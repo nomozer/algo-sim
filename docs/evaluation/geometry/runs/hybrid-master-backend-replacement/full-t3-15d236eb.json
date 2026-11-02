@@ -1,0 +1,22 @@
+{
+ "schema": "hybrid-master-backend-replacement/full-t3/1",
+ "verdict": "FULL_PRODUCT_GATE_PASS",
+ "attempt": 1,
+ "exit_code": 0,
+ "command": "cd frontend && node scripts/full-gate.mjs",
+ "worktree": ".superpowers/worktrees/hm-t3-15d236eb (fresh, detached; tracked and untracked clean after the run; post-run freeze_evaluation_candidate.py --verify MATCH; backend/.venv and frontend/node_modules junctions to the main checkout, removed with [IO.Directory]::Delete after a reparse-point check; git worktree remove succeeded and the directory is gone)",
+ "head": "15d236eb",
+ "candidate": "15d236eb",
+ "product_commit": "51ba6135a76e1daf761c021ce5c03de34acbae62",
+ "measured_system": {"tree_hash": "3711d4eeee260ffdbe50871c59b66922d470c99908eead729810c473d6ef8773", "files": 118},
+ "cache_version": "131",
+ "default_mode": "LLM_ONLY",
+ "pytest": {"passed": 16581, "skipped": 7, "deselected": 2, "xfailed": 15, "failed": 0, "seconds": 797.01},
+ "vitest": {"files": 84, "passed": 1424},
+ "build": "PASS",
+ "demo_replay": "PASS (5/5)",
+ "demo_crash_surface": "PASS (6/6 refusal boundaries typed, 0 thrown as 500)",
+ "T0_T2": "COVERED_BY_T3",
+ "log_sha256_local": "ef472d8741a589ec4b1422a483899119347d5f5cb7c16f7ae6fa85022cea5476",
+ "provider_calls": 0
+}

@@ -302,6 +302,11 @@
   - there is no verify-and-backtrack loop.
 
   See `evaluation/geometry/runs/hybrid-master-backend-replacement/constraint-to-witness-c17.md` §5.
+  **Update 2026-11-02 (eighteenth continuation, candidate `15d236eb`, not integrated):** points named by a property
+  (orthocenter, circumcenter) are served on `/4` by regressing a declared definition into locus needs whose producers
+  come from function contracts (`PerpLine`, `PerpDir`); 202 goals that need composition, 0 wrong-served. **Effect
+  discovery is still OPEN:** the definition declares the loci (rule `DINH_NGHIA_DIEM`), valid alternatives are equivalent,
+  and nothing retries on a verification failure. See `composition-c18.md` §§5, 10.
 - **description:** Current TypedFact/functions encode lines as point pairs; an intersection_line output line3 cannot
   become a projection/distance operand. FunctionSpec has no planning effects; Planner maps kinds/goals with fixed expansions,
   so a new Registry function is not automatically discovered. Valid supplied dependencies are scheduled by Engine.

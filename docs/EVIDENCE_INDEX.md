@@ -100,8 +100,20 @@ CODE_COMMIT = 8a89c6fd46b5f8021a16b16a6f1b3f270657a29f
 CANDIDATE_COMMIT = 2fc15108
 MODEL_REQUEST_COUNT = 0
 CORRECTS = HYBRID_MASTER_C16_PLANNER_PROVENANCE (approval templates; the representation-gap statement for constraint-defined planes); constraint-witness-probe.json / -r2.json and constraint-witness-ablation.json / -r2.json superseded by r3 (r1 ran a withdrawn arm D and a narrower generator; r2 ran on a dirty tree); historical receipts unchanged
-CORRECTED_BY = NONE
+CORRECTED_BY = HYBRID_MASTER_C18_DEFINITION_COMPOSITION (templates 2adff732 / 8e4441b5 no longer bind: candidate 15d236eb; from registry /31 the runner's composition_label also counts midpoint and intersect_line_line as registered-rule functions, 0 flips on the 54 stored gold S-2/R-1 rows, c15-rule-flip-check.json)
 
+
+## CONTINUATION_ID = HYBRID_MASTER_C18_DEFINITION_COMPOSITION
+
+REPORT = docs/evaluation/geometry/runs/hybrid-master-backend-replacement/composition-c18.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-master-backend-replacement/
+CLASSIFICATION = OFFLINE_DETERMINISTIC_FIXTURE_TEST + IMPLEMENTER_AUTHORED_DEVELOPMENT_DIAGNOSTIC (no live measurement; no approval exists); GENUINE_DISCOVERY_NOT_ESTABLISHED + DEFINITION_REGRESSION_COMPOSITION_VERIFIED_OFFLINE — typed-fact-next/2 described kinds orthocenter / circumcenter served on /4 by regressing a declared textbook definition into locus needs solved from function contracts (registry /31 POINT_DEFINITIONS + DINH_NGHIA_DIEM, planner /26, engine /22); independent forward-search oracle on 504 generated cases: 480 served exact, 24 degenerate refused, 0 wrong-served, 0 reachable-refused, 202 goals need composition; /25 baseline 480/480 INVALID_TYPED_FACT_NEXT; ablation r2 and metamorphic r2 (1044/1044); independent review READY in round 2 (round 1 NOT_READY: registered decomposition by the C17 standard, accepted)
+VERIFICATION = composition-c18.md; composition-oracle.json; composition-baseline-25.json; composition-probe-r2.json; composition-ablation-r2.json; composition-metamorphic-r2.json; constraint-witness-probe-c18-r2.json; c15-rule-flip-check.json; function-contract-graph.json; inventory-phase-s2.json; wave3-phase-s2.json; s2-pilot-gold-replay-c18.jsonl; r1-live-pilot-gold-replay-c18.jsonl; constraint-extraction-pilot-protocol.md; full-t3-15d236eb.json; owner-go-request.md (eighteenth addendum); ../hybrid-master-definition-composition/frozen-evaluation-candidate.json; ../hybrid-master-definition-composition/candidate_divergence.json
+CODE_COMMIT = 51ba6135a76e1daf761c021ce5c03de34acbae62
+CANDIDATE_COMMIT = 15d236eb
+MODEL_REQUEST_COUNT = 0
+CORRECTS = HYBRID_MASTER_C17_CONSTRAINT_WITNESS (approval templates); C11 planning_oracle MISSING_PRIMITIVE for circumcenter/orthocenter (a constant set, refuted by search: composition-oracle.json); composition-probe.json / -ablation.json / -metamorphic.json superseded by r2 (r1 used the withdrawn DISCOVERED labelling); historical receipts unchanged
+CORRECTED_BY = NONE
 ## WAVE_ID = ALGOSIM_W4_END_TO_END_GEOMETRY_AND_PEDAGOGICAL_SIMULATION
 
 REPORT = docs/evaluation/geometry/runs/geometry-generalization-and-pedagogical-construction/report.md

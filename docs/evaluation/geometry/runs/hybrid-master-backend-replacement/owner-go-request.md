@@ -452,3 +452,61 @@ $s = $s.Replace('"owner_decision": "PENDING_OWNER_DECISION"', '"owner_decision":
 | 5 | Live `constraints` extraction (new) | authorize preparing a constraint-plane live corpus and template (scripts/docs only, no calls), or defer |
 | 6 | S-1, D1/D2, P-1..P-3 | `DEFERRED_PENDING_EVIDENCE` |
 | 7 | Integration and cleanup | merge / push: `INTEGRATION_PENDING_OWNER_GO`. A leftover directory `.superpowers\worktrees\hm-t3-7e9e479d` (unregistered C16 T3 checkout: a partial tracked copy at `7e9e479d` plus regenerable `frontend/dist`, `.vite-cache`, no junctions, no unique data) could not be removed in this session because the tool refused recursive deletion. Owner command if wanted: `Remove-Item -Recurse -Force D:\Documents\projects\algo-sim\.superpowers\worktrees\hm-t3-7e9e479d` |
+
+## Addendum — eighteenth continuation (points named by a property; registry /31, planner /26, engine /22), 2026-11-02. It supersedes the commands of the seventeenth addendum.
+
+Still `0` live calls and `USD 0`, and no approval file exists. The seventeenth-addendum blobs `2adff732…` / `8e4441b5…`
+no longer bind: their measured system `b1b29a13…` is not the candidate.
+
+**The measured system changed.** The new candidate is `15d236eb`: product `51ba6135`, 118 files, `3711d4ee…`.
+Full T3 PASS on it (`full-t3-15d236eb.json`: pytest 16 581, vitest 1 424, build, demo 5/5, crash 6/6).
+
+**What it found (read before any GO):**
+- **Item 4 of the seventeenth addendum, answered offline.** Composition is necessary only where the kernel has no
+  primitive for the object itself. Points named by a property (orthocenter, circumcenter) are such objects; `/4` now
+  serves them: 480/480 generated cases exact, 0 wrong-served, 202 goals where an independent oracle shows composition is
+  necessary.
+- **Discovery: still not established.** The independent review (round 1) showed the plans are a registered
+  decomposition by the C17 standard: the definition declares the loci, valid alternatives are equivalent, nothing
+  retries. We accepted it (`composition-c18.md` §§5, 10–11). A genuine-discovery claim would need goals whose subgoals
+  no declared definition names, with alternatives that structure cannot rank and exact verification must reject.
+- **Model surface:** `typed-fact-next/2` gains two described kinds; flat / v3 / Route A, prompts, `CACHE_VERSION` 131
+  and `LLM_ONLY` are unchanged.
+- **Runner label (review R2-2).** The S-2/R-1 runner bytes are unchanged (`48d3fd11…`), but from registry `/31` its
+  `composition_label` counts `midpoint` and `intersect_line_line` beyond a description as registered-rule functions.
+  It can only under-count discovery; 54 stored gold rows: 0 flips (`c15-rule-flip-check.json`).
+- **Prepared, not run:** a 16-case live diagnostic for extracting `constraints` and the new kinds
+  (`constraint-extraction-pilot-protocol.md`; gold replay 14/14). It has no template; it needs its own GO.
+
+**Owner commands.** They are blob-keyed. Both templates passed `check_approval_terms` in a dry run with a non-approval
+value (in memory, no file written). Terms unchanged: S-2 36 requests / USD 2.0; R-1 18 requests / USD 1.0; prices
+0.30 / 2.50 USD per million tokens; model `gemini-2.5-flash`; runner `48d3fd11…`, paired harness `2ac9577f…`, scorer
+`8c330bd4…`.
+
+```powershell
+cd D:\Documents\projects\algo-sim\.superpowers\worktrees\hybrid-master-backend-replacement
+$d = 'APPROVED_BY_USER'
+$run = 'docs\evaluation\geometry\runs\hybrid-master-backend-replacement'
+# choose ONE pair: S-2 → 's2', '4dd2bcfd89a9a78b5443eac7e23fb084bb88b87e' ; R-1 → 'r1', 'c6ad2dc3d63a6acbb6b6c7c1dfc2c6b3fb25dda5'
+$name = 's2'; $blob = '4dd2bcfd89a9a78b5443eac7e23fb084bb88b87e'
+$t = "$run\$name-owner-approval.template.json"
+$o = "$run\$name-owner-approval.json"
+if ((git hash-object $t) -ne $blob) { throw 'template changed: do not approve' }
+if (Test-Path $o) { throw 'approval file already exists' }
+$s = [IO.File]::ReadAllText((Resolve-Path $t))
+if ([regex]::Matches($s, '"owner_decision": "PENDING_OWNER_DECISION"').Count -ne 1 -or [regex]::Matches($s, '"paid_project_confirmed": false').Count -ne 1) { throw 'unexpected template' }
+$s = $s.Replace('"owner_decision": "PENDING_OWNER_DECISION"', '"owner_decision": "' + $d + '"').Replace('"paid_project_confirmed": false', '"paid_project_confirmed": true')
+[IO.File]::WriteAllText((Join-Path (Get-Location) $o), $s, (New-Object Text.UTF8Encoding $false))
+```
+
+**All Owner decisions:**
+
+| # | decision | options |
+|---|---|---|
+| 1 | S-2 live pilot | run the command with `s2`, or defer |
+| 2 | R-1 live pilot | run the command with `r1`, or defer |
+| 3 | Paired 60-problem GO | name an independent author (`heldout-authoring/`) |
+| 4 | **Discovery claim** | close the thesis claim as "necessary composition served by definition regression; genuine discovery not established", or authorize a new design slice (relations not stated as loci, verify-and-retry loop between planner and engine) |
+| 5 | Constraint / new-kind extraction pilot | authorize issuing its approval template (16 requests, USD 1.0 proposed), or defer |
+| 6 | S-1, D1/D2, P-1..P-3; named "Gọi H là trực tâm …" | `DEFERRED_PENDING_EVIDENCE` |
+| 7 | Integration and cleanup | merge / push: `INTEGRATION_PENDING_OWNER_GO`. The leftover `.superpowers\worktrees\hm-t3-7e9e479d` (unregistered, no `.git`, no junction; only tracked copies and regenerable `frontend/dist`, `.vite-cache`, `__pycache__`, test screenshots) was re-verified and the tool again refused recursive deletion. Owner command if wanted: `Remove-Item -Recurse -Force D:\Documents\projects\algo-sim\.superpowers\worktrees\hm-t3-7e9e479d` |

@@ -849,3 +849,48 @@ fixtures through declared identity deltas.
 - Overall `HYBRID_NOT_READY`. Nothing is merged or pushed.
 
 **Next exact action:** the Owner decides items 1–7 of the seventeenth addendum.
+
+## Eighteenth continuation (Owner Master Directive: genuine function composition, goal regression, verified planning), 2026-11-02: CHECKPOINT REACHED — `GENUINE_DISCOVERY_NOT_ESTABLISHED`; `DEFINITION_REGRESSION_COMPOSITION_VERIFIED_OFFLINE`; `OFFLINE_READY_AWAITING_OWNER_GO`
+
+Offline only: `0` provider calls, `USD 0`, no approval file. Report: `composition-c18.md`.
+
+| Commit | Content |
+|---|---|
+| `5a540f46` | Independent forward-search oracle (`tools/composition_oracle.py`, stdlib only) + `/25` baseline: 480/480 reachable property-defined points `REPRESENTATION_BLOCKED`; the C11 `MISSING_PRIMITIVE` for orthocenter/circumcenter was a constant set |
+| `b2dd77de` | **Product:** definition regression (registry /31, planner /26, engine /22, `/2` described kinds `orthocenter`, `circumcenter`) |
+| `f5b29c12` · `51142160` · `636f5324` | Ablation / metamorphic / pilot tools; C15 label computed by the runner; receipts r1; phase-s replay |
+| `fe792910` · `ee89cffa` | Report draft; constraint-extraction pilot (16 cases, protocol, gold replay 14/14); Registry capability graph |
+| `a7aed190` · `93e36379` | **Product:** review round 1 closures (definition = declared rule `DINH_NGHIA_DIEM`, steps `registered`); receipts r2; phase-s2 |
+| `51ba6135` | **Product (final):** a certificate naming `DINH_NGHIA_DIEM` directly is a typed refusal (review R2-1) |
+| `918d4f59` | Review round 2 `READY` recorded; C15 rule-table flip receipt (54 gold rows, 0 flips) |
+| `15d236eb` | Candidate re-frozen in its own commit: product `51ba6135`, 118 files `3711d4eeee260ffd…`, layer `runs/hybrid-master-definition-composition/` |
+
+**Findings** (`VERIFIED_OFFLINE`, implementer-authored development data):
+- Composition is necessary only where the kernel lacks a primitive for the object itself: points named by a property.
+  The oracle: 504 cases, 208 point-necessary (202 goal-necessary), all reachable within its bound.
+- `/4` serves 480/480 reachable cases exactly, refuses 24/24 degenerate; 0 wrong-served, 0 reachable-refused.
+  Reviewer re-attack on 636 more cases (4 other topologies): 0 wrong-served (no committed receipt).
+- **Not discovery** (review round 1 MAJOR-1/2, accepted): the textbook definition declares the loci and the meet; the
+  locus contracts were written with their only consumer; valid alternatives give the same point; structure forces the
+  free choices; nothing retries. Planner and C15 rule: `REGISTERED_DECOMPOSITION` on all 480.
+- Ablation r2: removing a locus contract removes exactly the plans that need it; ignoring structural preconditions makes
+  the cheapest producer degenerate (engine refuses 264, nothing served wrong); depth 3 exhausts typed.
+- Regression: C17 corpus 1531/1531 identical; Wave 3 67/72, 0 transitions; locked 96/96; 203 probes clean; S-2 35/36;
+  R-1 labels unchanged; 41/41 preview fixtures; one declared transition (nine stated feet, now served √11).
+
+**Unchanged:** `CACHE_VERSION` 131, `LLM_ONLY`, flat `TypedFact`, v3, Route A schemas, prompts, frontend.
+
+**Review:** fresh-context, adversarial. Round 1 `NOT_READY` (2 MAJOR, 6 MINOR, 3 NIT); round 2 **`READY`** (0 BLOCKER,
+0 MAJOR); its MINOR-R2-1..3 and NITs closed at `51ba6135` / `918d4f59`.
+
+**Full T3:** see `full-t3-15d236eb.json`.
+
+**Cleanup:** the leftover `.superpowers\worktrees\hm-t3-7e9e479d` (no `.git`, unregistered, no junction, only tracked
+copies + regenerable artefacts) was verified removable but the tool refused recursive deletion again; Owner command in
+the eighteenth addendum.
+
+**Status:** discovery `NOT_ESTABLISHED`; definition-regression composition `VERIFIED_OFFLINE`; `LIVE_EXTRACTION_NOT_MEASURED`
+(constraints and the new kinds; protocol ready), `PAIRED_EVALUATION_NOT_MEASURED`, `INTEGRATION_NOT_READY`,
+`PRODUCTION_NOT_READY`. Overall `HYBRID_NOT_READY`. Nothing is merged or pushed.
+
+**Next exact action:** the Owner decides the items of the eighteenth addendum (`owner-go-request.md`).
