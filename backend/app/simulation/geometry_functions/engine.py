@@ -2299,7 +2299,7 @@ class _Dung:
         khai += [d for t, _ in sau for d in khai_cua[t]]
         # A stated line ⊥ base that PLACED its off-base end («hình chiếu vuông góc của A′ lên (ABC) là H» puts A′ over H)
         # and is no edge of any solid is a GIVEN the learner must see: draw it as a segment, so the exact right-angle
-        # witness (`certificates.attach_perpendicular_witnesses`) has an object to sit on. A forward projection (H := foot
+        # witness (`certificates.attach_scene_perpendicular_certificates`) has an object to sit on. A forward projection (H := foot
         # of S) already carries its witness on the point H; a stated edge (SA ⊥ đáy) carries it on the edge.
         canh = {frozenset(e) for k in self.khoi.values() for e in (
             [(k.base[i - 1], k.base[i]) for i in range(len(k.base))]
