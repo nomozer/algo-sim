@@ -293,6 +293,15 @@
   or engine change. Still OPEN: only `distance` questions enter the resolver (volume/area/angle/length keep fixed dispatch);
   descriptions are those the TypedFact `point_kind` literal can carry (midpoint, centroid); a description with two operand
   groups (intersection point of two lines) has no transport; the foot on a plane is a scene witness, not a construction step.
+  **Update 2026-11-02 (seventeenth continuation, research branch `research/hybrid-master-backend-replacement`,
+  candidate `2fc15108`, not integrated):** planes defined by stated constraints are served on `/4`. The planner obtains a
+  `Normal(Q)` from the `Normal` effect of `orthogonal_projection`'s contract (registry `/30`, rule `MAT_RANG_BUOC`).
+  Generated cases: 407/407 served exact, 0 wrong-served. **Effect discovery is still OPEN:**
+  - the witnesses come from a declared rule;
+  - an ablation shows the candidate choice does not change the answer;
+  - there is no verify-and-backtrack loop.
+
+  See `evaluation/geometry/runs/hybrid-master-backend-replacement/constraint-to-witness-c17.md` §5.
 - **description:** Current TypedFact/functions encode lines as point pairs; an intersection_line output line3 cannot
   become a projection/distance operand. FunctionSpec has no planning effects; Planner maps kinds/goals with fixed expansions,
   so a new Registry function is not automatically discovered. Valid supplied dependencies are scheduled by Engine.

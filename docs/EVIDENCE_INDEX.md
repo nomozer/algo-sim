@@ -88,6 +88,18 @@ CODE_COMMIT = 9c561ca62e1a193697e5b7b69f1bdf77fa8bd770
 CANDIDATE_COMMIT = 3154a696
 MODEL_REQUEST_COUNT = 0
 CORRECTS = HYBRID_MASTER_C15_R1_LIVE_PILOT_PREPARED (approval templates; the runner's composition rule) + C11 route-B planner-recomposition claim (planner-recomposition-matrix.json: 9 DISCOVERED = 6 source-explicit + 3 registered); historical receipts unchanged
+CORRECTED_BY = HYBRID_MASTER_C17_CONSTRAINT_WITNESS (templates beb9227b / 25000c72 no longer bind: candidate 2fc15108; from registry /30 the runner's composition_label counts orthogonal_projection as a registered-rule function, 0 flips on the gold S-2/R-1 dry-runs; C16 "goals with implicit objects are not representable" no longer holds for constraint-defined planes)
+
+## CONTINUATION_ID = HYBRID_MASTER_C17_CONSTRAINT_WITNESS
+
+REPORT = docs/evaluation/geometry/runs/hybrid-master-backend-replacement/constraint-to-witness-c17.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-master-backend-replacement/
+CLASSIFICATION = OFFLINE_DETERMINISTIC_FIXTURE_TEST + IMPLEMENTER_AUTHORED_DEVELOPMENT_DIAGNOSTIC (no live measurement; no approval exists); GENUINE_DISCOVERY_NOT_ESTABLISHED + CONSTRAINT_TO_WITNESS_SERVICE_VERIFIED_OFFLINE — typed-fact-next/2 plane_kind "constrained" served on /4 (registry /30 MAT_RANG_BUOC, planner /25, engine /21 exact existence/uniqueness); independent oracle on 1531 generated cases: 407 served exact, 1124 correct refusals, 0 wrong-served, 0 reachable-but-refused; /24 baseline 352/352 INVALID_TYPED_FACT_NEXT; ablation r3: last-candidate and premise-never arms keep all 407 answers (choice immaterial, no backtracking); independent review READY in round 2; Full T3 PASS (attempt 1)
+VERIFICATION = constraint-to-witness-c17.md; constraint-witness-probe-r3.json; constraint-witness-ablation-r3.json; constraint-witness-baseline-24.json; tools/constraint_witness_probe.py; tools/constraint_witness_ablation.py; inventory-phase-r.json; wave3-phase-r.json; full-t3-2fc15108.json; s2-owner-approval.template.json; r1-owner-approval.template.json; owner-go-request.md (seventeenth addendum); ../hybrid-master-constraint-witness/frozen-evaluation-candidate.json; ../hybrid-master-constraint-witness/candidate_divergence.json
+CODE_COMMIT = 8a89c6fd46b5f8021a16b16a6f1b3f270657a29f
+CANDIDATE_COMMIT = 2fc15108
+MODEL_REQUEST_COUNT = 0
+CORRECTS = HYBRID_MASTER_C16_PLANNER_PROVENANCE (approval templates; the representation-gap statement for constraint-defined planes); constraint-witness-probe.json / -r2.json and constraint-witness-ablation.json / -r2.json superseded by r3 (r1 ran a withdrawn arm D and a narrower generator; r2 ran on a dirty tree); historical receipts unchanged
 CORRECTED_BY = NONE
 
 ## WAVE_ID = ALGOSIM_W4_END_TO_END_GEOMETRY_AND_PEDAGOGICAL_SIMULATION

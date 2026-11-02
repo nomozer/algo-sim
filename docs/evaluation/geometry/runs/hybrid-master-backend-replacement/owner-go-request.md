@@ -394,3 +394,61 @@ $s = $s.Replace('"owner_decision": "PENDING_OWNER_DECISION"', '"owner_decision":
 | 4 | **Implicit-object goals** (new) | authorize an additive `/2` slice for goals that need hidden constructions, starting with "mặt phẳng qua MN và vuông góc với (ABCD)" and "(P) chứa AB và song song với SC". It needs Source Gate grammar, gate certificates, engine postconditions and a constraint-to-witness planner, plus a new candidate, review, T3 and approvals. Or keep the current scope, and the thesis states that discovery is not established |
 | 5 | S-1, D1/D2, P-1..P-3 | `DEFERRED_PENDING_EVIDENCE` |
 | 6 | Integration | merge / push: `INTEGRATION_PENDING_OWNER_GO` |
+
+## Addendum — seventeenth continuation (constraint-to-witness planes; registry /30, planner /25, engine /21), 2026-11-02. It supersedes the commands of the sixteenth addendum.
+
+Still `0` live calls and `USD 0`, and no approval file exists. The sixteenth-addendum blobs `beb9227b…` / `25000c72…` no
+longer bind: their measured system `1725590664…` is not the candidate.
+
+**The measured system changed.** The new candidate is `2fc15108`: product `8a89c6fd`, 118 files, `b1b29a13…`.
+- Item 4 of the sixteenth addendum is implemented offline. `/4` now serves sections by a plane defined by stated
+  constraints: through stated points, `∥` a stated line, `⊥` a named plane.
+- Report: `constraint-to-witness-c17.md`. Independent review: `READY` in round 2.
+
+**What it found (read before any GO):**
+- **Service:** 407 constraint planes are served exactly. There are 0 wrong-served and 0 reachable-but-refused in 1 531
+  generated cases, against an independent oracle.
+- **Discovery:** not established. The witnesses come from a declared rule, and the choice among them does not change the
+  answer.
+- **Not measured:** whether Gemini can emit `constraints` from student text. That needs a live measurement, so a new
+  corpus and a new GO; neither is prepared here.
+- **Runner label change (review MINOR-B).** The S-2/R-1 runner bytes are unchanged (`48d3fd11…`). From registry `/30`,
+  `orthogonal_projection` belongs to a declared rule, so `composition_label` now counts an `orthogonal_projection` step
+  beyond the description as `REGISTERED_DECOMPOSITION`. On `/29` it was DISCOVERED. The change can only under-count
+  discovery. Relabelling the gold S-2 (36) and R-1 (18) dry-runs with and without the rule gave 0 flips.
+
+**Owner commands.** They are blob-keyed. Each was dry-run with a non-approval value into a scratch file, and both
+passed `check_approval_terms`. The terms are unchanged:
+- S-2: 36 requests, USD 2.0.
+- R-1: 18 requests, USD 1.0.
+- Prices: 0.30 / 2.50 USD per million tokens.
+- Model: `gemini-2.5-flash`.
+- Hashes: runner `48d3fd11…`, paired harness `2ac9577f…`, scorer `8c330bd4…`.
+
+```powershell
+cd D:\Documents\projects\algo-sim\.superpowers\worktrees\hybrid-master-backend-replacement
+$d = 'APPROVED_BY_USER'
+$run = 'docs\evaluation\geometry\runs\hybrid-master-backend-replacement'
+# choose ONE pair: S-2 → 's2', '2adff732a9731a7cf4892b41dd9f2c79b5c1cf69' ; R-1 → 'r1', '8e4441b51c5b6f14f39ea32d80990518cf78ac97'
+$name = 's2'; $blob = '2adff732a9731a7cf4892b41dd9f2c79b5c1cf69'
+$t = "$run\$name-owner-approval.template.json"
+$o = "$run\$name-owner-approval.json"
+if ((git hash-object $t) -ne $blob) { throw 'template changed: do not approve' }
+if (Test-Path $o) { throw 'approval file already exists' }
+$s = [IO.File]::ReadAllText((Resolve-Path $t))
+if ([regex]::Matches($s, '"owner_decision": "PENDING_OWNER_DECISION"').Count -ne 1 -or [regex]::Matches($s, '"paid_project_confirmed": false').Count -ne 1) { throw 'unexpected template' }
+$s = $s.Replace('"owner_decision": "PENDING_OWNER_DECISION"', '"owner_decision": "' + $d + '"').Replace('"paid_project_confirmed": false', '"paid_project_confirmed": true')
+[IO.File]::WriteAllText((Join-Path (Get-Location) $o), $s, (New-Object Text.UTF8Encoding $false))
+```
+
+**All Owner decisions:**
+
+| # | decision | options |
+|---|---|---|
+| 1 | S-2 live pilot | run the command with `s2`, or defer |
+| 2 | R-1 live pilot | run the command with `r1`, or defer. It measures Gemini's described points; it cannot measure planner discovery |
+| 3 | Paired 60-problem GO | name an independent author (`heldout-authoring/`) |
+| 4 | **Discovery** (new) | measuring genuine discovery needs goals whose witnesses can be reached by **different** compositions with **different** results, plus a verify-and-backtrack loop between planner and engine. Options: authorize that design slice (new IR/planner surface; new candidate, review, T3), or close the thesis claim as "constraint-to-witness service verified, discovery not established" |
+| 5 | Live `constraints` extraction (new) | authorize preparing a constraint-plane live corpus and template (scripts/docs only, no calls), or defer |
+| 6 | S-1, D1/D2, P-1..P-3 | `DEFERRED_PENDING_EVIDENCE` |
+| 7 | Integration and cleanup | merge / push: `INTEGRATION_PENDING_OWNER_GO`. A leftover directory `.superpowers\worktrees\hm-t3-7e9e479d` (unregistered C16 T3 checkout: a partial tracked copy at `7e9e479d` plus regenerable `frontend/dist`, `.vite-cache`, no junctions, no unique data) could not be removed in this session because the tool refused recursive deletion. Owner command if wanted: `Remove-Item -Recurse -Force D:\Documents\projects\algo-sim\.superpowers\worktrees\hm-t3-7e9e479d` |

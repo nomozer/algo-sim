@@ -802,3 +802,50 @@ hash compared on CRLF bytes. That was fixed test-only at `7e072c7e`.
 
 **Next exact action:** the Owner decides items 1–6 of the sixteenth addendum. Item 4 is the only route to measurable
 planner discovery.
+
+## Seventeenth continuation (Owner Master Directive: constraint-to-witness planning, implicit geometric objects, verified function composition), 2026-11-02: CHECKPOINT REACHED — `GENUINE_DISCOVERY_NOT_ESTABLISHED`; `CONSTRAINT_TO_WITNESS_SERVICE_VERIFIED_OFFLINE`; `OFFLINE_READY_AWAITING_OWNER_GO`
+
+Offline only: `0` provider calls, `USD 0`, no approval file. Report: `constraint-to-witness-c17.md`.
+
+| Commit | Content |
+|---|---|
+| `785a51c1` | **Product (WIP):** constraint planes on `/4` — `typed-fact-next/2` `plane_kind = "constrained"`, registry `/30` (`MAT_RANG_BUOC`, `Normal` effect), planner `/25`, engine `/21` |
+| `29a7c1b4` | Systematic oracle (`tools/constraint_witness_probe.py`) and two gaps fixed at their authority (independent triple; verification-only witnesses) |
+| `8cc55bb2` | Tests (15 + 2 scope), ablation r1, `/24` baseline (352/352 `INVALID_TYPED_FACT_NEXT`), version pins |
+| `f646a8cc` | Report draft; phase-r replay: Wave 3 67/72, 72/72 negatives, 0 wrong-served, 0 transitions |
+| `8a89c6fd` | Review round 1 closures (MAJOR-1/2/3, MINOR-1/2, NIT-2); S-2 runner byte-identical to `3154a696` (**final product commit**) |
+| `c0a0793d` · `dbe50238` | Receipts r3 at a clean head (= r2); CODE_INDEX; review round 2 `READY` recorded |
+| `2fc15108` | Candidate re-frozen in its own commit: product `8a89c6fd`, 118 files `b1b29a13…`, layer `runs/hybrid-master-constraint-witness/` |
+| (this commit) | Full T3 receipt; templates re-issued: S-2 `2adff732…`, R-1 `8e4441b5…`; seventeenth addendum; write-back |
+
+**Findings** (`VERIFIED_OFFLINE`, development data, implementer-authored generator):
+- **Representation opened.** `/24` refused all 352 cases of the first probe at extraction validation. `/25` serves the
+  same goals: a plane through stated points, `∥` a stated line, or `⊥` a named plane.
+- **Exact service.** An independent oracle on 1 531 generated cases (2 topologies, Q named by vertices or stated
+  midpoints) gave 407 served with exact area and 1 124 correct refusals by the right code. There were 0 wrong-served
+  and 0 reachable-but-refused. The engine proves existence and uniqueness by affine rank.
+- **Not discovery.** All 407 cases are `REGISTERED_DECOMPOSITION` under the C15 rule (`MAT_RANG_BUOC` is a declared
+  rule). In the ablation, the last candidate and never using the premise both give the same answers on all 407 cases.
+  The candidate choice is a free parameter of a fixed recipe, and there is no backtracking.
+
+**Unchanged:** `CACHE_VERSION` 131, `LLM_ONLY`, locked flat `TypedFact`, Route A schemas, prompts, frontend; 41/41 preview
+fixtures through declared identity deltas.
+
+**Review:** fresh-context, adversarial.
+- Round 1 was `NOT_READY` with 3 MAJOR findings: telemetry overclaim, an ablation that measured nothing, and labels.
+- Round 2 was **`READY`**: 0 BLOCKER, 0 MAJOR. MINOR-A (generator change) and MINOR-C (derived receipt field) are
+  closed in the report. MINOR-B (the S-2 runner label counts `orthogonal_projection` as registered from `/30`; 0 flips
+  on the gold S-2/R-1 dry-runs) is declared in the seventeenth addendum.
+
+**Full T3:** `FULL_PRODUCT_GATE_PASS` on attempt 1 (`full-t3-2fc15108.json`; HEAD = candidate `2fc15108`).
+- pytest 16 559 passed, 0 failed; vitest 1 424; build PASS; demo 5/5; crash surface 6/6.
+- The worktree was fresh and detached; the post-run `--verify` MATCHed.
+- The worktree was removed cleanly.
+
+**Status:**
+- Discovery `NOT_ESTABLISHED`. Constraint-to-witness service `VERIFIED_OFFLINE` in the scope above.
+- `LIVE_EXTRACTION_NOT_MEASURED` for `constraints`. Also `PAIRED_EVALUATION_NOT_MEASURED`, `INTEGRATION_NOT_READY`,
+  `PRODUCTION_NOT_READY`.
+- Overall `HYBRID_NOT_READY`. Nothing is merged or pushed.
+
+**Next exact action:** the Owner decides items 1–7 of the seventeenth addendum.
