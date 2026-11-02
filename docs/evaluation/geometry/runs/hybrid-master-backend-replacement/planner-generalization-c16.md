@@ -132,8 +132,10 @@ written down anywhere. `HYPOTHESIS`: on those goals it would produce genuinely s
   Calls and auxiliary certificates were identical, except in tests that monkeypatch planner globals.
 - **Unchanged:** answers, calls, envelopes and cache identity. 41/41 preview fixtures verify through the declared
   `/23 → /24` identity delta. `CACHE_VERSION` stays 131: `/api/analyze` does not reach the planner.
-- **Tests:** the three tests that locked the false label now assert the provenance contract (it is a correction, not a
-  repin; see §2.1).
+- **Tests:** the four tests that locked the false label now assert the provenance contract (it is a correction, not a
+  repin; see §2.1). Six version pins move `/23` → `/24` (`3406b8ee`).
+- **Review:** fresh-context, two rounds. Round 1 `NOT_READY` (1 BLOCKER, 1 MAJOR, 5 MINOR, all closed); round 2
+  **`READY`**.
 - **Still open:** a refused route-B plan still carries the planner's proposal telemetry (H1). It describes the proposal,
   not an outcome.
 
