@@ -319,7 +319,11 @@ def test_metric_translation_and_chart_scaling_of_real_planned_ir():
     assert xyz(replay.final_memory['M'])==tuple(2*v+o for v,o in zip(r.points['M'],(3,-4,5)))
 
 
-def test_available_foot_candidates_are_also_budgeted():
+def test_available_foot_candidates_are_also_budgeted(monkeypatch):
+    # C18 raised the default bound to 48 (a defined point evaluates every locus); this scenario was written for 8 and
+    # still checks the same thing — available-binding candidates count against the bound
+    from app.simulation.geometry_functions import planner
+    monkeypatch.setattr(planner, 'MAX_EFFECT_CANDIDATES', 8)
     c=named_case()
     for i in range(9):
         label=f'J{i}'

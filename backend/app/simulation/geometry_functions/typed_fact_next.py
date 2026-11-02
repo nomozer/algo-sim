@@ -75,7 +75,9 @@ DESCRIBED_POINT_FIELDS = {"midpoint": {"segment": "pt2"}, "centroid": {"polygon"
                           "orthogonal_projection": {"point": "pt", "plane": "labels3+"},
                           "orthogonal_projection_line": {"point": "pt", "line": "pt2"},
                           "intersect_line_line": {"line1": "pt2", "line2": "pt2"},
-                          "intersect_line_plane": {"line": "pt2", "plane": "labels3+"}}
+                          "intersect_line_plane": {"line": "pt2", "plane": "labels3+"},
+                          # C18: named by a PROPERTY of a triangle — no function builds them; the planner composes one
+                          "orthocenter": {"polygon": "labels3"}, "circumcenter": {"polygon": "labels3"}}
 #: Goal target keys whose values are point operands (a described ref may stand there); planes stay labels.
 DESCRIBED_GOAL_KEYS = ("point", "segment", "line", "line1", "line2", "polygon")
 #: Nesting bound of described points (the planner's effect search is bounded at depth 3: the ask + two producer levels).
@@ -1465,7 +1467,8 @@ def clarification_record(u: UnresolvedSpec, problem_text: str) -> dict[str, Any]
 class DescribedPointSpec(ClosedNextModel):
     """Một điểm đề MÔ TẢ mà không đặt tên (trung điểm của SC, hình chiếu vuông góc của A lên SD, ...). quote là nguyên văn
     cụm mô tả; chỉ điền các toán hạng của kind (midpoint: segment; centroid: polygon; orthogonal_projection: point,
-    plane; orthogonal_projection_line: point, line; intersect_line_line: line1, line2; intersect_line_plane: line, plane).
+    plane; orthogonal_projection_line: point, line; intersect_line_line: line1, line2; intersect_line_plane: line, plane;
+    orthocenter — trực tâm, circumcenter — tâm đường tròn ngoại tiếp: polygon, ba đỉnh của tam giác).
     Chỗ dùng điểm này ghi '@' + described_id. (R-1: never a fact, never a label — `DESCRIBED_REF_RE`.)"""
 
     described_id: Annotated[str, StringConstraints(strip_whitespace=True, pattern=r"^[A-Za-z][A-Za-z0-9_]{0,31}$")]

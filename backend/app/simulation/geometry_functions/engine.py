@@ -58,7 +58,9 @@ from .registry import DINH_CAT_CANH, _cum_hoi
 #: /19 (same run): student simulation requests, honest exit, empty base, and solid-class semantic invariants (PE-2).
 #: /20 (same run): independent Gram/affine postcondition verifiers (`_MO_TA`) for composed projection and intersection
 #: `Point` descriptors across goal chains and derived planes (`point_operand`).
-ENGINE_VERSION = "geometry-function-engine/21"
+#: /22 (C18): the definitions of a point named by a property — orthocenter, circumcenter — checked on the built figure in
+#: the Gram metric (`_MO_TA`), every locus included, whatever composition the planner found.
+ENGINE_VERSION = "geometry-function-engine/22"
 PLANE_SECTION_CERTIFICATE_VERSION = "plane-section-certificate/1"
 PLANE_SECTION_CERTIFICATE_RULE = "engine_derived_plane_section"
 PLANE_SECTION_CERTIFICATE_PRODUCER = "engine.kiem_chung_chi_thiet_dien"
@@ -3145,6 +3147,22 @@ def _kiem_mo_ta_giao_duong(_dung: _Dung, x: V3, ps: list[V3]) -> bool:
             and Vec3(x[0] - c[0], x[1] - c[1], x[2] - c[2]).cross(cd).is_zero())
 
 
+def _kiem_tam_tam_giac(dung: _Dung, x: V3, ps: list[V3], loai: str) -> bool:
+    """C18: x IS the orthocenter (x − P ⊥ the opposite side, for all three vertices) or the circumcenter (equidistant from
+    all three) of the non-degenerate triangle ps, and lies in its plane — Gram metric, exact."""
+    if len(ps) != 3:
+        return False
+    a, b, c = ps
+    vec = lambda p, q: (q[0] - p[0], q[1] - p[1], q[2] - p[2])  # noqa: E731
+    n = Vec3(*vec(a, b)).cross(Vec3(*vec(a, c)))
+    if n.is_zero() or n.dot(Vec3(*vec(a, x))) != 0:
+        return False
+    if loai == "orthocenter":
+        return all(dung.g(vec(p, x), vec(q, r)) == 0 for p, q, r in ((a, b, c), (b, c, a), (c, a, b)))
+    d = [dung.g(vec(p, x), vec(p, x)) for p in ps]
+    return d[0] == d[1] == d[2]
+
+
 def _kiem_mo_ta_giao_mat(_dung: _Dung, x: V3, ps: list[V3]) -> bool:
     if len(ps) < 5 or (mp := _chon_phap_tuyen_mat(ps[2:])) is None:
         return False
@@ -3171,6 +3189,8 @@ _MO_TA = {
     "orthogonal_projection": _kiem_mo_ta_chieu_mat,
     "intersect_line_line": _kiem_mo_ta_giao_duong,
     "intersect_line_plane": _kiem_mo_ta_giao_mat,
+    "orthocenter": lambda dung, x, ps: _kiem_tam_tam_giac(dung, x, ps, "orthocenter"),
+    "circumcenter": lambda dung, x, ps: _kiem_tam_tam_giac(dung, x, ps, "circumcenter"),
 }
 
 
@@ -4170,7 +4190,8 @@ def dung_tu_loi_goi(problem_text: str, plan: Any, auxiliary: tuple[dict, ...] = 
         to_po = hop_dong_to_po_da_khai(calls)
         spec = hoan_thien_dung_hinh(vr.spec, to_po).spec
         if (len(spec.memory_declarations) > MAX_MEMORY_DECLARATIONS
-                and (any(d.get("rule") == DINH_CAT_CANH for d in auxiliary) or bool(dung.of("curved_solid")))):
+                and (any(d.get("rule") == DINH_CAT_CANH for d in auxiliary) or bool(dung.of("curved_solid"))
+                     or any(d.get("rule") == "effect-chain" and d.get("definition") for d in auxiliary))):   # C18
             # Section-vertex plans only (run `typedfactnext-planner-bridge`; every other plan keeps main's behaviour): when
             # the teaching expansion ALONE exceeds the IR budget, build the verified program unexpanded — the Adapter /3
             # policy — and say so in the trace. Geometry, checks and answers are those of the verified program.

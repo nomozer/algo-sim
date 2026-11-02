@@ -32,6 +32,7 @@ from pydantic.json_schema import SkipJsonSchema
 from .registry import AUXILIARY_RULES, DINH_CAT_CANH, MAT_SONG_SONG, MAT_HAI_DUONG, MAT_VUONG_DUONG, MAT_RANG_BUOC, ExactNumber, Label, TuChoi, chuan_hoa
 from .registry import nhan_cua_de, nhan_phu_da_dung
 from .registry import POINT_PRODUCERS, REGISTRY, doc_ke_hoach, goal_slots, parse_descriptor_inputs, planning_contract, planning_contracts, render_call, same_call
+from .registry import POINT_DEFINITIONS, descriptor_contracts
 
 #: /8 (run `goal-directed-function-composition`): goal entry by typed slots (`_toan_hang_muc_tieu`), line partner operand.
 #: /9 (run `geometry-capability-expansion`): `divide_segment` point_def, plane through a point ⊥ a line (`MAT_VUONG_DUONG`).
@@ -58,7 +59,11 @@ from .registry import POINT_PRODUCERS, REGISTRY, doc_ke_hoach, goal_slots, parse
 #: describes is no longer "discovered" (`route-b-composition-relabel.json`, `r1-composition-relabel.json`).
 #: /25 (C17): a plane the source defines by stated constraints (`plane_constraints`, `_mat_rang_buoc`): witness points
 #: chosen per constraint by contract (`Normal` needs: a stated line ⊥ Q, or the foot of a candidate point on Q).
-PLANNER_VERSION = "geometry-fact-planner/25"
+#: /26 (C18): a point the source names by a PROPERTY (`registry.POINT_DEFINITIONS`: orthocenter, circumcenter) is
+#: resolved by goal regression into its loci, each locus a typed need (`PerpLine`, `PerpDir`) whose producers come from
+#: function contracts (free slots, structural preconditions); depth exhaustion of one alternative no longer aborts the
+#: others; steps written inside such a regression are `search_generated`.
+PLANNER_VERSION = "geometry-fact-planner/26"
 PlaneName = Annotated[
     str,
     BeforeValidator(lambda v: chuan_hoa(v) if isinstance(v, str) else v),
@@ -74,11 +79,11 @@ _NHAN_PHU = _nhan_tuoi("H")
 MAX_CALLS = 64
 #: Bound of the goal-directed decomposition `MAT_SONG_SONG`: derived planes per problem (each costs two auxiliary points).
 MAX_DERIVED_PLANES = 4
-MAX_EFFECT_DEPTH = 3
-MAX_EFFECT_NEEDS = 32
-MAX_EFFECT_CANDIDATES = 8
+MAX_EFFECT_DEPTH = 4
+MAX_EFFECT_NEEDS = 96
+MAX_EFFECT_CANDIDATES = 48
 MAX_RESULT_LINES = 4
-MAX_RESULT_FEET = 8
+MAX_RESULT_FEET = 16
 
 #: Point kinds the frozen `flat` provider surface offers (485d3834…). The planner accepts more (`TypedFact.point_kind`).
 FLAT_POINT_KINDS = ("midpoint", "centroid", "intersect_line_line", "intersect_line_plane")
@@ -110,7 +115,7 @@ class TypedFact(BaseModel):
     # The planner also accepts `divide_segment` (Wave 2B); the provider schema stays the frozen `flat` surface (owner
     # decision): a live `flat` extraction cannot emit it until that surface is re-measured (`FLAT_POINT_KINDS`).
     point_kind: Annotated[Literal["midpoint", "centroid", "intersect_line_line", "intersect_line_plane", "divide_segment",
-                                  "orthogonal_projection", "orthogonal_projection_line"],
+                                  "orthogonal_projection", "orthogonal_projection_line", "orthocenter", "circumcenter"],
                           WithJsonSchema({"enum": list(FLAT_POINT_KINDS), "type": "string"})] | None = None
     value: ExactNumber | None = None
     measure: Literal["segment", "base_edge", "lateral_edge", "height", "edge"] | None = Field(
@@ -294,7 +299,7 @@ def doc_du_kien(raw: Any) -> list[TypedFact]:
                 raise TuChoi("SCHEMA_INVALID", f"{f.id}: plane_relation chỉ cho thiết diện, và thay cho `points`", (f.id,))
             if f.point_kind is not None:
                 required = ("solid", "point_kind", "points", "points_b") + (("quantity",) if f.kind == "question" else ())
-                dcs = [c for s in REGISTRY.values() for c in planning_contracts(s) if c.descriptor == f.point_kind]
+                dcs = descriptor_contracts(f.point_kind)
                 if not dcs:
                     raise TuChoi("UNSUPPORTED_CAPABILITY", f"{f.id}: không hàm nào của thư viện dựng được {f.point_kind}", (f.id,))
                 if not any(parse_descriptor_inputs(c, f.points or ()) is not None for c in dcs):
@@ -383,7 +388,7 @@ def _toan_hang_muc_tieu(f: TypedFact, contract) -> tuple | None:
     slots. The described point fills the first slot; `points_a` (its named partner on a line, one label) the next Point
     slot; `points_b` the rest — one label per Point slot, exactly two labels for a Line slot, ≥ 3 for a Plane slot. Each
     list fills only the slots of its own operand: a position is never guessed inside a list."""
-    dcs = [c for s in REGISTRY.values() for c in planning_contracts(s) if c.descriptor == f.point_kind]
+    dcs = descriptor_contracts(f.point_kind)
     parsed = next((r for c in dcs if (r := parse_descriptor_inputs(c, f.points or ())) is not None), None)
     if parsed is None:
         return None
@@ -413,7 +418,7 @@ def _doc_toan_hang_mo_ta(f: TypedFact) -> None:
                      "(point_kind + points; points_a chỉ là điểm thứ hai của một đường; không point)", (f.id,))
     if f.quantity != "distance" and not goals:
         raise TuChoi("UNSUPPORTED_CAPABILITY", f"{f.id}: chưa có hợp đồng mục tiêu cho {f.quantity} với điểm được mô tả", (f.id,))
-    contracts = [c for s in REGISTRY.values() for c in planning_contracts(s) if c.descriptor == f.point_kind]
+    contracts = descriptor_contracts(f.point_kind)
     if not contracts:
         raise TuChoi("UNSUPPORTED_CAPABILITY", f"{f.id}: không hàm nào của thư viện dựng được {f.point_kind}", (f.id,))
     pts = f.points or []
@@ -1307,7 +1312,7 @@ def _cau_hoi(f: TypedFact, q: list[str], k: KeHoach, khoi_cua, phat) -> dict:
         if len(b) > 3 and not f.line_ref:
             k.named_planes.append({"call": f.id, "labels": b})
         target = (("result", f.line_ref) if f.line_ref else ("named", tuple(sorted(b))) if len(b) == 2 else tuple(b[:3]))
-        dcs = [c for s in REGISTRY.values() for c in planning_contracts(s) if c.descriptor == f.point_kind]
+        dcs = descriptor_contracts(f.point_kind)
         parsed = next(r for c in dcs if (r := parse_descriptor_inputs(c, f.points or ())) is not None)
         return k.resolver.distance(f, ("desc", f.point_kind, parsed[0]), target)
     if f.line_ref:
@@ -1394,7 +1399,7 @@ def _cau_hoi(f: TypedFact, q: list[str], k: KeHoach, khoi_cua, phat) -> dict:
 def _phan_giai_diem_mat_phu(f: TypedFact, k: KeHoach) -> tuple[str, list[dict] | None, dict | None, list[str]]:
     if f.point is not None:
         return f.point, None, None, []
-    dcs = [c for s in REGISTRY.values() for c in planning_contracts(s) if c.descriptor == f.point_kind]
+    dcs = descriptor_contracts(f.point_kind)
     parsed = next(r for c in dcs if (r := parse_descriptor_inputs(c, f.points or ())) is not None)
     m, chain, p_labels = k.resolver.point(f, ("desc", f.point_kind, parsed[0]))
     return m, chain, {"descriptor": f.point_kind, "points": list(f.points or ()), "label": m}, p_labels
@@ -2038,6 +2043,7 @@ class _Choice:
     existing: dict | None = None
     cost: int = 0
     contract: Any = None
+    definition: dict | None = None      # C18: the meet of a defined point's loci (descriptor, slot env, loci searched)
 
 
 #: Source policies of contracts that are a declared decomposition's step: the foot of `distance(point,line)`, a section
@@ -2089,6 +2095,8 @@ class _EffectResolver:
         self.used = False
         self.active = set()
         self.memo = {}
+        self.rejected: list[dict] = []        # C18: candidates excluded by a structural precondition, in search order
+        self.definitions: dict[str, dict] = {}   # C18: defined point label → its definition binding (certificate)
         groups = {}
         for f in facts:
             if (f.kind=='intersection_line' and f.role in ('premise','question') and not f.negated
@@ -2097,14 +2105,44 @@ class _EffectResolver:
                 groups.setdefault(key,[]).append(f.id)
         self.aliases = {fid:min(ids) for ids in groups.values() for fid in ids}
 
-    def _exhausted(self, msg: str) -> TuChoi:
+    def _exhausted(self, msg: str, bound: str | None = None) -> TuChoi:
         return TuChoi("PLAN_TOO_LARGE", msg, data={"outcome": "SEARCH_EXHAUSTED", "explored_states": self.needs,
-                                                   "candidate_evaluations": self.candidates, "search_depth": self.depth_max})
+                                                   "candidate_evaluations": self.candidates, "search_depth": self.depth_max,
+                                                   "bound": bound})
+
+    def _tren_duong(self, p, line) -> bool:
+        """STRUCTURE only, no coordinates: p is an endpoint of the named line, or the midpoint of its two endpoints (a
+        description, or a premise of the source). Anything else is not known here and is left to the engine's exact check."""
+        if not (isinstance(line, tuple) and line[:1] == ("named",)):
+            return False
+        ends = set(line[1])
+        if isinstance(p, str):
+            return p in ends or any(f.kind == "point_def" and f.point_kind == "midpoint" and f.point == p and f.role == "premise"
+                                    and not f.negated and set(f.points or ()) == ends for f in self.facts.values())
+        return isinstance(p, tuple) and p[:2] == ("desc", "midpoint") and set(p[2]) == ends
+
+    def _binds(self, contract, env):
+        """Slot bindings of one contract: as the need gives them, or — a `free` slot — each point of the need's plane W, in
+        W's order (C18)."""
+        envs = [env]
+        for s in contract.free:
+            envs = [{**e, s: z} for e in envs for z in (e.get("W") or ())] if env.get(s) is None else envs
+        return envs
+
+    def _unmet(self, contract, env) -> str | None:
+        for pred, a, b in contract.requires:
+            if pred == "off_line" and self._tren_duong(env.get(a), env.get(b)):
+                return "precondition: the point lies on the line"
+        return None
 
     def _resolve(self, kind, operands, depth=0):
         key = (kind, operands)
         if not kind.startswith('Answer') and key in self.memo:
-            return self.memo[key]  # available producer binding only; Engine still verifies every given later
+            got, n_calls = self.memo[key]
+            # available producer binding only; Engine still verifies every given later. C18: an alternative that was
+            # never written and was chosen before the plan grew may miss a call it could now reuse — choose again.
+            if got.fn is None or got.existing is not None or n_calls == len(self.plan.calls):
+                return got
         self.needs += 1
         if self.needs > MAX_EFFECT_NEEDS:
             raise self._exhausted("quá trần typed needs")
@@ -2120,15 +2158,19 @@ class _EffectResolver:
         if kind == "Line" and operands[0][0] == "named":
             return _Choice(None, {})
         if depth >= MAX_EFFECT_DEPTH:
-            raise self._exhausted("quá trần phân rã effect")
+            raise self._exhausted("quá trần phân rã effect", bound="depth")
         self.active.add(key)
-        choices = []
+        choices, cut = [], None
         try:
+            desc = operands[0] if kind == 'Point' else None      # an unnamed point: only producers of its description
+            if desc and desc[1] in POINT_DEFINITIONS:            # C18: named by a property — regress its definition
+                choices.append(self._dinh_nghia(POINT_DEFINITIONS[desc[1]], desc, depth))
             contracts = [(s,c) for s in sorted(REGISTRY.values(), key=lambda s: s.name) for c in planning_contracts(s)]
-            for spec, contract in contracts:
+            # C18: a `free` slot multiplies a contract into one candidate per point of the need's plane (`_binds`)
+            for spec, contract, env in ((s, c, e) for s, c in contracts
+                                        for e in self._binds(c, dict(zip(c.effect.operands, operands)))):
                 if contract.effect.kind != kind or len(contract.effect.operands) != len(operands):
                     continue
-                desc = operands[0] if kind == 'Point' else None      # an unnamed point: only producers of its description
                 if desc and (contract.descriptor != desc[1] or len(contract.inputs) != len(desc[2])):
                     continue
                 typed = {t.operands[0]: t.kind for t in contract.inputs if t.kind in ('Point', 'Line', 'Plane')}
@@ -2137,9 +2179,12 @@ class _EffectResolver:
                 self.candidates += 1
                 if self.candidates > MAX_EFFECT_CANDIDATES:
                     raise self._exhausted("quá trần candidate")
-                env = dict(zip(contract.effect.operands, operands))
                 if desc:
                     env.update(zip((t.operands[0] for t in contract.inputs), desc[2]))
+                if why := self._unmet(contract, env):            # C18: decided from structure, before any sub-need
+                    self.rejected.append({"need": kind, "fn": spec.name, "reason": why,
+                                          "binding": {k: _ten(v) for k, v in env.items() if v is not None}})
+                    continue
                 existing = None
                 if contract.source_policy == "declared_intersection":
                     ref = env["L"][1]
@@ -2157,6 +2202,9 @@ class _EffectResolver:
                 except TuChoi as e:
                     if e.code=='UNSUPPORTED_CAPABILITY':
                         continue  # exclude incompatible symbolic candidates; never skip a geometric/source failure
+                    if e.code == 'PLAN_TOO_LARGE' and (e.data or {}).get('bound') == 'depth':
+                        cut = e   # C18: this alternative is too deep; a shallower one may still serve the need
+                        continue
                     raise
                 cost = sum(c.cost for c in children)
                 if contract.fresh:              # the source (or an earlier goal) may already hold this exact construction
@@ -2187,27 +2235,78 @@ class _EffectResolver:
                     cost += 1
                 choices.append(_Choice(spec.name, env, children, existing, cost, contract))
             if not choices:
+                if cut is not None:
+                    raise cut
                 raise TuChoi("UNSUPPORTED_CAPABILITY", f"không effect nào giải được {kind}")
             selected = min(choices, key=lambda c: (c.cost, c.fn, _nhan_ra(c), c.existing['id'] if c.existing else ''))
             if not kind.startswith('Answer'):
-                self.memo[key]=selected
+                self.memo[key] = (selected, len(self.plan.calls))
             return selected
         finally:
             self.active.remove(key)
 
-    def _emit(self, choice, fact):
+    def _dinh_nghia(self, defn, desc, depth):
+        """C18 — a point the source names by a PROPERTY (`registry.POINT_DEFINITIONS`), by goal regression: each locus of
+        its definition becomes a typed need `PerpLine` in the triangle's plane W, solved like any need (producers from
+        function contracts, free slots bound to points of W, structural preconditions); the two cheapest loci (ties: the
+        definition's order) are met by the ONE contract that makes a Point of two Lines. No function is named here: the
+        Registry decides what exists. The engine checks the whole definition, the unused locus included."""
+        env = dict(zip((t.operands[0] for t in defn.contract.inputs), desc[2]))
+        w = tuple(desc[2])
+        found, loci, cut = [], [], None
+        for i, lc in enumerate(defn.loci):
+            qua = (env[lc.through] if isinstance(lc.through, str)
+                   else ("desc", lc.through[0], tuple(sorted(env[x] for x in lc.through[1:]))))
+            side = ("named", tuple(sorted(env[x] for x in lc.perp)))
+            mark = len(self.rejected)
+            rec = {"locus": i, "need": f"PerpLine({_ten(qua)} ⊥ {''.join(side[1])} in ({''.join(w)}))"}
+            try:
+                ch = self._resolve("PerpLine", (None, qua, side, w), depth + 1)
+                found.append((ch.cost, i, ch))
+                rec["cost"] = ch.cost
+            except TuChoi as e:
+                if e.code == "PLAN_TOO_LARGE" and (e.data or {}).get("bound") == "depth":
+                    cut = e
+                elif e.code != "UNSUPPORTED_CAPABILITY":
+                    raise
+                rec["unresolved"] = e.code
+            rec["rejected"] = self.rejected[mark:]
+            loci.append(rec)
+        meets = [(s.name, c) for s in sorted(REGISTRY.values(), key=lambda s: s.name) for c in planning_contracts(s)
+                 if c.effect.kind == "Point" and [t.kind for t in c.inputs] == ["Line", "Line"]]
+        if len(found) < 2 or len(meets) != 1:
+            if cut is not None:
+                raise cut
+            raise TuChoi("UNSUPPORTED_CAPABILITY", f"thư viện không dựng được hai quỹ tích của {desc[1]}",
+                         data={"outcome": "MISSING_PRIMITIVE"})
+        (c1, i1, l1), (c2, i2, l2) = sorted(found, key=lambda t: t[:2])[:2]
+        for r in loci:
+            r["selected"] = r["locus"] in (i1, i2)
+        self.candidates += 1
+        if self.candidates > MAX_EFFECT_CANDIDATES:
+            raise self._exhausted("quá trần candidate")
+        fn, contract = meets[0]
+        return _Choice(fn, {}, [l1, l2], None, c1 + c2 + 1, contract,
+                       definition={"descriptor": desc[1], "env": env, "loci": loci})
+
+    def _emit(self, choice, fact, under=False):
         if choice.fn is None:
             return choice.env
+        under = under or choice.definition is not None     # C18: inside a definition's regression nothing is source-said
         contract = choice.contract
         env = dict(choice.env)
         for t, child in zip(contract.inputs, choice.inputs):  # an input slot takes its producer's effect, by position
-            got = self._emit(child, fact)
+            got = self._emit(child, fact, under)
             if child.fn is not None:
-                env.update({s: got[c] for s, c in zip(t.operands, child.contract.effect.operands)})
+                if t.kind == "Line" and child.contract.line:  # C18: a locus line is the two points its producer spans
+                    env[t.operands[0]] = ("named", tuple(sorted(got[x] for x in child.contract.line)))
+                else:
+                    env.update({s: got[c] for s, c in zip(t.operands, child.contract.effect.operands)})
         if choice.existing:
             if not contract.effect.kind.startswith('Answer'):
                 self.reused += 1
             self._ghi(choice.existing, env, contract)
+            self._dinh_nghia_ghi(choice, env, choice.existing)
             return env
         if not contract.call:
             raise TuChoi('UNSUPPORTED_CAPABILITY', 'producer chưa được khai trong nguồn')
@@ -2229,14 +2328,23 @@ class _EffectResolver:
         call = self.emit(cid, choice.fn, render_call(contract, env), fact.quotes, f'effect({contract.effect.kind})→{choice.fn}')
         self.plan.trace[-1]['fact'] = fact.id
         if not answer:                     # provenance at emission (C16): what put this step in the plan
-            self.plan.step_provenance[cid] = ('source_defined' if contract.descriptor
+            self.plan.step_provenance[cid] = ('search_generated' if under
+                                              else 'source_defined' if contract.descriptor
                                               else 'registered' if contract.source_policy in _RULE_POLICIES
                                               else 'search_generated')
         self._ghi(call, env, contract)
+        self._dinh_nghia_ghi(choice, env, call)
         if not answer:
             choice.env.update(env)
             choice.existing, choice.cost = call, 0
         return env
+
+    def _dinh_nghia_ghi(self, choice, env, call):
+        """C18: the certificate binding of a defined point — the definition's slots, the point, and the meet that built it."""
+        if choice.definition is not None:
+            x = env[choice.contract.effect.operands[0]]
+            self.definitions[x] = {"descriptor": choice.definition["descriptor"], "call": call["id"],
+                                   "env": {**choice.definition["env"], "X": x}, "loci": choice.definition["loci"]}
 
     def _ghi(self, call, env, contract):
         """Trail of the goal being resolved: the calls of its derivation, each with the slot bindings it was written from."""
@@ -2326,6 +2434,9 @@ class _EffectResolver:
                 'quotes': list(dict.fromkeys(fact.quotes)), 'provenance': 'DERIVED', 'binding': 'AUXILIARY'}
         if isinstance(target, tuple) and target[0] == 'result':
             cert['line_ref'] = target[1]
+        if (dn := self.definitions.get(cert['operand']['label'])) and dn['descriptor'] == point[1]:
+            cert['definition'] = {k: dn[k] for k in ('descriptor', 'call', 'env')}
+            cert['search'] = {'loci': dn['loci'], 'needs': self.needs, 'candidates': self.candidates, 'depth': self.depth_max}
         self.plan.auxiliary.append(cert)
         self.plan.trace.append({'fact': fact.id, 'step': 'decompose_goal', 'rule': cert['rule'],
                                 'calls': [e['call'] for e in self.trail], 'auxiliary': cert['labels'],
@@ -2334,6 +2445,15 @@ class _EffectResolver:
                                 'new_constructions': len([e for e in self.trail if e['fresh'] and e['call'] != fact.id]),
                                 'needs': self.needs, 'candidates': self.candidates, 'depth': self.depth_max})
         return next(c for c in self.plan.calls if c['id'] == fact.id)
+
+
+def _ten(v) -> str:
+    """A need operand as trace text: a label, a named line, a plane, or a description."""
+    if isinstance(v, tuple) and v[:1] == ("desc",):
+        return f"{v[1]}({','.join(_ten(x) for x in v[2])})"
+    if isinstance(v, tuple) and v[:1] == ("named",):
+        return "".join(v[1])
+    return "".join(v) if isinstance(v, tuple) else str(v)
 
 
 def _dich_muc_tieu(contract, operands) -> dict:

@@ -66,7 +66,7 @@ from pydantic import BaseModel, BeforeValidator, ConfigDict, Field, ValidationEr
 #: facts with optional named contact points, and multi-curved question disambiguation (`(S1)`/`(S2)`, `ngoại tiếp` vs `nội tiếp`).
 #: /29 (thirteenth continuation, SL-3): student shorthand "k/c" (khoảng cách) as a whole token wherever the ask grammar
 #: reads that word, and "đt" (đường thẳng) before a line's two labels; no function, contract or provider surface changed.
-REGISTRY_VERSION = "geometry-functions/30"
+REGISTRY_VERSION = "geometry-functions/31"
 
 
 class TuChoi(Exception):
@@ -441,7 +441,7 @@ class TranslatePointArgs(_Args):
 class PlanningTerm:
     """Internal typed role slots; not an expression language or provider program."""
     kind: Literal["Point", "Plane", "Line", "Foot", "AnswerDistance", "AnswerLength", "AnswerArea", "AnswerAngleLinePlane",
-                  "AnswerAngleLines", "Meet", "Normal"]
+                  "AnswerAngleLines", "Meet", "Normal", "PerpLine", "PerpDir"]
     operands: tuple[str, ...]
 
 
@@ -454,13 +454,20 @@ class PlanningContract:
     inputs: tuple[PlanningTerm, ...]
     effect: PlanningTerm
     source_policy: Literal["declared_intersection", "projection_foot", "distance_witness", "derived_point", "distance_answer",
-                           "goal_answer", "section_vertex", "normal_witness"]
+                           "goal_answer", "section_vertex", "normal_witness", "locus_witness", "point_definition"]
     verifier: str
     call: tuple[tuple[str, str | tuple[str, ...]], ...] = ()
     fresh: str | None = None
     descriptor: str | None = None
     phrase: str | tuple[str, ...] | None = None   # a goal contract may list several closed wordings (`_cac_cau`)
     goal: str | None = None  # semantic quantity accepted at goal entry; internal, never a provider field
+    #: C18: input slots the planner binds itself (no need operand fills them) — a point of the need's plane `W`.
+    free: tuple[str, ...] = ()
+    #: C18: preconditions the planner can decide from STRUCTURE (no coordinates): ("off_line", P, L) = point P not on line
+    #: L. A precondition it cannot decide is left to the engine, which checks every construction exactly.
+    requires: tuple[tuple[str, str, str], ...] = ()
+    #: C18: the two slots spanning the LINE this effect stands for (a locus line through P and its witness X).
+    line: tuple[str, str] | None = None
 
 
 def render_call(contract: PlanningContract, env: dict[str, Any]) -> dict[str, Any]:
@@ -655,7 +662,17 @@ REGISTRY: dict[str, FunctionSpec] = {s.name: s for s in (
            call=(("point", "P"), ("line", "L"), ("image", "H")), fresh="H", descriptor="orthogonal_projection_line",
            phrase=(r"hình chiếu(?:\s+vuông góc)?\s+của\s+(?:(?:điểm|đỉnh)\s+)?(?P<op_p>{P})(?![\w'])\s+"
                    r"(?:lên|trên)\s+(?:(?:đường thẳng|đt|đoạn thẳng|đoạn|cạnh(?:\s+bên|\s+đáy)?)\s+)?"
-                   r"(?<![\w'.(])(?P<op_l>(?:{P}){2})(?![\w'])")),)),
+                   r"(?<![\w'.(])(?P<op_l>(?:{P}){2})(?![\w'])")),
+           # C18 locus contracts (a local fact each, no goal named): in a plane W holding P and L, the line through P ⊥ L
+           # is P and its foot on L (only when P is off L); and Z − foot(Z, L) is a direction ⊥ L for any point Z of W off L.
+           PlanningContract((PlanningTerm("Point", ("P",)), PlanningTerm("Line", ("L",))),
+                            PlanningTerm("PerpLine", ("X", "P", "L", "W")), "locus_witness", "_construction_relation",
+                            call=(("point", "P"), ("line", "L"), ("image", "X")), fresh="H",
+                            requires=(("off_line", "P", "L"),), line=("P", "X")),
+           PlanningContract((PlanningTerm("Point", ("Z",)), PlanningTerm("Line", ("L",))),
+                            PlanningTerm("PerpDir", ("U", "Z", "L", "W")), "locus_witness", "_construction_relation",
+                            call=(("point", "Z"), ("line", "L"), ("image", "U")), fresh="H", free=("Z",),
+                            requires=(("off_line", "Z", "L"),)))),
     _F("intersect_line_line", IntersectionLinesArgs, "construct", "Dựng giao điểm DUY NHẤT của hai đường thẳng; không phải đoạn hữu hạn.",
        (("giao điểm",),), segment_fields=("line1", "line2"), point_fields=("point",),
        planning=PlanningContract(
@@ -808,12 +825,59 @@ REGISTRY: dict[str, FunctionSpec] = {s.name: s for s in (
     # Goal-directed slice (run `goal-directed-section-planning`): the plane through M parallel to (Q) is the plane through M
     # and two translates of M along directions of (Q) — the IR's own expression (`PlanePerpendicularToLineExpr` note).
     _F("translate_point", TranslatePointArgs, "construct", "Điểm phụ: ảnh của một điểm qua phép tịnh tiến theo vectơ hai "
-       "điểm đã có.", auxiliary_only=True),
+       "điểm đã có.", auxiliary_only=True,
+       # C18 locus contract: P translated along a direction ⊥ L (of W) spans, with P, the line of W through P ⊥ L.
+       planning_extra=(PlanningContract((PlanningTerm("Point", ("P",)), PlanningTerm("PerpDir", ("U", "Z", "L", "W"))),
+                                        PlanningTerm("PerpLine", ("X", "P", "L", "W")), "locus_witness",
+                                        "_construction_relation", call=(("point", "P"), ("vector", ("U", "Z")), ("image", "X")),
+                                        fresh="H", line=("P", "X")),)),
 )}
 #: The functions offered to the provider of route A — the library minus planner-only auxiliaries.
 PROVIDER_FUNCTIONS = tuple(n for n, s in REGISTRY.items() if not s.auxiliary_only and s.provider_offered)
 #: Construct functions whose output point is `args.point` — the ONE list the planner's dependency views read.
 POINT_PRODUCERS = ("midpoint", "centroid", "divide_segment", "intersect_line_line", "intersect_line_plane")
+
+
+@dataclass(frozen=True)
+class Locus:
+    """One locus of a point's definition, as a typed need `PerpLine`: the line of the triangle's plane through `through`
+    perpendicular to `perp`. `through` is a definition slot, or ("midpoint", slot, slot) — the point the locus names."""
+    through: str | tuple[str, str, str]
+    perp: tuple[str, str]
+
+
+@dataclass(frozen=True)
+class PointDefinition:
+    """C18: a point the source names by a PROPERTY, as the textbook defines it — the common point of loci ("trực tâm là
+    giao điểm của ba đường cao"). No Registry function builds it: `contract` says only what the source names (descriptor,
+    phrase, operands A, B, C → Point X, no call); the planner must compose its construction from function contracts, and
+    the engine checks the definition itself on the built figure (`engine._MO_TA`), every locus included."""
+    contract: PlanningContract
+    loci: tuple[Locus, ...]
+
+
+def _dinh_nghia(descriptor: str, phrase: str, loci: tuple[Locus, ...]) -> PointDefinition:
+    return PointDefinition(PlanningContract(
+        (PlanningTerm("Point", ("A",)), PlanningTerm("Point", ("B",)), PlanningTerm("Point", ("C",))),
+        PlanningTerm("Point", ("X",)), "point_definition", descriptor, fresh="I", descriptor=descriptor, phrase=phrase), loci)
+
+
+POINT_DEFINITIONS: dict[str, PointDefinition] = {
+    # the three altitudes: through a vertex, ⊥ the opposite side
+    "orthocenter": _dinh_nghia("orthocenter", r"trực tâm\s+(?:của\s+)?(?:(?:tam giác|Δ)\s*)?(?P<ops>{P}{P}{P})(?![\w'])",
+                               (Locus("A", ("B", "C")), Locus("B", ("C", "A")), Locus("C", ("A", "B")))),
+    # the three perpendicular bisectors: through a side's midpoint, ⊥ that side
+    "circumcenter": _dinh_nghia("circumcenter", r"tâm\s+(?:của\s+)?đường tròn ngoại tiếp\s+(?:(?:tam giác|Δ)\s*)?"
+                                r"(?P<ops>{P}{P}{P})(?![\w'])",
+                                (Locus(("midpoint", "A", "B"), ("A", "B")), Locus(("midpoint", "B", "C"), ("B", "C")),
+                                 Locus(("midpoint", "C", "A"), ("C", "A")))),
+}
+
+
+def descriptor_contracts(kind: str | None) -> list[PlanningContract]:
+    """Every contract that realizes the description `kind`: a function's descriptor contract, or a definition's (C18)."""
+    out = [c for s in REGISTRY.values() for c in planning_contracts(s) if c.descriptor == kind]
+    return out + ([POINT_DEFINITIONS[kind].contract] if kind in POINT_DEFINITIONS else [])
 
 #: Dấu phủ định — xét trong quote VÀ phần mệnh đề đứng ngay trước nó.
 PHU_DINH = ("không phải", "không là", "không vuông góc", "không ⊥", "không đều", "không song song", "không đi qua", "không qua", "chưa chắc")
@@ -1864,6 +1928,37 @@ def _kiem_chung_chi_mo_ta(dc: PlanningContract, denv: dict[str, Any], op: dict[s
         raise TuChoi("UNKNOWN_LABEL", "toán hạng của điểm được mô tả không có trong nguồn", err_ids)
 
 
+def _dinh_nghia_trong_chuoi(d: dict[str, Any], got: list, p: Any, err_ids: tuple[str, ...]) -> tuple[PlanningContract, dict]:
+    """C18: the measured point is a DEFINED point (`POINT_DEFINITIONS`): it must be the output of the chain's meet of two
+    lines, each line the locus of THIS definition — through the locus point (a slot, or the chain's midpoint of the two
+    slots it names) and a point a `PerpLine` contract of the chain built ⊥ the locus side. Re-derived from the bound slots,
+    never trusted; the engine then checks the definition itself on the figure."""
+    defn = POINT_DEFINITIONS[(d.get('operand') or {}).get('descriptor')]
+    dd = d.get('definition') or {}
+    denv = dd.get('env') or {}
+    slots = [t.operands[0] for t in defn.contract.inputs]
+    meet = next((g for g in got if g[2].id == dd.get('call')), None)
+    if (dd.get('descriptor') != defn.contract.descriptor or set(denv) != {*slots, 'X'} or denv.get('X') != p
+            or meet is None or meet[0].effect.kind != 'Point' or [t.kind for t in meet[0].inputs] != ['Line', 'Line']
+            or meet[1].get(meet[0].effect.operands[0]) != p):
+        raise TuChoi('AUXILIARY_RULE_MISMATCH', 'điểm được định nghĩa không là giao điểm của chuỗi', err_ids)
+    mids = {tuple(sorted(e[t.operands[0]] for t in c.inputs)): e[c.effect.operands[0]] for c, e, _c, _f in got
+            if c.descriptor == 'midpoint'}
+    perp = {(e.get('P'), tuple(sorted(e['L'][1]))): e.get('X') for c, e, _c, _f in got
+            if c.effect.kind == 'PerpLine' and isinstance(e.get('L'), (list, tuple)) and len(e['L']) == 2}
+
+    def locus_line(lc: Locus) -> frozenset | None:
+        qua = (denv[lc.through] if isinstance(lc.through, str)
+               else mids.get(tuple(sorted(denv[s] for s in lc.through[1:]))))
+        x = perp.get((qua, tuple(sorted(denv[s] for s in lc.perp))))
+        return frozenset((qua, x)) if qua and x else None
+    loci = {locus_line(lc) for lc in defn.loci} - {None}
+    lines = [frozenset(meet[1].get(t.operands[0])[1]) for t in meet[0].inputs]
+    if len(set(lines)) != 2 or not set(lines) <= loci:
+        raise TuChoi('AUXILIARY_RULE_MISMATCH', 'giao điểm không phải của hai quỹ tích của định nghĩa', err_ids)
+    return defn.contract, denv
+
+
 def _kiem_result_binding(phu, calls, de, nhan, don_vi_de: set[str] = frozenset(), buoc=None, plane_pts=None):
     """Validate proposed effects against real calls and closed source spans. No client promise is truth. `buoc` collects
     the exact source spans of the descriptor ask phrases an `effect-chain` certificate bound (read by the coverage gate)."""
@@ -1993,6 +2088,8 @@ def _kiem_result_binding(phu, calls, de, nhan, don_vi_de: set[str] = frozenset()
         if d.get('labels') != labels or len(set(labels)) != len(labels):
             raise TuChoi('AUXILIARY_RULE_MISMATCH', 'nhãn phụ không đúng các đầu ra tươi của chuỗi', (ask.id,))
         produced = {(g[0].effect.kind, values(g[0].effect, g[1])) for g in got}
+        # C18: a point an earlier call of this chain built (a foot, a translate) may span a line of a later call
+        built = {env.get(contract.effect.operands[0]) for contract, env, _c, fresh in got if fresh and contract.fresh}
         for contract, env, c, fresh in got:
             for t in contract.inputs:                    # every input: a source leaf, or produced inside this chain
                 v = values(t, env)
@@ -2003,7 +2100,7 @@ def _kiem_result_binding(phu, calls, de, nhan, don_vi_de: set[str] = frozenset()
                     if not v[0] or set(v[0]) - nhan:
                         raise TuChoi('UNKNOWN_LABEL', 'mặt phẳng có nhãn ngoài nguồn', (c.id,))
                 elif t.kind == 'Line' and v[0] and v[0][0] == 'named':
-                    if set(v[0][1]) - nhan:
+                    if set(v[0][1]) - nhan - built:
                         raise TuChoi('UNKNOWN_LABEL', 'đường thẳng có nhãn ngoài nguồn', (c.id,))
                 elif t.kind == 'Line' and v[0] and v[0][0] == 'result':
                     producer(v[0][1])
@@ -2028,11 +2125,16 @@ def _kiem_result_binding(phu, calls, de, nhan, don_vi_de: set[str] = frozenset()
         eff_vals = values(ans[0].effect, ans[1])
         p, rest = eff_vals[0], eff_vals[1:]
         op, target = d.get('operand') or {}, d.get('target') or {}
-        desc = [g for g in got if g[0].descriptor and g[0].descriptor == op.get('descriptor')
-                and values(g[0].effect, g[1]) == (p,)]
-        if not desc or op.get('label') != p:
+        if op.get('descriptor') in POINT_DEFINITIONS:
+            dc, denv = _dinh_nghia_trong_chuoi(d, got, p, (ask.id,))
+        else:
+            desc = [g for g in got if g[0].descriptor and g[0].descriptor == op.get('descriptor')
+                    and values(g[0].effect, g[1]) == (p,)]
+            if not desc:
+                raise TuChoi('AUXILIARY_RULE_MISMATCH', 'mục tiêu không đo từ điểm được mô tả', (ask.id,))
+            dc, denv = desc[0][0], desc[0][1]
+        if op.get('label') != p:
             raise TuChoi('AUXILIARY_RULE_MISMATCH', 'mục tiêu không đo từ điểm được mô tả', (ask.id,))
-        dc, denv = desc[0][0], desc[0][1]
         _kiem_chung_chi_mo_ta(dc, denv, op, nhan, (ask.id,))
         goal_kind = ans[0].goal
         slots = goal_slots(ans[0])[1:]

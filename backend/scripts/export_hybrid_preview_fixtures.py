@@ -356,6 +356,10 @@ IDENTITY_DELTAS = (
      "versions": {"registry_version": ("geometry-functions/29", "geometry-functions/30"),
                   "planner_version": ("geometry-fact-planner/24", "geometry-fact-planner/25"),
                   "engine_version": ("geometry-function-engine/20", "geometry-function-engine/21")}},
+    {"run": "hybrid-master-backend-replacement",           # C18 points named by a property, composed by definition regression
+     "versions": {"registry_version": ("geometry-functions/30", "geometry-functions/31"),
+                  "planner_version": ("geometry-fact-planner/25", "geometry-fact-planner/26"),
+                  "engine_version": ("geometry-function-engine/21", "geometry-function-engine/22")}},
 )
 
 
