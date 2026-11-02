@@ -205,10 +205,10 @@ class ProviderHTTPError(RuntimeError):
         self.status_code, self.body = status_code, body
 
 
-def live_transport(api_key: str, model: str | None = None, timeout_seconds: float = 60.0) -> Callable[[dict], dict]:
+def live_transport(api_key: str, model: str | None = None, timeout_seconds: float = 60.0) -> Callable[..., dict]:
     """Transport THẬT (không dùng trong lượt này). Kiểm `ALLOW_LIVE_AI` ở MỖI lần gửi; khoá trong header; ghi `ApiBudget`
     và `usageMetadata` như `gemini.call_gemini` để trần ngân sách của bộ đo áp được."""
-    def gui(payload: dict) -> dict:
+    def gui(payload: dict, *, is_retry: bool = False, timeout_override: float | None = None) -> dict:
         if os.environ.get("ALLOW_LIVE_AI") != "1":
             raise LiveAIDisabled("ALLOW_LIVE_AI != 1 — không gửi request thật")
         import httpx
@@ -217,10 +217,13 @@ def live_transport(api_key: str, model: str | None = None, timeout_seconds: floa
         from app.ai.telemetry import record_usage
 
         if gemini.BUDGET:
-            gemini.BUDGET.note_call()
-            gemini.BUDGET.note_request(is_retry=False)
-        url = f"https://generativelanguage.googleapis.com/v1beta/models/{model or gemini.MODEL}:generateContent"
-        res = httpx.post(url, json=payload, headers={"x-goog-api-key": api_key}, timeout=timeout_seconds)
+            if not is_retry:
+                gemini.BUDGET.note_call()
+            gemini.BUDGET.note_request(is_retry=is_retry)
+        resolved_model = (model or "").strip() or gemini.MODEL
+        eff_timeout = timeout_seconds if timeout_override is None else timeout_override
+        url = f"https://generativelanguage.googleapis.com/v1beta/models/{resolved_model}:generateContent"
+        res = httpx.post(url, json=payload, headers={"x-goog-api-key": api_key}, timeout=eff_timeout)
         if res.status_code != 200:
             try:
                 error_body = res.json()

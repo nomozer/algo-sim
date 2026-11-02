@@ -185,12 +185,15 @@ export function buildFailureMessage(result: {
   status: string;
   failure_category?: string;
   learner_reason?: string;
+  clarification?: { question?: string | null } | null;
 }): string {
   const dau =
     buildOutcome(result) === "INSUFFICIENT_GEOMETRIC_CONSTRAINTS"
       ? "Đề chưa đủ dữ kiện để dựng hình chính xác."
       : "Hệ thống chưa dựng được đề này.";
-  return result.learner_reason ? `${dau} ${result.learner_reason}` : dau;
+  const base = result.learner_reason ? `${dau} ${result.learner_reason}` : dau;
+  const q = result.clarification?.question?.trim();
+  return q && !base.includes(q) ? `${base} ${q}` : base;
 }
 
 export function clientFileProblem(file: PhotoFileInfo): string | null {

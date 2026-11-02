@@ -256,15 +256,32 @@ export const useAppStore = create<AppState>((set, get) => {
     visualMode: "2d",
 
     setProblemText: (text) => set({ problemText: text }),
-    setAnalyzing: (v) => set({ analyzing: v }),
-    setAnalysisError: (msg) => set({ analysisError: msg }),
+    setAnalyzing: (v) => set(v ? { analyzing: true, unsupported: null } : { analyzing: false }),
+    setAnalysisError: (msg) =>
+      set(
+        msg === null
+          ? { analysisError: null }
+          : /lượt mô phỏng thử/.test(msg)
+            ? { analysisError: msg, unsupported: null }
+            : {
+                analysisError: msg,
+                unsupported: null,
+                active: null,
+                activeAssignment: null,
+                semanticFocus: null,
+                activeHistoryId: null,
+                activeSampleId: null,
+                playing: false,
+                view: "home",
+              },
+      ),
 
 
     loadEnvelope: (env, sampleId, originalInput) => {
       const mod = getSimulation(env.simulation_id);
       if (!mod) {
         set({
-          active: null, activeHistoryId: null, unsupported: null, playing: false, view: "home",
+          active: null, activeAssignment: null, semanticFocus: null, activeHistoryId: null, unsupported: null, playing: false, view: "home",
           analysisError: `Hệ thống chưa có mô phỏng "${env.simulation_id}".`,
           activeSampleId: null,
         });
@@ -278,7 +295,7 @@ export const useAppStore = create<AppState>((set, get) => {
       }
       if (!result.ok) {
         set({
-          active: null, activeHistoryId: null, unsupported: null, playing: false, view: "home",
+          active: null, activeAssignment: null, semanticFocus: null, activeHistoryId: null, unsupported: null, playing: false, view: "home",
           analysisError: `Cấu hình mô phỏng không hợp lệ: ${result.error}`,
           activeSampleId: null,
         });
@@ -294,7 +311,7 @@ export const useAppStore = create<AppState>((set, get) => {
         initialState = mod.init(result.config);
       } catch {
         set({
-          active: null, activeHistoryId: null, unsupported: null, playing: false, view: "home",
+          active: null, activeAssignment: null, semanticFocus: null, activeHistoryId: null, unsupported: null, playing: false, view: "home",
           analysisError:
             "Mô phỏng này không còn mở được: cấu hình không vượt qua kiểm tra an toàn hiện hành. " +
             "Hãy phân tích lại đề để tạo mô phỏng mới.",
@@ -396,10 +413,14 @@ export const useAppStore = create<AppState>((set, get) => {
     loadUnsupported: (u) =>
       set({
         active: null,
+        activeAssignment: null,
+        semanticFocus: null,
+        activeHistoryId: null,
         unsupported: u,
         analysisError: null,
         activeSampleId: null,
         playing: false,
+        view: "home",
       }),
 
     dispatch: (action) => {

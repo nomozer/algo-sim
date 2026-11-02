@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import math
 import os
 import hmac
 import ipaddress
@@ -865,6 +866,17 @@ def semantic_route_mode() -> str:
     return v if v in SEMANTIC_ROUTE_MODES else "off"
 
 
+#: Chế độ đường thực thi Hybrid `/4` do máy chủ sở hữu (`off` mặc định giữ nguyên `LLM_ONLY`).
+#: - `staging-replay`: chạy đường `/4` với kho trích xuất đã ghi (`HYBRID_REPLAY_CORPUS`), đánh dấu mô phỏng tường minh.
+#: - `live`: trích xuất có cấu trúc qua Gemini (`typed-fact-next/2`) khi bật cả `ALLOW_LIVE_AI=1` và `GEMINI_API_KEY`.
+HYBRID_ROUTE_MODES = ("off", "staging-replay", "live")
+
+
+def hybrid_route_mode() -> str:
+    v = os.getenv("HYBRID_ROUTE_MODE", "off")
+    return v if v in HYBRID_ROUTE_MODES else "off"
+
+
 class InputPayload(BaseModel):
     """Đầu vào chuẩn hóa — M4 thêm document/code/image, contract không đổi."""
 
@@ -1157,6 +1169,120 @@ async def _analyze_hybrid_v2_local(text: str, corpus_path: str, algosim_session:
     return JSONResponse(content=response, headers={"Cache-Control": "no-store", "X-Algosim-Cache": state})
 
 
+_HYBRID_PROVIDER_502_CODES = frozenset({
+    "PROVIDER_ERROR", "PROVIDER_BLOCKED", "PROVIDER_REFUSED", "NO_CANDIDATE",
+    "PROVIDER_RESPONSE_INVALID", "MALFORMED_RESPONSE_PART", "JSON_INVALID",
+    "RESPONSE_TRUNCATED", "MAX_TOKENS", "SCHEMA_VERSION_MISMATCH",
+    "REPLAY_SOURCE_IDENTITY_MISMATCH",
+})
+
+
+def _hybrid_infra_error(code: str) -> JSONResponse:
+    """ Ánh xạ sự cố hạ tầng / cấu hình / nhà cung cấp trên tuyến Hybrid sang lỗi HTTP có thể khôi phục.
+    Tuyệt đối không gán nhãn thành từ chối toán học và không rò rỉ khóa API hay stack trace."""
+    headers = {"Cache-Control": "no-store"}
+    if code == "HYBRID_DEADLINE_EXCEEDED":
+        status, msg = 504, "Quá trình trích xuất và dựng hình vượt quá thời gian cho phép. Em hãy thử gửi lại đề bài."
+    elif code == "LIVE_AI_DISABLED":
+        status, msg = 503, "Chế độ trích xuất trực tiếp (live AI) đang tắt trên máy chủ. Quản trị viên cần bật tường minh trước khi gửi đề."
+    elif code == "MISSING_API_KEY":
+        status, msg = 503, MISSING_KEY_MSG
+    elif code == "STAGING_CORPUS_UNAVAILABLE":
+        status, msg = 503, "Kho dữ liệu phát lại Hybrid (staging) chưa sẵn sàng trên máy chủ. Vui lòng kiểm tra cấu hình hoặc thử lại sau."
+    elif code in _HYBRID_PROVIDER_502_CODES:
+        status, msg = 502, "Dịch vụ trích xuất đề bài đang gặp sự cố kết nối hoặc phản hồi chưa hợp lệ. Em hãy thử gửi lại sau ít phút."
+    else:
+        status, msg = 503, "Hệ thống gặp sự cố kỹ thuật tạm thời khi xử lý đề bài. Em hãy thử gửi lại sau."
+    return JSONResponse(
+        status_code=status,
+        headers=headers,
+        content={"error": msg, "reason_code": code, "failure_kind": "INFRASTRUCTURE_FAILURE"},
+    )
+
+
+async def _analyze_hybrid_route(text: str, mode: str, api_key: str | None, algosim_session: str | None) -> Any:
+    """Đường thực thi sản phẩm/staging của Hybrid `/4` (`HYBRID_ROUTE_MODE` = `staging-replay` | `live`).
+    Không bao giờ tự động lùi về `LLM_ONLY`."""
+    if mode == "live":
+        if os.getenv("ALLOW_LIVE_AI") != "1":
+            return _hybrid_infra_error("LIVE_AI_DISABLED")
+        if not api_key:
+            return _hybrid_infra_error("MISSING_API_KEY")
+
+    from starlette.concurrency import run_in_threadpool
+
+    from app.ai.hybrid_offline import (
+        HYBRID_INFRASTRUCTURE_CODES,
+        prepare_live_hybrid,
+        prepare_staging_replay,
+        resolve_hybrid_gemini_model,
+    )
+
+    if mode == "staging-replay":
+        corpus_path = os.getenv("HYBRID_REPLAY_CORPUS") or os.getenv("HYBRID_V2_LOCAL_REPLAY_CORPUS", "")
+        plan = await run_in_threadpool(prepare_staging_replay, text, corpus_path)
+        if plan is None:
+            return _hybrid_infra_error("STAGING_CORPUS_UNAVAILABLE")
+    else:
+        model_name = resolve_hybrid_gemini_model()
+        plan = await run_in_threadpool(prepare_live_hybrid, text, model=model_name)
+
+    ngoai = _ngoai_pham_vi(text)
+    if ngoai is not None:
+        return JSONResponse(content=attach_learner_reason(ngoai), headers={"Cache-Control": "no-store"})
+
+    response, state = None, "none"
+    if plan.cache_key is not None:
+        with SessionLocal() as session:
+            row = _cache_lookup(session, plan.cache_key, ROUTE_D_CACHE_POLICY)
+            response = _served_route_d(row)
+            if response is not None:
+                row.hit_count += 1
+                row.last_used_at = datetime.now(timezone.utc)
+                session.commit()
+                state = "hit"
+
+    if response is None:
+        if mode == "staging-replay":
+            result = await run_in_threadpool(plan.run)
+        else:
+            def _finite_pos_env(env_key: str, default: float) -> float:
+                raw = os.getenv(env_key)
+                if raw is None:
+                    return default
+                try:
+                    val = float(raw)
+                except ValueError:
+                    return default
+                return val if math.isfinite(val) and val > 0 else default
+
+            per_attempt = _finite_pos_env("HYBRID_LIVE_TIMEOUT_SECONDS", 60.0)
+            deadline = _finite_pos_env("HYBRID_LIVE_DEADLINE_SECONDS", per_attempt * 3.0)
+            result = await run_in_threadpool(
+                lambda: plan.run(api_key or "", per_attempt_timeout_s=per_attempt, deadline_seconds=deadline)
+            )
+        code = str(result.receipt.get("code") or "")
+        fkind = result.receipt.get("failure_kind")
+        if (fkind in ("TECHNICAL_FAILURE", "INTEGRITY", "DISABLED")
+                or code in HYBRID_INFRASTRUCTURE_CODES
+                or (mode == "live" and code in ("SCHEMA_VERSION_MISMATCH", "REPLAY_SOURCE_IDENTITY_MISMATCH"))):
+            return _hybrid_infra_error(code or "ROUTE_INTERNAL_ERROR")
+        response = result.response
+        if plan.cache_key is not None and response["route_d"]["status"] == "SERVED":
+            state = "miss"
+            with SessionLocal() as session:
+                try:
+                    _store_route_d(session, plan.cache_key, text, response)
+                except IntegrityError:
+                    session.rollback()
+
+    if response["route_d"]["status"] == "SERVED":
+        with SessionLocal() as session:
+            _consume_guest_trial(session, algosim_session)
+            session.commit()
+    return JSONResponse(content=response, headers={"Cache-Control": "no-store", "X-Algosim-Cache": state})
+
+
 @app.post("/api/analyze")
 async def analyze(body: AnalyzeBody, request: Request, algosim_session: str | None = Cookie(default=None)):
     """M18 — CỔNG LƯỢT DÙNG THỬ ĐỨNG TRƯỚC MỌI THỨ KHÁC.
@@ -1176,7 +1302,12 @@ async def analyze(body: AnalyzeBody, request: Request, algosim_session: str | No
 
     # Bước 1: chuẩn hóa MỌI loại input về text (M4) — sau bước này, text/docx/
     # code/image đi CHUNG một đường qua pipeline, không loại nào bypass.
-    kho_hybrid = _hybrid_v2_local(request)
+    che_do_hybrid = hybrid_route_mode()
+    if che_do_hybrid != "off" and body.input.type == "image":
+        return JSONResponse(status_code=400, headers={"Cache-Control": "no-store"}, content={
+            "error": "Chế độ Hybrid nhận đề văn bản (hoặc văn bản đã đọc từ ảnh qua bước xem lại). Hãy nhập nội dung đề để dựng hình.",
+            "reason_code": "IMAGE_DIRECT_UNSUPPORTED"})
+    kho_hybrid = _hybrid_v2_local(request) if che_do_hybrid == "off" else None
     if kho_hybrid is not None and body.input.type == "image":
         return JSONResponse(status_code=400, headers={"Cache-Control": "no-store"}, content={
             "error": "Chế độ phát lại cục bộ chỉ đọc đề văn bản. Hãy nhập nội dung đề để dựng hình."})
@@ -1202,6 +1333,8 @@ async def analyze(body: AnalyzeBody, request: Request, algosim_session: str | No
 
     # Stage 2 Hybrid V2 — chỉ khi bật tay ở máy cục bộ; TRƯỚC cache để một envelope `LLM_ONLY` đã cache không bao giờ
     # được trả dưới danh nghĩa Hybrid (đó chính là lùi về đường cũ trong im lặng).
+    if che_do_hybrid != "off":
+        return await _analyze_hybrid_route(text, che_do_hybrid, api_key, algosim_session)
     if kho_hybrid is not None:
         return await _analyze_hybrid_v2_local(text, kho_hybrid, algosim_session)
 

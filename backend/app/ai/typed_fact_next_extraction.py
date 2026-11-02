@@ -3,11 +3,13 @@ from __future__ import annotations
 
 from copy import deepcopy
 from dataclasses import dataclass
+import hashlib
+import json
 import re
 from typing import Any, Callable, Mapping, Protocol
 
 from app.ai.fact_extraction import _TuChoiAI, build_request, parse_response
-from app.ai.function_calling import _openapi
+from app.ai.function_calling import LiveAIDisabled, _openapi
 from app.simulation.geometry_functions.registry import _phu_dinh, _vai_tro_tai, _vi_tri, chuan_hoa
 from app.simulation.geometry_functions.typed_fact_next import (
     TYPED_FACT_NEXT_V2_SCHEMA_VERSION,
@@ -44,6 +46,35 @@ class ReplayExtractor:
         return deepcopy(self.outputs.get(source_text))
 
 
+TYPED_FACT_NEXT_SYSTEM_INSTRUCTION = (
+    "Chỉ trích dữ kiện theo lược đồ typed-fact-next/2; giữ nguyên problem_text và mọi quote. "
+    "Ghi đủ đối tượng, dữ kiện, mục tiêu dựng và câu hỏi của đề. Không tự thêm dữ kiện, "
+    "không tính toán, không chọn phép dựng, không sinh toạ độ hoặc mã. "
+    "Không biến phủ định, điều kiện hay điều phải chứng minh thành premise. "
+    "stated_intersections chỉ chứa giao điểm đề nêu; không tự suy ra giao điểm còn lại. "
+    "Điểm đề MÔ TẢ mà không đặt tên (trung điểm của SC, trọng tâm tam giác SAB, hình chiếu vuông góc của A lên SD, "
+    "giao điểm của AC và BD, …) ⇒ khai một mục described_points (kind, toán hạng, quote nguyên văn cụm mô tả) và "
+    "ghi '@' + described_id ở đúng chỗ của điểm đó trong mục tiêu hoặc through_point; không tự đặt tên cho điểm. "
+    "Thuật ngữ không rõ nghĩa, thiếu toán hạng, nhiều cách hiểu hay yêu cầu ngoài lược đồ ⇒ ghi vào unresolved "
+    "với quote nguyên văn; không đoán."
+)
+
+
+def build_typed_fact_next_v2_request(source_text: str) -> dict[str, Any]:
+    request = build_request(source_text)
+    schema = TypedFactNextPayloadV2.model_json_schema()
+    request["generationConfig"]["responseSchema"] = _openapi(
+        {k: v for k, v in schema.items() if k != "$defs"}, schema.get("$defs", {}))
+    request["systemInstruction"]["parts"][0]["text"] = TYPED_FACT_NEXT_SYSTEM_INSTRUCTION
+    return request
+
+
+def typed_fact_next_surface_fingerprint() -> str:
+    """SHA-256 fingerprint of the exact `typed-fact-next/2` system instruction, schema and generationConfig."""
+    framing = {k: v for k, v in build_typed_fact_next_v2_request("").items() if k != "contents"}
+    return hashlib.sha256(json.dumps(framing, ensure_ascii=False, sort_keys=True).encode("utf-8")).hexdigest()
+
+
 class TransportExtractor:
     """One source-only request using the existing provider framing and response parser."""
 
@@ -51,24 +82,16 @@ class TransportExtractor:
         self.transport = transport
 
     def extract(self, source_text: str) -> dict[str, Any]:
-        request = build_request(source_text)
-        schema = TypedFactNextPayloadV2.model_json_schema()
-        request["generationConfig"]["responseSchema"] = _openapi(
-            {k: v for k, v in schema.items() if k != "$defs"}, schema.get("$defs", {}))
-        request["systemInstruction"]["parts"][0]["text"] = (
-            "Chỉ trích dữ kiện theo lược đồ typed-fact-next/2; giữ nguyên problem_text và mọi quote. "
-            "Ghi đủ đối tượng, dữ kiện, mục tiêu dựng và câu hỏi của đề. Không tự thêm dữ kiện, "
-            "không tính toán, không chọn phép dựng, không sinh toạ độ hoặc mã. "
-            "Không biến phủ định, điều kiện hay điều phải chứng minh thành premise. "
-            "stated_intersections chỉ chứa giao điểm đề nêu; không tự suy ra giao điểm còn lại. "
-            "Điểm đề MÔ TẢ mà không đặt tên (trung điểm của SC, trọng tâm tam giác SAB, hình chiếu vuông góc của A lên SD, "
-            "giao điểm của AC và BD, …) ⇒ khai một mục described_points (kind, toán hạng, quote nguyên văn cụm mô tả) và "
-            "ghi '@' + described_id ở đúng chỗ của điểm đó trong mục tiêu hoặc through_point; không tự đặt tên cho điểm. "
-            "Thuật ngữ không rõ nghĩa, thiếu toán hạng, nhiều cách hiểu hay yêu cầu ngoài lược đồ ⇒ ghi vào unresolved "
-            "với quote nguyên văn; không đoán.")
+        request = build_typed_fact_next_v2_request(source_text)
         try:
             body = self.transport(request)
-        except Exception:
+        except LiveAIDisabled:
+            raise _TuChoiAI("LIVE_AI_DISABLED", "live AI disabled") from None
+        except TimeoutError:
+            raise _TuChoiAI("HYBRID_DEADLINE_EXCEEDED", "transport timed out") from None
+        except Exception as exc:
+            if any(cls.__name__.endswith("TimeoutException") for cls in type(exc).__mro__):
+                raise _TuChoiAI("HYBRID_DEADLINE_EXCEEDED", "transport timed out") from None
             raise _TuChoiAI("PROVIDER_ERROR", "transport failed") from None
         return parse_response(body, {})
 

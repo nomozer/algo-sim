@@ -1,0 +1,167 @@
+{
+  "schema": "hybrid-product-e2e-browser-receipt/1",
+  "classification": "REAL_BROWSER_AND_UVICORN_NETWORK_E2E_STAGING_REPLAY",
+  "live_provider_calls": 0,
+  "browser": "Playwright Chromium (headless)",
+  "frontend_bundle": {
+    "served_from": "frontend/dist",
+    "index_html_sha256": "1b7f6b557c39d1035c2e9112ea73a5ac9a91df55840db9ce31e98518ffc443bf"
+  },
+  "runtime_modes_verified": {
+    "staging_replay": {
+      "mode": "staging-replay",
+      "enabled": true,
+      "simulated": true,
+      "extraction_mode": "REPLAY_STAGING_SIMULATED",
+      "registry_version": "geometry-functions/31",
+      "planner_version": "geometry-fact-planner/26",
+      "engine_version": "geometry-function-engine/22",
+      "adapter_version": "hybrid-simulation-adapter/4",
+      "envelope_version": "hybrid-route-d-simulation/4",
+      "response_contract": "typed-fact-next/2",
+      "extraction_surface": "38652789a504f6ee2c95a38a0a68e7a3b65e71a5ccbaadd771bdd611a04ec0cd",
+      "gemini_model": "gemini-2.5-flash",
+      "allow_live_ai": false,
+      "replay_corpus_configured": true
+    },
+    "live_disabled_gate": {
+      "mode": "live",
+      "enabled": true,
+      "simulated": false,
+      "extraction_mode": "LIVE_GEMINI_STRUCTURED",
+      "registry_version": "geometry-functions/31",
+      "planner_version": "geometry-fact-planner/26",
+      "engine_version": "geometry-function-engine/22",
+      "adapter_version": "hybrid-simulation-adapter/4",
+      "envelope_version": "hybrid-route-d-simulation/4",
+      "response_contract": "typed-fact-next/2",
+      "extraction_surface": "38652789a504f6ee2c95a38a0a68e7a3b65e71a5ccbaadd771bdd611a04ec0cd",
+      "gemini_model": "gemini-2.5-flash",
+      "allow_live_ai": false,
+      "replay_corpus_configured": false
+    },
+    "rollback_off": {
+      "mode": "off",
+      "enabled": false
+    }
+  },
+  "page_errors": 0,
+  "flows_total": 6,
+  "flows_passed": 6,
+  "flows": [
+    {
+      "flow_id": "flow_1_supported_polyhedral",
+      "case_ids": [
+        "S2-B-I07_ve_va_tinh"
+      ],
+      "http_status": 200,
+      "answers_verified": [
+        "8/3"
+      ],
+      "step_progression": {
+        "before": "Bước 1/4",
+        "after": "Bước 2/4"
+      },
+      "canvas_box": {
+        "width": 1391,
+        "height": 717
+      },
+      "passed": true
+    },
+    {
+      "flow_id": "flow_2_curved_and_composite_geometry",
+      "case_ids": [
+        "cr.shared_base_pyramids_plus_inscribed_sphere",
+        "cone.par.S"
+      ],
+      "http_status": 200,
+      "answers_verified": [
+        "72",
+        "9π",
+        "81π/16"
+      ],
+      "canvas_boxes": [
+        {
+          "width": 1391,
+          "height": 717
+        },
+        {
+          "width": 1391,
+          "height": 717
+        }
+      ],
+      "passed": true
+    },
+    {
+      "flow_id": "flow_3_multi_function_composition",
+      "case_ids": [
+        "S2-B-P07_shared_intermediate_two_goals"
+      ],
+      "http_status": 200,
+      "answers_verified": [
+        "√3",
+        "1"
+      ],
+      "step_progression": {
+        "before": "Bước 1/6",
+        "after": "Bước 2/6"
+      },
+      "canvas_box": {
+        "width": 1391,
+        "height": 717
+      },
+      "passed": true
+    },
+    {
+      "flow_id": "flow_4_constrained_plane_and_orthocenter",
+      "case_ids": [
+        "K-A01",
+        "R1-B01"
+      ],
+      "http_status": 200,
+      "section_certificate_category": "ENGINE_DERIVED_SECTION",
+      "answers_verified": [
+        "3√2/2",
+        "2304/625"
+      ],
+      "canvas_boxes": [
+        {
+          "width": 1391,
+          "height": 717
+        },
+        {
+          "width": 1391,
+          "height": 717
+        }
+      ],
+      "passed": true
+    },
+    {
+      "flow_id": "flow_5_ambiguous_and_contradictory_refusal",
+      "case_ids": [
+        "S2-C-A01_goc_chieu",
+        "S2-D-D03_contradictory_length"
+      ],
+      "http_status": 200,
+      "clarification_question_rendered": "Trong “S là góc chiếu của hình lăng trụ xiên”, bạn muốn S là hình chiếu của điểm nào và lên đường thẳng hoặc mặt phẳng nào?",
+      "contradictory_failure_category": "geometry_generation_failed",
+      "zero_canvas_on_refusal": true,
+      "passed": true
+    },
+    {
+      "flow_id": "flow_6_infrastructure_failure_and_recovery",
+      "infra_http_status": 503,
+      "infra_reason_code": "LIVE_AI_DISABLED",
+      "infra_banner_text": "Chế độ trích xuất trực tiếp (live AI) đang tắt trên máy chủ. Quản trị viên cần bật tường minh trước khi gửi đề.",
+      "secret_leaked": false,
+      "traceback_leaked": false,
+      "mislabeled_as_math_refusal": false,
+      "recovered_to_served_canvas": {
+        "width": 1391,
+        "height": 717
+      },
+      "rollback_off_mode_verified": true,
+      "passed": true
+    }
+  ]
+}

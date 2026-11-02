@@ -50,6 +50,10 @@ services:
       # `app/main.py::semantic_route_mode`.
       #   SEMANTIC_ROUTE_MODE=serve docker compose up -d backend
       SEMANTIC_ROUTE_MODE: ${SEMANTIC_ROUTE_MODE:-off}
+      # Tuyến Hybrid `/4`: off (mặc định giữ LLM_ONLY) | staging-replay | live.
+      HYBRID_ROUTE_MODE: ${HYBRID_ROUTE_MODE:-off}
+      HYBRID_REPLAY_CORPUS: ${HYBRID_REPLAY_CORPUS:-}
+      ALLOW_LIVE_AI: ${ALLOW_LIVE_AI:-0}
       # Telemetry chẩn đoán route ngữ nghĩa — THỤ ĐỘNG, mặc định tắt.
       # Đọc ở `GET /api/diagnostics/semantic`. Bật khi cần biết một lượt chết ở
       # tầng nào; không bật thì mỗi lượt live chỉ trả về "unsupported" trống.

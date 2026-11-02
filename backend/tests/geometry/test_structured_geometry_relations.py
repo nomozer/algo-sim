@@ -692,6 +692,7 @@ _CONG_COMPILER = {("ai/pipeline.py", "app.simulation.geometry_compiler.routing")
 # Explicit lazy D boundaries: metadata, guarded preview, diagnostics and internal offline /4 validation.
 _CONG_PREVIEW = {("ai/pipeline.py", "app.ai.hybrid_preview"), ("main.py", "app.ai.hybrid_preview"),
                  ("runtime_identity.py", "app.ai.hybrid_preview"),
+                 ("runtime_identity.py", "app.ai.hybrid_offline"),
                  ("ai/adapter4_route.py", "app.ai.hybrid_preview"), ("ai/hybrid_offline.py", "app.ai.hybrid_preview"),
                  # Migration Stage 2 (run `scene3d-to-hybrid-v2-replacement`): `/api/analyze` reaches Hybrid V2 only in
                  # `_analyze_hybrid_v2_local`, behind `HYBRID_V2_LOCAL=offline-replay` + a loopback client — same lazy rule.

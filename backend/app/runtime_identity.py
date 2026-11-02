@@ -278,7 +278,7 @@ def runtime_identity() -> dict:
     image (build-arg → env); ngoài Docker thì báo "unknown" trung thực thay vì
     đoán — doctor sẽ xử lý riêng trường hợp đó."""
     # Nhập muộn: main.py import module này, tránh vòng import.
-    from app.main import CACHE_VERSION, semantic_route_mode
+    from app.main import CACHE_VERSION, hybrid_route_mode, semantic_route_mode
     from app.ai.pipeline import HYBRID_PREVIEW_TOKEN_MIN_LENGTH, route_policy_snapshot
 
     kn = capability_fingerprint()
@@ -294,9 +294,17 @@ def runtime_identity() -> dict:
 
         route_d = {**preview_runtime_identity(preview), "token_configured":
                    len(env.get("HYBRID_ROUTE_D_PREVIEW_TOKEN", "")) >= HYBRID_PREVIEW_TOKEN_MIN_LENGTH}
+    h_mode = hybrid_route_mode()
+    hybrid_rt: dict = {"mode": "off", "enabled": False}
+    if h_mode != "off":
+        # Lazy diagnostics boundary: Route D modules stay unimported when `HYBRID_ROUTE_MODE=off` (D-01).
+        from app.ai.hybrid_offline import hybrid_route_identity
+
+        hybrid_rt = hybrid_route_identity(h_mode, env)
     return {
         "route_policy": {"geometry_compiler_mode": policy.geometry_compiler_mode,
                          "fingerprint": policy.fingerprint()},
+        "hybrid_route": hybrid_rt,
         "hybrid_route_d_preview": route_d,
         "git_sha": os.getenv("ALGOSIM_GIT_SHA", "unknown"),
         "build_timestamp": os.getenv("ALGOSIM_BUILD_TIME", "unknown"),

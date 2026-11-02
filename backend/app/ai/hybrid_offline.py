@@ -15,19 +15,38 @@ from hashlib import sha256
 import json
 import math
 from pathlib import Path
+import time
 from time import perf_counter
-from typing import Callable
+from typing import Any, Callable, Mapping
 from uuid import uuid4
 
+from app.ai import typed_fact_next_extraction as _tfn_extraction
 from app.ai.adapter4_route import (
     ADAPTER_V4_VERSION, ROUTE_D_SIMULATION_V4_SCHEMA_VERSION,
     adapter_fault_response, build_adapter4_response, run_typed_fact_next_v2_route,
 )
 from app.ai.pipeline import RoutePolicy, route_policy_snapshot
-from app.ai.typed_fact_next_extraction import Extractor, ReplayExtractor, extract_typed_fact_next_v2
+from app.ai.typed_fact_next_extraction import (
+    Extractor, ReplayExtractor, TransportExtractor, extract_typed_fact_next_v2,
+)
 from app.ingestion.input import MAX_TEXT_CHARS
 from app.simulation.geometry_functions import KetQuaTuyen
 from app.simulation.geometry_functions.typed_fact_next import TYPED_FACT_NEXT_V2_SCHEMA_VERSION
+
+
+#: Provider, transport, schema-framing and internal technical fault codes on the selectable Hybrid `/4` route.
+#: Surfaced as recoverable HTTP infrastructure errors (`502`/`503`/`504`), never mislabeled as mathematical refusals.
+HYBRID_INFRASTRUCTURE_CODES = frozenset({
+    "LIVE_AI_DISABLED", "MISSING_API_KEY", "STAGING_CORPUS_UNAVAILABLE",
+    "PROVIDER_ERROR", "PROVIDER_BLOCKED", "PROVIDER_REFUSED", "NO_CANDIDATE",
+    "PROVIDER_RESPONSE_INVALID", "MALFORMED_RESPONSE_PART", "JSON_INVALID",
+    "RESPONSE_TRUNCATED", "MAX_TOKENS",
+    "HYBRID_DEADLINE_EXCEEDED", "HYBRID_CANCELLED",
+    "EXTRACTOR_INTERNAL_ERROR", "ROUTE_INTERNAL_ERROR", "ADAPTER_INTERNAL_ERROR",
+    "ENGINE_EXECUTION_FAILED", "ENGINE_SELF_CHECK_FAILED", "ENGINE_IR_INVALID",
+    "SCENE_BUILD_FAILED", "SECTION_CONSTRUCTION_INTERNAL_FAILURE",
+    "PREVIEW_IDENTITY_CHANGED", "PREVIEW_DISABLED",
+})
 
 
 def _surface() -> dict[str, str]:
@@ -153,7 +172,7 @@ def _run_hybrid_offline(problem_text: str, extractor: Extractor, policy: RoutePo
         code = extraction.code or 'INVALID_TYPED_FACT_NEXT'
         technical_codes = {'EXTRACTOR_INTERNAL_ERROR', 'PROVIDER_ERROR', 'PROVIDER_RESPONSE_INVALID',
                            'PROVIDER_BLOCKED', 'PROVIDER_REFUSED', 'NO_CANDIDATE', 'MALFORMED_RESPONSE_PART',
-                           'JSON_INVALID', 'RESPONSE_TRUNCATED', 'MAX_TOKENS'}
+                           'JSON_INVALID', 'RESPONSE_TRUNCATED', 'MAX_TOKENS', 'HYBRID_DEADLINE_EXCEEDED'}
         kind = 'TECHNICAL_FAILURE' if code in technical_codes else 'EXTRACTION_FAILURE'
         return refuse(code, 'extraction', kind)
 
@@ -230,3 +249,216 @@ def run_local_replay(problem_text: str, corpus_path: str) -> HybridOfflineResult
     """Stage 2 opt-in local route: verbatim source → recorded `typed-fact-next/2` (authored replay corpus, keyed by the
     exact problem text) → the same validation, Source Gate, planner, exact engine and /4 wrapper as `run_hybrid_offline`."""
     return prepare_local_replay(problem_text, corpus_path).run()
+
+
+_REPLAY_CORPUS_CACHE: dict[tuple[str, int, int], dict[str, dict]] = {}
+
+
+class HybridTransportTimeout(TimeoutError):
+    """Raised when live Hybrid extraction exhausts per-attempt or overall route deadline."""
+
+
+def _finite_pos(value: object, default: float) -> float:
+    if isinstance(value, bool) or not isinstance(value, (int, float)) or not math.isfinite(value) or value <= 0:
+        return default
+    return float(value)
+
+
+def resolve_hybrid_gemini_model(env: Mapping[str, str] | None = None) -> str:
+    """Single source of truth for the Hybrid live Gemini model name (empty/whitespace falls back to default)."""
+    import os
+
+    raw = (os.environ if env is None else env).get('GEMINI_MODEL')
+    cleaned = raw.strip() if isinstance(raw, str) else ''
+    return cleaned or 'gemini-2.5-flash'
+
+
+def load_replay_corpus(corpus_path: str) -> dict[str, dict] | None:
+    """Read and validate an authored `hybrid-v2-local-replay-corpus/1` file; memoized by `(path, mtime_ns, size)`."""
+    if not corpus_path:
+        return None
+    try:
+        p = Path(corpus_path)
+        st = p.stat()
+        cache_id = (str(p.resolve()), st.st_mtime_ns, st.st_size)
+        cached = _REPLAY_CORPUS_CACHE.get(cache_id)
+        if cached is not None:
+            return cached
+        data = json.loads(p.read_text(encoding='utf-8'))
+    except (OSError, ValueError, TypeError):
+        return None
+    if not isinstance(data, dict) or data.get('schema') != LOCAL_REPLAY_SCHEMA or not isinstance(data.get('outputs'), dict):
+        return None
+    if len(_REPLAY_CORPUS_CACHE) >= 8:
+        _REPLAY_CORPUS_CACHE.clear()
+    _REPLAY_CORPUS_CACHE[cache_id] = data['outputs']
+    return data['outputs']
+
+
+@dataclass(frozen=True)
+class StagingReplay:
+    """Selectable staging/integration Hybrid run (`HYBRID_ROUTE_MODE=staging-replay`), explicitly marked as simulated."""
+    problem_text: str
+    recorded: dict | None
+    policy: RoutePolicy
+    cache_key: str | None
+
+    def run(self, *, timeout_seconds: float = 15.0) -> HybridOfflineResult:
+        single = {self.problem_text: self.recorded} if self.recorded is not None else {}
+        res = run_hybrid_offline(self.problem_text, ReplayExtractor(single),
+                                 policy=self.policy, timeout_seconds=_finite_pos(timeout_seconds, 15.0))
+        response = dict(res.response)
+        route_d = dict(response['route_d'])
+        route_d['extraction_mode'] = 'REPLAY_STAGING_SIMULATED'
+        response['route_d'] = route_d
+        receipt = {**res.receipt, 'classification': 'STAGING_REPLAY_SIMULATED_NOT_LIVE_NLU'}
+        return HybridOfflineResult(response, receipt)
+
+
+def prepare_staging_replay(problem_text: str, corpus_path: str) -> StagingReplay | None:
+    outputs = load_replay_corpus(corpus_path)
+    if outputs is None:
+        return None
+    policy = hybrid_offline_policy({'HYBRID_ROUTE_D_PREVIEW': '1'})
+    recorded = outputs.get(problem_text) if isinstance(problem_text, str) else None
+    key = None
+    if recorded is not None:
+        identity = {
+            'route': 'HYBRID_V2_STAGING_REPLAY',
+            'surface': dict(policy.preview_surface),
+            'response_contract': policy.response_contract,
+            'recorded_extraction': recorded,
+            'source': problem_text,
+        }
+        key = sha256(json.dumps(identity, sort_keys=True, ensure_ascii=False).encode('utf-8')).hexdigest()
+    return StagingReplay(problem_text, recorded, policy, key)
+
+
+def _live_provider_transport(
+    api_key: str,
+    model: str | None = None,
+    timeout_seconds: float = 60.0,
+    *,
+    deadline_seconds: float | None = None,
+    sleep=time.sleep,
+) -> Callable[[dict[str, Any]], dict[str, Any]]:
+    """Bounded Gemini `generateContent` transport (`x-goog-api-key` header, `ALLOW_LIVE_AI=1` enforced per send,
+    deadline-aware transient retries, proper `ApiBudget` retry accounting, zero model fallback)."""
+    import httpx
+
+    from app.ai import gemini
+    from app.ai.function_calling import ProviderHTTPError, live_transport
+
+    per_attempt = _finite_pos(timeout_seconds, 60.0)
+    total_deadline = _finite_pos(deadline_seconds, per_attempt * 3.0)
+    resolved_model = (model or '').strip() or gemini.MODEL
+    send_once = live_transport(api_key, model=resolved_model, timeout_seconds=per_attempt)
+
+    def send(request: dict[str, Any]) -> dict[str, Any]:
+        deadline_at = perf_counter() + total_deadline
+        for attempt in range(gemini.MAX_ATTEMPTS):
+            rem = deadline_at - perf_counter()
+            if rem <= 0:
+                raise HybridTransportTimeout('hybrid live deadline exceeded')
+            attempt_timeout = min(per_attempt, rem)
+            try:
+                return send_once(request, is_retry=(attempt > 0), timeout_override=attempt_timeout)
+            except ProviderHTTPError as exc:
+                if exc.status_code not in gemini.TRANSIENT_STATUS or attempt == gemini.MAX_ATTEMPTS - 1:
+                    raise
+                if gemini.BUDGET is not None:
+                    gemini.BUDGET.note_transient()
+            except httpx.TimeoutException:
+                if attempt == gemini.MAX_ATTEMPTS - 1 or (deadline_at - perf_counter()) <= 0:
+                    raise HybridTransportTimeout('hybrid live upstream timeout') from None
+                if gemini.BUDGET is not None:
+                    gemini.BUDGET.note_transient()
+            except httpx.NetworkError:
+                if attempt == gemini.MAX_ATTEMPTS - 1:
+                    raise
+                if gemini.BUDGET is not None:
+                    gemini.BUDGET.note_transient()
+            backoff = gemini.BACKOFF_BASE_SECONDS * (2 ** attempt)
+            if (deadline_at - perf_counter()) <= backoff:
+                raise HybridTransportTimeout('hybrid live deadline exceeded before retry')
+            sleep(backoff)
+        raise HybridTransportTimeout('hybrid live deadline exceeded')
+
+    return send
+
+
+@dataclass(frozen=True)
+class LiveHybridRun:
+    """Selectable live Hybrid `/4` run (`HYBRID_ROUTE_MODE=live`), bound to model + extraction/route surfaces."""
+    problem_text: str
+    model: str
+    extraction_surface: str
+    policy: RoutePolicy
+    cache_key: str
+
+    def run(
+        self,
+        api_key: str,
+        *,
+        per_attempt_timeout_s: float = 60.0,
+        deadline_seconds: float | None = None,
+    ) -> HybridOfflineResult:
+        eff_per = _finite_pos(per_attempt_timeout_s, 60.0)
+        eff_deadline = _finite_pos(deadline_seconds, eff_per * 3.0)
+        transport = _live_provider_transport(
+            api_key, model=self.model, timeout_seconds=eff_per, deadline_seconds=eff_deadline
+        )
+        res = run_hybrid_offline(
+            self.problem_text,
+            TransportExtractor(transport),
+            policy=self.policy,
+            timeout_seconds=eff_deadline,
+        )
+        response = dict(res.response)
+        route_d = dict(response['route_d'])
+        route_d['extraction_mode'] = 'LIVE_GEMINI_STRUCTURED'
+        route_d['extraction_model'] = self.model
+        response['route_d'] = route_d
+        receipt = {
+            **res.receipt,
+            'classification': 'LIVE_STRUCTURED_EXTRACTION',
+            'provider_performance': 'MEASURED_IN_TELEMETRY',
+        }
+        return HybridOfflineResult(response, receipt)
+
+
+def prepare_live_hybrid(problem_text: str, *, model: str | None = None) -> LiveHybridRun:
+    resolved_model = (model or '').strip() or 'gemini-2.5-flash'
+    policy = hybrid_offline_policy({'HYBRID_ROUTE_D_PREVIEW': '1'})
+    ext_fp = _tfn_extraction.typed_fact_next_surface_fingerprint()
+    identity = {
+        'route': 'HYBRID_V2_LIVE',
+        'model': resolved_model,
+        'extraction_surface': ext_fp,
+        'surface': dict(policy.preview_surface),
+        'response_contract': policy.response_contract,
+        'source': problem_text,
+    }
+    key = sha256(json.dumps(identity, sort_keys=True, ensure_ascii=False).encode('utf-8')).hexdigest()
+    return LiveHybridRun(problem_text, resolved_model, ext_fp, policy, key)
+
+
+def hybrid_route_identity(mode: str, env: Mapping[str, str]) -> dict[str, Any]:
+    """Diagnostics snapshot for `/api/diagnostics/runtime` when `HYBRID_ROUTE_MODE != 'off'` (never exposes secrets)."""
+    surface = _surface()
+    return {
+        'mode': mode,
+        'enabled': mode in ('staging-replay', 'live'),
+        'simulated': mode == 'staging-replay',
+        'extraction_mode': 'REPLAY_STAGING_SIMULATED' if mode == 'staging-replay' else 'LIVE_GEMINI_STRUCTURED',
+        'registry_version': surface['registry_version'],
+        'planner_version': surface['planner_version'],
+        'engine_version': surface['engine_version'],
+        'adapter_version': surface['adapter_version'],
+        'envelope_version': surface['envelope_version'],
+        'response_contract': surface['response_contract'],
+        'extraction_surface': _tfn_extraction.typed_fact_next_surface_fingerprint(),
+        'gemini_model': resolve_hybrid_gemini_model(env),
+        'allow_live_ai': env.get('ALLOW_LIVE_AI') == '1',
+        'replay_corpus_configured': bool(env.get('HYBRID_REPLAY_CORPUS') or env.get('HYBRID_V2_LOCAL_REPLAY_CORPUS')),
+    }

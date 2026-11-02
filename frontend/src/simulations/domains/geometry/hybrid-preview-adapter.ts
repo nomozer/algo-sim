@@ -9,15 +9,23 @@
  * trước khi store nhận (store vẫn không biết miền — M2 #7). Phản hồi lệch hợp đồng ⇒ từ chối cả phản hồi.
  *
  * Không có lời gọi mạng nào ở đây: frontend KHÔNG gọi `/api/preview/hybrid` (operator-only); biên này chỉ dùng cho
- * fixture/harness offline và cho một tích hợp tương lai đã được duyệt riêng.
+ * fixture/harness offline và cho tuyến `/api/analyze` khi máy chủ bật chế độ Hybrid đã khai báo.
  */
-import type { Scene3D } from "./scene3d-model";
+import type { ClarificationPrompt } from "../../../core/types";
+import type { Scene3D, SceneObject } from "./scene3d-model";
 
 export const HYBRID_PREVIEW_SCHEMA = "hybrid-route-d-preview/1";
 export const HYBRID_PREVIEW_ADAPTER = "hybrid-preview-adapter/2";
 export const HYBRID_SIMULATION_SCHEMA = "hybrid-route-d-simulation/4";
 export const HYBRID_SIMULATION_ADAPTER = "hybrid-simulation-adapter/4";
 const HYBRID_SIMULATION_CONTRACT = "typed-fact-next/2";
+const PLANE_SECTION_CERTIFICATE_VERSION = "plane-section-certificate/1";
+const PLANE_SECTION_CERTIFICATE_RULE = "engine_derived_plane_section";
+const PLANE_SECTION_CERTIFICATE_PRODUCER = "engine.kiem_chung_chi_thiet_dien";
+const ENGINE_DERIVED_SECTION_CATEGORY = "ENGINE_DERIVED_SECTION";
+const HYBRID_CLARIFICATION_SCHEMA = "route-d-clarification/1";
+const RATIONAL_STR_RE = /^-?\d+(?:\/\d+)?$/;
+const INTERNAL_LEAK_RE = /::|@[a-zA-Z0-9_]+|\b(?:kq|td|mp_td)_[a-zA-Z0-9_]+|_prime\b|Traceback/i;
 /** Khoá của view đã kiểm trong envelope (do frontend tạo, không phải trường của backend). */
 export const KHOA_HYBRID_VIEW = "hybrid_preview";
 
@@ -54,10 +62,32 @@ export interface HybridPreviewView {
 
 export interface HybridSectionView {
   section_id: string;
+  certificate_version?: string;
+  certificate_category?: string;
   boundary: string[] | null;
-  vertices: { label: string; edge: string[]; provenance: string; stated: boolean }[];
-  closure_certificate: { boundary: string[]; verified: boolean; rule: string } | null;
+  vertices: {
+    label: string | null;
+    entity_id?: string;
+    ordinal?: number;
+    xyz?: string[];
+    source_kind?: "SOLID_VERTEX" | "SOLID_EDGE_INTERSECTION";
+    solid_vertex_index?: number | null;
+    solid_edge_vertex_indices?: number[];
+    choice?: string;
+    edge: string[];
+    provenance: string;
+    stated: boolean;
+  }[];
+  closure_certificate: {
+    boundary: string[];
+    verified: boolean;
+    rule: string;
+    version?: string;
+    polygon?: string[][];
+  } | null;
 }
+
+export type HybridClarificationView = ClarificationPrompt;
 
 /** Hàm loại `fact` của Registry (`geometry_functions/registry.py` — mệnh đề kiểm được trên hình) → tên cho học sinh.
  *  Ngoài bảng ⇒ tên chung (an toàn: không bịa quan hệ). */
@@ -78,6 +108,20 @@ const TEN_QUAN_HE_CHUNG = "mệnh đề của đề";
 const TEN_HOP_LE = new Set<string>([...Object.values(TEN_QUAN_HE), TEN_QUAN_HE_CHUNG]);
 
 const TRANG_THAI = new Set<string>(["TRUE_ON_CONFIGURATION", "FALSE_ON_CONFIGURATION", "UNVERIFIABLE"]);
+
+const CLARIFICATION_KIND_TO_NLU: Record<HybridClarificationView["kind"], HybridClarificationView["nlu_class"]> = {
+  ambiguous: "AMBIGUOUS",
+  missing_operand: "MISSING_DATA",
+  unrecognized_term: "UNRECOGNIZED_WORDING",
+  unsupported: "VALID_BUT_UNSUPPORTED",
+};
+
+const DERIVED_PLANE_RULES = new Set<string>([
+  "section(plane defined by stated constraints)",
+  "section(plane through point ∥ plane)",
+  "section(plane through point strictly parallel to two lines)",
+  "section(plane through point perpendicular to a line)",
+]);
 
 export type KetQuaPhanHoiHybrid =
   | { ok: true; envelope: Record<string, unknown> }
@@ -107,6 +151,265 @@ const LUAT_NGUON: Record<string, { phu?: boolean; stated?: boolean; qua?: boolea
 };
 const chuanTen = (s: string) => s.replace(/″/g, "''").replace(/[′’]/g, "'");
 
+/** Structural verification of a Category B (`ENGINE_DERIVED_SECTION`, `plane-section-certificate/1`) section against `scene`. */
+function kiemEngineDerivedSection(
+  s: Record<string, unknown>,
+  obj: SceneObject,
+  solid: SceneObject,
+  scene: Scene3D,
+  diem: (name: string) => SceneObject[],
+): string | null {
+  if (
+    s.certificate_version !== PLANE_SECTION_CERTIFICATE_VERSION
+    || s.certificate_category !== ENGINE_DERIVED_SECTION_CATEGORY
+    || s.section_object_id !== obj.id
+    || s.declared_boundary !== null
+    || obj.closed !== true
+    || (Array.isArray(obj.identity_diagnostics) && obj.identity_diagnostics.length > 0)
+  ) {
+    return "chứng chỉ thiết diện dẫn xuất sai dạng";
+  }
+  const vIds = solid.vertex_ids ?? [];
+  const solidVerts = solid.vertices ?? [];
+  const faces = solid.faces ?? [];
+  if (
+    s.solid_object_id !== solid.id
+    || typeof s.solid !== "string"
+    || typeof solid.notation !== "string"
+    || chuanTen(s.solid) !== chuanTen(solid.notation)
+    || vIds.length < 4
+    || solidVerts.length !== vIds.length
+    || faces.length === 0
+    || scene.objects.some((o) => o.type === "solid" && o.id !== solid.id && (o.depends ?? []).includes(obj.id))
+  ) {
+    return "khối của thiết diện dẫn xuất lệch cảnh";
+  }
+  for (let i = 0; i < vIds.length; i++) {
+    const po = scene.objects.find((o) => o.id === vIds[i] && o.type === "point3");
+    if (!po || JSON.stringify(po.xyz) !== JSON.stringify(solidVerts[i])) {
+      return "đỉnh khối của thiết diện dẫn xuất lệch cảnh";
+    }
+  }
+  const solidEdges = new Set<string>();
+  for (const f of faces) {
+    if (!Array.isArray(f) || f.length < 3) return "mặt khối sai dạng";
+    for (let i = 0; i < f.length; i++) {
+      const a = f[i];
+      const b = f[(i + 1) % f.length];
+      solidEdges.add(`${Math.min(a, b)}-${Math.max(a, b)}`);
+    }
+  }
+
+  const expectedPlaneId = `mp_td_${s.section_id}`;
+  const planeObj = scene.objects.find((o) => o.id === expectedPlaneId && o.type === "plane3");
+  if (
+    s.plane_object_id !== expectedPlaneId
+    || !planeObj
+    || !obj.depends.includes(expectedPlaneId)
+    || !Array.isArray(s.plane_points)
+    || s.plane_points.length !== 3
+    || !s.plane_points.every((p) => typeof p === "string" && diem(p).length === 1)
+  ) {
+    return "mặt cắt của thiết diện dẫn xuất lệch cảnh";
+  }
+  const planePointIds = new Set(s.plane_points.map((p: string) => diem(p)[0].id));
+  const planeDepends = new Set(planeObj.depends ?? []);
+  if (
+    planePointIds.size !== 3
+    || planePointIds.size !== planeDepends.size
+    || ![...planePointIds].every((id) => planeDepends.has(id))
+  ) {
+    return "điểm dựng mặt cắt lệch phụ thuộc cảnh";
+  }
+
+  const planeEq = s.plane_equation;
+  if (
+    !laDoiTuong(planeEq)
+    || !Array.isArray(planeEq.normal)
+    || planeEq.normal.length !== 3
+    || !planeEq.normal.every((c) => typeof c === "string" && RATIONAL_STR_RE.test(c))
+    || planeEq.normal.every((c) => c === "0")
+    || typeof planeEq.offset !== "string"
+    || !RATIONAL_STR_RE.test(planeEq.offset)
+  ) {
+    return "phương trình mặt cắt dẫn xuất sai dạng";
+  }
+
+  const planeRule = s.plane_rule;
+  const planeRel = s.plane_relation;
+  if (!laDoiTuong(planeRel)) return "quan hệ mặt cắt dẫn xuất sai dạng";
+  let tpObj: SceneObject | null = null;
+  if (planeRule === "explicit_plane") {
+    if (s.through_point !== null || planeRel.kind !== "explicit_points") {
+      return "mặt phẳng tường minh không có through_point";
+    }
+  } else if (typeof planeRule === "string" && DERIVED_PLANE_RULES.has(planeRule)) {
+    if (
+      typeof s.through_point !== "string"
+      || planeRel.through_point !== s.through_point
+      || diem(s.through_point).length !== 1
+    ) {
+      return "điểm đi qua của mặt cắt dẫn xuất sai";
+    }
+    tpObj = diem(s.through_point)[0];
+    if (!planeDepends.has(tpObj.id)) return "điểm đi qua không thuộc mặt cắt";
+  } else {
+    return "quy tắc mặt cắt dẫn xuất lạ";
+  }
+
+  const vertices = s.vertices as unknown[];
+  const polygon = obj.polygon ?? [];
+  const vSources = obj.vertex_sources ?? [];
+  const epEntities = obj.endpoint_entities ?? [];
+  if (
+    vertices.length < 3
+    || vertices.length !== polygon.length
+    || vSources.length !== polygon.length
+    || epEntities.length !== polygon.length
+  ) {
+    return "số đỉnh thiết diện dẫn xuất lệch cảnh";
+  }
+
+  const seenXyz = new Set<string>();
+  const seenEntityIds = new Set<string>();
+  const expectedBoundary: string[] = [];
+
+  for (let idx = 0; idx < vertices.length; idx++) {
+    const v = vertices[idx];
+    const vSrc = vSources[idx] as unknown as Record<string, unknown>;
+    const ep = epEntities[idx] as unknown as Record<string, unknown>;
+    const polyXyz = polygon[idx];
+    if (!laDoiTuong(v) || !laDoiTuong(vSrc) || !laDoiTuong(ep)) return "đỉnh thiết diện dẫn xuất sai dạng";
+    const xyzKey = JSON.stringify(polyXyz);
+    if (
+      v.ordinal !== idx
+      || JSON.stringify(v.xyz) !== xyzKey
+      || v.stated !== false
+      || seenXyz.has(xyzKey)
+    ) {
+      return "toạ độ hoặc cờ stated của đỉnh thiết diện dẫn xuất sai";
+    }
+    seenXyz.add(xyzKey);
+
+    const entityId = v.entity_id;
+    if (
+      typeof entityId !== "string"
+      || !entityId
+      || seenEntityIds.has(entityId)
+      || ep.entity_id !== entityId
+      || ep.section_vertex_ordinal !== idx
+      || ep.anonymous_coordinate_fallback !== false
+    ) {
+      return "danh tính endpoint của thiết diện dẫn xuất lệch cảnh";
+    }
+    seenEntityIds.add(entityId);
+    expectedBoundary.push(entityId);
+
+    if (
+      !Array.isArray(v.edge)
+      || v.edge.length !== 2
+      || !v.edge.every((lbl) => typeof lbl === "string" && diem(lbl).length === 1)
+      || !Array.isArray(v.solid_edge_vertex_indices)
+      || v.solid_edge_vertex_indices.length !== 2
+    ) {
+      return "cạnh đỡ của đỉnh thiết diện dẫn xuất sai";
+    }
+    const [ia, ib] = v.solid_edge_vertex_indices;
+    if (
+      typeof ia !== "number" || typeof ib !== "number"
+      || !Number.isInteger(ia) || !Number.isInteger(ib)
+      || ia < 0 || ia >= ib || ib >= vIds.length
+      || !solidEdges.has(`${ia}-${ib}`)
+      || diem(v.edge[0])[0].id !== vIds[ia]
+      || diem(v.edge[1])[0].id !== vIds[ib]
+    ) {
+      return "chỉ số cạnh đỡ của đỉnh thiết diện dẫn xuất lệch khối";
+    }
+
+    const srcKind = v.source_kind;
+    if (srcKind !== vSrc.kind || ep.provenance_kind !== srcKind) {
+      return "source_kind của đỉnh thiết diện dẫn xuất lệch cảnh";
+    }
+    const isTp = tpObj !== null && JSON.stringify(tpObj.xyz) === xyzKey;
+    if (srcKind === "SOLID_VERTEX") {
+      const iv = v.solid_vertex_index;
+      if (
+        typeof iv !== "number"
+        || iv !== vSrc.solid_vertex_index
+        || (iv !== ia && iv !== ib)
+        || JSON.stringify(solidVerts[iv]) !== xyzKey
+        || entityId !== vIds[iv]
+        || v.label !== vIds[iv]
+        || scene.objects.find((o) => o.id === vIds[iv] && o.type === "point3")?.notation == null
+        || (isTp
+          ? v.choice !== "reuse_through_point" || v.provenance !== "THROUGH_POINT_REUSE"
+          : v.choice !== "solid_vertex" || v.provenance !== "SOLID_VERTEX_INTERSECTION")
+      ) {
+        return "provenance đỉnh khối của thiết diện dẫn xuất sai";
+      }
+    } else if (srcKind === "SOLID_EDGE_INTERSECTION") {
+      const srcPair = vSrc.solid_edge_vertex_indices;
+      const expectedEid = `section:${obj.id}:point:on:${solid.id}::edge:${vIds[ia]}-${vIds[ib]}`;
+      if (
+        v.solid_vertex_index !== null
+        || vSrc.solid_vertex_index != null
+        || !Array.isArray(srcPair)
+        || srcPair.length !== 2
+        || Math.min(Number(srcPair[0]), Number(srcPair[1])) !== ia
+        || Math.max(Number(srcPair[0]), Number(srcPair[1])) !== ib
+        || solidVerts.some((sv) => JSON.stringify(sv) === xyzKey)
+        || entityId !== expectedEid
+        || (isTp
+          ? v.choice !== "reuse_through_point"
+            || v.provenance !== "THROUGH_POINT_REUSE"
+            || v.label !== tpObj!.id
+            || tpObj!.notation == null
+          : v.choice !== "engine_derived_edge_cut"
+            || v.provenance !== "ENGINE_DERIVED_EDGE_CUT"
+            || v.label !== null)
+      ) {
+        return "provenance giao điểm cạnh của thiết diện dẫn xuất sai";
+      }
+    } else {
+      return "source_kind của thiết diện dẫn xuất không hợp lệ";
+    }
+  }
+
+  // Cyclic face adjacency across consecutive vertices.
+  for (let i = 0; i < vertices.length; i++) {
+    const vc = vertices[i] as Record<string, unknown>;
+    const vn = vertices[(i + 1) % vertices.length] as Record<string, unknown>;
+    const facesContaining = (vx: Record<string, unknown>) =>
+      faces.reduce<number[]>((acc, f, fi) => {
+        const hit = vx.source_kind === "SOLID_VERTEX"
+          ? f.includes(vx.solid_vertex_index as number)
+          : (vx.solid_edge_vertex_indices as number[]).every((k) => f.includes(k));
+        if (hit) acc.push(fi);
+        return acc;
+      }, []);
+    const fc = facesContaining(vc);
+    const fn = new Set(facesContaining(vn));
+    if (!fc.some((fi) => fn.has(fi))) return "chu trình đỉnh thiết diện dẫn xuất không kề mặt";
+  }
+
+  const cert = s.closure_certificate;
+  if (
+    JSON.stringify(s.boundary) !== JSON.stringify(expectedBoundary)
+    || !laDoiTuong(cert)
+    || cert.verified !== true
+    || cert.version !== PLANE_SECTION_CERTIFICATE_VERSION
+    || cert.rule !== PLANE_SECTION_CERTIFICATE_RULE
+    || cert.producer !== PLANE_SECTION_CERTIFICATE_PRODUCER
+    || typeof cert.area_squared !== "string"
+    || !RATIONAL_STR_RE.test(cert.area_squared)
+    || JSON.stringify(cert.boundary) !== JSON.stringify(expectedBoundary)
+    || JSON.stringify(cert.polygon) !== JSON.stringify(polygon)
+  ) {
+    return "chứng chỉ khép kín của thiết diện dẫn xuất lệch";
+  }
+  return null;
+}
+
 /** Malformed scene shapes refuse instead of throwing (the boundary never raises). */
 function kiemSections(sections: unknown, scene: Scene3D): string | null {
   try {
@@ -132,6 +435,11 @@ function kiemSectionsCore(sections: unknown, scene: Scene3D): string | null {
     const polygon = obj.polygon;
     const solid = scene.objects.find((o) => obj.depends.includes(o.id) && o.type === "solid");
     if (!solid?.vertex_ids || s.vertices.length !== polygon.length) return "đỉnh thiết diện lệch cảnh";
+    if (s.certificate_category === ENGINE_DERIVED_SECTION_CATEGORY || "certificate_version" in s || "certificate_category" in s) {
+      const catBErr = kiemEngineDerivedSection(s, obj, solid, scene, diem);
+      if (catBErr) return catBErr;
+      continue;
+    }
     const labels = new Set<string>();
     for (const v of s.vertices) {
       const luat = laDoiTuong(v) ? LUAT_NGUON[String(v.provenance)] : undefined;
@@ -172,6 +480,70 @@ function kiemSectionsCore(sections: unknown, scene: Scene3D): string | null {
   }
   if (scene.objects.filter((o) => o.type === "section").length !== ids.size) return "thiếu thiết diện";
   return null;
+}
+
+function kiemClarification(
+  rawClar: unknown,
+  refusalCode: string,
+): { ok: true; view: HybridClarificationView } | { ok: false; reason: string } {
+  if (!laDoiTuong(rawClar) || rawClar.schema_version !== HYBRID_CLARIFICATION_SCHEMA) {
+    return { ok: false, reason: "clarification sai schema_version" };
+  }
+  if (typeof rawClar.unresolved_id !== "string" || !rawClar.unresolved_id.trim()) {
+    return { ok: false, reason: "clarification thiếu unresolved_id" };
+  }
+  const kind = rawClar.kind;
+  if (typeof kind !== "string" || !(kind in CLARIFICATION_KIND_TO_NLU)) {
+    return { ok: false, reason: "clarification có kind lạ" };
+  }
+  const typedKind = kind as HybridClarificationView["kind"];
+  const expectedNlu = CLARIFICATION_KIND_TO_NLU[typedKind];
+  if (rawClar.nlu_class !== expectedNlu) {
+    return { ok: false, reason: "clarification lệch nlu_class" };
+  }
+  const expectedCode = typedKind === "unsupported" ? "OUT_OF_SCOPE" : "AMBIGUOUS_FACT";
+  if (refusalCode !== expectedCode) {
+    return { ok: false, reason: "clarification lệch mã từ chối" };
+  }
+  if (typeof rawClar.quote !== "string" || !rawClar.quote.trim()) {
+    return { ok: false, reason: "clarification thiếu trích dẫn nguyên văn" };
+  }
+  if (
+    !Array.isArray(rawClar.spans)
+    || rawClar.spans.length < 1
+    || !rawClar.spans.every(
+      (sp) =>
+        Array.isArray(sp)
+        && sp.length === 2
+        && typeof sp[0] === "number"
+        && typeof sp[1] === "number"
+        && Number.isInteger(sp[0])
+        && Number.isInteger(sp[1])
+        && sp[0] >= 0
+        && sp[0] < sp[1],
+    )
+  ) {
+    return { ok: false, reason: "clarification có spans sai dạng" };
+  }
+  if (typedKind === "unsupported") {
+    if (rawClar.question !== null) return { ok: false, reason: "clarification unsupported không được mang câu hỏi" };
+  } else if (
+    typeof rawClar.question !== "string"
+    || !rawClar.question.trim()
+    || INTERNAL_LEAK_RE.test(rawClar.question)
+  ) {
+    return { ok: false, reason: "clarification thiếu câu hỏi làm rõ hoặc chứa mã nội bộ" };
+  }
+  return {
+    ok: true,
+    view: {
+      kind: typedKind,
+      nlu_class: expectedNlu,
+      quote: rawClar.quote,
+      spans: rawClar.spans.map((sp: number[]) => [sp[0], sp[1]] as [number, number]),
+      question: typedKind === "unsupported" ? null : (rawClar.question as string),
+    },
+  };
 }
 
 function nhomKiem(group: unknown): [string, Record<string, unknown>][] | null {
@@ -270,7 +642,7 @@ export function dungHybridView(routeD: unknown, scene: Scene3D): { view: HybridP
 
 /**
  * Phản hồi preview → envelope cho `store.loadEnvelope`. Envelope phục vụ mang thêm `hybrid_preview` (view đã kiểm);
- * envelope từ chối giữ nguyên (lời từ chối không mang quan sát — §5). Phản hồi cổng HTTP (không envelope) ⇒ lỗi.
+ * envelope từ chối giữ nguyên (và gắn `clarification` đã kiểm khi có bản ghi `route-d-clarification/1`). Phản hồi cổng HTTP (không envelope) ⇒ lỗi.
  */
 export function docPhanHoiHybrid(raw: unknown): KetQuaPhanHoiHybrid {
   if (!laDoiTuong(raw) || (raw.schema_version !== HYBRID_PREVIEW_SCHEMA && raw.schema_version !== HYBRID_SIMULATION_SCHEMA)) return { ok: false, reason: "schema_version lạ" };
@@ -281,10 +653,20 @@ export function docPhanHoiHybrid(raw: unknown): KetQuaPhanHoiHybrid {
   const envelope = raw.envelope;
   if (!laDoiTuong(envelope)) return { ok: false, reason: "phản hồi không có envelope (phản hồi cổng operator)" };
   if (KHOA_HYBRID_VIEW in envelope) return { ok: false, reason: "envelope backend không được tự mang hybrid_preview" };
+  if ("clarification" in envelope) return { ok: false, reason: "envelope backend không được tự mang clarification" };
   if (envelope.status !== "ok") {
-    if (v4 && (!laDoiTuong(raw.route_d) || raw.route_d.status !== "REFUSED" || !laDoiTuong(raw.route_d.refusal)
-      || typeof raw.route_d.refusal.code !== "string" || raw.route_d.refusal.code !== envelope.reason_code
-      || envelope.scene3d != null || envelope.simulation_id != null)) return { ok: false, reason: "từ chối Adapter /4 lệch" };
+    if (v4) {
+      if (!laDoiTuong(raw.route_d) || raw.route_d.status !== "REFUSED" || !laDoiTuong(raw.route_d.refusal)
+        || typeof raw.route_d.refusal.code !== "string" || raw.route_d.refusal.code !== envelope.reason_code
+        || envelope.scene3d != null || envelope.simulation_id != null) {
+        return { ok: false, reason: "từ chối Adapter /4 lệch" };
+      }
+      if ("clarification" in raw.route_d.refusal && raw.route_d.refusal.clarification !== undefined) {
+        const clar = kiemClarification(raw.route_d.refusal.clarification, raw.route_d.refusal.code);
+        if (!clar.ok) return clar;
+        return { ok: true, envelope: { ...envelope, clarification: clar.view } };
+      }
+    }
     return { ok: true, envelope: { ...envelope } };
   }
   const scene = envelope.scene3d as Scene3D | undefined;

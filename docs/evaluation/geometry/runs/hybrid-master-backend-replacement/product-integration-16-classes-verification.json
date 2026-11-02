@@ -1,0 +1,962 @@
+{
+  "schema": "hybrid-product-integration-16-classes-verification/1",
+  "classification": "PRODUCT_RUNTIME_REPLAY_VERIFICATION_NOT_LIVE_PROVIDER",
+  "route_mode": "staging-replay",
+  "live_provider_calls": 0,
+  "categories_total": 16,
+  "categories_passed": 16,
+  "cases_total": 41,
+  "categories": [
+    {
+      "category_id": "01_polyhedra",
+      "label": "Polyhedra (cube, asymmetric tetrahedron)",
+      "expected_disposition": "SERVED",
+      "cases_verified": 2,
+      "all_passed": true,
+      "cases": [
+        {
+          "case_id": "cr.cube_2.dual_spheres.multi_goal",
+          "problem_text": "Cho hình lập phương ABCD.A'B'C'D' có cạnh bằng 2. Gọi (S1) là mặt cầu ngoại tiếp hình lập phương ABCD.A'B'C'D'. Gọi (S2) là mặt cầu nội tiếp hình lập phương ABCD.A'B'C'D'. Tính diện tích mặt cầu (S1), diện tích mặt cầu (S2) và thể tích khối lập phương ABCD.A'B'C'D'.",
+          "http_status": 200,
+          "route_d_status": "SERVED",
+          "envelope_status": "ok",
+          "answers": {
+            "mg1": "12π",
+            "mg2": "4π",
+            "mg3": "8"
+          },
+          "oracles": [
+            "12π",
+            "4π",
+            "8"
+          ],
+          "oracle_verified": true,
+          "source_gate_authority": "registry.kiem_nguon",
+          "section_certificates": 0,
+          "relation_certificates": 2,
+          "scene3d_objects": 28,
+          "scene3d_events": 20,
+          "dependencies_closed": true,
+          "zero_machine_id_leak": true,
+          "response_sha256": "cf3015d83617918f48a2e5cf592eebfabf381b06f7f90044489362bcdd6e75c9"
+        },
+        {
+          "case_id": "cr.tetra_asym_132.inscribed.named_center",
+          "problem_text": "Cho hình chóp S.ABC có đáy ABC là tam giác vuông tại A, AB = 3, AC = 2, SA vuông góc với mặt phẳng (ABC) và SA = 1. Gọi I là tâm mặt cầu nội tiếp hình chóp S.ABC. Tính bán kính mặt cầu nội tiếp hình chóp S.ABC và độ dài AI.",
+          "http_status": 200,
+          "route_d_status": "SERVED",
+          "envelope_status": "ok",
+          "answers": {
+            "mg2": "√3/3",
+            "mg1": "1/3"
+          },
+          "oracles": [
+            "1/3",
+            "√3/3"
+          ],
+          "oracle_verified": true,
+          "source_gate_authority": "registry.kiem_nguon",
+          "section_certificates": 0,
+          "relation_certificates": 1,
+          "scene3d_objects": 15,
+          "scene3d_events": 9,
+          "dependencies_closed": true,
+          "zero_machine_id_leak": true,
+          "response_sha256": "689796a23b369775c310b973fb23f13a621bbe2dc505a736d3797f6a460ab3a5"
+        }
+      ]
+    },
+    {
+      "category_id": "02_pyramids",
+      "label": "Pyramids",
+      "expected_disposition": "SERVED",
+      "cases_verified": 2,
+      "all_passed": true,
+      "cases": [
+        {
+          "case_id": "S2-B-I07_ve_va_tinh",
+          "problem_text": "Vẽ hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với mặt phẳng (ABCD) và SA = 2. Tính thể tích khối chóp S.ABCD.",
+          "http_status": 200,
+          "route_d_status": "SERVED",
+          "envelope_status": "ok",
+          "answers": {
+            "mg1": "8/3"
+          },
+          "oracles": [
+            "8/3"
+          ],
+          "oracle_verified": true,
+          "source_gate_authority": "registry.kiem_nguon",
+          "section_certificates": 0,
+          "relation_certificates": 0,
+          "scene3d_objects": 12,
+          "scene3d_events": 5,
+          "dependencies_closed": true,
+          "zero_machine_id_leak": true,
+          "response_sha256": "bd23e3e10a350a95154b71e42ddb503e30ba6fd978110c9c2421d4ec81843b95"
+        },
+        {
+          "case_id": "S2-F-S02_vuong_goc_day",
+          "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc đáy và SA = 2. Tính thể tích khối chóp S.ABCD.",
+          "http_status": 200,
+          "route_d_status": "SERVED",
+          "envelope_status": "ok",
+          "answers": {
+            "mg1": "8/3"
+          },
+          "oracles": [
+            "8/3"
+          ],
+          "oracle_verified": true,
+          "source_gate_authority": "registry.kiem_nguon",
+          "section_certificates": 0,
+          "relation_certificates": 0,
+          "scene3d_objects": 12,
+          "scene3d_events": 5,
+          "dependencies_closed": true,
+          "zero_machine_id_leak": true,
+          "response_sha256": "aeaed7dc15c93bf607b12b43a2442d155d8327648447d5860613c953cf74ce71"
+        }
+      ]
+    },
+    {
+      "category_id": "03_prisms",
+      "label": "Prisms",
+      "expected_disposition": "SERVED",
+      "cases_verified": 2,
+      "all_passed": true,
+      "cases": [
+        {
+          "case_id": "S2-B-A03_control_with_dimensions",
+          "problem_text": "Cho lăng trụ xiên ABC.A'B'C' có đáy ABC là tam giác đều cạnh 2. Gọi H là trung điểm của BC, hình chiếu vuông góc của A' lên mặt phẳng (ABC) là H và AA' = 2. Hãy mô phỏng hình và điểm H, rồi tính thể tích khối lăng trụ.",
+          "http_status": 200,
+          "route_d_status": "SERVED",
+          "envelope_status": "ok",
+          "answers": {
+            "mg1": "√3"
+          },
+          "oracles": [
+            "√3"
+          ],
+          "oracle_verified": true,
+          "source_gate_authority": "registry.kiem_nguon",
+          "section_certificates": 0,
+          "relation_certificates": 0,
+          "scene3d_objects": 14,
+          "scene3d_events": 7,
+          "dependencies_closed": true,
+          "zero_machine_id_leak": true,
+          "response_sha256": "8a6510ac357968ed7affb9609daa748baf23c8e0c05c4e99a7006cabb5ea1fcd"
+        },
+        {
+          "case_id": "cr.prism_345_h2.inscribed.area",
+          "problem_text": "Cho lăng trụ đứng ABC.A'B'C' có đáy ABC là tam giác vuông tại A, AB = 3, AC = 4, AA' = 2. Gọi (S) là mặt cầu nội tiếp lăng trụ ABC.A'B'C'. Tính diện tích mặt cầu (S).",
+          "http_status": 200,
+          "route_d_status": "SERVED",
+          "envelope_status": "ok",
+          "answers": {
+            "mg1": "4π"
+          },
+          "oracles": [
+            "4π"
+          ],
+          "oracle_verified": true,
+          "source_gate_authority": "registry.kiem_nguon",
+          "section_certificates": 0,
+          "relation_certificates": 1,
+          "scene3d_objects": 17,
+          "scene3d_events": 9,
+          "dependencies_closed": true,
+          "zero_machine_id_leak": true,
+          "response_sha256": "a0fa1912e3731ef1cf53a72cc8c40840ba9ce34b98c53f06c5fc36c73997975b"
+        }
+      ]
+    },
+    {
+      "category_id": "04_distance_and_angle",
+      "label": "Distance and angle",
+      "expected_disposition": "SERVED",
+      "cases_verified": 3,
+      "all_passed": true,
+      "cases": [
+        {
+          "case_id": "S2-F-F05_kc_mp_shorthand",
+          "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA ⊥ (ABCD), SA = 2. Tính k/c từ A đến mp(SBC).",
+          "http_status": 200,
+          "route_d_status": "SERVED",
+          "envelope_status": "ok",
+          "answers": {
+            "mg1": "√2"
+          },
+          "oracles": [
+            "√2"
+          ],
+          "oracle_verified": true,
+          "source_gate_authority": "registry.kiem_nguon",
+          "section_certificates": 0,
+          "relation_certificates": 0,
+          "scene3d_objects": 13,
+          "scene3d_events": 6,
+          "dependencies_closed": true,
+          "zero_machine_id_leak": true,
+          "response_sha256": "ed3badf43b4dbfa65e3898e14d067c8a11f111a360d1f05a2725703ccb1292a3"
+        },
+        {
+          "case_id": "S2-F-F06_dt_mp_shorthand",
+          "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với đáy, SA = 2. Tính góc giữa đt SC và mp (ABCD).",
+          "http_status": 200,
+          "route_d_status": "SERVED",
+          "envelope_status": "ok",
+          "answers": {
+            "mg1": "cos²=2/3"
+          },
+          "oracles": [
+            "2/3"
+          ],
+          "oracle_verified": true,
+          "source_gate_authority": "registry.kiem_nguon",
+          "section_certificates": 0,
+          "relation_certificates": 0,
+          "scene3d_objects": 14,
+          "scene3d_events": 7,
+          "dependencies_closed": true,
+          "zero_machine_id_leak": true,
+          "response_sha256": "29e82156c3cb14080b2f54ae9544aeb776aa06c069e5c184963971227c56b385"
+        },
+        {
+          "case_id": "R1-D01",
+          "problem_text": "Cho hình lăng trụ đứng ABC.A'B'C' có đáy ABC là tam giác vuông tại A, AB = 3, AC = 4 và AA' = 2. Tính độ dài đoạn thẳng nối A' với trung điểm của BC.",
+          "http_status": 200,
+          "route_d_status": "SERVED",
+          "envelope_status": "ok",
+          "answers": {
+            "q1": "√41/2"
+          },
+          "oracles": [
+            "√41/2"
+          ],
+          "oracle_verified": true,
+          "source_gate_authority": "registry.kiem_nguon",
+          "section_certificates": 0,
+          "relation_certificates": 0,
+          "scene3d_objects": 14,
+          "scene3d_events": 7,
+          "dependencies_closed": true,
+          "zero_machine_id_leak": true,
+          "response_sha256": "f1bd5def38589a5b7abb198c7be1c71ed9656e78f8f9523de4ae27235d85ca03"
+        }
+      ]
+    },
+    {
+      "category_id": "05_area_and_volume",
+      "label": "Area and volume",
+      "expected_disposition": "SERVED",
+      "cases_verified": 2,
+      "all_passed": true,
+      "cases": [
+        {
+          "case_id": "R1-A05",
+          "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với mặt phẳng (ABCD) và SA = 2. Tính diện tích tam giác tạo bởi S, C và trung điểm của AB.",
+          "http_status": 200,
+          "route_d_status": "SERVED",
+          "envelope_status": "ok",
+          "answers": {
+            "q1": "√6"
+          },
+          "oracles": [
+            "√6"
+          ],
+          "oracle_verified": true,
+          "source_gate_authority": "registry.kiem_nguon",
+          "section_certificates": 0,
+          "relation_certificates": 0,
+          "scene3d_objects": 14,
+          "scene3d_events": 7,
+          "dependencies_closed": true,
+          "zero_machine_id_leak": true,
+          "response_sha256": "50412d12a43a11a377e9311623a8f3e763939ee13a33f48c1e188aaf8263c787"
+        },
+        {
+          "case_id": "CORPUS-DEV10-prism-area",
+          "problem_text": "Cho lăng trụ đứng ABC.A'B'C' có đáy ABC là tam giác đều cạnh a và AA' = 2a. Gọi M là trung điểm của AA'. Mặt phẳng (α) qua M và song song với (ABC) cắt BB', CC'. Dựng lăng trụ, thiết diện bởi (α) và tính diện tích thiết diện.",
+          "http_status": 200,
+          "route_d_status": "SERVED",
+          "envelope_status": "ok",
+          "answers": {
+            "g_area": "a²√3/4"
+          },
+          "oracles": {
+            "symbolic": [
+              "a²√3/4"
+            ],
+            "exact_coef": [
+              "√3/4"
+            ]
+          },
+          "oracle_verified": true,
+          "source_gate_authority": "registry.kiem_nguon",
+          "section_certificates": 1,
+          "relation_certificates": 0,
+          "scene3d_objects": 25,
+          "scene3d_events": 21,
+          "dependencies_closed": true,
+          "zero_machine_id_leak": true,
+          "response_sha256": "aa49248dd79749c8534e61ae91211a7fd05b51ab7cd8aa71d181847706e7a358"
+        }
+      ]
+    },
+    {
+      "category_id": "06_plane_sections",
+      "label": "Plane sections (Category A declared/edge-cut & Category B engine-derived)",
+      "expected_disposition": "SERVED",
+      "cases_verified": 2,
+      "all_passed": true,
+      "cases": [
+        {
+          "case_id": "PARTIAL-1of2-construct",
+          "problem_text": "Cho hình chóp S.ABC. Đáy ABC là tam giác đều cạnh a. SA vuông góc với mặt phẳng (ABC). SA = a. Gọi M là trung điểm của SA. Mặt phẳng (α) qua M và song song với (ABC) cắt SB tại N. Dựng thiết diện của hình chóp S.ABC bởi (α) và khối chóp đỉnh S cắt bởi (α).",
+          "http_status": 200,
+          "route_d_status": "SERVED",
+          "envelope_status": "ok",
+          "answers": {},
+          "oracles": [],
+          "oracle_verified": true,
+          "source_gate_authority": "registry.kiem_nguon",
+          "section_certificates": 1,
+          "relation_certificates": 0,
+          "scene3d_objects": 22,
+          "scene3d_events": 20,
+          "dependencies_closed": true,
+          "zero_machine_id_leak": true,
+          "response_sha256": "fc6b31d694ec5ccbc4520541cc4e94b279ba4c0cb7bcefaa4090b55b5874c65f"
+        },
+        {
+          "case_id": "R1-C02",
+          "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với mặt phẳng (ABCD) và SA = 2. Mặt phẳng (P) đi qua giao điểm của AC và BD và song song với mặt phẳng (SAB). Xác định thiết diện của hình chóp S.ABCD cắt bởi (P) và tính diện tích thiết diện đó.",
+          "http_status": 200,
+          "route_d_status": "SERVED",
+          "envelope_status": "ok",
+          "answers": {
+            "q1": "3/2"
+          },
+          "oracles": [
+            "3/2"
+          ],
+          "oracle_verified": true,
+          "source_gate_authority": "registry.kiem_nguon",
+          "section_certificates": 1,
+          "relation_certificates": 0,
+          "scene3d_objects": 21,
+          "scene3d_events": 18,
+          "dependencies_closed": true,
+          "zero_machine_id_leak": true,
+          "response_sha256": "bb69ac5e91c9c4338a6844186bf57d3cba3de1b0f00bf5b78cdac870d794be9e"
+        }
+      ]
+    },
+    {
+      "category_id": "07_curved_solids",
+      "label": "Curved solids (sphere, cylinder, cone, curved plane section)",
+      "expected_disposition": "SERVED",
+      "cases_verified": 4,
+      "all_passed": true,
+      "cases": [
+        {
+          "case_id": "sph.V",
+          "problem_text": "Cho mặt cầu tâm O, điểm A thuộc mặt cầu, bán kính bằng 3. Tính thể tích khối cầu.",
+          "http_status": 200,
+          "route_d_status": "SERVED",
+          "envelope_status": "ok",
+          "answers": {
+            "mg1": "36π"
+          },
+          "oracles": [
+            "36π"
+          ],
+          "oracle_verified": true,
+          "source_gate_authority": "registry.kiem_nguon",
+          "section_certificates": 0,
+          "relation_certificates": 0,
+          "scene3d_objects": 4,
+          "scene3d_events": 3,
+          "dependencies_closed": true,
+          "zero_machine_id_leak": true,
+          "response_sha256": "21336e854f485b02536d8b0bd36ed33ce697d888a49788ab5f0cafe6ab78b0a9"
+        },
+        {
+          "case_id": "cyl.Stp",
+          "problem_text": "Cho hình trụ có tâm hai đáy là O và O', điểm A thuộc đường tròn đáy tâm O, bán kính đáy bằng 3 và chiều cao bằng 5. Tính diện tích toàn phần của hình trụ.",
+          "http_status": 200,
+          "route_d_status": "SERVED",
+          "envelope_status": "ok",
+          "answers": {
+            "mg1": "48π"
+          },
+          "oracles": [
+            "48π"
+          ],
+          "oracle_verified": true,
+          "source_gate_authority": "registry.kiem_nguon",
+          "section_certificates": 0,
+          "relation_certificates": 0,
+          "scene3d_objects": 9,
+          "scene3d_events": 7,
+          "dependencies_closed": true,
+          "zero_machine_id_leak": true,
+          "response_sha256": "55162007817897192eebb04225b6b4452c678e86138c6fdf35bd0dca7e5270a0"
+        },
+        {
+          "case_id": "coneR.Sxq",
+          "problem_text": "Cho hình nón đỉnh S, đáy là đường tròn tâm O, điểm A thuộc đường tròn đáy, bán kính đáy bằng 2 và chiều cao bằng 2. Tính diện tích xung quanh của hình nón.",
+          "http_status": 200,
+          "route_d_status": "SERVED",
+          "envelope_status": "ok",
+          "answers": {
+            "mg1": "4π√2"
+          },
+          "oracles": [
+            "4π√2"
+          ],
+          "oracle_verified": true,
+          "source_gate_authority": "registry.kiem_nguon",
+          "section_certificates": 0,
+          "relation_certificates": 0,
+          "scene3d_objects": 5,
+          "scene3d_events": 3,
+          "dependencies_closed": true,
+          "zero_machine_id_leak": true,
+          "response_sha256": "d7907927281f1391bed8e97de04a7a04bad19e4d85b553c365aee14e5de4fa6c"
+        },
+        {
+          "case_id": "cone.par.S",
+          "problem_text": "Cho hình nón đỉnh S, đáy là đường tròn tâm O, điểm A thuộc đường tròn đáy, bán kính đáy bằng 3 và chiều cao bằng 4. Mặt phẳng (P) song song với đáy và cách đáy một khoảng bằng 1 cắt hình nón theo một đường tròn. Tính diện tích thiết diện.",
+          "http_status": 200,
+          "route_d_status": "SERVED",
+          "envelope_status": "ok",
+          "answers": {
+            "mg1": "81π/16"
+          },
+          "oracles": [
+            "81π/16"
+          ],
+          "oracle_verified": true,
+          "source_gate_authority": "registry.kiem_nguon",
+          "section_certificates": 0,
+          "relation_certificates": 0,
+          "scene3d_objects": 7,
+          "scene3d_events": 5,
+          "dependencies_closed": true,
+          "zero_machine_id_leak": true,
+          "response_sha256": "60677b5a1ef9c26bc9bea61e4c674b52a06839f4c4dc2e0650e4b4fda9ca8856"
+        }
+      ]
+    },
+    {
+      "category_id": "08_multi_object_geometry",
+      "label": "Multi-object geometry (shared faces, dual spheres, frustum residual volume)",
+      "expected_disposition": "SERVED",
+      "cases_verified": 3,
+      "all_passed": true,
+      "cases": [
+        {
+          "case_id": "cr.shared_base_pyramids_plus_inscribed_sphere",
+          "problem_text": "Hai hình chóp S.ABCD và T.ABCD có mặt chung ABCD. Hình chóp tứ giác đều S.ABCD có cạnh đáy bằng 6, chiều cao của hình chóp S.ABCD bằng 4. Biết TA vuông góc với mặt phẳng (ABCD) và TA = 6. Gọi (S) là mặt cầu nội tiếp hình chóp S.ABCD. Tính thể tích khối chóp T.ABCD và diện tích mặt cầu (S).",
+          "http_status": 200,
+          "route_d_status": "SERVED",
+          "envelope_status": "ok",
+          "answers": {
+            "mg2": "9π",
+            "mg1": "72"
+          },
+          "oracles": [
+            "72",
+            "9π"
+          ],
+          "oracle_verified": true,
+          "source_gate_authority": "registry.kiem_nguon",
+          "section_certificates": 0,
+          "relation_certificates": 1,
+          "scene3d_objects": 24,
+          "scene3d_events": 11,
+          "dependencies_closed": true,
+          "zero_machine_id_leak": true,
+          "response_sha256": "78c695688a5abf195dfd94fb94a245321e9684df07d734c1e20c71b7ef574a76"
+        },
+        {
+          "case_id": "cr.cube_section_plus_inscribed_sphere",
+          "problem_text": "Cho hình lập phương ABCD.A'B'C'D' có cạnh bằng 2. Gọi M là trung điểm của AA'. Gọi (S) là mặt cầu nội tiếp hình lập phương ABCD.A'B'C'D'. Mặt phẳng (P) đi qua M và song song với (ABCD). Tính diện tích thiết diện của hình lập phương ABCD.A'B'C'D' cắt bởi (P) và thể tích khối cầu (S).",
+          "http_status": 200,
+          "route_d_status": "SERVED",
+          "envelope_status": "ok",
+          "answers": {
+            "mg2": "4π/3",
+            "mg1": "4"
+          },
+          "oracles": [
+            "4",
+            "4π/3"
+          ],
+          "oracle_verified": true,
+          "source_gate_authority": "registry.kiem_nguon",
+          "section_certificates": 1,
+          "relation_certificates": 1,
+          "scene3d_objects": 28,
+          "scene3d_events": 21,
+          "dependencies_closed": true,
+          "zero_machine_id_leak": true,
+          "response_sha256": "3f4c65fa2881fcae689b9f48102cdd03e86994922104be4670b02fec6ed5e688"
+        },
+        {
+          "case_id": "cone.residual",
+          "problem_text": "Cho hình nón đỉnh S, đáy là đường tròn tâm O, điểm A thuộc đường tròn đáy, bán kính đáy bằng 3 và chiều cao bằng 4. Mặt phẳng (P) song song với đáy và cách đáy một khoảng bằng 2 cắt hình nón theo một đường tròn. Mặt phẳng (P) chia hình nón thành một khối nón nhỏ đỉnh S và một khối nón cụt. Tính thể tích của khối nón cụt.",
+          "http_status": 200,
+          "route_d_status": "SERVED",
+          "envelope_status": "ok",
+          "answers": {
+            "mg1": "21π/2"
+          },
+          "oracles": [
+            "21π/2"
+          ],
+          "oracle_verified": true,
+          "source_gate_authority": "registry.kiem_nguon",
+          "section_certificates": 0,
+          "relation_certificates": 0,
+          "scene3d_objects": 12,
+          "scene3d_events": 9,
+          "dependencies_closed": true,
+          "zero_machine_id_leak": true,
+          "response_sha256": "b89fb01577fe57a697fc41e94828b877aa0be1cbcac813322a77f3a5f52d10f9"
+        }
+      ]
+    },
+    {
+      "category_id": "09_described_points",
+      "label": "Described points (@id midpoint, ratio, projection, centroid)",
+      "expected_disposition": "SERVED",
+      "cases_verified": 2,
+      "all_passed": true,
+      "cases": [
+        {
+          "case_id": "R1-A01",
+          "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 4, SA vuông góc với mặt phẳng (ABCD) và SA = 4. Tính khoảng cách từ trung điểm của SB đến mặt phẳng (SCD).",
+          "http_status": 200,
+          "route_d_status": "SERVED",
+          "envelope_status": "ok",
+          "answers": {
+            "q1": "√2"
+          },
+          "oracles": [
+            "√2"
+          ],
+          "oracle_verified": true,
+          "source_gate_authority": "registry.kiem_nguon",
+          "section_certificates": 0,
+          "relation_certificates": 0,
+          "scene3d_objects": 14,
+          "scene3d_events": 7,
+          "dependencies_closed": true,
+          "zero_machine_id_leak": true,
+          "response_sha256": "f93ac54e02a4837a2fe7d371024b0e8bf4f54afaef93cfdd18f9105adf066aa6"
+        },
+        {
+          "case_id": "R1-A02",
+          "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 4, SA vuông góc với mặt phẳng (ABCD) và SA = 4. Tính khoảng cách từ hình chiếu vuông góc của B lên mặt phẳng (SAC) đến đường thẳng SC.",
+          "http_status": 200,
+          "route_d_status": "SERVED",
+          "envelope_status": "ok",
+          "answers": {
+            "q1": "2√6/3"
+          },
+          "oracles": [
+            "2√6/3"
+          ],
+          "oracle_verified": true,
+          "source_gate_authority": "registry.kiem_nguon",
+          "section_certificates": 0,
+          "relation_certificates": 0,
+          "scene3d_objects": 16,
+          "scene3d_events": 9,
+          "dependencies_closed": true,
+          "zero_machine_id_leak": true,
+          "response_sha256": "6119f0edd95d0744c3389290989916952cf77bfe5d99aaad08173978a5c5dcf1"
+        }
+      ]
+    },
+    {
+      "category_id": "10_constrained_planes",
+      "label": "Constrained planes (MAT_RANG_BUOC)",
+      "expected_disposition": "SERVED",
+      "cases_verified": 2,
+      "all_passed": true,
+      "cases": [
+        {
+          "case_id": "K-A01",
+          "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với mặt phẳng (ABCD) và SA = 2. Gọi M là trung điểm của AB. Gọi N là trung điểm của SC. Mặt phẳng (P) đi qua A, B và vuông góc với (SCD). Xác định thiết diện của hình chóp S.ABCD cắt bởi (P) và tính diện tích thiết diện đó.",
+          "http_status": 200,
+          "route_d_status": "SERVED",
+          "envelope_status": "ok",
+          "answers": {
+            "q1": "3√2/2"
+          },
+          "oracles": [
+            "3√2/2"
+          ],
+          "oracle_verified": true,
+          "source_gate_authority": "registry.kiem_nguon",
+          "section_certificates": 1,
+          "relation_certificates": 0,
+          "scene3d_objects": 20,
+          "scene3d_events": 17,
+          "dependencies_closed": true,
+          "zero_machine_id_leak": true,
+          "response_sha256": "e603e9079af2eb9f6ac0128ffad650ebeb7b8113bd5663720a7b5a0abb9071c8"
+        },
+        {
+          "case_id": "K-A03",
+          "problem_text": "Cho hình lăng trụ đứng ABC.A'B'C' có đáy ABC là tam giác vuông tại A, AB = 3, AC = 4 và AA' = 2. Gọi M là trung điểm của BC. Gọi N là trung điểm của A'B'. Mặt phẳng (P) chứa AB' và song song với BC. Xác định thiết diện của hình lăng trụ ABC.A'B'C' cắt bởi (P) và tính diện tích thiết diện đó.",
+          "http_status": 200,
+          "route_d_status": "SERVED",
+          "envelope_status": "ok",
+          "answers": {
+            "q1": "√61"
+          },
+          "oracles": [
+            "√61"
+          ],
+          "oracle_verified": true,
+          "source_gate_authority": "registry.kiem_nguon",
+          "section_certificates": 1,
+          "relation_certificates": 0,
+          "scene3d_objects": 19,
+          "scene3d_events": 15,
+          "dependencies_closed": true,
+          "zero_machine_id_leak": true,
+          "response_sha256": "d64c6015be829349cc24b81a114d715ab8ecba6ba4b65344d768e1e476744ff2"
+        }
+      ]
+    },
+    {
+      "category_id": "11_orthocenter_and_circumcenter",
+      "label": "Orthocenter and circumcenter",
+      "expected_disposition": "SERVED",
+      "cases_verified": 3,
+      "all_passed": true,
+      "cases": [
+        {
+          "case_id": "R1-B01",
+          "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 3, SA vuông góc với mặt phẳng (ABCD) và SA = 4. Mặt phẳng (P) đi qua hình chiếu vuông góc của A lên SB và song song với mặt phẳng (ABCD). Xác định thiết diện của hình chóp S.ABCD cắt bởi (P) và tính diện tích thiết diện đó.",
+          "http_status": 200,
+          "route_d_status": "SERVED",
+          "envelope_status": "ok",
+          "answers": {
+            "q1": "2304/625"
+          },
+          "oracles": [
+            "2304/625"
+          ],
+          "oracle_verified": true,
+          "source_gate_authority": "registry.kiem_nguon",
+          "section_certificates": 1,
+          "relation_certificates": 0,
+          "scene3d_objects": 20,
+          "scene3d_events": 17,
+          "dependencies_closed": true,
+          "zero_machine_id_leak": true,
+          "response_sha256": "5cd5d5dd7b06e6324c08c4e1daf9615fde5115745ce1519898cb5589aa33d168"
+        },
+        {
+          "case_id": "K-C01",
+          "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với mặt phẳng (ABCD) và SA = 2. Gọi M là trung điểm của AB. Gọi N là trung điểm của SC. Tính khoảng cách từ trực tâm của tam giác ACM đến mặt phẳng (SAB).",
+          "http_status": 200,
+          "route_d_status": "SERVED",
+          "envelope_status": "ok",
+          "answers": {
+            "q1": "1"
+          },
+          "oracles": [
+            "1"
+          ],
+          "oracle_verified": true,
+          "source_gate_authority": "registry.kiem_nguon",
+          "section_certificates": 0,
+          "relation_certificates": 0,
+          "scene3d_objects": 22,
+          "scene3d_events": 15,
+          "dependencies_closed": true,
+          "zero_machine_id_leak": true,
+          "response_sha256": "dfa25169fc66bf0a12ec5b70455bad2349f13808a00d0e28158504d1fdaf89d1"
+        },
+        {
+          "case_id": "K-C02",
+          "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với mặt phẳng (ABCD) và SA = 2. Gọi M là trung điểm của AB. Gọi N là trung điểm của SC. Tính khoảng cách từ tâm đường tròn ngoại tiếp tam giác ABN đến mặt phẳng (ABCD).",
+          "http_status": 200,
+          "route_d_status": "SERVED",
+          "envelope_status": "ok",
+          "answers": {
+            "q1": "1/4"
+          },
+          "oracles": [
+            "1/4"
+          ],
+          "oracle_verified": true,
+          "source_gate_authority": "registry.kiem_nguon",
+          "section_certificates": 0,
+          "relation_certificates": 0,
+          "scene3d_objects": 27,
+          "scene3d_events": 20,
+          "dependencies_closed": true,
+          "zero_machine_id_leak": true,
+          "response_sha256": "a0e255ef9f79b10aafdf5a23d0ffb9a67cb3eab9a9447e5d6bdde1eaf0913965"
+        }
+      ]
+    },
+    {
+      "category_id": "12_registered_multi_function_composition",
+      "label": "Registered multi-function composition",
+      "expected_disposition": "SERVED",
+      "cases_verified": 3,
+      "all_passed": true,
+      "cases": [
+        {
+          "case_id": "S2-B-P07_shared_intermediate_two_goals",
+          "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với mặt phẳng (ABCD) và SA = 2. Gọi M là trung điểm của SC. Tính độ dài AM và khoảng cách từ M đến mặt phẳng (ABCD).",
+          "http_status": 200,
+          "route_d_status": "SERVED",
+          "envelope_status": "ok",
+          "answers": {
+            "mg2": "1",
+            "mg1": "√3"
+          },
+          "oracles": [
+            "√3",
+            "1"
+          ],
+          "oracle_verified": true,
+          "source_gate_authority": "registry.kiem_nguon",
+          "section_certificates": 0,
+          "relation_certificates": 0,
+          "scene3d_objects": 15,
+          "scene3d_events": 8,
+          "dependencies_closed": true,
+          "zero_machine_id_leak": true,
+          "response_sha256": "bf3326954f852b90e3bf81875380e6d74084448d0cb375785d656595a3d280e2"
+        },
+        {
+          "case_id": "S2-B-P09_student_chain",
+          "problem_text": "Vẽ hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với mặt phẳng (ABCD) và SA = 2. Gọi M là trung điểm SC. Mô phỏng hình và tính độ dài AM.",
+          "http_status": 200,
+          "route_d_status": "SERVED",
+          "envelope_status": "ok",
+          "answers": {
+            "mg1": "√3"
+          },
+          "oracles": [
+            "√3"
+          ],
+          "oracle_verified": true,
+          "source_gate_authority": "registry.kiem_nguon",
+          "section_certificates": 0,
+          "relation_certificates": 0,
+          "scene3d_objects": 13,
+          "scene3d_events": 6,
+          "dependencies_closed": true,
+          "zero_machine_id_leak": true,
+          "response_sha256": "aed9b3de4daa2bd5cc33dc82d81258804787a398564029f154c6f4718f05d844"
+        },
+        {
+          "case_id": "K-C03",
+          "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với mặt phẳng (ABCD) và SA = 2. Gọi M là trung điểm của AB. Gọi N là trung điểm của SC. Tính độ dài đoạn thẳng nối điểm C với tâm đường tròn ngoại tiếp tam giác ABN.",
+          "http_status": 200,
+          "route_d_status": "SERVED",
+          "envelope_status": "ok",
+          "answers": {
+            "q1": "√66/4"
+          },
+          "oracles": [
+            "√66/4"
+          ],
+          "oracle_verified": true,
+          "source_gate_authority": "registry.kiem_nguon",
+          "section_certificates": 0,
+          "relation_certificates": 0,
+          "scene3d_objects": 26,
+          "scene3d_events": 19,
+          "dependencies_closed": true,
+          "zero_machine_id_leak": true,
+          "response_sha256": "2fa0379f420bbe732d0c096b77789c554a2b25fa886c48c2297752fe5f0c1651"
+        }
+      ]
+    },
+    {
+      "category_id": "13_contradictory_data",
+      "label": "Contradictory geometric data (fail-closed refusal)",
+      "expected_disposition": "REFUSED",
+      "cases_verified": 3,
+      "all_passed": true,
+      "cases": [
+        {
+          "case_id": "S2-D-D03_contradictory_length",
+          "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với mặt phẳng (ABCD), SA = 2 và SC = 5. Tính thể tích khối chóp S.ABCD.",
+          "http_status": 200,
+          "route_d_status": "REFUSED",
+          "envelope_status": "unsupported",
+          "reason_code": "INCONSISTENT_FACTS",
+          "failure_category": "geometry_generation_failed",
+          "clarification_question": null,
+          "zero_scene_on_refusal": true,
+          "response_sha256": "73d1dc3fa21c11da79b9a3dd1709e2ed38470278f123712f32c93cc75270ac33"
+        },
+        {
+          "case_id": "K-D01",
+          "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với mặt phẳng (ABCD) và SA = 2. Gọi M là trung điểm của AB. Gọi N là trung điểm của SC. Tính khoảng cách từ trực tâm của tam giác ABM đến mặt phẳng (ABCD).",
+          "http_status": 200,
+          "route_d_status": "REFUSED",
+          "envelope_status": "unsupported",
+          "reason_code": "DEGENERATE_POINTS",
+          "failure_category": "geometry_generation_failed",
+          "clarification_question": null,
+          "zero_scene_on_refusal": true,
+          "response_sha256": "17ad2d16012d24f5fb0cd24777b1f70214fe1e641f5be0f931554d7de7293556"
+        },
+        {
+          "case_id": "n.bad_slant",
+          "problem_text": "Cho hình nón đỉnh S, đáy là đường tròn tâm O, điểm A thuộc đường tròn đáy, bán kính đáy bằng 3. Đường sinh SA = 3. Tính thể tích khối nón.",
+          "http_status": 200,
+          "route_d_status": "REFUSED",
+          "envelope_status": "unsupported",
+          "reason_code": "INCONSISTENT_FACTS",
+          "failure_category": "geometry_generation_failed",
+          "clarification_question": null,
+          "zero_scene_on_refusal": true,
+          "response_sha256": "73d1dc3fa21c11da79b9a3dd1709e2ed38470278f123712f32c93cc75270ac33"
+        }
+      ]
+    },
+    {
+      "category_id": "14_missing_data",
+      "label": "Missing geometric data (fail-closed refusal)",
+      "expected_disposition": "REFUSED",
+      "cases_verified": 2,
+      "all_passed": true,
+      "cases": [
+        {
+          "case_id": "K-B01",
+          "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với mặt phẳng (ABCD) và SA = 2. Gọi M là trung điểm của AB. Gọi N là trung điểm của SC. Mặt phẳng (P) đi qua A, B và vuông góc với (SDA). Xác định thiết diện của hình chóp S.ABCD cắt bởi (P) và tính diện tích thiết diện đó.",
+          "http_status": 200,
+          "route_d_status": "REFUSED",
+          "envelope_status": "unsupported",
+          "reason_code": "PLANE_NOT_UNIQUE",
+          "failure_category": "insufficient_specification",
+          "clarification_question": null,
+          "zero_scene_on_refusal": true,
+          "response_sha256": "fed2ecdb5e3b3e4916753c4edc882d6a67655d7f10931f3ba55f74e4dd3dbcc6"
+        },
+        {
+          "case_id": "n.missing_height",
+          "problem_text": "Cho hình trụ có tâm hai đáy là O và O', điểm A thuộc đường tròn đáy tâm O, bán kính đáy bằng 3. Tính thể tích khối trụ.",
+          "http_status": 200,
+          "route_d_status": "REFUSED",
+          "envelope_status": "unsupported",
+          "reason_code": "MISSING_DIMENSION",
+          "failure_category": "insufficient_specification",
+          "clarification_question": null,
+          "zero_scene_on_refusal": true,
+          "response_sha256": "0d0d0f96d53f4362308986490323ed23cba705d4d9d69927f499ad8c48d1e1b4"
+        }
+      ]
+    },
+    {
+      "category_id": "15_ambiguous_expressions",
+      "label": "Ambiguous expressions (route-d-clarification/1 user-facing question)",
+      "expected_disposition": "CLARIFY",
+      "cases_verified": 3,
+      "all_passed": true,
+      "cases": [
+        {
+          "case_id": "S2-C-A01_goc_chieu",
+          "problem_text": "Mô phỏng điểm S là góc chiếu của hình lăng trụ xiên.",
+          "http_status": 200,
+          "route_d_status": "REFUSED",
+          "envelope_status": "unsupported",
+          "reason_code": "AMBIGUOUS_FACT",
+          "failure_category": "insufficient_specification",
+          "clarification_question": "Trong “S là góc chiếu của hình lăng trụ xiên”, bạn muốn S là hình chiếu của điểm nào và lên đường thẳng hoặc mặt phẳng nào?",
+          "zero_scene_on_refusal": true,
+          "response_sha256": "dc18cf76dc5f01109f72a42801595060e1cef941a55299731f8702689937ac2b"
+        },
+        {
+          "case_id": "K-E01",
+          "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với mặt phẳng (ABCD) và SA = 2. Gọi M là trung điểm của AB. Gọi N là trung điểm của SC. Mặt phẳng (P) đi qua A, B và vuông góc với một mặt bên. Xác định thiết diện của hình chóp S.ABCD cắt bởi (P) và tính diện tích thiết diện đó.",
+          "http_status": 200,
+          "route_d_status": "REFUSED",
+          "envelope_status": "unsupported",
+          "reason_code": "AMBIGUOUS_FACT",
+          "failure_category": "insufficient_specification",
+          "clarification_question": "Trong “vuông góc với một mặt bên”, bạn muốn nói vuông góc lên đường thẳng hoặc mặt phẳng nào?",
+          "zero_scene_on_refusal": true,
+          "response_sha256": "a39f0893deeea5370846e140b2aaa89748c657a2a2c82b68f667e97ca6603a86"
+        },
+        {
+          "case_id": "R1-E01",
+          "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với mặt phẳng (ABCD) và SA = 2. Tính độ dài đoạn thẳng nối C với trung điểm của một cạnh bên.",
+          "http_status": 200,
+          "route_d_status": "REFUSED",
+          "envelope_status": "unsupported",
+          "reason_code": "AMBIGUOUS_FACT",
+          "failure_category": "insufficient_specification",
+          "clarification_question": "Trong “trung điểm của một cạnh bên”, bạn muốn nói trung điểm của điểm nào?",
+          "zero_scene_on_refusal": true,
+          "response_sha256": "efceb2204539c3158383c67891f7751818f4bc74b43df15d5d94c9f149ef6107"
+        }
+      ]
+    },
+    {
+      "category_id": "16_unsupported_goals",
+      "label": "Unsupported goals and outside-exact-domain requests (fail-closed refusal)",
+      "expected_disposition": "REFUSED",
+      "cases_verified": 3,
+      "all_passed": true,
+      "cases": [
+        {
+          "case_id": "S2-E-E02_truncated_pyramid",
+          "problem_text": "Cho hình chóp cụt đều ABC.A'B'C' có cạnh đáy lớn bằng 4, cạnh đáy nhỏ bằng 2 và chiều cao bằng 3. Tính thể tích khối chóp cụt.",
+          "http_status": 200,
+          "route_d_status": "REFUSED",
+          "envelope_status": "unsupported",
+          "reason_code": "OUT_OF_SCOPE",
+          "failure_category": "capability_gap",
+          "clarification_question": null,
+          "zero_scene_on_refusal": true,
+          "response_sha256": "e531fba100bfc88aa60d10349960de864ae61003bfdc0052e22ec43d493abbb1"
+        },
+        {
+          "case_id": "R1-F01",
+          "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với mặt phẳng (ABCD) và SA = 2. Tính khoảng cách từ hình chiếu vuông góc của trung điểm của SC lên mặt phẳng (ABCD) đến đường thẳng SB.",
+          "http_status": 200,
+          "route_d_status": "REFUSED",
+          "envelope_status": "unsupported",
+          "reason_code": "BRIDGE_UNSUPPORTED_DESCRIBED_POINT",
+          "failure_category": "capability_gap",
+          "clarification_question": null,
+          "zero_scene_on_refusal": true,
+          "response_sha256": "e9699a91344cf79971e104ee25876d06248478c917fa175a1a114c96b3861881"
+        },
+        {
+          "case_id": "cylR.Stp",
+          "problem_text": "Cho hình trụ có tâm hai đáy là O và O', điểm A thuộc đường tròn đáy tâm O, bán kính đáy bằng √2 và chiều cao bằng 3. Tính diện tích toàn phần của hình trụ.",
+          "http_status": 200,
+          "route_d_status": "REFUSED",
+          "envelope_status": "unsupported",
+          "reason_code": "EXACT_DOMAIN_EXCEEDED",
+          "failure_category": "capability_gap",
+          "clarification_question": null,
+          "zero_scene_on_refusal": true,
+          "response_sha256": "e54116fa4c662ff270ee8526ef755ebf026300932fa31fac7fb53bdbe256eb5a"
+        }
+      ]
+    }
+  ],
+  "corpus_sha256": "82ca8bb39eca54921a49f04d0c23cda85e0dad322a5fcfef5ed5ca5a143dbb24",
+  "corpus_texts": 176
+}
