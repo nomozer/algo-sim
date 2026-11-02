@@ -353,7 +353,7 @@ def composition_label(row: dict[str, Any]) -> str:
     functions of the registered auxiliary rules, and DISCOVERED_FUNCTION_COMPOSITION only otherwise. Failures are
     labelled by layer only when the gold reproduction ends the same way."""
     from app.ai.hybrid_preview import classify_refusal
-    from app.simulation.geometry_functions.registry import AUXILIARY_RULES, MAT_RANG_BUOC
+    from app.simulation.geometry_functions.registry import AUXILIARY_RULES
 
     if row["technical_failure"]:
         return "NOT_ESTABLISHED"
@@ -371,8 +371,7 @@ def composition_label(row: dict[str, Any]) -> str:
             return "SOURCE_EXPLICIT_SEQUENCE"
         # ponytail: by function name — a registered-rule function used outside its rule is counted registered too
         # (undercounts discovery, never overcounts); match the rule's step pattern if that ever matters
-        # C17: MAT_RANG_BUOC names a witness VOCABULARY whose producer is chosen by contract, not a fixed sequence
-        registered = {fn for rule, fns in AUXILIARY_RULES.items() if rule != MAT_RANG_BUOC for fn in fns}
+        registered = {fn for fns in AUXILIARY_RULES.values() for fn in fns}
         return ("REGISTERED_DECOMPOSITION" if all(s.get("fn") in registered for s in beyond)
                 else "DISCOVERED_FUNCTION_COMPOSITION")
     if row["attribution"] == "LLM_EXTRACTION_DIFFERS_FROM_GOLD":

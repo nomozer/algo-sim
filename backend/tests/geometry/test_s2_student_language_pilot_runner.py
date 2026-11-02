@@ -308,7 +308,8 @@ def test_c15_only_a_step_beyond_the_description_and_the_registered_rules_is_disc
     assert R.composition_label(_served([real], [h1])) == "SOURCE_EXPLICIT_SEQUENCE"
     assert R.composition_label(_served([real, rule], [h1])) == "REGISTERED_DECOMPOSITION"     # distance(point,line)
     assert R.composition_label(_served([real, rule, new], [h1])) == "DISCOVERED_FUNCTION_COMPOSITION"
-    moved = dict(real, args={"point": "D", "plane": ["S", "A", "C"], "image": "H"})          # not the stated point
+    # not the stated point; C17 put `orthogonal_projection` in a declared rule, so a function outside every rule is used
+    moved = {"id": "a", "fn": "centroid", "args": {"point": "G", "polygon": ["S", "A", "C"]}}
     assert R.composition_label(_served([moved], [h1])) == "DISCOVERED_FUNCTION_COMPOSITION"
     swapped = dict(real, args={"point": "B", "plane": ["C", "S", "A"], "image": "H"})        # same plane, other order
     assert R.composition_label(_served([swapped], [h1])) == "SOURCE_EXPLICIT_SEQUENCE"

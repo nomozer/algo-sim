@@ -453,10 +453,11 @@ def _chung_can_thiet(planner: dict) -> None:
         for w in d.get("witnesses") or ():
             if w["label"] not in d["span"]:
                 thua |= {w["translate"]} | ({w["call"]} if w.get("call") else set())
-    thua &= set(tel.get("search_generated_steps") or ())
+    thua &= set(tel.get("search_generated_steps") or ()) | set(tel.get("registered_decomposition_steps") or ())
     if not thua:
         return
-    tel["search_generated_steps"] = [i for i in tel["search_generated_steps"] if i not in thua]
+    for key in ("search_generated_steps", "registered_decomposition_steps"):
+        tel[key] = [i for i in tel.get(key) or () if i not in thua]
     tel["verification_witness_steps"] = sorted(thua)
     if tel.get("classification") == "DISCOVERED_FUNCTION_COMPOSITION" and not tel["search_generated_steps"]:
         tel["classification"] = "REGISTERED_DECOMPOSITION"

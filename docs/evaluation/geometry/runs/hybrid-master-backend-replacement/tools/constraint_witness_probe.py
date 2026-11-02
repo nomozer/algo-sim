@@ -13,11 +13,14 @@ missing the interior: NO_SECTION; otherwise UNIQUE with the section's area² (co
 A witness plan exists for every UNIQUE plane from the Registry's primitives: the normal of any Q is Z − foot(Z, Q) for a
 vertex Z off Q (there always is one), and ∥ UV is the anchor + UV.
 
-COMPOSITION LABEL (from the CERTIFICATE the product served with, not from telemetry; a witness counts only where the
-oracle shows it is NECESSARY — the stated points alone do not span the plane, else VERIFICATION_WITNESS_ONLY):
-  constructed normal (a Normal-contract call whose foot label the source never writes) → GENUINE_SEARCH_GENERATED;
-  normal taken from a stated premise line ⊥ Q → SEARCH_GENERATED_PREMISE_REUSE;
-  only stated-line translations → REGISTERED_DECOMPOSITION (one producer per stated line, as MAT_HAI_DUONG).
+COMPOSITION (from the CERTIFICATE the product served with, not from telemetry). Under the reviewed C15 rule every plan
+here is REGISTERED_DECOMPOSITION: `MAT_RANG_BUOC` is a declared rule (C17 review MAJOR-3). The detail label says which
+part of the rule served it, a witness counting only where the oracle shows it NECESSARY (the stated points alone do not
+span the plane), else VERIFICATION_WITNESS_ONLY:
+  RULE_PARAMETER_CONSTRUCTED_NORMAL — the rule's free vertex Z bound by the Normal contract, its foot built;
+  RULE_PREMISE_NORMAL — the normal is a stated premise line ⊥ Q;
+  RULE_STATED_LINE — only translations along a stated line (as MAT_HAI_DUONG).
+  `foot_is_vertex` records a foot that coincides with a vertex of the solid (review MINOR-2).
 IMPLEMENTER_AUTHORED_DEVELOPMENT_DIAGNOSTIC, offline, 0 provider calls. Usage: constraint_witness_probe.py [out.json]
 """
 import collections, itertools, json, math, os, re, socket, sys
@@ -92,7 +95,8 @@ def pyramid(a, h):
     a, h = F(a), F(h)
     V = {'A': (Z, Z, Z), 'B': (a, Z, Z), 'C': (a, a, Z), 'D': (Z, a, Z), 'S': (Z, Z, h)}
     E = [('A', 'B'), ('B', 'C'), ('C', 'D'), ('D', 'A'), ('S', 'A'), ('S', 'B'), ('S', 'C'), ('S', 'D')]
-    planes = [list('ABCD'), list('SAB'), list('SBC'), list('SCD'), list('SDA'), list('SAC'), list('SBD')]
+    planes = [list('ABCD'), list('SAB'), list('SBC'), list('SCD'), list('SDA'), list('SAC'), list('SBD'),
+              list('SAM'), list('MBC'), list('SMN')]     # review MINOR-1: Q named through the stated midpoints
     lines = [list(x) for x in ('AB', 'BC', 'SA', 'SB', 'SC', 'SD', 'AC', 'BD')]
     mids = (('M', ('A', 'B')), ('N', ('S', 'C')))
     text = f'Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh {a}, SA vuông góc với mặt phẳng (ABCD) và SA = {h}. '
@@ -109,7 +113,7 @@ def prism(b, c, h):
     V = {'A': (Z, Z, Z), 'B': (b, Z, Z), 'C': (Z, c, Z), "A'": (Z, Z, h), "B'": (b, Z, h), "C'": (Z, c, h)}
     E = [('A', 'B'), ('B', 'C'), ('C', 'A'), ("A'", "B'"), ("B'", "C'"), ("C'", "A'"), ('A', "A'"), ('B', "B'"), ('C', "C'")]
     planes = [list('ABC'), ["A'", "B'", "C'"], ['A', 'B', "B'", "A'"], ['B', 'C', "C'", "B'"], ['C', 'A', "A'", "C'"],
-              ['A', 'B', "C'"], ["A'", 'B', 'C']]
+              ['A', 'B', "C'"], ["A'", 'B', 'C'], ['A', 'M', "A'"]]   # review MINOR-1: Q through midpoint M
     lines = [['A', 'B'], ['B', 'C'], ['A', "A'"], ['B', "B'"], ["A'", 'B'], ['A', "C'"], ["B'", 'C']]
     mids = (('M', ('B', 'C')), ('N', ("A'", "B'")))
     text = f"Cho hình lăng trụ đứng ABC.A'B'C' có đáy ABC là tam giác vuông tại A, AB = {b}, AC = {c} và AA' = {h}. "
@@ -135,7 +139,7 @@ def cases():
             prem.append({'kind': 'midpoint', 'args': {'point': lbl, 'segment': [a, b]},
                          'quote': f'Gọi {lbl} là trung điểm của {a}{b}', 'solid_id': 's1'})
         area_q = f'Xác định thiết diện của {solid_name} cắt bởi (P) và tính diện tích thiết diện đó'
-        faces = [frozenset(p) for p in planes[:-2]]
+        faces = [frozenset(p) for p in planes]
         combos = [((x, y), fam, ref) for x, y in itertools.combinations(list(V), 2)
                   for fam, ref in [('F1', q) for q in planes] + [('F2', ln) for ln in lines]]
         # F3: three stated points AND ⊥ Q — over-determined: a plane exists only if the three points' plane is ⊥ Q
@@ -175,7 +179,7 @@ def cases():
             P = [V[x] for x in pts_]                          # do the stated points alone span the plane? (oracle)
             spans = any(any(cross(sub(P[i], P[0]), sub(P[j], P[0]))) for i in range(1, len(P)) for j in range(i + 1, len(P)))
             yield {'topology': name, 'family': fam, 'contains': list(pts_), 'ref': list(ref), 'text': text,
-                   'payload': payload, 'oracle': verdict, 'oracle_area2': a2, 'witness_needed': not spans}
+                   'payload': payload, 'oracle': verdict, 'oracle_area2': a2, 'witness_needed': not spans, 'V': V}
 
 
 def composition(route, text, needed=True):
@@ -186,10 +190,18 @@ def composition(route, text, needed=True):
     built = [w for w in aux.get('witnesses') or () if w.get('call') and w.get('foot')
              and not re.search(rf"(?<![\w']){re.escape(w['foot'])}(?![\w'])", text)]
     if built:                                          # constructed, and NECESSARY: the stated points do not span
-        return 'GENUINE_SEARCH_GENERATED' if needed else 'VERIFICATION_WITNESS_ONLY'
+        return 'RULE_PARAMETER_CONSTRUCTED_NORMAL' if needed else 'VERIFICATION_WITNESS_ONLY'
     if 'premise' in nguon:
-        return 'SEARCH_GENERATED_PREMISE_REUSE' if needed else 'VERIFICATION_WITNESS_ONLY'
-    return 'REGISTERED_DECOMPOSITION'
+        return 'RULE_PREMISE_NORMAL' if needed else 'VERIFICATION_WITNESS_ONLY'
+    return 'RULE_STATED_LINE'
+
+
+def _foot_is_vertex(V, z, q):
+    a, b, c = (V[x] for x in q[:3])
+    n = cross(sub(b, a), sub(c, a))
+    t = dot(sub(V[z], a), n) / dot(n, n)
+    h = tuple(x - t * y for x, y in zip(V[z], n))
+    return any(h == V[v] for v in V)
 
 
 def run_all(rows_out=None):
@@ -214,7 +226,9 @@ def run_all(rows_out=None):
             'witness_needed': c['witness_needed'],
             'composition': composition(route, c['text'], c['witness_needed']) if served else None,
             'planner_label': tel.get('classification') if served else None,
-            'normal_search': (aux.get('search') or {}).get('subgoals') if served else None})
+            'normal_search': (aux.get('search') or {}).get('subgoals') if served else None,
+            'foot_is_vertex': any(_foot_is_vertex(c['V'], w['point'], c['ref']) for w in aux.get('witnesses') or ()
+                                  if w.get('call')) if served else None})
     return rows
 
 
@@ -225,7 +239,10 @@ if __name__ == '__main__':
                'oracle': dict(collections.Counter(r['oracle'] for r in rows)),
                'refusal_codes_by_oracle': {o: dict(collections.Counter(r['code'] for r in rows if r['oracle'] == o and r['status'] != 'SERVED'))
                                            for o in sorted({r['oracle'] for r in rows})},
+               'c15_rule_label_of_served': {'REGISTERED_DECOMPOSITION': len(served), 'DISCOVERED_FUNCTION_COMPOSITION': 0},
                'composition_of_served': dict(collections.Counter(r['composition'] for r in served)),
+               'constructed_normal_foot_is_a_vertex': sum(bool(r['foot_is_vertex']) for r in served
+                                                         if r['composition'] == 'RULE_PARAMETER_CONSTRUCTED_NORMAL'),
                'planner_label_vs_composition': dict(collections.Counter(f"{r['planner_label']} | {r['composition']}" for r in served))}
     print(json.dumps(summary, ensure_ascii=False, indent=1))
     if len(sys.argv) > 1:

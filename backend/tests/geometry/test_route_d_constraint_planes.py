@@ -78,7 +78,10 @@ def test_c17_a_normal_no_premise_gives_is_constructed_by_the_planner_and_the_ans
     assert w["producer"] == "orthogonal_projection" and w["point"] == "A"
     assert not re.search(rf"(?<![\w']){re.escape(w['foot'])}(?![\w'])", text)        # an intermediate the source never names
     tel = route["planner"]["search_telemetry"]
-    assert tel["classification"] == "DISCOVERED_FUNCTION_COMPOSITION" and w["call"] in tel["search_generated_steps"]
+    # C17 review MAJOR-1: MAT_RANG_BUOC is a declared rule and Z is its parameter (any candidate gives the same plane), so the
+    # constructed normal is a REGISTERED step — the product never calls it discovered
+    assert tel["classification"] == "REGISTERED_DECOMPOSITION" and not tel["search_generated_steps"]
+    assert w["call"] in tel["registered_decomposition_steps"]
     plane = next(s for s in route["construction_trace"] if s.get("rule", "").startswith("section(plane defined"))
     assert plane["existence"] == plane["uniqueness"] == "VERIFIED" and w["label"] in plane["span"]   # necessary witness
 
@@ -91,6 +94,16 @@ def test_c17_a_normal_no_premise_gives_is_constructed_by_the_planner_and_the_ans
 def test_c17_existence_and_uniqueness_are_proved_from_every_stated_relation(pts, q, code):
     _text, route, env = _run(*_qua_vuong(pts, q))
     assert route["status"] == "REFUSED" and env.get("reason_code") == code
+
+
+def test_c17_a_vertex_on_q_through_a_stated_midpoint_is_rejected_structurally():
+    """C17 review MINOR-1: (SAM) with M = mid AB IS (SAB); B lies on it, so B is no candidate (its foot is itself).
+    (P) ∋ S, N, ⊥ (SAB) (y = 0): 2x + z = 2 ⇒ triangle S, M, N ⇒ |(1,0,−2) × (1,2,−2)| / 2 = √20 / 2 = √5."""
+    _text, route, env = _run(*_qua_vuong("SN", "SAM"))
+    assert route["status"] == "SERVED", env.get("reason_code")
+    assert {k: v["coef"] for k, v in route["answer_exact"].items()} == {"q1": "√5"}
+    sub = next(d for d in route["planner"]["auxiliary"] if d.get("witnesses"))["search"]["subgoals"][0]
+    assert "B" in {r["point"] for r in sub["rejected"]}
 
 
 def test_c17_a_parallel_line_inside_the_plane_is_refused():

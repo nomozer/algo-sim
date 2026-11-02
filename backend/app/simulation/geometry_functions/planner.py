@@ -1747,7 +1747,25 @@ def _phap_tuyen(q_mat: list[str], kh: _Khoi, k: KeHoach) -> dict:
                 and (tap_q <= frozenset(pb) or frozenset(pb) <= tap_q)):
             chan = next((x for x in pa if x in pb or x in tap_q), pa[0])
             ung_vien.append({"cost": 0, "producer": "premise", "fact": pf.id, "vector": [chan, next(x for x in pa if x != chan)]})
-    tren_q = set().union(*(m for m in _mat_cua_khoi(kh) if len(tap_q & m) >= 3)) | tap_q
+    # Points known to lie on Q from STRUCTURE (review MINOR-1): a stated midpoint of an edge lies on that edge's faces,
+    # and two of {A, B, mid AB} on Q put the third on it; then a face sharing ≥ 3 such points IS Q.
+    trung = [(pf.point, *pf.points) for pf in k.resolver.facts.values()
+             if pf.kind == "point_def" and pf.point_kind == "midpoint" and pf.point and len(pf.points or ()) == 2]
+    mats = [set(m) for m in _mat_cua_khoi(kh)]
+    duong = [set(t) for t in trung]                    # the only collinear triples structure knows: A, B, mid AB
+    tren_q = set(tap_q)
+
+    def phang(chung: set) -> bool:                     # ≥ 3 shared points that are NOT all on one known line
+        return len(chung) >= 3 and not any(chung <= ln for ln in duong)
+    for _ in range(3):
+        for m in mats:
+            m |= {x for x, a, b in trung if a in m and b in m}
+        for x, a, b in trung:
+            if len({x, a, b} & tren_q) >= 2:
+                tren_q |= {x, a, b}
+        for m in mats:
+            if phang(tren_q & m):
+                tren_q |= m
     dinh = list(dict.fromkeys([*kh.day, *(kh.tren if kh.loai == "prism" else [kh.dinh])]))
     for spec in sorted(REGISTRY.values(), key=lambda s: s.name):
         for contract in planning_contracts(spec):
@@ -1755,7 +1773,7 @@ def _phap_tuyen(q_mat: list[str], kh: _Khoi, k: KeHoach) -> dict:
                 continue
             for z in dinh:
                 if z in tren_q:
-                    loai.append({"producer": spec.name, "point": z, "rejected": "lies on the plane's face"})
+                    loai.append({"producer": spec.name, "point": z, "rejected": "lies on the plane (solid structure)"})
                     continue
                 ung_vien.append({"cost": 1, "producer": spec.name, "contract": contract, "point": z})
     if len(ung_vien) > MAX_NORMAL_CANDIDATES:
@@ -1812,7 +1830,9 @@ def _mat_rang_buoc(f: TypedFact, q: list[str], k: KeHoach, phat, khoi: str, fn: 
             else:                                            # perpendicular_to_plane: a Normal(Q) subgoal
                 tim.append(_phap_tuyen(c["points"], kh, k))
                 u = tim[-1]["selected"]
-                cach = "search_generated"
+                # C17 review MAJOR-1: `MAT_RANG_BUOC` is a declared rule; choosing its free vertex Z is a parameter of
+                # that rule, not a composition search (any candidate yields the same plane) — so REGISTERED
+                cach = "registered"
                 if u["producer"] == "premise":
                     vec, nguon = list(u["vector"]), {"producer": "premise", "fact": u["fact"]}
                 else:
@@ -1821,7 +1841,7 @@ def _mat_rang_buoc(f: TypedFact, q: list[str], k: KeHoach, phat, khoi: str, fn: 
                     phat(cid, u["producer"], render_call(u["contract"], {"Z": u["point"], "Q": tuple(c["points"]), "H": h}), q,
                          f"{MAT_RANG_BUOC}→{u['producer']} (pháp tuyến của ({''.join(c['points'])}): {u['point']} − chân {h})")
                     k.trace[-1]["fact"] = f.id
-                    k.step_provenance[cid] = "search_generated"
+                    k.step_provenance[cid] = "registered"
                     cids.append(cid)
                     vec, nguon = [h, u["point"]], {"producer": u["producer"], "point": u["point"], "foot": h, "call": cid}
             x = moi_nhan()

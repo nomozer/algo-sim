@@ -1111,8 +1111,14 @@ class _Dung:
                 return [labels[i], labels[j], labels[k]]
         return list(labels[:3])                            # all collinear: the kernel reports it
 
+    def _diem_qua(self, labels) -> list[str]:
+        """The three points a plane is built through: the first independent triple ONLY for a `MAT_RANG_BUOC` plane (C17
+        review NIT-2) — every other list keeps its first three, so a base or an area polygon never changes behaviour."""
+        rb = {tuple(d["plane"]) for d in getattr(self, "mat_phu", ()) or () if d.get("rule") == MAT_RANG_BUOC}
+        return self._ba_diem(labels) if tuple(labels) in rb else list(labels[:3])
+
     def _plane(self, labels) -> Plane3:
-        plane = Plane3.through(*(Vec3(*self.pts[p]) for p in self._ba_diem(labels)))
+        plane = Plane3.through(*(Vec3(*self.pts[p]) for p in self._diem_qua(labels)))
         if any(plane.signed_eval(Vec3(*self.pts[p])) != 0 for p in labels[3:]):
             raise GeometryError("NON_COPLANAR_POINTS", "các điểm không cùng nằm trong một mặt phẳng")
         return plane
@@ -2718,7 +2724,7 @@ class _Dung:
             nhan_mat = (f"({self.ten_mat_phu.get(dan['constructs'][0]) or 'α'})" if dan
                         else "(" + "".join(c.args.plane) + ")")
             khoi_id = "khoi_" + ir_name(c.args.solid.replace(".", "_"))
-            lenh.append({"kind": "construct_plane", "target_var": mp, "through": [ir_name(x) for x in self._ba_diem(c.args.plane)],
+            lenh.append({"kind": "construct_plane", "target_var": mp, "through": [ir_name(x) for x in self._diem_qua(c.args.plane)],
                          "label": nhan_mat})
             lenh.append({"kind": "construct_section", "target_var": ten, "solid": khoi_id,
                          "plane": mp, "label": "thiết diện"})
@@ -2971,7 +2977,7 @@ class _Dung:
                 "solid": rec["solid"],
                 "solid_object_id": rec["solid_object_id"],
                 "plane_object_id": rec["plane_object_id"],
-                "plane_points": self._ba_diem(rec["plane"]),
+                "plane_points": self._diem_qua(rec["plane"]),
                 "plane_label": rec["plane_label"],
                 "plane_rule": luat_mat,
                 "plane_relation": quan_he,
