@@ -64,8 +64,13 @@ above; nothing re-selected). Changes, all found by the offline gold replay, neve
   registered ("REFUSED"); the first conversion had mapped it to CLARIFY, which only a model could produce and only the
   engine can see.
 - K-E gold is the honest exit (the source gold without the ambiguous object and its goal, plus one `unresolved`).
-- Metrics §3: 1 and 2 are the runner's `constraint_check` / `described_check`; 6 is `no_invented_construction`;
-  8 is the scorer plus `hybrid_outcome`.
+- Metrics §3: 1 and 2 are the runner's `constraint_check` / `described_check`; 8 is the scorer plus `hybrid_outcome`.
+  6 is `no_invented_construction` ONLY for extra described points and sections (review MINOR-3); an extra premise,
+  relation, goal or GIVEN is seen by the facts signature (`extraction_accuracy`) and refused by the Source Gate, not by
+  this field. 4 (ownership) and 7 (no fake GIVEN) are not scored separately: the facts signature and the Source Gate
+  cover them.
+- Review MAJOR-1: K-B and K-E count as correct only for the gold's reason (`reason_verified`: same code and same facts;
+  an `unresolved` on the gold's ambiguous wording).
 
 Gold replay (`k1-live-pilot-gold-replay.jsonl`): **16/16**, 0 wrong-served. Approval template
 `k1-owner-approval.template.json`: 16 requests (one per case, no retry headroom), USD 1.0; worst-case estimate USD 0.39.

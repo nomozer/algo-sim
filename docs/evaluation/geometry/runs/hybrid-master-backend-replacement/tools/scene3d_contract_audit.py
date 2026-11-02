@@ -20,8 +20,14 @@ os.environ['ALLOW_LIVE_AI'] = '0'
 def _offline(*_a, **_k): raise RuntimeError('OFFLINE_ONLY')
 socket.socket.connect = _offline; socket.create_connection = _offline
 
-_CODE = re.compile(r'\b[A-Z]{2,}(?:_[A-Z0-9]{2,})+\b')
-_EXACT = re.compile(r"^-?[0-9]+(?:/[0-9]+)?$|√|π")
+_CODE = re.compile(r'\b[A-Z]{2,}(?:_[A-Z0-9]{2,})+\b'          # reason codes: PLANE_NOT_UNIQUE
+                   r"|\b[A-Za-z][A-Za-z0-9]*_[A-Za-z0-9_]+\b")  # entity ids: khoi_S_ABCD, A_prime (review MINOR-5)
+#: an exact value: digits, fractions, radicals, π, signs, sums — never a decimal point or an exponent (fullmatch)
+_EXACT = re.compile(r"[0-9√π/+\-() ]+")
+#: fields whose text a learner reads, anywhere in the envelope (served or refused)
+_VISIBLE = {'label', 'display_label', 'learner_text', 'learner_reason', 'explanation', 'title', 'description', 'notes',
+            'message', 'caption'}
+_COORDS = {'xyz', 'polygon', 'vertices_xyz', 'center_xyz'}
 
 
 def corpora():
@@ -42,12 +48,28 @@ def corpora():
         yield 'composite solids', cid, p['problem_text'], p
 
 
+def _walk(v, key=None):
+    if isinstance(v, dict):
+        for k, x in v.items():
+            yield from _walk(x, k)
+    elif isinstance(v, list):
+        for x in v:
+            yield from _walk(x, key)
+    else:
+        yield key, v
+
+
 def learner_text(env):
-    sc = env.get('scene3d') or {}
-    yield from (str(env.get(k) or '') for k in ('title', 'description'))
-    yield from (json.dumps(env.get('notes'), ensure_ascii=False),)
-    for o in sc.get('objects') or ():
-        yield from (str(o.get(k) or '') for k in ('label', 'display_label'))
+    """Every string under a learner-visible key, anywhere in the envelope."""
+    for k, v in _walk(env):
+        if k in _VISIBLE and isinstance(v, str):
+            yield v
+
+
+def coordinates(env):
+    for k, v in _walk(env.get('scene3d') or {}):
+        if k in _COORDS:
+            yield v
 
 
 def audit(text, payload, run):
@@ -62,16 +84,17 @@ def audit(text, payload, run):
         v += [] if rec['engine'].get('status') == 'VERIFIED' and rec['engine'].get('kernel_check') else ['not_verified']
         v += [] if goals <= set(route.get('answer_exact') or {}) else [f"goal_dropped:{sorted(goals - set(route.get('answer_exact') or {}))}"]
         v += [] if objs and all(o.get('id') and o.get('type') for o in objs) else ['scene_objects']
-        v += [] if all(isinstance(x, str) and _EXACT.search(x) for o in objs for x in o.get('xyz') or ()) else ['inexact_xyz']
+        v += [] if all(isinstance(x, str) and _EXACT.fullmatch(x) for x in coordinates(env)) else ['inexact_coordinate']
         v += [] if route.get('construction_trace') else ['no_construction_trace']
-        leaked = sorted({m for t in learner_text(env) for m in _CODE.findall(t)}
-                        | ({env['simulation_id']} if env.get('simulation_id') and any(env['simulation_id'] in t
-                                                                                         for t in learner_text(env)) else set()))
-        v += [f'leaked:{leaked}'] if leaked else []
     else:
         v += [] if (route.get('refusal') or {}).get('code') else ['refusal_without_code']
         v += [] if not route.get('answer_exact') and not route.get('answers') else ['refusal_with_answers']
         v += [] if env.get('status') != 'ok' else ['refusal_envelope_ok']
+    texts = list(learner_text(env))                       # served AND refused (review MINOR-5)
+    leaked = sorted({m for t in texts for m in _CODE.findall(t)}
+                    | ({env['simulation_id']} if env.get('simulation_id') and any(env['simulation_id'] in t for t in texts)
+                       else set()))
+    v += [f'leaked:{leaked}'] if leaked else []
     lat = rec.get('individual_source_gate_planner_engine_latency')
     return {'served': served, 'code': rec.get('code'), 'violations': v, 'stage_latency': lat,
             'planner_label': ((route.get('planner') or {}).get('search_telemetry') or {}).get('classification')}
@@ -90,11 +113,19 @@ def _selfcheck():
     p = {'math_goals': [{'goal_id': 'q1'}, {'goal_id': 'q2'}]}
     assert audit('', {'math_goals': [{'goal_id': 'q1'}]}, fake(ok_env, ok_route))['violations'] == []
     assert any(v.startswith('goal_dropped') for v in audit('', p, fake(ok_env, ok_route))['violations'])
-    leak = json.loads(json.dumps(ok_env))
-    leak['scene3d']['objects'][0]['label'] = 'PLANE_NOT_UNIQUE'
-    leak['scene3d']['objects'][0]['xyz'] = ['0.3333', '0', '0']
-    v = audit('', {'math_goals': [{'goal_id': 'q1'}]}, fake(leak, ok_route))['violations']
-    assert 'inexact_xyz' in v and any(x.startswith('leaked') for x in v), v
+    one = {'math_goals': [{'goal_id': 'q1'}]}
+    for plant, want in ((lambda e: e['scene3d']['objects'][0].update(label='PLANE_NOT_UNIQUE'), 'leaked'),
+                        (lambda e: e['scene3d']['objects'][0].update(label='khoi_S_ABCD'), 'leaked'),
+                        (lambda e: e['scene3d'].update(events=[{'learner_text': 'A_prime'}]), 'leaked'),
+                        (lambda e: e['scene3d']['objects'][0].update(xyz=['0.3333', '0', '0']), 'inexact_coordinate'),
+                        (lambda e: e['scene3d']['objects'][0].update(xyz=['0.5√2', '0', '0']), 'inexact_coordinate'),
+                        (lambda e: e['scene3d'].update(sections=[{'polygon': [['0.5', '1', '0']]}]), 'inexact_coordinate')):
+        bad = json.loads(json.dumps(ok_env))
+        plant(bad)
+        assert any(x.startswith(want) for x in audit('', one, fake(bad, ok_route))['violations']), (want, bad)
+    refused = {'status': 'unsupported', 'learner_reason': 'Lỗi SOURCE_OBJECT_MISMATCH'}
+    v = audit('', one, fake(refused, {'status': 'REFUSED', 'refusal': {'code': 'X'}}))['violations']
+    assert any(x.startswith('leaked') for x in v), v
 
 
 if __name__ == '__main__':

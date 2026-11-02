@@ -1,6 +1,6 @@
 # Hybrid-only independent evaluation — protocol `hybrid-only-independent-evaluation/1` (pre-registered, C19, 2026-11-02)
 
-**Status: framework ready, `NOT_MEASURED`.** No corpus exists: no author independent of the implementer has been named,
+**Status: framework ready, `NOT_MEASURED`.** Revision 1a (same day, before any run): independent review round 1 closures (MAJOR-1/2, MINOR-4). No corpus exists: no author independent of the implementer has been named,
 and this protocol forbids the implementer from writing one or attesting its independence.
 
 ## 1. Question
@@ -13,7 +13,7 @@ its limits? Hybrid is the target architecture. **This protocol does not compare 
 
 | field | value |
 |---|---|
-| `MEASUREMENT_CLASS` | `INDEPENDENT_HYBRID_EVALUATION` only if §3 holds; otherwise the run is refused (`H-1`) |
+| `MEASUREMENT_CLASS` | `INDEPENDENT_HYBRID_EVALUATION` (the live header of an `H-1` run) only if §3 holds; otherwise the run is refused |
 | `HELD_OUT_CLAIM` | the corpus is unseen by the implementer until it is frozen; any product change made after seeing results turns it into development data for the next candidate |
 | arm | one: the production opt-in Hybrid `/4` path, one source-only request per case |
 | runner / scorer | `backend/scripts/run_s2_student_language_pilot.py` study `H-1` + the unchanged `score_s2_student_language_pilot.py`; hashes bound in the approval |
@@ -34,17 +34,27 @@ its limits? Hybrid is the target architecture. **This protocol does not compare 
 - **Expected outcome:** from the capability contract (`product_capability.py`, `CAPABILITY_MATRIX.json`), never from what
   the product currently does. Vocabulary: `SERVED`, `CLARIFY` (allowed codes), `REFUSED_UNSUPPORTED`,
   `REFUSED_INCONSISTENT`, `REFUSED_UNDERDETERMINED`.
-- **Gold extractions** may be written by the implementer AFTER the corpus is frozen, for attribution only; they never
-  change an expectation.
+- **Gold extraction for every `SERVED` case** (review MAJOR-2): goal and operand matching exists only against a gold, so
+  the gold IS part of the expectation. It is written before the freeze (by the author, or by the implementer and then
+  confirmed by the author: `authoring.gold_confirmed_by_author: true`); the runner refuses an H-1 corpus without it, or
+  without every stratum. Gold may be added for non-served cases for attribution only.
+- **What the authorship fields prove:** nothing by themselves — they are fields of the corpus file. The control is the
+  Owner approving the hash of that file (review MINOR-4).
 
 ## 4. Scoring (fixed in code before any run)
 
 - The scorer's eight metrics, unchanged (extraction accuracy, goal completeness, operand preservation, ambiguity
   detection, clarification correctness, false clarification, unsupported classification, wrong-served).
 - **`SERVED_CORRECT`** only when every expected quantity is answered exactly, the certificate is verified, and the
-  extraction's goals and operands match (a dropped goal with a correct number is `SERVED_WRONG`; test).
+  extraction's goals and operands match the gold's (tests: an unanswered expected quantity is `SERVED_WRONG`; a model
+  that drops one of two goals is never `SERVED_CORRECT`).
+- **Right status, right reason** (review MAJOR-1): a refusal is correct only with the gold replay's refusal code AND the
+  gold's facts; a clarification only with an `unresolved` entry on the gold's ambiguous wording (`reason_verified`).
+  Otherwise `WRONG_REASON_REFUSAL` / `WRONG_REASON_CLARIFICATION`. Conservative: an equivalent but different extraction
+  that refuses for the right reason is counted wrong. A refusal at the domain gate (no extraction) needs only the code.
 - **Outcome taxonomy per row** (`hybrid_outcome`): `SERVED_CORRECT`, `SERVED_WRONG`, `CORRECT_REFUSAL`, `FALSE_REFUSAL`,
-  `WRONG_REASON_REFUSAL`, `CORRECT_CLARIFICATION`, `FALSE_CLARIFICATION`, `INFRASTRUCTURE_FAILURE`; unrun cases are
+  `WRONG_REASON_REFUSAL`, `CORRECT_CLARIFICATION`, `WRONG_REASON_CLARIFICATION`, `FALSE_CLARIFICATION`,
+  `INFRASTRUCTURE_FAILURE`; unrun cases are
   `cases_not_measured`, never 0. A technical failure is never a refusal (test).
 - **Extraction detail:** `described_check` (kinds, refs, quotes) and `constraint_check` (kinds, operands, quotes, no
   invented construction).

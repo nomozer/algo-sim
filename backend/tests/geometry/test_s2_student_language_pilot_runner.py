@@ -606,8 +606,10 @@ def test_c19_the_k1_gold_replay_is_the_locked_attribution_baseline(tmp_path, mon
     sup = out["supplementary"]
     assert (sup["end_to_end_correct"]["numerator"], sup["end_to_end_correct"]["denominator"]) == (16, 16)
     assert sup["hybrid_outcomes"] == {"SERVED_CORRECT": 10, "SERVED_WRONG": 0, "CORRECT_REFUSAL": 4, "FALSE_REFUSAL": 0,
-                                      "WRONG_REASON_REFUSAL": 0, "CORRECT_CLARIFICATION": 2, "FALSE_CLARIFICATION": 0,
+                                      "WRONG_REASON_REFUSAL": 0, "CORRECT_CLARIFICATION": 2,
+                                      "WRONG_REASON_CLARIFICATION": 0, "FALSE_CLARIFICATION": 0,
                                       "INFRASTRUCTURE_FAILURE": 0}
+    assert {r["reason_verified"] for r in out["rows"] if r["expected"]["outcome"] != "SERVED"} == {True}
     assert sup["constraints"]["operands_match"]["numerator"] == 6 and sup["described_points"]["kinds_match"]["numerator"] == 8
     assert out["latency_median_s"] == "NOT_MEASURED" and out["spent_reported_usd"] == "NOT_MEASURED"   # offline: no cost
 
@@ -649,7 +651,50 @@ def test_c19_hybrid_outcome_taxonomy(exp, obs, e2e, tech, want):
     assert R.hybrid_outcome(row) == want
 
 
-def test_c19_a_dropped_goal_with_a_correct_number_is_never_served_correct(tmp_path, monkeypatch):
+@pytest.mark.parametrize("exp,obs,want", [("REFUSED_INCONSISTENT", "REFUSED", "WRONG_REASON_REFUSAL"),
+                                          ("CLARIFY", "CLARIFY", "WRONG_REASON_CLARIFICATION")])
+def test_c19_review_major1_the_right_status_for_another_reason_is_not_correct(exp, obs, want):
+    row = {"expected": {"outcome": exp}, "observed": {"status": obs}, "end_to_end_correct": True,
+           "technical_failure": False, "reason_verified": False}
+    assert R.hybrid_outcome(row) == want
+
+
+def test_c19_review_major1_a_model_that_drops_the_constraint_gets_the_same_code_but_not_a_correct_refusal(
+        tmp_path, monkeypatch):
+    case = _k1("K-B01")
+    bad = deepcopy(case["gold_extraction"])
+    bad["derived_sections"][0]["constraints"] = [c for c in bad["derived_sections"][0]["constraints"]
+                                                 if c["kind"] != "perpendicular_to_plane"]
+    out = _k1_live(tmp_path, monkeypatch, Provider(_body(bad)), [case])
+    row = out["rows"][0]
+    assert row["hybrid_code"] == "PLANE_NOT_UNIQUE" and row["end_to_end_correct"]      # the old, status-only verdict
+    assert row["reason_verified"] is False and row["hybrid_outcome"] == "WRONG_REASON_REFUSAL"
+    assert row["attribution"] == "LLM_EXTRACTION_DIFFERS_FROM_GOLD"
+
+
+def test_c19_review_major1_a_clarification_on_another_phrase_is_not_correct(tmp_path, monkeypatch):
+    case = _k1("K-E01")
+    bad = deepcopy(case["gold_extraction"])
+    bad["unresolved"] = [{"unresolved_id": "u1", "kind": "missing_operand", "quote": "SA = 2",
+                          "missing_roles": ["dimension"]}]
+    out = _k1_live(tmp_path, monkeypatch, Provider(_body(bad)), [case])
+    row = out["rows"][0]
+    assert row["observed"]["status"] == "CLARIFY" and row["reason_verified"] is False
+    assert row["hybrid_outcome"] == "WRONG_REASON_CLARIFICATION"
+    good = _k1_live(tmp_path / "g", monkeypatch, Provider(_body(case["gold_extraction"])), [case]) if (
+        (tmp_path / "g").mkdir() or True) else None
+    assert good["rows"][0]["hybrid_outcome"] == "CORRECT_CLARIFICATION"
+
+
+def test_c19_review_major2_a_model_that_drops_one_of_two_goals_is_never_served_correct(tmp_path, monkeypatch):
+    case = _case("S2-B-P07_shared_intermediate_two_goals")
+    bad = deepcopy(case["gold_extraction"])
+    bad["math_goals"] = bad["math_goals"][:1]
+    out = _live(tmp_path, monkeypatch, Provider(_body(bad)), [case])
+    assert out["rows"][0]["hybrid_outcome"] != "SERVED_CORRECT"
+
+
+def test_c19_an_unanswered_expected_quantity_is_served_wrong(tmp_path, monkeypatch):
     case = _k1("K-C01")
     two = deepcopy(case)                                       # the protocol asks two quantities; the model keeps one
     two["expected"]["oracle"] = {"distance": ["1", "√6/2"]}
@@ -687,16 +732,44 @@ def test_c19_an_unrun_case_is_not_measured_never_zero(tmp_path, monkeypatch):
     assert out["supplementary"]["hybrid_outcomes"]["CORRECT_REFUSAL"] == 0
 
 
+def _h1_cases():
+    """One case per H-1 stratum (the K-1 texts reused only to exercise validation; never a benchmark)."""
+    src = json.loads(K1.read_text(encoding="utf-8"))["cases"]
+    return [dict(src[i % len(src)], id=f"H{i:02d}", stratum=s,
+                 problem_text=src[i % len(src)]["problem_text"] + " " * i) | (
+        {"gold_extraction": dict(src[i % len(src)]["gold_extraction"],
+                                 problem_text=src[i % len(src)]["problem_text"] + " " * i)}
+        if src[i % len(src)].get("gold_extraction") else {})
+            for i, s in enumerate(R.STUDIES["H-1"][0])]
+
+
+_ATTESTED = {"author": "X", "independent_of_implementer": True, "independence_attested_by": "OWNER",
+             "gold_confirmed_by_author": True}
+
+
 def test_c19_an_h1_corpus_is_refused_live_unless_the_owner_attests_an_independent_author(tmp_path):
-    case = dict(_k1("K-A01"), stratum="H-SECTION")
-    for authoring, ok in ((None, False), ({"author": "implementer (agent)", "independent_of_implementer": True}, False),
-                          ({"author": "X", "independent_of_implementer": True, "independence_attested_by": "OWNER"}, True)):
-        path = tmp_path / f"h1-{ok}-{authoring is None}.json"
-        body = {"study": "H-1", "cases": [case], **({"authoring": authoring} if authoring else {})}
+    for authoring, why in ((None, "Owner-attested"),
+                           ({"author": "implementer (agent)", "independent_of_implementer": True}, "Owner-attested"),
+                           ({**_ATTESTED, "gold_confirmed_by_author": False}, "confirmed by the author"),
+                           (_ATTESTED, None)):
+        path = tmp_path / f"h1-{why}.json"
+        body = {"study": "H-1", "cases": _h1_cases(), **({"authoring": authoring} if authoring else {})}
         path.write_text(json.dumps(body, ensure_ascii=False), encoding="utf-8")
-        terms = _terms(path, pilot="H-1", max_requests=1, max_usd=1.0)
-        if ok:
+        terms = _terms(path, pilot="H-1", max_requests=13, max_usd=1.0)
+        if why is None:
             assert R.check_approval_terms(path.read_bytes(), terms)["pilot"] == "H-1"
         else:
-            with pytest.raises(R.LiveRefused, match="Owner-attested"):
+            with pytest.raises(R.LiveRefused, match=why):
                 R.check_approval_terms(path.read_bytes(), terms)
+
+
+@pytest.mark.parametrize("mutate,why", [
+    (lambda cs: cs.pop(), "covers every stratum"),                                         # a weak stratum dropped
+    (lambda cs: cs[0].pop("gold_extraction"), "author-confirmed gold"),                    # a SERVED case without gold
+])
+def test_c19_review_major2_an_h1_corpus_needs_every_stratum_and_a_gold_for_every_serve(mutate, why):
+    cases = _h1_cases()
+    assert cases[0]["expected"]["outcome"] == "SERVED"
+    mutate(cases)
+    with pytest.raises(R.LiveRefused, match=why):
+        R.validate_corpus({"study": "H-1", "authoring": _ATTESTED, "cases": cases})
