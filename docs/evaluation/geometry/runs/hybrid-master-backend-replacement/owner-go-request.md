@@ -300,6 +300,9 @@ only.
 - It measures whether Gemini emits correct `DescribedPointSpec`s; the S-2 pilot cannot measure that.
 - No retry headroom: the cap is 18 requests for 18 cases.
 
+> **SUPERSEDED (sixteenth continuation):** the candidate and the runner changed, so the blobs below (`f764752d…`,
+> `df69d370…`) fail their check. Use the sixteenth addendum.
+
 **The two Owner commands** (each dry-run with a non-approval value; both passed `check_approval_terms`, and the
 scratch files were deleted). Each writes one approval file. Running it **is** the GO for that pilot only; it confirms
 the paid project and the use of its key.
@@ -339,3 +342,55 @@ Each approval funds one run (`<approval>.consumed`). A stopped run is not resume
 | 4 | Planner telemetry (`ISSUE-ARCH-PLANNER-COMPOSITION-SELF-LABEL-OVERSTATES`) | fix the product label (new candidate, review, Full T3, new approvals), or keep it with the evaluation-side rule | the evaluation already uses the reviewed rule |
 | 5 | S-1, D1/D2, P-1..P-3 | unchanged | `DEFERRED_PENDING_EVIDENCE` |
 | 6 | Integration | merge / push | `INTEGRATION_PENDING_OWNER_GO` |
+
+## Addendum — sixteenth continuation (planner capability measured; planner /24), 2026-11-02. It supersedes the commands of the fifteenth addendum.
+
+Still `0` live calls and `USD 0`, and no approval file exists.
+
+**The measured system changed.** The new candidate is `3154a696`: product `9c561ca6`, 118 files, `1725590664…`.
+- The only product change is planner `/24`: honest, provenance-classified `search_telemetry`. Answers and envelopes are
+  unchanged.
+- The S-2 and R-1 runners now apply the composition rule to every served row.
+- Report: `planner-generalization-c16.md`. Independent review: `READY` in round 2.
+
+**What it found (read before any GO):**
+- On every measured case, every served plan is source-explicit or a declared decomposition. **Genuine discovery is not
+  established.**
+- In Registry `/29`, no contract can produce a search-generated step.
+- In 710 systematically generated perpendicular-plane sections, plus 948 more from the reviewer, there is no
+  reachable-but-missed case.
+- The limit is in representation, not in the planner.
+  - Goals whose objects are implicit cannot be expressed in `TypedFactNext /2`. Examples: a plane through two points ⊥
+    a plane; a plane containing a line ∥ another line; a described line.
+  - Opening them is a model-surface decision (item 4 below).
+
+**Owner commands** (blob-keyed; each dry-run with a non-approval value, and both passed `check_approval_terms`).
+Terms are unchanged: S-2 is 36 requests / USD 2.0; R-1 is 18 requests / USD 1.0; prices 0.30 / 2.50 USD per million
+tokens; model `gemini-2.5-flash`.
+
+```powershell
+cd D:\Documents\projects\algo-sim\.superpowers\worktrees\hybrid-master-backend-replacement
+$d = 'APPROVED_BY_USER'
+$run = 'docs\evaluation\geometry\runs\hybrid-master-backend-replacement'
+# choose ONE pair: S-2 → 's2', 'beb9227b4f48c77d979828db61fbdc2de8d6cd6a' ; R-1 → 'r1', '25000c72b0fe1802fb48be82766aaafc3dd00d04'
+$name = 's2'; $blob = 'beb9227b4f48c77d979828db61fbdc2de8d6cd6a'
+$t = "$run\$name-owner-approval.template.json"
+$o = "$run\$name-owner-approval.json"
+if ((git hash-object $t) -ne $blob) { throw 'template changed: do not approve' }
+if (Test-Path $o) { throw 'approval file already exists' }
+$s = [IO.File]::ReadAllText((Resolve-Path $t))
+if ([regex]::Matches($s, '"owner_decision": "PENDING_OWNER_DECISION"').Count -ne 1 -or [regex]::Matches($s, '"paid_project_confirmed": false').Count -ne 1) { throw 'unexpected template' }
+$s = $s.Replace('"owner_decision": "PENDING_OWNER_DECISION"', '"owner_decision": "' + $d + '"').Replace('"paid_project_confirmed": false', '"paid_project_confirmed": true')
+[IO.File]::WriteAllText((Join-Path (Get-Location) $o), $s, (New-Object Text.UTF8Encoding $false))
+```
+
+**All Owner decisions:**
+
+| # | decision | options |
+|---|---|---|
+| 1 | S-2 live pilot | run the command with `s2`, or defer |
+| 2 | R-1 live pilot | run the command with `r1`, or defer. It measures Gemini's described points; it cannot measure planner discovery |
+| 3 | Paired 60-problem GO | name an independent author (`heldout-authoring/`) |
+| 4 | **Implicit-object goals** (new) | authorize an additive `/2` slice for goals that need hidden constructions, starting with "mặt phẳng qua MN và vuông góc với (ABCD)" and "(P) chứa AB và song song với SC". It needs Source Gate grammar, gate certificates, engine postconditions and a constraint-to-witness planner, plus a new candidate, review, T3 and approvals. Or keep the current scope, and the thesis states that discovery is not established |
+| 5 | S-1, D1/D2, P-1..P-3 | `DEFERRED_PENDING_EVIDENCE` |
+| 6 | Integration | merge / push: `INTEGRATION_PENDING_OWNER_GO` |

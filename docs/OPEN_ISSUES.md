@@ -19,7 +19,11 @@
 
 ### ISSUE-ARCH-PLANNER-COMPOSITION-SELF-LABEL-OVERSTATES
 
-- **status:** OPEN (2026-11-02, fifteenth continuation of `ALGOSIM_MASTER_HYBRID_BACKEND_REPLACEMENT`). The evaluation scripts no longer trust the label. The product telemetry is unchanged: changing it is a `backend/app` change, so it needs a new candidate.
+- **status:** RESOLVED ON RESEARCH BRANCH (2026-11-02, sixteenth continuation; planner `/24`, product `9c561ca6`, candidate `3154a696`; independent review `READY` in round 2; not yet on `main`).
+  - `_EffectResolver._emit` tags each step's provenance, and `_nguon_goc_buoc` builds `source_defined_steps` / `registered_decomposition_steps` / `search_generated_steps`. DISCOVERED requires a search-generated step.
+  - `/23` and `/24` differ only where `/23` said DISCOVERED: 753 plans compared, with identical calls and certificates.
+  - **Remaining fact:** in Registry `/29` no contract can produce a search-generated step, so DISCOVERED is unreachable. See `evaluation/geometry/runs/hybrid-master-backend-replacement/planner-generalization-c16.md`.
+- **status before C16:** OPEN (fifteenth continuation). The evaluation scripts no longer trusted the label, but the product telemetry was unchanged.
 - **cause:** `planner.py` counts every call whose id is not a fact id in `search_telemetry.planner_originated_steps`, and labels the plan `DISCOVERED_FUNCTION_COMPOSITION`. Such a call can be:
   - the step that only builds a point the extraction described (`midpoint(S,B)` for "trung điểm của SB");
   - a step of a registered auxiliary rule (`registry.AUXILIARY_RULES`).

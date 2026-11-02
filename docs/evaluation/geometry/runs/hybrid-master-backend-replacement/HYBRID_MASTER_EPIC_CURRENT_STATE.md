@@ -755,3 +755,48 @@ ran: `0` provider calls, `USD 0`. The candidate is unchanged: `0fe38a29` (produc
 - With an approval: run `run_s2_student_language_pilot.py --corpus <s2|r1 corpus> --live --approval-file <file> --out <new.jsonl>`
   once. Then hand attribution of every failed and DISCOVERED row, and an independent review.
 - Without approvals: nothing more offline is justified. No further readiness round (directive §XII).
+
+---
+
+## Sixteenth continuation (Owner Master Directive: genuine goal-directed planner generalization), 2026-11-02: CHECKPOINT REACHED — `GENUINE_DISCOVERY_NOT_ESTABLISHED`; `OFFLINE_READY_AWAITING_OWNER_GO`
+
+Offline only: `0` provider calls, `USD 0`, no approval file. Report: `planner-generalization-c16.md`.
+
+| Commit | Content |
+|---|---|
+| `75a5b3e2` | Route-B relabel (C11: 9 planner-DISCOVERED = 6 source-explicit + 3 registered); 710-case reachability (0 missed) |
+| `b70995db` | **Product:** planner `/24` provenance-classified `search_telemetry` |
+| `8a735b01` | Ablation (rules off ⇒ exactly the source-explicit plans survive); contract-only and removal tests; report |
+| `3406b8ee` | Version pins `/24`; runner test on the corrected label |
+| `6fe22999` | phase-q replay: Wave 3 67/72, 72/72 negatives refused, 0 wrong-served, 0 transitions; 203 probes clean |
+| `9c561ca6` | Review round 1 fixes: definitional steps are `source_defined`; the runner rule runs on every served row; receipts r2 (**final product commit**) |
+| `3154a696` | Candidate re-frozen in its own commit: product `9c561ca6`, 118 files `1725590664…`, layer `runs/hybrid-master-planner-provenance/` |
+| (this commit) | Templates re-issued: S-2 `beb9227b…`, R-1 `25000c72…`; sixteenth addendum; write-back |
+
+**Findings** (all `VERIFIED_OFFLINE`, development data):
+- **The `/23` planner discovers nothing.**
+  - Measurements are direct kernel primitives.
+  - A `Point` need is a label or a description with one producer.
+  - Planes are built by hand-written decompositions.
+  - Its DISCOVERED label meant "built a described point".
+- **No planning gap** in the tested families: 710 generated cases, plus 948 from the reviewer, with 0 reachable-but-missed.
+- **Ablation:** the capability comes from source descriptions plus declared rules.
+- **A contract-only function** is picked up without dispatch code (planner level).
+- **The limit is representation.** Goals with implicit objects are not expressible in `/2` (Owner item 4).
+
+**Product:** planner `/24` reports provenance honestly; DISCOVERED is unreachable in Registry `/29` (stated).
+- Calls, certificates and answers are unchanged: 753 plans compared; 41/41 fixtures; Wave 3 0 transitions.
+- `CACHE_VERSION` 131 and `LLM_ONLY` are unchanged.
+
+**Review:** fresh-context. Round 1 `NOT_READY` (1 BLOCKER, 1 MAJOR, 5 MINOR); round 2 **`READY`**.
+
+**Full T3:** FULL_T3_PENDING
+
+**Status:**
+- `PLANNER_GENERALIZATION_OFFLINE_VERIFIED`: no. Discovery is `NOT_ESTABLISHED`; the capability is measured and the
+  telemetry is honest.
+- `LIVE_EXTRACTION_NOT_MEASURED`, `PAIRED_EVALUATION_NOT_MEASURED`, `INTEGRATION_NOT_READY`, `PRODUCTION_NOT_READY`.
+- Overall `HYBRID_NOT_READY`. Nothing is merged or pushed.
+
+**Next exact action:** the Owner decides items 1–6 of the sixteenth addendum. Item 4 is the only route to measurable
+planner discovery.
