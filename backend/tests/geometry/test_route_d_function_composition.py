@@ -216,6 +216,21 @@ def _bridge(cid):
     return bridge_v2(T._parse(T.TypedFactNextPayloadV2, CASES[cid]["payload"]))
 
 
+def test_c18_a_section_plane_through_a_defined_point_is_a_stated_boundary_refused_not_served():
+    """Out of C18 scope: the plane-point certificate (`plane_point_chain`) reads a function descriptor only."""
+    import json
+    c = next(c for c in json.loads((RUN / "r1-described-point-probe.json").read_text(encoding="utf-8"))["cases"]
+             if c["id"] == "C6a")
+    p, old, new = copy.deepcopy(c["payload"]), "trung điểm của SA", "trực tâm của tam giác SBD"
+    text = c["text"].replace(old, new)
+    p["problem_text"] = text
+    p["described_points"][0] = {"described_id": "m1", "kind": "orthocenter", "quote": new, "polygon": ["S", "B", "D"]}
+    for x in (*p["derived_sections"], *p["math_goals"]):
+        x["quote"] = x["quote"].replace(old, new)
+    route, env, _a = _run(text, p)
+    assert route["status"] == "REFUSED", env.get("reason_code")
+
+
 def test_c18_search_is_bounded_and_exhaustion_is_typed(monkeypatch):
     monkeypatch.setattr(planner, "MAX_EFFECT_DEPTH", 2)
     route, env, _a = _case(O_CDM)

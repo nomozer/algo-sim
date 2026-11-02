@@ -1,0 +1,1995 @@
+{
+ "classification": "IMPLEMENTER_AUTHORED_DEVELOPMENT_DIAGNOSTIC",
+ "measurement_class": "LIVE_DEVELOPMENT_PILOT",
+ "held_out_claim": null,
+ "provider_calls": 0,
+ "cases": [
+  {
+   "id": "K-A01",
+   "stratum": "K-A",
+   "expected": "SERVED",
+   "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với mặt phẳng (ABCD) và SA = 2. Gọi M là trung điểm của AB. Gọi N là trung điểm của SC. Mặt phẳng (P) đi qua A, B và vuông góc với (SCD). Xác định thiết diện của hình chóp S.ABCD cắt bởi (P) và tính diện tích thiết diện đó.",
+   "gold": {
+    "schema_version": "typed-fact-next/2",
+    "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với mặt phẳng (ABCD) và SA = 2. Gọi M là trung điểm của AB. Gọi N là trung điểm của SC. Mặt phẳng (P) đi qua A, B và vuông góc với (SCD). Xác định thiết diện của hình chóp S.ABCD cắt bởi (P) và tính diện tích thiết diện đó.",
+    "length_unit": "1",
+    "solids": [
+     {
+      "solid_id": "s1",
+      "solid_type": "pyramid",
+      "notation": "S.ABCD",
+      "quote": "Cho hình chóp S.ABCD"
+     }
+    ],
+    "premises": [
+     {
+      "kind": "regular_polygon",
+      "args": {
+       "vertices": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ],
+       "side": "2"
+      },
+      "quote": "đáy ABCD là hình vuông cạnh 2",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "perpendicular_line_plane",
+      "args": {
+       "line": [
+        "S",
+        "A"
+       ],
+       "plane": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ]
+      },
+      "quote": "SA vuông góc với mặt phẳng (ABCD)",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "segment_length",
+      "args": {
+       "segment": [
+        "S",
+        "A"
+       ],
+       "value": "2"
+      },
+      "quote": "SA = 2",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "midpoint",
+      "args": {
+       "point": "M",
+       "segment": [
+        "A",
+        "B"
+       ]
+      },
+      "quote": "Gọi M là trung điểm của AB",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "midpoint",
+      "args": {
+       "point": "N",
+       "segment": [
+        "S",
+        "C"
+       ]
+      },
+      "quote": "Gọi N là trung điểm của SC",
+      "solid_id": "s1"
+     }
+    ],
+    "relations": [],
+    "derived_sections": [
+     {
+      "section_id": "sec1",
+      "plane_name": "P",
+      "target_solid_id": "s1",
+      "quote": "Mặt phẳng (P) đi qua A, B và vuông góc với (SCD)",
+      "plane_kind": "constrained",
+      "constraints": [
+       {
+        "kind": "contains_points",
+        "operands": [
+         "A",
+         "B"
+        ]
+       },
+       {
+        "kind": "perpendicular_to_plane",
+        "operands": [
+         "S",
+         "C",
+         "D"
+        ]
+       }
+      ],
+      "stated_intersections": []
+     }
+    ],
+    "simulation_goals": [
+     {
+      "goal_id": "sg1",
+      "kind": "construct_object",
+      "target_solid_id": "s1",
+      "quote": "Cho hình chóp S.ABCD"
+     }
+    ],
+    "math_goals": [
+     {
+      "goal_id": "q1",
+      "kind": "measurement",
+      "goal_type": "area",
+      "target": {
+       "section_id": "sec1"
+      },
+      "quote": "Xác định thiết diện của hình chóp S.ABCD cắt bởi (P) và tính diện tích thiết diện đó",
+      "solid_id": "s1"
+     }
+    ]
+   },
+   "oracle": "9/2",
+   "source_row": "pyramid(2,2)|F1|['A', 'B']|['S', 'C', 'D']"
+  },
+  {
+   "id": "K-A02",
+   "stratum": "K-A",
+   "expected": "SERVED",
+   "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với mặt phẳng (ABCD) và SA = 2. Gọi M là trung điểm của AB. Gọi N là trung điểm của SC. Mặt phẳng (P) đi qua A, B và vuông góc với (SBD). Xác định thiết diện của hình chóp S.ABCD cắt bởi (P) và tính diện tích thiết diện đó.",
+   "gold": {
+    "schema_version": "typed-fact-next/2",
+    "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với mặt phẳng (ABCD) và SA = 2. Gọi M là trung điểm của AB. Gọi N là trung điểm của SC. Mặt phẳng (P) đi qua A, B và vuông góc với (SBD). Xác định thiết diện của hình chóp S.ABCD cắt bởi (P) và tính diện tích thiết diện đó.",
+    "length_unit": "1",
+    "solids": [
+     {
+      "solid_id": "s1",
+      "solid_type": "pyramid",
+      "notation": "S.ABCD",
+      "quote": "Cho hình chóp S.ABCD"
+     }
+    ],
+    "premises": [
+     {
+      "kind": "regular_polygon",
+      "args": {
+       "vertices": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ],
+       "side": "2"
+      },
+      "quote": "đáy ABCD là hình vuông cạnh 2",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "perpendicular_line_plane",
+      "args": {
+       "line": [
+        "S",
+        "A"
+       ],
+       "plane": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ]
+      },
+      "quote": "SA vuông góc với mặt phẳng (ABCD)",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "segment_length",
+      "args": {
+       "segment": [
+        "S",
+        "A"
+       ],
+       "value": "2"
+      },
+      "quote": "SA = 2",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "midpoint",
+      "args": {
+       "point": "M",
+       "segment": [
+        "A",
+        "B"
+       ]
+      },
+      "quote": "Gọi M là trung điểm của AB",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "midpoint",
+      "args": {
+       "point": "N",
+       "segment": [
+        "S",
+        "C"
+       ]
+      },
+      "quote": "Gọi N là trung điểm của SC",
+      "solid_id": "s1"
+     }
+    ],
+    "relations": [],
+    "derived_sections": [
+     {
+      "section_id": "sec1",
+      "plane_name": "P",
+      "target_solid_id": "s1",
+      "quote": "Mặt phẳng (P) đi qua A, B và vuông góc với (SBD)",
+      "plane_kind": "constrained",
+      "constraints": [
+       {
+        "kind": "contains_points",
+        "operands": [
+         "A",
+         "B"
+        ]
+       },
+       {
+        "kind": "perpendicular_to_plane",
+        "operands": [
+         "S",
+         "B",
+         "D"
+        ]
+       }
+      ],
+      "stated_intersections": []
+     }
+    ],
+    "simulation_goals": [
+     {
+      "goal_id": "sg1",
+      "kind": "construct_object",
+      "target_solid_id": "s1",
+      "quote": "Cho hình chóp S.ABCD"
+     }
+    ],
+    "math_goals": [
+     {
+      "goal_id": "q1",
+      "kind": "measurement",
+      "goal_type": "area",
+      "target": {
+       "section_id": "sec1"
+      },
+      "quote": "Xác định thiết diện của hình chóp S.ABCD cắt bởi (P) và tính diện tích thiết diện đó",
+      "solid_id": "s1"
+     }
+    ]
+   },
+   "oracle": "9/2",
+   "source_row": "pyramid(2,2)|F1|['A', 'B']|['S', 'B', 'D']"
+  },
+  {
+   "id": "K-A03",
+   "stratum": "K-A",
+   "expected": "SERVED",
+   "text": "Cho hình lăng trụ đứng ABC.A'B'C' có đáy ABC là tam giác vuông tại A, AB = 3, AC = 4 và AA' = 2. Gọi M là trung điểm của BC. Gọi N là trung điểm của A'B'. Mặt phẳng (P) chứa AB' và song song với BC. Xác định thiết diện của hình lăng trụ ABC.A'B'C' cắt bởi (P) và tính diện tích thiết diện đó.",
+   "gold": {
+    "schema_version": "typed-fact-next/2",
+    "problem_text": "Cho hình lăng trụ đứng ABC.A'B'C' có đáy ABC là tam giác vuông tại A, AB = 3, AC = 4 và AA' = 2. Gọi M là trung điểm của BC. Gọi N là trung điểm của A'B'. Mặt phẳng (P) chứa AB' và song song với BC. Xác định thiết diện của hình lăng trụ ABC.A'B'C' cắt bởi (P) và tính diện tích thiết diện đó.",
+    "length_unit": "1",
+    "solids": [
+     {
+      "solid_id": "s1",
+      "solid_type": "prism",
+      "notation": "ABC.A'B'C'",
+      "quote": "Cho hình lăng trụ đứng ABC.A'B'C'"
+     }
+    ],
+    "premises": [
+     {
+      "kind": "right_prism",
+      "args": {
+       "base": [
+        "A",
+        "B",
+        "C"
+       ],
+       "top": [
+        "A'",
+        "B'",
+        "C'"
+       ]
+      },
+      "quote": "Cho hình lăng trụ đứng ABC.A'B'C'",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "right_angle",
+      "args": {
+       "vertex": "A",
+       "rays": [
+        "B",
+        "C"
+       ]
+      },
+      "quote": "đáy ABC là tam giác vuông tại A",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "segment_length",
+      "args": {
+       "segment": [
+        "A",
+        "B"
+       ],
+       "value": "3"
+      },
+      "quote": "AB = 3",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "segment_length",
+      "args": {
+       "segment": [
+        "A",
+        "C"
+       ],
+       "value": "4"
+      },
+      "quote": "AC = 4",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "segment_length",
+      "args": {
+       "segment": [
+        "A",
+        "A'"
+       ],
+       "value": "2"
+      },
+      "quote": "AA' = 2",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "midpoint",
+      "args": {
+       "point": "M",
+       "segment": [
+        "B",
+        "C"
+       ]
+      },
+      "quote": "Gọi M là trung điểm của BC",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "midpoint",
+      "args": {
+       "point": "N",
+       "segment": [
+        "A'",
+        "B'"
+       ]
+      },
+      "quote": "Gọi N là trung điểm của A'B'",
+      "solid_id": "s1"
+     }
+    ],
+    "relations": [],
+    "derived_sections": [
+     {
+      "section_id": "sec1",
+      "plane_name": "P",
+      "target_solid_id": "s1",
+      "quote": "Mặt phẳng (P) chứa AB' và song song với BC",
+      "plane_kind": "constrained",
+      "constraints": [
+       {
+        "kind": "contains_points",
+        "operands": [
+         "A",
+         "B'"
+        ]
+       },
+       {
+        "kind": "parallel_to_line",
+        "operands": [
+         "B",
+         "C"
+        ]
+       }
+      ],
+      "stated_intersections": []
+     }
+    ],
+    "simulation_goals": [
+     {
+      "goal_id": "sg1",
+      "kind": "construct_object",
+      "target_solid_id": "s1",
+      "quote": "Cho hình lăng trụ đứng ABC.A'B'C'"
+     }
+    ],
+    "math_goals": [
+     {
+      "goal_id": "q1",
+      "kind": "measurement",
+      "goal_type": "area",
+      "target": {
+       "section_id": "sec1"
+      },
+      "quote": "Xác định thiết diện của hình lăng trụ ABC.A'B'C' cắt bởi (P) và tính diện tích thiết diện đó",
+      "solid_id": "s1"
+     }
+    ]
+   },
+   "oracle": "61",
+   "source_row": "prism(3,4,2)|F2|['A', \"B'\"]|['B', 'C']"
+  },
+  {
+   "id": "K-A04",
+   "stratum": "K-A",
+   "expected": "SERVED",
+   "text": "Cho hình lăng trụ đứng ABC.A'B'C' có đáy ABC là tam giác vuông tại A, AB = 3, AC = 4 và AA' = 2. Gọi M là trung điểm của BC. Gọi N là trung điểm của A'B'. Mặt phẳng (P) chứa AC' và song song với BC. Xác định thiết diện của hình lăng trụ ABC.A'B'C' cắt bởi (P) và tính diện tích thiết diện đó.",
+   "gold": {
+    "schema_version": "typed-fact-next/2",
+    "problem_text": "Cho hình lăng trụ đứng ABC.A'B'C' có đáy ABC là tam giác vuông tại A, AB = 3, AC = 4 và AA' = 2. Gọi M là trung điểm của BC. Gọi N là trung điểm của A'B'. Mặt phẳng (P) chứa AC' và song song với BC. Xác định thiết diện của hình lăng trụ ABC.A'B'C' cắt bởi (P) và tính diện tích thiết diện đó.",
+    "length_unit": "1",
+    "solids": [
+     {
+      "solid_id": "s1",
+      "solid_type": "prism",
+      "notation": "ABC.A'B'C'",
+      "quote": "Cho hình lăng trụ đứng ABC.A'B'C'"
+     }
+    ],
+    "premises": [
+     {
+      "kind": "right_prism",
+      "args": {
+       "base": [
+        "A",
+        "B",
+        "C"
+       ],
+       "top": [
+        "A'",
+        "B'",
+        "C'"
+       ]
+      },
+      "quote": "Cho hình lăng trụ đứng ABC.A'B'C'",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "right_angle",
+      "args": {
+       "vertex": "A",
+       "rays": [
+        "B",
+        "C"
+       ]
+      },
+      "quote": "đáy ABC là tam giác vuông tại A",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "segment_length",
+      "args": {
+       "segment": [
+        "A",
+        "B"
+       ],
+       "value": "3"
+      },
+      "quote": "AB = 3",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "segment_length",
+      "args": {
+       "segment": [
+        "A",
+        "C"
+       ],
+       "value": "4"
+      },
+      "quote": "AC = 4",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "segment_length",
+      "args": {
+       "segment": [
+        "A",
+        "A'"
+       ],
+       "value": "2"
+      },
+      "quote": "AA' = 2",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "midpoint",
+      "args": {
+       "point": "M",
+       "segment": [
+        "B",
+        "C"
+       ]
+      },
+      "quote": "Gọi M là trung điểm của BC",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "midpoint",
+      "args": {
+       "point": "N",
+       "segment": [
+        "A'",
+        "B'"
+       ]
+      },
+      "quote": "Gọi N là trung điểm của A'B'",
+      "solid_id": "s1"
+     }
+    ],
+    "relations": [],
+    "derived_sections": [
+     {
+      "section_id": "sec1",
+      "plane_name": "P",
+      "target_solid_id": "s1",
+      "quote": "Mặt phẳng (P) chứa AC' và song song với BC",
+      "plane_kind": "constrained",
+      "constraints": [
+       {
+        "kind": "contains_points",
+        "operands": [
+         "A",
+         "C'"
+        ]
+       },
+       {
+        "kind": "parallel_to_line",
+        "operands": [
+         "B",
+         "C"
+        ]
+       }
+      ],
+      "stated_intersections": []
+     }
+    ],
+    "simulation_goals": [
+     {
+      "goal_id": "sg1",
+      "kind": "construct_object",
+      "target_solid_id": "s1",
+      "quote": "Cho hình lăng trụ đứng ABC.A'B'C'"
+     }
+    ],
+    "math_goals": [
+     {
+      "goal_id": "q1",
+      "kind": "measurement",
+      "goal_type": "area",
+      "target": {
+       "section_id": "sec1"
+      },
+      "quote": "Xác định thiết diện của hình lăng trụ ABC.A'B'C' cắt bởi (P) và tính diện tích thiết diện đó",
+      "solid_id": "s1"
+     }
+    ]
+   },
+   "oracle": "61",
+   "source_row": "prism(3,4,2)|F2|['A', \"C'\"]|['B', 'C']"
+  },
+  {
+   "id": "K-B01",
+   "stratum": "K-B",
+   "expected": "REFUSED",
+   "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với mặt phẳng (ABCD) và SA = 2. Gọi M là trung điểm của AB. Gọi N là trung điểm của SC. Mặt phẳng (P) đi qua A, B và vuông góc với (SDA). Xác định thiết diện của hình chóp S.ABCD cắt bởi (P) và tính diện tích thiết diện đó.",
+   "gold": {
+    "schema_version": "typed-fact-next/2",
+    "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với mặt phẳng (ABCD) và SA = 2. Gọi M là trung điểm của AB. Gọi N là trung điểm của SC. Mặt phẳng (P) đi qua A, B và vuông góc với (SDA). Xác định thiết diện của hình chóp S.ABCD cắt bởi (P) và tính diện tích thiết diện đó.",
+    "length_unit": "1",
+    "solids": [
+     {
+      "solid_id": "s1",
+      "solid_type": "pyramid",
+      "notation": "S.ABCD",
+      "quote": "Cho hình chóp S.ABCD"
+     }
+    ],
+    "premises": [
+     {
+      "kind": "regular_polygon",
+      "args": {
+       "vertices": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ],
+       "side": "2"
+      },
+      "quote": "đáy ABCD là hình vuông cạnh 2",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "perpendicular_line_plane",
+      "args": {
+       "line": [
+        "S",
+        "A"
+       ],
+       "plane": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ]
+      },
+      "quote": "SA vuông góc với mặt phẳng (ABCD)",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "segment_length",
+      "args": {
+       "segment": [
+        "S",
+        "A"
+       ],
+       "value": "2"
+      },
+      "quote": "SA = 2",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "midpoint",
+      "args": {
+       "point": "M",
+       "segment": [
+        "A",
+        "B"
+       ]
+      },
+      "quote": "Gọi M là trung điểm của AB",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "midpoint",
+      "args": {
+       "point": "N",
+       "segment": [
+        "S",
+        "C"
+       ]
+      },
+      "quote": "Gọi N là trung điểm của SC",
+      "solid_id": "s1"
+     }
+    ],
+    "relations": [],
+    "derived_sections": [
+     {
+      "section_id": "sec1",
+      "plane_name": "P",
+      "target_solid_id": "s1",
+      "quote": "Mặt phẳng (P) đi qua A, B và vuông góc với (SDA)",
+      "plane_kind": "constrained",
+      "constraints": [
+       {
+        "kind": "contains_points",
+        "operands": [
+         "A",
+         "B"
+        ]
+       },
+       {
+        "kind": "perpendicular_to_plane",
+        "operands": [
+         "S",
+         "D",
+         "A"
+        ]
+       }
+      ],
+      "stated_intersections": []
+     }
+    ],
+    "simulation_goals": [
+     {
+      "goal_id": "sg1",
+      "kind": "construct_object",
+      "target_solid_id": "s1",
+      "quote": "Cho hình chóp S.ABCD"
+     }
+    ],
+    "math_goals": [
+     {
+      "goal_id": "q1",
+      "kind": "measurement",
+      "goal_type": "area",
+      "target": {
+       "section_id": "sec1"
+      },
+      "quote": "Xác định thiết diện của hình chóp S.ABCD cắt bởi (P) và tính diện tích thiết diện đó",
+      "solid_id": "s1"
+     }
+    ]
+   },
+   "oracle": null,
+   "source_row": "pyramid(2,2)|F1|['A', 'B']|['S', 'D', 'A']"
+  },
+  {
+   "id": "K-B02",
+   "stratum": "K-B",
+   "expected": "REFUSED",
+   "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với mặt phẳng (ABCD) và SA = 2. Gọi M là trung điểm của AB. Gọi N là trung điểm của SC. Mặt phẳng (P) đi qua A, B, C và vuông góc với (ABCD). Xác định thiết diện của hình chóp S.ABCD cắt bởi (P) và tính diện tích thiết diện đó.",
+   "gold": {
+    "schema_version": "typed-fact-next/2",
+    "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với mặt phẳng (ABCD) và SA = 2. Gọi M là trung điểm của AB. Gọi N là trung điểm của SC. Mặt phẳng (P) đi qua A, B, C và vuông góc với (ABCD). Xác định thiết diện của hình chóp S.ABCD cắt bởi (P) và tính diện tích thiết diện đó.",
+    "length_unit": "1",
+    "solids": [
+     {
+      "solid_id": "s1",
+      "solid_type": "pyramid",
+      "notation": "S.ABCD",
+      "quote": "Cho hình chóp S.ABCD"
+     }
+    ],
+    "premises": [
+     {
+      "kind": "regular_polygon",
+      "args": {
+       "vertices": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ],
+       "side": "2"
+      },
+      "quote": "đáy ABCD là hình vuông cạnh 2",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "perpendicular_line_plane",
+      "args": {
+       "line": [
+        "S",
+        "A"
+       ],
+       "plane": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ]
+      },
+      "quote": "SA vuông góc với mặt phẳng (ABCD)",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "segment_length",
+      "args": {
+       "segment": [
+        "S",
+        "A"
+       ],
+       "value": "2"
+      },
+      "quote": "SA = 2",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "midpoint",
+      "args": {
+       "point": "M",
+       "segment": [
+        "A",
+        "B"
+       ]
+      },
+      "quote": "Gọi M là trung điểm của AB",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "midpoint",
+      "args": {
+       "point": "N",
+       "segment": [
+        "S",
+        "C"
+       ]
+      },
+      "quote": "Gọi N là trung điểm của SC",
+      "solid_id": "s1"
+     }
+    ],
+    "relations": [],
+    "derived_sections": [
+     {
+      "section_id": "sec1",
+      "plane_name": "P",
+      "target_solid_id": "s1",
+      "quote": "Mặt phẳng (P) đi qua A, B, C và vuông góc với (ABCD)",
+      "plane_kind": "constrained",
+      "constraints": [
+       {
+        "kind": "contains_points",
+        "operands": [
+         "A",
+         "B",
+         "C"
+        ]
+       },
+       {
+        "kind": "perpendicular_to_plane",
+        "operands": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ]
+       }
+      ],
+      "stated_intersections": []
+     }
+    ],
+    "simulation_goals": [
+     {
+      "goal_id": "sg1",
+      "kind": "construct_object",
+      "target_solid_id": "s1",
+      "quote": "Cho hình chóp S.ABCD"
+     }
+    ],
+    "math_goals": [
+     {
+      "goal_id": "q1",
+      "kind": "measurement",
+      "goal_type": "area",
+      "target": {
+       "section_id": "sec1"
+      },
+      "quote": "Xác định thiết diện của hình chóp S.ABCD cắt bởi (P) và tính diện tích thiết diện đó",
+      "solid_id": "s1"
+     }
+    ]
+   },
+   "oracle": null,
+   "source_row": "pyramid(2,2)|F3|['A', 'B', 'C']|['A', 'B', 'C', 'D']"
+  },
+  {
+   "id": "K-C01",
+   "stratum": "K-C",
+   "expected": "SERVED",
+   "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với mặt phẳng (ABCD) và SA = 2. Gọi M là trung điểm của AB. Gọi N là trung điểm của SC. Tính khoảng cách từ trực tâm của tam giác ACM đến mặt phẳng (SAB).",
+   "gold": {
+    "schema_version": "typed-fact-next/2",
+    "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với mặt phẳng (ABCD) và SA = 2. Gọi M là trung điểm của AB. Gọi N là trung điểm của SC. Tính khoảng cách từ trực tâm của tam giác ACM đến mặt phẳng (SAB).",
+    "length_unit": "1",
+    "solids": [
+     {
+      "solid_id": "s1",
+      "solid_type": "pyramid",
+      "notation": "S.ABCD",
+      "quote": "Cho hình chóp S.ABCD"
+     }
+    ],
+    "premises": [
+     {
+      "kind": "regular_polygon",
+      "args": {
+       "vertices": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ],
+       "side": "2"
+      },
+      "quote": "đáy ABCD là hình vuông cạnh 2",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "perpendicular_line_plane",
+      "args": {
+       "line": [
+        "S",
+        "A"
+       ],
+       "plane": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ]
+      },
+      "quote": "SA vuông góc với mặt phẳng (ABCD)",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "segment_length",
+      "args": {
+       "segment": [
+        "S",
+        "A"
+       ],
+       "value": "2"
+      },
+      "quote": "SA = 2",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "midpoint",
+      "args": {
+       "point": "M",
+       "segment": [
+        "A",
+        "B"
+       ]
+      },
+      "quote": "Gọi M là trung điểm của AB",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "midpoint",
+      "args": {
+       "point": "N",
+       "segment": [
+        "S",
+        "C"
+       ]
+      },
+      "quote": "Gọi N là trung điểm của SC",
+      "solid_id": "s1"
+     }
+    ],
+    "derived_sections": [],
+    "relations": [],
+    "simulation_goals": [
+     {
+      "goal_id": "sg1",
+      "kind": "construct_object",
+      "target_solid_id": "s1",
+      "quote": "Cho hình chóp S.ABCD"
+     }
+    ],
+    "math_goals": [
+     {
+      "goal_id": "q1",
+      "kind": "measurement",
+      "goal_type": "distance",
+      "target": {
+       "point": "@h1",
+       "plane": [
+        "S",
+        "A",
+        "B"
+       ]
+      },
+      "quote": "Tính khoảng cách từ trực tâm của tam giác ACM đến mặt phẳng (SAB)",
+      "solid_id": "s1"
+     }
+    ],
+    "described_points": [
+     {
+      "described_id": "h1",
+      "kind": "orthocenter",
+      "quote": "trực tâm của tam giác ACM",
+      "polygon": [
+       "A",
+       "C",
+       "M"
+      ]
+     }
+    ]
+   },
+   "oracle": "1",
+   "source_row": "pyramid(2,2)|orthocenter|ACM|G1"
+  },
+  {
+   "id": "K-C02",
+   "stratum": "K-C",
+   "expected": "SERVED",
+   "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với mặt phẳng (ABCD) và SA = 2. Gọi M là trung điểm của AB. Gọi N là trung điểm của SC. Tính khoảng cách từ tâm đường tròn ngoại tiếp tam giác ABN đến mặt phẳng (ABCD).",
+   "gold": {
+    "schema_version": "typed-fact-next/2",
+    "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với mặt phẳng (ABCD) và SA = 2. Gọi M là trung điểm của AB. Gọi N là trung điểm của SC. Tính khoảng cách từ tâm đường tròn ngoại tiếp tam giác ABN đến mặt phẳng (ABCD).",
+    "length_unit": "1",
+    "solids": [
+     {
+      "solid_id": "s1",
+      "solid_type": "pyramid",
+      "notation": "S.ABCD",
+      "quote": "Cho hình chóp S.ABCD"
+     }
+    ],
+    "premises": [
+     {
+      "kind": "regular_polygon",
+      "args": {
+       "vertices": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ],
+       "side": "2"
+      },
+      "quote": "đáy ABCD là hình vuông cạnh 2",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "perpendicular_line_plane",
+      "args": {
+       "line": [
+        "S",
+        "A"
+       ],
+       "plane": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ]
+      },
+      "quote": "SA vuông góc với mặt phẳng (ABCD)",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "segment_length",
+      "args": {
+       "segment": [
+        "S",
+        "A"
+       ],
+       "value": "2"
+      },
+      "quote": "SA = 2",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "midpoint",
+      "args": {
+       "point": "M",
+       "segment": [
+        "A",
+        "B"
+       ]
+      },
+      "quote": "Gọi M là trung điểm của AB",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "midpoint",
+      "args": {
+       "point": "N",
+       "segment": [
+        "S",
+        "C"
+       ]
+      },
+      "quote": "Gọi N là trung điểm của SC",
+      "solid_id": "s1"
+     }
+    ],
+    "derived_sections": [],
+    "relations": [],
+    "simulation_goals": [
+     {
+      "goal_id": "sg1",
+      "kind": "construct_object",
+      "target_solid_id": "s1",
+      "quote": "Cho hình chóp S.ABCD"
+     }
+    ],
+    "math_goals": [
+     {
+      "goal_id": "q1",
+      "kind": "measurement",
+      "goal_type": "distance",
+      "target": {
+       "point": "@h1",
+       "plane": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ]
+      },
+      "quote": "Tính khoảng cách từ tâm đường tròn ngoại tiếp tam giác ABN đến mặt phẳng (ABCD)",
+      "solid_id": "s1"
+     }
+    ],
+    "described_points": [
+     {
+      "described_id": "h1",
+      "kind": "circumcenter",
+      "quote": "tâm đường tròn ngoại tiếp tam giác ABN",
+      "polygon": [
+       "A",
+       "B",
+       "N"
+      ]
+     }
+    ]
+   },
+   "oracle": "1/16",
+   "source_row": "pyramid(2,2)|circumcenter|ABN|G1"
+  },
+  {
+   "id": "K-C03",
+   "stratum": "K-C",
+   "expected": "SERVED",
+   "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với mặt phẳng (ABCD) và SA = 2. Gọi M là trung điểm của AB. Gọi N là trung điểm của SC. Tính độ dài đoạn thẳng nối điểm C với tâm đường tròn ngoại tiếp tam giác ABN.",
+   "gold": {
+    "schema_version": "typed-fact-next/2",
+    "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với mặt phẳng (ABCD) và SA = 2. Gọi M là trung điểm của AB. Gọi N là trung điểm của SC. Tính độ dài đoạn thẳng nối điểm C với tâm đường tròn ngoại tiếp tam giác ABN.",
+    "length_unit": "1",
+    "solids": [
+     {
+      "solid_id": "s1",
+      "solid_type": "pyramid",
+      "notation": "S.ABCD",
+      "quote": "Cho hình chóp S.ABCD"
+     }
+    ],
+    "premises": [
+     {
+      "kind": "regular_polygon",
+      "args": {
+       "vertices": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ],
+       "side": "2"
+      },
+      "quote": "đáy ABCD là hình vuông cạnh 2",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "perpendicular_line_plane",
+      "args": {
+       "line": [
+        "S",
+        "A"
+       ],
+       "plane": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ]
+      },
+      "quote": "SA vuông góc với mặt phẳng (ABCD)",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "segment_length",
+      "args": {
+       "segment": [
+        "S",
+        "A"
+       ],
+       "value": "2"
+      },
+      "quote": "SA = 2",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "midpoint",
+      "args": {
+       "point": "M",
+       "segment": [
+        "A",
+        "B"
+       ]
+      },
+      "quote": "Gọi M là trung điểm của AB",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "midpoint",
+      "args": {
+       "point": "N",
+       "segment": [
+        "S",
+        "C"
+       ]
+      },
+      "quote": "Gọi N là trung điểm của SC",
+      "solid_id": "s1"
+     }
+    ],
+    "derived_sections": [],
+    "relations": [],
+    "simulation_goals": [
+     {
+      "goal_id": "sg1",
+      "kind": "construct_object",
+      "target_solid_id": "s1",
+      "quote": "Cho hình chóp S.ABCD"
+     }
+    ],
+    "math_goals": [
+     {
+      "goal_id": "q1",
+      "kind": "measurement",
+      "goal_type": "distance",
+      "target": {
+       "segment": [
+        "C",
+        "@h1"
+       ]
+      },
+      "quote": "Tính độ dài đoạn thẳng nối điểm C với tâm đường tròn ngoại tiếp tam giác ABN",
+      "solid_id": "s1"
+     }
+    ],
+    "described_points": [
+     {
+      "described_id": "h1",
+      "kind": "circumcenter",
+      "quote": "tâm đường tròn ngoại tiếp tam giác ABN",
+      "polygon": [
+       "A",
+       "B",
+       "N"
+      ]
+     }
+    ]
+   },
+   "oracle": "33/8",
+   "source_row": "pyramid(2,2)|circumcenter|ABN|G2"
+  },
+  {
+   "id": "K-C04",
+   "stratum": "K-C",
+   "expected": "SERVED",
+   "text": "Cho hình lăng trụ đứng ABC.A'B'C' có đáy ABC là tam giác vuông tại A, AB = 3, AC = 4 và AA' = 2. Gọi M là trung điểm của BC. Gọi N là trung điểm của A'B'. Tính khoảng cách từ trực tâm của tam giác ABM đến mặt phẳng (A'B'C').",
+   "gold": {
+    "schema_version": "typed-fact-next/2",
+    "problem_text": "Cho hình lăng trụ đứng ABC.A'B'C' có đáy ABC là tam giác vuông tại A, AB = 3, AC = 4 và AA' = 2. Gọi M là trung điểm của BC. Gọi N là trung điểm của A'B'. Tính khoảng cách từ trực tâm của tam giác ABM đến mặt phẳng (A'B'C').",
+    "length_unit": "1",
+    "solids": [
+     {
+      "solid_id": "s1",
+      "solid_type": "prism",
+      "notation": "ABC.A'B'C'",
+      "quote": "Cho hình lăng trụ đứng ABC.A'B'C'"
+     }
+    ],
+    "premises": [
+     {
+      "kind": "right_prism",
+      "args": {
+       "base": [
+        "A",
+        "B",
+        "C"
+       ],
+       "top": [
+        "A'",
+        "B'",
+        "C'"
+       ]
+      },
+      "quote": "Cho hình lăng trụ đứng ABC.A'B'C'",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "right_angle",
+      "args": {
+       "vertex": "A",
+       "rays": [
+        "B",
+        "C"
+       ]
+      },
+      "quote": "đáy ABC là tam giác vuông tại A",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "segment_length",
+      "args": {
+       "segment": [
+        "A",
+        "B"
+       ],
+       "value": "3"
+      },
+      "quote": "AB = 3",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "segment_length",
+      "args": {
+       "segment": [
+        "A",
+        "C"
+       ],
+       "value": "4"
+      },
+      "quote": "AC = 4",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "segment_length",
+      "args": {
+       "segment": [
+        "A",
+        "A'"
+       ],
+       "value": "2"
+      },
+      "quote": "AA' = 2",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "midpoint",
+      "args": {
+       "point": "M",
+       "segment": [
+        "B",
+        "C"
+       ]
+      },
+      "quote": "Gọi M là trung điểm của BC",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "midpoint",
+      "args": {
+       "point": "N",
+       "segment": [
+        "A'",
+        "B'"
+       ]
+      },
+      "quote": "Gọi N là trung điểm của A'B'",
+      "solid_id": "s1"
+     }
+    ],
+    "derived_sections": [],
+    "relations": [],
+    "simulation_goals": [
+     {
+      "goal_id": "sg1",
+      "kind": "construct_object",
+      "target_solid_id": "s1",
+      "quote": "Cho hình lăng trụ đứng ABC.A'B'C'"
+     }
+    ],
+    "math_goals": [
+     {
+      "goal_id": "q1",
+      "kind": "measurement",
+      "goal_type": "distance",
+      "target": {
+       "point": "@h1",
+       "plane": [
+        "A'",
+        "B'",
+        "C'"
+       ]
+      },
+      "quote": "Tính khoảng cách từ trực tâm của tam giác ABM đến mặt phẳng (A'B'C')",
+      "solid_id": "s1"
+     }
+    ],
+    "described_points": [
+     {
+      "described_id": "h1",
+      "kind": "orthocenter",
+      "quote": "trực tâm của tam giác ABM",
+      "polygon": [
+       "A",
+       "B",
+       "M"
+      ]
+     }
+    ]
+   },
+   "oracle": "4",
+   "source_row": "prism(3,4,2)|orthocenter|ABM|G1"
+  },
+  {
+   "id": "K-C05",
+   "stratum": "K-C",
+   "expected": "SERVED",
+   "text": "Cho hình lăng trụ đứng ABC.A'B'C' có đáy ABC là tam giác vuông tại A, AB = 3, AC = 4 và AA' = 2. Gọi M là trung điểm của BC. Gọi N là trung điểm của A'B'. Tính độ dài đoạn thẳng nối điểm C với trực tâm của tam giác ABM.",
+   "gold": {
+    "schema_version": "typed-fact-next/2",
+    "problem_text": "Cho hình lăng trụ đứng ABC.A'B'C' có đáy ABC là tam giác vuông tại A, AB = 3, AC = 4 và AA' = 2. Gọi M là trung điểm của BC. Gọi N là trung điểm của A'B'. Tính độ dài đoạn thẳng nối điểm C với trực tâm của tam giác ABM.",
+    "length_unit": "1",
+    "solids": [
+     {
+      "solid_id": "s1",
+      "solid_type": "prism",
+      "notation": "ABC.A'B'C'",
+      "quote": "Cho hình lăng trụ đứng ABC.A'B'C'"
+     }
+    ],
+    "premises": [
+     {
+      "kind": "right_prism",
+      "args": {
+       "base": [
+        "A",
+        "B",
+        "C"
+       ],
+       "top": [
+        "A'",
+        "B'",
+        "C'"
+       ]
+      },
+      "quote": "Cho hình lăng trụ đứng ABC.A'B'C'",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "right_angle",
+      "args": {
+       "vertex": "A",
+       "rays": [
+        "B",
+        "C"
+       ]
+      },
+      "quote": "đáy ABC là tam giác vuông tại A",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "segment_length",
+      "args": {
+       "segment": [
+        "A",
+        "B"
+       ],
+       "value": "3"
+      },
+      "quote": "AB = 3",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "segment_length",
+      "args": {
+       "segment": [
+        "A",
+        "C"
+       ],
+       "value": "4"
+      },
+      "quote": "AC = 4",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "segment_length",
+      "args": {
+       "segment": [
+        "A",
+        "A'"
+       ],
+       "value": "2"
+      },
+      "quote": "AA' = 2",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "midpoint",
+      "args": {
+       "point": "M",
+       "segment": [
+        "B",
+        "C"
+       ]
+      },
+      "quote": "Gọi M là trung điểm của BC",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "midpoint",
+      "args": {
+       "point": "N",
+       "segment": [
+        "A'",
+        "B'"
+       ]
+      },
+      "quote": "Gọi N là trung điểm của A'B'",
+      "solid_id": "s1"
+     }
+    ],
+    "derived_sections": [],
+    "relations": [],
+    "simulation_goals": [
+     {
+      "goal_id": "sg1",
+      "kind": "construct_object",
+      "target_solid_id": "s1",
+      "quote": "Cho hình lăng trụ đứng ABC.A'B'C'"
+     }
+    ],
+    "math_goals": [
+     {
+      "goal_id": "q1",
+      "kind": "measurement",
+      "goal_type": "distance",
+      "target": {
+       "segment": [
+        "C",
+        "@h1"
+       ]
+      },
+      "quote": "Tính độ dài đoạn thẳng nối điểm C với trực tâm của tam giác ABM",
+      "solid_id": "s1"
+     }
+    ],
+    "described_points": [
+     {
+      "described_id": "h1",
+      "kind": "orthocenter",
+      "quote": "trực tâm của tam giác ABM",
+      "polygon": [
+       "A",
+       "B",
+       "M"
+      ]
+     }
+    ]
+   },
+   "oracle": "673/64",
+   "source_row": "prism(3,4,2)|orthocenter|ABM|G2"
+  },
+  {
+   "id": "K-C06",
+   "stratum": "K-C",
+   "expected": "SERVED",
+   "text": "Cho hình lăng trụ đứng ABC.A'B'C' có đáy ABC là tam giác vuông tại A, AB = 3, AC = 4 và AA' = 2. Gọi M là trung điểm của BC. Gọi N là trung điểm của A'B'. Tính khoảng cách từ tâm đường tròn ngoại tiếp tam giác ABM đến mặt phẳng (A'B'C').",
+   "gold": {
+    "schema_version": "typed-fact-next/2",
+    "problem_text": "Cho hình lăng trụ đứng ABC.A'B'C' có đáy ABC là tam giác vuông tại A, AB = 3, AC = 4 và AA' = 2. Gọi M là trung điểm của BC. Gọi N là trung điểm của A'B'. Tính khoảng cách từ tâm đường tròn ngoại tiếp tam giác ABM đến mặt phẳng (A'B'C').",
+    "length_unit": "1",
+    "solids": [
+     {
+      "solid_id": "s1",
+      "solid_type": "prism",
+      "notation": "ABC.A'B'C'",
+      "quote": "Cho hình lăng trụ đứng ABC.A'B'C'"
+     }
+    ],
+    "premises": [
+     {
+      "kind": "right_prism",
+      "args": {
+       "base": [
+        "A",
+        "B",
+        "C"
+       ],
+       "top": [
+        "A'",
+        "B'",
+        "C'"
+       ]
+      },
+      "quote": "Cho hình lăng trụ đứng ABC.A'B'C'",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "right_angle",
+      "args": {
+       "vertex": "A",
+       "rays": [
+        "B",
+        "C"
+       ]
+      },
+      "quote": "đáy ABC là tam giác vuông tại A",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "segment_length",
+      "args": {
+       "segment": [
+        "A",
+        "B"
+       ],
+       "value": "3"
+      },
+      "quote": "AB = 3",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "segment_length",
+      "args": {
+       "segment": [
+        "A",
+        "C"
+       ],
+       "value": "4"
+      },
+      "quote": "AC = 4",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "segment_length",
+      "args": {
+       "segment": [
+        "A",
+        "A'"
+       ],
+       "value": "2"
+      },
+      "quote": "AA' = 2",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "midpoint",
+      "args": {
+       "point": "M",
+       "segment": [
+        "B",
+        "C"
+       ]
+      },
+      "quote": "Gọi M là trung điểm của BC",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "midpoint",
+      "args": {
+       "point": "N",
+       "segment": [
+        "A'",
+        "B'"
+       ]
+      },
+      "quote": "Gọi N là trung điểm của A'B'",
+      "solid_id": "s1"
+     }
+    ],
+    "derived_sections": [],
+    "relations": [],
+    "simulation_goals": [
+     {
+      "goal_id": "sg1",
+      "kind": "construct_object",
+      "target_solid_id": "s1",
+      "quote": "Cho hình lăng trụ đứng ABC.A'B'C'"
+     }
+    ],
+    "math_goals": [
+     {
+      "goal_id": "q1",
+      "kind": "measurement",
+      "goal_type": "distance",
+      "target": {
+       "point": "@h1",
+       "plane": [
+        "A'",
+        "B'",
+        "C'"
+       ]
+      },
+      "quote": "Tính khoảng cách từ tâm đường tròn ngoại tiếp tam giác ABM đến mặt phẳng (A'B'C')",
+      "solid_id": "s1"
+     }
+    ],
+    "described_points": [
+     {
+      "described_id": "h1",
+      "kind": "circumcenter",
+      "quote": "tâm đường tròn ngoại tiếp tam giác ABM",
+      "polygon": [
+       "A",
+       "B",
+       "M"
+      ]
+     }
+    ]
+   },
+   "oracle": "4",
+   "source_row": "prism(3,4,2)|circumcenter|ABM|G1"
+  },
+  {
+   "id": "K-D01",
+   "stratum": "K-D",
+   "expected": "REFUSED",
+   "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với mặt phẳng (ABCD) và SA = 2. Gọi M là trung điểm của AB. Gọi N là trung điểm của SC. Tính khoảng cách từ trực tâm của tam giác ABM đến mặt phẳng (ABCD).",
+   "gold": {
+    "schema_version": "typed-fact-next/2",
+    "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với mặt phẳng (ABCD) và SA = 2. Gọi M là trung điểm của AB. Gọi N là trung điểm của SC. Tính khoảng cách từ trực tâm của tam giác ABM đến mặt phẳng (ABCD).",
+    "length_unit": "1",
+    "solids": [
+     {
+      "solid_id": "s1",
+      "solid_type": "pyramid",
+      "notation": "S.ABCD",
+      "quote": "Cho hình chóp S.ABCD"
+     }
+    ],
+    "premises": [
+     {
+      "kind": "regular_polygon",
+      "args": {
+       "vertices": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ],
+       "side": "2"
+      },
+      "quote": "đáy ABCD là hình vuông cạnh 2",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "perpendicular_line_plane",
+      "args": {
+       "line": [
+        "S",
+        "A"
+       ],
+       "plane": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ]
+      },
+      "quote": "SA vuông góc với mặt phẳng (ABCD)",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "segment_length",
+      "args": {
+       "segment": [
+        "S",
+        "A"
+       ],
+       "value": "2"
+      },
+      "quote": "SA = 2",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "midpoint",
+      "args": {
+       "point": "M",
+       "segment": [
+        "A",
+        "B"
+       ]
+      },
+      "quote": "Gọi M là trung điểm của AB",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "midpoint",
+      "args": {
+       "point": "N",
+       "segment": [
+        "S",
+        "C"
+       ]
+      },
+      "quote": "Gọi N là trung điểm của SC",
+      "solid_id": "s1"
+     }
+    ],
+    "derived_sections": [],
+    "relations": [],
+    "simulation_goals": [
+     {
+      "goal_id": "sg1",
+      "kind": "construct_object",
+      "target_solid_id": "s1",
+      "quote": "Cho hình chóp S.ABCD"
+     }
+    ],
+    "math_goals": [
+     {
+      "goal_id": "q1",
+      "kind": "measurement",
+      "goal_type": "distance",
+      "target": {
+       "point": "@h1",
+       "plane": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ]
+      },
+      "quote": "Tính khoảng cách từ trực tâm của tam giác ABM đến mặt phẳng (ABCD)",
+      "solid_id": "s1"
+     }
+    ],
+    "described_points": [
+     {
+      "described_id": "h1",
+      "kind": "orthocenter",
+      "quote": "trực tâm của tam giác ABM",
+      "polygon": [
+       "A",
+       "B",
+       "M"
+      ]
+     }
+    ]
+   },
+   "oracle": null,
+   "source_row": "pyramid(2,2)|orthocenter|ABM|G1"
+  },
+  {
+   "id": "K-D02",
+   "stratum": "K-D",
+   "expected": "REFUSED",
+   "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với mặt phẳng (ABCD) và SA = 2. Gọi M là trung điểm của AB. Gọi N là trung điểm của SC. Tính khoảng cách từ tâm đường tròn ngoại tiếp tam giác ABM đến mặt phẳng (ABCD).",
+   "gold": {
+    "schema_version": "typed-fact-next/2",
+    "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với mặt phẳng (ABCD) và SA = 2. Gọi M là trung điểm của AB. Gọi N là trung điểm của SC. Tính khoảng cách từ tâm đường tròn ngoại tiếp tam giác ABM đến mặt phẳng (ABCD).",
+    "length_unit": "1",
+    "solids": [
+     {
+      "solid_id": "s1",
+      "solid_type": "pyramid",
+      "notation": "S.ABCD",
+      "quote": "Cho hình chóp S.ABCD"
+     }
+    ],
+    "premises": [
+     {
+      "kind": "regular_polygon",
+      "args": {
+       "vertices": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ],
+       "side": "2"
+      },
+      "quote": "đáy ABCD là hình vuông cạnh 2",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "perpendicular_line_plane",
+      "args": {
+       "line": [
+        "S",
+        "A"
+       ],
+       "plane": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ]
+      },
+      "quote": "SA vuông góc với mặt phẳng (ABCD)",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "segment_length",
+      "args": {
+       "segment": [
+        "S",
+        "A"
+       ],
+       "value": "2"
+      },
+      "quote": "SA = 2",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "midpoint",
+      "args": {
+       "point": "M",
+       "segment": [
+        "A",
+        "B"
+       ]
+      },
+      "quote": "Gọi M là trung điểm của AB",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "midpoint",
+      "args": {
+       "point": "N",
+       "segment": [
+        "S",
+        "C"
+       ]
+      },
+      "quote": "Gọi N là trung điểm của SC",
+      "solid_id": "s1"
+     }
+    ],
+    "derived_sections": [],
+    "relations": [],
+    "simulation_goals": [
+     {
+      "goal_id": "sg1",
+      "kind": "construct_object",
+      "target_solid_id": "s1",
+      "quote": "Cho hình chóp S.ABCD"
+     }
+    ],
+    "math_goals": [
+     {
+      "goal_id": "q1",
+      "kind": "measurement",
+      "goal_type": "distance",
+      "target": {
+       "point": "@h1",
+       "plane": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ]
+      },
+      "quote": "Tính khoảng cách từ tâm đường tròn ngoại tiếp tam giác ABM đến mặt phẳng (ABCD)",
+      "solid_id": "s1"
+     }
+    ],
+    "described_points": [
+     {
+      "described_id": "h1",
+      "kind": "circumcenter",
+      "quote": "tâm đường tròn ngoại tiếp tam giác ABM",
+      "polygon": [
+       "A",
+       "B",
+       "M"
+      ]
+     }
+    ]
+   },
+   "oracle": null,
+   "source_row": "pyramid(2,2)|circumcenter|ABM|G1"
+  },
+  {
+   "id": "K-E01",
+   "stratum": "K-E",
+   "expected": "CLARIFY",
+   "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với mặt phẳng (ABCD) và SA = 2. Gọi M là trung điểm của AB. Gọi N là trung điểm của SC. Mặt phẳng (P) đi qua A, B và vuông góc với một mặt bên. Xác định thiết diện của hình chóp S.ABCD cắt bởi (P) và tính diện tích thiết diện đó.",
+   "gold": null,
+   "oracle": null,
+   "source_row": "K-A01"
+  },
+  {
+   "id": "K-E02",
+   "stratum": "K-E",
+   "expected": "CLARIFY",
+   "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với mặt phẳng (ABCD) và SA = 2. Gọi M là trung điểm của AB. Gọi N là trung điểm của SC. Tính khoảng cách từ trực tâm của một tam giác có ba đỉnh thuộc hình chóp đến mặt phẳng (SAB).",
+   "gold": null,
+   "oracle": null,
+   "source_row": "K-C01"
+  }
+ ]
+}

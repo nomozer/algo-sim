@@ -14,7 +14,7 @@ Gold rows come from the C17 generator (`constraint_witness_probe.cases`) and the
 each stratum in generator order), never by looking at a model's output.
 Usage: build_constraint_extraction_pilot.py <corpus.json> [gold_replay.jsonl]   (refuses to overwrite)
 """
-import copy, json, sys
+import copy, json, re, sys
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
@@ -31,8 +31,8 @@ def corpus():
     def take(rows, n, stratum, expect):
         for r in rows[:n]:
             out.append({'id': f"{stratum}{len([x for x in out if x['stratum'] == stratum]) + 1:02d}", 'stratum': stratum,
-                        'expected': expect, 'text': r['text'], 'gold': r['payload'], 'oracle': r.get('oracle_area2')
-                        or r.get('want2'), 'source_row': r.get('id') or f"{r['topology']}|{r['family']}|{r['contains']}|{r['ref']}"})
+                        'expected': expect, 'text': r['text'], 'gold': r['payload'],
+                        'oracle': None if (v := r.get('oracle_area2') or r.get('want2')) is None else str(v), 'source_row': r.get('id') or f"{r['topology']}|{r['family']}|{r['contains']}|{r['ref']}"})
     take([r for r in cw if r['oracle'] == 'UNIQUE' and r['family'] == 'F1' and r['topology'] == 'pyramid(2,2)'], 2, 'K-A', 'SERVED')
     take([r for r in cw if r['oracle'] == 'UNIQUE' and r['family'] == 'F2' and r['topology'].startswith('prism')], 2, 'K-A', 'SERVED')
     take([r for r in cw if r['oracle'] == 'NOT_UNIQUE'], 1, 'K-B', 'REFUSED')
@@ -43,12 +43,12 @@ def corpus():
             take([c for c in cc if c['topology'] == topo and c['center'] == kind and c['necessity'] == 'COMPOSITION_NECESSARY'],
                  n, 'K-C', 'SERVED')
     take([c for c in cc if c['necessity'] == 'DEGENERATE_TRIANGLE' and c['goal'] == 'G1'], 2, 'K-D', 'REFUSED')
-    for k, (old, new) in enumerate((('vuông góc với (SBC)', 'vuông góc với một mặt bên'),
-                                    ('trực tâm của tam giác CDM', 'trực tâm của một tam giác'))):
-        src = out[0] if k == 0 else next(x for x in out if 'trực tâm của tam giác CDM' in x['text'])
-        if old not in src['text']:
+    for k, (old, new) in enumerate((('và vuông góc với \\(SCD\\)', 'và vuông góc với một mặt bên'),
+                                    ("trực tâm của tam giác [A-Z']+", 'trực tâm của một tam giác có ba đỉnh thuộc hình chóp'))):
+        src = out[0] if k == 0 else next(x for x in out if re.search(old, x['text']))
+        if not re.search(old, src['text']):
             raise SystemExit(f'K-E source lacks {old!r}')
-        out.append({'id': f'K-E{k + 1:02d}', 'stratum': 'K-E', 'expected': 'CLARIFY', 'text': src['text'].replace(old, new),
+        out.append({'id': f'K-E{k + 1:02d}', 'stratum': 'K-E', 'expected': 'CLARIFY', 'text': re.sub(old, new, src['text'], 1),
                     'gold': None, 'oracle': None, 'source_row': src['id']})
     return out
 
