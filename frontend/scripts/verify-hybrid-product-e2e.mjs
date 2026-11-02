@@ -8,7 +8,7 @@
  */
 import { spawn } from "node:child_process";
 import { createHash } from "node:crypto";
-import { existsSync, mkdtempSync, readFileSync, rmSync, statSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, statSync, writeFileSync } from "node:fs";
 import http from "node:http";
 import net from "node:net";
 import os from "node:os";
@@ -21,7 +21,9 @@ const RUN_DIR = join(REPO, "docs/evaluation/geometry/runs/hybrid-master-backend-
 const CORPUS_PATH = join(RUN_DIR, "product-integration-staging-corpus.json");
 const VERIFICATION_PATH = join(RUN_DIR, "product-integration-16-classes-verification.json");
 const DIST_DIR = join(REPO, "frontend/dist");
-const RECEIPT_OUT = join(RUN_DIR, "product-e2e-browser-receipt.json");
+// The candidate-123e57da receipt (`product-e2e-browser-receipt.json`) is frozen evidence; new runs write their own layer.
+const OUT_DIR = join(REPO, "docs/evaluation/geometry/runs/pedagogical-simulation-integration");
+const RECEIPT_OUT = join(OUT_DIR, "pedagogical-e2e-browser-receipt.json");
 const SECRET_CANARY = "SECRET_DO_NOT_LEAK_E2E_999";
 
 const MIME = {
@@ -164,7 +166,108 @@ async function submitProblemAndCapture(page, text) {
   return { status, rawBody, json: JSON.parse(rawBody) };
 }
 
-async function verifyServedWorkspace(page, expectedAnswers, checkStepping = false) {
+/** Everything the student-mode workspace hands a learner: rendered text, screen-reader live regions, tooltips/labels. */
+const studentText = (page) => page.evaluate(() => {
+  const root = document.querySelector(".geo3d-xuong");
+  if (!root) return "";
+  const attrs = [...root.querySelectorAll("[title],[aria-label],[aria-description]")]
+    .flatMap((e) => [e.getAttribute("title"), e.getAttribute("aria-label"), e.getAttribute("aria-description")]);
+  return `${root.textContent ?? ""}\n${attrs.filter(Boolean).join("\n")}`;
+});
+
+const STUDENT_MODE_LOG = [];
+const escapeRe = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+/** `… = <answer>` / `… bằng <answer>` / `… là <answer>` with no digit/fraction/radical continuing it — a stated result,
+ *  never a step counter or a given (backend narration does say "Thể tích … bằng √3."; only rendering decides). */
+const statesAnswer = (text, ans) => new RegExp(`(?:=|bằng|là)\\s*${escapeRe(ans)}(?![\\d.,/√π⁄²³])`, "u").test(text);
+
+const clickIfReady = async (loc) => {
+  if (!(await loc.count()) || !(await loc.first().isVisible()) || !(await loc.first().isEnabled())) return false;
+  await loc.first().click();
+  return true;
+};
+
+async function openMenuItem(page, group, name) {
+  await clickIfReady(page.locator(`[data-mo-nhom="${group}"]`));
+  const ok = await clickIfReady(page.locator("[role^=menuitem]", { hasText: name }));
+  await page.keyboard.press("Escape").catch(() => {});
+  return ok;
+}
+
+/**
+ * Pedagogical display contract (DESIGN_BRIEF §79–80) in student mode, BEFORE the learner opens «Phân tích toán học»:
+ * opens at step 1 without autoplay; no requested result is stated at load, at any construction step, in the step list,
+ * with «Hiện tất cả số đo», or in the inspector of any quantity/component; no goal-check conclusion on the stage;
+ * «Đề bài» is the learner's verbatim text. Rotate/zoom/step never re-enter the pipeline.
+ */
+async function verifyStudentModeDisclosure(page, answers, problemText, analyzeCalls) {
+  const callsBefore = analyzeCalls.n;
+  const initialStep = ((await page.locator(".geo3d-buoc-so").textContent()) || "").trim();
+  assert(/^Bước 1\//.test(initialStep), `Student mode must open at step 1, got ${initialStep}`);
+  assert((await page.locator('button[aria-label="Tạm dừng"]').count()) === 0, "Construction must not autoplay");
+
+  const seen = { load: await studentText(page) };
+  const canvas = page.locator(".geo3d-canvas canvas");
+  const box = await canvas.boundingBox();
+  await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
+  await page.mouse.down();
+  await page.mouse.move(box.x + box.width / 2 + 120, box.y + box.height / 2 + 40, { steps: 6 });
+  await page.mouse.up();
+  await page.mouse.wheel(0, -240);
+
+  let steps = 0;
+  seen.steps = "";
+  while (steps < 80 && (await clickIfReady(page.locator('button[aria-label="Bước sau"]')))) {
+    steps += 1;
+    seen.steps += `\n${await studentText(page)}`;
+  }
+  const finalStep = ((await page.locator(".geo3d-buoc-so").textContent()) || "").trim();
+  const stageObservations = await page.locator("[data-route-d-observation]").count();
+  await clickIfReady(page.locator("button.geo3d-cac-buoc-mo"));
+  seen.steps_panel = await studentText(page);
+  await clickIfReady(page.locator("button.geo3d-cac-buoc-mo.la-mo"));
+  if (await openMenuItem(page, "hien-thi", "Hiện tất cả số đo")) {
+    seen.show_all = await studentText(page);
+    await openMenuItem(page, "hien-thi", "Hiện tất cả số đo");
+  }
+  seen.quantity_inspector = "";
+  if (await openMenuItem(page, "kham-pha", "Đại lượng")) {
+    for (const id of await page.locator("[data-quantity-id]").evaluateAll((es) => es.map((e) => e.dataset.quantityId))) {
+      await page.locator(`[data-quantity-id="${id}"]`).first().click();
+      seen.quantity_inspector += `\n${await studentText(page)}`;
+    }
+  }
+  seen.component_inspector = "";
+  await openMenuItem(page, "kham-pha", "Thành phần");
+  await page.locator(".geo3d-tree details").evaluateAll((ds) => ds.forEach((d) => { d.open = true; }));
+  const treeIds = await page.locator("[data-tree-id]").evaluateAll((es) => es.map((e) => e.dataset.treeId));
+  let inspected = 0;
+  for (const id of treeIds) {
+    if (!(await page.locator(`[data-tree-id="${id}"]`).first().click({ timeout: 3_000 }).then(() => true, () => false))) continue;
+    inspected += 1;
+    seen.component_inspector += `\n${await studentText(page)}`;
+  }
+
+  const leaks = [];
+  for (const [stage, text] of Object.entries(seen)) {
+    for (const ans of answers) if (statesAnswer(text, ans)) leaks.push(`${stage}: = ${ans}`);
+  }
+  assert(leaks.length === 0, `Requested result disclosed in student mode: ${leaks.join("; ")}`);
+  assert(stageObservations === 0, "Goal-check conclusion shown on the student-mode stage");
+
+  await page.locator('[data-mo-bang="de"]').click();
+  const de = ((await page.locator(".geo3d-de").textContent()) || "").trim();
+  assert(de === problemText.trim(), `«Đề bài» must be the submitted text verbatim, got: ${de}`);
+  await page.locator('[data-mo-bang="de"]').click();
+  assert(analyzeCalls.n === callsBefore, "Rotate/zoom/step/inspect must not call /api/analyze");
+
+  return { initial_step: initialStep, final_step: finalStep, steps_walked: steps,
+    components_inspected: `${inspected}/${treeIds.length}`,
+    stages_checked: Object.keys(seen), answers_hidden: answers, problem_statement_verbatim: true, autoplay: false,
+    analyze_calls_during_interaction: 0 };
+}
+
+async function verifyServedWorkspace(page, expectedAnswers, checkStepping = false, disclosure = null) {
   await page.locator(".geo3d-xuong").waitFor({ state: "visible", timeout: 10_000 });
   const canvas = page.locator(".geo3d-canvas canvas");
   await canvas.waitFor({ state: "visible", timeout: 10_000 });
@@ -181,8 +284,14 @@ async function verifyServedWorkspace(page, expectedAnswers, checkStepping = fals
       const afterStep = (await stepLabel.textContent())?.trim() || "";
       assert(afterStep !== beforeStep, `Expected step label to advance from ${beforeStep}, got ${afterStep}`);
       stepProgression = { before: beforeStep, after: afterStep };
+      await page.locator('button[aria-label="Bước trước"]').click();
     }
   }
+  const studentMode = disclosure
+    ? await verifyStudentModeDisclosure(page, expectedAnswers, disclosure.problemText, disclosure.analyzeCalls)
+    : null;
+  if (studentMode) STUDENT_MODE_LOG.push({ case_id: disclosure.caseId, ...studentMode });
+  if (disclosure?.screenshot) await page.screenshot({ path: join(OUT_DIR, disclosure.screenshot) });
 
   const analysisBtn = page.locator('[data-mo-bang="phan-tich"]');
   await analysisBtn.waitFor({ state: "visible", timeout: 10_000 });
@@ -200,7 +309,7 @@ async function verifyServedWorkspace(page, expectedAnswers, checkStepping = fals
 
   await page.locator(".geo3d-quay-lai").click();
   await page.locator(".composer-text").waitFor({ state: "visible", timeout: 10_000 });
-  return { canvasBox: { width: Math.round(box.width), height: Math.round(box.height) }, stepProgression };
+  return { canvasBox: { width: Math.round(box.width), height: Math.round(box.height) }, stepProgression, studentMode };
 }
 
 async function main() {
@@ -282,6 +391,17 @@ async function main() {
     const page = await context.newPage();
     const pageErrors = [];
     page.on("pageerror", (err) => pageErrors.push(err.message));
+    const consoleErrors = [];
+    page.on("console", (m) => {
+      if (m.type() !== "error") return;
+      // Flow 6 provokes exactly this: Chromium logs the deliberate HTTP 503 of /api/analyze as a failed resource.
+      if (/status of 503/.test(m.text()) && (m.location().url || "").includes("/api/analyze")) return;
+      consoleErrors.push(m.text());
+    });
+    const analyzeCalls = { n: 0 };
+    page.on("request", (r) => { if (r.url().includes("/api/analyze")) analyzeCalls.n += 1; });
+    const D = (id, screenshot) => ({ caseId: id, problemText: texts.get(id), analyzeCalls, screenshot });
+    mkdirSync(OUT_DIR, { recursive: true });
 
     await page.goto(uiBase, { waitUntil: "networkidle" });
     // Register a real student session through the gateway so unlimited E2E flows run under an authenticated cookie.
@@ -307,7 +427,7 @@ async function main() {
     {
       const net = await submitProblemAndCapture(page, texts.get("S2-B-I07_ve_va_tinh"));
       assert(net.status === 200 && net.json.route_d?.status === "SERVED", `Flow 1 HTTP ${net.status}`);
-      const ui = await verifyServedWorkspace(page, ["8/3"], true);
+      const ui = await verifyServedWorkspace(page, ["8/3"], true, D("S2-B-I07_ve_va_tinh", "flow1-student-mode-final-step.png"));
       flows.push({
         flow_id: "flow_1_supported_polyhedral",
         case_ids: ["S2-B-I07_ve_va_tinh"],
@@ -326,11 +446,11 @@ async function main() {
         texts.get("cr.shared_base_pyramids_plus_inscribed_sphere"),
       );
       assert(net1.status === 200 && net1.json.route_d?.status === "SERVED", `Flow 2a HTTP ${net1.status}`);
-      const ui1 = await verifyServedWorkspace(page, ["72", "9π"], false);
+      const ui1 = await verifyServedWorkspace(page, ["72", "9π"], false, D("cr.shared_base_pyramids_plus_inscribed_sphere"));
 
       const net2 = await submitProblemAndCapture(page, texts.get("cone.par.S"));
       assert(net2.status === 200 && net2.json.route_d?.status === "SERVED", `Flow 2b HTTP ${net2.status}`);
-      const ui2 = await verifyServedWorkspace(page, ["81π/16"], false);
+      const ui2 = await verifyServedWorkspace(page, ["81π/16"], false, D("cone.par.S"));
 
       flows.push({
         flow_id: "flow_2_curved_and_composite_geometry",
@@ -349,7 +469,7 @@ async function main() {
         texts.get("S2-B-P07_shared_intermediate_two_goals"),
       );
       assert(net.status === 200 && net.json.route_d?.status === "SERVED", `Flow 3 HTTP ${net.status}`);
-      const ui = await verifyServedWorkspace(page, ["√3", "1"], true);
+      const ui = await verifyServedWorkspace(page, ["√3", "1"], true, D("S2-B-P07_shared_intermediate_two_goals"));
       flows.push({
         flow_id: "flow_3_multi_function_composition",
         case_ids: ["S2-B-P07_shared_intermediate_two_goals"],
@@ -369,7 +489,7 @@ async function main() {
         net1.json.route_d.sections?.[0]?.certificate_category === "ENGINE_DERIVED_SECTION",
         "K-A01 must carry ENGINE_DERIVED_SECTION",
       );
-      const ui1 = await verifyServedWorkspace(page, ["3√2/2"], false);
+      const ui1 = await verifyServedWorkspace(page, ["3√2/2"], false, D("K-A01"));
 
       const net2 = await submitProblemAndCapture(page, texts.get("R1-B01"));
       assert(net2.status === 200 && net2.json.route_d?.status === "SERVED", `Flow 4b HTTP ${net2.status}`);
@@ -377,7 +497,7 @@ async function main() {
         net2.json.route_d.sections?.[0]?.certificate_category === "ENGINE_DERIVED_SECTION",
         "R1-B01 must carry ENGINE_DERIVED_SECTION",
       );
-      const ui2 = await verifyServedWorkspace(page, ["2304/625"], false);
+      const ui2 = await verifyServedWorkspace(page, ["2304/625"], false, D("R1-B01"));
 
       flows.push({
         flow_id: "flow_4_constrained_plane_and_orthocenter",
@@ -450,7 +570,7 @@ async function main() {
       activeBackendPort = stagingPort;
       const netRecover = await submitProblemAndCapture(page, texts.get("S2-B-I07_ve_va_tinh"));
       assert(netRecover.status === 200 && netRecover.json.route_d?.status === "SERVED", "Recovery failed");
-      const uiRecover = await verifyServedWorkspace(page, ["8/3"], false);
+      const uiRecover = await verifyServedWorkspace(page, ["8/3"], false, D("S2-B-I07_ve_va_tinh"));
 
       flows.push({
         flow_id: "flow_6_infrastructure_failure_and_recovery",
@@ -466,7 +586,34 @@ async function main() {
       });
     }
 
+    // Flow 7: pedagogical display contract over EVERY served case of the 16-class corpus, back to back (no reload),
+    // so stale state from the previous problem would show up as a wrong step, statement, or answer.
+    {
+      const ver = JSON.parse(readFileSync(VERIFICATION_PATH, "utf8"));
+      const served = ver.categories.flatMap((c) => c.cases).filter((c) => c.route_d_status === "SERVED");
+      const witnesses = {};
+      for (const c of served) {
+        const net = await submitProblemAndCapture(page, c.problem_text);
+        assert(net.status === 200 && net.json.route_d?.status === "SERVED", `Flow 7 ${c.case_id} HTTP ${net.status}`);
+        witnesses[c.case_id] = (net.json.envelope?.scene3d?.objects ?? []).filter((o) => o.perpendicular_witness).length;
+        // Same rule as `giaTriDapSo`: an angle oracle carries its left side ("cos²=2/3"); the value is what follows "=".
+        const values = Object.values(c.answers).map((a) => (a.includes("=") ? a.slice(a.lastIndexOf("=") + 1).trim() : a));
+        await verifyServedWorkspace(page, values, false, D(c.case_id));
+      }
+      // «SA vuông góc với mặt phẳng (ABCD)» reaches the scene as a certified right-angle witness, not just prose.
+      for (const id of ["S2-B-I07_ve_va_tinh", "S2-F-S02_vuong_goc_day"]) {
+        assert(witnesses[id] >= 1, `${id} must carry a perpendicular witness for its ⊥ premise`);
+      }
+      flows.push({
+        flow_id: "flow_7_pedagogical_display_contract_all_served",
+        cases_total: served.length,
+        perpendicular_witness_objects: witnesses,
+        passed: true,
+      });
+    }
+
     assert(pageErrors.length === 0, `Uncaught browser page errors: ${pageErrors.join("; ")}`);
+    assert(consoleErrors.length === 0, `Browser console errors: ${consoleErrors.join("; ")}`);
 
     const distIndexSha = createHash("sha256").update(readFileSync(join(DIST_DIR, "index.html"))).digest("hex");
     const receipt = {
@@ -484,6 +631,8 @@ async function main() {
         rollback_off: rollbackHealth.runtime.hybrid_route,
       },
       page_errors: pageErrors.length,
+      console_errors: consoleErrors.length,
+      student_mode_checks: STUDENT_MODE_LOG,
       flows_total: flows.length,
       flows_passed: flows.filter((f) => f.passed).length,
       flows,
@@ -494,7 +643,7 @@ async function main() {
         ok: true,
         flows_passed: `${receipt.flows_passed}/${receipt.flows_total}`,
         page_errors: receipt.page_errors,
-        receipt: "docs/evaluation/geometry/runs/hybrid-master-backend-replacement/product-e2e-browser-receipt.json",
+        receipt: RECEIPT_OUT.slice(REPO.length + 1).replace(/\\/g, "/"),
       }),
     );
   } finally {
