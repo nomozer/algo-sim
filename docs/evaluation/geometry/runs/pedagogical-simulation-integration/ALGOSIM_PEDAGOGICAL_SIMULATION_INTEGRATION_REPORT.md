@@ -40,8 +40,8 @@ không tải lại trang. Ở mỗi ca, probe ghi toàn bộ chữ người họ
 `title`/`aria-label`): lúc tải → sau từng «Bước sau» → bảng «Các bước dựng» → «Hiện tất cả số đo» → ô soi từng đại
 lượng → ô soi từng thành phần → bảng «Đề bài» → cuối cùng mới mở «Phân tích toán học». Bằng chứng:
 `prefix-ui-audit.json` (tóm tắt từng ca), `prefix-ui-audit-probe.mjs` (probe), `prefix-ui-audit-analyze.mjs` (bước
-phân tích). Bản dump DOM thô không commit; con số dựng lại được bằng cách chạy probe tại `5abf8c20` rồi chạy bước phân
-tích. 0 lỗi trang/console.
+phân tích). Bản dump DOM thô **không commit** (sha256 ghi trong `prefix-ui-audit.json`), nên tóm tắt không dựng lại
+được chỉ từ kho; muốn dựng lại phải chạy lại probe tại `5abf8c20` rồi chạy bước phân tích. 0 lỗi trang/console.
 
 Trả lời mười câu hỏi của §III:
 
@@ -95,9 +95,12 @@ những phần này. Không thêm chế độ giáo viên hay nút «xem lời g
 
 1. **«Đề bài» = đề nguyên văn** (`3223fdf4`, hoàn chỉnh ở `928fb880`): `store.loadEnvelope(env, sampleId, originalInput)`
    đóng dấu đề người học đã gửi (gõ tay, hoặc văn bản đã duyệt từ ảnh) vào **chính envelope**, trường hiển thị
-   `problem_statement`. Vì nằm trong envelope, đề đi theo Lịch sử, Thư viện và bài giao cho lớp (máy chủ lưu nguyên dict
-   envelope — `classroom_router._validated_envelope`). `SimulationWorkspace` đọc `problem_statement || description ||
-   title`. Bản đầu chỉ giữ đề ở `active` (không theo bài giao) — reviewer bắt ở vòng 1 (F1, MAJOR), đã sửa và có test.
+   `problem_statement`. Vì nằm trong envelope, đề đi theo **bài giao cho lớp** (máy chủ lưu nguyên dict envelope —
+   `classroom_router._validated_envelope`). `SimulationWorkspace` đọc `problem_statement || description || title`. Bản
+   đầu chỉ giữ đề ở `active` (không theo bài giao) — reviewer bắt ở vòng 1 (F1, MAJOR), đã sửa và có test. **Lịch sử**
+   giữ đề chỉ qua `item.originalInput` (đề gõ tay hoặc đã duyệt từ ảnh): `history.ts::sanitizeEnvelope` không lưu
+   `problem_statement` — và cũng không lưu `scene3d` (lỗi có sẵn, review vòng 2 R2/R3,
+   `ISSUE-ARCH-HISTORY-REOPEN-DROPS-SCENE3D`). Bài mẫu Thư viện không có đề đã gửi, lùi về `description` như trước.
 2. **Kết luận mục tiêu chỉ ở Chế độ B** (`3223fdf4`): chip `[data-route-d-observation]` rời cụm nút nổi trên sân khấu,
    vào bảng «Phân tích toán học», mục «Kiểm tra trên hình đã dựng» — vẫn theo luật neo F4 (`hybridTaiBuoc`), vẫn nói
    «quan sát trên một hình, không phải chứng minh tổng quát». Nút Chế độ B có mặt cả khi cảnh chỉ có quan sát.
@@ -165,11 +168,14 @@ console. Không đổi camera, cây, ô soi, tách khối.
   đề và số đếm không bị che nhầm.
 - Giá trị dò: oracle (chuẩn hoá vế trái như `cos²=`), **chuỗi Chế độ B thật sự render** cho từng ca, và giá trị ở tỉ lệ
   hình dựng (`answer_exact.coef`, vd `√3/4` của `a²√3/4`).
-- **Đối chứng dương** (cửa sổ chứng): cùng bộ dò phải bắt được đáp số trong bảng Chế độ B — **47/48** đáp số. Giá trị
-  còn lại (`4`, `cr.cube_section_plus_inscribed_sphere`) là số nguyên nhỏ hiện không kèm `=`, ghi ở
-  `detector_blind_values`, không bị giấu. Đối chứng dương còn tìm ra một điểm mù thật của bộ dò đầu (`9π` hiện không có
-  `=` khi đại lượng không có ký hiệu), đã đóng ở `c62b3aa1`.
-- Trước sửa: 0 lần ở 30 ca. Sau sửa: 0 lần ở 37 lần kiểm.
+- **Đối chứng dương** (cửa sổ chứng): cùng bộ dò phải bắt được đáp số trong bảng Chế độ B — **43/44** giá trị đáp số
+  (tổng `detector_positive_control` của 37 lần kiểm). Giá trị còn lại (`4`, `cr.cube_section_plus_inscribed_sphere`) là
+  số nguyên nhỏ hiện không kèm `=`, ghi ở `detector_blind_values`, không bị giấu. Đối chứng dương còn tìm ra một điểm mù
+  thật của bộ dò đầu (`9π` hiện không có `=` khi đại lượng không có ký hiệu), đã đóng ở `c62b3aa1`. Giá trị tỉ lệ hình
+  dựng (`√3/4`) được dò ở chế độ học sinh nhưng **không có** đối chứng dương: Chế độ B chỉ hiện dạng ký hiệu, nên đối
+  chứng ấy không dựng được (review vòng 2, R5).
+- Trước sửa: 0 lần ở 30 ca, với luật `(=|bằng|là) giá trị` — **yếu hơn** bộ dò cuối (chưa dò giá trị đứng trần). Sau
+  sửa: 0 lần ở 37 lần kiểm, với bộ dò cuối.
 - Vitest: `hybrid-preview-contract.test.tsx` khoá vị trí của quan sát (nền đỏ trên mã cũ), cùng các test SIMULATION-FIRST
   sẵn có.
 
@@ -201,7 +207,7 @@ Báo riêng theo §VIII:
 | Trục | Kết quả đo |
 |---|---|
 | Mathematical correctness | 30/30 đáp số đúng trong Chế độ B; 16/16 lớp backend; witness Gram chính xác |
-| Pedagogical disclosure correctness | 0 lần nêu đáp số / 37 lần kiểm (đối chứng dương 47/48); 0 quan sát trên sân khấu; «Đề bài» nguyên văn 37/37 (trước sửa 0/30) |
+| Pedagogical disclosure correctness | 0 lần nêu đáp số / 37 lần kiểm (đối chứng dương 43/44); 0 quan sát trên sân khấu; «Đề bài» nguyên văn 37/37 (trước sửa 0/30) |
 | User interaction correctness | mọi bước, mọi ô soi, xoay/thu phóng; 0 lượt pipeline thừa |
 | Rendering correctness | canvas ≥ 200×150 ở mọi ca; witness ⊥ cho giả thiết ⊥ |
 | Runtime reliability | 0 lỗi trang/console; phục hồi sau 503 |
@@ -227,7 +233,14 @@ Reviewer fresh-context, đối kháng, chỉ đọc.
   - F5: chưa ghi ngược tài liệu sống, blob template cũ → đã ghi ngược (§6).
   - F6: thiếu test `perpendicular_line_plane`/`altitude`; SH là hình phụ sau khi đóng khối → thêm test; thứ tự ghi ở L5.
   - F7–F9 (NIT): tên hàm trong comment, test kiểm chuỗi nguồn, dòng trạng thái báo cáo → sửa.
-- **Vòng 2:** `CHỜ` — `independent-review.md`.
+- **Vòng 2 — `READY`** (0 BLOCKER, 0 MAJOR, 4 MINOR, 2 NIT):
+  - R1: số đối chứng dương ghi 47/48, biên nhận là 43/44 → đã sửa mọi nơi.
+  - R2/R3: `history.ts::sanitizeEnvelope` không lưu `problem_statement` và `scene3d` — mở lại từ Lịch sử mất «Đề bài»
+    của bài giao và mất cảnh 3D (lỗi có sẵn từ trước Scene3D) → câu chữ báo cáo đã sửa; ghi
+    `ISSUE-ARCH-HISTORY-REOPEN-DROPS-SCENE3D` (cần quyết định lưu trữ, ngoài run này).
+  - R4–R6 (NIT): tham chiếu `independent-review.md` trước khi có file; giới hạn của bộ dò và của kiểm toán trước sửa;
+    `problem_statement` là chữ tự do của giáo viên → đã ghi (§10, L10).
+- Chi tiết hai vòng: `independent-review.md`.
 
 ## 16. Full T3
 
@@ -262,10 +275,14 @@ biên nhận C18/C19/C21 + product-integration giữ nguyên, không chấm lạ
   `ENGINE_VERIFIED` thay vì `GIVEN`. Hiển thị đúng; thứ tự và nhãn xuất xứ có thể chặt hơn.
 - **L6 — Dấu góc vuông vẽ trên canvas**: kiểm bằng dữ liệu witness + cổng tự nhất quán + một ảnh chụp, không so pixel.
 - **L7 — Phép phát hiện là theo mẫu**: cách nói khác (chữ viết bằng lời, độ thay cho cos², LaTeX) không được bắt; số
-  nguyên nhỏ hiện không kèm `=` là điểm mù đã ghi (1/48 trong đối chứng dương).
+  nguyên nhỏ hiện không kèm `=` là điểm mù đã ghi (1/44 trong đối chứng dương).
 - **L8 — Chỉ replay**: mọi số ở đây là `staging-replay`, không phải độ chính xác đọc đề của Gemini.
-- **L9 — Tải tệp trực tiếp** (không qua bước duyệt ảnh) và bài mẫu offline không có đề đã gửi ⇒ «Đề bài» lùi về
-  `description`/`title` như trước run.
+- **L9 — Tải tệp trực tiếp** (không qua bước duyệt ảnh), bài mẫu offline và bài giao trước `928fb880` không có đề đã
+  gửi ⇒ «Đề bài» lùi về `description`/`title` như trước run.
+- **L10 — Mở lại từ Lịch sử** làm rơi `scene3d` và `problem_statement` (`ISSUE-ARCH-HISTORY-REOPEN-DROPS-SCENE3D`, có từ
+  trước run, chưa có test tái hiện). `problem_statement` là chữ tự do do trình duyệt giáo viên gửi (React escape; cùng
+  mức tin cậy với `title`/`description`/`instruction`), không có trần độ dài riêng ngoài `MAX_ENVELOPE_BYTES`, và có
+  thể lệch với hình đã dựng nếu bị sửa tay.
 
 ## 19. Live Gemini status
 

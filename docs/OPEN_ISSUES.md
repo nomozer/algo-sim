@@ -2,6 +2,23 @@
 
 **Integration update 2026-10-30:** W3-F2 resolution below is now on local main `15a8e1ac`; earlier “not on main” labels are historical. Publication retains 105 baseline head findings (104 pending findings, 1 additional test vector), not new W3-F2 regressions: 95 traceback, 5 Google-key test vectors and 5 other security-pattern findings. Narrow Owner policy and closure: `evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/integration/report.md`. This does not resolve the historical publication debt globally.
 
+### ISSUE-ARCH-HISTORY-REOPEN-DROPS-SCENE3D
+
+- **status:** OPEN (found 2026-11-03 by the independent review, round 2, of run `pedagogical-simulation-integration`; read
+  in code, not yet reproduced by a test; predates that run — `sanitizeEnvelope` is unchanged since `1f95e923`, before
+  Scene3D existed).
+- **cause:** `frontend/src/state/history.ts::sanitizeEnvelope` persists only `status`, `simulation_id`, `domain`,
+  `visual_mode`, `title`, `description`, `config`, `notes`. Every other envelope field is dropped from a history item:
+  `scene3d`, the checked Hybrid view, and `problem_statement` (the learner's verbatim statement).
+- **impact:** reopening a 3D problem from «Lịch sử» yields an envelope without `scene3d`, so `SimulationWorkspace` does not
+  render `Scene3DExplorer`; the claim "0-AI reopen" is not shown at UI level for 3D scenes. An assignment the student
+  opened (recorded with `originalInput = null`) would also lose «Đề bài» on reopen. Typed/photo-reviewed problems keep the
+  statement through `item.originalInput`.
+- **repair:** first a RED vitest (load a served Hybrid envelope, `reopenFromHistory`, expect `scene3d` and
+  `problem_statement`); then decide what history may persist (a 3D scene is large; `localStorage` quota) — keep the
+  fields, or store a reference and refetch. Not a pedagogical-disclosure issue: nothing extra is shown.
+- **source:** `evaluation/geometry/runs/pedagogical-simulation-integration/independent-review.md` (round 2, R2/R3).
+
 ### ISSUE-ARCH-ROUTE-D-SOLID-CLASS-WORD-UNCERTIFIED
 
 - **status:** RESOLVED ON RESEARCH BRANCH (2026-11-01, eleventh continuation of `ALGOSIM_MASTER_HYBRID_BACKEND_REPLACEMENT`, product `9e059eb7`, Registry `/28`, Planner `/23`, Engine `/20`; independent adversarial review `READY` in Round 4, `0 BLOCKER, 0 MAJOR, 0 MINOR`; not yet on `main`). `registry.py::doc_khang_dinh_loai_hinh` reads premise-level solid-class and 2D polygon assertions (with ordered prose-solid topology binding `_khop_ky_hieu_khoi` and multi-solid coordination `_day_khoi_cho_menh_de`) and `engine.py::kiem_khang_dinh_loai_hinh` certifies them in exact `Fraction` Gram arithmetic (`"Cho hình lập phương ABCD.A'B'C'D' có đáy ABCD là hình chữ nhật, AB = 2, AD = 3, AA' = 4."` deterministically refuses `INCONSISTENT_FACTS`). Locked by `backend/tests/geometry/test_route_d_semantic_shape_invariants.py` (`41/41`). Original status preserved: OPEN (found 2026-11-01 by the independent review of the hybrid-master tenth continuation; it predates that work and is present at `c9f54828`).
