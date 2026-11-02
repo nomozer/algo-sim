@@ -24,9 +24,6 @@ export interface ActiveSimulation {
   config: unknown;
   /** Engine state — module sở hữu, store chỉ cầm hộ. */
   state: unknown;
-  /** Đề NGUYÊN VĂN người học đã gửi (gõ tay hoặc đã duyệt từ ảnh) — nguồn của nút «Đề bài». `description` của envelope
-   *  không phải đề: tuyến Hybrid đặt ở đó một câu miễn trừ, nên đọc nó làm đề là mất mọi giả thiết (⊥, ∥, số đo). */
-  originalInput?: string | null;
 }
 
 
@@ -280,7 +277,10 @@ export const useAppStore = create<AppState>((set, get) => {
       ),
 
 
-    loadEnvelope: (env, sampleId, originalInput) => {
+    loadEnvelope: (envIn, sampleId, originalInput) => {
+      // «Đề bài» = đề người học đã gửi, đóng dấu vào envelope để mọi lối mở lại (Lịch sử, Thư viện, bài giao) mang theo.
+      const deGui = originalInput?.trim();
+      const env = deGui ? { ...envIn, problem_statement: deGui } : envIn;
       const mod = getSimulation(env.simulation_id);
       if (!mod) {
         set({
@@ -330,7 +330,6 @@ export const useAppStore = create<AppState>((set, get) => {
         envelope: env,
         config: result.config,
         state: initialState,
-        originalInput: originalInput ?? item.originalInput ?? null,
       };
       /* M18-UI — MỘT MÔ PHỎNG TẠI MỘT THỜI ĐIỂM.
          Nhiều phiên (W4B-2Z §26) đã GỠ: mở thêm bài thứ hai không phải việc học

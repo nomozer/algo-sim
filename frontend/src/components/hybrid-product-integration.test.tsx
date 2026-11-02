@@ -369,23 +369,37 @@ describe("Hybrid /4 product integration — all 16 scope & refusal classes (§VI
 describe("Hybrid /4 product integration — «Đề bài» là đề người học đã gửi (SOURCE_GIVEN)", () => {
   const served = bundle.fixtures.filter((f) => f.response.route_d?.status === "SERVED");
 
-  it.each(served)("$id: active.originalInput giữ nguyên văn đề, envelope.description KHÔNG phải đề", (row) => {
+  it.each(served)("$id: envelope mang đề nguyên văn (problem_statement), envelope.description KHÔNG phải đề", (row) => {
     const env = docPhanHoiPhanTich(structuredClone(row.response));
     if (env.status !== "ok") throw new Error(row.id);
     // Nền đỏ của lỗi: tuyến Hybrid đặt câu miễn trừ vào description ⇒ nút «Đề bài» mất mọi giả thiết.
     expect(env.description).not.toBe(row.problem_text);
     useAppStore.getState().loadEnvelope(env, undefined, row.problem_text);
-    expect(useAppStore.getState().active!.originalInput).toBe(row.problem_text);
+    expect(useAppStore.getState().active!.envelope.problem_statement).toBe(row.problem_text);
     // Mở lại từ Lịch sử (0 AI) vẫn mang đúng đề.
     const hid = useAppStore.getState().activeHistoryId!;
     useAppStore.getState().reset();
     useAppStore.getState().reopenFromHistory(hid);
-    expect(useAppStore.getState().active!.originalInput).toBe(row.problem_text);
+    expect(useAppStore.getState().active!.envelope.problem_statement).toBe(row.problem_text);
+  });
+
+  it("bài giao cho lớp (envelope gửi đi, mở lại KHÔNG kèm đề) vẫn mang đề — review F1", () => {
+    const row = served[0];
+    const env = docPhanHoiPhanTich(structuredClone(row.response));
+    if (env.status !== "ok") throw new Error(row.id);
+    useAppStore.getState().loadEnvelope(env, undefined, row.problem_text);
+    // AssignDialog gửi `active.envelope`; máy chủ lưu nguyên dict (`_validated_envelope`); AssignmentsView mở lại bằng
+    // `loadEnvelope(a.envelope)` — không đối số đề, trên máy học sinh không có Lịch sử của bài này.
+    const giao = JSON.parse(JSON.stringify(useAppStore.getState().active!.envelope));
+    __resetHistoryForTest();
+    useAppStore.getState().reset();
+    useAppStore.getState().loadEnvelope(giao);
+    expect(useAppStore.getState().active!.envelope.problem_statement).toBe(row.problem_text);
   });
 
   it("SimulationWorkspace đưa đề nguyên văn vào «Đề bài» trước description/title", () => {
     const src = readFileSync(resolve(__dirname, "SimulationWorkspace.tsx"), "utf8");
-    expect(src).toContain("de={active.originalInput || active.envelope.description");
+    expect(src).toMatch(/de=\{active\.envelope\.problem_statement\s*\|\|\s*active\.envelope\.description/);
   });
 
   it("đề có ký hiệu ⊥ / ∥ / ′ đi qua store không bị chuẩn hoá", () => {
@@ -394,6 +408,6 @@ describe("Hybrid /4 product integration — «Đề bài» là đề người h�
     if (env.status !== "ok") throw new Error(row.id);
     const de = "Cho hình chóp S.ABCD, SA ⊥ (ABCD), AB ∥ CD, A′ là điểm đối xứng; góc ∠SBA = 60°.";
     useAppStore.getState().loadEnvelope(env, undefined, de);
-    expect(useAppStore.getState().active!.originalInput).toBe(de);
+    expect(useAppStore.getState().active!.envelope.problem_statement).toBe(de);
   });
 });

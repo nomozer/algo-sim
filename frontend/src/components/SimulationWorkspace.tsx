@@ -531,7 +531,7 @@ export function SimulationWorkspace() {
     return (
       <Scene3DExplorer
         scene={canh3d}
-        de={active.originalInput || active.envelope.description || active.envelope.title || null}
+        de={active.envelope.problem_statement || active.envelope.description || active.envelope.title || null}
         tieuDe={active.envelope.title ?? null}
         quayLai={{ nhan: TEN_TRANG[returnView] ?? "Trang chủ", onClick: roiXuong }}
         phien={session}

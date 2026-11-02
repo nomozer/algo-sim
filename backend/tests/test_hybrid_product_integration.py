@@ -474,3 +474,40 @@ def test_stated_line_perpendicular_to_base_is_drawn_with_exact_witness_and_edges
     sa = [o for o in pyramid["envelope"]["scene3d"]["objects"]
           if o["type"] == "segment3" and set(o.get("endpoint_ids") or ()) == {"S", "A"}]
     assert [o["id"] for o in sa] == ["canh_ben_S_A"] and sa[0].get("perpendicular_witness")
+
+
+@pytest.mark.parametrize("phrasing", ["perpendicular", "altitude"])
+def test_stated_perpendicular_to_a_non_vertex_foot_is_drawn_once_in_learner_order(phrasing):
+    """«SH ⊥ (ABCD)» and «SH là đường cao», H the midpoint of AB: both normalize through `_rang_buoc_vuong()` and both
+    place S, so both draw SH once with an exact witness; V = 4 unchanged; construction order O1–O4 clean."""
+    from app.ai.function_route import run_fact_route
+    from tests.geometry import hybrid_compiler_benchmark as HB
+    from tests.geometry.construction_sequencing import check
+
+    q = ["Cho hình chóp S.ABCD.", "Đáy ABCD là hình vuông cạnh 2.", "Gọi H là trung điểm AB."]
+    facts = [HB._f("f1", "solid", q[0], solid="S.ABCD", solid_type="pyramid"),
+             HB._f("f2", "polygon_shape", q[1], points=list("ABCD"), shape="square", value="2"),
+             HB._f("f3", "point_def", q[2], point="H", point_kind="midpoint", points=["A", "B"])]
+    rel = (HB._f("f4", "perpendicular", "SH vuông góc với (ABCD).", points_a=["S", "H"], points_b=list("ABCD"))
+           if phrasing == "perpendicular" else
+           HB._f("f4", "altitude", "SH là đường cao của hình chóp S.ABCD.", points=["S", "H"], solid="S.ABCD"))
+    q, facts = HB._with((q, facts), rel, HB._f("f5", "length", "SH = 3.", points=["S", "H"], measure="segment", value="3"),
+                        HB._ask("q", "Tính thể tích khối chóp S.ABCD.", "volume", solid="S.ABCD"))
+    r = run_fact_route(" ".join(q), {"facts": facts})
+    assert r.status == "SERVED" and r.answers == {"q": "4"}, (r.code, r.reason)
+    sh = [o for o in r.scene3d["objects"] if o["type"] == "segment3" and set(o.get("endpoint_ids") or ()) == {"S", "H"}]
+    assert len(sh) == 1 and sh[0]["perpendicular_witness"]["foot_id"] == "H"
+    assert check(r.scene3d) == {"O1": [], "O2": [], "O3": [], "O4": []}
+
+
+def test_assigned_hybrid_envelope_keeps_the_problem_statement_through_the_classroom_gate():
+    """F1 of the pedagogical review: the classroom stores the envelope the teacher's browser sends; the statement the
+    frontend stamps on it (`problem_statement`) must survive the gate, so a student who opens the assignment sees it."""
+    from app.accounts.classroom_router import _validated_envelope
+    from scripts.export_hybrid_product_integration_corpus import RUN_DIR
+
+    bundle = json.loads((RUN_DIR / "product-integration-frontend-fixtures.json").read_text(encoding="utf-8"))
+    row = next(f for f in bundle["fixtures"] if f["id"] == "S2-B-I07_ve_va_tinh")
+    envelope = {**row["response"]["envelope"], "problem_statement": row["problem_text"]}
+    _sim_id, blob = _validated_envelope(envelope)
+    assert json.loads(blob)["problem_statement"] == row["problem_text"]
