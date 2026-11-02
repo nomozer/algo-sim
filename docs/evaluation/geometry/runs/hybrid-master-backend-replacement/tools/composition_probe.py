@@ -15,7 +15,7 @@ Composition of a served case (from the CERTIFICATE it was served with, checked a
   COMPOSED_NOT_NECESSARY                  served by the same search, but the centre is a named point or one call away.
 Usage: composition_probe.py [out.json] [--arm NAME]   (`IMPLEMENTER_AUTHORED_DEVELOPMENT_DIAGNOSTIC`, 0 provider calls)
 """
-import collections, json, os, re, socket, sys, time
+import collections, functools, json, os, re, socket, sys, time
 from fractions import Fraction as F
 from pathlib import Path
 
@@ -72,6 +72,28 @@ def composition(route, case):
     return ('DISCOVERED_FUNCTION_COMPOSITION' if ok else 'NOT_ESTABLISHED'), info
 
 
+@functools.lru_cache(maxsize=1)
+def _runner():
+    import importlib.util
+    spec = importlib.util.spec_from_file_location('s2_runner', ROOT / 'backend/scripts/run_s2_student_language_pilot.py')
+    runner = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(runner)
+    return runner
+
+
+def c15_rule_label(route, payload):
+    """The reviewed C15 rule, COMPUTED by the S-2/R-1 runner's own `composition_label` (written before C18, unchanged) on
+    the planner-made steps of the served route — never the planner's label."""
+    runner = _runner()
+    tel = route['planner'].get('search_telemetry') or {}
+    own = set(tel.get('planner_originated_steps') or ())
+    row = {'technical_failure': False, 'observed': {'status': 'SERVED'}, 'end_to_end_correct': True,
+           'expected': {'outcome': 'SERVED'}, 'raw_extraction': payload,
+           'search': {'planner_steps': [{k: c.get(k) for k in ('id', 'fn', 'args')}
+                                        for c in route['planner'].get('calls') or () if c.get('id') in own]}}
+    return runner.composition_label(row)
+
+
 def run_all(arm=None):
     from app.ai.hybrid_offline import hybrid_offline_policy, run_hybrid_offline
     from app.ai.typed_fact_next_extraction import ReplayExtractor
@@ -101,6 +123,7 @@ def run_all(arm=None):
         rows.append({k: c[k] for k in ('id', 'topology', 'center', 'triangle', 'goal', 'necessity', 'want2')} | {
             'status': route['status'], 'code': code, 'verdict': verdict, 'got2': [str(g) for g in got] if got else None,
             'composition': comp, 'planner_label': tel.get('classification') if served else None,
+            'c15_rule_label': c15_rule_label(route, c['payload']) if served else None,
             'explored_states': tel.get('explored_states'), 'search_depth': tel.get('search_depth'),
             'candidate_evaluations': tel.get('candidate_evaluations'), 'ms': ms, **info})
     return rows
@@ -116,6 +139,8 @@ def summary(rows):
             'composition_of_served': dict(collections.Counter(r['composition'] for r in served)),
             'planner_label_vs_composition': dict(collections.Counter(f"{r['planner_label']} | {r['composition']}"
                                                                      for r in served)),
+            'c15_rule_label_vs_composition': dict(collections.Counter(f"{r.get('c15_rule_label')} | {r['composition']}"
+                                                                      for r in served)),
             'chain_functions_of_discovered': dict(collections.Counter(
                 '+'.join(r['chain_functions']) for r in served if r['composition'] == 'DISCOVERED_FUNCTION_COMPOSITION')),
             'max_explored_states': max((r['explored_states'] or 0 for r in rows), default=0),
