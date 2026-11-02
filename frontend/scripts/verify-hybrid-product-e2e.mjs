@@ -21,8 +21,10 @@ const RUN_DIR = join(REPO, "docs/evaluation/geometry/runs/hybrid-master-backend-
 const CORPUS_PATH = join(RUN_DIR, "product-integration-staging-corpus.json");
 const VERIFICATION_PATH = join(RUN_DIR, "product-integration-16-classes-verification.json");
 const DIST_DIR = join(REPO, "frontend/dist");
-// The candidate-123e57da receipt (`product-e2e-browser-receipt.json`) is frozen evidence; new runs write their own layer.
-const OUT_DIR = join(REPO, "docs/evaluation/geometry/runs/pedagogical-simulation-integration");
+// Receipts are frozen evidence (the 123e57da one included): `--out-dir <repo-relative dir>` names a NEW place and the
+// run refuses to overwrite a receipt that already exists there.
+const OUT_ARG = process.argv.indexOf("--out-dir");
+const OUT_DIR = join(REPO, OUT_ARG > 0 ? process.argv[OUT_ARG + 1] : "docs/evaluation/geometry/runs/pedagogical-simulation-integration");
 const RECEIPT_OUT = join(OUT_DIR, "pedagogical-e2e-browser-receipt.json");
 const SECRET_CANARY = "SECRET_DO_NOT_LEAK_E2E_999";
 
@@ -176,6 +178,16 @@ const studentText = (page) => page.evaluate(() => {
 });
 
 const STUDENT_MODE_LOG = [];
+/** Student-mode texts of the case being verified — re-checked against the values Mode B actually renders. */
+const STUDENT_TEXT = { seen: null };
+
+function assertNoAnswerStated(seen, answers) {
+  const leaks = [];
+  for (const [stage, text] of Object.entries(seen)) {
+    for (const ans of answers) if (statesAnswer(text, ans)) leaks.push(`${stage}: ${ans}`);
+  }
+  assert(leaks.length === 0, `Requested result disclosed in student mode: ${leaks.join("; ")}`);
+}
 const escapeRe = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 /** `… = <answer>` / `… bằng <answer>` / `… là <answer>` with no digit/fraction/radical continuing it — a stated result,
  *  never a step counter or a given (backend narration does say "Thể tích … bằng √3."; only rendering decides). */
@@ -248,11 +260,7 @@ async function verifyStudentModeDisclosure(page, answers, problemText, analyzeCa
     seen.component_inspector += `\n${await studentText(page)}`;
   }
 
-  const leaks = [];
-  for (const [stage, text] of Object.entries(seen)) {
-    for (const ans of answers) if (statesAnswer(text, ans)) leaks.push(`${stage}: = ${ans}`);
-  }
-  assert(leaks.length === 0, `Requested result disclosed in student mode: ${leaks.join("; ")}`);
+  assertNoAnswerStated(seen, answers);
   assert(stageObservations === 0, "Goal-check conclusion shown on the student-mode stage");
 
   await page.locator('[data-mo-bang="de"]').click();
@@ -261,6 +269,7 @@ async function verifyStudentModeDisclosure(page, answers, problemText, analyzeCa
   await page.locator('[data-mo-bang="de"]').click();
   assert(analyzeCalls.n === callsBefore, "Rotate/zoom/step/inspect must not call /api/analyze");
 
+  STUDENT_TEXT.seen = seen;
   return { initial_step: initialStep, final_step: finalStep, steps_walked: steps,
     components_inspected: `${inspected}/${treeIds.length}`,
     stages_checked: Object.keys(seen), answers_hidden: answers, problem_statement_verbatim: true, autoplay: false,
@@ -287,8 +296,11 @@ async function verifyServedWorkspace(page, expectedAnswers, checkStepping = fals
       await page.locator('button[aria-label="Bước trước"]').click();
     }
   }
+  // `figureValues`: the same results at figure scale (`answer_exact.coef`, e.g. √3/4 for a²√3/4) — what an on-figure
+  // label would read if `hiddenIds` failed; checked in student mode only (Mode B shows the symbolic form).
   const studentMode = disclosure
-    ? await verifyStudentModeDisclosure(page, expectedAnswers, disclosure.problemText, disclosure.analyzeCalls)
+    ? await verifyStudentModeDisclosure(page, [...expectedAnswers, ...(disclosure.figureValues ?? [])],
+      disclosure.problemText, disclosure.analyzeCalls)
     : null;
   if (studentMode) STUDENT_MODE_LOG.push({ case_id: disclosure.caseId, ...studentMode });
   if (disclosure?.screenshot) await page.screenshot({ path: join(OUT_DIR, disclosure.screenshot) });
@@ -303,6 +315,17 @@ async function verifyServedWorkspace(page, expectedAnswers, checkStepping = fals
     assert(panelText.includes(ans), `Expected answer "${ans}" inside #geo3d-bang-phan-tich, got: ${panelText}`);
   }
   assert(!/\b(?:kq_|td_|mp_td_)[A-Za-z0-9_]+|section:td_/.test(panelText), `Leaked machine ID in UI: ${panelText}`);
+  if (studentMode) {
+    // Witness window (CLAUDE.md §4): the same detector must FIRE on the real Mode B rendering of every answer —
+    // otherwise a silent student mode proves nothing about the detector.
+    for (const ans of expectedAnswers) assert(statesAnswer(panelText, ans), `Detector blind to the Mode B rendering of ${ans}`);
+    // …and student mode is re-checked against the values exactly as Mode B renders them, not only the oracle strings.
+    const rendered = (await page.locator('[data-semantic-role="REQUESTED_RESULT"] .geo3d-dai-luong-so').allTextContents())
+      .map((s) => (s.includes("=") ? s.slice(s.lastIndexOf("=") + 1) : s).trim()).filter(Boolean);
+    assertNoAnswerStated(STUDENT_TEXT.seen, rendered);
+    Object.assign(studentMode, { detector_positive_control: `${expectedAnswers.length}/${expectedAnswers.length}`,
+      mode_b_rendered_values: rendered, figure_scale_values: disclosure.figureValues ?? [] });
+  }
 
   const bodyText = (await page.locator("body").textContent()) || "";
   assert(!/\b(?:kq_|td_|mp_td_)[A-Za-z0-9_]+|section:td_/.test(bodyText), "Leaked machine ID in body");
@@ -314,6 +337,7 @@ async function verifyServedWorkspace(page, expectedAnswers, checkStepping = fals
 
 async function main() {
   assert(existsSync(join(DIST_DIR, "index.html")), "frontend/dist/index.html missing — run `npm run build` first");
+  assert(!existsSync(RECEIPT_OUT), `refusing to overwrite ${RECEIPT_OUT} — pass --out-dir <new repo-relative dir>`);
   assert(existsSync(CORPUS_PATH), `Missing staging corpus: ${CORPUS_PATH}`);
   assert(existsSync(VERIFICATION_PATH), `Missing 16-class verification: ${VERIFICATION_PATH}`);
 
@@ -400,7 +424,7 @@ async function main() {
     });
     const analyzeCalls = { n: 0 };
     page.on("request", (r) => { if (r.url().includes("/api/analyze")) analyzeCalls.n += 1; });
-    const D = (id, screenshot) => ({ caseId: id, problemText: texts.get(id), analyzeCalls, screenshot });
+    const D = (id, screenshot, figureValues) => ({ caseId: id, problemText: texts.get(id), analyzeCalls, screenshot, figureValues });
     mkdirSync(OUT_DIR, { recursive: true });
 
     await page.goto(uiBase, { waitUntil: "networkidle" });
@@ -598,7 +622,8 @@ async function main() {
         witnesses[c.case_id] = (net.json.envelope?.scene3d?.objects ?? []).filter((o) => o.perpendicular_witness).length;
         // Same rule as `giaTriDapSo`: an angle oracle carries its left side ("cos²=2/3"); the value is what follows "=".
         const values = Object.values(c.answers).map((a) => (a.includes("=") ? a.slice(a.lastIndexOf("=") + 1).trim() : a));
-        await verifyServedWorkspace(page, values, false, D(c.case_id));
+        const figure = Object.values(net.json.route_d.answer_exact ?? {}).map((x) => x?.coef).filter((x) => x && !values.includes(x));
+        await verifyServedWorkspace(page, values, false, D(c.case_id, undefined, figure));
       }
       // «SA vuông góc với mặt phẳng (ABCD)» reaches the scene as a certified right-angle witness, not just prose.
       for (const id of ["S2-B-I07_ve_va_tinh", "S2-F-S02_vuong_goc_day"]) {
