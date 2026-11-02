@@ -60,7 +60,11 @@ def composition(route, case):
     chain_calls = [calls[e['call']] for e in d['chain'] if e['call'] in calls]
     used = {x: any(output(c) != x and x in labels(list(c['args'].values())) for c in chain_calls) for x in fresh}
     fns = sorted({e['fn'] for e in d['chain'] if not e['fn'].startswith('ask_')})
-    info = {'chain_functions': fns, 'fresh_points': fresh, 'fresh_consumed': used,
+    # the plan up to fresh-label names: each step's function and its arguments that are source labels
+    src = set(case['triangle'])
+    plan = sorted(f"{c['fn']}({','.join(sorted(x for x in labels(list(c['args'].values())) if x in src))})"
+                  for c in chain_calls if not c['fn'].startswith('ask_'))
+    info = {'chain_functions': fns, 'plan': plan, 'fresh_points': fresh, 'fresh_consumed': used,
             'search_generated_steps': (route['planner'].get('search_telemetry') or {}).get('search_generated_steps')}
     if case['necessity'] != 'COMPOSITION_NECESSARY':
         return 'COMPOSED_NOT_NECESSARY', info
