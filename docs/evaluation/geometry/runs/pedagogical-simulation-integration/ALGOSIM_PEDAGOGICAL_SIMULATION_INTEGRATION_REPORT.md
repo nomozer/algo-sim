@@ -297,6 +297,15 @@ nguyên; không thêm Geometry Function, không sửa Planner.
 
 ## 21. Git and publication status
 
-Nhánh `research/hybrid-master-backend-replacement`; không merge vào `main`, không push, không viết lại lịch sử.
-Publication safety `check_publication_safety.py --range f986e897..HEAD`: `CHỜ` (chạy lại sau commit cuối).
-`PEDAGOGICAL_SIMULATION_VERIFIED` chỉ được ghi khi review vòng 2 không còn BLOCKER/MAJOR.
+Nhánh `research/hybrid-master-backend-replacement`; không merge vào `main`, không push, không viết lại lịch sử, không
+commit nào mang trailer `Co-Authored-By`. Publication safety `check_publication_safety.py --range f986e897..HEAD` tại
+`736aae6d`: **PASS** (`scanned=1159 messages=166 violations=0 pending_exception=0`). Tích hợp vào `main` và push cần
+quyết định riêng của Owner.
+
+## Kết luận phát hành
+
+| Trạng thái | Kết luận | Căn cứ |
+|---|---|---|
+| `PEDAGOGICAL_SIMULATION_VERIFIED` | **Đạt, trong phạm vi đã kiểm**: 30 ca SERVED của corpus 16 lớp trên đường `staging-replay`; với giới hạn L1–L10 | §2, §8–§13, Full T3 §16, review vòng 2 `READY` §15 |
+| `HYBRID_LIVE_VALIDATED` | **Không** | 0 request Gemini live (§19) |
+| `PRODUCTION_CUTOVER_READY` | **Không** | §20 |
