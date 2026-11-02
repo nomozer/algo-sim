@@ -189,7 +189,7 @@ def test_wave3a_version_and_surface_fingerprint_invariants():
     # Wave 3A surface fingerprints below unchanged
     assert registry.REGISTRY_VERSION == "geometry-functions/31"    # /29: SL-3 student shorthand (k/c, đt); /31: C18
     assert planner.PLANNER_VERSION == "geometry-fact-planner/26"
-    assert engine.ENGINE_VERSION == "geometry-function-engine/22"
+    assert engine.ENGINE_VERSION == "geometry-function-engine/23"
     assert ADAPTER_VERSION == "hybrid-preview-adapter/2"
     assert RESPONSE_CONTRACT == "flat"
     assert registry.REGISTRY["ask_volume_ratio"].provider_offered is False

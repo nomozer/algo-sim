@@ -60,7 +60,9 @@ from .registry import DINH_CAT_CANH, _cum_hoi
 #: `Point` descriptors across goal chains and derived planes (`point_operand`).
 #: /22 (C18): the definitions of a point named by a property — orthocenter, circumcenter — checked on the built figure in
 #: the Gram metric (`_MO_TA`), every locus included, whatever composition the planner found.
-ENGINE_VERSION = "geometry-function-engine/22"
+#: /23 (run `pedagogical-simulation-integration`): a stated line ⊥ base that is no solid edge (projection foot, altitude
+#: to a non-vertex foot) is drawn as a segment so its exact right-angle witness is shown — scene only, values unchanged.
+ENGINE_VERSION = "geometry-function-engine/23"
 PLANE_SECTION_CERTIFICATE_VERSION = "plane-section-certificate/1"
 PLANE_SECTION_CERTIFICATE_RULE = "engine_derived_plane_section"
 PLANE_SECTION_CERTIFICATE_PRODUCER = "engine.kiem_chung_chi_thiet_dien"
@@ -2295,6 +2297,24 @@ class _Dung:
                                "provenance": "DERIVED"})
         lenh += [st for _, l in sau for st in l]
         khai += [d for t, _ in sau for d in khai_cua[t]]
+        # A stated line ⊥ base that PLACED its off-base end («hình chiếu vuông góc của A′ lên (ABC) là H» puts A′ over H)
+        # and is no edge of any solid is a GIVEN the learner must see: draw it as a segment, so the exact right-angle
+        # witness (`certificates.attach_perpendicular_witnesses`) has an object to sit on. A forward projection (H := foot
+        # of S) already carries its witness on the point H; a stated edge (SA ⊥ đáy) carries it on the edge.
+        canh = {frozenset(e) for k in self.khoi.values() for e in (
+            [(k.base[i - 1], k.base[i]) for i in range(len(k.base))]
+            + [(k.top[i - 1], k.top[i]) for i in range(len(k.top))]
+            + list(zip(k.base, k.top)) + [(k.apex, b) for b in k.base if k.apex])}
+        dat_boi = {(s["object"], s.get("rule")) for s in self.trace if s.get("step") == "place_point"}
+        for c, (a, b), _mp, luat, _chan in self._rang_buoc_vuong():
+            if a not in self.pts or b not in self.pts or self.pts[a] == self.pts[b] or frozenset((a, b)) in canh:
+                continue
+            if not any((dinh, luat + chan) in dat_boi for dinh, chan in ((a, b), (b, a))):
+                continue
+            canh.add(frozenset((a, b)))
+            ten = f"doan_gt_{ir_name(c.id)}"
+            lenh.append({"kind": "construct_segment", "target_var": ten, "endpoint_a": ir_name(a), "endpoint_b": ir_name(b)})
+            khai.append(P.memory_declaration(ten, "segment3"))
         td = self._bien_dich_mat_cat(khai, lenh)
         khoi_cong_ir: dict[str, tuple[str, Any, Fraction, V3, str, tuple[str, V3] | None]] = {}
         for c in self.of("curved_solid"):

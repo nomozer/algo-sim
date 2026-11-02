@@ -445,3 +445,32 @@ def test_staging_replay_corpus_is_memoized_and_copies_single_entry(staging_env, 
     assert p1 is not None and p1.recorded is not None
     assert p2 is not None and p2.recorded is None
     assert read_calls[0] == 1
+
+
+def test_stated_line_perpendicular_to_base_is_drawn_with_exact_witness_and_edges_are_not_duplicated(
+        staging_env, monkeypatch):
+    """«hình chiếu vuông góc của A′ lên (ABC) là H» is a GIVEN ⊥ relation: the scene draws A′H (no solid edge) and the
+    exact right-angle witness sits on it; «SA ⊥ (ABCD)» keeps its witness on the lateral edge SA, no second segment."""
+    from scripts.export_hybrid_product_integration_corpus import RUN_DIR
+
+    corpus = RUN_DIR / "product-integration-staging-corpus.json"
+    monkeypatch.setenv("HYBRID_ROUTE_MODE", "staging-replay")
+    monkeypatch.setenv("HYBRID_REPLAY_CORPUS", str(corpus))
+    texts = {c["case_id"]: c for cat in json.loads(
+        (RUN_DIR / "product-integration-16-classes-verification.json").read_text(encoding="utf-8"))["categories"]
+        for c in cat["cases"]}
+
+    oblique = _post(texts["S2-B-A03_control_with_dimensions"]["problem_text"]).json()
+    assert oblique["route_d"]["status"] == "SERVED" and oblique["route_d"]["answers"] == {"mg1": "√3"}
+    segs = [o for o in oblique["envelope"]["scene3d"]["objects"] if o["type"] == "segment3"]
+    height = [o for o in segs if set(o.get("endpoint_ids") or ()) == {"A_prime", "H"}]
+    assert len(height) == 1, [o["id"] for o in segs]
+    assert height[0]["notation"] == "A′H"
+    w = height[0]["perpendicular_witness"]
+    assert w and w["from"] == "A_prime" and w["foot_id"] == "H"
+
+    pyramid = _post(texts["S2-B-I07_ve_va_tinh"]["problem_text"]).json()
+    assert pyramid["route_d"]["answers"] == {"mg1": "8/3"}
+    sa = [o for o in pyramid["envelope"]["scene3d"]["objects"]
+          if o["type"] == "segment3" and set(o.get("endpoint_ids") or ()) == {"S", "A"}]
+    assert [o["id"] for o in sa] == ["canh_ben_S_A"] and sa[0].get("perpendicular_witness")

@@ -360,6 +360,8 @@ IDENTITY_DELTAS = (
      "versions": {"registry_version": ("geometry-functions/30", "geometry-functions/31"),
                   "planner_version": ("geometry-fact-planner/25", "geometry-fact-planner/26"),
                   "engine_version": ("geometry-function-engine/21", "geometry-function-engine/22")}},
+    {"run": "pedagogical-simulation-integration",          # a stated ⊥ line that placed its end is drawn (engine /23)
+     "versions": {"engine_version": ("geometry-function-engine/22", "geometry-function-engine/23")}},
 )
 
 

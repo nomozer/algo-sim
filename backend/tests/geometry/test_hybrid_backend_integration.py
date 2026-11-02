@@ -476,7 +476,7 @@ def test_version_constants_surface_fingerprints_and_historical_receipt_preservat
     # planner /14, engine /13 (hybrid-v2-backend-generalization): full > 3-label question planes, witness triple.
     assert PLANNER_VERSION == "geometry-fact-planner/26"
     # engine /11 -> /12 (claude-to-codex-takeover): skew-claim contradiction refusal on ask_distance_lines; registry/planner unchanged.
-    assert ENGINE_VERSION == "geometry-function-engine/22"
+    assert ENGINE_VERSION == "geometry-function-engine/23"
     # 125 -> 126 (hybrid-offline-readiness-finalization): độ dài nguồn không đọc từ biểu thức/vectơ/giả định.
     # 126 -> 127 (hybrid-architecture-wave1-exact-certificates-planner): segment3 đường cao mang perpendicular_witness.
     # 127 -> 128 (visual-hybrid-final-corrections): tên hiển thị backend (mặt phẳng tên đề viết, chu trình thiết diện).
