@@ -5179,12 +5179,12 @@ def _kiem_mat_rang_buoc(d: dict, theo_id: dict, de: str, nhan: set[str], chiem: 
     tu_do = []
     for w in chung:
         tu_do += [w.get("label")] + ([w["foot"]] if w.get("foot") else [])
-    for x in tu_do:
-        if not x or x in nhan_da_khai or x == p:
-            raise sai(f"điểm phụ {x} được khai hai lần")
-        nhan_da_khai.add(x)
-        if x in chiem:
-            raise TuChoi("AUXILIARY_LABEL_COLLISION", f"điểm phụ {x} trùng một nhãn của đề", ids)
+    for phu in tu_do:
+        if not phu or phu in nhan_da_khai or phu == p:
+            raise sai(f"điểm phụ {phu} được khai hai lần")
+        nhan_da_khai.add(phu)
+        if phu in chiem:
+            raise TuChoi("AUXILIARY_LABEL_COLLISION", f"điểm phụ {phu} trùng một nhãn của đề", ids)
     dung = list(d.get("constructs") or ())
     for w in chung:
         i = w.get("constraint")

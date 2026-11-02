@@ -695,3 +695,25 @@ def test_described_point_scope_violations_refuse(field):
     p = _r1_with_second_solid()
     p['described_points'][0][field] = ['zz::T', p['described_points'][0][field][1]]
     assert outcome(run_typed_fact_next_v2_route(p)) == ('REFUSED', 'SOURCE_OBJECT_MISMATCH')          # S5
+
+
+# C17: the label operands of a constrained plane are scoped by the section's target solid (`scope_records`).
+def _c17_payload():
+    from tests.geometry.test_route_d_constraint_planes import _case, _qua_vuong
+    return _case(*_qua_vuong('MN', 'SBC'))[1]
+
+
+def test_constraint_plane_scope_controls_serve():
+    from app.ai.adapter4_route import run_typed_fact_next_v2_route
+    base = run_typed_fact_next_v2_route(_c17_payload()); assert base.status == 'SERVED'
+    p = _c17_payload(); p['derived_sections'][0]['constraints'][1]['operands'] = ['s1::S', 'B', 'C']
+    r = run_typed_fact_next_v2_route(p); assert r.status == 'SERVED' and r.answer_exact == base.answer_exact
+
+
+def test_constraint_plane_scope_violations_refuse():
+    from app.ai.adapter4_route import run_typed_fact_next_v2_route
+    p = _c17_payload()
+    other = deepcopy(p['solids'][0]); other.update(solid_id='zz', notation='T.ABCD', quote='Cho hình chóp T.ABCD')
+    p['solids'].append(other); p['problem_text'] += ' Cho hình chóp T.ABCD.'
+    p['derived_sections'][0]['constraints'][1]['operands'] = ['zz::T', 'B', 'C']
+    assert outcome(run_typed_fact_next_v2_route(p)) == ('REFUSED', 'SOURCE_OBJECT_MISMATCH')          # S5

@@ -1180,6 +1180,7 @@ def scope_records(p: "TypedFactNextPayload") -> list[tuple[str, str, str | None,
         refs += [x for e in getattr(sec, "cut_edges", ()) for x in e]
         refs += [x for k in getattr(sec, "named_intersections", {}) for x in split_edge_key(k)]
         refs += [x for s in getattr(sec, "stated_intersections", ()) for x in s.edge]
+        refs += [x for c in getattr(sec, "constraints", ()) for x in c.operands if not is_described_ref(x)]   # C17
         refs += [x for e in (getattr(sec, "declared_boundary", None) or ()) for x in e]
         recs.append(("section", sec.section_id, sec.target_solid_id, refs, False))
     ids = {s.solid_id for s in p.solids} | set(parents) | set(sections)

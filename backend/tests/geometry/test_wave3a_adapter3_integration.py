@@ -33,9 +33,9 @@ from app.simulation.geometry_functions.typed_fact_next import (
 def test_combined_version_identities_and_governance() -> None:
     """Verify version identities of Registry /13, Planner /13 (hybrid-contract-v2, owner D5), Engine /12
     (claude-to-codex-takeover skew-claim refusal), Adapter /2 and /3."""
-    assert REGISTRY_VERSION == "geometry-functions/29"    # /29: SL-3 student shorthand (k/c, đt)
-    assert PLANNER_VERSION == "geometry-fact-planner/24"
-    assert ENGINE_VERSION == "geometry-function-engine/20"
+    assert REGISTRY_VERSION == "geometry-functions/30"    # /29: SL-3 student shorthand (k/c, đt)
+    assert PLANNER_VERSION == "geometry-fact-planner/25"
+    assert ENGINE_VERSION == "geometry-function-engine/21"
     assert ADAPTER_V2_VERSION == "hybrid-preview-adapter/2"
     assert TYPED_FACT_NEXT_SCHEMA_VERSION == "typed-fact-next/1"
     assert ADAPTER_V3_VERSION == "hybrid-simulation-adapter/3"

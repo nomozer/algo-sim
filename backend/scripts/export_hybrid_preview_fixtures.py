@@ -352,6 +352,10 @@ IDENTITY_DELTAS = (
      "versions": {"registry_version": ("geometry-functions/28", "geometry-functions/29")}},
     {"run": "hybrid-master-backend-replacement",           # C16 provenance-classified search telemetry (planner /24)
      "versions": {"planner_version": ("geometry-fact-planner/23", "geometry-fact-planner/24")}},
+    {"run": "hybrid-master-backend-replacement",           # C17 constraint-to-witness planes
+     "versions": {"registry_version": ("geometry-functions/29", "geometry-functions/30"),
+                  "planner_version": ("geometry-fact-planner/24", "geometry-fact-planner/25"),
+                  "engine_version": ("geometry-function-engine/20", "geometry-function-engine/21")}},
 )
 
 

@@ -1,0 +1,6025 @@
+{
+ "classification": "IMPLEMENTER_AUTHORED_DEVELOPMENT_DIAGNOSTIC",
+ "provider_calls": 0,
+ "production_defaults_changed": false,
+ "summary": {
+  "C": {
+   "GENUINE_SEARCH_GENERATED": {
+    "UNSUPPORTED_CAPABILITY": 202
+   },
+   "REGISTERED_DECOMPOSITION": {
+    "SURVIVES": 101
+   },
+   "SEARCH_GENERATED_PREMISE_REUSE": {
+    "SURVIVES": 24
+   },
+   "VERIFICATION_WITNESS_ONLY": {
+    "UNSUPPORTED_CAPABILITY": 17,
+    "SURVIVES": 8
+   }
+  },
+  "D": {
+   "GENUINE_SEARCH_GENERATED": {
+    "PLAN_TOO_LARGE": 202
+   },
+   "REGISTERED_DECOMPOSITION": {
+    "SURVIVES": 101
+   },
+   "SEARCH_GENERATED_PREMISE_REUSE": {
+    "PLAN_TOO_LARGE": 24
+   },
+   "VERIFICATION_WITNESS_ONLY": {
+    "PLAN_TOO_LARGE": 25
+   }
+  },
+  "served_in_B": 352
+ },
+ "rows": [
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "B"
+   ],
+   "ref": [
+    "S",
+    "C",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "B"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "C"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "SEARCH_GENERATED_PREMISE_REUSE",
+   "C": "SURVIVES",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "C"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "C"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "C"
+   ],
+   "ref": [
+    "S",
+    "C",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "C"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F2",
+   "contains": [
+    "A",
+    "C"
+   ],
+   "ref": [
+    "S",
+    "B"
+   ],
+   "B": "SERVED",
+   "composition": "REGISTERED_DECOMPOSITION",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F2",
+   "contains": [
+    "A",
+    "C"
+   ],
+   "ref": [
+    "S",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "REGISTERED_DECOMPOSITION",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "D"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "C"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "D"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "S"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "M"
+   ],
+   "ref": [
+    "S",
+    "C",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "M"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "N"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "SEARCH_GENERATED_PREMISE_REUSE",
+   "C": "SURVIVES",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "A",
+    "B"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "C"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "C",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "D",
+    "A"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "A",
+    "C"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F2",
+   "contains": [
+    "A",
+    "N"
+   ],
+   "ref": [
+    "B",
+    "C"
+   ],
+   "B": "SERVED",
+   "composition": "REGISTERED_DECOMPOSITION",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F2",
+   "contains": [
+    "A",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "B"
+   ],
+   "B": "SERVED",
+   "composition": "REGISTERED_DECOMPOSITION",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F2",
+   "contains": [
+    "A",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "REGISTERED_DECOMPOSITION",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F2",
+   "contains": [
+    "A",
+    "N"
+   ],
+   "ref": [
+    "B",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "REGISTERED_DECOMPOSITION",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "B",
+    "D"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "SEARCH_GENERATED_PREMISE_REUSE",
+   "C": "SURVIVES",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "B",
+    "D"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "C"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "B",
+    "D"
+   ],
+   "ref": [
+    "S",
+    "C",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "B",
+    "D"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F2",
+   "contains": [
+    "B",
+    "D"
+   ],
+   "ref": [
+    "S",
+    "A"
+   ],
+   "B": "SERVED",
+   "composition": "REGISTERED_DECOMPOSITION",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F2",
+   "contains": [
+    "B",
+    "D"
+   ],
+   "ref": [
+    "S",
+    "C"
+   ],
+   "B": "SERVED",
+   "composition": "REGISTERED_DECOMPOSITION",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "B",
+    "S"
+   ],
+   "ref": [
+    "S",
+    "A",
+    "C"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "B",
+    "M"
+   ],
+   "ref": [
+    "S",
+    "C",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "B",
+    "M"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "B",
+    "N"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "SEARCH_GENERATED_PREMISE_REUSE",
+   "C": "SURVIVES",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "B",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "C"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "B",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "C",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "B",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "D",
+    "A"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "B",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "A",
+    "C"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "B",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F2",
+   "contains": [
+    "B",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "A"
+   ],
+   "B": "SERVED",
+   "composition": "REGISTERED_DECOMPOSITION",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F2",
+   "contains": [
+    "B",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "REGISTERED_DECOMPOSITION",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F2",
+   "contains": [
+    "B",
+    "N"
+   ],
+   "ref": [
+    "A",
+    "C"
+   ],
+   "B": "SERVED",
+   "composition": "REGISTERED_DECOMPOSITION",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "C",
+    "S"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "SEARCH_GENERATED_PREMISE_REUSE",
+   "C": "SURVIVES",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "C",
+    "S"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "C"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "C",
+    "S"
+   ],
+   "ref": [
+    "S",
+    "C",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "C",
+    "S"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "C",
+    "M"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "SEARCH_GENERATED_PREMISE_REUSE",
+   "C": "SURVIVES",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "C",
+    "M"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "C"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "C",
+    "M"
+   ],
+   "ref": [
+    "S",
+    "C",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "C",
+    "M"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F2",
+   "contains": [
+    "C",
+    "M"
+   ],
+   "ref": [
+    "S",
+    "A"
+   ],
+   "B": "SERVED",
+   "composition": "REGISTERED_DECOMPOSITION",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F2",
+   "contains": [
+    "C",
+    "M"
+   ],
+   "ref": [
+    "S",
+    "B"
+   ],
+   "B": "SERVED",
+   "composition": "REGISTERED_DECOMPOSITION",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F2",
+   "contains": [
+    "C",
+    "M"
+   ],
+   "ref": [
+    "S",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "REGISTERED_DECOMPOSITION",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "C",
+    "N"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "SEARCH_GENERATED_PREMISE_REUSE",
+   "C": "SURVIVES",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "C",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "C"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "C",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "C",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "C",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "D",
+    "S"
+   ],
+   "ref": [
+    "S",
+    "A",
+    "C"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "D",
+    "M"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "SEARCH_GENERATED_PREMISE_REUSE",
+   "C": "SURVIVES",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "D",
+    "M"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "C"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "D",
+    "M"
+   ],
+   "ref": [
+    "S",
+    "C",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "D",
+    "M"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F2",
+   "contains": [
+    "D",
+    "M"
+   ],
+   "ref": [
+    "S",
+    "A"
+   ],
+   "B": "SERVED",
+   "composition": "REGISTERED_DECOMPOSITION",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F2",
+   "contains": [
+    "D",
+    "M"
+   ],
+   "ref": [
+    "S",
+    "B"
+   ],
+   "B": "SERVED",
+   "composition": "REGISTERED_DECOMPOSITION",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F2",
+   "contains": [
+    "D",
+    "M"
+   ],
+   "ref": [
+    "S",
+    "C"
+   ],
+   "B": "SERVED",
+   "composition": "REGISTERED_DECOMPOSITION",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "D",
+    "N"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "SEARCH_GENERATED_PREMISE_REUSE",
+   "C": "SURVIVES",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "D",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "A",
+    "B"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "D",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "C"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "D",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "C",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "D",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "A",
+    "C"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "D",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F2",
+   "contains": [
+    "D",
+    "N"
+   ],
+   "ref": [
+    "B",
+    "C"
+   ],
+   "B": "SERVED",
+   "composition": "REGISTERED_DECOMPOSITION",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F2",
+   "contains": [
+    "D",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "A"
+   ],
+   "B": "SERVED",
+   "composition": "REGISTERED_DECOMPOSITION",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F2",
+   "contains": [
+    "D",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "B"
+   ],
+   "B": "SERVED",
+   "composition": "REGISTERED_DECOMPOSITION",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F2",
+   "contains": [
+    "D",
+    "N"
+   ],
+   "ref": [
+    "A",
+    "C"
+   ],
+   "B": "SERVED",
+   "composition": "REGISTERED_DECOMPOSITION",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "S",
+    "M"
+   ],
+   "ref": [
+    "S",
+    "A",
+    "B"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "S",
+    "M"
+   ],
+   "ref": [
+    "S",
+    "C",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "S",
+    "M"
+   ],
+   "ref": [
+    "S",
+    "A",
+    "C"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "S",
+    "M"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F2",
+   "contains": [
+    "S",
+    "M"
+   ],
+   "ref": [
+    "B",
+    "C"
+   ],
+   "B": "SERVED",
+   "composition": "REGISTERED_DECOMPOSITION",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F2",
+   "contains": [
+    "S",
+    "M"
+   ],
+   "ref": [
+    "A",
+    "C"
+   ],
+   "B": "SERVED",
+   "composition": "REGISTERED_DECOMPOSITION",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F2",
+   "contains": [
+    "S",
+    "M"
+   ],
+   "ref": [
+    "B",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "REGISTERED_DECOMPOSITION",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "S",
+    "N"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "SEARCH_GENERATED_PREMISE_REUSE",
+   "C": "SURVIVES",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "S",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "C"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "S",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "C",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "S",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "M",
+    "N"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "SEARCH_GENERATED_PREMISE_REUSE",
+   "C": "SURVIVES",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "M",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "A",
+    "B"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "M",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "C"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "M",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "D",
+    "A"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "M",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "A",
+    "C"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "M",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F2",
+   "contains": [
+    "M",
+    "N"
+   ],
+   "ref": [
+    "B",
+    "C"
+   ],
+   "B": "SERVED",
+   "composition": "REGISTERED_DECOMPOSITION",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F2",
+   "contains": [
+    "M",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "A"
+   ],
+   "B": "SERVED",
+   "composition": "REGISTERED_DECOMPOSITION",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F2",
+   "contains": [
+    "M",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "B"
+   ],
+   "B": "SERVED",
+   "composition": "REGISTERED_DECOMPOSITION",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F2",
+   "contains": [
+    "M",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "REGISTERED_DECOMPOSITION",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F2",
+   "contains": [
+    "M",
+    "N"
+   ],
+   "ref": [
+    "A",
+    "C"
+   ],
+   "B": "SERVED",
+   "composition": "REGISTERED_DECOMPOSITION",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F2",
+   "contains": [
+    "M",
+    "N"
+   ],
+   "ref": [
+    "B",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "REGISTERED_DECOMPOSITION",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F3",
+   "contains": [
+    "A",
+    "B",
+    "M"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F3",
+   "contains": [
+    "A",
+    "B",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "VERIFICATION_WITNESS_ONLY",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F3",
+   "contains": [
+    "A",
+    "C",
+    "S"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "VERIFICATION_WITNESS_ONLY",
+   "C": "SURVIVES",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F3",
+   "contains": [
+    "A",
+    "C",
+    "S"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "VERIFICATION_WITNESS_ONLY",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F3",
+   "contains": [
+    "A",
+    "C",
+    "N"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "VERIFICATION_WITNESS_ONLY",
+   "C": "SURVIVES",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F3",
+   "contains": [
+    "A",
+    "C",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "VERIFICATION_WITNESS_ONLY",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F3",
+   "contains": [
+    "A",
+    "D",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "C"
+   ],
+   "B": "SERVED",
+   "composition": "VERIFICATION_WITNESS_ONLY",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F3",
+   "contains": [
+    "A",
+    "D",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "VERIFICATION_WITNESS_ONLY",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F3",
+   "contains": [
+    "A",
+    "S",
+    "N"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "VERIFICATION_WITNESS_ONLY",
+   "C": "SURVIVES",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F3",
+   "contains": [
+    "A",
+    "S",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "VERIFICATION_WITNESS_ONLY",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F3",
+   "contains": [
+    "A",
+    "M",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "VERIFICATION_WITNESS_ONLY",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F3",
+   "contains": [
+    "B",
+    "D",
+    "N"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "VERIFICATION_WITNESS_ONLY",
+   "C": "SURVIVES",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F3",
+   "contains": [
+    "B",
+    "M",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "VERIFICATION_WITNESS_ONLY",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F3",
+   "contains": [
+    "C",
+    "S",
+    "N"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "SEARCH_GENERATED_PREMISE_REUSE",
+   "C": "SURVIVES",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F3",
+   "contains": [
+    "C",
+    "S",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "C"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F3",
+   "contains": [
+    "C",
+    "S",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "B"
+   ],
+   "ref": [
+    "S",
+    "C",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "B"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "C"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "SEARCH_GENERATED_PREMISE_REUSE",
+   "C": "SURVIVES",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "C"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "C"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "C"
+   ],
+   "ref": [
+    "S",
+    "C",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "C"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F2",
+   "contains": [
+    "A",
+    "C"
+   ],
+   "ref": [
+    "S",
+    "B"
+   ],
+   "B": "SERVED",
+   "composition": "REGISTERED_DECOMPOSITION",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F2",
+   "contains": [
+    "A",
+    "C"
+   ],
+   "ref": [
+    "S",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "REGISTERED_DECOMPOSITION",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "D"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "C"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "D"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "S"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "M"
+   ],
+   "ref": [
+    "S",
+    "C",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "M"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "N"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "SEARCH_GENERATED_PREMISE_REUSE",
+   "C": "SURVIVES",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "A",
+    "B"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "C"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "C",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "D",
+    "A"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "A",
+    "C"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F2",
+   "contains": [
+    "A",
+    "N"
+   ],
+   "ref": [
+    "B",
+    "C"
+   ],
+   "B": "SERVED",
+   "composition": "REGISTERED_DECOMPOSITION",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F2",
+   "contains": [
+    "A",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "B"
+   ],
+   "B": "SERVED",
+   "composition": "REGISTERED_DECOMPOSITION",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F2",
+   "contains": [
+    "A",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "REGISTERED_DECOMPOSITION",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F2",
+   "contains": [
+    "A",
+    "N"
+   ],
+   "ref": [
+    "B",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "REGISTERED_DECOMPOSITION",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "B",
+    "D"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "SEARCH_GENERATED_PREMISE_REUSE",
+   "C": "SURVIVES",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "B",
+    "D"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "C"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "B",
+    "D"
+   ],
+   "ref": [
+    "S",
+    "C",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "B",
+    "D"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F2",
+   "contains": [
+    "B",
+    "D"
+   ],
+   "ref": [
+    "S",
+    "A"
+   ],
+   "B": "SERVED",
+   "composition": "REGISTERED_DECOMPOSITION",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F2",
+   "contains": [
+    "B",
+    "D"
+   ],
+   "ref": [
+    "S",
+    "C"
+   ],
+   "B": "SERVED",
+   "composition": "REGISTERED_DECOMPOSITION",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "B",
+    "S"
+   ],
+   "ref": [
+    "S",
+    "A",
+    "C"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "B",
+    "M"
+   ],
+   "ref": [
+    "S",
+    "C",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "B",
+    "M"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "B",
+    "N"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "SEARCH_GENERATED_PREMISE_REUSE",
+   "C": "SURVIVES",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "B",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "C"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "B",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "C",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "B",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "D",
+    "A"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "B",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "A",
+    "C"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "B",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F2",
+   "contains": [
+    "B",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "A"
+   ],
+   "B": "SERVED",
+   "composition": "REGISTERED_DECOMPOSITION",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F2",
+   "contains": [
+    "B",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "REGISTERED_DECOMPOSITION",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F2",
+   "contains": [
+    "B",
+    "N"
+   ],
+   "ref": [
+    "A",
+    "C"
+   ],
+   "B": "SERVED",
+   "composition": "REGISTERED_DECOMPOSITION",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "C",
+    "S"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "SEARCH_GENERATED_PREMISE_REUSE",
+   "C": "SURVIVES",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "C",
+    "S"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "C"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "C",
+    "S"
+   ],
+   "ref": [
+    "S",
+    "C",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "C",
+    "S"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "C",
+    "M"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "SEARCH_GENERATED_PREMISE_REUSE",
+   "C": "SURVIVES",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "C",
+    "M"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "C"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "C",
+    "M"
+   ],
+   "ref": [
+    "S",
+    "C",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "C",
+    "M"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F2",
+   "contains": [
+    "C",
+    "M"
+   ],
+   "ref": [
+    "S",
+    "A"
+   ],
+   "B": "SERVED",
+   "composition": "REGISTERED_DECOMPOSITION",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F2",
+   "contains": [
+    "C",
+    "M"
+   ],
+   "ref": [
+    "S",
+    "B"
+   ],
+   "B": "SERVED",
+   "composition": "REGISTERED_DECOMPOSITION",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F2",
+   "contains": [
+    "C",
+    "M"
+   ],
+   "ref": [
+    "S",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "REGISTERED_DECOMPOSITION",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "C",
+    "N"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "SEARCH_GENERATED_PREMISE_REUSE",
+   "C": "SURVIVES",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "C",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "C"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "C",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "C",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "C",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "D",
+    "S"
+   ],
+   "ref": [
+    "S",
+    "A",
+    "C"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "D",
+    "M"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "SEARCH_GENERATED_PREMISE_REUSE",
+   "C": "SURVIVES",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "D",
+    "M"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "C"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "D",
+    "M"
+   ],
+   "ref": [
+    "S",
+    "C",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "D",
+    "M"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F2",
+   "contains": [
+    "D",
+    "M"
+   ],
+   "ref": [
+    "S",
+    "A"
+   ],
+   "B": "SERVED",
+   "composition": "REGISTERED_DECOMPOSITION",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F2",
+   "contains": [
+    "D",
+    "M"
+   ],
+   "ref": [
+    "S",
+    "B"
+   ],
+   "B": "SERVED",
+   "composition": "REGISTERED_DECOMPOSITION",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F2",
+   "contains": [
+    "D",
+    "M"
+   ],
+   "ref": [
+    "S",
+    "C"
+   ],
+   "B": "SERVED",
+   "composition": "REGISTERED_DECOMPOSITION",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "D",
+    "N"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "SEARCH_GENERATED_PREMISE_REUSE",
+   "C": "SURVIVES",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "D",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "A",
+    "B"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "D",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "C"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "D",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "C",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "D",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "A",
+    "C"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "D",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F2",
+   "contains": [
+    "D",
+    "N"
+   ],
+   "ref": [
+    "B",
+    "C"
+   ],
+   "B": "SERVED",
+   "composition": "REGISTERED_DECOMPOSITION",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F2",
+   "contains": [
+    "D",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "A"
+   ],
+   "B": "SERVED",
+   "composition": "REGISTERED_DECOMPOSITION",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F2",
+   "contains": [
+    "D",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "B"
+   ],
+   "B": "SERVED",
+   "composition": "REGISTERED_DECOMPOSITION",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F2",
+   "contains": [
+    "D",
+    "N"
+   ],
+   "ref": [
+    "A",
+    "C"
+   ],
+   "B": "SERVED",
+   "composition": "REGISTERED_DECOMPOSITION",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "S",
+    "M"
+   ],
+   "ref": [
+    "S",
+    "A",
+    "B"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "S",
+    "M"
+   ],
+   "ref": [
+    "S",
+    "C",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "S",
+    "M"
+   ],
+   "ref": [
+    "S",
+    "A",
+    "C"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "S",
+    "M"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F2",
+   "contains": [
+    "S",
+    "M"
+   ],
+   "ref": [
+    "B",
+    "C"
+   ],
+   "B": "SERVED",
+   "composition": "REGISTERED_DECOMPOSITION",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F2",
+   "contains": [
+    "S",
+    "M"
+   ],
+   "ref": [
+    "A",
+    "C"
+   ],
+   "B": "SERVED",
+   "composition": "REGISTERED_DECOMPOSITION",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F2",
+   "contains": [
+    "S",
+    "M"
+   ],
+   "ref": [
+    "B",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "REGISTERED_DECOMPOSITION",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "S",
+    "N"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "SEARCH_GENERATED_PREMISE_REUSE",
+   "C": "SURVIVES",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "S",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "C"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "S",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "C",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "S",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "M",
+    "N"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "SEARCH_GENERATED_PREMISE_REUSE",
+   "C": "SURVIVES",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "M",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "A",
+    "B"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "M",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "C"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "M",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "C",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "M",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "D",
+    "A"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "M",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "A",
+    "C"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "M",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F2",
+   "contains": [
+    "M",
+    "N"
+   ],
+   "ref": [
+    "B",
+    "C"
+   ],
+   "B": "SERVED",
+   "composition": "REGISTERED_DECOMPOSITION",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F2",
+   "contains": [
+    "M",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "A"
+   ],
+   "B": "SERVED",
+   "composition": "REGISTERED_DECOMPOSITION",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F2",
+   "contains": [
+    "M",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "B"
+   ],
+   "B": "SERVED",
+   "composition": "REGISTERED_DECOMPOSITION",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F2",
+   "contains": [
+    "M",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "REGISTERED_DECOMPOSITION",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F2",
+   "contains": [
+    "M",
+    "N"
+   ],
+   "ref": [
+    "A",
+    "C"
+   ],
+   "B": "SERVED",
+   "composition": "REGISTERED_DECOMPOSITION",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F2",
+   "contains": [
+    "M",
+    "N"
+   ],
+   "ref": [
+    "B",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "REGISTERED_DECOMPOSITION",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F3",
+   "contains": [
+    "A",
+    "B",
+    "M"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F3",
+   "contains": [
+    "A",
+    "C",
+    "S"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "VERIFICATION_WITNESS_ONLY",
+   "C": "SURVIVES",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F3",
+   "contains": [
+    "A",
+    "C",
+    "S"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "VERIFICATION_WITNESS_ONLY",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F3",
+   "contains": [
+    "A",
+    "C",
+    "N"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "VERIFICATION_WITNESS_ONLY",
+   "C": "SURVIVES",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F3",
+   "contains": [
+    "A",
+    "C",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "VERIFICATION_WITNESS_ONLY",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F3",
+   "contains": [
+    "A",
+    "S",
+    "N"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "VERIFICATION_WITNESS_ONLY",
+   "C": "SURVIVES",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F3",
+   "contains": [
+    "A",
+    "S",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "VERIFICATION_WITNESS_ONLY",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F3",
+   "contains": [
+    "B",
+    "D",
+    "N"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "VERIFICATION_WITNESS_ONLY",
+   "C": "SURVIVES",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F3",
+   "contains": [
+    "C",
+    "S",
+    "N"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "SEARCH_GENERATED_PREMISE_REUSE",
+   "C": "SURVIVES",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F3",
+   "contains": [
+    "C",
+    "S",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "C"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F3",
+   "contains": [
+    "C",
+    "S",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "D"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "B"
+   ],
+   "ref": [
+    "A'",
+    "B",
+    "C"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "C"
+   ],
+   "ref": [
+    "A'",
+    "B",
+    "C"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "A'"
+   ],
+   "ref": [
+    "B",
+    "C",
+    "C'",
+    "B'"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "A'"
+   ],
+   "ref": [
+    "A'",
+    "B",
+    "C"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "B'"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "B'",
+    "A'"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "B'"
+   ],
+   "ref": [
+    "B",
+    "C",
+    "C'",
+    "B'"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "B'"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C'"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "B'"
+   ],
+   "ref": [
+    "A'",
+    "B",
+    "C"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F2",
+   "contains": [
+    "A",
+    "B'"
+   ],
+   "ref": [
+    "B",
+    "C"
+   ],
+   "B": "SERVED",
+   "composition": "REGISTERED_DECOMPOSITION",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "C'"
+   ],
+   "ref": [
+    "B",
+    "C",
+    "C'",
+    "B'"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "C'"
+   ],
+   "ref": [
+    "C",
+    "A",
+    "A'",
+    "C'"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "C'"
+   ],
+   "ref": [
+    "A'",
+    "B",
+    "C"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F2",
+   "contains": [
+    "A",
+    "C'"
+   ],
+   "ref": [
+    "B",
+    "C"
+   ],
+   "B": "SERVED",
+   "composition": "REGISTERED_DECOMPOSITION",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F2",
+   "contains": [
+    "A",
+    "C'"
+   ],
+   "ref": [
+    "A'",
+    "B"
+   ],
+   "B": "SERVED",
+   "composition": "REGISTERED_DECOMPOSITION",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F2",
+   "contains": [
+    "A",
+    "C'"
+   ],
+   "ref": [
+    "B'",
+    "C"
+   ],
+   "B": "SERVED",
+   "composition": "REGISTERED_DECOMPOSITION",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "M"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "M"
+   ],
+   "ref": [
+    "A'",
+    "B'",
+    "C'"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "M"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C'"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "M"
+   ],
+   "ref": [
+    "A'",
+    "B",
+    "C"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F2",
+   "contains": [
+    "A",
+    "M"
+   ],
+   "ref": [
+    "B",
+    "B'"
+   ],
+   "B": "SERVED",
+   "composition": "REGISTERED_DECOMPOSITION",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F2",
+   "contains": [
+    "A",
+    "M"
+   ],
+   "ref": [
+    "A'",
+    "B"
+   ],
+   "B": "SERVED",
+   "composition": "REGISTERED_DECOMPOSITION",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F2",
+   "contains": [
+    "A",
+    "M"
+   ],
+   "ref": [
+    "B'",
+    "C"
+   ],
+   "B": "SERVED",
+   "composition": "REGISTERED_DECOMPOSITION",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "N"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "B'",
+    "A'"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "N"
+   ],
+   "ref": [
+    "B",
+    "C",
+    "C'",
+    "B'"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "N"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C'"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "N"
+   ],
+   "ref": [
+    "A'",
+    "B",
+    "C"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F2",
+   "contains": [
+    "A",
+    "N"
+   ],
+   "ref": [
+    "B",
+    "C"
+   ],
+   "B": "SERVED",
+   "composition": "REGISTERED_DECOMPOSITION",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F2",
+   "contains": [
+    "A",
+    "N"
+   ],
+   "ref": [
+    "B'",
+    "C"
+   ],
+   "B": "SERVED",
+   "composition": "REGISTERED_DECOMPOSITION",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "B",
+    "C"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C'"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "B",
+    "A'"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "B'",
+    "A'"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "B",
+    "A'"
+   ],
+   "ref": [
+    "B",
+    "C",
+    "C'",
+    "B'"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "B",
+    "A'"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C'"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "B",
+    "A'"
+   ],
+   "ref": [
+    "A'",
+    "B",
+    "C"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F2",
+   "contains": [
+    "B",
+    "A'"
+   ],
+   "ref": [
+    "A",
+    "C'"
+   ],
+   "B": "SERVED",
+   "composition": "REGISTERED_DECOMPOSITION",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F2",
+   "contains": [
+    "B",
+    "A'"
+   ],
+   "ref": [
+    "B'",
+    "C"
+   ],
+   "B": "SERVED",
+   "composition": "REGISTERED_DECOMPOSITION",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "B",
+    "C'"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "B'",
+    "A'"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "B",
+    "C'"
+   ],
+   "ref": [
+    "B",
+    "C",
+    "C'",
+    "B'"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "B",
+    "C'"
+   ],
+   "ref": [
+    "C",
+    "A",
+    "A'",
+    "C'"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "B",
+    "C'"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C'"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "B",
+    "C'"
+   ],
+   "ref": [
+    "A'",
+    "B",
+    "C"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "B",
+    "M"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C'"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "B",
+    "N"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "B'",
+    "A'"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "B",
+    "N"
+   ],
+   "ref": [
+    "B",
+    "C",
+    "C'",
+    "B'"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "B",
+    "N"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C'"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "B",
+    "N"
+   ],
+   "ref": [
+    "A'",
+    "B",
+    "C"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F2",
+   "contains": [
+    "B",
+    "N"
+   ],
+   "ref": [
+    "A",
+    "C'"
+   ],
+   "B": "SERVED",
+   "composition": "REGISTERED_DECOMPOSITION",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F2",
+   "contains": [
+    "B",
+    "N"
+   ],
+   "ref": [
+    "B'",
+    "C"
+   ],
+   "B": "SERVED",
+   "composition": "REGISTERED_DECOMPOSITION",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "C",
+    "A'"
+   ],
+   "ref": [
+    "B",
+    "C",
+    "C'",
+    "B'"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "C",
+    "A'"
+   ],
+   "ref": [
+    "C",
+    "A",
+    "A'",
+    "C'"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "C",
+    "A'"
+   ],
+   "ref": [
+    "A'",
+    "B",
+    "C"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F2",
+   "contains": [
+    "C",
+    "A'"
+   ],
+   "ref": [
+    "A",
+    "B"
+   ],
+   "B": "SERVED",
+   "composition": "REGISTERED_DECOMPOSITION",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "C",
+    "B'"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "B'",
+    "A'"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "C",
+    "B'"
+   ],
+   "ref": [
+    "B",
+    "C",
+    "C'",
+    "B'"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "C",
+    "B'"
+   ],
+   "ref": [
+    "C",
+    "A",
+    "A'",
+    "C'"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "C",
+    "B'"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C'"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "C",
+    "B'"
+   ],
+   "ref": [
+    "A'",
+    "B",
+    "C"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F2",
+   "contains": [
+    "C",
+    "B'"
+   ],
+   "ref": [
+    "A",
+    "B"
+   ],
+   "B": "SERVED",
+   "composition": "REGISTERED_DECOMPOSITION",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F2",
+   "contains": [
+    "C",
+    "B'"
+   ],
+   "ref": [
+    "A'",
+    "B"
+   ],
+   "B": "SERVED",
+   "composition": "REGISTERED_DECOMPOSITION",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F2",
+   "contains": [
+    "C",
+    "B'"
+   ],
+   "ref": [
+    "A",
+    "C'"
+   ],
+   "B": "SERVED",
+   "composition": "REGISTERED_DECOMPOSITION",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "C",
+    "M"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C'"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "C",
+    "N"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "C",
+    "N"
+   ],
+   "ref": [
+    "A'",
+    "B'",
+    "C'"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "C",
+    "N"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "B'",
+    "A'"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "C",
+    "N"
+   ],
+   "ref": [
+    "B",
+    "C",
+    "C'",
+    "B'"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "C",
+    "N"
+   ],
+   "ref": [
+    "C",
+    "A",
+    "A'",
+    "C'"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "C",
+    "N"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C'"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "C",
+    "N"
+   ],
+   "ref": [
+    "A'",
+    "B",
+    "C"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F2",
+   "contains": [
+    "C",
+    "N"
+   ],
+   "ref": [
+    "A",
+    "B"
+   ],
+   "B": "SERVED",
+   "composition": "REGISTERED_DECOMPOSITION",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F2",
+   "contains": [
+    "C",
+    "N"
+   ],
+   "ref": [
+    "A",
+    "A'"
+   ],
+   "B": "SERVED",
+   "composition": "REGISTERED_DECOMPOSITION",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F2",
+   "contains": [
+    "C",
+    "N"
+   ],
+   "ref": [
+    "B",
+    "B'"
+   ],
+   "B": "SERVED",
+   "composition": "REGISTERED_DECOMPOSITION",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F2",
+   "contains": [
+    "C",
+    "N"
+   ],
+   "ref": [
+    "A'",
+    "B"
+   ],
+   "B": "SERVED",
+   "composition": "REGISTERED_DECOMPOSITION",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F2",
+   "contains": [
+    "C",
+    "N"
+   ],
+   "ref": [
+    "A",
+    "C'"
+   ],
+   "B": "SERVED",
+   "composition": "REGISTERED_DECOMPOSITION",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "A'",
+    "B'"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C'"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "A'",
+    "M"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "A'",
+    "M"
+   ],
+   "ref": [
+    "A'",
+    "B'",
+    "C'"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "A'",
+    "M"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "B'",
+    "A'"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "A'",
+    "M"
+   ],
+   "ref": [
+    "B",
+    "C",
+    "C'",
+    "B'"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "A'",
+    "M"
+   ],
+   "ref": [
+    "C",
+    "A",
+    "A'",
+    "C'"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "A'",
+    "M"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C'"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "A'",
+    "M"
+   ],
+   "ref": [
+    "A'",
+    "B",
+    "C"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F2",
+   "contains": [
+    "A'",
+    "M"
+   ],
+   "ref": [
+    "A",
+    "B"
+   ],
+   "B": "SERVED",
+   "composition": "REGISTERED_DECOMPOSITION",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F2",
+   "contains": [
+    "A'",
+    "M"
+   ],
+   "ref": [
+    "B",
+    "B'"
+   ],
+   "B": "SERVED",
+   "composition": "REGISTERED_DECOMPOSITION",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F2",
+   "contains": [
+    "A'",
+    "M"
+   ],
+   "ref": [
+    "A",
+    "C'"
+   ],
+   "B": "SERVED",
+   "composition": "REGISTERED_DECOMPOSITION",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F2",
+   "contains": [
+    "A'",
+    "M"
+   ],
+   "ref": [
+    "B'",
+    "C"
+   ],
+   "B": "SERVED",
+   "composition": "REGISTERED_DECOMPOSITION",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "A'",
+    "N"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C'"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "B'",
+    "C'"
+   ],
+   "ref": [
+    "A'",
+    "B",
+    "C"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "B'",
+    "M"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "B'",
+    "A'"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "B'",
+    "M"
+   ],
+   "ref": [
+    "B",
+    "C",
+    "C'",
+    "B'"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "B'",
+    "M"
+   ],
+   "ref": [
+    "C",
+    "A",
+    "A'",
+    "C'"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "B'",
+    "M"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C'"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "B'",
+    "M"
+   ],
+   "ref": [
+    "A'",
+    "B",
+    "C"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F2",
+   "contains": [
+    "B'",
+    "M"
+   ],
+   "ref": [
+    "A",
+    "B"
+   ],
+   "B": "SERVED",
+   "composition": "REGISTERED_DECOMPOSITION",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F2",
+   "contains": [
+    "B'",
+    "M"
+   ],
+   "ref": [
+    "A'",
+    "B"
+   ],
+   "B": "SERVED",
+   "composition": "REGISTERED_DECOMPOSITION",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F2",
+   "contains": [
+    "B'",
+    "M"
+   ],
+   "ref": [
+    "A",
+    "C'"
+   ],
+   "B": "SERVED",
+   "composition": "REGISTERED_DECOMPOSITION",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "B'",
+    "N"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C'"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "C'",
+    "M"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "B'",
+    "A'"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "C'",
+    "M"
+   ],
+   "ref": [
+    "B",
+    "C",
+    "C'",
+    "B'"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "C'",
+    "M"
+   ],
+   "ref": [
+    "C",
+    "A",
+    "A'",
+    "C'"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "C'",
+    "M"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C'"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "C'",
+    "M"
+   ],
+   "ref": [
+    "A'",
+    "B",
+    "C"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F2",
+   "contains": [
+    "C'",
+    "M"
+   ],
+   "ref": [
+    "A",
+    "B"
+   ],
+   "B": "SERVED",
+   "composition": "REGISTERED_DECOMPOSITION",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F2",
+   "contains": [
+    "C'",
+    "M"
+   ],
+   "ref": [
+    "A'",
+    "B"
+   ],
+   "B": "SERVED",
+   "composition": "REGISTERED_DECOMPOSITION",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "C'",
+    "N"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "C'",
+    "N"
+   ],
+   "ref": [
+    "A'",
+    "B'",
+    "C'"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "C'",
+    "N"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C'"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "C'",
+    "N"
+   ],
+   "ref": [
+    "A'",
+    "B",
+    "C"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F2",
+   "contains": [
+    "C'",
+    "N"
+   ],
+   "ref": [
+    "A",
+    "A'"
+   ],
+   "B": "SERVED",
+   "composition": "REGISTERED_DECOMPOSITION",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F2",
+   "contains": [
+    "C'",
+    "N"
+   ],
+   "ref": [
+    "B",
+    "B'"
+   ],
+   "B": "SERVED",
+   "composition": "REGISTERED_DECOMPOSITION",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F2",
+   "contains": [
+    "C'",
+    "N"
+   ],
+   "ref": [
+    "A'",
+    "B"
+   ],
+   "B": "SERVED",
+   "composition": "REGISTERED_DECOMPOSITION",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F2",
+   "contains": [
+    "C'",
+    "N"
+   ],
+   "ref": [
+    "B'",
+    "C"
+   ],
+   "B": "SERVED",
+   "composition": "REGISTERED_DECOMPOSITION",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "M",
+    "N"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "M",
+    "N"
+   ],
+   "ref": [
+    "A'",
+    "B'",
+    "C'"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "M",
+    "N"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "B'",
+    "A'"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "M",
+    "N"
+   ],
+   "ref": [
+    "B",
+    "C",
+    "C'",
+    "B'"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "M",
+    "N"
+   ],
+   "ref": [
+    "C",
+    "A",
+    "A'",
+    "C'"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "M",
+    "N"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C'"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "M",
+    "N"
+   ],
+   "ref": [
+    "A'",
+    "B",
+    "C"
+   ],
+   "B": "SERVED",
+   "composition": "GENUINE_SEARCH_GENERATED",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F2",
+   "contains": [
+    "M",
+    "N"
+   ],
+   "ref": [
+    "A",
+    "B"
+   ],
+   "B": "SERVED",
+   "composition": "REGISTERED_DECOMPOSITION",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F2",
+   "contains": [
+    "M",
+    "N"
+   ],
+   "ref": [
+    "A",
+    "A'"
+   ],
+   "B": "SERVED",
+   "composition": "REGISTERED_DECOMPOSITION",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F2",
+   "contains": [
+    "M",
+    "N"
+   ],
+   "ref": [
+    "B",
+    "B'"
+   ],
+   "B": "SERVED",
+   "composition": "REGISTERED_DECOMPOSITION",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F2",
+   "contains": [
+    "M",
+    "N"
+   ],
+   "ref": [
+    "A'",
+    "B"
+   ],
+   "B": "SERVED",
+   "composition": "REGISTERED_DECOMPOSITION",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F2",
+   "contains": [
+    "M",
+    "N"
+   ],
+   "ref": [
+    "A",
+    "C'"
+   ],
+   "B": "SERVED",
+   "composition": "REGISTERED_DECOMPOSITION",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F2",
+   "contains": [
+    "M",
+    "N"
+   ],
+   "ref": [
+    "B'",
+    "C"
+   ],
+   "B": "SERVED",
+   "composition": "REGISTERED_DECOMPOSITION",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F3",
+   "contains": [
+    "A",
+    "C",
+    "B'"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "B'",
+    "A'"
+   ],
+   "B": "SERVED",
+   "composition": "VERIFICATION_WITNESS_ONLY",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F3",
+   "contains": [
+    "A",
+    "C",
+    "N"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "B'",
+    "A'"
+   ],
+   "B": "SERVED",
+   "composition": "VERIFICATION_WITNESS_ONLY",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F3",
+   "contains": [
+    "A",
+    "A'",
+    "M"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C"
+   ],
+   "B": "SERVED",
+   "composition": "VERIFICATION_WITNESS_ONLY",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F3",
+   "contains": [
+    "B",
+    "A'",
+    "C'"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "B'",
+    "A'"
+   ],
+   "B": "SERVED",
+   "composition": "VERIFICATION_WITNESS_ONLY",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F3",
+   "contains": [
+    "C",
+    "C'",
+    "N"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C"
+   ],
+   "B": "SERVED",
+   "composition": "VERIFICATION_WITNESS_ONLY",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F3",
+   "contains": [
+    "A'",
+    "C'",
+    "M"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "B'",
+    "A'"
+   ],
+   "B": "SERVED",
+   "composition": "VERIFICATION_WITNESS_ONLY",
+   "C": "UNSUPPORTED_CAPABILITY",
+   "D": "PLAN_TOO_LARGE"
+  }
+ ]
+}

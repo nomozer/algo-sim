@@ -469,6 +469,26 @@
    "category": "METADATA",
    "note": "container; fields classified above",
    "annotation": "tuple[app.simulation.geometry_functions.typed_fact_next.DescribedPointSpec, ...]"
+  },
+  "DerivedPlaneSectionSpecV2.constraints": {
+   "category": "METADATA",
+   "note": "C17: the stated relations of a constrained plane (container of PlaneConstraintSpec)"
+  },
+  "PlaneConstraintSpec.kind": {
+   "category": "METADATA",
+   "note": "C17: closed relation kind (contains_points | parallel_to_line | perpendicular_to_plane)"
+  },
+  "PlaneConstraintSpec.operands": {
+   "category": "VERTEX_REF",
+   "owner": "section target_solid_id (constrained plane)",
+   "rules": [
+    "S5",
+    "S7",
+    "S8"
+   ],
+   "entry_points": "adapter4, planner route v2, bridge v2",
+   "positive_test": "test_constraint_plane_scope_controls_serve",
+   "negative_test": "test_constraint_plane_scope_violations_refuse"
   }
  }
 }
