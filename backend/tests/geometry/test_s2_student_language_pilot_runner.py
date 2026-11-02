@@ -339,8 +339,11 @@ def test_c15_the_registered_r1_corpus_and_its_gold_replay_are_locked(tmp_path):
     assert receipt[0]["corpus_sha256"] == hashlib.sha256(corpus.read_bytes().replace(b"\r\n", b"\n")).hexdigest()
     assert {r["case_id"]: r["composition_label"] for r in out["rows"]} == {
         r["case_id"]: r["composition_label"] for r in receipt if r["type"] == "row"}
-    assert out["supplementary"] == receipt[-1]["supplementary"]
+    sup = dict(out["supplementary"])
+    outcomes = sup.pop("hybrid_outcomes")                    # C19: a new field the C16 receipt predates
+    assert sup == receipt[-1]["supplementary"]
     assert out["score"]["metrics"]["wrong_served_end_to_end"]["numerator"] == 0
+    assert (outcomes["SERVED_CORRECT"], outcomes["FALSE_REFUSAL"], outcomes["SERVED_WRONG"]) == (11, 2, 0)
 
 
 def test_c15_the_models_own_described_points_are_checked_against_gold():
@@ -576,3 +579,124 @@ def test_r1_project_ignores_openapi_nullable_none_fields_and_outer_whitespace_on
         }],
     }
     assert R.project(nullable) == R.project(gold)
+
+
+# ── C19: K-1 (constraint planes, points named by a property) and the Hybrid-only outcome taxonomy ────────────────────
+
+K1 = CORPUS.parent / "k1-live-pilot-corpus.json"
+
+
+def _k1(cid):
+    return next(c for c in json.loads(K1.read_text(encoding="utf-8"))["cases"] if c["id"] == cid)
+
+
+def _k1_live(tmp_path, monkeypatch, provider, cases, **terms):
+    corpus = _write_study(tmp_path, "K-1", cases)
+    monkeypatch.setenv("ALLOW_LIVE_AI", "1")
+    monkeypatch.setenv("GEMINI_API_KEY", "offline-test-key-never-sent")
+    monkeypatch.setattr(httpx, "post", provider)
+    return R.evaluate(corpus, tmp_path / "live.jsonl", _terms(corpus, pilot="K-1", max_requests=16, max_usd=1.0, **terms),
+                      sleep=lambda s: None)
+
+
+def test_c19_the_k1_gold_replay_is_the_locked_attribution_baseline(tmp_path, monkeypatch):
+    monkeypatch.setattr(httpx, "post", lambda *a, **k: pytest.fail("a dry run sent a provider request"))
+    out = R.evaluate(K1, tmp_path / "dry.jsonl", None)
+    assert out["completed"] and out["cases_run"] == 16 and out["http_requests"] == 0 and out["cases_not_measured"] == 0
+    sup = out["supplementary"]
+    assert (sup["end_to_end_correct"]["numerator"], sup["end_to_end_correct"]["denominator"]) == (16, 16)
+    assert sup["hybrid_outcomes"] == {"SERVED_CORRECT": 10, "SERVED_WRONG": 0, "CORRECT_REFUSAL": 4, "FALSE_REFUSAL": 0,
+                                      "WRONG_REASON_REFUSAL": 0, "CORRECT_CLARIFICATION": 2, "FALSE_CLARIFICATION": 0,
+                                      "INFRASTRUCTURE_FAILURE": 0}
+    assert sup["constraints"]["operands_match"]["numerator"] == 6 and sup["described_points"]["kinds_match"]["numerator"] == 8
+    assert out["latency_median_s"] == "NOT_MEASURED" and out["spent_reported_usd"] == "NOT_MEASURED"   # offline: no cost
+
+
+def test_c19_constraint_check_sees_a_wrong_kind_a_wrong_operand_and_an_invented_construction():
+    gold = _k1("K-A01")["gold_extraction"]
+    text = gold["problem_text"]
+    assert R.constraint_check(gold, gold, text) == dict.fromkeys(
+        ("emitted", "kinds_match", "operands_match", "quotes_verbatim", "no_invented_construction"), True)
+    wrong = deepcopy(gold)
+    wrong["derived_sections"][0]["constraints"][1]["kind"] = "parallel_to_line"
+    assert R.constraint_check(gold, wrong, text)["kinds_match"] is False
+    other = deepcopy(gold)
+    other["derived_sections"][0]["constraints"][1]["operands"] = ["S", "B", "C"]
+    c = R.constraint_check(gold, other, text)
+    assert c["kinds_match"] and c["operands_match"] is False
+    built = deepcopy(gold)                                    # the model writes a foot the source never states
+    built["described_points"] = [{"described_id": "h9", "kind": "orthogonal_projection", "quote": "A", "point": "A",
+                                  "plane": ["S", "C", "D"]}]
+    assert R.constraint_check(gold, built, text)["no_invented_construction"] is False
+    assert R.constraint_check(gold, None, text)["emitted"] is False
+    assert R.constraint_check(_k1("K-C01")["gold_extraction"], gold, text) is None       # no constrained plane in gold
+
+
+@pytest.mark.parametrize("exp,obs,e2e,tech,want", [
+    ("SERVED", "SERVED", True, False, "SERVED_CORRECT"),
+    ("SERVED", "SERVED", False, False, "SERVED_WRONG"),        # e.g. a dropped goal: answers ≠ expected
+    ("SERVED", "REFUSED", False, False, "FALSE_REFUSAL"),
+    ("SERVED", "CLARIFY", False, False, "FALSE_CLARIFICATION"),
+    ("REFUSED_INCONSISTENT", "REFUSED", True, False, "CORRECT_REFUSAL"),
+    ("REFUSED_INCONSISTENT", "REFUSED", False, False, "WRONG_REASON_REFUSAL"),
+    ("REFUSED_INCONSISTENT", "SERVED", False, False, "SERVED_WRONG"),
+    ("CLARIFY", "CLARIFY", True, False, "CORRECT_CLARIFICATION"),
+    ("CLARIFY", "REFUSED", False, False, "WRONG_REASON_REFUSAL"),
+    ("REFUSED_UNSUPPORTED", "NOT_RECOVERABLE", None, True, "INFRASTRUCTURE_FAILURE"),   # never a correct refusal
+])
+def test_c19_hybrid_outcome_taxonomy(exp, obs, e2e, tech, want):
+    row = {"expected": {"outcome": exp}, "observed": {"status": obs}, "end_to_end_correct": e2e, "technical_failure": tech}
+    assert R.hybrid_outcome(row) == want
+
+
+def test_c19_a_dropped_goal_with_a_correct_number_is_never_served_correct(tmp_path, monkeypatch):
+    case = _k1("K-C01")
+    two = deepcopy(case)                                       # the protocol asks two quantities; the model keeps one
+    two["expected"]["oracle"] = {"distance": ["1", "√6/2"]}
+    out = _k1_live(tmp_path, monkeypatch, Provider(_body(case["gold_extraction"])), [two])
+    assert out["rows"][0]["hybrid_outcome"] == "SERVED_WRONG"
+    assert out["score"]["metrics"]["wrong_served_end_to_end"]["numerator"] == 1
+
+
+def test_c19_mock_live_a_model_that_drops_a_constraint_is_an_extraction_failure_never_a_serve(tmp_path, monkeypatch):
+    case = _k1("K-A01")
+    bad = deepcopy(case["gold_extraction"])
+    bad["derived_sections"][0]["constraints"] = bad["derived_sections"][0]["constraints"][:1]   # "⊥ (SCD)" lost
+    out = _k1_live(tmp_path, monkeypatch, Provider(_body(bad)), [case])
+    row = out["rows"][0]
+    assert row["observed"]["status"] != "SERVED" and row["hybrid_outcome"] == "FALSE_REFUSAL"
+    assert row["attribution"] == "LLM_EXTRACTION_DIFFERS_FROM_GOLD" and row["constraint_check"]["kinds_match"] is False
+    assert out["http_requests"] == 1 and isinstance(row["usd"], float)
+
+
+def test_c19_mock_live_a_model_that_calls_the_orthocenter_a_circumcenter_is_never_served(tmp_path, monkeypatch):
+    case = _k1("K-C01")
+    bad = deepcopy(case["gold_extraction"])
+    bad["described_points"][0]["kind"] = "circumcenter"
+    out = _k1_live(tmp_path, monkeypatch, Provider(_body(bad)), [case])
+    row = out["rows"][0]
+    assert row["observed"]["status"] != "SERVED" and row["described_check"]["kinds_match"] is False
+    assert row["attribution"] == "LLM_EXTRACTION_DIFFERS_FROM_GOLD"
+
+
+def test_c19_an_unrun_case_is_not_measured_never_zero(tmp_path, monkeypatch):
+    cases = [_k1(c) for c in ("K-A01", "K-A02", "K-A03", "K-A04")]
+    out = _k1_live(tmp_path, monkeypatch, Provider(default=400), cases)
+    assert out["stop_reason"] == "INFRASTRUCTURE_STREAK" and out["cases_not_measured"] == 1
+    assert out["supplementary"]["hybrid_outcomes"]["INFRASTRUCTURE_FAILURE"] == 3
+    assert out["supplementary"]["hybrid_outcomes"]["CORRECT_REFUSAL"] == 0
+
+
+def test_c19_an_h1_corpus_is_refused_live_unless_the_owner_attests_an_independent_author(tmp_path):
+    case = dict(_k1("K-A01"), stratum="H-SECTION")
+    for authoring, ok in ((None, False), ({"author": "implementer (agent)", "independent_of_implementer": True}, False),
+                          ({"author": "X", "independent_of_implementer": True, "independence_attested_by": "OWNER"}, True)):
+        path = tmp_path / f"h1-{ok}-{authoring is None}.json"
+        body = {"study": "H-1", "cases": [case], **({"authoring": authoring} if authoring else {})}
+        path.write_text(json.dumps(body, ensure_ascii=False), encoding="utf-8")
+        terms = _terms(path, pilot="H-1", max_requests=1, max_usd=1.0)
+        if ok:
+            assert R.check_approval_terms(path.read_bytes(), terms)["pilot"] == "H-1"
+        else:
+            with pytest.raises(R.LiveRefused, match="Owner-attested"):
+                R.check_approval_terms(path.read_bytes(), terms)

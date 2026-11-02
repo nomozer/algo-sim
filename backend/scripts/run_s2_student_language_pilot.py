@@ -43,8 +43,18 @@ STRATA = ("S2-A", "S2-B", "S2-C", "S2-D", "S2-E", "S2-F")
 #: C15: one runner, several pre-registered studies — each with its own closed strata and case cap (= request cap). A
 #: corpus names its study; none ⇒ S-2, so the locked S-2 corpus is byte-identical. An approval binds exactly one study.
 STUDIES = {"S-2": (STRATA, MAX_CASES),
-           "R-1": (("R1-A", "R1-B", "R1-C", "R1-D", "R1-E", "R1-F", "R1-G"), 18)}   # unnamed described points (C14)
-OUTCOMES = ("SERVED", "CLARIFY", "REFUSED_UNSUPPORTED", "REFUSED_INCONSISTENT")
+           "R-1": (("R1-A", "R1-B", "R1-C", "R1-D", "R1-E", "R1-F", "R1-G"), 18),   # unnamed described points (C14)
+           # C19: what C17/C18 opened — planes given by constraints, points named by a property (orthocenter, circumcenter)
+           "K-1": (("K-A", "K-B", "K-C", "K-D", "K-E"), 16),
+           # C19 `hybrid-only-independent-evaluation/1`: the held-out benchmark groups; live needs Owner-attested authorship
+           "H-1": (("H-POLY", "H-CURVED", "H-COMPOSITE", "H-SECTION", "H-DESCRIBED", "H-CONSTRAINT", "H-DEFINITION",
+                    "H-MULTI", "H-MISSING", "H-CONTRA", "H-AMBIG", "H-OUT", "H-NONUNIQUE"), 60)}
+#: C19: end-to-end outcome of one row, Hybrid-only taxonomy (`hybrid-only-independent-evaluation-protocol.md` §4).
+HYBRID_OUTCOMES = ("SERVED_CORRECT", "SERVED_WRONG", "CORRECT_REFUSAL", "FALSE_REFUSAL", "WRONG_REASON_REFUSAL",
+                   "CORRECT_CLARIFICATION", "FALSE_CLARIFICATION", "INFRASTRUCTURE_FAILURE")
+#: C19: REFUSED_UNDERDETERMINED — refused because the stated givens fix no unique object (refusal group MISSING_DATA), e.g. a
+#: plane the stated constraints leave free; only the engine can see it, so no model clarification is expected.
+OUTCOMES = ("SERVED", "CLARIFY", "REFUSED_UNSUPPORTED", "REFUSED_INCONSISTENT", "REFUSED_UNDERDETERMINED")
 #: `route-d-clarification/1` closed `nlu_class` vocabulary (server-built, never model prose) = the clarification code.
 CLARIFICATION_CODES = ("AMBIGUOUS", "MISSING_DATA", "UNRECOGNIZED_WORDING")
 #: Keys whose values are identifiers or source text, never facts: dropped before comparison.
@@ -288,6 +298,8 @@ def end_to_end_correct(expected: dict[str, Any], observed: dict[str, Any]) -> bo
         return status == "CLARIFY" and observed.get("clarification_code") in expected["allowed_clarification_codes"]
     if outcome == "REFUSED_UNSUPPORTED":
         return status == "REFUSED" and bool(observed.get("is_unsupported_code"))
+    if outcome == "REFUSED_UNDERDETERMINED":
+        return status == "REFUSED" and observed.get("refusal_group") == "MISSING_DATA"
     # REFUSED_INCONSISTENT: refused BECAUSE the givens contradict (the paired harness's CONTRADICTORY_DATA rule) — a
     # refusal for an unread quote or a failed extraction is the right status for the wrong reason
     return status == "REFUSED" and observed.get("refusal_group") == "INVALID_DATA"
@@ -402,6 +414,50 @@ def described_check(gold: Any, raw: Any, text: str) -> dict[str, bool] | None:
                                                  and d["quote"] in text for d in got)}
 
 
+def _constrained(payload: Any) -> list[tuple[str, tuple[str, ...]]]:
+    if not isinstance(payload, dict):
+        return []
+    return sorted((str(c.get("kind")), tuple(sorted(str(x).split("::")[-1].strip() for x in c.get("operands") or ())))
+                  for s in payload.get("derived_sections") or () if isinstance(s, dict) and s.get("plane_kind") == "constrained"
+                  for c in s.get("constraints") or () if isinstance(c, dict))
+
+
+def constraint_check(gold: Any, raw: Any, text: str) -> dict[str, bool] | None:
+    """C19 K-1: the model's OWN plane constraints against the gold's, fixed before any live run. `None` where the gold
+    states no constrained plane. A plane named by another correct triple of labels counts as different (lower bound).
+    `no_invented_construction`: no described point and no section beyond the gold's — a foot, a translate or a witness the
+    source never states is a construction the model must not write."""
+    want = _constrained(gold)
+    if not want:
+        return None
+    got = _constrained(raw)
+    sections = [s for s in (raw.get("derived_sections") or []) if isinstance(s, dict)] if isinstance(raw, dict) else []
+    return {"emitted": bool(got),
+            "kinds_match": sorted(k for k, _ in got) == sorted(k for k, _ in want),
+            "operands_match": got == want,
+            "quotes_verbatim": bool(sections) and all(isinstance(s.get("quote"), str) and s["quote"].strip()
+                                                      and s["quote"] in text for s in sections),
+            "no_invented_construction": isinstance(raw, dict)
+            and len(raw.get("described_points") or []) <= len((gold or {}).get("described_points") or [])
+            and len(sections) <= len((gold or {}).get("derived_sections") or [])}
+
+
+def hybrid_outcome(row: dict[str, Any]) -> str:
+    """C19: the Hybrid-only end-to-end outcome. A technical failure is never a refusal; a serve is correct only as
+    `end_to_end_correct` says (every goal, exact answers, verified certificate); a refusal or clarification of a case the
+    protocol expects SERVED is FALSE, of a refused case for another reason WRONG_REASON."""
+    obs, exp = row["observed"].get("status"), row["expected"]["outcome"]
+    if row["technical_failure"] or row["end_to_end_correct"] is None:
+        return "INFRASTRUCTURE_FAILURE"
+    if obs == "SERVED":
+        return "SERVED_CORRECT" if row["end_to_end_correct"] else "SERVED_WRONG"
+    if exp == "SERVED":
+        return "FALSE_CLARIFICATION" if obs == "CLARIFY" else "FALSE_REFUSAL"
+    if obs == "CLARIFY":
+        return "CORRECT_CLARIFICATION" if row["end_to_end_correct"] else "FALSE_CLARIFICATION"
+    return "CORRECT_REFUSAL" if row["end_to_end_correct"] else "WRONG_REASON_REFUSAL"
+
+
 def supplementary(rows: list[dict[str, Any]], study: str = "S-2") -> dict[str, Any]:
     scored = [r for r in rows if r["end_to_end_correct"] is not None]
     serve = [r for r in scored if r["expected"]["outcome"] == "SERVED"]
@@ -413,6 +469,12 @@ def supplementary(rows: list[dict[str, Any]], study: str = "S-2") -> dict[str, A
                                         and r["search"].get("classification") != r["composition_label"]],
         "described_points": {k: _rate_or_unknown(sum(c[k] for c in checked), len(checked))
                              for k in ("emitted", "kinds_match", "refs_resolve", "quotes_verbatim")}}
+    if study not in ("S-2", "R-1"):                       # C19: constraint extraction (K-1, H-1)
+        cons = [r["constraint_check"] for r in rows if not r["technical_failure"] and r.get("constraint_check")]
+        extra["constraints"] = {k: _rate_or_unknown(sum(c[k] for c in cons), len(cons))
+                                for k in ("emitted", "kinds_match", "operands_match", "quotes_verbatim",
+                                          "no_invented_construction")}
+    extra["hybrid_outcomes"] = {k: sum(r.get("hybrid_outcome") == k for r in rows) for k in HYBRID_OUTCOMES}
     return {**extra, "note": "not a protocol §2 metric; reported beside them (Master directive §V)",
             "end_to_end_correct": _rate_or_unknown(sum(r["end_to_end_correct"] for r in scored), len(scored)),
             "gold_replay_ceiling": _rate_or_unknown(sum(bool(r["gold_replay_end_to_end_correct"]) for r in scored),
@@ -450,6 +512,11 @@ def check_approval_terms(corpus_bytes: bytes, approval: dict[str, Any]) -> dict[
     study = study_of(corpus)
     if approval["pilot"] != study:                                               # one approval, one study (C15)
         raise LiveRefused(f"approval is not for the {study} pilot")
+    if study == "H-1":                      # C19: held-out only when the Owner attests an author independent of the build
+        a = corpus.get("authoring") or {}
+        if not (isinstance(a.get("author"), str) and a["author"].strip() and a.get("independence_attested_by") == "OWNER"
+                and a.get("independent_of_implementer") is True):
+            raise LiveRefused("an H-1 corpus needs an Owner-attested author independent of the implementer")
     if approval["paid_project_confirmed"] is not True:                           # §4.3
         raise LiveRefused("the paid project / key is not confirmed")
     if approval["corpus_sha256"] != hashlib.sha256(corpus_bytes).hexdigest():   # §4.6 data scope
@@ -555,6 +622,9 @@ def evaluate(corpus_path: Path, out_path: Path, approval: dict[str, Any] | None,
             if study != "S-2":
                 row["composition_label"] = composition_label(row)
                 row["described_check"] = described_check(gold, row.get("raw_extraction"), case["problem_text"])
+            if study not in ("S-2", "R-1"):
+                row["constraint_check"] = constraint_check(gold, row.get("raw_extraction"), case["problem_text"])
+            row["hybrid_outcome"] = hybrid_outcome(row)
             rows.append(row)
             emit(row)
             spent += upper if isinstance(upper, float) else 0.0
@@ -581,6 +651,7 @@ def evaluate(corpus_path: Path, out_path: Path, approval: dict[str, Any] | None,
                "run_status": "COMPLETE" if complete else "INCOMPLETE",
                "completed": complete,
                "cases_run": len(rows), "cases_planned": len(corpus["cases"]),
+               "cases_not_measured": len(corpus["cases"]) - len(rows),        # C19: an unrun case is NOT_MEASURED, not 0
                "http_requests": budget.http_requests if budget else 0,
                "spent_upper_usd": spent if live else 0.0,
                "spent_reported_usd": ("NOT_MEASURED" if not live else "UNKNOWN"
