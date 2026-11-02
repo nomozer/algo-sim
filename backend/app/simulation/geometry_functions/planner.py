@@ -1834,7 +1834,7 @@ def _mat_rang_buoc(f: TypedFact, q: list[str], k: KeHoach, phat, khoi: str, fn: 
             nhan.append(x)
             chung.append({"label": x, "translate": cid, "vector": vec, "constraint": i, **nguon})
         d = {"rule": MAT_RANG_BUOC, "goal": f.id, "point": anchor, "contains": diem[1:], "constraints": cs, "labels": nhan,
-             "witnesses": chung, "constructs": cids, "targets": [], "solid": khoi, "plane": [anchor, *diem[1:2], *nhan, *diem[2:]],
+             "witnesses": chung, "constructs": cids, "targets": [], "solid": khoi, "plane": [anchor, *diem[1:], *nhan],
              "quotes": list(dict.fromkeys(q)), "provenance": "DERIVED", "binding": "AUXILIARY",
              "search": {"subgoals": [{"need": f"Normal({''.join(c['points'])})", "candidates": t["candidates"],
                                       "rejected": t["rejected"],

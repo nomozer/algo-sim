@@ -438,6 +438,30 @@ def run_function_route(problem_text: str, plan: Any, auxiliary: tuple[dict, ...]
     return r
 
 
+def _chung_can_thiet(planner: dict) -> None:
+    """C17: a constrained plane's search-generated witness counts as COMPOSITION only when the engine built the plane
+    through it (`span`, its exact independent triple); a witness that only re-checks a stated relation (the stated points
+    already span the plane) is `verification_witness_steps`. Recomputed here because only the engine knows the span —
+    telemetry never claims a step the built figure did not need."""
+    from app.simulation.geometry_functions.registry import MAT_RANG_BUOC
+
+    tel = planner.get("search_telemetry") or {}
+    thua = set()
+    for d in planner.get("auxiliary") or ():
+        if d.get("rule") != MAT_RANG_BUOC or "span" not in d:
+            continue
+        for w in d.get("witnesses") or ():
+            if w["label"] not in d["span"]:
+                thua |= {w["translate"]} | ({w["call"]} if w.get("call") else set())
+    thua &= set(tel.get("search_generated_steps") or ())
+    if not thua:
+        return
+    tel["search_generated_steps"] = [i for i in tel["search_generated_steps"] if i not in thua]
+    tel["verification_witness_steps"] = sorted(thua)
+    if tel.get("classification") == "DISCOVERED_FUNCTION_COMPOSITION" and not tel["search_generated_steps"]:
+        tel["classification"] = "REGISTERED_DECOMPOSITION"
+
+
 def run_fact_route(problem_text: str, facts: Any) -> KetQuaTuyen:
     """NHÁNH B (thực nghiệm, run `hybrid-compiler-selection`): dữ kiện có kiểu → planner → `run_function_route` (ĐÚNG đường
     của nhánh A từ lược đồ trở đi). Checker chỉ quan sát một cấu hình dựng từ giả thiết, không là bộ chứng minh tổng quát:
@@ -454,6 +478,8 @@ def run_fact_route(problem_text: str, facts: Any) -> KetQuaTuyen:
     r.planner = {"version": PLANNER_VERSION, "calls": k.calls, "trace": k.trace, "auxiliary": k.auxiliary,
                  "composition_classification": k.composition_classification,
                  "search_telemetry": k.search_telemetry, "goal_checks": {}, "negated_checks": {}}
+    if r.status == "SERVED":
+        _chung_can_thiet(r.planner)
     if r.status != "SERVED":
         if r.code == "UNDERDETERMINED_POINT" and (khong := _hinh_khong_duy_nhat(k, r.details.get("points") or [])):
             return KetQuaTuyen("REFUSED", "FIGURE_NOT_UNIQUE", khong, r.failed_calls, trace=r.trace,

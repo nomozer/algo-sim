@@ -603,7 +603,7 @@ def _validate_engine_derived_section(
         if (dan is None or not isinstance(tp, str) or dan.get("point") != tp or rel.get("through_point") != tp
                 or rel.get("kind") != "stated_constraints"
                 or rel.get("constraints") != [{"kind": c["kind"], "points": list(c["points"])} for c in dan["constraints"]]
-                or list(dan["plane"][:3]) != list(plane_points)):
+                or len(set(plane_points)) != 3 or not set(plane_points) <= set(dan["plane"])):
             raise PreviewInvalid("PREVIEW_RESULT_INVALID")
         for p_lbl in dan["plane"]:
             po = objects.get(ir_name(p_lbl), {})

@@ -21,6 +21,7 @@ Một điểm ngoài đáy chỉ được đặt khi CÓ lời gọi xác địn
 """
 from __future__ import annotations
 
+import itertools
 import json
 import re
 import unicodedata
@@ -1101,8 +1102,17 @@ class _Dung:
                 raise TuChoi("SOURCE_OBJECT_MISMATCH", f"({''.join(g)}) không phải một mặt phẳng của hình — "
                              "không đọc nó thành mặt ba nhãn")
 
+    def _ba_diem(self, labels) -> list[str]:
+        """The first three labels of a coplanar list that are NOT collinear (exact; C17): the plane they all lie on. The
+        first three when they already span it — every plane served before C17 — else the first independent triple."""
+        for i, j, k in itertools.combinations(range(len(labels)), 3):
+            u, v = self._vec(labels[i], labels[j]), self._vec(labels[i], labels[k])
+            if (u[1] * v[2] - u[2] * v[1], u[2] * v[0] - u[0] * v[2], u[0] * v[1] - u[1] * v[0]) != (0, 0, 0):
+                return [labels[i], labels[j], labels[k]]
+        return list(labels[:3])                            # all collinear: the kernel reports it
+
     def _plane(self, labels) -> Plane3:
-        plane = Plane3.through(*(Vec3(*self.pts[p]) for p in labels[:3]))
+        plane = Plane3.through(*(Vec3(*self.pts[p]) for p in self._ba_diem(labels)))
         if any(plane.signed_eval(Vec3(*self.pts[p])) != 0 for p in labels[3:]):
             raise GeometryError("NON_COPLANAR_POINTS", "các điểm không cùng nằm trong một mặt phẳng")
         return plane
@@ -2627,8 +2637,10 @@ class _Dung:
             dau = [mat.signed_eval(Vec3(*self.pts[v])) for v in dinh]
             if sum(x == 0 for x in dau) >= 3 and not ({x > 0 for x in dau if x != 0} == {True, False}):
                 raise TuChoi("SECTION_PLANE_IS_FACE", f"{c.id}: mặt dẫn xuất chứa một mặt biên của {k.name}", ids)
+        d["span"] = self._ba_diem(d["plane"])           # the independent triple the plane is built through (C17)
         self.trace.append({"step": "construct_plane", "object": f"({d.get('plane_name') or 'α'})", "rule": d["rule"],
-                           "calls": list(d["constructs"]), "dependencies": list(d["plane"]), "relation_verified": True,
+                           "calls": list(d["constructs"]), "dependencies": list(d["plane"]), "span": list(d["span"]),
+                           "relation_verified": True,
                            "existence": "VERIFIED", "uniqueness": "VERIFIED",
                            "provenance": "DERIVED", "binding": "AUXILIARY"})
 
@@ -2706,7 +2718,7 @@ class _Dung:
             nhan_mat = (f"({self.ten_mat_phu.get(dan['constructs'][0]) or 'α'})" if dan
                         else "(" + "".join(c.args.plane) + ")")
             khoi_id = "khoi_" + ir_name(c.args.solid.replace(".", "_"))
-            lenh.append({"kind": "construct_plane", "target_var": mp, "through": [ir_name(x) for x in c.args.plane[:3]],
+            lenh.append({"kind": "construct_plane", "target_var": mp, "through": [ir_name(x) for x in self._ba_diem(c.args.plane)],
                          "label": nhan_mat})
             lenh.append({"kind": "construct_section", "target_var": ten, "solid": khoi_id,
                          "plane": mp, "label": "thiết diện"})
@@ -2818,7 +2830,7 @@ class _Dung:
                 for f in faces_idx for i in range(len(f))
             }
             with _metric.using(G):
-                mp = self._plane(rec["plane"][:3])
+                mp = self._plane(rec["plane"])              # C17: its independent triple, every point checked on it
                 try:
                     cs = cross_section(Polyhedron(tuple(Vec3(*self.pts[p]) for p in dinh), faces_idx), mp)
                 except GeometryError as e:
@@ -2959,7 +2971,7 @@ class _Dung:
                 "solid": rec["solid"],
                 "solid_object_id": rec["solid_object_id"],
                 "plane_object_id": rec["plane_object_id"],
-                "plane_points": list(rec["plane"][:3]),
+                "plane_points": self._ba_diem(rec["plane"]),
                 "plane_label": rec["plane_label"],
                 "plane_rule": luat_mat,
                 "plane_relation": quan_he,

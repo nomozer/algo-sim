@@ -5125,7 +5125,8 @@ def _kiem_mat_vuong_duong(d, p, xs, chan, duong, moc, dung, dich, qs, ids, de, n
 #: C17 closed grammar of a plane the source defines by relations, named "(P)": it contains two points (or the line through
 #: them) and is ⊥ a plane, or ∥ a line. Any other wording is refused, never guessed.
 _RB_DAU = (rf"(?:(?:mặt phẳng|mp)\s*)?\((?P<ten>{_P1}|[α-ω]'?)\)\s*(?:là\s+mặt phẳng\s+)?(?:(?:đi\s+)?qua|chứa)\s+"
-           rf"(?:(?:hai\s+điểm|đường thẳng|đoạn thẳng|cạnh)\s+)?(?P<p1>{_P1})\s*(?:,\s*|\s+và\s+)?(?P<p2>{_P1})(?![\w'])"
+           rf"(?:(?:hai\s+điểm|ba\s+điểm|đường thẳng|đoạn thẳng|cạnh)\s+)?(?P<p1>{_P1})\s*(?:,\s*|\s+và\s+)?(?P<p2>{_P1})(?![\w'])"
+           rf"(?:\s*(?:,\s*|\s+và\s+)(?P<p3>{_P1})(?![\w']))?"
            rf"\s*,?\s*(?:(?:và(?:\s+đồng\s+thời)?|đồng\s+thời)\s+)?")
 _RB_VUONG_MAT = re.compile(_RB_DAU + rf"vuông góc\s+(?:với\s+)?(?:(?:mặt phẳng|mp|mặt đáy|mặt bên)\s*)?"
                            rf"\((?P<q>{_NHOM_NHAN})\)", re.IGNORECASE)
@@ -5139,7 +5140,8 @@ def _rang_buoc_nguon(de: str) -> list[tuple[str, frozenset, tuple[int, int]]]:
     for mau, kind in ((_RB_VUONG_MAT, "perpendicular_to_plane"), (_RB_SONG_SONG_DUONG, "parallel_to_line")):
         for m in mau.finditer(de):
             ref = frozenset(_nhan_cum(m["q"])) if kind == "perpendicular_to_plane" else frozenset((m["a"], m["b"]))
-            out.append((m["ten"], frozenset({("contains_points", frozenset((m["p1"], m["p2"]))), (kind, ref)}), m.span()))
+            diem = frozenset(x for x in (m["p1"], m["p2"], m["p3"]) if x)
+            out.append((m["ten"], frozenset({("contains_points", diem), (kind, ref)}), m.span()))
     return out
 
 
@@ -5208,7 +5210,7 @@ def _kiem_mat_rang_buoc(d: dict, theo_id: dict, de: str, nhan: set[str], chiem: 
                     or h.args.image != w.get("foot") or list(w["vector"]) != [w.get("foot"), w.get("point")]
                     or h.quotes != qs or w.get("call") not in dung):
                 raise sai("pháp tuyến không do một hàm có hợp đồng Normal dựng")
-    mat = [p, *diem[1:2], *(w["label"] for w in chung), *diem[2:]]
+    mat = [p, *diem[1:], *(w["label"] for w in chung)]
     if list(d.get("plane") or ()) != mat or {w["translate"] for w in chung} | {w["call"] for w in chung if w.get("call")} != set(dung):
         raise sai("lời gọi không khớp các điểm chứng")
     doc: list[tuple[int, int]] = [khop[0]]              # spans this certificate READS: definition, section phrase, ask
