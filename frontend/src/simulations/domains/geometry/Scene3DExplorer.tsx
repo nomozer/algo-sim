@@ -240,7 +240,8 @@ export function Scene3DExplorer({
   const coPhanTichToan = phanTich.requestedResults.length
     + phanTich.derivedMeasurements.length
     + phanTich.givenDimensions.length
-    + phanTich.certificates.length > 0;
+    + phanTich.certificates.length
+    + (hybrid?.observations.length ?? 0) > 0;
   const [moc, setMoc] = useState<SeenMarks>(CHUA_THAY);
   const [baoDongBo, setBaoDongBo] = useState(false);
   /* W4 (H-W2-3): các BẢNG THÔNG TIN đang mở — mỗi bảng độc lập (mở cái này không đóng cái kia); chỉ giữ TÊN bảng,
@@ -327,6 +328,7 @@ export function Scene3DExplorer({
     [day, buocHien],
   );
   const cayBuoc = useMemo(() => treeAt(cay, coMat), [cay, coMat]);
+  const quanSat = hybridTaiBuoc(hybrid, day, buocHien).observations;
   // Chọn trên hình (hay ở bảng khác) ⇒ nhóm chứa vật ấy mở, mục của nó hiện ra trong cây.
   useEffect(() => {
     const k = groupKeysOf(cayBuoc, tt.selected_id);
@@ -600,14 +602,6 @@ export function Scene3DExplorer({
               Tỉ lệ dựng: {day.length_unit.display_scale}
             </span>
           )}
-          {/* F4 — chỉ từ view ĐÃ KIỂM (`hybrid-preview-adapter`), và theo timeline: quan sát từ bước neo (hình dựng xong) —
-              không kết luận nào đứng trước bước chống đỡ nó. Giao diện học sinh không hiện thẻ Đáp số hay nút mở đáp án (P1). */}
-          {hybridTaiBuoc(hybrid, day, buocHien).observations
-            .map((o) => (
-              <span key={`${o.group}:${o.check_id}`} className="geo3d-noi-nut" role="note" data-route-d-observation="">
-                {cauQuanSat(o)}
-              </span>
-            ))}
         </div>
 
         {/* Ô SOI — chỉ khi có vật đang chọn. W4: bảng nổi như mọi bảng thông tin — chọn vật không dành cột, không
@@ -819,6 +813,18 @@ export function Scene3DExplorer({
                   </ul>
                 </section>
               ))}
+              {/* F4 — kết quả kiểm MỤC TIÊU của đề (vd «chứng minh SA ⊥ (ABC)») là kết luận học sinh phải tự đi tới: chỉ ở
+                  Chế độ B, không trên sân khấu. Vẫn theo timeline — từ bước neo (hình dựng xong), không trước bước chống đỡ nó. */}
+              {quanSat.length > 0 && (
+                <section aria-label="Kiểm tra trên hình đã dựng">
+                  <h5 className="geo3d-dai-luong-muc">Kiểm tra trên hình đã dựng</h5>
+                  <ul className="geo3d-dai-luong-ds">
+                    {quanSat.map((o) => (
+                      <li key={`${o.group}:${o.check_id}`} role="note" data-route-d-observation="">{cauQuanSat(o)}</li>
+                    ))}
+                  </ul>
+                </section>
+              )}
             </div>
           </BangNoi>
         )}

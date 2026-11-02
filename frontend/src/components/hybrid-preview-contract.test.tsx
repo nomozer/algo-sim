@@ -422,6 +422,30 @@ describe("Hybrid Preview Contract v2 — 41 fixtures & F1–F6", () => {
       expect(html).not.toMatch(CHUNG_MINH);
     });
 
+    it("quan sát MỤC TIÊU chỉ sống trong bảng Chế độ B («Phân tích toán học»), không trên sân khấu Chế độ A ở bất kỳ bước nào", () => {
+      const src = readFileSync(
+        join(__dirname, "..", "simulations", "domains", "geometry", "Scene3DExplorer.tsx"), "utf8",
+      );
+      const batDau = src.indexOf('{moBang.has("phan-tich") && (');
+      const ketThuc = src.indexOf('{moBang.has("thanh-phan") && (');
+      expect(batDau).toBeGreaterThan(0);
+      expect(ketThuc).toBeGreaterThan(batDau);
+      const trongB = src.slice(batDau, ketThuc);
+      const ngoaiB = src.slice(0, batDau) + src.slice(ketThuc);
+      expect(trongB).toContain("data-route-d-observation");
+      expect(trongB).toContain("cauQuanSat(o)");
+      expect(ngoaiB).not.toContain("data-route-d-observation");
+      expect(ngoaiB).not.toContain("cauQuanSat(");
+      // Nút mở Chế độ B có mặt khi cảnh chỉ có quan sát (không đáp số) — không giấu mất kết quả kiểm.
+      expect(src).toContain("(hybrid?.observations.length ?? 0) > 0");
+      const r = docPhanHoiHybrid(loadFixture(H07).response);
+      if (!r.ok) throw new Error(r.reason);
+      const html = renderToString(
+        <Scene3DExplorer scene={r.envelope.scene3d as Scene3D} hybrid={hybridViewCua(r.envelope)} />,
+      ).replace(/<!--.*?-->/g, "");
+      expect(html).toContain('data-mo-bang="phan-tich"');
+    });
+
     it("wrapper hỏng có phần tử scene null bị từ chối thay vì ném lỗi", () => {
       const raw = clone(loadFixture(H07).response) as any;
       raw.envelope.scene3d.objects = [null];
