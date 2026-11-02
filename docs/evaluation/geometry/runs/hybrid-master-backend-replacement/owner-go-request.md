@@ -510,3 +510,55 @@ $s = $s.Replace('"owner_decision": "PENDING_OWNER_DECISION"', '"owner_decision":
 | 5 | Constraint / new-kind extraction pilot | authorize issuing its approval template (16 requests, USD 1.0 proposed), or defer |
 | 6 | S-1, D1/D2, P-1..P-3; named "Gọi H là trực tâm …" | `DEFERRED_PENDING_EVIDENCE` |
 | 7 | Integration and cleanup | merge / push: `INTEGRATION_PENDING_OWNER_GO`. The leftover `.superpowers\worktrees\hm-t3-7e9e479d` (unregistered, no `.git`, no junction; only tracked copies and regenerable `frontend/dist`, `.vite-cache`, `__pycache__`, test screenshots) was re-verified and the tool again refused recursive deletion. Owner command if wanted: `Remove-Item -Recurse -Force D:\Documents\projects\algo-sim\.superpowers\worktrees\hm-t3-7e9e479d` |
+
+## Addendum — nineteenth continuation (Hybrid-first evaluation framework; no product change), 2026-11-02. It supersedes the commands of the eighteenth addendum.
+
+Still `0` live calls and `USD 0`; no approval file exists. The candidate is unchanged: `15d236eb` (product `51ba6135`,
+118 files `3711d4ee…`, Full T3 `full-t3-15d236eb.json`). The eighteenth-addendum blobs `4dd2bcfd…` / `c6ad2dc3…` no
+longer bind: the runner they hash changed (`e3d3b2ec…`).
+
+**What changed (scripts, tests, docs only):** the one pilot runner gained study `K-1` (constraint planes and points named
+by a property, 16 cases, gold 16/16), study `H-1` (`hybrid-only-independent-evaluation-protocol.md`), a Hybrid-only
+outcome per row, and a right-reason check (a refusal or clarification counts only for the gold's reason). Independent
+review: round 3 `READY`. Report: `hybrid-first-evaluation-c19.md`.
+
+**Gold ceilings (offline; extraction = gold, NOT Gemini's accuracy):** S-2 35/36, R-1 16/18, K-1 16/16; 0 wrong-served.
+The 3 misses are the Source Gate (S2-F-S07 tone typo under S-1; R1-G01 "đường thẳng đi qua A và trung điểm của SC" and
+R1-G02 "điểm chính giữa cạnh SB" outside the closed wording grammar).
+
+**Owner commands** (blob-keyed; each template passed `check_approval_terms` in memory with a non-approval value; no file
+written). Terms: S-2 36 requests / USD 2.0; R-1 18 / USD 1.0; **K-1 16 / USD 1.0** (one request per case, no retry
+headroom; worst-case estimate USD 0.39); prices 0.30 / 2.50 USD per million tokens; model `gemini-2.5-flash`; runner
+`e3d3b2ec…`, paired harness `2ac9577f…`, scorer `8c330bd4…`.
+
+```powershell
+cd D:\Documents\projects\algo-sim\.superpowers\worktrees\hybrid-master-backend-replacement
+$d = 'APPROVED_BY_USER'
+$run = 'docs\evaluation\geometry\runs\hybrid-master-backend-replacement'
+# choose ONE pair: S-2 → 's2', '05f2a5463d0ab63964cde93f05a8c377b70f0411' ; R-1 → 'r1', '71792f77918ab6cd1dec3164cd07813ea55fb986' ; K-1 → 'k1', 'a6ccbf2e572489ce845582a2968adb7b97647c31'
+$name = 's2'; $blob = '05f2a5463d0ab63964cde93f05a8c377b70f0411'
+$t = "$run\$name-owner-approval.template.json"
+$o = "$run\$name-owner-approval.json"
+if ((git hash-object $t) -ne $blob) { throw 'template changed: do not approve' }
+if (Test-Path $o) { throw 'approval file already exists' }
+$s = [IO.File]::ReadAllText((Resolve-Path $t))
+if ([regex]::Matches($s, '"owner_decision": "PENDING_OWNER_DECISION"').Count -ne 1 -or [regex]::Matches($s, '"paid_project_confirmed": false').Count -ne 1) { throw 'unexpected template' }
+$s = $s.Replace('"owner_decision": "PENDING_OWNER_DECISION"', '"owner_decision": "' + $d + '"').Replace('"paid_project_confirmed": false', '"paid_project_confirmed": true')
+[IO.File]::WriteAllText((Join-Path (Get-Location) $o), $s, (New-Object Text.UTF8Encoding $false))
+```
+
+Then run (ALLOW_LIVE_AI=1 and GEMINI_API_KEY in the environment):
+`cd backend; .venv\Scripts\python.exe scripts\run_s2_student_language_pilot.py --corpus ..\<run>\<corpus>.json --out ..\<run>\<name>-live.jsonl --live --approval-file ..\<run>\<name>-owner-approval.json`
+
+**All Owner decisions:**
+
+| # | decision | options |
+|---|---|---|
+| 1 | S-2 live | run the command with `s2`, or defer |
+| 2 | R-1 live | run the command with `r1`, or defer |
+| 3 | **K-1 live** (new) | run the command with `k1`, or defer. It measures whether Gemini emits constraints and the two new point kinds from Vietnamese |
+| 4 | **H-1 independent evaluation** (new) | name an author independent of the implementer; the author writes the corpus, oracle and expected outcomes (13 strata), confirms the golds; the Owner attests and approves its hash. The paired 60-problem protocol becomes `OPTIONAL_LEGACY_MIGRATION_COMPARISON` |
+| 5 | Discovery claim | close as "necessary composition by definition regression; genuine discovery not established", or authorize a new design slice |
+| 6 | Source Gate wording (R1-G01/G02) | add the two closed wordings (product change: new candidate, review, T3; templates re-issued; R-1 becomes development data for it), or keep them as declared limits |
+| 7 | S-1 (diacritics), D1/D2, P-1..P-3, named "Gọi H là trực tâm …" | `DEFERRED_PENDING_EVIDENCE` |
+| 8 | Integration and cleanup | merge / push: `INTEGRATION_PENDING_OWNER_GO`. `.superpowers\worktrees\hm-t3-7e9e479d` re-verified (unregistered, no `.git`, no reparse point, tracked copies and regenerable artefacts only); deletion was refused by the tool's safety classifier again. Owner command: `Remove-Item -Recurse -Force D:\Documents\projects\algo-sim\.superpowers\worktrees\hm-t3-7e9e479d` |

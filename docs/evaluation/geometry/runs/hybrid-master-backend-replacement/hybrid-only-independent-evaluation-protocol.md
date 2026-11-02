@@ -56,6 +56,8 @@ its limits? Hybrid is the target architecture. **This protocol does not compare 
   The same verdict feeds `end_to_end_correct`, `by_stratum` and `composition_label`; only the scorer's eight metrics stay
   status-only (unchanged scorer). Conservative: an equivalent but different extraction, or a clarification naming only
   half of the ambiguous wording, counts as wrong. A refusal at the domain gate (no extraction) needs only the code.
+  Every LIVE `unresolved` entry must match some gold entry, not every gold entry: any one entry already refuses the
+  whole payload (review round 3). `REASON_NOT_VERIFIED` is reported on its own line, never read as a model failure.
 - **Outcome taxonomy per row** (`hybrid_outcome`): `SERVED_CORRECT`, `SERVED_WRONG`, `CORRECT_REFUSAL`, `FALSE_REFUSAL`,
   `WRONG_REASON_REFUSAL`, `CORRECT_CLARIFICATION`, `WRONG_REASON_CLARIFICATION`, `FALSE_CLARIFICATION`,
   `REASON_NOT_VERIFIED`, `INFRASTRUCTURE_FAILURE`; unrun cases are

@@ -894,3 +894,34 @@ the eighteenth addendum.
 `PRODUCTION_NOT_READY`. Overall `HYBRID_NOT_READY`. Nothing is merged or pushed.
 
 **Next exact action:** the Owner decides the items of the eighteenth addendum (`owner-go-request.md`).
+
+## Nineteenth continuation (Owner Master Directive: Hybrid-first end-to-end validation, real-world extraction, independent evaluation), 2026-11-02: CHECKPOINT REACHED — `OFFLINE_READY_AWAITING_OWNER_GO`
+
+Offline only: `0` provider calls, `USD 0`, no approval file, no independent author. Report:
+`hybrid-first-evaluation-c19.md`. **No product change**: candidate `15d236eb` preserved (`--verify` MATCH); no new T3.
+
+| Commit | Content |
+|---|---|
+| `af3bea32` | Runner: studies `K-1`, `H-1`; `REFUSED_UNDERDETERMINED`; `constraint_check`; `hybrid_outcome`; `cases_not_measured`; K-1 corpus (from the C18 pilot, nothing re-selected); Scene3D contract audit tool |
+| `2ecde5ee` | Gold replays, audit receipt, protocol `hybrid-only-independent-evaluation/1`, K-1 template, S-2/R-1 templates re-issued |
+| `b7926eae` · `697a59ad` | Review round 1 closures (right reason; gold required in H-1; audit widened); receipts r2 |
+| `32d945f4` · `1af18bf0` | Review round 2 closures (one verdict for every rate; wording-located clarifications; `REASON_NOT_VERIFIED`); receipts r3; templates S-2 `05f2a546…`, R-1 `71792f77…`, K-1 `a6ccbf2e…` |
+
+**Findings** (`VERIFIED_OFFLINE`; gold ceilings, not model accuracy):
+- Gold replay: S-2 35/36, R-1 16/18, K-1 16/16; 0 wrong-served. The 3 misses reproduce with gold at the Source Gate
+  (S-1 tone typo; two R1-G wordings outside the closed grammar): not extraction, not planner, not kernel.
+- No `PROVEN_REACHABLE_BUT_SEARCH_MISSED` anywhere ⇒ planner not reopened; discovery stays `NOT_ESTABLISHED`.
+- Scene3D backend contract: 105 rows over 8 groups, 0 violations (envelope and route_d learner text, exact coordinates,
+  every math goal answered, verified certificates); not a browser check.
+- Per-stage latency is `UNKNOWN_NOT_INSTRUMENTED`; live latency, tokens, USD are `NOT_MEASURED`.
+
+**Review:** fresh-context, adversarial. Round 1 `NOT_READY` (2 MAJOR: wrong-reason refusals scored correct; H-1
+served-correct needed gold), round 2 `NOT_READY` (3 MAJOR: summary rates status-only; loose clarification overlap;
+no-gold switched the check off), round 3 **`READY`**.
+
+**Status:** `OFFLINE_READY_AWAITING_OWNER_GO`. Live (S-2, R-1, K-1) `NOT_MEASURED`; `INDEPENDENT_HYBRID_EVALUATION`
+`NOT_MEASURED` (no author); `INTEGRATION_NOT_READY`, `PRODUCTION_NOT_READY`; overall `HYBRID_NOT_READY`. Nothing merged
+or pushed.
+
+**Next exact action:** the Owner decides items 1–8 of the nineteenth addendum. Without a GO or an author, no further
+offline round is warranted (directive §XVI).

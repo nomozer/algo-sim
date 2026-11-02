@@ -113,6 +113,18 @@ CODE_COMMIT = 51ba6135a76e1daf761c021ce5c03de34acbae62
 CANDIDATE_COMMIT = 15d236eb
 MODEL_REQUEST_COUNT = 0
 CORRECTS = HYBRID_MASTER_C17_CONSTRAINT_WITNESS (approval templates); C11 planning_oracle MISSING_PRIMITIVE for circumcenter/orthocenter (a constant set, refuted by search: composition-oracle.json); composition-probe.json / -ablation.json / -metamorphic.json superseded by r2 (r1 used the withdrawn DISCOVERED labelling); historical receipts unchanged
+CORRECTED_BY = HYBRID_MASTER_C19_HYBRID_FIRST_EVALUATION (templates 4dd2bcfd / c6ad2dc3 no longer bind: runner e3d3b2ec; candidate unchanged)
+
+## CONTINUATION_ID = HYBRID_MASTER_C19_HYBRID_FIRST_EVALUATION
+
+REPORT = docs/evaluation/geometry/runs/hybrid-master-backend-replacement/hybrid-first-evaluation-c19.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-master-backend-replacement/
+CLASSIFICATION = OFFLINE_DETERMINISTIC_FIXTURE_TEST (no live measurement; no approval exists; no independent author) — OFFLINE_READY_AWAITING_OWNER_GO; Hybrid-only protocol hybrid-only-independent-evaluation/1 (study H-1, NOT_MEASURED); K-1 constraint/definition extraction pilot runnable (gold 16/16); gold ceilings S-2 35/36, R-1 16/18, 0 wrong-served, 3 misses reproduced at the Source Gate; Scene3D backend contract audit 105 rows 0 violations; independent review READY in round 3; no product change
+VERIFICATION = hybrid-first-evaluation-c19.md; hybrid-only-independent-evaluation-protocol.md; constraint-extraction-pilot-protocol.md (revision A); k1-live-pilot-corpus.json; k1-live-pilot-gold-replay-r3.jsonl; s2-pilot-gold-replay-c19-r3.jsonl; r1-live-pilot-gold-replay-c19-r3.jsonl; scene3d-contract-audit-r3.json; s2-owner-approval.template.json; r1-owner-approval.template.json; k1-owner-approval.template.json; owner-go-request.md (nineteenth addendum)
+CODE_COMMIT = 51ba6135a76e1daf761c021ce5c03de34acbae62
+CANDIDATE_COMMIT = 15d236eb
+MODEL_REQUEST_COUNT = 0
+CORRECTS = HYBRID_MASTER_C18_DEFINITION_COMPOSITION (approval templates); C19 receipts -c19 / -r2 superseded by r3 (scoring rules tightened by review rounds 1–2 before any live run); historical receipts unchanged
 CORRECTED_BY = NONE
 ## WAVE_ID = ALGOSIM_W4_END_TO_END_GEOMETRY_AND_PEDAGOGICAL_SIMULATION
 
