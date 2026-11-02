@@ -181,10 +181,10 @@ const STUDENT_MODE_LOG = [];
 /** Student-mode texts of the case being verified — re-checked against the values Mode B actually renders. */
 const STUDENT_TEXT = { seen: null };
 
-function assertNoAnswerStated(seen, answers) {
+function assertNoAnswerStated(seen, answers, problemText) {
   const leaks = [];
   for (const [stage, text] of Object.entries(seen)) {
-    for (const ans of answers) if (statesAnswer(text, ans)) leaks.push(`${stage}: ${ans}`);
+    for (const ans of answers) if (mentionsAnswer(text, ans, problemText)) leaks.push(`${stage}: ${ans}`);
   }
   assert(leaks.length === 0, `Requested result disclosed in student mode: ${leaks.join("; ")}`);
 }
@@ -192,6 +192,14 @@ const escapeRe = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 /** `… = <answer>` / `… bằng <answer>` / `… là <answer>` with no digit/fraction/radical continuing it — a stated result,
  *  never a step counter or a given (backend narration does say "Thể tích … bằng √3."; only rendering decides). */
 const statesAnswer = (text, ans) => new RegExp(`(?:=|bằng|là)\\s*${escapeRe(ans)}(?![\\d.,/√π⁄²³])`, "u").test(text);
+/** A value with √, π or a fraction bar never occurs as a counter, so it also counts BARE — Mode B itself renders
+ *  «Diện tích mặt cong … 9π» with no "=" when the quantity has no notation (the positive control found this). Bare
+ *  matching skips values the problem states and the «Bước n/N» counters; small integers stay "= v" only. */
+const distinctive = (ans) => /[√π/]/.test(ans);
+const bare = (ans) => new RegExp(`(?<![\\d.,/√π⁄²³])${escapeRe(ans)}(?![\\d.,/√π⁄²³])`, "u");
+const mentionsAnswer = (text, ans, problemText) => statesAnswer(text, ans)
+  || (distinctive(ans) && !bare(ans).test(problemText)
+    && bare(ans).test(text.replace(/[Bb]ước \d+\/\d+|bước \d+ trên \d+/g, " ")));
 
 const clickIfReady = async (loc) => {
   if (!(await loc.count()) || !(await loc.first().isVisible()) || !(await loc.first().isEnabled())) return false;
@@ -260,7 +268,7 @@ async function verifyStudentModeDisclosure(page, answers, problemText, analyzeCa
     seen.component_inspector += `\n${await studentText(page)}`;
   }
 
-  assertNoAnswerStated(seen, answers);
+  assertNoAnswerStated(seen, answers, problemText);
   assert(stageObservations === 0, "Goal-check conclusion shown on the student-mode stage");
 
   await page.locator('[data-mo-bang="de"]').click();
@@ -302,7 +310,6 @@ async function verifyServedWorkspace(page, expectedAnswers, checkStepping = fals
     ? await verifyStudentModeDisclosure(page, [...expectedAnswers, ...(disclosure.figureValues ?? [])],
       disclosure.problemText, disclosure.analyzeCalls)
     : null;
-  if (studentMode) STUDENT_MODE_LOG.push({ case_id: disclosure.caseId, ...studentMode });
   if (disclosure?.screenshot) await page.screenshot({ path: join(OUT_DIR, disclosure.screenshot) });
 
   const analysisBtn = page.locator('[data-mo-bang="phan-tich"]');
@@ -318,13 +325,21 @@ async function verifyServedWorkspace(page, expectedAnswers, checkStepping = fals
   if (studentMode) {
     // Witness window (CLAUDE.md §4): the same detector must FIRE on the real Mode B rendering of every answer —
     // otherwise a silent student mode proves nothing about the detector.
-    for (const ans of expectedAnswers) assert(statesAnswer(panelText, ans), `Detector blind to the Mode B rendering of ${ans}`);
+    // A small integer Mode B shows without "=" cannot be told from a counter by text alone: recorded, not hidden.
+    const blind = [];
+    for (const ans of expectedAnswers) {
+      if (mentionsAnswer(panelText, ans, disclosure.problemText)) continue;
+      assert(!distinctive(ans), `Detector blind to the Mode B rendering of ${ans}`);
+      blind.push(ans);
+    }
     // …and student mode is re-checked against the values exactly as Mode B renders them, not only the oracle strings.
     const rendered = (await page.locator('[data-semantic-role="REQUESTED_RESULT"] .geo3d-dai-luong-so').allTextContents())
       .map((s) => (s.includes("=") ? s.slice(s.lastIndexOf("=") + 1) : s).trim()).filter(Boolean);
-    assertNoAnswerStated(STUDENT_TEXT.seen, rendered);
-    Object.assign(studentMode, { detector_positive_control: `${expectedAnswers.length}/${expectedAnswers.length}`,
-      mode_b_rendered_values: rendered, figure_scale_values: disclosure.figureValues ?? [] });
+    assertNoAnswerStated(STUDENT_TEXT.seen, rendered, disclosure.problemText);
+    Object.assign(studentMode, {
+      detector_positive_control: `${expectedAnswers.length - blind.length}/${expectedAnswers.length}`,
+      detector_blind_values: blind, mode_b_rendered_values: rendered, figure_scale_values: disclosure.figureValues ?? [] });
+    STUDENT_MODE_LOG.push({ case_id: disclosure.caseId, ...studentMode });
   }
 
   const bodyText = (await page.locator("body").textContent()) || "";
