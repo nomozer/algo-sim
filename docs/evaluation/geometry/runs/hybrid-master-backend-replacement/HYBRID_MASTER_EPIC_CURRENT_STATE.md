@@ -975,3 +975,18 @@ Report: `ALGOSIM_REAL_PRODUCT_INTEGRATION_REPORT.md`. `0` live Gemini calls (`US
   - Full T3 Attempt 2 on clean detached `hm-t3-123e57da`: **`FULL_PRODUCT_GATE_PASS`** (`16,648` pytest, `1,486` vitest, `tsc -b && vite build` PASS, demo `5/5`, crash `6/6`, pre/post `--verify` `MATCH`; `full-t3-123e57da.json`).
 - **Review:** fresh-context, adversarial. Round 1 `NOT_READY` (`1 BLOCKER`, `2 MAJOR`, `5 MINOR`, `2 NIT`); Round 2 `NOT_READY` (`1 MAJOR`, `1 MINOR`, `1 NIT`); Round 3 **`READY`** (`0 BLOCKER`, `0 MAJOR`, `0 MINOR`, `0 NIT`; `product-integration-adversarial-review.md`).
 - **Remaining release gates:** `PAID_PROJECT_NOT_VERIFIED`, live `K-1`/`S-2`/`R-1` and `H-1` `NOT_MEASURED`, `GENUINE_DISCOVERY_NOT_ESTABLISHED`, and explicit Owner cutover/merge/push GO required.
+
+## Twenty-third continuation (Pedagogical simulation integration), 2026-11-03: display contract verified on the product path · `LIVE_PROVIDER_NOT_MEASURED` · `PRODUCTION_RELEASE_BLOCKED`
+
+Run `../pedagogical-simulation-integration/`; report `ALGOSIM_PEDAGOGICAL_SIMULATION_INTEGRATION_REPORT.md`. `0` live Gemini calls.
+
+- **Pre-fix audit** (real Chromium + `uvicorn` `staging-replay`, 30/30 served cases): 0 answer statements in Mode A at any
+  stage, 0 autoplay, every case at step 1; «Đề bài» was the Hybrid disclaimer on 30/30 (`prefix-ui-audit.json`).
+- **Fixes:** `envelope.problem_statement` stamped by `store.loadEnvelope` (history, library, classroom carry it);
+  `goal_checks` conclusions in Mode B only; engine `/23` draws a stated ⊥ line that placed its end (A′H, SH) with its
+  witness. Registry `/31`, Planner `/26`, Adapter `/4`, `CACHE_VERSION = 131` unchanged.
+- **Candidate:** product `adf4a113`, candidate `fba8b7a7` (118 files `39e9f54b…`); pilot templates still
+  `PENDING_OWNER_DECISION`, re-bound (`k1` `01113600…`, `s2` `39a4a564…`, `r1` `06589213…`).
+- **Verification:** E2E 7/7 (37 student-mode checks, positive control 47/48); Full T3 PASS at `dbc0316c` (16,652 / 1,502).
+- **Open:** step list shows the whole construction plan on one click (Owner product decision); live `K-1`/`S-2`/`R-1`/`H-1`
+  `NOT_MEASURED`; Owner cutover/merge/push GO required.

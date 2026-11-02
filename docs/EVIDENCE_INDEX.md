@@ -149,6 +149,18 @@ CODE_COMMIT = d17116cbc4b4f4065f198a19de0957cc51eeb82e
 CANDIDATE_COMMIT = 123e57da
 MODEL_REQUEST_COUNT = 0
 CORRECTS = HYBRID_MASTER_C21_OWNER_DELEGATED_LIVE_EXECUTION (pilot approval template blobs ee581d67 / 528622dd / f20279a9 re-bound to candidate 123e57da / measured_system 730045ff / LF-normalized runner e9c6ad43 -> blobs 2199eb32 / a6792fce / 9f832e67; candidate divergence chain updated via hybrid-master-product-integration/candidate_divergence.json while preserving 15d236eb and all C18/C19/C21 receipts)
+CORRECTED_BY = HYBRID_MASTER_C23_PEDAGOGICAL_SIMULATION_INTEGRATION (candidate identity and pilot template blobs only: product adf4a113 / candidate fba8b7a7 / measured_system 39e9f54b; templates 2199eb32 / a6792fce / 9f832e67 -> 01113600 / 39a4a564 / 06589213; divergence layer pedagogical-simulation-integration/candidate_divergence.json; the C22 receipts themselves are unchanged and not rescored)
+
+## CONTINUATION_ID = HYBRID_MASTER_C23_PEDAGOGICAL_SIMULATION_INTEGRATION
+
+REPORT = docs/evaluation/geometry/runs/pedagogical-simulation-integration/ALGOSIM_PEDAGOGICAL_SIMULATION_INTEGRATION_REPORT.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/pedagogical-simulation-integration/
+CLASSIFICATION = REAL_BROWSER_AND_UVICORN_NETWORK_E2E_STAGING_REPLAY + PRODUCT_RUNTIME_REPLAY_VERIFICATION_NOT_LIVE_PROVIDER (0 live provider requests; LIVE_PROVIDER_NOT_MEASURED; PRODUCTION_RELEASE_BLOCKED; GENUINE_DISCOVERY_NOT_ESTABLISHED) — pedagogical display contract (DESIGN_BRIEF §79–80) on the product path: pre-fix UI audit 30/30 served cases (0 answer statements, 0 autoplay, «Đề bài» = submitted text 0/30); fixes «Đề bài» (envelope problem_statement stamped by loadEnvelope, carried by history/library/classroom), goal_checks conclusions to Mode B, engine /23 stated perpendicular drawn with its witness; post-fix E2E 7/7 flows, 37 student-mode checks on 30 cases, positive control 47/48; candidate fba8b7a7 (product adf4a113, 118 files 39e9f54b); Full T3 FULL_PRODUCT_GATE_PASS at dbc0316c (16652 pytest, 1502 vitest); preview fixtures re-exported (fixtures-adapter-2-stated-perpendicular); publication range f986e897..HEAD PASS
+VERIFICATION = ALGOSIM_PEDAGOGICAL_SIMULATION_INTEGRATION_REPORT.md; prefix-ui-audit.json; prefix-ui-audit-probe.mjs; prefix-ui-audit-analyze.mjs; pedagogical-e2e-browser-receipt.json (pre-review, candidate 444b8c95); e2e-review-round-1/pedagogical-e2e-browser-receipt.json; full-t3-e8fc37fb.json (pre-review); full-t3-dbc0316c.json; independent-review.md; candidate_divergence.json; frozen-evaluation-candidate.json; fixtures-adapter-2-stated-perpendicular/manifest.json
+CODE_COMMIT = adf4a1139f389133fe855845b5f149a3691a36d1
+CANDIDATE_COMMIT = fba8b7a7
+MODEL_REQUEST_COUNT = 0
+CORRECTS = HYBRID_MASTER_C22_REAL_PRODUCT_INTEGRATION (candidate identity and template blobs; hybrid-master-product-integration/candidate_divergence.json corrected by pedagogical-simulation-integration/candidate_divergence.json)
 CORRECTED_BY = NONE
 ## WAVE_ID = ALGOSIM_W4_END_TO_END_GEOMETRY_AND_PEDAGOGICAL_SIMULATION
 
