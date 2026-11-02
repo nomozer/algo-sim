@@ -333,7 +333,9 @@ def test_c15_the_registered_r1_corpus_and_its_gold_replay_are_locked(tmp_path):
     R.validate_corpus(json.loads(corpus.read_text(encoding="utf-8")))
     out = R.evaluate(corpus, tmp_path / "dry.jsonl", None)
     receipt = _rows(CORPUS.parent / "r1-live-pilot-gold-replay-r2.jsonl")   # C16: runner records label disagreements
-    assert receipt[0]["corpus_sha256"] == R.sha256_file(corpus)
+    # the receipt hashed the LF bytes it ran on; a fresh checkout under core.autocrlf=true holds CRLF (Full T3 attempt 1)
+    import hashlib
+    assert receipt[0]["corpus_sha256"] == hashlib.sha256(corpus.read_bytes().replace(b"\r\n", b"\n")).hexdigest()
     assert {r["case_id"]: r["composition_label"] for r in out["rows"]} == {
         r["case_id"]: r["composition_label"] for r in receipt if r["type"] == "row"}
     assert out["supplementary"] == receipt[-1]["supplementary"]
