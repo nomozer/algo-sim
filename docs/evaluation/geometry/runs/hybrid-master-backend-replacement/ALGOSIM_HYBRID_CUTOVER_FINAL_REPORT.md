@@ -24,9 +24,9 @@
 - **Candidate `measured_system` hash**: `765487a4b48e7d522ae2cccab6516bf01d50422d9f92cc48eabe7e944e021164` (`102` measured files, down from `119`; prior candidate `017bfb9f` preserved byte-for-byte in `frozen-evaluation-candidate-017bfb9f.json`)
 - **Runtime versions**: `geometry-functions/33` · `geometry-fact-planner/26` · `geometry-function-engine/24` · `typed-fact-next/2` · `hybrid-simulation-adapter/4` · `CACHE_VERSION = 132` (`ROUTE_D_CACHE_POLICY = 132:route-d`)
 - **Pre-cutover rollback version**: Git tag `pre-hybrid-cutover-f986e897` → `f986e897bd266d06d4a9c5fa78c05463b7b247bf` (verified backend API tests `14/14` PASS + frontend `tsc -b && vite build` PASS prior to merge)
-- **Merge commit (`main`, `--no-ff`)**: `PENDING_MAIN_MERGE`
-- **Remote push status (`origin/main`)**: `PENDING_REMOTE_PUSH`
-- **Worktree & branch cleanup status**: `PENDING_POST_PUSH_CLEANUP`
+- **Merge commit (`main`, `--no-ff`)**: `dacd7f5ecb104908bfc2f8a327868a0b032e9f0c` (`dacd7f5e`, merging `d2f9f5e7` onto `f986e897`; final documentation stamp commit at `main` `HEAD`)
+- **Remote push status (`origin/main`)**: `PUSHED_TO_ORIGIN_MAIN` (`https://github.com/nomozer/algo-sim.git`; non-force `git push origin main` after post-merge verification, `git ls-remote origin refs/heads/main` verified matching local `main` `HEAD`)
+- **Worktree & branch cleanup status**: `CLEANED_UP_SAFELY` (`backend/.venv` and `frontend/node_modules` junctions inside `.superpowers/worktrees/hybrid-master-backend-replacement` unlinked without touching real environment directories, worktree unregistered via `git worktree remove`, local branch `research/hybrid-master-backend-replacement` deleted via `git branch -d`; all other sessions' worktrees/branches and remote branches preserved untouched)
 
 ---
 
