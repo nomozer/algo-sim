@@ -208,7 +208,7 @@
 - **NEXT_TEST:** —
 
 ### D-13: Quyết định bật
-- **STATUS:** NO-GO — `HYBRID_PRODUCT_ENABLEMENT = NO-GO` cho tới khi D-01…D-12 đạt và owner quyết.
+- **STATUS:** ACTIVE_BY_OWNER_CUTOVER_DIRECTIVE (2026-11-04, `ALGOSIM_HYBRID_CUTOVER_FINAL_REPORT.md`) — Owner đã quyết định chuyển tuyến sản phẩm mặc định `POST /api/analyze` sang Hybrid `/4` (`HYBRID_ROUTE_MODE = live`, `CACHE_VERSION = 132`, gỡ thực thi `LLM_ONLY` / Compiler C / Adapter `/3`; rollback sau cutover là rollback phiên bản triển khai về tag `pre-hybrid-cutover-f986e897` / `f986e897bd266d06d4a9c5fa78c05463b7b247bf`, không còn là đổi cờ môi trường `HYBRID_ROUTE_MODE=off`). Giữ nguyên sự thật nghiên cứu: `INDEPENDENT_H1_VALIDATION = NOT_MEASURED` (GATE-15 / D-11 chưa đo trên tập độc lập H-1) và `PRODUCTION_DEPLOYMENT_VERIFIED = NO`.
 
 ### GATE-20: User & Pedagogical Evaluation
 - **STATUS:** NOT_STARTED

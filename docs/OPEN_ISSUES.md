@@ -1,5 +1,7 @@
 # OPEN_ISSUES.md — Danh mục các vấn đề kỹ thuật đang mở
 
+**Cutover update 2026-11-04 (`ALGOSIM_HYBRID_CUTOVER_FINAL_REPORT.md`):** Hybrid `/4` is now the default production architecture on `POST /api/analyze` (`HYBRID_ROUTE_MODE = live`, `CACHE_VERSION = 132`, product `52205f45`, `102` measured files `765487a4b48e7d52…`), retiring `LLM_ONLY` (`pipeline.py`), Compiler C (`geometry_compiler/*`), and Adapter `/3` (`adapter3_simulation.py`) with pre-cutover deployment rollback tag `pre-hybrid-cutover-f986e897` (`f986e897bd266d06d4a9c5fa78c05463b7b247bf`). `ISSUE-ARCH-HYBRID-ROUTE-D-NOT-WIRED` and research-branch resolutions from `research/hybrid-master-backend-replacement` below are now integrated onto `main`; `INDEPENDENT_H1_VALIDATION = NOT_MEASURED` (`H-1` external corpus pending) and `ISSUE-ARCH-PARTIAL-STATED-CUT-NAMING` / `ISSUE-ARCH-HISTORY-REOPEN-DROPS-SCENE3D` / `ISSUE-ARCH-ROUTE-D-DIACRITIC-FREE-INPUT` remain OPEN.
+
 **Integration update 2026-10-30:** W3-F2 resolution below is now on local main `15a8e1ac`; earlier “not on main” labels are historical. Publication retains 105 baseline head findings (104 pending findings, 1 additional test vector), not new W3-F2 regressions: 95 traceback, 5 Google-key test vectors and 5 other security-pattern findings. Narrow Owner policy and closure: `evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/integration/report.md`. This does not resolve the historical publication debt globally.
 
 ### ISSUE-ARCH-PARTIAL-STATED-CUT-NAMING
