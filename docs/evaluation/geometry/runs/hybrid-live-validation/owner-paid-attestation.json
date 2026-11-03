@@ -1,0 +1,10 @@
+{
+  "schema": "owner-paid-project-attestation/1",
+  "authorization_source": "EXPLICIT_OWNER_SEPARATE_STATEMENT",
+  "verification_status": "OWNER_ATTESTED",
+  "cloud_billing_verified": false,
+  "paid_project_confirmed": true,
+  "project_id": null,
+  "statement_ref": "OWNER_DIRECT_STATEMENT_2026_11_03T145305_PLUS0700",
+  "statement_quote": "tôi dùng tiền mà ko free"
+}
