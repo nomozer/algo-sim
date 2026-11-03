@@ -12,8 +12,10 @@ from app.ai.fact_extraction import _TuChoiAI, build_request, parse_response
 from app.ai.function_calling import LiveAIDisabled
 from app.simulation.geometry_functions.registry import _phu_dinh, _vai_tro_tai, _vi_tri, chuan_hoa
 from app.simulation.geometry_functions.typed_fact_next import (
+    CANDIDATE_RELATIONS,
     DESCRIBED_POINT_FIELDS,
     GOAL_OPERAND_SHAPES,
+    MISSING_ROLES,
     TYPED_FACT_NEXT_V2_SCHEMA_VERSION,
     TypedFactNextPayloadV2,
     TypedFactNextValidationError,
@@ -65,34 +67,41 @@ TYPED_FACT_NEXT_SYSTEM_INSTRUCTION = (
     "không đặt tên ghi notation='()' (tham số center, apex_or_top, rim_point, radius, height, circumscribes, inscribed_in "
     "ghi vào solids.params dạng 'radius=2', 'circumscribes=s1'; vertex_bindings chỉ dùng khi nhiều khối khác tên đỉnh "
     "chung dạng 'local=canonical').\n"
-    "2. premises (gán solid_id của khối chứa giả thiết): chỉ dùng kind chuẩn và đúng khoá trong args: "
+    "2. premises (gán solid_id của khối chứa giả thiết; mọi quote trong premises PHẢI chứa cả từ khoá vị từ hình học lẫn "
+    "tên các đỉnh/khối liên quan): chỉ dùng kind chuẩn và đúng khoá trong args: "
     "regular_pyramid ['apex=S','base=A,B,C,...']; "
     "right_prism ['base=A,B,C','top=A\\',B\\',C\\''] (dùng cho lăng trụ đứng/đều, hình hộp chữ nhật, hình lập phương — "
     "chỉ thêm regular_polygon/rectangle/segment_length cho mặt hoặc cạnh đề thực sự nêu); "
-    "regular_polygon ['vertices=A,B,C,...', tuỳ chọn 'side=2'] (tam giác đều, hình vuông, lục giác đều); "
-    "rectangle ['vertices=A,B,C,D']; "
+    "regular_polygon ['vertices=A,B,C,...', tuỳ chọn 'side=2'] (dùng cho tam giác đều, hình vuông, lục giác đều — ví dụ "
+    "quote='đáy ABCD là hình vuông cạnh 2'; KHÔNG thêm rectangle hay segment_length trùng lặp cho hình vuông); "
+    "rectangle ['vertices=A,B,C,D'] (chỉ khi đề nêu hình chữ nhật); "
     "right_angle ['vertex=A','rays=B,C'] (vertex là đỉnh góc vuông, rays là 2 điểm trên 2 cạnh góc vuông); "
-    "segment_length ['segment=S,A','value=2']; height ['value=2', tuỳ chọn 'solid=s1']; "
+    "segment_length ['segment=S,A','value=2'] (dùng cho mọi độ dài cạnh/đoạn có tên 2 mút như SA=2, AA'=5); "
+    "height ['value=2', tuỳ chọn 'solid=s1'] (chỉ khi đề nêu chữ chiều cao/đường cao bằng số mà không ghi theo đoạn 2 mút); "
     "equal_length ['segment_a=S,A','segment_b=S,B']; "
-    "perpendicular_line_plane ['line=S,A','plane=A,B,C,...']; perpendicular_lines ['line1=S,A','line2=B,C']; "
+    "perpendicular_line_plane ['line=S,A','plane=A,B,C,...'] (dùng cho 'SA vuông góc (ABCD)'); "
+    "perpendicular_lines ['line1=S,A','line2=B,C']; "
     "face_perpendicular_base ['face=S,A,B','base=A,B,C,...']; "
-    "altitude ['apex=S','foot=H', tuỳ chọn 'solid=s1'] (quote gồm cả tên khối và cụm đường cao nếu cùng câu); "
+    "altitude ['apex=S','foot=H', tuỳ chọn 'solid=s1'] (chỉ dùng khi đề nêu chữ 'đường cao'/'chiều cao' gắn với chân H, "
+    "quote PHẢI bao gồm cả tên khối lẫn cụm đường cao); "
     "midpoint ['point=M','segment=A,B']; divide_segment ['point=M','segment=A,B','ratio=2'] (đúng hướng tỉ số); "
     "centroid ['point=G','polygon=A,B,C']; "
     "orthogonal_projection ['point=A','image=H','plane=S,B,C']; "
     "orthogonal_projection_line ['point=A','image=H','line=S,B']; "
     "intersect_line_line ['point=O','line1=A,C','line2=B,D']; "
     "intersect_line_plane ['point=I','line=S,M','plane=A,B,C'].\n"
-    "3. described_points: điểm đề MÔ TẢ mà không đặt tên (ví dụ 'trung điểm của SC', 'hình chiếu vuông góc của B lên "
-    "mặt phẳng (SAC)', 'giao điểm của AC và BD', 'trực tâm của tam giác SBC', 'tâm đường tròn ngoại tiếp tam giác ABC') "
-    "⇒ khai trong described_points với quote nguyên văn cụm mô tả, kind thuộc {midpoint, centroid, orthocenter, "
+    "3. described_points: CHỈ dùng cho điểm đề MÔ TẢ mà KHÔNG đặt tên chữ cái (ví dụ 'trung điểm của SC', 'hình chiếu "
+    "vuông góc của B lên mặt phẳng (SAC)', 'giao điểm của AC và BD', 'trực tâm của tam giác SBC', 'tâm đường tròn ngoại "
+    "tiếp tam giác ABC'); TUYỆT ĐỐI KHÔNG đưa điểm đã được đặt tên (như 'Gọi M là trung điểm của AB', 'H là hình chiếu...') "
+    "vào described_points — điểm có tên bắt buộc khai ở premises và tham chiếu trực tiếp bằng nhãn chữ cái (M, H). "
+    "Điểm không tên khai trong described_points với quote nguyên văn cụm mô tả, kind thuộc {midpoint, centroid, orthocenter, "
     "circumcenter, orthogonal_projection, orthogonal_projection_line, intersect_line_line, intersect_line_plane} và "
     "operands tương ứng (midpoint: ['segment=S,C']; centroid/orthocenter/circumcenter: ['polygon=S,B,C'] 3 đỉnh tam "
     "giác; orthogonal_projection: ['point=B','plane=S,A,C']; orthogonal_projection_line: ['point=A','line=S,B']; "
     "intersect_line_line: ['line1=A,C','line2=B,D']; intersect_line_plane: ['line=S,M','plane=A,B,C']). Tại chỗ dùng "
-    "điểm đó (math_goals.target, derived_sections.through_point, hoặc toán hạng điểm của described_points khác), ghi "
-    "'@' + described_id (ví dụ '@m1'). Không tự đặt tên đỉnh mới; vẫn trích đầy đủ kể cả khi hai điểm mô tả nối với "
-    "nhau hoặc lồng nhau.\n"
+    "điểm không tên đó (math_goals.target, derived_sections.through_point, hoặc toán hạng điểm của described_points khác) "
+    "thì ghi '@' + described_id (ví dụ '@m1') và quote của mục tiêu/mặt cắt dùng '@id' PHẢI bao hàm nguyên văn quote mô tả "
+    "điểm đó. Không tự đặt tên đỉnh mới; vẫn trích đầy đủ kể cả khi hai điểm mô tả nối với nhau hoặc lồng nhau.\n"
     "4. derived_sections: plane_name không kèm ngoặc ('P', 'Q', 'α'). Mặt cắt đi qua 1 điểm (nhãn đỉnh hoặc "
     "@described_id) kèm 1 quan hệ ⇒ through_point_parallel_plane (điền through_point, params=['parallel_plane=A,B,C'] "
     "với ĐÚNG 3 nhãn đại diện mặt phẳng, ví dụ mặt (ABCD) ghi 'parallel_plane=A,B,C'), "
@@ -104,9 +113,10 @@ TYPED_FACT_NEXT_SYSTEM_INSTRUCTION = (
     "stated_intersections chỉ khai khi đề nêu rõ cạnh bị cắt.\n"
     "5. simulation_goals & math_goals: khi unresolved rỗng, mỗi khối chính trong solids PHẢI có 1 mục tiêu trong "
     "simulation_goals với kind='construct_object', target_solid_id trỏ tới solid_id của khối đó, quote nguyên văn cụm "
-    "khai khối hoặc yêu cầu vẽ/mô phỏng (kể cả khi đề chỉ hỏi tính toán; mặt cắt đã khai ở derived_sections không thêm "
-    "simulation_goals trùng lặp; nếu đề chỉ yêu cầu vẽ/mô phỏng thì để math_goals=[]). Câu hỏi tính toán ghi vào "
-    "math_goals: kind='measurement' đặt solid_id ở mức mục tiêu (không đặt solid_id cạnh toán hạng khác trong target), "
+    "khai khối hoặc yêu cầu vẽ/mô phỏng (kể cả khi đề chỉ hỏi tính toán; nếu đề yêu cầu xác định/tìm thiết diện đã khai "
+    "ở derived_sections thì dùng kind='construct_plane_section' với target_section_id='sec1'; nếu đề chỉ yêu cầu vẽ/mô "
+    "phỏng thì để math_goals=[]). Câu hỏi tính toán ghi vào math_goals: kind='measurement' LUÔN điền solid_id của khối ở "
+    "mức mục tiêu (không đặt solid_id cạnh toán hạng khác trong target), "
     "goal_type thuộc {distance, angle, volume, area, lateral_area, radius}; độ dài đoạn thẳng dùng goal_type='distance' "
     "với target=['segment=S,@o1']; khoảng cách điểm–mặt/đường dùng target=['point=@h1','plane=S,C,D'] hoặc "
     "['point=@h1','line=S,C']; góc dùng target=['line=A,@m1','plane=A,B,C,D'] hoặc ['line1=...','line2=...']; "
@@ -553,12 +563,33 @@ def _normalize_transport_payload(data: Any) -> Any:
                 continue
             sg_clean = _strip_none_keys(sg, ("target_solid_id", "target_section_id"))
             _merge_unpacked_params(sg_clean, "params")
+            if (
+                sg_clean.get("kind") == "construct_object"
+                and "target_section_id" in sg_clean
+                and "target_solid_id" not in sg_clean
+            ):
+                sg_clean["kind"] = "construct_plane_section"
             if sg_clean.get("style_role") == "primary":
                 sg_clean.pop("style_role", None)
             if sg_clean.get("target_refs") == []:
                 sg_clean.pop("target_refs", None)
             norm_sgs.append(sg_clean)
         out["simulation_goals"] = norm_sgs
+
+    solids_list = out.get("solids") if isinstance(out.get("solids"), list) else []
+    has_derived_solid = any(
+        isinstance(sg, dict) and sg.get("kind") == "construct_derived_solid"
+        for sg in (out.get("simulation_goals") if isinstance(out.get("simulation_goals"), list) else ())
+    )
+    single_solid_id = (
+        solids_list[0].get("solid_id").strip()
+        if len(solids_list) == 1
+        and isinstance(solids_list[0], dict)
+        and isinstance(solids_list[0].get("solid_id"), str)
+        and solids_list[0].get("solid_id").strip()
+        and not has_derived_solid
+        else None
+    )
 
     if isinstance(out.get("math_goals"), list):
         norm_mgs = []
@@ -574,6 +605,15 @@ def _normalize_transport_payload(data: Any) -> Any:
                 mg_clean["target"] = _strip_none_keys(mg_clean["target"])
             if mg_clean.get("target") == {} and mg_clean.get("kind") != "measurement":
                 mg_clean.pop("target", None)
+            if (
+                single_solid_id is not None
+                and mg_clean.get("kind") == "measurement"
+                and "solid_id" not in mg_clean
+                and isinstance(mg_clean.get("target"), dict)
+                and "solid" not in mg_clean["target"]
+                and "solid_id" not in mg_clean["target"]
+            ):
+                mg_clean["solid_id"] = single_solid_id
             norm_mgs.append(mg_clean)
         out["math_goals"] = norm_mgs
 
@@ -603,6 +643,12 @@ def _normalize_transport_payload(data: Any) -> Any:
                 u_clean = _strip_none_keys(u, ("subject_ref",))
                 u_clean.setdefault("missing_roles", [])
                 u_clean.setdefault("candidate_relations", [])
+                if isinstance(u_clean["missing_roles"], list):
+                    u_clean["missing_roles"] = [r for r in u_clean["missing_roles"] if r in MISSING_ROLES]
+                if isinstance(u_clean["candidate_relations"], list):
+                    u_clean["candidate_relations"] = [
+                        r for r in u_clean["candidate_relations"] if r in CANDIDATE_RELATIONS
+                    ][:3]
                 norm_unres.append(u_clean)
             out["unresolved"] = norm_unres
 

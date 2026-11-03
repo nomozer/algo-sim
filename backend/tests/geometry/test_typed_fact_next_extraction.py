@@ -469,3 +469,87 @@ def test_transport_normalizer_unpacks_entries_and_fails_closed_on_malformed_wire
         mutate(bad)
         res_bad = extract_typed_fact_next_v2(TEXT, TransportExtractor(lambda _req, b=bad: body(b)))
         assert res_bad.payload is None and res_bad.code == expected_code
+
+
+def test_transport_normalizer_handles_observed_live_gemini_wire_patterns():
+    from app.ai.typed_fact_next_extraction import TransportExtractor, extract_typed_fact_next_v2
+
+    sec_text = (
+        "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với (ABCD) và SA = 2. "
+        "Mặt phẳng (P) đi qua A, B và vuông góc với (SBD). "
+        "Xác định thiết diện của hình chóp S.ABCD cắt bởi (P) và tính diện tích thiết diện đó."
+    )
+    sec_wire = {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": sec_text,
+        "length_unit": "1",
+        "solids": [{"solid_id": "s1", "solid_type": "pyramid", "notation": "S.ABCD", "quote": "hình chóp S.ABCD"}],
+        "premises": [
+            {"kind": "regular_polygon", "args": ["vertices=A,B,C,D", "side=2"], "quote": "đáy ABCD là hình vuông cạnh 2", "solid_id": "s1"},
+            {"kind": "perpendicular_line_plane", "args": ["line=S,A", "plane=A,B,C,D"], "quote": "SA vuông góc với (ABCD)", "solid_id": "s1"},
+            {"kind": "segment_length", "args": ["segment=S,A", "value=2"], "quote": "SA = 2", "solid_id": "s1"},
+        ],
+        "derived_sections": [{
+            "section_id": "sec1",
+            "plane_name": "P",
+            "target_solid_id": "s1",
+            "plane_kind": "constrained",
+            "constraints": ["contains_points=A,B", "perpendicular_to_plane=S,B,D"],
+            "quote": "Mặt phẳng (P) đi qua A, B và vuông góc với (SBD)",
+        }],
+        "simulation_goals": [
+            {"goal_id": "sg1", "kind": "construct_object", "target_solid_id": "s1", "quote": "hình chóp S.ABCD"},
+            {"goal_id": "sg2", "kind": "construct_object", "target_section_id": "sec1", "quote": "Xác định thiết diện của hình chóp S.ABCD cắt bởi (P)"},
+        ],
+        "math_goals": [{
+            "goal_id": "mg1",
+            "kind": "measurement",
+            "goal_type": "area",
+            "target": ["section_id=sec1"],
+            "quote": "tính diện tích thiết diện đó",
+        }],
+    }
+    ext = TransportExtractor(lambda _req: body(sec_wire))
+    norm_dict = ext.extract(sec_text)
+    assert norm_dict["simulation_goals"][1]["kind"] == "construct_plane_section"
+    assert norm_dict["math_goals"][0]["solid_id"] == "s1"
+    res_sec = extract_typed_fact_next_v2(sec_text, ext)
+    assert res_sec.code is None
+    assert res_sec.payload.simulation_goals[1].kind == "construct_plane_section"
+    assert res_sec.payload.math_goals[0].solid_id == "s1"
+
+    # Conflicting both target_solid_id + target_section_id on construct_object must still fail closed.
+    both_targets = deepcopy(sec_wire)
+    both_targets["simulation_goals"][1]["target_solid_id"] = "s1"
+    res_conflict = extract_typed_fact_next_v2(sec_text, TransportExtractor(lambda _req: body(both_targets)))
+    assert res_conflict.payload is None and res_conflict.code == "INVALID_SIMULATION_GOAL"
+
+    # Unresolved wire hints outside closed enums filter cleanly without crashing UnresolvedSpec,
+    # while an invalid unresolved kind still fails closed.
+    amb_text = "Tính khoảng cách từ trực tâm của một tam giác có ba đỉnh thuộc hình chóp đến mặt phẳng (SAB)."
+    amb_wire = {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": amb_text,
+        "length_unit": "1",
+        "solids": [],
+        "premises": [],
+        "simulation_goals": [],
+        "math_goals": [],
+        "unresolved": [{
+            "unresolved_id": "u1",
+            "kind": "ambiguous",
+            "missing_roles": ["polygon", "source_point"],
+            "candidate_relations": ["orthocenter", "distance"],
+            "quote": "trực tâm của một tam giác có ba đỉnh thuộc hình chóp",
+        }],
+    }
+    res_amb = extract_typed_fact_next_v2(amb_text, TransportExtractor(lambda _req: body(amb_wire)))
+    assert res_amb.code is None
+    assert res_amb.payload.unresolved[0].missing_roles == ("source_point",)
+    assert res_amb.payload.unresolved[0].candidate_relations == ("distance",)
+
+    bad_unres = deepcopy(amb_wire)
+    bad_unres["unresolved"][0]["kind"] = "invented_kind"
+    res_bad_unres = extract_typed_fact_next_v2(amb_text, TransportExtractor(lambda _req: body(bad_unres)))
+    assert res_bad_unres.payload is None and res_bad_unres.code == "INVALID_TYPED_FACT_NEXT"
+
