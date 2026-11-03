@@ -1,0 +1,56 @@
+{
+  "schema": "live-preflight/1",
+  "checked_at": "2026-11-03T04:03:52+00:00",
+  "candidate": {
+    "commit": "db9177c7e23c18d231ba8a5d474d13502651427d",
+    "product_commit_sha": "55db50c3654f114fb0691147bdd8a5c15bdd86dc",
+    "measured_system": "f4ed426a1c2f0a3b8cf24fea98d447094fa577bc91eae2405e36c5c83e50bf59"
+  },
+  "runner": "backend/scripts/run_s2_student_language_pilot.py",
+  "runner_sha256_lf": "e9c6ad4388032f06949ac6c0dd5d06b2882be576c0564ff4a5143e6e48229438",
+  "authorized_model": "gemini-2.5-flash",
+  "delegated_caps": {
+    "K-1": [
+      16,
+      1.0
+    ],
+    "S-2": [
+      36,
+      2.0
+    ],
+    "R-1": [
+      18,
+      1.0
+    ],
+    "global": [
+      70,
+      4.0
+    ]
+  },
+  "paid_verification_sources_accepted": [
+    "CLOUD_BILLING_API",
+    "EXPLICIT_OWNER_PAID_ATTESTATION"
+  ],
+  "credentials_presence": {
+    "root_dotenv_exists": true,
+    "api_key_present": true,
+    "api_key_source": "root_dotenv",
+    "api_key_kind": "AQ.",
+    "project_id_present": false,
+    "project_source": "missing",
+    "oauth_token_present": false,
+    "gcloud_on_path": false
+  },
+  "paid_attestation_file_present": false,
+  "verify_paid_project": {
+    "verified": false,
+    "stop_reason": "PAID_PROJECT_NOT_VERIFIED",
+    "detail": "No Cloud Billing API credentials/project_id and no separate explicit Owner paid-project attestation; GEMINI_API_KEY/.env presence never implies paid billing."
+  },
+  "decision": "BLOCKED_PREFLIGHT",
+  "stop_reason": "PAID_PROJECT_NOT_VERIFIED",
+  "http_requests": 0,
+  "usd_spent": 0.0,
+  "approvals_minted": 0,
+  "note": "Only presence and source of credentials are recorded, never values. API-key presence never implies paid billing (runner verify_paid_project)."
+}

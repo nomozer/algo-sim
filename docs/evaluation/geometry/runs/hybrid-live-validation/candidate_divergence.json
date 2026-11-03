@@ -1,0 +1,20 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "ALGOSIM_MASTER_HYBRID_BACKEND_REPLACEMENT (hybrid-live-validation: live Gemini blocked at PAID_PROJECT_NOT_VERIFIED; gold-replay failure repairs in Source Gate wording, stated-cut section coverage and exact radicals; registry /32, engine /24)",
+  "corrects": "docs/evaluation/geometry/runs/pedagogical-simulation-integration/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "current_candidate_hash": "f4ed426a1c2f0a3b8cf24fea98d447094fa577bc91eae2405e36c5c83e50bf59",
+  "current_product_commit": "55db50c3654f114fb0691147bdd8a5c15bdd86dc",
+  "current_candidate_source": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+  "diverged": true,
+  "reason": "Backend-only repairs on top of the fba8b7a7 candidate (product adf4a113), each found by gold TypedFactNext replay of the Wave 3 corpus (backend defects isolated from any provider): Source Gate wording ('khi bi cat' in both clause readers, 'vuong tai dinh', projection 'cua dinh' and the altitude-foot paraphrase, ratio 'thoa man he thuc', two-line slice 'xet'/'khoi'/base-polygon word bound to the base); engine: a /2 stated-cut section whose named vertices miss part of the exact cross-section refuses SECTION_BOUNDARY_INCOMPLETE instead of reaching the adapter as an invalid result; radicals: the trial-division input bound moves from MAX_RADICAND^2 to MAX_RADICAND^3 (domain ceiling unchanged). Planner /26, Adapter /4, TypedFactNext /2, provider surfaces and frontend unchanged. 0 live provider calls.",
+  "cache_version": 131,
+  "cache_version_hien_tai": 131,
+  "cache_decision": "NO BUMP: LLM_ONLY prompts, routing policy and cache bytes are untouched; Route D rows are keyed by Registry/Planner/Engine/Adapter versions and the registry /32 + engine /24 bumps invalidate /31-/23 Route D rows (MIGRATION_CHECKLIST M-2). The shared radical change only turns former refusals into exact results.",
+  "hieu_luc_len_ket_qua_da_do": {
+    "historical_measurements": "UNCHANGED",
+    "live_requests": 0,
+    "so_lieu_luot_do_cuoi": "UNCHANGED: every earlier receipt (C18/C19/C21, 123e57da product integration, fba8b7a7 pedagogical integration) is preserved byte-for-byte and not rescored."
+  }
+}
