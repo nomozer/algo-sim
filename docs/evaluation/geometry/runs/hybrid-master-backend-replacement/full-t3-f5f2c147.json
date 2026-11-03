@@ -1,0 +1,26 @@
+{
+  "schema": "full-t3-receipt/1",
+  "candidate_commit": "f5f2c14723e95a525ac38c97a960735312e7e3d0",
+  "product_commit": "52205f45fb66966de7d5b471d471c92d1ea2ac91",
+  "worktree": "detached clean worktree hm-t3-f5f2c147",
+  "source_tree_before": "",
+  "source_tree_after": "",
+  "started_utc": "2026-11-03T21:58:09.832085+00:00",
+  "finished_utc": "2026-11-03T22:05:56.034531+00:00",
+  "exit_code": 0,
+  "verdict": "FULL_PRODUCT_GATE_PASS",
+  "summaries": [
+    "13762 passed, 7 skipped, 2 deselected, 9 xfailed, 1 warning in 439.15s (0:07:19)",
+    "Test Files  85 passed (85)",
+    "Tests  1502 passed (1502)",
+    "FULL_PRODUCT_GATE_PASS"
+  ],
+  "pre_freeze_verify_exit": 0,
+  "post_freeze_verify_exit": 0,
+  "freeze_sha256_before": "0370d2bf5100386fed819518fba043db450a9ba68a982983d2591803e0062b31",
+  "freeze_sha256_after": "0370d2bf5100386fed819518fba043db450a9ba68a982983d2591803e0062b31",
+  "live_provider_calls": 0,
+  "allow_live_ai": "unset (conftest offline network guard active)",
+  "stdout_log_sha256": "917d9a910723366345d7db99e66383f714456310c3f3d21ee120671b46003895",
+  "stdout_log_bytes": 186379
+}

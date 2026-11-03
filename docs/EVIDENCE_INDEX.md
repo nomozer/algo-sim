@@ -233,6 +233,18 @@ CODE_COMMIT = d6a53dc6d11273f297b7029f0db07476cd81dcfb
 CANDIDATE_COMMIT = 017bfb9f
 MODEL_REQUEST_COUNT = 0
 CORRECTS = HYBRID_MASTER_C26_LIVE_EXTRACTION_RETEST (candidate divergence chain hybrid-live-extraction-retest/candidate_divergence.json -> hybrid-master-final-backend-product/candidate_divergence.json and pilot approval template measured_system rebound to b33629d10b9673e1 -> blobs 6d7755a3 / 590a3c9d / 44d4bc1d; C26 live receipts and reports unchanged)
+CORRECTED_BY = FINAL_HYBRID_ARCHITECTURE_CUTOVER (Owner-directed default production cutover to Hybrid /4, LLM_ONLY/Compiler-C/Adapter-3 retirement, CACHE_VERSION 131 -> 132, candidate divergence chain hybrid-master-final-backend-product/candidate_divergence.json -> hybrid-master-backend-replacement/candidate_divergence.json, prior candidate 017bfb9f preserved in frozen-evaluation-candidate-017bfb9f.json, templates rebound to 1cf8225c / 7200a3bc / a81f822c; C21-C28 and final-backend-product receipts preserved byte-for-byte)
+
+## CONTINUATION_ID = FINAL_HYBRID_ARCHITECTURE_CUTOVER
+
+REPORT = docs/evaluation/geometry/runs/hybrid-master-backend-replacement/ALGOSIM_HYBRID_CUTOVER_FINAL_REPORT.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-master-backend-replacement/
+CLASSIFICATION = OWNER_DIRECTED_DEFAULT_ARCHITECTURE_CUTOVER + OFFLINE_FULL_PRODUCT_VERIFICATION (0 live provider calls; HYBRID_DEFAULT_CUTOVER_COMPLETE = YES; LEGACY_EXECUTION_RETIRED = YES; LEGACY_FULLY_RETIRED = NO; PRODUCTION_DEPLOYMENT_VERIFIED = NO; INDEPENDENT_H1_VALIDATION = NOT_MEASURED; NEW_LIVE_SMOKE_NOT_MEASURED) — replaces POST /api/analyze default route with Hybrid /4 (HYBRID_ROUTE_MODE = live default, staging-replay for dev/test, ALLOW_LIVE_AI=0 kill-switch, 503 INVALID_HYBRID_ROUTE_MODE on off/unknown, zero fallback to LLM_ONLY), retires 18 LEGACY_ONLY product files (pipeline.py, adapter3_simulation.py, geometry_compiler/*, 10 legacy .md skills) + 54 legacy scripts + 91 legacy tests while preserving transcribe.md, semantic_program/route.py (COMPATIBILITY_REQUIRED), exact geometry kernel, Scene3D, construction continuity, auth, classroom, and persistence (frontend/** untouched in cutover); bumps CACHE_VERSION = 132 (ROUTE_D_CACHE_POLICY = 132:route-d); pre-cutover rollback tag pre-hybrid-cutover-f986e897 (f986e897bd266d06d4a9c5fa78c05463b7b247bf); product 52205f45, frozen candidate f5f2c147 (102 measured files 765487a4b48e7d52…); clean detached Full T3 FULL_PRODUCT_GATE_PASS (13762 pytest, 1502 vitest, build PASS, demo 5/5, crash 6/6, full-t3-f5f2c147.json); publication safety range main..HEAD PASS (0 violations)
+VERIFICATION = ALGOSIM_HYBRID_CUTOVER_FINAL_REPORT.md; full-t3-f5f2c147.json; candidate_divergence.json; frozen-evaluation-candidate-017bfb9f.json; k1-owner-approval.template.json; s2-owner-approval.template.json; r1-owner-approval.template.json
+CODE_COMMIT = 52205f45fb66966de7d5b471d471c92d1ea2ac91
+CANDIDATE_COMMIT = f5f2c147
+MODEL_REQUEST_COUNT = 0
+CORRECTS = HYBRID_MASTER_FINAL_BACKEND_PRODUCT_COMPLETION (default routing, retired legacy modules, CACHE_VERSION 132, candidate identity f5f2c147 / 765487a4b48e7d52…, and template blobs 1cf8225c / 7200a3bc / a81f822c; prior candidate 017bfb9f preserved in frozen-evaluation-candidate-017bfb9f.json)
 CORRECTED_BY = NONE
 
 ## WAVE_ID = ALGOSIM_W4_END_TO_END_GEOMETRY_AND_PEDAGOGICAL_SIMULATION
