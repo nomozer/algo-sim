@@ -1,0 +1,25 @@
+{
+ "campaign_id": "C26",
+ "max_requests": 80,
+ "max_usd": 1.0,
+ "requests_used": 10,
+ "spent_upper_usd": 0.0540085,
+ "pilots": [
+  {
+   "study": "K-1",
+   "http_requests": 3,
+   "spent_upper_usd": 0.020308
+  },
+  {
+   "study": "S-2",
+   "http_requests": 4,
+   "spent_upper_usd": 0.0200534
+  },
+  {
+   "study": "R-1",
+   "http_requests": 3,
+   "spent_upper_usd": 0.0136471
+  }
+ ],
+ "carried_from": null
+}
