@@ -197,7 +197,7 @@ CODE_COMMIT = d331e75b5bbf15722eca77c54e398173eefec98d
 CANDIDATE_COMMIT = 180db769
 MODEL_REQUEST_COUNT = 69
 CORRECTS = HYBRID_MASTER_C25_LIVE_GEMINI_EXECUTION_AND_EVALUATION (live-route timeout statement; candidate divergence chain hybrid-live-gemini-execution/candidate_divergence.json -> hybrid-live-extraction-retest/candidate_divergence.json; approval templates rebound to runner d1dc51d7 / measured_system 276fc548)
-CORRECTED_BY = NONE
+CORRECTED_BY = HYBRID_MASTER_FINAL_BACKEND_PRODUCT_COMPLETION (candidate divergence chain hybrid-live-extraction-retest/candidate_divergence.json -> hybrid-master-final-backend-product/candidate_divergence.json and pilot approval template measured_system rebound to b33629d10b9673e1 -> blobs 6d7755a3 / 590a3c9d / 44d4bc1d; prior candidate 180db769 preserved in hybrid-master-final-backend-product/frozen-evaluation-candidate.json; all C26 live receipts and reports remain byte-for-byte untouched)
 
 ## CONTINUATION_ID = HYBRID_MASTER_C27_INDEPENDENT_H1_PREREGISTRATION_AND_CUTOVER_DECISION
 
@@ -221,6 +221,18 @@ CODE_COMMIT = d331e75b5bbf15722eca77c54e398173eefec98d (product unchanged; evalu
 CANDIDATE_COMMIT = 180db769
 MODEL_REQUEST_COUNT = 0
 CORRECTS = NONE
+CORRECTED_BY = NONE
+
+## CONTINUATION_ID = HYBRID_MASTER_FINAL_BACKEND_PRODUCT_COMPLETION
+
+REPORT = docs/evaluation/geometry/runs/hybrid-master-backend-replacement/ALGOSIM_FINAL_BACKEND_PRODUCT_REPORT.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-master-backend-replacement/
+CLASSIFICATION = FUNCTIONAL_BACKEND_COMPLETE + OFFLINE_DETERMINISTIC_FIXTURE_TEST + CAPTURED_WIRE_REGRESSION_SEPARATED_FROM_LIVE (0 new live provider calls; NOT INDEPENDENTLY_VALIDATED; NOT PRODUCTION_CUTOVER_APPROVED; H-1 remains BLOCKED_EXTERNAL_AUTHOR; PEDAGOGICAL_HUMAN_VALIDATION = NOT_EVALUATED) — adds deterministic 0-LLM construction_continuity.py (backward-compatible Scene3D step enrichment with step_id, coordinate_frame_id = canonical_chart_v1, depends_on, preconditions, created_ids/reused_ids/highlighted_ids/retired_ids, verification_refs, and 5-part pedagogical step_summary + fail-closed SCENE_BUILD_FAILED continuity validator across 7 discontinuity classes), cleans curved-solid O.O'/S.O/O_sphere_O and compose_quantity learner strings and wires MAT_RANG_BUOC into prefer_declared_plane_names / _vai_mat_cat without leaking auxiliary feet in function_route.py, canonicalizes verbatim-grounded simulation_goals[*].vertex/point -> target_refs in typed_fact_next_extraction.py (4/4 provider surface fingerprints unchanged), enforces unsupported-over-ambiguous refusal precedence in typed_fact_next_bridge.py (R1-F03 OUT_OF_SCOPE), and adds 'điểm chính giữa' + 'đi qua/nối' Source Gate parity in registry.py (geometry-functions/33); C26 70-case captured wire replay 40/41 (97.56%) positive served exact (K-1 10/10, S-2 17/18, R-1 13/13), 29/29 negative refused, 0 wrong-served, 0 continuity violations; R-1 gold replay 18/18 (r1-live-pilot-gold-replay-final.jsonl); Wave 3 72/72 + 72/72 (0 wrong-served); 41/41 preview fixtures regenerated (fixtures-adapter-2-construction-continuity); sequential 140-run perf p50 = 75.17 ms, p95 = 222.64 ms, peak 1.69 MB; product d6a53dc6, frozen candidate 017bfb9f (119 files b33629d10b9673e1…), DEFAULT_MODE = LLM_ONLY, HYBRID_ROUTE_MODE = off, CACHE_VERSION = 131, frontend/** untouched; clean detached Full T3 FULL_PRODUCT_GATE_PASS (16749 pytest, 1502 vitest, full-t3-017bfb9f.json)
+VERIFICATION = ALGOSIM_FINAL_BACKEND_PRODUCT_REPORT.md; full-t3-017bfb9f.json; r1-live-pilot-gold-replay-final.jsonl; fixtures-adapter-2-construction-continuity/manifest.json; k1-owner-approval.template.json; s2-owner-approval.template.json; r1-owner-approval.template.json; ../hybrid-master-final-backend-product/frozen-evaluation-candidate.json; ../hybrid-master-final-backend-product/candidate_divergence.json
+CODE_COMMIT = d6a53dc6d11273f297b7029f0db07476cd81dcfb
+CANDIDATE_COMMIT = 017bfb9f
+MODEL_REQUEST_COUNT = 0
+CORRECTS = HYBRID_MASTER_C26_LIVE_EXTRACTION_RETEST (candidate divergence chain hybrid-live-extraction-retest/candidate_divergence.json -> hybrid-master-final-backend-product/candidate_divergence.json and pilot approval template measured_system rebound to b33629d10b9673e1 -> blobs 6d7755a3 / 590a3c9d / 44d4bc1d; C26 live receipts and reports unchanged)
 CORRECTED_BY = NONE
 
 ## WAVE_ID = ALGOSIM_W4_END_TO_END_GEOMETRY_AND_PEDAGOGICAL_SIMULATION
