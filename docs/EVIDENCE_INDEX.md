@@ -199,6 +199,18 @@ MODEL_REQUEST_COUNT = 69
 CORRECTS = HYBRID_MASTER_C25_LIVE_GEMINI_EXECUTION_AND_EVALUATION (live-route timeout statement; candidate divergence chain hybrid-live-gemini-execution/candidate_divergence.json -> hybrid-live-extraction-retest/candidate_divergence.json; approval templates rebound to runner d1dc51d7 / measured_system 276fc548)
 CORRECTED_BY = NONE
 
+## CONTINUATION_ID = HYBRID_MASTER_C27_INDEPENDENT_H1_PREREGISTRATION_AND_CUTOVER_DECISION
+
+REPORT = docs/evaluation/geometry/runs/hybrid-independent-h1/HYBRID_CUTOVER_DECISION.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-independent-h1/
+CLASSIFICATION = PREREGISTERED_LIVE_PAIRED_EVALUATION_PACKAGE + OFFLINE_EQUIVALENCE_VERIFICATION (0 live provider calls; product unchanged at d331e75b, frozen candidate 180db769, 118 files 276fc548… MATCH, DEFAULT_MODE = LLM_ONLY, HYBRID_ROUTE_MODE = off, CACHE_VERSION = 131, frontend/** untouched) — pre-registers contamination-free H-1 authoring handoff (60 Vietnamese problems = 45 SERVE + 5/5/5 OUT_OF_DOMAIN / CONTRADICTORY_DATA / MISSING_DATA), resolves §III strict-contract vs semantic-goal correctness via h1-section-determination-equivalence/1 without mutating historical gold labels (read-only C26 verification: mathematical 37/41 & 0/70 wrong-served, semantic 37/41 & 0/70 wrong-served, strict 30/41 & 7/70), implements offline sealing & three-tier scorer score_independent_holdout_equivalence.py (5/5 pytest PASS), and computes telemetry-grounded paired live budget proposal (max_requests = 300, expected actual spend USD 1.50-2.00, preflight reservation max_usd = 52.00; C26 remaining budget not reused); H1_AUTHORING_INDEPENDENCE = NOT_ESTABLISHED; H1_MEASUREMENT = NOT_MEASURED; PAIRED_LIVE_EVALUATION_COMPLETE = NO; LIVE_GEMINI_QUALITY_VALIDATED = NO; HYBRID_CUTOVER_BLOCKED; LEGACY_REMOVAL_BLOCKED
+VERIFICATION = HYBRID_CUTOVER_DECISION.md; H1_AUTHORING_HANDOFF.md; H1_PREREGISTRATION.md; H1_CORPUS_INTEGRITY.json; PAIRED_LIVE_BUDGET_PROPOSAL.md; paired-live-owner-approval.template.json; c26-three-tier-verification.json; run.json; README.md
+CODE_COMMIT = d331e75b5bbf15722eca77c54e398173eefec98d (product unchanged; scripts/tests/docs only)
+CANDIDATE_COMMIT = 180db769
+MODEL_REQUEST_COUNT = 0
+CORRECTS = NONE
+CORRECTED_BY = NONE
+
 ## WAVE_ID = ALGOSIM_W4_END_TO_END_GEOMETRY_AND_PEDAGOGICAL_SIMULATION
 
 REPORT = docs/evaluation/geometry/runs/geometry-generalization-and-pedagogical-construction/report.md

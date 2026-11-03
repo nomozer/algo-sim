@@ -1,0 +1,36 @@
+{
+  "schema": "algosim-eval-run/1",
+  "run_slug": "hybrid-independent-h1",
+  "epic": "ALGOSIM_MASTER_HYBRID_BACKEND_REPLACEMENT",
+  "task": "INDEPENDENT_H1_HOLDOUT_PAIRED_LIVE_EVALUATION_AND_HYBRID_CUTOVER_DECISION",
+  "branch": "research/hybrid-master-backend-replacement",
+  "scope": "BACKEND_ONLY",
+  "frontend_modified": false,
+  "product_modified": false,
+  "date": "2026-11-03",
+  "base_checkpoint_commit": "8daf3b64c21badc7426e1893e6eeb4d10f7230e1",
+  "product_commit": "d331e75b5bbf15722eca77c54e398173eefec98d",
+  "candidate_commit": "180db769",
+  "measured_system": "276fc548196e13eaa0ca7635428248dcaee7be79b79dff58c24a0478cddd4c63",
+  "measured_system_files": 118,
+  "versions": {
+    "registry": "geometry-functions/32",
+    "planner": "geometry-fact-planner/26",
+    "engine": "geometry-function-engine/24",
+    "typed_fact_next": "typed-fact-next/2",
+    "adapter": "hybrid-simulation-adapter/4",
+    "default_mode": "LLM_ONLY",
+    "hybrid_route_mode_default": "off",
+    "cache_version": "131"
+  },
+  "live_provider_calls": 0,
+  "live_spend_usd": 0.0,
+  "statuses": {
+    "H1_AUTHORING_INDEPENDENCE": "NOT_ESTABLISHED",
+    "H1_MEASUREMENT": "NOT_MEASURED",
+    "PAIRED_LIVE_EVALUATION_COMPLETE": "NO",
+    "LIVE_GEMINI_QUALITY_VALIDATED": "NO",
+    "HYBRID_CUTOVER_DECISION": "HYBRID_CUTOVER_BLOCKED",
+    "LEGACY_REMOVAL_DECISION": "LEGACY_REMOVAL_BLOCKED"
+  }
+}
