@@ -34,7 +34,8 @@ untouched) · 2026-11-03.
 
 ## 2. Candidate identity
 
-- `product_commit_sha` = candidate freeze commit `57457fc4c59094c5e57dd934bffd73533d82b81e`, recorded in `79bbc053`;
+- Product commit (`product_commit_sha` and `EVALUATION_CANDIDATE.json` `commit` at freeze time):
+  `57457fc4c59094c5e57dd934bffd73533d82b81e`, frozen in candidate commit `79bbc0531df89d3757ae16a6d8c5c0388fdac84b`;
   `measured_system.tree_hash` `6202a6a67b555a0d18b59c0edbea7c396b8fe6f1488fb1984f4e7663be1e1421` (118 files);
   `cay_lam_viec_sach = true` (`frozen-evaluation-candidate.json`, `candidate_divergence.json`).
 - Registry `geometry-functions/32`, Planner `geometry-fact-planner/26`, Engine `geometry-function-engine/24`,

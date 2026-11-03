@@ -34,6 +34,15 @@ the two-line slice polygon word; clause-reader consistency.
 All other report claims were checked against the receipts and found supported (Wave 3 72/72 + 72/72, 65 exact reason, 8
 transitions, locked 96/96, probes 0 served negatives, live preflight table, 0 live requests everywhere).
 
-## Round 3
+## Round 3 — receipt commit `e5c54324`: product `57457fc4` & freeze `79bbc053` `READY`; receipt commit `NOT_READY` (0 BLOCKER, 1 MAJOR, 0 MINOR, 1 NIT)
 
-See below (appended after the final report commit).
+Fresh-context read-only `research` subagent (`61c7f72f-ad28-4be8-b109-8309036b3e5b`, launched after `e3e72273` hit provider 429 quota). Verified all scope guards (`frontend/**` untouched, defaults unchanged, 0 live Gemini calls, pilot templates `PENDING_OWNER_DECISION`), all Round 1 (`MINOR-1..NIT-4`) and Round 2 (`R-0..R-7`) closures, all product changes (`21/21` repair tests, `41/41` preview fixtures), and `271/271` governance/seal/candidate/telemetry/thesis tests. Caught two documentation issues:
+
+| id | finding | resolution |
+|---|---|---|
+| R3-1 (MAJOR) | `full-t3-79bbc053.json` `attempt_1.product_commit` and `attempt_1.measured_system.tree_hash` had 8-char prefixes matching `55db50c3` / `f4ed426a` but unverified hex tails | replaced with exact Git / `d5c4098b:EVALUATION_CANDIDATE.json` hashes (`55db50c3654f114fb0691147bdd8a5c15bdd86dc`, `f4ed426a1c2f0a3b8cf24fea98d447094fa577bc91eae2405e36c5c83e50bf59`, `d5c4098b36bedb0ddad7a4fd44759554d0e36c81`) |
+| R3-2 (NIT) | report §2 line 37 called `57457fc4…` the "candidate freeze commit … recorded in `79bbc053`" | clarified as product commit (`product_commit_sha` / `commit` at freeze time), frozen in candidate commit `79bbc0531df89d3757ae16a6d8c5c0388fdac84b` |
+
+## Round 4
+
+See below (appended after Round 4 verification).

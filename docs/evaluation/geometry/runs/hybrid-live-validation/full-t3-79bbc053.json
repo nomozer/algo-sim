@@ -3,10 +3,10 @@
   "verdict": "FULL_PRODUCT_GATE_PASS",
   "attempt": 2,
   "attempt_1": {
-    "head": "d5c4098b",
-    "product_commit": "55db50c3582c4f67375ef316ed81741083d827ef",
+    "head": "d5c4098b36bedb0ddad7a4fd44759554d0e36c81",
+    "product_commit": "55db50c3654f114fb0691147bdd8a5c15bdd86dc",
     "measured_system": {
-      "tree_hash": "f4ed426ae45f2d1db5c50a2be30df10a0f980bb1b6e49d8dc0f6a0b7506c9d2b",
+      "tree_hash": "f4ed426a1c2f0a3b8cf24fea98d447094fa577bc91eae2405e36c5c83e50bf59",
       "files": 118
     },
     "verdict": "FULL_PRODUCT_GATE_FAIL",
