@@ -185,6 +185,18 @@ CODE_COMMIT = f60ae29e5c6d1b39057743ef05948a0ad06f4fca (live Run 3 measured on p
 CANDIDATE_COMMIT = 428515dc
 MODEL_REQUEST_COUNT = 70
 CORRECTS = HYBRID_MASTER_C24_LIVE_VALIDATION_AND_BACKEND_REPAIR (supersedes LIVE_GEMINI_MEASURED = NO / PAID_PROJECT_NOT_VERIFIED status and updates candidate divergence chain hybrid-live-validation/candidate_divergence.json -> hybrid-live-gemini-execution/candidate_divergence.json and C21 approval templates; C24 report and offline receipts remain byte-for-byte intact)
+CORRECTED_BY = HYBRID_MASTER_C26_LIVE_EXTRACTION_RETEST (its §3.3 / §10 Q7 claim that the live route cuts at a 15 s deadline is wrong: the product route applies HYBRID_LIVE_TIMEOUT_SECONDS 60 s and HYBRID_LIVE_DEADLINE_SECONDS 180 s by default; candidate divergence chain continued by hybrid-live-extraction-retest/candidate_divergence.json; the C25 report and Run 1-3 receipts are unchanged)
+
+## CONTINUATION_ID = HYBRID_MASTER_C26_LIVE_EXTRACTION_RETEST
+
+REPORT = docs/evaluation/geometry/runs/hybrid-live-extraction-retest/HYBRID_LIVE_EXTRACTION_RETEST_REPORT.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-live-extraction-retest/
+CLASSIFICATION = LIVE_REGRESSION_MEASURED on a development-contaminated corpus (K-1/S-2/R-1 70/70 on ONE candidate 180db769, product d331e75b, 118 files 276fc548; new Owner campaign C26 69/80 HTTP requests all HTTP 200 STOP, USD 0.3499129 / 1.00, OWNER_ATTESTED paid tier, canary 10 rows reused under a carried ledger) — false refusal on the 39 positives Run 3 measured 20/39 -> 2/39 (4/41 incl. the 2 never-measured paraphrases, gold also refuses them), 0 mathematically wrong served (37/37 served exact with certificates), 0 negatives served, 7 strict contract mismatches with exact answers; extraction repairs for named-vs-described points, square/rectangle and split side, inferred altitude, segment heights (TDD 7 RED -> 11 GREEN) + tightened v2 instruction; live route timeout verified 60 s / 180 s (C25 15 s statement corrected); LIVE_GEMINI_QUALITY_VALIDATED = NO (contaminated); GENUINE_DISCOVERY_NOT_ESTABLISHED; HYBRID_CUTOVER_BLOCKED; Full T3 FULL_PRODUCT_GATE_PASS at 180db769 (16698 pytest, 1502 vitest); frontend/** untouched
+VERIFICATION = HYBRID_LIVE_EXTRACTION_RETEST_REPORT.md; preregistration.md; c26-vs-run3-analysis.json; captured-wire-replay-d331e75b.jsonl; canary/c21-delegated-execution-receipt.json; canary/c26-global-budget-ledger.json; full/c21-delegated-execution-receipt.json; full/c26-global-budget-ledger.json; full/k1-live.jsonl; full/s2-live.jsonl; full/r1-live.jsonl; full-t3-180db769.json; candidate_divergence.json; frozen-evaluation-candidate.json
+CODE_COMMIT = d331e75b5bbf15722eca77c54e398173eefec98d
+CANDIDATE_COMMIT = 180db769
+MODEL_REQUEST_COUNT = 69
+CORRECTS = HYBRID_MASTER_C25_LIVE_GEMINI_EXECUTION_AND_EVALUATION (live-route timeout statement; candidate divergence chain hybrid-live-gemini-execution/candidate_divergence.json -> hybrid-live-extraction-retest/candidate_divergence.json; approval templates rebound to runner d1dc51d7 / measured_system 276fc548)
 CORRECTED_BY = NONE
 
 ## WAVE_ID = ALGOSIM_W4_END_TO_END_GEOMETRY_AND_PEDAGOGICAL_SIMULATION

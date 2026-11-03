@@ -1,0 +1,603 @@
+{
+ "schema": "c21-delegated-execution-receipt/1",
+ "authorization_mode": "EXPLICIT_OWNER_DELEGATED_EXECUTION",
+ "authorization_source": "EXPLICIT_OWNER_INSTRUCTION",
+ "directive_id": "OWNER_C26_LIVE_EXTRACTION_RETEST_2026_11_03_FULL",
+ "authorized_scope": [
+  "K-1",
+  "S-2",
+  "R-1"
+ ],
+ "excluded_scope": [
+  "H-1",
+  "PRODUCTION_CUTOVER",
+  "MERGE_PUSH"
+ ],
+ "authorized_model": "gemini-2.5-flash",
+ "candidate_commit": "802818e5c93f51a3d7e376e82f48872e3a8f99b0",
+ "runtime_identity": {
+  "measured_system": "276fc548196e13eaa0ca7635428248dcaee7be79b79dff58c24a0478cddd4c63",
+  "cache_version": "131",
+  "model": "gemini-2.5-flash",
+  "skills_sha256": "1dd37ccce05a9c15a4b399ff848226525413f351ce607659b9d4c0c28ea217d2",
+  "paired_harness_sha256": "4af1dc76355ec4f59d1f9045b7cee03d40b1bab3528290963776be85daa408d6",
+  "runner_sha256": "d1dc51d7a241a01410ed94bb8269e4e3a3f855054a5b7feca9c5c516b39e0086",
+  "scorer_sha256": "8c330bd493f9d401f579b6383f1a1df2bc9172eee2530cf187be2024801b5a2d"
+ },
+ "per_pilot_caps": {
+  "K-1": {
+   "max_requests": 16,
+   "max_usd": 1.0
+  },
+  "S-2": {
+   "max_requests": 36,
+   "max_usd": 2.0
+  },
+  "R-1": {
+   "max_requests": 18,
+   "max_usd": 1.0
+  }
+ },
+ "global_caps": {
+  "max_requests": 80,
+  "max_usd": 1.0
+ },
+ "campaign_id": "C26",
+ "executed_at": "2026-11-03T10:59:58Z",
+ "credentials_summary": {
+  "api_key_present": true,
+  "api_key_source": "root_dotenv",
+  "project_id_present": false,
+  "project_source": "missing",
+  "oauth_token_present": false
+ },
+ "paid_project_verification": {
+  "verified": true,
+  "source": "EXPLICIT_OWNER_PAID_ATTESTATION",
+  "attestation_sha256": "e89153f533827db33572314c977e73cf1d24d8db611358f3302eccdc87fb12e0",
+  "attestation_path": "docs/evaluation/geometry/runs/hybrid-live-validation/owner-paid-attestation.json",
+  "statement_ref": "OWNER_DIRECT_STATEMENT_2026_11_03T145305_PLUS0700",
+  "project_id": null
+ },
+ "templates_verified": {
+  "K-1": {
+   "template_name": "k1-owner-approval.template.json",
+   "template_git_blob": "32757e96fd44dae8a33bd08664360b56ec1a39f3",
+   "corpus_sha256": "6eeab278aef771c14ac1849363af3f87d52e8d90f6d27c1d5441ad8308acc080",
+   "cases": 16,
+   "max_requests": 16,
+   "max_usd": 1.0
+  },
+  "S-2": {
+   "template_name": "s2-owner-approval.template.json",
+   "template_git_blob": "c061aea0e81cbd042d3a2c4fcbc8bd919fdefb55",
+   "corpus_sha256": "3f1682bd6adbc5f21cb504a6b25f6ccc226c9b0d791f05fcb2eeb6a9a6fc6791",
+   "cases": 36,
+   "max_requests": 36,
+   "max_usd": 2.0
+  },
+  "R-1": {
+   "template_name": "r1-owner-approval.template.json",
+   "template_git_blob": "4d425cc18f6c80b71008d79157fd5371872fffa7",
+   "corpus_sha256": "250466ebdf5bcb435a2b803ed9443ef30b7f37818a3ae9f7e90a40625e84b7c6",
+   "cases": 18,
+   "max_requests": 18,
+   "max_usd": 1.0
+  }
+ },
+ "verified_conditions": [
+  "candidate_product_freeze_matched",
+  "default_mode_llm_only_preserved",
+  "authorized_model_gemini_2_5_flash_pinned_no_fallback",
+  "corpora_k1_s2_r1_validated",
+  "approval_templates_k1_s2_r1_bound_to_runtime_identity",
+  "gemini_api_key_present_via_root_dotenv",
+  "paid_project_verified_via_explicit_owner_paid_attestation"
+ ],
+ "unverified_conditions": [],
+ "status": "COMPLETE",
+ "stop_reason": null,
+ "model_availability": "VERIFIED_LIVE",
+ "approvals_created": [
+  {
+   "study": "K-1",
+   "file": "k1-delegated-approval.json",
+   "sha256": "82de775152373f4b889d008efbb073187a83979627d9ec1368b892490d95aeaa"
+  },
+  {
+   "study": "S-2",
+   "file": "s2-delegated-approval.json",
+   "sha256": "8315a038eef8315fa26a667fb561158afd4be6efab4a90e5922e4d8303760c84"
+  },
+  {
+   "study": "R-1",
+   "file": "r1-delegated-approval.json",
+   "sha256": "f5b5a4dd73165a55d1048391a0af56ba47f002905903458f8d1e0d5da80973f9"
+  }
+ ],
+ "total_http_requests": 69,
+ "total_spent_upper_usd": 0.3499129,
+ "total_spent_reported_usd": 0.2959044,
+ "carried_ledger": {
+  "ledger": "c26-global-budget-ledger.json",
+  "sha256": "1d6adfb0079b604989cb5e057efd6cadb8175d45edff4373f32bc45bf6d8ee53",
+  "requests_used": 10,
+  "spent_upper_usd": 0.0540085
+ },
+ "pilots": [
+  {
+   "study": "K-1",
+   "output_file": "k1-live.jsonl",
+   "output_sha256": "b6e3ebeccc8b1a1e16622213d94ecf58f7f29560328610472c58120298d38e81",
+   "completed": true,
+   "stop_reason": null,
+   "cases_run": 16,
+   "cases_planned": 16,
+   "cases_not_measured": 0,
+   "reused_rows": 3,
+   "reused_from": "canary/k1-live.jsonl",
+   "http_requests": 13,
+   "live_answered_rows": 16,
+   "spent_upper_usd": 0.07725570000000001,
+   "spent_reported_usd": 0.0772557,
+   "latency_median_s": 9.520981700003176,
+   "latency_p90_s": 13.873571600001014,
+   "metrics": {
+    "extraction_accuracy": {
+     "numerator": 14,
+     "denominator": 14,
+     "rate": 1.0
+    },
+    "goal_completeness": {
+     "numerator": 8,
+     "denominator": 14,
+     "rate": 0.571429
+    },
+    "operand_preservation": {
+     "numerator": 14,
+     "denominator": 14,
+     "rate": 1.0
+    },
+    "ambiguity_detection": {
+     "numerator": 2,
+     "denominator": 2,
+     "rate": 1.0
+    },
+    "clarification_correctness": {
+     "numerator": 2,
+     "denominator": 2,
+     "rate": 1.0
+    },
+    "false_clarification": {
+     "numerator": 0,
+     "denominator": 14,
+     "rate": 0.0
+    },
+    "unsupported_classification": {
+     "numerator": 0,
+     "denominator": 0,
+     "rate": "UNKNOWN"
+    },
+    "wrong_served_end_to_end": {
+     "numerator": 4,
+     "denominator": 16,
+     "rate": 0.25
+    }
+   },
+   "supplementary": {
+    "composition_labels": {
+     "CORRECT_REFUSAL": 4,
+     "EXTRACTION_FAILURE": 2,
+     "REGISTERED_DECOMPOSITION": 6,
+     "WRONG_SERVED": 4
+    },
+    "planner_label_disagreements": [
+     "K-A01",
+     "K-A02",
+     "K-A03",
+     "K-A04"
+    ],
+    "described_points": {
+     "emitted": {
+      "numerator": 8,
+      "denominator": 8,
+      "rate": 1.0
+     },
+     "kinds_match": {
+      "numerator": 8,
+      "denominator": 8,
+      "rate": 1.0
+     },
+     "refs_resolve": {
+      "numerator": 8,
+      "denominator": 8,
+      "rate": 1.0
+     },
+     "quotes_verbatim": {
+      "numerator": 8,
+      "denominator": 8,
+      "rate": 1.0
+     }
+    },
+    "constraints": {
+     "emitted": {
+      "numerator": 6,
+      "denominator": 6,
+      "rate": 1.0
+     },
+     "kinds_match": {
+      "numerator": 6,
+      "denominator": 6,
+      "rate": 1.0
+     },
+     "operands_match": {
+      "numerator": 6,
+      "denominator": 6,
+      "rate": 1.0
+     },
+     "quotes_verbatim": {
+      "numerator": 6,
+      "denominator": 6,
+      "rate": 1.0
+     },
+     "no_invented_construction": {
+      "numerator": 6,
+      "denominator": 6,
+      "rate": 1.0
+     }
+    },
+    "hybrid_outcomes": {
+     "SERVED_CORRECT": 6,
+     "SERVED_WRONG": 4,
+     "CORRECT_REFUSAL": 2,
+     "FALSE_REFUSAL": 0,
+     "WRONG_REASON_REFUSAL": 2,
+     "CORRECT_CLARIFICATION": 2,
+     "WRONG_REASON_CLARIFICATION": 0,
+     "FALSE_CLARIFICATION": 0,
+     "REASON_NOT_VERIFIED": 0,
+     "INFRASTRUCTURE_FAILURE": 0
+    },
+    "note": "not a protocol §2 metric; reported beside them (Master directive §V)",
+    "end_to_end_correct": {
+     "numerator": 10,
+     "denominator": 16,
+     "rate": 0.625
+    },
+    "gold_replay_ceiling": {
+     "numerator": 16,
+     "denominator": 16,
+     "rate": 1.0
+    },
+    "false_refusal": {
+     "numerator": 0,
+     "denominator": 10,
+     "rate": 0.0
+    },
+    "by_stratum": {
+     "K-A": {
+      "numerator": 0,
+      "denominator": 4,
+      "rate": 0.0
+     },
+     "K-B": {
+      "numerator": 0,
+      "denominator": 2,
+      "rate": 0.0
+     },
+     "K-C": {
+      "numerator": 6,
+      "denominator": 6,
+      "rate": 1.0
+     },
+     "K-D": {
+      "numerator": 2,
+      "denominator": 2,
+      "rate": 1.0
+     },
+     "K-E": {
+      "numerator": 2,
+      "denominator": 2,
+      "rate": 1.0
+     }
+    },
+    "attribution": {
+     "LLM_EXTRACTION_DIFFERS_FROM_GOLD": 6
+    }
+   }
+  },
+  {
+   "study": "S-2",
+   "output_file": "s2-live.jsonl",
+   "output_sha256": "45f68d1d85fe3fc8827ddb33723647640245b3886352a9df1bac9e1a513a1f61",
+   "completed": true,
+   "stop_reason": null,
+   "cases_run": 36,
+   "cases_planned": 36,
+   "cases_not_measured": 0,
+   "reused_rows": 4,
+   "reused_from": "canary/s2-live.jsonl",
+   "http_requests": 31,
+   "live_answered_rows": 35,
+   "spent_upper_usd": 0.14774730000000003,
+   "spent_reported_usd": 0.1477473,
+   "latency_median_s": 7.072326500001509,
+   "latency_p90_s": 11.259901699999318,
+   "metrics": {
+    "extraction_accuracy": {
+     "numerator": 23,
+     "denominator": 24,
+     "rate": 0.958333
+    },
+    "goal_completeness": {
+     "numerator": 23,
+     "denominator": 24,
+     "rate": 0.958333
+    },
+    "operand_preservation": {
+     "numerator": 24,
+     "denominator": 24,
+     "rate": 1.0
+    },
+    "ambiguity_detection": {
+     "numerator": 5,
+     "denominator": 6,
+     "rate": 0.833333
+    },
+    "clarification_correctness": {
+     "numerator": 3,
+     "denominator": 3,
+     "rate": 1.0
+    },
+    "false_clarification": {
+     "numerator": 0,
+     "denominator": 30,
+     "rate": 0.0
+    },
+    "unsupported_classification": {
+     "numerator": 5,
+     "denominator": 6,
+     "rate": 0.833333
+    },
+    "wrong_served_end_to_end": {
+     "numerator": 0,
+     "denominator": 36,
+     "rate": 0.0
+    }
+   },
+   "supplementary": {
+    "hybrid_outcomes": {
+     "SERVED_CORRECT": 16,
+     "SERVED_WRONG": 0,
+     "CORRECT_REFUSAL": 10,
+     "FALSE_REFUSAL": 2,
+     "WRONG_REASON_REFUSAL": 5,
+     "CORRECT_CLARIFICATION": 0,
+     "WRONG_REASON_CLARIFICATION": 3,
+     "FALSE_CLARIFICATION": 0,
+     "REASON_NOT_VERIFIED": 0,
+     "INFRASTRUCTURE_FAILURE": 0
+    },
+    "note": "not a protocol §2 metric; reported beside them (Master directive §V)",
+    "end_to_end_correct": {
+     "numerator": 26,
+     "denominator": 36,
+     "rate": 0.722222
+    },
+    "gold_replay_ceiling": {
+     "numerator": 35,
+     "denominator": 36,
+     "rate": 0.972222
+    },
+    "false_refusal": {
+     "numerator": 2,
+     "denominator": 18,
+     "rate": 0.111111
+    },
+    "by_stratum": {
+     "S2-A": {
+      "numerator": 6,
+      "denominator": 6,
+      "rate": 1.0
+     },
+     "S2-B": {
+      "numerator": 5,
+      "denominator": 6,
+      "rate": 0.833333
+     },
+     "S2-C": {
+      "numerator": 0,
+      "denominator": 6,
+      "rate": 0.0
+     },
+     "S2-D": {
+      "numerator": 6,
+      "denominator": 6,
+      "rate": 1.0
+     },
+     "S2-E": {
+      "numerator": 4,
+      "denominator": 6,
+      "rate": 0.666667
+     },
+     "S2-F": {
+      "numerator": 5,
+      "denominator": 6,
+      "rate": 0.833333
+     }
+    },
+    "attribution": {
+     "DETERMINISTIC_LAYER_REPRODUCED_WITH_GOLD": 1,
+     "LLM_EXTRACTION_DIFFERS_FROM_GOLD": 6,
+     "UNATTRIBUTED": 3
+    }
+   }
+  },
+  {
+   "study": "R-1",
+   "output_file": "r1-live.jsonl",
+   "output_sha256": "dec9607c2ade0f439c63a6c6cf911d6e7f0913f1809bd421daf5e78ceb2e69c6",
+   "completed": true,
+   "stop_reason": null,
+   "cases_run": 18,
+   "cases_planned": 18,
+   "cases_not_measured": 0,
+   "reused_rows": 3,
+   "reused_from": "canary/r1-live.jsonl",
+   "http_requests": 15,
+   "live_answered_rows": 18,
+   "spent_upper_usd": 0.07090140000000002,
+   "spent_reported_usd": 0.0709014,
+   "latency_median_s": 6.896251800000755,
+   "latency_p90_s": 11.175084499998775,
+   "metrics": {
+    "extraction_accuracy": {
+     "numerator": 15,
+     "denominator": 15,
+     "rate": 1.0
+    },
+    "goal_completeness": {
+     "numerator": 12,
+     "denominator": 15,
+     "rate": 0.8
+    },
+    "operand_preservation": {
+     "numerator": 15,
+     "denominator": 15,
+     "rate": 1.0
+    },
+    "ambiguity_detection": {
+     "numerator": 1,
+     "denominator": 2,
+     "rate": 0.5
+    },
+    "clarification_correctness": {
+     "numerator": 1,
+     "denominator": 2,
+     "rate": 0.5
+    },
+    "false_clarification": {
+     "numerator": 1,
+     "denominator": 16,
+     "rate": 0.0625
+    },
+    "unsupported_classification": {
+     "numerator": 2,
+     "denominator": 3,
+     "rate": 0.666667
+    },
+    "wrong_served_end_to_end": {
+     "numerator": 3,
+     "denominator": 18,
+     "rate": 0.166667
+    }
+   },
+   "supplementary": {
+    "composition_labels": {
+     "CORRECT_REFUSAL": 2,
+     "EXTRACTION_FAILURE": 3,
+     "REGISTERED_DECOMPOSITION": 1,
+     "SOURCE_EXPLICIT_SEQUENCE": 7,
+     "SOURCE_GROUNDING_FAILURE": 2,
+     "WRONG_SERVED": 3
+    },
+    "planner_label_disagreements": [
+     "R1-B01",
+     "R1-B02",
+     "R1-C02"
+    ],
+    "described_points": {
+     "emitted": {
+      "numerator": 15,
+      "denominator": 15,
+      "rate": 1.0
+     },
+     "kinds_match": {
+      "numerator": 15,
+      "denominator": 15,
+      "rate": 1.0
+     },
+     "refs_resolve": {
+      "numerator": 15,
+      "denominator": 15,
+      "rate": 1.0
+     },
+     "quotes_verbatim": {
+      "numerator": 15,
+      "denominator": 15,
+      "rate": 1.0
+     }
+    },
+    "hybrid_outcomes": {
+     "SERVED_CORRECT": 8,
+     "SERVED_WRONG": 3,
+     "CORRECT_REFUSAL": 2,
+     "FALSE_REFUSAL": 2,
+     "WRONG_REASON_REFUSAL": 1,
+     "CORRECT_CLARIFICATION": 0,
+     "WRONG_REASON_CLARIFICATION": 1,
+     "FALSE_CLARIFICATION": 1,
+     "REASON_NOT_VERIFIED": 0,
+     "INFRASTRUCTURE_FAILURE": 0
+    },
+    "note": "not a protocol §2 metric; reported beside them (Master directive §V)",
+    "end_to_end_correct": {
+     "numerator": 10,
+     "denominator": 18,
+     "rate": 0.555556
+    },
+    "gold_replay_ceiling": {
+     "numerator": 16,
+     "denominator": 18,
+     "rate": 0.888889
+    },
+    "false_refusal": {
+     "numerator": 2,
+     "denominator": 13,
+     "rate": 0.153846
+    },
+    "by_stratum": {
+     "R1-A": {
+      "numerator": 5,
+      "denominator": 5,
+      "rate": 1.0
+     },
+     "R1-B": {
+      "numerator": 0,
+      "denominator": 2,
+      "rate": 0.0
+     },
+     "R1-C": {
+      "numerator": 1,
+      "denominator": 2,
+      "rate": 0.5
+     },
+     "R1-D": {
+      "numerator": 2,
+      "denominator": 2,
+      "rate": 1.0
+     },
+     "R1-E": {
+      "numerator": 0,
+      "denominator": 2,
+      "rate": 0.0
+     },
+     "R1-F": {
+      "numerator": 2,
+      "denominator": 3,
+      "rate": 0.666667
+     },
+     "R1-G": {
+      "numerator": 0,
+      "denominator": 2,
+      "rate": 0.0
+     }
+    },
+    "attribution": {
+     "DETERMINISTIC_LAYER_REPRODUCED_WITH_GOLD": 2,
+     "LLM_EXTRACTION_DIFFERS_FROM_GOLD": 6
+    }
+   }
+  }
+ ]
+}

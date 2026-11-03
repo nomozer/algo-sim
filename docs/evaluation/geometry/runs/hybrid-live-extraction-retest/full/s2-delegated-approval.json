@@ -1,0 +1,41 @@
+{
+ "owner_decision": "DELEGATED_BY_EXPLICIT_OWNER_INSTRUCTION",
+ "pilot": "S-2",
+ "model": "gemini-2.5-flash",
+ "paid_project_confirmed": true,
+ "max_requests": 36,
+ "max_usd": 1.0,
+ "input_usd_per_million": 0.3,
+ "output_usd_per_million": 2.5,
+ "corpus_sha256": "3f1682bd6adbc5f21cb504a6b25f6ccc226c9b0d791f05fcb2eeb6a9a6fc6791",
+ "measured_system": "276fc548196e13eaa0ca7635428248dcaee7be79b79dff58c24a0478cddd4c63",
+ "runner_sha256": "d1dc51d7a241a01410ed94bb8269e4e3a3f855054a5b7feca9c5c516b39e0086",
+ "paired_harness_sha256": "4af1dc76355ec4f59d1f9045b7cee03d40b1bab3528290963776be85daa408d6",
+ "scorer_sha256": "8c330bd493f9d401f579b6383f1a1df2bc9172eee2530cf187be2024801b5a2d",
+ "authorization_mode": "EXPLICIT_OWNER_DELEGATED_EXECUTION",
+ "delegation": {
+  "authorization_source": "EXPLICIT_OWNER_INSTRUCTION",
+  "directive_id": "OWNER_C26_LIVE_EXTRACTION_RETEST_2026_11_03_FULL",
+  "authorized_pilots": [
+   "K-1",
+   "S-2",
+   "R-1"
+  ],
+  "authorized_model": "gemini-2.5-flash",
+  "candidate_commit": "802818e5c93f51a3d7e376e82f48872e3a8f99b0",
+  "global_max_requests": 80,
+  "global_max_usd": 1.0,
+  "issued_at": "2026-11-03T11:02:10Z",
+  "template_path": "s2-owner-approval.template.json",
+  "template_git_blob": "c061aea0e81cbd042d3a2c4fcbc8bd919fdefb55",
+  "paid_project_verification": {
+   "verified": true,
+   "source": "EXPLICIT_OWNER_PAID_ATTESTATION",
+   "attestation_sha256": "e89153f533827db33572314c977e73cf1d24d8db611358f3302eccdc87fb12e0",
+   "attestation_path": "docs/evaluation/geometry/runs/hybrid-live-validation/owner-paid-attestation.json",
+   "statement_ref": "OWNER_DIRECT_STATEMENT_2026_11_03T145305_PLUS0700",
+   "project_id": null
+  },
+  "campaign_id": "C26"
+ }
+}

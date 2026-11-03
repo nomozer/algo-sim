@@ -1,0 +1,30 @@
+{
+ "campaign_id": "C26",
+ "max_requests": 80,
+ "max_usd": 1.0,
+ "requests_used": 69,
+ "spent_upper_usd": 0.3499129,
+ "pilots": [
+  {
+   "study": "K-1",
+   "http_requests": 13,
+   "spent_upper_usd": 0.07725570000000001
+  },
+  {
+   "study": "S-2",
+   "http_requests": 31,
+   "spent_upper_usd": 0.14774730000000003
+  },
+  {
+   "study": "R-1",
+   "http_requests": 15,
+   "spent_upper_usd": 0.07090140000000002
+  }
+ ],
+ "carried_from": {
+  "ledger": "c26-global-budget-ledger.json",
+  "sha256": "1d6adfb0079b604989cb5e057efd6cadb8175d45edff4373f32bc45bf6d8ee53",
+  "requests_used": 10,
+  "spent_upper_usd": 0.0540085
+ }
+}
