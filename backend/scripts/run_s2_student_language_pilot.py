@@ -562,6 +562,10 @@ DELEGATED_PILOT_CAPS: dict[str, tuple[int, float]] = {"K-1": (16, 1.0), "S-2": (
 DELEGATED_SUITE_ORDER = ("K-1", "S-2", "R-1")
 DELEGATED_GLOBAL_MAX_REQUESTS = 70
 DELEGATED_GLOBAL_MAX_USD = 4.0
+#: Owner-authorized live campaigns: id -> (max HTTP requests incl. retries, max ledger USD). C21 = 70 / 4.00 (spent 70/70
+#: over runs 79bbc053, 48372208, 8853c4b0). C26 is a NEW, separate 80 / 1.00 authorization; it never resets C21.
+DELEGATED_CAMPAIGNS: dict[str, tuple[int, float]] = {"C21": (DELEGATED_GLOBAL_MAX_REQUESTS, DELEGATED_GLOBAL_MAX_USD),
+                                                     "C26": (80, 1.0)}
 PAID_VERIFICATION_SOURCES = ("CLOUD_BILLING_API", "EXPLICIT_OWNER_PAID_ATTESTATION")
 SUITE_FATAL_STOPS = {"PROVIDER_MODEL_UNAVAILABLE", "PROVIDER_AUTH_ERROR", "PROVIDER_BLOCK", "INFRASTRUCTURE_STREAK",
                      "UNAUTHORIZED_ENDPOINT_OR_MODEL", "IDENTITY_CHANGED", "CORPUS_CHANGED", "APPROVAL_CHANGED",
@@ -739,12 +743,16 @@ def _check_delegated_terms(study: str, approval: dict[str, Any]) -> None:
     pilots = d.get("authorized_pilots")
     if not (isinstance(pilots, list) and pilots and set(pilots) <= set(DELEGATED_PILOT_CAPS) and study in pilots):
         raise LiveRefused("delegation authorized_pilots invalid")
+    campaign = d.get("campaign_id", "C21")
+    if campaign not in DELEGATED_CAMPAIGNS:
+        raise LiveRefused("delegation campaign_id is not an Owner-authorized campaign")
+    camp_req, camp_usd = DELEGATED_CAMPAIGNS[campaign]
     g_req = d.get("global_max_requests")
-    if type(g_req) is not int or not 0 < g_req <= DELEGATED_GLOBAL_MAX_REQUESTS or approval["max_requests"] > g_req:
+    if type(g_req) is not int or not 0 < g_req <= camp_req or approval["max_requests"] > g_req:
         raise LiveRefused("delegation global_max_requests invalid")
     g_usd = d.get("global_max_usd")
     if (type(g_usd) not in (int, float) or not math.isfinite(g_usd)
-            or not 0 < g_usd <= DELEGATED_GLOBAL_MAX_USD or approval["max_usd"] > g_usd):
+            or not 0 < g_usd <= camp_usd or approval["max_usd"] > g_usd):
         raise LiveRefused("delegation global_max_usd invalid")
     if not re.fullmatch(r"[0-9a-f]{40}", str(d.get("template_git_blob") or "")):
         raise LiveRefused("delegation template_git_blob invalid")
@@ -859,23 +867,39 @@ def _has_verified_usage(usage: dict[str, dict[str, int]] | None) -> bool:
 
 
 class GlobalBudgetLedger:
-    """Cross-pilot hard cap (`MAX_TOTAL_REQUESTS = 70`, `MAX_TOTAL_SPEND_USD = 4.00`) guarded by an exclusive lock."""
+    """Cross-pilot hard cap of ONE campaign (`DELEGATED_CAMPAIGNS`) guarded by an exclusive lock. `carry_from` continues
+    the same campaign from an earlier ledger of it (e.g. a canary), so a campaign can never be spent twice."""
 
     def __init__(self, out_dir: Path, max_requests: int = DELEGATED_GLOBAL_MAX_REQUESTS,
-                 max_usd: float = DELEGATED_GLOBAL_MAX_USD) -> None:
-        if type(max_requests) is not int or not 0 < max_requests <= DELEGATED_GLOBAL_MAX_REQUESTS:
-            raise LiveRefused(f"global_max_requests must be in 1..{DELEGATED_GLOBAL_MAX_REQUESTS}")
-        if type(max_usd) not in (int, float) or not math.isfinite(max_usd) or not 0 < max_usd <= DELEGATED_GLOBAL_MAX_USD:
-            raise LiveRefused(f"global_max_usd must be in (0, {DELEGATED_GLOBAL_MAX_USD}]")
+                 max_usd: float = DELEGATED_GLOBAL_MAX_USD, *, campaign_id: str = "C21",
+                 carry_from: Path | None = None) -> None:
+        if campaign_id not in DELEGATED_CAMPAIGNS:
+            raise LiveRefused(f"unknown campaign {campaign_id!r}")
+        camp_req, camp_usd = DELEGATED_CAMPAIGNS[campaign_id]
+        if type(max_requests) is not int or not 0 < max_requests <= camp_req:
+            raise LiveRefused(f"global_max_requests must be in 1..{camp_req}")
+        if type(max_usd) not in (int, float) or not math.isfinite(max_usd) or not 0 < max_usd <= camp_usd:
+            raise LiveRefused(f"global_max_usd must be in (0, {camp_usd}]")
         out_dir.mkdir(parents=True, exist_ok=True)
-        self.ledger_path = out_dir / "c21-global-budget-ledger.json"
-        self.lock_path = out_dir / "c21-global-budget.lock"
+        self.ledger_path = out_dir / f"{campaign_id.lower()}-global-budget-ledger.json"
+        self.lock_path = out_dir / f"{campaign_id.lower()}-global-budget.lock"
         if self.ledger_path.exists() or self.lock_path.exists():
             raise LiveRefused("global budget ledger or lock already exists; refusing to share or re-spend global budget")
+        self.campaign_id = campaign_id
         self.max_requests = max_requests
         self.max_usd = float(max_usd)
         self.requests_used = 0
         self.spent_upper_usd = 0.0
+        self.carried_from: dict[str, Any] | None = None
+        if carry_from is not None:
+            prior = json.loads(carry_from.read_text(encoding="utf-8"))
+            if (prior.get("campaign_id", "C21") != campaign_id or prior.get("max_requests") != max_requests
+                    or prior.get("max_usd") != float(max_usd)):
+                raise LiveRefused("carried ledger belongs to another campaign or other caps")
+            self.requests_used = int(prior["requests_used"])
+            self.spent_upper_usd = float(prior["spent_upper_usd"])
+            self.carried_from = {"ledger": carry_from.name, "sha256": sha256_file(carry_from),
+                                 "requests_used": self.requests_used, "spent_upper_usd": self.spent_upper_usd}
         self.pilots_recorded: list[dict[str, Any]] = []
         self._lock_held = False
 
@@ -904,11 +928,13 @@ class GlobalBudgetLedger:
         self._flush()
 
     def _flush(self) -> None:
-        self.ledger_path.write_text(json.dumps({
-            "max_requests": self.max_requests, "max_usd": self.max_usd,
-            "requests_used": self.requests_used, "spent_upper_usd": self.spent_upper_usd,
-            "pilots": self.pilots_recorded,
-        }, ensure_ascii=False, indent=1) + "\n", encoding="utf-8", newline="\n")
+        record = {"max_requests": self.max_requests, "max_usd": self.max_usd,
+                  "requests_used": self.requests_used, "spent_upper_usd": self.spent_upper_usd,
+                  "pilots": self.pilots_recorded}
+        if self.campaign_id != "C21":                      # C21 ledgers keep their published shape
+            record = {"campaign_id": self.campaign_id, **record, "carried_from": self.carried_from}
+        self.ledger_path.write_text(json.dumps(record, ensure_ascii=False, indent=1) + "\n", encoding="utf-8",
+                                    newline="\n")
 
 
 def _pilot_budget(approval: dict[str, Any], global_budget: GlobalBudgetLedger | None = None):
@@ -1014,8 +1040,22 @@ def _classify_provider_http_stop(status_code: int, error_body: Any) -> str | Non
     return None
 
 
+def load_reusable_rows(path: Path, corpus_path: Path, identity: dict[str, str]) -> dict[str, dict[str, Any]]:
+    """Rows of an earlier LIVE run of the SAME campaign on the SAME runtime identity and corpus bytes (a canary), so a
+    full run counts them instead of re-sending. Technical failures are never reused (they are re-measured)."""
+    lines = [json.loads(x) for x in path.read_text(encoding="utf-8").splitlines() if x.strip()]
+    header = lines[0] if lines and lines[0].get("type") == "header" else {}
+    if header.get("measurement_class") != "LIVE_DEVELOPMENT_PILOT":
+        raise LiveRefused("only live development-pilot rows can be reused")
+    if header.get("runtime_identity") != identity or header.get("corpus_sha256") != sha256_file(corpus_path):
+        raise LiveRefused("reused rows come from another runtime identity or corpus; a candidate change is a new run")
+    return {r["case_id"]: r for r in lines if r.get("type") == "row" and not r.get("technical_failure")}
+
+
 def evaluate(corpus_path: Path, out_path: Path, approval: dict[str, Any] | None, *, sleep=time.sleep,
-             global_budget: GlobalBudgetLedger | None = None, approval_path: Path | None = None) -> dict[str, Any]:
+             global_budget: GlobalBudgetLedger | None = None, approval_path: Path | None = None,
+             only_case_ids: set[str] | None = None, reuse_rows: dict[str, dict[str, Any]] | None = None,
+             reuse_source: str | None = None) -> dict[str, Any]:
     """`approval is None` ⇒ gold replay; otherwise live under the approved terms, re-checked against the exact corpus
     bytes run (the Owner decision and the environment are checked by `authorize_live`, the CLI's only live entry, and
     `live_transport` refuses every send unless ALLOW_LIVE_AI=1). Rows are flushed as they complete into a new file (never overwritten); a stop is reported, never hidden."""
@@ -1056,11 +1096,19 @@ def evaluate(corpus_path: Path, out_path: Path, approval: dict[str, Any] | None,
                   if live else (lambda: None))
     rows: list[dict[str, Any]] = []
     spent, streak, stop_reason, in_arm = 0.0, 0, None, False
+    planned = [c for c in corpus["cases"] if only_case_ids is None or c["id"] in only_case_ids]
+    reused = 0
     try:
-        for case in corpus["cases"]:
+        for case in planned:
             if live and runtime_identity() != identity:
                 stop_reason = "IDENTITY_CHANGED"
                 break
+            if reuse_rows and case["id"] in reuse_rows:    # measured live by this campaign's canary: never re-sent
+                row = {**reuse_rows[case["id"]], "reused_from": reuse_source}
+                rows.append(row)
+                emit(row)
+                reused += 1
+                continue
             reset_usage()
             if budget is not None:
                 budget.start_arm(spent)
@@ -1155,11 +1203,12 @@ def evaluate(corpus_path: Path, out_path: Path, approval: dict[str, Any] | None,
                "completed": complete,
                "cases_run": len(rows), "cases_planned": len(corpus["cases"]),
                "cases_not_measured": len(corpus["cases"]) - len(rows),        # C19: an unrun case is NOT_MEASURED, not 0
+               "reused_rows": reused, "reused_from": reuse_source if reused else None,
                "http_requests": budget.http_requests if budget else 0,
                "spent_upper_usd": spent if live else 0.0,
                "spent_reported_usd": ("NOT_MEASURED" if not live else "UNKNOWN"
-                                      if any(not isinstance(r["usd"], float) for r in rows)
-                                      else sum(r["usd"] for r in rows)),
+                                      if any(not isinstance(r["usd"], float) for r in rows if not r.get("reused_from"))
+                                      else sum(r["usd"] for r in rows if not r.get("reused_from"))),
                "latency_median_s": P._quantile(latencies, 0.5) if live else "NOT_MEASURED",
                "latency_p90_s": P._quantile(latencies, 0.9) if live else "NOT_MEASURED",
                "score": score, "supplementary": supplementary(rows, study)}
@@ -1191,7 +1240,8 @@ def _git_blob_sha(path: Path, cwd: Path) -> str:
 
 def issue_delegated_approval(*, study: str, spec: dict[str, Any], out_dir: Path, git_cwd: Path,
                              directive_id: str, candidate_commit: str, global_max_requests: int,
-                             global_max_usd: float, paid_verification: dict[str, Any]) -> tuple[Path, dict[str, Any]]:
+                             global_max_usd: float, paid_verification: dict[str, Any],
+                             campaign_id: str = "C21") -> tuple[Path, dict[str, Any]]:
     if paid_verification.get("verified") is not True:
         raise LiveRefused("cannot issue a delegated approval without verified paid project status")
     tpath, cpath = Path(spec["template_path"]), Path(spec["corpus_path"])
@@ -1221,6 +1271,7 @@ def issue_delegated_approval(*, study: str, spec: dict[str, Any], out_dir: Path,
             "template_path": str(tpath.name),
             "template_git_blob": blob,
             "paid_project_verification": paid_verification,
+            **({"campaign_id": campaign_id} if campaign_id != "C21" else {}),
         },
     }
     check_approval_terms(cpath.read_bytes(), approval)
@@ -1251,8 +1302,14 @@ def run_delegated_c21_suite(
     global_max_usd: float = DELEGATED_GLOBAL_MAX_USD,
     billing_http_get=None,
     sleep=time.sleep,
+    campaign_id: str = "C21",
+    carry_ledger: Path | None = None,
+    only_case_ids: dict[str, set[str]] | None = None,
+    reuse_rows_from: dict[str, Path] | None = None,
 ) -> dict[str, Any]:
-    """C21 automatic sequence: Preflight -> Paid-Project Gate -> K-1 -> S-2 -> R-1 under two-tier caps."""
+    """C21 automatic sequence: Preflight -> Paid-Project Gate -> K-1 -> S-2 -> R-1 under two-tier caps. A later
+    campaign (`campaign_id`) may run a canary (`only_case_ids`) and then the full suite reusing the canary rows
+    (`reuse_rows_from`) under the canary's carried ledger (`carry_ledger`)."""
     from app.ai import gemini
     from app.ai.pipeline import route_policy_snapshot
 
@@ -1339,6 +1396,7 @@ def run_delegated_c21_suite(
         "runtime_identity": ident,
         "per_pilot_caps": {k: {"max_requests": v[0], "max_usd": v[1]} for k, v in DELEGATED_PILOT_CAPS.items()},
         "global_caps": {"max_requests": int(global_max_requests), "max_usd": float(global_max_usd)},
+        **({"campaign_id": campaign_id} if campaign_id != "C21" else {}),
         "executed_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
         "credentials_summary": {"api_key_present": bool(creds["api_key"]), "api_key_source": creds["api_key_source"],
                                 "project_id_present": bool(creds["project_id"]),
@@ -1368,7 +1426,8 @@ def run_delegated_c21_suite(
         return receipt
 
     campaign_ledger_dir = ledger_dir or Path(next(iter(specs.values()))["template_path"]).parent
-    ledger = GlobalBudgetLedger(campaign_ledger_dir, max_requests=global_max_requests, max_usd=global_max_usd)
+    ledger = GlobalBudgetLedger(campaign_ledger_dir, max_requests=global_max_requests, max_usd=global_max_usd,
+                                campaign_id=campaign_id, carry_from=carry_ledger)
     prev_allow = os.environ.get("ALLOW_LIVE_AI")
     prev_key = os.environ.get("GEMINI_API_KEY")
     approvals_created: list[dict[str, Any]] = []
@@ -1385,20 +1444,26 @@ def run_delegated_c21_suite(
             apath, _ = issue_delegated_approval(
                 study=study, spec=sp, out_dir=out_dir, git_cwd=repo_cwd, directive_id=directive_id,
                 candidate_commit=candidate_commit, global_max_requests=global_max_requests,
-                global_max_usd=global_max_usd, paid_verification=paid_check,
+                global_max_usd=global_max_usd, paid_verification=paid_check, campaign_id=campaign_id,
             )
             approvals_created.append({"study": study, "file": apath.name, "sha256": sha256_file(apath)})
             verified_approval = authorize_live(Path(sp["corpus_path"]), apath, allow_delegated=True,
                                                trusted_paid_verification=paid_check, repo_root=repo_cwd)
             p_out = out_dir / f"{sp['slug']}-live.jsonl"
             P.claim_approval(apath, p_out)
+            reuse_path = (reuse_rows_from or {}).get(study)
+            reuse = load_reusable_rows(reuse_path, Path(sp["corpus_path"]), ident) if reuse_path else None
             res = evaluate(Path(sp["corpus_path"]), p_out, verified_approval, sleep=sleep,
-                           global_budget=ledger, approval_path=apath)
+                           global_budget=ledger, approval_path=apath,
+                           only_case_ids=only_case_ids.get(study, set()) if only_case_ids is not None else None,
+                           reuse_rows=reuse, reuse_source=(reuse_path.parent.name + "/" + reuse_path.name)
+                           if reuse_path else None)
             pilot_summaries.append({
                 "study": study, "output_file": p_out.name, "output_sha256": sha256_file(p_out),
                 "completed": res["completed"], "stop_reason": res["stop_reason"],
                 "cases_run": res["cases_run"], "cases_planned": res["cases_planned"],
                 "cases_not_measured": res["cases_not_measured"],
+                "reused_rows": res["reused_rows"], "reused_from": res["reused_from"],
                 "http_requests": res["http_requests"],
                 "live_answered_rows": sum(r["http_requests"] > 0 and not r["technical_failure"] for r in res["rows"]),
                 "spent_upper_usd": res["spent_upper_usd"], "spent_reported_usd": res["spent_reported_usd"],
@@ -1440,6 +1505,7 @@ def run_delegated_c21_suite(
             "total_http_requests": ledger.requests_used,
             "total_spent_upper_usd": ledger.spent_upper_usd,
             "total_spent_reported_usd": total_reported,
+            **({"carried_ledger": ledger.carried_from} if ledger.carried_from else {}),
             "pilots": pilot_summaries,
         }
         _write_sanitized_json(receipt_path, receipt, secrets)
