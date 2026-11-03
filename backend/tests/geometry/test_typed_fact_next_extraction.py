@@ -205,14 +205,19 @@ def test_overlapping_occurrences_are_all_reported():
 
 
 _GEMINI_SCHEMA_KEYS = {
-    "type", "description", "enum", "required", "minItems", "maxItems",
-    "pattern", "minLength", "maxLength", "nullable", "items", "properties",
+    "type", "description", "required", "items", "properties", "propertyOrdering",
 }
 _GEMINI_TYPES = {"OBJECT", "ARRAY", "STRING", "INTEGER", "NUMBER", "BOOLEAN"}
+_FORBIDDEN_FSM_BLOWUP_KEYS = {
+    "pattern", "minLength", "maxLength", "minItems", "maxItems", "nullable", "enum", "anyOf",
+}
 
 
 def _walk_gemini_schema(node, path="root"):
     assert isinstance(node, dict), f"{path} is not a dict"
+    assert not (set(node) & _FORBIDDEN_FSM_BLOWUP_KEYS), (
+        f"{path} contains FSM-expanding keys {set(node) & _FORBIDDEN_FSM_BLOWUP_KEYS}"
+    )
     assert set(node) <= _GEMINI_SCHEMA_KEYS, f"{path} has unsupported keys {set(node) - _GEMINI_SCHEMA_KEYS}"
     t = node.get("type")
     assert t in _GEMINI_TYPES, f"{path} has invalid type {t!r}"
@@ -224,32 +229,36 @@ def _walk_gemini_schema(node, path="root"):
         assert isinstance(props, dict) and props, f"{path} OBJECT missing non-empty properties"
         req = node.get("required") or []
         assert set(req) <= set(props), f"{path} required keys not in properties"
+        assert node.get("propertyOrdering") == list(props.keys()), f"{path} missing exact propertyOrdering"
+        assert len(props) - len(req) <= 4, f"{path} has >4 optional properties ({len(props) - len(req)})"
         for k, v in props.items():
             _walk_gemini_schema(v, f"{path}.properties[{k}]")
 
 
-def test_transport_response_schema_is_valid_gemini_v1beta_openapi_subset():
-    from app.ai.fact_extraction import surface_fingerprint as fe_fp
+def test_transport_response_schema_is_valid_compact_gemini_v1beta_subset():
+    from app.ai.fact_extraction import facts_response_schema, surface_fingerprint as fe_fp
     from app.ai.function_calling import surface_fingerprint as fc_fp
     from app.ai.typed_fact_next_extraction import build_typed_fact_next_v2_request
-    from app.simulation.geometry_functions.typed_fact_next import (
-        GOAL_OPERAND_SHAPES,
-        _ARGS_GOC_VUONG,
-        _ARGS_LOI,
-    )
 
     schema = build_typed_fact_next_v2_request(TEXT)["generationConfig"]["responseSchema"]
     _walk_gemini_schema(schema)
 
-    expected_arg_keys = {k for m in (*_ARGS_LOI.values(), *_ARGS_GOC_VUONG) for k in m}
-    arg_props = schema["properties"]["premises"]["items"]["properties"]["args"]["properties"]
-    assert set(arg_props) == expected_arg_keys
+    def _strip_po(n):
+        return {k: (_strip_po(v) if isinstance(v, dict) else v) for k, v in n.items() if k != "propertyOrdering"}
 
-    target_props = schema["properties"]["math_goals"]["items"]["properties"]["target"]["properties"]
-    assert set(target_props) == set(GOAL_OPERAND_SHAPES)
+    flat_bytes = len(json.dumps(facts_response_schema("flat"), ensure_ascii=False).encode("utf-8"))
+    v2_bytes = len(json.dumps(schema, ensure_ascii=False).encode("utf-8"))
+    v2_struct_bytes = len(json.dumps(_strip_po(schema), ensure_ascii=False).encode("utf-8"))
+    assert v2_struct_bytes < flat_bytes and v2_bytes <= 4500, (
+        f"v2 wire schema too large: total={v2_bytes}, struct={v2_struct_bytes}, flat={flat_bytes}"
+    )
+
+    order = schema["propertyOrdering"]
+    assert order.index("solids") < order.index("described_points") < order.index("derived_sections")
+    assert order.index("derived_sections") < order.index("simulation_goals") < order.index("math_goals")
 
     vb = schema["properties"]["solids"]["items"]["properties"]["vertex_bindings"]
-    assert vb["type"] == "ARRAY" and set(vb["items"]["properties"]) == {"local", "canonical"}
+    assert vb == {"type": "ARRAY", "items": {"type": "STRING"}}
 
     assert fc_fp() == "7ea511a6e3828c9adcc8402aa2d7d6b1d433e67a01ec4329c3009c46af652b25"
     assert fe_fp("flat") == "485d3834db8b18cfdb24143bfbb14deb8f5b7a9d74cb612d48db8c08252e507a"
@@ -257,7 +266,7 @@ def test_transport_response_schema_is_valid_gemini_v1beta_openapi_subset():
 
 
 def _pad_constrained_decoding(schema: dict, value):
-    """Simulate Gemini constrained decoding emitting explicit null/default placeholders for unused properties."""
+    """Simulate Gemini constrained decoding emitting explicit empty-array placeholders for optional list properties."""
     if value is None:
         return None
     t = schema.get("type")
@@ -265,18 +274,16 @@ def _pad_constrained_decoding(schema: dict, value):
         return [_pad_constrained_decoding(schema["items"], item) for item in value]
     if t == "OBJECT" and isinstance(value, dict):
         props = schema["properties"]
+        req = set(schema.get("required") or ())
         out = {}
-        for k, sub in props.items():
+        for k in schema["propertyOrdering"]:
+            sub = props[k]
             if k in value:
                 out[k] = _pad_constrained_decoding(sub, value[k])
-            elif sub.get("nullable"):
-                out[k] = None
             elif sub.get("type") == "ARRAY":
                 out[k] = []
-            elif k == "coordinate_frame_id":
-                out[k] = "root"
-            elif k == "style_role":
-                out[k] = "primary"
+            elif sub.get("type") == "STRING" and k not in req:
+                out[k] = ""
         return out
     return value
 
@@ -289,6 +296,7 @@ def test_transport_schema_and_normalizer_preserve_all_pilot_gold_payloads():
         TransportExtractor,
         build_typed_fact_next_v2_request,
         extract_typed_fact_next_v2,
+        to_wire_typed_fact_next_v2,
     )
     from app.simulation.geometry_functions.typed_fact_next import parse_typed_fact_next_v2
 
@@ -299,42 +307,165 @@ def test_transport_schema_and_normalizer_preserve_all_pilot_gold_payloads():
         corpus = json.loads((base / fname).read_text(encoding="utf-8"))
         for case in corpus["cases"]:
             gold = case["gold_extraction"]
-            wire_gold = deepcopy(gold)
-            for s in wire_gold.get("solids") or []:
-                if isinstance(s.get("vertex_bindings"), dict):
-                    s["vertex_bindings"] = [{"local": k, "canonical": v} for k, v in s["vertex_bindings"].items()]
+            wire_gold = to_wire_typed_fact_next_v2(gold)
             assert schema_accepts(schema, wire_gold), f"{fname}:{case['id']} rejected by responseSchema"
             padded = _pad_constrained_decoding(schema, wire_gold)
             assert schema_accepts(schema, padded), f"{fname}:{case['id']} padded rejected by responseSchema"
-            ext = TransportExtractor(lambda _req, p=padded: body(p))
-            raw_norm = ext.extract(case["problem_text"])
-            res = extract_typed_fact_next_v2(case["problem_text"], TransportExtractor(lambda _req, p=padded: body(p)))
-            assert res.code is None, f"{fname}:{case['id']} failed extraction with {res.code}"
-            assert res.payload == parse_typed_fact_next_v2(gold)
-            assert R.project(raw_norm) == R.project(gold), f"{fname}:{case['id']} projection drift"
+            for candidate_wire in (wire_gold, padded, gold):
+                ext = TransportExtractor(lambda _req, p=candidate_wire: body(p))
+                raw_norm = ext.extract(case["problem_text"])
+                res = extract_typed_fact_next_v2(
+                    case["problem_text"], TransportExtractor(lambda _req, p=candidate_wire: body(p))
+                )
+                assert res.code is None, f"{fname}:{case['id']} failed extraction with {res.code}"
+                assert res.payload == parse_typed_fact_next_v2(gold)
+                assert R.project(raw_norm) == R.project(gold), f"{fname}:{case['id']} projection drift"
             checked += 1
     assert checked == 70
 
 
-def test_transport_normalizer_unpacks_vertex_bindings_and_refuses_non_null_inapplicable_fields():
-    from app.ai.typed_fact_next_extraction import TransportExtractor, extract_typed_fact_next_v2
+def test_transport_normalizer_unpacks_entries_and_fails_closed_on_malformed_wire_entries():
+    from app.ai.fact_extraction import schema_accepts
+    from app.ai.typed_fact_next_extraction import (
+        TransportExtractor,
+        build_typed_fact_next_v2_request,
+        extract_typed_fact_next_v2,
+        to_wire_typed_fact_next_v2,
+    )
 
-    raw = payload()
-    raw["solids"][0]["solid_type"] = "pyramid"
-    raw["solids"][0]["vertex_bindings"] = [{"local": "S", "canonical": "S"}, {"local": "A", "canonical": "A1"}]
-    res = extract_typed_fact_next_v2(TEXT, TransportExtractor(lambda _req: body(raw)))
-    assert res.code is None
-    assert res.payload.solids[0].vertex_bindings == {"S": "S", "A": "A1"}
+    schema = build_typed_fact_next_v2_request(TEXT)["generationConfig"]["responseSchema"]
+    rich_text = (
+        "Cho hình chóp S.ABC và S.DBC chung mặt (SBC), SA = 2. "
+        "Mặt phẳng (P) đi qua trung điểm của SA và song song với (ABC). "
+        "Dựng hình chóp S.ABC và tính diện tích thiết diện."
+    )
+    rich_canonical = {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": rich_text,
+        "length_unit": "1",
+        "solids": [
+            {
+                "solid_id": "s1",
+                "solid_type": "pyramid",
+                "notation": "S.ABC",
+                "quote": "Cho hình chóp S.ABC",
+                "vertex_bindings": {"S": "S", "A": "A"},
+            },
+            {
+                "solid_id": "s2",
+                "solid_type": "pyramid",
+                "notation": "S.DBC",
+                "quote": "S.DBC",
+            },
+        ],
+        "premises": [
+            {
+                "kind": "segment_length",
+                "args": {"segment": ["s1::S", "s1::A"], "value": "2"},
+                "quote": "SA = 2",
+                "solid_id": "s1",
+            }
+        ],
+        "described_points": [
+            {
+                "described_id": "m1",
+                "kind": "midpoint",
+                "segment": ["s1::S", "s1::A"],
+                "quote": "trung điểm của SA",
+            }
+        ],
+        "derived_sections": [
+            {
+                "section_id": "sec1",
+                "plane_name": "P",
+                "target_solid_id": "s1",
+                "plane_kind": "through_point_parallel_plane",
+                "through_point": "@m1",
+                "parallel_plane": ["s1::A", "s1::B", "s1::C"],
+                "stated_intersections": [],
+                "quote": "Mặt phẳng (P) đi qua trung điểm của SA và song song với (ABC)",
+            }
+        ],
+        "relations": [
+            {
+                "relation_id": "r1",
+                "kind": "shared_vertices",
+                "pairs": [["s1::S", "s2::S"], ["s1::B", "s2::B"], ["s1::C", "s2::C"]],
+                "quote": "chung mặt (SBC)",
+            }
+        ],
+        "simulation_goals": [
+            {
+                "goal_id": "sg1",
+                "kind": "construct_object",
+                "target_solid_id": "s1",
+                "quote": "Dựng hình chóp S.ABC",
+            }
+        ],
+        "math_goals": [
+            {
+                "goal_id": "mg1",
+                "kind": "measurement",
+                "goal_type": "area",
+                "solid_id": "s1",
+                "target": {"section_id": "sec1"},
+                "quote": "tính diện tích thiết diện",
+            }
+        ],
+    }
+    wire_rich = to_wire_typed_fact_next_v2(rich_canonical)
+    assert schema_accepts(schema, wire_rich)
+    res_rich = extract_typed_fact_next_v2(rich_text, TransportExtractor(lambda _req: body(wire_rich)))
+    assert res_rich.code is None
+    assert res_rich.payload.solids[0].vertex_bindings == {"S": "S", "A": "A"}
+    assert res_rich.payload.relations[0].pairs == (("s1::S", "s2::S"), ("s1::B", "s2::B"), ("s1::C", "s2::C"))
 
-    dup = payload()
-    dup["solids"][0]["solid_type"] = "pyramid"
-    dup["solids"][0]["vertex_bindings"] = [{"local": "A", "canonical": "A1"}, {"local": "A", "canonical": "A2"}]
-    res_dup = extract_typed_fact_next_v2(TEXT, TransportExtractor(lambda _req: body(dup)))
-    assert res_dup.payload is None and res_dup.code == "INVALID_TYPED_FACT_NEXT"
+    blank_opt_text = "Mặt phẳng (P) đi qua A, B và vuông góc với một mặt bên."
+    blank_opt_wire = {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": blank_opt_text,
+        "length_unit": "1",
+        "solids": [],
+        "premises": [],
+        "simulation_goals": [],
+        "math_goals": [],
+        "unresolved": [{
+            "unresolved_id": "u1",
+            "kind": "ambiguous",
+            "subject_ref": "",
+            "missing_roles": ["target_line_or_plane"],
+            "candidate_relations": ["perpendicular"],
+            "quote": "vuông góc với một mặt bên",
+        }],
+    }
+    res_blank = extract_typed_fact_next_v2(blank_opt_text, TransportExtractor(lambda _req: body(blank_opt_wire)))
+    assert res_blank.code is None and res_blank.payload.unresolved[0].subject_ref is None
 
-    bad = payload()
-    bad["math_goals"] = [{"goal_id": "m1", "kind": "measurement", "goal_type": "volume",
-                          "target": {"solid_id": "pyr"}, "numerator_solid_id": "pyr",
-                          "quote": "Dựng hình chóp S.ABC."}]
-    res_bad = extract_typed_fact_next_v2(TEXT, TransportExtractor(lambda _req: body(bad)))
-    assert res_bad.payload is None and res_bad.code == "INVALID_MATH_GOAL"
+    for mutate, expected_code in [
+        (lambda w: w["solids"][0].update(vertex_bindings=["A=A1", "A=A2"]),
+         "INVALID_TYPED_FACT_NEXT"),
+        (lambda w: w["premises"][0].update(args=["value=2", "value=3"]),
+         "INVALID_TYPED_FACT_NEXT"),
+        (lambda w: w["premises"][0].update(args=["segment_without_equals"]),
+         "INVALID_TYPED_FACT_NEXT"),
+        (lambda w: w["premises"][0].update(args=["segment=S,,A"]),
+         "INVALID_TYPED_FACT_NEXT"),
+        (lambda w: w["solids"][0].update(params=["quote=Cho hình chóp S.ABC."]),
+         "INVALID_TYPED_FACT_NEXT"),
+        (lambda w: w.update(math_goals=[{
+            "goal_id": "m1", "kind": "measurement", "goal_type": "volume", "solid_id": "pyr",
+            "target": ["solid_id=pyr"],
+            "params": ["numerator_solid_id=pyr"],
+            "quote": "Dựng hình chóp S.ABC.",
+        }]), "INVALID_MATH_GOAL"),
+    ]:
+        bad = to_wire_typed_fact_next_v2({
+            **payload(),
+            "length_unit": "1",
+            "solids": [{**payload()["solids"][0], "solid_type": "pyramid"}],
+            "premises": [{"kind": "segment_length", "args": {"segment": ["S", "A"], "value": "2"},
+                          "quote": "Cho hình chóp S.ABC.", "solid_id": "pyr"}],
+        })
+        mutate(bad)
+        res_bad = extract_typed_fact_next_v2(TEXT, TransportExtractor(lambda _req, b=bad: body(b)))
+        assert res_bad.payload is None and res_bad.code == expected_code

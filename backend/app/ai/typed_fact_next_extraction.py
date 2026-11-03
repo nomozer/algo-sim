@@ -9,9 +9,10 @@ import re
 from typing import Any, Callable, Mapping, Protocol
 
 from app.ai.fact_extraction import _TuChoiAI, build_request, parse_response
-from app.ai.function_calling import LiveAIDisabled, _openapi
+from app.ai.function_calling import LiveAIDisabled
 from app.simulation.geometry_functions.registry import _phu_dinh, _vai_tro_tai, _vi_tri, chuan_hoa
 from app.simulation.geometry_functions.typed_fact_next import (
+    DESCRIBED_POINT_FIELDS,
     GOAL_OPERAND_SHAPES,
     TYPED_FACT_NEXT_V2_SCHEMA_VERSION,
     TypedFactNextPayloadV2,
@@ -50,134 +51,396 @@ class ReplayExtractor:
 
 
 TYPED_FACT_NEXT_SYSTEM_INSTRUCTION = (
-    "Chỉ trích dữ kiện theo lược đồ typed-fact-next/2; chép nguyên văn từng ký tự của problem_text và mọi quote "
-    "(kể cả khi đề có lỗi gõ chữ; không diễn đạt lại, không thêm/bớt khoảng trắng). length_unit là 'a' nếu độ dài chứa "
-    "tham số a, ngược lại là '1'. Không tính toán, không chọn phép dựng, không sinh toạ độ hoặc mã. "
-    "Không biến mệnh đề phủ định, điều kiện ('nếu … thì') hay điều phải chứng minh thành premise.\n"
-    "1. solids: pyramid ghi notation dạng Đỉnh.Đáy (S.ABC, S.ABCD; tứ diện ABCD ghi A.BCD); prism ghi Đáy1.Đáy2 "
-    "(ABC.A'B'C', ABCD.A'B'C'D'); khối tròn xoay không đặt tên ghi notation='()'.\n"
-    "2. premises (gán solid_id của khối chứa giả thiết): chỉ dùng kind chuẩn và đúng khoá args: "
-    "regular_pyramid {apex, base}; right_prism {base, top} (lăng trụ đứng/đều, hình hộp chữ nhật, hình lập phương — "
+    "Chỉ trích dữ kiện theo lược đồ typed-fact-next/2 (schema_version='typed-fact-next/2'); chép nguyên văn từng ký tự "
+    "của problem_text và mọi quote từ đề gốc (kể cả khi đề gõ nhầm chính tả; không diễn đạt lại, không tự sửa chữ, "
+    "không thêm/bớt khoảng trắng). length_unit là 'a' nếu độ dài trong đề chứa tham số a, ngược lại là '1'. "
+    "Không tính toán, không chọn phép dựng, không sinh toạ độ hoặc mã. Không biến mệnh đề phủ định, điều kiện "
+    "('nếu … thì') hay mệnh đề yêu cầu chứng minh thành premises.\n"
+    "Quy ước chuỗi khoá=giá_trị trên wire: các mảng args, operands, target, params, constraints và vertex_bindings là "
+    "mảng chuỗi dạng 'khoá=giá_trị' cho toán hạng đơn (ví dụ 'side=2', 'vertex=A', 'point=@h1', 'section_id=sec1') "
+    "hoặc 'khoá=P1,P2,...' phân tách bằng dấu phẩy cho danh sách nhãn điểm (ví dụ 'vertices=A,B,C,D', 'line=S,A', "
+    "'segment=S,@o1'); bỏ qua các trường tuỳ chọn không dùng (không điền chuỗi rỗng).\n"
+    "1. solids: solid_type thuộc {pyramid, prism, cylinder, cone, sphere, cone_frustum}. pyramid ghi notation dạng "
+    "Đỉnh.Đáy (S.ABC, S.ABCD; tứ diện ABCD ghi A.BCD); prism ghi Đáy1.Đáy2 (ABC.A'B'C', ABCD.A'B'C'D'); khối tròn xoay "
+    "không đặt tên ghi notation='()' (tham số center, apex_or_top, rim_point, radius, height, circumscribes, inscribed_in "
+    "ghi vào solids.params dạng 'radius=2', 'circumscribes=s1'; vertex_bindings chỉ dùng khi nhiều khối khác tên đỉnh "
+    "chung dạng 'local=canonical').\n"
+    "2. premises (gán solid_id của khối chứa giả thiết): chỉ dùng kind chuẩn và đúng khoá trong args: "
+    "regular_pyramid ['apex=S','base=A,B,C,...']; "
+    "right_prism ['base=A,B,C','top=A\\',B\\',C\\''] (dùng cho lăng trụ đứng/đều, hình hộp chữ nhật, hình lập phương — "
     "chỉ thêm regular_polygon/rectangle/segment_length cho mặt hoặc cạnh đề thực sự nêu); "
-    "regular_polygon {vertices, side?}; rectangle {vertices}; right_angle {vertex, rays} (vertex là đỉnh góc vuông, "
-    "rays gồm 2 điểm trên 2 cạnh); segment_length {segment, value}; height {value, solid?}; "
-    "equal_length {segment_a, segment_b}; perpendicular_line_plane {line, plane}; perpendicular_lines {line1, line2}; "
-    "face_perpendicular_base {face, base}; altitude {apex, foot, solid?} (quote gồm cả tên khối và cụm đường cao nếu "
-    "cùng câu); midpoint {point, segment}; divide_segment {point, segment, ratio}; centroid {point, polygon}; "
-    "orthogonal_projection {point, image, plane}; orthogonal_projection_line {point, image, line}; "
-    "intersect_line_line {point, line1, line2}; intersect_line_plane {point, line, plane}.\n"
-    "3. described_points: điểm đề MÔ TẢ mà không đặt tên (midpoint: segment; centroid/orthocenter trực tâm/"
-    "circumcenter tâm đường tròn ngoại tiếp tam giác: polygon 3 đỉnh; orthogonal_projection: point, plane; "
-    "orthogonal_projection_line: point, line; intersect_line_line: line1, line2; intersect_line_plane: line, plane) ⇒ "
-    "khai trong described_points với quote nguyên văn cụm mô tả và ghi '@' + described_id tại toán hạng điểm của "
-    "math_goals.target, derived_sections.through_point hoặc described_points khác; không tự đặt tên đỉnh mới, không "
-    "thêm điểm phụ đề không nhắc tới.\n"
-    "4. derived_sections: plane_name không kèm ngoặc (P, Q, α). Mặt cắt qua 1 điểm (nhãn đỉnh hoặc @described_id) và "
-    "song song 1 mặt / vuông góc 1 đường / song song 2 đường ⇒ through_point_parallel_plane (through_point, "
-    "parallel_plane 3 nhãn), through_point_perpendicular_line (through_point, perpendicular_line 2 nhãn), hoặc "
-    "through_point_parallel_two_lines. Mặt cắt cho bằng tổ hợp quan hệ giữa các nhãn đỉnh (chứa cạnh/điểm, song song "
-    "đường, vuông góc mặt) ⇒ plane_kind='constrained', through_point=null, khai đúng các ràng buộc trong constraints "
-    "(contains_points 1..4 nhãn, parallel_to_line 2 nhãn, perpendicular_to_plane 3..4 nhãn). stated_intersections chỉ "
-    "chứa giao điểm đề nêu.\n"
-    "5. simulation_goals & math_goals: lược đồ simulation-first — mọi đề hợp lệ (khi unresolved rỗng) PHẢI có "
-    "simulation_goals (mặc định kind='construct_object', target_solid_id trỏ tới khối đã khai, quote nguyên văn mệnh đề "
-    "khai khối hoặc câu yêu cầu vẽ/mô phỏng), kể cả khi đề chỉ hỏi tính toán; không bịa math_goals khi đề chỉ yêu cầu "
-    "vẽ/mô phỏng. Câu hỏi tính toán ghi vào math_goals: kind='measurement' đặt solid_id ở mức mục tiêu (không đặt "
-    "solid_id cạnh toán hạng khác trong target), goal_type thuộc {distance, angle, volume, area, lateral_area, radius} "
-    "(độ dài đoạn thẳng dùng goal_type='distance' với target={segment:[A,B]}; thể tích khối dùng target={solid_id:...}; "
-    "diện tích thiết diện dùng target={section_id:...}; diện tích đa giác dùng target={polygon:[...]}).\n"
-    "6. unresolved: mệnh đề mơ hồ nhiều cách hiểu (ambiguous), thiếu toán hạng/tên đỉnh/kích thước bắt buộc "
-    "(missing_operand), thuật ngữ lạ (unrecognized_term), hoặc yêu cầu ngoài phạm vi như toạ độ Oxyz, quỹ tích, cực "
-    "trị, tổ hợp chưa hỗ trợ (unsupported) ⇒ ghi vào unresolved với quote nguyên văn mệnh đề gây vướng, missing_roles "
-    "và candidate_relations phù hợp (subject_ref chỉ điền khi là đúng một nhãn đỉnh nằm nguyên văn trong quote đó); "
-    "nếu chưa khai được khối hợp lệ thì để solids=[] và simulation_goals=[]. Dữ kiện mâu thuẫn số học hoặc mặt phẳng "
-    "ràng buộc chưa đủ duy nhất nhưng rõ ngữ pháp hình học thì vẫn trích đầy đủ, không đưa vào unresolved."
-)
-
-_CANONICAL_PREMISE_KINDS = (
-    "regular_pyramid", "right_prism", "regular_polygon", "rectangle", "right_angle",
-    "segment_length", "height", "equal_length", "perpendicular_line_plane", "perpendicular_lines",
-    "face_perpendicular_base", "altitude", "midpoint", "divide_segment", "centroid",
-    "orthogonal_projection", "orthogonal_projection_line", "intersect_line_line", "intersect_line_plane",
+    "regular_polygon ['vertices=A,B,C,...', tuỳ chọn 'side=2'] (tam giác đều, hình vuông, lục giác đều); "
+    "rectangle ['vertices=A,B,C,D']; "
+    "right_angle ['vertex=A','rays=B,C'] (vertex là đỉnh góc vuông, rays là 2 điểm trên 2 cạnh góc vuông); "
+    "segment_length ['segment=S,A','value=2']; height ['value=2', tuỳ chọn 'solid=s1']; "
+    "equal_length ['segment_a=S,A','segment_b=S,B']; "
+    "perpendicular_line_plane ['line=S,A','plane=A,B,C,...']; perpendicular_lines ['line1=S,A','line2=B,C']; "
+    "face_perpendicular_base ['face=S,A,B','base=A,B,C,...']; "
+    "altitude ['apex=S','foot=H', tuỳ chọn 'solid=s1'] (quote gồm cả tên khối và cụm đường cao nếu cùng câu); "
+    "midpoint ['point=M','segment=A,B']; divide_segment ['point=M','segment=A,B','ratio=2'] (đúng hướng tỉ số); "
+    "centroid ['point=G','polygon=A,B,C']; "
+    "orthogonal_projection ['point=A','image=H','plane=S,B,C']; "
+    "orthogonal_projection_line ['point=A','image=H','line=S,B']; "
+    "intersect_line_line ['point=O','line1=A,C','line2=B,D']; "
+    "intersect_line_plane ['point=I','line=S,M','plane=A,B,C'].\n"
+    "3. described_points: điểm đề MÔ TẢ mà không đặt tên (ví dụ 'trung điểm của SC', 'hình chiếu vuông góc của B lên "
+    "mặt phẳng (SAC)', 'giao điểm của AC và BD', 'trực tâm của tam giác SBC', 'tâm đường tròn ngoại tiếp tam giác ABC') "
+    "⇒ khai trong described_points với quote nguyên văn cụm mô tả, kind thuộc {midpoint, centroid, orthocenter, "
+    "circumcenter, orthogonal_projection, orthogonal_projection_line, intersect_line_line, intersect_line_plane} và "
+    "operands tương ứng (midpoint: ['segment=S,C']; centroid/orthocenter/circumcenter: ['polygon=S,B,C'] 3 đỉnh tam "
+    "giác; orthogonal_projection: ['point=B','plane=S,A,C']; orthogonal_projection_line: ['point=A','line=S,B']; "
+    "intersect_line_line: ['line1=A,C','line2=B,D']; intersect_line_plane: ['line=S,M','plane=A,B,C']). Tại chỗ dùng "
+    "điểm đó (math_goals.target, derived_sections.through_point, hoặc toán hạng điểm của described_points khác), ghi "
+    "'@' + described_id (ví dụ '@m1'). Không tự đặt tên đỉnh mới; vẫn trích đầy đủ kể cả khi hai điểm mô tả nối với "
+    "nhau hoặc lồng nhau.\n"
+    "4. derived_sections: plane_name không kèm ngoặc ('P', 'Q', 'α'). Mặt cắt đi qua 1 điểm (nhãn đỉnh hoặc "
+    "@described_id) kèm 1 quan hệ ⇒ through_point_parallel_plane (điền through_point, params=['parallel_plane=A,B,C'] "
+    "với ĐÚNG 3 nhãn đại diện mặt phẳng, ví dụ mặt (ABCD) ghi 'parallel_plane=A,B,C'), "
+    "through_point_perpendicular_line (điền through_point, params=['perpendicular_line=S,A']), hoặc "
+    "through_point_parallel_two_lines (điền through_point, params=['parallel_line_a=A,B','parallel_line_b=C,D']). "
+    "Mặt cắt cho bằng tổ hợp quan hệ giữa các nhãn đỉnh (chứa cạnh/điểm, song song đường thẳng, vuông góc mặt phẳng) "
+    "⇒ plane_kind='constrained', bỏ trống through_point và params, khai đủ các ràng buộc trong constraints dạng "
+    "'contains_points=A,B' (1..4 nhãn), 'parallel_to_line=B,C' (2 nhãn), 'perpendicular_to_plane=S,C,D' (3..4 nhãn). "
+    "stated_intersections chỉ khai khi đề nêu rõ cạnh bị cắt.\n"
+    "5. simulation_goals & math_goals: khi unresolved rỗng, mỗi khối chính trong solids PHẢI có 1 mục tiêu trong "
+    "simulation_goals với kind='construct_object', target_solid_id trỏ tới solid_id của khối đó, quote nguyên văn cụm "
+    "khai khối hoặc yêu cầu vẽ/mô phỏng (kể cả khi đề chỉ hỏi tính toán; mặt cắt đã khai ở derived_sections không thêm "
+    "simulation_goals trùng lặp; nếu đề chỉ yêu cầu vẽ/mô phỏng thì để math_goals=[]). Câu hỏi tính toán ghi vào "
+    "math_goals: kind='measurement' đặt solid_id ở mức mục tiêu (không đặt solid_id cạnh toán hạng khác trong target), "
+    "goal_type thuộc {distance, angle, volume, area, lateral_area, radius}; độ dài đoạn thẳng dùng goal_type='distance' "
+    "với target=['segment=S,@o1']; khoảng cách điểm–mặt/đường dùng target=['point=@h1','plane=S,C,D'] hoặc "
+    "['point=@h1','line=S,C']; góc dùng target=['line=A,@m1','plane=A,B,C,D'] hoặc ['line1=...','line2=...']; "
+    "thể tích khối dùng target=['solid_id=s1']; diện tích thiết diện dùng target=['section_id=sec1']; diện tích đa giác "
+    "dùng target=['polygon=A,B,@m1'].\n"
+    "6. unresolved: chỉ dùng cho mệnh đề không thể biểu diễn trung thực vào lược đồ mà không đoán — mơ hồ nhiều cách "
+    "hiểu (kind='ambiguous'), thiếu toán hạng/tên đỉnh/kích thước bắt buộc (kind='missing_operand'), thuật ngữ lạ "
+    "(kind='unrecognized_term'), hoặc khái niệm ngoài lược đồ như toạ độ Oxyz, hình chóp cụt đa diện, cực trị min/max, "
+    "quỹ tích/tập hợp điểm, phép biến hình, điểm đối xứng, bài toán thực tế vận tốc/thời gian (kind='unsupported') ⇒ "
+    "ghi quote nguyên văn mệnh đề gây vướng, missing_roles thuộc {source_point, target_line_or_plane, relation_kind, "
+    "solid_notation, dimension, goal_object}, candidate_relations (tối đa 3) thuộc {orthogonal_projection, intersection, "
+    "midpoint, centroid, perpendicular, parallel, angle, distance}; subject_ref chỉ điền khi là đúng 1 nhãn đỉnh nằm "
+    "nguyên văn trong quote đó. Nếu chưa khai được khối hợp lệ có tên đỉnh thì để solids=[], premises=[], "
+    "simulation_goals=[], math_goals=[]. Đề rõ ngữ pháp hình học nhưng mâu thuẫn số học hoặc mặt phẳng ràng buộc chưa "
+    "đủ xác định duy nhất thì KHÔNG đưa vào unresolved — vẫn trích đầy đủ để bộ kiểm tất định từ chối."
 )
 
 _RELATION_EMPTY_ARRAY_DEFAULTS = (
     "pairs", "face_a", "face_b", "entity_a", "entity_b", "member_refs", "anchor_refs",
 )
+_SOLID_CORE_KEYS = ("solid_id", "solid_type", "notation", "quote")
+_SECTION_CORE_KEYS = ("section_id", "plane_name", "target_solid_id", "plane_kind", "quote")
+_SECTION_DIRECT_OPT_KEYS = ("through_point", "constraints", "stated_intersections")
+_RELATION_CORE_KEYS = ("relation_id", "kind", "quote")
+_SIM_GOAL_CORE_KEYS = ("goal_id", "kind", "quote")
+_SIM_GOAL_DIRECT_OPT_KEYS = ("target_solid_id", "target_section_id")
+_MATH_GOAL_CORE_KEYS = ("goal_id", "kind", "quote")
+_MATH_GOAL_DIRECT_OPT_KEYS = ("goal_type", "solid_id")
+_DESCRIBED_CORE_KEYS = ("described_id", "kind", "quote")
+_FORBIDDEN_KV_NAMES = frozenset({"quote", "problem_text", "source_references"})
+_LIST_VALUED_KV_KEYS = frozenset({
+    *(k for m in (*_ARGS_LOI.values(), *_ARGS_GOC_VUONG) for k, sh in m.items() if sh.startswith("refs")),
+    *(k for k, sh in GOAL_OPERAND_SHAPES.items() if sh.startswith("refs")),
+    *(k for m in DESCRIBED_POINT_FIELDS.values() for k, sh in m.items() if sh != "pt"),
+    "equation_coeffs", "parallel_plane", "perpendicular_line", "parallel_line_a", "parallel_line_b",
+    "face_a", "face_b", "entity_a", "entity_b", "member_refs", "anchor_refs", "target_refs",
+})
 
 
-def _shape_openapi_property(shapes: set[str]) -> dict[str, Any]:
-    if all(s.startswith("refs") for s in shapes):
-        mins = [int(s[4:].rstrip("=")) for s in shapes]
-        exact = len(shapes) == 1 and next(iter(shapes)).endswith("=")
-        prop: dict[str, Any] = {
-            "type": "ARRAY",
-            "items": {"type": "STRING", "minLength": 1},
-            "minItems": min(mins),
-            "nullable": True,
-        }
-        if exact:
-            prop["maxItems"] = min(mins)
-        return prop
-    return {"type": "STRING", "minLength": 1, "nullable": True}
+def _obj(props: dict[str, Any], required: list[str]) -> dict[str, Any]:
+    return {"type": "OBJECT", "properties": props, "required": required, "propertyOrdering": list(props)}
 
 
 def _typed_fact_next_v2_response_schema() -> dict[str, Any]:
-    raw = TypedFactNextPayloadV2.model_json_schema()
-    schema = _openapi({k: v for k, v in raw.items() if k != "$defs"}, raw.get("$defs", {}))
-    props = schema["properties"]
-    props["schema_version"]["enum"] = [TYPED_FACT_NEXT_V2_SCHEMA_VERSION]
-    props["length_unit"]["description"] = (
-        "Đơn vị độ dài: 'a' nếu độ dài trong đề chứa tham số a (như a, 2a, a√3), ngược lại ghi '1'."
-    )
+    # ponytail: flat-item ordered wire schema (~2.8KB, <=4 optional props/object, 0 regex/bound DFAs) avoids Gemini FSM limit;
+    # Python parse_typed_fact_next_v2 enforces all exact regex/enum/arity invariants fail-closed post-decode.
+    s = {"type": "STRING"}
+    s_arr = {"type": "ARRAY", "items": s}
 
-    solid_item = props["solids"]["items"]
-    solid_item["required"] = ["solid_id", "solid_type", "notation", "quote"]
-    solid_item["properties"]["vertex_bindings"] = {
-        "type": "ARRAY",
-        "nullable": True,
-        "description": "Ánh xạ đỉnh cục bộ sang đỉnh chuẩn khi nhiều khối dùng chung đỉnh khác tên; để trống nếu cùng tên.",
-        "items": {
-            "type": "OBJECT",
-            "properties": {
-                "local": {"type": "STRING", "minLength": 1},
-                "canonical": {"type": "STRING", "minLength": 1},
-            },
-            "required": ["local", "canonical"],
+    solid_item = _obj(
+        {
+            "solid_id": s,
+            "solid_type": s,
+            "notation": s,
+            "quote": s,
+            "vertex_bindings": s_arr,
+            "params": s_arr,
         },
-    }
-
-    arg_shapes: dict[str, set[str]] = {}
-    for mapping in (*_ARGS_LOI.values(), *_ARGS_GOC_VUONG):
-        for key, shape in mapping.items():
-            arg_shapes.setdefault(key, set()).add(shape.rstrip("?"))
-    premise_item = props["premises"]["items"]
-    premise_item["properties"]["kind"]["description"] = (
-        "Loại giả thiết chuẩn: " + ", ".join(_CANONICAL_PREMISE_KINDS) + "."
+        ["solid_id", "solid_type", "notation", "quote"],
     )
-    premise_item["properties"]["args"] = {
-        "type": "OBJECT",
-        "properties": {k: _shape_openapi_property(arg_shapes[k]) for k in sorted(arg_shapes)},
+    premise_item = _obj(
+        {"kind": s, "args": s_arr, "quote": s, "solid_id": s},
+        ["kind", "args", "quote"],
+    )
+    dp_item = _obj(
+        {"described_id": s, "kind": s, "operands": s_arr, "quote": s},
+        ["described_id", "kind", "operands", "quote"],
+    )
+    sec_item = _obj(
+        {
+            "section_id": s,
+            "plane_name": s,
+            "target_solid_id": s,
+            "plane_kind": s,
+            "through_point": s,
+            "constraints": s_arr,
+            "stated_intersections": {
+                "type": "ARRAY",
+                "items": _obj({"edge": s_arr, "point": s, "quote": s}, ["edge", "quote"]),
+            },
+            "params": s_arr,
+            "quote": s,
+        },
+        ["section_id", "plane_name", "target_solid_id", "plane_kind", "quote"],
+    )
+    rel_item = _obj({"relation_id": s, "kind": s, "params": s_arr, "quote": s}, ["relation_id", "kind", "quote"])
+    sg_item = _obj(
+        {"goal_id": s, "kind": s, "target_solid_id": s, "target_section_id": s, "params": s_arr, "quote": s},
+        ["goal_id", "kind", "quote"],
+    )
+    mg_item = _obj(
+        {
+            "goal_id": s,
+            "kind": s,
+            "goal_type": s,
+            "solid_id": s,
+            "target": s_arr,
+            "params": s_arr,
+            "quote": s,
+        },
+        ["goal_id", "kind", "quote"],
+    )
+    unres_item = _obj(
+        {
+            "unresolved_id": s,
+            "kind": s,
+            "subject_ref": s,
+            "missing_roles": s_arr,
+            "candidate_relations": s_arr,
+            "quote": s,
+        },
+        ["unresolved_id", "kind", "quote"],
+    )
+    return _obj(
+        {
+            "schema_version": s,
+            "problem_text": s,
+            "length_unit": s,
+            "solids": {"type": "ARRAY", "items": solid_item},
+            "premises": {"type": "ARRAY", "items": premise_item},
+            "described_points": {"type": "ARRAY", "items": dp_item},
+            "derived_sections": {"type": "ARRAY", "items": sec_item},
+            "relations": {"type": "ARRAY", "items": rel_item},
+            "simulation_goals": {"type": "ARRAY", "items": sg_item},
+            "math_goals": {"type": "ARRAY", "items": mg_item},
+            "unresolved": {"type": "ARRAY", "items": unres_item},
+        },
+        ["schema_version", "problem_text", "length_unit", "solids", "premises", "simulation_goals", "math_goals"],
+    )
+
+
+def _pack_kv_strings(mapping: Mapping[str, Any], *, pair_keys: tuple[str, ...] = ()) -> list[str]:
+    out: list[str] = []
+    for k, v in mapping.items():
+        if v is None:
+            continue
+        if k in pair_keys and isinstance(v, (list, tuple)):
+            if v:
+                out.append(f"{k}=" + ";".join(f"{a},{b}" for a, b in v))
+        elif isinstance(v, (list, tuple)):
+            out.append(f"{k}=" + ",".join(str(x) for x in v))
+        else:
+            out.append(f"{k}={v}")
+    return out
+
+
+def to_wire_typed_fact_next_v2(canonical: Mapping[str, Any]) -> dict[str, Any]:
+    """Losslessly pack a canonical `typed-fact-next/2` dict into the compact Gemini wire `responseSchema` shape."""
+    src = deepcopy(dict(canonical))
+    wire: dict[str, Any] = {
+        "schema_version": src.get("schema_version", TYPED_FACT_NEXT_V2_SCHEMA_VERSION),
+        "problem_text": src["problem_text"],
+        "length_unit": src.get("length_unit") or "1",
+        "solids": [],
+        "premises": [],
+    }
+    for s in src.get("solids") or ():
+        ws: dict[str, Any] = {
+            "solid_id": s["solid_id"],
+            "solid_type": s.get("solid_type", "pyramid"),
+            "notation": s["notation"],
+            "quote": s["quote"],
+        }
+        if s.get("vertex_bindings"):
+            vb = s["vertex_bindings"]
+            ws["vertex_bindings"] = (
+                [f"{k}={v}" for k, v in vb.items()] if isinstance(vb, dict) else list(vb)
+            )
+        extra = {k: v for k, v in s.items() if k not in (*_SOLID_CORE_KEYS, "vertex_bindings")}
+        if params := _pack_kv_strings(extra):
+            ws["params"] = params
+        wire["solids"].append(ws)
+
+    for p in src.get("premises") or ():
+        wp: dict[str, Any] = {
+            "kind": p["kind"],
+            "args": _pack_kv_strings(p.get("args") or {}) if isinstance(p.get("args"), Mapping) else list(p.get("args") or ()),
+            "quote": p["quote"],
+        }
+        if p.get("solid_id") is not None:
+            wp["solid_id"] = p["solid_id"]
+        wire["premises"].append(wp)
+
+    if src.get("described_points"):
+        wire["described_points"] = []
+        for dp in src["described_points"]:
+            ops = {k: v for k, v in dp.items() if k not in (*_DESCRIBED_CORE_KEYS, "operands")}
+            wire["described_points"].append({
+                "described_id": dp["described_id"],
+                "kind": dp["kind"],
+                "operands": dp["operands"] if "operands" in dp else _pack_kv_strings(ops),
+                "quote": dp["quote"],
+            })
+
+    if "derived_sections" in src:
+        wire["derived_sections"] = []
+        for sec in src.get("derived_sections") or ():
+            wsec: dict[str, Any] = {k: sec[k] for k in _SECTION_CORE_KEYS if k in sec}
+            wsec.setdefault("plane_name", "α")
+            if sec.get("through_point") is not None:
+                wsec["through_point"] = sec["through_point"]
+            if sec.get("constraints"):
+                wsec["constraints"] = [
+                    f"{c['kind']}={','.join(str(x) for x in c['operands'])}" if isinstance(c, Mapping) else str(c)
+                    for c in sec["constraints"]
+                ]
+            if sec.get("stated_intersections"):
+                wsec["stated_intersections"] = [
+                    {ik: iv for ik, iv in si.items() if iv is not None} for si in sec["stated_intersections"]
+                ]
+            extra = {k: v for k, v in sec.items() if k not in (*_SECTION_CORE_KEYS, *_SECTION_DIRECT_OPT_KEYS, "params")}
+            if params := _pack_kv_strings(extra, pair_keys=("declared_boundary",)):
+                wsec["params"] = params
+            wire["derived_sections"].append(wsec)
+
+    if "relations" in src:
+        wire["relations"] = []
+        for rel in src.get("relations") or ():
+            wrel: dict[str, Any] = {k: rel[k] for k in _RELATION_CORE_KEYS}
+            extra = {k: v for k, v in rel.items() if k not in (*_RELATION_CORE_KEYS, "params") and v != []}
+            if params := _pack_kv_strings(extra, pair_keys=("pairs",)):
+                wrel["params"] = params
+            wire["relations"].append(wrel)
+
+    wire["simulation_goals"] = []
+    for sg in src.get("simulation_goals") or ():
+        wsg: dict[str, Any] = {k: sg[k] for k in _SIM_GOAL_CORE_KEYS}
+        for k in _SIM_GOAL_DIRECT_OPT_KEYS:
+            if sg.get(k) is not None:
+                wsg[k] = sg[k]
+        extra = {k: v for k, v in sg.items() if k not in (*_SIM_GOAL_CORE_KEYS, *_SIM_GOAL_DIRECT_OPT_KEYS, "params") and v != []}
+        if params := _pack_kv_strings(extra):
+            wsg["params"] = params
+        wire["simulation_goals"].append(wsg)
+
+    wire["math_goals"] = []
+    for mg in src.get("math_goals") or ():
+        wmg: dict[str, Any] = {k: mg[k] for k in _MATH_GOAL_CORE_KEYS}
+        for k in _MATH_GOAL_DIRECT_OPT_KEYS:
+            if mg.get(k) is not None:
+                wmg[k] = mg[k]
+        if mg.get("target"):
+            t = mg["target"]
+            wmg["target"] = _pack_kv_strings(t) if isinstance(t, Mapping) else list(t)
+        extra = {
+            k: v for k, v in mg.items()
+            if k not in (*_MATH_GOAL_CORE_KEYS, *_MATH_GOAL_DIRECT_OPT_KEYS, "target", "params")
+        }
+        if params := _pack_kv_strings(extra):
+            wmg["params"] = params
+        wire["math_goals"].append(wmg)
+
+    if src.get("unresolved"):
+        wire["unresolved"] = [
+            {k: v for k, v in u.items() if v is not None} for u in src["unresolved"]
+        ]
+    return wire
+
+
+def _strip_none_keys(item: dict[str, Any], blank_opt_keys: tuple[str, ...] = ()) -> dict[str, Any]:
+    return {
+        k: v for k, v in item.items()
+        if v is not None and not (k in blank_opt_keys and isinstance(v, str) and not v.strip())
     }
 
-    sec_item = props["derived_sections"]["items"]
-    sec_item["properties"]["plane_name"]["description"] = "Tên mặt phẳng cắt không kèm ngoặc, ví dụ P, Q, α."
 
-    mg_item = props["math_goals"]["items"]
-    mg_item["properties"]["target"] = {
-        "type": "OBJECT",
-        "nullable": True,
-        "properties": {k: _shape_openapi_property({sh}) for k, sh in sorted(GOAL_OPERAND_SHAPES.items())},
-    }
-    return schema
+def _split_csv_tokens(rhs: str, label: str) -> list[str]:
+    parts = [tok.strip() for tok in rhs.split(",")]
+    if not rhs.strip() or any(not tok for tok in parts):
+        raise TypedFactNextValidationError("INVALID_TYPED_FACT_NEXT", f"Malformed comma-separated list for {label!r}.")
+    return parts
 
 
-def _strip_none_keys(item: dict[str, Any]) -> dict[str, Any]:
-    return {k: v for k, v in item.items() if v is not None}
+def _unpack_kv_strings(entries: Any, *, pair_keys: tuple[str, ...] = ()) -> dict[str, Any]:
+    if not isinstance(entries, list):
+        raise TypedFactNextValidationError("INVALID_TYPED_FACT_NEXT", "Expected list of 'key=value' entries.")
+    unpacked: dict[str, Any] = {}
+    for raw_entry in entries:
+        if not isinstance(raw_entry, str):
+            raise TypedFactNextValidationError("INVALID_TYPED_FACT_NEXT", "KV wire entry must be a 'key=value' string.")
+        name, sep, rhs = raw_entry.partition("=")
+        name = name.strip()
+        rhs = rhs.strip()
+        if not sep or not name or not rhs or name in _FORBIDDEN_KV_NAMES:
+            raise TypedFactNextValidationError("INVALID_TYPED_FACT_NEXT", f"Invalid KV wire entry {raw_entry!r}.")
+        if name in unpacked:
+            raise TypedFactNextValidationError("INVALID_TYPED_FACT_NEXT", f"Duplicate KV wire key {name!r}.")
+        if name in pair_keys:
+            pairs = []
+            for seg in rhs.split(";"):
+                toks = _split_csv_tokens(seg, name)
+                if len(toks) != 2:
+                    raise TypedFactNextValidationError("INVALID_TYPED_FACT_NEXT", f"Pair entry {name!r} needs 2 refs.")
+                pairs.append(toks)
+            unpacked[name] = pairs
+        elif name in _LIST_VALUED_KV_KEYS:
+            unpacked[name] = _split_csv_tokens(rhs, name)
+        else:
+            unpacked[name] = rhs
+    return unpacked
+
+
+def _merge_unpacked_params(target: dict[str, Any], field: str, *, pair_keys: tuple[str, ...] = ()) -> None:
+    if field not in target:
+        return
+    extra = _unpack_kv_strings(target.pop(field), pair_keys=pair_keys)
+    overlap = set(extra) & set(target)
+    if overlap:
+        raise TypedFactNextValidationError("INVALID_TYPED_FACT_NEXT", f"Conflicting keys in {field}: {sorted(overlap)}.")
+    target.update(extra)
+
+
+def _unpack_constraints(raw_constraints: Any) -> Any:
+    if not isinstance(raw_constraints, list):
+        return raw_constraints
+    out = []
+    for item in raw_constraints:
+        if isinstance(item, dict):
+            out.append(_strip_none_keys(item))
+            continue
+        if not isinstance(item, str):
+            raise TypedFactNextValidationError("INVALID_DERIVED_SECTION", "Plane constraint must be string or object.")
+        kind, sep, rhs = item.partition("=")
+        if not sep:
+            kind, sep, rhs = item.partition(":")
+        kind = kind.strip()
+        if not sep or not kind:
+            raise TypedFactNextValidationError("INVALID_DERIVED_SECTION", f"Malformed plane constraint {item!r}.")
+        out.append({"kind": kind, "operands": _split_csv_tokens(rhs, kind)})
+    return out
 
 
 def _normalize_transport_payload(data: Any) -> Any:
-    """Canonicalize Gemini constrained-decoding null/default placeholders into `typed-fact-next/2` input shape."""
+    """Unpack compact wire `'key=value'` lists and canonicalize placeholders into `typed-fact-next/2` shape."""
     if not isinstance(data, dict) or data.get("schema_version") != TYPED_FACT_NEXT_V2_SCHEMA_VERSION:
         return data
     out = deepcopy(data)
@@ -195,20 +458,29 @@ def _normalize_transport_payload(data: Any) -> Any:
                 norm_solids.append(s)
                 continue
             s_clean = _strip_none_keys(s)
+            _merge_unpacked_params(s_clean, "params")
             if "vertex_bindings" in s_clean:
                 vb = s_clean["vertex_bindings"]
                 if isinstance(vb, list):
                     vb_dict: dict[str, str] = {}
-                    for pair in vb:
-                        if (
-                            not isinstance(pair, dict)
-                            or not isinstance(pair.get("local"), str)
-                            or not isinstance(pair.get("canonical"), str)
+                    for entry in vb:
+                        if isinstance(entry, str):
+                            loc, sep, can = entry.partition("=")
+                            loc, can = loc.strip(), can.strip()
+                            if not sep or not loc or not can:
+                                raise TypedFactNextValidationError(
+                                    "INVALID_TYPED_FACT_NEXT", f"Invalid vertex_bindings entry {entry!r}."
+                                )
+                        elif (
+                            isinstance(entry, dict)
+                            and isinstance(entry.get("local"), str)
+                            and isinstance(entry.get("canonical"), str)
                         ):
+                            loc, can = entry["local"], entry["canonical"]
+                        else:
                             raise TypedFactNextValidationError(
-                                "INVALID_TYPED_FACT_NEXT", "vertex_bindings entry must have string local and canonical."
+                                "INVALID_TYPED_FACT_NEXT", "vertex_bindings entry must be 'local=canonical'."
                             )
-                        loc, can = pair["local"], pair["canonical"]
                         if loc in vb_dict and vb_dict[loc] != can:
                             raise TypedFactNextValidationError(
                                 "INVALID_TYPED_FACT_NEXT", f"Duplicate conflicting vertex binding for {loc!r}."
@@ -228,8 +500,10 @@ def _normalize_transport_payload(data: Any) -> Any:
             if not isinstance(p, dict):
                 norm_premises.append(p)
                 continue
-            p_clean = _strip_none_keys(p)
-            if isinstance(p_clean.get("args"), dict):
+            p_clean = _strip_none_keys(p, ("solid_id",))
+            if isinstance(p_clean.get("args"), list):
+                p_clean["args"] = _unpack_kv_strings(p_clean["args"])
+            elif isinstance(p_clean.get("args"), dict):
                 p_clean["args"] = _strip_none_keys(p_clean["args"])
             norm_premises.append(p_clean)
         out["premises"] = norm_premises
@@ -240,14 +514,17 @@ def _normalize_transport_payload(data: Any) -> Any:
             if not isinstance(sec, dict):
                 norm_sections.append(sec)
                 continue
-            sec_clean = _strip_none_keys(sec)
+            sec_clean = _strip_none_keys(sec, ("through_point",))
+            _merge_unpacked_params(sec_clean, "params", pair_keys=("declared_boundary",))
+            if "constraints" in sec_clean:
+                sec_clean["constraints"] = _unpack_constraints(sec_clean["constraints"])
             if sec_clean.get("constraints") == [] and sec_clean.get("plane_kind") != "constrained":
                 sec_clean.pop("constraints", None)
             if "stated_intersections" not in sec_clean:
                 sec_clean["stated_intersections"] = []
             elif isinstance(sec_clean["stated_intersections"], list):
                 sec_clean["stated_intersections"] = [
-                    _strip_none_keys(si) if isinstance(si, dict) else si
+                    _strip_none_keys(si, ("point",)) if isinstance(si, dict) else si
                     for si in sec_clean["stated_intersections"]
                 ]
             norm_sections.append(sec_clean)
@@ -259,9 +536,11 @@ def _normalize_transport_payload(data: Any) -> Any:
             if not isinstance(rel, dict):
                 norm_rels.append(rel)
                 continue
+            rel_clean = _strip_none_keys(rel)
+            _merge_unpacked_params(rel_clean, "params", pair_keys=("pairs",))
             rel_clean = {
-                k: v for k, v in rel.items()
-                if v is not None and not (k in _RELATION_EMPTY_ARRAY_DEFAULTS and v == [])
+                k: v for k, v in rel_clean.items()
+                if not (k in _RELATION_EMPTY_ARRAY_DEFAULTS and v == [])
             }
             norm_rels.append(rel_clean)
         out["relations"] = norm_rels
@@ -272,7 +551,8 @@ def _normalize_transport_payload(data: Any) -> Any:
             if not isinstance(sg, dict):
                 norm_sgs.append(sg)
                 continue
-            sg_clean = _strip_none_keys(sg)
+            sg_clean = _strip_none_keys(sg, ("target_solid_id", "target_section_id"))
+            _merge_unpacked_params(sg_clean, "params")
             if sg_clean.get("style_role") == "primary":
                 sg_clean.pop("style_role", None)
             if sg_clean.get("target_refs") == []:
@@ -286,11 +566,14 @@ def _normalize_transport_payload(data: Any) -> Any:
             if not isinstance(mg, dict):
                 norm_mgs.append(mg)
                 continue
-            mg_clean = _strip_none_keys(mg)
-            if isinstance(mg_clean.get("target"), dict):
+            mg_clean = _strip_none_keys(mg, ("goal_type", "solid_id"))
+            _merge_unpacked_params(mg_clean, "params")
+            if isinstance(mg_clean.get("target"), list):
+                mg_clean["target"] = _unpack_kv_strings(mg_clean["target"])
+            elif isinstance(mg_clean.get("target"), dict):
                 mg_clean["target"] = _strip_none_keys(mg_clean["target"])
-                if mg_clean["target"] == {} and mg_clean.get("kind") != "measurement":
-                    mg_clean.pop("target", None)
+            if mg_clean.get("target") == {} and mg_clean.get("kind") != "measurement":
+                mg_clean.pop("target", None)
             norm_mgs.append(mg_clean)
         out["math_goals"] = norm_mgs
 
@@ -298,9 +581,15 @@ def _normalize_transport_payload(data: Any) -> Any:
         if not out["described_points"]:
             out.pop("described_points", None)
         elif isinstance(out["described_points"], list):
-            out["described_points"] = [
-                _strip_none_keys(dp) if isinstance(dp, dict) else dp for dp in out["described_points"]
-            ]
+            norm_dps = []
+            for dp in out["described_points"]:
+                if not isinstance(dp, dict):
+                    norm_dps.append(dp)
+                    continue
+                dp_clean = _strip_none_keys(dp)
+                _merge_unpacked_params(dp_clean, "operands")
+                norm_dps.append(dp_clean)
+            out["described_points"] = norm_dps
 
     if "unresolved" in out:
         if not out["unresolved"]:
@@ -311,7 +600,7 @@ def _normalize_transport_payload(data: Any) -> Any:
                 if not isinstance(u, dict):
                     norm_unres.append(u)
                     continue
-                u_clean = _strip_none_keys(u)
+                u_clean = _strip_none_keys(u, ("subject_ref",))
                 u_clean.setdefault("missing_roles", [])
                 u_clean.setdefault("candidate_relations", [])
                 norm_unres.append(u_clean)
