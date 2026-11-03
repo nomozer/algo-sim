@@ -43,6 +43,9 @@ Fresh-context read-only `research` subagent (`61c7f72f-ad28-4be8-b109-8309036b3e
 | R3-1 (MAJOR) | `full-t3-79bbc053.json` `attempt_1.product_commit` and `attempt_1.measured_system.tree_hash` had 8-char prefixes matching `55db50c3` / `f4ed426a` but unverified hex tails | replaced with exact Git / `d5c4098b:EVALUATION_CANDIDATE.json` hashes (`55db50c3654f114fb0691147bdd8a5c15bdd86dc`, `f4ed426a1c2f0a3b8cf24fea98d447094fa577bc91eae2405e36c5c83e50bf59`, `d5c4098b36bedb0ddad7a4fd44759554d0e36c81`) |
 | R3-2 (NIT) | report §2 line 37 called `57457fc4…` the "candidate freeze commit … recorded in `79bbc053`" | clarified as product commit (`product_commit_sha` / `commit` at freeze time), frozen in candidate commit `79bbc0531df89d3757ae16a6d8c5c0388fdac84b` |
 
-## Round 4
+## Round 4 — receipt commit `b145ed81`: **`READY`** (0 BLOCKER, 0 MAJOR, 0 MINOR, 0 NIT)
 
-See below (appended after Round 4 verification).
+Fresh-context read-only `research` subagent (`61c7f72f-ad28-4be8-b109-8309036b3e5b`) verified `e5c54324..b145ed81` on a clean working tree:
+- `R3-1 (MAJOR)` closed: `attempt_1.head`, `attempt_1.product_commit`, and `attempt_1.measured_system.tree_hash` in `full-t3-79bbc053.json` match Git and `d5c4098b:docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json` byte-for-byte.
+- `R3-2 (NIT)` closed: report §2 distinguishes product commit `57457fc4…` from candidate freeze commit `79bbc053…`.
+- `git diff 957ec289..b145ed81 --name-only -- frontend` empty (`0` files); `freeze_evaluation_candidate.py --verify` `MATCH` (`118` files, `6202a6a6…`); `check_publication_safety.py --range 957ec289..b145ed81` `PASS` (`0` violations); `test_docs_information_architecture.py` + `test_thesis_acceptance_matrix.py` + `test_evaluation_candidate.py` `120 passed`.

@@ -30,7 +30,7 @@ untouched) · 2026-11-03.
 | candidate (superseded) | `d5c4098b` | first freeze (product `55db50c3`, `f4ed426a…`); Full T3 attempt 1 failed on one divergence-layer key (§15) |
 | product (review round 1) | `57457fc4` | one altitude-foot grammar for both readers; docstrings (§11) — no served/refused change |
 | **candidate** | **`79bbc053`** | `EVALUATION_CANDIDATE.json` frozen at `57457fc4` on a clean tree; templates re-bound; `live-preflight.json` re-run |
-| after | see the final commit of this run (report + receipts + governance) | no merge, no push |
+| after | `e5c54324` → `b145ed81` + final review stamp commit | report + receipts + governance + Round 4 `READY` (`0/0/0/0`); no merge, no push |
 
 ## 2. Candidate identity
 
