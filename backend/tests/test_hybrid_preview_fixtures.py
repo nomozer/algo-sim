@@ -32,7 +32,7 @@ ROOT = Path(__file__).resolve().parents[2]
 #: `relation_certificates` and refusal/gate fixtures are unchanged. Earlier bundles stay unchanged.
 #: Superseded by run `pedagogical-simulation-integration` (engine /23): `served-H12_PROJECTION_MIDPOINT_ANGLE` draws the
 #: stated SH ⊥ (ABC) as a witnessed segment; every other fixture differs only by the declared engine identity pair.
-FIXTURES = ROOT / 'docs/evaluation/geometry/runs/pedagogical-simulation-integration/fixtures-adapter-2-stated-perpendicular'
+FIXTURES = ROOT / 'docs/evaluation/geometry/runs/hybrid-master-backend-replacement/fixtures-adapter-2-construction-continuity'
 #: The superseded bundle — the one that predates the route D version bump the identity-restore test is about.
 OLD_FIXTURES = ROOT / 'docs/evaluation/geometry/runs/hybrid-preview-contract-hardening/fixtures-adapter-2'
 SCRIPT = ROOT / 'backend/scripts/export_hybrid_preview_fixtures.py'
