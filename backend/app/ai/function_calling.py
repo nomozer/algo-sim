@@ -88,6 +88,11 @@ def _openapi(node: Any, defs: dict[str, Any]) -> Any:
             ra[k] = node[k]
     if "items" in node:
         ra["items"] = _openapi(node["items"], defs)
+    elif "prefixItems" in node:
+        phan_tu = [_openapi(x, defs) for x in node["prefixItems"]]
+        if not phan_tu or any(x != phan_tu[0] for x in phan_tu[1:]):
+            raise ValueError("prefixItems không đồng nhất không biểu diễn được trong tập con OpenAPI")
+        ra["items"] = phan_tu[0]
     if "properties" in node:
         ra["properties"] = {k: _openapi(v, defs) for k, v in node["properties"].items()}
     return ra

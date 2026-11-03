@@ -12,9 +12,12 @@ from app.ai.fact_extraction import _TuChoiAI, build_request, parse_response
 from app.ai.function_calling import LiveAIDisabled, _openapi
 from app.simulation.geometry_functions.registry import _phu_dinh, _vai_tro_tai, _vi_tri, chuan_hoa
 from app.simulation.geometry_functions.typed_fact_next import (
+    GOAL_OPERAND_SHAPES,
     TYPED_FACT_NEXT_V2_SCHEMA_VERSION,
     TypedFactNextPayloadV2,
     TypedFactNextValidationError,
+    _ARGS_GOC_VUONG,
+    _ARGS_LOI,
     parse_typed_fact_next_v2,
 )
 
@@ -47,24 +50,279 @@ class ReplayExtractor:
 
 
 TYPED_FACT_NEXT_SYSTEM_INSTRUCTION = (
-    "Chỉ trích dữ kiện theo lược đồ typed-fact-next/2; giữ nguyên problem_text và mọi quote. "
-    "Ghi đủ đối tượng, dữ kiện, mục tiêu dựng và câu hỏi của đề. Không tự thêm dữ kiện, "
-    "không tính toán, không chọn phép dựng, không sinh toạ độ hoặc mã. "
-    "Không biến phủ định, điều kiện hay điều phải chứng minh thành premise. "
-    "stated_intersections chỉ chứa giao điểm đề nêu; không tự suy ra giao điểm còn lại. "
-    "Điểm đề MÔ TẢ mà không đặt tên (trung điểm của SC, trọng tâm tam giác SAB, hình chiếu vuông góc của A lên SD, "
-    "giao điểm của AC và BD, …) ⇒ khai một mục described_points (kind, toán hạng, quote nguyên văn cụm mô tả) và "
-    "ghi '@' + described_id ở đúng chỗ của điểm đó trong mục tiêu hoặc through_point; không tự đặt tên cho điểm. "
-    "Thuật ngữ không rõ nghĩa, thiếu toán hạng, nhiều cách hiểu hay yêu cầu ngoài lược đồ ⇒ ghi vào unresolved "
-    "với quote nguyên văn; không đoán."
+    "Chỉ trích dữ kiện theo lược đồ typed-fact-next/2; chép nguyên văn từng ký tự của problem_text và mọi quote "
+    "(kể cả khi đề có lỗi gõ chữ; không diễn đạt lại, không thêm/bớt khoảng trắng). length_unit là 'a' nếu độ dài chứa "
+    "tham số a, ngược lại là '1'. Không tính toán, không chọn phép dựng, không sinh toạ độ hoặc mã. "
+    "Không biến mệnh đề phủ định, điều kiện ('nếu … thì') hay điều phải chứng minh thành premise.\n"
+    "1. solids: pyramid ghi notation dạng Đỉnh.Đáy (S.ABC, S.ABCD; tứ diện ABCD ghi A.BCD); prism ghi Đáy1.Đáy2 "
+    "(ABC.A'B'C', ABCD.A'B'C'D'); khối tròn xoay không đặt tên ghi notation='()'.\n"
+    "2. premises (gán solid_id của khối chứa giả thiết): chỉ dùng kind chuẩn và đúng khoá args: "
+    "regular_pyramid {apex, base}; right_prism {base, top} (lăng trụ đứng/đều, hình hộp chữ nhật, hình lập phương — "
+    "chỉ thêm regular_polygon/rectangle/segment_length cho mặt hoặc cạnh đề thực sự nêu); "
+    "regular_polygon {vertices, side?}; rectangle {vertices}; right_angle {vertex, rays} (vertex là đỉnh góc vuông, "
+    "rays gồm 2 điểm trên 2 cạnh); segment_length {segment, value}; height {value, solid?}; "
+    "equal_length {segment_a, segment_b}; perpendicular_line_plane {line, plane}; perpendicular_lines {line1, line2}; "
+    "face_perpendicular_base {face, base}; altitude {apex, foot, solid?} (quote gồm cả tên khối và cụm đường cao nếu "
+    "cùng câu); midpoint {point, segment}; divide_segment {point, segment, ratio}; centroid {point, polygon}; "
+    "orthogonal_projection {point, image, plane}; orthogonal_projection_line {point, image, line}; "
+    "intersect_line_line {point, line1, line2}; intersect_line_plane {point, line, plane}.\n"
+    "3. described_points: điểm đề MÔ TẢ mà không đặt tên (midpoint: segment; centroid/orthocenter trực tâm/"
+    "circumcenter tâm đường tròn ngoại tiếp tam giác: polygon 3 đỉnh; orthogonal_projection: point, plane; "
+    "orthogonal_projection_line: point, line; intersect_line_line: line1, line2; intersect_line_plane: line, plane) ⇒ "
+    "khai trong described_points với quote nguyên văn cụm mô tả và ghi '@' + described_id tại toán hạng điểm của "
+    "math_goals.target, derived_sections.through_point hoặc described_points khác; không tự đặt tên đỉnh mới, không "
+    "thêm điểm phụ đề không nhắc tới.\n"
+    "4. derived_sections: plane_name không kèm ngoặc (P, Q, α). Mặt cắt qua 1 điểm (nhãn đỉnh hoặc @described_id) và "
+    "song song 1 mặt / vuông góc 1 đường / song song 2 đường ⇒ through_point_parallel_plane (through_point, "
+    "parallel_plane 3 nhãn), through_point_perpendicular_line (through_point, perpendicular_line 2 nhãn), hoặc "
+    "through_point_parallel_two_lines. Mặt cắt cho bằng tổ hợp quan hệ giữa các nhãn đỉnh (chứa cạnh/điểm, song song "
+    "đường, vuông góc mặt) ⇒ plane_kind='constrained', through_point=null, khai đúng các ràng buộc trong constraints "
+    "(contains_points 1..4 nhãn, parallel_to_line 2 nhãn, perpendicular_to_plane 3..4 nhãn). stated_intersections chỉ "
+    "chứa giao điểm đề nêu.\n"
+    "5. simulation_goals & math_goals: lược đồ simulation-first — mọi đề hợp lệ (khi unresolved rỗng) PHẢI có "
+    "simulation_goals (mặc định kind='construct_object', target_solid_id trỏ tới khối đã khai, quote nguyên văn mệnh đề "
+    "khai khối hoặc câu yêu cầu vẽ/mô phỏng), kể cả khi đề chỉ hỏi tính toán; không bịa math_goals khi đề chỉ yêu cầu "
+    "vẽ/mô phỏng. Câu hỏi tính toán ghi vào math_goals: kind='measurement' đặt solid_id ở mức mục tiêu (không đặt "
+    "solid_id cạnh toán hạng khác trong target), goal_type thuộc {distance, angle, volume, area, lateral_area, radius} "
+    "(độ dài đoạn thẳng dùng goal_type='distance' với target={segment:[A,B]}; thể tích khối dùng target={solid_id:...}; "
+    "diện tích thiết diện dùng target={section_id:...}; diện tích đa giác dùng target={polygon:[...]}).\n"
+    "6. unresolved: mệnh đề mơ hồ nhiều cách hiểu (ambiguous), thiếu toán hạng/tên đỉnh/kích thước bắt buộc "
+    "(missing_operand), thuật ngữ lạ (unrecognized_term), hoặc yêu cầu ngoài phạm vi như toạ độ Oxyz, quỹ tích, cực "
+    "trị, tổ hợp chưa hỗ trợ (unsupported) ⇒ ghi vào unresolved với quote nguyên văn mệnh đề gây vướng, missing_roles "
+    "và candidate_relations phù hợp (subject_ref chỉ điền khi là đúng một nhãn đỉnh nằm nguyên văn trong quote đó); "
+    "nếu chưa khai được khối hợp lệ thì để solids=[] và simulation_goals=[]. Dữ kiện mâu thuẫn số học hoặc mặt phẳng "
+    "ràng buộc chưa đủ duy nhất nhưng rõ ngữ pháp hình học thì vẫn trích đầy đủ, không đưa vào unresolved."
 )
+
+_CANONICAL_PREMISE_KINDS = (
+    "regular_pyramid", "right_prism", "regular_polygon", "rectangle", "right_angle",
+    "segment_length", "height", "equal_length", "perpendicular_line_plane", "perpendicular_lines",
+    "face_perpendicular_base", "altitude", "midpoint", "divide_segment", "centroid",
+    "orthogonal_projection", "orthogonal_projection_line", "intersect_line_line", "intersect_line_plane",
+)
+
+_RELATION_EMPTY_ARRAY_DEFAULTS = (
+    "pairs", "face_a", "face_b", "entity_a", "entity_b", "member_refs", "anchor_refs",
+)
+
+
+def _shape_openapi_property(shapes: set[str]) -> dict[str, Any]:
+    if all(s.startswith("refs") for s in shapes):
+        mins = [int(s[4:].rstrip("=")) for s in shapes]
+        exact = len(shapes) == 1 and next(iter(shapes)).endswith("=")
+        prop: dict[str, Any] = {
+            "type": "ARRAY",
+            "items": {"type": "STRING", "minLength": 1},
+            "minItems": min(mins),
+            "nullable": True,
+        }
+        if exact:
+            prop["maxItems"] = min(mins)
+        return prop
+    return {"type": "STRING", "minLength": 1, "nullable": True}
+
+
+def _typed_fact_next_v2_response_schema() -> dict[str, Any]:
+    raw = TypedFactNextPayloadV2.model_json_schema()
+    schema = _openapi({k: v for k, v in raw.items() if k != "$defs"}, raw.get("$defs", {}))
+    props = schema["properties"]
+    props["schema_version"]["enum"] = [TYPED_FACT_NEXT_V2_SCHEMA_VERSION]
+    props["length_unit"]["description"] = (
+        "Đơn vị độ dài: 'a' nếu độ dài trong đề chứa tham số a (như a, 2a, a√3), ngược lại ghi '1'."
+    )
+
+    solid_item = props["solids"]["items"]
+    solid_item["required"] = ["solid_id", "solid_type", "notation", "quote"]
+    solid_item["properties"]["vertex_bindings"] = {
+        "type": "ARRAY",
+        "nullable": True,
+        "description": "Ánh xạ đỉnh cục bộ sang đỉnh chuẩn khi nhiều khối dùng chung đỉnh khác tên; để trống nếu cùng tên.",
+        "items": {
+            "type": "OBJECT",
+            "properties": {
+                "local": {"type": "STRING", "minLength": 1},
+                "canonical": {"type": "STRING", "minLength": 1},
+            },
+            "required": ["local", "canonical"],
+        },
+    }
+
+    arg_shapes: dict[str, set[str]] = {}
+    for mapping in (*_ARGS_LOI.values(), *_ARGS_GOC_VUONG):
+        for key, shape in mapping.items():
+            arg_shapes.setdefault(key, set()).add(shape.rstrip("?"))
+    premise_item = props["premises"]["items"]
+    premise_item["properties"]["kind"]["description"] = (
+        "Loại giả thiết chuẩn: " + ", ".join(_CANONICAL_PREMISE_KINDS) + "."
+    )
+    premise_item["properties"]["args"] = {
+        "type": "OBJECT",
+        "properties": {k: _shape_openapi_property(arg_shapes[k]) for k in sorted(arg_shapes)},
+    }
+
+    sec_item = props["derived_sections"]["items"]
+    sec_item["properties"]["plane_name"]["description"] = "Tên mặt phẳng cắt không kèm ngoặc, ví dụ P, Q, α."
+
+    mg_item = props["math_goals"]["items"]
+    mg_item["properties"]["target"] = {
+        "type": "OBJECT",
+        "nullable": True,
+        "properties": {k: _shape_openapi_property({sh}) for k, sh in sorted(GOAL_OPERAND_SHAPES.items())},
+    }
+    return schema
+
+
+def _strip_none_keys(item: dict[str, Any]) -> dict[str, Any]:
+    return {k: v for k, v in item.items() if v is not None}
+
+
+def _normalize_transport_payload(data: Any) -> Any:
+    """Canonicalize Gemini constrained-decoding null/default placeholders into `typed-fact-next/2` input shape."""
+    if not isinstance(data, dict) or data.get("schema_version") != TYPED_FACT_NEXT_V2_SCHEMA_VERSION:
+        return data
+    out = deepcopy(data)
+    if "length_unit" in out and out["length_unit"] is None:
+        out.pop("length_unit", None)
+
+    for list_key in ("solids", "premises", "derived_sections", "relations", "simulation_goals", "math_goals"):
+        if list_key in out and out[list_key] is None:
+            out[list_key] = []
+
+    if isinstance(out.get("solids"), list):
+        norm_solids = []
+        for s in out["solids"]:
+            if not isinstance(s, dict):
+                norm_solids.append(s)
+                continue
+            s_clean = _strip_none_keys(s)
+            if "vertex_bindings" in s_clean:
+                vb = s_clean["vertex_bindings"]
+                if isinstance(vb, list):
+                    vb_dict: dict[str, str] = {}
+                    for pair in vb:
+                        if (
+                            not isinstance(pair, dict)
+                            or not isinstance(pair.get("local"), str)
+                            or not isinstance(pair.get("canonical"), str)
+                        ):
+                            raise TypedFactNextValidationError(
+                                "INVALID_TYPED_FACT_NEXT", "vertex_bindings entry must have string local and canonical."
+                            )
+                        loc, can = pair["local"], pair["canonical"]
+                        if loc in vb_dict and vb_dict[loc] != can:
+                            raise TypedFactNextValidationError(
+                                "INVALID_TYPED_FACT_NEXT", f"Duplicate conflicting vertex binding for {loc!r}."
+                            )
+                        vb_dict[loc] = can
+                    s_clean["vertex_bindings"] = vb_dict
+                if s_clean["vertex_bindings"] == {}:
+                    s_clean.pop("vertex_bindings", None)
+            if s_clean.get("coordinate_frame_id") == "root":
+                s_clean.pop("coordinate_frame_id", None)
+            norm_solids.append(s_clean)
+        out["solids"] = norm_solids
+
+    if isinstance(out.get("premises"), list):
+        norm_premises = []
+        for p in out["premises"]:
+            if not isinstance(p, dict):
+                norm_premises.append(p)
+                continue
+            p_clean = _strip_none_keys(p)
+            if isinstance(p_clean.get("args"), dict):
+                p_clean["args"] = _strip_none_keys(p_clean["args"])
+            norm_premises.append(p_clean)
+        out["premises"] = norm_premises
+
+    if isinstance(out.get("derived_sections"), list):
+        norm_sections = []
+        for sec in out["derived_sections"]:
+            if not isinstance(sec, dict):
+                norm_sections.append(sec)
+                continue
+            sec_clean = _strip_none_keys(sec)
+            if sec_clean.get("constraints") == [] and sec_clean.get("plane_kind") != "constrained":
+                sec_clean.pop("constraints", None)
+            if "stated_intersections" not in sec_clean:
+                sec_clean["stated_intersections"] = []
+            elif isinstance(sec_clean["stated_intersections"], list):
+                sec_clean["stated_intersections"] = [
+                    _strip_none_keys(si) if isinstance(si, dict) else si
+                    for si in sec_clean["stated_intersections"]
+                ]
+            norm_sections.append(sec_clean)
+        out["derived_sections"] = norm_sections
+
+    if isinstance(out.get("relations"), list):
+        norm_rels = []
+        for rel in out["relations"]:
+            if not isinstance(rel, dict):
+                norm_rels.append(rel)
+                continue
+            rel_clean = {
+                k: v for k, v in rel.items()
+                if v is not None and not (k in _RELATION_EMPTY_ARRAY_DEFAULTS and v == [])
+            }
+            norm_rels.append(rel_clean)
+        out["relations"] = norm_rels
+
+    if isinstance(out.get("simulation_goals"), list):
+        norm_sgs = []
+        for sg in out["simulation_goals"]:
+            if not isinstance(sg, dict):
+                norm_sgs.append(sg)
+                continue
+            sg_clean = _strip_none_keys(sg)
+            if sg_clean.get("style_role") == "primary":
+                sg_clean.pop("style_role", None)
+            if sg_clean.get("target_refs") == []:
+                sg_clean.pop("target_refs", None)
+            norm_sgs.append(sg_clean)
+        out["simulation_goals"] = norm_sgs
+
+    if isinstance(out.get("math_goals"), list):
+        norm_mgs = []
+        for mg in out["math_goals"]:
+            if not isinstance(mg, dict):
+                norm_mgs.append(mg)
+                continue
+            mg_clean = _strip_none_keys(mg)
+            if isinstance(mg_clean.get("target"), dict):
+                mg_clean["target"] = _strip_none_keys(mg_clean["target"])
+                if mg_clean["target"] == {} and mg_clean.get("kind") != "measurement":
+                    mg_clean.pop("target", None)
+            norm_mgs.append(mg_clean)
+        out["math_goals"] = norm_mgs
+
+    if "described_points" in out:
+        if not out["described_points"]:
+            out.pop("described_points", None)
+        elif isinstance(out["described_points"], list):
+            out["described_points"] = [
+                _strip_none_keys(dp) if isinstance(dp, dict) else dp for dp in out["described_points"]
+            ]
+
+    if "unresolved" in out:
+        if not out["unresolved"]:
+            out.pop("unresolved", None)
+        elif isinstance(out["unresolved"], list):
+            norm_unres = []
+            for u in out["unresolved"]:
+                if not isinstance(u, dict):
+                    norm_unres.append(u)
+                    continue
+                u_clean = _strip_none_keys(u)
+                u_clean.setdefault("missing_roles", [])
+                u_clean.setdefault("candidate_relations", [])
+                norm_unres.append(u_clean)
+            out["unresolved"] = norm_unres
+
+    return out
 
 
 def build_typed_fact_next_v2_request(source_text: str) -> dict[str, Any]:
     request = build_request(source_text)
-    schema = TypedFactNextPayloadV2.model_json_schema()
-    request["generationConfig"]["responseSchema"] = _openapi(
-        {k: v for k, v in schema.items() if k != "$defs"}, schema.get("$defs", {}))
+    request["generationConfig"]["responseSchema"] = _typed_fact_next_v2_response_schema()
     request["systemInstruction"]["parts"][0]["text"] = TYPED_FACT_NEXT_SYSTEM_INSTRUCTION
     return request
 
@@ -95,7 +353,7 @@ class TransportExtractor:
             raise _TuChoiAI("HYBRID_DEADLINE_EXCEEDED", "transport timed out") from None
         except Exception:
             raise _TuChoiAI("PROVIDER_ERROR", "transport failed") from None
-        return parse_response(body, {})
+        return _normalize_transport_payload(parse_response(body, {}))
 
 
 def _occurrences(source_text: str, quote: str) -> tuple[tuple[int, int], ...]:
