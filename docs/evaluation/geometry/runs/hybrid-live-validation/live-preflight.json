@@ -1,10 +1,10 @@
 {
   "schema": "live-preflight/1",
-  "checked_at": "2026-11-03T04:03:52+00:00",
+  "checked_at": "2026-11-03T04:22:18+00:00",
   "candidate": {
-    "commit": "db9177c7e23c18d231ba8a5d474d13502651427d",
-    "product_commit_sha": "55db50c3654f114fb0691147bdd8a5c15bdd86dc",
-    "measured_system": "f4ed426a1c2f0a3b8cf24fea98d447094fa577bc91eae2405e36c5c83e50bf59"
+    "commit": "57457fc4c59094c5e57dd934bffd73533d82b81e",
+    "product_commit_sha": "57457fc4c59094c5e57dd934bffd73533d82b81e",
+    "measured_system": "6202a6a67b555a0d18b59c0edbea7c396b8fe6f1488fb1984f4e7663be1e1421"
   },
   "runner": "backend/scripts/run_s2_student_language_pilot.py",
   "runner_sha256_lf": "e9c6ad4388032f06949ac6c0dd5d06b2882be576c0564ff4a5143e6e48229438",
