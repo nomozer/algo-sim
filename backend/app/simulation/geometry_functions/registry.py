@@ -1312,8 +1312,9 @@ _C_DIEM = re.compile(rf"(?:gọi\s+)?{_L1}\s+là\s+(?:(?:trung\s+điểm|tâm|tr
 #: A projection may be read as the foot of a height stated in the same sentence: kept readable, but a subject change.
 _C_CHIEU = re.compile(rf"(?:(?:gọi\s+)?{_L1}\s+(?:là|trùng\s+với)\s+hình\s+chiếu(?:\s+vuông\s+góc)?\s+của\s+(?:(?:điểm|đỉnh)\s+)?{_L1}\s+(?:lên|trên)\s+{_DOI_TUONG_NHAN}"
                       rf"|hình\s+chiếu(?:\s+vuông\s+góc)?\s+của\s+(?:(?:điểm|đỉnh)\s+)?{_L1}\s+(?:lên|trên)\s+{_DOI_TUONG_NHAN}\s+(?:là|trùng\s+với)\s+(?:(?:điểm|đỉnh|trung\s+điểm|trọng\s+tâm)\s+)?{_L1}(?:\s+của\s+{_DOI_TUONG_NHAN})?"
-                      # the foot of the altitude from a point IS its orthogonal projection (run `hybrid-live-validation`)
-                      rf"|chân\s+đường\s+(?:cao|vuông\s+góc)\s+(?:hạ|kẻ)\s+từ\s+(?:(?:điểm|đỉnh)\s+)?{_L1}\s+(?:xuống|đến|tới|lên)\s+{_DOI_TUONG_NHAN}\s+(?:là|trùng\s+với)\s+(?:(?:điểm|đỉnh|trung\s+điểm|trọng\s+tâm)\s+)?{_L1}(?:\s+của\s+{_DOI_TUONG_NHAN})?)"
+                      # the foot of the altitude from a point IS its orthogonal projection (run `hybrid-live-validation`);
+                      # exactly the binder's grammar (`_chan_duong_cao_dung_nguon`), so both readers accept the same words
+                      rf"|chân\s+đường\s+cao\s+(?:(?:hạ|kẻ)\s+)?từ\s+(?:(?:điểm|đỉnh)\s+)?{_L1}\s+(?:xuống|đến)\s+mặt\s+phẳng\s*\((?:{_L1}){{3,}}\)\s+(?:là|trùng\s+với)\s+(?:(?:điểm|đỉnh)\s+)?{_L1})"
                       rf"(?![\w'])(?=\s*(?:[,;.]|và\s|$))", re.IGNORECASE)
 _C_DOAN = re.compile(rf"(?:(?:có|với)\s+)?(?:(?:các\s+)?kích\s+thước\s+)?(?:độ\s+dài\s+(?:của\s+)?)?(?:(?P<sv>cạnh\s+bên|chiều\s+cao|đường\s+cao)\s+|(?:cạnh|đoạn(?:\s+thẳng)?|đường\s+chéo|số\s+đo)\s+)?"
                      rf"(?P<seg>{_L1}{_L1})(?![\w'])"
@@ -6641,7 +6642,7 @@ def _kiem_nguon_dong(calls, de, phu, read_quotes):
                 if c.fn == 'divide_segment' and _ty_so_tron_cau(c, s):
                     continue
                 if (c.fn == 'right_angle'
-                        and re.fullmatch(rf'tam giác\s+(?:{_P1}){{3}}\s+vuông\s+tại\s+{_P1}[.\s]*', s, re.I)
+                        and re.fullmatch(rf'tam giác\s+(?:{_P1}){{3}}\s+vuông\s+tại\s+(?:đỉnh\s+)?{_P1}[.\s]*', s, re.I)
                         and construction_source_bound(replace(c, quotes=(s,)), de)):
                     continue
                 if c.fn in ('prism', 'regular_polygon', 'segment_length') and re.fullmatch(cube_form, s, re.I):

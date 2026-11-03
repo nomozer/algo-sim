@@ -2604,8 +2604,9 @@ class _Dung:
     def chung_chi_phu_dinh(self, ten_khoi: str, mat: list[str], nhan: list[str], ids: tuple = ()) -> None:
         """Coverage of a `/2` stated-cut section (run `hybrid-live-validation`): the vertices the certificate names (the
         through-point reuse and the source's stated cuts) must be EVERY vertex of `cross_section(solid, plane)`. A source
-        that names only some of the cuts describes a polygon the figure contradicts ⇒ `SECTION_BOUNDARY_INCOMPLETE`, a
-        typed refusal here instead of an adapter-invalid result. Incidence only, exact Fractions, chart coordinates."""
+        that names only some of the cuts (or a section with a base/top-edge vertex, which this lateral-edge certificate
+        cannot name) is an unsupported partial naming ⇒ `SECTION_BOUNDARY_INCOMPLETE`, a typed refusal here instead of an
+        adapter-invalid result; nothing it refuses was ever served. Incidence only, exact Fractions, chart coordinates."""
         from app.simulation.geometry.section import Polyhedron, cross_section
         k = self.khoi[ten_khoi]
         if k.kind == "pyramid":

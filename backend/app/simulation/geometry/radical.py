@@ -170,6 +170,10 @@ def _tach_binh_phuong(n: int) -> tuple[int, int]:
     số bình phương sinh bởi cơ sở hữu tỉ nhỏ (`d³ <= MAX_RADICAND`) mới được rút
     trước khi áp trần `MAX_RADICAND`; các xấp xỉ thập phân mang thừa số nguyên tố
     lớn (`d³ > MAX_RADICAND`) làm phình căn thức vượt trần vẫn bị từ chối.
+
+    Đầu vào tối đa `MAX_RADICAND³` (run `hybrid-live-validation`): vòng chia thử vẫn chỉ tới `d ≤ 10⁴`, nên hệ số `k`
+    tới ~10¹⁸ được nhận khi phần bình phương gồm thừa số nhỏ. Bình phương của một số nguyên tố lớn (`n = p²`,
+    `p³ > MAX_RADICAND`, `n > MAX_RADICAND`) vẫn bị từ chối dù `√n` hữu tỉ — chính sách cũ, giữ nguyên.
     """
     if n <= 0:
         raise RadicalDomainError(f"căn thức phải dương, nhận {n}")

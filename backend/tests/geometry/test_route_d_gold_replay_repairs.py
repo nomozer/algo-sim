@@ -105,6 +105,22 @@ def test_projection_and_altitude_foot_wording_still_bind_point_and_image(cid):
     assert run_typed_fact_next_v2_route(q).status == "REFUSED"
 
 
+@pytest.mark.parametrize("old,new", [
+    ("xuống mặt phẳng (KLM)", "tới mặt phẳng (KLM)"),
+    ("chân đường cao hạ từ", "chân đường vuông góc hạ từ"),
+    ("trùng với đỉnh L", "trùng với trung điểm L"),
+])
+def test_both_readers_share_one_altitude_foot_grammar(old, new):
+    """Review MINOR-1: the sentence reader (`_C_CHIEU`) accepts exactly the binder's words; other wordings refuse."""
+    from app.simulation.geometry_functions.registry import _C_CHIEU
+
+    ok = "chân đường cao hạ từ K' xuống mặt phẳng (KLM) trùng với đỉnh L"
+    assert _C_CHIEU.fullmatch(ok)
+    assert not _C_CHIEU.fullmatch(ok.replace(old, new))
+    r, _resp = _run(_swap(_case("W3-B35"), old, new))
+    assert r.status == "REFUSED"
+
+
 def test_ratio_with_he_thuc_is_read_and_a_wrong_ratio_still_refuses():
     from app.simulation.geometry_functions.registry import _TY_SO
 
