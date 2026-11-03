@@ -362,6 +362,9 @@ IDENTITY_DELTAS = (
                   "engine_version": ("geometry-function-engine/21", "geometry-function-engine/22")}},
     {"run": "pedagogical-simulation-integration",          # a stated ⊥ line that placed its end is drawn (engine /23)
      "versions": {"engine_version": ("geometry-function-engine/22", "geometry-function-engine/23")}},
+    {"run": "hybrid-live-validation",                      # gold-replay repairs: source wording, stated-cut coverage, radicals
+     "versions": {"registry_version": ("geometry-functions/31", "geometry-functions/32"),
+                  "engine_version": ("geometry-function-engine/23", "geometry-function-engine/24")}},
 )
 
 

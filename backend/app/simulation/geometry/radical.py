@@ -173,7 +173,11 @@ def _tach_binh_phuong(n: int) -> tuple[int, int]:
     """
     if n <= 0:
         raise RadicalDomainError(f"căn thức phải dương, nhận {n}")
-    if n > MAX_RADICAND * MAX_RADICAND:
+    # Input bound for the trial division below, not the domain ceiling: the loop is bounded by `d³ <= MAX_RADICAND`
+    # whatever `n` is, and a remainder it cannot certify square-free still refuses at the end. `MAX_RADICAND²` refused
+    # intermediates whose square part is made only of small primes (run `hybrid-live-validation`, W3-A06:
+    # 2³·3⁸·5⁷·7²·29²·31·107²·137² ≈ 1.13·10²⁴ = 60259484250²·310).
+    if n > MAX_RADICAND ** 3:
         raise RadicalDomainError(
             f"căn thức {n} vượt trần {MAX_RADICAND} — từ chối thay vì treo"
         )

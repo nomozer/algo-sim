@@ -66,7 +66,11 @@ from pydantic import BaseModel, BeforeValidator, ConfigDict, Field, ValidationEr
 #: facts with optional named contact points, and multi-curved question disambiguation (`(S1)`/`(S2)`, `ngoại tiếp` vs `nội tiếp`).
 #: /29 (thirteenth continuation, SL-3): student shorthand "k/c" (khoảng cách) as a whole token wherever the ask grammar
 #: reads that word, and "đt" (đường thẳng) before a line's two labels; no function, contract or provider surface changed.
-REGISTRY_VERSION = "geometry-functions/31"
+#: /32 (run `hybrid-live-validation`, gold-replay failures): "khi bị cắt" is construction wording in both clause readers;
+#: "vuông tại đỉnh E"; "hình chiếu … của đỉnh B'" and "chân đường cao hạ/kẻ từ B' xuống/đến (P) là/trùng với C"; ratio
+#: "thỏa mãn hệ thức"; the two-line slice reads "xét", "khối" and a base-polygon word that matches the base. No function,
+#: contract or provider surface changed.
+REGISTRY_VERSION = "geometry-functions/32"
 
 
 class TuChoi(Exception):
@@ -894,7 +898,8 @@ _TUYEN = re.compile(r"(?<!\w)hoặc(?!\w)", re.IGNORECASE)
 #: Câu tự phủ nhận điều nó nêu ("… là sai", "… vô lí") — đọc trong CẢ câu (review S1, I5).
 _SAI = re.compile(r"(?<!\w)(?:là\s+(?:điều\s+)?(?:sai|không đúng)|vô lí|vô lý)(?!\w)", re.IGNORECASE)
 #: Điều kiện đặt SAU điều được nêu, trong cùng mệnh đề ("SA ⊥ (ABCD) khi M trùng S") — review S1, I5.
-_DIEU_KIEN_SAU = re.compile(r"(?<!\w)(?:khi(?!\s+(?:đó|cắt|đã\s+cắt|bỏ|loại\s+bỏ|lấy\s+đi|dựng|quay|chiếu))|nếu|với điều kiện|trừ khi)(?!\w)", re.IGNORECASE)
+#: "khi (bị/đã) cắt" là lời dẫn phép dựng — cùng ngoại lệ với `_DIEU_KIEN` (run `hybrid-live-validation`).
+_DIEU_KIEN_SAU = re.compile(r"(?<!\w)(?:khi(?!\s+(?:đó|(?:bị\s+|đã\s+)?cắt|bỏ|loại\s+bỏ|lấy\s+đi|dựng|quay|chiếu))|nếu|với điều kiện|trừ khi)(?!\w)", re.IGNORECASE)
 
 
 class Source(BaseModel):
@@ -1305,8 +1310,10 @@ _C_DIEM = re.compile(rf"(?:gọi\s+)?{_L1}\s+là\s+(?:(?:trung\s+điểm|tâm|tr
                      rf"|điểm(?:\s+di\s+động)?\s+(?:nằm\s+)?(?:trên|thuộc)\s+{_DOI_TUONG_NHAN})"
                      rf"(?![\w'])(?=\s*(?:[,;.]|và\s|$))", re.IGNORECASE)
 #: A projection may be read as the foot of a height stated in the same sentence: kept readable, but a subject change.
-_C_CHIEU = re.compile(rf"(?:(?:gọi\s+)?{_L1}\s+(?:là|trùng\s+với)\s+hình\s+chiếu(?:\s+vuông\s+góc)?\s+của\s+{_L1}\s+(?:lên|trên)\s+{_DOI_TUONG_NHAN}"
-                      rf"|hình\s+chiếu(?:\s+vuông\s+góc)?\s+của\s+{_L1}\s+(?:lên|trên)\s+{_DOI_TUONG_NHAN}\s+(?:là|trùng\s+với)\s+(?:(?:điểm|đỉnh|trung\s+điểm|trọng\s+tâm)\s+)?{_L1}(?:\s+của\s+{_DOI_TUONG_NHAN})?)"
+_C_CHIEU = re.compile(rf"(?:(?:gọi\s+)?{_L1}\s+(?:là|trùng\s+với)\s+hình\s+chiếu(?:\s+vuông\s+góc)?\s+của\s+(?:(?:điểm|đỉnh)\s+)?{_L1}\s+(?:lên|trên)\s+{_DOI_TUONG_NHAN}"
+                      rf"|hình\s+chiếu(?:\s+vuông\s+góc)?\s+của\s+(?:(?:điểm|đỉnh)\s+)?{_L1}\s+(?:lên|trên)\s+{_DOI_TUONG_NHAN}\s+(?:là|trùng\s+với)\s+(?:(?:điểm|đỉnh|trung\s+điểm|trọng\s+tâm)\s+)?{_L1}(?:\s+của\s+{_DOI_TUONG_NHAN})?"
+                      # the foot of the altitude from a point IS its orthogonal projection (run `hybrid-live-validation`)
+                      rf"|chân\s+đường\s+(?:cao|vuông\s+góc)\s+(?:hạ|kẻ)\s+từ\s+(?:(?:điểm|đỉnh)\s+)?{_L1}\s+(?:xuống|đến|tới|lên)\s+{_DOI_TUONG_NHAN}\s+(?:là|trùng\s+với)\s+(?:(?:điểm|đỉnh|trung\s+điểm|trọng\s+tâm)\s+)?{_L1}(?:\s+của\s+{_DOI_TUONG_NHAN})?)"
                       rf"(?![\w'])(?=\s*(?:[,;.]|và\s|$))", re.IGNORECASE)
 _C_DOAN = re.compile(rf"(?:(?:có|với)\s+)?(?:(?:các\s+)?kích\s+thước\s+)?(?:độ\s+dài\s+(?:của\s+)?)?(?:(?P<sv>cạnh\s+bên|chiều\s+cao|đường\s+cao)\s+|(?:cạnh|đoạn(?:\s+thẳng)?|đường\s+chéo|số\s+đo)\s+)?"
                      rf"(?P<seg>{_L1}{_L1})(?![\w'])"
@@ -5719,7 +5726,7 @@ _CUE_DIEM = {"midpoint": r"(?i:trung\s+điểm)", "centroid": r"(?i:trọng\s+t�
 #: Case-insensitive only for the words: labels stay upper-case, so "tam" or the length symbol "a" is never a label.
 _HINH_VUONG_TAI = r"(?i:tam\s+giác|tứ\s+giác|hình\s+thang|hình\s+chữ\s+nhật)"
 _VUONG_TAI = re.compile(rf"(?:{_DAU_NHAN}\(?((?:{_DIEM}){{3,}})\)?(?![\w'.])\s+(?:(?i:là)\s+(?:(?i:một)\s+)?)?(?:{_HINH_VUONG_TAI}\s+)?)?"
-                        rf"(?i:vuông(?:\s+cân)?\s+(?:tại|ở))\s+({_DIEM}(?:\s*(?:,|(?i:và))\s*{_DIEM})*)(?![\w'])")
+                        rf"(?i:vuông(?:\s+cân)?\s+(?:tại|ở))\s+(?:(?i:đỉnh)\s+)?({_DIEM}(?:\s*(?:,|(?i:và))\s*{_DIEM})*)(?![\w'])")
 #: The base subject right before an unlabelled right polygon, read in the SOURCE up to the clause (a quote may hold only
 #: "tam giác vuông tại B"): "đáy (ABC) là (một) tam giác …"; an optional label names the base itself. Whose base it is
 #: comes from `_chu_cua_day`, never from "the only named solid".
@@ -5802,7 +5809,7 @@ _TY_SO = re.compile(
     r"(?<![\w'])(?:(?P<p>[A-Z][0-9]*'?)(?![\w'])\s+(?:(?i:là)\s+(?:(?i:một)\s+)?(?i:điểm)\s+)?(?i:thuộc|nằm\s+trên|trên)\s+"
     r"(?:(?i:cạnh|đoạn\s+thẳng|đoạn)\s+)?(?P<x>[A-Z][0-9]*'?)(?P<y>[A-Z][0-9]*'?)(?![\w'])"
     r"|(?i:trên)\s+(?i:cạnh|đoạn\s+thẳng|đoạn)\s+(?P<ix>[A-Z][0-9]*'?)(?P<iy>[A-Z][0-9]*'?)(?![\w'])\s*,?\s+"
-    rf"(?i:lấy|chọn)\s+(?:(?i:điểm)\s+)?(?P<ip>[A-Z][0-9]*'?)(?![\w']))\s*,?\s*{_NOI_TY_SO}\s+"
+    rf"(?i:lấy|chọn)\s+(?:(?i:điểm)\s+)?(?P<ip>[A-Z][0-9]*'?)(?![\w']))\s*,?\s*{_NOI_TY_SO}\s+(?:(?i:hệ\s+thức|đẳng\s+thức)\s+)?"
     r"(?P<l>(?:[A-Z][0-9]*'?){2})(?![\w'])\s*=\s*(?P<k>\d+(?:/\d+)?)?\s*(?P<r>(?:[A-Z][0-9]*'?){2})(?![\w'])")
 
 
@@ -6669,16 +6676,25 @@ def _kiem_nguon_dong(calls, de, phu, read_quotes):
                     shape = rf'(?:tam giác đều|hình vuông|lục giác đều)\s*(?:{labels}\s*)?(?:cạnh\s*{number})?'
                     prism = rf'(?:cho\s+)?(?:hình\s+)?lăng trụ đứng\s+{solid}\s+có đáy là\s+{shape}[.\s]*'
                     reg_pyr = rf'(?:cho\s+)?(?:hình|khối) chóp\s+(?:đều|tam giác đều|tứ giác đều)\s+{solid}(?:\s+có\s+cạnh\s+đáy\s*(?:bằng|=)?\s*{number})?[.\s]*'
+                    # "khối" like the pyramid form; an optional base-polygon word must name the base's own vertex count
+                    # (run `hybrid-live-validation`): a word that contradicts the base never acquires the form.
+                    da_giac = {'tam giác': 3, 'tứ giác': 4, 'ngũ giác': 5, 'lục giác': 6}
+                    prism_noun = (rf'(?:(?:cho|xét)\s+)?(?:(?:hình|khối)\s+)?(?:lăng trụ(?:\s+(?:đứng|xiên))?'
+                                  rf'(?:\s+(?P<dagiac>{"|".join(da_giac)}))?|hình hộp chữ nhật)\s+{solid}[.\s]*')
                     atomic_forms = {
-                        'pyramid': rf'(?:cho\s+)?(?:hình|khối) chóp\s+{solid}[.\s]*',
+                        'pyramid': rf'(?:(?:cho|xét)\s+)?(?:hình|khối) chóp\s+{solid}[.\s]*',
                         'regular_pyramid': reg_pyr,
-                        'prism': rf'(?:cho\s+)?(?:hình\s+)?(?:lăng trụ(?:\s+(?:đứng|xiên))?|hình hộp chữ nhật)\s+{solid}[.\s]*',
+                        'prism': prism_noun,
                         'regular_polygon': rf'(?:đáy\s+{labels}\s+là\s+)?{shape}[.\s]*',
                         'rectangle': rf'(?:cho\s+)?(?:hình hộp chữ nhật\s+{solid}|(?:đáy\s+{labels}\s+là\s+)?hình chữ nhật\s*(?:{labels})?)[.\s]*',
                         'midpoint': rf'(?:gọi\s+)?{_P1}\s+là trung điểm\s+(?:của\s+)?(?:(?:cạnh|đoạn(?:\s+thẳng)?)\s+)?{_P1}{_P1}[.\s]*',
                     }
                     form = atomic_forms.get(c.fn)
-                    if not ((form and re.fullmatch(form,s,re.I))
+                    hit = re.fullmatch(form, s, re.I) if form else None
+                    if (hit and c.fn == 'prism' and hit.group('dagiac')
+                            and da_giac[hit.group('dagiac').lower()] != len(c.args.base)):
+                        hit = None
+                    if not (hit
                             or c.fn in ('prism','regular_polygon') and re.fullmatch(prism,s,re.I)
                             or c.fn == 'regular_polygon' and re.fullmatch(reg_pyr,s,re.I)):
                         raise TuChoi('SOURCE_PREMISE_UNREAD','quote tiền đề chưa nằm trọn trong văn phạm lát hai đường',(c.id,))

@@ -62,7 +62,10 @@ from .registry import DINH_CAT_CANH, _cum_hoi
 #: the Gram metric (`_MO_TA`), every locus included, whatever composition the planner found.
 #: /23 (run `pedagogical-simulation-integration`): a stated line ⊥ base that is no solid edge (projection foot, altitude
 #: to a non-vertex foot) is drawn as a segment so its exact right-angle witness is shown — scene only, values unchanged.
-ENGINE_VERSION = "geometry-function-engine/23"
+#: /24 (run `hybrid-live-validation`): a `/2` stated-cut section whose named vertices do not cover the exact cross-section
+#: refuses `SECTION_BOUNDARY_INCOMPLETE` (it reached the adapter as an invalid result); exact radicals accept intermediates
+#: above `MAX_RADICAND²` whose square part is made of small primes (the domain ceiling itself is unchanged).
+ENGINE_VERSION = "geometry-function-engine/24"
 PLANE_SECTION_CERTIFICATE_VERSION = "plane-section-certificate/1"
 PLANE_SECTION_CERTIFICATE_RULE = "engine_derived_plane_section"
 PLANE_SECTION_CERTIFICATE_PRODUCER = "engine.kiem_chung_chi_thiet_dien"
@@ -2568,6 +2571,8 @@ class _Dung:
         if d.get("derived"):
             vong = list(d["derived"]["base"])
             self.chung_chi_khep_kin(k.name, d["plane"], vong, ids)
+        if vong is None and d.get("derive"):
+            self.chung_chi_phu_dinh(k.name, d["plane"], [v["label"] for v in d["vertices"]], ids)
         if vong is not None:
             d["closure"] = {"boundary": vong, "verified": True,
                             "rule": "boundary == cross_section(solid, plane) up to rotation/reversal; vertices 0 < t ≤ 1"}
@@ -2595,6 +2600,30 @@ class _Dung:
         if not same_section_cycle([Vec3(*self.pts[p]) for p in vong], that):
             raise TuChoi("SECTION_BOUNDARY_INCOMPLETE", f"chu trình {''.join(vong)} ({len(vong)} đỉnh) không phải thiết diện "
                          f"thật của {ten_khoi} ({len(that)} đỉnh) theo đúng thứ tự vòng", ids)
+
+    def chung_chi_phu_dinh(self, ten_khoi: str, mat: list[str], nhan: list[str], ids: tuple = ()) -> None:
+        """Coverage of a `/2` stated-cut section (run `hybrid-live-validation`): the vertices the certificate names (the
+        through-point reuse and the source's stated cuts) must be EVERY vertex of `cross_section(solid, plane)`. A source
+        that names only some of the cuts describes a polygon the figure contradicts ⇒ `SECTION_BOUNDARY_INCOMPLETE`, a
+        typed refusal here instead of an adapter-invalid result. Incidence only, exact Fractions, chart coordinates."""
+        from app.simulation.geometry.section import Polyhedron, cross_section
+        k = self.khoi[ten_khoi]
+        if k.kind == "pyramid":
+            dinh, mat_khoi = [k.apex, *k.base], P.construct_pyramid("solid", k.apex, k.base)["faces"]
+        else:
+            dinh = [*k.base, *k.top]
+            mat_khoi = P.construct_prism("solid", k.base, k.top, tuple(zip(k.base, k.top)))["faces"]
+        try:
+            with _metric.using(self.metric()):
+                that = cross_section(Polyhedron(tuple(Vec3(*self.pts[p]) for p in dinh),
+                                                tuple(tuple(dinh.index(p) for p in f) for f in mat_khoi)),
+                                     self._plane(mat[:3])).polygon
+        except GeometryError as e:
+            raise TuChoi(e.code, str(e), ids) from None
+        co = {Vec3(*self.pts[p]) for p in nhan if p in self.pts}
+        if len(co) != len(nhan) or set(that) != co:
+            raise TuChoi("SECTION_BOUNDARY_INCOMPLETE", f"các đỉnh đã nêu {''.join(nhan)} ({len(nhan)}) không phủ hết thiết "
+                         f"diện thật của {ten_khoi} ({len(that)} đỉnh)", ids)
 
     def _kiem_mat_vuong_duong(self, d: dict) -> None:
         """Postconditions of the plane through p ⊥ d (`MAT_VUONG_DUONG`), independent of how it was assembled: both
