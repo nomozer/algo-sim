@@ -18,12 +18,14 @@ from __future__ import annotations
 import argparse
 import asyncio
 import collections
+from decimal import Decimal, InvalidOperation
 import hashlib
 import json
 import math
 import os
 import re
 import sys
+import threading
 import time
 import unicodedata
 from pathlib import Path
@@ -367,6 +369,54 @@ def acceptance(corpus: dict[str, Any], record: dict[str, Any], approval: dict[st
 
 # ── live authorization and cost containment ──────────────────────────────────────────────────────────────────────────
 
+MILLION_DEC = Decimal("1000000")
+EIGHTY_PERCENT_DEC = Decimal("0.8")
+MAX_CAMPAIGN_REQUESTS_CEILING = 1000
+VERIFIED_MODEL_PRICING: dict[str, dict[str, Any]] = {
+    "gemini-2.5-flash": {
+        "max_output_tokens": MODEL_OUTPUT_LIMIT,
+        "min_input_usd_per_million": Decimal("0.30"),
+        "min_output_usd_per_million": Decimal("2.50"),
+    },
+}
+
+
+def _to_decimal(value: Any, name: str, *, allow_zero: bool = False) -> Decimal:
+    op = "non-negative" if allow_zero else "positive"
+    if isinstance(value, bool) or value is None:
+        raise LiveRefused(f"{name} must be a finite {op} number")
+    if isinstance(value, float) and not math.isfinite(value):
+        raise LiveRefused(f"{name} must be a finite {op} number")
+    try:
+        dec = value if isinstance(value, Decimal) else Decimal(str(value))
+    except (InvalidOperation, ValueError, TypeError) as exc:
+        raise LiveRefused(f"{name} must be a finite {op} number") from exc
+    if not dec.is_finite() or (dec < 0 if allow_zero else dec <= 0):
+        raise LiveRefused(f"{name} must be a finite {op} number")
+    return dec
+
+
+def compute_oracle_sha256(cases: list[dict[str, Any]]) -> str:
+    """Canonical SHA-256 over case expectations and exact parsed mathematical oracles / refusal classes."""
+    canonical = []
+    for c in sorted(cases, key=lambda item: str(item.get("id", ""))):
+        expect = c.get("expect") or (c.get("expected") or {}).get("outcome")
+        raw_oracle = c.get("oracle") if "oracle" in c else (c.get("expected") or {}).get("oracle")
+        parsed_oracle = (
+            {k: sorted(str(parse_oracle(v)) for v in vs) for k, vs in sorted(raw_oracle.items())}
+            if isinstance(raw_oracle, dict)
+            else None
+        )
+        canonical.append({
+            "id": c.get("id"),
+            "expect": expect,
+            "oracle": parsed_oracle,
+            "refusal_class": c.get("refusal_class"),
+        })
+    blob = json.dumps(canonical, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf-8")
+    return hashlib.sha256(blob).hexdigest()
+
+
 def authorize_live(corpus_path: Path, approval_path: Path | None) -> dict[str, Any]:
     """Every check happens before the first request. The approval file is Owner-written; this harness never writes it."""
     if os.environ.get("ALLOW_LIVE_AI") != "1" or not os.environ.get("GEMINI_API_KEY"):
@@ -396,56 +446,133 @@ def claim_approval(approval_path: Path, out_path: Path) -> None:
                           "Owner approval") from None
 
 
+def _normalize_campaign_caps(approval: dict[str, Any]) -> tuple[int, Decimal]:
+    has_cmr = "campaign_max_requests" in approval
+    has_mr = "max_requests" in approval
+    if not has_cmr and not has_mr:
+        raise LiveRefused("approval lacks max_requests / campaign_max_requests")
+    raw_req = approval["campaign_max_requests"] if has_cmr else approval["max_requests"]
+    if type(raw_req) is not int or raw_req <= 0:
+        raise LiveRefused("campaign_max_requests / max_requests must be a positive integer")
+    if has_cmr and has_mr and (type(approval["max_requests"]) is not int or approval["max_requests"] != raw_req):
+        raise LiveRefused("campaign_max_requests and max_requests disagree")
+    if raw_req > MAX_CAMPAIGN_REQUESTS_CEILING:
+        raise LiveRefused(f"campaign_max_requests ({raw_req}) exceeds safety ceiling {MAX_CAMPAIGN_REQUESTS_CEILING}")
+
+    has_cmu = "campaign_max_usd" in approval
+    has_mu = "max_usd" in approval
+    if not has_cmu and not has_mu:
+        raise LiveRefused("approval lacks max_usd / campaign_max_usd")
+    cmu_dec = _to_decimal(approval["campaign_max_usd"] if has_cmu else approval["max_usd"], "campaign_max_usd")
+    if has_cmu and has_mu:
+        mu_dec = _to_decimal(approval["max_usd"], "max_usd")
+        if cmu_dec != mu_dec:
+            raise LiveRefused("campaign_max_usd and max_usd disagree")
+    return raw_req, cmu_dec
+
+
+def _verified_rates_decimal(approval: dict[str, Any]) -> tuple[Decimal, Decimal, int]:
+    model = str(approval.get("model") or "gemini-2.5-flash")
+    spec = VERIFIED_MODEL_PRICING.get(model)
+    if spec is None:
+        raise LiveRefused(f"unverified model {model!r}: cannot bound request worst-case cost fail-closed")
+    in_rate = _to_decimal(approval.get("input_usd_per_million"), "input_usd_per_million")
+    out_rate = _to_decimal(approval.get("output_usd_per_million"), "output_usd_per_million")
+    if in_rate < spec["min_input_usd_per_million"] or out_rate < spec["min_output_usd_per_million"]:
+        raise LiveRefused(
+            f"token rates ({in_rate}, {out_rate}) are below verified paid-tier rates for {model} "
+            f"({spec['min_input_usd_per_million']}, {spec['min_output_usd_per_million']})"
+        )
+    return in_rate, out_rate, int(spec["max_output_tokens"])
+
+
 def check_approval_terms(corpus_bytes: bytes, approval: dict[str, Any]) -> dict[str, Any]:
     """The approved terms themselves, against the EXACT corpus bytes that will be run (tests exercise this directly —
-    automation never writes an approval value)."""
+    automation never writes an approval value). Preflight verifies that at least ONE worst-case request fits inside
+    `campaign_max_usd`; runtime enforces exact per-request Decimal reservation (`spent + inflight + req <= max_usd`)."""
     if approval.get("corpus_sha256") != sha256_bytes(corpus_bytes):
         raise LiveRefused("corpus hash differs from the approved one")
-    for key in ("max_requests", "max_usd", "input_usd_per_million", "output_usd_per_million", "model",
+    campaign_max_requests, campaign_max_usd = _normalize_campaign_caps(approval)
+    for key in ("input_usd_per_million", "output_usd_per_million", "model",
                 "llm_only_output_reservation_tokens", "measured_system", "harness_sha256",
                 # criterion 7 fields must be stated (any value): a paid run without them is a silent certain NO-GO
                 "corpus_author", "authoring_independence", "evaluator_independence"):
         if key not in approval:
             raise LiveRefused(f"approval lacks {key}")
+    if "paid_project_confirmed" in approval and approval.get("paid_project_confirmed") is not True:
+        raise LiveRefused("paid_project_confirmed must be true before any live campaign")
     identity = runtime_identity()
     for key in ("model", "measured_system", "harness_sha256"):
         if approval[key] != identity[key]:
             raise LiveRefused(f"{key} differs from the approved one")
-    if type(approval["max_requests"]) is not int or approval["max_requests"] <= 0:   # C14 review: = the S-2 runner's m1
-        raise LiveRefused("max_requests must be a positive integer")
-    for key in ("max_usd", "input_usd_per_million", "output_usd_per_million"):   # NaN / ≤ 0 would disable the USD cap
-        v = approval[key]
-        if type(v) not in (int, float) or not math.isfinite(v) or v <= 0:
-            raise LiveRefused(f"{key} must be a finite positive number")
-    if int(approval["llm_only_output_reservation_tokens"]) < MODEL_OUTPUT_LIMIT:
+    _, _, model_out_limit = _verified_rates_decimal(approval)
+    if type(approval["llm_only_output_reservation_tokens"]) is bool or int(
+        approval["llm_only_output_reservation_tokens"]
+    ) < model_out_limit:
         raise LiveRefused("LLM_ONLY sets no output cap: the reservation must be at least the model output limit")
     corpus = json.loads(corpus_bytes.decode("utf-8"))
     validate_corpus(corpus)
-    worst = worst_case_request_usd(corpus, approval)
-    if approval["max_requests"] * worst > approval["max_usd"]:
-        raise LiveRefused(f"max_requests × estimated request cost ({approval['max_requests']} × {worst:.4f} USD) "
-                          f"exceeds max_usd {approval['max_usd']}")
-    return approval
+    if "oracle_sha256" in approval and approval.get("oracle_sha256") != compute_oracle_sha256(corpus["cases"]):
+        raise LiveRefused("oracle_sha256 differs from the corpus exact oracle hash")
+    normalized = {
+        **approval,
+        "campaign_max_requests": campaign_max_requests,
+        "max_requests": campaign_max_requests,
+        "campaign_max_usd": approval["campaign_max_usd"] if "campaign_max_usd" in approval else approval["max_usd"],
+        "max_usd": float(campaign_max_usd),
+    }
+    single_worst = _to_decimal(worst_case_request_usd(corpus, normalized), "worst_case_request_usd", allow_zero=True)
+    if single_worst > campaign_max_usd:
+        raise LiveRefused(
+            f"single-request worst-case ceiling ({single_worst:.6f} USD) exceeds campaign_max_usd {campaign_max_usd}"
+        )
+    return normalized
+
+
+def worst_case_request_usd_decimal(corpus: dict[str, Any], approval: dict[str, Any]) -> Decimal:
+    """Planning worst-case bound of ONE request across the corpus in exact Decimal."""
+    from app.ai.function_calling import MAX_OUTPUT_TOKENS as HYBRID_OUTPUT_CAP
+
+    in_rate, out_rate, model_out_limit = _verified_rates_decimal(approval)
+    longest = max(len(c["problem_text"]) for c in corpus["cases"])
+    prompt = Decimal(max(MEASURED_OVERHEAD_CHARS.values()) + 3 * longest + PROMPT_FRAMING_RESERVE)
+    output = Decimal(max(HYBRID_OUTPUT_CAP, model_out_limit, int(approval["llm_only_output_reservation_tokens"])))
+    return (prompt * in_rate + output * out_rate) / MILLION_DEC
 
 
 def worst_case_request_usd(corpus: dict[str, Any], approval: dict[str, Any]) -> float:
-    """Planning ESTIMATE only (the enforced bound is `request_ceiling_usd` of each exact payload)."""
-    from app.ai.function_calling import MAX_OUTPUT_TOKENS as HYBRID_OUTPUT_CAP
+    """Planning ESTIMATE of a single worst-case request (the enforced bound is `request_worst_case_usd_decimal` on each
+    exact wire payload)."""
+    return float(worst_case_request_usd_decimal(corpus, approval))
 
-    longest = max(len(c["problem_text"]) for c in corpus["cases"])
-    prompt = max(MEASURED_OVERHEAD_CHARS.values()) + 3 * longest + PROMPT_FRAMING_RESERVE
-    output = max(HYBRID_OUTPUT_CAP, int(approval["llm_only_output_reservation_tokens"]))
-    return prompt * approval["input_usd_per_million"] / 1e6 + output * approval["output_usd_per_million"] / 1e6
+
+def request_worst_case_usd_decimal(payload: Any, approval: dict[str, Any]) -> Decimal:
+    """Exact Decimal ceiling of ONE request from the exact payload about to be sent. Fail-closed if payload or rates
+    cannot be bounded reliably."""
+    if not isinstance(payload, dict):
+        raise LiveRefused("cannot bound request worst-case cost: payload must be a JSON object")
+    in_rate, out_rate, model_out_limit = _verified_rates_decimal(approval)
+    body = json.dumps(payload, ensure_ascii=False).encode("utf-8")
+    gen_cfg = payload.get("generationConfig")
+    cap = gen_cfg.get("maxOutputTokens") if isinstance(gen_cfg, dict) else None
+    if isinstance(cap, int) and not isinstance(cap, bool) and cap > 0:
+        out = min(cap, model_out_limit)
+    else:
+        out = model_out_limit
+    return (Decimal(len(body)) * in_rate + Decimal(out) * out_rate) / MILLION_DEC
 
 
 def request_ceiling_usd(payload: Any, approval: dict[str, Any]) -> float:
-    """Ceiling of ONE request from the exact payload about to be sent: input tokens ≤ UTF-8 bytes of the whole request
-    JSON (system instruction and schema included; byte-fallback tokenization — an assumption, stated in the protocol),
-    output tokens ≤ the request's own `maxOutputTokens`, else the model limit (thinking included)."""
-    body = json.dumps(payload, ensure_ascii=False).encode("utf-8")
-    cap = ((payload or {}).get("generationConfig") or {}).get("maxOutputTokens") if isinstance(payload, dict) else None
-    out = min(int(cap), MODEL_OUTPUT_LIMIT) if isinstance(cap, int) and cap > 0 else MODEL_OUTPUT_LIMIT
-    return len(body) * approval["input_usd_per_million"] / 1e6 + out * approval["output_usd_per_million"] / 1e6
+    """Float wrapper around `request_worst_case_usd_decimal` preserved for backward-compatible callers."""
+    return float(request_worst_case_usd_decimal(payload, approval))
+
+
+def usd_decimal(usage: dict[str, dict[str, int]], approval: dict[str, Any], *, floor: bool = False) -> Decimal:
+    in_rate = _to_decimal(approval["input_usd_per_million"], "input_usd_per_million", allow_zero=True)
+    out_rate = _to_decimal(approval["output_usd_per_million"], "output_usd_per_million", allow_zero=True)
+    tin = sum(v.get("prompt_tokens", 0) - (v.get("cached_content_tokens", 0) if floor else 0) for v in usage.values())
+    tout = sum(v.get("candidates_tokens", 0) + v.get("thoughts_tokens", 0) for v in usage.values())
+    return (Decimal(tin) * in_rate + Decimal(tout) * out_rate) / MILLION_DEC
 
 
 def usd(usage: dict[str, dict[str, int]], approval: dict[str, Any] | None, *, floor: bool = False) -> float | str:
@@ -453,68 +580,256 @@ def usd(usage: dict[str, dict[str, int]], approval: dict[str, Any] | None, *, fl
     lower bound whatever the discount — the control's criterion-5 cost (review N3)."""
     if approval is None or not usage:
         return "UNKNOWN"
-    tin = sum(v.get("prompt_tokens", 0) - (v.get("cached_content_tokens", 0) if floor else 0) for v in usage.values())
-    tout = sum(v.get("candidates_tokens", 0) + v.get("thoughts_tokens", 0) for v in usage.values())
-    return tin * approval["input_usd_per_million"] / 1e6 + tout * approval["output_usd_per_million"] / 1e6
+    return float(usd_decimal(usage, approval, floor=floor))
 
 
-def _cost_capped_budget(approval: dict[str, Any]):
-    """`gemini.ApiBudget` (the request cap `call_gemini` and `live_transport` already honour) plus a USD guard applied to
-    the EXACT payload right before it is sent (`reserve`, called by `_guard_sends`): spend of finished arms + this arm's
-    reported usage + every sent request without reported usage at its own ceiling + the next request's ceiling must stay
-    ≤ max_usd. Requests are sequential (one arm at a time, `run_pipeline` awaits each call)."""
-    from app.ai import gemini
-    from app.ai.telemetry import usage_report
+def _verified_response_cost_decimal(response: Any, approval: dict[str, Any]) -> Decimal | None:
+    """Extract verified conservative Decimal cost from an HTTP 200 Gemini response. Returns `None` whenever status != 200,
+    JSON is unreadable, or `usageMetadata` is missing/partial/inconsistent — triggering full reservation charge."""
+    if response is None or getattr(response, "status_code", None) != 200:
+        return None
+    try:
+        body = response.json()
+    except (ValueError, TypeError, AttributeError):
+        return None
+    if not isinstance(body, dict):
+        return None
+    meta = body.get("usageMetadata")
+    if not isinstance(meta, dict):
+        return None
+    p_tok = meta.get("promptTokenCount")
+    if type(p_tok) is not int or p_tok <= 0:
+        return None
+    cached_tok = meta.get("cachedContentTokenCount", 0)
+    if type(cached_tok) is not int or cached_tok < 0 or cached_tok > p_tok:
+        return None
+    t_tok = meta.get("thoughtsTokenCount", 0)
+    if type(t_tok) is not int or t_tok < 0:
+        return None
+    candidates = body.get("candidates")
+    has_parts = isinstance(candidates, list) and any(
+        isinstance(c, dict) and bool(((c.get("content") or {}).get("parts")))
+        for c in candidates
+    )
+    c_tok = meta.get("candidatesTokenCount")
+    if has_parts:
+        if type(c_tok) is not int or c_tok <= 0:
+            return None
+    else:
+        if c_tok is None:
+            c_tok = 0
+        elif type(c_tok) is not int or c_tok < 0:
+            return None
+    if "totalTokenCount" in meta:
+        tot_tok = meta.get("totalTokenCount")
+        if type(tot_tok) is not int or tot_tok < p_tok + c_tok + t_tok:
+            return None
+    in_rate, out_rate, _ = _verified_rates_decimal(approval)
+    # Cached prompt tokens are priced at full input rate in the conservative settled upper bound.
+    return (Decimal(p_tok) * in_rate + Decimal(c_tok + t_tok) * out_rate) / MILLION_DEC
 
-    class CostCappedBudget(gemini.ApiBudget):
-        def __init__(self) -> None:
-            super().__init__(max_api_calls=int(approval["max_requests"]))
-            self.spent_before_arm = 0.0
-            self.arm_ceilings: list[float] = []
-            self.arm_start_requests = 0
-            self.stop_reason: str | None = None
 
-        def start_arm(self, spent: float) -> None:
-            self.spent_before_arm, self.arm_ceilings = spent, []
-            self.arm_start_requests = self.http_requests
+ReservationTicket = collections.namedtuple("ReservationTicket", ("seq", "worst_case_usd", "is_retry"))
 
-        def arm_upper(self) -> float:
-            usage = usage_report()
-            known = usd(usage, approval) if usage else 0.0
-            reported = sum(v.get("calls", 0) for v in usage.values())
-            unreported = self.arm_ceilings[reported:]           # sent, billed-or-not, without usage yet: at ceiling
-            return (known if isinstance(known, float) else 0.0) + sum(unreported)
 
-        def reserve(self, ceiling: float) -> None:
-            if self.spent_before_arm + self.arm_upper() + ceiling > approval["max_usd"]:
-                self.aborted, self.stop_reason = True, "COST_CEILING"
-                raise gemini.BudgetExceeded("the next request could exceed max_usd")
-            self.arm_ceilings.append(ceiling)
+from app.ai.gemini import ApiBudget as _BaseApiBudget, BudgetExceeded as _BudgetExceeded  # noqa: E402
 
-        def note_request(self, is_retry: bool) -> None:
-            try:
-                super().note_request(is_retry)
-            except gemini.BudgetExceeded:
+
+class SafeCampaignBudget(_BaseApiBudget):
+    """Thread-safe exact-Decimal campaign budget enforcing C27 §IV.1–IV.3 invariants:
+    - `spent_usd + inflight_reserved_usd + request_worst_case_usd <= campaign_max_usd` checked BEFORE every HTTP send.
+    - `actual_http_request_count + inflight_request_count < campaign_max_requests` checked BEFORE every HTTP send.
+    - Timeouts, network errors, HTTP 4xx/5xx, and missing/partial `usageMetadata` settle at `request_worst_case_usd`
+      (never refunded as $0)."""
+
+    def __init__(self, approval: dict[str, Any]) -> None:
+        max_req, max_usd = _normalize_campaign_caps(approval)
+        _verified_rates_decimal(approval)
+        super().__init__(max_api_calls=max_req)
+        self._approval = dict(approval)
+        self._lock = threading.Lock()
+        self.campaign_max_requests: int = max_req
+        self.campaign_max_usd: Decimal = max_usd
+        self.spent_usd: Decimal = Decimal("0")
+        self.inflight_reserved_usd: Decimal = Decimal("0")
+        self.actual_http_request_count: int = 0
+        self.inflight_request_count: int = 0
+        self.last_request_worst_case_usd: Decimal | None = None
+        self.arm_start_requests: int = 0
+        self.stop_reason: str | None = None
+        self._seq: int = 0
+        self._noted_awaiting_send: list[bool] = []
+        self._arm_spent_usd: Decimal = Decimal("0")
+        self._arm_wire_requests: int = 0
+        self._ledger_entries: list[dict[str, Any]] = []
+
+    @property
+    def remaining_usd(self) -> Decimal:
+        with self._lock:
+            rem = self.campaign_max_usd - self.spent_usd - self.inflight_reserved_usd
+            return rem if rem > Decimal("0") else Decimal("0")
+
+    def start_arm(self, _spent: float = 0.0) -> None:
+        with self._lock:
+            self._arm_spent_usd = Decimal("0")
+            self._arm_wire_requests = 0
+            self._noted_awaiting_send.clear()
+            self.arm_start_requests = self.actual_http_request_count
+
+    def arm_upper_decimal(self) -> Decimal:
+        from app.ai.telemetry import usage_report
+
+        usage = usage_report()
+        with self._lock:
+            if self._arm_wire_requests == 0 and usage:
+                # Offline monkeypatched `run_llm_only` test double injecting `record_usage` without HTTP wire calls.
+                known = usd_decimal(usage, self._approval)
+                self._arm_spent_usd = known
+                self.spent_usd += known
+            return self._arm_spent_usd
+
+    def arm_upper(self) -> float:
+        return float(self.arm_upper_decimal())
+
+    def note_call(self) -> None:
+        with self._lock:
+            super().note_call()
+
+    def note_transient(self) -> None:
+        with self._lock:
+            self.transient_hits += 1
+
+    def note_request(self, is_retry: bool) -> None:
+        with self._lock:
+            if self.aborted:
+                raise _BudgetExceeded(self.stop_reason or "BUDGET_ABORTED")
+            if (
+                self.actual_http_request_count + self.inflight_request_count + len(self._noted_awaiting_send)
+                >= self.campaign_max_requests
+            ):
+                self.aborted = True
                 self.stop_reason = self.stop_reason or "REQUEST_CAP"
-                raise
+                raise _BudgetExceeded(f"campaign_max_requests ({self.campaign_max_requests}) reached")
+            self._noted_awaiting_send.append(bool(is_retry))
 
-    return CostCappedBudget()
+    def begin_send(self, payload: Any, *, is_retry: bool | None = None) -> ReservationTicket:
+        try:
+            req_worst = request_worst_case_usd_decimal(payload, self._approval)
+        except LiveRefused as exc:
+            with self._lock:
+                if self._noted_awaiting_send:
+                    self._noted_awaiting_send.pop(0)
+                self.aborted = True
+                self.stop_reason = self.stop_reason or "UNBOUNDED_REQUEST_COST"
+            raise _BudgetExceeded(str(exc)) from exc
+
+        with self._lock:
+            noted_retry = self._noted_awaiting_send.pop(0) if self._noted_awaiting_send else False
+            retry_flag = noted_retry if is_retry is None else bool(is_retry)
+            if self.actual_http_request_count + self.inflight_request_count >= self.campaign_max_requests:
+                self.aborted = True
+                self.stop_reason = self.stop_reason or "REQUEST_CAP"
+                raise _BudgetExceeded(f"campaign_max_requests ({self.campaign_max_requests}) reached before send")
+            if self.spent_usd + self.inflight_reserved_usd + req_worst > self.campaign_max_usd:
+                self.aborted = True
+                self.stop_reason = self.stop_reason or "COST_CEILING"
+                raise _BudgetExceeded(
+                    f"request_worst_case_usd ({req_worst}) exceeds remaining_usd "
+                    f"({self.campaign_max_usd - self.spent_usd - self.inflight_reserved_usd})"
+                )
+            self._seq += 1
+            self.inflight_request_count += 1
+            self.inflight_reserved_usd += req_worst
+            self.last_request_worst_case_usd = req_worst
+            return ReservationTicket(seq=self._seq, worst_case_usd=req_worst, is_retry=retry_flag)
+
+    def finish_send(self, ticket: ReservationTicket, *, response: Any = None, error: str | None = None) -> Decimal:
+        verified = _verified_response_cost_decimal(response, self._approval) if error is None else None
+        usage_verified = verified is not None
+        settled = verified if verified is not None else ticket.worst_case_usd
+        with self._lock:
+            self.inflight_request_count = max(0, self.inflight_request_count - 1)
+            self.inflight_reserved_usd = max(Decimal("0"), self.inflight_reserved_usd - ticket.worst_case_usd)
+            self.actual_http_request_count += 1
+            self.http_requests = self.actual_http_request_count
+            if ticket.is_retry:
+                self.retry_requests += 1
+            self._arm_wire_requests += 1
+            self.spent_usd += settled
+            self._arm_spent_usd += settled
+            self._ledger_entries.append({
+                "seq": ticket.seq,
+                "is_retry": ticket.is_retry,
+                "http_status": getattr(response, "status_code", None),
+                "error": error,
+                "usage_verified": usage_verified,
+                "request_worst_case_usd": str(ticket.worst_case_usd),
+                "settled_usd": str(settled),
+            })
+            return settled
+
+    def snapshot(self) -> dict[str, Any]:
+        with self._lock:
+            rem = self.campaign_max_usd - self.spent_usd - self.inflight_reserved_usd
+            remaining = rem if rem > Decimal("0") else Decimal("0")
+            unverified = sum(1 for e in self._ledger_entries if not e["usage_verified"])
+            return {
+                "campaign_isolated": True,
+                "campaign_max_requests": self.campaign_max_requests,
+                "campaign_max_usd": str(self.campaign_max_usd),
+                "last_request_worst_case_usd": (
+                    str(self.last_request_worst_case_usd) if self.last_request_worst_case_usd is not None else None
+                ),
+                "spent_usd": str(self.spent_usd),
+                "inflight_reserved_usd": str(self.inflight_reserved_usd),
+                "remaining_usd": str(remaining),
+                "actual_http_request_count": self.actual_http_request_count,
+                "inflight_request_count": self.inflight_request_count,
+                "logical_calls": self.logical_calls,
+                "retries": self.retry_requests,
+                "transient_hits": self.transient_hits,
+                "unverified_requests_charged_at_ceiling": unverified,
+                "entries": list(self._ledger_entries),
+            }
 
 
-def _guard_sends(budget, approval: dict[str, Any]):
+def _cost_capped_budget(approval: dict[str, Any]) -> SafeCampaignBudget:
+    return SafeCampaignBudget(approval)
+
+
+def _guard_sends(budget: SafeCampaignBudget, approval: dict[str, Any]):
     """Wrap the only two send points in `app` (`httpx.post` of `live_transport`, `httpx.AsyncClient.post` of
-    `call_gemini`) so every request reserves its exact ceiling first. Returns an undo function."""
+    `call_gemini`) so every request atomically reserves `request_worst_case_usd` BEFORE send and settles into
+    `spent_usd` on exit (charging full reservation on timeout, HTTP error, or missing/partial usageMetadata)."""
     import httpx
 
     sync_post, async_post = httpx.post, httpx.AsyncClient.post
 
     def guarded_sync(url, *args, **kwargs):
-        budget.reserve(request_ceiling_usd(kwargs.get("json"), approval))
-        return sync_post(url, *args, **kwargs)
+        ticket = budget.begin_send(kwargs.get("json"))
+        resp = None
+        err = None
+        try:
+            resp = sync_post(url, *args, **kwargs)
+            return resp
+        except BaseException as exc:
+            err = type(exc).__name__
+            raise
+        finally:
+            budget.finish_send(ticket, response=resp, error=err)
 
     async def guarded_async(self, url, *args, **kwargs):
-        budget.reserve(request_ceiling_usd(kwargs.get("json"), approval))
-        return await async_post(self, url, *args, **kwargs)
+        ticket = budget.begin_send(kwargs.get("json"))
+        resp = None
+        err = None
+        try:
+            resp = await async_post(self, url, *args, **kwargs)
+            return resp
+        except BaseException as exc:
+            err = type(exc).__name__
+            raise
+        finally:
+            budget.finish_send(ticket, response=resp, error=err)
 
     httpx.post, httpx.AsyncClient.post = guarded_sync, guarded_async
 
@@ -533,14 +848,22 @@ def run_hybrid(text: str, extractor, deadline_s: float = 15.0) -> tuple[dict[str
 
     out_of_scope = _ngoai_pham_vi(text)
     if out_of_scope is not None:
-        return out_of_scope, {"hybrid_code": out_of_scope.get("error_code"), "source_references": []}
+        return out_of_scope, {"hybrid_code": out_of_scope.get("error_code"), "source_references": [],
+                              "certificate_verified": False, "failure_stage": "domain_gate"}
     result = run_hybrid_offline(text, extractor, policy=hybrid_offline_policy({"HYBRID_ROUTE_D_PREVIEW": "1"}),
                                 timeout_seconds=deadline_s)
     stages = {s["name"]: s for s in result.receipt["stages"]}
+    eng = result.receipt.get("engine") or {}
     return result.response.get("envelope"), {
-        "source_references": result.receipt["source_references"], "hybrid_code": result.receipt.get("code"),
+        "source_references": result.receipt["source_references"],
+        "hybrid_code": result.receipt.get("code"),
         "extraction_valid": "extraction" in stages and stages["extraction"]["code"] is None,
-        "source_grounding": result.receipt["source_gate"]["status"]}
+        "source_grounding": result.receipt["source_gate"]["status"],
+        "certificate_verified": eng.get("status") == "VERIFIED",
+        "planner_status": (result.receipt.get("planner") or {}).get("status"),
+        "failure_stage": result.receipt.get("failure_stage"),
+        "failure_kind": result.receipt.get("failure_kind"),
+    }
 
 
 async def run_llm_only(text: str, api_key: str) -> dict[str, Any]:
@@ -561,7 +884,7 @@ def hybrid_transport(api_key: str, sleep=time.sleep):
     def send(request: dict[str, Any]) -> dict[str, Any]:
         for attempt in range(gemini.MAX_ATTEMPTS):
             try:
-                return send_once(request)
+                return send_once(request, is_retry=attempt > 0)
             except ProviderHTTPError as e:
                 if e.status_code not in gemini.TRANSIENT_STATUS or attempt == gemini.MAX_ATTEMPTS - 1:
                     raise
@@ -620,7 +943,7 @@ def evaluate(corpus_path: Path, out_path: Path, approval: dict[str, Any] | None,
     live = approval is not None
     corpus_bytes = corpus_path.read_bytes()
     if live:
-        check_approval_terms(corpus_bytes, approval)
+        approval = check_approval_terms(corpus_bytes, approval)
     corpus = json.loads(corpus_bytes.decode("utf-8"))
     validate_corpus(corpus)
     identity = runtime_identity()
@@ -632,12 +955,13 @@ def evaluate(corpus_path: Path, out_path: Path, approval: dict[str, Any] | None,
 
     emit({"type": "header", "measurement_class": "PREREGISTERED_LIVE_PAIRED_EVALUATION" if live
           else "OFFLINE_DETERMINISTIC_FIXTURE_TEST", "corpus_sha256": sha256_bytes(corpus_bytes),
+          "oracle_sha256": compute_oracle_sha256(corpus["cases"]),
           "runtime_identity": identity, "arm_order_seed": ARM_ORDER_SEED})
     budget = _cost_capped_budget(approval) if live else None
     gemini.set_budget(budget)
     undo_guard = _guard_sends(budget, approval) if live else (lambda: None)
     rows: list[dict[str, Any]] = []
-    spent, technical_streak, stop_reason, stopped_arms = 0.0, 0, None, {}
+    technical_streak, stop_reason, stopped_arms = 0, None, {}
     try:
         for case in corpus["cases"]:
             if live and runtime_identity() != identity:
@@ -648,7 +972,7 @@ def evaluate(corpus_path: Path, out_path: Path, approval: dict[str, Any] | None,
                     continue
                 reset_usage()
                 if budget is not None:
-                    budget.start_arm(spent)
+                    budget.start_arm(float(budget.spent_usd))
                 start = time.perf_counter()
                 extra: dict[str, Any] = {}
                 envelope, technical = None, False
@@ -673,15 +997,17 @@ def evaluate(corpus_path: Path, out_path: Path, approval: dict[str, Any] | None,
                 except Exception as exc:  # noqa: BLE001 — recorded as infrastructure, never as a model/geometry result
                     technical, extra = True, {"exception": type(exc).__name__}
                 usage = usage_report()
-                upper = budget.arm_upper() if budget is not None else "UNKNOWN"
+                arm_upper_dec = budget.arm_upper_decimal() if budget is not None else None
+                upper: float | str = float(arm_upper_dec) if arm_upper_dec is not None else "UNKNOWN"
                 program_calls = (usage.get("semantic_program") or {}).get("calls") if usage else None
                 row = {"type": "row", "case_id": case["id"], "arm": arm, "expect": case["expect"],
                        "latency_s": time.perf_counter() - start, "usage": usage or "UNKNOWN",
                        "requests_with_usage": sum(v.get("calls", 0) for v in usage.values()) if usage else "UNKNOWN",
-                       "http_requests": (budget.http_requests - budget.arm_start_requests) if budget else 0,
+                       "http_requests": (budget.actual_http_request_count - budget.arm_start_requests) if budget else 0,
                        "repair_attempts": 0 if arm == "HYBRID" else (max(0, program_calls - 1)
                                                                      if isinstance(program_calls, int) else "UNKNOWN"),
-                       "usd": usd(usage, approval), "usd_floor": usd(usage, approval, floor=True), "usd_upper": upper, "technical_failure": technical, **extra}
+                       "usd": usd(usage, approval), "usd_floor": usd(usage, approval, floor=True),
+                       "usd_upper": upper, "technical_failure": technical, **extra}
                 try:
                     row.update(score(case, envelope, arm), outcome="SCORED")
                 except Exception as exc:  # noqa: BLE001 — never lose a paid row to a scorer bug
@@ -692,7 +1018,6 @@ def evaluate(corpus_path: Path, out_path: Path, approval: dict[str, Any] | None,
                     row.update(false_refusal=False, refusal_reason_correct=False)
                 rows.append(row)
                 emit(row)
-                spent += upper if isinstance(upper, float) else 0.0
                 technical_streak = technical_streak + 1 if technical else 0
                 if row["served"] and case["expect"] != "SERVE" and arm == "HYBRID":
                     # §5.1 (A2): Hybrid alone stops — criterion 1 has already failed. The control arm goes on, its
@@ -702,7 +1027,7 @@ def evaluate(corpus_path: Path, out_path: Path, approval: dict[str, Any] | None,
                     stop_reason = budget.stop_reason or "REQUEST_CAP"       # TransportExtractor wraps BudgetExceeded
                 elif extra.get("hybrid_code") in PROVIDER_BLOCK:
                     stop_reason = "PROVIDER_BLOCK"
-                elif live and spent >= 0.8 * approval["max_usd"]:
+                elif live and budget is not None and budget.spent_usd >= EIGHTY_PERCENT_DEC * budget.campaign_max_usd:
                     stop_reason = "USD_80_PERCENT"
                 elif technical_streak >= 3:
                     stop_reason = "INFRASTRUCTURE_STREAK"
@@ -716,10 +1041,26 @@ def evaluate(corpus_path: Path, out_path: Path, approval: dict[str, Any] | None,
     finally:
         undo_guard()
         gemini.set_budget(None)
-        out = {"type": "summary", "stop_reason": stop_reason, "stopped_arms": stopped_arms,
-               "completed": stop_reason is None and not stopped_arms,
-               "http_requests": budget.http_requests if budget else 0, "spent_upper_usd": spent if live else 0.0,
-               "summary": summarize(rows)}
+        completed = stop_reason is None and not stopped_arms
+        summary = summarize(rows)
+        paired_complete = (
+            completed
+            and (summary.get("paired") or {}).get("complete_pairs") == len(corpus["cases"])
+            and not (summary.get("paired") or {}).get("unpaired_cases")
+        )
+        spent_upper = float(budget.spent_usd) if budget is not None else 0.0
+        out = {
+            "type": "summary",
+            "stop_reason": stop_reason,
+            "stopped_arms": stopped_arms,
+            "completed": completed,
+            "run_status": "COMPLETE" if paired_complete else "INCOMPLETE_PAIRED_EVALUATION",
+            "paired_live_evaluation_complete": "YES" if (live and paired_complete) else "NO",
+            "http_requests": budget.actual_http_request_count if budget else 0,
+            "spent_upper_usd": spent_upper,
+            "budget_ledger": budget.snapshot() if budget is not None else None,
+            "summary": summary,
+        }
         out["acceptance"] = acceptance(corpus, out, approval)
         emit(out)
         sink.close()

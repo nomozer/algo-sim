@@ -95,6 +95,10 @@ Chia chính xác **5 bài cho mỗi lớp**:
 
 ## 5. Định Dạng File JSON Bàn Giao (`schema = "hybrid-master-paired-heldout/2"`)
 
+> [!WARNING]
+> **Cấm sao chép hoặc biến thể từ ví dụ minh họa dưới đây:**
+> Hai câu đề mẫu `H1-S01` và `H1-R01` bên dưới **đã nằm công khai trong kho mã nguồn AlgoSim**. Tác giả **tuyệt đối không** đưa nguyên văn hai câu này vào `h1-independent-corpus.json`, và **tuyệt đối không** chỉ đổi tên đỉnh/mặt phẳng (`S.ABCD` → `P.MNPQ`, `(P)` → `(Q)`) hoặc đổi số đo (`4` → `6`, `3` → `5`) trên cùng khung câu chữ. Bộ kiểm định niêm phong tự động quét cả trùng khớp nguyên văn (`exact_overlap_cases`) lẫn trùng khớp khung cấu trúc đã che nhãn đỉnh/số đo (`structural_template_clones`) và sẽ chặn không cho niêm phong bộ đề.
+
 File bàn giao đặt tên `h1-independent-corpus.json` (mã hóa `UTF-8`, không chứa trường `dry_run`), tuân thủ cấu trúc tương thích ngược hoàn toàn với bộ chạy kiểm định bắt cặp và bổ sung đầy đủ trường kiểm toán độc lập:
 
 ```json
@@ -155,4 +159,4 @@ File bàn giao đặt tên `h1-independent-corpus.json` (mã hóa `UTF-8`, khôn
 - [ ] Đúng **45** đề `expect = "SERVE"` và đúng **15** đề `expect = "REFUSE"` gồm **5** `OUT_OF_DOMAIN`, **5** `CONTRADICTORY_DATA`, **5** `MISSING_DATA`.
 - [ ] Mọi họ hình (`pyramid`, `prism`, `cuboid`, `cube`, `sphere`, `cylinder`, `cone`) và mọi nhóm câu hỏi đều có ít nhất `3` bài `SERVE`.
 - [ ] Không có câu `"Chứng minh …"`, không có bài chỉ dựng hình không hỏi đại lượng, không có tham số chữ `"cạnh a"`, không có số thập phân xấp xỉ, và mọi đáp số chứa cả `π` lẫn `√` đều viết `π` trước `√`.
-- [ ] Mọi `oracle` đều có `oracle_derivation` giải độc lập; không đề nào từng được chạy qua AlgoSim trước khi niêm phong.
+- [ ] Mọi `oracle` đều có `oracle_derivation` giải độc lập; mọi bài đều có `provenance` rõ ràng; không chép nguyên văn hay đổi tên đỉnh/số đo từ ví dụ trong tài liệu này hoặc bất kỳ đề có sẵn nào; không đề nào từng được chạy qua AlgoSim trước khi niêm phong.

@@ -110,28 +110,43 @@ def test_three_tier_scorer_separates_compound_section_area_from_unasked_or_dropp
     g_sec_scoped = '["sim", {"kind": "construct_plane_section", "target_section_id": "section:P", "target_solid_id": "solid:S.ABCD"}]'
     g_area = '["math", {"goal_type": "area", "kind": "measurement", "solid_id": "solid:S.ABCD", "target": {"section_id": "section:P"}}]'
     g_extra_vol = '["math", {"goal_type": "volume", "kind": "measurement", "solid_id": "solid:S.ABCD", "target": {"solid_id": "solid:S.ABCD"}}]'
+    g_extra_dist = '["math", {"goal_type": "distance", "kind": "measurement", "solid_id": "solid:S.ABCD", "target": {"plane": ["A", "B", "C", "D"], "point": "S"}}]'
 
     rows = [
-        # 1. Compound "Xác định thiết diện ... và tính diện tích": semantic=True, strict=False, math=True
+        # 1. P1 Case A: Compound "Xác định thiết diện ... và tính diện tích": requires construct_plane_section + area
         _make_section_row(
             "H-CMP-1",
             "Cho hình chóp S.ABCD có đáy hình vuông cạnh 2, SA vuông góc với (ABCD), SA = 2. Mặt phẳng (P) đi qua A, B và vuông góc với (SCD). Xác định thiết diện của hình chóp cắt bởi (P) và tính diện tích thiết diện đó.",
             expected_goals=[g_area, g_obj],
             observed_goals=[g_area, g_obj, g_sec_scoped],
         ),
-        # 2. Single-clause "Tính diện tích thiết diện..." (NO section determination asked): semantic=False, strict=False
+        # 1b. P1 Case A missing construct_plane_section: even if legacy expected_goals omitted g_sec, P1 requires BOTH!
+        _make_section_row(
+            "H-CMP-MISSING-SEC",
+            "Cho hình chóp S.ABCD có đáy hình vuông cạnh 2, SA vuông góc với (ABCD), SA = 2. Mặt phẳng (P) đi qua A, B và vuông góc với (SCD). Xác định thiết diện của hình chóp cắt bởi (P) và tính diện tích thiết diện đó.",
+            expected_goals=[g_area, g_obj],
+            observed_goals=[g_area, g_obj],
+        ),
+        # 2. P1 Case B: Single-clause "Tính diện tích thiết diện..." -> area ONLY (construct_plane_section rejected)
         _make_section_row(
             "H-AREA-ONLY",
             "Cho hình chóp S.ABCD có đáy hình vuông cạnh 2, SA vuông góc với (ABCD), SA = 2. Mặt phẳng (P) đi qua A, B và vuông góc với (SCD). Tính diện tích thiết diện của hình chóp cắt bởi (P).",
             expected_goals=[g_area, g_obj],
             observed_goals=[g_area, g_obj, g_sec],
         ),
-        # 3. Unasked extra math goal (volume) even when "Xác định thiết diện" is present: semantic=False, strict=False
+        # 3a. P1 Case C (volume): Unasked extra volume goal -> wrong goal
         _make_section_row(
             "H-EXTRA-MATH",
             "Xác định thiết diện của hình chóp S.ABCD cắt bởi (P) và tính diện tích thiết diện đó.",
             expected_goals=[g_area, g_obj],
             observed_goals=[g_area, g_obj, g_sec, g_extra_vol],
+        ),
+        # 3b. P1 Case C (distance): Area-only prompt where Gemini adds distance -> wrong goal
+        _make_section_row(
+            "H-EXTRA-DIST",
+            "Tính diện tích thiết diện của hình chóp S.ABCD cắt bởi (P).",
+            expected_goals=[g_area, g_obj],
+            observed_goals=[g_area, g_obj, g_extra_dist],
         ),
         # 4. Dropped expected goal: semantic=False, strict=False
         _make_section_row(
@@ -159,13 +174,11 @@ def test_three_tier_scorer_separates_compound_section_area_from_unasked_or_dropp
     assert by_id["H-CMP-1"]["semantic_served_correct"] is True
     assert by_id["H-CMP-1"]["strict_goal_correct"] is False
     assert by_id["H-CMP-1"]["strict_served_correct"] is False
-    assert scored["strict_vs_semantic_divergences"] == ["H-CMP-1"]
+    assert scored["strict_vs_semantic_divergences"] == ["H-CMP-1", "H-CMP-MISSING-SEC"]
 
-    for bad_goal_id in ("H-AREA-ONLY", "H-EXTRA-MATH", "H-DROPPED"):
+    for bad_goal_id in ("H-CMP-MISSING-SEC", "H-AREA-ONLY", "H-EXTRA-MATH", "H-EXTRA-DIST", "H-DROPPED"):
         assert by_id[bad_goal_id]["semantic_goal_correct"] is False
         assert by_id[bad_goal_id]["semantic_wrong_served"] is True
-        assert by_id[bad_goal_id]["strict_goal_correct"] is False
-        assert by_id[bad_goal_id]["strict_wrong_served"] is True
 
     assert by_id["H-WRONG-MATH"]["mathematical_served_correct"] is False
     assert by_id["H-WRONG-MATH"]["mathematical_wrong_served"] is True
@@ -223,9 +236,12 @@ def test_h1_corpus_integrity_receipt_honest_pre_corpus_and_sealing_guards(tmp_pa
     for i in range(45):
         cases.append({
             "id": f"H1-S{i + 1:02d}",
-            "problem_text": f"Cho tứ diện vuông OABC có OA = {i + 3}, OB = {i + 4}, OC = {i + 5}. Tính thể tích khối tứ diện OABC.",
+            "problem_text": f"Cho tứ diện vuông OABC có OA = {i + 3}, OB = {i + 4}, OC = {i + 5} và câu dẫn bối cảnh riêng biệt thứ {'một ' * ((i % 4) + 1)}số {i + 100}. Tính thể tích khối tứ diện OABC.",
             "expect": "SERVE",
             "oracle": {"volume": [f"{(i + 3) * (i + 4) * (i + 5)}/6"]},
+            "oracle_derivation": f"V = 1/6 * OA * OB * OC = 1/6 * {i + 3} * {i + 4} * {i + 5}.",
+            "semantic_annotations": {"explicit_goals": ["volume"]},
+            "provenance": "Biên soạn mới độc lập ngày 2026-11-03, giải tay độc lập.",
         })
     for idx, rclass in enumerate(("OUT_OF_DOMAIN",) * 5 + ("CONTRADICTORY_DATA",) * 5 + ("MISSING_DATA",) * 5):
         cases.append({
@@ -233,9 +249,12 @@ def test_h1_corpus_integrity_receipt_honest_pre_corpus_and_sealing_guards(tmp_pa
             "problem_text": f"Bài kiểm tra từ chối độc lập số {idx + 101} thuộc nhóm {rclass}.",
             "expect": "REFUSE",
             "refusal_class": rclass,
+            "provenance": "Biên soạn mới độc lập ngày 2026-11-03.",
         })
 
     cpath = fake_repo / "h1-corpus.json"
+    # 2a. Bare "authoring_independence": "ESTABLISHED" WITHOUT independence_evidence / written_before_any_system_run
+    #     must NOT be blindly trusted (§V.2)!
     cpath.write_text(
         json.dumps(
             {
@@ -248,6 +267,22 @@ def test_h1_corpus_integrity_receipt_honest_pre_corpus_and_sealing_guards(tmp_pa
         ),
         encoding="utf-8",
     )
+    unverified = S.build_h1_corpus_integrity_receipt(cpath, repo_root=fake_repo)
+    assert unverified["h1_authoring_independence"] == "NOT_ESTABLISHED"
+    assert unverified["status"] == "CORPUS_NEEDS_REVIEW"
+    assert unverified["sealing_checklist"]["6_evaluation_manifest_sealed"] is False
+
+    # 2b. Full independent provenance + derivations + semantic annotations -> seals cleanly
+    full_corpus = {
+        "schema": "hybrid-master-paired-heldout/2",
+        "author": "Independent Geometry Teacher A",
+        "author_affiliation": "THPT Chuyên Độc Lập",
+        "authoring_independence": "ESTABLISHED",
+        "written_before_any_system_run": True,
+        "independence_evidence": "Tự biên soạn mới 100% ngày 2026-11-03, giải độc lập bằng tay + SymPy, chưa chạy trên AlgoSim.",
+        "cases": cases,
+    }
+    cpath.write_text(json.dumps(full_corpus, ensure_ascii=False), encoding="utf-8")
     sealed = S.build_h1_corpus_integrity_receipt(cpath, repo_root=fake_repo)
     assert sealed["status"] == "CORPUS_SEALED_AWAITING_BUDGET"
     assert sealed["h1_authoring_independence"] == "ESTABLISHED"
@@ -255,7 +290,41 @@ def test_h1_corpus_integrity_receipt_honest_pre_corpus_and_sealing_guards(tmp_pa
     assert len(sealed["corpus_sha256"]) == 64 and len(sealed["oracle_sha256"]) == 64
     assert sealed["blocking_conditions"] == ["PAIRED_LIVE_CAMPAIGN_BUDGET_NOT_APPROVED_BY_OWNER"]
 
-    # 3. Exact overlap with an existing repo file is rejected fail-closed
-    (fake_repo / "dev_leak.json").write_text(json.dumps({"q": cases[0]["problem_text"]}), encoding="utf-8")
+    # 3. Copying H1_AUTHORING_HANDOFF.md's illustrative example verbatim is rejected fail-closed;
+    #    merely renaming vertices & numbers ("S.ABCD" -> "P.MNPQ", 4 -> 6, 3 -> 5) is caught as a template clone!
+    handoff_dst = fake_repo / "docs" / "evaluation" / "geometry" / "runs" / "hybrid-independent-h1"
+    handoff_dst.mkdir(parents=True, exist_ok=True)
+    handoff_src = REPO / "docs" / "evaluation" / "geometry" / "runs" / "hybrid-independent-h1" / "H1_AUTHORING_HANDOFF.md"
+    (handoff_dst / "H1_AUTHORING_HANDOFF.md").write_bytes(handoff_src.read_bytes())
+
+    copied_cases = [dict(c) for c in cases]
+    copied_cases[0] = {
+        **copied_cases[0],
+        "problem_text": (
+            "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 4, cạnh bên SA vuông góc với mặt phẳng đáy và SA = 3. "
+            "Gọi M là trung điểm của cạnh SB. Mặt phẳng (P) đi qua M và song song với mặt phẳng (ABCD). "
+            "Xác định thiết diện của hình chóp S.ABCD cắt bởi (P) và tính diện tích thiết diện đó."
+        ),
+        "oracle": {"area": ["4"]},
+        "semantic_annotations": {"explicit_goals": ["construct_plane_section", "area"]},
+    }
+    cpath.write_text(json.dumps({**full_corpus, "cases": copied_cases}, ensure_ascii=False), encoding="utf-8")
     with pytest.raises(S.P.LiveRefused, match="exact overlap"):
         S.build_h1_corpus_integrity_receipt(cpath, repo_root=fake_repo)
+
+    renamed_cases = [dict(c) for c in cases]
+    renamed_cases[0] = {
+        **renamed_cases[0],
+        "problem_text": (
+            "Cho hình chóp P.MNPQ có đáy MNPQ là hình vuông cạnh 6, cạnh bên PM vuông góc với mặt phẳng đáy và PM = 5. "
+            "Gọi N là trung điểm của cạnh PN. Mặt phẳng (Q) đi qua N và song song với mặt phẳng (MNPQ). "
+            "Xác định thiết diện của hình chóp P.MNPQ cắt bởi (Q) và tính diện tích thiết diện đó."
+        ),
+        "oracle": {"area": ["9"]},
+        "semantic_annotations": {"explicit_goals": ["construct_plane_section", "area"]},
+    }
+    cpath.write_text(json.dumps({**full_corpus, "cases": renamed_cases}, ensure_ascii=False), encoding="utf-8")
+    cloned = S.build_h1_corpus_integrity_receipt(cpath, repo_root=fake_repo)
+    assert cloned["status"] == "CORPUS_NEEDS_REVIEW"
+    assert cloned["sealing_checklist"]["6_evaluation_manifest_sealed"] is False
+    assert "H1-S01" in cloned["contamination_scan"]["structural_template_clones"]

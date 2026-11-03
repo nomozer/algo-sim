@@ -115,15 +115,16 @@ def semantic_goals_equivalent(
     raw_extraction: Any = None,
     gold_extraction: Any = None,
 ) -> bool | str:
-    """Evaluate Semantic Goal Correctness under `h1-section-determination-equivalence/1`.
+    """Evaluate Semantic Goal Correctness under finalized P1 (`h1-section-determination-equivalence/1`):
 
     - Returns `"UNKNOWN"` when `expected_goals` is `None` (e.g., `CLARIFY` cases where `unresolved` exits honestly).
-    - Requires every expected goal to be preserved (zero dropped goals).
-    - Allows an extra `["sim", {"kind": "construct_plane_section", "target_section_id": S}]` iff:
-      1. `has_explicit_section_determination_request(problem_text)` is True, AND
-      2. `S` is already targeted by an expected `area` or `radius` measurement goal in `expected_goals`.
-    - Rejects any other extra simulation or math goal, and rejects `construct_plane_section` when `problem_text`
-      asks only `"Tính diện tích thiết diện..."` without an explicit section-determination clause.
+    - Case A: `problem_text` explicitly requests section determination (`xác định/tìm/dựng/vẽ thiết diện`) for a
+      declared section `S` measured by `area` or `radius` -> canonical P1 goal set REQUIRES BOTH
+      `construct_plane_section(target_section_id=S)` AND the explicit measurement goal(s). Omitting either fails.
+    - Case B: `problem_text` asks only `"Tính diện tích thiết diện..."` without an explicit section-determination
+      clause -> canonical P1 goal set contains ONLY the measurement goal (`construct_plane_section` is rejected).
+    - Case C: Any unasked simulation or math goal (e.g., adding `volume` or `distance` when only `area` was asked)
+      or any dropped expected goal fails (`False`).
     """
     if expected_goals is None:
         return "UNKNOWN"
@@ -138,22 +139,16 @@ def semantic_goals_equivalent(
         # Duplicate identical goals are invalid.
         if sorted(expected_goals) != sorted(observed_goals or []):
             return False
-    missing = exp_set - obs_set
-    if missing:
-        return False
-    extra = obs_set - exp_set
-    if not extra:
-        return True
-    if not has_explicit_section_determination_request(problem_text):
-        return False
     allowed_sections = _measured_sections([x for x in exp_parsed if x is not None])
-    for item_json in extra:
-        tag, spec = json.loads(item_json)
-        if tag != "sim" or spec != {"kind": "construct_plane_section", "target_section_id": spec.get("target_section_id")}:
-            return False
-        if spec.get("target_section_id") not in allowed_sections:
-            return False
-    return True
+    if has_explicit_section_determination_request(problem_text) and allowed_sections:
+        p1_expected_set = exp_set | {
+            json.dumps(("sim", {"kind": "construct_plane_section", "target_section_id": sec_id}),
+                       ensure_ascii=False, sort_keys=True)
+            for sec_id in allowed_sections
+        }
+    else:
+        p1_expected_set = exp_set
+    return obs_set == p1_expected_set
 
 
 def _payload_schema_valid(raw_extraction: Any) -> bool:
@@ -347,23 +342,116 @@ def score_three_tier_rows(rows: list[dict[str, Any]], *, gold_by_id: dict[str, d
 
 def compute_oracle_sha256(cases: list[dict[str, Any]]) -> str:
     """Canonical SHA-256 over case expectations and exact parsed mathematical oracles / refusal classes."""
-    canonical = []
-    for c in sorted(cases, key=lambda item: str(item.get("id", ""))):
-        expect = c.get("expect") or (c.get("expected") or {}).get("outcome")
-        raw_oracle = c.get("oracle") if "oracle" in c else (c.get("expected") or {}).get("oracle")
-        parsed_oracle = (
-            {k: sorted(str(P.parse_oracle(v)) for v in vs) for k, vs in sorted(raw_oracle.items())}
-            if isinstance(raw_oracle, dict)
-            else None
-        )
-        canonical.append({
-            "id": c.get("id"),
-            "expect": expect,
-            "oracle": parsed_oracle,
-            "refusal_class": c.get("refusal_class"),
-        })
-    blob = json.dumps(canonical, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf-8")
-    return hashlib.sha256(blob).hexdigest()
+    return P.compute_oracle_sha256(cases)
+
+
+_PROBLEM_TEXT_JSON_RE = re.compile(r'"problem_text"\s*:\s*"((?:\\.|[^"\\])*)"')
+_SOLID_TOKEN_RE = re.compile(r"^[A-Z][A-Z0-9']*\.[A-Z][A-Z0-9']*$")
+_POLY_TOKEN_RE = re.compile(r"^[A-Z][A-Z0-9']+$")
+_PT_TOKEN_RE = re.compile(r"^[A-Z]'?$")
+_NUM_TOKEN_RE = re.compile(r"^(?:\d+(?:/\d+)?|[0-9/√π°^+-]*\d[0-9/√π°^+-]*|√\d+|π)$")
+
+
+def _structural_skeleton(text: str) -> str:
+    """Mask vertex/solid/plane ASCII labels and numeric/radical literals so renaming `S.ABCD -> P.MNPQ` and `4 -> 6`
+    produces the exact same structural template skeleton."""
+    import unicodedata
+
+    cleaned = unicodedata.normalize("NFC", text)
+    cleaned = re.sub(r"[.,;:!?()\[\]\"“”]", " ", cleaned)
+    tokens: list[str] = []
+    for tok in cleaned.split():
+        if _SOLID_TOKEN_RE.fullmatch(tok):
+            tokens.append("<SOLID>")
+        elif _POLY_TOKEN_RE.fullmatch(tok):
+            tokens.append("<POLY>")
+        elif _PT_TOKEN_RE.fullmatch(tok):
+            tokens.append("<PT>")
+        elif _NUM_TOKEN_RE.fullmatch(tok):
+            tokens.append("<NUM>")
+        else:
+            tokens.append(tok.lower())
+    return " ".join(tokens)
+
+
+def _scan_structural_template_clones(
+    cases: list[dict[str, Any]],
+    repo_root: Path,
+    *,
+    exclude: Path | None = None,
+) -> dict[str, list[str]]:
+    """Detect H-1 cases whose structural skeleton matches an existing problem text in repository docs/tests/corpora
+    (including `H1_AUTHORING_HANDOFF.md`'s illustrative examples) even after vertex renaming and number scaling."""
+    case_skeletons = {c["id"]: _structural_skeleton(c["problem_text"]) for c in cases}
+    clones: dict[str, list[str]] = {}
+    for path in repo_root.rglob("*"):
+        if (
+            not path.is_file()
+            or path.suffix not in P._TEXT_SUFFIXES
+            or P._SKIP_DIRS & set(path.relative_to(repo_root).parts)
+            or (exclude is not None and path.resolve() == exclude.resolve())
+        ):
+            continue
+        try:
+            raw = path.read_text(encoding="utf-8")
+        except (UnicodeDecodeError, OSError):
+            continue
+        rel = path.relative_to(repo_root).as_posix()
+        for m in _PROBLEM_TEXT_JSON_RE.finditer(raw):
+            try:
+                ref_text = json.loads(f'"{m.group(1)}"')
+            except ValueError:
+                continue
+            if not isinstance(ref_text, str) or len(ref_text.strip()) < 25:
+                continue
+            ref_skel = _structural_skeleton(ref_text)
+            for cid, c_skel in case_skeletons.items():
+                if c_skel == ref_skel and rel not in clones.get(cid, ()):
+                    clones.setdefault(cid, []).append(rel)
+    return clones
+
+
+def _is_non_placeholder_text(val: Any, *, min_len: int = 3) -> bool:
+    if not isinstance(val, str):
+        return False
+    s = val.strip()
+    if len(s) < min_len or ("<" in s and ">" in s):
+        return False
+    upper = s.upper()
+    if upper in ("TO_BE_NAMED_BY_OWNER", "TBD", "TODO", "UNKNOWN", "PENDING"):
+        return False
+    return True
+
+
+def _verify_authoring_independence(corpus: dict[str, Any]) -> tuple[str, list[str]]:
+    """Refuse to rubber-stamp `authoring_independence = ESTABLISHED` unless author identity, affiliation, pre-run
+    attestation, independence evidence, per-case provenance, and independent oracle derivations are all present."""
+    missing: list[str] = []
+    if corpus.get("authoring_independence") != "ESTABLISHED":
+        missing.append("authoring_independence!=ESTABLISHED")
+    author = corpus.get("author")
+    if not _is_non_placeholder_text(author, min_len=3):
+        missing.append("author")
+    elif re.search(r"\b(?:agent|antigravity|claude|gemini|gpt|copilot|llm)\b", str(author), flags=re.IGNORECASE):
+        missing.append("author_cannot_be_ai_agent")
+    if not _is_non_placeholder_text(corpus.get("author_affiliation"), min_len=2):
+        missing.append("author_affiliation")
+    if corpus.get("written_before_any_system_run") is not True:
+        missing.append("written_before_any_system_run")
+    if not _is_non_placeholder_text(corpus.get("independence_evidence"), min_len=20):
+        missing.append("independence_evidence")
+    for c in corpus.get("cases") or ():
+        cid = c.get("id", "?")
+        if not _is_non_placeholder_text(c.get("provenance"), min_len=8):
+            missing.append(f"{cid}.provenance")
+        if c.get("expect") == "SERVE":
+            if not _is_non_placeholder_text(c.get("oracle_derivation"), min_len=10):
+                missing.append(f"{cid}.oracle_derivation")
+            sem = c.get("semantic_annotations")
+            goals = sem.get("explicit_goals") if isinstance(sem, dict) else None
+            if not isinstance(goals, list) or not goals or not all(isinstance(g, str) and g for g in goals):
+                missing.append(f"{cid}.semantic_annotations.explicit_goals")
+    return ("ESTABLISHED" if not missing else "NOT_ESTABLISHED"), missing
 
 
 def _candidate_summary(repo_root: Path) -> dict[str, Any]:
@@ -480,24 +568,21 @@ def build_h1_corpus_integrity_receipt(
     if exact_hits:
         raise P.LiveRefused(f"H-1 corpus contains exact overlap with repository files: {exact_hits}")
 
+    template_clones = _scan_structural_template_clones(cases, repo_root, exclude=corpus_path)
+    indep, missing_indep = _verify_authoring_independence(corpus)
     author = str(corpus.get("author") or "").strip()
-    indep = (
-        "ESTABLISHED"
-        if author
-        and author != "TO_BE_NAMED_BY_OWNER"
-        and corpus.get("authoring_independence") == "ESTABLISHED"
-        else "NOT_ESTABLISHED"
-    )
     c_sha = P.sha256_file(corpus_path)
     o_sha = compute_oracle_sha256(cases)
     worst_req_usd = P.worst_case_request_usd(
         corpus,
         {
+            "model": "gemini-2.5-flash",
             "input_usd_per_million": 0.30,
             "output_usd_per_million": 2.50,
             "llm_only_output_reservation_tokens": P.MODEL_OUTPUT_LIMIT,
         },
     )
+    clean_seal = indep == "ESTABLISHED" and not near_hits and not template_clones
 
     sealing_steps.update({
         "1_format_validated": True,
@@ -505,13 +590,14 @@ def build_h1_corpus_integrity_receipt(
         "3_count_and_stratification_45_5_5_5_verified": True,
         "4_independent_oracle_parsed_exact": True,
         "5_corpus_and_oracle_sha256_recorded": True,
-        "6_evaluation_manifest_sealed": indep == "ESTABLISHED" and not near_hits,
+        "6_evaluation_manifest_sealed": clean_seal,
     })
 
     return {
         "schema": INTEGRITY_SCHEMA,
-        "status": "CORPUS_SEALED_AWAITING_BUDGET" if (indep == "ESTABLISHED" and not near_hits) else "CORPUS_NEEDS_REVIEW",
+        "status": "CORPUS_SEALED_AWAITING_BUDGET" if clean_seal else "CORPUS_NEEDS_REVIEW",
         "h1_authoring_independence": indep,
+        "missing_independence_fields": missing_indep,
         "h1_measurement": "NOT_MEASURED",
         "live_provider_calls": 0,
         "git_head_at_generation": head_sha,
@@ -528,8 +614,18 @@ def build_h1_corpus_integrity_receipt(
             "MISSING_DATA": 5,
         },
         "composition_observed": {"total": len(cases), "SERVE": serve_n, **ref_counts},
-        "contamination_scan": {"exact_overlap_cases": exact_hits, "near_overlap_cases": near_hits},
+        "contamination_scan": {
+            "exact_overlap_cases": exact_hits,
+            "near_overlap_cases": near_hits,
+            "structural_template_clones": template_clones,
+        },
         "worst_case_request_usd_at_paid_flash_rates": round(worst_req_usd, 6),
+        "proposed_campaign_limits": {
+            "campaign_max_requests": 300,
+            "campaign_max_usd": 5.0,
+            "model": "gemini-2.5-flash",
+            "approval_status": "PENDING_OWNER_DECISION",
+        },
         "semantic_equivalence_policy": SEMANTIC_EQUIVALENCE_POLICY,
         "candidate_identity": cand,
         "runtime_identity": ident,
@@ -537,6 +633,7 @@ def build_h1_corpus_integrity_receipt(
         "blocking_conditions": (
             (["AUTHORING_INDEPENDENCE_NOT_ESTABLISHED"] if indep != "ESTABLISHED" else [])
             + (["NEAR_OVERLAP_REQUIRES_MANUAL_REVIEW"] if near_hits else [])
+            + (["STRUCTURAL_TEMPLATE_CLONE_REQUIRES_REWRITE"] if template_clones else [])
             + ["PAIRED_LIVE_CAMPAIGN_BUDGET_NOT_APPROVED_BY_OWNER"]
         ),
     }
