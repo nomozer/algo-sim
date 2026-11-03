@@ -42,7 +42,7 @@ def test_versions_record_the_result_changes():
     from app.simulation.geometry_functions.registry import REGISTRY_VERSION
 
     assert (REGISTRY_VERSION, PLANNER_VERSION, ENGINE_VERSION) == (
-        "geometry-functions/32", "geometry-fact-planner/26", "geometry-function-engine/24")
+        "geometry-functions/33", "geometry-fact-planner/26", "geometry-function-engine/24")
 
 
 # ── 1. "khi bị cắt bởi" is construction wording, not a condition (both clause readers agree) ──────────────────────────

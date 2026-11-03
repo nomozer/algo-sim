@@ -843,6 +843,25 @@ def _repair_restated_premises(out: dict[str, Any], text: str, single_solid_id: s
     premises[:] = kept
 
 
+def _repair_simulation_goal_target_refs(out: dict[str, Any]) -> None:
+    """Canonicalize `simulation_goals[*].vertex`/`point` -> `target_refs` only when verbatim-grounded in `sg.quote`."""
+    goals = out.get("simulation_goals")
+    if not isinstance(goals, list):
+        return
+    for sg in goals:
+        if not isinstance(sg, dict) or sg.get("kind") not in ("construct_object", "highlight_geometry") or "target_refs" in sg:
+            continue
+        extra = [k for k in ("vertex", "point") if k in sg]
+        if len(extra) != 1 or not isinstance(val := sg[extra[0]], str) or not val.strip():
+            continue
+        tok = val.strip()
+        lbl = tok.split("::")[-1]
+        q = str(sg.get("quote") or "")
+        if tok.startswith("@") or (lbl and re.search(rf"(?<![\w']){re.escape(lbl)}(?![\w'])", q)):
+            sg.pop(extra[0])
+            sg["target_refs"] = [tok]
+
+
 def _repair_observed_wire_shapes(out: dict[str, Any]) -> dict[str, Any]:
     text = out.get("problem_text")
     if not isinstance(text, str):
@@ -852,6 +871,7 @@ def _repair_observed_wire_shapes(out: dict[str, Any]) -> dict[str, Any]:
     _named_described_points_to_premises(out, single)
     _repair_square_premises(out, text)
     _repair_restated_premises(out, text, single)
+    _repair_simulation_goal_target_refs(out)
     return out
 
 
@@ -947,6 +967,9 @@ def extract_typed_fact_next_v2(problem_text: str, extractor: Extractor) -> Extra
         if raw.get("problem_text") != problem_text:
             return ExtractionResult(None, "REPLAY_SOURCE_IDENTITY_MISMATCH", diagnostics)
         references = tuple(_check_quotes(raw, problem_text))
+        if "source_references" not in raw:
+            raw = _repair_observed_wire_shapes(deepcopy(raw))
+            references = tuple(_check_quotes(raw, problem_text))
         payload = parse_typed_fact_next_v2(raw).model_copy(update={"problem_text": problem_text})
         _check_premise_roles(payload, problem_text)
     except (TypedFactNextValidationError, _TuChoiAI) as exc:

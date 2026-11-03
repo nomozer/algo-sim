@@ -365,6 +365,8 @@ IDENTITY_DELTAS = (
     {"run": "hybrid-live-validation",                      # gold-replay repairs: source wording, stated-cut coverage, radicals
      "versions": {"registry_version": ("geometry-functions/31", "geometry-functions/32"),
                   "engine_version": ("geometry-function-engine/23", "geometry-function-engine/24")}},
+    {"run": "hybrid-master-backend-replacement",           # final backend product completion: midpoint/angle parity (registry /33)
+     "versions": {"registry_version": ("geometry-functions/32", "geometry-functions/33")}},
 )
 
 

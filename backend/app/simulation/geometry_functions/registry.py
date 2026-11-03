@@ -70,7 +70,9 @@ from pydantic import BaseModel, BeforeValidator, ConfigDict, Field, ValidationEr
 #: "vuông tại đỉnh E"; "hình chiếu … của đỉnh B'" and "chân đường cao hạ/kẻ từ B' xuống/đến (P) là/trùng với C"; ratio
 #: "thỏa mãn hệ thức"; the two-line slice reads "xét", "khối" and a base-polygon word that matches the base. No function,
 #: contract or provider surface changed.
-REGISTRY_VERSION = "geometry-functions/32"
+#: /33 (run `hybrid-master-backend-replacement`, final backend product completion): "điểm chính giữa" parity for `midpoint`
+#: and "đường thẳng (đi) qua <P> và <Q>" parity for `ask_angle_line_plane` / `ask_angle_lines`. Provider surface unchanged.
+REGISTRY_VERSION = "geometry-functions/33"
 
 
 class TuChoi(Exception):
@@ -707,11 +709,11 @@ REGISTRY: dict[str, FunctionSpec] = {s.name: s for s in (
     _F("height", HeightArgs, "fact", "Chiều cao của một khối do đề cho.", (("cao",),), ("value",)),
     _F("face_perpendicular_base", FacePerpendicularBaseArgs, "fact", "Mặt bên (một đỉnh ngoài đáy + một cạnh đáy) vuông "
        "góc với mặt đáy.", (_VUONG,), plane_fields=("base", "face")),
-    _F("midpoint", MidpointArgs, "construct", "Gọi một điểm là trung điểm của một đoạn.", (("trung điểm",),),
+    _F("midpoint", MidpointArgs, "construct", "Gọi một điểm là trung điểm của một đoạn.", (("trung điểm", "điểm chính giữa"),),
        planning=PlanningContract((PlanningTerm("Point", ("A",)), PlanningTerm("Point", ("B",))), PlanningTerm("Point", ("M",)),
                                  "derived_point", "midpoint", call=(("point", "M"), ("segment", ("A", "B"))), fresh="M",
                                  descriptor="midpoint",
-                                 phrase=r"trung điểm\s+(?:của\s+)?(?:(?:đoạn thẳng|đoạn|cạnh)\s+)?(?P<ops>{P}{P})(?![\w'])")),
+                                 phrase=r"(?:trung điểm|điểm chính giữa)\s+(?:của\s+)?(?:(?:đoạn thẳng|đoạn|cạnh)\s+)?(?P<ops>{P}{P})(?![\w'])")),
     # Wave 2A: the existing function gains ONE producer contract (data only) — the planner then composes it with every goal
     # contract, as the experimental arm `measure_function_discovery.experimental_centroid_contract` first showed.
     _F("centroid", CentroidArgs, "construct", "Gọi một điểm là trọng tâm của một đa giác.", (("trọng tâm",),),
@@ -760,9 +762,9 @@ REGISTRY: dict[str, FunctionSpec] = {s.name: s for s in (
            (PlanningTerm("Point", ("P",)), PlanningTerm("Point", ("Q",)), PlanningTerm("Plane", ("R",))),
            PlanningTerm("AnswerAngleLinePlane", ("P", "Q", "R")), "goal_answer", "angle_line_plane",
            call=(("line", ("P", "Q")), ("plane", "R")), goal="angle",
-           phrase=(r"góc\s+(?:giữa|tạo bởi|hợp bởi)\s+(?:đường thẳng|đt|đoạn thẳng|đoạn)\s+nối\s+{N}(?P<t>{P})"
+           phrase=(r"góc\s+(?:giữa|tạo bởi|hợp bởi)\s+(?:đường thẳng|đt|đoạn thẳng|đoạn)\s+(?:nối|(?:đi\s+)?qua)\s+{N}(?P<t>{P})"
                    r"{J}(?:{D})\s+(?:và|với)\s+{M}",
-                   r"góc\s+(?:giữa|tạo bởi|hợp bởi)\s+(?:đường thẳng|đt|đoạn thẳng|đoạn)\s+nối\s+(?:{D}){J}"
+                   r"góc\s+(?:giữa|tạo bởi|hợp bởi)\s+(?:đường thẳng|đt|đoạn thẳng|đoạn)\s+(?:nối|(?:đi\s+)?qua)\s+(?:{D}){J}"
                    r"{N}(?P<t>{P})\s+(?:và|với)\s+{M}"))),
     _F("ask_angle_plane_plane", AskAnglePlanePlaneArgs, "ask", "Đề hỏi góc giữa hai mặt phẳng (trả cos²).", (("góc",),)),
     # Wave 2A primitive: kernel/IR already measure `angle_cos_sq(line3, line3)`; this exposes it to route B only.
@@ -772,9 +774,9 @@ REGISTRY: dict[str, FunctionSpec] = {s.name: s for s in (
            (PlanningTerm("Point", ("P",)), PlanningTerm("Point", ("Q",)), PlanningTerm("Line", ("L",))),
            PlanningTerm("AnswerAngleLines", ("P", "Q", "L")), "goal_answer", "angle_lines",
            call=(("line1", ("P", "Q")), ("line2", "L")), goal="angle",
-           phrase=(r"góc\s+(?:giữa|tạo bởi|hợp bởi)\s+(?:đường thẳng|đt|đoạn thẳng|đoạn)\s+nối\s+{N}(?P<t>{P})"
+           phrase=(r"góc\s+(?:giữa|tạo bởi|hợp bởi)\s+(?:đường thẳng|đt|đoạn thẳng|đoạn)\s+(?:nối|(?:đi\s+)?qua)\s+{N}(?P<t>{P})"
                    r"{J}(?:{D})\s+(?:và|với)\s+{L}",
-                   r"góc\s+(?:giữa|tạo bởi|hợp bởi)\s+(?:đường thẳng|đt|đoạn thẳng|đoạn)\s+nối\s+(?:{D}){J}"
+                   r"góc\s+(?:giữa|tạo bởi|hợp bởi)\s+(?:đường thẳng|đt|đoạn thẳng|đoạn)\s+(?:nối|(?:đi\s+)?qua)\s+(?:{D}){J}"
                    r"{N}(?P<t>{P})\s+(?:và|với)\s+{L}"))),
     _F("ask_area", AskAreaArgs, "ask", "Đề hỏi diện tích một đa giác.", (("diện tích",),),
        planning=PlanningContract(
@@ -1305,13 +1307,13 @@ _C_DCAO = re.compile(rf"{_L1}{_L1}\s+là\s+đường\s+cao(?:\s+của\s+(?:(?:h�
 #: giao điểm / hình chiếu (vuông góc) … của <labelled object>", "X là điểm (di động) trên/thuộc cạnh XY" — the whole clause.
 _DOI_TUONG_NHAN = (rf"(?:(?:cạnh|đoạn(?:\s+thẳng)?|đường\s+thẳng|tam\s+giác|hình\s+vuông|hình\s+chữ\s+nhật|mặt\s+phẳng|"
                    rf"mặt\s+đáy|đáy|mp)\s*)?\(?{_NHAN}\)?")
-_C_DIEM = re.compile(rf"(?:gọi\s+)?{_L1}\s+là\s+(?:(?:trung\s+điểm|tâm|trọng\s+tâm)\s+(?:của\s+)?{_DOI_TUONG_NHAN}"
+_C_DIEM = re.compile(rf"(?:gọi\s+)?{_L1}\s+là\s+(?:(?:trung\s+điểm|điểm\s+chính\s+giữa|tâm|trọng\s+tâm)\s+(?:của\s+)?{_DOI_TUONG_NHAN}"
                      rf"|giao\s+điểm\s+(?:của\s+)?{_DOI_TUONG_NHAN}\s+(?:và|với)\s+{_DOI_TUONG_NHAN}"
                      rf"|điểm(?:\s+di\s+động)?\s+(?:nằm\s+)?(?:trên|thuộc)\s+{_DOI_TUONG_NHAN})"
                      rf"(?![\w'])(?=\s*(?:[,;.]|và\s|$))", re.IGNORECASE)
 #: A projection may be read as the foot of a height stated in the same sentence: kept readable, but a subject change.
 _C_CHIEU = re.compile(rf"(?:(?:gọi\s+)?{_L1}\s+(?:là|trùng\s+với)\s+hình\s+chiếu(?:\s+vuông\s+góc)?\s+của\s+(?:(?:điểm|đỉnh)\s+)?{_L1}\s+(?:lên|trên)\s+{_DOI_TUONG_NHAN}"
-                      rf"|hình\s+chiếu(?:\s+vuông\s+góc)?\s+của\s+(?:(?:điểm|đỉnh)\s+)?{_L1}\s+(?:lên|trên)\s+{_DOI_TUONG_NHAN}\s+(?:là|trùng\s+với)\s+(?:(?:điểm|đỉnh|trung\s+điểm|trọng\s+tâm)\s+)?{_L1}(?:\s+của\s+{_DOI_TUONG_NHAN})?"
+                      rf"|hình\s+chiếu(?:\s+vuông\s+góc)?\s+của\s+(?:(?:điểm|đỉnh)\s+)?{_L1}\s+(?:lên|trên)\s+{_DOI_TUONG_NHAN}\s+(?:là|trùng\s+với)\s+(?:(?:điểm|đỉnh|trung\s+điểm|điểm\s+chính\s+giữa|trọng\s+tâm)\s+)?{_L1}(?:\s+của\s+{_DOI_TUONG_NHAN})?"
                       # the foot of the altitude from a point IS its orthogonal projection (run `hybrid-live-validation`);
                       # exactly the binder's grammar (`_chan_duong_cao_dung_nguon`), so both readers accept the same words
                       rf"|chân\s+đường\s+cao\s+(?:(?:hạ|kẻ)\s+)?từ\s+(?:(?:điểm|đỉnh)\s+)?{_L1}\s+(?:xuống|đến)\s+mặt\s+phẳng\s*\((?:{_L1}){{3,}}\)\s+(?:là|trùng\s+với)\s+(?:(?:điểm|đỉnh)\s+)?{_L1})"
@@ -4564,7 +4566,7 @@ _CUM_DINH_NGHIA_DIEM = re.compile(
     rf"(?:(?:(?:gọi|lấy|chọn|cho|dựng|vẽ|xác định|tìm)\s+)?(?:điểm\s+)?{_P1}\s+(?:thuộc|nằm\s+trên|trên)\s+"
     rf"(?:(?:cạnh|đoạn\s+thẳng|đoạn)\s+)?{_P1}{_P1}\s*,?\s*{_NOI_TY_SO}\s+{_P1}{_P1}\s*=\s*(?:\d+(?:/\d+)?)?\s*{_P1}{_P1}[.\s]*$)|"
     rf"(?:(?:(?:gọi|lấy|cho|dựng|vẽ|xác định|tìm)\s+)?(?:điểm\s+)?{_P1}\s+(?:là|trùng\s+với)\s+"
-    rf"(?:trung điểm(?:\s+của)?(?:\s+(?:đoạn(?:\s+thẳng)?|cạnh(?:\s+bên|\s+đáy)?))?\s+{_P1}{_P1}"
+    rf"(?:(?:trung điểm|điểm chính giữa)(?:\s+của)?(?:\s+(?:đoạn(?:\s+thẳng)?|cạnh(?:\s+bên|\s+đáy)?))?\s+{_P1}{_P1}"
     rf"|trọng tâm(?:\s+của)?(?:\s+(?:tam giác|tứ giác|đa giác|mặt\s+đáy|đáy))?\s+\(?{_NHOM_NHAN}\)?"
     rf"|hình chiếu(?:\s+vuông góc)?\s+của\s+(?:điểm\s+|đỉnh\s+)?{_P1}\s+(?:lên|trên)\s+(?:{_MAT_TOAN_HANG}|(?:đường thẳng\s+|cạnh\s+)?{_P1}{_P1}|{_GIAO_TUYEN.pattern})"
     # two closed operands (review round 2: "[^,.;!?]+" also read "… và tìm giao điểm của SC với (ABD)" as this definition)
@@ -4572,7 +4574,7 @@ _CUM_DINH_NGHIA_DIEM = re.compile(
     # ratio point (`divide_segment`, bound by `_TY_SO`): "M là điểm thuộc cạnh SA sao cho SM = 2MA"
     rf"|(?:một\s+)?điểm\s+(?:thuộc|nằm\s+trên|trên)\s+(?:(?:cạnh|đoạn\s+thẳng|đoạn)\s+)?{_P1}{_P1}\s*,?\s*{_NOI_TY_SO}\s+"
     rf"{_P1}{_P1}\s*=\s*(?:\d+(?:/\d+)?)?\s*{_P1}{_P1})"
-    rf"|hình chiếu(?:\s+vuông góc)?\s+của\s+(?:điểm\s+|đỉnh\s+)?{_P1}\s+(?:lên|trên)\s+(?:{_MAT_TOAN_HANG}|(?:đường thẳng\s+|cạnh\s+)?{_P1}{_P1})\s+(?:là|trùng\s+với)\s+(?:(?:điểm|đỉnh|trọng tâm|trung điểm)\s+)?{_P1}(?:\s+của\s+(?:(?:cạnh(?:\s+bên|\s+đáy)?|đoạn(?:\s+thẳng)?|tam\s+giác|đáy)\s+)?(?:{_NHOM_NHAN}|{_P1}{_P1}))?)[.\s]*",
+    rf"|hình chiếu(?:\s+vuông góc)?\s+của\s+(?:điểm\s+|đỉnh\s+)?{_P1}\s+(?:lên|trên)\s+(?:{_MAT_TOAN_HANG}|(?:đường thẳng\s+|cạnh\s+)?{_P1}{_P1})\s+(?:là|trùng\s+với)\s+(?:(?:điểm|đỉnh|trọng tâm|trung điểm|điểm chính giữa)\s+)?{_P1}(?:\s+của\s+(?:(?:cạnh(?:\s+bên|\s+đáy)?|đoạn(?:\s+thẳng)?|tam\s+giác|đáy)\s+)?(?:{_NHOM_NHAN}|{_P1}{_P1}))?)[.\s]*",
     re.IGNORECASE,
 )
 _CUM_DUNG_THIET_DIEN = re.compile(
@@ -4660,7 +4662,7 @@ def _tap_mat(m: re.Match, i: int, day: frozenset | None) -> frozenset | None:
 #: "(P) đi qua M và song song với (ABCD)" — a plane defined by a verified point and a reference plane, possibly unnamed when
 #: written inside the section phrase. Groups: ten, diem, then the three operand groups of `_MAT_TOAN_HANG` (3, 4, 5).
 #: "chứa M" ≡ "qua M" for ONE point label (run `hybrid-contract-v2`, D3): "chứa SA" is a line and never matches `diem`.
-_QUA_CHUA = r"(?:(?:đi\s+)?qua|chứa)\s+(?:(?:điểm|đỉnh|trung\s+điểm|trọng\s+tâm)\s+)?"
+_QUA_CHUA = r"(?:(?:đi\s+)?qua|chứa)\s+(?:(?:điểm|đỉnh|trung\s+điểm|điểm\s+chính\s+giữa|trọng\s+tâm)\s+)?"
 _DUOI_DIEM_QUA = rf"(?:\s+của\s+(?:(?:cạnh|đoạn(?:\s+thẳng)?|tam\s+giác)\s+)?(?-i:{_P1}){{2,}}(?![\w']))?"
 _NOI_QUAN_HE_MAT = r"\s*,?\s*(?:(?:và(?:\s+đồng\s+thời)?|đồng\s+thời)\s+)?"
 _QUA_SONG_SONG = re.compile(
@@ -4938,7 +4940,7 @@ def mat_song_song_dung_nguon(c: LoiGoi, p: str, q: list[str], de: str, calls: tu
                     continue
                 if point_desc is None:
                     dau_diem = m[0][:m.start("diem") - m.start()].lower()
-                    if "trung" in dau_diem and not any(d.fn == "midpoint" and d.args.point == p and construction_source_bound(d, de) for d in calls):
+                    if ("trung" in dau_diem or "chính giữa" in dau_diem) and not any(d.fn == "midpoint" and d.args.point == p and construction_source_bound(d, de) for d in calls):
                         continue
                     if "trọng" in dau_diem and not any(d.fn == "centroid" and d.args.point == p and construction_source_bound(d, de) for d in calls):
                         continue
@@ -4985,7 +4987,7 @@ def mat_song_song_dung_nguon(c: LoiGoi, p: str, q: list[str], de: str, calls: tu
                 continue
             if point_desc is None:
                 dau_diem = m[0][:m.start("diem") - m.start()].lower()
-                if "trung" in dau_diem and not any(d.fn == "midpoint" and d.args.point == p and construction_source_bound(d, de) for d in calls):
+                if ("trung" in dau_diem or "chính giữa" in dau_diem) and not any(d.fn == "midpoint" and d.args.point == p and construction_source_bound(d, de) for d in calls):
                     continue
                 if "trọng" in dau_diem and not any(d.fn == "centroid" and d.args.point == p and construction_source_bound(d, de) for d in calls):
                     continue
@@ -5719,7 +5721,7 @@ _DOI_TUONG = (r"(?:(?i:cạnh(?:\s+(?:bên|đáy))?|đoạn(?:\s+thẳng)?|tam\s
 _DAU_NHAN = r"(?:(?<=Δ)|(?<![\w'.]))"
 _DS_NHOM = (rf"{_DOI_TUONG}{_DAU_NHAN}(?:{_DIEM}){{2,}}(?![\w'])"
             rf"(?:\s*(?:,|và)\s*{_DOI_TUONG}{_DAU_NHAN}(?:{_DIEM}){{2,}}(?![\w']))*")
-_CUE_DIEM = {"midpoint": r"(?i:trung\s+điểm)", "centroid": r"(?i:trọng\s+tâm)"}
+_CUE_DIEM = {"midpoint": r"(?i:trung\s+điểm|điểm\s+chính\s+giữa)", "centroid": r"(?i:trọng\s+tâm)"}
 #: Right angle of a named polygon: `ABC (là tam giác) vuông (cân) tại B`, `ABCD là hình thang vuông tại A và D`,
 #: `góc ABC vuông`; the angle at X has its rays on X's two cyclic neighbours. An unlabelled `(đáy là) tam giác vuông tại B`
 #: is resolved only when its subject is "đáy", by a unique named base of a solid; a face label in parentheses, "(SAB) là
@@ -6182,7 +6184,7 @@ _MO_MAT_CAT = (re.compile(rf"\s*(?:(?:cho|gọi)\s+)?(?:một\s+)?mặt\s+phẳn
 _CAU_MAT_CAT = tuple((vai, re.compile(mau, re.IGNORECASE)) for vai, mau in (
     ("parallel", r"song\s+song\s+với\s+(?:mặt\s+phẳng\s+)?(?:mặt\s+)?đáy(?![\w])"),
     ("distance", rf"cách\s+(?:mặt\s+phẳng\s+)?(?:mặt\s+)?đáy\s+(?:một\s+khoảng\s+)?(?:bằng\s+|là\s+)?{_SO_VB}"),
-    ("midpoint", rf"(?:đi\s+)?qua\s+trung\s+điểm\s+(?:của\s+)?(?:đường\s+cao|đoạn(?:\s+thẳng)?)\s+(?-i:(?P<x>{_L})(?P<y>{_L}))(?![\w'])"),
+    ("midpoint", rf"(?:đi\s+)?qua\s+(?:trung\s+điểm|điểm\s+chính\s+giữa)\s+(?:của\s+)?(?:đường\s+cao|đoạn(?:\s+thẳng)?)\s+(?-i:(?P<x>{_L})(?P<y>{_L}))(?![\w'])"),
     ("axial", r"(?:đi\s+)?qua\s+trục(?:\s+của\s+(?:hình|khối)\s+(?:trụ|nón))?(?![\w])"),
     # the general apex ratio (registry /25): "cắt (trục) SO tại M sao cho SM/SO = k" / "cắt trục SO theo tỉ lệ k tính từ đỉnh S"
     ("axis_point", rf"cắt\s+(?:trục\s+|đường\s+cao\s+)?(?-i:(?P<x>{_L})(?P<y>{_L}))(?![\w'])\s+tại\s+(?:điểm\s+)?"
@@ -6398,7 +6400,7 @@ def construction_source_bound(c: LoiGoi, de: str = "") -> bool:
                             n == a.image and labels(d) in (target, target[::-1]) for n, d in zip(names, lines)):
                         return True
             patterns = [rf"(?<![\w'])({point})\s+(?:là|trùng\s+với)\s+hình chiếu\s+(?:vuông góc\s+)?của\s+(?:(?:điểm|đỉnh)\s+)?({point})\s+(?:lên|trên)\s+{operand}(?![\w'])",
-                        rf"[Hh]ình chiếu\s+(?:vuông góc\s+)?của\s+(?:(?:điểm|đỉnh)\s+)?({point})\s+(?:lên|trên)\s+{operand}\s+(?:là|trùng\s+với)\s+(?:(?P<noun>điểm|đỉnh|trọng tâm|trung điểm)\s+)?({point})(?![\w'])"]
+                        rf"[Hh]ình chiếu\s+(?:vuông góc\s+)?của\s+(?:(?:điểm|đỉnh)\s+)?({point})\s+(?:lên|trên)\s+{operand}\s+(?:là|trùng\s+với)\s+(?:(?P<noun>điểm|đỉnh|trọng tâm|trung điểm|điểm chính giữa)\s+)?({point})(?![\w'])"]
             for i, pattern in enumerate(patterns):
                 for m in re.finditer(pattern, q):
                     out, src, dst = m.groups() if i == 0 else (m[4], m[1], m[2])
@@ -6580,7 +6582,7 @@ def _cau_tien_de_dong_hop_le(s: str, s_start: int, de: str, calls: tuple[LoiGoi,
             if not proj:
                 return False
             txt_c = re.sub(r"\s+", " ", m.group().lower())
-            if "trung điểm" in txt_c and not any(
+            if ("trung điểm" in txt_c or "điểm chính giữa" in txt_c) and not any(
                     d.fn == "midpoint" and d.args.point == proj[0].args.image
                     and construction_source_bound(replace(d, quotes=(m.group(),)), de) for d in calls):
                 return False
@@ -6688,7 +6690,7 @@ def _kiem_nguon_dong(calls, de, phu, read_quotes):
                         'prism': prism_noun,
                         'regular_polygon': rf'(?:đáy\s+{labels}\s+là\s+)?{shape}[.\s]*',
                         'rectangle': rf'(?:cho\s+)?(?:hình hộp chữ nhật\s+{solid}|(?:đáy\s+{labels}\s+là\s+)?hình chữ nhật\s*(?:{labels})?)[.\s]*',
-                        'midpoint': rf'(?:gọi\s+)?{_P1}\s+là trung điểm\s+(?:của\s+)?(?:(?:cạnh|đoạn(?:\s+thẳng)?)\s+)?{_P1}{_P1}[.\s]*',
+                        'midpoint': rf'(?:gọi\s+)?{_P1}\s+là\s+(?:trung\s+điểm|điểm\s+chính\s+giữa)\s+(?:của\s+)?(?:(?:cạnh|đoạn(?:\s+thẳng)?)\s+)?{_P1}{_P1}[.\s]*',
                     }
                     form = atomic_forms.get(c.fn)
                     hit = re.fullmatch(form, s, re.I) if form else None

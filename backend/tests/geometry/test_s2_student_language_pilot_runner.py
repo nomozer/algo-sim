@@ -333,17 +333,18 @@ def test_c15_the_registered_r1_corpus_and_its_gold_replay_are_locked(tmp_path):
     corpus = CORPUS.parent / "r1-live-pilot-corpus.json"
     R.validate_corpus(json.loads(corpus.read_text(encoding="utf-8")))
     out = R.evaluate(corpus, tmp_path / "dry.jsonl", None)
-    receipt = _rows(CORPUS.parent / "r1-live-pilot-gold-replay-r2.jsonl")   # C16: runner records label disagreements
+    # At registry /32 (`r1-live-pilot-gold-replay-r2.jsonl`, `r1-live-pilot-gold-replay-c19-r3.jsonl`) R1-G01/R1-G02
+    # refused at Source Gate `(11, 2, 0)`; registry /33 grounds "điểm chính giữa" and "đi qua/nối" -> `(13, 0, 0)`.
+    receipt = _rows(CORPUS.parent / "r1-live-pilot-gold-replay-final.jsonl")
     # the receipt hashed the LF bytes it ran on; a fresh checkout under core.autocrlf=true holds CRLF (Full T3 attempt 1)
     import hashlib
     assert receipt[0]["corpus_sha256"] == hashlib.sha256(corpus.read_bytes().replace(b"\r\n", b"\n")).hexdigest()
     assert {r["case_id"]: r["composition_label"] for r in out["rows"]} == {
         r["case_id"]: r["composition_label"] for r in receipt if r["type"] == "row"}
-    sup = dict(out["supplementary"])
-    outcomes = sup.pop("hybrid_outcomes")                    # C19: a new field the C16 receipt predates
-    assert sup == receipt[-1]["supplementary"]
+    assert out["supplementary"] == receipt[-1]["supplementary"]
+    outcomes = out["supplementary"]["hybrid_outcomes"]
     assert out["score"]["metrics"]["wrong_served_end_to_end"]["numerator"] == 0
-    assert (outcomes["SERVED_CORRECT"], outcomes["FALSE_REFUSAL"], outcomes["SERVED_WRONG"]) == (11, 2, 0)
+    assert (outcomes["SERVED_CORRECT"], outcomes["FALSE_REFUSAL"], outcomes["SERVED_WRONG"]) == (13, 0, 0)
 
 
 def test_c15_the_models_own_described_points_are_checked_against_gold():

@@ -472,7 +472,7 @@ def test_version_constants_surface_fingerprints_and_historical_receipt_preservat
     # (SL-2, the /4 extraction schema and instruction gain `unresolved`), an unconstrained base is MISSING_DIMENSION.
     # -> registry /31, planner /26, engine /22 (hybrid-master eighteenth continuation): points named by a property composed
     # by definition regression; provider surfaces flat / v3 / Route A unchanged (`/2` gains two described kinds).
-    assert REGISTRY_VERSION == "geometry-functions/32"
+    assert REGISTRY_VERSION == "geometry-functions/33"
     # planner /14, engine /13 (hybrid-v2-backend-generalization): full > 3-label question planes, witness triple.
     assert PLANNER_VERSION == "geometry-fact-planner/26"
     # engine /11 -> /12 (claude-to-codex-takeover): skew-claim contradiction refusal on ask_distance_lines; registry/planner unchanged.

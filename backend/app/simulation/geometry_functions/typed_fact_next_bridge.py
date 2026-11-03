@@ -609,9 +609,16 @@ def bridge_v2(raw: dict[str, Any]) -> dict[str, Any]:
         raise TuChoi(e.code, e.detail) from None
     if p.unresolved:
         # SL-2: the extractor reported what it could not read. Existing codes (flat contract parity): `ambiguous` facts are
-        # AMBIGUOUS_FACT, the `unsupported` escape is OUT_OF_SCOPE. The record describes the first entry a learner can
-        # answer (else the first), whatever order the model wrote. Adapter /4 re-locates spans in the raw source.
-        u = next((x for x in p.unresolved if x.kind != "unsupported"), p.unresolved[0])
+        # AMBIGUOUS_FACT, the `unsupported` escape is OUT_OF_SCOPE. An `incomplete`/`ambiguous` goal that merely embeds an
+        # `unsupported` operand span is a consequence of that capability gap, not a student-answerable ambiguity.
+        unsup = [x for x in p.unresolved if x.kind == "unsupported"]
+        clarifiable = [
+            x
+            for x in p.unresolved
+            if x.kind != "unsupported"
+            and not any((u0.quote and u0.quote in x.quote) or (u0.subject_ref and u0.subject_ref == x.subject_ref) for u0 in unsup)
+        ]
+        u = clarifiable[0] if clarifiable else p.unresolved[0]
         raise TuChoi("OUT_OF_SCOPE" if u.kind == "unsupported" else "AMBIGUOUS_FACT",
                      f"{u.unresolved_id}: {u.kind} — không đoán cách hiểu", tuple(x.unresolved_id for x in p.unresolved),
                      data={"clarification": clarification_record(u, p.problem_text)})
