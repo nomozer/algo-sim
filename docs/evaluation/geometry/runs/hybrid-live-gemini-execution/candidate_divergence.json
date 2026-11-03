@@ -1,0 +1,20 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "ALGOSIM_MASTER_HYBRID_BACKEND_REPLACEMENT (hybrid-live-gemini-execution: K-1/S-2/R-1 live Gemini 2.5 Flash measurement under OWNER_ATTESTED paid attestation, 70/70 HTTP requests, plus wire schema & post-Run-3 transport normalizer repairs)",
+  "corrects": "docs/evaluation/geometry/runs/hybrid-live-validation/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "current_candidate_hash": "e758e25af26707c2aa0a43c66ccbb4e59350aac0596b90d136c03be3c14c4d65",
+  "current_product_commit": "f60ae29e5c6d1b39057743ef05948a0ad06f4fca",
+  "current_candidate_source": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+  "diverged": true,
+  "reason": "Three narrow backend-only AI transport repairs discovered empirically during real Gemini 2.5 Flash execution under Owner paid-project attestation ('tôi dùng tiền mà ko free', OWNER_ATTESTED): (1) 48372208: OpenAPI ARRAY items conversion from JSON Schema prefixItems in backend/app/ai/function_calling.py after Run 1 (79bbc053) returned HTTP 400; (2) 8853c4b0 (frozen at 44568bc9, 5c0175289995b921...): compact 4,333-byte flat-item propertyOrdering wire schema + _normalize_transport_payload in backend/app/ai/typed_fact_next_extraction.py after Run 2 (48372208) hit Gemini's constrained-decoding FSM state limit — verified live in Run 3 (64/64 HTTP 200 STOP across K-1, S-2, R-1; 0 wrong math answers served, 19/19 served match exact symbolic oracle); (3) f60ae29e (frozen at 428515dc, e758e25af26707c2...): post-Run-3 transport normalizer & v2 system-instruction tightening for construct_plane_section simulation goals, omitted single-solid measurement solid_id, and out-of-vocab wire UnresolvedSpec hint tags. Registry /32, Planner /26, Engine /24, Adapter /4, TypedFactNext /2 contract, LLM_ONLY default route, and frontend/** are untouched.",
+  "cache_version": 131,
+  "cache_version_hien_tai": 131,
+  "cache_decision": "NO BUMP: LLM_ONLY default route, prompts, routing policy and cache bytes are untouched; Route D cache rows are isolated under ROUTE_D_CACHE_POLICY and automatically invalidated by typed_fact_next_surface_fingerprint() when TYPED_FACT_NEXT_SYSTEM_INSTRUCTION or TYPED_FACT_NEXT_RESPONSE_SCHEMA changes.",
+  "hieu_luc_len_ket_qua_da_do": {
+    "historical_measurements": "UNCHANGED",
+    "live_requests": 70,
+    "so_lieu_lượt_đo_cuối": "UNCHANGED: thesis-final-20260908T160224Z, every earlier offline receipt (79bbc053, fba8b7a7, 123e57da, 15d236eb), and all three live campaign receipts in hybrid-live-validation/live-pilots-{79bbc053,48372208,8853c4b0} remain byte-for-byte intact; post-Run-3 offline replay on captured wire payloads is reported strictly separately and never pooled with or substituted for live Run 3 numbers."
+  }
+}

@@ -173,7 +173,20 @@ CODE_COMMIT = 57457fc4c59094c5e57dd934bffd73533d82b81e
 CANDIDATE_COMMIT = 79bbc053
 MODEL_REQUEST_COUNT = 0
 CORRECTS = HYBRID_MASTER_C23_PEDAGOGICAL_SIMULATION_INTEGRATION (candidate identity and template measured_system only; pedagogical-simulation-integration/candidate_divergence.json corrected by hybrid-live-validation/candidate_divergence.json)
+CORRECTED_BY = HYBRID_MASTER_C25_LIVE_GEMINI_EXECUTION_AND_EVALUATION (PAID_PROJECT_NOT_VERIFIED cleared via Owner verbatim paid-service attestation OWNER_ATTESTED; 70/70 live Gemini 2.5 Flash HTTP requests executed across Run 1 79bbc053, Run 2 8c4f4f20 and Run 3 44568bc9 with 64/64 HTTP 200 STOP in Run 3 and 0/65 mathematically wrong answers served; post-Run-3 wire normalizer frozen at candidate 428515dc / product f60ae29e via hybrid-live-gemini-execution/candidate_divergence.json; C24 offline receipts preserved byte-for-byte)
+
+## CONTINUATION_ID = HYBRID_MASTER_C25_LIVE_GEMINI_EXECUTION_AND_EVALUATION
+
+REPORT = docs/evaluation/geometry/runs/hybrid-live-validation/LIVE_GEMINI_EVALUATION_REPORT.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-live-validation/
+CLASSIFICATION = LIVE_DEVELOPMENT_PILOT (gemini-2.5-flash, OWNER_ATTESTED via verbatim Owner quote in owner-paid-attestation.json, cloud_billing_verified=false, project_id=null; 70/70 HTTP requests used across Run 1 3xHTTP400 prefixItems + Run 2 3xHTTP400 FSM state limit + Run 3 64/64 HTTP 200 STOP, 0 retries, USD 0.340464 reported / USD 0.318308 cache-discounted / USD 0.495793 campaign upper <= USD 4.00) + OFFLINE_CAPTURED_WIRE_REPLAY_SEPARATED — LIVE_GEMINI_MEASURED = YES (VERIFIED_LIVE); LIVE_MATHEMATICAL_WRONG_ANSWER_SERVED = 0/65 (19/19 SERVED match exact symbolic oracle 100%, 4 REGISTERED_DECOMPOSITION + 15 SOURCE_EXPLICIT_SEQUENCE, 0 GENUINE_DISCOVERY, 0 hallucinated serves); LIVE_GEMINI_QUALITY_VALIDATED = NO (false_refusal 38.9%-70.0% from v2 wire/quote friction, 4 R-1 tail cases R1-F02..R1-G02 NOT_MEASURED at GLOBAL_REQUEST_CAP); post-Run-3 TDD wire normalizer & prompt repair frozen at candidate 428515dc (product f60ae29e, 118 files e758e25af26707c2); HYBRID_CUTOVER_BLOCKED (DEFAULT_MODE = LLM_ONLY, HYBRID_ROUTE_MODE = off, CACHE_VERSION = 131); LEGACY_REMOVAL_BLOCKED; frontend/** untouched
+VERIFICATION = LIVE_GEMINI_EVALUATION_REPORT.md; owner-paid-attestation.json; live-pilots-79bbc053/c21-delegated-execution-receipt.json; live-pilots-48372208/c21-delegated-execution-receipt.json; live-pilots-8853c4b0/c21-delegated-execution-receipt.json; live-pilots-8853c4b0/k1-live.jsonl; live-pilots-8853c4b0/s2-live.jsonl; live-pilots-8853c4b0/r1-live.jsonl; ../hybrid-live-gemini-execution/candidate_divergence.json; ../hybrid-live-gemini-execution/frozen-evaluation-candidate.json; ../hybrid-master-backend-replacement/k1-owner-approval.template.json; s2-owner-approval.template.json; r1-owner-approval.template.json
+CODE_COMMIT = f60ae29e5c6d1b39057743ef05948a0ad06f4fca (live Run 3 measured on product 8853c4b0 / candidate 44568bc9)
+CANDIDATE_COMMIT = 428515dc
+MODEL_REQUEST_COUNT = 70
+CORRECTS = HYBRID_MASTER_C24_LIVE_VALIDATION_AND_BACKEND_REPAIR (supersedes LIVE_GEMINI_MEASURED = NO / PAID_PROJECT_NOT_VERIFIED status and updates candidate divergence chain hybrid-live-validation/candidate_divergence.json -> hybrid-live-gemini-execution/candidate_divergence.json and C21 approval templates; C24 report and offline receipts remain byte-for-byte intact)
 CORRECTED_BY = NONE
+
 ## WAVE_ID = ALGOSIM_W4_END_TO_END_GEOMETRY_AND_PEDAGOGICAL_SIMULATION
 
 REPORT = docs/evaluation/geometry/runs/geometry-generalization-and-pedagogical-construction/report.md
