@@ -1,0 +1,677 @@
+{
+ "wave3_summary": {
+  "total_cases": 144,
+  "positive_total": 72,
+  "positive_served_correct": 72,
+  "positive_false_refusal": 0,
+  "positive_wrong_served": 0,
+  "positive_by_stratum": {
+   "P-B": {
+    "total": 54,
+    "served_correct": 54,
+    "false_refusal": 0
+   },
+   "P-A": {
+    "total": 18,
+    "served_correct": 18,
+    "false_refusal": 0
+   }
+  },
+  "positive_by_question_type": {
+   "section_only": {
+    "total": 24,
+    "served_correct": 24,
+    "false_refusal": 0
+   },
+   "area_only": {
+    "total": 24,
+    "served_correct": 24,
+    "false_refusal": 0
+   },
+   "section_and_area": {
+    "total": 24,
+    "served_correct": 24,
+    "false_refusal": 0
+   }
+  },
+  "w3_f1_remaining_source_object_mismatch": 0,
+  "negative_total": 72,
+  "negative_refused": 72,
+  "negative_correct_reason": 65,
+  "negative_reason_disagreement": 7,
+  "negative_wrong_served": 0,
+  "overall_wrong_served": 0,
+  "machine_id_leak_cases": [],
+  "source_identity_leak_cases": []
+ },
+ "wave3_transitions": [
+  {
+   "id": "W3-B01",
+   "before": [
+    "FALSE_REFUSAL",
+    "CONDITIONAL_CLAUSE"
+   ],
+   "after": [
+    "SERVED_CORRECT",
+    null
+   ]
+  },
+  {
+   "id": "W3-B34",
+   "before": [
+    "FALSE_REFUSAL",
+    "SOURCE_PREMISE_UNREAD"
+   ],
+   "after": [
+    "SERVED_CORRECT",
+    null
+   ]
+  },
+  {
+   "id": "W3-B35",
+   "before": [
+    "FALSE_REFUSAL",
+    "SOURCE_PREMISE_UNREAD"
+   ],
+   "after": [
+    "SERVED_CORRECT",
+    null
+   ]
+  },
+  {
+   "id": "W3-B36",
+   "before": [
+    "FALSE_REFUSAL",
+    "SOURCE_PREMISE_UNREAD"
+   ],
+   "after": [
+    "SERVED_CORRECT",
+    null
+   ]
+  },
+  {
+   "id": "W3-A06",
+   "before": [
+    "FALSE_REFUSAL",
+    "ENGINE_EXECUTION_FAILED"
+   ],
+   "after": [
+    "SERVED_CORRECT",
+    null
+   ]
+  },
+  {
+   "id": "W3-N02",
+   "before": [
+    "REFUSED_REASON_DISAGREEMENT",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "after": [
+    "REFUSED_CORRECT_REASON",
+    "INCONSISTENT_FACTS"
+   ]
+  },
+  {
+   "id": "W3-N54",
+   "before": [
+    "REFUSED_REASON_DISAGREEMENT",
+    "PREVIEW_RESULT_INVALID"
+   ],
+   "after": [
+    "REFUSED_CORRECT_REASON",
+    "SECTION_BOUNDARY_INCOMPLETE"
+   ]
+  },
+  {
+   "id": "W3-N55",
+   "before": [
+    "REFUSED_REASON_DISAGREEMENT",
+    "PREVIEW_RESULT_INVALID"
+   ],
+   "after": [
+    "REFUSED_CORRECT_REASON",
+    "SECTION_BOUNDARY_INCOMPLETE"
+   ]
+  }
+ ],
+ "locked96": {
+  "head": "d5c4098b36bedb0ddad7a4fd44759554d0e36c81",
+  "product_uncommitted": false,
+  "live_provider_calls": 0,
+  "match": 96,
+  "total": 96,
+  "wrong_served": 0,
+  "mismatches": []
+ },
+ "probes203": {
+  "head": "d5c4098b36bedb0ddad7a4fd44759554d0e36c81",
+  "product_uncommitted": false,
+  "live_provider_calls": 0,
+  "total": 203,
+  "served_negatives": [],
+  "internal": [],
+  "transitions_from_f7": [
+   "C.cone_base",
+   "C.two_cones_control",
+   "C.cone_volume_target_notation_alias",
+   "C.cone_highlight_control",
+   "C.cyl_base",
+   "C.two_cyl_hyphen_control",
+   "C.cyl_volume_target_notation_with_prime",
+   "C.two_cyl_underscore_control",
+   "C.two_cyl_hyphen",
+   "C.cone_single_hyphen_id",
+   "C.cone_single_multi_hyphen_id",
+   "F5.curved_target_notation_alias"
+  ]
+ },
+ "inventory_route": "adapter /4 offline replay of gold TypedFactNext /2 payloads (not live NLU)",
+ "inventory_blockers": [],
+ "inventory": [
+  {
+   "family": "cube",
+   "question_type": "area_only",
+   "plane_kind": "through_point_parallel_plane",
+   "positive": 1,
+   "served_correct": 1,
+   "source:wave3": 1,
+   "state": "SUPPORTED_END_TO_END"
+  },
+  {
+   "family": "cube",
+   "question_type": "area_only",
+   "plane_kind": "through_point_parallel_two_lines",
+   "positive": 1,
+   "served_correct": 1,
+   "source:wave3": 1,
+   "state": "SUPPORTED_END_TO_END"
+  },
+  {
+   "family": "cube",
+   "question_type": "area_only",
+   "plane_kind": "through_point_perpendicular_line",
+   "positive": 2,
+   "served_correct": 2,
+   "source:wave3": 2,
+   "state": "SUPPORTED_END_TO_END"
+  },
+  {
+   "family": "cube",
+   "question_type": "section_and_area",
+   "plane_kind": "through_point_parallel_plane",
+   "positive": 1,
+   "served_correct": 1,
+   "source:wave3": 1,
+   "state": "SUPPORTED_END_TO_END"
+  },
+  {
+   "family": "cube",
+   "question_type": "section_and_area",
+   "plane_kind": "through_point_parallel_two_lines",
+   "positive": 2,
+   "served_correct": 2,
+   "source:wave3": 2,
+   "state": "SUPPORTED_END_TO_END"
+  },
+  {
+   "family": "cube",
+   "question_type": "section_and_area",
+   "plane_kind": "through_point_perpendicular_line",
+   "positive": 1,
+   "served_correct": 1,
+   "source:wave3": 1,
+   "state": "SUPPORTED_END_TO_END"
+  },
+  {
+   "family": "cube",
+   "question_type": "section_only",
+   "plane_kind": "through_point_parallel_plane",
+   "positive": 7,
+   "served_correct": 7,
+   "source:wave3": 2,
+   "source:development": 5,
+   "state": "SUPPORTED_END_TO_END"
+  },
+  {
+   "family": "cube",
+   "question_type": "section_only",
+   "plane_kind": "through_point_parallel_two_lines",
+   "positive": 1,
+   "served_correct": 1,
+   "source:wave3": 1,
+   "state": "SUPPORTED_END_TO_END"
+  },
+  {
+   "family": "cube",
+   "question_type": "section_only",
+   "plane_kind": "through_point_perpendicular_line",
+   "positive": 2,
+   "served_correct": 2,
+   "source:wave3": 1,
+   "source:development": 1,
+   "state": "SUPPORTED_END_TO_END"
+  },
+  {
+   "family": "cuboid",
+   "question_type": "area_only",
+   "plane_kind": "through_point_parallel_plane",
+   "positive": 1,
+   "served_correct": 1,
+   "source:wave3": 1,
+   "state": "SUPPORTED_END_TO_END"
+  },
+  {
+   "family": "cuboid",
+   "question_type": "area_only",
+   "plane_kind": "through_point_parallel_two_lines",
+   "positive": 1,
+   "served_correct": 1,
+   "source:wave3": 1,
+   "state": "SUPPORTED_END_TO_END"
+  },
+  {
+   "family": "cuboid",
+   "question_type": "area_only",
+   "plane_kind": "through_point_perpendicular_line",
+   "positive": 3,
+   "served_correct": 3,
+   "source:wave3": 2,
+   "source:development": 1,
+   "state": "SUPPORTED_END_TO_END"
+  },
+  {
+   "family": "cuboid",
+   "question_type": "section_and_area",
+   "plane_kind": "through_point_parallel_plane",
+   "positive": 2,
+   "served_correct": 2,
+   "source:wave3": 1,
+   "source:development": 1,
+   "state": "SUPPORTED_END_TO_END"
+  },
+  {
+   "family": "cuboid",
+   "question_type": "section_and_area",
+   "plane_kind": "through_point_parallel_two_lines",
+   "positive": 2,
+   "served_correct": 2,
+   "source:wave3": 2,
+   "state": "SUPPORTED_END_TO_END"
+  },
+  {
+   "family": "cuboid",
+   "question_type": "section_and_area",
+   "plane_kind": "through_point_perpendicular_line",
+   "positive": 1,
+   "served_correct": 1,
+   "source:wave3": 1,
+   "state": "SUPPORTED_END_TO_END"
+  },
+  {
+   "family": "cuboid",
+   "question_type": "section_only",
+   "plane_kind": "through_point_parallel_plane",
+   "positive": 6,
+   "served_correct": 6,
+   "source:wave3": 1,
+   "source:development": 5,
+   "state": "SUPPORTED_END_TO_END"
+  },
+  {
+   "family": "cuboid",
+   "question_type": "section_only",
+   "plane_kind": "through_point_parallel_two_lines",
+   "positive": 1,
+   "served_correct": 1,
+   "source:wave3": 1,
+   "state": "SUPPORTED_END_TO_END"
+  },
+  {
+   "family": "cuboid",
+   "question_type": "section_only",
+   "plane_kind": "through_point_perpendicular_line",
+   "positive": 2,
+   "served_correct": 2,
+   "source:wave3": 2,
+   "state": "SUPPORTED_END_TO_END"
+  },
+  {
+   "family": "oblique_triangular_prism",
+   "question_type": "area_only",
+   "plane_kind": "through_point_parallel_plane",
+   "positive": 3,
+   "served_correct": 3,
+   "source:wave3": 2,
+   "source:development": 1,
+   "state": "SUPPORTED_END_TO_END"
+  },
+  {
+   "family": "oblique_triangular_prism",
+   "question_type": "area_only",
+   "plane_kind": "through_point_parallel_two_lines",
+   "positive": 1,
+   "served_correct": 1,
+   "source:wave3": 1,
+   "state": "SUPPORTED_END_TO_END"
+  },
+  {
+   "family": "oblique_triangular_prism",
+   "question_type": "area_only",
+   "plane_kind": "through_point_perpendicular_line",
+   "positive": 1,
+   "served_correct": 1,
+   "source:wave3": 1,
+   "state": "SUPPORTED_END_TO_END"
+  },
+  {
+   "family": "oblique_triangular_prism",
+   "question_type": "section_and_area",
+   "plane_kind": "through_point_parallel_plane",
+   "positive": 1,
+   "served_correct": 1,
+   "source:wave3": 1,
+   "state": "SUPPORTED_END_TO_END"
+  },
+  {
+   "family": "oblique_triangular_prism",
+   "question_type": "section_and_area",
+   "plane_kind": "through_point_parallel_two_lines",
+   "positive": 1,
+   "served_correct": 1,
+   "source:wave3": 1,
+   "state": "SUPPORTED_END_TO_END"
+  },
+  {
+   "family": "oblique_triangular_prism",
+   "question_type": "section_and_area",
+   "plane_kind": "through_point_perpendicular_line",
+   "positive": 4,
+   "served_correct": 4,
+   "source:wave3": 2,
+   "source:development": 2,
+   "state": "SUPPORTED_END_TO_END"
+  },
+  {
+   "family": "oblique_triangular_prism",
+   "question_type": "section_only",
+   "plane_kind": "through_point_parallel_plane",
+   "positive": 16,
+   "served_correct": 16,
+   "source:wave3": 1,
+   "source:development": 15,
+   "state": "SUPPORTED_END_TO_END"
+  },
+  {
+   "family": "oblique_triangular_prism",
+   "question_type": "section_only",
+   "plane_kind": "through_point_parallel_two_lines",
+   "positive": 1,
+   "served_correct": 1,
+   "source:wave3": 1,
+   "state": "SUPPORTED_END_TO_END"
+  },
+  {
+   "family": "oblique_triangular_prism",
+   "question_type": "section_only",
+   "plane_kind": "through_point_perpendicular_line",
+   "positive": 4,
+   "served_correct": 4,
+   "source:wave3": 2,
+   "source:development": 2,
+   "state": "SUPPORTED_END_TO_END"
+  },
+  {
+   "family": "quadrilateral_pyramid",
+   "question_type": "area_only",
+   "plane_kind": "through_point_parallel_plane",
+   "positive": 3,
+   "served_correct": 3,
+   "source:wave3": 2,
+   "source:development": 1,
+   "state": "SUPPORTED_END_TO_END"
+  },
+  {
+   "family": "quadrilateral_pyramid",
+   "question_type": "area_only",
+   "plane_kind": "through_point_parallel_two_lines",
+   "positive": 1,
+   "served_correct": 1,
+   "source:wave3": 1,
+   "state": "SUPPORTED_END_TO_END"
+  },
+  {
+   "family": "quadrilateral_pyramid",
+   "question_type": "area_only",
+   "plane_kind": "through_point_perpendicular_line",
+   "positive": 1,
+   "served_correct": 1,
+   "source:wave3": 1,
+   "state": "SUPPORTED_END_TO_END"
+  },
+  {
+   "family": "quadrilateral_pyramid",
+   "question_type": "section_and_area",
+   "plane_kind": "through_point_parallel_plane",
+   "positive": 1,
+   "served_correct": 1,
+   "source:wave3": 1,
+   "state": "SUPPORTED_END_TO_END"
+  },
+  {
+   "family": "quadrilateral_pyramid",
+   "question_type": "section_and_area",
+   "plane_kind": "through_point_parallel_two_lines",
+   "positive": 1,
+   "served_correct": 1,
+   "source:wave3": 1,
+   "state": "SUPPORTED_END_TO_END"
+  },
+  {
+   "family": "quadrilateral_pyramid",
+   "question_type": "section_and_area",
+   "plane_kind": "through_point_perpendicular_line",
+   "positive": 5,
+   "served_correct": 5,
+   "source:wave3": 2,
+   "source:development": 3,
+   "state": "SUPPORTED_END_TO_END"
+  },
+  {
+   "family": "quadrilateral_pyramid",
+   "question_type": "section_only",
+   "plane_kind": "through_point_parallel_plane",
+   "positive": 13,
+   "served_correct": 13,
+   "source:wave3": 1,
+   "source:development": 12,
+   "state": "SUPPORTED_END_TO_END"
+  },
+  {
+   "family": "quadrilateral_pyramid",
+   "question_type": "section_only",
+   "plane_kind": "through_point_parallel_two_lines",
+   "positive": 1,
+   "served_correct": 1,
+   "source:wave3": 1,
+   "state": "SUPPORTED_END_TO_END"
+  },
+  {
+   "family": "quadrilateral_pyramid",
+   "question_type": "section_only",
+   "plane_kind": "through_point_perpendicular_line",
+   "positive": 2,
+   "served_correct": 2,
+   "source:wave3": 2,
+   "state": "SUPPORTED_END_TO_END"
+  },
+  {
+   "family": "right_triangular_prism",
+   "question_type": "area_only",
+   "plane_kind": "through_point_parallel_plane",
+   "positive": 1,
+   "served_correct": 1,
+   "source:wave3": 1,
+   "state": "SUPPORTED_END_TO_END"
+  },
+  {
+   "family": "right_triangular_prism",
+   "question_type": "area_only",
+   "plane_kind": "through_point_parallel_two_lines",
+   "positive": 1,
+   "served_correct": 1,
+   "source:wave3": 1,
+   "state": "SUPPORTED_END_TO_END"
+  },
+  {
+   "family": "right_triangular_prism",
+   "question_type": "area_only",
+   "plane_kind": "through_point_perpendicular_line",
+   "positive": 3,
+   "served_correct": 3,
+   "source:wave3": 2,
+   "source:development": 1,
+   "state": "SUPPORTED_END_TO_END"
+  },
+  {
+   "family": "right_triangular_prism",
+   "question_type": "section_and_area",
+   "plane_kind": "through_point_parallel_plane",
+   "positive": 3,
+   "served_correct": 3,
+   "source:wave3": 2,
+   "source:development": 1,
+   "state": "SUPPORTED_END_TO_END"
+  },
+  {
+   "family": "right_triangular_prism",
+   "question_type": "section_and_area",
+   "plane_kind": "through_point_parallel_two_lines",
+   "positive": 1,
+   "served_correct": 1,
+   "source:wave3": 1,
+   "state": "SUPPORTED_END_TO_END"
+  },
+  {
+   "family": "right_triangular_prism",
+   "question_type": "section_and_area",
+   "plane_kind": "through_point_perpendicular_line",
+   "positive": 1,
+   "served_correct": 1,
+   "source:wave3": 1,
+   "state": "SUPPORTED_END_TO_END"
+  },
+  {
+   "family": "right_triangular_prism",
+   "question_type": "section_only",
+   "plane_kind": "through_point_parallel_plane",
+   "positive": 6,
+   "served_correct": 6,
+   "source:wave3": 1,
+   "source:development": 5,
+   "state": "SUPPORTED_END_TO_END"
+  },
+  {
+   "family": "right_triangular_prism",
+   "question_type": "section_only",
+   "plane_kind": "through_point_parallel_two_lines",
+   "positive": 1,
+   "served_correct": 1,
+   "source:wave3": 1,
+   "state": "SUPPORTED_END_TO_END"
+  },
+  {
+   "family": "right_triangular_prism",
+   "question_type": "section_only",
+   "plane_kind": "through_point_perpendicular_line",
+   "positive": 2,
+   "served_correct": 2,
+   "source:wave3": 2,
+   "state": "SUPPORTED_END_TO_END"
+  },
+  {
+   "family": "triangular_pyramid",
+   "question_type": "area_only",
+   "plane_kind": "through_point_parallel_plane",
+   "positive": 3,
+   "served_correct": 3,
+   "source:wave3": 2,
+   "source:development": 1,
+   "state": "SUPPORTED_END_TO_END"
+  },
+  {
+   "family": "triangular_pyramid",
+   "question_type": "area_only",
+   "plane_kind": "through_point_parallel_two_lines",
+   "positive": 1,
+   "served_correct": 1,
+   "source:wave3": 1,
+   "state": "SUPPORTED_END_TO_END"
+  },
+  {
+   "family": "triangular_pyramid",
+   "question_type": "area_only",
+   "plane_kind": "through_point_perpendicular_line",
+   "positive": 2,
+   "served_correct": 2,
+   "source:wave3": 1,
+   "source:development": 1,
+   "state": "SUPPORTED_END_TO_END"
+  },
+  {
+   "family": "triangular_pyramid",
+   "question_type": "section_and_area",
+   "plane_kind": "through_point_parallel_plane",
+   "positive": 2,
+   "served_correct": 2,
+   "source:wave3": 1,
+   "source:development": 1,
+   "state": "SUPPORTED_END_TO_END"
+  },
+  {
+   "family": "triangular_pyramid",
+   "question_type": "section_and_area",
+   "plane_kind": "through_point_parallel_two_lines",
+   "positive": 1,
+   "served_correct": 1,
+   "source:wave3": 1,
+   "state": "SUPPORTED_END_TO_END"
+  },
+  {
+   "family": "triangular_pyramid",
+   "question_type": "section_and_area",
+   "plane_kind": "through_point_perpendicular_line",
+   "positive": 2,
+   "served_correct": 2,
+   "source:wave3": 2,
+   "state": "SUPPORTED_END_TO_END"
+  },
+  {
+   "family": "triangular_pyramid",
+   "question_type": "section_only",
+   "plane_kind": "through_point_parallel_plane",
+   "positive": 14,
+   "served_correct": 14,
+   "source:wave3": 1,
+   "source:development": 13,
+   "state": "SUPPORTED_END_TO_END"
+  },
+  {
+   "family": "triangular_pyramid",
+   "question_type": "section_only",
+   "plane_kind": "through_point_parallel_two_lines",
+   "positive": 1,
+   "served_correct": 1,
+   "source:wave3": 1,
+   "state": "SUPPORTED_END_TO_END"
+  },
+  {
+   "family": "triangular_pyramid",
+   "question_type": "section_only",
+   "plane_kind": "through_point_perpendicular_line",
+   "positive": 2,
+   "served_correct": 2,
+   "source:wave3": 2,
+   "state": "SUPPORTED_END_TO_END"
+  }
+ ]
+}
