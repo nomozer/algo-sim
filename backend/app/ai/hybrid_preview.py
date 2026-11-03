@@ -45,7 +45,7 @@ def preview_identity(contract: str = "flat") -> dict[str, str]:
 def preview_runtime_identity(policy) -> dict[str, Any]:
     surface = dict(policy.preview_surface) if policy.hybrid_preview_enabled else preview_identity(policy.response_contract)
     return {**surface, "enabled": policy.hybrid_preview_enabled, "fingerprint": policy.fingerprint(),
-            "default_product_mode": "LLM_ONLY", "product_enablement": "NO-GO"}
+            "default_product_mode": "HYBRID", "product_enablement": "ACTIVE"}
 
 
 class PreviewInvalid(ValueError):
@@ -72,8 +72,12 @@ _NHOM: tuple[tuple[str, str, frozenset[str], str], ...] = (
         "BRIDGE_UNSUPPORTED_LENGTH_UNIT", "BRIDGE_CUT_EDGES_NOT_STATED", "BRIDGE_UNSUPPORTED_CURVED",
         "BRIDGE_UNSUPPORTED_DERIVED_SOLID", "BRIDGE_UNSUPPORTED_MEASUREMENT", "BRIDGE_UNSUPPORTED_PLANE_KIND",
         "BRIDGE_UNSUPPORTED_PREMISE", "BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY", "BRIDGE_UNSUPPORTED_RELATION",
+        "BRIDGE_UNSUPPORTED_DESCRIBED_POINT",
         "PLAN_TOO_LARGE", "NO_SOLID", "NON_HOMOGENEOUS_LENGTHS", "CONDITIONAL_CLAUSE", "NEGATED_CLAUSE",
         "METRIC_REQUIRES_EUCLIDEAN_CHART",
+        # curved slice (registry /23): what /4 cannot execute for a solid of revolution yet, or outside a·π·√b
+        "BRIDGE_UNSUPPORTED_CURVED_COMPOSITE", "CURVED_RELATION_UNSUPPORTED", "CURVED_MEASURE_UNDEFINED",
+        "EXACT_DOMAIN_EXCEEDED", "CURVED_SECTION_OUTSIDE_V1_CLOSURE", "CURVED_WORDING_UNSUPPORTED", "CURVED_MULTI_SECTION_UNSUPPORTED",
         # Route D's OUT_OF_SCOPE is the extraction escape `unsupported` ("this clause does not map to the function
         # library"), not the subject verdict of the scope gate: the preview runs no domain detection. `out_of_scope` would
         # tell the learner a geometry problem "belongs to another subject" (`learner_messages`: never).
@@ -85,11 +89,13 @@ _NHOM: tuple[tuple[str, str, frozenset[str], str], ...] = (
      "Dữ kiện hiện có chưa xác định được duy nhất hình cần dựng hoặc còn hiểu theo nhiều cách. AlgoSim không tự chọn số "
      "liệu hay cách hiểu thay em, nên không dựng hình."),
     ("INVALID_DATA", "geometry_generation_failed", frozenset({
-        "INCONSISTENT_FACTS", "NON_POSITIVE_LENGTH", "INVALID_RATIO", "DEGENERATE_LINE", "PARALLEL_PLANES", "SKEW_NO_INTERSECTION",
+        "INCONSISTENT_FACTS", "CURVED_PLANE_DOES_NOT_CUT", "CURVED_PLANE_TANGENT", "CURVED_SECTION_IS_A_BASE", "NON_POSITIVE_LENGTH", "INVALID_RATIO", "DEGENERATE_LINE", "PARALLEL_PLANES", "SKEW_NO_INTERSECTION",
         "SKEW_CLAIM_CONTRADICTED",
         "NON_COPLANAR_POINTS", "SECTION_EMPTY", "SECTION_PLANE_IS_FACE", "DERIVED_PLANE_IS_REFERENCE",
         "REGULAR_PYRAMID_NEEDS_REGULAR_BASE", "QUESTION_LOCAL_GIVEN_CONFLICT", "FOOT_NOT_IN_PLANE", "LINE_CONTAINED_IN_PLANE",
         "DEGENERATE_SOLID", "NON_POSITIVE_RESIDUAL_VOLUME", "OVERLAPPING_SUBTRACTED_SOLIDS", "RESIDUAL_CONTAINMENT_UNPROVED",
+        "NO_CIRCUMSCRIBED_SPHERE", "NO_INSCRIBED_SPHERE",
+        "PLANE_INTERSECTS_SPHERE_NOT_TANGENT", "PLANE_DOES_NOT_TOUCH_SPHERE",
         # polyhedral kernel (`GeometryError` codes Route D passes through unchanged)
         "DEGENERATE_POINTS", "COLLINEAR_POINTS", "PARALLEL_NO_INTERSECTION", "CONTAINED_INFINITE_INTERSECTION",
         "ZERO_VECTOR", "PLANE_EQUATION_DEGENERATE", "POLYGON_CHAIN_NOT_CONVEX", "MEASURE_UNDEFINED", "METRIC_NOT_EUCLIDEAN",
@@ -120,10 +126,10 @@ _NHOM: tuple[tuple[str, str, frozenset[str], str], ...] = (
     ("EXTRACTION_FAILED", "geometry_generation_failed", frozenset({
         "LIVE_AI_DISABLED", "PROVIDER_ERROR", "PROVIDER_BLOCKED", "PROVIDER_REFUSED", "PROVIDER_RESPONSE_INVALID",
         "RESPONSE_TRUNCATED", "MAX_TOKENS", "NO_CANDIDATE", "JSON_INVALID", "MALFORMED_RESPONSE_PART",
-        "RESPONSE_CONTRACT_INVALID", "SCHEMA_INVALID", "FACT_INCOMPLETE", "DANGLING_DEPENDENCY", "DUPLICATE_CALL_ID",
+        "RESPONSE_CONTRACT_INVALID", "SCHEMA_INVALID", "FACT_INCOMPLETE", "MALFORMED_CURVED_SOLID", "DANGLING_DEPENDENCY", "DUPLICATE_CALL_ID",
         "DEPENDENCY_CYCLE", "UNKNOWN_DERIVED_REFERENCE", "DERIVED_REFERENCE_TYPE_MISMATCH", "AUXILIARY_LABEL_COLLISION",
         "AUXILIARY_RULE_MISMATCH", "AUXILIARY_ONLY_FUNCTION", "UNKNOWN_SOLID", "PRECONDITION_FAILED",
-        "INTERNAL_FIELD_FROM_PROVIDER", "INVALID_TYPED_FACT_NEXT", "INVALID_PREMISE_ARGS",
+        "INTERNAL_FIELD_FROM_PROVIDER", "INVALID_TYPED_FACT_NEXT", "INVALID_PREMISE_ARGS", "INVALID_DESCRIBED_POINT",
         "INVALID_DERIVED_SECTION", "INVALID_RELATION_SPEC", "UNKNOWN_SOLID_ID", "UNKNOWN_VERTEX_REF",
         "BRIDGE_INCONSISTENT_SECTION", "SCHEMA_VERSION_MISMATCH", "ROUTE_LABEL_REQUIRED",
         "DUPLICATE_GOAL_ID", "DUPLICATE_SECTION_ID", "DUPLICATE_SOLID_ID", "EMPTY_SIMULATION_GOALS",
@@ -286,7 +292,8 @@ def adapt_result(result, policy, problem_text: str = "") -> HybridPreviewEnvelop
         "runtime_identity": preview_runtime_identity(policy), "geometry_ir": result.spec.model_dump(mode="json"),
         "answers": deepcopy(result.answers), "answer_exact": deepcopy(result.answer_exact),
         "source_provenance": deepcopy(result.calls), "construction_trace": deepcopy(result.trace),
-        "planner": planner, "length_unit": deepcopy(unit), "kernel_check": result.kernel_check,
+        "planner": {k: v for k, v in planner.items() if k != "search_telemetry"}, "length_unit": deepcopy(unit),
+        "kernel_check": result.kernel_check,
     })
 
 

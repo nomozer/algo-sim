@@ -22,7 +22,7 @@ for _p in (str(BACKEND), str(BACKEND / "scripts")):
         sys.path.insert(0, _p)
 
 from app.ai import gemini as G  # noqa: E402
-from app.ai.pipeline import _dung_scene3d  # noqa: E402
+from tests.geometry.scene3d_test_helper import _dung_scene3d  # noqa: E402
 from app.main import CACHE_VERSION  # noqa: E402
 from app.runtime_identity import (  # noqa: E402
     semantic_environment_fingerprint, semantic_environment_hash,

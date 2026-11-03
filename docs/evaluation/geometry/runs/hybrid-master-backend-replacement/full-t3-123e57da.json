@@ -1,0 +1,39 @@
+{
+ "schema": "hybrid-master-backend-replacement/full-t3/1",
+ "verdict": "FULL_PRODUCT_GATE_PASS",
+ "attempt": 2,
+ "prior_attempts": [
+  {
+   "attempt": 1,
+   "candidate": "ebb3e546",
+   "product_commit": "6fc6b3093149ab12e1d4cd5e59847fd5b8551c13",
+   "verdict": "FAIL",
+   "exit_code": 1,
+   "pytest": {"passed": 16645, "failed": 2, "skipped": 7, "deselected": 2, "xfailed": 15, "seconds": 763.07},
+   "vitest": {"files": 85, "passed": 1486},
+   "failures": [
+    "tests/geometry/test_s2_student_language_pilot_runner.py::test_c21_registered_approval_templates_bind_current_runtime_identity_and_stale_runner_is_refused (Windows core.autocrlf=true fresh-worktree CRLF checkout drift in sha256_file)",
+    "tests/test_paired_route_evaluation.py::test_mock_transport_failures_are_infrastructure_never_model_or_geometry_outcomes[action0-4] (generic httpx.ReadTimeout mapped to HYBRID_DEADLINE_EXCEEDED instead of PROVIDER_ERROR)"
+   ],
+   "resolution_commit": "d17116cbc4b4f4065f198a19de0957cc51eeb82e",
+   "log_sha256_local": "219deefd914f6fe7d034e537fe2502f66d3df8519385945bf490b898be542cf8"
+  }
+ ],
+ "exit_code": 0,
+ "command": "cd frontend && node scripts/full-gate.mjs",
+ "worktree": ".superpowers/worktrees/hm-t3-123e57da (fresh, detached; pre-run and post-run freeze_evaluation_candidate.py --verify MATCH; backend/.venv and frontend/node_modules junctions to the active checkout verified as ReparsePoint and removed with [System.IO.Directory]::Delete; git worktree remove --force succeeded and directory is gone)",
+ "head": "123e57daaa74d616f09b213e618fb309c09be1d7",
+ "candidate": "123e57da",
+ "product_commit": "d17116cbc4b4f4065f198a19de0957cc51eeb82e",
+ "measured_system": {"tree_hash": "730045ff43f7be806fcabbb0047717ef4ad390a8b32ad81a4b9cf0adad74075f", "files": 118},
+ "cache_version": "131",
+ "default_mode": "LLM_ONLY",
+ "pytest": {"passed": 16648, "skipped": 7, "deselected": 2, "xfailed": 15, "failed": 0, "seconds": 694.11},
+ "vitest": {"files": 85, "passed": 1486},
+ "build": "PASS",
+ "demo_replay": "PASS (5/5)",
+ "demo_crash_surface": "PASS (6/6 refusal boundaries typed, 0 thrown as 500)",
+ "T0_T2": "COVERED_BY_T3",
+ "log_sha256_local": "20d322f32f5e8cbdf50d56619f6bfe86b1a5e402598e972f4401956d5531c7f2",
+ "provider_calls": 0
+}

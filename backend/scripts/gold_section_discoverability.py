@@ -457,10 +457,10 @@ def chay_gold(ca: dict) -> dict[str, Any]:
     # `route` cố ý không dựng cảnh (phụ thuộc một chiều), nên phải gọi đúng hàm
     # mà sản phẩm gọi. Đây chính là chỗ `V3_PRODUCT_PATH_PARITY_CORRECTION` đã
     # phải đính chính một lần: đọc cảnh từ một phép chiếu luôn rỗng.
-    from app.ai import pipeline
+    from tests.geometry.scene3d_test_helper import _dung_scene3d
 
     try:
-        canh = pipeline._dung_scene3d(spec, hd) or {}
+        canh = _dung_scene3d(spec, hd) or {}
         ten = {o.get("name") or o.get("id") for o in canh.get("objects", [])}
         thieu = [w for _, _, w in ob if w not in ten]
         kq["scene3d_objects"] = len(canh.get("objects", []))

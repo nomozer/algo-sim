@@ -323,6 +323,53 @@ IDENTITY_DELTAS = (
                   "planner_version": ("geometry-fact-planner/17", "geometry-fact-planner/18")}},
     {"run": "hybrid-v2-w3-f2-ratio-projection-language-grounding",
      "versions": {"registry_version": ("geometry-functions/20", "geometry-functions/21")}},
+    {"run": "hybrid-master-backend-replacement",           # respectively projection lists; planner/engine unchanged
+     "versions": {"registry_version": ("geometry-functions/21", "geometry-functions/22")}},
+    {"run": "hybrid-master-backend-replacement",           # curved solids on /4 (registry /23, planner /19, engine /15)
+     "versions": {"registry_version": ("geometry-functions/22", "geometry-functions/23"),
+                  "planner_version": ("geometry-fact-planner/18", "geometry-fact-planner/19"),
+                  "engine_version": ("geometry-function-engine/14", "geometry-function-engine/15")}},
+    {"run": "hybrid-master-backend-replacement",           # curved sections and cone ratio (registry /24, planner /20, engine /16)
+     "versions": {"registry_version": ("geometry-functions/23", "geometry-functions/24"),
+                  "planner_version": ("geometry-fact-planner/19", "geometry-fact-planner/20"),
+                  "engine_version": ("geometry-function-engine/15", "geometry-function-engine/16")}},
+    {"run": "hybrid-master-backend-replacement",           # base-centre grammar and apex ratio k (registry /25, planner /21, engine /17)
+     "versions": {"registry_version": ("geometry-functions/24", "geometry-functions/25"),
+                  "planner_version": ("geometry-fact-planner/20", "geometry-fact-planner/21"),
+                  "engine_version": ("geometry-function-engine/16", "geometry-function-engine/17")}},
+    {"run": "hybrid-master-backend-replacement",           # composite inscribed sphere, tangency & axial-sphere relations (registry /26, planner /22, engine /18)
+     "versions": {"registry_version": ("geometry-functions/25", "geometry-functions/26"),
+                  "planner_version": ("geometry-fact-planner/21", "geometry-fact-planner/22"),
+                  "engine_version": ("geometry-function-engine/17", "geometry-function-engine/18")}},
+    {"run": "hybrid-master-backend-replacement",           # student simulation requests, honest exit, empty base (registry /27, engine /19; planner /22)
+     "versions": {"registry_version": ("geometry-functions/26", "geometry-functions/27"),
+                  "engine_version": ("geometry-function-engine/18", "geometry-function-engine/19")}},
+    {"run": "hybrid-master-backend-replacement",           # PE-2 solid-class invariants + generalized planner recomposition (registry /28, planner /23, engine /20)
+     "versions": {"registry_version": ("geometry-functions/27", "geometry-functions/28"),
+                  "planner_version": ("geometry-fact-planner/22", "geometry-fact-planner/23"),
+                  "engine_version": ("geometry-function-engine/19", "geometry-function-engine/20")}},
+    {"run": "hybrid-master-backend-replacement",           # SL-3 student shorthand + R-1 described points on /4 (registry /29; planner /23, engine /20)
+     "versions": {"registry_version": ("geometry-functions/28", "geometry-functions/29")}},
+    {"run": "hybrid-master-backend-replacement",           # C16 provenance-classified search telemetry (planner /24)
+     "versions": {"planner_version": ("geometry-fact-planner/23", "geometry-fact-planner/24")}},
+    {"run": "hybrid-master-backend-replacement",           # C17 constraint-to-witness planes
+     "versions": {"registry_version": ("geometry-functions/29", "geometry-functions/30"),
+                  "planner_version": ("geometry-fact-planner/24", "geometry-fact-planner/25"),
+                  "engine_version": ("geometry-function-engine/20", "geometry-function-engine/21")}},
+    {"run": "hybrid-master-backend-replacement",           # C18 points named by a property, composed by definition regression
+     "versions": {"registry_version": ("geometry-functions/30", "geometry-functions/31"),
+                  "planner_version": ("geometry-fact-planner/25", "geometry-fact-planner/26"),
+                  "engine_version": ("geometry-function-engine/21", "geometry-function-engine/22")}},
+    {"run": "pedagogical-simulation-integration",          # a stated ⊥ line that placed its end is drawn (engine /23)
+     "versions": {"engine_version": ("geometry-function-engine/22", "geometry-function-engine/23")}},
+    {"run": "hybrid-live-validation",                      # gold-replay repairs: source wording, stated-cut coverage, radicals
+     "versions": {"registry_version": ("geometry-functions/31", "geometry-functions/32"),
+                  "engine_version": ("geometry-function-engine/23", "geometry-function-engine/24")}},
+    {"run": "hybrid-master-backend-replacement",           # final backend product completion: midpoint/angle parity (registry /33)
+     "versions": {"registry_version": ("geometry-functions/32", "geometry-functions/33")}},
+    {"run": "hybrid-master-backend-replacement",           # final hybrid architecture cutover: HYBRID official default product mode
+     "versions": {"default_product_mode": ("LLM_ONLY", "HYBRID"),
+                  "product_enablement": ("NO-GO", "ACTIVE")}},
 )
 
 

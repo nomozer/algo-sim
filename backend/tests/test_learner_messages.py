@@ -106,7 +106,7 @@ def test_learner_error_message_khong_nhung_chi_tiet():
     assert "thử lại" in msg
 
 
-# ── integration qua /api/analyze (monkeypatch run_pipeline — không network) ──
+# ── integration qua /api/analyze (Hybrid `/4`, 0 network) ──
 @pytest.fixture()
 def co_key(monkeypatch):
     monkeypatch.setenv("GEMINI_API_KEY", "khoa-gia")
@@ -116,45 +116,39 @@ def _analyze(text: str):
     return client.post("/api/analyze", json={"input": {"type": "text", "content": text}})
 
 
-def test_api_unsupported_mang_learner_reason(monkeypatch, co_key):
-    async def fake_pipeline(text, api_key, pattern_store=None, observer=None, **kw):
-        return {
-            "status": "unsupported",
-            "reason": "Bài cần cơ chế chưa có engine tất định sở hữu (arbitrary_algorithm).",
-            "failure_category": "capability_gap",
-        }
+def test_api_unsupported_mang_learner_reason(monkeypatch, tmp_path):
+    import json as _json
+    from copy import deepcopy
+    from app.ai import hybrid_offline as HO
+    from tests.geometry.test_typed_fact_next_v2_distance_bridge import _prism
 
-    monkeypatch.setattr(main_module, "run_pipeline", fake_pipeline)
-    # Đề HÌNH HỌC: cổng phạm vi ở biên API từ chối mọi miền khác TRƯỚC khi gọi
-    # `run_pipeline`, nên một đề trung tính không bao giờ chạm tới `fake_pipeline`
-    # mà test này dựng lên để quan sát.
-    res = _analyze("Cho hình chóp S.ABCD, tính khoảng cách từ A đến mặt phẳng (SBD).")
+    bad = deepcopy(_prism())
+    bad["problem_text"] = bad["problem_text"].replace("AA' = 12.", "AA' = 12. BC = 11.")
+    bad["premises"].append({"kind": "segment_length", "args": {"segment": ["B", "C"], "value": "11"}, "quote": "BC = 11."})
+    corpus_file = tmp_path / "replay.json"
+    corpus_file.write_text(
+        _json.dumps({"schema": HO.LOCAL_REPLAY_SCHEMA, "outputs": {bad["problem_text"]: bad}}, ensure_ascii=False),
+        encoding="utf-8",
+    )
+    monkeypatch.setenv("HYBRID_ROUTE_MODE", "staging-replay")
+    monkeypatch.setenv("HYBRID_REPLAY_CORPUS", str(corpus_file))
+    res = _analyze(bad["problem_text"])
     assert res.status_code == 200
     body = res.json()
-    assert body["status"] == "unsupported"
-    # reason kỹ thuật GIỮ NGUYÊN (diagnostics), learner_reason sạch token
-    assert "arbitrary_algorithm" in body["reason"]
-    assert _sach(body["learner_reason"])
+    assert body["route_d"]["status"] == "REFUSED"
+    env = body["envelope"]
+    assert env["status"] == "unsupported"
+    assert _sach(env["learner_reason"])
 
 
-def test_api_422_than_thien_va_chi_tiet_tach_rieng(monkeypatch, co_key):
-    async def fail_pipeline(text, api_key, pattern_store=None, observer=None, **kw):
-        raise RuntimeError(
-            'Không sinh được cấu hình hợp lệ sau 3 lần thử (lỗi cuối: objects[2].value '
-            'thiếu trường "type" theo schema dsl_v1).'
-        )
-
-    monkeypatch.setattr(main_module, "run_pipeline", fail_pipeline)
-    # Đề HÌNH HỌC: cổng phạm vi ở biên API từ chối mọi miền khác TRƯỚC khi gọi
-    # `run_pipeline`, nên một đề trung tính không bao giờ chạm tới `fake_pipeline`
-    # mà test này dựng lên để quan sát.
-    res = _analyze("Cho hình chóp S.ABCD, tính khoảng cách từ A đến mặt phẳng (SBD).")
-    assert res.status_code == 422
+def test_api_provider_error_than_thien_khong_lo_traceback(monkeypatch, co_key):
+    monkeypatch.setenv("HYBRID_ROUTE_MODE", "live")
+    monkeypatch.setenv("ALLOW_LIVE_AI", "0")
+    res = _analyze("Cho hình chóp S.ABCD có đáy là hình vuông cạnh 4, SA = 6. Tính thể tích khối chóp S.ABCD.")
+    assert res.status_code == 503
     body = res.json()
-    # học sinh: thân thiện, không schema error
     assert _sach(body["error"]), f"lộ token kỹ thuật: {body['error']}"
-    # developer: chi tiết kỹ thuật vẫn còn, ở field riêng
-    assert "objects[2].value" in body["error_detail"]
+    assert body["reason_code"] == "LIVE_AI_DISABLED"
 
 
 # ── W17 · §15.3 · lời từ chối theo NGUYÊN NHÂN có cấu trúc ───────────────────────────────

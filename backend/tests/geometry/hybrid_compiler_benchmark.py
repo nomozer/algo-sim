@@ -373,6 +373,11 @@ def answer_square(s: str) -> F | None:
 
 #: Every refusal code of the B route, classified by meaning (complete: a code missing here is a harness bug, see the test).
 REFUSAL_CLASS = {
+    # Curved solids on /4 (registry /23): taxonomy only; frozen benchmark cases and oracles unchanged.
+    "BRIDGE_UNSUPPORTED_CURVED_COMPOSITE": "unsupported", "CURVED_RELATION_UNSUPPORTED": "unsupported",
+    "CURVED_MEASURE_UNDEFINED": "unsupported", "EXACT_DOMAIN_EXCEEDED": "unsupported", "MALFORMED_CURVED_SOLID": "malformed",
+    "CURVED_SECTION_OUTSIDE_V1_CLOSURE": "unsupported", "CURVED_WORDING_UNSUPPORTED": "unsupported", "CURVED_MULTI_SECTION_UNSUPPORTED": "unsupported", "CURVED_PLANE_DOES_NOT_CUT": "contradictory",
+    "CURVED_PLANE_TANGENT": "contradictory", "CURVED_SECTION_IS_A_BASE": "contradictory",
     # Result binding: taxonomy only; frozen case labels and mathematical oracle are unchanged.
     "UNKNOWN_DERIVED_REFERENCE": "malformed", "DERIVED_REFERENCE_TYPE_MISMATCH": "malformed",
     "RESULT_BINDING_UNVERIFIED": "grounding",
@@ -431,12 +436,25 @@ REFUSAL_CLASS = {
     "BRIDGE_UNSUPPORTED_DERIVED_SOLID": "unsupported", "BRIDGE_UNSUPPORTED_MEASUREMENT": "unsupported",
     "BRIDGE_UNSUPPORTED_PLANE_KIND": "unsupported", "BRIDGE_UNSUPPORTED_PREMISE": "unsupported",
     "BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY": "unsupported", "BRIDGE_UNSUPPORTED_RELATION": "unsupported",
-    "BRIDGE_UNSUPPORTED_LENGTH_UNIT": "unsupported",
+    "BRIDGE_UNSUPPORTED_LENGTH_UNIT": "unsupported", "BRIDGE_UNSUPPORTED_DESCRIBED_POINT": "unsupported",
     "INVALID_TYPED_FACT_NEXT": "malformed", "UNKNOWN_VERTEX_REF": "malformed", "INVALID_PREMISE_ARGS": "malformed",
     # hybrid-b3-v2-distance-bridge: a `/2` distance target outside its three key forms; taxonomy only.
     "INVALID_MATH_GOAL": "malformed",
     # claude-to-codex-takeover (engine /12): the question calls two coplanar lines skew; taxonomy only.
     "SKEW_CLAIM_CONTRADICTED": "contradictory",    # malformed facts / plan
+    "NO_CIRCUMSCRIBED_SPHERE": "contradictory",
+    "NO_INSCRIBED_SPHERE": "contradictory",
+    "COLLINEAR_POINTS": "contradictory",
+    "DEGENERATE_POINTS": "contradictory",
+    "NON_COPLANAR_POINTS": "contradictory",
+    "PLANE_INTERSECTS_SPHERE_NOT_TANGENT": "contradictory",
+    "PLANE_DOES_NOT_TOUCH_SPHERE": "contradictory",
+    "METRIC_REQUIRES_EUCLIDEAN_CHART": "unsupported",
+    "EXACT_DOMAIN_EXCEEDED": "unsupported",
+    "CURVED_WORDING_UNSUPPORTED": "unsupported",
+    "CURVED_RELATION_UNSUPPORTED": "unsupported",
+    "CURVED_MEASURE_UNDEFINED": "unsupported",
+    "BRIDGE_UNSUPPORTED_CURVED_COMPOSITE": "unsupported",
     "SCHEMA_INVALID": "malformed", "FACT_INCOMPLETE": "malformed", "UNKNOWN_SOLID": "malformed", "NO_SOLID": "malformed",
     "DUPLICATE_CALL_ID": "malformed", "DEPENDENCY_CYCLE": "dependency", "DANGLING_DEPENDENCY": "dependency",
     # system faults (never a correct answer to a geometry question)

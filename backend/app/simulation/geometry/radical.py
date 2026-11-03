@@ -170,10 +170,18 @@ def _tach_binh_phuong(n: int) -> tuple[int, int]:
     số bình phương sinh bởi cơ sở hữu tỉ nhỏ (`d³ <= MAX_RADICAND`) mới được rút
     trước khi áp trần `MAX_RADICAND`; các xấp xỉ thập phân mang thừa số nguyên tố
     lớn (`d³ > MAX_RADICAND`) làm phình căn thức vượt trần vẫn bị từ chối.
+
+    Đầu vào tối đa `MAX_RADICAND³` (run `hybrid-live-validation`): vòng chia thử vẫn chỉ tới `d ≤ 10⁴`, nên hệ số `k`
+    tới ~10¹⁸ được nhận khi phần bình phương gồm thừa số nhỏ. Bình phương của một số nguyên tố lớn (`n = p²`,
+    `p³ > MAX_RADICAND`, `n > MAX_RADICAND`) vẫn bị từ chối dù `√n` hữu tỉ — chính sách cũ, giữ nguyên.
     """
     if n <= 0:
         raise RadicalDomainError(f"căn thức phải dương, nhận {n}")
-    if n > MAX_RADICAND * MAX_RADICAND:
+    # Input bound for the trial division below, not the domain ceiling: the loop is bounded by `d³ <= MAX_RADICAND`
+    # whatever `n` is, and a remainder it cannot certify square-free still refuses at the end. `MAX_RADICAND²` refused
+    # intermediates whose square part is made only of small primes (run `hybrid-live-validation`, W3-A06:
+    # 2³·3⁸·5⁷·7²·29²·31·107²·137² ≈ 1.13·10²⁴ = 60259484250²·310).
+    if n > MAX_RADICAND ** 3:
         raise RadicalDomainError(
             f"căn thức {n} vượt trần {MAX_RADICAND} — từ chối thay vì treo"
         )

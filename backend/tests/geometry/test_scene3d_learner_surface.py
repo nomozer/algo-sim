@@ -35,21 +35,27 @@ LEARNER_FIELDS = ("label", "notation", "reference", "role", "display_label")
 
 
 @pytest.fixture(scope="module")
-def scenes(tmp_path_factory) -> dict[str, dict]:
-    for attempt in range(3):
-        out = tmp_path_factory.mktemp("fixtures")
-        generated = subprocess.run([sys.executable, str(GENERATOR), "--out", str(out)], cwd=ROOT,
-                                   capture_output=True, text=True)
-        if generated.returncode == 0 or "[WinError 10013]" not in generated.stderr or attempt == 2:
-            break
-        # Windows intermittently denies asyncio's local socketpair initialization in this sandbox.
-        # Offline fixture generation only; fresh output each time. Never retry a geometry/assertion failure.
-        warnings.warn(f"LOCAL_SOCKET_INIT_DENIED: fixture generator retry {attempt + 2}/3", RuntimeWarning)
-    # Keep the actual child failure visible without the unrelated subprocess implementation traceback.
-    assert generated.returncode == 0, generated.stderr.strip().splitlines()[-1:] or generated.returncode
-    return {family: json.loads((out / "fixtures" / f"{family}_positive.json")
-                               .read_text(encoding="utf-8"))["envelope"]["scene3d"]
-            for family in FAMILIES}
+def scenes() -> dict[str, dict]:
+    from tests.geometry import route_cases as W
+
+    mapping = {
+        "triangular_pyramid": W.chop_tam_giac,
+        "triangular_prism": W.lang_tru_tam_giac,
+        "rectangular_pyramid": W.chop_chu_nhat,
+        "cuboid": W.hop_chu_nhat,
+        "cube": W.lap_phuong,
+    }
+    out: dict[str, dict] = {}
+    for fam, fn in mapping.items():
+        _text, contract = fn()
+        _sp, outcome, scene = W.chay(contract)
+        assert outcome.executable and scene is not None
+        out[fam] = scene
+    _text, cs_contract, cs_prog = W.gold("p1_chop_thiet_dien_khoang_cach")
+    _sp, cs_out, cs_scene = W.chay(cs_contract, cs_prog)
+    assert cs_out.executable and cs_scene is not None
+    out["cross_section"] = cs_scene
+    return out
 
 
 def _learner_strings(scene: dict) -> list[str]:

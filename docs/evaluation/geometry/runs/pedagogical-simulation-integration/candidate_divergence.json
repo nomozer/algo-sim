@@ -1,0 +1,20 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "ALGOSIM_MASTER_HYBRID_BACKEND_REPLACEMENT (pedagogical simulation integration: student-mode display contract on the product path, verbatim problem statement, goal-check conclusions in Mode B, stated perpendicular drawn with its witness, engine /23)",
+  "corrects": "docs/evaluation/geometry/runs/hybrid-master-product-integration/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "current_candidate_hash": "39e9f54baf8c2a7ec2368a3c7a383d023a353ab0e9ab79a6b7c6fa25b6c66ed7",
+  "current_product_commit": "adf4a1139f389133fe855845b5f149a3691a36d1",
+  "current_candidate_source": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+  "diverged": true,
+  "reason": "Pedagogical display contract on top of the d17116cb candidate. Frontend: «Đề bài» shows the learner's verbatim submitted text, stamped on the envelope by loadEnvelope (problem_statement) so history, library and classroom assignments carry it, instead of envelope.description, which the Hybrid /4 adapter fills with a disclaimer (30/30 served problems had lost every premise in the UI); goal_checks observations moved from the Mode A stage into the Mode B «Phân tích toán học» panel, still anchor-gated (F4). Engine /22 -> /23: a stated line ⊥ base that placed its off-base end and is no solid edge is drawn as a construct_segment so its exact right-angle witness is shown (oblique prism A′H, pyramid SH to a midpoint); values, registry /31, planner /26 and adapter /4 unchanged. Browser E2E asserts the contract on every served case of the 16-class corpus with 0 live provider calls.",
+  "cache_version": 131,
+  "cache_version_hien_tai": 131,
+  "cache_decision": "NO BUMP: LLM_ONLY prompts, routing policy and its cache bytes are untouched; Route D rows are keyed by Registry/Planner/Engine/Adapter versions, and the engine /23 bump already invalidates /22 Route D rows.",
+  "hieu_luc_len_ket_qua_da_do": {
+    "historical_measurements": "UNCHANGED",
+    "live_requests": 0,
+    "so_lieu_lượt_đo_cuối": "UNCHANGED: historical measurements and the C18/C19/C21 receipts and the 123e57da product-integration receipts are preserved intact and not rescored."
+  }
+}

@@ -199,26 +199,59 @@ def test_a_rightness_word_elsewhere_in_the_quote_does_not_make_the_box_right(ext
     assert (r.status, r.code) == ("REFUSED", "PREDICATE_NOT_IN_QUOTE"), (r.answers, r.code)
 
 
-@pytest.mark.parametrize("phrase", ["hình hộp đứng", "lăng trụ đứng", "hình lăng trụ đứng tứ giác", "hình lăng trụ tứ giác đứng",
-                                    "lăng trụ tứ giác đều", "hình hộp chữ nhật", "hộp chữ nhật"])
-def test_a_rightness_word_naming_the_solid_still_makes_it_right(phrase):
-    text = f"Cho {phrase} ABCD.A'B'C'D' có đáy ABCD là hình chữ nhật, AB = 3, AD = 4, AA' = 12. Tính độ dài AC'."
-    served(text, _right_box("prism", True, f"Cho {phrase} ABCD.A'B'C'D'"), {"q": Fraction(169)})
+def _right_box_dims(solid_type, right, solid_quote, ab="3", ad="4", aa="12"):
+    return {
+        "facts": [
+            {"id": "f1", "kind": "solid", "role": "premise", "solid": "ABCD.A'B'C'D'", "solid_type": solid_type, "right": right, "quotes": [solid_quote]},
+            {"id": "f0", "kind": "polygon_shape", "role": "premise", "shape": "rectangle", "points": list("ABCD"), "quotes": ["đáy ABCD là hình chữ nhật"]},
+            L("f2", "A", "B", ab, f"AB = {ab}"),
+            L("f3", "A", "D", ad, f"AD = {ad}"),
+            L("f4", "A", "A'", aa, f"AA' = {aa}"),
+            {"id": "q", "kind": "question", "role": "question", "quantity": "length", "points": ["A", "C'"], "quotes": ["Tính độ dài AC'."]},
+        ]
+    }
 
 
-@pytest.mark.parametrize("quote,right", [
-    ("ABCD.A'B'C'D' là hình lập phương", True),          # label first, as the rectangle check also accepts
-    ("ABCD.A'B'C'D' là một lăng trụ đứng", True),
-    ("ABCD.A'B'C'D' là hình hộp có các cạnh bên đều bằng 12", False),
+@pytest.mark.parametrize("phrase,dims,want_ac2", [
+    ("hình hộp đứng", ("3", "4", "12"), Fraction(169)),
+    ("lăng trụ đứng", ("3", "4", "12"), Fraction(169)),
+    ("hình lăng trụ đứng tứ giác", ("3", "4", "12"), Fraction(169)),
+    ("hình lăng trụ tứ giác đứng", ("3", "4", "12"), Fraction(169)),
+    ("lăng trụ tứ giác đều", ("3", "3", "4"), Fraction(34)),
+    ("hình hộp chữ nhật", ("3", "4", "12"), Fraction(169)),
+    ("hộp chữ nhật", ("3", "4", "12"), Fraction(169)),
 ])
-def test_label_then_cue_order_names_the_solid_too(quote, right):
-    text = f"Cho {quote}, đáy ABCD là hình chữ nhật, AB = 3, AD = 4, AA' = 12. Tính độ dài AC'."
-    p = _right_box("prism", True, quote)
+def test_a_rightness_word_naming_the_solid_still_makes_it_right(phrase, dims, want_ac2):
+    ab, ad, aa = dims
+    text = f"Cho {phrase} ABCD.A'B'C'D' có đáy ABCD là hình chữ nhật, AB = {ab}, AD = {ad}, AA' = {aa}. Tính độ dài AC'."
+    served(text, _right_box_dims("prism", True, f"Cho {phrase} ABCD.A'B'C'D'", ab, ad, aa), {"q": want_ac2})
+
+
+@pytest.mark.parametrize("quote,right,dims,want_ac2", [
+    ("ABCD.A'B'C'D' là hình lập phương", True, ("3", "3", "3"), Fraction(27)),
+    ("ABCD.A'B'C'D' là một lăng trụ đứng", True, ("3", "4", "12"), Fraction(169)),
+    ("ABCD.A'B'C'D' là hình hộp có các cạnh bên đều bằng 12", False, ("3", "4", "12"), None),
+])
+def test_label_then_cue_order_names_the_solid_too(quote, right, dims, want_ac2):
+    ab, ad, aa = dims
+    text = f"Cho {quote}, đáy ABCD là hình chữ nhật, AB = {ab}, AD = {ad}, AA' = {aa}. Tính độ dài AC'."
+    p = _right_box_dims("prism", True, quote, ab, ad, aa)
     if right:
-        served(text, p, {"q": Fraction(169)})
+        served(text, p, {"q": want_ac2})
     else:
         r = run_fact_route(text, p)
         assert (r.status, r.code) == ("REFUSED", "PREDICATE_NOT_IN_QUOTE"), (r.answers, r.code)
+
+
+@pytest.mark.parametrize("quote", [
+    "Cho lăng trụ tứ giác đều ABCD.A'B'C'D'",
+    "ABCD.A'B'C'D' là hình lập phương",
+])
+def test_contradictory_regular_prism_or_cube_dimensions_pass_rightness_gate_and_fail_closed_in_engine(quote):
+    lead = quote if quote.startswith("Cho ") else f"Cho {quote}"
+    text = f"{lead}, đáy ABCD là hình chữ nhật, AB = 3, AD = 4, AA' = 12. Tính độ dài AC'."
+    r = run_fact_route(text, _right_box_dims("prism", True, quote, "3", "4", "12"))
+    assert (r.status, r.code) == ("REFUSED", "INCONSISTENT_FACTS"), (r.status, r.code, r.reason)
 
 
 @pytest.mark.parametrize("other", [

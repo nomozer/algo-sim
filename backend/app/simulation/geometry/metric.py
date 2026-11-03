@@ -126,7 +126,8 @@ def using(m: Metric | None) -> Iterator[None]:
 
 
 def require_euclidean(what: str) -> None:
-    if _ACTIVE.get() is not None:
+    """An identity Gram matrix IS the Euclidean chart (the polyhedral engine reports one for every Euclidean plan)."""
+    if (m := _ACTIVE.get()) is not None and not is_identity(m):
         raise GeometryError(ERR_CAN_EUCLID, f"{what} needs a Euclidean chart; this program's chart has a derived metric")
 
 

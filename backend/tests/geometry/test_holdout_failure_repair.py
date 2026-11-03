@@ -55,8 +55,8 @@ def _eval_case(payload: dict) -> tuple[object, dict, bool, str | None]:
 
 def test_versions_and_locked_typed_fact_json_schema():
     """M1: Runtime accepts Greek plane_name while TypedFact JSON schema hash stays locked."""
-    assert REGISTRY_VERSION == "geometry-functions/21"    # /21: W3-F2 ratio/projection wording (Owner GO)
-    assert PLANNER_VERSION == "geometry-fact-planner/18"
+    assert REGISTRY_VERSION == "geometry-functions/33"    # /29: SL-3 student shorthand (k/c, đt); /31: C18 definitions
+    assert PLANNER_VERSION == "geometry-fact-planner/26"
     schema_bytes = json.dumps(TypedFact.model_json_schema(), sort_keys=True, ensure_ascii=False).encode("utf-8")
     assert hashlib.sha256(schema_bytes).hexdigest() == LOCKED_TYPED_FACT_SCHEMA_SHA256
 

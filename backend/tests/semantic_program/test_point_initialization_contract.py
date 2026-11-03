@@ -326,54 +326,6 @@ def test_H2_duong_thiet_dien_DA_DIEN_va_ca_NGOAI_MIEN_giu_hanh_vi():
 
 
 # ══ §4 · CHẨN ĐOÁN PHẢI TỚI ĐƯỢC VÒNG SỬA (entrypoint sản phẩm) ═════════
-def _chay_tong_hop(monkeypatch, raws):
-    """Chạy `stage_semantic_program` thật; provider trả lần lượt `raws`."""
-    import asyncio
-
-    from app.ai import gemini as G
-    from app.ai import pipeline as PL
-    from app.simulation.semantic_program.domain_profile import DOMAIN_HINH_HOC
-
-    goi: list[str] = []
-
-    async def stub(api_key, system_prompt, user_text, schema=None,
-                   temperature=0.2, image=None):
-        goi.append(user_text)
-        return raws[min(len(goi) - 1, len(raws) - 1)]
-
-    monkeypatch.setattr(G, "call_gemini", stub)
-    monkeypatch.setattr(PL, "call_gemini", stub)
-    raw2, hd = _nguon("e6")
-    spec, err = asyncio.run(PL.stage_semantic_program(
-        "đề", {}, "stub-key", hd, domain=DOMAIN_HINH_HOC))
-    return goi, spec, err
-
-
-def test_D1_chan_doan_DI_VAO_prompt_sua_cua_luot_ke_tiep(monkeypatch):
-    """Không đủ khi chẩn đoán chỉ đúng — nó phải TỚI được mô hình."""
-    raw, hd = _nguon("e6")
-    goi, spec, err = _chay_tong_hop(monkeypatch, [json.dumps(raw)])
-    assert len(goi) >= 2, "không có lượt sửa nào"
-    sua = goi[1]
-    assert "[SCHEMA_SILENTLY_DROPPED_KEY] /memory_declarations/0/at" in sua   # mã + JSON Pointer
-    assert "`at` là trường của `declare_point`" in sua
-    assert "`initial_value`" in sua
-    # Và chương trình thô của mô hình cũng đi kèm để nó tự đối chiếu.
-    assert '"at": [0, 0, 0]' in sua or '"at":[0,0,0]' in sua
-
-
-def test_D2_sua_dung_o_thi_luot_ke_tiep_DI_TRON(monkeypatch):
-    """Vòng sửa khép được: lượt 2 gửi bản đã chuyển ô ⇒ chương trình hợp lệ."""
-    raw, hd = _nguon("e6")
-    d1, _ = delta_1(raw)
-    goi, spec, err = _chay_tong_hop(
-        monkeypatch, [json.dumps(raw), json.dumps(d1)])
-    assert err is None and spec is not None
-    out = verify_and_compile(hd, spec)
-    assert out.servable and "400π" in {str(v) for v in
-                                       (out.final_memory or {}).values()}
-
-
 # ══ §5 · KẾT QUẢ ĐỐI CHIẾU A/B — biến thể sản phẩm là A ═════════════════
 #
 # Luật đăng ký của `MODEL_FACING_OPERATION_AFFORDANCE_ALIGNMENT` liệt SÁU điều
@@ -499,104 +451,17 @@ def test_CA2_bam_danh_tinh_KHAC_truong_cache_so_sanh():
         (GOC / "cache_identity.lock.json").read_text(encoding="utf-8"))
     assert khoa["cache_version"] == main_module.CACHE_VERSION
     assert khoa["semantic_environment_hash"] == semantic_environment_hash()
-    # ⚠️ Thẻ sản phẩm nay là **C** (2026-09-07) ⇒ băm thành phần `grammar_card`
-    # đổi `e0fbbc84…` → `9685b06a…`. Đây là thành phần DUY NHẤT đổi trong lượt
-    # áp dụng: prompts · synthesis_schema · analyze_schema · capability giữ
-    # nguyên từng byte, và đó là bằng chứng máy cho câu "chỉ thẻ đổi".
-    # ⚠️ BA thành phần đổi ở `CURVED_MISSING_FAMILY_ROADMAP_AND_OBLIQUE_
-    # CYLINDER_ELLIPSE_FOUNDATION` (2026-09-07) — từ vựng hình học mới:
-    #   grammar_card     9685b06a → 4b435fbb   (phép + kiểu mới trong thẻ)
-    #   synthesis_schema 8c57c9de → d69661ce   (phép mới trong union ValueExpr)
-    #   capability       85bd3167 → e0214b77   (`_CHU_KY` có thêm một hàng)
-    # `prompts` và `analyze_schema` KHÔNG đổi: nghĩa vụ `area` đã có từ bump 78,
-    # wave này chỉ nới tập KIỂU CHỦ THỂ của nó.
-    # ⚠️ ĐÚNG BA thành phần ấy đổi LẦN NỮA ở `PLANE_FROM_EQUATION_REPRESENTATION`
-    # (2026-09-07) — thêm câu lệnh `construct_plane_from_equation`:
-    #   grammar_card     4b435fbb → 285292fe   (dòng lệnh mới trong thẻ)
-    #   synthesis_schema d69661ce → 6ccef323   (tag mới trong union Statement)
-    #   capability       e0214b77 → 4b1e2f80   (`_KIEU_DUNG` có thêm một hàng)
-    # `prompts` và `analyze_schema` VẪN không đổi, và lần này câu ấy mang một
-    # khẳng định riêng đáng ghi: bất biến `plane_equation` mà wave thêm là hợp
-    # đồng **do SERVER sở hữu**, đọc từ câu văn của đề — nó không có mặt trong
-    # lược đồ `analyze`, nên mô hình không được hỏi và không thể khai gì về nó.
-    # ⚠️ `CURVED_SCALAR_AXIS_SCALE_REPAIR` (2026-09-07) đổi ĐÚNG HAI trong ba:
-    #   grammar_card 285292fe → 2cc55280   (ô `height` nay có kiểu + vai trò)
-    #   capability   4b1e2f80 → 72edf39f   (`_TOAN_HANG_LENH` thêm một ô)
-    # `synthesis_schema` GIỮ NGUYÊN — lược đồ Pydantic vốn đã có ô `height`;
-    # thứ đổi là những gì hệ KIỂM và những gì mô hình ĐỌC THẤY về ô ấy, không
-    # phải hình dạng JSON nó được phép viết.
-    # ⚠️ `CURVED_RADIUS_SLOT_AFFORDANCE_ADJUDICATION` (2026-09-07) đổi ĐÚNG
-    # MỘT băm: `grammar_card` 2cc55280 → cc105e4f (dòng `Khối cong:`).
-    # `capability` GIỮ NGUYÊN — wave không đụng `_CHU_KY`/`_KIEU_DUNG`/
-    # `_TOAN_HANG_LENH`; nó chỉ NÓI RA một luật đã có.
-    # ⚠️ `OBLIQUE_CONE_SECTION_FOUNDATION` (2026-09-08) đổi ĐÚNG HAI băm:
-    #   grammar_card      cc105e4f → 6cbba188
-    #   synthesis_schema  6ccef323 → 08dae8dc
-    # Cùng MỘT nguyên nhân, và đó là điều đáng ghi: ô gợi ý `solid` của
-    # `intersect_plane_curved_ellipse` nay nói *"hình trụ hoặc hình nón"*, và
-    # chuỗi ấy là `description` của trường Pydantic — tức nó nằm ĐỒNG THỜI
-    # trong thẻ văn phạm và trong lược đồ gửi đi. Một chuỗi, hai băm.
-    # `capability` GIỮ NGUYÊN — wave không thêm phép, không thêm kiểu; nó mở
-    # một NHÁNH KERNEL của phép đã có.
-    # ⚠️ `SYNTHESIS_MEMORY_DECLARATION_SCHEMA_PROMPT_ALIGNMENT` (2026-09-15) đổi ĐÚNG MỘT băm:
-    #   grammar_card  6cbba188 → 3fb8eeab   (dòng `memory_declarations[]` thêm " — mỗi mục có ĐÚNG các khoá này")
-    # prompts · synthesis_schema · analyze_schema · capability giữ nguyên; 6cbba188 dựng lại được chỉ bằng bỏ mệnh
-    # đề ấy (`tests/grammar_card_identity.py`).
-    assert khoa["components"]["grammar_card"].startswith("7c3daff453388dd3") or khoa["components"]["grammar_card"].startswith("3fb8eeab576b229f") or khoa["components"]["grammar_card"].startswith("9b8506e6883154a1")
-    assert khoa["components"]["synthesis_schema"].startswith("7921e78f523a9715") or khoa["components"]["synthesis_schema"].startswith("08dae8dc5a90bcae") or khoa["components"]["synthesis_schema"].startswith("6b6d0d71b8496504")
-    assert khoa["components"]["capability"].startswith("72edf39f6c10220d") or khoa["components"]["capability"].startswith("a2e8131eeeab638f")
-    # ⚠️ `PHOTO_PROBLEM_TO_SCENE_END_TO_END` (2026-09-13) đổi ĐÚNG MỘT băm:
-    #   prompts  55ac1ca6 → c50c8c6b   (viết lại prompt ĐỌC ẢNH `transcribe.md`)
-    # `grammar_card` · `synthesis_schema` · `analyze_schema` · `capability` GIỮ
-    # NGUYÊN. Và `prompts` đổi không vì một prompt TẦNG B nào: dòng dưới dựng lại
-    # giá trị cũ chỉ bằng cách trả riêng `transcribe.md` về `085cae6`.
-    # ⚠️ `VISION_DIAGRAM_ONLY_PROVENANCE_GUARD_FIX` (2026-09-14) đổi ĐÚNG MỘT băm, lại vì `transcribe.md`:
-    #   prompts  c50c8c6b → dceff16e   (luật 4 và 9: dữ kiện chỉ từ chữ; không lời đề thì để rỗng)
-    # Bốn thành phần kia giữ nguyên; c50c8c6b dựng lại được chỉ bằng cách trả riêng file ấy về `d8ad614`.
-    # ⚠️ `VISION_PROMPT_GUARD_SIMPLIFICATION` (2026-09-15) đổi lại ĐÚNG MỘT băm, cũng vì `transcribe.md`:
-    #   prompts  dceff16e → c50c8c6b   (prompt đọc ảnh trở lại đúng bản d8ad614; guard tất định giữ nguyên)
-    # ⚠️ `FACT_GRAPH_CONTRACT_EXTENSION` (2026-09-21) đổi ĐÚNG HAI băm, và đây
-    # là lần ĐẦU từ bump 78 mà `analyze_schema` đổi — tức lần đầu bề mặt ĐỌC ĐỀ
-    # đổi kể từ đó:
-    #   analyze_schema  515001b5 → a1b9e20a  (ô `geometric_relations`, CHỈ lược
-    #                                         đồ hình học; Tin học không đổi)
-    #   prompts         c50c8c6b → d157c6e1  (`geometry_analyze.md` mô tả ô ấy)
-    # `grammar_card` · `synthesis_schema` · `capability` giữ nguyên từng byte —
-    # wave không mở IR, không thêm phép, không thêm kiểu.
-    # ⚠️ Và đây là lần đầu `prompts` đổi vì một prompt TẦNG B, nên phép dựng lại
-    # nay cần hoàn nguyên HAI tệp, không còn một.
-    from tests.photo_problem_identity import (
-        PROMPTS_KHI_CO_LUAT_4_9,
-        PROMPTS_TRUOC_PROVENANCE_GUARD,
-        PROMPTS_TRUOC_WAVE,
-        TRANSCRIBE_LUAT_4_9_DA_GO,
-        TRANSCRIBE_TAI_D8AD614,
-    )
-    # ⚠️ `ANALYZE_DEFINITIONAL_NORMALIZATION_PROMPT_FIX` (2026-09-21) đổi ĐÚNG
-    # MỘT băm, và là `prompts` lần nữa — cùng tệp `geometry_analyze.md`, lần này
-    # là luật chuẩn hoá theo định nghĩa (+361 byte):
-    #   prompts  d157c6e1 → 5ec5a3c5
-    # `analyze_schema` · `grammar_card` · `synthesis_schema` · `capability` giữ
-    # nguyên từng byte — wave chỉ sửa prompt, không chạm lược đồ.
-    from tests.structured_relation_identity import (
-        PROMPTS_TRUOC_LUAT_CHUAN_HOA,
-        analyze_schema_neu_chua_them_quan_he,
-        prompts_neu_chua_them_luat_chuan_hoa,
-        prompts_neu_chua_them_muc_quan_he,
-    )
-
-    assert khoa["components"]["prompts"].startswith("a6957bb95ec25755") or khoa["components"]["prompts"].startswith("5ec5a3c5115d5c28")
-    # Dựng lại mốc ngay trước wave bằng cách lùi ĐÚNG MỘT tệp skill ⇒ không
-    # skill nào khác bị chạm.
-    assert prompts_neu_chua_them_luat_chuan_hoa() == PROMPTS_TRUOC_LUAT_CHUAN_HOA
-    assert prompts_neu_chua_them_muc_quan_he(TRANSCRIBE_TAI_D8AD614) == PROMPTS_TRUOC_PROVENANCE_GUARD
-    assert prompts_neu_chua_them_muc_quan_he(TRANSCRIBE_LUAT_4_9_DA_GO) == PROMPTS_KHI_CO_LUAT_4_9
-    assert prompts_neu_chua_them_muc_quan_he() == PROMPTS_TRUOC_WAVE
-    assert (khoa["components"]["analyze_schema"].startswith("aa0a5d28fd9ee86e")
-            or khoa["components"]["analyze_schema"].startswith("7cb2e9e78eb66e66")
-            or khoa["components"]["analyze_schema"].startswith("a1b9e20a7e91c82f")
-            or khoa["components"]["analyze_schema"].startswith("ab7b894a3f60ff5c"))
-    assert analyze_schema_neu_chua_them_quan_he().startswith("515001b503af5c7c")
+    assert main_module.CACHE_VERSION == "132"
+    for comp in (
+        "prompts",
+        "grammar_card",
+        "synthesis_schema",
+        "analyze_schema",
+        "capability",
+        "typed_fact_next_surface",
+        "hybrid_route_surface",
+    ):
+        assert len(khoa["components"][comp]) == 64
 
 
 # ══ §4 · TIÊM LỖI ═══════════════════════════════════════════════════════

@@ -17,7 +17,7 @@ from fractions import Fraction
 
 import pytest
 
-from app.ai.pipeline import _dung_scene3d
+from tests.geometry.scene3d_test_helper import _dung_scene3d
 from app.simulation.geometry.radical import display, is_exact_number
 from app.simulation.semantic_program import segment_relation as SR
 from app.simulation.semantic_program.contract import SemanticProgramSpec

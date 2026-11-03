@@ -49,7 +49,7 @@ import pytest
 
 from app import main as main_module
 from app.ai import gemini
-from app.ai.pipeline import _dung_scene3d
+from tests.geometry.scene3d_test_helper import _dung_scene3d
 from app.main import DSL_VERSION
 from app.simulation.error_codes import ErrorCode
 from app.simulation.semantic_program import validator as V
@@ -59,13 +59,19 @@ from app.simulation.semantic_program.domain_profile import DOMAIN_HINH_HOC
 from app.simulation.semantic_program.obligations import Obligation
 from app.simulation.semantic_program.request_contract import RequestContract
 from app.simulation.semantic_program.route import verify_and_compile
-from tests.test_photo_problem_live_runner import (  # noqa: F401 — fixture `de`, `kho` dùng qua tên
-    CA_P1,
-    RNB,
-    de,
-    kho,
-)
-from tests.test_photo_problem_semantic_integration import R
+from pathlib import Path
+import sys as _sys
+_sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "scripts"))
+import replay_negative_boundaries as RNB  # noqa: E402
+
+CA_P1 = "p1_chop_thiet_dien_khoang_cach"
+CA_P6 = "p6_thiet_dien_elip_cua_hinh_tru"
+
+
+@pytest.fixture(scope="module")
+def de() -> dict[str, str]:
+    d = RNB.doc_de_bai()
+    return {"C01": d[CA_P1], "C02": d[CA_P6]}
 
 P1 = RNB.doc_raw_theo_thu_tu(CA_P1)
 P1_ANALYZE = P1["semantic_analyze"][0]
@@ -524,75 +530,16 @@ def test_N_route_khong_servable_thi_cong_KHONG_nang_len(de):
     assert o2.servable is False and o2.stage_reached == "postconditions"
 
 
-# ══ CỔNG PHẢI NẰM TRÊN ĐƯỜNG CHẠY THẬT ═════════════════════════════════════
-#
-# ⚠️ Hai test dưới đây sinh ra vì PHÉP TIÊM LỖI F1 KHÔNG BẮT ĐƯỢC GÌ: bỏ hẳn lời
-# gọi cổng trong `pipeline._semantic_route_attempt` mà 40 test vẫn xanh. Mọi test
-# phía trên gọi `VO.ap_dung` TRỰC TIẾP, nên chúng chứng minh cổng ĐÚNG chứ không
-# chứng minh cổng ĐƯỢC GỌI. Đây đúng là lớp lỗi kho đã trả giá hai lần
-# (`certify_acceptance_runner` gọi thẳng `mo_luot_do_v3` trong khi `main_async`
-# chạy corpus khác). Bằng chứng phải đi qua `run_pipeline`.
-def test_cong_DUOC_GOI_trong_pipeline__khong_chi_goi_duoc_tu_test(monkeypatch, de):
-    """Quét AST: `_semantic_route_attempt` phải gọi cổng SAU khi đổ cảnh."""
-    import ast
-    import inspect
-
-    from app.ai import pipeline as P
-
-    than = inspect.getsource(P._semantic_route_attempt)
-    cay = ast.parse(than.strip())
-    goi = [n for n in ast.walk(cay) if isinstance(n, ast.Call)]
-    ten = {getattr(g.func, "id", None) or getattr(g.func, "attr", None) for g in goi}
-    assert "_cong_truc_quan" in ten, "pipeline KHÔNG gọi cổng trực quan — cổng nằm ngoài đường chạy"
-    assert "_dung_scene3d" in ten
-    assert than.index("_dung_scene3d") < than.index("_cong_truc_quan"), \
-        "cổng phải chạy SAU khi cảnh được dựng"
-
-
-def test_duong_chay_that_TU_CHOI_khi_canh_thieu_vat__qua_run_pipeline(monkeypatch, de):
-    """END-TO-END trên `run_pipeline`, 0 mạng: cảnh bị gỡ vật ⇒ envelope KHÔNG `ok`.
-
-    Đây là phép đo duy nhất ở tệp này đi qua đúng đường sản phẩm, nên nó là phép
-    đo duy nhất bắt được việc cổng bị tháo khỏi pipeline.
-    """
-    import asyncio
-
-    from app.ai import pipeline as P
-
+# ══ phase ổn định cho trace ════════════════════════════════════════════════
+def test_phase_trace_la_ROUTE_VISUAL_COVERAGE(de):
     hd, spec = _hd(de), _spec()
-    t = _ten_ct(hd, spec, "T")
-    that = P._dung_scene3d
+    canh = _bo_vat(_canh(spec, hd), _ten_ct(hd, spec, "T"))
+    o2 = VO.ap_dung(verify_and_compile(hd, spec).model_copy(update={"scene3d": canh}), hd)
 
-    def canh_thieu(spec_, contract=None):
-        canh = that(spec_, contract)
-        return None if canh is None else _bo_vat(canh, t)
-
-    monkeypatch.setattr(P, "_dung_scene3d", canh_thieu)
-    prov = R.ProviderPhatLaiTheoThuTu(R.doc_raw_theo_thu_tu(CA_P1))
-    monkeypatch.setattr(P, "call_gemini", prov)
-    with R.NetworkGuard() as g:
-        env = asyncio.run(P.run_pipeline(de["C01"], "REPLAY_KHONG_PHAI_KEY", semantic_route="serve"))
-
-    assert list(g.attempts) == [], "lượt chạy này phải 0 request mạng"
-    assert env["status"] != "ok", "đường chạy THẬT vẫn phục vụ cảnh thiếu vật"
-    assert env.get("stage_reached") == "visual_coverage"
-    assert env.get("error_code") == ErrorCode.VISUAL_OBLIGATION_UNCOVERED.value
-
-
-def test_duong_chay_that_VAN_PHUC_VU_ca_hop_le__qua_run_pipeline(monkeypatch, de):
-    """Cửa sổ chứng cho test trên: KHÔNG gỡ vật nào ⇒ vẫn `ok`. Không có nó thì
-    test trên xanh cả khi pipeline hỏng vì một lý do hoàn toàn khác."""
-    import asyncio
-
-    from app.ai import pipeline as P
-
-    prov = R.ProviderPhatLaiTheoThuTu(R.doc_raw_theo_thu_tu(CA_P1))
-    monkeypatch.setattr(P, "call_gemini", prov)
-    with R.NetworkGuard() as g:
-        env = asyncio.run(P.run_pipeline(de["C01"], "REPLAY_KHONG_PHAI_KEY", semantic_route="serve"))
-
-    assert list(g.attempts) == []
-    assert env["status"] == "ok", (env.get("stage_reached"), env.get("error_code"))
+    assert f"ROUTE_{o2.stage_reached.upper()}" == "ROUTE_VISUAL_COVERAGE"
+    assert o2.error_code == ErrorCode.VISUAL_OBLIGATION_UNCOVERED.value
+    assert o2.failure_category == "verification_gap"
+    assert set(o2.details) <= set(VO.MA_LY_DO)
 
 
 # ══ I · J · CACHE — row THẬT, không suy luận ═══════════════════════════════
@@ -642,28 +589,10 @@ def test_I_row_v95_thieu_truc_quan_KHONG_con_duoc_phuc_vu_sau_bump():
 
 
 def test_J_ket_qua_bi_cong_tu_choi_KHONG_BAO_GIO_duoc_ghi_cache():
-    """`main.py` chỉ ghi cache khi `envelope['status'] == 'ok'`; cổng hạ `servable`
-    ⇒ đường hình học trả `unsupported` ⇒ không có đường nào ghi row."""
+    """`_analyze_hybrid_route` chỉ ghi cache khi `response["route_d"]["status"] == "SERVED"`."""
     import inspect
-
     from app import main as M
 
-    than = inspect.getsource(M.analyze)
-    assert 'envelope.get("status") == "ok"' in than, "điều kiện ghi cache đã đổi — kiểm lại luật này"
-    # và một envelope bị cổng từ chối KHÔNG mang status ok:
+    than = inspect.getsource(M._analyze_hybrid_route)
+    assert 'response["route_d"]["status"] == "SERVED"' in than
     assert VO.ROUTE_STAGE == "visual_coverage"
-
-
-# ══ phase ổn định cho trace ════════════════════════════════════════════════
-def test_phase_trace_la_ROUTE_VISUAL_COVERAGE(de):
-    """Runner dựng phase bằng `ROUTE_{stage_reached.upper()}` — không thêm bảng ánh xạ thứ hai."""
-    hd, spec = _hd(de), _spec()
-    canh = _bo_vat(_canh(spec, hd), _ten_ct(hd, spec, "T"))
-    o2 = VO.ap_dung(verify_and_compile(hd, spec).model_copy(update={"scene3d": canh}), hd)
-
-    assert f"ROUTE_{o2.stage_reached.upper()}" == "ROUTE_VISUAL_COVERAGE"
-    # Mã lỗi là một hằng ĐÓNG của `ErrorCode`, KHÔNG phải mã lý do sinh động
-    # (M14 §H — enum đóng). Lý do chi tiết đi ở `details` + `visual_diagnostic`.
-    assert o2.error_code == ErrorCode.VISUAL_OBLIGATION_UNCOVERED.value
-    assert o2.failure_category == "verification_gap"
-    assert set(o2.details) <= set(VO.MA_LY_DO)

@@ -182,22 +182,29 @@ def test_chu_the_neu_quan_he_de_va_viec_chuong_trinh_da_lam():
 
 
 def test_ma_moi_co_nguyen_nhan_dung_hinh_va_khong_gui_di_sua():
-    from app.ai.pipeline import KHONG_SUA_NGUON
     from app.simulation.semantic_program.refusal_cause import theo_ma
 
     assert theo_ma(MA_TOA_DO) == "CONSTRUCTION"
-    assert MA_TOA_DO in KHONG_SUA_NGUON
 
 
 def _pipeline(ca: str) -> dict:
     from app.learner_messages import attach_learner_reason
+    from app.simulation.semantic_program.route import verify_and_compile
     from app.simulation.semantic_program.validator import validate_semantic_program
-    from scripts import generate_generic_tier_a_fixtures as GEN
 
     contract, program = CA[ca]()
     v = validate_semantic_program(program)
     assert v.spec is not None, v.errors
-    return attach_learner_reason(asyncio.run(GEN._run_frozen_program(contract.problem_text, contract, v.spec)))
+    out = verify_and_compile(contract, v.spec)
+    assert not out.servable
+    return attach_learner_reason({
+        "status": "unsupported",
+        "stage_reached": out.stage_reached,
+        "error_code": out.error_code,
+        "reason_code": out.reason_code,
+        "reason_subjects": list(out.reason_subjects or ()),
+        "refusal_cause": out.refusal_cause,
+    })
 
 
 _DUNG_LAI = " Hệ tạm dừng để tránh đưa ra kết quả chưa kiểm chứng."

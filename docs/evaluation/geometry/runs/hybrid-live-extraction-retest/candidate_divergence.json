@@ -1,0 +1,20 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "ALGOSIM_MASTER_HYBRID_BACKEND_REPLACEMENT (hybrid-live-extraction-retest: C26 extraction reliability repairs from the 64 captured Run 3 wire payloads, then a new Owner-authorized live campaign C26 of <= 80 requests / USD 1.00)",
+  "corrects": "docs/evaluation/geometry/runs/hybrid-live-gemini-execution/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "current_candidate_hash": "276fc548196e13eaa0ca7635428248dcaee7be79b79dff58c24a0478cddd4c63",
+  "current_product_commit": "d331e75b5bbf15722eca77c54e398173eefec98d",
+  "current_candidate_source": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+  "diverged": true,
+  "reason": "Backend-only transport repairs in backend/app/ai/typed_fact_next_extraction.py, each re-filing only what the source states verbatim and each paired with an adversarial no-change test: a described point whose quote names it ('M là trung điểm của AB') becomes the matching premise and its @refs the label (circumcenter/orthocenter and refs to unconverted described points untouched); 'hình vuông' filed as rectangle becomes the regular quadrilateral (duplicates dropped, 'hình chữ nhật' untouched); a split 'hình vuông' + bare adjacent 'cạnh 2' merges into one verbatim polygon premise (non-adjacent or conflicting values untouched); an altitude inferred from 'SA vuông góc (ABCD)' without the words đường cao/chiều cao drops; a stated altitude quote binds to the single solid of the same sentence only; a 'height' quoted as a named segment ('MM' = 5') becomes that segment_length. TYPED_FACT_NEXT_SYSTEM_INSTRUCTION tightened (square side, no inferred altitude, segment heights, unnamed operands -> missing_operand); wire responseSchema unchanged. Registry /32, Planner /26, Engine /24, Adapter /4, TypedFactNext /2 contract, Source Gate, LLM_ONLY default and frontend/** unchanged. Runner (not product) gains campaign C26 support; C21 caps unchanged.",
+  "cache_version": 131,
+  "cache_version_hien_tai": 131,
+  "cache_decision": "NO BUMP: LLM_ONLY bytes untouched; Route D rows are keyed by typed_fact_next_surface_fingerprint(), which changes with the system instruction, so earlier Route D rows MISS automatically (MIGRATION_CHECKLIST M-2).",
+  "hieu_luc_len_ket_qua_da_do": {
+    "historical_measurements": "UNCHANGED",
+    "live_requests": "C21 campaign 70 (frozen receipts); C26 counted in hybrid-live-extraction-retest receipts",
+    "so_lieu_lượt_đo_cuối": "UNCHANGED: thesis-final-20260908T160224Z, all offline receipts and the three C21 live receipts (live-pilots-79bbc053/48372208/8853c4b0) stay byte-for-byte; Run 3 live numbers are never rescored with the new normalizer, offline captured-wire replay is reported separately and never called live."
+  }
+}

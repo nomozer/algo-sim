@@ -132,7 +132,7 @@ def cham(raw: str, hd) -> dict:
 
 def canh_va_trace(raw: str, hd) -> dict:
     """Trace + Scene3D — chỉ hỏi khi ứng viên đã `servable`."""
-    from app.ai.pipeline import _dung_scene3d
+    from tests.geometry.scene3d_test_helper import _dung_scene3d
 
     spec = SemanticProgramSpec.model_validate(json.loads(raw))
     canh = _dung_scene3d(spec, hd) or {}

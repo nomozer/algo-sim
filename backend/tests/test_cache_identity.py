@@ -136,7 +136,7 @@ def test_TIEM_prompt_doi_thi_van_tay_doi(monkeypatch, tmp_path):
     gia.mkdir()
     for f in gemini.SKILLS_DIR.glob("*.md"):
         (gia / f.name).write_text(f.read_text(encoding="utf-8"), encoding="utf-8")
-    (gia / "geometry_program_generator.md").write_text(
+    (gia / "transcribe.md").write_text(
         "MỘT CÂU KHÁC HẲN — tiêm để kiểm cổng.", encoding="utf-8")
     monkeypatch.setattr(gemini, "SKILLS_DIR", gia)
 

@@ -1,0 +1,588 @@
+{
+ "schema": "c21-delegated-execution-receipt/1",
+ "authorization_mode": "EXPLICIT_OWNER_DELEGATED_EXECUTION",
+ "authorization_source": "EXPLICIT_OWNER_INSTRUCTION",
+ "directive_id": "OWNER_DIRECTIVE_EXECUTE_GEMINI_LIVE_NOW_2026_11_03_RUN3_COMPACT_SCHEMA",
+ "authorized_scope": [
+  "K-1",
+  "S-2",
+  "R-1"
+ ],
+ "excluded_scope": [
+  "H-1",
+  "PRODUCTION_CUTOVER",
+  "MERGE_PUSH"
+ ],
+ "authorized_model": "gemini-2.5-flash",
+ "candidate_commit": "44568bc9c8154161e9c42a73a33532b62abeea07",
+ "runtime_identity": {
+  "measured_system": "5c0175289995b921007fb2d9275caad9bf839b857030280807094b5b98319046",
+  "cache_version": "131",
+  "model": "gemini-2.5-flash",
+  "skills_sha256": "1dd37ccce05a9c15a4b399ff848226525413f351ce607659b9d4c0c28ea217d2",
+  "paired_harness_sha256": "4af1dc76355ec4f59d1f9045b7cee03d40b1bab3528290963776be85daa408d6",
+  "runner_sha256": "e9c6ad4388032f06949ac6c0dd5d06b2882be576c0564ff4a5143e6e48229438",
+  "scorer_sha256": "8c330bd493f9d401f579b6383f1a1df2bc9172eee2530cf187be2024801b5a2d"
+ },
+ "per_pilot_caps": {
+  "K-1": {
+   "max_requests": 16,
+   "max_usd": 1.0
+  },
+  "S-2": {
+   "max_requests": 36,
+   "max_usd": 2.0
+  },
+  "R-1": {
+   "max_requests": 18,
+   "max_usd": 1.0
+  }
+ },
+ "global_caps": {
+  "max_requests": 64,
+  "max_usd": 3.844671
+ },
+ "executed_at": "2026-11-03T08:54:46Z",
+ "credentials_summary": {
+  "api_key_present": true,
+  "api_key_source": "root_dotenv",
+  "project_id_present": false,
+  "project_source": "missing",
+  "oauth_token_present": false
+ },
+ "paid_project_verification": {
+  "verified": true,
+  "source": "EXPLICIT_OWNER_PAID_ATTESTATION",
+  "attestation_sha256": "e89153f533827db33572314c977e73cf1d24d8db611358f3302eccdc87fb12e0",
+  "attestation_path": "docs/evaluation/geometry/runs/hybrid-live-validation/owner-paid-attestation.json",
+  "statement_ref": "OWNER_DIRECT_STATEMENT_2026_11_03T145305_PLUS0700",
+  "project_id": null
+ },
+ "templates_verified": {
+  "K-1": {
+   "template_name": "k1-owner-approval.template.json",
+   "template_git_blob": "bb29de7407e26d2d3987f16e8219ab891dff3823",
+   "corpus_sha256": "6eeab278aef771c14ac1849363af3f87d52e8d90f6d27c1d5441ad8308acc080",
+   "cases": 16,
+   "max_requests": 16,
+   "max_usd": 1.0
+  },
+  "S-2": {
+   "template_name": "s2-owner-approval.template.json",
+   "template_git_blob": "a8c8ca15119c0740fcb93d56fc3f790ea23918bc",
+   "corpus_sha256": "3f1682bd6adbc5f21cb504a6b25f6ccc226c9b0d791f05fcb2eeb6a9a6fc6791",
+   "cases": 36,
+   "max_requests": 36,
+   "max_usd": 2.0
+  },
+  "R-1": {
+   "template_name": "r1-owner-approval.template.json",
+   "template_git_blob": "8b7bdb1d80c7690120ffb61ecd9bb281de39c9d2",
+   "corpus_sha256": "250466ebdf5bcb435a2b803ed9443ef30b7f37818a3ae9f7e90a40625e84b7c6",
+   "cases": 18,
+   "max_requests": 18,
+   "max_usd": 1.0
+  }
+ },
+ "verified_conditions": [
+  "candidate_product_freeze_matched",
+  "default_mode_llm_only_preserved",
+  "authorized_model_gemini_2_5_flash_pinned_no_fallback",
+  "corpora_k1_s2_r1_validated",
+  "approval_templates_k1_s2_r1_bound_to_runtime_identity",
+  "gemini_api_key_present_via_root_dotenv",
+  "paid_project_verified_via_explicit_owner_paid_attestation"
+ ],
+ "unverified_conditions": [],
+ "status": "INCOMPLETE",
+ "stop_reason": "GLOBAL_REQUEST_CAP",
+ "model_availability": "VERIFIED_LIVE",
+ "approvals_created": [
+  {
+   "study": "K-1",
+   "file": "k1-delegated-approval.json",
+   "sha256": "6fea1e5fdfdd9a272106428bd9bbcc6f847ae906e3d59c733196238767fe7b90"
+  },
+  {
+   "study": "S-2",
+   "file": "s2-delegated-approval.json",
+   "sha256": "d1acabf634f1f3801279ad4a2e8c0c831aaa071f520a60e5e249e392c13d504e"
+  },
+  {
+   "study": "R-1",
+   "file": "r1-delegated-approval.json",
+   "sha256": "53827892627125315f3e7577e0c13dc3ca73e057d6d23d4a56e105a52ffb4cbf"
+  }
+ ],
+ "total_http_requests": 64,
+ "total_spent_upper_usd": 0.34046400000000004,
+ "total_spent_reported_usd": 0.340464,
+ "pilots": [
+  {
+   "study": "K-1",
+   "output_file": "k1-live.jsonl",
+   "output_sha256": "638a2bd11090f16cc04a3064f1caeb5db229fdc5f5a50ee584b152b380f5c51a",
+   "completed": true,
+   "stop_reason": null,
+   "cases_run": 16,
+   "cases_planned": 16,
+   "cases_not_measured": 0,
+   "http_requests": 16,
+   "live_answered_rows": 16,
+   "spent_upper_usd": 0.1063866,
+   "spent_reported_usd": 0.1063866,
+   "latency_median_s": 9.856342800001585,
+   "latency_p90_s": 14.337461099999928,
+   "metrics": {
+    "extraction_accuracy": {
+     "numerator": 5,
+     "denominator": 14,
+     "rate": 0.357143
+    },
+    "goal_completeness": {
+     "numerator": 1,
+     "denominator": 14,
+     "rate": 0.071429
+    },
+    "operand_preservation": {
+     "numerator": 8,
+     "denominator": 14,
+     "rate": 0.571429
+    },
+    "ambiguity_detection": {
+     "numerator": 2,
+     "denominator": 2,
+     "rate": 1.0
+    },
+    "clarification_correctness": {
+     "numerator": 0,
+     "denominator": 0,
+     "rate": "UNKNOWN"
+    },
+    "false_clarification": {
+     "numerator": 0,
+     "denominator": 14,
+     "rate": 0.0
+    },
+    "unsupported_classification": {
+     "numerator": 0,
+     "denominator": 0,
+     "rate": "UNKNOWN"
+    },
+    "wrong_served_end_to_end": {
+     "numerator": 2,
+     "denominator": 16,
+     "rate": 0.125
+    }
+   },
+   "supplementary": {
+    "composition_labels": {
+     "EXTRACTION_FAILURE": 12,
+     "NOT_ESTABLISHED": 1,
+     "REGISTERED_DECOMPOSITION": 1,
+     "WRONG_SERVED": 2
+    },
+    "planner_label_disagreements": [
+     "K-C01",
+     "K-C04"
+    ],
+    "described_points": {
+     "emitted": {
+      "numerator": 8,
+      "denominator": 8,
+      "rate": 1.0
+     },
+     "kinds_match": {
+      "numerator": 5,
+      "denominator": 8,
+      "rate": 0.625
+     },
+     "refs_resolve": {
+      "numerator": 8,
+      "denominator": 8,
+      "rate": 1.0
+     },
+     "quotes_verbatim": {
+      "numerator": 8,
+      "denominator": 8,
+      "rate": 1.0
+     }
+    },
+    "constraints": {
+     "emitted": {
+      "numerator": 6,
+      "denominator": 6,
+      "rate": 1.0
+     },
+     "kinds_match": {
+      "numerator": 6,
+      "denominator": 6,
+      "rate": 1.0
+     },
+     "operands_match": {
+      "numerator": 6,
+      "denominator": 6,
+      "rate": 1.0
+     },
+     "quotes_verbatim": {
+      "numerator": 6,
+      "denominator": 6,
+      "rate": 1.0
+     },
+     "no_invented_construction": {
+      "numerator": 3,
+      "denominator": 6,
+      "rate": 0.5
+     }
+    },
+    "hybrid_outcomes": {
+     "SERVED_CORRECT": 1,
+     "SERVED_WRONG": 2,
+     "CORRECT_REFUSAL": 0,
+     "FALSE_REFUSAL": 7,
+     "WRONG_REASON_REFUSAL": 6,
+     "CORRECT_CLARIFICATION": 0,
+     "WRONG_REASON_CLARIFICATION": 0,
+     "FALSE_CLARIFICATION": 0,
+     "REASON_NOT_VERIFIED": 0,
+     "INFRASTRUCTURE_FAILURE": 0
+    },
+    "note": "not a protocol §2 metric; reported beside them (Master directive §V)",
+    "end_to_end_correct": {
+     "numerator": 1,
+     "denominator": 16,
+     "rate": 0.0625
+    },
+    "gold_replay_ceiling": {
+     "numerator": 16,
+     "denominator": 16,
+     "rate": 1.0
+    },
+    "false_refusal": {
+     "numerator": 7,
+     "denominator": 10,
+     "rate": 0.7
+    },
+    "by_stratum": {
+     "K-A": {
+      "numerator": 0,
+      "denominator": 4,
+      "rate": 0.0
+     },
+     "K-B": {
+      "numerator": 0,
+      "denominator": 2,
+      "rate": 0.0
+     },
+     "K-C": {
+      "numerator": 1,
+      "denominator": 6,
+      "rate": 0.166667
+     },
+     "K-D": {
+      "numerator": 0,
+      "denominator": 2,
+      "rate": 0.0
+     },
+     "K-E": {
+      "numerator": 0,
+      "denominator": 2,
+      "rate": 0.0
+     }
+    },
+    "attribution": {
+     "LLM_EXTRACTION_DIFFERS_FROM_GOLD": 14,
+     "UNATTRIBUTED": 1
+    }
+   }
+  },
+  {
+   "study": "S-2",
+   "output_file": "s2-live.jsonl",
+   "output_sha256": "869fbebfc06b7798cc9048cedd674744f056027bfe40a70f14f80144275d89ac",
+   "completed": true,
+   "stop_reason": null,
+   "cases_run": 36,
+   "cases_planned": 36,
+   "cases_not_measured": 0,
+   "http_requests": 35,
+   "live_answered_rows": 35,
+   "spent_upper_usd": 0.17406220000000006,
+   "spent_reported_usd": 0.1740622,
+   "latency_median_s": 8.514906799999153,
+   "latency_p90_s": 14.604357399999571,
+   "metrics": {
+    "extraction_accuracy": {
+     "numerator": 10,
+     "denominator": 24,
+     "rate": 0.416667
+    },
+    "goal_completeness": {
+     "numerator": 20,
+     "denominator": 24,
+     "rate": 0.833333
+    },
+    "operand_preservation": {
+     "numerator": 21,
+     "denominator": 24,
+     "rate": 0.875
+    },
+    "ambiguity_detection": {
+     "numerator": 3,
+     "denominator": 6,
+     "rate": 0.5
+    },
+    "clarification_correctness": {
+     "numerator": 2,
+     "denominator": 3,
+     "rate": 0.666667
+    },
+    "false_clarification": {
+     "numerator": 0,
+     "denominator": 30,
+     "rate": 0.0
+    },
+    "unsupported_classification": {
+     "numerator": 5,
+     "denominator": 6,
+     "rate": 0.833333
+    },
+    "wrong_served_end_to_end": {
+     "numerator": 1,
+     "denominator": 36,
+     "rate": 0.027778
+    }
+   },
+   "supplementary": {
+    "hybrid_outcomes": {
+     "SERVED_CORRECT": 10,
+     "SERVED_WRONG": 1,
+     "CORRECT_REFUSAL": 4,
+     "FALSE_REFUSAL": 7,
+     "WRONG_REASON_REFUSAL": 11,
+     "CORRECT_CLARIFICATION": 1,
+     "WRONG_REASON_CLARIFICATION": 1,
+     "FALSE_CLARIFICATION": 1,
+     "REASON_NOT_VERIFIED": 0,
+     "INFRASTRUCTURE_FAILURE": 0
+    },
+    "note": "not a protocol §2 metric; reported beside them (Master directive §V)",
+    "end_to_end_correct": {
+     "numerator": 15,
+     "denominator": 36,
+     "rate": 0.416667
+    },
+    "gold_replay_ceiling": {
+     "numerator": 35,
+     "denominator": 36,
+     "rate": 0.972222
+    },
+    "false_refusal": {
+     "numerator": 7,
+     "denominator": 18,
+     "rate": 0.388889
+    },
+    "by_stratum": {
+     "S2-A": {
+      "numerator": 4,
+      "denominator": 6,
+      "rate": 0.666667
+     },
+     "S2-B": {
+      "numerator": 4,
+      "denominator": 6,
+      "rate": 0.666667
+     },
+     "S2-C": {
+      "numerator": 1,
+      "denominator": 6,
+      "rate": 0.166667
+     },
+     "S2-D": {
+      "numerator": 3,
+      "denominator": 6,
+      "rate": 0.5
+     },
+     "S2-E": {
+      "numerator": 1,
+      "denominator": 6,
+      "rate": 0.166667
+     },
+     "S2-F": {
+      "numerator": 2,
+      "denominator": 6,
+      "rate": 0.333333
+     }
+    },
+    "attribution": {
+     "DETERMINISTIC_LAYER_REPRODUCED_WITH_GOLD": 1,
+     "LLM_EXTRACTION_DIFFERS_FROM_GOLD": 17,
+     "UNATTRIBUTED": 3
+    }
+   }
+  },
+  {
+   "study": "R-1",
+   "output_file": "r1-live.jsonl",
+   "output_sha256": "804e80a983b7a8ea6581c0e7b0205f84ffd013a098b460ecd32b57d4f281b4fb",
+   "completed": false,
+   "stop_reason": "GLOBAL_REQUEST_CAP",
+   "cases_run": 14,
+   "cases_planned": 18,
+   "cases_not_measured": 4,
+   "http_requests": 13,
+   "live_answered_rows": 13,
+   "spent_upper_usd": 0.060015200000000005,
+   "spent_reported_usd": 0.0600152,
+   "latency_median_s": 7.886092400000052,
+   "latency_p90_s": 11.85431779999999,
+   "metrics": {
+    "extraction_accuracy": {
+     "numerator": 4,
+     "denominator": 11,
+     "rate": 0.363636
+    },
+    "goal_completeness": {
+     "numerator": 0,
+     "denominator": 11,
+     "rate": 0.0
+    },
+    "operand_preservation": {
+     "numerator": 11,
+     "denominator": 11,
+     "rate": 1.0
+    },
+    "ambiguity_detection": {
+     "numerator": 1,
+     "denominator": 2,
+     "rate": 0.5
+    },
+    "clarification_correctness": {
+     "numerator": 1,
+     "denominator": 1,
+     "rate": 1.0
+    },
+    "false_clarification": {
+     "numerator": 0,
+     "denominator": 11,
+     "rate": 0.0
+    },
+    "unsupported_classification": {
+     "numerator": 0,
+     "denominator": 0,
+     "rate": "UNKNOWN"
+    },
+    "wrong_served_end_to_end": {
+     "numerator": 5,
+     "denominator": 13,
+     "rate": 0.384615
+    }
+   },
+   "supplementary": {
+    "composition_labels": {
+     "EXTRACTION_FAILURE": 8,
+     "NOT_ESTABLISHED": 1,
+     "WRONG_SERVED": 5
+    },
+    "planner_label_disagreements": [
+     "R1-A02",
+     "R1-A04",
+     "R1-C01",
+     "R1-D01",
+     "R1-D02"
+    ],
+    "described_points": {
+     "emitted": {
+      "numerator": 11,
+      "denominator": 11,
+      "rate": 1.0
+     },
+     "kinds_match": {
+      "numerator": 11,
+      "denominator": 11,
+      "rate": 1.0
+     },
+     "refs_resolve": {
+      "numerator": 11,
+      "denominator": 11,
+      "rate": 1.0
+     },
+     "quotes_verbatim": {
+      "numerator": 11,
+      "denominator": 11,
+      "rate": 1.0
+     }
+    },
+    "hybrid_outcomes": {
+     "SERVED_CORRECT": 0,
+     "SERVED_WRONG": 5,
+     "CORRECT_REFUSAL": 0,
+     "FALSE_REFUSAL": 6,
+     "WRONG_REASON_REFUSAL": 1,
+     "CORRECT_CLARIFICATION": 0,
+     "WRONG_REASON_CLARIFICATION": 1,
+     "FALSE_CLARIFICATION": 0,
+     "REASON_NOT_VERIFIED": 0,
+     "INFRASTRUCTURE_FAILURE": 1
+    },
+    "note": "not a protocol §2 metric; reported beside them (Master directive §V)",
+    "end_to_end_correct": {
+     "numerator": 0,
+     "denominator": 13,
+     "rate": 0.0
+    },
+    "gold_replay_ceiling": {
+     "numerator": 13,
+     "denominator": 13,
+     "rate": 1.0
+    },
+    "false_refusal": {
+     "numerator": 6,
+     "denominator": 11,
+     "rate": 0.545455
+    },
+    "by_stratum": {
+     "R1-A": {
+      "numerator": 0,
+      "denominator": 5,
+      "rate": 0.0
+     },
+     "R1-B": {
+      "numerator": 0,
+      "denominator": 2,
+      "rate": 0.0
+     },
+     "R1-C": {
+      "numerator": 0,
+      "denominator": 2,
+      "rate": 0.0
+     },
+     "R1-D": {
+      "numerator": 0,
+      "denominator": 2,
+      "rate": 0.0
+     },
+     "R1-E": {
+      "numerator": 0,
+      "denominator": 2,
+      "rate": 0.0
+     },
+     "R1-F": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": "UNKNOWN"
+     },
+     "R1-G": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": "UNKNOWN"
+     }
+    },
+    "attribution": {
+     "INFRASTRUCTURE": 1,
+     "LLM_EXTRACTION_DIFFERS_FROM_GOLD": 13
+    }
+   }
+  }
+ ]
+}

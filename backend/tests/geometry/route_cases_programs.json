@@ -1,0 +1,1884 @@
+{
+  "chop_tam_giac": {
+    "spec_version": "1.0",
+    "title": "Thể tích khối chóp có đáy là tam giác vuông",
+    "memory_declarations": [
+      {
+        "name": "AB_length",
+        "type": "float",
+        "provenance": "GIVEN",
+        "source_fact_id": "fact_len_AB",
+        "initial_value": "3"
+      },
+      {
+        "name": "AC_length",
+        "type": "float",
+        "provenance": "GIVEN",
+        "source_fact_id": "fact_len_AC",
+        "initial_value": "4"
+      },
+      {
+        "name": "SA_length",
+        "type": "float",
+        "provenance": "GIVEN",
+        "source_fact_id": "fact_len_SA",
+        "initial_value": "5"
+      },
+      {
+        "name": "A",
+        "type": "point3",
+        "model_assumption": "đặt đỉnh vuông của tam giác đáy tại gốc toạ độ"
+      },
+      {
+        "name": "B",
+        "type": "point3",
+        "model_assumption": "đặt cạnh góc vuông thứ nhất dọc trục thứ nhất"
+      },
+      {
+        "name": "C",
+        "type": "point3",
+        "model_assumption": "đặt cạnh góc vuông thứ hai dọc trục thứ hai"
+      },
+      {
+        "name": "S",
+        "type": "point3",
+        "model_assumption": "đặt đỉnh chóp trên pháp tuyến của mặt phẳng đáy tại đỉnh vuông"
+      },
+      {
+        "name": "day_ABC",
+        "type": "polygon3"
+      },
+      {
+        "name": "khoi_chop",
+        "type": "solid"
+      },
+      {
+        "name": "dien_tich_day_ABC",
+        "type": "float"
+      },
+      {
+        "name": "the_tich_khoi_chop",
+        "type": "float"
+      },
+      {
+        "name": "the_tich_khoi",
+        "type": "float"
+      }
+    ],
+    "statements": [
+      {
+        "kind": "declare_point",
+        "target_var": "A",
+        "at": [
+          "0",
+          "0",
+          "0"
+        ]
+      },
+      {
+        "kind": "declare_point",
+        "target_var": "B",
+        "at": [
+          "3",
+          "0",
+          "0"
+        ]
+      },
+      {
+        "kind": "declare_point",
+        "target_var": "C",
+        "at": [
+          "0",
+          "4",
+          "0"
+        ]
+      },
+      {
+        "kind": "construct_polygon",
+        "target_var": "day_ABC",
+        "vertices": [
+          "A",
+          "B",
+          "C"
+        ],
+        "label": "Tam giác đáy"
+      },
+      {
+        "kind": "declare_point",
+        "target_var": "S",
+        "at": [
+          "0",
+          "0",
+          "5"
+        ]
+      },
+      {
+        "kind": "construct_solid",
+        "target_var": "khoi_chop",
+        "vertices": [
+          "S",
+          "A",
+          "B",
+          "C"
+        ],
+        "faces": [
+          [
+            "A",
+            "B",
+            "C"
+          ],
+          [
+            "S",
+            "A",
+            "B"
+          ],
+          [
+            "S",
+            "B",
+            "C"
+          ],
+          [
+            "S",
+            "C",
+            "A"
+          ]
+        ],
+        "label": "Khối chóp"
+      },
+      {
+        "kind": "assign",
+        "target_var": "dien_tich_day_ABC",
+        "expr": {
+          "kind": "measure",
+          "quantity": "area",
+          "of": "day_ABC"
+        }
+      },
+      {
+        "kind": "assign",
+        "target_var": "the_tich_khoi_chop",
+        "expr": {
+          "kind": "measure",
+          "quantity": "volume",
+          "of": "khoi_chop"
+        }
+      },
+      {
+        "kind": "assign",
+        "target_var": "the_tich_khoi",
+        "expr": {
+          "kind": "var",
+          "name": "the_tich_khoi_chop"
+        }
+      }
+    ]
+  },
+  "lang_tru_tam_giac": {
+    "spec_version": "1.0",
+    "title": "Thể tích khối lăng trụ đứng có đáy là tam giác vuông",
+    "memory_declarations": [
+      {
+        "name": "AB_length",
+        "type": "float",
+        "provenance": "GIVEN",
+        "source_fact_id": "fact_len_AB",
+        "initial_value": "3"
+      },
+      {
+        "name": "AC_length",
+        "type": "float",
+        "provenance": "GIVEN",
+        "source_fact_id": "fact_len_AC",
+        "initial_value": "4"
+      },
+      {
+        "name": "AD_length",
+        "type": "float",
+        "provenance": "GIVEN",
+        "source_fact_id": "fact_len_AD",
+        "initial_value": "5"
+      },
+      {
+        "name": "A",
+        "type": "point3",
+        "provenance": "LAYOUT_DERIVED"
+      },
+      {
+        "name": "B",
+        "type": "point3",
+        "provenance": "LAYOUT_DERIVED"
+      },
+      {
+        "name": "C",
+        "type": "point3",
+        "provenance": "LAYOUT_DERIVED"
+      },
+      {
+        "name": "D",
+        "type": "point3",
+        "provenance": "LAYOUT_DERIVED"
+      },
+      {
+        "name": "E",
+        "type": "point3",
+        "provenance": "LAYOUT_DERIVED"
+      },
+      {
+        "name": "F",
+        "type": "point3",
+        "provenance": "LAYOUT_DERIVED"
+      },
+      {
+        "name": "day_ABC",
+        "type": "polygon3"
+      },
+      {
+        "name": "solid_ABCDEF",
+        "type": "solid"
+      },
+      {
+        "name": "dien_tich_day_ABC",
+        "type": "float"
+      },
+      {
+        "name": "the_tich_solid_ABCDEF",
+        "type": "float"
+      },
+      {
+        "name": "the_tich_lang_tru",
+        "type": "float"
+      }
+    ],
+    "statements": [
+      {
+        "kind": "declare_point",
+        "target_var": "A",
+        "at": [
+          "0",
+          "0",
+          "0"
+        ]
+      },
+      {
+        "kind": "declare_point",
+        "target_var": "B",
+        "at": [
+          "3",
+          "0",
+          "0"
+        ]
+      },
+      {
+        "kind": "declare_point",
+        "target_var": "C",
+        "at": [
+          "0",
+          "4",
+          "0"
+        ]
+      },
+      {
+        "kind": "construct_polygon",
+        "target_var": "day_ABC",
+        "vertices": [
+          "A",
+          "B",
+          "C"
+        ],
+        "label": "Tam giác đáy dưới"
+      },
+      {
+        "kind": "declare_point",
+        "target_var": "D",
+        "at": [
+          "0",
+          "0",
+          "5"
+        ]
+      },
+      {
+        "kind": "declare_point",
+        "target_var": "E",
+        "at": [
+          "3",
+          "0",
+          "5"
+        ]
+      },
+      {
+        "kind": "declare_point",
+        "target_var": "F",
+        "at": [
+          "0",
+          "4",
+          "5"
+        ]
+      },
+      {
+        "kind": "construct_solid",
+        "target_var": "solid_ABCDEF",
+        "vertices": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F"
+        ],
+        "faces": [
+          [
+            "A",
+            "B",
+            "C"
+          ],
+          [
+            "D",
+            "E",
+            "F"
+          ],
+          [
+            "A",
+            "B",
+            "E",
+            "D"
+          ],
+          [
+            "B",
+            "C",
+            "F",
+            "E"
+          ],
+          [
+            "C",
+            "A",
+            "D",
+            "F"
+          ]
+        ]
+      },
+      {
+        "kind": "assign",
+        "target_var": "dien_tich_day_ABC",
+        "expr": {
+          "kind": "measure",
+          "quantity": "area",
+          "of": "day_ABC"
+        }
+      },
+      {
+        "kind": "assign",
+        "target_var": "the_tich_solid_ABCDEF",
+        "expr": {
+          "kind": "measure",
+          "quantity": "volume",
+          "of": "solid_ABCDEF"
+        }
+      },
+      {
+        "kind": "assign",
+        "target_var": "the_tich_lang_tru",
+        "expr": {
+          "kind": "var",
+          "name": "the_tich_solid_ABCDEF"
+        }
+      }
+    ]
+  },
+  "chop_chu_nhat": {
+    "spec_version": "1.0",
+    "title": "Thể tích khối chóp có đáy là hình chữ nhật",
+    "memory_declarations": [
+      {
+        "name": "AB_length",
+        "type": "float",
+        "provenance": "GIVEN",
+        "source_fact_id": "fact_len_AB",
+        "initial_value": "3"
+      },
+      {
+        "name": "AD_length",
+        "type": "float",
+        "provenance": "GIVEN",
+        "source_fact_id": "fact_len_AD",
+        "initial_value": "4"
+      },
+      {
+        "name": "SA_length",
+        "type": "float",
+        "provenance": "GIVEN",
+        "source_fact_id": "fact_len_SA",
+        "initial_value": "6"
+      },
+      {
+        "name": "A",
+        "type": "point3",
+        "provenance": "LAYOUT_DERIVED"
+      },
+      {
+        "name": "B",
+        "type": "point3",
+        "provenance": "LAYOUT_DERIVED"
+      },
+      {
+        "name": "D",
+        "type": "point3",
+        "provenance": "LAYOUT_DERIVED"
+      },
+      {
+        "name": "C",
+        "type": "point3",
+        "provenance": "LAYOUT_DERIVED"
+      },
+      {
+        "name": "S",
+        "type": "point3",
+        "provenance": "LAYOUT_DERIVED"
+      },
+      {
+        "name": "day_ABCD",
+        "type": "polygon3"
+      },
+      {
+        "name": "khoi_chop",
+        "type": "solid"
+      },
+      {
+        "name": "dien_tich_day_ABCD",
+        "type": "float"
+      },
+      {
+        "name": "the_tich_khoi_chop",
+        "type": "float"
+      },
+      {
+        "name": "v",
+        "type": "float"
+      }
+    ],
+    "statements": [
+      {
+        "kind": "declare_point",
+        "target_var": "A",
+        "at": [
+          "0",
+          "0",
+          "0"
+        ]
+      },
+      {
+        "kind": "declare_point",
+        "target_var": "B",
+        "at": [
+          "3",
+          "0",
+          "0"
+        ]
+      },
+      {
+        "kind": "declare_point",
+        "target_var": "D",
+        "at": [
+          "0",
+          "4",
+          "0"
+        ]
+      },
+      {
+        "kind": "declare_point",
+        "target_var": "C",
+        "at": [
+          "3",
+          "4",
+          "0"
+        ]
+      },
+      {
+        "kind": "declare_point",
+        "target_var": "S",
+        "at": [
+          "0",
+          "0",
+          "6"
+        ]
+      },
+      {
+        "kind": "construct_polygon",
+        "target_var": "day_ABCD",
+        "vertices": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "label": "Đáy ABCD"
+      },
+      {
+        "kind": "construct_solid",
+        "target_var": "khoi_chop",
+        "vertices": [
+          "S",
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "faces": [
+          [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          [
+            "S",
+            "A",
+            "B"
+          ],
+          [
+            "S",
+            "B",
+            "C"
+          ],
+          [
+            "S",
+            "C",
+            "D"
+          ],
+          [
+            "S",
+            "D",
+            "A"
+          ]
+        ],
+        "label": "S.ABCD"
+      },
+      {
+        "kind": "assign",
+        "target_var": "dien_tich_day_ABCD",
+        "expr": {
+          "kind": "measure",
+          "quantity": "area",
+          "of": "day_ABCD"
+        }
+      },
+      {
+        "kind": "assign",
+        "target_var": "the_tich_khoi_chop",
+        "expr": {
+          "kind": "measure",
+          "quantity": "volume",
+          "of": "khoi_chop"
+        }
+      },
+      {
+        "kind": "assign",
+        "target_var": "v",
+        "expr": {
+          "kind": "var",
+          "name": "the_tich_khoi_chop"
+        }
+      }
+    ]
+  },
+  "chop_vuong": {
+    "spec_version": "1.0",
+    "title": "Thể tích khối chóp có đáy là hình vuông",
+    "memory_declarations": [
+      {
+        "name": "AB_length",
+        "type": "float",
+        "provenance": "GIVEN",
+        "source_fact_id": "fact_len_AB",
+        "initial_value": "3"
+      },
+      {
+        "name": "SA_length",
+        "type": "float",
+        "provenance": "GIVEN",
+        "source_fact_id": "fact_len_SA",
+        "initial_value": "6"
+      },
+      {
+        "name": "A",
+        "type": "point3",
+        "provenance": "LAYOUT_DERIVED"
+      },
+      {
+        "name": "B",
+        "type": "point3",
+        "provenance": "LAYOUT_DERIVED"
+      },
+      {
+        "name": "D",
+        "type": "point3",
+        "provenance": "LAYOUT_DERIVED"
+      },
+      {
+        "name": "C",
+        "type": "point3",
+        "provenance": "LAYOUT_DERIVED"
+      },
+      {
+        "name": "S",
+        "type": "point3",
+        "provenance": "LAYOUT_DERIVED"
+      },
+      {
+        "name": "day_ABCD",
+        "type": "polygon3"
+      },
+      {
+        "name": "khoi_chop",
+        "type": "solid"
+      },
+      {
+        "name": "dien_tich_day_ABCD",
+        "type": "float"
+      },
+      {
+        "name": "the_tich_khoi_chop",
+        "type": "float"
+      },
+      {
+        "name": "v",
+        "type": "float"
+      }
+    ],
+    "statements": [
+      {
+        "kind": "declare_point",
+        "target_var": "A",
+        "at": [
+          "0",
+          "0",
+          "0"
+        ]
+      },
+      {
+        "kind": "declare_point",
+        "target_var": "B",
+        "at": [
+          "3",
+          "0",
+          "0"
+        ]
+      },
+      {
+        "kind": "declare_point",
+        "target_var": "D",
+        "at": [
+          "0",
+          "3",
+          "0"
+        ]
+      },
+      {
+        "kind": "declare_point",
+        "target_var": "C",
+        "at": [
+          "3",
+          "3",
+          "0"
+        ]
+      },
+      {
+        "kind": "declare_point",
+        "target_var": "S",
+        "at": [
+          "0",
+          "0",
+          "6"
+        ]
+      },
+      {
+        "kind": "construct_polygon",
+        "target_var": "day_ABCD",
+        "vertices": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "label": "Đáy ABCD"
+      },
+      {
+        "kind": "construct_solid",
+        "target_var": "khoi_chop",
+        "vertices": [
+          "S",
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "faces": [
+          [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          [
+            "S",
+            "A",
+            "B"
+          ],
+          [
+            "S",
+            "B",
+            "C"
+          ],
+          [
+            "S",
+            "C",
+            "D"
+          ],
+          [
+            "S",
+            "D",
+            "A"
+          ]
+        ],
+        "label": "S.ABCD"
+      },
+      {
+        "kind": "assign",
+        "target_var": "dien_tich_day_ABCD",
+        "expr": {
+          "kind": "measure",
+          "quantity": "area",
+          "of": "day_ABCD"
+        }
+      },
+      {
+        "kind": "assign",
+        "target_var": "the_tich_khoi_chop",
+        "expr": {
+          "kind": "measure",
+          "quantity": "volume",
+          "of": "khoi_chop"
+        }
+      },
+      {
+        "kind": "assign",
+        "target_var": "v",
+        "expr": {
+          "kind": "var",
+          "name": "the_tich_khoi_chop"
+        }
+      }
+    ]
+  },
+  "hop_chu_nhat": {
+    "spec_version": "1.0",
+    "title": "Thể tích khối hộp chữ nhật",
+    "memory_declarations": [
+      {
+        "name": "AB_length",
+        "type": "float",
+        "provenance": "GIVEN",
+        "source_fact_id": "fact_ab",
+        "initial_value": "3"
+      },
+      {
+        "name": "AD_length",
+        "type": "float",
+        "provenance": "GIVEN",
+        "source_fact_id": "fact_ad",
+        "initial_value": "4"
+      },
+      {
+        "name": "AA_prime_length",
+        "type": "float",
+        "provenance": "GIVEN",
+        "source_fact_id": "fact_aa_prime",
+        "initial_value": "5"
+      },
+      {
+        "name": "A",
+        "type": "point3",
+        "provenance": "LAYOUT_DERIVED"
+      },
+      {
+        "name": "B",
+        "type": "point3",
+        "provenance": "LAYOUT_DERIVED"
+      },
+      {
+        "name": "C",
+        "type": "point3",
+        "provenance": "LAYOUT_DERIVED"
+      },
+      {
+        "name": "D",
+        "type": "point3",
+        "provenance": "LAYOUT_DERIVED"
+      },
+      {
+        "name": "A_prime",
+        "type": "point3",
+        "provenance": "LAYOUT_DERIVED"
+      },
+      {
+        "name": "B_prime",
+        "type": "point3",
+        "provenance": "LAYOUT_DERIVED"
+      },
+      {
+        "name": "C_prime",
+        "type": "point3",
+        "provenance": "LAYOUT_DERIVED"
+      },
+      {
+        "name": "D_prime",
+        "type": "point3",
+        "provenance": "LAYOUT_DERIVED"
+      },
+      {
+        "name": "day_ABCD",
+        "type": "polygon3"
+      },
+      {
+        "name": "khoi_hop",
+        "type": "solid"
+      },
+      {
+        "name": "dien_tich_day_ABCD",
+        "type": "float"
+      },
+      {
+        "name": "chieu_cao_AA_prime",
+        "type": "float"
+      },
+      {
+        "name": "the_tich_khoi_hop",
+        "type": "float"
+      },
+      {
+        "name": "V",
+        "type": "float"
+      }
+    ],
+    "statements": [
+      {
+        "kind": "declare_point",
+        "target_var": "A",
+        "at": [
+          "0",
+          "0",
+          "0"
+        ],
+        "label": "A"
+      },
+      {
+        "kind": "declare_point",
+        "target_var": "B",
+        "at": [
+          "3",
+          "0",
+          "0"
+        ],
+        "label": "B"
+      },
+      {
+        "kind": "declare_point",
+        "target_var": "D",
+        "at": [
+          "0",
+          "4",
+          "0"
+        ],
+        "label": "D"
+      },
+      {
+        "kind": "declare_point",
+        "target_var": "C",
+        "at": [
+          "3",
+          "4",
+          "0"
+        ],
+        "label": "C"
+      },
+      {
+        "kind": "declare_point",
+        "target_var": "A_prime",
+        "at": [
+          "0",
+          "0",
+          "5"
+        ],
+        "label": "A′"
+      },
+      {
+        "kind": "declare_point",
+        "target_var": "B_prime",
+        "at": [
+          "3",
+          "0",
+          "5"
+        ],
+        "label": "B′"
+      },
+      {
+        "kind": "declare_point",
+        "target_var": "C_prime",
+        "at": [
+          "3",
+          "4",
+          "5"
+        ],
+        "label": "C′"
+      },
+      {
+        "kind": "declare_point",
+        "target_var": "D_prime",
+        "at": [
+          "0",
+          "4",
+          "5"
+        ],
+        "label": "D′"
+      },
+      {
+        "kind": "construct_polygon",
+        "target_var": "day_ABCD",
+        "vertices": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "label": "đáy dưới ABCD"
+      },
+      {
+        "kind": "construct_solid",
+        "target_var": "khoi_hop",
+        "vertices": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "A_prime",
+          "B_prime",
+          "C_prime",
+          "D_prime"
+        ],
+        "faces": [
+          [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          [
+            "A_prime",
+            "B_prime",
+            "C_prime",
+            "D_prime"
+          ],
+          [
+            "A",
+            "B",
+            "B_prime",
+            "A_prime"
+          ],
+          [
+            "B",
+            "C",
+            "C_prime",
+            "B_prime"
+          ],
+          [
+            "C",
+            "D",
+            "D_prime",
+            "C_prime"
+          ],
+          [
+            "D",
+            "A",
+            "A_prime",
+            "D_prime"
+          ]
+        ],
+        "label": "Hình hộp chữ nhật ABCD.A′B′C′D′"
+      },
+      {
+        "kind": "assign",
+        "target_var": "dien_tich_day_ABCD",
+        "expr": {
+          "kind": "measure",
+          "quantity": "area",
+          "of": "day_ABCD"
+        }
+      },
+      {
+        "kind": "assign",
+        "target_var": "chieu_cao_AA_prime",
+        "expr": {
+          "kind": "measure",
+          "quantity": "distance",
+          "of": "A",
+          "wrt": "A_prime"
+        }
+      },
+      {
+        "kind": "assign",
+        "target_var": "the_tich_khoi_hop",
+        "expr": {
+          "kind": "measure",
+          "quantity": "volume",
+          "of": "khoi_hop"
+        }
+      },
+      {
+        "kind": "assign",
+        "target_var": "V",
+        "expr": {
+          "kind": "var",
+          "name": "the_tich_khoi_hop"
+        }
+      }
+    ]
+  },
+  "lap_phuong": {
+    "spec_version": "1.0",
+    "title": "Thể tích khối lập phương",
+    "memory_declarations": [
+      {
+        "name": "AB_length",
+        "type": "float",
+        "provenance": "GIVEN",
+        "source_fact_id": "fact_edge",
+        "initial_value": "4"
+      },
+      {
+        "name": "AD_length",
+        "type": "float"
+      },
+      {
+        "name": "AA_prime_length",
+        "type": "float"
+      },
+      {
+        "name": "A",
+        "type": "point3",
+        "provenance": "LAYOUT_DERIVED"
+      },
+      {
+        "name": "B",
+        "type": "point3",
+        "provenance": "LAYOUT_DERIVED"
+      },
+      {
+        "name": "C",
+        "type": "point3",
+        "provenance": "LAYOUT_DERIVED"
+      },
+      {
+        "name": "D",
+        "type": "point3",
+        "provenance": "LAYOUT_DERIVED"
+      },
+      {
+        "name": "A_prime",
+        "type": "point3",
+        "provenance": "LAYOUT_DERIVED"
+      },
+      {
+        "name": "B_prime",
+        "type": "point3",
+        "provenance": "LAYOUT_DERIVED"
+      },
+      {
+        "name": "C_prime",
+        "type": "point3",
+        "provenance": "LAYOUT_DERIVED"
+      },
+      {
+        "name": "D_prime",
+        "type": "point3",
+        "provenance": "LAYOUT_DERIVED"
+      },
+      {
+        "name": "day_ABCD",
+        "type": "polygon3"
+      },
+      {
+        "name": "khoi_hop",
+        "type": "solid"
+      },
+      {
+        "name": "dien_tich_day_ABCD",
+        "type": "float"
+      },
+      {
+        "name": "chieu_cao_AA_prime",
+        "type": "float"
+      },
+      {
+        "name": "the_tich_khoi_hop",
+        "type": "float"
+      },
+      {
+        "name": "V",
+        "type": "float"
+      }
+    ],
+    "statements": [
+      {
+        "kind": "assign",
+        "target_var": "AD_length",
+        "expr": {
+          "kind": "var",
+          "name": "AB_length"
+        }
+      },
+      {
+        "kind": "assign",
+        "target_var": "AA_prime_length",
+        "expr": {
+          "kind": "var",
+          "name": "AB_length"
+        }
+      },
+      {
+        "kind": "declare_point",
+        "target_var": "A",
+        "at": [
+          "0",
+          "0",
+          "0"
+        ],
+        "label": "A"
+      },
+      {
+        "kind": "declare_point",
+        "target_var": "B",
+        "at": [
+          "4",
+          "0",
+          "0"
+        ],
+        "label": "B"
+      },
+      {
+        "kind": "declare_point",
+        "target_var": "D",
+        "at": [
+          "0",
+          "4",
+          "0"
+        ],
+        "label": "D"
+      },
+      {
+        "kind": "declare_point",
+        "target_var": "C",
+        "at": [
+          "4",
+          "4",
+          "0"
+        ],
+        "label": "C"
+      },
+      {
+        "kind": "declare_point",
+        "target_var": "A_prime",
+        "at": [
+          "0",
+          "0",
+          "4"
+        ],
+        "label": "A′"
+      },
+      {
+        "kind": "declare_point",
+        "target_var": "B_prime",
+        "at": [
+          "4",
+          "0",
+          "4"
+        ],
+        "label": "B′"
+      },
+      {
+        "kind": "declare_point",
+        "target_var": "C_prime",
+        "at": [
+          "4",
+          "4",
+          "4"
+        ],
+        "label": "C′"
+      },
+      {
+        "kind": "declare_point",
+        "target_var": "D_prime",
+        "at": [
+          "0",
+          "4",
+          "4"
+        ],
+        "label": "D′"
+      },
+      {
+        "kind": "construct_polygon",
+        "target_var": "day_ABCD",
+        "vertices": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "label": "đáy dưới ABCD"
+      },
+      {
+        "kind": "construct_solid",
+        "target_var": "khoi_hop",
+        "vertices": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "A_prime",
+          "B_prime",
+          "C_prime",
+          "D_prime"
+        ],
+        "faces": [
+          [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          [
+            "A_prime",
+            "B_prime",
+            "C_prime",
+            "D_prime"
+          ],
+          [
+            "A",
+            "B",
+            "B_prime",
+            "A_prime"
+          ],
+          [
+            "B",
+            "C",
+            "C_prime",
+            "B_prime"
+          ],
+          [
+            "C",
+            "D",
+            "D_prime",
+            "C_prime"
+          ],
+          [
+            "D",
+            "A",
+            "A_prime",
+            "D_prime"
+          ]
+        ],
+        "label": "Hình lập phương ABCD.A′B′C′D′"
+      },
+      {
+        "kind": "assign",
+        "target_var": "dien_tich_day_ABCD",
+        "expr": {
+          "kind": "measure",
+          "quantity": "area",
+          "of": "day_ABCD"
+        }
+      },
+      {
+        "kind": "assign",
+        "target_var": "chieu_cao_AA_prime",
+        "expr": {
+          "kind": "measure",
+          "quantity": "distance",
+          "of": "A",
+          "wrt": "A_prime"
+        }
+      },
+      {
+        "kind": "assign",
+        "target_var": "the_tich_khoi_hop",
+        "expr": {
+          "kind": "measure",
+          "quantity": "volume",
+          "of": "khoi_hop"
+        }
+      },
+      {
+        "kind": "assign",
+        "target_var": "V",
+        "expr": {
+          "kind": "var",
+          "name": "the_tich_khoi_hop"
+        }
+      }
+    ]
+  },
+  "lang_tru_day_vuong": {
+    "spec_version": "1.0",
+    "title": "Thể tích khối lăng trụ đứng có đáy là hình vuông",
+    "memory_declarations": [
+      {
+        "name": "AB_length",
+        "type": "float",
+        "provenance": "GIVEN",
+        "source_fact_id": "fact_base_edge",
+        "initial_value": "3"
+      },
+      {
+        "name": "AD_length",
+        "type": "float"
+      },
+      {
+        "name": "AA_prime_length",
+        "type": "float",
+        "provenance": "GIVEN",
+        "source_fact_id": "fact_height",
+        "initial_value": "7"
+      },
+      {
+        "name": "A",
+        "type": "point3",
+        "provenance": "LAYOUT_DERIVED"
+      },
+      {
+        "name": "B",
+        "type": "point3",
+        "provenance": "LAYOUT_DERIVED"
+      },
+      {
+        "name": "C",
+        "type": "point3",
+        "provenance": "LAYOUT_DERIVED"
+      },
+      {
+        "name": "D",
+        "type": "point3",
+        "provenance": "LAYOUT_DERIVED"
+      },
+      {
+        "name": "A_prime",
+        "type": "point3",
+        "provenance": "LAYOUT_DERIVED"
+      },
+      {
+        "name": "B_prime",
+        "type": "point3",
+        "provenance": "LAYOUT_DERIVED"
+      },
+      {
+        "name": "C_prime",
+        "type": "point3",
+        "provenance": "LAYOUT_DERIVED"
+      },
+      {
+        "name": "D_prime",
+        "type": "point3",
+        "provenance": "LAYOUT_DERIVED"
+      },
+      {
+        "name": "day_ABCD",
+        "type": "polygon3"
+      },
+      {
+        "name": "khoi_lang_tru",
+        "type": "solid"
+      },
+      {
+        "name": "dien_tich_day_ABCD",
+        "type": "float"
+      },
+      {
+        "name": "chieu_cao_AA_prime",
+        "type": "float"
+      },
+      {
+        "name": "the_tich_khoi_lang_tru",
+        "type": "float"
+      },
+      {
+        "name": "V",
+        "type": "float"
+      }
+    ],
+    "statements": [
+      {
+        "kind": "assign",
+        "target_var": "AD_length",
+        "expr": {
+          "kind": "var",
+          "name": "AB_length"
+        }
+      },
+      {
+        "kind": "declare_point",
+        "target_var": "A",
+        "at": [
+          "0",
+          "0",
+          "0"
+        ],
+        "label": "A"
+      },
+      {
+        "kind": "declare_point",
+        "target_var": "B",
+        "at": [
+          "3",
+          "0",
+          "0"
+        ],
+        "label": "B"
+      },
+      {
+        "kind": "declare_point",
+        "target_var": "D",
+        "at": [
+          "0",
+          "3",
+          "0"
+        ],
+        "label": "D"
+      },
+      {
+        "kind": "declare_point",
+        "target_var": "C",
+        "at": [
+          "3",
+          "3",
+          "0"
+        ],
+        "label": "C"
+      },
+      {
+        "kind": "declare_point",
+        "target_var": "A_prime",
+        "at": [
+          "0",
+          "0",
+          "7"
+        ],
+        "label": "A′"
+      },
+      {
+        "kind": "declare_point",
+        "target_var": "B_prime",
+        "at": [
+          "3",
+          "0",
+          "7"
+        ],
+        "label": "B′"
+      },
+      {
+        "kind": "declare_point",
+        "target_var": "C_prime",
+        "at": [
+          "3",
+          "3",
+          "7"
+        ],
+        "label": "C′"
+      },
+      {
+        "kind": "declare_point",
+        "target_var": "D_prime",
+        "at": [
+          "0",
+          "3",
+          "7"
+        ],
+        "label": "D′"
+      },
+      {
+        "kind": "construct_polygon",
+        "target_var": "day_ABCD",
+        "vertices": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "label": "đáy dưới ABCD"
+      },
+      {
+        "kind": "construct_solid",
+        "target_var": "khoi_lang_tru",
+        "vertices": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "A_prime",
+          "B_prime",
+          "C_prime",
+          "D_prime"
+        ],
+        "faces": [
+          [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          [
+            "A_prime",
+            "B_prime",
+            "C_prime",
+            "D_prime"
+          ],
+          [
+            "A",
+            "B",
+            "B_prime",
+            "A_prime"
+          ],
+          [
+            "B",
+            "C",
+            "C_prime",
+            "B_prime"
+          ],
+          [
+            "C",
+            "D",
+            "D_prime",
+            "C_prime"
+          ],
+          [
+            "D",
+            "A",
+            "A_prime",
+            "D_prime"
+          ]
+        ],
+        "label": "Lăng trụ đứng đáy vuông ABCD.A′B′C′D′"
+      },
+      {
+        "kind": "assign",
+        "target_var": "dien_tich_day_ABCD",
+        "expr": {
+          "kind": "measure",
+          "quantity": "area",
+          "of": "day_ABCD"
+        }
+      },
+      {
+        "kind": "assign",
+        "target_var": "chieu_cao_AA_prime",
+        "expr": {
+          "kind": "measure",
+          "quantity": "distance",
+          "of": "A",
+          "wrt": "A_prime"
+        }
+      },
+      {
+        "kind": "assign",
+        "target_var": "the_tich_khoi_lang_tru",
+        "expr": {
+          "kind": "measure",
+          "quantity": "volume",
+          "of": "khoi_lang_tru"
+        }
+      },
+      {
+        "kind": "assign",
+        "target_var": "V",
+        "expr": {
+          "kind": "var",
+          "name": "the_tich_khoi_lang_tru"
+        }
+      }
+    ]
+  },
+  "square_prism_4x4": {
+    "spec_version": "1.0",
+    "title": "Thể tích khối lăng trụ đứng có đáy là hình vuông",
+    "memory_declarations": [
+      {
+        "name": "AB_length",
+        "type": "float",
+        "provenance": "GIVEN",
+        "source_fact_id": "fact_base_edge",
+        "initial_value": "4"
+      },
+      {
+        "name": "AD_length",
+        "type": "float"
+      },
+      {
+        "name": "AA_prime_length",
+        "type": "float",
+        "provenance": "GIVEN",
+        "source_fact_id": "fact_height",
+        "initial_value": "4"
+      },
+      {
+        "name": "A",
+        "type": "point3",
+        "provenance": "LAYOUT_DERIVED"
+      },
+      {
+        "name": "B",
+        "type": "point3",
+        "provenance": "LAYOUT_DERIVED"
+      },
+      {
+        "name": "C",
+        "type": "point3",
+        "provenance": "LAYOUT_DERIVED"
+      },
+      {
+        "name": "D",
+        "type": "point3",
+        "provenance": "LAYOUT_DERIVED"
+      },
+      {
+        "name": "A_prime",
+        "type": "point3",
+        "provenance": "LAYOUT_DERIVED"
+      },
+      {
+        "name": "B_prime",
+        "type": "point3",
+        "provenance": "LAYOUT_DERIVED"
+      },
+      {
+        "name": "C_prime",
+        "type": "point3",
+        "provenance": "LAYOUT_DERIVED"
+      },
+      {
+        "name": "D_prime",
+        "type": "point3",
+        "provenance": "LAYOUT_DERIVED"
+      },
+      {
+        "name": "day_ABCD",
+        "type": "polygon3"
+      },
+      {
+        "name": "khoi_lang_tru",
+        "type": "solid"
+      },
+      {
+        "name": "dien_tich_day_ABCD",
+        "type": "float"
+      },
+      {
+        "name": "chieu_cao_AA_prime",
+        "type": "float"
+      },
+      {
+        "name": "the_tich_khoi_lang_tru",
+        "type": "float"
+      },
+      {
+        "name": "V",
+        "type": "float"
+      }
+    ],
+    "statements": [
+      {
+        "kind": "assign",
+        "target_var": "AD_length",
+        "expr": {
+          "kind": "var",
+          "name": "AB_length"
+        }
+      },
+      {
+        "kind": "declare_point",
+        "target_var": "A",
+        "at": [
+          "0",
+          "0",
+          "0"
+        ],
+        "label": "A"
+      },
+      {
+        "kind": "declare_point",
+        "target_var": "B",
+        "at": [
+          "4",
+          "0",
+          "0"
+        ],
+        "label": "B"
+      },
+      {
+        "kind": "declare_point",
+        "target_var": "D",
+        "at": [
+          "0",
+          "4",
+          "0"
+        ],
+        "label": "D"
+      },
+      {
+        "kind": "declare_point",
+        "target_var": "C",
+        "at": [
+          "4",
+          "4",
+          "0"
+        ],
+        "label": "C"
+      },
+      {
+        "kind": "declare_point",
+        "target_var": "A_prime",
+        "at": [
+          "0",
+          "0",
+          "4"
+        ],
+        "label": "A′"
+      },
+      {
+        "kind": "declare_point",
+        "target_var": "B_prime",
+        "at": [
+          "4",
+          "0",
+          "4"
+        ],
+        "label": "B′"
+      },
+      {
+        "kind": "declare_point",
+        "target_var": "C_prime",
+        "at": [
+          "4",
+          "4",
+          "4"
+        ],
+        "label": "C′"
+      },
+      {
+        "kind": "declare_point",
+        "target_var": "D_prime",
+        "at": [
+          "0",
+          "4",
+          "4"
+        ],
+        "label": "D′"
+      },
+      {
+        "kind": "construct_polygon",
+        "target_var": "day_ABCD",
+        "vertices": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "label": "đáy dưới ABCD"
+      },
+      {
+        "kind": "construct_solid",
+        "target_var": "khoi_lang_tru",
+        "vertices": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "A_prime",
+          "B_prime",
+          "C_prime",
+          "D_prime"
+        ],
+        "faces": [
+          [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          [
+            "A_prime",
+            "B_prime",
+            "C_prime",
+            "D_prime"
+          ],
+          [
+            "A",
+            "B",
+            "B_prime",
+            "A_prime"
+          ],
+          [
+            "B",
+            "C",
+            "C_prime",
+            "B_prime"
+          ],
+          [
+            "C",
+            "D",
+            "D_prime",
+            "C_prime"
+          ],
+          [
+            "D",
+            "A",
+            "A_prime",
+            "D_prime"
+          ]
+        ],
+        "label": "Lăng trụ đứng đáy vuông ABCD.A′B′C′D′"
+      },
+      {
+        "kind": "assign",
+        "target_var": "dien_tich_day_ABCD",
+        "expr": {
+          "kind": "measure",
+          "quantity": "area",
+          "of": "day_ABCD"
+        }
+      },
+      {
+        "kind": "assign",
+        "target_var": "chieu_cao_AA_prime",
+        "expr": {
+          "kind": "measure",
+          "quantity": "distance",
+          "of": "A",
+          "wrt": "A_prime"
+        }
+      },
+      {
+        "kind": "assign",
+        "target_var": "the_tich_khoi_lang_tru",
+        "expr": {
+          "kind": "measure",
+          "quantity": "volume",
+          "of": "khoi_lang_tru"
+        }
+      },
+      {
+        "kind": "assign",
+        "target_var": "V",
+        "expr": {
+          "kind": "var",
+          "name": "the_tich_khoi_lang_tru"
+        }
+      }
+    ]
+  }
+}

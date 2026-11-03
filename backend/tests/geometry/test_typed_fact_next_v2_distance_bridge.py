@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """B3 slice: canonical V2 `measurement` goals with `goal_type: "distance"` reach the ONE planner/engine.
 
-The target keys are the ones `adapter3_simulation` already reads (`{point, plane}`, `{segment}`, `{line1, line2}`); the
+The target keys are the ones `typed_fact_next` already reads (`{point, plane}`, `{segment}`, `{line1, line2}`); the
 bridge only renames them into the planner's existing distance/length questions. Expected values are closed-form from the
 stated facts of a triangular prism ABC.A'B'C' with a right angle at A, AB = x, AC = y (independent of engine layout):
 
@@ -71,7 +71,7 @@ def _served(p) -> F:
     return _square(r)
 
 
-# ── served: every target form adapter3 reads, against the closed-form oracle ─────────────────────────────
+# ── served: every target form typed_fact_next reads, against the closed-form oracle ─────────────────────────────
 
 @pytest.mark.parametrize("labels,x,y,h", [("ABC", 6, 8, 12), ("DEF", 6, 8, 12), ("KLM", 3, 4, 5), ("RST", 12, 16, 7)])
 def test_point_to_base_plane_of_a_right_prism_is_its_height(labels, x, y, h):

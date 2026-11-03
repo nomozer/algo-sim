@@ -39,7 +39,7 @@ from typing import Any
 
 import pytest
 
-from app.ai import fact_extraction, function_calling, pipeline
+from app.ai import fact_extraction, function_calling
 from app.ai.fact_extraction import (
     RESPONSE_CONTRACT,
     facts_response_schema,
@@ -468,23 +468,24 @@ def test_version_constants_surface_fingerprints_and_historical_receipt_preservat
     # (route B only, provider_offered=False), the base-side wording clause of the source gate.
     # -> registry /15, planner /16 (hybrid-v2-planner-generalization): prism ⊥-plane anchors; bare solid words in section
     # phrases, bound to the cut solid; provider schemas unchanged.
-    assert REGISTRY_VERSION == "geometry-functions/21"
+    # -> registry /27, engine /19 (hybrid-master tenth continuation): simulation-request reader (SL-1), `/2` honest exit
+    # (SL-2, the /4 extraction schema and instruction gain `unresolved`), an unconstrained base is MISSING_DIMENSION.
+    # -> registry /31, planner /26, engine /22 (hybrid-master eighteenth continuation): points named by a property composed
+    # by definition regression; provider surfaces flat / v3 / Route A unchanged (`/2` gains two described kinds).
+    assert REGISTRY_VERSION == "geometry-functions/33"
     # planner /14, engine /13 (hybrid-v2-backend-generalization): full > 3-label question planes, witness triple.
-    assert PLANNER_VERSION == "geometry-fact-planner/18"
+    assert PLANNER_VERSION == "geometry-fact-planner/26"
     # engine /11 -> /12 (claude-to-codex-takeover): skew-claim contradiction refusal on ask_distance_lines; registry/planner unchanged.
-    assert ENGINE_VERSION == "geometry-function-engine/14"
+    assert ENGINE_VERSION == "geometry-function-engine/24"
     # 125 -> 126 (hybrid-offline-readiness-finalization): độ dài nguồn không đọc từ biểu thức/vectơ/giả định.
     # 126 -> 127 (hybrid-architecture-wave1-exact-certificates-planner): segment3 đường cao mang perpendicular_witness.
     # 127 -> 128 (visual-hybrid-final-corrections): tên hiển thị backend (mặt phẳng tên đề viết, chu trình thiết diện).
     # 128 -> 129 (sphere-sample-source-authority): mặt phẳng cắt khối cong (đường tròn/elip giao) mang vai CONSTRUCT_CUTTING_OBJECT thay CONSTRUCT_AUXILIARY_GEOMETRY trong envelope phục vụ; row v128 thật vẫn HIT (runs/sphere-sample-source-authority/cache/decision.json).
-    assert main_module.CACHE_VERSION == "131"
-    assert main_module.semantic_route_mode() == "off"
+    assert main_module.CACHE_VERSION == "132"
+    assert main_module.hybrid_route_mode() == "live"
     assert RESPONSE_CONTRACT == "flat"
-    # Verify default production pipeline (`main.py` / `pipeline.py`) remains LLM_ONLY and does not wire Hybrid route
-    main_src = (ROOT / "backend/app/main.py").read_text(encoding="utf-8")
-    pipeline_src = (ROOT / "backend/app/ai/pipeline.py").read_text(encoding="utf-8")
-    assert "fact_extraction" not in main_src and "function_route" not in main_src
-    assert "fact_extraction" not in pipeline_src and "function_route" not in pipeline_src
+    assert not (ROOT / "backend/app/ai/pipeline.py").exists()
+    assert not (ROOT / "backend/app/simulation/geometry_compiler").exists()
 
     # Surface fingerprints must remain identical to locked evaluation pins
     assert surface_fingerprint("flat") == "485d3834db8b18cfdb24143bfbb14deb8f5b7a9d74cb612d48db8c08252e507a"

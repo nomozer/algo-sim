@@ -17,7 +17,7 @@ from fractions import Fraction
 
 import pytest
 
-from app.ai.pipeline import _dung_scene3d
+from tests.geometry.scene3d_test_helper import _dung_scene3d
 from app.simulation.semantic_program.assumption_gate import do_luong_cua
 from app.simulation.semantic_program.contract import SemanticProgramSpec
 from app.simulation.semantic_program.interpreter import SemanticProgramInterpreter

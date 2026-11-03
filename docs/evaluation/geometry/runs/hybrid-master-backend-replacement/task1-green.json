@@ -1,0 +1,38 @@
+{
+  "schema": "hybrid-master-backend-replacement/task-receipt/1",
+  "task": "TASK_1_SOURCE_REFERENCES_AND_ONE_IDENTITY_AUTHORITY",
+  "base_commit": "f5ae588b",
+  "provider_calls": 0,
+  "red": {
+    "extraction_source_references": "4 failed (AttributeError: missing SourceReference API), 21 passed",
+    "bridge_identity_authority": "1 failed (bridge module had no canonical_vertex_ref; private identity copy)"
+  },
+  "identity_suites_baseline_before_bridge_change": {"passed": 3357, "skipped": 6, "xfailed": 6, "failed": 0},
+  "identity_suites_after": {"passed": 3384, "skipped": 6, "xfailed": 6, "failed": 0,
+    "note": "after retargeting one source-text mutant anchor (test_s8_identity_scope_mutant_is_caught_by_behavior): same fault (scope ignored), same oracle, now injected at the delegated canonical_vertex_ref call"},
+  "targeted_green": {
+    "command": "pytest tests/geometry tests/semantic_program tests/test_hybrid_preview_fixtures.py",
+    "passed": 14679, "skipped": 7, "deselected": 1, "xfailed": 15, "failed": 12,
+    "log_sha256_local": "33e46ecf887f7e6a6f43b4bbeba5e8b3378b8a05628690409ab171c0adef9998",
+    "failed_classification": {
+      "PENDING_CANDIDATE_FREEZE (measured tree dac84bdc... != frozen 54b5b565..., 118 files)": [
+        "test_docs_information_architecture.py::test_inv_20_candidate_and_cache_verify_only",
+        "test_docs_test_telemetry.py::test_inv_05_candidate_and_cache_verify_only",
+        "test_hybrid_backend_integration.py::test_version_constants_surface_fingerprints_and_historical_receipt_preservation",
+        "test_thesis_acceptance_matrix.py::test_C2b_candidate_hien_tai_phai_duoc_KHAI",
+        "semantic_program/test_evaluation_candidate.py::test_ma_san_pham_khong_troi_khoi_ban_da_dong_bang",
+        "test_analyze_failure_cluster_diagnosis.py::test_tien_kiem_kho (CANDIDATE_VERIFY False)",
+        "test_branch_independent_harness.py x5 (precheck FAIL)"
+      ],
+      "DIRTY_WORKING_TREE (cleared by commit)": [
+        "test_holdout_readiness.py::test_bao_cao_da_sinh_va_KHONG_TROI"
+      ]
+    }
+  },
+  "impact": {
+    "cache_version": "UNCHANGED (131): /api/analyze cannot reach typed_fact_next_extraction or the bridge (import-closure lock); no served LLM_ONLY envelope changes",
+    "model_surface": "UNCHANGED: provider responseSchema is TypedFactNextPayloadV2 (unchanged); no prompt change; source_references is post-validation local evidence, never provider-supplied (provider field refused INVALID_TYPED_FACT_NEXT)",
+    "candidate": "PENDING_REFREEZE: backend/app is in MEASURED_SYSTEM_PATHS; new candidate is frozen in a separate commit at Task 4",
+    "identity_behaviour": "root-namespace identities unchanged; a derived-solid namespace now resolves through its parent chart (canonical_vertex_ref) instead of the bridge's label-only fallback"
+  }
+}

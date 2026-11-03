@@ -1,0 +1,5299 @@
+{
+ "classification": "IMPLEMENTER_AUTHORED_DEVELOPMENT_DIAGNOSTIC",
+ "provider_calls": 0,
+ "candidate": "3154a696",
+ "summary": {
+  "planner": "geometry-fact-planner/24",
+  "cases": 352,
+  "status": {
+   "REFUSED": 352
+  },
+  "codes": {
+   "INVALID_TYPED_FACT_NEXT": 352
+  }
+ },
+ "rows": [
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "B"
+   ],
+   "ref": [
+    "S",
+    "C",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "B"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "C"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "C"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "C"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "C"
+   ],
+   "ref": [
+    "S",
+    "C",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "C"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F2",
+   "contains": [
+    "A",
+    "C"
+   ],
+   "ref": [
+    "S",
+    "B"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F2",
+   "contains": [
+    "A",
+    "C"
+   ],
+   "ref": [
+    "S",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "D"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "C"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "D"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "S"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "M"
+   ],
+   "ref": [
+    "S",
+    "C",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "M"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "N"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "A",
+    "B"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "C"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "C",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "D",
+    "A"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "A",
+    "C"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F2",
+   "contains": [
+    "A",
+    "N"
+   ],
+   "ref": [
+    "B",
+    "C"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F2",
+   "contains": [
+    "A",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "B"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F2",
+   "contains": [
+    "A",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F2",
+   "contains": [
+    "A",
+    "N"
+   ],
+   "ref": [
+    "B",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "B",
+    "D"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "B",
+    "D"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "C"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "B",
+    "D"
+   ],
+   "ref": [
+    "S",
+    "C",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "B",
+    "D"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F2",
+   "contains": [
+    "B",
+    "D"
+   ],
+   "ref": [
+    "S",
+    "A"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F2",
+   "contains": [
+    "B",
+    "D"
+   ],
+   "ref": [
+    "S",
+    "C"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "B",
+    "S"
+   ],
+   "ref": [
+    "S",
+    "A",
+    "C"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "B",
+    "M"
+   ],
+   "ref": [
+    "S",
+    "C",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "B",
+    "M"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "B",
+    "N"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "B",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "C"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "B",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "C",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "B",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "D",
+    "A"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "B",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "A",
+    "C"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "B",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F2",
+   "contains": [
+    "B",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "A"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F2",
+   "contains": [
+    "B",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F2",
+   "contains": [
+    "B",
+    "N"
+   ],
+   "ref": [
+    "A",
+    "C"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "C",
+    "S"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "C",
+    "S"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "C"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "C",
+    "S"
+   ],
+   "ref": [
+    "S",
+    "C",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "C",
+    "S"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "C",
+    "M"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "C",
+    "M"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "C"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "C",
+    "M"
+   ],
+   "ref": [
+    "S",
+    "C",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "C",
+    "M"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F2",
+   "contains": [
+    "C",
+    "M"
+   ],
+   "ref": [
+    "S",
+    "A"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F2",
+   "contains": [
+    "C",
+    "M"
+   ],
+   "ref": [
+    "S",
+    "B"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F2",
+   "contains": [
+    "C",
+    "M"
+   ],
+   "ref": [
+    "S",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "C",
+    "N"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "C",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "C"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "C",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "C",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "C",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "D",
+    "S"
+   ],
+   "ref": [
+    "S",
+    "A",
+    "C"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "D",
+    "M"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "D",
+    "M"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "C"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "D",
+    "M"
+   ],
+   "ref": [
+    "S",
+    "C",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "D",
+    "M"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F2",
+   "contains": [
+    "D",
+    "M"
+   ],
+   "ref": [
+    "S",
+    "A"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F2",
+   "contains": [
+    "D",
+    "M"
+   ],
+   "ref": [
+    "S",
+    "B"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F2",
+   "contains": [
+    "D",
+    "M"
+   ],
+   "ref": [
+    "S",
+    "C"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "D",
+    "N"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "D",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "A",
+    "B"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "D",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "C"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "D",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "C",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "D",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "A",
+    "C"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "D",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F2",
+   "contains": [
+    "D",
+    "N"
+   ],
+   "ref": [
+    "B",
+    "C"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F2",
+   "contains": [
+    "D",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "A"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F2",
+   "contains": [
+    "D",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "B"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F2",
+   "contains": [
+    "D",
+    "N"
+   ],
+   "ref": [
+    "A",
+    "C"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "S",
+    "M"
+   ],
+   "ref": [
+    "S",
+    "A",
+    "B"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "S",
+    "M"
+   ],
+   "ref": [
+    "S",
+    "C",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "S",
+    "M"
+   ],
+   "ref": [
+    "S",
+    "A",
+    "C"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "S",
+    "M"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F2",
+   "contains": [
+    "S",
+    "M"
+   ],
+   "ref": [
+    "B",
+    "C"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F2",
+   "contains": [
+    "S",
+    "M"
+   ],
+   "ref": [
+    "A",
+    "C"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F2",
+   "contains": [
+    "S",
+    "M"
+   ],
+   "ref": [
+    "B",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "S",
+    "N"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "S",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "C"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "S",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "C",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "S",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "M",
+    "N"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "M",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "A",
+    "B"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "M",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "C"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "M",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "D",
+    "A"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "M",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "A",
+    "C"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F1",
+   "contains": [
+    "M",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F2",
+   "contains": [
+    "M",
+    "N"
+   ],
+   "ref": [
+    "B",
+    "C"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F2",
+   "contains": [
+    "M",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "A"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F2",
+   "contains": [
+    "M",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "B"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F2",
+   "contains": [
+    "M",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F2",
+   "contains": [
+    "M",
+    "N"
+   ],
+   "ref": [
+    "A",
+    "C"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F2",
+   "contains": [
+    "M",
+    "N"
+   ],
+   "ref": [
+    "B",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F3",
+   "contains": [
+    "A",
+    "B",
+    "M"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F3",
+   "contains": [
+    "A",
+    "B",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F3",
+   "contains": [
+    "A",
+    "C",
+    "S"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F3",
+   "contains": [
+    "A",
+    "C",
+    "S"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F3",
+   "contains": [
+    "A",
+    "C",
+    "N"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F3",
+   "contains": [
+    "A",
+    "C",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F3",
+   "contains": [
+    "A",
+    "D",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "C"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F3",
+   "contains": [
+    "A",
+    "D",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F3",
+   "contains": [
+    "A",
+    "S",
+    "N"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F3",
+   "contains": [
+    "A",
+    "S",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F3",
+   "contains": [
+    "A",
+    "M",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F3",
+   "contains": [
+    "B",
+    "D",
+    "N"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F3",
+   "contains": [
+    "B",
+    "M",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F3",
+   "contains": [
+    "C",
+    "S",
+    "N"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F3",
+   "contains": [
+    "C",
+    "S",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "C"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(2,2)",
+   "family": "F3",
+   "contains": [
+    "C",
+    "S",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "B"
+   ],
+   "ref": [
+    "S",
+    "C",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "B"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "C"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "C"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "C"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "C"
+   ],
+   "ref": [
+    "S",
+    "C",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "C"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F2",
+   "contains": [
+    "A",
+    "C"
+   ],
+   "ref": [
+    "S",
+    "B"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F2",
+   "contains": [
+    "A",
+    "C"
+   ],
+   "ref": [
+    "S",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "D"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "C"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "D"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "S"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "M"
+   ],
+   "ref": [
+    "S",
+    "C",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "M"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "N"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "A",
+    "B"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "C"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "C",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "D",
+    "A"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "A",
+    "C"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F2",
+   "contains": [
+    "A",
+    "N"
+   ],
+   "ref": [
+    "B",
+    "C"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F2",
+   "contains": [
+    "A",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "B"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F2",
+   "contains": [
+    "A",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F2",
+   "contains": [
+    "A",
+    "N"
+   ],
+   "ref": [
+    "B",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "B",
+    "D"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "B",
+    "D"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "C"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "B",
+    "D"
+   ],
+   "ref": [
+    "S",
+    "C",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "B",
+    "D"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F2",
+   "contains": [
+    "B",
+    "D"
+   ],
+   "ref": [
+    "S",
+    "A"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F2",
+   "contains": [
+    "B",
+    "D"
+   ],
+   "ref": [
+    "S",
+    "C"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "B",
+    "S"
+   ],
+   "ref": [
+    "S",
+    "A",
+    "C"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "B",
+    "M"
+   ],
+   "ref": [
+    "S",
+    "C",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "B",
+    "M"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "B",
+    "N"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "B",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "C"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "B",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "C",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "B",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "D",
+    "A"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "B",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "A",
+    "C"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "B",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F2",
+   "contains": [
+    "B",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "A"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F2",
+   "contains": [
+    "B",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F2",
+   "contains": [
+    "B",
+    "N"
+   ],
+   "ref": [
+    "A",
+    "C"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "C",
+    "S"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "C",
+    "S"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "C"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "C",
+    "S"
+   ],
+   "ref": [
+    "S",
+    "C",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "C",
+    "S"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "C",
+    "M"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "C",
+    "M"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "C"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "C",
+    "M"
+   ],
+   "ref": [
+    "S",
+    "C",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "C",
+    "M"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F2",
+   "contains": [
+    "C",
+    "M"
+   ],
+   "ref": [
+    "S",
+    "A"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F2",
+   "contains": [
+    "C",
+    "M"
+   ],
+   "ref": [
+    "S",
+    "B"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F2",
+   "contains": [
+    "C",
+    "M"
+   ],
+   "ref": [
+    "S",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "C",
+    "N"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "C",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "C"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "C",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "C",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "C",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "D",
+    "S"
+   ],
+   "ref": [
+    "S",
+    "A",
+    "C"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "D",
+    "M"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "D",
+    "M"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "C"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "D",
+    "M"
+   ],
+   "ref": [
+    "S",
+    "C",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "D",
+    "M"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F2",
+   "contains": [
+    "D",
+    "M"
+   ],
+   "ref": [
+    "S",
+    "A"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F2",
+   "contains": [
+    "D",
+    "M"
+   ],
+   "ref": [
+    "S",
+    "B"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F2",
+   "contains": [
+    "D",
+    "M"
+   ],
+   "ref": [
+    "S",
+    "C"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "D",
+    "N"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "D",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "A",
+    "B"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "D",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "C"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "D",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "C",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "D",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "A",
+    "C"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "D",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F2",
+   "contains": [
+    "D",
+    "N"
+   ],
+   "ref": [
+    "B",
+    "C"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F2",
+   "contains": [
+    "D",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "A"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F2",
+   "contains": [
+    "D",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "B"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F2",
+   "contains": [
+    "D",
+    "N"
+   ],
+   "ref": [
+    "A",
+    "C"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "S",
+    "M"
+   ],
+   "ref": [
+    "S",
+    "A",
+    "B"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "S",
+    "M"
+   ],
+   "ref": [
+    "S",
+    "C",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "S",
+    "M"
+   ],
+   "ref": [
+    "S",
+    "A",
+    "C"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "S",
+    "M"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F2",
+   "contains": [
+    "S",
+    "M"
+   ],
+   "ref": [
+    "B",
+    "C"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F2",
+   "contains": [
+    "S",
+    "M"
+   ],
+   "ref": [
+    "A",
+    "C"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F2",
+   "contains": [
+    "S",
+    "M"
+   ],
+   "ref": [
+    "B",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "S",
+    "N"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "S",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "C"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "S",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "C",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "S",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "M",
+    "N"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "M",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "A",
+    "B"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "M",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "C"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "M",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "C",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "M",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "D",
+    "A"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "M",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "A",
+    "C"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F1",
+   "contains": [
+    "M",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F2",
+   "contains": [
+    "M",
+    "N"
+   ],
+   "ref": [
+    "B",
+    "C"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F2",
+   "contains": [
+    "M",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "A"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F2",
+   "contains": [
+    "M",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "B"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F2",
+   "contains": [
+    "M",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F2",
+   "contains": [
+    "M",
+    "N"
+   ],
+   "ref": [
+    "A",
+    "C"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F2",
+   "contains": [
+    "M",
+    "N"
+   ],
+   "ref": [
+    "B",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F3",
+   "contains": [
+    "A",
+    "B",
+    "M"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F3",
+   "contains": [
+    "A",
+    "C",
+    "S"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F3",
+   "contains": [
+    "A",
+    "C",
+    "S"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F3",
+   "contains": [
+    "A",
+    "C",
+    "N"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F3",
+   "contains": [
+    "A",
+    "C",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F3",
+   "contains": [
+    "A",
+    "S",
+    "N"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F3",
+   "contains": [
+    "A",
+    "S",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F3",
+   "contains": [
+    "B",
+    "D",
+    "N"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F3",
+   "contains": [
+    "C",
+    "S",
+    "N"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F3",
+   "contains": [
+    "C",
+    "S",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "C"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "pyramid(4,3)",
+   "family": "F3",
+   "contains": [
+    "C",
+    "S",
+    "N"
+   ],
+   "ref": [
+    "S",
+    "B",
+    "D"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "B"
+   ],
+   "ref": [
+    "A'",
+    "B",
+    "C"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "C"
+   ],
+   "ref": [
+    "A'",
+    "B",
+    "C"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "A'"
+   ],
+   "ref": [
+    "B",
+    "C",
+    "C'",
+    "B'"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "A'"
+   ],
+   "ref": [
+    "A'",
+    "B",
+    "C"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "B'"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "B'",
+    "A'"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "B'"
+   ],
+   "ref": [
+    "B",
+    "C",
+    "C'",
+    "B'"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "B'"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C'"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "B'"
+   ],
+   "ref": [
+    "A'",
+    "B",
+    "C"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F2",
+   "contains": [
+    "A",
+    "B'"
+   ],
+   "ref": [
+    "B",
+    "C"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "C'"
+   ],
+   "ref": [
+    "B",
+    "C",
+    "C'",
+    "B'"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "C'"
+   ],
+   "ref": [
+    "C",
+    "A",
+    "A'",
+    "C'"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "C'"
+   ],
+   "ref": [
+    "A'",
+    "B",
+    "C"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F2",
+   "contains": [
+    "A",
+    "C'"
+   ],
+   "ref": [
+    "B",
+    "C"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F2",
+   "contains": [
+    "A",
+    "C'"
+   ],
+   "ref": [
+    "A'",
+    "B"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F2",
+   "contains": [
+    "A",
+    "C'"
+   ],
+   "ref": [
+    "B'",
+    "C"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "M"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "M"
+   ],
+   "ref": [
+    "A'",
+    "B'",
+    "C'"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "M"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C'"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "M"
+   ],
+   "ref": [
+    "A'",
+    "B",
+    "C"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F2",
+   "contains": [
+    "A",
+    "M"
+   ],
+   "ref": [
+    "B",
+    "B'"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F2",
+   "contains": [
+    "A",
+    "M"
+   ],
+   "ref": [
+    "A'",
+    "B"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F2",
+   "contains": [
+    "A",
+    "M"
+   ],
+   "ref": [
+    "B'",
+    "C"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "N"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "B'",
+    "A'"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "N"
+   ],
+   "ref": [
+    "B",
+    "C",
+    "C'",
+    "B'"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "N"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C'"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "A",
+    "N"
+   ],
+   "ref": [
+    "A'",
+    "B",
+    "C"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F2",
+   "contains": [
+    "A",
+    "N"
+   ],
+   "ref": [
+    "B",
+    "C"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F2",
+   "contains": [
+    "A",
+    "N"
+   ],
+   "ref": [
+    "B'",
+    "C"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "B",
+    "C"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C'"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "B",
+    "A'"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "B'",
+    "A'"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "B",
+    "A'"
+   ],
+   "ref": [
+    "B",
+    "C",
+    "C'",
+    "B'"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "B",
+    "A'"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C'"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "B",
+    "A'"
+   ],
+   "ref": [
+    "A'",
+    "B",
+    "C"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F2",
+   "contains": [
+    "B",
+    "A'"
+   ],
+   "ref": [
+    "A",
+    "C'"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F2",
+   "contains": [
+    "B",
+    "A'"
+   ],
+   "ref": [
+    "B'",
+    "C"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "B",
+    "C'"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "B'",
+    "A'"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "B",
+    "C'"
+   ],
+   "ref": [
+    "B",
+    "C",
+    "C'",
+    "B'"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "B",
+    "C'"
+   ],
+   "ref": [
+    "C",
+    "A",
+    "A'",
+    "C'"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "B",
+    "C'"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C'"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "B",
+    "C'"
+   ],
+   "ref": [
+    "A'",
+    "B",
+    "C"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "B",
+    "M"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C'"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "B",
+    "N"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "B'",
+    "A'"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "B",
+    "N"
+   ],
+   "ref": [
+    "B",
+    "C",
+    "C'",
+    "B'"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "B",
+    "N"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C'"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "B",
+    "N"
+   ],
+   "ref": [
+    "A'",
+    "B",
+    "C"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F2",
+   "contains": [
+    "B",
+    "N"
+   ],
+   "ref": [
+    "A",
+    "C'"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F2",
+   "contains": [
+    "B",
+    "N"
+   ],
+   "ref": [
+    "B'",
+    "C"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "C",
+    "A'"
+   ],
+   "ref": [
+    "B",
+    "C",
+    "C'",
+    "B'"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "C",
+    "A'"
+   ],
+   "ref": [
+    "C",
+    "A",
+    "A'",
+    "C'"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "C",
+    "A'"
+   ],
+   "ref": [
+    "A'",
+    "B",
+    "C"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F2",
+   "contains": [
+    "C",
+    "A'"
+   ],
+   "ref": [
+    "A",
+    "B"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "C",
+    "B'"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "B'",
+    "A'"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "C",
+    "B'"
+   ],
+   "ref": [
+    "B",
+    "C",
+    "C'",
+    "B'"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "C",
+    "B'"
+   ],
+   "ref": [
+    "C",
+    "A",
+    "A'",
+    "C'"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "C",
+    "B'"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C'"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "C",
+    "B'"
+   ],
+   "ref": [
+    "A'",
+    "B",
+    "C"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F2",
+   "contains": [
+    "C",
+    "B'"
+   ],
+   "ref": [
+    "A",
+    "B"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F2",
+   "contains": [
+    "C",
+    "B'"
+   ],
+   "ref": [
+    "A'",
+    "B"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F2",
+   "contains": [
+    "C",
+    "B'"
+   ],
+   "ref": [
+    "A",
+    "C'"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "C",
+    "M"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C'"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "C",
+    "N"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "C",
+    "N"
+   ],
+   "ref": [
+    "A'",
+    "B'",
+    "C'"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "C",
+    "N"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "B'",
+    "A'"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "C",
+    "N"
+   ],
+   "ref": [
+    "B",
+    "C",
+    "C'",
+    "B'"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "C",
+    "N"
+   ],
+   "ref": [
+    "C",
+    "A",
+    "A'",
+    "C'"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "C",
+    "N"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C'"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "C",
+    "N"
+   ],
+   "ref": [
+    "A'",
+    "B",
+    "C"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F2",
+   "contains": [
+    "C",
+    "N"
+   ],
+   "ref": [
+    "A",
+    "B"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F2",
+   "contains": [
+    "C",
+    "N"
+   ],
+   "ref": [
+    "A",
+    "A'"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F2",
+   "contains": [
+    "C",
+    "N"
+   ],
+   "ref": [
+    "B",
+    "B'"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F2",
+   "contains": [
+    "C",
+    "N"
+   ],
+   "ref": [
+    "A'",
+    "B"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F2",
+   "contains": [
+    "C",
+    "N"
+   ],
+   "ref": [
+    "A",
+    "C'"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "A'",
+    "B'"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C'"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "A'",
+    "M"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "A'",
+    "M"
+   ],
+   "ref": [
+    "A'",
+    "B'",
+    "C'"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "A'",
+    "M"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "B'",
+    "A'"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "A'",
+    "M"
+   ],
+   "ref": [
+    "B",
+    "C",
+    "C'",
+    "B'"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "A'",
+    "M"
+   ],
+   "ref": [
+    "C",
+    "A",
+    "A'",
+    "C'"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "A'",
+    "M"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C'"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "A'",
+    "M"
+   ],
+   "ref": [
+    "A'",
+    "B",
+    "C"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F2",
+   "contains": [
+    "A'",
+    "M"
+   ],
+   "ref": [
+    "A",
+    "B"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F2",
+   "contains": [
+    "A'",
+    "M"
+   ],
+   "ref": [
+    "B",
+    "B'"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F2",
+   "contains": [
+    "A'",
+    "M"
+   ],
+   "ref": [
+    "A",
+    "C'"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F2",
+   "contains": [
+    "A'",
+    "M"
+   ],
+   "ref": [
+    "B'",
+    "C"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "A'",
+    "N"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C'"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "B'",
+    "C'"
+   ],
+   "ref": [
+    "A'",
+    "B",
+    "C"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "B'",
+    "M"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "B'",
+    "A'"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "B'",
+    "M"
+   ],
+   "ref": [
+    "B",
+    "C",
+    "C'",
+    "B'"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "B'",
+    "M"
+   ],
+   "ref": [
+    "C",
+    "A",
+    "A'",
+    "C'"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "B'",
+    "M"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C'"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "B'",
+    "M"
+   ],
+   "ref": [
+    "A'",
+    "B",
+    "C"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F2",
+   "contains": [
+    "B'",
+    "M"
+   ],
+   "ref": [
+    "A",
+    "B"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F2",
+   "contains": [
+    "B'",
+    "M"
+   ],
+   "ref": [
+    "A'",
+    "B"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F2",
+   "contains": [
+    "B'",
+    "M"
+   ],
+   "ref": [
+    "A",
+    "C'"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "B'",
+    "N"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C'"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "C'",
+    "M"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "B'",
+    "A'"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "C'",
+    "M"
+   ],
+   "ref": [
+    "B",
+    "C",
+    "C'",
+    "B'"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "C'",
+    "M"
+   ],
+   "ref": [
+    "C",
+    "A",
+    "A'",
+    "C'"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "C'",
+    "M"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C'"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "C'",
+    "M"
+   ],
+   "ref": [
+    "A'",
+    "B",
+    "C"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F2",
+   "contains": [
+    "C'",
+    "M"
+   ],
+   "ref": [
+    "A",
+    "B"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F2",
+   "contains": [
+    "C'",
+    "M"
+   ],
+   "ref": [
+    "A'",
+    "B"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "C'",
+    "N"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "C'",
+    "N"
+   ],
+   "ref": [
+    "A'",
+    "B'",
+    "C'"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "C'",
+    "N"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C'"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "C'",
+    "N"
+   ],
+   "ref": [
+    "A'",
+    "B",
+    "C"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F2",
+   "contains": [
+    "C'",
+    "N"
+   ],
+   "ref": [
+    "A",
+    "A'"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F2",
+   "contains": [
+    "C'",
+    "N"
+   ],
+   "ref": [
+    "B",
+    "B'"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F2",
+   "contains": [
+    "C'",
+    "N"
+   ],
+   "ref": [
+    "A'",
+    "B"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F2",
+   "contains": [
+    "C'",
+    "N"
+   ],
+   "ref": [
+    "B'",
+    "C"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "M",
+    "N"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "M",
+    "N"
+   ],
+   "ref": [
+    "A'",
+    "B'",
+    "C'"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "M",
+    "N"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "B'",
+    "A'"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "M",
+    "N"
+   ],
+   "ref": [
+    "B",
+    "C",
+    "C'",
+    "B'"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "M",
+    "N"
+   ],
+   "ref": [
+    "C",
+    "A",
+    "A'",
+    "C'"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "M",
+    "N"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C'"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F1",
+   "contains": [
+    "M",
+    "N"
+   ],
+   "ref": [
+    "A'",
+    "B",
+    "C"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F2",
+   "contains": [
+    "M",
+    "N"
+   ],
+   "ref": [
+    "A",
+    "B"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F2",
+   "contains": [
+    "M",
+    "N"
+   ],
+   "ref": [
+    "A",
+    "A'"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F2",
+   "contains": [
+    "M",
+    "N"
+   ],
+   "ref": [
+    "B",
+    "B'"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F2",
+   "contains": [
+    "M",
+    "N"
+   ],
+   "ref": [
+    "A'",
+    "B"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F2",
+   "contains": [
+    "M",
+    "N"
+   ],
+   "ref": [
+    "A",
+    "C'"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F2",
+   "contains": [
+    "M",
+    "N"
+   ],
+   "ref": [
+    "B'",
+    "C"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F3",
+   "contains": [
+    "A",
+    "C",
+    "B'"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "B'",
+    "A'"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F3",
+   "contains": [
+    "A",
+    "C",
+    "N"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "B'",
+    "A'"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F3",
+   "contains": [
+    "A",
+    "A'",
+    "M"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F3",
+   "contains": [
+    "B",
+    "A'",
+    "C'"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "B'",
+    "A'"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F3",
+   "contains": [
+    "C",
+    "C'",
+    "N"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "C"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  },
+  {
+   "topology": "prism(3,4,2)",
+   "family": "F3",
+   "contains": [
+    "A'",
+    "C'",
+    "M"
+   ],
+   "ref": [
+    "A",
+    "B",
+    "B'",
+    "A'"
+   ],
+   "status": "REFUSED",
+   "code": "INVALID_TYPED_FACT_NEXT"
+  }
+ ]
+}

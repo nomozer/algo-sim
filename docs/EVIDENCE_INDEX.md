@@ -13,6 +13,240 @@ CORRECTS = living W4 status that still said publication blocked/not integrated; 
 CORRECTED_BY = NONE
 
 
+## WAVE_ID = ALGOSIM_MASTER_HYBRID_BACKEND_REPLACEMENT
+
+REPORT = docs/evaluation/geometry/runs/hybrid-master-backend-replacement/HYBRID_MASTER_EPIC_CURRENT_STATE.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-master-backend-replacement/
+CLASSIFICATION = OFFLINE_DETERMINISTIC_FIXTURE_TEST + DEVELOPMENT_DIAGNOSTIC (no live measurement); research branch research/hybrid-master-backend-replacement from main f986e897; D-02/D-12 PROVED offline; Route D /4 curved solids, parallel/axial/sphere sections, cone ratio/remaining volume, base-centre grammar, apex ratio k, polyhedral role-phrase parity, trace preconditions/postconditions, certified circumscribed & inscribed spheres of polyhedra, sphere-plane tangency, dual spheres, polyhedron section+sphere & shared_faces+sphere, axial cylinder/cone spheres, multi-object planner DAG (composition_classification), 4-layer relation_certificates, SL-1 simulation-request reader, SL-2 unresolved honest exit (route-d-clarification/1), PE-2 exact Gram 3D solid & 2D polygon shape-kind certification, unanswered-request refusal, R-1 unnamed described points end-to-end on /4 (TypedFactNextPayloadV2.described_points, 9/9 C1a..C7 DISCOVERED_FUNCTION_COMPOSITION chains + angle(line1,line2) served on /4, D1/D2 representable on /2 and fail-closed BRIDGE_UNSUPPORTED_DESCRIBED_POINT), SL-3 student shorthands (k/c, mp, đt; S-2 gold replay 35/36, 0 wrong-served), bridge literal 0x08 regex repair, and isolated S-1/S-2 offline readiness tooling (Registry /29, Planner /23, Engine /20, geometric-relation-certificate/1; independent review READY in Round 2); Wave 3 replay unchanged (67/72, 72/72, 0 wrong-served, 0 transitions), locked 96/96, 203 probes 0 wrong-served, 32/32 registered curved controls REFUSED, 41/41 preview fixtures verified; candidate 0fe38a29 (product 9503482a, 118 files 773e440d…); T0/T2/Full T3 PASS (16514 pytest, 1424 vitest); live paired evaluation & S-2 live pilot READY but NOT RUN (Owner GO pending)
+CODE_COMMIT = 9503482a7480c2e8501efa8bcef0ce2c37776287
+CANDIDATE_COMMIT = 0fe38a29
+VERIFICATION = task1-green.json; capability-inventory.md; inventory-task2.json; measurement-probe.json; migration-ledger.md; architecture-consolidation.md; recomposition-evidence.json; inventory-phase-d.json; live-evaluation-protocol.md; live-harness-status.md; owner-go-request.md; curved-capability.md; registered-curved-controls-audit.md; curved-generalization-audit.md; curved-generalization-review.md; circumscribed-spheres-review.md; multi-object-factgraph-audit.md; composite-relations-review.md; composite-relations-probe.json; student-language-audit.md; student-language-probe-final.json; student-language-probe-c11.json; planner-recomposition-audit.md; planner-recomposition-matrix.json; planner-recomposition-route-d4-correction.md; route-d4-representation-probe.json; described-point-usage-scan.json; r1-described-points-audit.md; r1-described-point-probe.json; r1-described-point-probe-r2.json; continuation13-adversarial-review.md; continuation13-handoff-checkpoint.md; s1-diacritic-free-offline-audit.md; s1-diacritic-development-corpus.json; s2-student-language-pilot-protocol.md; s2-student-language-pilot-corpus.json; s2-pilot-gold-replay-r2.jsonl; s2-pilot-gold-replay-r3.jsonl; s2-owner-approval.template.json; continuation11-adversarial-review.md; results/historical-gold-delta.json; inventory-phase-k.json; inventory-phase-l2.json; wave3-phase-l2.json; inventory-phase-m.json; wave3-phase-m.json; inventory-phase-n4.json; wave3-phase-n4.json; inventory-phase-o.json; wave3-phase-o.json; inventory-phase-p.json; wave3-phase-p.json; inventory-phase-p2.json; wave3-phase-p2.json; schema-census-extension.json; fixtures-adapter-2-trace-pre-postconditions/; fixtures-adapter-2-composition-classification/; fixtures-adapter-2-search-telemetry/; full-t3-cb06635e.json; full-t3-db1ac63a.json; full-t3-17e4a326.json; full-t3-8b25df71.json; full-t3-800ab355.json; full-t3-0fe38a29.json; ../hybrid-master-circumscribed-spheres/frozen-evaluation-candidate.json; ../hybrid-master-circumscribed-spheres/candidate_divergence.json; ../hybrid-master-composite-relations/frozen-evaluation-candidate.json; ../hybrid-master-composite-relations/candidate_divergence.json; ../hybrid-master-student-language/frozen-evaluation-candidate.json; ../hybrid-master-student-language/candidate_divergence.json; ../hybrid-master-semantic-planner-recomposition/frozen-evaluation-candidate.json; ../hybrid-master-semantic-planner-recomposition/candidate_divergence.json; ../hybrid-master-described-points/frozen-evaluation-candidate.json; ../hybrid-master-described-points/candidate_divergence.json
+MODEL_REQUEST_COUNT = 0
+CORRECTS = ALGOSIM_W4_END_TO_END_GEOMETRY_AND_PEDAGOGICAL_SIMULATION (candidate divergence chain only)
+CORRECTED_BY = NONE
+
+
+## CONTINUATION_ID = HYBRID_MASTER_C12_S2_RUNNABLE_AND_ROUTE_D4_CORRECTION
+
+REPORT = docs/evaluation/geometry/runs/hybrid-master-backend-replacement/planner-recomposition-route-d4-correction.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-master-backend-replacement/
+CLASSIFICATION = IMPLEMENTER_AUTHORED_DEVELOPMENT_DIAGNOSTIC + OFFLINE_DETERMINISTIC_FIXTURE_TEST (no live measurement); S-2 pilot made runnable (corpus 36, runner, gold-replay attribution baseline 33/36 end-to-end, 0 wrong-served, 3 Source Gate false refusals on gold); /4 representation probe (unnamed described points refused on /4, 0 DISCOVERED_FUNCTION_COMPOSITION among 52 served /4 gold rows)
+VERIFICATION = route-d4-representation-probe.json; described-point-usage-scan.json; s2-student-language-pilot-corpus.json; s2-pilot-gold-replay.jsonl (superseded by -r1 after review round 1, then by s2-pilot-gold-replay-r2.jsonl after review round 2 READY); s2-owner-approval.template.json; s2-student-language-pilot-protocol.md §5; owner-go-request.md (twelfth-continuation addendum)
+CODE_COMMIT = 9e059eb7163532d66a3f7a7cd24250a50b0ac7a3 (product unchanged; scripts/tests/docs only)
+CANDIDATE_COMMIT = 800ab355
+MODEL_REQUEST_COUNT = 0
+CORRECTS = ALGOSIM_MASTER_HYBRID_BACKEND_REPLACEMENT (the /4 scope of the eleventh-continuation planner claim at candidate 800ab355); planner-recomposition-audit.md and owner-go-request.md originals unchanged
+CORRECTED_BY = HYBRID_MASTER_C13_R1_DESCRIBED_POINTS_AND_SL3_SHORTHAND (R-1 closes /4 unnamed described-point representation on candidate 0fe38a29; D1/D2 remain representable on /2 and fail-closed BRIDGE_UNSUPPORTED_DESCRIBED_POINT)
+
+
+## CONTINUATION_ID = HYBRID_MASTER_C13_R1_DESCRIBED_POINTS_AND_SL3_SHORTHAND
+
+REPORT = docs/evaluation/geometry/runs/hybrid-master-backend-replacement/r1-described-points-audit.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-master-backend-replacement/
+CLASSIFICATION = OFFLINE_DETERMINISTIC_FIXTURE_TEST + DEVELOPMENT_DIAGNOSTIC (no live measurement); R-1 carries unnamed described points end-to-end on Route D /4 via TypedFactNextPayloadV2.described_points (9/9 C1a..C7 DISCOVERED_FUNCTION_COMPOSITION chains + angle(line1,line2) served with exact answers, D1/D2 contract-representable on /2 and fail-closed BRIDGE_UNSUPPORTED_DESCRIBED_POINT); SL-3 adds k/c and đt student shorthands alongside mp (S-2 gold replay 33/36 -> 35/36, 0 wrong-served; hình chop governed under S-1); _v2_plane_def_quotes literal 0x08 regex repaired; preview fixtures 41/41 verified; independent adversarial review READY in Round 2 (0 BLOCKER, 0 MAJOR, 0 MINOR); Full T3 PASS at candidate 0fe38a29 (16514 pytest, 1424 vitest)
+VERIFICATION = r1-described-points-audit.md; r1-described-point-probe.json; r1-described-point-probe-r2.json; continuation13-adversarial-review.md; continuation13-handoff-checkpoint.md; inventory-phase-p.json; wave3-phase-p.json; inventory-phase-p2.json; wave3-phase-p2.json; s2-pilot-gold-replay-r3.jsonl; s2-owner-approval.template.json; schema-census-extension.json; full-t3-0fe38a29.json; ../hybrid-master-described-points/frozen-evaluation-candidate.json; ../hybrid-master-described-points/candidate_divergence.json
+CODE_COMMIT = 9503482a7480c2e8501efa8bcef0ce2c37776287
+CANDIDATE_COMMIT = 0fe38a29
+MODEL_REQUEST_COUNT = 0
+CORRECTS = HYBRID_MASTER_C12_S2_RUNNABLE_AND_ROUTE_D4_CORRECTION (supersedes C12 /4 REPRESENTATION_BLOCKED state and S-2 33/36 gold-replay baseline; historical C12 receipts preserved byte-for-byte)
+CORRECTED_BY = HYBRID_MASTER_C14_LIVE_READINESS (S-2 template blob d6c6e6b0) + HYBRID_MASTER_C15_R1_LIVE_PILOT_PREPARED (the 9/9 DISCOVERED_FUNCTION_COMPOSITION claim is the planner's self-label: 6 SOURCE_EXPLICIT_SEQUENCE + 3 REGISTERED_DECOMPOSITION)
+
+
+## CONTINUATION_ID = HYBRID_MASTER_C14_LIVE_READINESS
+
+REPORT = docs/evaluation/geometry/runs/hybrid-master-backend-replacement/continuation14-live-readiness.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-master-backend-replacement/
+CLASSIFICATION = OFFLINE_DETERMINISTIC_FIXTURE_TEST + IMPLEMENTER_AUTHORED_DEVELOPMENT_DIAGNOSTIC (no live measurement; no Owner approval exists); single-use live approval on both runners, paired cap-term validation, scorer bound into the S-2 approval (harness tests 105); S-2 corpus cannot measure R-1 (0/36 described_points, 0/36 unnamed phrasings, 17/17 gold serves SOURCE_EXPLICIT_SEQUENCE ⇒ R1_LIVE_GENERALIZATION_NOT_ESTABLISHED); S-2 template re-issued (blob 8b2ab292)
+VERIFICATION = continuation14-live-readiness.md; s2-r1-coverage.json; tools/s2_r1_coverage_scan.py; s2-owner-approval.template.json; s2-student-language-pilot-protocol.md §5.11; live-evaluation-protocol.md (fourteenth amendment); owner-go-request.md (fourteenth addendum)
+CODE_COMMIT = 9503482a7480c2e8501efa8bcef0ce2c37776287 (product unchanged; scripts/tests/docs only)
+CANDIDATE_COMMIT = 0fe38a29
+MODEL_REQUEST_COUNT = 0
+CORRECTS = HYBRID_MASTER_C13_R1_DESCRIBED_POINTS_AND_SL3_SHORTHAND (the S-2 approval template blob d6c6e6b0 and its command no longer bind; C13 receipts unchanged)
+CORRECTED_BY = HYBRID_MASTER_C15_R1_LIVE_PILOT_PREPARED (S-2 template blob 8b2ab292 no longer binds after the runner change)
+
+
+## CONTINUATION_ID = HYBRID_MASTER_C15_R1_LIVE_PILOT_PREPARED
+
+REPORT = docs/evaluation/geometry/runs/hybrid-master-backend-replacement/r1-live-pilot-protocol.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-master-backend-replacement/
+CLASSIFICATION = OFFLINE_DETERMINISTIC_FIXTURE_TEST + IMPLEMENTER_AUTHORED_DEVELOPMENT_DIAGNOSTIC (no live measurement; no Owner approval exists); runner measures studies (S-2 default, R-1); R-1 corpus 18 implementer-authored texts, gold replay 16/18 end to end, 0 wrong-served, 11/11 served exact, 0 DISCOVERED_FUNCTION_COMPOSITION under the reviewed composition rule (7 SOURCE_EXPLICIT_SEQUENCE + 4 REGISTERED_DECOMPOSITION), both paraphrases refused at the Source Gate on gold; independent review READY in round 2; harness tests 119; S-2 template re-issued (blob f764752d), R-1 template new (blob df69d370)
+VERIFICATION = r1-live-pilot-protocol.md; r1-live-pilot-corpus.json; tools/build_r1_live_corpus.py; r1-live-pilot-gold-replay.jsonl; r1-composition-relabel.json; tools/r1_composition_relabel.py; r1-owner-approval.template.json; s2-owner-approval.template.json; s2-student-language-pilot-protocol.md §5.12; owner-go-request.md (fifteenth addendum)
+CODE_COMMIT = 9503482a7480c2e8501efa8bcef0ce2c37776287 (product unchanged; scripts/tests/docs only)
+CANDIDATE_COMMIT = 0fe38a29
+MODEL_REQUEST_COUNT = 0
+CORRECTS = HYBRID_MASTER_C13_R1_DESCRIBED_POINTS_AND_SL3_SHORTHAND (its 9/9 DISCOVERED_FUNCTION_COMPOSITION is the planner's self-label: 6 SOURCE_EXPLICIT_SEQUENCE + 3 REGISTERED_DECOMPOSITION, r1-composition-relabel.json; served values unchanged) + HYBRID_MASTER_C14_LIVE_READINESS (S-2 template blob)
+CORRECTED_BY = HYBRID_MASTER_C16_PLANNER_PROVENANCE (templates f764752d / df69d370 no longer bind: candidate 3154a696, runner 48d3fd11; the runner's composition rule now runs on every served row; gold-replay receipt superseded by r1-live-pilot-gold-replay-r2.jsonl)
+
+
+## CONTINUATION_ID = HYBRID_MASTER_C16_PLANNER_PROVENANCE
+
+REPORT = docs/evaluation/geometry/runs/hybrid-master-backend-replacement/planner-generalization-c16.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-master-backend-replacement/
+CLASSIFICATION = OFFLINE_DETERMINISTIC_FIXTURE_TEST + IMPLEMENTER_AUTHORED_DEVELOPMENT_DIAGNOSTIC (no live measurement; no approval exists); GENUINE_DISCOVERY_NOT_ESTABLISHED — on route B and /4 every served plan is source-explicit or a declared decomposition (route B C11: 6 + 3, /4 C13: 6 + 3, R-1 gold: 7 + 4, 0 discovered); 710 generated perpendicular-plane sections, 0 reachable-but-missed (364 served exact, 346 unreachable refused); ablation: declared rules off ⇒ exactly the source-explicit plans survive; product: planner /24 provenance-classified search_telemetry (calls/certificates/answers unchanged on 753 compared plans; DISCOVERED unreachable in Registry /29); independent review READY in round 2; Full T3 PASS (attempt 2)
+VERIFICATION = planner-generalization-c16.md; route-b-composition-relabel.json; route-b-composition-relabel-r2.json; plane-witness-reachability.json; planner-ablation.json; r1-live-pilot-gold-replay-r2.jsonl; inventory-phase-q.json; wave3-phase-q.json; full-t3-3154a696.json; s2-owner-approval.template.json; r1-owner-approval.template.json; owner-go-request.md (sixteenth addendum); ../hybrid-master-planner-provenance/frozen-evaluation-candidate.json; ../hybrid-master-planner-provenance/candidate_divergence.json
+CODE_COMMIT = 9c561ca62e1a193697e5b7b69f1bdf77fa8bd770
+CANDIDATE_COMMIT = 3154a696
+MODEL_REQUEST_COUNT = 0
+CORRECTS = HYBRID_MASTER_C15_R1_LIVE_PILOT_PREPARED (approval templates; the runner's composition rule) + C11 route-B planner-recomposition claim (planner-recomposition-matrix.json: 9 DISCOVERED = 6 source-explicit + 3 registered); historical receipts unchanged
+CORRECTED_BY = HYBRID_MASTER_C17_CONSTRAINT_WITNESS (templates beb9227b / 25000c72 no longer bind: candidate 2fc15108; from registry /30 the runner's composition_label counts orthogonal_projection as a registered-rule function, 0 flips on the gold S-2/R-1 dry-runs; C16 "goals with implicit objects are not representable" no longer holds for constraint-defined planes)
+
+## CONTINUATION_ID = HYBRID_MASTER_C17_CONSTRAINT_WITNESS
+
+REPORT = docs/evaluation/geometry/runs/hybrid-master-backend-replacement/constraint-to-witness-c17.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-master-backend-replacement/
+CLASSIFICATION = OFFLINE_DETERMINISTIC_FIXTURE_TEST + IMPLEMENTER_AUTHORED_DEVELOPMENT_DIAGNOSTIC (no live measurement; no approval exists); GENUINE_DISCOVERY_NOT_ESTABLISHED + CONSTRAINT_TO_WITNESS_SERVICE_VERIFIED_OFFLINE — typed-fact-next/2 plane_kind "constrained" served on /4 (registry /30 MAT_RANG_BUOC, planner /25, engine /21 exact existence/uniqueness); independent oracle on 1531 generated cases: 407 served exact, 1124 correct refusals, 0 wrong-served, 0 reachable-but-refused; /24 baseline 352/352 INVALID_TYPED_FACT_NEXT; ablation r3: last-candidate and premise-never arms keep all 407 answers (choice immaterial, no backtracking); independent review READY in round 2; Full T3 PASS (attempt 1)
+VERIFICATION = constraint-to-witness-c17.md; constraint-witness-probe-r3.json; constraint-witness-ablation-r3.json; constraint-witness-baseline-24.json; tools/constraint_witness_probe.py; tools/constraint_witness_ablation.py; inventory-phase-r.json; wave3-phase-r.json; full-t3-2fc15108.json; s2-owner-approval.template.json; r1-owner-approval.template.json; owner-go-request.md (seventeenth addendum); ../hybrid-master-constraint-witness/frozen-evaluation-candidate.json; ../hybrid-master-constraint-witness/candidate_divergence.json
+CODE_COMMIT = 8a89c6fd46b5f8021a16b16a6f1b3f270657a29f
+CANDIDATE_COMMIT = 2fc15108
+MODEL_REQUEST_COUNT = 0
+CORRECTS = HYBRID_MASTER_C16_PLANNER_PROVENANCE (approval templates; the representation-gap statement for constraint-defined planes); constraint-witness-probe.json / -r2.json and constraint-witness-ablation.json / -r2.json superseded by r3 (r1 ran a withdrawn arm D and a narrower generator; r2 ran on a dirty tree); historical receipts unchanged
+CORRECTED_BY = HYBRID_MASTER_C18_DEFINITION_COMPOSITION (templates 2adff732 / 8e4441b5 no longer bind: candidate 15d236eb; from registry /31 the runner's composition_label also counts midpoint and intersect_line_line as registered-rule functions, 0 flips on the 54 stored gold S-2/R-1 rows, c15-rule-flip-check.json)
+
+
+## CONTINUATION_ID = HYBRID_MASTER_C18_DEFINITION_COMPOSITION
+
+REPORT = docs/evaluation/geometry/runs/hybrid-master-backend-replacement/composition-c18.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-master-backend-replacement/
+CLASSIFICATION = OFFLINE_DETERMINISTIC_FIXTURE_TEST + IMPLEMENTER_AUTHORED_DEVELOPMENT_DIAGNOSTIC (no live measurement; no approval exists); GENUINE_DISCOVERY_NOT_ESTABLISHED + DEFINITION_REGRESSION_COMPOSITION_VERIFIED_OFFLINE — typed-fact-next/2 described kinds orthocenter / circumcenter served on /4 by regressing a declared textbook definition into locus needs solved from function contracts (registry /31 POINT_DEFINITIONS + DINH_NGHIA_DIEM, planner /26, engine /22); independent forward-search oracle on 504 generated cases: 480 served exact, 24 degenerate refused, 0 wrong-served, 0 reachable-refused, 202 goals need composition; /25 baseline 480/480 INVALID_TYPED_FACT_NEXT; ablation r2 and metamorphic r2 (1044/1044); independent review READY in round 2 (round 1 NOT_READY: registered decomposition by the C17 standard, accepted)
+VERIFICATION = composition-c18.md; composition-oracle.json; composition-baseline-25.json; composition-probe-r2.json; composition-ablation-r2.json; composition-metamorphic-r2.json; constraint-witness-probe-c18-r2.json; c15-rule-flip-check.json; function-contract-graph.json; inventory-phase-s2.json; wave3-phase-s2.json; s2-pilot-gold-replay-c18.jsonl; r1-live-pilot-gold-replay-c18.jsonl; constraint-extraction-pilot-protocol.md; full-t3-15d236eb.json; owner-go-request.md (eighteenth addendum); ../hybrid-master-definition-composition/frozen-evaluation-candidate.json; ../hybrid-master-definition-composition/candidate_divergence.json
+CODE_COMMIT = 51ba6135a76e1daf761c021ce5c03de34acbae62
+CANDIDATE_COMMIT = 15d236eb
+MODEL_REQUEST_COUNT = 0
+CORRECTS = HYBRID_MASTER_C17_CONSTRAINT_WITNESS (approval templates); C11 planning_oracle MISSING_PRIMITIVE for circumcenter/orthocenter (a constant set, refuted by search: composition-oracle.json); composition-probe.json / -ablation.json / -metamorphic.json superseded by r2 (r1 used the withdrawn DISCOVERED labelling); historical receipts unchanged
+CORRECTED_BY = HYBRID_MASTER_C19_HYBRID_FIRST_EVALUATION (templates 4dd2bcfd / c6ad2dc3 no longer bind: runner e3d3b2ec; candidate unchanged)
+
+## CONTINUATION_ID = HYBRID_MASTER_C19_HYBRID_FIRST_EVALUATION
+
+REPORT = docs/evaluation/geometry/runs/hybrid-master-backend-replacement/hybrid-first-evaluation-c19.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-master-backend-replacement/
+CLASSIFICATION = OFFLINE_DETERMINISTIC_FIXTURE_TEST (no live measurement; no approval exists; no independent author) — OFFLINE_READY_AWAITING_OWNER_GO; Hybrid-only protocol hybrid-only-independent-evaluation/1 (study H-1, NOT_MEASURED); K-1 constraint/definition extraction pilot runnable (gold 16/16); gold ceilings S-2 35/36, R-1 16/18, 0 wrong-served, 3 misses reproduced at the Source Gate; Scene3D backend contract audit 105 rows 0 violations; independent review READY in round 3; no product change
+VERIFICATION = hybrid-first-evaluation-c19.md; hybrid-only-independent-evaluation-protocol.md; constraint-extraction-pilot-protocol.md (revision A); k1-live-pilot-corpus.json; k1-live-pilot-gold-replay-r3.jsonl; s2-pilot-gold-replay-c19-r3.jsonl; r1-live-pilot-gold-replay-c19-r3.jsonl; scene3d-contract-audit-r3.json; s2-owner-approval.template.json; r1-owner-approval.template.json; k1-owner-approval.template.json; owner-go-request.md (nineteenth addendum)
+CODE_COMMIT = 51ba6135a76e1daf761c021ce5c03de34acbae62
+CANDIDATE_COMMIT = 15d236eb
+MODEL_REQUEST_COUNT = 0
+CORRECTS = HYBRID_MASTER_C18_DEFINITION_COMPOSITION (approval templates); C19 receipts -c19 / -r2 superseded by r3 (scoring rules tightened by review rounds 1–2 before any live run); historical receipts unchanged
+CORRECTED_BY = HYBRID_MASTER_C21_OWNER_DELEGATED_LIVE_EXECUTION (templates 05f2a546 / 71792f77 / a6ccbf2e and manual PowerShell issuance commands superseded by --delegated-c21 and templates 528622dd / f20279a9 / ee581d67 on runner 8691bf11; C19 gold-replay receipts and candidate 15d236eb unchanged)
+
+## CONTINUATION_ID = HYBRID_MASTER_C21_OWNER_DELEGATED_LIVE_EXECUTION
+
+REPORT = docs/evaluation/geometry/runs/hybrid-master-backend-replacement/hybrid-live-validation-c21.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-master-backend-replacement/
+CLASSIFICATION = INFRASTRUCTURE_PREFLIGHT_VERIFICATION + OFFLINE_DETERMINISTIC_FIXTURE_TEST (0 live provider requests; DELEGATED_AUTOMATION_READY_AND_VERIFIED; live execution BLOCKED_PREFLIGHT at PAID_PROJECT_NOT_VERIFIED before request 1) — EXPLICIT_OWNER_DELEGATED_EXECUTION (DELEGATED_BY_EXPLICIT_OWNER_INSTRUCTION, never writing the Owner-reserved direct string by automation) for K-1 (<=16/$1), S-2 (<=36/$2), R-1 (<=18/$1) on gemini-2.5-flash only (H-1 excluded), campaign-locked GlobalBudgetLedger (70 requests / USD 4.00), partial/missing usage marked UNKNOWN and charged at ceiling, AQ. and ya29. secret protection, templates refreshed to runner 8691bf11 (k1 ee581d67, s2 528622dd, r1 f20279a9), independent review READY in round 2; no product change
+VERIFICATION = hybrid-live-validation-c21.md; c21-delegated-attempt/c21-delegated-execution-receipt.json; k1-owner-approval.template.json; s2-owner-approval.template.json; r1-owner-approval.template.json; owner-go-request.md (twenty-first addendum); HYBRID_MASTER_EPIC_CURRENT_STATE.md
+CODE_COMMIT = 51ba6135a76e1daf761c021ce5c03de34acbae62 (product unchanged; scripts/tests/docs only)
+CANDIDATE_COMMIT = 15d236eb
+MODEL_REQUEST_COUNT = 0
+CORRECTS = HYBRID_MASTER_C19_HYBRID_FIRST_EVALUATION (approval templates 05f2a546 / 71792f77 / a6ccbf2e and manual PowerShell issuance workflow superseded; C19 gold-replay receipts unchanged)
+CORRECTED_BY = HYBRID_MASTER_C22_REAL_PRODUCT_INTEGRATION (approval templates ee581d67 / 528622dd / f20279a9 re-bound to product d17116cb / candidate 123e57da / measured_system 730045ff and LF-normalized runner e9c6ad43 -> blobs 2199eb32 / a6792fce / 9f832e67; C21 receipt and preserved 15d236eb candidate unchanged)
+
+## CONTINUATION_ID = HYBRID_MASTER_C22_REAL_PRODUCT_INTEGRATION
+
+REPORT = docs/evaluation/geometry/runs/hybrid-master-backend-replacement/ALGOSIM_REAL_PRODUCT_INTEGRATION_REPORT.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-master-backend-replacement/
+CLASSIFICATION = PRODUCT_RUNTIME_REPLAY_VERIFICATION_NOT_LIVE_PROVIDER + REAL_BROWSER_AND_UVICORN_NETWORK_E2E_STAGING_REPLAY (0 live provider requests; PRODUCT_INTEGRATION_VERIFIED; LIVE_PROVIDER_NOT_MEASURED; PRODUCTION_RELEASE_BLOCKED; GENUINE_DISCOVERY_NOT_ESTABLISHED) — selectable Hybrid /4 end-to-end runtime (HYBRID_ROUTE_MODE = off default LLM_ONLY | staging-replay REPLAY_STAGING_SIMULATED | live with ALLOW_LIVE_AI=1 + GEMINI_API_KEY + deadline-bounded retry TransportExtractor + ROUTE_D_CACHE_POLICY isolation + sanitized 502/503/504 INFRASTRUCTURE_FAILURE), existing React UI integration (Category B plane-section-certificate/1 rendering, route-d-clarification/1 user questions across workspace & Photo Review -> Build, M18 store resets), 16/16 scope/refusal categories (41/41 cases) verified, 6/6 Playwright Chromium + uvicorn E2E user flows PASS (0 page errors), CRLF-normalized pilot sha256_bytes/sha256_file, candidate 123e57da (product d17116cb, 118 files 730045ff; prior candidate 15d236eb preserved), Full T3 FULL_PRODUCT_GATE_PASS (attempt 2: 16648 pytest, 1486 vitest), publication range f986e897..HEAD PASS
+VERIFICATION = ALGOSIM_REAL_PRODUCT_INTEGRATION_REPORT.md; product-integration-16-classes-verification.json; product-e2e-browser-receipt.json; product-integration-adversarial-review.md; full-t3-123e57da.json; k1-owner-approval.template.json; s2-owner-approval.template.json; r1-owner-approval.template.json; ../hybrid-master-product-integration/frozen-evaluation-candidate.json; ../hybrid-master-product-integration/candidate_divergence.json
+CODE_COMMIT = d17116cbc4b4f4065f198a19de0957cc51eeb82e
+CANDIDATE_COMMIT = 123e57da
+MODEL_REQUEST_COUNT = 0
+CORRECTS = HYBRID_MASTER_C21_OWNER_DELEGATED_LIVE_EXECUTION (pilot approval template blobs ee581d67 / 528622dd / f20279a9 re-bound to candidate 123e57da / measured_system 730045ff / LF-normalized runner e9c6ad43 -> blobs 2199eb32 / a6792fce / 9f832e67; candidate divergence chain updated via hybrid-master-product-integration/candidate_divergence.json while preserving 15d236eb and all C18/C19/C21 receipts)
+CORRECTED_BY = HYBRID_MASTER_C23_PEDAGOGICAL_SIMULATION_INTEGRATION (candidate identity and pilot template blobs only: product adf4a113 / candidate fba8b7a7 / measured_system 39e9f54b; templates 2199eb32 / a6792fce / 9f832e67 -> 01113600 / 39a4a564 / 06589213; divergence layer pedagogical-simulation-integration/candidate_divergence.json; the C22 receipts themselves are unchanged and not rescored)
+
+## CONTINUATION_ID = HYBRID_MASTER_C23_PEDAGOGICAL_SIMULATION_INTEGRATION
+
+REPORT = docs/evaluation/geometry/runs/pedagogical-simulation-integration/ALGOSIM_PEDAGOGICAL_SIMULATION_INTEGRATION_REPORT.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/pedagogical-simulation-integration/
+CLASSIFICATION = REAL_BROWSER_AND_UVICORN_NETWORK_E2E_STAGING_REPLAY + PRODUCT_RUNTIME_REPLAY_VERIFICATION_NOT_LIVE_PROVIDER (0 live provider requests; LIVE_PROVIDER_NOT_MEASURED; PRODUCTION_RELEASE_BLOCKED; GENUINE_DISCOVERY_NOT_ESTABLISHED) — pedagogical display contract (DESIGN_BRIEF §79–80) on the product path: pre-fix UI audit 30/30 served cases (0 answer statements, 0 autoplay, «Đề bài» = submitted text 0/30); fixes «Đề bài» (envelope problem_statement stamped by loadEnvelope, carried by classroom assignments; history reopen drops scene3d and problem_statement — pre-existing ISSUE-ARCH-HISTORY-REOPEN-DROPS-SCENE3D), goal_checks conclusions to Mode B, engine /23 stated perpendicular drawn with its witness; post-fix E2E 7/7 flows, 37 student-mode checks on 30 cases, positive control 43/44; candidate fba8b7a7 (product adf4a113, 118 files 39e9f54b); Full T3 FULL_PRODUCT_GATE_PASS at dbc0316c (16652 pytest, 1502 vitest); preview fixtures re-exported (fixtures-adapter-2-stated-perpendicular); publication range f986e897..HEAD PASS
+VERIFICATION = ALGOSIM_PEDAGOGICAL_SIMULATION_INTEGRATION_REPORT.md; prefix-ui-audit.json; prefix-ui-audit-probe.mjs; prefix-ui-audit-analyze.mjs; pedagogical-e2e-browser-receipt.json (pre-review, candidate 444b8c95); e2e-review-round-1/pedagogical-e2e-browser-receipt.json; full-t3-e8fc37fb.json (pre-review); full-t3-dbc0316c.json; independent-review.md; candidate_divergence.json; frozen-evaluation-candidate.json; fixtures-adapter-2-stated-perpendicular/manifest.json
+CODE_COMMIT = adf4a1139f389133fe855845b5f149a3691a36d1
+CANDIDATE_COMMIT = fba8b7a7
+MODEL_REQUEST_COUNT = 0
+CORRECTS = HYBRID_MASTER_C22_REAL_PRODUCT_INTEGRATION (candidate identity and template blobs; hybrid-master-product-integration/candidate_divergence.json corrected by pedagogical-simulation-integration/candidate_divergence.json)
+CORRECTED_BY = HYBRID_MASTER_C24_LIVE_VALIDATION_AND_BACKEND_REPAIR (candidate identity and template measured_system only: product 57457fc4 / candidate 79bbc053 / measured_system 6202a6a6; divergence layer hybrid-live-validation/candidate_divergence.json; the C23 receipts are unchanged and not rescored)
+
+## CONTINUATION_ID = HYBRID_MASTER_C24_LIVE_VALIDATION_AND_BACKEND_REPAIR
+
+REPORT = docs/evaluation/geometry/runs/hybrid-live-validation/HYBRID_BACKEND_VALIDATION_AND_CUTOVER_REPORT.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-live-validation/
+CLASSIFICATION = LIVE_PREFLIGHT_BLOCKED (PAID_PROJECT_NOT_VERIFIED; 0 live provider requests; LIVE_GEMINI_MEASURED = NO) + POST_FEEDBACK_DEVELOPMENT_REGRESSION (gold TypedFactNext replay; Wave 3 is development-contaminated, not held-out) - BACKEND_HYBRID_OFFLINE_VERIFIED; PLANNER_COMPOSITION_VERIFIED as registered decomposition; GENUINE_DISCOVERY_NOT_ESTABLISHED; HYBRID_CUTOVER_BLOCKED; LEGACY_REMOVAL_BLOCKED - Source Gate wording repairs + stated-cut coverage certificate + exact-radical input bound (registry /32, engine /24); Wave 3 67 -> 72/72 served correct, 72/72 refused (62 -> 65 exact reason), 0 wrong-served; locked 96/96; probes 203 clean; C18 composition 480/480 + 24/24; static legacy dependency inventory (13 LEGACY_ONLY, 6 HYBRID_REQUIRED, 74 SHARED_COMPONENT, 3 UNCERTAIN_DEPENDENCY); candidate 79bbc053 (product 57457fc4, 118 files 6202a6a6); Full T3 attempt 1 at d5c4098b FAIL (1 divergence-layer key), attempt 2 at 79bbc053 FULL_PRODUCT_GATE_PASS (16673 pytest, 1502 vitest)
+VERIFICATION = HYBRID_BACKEND_VALIDATION_AND_CUTOVER_REPORT.md; live-preflight.json; gold-replay-regression.json; wave3-gold-replay.json; planner-composition-c18-probe.json; measurement-probe.json; legacy-dependency-inventory.json; tools/legacy_dependency_inventory.py; full-t3-79bbc053.json; independent-review.md; candidate_divergence.json; frozen-evaluation-candidate.json; ../hybrid-master-backend-replacement/k1-owner-approval.template.json; s2-owner-approval.template.json; r1-owner-approval.template.json
+CODE_COMMIT = 57457fc4c59094c5e57dd934bffd73533d82b81e
+CANDIDATE_COMMIT = 79bbc053
+MODEL_REQUEST_COUNT = 0
+CORRECTS = HYBRID_MASTER_C23_PEDAGOGICAL_SIMULATION_INTEGRATION (candidate identity and template measured_system only; pedagogical-simulation-integration/candidate_divergence.json corrected by hybrid-live-validation/candidate_divergence.json)
+CORRECTED_BY = HYBRID_MASTER_C25_LIVE_GEMINI_EXECUTION_AND_EVALUATION (PAID_PROJECT_NOT_VERIFIED cleared via Owner verbatim paid-service attestation OWNER_ATTESTED; 70/70 live Gemini 2.5 Flash HTTP requests executed across Run 1 79bbc053, Run 2 8c4f4f20 and Run 3 44568bc9 with 64/64 HTTP 200 STOP in Run 3 and 0/65 mathematically wrong answers served; post-Run-3 wire normalizer frozen at candidate 428515dc / product f60ae29e via hybrid-live-gemini-execution/candidate_divergence.json; C24 offline receipts preserved byte-for-byte)
+
+## CONTINUATION_ID = HYBRID_MASTER_C25_LIVE_GEMINI_EXECUTION_AND_EVALUATION
+
+REPORT = docs/evaluation/geometry/runs/hybrid-live-validation/LIVE_GEMINI_EVALUATION_REPORT.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-live-validation/
+CLASSIFICATION = LIVE_DEVELOPMENT_PILOT (gemini-2.5-flash, OWNER_ATTESTED via verbatim Owner quote in owner-paid-attestation.json, cloud_billing_verified=false, project_id=null; 70/70 HTTP requests used across Run 1 3xHTTP400 prefixItems + Run 2 3xHTTP400 FSM state limit + Run 3 64/64 HTTP 200 STOP, 0 retries, USD 0.340464 reported / USD 0.318308 cache-discounted / USD 0.495793 campaign upper <= USD 4.00) + OFFLINE_CAPTURED_WIRE_REPLAY_SEPARATED — LIVE_GEMINI_MEASURED = YES (VERIFIED_LIVE); LIVE_MATHEMATICAL_WRONG_ANSWER_SERVED = 0/65 (19/19 SERVED match exact symbolic oracle 100%, 4 REGISTERED_DECOMPOSITION + 15 SOURCE_EXPLICIT_SEQUENCE, 0 GENUINE_DISCOVERY, 0 hallucinated serves); LIVE_GEMINI_QUALITY_VALIDATED = NO (false_refusal 38.9%-70.0% from v2 wire/quote friction, 4 R-1 tail cases R1-F02..R1-G02 NOT_MEASURED at GLOBAL_REQUEST_CAP); post-Run-3 TDD wire normalizer & prompt repair frozen at candidate 428515dc (product f60ae29e, 118 files e758e25af26707c2); HYBRID_CUTOVER_BLOCKED (DEFAULT_MODE = LLM_ONLY, HYBRID_ROUTE_MODE = off, CACHE_VERSION = 131); LEGACY_REMOVAL_BLOCKED; frontend/** untouched
+VERIFICATION = LIVE_GEMINI_EVALUATION_REPORT.md; owner-paid-attestation.json; live-pilots-79bbc053/c21-delegated-execution-receipt.json; live-pilots-48372208/c21-delegated-execution-receipt.json; live-pilots-8853c4b0/c21-delegated-execution-receipt.json; live-pilots-8853c4b0/k1-live.jsonl; live-pilots-8853c4b0/s2-live.jsonl; live-pilots-8853c4b0/r1-live.jsonl; ../hybrid-live-gemini-execution/candidate_divergence.json; ../hybrid-live-gemini-execution/frozen-evaluation-candidate.json; ../hybrid-master-backend-replacement/k1-owner-approval.template.json; s2-owner-approval.template.json; r1-owner-approval.template.json
+CODE_COMMIT = f60ae29e5c6d1b39057743ef05948a0ad06f4fca (live Run 3 measured on product 8853c4b0 / candidate 44568bc9)
+CANDIDATE_COMMIT = 428515dc
+MODEL_REQUEST_COUNT = 70
+CORRECTS = HYBRID_MASTER_C24_LIVE_VALIDATION_AND_BACKEND_REPAIR (supersedes LIVE_GEMINI_MEASURED = NO / PAID_PROJECT_NOT_VERIFIED status and updates candidate divergence chain hybrid-live-validation/candidate_divergence.json -> hybrid-live-gemini-execution/candidate_divergence.json and C21 approval templates; C24 report and offline receipts remain byte-for-byte intact)
+CORRECTED_BY = HYBRID_MASTER_C26_LIVE_EXTRACTION_RETEST (its §3.3 / §10 Q7 claim that the live route cuts at a 15 s deadline is wrong: the product route applies HYBRID_LIVE_TIMEOUT_SECONDS 60 s and HYBRID_LIVE_DEADLINE_SECONDS 180 s by default; candidate divergence chain continued by hybrid-live-extraction-retest/candidate_divergence.json; the C25 report and Run 1-3 receipts are unchanged)
+
+## CONTINUATION_ID = HYBRID_MASTER_C26_LIVE_EXTRACTION_RETEST
+
+REPORT = docs/evaluation/geometry/runs/hybrid-live-extraction-retest/HYBRID_LIVE_EXTRACTION_RETEST_REPORT.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-live-extraction-retest/
+CLASSIFICATION = LIVE_REGRESSION_MEASURED on a development-contaminated corpus (K-1/S-2/R-1 70/70 on ONE candidate 180db769, product d331e75b, 118 files 276fc548; new Owner campaign C26 69/80 HTTP requests all HTTP 200 STOP, USD 0.3499129 / 1.00, OWNER_ATTESTED paid tier, canary 10 rows reused under a carried ledger) — false refusal on the 39 positives Run 3 measured 20/39 -> 2/39 (4/41 incl. the 2 never-measured paraphrases, gold also refuses them), 0 mathematically wrong served (37/37 served exact with certificates), 0 negatives served, 7 strict contract mismatches with exact answers; extraction repairs for named-vs-described points, square/rectangle and split side, inferred altitude, segment heights (TDD 7 RED -> 11 GREEN) + tightened v2 instruction; live route timeout verified 60 s / 180 s (C25 15 s statement corrected); LIVE_GEMINI_QUALITY_VALIDATED = NO (contaminated); GENUINE_DISCOVERY_NOT_ESTABLISHED; HYBRID_CUTOVER_BLOCKED; Full T3 FULL_PRODUCT_GATE_PASS at 180db769 (16698 pytest, 1502 vitest); frontend/** untouched
+VERIFICATION = HYBRID_LIVE_EXTRACTION_RETEST_REPORT.md; preregistration.md; c26-vs-run3-analysis.json; captured-wire-replay-d331e75b.jsonl; canary/c21-delegated-execution-receipt.json; canary/c26-global-budget-ledger.json; full/c21-delegated-execution-receipt.json; full/c26-global-budget-ledger.json; full/k1-live.jsonl; full/s2-live.jsonl; full/r1-live.jsonl; full-t3-180db769.json; candidate_divergence.json; frozen-evaluation-candidate.json
+CODE_COMMIT = d331e75b5bbf15722eca77c54e398173eefec98d
+CANDIDATE_COMMIT = 180db769
+MODEL_REQUEST_COUNT = 69
+CORRECTS = HYBRID_MASTER_C25_LIVE_GEMINI_EXECUTION_AND_EVALUATION (live-route timeout statement; candidate divergence chain hybrid-live-gemini-execution/candidate_divergence.json -> hybrid-live-extraction-retest/candidate_divergence.json; approval templates rebound to runner d1dc51d7 / measured_system 276fc548)
+CORRECTED_BY = HYBRID_MASTER_FINAL_BACKEND_PRODUCT_COMPLETION (candidate divergence chain hybrid-live-extraction-retest/candidate_divergence.json -> hybrid-master-final-backend-product/candidate_divergence.json and pilot approval template measured_system rebound to b33629d10b9673e1 -> blobs 6d7755a3 / 590a3c9d / 44d4bc1d; prior candidate 180db769 preserved in hybrid-master-final-backend-product/frozen-evaluation-candidate.json; all C26 live receipts and reports remain byte-for-byte untouched)
+
+## CONTINUATION_ID = HYBRID_MASTER_C27_INDEPENDENT_H1_PREREGISTRATION_AND_CUTOVER_DECISION
+
+REPORT = docs/evaluation/geometry/runs/hybrid-independent-h1/HYBRID_CUTOVER_DECISION.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-independent-h1/
+CLASSIFICATION = PREREGISTERED_LIVE_PAIRED_EVALUATION_PACKAGE + SAFE_CAMPAIGN_BUDGET_HARNESS + OFFLINE_EQUIVALENCE_VERIFICATION (0 live provider calls; product unchanged at d331e75b, frozen candidate 180db769, 118 files 276fc548… MATCH, DEFAULT_MODE = LLM_ONLY, HYBRID_ROUTE_MODE = off, CACHE_VERSION = 131, frontend/** untouched) — finalizes pre-registered technical policy P1 (h1-section-determination-equivalence/1, owner_formal_signoff = NOT_SIGNED_OFF: Case A section+area requires both construct_plane_section and area, Case B area-only forbids construct_plane_section, Case C unasked goals rejected) while keeping Mathematical / Semantic Goal / Strict Contract strictly separate without mutating C21/C26 historical gold labels; refactors run_paired_route_evaluation.py (4ba15bc1) with Decimal + Lock SafeCampaignBudget (campaign_max_requests = 300, campaign_max_usd = 5.00 PENDING_OWNER_DECISION replacing old 52.00 static ceiling, expected actual spend USD 1.50-2.00, conservative worst-case settlement on timeout / HTTP error / missing or partial usageMetadata; 17/17 + 54/54 pytest PASS); hardens score_independent_holdout_equivalence.py (49bd9343; 7/7 pytest PASS) with structural template-clone detection and author-independence provenance verification; C26 remaining budget not reused; H1_AUTHORING_INDEPENDENCE = NOT_ESTABLISHED; H1_MEASUREMENT = NOT_MEASURED; PAIRED_LIVE_EVALUATION_COMPLETE = NO; LIVE_GEMINI_QUALITY_VALIDATED = NO; HYBRID_CUTOVER_BLOCKED; LEGACY_REMOVAL_BLOCKED
+VERIFICATION = HYBRID_CUTOVER_DECISION.md; H1_AUTHORING_HANDOFF.md; H1_PREREGISTRATION.md; H1_CORPUS_INTEGRITY.json; PAIRED_LIVE_BUDGET_PROPOSAL.md; paired-live-owner-approval.template.json; c26-three-tier-verification.json; run.json; README.md
+CODE_COMMIT = d331e75b5bbf15722eca77c54e398173eefec98d (product unchanged; evaluation scripts/tests/docs only)
+CANDIDATE_COMMIT = 180db769
+MODEL_REQUEST_COUNT = 0
+CORRECTS = NONE
+CORRECTED_BY = NONE
+
+## CONTINUATION_ID = HYBRID_MASTER_C28_H1_INTAKE_GATE_AND_EXTERNAL_AUTHOR_HANDOFF
+
+REPORT = docs/evaluation/geometry/runs/hybrid-independent-h1/HYBRID_CUTOVER_DECISION.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-independent-h1/
+CLASSIFICATION = BLOCKED_EXTERNAL_AUTHOR + H1_INTAKE_AND_SCENE3D_BOUNDARY_HARDENING (0 live provider calls; product unchanged at d331e75b, frozen candidate 180db769, 118 files 276fc548… MATCH, DEFAULT_MODE = LLM_ONLY, HYBRID_ROUTE_MODE = off, CACHE_VERSION = 131, frontend/** untouched; C27 publication safety verified main..HEAD scanned=1342 messages=194 violations=0 PASS) — completes self-contained clean authoring package (H1_AUTHORING_HANDOFF.md + h1-corpus-template.json), 10-gate H-1 intake verification in score_independent_holdout_equivalence.py (7ada8a06; 7 solid families and 5 question groups >= 3 SERVE cases each, bidirectional P1 semantic_annotations validation, oracle derivation verification status, paired comparison table renderer; 9/9 pytest PASS), and Scene3D contract boundary + planner composition + clarification + 2x2 paired matrix audit in run_paired_route_evaluation.py (8af7ca1f; 18/18 + 54/54 pytest PASS); EXECUTION_GATE_STATUS = BLOCKED_EXTERNAL_AUTHOR; H1_AUTHORING_INDEPENDENCE = NOT_ESTABLISHED; H1_MEASUREMENT = NOT_MEASURED; PAIRED_LIVE_EVALUATION_COMPLETE = NO; PEDAGOGICAL_HUMAN_VALIDATION = NOT_EVALUATED; HYBRID_CUTOVER_BLOCKED; LEGACY_REMOVAL_BLOCKED
+VERIFICATION = HYBRID_CUTOVER_DECISION.md; H1_AUTHORING_HANDOFF.md; h1-corpus-template.json; H1_PREREGISTRATION.md; H1_CORPUS_INTEGRITY.json; PAIRED_LIVE_BUDGET_PROPOSAL.md; publication-safety-receipt.json; paired-live-owner-approval.template.json; c26-three-tier-verification.json; run.json; README.md
+CODE_COMMIT = d331e75b5bbf15722eca77c54e398173eefec98d (product unchanged; evaluation scripts/tests/docs only)
+CANDIDATE_COMMIT = 180db769
+MODEL_REQUEST_COUNT = 0
+CORRECTS = NONE
+CORRECTED_BY = NONE
+
+## CONTINUATION_ID = HYBRID_MASTER_FINAL_BACKEND_PRODUCT_COMPLETION
+
+REPORT = docs/evaluation/geometry/runs/hybrid-master-backend-replacement/ALGOSIM_FINAL_BACKEND_PRODUCT_REPORT.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-master-backend-replacement/
+CLASSIFICATION = FUNCTIONAL_BACKEND_COMPLETE + OFFLINE_DETERMINISTIC_FIXTURE_TEST + CAPTURED_WIRE_REGRESSION_SEPARATED_FROM_LIVE (0 new live provider calls; NOT INDEPENDENTLY_VALIDATED; NOT PRODUCTION_CUTOVER_APPROVED; H-1 remains BLOCKED_EXTERNAL_AUTHOR; PEDAGOGICAL_HUMAN_VALIDATION = NOT_EVALUATED) — adds deterministic 0-LLM construction_continuity.py (backward-compatible Scene3D step enrichment with step_id, coordinate_frame_id = canonical_chart_v1, depends_on, preconditions, created_ids/reused_ids/highlighted_ids/retired_ids, verification_refs, and 5-part pedagogical step_summary + fail-closed SCENE_BUILD_FAILED continuity validator across 7 discontinuity classes), cleans curved-solid O.O'/S.O/O_sphere_O and compose_quantity learner strings and wires MAT_RANG_BUOC into prefer_declared_plane_names / _vai_mat_cat without leaking auxiliary feet in function_route.py, canonicalizes verbatim-grounded simulation_goals[*].vertex/point -> target_refs in typed_fact_next_extraction.py (4/4 provider surface fingerprints unchanged), enforces unsupported-over-ambiguous refusal precedence in typed_fact_next_bridge.py (R1-F03 OUT_OF_SCOPE), and adds 'điểm chính giữa' + 'đi qua/nối' Source Gate parity in registry.py (geometry-functions/33); C26 70-case captured wire replay 40/41 (97.56%) positive served exact (K-1 10/10, S-2 17/18, R-1 13/13), 29/29 negative refused, 0 wrong-served, 0 continuity violations; R-1 gold replay 18/18 (r1-live-pilot-gold-replay-final.jsonl); Wave 3 72/72 + 72/72 (0 wrong-served); 41/41 preview fixtures regenerated (fixtures-adapter-2-construction-continuity); sequential 140-run perf p50 = 75.17 ms, p95 = 222.64 ms, peak 1.69 MB; product d6a53dc6, frozen candidate 017bfb9f (119 files b33629d10b9673e1…), DEFAULT_MODE = LLM_ONLY, HYBRID_ROUTE_MODE = off, CACHE_VERSION = 131, frontend/** untouched; clean detached Full T3 FULL_PRODUCT_GATE_PASS (16749 pytest, 1502 vitest, full-t3-017bfb9f.json)
+VERIFICATION = ALGOSIM_FINAL_BACKEND_PRODUCT_REPORT.md; full-t3-017bfb9f.json; r1-live-pilot-gold-replay-final.jsonl; fixtures-adapter-2-construction-continuity/manifest.json; k1-owner-approval.template.json; s2-owner-approval.template.json; r1-owner-approval.template.json; ../hybrid-master-final-backend-product/frozen-evaluation-candidate.json; ../hybrid-master-final-backend-product/candidate_divergence.json
+CODE_COMMIT = d6a53dc6d11273f297b7029f0db07476cd81dcfb
+CANDIDATE_COMMIT = 017bfb9f
+MODEL_REQUEST_COUNT = 0
+CORRECTS = HYBRID_MASTER_C26_LIVE_EXTRACTION_RETEST (candidate divergence chain hybrid-live-extraction-retest/candidate_divergence.json -> hybrid-master-final-backend-product/candidate_divergence.json and pilot approval template measured_system rebound to b33629d10b9673e1 -> blobs 6d7755a3 / 590a3c9d / 44d4bc1d; C26 live receipts and reports unchanged)
+CORRECTED_BY = FINAL_HYBRID_ARCHITECTURE_CUTOVER (Owner-directed default production cutover to Hybrid /4, LLM_ONLY/Compiler-C/Adapter-3 retirement, CACHE_VERSION 131 -> 132, candidate divergence chain hybrid-master-final-backend-product/candidate_divergence.json -> hybrid-master-backend-replacement/candidate_divergence.json, prior candidate 017bfb9f preserved in frozen-evaluation-candidate-017bfb9f.json, templates rebound to 1cf8225c / 7200a3bc / a81f822c; C21-C28 and final-backend-product receipts preserved byte-for-byte)
+
+## CONTINUATION_ID = FINAL_HYBRID_ARCHITECTURE_CUTOVER
+
+REPORT = docs/evaluation/geometry/runs/hybrid-master-backend-replacement/ALGOSIM_HYBRID_CUTOVER_FINAL_REPORT.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-master-backend-replacement/
+CLASSIFICATION = OWNER_DIRECTED_DEFAULT_ARCHITECTURE_CUTOVER + OFFLINE_FULL_PRODUCT_VERIFICATION (0 live provider calls; HYBRID_DEFAULT_CUTOVER_COMPLETE = YES; LEGACY_EXECUTION_RETIRED = YES; LEGACY_FULLY_RETIRED = NO; PRODUCTION_DEPLOYMENT_VERIFIED = NO; INDEPENDENT_H1_VALIDATION = NOT_MEASURED; NEW_LIVE_SMOKE_NOT_MEASURED) — replaces POST /api/analyze default route with Hybrid /4 (HYBRID_ROUTE_MODE = live default, staging-replay for dev/test, ALLOW_LIVE_AI=0 kill-switch, 503 INVALID_HYBRID_ROUTE_MODE on off/unknown, zero fallback to LLM_ONLY), retires 18 LEGACY_ONLY product files (pipeline.py, adapter3_simulation.py, geometry_compiler/*, 10 legacy .md skills) + 54 legacy scripts + 91 legacy tests while preserving transcribe.md, semantic_program/route.py (COMPATIBILITY_REQUIRED), exact geometry kernel, Scene3D, construction continuity, auth, classroom, and persistence (frontend/** untouched in cutover); bumps CACHE_VERSION = 132 (ROUTE_D_CACHE_POLICY = 132:route-d); pre-cutover rollback tag pre-hybrid-cutover-f986e897 (f986e897bd266d06d4a9c5fa78c05463b7b247bf); product 52205f45, frozen candidate f5f2c147 (102 measured files 765487a4b48e7d52…); clean detached Full T3 FULL_PRODUCT_GATE_PASS (13762 pytest, 1502 vitest, build PASS, demo 5/5, crash 6/6, full-t3-f5f2c147.json); publication safety range main..HEAD PASS (0 violations)
+VERIFICATION = ALGOSIM_HYBRID_CUTOVER_FINAL_REPORT.md; full-t3-f5f2c147.json; candidate_divergence.json; frozen-evaluation-candidate-017bfb9f.json; k1-owner-approval.template.json; s2-owner-approval.template.json; r1-owner-approval.template.json
+CODE_COMMIT = 52205f45fb66966de7d5b471d471c92d1ea2ac91
+CANDIDATE_COMMIT = f5f2c147
+MODEL_REQUEST_COUNT = 0
+CORRECTS = HYBRID_MASTER_FINAL_BACKEND_PRODUCT_COMPLETION (default routing, retired legacy modules, CACHE_VERSION 132, candidate identity f5f2c147 / 765487a4b48e7d52…, and template blobs 1cf8225c / 7200a3bc / a81f822c; prior candidate 017bfb9f preserved in frozen-evaluation-candidate-017bfb9f.json)
+CORRECTED_BY = NONE
+
 ## WAVE_ID = ALGOSIM_W4_END_TO_END_GEOMETRY_AND_PEDAGOGICAL_SIMULATION
 
 REPORT = docs/evaluation/geometry/runs/geometry-generalization-and-pedagogical-construction/report.md

@@ -1,53 +1,24 @@
 # -*- coding: utf-8 -*-
-"""Hard guard offline (M7.14T §5) — CHỨNG MINH pytest = 0 real API call.
-
-Cơ chế (conftest.py): autouse fixture patch TRANSPORT MẠNG THẬT của httpx →
-mọi request thật raise "Real Gemini API call blocked during offline tests.".
-Hệ quả: toàn bộ suite xanh ⇔ không test nào chạm mạng. Các test dưới đây là
-CANARY: nếu ai đó vô hiệu hóa guard, chúng đỏ ngay.
-"""
+"""Test cơ chế tự vệ của suite: quên mock Gemini → fail ngay, KHÔNG đi mạng."""
 
 import asyncio
-import os
 
 import pytest
 
-from app.ai import gemini, pipeline
+from app.ai import function_calling, gemini
 from conftest import BLOCK_MESSAGE
 
 
-def test_key_that_bi_go_khoi_moi_truong():
-    """backend/.env được load_dotenv nạp lúc import db.py → key THẬT nằm trong
-    os.environ suốt phiên pytest. Guard phải gỡ nó: test quên mock cũng không
-    có gì để xác thực."""
-    assert os.getenv("GEMINI_API_KEY") is None
+def test_quen_mock_call_gemini_bi_chan_tuc_thi():
+    """Nếu 1 test vô tình gọi thẳng gemini.call_gemini thật → nổ ngay với hướng dẫn rõ."""
+    with pytest.raises(RuntimeError) as exc:
+        asyncio.run(gemini.call_gemini("khoa-gia", "transcribe", "noi dung test"))
+    assert BLOCK_MESSAGE in str(exc.value)
 
 
-def test_call_gemini_that_bi_chan_truoc_khi_ra_mang():
-    """Gọi thẳng call_gemini (không mock) → chết ở biên mạng, KHÔNG có request."""
-    with pytest.raises(RuntimeError, match=BLOCK_MESSAGE):
-        asyncio.run(gemini.call_gemini("khoa-that-gia", "sys", "user"))
-
-
-def test_pipeline_quen_mock_cung_bi_chan():
-    """Kịch bản thật sự nguy hiểm: một test mới quên monkeypatch call_gemini.
-    Guard phải nổ TRƯỚC network, không âm thầm đốt quota."""
-    with pytest.raises(RuntimeError, match=BLOCK_MESSAGE):
-        # Phải là đề HÌNH HỌC: `run_pipeline` từ chối mọi miền khác TRƯỚC khi
-        # chạm biên mạng, nên một đề trung tính không bao giờ tới chỗ guard —
-        # test sẽ xanh vì lý do sai (không có call nào, vì không có gì gọi).
-        asyncio.run(pipeline.run_pipeline(
-            "Cho hình chóp S.ABCD, tính khoảng cách từ A đến mặt phẳng (SBD).",
-            "khoa-gia"))
-
-
-def test_guard_khong_chan_asgi_testclient():
-    """TestClient của FastAPI chạy in-process (ASGITransport) — guard chỉ chặn
-    transport MẠNG THẬT nên endpoint test vẫn chạy bình thường."""
-    from fastapi.testclient import TestClient
-
-    from app.main import app
-
-    res = TestClient(app).get("/api/health")
-    assert res.status_code == 200
-    assert res.json()["hasKey"] is False  # key đã bị gỡ
+def test_hybrid_live_transport_quen_mock_cung_bi_chan():
+    """Cũng đúng khi đi từ tuyến Hybrid (`function_calling.live_transport`) mà quên mock."""
+    send = function_calling.live_transport("khoa-gia", require_allow_live_ai=False)
+    with pytest.raises(RuntimeError) as exc:
+        send({"contents": []})
+    assert BLOCK_MESSAGE in str(exc.value)

@@ -137,9 +137,15 @@
 - **NEXT_TEST:** khi nối tuyến D, cổng nối phải được KHAI (như `_CONG_COMPILER`), không lách guard.
 
 ### D-02: Cache identity theo tuyến
-- **STATUS:** PARTIAL — `RoutePolicy` có chế độ preview tuyến D (run `hybrid-route-d-preview-wiring`); `fingerprint()` gồm Registry/Planner/Engine, surface trích xuất, adapter/envelope; preview KHÔNG có cache (`_policy_identity` từ chối policy preview), nên chưa có cache tuyến D nào để cách ly.
-- **BLOCKER:** chỉ khi tuyến D được phục vụ qua `/api/analyze` (chưa được duyệt) mới cần cache tuyến D.
-- **NEXT_TEST:** khi ấy: bộ test hai chiều của `test_route_aware_cache.py` cho chế độ tuyến D.
+- **STATUS:** PROVED offline (hybrid-master, `backend/tests/test_hybrid_route_d_cache_and_rollback.py`) cho tuyến D trên `/api/analyze` opt-in (`HYBRID_V2_LOCAL=offline-replay` + loopback):
+  - Khoá `prepare_local_replay(...).cache_key` gồm tuyến, surface Registry/Planner/Engine/hợp đồng/adapter/envelope, extraction đã ghi, và đề NGUYÊN VĂN (không chuẩn hoá như khoá `LLM_ONLY`).
+  - Nhãn `ROUTE_D_CACHE_POLICY` làm phép cách ly hai chiều: hàng tuyến D không đọc được bằng identity `LLM_ONLY`, và ngược lại (`test_hybrid_v2_local_analyze.py`).
+  - Chỉ lưu SERVED. MISS khi extraction ghi lại khác hoặc surface khác. Hàng không phải phản hồi SERVED ⇒ MISS và bị thay. Xung đột ghi đồng thời không làm hỏng phản hồi.
+  - Hai mutant bị bắt.
+  - Preview `/api/preview/hybrid` vẫn không cache.
+- **LUẬT BUMP (review kiến trúc M-2):** khoá tuyến D chỉ băm hằng phiên bản (`REGISTRY_VERSION`, `PLANNER_VERSION`, `ENGINE_VERSION`, hợp đồng, adapter, envelope), không băm mã. Vì vậy mọi sửa đổi đổi kết quả của kernel/engine/planner/adapter /4 **phải** bump hằng phiên bản tầng ấy (hoặc `CACHE_VERSION`) cùng commit, nếu không hàng SERVED cũ vẫn được phục vụ. Đây là cùng kỷ luật mà cache `LLM_ONLY` đang dựa vào.
+- **BLOCKER:** —. Surface hiện mang `provider_mode=INJECTED_OFFLINE_EXTRACTOR`; một transport live phải thêm định danh model + prompt/schema vào surface trước khi được ghi cache (kiểm ở D-11).
+- **NEXT_TEST:** khi có transport live: MISS khi đổi model/prompt.
 
 ### D-03: Cấu hình theo lượt, không theo biến toàn cục
 - **STATUS:** PROVED — `RoutePolicy` chụp một lần ở biên API; `run_ai_fact_route(contract=…)` chốt hợp đồng một lần mỗi lượt (`test_response_contract_is_one_snapshot_per_call`: trước đó đổi biến toàn cục giữa request và cổng kiểm làm một phản hồi xin theo v3 được phục vụ mà không qua cổng v3).
@@ -194,12 +200,15 @@
 - **NEXT_TEST:** —
 
 ### D-12: Rollback
-- **STATUS:** PARTIAL — tắt cờ là đủ về hành vi; preview không có cache nên không có gì để phục vụ chéo (D-02); một lượt đang chạy giữ ảnh chụp của nó.
-- **BLOCKER:** D-02 khi tuyến D có cache.
-- **NEXT_TEST:** bật → ghi cache → tắt ⇒ MISS; tắt → bật ⇒ MISS.
+- **STATUS:** PROVED offline (hybrid-master, `test_hybrid_route_d_cache_and_rollback.py`).
+  - Rollback được định nghĩa là `ROLLBACK_TO_LEGACY_MODE`: tắt `HYBRID_V2_LOCAL`, có kiểm soát.
+  - Bật → phục vụ + ghi hàng tuyến D → tắt ⇒ `LLM_ONLY` chạy với policy mặc định (fingerprint `None`) và cache riêng của nó. Phản hồi `LLM_ONLY` trùng từng byte dù có hay không có hàng tuyến D. Bật lại ⇒ hàng tuyến D trúng với cùng identity.
+  - Không có `SILENT_LEGACY_FALLBACK`. Thiếu dữ kiện, mâu thuẫn, sai sở hữu, mơ hồ, năng lực chưa hỗ trợ, hình học bất khả, quá hạn và lỗi adapter đều là từ chối có mã: không cảnh, không đáp số, không ghi cache, `run_pipeline` không chạy.
+- **BLOCKER:** —
+- **NEXT_TEST:** —
 
 ### D-13: Quyết định bật
-- **STATUS:** NO-GO — `HYBRID_PRODUCT_ENABLEMENT = NO-GO` cho tới khi D-01…D-12 đạt và owner quyết.
+- **STATUS:** ACTIVE_BY_OWNER_CUTOVER_DIRECTIVE (2026-11-04, `ALGOSIM_HYBRID_CUTOVER_FINAL_REPORT.md`) — Owner đã quyết định chuyển tuyến sản phẩm mặc định `POST /api/analyze` sang Hybrid `/4` (`HYBRID_ROUTE_MODE = live`, `CACHE_VERSION = 132`, gỡ thực thi `LLM_ONLY` / Compiler C / Adapter `/3`; rollback sau cutover là rollback phiên bản triển khai về tag `pre-hybrid-cutover-f986e897` / `f986e897bd266d06d4a9c5fa78c05463b7b247bf`, không còn là đổi cờ môi trường `HYBRID_ROUTE_MODE=off`). Giữ nguyên sự thật nghiên cứu: `INDEPENDENT_H1_VALIDATION = NOT_MEASURED` (GATE-15 / D-11 chưa đo trên tập độc lập H-1) và `PRODUCTION_DEPLOYMENT_VERIFIED = NO`.
 
 ### GATE-20: User & Pedagogical Evaluation
 - **STATUS:** NOT_STARTED

@@ -29,9 +29,10 @@ from typing import Annotated, Any, Literal
 from pydantic import BaseModel, BeforeValidator, ConfigDict, Field, ValidationError, WithJsonSchema
 from pydantic.json_schema import SkipJsonSchema
 
-from .registry import AUXILIARY_RULES, DINH_CAT_CANH, MAT_SONG_SONG, MAT_HAI_DUONG, MAT_VUONG_DUONG, ExactNumber, Label, TuChoi, chuan_hoa
+from .registry import AUXILIARY_RULES, DINH_CAT_CANH, MAT_SONG_SONG, MAT_HAI_DUONG, MAT_VUONG_DUONG, MAT_RANG_BUOC, ExactNumber, Label, TuChoi, chuan_hoa
 from .registry import nhan_cua_de, nhan_phu_da_dung
-from .registry import POINT_PRODUCERS, REGISTRY, doc_ke_hoach, goal_slots, render_call, same_call, planning_contracts
+from .registry import POINT_PRODUCERS, REGISTRY, doc_ke_hoach, goal_slots, parse_descriptor_inputs, planning_contract, planning_contracts, render_call, same_call
+from .registry import POINT_DEFINITIONS, descriptor_contracts
 
 #: /8 (run `goal-directed-function-composition`): goal entry by typed slots (`_toan_hang_muc_tieu`), line partner operand.
 #: /9 (run `geometry-capability-expansion`): `divide_segment` point_def, plane through a point ⊥ a line (`MAT_VUONG_DUONG`).
@@ -47,7 +48,23 @@ from .registry import POINT_PRODUCERS, REGISTRY, doc_ke_hoach, goal_slots, rende
 #: M5 bounded section-area question binding (`diện tích của nó` and grounded named section polygons).
 #: /18 (run `hybrid-v2-w3-f1-cross-sentence-plane-grounding`): propagate declared `plane_name` on all derived plane relations
 #: (`MAT_SONG_SONG`, `MAT_VUONG_DUONG`, `MAT_HAI_DUONG`) and distinguish unasked section-area goals (`NOT_ASKED_IN_SOURCE`).
-PLANNER_VERSION = "geometry-fact-planner/18"
+#: /21 (run `hybrid-master-backend-replacement`): a curved section carries the named point on the axis (`through_point`).
+#: /22 (run `hybrid-master-backend-replacement`): composite geometry relations (`inscribed_in`, `sphere_tangent_plane`,
+#: multi-sphere & axial-host composites) and explicit `composition_classification`.
+#: /23 (run `hybrid-master-backend-replacement`): generalized unhinted `Point` descriptor resolution across goals and
+#: auxiliary planes (`parse_descriptor_inputs`, `_EffectResolver.point`), premise-line `MAT_VUONG_DUONG` anchors, and
+#: 3-way `search_telemetry` + `SEARCH_EXHAUSTED` budget telemetry.
+#: /24 (run `hybrid-master-backend-replacement`, C16): `search_telemetry` classifies by step PROVENANCE recorded at emission
+#: (`source_defined_steps` / `registered_decomposition_steps` / `search_generated_steps`); building a point the source
+#: describes is no longer "discovered" (`route-b-composition-relabel.json`, `r1-composition-relabel.json`).
+#: /25 (C17): a plane the source defines by stated constraints (`plane_constraints`, `_mat_rang_buoc`): witness points
+#: chosen per constraint by contract (`Normal` needs: a stated line ⊥ Q, or the foot of a candidate point on Q).
+#: /26 (C18): a point the source names by a PROPERTY (`registry.POINT_DEFINITIONS`: orthocenter, circumcenter) is
+#: resolved by goal regression into its loci, each locus a typed need (`PerpLine`, `PerpDir`) whose producers come from
+#: function contracts (free slots, structural preconditions); depth exhaustion of one alternative no longer aborts the
+#: others; steps written inside such a regression are `registered` (the definition is the declared rule
+#: `DINH_NGHIA_DIEM`, review MAJOR-1/2): the composition is necessary and served, but it is not discovery.
+PLANNER_VERSION = "geometry-fact-planner/26"
 PlaneName = Annotated[
     str,
     BeforeValidator(lambda v: chuan_hoa(v) if isinstance(v, str) else v),
@@ -63,11 +80,11 @@ _NHAN_PHU = _nhan_tuoi("H")
 MAX_CALLS = 64
 #: Bound of the goal-directed decomposition `MAT_SONG_SONG`: derived planes per problem (each costs two auxiliary points).
 MAX_DERIVED_PLANES = 4
-MAX_EFFECT_DEPTH = 3
-MAX_EFFECT_NEEDS = 32
-MAX_EFFECT_CANDIDATES = 8
+MAX_EFFECT_DEPTH = 4
+MAX_EFFECT_NEEDS = 96
+MAX_EFFECT_CANDIDATES = 48
 MAX_RESULT_LINES = 4
-MAX_RESULT_FEET = 8
+MAX_RESULT_FEET = 16
 
 #: Point kinds the frozen `flat` provider surface offers (485d3834…). The planner accepts more (`TypedFact.point_kind`).
 FLAT_POINT_KINDS = ("midpoint", "centroid", "intersect_line_line", "intersect_line_plane")
@@ -98,7 +115,8 @@ class TypedFact(BaseModel):
     point: Label | None = None
     # The planner also accepts `divide_segment` (Wave 2B); the provider schema stays the frozen `flat` surface (owner
     # decision): a live `flat` extraction cannot emit it until that surface is re-measured (`FLAT_POINT_KINDS`).
-    point_kind: Annotated[Literal["midpoint", "centroid", "intersect_line_line", "intersect_line_plane", "divide_segment"],
+    point_kind: Annotated[Literal["midpoint", "centroid", "intersect_line_line", "intersect_line_plane", "divide_segment",
+                                  "orthogonal_projection", "orthogonal_projection_line", "orthocenter", "circumcenter"],
                           WithJsonSchema({"enum": list(FLAT_POINT_KINDS), "type": "string"})] | None = None
     value: ExactNumber | None = None
     measure: Literal["segment", "base_edge", "lateral_edge", "height", "edge"] | None = Field(
@@ -106,7 +124,8 @@ class TypedFact(BaseModel):
     points_a: list[Label] | None = Field(None, description="toán hạng 1: 1 điểm, 2 điểm = đường thẳng, ≥3 = mặt phẳng")
     points_b: list[Label] | None = Field(None, description="toán hạng 2")
     line_ref: str | None = Field(None, min_length=1, description="ID dữ kiện intersection_line có nguồn, cho distance/projection; không phải nhãn điểm hay chương trình")
-    quantity: Annotated[Literal["volume", "area", "length", "distance", "angle", "volume_ratio", "residual_volume"],
+    # the provider's flat quantities, plus the bridge-only ones (ratio / residual; curved lateral area and radius, /19)
+    quantity: Annotated[Literal[*FLAT_QUANTITIES, "volume_ratio", "residual_volume", "lateral_area", "radius"],
                         WithJsonSchema({"enum": list(FLAT_QUANTITIES), "type": "string"})] | None = None
     plane_relation: Literal["parallel", "perpendicular", "parallel_two_lines"] | None = Field(
         None, description="thiết diện / diện tích thiết diện với mặt cắt cho bằng QUAN HỆ: mặt qua `point`, song song "
@@ -128,10 +147,19 @@ class TypedFact(BaseModel):
     # `boundary_edges` is an author-declared boundary (cyclic edges) the engine must verify, never trust.
     derive_cuts: SkipJsonSchema[bool | None] = None
     boundary_edges: SkipJsonSchema[list[list[Label]] | None] = None
+    # Internal only (curved slice, planner /19): a solid of revolution's declaration — kind, centre / top / rim labels and
+    # the stated radius / height — as the `typed-fact-next/2` bridge read it from one `SolidSpec`.
+    curved: SkipJsonSchema[dict[str, Any] | None] = None
+    # Internal only (C17, planner /25): a plane the source defines by stated relations, as the `/2` bridge read them —
+    # [{"kind": contains_points | parallel_to_line | perpendicular_to_plane, "points": [labels]}]; no construction step.
+    plane_constraints: SkipJsonSchema[list[dict[str, Any]] | None] = None
+    # Internal only (planner /20): a section / the small cone / a goal of THE solid of revolution, as the bridge read it.
+    curved_part: SkipJsonSchema[dict[str, Any] | None] = None
 
 
 #: TypedFact fields only the deterministic bridge writes; a provider response carrying one is refused.
-INTERNAL_FACT_FIELDS = ("cut_edges", "cut_points", "plane_ref", "solid_refs", "derive_cuts", "boundary_edges")
+INTERNAL_FACT_FIELDS = ("cut_edges", "cut_points", "plane_ref", "solid_refs", "derive_cuts", "boundary_edges", "curved",
+                        "curved_part", "plane_constraints")
 
 
 @dataclass
@@ -146,11 +174,18 @@ class KeHoach:
     heights: dict[str, str] = field(default_factory=dict)           # khối → id dữ kiện chiều cao (chẩn đoán tính duy nhất)
     volume_asks: dict[str, str] = field(default_factory=dict)       # id câu hỏi thể tích → khối
     solids: dict[str, "_Khoi"] = field(default_factory=dict)
+    curved_solids: dict[str, TypedFact] = field(default_factory=dict)
     derived_planes: dict[tuple, dict] = field(default_factory=dict)  # (khối, điểm, mặt tham chiếu) → khai báo `MAT_SONG_SONG`
     # A question plane named by > 3 labels whose function slot takes three, `{"call": id, "labels": [...]}`: the engine
     # checks every label (`kiem_mat_viet`), measures through a non-collinear triple of them (`chon_ba_mat`) and shows the
     # full name — the call keeps the registry's three-label contract, nothing is dropped unchecked (review I-1).
     named_planes: list[dict[str, Any]] = field(default_factory=list)
+    composition_classification: str = "SCHEMA_TRANSLATION"
+    search_telemetry: dict[str, Any] = field(default_factory=dict)
+    #: call id → source_defined (builds a point the source describes) | registered (a declared rule's step) |
+    #: search_generated (a producer the effect search chose for a need neither describes); untagged planner calls are
+    #: steps of a declared decomposition (`_mat_qua_diem`, `_mat_vuong_duong`, `_dinh_cat_canh`, curved composites)
+    step_provenance: dict[str, str] = field(default_factory=dict)
     resolver: Any = field(default=None, repr=False)  # ephemeral view of existing calls; no geometry/semantic state
 
 
@@ -224,7 +259,7 @@ def doc_du_kien(raw: Any) -> list[TypedFact]:
         raise TuChoi("SCHEMA_INVALID", "id dữ kiện trùng")
     for f in facts:
         required = _CAN[f.kind]
-        if f.kind == "question" and f.point_kind is not None:
+        if f.kind == "question" and f.point_kind is not None and f.plane_relation is None:
             _doc_toan_hang_mo_ta(f)
         if f.line_ref is not None:
             if f.kind == "question" and f.quantity == "distance" and (len(f.points_a or []) == 1 or f.point_kind):
@@ -234,14 +269,44 @@ def doc_du_kien(raw: Any) -> list[TypedFact]:
                 required = ("point", "at", "line_ref")
             else:
                 raise TuChoi("SCHEMA_INVALID", f"{f.id}: line_ref chỉ cho distance / projection", (f.id,))
-        if f.kind == "point_def" and f.point_kind in ("intersect_line_line", "intersect_line_plane"):
-            required = ("point", "point_kind", "points_a", "points_b")
-        if f.kind == "point_def" and f.point_kind == "divide_segment":       # the ratio t = AP/AB rides on `value`
-            required = ("point", "point_kind", "points", "value")
+        if f.curved is not None:                        # a solid of revolution: kind + centre, never a polyhedral type
+            from app.simulation.geometry.curved import LOAI_TU_NGUON
+
+            if (f.kind != "solid" or f.solid_type is not None or f.curved.get("kind") not in LOAI_TU_NGUON):
+                raise TuChoi("SCHEMA_INVALID", f"{f.id}: khối tròn xoay cần loại (trụ, nón, cầu)", (f.id,))
+            required = ("solid",)
+        if f.curved_part is not None:                   # a part / relation of a solid of revolution: owner + its own fields
+            if f.curved_part.get("role") not in ("section", "derived", "ask", "tangent_plane") or f.points or f.solid_type:
+                raise TuChoi("SCHEMA_INVALID", f"{f.id}: phần của khối tròn xoay không hợp lệ", (f.id,))
+            if f.curved_part.get("role") == "tangent_plane":
+                pl = f.curved_part.get("plane") or []
+                if len(pl) < 3 or len(set(pl)) != len(pl):
+                    raise TuChoi("FACT_INCOMPLETE", f"{f.id}: mặt tiếp xúc cần ít nhất ba nhãn phân biệt", (f.id,))
+            required = ("solid",)
+        if f.kind == "point_def":
+            if f.point_kind not in ("midpoint", "centroid", "intersect_line_line", "intersect_line_plane", "divide_segment"):
+                raise TuChoi("SCHEMA_INVALID", f"{f.id}: point_def không hỗ trợ point_kind={f.point_kind!r}", (f.id,))
+            if f.point_kind in ("intersect_line_line", "intersect_line_plane"):
+                required = ("point", "point_kind", "points_a", "points_b")
+            elif f.point_kind == "divide_segment":       # the ratio t = AP/AB rides on `value`
+                required = ("point", "point_kind", "points", "value")
+        if f.plane_constraints is not None:             # C17: a plane the source defines by stated relations only
+            if (f.kind not in ("section", "question") or f.plane_relation or f.point or f.points or f.point_kind
+                    or not f.plane_constraints):
+                raise TuChoi("SCHEMA_INVALID", f"{f.id}: mặt cho bằng ràng buộc chỉ cho thiết diện, thay cho điểm/quan hệ", (f.id,))
+            required = ("solid",) + (("quantity",) if f.kind == "question" else ())
         if f.plane_relation is not None:                # mặt cắt cho bằng quan hệ: điểm đi qua + mặt tham chiếu, không ba điểm
-            if f.kind not in ("section", "question") or f.points:
+            if f.kind not in ("section", "question") or (f.points and f.point_kind is None) or (f.point and f.point_kind is not None):
                 raise TuChoi("SCHEMA_INVALID", f"{f.id}: plane_relation chỉ cho thiết diện, và thay cho `points`", (f.id,))
-            required = ("solid", "point", "points_b") + (("quantity",) if f.kind == "question" else ())
+            if f.point_kind is not None:
+                required = ("solid", "point_kind", "points", "points_b") + (("quantity",) if f.kind == "question" else ())
+                dcs = descriptor_contracts(f.point_kind)
+                if not dcs:
+                    raise TuChoi("UNSUPPORTED_CAPABILITY", f"{f.id}: không hàm nào của thư viện dựng được {f.point_kind}", (f.id,))
+                if not any(parse_descriptor_inputs(c, f.points or ()) is not None for c in dcs):
+                    raise TuChoi("FACT_INCOMPLETE", f"{f.id}: toán hạng của {f.point_kind} không hợp lệ", (f.id,))
+            else:
+                required = ("solid", "point", "points_b") + (("quantity",) if f.kind == "question" else ())
             if f.plane_relation == "parallel_two_lines":
                 required += ("points_a", "plane_name")
                 for line in (f.points_a, f.points_b):
@@ -251,7 +316,7 @@ def doc_du_kien(raw: Any) -> list[TypedFact]:
                         raise TuChoi("DEGENERATE_LINE", f"{f.id}: hai đầu mút đường trùng nhau", (f.id,))
         if f.cut_edges is not None or f.cut_points is not None or f.derive_cuts or f.boundary_edges is not None:
             # an empty stated list is meaningful only with `derive_cuts` (`/2`); `/1` never writes one
-            if (f.kind != "section" or f.plane_relation is None or f.cut_edges is None
+            if (f.kind != "section" or (f.plane_relation is None and f.plane_constraints is None) or f.cut_edges is None
                     or (not f.cut_edges and not f.derive_cuts)):
                 raise TuChoi("SCHEMA_INVALID", f"{f.id}: cạnh bị cắt chỉ cho thiết diện của mặt cho bằng quan hệ", (f.id,))
             vong = [frozenset(e) for e in f.boundary_edges or ()]
@@ -324,8 +389,12 @@ def _toan_hang_muc_tieu(f: TypedFact, contract) -> tuple | None:
     slots. The described point fills the first slot; `points_a` (its named partner on a line, one label) the next Point
     slot; `points_b` the rest — one label per Point slot, exactly two labels for a Line slot, ≥ 3 for a Plane slot. Each
     list fills only the slots of its own operand: a position is never guessed inside a list."""
+    dcs = descriptor_contracts(f.point_kind)
+    parsed = next((r for c in dcs if (r := parse_descriptor_inputs(c, f.points or ())) is not None), None)
+    if parsed is None:
+        return None
     kinds = [k for _s, k in goal_slots(contract)]
-    head = [("desc", f.point_kind, tuple(sorted(f.points or [])))] + list(f.points_a or [])
+    head = [("desc", f.point_kind, parsed[0])] + list(f.points_a or [])
     if len(head) >= len(kinds) or any(k != "Point" for k in kinds[:len(head)]):
         return None
     rest, b = kinds[len(head):], list(f.points_b or [])
@@ -350,13 +419,12 @@ def _doc_toan_hang_mo_ta(f: TypedFact) -> None:
                      "(point_kind + points; points_a chỉ là điểm thứ hai của một đường; không point)", (f.id,))
     if f.quantity != "distance" and not goals:
         raise TuChoi("UNSUPPORTED_CAPABILITY", f"{f.id}: chưa có hợp đồng mục tiêu cho {f.quantity} với điểm được mô tả", (f.id,))
-    contracts = [s.planning for s in REGISTRY.values() if s.planning is not None and s.planning.descriptor == f.point_kind]
+    contracts = descriptor_contracts(f.point_kind)
     if not contracts:
         raise TuChoi("UNSUPPORTED_CAPABILITY", f"{f.id}: không hàm nào của thư viện dựng được {f.point_kind}", (f.id,))
     pts = f.points or []
-    if len(set(pts)) != len(pts) or all(len(c.inputs) != len(pts) for c in contracts):
-        raise TuChoi("FACT_INCOMPLETE", f"{f.id}: {f.point_kind} cần {sorted({len(c.inputs) for c in contracts})} điểm "
-                     "phân biệt", (f.id,))
+    if not any(parse_descriptor_inputs(c, pts) is not None for c in contracts):
+        raise TuChoi("FACT_INCOMPLETE", f"{f.id}: {f.point_kind} cần toán hạng phân biệt đúng kiểu hợp đồng", (f.id,))
     if goals:
         if f.line_ref or not any(_toan_hang_muc_tieu(f, c) for c in goals):
             raise TuChoi('FACT_INCOMPLETE', f'{f.id}: toán hạng của mục tiêu {f.quantity} không điền đúng ô của hợp đồng '
@@ -365,19 +433,131 @@ def _doc_toan_hang_mo_ta(f: TypedFact) -> None:
         raise TuChoi("FACT_INCOMPLETE", f"{f.id}: thiếu đích của khoảng cách (đường, mặt hay line_ref)", (f.id,))
 
 
+#: Question quantity on a solid of revolution → its ask (curved slice, planner /19).
+_HOI_CONG = {"volume": "ask_curved_volume", "lateral_area": "ask_lateral_area", "area": "ask_surface_area",
+             "radius": "ask_radius"}
+
+
+#: A goal on a part of the solid of revolution → its ask (planner /20).
+_HOI_PHAN_CONG = {"area": "ask_curved_section_area", "radius": "ask_curved_section_radius",
+                  "volume_ratio": "ask_curved_volume_ratio", "residual_volume": "ask_curved_residual_volume"}
+
+
+def _ke_hoach_cong(facts: list[TypedFact], k: KeHoach) -> KeHoach:
+    """Standalone solid of revolution, or one axial host (`cylinder`/`cone`) with ≥ 1 anchored spheres (`circumscribes` /
+    `inscribed_in`). Unanchored multi-curved or unsupported mixed facts are refused fail-closed."""
+    unanchored = [f for f in facts if f.curved and not f.curved.get("circumscribes") and not f.curved.get("inscribed_in")]
+    anchored = [f for f in facts if f.curved and (f.curved.get("circumscribes") or f.curved.get("inscribed_in"))]
+    if len(unanchored) != 1:
+        raise TuChoi("CURVED_RELATION_UNSUPPORTED", "chỉ hỗ trợ một khối tròn xoay gốc trên tuyến này",
+                     tuple(f.id for f in facts if f.curved))
+    s = unanchored[0]
+    cv = s.curved
+
+    def phat(fid: str, fn: str, args: dict, quotes: list[str], luat: str) -> None:
+        k.calls.append({"id": fid, "fn": fn, "args": args, "source": {"quotes": list(dict.fromkeys(quotes))}})
+        k.trace.append({"fact": fid, "rule": luat, "fn": fn, "call": fid})
+
+    phat(s.id, "curved_solid", {"kind": cv["kind"], "solid": s.solid, "center": cv["center"], "top": cv.get("top"),
+                                "rim": cv.get("rim"), "radius": cv.get("radius"), "height": cv.get("height")},
+         s.quotes, f"solid({cv['kind']})→curved_solid")
+    from app.simulation.geometry import curved as CV
+
+    known_curved = {s.solid: s}
+    host_kc = CV.KHOI_CONG[CV.LOAI_TU_NGUON[cv["kind"]]]
+    for af in anchored:
+        acv = af.curved
+        akind = "circumscribes" if acv.get("circumscribes") else "inscribed_in"
+        anch_kc = CV.KHOI_CONG[CV.LOAI_TU_NGUON[acv["kind"]]]
+        if not host_kc.co_truc or anch_kc.co_truc or acv.get(akind) != s.solid:
+            raise TuChoi("CURVED_RELATION_UNSUPPORTED", f"{af.id}: quan hệ {akind} chưa hỗ trợ cho {acv['kind']} trên {cv['kind']}",
+                         (af.id,))
+        if af.solid in known_curved:
+            raise TuChoi("AMBIGUOUS_REFERENCE", f"{af.id}: ký hiệu khối cong {af.solid!r} bị trùng", (af.id,))
+        known_curved[af.solid] = af
+        phat(af.id, "curved_solid",
+             {"kind": acv["kind"], "solid": af.solid, "center": acv.get("center"), "top": acv.get("top"),
+              "rim": acv.get("rim"), "radius": acv.get("radius"), "height": acv.get("height"),
+              akind: s.solid},
+             af.quotes, f"solid({acv['kind']},{akind}={s.solid})→curved_solid")
+    if anchored:
+        k.composition_classification = "BOUNDED_RULE_COMPOSITION"
+    for f in facts:
+        if f is s or f in anchored:
+            continue
+        cp = f.curved_part or {}
+        if cp.get("role") == "section" and not anchored:
+            phat(f.id, "curved_section", {"solid": s.solid, "section": f.id, "kind": cp["kind"], "plane": cp.get("plane"),
+                                          "distance": cp.get("distance"), "ratio": cp.get("ratio"),
+                                          "point": cp.get("point")},
+                 f.quotes, f"section({cp['kind']})→curved_section")
+            k.composition_classification = "BOUNDED_RULE_COMPOSITION"
+        elif cp.get("role") == "derived" and not anchored:
+            phat(f.id, "curved_subsolid", {"solid": s.solid, "section": cp["section"], "derived": cp["derived"],
+                                           "apex": cp["apex"]}, f.quotes, "derived_solid→curved_subsolid")
+            k.composition_classification = "BOUNDED_RULE_COMPOSITION"
+        elif cp.get("role") == "ask" and f.quantity in _HOI_PHAN_CONG and not anchored:
+            fn = _HOI_PHAN_CONG[f.quantity]
+            args = ({"solid": s.solid, "section": cp["section"]} if "section" in cp
+                    else {"first": cp["pair"][0], "second": cp["pair"][1]})
+            phat(f.id, fn, args, f.quotes, f"question({f.quantity})→{fn}")
+        elif f.kind == "length" and f.measure == "segment" and f.points and f.value:
+            phat(f.id, "segment_length", {"segment": f.points, "value": f.value}, f.quotes, "length(segment)→segment_length")
+        elif f.kind == "question" and f.quantity in _HOI_CONG and f.solid in known_curved:
+            phat(f.id, _HOI_CONG[f.quantity], {"solid": f.solid}, f.quotes, f"question({f.quantity})→{_HOI_CONG[f.quantity]}")
+        else:
+            raise TuChoi("CURVED_RELATION_UNSUPPORTED", f"{f.id}: dữ kiện {f.kind} chưa có quan hệ đã chứng nhận với khối "
+                         "tròn xoay trên planner", (f.id,))
+    k.search_telemetry = {
+        "classification": (
+            "REGISTERED_DECOMPOSITION"
+            if k.composition_classification == "BOUNDED_RULE_COMPOSITION"
+            else "SOURCE_EXPLICIT_SEQUENCE"
+        ),
+        "explored_states": 0,
+        "candidate_evaluations": 0,
+        "search_depth": 0,
+        "reused_intermediates": 0,
+        **_nguon_goc_buoc(k),
+        "selected_functions": [c["fn"] for c in k.calls],
+        "available_effects": sorted({pc.effect.kind for sp in REGISTRY.values() for pc in planning_contracts(sp)}),
+        "search_budget": {
+            "max_depth": MAX_EFFECT_DEPTH,
+            "max_needs": MAX_EFFECT_NEEDS,
+            "max_candidates": MAX_EFFECT_CANDIDATES,
+            "max_fresh_points": MAX_RESULT_FEET,
+            "max_calls": MAX_CALLS,
+        },
+    }
+    return k
+
+
 def lap_ke_hoach(raw: Any, problem_text: str = "") -> KeHoach:
     """Dữ kiện có kiểu → kế hoạch lời gọi. Từ chối (`TuChoi`) khi dữ kiện mơ hồ, có điều kiện, thiếu ô, hay không ánh xạ được.
     `problem_text` chỉ dùng để chọn nhãn điểm phụ không trùng đề (cổng nguồn kiểm lại độc lập)."""
     facts = doc_du_kien(raw)
     k = KeHoach()
     k.fact_ids = {f.id for f in facts}
-    k.taken = nhan_cua_de(problem_text) | nhan_phu_da_dung(problem_text) | {n for f in facts for v in (f.points, f.points_a, f.points_b, [f.at, f.point],
-                                                                       _nhan(f.solid or "")) for n in (v or []) if n}
+    k.taken = (nhan_cua_de(problem_text) | nhan_phu_da_dung(problem_text) | {
+        n for f in facts for v in (f.points, f.points_a, f.points_b, [f.at, f.point], _nhan(f.solid or ""),
+                                   (f.curved_part or {}).get("plane"), [(f.curved_part or {}).get("point")])
+        for n in (v or []) if n
+    } | ({f.curved.get("center") for f in facts if f.curved} - {None}))
     if mo := [f.id for f in facts if f.ambiguous]:
         raise TuChoi("AMBIGUOUS_FACT", f"AI đánh dấu mơ hồ: {mo} — không đoán cách hiểu", tuple(mo))
     if dk := [f.id for f in facts if f.role == "condition"]:
         raise TuChoi("CONDITIONAL_CLAUSE", f"dữ kiện trong mệnh đề điều kiện {dk} — không phải giả thiết vô điều kiện", tuple(dk))
+    has_poly = any(f.kind == "solid" and f.curved is None and f.role != "question" and f.plane_ref is None for f in facts)
+    if not has_poly and any(f.curved for f in facts):
+        return _ke_hoach_cong(facts, k)
+    if any(f.curved and not f.curved.get("circumscribes") and not f.curved.get("inscribed_in") for f in facts):
+        return _ke_hoach_cong(facts, k)
     for f in facts:
+        if f.curved and (f.curved.get("circumscribes") or f.curved.get("inscribed_in")):
+            if f.solid in k.curved_solids:
+                raise TuChoi("AMBIGUOUS_REFERENCE", f"{f.id}: ký hiệu khối cong {f.solid!r} bị trùng", (f.id,))
+            k.curved_solids[f.solid] = f
+            continue
         if f.kind == "solid" and f.role != "question" and f.plane_ref is None:
             kh = _doc_khoi(f)
             k.solids[kh.ky_hieu] = kh
@@ -421,6 +601,15 @@ def lap_ke_hoach(raw: Any, problem_text: str = "") -> KeHoach:
                                               "lăng trụ đều / lập phương ⇒ đáy đa giác đều")
             elif kh.loai == "cuboid":
                 phat(kh.fact + "_day", "rectangle", {"vertices": kh.day}, kh.quotes, "hình hộp chữ nhật ⇒ đáy hình chữ nhật")
+    for sf in k.curved_solids.values():
+        cv = sf.curved
+        anchor_kind = "circumscribes" if cv.get("circumscribes") else "inscribed_in"
+        poly_kh = khoi_cua(cv[anchor_kind], sf)
+        phat(sf.id, "curved_solid",
+             {"kind": cv["kind"], "solid": sf.solid, "center": cv.get("center"), "top": cv.get("top"),
+              "rim": cv.get("rim"), "radius": cv.get("radius"), "height": cv.get("height"),
+              anchor_kind: poly_kh.ten},
+             sf.quotes, f"solid({cv['kind']},{anchor_kind}={poly_kh.ten})→curved_solid")
 
     # Bind all explicit producers before resolving goals, independently of provider order.
     def anh_xa(f: TypedFact) -> None:
@@ -474,12 +663,54 @@ def lap_ke_hoach(raw: Any, problem_text: str = "") -> KeHoach:
     _sap_xep_phu_thuoc_loi_goi(k)
     if k.resolver.used:
         _bind_result_dependencies(k)
+    k.composition_classification = (
+        "GENERALIZED_PRIMITIVE_COMPOSITION"
+        if k.resolver.used
+        else "BOUNDED_RULE_COMPOSITION"
+        if (k.derived_planes or k.curved_solids or len(k.solids) > 1 or any(c["fn"] == "sphere_tangent_plane" for c in k.calls))
+        else "SCHEMA_TRANSLATION"
+    )
+    # C16: DISCOVERED only with a step the effect search chose for a need the source does not describe and no declared
+    # rule supplies — before /24, building the point a question describes ("effect-chain", "point_chain") counted
+    steps = _nguon_goc_buoc(k)
+    has_registered_decomp = (
+        bool(steps["registered_decomposition_steps"])
+        or any(d.get("rule") != "effect-chain" for d in k.auxiliary)
+        or bool(k.derived_planes)
+        or bool(k.curved_solids)
+        or len(k.solids) > 1
+        or any(c["fn"] == "sphere_tangent_plane" for c in k.calls)
+    )
+    k.search_telemetry = {
+        "classification": (
+            "DISCOVERED_FUNCTION_COMPOSITION"
+            if steps["search_generated_steps"]
+            else "REGISTERED_DECOMPOSITION"
+            if has_registered_decomp
+            else "SOURCE_EXPLICIT_SEQUENCE"
+        ),
+        "explored_states": k.resolver.needs,
+        "candidate_evaluations": k.resolver.candidates,
+        "search_depth": k.resolver.depth_max,
+        "reused_intermediates": k.resolver.reused,
+        **steps,
+        "selected_functions": [c["fn"] for c in k.calls],
+        "available_effects": sorted({pc.effect.kind for s in REGISTRY.values() for pc in planning_contracts(s)}),
+        "search_budget": {
+            "max_depth": MAX_EFFECT_DEPTH,
+            "max_needs": MAX_EFFECT_NEEDS,
+            "max_candidates": MAX_EFFECT_CANDIDATES,
+            "max_fresh_points": MAX_RESULT_FEET,
+            "max_calls": MAX_CALLS,
+        },
+    }
     return k
 
 
 _NON_POINT_ARG_KEYS = frozenset({
     "line_ref", "solid", "numerator_solid", "denominator_solid",
     "original_solid", "subtracted_solids", "value", "side", "reason", "right",
+    "circumscribes", "inscribed_in", "kind", "radius", "height",
 })
 
 
@@ -569,6 +800,16 @@ def _sap_xep_phu_thuoc_loi_goi(k: KeHoach) -> None:
             if not is_apex_foot_proj and pt not in solid_vertices:
                 point_producers.setdefault(pt, []).append(c["id"])
                 produced_point_of_call[c["id"]] = pt
+        elif fn == "curved_solid" and isinstance(a.get("center"), str):
+            pt = a["center"]
+            if pt not in solid_vertices and pt not in explicit_point_producers:
+                point_producers.setdefault(pt, []).append(c["id"])
+                produced_point_of_call[c["id"]] = pt
+        elif fn == "sphere_tangent_plane" and isinstance(a.get("point"), str):
+            pt = a["point"]
+            if pt not in solid_vertices and pt not in explicit_point_producers:
+                point_producers.setdefault(pt, []).append(c["id"])
+                produced_point_of_call[c["id"]] = pt
 
     direct_deps: dict[str, set[str]] = {c["id"]: set() for c in calls}
     consumed_points_of_call: dict[str, list[str]] = {}
@@ -603,6 +844,17 @@ def _sap_xep_phu_thuoc_loi_goi(k: KeHoach) -> None:
                     direct_deps[v["id"]].add(kh.fact)
 
     for u in calls:
+        if u["fn"] == "curved_solid":
+            ua = u.get("args") or {}
+            u_solid = ua.get("solid")
+            host_ten = ua.get("circumscribes") or ua.get("inscribed_in")
+            if host_ten:
+                for kh in k.solids.values():
+                    if kh.ten == host_ten and kh.fact in by_id and kh.fact != u["id"]:
+                        direct_deps[u["id"]].add(kh.fact)
+            for v in calls:
+                if v["fn"] in (*_HOI_CONG.values(), "sphere_tangent_plane") and (v.get("args") or {}).get("solid") == u_solid:
+                    direct_deps[v["id"]].add(u["id"])
         if u["fn"] == "section":
             u_solid = (u.get("args") or {}).get("solid")
             u_plane = frozenset((u.get("args") or {}).get("plane") or ())
@@ -614,12 +866,12 @@ def _sap_xep_phu_thuoc_loi_goi(k: KeHoach) -> None:
                 ):
                     direct_deps[v["id"]].add(u["id"])
 
-    # Determine goal-reachable calls (ask_*, section, explicit line_ref / depends_on)
+    # Determine goal-reachable calls (ask_*, section, sphere_tangent_plane, explicit line_ref / depends_on)
     goal_roots = [
         c["id"]
         for c in calls
         if c["fn"].startswith("ask_")
-        or c["fn"] == "section"
+        or c["fn"] in ("section", "sphere_tangent_plane")
         or bool(c.get("depends_on"))
         or bool((c.get("args") or {}).get("line_ref"))
     ]
@@ -830,6 +1082,13 @@ def _anh_xa(f: TypedFact, k: KeHoach, ten: dict, deu: dict, khoi_cua, phat) -> d
         x, y = f.points
         dinh, chan = (x, y) if x == kh.dinh else (y, x)
         return phat(f.id, "altitude", {"apex": dinh, "foot": chan, "solid": kh.ten}, q, "altitude")
+    if f.curved_part and f.curved_part.get("role") == "tangent_plane":
+        if f.solid not in k.curved_solids:
+            raise TuChoi("UNKNOWN_SOLID", f"{f.id}: mặt cầu {f.solid!r} không có trong dữ kiện", (f.id,))
+        cp = f.curved_part
+        return phat(f.id, "sphere_tangent_plane",
+                    {"solid": f.solid, "plane": cp["plane"], **({"point": cp["point"]} if cp.get("point") else {})},
+                    q, "tangent_to→sphere_tangent_plane")
     if f.kind == "projection":
         if f.line_ref:
             ref = k.resolver.aliases.get(f.line_ref,f.line_ref)
@@ -850,12 +1109,16 @@ def _anh_xa(f: TypedFact, k: KeHoach, ten: dict, deu: dict, khoi_cua, phat) -> d
         if f.point_kind == "divide_segment":
             return phat(f.id, "divide_segment", {"point": f.point, "segment": f.points, "ratio": _ty_so(f)}, q,
                         "point_def(divide_segment)")
-        fn = "midpoint" if f.point_kind == "midpoint" else "centroid"
-        args = {"point": f.point, ("segment" if fn == "midpoint" else "polygon"): f.points}
-        return phat(f.id, fn, args, q, f"point_def({f.point_kind})")
-    if f.kind == "section" and f.plane_relation:                     # mục tiêu: thiết diện với một mặt DỰNG từ quan hệ
+        if f.point_kind in ("midpoint", "centroid"):
+            fn = f.point_kind
+            args = {"point": f.point, ("segment" if fn == "midpoint" else "polygon"): f.points}
+            return phat(f.id, fn, args, q, f"point_def({f.point_kind})")
+        raise TuChoi("SCHEMA_INVALID", f"{f.id}: point_def không hỗ trợ point_kind={f.point_kind!r}", (f.id,))
+    if f.kind == "section" and (f.plane_relation or f.plane_constraints):   # thiết diện với một mặt DỰNG từ quan hệ
         c = _mat_qua_diem(f, q, k, phat, khoi_cua(f.solid, f).ten, "section")
-        if f.cut_edges or (f.cut_edges is not None and f.derive_cuts):      # `/2`: no stated cut, vertices derived (D6)
+        if f.plane_constraints and f.cut_edges:
+            raise TuChoi("UNSUPPORTED_CAPABILITY", f"{f.id}: giao điểm khai sẵn trên mặt cho bằng ràng buộc chưa hỗ trợ", (f.id,))
+        if not f.plane_constraints and (f.cut_edges or (f.cut_edges is not None and f.derive_cuts)):      # `/2`: no stated cut, vertices derived (D6)
             _dinh_cat_canh(f, k, phat, khoi_cua(f.solid, f))
         return c
     if f.kind == "section":                                         # dựng thiết diện: khối × mặt phẳng qua ba điểm có tên
@@ -1004,6 +1267,14 @@ def _hoi_dien_tich_thiet_dien_phu(f: TypedFact, q: list[str], k: KeHoach, khoi_c
 
 def _cau_hoi(f: TypedFact, q: list[str], k: KeHoach, khoi_cua, phat) -> dict:
     n = f.quantity
+    if f.solid in k.curved_solids:
+        if f.role == "prove":
+            raise TuChoi("GOAL_CLAUSE_NOT_PREMISE", f"{f.id}: đại lượng khối tròn xoay là điều phải chứng minh, chưa hỗ trợ", (f.id,))
+        if f.negated:
+            raise TuChoi("NEGATED_CLAUSE", f"{f.id}: câu hỏi khối tròn xoay bị phủ định", (f.id,))
+        if n not in _HOI_CONG:
+            raise TuChoi("UNSUPPORTED_CAPABILITY", f"{f.id}: câu hỏi {n!r} chưa hỗ trợ trên khối tròn xoay", (f.id,))
+        return phat(f.id, _HOI_CONG[n], {"solid": f.solid}, q, f"question({n})→{_HOI_CONG[n]}")
     # Diện tích THIẾT DIỆN chỉ khi câu hỏi gọi tên đúng đối tượng ấy ("diện tích (của) thiết diện"); "diện tích tam giác MAB"
     # có ô `solid` vẫn là đa giác; một dữ kiện hỏi CẢ HAI là mơ hồ (review 2, I2). Cổng nguồn kiểm lại cụm mặt cắt.
     hoi_td = any(_DIEN_TICH_THIET_DIEN.search(x) for x in q)
@@ -1015,9 +1286,9 @@ def _cau_hoi(f: TypedFact, q: list[str], k: KeHoach, khoi_cua, phat) -> dict:
             if not any(re.search(r"diện\s+tích", x, re.IGNORECASE) for x in q):
                 raise TuChoi("NOT_ASKED_IN_SOURCE", f"{f.id}: nguồn không hỏi diện tích thiết diện", (f.id,))
             raise TuChoi("SOURCE_OBJECT_MISMATCH", f"{f.id}: câu hỏi diện tích không gọi đúng thiết diện đã khai", (f.id,))
-    if n == "area" and f.plane_relation and hoi_td and not f.negated and f.role == "question":
+    if n == "area" and (f.plane_relation or f.plane_constraints) and hoi_td and not f.negated and f.role == "question":
         return _mat_qua_diem(f, q, k, phat, khoi_cua(f.solid, f).ten, "ask_section_area")
-    if f.plane_relation:
+    if f.plane_relation or f.plane_constraints:
         raise TuChoi("UNSUPPORTED_CAPABILITY", f"{f.id}: mặt cho bằng quan hệ chỉ dùng cho thiết diện / diện tích thiết diện",
                      (f.id,))
     if n == "area" and f.solid and len(f.points or []) >= 3 and hoi_td:
@@ -1042,7 +1313,9 @@ def _cau_hoi(f: TypedFact, q: list[str], k: KeHoach, khoi_cua, phat) -> dict:
         if len(b) > 3 and not f.line_ref:
             k.named_planes.append({"call": f.id, "labels": b})
         target = (("result", f.line_ref) if f.line_ref else ("named", tuple(sorted(b))) if len(b) == 2 else tuple(b[:3]))
-        return k.resolver.distance(f, ("desc", f.point_kind, tuple(sorted(f.points))), target)
+        dcs = descriptor_contracts(f.point_kind)
+        parsed = next(r for c in dcs if (r := parse_descriptor_inputs(c, f.points or ())) is not None)
+        return k.resolver.distance(f, ("desc", f.point_kind, parsed[0]), target)
     if f.line_ref:
         return k.resolver.distance(f, f.points_a[0], ("result", f.line_ref))
     if n == "volume":
@@ -1124,6 +1397,15 @@ def _cau_hoi(f: TypedFact, q: list[str], k: KeHoach, khoi_cua, phat) -> dict:
     raise TuChoi("UNSUPPORTED_CAPABILITY", f"{f.id}: câu hỏi {n} giữa {loai} chưa có hàm", (f.id,))
 
 
+def _phan_giai_diem_mat_phu(f: TypedFact, k: KeHoach) -> tuple[str, list[dict] | None, dict | None, list[str]]:
+    if f.point is not None:
+        return f.point, None, None, []
+    dcs = descriptor_contracts(f.point_kind)
+    parsed = next(r for c in dcs if (r := parse_descriptor_inputs(c, f.points or ())) is not None)
+    m, chain, p_labels = k.resolver.point(f, ("desc", f.point_kind, parsed[0]))
+    return m, chain, {"descriptor": f.point_kind, "points": list(f.points or ()), "label": m}, p_labels
+
+
 def _mat_qua_diem(f: TypedFact, q: list[str], k: KeHoach, phat, khoi: str, fn: str) -> dict:
     """PHÂN RÃ MỤC TIÊU, độ sâu 1 (`MAT_SONG_SONG`): Section(khối, mặt qua M ∥ (Q)).
 
@@ -1131,9 +1413,11 @@ def _mat_qua_diem(f: TypedFact, q: list[str], k: KeHoach, phat, khoi: str, fn: s
     định nghĩa) → hai điểm phụ = M tịnh tiến theo hai vectơ chỉ phương của (Q) → thiết diện qua (M, X₁, X₂). Engine kiểm
     hậu điều kiện độc lập (qua M, song song (Q), không trùng (Q), không phải mặt biên). Một mặt dẫn xuất chỉ dựng MỘT lần
     dù được dùng để dựng và để hỏi diện tích. Mặt qua một điểm VUÔNG GÓC với một mặt phẳng không duy nhất ⇒ từ chối."""
+    if f.plane_constraints:                           # C17: witnesses chosen per stated constraint, not one rule per kind
+        return _mat_rang_buoc(f, q, k, phat, khoi, fn)
     if f.plane_relation == "perpendicular":
         if len(set(f.points_b)) >= 3:                 # ⊥ a PLANE: infinitely many planes through the point
-            raise TuChoi("PLANE_NOT_UNIQUE", f"{f.id}: mặt qua {f.point} vuông góc với ({''.join(f.points_b)}) có vô số — cần "
+            raise TuChoi("PLANE_NOT_UNIQUE", f"{f.id}: mặt qua {f.point or f.point_kind} vuông góc với ({''.join(f.points_b)}) có vô số — cần "
                          "thêm một ràng buộc để xác định duy nhất", (f.id,))
         if len(set(f.points_b)) != 2:
             raise TuChoi("FACT_INCOMPLETE", f"{f.id}: đường vuông góc với mặt cần đúng hai điểm phân biệt", (f.id,))
@@ -1142,7 +1426,8 @@ def _mat_qua_diem(f: TypedFact, q: list[str], k: KeHoach, phat, khoi: str, fn: s
         raise TuChoi("UNSUPPORTED_CAPABILITY", f"{f.id}: mặt dựng từ quan hệ chỉ cho thiết diện được yêu cầu", (f.id,))
     two = f.plane_relation == "parallel_two_lines"
     rule = MAT_HAI_DUONG if two else MAT_SONG_SONG
-    m, ref = f.point, list(dict.fromkeys(f.points_b))
+    m, p_chain, p_op, p_labels = _phan_giai_diem_mat_phu(f, k)
+    ref = list(dict.fromkeys(f.points_b))
     directions = [list(f.points_a), list(f.points_b)] if two else [[ref[0], ref[1]], [ref[0], ref[2]]] if len(ref) >= 3 else []
     if not two and len(ref) < 3:
         raise TuChoi("FACT_INCOMPLETE", f"{f.id}: mặt tham chiếu cần ít nhất ba điểm", (f.id,))
@@ -1169,6 +1454,8 @@ def _mat_qua_diem(f: TypedFact, q: list[str], k: KeHoach, phat, khoi: str, fn: s
         d = {"labels": xs, "rule": rule, "goal": f.id, "constructs": cids, "targets": [], "point": m,
              "parallel_to": ref, "solid": khoi, "quotes": list(dict.fromkeys(q)), "provenance": "DERIVED",
              "binding": "AUXILIARY"}
+        if p_chain is not None:
+            d.update(point_chain=p_chain, point_operand=p_op, point_labels=p_labels)
         if f.plane_name is not None:
             d["plane_name"] = f.plane_name
         if two:
@@ -1198,6 +1485,175 @@ def _mat_qua_diem(f: TypedFact, q: list[str], k: KeHoach, phat, khoi: str, fn: s
     return c
 
 
+def _chon_moc_vuong_duong(kh: _Khoi, d: list[str], facts: dict[str, TypedFact], fid: str) -> list[str]:
+    tang = [kh.day, [kh.dinh] if kh.loai == "pyramid" else kh.tren]
+    solid_verts = {*tang[0], *tang[1]}
+    if set(d) <= solid_verts:
+        cung = next((i for i, t in enumerate(tang) if set(d) <= set(t) and set(t) - set(d)), None)
+        return ([v for v in kh.day if v not in d][:2] if cung is None
+                else [next(v for v in tang[cung] if v not in d), tang[1 - cung][0]])
+    prem_pts: dict[str, TypedFact] = {}
+    perp_faces: list[tuple[set[str], set[str]]] = []
+    perp_line_planes: list[tuple[set[str], set[str]]] = []
+    for pf in facts.values():
+        if pf.role == "premise" and not pf.negated:
+            if pf.kind == "point_def" and pf.point:
+                prem_pts[pf.point] = pf
+            elif pf.kind == "projection" and pf.at:
+                prem_pts[pf.at] = pf
+            elif pf.kind == "altitude" and pf.points:
+                for ap in pf.points:
+                    if ap not in solid_verts:
+                        prem_pts[ap] = pf
+            elif pf.kind == "perpendicular":
+                pa, pb = pf.points_a or (), pf.points_b or ()
+                if len(pa) >= 3 and len(pb) >= 3:
+                    perp_faces.append((set(pa), set(pb)))
+                elif len(pa) == 2 and len(pb) >= 3:
+                    perp_line_planes.append((set(pa), set(pb)))
+                elif len(pb) == 2 and len(pa) >= 3:
+                    perp_line_planes.append((set(pb), set(pa)))
+    if not set(d) <= (solid_verts | set(prem_pts)):
+        raise TuChoi("UNSUPPORTED_CAPABILITY", f"{fid}: đường {''.join(d)} phải nối hai điểm đã xác thực của {kh.ten}", (fid,))
+
+    carrier_planes: list[set[str]] = [set(kh.day)]
+    if kh.loai == "prism":
+        carrier_planes.append(set(kh.tren))
+        for i in range(len(kh.day)):
+            for j in range(i + 1, len(kh.day)):
+                carrier_planes.append({kh.day[i], kh.day[j], kh.tren[j], kh.tren[i]})
+    else:
+        for i in range(len(kh.day)):
+            for j in range(i + 1, len(kh.day)):
+                carrier_planes.append({kh.dinh, kh.day[i], kh.day[j]})
+    for ln_p, pl_p in perp_line_planes:
+        for f_pl in carrier_planes:
+            if ln_p <= f_pl:
+                perp_faces.append((set(f_pl), set(pl_p)))
+
+    def _layer(pt: str, seen: frozenset[str] = frozenset()) -> int | None:
+        if pt in tang[0]:
+            return 0
+        if pt in tang[1]:
+            return 1
+        if pt in seen or (pf := prem_pts.get(pt)) is None:
+            return None
+        nxt = seen | {pt}
+        if pf.kind == "altitude":
+            return 0
+        if pf.kind == "projection":
+            ops = set(pf.points or ())
+        elif pf.kind == "point_def" and pf.point_kind == "intersect_line_plane":
+            ops = set(pf.points_b or ())
+        else:
+            ops = set(pf.points or ()) | set(pf.points_a or ()) | set(pf.points_b or ())
+        if not ops:
+            return None
+        ls = {_layer(u, nxt) for u in ops}
+        return next(iter(ls)) if len(ls) == 1 and None not in ls else None
+
+    carrier_lines: list[set[str]] = []
+    for pt, pf in prem_pts.items():
+        if pf.kind == "point_def":
+            if pf.point_kind in ("midpoint", "divide_segment") and len(pf.points or ()) == 2:
+                carrier_lines.append({pt, *pf.points})
+            elif pf.point_kind == "centroid" and len(pf.points or ()) >= 3:
+                carrier_planes.append({pt, *pf.points})
+            elif pf.point_kind == "intersect_line_line":
+                if len(pf.points_a or ()) == 2:
+                    carrier_lines.append({pt, *pf.points_a})
+                if len(pf.points_b or ()) == 2:
+                    carrier_lines.append({pt, *pf.points_b})
+                if len(pf.points_a or ()) == 2 and len(pf.points_b or ()) == 2:
+                    carrier_planes.append({pt, *pf.points_a, *pf.points_b})
+            elif pf.point_kind == "intersect_line_plane":
+                if len(pf.points_a or ()) == 2:
+                    carrier_lines.append({pt, *pf.points_a})
+                if len(pf.points_b or ()) >= 3:
+                    carrier_planes.append({pt, *pf.points_b})
+        elif pf.kind == "projection":
+            if len(pf.points or ()) == 2:
+                carrier_lines.append({pt, *pf.points})
+            elif len(pf.points or ()) >= 3:
+                carrier_planes.append({pt, *pf.points})
+                if pf.point:
+                    pl = set(pf.points)
+                    for fa, fb in perp_faces:
+                        for face, base_pl in ((fa, fb), (fb, fa)):
+                            inter = face & base_pl
+                            if pf.point in face and pl <= base_pl and len(inter) == 2:
+                                carrier_lines.append({pt, *inter})
+        elif pf.kind == "altitude" and pf.points:
+            carrier_planes.append({pt, *kh.day})
+            ap = next((u for u in pf.points if u != pt), None)
+            base_pl = set(kh.day)
+            if ap:
+                for fa, fb in perp_faces:
+                    for face, bpl in ((fa, fb), (fb, fa)):
+                        inter = face & bpl
+                        if ap in face and bpl == base_pl and len(inter) == 2:
+                            carrier_lines.append({pt, *inter})
+
+    changed = True
+    while changed:
+        changed = False
+        for i in range(len(carrier_lines)):
+            for j in range(i + 1, len(carrier_lines)):
+                if len(carrier_lines[i] & carrier_lines[j]) >= 2:
+                    carrier_lines[i] |= carrier_lines[j]
+                    carrier_lines.pop(j)
+                    changed = True
+                    break
+            if changed:
+                break
+
+    pl_changed = True
+    while pl_changed:
+        pl_changed = False
+        for pl in carrier_planes:
+            before_n = len(pl)
+            for ln in carrier_lines:
+                if len(pl & ln) >= 2:
+                    pl |= ln
+            for pt, pf in prem_pts.items():
+                if pt in pl:
+                    continue
+                if pf.kind == "point_def":
+                    if pf.point_kind in ("midpoint", "divide_segment", "centroid") and pf.points and set(pf.points) <= pl:
+                        pl.add(pt)
+                    elif pf.point_kind == "intersect_line_plane" and pf.points_b and set(pf.points_b) <= pl:
+                        pl.add(pt)
+                    elif pf.point_kind == "intersect_line_line" and pf.points_a and pf.points_b and set(pf.points_a) <= pl and set(pf.points_b) <= pl:
+                        pl.add(pt)
+                elif pf.kind == "projection" and len(pf.points or ()) >= 3 and set(pf.points) <= pl:
+                    pl.add(pt)
+                elif pf.kind == "altitude" and set(kh.day) <= pl:
+                    pl.add(pt)
+            if len(pl) != before_n:
+                pl_changed = True
+
+    layers = [_layer(x) for x in d]
+    if layers[0] is not None and layers[0] == layers[1]:
+        li = layers[0]
+        collinear: set[str] = set(d)
+        for ln in carrier_lines:
+            if len(ln & set(d)) >= 2:
+                collinear |= ln
+        z_same = next((v for v in tang[li] if v not in collinear), next(v for v in tang[li] if v not in d))
+        return [z_same, tang[1 - li][0]]
+    rel_lines = [ln for ln in carrier_lines if ln & set(d)]
+    ordered_verts = [*kh.day, *(v for v in tang[1] if v not in kh.day)]
+    on_d = set(d) | {v for ln in carrier_lines if len(ln & set(d)) >= 2 for v in ln}
+    cand = [v for v in ordered_verts if v not in on_d]
+    if len(cand) < 2:
+        cand = [v for v in ordered_verts if v not in d]
+    for i, u in enumerate(cand):
+        for w in cand[i + 1:]:
+            if not any({u, w} <= ln for ln in rel_lines) and not any({*d, u, w} <= pl for pl in carrier_planes):
+                return [u, w]
+    return cand[:2]
+
+
 def _mat_vuong_duong(f: TypedFact, q: list[str], k: KeHoach, phat, khoi: str, fn: str) -> dict:
     """PHÂN RÃ MỤC TIÊU (`MAT_VUONG_DUONG`): Section(khối, mặt qua M ⊥ d) from EXISTING primitives only.
 
@@ -1209,14 +1665,10 @@ def _mat_vuong_duong(f: TypedFact, q: list[str], k: KeHoach, phat, khoi: str, fn
     independence, and against the kernel's `plane_through_point_perpendicular_to`."""
     if f.role not in ("premise", "question") or f.negated:
         raise TuChoi("UNSUPPORTED_CAPABILITY", f"{f.id}: mặt dựng từ quan hệ chỉ cho thiết diện được yêu cầu", (f.id,))
-    m, d = f.point, list(f.points_b)
+    m, p_chain, p_op, p_labels = _phan_giai_diem_mat_phu(f, k)
+    d = list(f.points_b)
     kh = next(x for x in k.solids.values() if x.ten == khoi)
-    tang = [kh.day, [kh.dinh] if kh.loai == "pyramid" else kh.tren]
-    if not set(d) <= {*tang[0], *tang[1]}:
-        raise TuChoi("UNSUPPORTED_CAPABILITY", f"{f.id}: đường {''.join(d)} phải nối hai đỉnh của {khoi}", (f.id,))
-    cung = next((i for i, t in enumerate(tang) if set(d) <= set(t) and set(t) - set(d)), None)
-    moc = ([v for v in kh.day if v not in d][:2] if cung is None
-           else [next(v for v in tang[cung] if v not in d), tang[1 - cung][0]])
+    moc = _chon_moc_vuong_duong(kh, d, k.resolver.facts, f.id)
     khoa = (khoi, m, f.plane_name, "perpendicular_line", frozenset(d))
     dd = k.derived_planes.get(khoa)
     if dd is None:
@@ -1245,6 +1697,8 @@ def _mat_vuong_duong(f: TypedFact, q: list[str], k: KeHoach, phat, khoi: str, fn
         dd = {"labels": xs, "feet": chan, "anchors": moc, "rule": MAT_VUONG_DUONG, "goal": f.id, "constructs": cids,
               "targets": [], "point": m, "perpendicular_to": d, "solid": khoi, "quotes": list(dict.fromkeys(q)),
               "provenance": "DERIVED", "binding": "AUXILIARY"}
+        if p_chain is not None:
+            dd.update(point_chain=p_chain, point_operand=p_op, point_labels=p_labels)
         if f.plane_name is not None:
             dd["plane_name"] = f.plane_name
         k.derived_planes[khoa] = dd
@@ -1265,6 +1719,167 @@ def _mat_vuong_duong(f: TypedFact, q: list[str], k: KeHoach, phat, khoi: str, fn
                     "calls": dd["constructs"] + [f.id], "auxiliary": dd["feet"] + dd["labels"],
                     "reason": f"mặt qua {m} và hai điểm {m} + (đỉnh − chân của đỉnh trên {''.join(d)}) (IR sẵn có: project_onto, "
                               "translate; engine kiểm vuông góc chính xác)",
+                    "provenance": "DERIVED", "binding": "AUXILIARY"})
+    return c
+
+
+#: Bound of the constraint-to-witness search (C17): normal-producer candidates evaluated per plane, witness directions.
+MAX_NORMAL_CANDIDATES = 12
+MAX_PLANE_DIRECTIONS = 3
+
+
+def _mat_cua_khoi(kh: _Khoi) -> list[frozenset[str]]:
+    """The faces of a polyhedral solid from its STRUCTURE (no coordinates): base, top, lateral faces."""
+    mats = [frozenset(kh.day)] + ([frozenset(kh.tren)] if kh.loai == "prism" and kh.tren else [])
+    n = len(kh.day)
+    for i in range(n):
+        j = (i + 1) % n
+        mats.append(frozenset((kh.dinh, kh.day[i], kh.day[j])) if kh.loai == "pyramid"
+                    else frozenset((kh.day[i], kh.day[j], kh.tren[j], kh.tren[i])))
+    return mats
+
+
+def _phap_tuyen(q_mat: list[str], kh: _Khoi, k: KeHoach) -> dict:
+    """Goal regression of ONE `Normal(Q)` need (C17): every producer the Registry's contracts offer, cheapest first.
+    - a premise stating a line ⊥ Q reuses that line (cost 0, nothing built);
+    - each `Normal` contract (today `orthogonal_projection`) with a FREE point Z bound to every solid vertex not on Q —
+      a vertex of a face holding Q's labels lies on Q, so its foot is itself (rejected, never tried on coordinates).
+    Ties break on the vertex label's position in the solid, never on the problem's wording. The engine re-checks ⊥."""
+    tap_q = frozenset(q_mat)
+    ung_vien, loai = [], []
+    for pf in k.resolver.facts.values():
+        pa, pb = list(pf.points_a or ()), list(pf.points_b or ())
+        if (pf.kind == "perpendicular" and pf.role == "premise" and not pf.negated and len(pa) == 2 and len(pb) >= 3
+                and (tap_q <= frozenset(pb) or frozenset(pb) <= tap_q)):
+            chan = next((x for x in pa if x in pb or x in tap_q), pa[0])
+            ung_vien.append({"cost": 0, "producer": "premise", "fact": pf.id, "vector": [chan, next(x for x in pa if x != chan)]})
+    # Points known to lie on Q from STRUCTURE (review MINOR-1): a stated midpoint of an edge lies on that edge's faces,
+    # and two of {A, B, mid AB} on Q put the third on it; then a face sharing ≥ 3 such points IS Q.
+    trung = [(pf.point, *pf.points) for pf in k.resolver.facts.values()
+             if pf.kind == "point_def" and pf.point_kind == "midpoint" and pf.point and len(pf.points or ()) == 2]
+    mats = [set(m) for m in _mat_cua_khoi(kh)]
+    duong = [set(t) for t in trung]                    # the only collinear triples structure knows: A, B, mid AB
+    tren_q = set(tap_q)
+
+    def phang(chung: set) -> bool:                     # ≥ 3 shared points that are NOT all on one known line
+        return len(chung) >= 3 and not any(chung <= ln for ln in duong)
+    for _ in range(3):
+        for m in mats:
+            m |= {x for x, a, b in trung if a in m and b in m}
+        for x, a, b in trung:
+            if len({x, a, b} & tren_q) >= 2:
+                tren_q |= {x, a, b}
+        for m in mats:
+            if phang(tren_q & m):
+                tren_q |= m
+    dinh = list(dict.fromkeys([*kh.day, *(kh.tren if kh.loai == "prism" else [kh.dinh])]))
+    for spec in sorted(REGISTRY.values(), key=lambda s: s.name):
+        for contract in planning_contracts(spec):
+            if contract.effect.kind != "Normal":
+                continue
+            for z in dinh:
+                if z in tren_q:
+                    loai.append({"producer": spec.name, "point": z, "rejected": "lies on the plane (solid structure)"})
+                    continue
+                ung_vien.append({"cost": 1, "producer": spec.name, "contract": contract, "point": z})
+    if len(ung_vien) > MAX_NORMAL_CANDIDATES:
+        raise TuChoi("PLAN_TOO_LARGE", f"quá {MAX_NORMAL_CANDIDATES} ứng viên pháp tuyến của ({''.join(q_mat)})",
+                     data={"outcome": "SEARCH_EXHAUSTED", "candidates": len(ung_vien)})
+    if not ung_vien:
+        raise TuChoi("UNSUPPORTED_CAPABILITY", f"không hàm nào của thư viện cho pháp tuyến của ({''.join(q_mat)})",
+                     data={"outcome": "MISSING_PRIMITIVE"})
+    chon = min(ung_vien, key=lambda u: (u["cost"], dinh.index(u["point"]) if "point" in u else -1, u.get("fact", "")))
+    return {"selected": chon, "candidates": len(ung_vien), "rejected": loai}
+
+
+def _mat_rang_buoc(f: TypedFact, q: list[str], k: KeHoach, phat, khoi: str, fn: str) -> dict:
+    """CONSTRAINT-TO-WITNESS (C17, `MAT_RANG_BUOC`): a plane the source defines only by relations. The kernel cuts a plane
+    through points, so the planner must FIND witness points the source never names:
+    - points the plane contains are witnesses as they are (the first is the anchor);
+    - a line it is ∥ to: the anchor translated along it;
+    - a plane Q it is ⊥ to: a `Normal(Q)` subgoal (`_phap_tuyen`), then the anchor translated along that normal.
+    Fewer than three witnesses ⇒ the stated relations cannot fix a plane. The engine proves the plane exists and is
+    unique from EVERY stated constraint, so a redundant or contradictory constraint is checked, never ignored."""
+    if f.role not in ("premise", "question") or f.negated:
+        raise TuChoi("UNSUPPORTED_CAPABILITY", f"{f.id}: mặt dựng từ quan hệ chỉ cho thiết diện được yêu cầu", (f.id,))
+    cs = [{"kind": c["kind"], "points": list(c["points"])} for c in f.plane_constraints]
+    diem = list(dict.fromkeys(p for c in cs if c["kind"] == "contains_points" for p in c["points"]))
+    khoa = (khoi, f.plane_name, "constrained", tuple((c["kind"], frozenset(c["points"])) for c in cs))
+    d = k.derived_planes.get(khoa)
+    if d is None:
+        if len(k.derived_planes) >= MAX_DERIVED_PLANES:
+            raise TuChoi("PLAN_TOO_LARGE", f"{f.id}: quá {MAX_DERIVED_PLANES} mặt dẫn xuất", (f.id,))
+        huong = [c for c in cs if c["kind"] != "contains_points"]
+        if len(huong) > MAX_PLANE_DIRECTIONS:
+            raise TuChoi("PLAN_TOO_LARGE", f"{f.id}: quá {MAX_PLANE_DIRECTIONS} ràng buộc phương", (f.id,))
+        if len(diem) + len(huong) < 3:
+            raise TuChoi("PLANE_NOT_UNIQUE", f"{f.id}: các quan hệ đã nêu chưa xác định một mặt phẳng duy nhất", (f.id,))
+        kh = next(x for x in k.solids.values() if x.ten == khoi)
+        anchor, cids, nhan, chung, tim = diem[0], [], [], [], []
+
+        def moi_nhan() -> str:
+            x = next((t for t in _NHAN_PHU if t not in k.taken), None)
+            if x is None:
+                raise TuChoi("PLAN_TOO_LARGE", f"{f.id}: hết nhãn điểm phụ", (f.id,))
+            k.taken.add(x)
+            return x
+
+        def moi_id(goc: str) -> str:
+            dung = {c["id"] for c in k.calls}
+            return next(j for j in (goc, *(f"{goc}_{n}" for n in range(2, 1000))) if j not in k.fact_ids | dung)
+
+        for i, c in enumerate(cs):
+            if c["kind"] == "contains_points":
+                continue
+            if c["kind"] == "parallel_to_line":
+                vec, nguon, cach = list(c["points"]), {"producer": "stated_line"}, "registered"
+            else:                                            # perpendicular_to_plane: a Normal(Q) subgoal
+                tim.append(_phap_tuyen(c["points"], kh, k))
+                u = tim[-1]["selected"]
+                # C17 review MAJOR-1: `MAT_RANG_BUOC` is a declared rule; choosing its free vertex Z is a parameter of
+                # that rule, not a composition search (any candidate yields the same plane) — so REGISTERED
+                cach = "registered"
+                if u["producer"] == "premise":
+                    vec, nguon = list(u["vector"]), {"producer": "premise", "fact": u["fact"]}
+                else:
+                    h = moi_nhan()
+                    cid = moi_id(f"{f.id}_normal{i}")
+                    phat(cid, u["producer"], render_call(u["contract"], {"Z": u["point"], "Q": tuple(c["points"]), "H": h}), q,
+                         f"{MAT_RANG_BUOC}→{u['producer']} (pháp tuyến của ({''.join(c['points'])}): {u['point']} − chân {h})")
+                    k.trace[-1]["fact"] = f.id
+                    k.step_provenance[cid] = "registered"
+                    cids.append(cid)
+                    vec, nguon = [h, u["point"]], {"producer": u["producer"], "point": u["point"], "foot": h, "call": cid}
+            x = moi_nhan()
+            cid = moi_id(f"{f.id}_witness{i}")
+            phat(cid, "translate_point", {"point": anchor, "vector": vec, "image": x}, q,
+                 f"{MAT_RANG_BUOC}→translate_point (điểm chứng {x} = {anchor} + {vec[0]}{vec[1]}→)")
+            k.trace[-1]["fact"] = f.id
+            k.step_provenance[cid] = cach
+            cids.append(cid)
+            nhan.append(x)
+            chung.append({"label": x, "translate": cid, "vector": vec, "constraint": i, **nguon})
+        d = {"rule": MAT_RANG_BUOC, "goal": f.id, "point": anchor, "contains": diem[1:], "constraints": cs, "labels": nhan,
+             "witnesses": chung, "constructs": cids, "targets": [], "solid": khoi, "plane": [anchor, *diem[1:], *nhan],
+             "quotes": list(dict.fromkeys(q)), "provenance": "DERIVED", "binding": "AUXILIARY",
+             "search": {"subgoals": [{"need": f"Normal({''.join(c['points'])})", "candidates": t["candidates"],
+                                      "rejected": t["rejected"],
+                                      "selected": {key: v for key, v in t["selected"].items() if key != "contract"}}
+                                     for c, t in zip([c for c in cs if c["kind"] == "perpendicular_to_plane"], tim)]}}
+        if f.plane_name is not None:
+            d["plane_name"] = f.plane_name
+        k.derived_planes[khoa] = d
+        k.auxiliary.append(d)
+    d["quotes"] = list(dict.fromkeys(d["quotes"] + q))
+    c = phat(f.id, fn, {"solid": khoi, "plane": list(d["plane"])}, d["quotes"], f"{MAT_RANG_BUOC}→{fn}")
+    k.trace[-1]["fact"] = f.id
+    d["targets"].append(f.id)
+    for call in k.calls:                                  # one declaration, one set of quotes for all its calls
+        if call["id"] in d["constructs"] + d["targets"]:
+            call["source"]["quotes"] = list(d["quotes"])
+    k.trace.append({"fact": f.id, "step": "decompose_goal", "rule": MAT_RANG_BUOC,
+                    "goal": f"Section({khoi}, Plane(" + "; ".join(f"{c['kind']} {''.join(c['points'])}" for c in d["constraints"]) + "))",
+                    "subgoals": d["search"]["subgoals"], "calls": d["constructs"] + [f.id], "auxiliary": d["labels"],
                     "provenance": "DERIVED", "binding": "AUXILIARY"})
     return c
 
@@ -1429,6 +2044,27 @@ class _Choice:
     existing: dict | None = None
     cost: int = 0
     contract: Any = None
+    definition: dict | None = None      # C18: the meet of a defined point's loci (descriptor, slot env, loci searched)
+
+
+#: Source policies of contracts that are a declared decomposition's step: the foot of `distance(point,line)`, a section
+#: vertex on a stated cut edge (`DINH_CAT_CANH`), a declared intersection line (`registry.AUXILIARY_RULES`).
+_RULE_POLICIES = frozenset({"projection_foot", "distance_witness", "section_vertex", "declared_intersection"})
+#: The only functions the planner writes to spell out a definition its solid word carries (`<solid>_day`, `khoi_cua`).
+DEFINITION_FUNCTIONS = frozenset({"regular_polygon", "rectangle"})
+
+
+def _nguon_goc_buoc(k: KeHoach) -> dict[str, list[str]]:
+    """Planner-made steps by provenance (C16). A `DEFINITION_FUNCTIONS` step restates a definition the source's own solid
+    word carries ("hình lập phương" ⇒ `<solid>_day` regular base): source-defined. Other untagged ones are steps of a
+    declared decomposition."""
+    own = [c["id"] for c in k.calls if c["id"] not in k.fact_ids]
+    fn = {c["id"]: c["fn"] for c in k.calls}
+    tag = {i: k.step_provenance.get(i, "source_defined" if fn[i] in DEFINITION_FUNCTIONS else "registered") for i in own}
+    return {"planner_originated_steps": own,
+            "source_defined_steps": [i for i in own if tag[i] == "source_defined"],
+            "registered_decomposition_steps": [i for i in own if tag[i] == "registered"],
+            "search_generated_steps": [i for i in own if tag[i] == "search_generated"]}
 
 
 def _loai(v) -> str | None:
@@ -1453,13 +2089,15 @@ class _EffectResolver:
     def __init__(self, facts, plan, emit, text=""):
         self.facts = {f.id: f for f in facts}
         self.plan, self.emit, self.text = plan, emit, text
-        self.needs = self.candidates = self.feet = self.depth_max = 0  # feet: every fresh point (feet, unnamed operands)
+        self.needs = self.candidates = self.feet = self.depth_max = self.reused = 0  # feet: every fresh point (feet, unnamed operands)
         self.trail: list[dict] = []
         self.quet = {"H"}                     # label stems already scanned in the text (`lap_ke_hoach` scans H itself)
         self.lines = set()
         self.used = False
         self.active = set()
         self.memo = {}
+        self.rejected: list[dict] = []        # C18: candidates excluded by a structural precondition, in search order
+        self.definitions: dict[str, dict] = {}   # C18: defined point label → its definition binding (certificate)
         groups = {}
         for f in facts:
             if (f.kind=='intersection_line' and f.role in ('premise','question') and not f.negated
@@ -1468,13 +2106,47 @@ class _EffectResolver:
                 groups.setdefault(key,[]).append(f.id)
         self.aliases = {fid:min(ids) for ids in groups.values() for fid in ids}
 
+    def _exhausted(self, msg: str, bound: str | None = None) -> TuChoi:
+        return TuChoi("PLAN_TOO_LARGE", msg, data={"outcome": "SEARCH_EXHAUSTED", "explored_states": self.needs,
+                                                   "candidate_evaluations": self.candidates, "search_depth": self.depth_max,
+                                                   "bound": bound})
+
+    def _tren_duong(self, p, line) -> bool:
+        """STRUCTURE only, no coordinates: p is an endpoint of the named line, or the midpoint of its two endpoints (a
+        description, or a premise of the source). Anything else is not known here and is left to the engine's exact check."""
+        if not (isinstance(line, tuple) and line[:1] == ("named",)):
+            return False
+        ends = set(line[1])
+        if isinstance(p, str):
+            return p in ends or any(f.kind == "point_def" and f.point_kind == "midpoint" and f.point == p and f.role == "premise"
+                                    and not f.negated and set(f.points or ()) == ends for f in self.facts.values())
+        return isinstance(p, tuple) and p[:2] == ("desc", "midpoint") and set(p[2]) == ends
+
+    def _binds(self, contract, env):
+        """Slot bindings of one contract: as the need gives them, or — a `free` slot — each point of the need's plane W, in
+        W's order (C18)."""
+        envs = [env]
+        for s in contract.free:
+            envs = [{**e, s: z} for e in envs for z in (e.get("W") or ())] if env.get(s) is None else envs
+        return envs
+
+    def _unmet(self, contract, env) -> str | None:
+        for pred, a, b in contract.requires:
+            if pred == "off_line" and self._tren_duong(env.get(a), env.get(b)):
+                return "precondition: the point lies on the line"
+        return None
+
     def _resolve(self, kind, operands, depth=0):
         key = (kind, operands)
         if not kind.startswith('Answer') and key in self.memo:
-            return self.memo[key]  # available producer binding only; Engine still verifies every given later
+            got, n_calls = self.memo[key]
+            # available producer binding only; Engine still verifies every given later. C18: an alternative that was
+            # never written and was chosen before the plan grew may miss a call it could now reuse — choose again.
+            if got.fn is None or got.existing is not None or n_calls == len(self.plan.calls):
+                return got
         self.needs += 1
         if self.needs > MAX_EFFECT_NEEDS:
-            raise TuChoi("PLAN_TOO_LARGE", "quá trần typed needs")
+            raise self._exhausted("quá trần typed needs")
         if key in self.active:
             raise TuChoi("DEPENDENCY_CYCLE", "typed need phụ thuộc chính nó")
         self.depth_max = max(self.depth_max, depth)
@@ -1487,15 +2159,19 @@ class _EffectResolver:
         if kind == "Line" and operands[0][0] == "named":
             return _Choice(None, {})
         if depth >= MAX_EFFECT_DEPTH:
-            raise TuChoi("PLAN_TOO_LARGE", "quá trần phân rã effect")
+            raise self._exhausted("quá trần phân rã effect", bound="depth")
         self.active.add(key)
-        choices = []
+        choices, cut = [], None
         try:
+            desc = operands[0] if kind == 'Point' else None      # an unnamed point: only producers of its description
+            if desc and desc[1] in POINT_DEFINITIONS:            # C18: named by a property — regress its definition
+                choices.append(self._dinh_nghia(POINT_DEFINITIONS[desc[1]], desc, depth))
             contracts = [(s,c) for s in sorted(REGISTRY.values(), key=lambda s: s.name) for c in planning_contracts(s)]
-            for spec, contract in contracts:
+            # C18: a `free` slot multiplies a contract into one candidate per point of the need's plane (`_binds`)
+            for spec, contract, env in ((s, c, e) for s, c in contracts
+                                        for e in self._binds(c, dict(zip(c.effect.operands, operands)))):
                 if contract.effect.kind != kind or len(contract.effect.operands) != len(operands):
                     continue
-                desc = operands[0] if kind == 'Point' else None      # an unnamed point: only producers of its description
                 if desc and (contract.descriptor != desc[1] or len(contract.inputs) != len(desc[2])):
                     continue
                 typed = {t.operands[0]: t.kind for t in contract.inputs if t.kind in ('Point', 'Line', 'Plane')}
@@ -1503,10 +2179,13 @@ class _EffectResolver:
                     continue  # an operand of the wrong kind is not a candidate; excluded before it is counted
                 self.candidates += 1
                 if self.candidates > MAX_EFFECT_CANDIDATES:
-                    raise TuChoi("PLAN_TOO_LARGE", "quá trần candidate")
-                env = dict(zip(contract.effect.operands, operands))
+                    raise self._exhausted("quá trần candidate")
                 if desc:
                     env.update(zip((t.operands[0] for t in contract.inputs), desc[2]))
+                if why := self._unmet(contract, env):            # C18: decided from structure, before any sub-need
+                    self.rejected.append({"need": kind, "fn": spec.name, "reason": why,
+                                          "binding": {k: _ten(v) for k, v in env.items() if v is not None}})
+                    continue
                 existing = None
                 if contract.source_policy == "declared_intersection":
                     ref = env["L"][1]
@@ -1517,49 +2196,118 @@ class _EffectResolver:
                         continue
                     self.lines.add(ref)
                     if len(self.lines) > MAX_RESULT_LINES:
-                        raise TuChoi("PLAN_TOO_LARGE", "quá trần line results")
+                        raise self._exhausted("quá trần line results")
                 try:
                     children = [self._resolve(term.kind, tuple(env.get(slot) for slot in term.operands), depth+1)
                                 for term in contract.inputs]
                 except TuChoi as e:
                     if e.code=='UNSUPPORTED_CAPABILITY':
                         continue  # exclude incompatible symbolic candidates; never skip a geometric/source failure
+                    if e.code == 'PLAN_TOO_LARGE' and (e.data or {}).get('bound') == 'depth':
+                        cut = e   # C18: this alternative is too deep; a shallower one may still serve the need
+                        continue
                     raise
                 cost = sum(c.cost for c in children)
                 if contract.fresh:              # the source (or an earlier goal) may already hold this exact construction
                     out = contract.effect.operands[0]
                     arg = next(a for a, s in contract.call if s == out)
-                    for c in self.plan.calls:
-                        if c['fn'] != spec.name:
-                            continue
-                        bound = {**env, out: c['args'].get(arg)}
-                        if same_call(contract, render_call(contract, bound), c['args']):
-                            self.candidates += 1
-                            if self.candidates > MAX_EFFECT_CANDIDATES:
-                                raise TuChoi('PLAN_TOO_LARGE','quá trần available-binding candidates')
-                            choices.append(_Choice(spec.name, bound, children, c, cost, contract))
+                    check_env = dict(env)
+                    can_reuse = True
+                    for t_in, child in zip(contract.inputs, children):
+                        if child.fn is not None:
+                            if child.existing is None:
+                                can_reuse = False
+                                break
+                            check_env.update({s: child.env[c_op] for s, c_op in zip(t_in.operands, child.contract.effect.operands)})
+                    if can_reuse and not any(
+                        isinstance(v, tuple) and v and v[0] == "desc"
+                        for k_slot, v in check_env.items()
+                        if k_slot != out
+                    ):
+                        for c in self.plan.calls:
+                            if c['fn'] != spec.name:
+                                continue
+                            bound = {**check_env, out: c['args'].get(arg)}
+                            if same_call(contract, render_call(contract, bound), c['args']):
+                                self.candidates += 1
+                                if self.candidates > MAX_EFFECT_CANDIDATES:
+                                    raise self._exhausted('quá trần available-binding candidates')
+                                choices.append(_Choice(spec.name, bound, children, c, cost, contract))
                     cost += 1
                 choices.append(_Choice(spec.name, env, children, existing, cost, contract))
             if not choices:
+                if cut is not None:
+                    raise cut
                 raise TuChoi("UNSUPPORTED_CAPABILITY", f"không effect nào giải được {kind}")
             selected = min(choices, key=lambda c: (c.cost, c.fn, _nhan_ra(c), c.existing['id'] if c.existing else ''))
             if not kind.startswith('Answer'):
-                self.memo[key]=selected
+                self.memo[key] = (selected, len(self.plan.calls))
             return selected
         finally:
             self.active.remove(key)
 
-    def _emit(self, choice, fact):
+    def _dinh_nghia(self, defn, desc, depth):
+        """C18 — a point the source names by a PROPERTY (`registry.POINT_DEFINITIONS`), by goal regression: each locus of
+        its definition becomes a typed need `PerpLine` in the triangle's plane W, solved like any need (producers from
+        function contracts, free slots bound to points of W, structural preconditions); the two cheapest loci (ties: the
+        definition's order) are met by the ONE contract that makes a Point of two Lines. No function is named here: the
+        Registry decides what exists. The engine checks the whole definition, the unused locus included."""
+        env = dict(zip((t.operands[0] for t in defn.contract.inputs), desc[2]))
+        w = tuple(desc[2])
+        found, loci, cut = [], [], None
+        for i, lc in enumerate(defn.loci):
+            qua = (env[lc.through] if isinstance(lc.through, str)
+                   else ("desc", lc.through[0], tuple(sorted(env[x] for x in lc.through[1:]))))
+            side = ("named", tuple(sorted(env[x] for x in lc.perp)))
+            mark = len(self.rejected)
+            rec = {"locus": i, "need": f"PerpLine({_ten(qua)} ⊥ {''.join(side[1])} in ({''.join(w)}))"}
+            try:
+                ch = self._resolve("PerpLine", (None, qua, side, w), depth + 1)
+                found.append((ch.cost, i, ch))
+                rec["cost"] = ch.cost
+            except TuChoi as e:
+                if e.code == "PLAN_TOO_LARGE" and (e.data or {}).get("bound") == "depth":
+                    cut = e
+                elif e.code != "UNSUPPORTED_CAPABILITY":
+                    raise
+                rec["unresolved"] = e.code
+            rec["rejected"] = self.rejected[mark:]
+            loci.append(rec)
+        meets = [(s.name, c) for s in sorted(REGISTRY.values(), key=lambda s: s.name) for c in planning_contracts(s)
+                 if c.effect.kind == "Point" and [t.kind for t in c.inputs] == ["Line", "Line"]]
+        if len(found) < 2 or len(meets) != 1:
+            if cut is not None:
+                raise cut
+            raise TuChoi("UNSUPPORTED_CAPABILITY", f"thư viện không dựng được hai quỹ tích của {desc[1]}",
+                         data={"outcome": "MISSING_PRIMITIVE"})
+        (c1, i1, l1), (c2, i2, l2) = sorted(found, key=lambda t: t[:2])[:2]
+        for r in loci:
+            r["selected"] = r["locus"] in (i1, i2)
+        self.candidates += 1
+        if self.candidates > MAX_EFFECT_CANDIDATES:
+            raise self._exhausted("quá trần candidate")
+        fn, contract = meets[0]
+        return _Choice(fn, {}, [l1, l2], None, c1 + c2 + 1, contract,
+                       definition={"descriptor": desc[1], "env": env, "loci": loci})
+
+    def _emit(self, choice, fact, under=False):
         if choice.fn is None:
             return choice.env
+        under = under or choice.definition is not None     # C18: inside a definition's regression: the declared rule
         contract = choice.contract
         env = dict(choice.env)
         for t, child in zip(contract.inputs, choice.inputs):  # an input slot takes its producer's effect, by position
-            got = self._emit(child, fact)
+            got = self._emit(child, fact, under)
             if child.fn is not None:
-                env.update({s: got[c] for s, c in zip(t.operands, child.contract.effect.operands)})
+                if t.kind == "Line" and child.contract.line:  # C18: a locus line is the two points its producer spans
+                    env[t.operands[0]] = ("named", tuple(sorted(got[x] for x in child.contract.line)))
+                else:
+                    env.update({s: got[c] for s, c in zip(t.operands, child.contract.effect.operands)})
         if choice.existing:
+            if not contract.effect.kind.startswith('Answer'):
+                self.reused += 1
             self._ghi(choice.existing, env, contract)
+            self._dinh_nghia_ghi(choice, env, choice.existing)
             return env
         if not contract.call:
             raise TuChoi('UNSUPPORTED_CAPABILITY', 'producer chưa được khai trong nguồn')
@@ -1567,24 +2315,38 @@ class _EffectResolver:
         if contract.fresh:
             self.feet += 1
             if self.feet > MAX_RESULT_FEET:
-                raise TuChoi("PLAN_TOO_LARGE", "quá trần điểm tươi")
+                raise self._exhausted("quá trần điểm tươi")
             if contract.fresh not in self.quet:
                 self.quet.add(contract.fresh)
                 self.plan.taken |= nhan_phu_da_dung(self.text, contract.fresh)
             x = next((n for n in _nhan_tuoi(contract.fresh) if n not in self.plan.taken), None)
             if x is None:
-                raise TuChoi("PLAN_TOO_LARGE", "hết nhãn điểm phụ")
+                raise self._exhausted("hết nhãn điểm phụ")
             self.plan.taken.add(x)
             env[contract.effect.operands[0]] = x
         cid = fact.id if answer else next(i for i in (f'{fact.id}_aux', *(f'{fact.id}_aux{n}' for n in range(2,1000)))
                                           if i not in self.plan.fact_ids | {c['id'] for c in self.plan.calls})
         call = self.emit(cid, choice.fn, render_call(contract, env), fact.quotes, f'effect({contract.effect.kind})→{choice.fn}')
         self.plan.trace[-1]['fact'] = fact.id
+        if not answer:                     # provenance at emission (C16): what put this step in the plan
+            # C18 review MAJOR-2: a step under a defined point realizes its DECLARED definition (`DINH_NGHIA_DIEM`)
+            self.plan.step_provenance[cid] = ('registered' if under
+                                              else 'source_defined' if contract.descriptor
+                                              else 'registered' if contract.source_policy in _RULE_POLICIES
+                                              else 'search_generated')
         self._ghi(call, env, contract)
+        self._dinh_nghia_ghi(choice, env, call)
         if not answer:
             choice.env.update(env)
             choice.existing, choice.cost = call, 0
         return env
+
+    def _dinh_nghia_ghi(self, choice, env, call):
+        """C18: the certificate binding of a defined point — the definition's slots, the point, and the meet that built it."""
+        if choice.definition is not None:
+            x = env[choice.contract.effect.operands[0]]
+            self.definitions[x] = {"descriptor": choice.definition["descriptor"], "call": call["id"],
+                                   "env": {**choice.definition["env"], "X": x}, "loci": choice.definition["loci"]}
 
     def _ghi(self, call, env, contract):
         """Trail of the goal being resolved: the calls of its derivation, each with the slot bindings it was written from."""
@@ -1593,6 +2355,8 @@ class _EffectResolver:
                                'fresh': call['id'] not in self.plan.fact_ids})
             if contract is not REGISTRY[call['fn']].planning:
                 self.trail[-1]['effect'] = contract.effect.kind
+                if contract.descriptor:
+                    self.trail[-1]['descriptor'] = contract.descriptor
 
     def goal(self, fact, entries):
         """Typed semantic entry: quantity + the typed slots its operands fill select ONE contract effect (several ⇒
@@ -1644,12 +2408,22 @@ class _EffectResolver:
                                 'new_constructions':choice.cost})
         return next(c for c in self.plan.calls if c['id']==fact.id)
 
+    def point(self, fact, point_term):
+        self.used, self.trail = True, []
+        choice = self._resolve('Point', (point_term,))
+        env = self._emit(choice, fact)
+        out = env[choice.contract.effect.operands[0]]
+        fresh = [e['env'][pc.effect.operands[0]] for e in self.trail
+                 if e['fresh'] and (pc := planning_contract(REGISTRY[e['fn']], e.get('effect'), e.get('descriptor'))) and pc.fresh]
+        return out, list(self.trail), fresh
+
     def _chuoi(self, fact, point, target, choice, env):
         """`effect-chain` certificate of a goal on an unnamed described point: the trail of calls with their bindings, the
         goal (description + target) and the fresh labels. The gate re-writes every call from its contract; the engine checks
         the description and the answer on the built figure."""
         answer = choice.contract
-        fresh = [e for e in self.trail if e['fresh'] and REGISTRY[e['fn']].planning and REGISTRY[e['fn']].planning.fresh]
+        fresh = [(e, pc) for e in self.trail
+                 if e['fresh'] and (pc := planning_contract(REGISTRY[e['fn']], e.get('effect'), e.get('descriptor'))) and pc.fresh]
         cert = {'rule': 'effect-chain', 'effect_binding': True, 'goal': fact.id, 'ask': fact.id,
                 'operand': {'descriptor': point[1], 'points': list(fact.points), 'label': env[answer.effect.operands[0]]},
                 'target': (target if isinstance(target, dict) else {'point': target} if isinstance(target, str)
@@ -1658,10 +2432,13 @@ class _EffectResolver:
                            else {'line': list(target[1])} if target[0] == 'named'
                            else {'plane': list(target)}),
                 'chain': self.trail,
-                'labels': [e['env'][REGISTRY[e['fn']].planning.effect.operands[0]] for e in fresh],
+                'labels': [e['env'][pc.effect.operands[0]] for e, pc in fresh],
                 'quotes': list(dict.fromkeys(fact.quotes)), 'provenance': 'DERIVED', 'binding': 'AUXILIARY'}
         if isinstance(target, tuple) and target[0] == 'result':
             cert['line_ref'] = target[1]
+        if (dn := self.definitions.get(cert['operand']['label'])) and dn['descriptor'] == point[1]:
+            cert['definition'] = {k: dn[k] for k in ('descriptor', 'call', 'env')}
+            cert['search'] = {'loci': dn['loci'], 'needs': self.needs, 'candidates': self.candidates, 'depth': self.depth_max}
         self.plan.auxiliary.append(cert)
         self.plan.trace.append({'fact': fact.id, 'step': 'decompose_goal', 'rule': cert['rule'],
                                 'calls': [e['call'] for e in self.trail], 'auxiliary': cert['labels'],
@@ -1670,6 +2447,15 @@ class _EffectResolver:
                                 'new_constructions': len([e for e in self.trail if e['fresh'] and e['call'] != fact.id]),
                                 'needs': self.needs, 'candidates': self.candidates, 'depth': self.depth_max})
         return next(c for c in self.plan.calls if c['id'] == fact.id)
+
+
+def _ten(v) -> str:
+    """A need operand as trace text: a label, a named line, a plane, or a description."""
+    if isinstance(v, tuple) and v[:1] == ("desc",):
+        return f"{v[1]}({','.join(_ten(x) for x in v[2])})"
+    if isinstance(v, tuple) and v[:1] == ("named",):
+        return "".join(v[1])
+    return "".join(v) if isinstance(v, tuple) else str(v)
 
 
 def _dich_muc_tieu(contract, operands) -> dict:
@@ -1692,11 +2478,17 @@ def _nhan_ra(c: _Choice) -> str:
 
 def _bind_result_dependencies(k):
     """Call edges are a view of the existing producers, not another FactGraph."""
+    solid_pts = {v for kh in k.solids.values() for v in (*kh.day, *kh.tren, *([kh.dinh] if kh.dinh else ()))}
     producers = {}
+    curved_by_solid = {}
     for c in k.calls:
         a, fn = c['args'], c['fn']
+        if fn == 'curved_solid' and isinstance(a.get('solid'), str):
+            curved_by_solid[a['solid']] = c['id']
         label = (a.get('image') if fn in ('orthogonal_projection_line','orthogonal_projection','translate_point')
-                 else a.get('point') if fn in POINT_PRODUCERS else None)
+                 else a.get('point') if fn in (*POINT_PRODUCERS, 'sphere_tangent_plane')
+                 else a.get('center') if fn == 'curved_solid' and a.get('center') not in solid_pts
+                 else None)
         if label:
             producers.setdefault(label, []).append(c['id'])
     for c in k.calls:
@@ -1704,10 +2496,14 @@ def _bind_result_dependencies(k):
         points = [x for v in a.values() if isinstance(v,list) for x in v]
         if c['fn'].startswith('orthogonal_projection') or c['fn']=='translate_point' or c['fn'].startswith('ask_'):
             points += [a['point']] if isinstance(a.get('point'), str) else []
-        output = a.get('image') or (a.get('point') if c['fn'] in POINT_PRODUCERS else None)
+        output = (a.get('image')
+                  or (a.get('point') if c['fn'] in (*POINT_PRODUCERS, 'sphere_tangent_plane') else None)
+                  or (a.get('center') if c['fn'] == 'curved_solid' else None))
         if output:
             points = [x for x in points if x != output]
         deps = {p for x in points for p in producers.get(x,()) if p != c['id']}
+        if c['fn'] == 'sphere_tangent_plane' and a.get('solid') in curved_by_solid:
+            deps.add(curved_by_solid[a['solid']])
         if a.get('line_ref'):
             deps.add(a['line_ref'])
         c['depends_on'] = sorted(deps)

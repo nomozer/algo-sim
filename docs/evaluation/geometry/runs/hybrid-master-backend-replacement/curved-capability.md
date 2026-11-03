@@ -1,0 +1,273 @@
+# Curved solids on Route D /4: capability, parity and limits (fifth continuation, 2026-10-31)
+
+**Revisions after the independent review.** Round 1 and round 2 were `NOT_READY`; round 3 was **READY** (`curved-slice-review.md`).
+
+**Round 1.** The reviewer found three blockers. B1: the centre, top and rim roles were not grounded. B2: a value did not have to end its clause. B3: a role phrase or height belonging to another object was accepted. Each one served a WRONG exact value. All are fixed, and each reproduction is a locked negative (`ADVERSARIAL` in the probe). M1, the certificate's scope, is corrected in the table below.
+
+**Basis.** This record is read from the code at the branch HEAD and from the development probe `tools/curved_probe.py` → `curved-probe.json`. 0 provider calls. The implementer wrote the probe cases, so this is `DEVELOPMENT_DIAGNOSTIC` evidence, never held-out. The oracles were computed by hand, before the implementation. At `23c20679` every case was RED, refused with `BRIDGE_UNSUPPORTED_CURVED`.
+
+## What is now served, and how (one route, no new compiler)
+
+The path is: bridge → the **one** planner → Source Gate → engine → the **existing** curved IR (`construct_curved_solid`, `measure`, `intersect_plane_curved`, `arith`) → interpreter → exact kernel (`geometry/curved.py`) → Adapter /4.
+
+The only new layout code is the engine's canonical pose (`_dung_cong`), which sits beside the polygon chart (`_Dung`). It shares the Source Gate, the IR validator, the interpreter, the kernel and `KetQuaTuyen`.
+
+| capability | status on /4 | evidence |
+|---|---|---|
+| Cylinder, cone and sphere declared with centre, top/apex and rim, radius and height | **IMPLEMENTED_AND_VERIFIED** | 18/18 probe positives exact, including the canonical pose (no named point), a rim on the second base, and "chiều cao của hình nón"; `test_route_d_curved_solids.py` (55 tests) |
+| Volume: πr²h, πr²h/3, 4πr³/3 | **IMPLEMENTED_AND_VERIFIED** | cylinder 45π and 6π, cone 12π and 8π/3, sphere 36π |
+| Lateral area: 2πrh, πrl | **IMPLEMENTED_AND_VERIFIED** | 30π, 15π, 4π√2, 6π√2 |
+| Sphere surface, 4πR² (= its curved surface) | **IMPLEMENTED_AND_VERIFIED** | 36π |
+| Total area of a cylinder or cone, **composed**: lateral area + base circle(s) | **IMPLEMENTED_AND_VERIFIED** where the sum is one exact term; a typed refusal otherwise | 48π and 24π. 6π√2 + 4π ⇒ `EXACT_DOMAIN_EXCEEDED`, never rounded. |
+| Radius | **IMPLEMENTED_AND_VERIFIED** | 3 |
+| **Derived dimension:** cone height from a stated slant, h² = SA² − OA² | **IMPLEMENTED_AND_VERIFIED.** This is recomposition over named points. | 12π and 15π from SA = 5; traced as `derive_dimension` / `pythagoras_axis_rim` |
+| Symbolic unit a | **IMPLEMENTED_AND_VERIFIED** | V = 2πa³. A defect was found and fixed here: the learner answer had dropped π and showed "2a³". |
+| Source grounding | **IMPLEMENTED_AND_VERIFIED** (independent review **READY**, round 3, `curved-slice-review.md`) | `_khoi_cong_dung_nguon` / `_doc_cau_cong` require the WHOLE solid quote to parse in a closed clause grammar, an allowlist. The grammar has: the kind word and a written notation; the base-centre pair; the base circle; the sphere centre; the apex; the rim on ITS base circle or on the sphere; radius and height clauses, whose value ends the clause. Any unread word ⇒ `SOURCE_OBJECT_MISMATCH`. Each named point is bound by its role, and the notation agrees with the roles. A height assertion counts only inside the solid's own quote. The question must name the solid's kind (`_cong_khop`). Unnamed points are allowed (canonical pose) and never invented. Refused: 12 adversarial cases and 17 reproductions from review rounds 1–2, every one of which had served a wrong or unfounded value before its fix. |
+| Exactness certificate | **IMPLEMENTED_AND_VERIFIED, for arithmetic only** | Each answer equals both the executed kernel value and an independent closed form (`_chung_chi_cong`), written from the geometry by `KHOI_CONG` attribute. A tampered closed form gives `ENGINE_SELF_CHECK_FAILED`. **Scope (review M1):** the certificate receives the same solved (r², h²) as the IR. It certifies the formula and the kernel's execution, **not the grounding**. Grounding belongs to the Source Gate (next row). |
+| Pedagogical trace | **PARTIALLY_IMPLEMENTED** | Steps recorded: `choose_pose` (LAYOUT_DERIVED, not a given), `derive_dimension`, `construct_solid`, `compose_quantity`, `certify_answer`. The learner sees only the asked target; the parts stay intermediates. |
+
+**Negatives, each refused for the right reason:**
+
+| case | code |
+|---|---|
+| slant ≤ radius | `INCONSISTENT_FACTS` |
+| r, h and slant stated but disagreeing | `INCONSISTENT_FACTS` |
+| radius/height swapped against the text | `UNGROUNDED_VALUE` |
+| a value the text does not state | `UNGROUNDED_VALUE` |
+| a question naming a cone for a cylinder | `SOURCE_OBJECT_MISMATCH` |
+| no height stated | `MISSING_DIMENSION` |
+| the lateral area of a sphere | `CURVED_MEASURE_UNDEFINED` |
+| "diện tích của hình trụ" without "toàn phần" | `PREDICATE_NOT_IN_QUOTE` |
+| a curved solid together with a pyramid | `BRIDGE_UNSUPPORTED_CURVED_COMPOSITE` |
+| a segment to a point the cone does not own | `SOURCE_OBJECT_MISMATCH` |
+| a stated height dropped by the extraction | `SOURCE_PREMISE_UNREAD` |
+| an undeclared solid id | `UNKNOWN_SOLID_ID` |
+| "đường kính bằng 6" read as a radius | `UNGROUNDED_VALUE` (not guessed) |
+
+## Planner: what changed, honestly
+
+- **Plan branch.** `_ke_hoach_cong` maps one curved declaration and its questions to calls; any other fact is refused. This is **schema transformation plus bounded dispatch**, not search.
+- **The real recomposition happens in the engine's exact dimension solve.**
+  - Every stated length among {centre, top, rim} is one linear equation in (r², h²).
+  - The slant, centre–top or centre–rim distance thereby becomes an intermediate the solver derives and checks.
+  - The total area is composed from three primitives already in the IR: `lateral_area`, the base circle (`intersect_plane_curved`), and `area(circle)`.
+- **No failing case showed a gap in the polyhedral planner.**
+
+## Parity: Adapter /3 → /4 (read from `adapter3_simulation._run_curved_route`)
+
+| capability | Adapter /3 | /4 now |
+|---|---|---|
+| Declaration, volume, lateral area, radius | yes | **yes** |
+| Height from a slant | no: height required (`MISSING_CURVED_DIMENSION`) | **yes** |
+| Total area of a cylinder or cone | not offered | **yes**, composed and exact or refused |
+| Section parallel to the base (a circle) and its area | yes | **no** |
+| Axial section | yes | **no** |
+| Cone volume ratio / remaining (frustum) volume | yes | **no** |
+| Standalone frustum | refused | refused |
+| Composite curved + polyhedron | refused | refused |
+
+**Parity is therefore PARTIAL.** Adapter /3 must stay until curved sections and the cone ratio are on /4, and LLM_ONLY cannot be retired on curved problems. Ported next, all on existing kernel primitives (`intersect_plane_curved`, `phan_xu_conic`, `measure area`):
+- parallel and axial sections;
+- the cone ratio / remaining volume.
+
+## Not supported, and why
+
+| capability | why |
+|---|---|
+| Diameter, circumference or base-area phrasings | No role grammar exists for them yet. They are refused, never guessed. |
+| Inscribed / circumscribed spheres; any curved–polyhedral relation | No relation type in the schema, and no certificate (all vertices on one sphere, tangency) |
+| Pyramid frustum | No declaration |
+| Curved solids in Oxyz | Coordinates are a root marker only |
+| Total area that is a sum of unlike radical terms | Outside the exact single-term domain a·π·√b |
+
+## Evaluation consequence (protocol unchanged)
+
+The scorer and the thresholds are untouched. The authoring package (`heldout-authoring/README.md`) now states rules that apply identically to both arms:
+- π is written before √;
+- a sphere's surface and every lateral area go under `lateral_area`;
+- the total area of a cylinder or cone is not asked, because neither arm shows it under a scorable producer kind.
+
+Each rule follows from the kernel both arms share. None of them favours Hybrid.
+
+---
+
+## Sixth continuation: curved sections and the cone volume ratio (registry /24, planner /20, engine /16)
+
+**Development probe:** `tools/curved_section_probe.py`, with oracles computed by hand before the code. At `9f4f61d2` every case was refused at the bridge. Now **10/10 positives are served exactly** and **10/10 negatives are refused for the right reason** (`test_route_d_curved_sections.py`).
+
+### What is served, and how
+
+| capability | how (existing primitives only) | oracle examples |
+|---|---|---|
+| Section parallel to the base, cylinder | plane z = d → kernel `intersect_plane_curved` → `measure area` / `measure radius` | d = 2: S = 9π, r′ = 3 |
+| Section parallel to the base, cone, at a distance from the base | the same; certificate r′ = r·(h − d)/h | d = 1: r′ = 9/4, S = 81π/16 |
+| The same, through the midpoint of the axis (ratio from the apex = 1/2) | z = (1 − k)·h | S = 9π/4 |
+| Axial section of a cylinder (rectangle) or a cone (isosceles triangle) | a polygon through the axis plus its named plane → `measure area` | 30; 12 |
+| Volume ratio small cone : original cone, in either order | the kernel builds the small cone from the apex and the radius it **measures** on the section circle; ratio by cross-multiplication (q·V₁ − p·V₂ = 0) | 1/8; inverse 8 |
+| Remaining volume (frustum) | V − V_small, by IR subtraction | 21π/2 |
+
+**Scorer-facing output:** one target per question — `measure.area`, `measure.radius`, `assign.volume_ratio` or `assign.residual_volume`.
+
+### Typed refusals
+
+| case | code |
+|---|---|
+| a plane outside the solid | `CURVED_PLANE_DOES_NOT_CUT` |
+| a plane through the apex | `CURVED_PLANE_TANGENT` |
+| a plane on a base | `CURVED_SECTION_IS_A_BASE` |
+| an irrational cut | `CURVED_SECTION_OUTSIDE_V1_CLOSURE` |
+| a distance the text does not state | `UNGROUNDED_VALUE` |
+| a distance "cách đỉnh"; an unread qualifier; a plane not parallel; an inverted ratio; a section sentence about another kind | `SOURCE_OBJECT_MISMATCH` |
+| a section "volume" | `INVALID_MATH_GOAL` |
+| sphere sections | `BRIDGE_UNSUPPORTED_CURVED` |
+
+### Recomposition (honest classification)
+
+The dependency chain is **original cone → section circle (kernel) → its measured radius → small cone (kernel) → its volume → ratio / remaining volume**. The trace records it in order: `construct_section` → `derive_dimension` (similar cones) → `construct_subsolid` (reusing the section circle) → `compose_quantity` → `certify_answer`, and it is test-locked.
+
+This is **bounded composition of existing primitives**, not open-ended planning. No polyhedral planner change was needed.
+
+### Parity Adapter /3 → /4
+
+| capability | status |
+|---|---|
+| Cylinder, cone, sphere: volume, lateral area, radius | `SUPPORTED_BOTH` |
+| Section parallel to the base, cylinder and cone (distance from the base) | `SUPPORTED_BOTH` |
+| Ratio from the apex: /3 takes any k in (0, 1); /4 reads only the midpoint wording (k = 1/2) | `PARTIAL` |
+| Axial section of a cylinder or cone | `SUPPORTED_BOTH` |
+| Cone volume ratio, remaining volume | `SUPPORTED_BOTH` |
+| Height from slant; total area of a cylinder or cone; canonical pose | `SUPPORTED_ONLY_V4` |
+| Plane by equation (`plane_equation`); ellipse sections | `SUPPORTED_ONLY_V3` (the /4 schema path would need coordinates from the LLM, which R0 forbids) |
+| Sphere section at a distance from the centre / through the centre | `UNSUPPORTED` on /4 (needs a new contract field) |
+| Standalone frustum; curved composites | `UNSUPPORTED` on both |
+
+**Parity is therefore still PARTIAL.** Adapter /3 cannot be retired yet.
+
+### Registered controls (explicit layer, not a silent re-pin)
+
+`registered-curved-control-transitions.json` records 32 Owner-registered control cells. Each moved from REFUSED `BRIDGE_UNSUPPORTED_CURVED` to REFUSED `SOURCE_OBJECT_MISMATCH`.
+- **Why:** these controls now pass the bridge, and their wording lies outside the closed grammar: "tâm đáy O", "tâm đáy dưới/trên", "A trên đường tròn đáy dưới", "cắt trục SO theo tỉ lệ 1/2 tính từ đỉnh S", "thiết diện qua trục SAB".
+- **Guarantee:** the layer can only move a cell between REFUSED codes, and the tests assert that. The registered oracle files are not edited.
+- **These wordings are the next grammar gaps.**
+
+## Seventh continuation: registered contract audit, base-centre grammar, apex ratio k, sphere sections (registry /25, planner /21, engine /17)
+
+Commit `6e0a6c2c`. Offline, 0 provider calls. Supporting documents:
+
+- `registered-curved-controls-audit.md`: the 32 registered cells and the 12 moved probes;
+- `curved-generalization-audit.md`: planner, FactGraph, certificates, trace and model-surface impact.
+
+### What is now served on /4
+
+| Area | New wording or capability | Development probe |
+|---|---|---|
+| Base-centre grammar | "tâm đáy O", "tâm đáy dưới/trên (là) X", "hai đáy (lần lượt) có tâm X và Y", "đáy có tâm O", "đường tròn đáy (có) tâm O", rims "thuộc / trên đường tròn đáy (dưới/trên) (tâm O)/(O)", "bán kính đáy R = 3", "chiều cao h = 4", segment dimensions "chiều cao SO = 15" / "bán kính OB = 9" | `base_center_probe`: 7/7 served, 9/9 refused with the exact code |
+| Apex ratio k | "cắt (trục) SO tại M sao cho SM/SO = k"; "OM/OS = k" (the **gate** converts it to 1 − k, never the model); "cắt trục SO theo tỉ lệ k tính từ đỉnh S" | `apex_ratio_probe`: 11/11 served, 9/9 refused |
+| Sphere sections | "cách tâm O một khoảng bằng d" (`at_distance_from_center`) and "(đi) qua tâm O" (`through_center`) | `sphere_section_probe`: 8/8 served, 11/11 refused |
+
+Details:
+
+- **Apex ratio k.** The section's r' = k·r and S = πk²r². The small cone is V' = k³V and the rest is (1 − k³)V. One
+  mechanism covers every k (no per-k code). A named point M is the centre of the section circle and the base centre of the
+  small cone.
+- **Sphere sections.** The kernel's `_giao_cau` gives r'² = R² − d², with an independent certificate. The two edge cases
+  are typed:
+  - d = R ⇒ `CURVED_PLANE_TANGENT`: a point, no area;
+  - d > R ⇒ `CURVED_PLANE_DOES_NOT_CUT`.
+- **Sphere status.** Sphere sections are **IMPLEMENTED_AND_VERIFIED** on `/4` (`curved-generalization-review.md` Round 3 `READY`, Full T3 `FULL_PRODUCT_GATE_PASS` at `cb06635e`).
+
+### Refusal-reason integrity
+
+Unread curved wording now refuses with `CURVED_WORDING_UNSUPPORTED`. Before this fix it said `SOURCE_OBJECT_MISMATCH`, a
+false reason (the input names no wrong object) that moved the cell from CAPABILITY to SOURCE_UNVERIFIED.
+
+When a run has more than one section, the refusal is now `CURVED_MULTI_SECTION_UNSUPPORTED`. Before, it was a false "về đối
+tượng khác" (about another object).
+
+The transition layer is in two parts:
+
+- **Layer 1** is `registered-curved-control-transitions.json`. It is left untouched.
+- **Layer 2 & Layer 3** are `registered-curved-control-transitions-2.json` and `registered-curved-control-transitions-3.json`.
+  - Layer 2 corrects layer 1 across all 32 cells, and Layer 3 corrects the 2 multi-section cells (`CURVED_MULTI_SECTION_UNSUPPORTED`).
+  - The tests (`test_target_grammar_identity_recovery.load_transitions`) compose all three layers and assert the chain.
+  - Every cell moves REFUSED → REFUSED; none is SERVED.
+
+### Parity: what still blocks the 8 Adapter /3 curved fixtures
+
+The base-centre grammar was necessary, but it is not sufficient. The fixtures still refuse because of three gaps:
+
+| Gap | Effect | Status |
+|---|---|---|
+| Coordinated question lists ("Tính thể tích, diện tích xung quanh hình nón, …") | The shared question gate cannot bind them | Owner proposal P-1 |
+| Several sections in one run | The binder covers one section only | Owner proposal P-2 |
+| The cone fixtures ask "tỉ số thể tích" with no order | The question cannot be bound | Stays a refusal |
+
+Serving the first two would turn registered REFUSED cells into SERVED cells, so both are withheld until the Owner decides.
+
+**Parity is still PARTIAL.**
+
+## Eighth continuation: role-phrase parity, pedagogical trace pre/postconditions, and certified circumscribed spheres of polyhedra on /4
+
+Commits `df81deba` / `44a0b79e` (product). Offline, 0 provider calls. Supporting documents: `circumscribed-spheres-review.md`, `tools/circumscribed_sphere_probe.py`, `inventory-phase-l2.json`.
+
+### What is now served and hardened on /4
+
+| Slice | Capability / Hardening | Verification |
+|---|---|---|
+| Polyhedral role-phrase parity | `_C_VAI` + `_cua_khop` accept explicit solid nouns without `"của"` (e.g. `"chiều cao hình chóp bằng 4"`, `"cạnh bên hình lăng trụ bằng 3"`) while enforcing full prism-subclass invariants via `_loai_cum_dung` | `test_route_d_role_phrase_parity.py` |
+| Pedagogical construction trace | `_gan_dieu_kien_vet` exports machine-verified `preconditions` and `postconditions` on `KetQuaTuyen.trace` and `route_d.construction_trace` across polyhedral, standalone curved, and composite traces; strips post-execution kernel claims on all `REFUSED` paths; keeps standalone sphere pose axisless (`canonical_origin_center`) | `test_route_d_pedagogical_trace.py` |
+| Certified circumscribed spheres of polyhedra | Additive `SolidSpec.circumscribes` on `typed-fact-next/2`; exact `Fraction` $3 \times 3$ Gram circumcenter solver (`_tam_bon_dinh`) + all-vertex cosphericity certificate (`NO_CIRCUMSCRIBED_SPHERE`); exact `Fraction` Cholesky Euclidean chart normalization (`chuan_hoa_euclid`, refusing irrational charts with `METRIC_REQUIRES_EUCLIDEAN_CHART`); G4 IR perpendicular-bisector construction (`_emit_tam_ngoai_tiep`) + `construct_curved_solid` + independent closed-form cross-check; closed Vietnamese Source Gate grammar (`_CAU_CONG_NGOAI_TIEP`) + composite `ask_volume` disambiguation (`_chi_mot_khoi_3d`) | `circumscribed_sphere_probe.py` (`12/12` served, `12/12` refused), `test_route_d_circumscribed_spheres.py`, `test_scope_census_closure.py`, `circumscribed-spheres-review.md` (`READY`, Round 2) |
+
+### Still refused on /4 (typed)
+
+- Inscribed spheres (`"mặt cầu nội tiếp"`), tangent spheres, and circumcircles (`CURVED_WORDING_UNSUPPORTED`);
+- Non-cospheric polyhedra such as oblique pyramids, non-cyclic bases, and oblique prisms (`NO_CIRCUMSCRIBED_SPHERE`);
+- Polyhedra whose base metric/height requires an irrational Cholesky factor (`METRIC_REQUIRES_EUCLIDEAN_CHART`);
+- Composite polyhedron + curved sections in a single run (`BRIDGE_UNSUPPORTED_CURVED_COMPOSITE`);
+- Legacy Adapter `/3` is not expanded (`BRIDGE_UNSUPPORTED_CURVED_COMPOSITE`).
+
+## Ninth continuation: multi-object FactGraph, certified inscribed spheres, sphere–plane tangency, and composite geometry on /4 (registry /26, planner /22, engine /18, geometric-relation-certificate/1)
+
+Product commit `fa1ed277`. Offline, 0 provider calls. Supporting documents: `multi-object-factgraph-audit.md`, `composite-relations-review.md` (`READY` in Round 3), `tools/composite_relations_probe.py` → `composite-relations-probe.json`, `inventory-phase-m.json`, `wave3-phase-m.json`.
+
+### What is now served on /4
+
+| Slice | Capability / Hardening | Verification |
+|---|---|---|
+| Additive Typed Relation Contract (`typed-fact-next/2`) | `GeometricRelationSpecV2` (`circumscribes`, `inscribed_in`, `tangent_to` with optional `contact_ref`) and `SolidSpec.inscribed_in` (additive to `/2` only; `/1` schema untouched), unique `relation_id` check, `solid_scope` disambiguation for dual unnamed `"()"` solids, and `schema-census-extension.json` closure | `test_scope_census_closure.py`, `test_route_d_composite_relations.py` |
+| Certified sphere inscribed in a convex polyhedron (5A) | Exact `Fraction` + integer `isqrt` + multiquadratic $\mathbb{Q}(\sqrt{p} : p \in P)$ ($m \le 4$) solver across **all** boundary faces (`NO_INSCRIBED_SPHERE`, `EXACT_DOMAIN_EXCEEDED`, `METRIC_REQUIRES_EUCLIDEAN_CHART`); face coplanarity & strict polygon convexity verification (`NON_COPLANAR_POINTS`, `DEGENERATE_SOLID`); strict inward half-space signs; strict relative-interior face contact checks $T_k \in \operatorname{relint}(F_k)$; and independent pure-`Fraction` volume-surface identity cross-check ($9V^2 = r^2 (\sum_k S_k)^2$) | `composite_relations_probe.py`, `test_route_d_composite_relations.py` |
+| Certified sphere–plane tangency (5B) | `sphere_tangent_plane` on `tangent_to` relations: exact Euclidean chart distance $d^2(O, (\alpha)) = R^2$ vs. secant (`PLANE_INTERSECTS_SPHERE_NOT_TANGENT`, $d^2 < R^2$) vs. disjoint (`PLANE_DOES_NOT_TOUCH_SPHERE`, $d^2 > R^2$), certified non-collinear witness triple for G4 IR `construct_plane`, and optional named contact point verification (`INCONSISTENT_FACTS` on mismatch, usable in downstream metric goals) | `composite_relations_probe.py`, `test_route_d_composite_relations.py` |
+| Multi-object composites & axial-host spheres (5C / 5D) | Multi-polyhedron (`shared_faces` / `shared_vertices`) + spheres; dual spheres (`(S1)` circumscribed + `(S2)` inscribed, and dual unnamed `"()"` spheres via synthetic `(out:...)` / `(in:...)` symbols); polyhedron plane section + sphere coexistence; axial cylinder/cone hosts (`O.O'`, `(T)`, `S.O`, `(N)`) + circumscribed/inscribed spheres (`NO_INSCRIBED_SPHERE` when cylinder $h \ne 2R$); multi-goal cross-solid queries | `composite_relations_probe.py` (`17/17` served, `19/19` refused) |
+| Planner DAG, Source Gate & 4-layer `relation_certificates` | Explicit multi-object dependency DAG (`DEPENDENCY_CYCLE` detection) + honest `composition_classification` (`single_solid_direct`, `single_solid_composed`, `multi_solid_independent`, `multi_solid_relational`, `composite_section_and_relation`); closed Vietnamese grammar for `"nội tiếp"`, `"tiếp xúc với tất cả các mặt của"`, `"tiếp xúc với mặt phẳng ... (tại ...)"`, and axial hosts; 4-layer `relation_certificates` (`SOURCE_GROUNDING_PROOF`, `GEOMETRIC_RELATION_PROOF`, `KERNEL_EXECUTION_PROOF`, `RESULT_CERTIFICATE`) cleared on all `REFUSED` envelopes | `composite-relations-review.md` (`READY`, Round 3), `fixtures-adapter-2-composition-classification/` (`41/41`) |
+
+### Updated 18-group capability matrix across Route D `/4`, Adapter `/3`, and `LLM_ONLY` (offline backend at `fa1ed277`; live NL extraction on `/4` is `NOT_MEASURED`)
+
+Status tokens (`§X.11`): `IMPLEMENTED_AND_VERIFIED` (bounded verified slice), `SUPPORTED_WITH_LIMITS` (verified on supported sub-domain, typed refusals outside), `REPRESENTABLE_ONLY`, `REFUSED_CORRECTLY`, `UNSUPPORTED`, `NOT_MEASURED`.
+
+| # / registered group | Route D `/4` (offline gold V2) | Legacy Adapter `/3` (offline V1) | `LLM_ONLY` (live NL) | Exact `/4` offline basis & remaining group boundary |
+|---|---|---|---|---|
+| 1 `quan_he_dt_mp`: line–plane / three perpendiculars | `SUPPORTED_WITH_LIMITS` | `SUPPORTED_WITH_LIMITS` | `SUPPORTED_WITH_LIMITS` (`NOT_MEASURED` paired) | Named point/line/plane distances & angles + ordered `"lần lượt"` projections `IMPLEMENTED_AND_VERIFIED` (`topology-probe.json`); open-ended theorem discovery `UNSUPPORTED` |
+| 2 `hai_dt_cheo_nhau`: skew lines / common perpendicular | `SUPPORTED_WITH_LIMITS` | `SUPPORTED_WITH_LIMITS` | `SUPPORTED_WITH_LIMITS` (`NOT_MEASURED` paired) | Exact skew-line distance + certified common perpendicular witness `IMPLEMENTED_AND_VERIFIED`; standalone line-only programs without anchor solid `UNSUPPORTED` |
+| 3 `chop_sa_vuong_day_vuong`: square-base right-apex pyramid | `SUPPORTED_WITH_LIMITS` | `SUPPORTED_WITH_LIMITS` (no spheres/tangency) | `SUPPORTED_WITH_LIMITS` (`NOT_MEASURED` paired) | Metrics, polygonal sections, circumscribed/inscribed spheres, and sphere–plane tangency `IMPLEMENTED_AND_VERIFIED` on `/4` |
+| 4 `chop_tu_giac_deu`: regular square pyramid, inscription | `SUPPORTED_WITH_LIMITS` | `SUPPORTED_WITH_LIMITS` (no spheres/tangency) | `SUPPORTED_WITH_LIMITS` (`NOT_MEASURED` paired) | Circumscribed & inscribed spheres (including radical face-normal heights via `_QField`), dual spheres, sections, and tangency `IMPLEMENTED_AND_VERIFIED` on `/4` |
+| 5 `chop_tam_giac_deu`: regular triangular pyramid, inscription | `SUPPORTED_WITH_LIMITS` | `SUPPORTED_WITH_LIMITS` (no spheres/tangency) | `SUPPORTED_WITH_LIMITS` (`NOT_MEASURED` paired) | Rational-Cholesky equilateral/regular tetrahedron charts `IMPLEMENTED_AND_VERIFIED`; irrational Cholesky charts `REFUSED_CORRECTLY` (`METRIC_REQUIRES_EUCLIDEAN_CHART`) |
+| 6 `chop_sa_vuong_abc`: triangular-base right-apex pyramid | `SUPPORTED_WITH_LIMITS` | `SUPPORTED_WITH_LIMITS` (no spheres/tangency) | `SUPPORTED_WITH_LIMITS` (`NOT_MEASURED` paired) | Right-angled base charts + circum-/insphere `IMPLEMENTED_AND_VERIFIED`; irrational Heron Cholesky charts `REFUSED_CORRECTLY` (`METRIC_REQUIRES_EUCLIDEAN_CHART`) |
+| 7 `to_hop_chop_non`: pyramid–cone inscription/composite | `REFUSED_CORRECTLY` (`REPRESENTABLE_ONLY`) | `REFUSED_CORRECTLY` | `NOT_MEASURED` | Polyhedron–cone inscription (`inscribed_cone` / `circumscribed_cone`) `UNSUPPORTED` on `/4` (`BRIDGE_UNSUPPORTED_CURVED_COMPOSITE`) |
+| 8 `to_hop_lang_tru_tru_cau`: prism–cylinder–sphere | `SUPPORTED_WITH_LIMITS` | `REFUSED_CORRECTLY` | `NOT_MEASURED` | Prism–sphere and axial cylinder–sphere (`h = 2R` check) `IMPLEMENTED_AND_VERIFIED` on `/4`; prism–cylinder inscription `REFUSED_CORRECTLY` (`BRIDGE_UNSUPPORTED_CURVED_COMPOSITE`) |
+| 9 `to_hop_non_cau`: cone–sphere inscription | `SUPPORTED_WITH_LIMITS` | `REFUSED_CORRECTLY` | `NOT_MEASURED` | Right circular cone + circumscribed ($R = \frac{r^2 + h^2}{2h}$), inscribed ($r_{\text{in}} = \frac{rh}{r + \sqrt{r^2 + h^2}}$), and dual spheres `IMPLEMENTED_AND_VERIFIED` on `/4` |
+| 10 `chop_cut_deu`: regular quadrilateral pyramid frustum | `REFUSED_CORRECTLY` (`UNSUPPORTED`) | `REFUSED_CORRECTLY` | `NOT_MEASURED` | Standalone pyramid frustum & `cone_frustum` `UNSUPPORTED` on `/4` (`BRIDGE_UNSUPPORTED_CURVED`; cone parallel-cut residual volume is in Group 15) |
+| 11 `hinh_hop_chu_nhat`: cuboid / cube | `SUPPORTED_WITH_LIMITS` | `SUPPORTED_WITH_LIMITS` (no spheres/tangency) | `SUPPORTED_WITH_LIMITS` (`NOT_MEASURED` paired) | Metrics, sections, circumsphere, cube insphere (`NO_INSCRIBED_SPHERE` on non-cubic cuboid), dual spheres, and section+sphere coexistence `IMPLEMENTED_AND_VERIFIED` on `/4` |
+| 12 `lang_tru_tam_giac_deu`: right triangular prism | `SUPPORTED_WITH_LIMITS` | `SUPPORTED_WITH_LIMITS` (no spheres) | `SUPPORTED_WITH_LIMITS` (`NOT_MEASURED` paired) | Right prism metrics, perpendicular/parallel sections, circumsphere, and tangential-height insphere `IMPLEMENTED_AND_VERIFIED` on `/4` |
+| 13 `lang_tru_xien`: oblique triangular prism | `SUPPORTED_WITH_LIMITS` | `SUPPORTED_WITH_LIMITS` | `SUPPORTED_WITH_LIMITS` (`NOT_MEASURED` paired) | Grounded lateral-vector metrics & parallel/perpendicular sections `IMPLEMENTED_AND_VERIFIED` (`REPRESENTABLE_ONLY` on 3 Wave 3 two-line wording cells); non-cospheric oblique prisms `REFUSED_CORRECTLY` (`NO_CIRCUMSCRIBED_SPHERE`) |
+| 14 `mat_cau`: sphere–plane / tangency | `SUPPORTED_WITH_LIMITS` | `SUPPORTED_WITH_LIMITS` (legacy IR) | `SUPPORTED_WITH_LIMITS` (`NOT_MEASURED` paired) | Standalone sphere measures, `at_distance_from_center` / `through_center` sections, and polyhedral plane `tangent_to` (`d^2 = R^2` + contact point) `IMPLEMENTED_AND_VERIFIED`; algebraic plane equations `REFUSED_CORRECTLY` |
+| 15 `hinh_non`: cone, sections, generators | `SUPPORTED_WITH_LIMITS` | `SUPPORTED_WITH_LIMITS` (`P-1`/`P-2` fixtures) | `SUPPORTED_WITH_LIMITS` (`NOT_MEASURED` paired) | Volume, $S_{xq}$, $S_{tp}$, slant Pythagoras, parallel/axial sections, general ratio $k$, residual volume, and cone–sphere composites `IMPLEMENTED_AND_VERIFIED`; oblique ellipse sections & `P-1`/`P-2` wordings `REFUSED_CORRECTLY` |
+| 16 `hinh_tru`: cylinder / axis-parallel sections | `SUPPORTED_WITH_LIMITS` | `SUPPORTED_WITH_LIMITS` (`P-1`/`P-2` fixtures) | `SUPPORTED_WITH_LIMITS` (`NOT_MEASURED` paired) | Volume, $S_{xq}$, $S_{tp}$, parallel/axial sections, and cylinder–sphere composites `IMPLEMENTED_AND_VERIFIED`; off-axis rectangular & oblique ellipse sections `REFUSED_CORRECTLY` |
+| 17 `he_truc_oxyz`: coordinates / intercept plane | `REFUSED_CORRECTLY` (`REPRESENTABLE_ONLY` root marker) | `REFUSED_CORRECTLY` | `SUPPORTED_WITH_LIMITS` (`NOT_MEASURED` paired) | General Oxyz coordinate/equation input `UNSUPPORTED` on `/4` |
+| 18 `oxyz_dt_mp_cau`: coordinate line–plane–sphere | `REFUSED_CORRECTLY` (`UNSUPPORTED`) | `REFUSED_CORRECTLY` | `SUPPORTED_WITH_LIMITS` (`NOT_MEASURED` paired) | Requires Oxyz coordinate input layer (Group 17); `UNSUPPORTED` on `/4` |
+
+### Subsequent architectural frontier (not claimed in Continuation 9)
+
+1. **Polyhedron–cylinder/cone inscription (`Group 7`, prism–cylinder in `Group 8`) & sphere–line / sphere–sphere tangency:** evaluated in `multi-object-factgraph-audit.md` §4 (`DEFERRED` until base-circle/incircle/circumcircle 2D relation primitives are added).
+2. **Standalone pyramid frustum & cone frustum (`Group 10`):** requires frustum `SolidSpec` + exact two-base similarity certificates.
+3. **Oxyz coordinate geometry (`Groups 17–18`) & algebraic plane equations / oblique conic (ellipse) sections:** out of current synthetic construction scope.
+4. **Owner grammar rulings `P-1`, `P-2`, `P-3`** (`owner-go-request.md`) for coordinated question lists and multi-section curved fixtures, **Frontend `D-10`** (`annotation.kind` / trace UI), and **Live Paired Evaluation (`D-04`, `D-11`, `D-13`, `GATE-16`)** under Owner GO.

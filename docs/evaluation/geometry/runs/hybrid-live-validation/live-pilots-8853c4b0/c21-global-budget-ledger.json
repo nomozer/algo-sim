@@ -1,0 +1,23 @@
+{
+ "max_requests": 64,
+ "max_usd": 3.844671,
+ "requests_used": 64,
+ "spent_upper_usd": 0.34046400000000004,
+ "pilots": [
+  {
+   "study": "K-1",
+   "http_requests": 16,
+   "spent_upper_usd": 0.1063866
+  },
+  {
+   "study": "S-2",
+   "http_requests": 35,
+   "spent_upper_usd": 0.17406220000000006
+  },
+  {
+   "study": "R-1",
+   "http_requests": 13,
+   "spent_upper_usd": 0.060015200000000005
+  }
+ ]
+}

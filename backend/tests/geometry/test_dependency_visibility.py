@@ -48,7 +48,7 @@ def cau():
 
 @pytest.fixture
 def canh(cau):
-    from app.ai.pipeline import _dung_scene3d
+    from tests.geometry.scene3d_test_helper import _dung_scene3d
 
     ct, spec, _ = cau
     return _dung_scene3d(spec, ct)

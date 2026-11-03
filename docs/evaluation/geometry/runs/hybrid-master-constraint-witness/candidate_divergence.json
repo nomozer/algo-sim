@@ -1,0 +1,20 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "ALGOSIM_MASTER_HYBRID_BACKEND_REPLACEMENT (seventeenth continuation: constraint-to-witness planes, registry /30, planner /25, engine /21)",
+  "corrects": "docs/evaluation/geometry/runs/hybrid-master-planner-provenance/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "current_candidate_hash": "b1b29a13dc4ed5e7c44fb48bfb2c96fd4e086fdb182a4fa96b6992545e6942e9",
+  "current_product_commit": "8a89c6fd46b5f8021a16b16a6f1b3f270657a29f",
+  "current_candidate_source": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+  "diverged": true,
+  "reason": "Backend only, offline, on top of the 3154a696 candidate: typed-fact-next/2 gains plane_kind 'constrained' (contains_points / parallel_to_line / perpendicular_to_plane), carried by the bridge as the internal fact field plane_constraints (the locked flat TypedFact schema is unchanged). Registry /30 adds the declared rule MAT_RANG_BUOC with its closed-grammar source gate and a Normal effect on orthogonal_projection; planner /25 plans the witnesses; engine /21 decides existence and uniqueness by exact affine rank and builds the plane through its first independent triple (MAT_RANG_BUOC planes only); the route moves witnesses outside the engine span to verification_witness_steps; adapter /4 re-checks stated_constraints. Independent oracle on 1531 generated cases: 407 served exact, 1124 correct refusals, 0 wrong-served, 0 reachable-but-refused (constraint-witness-probe-r3.json). Discovery is NOT established (ablation r3: candidate choice immaterial). 41/41 preview fixtures verify through the declared identity deltas; Wave 3 phase-r 0 transitions. Independent review READY in round 2. LLM_ONLY, its cache identity, prompts, frontend and route A schemas are unchanged.",
+  "cache_version": 131,
+  "cache_version_hien_tai": 131,
+  "cache_decision": "NO BUMP: LLM_ONLY untouched (CACHE_VERSION keys the /api/analyze response cache); Route D rows are keyed by the Route D surface, which includes the registry/planner/engine versions (/30, /25, /21), so they invalidate on their own; refusals are never cached.",
+  "hieu_luc_len_ket_qua_da_do": {
+    "historical_measurements": "UNCHANGED",
+    "live_requests": 0,
+    "so_lieu_lượt_đo_cuối": "UNCHANGED: historical measurements are not rescored. Constraint-defined planes were refused (INVALID_TYPED_FACT_NEXT) on 3154a696 (constraint-witness-baseline-24.json)."
+  }
+}

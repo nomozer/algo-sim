@@ -1,0 +1,103 @@
+{
+  "schema": "s1-diacritic-development-corpus/1",
+  "scope": "DEVELOPMENT_OFFLINE_ONLY",
+  "production_status": "NOT_APPROVED_BY_OWNER",
+  "cases": [
+    {
+      "id": "S1-DEV-01",
+      "category": "unambiguous_polyhedral",
+      "raw_text": "Cho hinh chop S.ABCD co day ABCD la hinh vuong canh 2, SA vuong goc voi (ABCD), SA = 2. Tinh the tich khoi chop S.ABCD.",
+      "expected_status": "RESTORED_UNAMBIGUOUS"
+    },
+    {
+      "id": "S1-DEV-02",
+      "category": "unambiguous_polyhedral_distance",
+      "raw_text": "Cho hinh chop S.ABCD co day ABCD la hinh vuong canh 3, SA vuong goc voi mat phang day, SA = 4. Tinh khoang cach tu A den mat phang (SBC).",
+      "expected_status": "RESTORED_UNAMBIGUOUS"
+    },
+    {
+      "id": "S1-DEV-03",
+      "category": "unambiguous_prism",
+      "raw_text": "Cho hinh lang tru dung ABC.A'B'C' co day ABC la tam giac vuong tai A, AB = 3, AC = 4, AA' = 5. Tinh the tich khoi lang tru ABC.A'B'C'.",
+      "expected_status": "RESTORED_UNAMBIGUOUS"
+    },
+    {
+      "id": "S1-DEV-04",
+      "category": "unambiguous_cube_section",
+      "raw_text": "Cho hinh lap phuong ABCD.A'B'C'D' canh 2. Goi M la trung diem cua AA'. Xac dinh thiet dien cua hinh lap phuong cat boi (MBC') va tinh dien tich thiet dien.",
+      "expected_status": "RESTORED_UNAMBIGUOUS"
+    },
+    {
+      "id": "S1-DEV-05",
+      "category": "unambiguous_angle_giua",
+      "raw_text": "Cho hinh chop tu giac deu S.ABCD co canh day 2 va canh ben 4. Tinh goc giua SC va mat phang day.",
+      "expected_status": "RESTORED_UNAMBIGUOUS"
+    },
+    {
+      "id": "S1-DEV-06",
+      "category": "unambiguous_sphere_center",
+      "raw_text": "Cho mat cau tam O co ban kinh day 3. Tinh the tich.",
+      "expected_status": "RESTORED_UNAMBIGUOUS"
+    },
+    {
+      "id": "S1-DEV-07",
+      "category": "passthrough_has_diacritics",
+      "raw_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với (ABCD), SA = 3. Tính thể tích khối chóp S.ABCD.",
+      "expected_status": "PASSTHROUGH_HAS_DIACRITICS"
+    },
+    {
+      "id": "S1-DEV-08",
+      "category": "ambiguous_goc_angle_vs_origin",
+      "raw_text": "Cho hinh chop S.ABC. Tinh khoang cach tu goc O den mat phang (SBC).",
+      "expected_status": "NEEDS_CLARIFICATION"
+    },
+    {
+      "id": "S1-DEV-09",
+      "category": "ambiguous_goc_bare_vertex",
+      "raw_text": "Cho tam giac ABC co goc A bang 60. Tinh dien tich tam giac ABC.",
+      "expected_status": "NEEDS_CLARIFICATION"
+    },
+    {
+      "id": "S1-DEV-10",
+      "category": "ambiguous_day_base_vs_chord",
+      "raw_text": "Cho duong tron tam O. Tinh do dai day AB cua duong tron.",
+      "expected_status": "NEEDS_CLARIFICATION"
+    },
+    {
+      "id": "S1-DEV-11",
+      "category": "ambiguous_day_chord_in_solid_with_circle",
+      "raw_text": "Cho hinh non dinh S va duong tron day. Tinh do dai day AB.",
+      "expected_status": "NEEDS_CLARIFICATION"
+    },
+    {
+      "id": "S1-DEV-12",
+      "category": "ambiguous_tam_eight_vs_center",
+      "raw_text": "Cho hinh lap phuong ABCD.A'B'C'D' co canh bang tam. Tinh the tich.",
+      "expected_status": "NEEDS_CLARIFICATION"
+    },
+    {
+      "id": "S1-DEV-13",
+      "category": "ambiguous_tam_unanchored_point",
+      "raw_text": "Cho hinh chop S.ABCD. Goi I la tam cua hinh. Tinh khoang cach tu I den (SBC).",
+      "expected_status": "NEEDS_CLARIFICATION"
+    },
+    {
+      "id": "S1-DEV-14",
+      "category": "ambiguous_canh_sector_wing_vs_edge",
+      "raw_text": "Tinh dien tich hinh canh quat OAB.",
+      "expected_status": "NEEDS_CLARIFICATION"
+    },
+    {
+      "id": "S1-DEV-15",
+      "category": "ambiguous_duong_line_vs_positive",
+      "raw_text": "Cho hinh chop S.ABC co a la so duong. Tinh the tich.",
+      "expected_status": "NEEDS_CLARIFICATION"
+    },
+    {
+      "id": "S1-DEV-16",
+      "category": "lowercase_vertex_notation_trap",
+      "raw_text": "Cho hinh chop s.abcd co sa = 2. Tinh the tich.",
+      "expected_status": "NEEDS_CLARIFICATION"
+    }
+  ]
+}

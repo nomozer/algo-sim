@@ -100,21 +100,21 @@ Tên đề tài (giữ nguyên chính xác):
 > truy vết ở `CODE_INDEX.md §0j`) — doc nào còn mô tả chúng là đang nói về mã
 > không tồn tại.
 >
-> **Phân biệt rõ vai trò của LLM trên tuyến sản phẩm mặc định hiện hành (`AS-IS`)
-> và kiến trúc mục tiêu (`TO-BE: Hybrid`):**
-> - **AS-IS (`DEFAULT_MODE = LLM_ONLY` — tuyến sản phẩm mặc định hiện hành):**
->   LLM đọc đề → `RequestContract` rồi **tổng hợp một Semantic Program có biên**
->   (các BƯỚC DỰNG) để engine tất định thực thi, kiểm chứng và dẫn xuất trace/cảnh 3D.
-> - **TO-BE (`Hybrid` — kiến trúc mục tiêu):**
->   AI chỉ trích xuất **JSON Typed Facts** (`TypedFact` / `TypedFactNext`) kèm trích
->   dẫn nguyên văn câu đề → **Semantic Grounding** → **Goal-Directed Construction
+> **Vai trò của LLM trên kiến trúc sản phẩm chính thức hiện hành (`Hybrid /4`):**
+> - **Tuyến sản phẩm mặc định (`HYBRID_ROUTE_MODE = live`; `staging-replay` cho dev/test):**
+>   AI chỉ trích xuất **JSON Typed Facts** (`TypedFactNext`) kèm trích
+>   dẫn nguyên văn câu đề → **Source Gate / Semantic Grounding** → **Goal-Directed Construction
 >   Planner tất định** tự chọn và phối hợp **Geometry Functions** → **Compiler /
->   Construction IR** → **Engine / Kernel** → **Scene3D** (xem
+>   Construction IR** → **Exact Geometry Kernel** → **Adapter `/4` / Scene3D** (xem
 >   [`architecture/HYBRID_B_TARGET_ARCHITECTURE_DECISION.md`](architecture/HYBRID_B_TARGET_ARCHITECTURE_DECISION.md)
 >   và [`architecture/TEXT_TO_GEOMETRY_FUNCTIONS_CONTRACT.md`](architecture/TEXT_TO_GEOMETRY_FUNCTIONS_CONTRACT.md)).
->   Không đánh đồng kiến trúc **Hybrid** với lát cắt `FactGraph`/`primitive_compiler`
->   cũ theo họ bài (`geometry_compiler/`). Tuyến mặc định của sản phẩm vẫn là
->   `LLM_ONLY` cho tới khi vượt qua đủ 20 cổng tại [`MIGRATION_CHECKLIST.md`](MIGRATION_CHECKLIST.md).
+> - **Đã gỡ bỏ khỏi thực thi (`LEGACY_EXECUTION_RETIRED`):**
+>   Orchestrator `LLM_ONLY` cũ (`pipeline.py`, tổng hợp chương trình bởi LLM), `Adapter /3`
+>   và lát cắt `geometry_compiler/` cũ đã ngừng sử dụng và bị xoá khỏi mã sản phẩm;
+>   không còn fallback ngầm về tổng hợp chương trình. `semantic_program/route.py` chỉ còn
+>   giữ vai trò kiểm định IR/Scene3D tất định dùng chung (`COMPATIBILITY_REQUIRED`).
+>   Trạng thái cổng chuyển đổi và giới hạn nghiên cứu độc lập (`H-1`) được ghi nhận trung thực tại
+>   [`MIGRATION_CHECKLIST.md`](MIGRATION_CHECKLIST.md) và [`CURRENT_STATE.md`](CURRENT_STATE.md).
 >
 > Ranh giới R0 **không** vì thế mà lỏng đi — nó chặt hơn: LLM tuyệt đối không
 > phát toạ độ, mọi toán hạng hình học trong IR là **TÊN** của vật đã dựng, và
@@ -125,8 +125,7 @@ Tên đề tài (giữ nguyên chính xác):
 ### 3a. Phạm vi cốt lõi
 
 1. **Đọc đề tiếng Việt có kiểm chứng nguồn:**
-   - Trên tuyến mặc định `AS-IS` (`LLM_ONLY`): LLM đọc đề → `RequestContract` (dữ kiện + nghĩa vụ, **đóng băng**) → LLM tổng hợp `SemanticProgramSpec` (các bước dựng, có lược đồ ràng buộc).
-   - Trên kiến trúc mục tiêu `TO-BE` (**Hybrid**): AI trích xuất JSON Typed Facts (`TypedFact` / `TypedFactNext`) → Semantic Grounding → Planner tất định tự phối hợp Geometry Functions → Compiler / Construction IR.
+   - Trên tuyến sản phẩm chính thức (**Hybrid `/4`**): AI trích xuất JSON Typed Facts (`TypedFactNext`) kèm trích dẫn nguyên văn → Source Gate / Semantic Grounding → Planner tất định tự phối hợp Geometry Functions → Compiler / Construction IR (không còn tuyến LLM tự sinh chương trình `LLM_ONLY`).
 2. Cổng tất định kiểm định **fail-closed**: tĩnh · grounding nguồn · phủ · hậu điều kiện · chứng chỉ giả định.
 3. Deterministic engine **sở hữu** state, timeline, bố cục khung affine + metric Gram và result; nhân hình học tính
    **chính xác** (hữu tỉ + căn), không `float`.
@@ -173,11 +172,10 @@ patch wave**, và báo đúng bốn mục:
 ## 4. Các luật cứng bền vững (tóm tắt — nơi thực thi ở ARCHITECTURE_MAP §5)
 
 1. **LLM không bao giờ sở hữu runtime**: không sinh timeline / bước / kết quả.
-   Trên tuyến mặc định `AS-IS` (`LLM_ONLY`), LLM chỉ trích xuất `RequestContract`
-   và tổng hợp bounded Semantic IR; trên kiến trúc mục tiêu `TO-BE` (**Hybrid**),
-   AI chỉ trích xuất JSON Typed Facts còn Planner tất định tự chọn và phối hợp
+   Trên kiến trúc sản phẩm chính thức (**Hybrid `/4`**), AI chỉ trích xuất JSON
+   Typed Facts (`TypedFactNext`) còn Planner tất định tự chọn và phối hợp
    Geometry Functions để biên dịch sang IR — chạy IR ra timeline và `Scene3D`
-   luôn là việc của engine tất định.
+   luôn là việc của engine tất định (tuyến `LLM_ONLY` tự sinh chương trình đã gỡ bỏ).
 2. **Engine tất định sở hữu sự thật** — mọi diễn biến từ `init`/`apply`/`timeline`.
 3. **Canonical simulation: đúng hoặc `capability_gap`** — không render xấp xỉ
    gây hiểu lầm.

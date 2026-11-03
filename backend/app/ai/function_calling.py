@@ -88,6 +88,11 @@ def _openapi(node: Any, defs: dict[str, Any]) -> Any:
             ra[k] = node[k]
     if "items" in node:
         ra["items"] = _openapi(node["items"], defs)
+    elif "prefixItems" in node:
+        phan_tu = [_openapi(x, defs) for x in node["prefixItems"]]
+        if not phan_tu or any(x != phan_tu[0] for x in phan_tu[1:]):
+            raise ValueError("prefixItems không đồng nhất không biểu diễn được trong tập con OpenAPI")
+        ra["items"] = phan_tu[0]
     if "properties" in node:
         ra["properties"] = {k: _openapi(v, defs) for k, v in node["properties"].items()}
     return ra
@@ -205,22 +210,35 @@ class ProviderHTTPError(RuntimeError):
         self.status_code, self.body = status_code, body
 
 
-def live_transport(api_key: str, model: str | None = None, timeout_seconds: float = 60.0) -> Callable[[dict], dict]:
-    """Transport THẬT (không dùng trong lượt này). Kiểm `ALLOW_LIVE_AI` ở MỖI lần gửi; khoá trong header; ghi `ApiBudget`
-    và `usageMetadata` như `gemini.call_gemini` để trần ngân sách của bộ đo áp được."""
-    def gui(payload: dict) -> dict:
-        if os.environ.get("ALLOW_LIVE_AI") != "1":
-            raise LiveAIDisabled("ALLOW_LIVE_AI != 1 — không gửi request thật")
+def live_transport(
+    api_key: str,
+    model: str | None = None,
+    timeout_seconds: float = 60.0,
+    *,
+    require_allow_live_ai: bool = True,
+) -> Callable[..., dict]:
+    """Transport Gemini `generateContent` có trần thời gian và hạch toán `ApiBudget`.
+    Mặc định bộ đánh giá/nghiên cứu đòi `ALLOW_LIVE_AI=1`; tuyến sản phẩm (`require_allow_live_ai=False`) hoạt động
+    bình thường khi có `GEMINI_API_KEY` và chỉ dừng khi quản trị viên chủ động đặt `ALLOW_LIVE_AI=0`."""
+    def gui(payload: dict, *, is_retry: bool = False, timeout_override: float | None = None) -> dict:
+        if require_allow_live_ai:
+            if os.environ.get("ALLOW_LIVE_AI") != "1":
+                raise LiveAIDisabled("ALLOW_LIVE_AI != 1 — không gửi request thật")
+        elif os.environ.get("ALLOW_LIVE_AI") == "0":
+            raise LiveAIDisabled("ALLOW_LIVE_AI=0 — máy chủ đang khoá kết nối live AI")
         import httpx
 
         from app.ai import gemini
         from app.ai.telemetry import record_usage
 
         if gemini.BUDGET:
-            gemini.BUDGET.note_call()
-            gemini.BUDGET.note_request(is_retry=False)
-        url = f"https://generativelanguage.googleapis.com/v1beta/models/{model or gemini.MODEL}:generateContent"
-        res = httpx.post(url, json=payload, headers={"x-goog-api-key": api_key}, timeout=timeout_seconds)
+            if not is_retry:
+                gemini.BUDGET.note_call()
+            gemini.BUDGET.note_request(is_retry=is_retry)
+        resolved_model = (model or "").strip() or gemini.MODEL
+        eff_timeout = timeout_seconds if timeout_override is None else timeout_override
+        url = f"https://generativelanguage.googleapis.com/v1beta/models/{resolved_model}:generateContent"
+        res = httpx.post(url, json=payload, headers={"x-goog-api-key": api_key}, timeout=eff_timeout)
         if res.status_code != 200:
             try:
                 error_body = res.json()

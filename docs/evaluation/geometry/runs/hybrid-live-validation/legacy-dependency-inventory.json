@@ -1,0 +1,1630 @@
+{
+ "schema": "legacy-dependency-inventory/1",
+ "head": "79bbc0531df89d3757ae16a6d8c5c0388fdac84b",
+ "product_uncommitted": false,
+ "method": "static AST import graph incl. function-level imports; over-approximates load closures",
+ "roots": {
+  "llm_only": "app.ai.pipeline",
+  "hybrid": [
+   "app.ai.hybrid_offline",
+   "app.ai.adapter4_route",
+   "app.ai.typed_fact_next_extraction"
+  ],
+  "shell": "app.main"
+ },
+ "hybrid_imports_from_pipeline_by_symbol": [
+  "RoutePolicy",
+  "route_policy_snapshot"
+ ],
+ "counts": {
+  "SHARED_COMPONENT": 74,
+  "UNCERTAIN_DEPENDENCY": 3,
+  "HYBRID_REQUIRED": 6,
+  "LEGACY_ONLY": 13
+ },
+ "modules": [
+  {
+   "module": "app.accounts",
+   "path": "backend/app/accounts/__init__.py",
+   "class": "SHARED_COMPONENT",
+   "in_llm_only_closure": false,
+   "in_hybrid_closure": false,
+   "reachable_from_main": true,
+   "route_independent_shell": true,
+   "importers": [
+    "app.accounts.router",
+    "app.main"
+   ],
+   "lines": 26
+  },
+  {
+   "module": "app.accounts.classroom_router",
+   "path": "backend/app/accounts/classroom_router.py",
+   "class": "SHARED_COMPONENT",
+   "in_llm_only_closure": false,
+   "in_hybrid_closure": false,
+   "reachable_from_main": true,
+   "route_independent_shell": true,
+   "importers": [
+    "app.main"
+   ],
+   "lines": 332
+  },
+  {
+   "module": "app.accounts.passwords",
+   "path": "backend/app/accounts/passwords.py",
+   "class": "SHARED_COMPONENT",
+   "in_llm_only_closure": false,
+   "in_hybrid_closure": false,
+   "reachable_from_main": true,
+   "route_independent_shell": true,
+   "importers": [
+    "app.accounts",
+    "app.accounts.router",
+    "app.accounts.service"
+   ],
+   "lines": 95
+  },
+  {
+   "module": "app.accounts.policy",
+   "path": "backend/app/accounts/policy.py",
+   "class": "SHARED_COMPONENT",
+   "in_llm_only_closure": false,
+   "in_hybrid_closure": false,
+   "reachable_from_main": true,
+   "route_independent_shell": true,
+   "importers": [
+    "app.accounts",
+    "app.accounts.classroom_router",
+    "app.accounts.router",
+    "app.accounts.service",
+    "app.accounts.session_router",
+    "app.main"
+   ],
+   "lines": 130
+  },
+  {
+   "module": "app.accounts.router",
+   "path": "backend/app/accounts/router.py",
+   "class": "SHARED_COMPONENT",
+   "in_llm_only_closure": false,
+   "in_hybrid_closure": false,
+   "reachable_from_main": true,
+   "route_independent_shell": true,
+   "importers": [
+    "app.accounts.classroom_router",
+    "app.accounts.session_router",
+    "app.main"
+   ],
+   "lines": 347
+  },
+  {
+   "module": "app.accounts.service",
+   "path": "backend/app/accounts/service.py",
+   "class": "SHARED_COMPONENT",
+   "in_llm_only_closure": false,
+   "in_hybrid_closure": false,
+   "reachable_from_main": true,
+   "route_independent_shell": true,
+   "importers": [
+    "app.accounts.router",
+    "app.main"
+   ],
+   "lines": 190
+  },
+  {
+   "module": "app.accounts.session_router",
+   "path": "backend/app/accounts/session_router.py",
+   "class": "SHARED_COMPONENT",
+   "in_llm_only_closure": false,
+   "in_hybrid_closure": false,
+   "reachable_from_main": true,
+   "route_independent_shell": true,
+   "importers": [
+    "app.accounts.classroom_router",
+    "app.main"
+   ],
+   "lines": 486
+  },
+  {
+   "module": "app.ai.adapter3_simulation",
+   "path": "backend/app/ai/adapter3_simulation.py",
+   "class": "UNCERTAIN_DEPENDENCY",
+   "in_llm_only_closure": false,
+   "in_hybrid_closure": false,
+   "reachable_from_main": false,
+   "route_independent_shell": false,
+   "importers": [],
+   "lines": 3378
+  },
+  {
+   "module": "app.ai.adapter4_route",
+   "path": "backend/app/ai/adapter4_route.py",
+   "class": "HYBRID_REQUIRED",
+   "in_llm_only_closure": false,
+   "in_hybrid_closure": true,
+   "reachable_from_main": true,
+   "route_independent_shell": false,
+   "importers": [
+    "app.ai.hybrid_offline"
+   ],
+   "lines": 790
+  },
+  {
+   "module": "app.ai.fact_extraction",
+   "path": "backend/app/ai/fact_extraction.py",
+   "class": "SHARED_COMPONENT",
+   "in_llm_only_closure": true,
+   "in_hybrid_closure": true,
+   "reachable_from_main": true,
+   "route_independent_shell": false,
+   "importers": [
+    "app.ai.hybrid_preview",
+    "app.ai.typed_fact_next_extraction"
+   ],
+   "lines": 284
+  },
+  {
+   "module": "app.ai.function_calling",
+   "path": "backend/app/ai/function_calling.py",
+   "class": "SHARED_COMPONENT",
+   "in_llm_only_closure": true,
+   "in_hybrid_closure": true,
+   "reachable_from_main": true,
+   "route_independent_shell": false,
+   "importers": [
+    "app.ai.fact_extraction",
+    "app.ai.hybrid_offline",
+    "app.ai.typed_fact_next_extraction"
+   ],
+   "lines": 237
+  },
+  {
+   "module": "app.ai.function_route",
+   "path": "backend/app/ai/function_route.py",
+   "class": "SHARED_COMPONENT",
+   "in_llm_only_closure": true,
+   "in_hybrid_closure": true,
+   "reachable_from_main": true,
+   "route_independent_shell": false,
+   "importers": [
+    "app.ai.adapter3_simulation",
+    "app.ai.adapter4_route",
+    "app.ai.fact_extraction",
+    "app.ai.function_calling"
+   ],
+   "lines": 572
+  },
+  {
+   "module": "app.ai.gemini",
+   "path": "backend/app/ai/gemini.py",
+   "class": "SHARED_COMPONENT",
+   "in_llm_only_closure": true,
+   "in_hybrid_closure": true,
+   "reachable_from_main": true,
+   "route_independent_shell": false,
+   "importers": [
+    "app.ai.function_calling",
+    "app.ai.hybrid_offline",
+    "app.ai.pipeline",
+    "app.ingestion.image_extraction",
+    "app.runtime_identity"
+   ],
+   "lines": 257
+  },
+  {
+   "module": "app.ai.hybrid_offline",
+   "path": "backend/app/ai/hybrid_offline.py",
+   "class": "HYBRID_REQUIRED",
+   "in_llm_only_closure": false,
+   "in_hybrid_closure": true,
+   "reachable_from_main": true,
+   "route_independent_shell": false,
+   "importers": [
+    "app.main",
+    "app.runtime_identity"
+   ],
+   "lines": 461
+  },
+  {
+   "module": "app.ai.hybrid_preview",
+   "path": "backend/app/ai/hybrid_preview.py",
+   "class": "SHARED_COMPONENT",
+   "in_llm_only_closure": true,
+   "in_hybrid_closure": true,
+   "reachable_from_main": true,
+   "route_independent_shell": false,
+   "importers": [
+    "app.ai.adapter4_route",
+    "app.ai.hybrid_offline",
+    "app.ai.pipeline",
+    "app.main",
+    "app.runtime_identity"
+   ],
+   "lines": 319
+  },
+  {
+   "module": "app.ai.pipeline",
+   "path": "backend/app/ai/pipeline.py",
+   "class": "SHARED_COMPONENT",
+   "in_llm_only_closure": true,
+   "in_hybrid_closure": true,
+   "reachable_from_main": true,
+   "route_independent_shell": false,
+   "importers": [
+    "app.ai.hybrid_offline",
+    "app.main",
+    "app.runtime_identity"
+   ],
+   "lines": 1021
+  },
+  {
+   "module": "app.ai.route_trace",
+   "path": "backend/app/ai/route_trace.py",
+   "class": "SHARED_COMPONENT",
+   "in_llm_only_closure": false,
+   "in_hybrid_closure": false,
+   "reachable_from_main": true,
+   "route_independent_shell": true,
+   "importers": [
+    "app.main"
+   ],
+   "lines": 167
+  },
+  {
+   "module": "app.ai.telemetry",
+   "path": "backend/app/ai/telemetry.py",
+   "class": "SHARED_COMPONENT",
+   "in_llm_only_closure": true,
+   "in_hybrid_closure": true,
+   "reachable_from_main": true,
+   "route_independent_shell": false,
+   "importers": [
+    "app.ai.function_calling",
+    "app.ai.gemini",
+    "app.ai.pipeline",
+    "app.ingestion.image_extraction"
+   ],
+   "lines": 91
+  },
+  {
+   "module": "app.ai.typed_fact_next_extraction",
+   "path": "backend/app/ai/typed_fact_next_extraction.py",
+   "class": "HYBRID_REQUIRED",
+   "in_llm_only_closure": false,
+   "in_hybrid_closure": true,
+   "reachable_from_main": true,
+   "route_independent_shell": false,
+   "importers": [
+    "app.ai.hybrid_offline"
+   ],
+   "lines": 164
+  },
+  {
+   "module": "app.ingestion.image",
+   "path": "backend/app/ingestion/image.py",
+   "class": "HYBRID_REQUIRED",
+   "in_llm_only_closure": false,
+   "in_hybrid_closure": true,
+   "reachable_from_main": true,
+   "route_independent_shell": false,
+   "importers": [
+    "app.ingestion.image_extraction",
+    "app.ingestion.input",
+    "app.main"
+   ],
+   "lines": 242
+  },
+  {
+   "module": "app.ingestion.image_extraction",
+   "path": "backend/app/ingestion/image_extraction.py",
+   "class": "HYBRID_REQUIRED",
+   "in_llm_only_closure": false,
+   "in_hybrid_closure": true,
+   "reachable_from_main": true,
+   "route_independent_shell": false,
+   "importers": [
+    "app.ingestion.input",
+    "app.main"
+   ],
+   "lines": 642
+  },
+  {
+   "module": "app.ingestion.input",
+   "path": "backend/app/ingestion/input.py",
+   "class": "HYBRID_REQUIRED",
+   "in_llm_only_closure": false,
+   "in_hybrid_closure": true,
+   "reachable_from_main": true,
+   "route_independent_shell": false,
+   "importers": [
+    "app.ai.hybrid_offline",
+    "app.main"
+   ],
+   "lines": 167
+  },
+  {
+   "module": "app.learner_messages",
+   "path": "backend/app/learner_messages.py",
+   "class": "SHARED_COMPONENT",
+   "in_llm_only_closure": true,
+   "in_hybrid_closure": true,
+   "reachable_from_main": true,
+   "route_independent_shell": false,
+   "importers": [
+    "app.ai.hybrid_preview",
+    "app.main"
+   ],
+   "lines": 328
+  },
+  {
+   "module": "app.main",
+   "path": "backend/app/main.py",
+   "class": "SHARED_COMPONENT",
+   "in_llm_only_closure": false,
+   "in_hybrid_closure": false,
+   "reachable_from_main": true,
+   "route_independent_shell": true,
+   "importers": [
+    "app.runtime_identity"
+   ],
+   "lines": 1526
+  },
+  {
+   "module": "app.persistence.classroom_models",
+   "path": "backend/app/persistence/classroom_models.py",
+   "class": "SHARED_COMPONENT",
+   "in_llm_only_closure": false,
+   "in_hybrid_closure": false,
+   "reachable_from_main": true,
+   "route_independent_shell": true,
+   "importers": [
+    "app.accounts.classroom_router",
+    "app.accounts.router",
+    "app.accounts.service",
+    "app.accounts.session_router",
+    "app.main"
+   ],
+   "lines": 237
+  },
+  {
+   "module": "app.persistence.db",
+   "path": "backend/app/persistence/db.py",
+   "class": "SHARED_COMPONENT",
+   "in_llm_only_closure": false,
+   "in_hybrid_closure": false,
+   "reachable_from_main": true,
+   "route_independent_shell": true,
+   "importers": [
+    "app.accounts.router",
+    "app.main",
+    "app.persistence.classroom_models"
+   ],
+   "lines": 163
+  },
+  {
+   "module": "app.runtime_identity",
+   "path": "backend/app/runtime_identity.py",
+   "class": "SHARED_COMPONENT",
+   "in_llm_only_closure": false,
+   "in_hybrid_closure": false,
+   "reachable_from_main": true,
+   "route_independent_shell": true,
+   "importers": [
+    "app.main"
+   ],
+   "lines": 350
+  },
+  {
+   "module": "app.simulation.error_codes",
+   "path": "backend/app/simulation/error_codes.py",
+   "class": "LEGACY_ONLY",
+   "in_llm_only_closure": true,
+   "in_hybrid_closure": false,
+   "reachable_from_main": true,
+   "route_independent_shell": false,
+   "importers": [
+    "app.ai.pipeline",
+    "app.main",
+    "app.simulation.semantic_program.route",
+    "app.simulation.semantic_program.visual_obligations"
+   ],
+   "lines": 124
+  },
+  {
+   "module": "app.simulation.geometry",
+   "path": "backend/app/simulation/geometry/__init__.py",
+   "class": "SHARED_COMPONENT",
+   "in_llm_only_closure": true,
+   "in_hybrid_closure": true,
+   "reachable_from_main": true,
+   "route_independent_shell": false,
+   "importers": [
+    "app.ai.adapter3_simulation",
+    "app.ai.function_route",
+    "app.ai.pipeline",
+    "app.simulation.geometry.kernel",
+    "app.simulation.geometry.measure",
+    "app.simulation.geometry.predicates",
+    "app.simulation.geometry_functions.engine",
+    "app.simulation.geometry_functions.planner",
+    "app.simulation.geometry_functions.registry",
+    "app.simulation.geometry_functions.typed_fact_next",
+    "app.simulation.geometry_functions.typed_fact_next_bridge",
+    "app.simulation.semantic_program.assumption_gate",
+    "app.simulation.semantic_program.display_names",
+    "app.simulation.semantic_program.geometry_exec",
+    "app.simulation.semantic_program.geometry_obligations",
+    "app.simulation.semantic_program.quantity_annotations",
+    "app.simulation.semantic_program.route",
+    "app.simulation.semantic_program.simulation_state"
+   ],
+   "lines": 36
+  },
+  {
+   "module": "app.simulation.geometry.curved",
+   "path": "backend/app/simulation/geometry/curved.py",
+   "class": "SHARED_COMPONENT",
+   "in_llm_only_closure": true,
+   "in_hybrid_closure": true,
+   "reachable_from_main": true,
+   "route_independent_shell": false,
+   "importers": [
+    "app.ai.adapter3_simulation",
+    "app.simulation.geometry_functions.engine",
+    "app.simulation.geometry_functions.planner",
+    "app.simulation.geometry_functions.registry",
+    "app.simulation.geometry_functions.typed_fact_next",
+    "app.simulation.geometry_functions.typed_fact_next_bridge",
+    "app.simulation.semantic_program.contract",
+    "app.simulation.semantic_program.display_names",
+    "app.simulation.semantic_program.geometry_exec",
+    "app.simulation.semantic_program.geometry_obligations",
+    "app.simulation.semantic_program.measure_contract",
+    "app.simulation.semantic_program.postconditions",
+    "app.simulation.semantic_program.simulation_state"
+   ],
+   "lines": 1113
+  },
+  {
+   "module": "app.simulation.geometry.exact",
+   "path": "backend/app/simulation/geometry/exact.py",
+   "class": "SHARED_COMPONENT",
+   "in_llm_only_closure": true,
+   "in_hybrid_closure": true,
+   "reachable_from_main": true,
+   "route_independent_shell": false,
+   "importers": [
+    "app.ai.adapter3_simulation",
+    "app.ai.adapter4_route",
+    "app.ai.hybrid_preview",
+    "app.simulation.geometry",
+    "app.simulation.geometry.curved",
+    "app.simulation.geometry.kernel",
+    "app.simulation.geometry.measure",
+    "app.simulation.geometry.metric",
+    "app.simulation.geometry.predicates",
+    "app.simulation.geometry.section",
+    "app.simulation.geometry_compiler.compiler",
+    "app.simulation.geometry_functions.engine",
+    "app.simulation.semantic_program.assumption_gate",
+    "app.simulation.semantic_program.geometry_obligations",
+    "app.simulation.semantic_program.postconditions",
+    "app.simulation.semantic_program.quantity_annotations",
+    "app.simulation.semantic_program.section_provenance",
+    "app.simulation.semantic_program.transport",
+    "app.simulation.semantic_program.visual_obligations"
+   ],
+   "lines": 292
+  },
+  {
+   "module": "app.simulation.geometry.kernel",
+   "path": "backend/app/simulation/geometry/kernel.py",
+   "class": "SHARED_COMPONENT",
+   "in_llm_only_closure": true,
+   "in_hybrid_closure": true,
+   "reachable_from_main": true,
+   "route_independent_shell": false,
+   "importers": [
+    "app.ai.adapter3_simulation",
+    "app.simulation.geometry.curved",
+    "app.simulation.geometry.measure",
+    "app.simulation.geometry_compiler.compiler",
+    "app.simulation.geometry_functions.engine",
+    "app.simulation.semantic_program.assumption_gate",
+    "app.simulation.semantic_program.geometry_exec",
+    "app.simulation.semantic_program.quantity_annotations"
+   ],
+   "lines": 234
+  },
+  {
+   "module": "app.simulation.geometry.measure",
+   "path": "backend/app/simulation/geometry/measure.py",
+   "class": "SHARED_COMPONENT",
+   "in_llm_only_closure": true,
+   "in_hybrid_closure": true,
+   "reachable_from_main": true,
+   "route_independent_shell": false,
+   "importers": [
+    "app.simulation.geometry.curved",
+    "app.simulation.semantic_program.geometry_exec",
+    "app.simulation.semantic_program.geometry_obligations",
+    "app.simulation.semantic_program.postconditions"
+   ],
+   "lines": 382
+  },
+  {
+   "module": "app.simulation.geometry.metric",
+   "path": "backend/app/simulation/geometry/metric.py",
+   "class": "SHARED_COMPONENT",
+   "in_llm_only_closure": true,
+   "in_hybrid_closure": true,
+   "reachable_from_main": true,
+   "route_independent_shell": false,
+   "importers": [
+    "app.ai.adapter3_simulation",
+    "app.ai.adapter4_route",
+    "app.ai.function_route",
+    "app.ai.hybrid_preview",
+    "app.ai.pipeline",
+    "app.simulation.geometry.kernel",
+    "app.simulation.geometry.measure",
+    "app.simulation.geometry.predicates",
+    "app.simulation.geometry_functions.engine",
+    "app.simulation.semantic_program.assumption_gate",
+    "app.simulation.semantic_program.display_names",
+    "app.simulation.semantic_program.geometry_exec",
+    "app.simulation.semantic_program.quantity_annotations",
+    "app.simulation.semantic_program.route"
+   ],
+   "lines": 207
+  },
+  {
+   "module": "app.simulation.geometry.predicates",
+   "path": "backend/app/simulation/geometry/predicates.py",
+   "class": "SHARED_COMPONENT",
+   "in_llm_only_closure": true,
+   "in_hybrid_closure": true,
+   "reachable_from_main": true,
+   "route_independent_shell": false,
+   "importers": [
+    "app.ai.adapter3_simulation",
+    "app.simulation.geometry.kernel",
+    "app.simulation.geometry.measure",
+    "app.simulation.geometry_functions.engine",
+    "app.simulation.semantic_program.geometry_exec",
+    "app.simulation.semantic_program.geometry_obligations",
+    "app.simulation.semantic_program.quantity_annotations",
+    "app.simulation.semantic_program.visual_obligations"
+   ],
+   "lines": 122
+  },
+  {
+   "module": "app.simulation.geometry.radical",
+   "path": "backend/app/simulation/geometry/radical.py",
+   "class": "SHARED_COMPONENT",
+   "in_llm_only_closure": true,
+   "in_hybrid_closure": true,
+   "reachable_from_main": true,
+   "route_independent_shell": false,
+   "importers": [
+    "app.ai.adapter3_simulation",
+    "app.simulation.geometry.curved",
+    "app.simulation.geometry.measure",
+    "app.simulation.geometry_compiler.compiler",
+    "app.simulation.geometry_functions.engine",
+    "app.simulation.geometry_functions.registry",
+    "app.simulation.semantic_program.assumption_gate",
+    "app.simulation.semantic_program.geometry_exec",
+    "app.simulation.semantic_program.geometry_obligations",
+    "app.simulation.semantic_program.grounding_gate",
+    "app.simulation.semantic_program.interpreter",
+    "app.simulation.semantic_program.postconditions",
+    "app.simulation.semantic_program.quantity_annotations",
+    "app.simulation.semantic_program.refusal_cause",
+    "app.simulation.semantic_program.segment_relation",
+    "app.simulation.semantic_program.shape_constraint",
+    "app.simulation.semantic_program.simulation_state",
+    "app.simulation.semantic_program.transport"
+   ],
+   "lines": 575
+  },
+  {
+   "module": "app.simulation.geometry.section",
+   "path": "backend/app/simulation/geometry/section.py",
+   "class": "SHARED_COMPONENT",
+   "in_llm_only_closure": true,
+   "in_hybrid_closure": true,
+   "reachable_from_main": true,
+   "route_independent_shell": false,
+   "importers": [
+    "app.ai.adapter3_simulation",
+    "app.ai.adapter4_route",
+    "app.simulation.geometry_functions.engine",
+    "app.simulation.semantic_program.geometry_exec",
+    "app.simulation.semantic_program.geometry_obligations",
+    "app.simulation.semantic_program.section_provenance",
+    "app.simulation.semantic_program.simulation_state"
+   ],
+   "lines": 704
+  },
+  {
+   "module": "app.simulation.geometry_compiler",
+   "path": "backend/app/simulation/geometry_compiler/__init__.py",
+   "class": "LEGACY_ONLY",
+   "in_llm_only_closure": true,
+   "in_hybrid_closure": false,
+   "reachable_from_main": true,
+   "route_independent_shell": false,
+   "importers": [
+    "app.simulation.geometry_compiler.compiler"
+   ],
+   "lines": 15
+  },
+  {
+   "module": "app.simulation.geometry_compiler.compiler",
+   "path": "backend/app/simulation/geometry_compiler/compiler.py",
+   "class": "LEGACY_ONLY",
+   "in_llm_only_closure": true,
+   "in_hybrid_closure": false,
+   "reachable_from_main": true,
+   "route_independent_shell": false,
+   "importers": [
+    "app.simulation.geometry_compiler",
+    "app.simulation.geometry_compiler.routing"
+   ],
+   "lines": 2096
+  },
+  {
+   "module": "app.simulation.geometry_compiler.contract_adapter",
+   "path": "backend/app/simulation/geometry_compiler/contract_adapter.py",
+   "class": "LEGACY_ONLY",
+   "in_llm_only_closure": true,
+   "in_hybrid_closure": false,
+   "reachable_from_main": true,
+   "route_independent_shell": false,
+   "importers": [
+    "app.simulation.geometry_compiler",
+    "app.simulation.geometry_compiler.routing"
+   ],
+   "lines": 263
+  },
+  {
+   "module": "app.simulation.geometry_compiler.fact_graph",
+   "path": "backend/app/simulation/geometry_compiler/fact_graph.py",
+   "class": "LEGACY_ONLY",
+   "in_llm_only_closure": true,
+   "in_hybrid_closure": false,
+   "reachable_from_main": true,
+   "route_independent_shell": false,
+   "importers": [
+    "app.simulation.geometry_compiler",
+    "app.simulation.geometry_compiler.compiler",
+    "app.simulation.geometry_compiler.contract_adapter",
+    "app.simulation.geometry_compiler.routing"
+   ],
+   "lines": 383
+  },
+  {
+   "module": "app.simulation.geometry_compiler.primitives",
+   "path": "backend/app/simulation/geometry_compiler/primitives.py",
+   "class": "LEGACY_ONLY",
+   "in_llm_only_closure": true,
+   "in_hybrid_closure": false,
+   "reachable_from_main": true,
+   "route_independent_shell": false,
+   "importers": [
+    "app.simulation.geometry_compiler",
+    "app.simulation.geometry_compiler.compiler",
+    "app.simulation.geometry_compiler.routing"
+   ],
+   "lines": 77
+  },
+  {
+   "module": "app.simulation.geometry_compiler.routing",
+   "path": "backend/app/simulation/geometry_compiler/routing.py",
+   "class": "LEGACY_ONLY",
+   "in_llm_only_closure": true,
+   "in_hybrid_closure": false,
+   "reachable_from_main": true,
+   "route_independent_shell": false,
+   "importers": [
+    "app.ai.pipeline"
+   ],
+   "lines": 105
+  },
+  {
+   "module": "app.simulation.geometry_functions",
+   "path": "backend/app/simulation/geometry_functions/__init__.py",
+   "class": "SHARED_COMPONENT",
+   "in_llm_only_closure": true,
+   "in_hybrid_closure": true,
+   "reachable_from_main": true,
+   "route_independent_shell": false,
+   "importers": [
+    "app.ai.adapter4_route",
+    "app.ai.fact_extraction",
+    "app.ai.function_calling",
+    "app.ai.function_route",
+    "app.ai.hybrid_offline",
+    "app.ai.hybrid_preview"
+   ],
+   "lines": 11
+  },
+  {
+   "module": "app.simulation.geometry_functions.certificates",
+   "path": "backend/app/simulation/geometry_functions/certificates.py",
+   "class": "SHARED_COMPONENT",
+   "in_llm_only_closure": true,
+   "in_hybrid_closure": true,
+   "reachable_from_main": true,
+   "route_independent_shell": false,
+   "importers": [
+    "app.ai.function_route"
+   ],
+   "lines": 612
+  },
+  {
+   "module": "app.simulation.geometry_functions.engine",
+   "path": "backend/app/simulation/geometry_functions/engine.py",
+   "class": "SHARED_COMPONENT",
+   "in_llm_only_closure": true,
+   "in_hybrid_closure": true,
+   "reachable_from_main": true,
+   "route_independent_shell": false,
+   "importers": [
+    "app.ai.adapter3_simulation",
+    "app.ai.adapter4_route",
+    "app.ai.function_route",
+    "app.ai.hybrid_offline",
+    "app.ai.hybrid_preview",
+    "app.simulation.geometry_functions"
+   ],
+   "lines": 4504
+  },
+  {
+   "module": "app.simulation.geometry_functions.planner",
+   "path": "backend/app/simulation/geometry_functions/planner.py",
+   "class": "SHARED_COMPONENT",
+   "in_llm_only_closure": true,
+   "in_hybrid_closure": true,
+   "reachable_from_main": true,
+   "route_independent_shell": false,
+   "importers": [
+    "app.ai.adapter3_simulation",
+    "app.ai.adapter4_route",
+    "app.ai.fact_extraction",
+    "app.ai.function_route",
+    "app.ai.hybrid_offline",
+    "app.ai.hybrid_preview"
+   ],
+   "lines": 2510
+  },
+  {
+   "module": "app.simulation.geometry_functions.registry",
+   "path": "backend/app/simulation/geometry_functions/registry.py",
+   "class": "SHARED_COMPONENT",
+   "in_llm_only_closure": true,
+   "in_hybrid_closure": true,
+   "reachable_from_main": true,
+   "route_independent_shell": false,
+   "importers": [
+    "app.ai.adapter3_simulation",
+    "app.ai.adapter4_route",
+    "app.ai.fact_extraction",
+    "app.ai.function_route",
+    "app.ai.hybrid_offline",
+    "app.ai.hybrid_preview",
+    "app.ai.typed_fact_next_extraction",
+    "app.simulation.geometry_functions",
+    "app.simulation.geometry_functions.engine",
+    "app.simulation.geometry_functions.planner",
+    "app.simulation.geometry_functions.typed_fact_next",
+    "app.simulation.geometry_functions.typed_fact_next_bridge"
+   ],
+   "lines": 6722
+  },
+  {
+   "module": "app.simulation.geometry_functions.typed_fact_next",
+   "path": "backend/app/simulation/geometry_functions/typed_fact_next.py",
+   "class": "SHARED_COMPONENT",
+   "in_llm_only_closure": true,
+   "in_hybrid_closure": true,
+   "reachable_from_main": true,
+   "route_independent_shell": false,
+   "importers": [
+    "app.ai.adapter3_simulation",
+    "app.ai.adapter4_route",
+    "app.ai.hybrid_offline",
+    "app.ai.typed_fact_next_extraction",
+    "app.simulation.geometry_functions.typed_fact_next_bridge"
+   ],
+   "lines": 1616
+  },
+  {
+   "module": "app.simulation.geometry_functions.typed_fact_next_bridge",
+   "path": "backend/app/simulation/geometry_functions/typed_fact_next_bridge.py",
+   "class": "SHARED_COMPONENT",
+   "in_llm_only_closure": true,
+   "in_hybrid_closure": true,
+   "reachable_from_main": true,
+   "route_independent_shell": false,
+   "importers": [
+    "app.ai.adapter3_simulation",
+    "app.ai.adapter4_route",
+    "app.ai.function_route"
+   ],
+   "lines": 914
+  },
+  {
+   "module": "app.simulation.product_capability",
+   "path": "backend/app/simulation/product_capability.py",
+   "class": "UNCERTAIN_DEPENDENCY",
+   "in_llm_only_closure": false,
+   "in_hybrid_closure": false,
+   "reachable_from_main": false,
+   "route_independent_shell": false,
+   "importers": [],
+   "lines": 220
+  },
+  {
+   "module": "app.simulation.semantic_program",
+   "path": "backend/app/simulation/semantic_program/__init__.py",
+   "class": "SHARED_COMPONENT",
+   "in_llm_only_closure": true,
+   "in_hybrid_closure": true,
+   "reachable_from_main": true,
+   "route_independent_shell": false,
+   "importers": [
+    "app.accounts.classroom_router",
+    "app.simulation.geometry_functions.engine",
+    "app.simulation.semantic_program.assumption_gate",
+    "app.simulation.semantic_program.grammar_card",
+    "app.simulation.semantic_program.validator"
+   ],
+   "lines": 39
+  },
+  {
+   "module": "app.simulation.semantic_program.analyze_contract",
+   "path": "backend/app/simulation/semantic_program/analyze_contract.py",
+   "class": "LEGACY_ONLY",
+   "in_llm_only_closure": true,
+   "in_hybrid_closure": false,
+   "reachable_from_main": true,
+   "route_independent_shell": false,
+   "importers": [
+    "app.ai.pipeline",
+    "app.runtime_identity"
+   ],
+   "lines": 821
+  },
+  {
+   "module": "app.simulation.semantic_program.assumption_gate",
+   "path": "backend/app/simulation/semantic_program/assumption_gate.py",
+   "class": "SHARED_COMPONENT",
+   "in_llm_only_closure": true,
+   "in_hybrid_closure": true,
+   "reachable_from_main": true,
+   "route_independent_shell": false,
+   "importers": [
+    "app.ai.pipeline",
+    "app.simulation.semantic_program.construction_binding",
+    "app.simulation.semantic_program.route"
+   ],
+   "lines": 1993
+  },
+  {
+   "module": "app.simulation.semantic_program.coercion_stats",
+   "path": "backend/app/simulation/semantic_program/coercion_stats.py",
+   "class": "SHARED_COMPONENT",
+   "in_llm_only_closure": true,
+   "in_hybrid_closure": true,
+   "reachable_from_main": true,
+   "route_independent_shell": false,
+   "importers": [
+    "app.simulation.semantic_program.contract"
+   ],
+   "lines": 93
+  },
+  {
+   "module": "app.simulation.semantic_program.construction_binding",
+   "path": "backend/app/simulation/semantic_program/construction_binding.py",
+   "class": "SHARED_COMPONENT",
+   "in_llm_only_closure": true,
+   "in_hybrid_closure": true,
+   "reachable_from_main": true,
+   "route_independent_shell": false,
+   "importers": [
+    "app.simulation.semantic_program.route",
+    "app.simulation.semantic_program.simulation_state"
+   ],
+   "lines": 468
+  },
+  {
+   "module": "app.simulation.semantic_program.contract",
+   "path": "backend/app/simulation/semantic_program/contract.py",
+   "class": "SHARED_COMPONENT",
+   "in_llm_only_closure": true,
+   "in_hybrid_closure": true,
+   "reachable_from_main": true,
+   "route_independent_shell": false,
+   "importers": [
+    "app.ai.pipeline",
+    "app.main",
+    "app.runtime_identity",
+    "app.simulation.semantic_program",
+    "app.simulation.semantic_program.assumption_gate",
+    "app.simulation.semantic_program.coverage_gate",
+    "app.simulation.semantic_program.formation",
+    "app.simulation.semantic_program.grammar_card",
+    "app.simulation.semantic_program.grounding_gate",
+    "app.simulation.semantic_program.interpreter",
+    "app.simulation.semantic_program.learner_surface",
+    "app.simulation.semantic_program.measure_contract",
+    "app.simulation.semantic_program.pipeline_adapter",
+    "app.simulation.semantic_program.purpose_analysis",
+    "app.simulation.semantic_program.route",
+    "app.simulation.semantic_program.simulation_state",
+    "app.simulation.semantic_program.validator",
+    "app.simulation.semantic_program.visual_adapter"
+   ],
+   "lines": 1884
+  },
+  {
+   "module": "app.simulation.semantic_program.coverage_gate",
+   "path": "backend/app/simulation/semantic_program/coverage_gate.py",
+   "class": "SHARED_COMPONENT",
+   "in_llm_only_closure": true,
+   "in_hybrid_closure": true,
+   "reachable_from_main": true,
+   "route_independent_shell": false,
+   "importers": [
+    "app.simulation.semantic_program.assumption_gate",
+    "app.simulation.semantic_program.construction_binding",
+    "app.simulation.semantic_program.grounding_gate",
+    "app.simulation.semantic_program.postconditions",
+    "app.simulation.semantic_program.purpose_analysis",
+    "app.simulation.semantic_program.route",
+    "app.simulation.semantic_program.simulation_state"
+   ],
+   "lines": 1433
+  },
+  {
+   "module": "app.simulation.semantic_program.display_names",
+   "path": "backend/app/simulation/semantic_program/display_names.py",
+   "class": "SHARED_COMPONENT",
+   "in_llm_only_closure": true,
+   "in_hybrid_closure": true,
+   "reachable_from_main": true,
+   "route_independent_shell": false,
+   "importers": [
+    "app.simulation.semantic_program.interpreter",
+    "app.simulation.semantic_program.quantity_annotations",
+    "app.simulation.semantic_program.simulation_state"
+   ],
+   "lines": 692
+  },
+  {
+   "module": "app.simulation.semantic_program.domain_profile",
+   "path": "backend/app/simulation/semantic_program/domain_profile.py",
+   "class": "SHARED_COMPONENT",
+   "in_llm_only_closure": true,
+   "in_hybrid_closure": true,
+   "reachable_from_main": true,
+   "route_independent_shell": false,
+   "importers": [
+    "app.ai.pipeline",
+    "app.ingestion.image_extraction",
+    "app.main",
+    "app.simulation.semantic_program.analyze_contract",
+    "app.simulation.semantic_program.assumption_gate",
+    "app.simulation.semantic_program.coverage_gate"
+   ],
+   "lines": 709
+  },
+  {
+   "module": "app.simulation.semantic_program.formation",
+   "path": "backend/app/simulation/semantic_program/formation.py",
+   "class": "SHARED_COMPONENT",
+   "in_llm_only_closure": true,
+   "in_hybrid_closure": true,
+   "reachable_from_main": true,
+   "route_independent_shell": false,
+   "importers": [
+    "app.ai.adapter3_simulation",
+    "app.ai.pipeline",
+    "app.simulation.geometry_functions.engine",
+    "app.simulation.semantic_program.assumption_gate",
+    "app.simulation.semantic_program.construction_binding",
+    "app.simulation.semantic_program.route",
+    "app.simulation.semantic_program.simulation_state"
+   ],
+   "lines": 600
+  },
+  {
+   "module": "app.simulation.semantic_program.geometry_exec",
+   "path": "backend/app/simulation/semantic_program/geometry_exec.py",
+   "class": "SHARED_COMPONENT",
+   "in_llm_only_closure": true,
+   "in_hybrid_closure": true,
+   "reachable_from_main": true,
+   "route_independent_shell": false,
+   "importers": [
+    "app.simulation.semantic_program.domain_profile",
+    "app.simulation.semantic_program.geometry_obligations",
+    "app.simulation.semantic_program.interpreter",
+    "app.simulation.semantic_program.learner_surface",
+    "app.simulation.semantic_program.postconditions",
+    "app.simulation.semantic_program.simulation_state",
+    "app.simulation.semantic_program.validator"
+   ],
+   "lines": 917
+  },
+  {
+   "module": "app.simulation.semantic_program.geometry_obligations",
+   "path": "backend/app/simulation/semantic_program/geometry_obligations.py",
+   "class": "SHARED_COMPONENT",
+   "in_llm_only_closure": true,
+   "in_hybrid_closure": true,
+   "reachable_from_main": true,
+   "route_independent_shell": false,
+   "importers": [
+    "app.runtime_identity",
+    "app.simulation.semantic_program.domain_profile",
+    "app.simulation.semantic_program.postconditions"
+   ],
+   "lines": 525
+  },
+  {
+   "module": "app.simulation.semantic_program.grammar_card",
+   "path": "backend/app/simulation/semantic_program/grammar_card.py",
+   "class": "LEGACY_ONLY",
+   "in_llm_only_closure": true,
+   "in_hybrid_closure": false,
+   "reachable_from_main": true,
+   "route_independent_shell": false,
+   "importers": [
+    "app.ai.pipeline",
+    "app.runtime_identity"
+   ],
+   "lines": 819
+  },
+  {
+   "module": "app.simulation.semantic_program.grounding_gate",
+   "path": "backend/app/simulation/semantic_program/grounding_gate.py",
+   "class": "SHARED_COMPONENT",
+   "in_llm_only_closure": true,
+   "in_hybrid_closure": true,
+   "reachable_from_main": true,
+   "route_independent_shell": false,
+   "importers": [
+    "app.ai.pipeline",
+    "app.simulation.semantic_program.assumption_gate",
+    "app.simulation.semantic_program.construction_binding",
+    "app.simulation.semantic_program.quantity_annotations",
+    "app.simulation.semantic_program.route"
+   ],
+   "lines": 976
+  },
+  {
+   "module": "app.simulation.semantic_program.hoisting",
+   "path": "backend/app/simulation/semantic_program/hoisting.py",
+   "class": "SHARED_COMPONENT",
+   "in_llm_only_closure": true,
+   "in_hybrid_closure": true,
+   "reachable_from_main": true,
+   "route_independent_shell": false,
+   "importers": [
+    "app.simulation.semantic_program.contract",
+    "app.simulation.semantic_program.grammar_card",
+    "app.simulation.semantic_program.simulation_state"
+   ],
+   "lines": 320
+  },
+  {
+   "module": "app.simulation.semantic_program.interpreter",
+   "path": "backend/app/simulation/semantic_program/interpreter.py",
+   "class": "SHARED_COMPONENT",
+   "in_llm_only_closure": true,
+   "in_hybrid_closure": true,
+   "reachable_from_main": true,
+   "route_independent_shell": false,
+   "importers": [
+    "app.ai.adapter3_simulation",
+    "app.ai.pipeline",
+    "app.simulation.geometry_functions.engine",
+    "app.simulation.semantic_program",
+    "app.simulation.semantic_program.assumption_gate",
+    "app.simulation.semantic_program.learner_surface",
+    "app.simulation.semantic_program.pipeline_adapter",
+    "app.simulation.semantic_program.route",
+    "app.simulation.semantic_program.visual_adapter"
+   ],
+   "lines": 900
+  },
+  {
+   "module": "app.simulation.semantic_program.ir_builders",
+   "path": "backend/app/simulation/semantic_program/ir_builders.py",
+   "class": "SHARED_COMPONENT",
+   "in_llm_only_closure": true,
+   "in_hybrid_closure": true,
+   "reachable_from_main": true,
+   "route_independent_shell": false,
+   "importers": [
+    "app.simulation.geometry_compiler.primitives",
+    "app.simulation.geometry_functions.engine"
+   ],
+   "lines": 195
+  },
+  {
+   "module": "app.simulation.semantic_program.ir_static_check",
+   "path": "backend/app/simulation/semantic_program/ir_static_check.py",
+   "class": "SHARED_COMPONENT",
+   "in_llm_only_closure": true,
+   "in_hybrid_closure": true,
+   "reachable_from_main": true,
+   "route_independent_shell": false,
+   "importers": [
+    "app.ai.pipeline",
+    "app.runtime_identity",
+    "app.simulation.semantic_program.construction_binding",
+    "app.simulation.semantic_program.contract",
+    "app.simulation.semantic_program.coverage_gate",
+    "app.simulation.semantic_program.formation",
+    "app.simulation.semantic_program.grammar_card",
+    "app.simulation.semantic_program.hoisting",
+    "app.simulation.semantic_program.route",
+    "app.simulation.semantic_program.simulation_state",
+    "app.simulation.semantic_program.validator"
+   ],
+   "lines": 518
+  },
+  {
+   "module": "app.simulation.semantic_program.learner_surface",
+   "path": "backend/app/simulation/semantic_program/learner_surface.py",
+   "class": "LEGACY_ONLY",
+   "in_llm_only_closure": true,
+   "in_hybrid_closure": false,
+   "reachable_from_main": true,
+   "route_independent_shell": false,
+   "importers": [
+    "app.simulation.semantic_program.route"
+   ],
+   "lines": 413
+  },
+  {
+   "module": "app.simulation.semantic_program.literal_extractor",
+   "path": "backend/app/simulation/semantic_program/literal_extractor.py",
+   "class": "SHARED_COMPONENT",
+   "in_llm_only_closure": true,
+   "in_hybrid_closure": true,
+   "reachable_from_main": true,
+   "route_independent_shell": false,
+   "importers": [
+    "app.simulation.semantic_program.analyze_contract",
+    "app.simulation.semantic_program.grounding_gate",
+    "app.simulation.semantic_program.segment_relation"
+   ],
+   "lines": 298
+  },
+  {
+   "module": "app.simulation.semantic_program.measure_contract",
+   "path": "backend/app/simulation/semantic_program/measure_contract.py",
+   "class": "SHARED_COMPONENT",
+   "in_llm_only_closure": true,
+   "in_hybrid_closure": true,
+   "reachable_from_main": true,
+   "route_independent_shell": false,
+   "importers": [
+    "app.runtime_identity",
+    "app.simulation.geometry_functions.typed_fact_next",
+    "app.simulation.semantic_program.coverage_gate",
+    "app.simulation.semantic_program.geometry_obligations",
+    "app.simulation.semantic_program.grammar_card",
+    "app.simulation.semantic_program.ir_static_check",
+    "app.simulation.semantic_program.obligations",
+    "app.simulation.semantic_program.postconditions",
+    "app.simulation.semantic_program.validator"
+   ],
+   "lines": 322
+  },
+  {
+   "module": "app.simulation.semantic_program.obligations",
+   "path": "backend/app/simulation/semantic_program/obligations.py",
+   "class": "SHARED_COMPONENT",
+   "in_llm_only_closure": true,
+   "in_hybrid_closure": true,
+   "reachable_from_main": true,
+   "route_independent_shell": false,
+   "importers": [
+    "app.runtime_identity",
+    "app.simulation.semantic_program.analyze_contract",
+    "app.simulation.semantic_program.contract",
+    "app.simulation.semantic_program.coverage_gate",
+    "app.simulation.semantic_program.domain_profile",
+    "app.simulation.semantic_program.postconditions",
+    "app.simulation.semantic_program.request_contract",
+    "app.simulation.semantic_program.visual_obligations"
+   ],
+   "lines": 280
+  },
+  {
+   "module": "app.simulation.semantic_program.pacer",
+   "path": "backend/app/simulation/semantic_program/pacer.py",
+   "class": "SHARED_COMPONENT",
+   "in_llm_only_closure": true,
+   "in_hybrid_closure": true,
+   "reachable_from_main": true,
+   "route_independent_shell": false,
+   "importers": [
+    "app.simulation.semantic_program.pipeline_adapter",
+    "app.simulation.semantic_program.route"
+   ],
+   "lines": 89
+  },
+  {
+   "module": "app.simulation.semantic_program.pipeline_adapter",
+   "path": "backend/app/simulation/semantic_program/pipeline_adapter.py",
+   "class": "SHARED_COMPONENT",
+   "in_llm_only_closure": true,
+   "in_hybrid_closure": true,
+   "reachable_from_main": true,
+   "route_independent_shell": false,
+   "importers": [
+    "app.ai.adapter4_route",
+    "app.ai.hybrid_preview",
+    "app.simulation.semantic_program",
+    "app.simulation.semantic_program.assumption_gate",
+    "app.simulation.semantic_program.route"
+   ],
+   "lines": 189
+  },
+  {
+   "module": "app.simulation.semantic_program.plane_equation",
+   "path": "backend/app/simulation/semantic_program/plane_equation.py",
+   "class": "SHARED_COMPONENT",
+   "in_llm_only_closure": true,
+   "in_hybrid_closure": true,
+   "reachable_from_main": true,
+   "route_independent_shell": false,
+   "importers": [
+    "app.simulation.semantic_program.analyze_contract",
+    "app.simulation.semantic_program.assumption_gate",
+    "app.simulation.semantic_program.postconditions",
+    "app.simulation.semantic_program.refusal_cause"
+   ],
+   "lines": 439
+  },
+  {
+   "module": "app.simulation.semantic_program.point_coordinate",
+   "path": "backend/app/simulation/semantic_program/point_coordinate.py",
+   "class": "SHARED_COMPONENT",
+   "in_llm_only_closure": true,
+   "in_hybrid_closure": true,
+   "reachable_from_main": true,
+   "route_independent_shell": false,
+   "importers": [
+    "app.simulation.semantic_program.analyze_contract",
+    "app.simulation.semantic_program.assumption_gate",
+    "app.simulation.semantic_program.postconditions"
+   ],
+   "lines": 157
+  },
+  {
+   "module": "app.simulation.semantic_program.postconditions",
+   "path": "backend/app/simulation/semantic_program/postconditions.py",
+   "class": "SHARED_COMPONENT",
+   "in_llm_only_closure": true,
+   "in_hybrid_closure": true,
+   "reachable_from_main": true,
+   "route_independent_shell": false,
+   "importers": [
+    "app.simulation.semantic_program.analyze_contract",
+    "app.simulation.semantic_program.assumption_gate",
+    "app.simulation.semantic_program.obligations",
+    "app.simulation.semantic_program.route"
+   ],
+   "lines": 1100
+  },
+  {
+   "module": "app.simulation.semantic_program.purpose_analysis",
+   "path": "backend/app/simulation/semantic_program/purpose_analysis.py",
+   "class": "UNCERTAIN_DEPENDENCY",
+   "in_llm_only_closure": false,
+   "in_hybrid_closure": false,
+   "reachable_from_main": false,
+   "route_independent_shell": false,
+   "importers": [],
+   "lines": 113
+  },
+  {
+   "module": "app.simulation.semantic_program.quantity_annotations",
+   "path": "backend/app/simulation/semantic_program/quantity_annotations.py",
+   "class": "SHARED_COMPONENT",
+   "in_llm_only_closure": true,
+   "in_hybrid_closure": true,
+   "reachable_from_main": true,
+   "route_independent_shell": false,
+   "importers": [
+    "app.ai.function_route",
+    "app.simulation.semantic_program.simulation_state"
+   ],
+   "lines": 487
+  },
+  {
+   "module": "app.simulation.semantic_program.refusal_cause",
+   "path": "backend/app/simulation/semantic_program/refusal_cause.py",
+   "class": "SHARED_COMPONENT",
+   "in_llm_only_closure": true,
+   "in_hybrid_closure": true,
+   "reachable_from_main": true,
+   "route_independent_shell": false,
+   "importers": [
+    "app.ai.hybrid_preview",
+    "app.ai.pipeline",
+    "app.simulation.semantic_program.route"
+   ],
+   "lines": 112
+  },
+  {
+   "module": "app.simulation.semantic_program.request_contract",
+   "path": "backend/app/simulation/semantic_program/request_contract.py",
+   "class": "SHARED_COMPONENT",
+   "in_llm_only_closure": true,
+   "in_hybrid_closure": true,
+   "reachable_from_main": true,
+   "route_independent_shell": false,
+   "importers": [
+    "app.ai.adapter3_simulation",
+    "app.ai.pipeline",
+    "app.simulation.geometry_functions.engine",
+    "app.simulation.semantic_program.analyze_contract",
+    "app.simulation.semantic_program.coverage_gate",
+    "app.simulation.semantic_program.grounding_gate",
+    "app.simulation.semantic_program.learner_surface",
+    "app.simulation.semantic_program.literal_extractor",
+    "app.simulation.semantic_program.postconditions",
+    "app.simulation.semantic_program.purpose_analysis",
+    "app.simulation.semantic_program.route"
+   ],
+   "lines": 228
+  },
+  {
+   "module": "app.simulation.semantic_program.route",
+   "path": "backend/app/simulation/semantic_program/route.py",
+   "class": "LEGACY_ONLY",
+   "in_llm_only_closure": true,
+   "in_hybrid_closure": false,
+   "reachable_from_main": true,
+   "route_independent_shell": false,
+   "importers": [
+    "app.ai.pipeline"
+   ],
+   "lines": 687
+  },
+  {
+   "module": "app.simulation.semantic_program.scale_normalization",
+   "path": "backend/app/simulation/semantic_program/scale_normalization.py",
+   "class": "SHARED_COMPONENT",
+   "in_llm_only_closure": true,
+   "in_hybrid_closure": true,
+   "reachable_from_main": true,
+   "route_independent_shell": false,
+   "importers": [
+    "app.simulation.semantic_program.analyze_contract",
+    "app.simulation.semantic_program.grounding_gate",
+    "app.simulation.semantic_program.plane_equation",
+    "app.simulation.semantic_program.point_coordinate",
+    "app.simulation.semantic_program.request_contract",
+    "app.simulation.semantic_program.segment_relation"
+   ],
+   "lines": 410
+  },
+  {
+   "module": "app.simulation.semantic_program.scene3d",
+   "path": "backend/app/simulation/semantic_program/scene3d.py",
+   "class": "SHARED_COMPONENT",
+   "in_llm_only_closure": true,
+   "in_hybrid_closure": true,
+   "reachable_from_main": true,
+   "route_independent_shell": false,
+   "importers": [
+    "app.ai.adapter3_simulation",
+    "app.ai.function_route",
+    "app.ai.pipeline"
+   ],
+   "lines": 1007
+  },
+  {
+   "module": "app.simulation.semantic_program.section_provenance",
+   "path": "backend/app/simulation/semantic_program/section_provenance.py",
+   "class": "LEGACY_ONLY",
+   "in_llm_only_closure": true,
+   "in_hybrid_closure": false,
+   "reachable_from_main": true,
+   "route_independent_shell": false,
+   "importers": [
+    "app.ai.pipeline"
+   ],
+   "lines": 246
+  },
+  {
+   "module": "app.simulation.semantic_program.segment_relation",
+   "path": "backend/app/simulation/semantic_program/segment_relation.py",
+   "class": "SHARED_COMPONENT",
+   "in_llm_only_closure": true,
+   "in_hybrid_closure": true,
+   "reachable_from_main": true,
+   "route_independent_shell": false,
+   "importers": [
+    "app.simulation.semantic_program.analyze_contract",
+    "app.simulation.semantic_program.assumption_gate",
+    "app.simulation.semantic_program.construction_binding",
+    "app.simulation.semantic_program.formation",
+    "app.simulation.semantic_program.grounding_gate",
+    "app.simulation.semantic_program.plane_equation",
+    "app.simulation.semantic_program.point_coordinate",
+    "app.simulation.semantic_program.postconditions",
+    "app.simulation.semantic_program.quantity_annotations",
+    "app.simulation.semantic_program.refusal_cause",
+    "app.simulation.semantic_program.shape_constraint"
+   ],
+   "lines": 524
+  },
+  {
+   "module": "app.simulation.semantic_program.shape_constraint",
+   "path": "backend/app/simulation/semantic_program/shape_constraint.py",
+   "class": "SHARED_COMPONENT",
+   "in_llm_only_closure": true,
+   "in_hybrid_closure": true,
+   "reachable_from_main": true,
+   "route_independent_shell": false,
+   "importers": [
+    "app.simulation.geometry_functions.registry",
+    "app.simulation.semantic_program.assumption_gate",
+    "app.simulation.semantic_program.construction_binding",
+    "app.simulation.semantic_program.formation",
+    "app.simulation.semantic_program.grounding_gate",
+    "app.simulation.semantic_program.quantity_annotations",
+    "app.simulation.semantic_program.refusal_cause",
+    "app.simulation.semantic_program.route",
+    "app.simulation.semantic_program.simulation_state"
+   ],
+   "lines": 573
+  },
+  {
+   "module": "app.simulation.semantic_program.simulation_state",
+   "path": "backend/app/simulation/semantic_program/simulation_state.py",
+   "class": "SHARED_COMPONENT",
+   "in_llm_only_closure": true,
+   "in_hybrid_closure": true,
+   "reachable_from_main": true,
+   "route_independent_shell": false,
+   "importers": [
+    "app.ai.adapter3_simulation",
+    "app.ai.function_route",
+    "app.ai.pipeline"
+   ],
+   "lines": 956
+  },
+  {
+   "module": "app.simulation.semantic_program.solid_faces",
+   "path": "backend/app/simulation/semantic_program/solid_faces.py",
+   "class": "SHARED_COMPONENT",
+   "in_llm_only_closure": true,
+   "in_hybrid_closure": true,
+   "reachable_from_main": true,
+   "route_independent_shell": false,
+   "importers": [
+    "app.simulation.semantic_program.assumption_gate",
+    "app.simulation.semantic_program.display_names",
+    "app.simulation.semantic_program.formation"
+   ],
+   "lines": 61
+  },
+  {
+   "module": "app.simulation.semantic_program.source_entities",
+   "path": "backend/app/simulation/semantic_program/source_entities.py",
+   "class": "SHARED_COMPONENT",
+   "in_llm_only_closure": true,
+   "in_hybrid_closure": true,
+   "reachable_from_main": true,
+   "route_independent_shell": false,
+   "importers": [
+    "app.simulation.geometry_compiler.contract_adapter",
+    "app.simulation.geometry_functions.registry",
+    "app.simulation.semantic_program.assumption_gate",
+    "app.simulation.semantic_program.construction_binding",
+    "app.simulation.semantic_program.display_names",
+    "app.simulation.semantic_program.formation",
+    "app.simulation.semantic_program.geometry_exec",
+    "app.simulation.semantic_program.grounding_gate",
+    "app.simulation.semantic_program.interpreter",
+    "app.simulation.semantic_program.postconditions",
+    "app.simulation.semantic_program.quantity_annotations",
+    "app.simulation.semantic_program.refusal_cause",
+    "app.simulation.semantic_program.shape_constraint",
+    "app.simulation.semantic_program.simulation_state"
+   ],
+   "lines": 294
+  },
+  {
+   "module": "app.simulation.semantic_program.structured_relations",
+   "path": "backend/app/simulation/semantic_program/structured_relations.py",
+   "class": "SHARED_COMPONENT",
+   "in_llm_only_closure": true,
+   "in_hybrid_closure": true,
+   "reachable_from_main": true,
+   "route_independent_shell": false,
+   "importers": [
+    "app.simulation.geometry_compiler.contract_adapter",
+    "app.simulation.semantic_program.analyze_contract",
+    "app.simulation.semantic_program.request_contract"
+   ],
+   "lines": 276
+  },
+  {
+   "module": "app.simulation.semantic_program.transport",
+   "path": "backend/app/simulation/semantic_program/transport.py",
+   "class": "SHARED_COMPONENT",
+   "in_llm_only_closure": true,
+   "in_hybrid_closure": true,
+   "reachable_from_main": true,
+   "route_independent_shell": false,
+   "importers": [
+    "app.simulation.semantic_program.route",
+    "app.simulation.semantic_program.simulation_state",
+    "app.simulation.semantic_program.visual_adapter"
+   ],
+   "lines": 207
+  },
+  {
+   "module": "app.simulation.semantic_program.validator",
+   "path": "backend/app/simulation/semantic_program/validator.py",
+   "class": "SHARED_COMPONENT",
+   "in_llm_only_closure": true,
+   "in_hybrid_closure": true,
+   "reachable_from_main": true,
+   "route_independent_shell": false,
+   "importers": [
+    "app.ai.adapter3_simulation",
+    "app.ai.pipeline",
+    "app.simulation.geometry_functions.engine",
+    "app.simulation.semantic_program",
+    "app.simulation.semantic_program.coverage_gate",
+    "app.simulation.semantic_program.interpreter",
+    "app.simulation.semantic_program.pipeline_adapter",
+    "app.simulation.semantic_program.simulation_state"
+   ],
+   "lines": 812
+  },
+  {
+   "module": "app.simulation.semantic_program.visual_adapter",
+   "path": "backend/app/simulation/semantic_program/visual_adapter.py",
+   "class": "SHARED_COMPONENT",
+   "in_llm_only_closure": true,
+   "in_hybrid_closure": true,
+   "reachable_from_main": true,
+   "route_independent_shell": false,
+   "importers": [
+    "app.simulation.semantic_program",
+    "app.simulation.semantic_program.pacer",
+    "app.simulation.semantic_program.pipeline_adapter"
+   ],
+   "lines": 217
+  },
+  {
+   "module": "app.simulation.semantic_program.visual_obligations",
+   "path": "backend/app/simulation/semantic_program/visual_obligations.py",
+   "class": "LEGACY_ONLY",
+   "in_llm_only_closure": true,
+   "in_hybrid_closure": false,
+   "reachable_from_main": true,
+   "route_independent_shell": false,
+   "importers": [
+    "app.ai.pipeline"
+   ],
+   "lines": 435
+  }
+ ]
+}

@@ -15,7 +15,6 @@ import sys
 
 import pytest
 
-from app.ai import pipeline as PL
 from app.simulation.semantic_program.shape_constraint import neu_khoi_da_dien
 from tests.geometry import test_regular_square_pyramid as SQ
 from tests.geometry import test_regular_triangular_pyramid as TR
@@ -63,23 +62,3 @@ def test_vung_tu_choi_gom_chop_deu_khong_ten_co_ten_diem():
     assert neu_khoi_da_dien("Cho hình chóp tứ giác đều có cạnh đáy bằng 4. Tính thể tích khối chóp.")
     assert not neu_khoi_da_dien("Cho tam giác ABC có AB = 4. Tính diện tích tam giác ABC.")
 
-
-def test_khong_scene3d_qua_pipeline(monkeypatch):
-    rid = "square/R2_N9_contradiction_program_fits_lengths"
-    corpus, ca = rid.split("/")
-    monkeypatch.setitem(SQ.NHAN, ca, {**SQ.NHAN[ca], "text": TOAN[rid]["text"]})
-    contract, prog = SQ._nap(ca)
-
-    async def analyze(*_a, **_k):
-        return contract, None
-
-    async def program(*_a, **_k):
-        from app.simulation.semantic_program.contract import SemanticProgramSpec
-        return SemanticProgramSpec.model_validate(prog), None
-
-    monkeypatch.setattr(PL, "stage_semantic_analyze", analyze)
-    monkeypatch.setattr(PL, "stage_semantic_program", program)
-    monkeypatch.delenv("GEOMETRY_COMPILER_MODE", raising=False)
-    env = asyncio.run(PL.run_pipeline(TOAN[rid]["text"], "fake_key"))
-    assert env.get("status") != "ok" and not env.get("scene3d"), env
-    assert env.get("reason_code") == "ASSUMPTION_INVARIANCE_UNPROVEN"

@@ -1,0 +1,63 @@
+{
+  "schema": "h1-corpus-integrity/1",
+  "status": "AWAITING_INDEPENDENT_CORPUS",
+  "h1_authoring_independence": "NOT_ESTABLISHED",
+  "h1_measurement": "NOT_MEASURED",
+  "live_provider_calls": 0,
+  "git_head_at_generation": "7a2a7592",
+  "corpus_present": false,
+  "corpus_path": null,
+  "corpus_sha256": null,
+  "oracle_sha256": null,
+  "author": null,
+  "composition_required": {
+    "total": 60,
+    "SERVE": 45,
+    "OUT_OF_DOMAIN": 5,
+    "CONTRADICTORY_DATA": 5,
+    "MISSING_DATA": 5
+  },
+  "composition_observed": "NOT_MEASURED",
+  "contamination_scan": "NOT_RUN_NO_CORPUS",
+  "semantic_equivalence_policy": "h1-section-determination-equivalence/1",
+  "candidate_identity": {
+    "candidate_manifest_path": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+    "candidate_manifest_sha256": "218404c8794861b140a8c16ffd8dcdca30c4bfaaf8cee33332b0e4ff2ac5dcb9",
+    "frozen_candidate_commit": "180db769",
+    "product_commit_sha": "d331e75b5bbf15722eca77c54e398173eefec98d",
+    "measured_system_tree_hash": "276fc548196e13eaa0ca7635428248dcaee7be79b79dff58c24a0478cddd4c63",
+    "measured_system_file_count": 118,
+    "registry_version": "geometry-functions/32",
+    "planner_version": "geometry-fact-planner/26",
+    "engine_version": "geometry-function-engine/24",
+    "typed_fact_next_version": "typed-fact-next/2",
+    "adapter_version": "hybrid-simulation-adapter/4",
+    "default_mode": "LLM_ONLY",
+    "hybrid_route_mode_default": "off",
+    "cache_version": "131"
+  },
+  "runtime_identity": {
+    "measured_system": "276fc548196e13eaa0ca7635428248dcaee7be79b79dff58c24a0478cddd4c63",
+    "cache_version": "131",
+    "model": "gemini-2.5-flash",
+    "skills_sha256": "1dd37ccce05a9c15a4b399ff848226525413f351ce607659b9d4c0c28ea217d2",
+    "paired_harness_sha256": "8af7ca1f27e7ca3fb4e58ba7e0e067bc17973d8254a086e6c39d896078cd2e1f",
+    "runner_sha256": "d1dc51d7a241a01410ed94bb8269e4e3a3f855054a5b7feca9c5c516b39e0086",
+    "scorer_sha256": "8c330bd493f9d401f579b6383f1a1df2bc9172eee2530cf187be2024801b5a2d",
+    "equivalence_scorer_sha256": "7ada8a0616e9482b4984e92e86804bfc60deab540a505a10da65d8436ceba391"
+  },
+  "sealing_checklist": {
+    "1_format_validated": false,
+    "2_duplication_and_contamination_checked": false,
+    "3_count_and_stratification_45_5_5_5_verified": false,
+    "4_independent_oracle_parsed_exact": false,
+    "5_corpus_and_oracle_sha256_recorded": false,
+    "6_evaluation_manifest_sealed": false,
+    "7_candidate_scorer_model_budget_acceptance_preregistered": true,
+    "8_owner_live_budget_approved": false
+  },
+  "blocking_conditions": [
+    "INDEPENDENT_AUTHOR_NOT_ASSIGNED_OR_CORPUS_NOT_DELIVERED",
+    "PAIRED_LIVE_CAMPAIGN_BUDGET_NOT_APPROVED_BY_OWNER"
+  ]
+}

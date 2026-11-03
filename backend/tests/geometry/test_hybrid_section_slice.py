@@ -362,8 +362,11 @@ SLICE_MUTANTS = [
          "SAB")).status != "REFUSED"),
     ("cutting-plane binding dropped", _gate_mutant, "        if c.fn in (\"section\", \"ask_section_area\", \"intersection_line\") "
      "and not mat_cat_dung_nguon(c, calls):", "        if False:",
+     # hybrid-master tenth continuation (PE-1): the unread remainder of this request sentence is now refused by a second,
+     # independent guard, so the mutant is observed by the reason the binding check gives, not by a serve
      lambda: _run(HB._mid("f5", "M", "S", "C"), _section(
-         "f6", "Xác định thiết diện của hình chóp S.ABCD cắt bởi mặt phẳng qua M song song với đáy.", "MAB")).status != "REFUSED"),
+         "f6", "Xác định thiết diện của hình chóp S.ABCD cắt bởi mặt phẳng qua M song song với đáy.", "MAB")).code
+     != "SOURCE_OBJECT_MISMATCH"),
 ]
 
 
@@ -372,3 +375,15 @@ def test_slice_mutant_is_killed(monkeypatch, name, apply, old, new, killed):
     assert not killed(), "the unmutated code must pass the kill check"
     apply(monkeypatch, old, new)
     assert killed(), f"mutant survived: {name}"
+
+
+# hybrid-master tenth continuation, review round 3: an anaphoric request is answered only by the call of ITS noun
+@pytest.mark.parametrize("text,served", [
+    ("Mặt phẳng (MAB) cắt hình chóp S.ABCD theo một thiết diện. Xác định thiết diện đó.", True),
+    ("Mặt phẳng (MAB) cắt hình chóp S.ABCD theo một thiết diện. Xác định thiết diện vừa dựng.", True),
+    ("Mặt phẳng (MAB) cắt hình chóp S.ABCD theo một thiết diện. Xác định giao tuyến đó.", False),
+    ("Mặt phẳng (MAB) cắt hình chóp S.ABCD theo một thiết diện. Tìm giao tuyến này.", False),
+])
+def test_anaphoric_request_needs_the_call_of_its_own_noun(text, served):
+    r = _run(HB._mid("f5", "M", "S", "C"), _section("f6", text, "MAB"))
+    assert (r.status == "SERVED") is served, (r.code, r.reason)

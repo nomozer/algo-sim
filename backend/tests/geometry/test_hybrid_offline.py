@@ -28,6 +28,33 @@ def test_offline_orchestrator_exists():
     assert importlib.util.find_spec('app.ai.hybrid_offline') is not None
 
 
+def test_receipt_carries_exact_source_spans_for_every_quote_and_none_on_refused_extraction():
+    # Hybrid master Phase B: provenance survives into the execution receipt (offsets only, never the source text).
+    raw = deepcopy(next(c for c in CASES if c['id'] == 'PARA-0')['payload'])
+    source = raw['problem_text']
+    receipt = api().run_hybrid_offline(source, replay(raw), policy=enabled()).receipt
+    refs = receipt['source_references']
+    assert refs and all(r['spans'] for r in refs)
+    for r in refs:
+        value = raw
+        for step in r['path']:
+            value = value[step]
+        assert all(source[a:b] == value for a, b in r['spans'])
+    quotes = []
+    def walk(v):
+        if isinstance(v, dict):
+            quotes.extend(x for k, x in v.items() if k == 'quote')
+            [walk(x) for x in v.values()]
+        elif isinstance(v, list):
+            [walk(x) for x in v]
+    walk(raw)
+    assert len(refs) == len(quotes)
+    spoofed = deepcopy(raw)
+    spoofed['solids'][0]['quote'] = 'không có trong đề'
+    refused = api().run_hybrid_offline(source, replay(spoofed), policy=enabled()).receipt
+    assert refused['source_references'] == []
+
+
 def test_disabled_and_default_policy_never_invoke_extractor(monkeypatch):
     class Bomb:
         def extract(self, text):
@@ -40,15 +67,16 @@ def test_disabled_and_default_policy_never_invoke_extractor(monkeypatch):
 
 
 def test_offline_policy_uses_existing_route_snapshot_and_cannot_enter_default_cache():
-    from app.ai.pipeline import RoutePolicy, route_policy_snapshot
+    from app.ai.route_policy import RoutePolicy, route_policy_snapshot
     from app.main import _policy_identity, CACHE_VERSION
     policy = enabled()
     assert isinstance(policy, RoutePolicy)
-    assert policy.geometry_compiler_mode == 'LLM_ONLY'
+    assert policy.default_route_mode == 'HYBRID'
     assert policy.response_contract == 'typed-fact-next/2'
     assert dict(policy.preview_surface)['adapter_version'] == 'hybrid-simulation-adapter/4'
     assert route_policy_snapshot({}).response_contract == 'flat'
-    assert _policy_identity(route_policy_snapshot({})) == CACHE_VERSION
+    from app.main import ROUTE_D_CACHE_POLICY
+    assert _policy_identity(route_policy_snapshot({})) == ROUTE_D_CACHE_POLICY
     with pytest.raises(ValueError):
         _policy_identity(policy)
 

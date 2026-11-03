@@ -1,0 +1,20 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "ALGOSIM_MASTER_HYBRID_BACKEND_REPLACEMENT (final-hybrid-architecture-cutover: Hybrid /4 default production route, LLM_ONLY/Compiler-C/Adapter-3 retirement, CACHE_VERSION 132)",
+  "corrects": "docs/evaluation/geometry/runs/hybrid-master-final-backend-product/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "current_candidate_hash": "765487a4b48e7d522ae2cccab6516bf01d50422d9f92cc48eabe7e944e021164",
+  "current_product_commit": "52205f45fb66966de7d5b471d471c92d1ea2ac91",
+  "current_candidate_source": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+  "diverged": true,
+  "reason": "Owner-directed Final Hybrid Architecture Cutover (102 measured files, down from 119): POST /api/analyze defaults to Hybrid /4 (HYBRID_ROUTE_MODE = live, staging-replay for dev/test, 503 INVALID_HYBRID_ROUTE_MODE on off/unknown, zero fallback to LLM_ONLY); retires 18 LEGACY_ONLY product files (pipeline.py, adapter3_simulation.py, geometry_compiler/*, and 10 legacy .md prompts while preserving transcribe.md and all shared kernel/IR/Scene3D/continuity/persistence modules); bumps CACHE_VERSION 131 -> 132 (ROUTE_D_CACHE_POLICY = 132:route-d); frontend/** untouched.",
+  "cache_version": 132,
+  "cache_version_hien_tai": 132,
+  "cache_decision": "BUMP 131 -> 132: default /api/analyze route switched from retired LLM_ONLY to Hybrid /4; two-way cache isolation verified between v131 and v132 and between staging-replay and live.",
+  "hieu_luc_len_ket_qua_da_do": {
+    "historical_measurements": "UNCHANGED",
+    "live_requests": "0 new live requests (NEW_LIVE_SMOKE_NOT_MEASURED; INDEPENDENT_H1_VALIDATION = NOT_MEASURED; C21 70 and C26 69 frozen receipts untouched)",
+    "so_lieu_luot_do_cuoi": "UNCHANGED: prior candidate 017bfb9f preserved in frozen-evaluation-candidate-017bfb9f.json; all historical offline and C21/C26 live receipts preserved byte-for-byte."
+  }
+}

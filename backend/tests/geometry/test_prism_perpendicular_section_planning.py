@@ -28,6 +28,8 @@ ROWS = json.loads((RUN/'inputs/development.json').read_text(encoding='utf-8'))['
 ORACLES = json.loads((RUN/'inputs/oracle.json').read_text(encoding='utf-8'))
 POS = [r for r in ROWS if r['expected_status']=='SERVED']
 NEG = [r for r in ROWS if r['expected_status']=='REFUSED']
+NEG_STILL_REFUSED = [r for r in NEG if r['id'] != 'constructed-line-endpoint']
+CONSTRUCTED_LINE_ROW = next(r for r in NEG if r['id'] == 'constructed-line-endpoint')
 
 
 def _run(row):
@@ -69,12 +71,33 @@ def test_fixtures_have_sufficient_source_dimensions_without_the_new_goal(row):
     assert result.status=='SERVED',(result.code,result.reason)
 
 
-@pytest.mark.parametrize('row',NEG,ids=lambda r:r['id'])
+@pytest.mark.parametrize('row',NEG_STILL_REFUSED,ids=lambda r:r['id'])
 def test_unsupported_ungrounded_and_invalid_prism_sections_refuse(row):
     result=_run(row)
     assert result.status=='REFUSED'
     assert result.code in row['expected_codes'],(result.code,result.reason)
     assert result.exec_result is None
+
+
+def test_constructed_line_endpoint_now_served_with_independent_edge_clip_oracle():
+    """`constructed-line-endpoint` (`(P)` through midpoint `M` of `BC'` perpendicular to constructed line `AM`) was an
+    `UNSUPPORTED_CAPABILITY` pin in `geometry-fact-planner/16`; `geometry-fact-planner/23` (`_chon_moc_vuong_duong`)
+    generalizes perpendicular-plane anchor selection to premise-constructed lines while historical `inputs/development.json`
+    stays untouched."""
+    oracle=_module('oracle')
+    geom=deepcopy(POS[0]['geometry'])
+    geom['point']='M'
+    geom['line']=['A','M']
+    want=oracle.section(geom)
+    assert want['interior_cut'] is True and want['area_squared']=='976'
+    result=_run(CONSTRUCTED_LINE_ROW)
+    assert result.status=='SERVED',(result.code,result.reason)
+    assert _square(result)==F(want['area_squared'])
+    payload=_module('corpus').canonical({**deepcopy(CONSTRUCTED_LINE_ROW),'geometry':geom})
+    v2=run_typed_fact_next_v2_route(payload)
+    assert v2.status=='SERVED' and _square(v2)==F(want['area_squared'])
+    resp=build_adapter4_response(v2,payload['problem_text'])
+    assert (resp['envelope']['status'],resp['route_d']['status'],resp['route_d']['refusal'])==('ok','SERVED',None)
 
 
 @pytest.mark.parametrize('row',[POS[0],POS[7]],ids=lambda r:r['id'])

@@ -1,0 +1,22 @@
+{
+ "schema": "hybrid-master-backend-replacement/full-t3/1",
+ "verdict": "FULL_PRODUCT_GATE_PASS",
+ "attempt": 1,
+ "exit_code": 0,
+ "command": "cd frontend && node scripts/full-gate.mjs",
+ "worktree": ".superpowers/worktrees/hm-t3-cb06635e (fresh, detached; tracked and untracked clean after the run; frontend/node_modules and backend/.venv junctions to the main checkout, removed with [IO.Directory]::Delete before the worktree)",
+ "head": "cb06635e",
+ "product_commit": "d9d11b601ddf482adf1fae6d30b4fd78266588df",
+ "measured_system": {"tree_hash": "4c269babade61e10a6da5ea55d0e68da6be2d0deb661e749e32de241c29a0e63", "files": 118},
+ "cache_version": "131",
+ "default_mode": "LLM_ONLY",
+ "pytest": {"passed": 16140, "skipped": 7, "deselected": 2, "xfailed": 15, "failed": 0, "seconds": 564.97},
+ "vitest": {"files": 84, "passed": 1424},
+ "build": "PASS",
+ "demo_replay": "PASS (5/5)",
+ "demo_crash_surface": "PASS (6/6 refusal boundaries typed, 0 thrown as 500)",
+ "T0_T2": "COVERED_BY_T3: the whole pytest and vitest suites and the build, a superset of T0 and T2",
+ "publication_scan": "check_publication_safety.py --range f986e897..HEAD at cb06635e: scanned=296 messages=51 violations=0 verdict=PASS; 0 Co-Authored-By trailers",
+ "log_sha256_local": "25326ceebe9b4cb928993a7ea0a94f8015ed830c45180d6839a838a8d6123ef6",
+ "provider_calls": 0
+}

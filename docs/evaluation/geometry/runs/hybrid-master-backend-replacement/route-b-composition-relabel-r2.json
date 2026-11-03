@@ -1,0 +1,269 @@
+{
+ "classification": "IMPLEMENTER_AUTHORED_DEVELOPMENT_DIAGNOSTIC",
+ "provider_calls": 0,
+ "route": "B (flat TypedFact)",
+ "corrects": "planner-recomposition-matrix.json (planner self-label)",
+ "summary": {
+  "planner_label": {
+   "SOURCE_EXPLICIT_SEQUENCE": 17,
+   "REGISTERED_DECOMPOSITION": 5,
+   "None": 2
+  },
+  "strict_label": {
+   "SOURCE_EXPLICIT_SEQUENCE": 8,
+   "REGISTERED_DECOMPOSITION": 5,
+   "REFUSED:FACT_INCOMPLETE": 2,
+   "REFUSED:OUT_OF_SCOPE": 5,
+   "REFUSED:MISSING_DIMENSION": 2,
+   "REFUSED:SOURCE_OBJECT_MISMATCH": 1,
+   "REFUSED:UNKNOWN_LABEL": 1
+  }
+ },
+ "rows": [
+  {
+   "id": "A1-explicit-midpoint-length",
+   "status": "SERVED",
+   "planner_label": "SOURCE_EXPLICIT_SEQUENCE",
+   "strict_label": "SOURCE_EXPLICIT_SEQUENCE",
+   "planner_steps": [],
+   "beyond_description": []
+  },
+  {
+   "id": "A2-explicit-intersection-length",
+   "status": "SERVED",
+   "planner_label": "SOURCE_EXPLICIT_SEQUENCE",
+   "strict_label": "SOURCE_EXPLICIT_SEQUENCE",
+   "planner_steps": [],
+   "beyond_description": []
+  },
+  {
+   "id": "B1-registered-distance-point-to-line",
+   "status": "SERVED",
+   "planner_label": "REGISTERED_DECOMPOSITION",
+   "strict_label": "REGISTERED_DECOMPOSITION",
+   "planner_steps": [
+    "orthogonal_projection_line"
+   ],
+   "beyond_description": [
+    "orthogonal_projection_line"
+   ]
+  },
+  {
+   "id": "B2-registered-named-point-parallel-plane-section-area",
+   "status": "SERVED",
+   "planner_label": "REGISTERED_DECOMPOSITION",
+   "strict_label": "REGISTERED_DECOMPOSITION",
+   "planner_steps": [
+    "translate_point",
+    "translate_point"
+   ],
+   "beyond_description": [
+    "translate_point",
+    "translate_point"
+   ]
+  },
+  {
+   "id": "C1a-unhinted-proj-line-length",
+   "status": "SERVED",
+   "planner_label": "SOURCE_EXPLICIT_SEQUENCE",
+   "strict_label": "SOURCE_EXPLICIT_SEQUENCE",
+   "planner_steps": [
+    "orthogonal_projection_line"
+   ],
+   "beyond_description": []
+  },
+  {
+   "id": "C1b-unhinted-proj-plane-area",
+   "status": "SERVED",
+   "planner_label": "SOURCE_EXPLICIT_SEQUENCE",
+   "strict_label": "SOURCE_EXPLICIT_SEQUENCE",
+   "planner_steps": [
+    "orthogonal_projection"
+   ],
+   "beyond_description": []
+  },
+  {
+   "id": "C2-unhinted-inter-line-line-dist-plane",
+   "status": "SERVED",
+   "planner_label": "SOURCE_EXPLICIT_SEQUENCE",
+   "strict_label": "SOURCE_EXPLICIT_SEQUENCE",
+   "planner_steps": [
+    "intersect_line_line"
+   ],
+   "beyond_description": []
+  },
+  {
+   "id": "C3-unhinted-inter-line-plane-angle-line-plane",
+   "status": "SERVED",
+   "planner_label": "SOURCE_EXPLICIT_SEQUENCE",
+   "strict_label": "SOURCE_EXPLICIT_SEQUENCE",
+   "planner_steps": [
+    "intersect_line_plane"
+   ],
+   "beyond_description": []
+  },
+  {
+   "id": "C4-multi-goal-shared-proj-line-reuse",
+   "status": "SERVED",
+   "planner_label": "SOURCE_EXPLICIT_SEQUENCE",
+   "strict_label": "SOURCE_EXPLICIT_SEQUENCE",
+   "planner_steps": [
+    "orthogonal_projection_line"
+   ],
+   "beyond_description": []
+  },
+  {
+   "id": "C5-flagship-unhinted-proj-line-parallel-plane-section-area",
+   "status": "SERVED",
+   "planner_label": "REGISTERED_DECOMPOSITION",
+   "strict_label": "REGISTERED_DECOMPOSITION",
+   "planner_steps": [
+    "orthogonal_projection_line",
+    "translate_point",
+    "translate_point"
+   ],
+   "beyond_description": [
+    "translate_point",
+    "translate_point"
+   ]
+  },
+  {
+   "id": "C6a-unhinted-midpoint-perp-line-section-area",
+   "status": "SERVED",
+   "planner_label": "REGISTERED_DECOMPOSITION",
+   "strict_label": "REGISTERED_DECOMPOSITION",
+   "planner_steps": [
+    "midpoint",
+    "orthogonal_projection_line",
+    "orthogonal_projection_line",
+    "translate_point",
+    "translate_point"
+   ],
+   "beyond_description": [
+    "orthogonal_projection_line",
+    "orthogonal_projection_line",
+    "translate_point",
+    "translate_point"
+   ]
+  },
+  {
+   "id": "C6b-unhinted-proj-line-perp-derived-SO-section-area",
+   "status": "SERVED",
+   "planner_label": "REGISTERED_DECOMPOSITION",
+   "strict_label": "REGISTERED_DECOMPOSITION",
+   "planner_steps": [
+    "orthogonal_projection_line",
+    "orthogonal_projection_line",
+    "orthogonal_projection_line",
+    "translate_point",
+    "translate_point"
+   ],
+   "beyond_description": [
+    "orthogonal_projection_line",
+    "orthogonal_projection_line",
+    "translate_point",
+    "translate_point"
+   ]
+  },
+  {
+   "id": "C7-prism-unhinted-proj-line-length",
+   "status": "SERVED",
+   "planner_label": "SOURCE_EXPLICIT_SEQUENCE",
+   "strict_label": "SOURCE_EXPLICIT_SEQUENCE",
+   "planner_steps": [
+    "orthogonal_projection_line"
+   ],
+   "beyond_description": []
+  },
+  {
+   "id": "D1-nested-two-level-unnamed-descriptor",
+   "status": "REFUSED",
+   "planner_label": null,
+   "strict_label": "REFUSED:FACT_INCOMPLETE",
+   "planner_steps": [],
+   "beyond_description": []
+  },
+  {
+   "id": "D2-dual-unnamed-point-endpoints-in-binary-goal",
+   "status": "REFUSED",
+   "planner_label": null,
+   "strict_label": "REFUSED:FACT_INCOMPLETE",
+   "planner_steps": [],
+   "beyond_description": []
+  },
+  {
+   "id": "E1-missing-circumcenter-primitive",
+   "status": "REFUSED",
+   "planner_label": "SOURCE_EXPLICIT_SEQUENCE",
+   "strict_label": "REFUSED:OUT_OF_SCOPE",
+   "planner_steps": [],
+   "beyond_description": []
+  },
+  {
+   "id": "E2-missing-incenter-primitive",
+   "status": "REFUSED",
+   "planner_label": "SOURCE_EXPLICIT_SEQUENCE",
+   "strict_label": "REFUSED:OUT_OF_SCOPE",
+   "planner_steps": [],
+   "beyond_description": []
+  },
+  {
+   "id": "F1-transcendental-arccos-degree-sum",
+   "status": "REFUSED",
+   "planner_label": "SOURCE_EXPLICIT_SEQUENCE",
+   "strict_label": "REFUSED:OUT_OF_SCOPE",
+   "planner_steps": [],
+   "beyond_description": []
+  },
+  {
+   "id": "F2-curved-oblique-conic-section",
+   "status": "REFUSED",
+   "planner_label": "SOURCE_EXPLICIT_SEQUENCE",
+   "strict_label": "REFUSED:OUT_OF_SCOPE",
+   "planner_steps": [],
+   "beyond_description": []
+  },
+  {
+   "id": "G1-insufficient-missing-altitude-length",
+   "status": "REFUSED",
+   "planner_label": "SOURCE_EXPLICIT_SEQUENCE",
+   "strict_label": "REFUSED:MISSING_DIMENSION",
+   "planner_steps": [],
+   "beyond_description": []
+  },
+  {
+   "id": "G2-insufficient-unconstrained-quadrilateral-base",
+   "status": "REFUSED",
+   "planner_label": "SOURCE_EXPLICIT_SEQUENCE",
+   "strict_label": "REFUSED:MISSING_DIMENSION",
+   "planner_steps": [],
+   "beyond_description": []
+  },
+  {
+   "id": "H1-role-swapped-projection-source-unverified",
+   "status": "REFUSED",
+   "planner_label": "SOURCE_EXPLICIT_SEQUENCE",
+   "strict_label": "REFUSED:SOURCE_OBJECT_MISMATCH",
+   "planner_steps": [
+    "orthogonal_projection_line"
+   ],
+   "beyond_description": []
+  },
+  {
+   "id": "H2-derived-point-forged-as-given-premise",
+   "status": "REFUSED",
+   "planner_label": "SOURCE_EXPLICIT_SEQUENCE",
+   "strict_label": "REFUSED:UNKNOWN_LABEL",
+   "planner_steps": [],
+   "beyond_description": []
+  },
+  {
+   "id": "I1-beyond-finite-oracle-horizon-not-established",
+   "status": "REFUSED",
+   "planner_label": "SOURCE_EXPLICIT_SEQUENCE",
+   "strict_label": "REFUSED:OUT_OF_SCOPE",
+   "planner_steps": [],
+   "beyond_description": []
+  }
+ ]
+}

@@ -121,24 +121,6 @@ def test_R3_distance_giu_nguyen_ngu_nghia():
         assert not accepts_container_type("distance", kieu)
 
 
-def test_R3b_hai_nghia_vu_phan_biet_bang_SO_TOAN_HANG():
-    """Prompt dạy phân biệt bằng **số toán hạng**, không bằng chữ trong đề.
-
-    Dạy theo chữ là đúng cái bẫy `measure_contract §②` đã phải đi dọn với
-    `angle_cos`: tên phép đo chứa sẵn chữ "cos" nên đề nào hỏi "côsin" là mô
-    hình chọn nó, kể cả khi sai.
-    """
-    from app.ai import gemini
-
-    md = (Path(gemini.SKILLS_DIR) / "geometry_analyze.md").read_text(
-        encoding="utf-8")
-    assert "`radius`" in md and "Tính bán kính" in md
-    assert "số toán hạng" in md
-    # `distance` vẫn phải được dạy là có `wrt`.
-    assert "`wrt`" in md
-
-
-# ══ R1–R2 · CÂU HỎI BÁN KÍNH CÓ TỪ ĐỂ GỌI ════════════════════════════════
 def test_R1_R2_radius_co_trong_enum_analyze_hinh_hoc():
     """Không có dòng này thì mô hình **không có cách hợp lệ nào** để nói đúng —
     và nó sẽ ép vào `distance`, đúng như V2 đo được."""

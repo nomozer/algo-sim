@@ -164,7 +164,7 @@ def test_P4_P5_mp_vuong_goc_truc_cat_NON_theo_ti_le_dong_dang():
 
 
 def test_P7_P8_P9_trace_va_scene3d_mang_circle3_dung_phu_thuoc():
-    from app.ai import pipeline
+    from tests.geometry import scene3d_test_helper as pipeline
 
     d, s = _khoi_cat("cylinder", dinh_z=20, vanh_x=9, cat_t="1/2", fid="f",
                      do=("radius", "area"))
@@ -531,7 +531,7 @@ def test_T4b_khai_SAI_kieu_DUONG_TRON_thi_CO_can_he_lai():
     ("RENDER_HINT", "circle3"), ("_TRUONG", "circle3")])
 def test_T5_T6_go_circle3_khoi_scene3d_thi_MAT_VAT(monkeypatch, bang, khoa):
     """Tiêm ⑤⑥ — không có ô trình bày thì đường tròn không tới được học sinh."""
-    from app.ai import pipeline
+    from tests.geometry import scene3d_test_helper as pipeline
     from app.simulation.semantic_program import scene3d
 
     hd, spec = _tru(do=("radius", "area"),

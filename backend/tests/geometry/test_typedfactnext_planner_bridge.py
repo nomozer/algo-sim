@@ -109,7 +109,7 @@ def _served_simson_midpoint():
 
 
 def _preview_policy():
-    from app.ai.pipeline import route_policy_snapshot
+    from app.ai.route_policy import route_policy_snapshot
     return route_policy_snapshot({"HYBRID_ROUTE_D_PREVIEW": "1"}, preview=True)
 
 
@@ -678,6 +678,32 @@ def test_qualified_constructed_point_keeps_its_verified_producer_identity():
     qualified = run_typed_fact_next_planner_route(payload)
     assert control.status == qualified.status == "SERVED"
     assert qualified.points == control.points and qualified.trace == control.trace
+
+
+def test_bridge_ownership_resolves_identity_through_the_one_canonical_resolver(monkeypatch):
+    # Master contract: `canonical_vertex_ref` is the sole identity authority; the bridge keeps no private copy.
+    from app.ai.function_route import run_typed_fact_next_planner_route
+    from app.simulation.geometry_functions import typed_fact_next_bridge as B
+    real, calls = B.canonical_vertex_ref, []
+    monkeypatch.setattr(B, "canonical_vertex_ref", lambda p, ref, scope=None: calls.append(ref) or real(p, ref, scope))
+    payload = _next(NAMED.replace(" " + RATIO_Q, ""), [deepcopy(SEC)], [deepcopy(SEC_GOAL)])
+    payload["derived_sections"][0]["through_point"] = "pyr::M"
+    r = run_typed_fact_next_planner_route(payload)
+    assert r.status == "SERVED", (r.code, r.reason)
+    assert "pyr::M" in calls
+
+
+def test_derived_namespace_refusal_after_delegation_is_a_capability_code():
+    # Architecture review M-1: before Task 1 the bridge's private copy refused `top_pyramid::S` (two roots own `S`) as
+    # AMBIGUOUS_REFERENCE, contrary to the Owner-registered R2 oracle (a derived solid resolves through its parent).
+    # Delegating fixed that; the case is still refused, now as unsupported qualified identity. Pin the code and stage.
+    import test_measurement_dispatch_and_identity_order as M
+    cases = [k for k in M.names('R2_POSITIVE') if M.CASES[k]['expected_routes'] is None]
+    assert cases
+    for k in cases:
+        for route in ('pl', 'a4'):
+            r = M.F.ROUTES[route](deepcopy(M.CASES[k]['payload']))
+            assert (r.status, r.code) == ('REFUSED', 'BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY'), (k, route, r.code)
 
 
 def test_bridge_accepts_matching_units_and_declared_qualified_vertices():

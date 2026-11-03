@@ -23,6 +23,7 @@ TB_HEADER = "Trace" + "back (most recent call last):"
 TB = (f"pytest output\n  {TB_HEADER}\n    " + 'File "C:\\x\\threading.py"' + ", line 1075, in run\n"
       "UnicodeDecodeError: boom\n")
 FAKE_KEY = "AI" + "za" + "Sy" + "Q" * 33
+FAKE_AQ_KEY = "AQ" + "." + "Ab8RN6" + "Q" * 36
 
 
 def _git(repo: Path, *args: str) -> str:
@@ -112,6 +113,14 @@ def test_exception_does_not_cover_a_different_rule(repo, tmp_path, capsys):
     exc = _exceptions(tmp_path, repo, "logs/run.log", "HEAD", gate.OWNER_APPROVED)
     code, out = _run(repo, exc, "--head", capsys=capsys)
     assert code == 1 and "rule=GOOGLE_API_KEY" in out and "rule=PY_TRACEBACK" not in out and FAKE_KEY not in out
+
+
+def test_aq_google_api_key_oauth_token_and_secret_assignment_with_dots_are_blocked(repo, tmp_path, capsys):
+    fake_oauth = "ya29." + "a0AfH6SMB" + "x" * 40
+    _commit(repo, {"logs/aq.txt": f"GEMINI_API_KEY={FAKE_AQ_KEY}\nGOOGLE_OAUTH_ACCESS_TOKEN={fake_oauth}\n"}, "add aq")
+    code, out = _run(repo, tmp_path / "none.json", "--range", "base..HEAD", capsys=capsys)
+    assert code == 1 and out.count("rule=GOOGLE_API_KEY") == 2 and out.count("rule=SECRET_ASSIGNMENT") == 2
+    assert FAKE_AQ_KEY not in out and fake_oauth not in out
 
 
 def test_removed_from_tip_passes_head_but_history_still_blocks_range(repo, tmp_path, capsys):

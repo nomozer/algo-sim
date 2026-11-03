@@ -24,7 +24,7 @@ from fractions import Fraction as F
 
 import pytest
 
-from app.ai.pipeline import _dung_scene3d
+from tests.geometry.scene3d_test_helper import _dung_scene3d
 from app.simulation.geometry import measure as M
 from app.simulation.geometry import section as SEC
 from app.simulation.geometry.exact import GeometryError, Vec3

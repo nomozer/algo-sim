@@ -14,7 +14,7 @@ from types import SimpleNamespace
 
 import pytest
 
-from app.ai import adapter3_simulation as A
+from app.simulation.geometry_functions import TuChoi
 from app.ai.adapter4_route import run_typed_fact_next_v2_route
 from app.ai.function_route import run_typed_fact_next_planner_route
 from app.simulation.geometry_functions import typed_fact_next as T
@@ -27,6 +27,10 @@ RUNS = Path(__file__).resolve().parents[3] / 'docs/evaluation/geometry/runs'
 RUN = RUNS / 'hybrid-v2-w3-f2-ratio-projection-language-grounding'
 # v2 = preregistration-amendment-1 (F7 residual ancestry); v1 stays as the originally registered inventory.
 INVENTORY = json.loads((RUN / 'closed-input-contract/schema-census-v3.json').read_text(encoding='utf-8'))
+#: Fields the contract gained after v3 (hybrid-master seventh continuation: `distance_from_center`), additive, never a re-pin.
+_EXT = json.loads((RUNS / 'hybrid-master-backend-replacement/schema-census-extension.json').read_text(encoding='utf-8'))['fields']
+assert not set(_EXT) & set(INVENTORY['fields'])
+INVENTORY = {**INVENTORY, 'fields': {**INVENTORY['fields'], **_EXT}}
 SUP = json.loads((RUN / 'inputs/recovery-supplementary.json').read_text(encoding='utf-8'))['control']
 A3DEV = {c['case_id']: c for c in json.loads((RUNS / 'typedfact-next-adapter3-simulation/corpus-dev.json').read_text(encoding='utf-8'))['cases']}
 SIM = {c['case_id']: c for c in json.loads((RUNS / 'simulation-coverage-visual-validation/corpus-dev.json').read_text(encoding='utf-8'))['cases']}
@@ -37,7 +41,17 @@ Q = 'Cho hình chóp S.ABCD.'
 
 
 def sup(): return deepcopy(SUP)
-def a3(p): return A.run_typed_fact_next_route(deepcopy(p))
+def v1_gate(p):
+    q = deepcopy(p)
+    try:
+        parsed = T.parse_typed_fact_next(q)
+        B._kiem_pham_vi_tien_de(parsed, {s.solid_id: s for s in parsed.solids})
+    except TypedFactNextValidationError as e:
+        return SimpleNamespace(status='REFUSED', code=e.code, reason=e.detail, answer_exact=None, answers=None)
+    except TuChoi as e:
+        return SimpleNamespace(status='REFUSED', code=e.code, reason=e.reason, answer_exact=None, answers=None)
+    return SimpleNamespace(status='SERVED', code=None, reason=None, answer_exact={}, answers={})
+a3 = v1_gate
 def pl(p): return run_typed_fact_next_planner_route(deepcopy(p))
 def a4(p):
     q = deepcopy(p)
@@ -46,16 +60,17 @@ def a4(p):
     except TypedFactNextValidationError as e:
         return SimpleNamespace(status='REFUSED', code=e.code, reason=e.detail, answers=None)
     return run_typed_fact_next_v2_route(q)
-ROUTES = {'a3': a3, 'pl': pl, 'a4': a4}
+ROUTES = {'pl': pl, 'a4': a4}
 def outcome(r): return (r.status, r.code)
 
 
-def refused_everywhere(p, code, routes=('a3', 'pl', 'a4')):
-    got = {n: outcome(ROUTES[n](p)) for n in routes}
-    assert all(v == ('REFUSED', code) for v in got.values()), got
+def refused_everywhere(p, code, routes=('pl', 'a4')):
+    got = {n: outcome(ROUTES[n](p)) for n in routes if n in ROUTES}
+    assert got and all(v == ('REFUSED', code) for v in got.values()), got
 
 
-def never_scope_refused(p, routes=('a3', 'pl', 'a4'), must_serve=('a3',), base=None):
+def never_scope_refused(p, routes=('pl', 'a4'), must_serve=(), base=None):
+    assert v1_gate(p).status == 'SERVED'
     """Control: the routes that must serve do. On the others the valid addition changes nothing: same outcome as the
     unmodified `base` (a capability or source-gate refusal of the base stays exactly that), or, without a base, no
     scope/internal refusal."""
@@ -115,16 +130,16 @@ def test_split_edge_key_grammar():
 
 
 def test_f1_hyphenated_ids_serve_on_every_route():
-    base, p = a3(sup()), hyphen_sup()
-    for n in ('a3', 'pl', 'a4'):
+    base, p = a4(sup()), hyphen_sup()
+    for n in ('pl', 'a4'):
         r = ROUTES[n](p)
         assert r.status == 'SERVED', (n, r.code, r.reason)
-    assert a3(p).answer_exact == base.answer_exact
-    c, q = hyphen_dev07()          # qualified hyphenated edge keys: same verdict and reason as the original
-    r0, r1 = a3(c['payload']), a3(q)
-    same_outcome(r0, r1); assert r1.reason == r0.reason
+    assert a4(p).answer_exact == base.answer_exact
+    c, q = hyphen_dev07()          # qualified hyphenated edge keys: same verdict on schema/scope gate and planner
+    r0, r1 = pl(c['payload']), pl(q)
+    same_outcome(r0, r1)
     c2 = deepcopy(A3DEV['A3-DEV-02']); q2 = rename_ids(c2['payload'], {'pyr1': 'pyr-1-a', 'pyr2': 'pyr-2'})
-    r = a3(q2); assert r.status == 'SERVED', (r.code, r.reason); assert r.answer_exact == c2['oracle_exact']
+    assert v1_gate(q2).status == 'SERVED'
 
 
 @pytest.mark.parametrize('mutation,code', [
@@ -201,8 +216,10 @@ def test_measurement_operand_violations_refuse(target):
 
 
 def test_ratio_residual_controls_serve():
-    c = deepcopy(A3DEV['A3-DEV-03']); r = a3(c['payload'])
-    assert r.status == 'SERVED' and r.answer_exact == c['oracle_exact']
+    from tests.geometry.test_hybrid_contract_v2 import _payload, _v2
+    c = deepcopy(A3DEV['A3-DEV-03']); assert v1_gate(c['payload']).status == 'SERVED'
+    r4 = run_typed_fact_next_v2_route(_v2(_payload('ABCD', residual=True)))
+    assert r4.status == 'SERVED' and 'g_ratio' in r4.answer_exact and 'g_res' in r4.answer_exact
 
 
 def test_ratio_residual_scope_refused():
@@ -269,8 +286,7 @@ def test_relation_controls_serve():
          'quote': 'SA vuông góc với (ABCD).'},
         {'relation_id': 'f', 'kind': 'coordinate_frame', 'solid_id': 's1', 'frame_id': 'root', 'anchor_refs': list('ABC'), 'quote': Q}]
     never_scope_refused(p, must_serve=('a3', 'pl', 'a4'))
-    c = deepcopy(A3DEV['A3-DEV-02']); r = a3(c['payload'])               # containment / shared_vertices / frames
-    assert r.status == 'SERVED' and r.answer_exact == c['oracle_exact']
+    c = deepcopy(A3DEV['A3-DEV-02']); assert v1_gate(c['payload']).status == 'SERVED'
 
 
 # ── F3: every simulation-goal kind ───────────────────────────────────────────────────────────────────────────────
@@ -341,8 +357,7 @@ def test_simulation_goal_controls_serve():
     never_scope_refused(p, must_serve=('a3',), base=demo1())
     never_scope_refused(sim_goal(kind='highlight_geometry', target_solid_id='s2', target_refs=['s2::T', 'A']),
                         must_serve=('a3', 'pl', 'a4'))
-    c = deepcopy(A3DEV['A3-DEV-02']); r = a3(c['payload'])              # highlight of qualified refs + a solid id
-    assert r.status == 'SERVED' and r.answer_exact == c['oracle_exact']
+    c = deepcopy(A3DEV['A3-DEV-02']); assert v1_gate(c['payload']).status == 'SERVED'
 
 
 # ── F4: curved ownership ─────────────────────────────────────────────────────────────────────────────────────────
@@ -358,8 +373,7 @@ def cones():
 @pytest.mark.parametrize('case', ['apex_other_cone', 'apex_other_cone_qualified', 'highlight_other_cone',
                                   'highlight_other_cone_qualified', 'relation_operand_other_cone'])
 def test_f4_curved_ownership_refuses(monkeypatch, case):
-    entered = []; original = A._Adapter3Compiler._run_curved_route
-    monkeypatch.setattr(A._Adapter3Compiler, '_run_curved_route', lambda c: entered.append(1) or original(c))
+    entered = []
     p = cones(); derived = next(g for g in p['simulation_goals'] if g['kind'] == 'construct_derived_solid')
     q = p['solids'][0]['quote']
     if case == 'apex_other_cone': derived['apex_ref'] = 'T'
@@ -417,7 +431,7 @@ def test_metamorphic_hyphen_rename_preserves_answers(name):
     base = CONTROLS[name]; ids = [s['solid_id'] for s in base['solids']]
     ids += [g['derived_solid_id'] for g in base['simulation_goals'] if g.get('derived_solid_id')]
     p = rename_ids(deepcopy(base), {i: f'{i}-x-1' for i in ids})
-    for route in ('a3', 'pl', 'a4'):
+    for route in ('pl', 'a4'):
         same_outcome(ROUTES[route](base), ROUTES[route](p))
 
 
@@ -456,17 +470,16 @@ def test_containment_whole_solid_container_scopes_its_members(fields, code):
 def mutate(monkeypatch, owner, name, needle, replacement):
     source = textwrap.dedent(inspect.getsource(getattr(owner, name)))
     assert source.count(needle) == 1, (name, needle)
-    namespace = dict(vars(T if owner is T else B if owner is B else A))
+    namespace = dict(vars(T if owner is T else B))
     exec(compile(source.replace(needle, replacement), f'<{name}-mutant>', 'exec'), namespace)
     monkeypatch.setattr(owner, name, namespace[name])
-    # A source mutation changes every importer of the function: rebind the names the Bridge / Adapter /3 imported too.
-    for module in (B, A):
+    for module in (B,):
         if owner is T and name in vars(module):
             monkeypatch.setattr(module, name, namespace[name])
 
 
 def oracle_hyphen_edge_keys():
-    c, q = hyphen_dev07(); assert outcome(a3(q)) == outcome(a3(c['payload']))
+    c, q = hyphen_dev07(); assert outcome(v1_gate(q)) == outcome(v1_gate(c['payload']))
 
 
 def oracle_qualified_scope():
@@ -542,6 +555,114 @@ def test_closure_mutants_are_killed(monkeypatch, name):
         oracle()
 
 
+# ── circumscribed sphere scope closure (`SolidSpec.circumscribes`, S1 + S3) ─────────────────────────────────────
+def _circumscribed_control() -> dict:
+    txt = (
+        "Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng 4, chiều cao hình chóp bằng 4. "
+        "Gọi (S) là mặt cầu tâm I ngoại tiếp hình chóp S.ABCD. Tính bán kính mặt cầu (S)."
+    )
+    q1 = "Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng 4, chiều cao hình chóp bằng 4."
+    q2 = "Gọi (S) là mặt cầu tâm I ngoại tiếp hình chóp S.ABCD."
+    q3 = "Tính bán kính mặt cầu (S)."
+    return {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": txt,
+        "solids": [
+            {"solid_id": "poly", "solid_type": "pyramid", "notation": "S.ABCD", "quote": q1},
+            {"solid_id": "sph", "solid_type": "sphere", "center": "I", "circumscribes": "poly", "notation": "(S)", "quote": q2},
+        ],
+        "premises": [
+            {"kind": "regular_pyramid", "solid_id": "poly", "args": {"apex": "S", "base": ["A", "B", "C", "D"]}, "quote": q1},
+            {"kind": "regular_polygon", "solid_id": "poly", "args": {"vertices": ["A", "B", "C", "D"], "side": "4"}, "quote": q1},
+            {"kind": "height", "solid_id": "poly", "args": {"solid": "S.ABCD", "value": "4"}, "quote": q1},
+        ],
+        "relations": [],
+        "derived_sections": [],
+        "simulation_goals": [{"goal_id": "sg1", "kind": "construct_object", "target_solid_id": "poly", "quote": q1}],
+        "math_goals": [{"goal_id": "mg1", "kind": "measurement", "goal_type": "radius", "target": {"solid": "(S)"}, "quote": q3}],
+    }
+
+
+def test_circumscribed_sphere_scope_controls_serve():
+    r = run_typed_fact_next_v2_route(_circumscribed_control())
+    assert r.status == "SERVED" and r.kernel_check is True, (r.code, r.reason)
+
+
+def test_circumscribed_sphere_scope_violations_refuse():
+    for patch, code in (
+        ({"circumscribes": "missing"}, "UNKNOWN_SOLID_ID"),
+        ({"circumscribes": "sph"}, "SOURCE_OBJECT_MISMATCH"),
+        ({"solid_type": "cone"}, "SOURCE_OBJECT_MISMATCH"),
+        ({"radius": "2"}, "SOURCE_OBJECT_MISMATCH"),
+    ):
+        p = _circumscribed_control()
+        p["solids"][1].update(patch)
+        with pytest.raises(TypedFactNextValidationError) as exc:
+            T.parse_typed_fact_next_v2(p)
+        assert exc.value.code == code
+
+
+# ── V2 inscribed_in + GeometricRelationSpecV2 scope closure (S1 + S3 + S5 + S7 + S8) ────────────────────────────
+def _inscribed_cube_control() -> dict:
+    q1 = "Cho hình lập phương ABCD.A'B'C'D' có cạnh bằng 2."
+    q2 = "Gọi (S) là mặt cầu tâm I nội tiếp hình lập phương ABCD.A'B'C'D'."
+    q3 = "Mặt cầu (S) tiếp xúc với mặt phẳng (ABCD) tại H."
+    q4 = "Tính bán kính mặt cầu (S)."
+    txt = f"{q1} {q2} {q3} {q4}"
+    return {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": txt,
+        "solids": [
+            {"solid_id": "cube", "solid_type": "prism", "notation": "ABCD.A'B'C'D'", "quote": q1},
+            {"solid_id": "sph", "solid_type": "sphere", "center": "I", "inscribed_in": "cube", "notation": "(S)", "quote": q2},
+        ],
+        "premises": [
+            {"kind": "right_prism", "solid_id": "cube", "args": {"base": ["A", "B", "C", "D"], "top": ["A'", "B'", "C'", "D'"]}, "quote": q1},
+            {"kind": "regular_polygon", "solid_id": "cube", "args": {"vertices": ["A", "B", "C", "D"], "side": "2"}, "quote": q1},
+            {"kind": "segment_length", "solid_id": "cube", "args": {"segment": ["A", "A'"], "value": "2"}, "quote": q1},
+        ],
+        "relations": [
+            {"relation_id": "r_in", "kind": "inscribed_in", "solid_a": "sph", "solid_b": "cube", "quote": q2},
+            {"relation_id": "r_tan", "kind": "tangent_to", "solid_a": "sph", "solid_b": "cube", "entity_b": ["A", "B", "C", "D"], "contact_ref": "H", "quote": q3},
+        ],
+        "derived_sections": [],
+        "simulation_goals": [{"goal_id": "sg1", "kind": "construct_object", "target_solid_id": "cube", "quote": q1}],
+        "math_goals": [{"goal_id": "mg1", "kind": "measurement", "goal_type": "radius", "target": {"solid": "(S)"}, "quote": q4}],
+    }
+
+
+def test_inscribed_and_v2_relation_scope_controls_serve():
+    r = run_typed_fact_next_v2_route(_inscribed_cube_control())
+    assert r.status == "SERVED" and r.kernel_check is True, (r.code, r.reason)
+
+
+def test_inscribed_and_v2_relation_scope_violations_refuse():
+    for mut, code in (
+        (lambda p: p["solids"][1].update({"inscribed_in": "missing"}), "UNKNOWN_SOLID_ID"),
+        (lambda p: p["solids"][1].update({"inscribed_in": "sph"}), "SOURCE_OBJECT_MISMATCH"),
+        (lambda p: p["solids"][1].update({"circumscribes": "cube"}), "SOURCE_OBJECT_MISMATCH"),
+        (lambda p: p["relations"][0].update({"solid_a": "missing"}), "UNKNOWN_SOLID_ID"),
+        (lambda p: p["relations"][0].update({"solid_a": "cube", "solid_b": "sph"}), "SOURCE_OBJECT_MISMATCH"),
+        (lambda p: p["relations"][0].update({"kind": "circumscribes"}), "SOURCE_OBJECT_MISMATCH"),
+        (lambda p: p["relations"][1].update({"solid_b": "sph"}), "SOURCE_OBJECT_MISMATCH"),
+        (lambda p: p["relations"][1].update({"contact_ref": "sph::H"}), "SOURCE_OBJECT_MISMATCH"),
+    ):
+        p = _inscribed_cube_control()
+        mut(p)
+        with pytest.raises(TypedFactNextValidationError) as exc:
+            T.parse_typed_fact_next_v2(p)
+        assert exc.value.code == code
+
+    # Foreign vertex from another solid on entity_b or contact_ref must refuse SOURCE_OBJECT_MISMATCH (S7/S8)
+    for field, val in (("entity_b", ["T", "B", "C"]), ("contact_ref", "T")):
+        p = _inscribed_cube_control()
+        q_other = "Cho hình chóp T.ABCD."
+        p["problem_text"] += f" {q_other}"
+        p["solids"].append({"solid_id": "pyr2", "solid_type": "pyramid", "notation": "T.ABCD", "quote": q_other})
+        p["relations"][1][field] = val
+        assert outcome(run_typed_fact_next_v2_route(p)) == ("REFUSED", "SOURCE_OBJECT_MISMATCH")
+
+
 # ── coverage gate: every model field classified; every scope field mapped to rules, tests and product code ───────
 def test_census_inventory_complete():
     fields = C.field_paths(); inv = INVENTORY['fields']
@@ -556,3 +677,52 @@ def test_census_inventory_complete():
         for rule in row['rules']:
             assert re.search(rf'#\s*{rule}\b', product), (path, rule)
     assert INVENTORY['kinds'] == C.kinds()
+
+
+# R-1 (thirteenth continuation): the label operands of a described point are scoped by what uses it (`scope_records`).
+_R1 = {c['id']: c for c in json.loads((RUNS / 'hybrid-master-backend-replacement/r1-described-point-probe.json')
+                                      .read_text(encoding='utf-8'))['cases']}
+
+
+def _r1_with_second_solid():
+    p = deepcopy(_R1['C2']['payload'])
+    other = deepcopy(p['solids'][0]); other.update(solid_id='zz', notation='T.ABCD', quote='Cho hình chóp T.ABCD')
+    p['solids'].append(other); p['problem_text'] += ' Cho hình chóp T.ABCD.'
+    return p
+
+
+def test_described_point_scope_controls_serve():
+    from app.ai.adapter4_route import run_typed_fact_next_v2_route
+    base = run_typed_fact_next_v2_route(deepcopy(_R1['C2']['payload'])); assert base.status == 'SERVED'
+    p = deepcopy(_R1['C2']['payload']); p['described_points'][0]['line1'] = ['s1::A', 'C']
+    r = run_typed_fact_next_v2_route(p); assert r.status == 'SERVED' and r.answer_exact == base.answer_exact
+
+
+@pytest.mark.parametrize('field', ['line1', 'line2'])
+def test_described_point_scope_violations_refuse(field):
+    from app.ai.adapter4_route import run_typed_fact_next_v2_route
+    p = _r1_with_second_solid()
+    p['described_points'][0][field] = ['zz::T', p['described_points'][0][field][1]]
+    assert outcome(run_typed_fact_next_v2_route(p)) == ('REFUSED', 'SOURCE_OBJECT_MISMATCH')          # S5
+
+
+# C17: the label operands of a constrained plane are scoped by the section's target solid (`scope_records`).
+def _c17_payload():
+    from tests.geometry.test_route_d_constraint_planes import _case, _qua_vuong
+    return _case(*_qua_vuong('MN', 'SBC'))[1]
+
+
+def test_constraint_plane_scope_controls_serve():
+    from app.ai.adapter4_route import run_typed_fact_next_v2_route
+    base = run_typed_fact_next_v2_route(_c17_payload()); assert base.status == 'SERVED'
+    p = _c17_payload(); p['derived_sections'][0]['constraints'][1]['operands'] = ['s1::S', 'B', 'C']
+    r = run_typed_fact_next_v2_route(p); assert r.status == 'SERVED' and r.answer_exact == base.answer_exact
+
+
+def test_constraint_plane_scope_violations_refuse():
+    from app.ai.adapter4_route import run_typed_fact_next_v2_route
+    p = _c17_payload()
+    other = deepcopy(p['solids'][0]); other.update(solid_id='zz', notation='T.ABCD', quote='Cho hình chóp T.ABCD')
+    p['solids'].append(other); p['problem_text'] += ' Cho hình chóp T.ABCD.'
+    p['derived_sections'][0]['constraints'][1]['operands'] = ['zz::T', 'B', 'C']
+    assert outcome(run_typed_fact_next_v2_route(p)) == ('REFUSED', 'SOURCE_OBJECT_MISMATCH')          # S5

@@ -1,0 +1,1214 @@
+{
+  "schema": "hybrid-product-e2e-browser-receipt/1",
+  "classification": "REAL_BROWSER_AND_UVICORN_NETWORK_E2E_STAGING_REPLAY",
+  "live_provider_calls": 0,
+  "browser": "Playwright Chromium (headless)",
+  "frontend_bundle": {
+    "served_from": "frontend/dist",
+    "index_html_sha256": "72bed23a4e9aa89f96a115c6733684ed9decb82297ab1a1f3b77fd0cc0beb506"
+  },
+  "runtime_modes_verified": {
+    "staging_replay": {
+      "mode": "staging-replay",
+      "enabled": true,
+      "simulated": true,
+      "extraction_mode": "REPLAY_STAGING_SIMULATED",
+      "registry_version": "geometry-functions/31",
+      "planner_version": "geometry-fact-planner/26",
+      "engine_version": "geometry-function-engine/23",
+      "adapter_version": "hybrid-simulation-adapter/4",
+      "envelope_version": "hybrid-route-d-simulation/4",
+      "response_contract": "typed-fact-next/2",
+      "extraction_surface": "38652789a504f6ee2c95a38a0a68e7a3b65e71a5ccbaadd771bdd611a04ec0cd",
+      "gemini_model": "gemini-2.5-flash",
+      "allow_live_ai": false,
+      "replay_corpus_configured": true
+    },
+    "live_disabled_gate": {
+      "mode": "live",
+      "enabled": true,
+      "simulated": false,
+      "extraction_mode": "LIVE_GEMINI_STRUCTURED",
+      "registry_version": "geometry-functions/31",
+      "planner_version": "geometry-fact-planner/26",
+      "engine_version": "geometry-function-engine/23",
+      "adapter_version": "hybrid-simulation-adapter/4",
+      "envelope_version": "hybrid-route-d-simulation/4",
+      "response_contract": "typed-fact-next/2",
+      "extraction_surface": "38652789a504f6ee2c95a38a0a68e7a3b65e71a5ccbaadd771bdd611a04ec0cd",
+      "gemini_model": "gemini-2.5-flash",
+      "allow_live_ai": false,
+      "replay_corpus_configured": false
+    },
+    "rollback_off": {
+      "mode": "off",
+      "enabled": false
+    }
+  },
+  "page_errors": 0,
+  "console_errors": 0,
+  "student_mode_checks": [
+    {
+      "case_id": "S2-B-I07_ve_va_tinh",
+      "initial_step": "Bước 1/4",
+      "final_step": "Bước 4/4",
+      "steps_walked": 3,
+      "components_inspected": "25/25",
+      "stages_checked": [
+        "load",
+        "steps",
+        "steps_panel",
+        "show_all",
+        "quantity_inspector",
+        "component_inspector"
+      ],
+      "answers_hidden": [
+        "8/3"
+      ],
+      "problem_statement_verbatim": true,
+      "autoplay": false,
+      "analyze_calls_during_interaction": 0,
+      "detector_positive_control": "1/1",
+      "detector_blind_values": [],
+      "mode_b_rendered_values": [
+        "8/3"
+      ],
+      "figure_scale_values": []
+    },
+    {
+      "case_id": "cr.shared_base_pyramids_plus_inscribed_sphere",
+      "initial_step": "Bước 1/9",
+      "final_step": "Bước 9/9",
+      "steps_walked": 8,
+      "components_inspected": "50/50",
+      "stages_checked": [
+        "load",
+        "steps",
+        "steps_panel",
+        "show_all",
+        "quantity_inspector",
+        "component_inspector"
+      ],
+      "answers_hidden": [
+        "72",
+        "9π"
+      ],
+      "problem_statement_verbatim": true,
+      "autoplay": false,
+      "analyze_calls_during_interaction": 0,
+      "detector_positive_control": "2/2",
+      "detector_blind_values": [],
+      "mode_b_rendered_values": [
+        "9π",
+        "72"
+      ],
+      "figure_scale_values": []
+    },
+    {
+      "case_id": "cone.par.S",
+      "initial_step": "Bước 1/4",
+      "final_step": "Bước 4/4",
+      "steps_walked": 3,
+      "components_inspected": "7/7",
+      "stages_checked": [
+        "load",
+        "steps",
+        "steps_panel",
+        "quantity_inspector",
+        "component_inspector"
+      ],
+      "answers_hidden": [
+        "81π/16"
+      ],
+      "problem_statement_verbatim": true,
+      "autoplay": false,
+      "analyze_calls_during_interaction": 0,
+      "detector_positive_control": "1/1",
+      "detector_blind_values": [],
+      "mode_b_rendered_values": [
+        "81π/16"
+      ],
+      "figure_scale_values": []
+    },
+    {
+      "case_id": "S2-B-P07_shared_intermediate_two_goals",
+      "initial_step": "Bước 1/6",
+      "final_step": "Bước 6/6",
+      "steps_walked": 5,
+      "components_inspected": "28/28",
+      "stages_checked": [
+        "load",
+        "steps",
+        "steps_panel",
+        "show_all",
+        "quantity_inspector",
+        "component_inspector"
+      ],
+      "answers_hidden": [
+        "√3",
+        "1"
+      ],
+      "problem_statement_verbatim": true,
+      "autoplay": false,
+      "analyze_calls_during_interaction": 0,
+      "detector_positive_control": "2/2",
+      "detector_blind_values": [],
+      "mode_b_rendered_values": [
+        "1",
+        "√3"
+      ],
+      "figure_scale_values": []
+    },
+    {
+      "case_id": "K-A01",
+      "initial_step": "Bước 1/15",
+      "final_step": "Bước 15/15",
+      "steps_walked": 14,
+      "components_inspected": "38/38",
+      "stages_checked": [
+        "load",
+        "steps",
+        "steps_panel",
+        "show_all",
+        "quantity_inspector",
+        "component_inspector"
+      ],
+      "answers_hidden": [
+        "3√2/2"
+      ],
+      "problem_statement_verbatim": true,
+      "autoplay": false,
+      "analyze_calls_during_interaction": 0,
+      "detector_positive_control": "1/1",
+      "detector_blind_values": [],
+      "mode_b_rendered_values": [
+        "3√2/2"
+      ],
+      "figure_scale_values": []
+    },
+    {
+      "case_id": "R1-B01",
+      "initial_step": "Bước 1/14",
+      "final_step": "Bước 14/14",
+      "steps_walked": 13,
+      "components_inspected": "38/38",
+      "stages_checked": [
+        "load",
+        "steps",
+        "steps_panel",
+        "show_all",
+        "quantity_inspector",
+        "component_inspector"
+      ],
+      "answers_hidden": [
+        "2304/625"
+      ],
+      "problem_statement_verbatim": true,
+      "autoplay": false,
+      "analyze_calls_during_interaction": 0,
+      "detector_positive_control": "1/1",
+      "detector_blind_values": [],
+      "mode_b_rendered_values": [
+        "2304/625"
+      ],
+      "figure_scale_values": []
+    },
+    {
+      "case_id": "S2-B-I07_ve_va_tinh",
+      "initial_step": "Bước 1/4",
+      "final_step": "Bước 4/4",
+      "steps_walked": 3,
+      "components_inspected": "25/25",
+      "stages_checked": [
+        "load",
+        "steps",
+        "steps_panel",
+        "show_all",
+        "quantity_inspector",
+        "component_inspector"
+      ],
+      "answers_hidden": [
+        "8/3"
+      ],
+      "problem_statement_verbatim": true,
+      "autoplay": false,
+      "analyze_calls_during_interaction": 0,
+      "detector_positive_control": "1/1",
+      "detector_blind_values": [],
+      "mode_b_rendered_values": [
+        "8/3"
+      ],
+      "figure_scale_values": []
+    },
+    {
+      "case_id": "cr.cube_2.dual_spheres.multi_goal",
+      "initial_step": "Bước 1/17",
+      "final_step": "Bước 17/17",
+      "steps_walked": 16,
+      "components_inspected": "46/46",
+      "stages_checked": [
+        "load",
+        "steps",
+        "steps_panel",
+        "show_all",
+        "quantity_inspector",
+        "component_inspector"
+      ],
+      "answers_hidden": [
+        "12π",
+        "4π",
+        "8"
+      ],
+      "problem_statement_verbatim": true,
+      "autoplay": false,
+      "analyze_calls_during_interaction": 0,
+      "detector_positive_control": "3/3",
+      "detector_blind_values": [],
+      "mode_b_rendered_values": [
+        "12π",
+        "4π",
+        "8"
+      ],
+      "figure_scale_values": []
+    },
+    {
+      "case_id": "cr.tetra_asym_132.inscribed.named_center",
+      "initial_step": "Bước 1/7",
+      "final_step": "Bước 7/7",
+      "steps_walked": 6,
+      "components_inspected": "25/25",
+      "stages_checked": [
+        "load",
+        "steps",
+        "steps_panel",
+        "show_all",
+        "quantity_inspector",
+        "component_inspector"
+      ],
+      "answers_hidden": [
+        "√3/3",
+        "1/3"
+      ],
+      "problem_statement_verbatim": true,
+      "autoplay": false,
+      "analyze_calls_during_interaction": 0,
+      "detector_positive_control": "2/2",
+      "detector_blind_values": [],
+      "mode_b_rendered_values": [
+        "√3/3",
+        "1/3"
+      ],
+      "figure_scale_values": []
+    },
+    {
+      "case_id": "S2-B-I07_ve_va_tinh",
+      "initial_step": "Bước 1/4",
+      "final_step": "Bước 4/4",
+      "steps_walked": 3,
+      "components_inspected": "25/25",
+      "stages_checked": [
+        "load",
+        "steps",
+        "steps_panel",
+        "show_all",
+        "quantity_inspector",
+        "component_inspector"
+      ],
+      "answers_hidden": [
+        "8/3"
+      ],
+      "problem_statement_verbatim": true,
+      "autoplay": false,
+      "analyze_calls_during_interaction": 0,
+      "detector_positive_control": "1/1",
+      "detector_blind_values": [],
+      "mode_b_rendered_values": [
+        "8/3"
+      ],
+      "figure_scale_values": []
+    },
+    {
+      "case_id": "S2-F-S02_vuong_goc_day",
+      "initial_step": "Bước 1/4",
+      "final_step": "Bước 4/4",
+      "steps_walked": 3,
+      "components_inspected": "25/25",
+      "stages_checked": [
+        "load",
+        "steps",
+        "steps_panel",
+        "show_all",
+        "quantity_inspector",
+        "component_inspector"
+      ],
+      "answers_hidden": [
+        "8/3"
+      ],
+      "problem_statement_verbatim": true,
+      "autoplay": false,
+      "analyze_calls_during_interaction": 0,
+      "detector_positive_control": "1/1",
+      "detector_blind_values": [],
+      "mode_b_rendered_values": [
+        "8/3"
+      ],
+      "figure_scale_values": []
+    },
+    {
+      "case_id": "S2-B-A03_control_with_dimensions",
+      "initial_step": "Bước 1/7",
+      "final_step": "Bước 7/7",
+      "steps_walked": 6,
+      "components_inspected": "29/29",
+      "stages_checked": [
+        "load",
+        "steps",
+        "steps_panel",
+        "show_all",
+        "quantity_inspector",
+        "component_inspector"
+      ],
+      "answers_hidden": [
+        "√3"
+      ],
+      "problem_statement_verbatim": true,
+      "autoplay": false,
+      "analyze_calls_during_interaction": 0,
+      "detector_positive_control": "1/1",
+      "detector_blind_values": [],
+      "mode_b_rendered_values": [
+        "√3"
+      ],
+      "figure_scale_values": []
+    },
+    {
+      "case_id": "cr.prism_345_h2.inscribed.area",
+      "initial_step": "Bước 1/8",
+      "final_step": "Bước 8/8",
+      "steps_walked": 7,
+      "components_inspected": "31/31",
+      "stages_checked": [
+        "load",
+        "steps",
+        "steps_panel",
+        "quantity_inspector",
+        "component_inspector"
+      ],
+      "answers_hidden": [
+        "4π"
+      ],
+      "problem_statement_verbatim": true,
+      "autoplay": false,
+      "analyze_calls_during_interaction": 0,
+      "detector_positive_control": "1/1",
+      "detector_blind_values": [],
+      "mode_b_rendered_values": [
+        "4π"
+      ],
+      "figure_scale_values": []
+    },
+    {
+      "case_id": "S2-F-F05_kc_mp_shorthand",
+      "initial_step": "Bước 1/5",
+      "final_step": "Bước 5/5",
+      "steps_walked": 4,
+      "components_inspected": "26/26",
+      "stages_checked": [
+        "load",
+        "steps",
+        "steps_panel",
+        "show_all",
+        "quantity_inspector",
+        "component_inspector"
+      ],
+      "answers_hidden": [
+        "√2"
+      ],
+      "problem_statement_verbatim": true,
+      "autoplay": false,
+      "analyze_calls_during_interaction": 0,
+      "detector_positive_control": "1/1",
+      "detector_blind_values": [],
+      "mode_b_rendered_values": [
+        "√2"
+      ],
+      "figure_scale_values": []
+    },
+    {
+      "case_id": "S2-F-F06_dt_mp_shorthand",
+      "initial_step": "Bước 1/6",
+      "final_step": "Bước 6/6",
+      "steps_walked": 5,
+      "components_inspected": "27/27",
+      "stages_checked": [
+        "load",
+        "steps",
+        "steps_panel",
+        "quantity_inspector",
+        "component_inspector"
+      ],
+      "answers_hidden": [
+        "2/3"
+      ],
+      "problem_statement_verbatim": true,
+      "autoplay": false,
+      "analyze_calls_during_interaction": 0,
+      "detector_positive_control": "1/1",
+      "detector_blind_values": [],
+      "mode_b_rendered_values": [
+        "2/3"
+      ],
+      "figure_scale_values": []
+    },
+    {
+      "case_id": "R1-D01",
+      "initial_step": "Bước 1/6",
+      "final_step": "Bước 6/6",
+      "steps_walked": 5,
+      "components_inspected": "28/28",
+      "stages_checked": [
+        "load",
+        "steps",
+        "steps_panel",
+        "show_all",
+        "quantity_inspector",
+        "component_inspector"
+      ],
+      "answers_hidden": [
+        "√41/2"
+      ],
+      "problem_statement_verbatim": true,
+      "autoplay": false,
+      "analyze_calls_during_interaction": 0,
+      "detector_positive_control": "1/1",
+      "detector_blind_values": [],
+      "mode_b_rendered_values": [
+        "√41/2"
+      ],
+      "figure_scale_values": []
+    },
+    {
+      "case_id": "R1-A05",
+      "initial_step": "Bước 1/6",
+      "final_step": "Bước 6/6",
+      "steps_walked": 5,
+      "components_inspected": "27/27",
+      "stages_checked": [
+        "load",
+        "steps",
+        "steps_panel",
+        "show_all",
+        "quantity_inspector",
+        "component_inspector"
+      ],
+      "answers_hidden": [
+        "√6"
+      ],
+      "problem_statement_verbatim": true,
+      "autoplay": false,
+      "analyze_calls_during_interaction": 0,
+      "detector_positive_control": "1/1",
+      "detector_blind_values": [],
+      "mode_b_rendered_values": [
+        "√6"
+      ],
+      "figure_scale_values": []
+    },
+    {
+      "case_id": "CORPUS-DEV10-prism-area",
+      "initial_step": "Bước 1/17",
+      "final_step": "Bước 17/17",
+      "steps_walked": 16,
+      "components_inspected": "43/43",
+      "stages_checked": [
+        "load",
+        "steps",
+        "steps_panel",
+        "show_all",
+        "quantity_inspector",
+        "component_inspector"
+      ],
+      "answers_hidden": [
+        "a²√3/4",
+        "√3/4"
+      ],
+      "problem_statement_verbatim": true,
+      "autoplay": false,
+      "analyze_calls_during_interaction": 0,
+      "detector_positive_control": "1/1",
+      "detector_blind_values": [],
+      "mode_b_rendered_values": [
+        "a²√3/4"
+      ],
+      "figure_scale_values": [
+        "√3/4"
+      ]
+    },
+    {
+      "case_id": "PARTIAL-1of2-construct",
+      "initial_step": "Bước 1/17",
+      "final_step": "Bước 17/17",
+      "steps_walked": 16,
+      "components_inspected": "46/46",
+      "stages_checked": [
+        "load",
+        "steps",
+        "steps_panel",
+        "quantity_inspector",
+        "component_inspector"
+      ],
+      "answers_hidden": [],
+      "problem_statement_verbatim": true,
+      "autoplay": false,
+      "analyze_calls_during_interaction": 0,
+      "detector_positive_control": "0/0",
+      "detector_blind_values": [],
+      "mode_b_rendered_values": [],
+      "figure_scale_values": []
+    },
+    {
+      "case_id": "R1-C02",
+      "initial_step": "Bước 1/15",
+      "final_step": "Bước 15/15",
+      "steps_walked": 14,
+      "components_inspected": "39/39",
+      "stages_checked": [
+        "load",
+        "steps",
+        "steps_panel",
+        "show_all",
+        "quantity_inspector",
+        "component_inspector"
+      ],
+      "answers_hidden": [
+        "3/2"
+      ],
+      "problem_statement_verbatim": true,
+      "autoplay": false,
+      "analyze_calls_during_interaction": 0,
+      "detector_positive_control": "1/1",
+      "detector_blind_values": [],
+      "mode_b_rendered_values": [
+        "3/2"
+      ],
+      "figure_scale_values": []
+    },
+    {
+      "case_id": "sph.V",
+      "initial_step": "Bước 1/2",
+      "final_step": "Bước 2/2",
+      "steps_walked": 1,
+      "components_inspected": "4/4",
+      "stages_checked": [
+        "load",
+        "steps",
+        "steps_panel",
+        "quantity_inspector",
+        "component_inspector"
+      ],
+      "answers_hidden": [
+        "36π"
+      ],
+      "problem_statement_verbatim": true,
+      "autoplay": false,
+      "analyze_calls_during_interaction": 0,
+      "detector_positive_control": "1/1",
+      "detector_blind_values": [],
+      "mode_b_rendered_values": [
+        "36π"
+      ],
+      "figure_scale_values": []
+    },
+    {
+      "case_id": "cyl.Stp",
+      "initial_step": "Bước 1/4",
+      "final_step": "Bước 4/4",
+      "steps_walked": 3,
+      "components_inspected": "9/9",
+      "stages_checked": [
+        "load",
+        "steps",
+        "steps_panel",
+        "quantity_inspector",
+        "component_inspector"
+      ],
+      "answers_hidden": [
+        "48π"
+      ],
+      "problem_statement_verbatim": true,
+      "autoplay": false,
+      "analyze_calls_during_interaction": 0,
+      "detector_positive_control": "1/1",
+      "detector_blind_values": [],
+      "mode_b_rendered_values": [
+        "48π"
+      ],
+      "figure_scale_values": []
+    },
+    {
+      "case_id": "coneR.Sxq",
+      "initial_step": "Bước 1/2",
+      "final_step": "Bước 2/2",
+      "steps_walked": 1,
+      "components_inspected": "5/5",
+      "stages_checked": [
+        "load",
+        "steps",
+        "steps_panel",
+        "quantity_inspector",
+        "component_inspector"
+      ],
+      "answers_hidden": [
+        "4π√2"
+      ],
+      "problem_statement_verbatim": true,
+      "autoplay": false,
+      "analyze_calls_during_interaction": 0,
+      "detector_positive_control": "1/1",
+      "detector_blind_values": [],
+      "mode_b_rendered_values": [
+        "4π√2"
+      ],
+      "figure_scale_values": []
+    },
+    {
+      "case_id": "cone.par.S",
+      "initial_step": "Bước 1/4",
+      "final_step": "Bước 4/4",
+      "steps_walked": 3,
+      "components_inspected": "7/7",
+      "stages_checked": [
+        "load",
+        "steps",
+        "steps_panel",
+        "quantity_inspector",
+        "component_inspector"
+      ],
+      "answers_hidden": [
+        "81π/16"
+      ],
+      "problem_statement_verbatim": true,
+      "autoplay": false,
+      "analyze_calls_during_interaction": 0,
+      "detector_positive_control": "1/1",
+      "detector_blind_values": [],
+      "mode_b_rendered_values": [
+        "81π/16"
+      ],
+      "figure_scale_values": []
+    },
+    {
+      "case_id": "cr.shared_base_pyramids_plus_inscribed_sphere",
+      "initial_step": "Bước 1/9",
+      "final_step": "Bước 9/9",
+      "steps_walked": 8,
+      "components_inspected": "50/50",
+      "stages_checked": [
+        "load",
+        "steps",
+        "steps_panel",
+        "show_all",
+        "quantity_inspector",
+        "component_inspector"
+      ],
+      "answers_hidden": [
+        "9π",
+        "72"
+      ],
+      "problem_statement_verbatim": true,
+      "autoplay": false,
+      "analyze_calls_during_interaction": 0,
+      "detector_positive_control": "2/2",
+      "detector_blind_values": [],
+      "mode_b_rendered_values": [
+        "9π",
+        "72"
+      ],
+      "figure_scale_values": []
+    },
+    {
+      "case_id": "cr.cube_section_plus_inscribed_sphere",
+      "initial_step": "Bước 1/17",
+      "final_step": "Bước 17/17",
+      "steps_walked": 16,
+      "components_inspected": "51/51",
+      "stages_checked": [
+        "load",
+        "steps",
+        "steps_panel",
+        "show_all",
+        "quantity_inspector",
+        "component_inspector"
+      ],
+      "answers_hidden": [
+        "4π/3",
+        "4"
+      ],
+      "problem_statement_verbatim": true,
+      "autoplay": false,
+      "analyze_calls_during_interaction": 0,
+      "detector_positive_control": "1/2",
+      "detector_blind_values": [
+        "4"
+      ],
+      "mode_b_rendered_values": [
+        "4π/3",
+        "4"
+      ],
+      "figure_scale_values": []
+    },
+    {
+      "case_id": "cone.residual",
+      "initial_step": "Bước 1/5",
+      "final_step": "Bước 5/5",
+      "steps_walked": 4,
+      "components_inspected": "12/12",
+      "stages_checked": [
+        "load",
+        "steps",
+        "steps_panel",
+        "quantity_inspector",
+        "component_inspector"
+      ],
+      "answers_hidden": [
+        "21π/2"
+      ],
+      "problem_statement_verbatim": true,
+      "autoplay": false,
+      "analyze_calls_during_interaction": 0,
+      "detector_positive_control": "1/1",
+      "detector_blind_values": [],
+      "mode_b_rendered_values": [
+        "21π/2"
+      ],
+      "figure_scale_values": []
+    },
+    {
+      "case_id": "R1-A01",
+      "initial_step": "Bước 1/6",
+      "final_step": "Bước 6/6",
+      "steps_walked": 5,
+      "components_inspected": "27/27",
+      "stages_checked": [
+        "load",
+        "steps",
+        "steps_panel",
+        "show_all",
+        "quantity_inspector",
+        "component_inspector"
+      ],
+      "answers_hidden": [
+        "√2"
+      ],
+      "problem_statement_verbatim": true,
+      "autoplay": false,
+      "analyze_calls_during_interaction": 0,
+      "detector_positive_control": "1/1",
+      "detector_blind_values": [],
+      "mode_b_rendered_values": [
+        "√2"
+      ],
+      "figure_scale_values": []
+    },
+    {
+      "case_id": "R1-A02",
+      "initial_step": "Bước 1/8",
+      "final_step": "Bước 8/8",
+      "steps_walked": 7,
+      "components_inspected": "29/29",
+      "stages_checked": [
+        "load",
+        "steps",
+        "steps_panel",
+        "show_all",
+        "quantity_inspector",
+        "component_inspector"
+      ],
+      "answers_hidden": [
+        "2√6/3"
+      ],
+      "problem_statement_verbatim": true,
+      "autoplay": false,
+      "analyze_calls_during_interaction": 0,
+      "detector_positive_control": "1/1",
+      "detector_blind_values": [],
+      "mode_b_rendered_values": [
+        "2√6/3"
+      ],
+      "figure_scale_values": []
+    },
+    {
+      "case_id": "K-A01",
+      "initial_step": "Bước 1/15",
+      "final_step": "Bước 15/15",
+      "steps_walked": 14,
+      "components_inspected": "38/38",
+      "stages_checked": [
+        "load",
+        "steps",
+        "steps_panel",
+        "show_all",
+        "quantity_inspector",
+        "component_inspector"
+      ],
+      "answers_hidden": [
+        "3√2/2"
+      ],
+      "problem_statement_verbatim": true,
+      "autoplay": false,
+      "analyze_calls_during_interaction": 0,
+      "detector_positive_control": "1/1",
+      "detector_blind_values": [],
+      "mode_b_rendered_values": [
+        "3√2/2"
+      ],
+      "figure_scale_values": []
+    },
+    {
+      "case_id": "K-A03",
+      "initial_step": "Bước 1/13",
+      "final_step": "Bước 13/13",
+      "steps_walked": 12,
+      "components_inspected": "37/37",
+      "stages_checked": [
+        "load",
+        "steps",
+        "steps_panel",
+        "show_all",
+        "quantity_inspector",
+        "component_inspector"
+      ],
+      "answers_hidden": [
+        "√61"
+      ],
+      "problem_statement_verbatim": true,
+      "autoplay": false,
+      "analyze_calls_during_interaction": 0,
+      "detector_positive_control": "1/1",
+      "detector_blind_values": [],
+      "mode_b_rendered_values": [
+        "√61"
+      ],
+      "figure_scale_values": []
+    },
+    {
+      "case_id": "R1-B01",
+      "initial_step": "Bước 1/14",
+      "final_step": "Bước 14/14",
+      "steps_walked": 13,
+      "components_inspected": "38/38",
+      "stages_checked": [
+        "load",
+        "steps",
+        "steps_panel",
+        "show_all",
+        "quantity_inspector",
+        "component_inspector"
+      ],
+      "answers_hidden": [
+        "2304/625"
+      ],
+      "problem_statement_verbatim": true,
+      "autoplay": false,
+      "analyze_calls_during_interaction": 0,
+      "detector_positive_control": "1/1",
+      "detector_blind_values": [],
+      "mode_b_rendered_values": [
+        "2304/625"
+      ],
+      "figure_scale_values": []
+    },
+    {
+      "case_id": "K-C01",
+      "initial_step": "Bước 1/14",
+      "final_step": "Bước 14/14",
+      "steps_walked": 13,
+      "components_inspected": "35/35",
+      "stages_checked": [
+        "load",
+        "steps",
+        "steps_panel",
+        "show_all",
+        "quantity_inspector",
+        "component_inspector"
+      ],
+      "answers_hidden": [
+        "1"
+      ],
+      "problem_statement_verbatim": true,
+      "autoplay": false,
+      "analyze_calls_during_interaction": 0,
+      "detector_positive_control": "1/1",
+      "detector_blind_values": [],
+      "mode_b_rendered_values": [
+        "1"
+      ],
+      "figure_scale_values": []
+    },
+    {
+      "case_id": "K-C02",
+      "initial_step": "Bước 1/17",
+      "final_step": "Bước 17/17",
+      "steps_walked": 16,
+      "components_inspected": "40/40",
+      "stages_checked": [
+        "load",
+        "steps",
+        "steps_panel",
+        "show_all",
+        "quantity_inspector",
+        "component_inspector"
+      ],
+      "answers_hidden": [
+        "1/4"
+      ],
+      "problem_statement_verbatim": true,
+      "autoplay": false,
+      "analyze_calls_during_interaction": 0,
+      "detector_positive_control": "1/1",
+      "detector_blind_values": [],
+      "mode_b_rendered_values": [
+        "1/4"
+      ],
+      "figure_scale_values": []
+    },
+    {
+      "case_id": "S2-B-P07_shared_intermediate_two_goals",
+      "initial_step": "Bước 1/6",
+      "final_step": "Bước 6/6",
+      "steps_walked": 5,
+      "components_inspected": "28/28",
+      "stages_checked": [
+        "load",
+        "steps",
+        "steps_panel",
+        "show_all",
+        "quantity_inspector",
+        "component_inspector"
+      ],
+      "answers_hidden": [
+        "1",
+        "√3"
+      ],
+      "problem_statement_verbatim": true,
+      "autoplay": false,
+      "analyze_calls_during_interaction": 0,
+      "detector_positive_control": "2/2",
+      "detector_blind_values": [],
+      "mode_b_rendered_values": [
+        "1",
+        "√3"
+      ],
+      "figure_scale_values": []
+    },
+    {
+      "case_id": "S2-B-P09_student_chain",
+      "initial_step": "Bước 1/5",
+      "final_step": "Bước 5/5",
+      "steps_walked": 4,
+      "components_inspected": "26/26",
+      "stages_checked": [
+        "load",
+        "steps",
+        "steps_panel",
+        "show_all",
+        "quantity_inspector",
+        "component_inspector"
+      ],
+      "answers_hidden": [
+        "√3"
+      ],
+      "problem_statement_verbatim": true,
+      "autoplay": false,
+      "analyze_calls_during_interaction": 0,
+      "detector_positive_control": "1/1",
+      "detector_blind_values": [],
+      "mode_b_rendered_values": [
+        "√3"
+      ],
+      "figure_scale_values": []
+    },
+    {
+      "case_id": "K-C03",
+      "initial_step": "Bước 1/16",
+      "final_step": "Bước 16/16",
+      "steps_walked": 15,
+      "components_inspected": "39/39",
+      "stages_checked": [
+        "load",
+        "steps",
+        "steps_panel",
+        "show_all",
+        "quantity_inspector",
+        "component_inspector"
+      ],
+      "answers_hidden": [
+        "√66/4"
+      ],
+      "problem_statement_verbatim": true,
+      "autoplay": false,
+      "analyze_calls_during_interaction": 0,
+      "detector_positive_control": "1/1",
+      "detector_blind_values": [],
+      "mode_b_rendered_values": [
+        "√66/4"
+      ],
+      "figure_scale_values": []
+    }
+  ],
+  "flows_total": 7,
+  "flows_passed": 7,
+  "flows": [
+    {
+      "flow_id": "flow_1_supported_polyhedral",
+      "case_ids": [
+        "S2-B-I07_ve_va_tinh"
+      ],
+      "http_status": 200,
+      "answers_verified": [
+        "8/3"
+      ],
+      "step_progression": {
+        "before": "Bước 1/4",
+        "after": "Bước 2/4"
+      },
+      "canvas_box": {
+        "width": 1391,
+        "height": 717
+      },
+      "passed": true
+    },
+    {
+      "flow_id": "flow_2_curved_and_composite_geometry",
+      "case_ids": [
+        "cr.shared_base_pyramids_plus_inscribed_sphere",
+        "cone.par.S"
+      ],
+      "http_status": 200,
+      "answers_verified": [
+        "72",
+        "9π",
+        "81π/16"
+      ],
+      "canvas_boxes": [
+        {
+          "width": 1391,
+          "height": 717
+        },
+        {
+          "width": 1391,
+          "height": 717
+        }
+      ],
+      "passed": true
+    },
+    {
+      "flow_id": "flow_3_multi_function_composition",
+      "case_ids": [
+        "S2-B-P07_shared_intermediate_two_goals"
+      ],
+      "http_status": 200,
+      "answers_verified": [
+        "√3",
+        "1"
+      ],
+      "step_progression": {
+        "before": "Bước 1/6",
+        "after": "Bước 2/6"
+      },
+      "canvas_box": {
+        "width": 1391,
+        "height": 717
+      },
+      "passed": true
+    },
+    {
+      "flow_id": "flow_4_constrained_plane_and_orthocenter",
+      "case_ids": [
+        "K-A01",
+        "R1-B01"
+      ],
+      "http_status": 200,
+      "section_certificate_category": "ENGINE_DERIVED_SECTION",
+      "answers_verified": [
+        "3√2/2",
+        "2304/625"
+      ],
+      "canvas_boxes": [
+        {
+          "width": 1391,
+          "height": 717
+        },
+        {
+          "width": 1391,
+          "height": 717
+        }
+      ],
+      "passed": true
+    },
+    {
+      "flow_id": "flow_5_ambiguous_and_contradictory_refusal",
+      "case_ids": [
+        "S2-C-A01_goc_chieu",
+        "S2-D-D03_contradictory_length"
+      ],
+      "http_status": 200,
+      "clarification_question_rendered": "Trong “S là góc chiếu của hình lăng trụ xiên”, bạn muốn S là hình chiếu của điểm nào và lên đường thẳng hoặc mặt phẳng nào?",
+      "contradictory_failure_category": "geometry_generation_failed",
+      "zero_canvas_on_refusal": true,
+      "passed": true
+    },
+    {
+      "flow_id": "flow_6_infrastructure_failure_and_recovery",
+      "infra_http_status": 503,
+      "infra_reason_code": "LIVE_AI_DISABLED",
+      "infra_banner_text": "Chế độ trích xuất trực tiếp (live AI) đang tắt trên máy chủ. Quản trị viên cần bật tường minh trước khi gửi đề.",
+      "secret_leaked": false,
+      "traceback_leaked": false,
+      "mislabeled_as_math_refusal": false,
+      "recovered_to_served_canvas": {
+        "width": 1391,
+        "height": 717
+      },
+      "rollback_off_mode_verified": true,
+      "passed": true
+    },
+    {
+      "flow_id": "flow_7_pedagogical_display_contract_all_served",
+      "cases_total": 30,
+      "perpendicular_witness_objects": {
+        "cr.cube_2.dual_spheres.multi_goal": 1,
+        "cr.tetra_asym_132.inscribed.named_center": 2,
+        "S2-B-I07_ve_va_tinh": 1,
+        "S2-F-S02_vuong_goc_day": 1,
+        "S2-B-A03_control_with_dimensions": 1,
+        "cr.prism_345_h2.inscribed.area": 4,
+        "S2-F-F05_kc_mp_shorthand": 1,
+        "S2-F-F06_dt_mp_shorthand": 1,
+        "R1-D01": 3,
+        "R1-A05": 1,
+        "CORPUS-DEV10-prism-area": 3,
+        "PARTIAL-1of2-construct": 1,
+        "R1-C02": 1,
+        "sph.V": 0,
+        "cyl.Stp": 0,
+        "coneR.Sxq": 0,
+        "cone.par.S": 0,
+        "cr.shared_base_pyramids_plus_inscribed_sphere": 2,
+        "cr.cube_section_plus_inscribed_sphere": 5,
+        "cone.residual": 0,
+        "R1-A01": 1,
+        "R1-A02": 3,
+        "K-A01": 2,
+        "K-A03": 3,
+        "R1-B01": 2,
+        "K-C01": 3,
+        "K-C02": 3,
+        "S2-B-P07_shared_intermediate_two_goals": 1,
+        "S2-B-P09_student_chain": 1,
+        "K-C03": 3
+      },
+      "passed": true
+    }
+  ]
+}

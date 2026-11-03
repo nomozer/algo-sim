@@ -160,7 +160,9 @@ def test_all_12_served_hybrid_fixtures_certify_17_perpendicular_and_reject_24_ob
             elif obj["id"].startswith("canh_ben_"):
                 rejected_oblique_count += 1
 
-    assert certified_count == 17
+    # 18 = 17 + SH of H12 («Hình chiếu vuông góc của S lên (ABC) là trung điểm H»): engine /23 draws a stated ⊥ line that
+    # placed its end, so the given SH ⊥ (ABC) finally has a segment to certify (run `pedagogical-simulation-integration`).
+    assert certified_count == 18
     assert rejected_oblique_count == 24
 
 

@@ -134,7 +134,7 @@ def _vai_mat_cat(canh: dict[str, Any], auxiliary: tuple[dict, ...]) -> None:
     the planner read ("qua M và song song với (ABC)"), not its construction points ("qua M, H, H1": translates the source
     never names). Depends, coordinates and the construction itself are unchanged."""
     from app.simulation.geometry_functions.engine import ir_name
-    from app.simulation.geometry_functions.registry import MAT_HAI_DUONG, MAT_SONG_SONG, MAT_VUONG_DUONG
+    from app.simulation.geometry_functions.registry import MAT_HAI_DUONG, MAT_RANG_BUOC, MAT_SONG_SONG, MAT_VUONG_DUONG
 
     objs = {o["id"]: o for o in canh["objects"]}
     ky = lambda xs: "".join(xs).replace("'", "′")
@@ -163,63 +163,85 @@ def _vai_mat_cat(canh: dict[str, Any], auxiliary: tuple[dict, ...]) -> None:
         return f"({ky(nhan)})"
 
     for d in auxiliary:
-        mat = objs.get(f"mp_td_{ir_name(d['goal'])}") if d.get("goal") else None
-        if mat is None:
+        gids = [g for g in dict.fromkeys([d.get("goal"), *(d.get("targets") or ())]) if isinstance(g, str) and g]
+        mats = [objs[f"mp_td_{ir_name(g)}"] for g in gids if f"mp_td_{ir_name(g)}" in objs]
+        if not mats:
             continue
         if d.get("rule") == MAT_SONG_SONG:
             quan_he = f"song song với {ten_nguon(d, d['parallel_to'])}"
+            diem_qua = "điểm dựng phụ" if d.get("point_operand") else ky(d["point"])
         elif d.get("rule") == MAT_HAI_DUONG:
             quan_he = "song song với " + " và ".join(ky(x) for x in d["lines"])
+            diem_qua = "điểm dựng phụ" if d.get("point_operand") else ky(d["point"])
         elif d.get("rule") == MAT_VUONG_DUONG:
             quan_he = f"vuông góc với {ky(d['perpendicular_to'])}"
+            diem_qua = "điểm dựng phụ" if d.get("point_operand") else ky(d["point"])
+        elif d.get("rule") == MAT_RANG_BUOC:
+            quan_he = " và ".join(
+                f"song song với {ky(c['points'])}"
+                if c["kind"] == "parallel_to_line"
+                else f"vuông góc với {ten_nguon(d, c['points'])}"
+                for c in d.get("constraints") or ()
+            )
+            diem_qua = ", ".join(ky([p]) for p in (d["point"], *(d.get("contains") or ())))
         else:
             continue
-        mat["role"] = f"Mặt phẳng qua {ky(d['point'])} và {quan_he}"
-        # Review R1 (run `scene3d-section-inspector-c0`): the fallback explanation read "Dựng mặt phẳng (α) qua ba điểm
-        # M, H, H1." as if H, H1 defined (α). Source definition first, then the real construction and its auxiliaries.
-        ten = mat.get("display_label") or mat.get("label")
         phu = ", ".join(ky([x]) for x in d.get("labels") or ())
-        for e in canh["events"]:
-            if e.get("object") == mat["id"] and e.get("action") == "CREATE" and phu:
-                e["explanation"] = (f"Dựng {ten}: mặt phẳng qua {ky(d['point'])} và {quan_he}; dựng qua "
-                                    f"{ky(d['point'])} và các điểm dựng phụ {phu}.")
-        phu_mat = [x for x in (*(d.get("labels") or ()), *(d.get("feet") or ())) if isinstance(x, str)]
-        if phu_mat and ten:
-            an_mat = re.compile(
-                r"(?<![\w'])[A-Z0-9'.]*(?:"
-                + "|".join(map(re.escape, sorted(phu_mat, key=len, reverse=True)))
-                + r")[A-Z0-9'.]*(?![\w'])"
+        phu_mat = [
+            x
+            for x in (
+                *(d.get("labels") or ()),
+                *(d.get("feet") or ()),
+                *(d.get("point_labels") or ()),
+                *(w.get("foot") for w in d.get("witnesses") or () if isinstance(w, dict)),
             )
-            cu_mat: list[tuple[str, str]] = []
-            for o in canh["objects"]:
-                if (o.get("type") in ("polygon3", "section")
-                        and mat["id"] in (o.get("depends") or ())
-                        and an_mat.search(str(o.get("notation") or o.get("label") or ""))):
-                    truoc = o.get("notation")
-                    nhan = f"Thiết diện bởi {ten}"
-                    o.update(label=nhan, display_label=nhan, reference=nhan[:1].lower() + nhan[1:], notation=None)
-                    if truoc:
-                        cu_mat.append((truoc, o["reference"]))
-            if cu_mat:
-                cu_mat.sort(key=lambda p: len(p[0]), reverse=True)
-                thay_mat = lambda s: _thay_ten(s, cu_mat)
+            if isinstance(x, str)
+        ]
+        for mat in mats:
+            mat["role"] = f"Mặt phẳng qua {diem_qua} và {quan_he}"
+            # Review R1 (run `scene3d-section-inspector-c0`): the fallback explanation read "Dựng mặt phẳng (α) qua ba điểm
+            # M, H, H1." as if H, H1 defined (α). Source definition first, then the real construction and its auxiliaries.
+            ten = mat.get("display_label") or mat.get("label")
+            for e in canh["events"]:
+                if e.get("object") == mat["id"] and e.get("action") == "CREATE" and phu:
+                    e["explanation"] = (f"Dựng {ten}: mặt phẳng qua {diem_qua} và {quan_he}; dựng qua "
+                                        f"{diem_qua} và các điểm dựng phụ {phu}.")
+            if phu_mat and ten:
+                an_mat = re.compile(
+                    r"(?<![\w'])[A-Z0-9'.]*(?:"
+                    + "|".join(map(re.escape, sorted(phu_mat, key=len, reverse=True)))
+                    + r")[A-Z0-9'.]*(?![\w'])"
+                )
+                cu_mat: list[tuple[str, str]] = []
                 for o in canh["objects"]:
-                    nguon = [o.get("label"), o.get("notation"), (o.get("formula") or {}).get("text")]
-                    if o.get("type") != "quantity" or not any(isinstance(s, str) and thay_mat(s) != s for s in nguon):
-                        continue
-                    nhan = thay_mat(str(o.get("label") or ""))
-                    o.update(label=nhan, display_label=nhan, reference=nhan[:1].lower() + nhan[1:], notation=None)
-                    if isinstance((o.get("formula") or {}).get("text"), str):
-                        o["formula"]["text"] = thay_mat(o["formula"]["text"])
-                    if isinstance(o.get("role"), str):
-                        o["role"] = thay_mat(o["role"])
-                for e in canh["events"]:
-                    for k in ("display_label", "learner_text", "explanation"):
-                        if isinstance(e.get(k), str):
-                            e[k] = thay_mat(e[k])
-                for s in canh.get("formation", {}).get("steps", []):
-                    if isinstance(s.get("learner_text"), str):
-                        s["learner_text"] = thay_mat(s["learner_text"])
+                    if (o.get("type") in ("polygon3", "section")
+                            and mat["id"] in (o.get("depends") or ())
+                            and an_mat.search(str(o.get("notation") or o.get("label") or ""))):
+                        truoc = o.get("notation")
+                        nhan = f"Thiết diện bởi {ten}"
+                        o.update(label=nhan, display_label=nhan, reference=nhan[:1].lower() + nhan[1:], notation=None)
+                        if truoc:
+                            cu_mat.append((truoc, o["reference"]))
+                if cu_mat:
+                    cu_mat.sort(key=lambda p: len(p[0]), reverse=True)
+                    thay_mat = lambda s: _thay_ten(s, cu_mat)
+                    for o in canh["objects"]:
+                        nguon = [o.get("label"), o.get("notation"), (o.get("formula") or {}).get("text")]
+                        if o.get("type") != "quantity" or not any(isinstance(s, str) and thay_mat(s) != s for s in nguon):
+                            continue
+                        nhan = thay_mat(str(o.get("label") or ""))
+                        o.update(label=nhan, display_label=nhan, reference=nhan[:1].lower() + nhan[1:], notation=None)
+                        if isinstance((o.get("formula") or {}).get("text"), str):
+                            o["formula"]["text"] = thay_mat(o["formula"]["text"])
+                        if isinstance(o.get("role"), str):
+                            o["role"] = thay_mat(o["role"])
+                    for e in canh["events"]:
+                        for k in ("display_label", "learner_text", "explanation"):
+                            if isinstance(e.get(k), str):
+                                e[k] = thay_mat(e[k])
+                    for s in canh.get("formation", {}).get("steps", []):
+                        if isinstance(s.get("learner_text"), str):
+                            s["learner_text"] = thay_mat(s["learner_text"])
 
 
 def _an_dinh_thiet_dien_phu(canh: dict[str, Any], auxiliary: tuple[dict, ...]) -> None:
@@ -370,6 +392,136 @@ def _an_dinh_thiet_dien_phu(canh: dict[str, Any], auxiliary: tuple[dict, ...]) -
                 s["learner_text"] = an.sub(lambda m: "đỉnh thiết diện" if m[0] in hien else "thiết diện", s["learner_text"])
 
 
+
+
+def _chuan_hoa_be_mat_khoi_cong(canh: dict[str, Any], trace: list[dict[str, Any]]) -> None:
+    """Presentation only (Route D curved solids): clean generic curved-solid references («Khối cầu tâm điểm...»,
+    «Hình trụ đáy tâm O...», «Mặt cầu O tâm O») and `compose_quantity` labels («Đại lượng đo», «Thể tích khối cong»
+    trừ «Thể tích khối cong») into student-facing Vietnamese names with prime `′`. Zero geometry/coordinate changes."""
+    curved_solids = [o for o in canh.get("objects") or () if o.get("type") == "curved_solid"]
+    if not curved_solids:
+        return
+    objs = {o["id"]: o for o in canh["objects"]}
+    buoc = canh.get("formation", {}).get("steps", [])
+    thay_map: list[tuple[str, str]] = []
+
+    for cs in curved_solids:
+        old_lbl = str(cs.get("label") or "")
+        old_ref = str(cs.get("reference") or "")
+        lbl = old_lbl.replace(" ()", "").replace("'", "′").strip()
+        lbl = re.sub(r"^(Mặt cầu|Hình cầu|Khối cầu)\s+(\S+)\s+tâm\s+\2\b", r"\1 tâm \2", lbl)
+        ref = lbl[:1].lower() + lbl[1:] if lbl else old_ref
+        cs["label"] = lbl
+        cs["display_label"] = lbl
+        cs["reference"] = ref
+        if isinstance(cs.get("notation"), str):
+            cs["notation"] = cs["notation"].replace("'", "′")
+        if isinstance(cs.get("role"), str):
+            role = cs["role"].replace("'", "′")
+            if "tâm điểm" in role or "«" in role:
+                role = lbl
+            cs["role"] = role
+        for pat in (f"«{old_ref}»", old_ref, f"«{old_lbl}»"):
+            if pat and pat not in ("«»", "") and pat != ref:
+                thay_map.append((pat, ref))
+        if old_lbl and old_lbl != lbl:
+            thay_map.append((old_lbl, lbl))
+            old_low = old_lbl[:1].lower() + old_lbl[1:]
+            if old_low != ref:
+                thay_map.append((old_low, ref))
+
+    thay_map.sort(key=lambda kv: len(kv[0]), reverse=True)
+    single_ball = len(curved_solids) == 1 and curved_solids[0].get("curved_kind") == "ball"
+    single_ref = curved_solids[0]["reference"] if len(curved_solids) == 1 else None
+
+    def _clean_curved_str(s: str, *, owner_ref: str | None = None) -> str:
+        out = s
+        for src, dst in thay_map:
+            out = out.replace(src, dst)
+        if single_ball:
+            out = out.replace("Diện tích mặt cong của ", "Diện tích của ").replace("diện tích mặt cong của ", "diện tích của ")
+        ref_use = owner_ref or single_ref
+        if ref_use:
+            out = out.replace("của khối cong", f"của {ref_use}").replace("Thể tích khối cong", f"Thể tích {ref_use}")
+        return out
+
+    for o in canh["objects"]:
+        cs_deps = [objs[d] for d in o.get("depends") or () if (objs.get(d) or {}).get("type") == "curved_solid"]
+        owner_ref = cs_deps[0]["reference"] if len(cs_deps) == 1 else None
+        for k in ("label", "display_label", "reference", "role"):
+            if isinstance(o.get(k), str):
+                s2 = _clean_curved_str(o[k], owner_ref=owner_ref)
+                if k == "reference" and o.get("type") == "quantity" and s2:
+                    s2 = s2[:1].lower() + s2[1:]
+                o[k] = s2
+        if isinstance((o.get("formula") or {}).get("text"), str):
+            o["formula"]["text"] = _clean_curved_str(o["formula"]["text"], owner_ref=owner_ref)
+    for e in canh["events"]:
+        for k in ("display_label", "learner_text", "explanation"):
+            if isinstance(e.get(k), str):
+                e[k] = _clean_curved_str(e[k])
+        if isinstance(e.get("details"), dict) and isinstance(e["details"].get("label"), str):
+            e["details"]["label"] = _clean_curved_str(e["details"]["label"])
+    for st in buoc:
+        if isinstance(st.get("learner_text"), str):
+            st["learner_text"] = _clean_curved_str(st["learner_text"])
+
+    def _owner_curved(part_id: str) -> dict[str, Any] | None:
+        po = objs.get(f"kq_{part_id}") or objs.get(part_id)
+        for dep in (po or {}).get("depends") or ():
+            if (objs.get(dep) or {}).get("type") == "curved_solid":
+                return objs[dep]
+        return curved_solids[0] if len(curved_solids) == 1 else None
+
+    for item in trace:
+        if item.get("step") != "compose_quantity":
+            continue
+        qo = objs.get(f"kq_{item.get('object')}")
+        if qo is None or qo.get("type") != "quantity":
+            continue
+        rule = str(item.get("rule") or "")
+        parts = list(item.get("parts") or ())
+        val = qo.get("value")
+        if rule == "total_area = lateral + bases":
+            cs = _owner_curved(parts[0]) if parts else (curved_solids[0] if curved_solids else None)
+            ten = cs["reference"] if cs else "khối tròn xoay"
+            nhan = f"Diện tích toàn phần của {ten}"
+            role = "Diện tích toàn phần"
+            cau_thuong = f"{nhan} bằng {val}."
+            cau_ket = f"Kết luận: {nhan[:1].lower() + nhan[1:]} bằng {val}."
+        elif rule == "residual = V − V_small":
+            cs1 = _owner_curved(parts[0]) if len(parts) >= 1 else None
+            cs2 = _owner_curved(parts[1]) if len(parts) >= 2 else None
+            t1 = cs1["reference"] if cs1 else "khối nón ban đầu"
+            t2 = cs2["reference"] if cs2 else "khối nón nhỏ"
+            nhan = "Thể tích khối nón cụt"
+            role = "Thể tích phần còn lại"
+            cau_thuong = f"Thể tích khối nón cụt bằng hiệu thể tích của {t1} và {t2}, bằng {val}."
+            cau_ket = f"Kết luận: thể tích khối nón cụt bằng hiệu thể tích của {t1} và {t2}, bằng {val}."
+        elif rule.startswith("volume_ratio"):
+            cs1 = _owner_curved(parts[0]) if len(parts) >= 1 else None
+            cs2 = _owner_curved(parts[1]) if len(parts) >= 2 else None
+            t1 = cs1["reference"] if cs1 else "khối nón thứ nhất"
+            t2 = cs2["reference"] if cs2 else "khối nón thứ hai"
+            nhan = f"Tỉ số thể tích của {t1} và {t2}"
+            role = "Tỉ số thể tích"
+            cau_thuong = f"{nhan} bằng {val}."
+            cau_ket = f"Kết luận: {nhan[:1].lower() + nhan[1:]} bằng {val}."
+        else:
+            continue
+        qo.update(label=nhan, display_label=nhan, reference=nhan[:1].lower() + nhan[1:], role=role)
+        if isinstance(qo.get("formula"), dict):
+            qo["formula"]["text"] = f"{nhan} = {val}"
+        for e in canh["events"]:
+            if e.get("object") == qo["id"]:
+                cau = cau_ket if e.get("semantic_kind") == "FINAL_RESULT" else cau_thuong
+                e.update(display_label=nhan, learner_text=cau, explanation=cau)
+                if isinstance(e.get("details"), dict) and "label" in e["details"]:
+                    e["details"]["label"] = nhan
+                if 0 <= e["step_index"] < len(buoc):
+                    buoc[e["step_index"]]["learner_text"] = cau
+
+
 def run_function_route(problem_text: str, plan: Any, auxiliary: tuple[dict, ...] = (),
                        read_quotes: tuple[str, ...] = ()) -> KetQuaTuyen:
     """`auxiliary` chỉ do `run_fact_route` truyền (điểm phụ của planner); nhánh A không có đường nào đặt nó.
@@ -380,13 +532,13 @@ def run_function_route(problem_text: str, plan: Any, auxiliary: tuple[dict, ...]
         return r
     try:
         from app.simulation.geometry_functions.registry import (
-            DINH_CAT_CANH, MAT_HAI_DUONG, MAT_SONG_SONG, MAT_VUONG_DUONG)
+            DINH_CAT_CANH, MAT_HAI_DUONG, MAT_RANG_BUOC, MAT_SONG_SONG, MAT_VUONG_DUONG)
         from app.simulation.geometry_functions.engine import ir_name
         two_line = [d for d in auxiliary if d.get('rule') == MAT_HAI_DUONG]
         # A derived section plane's source name (α) is not rebuildable from its construction points either (the
         # planner's parallel-plane translates H, H1 gave "(MHH1)"); keep it as notation/reference, with or without
         # stated cut edges (run `scene3d-plane-section-display-identity`, review F1).
-        cut = any(d.get('rule') in (DINH_CAT_CANH, MAT_SONG_SONG, MAT_VUONG_DUONG) for d in auxiliary)
+        cut = any(d.get('rule') in (DINH_CAT_CANH, MAT_SONG_SONG, MAT_VUONG_DUONG, MAT_RANG_BUOC) for d in auxiliary)
         with _metric.using(r.chart_metric):
             state = build_simulation_state(r.spec, r.exec_result, r.declared_topology,
                                            prefer_declared_plane_names=bool(two_line) or cut,
@@ -397,7 +549,9 @@ def run_function_route(problem_text: str, plan: Any, auxiliary: tuple[dict, ...]
             # Presentation of the certified auxiliary binding; no new geometry or semantic authority.
             aux_ids = ({ir_name(p) for d in two_line for p in d['labels']}
                        | {ir_name(d['label']) for d in auxiliary if d.get('effect_binding') and d.get('fresh')}
-                       | {ir_name(p) for d in auxiliary if d.get('rule') == 'effect-chain' for p in d['labels']})
+                       | {ir_name(p) for d in auxiliary if d.get('rule') == 'effect-chain' for p in d['labels']}
+                       | {ir_name(p) for d in auxiliary if d.get('point_labels') for p in d['point_labels']}
+                       | {o['id'] for o in state['scene']['objects'] if o['id'].startswith(('td_cau_', 'tam_cau_', 'tx_cau_', 'tam_truc_'))})
             vai = {o['id']: o.get('role') for o in state['scene']['objects'] if (o.get('producer') or '').startswith('construct_point.')}
             for obj in state['scene']['objects']:
                 if obj['id'] in aux_ids:
@@ -419,19 +573,54 @@ def run_function_route(problem_text: str, plan: Any, auxiliary: tuple[dict, ...]
             _dich_khoang_cach_diem_duong(canh, auxiliary)
             _an_dinh_thiet_dien_phu(canh, auxiliary)
             _vai_mat_cat(canh, auxiliary)
+            _chuan_hoa_be_mat_khoi_cong(canh, r.trace)
     except _KhoiKhongKhai as e:
         return KetQuaTuyen("REFUSED", "SCENE_BUILD_FAILED",
-                           f"khối {e} dựng trên đỉnh thiết diện không tên mà không có khối dẫn xuất đã khai", trace=r.trace)
+                           f"khối {e} dựng trên đỉnh thiết diện không tên mà không có khối dẫn xuất đã khai",
+                           trace=_vet_tu_choi(r.trace))
     except Exception as e:  # noqa: BLE001 — cảnh hỏng ⇒ từ chối có mã, không phục vụ nửa vời
-        return KetQuaTuyen("REFUSED", "SCENE_BUILD_FAILED", f"{type(e).__name__}: {e}", trace=r.trace)
+        return KetQuaTuyen("REFUSED", "SCENE_BUILD_FAILED", f"{type(e).__name__}: {e}", trace=_vet_tu_choi(r.trace))
     if not canh.get("objects"):
-        return KetQuaTuyen("REFUSED", "SCENE_BUILD_FAILED", "cảnh rỗng", trace=r.trace)
-    r.scene3d = {**canh, "chart_metric": r.metric}
+        return KetQuaTuyen("REFUSED", "SCENE_BUILD_FAILED", "cảnh rỗng", trace=_vet_tu_choi(r.trace))
+    from app.simulation.geometry_functions import construction_continuity as _cc
+    scene_out = {**canh, "chart_metric": r.metric}
     if r.length_unit:
         # Toạ độ khung đo theo đơn vị a (a = 1 là TỈ LỆ hiển thị, không phải dữ kiện đề); đáp số mang a^bậc.
-        r.scene3d["length_unit"] = {"symbol": r.length_unit, "display_scale": f"{r.length_unit} = 1 đơn vị dựng",
+        scene_out["length_unit"] = {"symbol": r.length_unit, "display_scale": f"{r.length_unit} = 1 đơn vị dựng",
                                     "is_given": False}
+    _cc.enrich_construction_continuity(scene_out, trace=r.trace)
+    continuity_issues = _cc.validate_construction_continuity(scene_out, trace=r.trace)
+    if continuity_issues:
+        head = continuity_issues[0]
+        return KetQuaTuyen("REFUSED", "SCENE_BUILD_FAILED",
+                           f"{head['code']}: {head['detail']}", trace=_vet_tu_choi(r.trace))
+    r.scene3d = scene_out
     return r
+
+
+def _chung_can_thiet(planner: dict) -> None:
+    """C17: a constrained plane's search-generated witness counts as COMPOSITION only when the engine built the plane
+    through it (`span`, its exact independent triple); a witness that only re-checks a stated relation (the stated points
+    already span the plane) is `verification_witness_steps`. Recomputed here because only the engine knows the span —
+    telemetry never claims a step the built figure did not need."""
+    from app.simulation.geometry_functions.registry import MAT_RANG_BUOC
+
+    tel = planner.get("search_telemetry") or {}
+    thua = set()
+    for d in planner.get("auxiliary") or ():
+        if d.get("rule") != MAT_RANG_BUOC or "span" not in d:
+            continue
+        for w in d.get("witnesses") or ():
+            if w["label"] not in d["span"]:
+                thua |= {w["translate"]} | ({w["call"]} if w.get("call") else set())
+    thua &= set(tel.get("search_generated_steps") or ()) | set(tel.get("registered_decomposition_steps") or ())
+    if not thua:
+        return
+    for key in ("search_generated_steps", "registered_decomposition_steps"):
+        tel[key] = [i for i in tel.get(key) or () if i not in thua]
+    tel["verification_witness_steps"] = sorted(thua)
+    if tel.get("classification") == "DISCOVERED_FUNCTION_COMPOSITION" and not tel["search_generated_steps"]:
+        tel["classification"] = "REGISTERED_DECOMPOSITION"
 
 
 def run_fact_route(problem_text: str, facts: Any) -> KetQuaTuyen:
@@ -448,7 +637,10 @@ def run_fact_route(problem_text: str, facts: Any) -> KetQuaTuyen:
     doc = tuple(q for g in (*k.goals, *k.negated) if g.get("call") for q in g["call"]["source"]["quotes"])
     r = run_function_route(problem_text, {"calls": k.calls, "named_planes": k.named_planes}, tuple(k.auxiliary), doc)
     r.planner = {"version": PLANNER_VERSION, "calls": k.calls, "trace": k.trace, "auxiliary": k.auxiliary,
-                 "goal_checks": {}, "negated_checks": {}}
+                 "composition_classification": k.composition_classification,
+                 "search_telemetry": k.search_telemetry, "goal_checks": {}, "negated_checks": {}}
+    if r.status == "SERVED":
+        _chung_can_thiet(r.planner)
     if r.status != "SERVED":
         if r.code == "UNDERDETERMINED_POINT" and (khong := _hinh_khong_duy_nhat(k, r.details.get("points") or [])):
             return KetQuaTuyen("REFUSED", "FIGURE_NOT_UNIQUE", khong, r.failed_calls, trace=r.trace,
@@ -462,19 +654,26 @@ def run_fact_route(problem_text: str, facts: Any) -> KetQuaTuyen:
     if dung := list(r.planner["negated_checks"]):
         return KetQuaTuyen("REFUSED", "NEGATED_CLAUSE",
                            f"mệnh đề phủ định {dung} chưa có chứng chỉ chứng minh độc lập; không phân loại giả thiết này",
-                           tuple(dung), trace=r.trace, planner=r.planner)
+                           tuple(dung), trace=_vet_tu_choi(r.trace), planner=r.planner)
     # Không có câu hỏi số học để phục vụ: các goal trên một cấu hình không đủ làm proof certificate.
     if k.goals and not r.answers:
         return KetQuaTuyen("REFUSED", "PROOF_UNVERIFIABLE",
                            "checker chỉ quan sát trên một cấu hình; chưa có chứng chỉ suy diễn từ giả thiết",
-                           tuple(r.planner["goal_checks"]), trace=r.trace, planner=r.planner)
+                           tuple(r.planner["goal_checks"]), trace=_vet_tu_choi(r.trace), planner=r.planner)
     return r
+
+
+def _vet_tu_choi(trace: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    from copy import deepcopy
+    from app.simulation.geometry_functions.engine import _gan_dieu_kien_vet
+
+    return _gan_dieu_kien_vet(deepcopy(trace), kernel_checked=False)
 
 
 def run_typed_fact_next_planner_route(raw: Any) -> KetQuaTuyen:
     """TypedFactNext → pure bridge → the ONE planner / Source Gate / engine of route B (`run_fact_route`). Research
-    only (run `typedfactnext-planner-bridge`): not wired to `/api/analyze`; Adapter /3 (`run_typed_fact_next_route`) is
-    left as it is. A construct `TypedFact` cannot express is refused (`BRIDGE_UNSUPPORTED_*`), never re-routed."""
+    only (run `typedfactnext-planner-bridge`): not wired to `/api/analyze`; Adapter /4 (`run_typed_fact_next_v2_route`) is
+    the active `/2` product route. A construct `TypedFact` cannot express is refused (`BRIDGE_UNSUPPORTED_*`), never re-routed."""
     from app.simulation.geometry_functions import TuChoi
     from app.simulation.geometry_functions.typed_fact_next_bridge import BRIDGE_VERSION, bridge
 

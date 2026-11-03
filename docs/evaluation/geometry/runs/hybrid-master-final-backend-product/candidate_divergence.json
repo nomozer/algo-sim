@@ -1,0 +1,20 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "ALGOSIM_MASTER_HYBRID_BACKEND_REPLACEMENT (final-backend-product-completion: construction continuity validator & 5-part pedagogical step_summary, 7-family curved-solid learner surface polish, constrained-plane section naming, and Registry /33 + extraction wire parity on C26 captured payloads)",
+  "corrects": "docs/evaluation/geometry/runs/hybrid-live-extraction-retest/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "current_candidate_hash": "b33629d10b9673e1e9eed92ecc09074faccbd6a8ad245658ac4ff45c2f284cbc",
+  "current_product_commit": "d6a53dc6d11273f297b7029f0db07476cd81dcfb",
+  "current_candidate_source": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+  "diverged": true,
+  "reason": "Final backend product completion (119 measured files): adds deterministic 0-LLM construction_continuity.py (backward-compatible Scene3D step enrichment with step_id, coordinate_frame_id, depends_on, preconditions, created_ids/reused_ids/highlighted_ids/retired_ids, verification_refs, and 5-part pedagogical step_summary + fail-closed SCENE_BUILD_FAILED validator across 7 continuity classes); cleans curved-solid internal O.O'/S.O/O_sphere_O labels and compose_quantity formulas on Route D learner strings and routes MAT_RANG_BUOC constrained planes through prefer_declared_plane_names without leaking auxiliary feet in function_route.py; canonicalizes verbatim-grounded simulation_goals vertex/point -> target_refs in typed_fact_next_extraction.py without changing any provider prompt/schema fingerprint; prevents unresolved entries embedding an unsupported phrase from masking OUT_OF_SCOPE in typed_fact_next_bridge.py; adds 'điểm chính giữa' and 'đi qua/nối' Source Gate parity in registry.py (geometry-functions/33). Planner /26, Engine /24, TypedFactNext /2, Adapter /4, DEFAULT_MODE = LLM_ONLY, HYBRID_ROUTE_MODE = off, CACHE_VERSION = 131, and frontend/** unchanged.",
+  "cache_version": 131,
+  "cache_version_hien_tai": 131,
+  "cache_decision": "NO BUMP: LLM_ONLY bytes and all four provider request surface fingerprints are unchanged; Route D cache rows key on runtime_identity fingerprint (which includes registry_version = geometry-functions/33), so earlier Route D rows MISS automatically.",
+  "hieu_luc_len_ket_qua_da_do": {
+    "historical_measurements": "UNCHANGED",
+    "live_requests": "0 new live requests (C21 70 and C26 69 frozen receipts untouched)",
+    "so_lieu_lượt_đo_cuối": "UNCHANGED: thesis-final-20260908T160224Z, all offline receipts, and all C21/C26 live receipts stay byte-for-byte; prior candidate 180db769 / product d331e75b preserved in frozen-evaluation-candidate.json; offline replay on captured C26 wire payloads is reported separately and never conflated with live runs."
+  }
+}

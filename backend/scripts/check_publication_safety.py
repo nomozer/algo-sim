@@ -41,7 +41,7 @@ RULES: dict[str, re.Pattern[bytes]] = {
     # Một chuỗi literal nằm giữa dòng mã (`b'Trace…' in data`) không khớp.
     "PY_TRACEBACK": re.compile(rb"(?m)^[ \t]*(?:" + _TB.encode() + rb" \(most recent call last\):"
                                rb"|File \"[^\"\r\n]+\", line \d+)"),
-    "GOOGLE_API_KEY": re.compile(rb"AIza[0-9A-Za-z_\-]{35}"),
+    "GOOGLE_API_KEY": re.compile(rb"AIza[0-9A-Za-z_\-]{35}|\bAQ\.[0-9A-Za-z_.\-]{30,}|\bya29\.[0-9A-Za-z_.\-]{40,}"),
     "OPENAI_KEY": re.compile(rb"\bsk-(?:proj-)?[A-Za-z0-9_\-]{32,}"),
     "ANTHROPIC_KEY": re.compile(rb"\bsk-ant-[A-Za-z0-9_\-]{20,}"),
     "GITHUB_TOKEN": re.compile(rb"\bgh[pousr]_[A-Za-z0-9]{36,}"),
@@ -52,8 +52,8 @@ RULES: dict[str, re.Pattern[bytes]] = {
     "BEARER_TOKEN": re.compile(rb"Bearer\s+[a-zA-Z0-9\-_]{20,}"),
     "HARDCODED_PASSWORD": re.compile(rb"(?i)password\s*[:=]\s*['\"][^'\"\r\n]{6,}['\"]"),
     "SECRET_ASSIGNMENT": re.compile(
-        rb"(?i)\b(?:GEMINI_API_KEY|GOOGLE_API_KEY|OPENAI_API_KEY|ANTHROPIC_API_KEY|HYBRID_ROUTE_D_PREVIEW_TOKEN)"
-        rb"[ \t]*[:=][ \t]*[\"']?[A-Za-z0-9_\-]{20,}"),
+        rb"(?i)\b(?:GEMINI_API_KEY|GOOGLE_API_KEY|GOOGLE_OAUTH_ACCESS_TOKEN|OPENAI_API_KEY|ANTHROPIC_API_KEY|HYBRID_ROUTE_D_PREVIEW_TOKEN)"
+        rb"[ \t]*[:=][ \t]*[\"']?[A-Za-z0-9_.\-]{20,}"),
 }
 
 

@@ -6,7 +6,8 @@ A THIN layer: `typed-fact-next/2` → bridge `/2` → the ONE planner / Registry
 refused with its code (curved solids, qualified multi-solid identity, unsupported plane kinds …) — `/1` Adapter /3 stays,
 isolated and labelled, for those. Every SERVED result is therefore verified by the Source Gate (strict by construction).
 The envelope reports what the engine certified: section boundaries with per-vertex provenance and closure certificates.
-Research only: not wired to `/api/analyze`.
+Reached from `/api/analyze` only through the declared local opt-in (`main._hybrid_v2_local` → `hybrid_offline`); the
+default route stays `LLM_ONLY`.
 """
 from __future__ import annotations
 
@@ -55,6 +56,10 @@ def run_typed_fact_next_v2_route(raw: Any) -> KetQuaTuyen:
                         planner={"bridge": {"version": BRIDGE_V2_VERSION}})
     if isinstance(source, str):
         r.ai["source_sha256"] = sha256(source.encode("utf-8")).hexdigest()
+        if (clar := (r.details or {}).get("clarification")) and r.status != "SERVED":
+            from app.simulation.geometry_functions.typed_fact_next import quote_spans
+
+            clar["spans"] = quote_spans(source, clar["quote"])   # offsets in the RAW source (a model input is stripped)
     r.route_d = deepcopy(_phong_bi(r))
     return r
 
@@ -88,15 +93,48 @@ def _phong_bi(r: KetQuaTuyen) -> dict[str, Any]:
         "adapter_version": ADAPTER_V4_VERSION,
         "contract_version": TYPED_FACT_NEXT_V2_SCHEMA_VERSION,
         "status": r.status,
-        "refusal": None if served else {"code": r.code, "detail": r.reason, "calls": list(r.failed_calls)},
+        "refusal": None if served else {"code": r.code, "detail": r.reason, "calls": list(r.failed_calls),
+                                        **_ban_ghi_lam_ro(r)},
         # every served `/4` result passed the Registry Source Gate; there is no other authority on this route
         "source_verification": {"authority": SOURCE_GATE_AUTHORITY} if served else None,
         "sections": sections,
+        "relation_certificates": deepcopy(list(r.relation_certificates)) if served else [],
         "answers": dict(r.answers),
         "answer_exact": dict(r.answer_exact),
         "length_unit": r.length_unit,
         "planner": {k: (r.planner or {}).get(k) for k in ("version", "bridge")},
+        "construction_trace": deepcopy(r.trace) if served else [],
     }
+
+
+def _ban_ghi_lam_ro(r: KetQuaTuyen) -> dict[str, Any]:
+    """`{"clarification": route-d-clarification/1}` for a refusal of the `/2` honest exit (SL-2), else nothing — every
+    other refusal keeps its exact shape. The record is the bridge's own (closed fields, verbatim quote)."""
+    clar = (r.details or {}).get("clarification") if r.status != "SERVED" else None
+    return {"clarification": deepcopy(clar)} if clar else {}
+
+
+#: `classify_refusal`'s class of each fault-of-ours code, as constants (equality with the normal path is test-locked).
+_FAULT_CLASS = {
+    "ADAPTER_INTERNAL_ERROR": ("geometry_generation_failed",
+                               "Hệ chưa dựng được hình đã kiểm chứng cho đề này, nên không hiển thị hình."),
+    "ROUTE_INTERNAL_ERROR": ("verification_gap", "Hệ đã thử dựng nhưng kết quả chưa qua được khâu kiểm chứng, "
+                                                 "nên không hiển thị hình chưa được kiểm."),
+}
+
+
+def adapter_fault_response(code: str) -> dict[str, Any]:
+    """The technical refusal for a fault of OURS, built from constants only. A fault handler must not depend on the code
+    that just failed: re-running `build_adapter4_response` there let a second fault escape as an HTTP 500 (review M-3)."""
+    from app.simulation.geometry_functions.typed_fact_next import TYPED_FACT_NEXT_V2_SCHEMA_VERSION
+
+    category, message = _FAULT_CLASS[code]
+    return {"schema_version": ROUTE_D_SIMULATION_V4_SCHEMA_VERSION,
+            "envelope": {"status": "unsupported", "reason_code": code, "reason": message, "learner_reason": message,
+                         "failure_category": category, "refusal_cause": "UNKNOWN"},
+            "route_d": {"schema_version": ROUTE_D_SIMULATION_V4_SCHEMA_VERSION, "adapter_version": ADAPTER_V4_VERSION,
+                        "contract_version": TYPED_FACT_NEXT_V2_SCHEMA_VERSION, "status": "REFUSED",
+                        "refusal": {"code": code}}}
 
 
 def build_adapter4_response(result: KetQuaTuyen, problem_text: str) -> dict[str, Any]:
@@ -120,7 +158,8 @@ def build_adapter4_response(result: KetQuaTuyen, problem_text: str) -> dict[str,
                 "envelope": {"status": "unsupported", "reason_code": code, "reason": kind.message,
                              "learner_reason": kind.message, "failure_category": kind.failure_category,
                              "refusal_cause": kind.refusal_cause},
-                "route_d": {**identity, "status": "REFUSED", "refusal": {"code": code}}}
+                "route_d": {**identity, "status": "REFUSED",
+                            "refusal": {"code": code, **(_ban_ghi_lam_ro(result) if code == result.code else {})}}}
 
     if result.status != "SERVED":
         return refuse(result.code or "PREVIEW_RESULT_INVALID")
@@ -202,6 +241,20 @@ def build_adapter4_response(result: KetQuaTuyen, problem_text: str) -> dict[str,
         if route.get("sections") != _phong_bi(result)["sections"]:
             raise PreviewInvalid("PREVIEW_RESULT_INVALID")
         _validate_sections(route["sections"], objects, result)
+        if route.get("relation_certificates") != _phong_bi(result)["relation_certificates"]:
+            raise PreviewInvalid("PREVIEW_RESULT_INVALID")
+        for rcert in route.get("relation_certificates") or ():
+            if not isinstance(rcert, dict):
+                raise PreviewInvalid("PREVIEW_RESULT_INVALID")
+            for layer in (
+                "SOURCE_GROUNDING_PROOF",
+                "GEOMETRIC_RELATION_PROOF",
+                "KERNEL_EXECUTION_PROOF",
+                "RESULT_CERTIFICATE",
+            ):
+                lp = rcert.get(layer)
+                if not isinstance(lp, dict) or lp.get("verified") is not True:
+                    raise PreviewInvalid("PREVIEW_RESULT_INVALID")
         with using(metric):
             envelope = compile_semantic_program_to_envelope(result.spec)
         if validate_semantic_envelope_config(envelope["config"]) or envelope["config"]["execution_truncated"]:
@@ -457,7 +510,7 @@ def _validate_engine_derived_section(
         _binh_phuong,
         ir_name,
     )
-    from app.simulation.geometry_functions.registry import MAT_HAI_DUONG, MAT_SONG_SONG, MAT_VUONG_DUONG
+    from app.simulation.geometry_functions.registry import MAT_HAI_DUONG, MAT_RANG_BUOC, MAT_SONG_SONG, MAT_VUONG_DUONG
 
     if section.get("certificate_version") != PLANE_SECTION_CERTIFICATE_VERSION:
         raise PreviewInvalid("PREVIEW_IDENTITY_CHANGED")
@@ -544,6 +597,21 @@ def _validate_engine_derived_section(
             po = objects.get(ir_name(p_lbl), {})
             if po.get("type") != "point3" or sum(a * b for a, b in zip(normal, (Fraction(c) for c in po["xyz"]))) != offset:
                 raise PreviewInvalid("PREVIEW_RESULT_INVALID")
+    elif plane_rule == MAT_RANG_BUOC:                 # C17: every witness and stated point on the plane, relations as stated
+        dan = next((d for d in ((result.planner or {}).get("auxiliary") or ())
+                    if d.get("rule") == plane_rule and sid in (d.get("targets") or ())), None)
+        if (dan is None or not isinstance(tp, str) or dan.get("point") != tp or rel.get("through_point") != tp
+                or rel.get("kind") != "stated_constraints"
+                or rel.get("constraints") != [{"kind": c["kind"], "points": list(c["points"])} for c in dan["constraints"]]
+                or len(set(plane_points)) != 3 or not set(plane_points) <= set(dan["plane"])):
+            raise PreviewInvalid("PREVIEW_RESULT_INVALID")
+        for p_lbl in dan["plane"]:
+            po = objects.get(ir_name(p_lbl), {})
+            if po.get("type") != "point3" or sum(a * b for a, b in zip(normal, (Fraction(c) for c in po["xyz"]))) != offset:
+                raise PreviewInvalid("PREVIEW_RESULT_INVALID")
+        dau = [sum(a * b for a, b in zip(normal, pt)) - offset for pt in solid_pts]
+        if sum(x == 0 for x in dau) >= 3 and {x > 0 for x in dau if x != 0} != {True, False}:
+            raise PreviewInvalid("PREVIEW_RESULT_INVALID")
     elif plane_rule in {MAT_SONG_SONG, MAT_HAI_DUONG, MAT_VUONG_DUONG}:
         if not isinstance(tp, str) or not tp or rel.get("through_point") != tp:
             raise PreviewInvalid("PREVIEW_RESULT_INVALID")

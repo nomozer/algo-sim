@@ -1,0 +1,20 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "ALGOSIM_MASTER_HYBRID_BACKEND_REPLACEMENT (real product integration: selectable Hybrid /4 end-to-end runtime, existing frontend Scene3DExplorer connection, 16-class verification, 6-flow browser E2E)",
+  "corrects": "docs/evaluation/geometry/runs/hybrid-master-definition-composition/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "current_candidate_hash": "730045ff43f7be806fcabbb0047717ef4ad390a8b32ad81a4b9cf0adad74075f",
+  "current_product_commit": "d17116cbc4b4f4065f198a19de0957cc51eeb82e",
+  "current_candidate_source": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+  "diverged": true,
+  "reason": "Real product integration on top of the 51ba6135 candidate: backend exposes selectable HYBRID_ROUTE_MODE (off default LLM_ONLY, staging-replay with explicit REPLAY_STAGING_SIMULATED metadata and memoized single-entry corpus lookup, live with ALLOW_LIVE_AI=1 + GEMINI_API_KEY + deadline-bounded retry TransportExtractor + normalized GEMINI_MODEL + ApiBudget retry accounting), route-aware cache isolation and invalidation on GEMINI_MODEL + typed_fact_next_surface_fingerprint() + Registry/Planner/Engine/Adapter versions, sanitized HTTP 502/503/504 infrastructure errors with zero secrets/tracebacks and zero fallback to LLM_ONLY, and runtime diagnostics on /api/health and /api/diagnostics/runtime while preserving D-01 import isolation when off. Existing React frontend (hybrid-preview-adapter.ts, SimulationWorkspace.tsx, photo-problem-flow.ts, store.ts) validates Category B plane-section-certificate/1 sections, displays route-d-clarification/1 user questions across both text and Photo Review -> Build paths, and resets stale active/activeAssignment/semanticFocus/unsupported state across recoverable errors/refusals. Verified 16/16 scope/refusal categories (41/41 cases) and 6/6 real Chromium + Uvicorn browser E2E flows with 0 live provider calls. LLM_ONLY default mode, its cache bytes, Route A schemas, and math kernel/planner/registry versions (/31, /26, /22, /4) are unchanged.",
+  "cache_version": 131,
+  "cache_version_hien_tai": 131,
+  "cache_decision": "NO BUMP: LLM_ONLY default route and its response cache bytes are untouched; Route D rows are isolated under ROUTE_D_CACHE_POLICY and keyed by mode, normalized GEMINI_MODEL, typed_fact_next_surface_fingerprint(), and Registry/Planner/Engine/Adapter versions (/31, /26, /22, /4); refusals and infrastructure errors are never cached.",
+  "hieu_luc_len_ket_qua_da_do": {
+    "historical_measurements": "UNCHANGED",
+    "live_requests": 0,
+    "so_lieu_lượt_đo_cuối": "UNCHANGED: historical measurements and C18/C19/C21 receipts (candidate 15d236eb / product 51ba6135) are preserved intact and not rescored."
+  }
+}

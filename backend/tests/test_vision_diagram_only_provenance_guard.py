@@ -35,18 +35,9 @@ from app.ai import gemini
 from app.ingestion import image_extraction as ie
 from app.ingestion.image import normalize_image
 from app.persistence.db import init_db
-from tests.test_photo_problem_live_runner import (  # noqa: F401 — kho/de/_khong_cho_backoff là fixture
-    CA_P1,
-    RNB,
-    R,
-    _ca,
-    _chay,
-    _json,
-    _khong_cho_backoff,
-    _kich_ban,
-    de,
-    kho,
-)
+@pytest.fixture(autouse=True)
+def _khong_cho_backoff(monkeypatch):
+    monkeypatch.setattr(gemini, "BACKOFF_BASE_SECONDS", 0.0)
 
 TESTS = Path(__file__).resolve().parent
 GOC = TESTS.parents[1]
@@ -183,40 +174,22 @@ def test_C_ma_tu_choi_van_la_MISSING_PROBLEM_TEXT(ten, monkeypatch):
 
 # ── D ───────────────────────────────────────────────────────────────────────
 @pytest.mark.parametrize("ten", sorted(BIEN_THE_RO))
-def test_D1_duong_analyze_anh_cu_KHONG_toi_pipeline(ten, monkeypatch):
+def test_D1_duong_analyze_anh_truc_tiep_KHONG_toi_hybrid_route(ten, monkeypatch):
     monkeypatch.setenv("GEMINI_API_KEY", "khoa-gia")
-    monkeypatch.setattr(main_module, "CACHE_VERSION", f"test-{uuid.uuid4()}")
     init_db()
     thay: list[str] = []
 
-    async def fake_pipeline(text, api_key, **kw):
-        thay.append(text)
-        return {"status": "ok"}
+    async def cam(*a, **kw):
+        thay.append("called")
+        raise AssertionError("không được chạm _analyze_hybrid_route")
 
-    monkeypatch.setattr(main_module, "run_pipeline", fake_pipeline)
+    monkeypatch.setattr(main_module, "_analyze_hybrid_route", cam)
     _gia(monkeypatch, BIEN_THE_RO[ten])
     r = client.post("/api/analyze", json={"input": {"type": "image", "content": base64.b64encode(_anh()).decode(),
                                                     "mime_type": "image/png"}})
-    assert r.status_code == 400 and thay == []
+    assert r.status_code == 400 and r.json()["reason_code"] == "IMAGE_DIRECT_UNSUPPORTED" and thay == []
     for s in _chuoi_du_kien(BIEN_THE_RO[ten]):
         assert s not in r.text
-
-
-def _chay_c03(kho, de, vision):
-    p1 = RNB.doc_raw_theo_thu_tu(CA_P1)
-    # Phản hồi tầng B CÓ SẴN cho C03 — nếu runner gọi, nó được phục vụ và lộ ra.
-    thay = {("C03", "vision"): [vision], ("C03", "analyze"): p1["semantic_analyze"],
-            ("C03", "synthesis"): p1["semantic_program"]}
-    r = _chay(kho, "C03", kich_ban=_kich_ban(de, thay))
-    return r, _json(r, "RUN_SUMMARY.json")
-
-
-def test_D2_runner_C03_CHI_mot_luot_vision_khong_analyze_synthesis_canh(kho, de):
-    r, tt = _chay_c03(kho, de, json.dumps(C03, ensure_ascii=False))
-    assert r.prov.calls == [("C03", "vision")]
-    assert (tt["ANALYZE_HTTP_REQUESTS"], tt["SYNTHESIS_HTTP_REQUESTS"]) == (0, 0)
-    assert _ca(tt, "C03")["STAGE_B_HTTP_ATTEMPTS"] == 0
-    assert not (r.ra / "C03_ANALYZE_RESULT.json").exists() and not (r.ra / "C03_SCENE_RESULT.json").exists()
 
 
 # ── E ───────────────────────────────────────────────────────────────────────
@@ -242,32 +215,6 @@ def test_E2_ban_trong_CACHE_cung_di_qua_guard(monkeypatch):
     assert len(goi) == 1 and dau.cached is False and sau.cached is True
     for kq in (dau, sau):
         assert _co_du_kien(kq.extraction.model_dump()) == {} and kq.assessment.problem_text == ""
-
-
-def test_E3_runner_C03_bao_RIENG_ban_mo_hinh_ban_cong_khai_va_so_cach_ly(kho, de):
-    r, tt = _chay_c03(kho, de, json.dumps(C03, ensure_ascii=False))
-    assert r.code == R.EXIT_PASS, (r.out, r.err)
-    c = _ca(tt, "C03")
-    assert c["RAW_MODEL_FACT_FIELDS_EMPTY"] is False
-    assert c["SAFE_PUBLIC_FACT_FIELDS_EMPTY"] is True
-    assert c["QUARANTINED_FACT_FIELDS"] == ["given_relations"] and c["QUARANTINED_FACT_COUNT"] == 3
-    assert c["DIAGRAM_OBSERVATIONS_USED_AS_FACTS"] == "NO"
-    assert c["C03_SAFE_REJECTION"] is True and c["SILENT_HALLUCINATION"] == 0
-    tho = _json(r, "C03_RAW_EXTRACTION.json")
-    assert tho["extraction"]["given_relations"] == QUAN_HE_C03      # bản mô hình trả — chỉ ở thư mục chạy
-    assert _co_du_kien(tho["public_extraction"]) == {}
-
-
-def test_E4_runner_CHAM_DOC_LAP__guard_bi_vo_hieu_thi_C03_FAIL(kho, de, monkeypatch):
-    # Vô hiệu guard bằng cách để nó không còn trường nào để cách ly. Runner phải tự thấy dữ kiện trong bản công
-    # khai — không được tin nhãn guard tự khai.
-    monkeypatch.setattr(ie, "FACT_BEARING_FIELDS", (), raising=False)
-    r, tt = _chay_c03(kho, de, json.dumps(C03, ensure_ascii=False))
-    c = _ca(tt, "C03")
-    assert r.code == R.EXIT_CASE_FAIL
-    assert c["C03_SAFE_REJECTION"] is False and c["SILENT_HALLUCINATION"] == 1
-    assert c["SAFE_PUBLIC_FACT_FIELDS_EMPTY"] is False and c["DIAGRAM_OBSERVATIONS_USED_AS_FACTS"] == "YES"
-    assert any(x.startswith("C03_PUBLIC_FACT_FIELDS_NOT_EMPTY") for x in c["fail_reasons"])
 
 
 # ── F ───────────────────────────────────────────────────────────────────────
@@ -349,19 +296,6 @@ def test_J1_loi_provider_luoc_do_Pydantic_KHONG_BAO_GIO_la_tu_choi_an_toan(tra, 
     assert not {"assessment", "extraction"} & set(r.json())
     assert "MISSING_PROBLEM_TEXT" not in r.text
     assert not _su_kien(caplog)
-
-
-@pytest.mark.parametrize("vision, tien_to", [
-    (httpx.Response(503, json={"error": "tam thoi"}), "VISION_PROVIDER_ERROR"),
-    ("không phải JSON", "VISION_CONTRACT_ERROR"),
-    (json.dumps({**C03, "truong_la": 1}, ensure_ascii=False), "VISION_CONTRACT_ERROR"),
-], ids=["http_503", "json", "pydantic"])
-def test_J2_runner_C03_loi_KHONG_tinh_la_tu_choi_an_toan(kho, de, vision, tien_to):
-    r, tt = _chay_c03(kho, de, vision)
-    c = _ca(tt, "C03")
-    assert c["C03_SAFE_REJECTION"] is False and c["status"] != "PASS"
-    assert c["fail_reasons"][0].startswith(tien_to)
-    assert r.prov.calls == [("C03", "vision")]
 
 
 # ── bề mặt mô hình: prompt là HƯỚNG DẪN, guard tất định là THẨM QUYỀN ─────────

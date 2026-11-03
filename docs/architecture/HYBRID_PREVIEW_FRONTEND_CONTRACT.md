@@ -88,6 +88,10 @@ Frontend PHẢI:
    Mọi cách nói phải kèm ý "đây là quan sát trên một hình, không phải chứng minh tổng quát".
 3. Không suy ra "đề sai" từ `FALSE_ON_CONFIGURATION` của một mệnh đề phủ định. Backend đã từ chối loại đề này
    (`NEGATED_CLAUSE`, `verification_gap`).
+4. (Bổ sung 2026-11-03, run `pedagogical-simulation-integration`) Quan sát của `goal_checks` là kết quả kiểm **mục tiêu**
+   của đề — kết luận học sinh phải tự đi tới — nên chỉ hiện trong bảng Chế độ B «Phân tích toán học» (mục «Kiểm tra trên
+   hình đã dựng»), không trên sân khấu Chế độ A, và vẫn chỉ từ bước neo. Khoá: `hybrid-preview-contract.test.tsx`
+   ("quan sát MỤC TIÊU chỉ sống trong bảng Chế độ B…").
 
 Fixture kiểm: `served-H07_PROOF_GOAL_NOT_PREMISE_BUT_CHECKED` (quan sát `TRUE_ON_CONFIGURATION`),
 `refusal-inconclusive-negated`, `refusal-inconclusive-proof-only`, `refusal-integrity-proof-status`.

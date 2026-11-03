@@ -1,0 +1,2521 @@
+{
+ "classification": "DEVELOPMENT_DIAGNOSTIC_NOT_HELDOUT_NOT_LIVE",
+ "provider_calls": 0,
+ "identity": {
+  "head": "6637f6fd3102b4a858ad7cb0f8209a688f738fd1",
+  "product_uncommitted": false
+ },
+ "summary": {
+  "gold": {
+   "SERVED_CORRECT": 45,
+   "NEEDS_CLARIFICATION_CORRECT": 5,
+   "FALSE_REFUSAL": 3,
+   "CORRECT_REFUSAL": 7
+  },
+  "adversarial": {
+   "SAFE_REFUSAL": 20
+  }
+ },
+ "rows": [
+  {
+   "id": "I01_cho_tinh",
+   "extraction": "gold",
+   "axes": {
+    "family": "pyramid",
+    "intent": "measure",
+    "wording": "standard"
+   },
+   "expect": {
+    "action": "SERVED",
+    "oracle": {
+     "mg1": [
+      "sq",
+      "64/9"
+     ]
+    },
+    "show": []
+   },
+   "observed": {
+    "status": "SERVED",
+    "code": null,
+    "stage": null,
+    "answer_exact": {
+     "mg1": {
+      "coef": "8/3",
+      "dim": 0,
+      "unit": null
+     }
+    },
+    "scene_points": [
+     "A",
+     "B",
+     "C",
+     "D",
+     "S"
+    ]
+   },
+   "outcome": "SERVED_CORRECT"
+  },
+  {
+   "id": "I02_ve",
+   "extraction": "gold",
+   "axes": {
+    "family": "pyramid",
+    "intent": "simulate_only",
+    "wording": "ve"
+   },
+   "expect": {
+    "action": "SERVED",
+    "oracle": {},
+    "show": [
+     "S",
+     "A",
+     "B",
+     "C",
+     "D"
+    ]
+   },
+   "observed": {
+    "status": "SERVED",
+    "code": null,
+    "stage": null,
+    "answer_exact": {},
+    "scene_points": [
+     "A",
+     "B",
+     "C",
+     "D",
+     "S"
+    ]
+   },
+   "outcome": "SERVED_CORRECT"
+  },
+  {
+   "id": "I02_ve",
+   "extraction": "adv:invented_volume_goal",
+   "axes": {
+    "family": "pyramid",
+    "intent": "simulate_only",
+    "wording": "ve"
+   },
+   "expect": null,
+   "observed": {
+    "status": "REFUSED",
+    "code": "SOURCE_OBJECT_MISMATCH",
+    "stage": "deterministic_route",
+    "clarification": null,
+    "nlu_class": "UNRECOGNIZED_WORDING"
+   },
+   "outcome": "SAFE_REFUSAL"
+  },
+  {
+   "id": "I03_dung",
+   "extraction": "gold",
+   "axes": {
+    "family": "pyramid",
+    "intent": "simulate_only",
+    "wording": "dung"
+   },
+   "expect": {
+    "action": "SERVED",
+    "oracle": {},
+    "show": [
+     "S",
+     "A",
+     "B",
+     "C",
+     "D"
+    ]
+   },
+   "observed": {
+    "status": "SERVED",
+    "code": null,
+    "stage": null,
+    "answer_exact": {},
+    "scene_points": [
+     "A",
+     "B",
+     "C",
+     "D",
+     "S"
+    ]
+   },
+   "outcome": "SERVED_CORRECT"
+  },
+  {
+   "id": "I03_dung",
+   "extraction": "adv:invented_volume_goal",
+   "axes": {
+    "family": "pyramid",
+    "intent": "simulate_only",
+    "wording": "dung"
+   },
+   "expect": null,
+   "observed": {
+    "status": "REFUSED",
+    "code": "SOURCE_OBJECT_MISMATCH",
+    "stage": "deterministic_route",
+    "clarification": null,
+    "nlu_class": "UNRECOGNIZED_WORDING"
+   },
+   "outcome": "SAFE_REFUSAL"
+  },
+  {
+   "id": "I04_mo_phong",
+   "extraction": "gold",
+   "axes": {
+    "family": "pyramid",
+    "intent": "simulate_only",
+    "wording": "mo_phong"
+   },
+   "expect": {
+    "action": "SERVED",
+    "oracle": {},
+    "show": [
+     "S",
+     "A",
+     "B",
+     "C",
+     "D"
+    ]
+   },
+   "observed": {
+    "status": "SERVED",
+    "code": null,
+    "stage": null,
+    "answer_exact": {},
+    "scene_points": [
+     "A",
+     "B",
+     "C",
+     "D",
+     "S"
+    ]
+   },
+   "outcome": "SERVED_CORRECT"
+  },
+  {
+   "id": "I04_mo_phong",
+   "extraction": "adv:invented_volume_goal",
+   "axes": {
+    "family": "pyramid",
+    "intent": "simulate_only",
+    "wording": "mo_phong"
+   },
+   "expect": null,
+   "observed": {
+    "status": "REFUSED",
+    "code": "SOURCE_OBJECT_MISMATCH",
+    "stage": "deterministic_route",
+    "clarification": null,
+    "nlu_class": "UNRECOGNIZED_WORDING"
+   },
+   "outcome": "SAFE_REFUSAL"
+  },
+  {
+   "id": "I05_cho_minh_xem",
+   "extraction": "gold",
+   "axes": {
+    "family": "pyramid",
+    "intent": "simulate_only",
+    "wording": "cho_minh_xem"
+   },
+   "expect": {
+    "action": "SERVED",
+    "oracle": {},
+    "show": [
+     "S",
+     "A",
+     "B",
+     "C",
+     "D"
+    ]
+   },
+   "observed": {
+    "status": "SERVED",
+    "code": null,
+    "stage": null,
+    "answer_exact": {},
+    "scene_points": [
+     "A",
+     "B",
+     "C",
+     "D",
+     "S"
+    ]
+   },
+   "outcome": "SERVED_CORRECT"
+  },
+  {
+   "id": "I05_cho_minh_xem",
+   "extraction": "adv:invented_volume_goal",
+   "axes": {
+    "family": "pyramid",
+    "intent": "simulate_only",
+    "wording": "cho_minh_xem"
+   },
+   "expect": null,
+   "observed": {
+    "status": "REFUSED",
+    "code": "SOURCE_OBJECT_MISMATCH",
+    "stage": "deterministic_route",
+    "clarification": null,
+    "nlu_class": "UNRECOGNIZED_WORDING"
+   },
+   "outcome": "SAFE_REFUSAL"
+  },
+  {
+   "id": "I06_hay_ve",
+   "extraction": "gold",
+   "axes": {
+    "family": "pyramid",
+    "intent": "simulate_only",
+    "wording": "hay_ve"
+   },
+   "expect": {
+    "action": "SERVED",
+    "oracle": {},
+    "show": [
+     "S",
+     "A",
+     "B",
+     "C",
+     "D"
+    ]
+   },
+   "observed": {
+    "status": "SERVED",
+    "code": null,
+    "stage": null,
+    "answer_exact": {},
+    "scene_points": [
+     "A",
+     "B",
+     "C",
+     "D",
+     "S"
+    ]
+   },
+   "outcome": "SERVED_CORRECT"
+  },
+  {
+   "id": "I06_hay_ve",
+   "extraction": "adv:invented_volume_goal",
+   "axes": {
+    "family": "pyramid",
+    "intent": "simulate_only",
+    "wording": "hay_ve"
+   },
+   "expect": null,
+   "observed": {
+    "status": "REFUSED",
+    "code": "SOURCE_OBJECT_MISMATCH",
+    "stage": "deterministic_route",
+    "clarification": null,
+    "nlu_class": "UNRECOGNIZED_WORDING"
+   },
+   "outcome": "SAFE_REFUSAL"
+  },
+  {
+   "id": "I07_ve_va_tinh",
+   "extraction": "gold",
+   "axes": {
+    "family": "pyramid",
+    "intent": "simulate_and_measure",
+    "wording": "ve_opener"
+   },
+   "expect": {
+    "action": "SERVED",
+    "oracle": {
+     "mg1": [
+      "sq",
+      "64/9"
+     ]
+    },
+    "show": []
+   },
+   "observed": {
+    "status": "SERVED",
+    "code": null,
+    "stage": null,
+    "answer_exact": {
+     "mg1": {
+      "coef": "8/3",
+      "dim": 0,
+      "unit": null
+     }
+    },
+    "scene_points": [
+     "A",
+     "B",
+     "C",
+     "D",
+     "S"
+    ]
+   },
+   "outcome": "SERVED_CORRECT"
+  },
+  {
+   "id": "I08_trailing_ve",
+   "extraction": "gold",
+   "axes": {
+    "family": "pyramid",
+    "intent": "simulate_only",
+    "wording": "trailing_request"
+   },
+   "expect": {
+    "action": "SERVED",
+    "oracle": {},
+    "show": [
+     "S"
+    ]
+   },
+   "observed": {
+    "status": "SERVED",
+    "code": null,
+    "stage": null,
+    "answer_exact": {},
+    "scene_points": [
+     "A",
+     "B",
+     "C",
+     "D",
+     "S"
+    ]
+   },
+   "outcome": "SERVED_CORRECT"
+  },
+  {
+   "id": "I09_trailing_mo_phong_hinh",
+   "extraction": "gold",
+   "axes": {
+    "family": "pyramid",
+    "intent": "simulate_only",
+    "wording": "trailing_request"
+   },
+   "expect": {
+    "action": "SERVED",
+    "oracle": {},
+    "show": [
+     "S"
+    ]
+   },
+   "observed": {
+    "status": "SERVED",
+    "code": null,
+    "stage": null,
+    "answer_exact": {},
+    "scene_points": [
+     "A",
+     "B",
+     "C",
+     "D",
+     "S"
+    ]
+   },
+   "outcome": "SERVED_CORRECT"
+  },
+  {
+   "id": "I10_ve_roi_tinh",
+   "extraction": "gold",
+   "axes": {
+    "family": "pyramid",
+    "intent": "simulate_and_measure",
+    "wording": "mixed_sentence"
+   },
+   "expect": {
+    "action": "SERVED",
+    "oracle": {
+     "mg1": [
+      "sq",
+      "64/9"
+     ]
+    },
+    "show": []
+   },
+   "observed": {
+    "status": "SERVED",
+    "code": null,
+    "stage": null,
+    "answer_exact": {
+     "mg1": {
+      "coef": "8/3",
+      "dim": 0,
+      "unit": null
+     }
+    },
+    "scene_points": [
+     "A",
+     "B",
+     "C",
+     "D",
+     "S"
+    ]
+   },
+   "outcome": "SERVED_CORRECT"
+  },
+  {
+   "id": "I11_mo_phong_va_tinh_SC",
+   "extraction": "gold",
+   "axes": {
+    "family": "pyramid",
+    "intent": "simulate_and_measure",
+    "wording": "mixed_sentence"
+   },
+   "expect": {
+    "action": "SERVED",
+    "oracle": {
+     "mg1": [
+      "sq",
+      "12"
+     ]
+    },
+    "show": []
+   },
+   "observed": {
+    "status": "SERVED",
+    "code": null,
+    "stage": null,
+    "answer_exact": {
+     "mg1": {
+      "coef": "2√3",
+      "dim": 0,
+      "unit": null
+     }
+    },
+    "scene_points": [
+     "A",
+     "B",
+     "C",
+     "D",
+     "S"
+    ]
+   },
+   "outcome": "SERVED_CORRECT"
+  },
+  {
+   "id": "I12_trailing_point",
+   "extraction": "gold",
+   "axes": {
+    "family": "pyramid",
+    "intent": "simulate_point",
+    "wording": "trailing_request",
+    "chain": 1
+   },
+   "expect": {
+    "action": "SERVED",
+    "oracle": {},
+    "show": [
+     "M"
+    ]
+   },
+   "observed": {
+    "status": "SERVED",
+    "code": null,
+    "stage": null,
+    "answer_exact": {},
+    "scene_points": [
+     "A",
+     "B",
+     "C",
+     "D",
+     "M",
+     "S"
+    ]
+   },
+   "outcome": "SERVED_CORRECT"
+  },
+  {
+   "id": "I13_chi_ra_duong_cao",
+   "extraction": "gold",
+   "axes": {
+    "family": "pyramid",
+    "intent": "highlight_role",
+    "wording": "informal"
+   },
+   "expect": {
+    "action": "NEEDS_CLARIFICATION",
+    "nlu_class": "VALID_BUT_UNSUPPORTED",
+    "kind": "unsupported",
+    "missing": []
+   },
+   "observed": {
+    "status": "REFUSED",
+    "code": "OUT_OF_SCOPE",
+    "stage": "deterministic_route",
+    "clarification": {
+     "schema_version": "route-d-clarification/1",
+     "unresolved_id": "u1",
+     "kind": "unsupported",
+     "nlu_class": "VALID_BUT_UNSUPPORTED",
+     "quote": "chỉ ra đường cao của hình chóp",
+     "spans": [
+      [
+       112,
+       142
+      ]
+     ],
+     "subject_ref": null,
+     "missing_roles": [],
+     "candidate_relations": [],
+     "question": null
+    },
+    "nlu_class": "VALID_BUT_UNSUPPORTED"
+   },
+   "outcome": "NEEDS_CLARIFICATION_CORRECT"
+  },
+  {
+   "id": "I13_chi_ra_duong_cao",
+   "extraction": "adv:inferred_highlight",
+   "axes": {
+    "family": "pyramid",
+    "intent": "highlight_role",
+    "wording": "informal"
+   },
+   "expect": null,
+   "observed": {
+    "status": "REFUSED",
+    "code": "SOURCE_PREMISE_UNREAD",
+    "stage": "deterministic_route",
+    "clarification": null,
+    "nlu_class": "UNRECOGNIZED_WORDING"
+   },
+   "outcome": "SAFE_REFUSAL"
+  },
+  {
+   "id": "I14_hoi_bao_nhieu",
+   "extraction": "gold",
+   "axes": {
+    "family": "pyramid",
+    "intent": "measure",
+    "wording": "question_form"
+   },
+   "expect": {
+    "action": "SERVED",
+    "oracle": {
+     "mg1": [
+      "sq",
+      "64/9"
+     ]
+    },
+    "show": []
+   },
+   "observed": {
+    "status": "SERVED",
+    "code": null,
+    "stage": null,
+    "answer_exact": {
+     "mg1": {
+      "coef": "8/3",
+      "dim": 0,
+      "unit": null
+     }
+    },
+    "scene_points": [
+     "A",
+     "B",
+     "C",
+     "D",
+     "S"
+    ]
+   },
+   "outcome": "SERVED_CORRECT"
+  },
+  {
+   "id": "S01_lowercase_cho",
+   "extraction": "gold",
+   "axes": {
+    "family": "pyramid",
+    "wording": "lowercase_sentence"
+   },
+   "expect": {
+    "action": "SERVED",
+    "oracle": {
+     "mg1": [
+      "sq",
+      "64/9"
+     ]
+    },
+    "show": []
+   },
+   "observed": {
+    "status": "SERVED",
+    "code": null,
+    "stage": null,
+    "answer_exact": {
+     "mg1": {
+      "coef": "8/3",
+      "dim": 0,
+      "unit": null
+     }
+    },
+    "scene_points": [
+     "A",
+     "B",
+     "C",
+     "D",
+     "S"
+    ]
+   },
+   "outcome": "SERVED_CORRECT"
+  },
+  {
+   "id": "S02_vuong_goc_day",
+   "extraction": "gold",
+   "axes": {
+    "family": "pyramid",
+    "wording": "dropped_preposition"
+   },
+   "expect": {
+    "action": "SERVED",
+    "oracle": {
+     "mg1": [
+      "sq",
+      "64/9"
+     ]
+    },
+    "show": []
+   },
+   "observed": {
+    "status": "SERVED",
+    "code": null,
+    "stage": null,
+    "answer_exact": {
+     "mg1": {
+      "coef": "8/3",
+      "dim": 0,
+      "unit": null
+     }
+    },
+    "scene_points": [
+     "A",
+     "B",
+     "C",
+     "D",
+     "S"
+    ]
+   },
+   "outcome": "SERVED_CORRECT"
+  },
+  {
+   "id": "S03_symbol_perp",
+   "extraction": "gold",
+   "axes": {
+    "family": "pyramid",
+    "wording": "math_symbol"
+   },
+   "expect": {
+    "action": "SERVED",
+    "oracle": {
+     "mg1": [
+      "sq",
+      "64/9"
+     ]
+    },
+    "show": []
+   },
+   "observed": {
+    "status": "SERVED",
+    "code": null,
+    "stage": null,
+    "answer_exact": {
+     "mg1": {
+      "coef": "8/3",
+      "dim": 0,
+      "unit": null
+     }
+    },
+    "scene_points": [
+     "A",
+     "B",
+     "C",
+     "D",
+     "S"
+    ]
+   },
+   "outcome": "SERVED_CORRECT"
+  },
+  {
+   "id": "S04_no_spaces",
+   "extraction": "gold",
+   "axes": {
+    "family": "pyramid",
+    "wording": "spacing"
+   },
+   "expect": {
+    "action": "SERVED",
+    "oracle": {
+     "mg1": [
+      "sq",
+      "64/9"
+     ]
+    },
+    "show": []
+   },
+   "observed": {
+    "status": "SERVED",
+    "code": null,
+    "stage": null,
+    "answer_exact": {
+     "mg1": {
+      "coef": "8/3",
+      "dim": 0,
+      "unit": null
+     }
+    },
+    "scene_points": [
+     "A",
+     "B",
+     "C",
+     "D",
+     "S"
+    ]
+   },
+   "outcome": "SERVED_CORRECT"
+  },
+  {
+   "id": "S05_no_diacritics",
+   "extraction": "gold",
+   "axes": {
+    "family": "pyramid",
+    "wording": "no_diacritics"
+   },
+   "expect": {
+    "action": "SERVED",
+    "oracle": {
+     "mg1": [
+      "sq",
+      "64/9"
+     ]
+    },
+    "show": []
+   },
+   "observed": {
+    "status": "REFUSED",
+    "code": "GATE_OUT_OF_SCOPE",
+    "nlu_class": "OUT_OF_SCOPE",
+    "stage": "domain"
+   },
+   "outcome": "FALSE_REFUSAL"
+  },
+  {
+   "id": "S06_lowercase_labels",
+   "extraction": "gold",
+   "axes": {
+    "family": "pyramid",
+    "wording": "lowercase_labels"
+   },
+   "expect": {
+    "action": "SERVED",
+    "oracle": {
+     "mg1": [
+      "sq",
+      "64/9"
+     ]
+    },
+    "show": []
+   },
+   "observed": {
+    "status": "REFUSED",
+    "code": "SOURCE_OBJECT_MISMATCH",
+    "stage": "deterministic_route",
+    "clarification": null,
+    "nlu_class": "UNRECOGNIZED_WORDING"
+   },
+   "outcome": "FALSE_REFUSAL"
+  },
+  {
+   "id": "S07_typo_tone",
+   "extraction": "gold",
+   "axes": {
+    "family": "pyramid",
+    "wording": "typo"
+   },
+   "expect": {
+    "action": "SERVED",
+    "oracle": {
+     "mg1": [
+      "sq",
+      "64/9"
+     ]
+    },
+    "show": []
+   },
+   "observed": {
+    "status": "REFUSED",
+    "code": "UNGROUNDED_VALUE",
+    "stage": "deterministic_route",
+    "clarification": null,
+    "nlu_class": "UNRECOGNIZED_WORDING"
+   },
+   "outcome": "FALSE_REFUSAL"
+  },
+  {
+   "id": "S08_altitude_wording",
+   "extraction": "gold",
+   "axes": {
+    "family": "pyramid",
+    "wording": "equivalent_relation"
+   },
+   "expect": {
+    "action": "SERVED",
+    "oracle": {
+     "mg1": [
+      "sq",
+      "64/9"
+     ]
+    },
+    "show": []
+   },
+   "observed": {
+    "status": "SERVED",
+    "code": null,
+    "stage": null,
+    "answer_exact": {
+     "mg1": {
+      "coef": "8/3",
+      "dim": 0,
+      "unit": null
+     }
+    },
+    "scene_points": [
+     "A",
+     "B",
+     "C",
+     "D",
+     "S"
+    ]
+   },
+   "outcome": "SERVED_CORRECT"
+  },
+  {
+   "id": "R01_permuted_clauses",
+   "extraction": "gold",
+   "axes": {
+    "family": "pyramid",
+    "metamorphic": "permute"
+   },
+   "expect": {
+    "action": "SERVED",
+    "oracle": {
+     "mg1": [
+      "sq",
+      "64/9"
+     ]
+    },
+    "show": []
+   },
+   "observed": {
+    "status": "SERVED",
+    "code": null,
+    "stage": null,
+    "answer_exact": {
+     "mg1": {
+      "coef": "8/3",
+      "dim": 0,
+      "unit": null
+     }
+    },
+    "scene_points": [
+     "A",
+     "B",
+     "C",
+     "D",
+     "S"
+    ]
+   },
+   "outcome": "SERVED_CORRECT"
+  },
+  {
+   "id": "R02_renamed",
+   "extraction": "gold",
+   "axes": {
+    "family": "pyramid",
+    "metamorphic": "rename"
+   },
+   "expect": {
+    "action": "SERVED",
+    "oracle": {
+     "mg1": [
+      "sq",
+      "64/9"
+     ]
+    },
+    "show": []
+   },
+   "observed": {
+    "status": "SERVED",
+    "code": null,
+    "stage": null,
+    "answer_exact": {
+     "mg1": {
+      "coef": "8/3",
+      "dim": 0,
+      "unit": null
+     }
+    },
+    "scene_points": [
+     "M",
+     "N",
+     "P",
+     "Q",
+     "S"
+    ]
+   },
+   "outcome": "SERVED_CORRECT"
+  },
+  {
+   "id": "R03_scaled_x2",
+   "extraction": "gold",
+   "axes": {
+    "family": "pyramid",
+    "metamorphic": "scale"
+   },
+   "expect": {
+    "action": "SERVED",
+    "oracle": {
+     "mg1": [
+      "sq",
+      "4096/9"
+     ]
+    },
+    "show": []
+   },
+   "observed": {
+    "status": "SERVED",
+    "code": null,
+    "stage": null,
+    "answer_exact": {
+     "mg1": {
+      "coef": "64/3",
+      "dim": 0,
+      "unit": null
+     }
+    },
+    "scene_points": [
+     "A",
+     "B",
+     "C",
+     "D",
+     "S"
+    ]
+   },
+   "outcome": "SERVED_CORRECT"
+  },
+  {
+   "id": "R04_symbolic_a",
+   "extraction": "gold",
+   "axes": {
+    "family": "pyramid",
+    "metamorphic": "symbolic_unit"
+   },
+   "expect": {
+    "action": "SERVED",
+    "oracle": {
+     "mg1": [
+      "sq",
+      "1/9"
+     ]
+    },
+    "show": []
+   },
+   "observed": {
+    "status": "SERVED",
+    "code": null,
+    "stage": null,
+    "answer_exact": {
+     "mg1": {
+      "coef": "1/3",
+      "dim": 3,
+      "unit": "a"
+     }
+    },
+    "scene_points": [
+     "A",
+     "B",
+     "C",
+     "D",
+     "S"
+    ]
+   },
+   "outcome": "SERVED_CORRECT"
+  },
+  {
+   "id": "P01_mid_then_distance",
+   "extraction": "gold",
+   "axes": {
+    "family": "pyramid",
+    "chain": 2,
+    "goals": 1
+   },
+   "expect": {
+    "action": "SERVED",
+    "oracle": {
+     "mg1": [
+      "sq",
+      "1"
+     ]
+    },
+    "show": []
+   },
+   "observed": {
+    "status": "SERVED",
+    "code": null,
+    "stage": null,
+    "answer_exact": {
+     "mg1": {
+      "coef": "1",
+      "dim": 0,
+      "unit": null
+     }
+    },
+    "scene_points": [
+     "A",
+     "B",
+     "C",
+     "D",
+     "M",
+     "S"
+    ]
+   },
+   "outcome": "SERVED_CORRECT"
+  },
+  {
+   "id": "P02_proj_then_length",
+   "extraction": "gold",
+   "axes": {
+    "family": "pyramid",
+    "chain": 2
+   },
+   "expect": {
+    "action": "SERVED",
+    "oracle": {
+     "mg1": [
+      "sq",
+      "2"
+     ]
+    },
+    "show": []
+   },
+   "observed": {
+    "status": "SERVED",
+    "code": null,
+    "stage": null,
+    "answer_exact": {
+     "mg1": {
+      "coef": "√2",
+      "dim": 0,
+      "unit": null
+     }
+    },
+    "scene_points": [
+     "A",
+     "B",
+     "C",
+     "D",
+     "H",
+     "S"
+    ]
+   },
+   "outcome": "SERVED_CORRECT"
+  },
+  {
+   "id": "P02_proj_then_length",
+   "extraction": "adv:role_swap",
+   "axes": {
+    "family": "pyramid",
+    "chain": 2
+   },
+   "expect": null,
+   "observed": {
+    "status": "REFUSED",
+    "code": "SOURCE_OBJECT_MISMATCH",
+    "stage": "deterministic_route",
+    "clarification": null,
+    "nlu_class": "UNRECOGNIZED_WORDING"
+   },
+   "outcome": "SAFE_REFUSAL"
+  },
+  {
+   "id": "P03_two_proj_then_length",
+   "extraction": "gold",
+   "axes": {
+    "family": "pyramid",
+    "chain": 3
+   },
+   "expect": {
+    "action": "SERVED",
+    "oracle": {
+     "mg1": [
+      "sq",
+      "2"
+     ]
+    },
+    "show": []
+   },
+   "observed": {
+    "status": "SERVED",
+    "code": null,
+    "stage": null,
+    "answer_exact": {
+     "mg1": {
+      "coef": "√2",
+      "dim": 0,
+      "unit": null
+     }
+    },
+    "scene_points": [
+     "A",
+     "B",
+     "C",
+     "D",
+     "H",
+     "K",
+     "S"
+    ]
+   },
+   "outcome": "SERVED_CORRECT"
+  },
+  {
+   "id": "P04_intersection_then_length",
+   "extraction": "gold",
+   "axes": {
+    "family": "pyramid",
+    "chain": 2
+   },
+   "expect": {
+    "action": "SERVED",
+    "oracle": {
+     "mg1": [
+      "sq",
+      "6"
+     ]
+    },
+    "show": []
+   },
+   "observed": {
+    "status": "SERVED",
+    "code": null,
+    "stage": null,
+    "answer_exact": {
+     "mg1": {
+      "coef": "√6",
+      "dim": 0,
+      "unit": null
+     }
+    },
+    "scene_points": [
+     "A",
+     "B",
+     "C",
+     "D",
+     "O",
+     "S"
+    ]
+   },
+   "outcome": "SERVED_CORRECT"
+  },
+  {
+   "id": "P05_point_line_decomposition",
+   "extraction": "gold",
+   "axes": {
+    "family": "pyramid",
+    "chain": 2,
+    "auxiliary": "planner"
+   },
+   "expect": {
+    "action": "SERVED",
+    "oracle": {
+     "mg1": [
+      "sq",
+      "6"
+     ]
+    },
+    "show": []
+   },
+   "observed": {
+    "status": "SERVED",
+    "code": null,
+    "stage": null,
+    "answer_exact": {
+     "mg1": {
+      "coef": "√6",
+      "dim": 0,
+      "unit": null
+     }
+    },
+    "scene_points": [
+     "A",
+     "B",
+     "C",
+     "D",
+     "H",
+     "S"
+    ]
+   },
+   "outcome": "SERVED_CORRECT"
+  },
+  {
+   "id": "P06_two_mid_then_angle",
+   "extraction": "gold",
+   "axes": {
+    "family": "pyramid",
+    "chain": 3
+   },
+   "expect": {
+    "action": "SERVED",
+    "oracle": {
+     "mg1": [
+      "cos2",
+      "1/2"
+     ]
+    },
+    "show": []
+   },
+   "observed": {
+    "status": "SERVED",
+    "code": null,
+    "stage": null,
+    "answer_exact": {
+     "mg1": {
+      "coef": "1/2",
+      "dim": 0,
+      "unit": null
+     }
+    },
+    "scene_points": [
+     "A",
+     "B",
+     "C",
+     "D",
+     "M",
+     "N",
+     "S"
+    ]
+   },
+   "outcome": "SERVED_CORRECT"
+  },
+  {
+   "id": "P07_shared_intermediate_two_goals",
+   "extraction": "gold",
+   "axes": {
+    "family": "pyramid",
+    "chain": 2,
+    "goals": 2
+   },
+   "expect": {
+    "action": "SERVED",
+    "oracle": {
+     "mg1": [
+      "sq",
+      "3"
+     ],
+     "mg2": [
+      "sq",
+      "1"
+     ]
+    },
+    "show": []
+   },
+   "observed": {
+    "status": "SERVED",
+    "code": null,
+    "stage": null,
+    "answer_exact": {
+     "mg2": {
+      "coef": "1",
+      "dim": 0,
+      "unit": null
+     },
+     "mg1": {
+      "coef": "√3",
+      "dim": 0,
+      "unit": null
+     }
+    },
+    "scene_points": [
+     "A",
+     "B",
+     "C",
+     "D",
+     "M",
+     "S"
+    ]
+   },
+   "outcome": "SERVED_CORRECT"
+  },
+  {
+   "id": "P08_proj_foot_reused",
+   "extraction": "gold",
+   "axes": {
+    "family": "pyramid",
+    "chain": 2
+   },
+   "expect": {
+    "action": "SERVED",
+    "oracle": {
+     "mg1": [
+      "sq",
+      "1"
+     ]
+    },
+    "show": []
+   },
+   "observed": {
+    "status": "SERVED",
+    "code": null,
+    "stage": null,
+    "answer_exact": {
+     "mg1": {
+      "coef": "1",
+      "dim": 0,
+      "unit": null
+     }
+    },
+    "scene_points": [
+     "A",
+     "B",
+     "C",
+     "D",
+     "H",
+     "S"
+    ]
+   },
+   "outcome": "SERVED_CORRECT"
+  },
+  {
+   "id": "P09_student_chain",
+   "extraction": "gold",
+   "axes": {
+    "family": "pyramid",
+    "chain": 2,
+    "intent": "simulate_and_measure",
+    "wording": "ve_opener"
+   },
+   "expect": {
+    "action": "SERVED",
+    "oracle": {
+     "mg1": [
+      "sq",
+      "3"
+     ]
+    },
+    "show": []
+   },
+   "observed": {
+    "status": "SERVED",
+    "code": null,
+    "stage": null,
+    "answer_exact": {
+     "mg1": {
+      "coef": "√3",
+      "dim": 0,
+      "unit": null
+     }
+    },
+    "scene_points": [
+     "A",
+     "B",
+     "C",
+     "D",
+     "M",
+     "S"
+    ]
+   },
+   "outcome": "SERVED_CORRECT"
+  },
+  {
+   "id": "P10_proj_point_on_face",
+   "extraction": "gold",
+   "axes": {
+    "family": "pyramid",
+    "chain": 2,
+    "intent": "simulate_point"
+   },
+   "expect": {
+    "action": "SERVED",
+    "oracle": {
+     "mg1": [
+      "sq",
+      "2"
+     ]
+    },
+    "show": []
+   },
+   "observed": {
+    "status": "SERVED",
+    "code": null,
+    "stage": null,
+    "answer_exact": {
+     "mg1": {
+      "coef": "√2",
+      "dim": 0,
+      "unit": null
+     }
+    },
+    "scene_points": [
+     "A",
+     "B",
+     "C",
+     "D",
+     "H",
+     "S"
+    ]
+   },
+   "outcome": "SERVED_CORRECT"
+  },
+  {
+   "id": "A01_goc_chieu",
+   "extraction": "gold",
+   "axes": {
+    "family": "prism",
+    "ambiguity": "undefined_term",
+    "wording": "nonstandard_term"
+   },
+   "expect": {
+    "action": "NEEDS_CLARIFICATION",
+    "nlu_class": "AMBIGUOUS",
+    "kind": "ambiguous",
+    "missing": [
+     "source_point",
+     "target_line_or_plane"
+    ]
+   },
+   "observed": {
+    "status": "REFUSED",
+    "code": "AMBIGUOUS_FACT",
+    "stage": "deterministic_route",
+    "clarification": {
+     "schema_version": "route-d-clarification/1",
+     "unresolved_id": "u1",
+     "kind": "ambiguous",
+     "nlu_class": "AMBIGUOUS",
+     "quote": "S là góc chiếu của hình lăng trụ xiên",
+     "spans": [
+      [
+       14,
+       51
+      ]
+     ],
+     "subject_ref": "S",
+     "missing_roles": [
+      "source_point",
+      "target_line_or_plane"
+     ],
+     "candidate_relations": [
+      "orthogonal_projection"
+     ],
+     "question": "Trong “S là góc chiếu của hình lăng trụ xiên”, bạn muốn S là hình chiếu của điểm nào và lên đường thẳng hoặc mặt phẳng nào?"
+    },
+    "nlu_class": "AMBIGUOUS"
+   },
+   "outcome": "NEEDS_CLARIFICATION_CORRECT"
+  },
+  {
+   "id": "A01_goc_chieu",
+   "extraction": "adv:assume_projection_of_A_prime",
+   "axes": {
+    "family": "prism",
+    "ambiguity": "undefined_term",
+    "wording": "nonstandard_term"
+   },
+   "expect": null,
+   "observed": {
+    "status": "REFUSED",
+    "code": "UNKNOWN_LABEL",
+    "stage": "deterministic_route",
+    "clarification": null,
+    "nlu_class": "UNRECOGNIZED_WORDING"
+   },
+   "outcome": "SAFE_REFUSAL"
+  },
+  {
+   "id": "A01_goc_chieu",
+   "extraction": "adv:assume_S_apex",
+   "axes": {
+    "family": "prism",
+    "ambiguity": "undefined_term",
+    "wording": "nonstandard_term"
+   },
+   "expect": null,
+   "observed": {
+    "status": "REFUSED",
+    "code": "UNKNOWN_LABEL",
+    "stage": "deterministic_route",
+    "clarification": null,
+    "nlu_class": "UNRECOGNIZED_WORDING"
+   },
+   "outcome": "SAFE_REFUSAL"
+  },
+  {
+   "id": "A02_control_dimensionless",
+   "extraction": "gold",
+   "axes": {
+    "family": "prism",
+    "completeness": "missing_dimensions",
+    "intent": "simulate_point"
+   },
+   "expect": {
+    "action": "REFUSED",
+    "nlu_class": "MISSING_DATA",
+    "codes": null
+   },
+   "observed": {
+    "status": "REFUSED",
+    "code": "MISSING_DIMENSION",
+    "stage": "deterministic_route",
+    "clarification": null,
+    "nlu_class": "MISSING_DATA"
+   },
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "A03_control_with_dimensions",
+   "extraction": "gold",
+   "axes": {
+    "family": "prism",
+    "intent": "simulate_and_measure",
+    "chain": 2
+   },
+   "expect": {
+    "action": "SERVED",
+    "oracle": {
+     "mg1": [
+      "sq",
+      "3"
+     ]
+    },
+    "show": [
+     "H"
+    ]
+   },
+   "observed": {
+    "status": "SERVED",
+    "code": null,
+    "stage": null,
+    "answer_exact": {
+     "mg1": {
+      "coef": "√3",
+      "dim": 0,
+      "unit": null
+     }
+    },
+    "scene_points": [
+     "A",
+     "A_prime",
+     "B",
+     "B_prime",
+     "C",
+     "C_prime",
+     "H"
+    ]
+   },
+   "outcome": "SERVED_CORRECT"
+  },
+  {
+   "id": "D01_no_side",
+   "extraction": "gold",
+   "axes": {
+    "family": "pyramid",
+    "completeness": "missing_dimension"
+   },
+   "expect": {
+    "action": "REFUSED",
+    "nlu_class": "MISSING_DATA",
+    "codes": null
+   },
+   "observed": {
+    "status": "REFUSED",
+    "code": "MISSING_DIMENSION",
+    "stage": "deterministic_route",
+    "clarification": null,
+    "nlu_class": "MISSING_DATA"
+   },
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "D02_bare_solid",
+   "extraction": "gold",
+   "axes": {
+    "family": "pyramid",
+    "completeness": "missing_shape",
+    "intent": "simulate_only"
+   },
+   "expect": {
+    "action": "REFUSED",
+    "nlu_class": "MISSING_DATA",
+    "codes": null
+   },
+   "observed": {
+    "status": "REFUSED",
+    "code": "MISSING_DIMENSION",
+    "stage": "deterministic_route",
+    "clarification": null,
+    "nlu_class": "MISSING_DATA"
+   },
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "D03_contradictory_length",
+   "extraction": "gold",
+   "axes": {
+    "family": "pyramid",
+    "completeness": "contradictory"
+   },
+   "expect": {
+    "action": "REFUSED",
+    "nlu_class": "CONTRADICTORY_DATA",
+    "codes": null
+   },
+   "observed": {
+    "status": "REFUSED",
+    "code": "INCONSISTENT_FACTS",
+    "stage": "deterministic_route",
+    "clarification": null,
+    "nlu_class": "CONTRADICTORY_DATA"
+   },
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "D04_two_values_same_segment",
+   "extraction": "gold",
+   "axes": {
+    "family": "pyramid",
+    "completeness": "contradictory"
+   },
+   "expect": {
+    "action": "REFUSED",
+    "nlu_class": "CONTRADICTORY_DATA",
+    "codes": null
+   },
+   "observed": {
+    "status": "REFUSED",
+    "code": "INCONSISTENT_FACTS",
+    "stage": "deterministic_route",
+    "clarification": null,
+    "nlu_class": "CONTRADICTORY_DATA"
+   },
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "D05_projection_missing_target",
+   "extraction": "gold",
+   "axes": {
+    "family": "pyramid",
+    "completeness": "missing_operand"
+   },
+   "expect": {
+    "action": "NEEDS_CLARIFICATION",
+    "nlu_class": "MISSING_DATA",
+    "kind": "missing_operand",
+    "missing": [
+     "target_line_or_plane"
+    ]
+   },
+   "observed": {
+    "status": "REFUSED",
+    "code": "AMBIGUOUS_FACT",
+    "stage": "deterministic_route",
+    "clarification": {
+     "schema_version": "route-d-clarification/1",
+     "unresolved_id": "u1",
+     "kind": "missing_operand",
+     "nlu_class": "MISSING_DATA",
+     "quote": "Gọi H là hình chiếu của S",
+     "spans": [
+      [
+       100,
+       125
+      ]
+     ],
+     "subject_ref": "H",
+     "missing_roles": [
+      "target_line_or_plane"
+     ],
+     "candidate_relations": [
+      "orthogonal_projection"
+     ],
+     "question": "Trong “Gọi H là hình chiếu của S”, bạn muốn H là hình chiếu lên đường thẳng hoặc mặt phẳng nào?"
+    },
+    "nlu_class": "MISSING_DATA"
+   },
+   "outcome": "NEEDS_CLARIFICATION_CORRECT"
+  },
+  {
+   "id": "D05_projection_missing_target",
+   "extraction": "adv:assume_onto_base",
+   "axes": {
+    "family": "pyramid",
+    "completeness": "missing_operand"
+   },
+   "expect": null,
+   "observed": {
+    "status": "REFUSED",
+    "code": "PLANE_NOT_IN_QUOTE",
+    "stage": "deterministic_route",
+    "clarification": null,
+    "nlu_class": "UNRECOGNIZED_WORDING"
+   },
+   "outcome": "SAFE_REFUSAL"
+  },
+  {
+   "id": "D06_unnamed_prism",
+   "extraction": "gold",
+   "axes": {
+    "family": "prism",
+    "completeness": "missing_notation",
+    "intent": "simulate_only"
+   },
+   "expect": {
+    "action": "NEEDS_CLARIFICATION",
+    "nlu_class": "MISSING_DATA",
+    "kind": "missing_operand",
+    "missing": [
+     "solid_notation",
+     "dimension"
+    ]
+   },
+   "observed": {
+    "status": "REFUSED",
+    "code": "AMBIGUOUS_FACT",
+    "stage": "deterministic_route",
+    "clarification": {
+     "schema_version": "route-d-clarification/1",
+     "unresolved_id": "u1",
+     "kind": "missing_operand",
+     "nlu_class": "MISSING_DATA",
+     "quote": "Mô phỏng hình lăng trụ",
+     "spans": [
+      [
+       0,
+       22
+      ]
+     ],
+     "subject_ref": null,
+     "missing_roles": [
+      "solid_notation",
+      "dimension"
+     ],
+     "candidate_relations": [],
+     "question": "Trong “Mô phỏng hình lăng trụ”, bạn hãy nói rõ tên các đỉnh của hình và các số đo cần thiết."
+    },
+    "nlu_class": "MISSING_DATA"
+   },
+   "outcome": "NEEDS_CLARIFICATION_CORRECT"
+  },
+  {
+   "id": "D07_unsupported_unnamed_projection",
+   "extraction": "gold",
+   "axes": {
+    "family": "pyramid",
+    "intent": "find_point",
+    "support": "unsupported"
+   },
+   "expect": {
+    "action": "NEEDS_CLARIFICATION",
+    "nlu_class": "VALID_BUT_UNSUPPORTED",
+    "kind": "unsupported",
+    "missing": []
+   },
+   "observed": {
+    "status": "REFUSED",
+    "code": "OUT_OF_SCOPE",
+    "stage": "deterministic_route",
+    "clarification": {
+     "schema_version": "route-d-clarification/1",
+     "unresolved_id": "u1",
+     "kind": "unsupported",
+     "nlu_class": "VALID_BUT_UNSUPPORTED",
+     "quote": "Tìm hình chiếu của A lên mặt phẳng (SBC)",
+     "spans": [
+      [
+       100,
+       140
+      ]
+     ],
+     "subject_ref": null,
+     "missing_roles": [],
+     "candidate_relations": [],
+     "question": null
+    },
+    "nlu_class": "VALID_BUT_UNSUPPORTED"
+   },
+   "outcome": "NEEDS_CLARIFICATION_CORRECT"
+  },
+  {
+   "id": "O01_calculus",
+   "extraction": "gold",
+   "axes": {
+    "scope": "other_subject"
+   },
+   "expect": {
+    "action": "REFUSED",
+    "nlu_class": "OUT_OF_SCOPE",
+    "codes": null
+   },
+   "observed": {
+    "status": "REFUSED",
+    "code": "GATE_OUT_OF_SCOPE",
+    "nlu_class": "OUT_OF_SCOPE",
+    "stage": "domain"
+   },
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "O02_plane_geometry",
+   "extraction": "gold",
+   "axes": {
+    "scope": "plane_geometry"
+   },
+   "expect": {
+    "action": "REFUSED",
+    "nlu_class": "OUT_OF_SCOPE",
+    "codes": null
+   },
+   "observed": {
+    "status": "REFUSED",
+    "code": "GATE_OUT_OF_SCOPE",
+    "nlu_class": "OUT_OF_SCOPE",
+    "stage": "domain"
+   },
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "X01_point_plane_vs_point_line",
+   "extraction": "gold",
+   "axes": {
+    "family": "pyramid",
+    "contrastive": "goal_operand"
+   },
+   "expect": {
+    "action": "SERVED",
+    "oracle": {
+     "mg1": [
+      "sq",
+      "2"
+     ]
+    },
+    "show": []
+   },
+   "observed": {
+    "status": "SERVED",
+    "code": null,
+    "stage": null,
+    "answer_exact": {
+     "mg1": {
+      "coef": "√2",
+      "dim": 0,
+      "unit": null
+     }
+    },
+    "scene_points": [
+     "A",
+     "B",
+     "C",
+     "D",
+     "S"
+    ]
+   },
+   "outcome": "SERVED_CORRECT"
+  },
+  {
+   "id": "X01_point_plane_vs_point_line",
+   "extraction": "adv:point_line",
+   "axes": {
+    "family": "pyramid",
+    "contrastive": "goal_operand"
+   },
+   "expect": null,
+   "observed": {
+    "status": "REFUSED",
+    "code": "SOURCE_OBJECT_MISMATCH",
+    "stage": "deterministic_route",
+    "clarification": null,
+    "nlu_class": "UNRECOGNIZED_WORDING"
+   },
+   "outcome": "SAFE_REFUSAL"
+  },
+  {
+   "id": "X02_dropped_goal",
+   "extraction": "adv:dropped_volume",
+   "axes": {
+    "family": "pyramid",
+    "completeness": "dropped_request"
+   },
+   "expect": null,
+   "observed": {
+    "status": "REFUSED",
+    "code": "REQUEST_NOT_ANSWERED",
+    "stage": "deterministic_route",
+    "clarification": null,
+    "nlu_class": "UNRECOGNIZED_WORDING"
+   },
+   "outcome": "SAFE_REFUSAL"
+  },
+  {
+   "id": "X03_negated",
+   "extraction": "adv:negation_as_premise",
+   "axes": {
+    "family": "pyramid",
+    "adversarial": "negation"
+   },
+   "expect": null,
+   "observed": {
+    "status": "REFUSED",
+    "code": "NEGATED_CLAUSE",
+    "stage": "extraction",
+    "clarification": null,
+    "nlu_class": "VALID_BUT_UNSUPPORTED"
+   },
+   "outcome": "SAFE_REFUSAL"
+  },
+  {
+   "id": "X04_conditional",
+   "extraction": "adv:condition_as_premise",
+   "axes": {
+    "family": "pyramid",
+    "adversarial": "conditional"
+   },
+   "expect": null,
+   "observed": {
+    "status": "REFUSED",
+    "code": "CONDITIONAL_CLAUSE",
+    "stage": "extraction",
+    "clarification": null,
+    "nlu_class": "VALID_BUT_UNSUPPORTED"
+   },
+   "outcome": "SAFE_REFUSAL"
+  },
+  {
+   "id": "X05_value_mismatch",
+   "extraction": "adv:wrong_value",
+   "axes": {
+    "family": "pyramid",
+    "adversarial": "value"
+   },
+   "expect": null,
+   "observed": {
+    "status": "REFUSED",
+    "code": "UNGROUNDED_VALUE",
+    "stage": "deterministic_route",
+    "clarification": null,
+    "nlu_class": "UNRECOGNIZED_WORDING"
+   },
+   "outcome": "SAFE_REFUSAL"
+  },
+  {
+   "id": "X06_invented_given",
+   "extraction": "adv:invented_height",
+   "axes": {
+    "family": "pyramid",
+    "adversarial": "invented_fact"
+   },
+   "expect": null,
+   "observed": {
+    "status": "REFUSED",
+    "code": "QUOTE_NOT_IN_SOURCE",
+    "stage": "extraction",
+    "clarification": null,
+    "nlu_class": "UNRECOGNIZED_WORDING"
+   },
+   "outcome": "SAFE_REFUSAL"
+  },
+  {
+   "id": "X07_lines_vs_segment",
+   "extraction": "gold",
+   "axes": {
+    "family": "pyramid",
+    "contrastive": "quantity_kind"
+   },
+   "expect": {
+    "action": "SERVED",
+    "oracle": {
+     "mg1": [
+      "sq",
+      "4"
+     ]
+    },
+    "show": []
+   },
+   "observed": {
+    "status": "SERVED",
+    "code": null,
+    "stage": null,
+    "answer_exact": {
+     "mg1": {
+      "coef": "2",
+      "dim": 0,
+      "unit": null
+     }
+    },
+    "scene_points": [
+     "A",
+     "B",
+     "C",
+     "D",
+     "S"
+    ]
+   },
+   "outcome": "SERVED_CORRECT"
+  },
+  {
+   "id": "X07_lines_vs_segment",
+   "extraction": "adv:segment_length",
+   "axes": {
+    "family": "pyramid",
+    "contrastive": "quantity_kind"
+   },
+   "expect": null,
+   "observed": {
+    "status": "REFUSED",
+    "code": "NOT_ASKED_IN_SOURCE",
+    "stage": "deterministic_route",
+    "clarification": null,
+    "nlu_class": "UNRECOGNIZED_WORDING"
+   },
+   "outcome": "SAFE_REFUSAL"
+  },
+  {
+   "id": "X08_simulation_goal_swapped",
+   "extraction": "gold",
+   "axes": {
+    "family": "pyramid",
+    "contrastive": "intent_vs_measure"
+   },
+   "expect": {
+    "action": "SERVED",
+    "oracle": {},
+    "show": [
+     "S"
+    ]
+   },
+   "observed": {
+    "status": "SERVED",
+    "code": null,
+    "stage": null,
+    "answer_exact": {},
+    "scene_points": [
+     "A",
+     "B",
+     "C",
+     "D",
+     "S"
+    ]
+   },
+   "outcome": "SERVED_CORRECT"
+  },
+  {
+   "id": "X08_simulation_goal_swapped",
+   "extraction": "adv:sim_as_volume",
+   "axes": {
+    "family": "pyramid",
+    "contrastive": "intent_vs_measure"
+   },
+   "expect": null,
+   "observed": {
+    "status": "REFUSED",
+    "code": "SOURCE_OBJECT_MISMATCH",
+    "stage": "deterministic_route",
+    "clarification": null,
+    "nlu_class": "UNRECOGNIZED_WORDING"
+   },
+   "outcome": "SAFE_REFUSAL"
+  },
+  {
+   "id": "X09_smuggled_value_in_request",
+   "extraction": "adv:ignore_smuggled",
+   "axes": {
+    "family": "pyramid",
+    "adversarial": "smuggled_given"
+   },
+   "expect": null,
+   "observed": {
+    "status": "REFUSED",
+    "code": "SOURCE_PREMISE_UNREAD",
+    "stage": "deterministic_route",
+    "clarification": null,
+    "nlu_class": "UNRECOGNIZED_WORDING"
+   },
+   "outcome": "SAFE_REFUSAL"
+  },
+  {
+   "id": "X10_new_object_in_request",
+   "extraction": "adv:show_unbuilt_point",
+   "axes": {
+    "family": "pyramid",
+    "adversarial": "unbuilt_object"
+   },
+   "expect": null,
+   "observed": {
+    "status": "REFUSED",
+    "code": "SOURCE_PREMISE_UNREAD",
+    "stage": "deterministic_route",
+    "clarification": null,
+    "nlu_class": "UNRECOGNIZED_WORDING"
+   },
+   "outcome": "SAFE_REFUSAL"
+  },
+  {
+   "id": "X11_negated_request",
+   "extraction": "gold",
+   "axes": {
+    "family": "pyramid",
+    "adversarial": "negated_request"
+   },
+   "expect": {
+    "action": "SERVED",
+    "oracle": {
+     "mg1": [
+      "sq",
+      "64/9"
+     ]
+    },
+    "show": []
+   },
+   "observed": {
+    "status": "SERVED",
+    "code": null,
+    "stage": null,
+    "answer_exact": {
+     "mg1": {
+      "coef": "8/3",
+      "dim": 0,
+      "unit": null
+     }
+    },
+    "scene_points": [
+     "A",
+     "B",
+     "C",
+     "D",
+     "S"
+    ]
+   },
+   "outcome": "SERVED_CORRECT"
+  },
+  {
+   "id": "M_T1_Cho",
+   "extraction": "gold",
+   "axes": {
+    "family": "pyramid",
+    "metamorphic": "opener_swap",
+    "wording": "Cho"
+   },
+   "expect": {
+    "action": "SERVED",
+    "oracle": {
+     "mg1": [
+      "sq",
+      "432"
+     ]
+    },
+    "show": []
+   },
+   "observed": {
+    "status": "SERVED",
+    "code": null,
+    "stage": null,
+    "answer_exact": {
+     "mg1": {
+      "coef": "12√3",
+      "dim": 0,
+      "unit": null
+     }
+    },
+    "scene_points": [
+     "A",
+     "B",
+     "C",
+     "O",
+     "S"
+    ]
+   },
+   "outcome": "SERVED_CORRECT"
+  },
+  {
+   "id": "M_T1_Vẽ",
+   "extraction": "gold",
+   "axes": {
+    "family": "pyramid",
+    "metamorphic": "opener_swap",
+    "wording": "Vẽ"
+   },
+   "expect": {
+    "action": "SERVED",
+    "oracle": {
+     "mg1": [
+      "sq",
+      "432"
+     ]
+    },
+    "show": []
+   },
+   "observed": {
+    "status": "SERVED",
+    "code": null,
+    "stage": null,
+    "answer_exact": {
+     "mg1": {
+      "coef": "12√3",
+      "dim": 0,
+      "unit": null
+     }
+    },
+    "scene_points": [
+     "A",
+     "B",
+     "C",
+     "O",
+     "S"
+    ]
+   },
+   "outcome": "SERVED_CORRECT"
+  },
+  {
+   "id": "M_T1_Mô_phỏng",
+   "extraction": "gold",
+   "axes": {
+    "family": "pyramid",
+    "metamorphic": "opener_swap",
+    "wording": "Mô phỏng"
+   },
+   "expect": {
+    "action": "SERVED",
+    "oracle": {
+     "mg1": [
+      "sq",
+      "432"
+     ]
+    },
+    "show": []
+   },
+   "observed": {
+    "status": "SERVED",
+    "code": null,
+    "stage": null,
+    "answer_exact": {
+     "mg1": {
+      "coef": "12√3",
+      "dim": 0,
+      "unit": null
+     }
+    },
+    "scene_points": [
+     "A",
+     "B",
+     "C",
+     "O",
+     "S"
+    ]
+   },
+   "outcome": "SERVED_CORRECT"
+  },
+  {
+   "id": "M_T1_Cho_mình_xem",
+   "extraction": "gold",
+   "axes": {
+    "family": "pyramid",
+    "metamorphic": "opener_swap",
+    "wording": "Cho mình xem"
+   },
+   "expect": {
+    "action": "SERVED",
+    "oracle": {
+     "mg1": [
+      "sq",
+      "432"
+     ]
+    },
+    "show": []
+   },
+   "observed": {
+    "status": "SERVED",
+    "code": null,
+    "stage": null,
+    "answer_exact": {
+     "mg1": {
+      "coef": "12√3",
+      "dim": 0,
+      "unit": null
+     }
+    },
+    "scene_points": [
+     "A",
+     "B",
+     "C",
+     "O",
+     "S"
+    ]
+   },
+   "outcome": "SERVED_CORRECT"
+  },
+  {
+   "id": "M_T2_Cho",
+   "extraction": "gold",
+   "axes": {
+    "family": "prism",
+    "metamorphic": "opener_swap",
+    "wording": "Cho"
+   },
+   "expect": {
+    "action": "SERVED",
+    "oracle": {
+     "mg1": [
+      "sq",
+      "4/3"
+     ]
+    },
+    "show": []
+   },
+   "observed": {
+    "status": "SERVED",
+    "code": null,
+    "stage": null,
+    "answer_exact": {
+     "mg1": {
+      "coef": "2√3/3",
+      "dim": 0,
+      "unit": null
+     }
+    },
+    "scene_points": [
+     "A",
+     "A_prime",
+     "B",
+     "B_prime",
+     "C",
+     "C_prime",
+     "D",
+     "D_prime"
+    ]
+   },
+   "outcome": "SERVED_CORRECT"
+  },
+  {
+   "id": "M_T2_Vẽ",
+   "extraction": "gold",
+   "axes": {
+    "family": "prism",
+    "metamorphic": "opener_swap",
+    "wording": "Vẽ"
+   },
+   "expect": {
+    "action": "SERVED",
+    "oracle": {
+     "mg1": [
+      "sq",
+      "4/3"
+     ]
+    },
+    "show": []
+   },
+   "observed": {
+    "status": "SERVED",
+    "code": null,
+    "stage": null,
+    "answer_exact": {
+     "mg1": {
+      "coef": "2√3/3",
+      "dim": 0,
+      "unit": null
+     }
+    },
+    "scene_points": [
+     "A",
+     "A_prime",
+     "B",
+     "B_prime",
+     "C",
+     "C_prime",
+     "D",
+     "D_prime"
+    ]
+   },
+   "outcome": "SERVED_CORRECT"
+  },
+  {
+   "id": "M_T2_Mô_phỏng",
+   "extraction": "gold",
+   "axes": {
+    "family": "prism",
+    "metamorphic": "opener_swap",
+    "wording": "Mô phỏng"
+   },
+   "expect": {
+    "action": "SERVED",
+    "oracle": {
+     "mg1": [
+      "sq",
+      "4/3"
+     ]
+    },
+    "show": []
+   },
+   "observed": {
+    "status": "SERVED",
+    "code": null,
+    "stage": null,
+    "answer_exact": {
+     "mg1": {
+      "coef": "2√3/3",
+      "dim": 0,
+      "unit": null
+     }
+    },
+    "scene_points": [
+     "A",
+     "A_prime",
+     "B",
+     "B_prime",
+     "C",
+     "C_prime",
+     "D",
+     "D_prime"
+    ]
+   },
+   "outcome": "SERVED_CORRECT"
+  },
+  {
+   "id": "M_T2_Cho_mình_xem",
+   "extraction": "gold",
+   "axes": {
+    "family": "prism",
+    "metamorphic": "opener_swap",
+    "wording": "Cho mình xem"
+   },
+   "expect": {
+    "action": "SERVED",
+    "oracle": {
+     "mg1": [
+      "sq",
+      "4/3"
+     ]
+    },
+    "show": []
+   },
+   "observed": {
+    "status": "SERVED",
+    "code": null,
+    "stage": null,
+    "answer_exact": {
+     "mg1": {
+      "coef": "2√3/3",
+      "dim": 0,
+      "unit": null
+     }
+    },
+    "scene_points": [
+     "A",
+     "A_prime",
+     "B",
+     "B_prime",
+     "C",
+     "C_prime",
+     "D",
+     "D_prime"
+    ]
+   },
+   "outcome": "SERVED_CORRECT"
+  }
+ ]
+}

@@ -1,0 +1,20 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "ALGOSIM_MASTER_HYBRID_BACKEND_REPLACEMENT (fourth continuation)",
+  "corrects": "docs/evaluation/geometry/runs/hybrid-master-backend-replacement/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "current_candidate_hash": "f0ebd8dff1165fc1410e9f0a0c259c52e6616e4a8a6aeae0471bbf132047a113",
+  "current_product_commit": "b249d82a19babe94232ad30a50840c3e662388b2",
+  "current_candidate_source": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+  "diverged": true,
+  "reason": "Backend only, offline, on top of the 44b02a62 candidate: (1) review M-3 — the Route D adapter fault handler builds its refusal from constants (adapter4_route.adapter_fault_response) and run_hybrid_offline never raises past argument validation, so a doubly-faulted adapter is a typed technical refusal, not an HTTP 500; M-4 docstrings closed. (2) Source Gate registry /22 — ordered 'lần lượt' lists for point-line projections (LLM_ONLY W18 parity). Served output of every previously served input is unchanged (locked regression: 0 transitions). The default LLM_ONLY path, its cache identity, prompts and schemas are unchanged.",
+  "cache_version": 131,
+  "cache_version_hien_tai": 131,
+  "cache_decision": "NO BUMP: LLM_ONLY is untouched; Route D rows are keyed by the Route D surface, which includes registry_version, so /22 retires /21 Route D rows by key (D-02); refusals are never cached.",
+  "hieu_luc_len_ket_qua_da_do": {
+    "historical_measurements": "UNCHANGED",
+    "live_requests": 0,
+    "so_lieu_lượt_đo_cuối": "UNCHANGED: historical measurements are not rescored."
+  }
+}

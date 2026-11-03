@@ -1,0 +1,15 @@
+{
+  "schema": "hybrid-master-backend-replacement/1",
+  "task_id": "ALGOSIM_MASTER_HYBRID_BACKEND_REPLACEMENT",
+  "run_id": "hybrid-master-backend-replacement",
+  "wave_id": "HYBRID_MASTER_BACKEND_REPLACEMENT_W1",
+  "date": "2026-10-30",
+  "baseline_commit": "f986e897bd266d06d4a9c5fa78c05463b7b247bf",
+  "branch": "research/hybrid-master-backend-replacement",
+  "scope": "BACKEND_ONLY",
+  "live_provider_budget": "NOT_AUTHORIZED",
+  "live_provider_calls": 0,
+  "phase": "CANONICAL_SOURCE_AND_IDENTITY_FOUNDATION",
+  "production_default": "LLM_ONLY",
+  "final_acceptance": "NOT_REACHED"
+}

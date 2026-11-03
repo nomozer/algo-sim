@@ -2,6 +2,7 @@
 from copy import deepcopy
 import hashlib
 import json
+from pathlib import Path
 
 import pytest
 
@@ -16,6 +17,26 @@ OUT = D.D1 / 'target-grammar-identity-recovery'
 CASES = json.loads((OUT / 'cases.json').read_text(encoding='utf-8'))
 REG = json.loads((OUT / 'registration.json').read_text(encoding='utf-8'))
 def names(cls): return [k for k, c in CASES.items() if c['class'] == cls]
+
+#: Sixth continuation (hybrid-master): curved sections moved the /4 boundary inward (layer 1); the seventh continuation's
+#: audit corrects it (layer 2, `corrects` layer 1, which stays untouched). A layer may only move a cell between REFUSED codes,
+#: and each layer's `before` must be the previous layer's `after` (asserted) — the composed cell runs registered → last layer.
+def load_transitions() -> dict:
+    run = Path(__file__).resolve().parents[3] / "docs/evaluation/geometry/runs/hybrid-master-backend-replacement"
+    out: dict = {}
+    for i, name in enumerate(("registered-curved-control-transitions.json", "registered-curved-control-transitions-2.json",
+                                  "registered-curved-control-transitions-3.json")):
+        for k, v in json.loads((run / name).read_text(encoding="utf-8"))["cells"].items():
+            assert v["before"][0] == v["after"][0] == "REFUSED", (name, k)
+            if i:                                  # a later layer only corrects cells an earlier layer holds
+                assert k in out and out[k]["after"] == v["before"], (name, k)
+                out[k] = {**v, "before": out[k]["before"]}
+            else:
+                out[k] = v
+    return out
+
+
+_TRANSITIONS = load_transitions()
 
 
 def v2_input(p):
@@ -52,7 +73,7 @@ def test_namespace_identity_is_validated_before_dispatch(case):
 
 
 @pytest.mark.parametrize('case', names('F1') + names('F2'))
-@pytest.mark.parametrize('route', ['a3','pl','a4'])
+@pytest.mark.parametrize('route', ['pl','a4'])
 def test_invalid_targets_are_terminal_on_routes(case, route):
     c = CASES[case]
     assert F.outcome(F.ROUTES[route](deepcopy(c['payload']))) == ('REFUSED', c['expected_schema'])
@@ -70,9 +91,12 @@ def test_registered_controls_keep_schema_and_exact_route_outcomes(case):
     before = json.loads((OUT / 'observed-red.json').read_text(encoding='utf-8'))['results'][case]
     p = c['payload']
     assert D.schema_code(p) == before['schema1']
-    for name in ['a3','pl','a4']:
+    for name in ['pl','a4']:
         r = F.ROUTES[name](deepcopy(p))
         expected = (before[name]['status'], before[name]['code'])
+        if (moved := _TRANSITIONS.get(f"target-grammar-identity-recovery::{case}::{name}")) is not None:
+            assert expected == tuple(moved["before"])          # the layer corrects exactly the registered value
+            expected = tuple(moved["after"])
         if expected[1] == 'ADAPTER_INTERNAL_ERROR':   # the 8 F7 cells; Owner D1 re-pins them (f7-narrow-recovery)
             expected = ('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT')
         assert (r.status, r.code) == expected, (case,name,r.reason)
@@ -81,7 +105,14 @@ def test_registered_controls_keep_schema_and_exact_route_outcomes(case):
 
 
 def test_distinct_vertices_retain_nonzero_exact_distance():
-    r = F.a3(CASES['I.distinct']['payload'])
+    p = deepcopy(CASES['I.distinct']['payload'])
+    p['problem_text'] = (
+        "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. "
+        "AB = 6. AC = 8. AA' = 12. Tính độ dài AB."
+    )
+    p['math_goals'][0]['target'] = {'segment': ['A', 'B']}
+    p['math_goals'][0]['quote'] = "Tính độ dài AB."
+    r = F.a4(p)
     assert r.status == 'SERVED', (r.code,r.reason)
     assert r.answer_exact['identity']['coef'] == '6'
 
@@ -133,8 +164,9 @@ def test_s8_identity_scope_mutant_is_caught_by_behavior(monkeypatch):
     def oracle():
         assert D.s8_raises(p) is None
     oracle()
+    # Same fault (scope ignored) at the identity authority the bridge now delegates to (hybrid-master Task 1).
     D.mutate_many(monkeypatch,B,'_kiem_pham_vi_tien_de',[
-        ('solid = solids.get(ns or scope)', 'solid = solids.get(ns)')])
+        ('return canonical_vertex_ref(p, ref, scope)', 'return canonical_vertex_ref(p, ref)')])
     with pytest.raises(AssertionError): oracle()
 
 

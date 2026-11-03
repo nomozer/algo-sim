@@ -1,0 +1,20 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "ALGOSIM_MASTER_HYBRID_BACKEND_REPLACEMENT (seventh continuation: registered contract audit, base-centre grammar, apex ratio k, sphere sections on /4)",
+  "corrects": "docs/evaluation/geometry/runs/hybrid-master-curved-sections/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "current_candidate_hash": "4c269babade61e10a6da5ea55d0e68da6be2d0deb661e749e32de241c29a0e63",
+  "current_product_commit": "d9d11b601ddf482adf1fae6d30b4fd78266588df",
+  "current_candidate_source": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+  "diverged": true,
+  "reason": "Backend only, offline, on top of the 277338ce candidate: the registered curved-control audit (two refusal-reason regressions fixed: CURVED_WORDING_UNSUPPORTED, CURVED_MULTI_SECTION_UNSUPPORTED; layers 2-3 of the transition record, REFUSED -> REFUSED only); base-centre wordings; the general apex ratio k (SM/SO, OM/OS converted by the gate); sphere sections at a distance from / through the centre (additive typed-fact-next/2 plane kinds at_distance_from_center, through_center and field distance_from_center; kernel _giao_cau with the certificate r'^2 = R^2 - d^2); Greek plane names; independent review READY in round 3 (registry /25, planner /21, engine /17). Wave 3 67/72 (72/72 negatives refused, 0 wrong-served), locked 96/96, 203 probes 0 wrong-served. The default LLM_ONLY path, its cache identity, prompts and route A's provider surface are unchanged; the /4 provider response schema widened (model surface changed for the /4 arm only).",
+  "cache_version": 131,
+  "cache_version_hien_tai": 131,
+  "cache_decision": "NO BUMP: LLM_ONLY untouched (CACHE_VERSION keys the /api/analyze response cache); Route D /4 has no response cache and its rows are keyed by the Route D surface (registry /25, planner /21, engine /17); refusals are never cached.",
+  "hieu_luc_len_ket_qua_da_do": {
+    "historical_measurements": "UNCHANGED",
+    "live_requests": 0,
+    "so_lieu_lượt_đo_cuối": "UNCHANGED: historical measurements are not rescored."
+  }
+}

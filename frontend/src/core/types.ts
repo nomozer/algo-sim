@@ -5,6 +5,14 @@
  * cùng `core/algorithms.ts`, `core/scan.ts`, `core/program.ts`, `core/trace-builder.ts` — không còn người dùng.
  */
 
+export interface ClarificationPrompt {
+  kind: "ambiguous" | "missing_operand" | "unrecognized_term" | "unsupported";
+  nlu_class: "AMBIGUOUS" | "MISSING_DATA" | "UNRECOGNIZED_WORDING" | "VALID_BUT_UNSUPPORTED";
+  quote: string;
+  spans: [number, number][];
+  question: string | null;
+}
+
 export interface AnalysisUnsupported {
   status: "unsupported";
   reason: string;
@@ -27,4 +35,6 @@ export interface AnalysisUnsupported {
    * đề" khi cùng một nguyên nhân gộp hai ca khác nhau (dựng lệch đã chứng minh vs chưa kiểm chứng được).
    * KHÔNG BAO GIỜ hiển thị mã này. */
   reason_code?: string;
+  /** Câu hỏi làm rõ từ bản ghi `route-d-clarification/1` đã qua bộ đọc kiểm chứng (không mang id nội bộ). */
+  clarification?: ClarificationPrompt;
 }

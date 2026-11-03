@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import math
 import os
 import hmac
 import ipaddress
@@ -20,6 +21,7 @@ from fastapi import Cookie, FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel, ConfigDict, Field
+from sqlalchemy.exc import IntegrityError
 
 from app.persistence.db import (
     SessionLocal,
@@ -53,8 +55,8 @@ from app.ingestion.image_extraction import (
     VisionUnavailable,
     extract_problem_from_image,
 )
-from app.ai.pipeline import HYBRID_PREVIEW_TOKEN_MIN_LENGTH, RoutePolicy, route_policy_snapshot, run_pipeline
-from app.learner_messages import attach_learner_reason, learner_error_message
+from app.ai.route_policy import HYBRID_PREVIEW_TOKEN_MIN_LENGTH, RoutePolicy, route_policy_snapshot
+from app.learner_messages import attach_learner_reason
 from app.runtime_identity import runtime_identity
 from app.accounts import service as accounts_service
 from app.accounts.policy import Role as AccountRole, entitlement_for
@@ -838,30 +840,27 @@ MISSING_KEY_MSG = (
 #       `CurvedSolid(…)` trong lời kể; mặt phẳng không tên gọi `(α)` khi đề không viết tên nào chưa hiện; tên khai nhiều
 #       điểm `(ABCD)` kiểm đồng phẳng thay vì rút thành `(ABC)`. Row v129 THẬT của 6 ca phát lại vẫn HIT
 #       (`runs/scene3d-to-hybrid-v2-replacement/cache/decision.json`); 2 ca đa diện đối chứng trùng byte.
-CACHE_VERSION = "131"
+# 132 — 2026-11-04 (hybrid-architecture-cutover): Tuyến sản phẩm chính thức của `POST /api/analyze` chuyển hoàn toàn
+#       sang Hybrid `/4` (`typed-fact-next/2` -> Source Gate -> FactGraph -> Planner `/26` -> Registry `/33` -> IR ->
+#       Exact Geometry Kernel -> Adapter `/4`), gỡ bỏ orchestrator `LLM_ONLY`, Compiler C và toàn bộ prompt sinh mã cũ.
+#       Bump `CACHE_VERSION` lên `132` (`ROUTE_D_CACHE_POLICY = "132:route-d"`) bảo đảm cách ly hai chiều: mọi hàng
+#       cache `131` (cả `LLM_ONLY` lẫn `131:route-d`) đều MISS và không bao giờ nhiễm sang kết quả Hybrid chính thức.
+CACHE_VERSION = "132"
 
-#: Ba chế độ của route sinh ngữ nghĩa, SERVER sở hữu — không phải cờ của client,
-#: không suy từ nội dung đề, không hard-code riêng bài nào.
-SEMANTIC_ROUTE_MODES = ("off", "shadow", "serve")
+#: Hai chế độ hợp lệ của kiến trúc chính thức Hybrid `/4` do máy chủ sở hữu:
+#: - `live` (mặc định): trích xuất có cấu trúc qua Gemini (`typed-fact-next/2`) khi cấu hình `GEMINI_API_KEY`.
+#: - `staging-replay`: chạy đường `/4` với kho trích xuất đã ghi (`HYBRID_REPLAY_CORPUS`), đánh dấu mô phỏng tường minh.
+HYBRID_ROUTE_MODES = ("live", "staging-replay")
 
 
-def semantic_route_mode() -> str:
-    """Chế độ route sinh ngữ nghĩa cho lượt phân tích này.
-
-    VÌ SAO HÀM NÀY TỒN TẠI: trước vNext, `main.py` gọi `run_pipeline(text,
-    api_key, pattern_store=...)` mà KHÔNG truyền `semantic_route`. Tham số ấy
-    mặc định `"off"` ở `ai/pipeline.py`, nên `stage_semantic_program` **chưa bao
-    giờ chạy trong sản phẩm** — mọi bài đều rơi về classifier legacy. Bài thuật
-    toán không khớp module nào thì xuống `generic.rule_scene`, miền khai báo
-    tĩnh: narration kể "đẩy '(' vào ngăn xếp" trong khi hình ngăn xếp rỗng.
-    Cùng họ với bất biến #22 (mảnh nào cũng xanh mà chưa mảnh nào được ghép).
-
-    Mặc định giữ `"off"`: bật là một quyết định vận hành tường minh, không phải
-    tác dụng phụ của việc nâng cấp. Giá trị lạ ⇒ ép về `"off"` chứ không tạo ra
-    một chế độ thứ tư im lặng.
-    """
-    v = os.getenv("SEMANTIC_ROUTE_MODE", "off")
-    return v if v in SEMANTIC_ROUTE_MODES else "off"
+def hybrid_route_mode() -> str:
+    """Đọc chế độ định tuyến Hybrid `/4`. Trống/chưa đặt ⇒ `live` (mặc định sản phẩm).
+    Giá trị lạ (kể cả `off` đã ngừng sử dụng) ⇒ `invalid` để fail-closed HTTP 503, không lùi về kiến trúc cũ."""
+    raw = os.getenv("HYBRID_ROUTE_MODE")
+    if raw is None or not raw.strip():
+        return "live"
+    cleaned = raw.strip()
+    return cleaned if cleaned in HYBRID_ROUTE_MODES else "invalid"
 
 
 class InputPayload(BaseModel):
@@ -904,15 +903,11 @@ def _cache_key(text: str) -> str:
 
 
 def _policy_identity(route_policy: RoutePolicy) -> str:
-    """`policy_version` của hàng cache cho ảnh chụp tuyến (run `hybrid-pre-main-hardening`).
-
-    Mặc định = `CACHE_VERSION`, đúng như trước — hàng hiện có vẫn trúng, không cần bump. Chế độ khác =
-    `CACHE_VERSION:<băm 8 của chế độ + phiên bản các tầng>` ⇒ bật hay rollback một chế độ đều MISS (trước đây khoá chỉ
-    là băm đề, nên đổi chế độ vẫn trả envelope của chế độ kia). ≤ `String(16)` khi `CACHE_VERSION` ≤ 7 ký tự."""
+    """`policy_version` của hàng cache sản phẩm sau cutover Hybrid `/4` (`ROUTE_D_CACHE_POLICY`).
+    Chế độ xem trước nội bộ (`hybrid_preview_enabled=True`) tuyệt đối không được dùng cache sản phẩm."""
     if route_policy.hybrid_preview_enabled:
         raise ValueError("Route D preview must never use the product cache")
-    fp = route_policy.fingerprint()
-    return CACHE_VERSION if fp is None else f"{CACHE_VERSION}:{fp}"
+    return ROUTE_D_CACHE_POLICY
 
 
 def _cache_lookup(session, key: str, policy_version: str | None = None) -> SimulationCache | None:
@@ -1054,21 +1049,6 @@ async def hybrid_preview(request: Request):
     return JSONResponse(content=result.model_dump(mode="json"), headers=headers)
 
 
-def _hybrid_v2_local(request: Request) -> str | None:
-    """Migration Stage 2 (run `scene3d-to-hybrid-v2-replacement`): đường Hybrid V2 BẬT TAY ở máy cục bộ.
-
-    Chỉ khi máy chủ đặt `HYBRID_V2_LOCAL=offline-replay` VÀ khách là loopback ⇒ trả đường dẫn kho phát lại
-    (`HYBRID_V2_LOCAL_REPLAY_CORPUS`). Ngoài ra `None`: tuyến mặc định `LLM_ONLY` chạy NGUYÊN như cũ — công tắc này không
-    đổi chính sách mặc định, không đổi cache (lượt Hybrid không đọc, không ghi cache), không bao giờ là đường lùi."""
-    if os.getenv("HYBRID_V2_LOCAL") != "offline-replay":
-        return None
-    try:
-        local = request.client is not None and ipaddress.ip_address(request.client.host).is_loopback
-    except ValueError:
-        local = False
-    return os.getenv("HYBRID_V2_LOCAL_REPLAY_CORPUS", "") if local else None
-
-
 def _ngoai_pham_vi(text: str) -> dict | None:
     """Phạm vi sản phẩm: hình học không gian, fail closed (xem chú thích ở `analyze`). `None` = trong phạm vi."""
     from app.simulation.error_codes import ErrorCode
@@ -1089,47 +1069,185 @@ def _ngoai_pham_vi(text: str) -> dict | None:
     }
 
 
-async def _analyze_hybrid_v2_local(text: str, corpus_path: str, algosim_session: str | None) -> Any:
-    """Đường Hybrid V2 offline (Stage 2): phản hồi /4 nguyên vẹn (`hybrid-route-d-simulation/4`), `no-store`."""
-    ngoai = _ngoai_pham_vi(text)
-    if ngoai is not None:
-        return JSONResponse(content=ngoai, headers={"Cache-Control": "no-store"})
-    # Declared Hybrid V2 execution boundary, reached only after the opt-in and loopback gates.
+#: `policy_version` of Route D rows (hybrid-master D-02). Their key is `prepare_local_replay(...).cache_key` (exact source
+#: + recorded extraction + Route D surface), a namespace the normalized `LLM_ONLY` key never produces; this tag makes the
+#: isolation two-way: an `LLM_ONLY` lookup wants `CACHE_VERSION[:fp]`, a Route D lookup wants this, so neither reads the
+#: other's row. Bumping `CACHE_VERSION` retires Route D rows too.
+ROUTE_D_CACHE_POLICY = f"{CACHE_VERSION}:route-d"
+
+
+def _served_route_d(row: SimulationCache | None) -> dict | None:
+    """A stored Route D response is reused only if it still is a SERVED /4 response; anything else is a MISS."""
+    try:
+        body = json.loads(row.envelope_json) if row is not None else None
+    except ValueError:
+        return None
+    return body if isinstance(body, dict) and (body.get("route_d") or {}).get("status") == "SERVED" else None
+
+
+def _store_route_d(session, key: str, text: str, response: dict) -> None:
+    stale = session.query(SimulationCache).filter_by(key=key).first()
+    if stale is not None:
+        session.delete(stale)
+        session.flush()        # same INSERT-before-DELETE trap as the LLM_ONLY write (see `analyze`)
+    session.add(SimulationCache(key=key, problem_text=text, simulation_id=str(response["envelope"].get("simulation_id", "")),
+                                envelope_json=json.dumps(response, ensure_ascii=False), dsl_version=DSL_VERSION,
+                                policy_version=ROUTE_D_CACHE_POLICY))
+    session.commit()
+
+
+_HYBRID_PROVIDER_502_CODES = frozenset({
+    "PROVIDER_ERROR", "PROVIDER_BLOCKED", "PROVIDER_REFUSED", "NO_CANDIDATE",
+    "PROVIDER_RESPONSE_INVALID", "MALFORMED_RESPONSE_PART", "JSON_INVALID",
+    "RESPONSE_TRUNCATED", "MAX_TOKENS", "SCHEMA_VERSION_MISMATCH",
+    "REPLAY_SOURCE_IDENTITY_MISMATCH",
+})
+
+
+def _hybrid_infra_error(code: str) -> JSONResponse:
+    """Ánh xạ sự cố hạ tầng / cấu hình / nhà cung cấp trên tuyến Hybrid sang lỗi HTTP có thể khôi phục.
+    Tuyệt đối không gán nhãn thành từ chối toán học và không rò rỉ khóa API hay stack trace."""
+    headers = {"Cache-Control": "no-store"}
+    if code == "HYBRID_DEADLINE_EXCEEDED":
+        status, msg = 504, "Quá trình trích xuất và dựng hình vượt quá thời gian cho phép. Em hãy thử gửi lại đề bài."
+    elif code == "LIVE_AI_DISABLED":
+        status, msg = 503, "Chế độ trích xuất trực tiếp (live AI) đang bị khoá bởi cấu hình máy chủ (ALLOW_LIVE_AI=0)."
+    elif code == "INVALID_HYBRID_ROUTE_MODE":
+        status, msg = 503, "Chế độ định tuyến Hybrid trên máy chủ không hợp lệ. Chỉ chấp nhận 'live' (mặc định) hoặc 'staging-replay'."
+    elif code == "MISSING_API_KEY":
+        status, msg = 503, MISSING_KEY_MSG
+    elif code == "STAGING_CORPUS_UNAVAILABLE":
+        status, msg = 503, "Kho dữ liệu phát lại Hybrid (staging) chưa sẵn sàng trên máy chủ. Vui lòng kiểm tra cấu hình hoặc thử lại sau."
+    elif code in _HYBRID_PROVIDER_502_CODES:
+        status, msg = 502, "Dịch vụ trích xuất đề bài đang gặp sự cố kết nối hoặc phản hồi chưa hợp lệ. Em hãy thử gửi lại sau ít phút."
+    else:
+        status, msg = 503, "Hệ thống gặp sự cố kỹ thuật tạm thời khi xử lý đề bài. Em hãy thử gửi lại sau."
+    return JSONResponse(
+        status_code=status,
+        headers=headers,
+        content={"error": msg, "reason_code": code, "failure_kind": "INFRASTRUCTURE_FAILURE"},
+    )
+
+
+async def _analyze_hybrid_route(text: str, mode: str, api_key: str | None, algosim_session: str | None) -> Any:
+    """Tuyến thực thi chính thức duy nhất của AlgoSim (`HYBRID_ROUTE_MODE` = `live` mặc định | `staging-replay`).
+    Tuyệt đối không còn bất kỳ nhánh hay fallback nào về `LLM_ONLY`."""
+    if mode not in HYBRID_ROUTE_MODES:
+        return _hybrid_infra_error("INVALID_HYBRID_ROUTE_MODE")
+    if mode == "live" and os.getenv("ALLOW_LIVE_AI") == "0":
+        return _hybrid_infra_error("LIVE_AI_DISABLED")
+
     from starlette.concurrency import run_in_threadpool
 
-    from app.ai.hybrid_offline import run_local_replay
+    from app.ai.hybrid_offline import (
+        HYBRID_INFRASTRUCTURE_CODES,
+        prepare_live_hybrid,
+        prepare_staging_replay,
+        resolve_hybrid_gemini_model,
+    )
 
-    result = await run_in_threadpool(run_local_replay, text, corpus_path)
-    if result.response["route_d"]["status"] == "SERVED":
+    if mode == "staging-replay":
+        corpus_path = os.getenv("HYBRID_REPLAY_CORPUS", "")
+        plan = await run_in_threadpool(prepare_staging_replay, text, corpus_path)
+        if plan is None:
+            return _hybrid_infra_error("STAGING_CORPUS_UNAVAILABLE")
+    else:
+        model_name = resolve_hybrid_gemini_model()
+        plan = await run_in_threadpool(prepare_live_hybrid, text, model=model_name)
+
+    response, state = None, "none"
+    if plan.cache_key is not None:
+        with SessionLocal() as session:
+            row = _cache_lookup(session, plan.cache_key, ROUTE_D_CACHE_POLICY)
+            response = _served_route_d(row)
+            if response is not None:
+                row.hit_count += 1
+                row.last_used_at = datetime.now(timezone.utc)
+                bump_metric(session, "exact_cache_hits")
+                bump_metric(session, "estimated_llm_calls_saved", 1)
+                session.commit()
+                state = "hit"
+
+    if response is None:
+        if mode == "live" and not api_key:
+            return _hybrid_infra_error("MISSING_API_KEY")
+
+        ngoai = _ngoai_pham_vi(text)
+        if ngoai is not None:
+            return JSONResponse(content=attach_learner_reason(ngoai), headers={"Cache-Control": "no-store"})
+
+        if mode == "staging-replay":
+            result = await run_in_threadpool(plan.run)
+        else:
+            def _finite_pos_env(env_key: str, default: float) -> float:
+                raw = os.getenv(env_key)
+                if raw is None:
+                    return default
+                try:
+                    val = float(raw)
+                except ValueError:
+                    return default
+                return val if math.isfinite(val) and val > 0 else default
+
+            per_attempt = _finite_pos_env("HYBRID_LIVE_TIMEOUT_SECONDS", 60.0)
+            deadline = _finite_pos_env("HYBRID_LIVE_DEADLINE_SECONDS", per_attempt * 3.0)
+            result = await run_in_threadpool(
+                lambda: plan.run(api_key or "", per_attempt_timeout_s=per_attempt, deadline_seconds=deadline)
+            )
+        code = str(result.receipt.get("code") or "")
+        fkind = result.receipt.get("failure_kind")
+        obs = DiagnosticObserver(text) if bat_telemetry() else None
+        if obs is not None:
+            obs.emit("hybrid_route", {"mode": mode, "receipt": result.receipt})
+        if (fkind in ("TECHNICAL_FAILURE", "INTEGRITY", "DISABLED")
+                or code in HYBRID_INFRASTRUCTURE_CODES
+                or (mode == "live" and code in ("SCHEMA_VERSION_MISMATCH", "REPLAY_SOURCE_IDENTITY_MISMATCH"))):
+            if obs is not None:
+                obs.ket_thuc(None)
+            return _hybrid_infra_error(code or "ROUTE_INTERNAL_ERROR")
+        response = result.response
+        if obs is not None:
+            obs.ket_thuc(response.get("envelope") if isinstance(response, dict) else None)
+        if plan.cache_key is not None and response["route_d"]["status"] == "SERVED":
+            state = "miss"
+            with SessionLocal() as session:
+                try:
+                    _store_route_d(session, plan.cache_key, text, response)
+                    bump_metric(session, "compose_new_count")
+                    session.commit()
+                except IntegrityError:
+                    session.rollback()
+
+    if response["route_d"]["status"] == "SERVED":
         with SessionLocal() as session:
             _consume_guest_trial(session, algosim_session)
             session.commit()
-    return JSONResponse(content=result.response, headers={"Cache-Control": "no-store"})
+    return JSONResponse(content=response, headers={"Cache-Control": "no-store", "X-Algosim-Cache": state})
 
 
 @app.post("/api/analyze")
 async def analyze(body: AnalyzeBody, request: Request, algosim_session: str | None = Cookie(default=None)):
-    """M18 — CỔNG LƯỢT DÙNG THỬ ĐỨNG TRƯỚC MỌI THỨ KHÁC.
-
-    Khách được chạy MỘT mô phỏng thật (cùng pipeline này, không phải renderer
-    giả), rồi phải đăng nhập. Cổng đếm ở PHIÊN MÁY CHỦ chứ không ở localStorage:
-    một cờ phía client thì xoá cache là có lượt mới.
-
-    Đặt TRƯỚC ingestion có chủ đích — hết lượt thì không tiêu một byte xử lý ảnh
-    nào, và không có đường nào chạm tới LLM.
-    """
+    """Điểm vào sản phẩm chính thức: đề bài tiếng Việt -> Hybrid `/4` (`Scene3D` + dựng hình từng bước + lời giải + đáp số chính xác).
+    Cổng lượt dùng thử đứng trước mọi khâu xử lý khác."""
     chan = _cong_luot_thu(algosim_session)
     if chan is not None:
         return chan
 
-    api_key = os.getenv("GEMINI_API_KEY")
+    che_do_hybrid = hybrid_route_mode()
+    if che_do_hybrid not in HYBRID_ROUTE_MODES:
+        return _hybrid_infra_error("INVALID_HYBRID_ROUTE_MODE")
 
-    # Bước 1: chuẩn hóa MỌI loại input về text (M4) — sau bước này, text/docx/
-    # code/image đi CHUNG một đường qua pipeline, không loại nào bypass.
-    kho_hybrid = _hybrid_v2_local(request)
-    if kho_hybrid is not None and body.input.type == "image":
-        return JSONResponse(status_code=400, headers={"Cache-Control": "no-store"}, content={
-            "error": "Chế độ phát lại cục bộ chỉ đọc đề văn bản. Hãy nhập nội dung đề để dựng hình."})
+    if body.input.type == "image":
+        return JSONResponse(
+            status_code=400,
+            headers={"Cache-Control": "no-store"},
+            content={
+                "error": "Tuyến phân tích chính thức nhận đề văn bản (hoặc văn bản đã đọc từ ảnh qua bước xem lại `/api/image/extract`). Hãy nhập nội dung đề để dựng hình.",
+                "reason_code": "IMAGE_DIRECT_UNSUPPORTED",
+            },
+        )
+
+    api_key = os.getenv("GEMINI_API_KEY")
     try:
         text = await ingest_to_text(
             body.input.type,
@@ -1139,7 +1257,6 @@ async def analyze(body: AnalyzeBody, request: Request, algosim_session: str | No
             api_key,
         )
     except IngestError as err:
-        # Ảnh cần key để phiên dịch nhưng chưa cấu hình → 503 (không phải lỗi input)
         if str(err) == "__NEED_KEY__":
             return JSONResponse(status_code=503, content={"error": MISSING_KEY_MSG})
         return JSONResponse(status_code=400, content={"error": str(err)})
@@ -1150,130 +1267,7 @@ async def analyze(body: AnalyzeBody, request: Request, algosim_session: str | No
             content={"error": "Nội dung đề quá ngắn — hãy nhập/chọn đầy đủ bài toán."},
         )
 
-    # Stage 2 Hybrid V2 — chỉ khi bật tay ở máy cục bộ; TRƯỚC cache để một envelope `LLM_ONLY` đã cache không bao giờ
-    # được trả dưới danh nghĩa Hybrid (đó chính là lùi về đường cũ trong im lặng).
-    if kho_hybrid is not None:
-        return await _analyze_hybrid_v2_local(text, kho_hybrid, algosim_session)
-
-    # Bước 2 — TẦNG 1 reuse (M7.13B): exact validated cache, version-aware.
-    # Hit = 0 call LLM (tiết kiệm tối thiểu analyze + classify + simulate = 3).
-    key = _cache_key(text)
-    # MỘT ảnh chụp tuyến cho cả lượt: tra cache, chạy pipeline, ghi cache cùng một chế độ.
-    tuyen = route_policy_snapshot()
-    dinh_danh = _policy_identity(tuyen)
-    with SessionLocal() as session:
-        row = _cache_lookup(session, key, dinh_danh)
-        if row:
-            row.hit_count += 1
-            row.last_used_at = datetime.now(timezone.utc)
-            bump_metric(session, "exact_cache_hits")
-            bump_metric(session, "estimated_llm_calls_saved", 3)
-            _consume_guest_trial(session, algosim_session)
-            session.commit()
-            return {**json.loads(row.envelope_json), "cached": True, "source": "exact_cache"}
-
-    if not api_key:
-        return JSONResponse(status_code=503, content={"error": MISSING_KEY_MSG})
-
-    # ─── PHẠM VI SẢN PHẨM: HÌNH HỌC KHÔNG GIAN, FAIL CLOSED ────────────────
-    #
-    # Đề tài là *"mô phỏng 3D hình học không gian"*. Đề ngoài miền ấy bị TỪ CHỐI
-    # ở biên sản phẩm — không có nhánh `else → Tin học` nào nữa.
-    #
-    # ⚠️ Cổng đặt ở BIÊN API, không đặt trong `run_pipeline`, và đó là một ranh
-    # giới có chủ đích chứ không phải chỗ tiện tay: `run_pipeline` là ENGINE, và
-    # 44 tệp test gọi thẳng nó để kiểm những bất biến vẫn còn giá trị (định
-    # tuyến, cổng, envelope). Đóng cửa ở engine là bịt luôn cả những phép kiểm
-    # ấy; đóng ở đây thì **người dùng** không còn lối vào Tin học, mà bằng chứng
-    # kỹ thuật vẫn chạy lại được.
-    #
-    # `detect_domain` tất định, chạy trên văn bản, **0 lượt gọi model** — nên
-    # lời từ chối này không tốn gì.
-    ngoai = _ngoai_pham_vi(text)
-    if ngoai is not None:
-        return ngoai
-
-    # Bước 3: pipeline analyze → classify → (pattern reuse | simulate) → validate.
-    # TẦNG 2 (pattern reuse) bật qua store inject — pipeline tự giới hạn nó
-    # sau classify và chỉ cho generic.rule_scene.
-    try:
-        # TELEMETRY CHẨN ĐOÁN — thụ động, mặc định TẮT (`SEMANTIC_TELEMETRY`).
-        #
-        # `run_pipeline` phát sự kiện cho observer từ M14, nhưng đường sản phẩm
-        # luôn truyền `None` nên mọi sự kiện rơi vào hư không. Lượt live
-        # 2026-08-24 trả `unsupported` cho cả ba đề mà log chỉ có `POST 200 OK`:
-        # tiêu quota thật để mua lại đúng câu hỏi cũ. Cùng lớp lỗi với chính
-        # `semantic_route` từng bị bỏ quên ở đây.
-        obs = DiagnosticObserver(text) if bat_telemetry() else None
-        envelope = await run_pipeline(
-            text,
-            api_key,
-            observer=obs,
-            # `pattern_store` đã gỡ cùng `try_pattern_reuse`: tái dùng mẫu là
-            # tầng 2 của đường Tin học, và tuyến hình học không đi qua nó.
-            # Thiếu đúng tham số này là lý do route sinh ngữ nghĩa chưa bao giờ
-            # chạy trong sản phẩm — xem `semantic_route_mode()`. Khoá bởi
-            # `tests/test_semantic_route_wired_to_production.py`.
-            semantic_route=semantic_route_mode(),
-            route_policy=tuyen,
-        )
-    except Exception as err:  # pipeline thất bại sau retry → báo người dùng
-        # Chốt bản ghi TRƯỚC khi trả lỗi: lượt hỏng mới là lượt cần chẩn đoán,
-        # bỏ nó đi là bỏ đúng dữ liệu đáng giá nhất.
-        if obs is not None:
-            obs.ket_thuc(None)
-        # M17 W0 — học sinh thấy thông điệp thân thiện; chi tiết kỹ thuật đi
-        # field riêng (FE không render, dev đọc qua devtools/log).
-        return JSONResponse(
-            status_code=422,
-            content={"error": learner_error_message(), "error_detail": str(err)},
-        )
-
-    if obs is not None:
-        obs.ket_thuc(envelope)
-
-    # M7.8: CHỈ cache kết quả THÀNH CÔNG. Không cache unsupported để tránh kẹt
-    # kết quả cũ khi năng lực classify/DSL được cải thiện (chống stale).
-    if envelope.get("status") == "ok":
-        with SessionLocal() as session:
-            src = envelope.get("source", "composed")
-            bump_metric(session, "pattern_reuse_hits" if src == "pattern_reuse" else "compose_new_count")
-            if src == "pattern_reuse":
-                # tiết kiệm 1–3 call simulate; ước lượng bảo thủ trừ đi call adapt
-                bump_metric(session, "estimated_llm_calls_saved", 1 if envelope.get("adapt_used") else 2)
-            if envelope.get("reuse_fallback"):
-                bump_metric(session, "fallback_after_reuse_failure")
-            stale = session.query(SimulationCache).filter_by(key=key).first()
-            if stale is not None:
-                session.delete(stale)  # row version cũ → thay bằng kết quả mới
-                # FLUSH NGAY, và đây không phải thừa: trong MỘT flush,
-                # SQLAlchemy phát INSERT **trước** DELETE, nên hàng mới đụng
-                # `UNIQUE(key)` của hàng cũ chưa kịp xoá. Hệ quả là mỗi lần bump
-                # `CACHE_VERSION` thì đề ĐÃ TỪNG phân tích trả 500 — tra cứu
-                # trượt vì `policy_version` khác, rồi ghi lại thì vỡ khoá.
-                # Lỗi câm suốt nhiều lần bump vì test luôn chạy trên DB sạch;
-                # nó lộ ra ở bump 36→37 khi DB test còn hàng của lượt trước.
-                session.flush()
-            session.add(
-                SimulationCache(
-                    key=key,
-                    problem_text=text,
-                    simulation_id=str(envelope.get("simulation_id", "")),
-                    envelope_json=json.dumps(envelope, ensure_ascii=False),
-                    dsl_version=DSL_VERSION,
-                    policy_version=dinh_danh,
-                )
-            )
-            session.commit()
-    # M17 W0 — lớp trình bày: envelope unsupported mang thêm learner_reason
-    # (bản sao tại biên API; envelope pipeline/eval không đổi — bất biến #22).
-    # Lượt dùng thử chỉ TÍNH khi mô phỏng ra được — đề bị từ chối trung thực
-    # không ăn mất lượt duy nhất của khách.
-    if envelope.get("status") == "ok":
-        with SessionLocal() as session:
-            _consume_guest_trial(session, algosim_session)
-            session.commit()
-    return attach_learner_reason(envelope)
+    return await _analyze_hybrid_route(text, che_do_hybrid, api_key, algosim_session)
 
 
 @app.post("/api/image/extract")
@@ -1338,6 +1332,5 @@ async def image_extract(
 # ── `/api/explain` ĐÃ GỠ (repo-cleanup) ────────────────────────────────────
 #
 # Trợ giúp giải thích trạng thái engine của miền Tin học: người gọi duy nhất là `AIHelpPanel` (không còn gắn vào giao
-# diện từ khi gỡ Tin học, `ui-hygiene.test.ts` đã cấm nó hiện ra). Prompt `skills/explain.md` vẫn nằm trên đĩa vì
-# mọi `skills/*.md` đi vào băm môi trường ngữ nghĩa của khoá cache — xoá nó là một đổi bề mặt mô hình, thuộc lượt đổi
-# prompt kế tiếp. Khoá: `tests/test_api.py::test_endpoint_tutor_flow_da_xoa` (404).
+# diện từ khi gỡ Tin học, `ui-hygiene.test.ts` đã cấm nó hiện ra). Prompt `skills/explain.md` cùng các prompt legacy
+# của `LLM_ONLY` đã được gỡ hoàn toàn ở `CACHE_VERSION = "132"`. Khoá: `tests/test_api.py::test_endpoint_tutor_flow_da_xoa` (404).

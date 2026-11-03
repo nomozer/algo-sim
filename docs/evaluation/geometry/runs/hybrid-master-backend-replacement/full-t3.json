@@ -1,0 +1,18 @@
+{
+ "schema": "hybrid-master-backend-replacement/full-t3/1",
+ "verdict": "FULL_PRODUCT_GATE_PASS",
+ "attempt": 1,
+ "exit_code": 0,
+ "command": "cd frontend && node scripts/full-gate.mjs",
+ "worktree": ".superpowers/worktrees/hm-final-t3-bf2c3eaa (fresh, detached, tracked and untracked clean before and after; frontend/node_modules junction to the main checkout)",
+ "head": "bf2c3eaa35dd091a95c212e1d323e60348d6286b",
+ "product_commit": "f5ad105345f01617613559326e22bf9221b12d93",
+ "measured_system": {"tree_hash": "44b02a623cf551647db05ec2fb456656ece9bf13d27339f6d775a2471413c7ac", "files": 118},
+ "pytest": {"passed": 15929, "skipped": 7, "deselected": 2, "xfailed": 15, "failed": 0, "seconds": 570.40},
+ "vitest": {"files": 84, "passed": 1424},
+ "build": "PASS",
+ "demo_replay": "PASS",
+ "demo_crash_surface": "PASS (six refusal boundaries typed, no 500)",
+ "log_sha256_local": "462dee7b44c7d07599f890a75988857cbaa4c4897c3ff935bee5d774221ec6fc",
+ "provider_calls": 0
+}

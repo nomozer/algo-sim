@@ -1,0 +1,20 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "ALGOSIM_MASTER_HYBRID_BACKEND_REPLACEMENT (tenth continuation: student natural-language understanding on /4)",
+  "corrects": "docs/evaluation/geometry/runs/hybrid-master-composite-relations/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "current_candidate_hash": "42347fbe9201a1cf3bba15871a97549b684c6bd4e45c393c370c790a5a1304c8",
+  "current_product_commit": "fb67cfb20f8f60783aa9e22575b74b8ebf612b0e",
+  "current_candidate_source": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+  "diverged": true,
+  "reason": "Backend only, offline, on top of the 17e4a326 candidate: SL-1 closed Source Gate reader for simulation requests (Vẽ / Dựng / Mô phỏng / Cho mình xem …; generic solid word and built points only, adds no fact), 'vuông góc' without 'với', the 'đường cao XY = v' role; SL-2 additive typed-fact-next/2 `unresolved` honest exit refused with AMBIGUOUS_FACT / OUT_OF_SCOPE and a server-built route-d-clarification/1 record in route_d.refusal (frontend envelope unchanged; /1 untouched); D02 base with no length ⇒ MISSING_DIMENSION; PE-1 request sentences read whole (unbuilt projection phrase only with an ask of its sentence, closed intersection operands, anaphor matched to its own call). Independent review READY in round 4 (registry /27, planner /22, engine /19). Wave 3 67/72 (72/72 negatives refused, 0 wrong-served, 0 transitions), locked 96/96, 203 probes 0 wrong-served; earlier curved, section, topology, measurement and composite probes identical to baseline. The /4 provider surface changed (schema field + one instruction sentence); LLM_ONLY, its cache identity, prompts and route A are unchanged.",
+  "cache_version": 131,
+  "cache_version_hien_tai": 131,
+  "cache_decision": "NO BUMP: LLM_ONLY untouched (CACHE_VERSION keys the /api/analyze response cache); Route D rows are keyed by the Route D surface (registry /27, planner /22, engine /19); refusals are never cached.",
+  "hieu_luc_len_ket_qua_da_do": {
+    "historical_measurements": "UNCHANGED",
+    "live_requests": 0,
+    "so_lieu_lượt_đo_cuối": "UNCHANGED: historical measurements are not rescored."
+  }
+}

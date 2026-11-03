@@ -168,6 +168,8 @@ export function UnsupportedNotice({
     refusal_cause?: "SOURCE" | "CONSTRUCTION" | "UNKNOWN";
     /** (W20 §17) Mã lý do chi tiết — chỉ để chọn nhãn loại vấn đề, không bao giờ hiển thị. */
     reason_code?: string;
+    /** Câu hỏi làm rõ đã qua bộ đọc kiểm chứng (không mang định danh kỹ thuật nội bộ). */
+    clarification?: { question: string | null };
   };
 }) {
   const geometricCode = unsupported.reason_code ?? unsupported.error_code;
@@ -331,6 +333,7 @@ export function UnsupportedNotice({
      chuỗi rỗng. */
   const loiKe =
     unsupported.learner_reason ?? unsupported.reason ?? MO_TA_TU_CHOI_CHUNG;
+  const cauHoiLamRo = unsupported.clarification?.question ?? null;
   return (
     <section className="card">
       <span className="eyebrow">{geometricRefusal?.title ?? (failedVerification ? "CHƯA KIỂM CHỨNG ĐƯỢC MÔ PHỎNG" : eyebrow)}</span>
@@ -347,7 +350,11 @@ export function UnsupportedNotice({
           <dd>{geometricRefusal?.title ?? nhanLoai}</dd>
         </div>
       </dl>
-      {!geometricRefusal && hint && <p className="notes">{hint}</p>}
+      {cauHoiLamRo ? (
+        <p className="notes" data-clarification-question="">{cauHoiLamRo}</p>
+      ) : (
+        !geometricRefusal && hint && <p className="notes">{hint}</p>
+      )}
     </section>
   );
 }
@@ -524,7 +531,7 @@ export function SimulationWorkspace() {
     return (
       <Scene3DExplorer
         scene={canh3d}
-        de={active.envelope.description ?? active.envelope.title ?? null}
+        de={active.envelope.problem_statement || active.envelope.description || active.envelope.title || null}
         tieuDe={active.envelope.title ?? null}
         quayLai={{ nhan: TEN_TRANG[returnView] ?? "Trang chủ", onClick: roiXuong }}
         phien={session}

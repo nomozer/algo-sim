@@ -15,10 +15,6 @@ from fractions import Fraction
 
 import pytest
 
-from app.ai import pipeline as PL
-from app.simulation.geometry_compiler import compiler as C
-from app.simulation.geometry_compiler import contract_adapter as A
-from app.simulation.geometry_compiler.routing import quyet_dinh_dinh_tuyen
 from app.simulation.semantic_program.analyze_contract import build_request_contract
 from app.simulation.semantic_program.contract import SemanticProgramSpec
 from app.simulation.semantic_program.interpreter import SemanticProgramInterpreter
@@ -138,50 +134,3 @@ def test_c0_diem_vang_trong_chuong_trinh_kiem_bang_toa_do_de(cau_e, mong):
 
 def test_mau_thuan_la_loi_cua_de_khong_gui_di_sua():
     assert theo_ma("SOURCE_SHAPE_CONTRADICTS_COORDINATES") == "SOURCE"
-    assert "SOURCE_SHAPE_CONTRADICTS_COORDINATES" in PL.KHONG_SUA_NGUON
-
-
-def test_c0_mau_thuan_khong_co_scene3d_qua_pipeline(monkeypatch):
-    rid = "C02_trapezoid_phrase_contradicts"
-    contract, sp = _c0(rid)
-
-    async def analyze(*_a, **_k):
-        return contract, None
-
-    async def program(*_a, **_k):
-        return sp, None
-
-    monkeypatch.setattr(PL, "stage_semantic_analyze", analyze)
-    monkeypatch.setattr(PL, "stage_semantic_program", program)
-    monkeypatch.delenv("GEOMETRY_COMPILER_MODE", raising=False)
-    env = asyncio.run(PL.run_pipeline(ROWS[rid]["text"], "fake_key"))
-    assert env.get("status") != "ok" and not env.get("scene3d"), env
-    assert env.get("reason_code") == "SOURCE_SHAPE_CONTRADICTS_COORDINATES" and env.get("refusal_cause") == "SOURCE"
-
-
-# ══ COMPILER — không tự giả định hình chữ nhật ══════════════════════════════
-@pytest.mark.parametrize("rid", COMP)
-def test_compiler_theo_nhan(rid, monkeypatch):
-    loai, _, gia_tri = ROWS[rid]["expect"].partition(":")
-    contract = _hop_dong(rid)
-    qd = quyet_dinh_dinh_tuyen(contract, BAT)
-    if loai == "fallback":
-        assert (qd.decision, qd.reason_code) == ("FALLBACK_TO_LLM", gia_tri), (qd.decision, qd.reason_code)
-        assert C.bien_dich(A.build_fact_graph(contract).graph).program is None
-        return
-    assert qd.decision == "USE_COMPILER", (qd.reason_code, qd.diagnostics)
-    if loai == "compiled":
-        return
-
-    async def analyze(*_a, **_k):
-        return contract, None
-
-    async def khong_goi(*_a, **_k):
-        raise AssertionError("tuyến compiler gọi model")
-
-    monkeypatch.setattr(PL, "stage_semantic_analyze", analyze)
-    monkeypatch.setattr(PL, "call_gemini", khong_goi)
-    monkeypatch.setenv("GEOMETRY_COMPILER_MODE", "DETERMINISTIC_FIRST")
-    env = asyncio.run(PL.run_pipeline(ROWS[rid]["text"], "fake_key"))
-    assert env.get("status") == "ok", env
-    assert Fraction(next(o["value"] for o in env["scene3d"]["objects"] if o["id"] == "V")) == Fraction(gia_tri)

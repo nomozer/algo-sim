@@ -1,0 +1,20 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "ALGOSIM_MASTER_HYBRID_BACKEND_REPLACEMENT (thirteenth continuation: unnamed described points end-to-end on /4 [R-1], student shorthands [SL-3], and bridge regex repair)",
+  "corrects": "docs/evaluation/geometry/runs/hybrid-master-semantic-planner-recomposition/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "current_candidate_hash": "773e440de0385d577040a9eca107706bfb2d3e4aec1d827b52c99c89d42ac7c3",
+  "current_product_commit": "9503482a7480c2e8501efa8bcef0ce2c37776287",
+  "current_candidate_source": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+  "diverged": true,
+  "reason": "Backend only, offline, on top of the 800ab355 candidate: (1) R-1 unnamed described points end-to-end on Hybrid /4 — additive TypedFactNextPayloadV2.described_points (DescribedPointSpec, @id refs, canonical alias deduplication via canonical_vertex_ref, explicit dependency cycle/depth validation, multi-consumer scope_records ownership propagation, verbatim quote span provenance) + typed_fact_next_bridge.py (_mo_ta_phang, _cau_hoi_mo_ta, _mat_fact) serve all 9 Continuation 11 DISCOVERED_FUNCTION_COMPOSITION chains (C1a..C7) plus angle(line1, line2) end-to-end on /4 without new GeometryFunction primitives, while failing closed (BRIDGE_UNSUPPORTED_DESCRIBED_POINT) on D1/D2 and uncontracted/curved @id shapes; (2) SL-3 student shorthand reading — registry.py (/29) reads case-insensitive k/c and đt before line labels across ask and descriptor phrases (lifting S-2 gold replay from 33/36 to 35/36, 0 wrong-served; 'hình chop' stays governed under S-1); (3) typed_fact_next_bridge._v2_plane_def_quotes literal 0x08 control byte replaced with \\b + word-for-word imperative restatement rule. Independent adversarial review READY in round 2 (registry /29, planner /23, engine /20; 0 BLOCKER, 0 MAJOR, 0 MINOR). Wave 3 67/72 (72/72 negatives refused, 0 wrong-served, 0 transitions), locked 96/96, 203 probes 0 wrong-served, 41/41 preview fixtures verified. LLM_ONLY, its cache identity, prompts, frontend, and route A schemas are unchanged.",
+  "cache_version": 131,
+  "cache_version_hien_tai": 131,
+  "cache_decision": "NO BUMP: LLM_ONLY untouched (CACHE_VERSION keys the /api/analyze response cache); Route D rows are keyed by the Route D surface (registry /29, planner /23, engine /20, typed-fact-next-extraction/2); refusals are never cached.",
+  "hieu_luc_len_ket_qua_da_do": {
+    "historical_measurements": "UNCHANGED",
+    "live_requests": 0,
+    "so_lieu_lượt_đo_cuối": "UNCHANGED: historical measurements are not rescored."
+  }
+}

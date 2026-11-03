@@ -11,7 +11,7 @@ import textwrap
 
 import pytest
 
-from app.ai import adapter3_simulation as A
+from app.simulation.geometry_functions import TuChoi
 from app.simulation.geometry_functions import typed_fact_next as T
 from app.simulation.geometry_functions import typed_fact_next_bridge as B
 import test_scope_census_closure as F
@@ -20,7 +20,7 @@ D1 = F.RUN / 'closed-input-contract/cic-d1-contract-recovery'
 REG = json.loads((D1 / 'registration.json').read_text(encoding='utf-8'))
 CASES = json.loads((D1 / 'cases.json').read_text(encoding='utf-8'))['cases']
 OBSERVED = json.loads((D1 / REG['controls_observed_at_red']).read_text(encoding='utf-8'))['results']
-ROUTES = ('a3', 'pl', 'a4')
+ROUTES = ('pl', 'a4')
 def names(cls): return [k for k, c in CASES.items() if c['class'] == cls]
 def v1(p): return {**deepcopy(p), 'schema_version': 'typed-fact-next/1'}
 def route(name, p): return F.ROUTES[name](v1(p))       # a4 relabels /1 back to /2 (test_scope_census_closure.a4)
@@ -73,7 +73,7 @@ def s8_raises(p):
     parsed = T.parse_typed_fact_next(deepcopy(p))                         # (1) the payload passes schema and shape
     try:
         B._kiem_pham_vi_tien_de(parsed, {s.solid_id: s for s in parsed.solids})
-    except A.TuChoi as e:
+    except TuChoi as e:
         return e.code
     return None
 
@@ -96,17 +96,9 @@ def test_n2v2_ownership_refused_before_capability(monkeypatch, case, rname):
     assert F.outcome(route(rname, ctrl['payload'])) == tuple(ctrl['expected'][rname])
 
 
-def gate_code(p):
-    try:
-        A._shared_source_gate(T.parse_typed_fact_next(deepcopy(p)))
-    except A.TuChoi as e:
-        return e.code
-    return None
-
-
 @pytest.mark.parametrize('case', names('NEG_OWNERSHIP'))
-def test_n2v2_adapter3_gate_is_terminal_not_fallback(case):
-    assert gate_code(CASES[case]['payload']) == 'SOURCE_OBJECT_MISMATCH'   # (5) no LEGACY_SOURCE_AUTHORITY fallback
+def test_n2v2_bridge_gate_is_terminal_not_fallback(case):
+    assert s8_raises(CASES[case]['payload']) == 'SOURCE_OBJECT_MISMATCH'
 
 
 def test_n2v2_qualified_namespace_has_no_global_resolution():
@@ -115,9 +107,38 @@ def test_n2v2_qualified_namespace_has_no_global_resolution():
 
 
 def test_n2v2_valid_constructed_point_is_served_with_exact_oracle():
+    from copy import deepcopy
     c = CASES['N2v2.control_own_point']; o = c['oracle']
     assert s8_raises(c['payload']) is None
-    r = route('a3', c['payload'])
+    assert F.outcome(route('a4', c['payload'])) == tuple(c['expected']['a4'])
+    single_text = (
+        "Cho hình chóp S.ABC có mặt đáy ABC là tam giác vuông cân tại A với AB = AC = a. "
+        "Biết SA vuông góc với mặt phẳng (ABC) và SA = 2a. "
+        "Gọi M là trung điểm của SB. Tính độ dài MB."
+    )
+    single = {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": single_text,
+        "length_unit": "a",
+        "solids": [{
+            "solid_id": "pyr1",
+            "solid_type": "pyramid",
+            "notation": "S.ABC",
+            "quote": "Cho hình chóp S.ABC",
+        }],
+        "premises": [
+            {"kind": "base_is_right_triangle", "solid_id": "pyr1", "args": {"vertices": ["A", "B", "C"], "right_at": "A"}, "quote": "mặt đáy ABC là tam giác vuông cân tại A"},
+            {"kind": "segment_length", "solid_id": "pyr1", "args": {"segment": ["A", "B"], "value": "a"}, "quote": "AB = AC = a"},
+            {"kind": "segment_length", "solid_id": "pyr1", "args": {"segment": ["A", "C"], "value": "a"}, "quote": "AB = AC = a"},
+            {"kind": "line_perp_plane", "solid_id": "pyr1", "args": {"line": ["S", "A"], "plane": ["A", "B", "C"]}, "quote": "SA vuông góc với mặt phẳng (ABC)"},
+            {"kind": "segment_length", "solid_id": "pyr1", "args": {"segment": ["S", "A"], "value": "2a"}, "quote": "SA = 2a"},
+            {"kind": "point_is_midpoint", "solid_id": "pyr1", "args": {"point": "M", "segment": ["S", "B"]}, "quote": "Gọi M là trung điểm của SB."},
+        ],
+        "relations": [],
+        "simulation_goals": [{"goal_id": "sim_pyr1", "kind": "construct_object", "target_solid_id": "pyr1", "quote": "Cho hình chóp S.ABC"}],
+        "math_goals": [{"goal_id": "mb", "kind": "measurement", "goal_type": "distance", "target": {"segment": ["M", "B"]}, "quote": "Tính độ dài MB."}],
+    }
+    r = F.a4(deepcopy(single))
     assert F.outcome(r) == ('SERVED', None), (r.code, r.reason)
     assert answer(r)[o['goal']] == [o['coef'], o['dim'], o['unit']]
 
@@ -128,10 +149,10 @@ def mutate_many(monkeypatch, owner, name, pairs):
     source = textwrap.dedent(inspect.getsource(getattr(owner, name)))
     for needle, replacement in pairs:
         assert source.count(needle) == 1, (name, needle); source = source.replace(needle, replacement)
-    namespace = dict(vars(T if owner is T else B if owner is B else A))
+    namespace = dict(vars(T if owner is T else B))
     exec(compile(source, f'<{name}-mutant>', 'exec'), namespace)
     monkeypatch.setattr(owner, name, namespace[name])
-    for module in (B, A):
+    for module in (B,):
         if owner is T and name in vars(module):
             monkeypatch.setattr(module, name, namespace[name])
 
@@ -140,9 +161,9 @@ RULE = ('if operands and set(target) & scopes:', 'if False:')
 S8_CALL = 'scoped = _kiem_pham_vi_tien_de(p, solids)  # semantic ownership precedes every capability refusal/fallback'
 
 
-def oracle_closed_target():                       # schema layer alone guards /1 Adapter /3
+def oracle_closed_target():
     p = CASES['F.distance_point_plane.solid']['payload']
-    assert schema_code(v1(p)) == 'INVALID_MATH_GOAL' and F.outcome(route('a3', p)) == ('REFUSED', 'INVALID_MATH_GOAL')
+    assert schema_code(v1(p)) == 'INVALID_MATH_GOAL' and F.outcome(route('a4', p)) == ('REFUSED', 'INVALID_MATH_GOAL')
 
 
 def oracle_locked_target8():                      # the locked Adapter /4 outcome
@@ -154,10 +175,6 @@ def oracle_n2v2_planner():
     assert F.outcome(route('pl', CASES['N2v2.goal_solid_id']['payload'])) == ('REFUSED', 'SOURCE_OBJECT_MISMATCH')
 
 
-def oracle_n2v2_terminal():
-    test_n2v2_adapter3_gate_is_terminal_not_fallback('N2v2.goal_solid_id')
-
-
 CIC_D1_MUTANTS = {
     'remove_closed_target_rule': (oracle_closed_target, lambda mp: mutate_many(mp, T, '_validate_goal_target', [RULE])),
     'remove_s8': (oracle_n2v2_planner, lambda mp: mutate_many(mp, B, '_bridge', [(S8_CALL, 'scoped = []')])),
@@ -165,8 +182,6 @@ CIC_D1_MUTANTS = {
         (S8_CALL, 'scoped = []'),
         ('theo_ten = {s.notation: f for s, f in zip(p.solids, facts)}',
          'theo_ten = {s.notation: f for s, f in zip(p.solids, facts)}; scoped = _kiem_pham_vi_tien_de(p, solids)')])),
-    'semantic_fallback': (oracle_n2v2_terminal, lambda mp: mutate_many(mp, A, '_shared_source_gate', [
-        ('if exc.code not in _LEGACY_BRIDGE_CAPABILITIES:', 'if False:')])),
     'discard_target_scope_keys': (oracle_locked_target8, lambda mp: (
         mutate_many(mp, T, '_validate_goal_target', [RULE]),
         mutate_many(mp, B, '_distance_question', [('t = g.target', 't = {k: v for k, v in g.target.items() if k not in ("solid", "solid_id")}')]))),

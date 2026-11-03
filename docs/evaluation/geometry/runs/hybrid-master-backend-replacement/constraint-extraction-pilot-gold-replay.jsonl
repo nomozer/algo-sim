@@ -1,0 +1,14 @@
+{"id": "K-A01", "expected": "SERVED", "status": "SERVED", "code": null, "gold_matches_expectation": true}
+{"id": "K-A02", "expected": "SERVED", "status": "SERVED", "code": null, "gold_matches_expectation": true}
+{"id": "K-A03", "expected": "SERVED", "status": "SERVED", "code": null, "gold_matches_expectation": true}
+{"id": "K-A04", "expected": "SERVED", "status": "SERVED", "code": null, "gold_matches_expectation": true}
+{"id": "K-B01", "expected": "REFUSED", "status": "REFUSED", "code": "PLANE_NOT_UNIQUE", "gold_matches_expectation": true}
+{"id": "K-B02", "expected": "REFUSED", "status": "REFUSED", "code": "INCONSISTENT_FACTS", "gold_matches_expectation": true}
+{"id": "K-C01", "expected": "SERVED", "status": "SERVED", "code": null, "gold_matches_expectation": true}
+{"id": "K-C02", "expected": "SERVED", "status": "SERVED", "code": null, "gold_matches_expectation": true}
+{"id": "K-C03", "expected": "SERVED", "status": "SERVED", "code": null, "gold_matches_expectation": true}
+{"id": "K-C04", "expected": "SERVED", "status": "SERVED", "code": null, "gold_matches_expectation": true}
+{"id": "K-C05", "expected": "SERVED", "status": "SERVED", "code": null, "gold_matches_expectation": true}
+{"id": "K-C06", "expected": "SERVED", "status": "SERVED", "code": null, "gold_matches_expectation": true}
+{"id": "K-D01", "expected": "REFUSED", "status": "REFUSED", "code": "DEGENERATE_POINTS", "gold_matches_expectation": true}
+{"id": "K-D02", "expected": "REFUSED", "status": "REFUSED", "code": "DEGENERATE_POINTS", "gold_matches_expectation": true}

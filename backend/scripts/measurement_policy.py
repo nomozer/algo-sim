@@ -244,7 +244,7 @@ def cau_hinh_model_hien_tai() -> dict[str, Any]:
         MODEL,
         TRANSIENT_STATUS,
     )
-    from app.ai.pipeline import MAX_SEMANTIC_PROGRAM_ATTEMPTS
+    MAX_SEMANTIC_PROGRAM_ATTEMPTS = 3
 
     return {
         "provider": "gemini",

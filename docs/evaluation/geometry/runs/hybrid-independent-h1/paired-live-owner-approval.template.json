@@ -1,0 +1,26 @@
+{
+  "owner_decision": "PENDING_OWNER_DECISION",
+  "campaign": "H1_PAIRED_LIVE_EVALUATION",
+  "paid_project_confirmed": false,
+  "model": "gemini-2.5-flash",
+  "campaign_max_requests": 300,
+  "max_requests": 300,
+  "campaign_max_usd": 5.0,
+  "max_usd": 5.0,
+  "expected_spend_usd_estimate_range": [
+    1.5,
+    2.0
+  ],
+  "input_usd_per_million": 0.3,
+  "output_usd_per_million": 2.5,
+  "llm_only_output_reservation_tokens": 65536,
+  "corpus_sha256": null,
+  "oracle_sha256": null,
+  "corpus_author": "",
+  "authoring_independence": "NOT_ESTABLISHED",
+  "evaluator_independence": "NOT_ESTABLISHED",
+  "measured_system": "276fc548196e13eaa0ca7635428248dcaee7be79b79dff58c24a0478cddd4c63",
+  "harness_sha256": "8af7ca1f27e7ca3fb4e58ba7e0e067bc17973d8254a086e6c39d896078cd2e1f",
+  "equivalence_scorer_sha256": "7ada8a0616e9482b4984e92e86804bfc60deab540a505a10da65d8436ceba391",
+  "semantic_equivalence_policy": "h1-section-determination-equivalence/1"
+}

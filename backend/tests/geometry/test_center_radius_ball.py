@@ -158,7 +158,7 @@ def test_B_tuyen_day_du_cho_de_mat_cau_tam_O_ban_kinh_13():
     cfg = (oc.envelope or {})["config"]
     assert len(cfg["frames"]) == oc.total_steps
 
-    from app.ai.pipeline import _dung_scene3d
+    from tests.geometry.scene3d_test_helper import _dung_scene3d
     canh = _dung_scene3d(_spec(13), _ct(13))
     assert canh and canh["objects"] and canh["events"]
 
@@ -346,7 +346,7 @@ def test_F1_mot_phep_dung_ball_la_DUNG_MOT_buoc():
 
 
 def test_F2_scene_mang_tam_va_ban_kinh_CHINH_XAC_khong_mang_mesh():
-    from app.ai.pipeline import _dung_scene3d
+    from tests.geometry.scene3d_test_helper import _dung_scene3d
 
     canh = _dung_scene3d(_spec(13), _ct(13))
     qc = next(o for o in canh["objects"] if o["id"] == "S")
@@ -358,7 +358,7 @@ def test_F2_scene_mang_tam_va_ban_kinh_CHINH_XAC_khong_mang_mesh():
 
 
 def test_F3_producer_va_depends_truy_ve_tam_VA_bien_ban_kinh():
-    from app.ai.pipeline import _dung_scene3d
+    from tests.geometry.scene3d_test_helper import _dung_scene3d
 
     canh = _dung_scene3d(_spec(13), _ct(13))
     qc = next(o for o in canh["objects"] if o["id"] == "S")
@@ -368,7 +368,7 @@ def test_F3_producer_va_depends_truy_ve_tam_VA_bien_ban_kinh():
 
 
 def test_F4_chon_ket_qua_cho_bao_dong_day_du():
-    from app.ai.pipeline import _dung_scene3d
+    from tests.geometry.scene3d_test_helper import _dung_scene3d
 
     canh = _dung_scene3d(_spec(13), _ct(13))
     theo = {o["id"]: o for o in canh["objects"]}

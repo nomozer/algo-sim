@@ -56,15 +56,6 @@ from app.simulation.semantic_program.domain_profile import DOMAIN_HINH_HOC, dete
 VISION_PROMPT_SKILL = "transcribe"
 #: Tăng khi đổi hình dạng `ImageProblemExtraction` / `VISION_RESPONSE_SCHEMA`.
 VISION_SCHEMA_VERSION = "photo-problem-extraction/1"
-#: Skill của TẦNG B. Chúng không đổi kết quả đọc ảnh, nhưng §8 buộc khoá cache ảnh
-#: gắn với phiên bản prompt ngữ nghĩa: người học xem lại bản trích xuất để dựng
-#: bằng đúng hệ đang chạy.
-SEMANTIC_PROMPT_SKILLS = (
-    "semantic_analyze",
-    "semantic_program",
-    "geometry_analyze",
-    "geometry_program_generator",
-)
 
 VISION_TIMEOUT_SECONDS = 60.0
 #: 1 lượt đầu + TỐI ĐA 1 lượt thử lại, và chỉ cho lỗi mạng/HTTP tạm thời
@@ -405,8 +396,10 @@ def _bam(s: str) -> str:
 
 
 def semantic_prompt_version() -> str:
-    """Băm các skill TẦNG B đang được tiến trình giữ (đúng thứ sẽ gửi đi)."""
-    return _bam(json.dumps({s: _bam(load_skill(s)) for s in SEMANTIC_PROMPT_SKILLS}, sort_keys=True))
+    """Băm bề mặt trích xuất TẦNG B hiện hành (`typed-fact-next/2`) để gắn khoá cache ảnh với đúng hệ dựng hình."""
+    from app.ai.typed_fact_next_extraction import typed_fact_next_surface_fingerprint
+
+    return typed_fact_next_surface_fingerprint()
 
 
 def vision_identity(cache_version: str | None) -> dict:

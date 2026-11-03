@@ -1,0 +1,266 @@
+{
+ "solid": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với mặt phẳng (ABCD) và SA = 2.",
+ "provider_calls": 0,
+ "rows": [
+  {
+   "id": "d_point_plane",
+   "goal_type": "distance",
+   "target": {
+    "point": "A",
+    "plane": [
+     "S",
+     "B",
+     "C"
+    ]
+   },
+   "status": "SERVED",
+   "code": null,
+   "reason": "",
+   "answer": {
+    "coef": "√2",
+    "dim": 0,
+    "unit": null
+   },
+   "oracle_squared": "2",
+   "outcome": "SERVED_CORRECT"
+  },
+  {
+   "id": "d_segment",
+   "goal_type": "distance",
+   "target": {
+    "segment": [
+     "S",
+     "C"
+    ]
+   },
+   "status": "SERVED",
+   "code": null,
+   "reason": "",
+   "answer": {
+    "coef": "2√3",
+    "dim": 0,
+    "unit": null
+   },
+   "oracle_squared": "12",
+   "outcome": "SERVED_CORRECT"
+  },
+  {
+   "id": "d_line_line",
+   "goal_type": "distance",
+   "target": {
+    "line1": [
+     "A",
+     "B"
+    ],
+    "line2": [
+     "S",
+     "C"
+    ]
+   },
+   "status": "SERVED",
+   "code": null,
+   "reason": "",
+   "answer": {
+    "coef": "√2",
+    "dim": 0,
+    "unit": null
+   },
+   "oracle_squared": "2",
+   "outcome": "SERVED_CORRECT"
+  },
+  {
+   "id": "d_point_line",
+   "goal_type": "distance",
+   "target": {
+    "point": "A",
+    "line": [
+     "S",
+     "C"
+    ]
+   },
+   "status": "SERVED",
+   "code": null,
+   "reason": "",
+   "answer": {
+    "coef": "2√6/3",
+    "dim": 0,
+    "unit": null
+   },
+   "oracle_squared": "8/3",
+   "outcome": "SERVED_CORRECT"
+  },
+  {
+   "id": "d_line_plane",
+   "goal_type": "distance",
+   "target": {
+    "line": [
+     "A",
+     "D"
+    ],
+    "plane": [
+     "S",
+     "B",
+     "C"
+    ]
+   },
+   "status": "SERVED",
+   "code": null,
+   "reason": "",
+   "answer": {
+    "coef": "√2",
+    "dim": 0,
+    "unit": null
+   },
+   "oracle_squared": "2",
+   "outcome": "SERVED_CORRECT"
+  },
+  {
+   "id": "d_plane_plane",
+   "goal_type": "distance",
+   "target": {
+    "plane1": [
+     "S",
+     "A",
+     "B"
+    ],
+    "plane2": [
+     "S",
+     "C",
+     "D"
+    ]
+   },
+   "status": "SERVED",
+   "code": null,
+   "reason": "",
+   "answer": {
+    "coef": "0",
+    "dim": 0,
+    "unit": null
+   },
+   "oracle_squared": "0",
+   "outcome": "SERVED_CORRECT"
+  },
+  {
+   "id": "a_line_plane",
+   "goal_type": "angle",
+   "target": {
+    "line": [
+     "S",
+     "C"
+    ],
+    "plane": [
+     "A",
+     "B",
+     "C",
+     "D"
+    ]
+   },
+   "status": "SERVED",
+   "code": null,
+   "reason": "",
+   "answer": {
+    "coef": "2/3",
+    "dim": 0,
+    "unit": null
+   },
+   "oracle_squared": "2/3",
+   "outcome": "SERVED_CORRECT"
+  },
+  {
+   "id": "a_line_line",
+   "goal_type": "angle",
+   "target": {
+    "line1": [
+     "S",
+     "B"
+    ],
+    "line2": [
+     "C",
+     "D"
+    ]
+   },
+   "status": "SERVED",
+   "code": null,
+   "reason": "",
+   "answer": {
+    "coef": "1/2",
+    "dim": 0,
+    "unit": null
+   },
+   "oracle_squared": "1/2",
+   "outcome": "SERVED_CORRECT"
+  },
+  {
+   "id": "a_plane_plane",
+   "goal_type": "angle",
+   "target": {
+    "plane1": [
+     "S",
+     "B",
+     "C"
+    ],
+    "plane2": [
+     "A",
+     "B",
+     "C",
+     "D"
+    ]
+   },
+   "status": "SERVED",
+   "code": null,
+   "reason": "",
+   "answer": {
+    "coef": "1/2",
+    "dim": 0,
+    "unit": null
+   },
+   "oracle_squared": "1/2",
+   "outcome": "SERVED_CORRECT"
+  },
+  {
+   "id": "v_solid",
+   "goal_type": "volume",
+   "target": {
+    "solid_id": "s1"
+   },
+   "status": "SERVED",
+   "code": null,
+   "reason": "",
+   "answer": {
+    "coef": "8/3",
+    "dim": 0,
+    "unit": null
+   },
+   "oracle_squared": "64/9",
+   "outcome": "SERVED_CORRECT"
+  },
+  {
+   "id": "n_wrong_value",
+   "status": "REFUSED",
+   "code": "UNGROUNDED_VALUE",
+   "reason": "p3: giá trị 3 không phải số đứng sau nhãn đoạn trong 'SA = 2'",
+   "outcome": "REFUSED_CORRECT"
+  },
+  {
+   "id": "n_undeclared_operand",
+   "status": "REFUSED",
+   "code": "UNKNOWN_LABEL",
+   "reason": "mg1: nhãn ['X'] không có trong đề",
+   "outcome": "REFUSED_CORRECT"
+  },
+  {
+   "id": "n_question_not_in_source",
+   "status": "REFUSED",
+   "code": "QUOTE_NOT_IN_SOURCE",
+   "reason": "mg1: đoạn 'Tính khoảng cách từ B đến mặt phẳng (SCD)' không có nguyên văn trong đề",
+   "outcome": "REFUSED_CORRECT"
+  },
+  {
+   "id": "n_degenerate_plane",
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "mg1: malformed operand 'plane', expected refs3",
+   "outcome": "REFUSED_CORRECT"
+  }
+ ]
+}

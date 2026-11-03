@@ -1,0 +1,21 @@
+{
+ "schema": "hybrid-master-backend-replacement/full-t3/1",
+ "verdict": "FULL_PRODUCT_GATE_PASS",
+ "attempt": 1,
+ "exit_code": 0,
+ "command": "cd frontend && node scripts/full-gate.mjs",
+ "worktree": ".superpowers/worktrees/hm-t3-98df8189 (fresh, detached; tracked and untracked clean after the run; frontend/node_modules junction to the main checkout, removed with the worktree)",
+ "head": "98df8189ee34b1fad3e36860db4ac9a8a015073e",
+ "product_commit": "4074e8b95ec5ff64f7743bc8be4259b2f0136362",
+ "measured_system": {"tree_hash": "2f8c9945ac95d3fd7338cd68b54501e2d83d581ea44f034a507cf0e526a06c1d", "files": 118},
+ "cache_version": "131",
+ "default_mode": "LLM_ONLY",
+ "pytest": {"passed": 16039, "skipped": 7, "deselected": 2, "xfailed": 15, "failed": 0, "seconds": 683.11},
+ "vitest": {"files": 84, "passed": 1424},
+ "build": "PASS",
+ "demo_replay": "PASS",
+ "demo_crash_surface": "PASS (6/6 refusal boundaries typed, 0 thrown as 500)",
+ "T0_T2": "COVERED_BY_T3: the whole pytest and vitest suites and the build, a superset of T0 and T2",
+ "log_sha256_local": "729606725186ab904ca5da46e22d0ba89524e1ba265dd61533e42ad1f6d241d",
+ "provider_calls": 0
+}

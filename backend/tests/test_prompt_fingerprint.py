@@ -45,13 +45,13 @@ def test_tien_trinh_moi_khoi_dong_thi_CHUA_NAP_gi(cache_sach):
     giữ, và khi ấy không có gì cũ được."""
     f = skill_fingerprint()
     assert f["da_nap"] == {} and f["cu"] == []
-    assert len(f["tren_dia"]) >= 10, "phải thấy MỌI skill trên đĩa"
+    assert set(f["tren_dia"]) == {"transcribe"}, "phải thấy MỌI skill trên đĩa"
 
 
 def test_nap_mot_skill_thi_no_hien_ra(cache_sach):
-    gemini.load_skill("geometry_analyze")
+    gemini.load_skill("transcribe")
     f = skill_fingerprint()
-    assert set(f["da_nap"]) == {"geometry_analyze"}
+    assert set(f["da_nap"]) == {"transcribe"}
     assert f["cu"] == [], "vừa nạp từ đĩa thì không thể cũ"
 
 
@@ -61,17 +61,17 @@ def test_PROMPT_CU_TRONG_TIEN_TRINH_bi_bat(cache_sach):
     Đây đúng là hiện trường thật: sửa `skills/*.md`, quên restart, và LLM đọc
     bản cũ trong khi mọi phép so khác nói "khớp".
     """
-    gemini.load_skill("geometry_program_generator")
-    gemini._skill_cache["geometry_program_generator"] = "BẢN CŨ"
-    assert skill_fingerprint()["cu"] == ["geometry_program_generator"]
+    gemini.load_skill("transcribe")
+    gemini._skill_cache["transcribe"] = "BẢN CŨ"
+    assert skill_fingerprint()["cu"] == ["transcribe"]
 
 
 def test_bam_CHUAN_HOA_xuong_dong(cache_sach):
     """Skill nằm trên bind mount từ host Windows; Git đổi CRLF khi chạm file.
     Không chuẩn hoá thì vân tay lệch mà nội dung không đổi một chữ — một báo
     động giả, và báo động giả là cách nhanh nhất để một cổng bị tắt."""
-    goc = gemini.load_skill("semantic_analyze")
-    gemini._skill_cache["semantic_analyze"] = goc.replace("\n", "\r\n")
+    goc = gemini.load_skill("transcribe")
+    gemini._skill_cache["transcribe"] = goc.replace("\n", "\r\n")
     assert skill_fingerprint()["cu"] == []
 
 
@@ -107,7 +107,7 @@ def _ma(findings) -> set[str]:
 def test_doctor_bat_PROMPT_STALE_IN_PROCESS():
     rd = _doctor()
     src = _nen()
-    rt = {**src, "skills": {**src["skills"], "cu": ["geometry_analyze"]}}
+    rt = {**src, "skills": {**src["skills"], "cu": ["transcribe"]}}
     assert "PROMPT_STALE_IN_PROCESS" in _ma(
         rd.diagnose(src, rt, src["git_sha"]))
 
@@ -115,7 +115,7 @@ def test_doctor_bat_PROMPT_STALE_IN_PROCESS():
 def test_doctor_bat_SKILL_FILE_MISMATCH():
     rd = _doctor()
     src = _nen()
-    dia = {**src["skills"]["tren_dia"], "semantic_program": "0" * 64}
+    dia = {**src["skills"]["tren_dia"], "transcribe": "0" * 64}
     rt = {**src, "skills": {**src["skills"], "tren_dia": dia}}
     assert "SKILL_FILE_MISMATCH" in _ma(rd.diagnose(src, rt, src["git_sha"]))
 
@@ -159,7 +159,7 @@ def test_danh_tinh_khai_ca_CO_VAN_HANH():
     from app.runtime_identity import runtime_identity
 
     r = runtime_identity()
-    for co in ("semantic_route_mode", "gemini_model", "semantic_telemetry",
+    for co in ("hybrid_route_mode", "gemini_model", "semantic_telemetry",
                "dev_reload"):
         assert co in r, co
 
@@ -169,7 +169,7 @@ def test_doctor_KHONG_tu_phan_route_mode_la_sai():
     tự phán thì nó sẽ đỏ ở mọi lượt production và bị tắt."""
     rd = _doctor()
     src = _nen()
-    rt = {**src, "semantic_route_mode": "off"}
+    rt = {**src, "hybrid_route_mode": "staging-replay"}
     assert rd.diagnose(src, rt, src["git_sha"]) == []
 
 
@@ -183,12 +183,12 @@ def test_doctor_DO_khi_khai_ky_vong_ma_lech():
 
     rd = _doctor()
     src = _nen()
-    rt = {**src, "semantic_route_mode": "off", "git_sha": src["git_sha"]}
+    rt = {**src, "hybrid_route_mode": "staging-replay", "git_sha": src["git_sha"]}
     gia = (
         patch.object(rd, "fetch_runtime", lambda url: (rt, None)),
         patch.object(rd, "runtime_identity", lambda: src),
         patch.object(rd, "_source_git_sha", lambda: src["git_sha"]),
-        patch.object(_sys, "argv", ["rd", "--doi-mode", "serve"]),
+        patch.object(_sys, "argv", ["rd", "--doi-mode", "live"]),
     )
     buf = _io.StringIO()
     for g in gia:

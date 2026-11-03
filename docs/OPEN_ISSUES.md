@@ -1,6 +1,91 @@
 # OPEN_ISSUES.md — Danh mục các vấn đề kỹ thuật đang mở
 
+**Cutover update 2026-11-04 (`ALGOSIM_HYBRID_CUTOVER_FINAL_REPORT.md`):** Hybrid `/4` is now the default production architecture on `POST /api/analyze` (`HYBRID_ROUTE_MODE = live`, `CACHE_VERSION = 132`, product `52205f45`, `102` measured files `765487a4b48e7d52…`), retiring `LLM_ONLY` (`pipeline.py`), Compiler C (`geometry_compiler/*`), and Adapter `/3` (`adapter3_simulation.py`) with pre-cutover deployment rollback tag `pre-hybrid-cutover-f986e897` (`f986e897bd266d06d4a9c5fa78c05463b7b247bf`). `ISSUE-ARCH-HYBRID-ROUTE-D-NOT-WIRED` and research-branch resolutions from `research/hybrid-master-backend-replacement` below are now integrated onto `main`; `INDEPENDENT_H1_VALIDATION = NOT_MEASURED` (`H-1` external corpus pending) and `ISSUE-ARCH-PARTIAL-STATED-CUT-NAMING` / `ISSUE-ARCH-HISTORY-REOPEN-DROPS-SCENE3D` / `ISSUE-ARCH-ROUTE-D-DIACRITIC-FREE-INPUT` remain OPEN.
+
 **Integration update 2026-10-30:** W3-F2 resolution below is now on local main `15a8e1ac`; earlier “not on main” labels are historical. Publication retains 105 baseline head findings (104 pending findings, 1 additional test vector), not new W3-F2 regressions: 95 traceback, 5 Google-key test vectors and 5 other security-pattern findings. Narrow Owner policy and closure: `evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/integration/report.md`. This does not resolve the historical publication debt globally.
+
+### ISSUE-ARCH-PARTIAL-STATED-CUT-NAMING
+
+- **status:** OPEN (found 2026-11-03 by the independent review of run `hybrid-live-validation`, MINOR-2 / R-5; reproduced on
+  mutated Wave 3 payloads, A04 stating only "cắt SC tại N", A07 stating only AA').
+- **cause:** the `/2` stated-cut certificate (`DINH_CAT_CANH`) names only the through-point and the stated lateral cuts. Engine
+  `/24` `chung_chi_phu_dinh` refuses `SECTION_BOUNDARY_INCOMPLETE` when they miss a vertex of the exact cross-section (before
+  `/24` the route served it and Adapter `/4` rejected it as `PREVIEW_RESULT_INVALID`). The same problem with no stated cut is
+  served as an engine-derived section.
+- **impact:** legitimate partial naming is refused, and the learner sees the "dữ kiện mâu thuẫn / suy biến" message
+  (`hybrid_preview` maps the code to `INVALID_DATA`). Fail-closed: nothing refused was ever served.
+- **repair:** for `derive = True`, add engine-certified `derived_fresh` vertices on unstated cut lateral edges and fall back to the
+  engine-derived section for base/top-edge vertices; or give partial naming its own code in the unsupported category. RED first.
+- **source:** `evaluation/geometry/runs/hybrid-live-validation/independent-review.md`.
+
+### ISSUE-ARCH-HISTORY-REOPEN-DROPS-SCENE3D
+
+- **status:** OPEN (found 2026-11-03 by the independent review, round 2, of run `pedagogical-simulation-integration`; read
+  in code, not yet reproduced by a test; predates that run — `sanitizeEnvelope` is unchanged since `1f95e923`, before
+  Scene3D existed).
+- **cause:** `frontend/src/state/history.ts::sanitizeEnvelope` persists only `status`, `simulation_id`, `domain`,
+  `visual_mode`, `title`, `description`, `config`, `notes`. Every other envelope field is dropped from a history item:
+  `scene3d`, the checked Hybrid view, and `problem_statement` (the learner's verbatim statement).
+- **impact:** reopening a 3D problem from «Lịch sử» yields an envelope without `scene3d`, so `SimulationWorkspace` does not
+  render `Scene3DExplorer`; the claim "0-AI reopen" is not shown at UI level for 3D scenes. An assignment the student
+  opened (recorded with `originalInput = null`) would also lose «Đề bài» on reopen. Typed/photo-reviewed problems keep the
+  statement through `item.originalInput`.
+- **repair:** first a RED vitest (load a served Hybrid envelope, `reopenFromHistory`, expect `scene3d` and
+  `problem_statement`); then decide what history may persist (a 3D scene is large; `localStorage` quota) — keep the
+  fields, or store a reference and refetch. Not a pedagogical-disclosure issue: nothing extra is shown.
+- **source:** `evaluation/geometry/runs/pedagogical-simulation-integration/independent-review.md` (round 2, R2/R3).
+
+### ISSUE-ARCH-ROUTE-D-SOLID-CLASS-WORD-UNCERTIFIED
+
+- **status:** RESOLVED ON RESEARCH BRANCH (2026-11-01, eleventh continuation of `ALGOSIM_MASTER_HYBRID_BACKEND_REPLACEMENT`, product `9e059eb7`, Registry `/28`, Planner `/23`, Engine `/20`; independent adversarial review `READY` in Round 4, `0 BLOCKER, 0 MAJOR, 0 MINOR`; not yet on `main`). `registry.py::doc_khang_dinh_loai_hinh` reads premise-level solid-class and 2D polygon assertions (with ordered prose-solid topology binding `_khop_ky_hieu_khoi` and multi-solid coordination `_day_khoi_cho_menh_de`) and `engine.py::kiem_khang_dinh_loai_hinh` certifies them in exact `Fraction` Gram arithmetic (`"Cho hình lập phương ABCD.A'B'C'D' có đáy ABCD là hình chữ nhật, AB = 2, AD = 3, AA' = 4."` deterministically refuses `INCONSISTENT_FACTS`). Locked by `backend/tests/geometry/test_route_d_semantic_shape_invariants.py` (`41/41`). Original status preserved: OPEN (found 2026-11-01 by the independent review of the hybrid-master tenth continuation; it predates that work and is present at `c9f54828`).
+- **cause:** A specific solid-class word in a solid clause is a claim that no call encodes and nothing checks. "Cho hình lập phương ABCD.A'B'C'D' có đáy ABCD là hình chữ nhật, AB = 2, AD = 3, AA' = 4." is served on Route D /4 as a 2×3×4 box, so the cube claim (all edges equal) is never verified. The engine has no notion of the class.
+- **impact:** A contradictory text is served instead of being refused. The SL-1 opener ("Vẽ hình lập phương … có …") inherits the same path. The trailing-mention reader does not inherit it: it accepts only the generic word.
+- **repair:** Certify the class where the claim is read: the Source Gate requires calls that encode the class, or the engine checks it after layout. This needs a RED test on the repro above.
+- **source:** `evaluation/geometry/runs/hybrid-master-backend-replacement/student-language-audit.md` §8.
+
+### ISSUE-ARCH-ROUTE-D-DIACRITIC-FREE-INPUT
+
+- **status:** OPEN, waiting for an Owner decision (S-1 in `evaluation/geometry/runs/hybrid-master-backend-replacement/owner-go-request.md`).
+- **cause:** `detect_domain` refuses space-geometry text typed without diacritics as out of scope on every route, the `LLM_ONLY` default included. On Route D the closed Source Gate grammars would then refuse it as well.
+- **evidence:** probe row S05 in `evaluation/geometry/runs/hybrid-master-backend-replacement/student-language-probe.json`.
+- **update 2026-11-01 (eleventh continuation, offline prototype only):** `backend/scripts/s1_diacritic_offline.py` (`0` imports in `backend/app/`, `detect_domain` untouched) implements a strictly isolated, span-preserving normalization prototype (`norm_char_to_raw_span`, `verify_no_forged_quotes`, mixed-IME `_ascii_fold`, and polysemy flags `NEEDS_CLARIFICATION` for `goc`/`day`/`tam`/`canh`/`duong` and lowercase solid labels), verified on `s1-diacritic-development-corpus.json` (`16/16`, `test_s1_diacritic_free_offline.py`; `s1-diacritic-free-offline-audit.md`). Production integration remains gated on Owner decision `S-1`.
+
+### ISSUE-ARCH-PLANNER-COMPOSITION-SELF-LABEL-OVERSTATES
+
+- **status:** RESOLVED ON RESEARCH BRANCH (2026-11-02, sixteenth continuation; planner `/24`, product `9c561ca6`, candidate `3154a696`; independent review `READY` in round 2; not yet on `main`).
+  - `_EffectResolver._emit` tags each step's provenance, and `_nguon_goc_buoc` builds `source_defined_steps` / `registered_decomposition_steps` / `search_generated_steps`. DISCOVERED requires a search-generated step.
+  - `/23` and `/24` differ only where `/23` said DISCOVERED: 753 plans compared, with identical calls and certificates.
+  - **Remaining fact:** in Registry `/29` no contract can produce a search-generated step, so DISCOVERED is unreachable. See `evaluation/geometry/runs/hybrid-master-backend-replacement/planner-generalization-c16.md`.
+- **status before C16:** OPEN (fifteenth continuation). The evaluation scripts no longer trusted the label, but the product telemetry was unchanged.
+- **cause:** `planner.py` counts every call whose id is not a fact id in `search_telemetry.planner_originated_steps`, and labels the plan `DISCOVERED_FUNCTION_COMPOSITION`. Such a call can be:
+  - the step that only builds a point the extraction described (`midpoint(S,B)` for "trung điểm của SB");
+  - a step of a registered auxiliary rule (`registry.AUXILIARY_RULES`).
+- **evidence:**
+  - `evaluation/geometry/runs/hybrid-master-backend-replacement/r1-composition-relabel.json`: the 9 C13 probe chains the planner labels DISCOVERED are 6 `SOURCE_EXPLICIT_SEQUENCE` and 3 `REGISTERED_DECOMPOSITION`.
+  - `r1-live-pilot-gold-replay.jsonl`: of 11 serves, 0 are DISCOVERED.
+  - The rule is in `backend/scripts/run_s2_student_language_pilot.py::composition_label`. Its independent review is READY (`r1-live-pilot-protocol.md`, revisions A–B).
+- **impact:** every report that cites the planner's own DISCOVERED count overstates composition. That includes C13 "9/9" and C11 "9 discovered". The C11 route-B claim has not been re-checked with this rule: `HYPOTHESIS`, not `ESTABLISHED`.
+
+### ISSUE-ARCH-ROUTE-D4-UNNAMED-DESCRIBED-POINT-GOAL
+
+- **status:** RESOLVED ON RESEARCH BRANCH (2026-11-01, thirteenth continuation of `ALGOSIM_MASTER_HYBRID_BACKEND_REPLACEMENT`, product `9503482a`, Registry `/29`, Planner `/23`, Engine `/20`; independent adversarial review `READY` in Round 2, `0 BLOCKER, 0 MAJOR, 0 MINOR`; not yet on `main`). `TypedFactNextPayloadV2.described_points` (`DescribedPointSpec`, `@id` refs, canonical alias deduplication, explicit cycle/depth validation, multi-consumer `scope_records` ownership checks, verbatim quote span provenance) + `typed_fact_next_bridge.py` (`_mo_ta_phang`, `_cau_hoi_mo_ta`, `_mat_fact`) carry unnamed described points end-to-end on `/4` across measurement goals and section `through_point`s (`9/9` Continuation 11 `DISCOVERED_FUNCTION_COMPOSITION` chains `C1a..C7` + `angle(line1, line2)` served with exact values in `r1-described-point-probe-r2.json` and `test_route_d4_described_points.py` `55/55`; `D1` depth-2 nested and `D2` two-described-operand goals are contract-representable on `/2` and refuse fail-closed `BRIDGE_UNSUPPORTED_DESCRIBED_POINT` until Source Gate `effect-chain` certification is generalized). Original status preserved: OPEN, waiting for an Owner decision (R-1 in `evaluation/geometry/runs/hybrid-master-backend-replacement/owner-go-request.md`, twelfth-continuation addendum).
+- **cause:** the `/4` bridge (`typed_fact_next_bridge._distance_question` / `_angle_question` / `_operand`, section `through_point`) accepts only named labels as goal operands, so a goal or auxiliary plane that uses an unnamed described point ("khoảng cách từ trung điểm của SC đến (ABCD)") is refused (`INVALID_MATH_GOAL` / `INVALID_QUALIFIED_REF`). The planner `/23` composes these goals on the flat route B only; the eleventh-continuation `/4` claim is corrected.
+- **evidence:** `evaluation/geometry/runs/hybrid-master-backend-replacement/planner-recomposition-route-d4-correction.md`, `route-d4-representation-probe.json` (4 refused shapes, 2 named controls served with hand-checked values; 0 `DISCOVERED_FUNCTION_COMPOSITION` among 52 served `/4` gold rows). 3/60 problems of the blind-agent NLU corpus use this wording (`described-point-usage-scan.json`).
+- **impact:** fail-closed (0 wrong-served); a likely Hybrid false-refusal source in the live paired run. Fixing it changes the Hybrid model surface ⇒ new candidate.
+
+### ISSUE-ARCH-ROUTE-D-STUDENT-SHORTHAND-UNREAD
+
+- **status:** RESOLVED ON RESEARCH BRANCH FOR SHORTHANDS `k/c`, `mp`, `đt` (2026-11-01, thirteenth continuation of `ALGOSIM_MASTER_HYBRID_BACKEND_REPLACEMENT`, product `9503482a`, Registry `/29`; `S-2` gold replay ceiling lifted `33/36 -> 35/36`, `0` wrong-served in `s2-pilot-gold-replay-r3.jsonl`; tone-dropped `"hình chop"` in `S2-F-S07` remains fail-closed `UNGROUNDED_VALUE` under Owner diacritic policy `S-1`; not yet on `main`). Original status preserved: OPEN, recorded; fix deferred until after the S-2 pilot (SL-3 in the same addendum).
+- **cause:** the Source Gate does not read the student abbreviations `k/c` (khoảng cách), `mp` (mặt phẳng), `đt` (đường thẳng) as object names (`SOURCE_OBJECT_MISMATCH`), and a tone typo in the solid word ("hình chop") leaves its clause unread (`UNGROUNDED_VALUE`).
+- **evidence:** the S-2 gold replay `evaluation/geometry/runs/hybrid-master-backend-replacement/s2-pilot-gold-replay.jsonl`: rows `S2-F-F05`, `S2-F-F06`, `S2-F-S07` refused on the **gold** extraction (attribution `DETERMINISTIC_LAYER_REPRODUCED_WITH_GOLD`).
+- **impact:** fail-closed false refusals; caps S-2 end-to-end at 33/36 whatever the live model reads.
+
+### ISSUE-ARCH-ROUTE-D-BRIDGE-LITERAL-BACKSPACE-REGEX
+
+- **status:** RESOLVED ON RESEARCH BRANCH (2026-11-01, thirteenth continuation of `ALGOSIM_MASTER_HYBRID_BACKEND_REPLACEMENT`, product `9503482a`, `typed_fact_next_bridge.py::_v2_plane_def_quotes` literal `0x08` byte replaced with `\b` + word-for-word imperative restatement rule; `0` ASCII control bytes locked by `test_bridge_source_holds_no_control_byte`; not yet on `main`). Original status preserved: OPEN, recorded 2026-11-01 (twelfth continuation); fix with the next product change (any `backend/app` edit invalidates candidate `800ab355`).
+- **cause:** `backend/app/simulation/geometry_functions/typed_fact_next_bridge.py::_v2_plane_def_quotes` (line 382, since `c15eebe4`) matches `r"^\s*(?:hãy\s+)?dựng<0x08>"`: the file holds a literal BACKSPACE byte where the word boundary `\b` was meant, so the rule that skips an imperative "(Hãy) dựng …" sentence when looking for a plane's declarative definition never fires. Most likely a shell escape collapse when the line was written.
+- **evidence:** a byte scan of the files changed on the branch (`[\x00-\x08\x0b\x0c\x0e-\x1f]`), with this line as its only hit.
+- **impact:** `NOT_MEASURED`. A "Dựng mặt phẳng (P) …" sentence can count as a definition candidate. With two candidates the function returns none, which risks a false refusal; with one, an extra quote is sent to the Source Gate. No wrong-served path is known.
 
 ### ISSUE-RESEARCH-TYPEDFACTNEXT-PREMISE-SCOPE-ERASED
 
@@ -241,6 +326,20 @@
   or engine change. Still OPEN: only `distance` questions enter the resolver (volume/area/angle/length keep fixed dispatch);
   descriptions are those the TypedFact `point_kind` literal can carry (midpoint, centroid); a description with two operand
   groups (intersection point of two lines) has no transport; the foot on a plane is a scene witness, not a construction step.
+  **Update 2026-11-02 (seventeenth continuation, research branch `research/hybrid-master-backend-replacement`,
+  candidate `2fc15108`, not integrated):** planes defined by stated constraints are served on `/4`. The planner obtains a
+  `Normal(Q)` from the `Normal` effect of `orthogonal_projection`'s contract (registry `/30`, rule `MAT_RANG_BUOC`).
+  Generated cases: 407/407 served exact, 0 wrong-served. **Effect discovery is still OPEN:**
+  - the witnesses come from a declared rule;
+  - an ablation shows the candidate choice does not change the answer;
+  - there is no verify-and-backtrack loop.
+
+  See `evaluation/geometry/runs/hybrid-master-backend-replacement/constraint-to-witness-c17.md` §5.
+  **Update 2026-11-02 (eighteenth continuation, candidate `15d236eb`, not integrated):** points named by a property
+  (orthocenter, circumcenter) are served on `/4` by regressing a declared definition into locus needs whose producers
+  come from function contracts (`PerpLine`, `PerpDir`); 202 goals that need composition, 0 wrong-served. **Effect
+  discovery is still OPEN:** the definition declares the loci (rule `DINH_NGHIA_DIEM`), valid alternatives are equivalent,
+  and nothing retries on a verification failure. See `composition-c18.md` §§5, 10.
 - **description:** Current TypedFact/functions encode lines as point pairs; an intersection_line output line3 cannot
   become a projection/distance operand. FunctionSpec has no planning effects; Planner maps kinds/goals with fixed expansions,
   so a new Registry function is not automatically discovered. Valid supplied dependencies are scheduled by Engine.

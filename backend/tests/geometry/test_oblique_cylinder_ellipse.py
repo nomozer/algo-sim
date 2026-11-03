@@ -30,7 +30,7 @@ from pathlib import Path
 
 import pytest
 
-from app.ai.pipeline import _dung_scene3d
+from tests.geometry.scene3d_test_helper import _dung_scene3d
 from app.simulation.geometry import curved as CV
 from app.simulation.geometry.exact import GeometryError, Plane3, Vec3
 from app.simulation.geometry.radical import display, is_exact_number

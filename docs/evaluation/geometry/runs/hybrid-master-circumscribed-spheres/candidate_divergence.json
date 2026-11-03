@@ -1,0 +1,20 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "ALGOSIM_MASTER_HYBRID_BACKEND_REPLACEMENT (eighth continuation: polyhedral role-phrase parity, trace pre/postconditions, certified circumscribed spheres on /4)",
+  "corrects": "docs/evaluation/geometry/runs/hybrid-master-curved-generalization/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "current_candidate_hash": "ccfce08c8b572339fbbc140789dee078773b2dc199c52a43c054dce92b77e8f8",
+  "current_product_commit": "44a0b79ee4e40299d5ff93e0102cd14f49d5064a",
+  "current_candidate_source": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+  "diverged": true,
+  "reason": "Backend only, offline, on top of the cb06635e candidate: polyhedral role-phrase Source Gate parity (_C_VAI + _cua_khop delegating subclass verification to _loai_cum_dung); pedagogical construction trace hardening (preconditions and postconditions exported on KetQuaTuyen.trace and route_d.construction_trace, stripped on all REFUSED paths, axisless standalone sphere pose); certified circumscribed spheres of polyhedra on Route D /4 (additive typed-fact-next/2 SolidSpec.circumscribes, exact Fraction 3x3 Gram circumcenter solver, all-vertex cosphericity certificate NO_CIRCUMSCRIBED_SPHERE, exact Fraction Cholesky Euclidean chart normalization chuan_hoa_euclid, G4 IR perpendicular-bisector construction _emit_tam_ngoai_tiep, closed-form cross-check, closed Vietnamese Source Gate grammar _CAU_CONG_NGOAI_TIEP, composite polyhedron/sphere ask_volume disambiguation); independent review READY in round 2 (registry /25, planner /21, engine /17). Wave 3 67/72 (72/72 negatives refused, 0 wrong-served), locked 96/96, 203 probes 0 wrong-served, 32/32 registered curved controls unchanged. The default LLM_ONLY path, its cache identity, prompts and route A's provider surface are unchanged; the /4 provider response schema widened (model surface changed for the /4 arm only).",
+  "cache_version": 131,
+  "cache_version_hien_tai": 131,
+  "cache_decision": "NO BUMP: LLM_ONLY untouched (CACHE_VERSION keys the /api/analyze response cache); Route D /4 has no response cache and its rows are keyed by the Route D surface (registry /25, planner /21, engine /17); refusals are never cached.",
+  "hieu_luc_len_ket_qua_da_do": {
+    "historical_measurements": "UNCHANGED",
+    "live_requests": 0,
+    "so_lieu_lượt_đo_cuối": "UNCHANGED: historical measurements are not rescored."
+  }
+}

@@ -285,6 +285,9 @@ KHOI_CONG: dict[str, KhoiCong] = {
                  True, True, None, True, _the_tich_non, _mat_non),
     )
 }
+#: `typed-fact-next/2` solid type of revolution → its kind HERE (the source contract writes "sphere"). Route D /4 reads
+#: every per-kind fact from `KHOI_CONG` through this map, so no other layer branches on a kind name (hybrid-master).
+LOAI_TU_NGUON = {"sphere": "ball", "cylinder": "cylinder", "cone": "cone"}
 
 
 # ── KHỐI CONG ─────────────────────────────────────────────────────────────

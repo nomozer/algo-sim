@@ -1,0 +1,22 @@
+{
+ "schema": "hybrid-master-paired-heldout/2",
+ "author": "TO_BE_NAMED_BY_OWNER",
+ "authoring_independence": "NOT_ESTABLISHED",
+ "written_before_any_system_run": null,
+ "cases": [
+  {
+   "id": "<unique id>",
+   "problem_text": "<Vietnamese problem text with numeric data, exactly as a student would read it>",
+   "expect": "SERVE",
+   "oracle": {"<kind>": ["<exact value, e.g. 2√6/3 or 36π>"]},
+   "premise_sentences": ["<sentences that must be read>"],
+   "stratum": {"family": "<pyramid|prism|cuboid|cube|sphere|cylinder|cone>", "question": "<section_measure|distance|angle|volume|area>"}
+  },
+  {
+   "id": "<unique id>",
+   "problem_text": "<Vietnamese problem text>",
+   "expect": "REFUSE",
+   "refusal_class": "<OUT_OF_DOMAIN|CONTRADICTORY_DATA|MISSING_DATA>"
+  }
+ ]
+}

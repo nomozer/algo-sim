@@ -1,0 +1,2518 @@
+{
+ "per_case": [
+  {
+   "study": "K-1",
+   "case_id": "K-A01",
+   "expected": "SERVED",
+   "observed": "SERVED",
+   "outcome": "SERVED_WRONG",
+   "code": null,
+   "stage": null,
+   "math_ok": true,
+   "run3_outcome": "FALSE_REFUSAL",
+   "answers": {
+    "area": [
+     "3√2/2"
+    ]
+   },
+   "composition": "WRONG_SERVED",
+   "http": 1,
+   "latency_s": 10.95,
+   "usd": 0.0051332999999999995,
+   "reused_from": "canary/k1-live.jsonl",
+   "tok": {
+    "prompt_tokens": 2611,
+    "candidates_tokens": 845,
+    "thoughts_tokens": 895,
+    "cached_tokens": null,
+    "total_tokens": 4351
+   }
+  },
+  {
+   "study": "K-1",
+   "case_id": "K-A02",
+   "expected": "SERVED",
+   "observed": "SERVED",
+   "outcome": "SERVED_WRONG",
+   "code": null,
+   "stage": null,
+   "math_ok": true,
+   "run3_outcome": "FALSE_REFUSAL",
+   "answers": {
+    "area": [
+     "3√2/2"
+    ]
+   },
+   "composition": "WRONG_SERVED",
+   "http": 1,
+   "latency_s": 13.87,
+   "usd": 0.0070208,
+   "reused_from": null,
+   "tok": {
+    "prompt_tokens": 2611,
+    "candidates_tokens": 845,
+    "thoughts_tokens": 1650,
+    "cached_tokens": null,
+    "total_tokens": 5106
+   }
+  },
+  {
+   "study": "K-1",
+   "case_id": "K-A03",
+   "expected": "SERVED",
+   "observed": "SERVED",
+   "outcome": "SERVED_WRONG",
+   "code": null,
+   "stage": null,
+   "math_ok": true,
+   "run3_outcome": "FALSE_REFUSAL",
+   "answers": {
+    "area": [
+     "√61"
+    ]
+   },
+   "composition": "WRONG_SERVED",
+   "http": 1,
+   "latency_s": 12.07,
+   "usd": 0.0073544000000000005,
+   "reused_from": null,
+   "tok": {
+    "prompt_tokens": 2623,
+    "candidates_tokens": 1051,
+    "thoughts_tokens": 1576,
+    "cached_tokens": null,
+    "total_tokens": 5250
+   }
+  },
+  {
+   "study": "K-1",
+   "case_id": "K-A04",
+   "expected": "SERVED",
+   "observed": "SERVED",
+   "outcome": "SERVED_WRONG",
+   "code": null,
+   "stage": null,
+   "math_ok": true,
+   "run3_outcome": "FALSE_REFUSAL",
+   "answers": {
+    "area": [
+     "√61"
+    ]
+   },
+   "composition": "WRONG_SERVED",
+   "http": 1,
+   "latency_s": 9.3,
+   "usd": 0.0057944,
+   "reused_from": null,
+   "tok": {
+    "prompt_tokens": 2623,
+    "candidates_tokens": 1051,
+    "thoughts_tokens": 952,
+    "cached_tokens": null,
+    "total_tokens": 4626
+   }
+  },
+  {
+   "study": "K-1",
+   "case_id": "K-B01",
+   "expected": "REFUSED_UNDERDETERMINED",
+   "observed": "REFUSED",
+   "outcome": "WRONG_REASON_REFUSAL",
+   "code": "PLANE_NOT_UNIQUE",
+   "stage": "deterministic_route",
+   "math_ok": null,
+   "run3_outcome": "WRONG_REASON_REFUSAL",
+   "answers": null,
+   "composition": "EXTRACTION_FAILURE",
+   "http": 1,
+   "latency_s": 11.31,
+   "usd": 0.0069108,
+   "reused_from": null,
+   "tok": {
+    "prompt_tokens": 2611,
+    "candidates_tokens": 845,
+    "thoughts_tokens": 1606,
+    "cached_tokens": null,
+    "total_tokens": 5062
+   }
+  },
+  {
+   "study": "K-1",
+   "case_id": "K-B02",
+   "expected": "REFUSED_INCONSISTENT",
+   "observed": "REFUSED",
+   "outcome": "WRONG_REASON_REFUSAL",
+   "code": "INCONSISTENT_FACTS",
+   "stage": "deterministic_route",
+   "math_ok": null,
+   "run3_outcome": "WRONG_REASON_REFUSAL",
+   "answers": null,
+   "composition": "EXTRACTION_FAILURE",
+   "http": 1,
+   "latency_s": 13.38,
+   "usd": 0.0073411,
+   "reused_from": null,
+   "tok": {
+    "prompt_tokens": 2612,
+    "candidates_tokens": 864,
+    "thoughts_tokens": 1759,
+    "cached_tokens": null,
+    "total_tokens": 5235
+   }
+  },
+  {
+   "study": "K-1",
+   "case_id": "K-C01",
+   "expected": "SERVED",
+   "observed": "SERVED",
+   "outcome": "SERVED_CORRECT",
+   "code": null,
+   "stage": null,
+   "math_ok": true,
+   "run3_outcome": "SERVED_WRONG",
+   "answers": {
+    "distance": [
+     "1"
+    ]
+   },
+   "composition": "REGISTERED_DECOMPOSITION",
+   "http": 1,
+   "latency_s": 6.68,
+   "usd": 0.0040708,
+   "reused_from": null,
+   "tok": {
+    "prompt_tokens": 2586,
+    "candidates_tokens": 725,
+    "thoughts_tokens": 593,
+    "cached_tokens": null,
+    "total_tokens": 3904
+   }
+  },
+  {
+   "study": "K-1",
+   "case_id": "K-C02",
+   "expected": "SERVED",
+   "observed": "SERVED",
+   "outcome": "SERVED_CORRECT",
+   "code": null,
+   "stage": null,
+   "math_ok": true,
+   "run3_outcome": "FALSE_REFUSAL",
+   "answers": {
+    "distance": [
+     "1/4"
+    ]
+   },
+   "composition": "REGISTERED_DECOMPOSITION",
+   "http": 1,
+   "latency_s": 8.44,
+   "usd": 0.0050889,
+   "reused_from": "canary/k1-live.jsonl",
+   "tok": {
+    "prompt_tokens": 2588,
+    "candidates_tokens": 787,
+    "thoughts_tokens": 938,
+    "cached_tokens": null,
+    "total_tokens": 4313
+   }
+  },
+  {
+   "study": "K-1",
+   "case_id": "K-C03",
+   "expected": "SERVED",
+   "observed": "SERVED",
+   "outcome": "SERVED_CORRECT",
+   "code": null,
+   "stage": null,
+   "math_ok": true,
+   "run3_outcome": "FALSE_REFUSAL",
+   "answers": {
+    "distance": [
+     "√66/4"
+    ]
+   },
+   "composition": "REGISTERED_DECOMPOSITION",
+   "http": 1,
+   "latency_s": 6.79,
+   "usd": 0.0040789,
+   "reused_from": null,
+   "tok": {
+    "prompt_tokens": 2588,
+    "candidates_tokens": 723,
+    "thoughts_tokens": 598,
+    "cached_tokens": null,
+    "total_tokens": 3909
+   }
+  },
+  {
+   "study": "K-1",
+   "case_id": "K-C04",
+   "expected": "SERVED",
+   "observed": "SERVED",
+   "outcome": "SERVED_CORRECT",
+   "code": null,
+   "stage": null,
+   "math_ok": true,
+   "run3_outcome": "SERVED_WRONG",
+   "answers": {
+    "distance": [
+     "2"
+    ]
+   },
+   "composition": "REGISTERED_DECOMPOSITION",
+   "http": 1,
+   "latency_s": 7.81,
+   "usd": 0.004795000000000001,
+   "reused_from": null,
+   "tok": {
+    "prompt_tokens": 2600,
+    "candidates_tokens": 873,
+    "thoughts_tokens": 733,
+    "cached_tokens": null,
+    "total_tokens": 4206
+   }
+  },
+  {
+   "study": "K-1",
+   "case_id": "K-C05",
+   "expected": "SERVED",
+   "observed": "SERVED",
+   "outcome": "SERVED_CORRECT",
+   "code": null,
+   "stage": null,
+   "math_ok": true,
+   "run3_outcome": "SERVED_CORRECT",
+   "answers": {
+    "distance": [
+     "√673/8"
+    ]
+   },
+   "composition": "REGISTERED_DECOMPOSITION",
+   "http": 1,
+   "latency_s": 8.45,
+   "usd": 0.005066299999999999,
+   "reused_from": null,
+   "tok": {
+    "prompt_tokens": 2596,
+    "candidates_tokens": 855,
+    "thoughts_tokens": 860,
+    "cached_tokens": null,
+    "total_tokens": 4311
+   }
+  },
+  {
+   "study": "K-1",
+   "case_id": "K-C06",
+   "expected": "SERVED",
+   "observed": "SERVED",
+   "outcome": "SERVED_CORRECT",
+   "code": null,
+   "stage": null,
+   "math_ok": true,
+   "run3_outcome": "FALSE_REFUSAL",
+   "answers": {
+    "distance": [
+     "2"
+    ]
+   },
+   "composition": "REGISTERED_DECOMPOSITION",
+   "http": 1,
+   "latency_s": 11.0,
+   "usd": 0.0065281,
+   "reused_from": null,
+   "tok": {
+    "prompt_tokens": 2602,
+    "candidates_tokens": 945,
+    "thoughts_tokens": 1354,
+    "cached_tokens": null,
+    "total_tokens": 4901
+   }
+  },
+  {
+   "study": "K-1",
+   "case_id": "K-D01",
+   "expected": "REFUSED_INCONSISTENT",
+   "observed": "REFUSED",
+   "outcome": "CORRECT_REFUSAL",
+   "code": "DEGENERATE_POINTS",
+   "stage": "deterministic_route",
+   "math_ok": null,
+   "run3_outcome": "WRONG_REASON_REFUSAL",
+   "answers": null,
+   "composition": "CORRECT_REFUSAL",
+   "http": 1,
+   "latency_s": 9.52,
+   "usd": 0.0059408,
+   "reused_from": null,
+   "tok": {
+    "prompt_tokens": 2586,
+    "candidates_tokens": 728,
+    "thoughts_tokens": 1338,
+    "cached_tokens": null,
+    "total_tokens": 4652
+   }
+  },
+  {
+   "study": "K-1",
+   "case_id": "K-D02",
+   "expected": "REFUSED_INCONSISTENT",
+   "observed": "REFUSED",
+   "outcome": "CORRECT_REFUSAL",
+   "code": "DEGENERATE_POINTS",
+   "stage": "deterministic_route",
+   "math_ok": null,
+   "run3_outcome": "WRONG_REASON_REFUSAL",
+   "answers": null,
+   "composition": "CORRECT_REFUSAL",
+   "http": 1,
+   "latency_s": 6.82,
+   "usd": 0.0041738999999999995,
+   "reused_from": null,
+   "tok": {
+    "prompt_tokens": 2588,
+    "candidates_tokens": 733,
+    "thoughts_tokens": 626,
+    "cached_tokens": null,
+    "total_tokens": 3947
+   }
+  },
+  {
+   "study": "K-1",
+   "case_id": "K-E01",
+   "expected": "CLARIFY",
+   "observed": "CLARIFY",
+   "outcome": "CORRECT_CLARIFICATION",
+   "code": "AMBIGUOUS_FACT",
+   "stage": "deterministic_route",
+   "math_ok": null,
+   "run3_outcome": "WRONG_REASON_REFUSAL",
+   "answers": null,
+   "composition": "CORRECT_REFUSAL",
+   "http": 1,
+   "latency_s": 15.44,
+   "usd": 0.0100858,
+   "reused_from": "canary/k1-live.jsonl",
+   "tok": {
+    "prompt_tokens": 2611,
+    "candidates_tokens": 902,
+    "thoughts_tokens": 2819,
+    "cached_tokens": null,
+    "total_tokens": 6332
+   }
+  },
+  {
+   "study": "K-1",
+   "case_id": "K-E02",
+   "expected": "CLARIFY",
+   "observed": "CLARIFY",
+   "outcome": "CORRECT_CLARIFICATION",
+   "code": "AMBIGUOUS_FACT",
+   "stage": "deterministic_route",
+   "math_ok": null,
+   "run3_outcome": "WRONG_REASON_REFUSAL",
+   "answers": null,
+   "composition": "CORRECT_REFUSAL",
+   "http": 1,
+   "latency_s": 13.79,
+   "usd": 0.0081804,
+   "reused_from": null,
+   "tok": {
+    "prompt_tokens": 2593,
+    "candidates_tokens": 737,
+    "thoughts_tokens": 2224,
+    "cached_tokens": null,
+    "total_tokens": 5554
+   }
+  },
+  {
+   "study": "R-1",
+   "case_id": "R1-A01",
+   "expected": "SERVED",
+   "observed": "SERVED",
+   "outcome": "SERVED_CORRECT",
+   "code": null,
+   "stage": null,
+   "math_ok": true,
+   "run3_outcome": "FALSE_REFUSAL",
+   "answers": {
+    "distance": [
+     "√2"
+    ]
+   },
+   "composition": "SOURCE_EXPLICIT_SEQUENCE",
+   "http": 1,
+   "latency_s": 6.79,
+   "usd": 0.0041954,
+   "reused_from": "canary/r1-live.jsonl",
+   "tok": {
+    "prompt_tokens": 2568,
+    "candidates_tokens": 626,
+    "thoughts_tokens": 744,
+    "cached_tokens": null,
+    "total_tokens": 3938
+   }
+  },
+  {
+   "study": "R-1",
+   "case_id": "R1-A02",
+   "expected": "SERVED",
+   "observed": "SERVED",
+   "outcome": "SERVED_CORRECT",
+   "code": null,
+   "stage": null,
+   "math_ok": true,
+   "run3_outcome": "SERVED_WRONG",
+   "answers": {
+    "distance": [
+     "2√6/3"
+    ]
+   },
+   "composition": "REGISTERED_DECOMPOSITION",
+   "http": 1,
+   "latency_s": 7.04,
+   "usd": 0.0042022,
+   "reused_from": null,
+   "tok": {
+    "prompt_tokens": 2574,
+    "candidates_tokens": 651,
+    "thoughts_tokens": 721,
+    "cached_tokens": null,
+    "total_tokens": 3946
+   }
+  },
+  {
+   "study": "R-1",
+   "case_id": "R1-A03",
+   "expected": "SERVED",
+   "observed": "SERVED",
+   "outcome": "SERVED_CORRECT",
+   "code": null,
+   "stage": null,
+   "math_ok": true,
+   "run3_outcome": "FALSE_REFUSAL",
+   "answers": {
+    "distance": [
+     "√17"
+    ]
+   },
+   "composition": "SOURCE_EXPLICIT_SEQUENCE",
+   "http": 1,
+   "latency_s": 6.71,
+   "usd": 0.0042354,
+   "reused_from": null,
+   "tok": {
+    "prompt_tokens": 2568,
+    "candidates_tokens": 632,
+    "thoughts_tokens": 754,
+    "cached_tokens": null,
+    "total_tokens": 3954
+   }
+  },
+  {
+   "study": "R-1",
+   "case_id": "R1-A04",
+   "expected": "SERVED",
+   "observed": "SERVED",
+   "outcome": "SERVED_CORRECT",
+   "code": null,
+   "stage": null,
+   "math_ok": true,
+   "run3_outcome": "SERVED_WRONG",
+   "answers": {
+    "angle_cos_sq": [
+     "2/3"
+    ]
+   },
+   "composition": "SOURCE_EXPLICIT_SEQUENCE",
+   "http": 1,
+   "latency_s": 6.05,
+   "usd": 0.0034787999999999998,
+   "reused_from": null,
+   "tok": {
+    "prompt_tokens": 2571,
+    "candidates_tokens": 598,
+    "thoughts_tokens": 485,
+    "cached_tokens": null,
+    "total_tokens": 3654
+   }
+  },
+  {
+   "study": "R-1",
+   "case_id": "R1-A05",
+   "expected": "SERVED",
+   "observed": "SERVED",
+   "outcome": "SERVED_CORRECT",
+   "code": null,
+   "stage": null,
+   "math_ok": true,
+   "run3_outcome": "FALSE_REFUSAL",
+   "answers": {
+    "area": [
+     "√6"
+    ]
+   },
+   "composition": "SOURCE_EXPLICIT_SEQUENCE",
+   "http": 1,
+   "latency_s": 9.17,
+   "usd": 0.0048182,
+   "reused_from": null,
+   "tok": {
+    "prompt_tokens": 2569,
+    "candidates_tokens": 620,
+    "thoughts_tokens": 999,
+    "cached_tokens": null,
+    "total_tokens": 4188
+   }
+  },
+  {
+   "study": "R-1",
+   "case_id": "R1-B01",
+   "expected": "SERVED",
+   "observed": "SERVED",
+   "outcome": "SERVED_WRONG",
+   "code": null,
+   "stage": null,
+   "math_ok": true,
+   "run3_outcome": "FALSE_REFUSAL",
+   "answers": {
+    "area": [
+     "2304/625"
+    ]
+   },
+   "composition": "WRONG_SERVED",
+   "http": 1,
+   "latency_s": 7.69,
+   "usd": 0.0044628,
+   "reused_from": null,
+   "tok": {
+    "prompt_tokens": 2601,
+    "candidates_tokens": 799,
+    "thoughts_tokens": 674,
+    "cached_tokens": null,
+    "total_tokens": 4074
+   }
+  },
+  {
+   "study": "R-1",
+   "case_id": "R1-B02",
+   "expected": "SERVED",
+   "observed": "SERVED",
+   "outcome": "SERVED_WRONG",
+   "code": null,
+   "stage": null,
+   "math_ok": true,
+   "run3_outcome": "FALSE_REFUSAL",
+   "answers": {
+    "area": [
+     "4"
+    ]
+   },
+   "composition": "WRONG_SERVED",
+   "http": 1,
+   "latency_s": 8.59,
+   "usd": 0.0057082,
+   "reused_from": "canary/r1-live.jsonl",
+   "tok": {
+    "prompt_tokens": 2594,
+    "candidates_tokens": 816,
+    "thoughts_tokens": 1156,
+    "cached_tokens": null,
+    "total_tokens": 4566
+   }
+  },
+  {
+   "study": "R-1",
+   "case_id": "R1-C01",
+   "expected": "SERVED",
+   "observed": "SERVED",
+   "outcome": "SERVED_CORRECT",
+   "code": null,
+   "stage": null,
+   "math_ok": true,
+   "run3_outcome": "SERVED_WRONG",
+   "answers": {
+    "distance": [
+     "2",
+     "√6"
+    ]
+   },
+   "composition": "SOURCE_EXPLICIT_SEQUENCE",
+   "http": 1,
+   "latency_s": 6.21,
+   "usd": 0.003929,
+   "reused_from": null,
+   "tok": {
+    "prompt_tokens": 2580,
+    "candidates_tokens": 678,
+    "thoughts_tokens": 584,
+    "cached_tokens": null,
+    "total_tokens": 3842
+   }
+  },
+  {
+   "study": "R-1",
+   "case_id": "R1-C02",
+   "expected": "SERVED",
+   "observed": "SERVED",
+   "outcome": "SERVED_WRONG",
+   "code": null,
+   "stage": null,
+   "math_ok": true,
+   "run3_outcome": "FALSE_REFUSAL",
+   "answers": {
+    "area": [
+     "3/2"
+    ]
+   },
+   "composition": "WRONG_SERVED",
+   "http": 1,
+   "latency_s": 9.53,
+   "usd": 0.005835,
+   "reused_from": null,
+   "tok": {
+    "prompt_tokens": 2600,
+    "candidates_tokens": 844,
+    "thoughts_tokens": 1178,
+    "cached_tokens": null,
+    "total_tokens": 4622
+   }
+  },
+  {
+   "study": "R-1",
+   "case_id": "R1-D01",
+   "expected": "SERVED",
+   "observed": "SERVED",
+   "outcome": "SERVED_CORRECT",
+   "code": null,
+   "stage": null,
+   "math_ok": true,
+   "run3_outcome": "SERVED_WRONG",
+   "answers": {
+    "distance": [
+     "√41/2"
+    ]
+   },
+   "composition": "SOURCE_EXPLICIT_SEQUENCE",
+   "http": 1,
+   "latency_s": 6.79,
+   "usd": 0.0043525,
+   "reused_from": null,
+   "tok": {
+    "prompt_tokens": 2575,
+    "candidates_tokens": 762,
+    "thoughts_tokens": 670,
+    "cached_tokens": null,
+    "total_tokens": 4007
+   }
+  },
+  {
+   "study": "R-1",
+   "case_id": "R1-D02",
+   "expected": "SERVED",
+   "observed": "SERVED",
+   "outcome": "SERVED_CORRECT",
+   "code": null,
+   "stage": null,
+   "math_ok": true,
+   "run3_outcome": "SERVED_WRONG",
+   "answers": {
+    "distance": [
+     "√3/3"
+    ]
+   },
+   "composition": "SOURCE_EXPLICIT_SEQUENCE",
+   "http": 1,
+   "latency_s": 8.73,
+   "usd": 0.0053316,
+   "reused_from": null,
+   "tok": {
+    "prompt_tokens": 2572,
+    "candidates_tokens": 636,
+    "thoughts_tokens": 1188,
+    "cached_tokens": null,
+    "total_tokens": 4396
+   }
+  },
+  {
+   "study": "R-1",
+   "case_id": "R1-E01",
+   "expected": "CLARIFY",
+   "observed": "CLARIFY",
+   "outcome": "WRONG_REASON_CLARIFICATION",
+   "code": "AMBIGUOUS_FACT",
+   "stage": "deterministic_route",
+   "math_ok": null,
+   "run3_outcome": "WRONG_REASON_CLARIFICATION",
+   "answers": null,
+   "composition": "EXTRACTION_FAILURE",
+   "http": 1,
+   "latency_s": 12.3,
+   "usd": 0.0069979000000000005,
+   "reused_from": null,
+   "tok": {
+    "prompt_tokens": 2568,
+    "candidates_tokens": 560,
+    "thoughts_tokens": 1931,
+    "cached_tokens": null,
+    "total_tokens": 5059
+   }
+  },
+  {
+   "study": "R-1",
+   "case_id": "R1-E02",
+   "expected": "CLARIFY",
+   "observed": "REFUSED",
+   "outcome": "WRONG_REASON_REFUSAL",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "stage": "deterministic_route",
+   "math_ok": null,
+   "run3_outcome": "WRONG_REASON_REFUSAL",
+   "answers": null,
+   "composition": "EXTRACTION_FAILURE",
+   "http": 1,
+   "latency_s": 5.93,
+   "usd": 0.0037435,
+   "reused_from": "canary/r1-live.jsonl",
+   "tok": {
+    "prompt_tokens": 2570,
+    "candidates_tokens": 607,
+    "thoughts_tokens": 582,
+    "cached_tokens": null,
+    "total_tokens": 3759
+   }
+  },
+  {
+   "study": "R-1",
+   "case_id": "R1-F01",
+   "expected": "REFUSED_UNSUPPORTED",
+   "observed": "REFUSED",
+   "outcome": "CORRECT_REFUSAL",
+   "code": "BRIDGE_UNSUPPORTED_DESCRIBED_POINT",
+   "stage": "deterministic_route",
+   "math_ok": null,
+   "run3_outcome": "INFRASTRUCTURE_FAILURE",
+   "answers": null,
+   "composition": "CORRECT_REFUSAL",
+   "http": 1,
+   "latency_s": 7.22,
+   "usd": 0.0045506,
+   "reused_from": null,
+   "tok": {
+    "prompt_tokens": 2577,
+    "candidates_tokens": 720,
+    "thoughts_tokens": 791,
+    "cached_tokens": null,
+    "total_tokens": 4088
+   }
+  },
+  {
+   "study": "R-1",
+   "case_id": "R1-F02",
+   "expected": "REFUSED_UNSUPPORTED",
+   "observed": "REFUSED",
+   "outcome": "CORRECT_REFUSAL",
+   "code": "BRIDGE_UNSUPPORTED_DESCRIBED_POINT",
+   "stage": "deterministic_route",
+   "math_ok": null,
+   "run3_outcome": "NOT_MEASURED",
+   "answers": null,
+   "composition": "CORRECT_REFUSAL",
+   "http": 1,
+   "latency_s": 6.9,
+   "usd": 0.0045713,
+   "reused_from": null,
+   "tok": {
+    "prompt_tokens": 2571,
+    "candidates_tokens": 696,
+    "thoughts_tokens": 824,
+    "cached_tokens": null,
+    "total_tokens": 4091
+   }
+  },
+  {
+   "study": "R-1",
+   "case_id": "R1-F03",
+   "expected": "REFUSED_UNSUPPORTED",
+   "observed": "CLARIFY",
+   "outcome": "FALSE_CLARIFICATION",
+   "code": "AMBIGUOUS_FACT",
+   "stage": "deterministic_route",
+   "math_ok": null,
+   "run3_outcome": "NOT_MEASURED",
+   "answers": null,
+   "composition": "EXTRACTION_FAILURE",
+   "http": 1,
+   "latency_s": 11.18,
+   "usd": 0.0067913,
+   "reused_from": null,
+   "tok": {
+    "prompt_tokens": 2571,
+    "candidates_tokens": 566,
+    "thoughts_tokens": 1842,
+    "cached_tokens": null,
+    "total_tokens": 4979
+   }
+  },
+  {
+   "study": "R-1",
+   "case_id": "R1-G01",
+   "expected": "SERVED",
+   "observed": "REFUSED",
+   "outcome": "FALSE_REFUSAL",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "stage": "deterministic_route",
+   "math_ok": null,
+   "run3_outcome": "NOT_MEASURED",
+   "answers": null,
+   "composition": "SOURCE_GROUNDING_FAILURE",
+   "http": 1,
+   "latency_s": 6.22,
+   "usd": 0.0037641,
+   "reused_from": null,
+   "tok": {
+    "prompt_tokens": 2572,
+    "candidates_tokens": 600,
+    "thoughts_tokens": 597,
+    "cached_tokens": null,
+    "total_tokens": 3769
+   }
+  },
+  {
+   "study": "R-1",
+   "case_id": "R1-G02",
+   "expected": "SERVED",
+   "observed": "REFUSED",
+   "outcome": "FALSE_REFUSAL",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "stage": "deterministic_route",
+   "math_ok": null,
+   "run3_outcome": "NOT_MEASURED",
+   "answers": null,
+   "composition": "SOURCE_GROUNDING_FAILURE",
+   "http": 1,
+   "latency_s": 6.71,
+   "usd": 0.0035807,
+   "reused_from": null,
+   "tok": {
+    "prompt_tokens": 2569,
+    "candidates_tokens": 629,
+    "thoughts_tokens": 495,
+    "cached_tokens": null,
+    "total_tokens": 3693
+   }
+  },
+  {
+   "study": "S-2",
+   "case_id": "S2-A-I02_ve",
+   "expected": "SERVED",
+   "observed": "SERVED",
+   "outcome": "SERVED_CORRECT",
+   "code": null,
+   "stage": null,
+   "math_ok": true,
+   "run3_outcome": "SERVED_CORRECT",
+   "answers": {},
+   "composition": null,
+   "http": 1,
+   "latency_s": 5.54,
+   "usd": 0.0033862,
+   "reused_from": null,
+   "tok": {
+    "prompt_tokens": 2554,
+    "candidates_tokens": 454,
+    "thoughts_tokens": 594,
+    "cached_tokens": null,
+    "total_tokens": 3602
+   }
+  },
+  {
+   "study": "S-2",
+   "case_id": "S2-A-I04_mo_phong",
+   "expected": "SERVED",
+   "observed": "SERVED",
+   "outcome": "SERVED_CORRECT",
+   "code": null,
+   "stage": null,
+   "math_ok": true,
+   "run3_outcome": "SERVED_CORRECT",
+   "answers": {},
+   "composition": null,
+   "http": 1,
+   "latency_s": 5.57,
+   "usd": 0.0035293,
+   "reused_from": null,
+   "tok": {
+    "prompt_tokens": 2556,
+    "candidates_tokens": 458,
+    "thoughts_tokens": 647,
+    "cached_tokens": null,
+    "total_tokens": 3661
+   }
+  },
+  {
+   "study": "S-2",
+   "case_id": "S2-A-I05_cho_minh_xem",
+   "expected": "SERVED",
+   "observed": "SERVED",
+   "outcome": "SERVED_CORRECT",
+   "code": null,
+   "stage": null,
+   "math_ok": true,
+   "run3_outcome": "SERVED_CORRECT",
+   "answers": {},
+   "composition": null,
+   "http": 1,
+   "latency_s": 6.53,
+   "usd": 0.0035315,
+   "reused_from": null,
+   "tok": {
+    "prompt_tokens": 2555,
+    "candidates_tokens": 456,
+    "thoughts_tokens": 650,
+    "cached_tokens": null,
+    "total_tokens": 3661
+   }
+  },
+  {
+   "study": "S-2",
+   "case_id": "S2-A-I08_trailing_ve",
+   "expected": "SERVED",
+   "observed": "SERVED",
+   "outcome": "SERVED_CORRECT",
+   "code": null,
+   "stage": null,
+   "math_ok": true,
+   "run3_outcome": "FALSE_REFUSAL",
+   "answers": {},
+   "composition": null,
+   "http": 1,
+   "latency_s": 5.66,
+   "usd": 0.0034658,
+   "reused_from": "canary/s2-live.jsonl",
+   "tok": {
+    "prompt_tokens": 2561,
+    "candidates_tokens": 461,
+    "thoughts_tokens": 618,
+    "cached_tokens": null,
+    "total_tokens": 3640
+   }
+  },
+  {
+   "study": "S-2",
+   "case_id": "S2-A-I09_trailing_mo_phong_hinh",
+   "expected": "SERVED",
+   "observed": "SERVED",
+   "outcome": "SERVED_CORRECT",
+   "code": null,
+   "stage": null,
+   "math_ok": true,
+   "run3_outcome": "SERVED_CORRECT",
+   "answers": {},
+   "composition": null,
+   "http": 1,
+   "latency_s": 6.18,
+   "usd": 0.0033377,
+   "reused_from": null,
+   "tok": {
+    "prompt_tokens": 2559,
+    "candidates_tokens": 456,
+    "thoughts_tokens": 572,
+    "cached_tokens": null,
+    "total_tokens": 3587
+   }
+  },
+  {
+   "study": "S-2",
+   "case_id": "S2-A-I12_trailing_point",
+   "expected": "SERVED",
+   "observed": "SERVED",
+   "outcome": "SERVED_CORRECT",
+   "code": null,
+   "stage": null,
+   "math_ok": true,
+   "run3_outcome": "FALSE_REFUSAL",
+   "answers": {},
+   "composition": null,
+   "http": 1,
+   "latency_s": 8.41,
+   "usd": 0.0047735,
+   "reused_from": null,
+   "tok": {
+    "prompt_tokens": 2570,
+    "candidates_tokens": 502,
+    "thoughts_tokens": 1099,
+    "cached_tokens": null,
+    "total_tokens": 4171
+   }
+  },
+  {
+   "study": "S-2",
+   "case_id": "S2-B-A03_control_with_dimensions",
+   "expected": "SERVED",
+   "observed": "REFUSED",
+   "outcome": "FALSE_REFUSAL",
+   "code": "INVALID_SIMULATION_GOAL",
+   "stage": "extraction",
+   "math_ok": null,
+   "run3_outcome": "SERVED_CORRECT",
+   "answers": null,
+   "composition": null,
+   "http": 1,
+   "latency_s": 6.77,
+   "usd": 0.0043882,
+   "reused_from": null,
+   "tok": {
+    "prompt_tokens": 2594,
+    "candidates_tokens": 674,
+    "thoughts_tokens": 770,
+    "cached_tokens": null,
+    "total_tokens": 4038
+   }
+  },
+  {
+   "study": "S-2",
+   "case_id": "S2-B-I07_ve_va_tinh",
+   "expected": "SERVED",
+   "observed": "SERVED",
+   "outcome": "SERVED_CORRECT",
+   "code": null,
+   "stage": null,
+   "math_ok": true,
+   "run3_outcome": "SERVED_CORRECT",
+   "answers": {
+    "volume": [
+     "8/3"
+    ]
+   },
+   "composition": null,
+   "http": 1,
+   "latency_s": 5.69,
+   "usd": 0.0037841999999999997,
+   "reused_from": null,
+   "tok": {
+    "prompt_tokens": 2564,
+    "candidates_tokens": 548,
+    "thoughts_tokens": 658,
+    "cached_tokens": null,
+    "total_tokens": 3770
+   }
+  },
+  {
+   "study": "S-2",
+   "case_id": "S2-B-I10_ve_roi_tinh",
+   "expected": "SERVED",
+   "observed": "SERVED",
+   "outcome": "SERVED_CORRECT",
+   "code": null,
+   "stage": null,
+   "math_ok": true,
+   "run3_outcome": "SERVED_CORRECT",
+   "answers": {
+    "volume": [
+     "8/3"
+    ]
+   },
+   "composition": null,
+   "http": 1,
+   "latency_s": 5.53,
+   "usd": 0.0037923,
+   "reused_from": null,
+   "tok": {
+    "prompt_tokens": 2566,
+    "candidates_tokens": 546,
+    "thoughts_tokens": 663,
+    "cached_tokens": null,
+    "total_tokens": 3775
+   }
+  },
+  {
+   "study": "S-2",
+   "case_id": "S2-B-I11_mo_phong_va_tinh_SC",
+   "expected": "SERVED",
+   "observed": "SERVED",
+   "outcome": "SERVED_CORRECT",
+   "code": null,
+   "stage": null,
+   "math_ok": true,
+   "run3_outcome": "SERVED_CORRECT",
+   "answers": {
+    "distance": [
+     "2√3"
+    ]
+   },
+   "composition": null,
+   "http": 1,
+   "latency_s": 5.76,
+   "usd": 0.003712,
+   "reused_from": null,
+   "tok": {
+    "prompt_tokens": 2565,
+    "candidates_tokens": 543,
+    "thoughts_tokens": 634,
+    "cached_tokens": null,
+    "total_tokens": 3742
+   }
+  },
+  {
+   "study": "S-2",
+   "case_id": "S2-B-P07_shared_intermediate_two_goals",
+   "expected": "SERVED",
+   "observed": "SERVED",
+   "outcome": "SERVED_CORRECT",
+   "code": null,
+   "stage": null,
+   "math_ok": true,
+   "run3_outcome": "FALSE_REFUSAL",
+   "answers": {
+    "distance": [
+     "1",
+     "√3"
+    ]
+   },
+   "composition": null,
+   "http": 1,
+   "latency_s": 6.08,
+   "usd": 0.0038778,
+   "reused_from": "canary/s2-live.jsonl",
+   "tok": {
+    "prompt_tokens": 2576,
+    "candidates_tokens": 664,
+    "thoughts_tokens": 578,
+    "cached_tokens": null,
+    "total_tokens": 3818
+   }
+  },
+  {
+   "study": "S-2",
+   "case_id": "S2-B-P09_student_chain",
+   "expected": "SERVED",
+   "observed": "SERVED",
+   "outcome": "SERVED_CORRECT",
+   "code": null,
+   "stage": null,
+   "math_ok": true,
+   "run3_outcome": "FALSE_REFUSAL",
+   "answers": {
+    "distance": [
+     "√3"
+    ]
+   },
+   "composition": null,
+   "http": 1,
+   "latency_s": 7.83,
+   "usd": 0.0042512999999999995,
+   "reused_from": null,
+   "tok": {
+    "prompt_tokens": 2571,
+    "candidates_tokens": 613,
+    "thoughts_tokens": 779,
+    "cached_tokens": null,
+    "total_tokens": 3963
+   }
+  },
+  {
+   "study": "S-2",
+   "case_id": "S2-C-A01_goc_chieu",
+   "expected": "CLARIFY",
+   "observed": "CLARIFY",
+   "outcome": "WRONG_REASON_CLARIFICATION",
+   "code": "AMBIGUOUS_FACT",
+   "stage": "deterministic_route",
+   "math_ok": null,
+   "run3_outcome": "FALSE_CLARIFICATION",
+   "answers": null,
+   "composition": null,
+   "http": 1,
+   "latency_s": 11.06,
+   "usd": 0.006646399999999999,
+   "reused_from": null,
+   "tok": {
+    "prompt_tokens": 2538,
+    "candidates_tokens": 294,
+    "thoughts_tokens": 2060,
+    "cached_tokens": null,
+    "total_tokens": 4892
+   }
+  },
+  {
+   "study": "S-2",
+   "case_id": "S2-C-C04_angle_plane_missing",
+   "expected": "CLARIFY",
+   "observed": "REFUSED",
+   "outcome": "WRONG_REASON_REFUSAL",
+   "code": "INVALID_MATH_GOAL",
+   "stage": "extraction",
+   "math_ok": null,
+   "run3_outcome": "WRONG_REASON_REFUSAL",
+   "answers": null,
+   "composition": null,
+   "http": 1,
+   "latency_s": 11.26,
+   "usd": 0.0069783,
+   "reused_from": "canary/s2-live.jsonl",
+   "tok": {
+    "prompt_tokens": 2561,
+    "candidates_tokens": 578,
+    "thoughts_tokens": 1906,
+    "cached_tokens": null,
+    "total_tokens": 5045
+   }
+  },
+  {
+   "study": "S-2",
+   "case_id": "S2-C-C05_draw_then_compute",
+   "expected": "CLARIFY",
+   "observed": "CLARIFY",
+   "outcome": "WRONG_REASON_CLARIFICATION",
+   "code": "AMBIGUOUS_FACT",
+   "stage": "deterministic_route",
+   "math_ok": null,
+   "run3_outcome": "WRONG_REASON_CLARIFICATION",
+   "answers": null,
+   "composition": null,
+   "http": 1,
+   "latency_s": 5.5,
+   "usd": 0.0033324,
+   "reused_from": null,
+   "tok": {
+    "prompt_tokens": 2558,
+    "candidates_tokens": 511,
+    "thoughts_tokens": 515,
+    "cached_tokens": null,
+    "total_tokens": 3584
+   }
+  },
+  {
+   "study": "S-2",
+   "case_id": "S2-C-C06_square_without_side",
+   "expected": "CLARIFY",
+   "observed": "CLARIFY",
+   "outcome": "WRONG_REASON_CLARIFICATION",
+   "code": "AMBIGUOUS_FACT",
+   "stage": "deterministic_route",
+   "math_ok": null,
+   "run3_outcome": "WRONG_REASON_REFUSAL",
+   "answers": null,
+   "composition": null,
+   "http": 1,
+   "latency_s": 9.88,
+   "usd": 0.0047637,
+   "reused_from": null,
+   "tok": {
+    "prompt_tokens": 2554,
+    "candidates_tokens": 527,
+    "thoughts_tokens": 1072,
+    "cached_tokens": null,
+    "total_tokens": 4153
+   }
+  },
+  {
+   "study": "S-2",
+   "case_id": "S2-C-D05_projection_missing_target",
+   "expected": "CLARIFY",
+   "observed": "REFUSED",
+   "outcome": "WRONG_REASON_REFUSAL",
+   "code": "QUOTE_NOT_IN_SOURCE",
+   "stage": "extraction",
+   "math_ok": null,
+   "run3_outcome": "CORRECT_CLARIFICATION",
+   "answers": null,
+   "composition": null,
+   "http": 1,
+   "latency_s": 7.89,
+   "usd": 0.0048457,
+   "reused_from": null,
+   "tok": {
+    "prompt_tokens": 2569,
+    "candidates_tokens": 579,
+    "thoughts_tokens": 1051,
+    "cached_tokens": null,
+    "total_tokens": 4199
+   }
+  },
+  {
+   "study": "S-2",
+   "case_id": "S2-C-D06_unnamed_prism",
+   "expected": "CLARIFY",
+   "observed": "REFUSED",
+   "outcome": "WRONG_REASON_REFUSAL",
+   "code": "UNKNOWN_LABEL",
+   "stage": "deterministic_route",
+   "math_ok": null,
+   "run3_outcome": "WRONG_REASON_REFUSAL",
+   "answers": null,
+   "composition": null,
+   "http": 1,
+   "latency_s": 3.33,
+   "usd": 0.0016215000000000001,
+   "reused_from": null,
+   "tok": {
+    "prompt_tokens": 2530,
+    "candidates_tokens": 217,
+    "thoughts_tokens": 128,
+    "cached_tokens": null,
+    "total_tokens": 2875
+   }
+  },
+  {
+   "study": "S-2",
+   "case_id": "S2-D-D03_contradictory_length",
+   "expected": "REFUSED_INCONSISTENT",
+   "observed": "REFUSED",
+   "outcome": "CORRECT_REFUSAL",
+   "code": "INCONSISTENT_FACTS",
+   "stage": "deterministic_route",
+   "math_ok": null,
+   "run3_outcome": "WRONG_REASON_REFUSAL",
+   "answers": null,
+   "composition": null,
+   "http": 1,
+   "latency_s": 5.65,
+   "usd": 0.0034501,
+   "reused_from": null,
+   "tok": {
+    "prompt_tokens": 2567,
+    "candidates_tokens": 575,
+    "thoughts_tokens": 497,
+    "cached_tokens": null,
+    "total_tokens": 3639
+   }
+  },
+  {
+   "study": "S-2",
+   "case_id": "S2-D-D04_two_values_same_segment",
+   "expected": "REFUSED_INCONSISTENT",
+   "observed": "REFUSED",
+   "outcome": "CORRECT_REFUSAL",
+   "code": "INCONSISTENT_FACTS",
+   "stage": "deterministic_route",
+   "math_ok": null,
+   "run3_outcome": "WRONG_REASON_REFUSAL",
+   "answers": null,
+   "composition": null,
+   "http": 1,
+   "latency_s": 9.45,
+   "usd": 0.0060526,
+   "reused_from": null,
+   "tok": {
+    "prompt_tokens": 2567,
+    "candidates_tokens": 574,
+    "thoughts_tokens": 1539,
+    "cached_tokens": null,
+    "total_tokens": 4680
+   }
+  },
+  {
+   "study": "S-2",
+   "case_id": "S2-D-D07_cube_rectangle_base",
+   "expected": "REFUSED_INCONSISTENT",
+   "observed": "REFUSED",
+   "outcome": "CORRECT_REFUSAL",
+   "code": "INCONSISTENT_FACTS",
+   "stage": "deterministic_route",
+   "math_ok": null,
+   "run3_outcome": "CORRECT_REFUSAL",
+   "answers": null,
+   "composition": null,
+   "http": 1,
+   "latency_s": 10.66,
+   "usd": 0.0056925,
+   "reused_from": null,
+   "tok": {
+    "prompt_tokens": 2575,
+    "candidates_tokens": 703,
+    "thoughts_tokens": 1265,
+    "cached_tokens": null,
+    "total_tokens": 4543
+   }
+  },
+  {
+   "study": "S-2",
+   "case_id": "S2-D-D08_cube_tall",
+   "expected": "REFUSED_INCONSISTENT",
+   "observed": "REFUSED",
+   "outcome": "CORRECT_REFUSAL",
+   "code": "INCONSISTENT_FACTS",
+   "stage": "deterministic_route",
+   "math_ok": null,
+   "run3_outcome": "WRONG_REASON_REFUSAL",
+   "answers": null,
+   "composition": null,
+   "http": 1,
+   "latency_s": 14.61,
+   "usd": 0.0078269,
+   "reused_from": null,
+   "tok": {
+    "prompt_tokens": 2573,
+    "candidates_tokens": 597,
+    "thoughts_tokens": 2225,
+    "cached_tokens": null,
+    "total_tokens": 5395
+   }
+  },
+  {
+   "study": "S-2",
+   "case_id": "S2-D-D09_base_edge_perp_base",
+   "expected": "REFUSED_INCONSISTENT",
+   "observed": "REFUSED",
+   "outcome": "CORRECT_REFUSAL",
+   "code": "INCONSISTENT_FACTS",
+   "stage": "deterministic_route",
+   "math_ok": null,
+   "run3_outcome": "CORRECT_REFUSAL",
+   "answers": null,
+   "composition": null,
+   "http": 1,
+   "latency_s": 10.42,
+   "usd": 0.0060913,
+   "reused_from": null,
+   "tok": {
+    "prompt_tokens": 2571,
+    "candidates_tokens": 630,
+    "thoughts_tokens": 1498,
+    "cached_tokens": null,
+    "total_tokens": 4699
+   }
+  },
+  {
+   "study": "S-2",
+   "case_id": "S2-D-D10_square_diagonal_3",
+   "expected": "REFUSED_INCONSISTENT",
+   "observed": "REFUSED",
+   "outcome": "CORRECT_REFUSAL",
+   "code": "INCONSISTENT_FACTS",
+   "stage": "deterministic_route",
+   "math_ok": null,
+   "run3_outcome": "CORRECT_REFUSAL",
+   "answers": null,
+   "composition": null,
+   "http": 1,
+   "latency_s": 7.69,
+   "usd": 0.0046501,
+   "reused_from": null,
+   "tok": {
+    "prompt_tokens": 2567,
+    "candidates_tokens": 613,
+    "thoughts_tokens": 939,
+    "cached_tokens": null,
+    "total_tokens": 4119
+   }
+  },
+  {
+   "study": "S-2",
+   "case_id": "S2-E-E01_oxyz",
+   "expected": "REFUSED_UNSUPPORTED",
+   "observed": "REFUSED",
+   "outcome": "CORRECT_REFUSAL",
+   "code": "gate_out_of_scope",
+   "stage": "domain_gate",
+   "math_ok": null,
+   "run3_outcome": "CORRECT_REFUSAL",
+   "answers": null,
+   "composition": null,
+   "http": 0,
+   "latency_s": 0.0,
+   "usd": 0.0,
+   "reused_from": null,
+   "tok": "UNKNOWN"
+  },
+  {
+   "study": "S-2",
+   "case_id": "S2-E-E02_truncated_pyramid",
+   "expected": "REFUSED_UNSUPPORTED",
+   "observed": "REFUSED",
+   "outcome": "CORRECT_REFUSAL",
+   "code": "OUT_OF_SCOPE",
+   "stage": "deterministic_route",
+   "math_ok": null,
+   "run3_outcome": "WRONG_REASON_REFUSAL",
+   "answers": null,
+   "composition": null,
+   "http": 1,
+   "latency_s": 8.09,
+   "usd": 0.0046623,
+   "reused_from": null,
+   "tok": {
+    "prompt_tokens": 2566,
+    "candidates_tokens": 241,
+    "thoughts_tokens": 1316,
+    "cached_tokens": null,
+    "total_tokens": 4123
+   }
+  },
+  {
+   "study": "S-2",
+   "case_id": "S2-E-E03_volume_maximum",
+   "expected": "REFUSED_UNSUPPORTED",
+   "observed": "REFUSED",
+   "outcome": "WRONG_REASON_REFUSAL",
+   "code": "INVALID_SOLID_NOTATION",
+   "stage": "extraction",
+   "math_ok": null,
+   "run3_outcome": "WRONG_REASON_REFUSAL",
+   "answers": null,
+   "composition": null,
+   "http": 1,
+   "latency_s": 19.33,
+   "usd": 0.0110388,
+   "reused_from": null,
+   "tok": {
+    "prompt_tokens": 2546,
+    "candidates_tokens": 387,
+    "thoughts_tokens": 3723,
+    "cached_tokens": null,
+    "total_tokens": 6656
+   }
+  },
+  {
+   "study": "S-2",
+   "case_id": "S2-E-E04_locus",
+   "expected": "REFUSED_UNSUPPORTED",
+   "observed": "REFUSED",
+   "outcome": "CORRECT_REFUSAL",
+   "code": "OUT_OF_SCOPE",
+   "stage": "deterministic_route",
+   "math_ok": null,
+   "run3_outcome": "WRONG_REASON_REFUSAL",
+   "answers": null,
+   "composition": null,
+   "http": 1,
+   "latency_s": 7.78,
+   "usd": 0.0044079,
+   "reused_from": null,
+   "tok": {
+    "prompt_tokens": 2568,
+    "candidates_tokens": 518,
+    "thoughts_tokens": 937,
+    "cached_tokens": null,
+    "total_tokens": 4023
+   }
+  },
+  {
+   "study": "S-2",
+   "case_id": "S2-E-E05_translation",
+   "expected": "REFUSED_UNSUPPORTED",
+   "observed": "REFUSED",
+   "outcome": "CORRECT_REFUSAL",
+   "code": "OUT_OF_SCOPE",
+   "stage": "deterministic_route",
+   "math_ok": null,
+   "run3_outcome": "WRONG_REASON_REFUSAL",
+   "answers": null,
+   "composition": null,
+   "http": 1,
+   "latency_s": 8.52,
+   "usd": 0.0050716,
+   "reused_from": null,
+   "tok": {
+    "prompt_tokens": 2572,
+    "candidates_tokens": 526,
+    "thoughts_tokens": 1194,
+    "cached_tokens": null,
+    "total_tokens": 4292
+   }
+  },
+  {
+   "study": "S-2",
+   "case_id": "S2-E-E06_word_problem_rate",
+   "expected": "REFUSED_UNSUPPORTED",
+   "observed": "REFUSED",
+   "outcome": "WRONG_REASON_REFUSAL",
+   "code": "OUT_OF_SCOPE",
+   "stage": "deterministic_route",
+   "math_ok": null,
+   "run3_outcome": "WRONG_REASON_REFUSAL",
+   "answers": null,
+   "composition": null,
+   "http": 1,
+   "latency_s": 15.16,
+   "usd": 0.008722299999999999,
+   "reused_from": null,
+   "tok": {
+    "prompt_tokens": 2566,
+    "candidates_tokens": 592,
+    "thoughts_tokens": 2589,
+    "cached_tokens": null,
+    "total_tokens": 5747
+   }
+  },
+  {
+   "study": "S-2",
+   "case_id": "S2-F-F05_kc_mp_shorthand",
+   "expected": "SERVED",
+   "observed": "SERVED",
+   "outcome": "SERVED_CORRECT",
+   "code": null,
+   "stage": null,
+   "math_ok": true,
+   "run3_outcome": "SERVED_WRONG",
+   "answers": {
+    "distance": [
+     "√2"
+    ]
+   },
+   "composition": null,
+   "http": 1,
+   "latency_s": 6.43,
+   "usd": 0.0037933,
+   "reused_from": null,
+   "tok": {
+    "prompt_tokens": 2561,
+    "candidates_tokens": 552,
+    "thoughts_tokens": 658,
+    "cached_tokens": null,
+    "total_tokens": 3771
+   }
+  },
+  {
+   "study": "S-2",
+   "case_id": "S2-F-F06_dt_mp_shorthand",
+   "expected": "SERVED",
+   "observed": "SERVED",
+   "outcome": "SERVED_CORRECT",
+   "code": null,
+   "stage": null,
+   "math_ok": true,
+   "run3_outcome": "FALSE_REFUSAL",
+   "answers": {
+    "angle_cos_sq": [
+     "2/3"
+    ]
+   },
+   "composition": null,
+   "http": 1,
+   "latency_s": 8.86,
+   "usd": 0.005308,
+   "reused_from": null,
+   "tok": {
+    "prompt_tokens": 2560,
+    "candidates_tokens": 522,
+    "thoughts_tokens": 1294,
+    "cached_tokens": null,
+    "total_tokens": 4376
+   }
+  },
+  {
+   "study": "S-2",
+   "case_id": "S2-F-S02_vuong_goc_day",
+   "expected": "SERVED",
+   "observed": "SERVED",
+   "outcome": "SERVED_CORRECT",
+   "code": null,
+   "stage": null,
+   "math_ok": true,
+   "run3_outcome": "SERVED_CORRECT",
+   "answers": {
+    "volume": [
+     "8/3"
+    ]
+   },
+   "composition": null,
+   "http": 1,
+   "latency_s": 6.29,
+   "usd": 0.0037249,
+   "reused_from": null,
+   "tok": {
+    "prompt_tokens": 2558,
+    "candidates_tokens": 537,
+    "thoughts_tokens": 646,
+    "cached_tokens": null,
+    "total_tokens": 3741
+   }
+  },
+  {
+   "study": "S-2",
+   "case_id": "S2-F-S03_symbol_perp",
+   "expected": "SERVED",
+   "observed": "SERVED",
+   "outcome": "SERVED_CORRECT",
+   "code": null,
+   "stage": null,
+   "math_ok": true,
+   "run3_outcome": "SERVED_CORRECT",
+   "answers": {
+    "volume": [
+     "8/3"
+    ]
+   },
+   "composition": null,
+   "http": 1,
+   "latency_s": 7.07,
+   "usd": 0.0037952,
+   "reused_from": null,
+   "tok": {
+    "prompt_tokens": 2559,
+    "candidates_tokens": 539,
+    "thoughts_tokens": 672,
+    "cached_tokens": null,
+    "total_tokens": 3770
+   }
+  },
+  {
+   "study": "S-2",
+   "case_id": "S2-F-S07_typo_tone",
+   "expected": "SERVED",
+   "observed": "REFUSED",
+   "outcome": "FALSE_REFUSAL",
+   "code": "UNGROUNDED_VALUE",
+   "stage": "deterministic_route",
+   "math_ok": null,
+   "run3_outcome": "FALSE_REFUSAL",
+   "answers": null,
+   "composition": null,
+   "http": 1,
+   "latency_s": 6.14,
+   "usd": 0.0037635999999999998,
+   "reused_from": null,
+   "tok": {
+    "prompt_tokens": 2562,
+    "candidates_tokens": 544,
+    "thoughts_tokens": 654,
+    "cached_tokens": null,
+    "total_tokens": 3760
+   }
+  },
+  {
+   "study": "S-2",
+   "case_id": "S2-F-S08_altitude_wording",
+   "expected": "SERVED",
+   "observed": "SERVED",
+   "outcome": "SERVED_CORRECT",
+   "code": null,
+   "stage": null,
+   "math_ok": true,
+   "run3_outcome": "FALSE_REFUSAL",
+   "answers": {
+    "volume": [
+     "8/3"
+    ]
+   },
+   "composition": null,
+   "http": 1,
+   "latency_s": 8.87,
+   "usd": 0.0057315,
+   "reused_from": "canary/s2-live.jsonl",
+   "tok": {
+    "prompt_tokens": 2555,
+    "candidates_tokens": 497,
+    "thoughts_tokens": 1489,
+    "cached_tokens": null,
+    "total_tokens": 4541
+   }
+  }
+ ],
+ "by_study": {
+  "K-1": {
+   "run3": {
+    "cases": 16,
+    "outcomes": {
+     "FALSE_REFUSAL": 7,
+     "WRONG_REASON_REFUSAL": 6,
+     "SERVED_WRONG": 2,
+     "SERVED_CORRECT": 1
+    },
+    "served": 3,
+    "served_math_correct": 3,
+    "math_wrong": 0,
+    "false_refusal": "7/10",
+    "negatives_not_served": "6/6",
+    "negatives_reason_correct": "0/6",
+    "end_to_end_correct": "1/16",
+    "strict_contract_mismatch_on_correct_math": 2,
+    "codes_non_served": {
+     "INVALID_SIMULATION_GOAL": 7,
+     "INVALID_DESCRIBED_POINT": 3,
+     "DEGENERATE_POINTS": 2,
+     "INVALID_TYPED_FACT_NEXT": 1
+    },
+    "composition": {
+     "EXTRACTION_FAILURE": 12,
+     "WRONG_SERVED": 2,
+     "REGISTERED_DECOMPOSITION": 1,
+     "NOT_ESTABLISHED": 1
+    }
+   },
+   "c26": {
+    "cases": 16,
+    "outcomes": {
+     "SERVED_WRONG": 4,
+     "WRONG_REASON_REFUSAL": 2,
+     "SERVED_CORRECT": 6,
+     "CORRECT_REFUSAL": 2,
+     "CORRECT_CLARIFICATION": 2
+    },
+    "served": 10,
+    "served_math_correct": 10,
+    "math_wrong": 0,
+    "false_refusal": "0/10",
+    "negatives_not_served": "6/6",
+    "negatives_reason_correct": "4/6",
+    "end_to_end_correct": "10/16",
+    "strict_contract_mismatch_on_correct_math": 4,
+    "codes_non_served": {
+     "PLANE_NOT_UNIQUE": 1,
+     "INCONSISTENT_FACTS": 1,
+     "DEGENERATE_POINTS": 2,
+     "AMBIGUOUS_FACT": 2
+    },
+    "composition": {
+     "WRONG_SERVED": 4,
+     "EXTRACTION_FAILURE": 2,
+     "REGISTERED_DECOMPOSITION": 6,
+     "CORRECT_REFUSAL": 4
+    }
+   },
+   "c26_scorer_metrics": {
+    "extraction_accuracy": {
+     "numerator": 14,
+     "denominator": 14,
+     "rate": 1.0
+    },
+    "goal_completeness": {
+     "numerator": 8,
+     "denominator": 14,
+     "rate": 0.571429
+    },
+    "operand_preservation": {
+     "numerator": 14,
+     "denominator": 14,
+     "rate": 1.0
+    },
+    "ambiguity_detection": {
+     "numerator": 2,
+     "denominator": 2,
+     "rate": 1.0
+    },
+    "clarification_correctness": {
+     "numerator": 2,
+     "denominator": 2,
+     "rate": 1.0
+    },
+    "false_clarification": {
+     "numerator": 0,
+     "denominator": 14,
+     "rate": 0.0
+    },
+    "unsupported_classification": {
+     "numerator": 0,
+     "denominator": 0,
+     "rate": "UNKNOWN"
+    },
+    "wrong_served_end_to_end": {
+     "numerator": 4,
+     "denominator": 16,
+     "rate": 0.25
+    }
+   },
+   "c26_supplementary": {
+    "described_points": {
+     "emitted": {
+      "numerator": 8,
+      "denominator": 8,
+      "rate": 1.0
+     },
+     "kinds_match": {
+      "numerator": 8,
+      "denominator": 8,
+      "rate": 1.0
+     },
+     "refs_resolve": {
+      "numerator": 8,
+      "denominator": 8,
+      "rate": 1.0
+     },
+     "quotes_verbatim": {
+      "numerator": 8,
+      "denominator": 8,
+      "rate": 1.0
+     }
+    },
+    "constraints": {
+     "emitted": {
+      "numerator": 6,
+      "denominator": 6,
+      "rate": 1.0
+     },
+     "kinds_match": {
+      "numerator": 6,
+      "denominator": 6,
+      "rate": 1.0
+     },
+     "operands_match": {
+      "numerator": 6,
+      "denominator": 6,
+      "rate": 1.0
+     },
+     "quotes_verbatim": {
+      "numerator": 6,
+      "denominator": 6,
+      "rate": 1.0
+     },
+     "no_invented_construction": {
+      "numerator": 6,
+      "denominator": 6,
+      "rate": 1.0
+     }
+    }
+   },
+   "run3_scorer_metrics": {
+    "extraction_accuracy": {
+     "numerator": 5,
+     "denominator": 14,
+     "rate": 0.357143
+    },
+    "goal_completeness": {
+     "numerator": 1,
+     "denominator": 14,
+     "rate": 0.071429
+    },
+    "operand_preservation": {
+     "numerator": 8,
+     "denominator": 14,
+     "rate": 0.571429
+    },
+    "ambiguity_detection": {
+     "numerator": 2,
+     "denominator": 2,
+     "rate": 1.0
+    },
+    "clarification_correctness": {
+     "numerator": 0,
+     "denominator": 0,
+     "rate": "UNKNOWN"
+    },
+    "false_clarification": {
+     "numerator": 0,
+     "denominator": 14,
+     "rate": 0.0
+    },
+    "unsupported_classification": {
+     "numerator": 0,
+     "denominator": 0,
+     "rate": "UNKNOWN"
+    },
+    "wrong_served_end_to_end": {
+     "numerator": 2,
+     "denominator": 16,
+     "rate": 0.125
+    }
+   }
+  },
+  "S-2": {
+   "run3": {
+    "cases": 36,
+    "outcomes": {
+     "SERVED_CORRECT": 10,
+     "FALSE_REFUSAL": 7,
+     "FALSE_CLARIFICATION": 1,
+     "CORRECT_CLARIFICATION": 1,
+     "WRONG_REASON_REFUSAL": 11,
+     "WRONG_REASON_CLARIFICATION": 1,
+     "CORRECT_REFUSAL": 4,
+     "SERVED_WRONG": 1
+    },
+    "served": 11,
+    "served_math_correct": 11,
+    "math_wrong": 0,
+    "false_refusal": "7/18",
+    "negatives_not_served": "18/18",
+    "negatives_reason_correct": "5/18",
+    "end_to_end_correct": "15/36",
+    "strict_contract_mismatch_on_correct_math": 1,
+    "codes_non_served": {
+     "PREDICATE_NOT_IN_QUOTE": 4,
+     "DANGLING_DEPENDENCY": 1,
+     "SOURCE_OBJECT_MISMATCH": 3,
+     "AMBIGUOUS_FACT": 3,
+     "UNKNOWN_LABEL": 1,
+     "MISSING_DIMENSION": 1,
+     "OBJECT_NOT_IN_QUOTE": 1,
+     "INCONSISTENT_FACTS": 4,
+     "gate_out_of_scope": 1,
+     "INVALID_TYPED_FACT_NEXT": 1,
+     "OUT_OF_SCOPE": 4,
+     "UNGROUNDED_VALUE": 1
+    },
+    "composition": {}
+   },
+   "c26": {
+    "cases": 36,
+    "outcomes": {
+     "SERVED_CORRECT": 16,
+     "FALSE_REFUSAL": 2,
+     "WRONG_REASON_CLARIFICATION": 3,
+     "WRONG_REASON_REFUSAL": 5,
+     "CORRECT_REFUSAL": 10
+    },
+    "served": 16,
+    "served_math_correct": 16,
+    "math_wrong": 0,
+    "false_refusal": "2/18",
+    "negatives_not_served": "18/18",
+    "negatives_reason_correct": "10/18",
+    "end_to_end_correct": "26/36",
+    "strict_contract_mismatch_on_correct_math": 0,
+    "codes_non_served": {
+     "INVALID_SIMULATION_GOAL": 1,
+     "AMBIGUOUS_FACT": 3,
+     "QUOTE_NOT_IN_SOURCE": 1,
+     "UNKNOWN_LABEL": 1,
+     "INVALID_MATH_GOAL": 1,
+     "INCONSISTENT_FACTS": 6,
+     "gate_out_of_scope": 1,
+     "OUT_OF_SCOPE": 4,
+     "INVALID_SOLID_NOTATION": 1,
+     "UNGROUNDED_VALUE": 1
+    },
+    "composition": {}
+   },
+   "c26_scorer_metrics": {
+    "extraction_accuracy": {
+     "numerator": 23,
+     "denominator": 24,
+     "rate": 0.958333
+    },
+    "goal_completeness": {
+     "numerator": 23,
+     "denominator": 24,
+     "rate": 0.958333
+    },
+    "operand_preservation": {
+     "numerator": 24,
+     "denominator": 24,
+     "rate": 1.0
+    },
+    "ambiguity_detection": {
+     "numerator": 5,
+     "denominator": 6,
+     "rate": 0.833333
+    },
+    "clarification_correctness": {
+     "numerator": 3,
+     "denominator": 3,
+     "rate": 1.0
+    },
+    "false_clarification": {
+     "numerator": 0,
+     "denominator": 30,
+     "rate": 0.0
+    },
+    "unsupported_classification": {
+     "numerator": 5,
+     "denominator": 6,
+     "rate": 0.833333
+    },
+    "wrong_served_end_to_end": {
+     "numerator": 0,
+     "denominator": 36,
+     "rate": 0.0
+    }
+   },
+   "c26_supplementary": {
+    "described_points": null,
+    "constraints": null
+   },
+   "run3_scorer_metrics": {
+    "extraction_accuracy": {
+     "numerator": 10,
+     "denominator": 24,
+     "rate": 0.416667
+    },
+    "goal_completeness": {
+     "numerator": 20,
+     "denominator": 24,
+     "rate": 0.833333
+    },
+    "operand_preservation": {
+     "numerator": 21,
+     "denominator": 24,
+     "rate": 0.875
+    },
+    "ambiguity_detection": {
+     "numerator": 3,
+     "denominator": 6,
+     "rate": 0.5
+    },
+    "clarification_correctness": {
+     "numerator": 2,
+     "denominator": 3,
+     "rate": 0.666667
+    },
+    "false_clarification": {
+     "numerator": 0,
+     "denominator": 30,
+     "rate": 0.0
+    },
+    "unsupported_classification": {
+     "numerator": 5,
+     "denominator": 6,
+     "rate": 0.833333
+    },
+    "wrong_served_end_to_end": {
+     "numerator": 1,
+     "denominator": 36,
+     "rate": 0.027778
+    }
+   }
+  },
+  "R-1": {
+   "run3": {
+    "cases": 14,
+    "outcomes": {
+     "FALSE_REFUSAL": 6,
+     "SERVED_WRONG": 5,
+     "WRONG_REASON_CLARIFICATION": 1,
+     "WRONG_REASON_REFUSAL": 1,
+     "INFRASTRUCTURE_FAILURE": 1
+    },
+    "served": 5,
+    "served_math_correct": 5,
+    "math_wrong": 0,
+    "false_refusal": "6/11",
+    "negatives_not_served": "3/3",
+    "negatives_reason_correct": "0/3",
+    "end_to_end_correct": "0/14",
+    "strict_contract_mismatch_on_correct_math": 5,
+    "codes_non_served": {
+     "PREDICATE_NOT_IN_QUOTE": 3,
+     "INVALID_SIMULATION_GOAL": 3,
+     "AMBIGUOUS_FACT": 1,
+     "SOURCE_OBJECT_MISMATCH": 1,
+     "PROVIDER_ERROR": 1
+    },
+    "composition": {
+     "EXTRACTION_FAILURE": 8,
+     "WRONG_SERVED": 5,
+     "NOT_ESTABLISHED": 1
+    }
+   },
+   "c26": {
+    "cases": 18,
+    "outcomes": {
+     "SERVED_CORRECT": 8,
+     "SERVED_WRONG": 3,
+     "WRONG_REASON_CLARIFICATION": 1,
+     "WRONG_REASON_REFUSAL": 1,
+     "CORRECT_REFUSAL": 2,
+     "FALSE_CLARIFICATION": 1,
+     "FALSE_REFUSAL": 2
+    },
+    "served": 11,
+    "served_math_correct": 11,
+    "math_wrong": 0,
+    "false_refusal": "2/13",
+    "negatives_not_served": "5/5",
+    "negatives_reason_correct": "2/5",
+    "end_to_end_correct": "10/18",
+    "strict_contract_mismatch_on_correct_math": 3,
+    "codes_non_served": {
+     "AMBIGUOUS_FACT": 2,
+     "SOURCE_OBJECT_MISMATCH": 3,
+     "BRIDGE_UNSUPPORTED_DESCRIBED_POINT": 2
+    },
+    "composition": {
+     "SOURCE_EXPLICIT_SEQUENCE": 7,
+     "REGISTERED_DECOMPOSITION": 1,
+     "WRONG_SERVED": 3,
+     "EXTRACTION_FAILURE": 3,
+     "CORRECT_REFUSAL": 2,
+     "SOURCE_GROUNDING_FAILURE": 2
+    }
+   },
+   "c26_scorer_metrics": {
+    "extraction_accuracy": {
+     "numerator": 15,
+     "denominator": 15,
+     "rate": 1.0
+    },
+    "goal_completeness": {
+     "numerator": 12,
+     "denominator": 15,
+     "rate": 0.8
+    },
+    "operand_preservation": {
+     "numerator": 15,
+     "denominator": 15,
+     "rate": 1.0
+    },
+    "ambiguity_detection": {
+     "numerator": 1,
+     "denominator": 2,
+     "rate": 0.5
+    },
+    "clarification_correctness": {
+     "numerator": 1,
+     "denominator": 2,
+     "rate": 0.5
+    },
+    "false_clarification": {
+     "numerator": 1,
+     "denominator": 16,
+     "rate": 0.0625
+    },
+    "unsupported_classification": {
+     "numerator": 2,
+     "denominator": 3,
+     "rate": 0.666667
+    },
+    "wrong_served_end_to_end": {
+     "numerator": 3,
+     "denominator": 18,
+     "rate": 0.166667
+    }
+   },
+   "c26_supplementary": {
+    "described_points": {
+     "emitted": {
+      "numerator": 15,
+      "denominator": 15,
+      "rate": 1.0
+     },
+     "kinds_match": {
+      "numerator": 15,
+      "denominator": 15,
+      "rate": 1.0
+     },
+     "refs_resolve": {
+      "numerator": 15,
+      "denominator": 15,
+      "rate": 1.0
+     },
+     "quotes_verbatim": {
+      "numerator": 15,
+      "denominator": 15,
+      "rate": 1.0
+     }
+    },
+    "constraints": null
+   },
+   "run3_scorer_metrics": {
+    "extraction_accuracy": {
+     "numerator": 4,
+     "denominator": 11,
+     "rate": 0.363636
+    },
+    "goal_completeness": {
+     "numerator": 0,
+     "denominator": 11,
+     "rate": 0.0
+    },
+    "operand_preservation": {
+     "numerator": 11,
+     "denominator": 11,
+     "rate": 1.0
+    },
+    "ambiguity_detection": {
+     "numerator": 1,
+     "denominator": 2,
+     "rate": 0.5
+    },
+    "clarification_correctness": {
+     "numerator": 1,
+     "denominator": 1,
+     "rate": 1.0
+    },
+    "false_clarification": {
+     "numerator": 0,
+     "denominator": 11,
+     "rate": 0.0
+    },
+    "unsupported_classification": {
+     "numerator": 0,
+     "denominator": 0,
+     "rate": "UNKNOWN"
+    },
+    "wrong_served_end_to_end": {
+     "numerator": 5,
+     "denominator": 13,
+     "rate": 0.384615
+    }
+   }
+  }
+ },
+ "comparison_39": {
+  "run3_false_refusal": 20,
+  "c26_false_refusal": 2,
+  "denominator": 39,
+  "run3_cases": [
+   "K-A01",
+   "K-A02",
+   "K-A03",
+   "K-A04",
+   "K-C02",
+   "K-C03",
+   "K-C06",
+   "S2-A-I08_trailing_ve",
+   "S2-A-I12_trailing_point",
+   "S2-B-P07_shared_intermediate_two_goals",
+   "S2-B-P09_student_chain",
+   "S2-F-S07_typo_tone",
+   "S2-F-S08_altitude_wording",
+   "S2-F-F06_dt_mp_shorthand",
+   "R1-A01",
+   "R1-A03",
+   "R1-A05",
+   "R1-B01",
+   "R1-B02",
+   "R1-C02"
+  ],
+  "c26_cases": [
+   "S2-B-A03_control_with_dimensions",
+   "S2-F-S07_typo_tone"
+  ],
+  "newly_served": [
+   "K-A01",
+   "K-A02",
+   "K-A03",
+   "K-A04",
+   "K-C02",
+   "K-C03",
+   "K-C06",
+   "R1-A01",
+   "R1-A03",
+   "R1-A05",
+   "R1-B01",
+   "R1-B02",
+   "R1-C02",
+   "S2-A-I08_trailing_ve",
+   "S2-A-I12_trailing_point",
+   "S2-B-P07_shared_intermediate_two_goals",
+   "S2-B-P09_student_chain",
+   "S2-F-F06_dt_mp_shorthand",
+   "S2-F-S08_altitude_wording"
+  ],
+  "newly_refused": [
+   "S2-B-A03_control_with_dimensions"
+  ]
+ },
+ "safety": {
+  "math_wrong": [],
+  "served_negative": []
+ },
+ "previously_unmeasured": {
+  "R1-F02": {
+   "expected": "REFUSED_UNSUPPORTED",
+   "observed": "REFUSED",
+   "outcome": "CORRECT_REFUSAL",
+   "code": "BRIDGE_UNSUPPORTED_DESCRIBED_POINT",
+   "math_ok": null
+  },
+  "R1-F03": {
+   "expected": "REFUSED_UNSUPPORTED",
+   "observed": "CLARIFY",
+   "outcome": "FALSE_CLARIFICATION",
+   "code": "AMBIGUOUS_FACT",
+   "math_ok": null
+  },
+  "R1-G01": {
+   "expected": "SERVED",
+   "observed": "REFUSED",
+   "outcome": "FALSE_REFUSAL",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "math_ok": null
+  },
+  "R1-G02": {
+   "expected": "SERVED",
+   "observed": "REFUSED",
+   "outcome": "FALSE_REFUSAL",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "math_ok": null
+  }
+ },
+ "wire": {
+  "http_calls": 69,
+  "status": {
+   "200": 69
+  },
+  "finish": {
+   "STOP": 69
+  },
+  "service_tier": {
+   "null": 69
+  },
+  "prompt": {
+   "n": 69,
+   "min": 2530,
+   "median": 2571,
+   "mean": 2575.261,
+   "p90": 2602,
+   "max": 2623,
+   "sum": 177693
+  },
+  "output": {
+   "n": 69,
+   "min": 217,
+   "median": 613,
+   "mean": 634.449,
+   "p90": 845,
+   "max": 1051,
+   "sum": 43777
+  },
+  "thinking": {
+   "n": 69,
+   "min": 128,
+   "median": 860,
+   "mean": 1085,
+   "p90": 1906,
+   "max": 3723,
+   "sum": 74865
+  },
+  "cached_present": {
+   "n": 30,
+   "min": 2513,
+   "median": 2535.0,
+   "mean": 2535.6,
+   "p90": 2549,
+   "max": 2553,
+   "sum": 76068
+  },
+  "cached_absent_calls": 39,
+  "total": {
+   "n": 69,
+   "min": 2875,
+   "median": 4119,
+   "mean": 4294.71,
+   "p90": 5106,
+   "max": 6656,
+   "sum": 296335
+  },
+  "http_latency_s": {
+   "n": 69,
+   "min": 3.290978,
+   "median": 7.739,
+   "mean": 8.481,
+   "p90": 12.259834,
+   "max": 19.2904,
+   "sum": 585.185864
+  },
+  "case_latency_s": {
+   "n": 69,
+   "min": 3.334843100001308,
+   "median": 7.812,
+   "mean": 8.564,
+   "p90": 12.302292000000307,
+   "max": 19.330802800002857,
+   "sum": 590.889369
+  }
+ },
+ "cost": {
+  "per_http_case_usd": {
+   "n": 69,
+   "min": 0.0016215000000000001,
+   "median": 0.005,
+   "mean": 0.005,
+   "p90": 0.0070208,
+   "max": 0.0110388,
+   "sum": 0.349913
+  }
+ },
+ "run3_http_latency_s": {
+  "n": 64,
+  "min": 3.060166,
+  "median": 8.592,
+  "mean": 9.551,
+  "p90": 13.900497,
+  "max": 20.862897,
+  "sum": 611.287742
+ }
+}

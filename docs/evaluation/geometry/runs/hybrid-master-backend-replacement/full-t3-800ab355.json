@@ -1,0 +1,22 @@
+{
+ "schema": "hybrid-master-backend-replacement/full-t3/1",
+ "verdict": "FULL_PRODUCT_GATE_PASS",
+ "attempt": 1,
+ "exit_code": 0,
+ "command": "cd frontend && node scripts/full-gate.mjs",
+ "worktree": ".superpowers/worktrees/hm-t3-800ab355 (fresh, detached; tracked and untracked clean before and after the run; post-run freeze_evaluation_candidate.py --verify MATCH; frontend/node_modules and backend/.venv junctions to the main checkout, removed with [IO.Directory]::Delete before the worktree)",
+ "head": "800ab355",
+ "product_commit": "9e059eb7163532d66a3f7a7cd24250a50b0ac7a3",
+ "measured_system": {"tree_hash_prefix": "184c64ff1810ec20", "tree_hash": "184c64ff1810ec20af5f5ba1451cfcac082de65876fbf8bbfc63a7f012afe26d", "files": 118},
+ "cache_version": "131",
+ "default_mode": "LLM_ONLY",
+ "pytest": {"passed": 16408, "skipped": 7, "deselected": 2, "xfailed": 15, "failed": 0, "seconds": 664.14},
+ "vitest": {"files": 84, "passed": 1424},
+ "build": "PASS",
+ "demo_replay": "PASS (5/5)",
+ "demo_crash_surface": "PASS (6/6 refusal boundaries typed, 0 thrown as 500)",
+ "T0_T2": "COVERED_BY_T3: the whole pytest and vitest suites and the build, a superset of T0 and T2",
+ "publication_scan": "check_publication_safety.py --range f986e897..HEAD at 800ab355: scanned=623 messages=82 violations=0 pending_exception=0 verdict=PASS; 0 Co-Authored-By trailers",
+ "log_sha256_local": "474a214089df47af61ee51cb866a54991a389ea22f03e3bbbe1df46ace9c9d34",
+ "provider_calls": 0
+}

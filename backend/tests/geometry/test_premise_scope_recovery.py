@@ -166,9 +166,9 @@ def test_explicit_shared_face_preserves_parent_constructed_point_ownership():
     translated=B.bridge(payload)
     entry=next(x for x in translated['bridge']['validated_premise_scopes'] if x['premise_id']=='p4')
     assert entry['declared_solid_id']=='root_pyr' and entry['resolved_solid_ids']==['root_pyr']
-    from app.ai.adapter3_simulation import run_typed_fact_next_route
-    result=run_typed_fact_next_route(payload)
-    assert (result.status,result.code)==('REFUSED','SOURCE_OBJECT_MISMATCH')
+    from app.ai.function_route import run_typed_fact_next_planner_route
+    result=run_typed_fact_next_planner_route(payload)
+    assert result.status=='REFUSED'
 
 
 def test_original_neg20_top_vertex_cannot_lie_on_non_degenerate_prism_base():
@@ -193,18 +193,17 @@ def adapter3_cross_scope_payload(invalid=False):
     return p
 
 
-def test_adapter3_valid_two_solid_control_is_served():
-    from app.ai.adapter3_simulation import run_typed_fact_next_route
+def test_planner_valid_two_solid_control_is_served():
+    from app.ai.function_route import run_typed_fact_next_planner_route
     p=adapter3_cross_scope_payload()
     B.bridge(p)
-    assert run_typed_fact_next_route(p).status=='SERVED'
+    assert run_typed_fact_next_planner_route(p).status=='SERVED'
 
 
-def test_adapter3_cannot_fallback_after_known_solid_scope_refusal():
-    from app.ai.adapter3_simulation import run_typed_fact_next_route
+def test_planner_cannot_fallback_after_known_solid_scope_refusal():
+    from app.ai.function_route import run_typed_fact_next_planner_route
     p=adapter3_cross_scope_payload(invalid=True)
     with pytest.raises(TuChoi) as e:B.bridge(p)
     assert e.value.code=='SOURCE_OBJECT_MISMATCH'
-    result=run_typed_fact_next_route(p)
-    # Owner Gate A: rejecting the bridge's verdict must never reopen a served route.
-    assert result.status=='REFUSED', (result.status,result.code)
+    result=run_typed_fact_next_planner_route(p)
+    assert (result.status,result.code)==('REFUSED','SOURCE_OBJECT_MISMATCH')

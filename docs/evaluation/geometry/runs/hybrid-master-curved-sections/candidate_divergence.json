@@ -1,0 +1,20 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "ALGOSIM_MASTER_HYBRID_BACKEND_REPLACEMENT (sixth continuation: curved sections and cone ratio on /4)",
+  "corrects": "docs/evaluation/geometry/runs/hybrid-master-curved-solids/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "current_candidate_hash": "277338cef90665afb1f63d1c88bca9c8ec1b1303f5f16714f6eb622ec5faf152",
+  "current_product_commit": "bfe8912f427ebfce091ad5a42f20c9628c7df421",
+  "current_candidate_source": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+  "diverged": true,
+  "reason": "Backend only, offline, on top of the 2f8c9945 candidate: curved sections on Route D /4 (parallel to the base at a stated distance or through the midpoint of the axis, and axial sections of a cylinder or cone), the small cone a parallel section cuts off, its volume ratio (cross-multiplication) and remaining volume (subtraction), each against an independent similarity certificate; closed grammars for the section, derived-cone and question sentences; duplicate section names and inexpressible curved notations refused (registry /24, planner /20, engine /16). Every previously served input is unchanged (locked regression 0 transitions); 32 registered curved control cells moved REFUSED -> REFUSED (registered-curved-control-transitions.json). The default LLM_ONLY path, its cache identity, prompts, schemas and route A's provider surface are unchanged.",
+  "cache_version": 131,
+  "cache_version_hien_tai": 131,
+  "cache_decision": "NO BUMP: LLM_ONLY untouched; Route D rows are keyed by the Route D surface (registry /24, planner /20, engine /16), so older Route D rows are retired by key; refusals are never cached.",
+  "hieu_luc_len_ket_qua_da_do": {
+    "historical_measurements": "UNCHANGED",
+    "live_requests": 0,
+    "so_lieu_lượt_đo_cuối": "UNCHANGED: historical measurements are not rescored."
+  }
+}

@@ -278,7 +278,7 @@ Chi tiết dành cho khoá luận — sơ đồ, vùng LLM/tất định, đư�
 | Đúng/sai của kết quả hình học | **chỉ engine/checker tất định** (`geometry_obligations.py::GEOMETRY_CHECKERS`, hậu điều kiện, chứng chỉ thể tích) | không còn bề mặt phán quyết cho học sinh (#10, #11) |
 | Cấu hình đang chạy | store (`active.config`) — **opaque**, bất biến | store mù domain |
 | Mặt trình bày đang mở (home/workspace/history) | store — `view` (M9-UX1) | trình bày thuần, không đụng engine |
-| **Chế độ quan sát trên Scene3D (Mode A — Mô phỏng / Mode B — Phân tích)** | `Scene3DExplorer.tsx` + `interaction-state.ts` | mặc định mở ở Mode A (không lộ đáp số cuối cùng trên canvas); học sinh chủ động mở bảng Phân tích/Lời giải (Mode B) |
+| **Chế độ quan sát trên Scene3D (Mode A — Mô phỏng / Mode B — Phân tích)** | `Scene3DExplorer.tsx` + `interaction-state.ts` | mặc định mở ở Mode A (không lộ đáp số cuối cùng trên canvas); học sinh chủ động mở bảng Phân tích/Lời giải (Mode B). Kết quả kiểm mục tiêu (`goal_checks`) cũng chỉ ở Mode B; «Đề bài» là đề nguyên văn người học gửi (`active.originalInput`), không phải `envelope.description` — run `pedagogical-simulation-integration` |
 | **Lịch sử học BỀN** | `state/history.ts` → localStorage (schema v1, whitelist) | M9-UX1: envelope ĐÃ VALIDATE + tiến độ trình bày an toàn (lastCursor/visualMode); **runtime reset/goHome không phá lịch sử** |
 | *Các hàng lịch sử của giai đoạn Tin học* (`graph_view`, `GenericState.pos`, `challengeOpen`/`predict.entry`/`explore.entry`) | *Đã gỡ cùng các module Tin học (`6703c48a`, `e664f683`)* | *Xem nguyên văn lịch sử tại [`legacy/ARCHITECTURE_MAP_INFORMATICS_ERA.md`](legacy/ARCHITECTURE_MAP_INFORMATICS_ERA.md) và các hàng `#10, #16, #18, #24–#26` ở §5* |
 

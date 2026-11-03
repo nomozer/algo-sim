@@ -1,0 +1,49 @@
+{
+  "schema": "algosim-eval-run/1",
+  "run_slug": "hybrid-independent-h1",
+  "epic": "ALGOSIM_MASTER_HYBRID_BACKEND_REPLACEMENT",
+  "task": "C28_INDEPENDENT_H1_INTAKE_PAIRED_GEMINI_LIVE_AND_HYBRID_CUTOVER_VERDICT",
+  "branch": "research/hybrid-master-backend-replacement",
+  "scope": "BACKEND_ONLY",
+  "frontend_modified": false,
+  "product_modified": false,
+  "date": "2026-11-03",
+  "base_checkpoint_commit": "7a2a7592b3eef03afb74b64778e42b2a2311a933",
+  "product_commit": "d331e75b5bbf15722eca77c54e398173eefec98d",
+  "candidate_commit": "180db769",
+  "measured_system": "276fc548196e13eaa0ca7635428248dcaee7be79b79dff58c24a0478cddd4c63",
+  "measured_system_files": 118,
+  "harness_sha256": "8af7ca1f27e7ca3fb4e58ba7e0e067bc17973d8254a086e6c39d896078cd2e1f",
+  "equivalence_scorer_sha256": "7ada8a0616e9482b4984e92e86804bfc60deab540a505a10da65d8436ceba391",
+  "semantic_equivalence_policy": "h1-section-determination-equivalence/1",
+  "semantic_policy_mode": "P1_PREREGISTERED_TECHNICAL_POLICY",
+  "owner_semantic_policy_formal_signoff": "NOT_SIGNED_OFF",
+  "proposed_campaign_limits": {
+    "campaign_max_requests": 300,
+    "campaign_max_usd": 5.0,
+    "model": "gemini-2.5-flash",
+    "approval_status": "PENDING_OWNER_DECISION"
+  },
+  "versions": {
+    "registry": "geometry-functions/32",
+    "planner": "geometry-fact-planner/26",
+    "engine": "geometry-function-engine/24",
+    "typed_fact_next": "typed-fact-next/2",
+    "adapter": "hybrid-simulation-adapter/4",
+    "default_mode": "LLM_ONLY",
+    "hybrid_route_mode_default": "off",
+    "cache_version": "131"
+  },
+  "live_provider_calls": 0,
+  "live_spend_usd": 0.0,
+  "statuses": {
+    "EXECUTION_GATE_STATUS": "BLOCKED_EXTERNAL_AUTHOR",
+    "H1_AUTHORING_INDEPENDENCE": "NOT_ESTABLISHED",
+    "H1_MEASUREMENT": "NOT_MEASURED",
+    "PAIRED_LIVE_EVALUATION_COMPLETE": "NO",
+    "LIVE_GEMINI_QUALITY_VALIDATED": "NO",
+    "PEDAGOGICAL_HUMAN_VALIDATION": "NOT_EVALUATED",
+    "HYBRID_CUTOVER_DECISION": "HYBRID_CUTOVER_BLOCKED",
+    "LEGACY_REMOVAL_DECISION": "LEGACY_REMOVAL_BLOCKED"
+  }
+}

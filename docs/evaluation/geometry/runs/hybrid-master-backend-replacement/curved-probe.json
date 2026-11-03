@@ -1,0 +1,451 @@
+{
+ "provider_calls": 0,
+ "classification": "DEVELOPMENT_DIAGNOSTIC",
+ "rows": [
+  {
+   "id": "cyl.V",
+   "status": "SERVED",
+   "code": null,
+   "answer": {
+    "coef": "45π",
+    "dim": 0,
+    "unit": null
+   },
+   "oracle": "45π",
+   "outcome": "SERVED_CORRECT",
+   "reason": ""
+  },
+  {
+   "id": "cyl.Sxq",
+   "status": "SERVED",
+   "code": null,
+   "answer": {
+    "coef": "30π",
+    "dim": 0,
+    "unit": null
+   },
+   "oracle": "30π",
+   "outcome": "SERVED_CORRECT",
+   "reason": ""
+  },
+  {
+   "id": "cyl.Stp",
+   "status": "SERVED",
+   "code": null,
+   "answer": {
+    "coef": "48π",
+    "dim": 0,
+    "unit": null
+   },
+   "oracle": "48π",
+   "outcome": "SERVED_CORRECT",
+   "reason": ""
+  },
+  {
+   "id": "cyl.r",
+   "status": "SERVED",
+   "code": null,
+   "answer": {
+    "coef": "3",
+    "dim": 0,
+    "unit": null
+   },
+   "oracle": "3",
+   "outcome": "SERVED_CORRECT",
+   "reason": ""
+  },
+  {
+   "id": "cone.V",
+   "status": "SERVED",
+   "code": null,
+   "answer": {
+    "coef": "12π",
+    "dim": 0,
+    "unit": null
+   },
+   "oracle": "12π",
+   "outcome": "SERVED_CORRECT",
+   "reason": ""
+  },
+  {
+   "id": "cone.Sxq",
+   "status": "SERVED",
+   "code": null,
+   "answer": {
+    "coef": "15π",
+    "dim": 0,
+    "unit": null
+   },
+   "oracle": "15π",
+   "outcome": "SERVED_CORRECT",
+   "reason": ""
+  },
+  {
+   "id": "cone.Stp",
+   "status": "SERVED",
+   "code": null,
+   "answer": {
+    "coef": "24π",
+    "dim": 0,
+    "unit": null
+   },
+   "oracle": "24π",
+   "outcome": "SERVED_CORRECT",
+   "reason": ""
+  },
+  {
+   "id": "coneL.V",
+   "status": "SERVED",
+   "code": null,
+   "answer": {
+    "coef": "12π",
+    "dim": 0,
+    "unit": null
+   },
+   "oracle": "12π",
+   "outcome": "SERVED_CORRECT",
+   "reason": ""
+  },
+  {
+   "id": "coneL.Sxq",
+   "status": "SERVED",
+   "code": null,
+   "answer": {
+    "coef": "15π",
+    "dim": 0,
+    "unit": null
+   },
+   "oracle": "15π",
+   "outcome": "SERVED_CORRECT",
+   "reason": ""
+  },
+  {
+   "id": "coneR.Sxq",
+   "status": "SERVED",
+   "code": null,
+   "answer": {
+    "coef": "4π√2",
+    "dim": 0,
+    "unit": null
+   },
+   "oracle": "4π√2",
+   "outcome": "SERVED_CORRECT",
+   "reason": ""
+  },
+  {
+   "id": "coneR.V",
+   "status": "SERVED",
+   "code": null,
+   "answer": {
+    "coef": "8π/3",
+    "dim": 0,
+    "unit": null
+   },
+   "oracle": "8π/3",
+   "outcome": "SERVED_CORRECT",
+   "reason": ""
+  },
+  {
+   "id": "sph.S",
+   "status": "SERVED",
+   "code": null,
+   "answer": {
+    "coef": "36π",
+    "dim": 0,
+    "unit": null
+   },
+   "oracle": "36π",
+   "outcome": "SERVED_CORRECT",
+   "reason": ""
+  },
+  {
+   "id": "sph.V",
+   "status": "SERVED",
+   "code": null,
+   "answer": {
+    "coef": "36π",
+    "dim": 0,
+    "unit": null
+   },
+   "oracle": "36π",
+   "outcome": "SERVED_CORRECT",
+   "reason": ""
+  },
+  {
+   "id": "cylR.V",
+   "status": "SERVED",
+   "code": null,
+   "answer": {
+    "coef": "6π",
+    "dim": 0,
+    "unit": null
+   },
+   "oracle": "6π",
+   "outcome": "SERVED_CORRECT",
+   "reason": ""
+  },
+  {
+   "id": "cylR.Sxq",
+   "status": "SERVED",
+   "code": null,
+   "answer": {
+    "coef": "6π√2",
+    "dim": 0,
+    "unit": null
+   },
+   "oracle": "6π√2",
+   "outcome": "SERVED_CORRECT",
+   "reason": ""
+  },
+  {
+   "id": "cylR.Stp",
+   "status": "REFUSED",
+   "code": "EXACT_DOMAIN_EXCEEDED",
+   "answer": null,
+   "oracle": "REFUSE",
+   "outcome": "REFUSED_CORRECT",
+   "reason": "mg1: đáp số là tổng hai số hạng căn khác loại, ngoài miền số chính xác a·π·√b — không làm tròn"
+  },
+  {
+   "id": "cylTop.V",
+   "status": "SERVED",
+   "code": null,
+   "answer": {
+    "coef": "45π",
+    "dim": 0,
+    "unit": null
+   },
+   "oracle": "45π",
+   "outcome": "SERVED_CORRECT",
+   "reason": ""
+  },
+  {
+   "id": "coneOf.V",
+   "status": "SERVED",
+   "code": null,
+   "answer": {
+    "coef": "12π",
+    "dim": 0,
+    "unit": null
+   },
+   "oracle": "12π",
+   "outcome": "SERVED_CORRECT",
+   "reason": ""
+  },
+  {
+   "id": "n.bad_slant",
+   "status": "REFUSED",
+   "code": "INCONSISTENT_FACTS",
+   "outcome": "REFUSED_CORRECT",
+   "reason": "k: kích thước suy ra không dương (r² = 9, h² = 0)"
+  },
+  {
+   "id": "n.swapped",
+   "status": "REFUSED",
+   "code": "UNGROUNDED_VALUE",
+   "outcome": "REFUSED_CORRECT",
+   "reason": "k: \"Cho hình trụ có tâm hai đáy là O và O', điểm A thuộc đường tròn đáy tâm O, bán kính đáy bằng 3 và chiều cao bằng 5\" không nêu đúng khối tròn xoay này (vai trò điểm, ký hiệu, hay bán kính / chiều c"
+  },
+  {
+   "id": "n.wrong_kind",
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "outcome": "REFUSED_CORRECT",
+   "reason": "mg1: 'Tính thể tích khối nón' không gọi tên đúng đối tượng của ask_curved_volume {'solid': \"O.O'\"} — không trả lời câu hỏi về đối tượng khác"
+  },
+  {
+   "id": "n.missing_height",
+   "status": "REFUSED",
+   "code": "MISSING_DIMENSION",
+   "outcome": "REFUSED_CORRECT",
+   "reason": "k: thiếu chiều cao của O.O'"
+  },
+  {
+   "id": "n.sphere_lateral",
+   "status": "REFUSED",
+   "code": "CURVED_MEASURE_UNDEFINED",
+   "outcome": "REFUSED_CORRECT",
+   "reason": "mg1: mặt cầu không có diện tích xung quanh"
+  },
+  {
+   "id": "n.area_unqualified",
+   "status": "REFUSED",
+   "code": "PREDICATE_NOT_IN_QUOTE",
+   "outcome": "REFUSED_CORRECT",
+   "reason": "mg1: ask_surface_area cần một trong ['toàn phần', 'mặt cầu'] trong 'Tính diện tích của hình trụ'"
+  },
+  {
+   "id": "n.composite",
+   "status": "REFUSED",
+   "code": "BRIDGE_UNSUPPORTED_CURVED_COMPOSITE",
+   "outcome": "REFUSED_CORRECT",
+   "reason": "['k']: khối tròn xoay cùng khối khác trong một bài chưa có chứng chỉ quan hệ trên planner"
+  },
+  {
+   "id": "n.foreign_segment",
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "outcome": "REFUSED_CORRECT",
+   "reason": "p1: toán hạng/điểm dựng không thuộc phạm vi 'k'"
+  },
+  {
+   "id": "n.overdetermined",
+   "status": "REFUSED",
+   "code": "INCONSISTENT_FACTS",
+   "outcome": "REFUSED_CORRECT",
+   "reason": "p1: độ dài đã cho mâu thuẫn với bán kính / chiều cao của S.O"
+  },
+  {
+   "id": "n.wrong_value",
+   "status": "REFUSED",
+   "code": "UNGROUNDED_VALUE",
+   "outcome": "REFUSED_CORRECT",
+   "reason": "k: \"Cho hình trụ có tâm hai đáy là O và O', điểm A thuộc đường tròn đáy tâm O, bán kính đáy bằng 3 và chiều cao bằng 5\" không nêu đúng khối tròn xoay này (vai trò điểm, ký hiệu, hay bán kính / chiều c"
+  },
+  {
+   "id": "n.no_height",
+   "status": "REFUSED",
+   "code": "SOURCE_PREMISE_UNREAD",
+   "outcome": "REFUSED_CORRECT",
+   "reason": "giá trị trong tiền đề \"Cho hình trụ có tâm hai đáy là O và O', điểm A thuộc đường tròn đáy tâm O, bán kính đáy bằng 3 và chiều cao bằng 5.\" không nằm trong quote của lời gọi mang giá trị ấy — không dù"
+  },
+  {
+   "id": "n.foreign_solid",
+   "status": "REFUSED",
+   "code": "UNKNOWN_SOLID_ID",
+   "outcome": "REFUSED_CORRECT",
+   "reason": "mg1: khối 'other' chưa được khai báo"
+  },
+  {
+   "id": "r.radius_times_h",
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "reason": "k: \"Cho hình trụ có tâm hai đáy là O và O', điểm A thuộc đường tròn đáy tâm O, chiều cao bằng 2 và bán kính đáy bằng 3 lần chiều cao\" không nêu đúng khối tròn xoay này (vai trò điểm, ký hiệu, hay bán ",
+   "outcome": "REFUSED_CORRECT"
+  },
+  {
+   "id": "r.radius_fraction_of_h",
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "reason": "k: \"Cho hình trụ có tâm hai đáy là O và O', điểm A thuộc đường tròn đáy tâm O, chiều cao bằng 6 và bán kính đáy bằng 1/3 chiều cao\" không nêu đúng khối tròn xoay này (vai trò điểm, ký hiệu, hay bán kí",
+   "outcome": "REFUSED_CORRECT"
+  },
+  {
+   "id": "r.radius_sum",
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "reason": "k: \"Cho hình trụ có tâm hai đáy là O và O', điểm A thuộc đường tròn đáy tâm O, bán kính đáy bằng 3 + √2 và chiều cao bằng 5\" không nêu đúng khối tròn xoay này (vai trò điểm, ký hiệu, hay bán kính / ch",
+   "outcome": "REFUSED_CORRECT"
+  },
+  {
+   "id": "r.cyl_rim_on_other_base",
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "reason": "k: \"Cho hình trụ có tâm hai đáy là O và O', điểm A thuộc đường tròn đáy tâm O', chiều cao bằng 4\" không nêu đúng khối tròn xoay này (vai trò điểm, ký hiệu, hay bán kính / chiều cao của chính mệnh đề v",
+   "outcome": "REFUSED_CORRECT"
+  },
+  {
+   "id": "r.cone_apex_centre_swapped",
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "reason": "k: 'Cho hình nón đỉnh S, đáy là đường tròn tâm O, điểm A thuộc đường tròn đáy, chiều cao bằng 4' không nêu đúng khối tròn xoay này (vai trò điểm, ký hiệu, hay bán kính / chiều cao của chính mệnh đề va",
+   "outcome": "REFUSED_CORRECT"
+  },
+  {
+   "id": "r.sphere_point_outside",
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "reason": "k: 'Cho mặt cầu tâm O, điểm A nằm ngoài mặt cầu' không nêu đúng khối tròn xoay này (vai trò điểm, ký hiệu, hay bán kính / chiều cao của chính mệnh đề vai trò)",
+   "outcome": "REFUSED_CORRECT"
+  },
+  {
+   "id": "r.cyl_point_on_axis",
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "reason": "k: \"Cho hình trụ có tâm hai đáy là O và O', chiều cao bằng 4\" không nêu đúng khối tròn xoay này (vai trò điểm, ký hiệu, hay bán kính / chiều cao của chính mệnh đề vai trò)",
+   "outcome": "REFUSED_CORRECT"
+  },
+  {
+   "id": "r.height_of_a_triangle",
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "reason": "k: 'Cho hình nón đỉnh S, đáy là đường tròn tâm O, điểm A thuộc đường tròn đáy, bán kính đáy bằng 3, tam giác SAB có chiều cao bằng 2' không nêu đúng khối tròn xoay này (vai trò điểm, ký hiệu, hay bán ",
+   "outcome": "REFUSED_CORRECT"
+  },
+  {
+   "id": "r.dimensions_of_another_solid",
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "reason": "k: 'Cho hình nón đỉnh S, đáy là đường tròn tâm O, điểm A thuộc đường tròn đáy và một hình trụ có bán kính đáy bằng 3, chiều cao bằng 4' không nêu đúng khối tròn xoay này (vai trò điểm, ký hiệu, hay bá",
+   "outcome": "REFUSED_CORRECT"
+  },
+  {
+   "id": "r.notation_against_roles",
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "reason": "k: 'Cho hình nón đỉnh S, đáy là đường tròn tâm O, điểm A thuộc đường tròn đáy, bán kính đáy bằng 3 và chiều cao bằng 4' không nêu đúng khối tròn xoay này (vai trò điểm, ký hiệu, hay bán kính / chiều c",
+   "outcome": "REFUSED_CORRECT"
+  },
+  {
+   "id": "r.invented_labels",
+   "status": "REFUSED",
+   "code": "UNKNOWN_LABEL",
+   "reason": "k: nhãn ['A', 'O', 'S'] không có trong đề",
+   "outcome": "REFUSED_CORRECT"
+  },
+  {
+   "id": "r2.second_cone_same_kind",
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "reason": "k: 'Cho hình nón đỉnh S, đáy là đường tròn tâm O, điểm A thuộc đường tròn đáy, bán kính đáy bằng 3 và một hình nón khác có chiều cao bằng 4' không nêu đúng khối tròn xoay này (vai trò điểm, ký hiệu, h",
+   "outcome": "REFUSED_CORRECT"
+  },
+  {
+   "id": "r2.plane_section_circle",
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "reason": "k: 'Cho hình nón đỉnh S, đáy là đường tròn tâm O, điểm A thuộc đường tròn đáy, chiều cao bằng 4, mặt phẳng (P) song song với đáy cắt hình nón theo đường tròn có bán kính bằng 2' không nêu đúng khối tr",
+   "outcome": "REFUSED_CORRECT"
+  },
+  {
+   "id": "r2.sector_radius",
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "reason": "k: 'Cho hình nón đỉnh S, đáy là đường tròn tâm O, điểm A thuộc đường tròn đáy, chiều cao bằng 4, được cuộn từ một hình quạt có bán kính bằng 5' không nêu đúng khối tròn xoay này (vai trò điểm, ký hiệu",
+   "outcome": "REFUSED_CORRECT"
+  },
+  {
+   "id": "r2.unread_qualifier",
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "reason": "k: 'Cho hình nón đỉnh S, đáy là đường tròn tâm O, điểm A thuộc đường tròn đáy, bán kính đáy bằng 2, chiều cao bằng 3 và gấp đôi bán kính' không nêu đúng khối tròn xoay này (vai trò điểm, ký hiệu, hay ",
+   "outcome": "REFUSED_CORRECT"
+  },
+  {
+   "id": "r2.object_before_kind_word",
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "reason": "k: 'Cho tam giác SAB có chiều cao bằng 4 và hình nón đỉnh S, đáy là đường tròn tâm O, điểm A thuộc đường tròn đáy, bán kính đáy bằng 3' không nêu đúng khối tròn xoay này (vai trò điểm, ký hiệu, hay bá",
+   "outcome": "REFUSED_CORRECT"
+  },
+  {
+   "id": "r2.notation_not_written",
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "reason": "k: 'Cho hình nón có bán kính đáy bằng 3 và chiều cao bằng 4' không nêu đúng khối tròn xoay này (vai trò điểm, ký hiệu, hay bán kính / chiều cao của chính mệnh đề vai trò)",
+   "outcome": "REFUSED_CORRECT"
+  },
+  {
+   "id": "u.unlabelled_cone.V",
+   "status": "SERVED",
+   "code": null,
+   "answer": {
+    "coef": "12π",
+    "dim": 0,
+    "unit": null
+   },
+   "oracle": "12π",
+   "outcome": "SERVED_CORRECT"
+  }
+ ]
+}

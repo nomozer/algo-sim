@@ -1,0 +1,81 @@
+{
+ "covers": [
+  "refusal"
+ ],
+ "expected": {
+  "envelope_status": "unsupported",
+  "failure_category": "insufficient_specification",
+  "http_status": 200,
+  "reason_code": "UNDERDETERMINED_POINT",
+  "refusal_cause": "UNKNOWN"
+ },
+ "id": "refusal-missing-underdetermined",
+ "injection": null,
+ "kind": "refusal",
+ "producer": {
+  "adapter_version": "hybrid-preview-adapter/2",
+  "backend_app_dirty": false,
+  "commit": "6679b8fc76e11cd764a01558b920f99d770e68ff",
+  "envelope_version": "hybrid-route-d-preview/1",
+  "inputs_dirty": false,
+  "product_commit": "6679b8fc76e11cd764a01558b920f99d770e68ff",
+  "source_fingerprint": {
+   "files": 118,
+   "measured_system_hash": "828da106083226004127245128fbcacd6cff7b507904e0cb21b74c164b9885a4",
+   "rule": "scripts/freeze_evaluation_candidate.py::measured_system_hash"
+  }
+ },
+ "response": {
+  "envelope": {
+   "failure_category": "insufficient_specification",
+   "learner_reason": "Dữ kiện hiện có chưa xác định được duy nhất hình cần dựng hoặc còn hiểu theo nhiều cách. AlgoSim không tự chọn số liệu hay cách hiểu thay em, nên không dựng hình.",
+   "reason": "Dữ kiện hiện có chưa xác định được duy nhất hình cần dựng hoặc còn hiểu theo nhiều cách. AlgoSim không tự chọn số liệu hay cách hiểu thay em, nên không dựng hình.",
+   "reason_code": "UNDERDETERMINED_POINT",
+   "refusal_cause": "UNKNOWN",
+   "status": "unsupported"
+  },
+  "route_d": {
+   "planner": {
+    "goal_checks": {},
+    "negated_checks": {},
+    "version": "geometry-fact-planner/26"
+   },
+   "runtime_identity": {
+    "adapter_version": "hybrid-preview-adapter/2",
+    "default_product_mode": "LLM_ONLY",
+    "enabled": true,
+    "engine_version": "geometry-function-engine/23",
+    "envelope_version": "hybrid-route-d-preview/1",
+    "extraction_surface": "485d3834db8b18cfdb24143bfbb14deb8f5b7a9d74cb612d48db8c08252e507a",
+    "fingerprint": "db1dc2e0ca9f9e7640d1eeccee0b9c3d5f42b8d9f5e24ba61b74062fcfd4c74e",
+    "planner_version": "geometry-fact-planner/26",
+    "product_enablement": "NO-GO",
+    "provider_mode": "OFFLINE_FIXTURE_ONLY",
+    "registry_version": "geometry-functions/31",
+    "response_contract": "flat"
+   }
+  },
+  "schema_version": "hybrid-route-d-preview/1"
+ },
+ "response_sha256": "d3b46fbaf2f132e1d153419a7df7f112f2cec1d31a8d02bcd72057d2a9fc1f48",
+ "schema": "hybrid-preview-envelope-fixture/1",
+ "source": {
+  "input_sha256": "fa3e1e23ba00d05aa5f452992157693a013c83e4b4795377abb08a7da8a2a530",
+  "origin": "tests/test_hybrid_preview_contract.py::CASES[missing-underdetermined]",
+  "problem_text": "Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh 2 và SA = 3. Tính thể tích khối chóp S.ABC.",
+  "provider_body": {
+   "candidates": [
+    {
+     "content": {
+      "parts": [
+       {
+        "text": "{\"facts\": [{\"id\": \"f1\", \"kind\": \"polygon_shape\", \"role\": \"premise\", \"negated\": false, \"ambiguous\": false, \"quotes\": [\"đáy ABC là tam giác đều cạnh 2\"], \"points\": [\"A\", \"B\", \"C\"], \"shape\": \"equilateral_triangle\", \"value\": \"2\"}, {\"id\": \"f2\", \"kind\": \"length\", \"role\": \"premise\", \"negated\": false, \"ambiguous\": false, \"quotes\": [\"SA = 3\"], \"measure\": \"segment\", \"points\": [\"S\", \"A\"], \"value\": \"3\"}, {\"id\": \"f3\", \"kind\": \"solid\", \"role\": \"premise\", \"negated\": false, \"ambiguous\": false, \"quotes\": [\"hình chóp S.ABC\"], \"solid\": \"S.ABC\", \"solid_type\": \"pyramid\"}, {\"id\": \"f4\", \"kind\": \"question\", \"role\": \"question\", \"negated\": false, \"ambiguous\": false, \"quotes\": [\"Tính thể tích khối chóp S.ABC\"], \"quantity\": \"volume\", \"solid\": \"S.ABC\"}]}"
+       }
+      ]
+     },
+     "finishReason": "STOP"
+    }
+   ]
+  }
+ }
+}

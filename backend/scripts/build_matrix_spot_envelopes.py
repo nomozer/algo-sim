@@ -16,7 +16,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from app.ai.pipeline import _dung_scene3d  # noqa: E402
+from tests.geometry.scene3d_test_helper import _dung_scene3d  # noqa: E402
 from app.simulation.semantic_program.pipeline_adapter import (  # noqa: E402
     SIMULATION_ID,
     compile_semantic_program_to_envelope,

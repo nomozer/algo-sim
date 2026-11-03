@@ -1,0 +1,375 @@
+{
+ "provider_calls": 0,
+ "cases": {
+  "pyramid.d_point_plane": {
+   "fns": [
+    "pyramid",
+    "regular_polygon",
+    "perpendicular_line_plane",
+    "segment_length",
+    "ask_distance_point_plane"
+   ],
+   "ids": [
+    "s1",
+    "p1",
+    "p2",
+    "p3",
+    "mg1"
+   ],
+   "planner_derived": [],
+   "answers": {
+    "mg1": {
+     "coef": "√2",
+     "dim": 0,
+     "unit": null
+    }
+   }
+  },
+  "pyramid.d_segment": {
+   "fns": [
+    "pyramid",
+    "regular_polygon",
+    "perpendicular_line_plane",
+    "segment_length",
+    "ask_length"
+   ],
+   "ids": [
+    "s1",
+    "p1",
+    "p2",
+    "p3",
+    "mg1"
+   ],
+   "planner_derived": [],
+   "answers": {
+    "mg1": {
+     "coef": "2√3",
+     "dim": 0,
+     "unit": null
+    }
+   }
+  },
+  "pyramid.d_line_line": {
+   "fns": [
+    "pyramid",
+    "regular_polygon",
+    "perpendicular_line_plane",
+    "segment_length",
+    "ask_distance_lines"
+   ],
+   "ids": [
+    "s1",
+    "p1",
+    "p2",
+    "p3",
+    "mg1"
+   ],
+   "planner_derived": [],
+   "answers": {
+    "mg1": {
+     "coef": "√2",
+     "dim": 0,
+     "unit": null
+    }
+   }
+  },
+  "pyramid.d_point_line": {
+   "fns": [
+    "pyramid",
+    "regular_polygon",
+    "perpendicular_line_plane",
+    "segment_length",
+    "orthogonal_projection_line",
+    "ask_length"
+   ],
+   "ids": [
+    "s1",
+    "p1",
+    "p2",
+    "p3",
+    "mg1_aux",
+    "mg1"
+   ],
+   "planner_derived": [
+    "orthogonal_projection_line"
+   ],
+   "answers": {
+    "mg1": {
+     "coef": "2√6/3",
+     "dim": 0,
+     "unit": null
+    }
+   }
+  },
+  "pyramid.d_line_plane": {
+   "fns": [
+    "pyramid",
+    "regular_polygon",
+    "perpendicular_line_plane",
+    "segment_length",
+    "ask_distance_line_plane"
+   ],
+   "ids": [
+    "s1",
+    "p1",
+    "p2",
+    "p3",
+    "mg1"
+   ],
+   "planner_derived": [],
+   "answers": {
+    "mg1": {
+     "coef": "√2",
+     "dim": 0,
+     "unit": null
+    }
+   }
+  },
+  "pyramid.d_plane_plane": {
+   "fns": [
+    "pyramid",
+    "regular_polygon",
+    "perpendicular_line_plane",
+    "segment_length",
+    "ask_distance_planes"
+   ],
+   "ids": [
+    "s1",
+    "p1",
+    "p2",
+    "p3",
+    "mg1"
+   ],
+   "planner_derived": [],
+   "answers": {
+    "mg1": {
+     "coef": "0",
+     "dim": 0,
+     "unit": null
+    }
+   }
+  },
+  "pyramid.a_line_plane": {
+   "fns": [
+    "pyramid",
+    "regular_polygon",
+    "perpendicular_line_plane",
+    "segment_length",
+    "ask_angle_line_plane"
+   ],
+   "ids": [
+    "s1",
+    "p1",
+    "p2",
+    "p3",
+    "mg1"
+   ],
+   "planner_derived": [],
+   "answers": {
+    "mg1": {
+     "coef": "2/3",
+     "dim": 0,
+     "unit": null
+    }
+   }
+  },
+  "pyramid.a_line_line": {
+   "fns": [
+    "pyramid",
+    "regular_polygon",
+    "perpendicular_line_plane",
+    "segment_length",
+    "ask_angle_lines"
+   ],
+   "ids": [
+    "s1",
+    "p1",
+    "p2",
+    "p3",
+    "mg1"
+   ],
+   "planner_derived": [],
+   "answers": {
+    "mg1": {
+     "coef": "1/2",
+     "dim": 0,
+     "unit": null
+    }
+   }
+  },
+  "pyramid.a_plane_plane": {
+   "fns": [
+    "pyramid",
+    "regular_polygon",
+    "perpendicular_line_plane",
+    "segment_length",
+    "ask_angle_plane_plane"
+   ],
+   "ids": [
+    "s1",
+    "p1",
+    "p2",
+    "p3",
+    "mg1"
+   ],
+   "planner_derived": [],
+   "answers": {
+    "mg1": {
+     "coef": "1/2",
+     "dim": 0,
+     "unit": null
+    }
+   }
+  },
+  "pyramid.v_solid": {
+   "fns": [
+    "pyramid",
+    "regular_polygon",
+    "perpendicular_line_plane",
+    "segment_length",
+    "ask_volume"
+   ],
+   "ids": [
+    "s1",
+    "p1",
+    "p2",
+    "p3",
+    "mg1"
+   ],
+   "planner_derived": [],
+   "answers": {
+    "mg1": {
+     "coef": "8/3",
+     "dim": 0,
+     "unit": null
+    }
+   }
+  },
+  "prism.d_point_plane": {
+   "fns": [
+    "prism",
+    "right_angle",
+    "segment_length",
+    "segment_length",
+    "segment_length",
+    "ask_distance_point_plane"
+   ],
+   "ids": [
+    "pr",
+    "p1",
+    "p2",
+    "p3",
+    "p5",
+    "q"
+   ],
+   "planner_derived": [],
+   "answers": {
+    "q": {
+     "coef": "12",
+     "dim": 0,
+     "unit": null
+    }
+   }
+  },
+  "prism.d_point_line": {
+   "fns": [
+    "prism",
+    "right_angle",
+    "segment_length",
+    "segment_length",
+    "segment_length",
+    "orthogonal_projection_line",
+    "ask_length"
+   ],
+   "ids": [
+    "pr",
+    "p1",
+    "p2",
+    "p3",
+    "p5",
+    "q_aux",
+    "q"
+   ],
+   "planner_derived": [
+    "orthogonal_projection_line"
+   ],
+   "answers": {
+    "q": {
+     "coef": "12√29/5",
+     "dim": 0,
+     "unit": null
+    }
+   }
+  },
+  "pyramid.two_goals": {
+   "fns": [
+    "pyramid",
+    "regular_polygon",
+    "perpendicular_line_plane",
+    "segment_length",
+    "orthogonal_projection_line",
+    "ask_distance_point_plane",
+    "ask_length"
+   ],
+   "ids": [
+    "s1",
+    "p1",
+    "p2",
+    "p3",
+    "mg2_aux",
+    "mg1",
+    "mg2"
+   ],
+   "planner_derived": [
+    "orthogonal_projection_line"
+   ],
+   "answers": {
+    "mg1": {
+     "coef": "√2",
+     "dim": 0,
+     "unit": null
+    },
+    "mg2": {
+     "coef": "2√6/3",
+     "dim": 0,
+     "unit": null
+    }
+   }
+  }
+ },
+ "shared_primitives_pyramid_and_prism": [
+  "ask_distance_point_plane",
+  "ask_length",
+  "orthogonal_projection_line",
+  "segment_length"
+ ],
+ "pyramid_only": [
+  "ask_angle_line_plane",
+  "ask_angle_lines",
+  "ask_angle_plane_plane",
+  "ask_distance_line_plane",
+  "ask_distance_lines",
+  "ask_distance_planes",
+  "ask_volume",
+  "perpendicular_line_plane",
+  "pyramid",
+  "regular_polygon"
+ ],
+ "prism_only": [
+  "prism",
+  "right_angle"
+ ],
+ "identical_calls_built_twice_in_two_goal_plan": [],
+ "two_goal_answers": {
+  "mg1": {
+   "coef": "√2",
+   "dim": 0,
+   "unit": null
+  },
+  "mg2": {
+   "coef": "2√6/3",
+   "dim": 0,
+   "unit": null
+  }
+ }
+}

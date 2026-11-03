@@ -186,7 +186,11 @@ def test_khai_bao_ham_gemini_dung_tap_con_openapi():
     # hybrid-v2-nl-certificates-e2e: `ask_distance_line_plane` / `ask_distance_planes` are route B only as well.
     assert {d["name"] for d in decl} == set(GF.PROVIDER_FUNCTIONS) == set(GF.REGISTRY) - {
         "translate_point", "ask_angle_lines", "divide_segment", "ask_volume_ratio", "ask_residual_volume",
-        "ask_distance_line_plane", "ask_distance_planes"}
+        "ask_distance_line_plane", "ask_distance_planes",
+        # hybrid-master curved slice (registry /23, /26): planner-only, route A provider surface unchanged
+        "curved_solid", "sphere_tangent_plane", "ask_curved_volume", "ask_lateral_area", "ask_surface_area", "ask_radius",
+        "curved_section", "curved_subsolid", "ask_curved_section_area", "ask_curved_section_radius",
+        "ask_curved_volume_ratio", "ask_curved_residual_volume"}
     txt = json.dumps(decl)
     for cam in ('"$ref"', '"$defs"', '"anyOf"', '"title"', '"additionalProperties"', '"xyz"', '"coord'):
         assert cam not in txt, cam
@@ -296,21 +300,26 @@ def test_transport_live_bi_khoa_khi_khong_bat_cong(monkeypatch):
 
 
 def test_adapter_khong_nhap_pipeline_hay_provider_o_dau_module():
-    cay = ast.parse(Path(FC.__file__).read_text(encoding="utf-8"))
-    dau = {n.module for n in cay.body if isinstance(n, ast.ImportFrom)} | \
-          {a.name for n in cay.body if isinstance(n, ast.Import) for a in n.names}
-    assert not {m for m in dau if m and (m.startswith("app.ai.pipeline") or m.startswith("app.ai.gemini") or m == "httpx")}, dau
+    import sys
+    from pathlib import Path
+    from app.ai import gemini
+
+    dau = set(sys.modules)
+    from app.ai import function_route as FR  # noqa: F401
+    assert not (Path(gemini.__file__).resolve().parent / "pipeline.py").exists()
+    moi = set(sys.modules) - dau
+    assert not {m for m in moi if m and (m.startswith("app.ai.gemini") or m == "app.main")}
 
 
 def test_adapter_khong_lui_ve_llm_only(monkeypatch):
-    from app.ai import gemini, pipeline
+    from app.ai import gemini
+
+    assert not (Path(gemini.__file__).resolve().parent / "pipeline.py").exists()
 
     def cam(*a, **k):
         raise AssertionError("đã chạm đường LLM_ONLY/provider")
 
     monkeypatch.setattr(gemini, "call_gemini", cam)
-    monkeypatch.setattr(pipeline, "run_pipeline", cam)
-    monkeypatch.setattr(pipeline, "stage_semantic_program", cam)
     for c in list(PARA.values()) + list(EXP.values()):
         FC.run_ai_function_route(c["text"], _Gia(_phan_hoi(c["calls"])))
         FC.run_ai_function_route(c["text"], _Gia({"candidates": []}))

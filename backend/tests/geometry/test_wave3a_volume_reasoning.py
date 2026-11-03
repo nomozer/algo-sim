@@ -187,9 +187,9 @@ def test_direct_route_interior_point_without_shared_boundary_face_refuses(monkey
 def test_wave3a_version_and_surface_fingerprint_invariants():
     # /13, /13, /11 since hybrid-contract-v2 (owner D5); engine /12 since claude-to-codex-takeover (skew-claim refusal).
     # Wave 3A surface fingerprints below unchanged
-    assert registry.REGISTRY_VERSION == "geometry-functions/21"    # /21: W3-F2 ratio/projection wording (Owner GO)
-    assert planner.PLANNER_VERSION == "geometry-fact-planner/18"
-    assert engine.ENGINE_VERSION == "geometry-function-engine/14"
+    assert registry.REGISTRY_VERSION == "geometry-functions/33"    # /29: SL-3 student shorthand (k/c, đt); /31: C18
+    assert planner.PLANNER_VERSION == "geometry-fact-planner/26"
+    assert engine.ENGINE_VERSION == "geometry-function-engine/24"
     assert ADAPTER_VERSION == "hybrid-preview-adapter/2"
     assert RESPONSE_CONTRACT == "flat"
     assert registry.REGISTRY["ask_volume_ratio"].provider_offered is False

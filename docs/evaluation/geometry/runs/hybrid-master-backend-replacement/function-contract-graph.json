@@ -1,0 +1,2065 @@
+{
+ "contracts": [
+  {
+   "fn": "ask_angle_line_plane",
+   "effect": "AnswerAngleLinePlane",
+   "inputs": [
+    "Point*",
+    "Point*",
+    "Plane"
+   ],
+   "policy": "goal_answer",
+   "descriptor": null,
+   "free": [],
+   "requires": []
+  },
+  {
+   "fn": "ask_angle_lines",
+   "effect": "AnswerAngleLines",
+   "inputs": [
+    "Point*",
+    "Point*",
+    "Line"
+   ],
+   "policy": "goal_answer",
+   "descriptor": null,
+   "free": [],
+   "requires": []
+  },
+  {
+   "fn": "ask_area",
+   "effect": "AnswerArea",
+   "inputs": [
+    "Point*",
+    "Point*",
+    "Point*"
+   ],
+   "policy": "goal_answer",
+   "descriptor": null,
+   "free": [],
+   "requires": []
+  },
+  {
+   "fn": "ask_distance_point_plane",
+   "effect": "AnswerDistance",
+   "inputs": [
+    "Point*",
+    "Plane"
+   ],
+   "policy": "distance_answer",
+   "descriptor": null,
+   "free": [],
+   "requires": []
+  },
+  {
+   "fn": "ask_length",
+   "effect": "AnswerDistance",
+   "inputs": [
+    "Point*",
+    "Foot"
+   ],
+   "policy": "distance_witness",
+   "descriptor": null,
+   "free": [],
+   "requires": []
+  },
+  {
+   "fn": "ask_length",
+   "effect": "AnswerLength",
+   "inputs": [
+    "Point*",
+    "Point*"
+   ],
+   "policy": "goal_answer",
+   "descriptor": null,
+   "free": [],
+   "requires": []
+  },
+  {
+   "fn": "centroid",
+   "effect": "Point*",
+   "inputs": [
+    "Point*",
+    "Point*",
+    "Point*"
+   ],
+   "policy": "derived_point",
+   "descriptor": "centroid",
+   "free": [],
+   "requires": []
+  },
+  {
+   "fn": "intersect_line_line",
+   "effect": "Point*",
+   "inputs": [
+    "Line",
+    "Line"
+   ],
+   "policy": "derived_point",
+   "descriptor": "intersect_line_line",
+   "free": [],
+   "requires": []
+  },
+  {
+   "fn": "intersect_line_plane",
+   "effect": "Meet",
+   "inputs": [
+    "Line",
+    "Plane"
+   ],
+   "policy": "section_vertex",
+   "descriptor": null,
+   "free": [],
+   "requires": []
+  },
+  {
+   "fn": "intersect_line_plane",
+   "effect": "Point*",
+   "inputs": [
+    "Line",
+    "Plane"
+   ],
+   "policy": "derived_point",
+   "descriptor": "intersect_line_plane",
+   "free": [],
+   "requires": []
+  },
+  {
+   "fn": "intersection_line",
+   "effect": "Line",
+   "inputs": [
+    "Plane",
+    "Plane"
+   ],
+   "policy": "declared_intersection",
+   "descriptor": null,
+   "free": [],
+   "requires": []
+  },
+  {
+   "fn": "midpoint",
+   "effect": "Point*",
+   "inputs": [
+    "Point*",
+    "Point*"
+   ],
+   "policy": "derived_point",
+   "descriptor": "midpoint",
+   "free": [],
+   "requires": []
+  },
+  {
+   "fn": "orthogonal_projection",
+   "effect": "Point*",
+   "inputs": [
+    "Point*",
+    "Plane"
+   ],
+   "policy": "derived_point",
+   "descriptor": "orthogonal_projection",
+   "free": [],
+   "requires": []
+  },
+  {
+   "fn": "orthogonal_projection",
+   "effect": "Normal",
+   "inputs": [
+    "Point*",
+    "Plane"
+   ],
+   "policy": "normal_witness",
+   "descriptor": null,
+   "free": [],
+   "requires": []
+  },
+  {
+   "fn": "orthogonal_projection_line",
+   "effect": "Foot",
+   "inputs": [
+    "Point*",
+    "Line"
+   ],
+   "policy": "projection_foot",
+   "descriptor": null,
+   "free": [],
+   "requires": []
+  },
+  {
+   "fn": "orthogonal_projection_line",
+   "effect": "Point*",
+   "inputs": [
+    "Point*",
+    "Line"
+   ],
+   "policy": "derived_point",
+   "descriptor": "orthogonal_projection_line",
+   "free": [],
+   "requires": []
+  },
+  {
+   "fn": "orthogonal_projection_line",
+   "effect": "PerpLine",
+   "inputs": [
+    "Point*",
+    "Line"
+   ],
+   "policy": "locus_witness",
+   "descriptor": null,
+   "free": [],
+   "requires": [
+    [
+     "off_line",
+     "P",
+     "L"
+    ]
+   ]
+  },
+  {
+   "fn": "orthogonal_projection_line",
+   "effect": "PerpDir",
+   "inputs": [
+    "Point*",
+    "Line"
+   ],
+   "policy": "locus_witness",
+   "descriptor": null,
+   "free": [
+    "Z"
+   ],
+   "requires": [
+    [
+     "off_line",
+     "Z",
+     "L"
+    ]
+   ]
+  },
+  {
+   "fn": "translate_point",
+   "effect": "PerpLine",
+   "inputs": [
+    "Point*",
+    "PerpDir"
+   ],
+   "policy": "locus_witness",
+   "descriptor": null,
+   "free": [],
+   "requires": []
+  },
+  {
+   "fn": "definition:orthocenter",
+   "effect": "Point*",
+   "inputs": [
+    "PerpLine",
+    "PerpLine"
+   ],
+   "policy": "point_definition",
+   "descriptor": "orthocenter",
+   "free": [],
+   "requires": []
+  },
+  {
+   "fn": "definition:circumcenter",
+   "effect": "Point*",
+   "inputs": [
+    "PerpLine",
+    "PerpLine"
+   ],
+   "policy": "point_definition",
+   "descriptor": "circumcenter",
+   "free": [],
+   "requires": []
+  }
+ ],
+ "producers_by_effect": {
+  "AnswerAngleLinePlane": [
+   "ask_angle_line_plane"
+  ],
+  "AnswerAngleLines": [
+   "ask_angle_lines"
+  ],
+  "AnswerArea": [
+   "ask_area"
+  ],
+  "AnswerDistance": [
+   "ask_distance_point_plane",
+   "ask_length"
+  ],
+  "AnswerLength": [
+   "ask_length"
+  ],
+  "Foot": [
+   "orthogonal_projection_line"
+  ],
+  "Line": [
+   "intersection_line"
+  ],
+  "Meet": [
+   "intersect_line_plane"
+  ],
+  "Normal": [
+   "orthogonal_projection"
+  ],
+  "PerpDir": [
+   "orthogonal_projection_line"
+  ],
+  "PerpLine": [
+   "orthogonal_projection_line",
+   "translate_point"
+  ],
+  "Point*": [
+   "centroid",
+   "intersect_line_line",
+   "intersect_line_plane",
+   "midpoint",
+   "orthogonal_projection",
+   "orthogonal_projection_line",
+   "definition:orthocenter",
+   "definition:circumcenter"
+  ]
+ },
+ "edges_effect_to_need": [
+  [
+   "centroid:Point*",
+   "ask_angle_line_plane:AnswerAngleLinePlane"
+  ],
+  [
+   "centroid:Point*",
+   "ask_angle_lines:AnswerAngleLines"
+  ],
+  [
+   "centroid:Point*",
+   "ask_area:AnswerArea"
+  ],
+  [
+   "centroid:Point*",
+   "ask_distance_point_plane:AnswerDistance"
+  ],
+  [
+   "centroid:Point*",
+   "ask_length:AnswerDistance"
+  ],
+  [
+   "centroid:Point*",
+   "ask_length:AnswerLength"
+  ],
+  [
+   "centroid:Point*",
+   "centroid:Point*"
+  ],
+  [
+   "centroid:Point*",
+   "midpoint:Point*"
+  ],
+  [
+   "centroid:Point*",
+   "orthogonal_projection:Normal"
+  ],
+  [
+   "centroid:Point*",
+   "orthogonal_projection:Point*"
+  ],
+  [
+   "centroid:Point*",
+   "orthogonal_projection_line:Foot"
+  ],
+  [
+   "centroid:Point*",
+   "orthogonal_projection_line:PerpDir"
+  ],
+  [
+   "centroid:Point*",
+   "orthogonal_projection_line:PerpLine"
+  ],
+  [
+   "centroid:Point*",
+   "orthogonal_projection_line:Point*"
+  ],
+  [
+   "centroid:Point*",
+   "translate_point:PerpLine"
+  ],
+  [
+   "definition:circumcenter:Point*",
+   "ask_angle_line_plane:AnswerAngleLinePlane"
+  ],
+  [
+   "definition:circumcenter:Point*",
+   "ask_angle_lines:AnswerAngleLines"
+  ],
+  [
+   "definition:circumcenter:Point*",
+   "ask_area:AnswerArea"
+  ],
+  [
+   "definition:circumcenter:Point*",
+   "ask_distance_point_plane:AnswerDistance"
+  ],
+  [
+   "definition:circumcenter:Point*",
+   "ask_length:AnswerDistance"
+  ],
+  [
+   "definition:circumcenter:Point*",
+   "ask_length:AnswerLength"
+  ],
+  [
+   "definition:circumcenter:Point*",
+   "centroid:Point*"
+  ],
+  [
+   "definition:circumcenter:Point*",
+   "midpoint:Point*"
+  ],
+  [
+   "definition:circumcenter:Point*",
+   "orthogonal_projection:Normal"
+  ],
+  [
+   "definition:circumcenter:Point*",
+   "orthogonal_projection:Point*"
+  ],
+  [
+   "definition:circumcenter:Point*",
+   "orthogonal_projection_line:Foot"
+  ],
+  [
+   "definition:circumcenter:Point*",
+   "orthogonal_projection_line:PerpDir"
+  ],
+  [
+   "definition:circumcenter:Point*",
+   "orthogonal_projection_line:PerpLine"
+  ],
+  [
+   "definition:circumcenter:Point*",
+   "orthogonal_projection_line:Point*"
+  ],
+  [
+   "definition:circumcenter:Point*",
+   "translate_point:PerpLine"
+  ],
+  [
+   "definition:orthocenter:Point*",
+   "ask_angle_line_plane:AnswerAngleLinePlane"
+  ],
+  [
+   "definition:orthocenter:Point*",
+   "ask_angle_lines:AnswerAngleLines"
+  ],
+  [
+   "definition:orthocenter:Point*",
+   "ask_area:AnswerArea"
+  ],
+  [
+   "definition:orthocenter:Point*",
+   "ask_distance_point_plane:AnswerDistance"
+  ],
+  [
+   "definition:orthocenter:Point*",
+   "ask_length:AnswerDistance"
+  ],
+  [
+   "definition:orthocenter:Point*",
+   "ask_length:AnswerLength"
+  ],
+  [
+   "definition:orthocenter:Point*",
+   "centroid:Point*"
+  ],
+  [
+   "definition:orthocenter:Point*",
+   "midpoint:Point*"
+  ],
+  [
+   "definition:orthocenter:Point*",
+   "orthogonal_projection:Normal"
+  ],
+  [
+   "definition:orthocenter:Point*",
+   "orthogonal_projection:Point*"
+  ],
+  [
+   "definition:orthocenter:Point*",
+   "orthogonal_projection_line:Foot"
+  ],
+  [
+   "definition:orthocenter:Point*",
+   "orthogonal_projection_line:PerpDir"
+  ],
+  [
+   "definition:orthocenter:Point*",
+   "orthogonal_projection_line:PerpLine"
+  ],
+  [
+   "definition:orthocenter:Point*",
+   "orthogonal_projection_line:Point*"
+  ],
+  [
+   "definition:orthocenter:Point*",
+   "translate_point:PerpLine"
+  ],
+  [
+   "intersect_line_line:Point*",
+   "ask_angle_line_plane:AnswerAngleLinePlane"
+  ],
+  [
+   "intersect_line_line:Point*",
+   "ask_angle_lines:AnswerAngleLines"
+  ],
+  [
+   "intersect_line_line:Point*",
+   "ask_area:AnswerArea"
+  ],
+  [
+   "intersect_line_line:Point*",
+   "ask_distance_point_plane:AnswerDistance"
+  ],
+  [
+   "intersect_line_line:Point*",
+   "ask_length:AnswerDistance"
+  ],
+  [
+   "intersect_line_line:Point*",
+   "ask_length:AnswerLength"
+  ],
+  [
+   "intersect_line_line:Point*",
+   "centroid:Point*"
+  ],
+  [
+   "intersect_line_line:Point*",
+   "midpoint:Point*"
+  ],
+  [
+   "intersect_line_line:Point*",
+   "orthogonal_projection:Normal"
+  ],
+  [
+   "intersect_line_line:Point*",
+   "orthogonal_projection:Point*"
+  ],
+  [
+   "intersect_line_line:Point*",
+   "orthogonal_projection_line:Foot"
+  ],
+  [
+   "intersect_line_line:Point*",
+   "orthogonal_projection_line:PerpDir"
+  ],
+  [
+   "intersect_line_line:Point*",
+   "orthogonal_projection_line:PerpLine"
+  ],
+  [
+   "intersect_line_line:Point*",
+   "orthogonal_projection_line:Point*"
+  ],
+  [
+   "intersect_line_line:Point*",
+   "translate_point:PerpLine"
+  ],
+  [
+   "intersect_line_plane:Point*",
+   "ask_angle_line_plane:AnswerAngleLinePlane"
+  ],
+  [
+   "intersect_line_plane:Point*",
+   "ask_angle_lines:AnswerAngleLines"
+  ],
+  [
+   "intersect_line_plane:Point*",
+   "ask_area:AnswerArea"
+  ],
+  [
+   "intersect_line_plane:Point*",
+   "ask_distance_point_plane:AnswerDistance"
+  ],
+  [
+   "intersect_line_plane:Point*",
+   "ask_length:AnswerDistance"
+  ],
+  [
+   "intersect_line_plane:Point*",
+   "ask_length:AnswerLength"
+  ],
+  [
+   "intersect_line_plane:Point*",
+   "centroid:Point*"
+  ],
+  [
+   "intersect_line_plane:Point*",
+   "midpoint:Point*"
+  ],
+  [
+   "intersect_line_plane:Point*",
+   "orthogonal_projection:Normal"
+  ],
+  [
+   "intersect_line_plane:Point*",
+   "orthogonal_projection:Point*"
+  ],
+  [
+   "intersect_line_plane:Point*",
+   "orthogonal_projection_line:Foot"
+  ],
+  [
+   "intersect_line_plane:Point*",
+   "orthogonal_projection_line:PerpDir"
+  ],
+  [
+   "intersect_line_plane:Point*",
+   "orthogonal_projection_line:PerpLine"
+  ],
+  [
+   "intersect_line_plane:Point*",
+   "orthogonal_projection_line:Point*"
+  ],
+  [
+   "intersect_line_plane:Point*",
+   "translate_point:PerpLine"
+  ],
+  [
+   "midpoint:Point*",
+   "ask_angle_line_plane:AnswerAngleLinePlane"
+  ],
+  [
+   "midpoint:Point*",
+   "ask_angle_lines:AnswerAngleLines"
+  ],
+  [
+   "midpoint:Point*",
+   "ask_area:AnswerArea"
+  ],
+  [
+   "midpoint:Point*",
+   "ask_distance_point_plane:AnswerDistance"
+  ],
+  [
+   "midpoint:Point*",
+   "ask_length:AnswerDistance"
+  ],
+  [
+   "midpoint:Point*",
+   "ask_length:AnswerLength"
+  ],
+  [
+   "midpoint:Point*",
+   "centroid:Point*"
+  ],
+  [
+   "midpoint:Point*",
+   "midpoint:Point*"
+  ],
+  [
+   "midpoint:Point*",
+   "orthogonal_projection:Normal"
+  ],
+  [
+   "midpoint:Point*",
+   "orthogonal_projection:Point*"
+  ],
+  [
+   "midpoint:Point*",
+   "orthogonal_projection_line:Foot"
+  ],
+  [
+   "midpoint:Point*",
+   "orthogonal_projection_line:PerpDir"
+  ],
+  [
+   "midpoint:Point*",
+   "orthogonal_projection_line:PerpLine"
+  ],
+  [
+   "midpoint:Point*",
+   "orthogonal_projection_line:Point*"
+  ],
+  [
+   "midpoint:Point*",
+   "translate_point:PerpLine"
+  ],
+  [
+   "orthogonal_projection:Point*",
+   "ask_angle_line_plane:AnswerAngleLinePlane"
+  ],
+  [
+   "orthogonal_projection:Point*",
+   "ask_angle_lines:AnswerAngleLines"
+  ],
+  [
+   "orthogonal_projection:Point*",
+   "ask_area:AnswerArea"
+  ],
+  [
+   "orthogonal_projection:Point*",
+   "ask_distance_point_plane:AnswerDistance"
+  ],
+  [
+   "orthogonal_projection:Point*",
+   "ask_length:AnswerDistance"
+  ],
+  [
+   "orthogonal_projection:Point*",
+   "ask_length:AnswerLength"
+  ],
+  [
+   "orthogonal_projection:Point*",
+   "centroid:Point*"
+  ],
+  [
+   "orthogonal_projection:Point*",
+   "midpoint:Point*"
+  ],
+  [
+   "orthogonal_projection:Point*",
+   "orthogonal_projection:Normal"
+  ],
+  [
+   "orthogonal_projection:Point*",
+   "orthogonal_projection:Point*"
+  ],
+  [
+   "orthogonal_projection:Point*",
+   "orthogonal_projection_line:Foot"
+  ],
+  [
+   "orthogonal_projection:Point*",
+   "orthogonal_projection_line:PerpDir"
+  ],
+  [
+   "orthogonal_projection:Point*",
+   "orthogonal_projection_line:PerpLine"
+  ],
+  [
+   "orthogonal_projection:Point*",
+   "orthogonal_projection_line:Point*"
+  ],
+  [
+   "orthogonal_projection:Point*",
+   "translate_point:PerpLine"
+  ],
+  [
+   "orthogonal_projection_line:Foot",
+   "ask_length:AnswerDistance"
+  ],
+  [
+   "orthogonal_projection_line:PerpDir",
+   "translate_point:PerpLine"
+  ],
+  [
+   "orthogonal_projection_line:PerpLine",
+   "definition:circumcenter:Point*"
+  ],
+  [
+   "orthogonal_projection_line:PerpLine",
+   "definition:orthocenter:Point*"
+  ],
+  [
+   "orthogonal_projection_line:Point*",
+   "ask_angle_line_plane:AnswerAngleLinePlane"
+  ],
+  [
+   "orthogonal_projection_line:Point*",
+   "ask_angle_lines:AnswerAngleLines"
+  ],
+  [
+   "orthogonal_projection_line:Point*",
+   "ask_area:AnswerArea"
+  ],
+  [
+   "orthogonal_projection_line:Point*",
+   "ask_distance_point_plane:AnswerDistance"
+  ],
+  [
+   "orthogonal_projection_line:Point*",
+   "ask_length:AnswerDistance"
+  ],
+  [
+   "orthogonal_projection_line:Point*",
+   "ask_length:AnswerLength"
+  ],
+  [
+   "orthogonal_projection_line:Point*",
+   "centroid:Point*"
+  ],
+  [
+   "orthogonal_projection_line:Point*",
+   "midpoint:Point*"
+  ],
+  [
+   "orthogonal_projection_line:Point*",
+   "orthogonal_projection:Normal"
+  ],
+  [
+   "orthogonal_projection_line:Point*",
+   "orthogonal_projection:Point*"
+  ],
+  [
+   "orthogonal_projection_line:Point*",
+   "orthogonal_projection_line:Foot"
+  ],
+  [
+   "orthogonal_projection_line:Point*",
+   "orthogonal_projection_line:PerpDir"
+  ],
+  [
+   "orthogonal_projection_line:Point*",
+   "orthogonal_projection_line:PerpLine"
+  ],
+  [
+   "orthogonal_projection_line:Point*",
+   "orthogonal_projection_line:Point*"
+  ],
+  [
+   "orthogonal_projection_line:Point*",
+   "translate_point:PerpLine"
+  ],
+  [
+   "translate_point:PerpLine",
+   "definition:circumcenter:Point*"
+  ],
+  [
+   "translate_point:PerpLine",
+   "definition:orthocenter:Point*"
+  ]
+ ],
+ "multi_step_type_chains_to_an_answer": [
+  "centroid:Point* → centroid:Point* → centroid:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "centroid:Point* → centroid:Point* → centroid:Point* → ask_angle_lines:AnswerAngleLines",
+  "centroid:Point* → centroid:Point* → centroid:Point* → ask_area:AnswerArea",
+  "centroid:Point* → centroid:Point* → centroid:Point* → ask_distance_point_plane:AnswerDistance",
+  "centroid:Point* → centroid:Point* → centroid:Point* → ask_length:AnswerDistance",
+  "centroid:Point* → centroid:Point* → centroid:Point* → ask_length:AnswerLength",
+  "centroid:Point* → centroid:Point* → midpoint:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "centroid:Point* → centroid:Point* → midpoint:Point* → ask_angle_lines:AnswerAngleLines",
+  "centroid:Point* → centroid:Point* → midpoint:Point* → ask_area:AnswerArea",
+  "centroid:Point* → centroid:Point* → midpoint:Point* → ask_distance_point_plane:AnswerDistance",
+  "centroid:Point* → centroid:Point* → midpoint:Point* → ask_length:AnswerDistance",
+  "centroid:Point* → centroid:Point* → midpoint:Point* → ask_length:AnswerLength",
+  "centroid:Point* → centroid:Point* → orthogonal_projection:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "centroid:Point* → centroid:Point* → orthogonal_projection:Point* → ask_angle_lines:AnswerAngleLines",
+  "centroid:Point* → centroid:Point* → orthogonal_projection:Point* → ask_area:AnswerArea",
+  "centroid:Point* → centroid:Point* → orthogonal_projection:Point* → ask_distance_point_plane:AnswerDistance",
+  "centroid:Point* → centroid:Point* → orthogonal_projection:Point* → ask_length:AnswerDistance",
+  "centroid:Point* → centroid:Point* → orthogonal_projection:Point* → ask_length:AnswerLength",
+  "centroid:Point* → centroid:Point* → orthogonal_projection_line:Foot → ask_length:AnswerDistance",
+  "centroid:Point* → centroid:Point* → orthogonal_projection_line:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "centroid:Point* → centroid:Point* → orthogonal_projection_line:Point* → ask_angle_lines:AnswerAngleLines",
+  "centroid:Point* → centroid:Point* → orthogonal_projection_line:Point* → ask_area:AnswerArea",
+  "centroid:Point* → centroid:Point* → orthogonal_projection_line:Point* → ask_distance_point_plane:AnswerDistance",
+  "centroid:Point* → centroid:Point* → orthogonal_projection_line:Point* → ask_length:AnswerDistance",
+  "centroid:Point* → centroid:Point* → orthogonal_projection_line:Point* → ask_length:AnswerLength",
+  "centroid:Point* → midpoint:Point* → centroid:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "centroid:Point* → midpoint:Point* → centroid:Point* → ask_angle_lines:AnswerAngleLines",
+  "centroid:Point* → midpoint:Point* → centroid:Point* → ask_area:AnswerArea",
+  "centroid:Point* → midpoint:Point* → centroid:Point* → ask_distance_point_plane:AnswerDistance",
+  "centroid:Point* → midpoint:Point* → centroid:Point* → ask_length:AnswerDistance",
+  "centroid:Point* → midpoint:Point* → centroid:Point* → ask_length:AnswerLength",
+  "centroid:Point* → midpoint:Point* → midpoint:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "centroid:Point* → midpoint:Point* → midpoint:Point* → ask_angle_lines:AnswerAngleLines",
+  "centroid:Point* → midpoint:Point* → midpoint:Point* → ask_area:AnswerArea",
+  "centroid:Point* → midpoint:Point* → midpoint:Point* → ask_distance_point_plane:AnswerDistance",
+  "centroid:Point* → midpoint:Point* → midpoint:Point* → ask_length:AnswerDistance",
+  "centroid:Point* → midpoint:Point* → midpoint:Point* → ask_length:AnswerLength",
+  "centroid:Point* → midpoint:Point* → orthogonal_projection:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "centroid:Point* → midpoint:Point* → orthogonal_projection:Point* → ask_angle_lines:AnswerAngleLines",
+  "centroid:Point* → midpoint:Point* → orthogonal_projection:Point* → ask_area:AnswerArea",
+  "centroid:Point* → midpoint:Point* → orthogonal_projection:Point* → ask_distance_point_plane:AnswerDistance",
+  "centroid:Point* → midpoint:Point* → orthogonal_projection:Point* → ask_length:AnswerDistance",
+  "centroid:Point* → midpoint:Point* → orthogonal_projection:Point* → ask_length:AnswerLength",
+  "centroid:Point* → midpoint:Point* → orthogonal_projection_line:Foot → ask_length:AnswerDistance",
+  "centroid:Point* → midpoint:Point* → orthogonal_projection_line:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "centroid:Point* → midpoint:Point* → orthogonal_projection_line:Point* → ask_angle_lines:AnswerAngleLines",
+  "centroid:Point* → midpoint:Point* → orthogonal_projection_line:Point* → ask_area:AnswerArea",
+  "centroid:Point* → midpoint:Point* → orthogonal_projection_line:Point* → ask_distance_point_plane:AnswerDistance",
+  "centroid:Point* → midpoint:Point* → orthogonal_projection_line:Point* → ask_length:AnswerDistance",
+  "centroid:Point* → midpoint:Point* → orthogonal_projection_line:Point* → ask_length:AnswerLength",
+  "centroid:Point* → orthogonal_projection:Point* → centroid:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "centroid:Point* → orthogonal_projection:Point* → centroid:Point* → ask_angle_lines:AnswerAngleLines",
+  "centroid:Point* → orthogonal_projection:Point* → centroid:Point* → ask_area:AnswerArea",
+  "centroid:Point* → orthogonal_projection:Point* → centroid:Point* → ask_distance_point_plane:AnswerDistance",
+  "centroid:Point* → orthogonal_projection:Point* → centroid:Point* → ask_length:AnswerDistance",
+  "centroid:Point* → orthogonal_projection:Point* → centroid:Point* → ask_length:AnswerLength",
+  "centroid:Point* → orthogonal_projection:Point* → midpoint:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "centroid:Point* → orthogonal_projection:Point* → midpoint:Point* → ask_angle_lines:AnswerAngleLines",
+  "centroid:Point* → orthogonal_projection:Point* → midpoint:Point* → ask_area:AnswerArea",
+  "centroid:Point* → orthogonal_projection:Point* → midpoint:Point* → ask_distance_point_plane:AnswerDistance",
+  "centroid:Point* → orthogonal_projection:Point* → midpoint:Point* → ask_length:AnswerDistance",
+  "centroid:Point* → orthogonal_projection:Point* → midpoint:Point* → ask_length:AnswerLength",
+  "centroid:Point* → orthogonal_projection:Point* → orthogonal_projection:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "centroid:Point* → orthogonal_projection:Point* → orthogonal_projection:Point* → ask_angle_lines:AnswerAngleLines",
+  "centroid:Point* → orthogonal_projection:Point* → orthogonal_projection:Point* → ask_area:AnswerArea",
+  "centroid:Point* → orthogonal_projection:Point* → orthogonal_projection:Point* → ask_distance_point_plane:AnswerDistance",
+  "centroid:Point* → orthogonal_projection:Point* → orthogonal_projection:Point* → ask_length:AnswerDistance",
+  "centroid:Point* → orthogonal_projection:Point* → orthogonal_projection:Point* → ask_length:AnswerLength",
+  "centroid:Point* → orthogonal_projection:Point* → orthogonal_projection_line:Foot → ask_length:AnswerDistance",
+  "centroid:Point* → orthogonal_projection:Point* → orthogonal_projection_line:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "centroid:Point* → orthogonal_projection:Point* → orthogonal_projection_line:Point* → ask_angle_lines:AnswerAngleLines",
+  "centroid:Point* → orthogonal_projection:Point* → orthogonal_projection_line:Point* → ask_area:AnswerArea",
+  "centroid:Point* → orthogonal_projection:Point* → orthogonal_projection_line:Point* → ask_distance_point_plane:AnswerDistance",
+  "centroid:Point* → orthogonal_projection:Point* → orthogonal_projection_line:Point* → ask_length:AnswerDistance",
+  "centroid:Point* → orthogonal_projection:Point* → orthogonal_projection_line:Point* → ask_length:AnswerLength",
+  "centroid:Point* → orthogonal_projection_line:PerpLine → definition:circumcenter:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "centroid:Point* → orthogonal_projection_line:PerpLine → definition:circumcenter:Point* → ask_angle_lines:AnswerAngleLines",
+  "centroid:Point* → orthogonal_projection_line:PerpLine → definition:circumcenter:Point* → ask_area:AnswerArea",
+  "centroid:Point* → orthogonal_projection_line:PerpLine → definition:circumcenter:Point* → ask_distance_point_plane:AnswerDistance",
+  "centroid:Point* → orthogonal_projection_line:PerpLine → definition:circumcenter:Point* → ask_length:AnswerDistance",
+  "centroid:Point* → orthogonal_projection_line:PerpLine → definition:circumcenter:Point* → ask_length:AnswerLength",
+  "centroid:Point* → orthogonal_projection_line:PerpLine → definition:orthocenter:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "centroid:Point* → orthogonal_projection_line:PerpLine → definition:orthocenter:Point* → ask_angle_lines:AnswerAngleLines",
+  "centroid:Point* → orthogonal_projection_line:PerpLine → definition:orthocenter:Point* → ask_area:AnswerArea",
+  "centroid:Point* → orthogonal_projection_line:PerpLine → definition:orthocenter:Point* → ask_distance_point_plane:AnswerDistance",
+  "centroid:Point* → orthogonal_projection_line:PerpLine → definition:orthocenter:Point* → ask_length:AnswerDistance",
+  "centroid:Point* → orthogonal_projection_line:PerpLine → definition:orthocenter:Point* → ask_length:AnswerLength",
+  "centroid:Point* → orthogonal_projection_line:Point* → centroid:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "centroid:Point* → orthogonal_projection_line:Point* → centroid:Point* → ask_angle_lines:AnswerAngleLines",
+  "centroid:Point* → orthogonal_projection_line:Point* → centroid:Point* → ask_area:AnswerArea",
+  "centroid:Point* → orthogonal_projection_line:Point* → centroid:Point* → ask_distance_point_plane:AnswerDistance",
+  "centroid:Point* → orthogonal_projection_line:Point* → centroid:Point* → ask_length:AnswerDistance",
+  "centroid:Point* → orthogonal_projection_line:Point* → centroid:Point* → ask_length:AnswerLength",
+  "centroid:Point* → orthogonal_projection_line:Point* → midpoint:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "centroid:Point* → orthogonal_projection_line:Point* → midpoint:Point* → ask_angle_lines:AnswerAngleLines",
+  "centroid:Point* → orthogonal_projection_line:Point* → midpoint:Point* → ask_area:AnswerArea",
+  "centroid:Point* → orthogonal_projection_line:Point* → midpoint:Point* → ask_distance_point_plane:AnswerDistance",
+  "centroid:Point* → orthogonal_projection_line:Point* → midpoint:Point* → ask_length:AnswerDistance",
+  "centroid:Point* → orthogonal_projection_line:Point* → midpoint:Point* → ask_length:AnswerLength",
+  "centroid:Point* → orthogonal_projection_line:Point* → orthogonal_projection:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "centroid:Point* → orthogonal_projection_line:Point* → orthogonal_projection:Point* → ask_angle_lines:AnswerAngleLines",
+  "centroid:Point* → orthogonal_projection_line:Point* → orthogonal_projection:Point* → ask_area:AnswerArea",
+  "centroid:Point* → orthogonal_projection_line:Point* → orthogonal_projection:Point* → ask_distance_point_plane:AnswerDistance",
+  "centroid:Point* → orthogonal_projection_line:Point* → orthogonal_projection:Point* → ask_length:AnswerDistance",
+  "centroid:Point* → orthogonal_projection_line:Point* → orthogonal_projection:Point* → ask_length:AnswerLength",
+  "centroid:Point* → orthogonal_projection_line:Point* → orthogonal_projection_line:Foot → ask_length:AnswerDistance",
+  "centroid:Point* → orthogonal_projection_line:Point* → orthogonal_projection_line:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "centroid:Point* → orthogonal_projection_line:Point* → orthogonal_projection_line:Point* → ask_angle_lines:AnswerAngleLines",
+  "centroid:Point* → orthogonal_projection_line:Point* → orthogonal_projection_line:Point* → ask_area:AnswerArea",
+  "centroid:Point* → orthogonal_projection_line:Point* → orthogonal_projection_line:Point* → ask_distance_point_plane:AnswerDistance",
+  "centroid:Point* → orthogonal_projection_line:Point* → orthogonal_projection_line:Point* → ask_length:AnswerDistance",
+  "centroid:Point* → orthogonal_projection_line:Point* → orthogonal_projection_line:Point* → ask_length:AnswerLength",
+  "centroid:Point* → translate_point:PerpLine → definition:circumcenter:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "centroid:Point* → translate_point:PerpLine → definition:circumcenter:Point* → ask_angle_lines:AnswerAngleLines",
+  "centroid:Point* → translate_point:PerpLine → definition:circumcenter:Point* → ask_area:AnswerArea",
+  "centroid:Point* → translate_point:PerpLine → definition:circumcenter:Point* → ask_distance_point_plane:AnswerDistance",
+  "centroid:Point* → translate_point:PerpLine → definition:circumcenter:Point* → ask_length:AnswerDistance",
+  "centroid:Point* → translate_point:PerpLine → definition:circumcenter:Point* → ask_length:AnswerLength",
+  "centroid:Point* → translate_point:PerpLine → definition:orthocenter:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "centroid:Point* → translate_point:PerpLine → definition:orthocenter:Point* → ask_angle_lines:AnswerAngleLines",
+  "centroid:Point* → translate_point:PerpLine → definition:orthocenter:Point* → ask_area:AnswerArea",
+  "centroid:Point* → translate_point:PerpLine → definition:orthocenter:Point* → ask_distance_point_plane:AnswerDistance",
+  "centroid:Point* → translate_point:PerpLine → definition:orthocenter:Point* → ask_length:AnswerDistance",
+  "centroid:Point* → translate_point:PerpLine → definition:orthocenter:Point* → ask_length:AnswerLength",
+  "definition:circumcenter:Point* → centroid:Point* → centroid:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "definition:circumcenter:Point* → centroid:Point* → centroid:Point* → ask_angle_lines:AnswerAngleLines",
+  "definition:circumcenter:Point* → centroid:Point* → centroid:Point* → ask_area:AnswerArea",
+  "definition:circumcenter:Point* → centroid:Point* → centroid:Point* → ask_distance_point_plane:AnswerDistance",
+  "definition:circumcenter:Point* → centroid:Point* → centroid:Point* → ask_length:AnswerDistance",
+  "definition:circumcenter:Point* → centroid:Point* → centroid:Point* → ask_length:AnswerLength",
+  "definition:circumcenter:Point* → centroid:Point* → midpoint:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "definition:circumcenter:Point* → centroid:Point* → midpoint:Point* → ask_angle_lines:AnswerAngleLines",
+  "definition:circumcenter:Point* → centroid:Point* → midpoint:Point* → ask_area:AnswerArea",
+  "definition:circumcenter:Point* → centroid:Point* → midpoint:Point* → ask_distance_point_plane:AnswerDistance",
+  "definition:circumcenter:Point* → centroid:Point* → midpoint:Point* → ask_length:AnswerDistance",
+  "definition:circumcenter:Point* → centroid:Point* → midpoint:Point* → ask_length:AnswerLength",
+  "definition:circumcenter:Point* → centroid:Point* → orthogonal_projection:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "definition:circumcenter:Point* → centroid:Point* → orthogonal_projection:Point* → ask_angle_lines:AnswerAngleLines",
+  "definition:circumcenter:Point* → centroid:Point* → orthogonal_projection:Point* → ask_area:AnswerArea",
+  "definition:circumcenter:Point* → centroid:Point* → orthogonal_projection:Point* → ask_distance_point_plane:AnswerDistance",
+  "definition:circumcenter:Point* → centroid:Point* → orthogonal_projection:Point* → ask_length:AnswerDistance",
+  "definition:circumcenter:Point* → centroid:Point* → orthogonal_projection:Point* → ask_length:AnswerLength",
+  "definition:circumcenter:Point* → centroid:Point* → orthogonal_projection_line:Foot → ask_length:AnswerDistance",
+  "definition:circumcenter:Point* → centroid:Point* → orthogonal_projection_line:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "definition:circumcenter:Point* → centroid:Point* → orthogonal_projection_line:Point* → ask_angle_lines:AnswerAngleLines",
+  "definition:circumcenter:Point* → centroid:Point* → orthogonal_projection_line:Point* → ask_area:AnswerArea",
+  "definition:circumcenter:Point* → centroid:Point* → orthogonal_projection_line:Point* → ask_distance_point_plane:AnswerDistance",
+  "definition:circumcenter:Point* → centroid:Point* → orthogonal_projection_line:Point* → ask_length:AnswerDistance",
+  "definition:circumcenter:Point* → centroid:Point* → orthogonal_projection_line:Point* → ask_length:AnswerLength",
+  "definition:circumcenter:Point* → midpoint:Point* → centroid:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "definition:circumcenter:Point* → midpoint:Point* → centroid:Point* → ask_angle_lines:AnswerAngleLines",
+  "definition:circumcenter:Point* → midpoint:Point* → centroid:Point* → ask_area:AnswerArea",
+  "definition:circumcenter:Point* → midpoint:Point* → centroid:Point* → ask_distance_point_plane:AnswerDistance",
+  "definition:circumcenter:Point* → midpoint:Point* → centroid:Point* → ask_length:AnswerDistance",
+  "definition:circumcenter:Point* → midpoint:Point* → centroid:Point* → ask_length:AnswerLength",
+  "definition:circumcenter:Point* → midpoint:Point* → midpoint:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "definition:circumcenter:Point* → midpoint:Point* → midpoint:Point* → ask_angle_lines:AnswerAngleLines",
+  "definition:circumcenter:Point* → midpoint:Point* → midpoint:Point* → ask_area:AnswerArea",
+  "definition:circumcenter:Point* → midpoint:Point* → midpoint:Point* → ask_distance_point_plane:AnswerDistance",
+  "definition:circumcenter:Point* → midpoint:Point* → midpoint:Point* → ask_length:AnswerDistance",
+  "definition:circumcenter:Point* → midpoint:Point* → midpoint:Point* → ask_length:AnswerLength",
+  "definition:circumcenter:Point* → midpoint:Point* → orthogonal_projection:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "definition:circumcenter:Point* → midpoint:Point* → orthogonal_projection:Point* → ask_angle_lines:AnswerAngleLines",
+  "definition:circumcenter:Point* → midpoint:Point* → orthogonal_projection:Point* → ask_area:AnswerArea",
+  "definition:circumcenter:Point* → midpoint:Point* → orthogonal_projection:Point* → ask_distance_point_plane:AnswerDistance",
+  "definition:circumcenter:Point* → midpoint:Point* → orthogonal_projection:Point* → ask_length:AnswerDistance",
+  "definition:circumcenter:Point* → midpoint:Point* → orthogonal_projection:Point* → ask_length:AnswerLength",
+  "definition:circumcenter:Point* → midpoint:Point* → orthogonal_projection_line:Foot → ask_length:AnswerDistance",
+  "definition:circumcenter:Point* → midpoint:Point* → orthogonal_projection_line:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "definition:circumcenter:Point* → midpoint:Point* → orthogonal_projection_line:Point* → ask_angle_lines:AnswerAngleLines",
+  "definition:circumcenter:Point* → midpoint:Point* → orthogonal_projection_line:Point* → ask_area:AnswerArea",
+  "definition:circumcenter:Point* → midpoint:Point* → orthogonal_projection_line:Point* → ask_distance_point_plane:AnswerDistance",
+  "definition:circumcenter:Point* → midpoint:Point* → orthogonal_projection_line:Point* → ask_length:AnswerDistance",
+  "definition:circumcenter:Point* → midpoint:Point* → orthogonal_projection_line:Point* → ask_length:AnswerLength",
+  "definition:circumcenter:Point* → orthogonal_projection:Point* → centroid:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "definition:circumcenter:Point* → orthogonal_projection:Point* → centroid:Point* → ask_angle_lines:AnswerAngleLines",
+  "definition:circumcenter:Point* → orthogonal_projection:Point* → centroid:Point* → ask_area:AnswerArea",
+  "definition:circumcenter:Point* → orthogonal_projection:Point* → centroid:Point* → ask_distance_point_plane:AnswerDistance",
+  "definition:circumcenter:Point* → orthogonal_projection:Point* → centroid:Point* → ask_length:AnswerDistance",
+  "definition:circumcenter:Point* → orthogonal_projection:Point* → centroid:Point* → ask_length:AnswerLength",
+  "definition:circumcenter:Point* → orthogonal_projection:Point* → midpoint:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "definition:circumcenter:Point* → orthogonal_projection:Point* → midpoint:Point* → ask_angle_lines:AnswerAngleLines",
+  "definition:circumcenter:Point* → orthogonal_projection:Point* → midpoint:Point* → ask_area:AnswerArea",
+  "definition:circumcenter:Point* → orthogonal_projection:Point* → midpoint:Point* → ask_distance_point_plane:AnswerDistance",
+  "definition:circumcenter:Point* → orthogonal_projection:Point* → midpoint:Point* → ask_length:AnswerDistance",
+  "definition:circumcenter:Point* → orthogonal_projection:Point* → midpoint:Point* → ask_length:AnswerLength",
+  "definition:circumcenter:Point* → orthogonal_projection:Point* → orthogonal_projection:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "definition:circumcenter:Point* → orthogonal_projection:Point* → orthogonal_projection:Point* → ask_angle_lines:AnswerAngleLines",
+  "definition:circumcenter:Point* → orthogonal_projection:Point* → orthogonal_projection:Point* → ask_area:AnswerArea",
+  "definition:circumcenter:Point* → orthogonal_projection:Point* → orthogonal_projection:Point* → ask_distance_point_plane:AnswerDistance",
+  "definition:circumcenter:Point* → orthogonal_projection:Point* → orthogonal_projection:Point* → ask_length:AnswerDistance",
+  "definition:circumcenter:Point* → orthogonal_projection:Point* → orthogonal_projection:Point* → ask_length:AnswerLength",
+  "definition:circumcenter:Point* → orthogonal_projection:Point* → orthogonal_projection_line:Foot → ask_length:AnswerDistance",
+  "definition:circumcenter:Point* → orthogonal_projection:Point* → orthogonal_projection_line:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "definition:circumcenter:Point* → orthogonal_projection:Point* → orthogonal_projection_line:Point* → ask_angle_lines:AnswerAngleLines",
+  "definition:circumcenter:Point* → orthogonal_projection:Point* → orthogonal_projection_line:Point* → ask_area:AnswerArea",
+  "definition:circumcenter:Point* → orthogonal_projection:Point* → orthogonal_projection_line:Point* → ask_distance_point_plane:AnswerDistance",
+  "definition:circumcenter:Point* → orthogonal_projection:Point* → orthogonal_projection_line:Point* → ask_length:AnswerDistance",
+  "definition:circumcenter:Point* → orthogonal_projection:Point* → orthogonal_projection_line:Point* → ask_length:AnswerLength",
+  "definition:circumcenter:Point* → orthogonal_projection_line:PerpLine → definition:circumcenter:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "definition:circumcenter:Point* → orthogonal_projection_line:PerpLine → definition:circumcenter:Point* → ask_angle_lines:AnswerAngleLines",
+  "definition:circumcenter:Point* → orthogonal_projection_line:PerpLine → definition:circumcenter:Point* → ask_area:AnswerArea",
+  "definition:circumcenter:Point* → orthogonal_projection_line:PerpLine → definition:circumcenter:Point* → ask_distance_point_plane:AnswerDistance",
+  "definition:circumcenter:Point* → orthogonal_projection_line:PerpLine → definition:circumcenter:Point* → ask_length:AnswerDistance",
+  "definition:circumcenter:Point* → orthogonal_projection_line:PerpLine → definition:circumcenter:Point* → ask_length:AnswerLength",
+  "definition:circumcenter:Point* → orthogonal_projection_line:PerpLine → definition:orthocenter:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "definition:circumcenter:Point* → orthogonal_projection_line:PerpLine → definition:orthocenter:Point* → ask_angle_lines:AnswerAngleLines",
+  "definition:circumcenter:Point* → orthogonal_projection_line:PerpLine → definition:orthocenter:Point* → ask_area:AnswerArea",
+  "definition:circumcenter:Point* → orthogonal_projection_line:PerpLine → definition:orthocenter:Point* → ask_distance_point_plane:AnswerDistance",
+  "definition:circumcenter:Point* → orthogonal_projection_line:PerpLine → definition:orthocenter:Point* → ask_length:AnswerDistance",
+  "definition:circumcenter:Point* → orthogonal_projection_line:PerpLine → definition:orthocenter:Point* → ask_length:AnswerLength",
+  "definition:circumcenter:Point* → orthogonal_projection_line:Point* → centroid:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "definition:circumcenter:Point* → orthogonal_projection_line:Point* → centroid:Point* → ask_angle_lines:AnswerAngleLines",
+  "definition:circumcenter:Point* → orthogonal_projection_line:Point* → centroid:Point* → ask_area:AnswerArea",
+  "definition:circumcenter:Point* → orthogonal_projection_line:Point* → centroid:Point* → ask_distance_point_plane:AnswerDistance",
+  "definition:circumcenter:Point* → orthogonal_projection_line:Point* → centroid:Point* → ask_length:AnswerDistance",
+  "definition:circumcenter:Point* → orthogonal_projection_line:Point* → centroid:Point* → ask_length:AnswerLength",
+  "definition:circumcenter:Point* → orthogonal_projection_line:Point* → midpoint:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "definition:circumcenter:Point* → orthogonal_projection_line:Point* → midpoint:Point* → ask_angle_lines:AnswerAngleLines",
+  "definition:circumcenter:Point* → orthogonal_projection_line:Point* → midpoint:Point* → ask_area:AnswerArea",
+  "definition:circumcenter:Point* → orthogonal_projection_line:Point* → midpoint:Point* → ask_distance_point_plane:AnswerDistance",
+  "definition:circumcenter:Point* → orthogonal_projection_line:Point* → midpoint:Point* → ask_length:AnswerDistance",
+  "definition:circumcenter:Point* → orthogonal_projection_line:Point* → midpoint:Point* → ask_length:AnswerLength",
+  "definition:circumcenter:Point* → orthogonal_projection_line:Point* → orthogonal_projection:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "definition:circumcenter:Point* → orthogonal_projection_line:Point* → orthogonal_projection:Point* → ask_angle_lines:AnswerAngleLines",
+  "definition:circumcenter:Point* → orthogonal_projection_line:Point* → orthogonal_projection:Point* → ask_area:AnswerArea",
+  "definition:circumcenter:Point* → orthogonal_projection_line:Point* → orthogonal_projection:Point* → ask_distance_point_plane:AnswerDistance",
+  "definition:circumcenter:Point* → orthogonal_projection_line:Point* → orthogonal_projection:Point* → ask_length:AnswerDistance",
+  "definition:circumcenter:Point* → orthogonal_projection_line:Point* → orthogonal_projection:Point* → ask_length:AnswerLength",
+  "definition:circumcenter:Point* → orthogonal_projection_line:Point* → orthogonal_projection_line:Foot → ask_length:AnswerDistance",
+  "definition:circumcenter:Point* → orthogonal_projection_line:Point* → orthogonal_projection_line:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "definition:circumcenter:Point* → orthogonal_projection_line:Point* → orthogonal_projection_line:Point* → ask_angle_lines:AnswerAngleLines",
+  "definition:circumcenter:Point* → orthogonal_projection_line:Point* → orthogonal_projection_line:Point* → ask_area:AnswerArea",
+  "definition:circumcenter:Point* → orthogonal_projection_line:Point* → orthogonal_projection_line:Point* → ask_distance_point_plane:AnswerDistance",
+  "definition:circumcenter:Point* → orthogonal_projection_line:Point* → orthogonal_projection_line:Point* → ask_length:AnswerDistance",
+  "definition:circumcenter:Point* → orthogonal_projection_line:Point* → orthogonal_projection_line:Point* → ask_length:AnswerLength",
+  "definition:circumcenter:Point* → translate_point:PerpLine → definition:circumcenter:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "definition:circumcenter:Point* → translate_point:PerpLine → definition:circumcenter:Point* → ask_angle_lines:AnswerAngleLines",
+  "definition:circumcenter:Point* → translate_point:PerpLine → definition:circumcenter:Point* → ask_area:AnswerArea",
+  "definition:circumcenter:Point* → translate_point:PerpLine → definition:circumcenter:Point* → ask_distance_point_plane:AnswerDistance",
+  "definition:circumcenter:Point* → translate_point:PerpLine → definition:circumcenter:Point* → ask_length:AnswerDistance",
+  "definition:circumcenter:Point* → translate_point:PerpLine → definition:circumcenter:Point* → ask_length:AnswerLength",
+  "definition:circumcenter:Point* → translate_point:PerpLine → definition:orthocenter:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "definition:circumcenter:Point* → translate_point:PerpLine → definition:orthocenter:Point* → ask_angle_lines:AnswerAngleLines",
+  "definition:circumcenter:Point* → translate_point:PerpLine → definition:orthocenter:Point* → ask_area:AnswerArea",
+  "definition:circumcenter:Point* → translate_point:PerpLine → definition:orthocenter:Point* → ask_distance_point_plane:AnswerDistance",
+  "definition:circumcenter:Point* → translate_point:PerpLine → definition:orthocenter:Point* → ask_length:AnswerDistance",
+  "definition:circumcenter:Point* → translate_point:PerpLine → definition:orthocenter:Point* → ask_length:AnswerLength",
+  "definition:orthocenter:Point* → centroid:Point* → centroid:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "definition:orthocenter:Point* → centroid:Point* → centroid:Point* → ask_angle_lines:AnswerAngleLines",
+  "definition:orthocenter:Point* → centroid:Point* → centroid:Point* → ask_area:AnswerArea",
+  "definition:orthocenter:Point* → centroid:Point* → centroid:Point* → ask_distance_point_plane:AnswerDistance",
+  "definition:orthocenter:Point* → centroid:Point* → centroid:Point* → ask_length:AnswerDistance",
+  "definition:orthocenter:Point* → centroid:Point* → centroid:Point* → ask_length:AnswerLength",
+  "definition:orthocenter:Point* → centroid:Point* → midpoint:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "definition:orthocenter:Point* → centroid:Point* → midpoint:Point* → ask_angle_lines:AnswerAngleLines",
+  "definition:orthocenter:Point* → centroid:Point* → midpoint:Point* → ask_area:AnswerArea",
+  "definition:orthocenter:Point* → centroid:Point* → midpoint:Point* → ask_distance_point_plane:AnswerDistance",
+  "definition:orthocenter:Point* → centroid:Point* → midpoint:Point* → ask_length:AnswerDistance",
+  "definition:orthocenter:Point* → centroid:Point* → midpoint:Point* → ask_length:AnswerLength",
+  "definition:orthocenter:Point* → centroid:Point* → orthogonal_projection:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "definition:orthocenter:Point* → centroid:Point* → orthogonal_projection:Point* → ask_angle_lines:AnswerAngleLines",
+  "definition:orthocenter:Point* → centroid:Point* → orthogonal_projection:Point* → ask_area:AnswerArea",
+  "definition:orthocenter:Point* → centroid:Point* → orthogonal_projection:Point* → ask_distance_point_plane:AnswerDistance",
+  "definition:orthocenter:Point* → centroid:Point* → orthogonal_projection:Point* → ask_length:AnswerDistance",
+  "definition:orthocenter:Point* → centroid:Point* → orthogonal_projection:Point* → ask_length:AnswerLength",
+  "definition:orthocenter:Point* → centroid:Point* → orthogonal_projection_line:Foot → ask_length:AnswerDistance",
+  "definition:orthocenter:Point* → centroid:Point* → orthogonal_projection_line:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "definition:orthocenter:Point* → centroid:Point* → orthogonal_projection_line:Point* → ask_angle_lines:AnswerAngleLines",
+  "definition:orthocenter:Point* → centroid:Point* → orthogonal_projection_line:Point* → ask_area:AnswerArea",
+  "definition:orthocenter:Point* → centroid:Point* → orthogonal_projection_line:Point* → ask_distance_point_plane:AnswerDistance",
+  "definition:orthocenter:Point* → centroid:Point* → orthogonal_projection_line:Point* → ask_length:AnswerDistance",
+  "definition:orthocenter:Point* → centroid:Point* → orthogonal_projection_line:Point* → ask_length:AnswerLength",
+  "definition:orthocenter:Point* → midpoint:Point* → centroid:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "definition:orthocenter:Point* → midpoint:Point* → centroid:Point* → ask_angle_lines:AnswerAngleLines",
+  "definition:orthocenter:Point* → midpoint:Point* → centroid:Point* → ask_area:AnswerArea",
+  "definition:orthocenter:Point* → midpoint:Point* → centroid:Point* → ask_distance_point_plane:AnswerDistance",
+  "definition:orthocenter:Point* → midpoint:Point* → centroid:Point* → ask_length:AnswerDistance",
+  "definition:orthocenter:Point* → midpoint:Point* → centroid:Point* → ask_length:AnswerLength",
+  "definition:orthocenter:Point* → midpoint:Point* → midpoint:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "definition:orthocenter:Point* → midpoint:Point* → midpoint:Point* → ask_angle_lines:AnswerAngleLines",
+  "definition:orthocenter:Point* → midpoint:Point* → midpoint:Point* → ask_area:AnswerArea",
+  "definition:orthocenter:Point* → midpoint:Point* → midpoint:Point* → ask_distance_point_plane:AnswerDistance",
+  "definition:orthocenter:Point* → midpoint:Point* → midpoint:Point* → ask_length:AnswerDistance",
+  "definition:orthocenter:Point* → midpoint:Point* → midpoint:Point* → ask_length:AnswerLength",
+  "definition:orthocenter:Point* → midpoint:Point* → orthogonal_projection:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "definition:orthocenter:Point* → midpoint:Point* → orthogonal_projection:Point* → ask_angle_lines:AnswerAngleLines",
+  "definition:orthocenter:Point* → midpoint:Point* → orthogonal_projection:Point* → ask_area:AnswerArea",
+  "definition:orthocenter:Point* → midpoint:Point* → orthogonal_projection:Point* → ask_distance_point_plane:AnswerDistance",
+  "definition:orthocenter:Point* → midpoint:Point* → orthogonal_projection:Point* → ask_length:AnswerDistance",
+  "definition:orthocenter:Point* → midpoint:Point* → orthogonal_projection:Point* → ask_length:AnswerLength",
+  "definition:orthocenter:Point* → midpoint:Point* → orthogonal_projection_line:Foot → ask_length:AnswerDistance",
+  "definition:orthocenter:Point* → midpoint:Point* → orthogonal_projection_line:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "definition:orthocenter:Point* → midpoint:Point* → orthogonal_projection_line:Point* → ask_angle_lines:AnswerAngleLines",
+  "definition:orthocenter:Point* → midpoint:Point* → orthogonal_projection_line:Point* → ask_area:AnswerArea",
+  "definition:orthocenter:Point* → midpoint:Point* → orthogonal_projection_line:Point* → ask_distance_point_plane:AnswerDistance",
+  "definition:orthocenter:Point* → midpoint:Point* → orthogonal_projection_line:Point* → ask_length:AnswerDistance",
+  "definition:orthocenter:Point* → midpoint:Point* → orthogonal_projection_line:Point* → ask_length:AnswerLength",
+  "definition:orthocenter:Point* → orthogonal_projection:Point* → centroid:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "definition:orthocenter:Point* → orthogonal_projection:Point* → centroid:Point* → ask_angle_lines:AnswerAngleLines",
+  "definition:orthocenter:Point* → orthogonal_projection:Point* → centroid:Point* → ask_area:AnswerArea",
+  "definition:orthocenter:Point* → orthogonal_projection:Point* → centroid:Point* → ask_distance_point_plane:AnswerDistance",
+  "definition:orthocenter:Point* → orthogonal_projection:Point* → centroid:Point* → ask_length:AnswerDistance",
+  "definition:orthocenter:Point* → orthogonal_projection:Point* → centroid:Point* → ask_length:AnswerLength",
+  "definition:orthocenter:Point* → orthogonal_projection:Point* → midpoint:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "definition:orthocenter:Point* → orthogonal_projection:Point* → midpoint:Point* → ask_angle_lines:AnswerAngleLines",
+  "definition:orthocenter:Point* → orthogonal_projection:Point* → midpoint:Point* → ask_area:AnswerArea",
+  "definition:orthocenter:Point* → orthogonal_projection:Point* → midpoint:Point* → ask_distance_point_plane:AnswerDistance",
+  "definition:orthocenter:Point* → orthogonal_projection:Point* → midpoint:Point* → ask_length:AnswerDistance",
+  "definition:orthocenter:Point* → orthogonal_projection:Point* → midpoint:Point* → ask_length:AnswerLength",
+  "definition:orthocenter:Point* → orthogonal_projection:Point* → orthogonal_projection:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "definition:orthocenter:Point* → orthogonal_projection:Point* → orthogonal_projection:Point* → ask_angle_lines:AnswerAngleLines",
+  "definition:orthocenter:Point* → orthogonal_projection:Point* → orthogonal_projection:Point* → ask_area:AnswerArea",
+  "definition:orthocenter:Point* → orthogonal_projection:Point* → orthogonal_projection:Point* → ask_distance_point_plane:AnswerDistance",
+  "definition:orthocenter:Point* → orthogonal_projection:Point* → orthogonal_projection:Point* → ask_length:AnswerDistance",
+  "definition:orthocenter:Point* → orthogonal_projection:Point* → orthogonal_projection:Point* → ask_length:AnswerLength",
+  "definition:orthocenter:Point* → orthogonal_projection:Point* → orthogonal_projection_line:Foot → ask_length:AnswerDistance",
+  "definition:orthocenter:Point* → orthogonal_projection:Point* → orthogonal_projection_line:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "definition:orthocenter:Point* → orthogonal_projection:Point* → orthogonal_projection_line:Point* → ask_angle_lines:AnswerAngleLines",
+  "definition:orthocenter:Point* → orthogonal_projection:Point* → orthogonal_projection_line:Point* → ask_area:AnswerArea",
+  "definition:orthocenter:Point* → orthogonal_projection:Point* → orthogonal_projection_line:Point* → ask_distance_point_plane:AnswerDistance",
+  "definition:orthocenter:Point* → orthogonal_projection:Point* → orthogonal_projection_line:Point* → ask_length:AnswerDistance",
+  "definition:orthocenter:Point* → orthogonal_projection:Point* → orthogonal_projection_line:Point* → ask_length:AnswerLength",
+  "definition:orthocenter:Point* → orthogonal_projection_line:PerpLine → definition:circumcenter:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "definition:orthocenter:Point* → orthogonal_projection_line:PerpLine → definition:circumcenter:Point* → ask_angle_lines:AnswerAngleLines",
+  "definition:orthocenter:Point* → orthogonal_projection_line:PerpLine → definition:circumcenter:Point* → ask_area:AnswerArea",
+  "definition:orthocenter:Point* → orthogonal_projection_line:PerpLine → definition:circumcenter:Point* → ask_distance_point_plane:AnswerDistance",
+  "definition:orthocenter:Point* → orthogonal_projection_line:PerpLine → definition:circumcenter:Point* → ask_length:AnswerDistance",
+  "definition:orthocenter:Point* → orthogonal_projection_line:PerpLine → definition:circumcenter:Point* → ask_length:AnswerLength",
+  "definition:orthocenter:Point* → orthogonal_projection_line:PerpLine → definition:orthocenter:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "definition:orthocenter:Point* → orthogonal_projection_line:PerpLine → definition:orthocenter:Point* → ask_angle_lines:AnswerAngleLines",
+  "definition:orthocenter:Point* → orthogonal_projection_line:PerpLine → definition:orthocenter:Point* → ask_area:AnswerArea",
+  "definition:orthocenter:Point* → orthogonal_projection_line:PerpLine → definition:orthocenter:Point* → ask_distance_point_plane:AnswerDistance",
+  "definition:orthocenter:Point* → orthogonal_projection_line:PerpLine → definition:orthocenter:Point* → ask_length:AnswerDistance",
+  "definition:orthocenter:Point* → orthogonal_projection_line:PerpLine → definition:orthocenter:Point* → ask_length:AnswerLength",
+  "definition:orthocenter:Point* → orthogonal_projection_line:Point* → centroid:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "definition:orthocenter:Point* → orthogonal_projection_line:Point* → centroid:Point* → ask_angle_lines:AnswerAngleLines",
+  "definition:orthocenter:Point* → orthogonal_projection_line:Point* → centroid:Point* → ask_area:AnswerArea",
+  "definition:orthocenter:Point* → orthogonal_projection_line:Point* → centroid:Point* → ask_distance_point_plane:AnswerDistance",
+  "definition:orthocenter:Point* → orthogonal_projection_line:Point* → centroid:Point* → ask_length:AnswerDistance",
+  "definition:orthocenter:Point* → orthogonal_projection_line:Point* → centroid:Point* → ask_length:AnswerLength",
+  "definition:orthocenter:Point* → orthogonal_projection_line:Point* → midpoint:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "definition:orthocenter:Point* → orthogonal_projection_line:Point* → midpoint:Point* → ask_angle_lines:AnswerAngleLines",
+  "definition:orthocenter:Point* → orthogonal_projection_line:Point* → midpoint:Point* → ask_area:AnswerArea",
+  "definition:orthocenter:Point* → orthogonal_projection_line:Point* → midpoint:Point* → ask_distance_point_plane:AnswerDistance",
+  "definition:orthocenter:Point* → orthogonal_projection_line:Point* → midpoint:Point* → ask_length:AnswerDistance",
+  "definition:orthocenter:Point* → orthogonal_projection_line:Point* → midpoint:Point* → ask_length:AnswerLength",
+  "definition:orthocenter:Point* → orthogonal_projection_line:Point* → orthogonal_projection:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "definition:orthocenter:Point* → orthogonal_projection_line:Point* → orthogonal_projection:Point* → ask_angle_lines:AnswerAngleLines",
+  "definition:orthocenter:Point* → orthogonal_projection_line:Point* → orthogonal_projection:Point* → ask_area:AnswerArea",
+  "definition:orthocenter:Point* → orthogonal_projection_line:Point* → orthogonal_projection:Point* → ask_distance_point_plane:AnswerDistance",
+  "definition:orthocenter:Point* → orthogonal_projection_line:Point* → orthogonal_projection:Point* → ask_length:AnswerDistance",
+  "definition:orthocenter:Point* → orthogonal_projection_line:Point* → orthogonal_projection:Point* → ask_length:AnswerLength",
+  "definition:orthocenter:Point* → orthogonal_projection_line:Point* → orthogonal_projection_line:Foot → ask_length:AnswerDistance",
+  "definition:orthocenter:Point* → orthogonal_projection_line:Point* → orthogonal_projection_line:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "definition:orthocenter:Point* → orthogonal_projection_line:Point* → orthogonal_projection_line:Point* → ask_angle_lines:AnswerAngleLines",
+  "definition:orthocenter:Point* → orthogonal_projection_line:Point* → orthogonal_projection_line:Point* → ask_area:AnswerArea",
+  "definition:orthocenter:Point* → orthogonal_projection_line:Point* → orthogonal_projection_line:Point* → ask_distance_point_plane:AnswerDistance",
+  "definition:orthocenter:Point* → orthogonal_projection_line:Point* → orthogonal_projection_line:Point* → ask_length:AnswerDistance",
+  "definition:orthocenter:Point* → orthogonal_projection_line:Point* → orthogonal_projection_line:Point* → ask_length:AnswerLength",
+  "definition:orthocenter:Point* → translate_point:PerpLine → definition:circumcenter:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "definition:orthocenter:Point* → translate_point:PerpLine → definition:circumcenter:Point* → ask_angle_lines:AnswerAngleLines",
+  "definition:orthocenter:Point* → translate_point:PerpLine → definition:circumcenter:Point* → ask_area:AnswerArea",
+  "definition:orthocenter:Point* → translate_point:PerpLine → definition:circumcenter:Point* → ask_distance_point_plane:AnswerDistance",
+  "definition:orthocenter:Point* → translate_point:PerpLine → definition:circumcenter:Point* → ask_length:AnswerDistance",
+  "definition:orthocenter:Point* → translate_point:PerpLine → definition:circumcenter:Point* → ask_length:AnswerLength",
+  "definition:orthocenter:Point* → translate_point:PerpLine → definition:orthocenter:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "definition:orthocenter:Point* → translate_point:PerpLine → definition:orthocenter:Point* → ask_angle_lines:AnswerAngleLines",
+  "definition:orthocenter:Point* → translate_point:PerpLine → definition:orthocenter:Point* → ask_area:AnswerArea",
+  "definition:orthocenter:Point* → translate_point:PerpLine → definition:orthocenter:Point* → ask_distance_point_plane:AnswerDistance",
+  "definition:orthocenter:Point* → translate_point:PerpLine → definition:orthocenter:Point* → ask_length:AnswerDistance",
+  "definition:orthocenter:Point* → translate_point:PerpLine → definition:orthocenter:Point* → ask_length:AnswerLength",
+  "intersect_line_line:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "intersect_line_line:Point* → ask_angle_lines:AnswerAngleLines",
+  "intersect_line_line:Point* → ask_area:AnswerArea",
+  "intersect_line_line:Point* → ask_distance_point_plane:AnswerDistance",
+  "intersect_line_line:Point* → ask_length:AnswerDistance",
+  "intersect_line_line:Point* → ask_length:AnswerLength",
+  "intersect_line_line:Point* → centroid:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "intersect_line_line:Point* → centroid:Point* → ask_angle_lines:AnswerAngleLines",
+  "intersect_line_line:Point* → centroid:Point* → ask_area:AnswerArea",
+  "intersect_line_line:Point* → centroid:Point* → ask_distance_point_plane:AnswerDistance",
+  "intersect_line_line:Point* → centroid:Point* → ask_length:AnswerDistance",
+  "intersect_line_line:Point* → centroid:Point* → ask_length:AnswerLength",
+  "intersect_line_line:Point* → centroid:Point* → centroid:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "intersect_line_line:Point* → centroid:Point* → centroid:Point* → ask_angle_lines:AnswerAngleLines",
+  "intersect_line_line:Point* → centroid:Point* → centroid:Point* → ask_area:AnswerArea",
+  "intersect_line_line:Point* → centroid:Point* → centroid:Point* → ask_distance_point_plane:AnswerDistance",
+  "intersect_line_line:Point* → centroid:Point* → centroid:Point* → ask_length:AnswerDistance",
+  "intersect_line_line:Point* → centroid:Point* → centroid:Point* → ask_length:AnswerLength",
+  "intersect_line_line:Point* → centroid:Point* → midpoint:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "intersect_line_line:Point* → centroid:Point* → midpoint:Point* → ask_angle_lines:AnswerAngleLines",
+  "intersect_line_line:Point* → centroid:Point* → midpoint:Point* → ask_area:AnswerArea",
+  "intersect_line_line:Point* → centroid:Point* → midpoint:Point* → ask_distance_point_plane:AnswerDistance",
+  "intersect_line_line:Point* → centroid:Point* → midpoint:Point* → ask_length:AnswerDistance",
+  "intersect_line_line:Point* → centroid:Point* → midpoint:Point* → ask_length:AnswerLength",
+  "intersect_line_line:Point* → centroid:Point* → orthogonal_projection:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "intersect_line_line:Point* → centroid:Point* → orthogonal_projection:Point* → ask_angle_lines:AnswerAngleLines",
+  "intersect_line_line:Point* → centroid:Point* → orthogonal_projection:Point* → ask_area:AnswerArea",
+  "intersect_line_line:Point* → centroid:Point* → orthogonal_projection:Point* → ask_distance_point_plane:AnswerDistance",
+  "intersect_line_line:Point* → centroid:Point* → orthogonal_projection:Point* → ask_length:AnswerDistance",
+  "intersect_line_line:Point* → centroid:Point* → orthogonal_projection:Point* → ask_length:AnswerLength",
+  "intersect_line_line:Point* → centroid:Point* → orthogonal_projection_line:Foot → ask_length:AnswerDistance",
+  "intersect_line_line:Point* → centroid:Point* → orthogonal_projection_line:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "intersect_line_line:Point* → centroid:Point* → orthogonal_projection_line:Point* → ask_angle_lines:AnswerAngleLines",
+  "intersect_line_line:Point* → centroid:Point* → orthogonal_projection_line:Point* → ask_area:AnswerArea",
+  "intersect_line_line:Point* → centroid:Point* → orthogonal_projection_line:Point* → ask_distance_point_plane:AnswerDistance",
+  "intersect_line_line:Point* → centroid:Point* → orthogonal_projection_line:Point* → ask_length:AnswerDistance",
+  "intersect_line_line:Point* → centroid:Point* → orthogonal_projection_line:Point* → ask_length:AnswerLength",
+  "intersect_line_line:Point* → midpoint:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "intersect_line_line:Point* → midpoint:Point* → ask_angle_lines:AnswerAngleLines",
+  "intersect_line_line:Point* → midpoint:Point* → ask_area:AnswerArea",
+  "intersect_line_line:Point* → midpoint:Point* → ask_distance_point_plane:AnswerDistance",
+  "intersect_line_line:Point* → midpoint:Point* → ask_length:AnswerDistance",
+  "intersect_line_line:Point* → midpoint:Point* → ask_length:AnswerLength",
+  "intersect_line_line:Point* → midpoint:Point* → centroid:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "intersect_line_line:Point* → midpoint:Point* → centroid:Point* → ask_angle_lines:AnswerAngleLines",
+  "intersect_line_line:Point* → midpoint:Point* → centroid:Point* → ask_area:AnswerArea",
+  "intersect_line_line:Point* → midpoint:Point* → centroid:Point* → ask_distance_point_plane:AnswerDistance",
+  "intersect_line_line:Point* → midpoint:Point* → centroid:Point* → ask_length:AnswerDistance",
+  "intersect_line_line:Point* → midpoint:Point* → centroid:Point* → ask_length:AnswerLength",
+  "intersect_line_line:Point* → midpoint:Point* → midpoint:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "intersect_line_line:Point* → midpoint:Point* → midpoint:Point* → ask_angle_lines:AnswerAngleLines",
+  "intersect_line_line:Point* → midpoint:Point* → midpoint:Point* → ask_area:AnswerArea",
+  "intersect_line_line:Point* → midpoint:Point* → midpoint:Point* → ask_distance_point_plane:AnswerDistance",
+  "intersect_line_line:Point* → midpoint:Point* → midpoint:Point* → ask_length:AnswerDistance",
+  "intersect_line_line:Point* → midpoint:Point* → midpoint:Point* → ask_length:AnswerLength",
+  "intersect_line_line:Point* → midpoint:Point* → orthogonal_projection:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "intersect_line_line:Point* → midpoint:Point* → orthogonal_projection:Point* → ask_angle_lines:AnswerAngleLines",
+  "intersect_line_line:Point* → midpoint:Point* → orthogonal_projection:Point* → ask_area:AnswerArea",
+  "intersect_line_line:Point* → midpoint:Point* → orthogonal_projection:Point* → ask_distance_point_plane:AnswerDistance",
+  "intersect_line_line:Point* → midpoint:Point* → orthogonal_projection:Point* → ask_length:AnswerDistance",
+  "intersect_line_line:Point* → midpoint:Point* → orthogonal_projection:Point* → ask_length:AnswerLength",
+  "intersect_line_line:Point* → midpoint:Point* → orthogonal_projection_line:Foot → ask_length:AnswerDistance",
+  "intersect_line_line:Point* → midpoint:Point* → orthogonal_projection_line:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "intersect_line_line:Point* → midpoint:Point* → orthogonal_projection_line:Point* → ask_angle_lines:AnswerAngleLines",
+  "intersect_line_line:Point* → midpoint:Point* → orthogonal_projection_line:Point* → ask_area:AnswerArea",
+  "intersect_line_line:Point* → midpoint:Point* → orthogonal_projection_line:Point* → ask_distance_point_plane:AnswerDistance",
+  "intersect_line_line:Point* → midpoint:Point* → orthogonal_projection_line:Point* → ask_length:AnswerDistance",
+  "intersect_line_line:Point* → midpoint:Point* → orthogonal_projection_line:Point* → ask_length:AnswerLength",
+  "intersect_line_line:Point* → orthogonal_projection:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "intersect_line_line:Point* → orthogonal_projection:Point* → ask_angle_lines:AnswerAngleLines",
+  "intersect_line_line:Point* → orthogonal_projection:Point* → ask_area:AnswerArea",
+  "intersect_line_line:Point* → orthogonal_projection:Point* → ask_distance_point_plane:AnswerDistance",
+  "intersect_line_line:Point* → orthogonal_projection:Point* → ask_length:AnswerDistance",
+  "intersect_line_line:Point* → orthogonal_projection:Point* → ask_length:AnswerLength",
+  "intersect_line_line:Point* → orthogonal_projection:Point* → centroid:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "intersect_line_line:Point* → orthogonal_projection:Point* → centroid:Point* → ask_angle_lines:AnswerAngleLines",
+  "intersect_line_line:Point* → orthogonal_projection:Point* → centroid:Point* → ask_area:AnswerArea",
+  "intersect_line_line:Point* → orthogonal_projection:Point* → centroid:Point* → ask_distance_point_plane:AnswerDistance",
+  "intersect_line_line:Point* → orthogonal_projection:Point* → centroid:Point* → ask_length:AnswerDistance",
+  "intersect_line_line:Point* → orthogonal_projection:Point* → centroid:Point* → ask_length:AnswerLength",
+  "intersect_line_line:Point* → orthogonal_projection:Point* → midpoint:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "intersect_line_line:Point* → orthogonal_projection:Point* → midpoint:Point* → ask_angle_lines:AnswerAngleLines",
+  "intersect_line_line:Point* → orthogonal_projection:Point* → midpoint:Point* → ask_area:AnswerArea",
+  "intersect_line_line:Point* → orthogonal_projection:Point* → midpoint:Point* → ask_distance_point_plane:AnswerDistance",
+  "intersect_line_line:Point* → orthogonal_projection:Point* → midpoint:Point* → ask_length:AnswerDistance",
+  "intersect_line_line:Point* → orthogonal_projection:Point* → midpoint:Point* → ask_length:AnswerLength",
+  "intersect_line_line:Point* → orthogonal_projection:Point* → orthogonal_projection:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "intersect_line_line:Point* → orthogonal_projection:Point* → orthogonal_projection:Point* → ask_angle_lines:AnswerAngleLines",
+  "intersect_line_line:Point* → orthogonal_projection:Point* → orthogonal_projection:Point* → ask_area:AnswerArea",
+  "intersect_line_line:Point* → orthogonal_projection:Point* → orthogonal_projection:Point* → ask_distance_point_plane:AnswerDistance",
+  "intersect_line_line:Point* → orthogonal_projection:Point* → orthogonal_projection:Point* → ask_length:AnswerDistance",
+  "intersect_line_line:Point* → orthogonal_projection:Point* → orthogonal_projection:Point* → ask_length:AnswerLength",
+  "intersect_line_line:Point* → orthogonal_projection:Point* → orthogonal_projection_line:Foot → ask_length:AnswerDistance",
+  "intersect_line_line:Point* → orthogonal_projection:Point* → orthogonal_projection_line:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "intersect_line_line:Point* → orthogonal_projection:Point* → orthogonal_projection_line:Point* → ask_angle_lines:AnswerAngleLines",
+  "intersect_line_line:Point* → orthogonal_projection:Point* → orthogonal_projection_line:Point* → ask_area:AnswerArea",
+  "intersect_line_line:Point* → orthogonal_projection:Point* → orthogonal_projection_line:Point* → ask_distance_point_plane:AnswerDistance",
+  "intersect_line_line:Point* → orthogonal_projection:Point* → orthogonal_projection_line:Point* → ask_length:AnswerDistance",
+  "intersect_line_line:Point* → orthogonal_projection:Point* → orthogonal_projection_line:Point* → ask_length:AnswerLength",
+  "intersect_line_line:Point* → orthogonal_projection_line:Foot → ask_length:AnswerDistance",
+  "intersect_line_line:Point* → orthogonal_projection_line:PerpLine → definition:circumcenter:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "intersect_line_line:Point* → orthogonal_projection_line:PerpLine → definition:circumcenter:Point* → ask_angle_lines:AnswerAngleLines",
+  "intersect_line_line:Point* → orthogonal_projection_line:PerpLine → definition:circumcenter:Point* → ask_area:AnswerArea",
+  "intersect_line_line:Point* → orthogonal_projection_line:PerpLine → definition:circumcenter:Point* → ask_distance_point_plane:AnswerDistance",
+  "intersect_line_line:Point* → orthogonal_projection_line:PerpLine → definition:circumcenter:Point* → ask_length:AnswerDistance",
+  "intersect_line_line:Point* → orthogonal_projection_line:PerpLine → definition:circumcenter:Point* → ask_length:AnswerLength",
+  "intersect_line_line:Point* → orthogonal_projection_line:PerpLine → definition:orthocenter:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "intersect_line_line:Point* → orthogonal_projection_line:PerpLine → definition:orthocenter:Point* → ask_angle_lines:AnswerAngleLines",
+  "intersect_line_line:Point* → orthogonal_projection_line:PerpLine → definition:orthocenter:Point* → ask_area:AnswerArea",
+  "intersect_line_line:Point* → orthogonal_projection_line:PerpLine → definition:orthocenter:Point* → ask_distance_point_plane:AnswerDistance",
+  "intersect_line_line:Point* → orthogonal_projection_line:PerpLine → definition:orthocenter:Point* → ask_length:AnswerDistance",
+  "intersect_line_line:Point* → orthogonal_projection_line:PerpLine → definition:orthocenter:Point* → ask_length:AnswerLength",
+  "intersect_line_line:Point* → orthogonal_projection_line:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "intersect_line_line:Point* → orthogonal_projection_line:Point* → ask_angle_lines:AnswerAngleLines",
+  "intersect_line_line:Point* → orthogonal_projection_line:Point* → ask_area:AnswerArea",
+  "intersect_line_line:Point* → orthogonal_projection_line:Point* → ask_distance_point_plane:AnswerDistance",
+  "intersect_line_line:Point* → orthogonal_projection_line:Point* → ask_length:AnswerDistance",
+  "intersect_line_line:Point* → orthogonal_projection_line:Point* → ask_length:AnswerLength",
+  "intersect_line_line:Point* → orthogonal_projection_line:Point* → centroid:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "intersect_line_line:Point* → orthogonal_projection_line:Point* → centroid:Point* → ask_angle_lines:AnswerAngleLines",
+  "intersect_line_line:Point* → orthogonal_projection_line:Point* → centroid:Point* → ask_area:AnswerArea",
+  "intersect_line_line:Point* → orthogonal_projection_line:Point* → centroid:Point* → ask_distance_point_plane:AnswerDistance",
+  "intersect_line_line:Point* → orthogonal_projection_line:Point* → centroid:Point* → ask_length:AnswerDistance",
+  "intersect_line_line:Point* → orthogonal_projection_line:Point* → centroid:Point* → ask_length:AnswerLength",
+  "intersect_line_line:Point* → orthogonal_projection_line:Point* → midpoint:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "intersect_line_line:Point* → orthogonal_projection_line:Point* → midpoint:Point* → ask_angle_lines:AnswerAngleLines",
+  "intersect_line_line:Point* → orthogonal_projection_line:Point* → midpoint:Point* → ask_area:AnswerArea",
+  "intersect_line_line:Point* → orthogonal_projection_line:Point* → midpoint:Point* → ask_distance_point_plane:AnswerDistance",
+  "intersect_line_line:Point* → orthogonal_projection_line:Point* → midpoint:Point* → ask_length:AnswerDistance",
+  "intersect_line_line:Point* → orthogonal_projection_line:Point* → midpoint:Point* → ask_length:AnswerLength",
+  "intersect_line_line:Point* → orthogonal_projection_line:Point* → orthogonal_projection:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "intersect_line_line:Point* → orthogonal_projection_line:Point* → orthogonal_projection:Point* → ask_angle_lines:AnswerAngleLines",
+  "intersect_line_line:Point* → orthogonal_projection_line:Point* → orthogonal_projection:Point* → ask_area:AnswerArea",
+  "intersect_line_line:Point* → orthogonal_projection_line:Point* → orthogonal_projection:Point* → ask_distance_point_plane:AnswerDistance",
+  "intersect_line_line:Point* → orthogonal_projection_line:Point* → orthogonal_projection:Point* → ask_length:AnswerDistance",
+  "intersect_line_line:Point* → orthogonal_projection_line:Point* → orthogonal_projection:Point* → ask_length:AnswerLength",
+  "intersect_line_line:Point* → orthogonal_projection_line:Point* → orthogonal_projection_line:Foot → ask_length:AnswerDistance",
+  "intersect_line_line:Point* → orthogonal_projection_line:Point* → orthogonal_projection_line:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "intersect_line_line:Point* → orthogonal_projection_line:Point* → orthogonal_projection_line:Point* → ask_angle_lines:AnswerAngleLines",
+  "intersect_line_line:Point* → orthogonal_projection_line:Point* → orthogonal_projection_line:Point* → ask_area:AnswerArea",
+  "intersect_line_line:Point* → orthogonal_projection_line:Point* → orthogonal_projection_line:Point* → ask_distance_point_plane:AnswerDistance",
+  "intersect_line_line:Point* → orthogonal_projection_line:Point* → orthogonal_projection_line:Point* → ask_length:AnswerDistance",
+  "intersect_line_line:Point* → orthogonal_projection_line:Point* → orthogonal_projection_line:Point* → ask_length:AnswerLength",
+  "intersect_line_line:Point* → translate_point:PerpLine → definition:circumcenter:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "intersect_line_line:Point* → translate_point:PerpLine → definition:circumcenter:Point* → ask_angle_lines:AnswerAngleLines",
+  "intersect_line_line:Point* → translate_point:PerpLine → definition:circumcenter:Point* → ask_area:AnswerArea",
+  "intersect_line_line:Point* → translate_point:PerpLine → definition:circumcenter:Point* → ask_distance_point_plane:AnswerDistance",
+  "intersect_line_line:Point* → translate_point:PerpLine → definition:circumcenter:Point* → ask_length:AnswerDistance",
+  "intersect_line_line:Point* → translate_point:PerpLine → definition:circumcenter:Point* → ask_length:AnswerLength",
+  "intersect_line_line:Point* → translate_point:PerpLine → definition:orthocenter:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "intersect_line_line:Point* → translate_point:PerpLine → definition:orthocenter:Point* → ask_angle_lines:AnswerAngleLines",
+  "intersect_line_line:Point* → translate_point:PerpLine → definition:orthocenter:Point* → ask_area:AnswerArea",
+  "intersect_line_line:Point* → translate_point:PerpLine → definition:orthocenter:Point* → ask_distance_point_plane:AnswerDistance",
+  "intersect_line_line:Point* → translate_point:PerpLine → definition:orthocenter:Point* → ask_length:AnswerDistance",
+  "intersect_line_line:Point* → translate_point:PerpLine → definition:orthocenter:Point* → ask_length:AnswerLength",
+  "intersect_line_plane:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "intersect_line_plane:Point* → ask_angle_lines:AnswerAngleLines",
+  "intersect_line_plane:Point* → ask_area:AnswerArea",
+  "intersect_line_plane:Point* → ask_distance_point_plane:AnswerDistance",
+  "intersect_line_plane:Point* → ask_length:AnswerDistance",
+  "intersect_line_plane:Point* → ask_length:AnswerLength",
+  "intersect_line_plane:Point* → centroid:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "intersect_line_plane:Point* → centroid:Point* → ask_angle_lines:AnswerAngleLines",
+  "intersect_line_plane:Point* → centroid:Point* → ask_area:AnswerArea",
+  "intersect_line_plane:Point* → centroid:Point* → ask_distance_point_plane:AnswerDistance",
+  "intersect_line_plane:Point* → centroid:Point* → ask_length:AnswerDistance",
+  "intersect_line_plane:Point* → centroid:Point* → ask_length:AnswerLength",
+  "intersect_line_plane:Point* → centroid:Point* → centroid:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "intersect_line_plane:Point* → centroid:Point* → centroid:Point* → ask_angle_lines:AnswerAngleLines",
+  "intersect_line_plane:Point* → centroid:Point* → centroid:Point* → ask_area:AnswerArea",
+  "intersect_line_plane:Point* → centroid:Point* → centroid:Point* → ask_distance_point_plane:AnswerDistance",
+  "intersect_line_plane:Point* → centroid:Point* → centroid:Point* → ask_length:AnswerDistance",
+  "intersect_line_plane:Point* → centroid:Point* → centroid:Point* → ask_length:AnswerLength",
+  "intersect_line_plane:Point* → centroid:Point* → midpoint:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "intersect_line_plane:Point* → centroid:Point* → midpoint:Point* → ask_angle_lines:AnswerAngleLines",
+  "intersect_line_plane:Point* → centroid:Point* → midpoint:Point* → ask_area:AnswerArea",
+  "intersect_line_plane:Point* → centroid:Point* → midpoint:Point* → ask_distance_point_plane:AnswerDistance",
+  "intersect_line_plane:Point* → centroid:Point* → midpoint:Point* → ask_length:AnswerDistance",
+  "intersect_line_plane:Point* → centroid:Point* → midpoint:Point* → ask_length:AnswerLength",
+  "intersect_line_plane:Point* → centroid:Point* → orthogonal_projection:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "intersect_line_plane:Point* → centroid:Point* → orthogonal_projection:Point* → ask_angle_lines:AnswerAngleLines",
+  "intersect_line_plane:Point* → centroid:Point* → orthogonal_projection:Point* → ask_area:AnswerArea",
+  "intersect_line_plane:Point* → centroid:Point* → orthogonal_projection:Point* → ask_distance_point_plane:AnswerDistance",
+  "intersect_line_plane:Point* → centroid:Point* → orthogonal_projection:Point* → ask_length:AnswerDistance",
+  "intersect_line_plane:Point* → centroid:Point* → orthogonal_projection:Point* → ask_length:AnswerLength",
+  "intersect_line_plane:Point* → centroid:Point* → orthogonal_projection_line:Foot → ask_length:AnswerDistance",
+  "intersect_line_plane:Point* → centroid:Point* → orthogonal_projection_line:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "intersect_line_plane:Point* → centroid:Point* → orthogonal_projection_line:Point* → ask_angle_lines:AnswerAngleLines",
+  "intersect_line_plane:Point* → centroid:Point* → orthogonal_projection_line:Point* → ask_area:AnswerArea",
+  "intersect_line_plane:Point* → centroid:Point* → orthogonal_projection_line:Point* → ask_distance_point_plane:AnswerDistance",
+  "intersect_line_plane:Point* → centroid:Point* → orthogonal_projection_line:Point* → ask_length:AnswerDistance",
+  "intersect_line_plane:Point* → centroid:Point* → orthogonal_projection_line:Point* → ask_length:AnswerLength",
+  "intersect_line_plane:Point* → midpoint:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "intersect_line_plane:Point* → midpoint:Point* → ask_angle_lines:AnswerAngleLines",
+  "intersect_line_plane:Point* → midpoint:Point* → ask_area:AnswerArea",
+  "intersect_line_plane:Point* → midpoint:Point* → ask_distance_point_plane:AnswerDistance",
+  "intersect_line_plane:Point* → midpoint:Point* → ask_length:AnswerDistance",
+  "intersect_line_plane:Point* → midpoint:Point* → ask_length:AnswerLength",
+  "intersect_line_plane:Point* → midpoint:Point* → centroid:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "intersect_line_plane:Point* → midpoint:Point* → centroid:Point* → ask_angle_lines:AnswerAngleLines",
+  "intersect_line_plane:Point* → midpoint:Point* → centroid:Point* → ask_area:AnswerArea",
+  "intersect_line_plane:Point* → midpoint:Point* → centroid:Point* → ask_distance_point_plane:AnswerDistance",
+  "intersect_line_plane:Point* → midpoint:Point* → centroid:Point* → ask_length:AnswerDistance",
+  "intersect_line_plane:Point* → midpoint:Point* → centroid:Point* → ask_length:AnswerLength",
+  "intersect_line_plane:Point* → midpoint:Point* → midpoint:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "intersect_line_plane:Point* → midpoint:Point* → midpoint:Point* → ask_angle_lines:AnswerAngleLines",
+  "intersect_line_plane:Point* → midpoint:Point* → midpoint:Point* → ask_area:AnswerArea",
+  "intersect_line_plane:Point* → midpoint:Point* → midpoint:Point* → ask_distance_point_plane:AnswerDistance",
+  "intersect_line_plane:Point* → midpoint:Point* → midpoint:Point* → ask_length:AnswerDistance",
+  "intersect_line_plane:Point* → midpoint:Point* → midpoint:Point* → ask_length:AnswerLength",
+  "intersect_line_plane:Point* → midpoint:Point* → orthogonal_projection:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "intersect_line_plane:Point* → midpoint:Point* → orthogonal_projection:Point* → ask_angle_lines:AnswerAngleLines",
+  "intersect_line_plane:Point* → midpoint:Point* → orthogonal_projection:Point* → ask_area:AnswerArea",
+  "intersect_line_plane:Point* → midpoint:Point* → orthogonal_projection:Point* → ask_distance_point_plane:AnswerDistance",
+  "intersect_line_plane:Point* → midpoint:Point* → orthogonal_projection:Point* → ask_length:AnswerDistance",
+  "intersect_line_plane:Point* → midpoint:Point* → orthogonal_projection:Point* → ask_length:AnswerLength",
+  "intersect_line_plane:Point* → midpoint:Point* → orthogonal_projection_line:Foot → ask_length:AnswerDistance",
+  "intersect_line_plane:Point* → midpoint:Point* → orthogonal_projection_line:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "intersect_line_plane:Point* → midpoint:Point* → orthogonal_projection_line:Point* → ask_angle_lines:AnswerAngleLines",
+  "intersect_line_plane:Point* → midpoint:Point* → orthogonal_projection_line:Point* → ask_area:AnswerArea",
+  "intersect_line_plane:Point* → midpoint:Point* → orthogonal_projection_line:Point* → ask_distance_point_plane:AnswerDistance",
+  "intersect_line_plane:Point* → midpoint:Point* → orthogonal_projection_line:Point* → ask_length:AnswerDistance",
+  "intersect_line_plane:Point* → midpoint:Point* → orthogonal_projection_line:Point* → ask_length:AnswerLength",
+  "intersect_line_plane:Point* → orthogonal_projection:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "intersect_line_plane:Point* → orthogonal_projection:Point* → ask_angle_lines:AnswerAngleLines",
+  "intersect_line_plane:Point* → orthogonal_projection:Point* → ask_area:AnswerArea",
+  "intersect_line_plane:Point* → orthogonal_projection:Point* → ask_distance_point_plane:AnswerDistance",
+  "intersect_line_plane:Point* → orthogonal_projection:Point* → ask_length:AnswerDistance",
+  "intersect_line_plane:Point* → orthogonal_projection:Point* → ask_length:AnswerLength",
+  "intersect_line_plane:Point* → orthogonal_projection:Point* → centroid:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "intersect_line_plane:Point* → orthogonal_projection:Point* → centroid:Point* → ask_angle_lines:AnswerAngleLines",
+  "intersect_line_plane:Point* → orthogonal_projection:Point* → centroid:Point* → ask_area:AnswerArea",
+  "intersect_line_plane:Point* → orthogonal_projection:Point* → centroid:Point* → ask_distance_point_plane:AnswerDistance",
+  "intersect_line_plane:Point* → orthogonal_projection:Point* → centroid:Point* → ask_length:AnswerDistance",
+  "intersect_line_plane:Point* → orthogonal_projection:Point* → centroid:Point* → ask_length:AnswerLength",
+  "intersect_line_plane:Point* → orthogonal_projection:Point* → midpoint:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "intersect_line_plane:Point* → orthogonal_projection:Point* → midpoint:Point* → ask_angle_lines:AnswerAngleLines",
+  "intersect_line_plane:Point* → orthogonal_projection:Point* → midpoint:Point* → ask_area:AnswerArea",
+  "intersect_line_plane:Point* → orthogonal_projection:Point* → midpoint:Point* → ask_distance_point_plane:AnswerDistance",
+  "intersect_line_plane:Point* → orthogonal_projection:Point* → midpoint:Point* → ask_length:AnswerDistance",
+  "intersect_line_plane:Point* → orthogonal_projection:Point* → midpoint:Point* → ask_length:AnswerLength",
+  "intersect_line_plane:Point* → orthogonal_projection:Point* → orthogonal_projection:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "intersect_line_plane:Point* → orthogonal_projection:Point* → orthogonal_projection:Point* → ask_angle_lines:AnswerAngleLines",
+  "intersect_line_plane:Point* → orthogonal_projection:Point* → orthogonal_projection:Point* → ask_area:AnswerArea",
+  "intersect_line_plane:Point* → orthogonal_projection:Point* → orthogonal_projection:Point* → ask_distance_point_plane:AnswerDistance",
+  "intersect_line_plane:Point* → orthogonal_projection:Point* → orthogonal_projection:Point* → ask_length:AnswerDistance",
+  "intersect_line_plane:Point* → orthogonal_projection:Point* → orthogonal_projection:Point* → ask_length:AnswerLength",
+  "intersect_line_plane:Point* → orthogonal_projection:Point* → orthogonal_projection_line:Foot → ask_length:AnswerDistance",
+  "intersect_line_plane:Point* → orthogonal_projection:Point* → orthogonal_projection_line:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "intersect_line_plane:Point* → orthogonal_projection:Point* → orthogonal_projection_line:Point* → ask_angle_lines:AnswerAngleLines",
+  "intersect_line_plane:Point* → orthogonal_projection:Point* → orthogonal_projection_line:Point* → ask_area:AnswerArea",
+  "intersect_line_plane:Point* → orthogonal_projection:Point* → orthogonal_projection_line:Point* → ask_distance_point_plane:AnswerDistance",
+  "intersect_line_plane:Point* → orthogonal_projection:Point* → orthogonal_projection_line:Point* → ask_length:AnswerDistance",
+  "intersect_line_plane:Point* → orthogonal_projection:Point* → orthogonal_projection_line:Point* → ask_length:AnswerLength",
+  "intersect_line_plane:Point* → orthogonal_projection_line:Foot → ask_length:AnswerDistance",
+  "intersect_line_plane:Point* → orthogonal_projection_line:PerpLine → definition:circumcenter:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "intersect_line_plane:Point* → orthogonal_projection_line:PerpLine → definition:circumcenter:Point* → ask_angle_lines:AnswerAngleLines",
+  "intersect_line_plane:Point* → orthogonal_projection_line:PerpLine → definition:circumcenter:Point* → ask_area:AnswerArea",
+  "intersect_line_plane:Point* → orthogonal_projection_line:PerpLine → definition:circumcenter:Point* → ask_distance_point_plane:AnswerDistance",
+  "intersect_line_plane:Point* → orthogonal_projection_line:PerpLine → definition:circumcenter:Point* → ask_length:AnswerDistance",
+  "intersect_line_plane:Point* → orthogonal_projection_line:PerpLine → definition:circumcenter:Point* → ask_length:AnswerLength",
+  "intersect_line_plane:Point* → orthogonal_projection_line:PerpLine → definition:orthocenter:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "intersect_line_plane:Point* → orthogonal_projection_line:PerpLine → definition:orthocenter:Point* → ask_angle_lines:AnswerAngleLines",
+  "intersect_line_plane:Point* → orthogonal_projection_line:PerpLine → definition:orthocenter:Point* → ask_area:AnswerArea",
+  "intersect_line_plane:Point* → orthogonal_projection_line:PerpLine → definition:orthocenter:Point* → ask_distance_point_plane:AnswerDistance",
+  "intersect_line_plane:Point* → orthogonal_projection_line:PerpLine → definition:orthocenter:Point* → ask_length:AnswerDistance",
+  "intersect_line_plane:Point* → orthogonal_projection_line:PerpLine → definition:orthocenter:Point* → ask_length:AnswerLength",
+  "intersect_line_plane:Point* → orthogonal_projection_line:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "intersect_line_plane:Point* → orthogonal_projection_line:Point* → ask_angle_lines:AnswerAngleLines",
+  "intersect_line_plane:Point* → orthogonal_projection_line:Point* → ask_area:AnswerArea",
+  "intersect_line_plane:Point* → orthogonal_projection_line:Point* → ask_distance_point_plane:AnswerDistance",
+  "intersect_line_plane:Point* → orthogonal_projection_line:Point* → ask_length:AnswerDistance",
+  "intersect_line_plane:Point* → orthogonal_projection_line:Point* → ask_length:AnswerLength",
+  "intersect_line_plane:Point* → orthogonal_projection_line:Point* → centroid:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "intersect_line_plane:Point* → orthogonal_projection_line:Point* → centroid:Point* → ask_angle_lines:AnswerAngleLines",
+  "intersect_line_plane:Point* → orthogonal_projection_line:Point* → centroid:Point* → ask_area:AnswerArea",
+  "intersect_line_plane:Point* → orthogonal_projection_line:Point* → centroid:Point* → ask_distance_point_plane:AnswerDistance",
+  "intersect_line_plane:Point* → orthogonal_projection_line:Point* → centroid:Point* → ask_length:AnswerDistance",
+  "intersect_line_plane:Point* → orthogonal_projection_line:Point* → centroid:Point* → ask_length:AnswerLength",
+  "intersect_line_plane:Point* → orthogonal_projection_line:Point* → midpoint:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "intersect_line_plane:Point* → orthogonal_projection_line:Point* → midpoint:Point* → ask_angle_lines:AnswerAngleLines",
+  "intersect_line_plane:Point* → orthogonal_projection_line:Point* → midpoint:Point* → ask_area:AnswerArea",
+  "intersect_line_plane:Point* → orthogonal_projection_line:Point* → midpoint:Point* → ask_distance_point_plane:AnswerDistance",
+  "intersect_line_plane:Point* → orthogonal_projection_line:Point* → midpoint:Point* → ask_length:AnswerDistance",
+  "intersect_line_plane:Point* → orthogonal_projection_line:Point* → midpoint:Point* → ask_length:AnswerLength",
+  "intersect_line_plane:Point* → orthogonal_projection_line:Point* → orthogonal_projection:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "intersect_line_plane:Point* → orthogonal_projection_line:Point* → orthogonal_projection:Point* → ask_angle_lines:AnswerAngleLines",
+  "intersect_line_plane:Point* → orthogonal_projection_line:Point* → orthogonal_projection:Point* → ask_area:AnswerArea",
+  "intersect_line_plane:Point* → orthogonal_projection_line:Point* → orthogonal_projection:Point* → ask_distance_point_plane:AnswerDistance",
+  "intersect_line_plane:Point* → orthogonal_projection_line:Point* → orthogonal_projection:Point* → ask_length:AnswerDistance",
+  "intersect_line_plane:Point* → orthogonal_projection_line:Point* → orthogonal_projection:Point* → ask_length:AnswerLength",
+  "intersect_line_plane:Point* → orthogonal_projection_line:Point* → orthogonal_projection_line:Foot → ask_length:AnswerDistance",
+  "intersect_line_plane:Point* → orthogonal_projection_line:Point* → orthogonal_projection_line:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "intersect_line_plane:Point* → orthogonal_projection_line:Point* → orthogonal_projection_line:Point* → ask_angle_lines:AnswerAngleLines",
+  "intersect_line_plane:Point* → orthogonal_projection_line:Point* → orthogonal_projection_line:Point* → ask_area:AnswerArea",
+  "intersect_line_plane:Point* → orthogonal_projection_line:Point* → orthogonal_projection_line:Point* → ask_distance_point_plane:AnswerDistance",
+  "intersect_line_plane:Point* → orthogonal_projection_line:Point* → orthogonal_projection_line:Point* → ask_length:AnswerDistance",
+  "intersect_line_plane:Point* → orthogonal_projection_line:Point* → orthogonal_projection_line:Point* → ask_length:AnswerLength",
+  "intersect_line_plane:Point* → translate_point:PerpLine → definition:circumcenter:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "intersect_line_plane:Point* → translate_point:PerpLine → definition:circumcenter:Point* → ask_angle_lines:AnswerAngleLines",
+  "intersect_line_plane:Point* → translate_point:PerpLine → definition:circumcenter:Point* → ask_area:AnswerArea",
+  "intersect_line_plane:Point* → translate_point:PerpLine → definition:circumcenter:Point* → ask_distance_point_plane:AnswerDistance",
+  "intersect_line_plane:Point* → translate_point:PerpLine → definition:circumcenter:Point* → ask_length:AnswerDistance",
+  "intersect_line_plane:Point* → translate_point:PerpLine → definition:circumcenter:Point* → ask_length:AnswerLength",
+  "intersect_line_plane:Point* → translate_point:PerpLine → definition:orthocenter:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "intersect_line_plane:Point* → translate_point:PerpLine → definition:orthocenter:Point* → ask_angle_lines:AnswerAngleLines",
+  "intersect_line_plane:Point* → translate_point:PerpLine → definition:orthocenter:Point* → ask_area:AnswerArea",
+  "intersect_line_plane:Point* → translate_point:PerpLine → definition:orthocenter:Point* → ask_distance_point_plane:AnswerDistance",
+  "intersect_line_plane:Point* → translate_point:PerpLine → definition:orthocenter:Point* → ask_length:AnswerDistance",
+  "intersect_line_plane:Point* → translate_point:PerpLine → definition:orthocenter:Point* → ask_length:AnswerLength",
+  "midpoint:Point* → centroid:Point* → centroid:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "midpoint:Point* → centroid:Point* → centroid:Point* → ask_angle_lines:AnswerAngleLines",
+  "midpoint:Point* → centroid:Point* → centroid:Point* → ask_area:AnswerArea",
+  "midpoint:Point* → centroid:Point* → centroid:Point* → ask_distance_point_plane:AnswerDistance",
+  "midpoint:Point* → centroid:Point* → centroid:Point* → ask_length:AnswerDistance",
+  "midpoint:Point* → centroid:Point* → centroid:Point* → ask_length:AnswerLength",
+  "midpoint:Point* → centroid:Point* → midpoint:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "midpoint:Point* → centroid:Point* → midpoint:Point* → ask_angle_lines:AnswerAngleLines",
+  "midpoint:Point* → centroid:Point* → midpoint:Point* → ask_area:AnswerArea",
+  "midpoint:Point* → centroid:Point* → midpoint:Point* → ask_distance_point_plane:AnswerDistance",
+  "midpoint:Point* → centroid:Point* → midpoint:Point* → ask_length:AnswerDistance",
+  "midpoint:Point* → centroid:Point* → midpoint:Point* → ask_length:AnswerLength",
+  "midpoint:Point* → centroid:Point* → orthogonal_projection:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "midpoint:Point* → centroid:Point* → orthogonal_projection:Point* → ask_angle_lines:AnswerAngleLines",
+  "midpoint:Point* → centroid:Point* → orthogonal_projection:Point* → ask_area:AnswerArea",
+  "midpoint:Point* → centroid:Point* → orthogonal_projection:Point* → ask_distance_point_plane:AnswerDistance",
+  "midpoint:Point* → centroid:Point* → orthogonal_projection:Point* → ask_length:AnswerDistance",
+  "midpoint:Point* → centroid:Point* → orthogonal_projection:Point* → ask_length:AnswerLength",
+  "midpoint:Point* → centroid:Point* → orthogonal_projection_line:Foot → ask_length:AnswerDistance",
+  "midpoint:Point* → centroid:Point* → orthogonal_projection_line:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "midpoint:Point* → centroid:Point* → orthogonal_projection_line:Point* → ask_angle_lines:AnswerAngleLines",
+  "midpoint:Point* → centroid:Point* → orthogonal_projection_line:Point* → ask_area:AnswerArea",
+  "midpoint:Point* → centroid:Point* → orthogonal_projection_line:Point* → ask_distance_point_plane:AnswerDistance",
+  "midpoint:Point* → centroid:Point* → orthogonal_projection_line:Point* → ask_length:AnswerDistance",
+  "midpoint:Point* → centroid:Point* → orthogonal_projection_line:Point* → ask_length:AnswerLength",
+  "midpoint:Point* → midpoint:Point* → centroid:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "midpoint:Point* → midpoint:Point* → centroid:Point* → ask_angle_lines:AnswerAngleLines",
+  "midpoint:Point* → midpoint:Point* → centroid:Point* → ask_area:AnswerArea",
+  "midpoint:Point* → midpoint:Point* → centroid:Point* → ask_distance_point_plane:AnswerDistance",
+  "midpoint:Point* → midpoint:Point* → centroid:Point* → ask_length:AnswerDistance",
+  "midpoint:Point* → midpoint:Point* → centroid:Point* → ask_length:AnswerLength",
+  "midpoint:Point* → midpoint:Point* → midpoint:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "midpoint:Point* → midpoint:Point* → midpoint:Point* → ask_angle_lines:AnswerAngleLines",
+  "midpoint:Point* → midpoint:Point* → midpoint:Point* → ask_area:AnswerArea",
+  "midpoint:Point* → midpoint:Point* → midpoint:Point* → ask_distance_point_plane:AnswerDistance",
+  "midpoint:Point* → midpoint:Point* → midpoint:Point* → ask_length:AnswerDistance",
+  "midpoint:Point* → midpoint:Point* → midpoint:Point* → ask_length:AnswerLength",
+  "midpoint:Point* → midpoint:Point* → orthogonal_projection:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "midpoint:Point* → midpoint:Point* → orthogonal_projection:Point* → ask_angle_lines:AnswerAngleLines",
+  "midpoint:Point* → midpoint:Point* → orthogonal_projection:Point* → ask_area:AnswerArea",
+  "midpoint:Point* → midpoint:Point* → orthogonal_projection:Point* → ask_distance_point_plane:AnswerDistance",
+  "midpoint:Point* → midpoint:Point* → orthogonal_projection:Point* → ask_length:AnswerDistance",
+  "midpoint:Point* → midpoint:Point* → orthogonal_projection:Point* → ask_length:AnswerLength",
+  "midpoint:Point* → midpoint:Point* → orthogonal_projection_line:Foot → ask_length:AnswerDistance",
+  "midpoint:Point* → midpoint:Point* → orthogonal_projection_line:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "midpoint:Point* → midpoint:Point* → orthogonal_projection_line:Point* → ask_angle_lines:AnswerAngleLines",
+  "midpoint:Point* → midpoint:Point* → orthogonal_projection_line:Point* → ask_area:AnswerArea",
+  "midpoint:Point* → midpoint:Point* → orthogonal_projection_line:Point* → ask_distance_point_plane:AnswerDistance",
+  "midpoint:Point* → midpoint:Point* → orthogonal_projection_line:Point* → ask_length:AnswerDistance",
+  "midpoint:Point* → midpoint:Point* → orthogonal_projection_line:Point* → ask_length:AnswerLength",
+  "midpoint:Point* → orthogonal_projection:Point* → centroid:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "midpoint:Point* → orthogonal_projection:Point* → centroid:Point* → ask_angle_lines:AnswerAngleLines",
+  "midpoint:Point* → orthogonal_projection:Point* → centroid:Point* → ask_area:AnswerArea",
+  "midpoint:Point* → orthogonal_projection:Point* → centroid:Point* → ask_distance_point_plane:AnswerDistance",
+  "midpoint:Point* → orthogonal_projection:Point* → centroid:Point* → ask_length:AnswerDistance",
+  "midpoint:Point* → orthogonal_projection:Point* → centroid:Point* → ask_length:AnswerLength",
+  "midpoint:Point* → orthogonal_projection:Point* → midpoint:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "midpoint:Point* → orthogonal_projection:Point* → midpoint:Point* → ask_angle_lines:AnswerAngleLines",
+  "midpoint:Point* → orthogonal_projection:Point* → midpoint:Point* → ask_area:AnswerArea",
+  "midpoint:Point* → orthogonal_projection:Point* → midpoint:Point* → ask_distance_point_plane:AnswerDistance",
+  "midpoint:Point* → orthogonal_projection:Point* → midpoint:Point* → ask_length:AnswerDistance",
+  "midpoint:Point* → orthogonal_projection:Point* → midpoint:Point* → ask_length:AnswerLength",
+  "midpoint:Point* → orthogonal_projection:Point* → orthogonal_projection:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "midpoint:Point* → orthogonal_projection:Point* → orthogonal_projection:Point* → ask_angle_lines:AnswerAngleLines",
+  "midpoint:Point* → orthogonal_projection:Point* → orthogonal_projection:Point* → ask_area:AnswerArea",
+  "midpoint:Point* → orthogonal_projection:Point* → orthogonal_projection:Point* → ask_distance_point_plane:AnswerDistance",
+  "midpoint:Point* → orthogonal_projection:Point* → orthogonal_projection:Point* → ask_length:AnswerDistance",
+  "midpoint:Point* → orthogonal_projection:Point* → orthogonal_projection:Point* → ask_length:AnswerLength",
+  "midpoint:Point* → orthogonal_projection:Point* → orthogonal_projection_line:Foot → ask_length:AnswerDistance",
+  "midpoint:Point* → orthogonal_projection:Point* → orthogonal_projection_line:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "midpoint:Point* → orthogonal_projection:Point* → orthogonal_projection_line:Point* → ask_angle_lines:AnswerAngleLines",
+  "midpoint:Point* → orthogonal_projection:Point* → orthogonal_projection_line:Point* → ask_area:AnswerArea",
+  "midpoint:Point* → orthogonal_projection:Point* → orthogonal_projection_line:Point* → ask_distance_point_plane:AnswerDistance",
+  "midpoint:Point* → orthogonal_projection:Point* → orthogonal_projection_line:Point* → ask_length:AnswerDistance",
+  "midpoint:Point* → orthogonal_projection:Point* → orthogonal_projection_line:Point* → ask_length:AnswerLength",
+  "midpoint:Point* → orthogonal_projection_line:PerpLine → definition:circumcenter:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "midpoint:Point* → orthogonal_projection_line:PerpLine → definition:circumcenter:Point* → ask_angle_lines:AnswerAngleLines",
+  "midpoint:Point* → orthogonal_projection_line:PerpLine → definition:circumcenter:Point* → ask_area:AnswerArea",
+  "midpoint:Point* → orthogonal_projection_line:PerpLine → definition:circumcenter:Point* → ask_distance_point_plane:AnswerDistance",
+  "midpoint:Point* → orthogonal_projection_line:PerpLine → definition:circumcenter:Point* → ask_length:AnswerDistance",
+  "midpoint:Point* → orthogonal_projection_line:PerpLine → definition:circumcenter:Point* → ask_length:AnswerLength",
+  "midpoint:Point* → orthogonal_projection_line:PerpLine → definition:orthocenter:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "midpoint:Point* → orthogonal_projection_line:PerpLine → definition:orthocenter:Point* → ask_angle_lines:AnswerAngleLines",
+  "midpoint:Point* → orthogonal_projection_line:PerpLine → definition:orthocenter:Point* → ask_area:AnswerArea",
+  "midpoint:Point* → orthogonal_projection_line:PerpLine → definition:orthocenter:Point* → ask_distance_point_plane:AnswerDistance",
+  "midpoint:Point* → orthogonal_projection_line:PerpLine → definition:orthocenter:Point* → ask_length:AnswerDistance",
+  "midpoint:Point* → orthogonal_projection_line:PerpLine → definition:orthocenter:Point* → ask_length:AnswerLength",
+  "midpoint:Point* → orthogonal_projection_line:Point* → centroid:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "midpoint:Point* → orthogonal_projection_line:Point* → centroid:Point* → ask_angle_lines:AnswerAngleLines",
+  "midpoint:Point* → orthogonal_projection_line:Point* → centroid:Point* → ask_area:AnswerArea",
+  "midpoint:Point* → orthogonal_projection_line:Point* → centroid:Point* → ask_distance_point_plane:AnswerDistance",
+  "midpoint:Point* → orthogonal_projection_line:Point* → centroid:Point* → ask_length:AnswerDistance",
+  "midpoint:Point* → orthogonal_projection_line:Point* → centroid:Point* → ask_length:AnswerLength",
+  "midpoint:Point* → orthogonal_projection_line:Point* → midpoint:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "midpoint:Point* → orthogonal_projection_line:Point* → midpoint:Point* → ask_angle_lines:AnswerAngleLines",
+  "midpoint:Point* → orthogonal_projection_line:Point* → midpoint:Point* → ask_area:AnswerArea",
+  "midpoint:Point* → orthogonal_projection_line:Point* → midpoint:Point* → ask_distance_point_plane:AnswerDistance",
+  "midpoint:Point* → orthogonal_projection_line:Point* → midpoint:Point* → ask_length:AnswerDistance",
+  "midpoint:Point* → orthogonal_projection_line:Point* → midpoint:Point* → ask_length:AnswerLength",
+  "midpoint:Point* → orthogonal_projection_line:Point* → orthogonal_projection:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "midpoint:Point* → orthogonal_projection_line:Point* → orthogonal_projection:Point* → ask_angle_lines:AnswerAngleLines",
+  "midpoint:Point* → orthogonal_projection_line:Point* → orthogonal_projection:Point* → ask_area:AnswerArea",
+  "midpoint:Point* → orthogonal_projection_line:Point* → orthogonal_projection:Point* → ask_distance_point_plane:AnswerDistance",
+  "midpoint:Point* → orthogonal_projection_line:Point* → orthogonal_projection:Point* → ask_length:AnswerDistance",
+  "midpoint:Point* → orthogonal_projection_line:Point* → orthogonal_projection:Point* → ask_length:AnswerLength",
+  "midpoint:Point* → orthogonal_projection_line:Point* → orthogonal_projection_line:Foot → ask_length:AnswerDistance",
+  "midpoint:Point* → orthogonal_projection_line:Point* → orthogonal_projection_line:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "midpoint:Point* → orthogonal_projection_line:Point* → orthogonal_projection_line:Point* → ask_angle_lines:AnswerAngleLines",
+  "midpoint:Point* → orthogonal_projection_line:Point* → orthogonal_projection_line:Point* → ask_area:AnswerArea",
+  "midpoint:Point* → orthogonal_projection_line:Point* → orthogonal_projection_line:Point* → ask_distance_point_plane:AnswerDistance",
+  "midpoint:Point* → orthogonal_projection_line:Point* → orthogonal_projection_line:Point* → ask_length:AnswerDistance",
+  "midpoint:Point* → orthogonal_projection_line:Point* → orthogonal_projection_line:Point* → ask_length:AnswerLength",
+  "midpoint:Point* → translate_point:PerpLine → definition:circumcenter:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "midpoint:Point* → translate_point:PerpLine → definition:circumcenter:Point* → ask_angle_lines:AnswerAngleLines",
+  "midpoint:Point* → translate_point:PerpLine → definition:circumcenter:Point* → ask_area:AnswerArea",
+  "midpoint:Point* → translate_point:PerpLine → definition:circumcenter:Point* → ask_distance_point_plane:AnswerDistance",
+  "midpoint:Point* → translate_point:PerpLine → definition:circumcenter:Point* → ask_length:AnswerDistance",
+  "midpoint:Point* → translate_point:PerpLine → definition:circumcenter:Point* → ask_length:AnswerLength",
+  "midpoint:Point* → translate_point:PerpLine → definition:orthocenter:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "midpoint:Point* → translate_point:PerpLine → definition:orthocenter:Point* → ask_angle_lines:AnswerAngleLines",
+  "midpoint:Point* → translate_point:PerpLine → definition:orthocenter:Point* → ask_area:AnswerArea",
+  "midpoint:Point* → translate_point:PerpLine → definition:orthocenter:Point* → ask_distance_point_plane:AnswerDistance",
+  "midpoint:Point* → translate_point:PerpLine → definition:orthocenter:Point* → ask_length:AnswerDistance",
+  "midpoint:Point* → translate_point:PerpLine → definition:orthocenter:Point* → ask_length:AnswerLength",
+  "orthogonal_projection:Point* → centroid:Point* → centroid:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "orthogonal_projection:Point* → centroid:Point* → centroid:Point* → ask_angle_lines:AnswerAngleLines",
+  "orthogonal_projection:Point* → centroid:Point* → centroid:Point* → ask_area:AnswerArea",
+  "orthogonal_projection:Point* → centroid:Point* → centroid:Point* → ask_distance_point_plane:AnswerDistance",
+  "orthogonal_projection:Point* → centroid:Point* → centroid:Point* → ask_length:AnswerDistance",
+  "orthogonal_projection:Point* → centroid:Point* → centroid:Point* → ask_length:AnswerLength",
+  "orthogonal_projection:Point* → centroid:Point* → midpoint:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "orthogonal_projection:Point* → centroid:Point* → midpoint:Point* → ask_angle_lines:AnswerAngleLines",
+  "orthogonal_projection:Point* → centroid:Point* → midpoint:Point* → ask_area:AnswerArea",
+  "orthogonal_projection:Point* → centroid:Point* → midpoint:Point* → ask_distance_point_plane:AnswerDistance",
+  "orthogonal_projection:Point* → centroid:Point* → midpoint:Point* → ask_length:AnswerDistance",
+  "orthogonal_projection:Point* → centroid:Point* → midpoint:Point* → ask_length:AnswerLength",
+  "orthogonal_projection:Point* → centroid:Point* → orthogonal_projection:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "orthogonal_projection:Point* → centroid:Point* → orthogonal_projection:Point* → ask_angle_lines:AnswerAngleLines",
+  "orthogonal_projection:Point* → centroid:Point* → orthogonal_projection:Point* → ask_area:AnswerArea",
+  "orthogonal_projection:Point* → centroid:Point* → orthogonal_projection:Point* → ask_distance_point_plane:AnswerDistance",
+  "orthogonal_projection:Point* → centroid:Point* → orthogonal_projection:Point* → ask_length:AnswerDistance",
+  "orthogonal_projection:Point* → centroid:Point* → orthogonal_projection:Point* → ask_length:AnswerLength",
+  "orthogonal_projection:Point* → centroid:Point* → orthogonal_projection_line:Foot → ask_length:AnswerDistance",
+  "orthogonal_projection:Point* → centroid:Point* → orthogonal_projection_line:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "orthogonal_projection:Point* → centroid:Point* → orthogonal_projection_line:Point* → ask_angle_lines:AnswerAngleLines",
+  "orthogonal_projection:Point* → centroid:Point* → orthogonal_projection_line:Point* → ask_area:AnswerArea",
+  "orthogonal_projection:Point* → centroid:Point* → orthogonal_projection_line:Point* → ask_distance_point_plane:AnswerDistance",
+  "orthogonal_projection:Point* → centroid:Point* → orthogonal_projection_line:Point* → ask_length:AnswerDistance",
+  "orthogonal_projection:Point* → centroid:Point* → orthogonal_projection_line:Point* → ask_length:AnswerLength",
+  "orthogonal_projection:Point* → midpoint:Point* → centroid:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "orthogonal_projection:Point* → midpoint:Point* → centroid:Point* → ask_angle_lines:AnswerAngleLines",
+  "orthogonal_projection:Point* → midpoint:Point* → centroid:Point* → ask_area:AnswerArea",
+  "orthogonal_projection:Point* → midpoint:Point* → centroid:Point* → ask_distance_point_plane:AnswerDistance",
+  "orthogonal_projection:Point* → midpoint:Point* → centroid:Point* → ask_length:AnswerDistance",
+  "orthogonal_projection:Point* → midpoint:Point* → centroid:Point* → ask_length:AnswerLength",
+  "orthogonal_projection:Point* → midpoint:Point* → midpoint:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "orthogonal_projection:Point* → midpoint:Point* → midpoint:Point* → ask_angle_lines:AnswerAngleLines",
+  "orthogonal_projection:Point* → midpoint:Point* → midpoint:Point* → ask_area:AnswerArea",
+  "orthogonal_projection:Point* → midpoint:Point* → midpoint:Point* → ask_distance_point_plane:AnswerDistance",
+  "orthogonal_projection:Point* → midpoint:Point* → midpoint:Point* → ask_length:AnswerDistance",
+  "orthogonal_projection:Point* → midpoint:Point* → midpoint:Point* → ask_length:AnswerLength",
+  "orthogonal_projection:Point* → midpoint:Point* → orthogonal_projection:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "orthogonal_projection:Point* → midpoint:Point* → orthogonal_projection:Point* → ask_angle_lines:AnswerAngleLines",
+  "orthogonal_projection:Point* → midpoint:Point* → orthogonal_projection:Point* → ask_area:AnswerArea",
+  "orthogonal_projection:Point* → midpoint:Point* → orthogonal_projection:Point* → ask_distance_point_plane:AnswerDistance",
+  "orthogonal_projection:Point* → midpoint:Point* → orthogonal_projection:Point* → ask_length:AnswerDistance",
+  "orthogonal_projection:Point* → midpoint:Point* → orthogonal_projection:Point* → ask_length:AnswerLength",
+  "orthogonal_projection:Point* → midpoint:Point* → orthogonal_projection_line:Foot → ask_length:AnswerDistance",
+  "orthogonal_projection:Point* → midpoint:Point* → orthogonal_projection_line:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "orthogonal_projection:Point* → midpoint:Point* → orthogonal_projection_line:Point* → ask_angle_lines:AnswerAngleLines",
+  "orthogonal_projection:Point* → midpoint:Point* → orthogonal_projection_line:Point* → ask_area:AnswerArea",
+  "orthogonal_projection:Point* → midpoint:Point* → orthogonal_projection_line:Point* → ask_distance_point_plane:AnswerDistance",
+  "orthogonal_projection:Point* → midpoint:Point* → orthogonal_projection_line:Point* → ask_length:AnswerDistance",
+  "orthogonal_projection:Point* → midpoint:Point* → orthogonal_projection_line:Point* → ask_length:AnswerLength",
+  "orthogonal_projection:Point* → orthogonal_projection:Point* → centroid:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "orthogonal_projection:Point* → orthogonal_projection:Point* → centroid:Point* → ask_angle_lines:AnswerAngleLines",
+  "orthogonal_projection:Point* → orthogonal_projection:Point* → centroid:Point* → ask_area:AnswerArea",
+  "orthogonal_projection:Point* → orthogonal_projection:Point* → centroid:Point* → ask_distance_point_plane:AnswerDistance",
+  "orthogonal_projection:Point* → orthogonal_projection:Point* → centroid:Point* → ask_length:AnswerDistance",
+  "orthogonal_projection:Point* → orthogonal_projection:Point* → centroid:Point* → ask_length:AnswerLength",
+  "orthogonal_projection:Point* → orthogonal_projection:Point* → midpoint:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "orthogonal_projection:Point* → orthogonal_projection:Point* → midpoint:Point* → ask_angle_lines:AnswerAngleLines",
+  "orthogonal_projection:Point* → orthogonal_projection:Point* → midpoint:Point* → ask_area:AnswerArea",
+  "orthogonal_projection:Point* → orthogonal_projection:Point* → midpoint:Point* → ask_distance_point_plane:AnswerDistance",
+  "orthogonal_projection:Point* → orthogonal_projection:Point* → midpoint:Point* → ask_length:AnswerDistance",
+  "orthogonal_projection:Point* → orthogonal_projection:Point* → midpoint:Point* → ask_length:AnswerLength",
+  "orthogonal_projection:Point* → orthogonal_projection:Point* → orthogonal_projection:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "orthogonal_projection:Point* → orthogonal_projection:Point* → orthogonal_projection:Point* → ask_angle_lines:AnswerAngleLines",
+  "orthogonal_projection:Point* → orthogonal_projection:Point* → orthogonal_projection:Point* → ask_area:AnswerArea",
+  "orthogonal_projection:Point* → orthogonal_projection:Point* → orthogonal_projection:Point* → ask_distance_point_plane:AnswerDistance",
+  "orthogonal_projection:Point* → orthogonal_projection:Point* → orthogonal_projection:Point* → ask_length:AnswerDistance",
+  "orthogonal_projection:Point* → orthogonal_projection:Point* → orthogonal_projection:Point* → ask_length:AnswerLength",
+  "orthogonal_projection:Point* → orthogonal_projection:Point* → orthogonal_projection_line:Foot → ask_length:AnswerDistance",
+  "orthogonal_projection:Point* → orthogonal_projection:Point* → orthogonal_projection_line:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "orthogonal_projection:Point* → orthogonal_projection:Point* → orthogonal_projection_line:Point* → ask_angle_lines:AnswerAngleLines",
+  "orthogonal_projection:Point* → orthogonal_projection:Point* → orthogonal_projection_line:Point* → ask_area:AnswerArea",
+  "orthogonal_projection:Point* → orthogonal_projection:Point* → orthogonal_projection_line:Point* → ask_distance_point_plane:AnswerDistance",
+  "orthogonal_projection:Point* → orthogonal_projection:Point* → orthogonal_projection_line:Point* → ask_length:AnswerDistance",
+  "orthogonal_projection:Point* → orthogonal_projection:Point* → orthogonal_projection_line:Point* → ask_length:AnswerLength",
+  "orthogonal_projection:Point* → orthogonal_projection_line:PerpLine → definition:circumcenter:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "orthogonal_projection:Point* → orthogonal_projection_line:PerpLine → definition:circumcenter:Point* → ask_angle_lines:AnswerAngleLines",
+  "orthogonal_projection:Point* → orthogonal_projection_line:PerpLine → definition:circumcenter:Point* → ask_area:AnswerArea",
+  "orthogonal_projection:Point* → orthogonal_projection_line:PerpLine → definition:circumcenter:Point* → ask_distance_point_plane:AnswerDistance",
+  "orthogonal_projection:Point* → orthogonal_projection_line:PerpLine → definition:circumcenter:Point* → ask_length:AnswerDistance",
+  "orthogonal_projection:Point* → orthogonal_projection_line:PerpLine → definition:circumcenter:Point* → ask_length:AnswerLength",
+  "orthogonal_projection:Point* → orthogonal_projection_line:PerpLine → definition:orthocenter:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "orthogonal_projection:Point* → orthogonal_projection_line:PerpLine → definition:orthocenter:Point* → ask_angle_lines:AnswerAngleLines",
+  "orthogonal_projection:Point* → orthogonal_projection_line:PerpLine → definition:orthocenter:Point* → ask_area:AnswerArea",
+  "orthogonal_projection:Point* → orthogonal_projection_line:PerpLine → definition:orthocenter:Point* → ask_distance_point_plane:AnswerDistance",
+  "orthogonal_projection:Point* → orthogonal_projection_line:PerpLine → definition:orthocenter:Point* → ask_length:AnswerDistance",
+  "orthogonal_projection:Point* → orthogonal_projection_line:PerpLine → definition:orthocenter:Point* → ask_length:AnswerLength",
+  "orthogonal_projection:Point* → orthogonal_projection_line:Point* → centroid:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "orthogonal_projection:Point* → orthogonal_projection_line:Point* → centroid:Point* → ask_angle_lines:AnswerAngleLines",
+  "orthogonal_projection:Point* → orthogonal_projection_line:Point* → centroid:Point* → ask_area:AnswerArea",
+  "orthogonal_projection:Point* → orthogonal_projection_line:Point* → centroid:Point* → ask_distance_point_plane:AnswerDistance",
+  "orthogonal_projection:Point* → orthogonal_projection_line:Point* → centroid:Point* → ask_length:AnswerDistance",
+  "orthogonal_projection:Point* → orthogonal_projection_line:Point* → centroid:Point* → ask_length:AnswerLength",
+  "orthogonal_projection:Point* → orthogonal_projection_line:Point* → midpoint:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "orthogonal_projection:Point* → orthogonal_projection_line:Point* → midpoint:Point* → ask_angle_lines:AnswerAngleLines",
+  "orthogonal_projection:Point* → orthogonal_projection_line:Point* → midpoint:Point* → ask_area:AnswerArea",
+  "orthogonal_projection:Point* → orthogonal_projection_line:Point* → midpoint:Point* → ask_distance_point_plane:AnswerDistance",
+  "orthogonal_projection:Point* → orthogonal_projection_line:Point* → midpoint:Point* → ask_length:AnswerDistance",
+  "orthogonal_projection:Point* → orthogonal_projection_line:Point* → midpoint:Point* → ask_length:AnswerLength",
+  "orthogonal_projection:Point* → orthogonal_projection_line:Point* → orthogonal_projection:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "orthogonal_projection:Point* → orthogonal_projection_line:Point* → orthogonal_projection:Point* → ask_angle_lines:AnswerAngleLines",
+  "orthogonal_projection:Point* → orthogonal_projection_line:Point* → orthogonal_projection:Point* → ask_area:AnswerArea",
+  "orthogonal_projection:Point* → orthogonal_projection_line:Point* → orthogonal_projection:Point* → ask_distance_point_plane:AnswerDistance",
+  "orthogonal_projection:Point* → orthogonal_projection_line:Point* → orthogonal_projection:Point* → ask_length:AnswerDistance",
+  "orthogonal_projection:Point* → orthogonal_projection_line:Point* → orthogonal_projection:Point* → ask_length:AnswerLength",
+  "orthogonal_projection:Point* → orthogonal_projection_line:Point* → orthogonal_projection_line:Foot → ask_length:AnswerDistance",
+  "orthogonal_projection:Point* → orthogonal_projection_line:Point* → orthogonal_projection_line:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "orthogonal_projection:Point* → orthogonal_projection_line:Point* → orthogonal_projection_line:Point* → ask_angle_lines:AnswerAngleLines",
+  "orthogonal_projection:Point* → orthogonal_projection_line:Point* → orthogonal_projection_line:Point* → ask_area:AnswerArea",
+  "orthogonal_projection:Point* → orthogonal_projection_line:Point* → orthogonal_projection_line:Point* → ask_distance_point_plane:AnswerDistance",
+  "orthogonal_projection:Point* → orthogonal_projection_line:Point* → orthogonal_projection_line:Point* → ask_length:AnswerDistance",
+  "orthogonal_projection:Point* → orthogonal_projection_line:Point* → orthogonal_projection_line:Point* → ask_length:AnswerLength",
+  "orthogonal_projection:Point* → translate_point:PerpLine → definition:circumcenter:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "orthogonal_projection:Point* → translate_point:PerpLine → definition:circumcenter:Point* → ask_angle_lines:AnswerAngleLines",
+  "orthogonal_projection:Point* → translate_point:PerpLine → definition:circumcenter:Point* → ask_area:AnswerArea",
+  "orthogonal_projection:Point* → translate_point:PerpLine → definition:circumcenter:Point* → ask_distance_point_plane:AnswerDistance",
+  "orthogonal_projection:Point* → translate_point:PerpLine → definition:circumcenter:Point* → ask_length:AnswerDistance",
+  "orthogonal_projection:Point* → translate_point:PerpLine → definition:circumcenter:Point* → ask_length:AnswerLength",
+  "orthogonal_projection:Point* → translate_point:PerpLine → definition:orthocenter:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "orthogonal_projection:Point* → translate_point:PerpLine → definition:orthocenter:Point* → ask_angle_lines:AnswerAngleLines",
+  "orthogonal_projection:Point* → translate_point:PerpLine → definition:orthocenter:Point* → ask_area:AnswerArea",
+  "orthogonal_projection:Point* → translate_point:PerpLine → definition:orthocenter:Point* → ask_distance_point_plane:AnswerDistance",
+  "orthogonal_projection:Point* → translate_point:PerpLine → definition:orthocenter:Point* → ask_length:AnswerDistance",
+  "orthogonal_projection:Point* → translate_point:PerpLine → definition:orthocenter:Point* → ask_length:AnswerLength",
+  "orthogonal_projection_line:PerpDir → translate_point:PerpLine → definition:circumcenter:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "orthogonal_projection_line:PerpDir → translate_point:PerpLine → definition:circumcenter:Point* → ask_angle_lines:AnswerAngleLines",
+  "orthogonal_projection_line:PerpDir → translate_point:PerpLine → definition:circumcenter:Point* → ask_area:AnswerArea",
+  "orthogonal_projection_line:PerpDir → translate_point:PerpLine → definition:circumcenter:Point* → ask_distance_point_plane:AnswerDistance",
+  "orthogonal_projection_line:PerpDir → translate_point:PerpLine → definition:circumcenter:Point* → ask_length:AnswerDistance",
+  "orthogonal_projection_line:PerpDir → translate_point:PerpLine → definition:circumcenter:Point* → ask_length:AnswerLength",
+  "orthogonal_projection_line:PerpDir → translate_point:PerpLine → definition:orthocenter:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "orthogonal_projection_line:PerpDir → translate_point:PerpLine → definition:orthocenter:Point* → ask_angle_lines:AnswerAngleLines",
+  "orthogonal_projection_line:PerpDir → translate_point:PerpLine → definition:orthocenter:Point* → ask_area:AnswerArea",
+  "orthogonal_projection_line:PerpDir → translate_point:PerpLine → definition:orthocenter:Point* → ask_distance_point_plane:AnswerDistance",
+  "orthogonal_projection_line:PerpDir → translate_point:PerpLine → definition:orthocenter:Point* → ask_length:AnswerDistance",
+  "orthogonal_projection_line:PerpDir → translate_point:PerpLine → definition:orthocenter:Point* → ask_length:AnswerLength",
+  "orthogonal_projection_line:PerpLine → definition:circumcenter:Point* → centroid:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "orthogonal_projection_line:PerpLine → definition:circumcenter:Point* → centroid:Point* → ask_angle_lines:AnswerAngleLines",
+  "orthogonal_projection_line:PerpLine → definition:circumcenter:Point* → centroid:Point* → ask_area:AnswerArea",
+  "orthogonal_projection_line:PerpLine → definition:circumcenter:Point* → centroid:Point* → ask_distance_point_plane:AnswerDistance",
+  "orthogonal_projection_line:PerpLine → definition:circumcenter:Point* → centroid:Point* → ask_length:AnswerDistance",
+  "orthogonal_projection_line:PerpLine → definition:circumcenter:Point* → centroid:Point* → ask_length:AnswerLength",
+  "orthogonal_projection_line:PerpLine → definition:circumcenter:Point* → midpoint:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "orthogonal_projection_line:PerpLine → definition:circumcenter:Point* → midpoint:Point* → ask_angle_lines:AnswerAngleLines",
+  "orthogonal_projection_line:PerpLine → definition:circumcenter:Point* → midpoint:Point* → ask_area:AnswerArea",
+  "orthogonal_projection_line:PerpLine → definition:circumcenter:Point* → midpoint:Point* → ask_distance_point_plane:AnswerDistance",
+  "orthogonal_projection_line:PerpLine → definition:circumcenter:Point* → midpoint:Point* → ask_length:AnswerDistance",
+  "orthogonal_projection_line:PerpLine → definition:circumcenter:Point* → midpoint:Point* → ask_length:AnswerLength",
+  "orthogonal_projection_line:PerpLine → definition:circumcenter:Point* → orthogonal_projection:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "orthogonal_projection_line:PerpLine → definition:circumcenter:Point* → orthogonal_projection:Point* → ask_angle_lines:AnswerAngleLines",
+  "orthogonal_projection_line:PerpLine → definition:circumcenter:Point* → orthogonal_projection:Point* → ask_area:AnswerArea",
+  "orthogonal_projection_line:PerpLine → definition:circumcenter:Point* → orthogonal_projection:Point* → ask_distance_point_plane:AnswerDistance",
+  "orthogonal_projection_line:PerpLine → definition:circumcenter:Point* → orthogonal_projection:Point* → ask_length:AnswerDistance",
+  "orthogonal_projection_line:PerpLine → definition:circumcenter:Point* → orthogonal_projection:Point* → ask_length:AnswerLength",
+  "orthogonal_projection_line:PerpLine → definition:circumcenter:Point* → orthogonal_projection_line:Foot → ask_length:AnswerDistance",
+  "orthogonal_projection_line:PerpLine → definition:circumcenter:Point* → orthogonal_projection_line:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "orthogonal_projection_line:PerpLine → definition:circumcenter:Point* → orthogonal_projection_line:Point* → ask_angle_lines:AnswerAngleLines",
+  "orthogonal_projection_line:PerpLine → definition:circumcenter:Point* → orthogonal_projection_line:Point* → ask_area:AnswerArea",
+  "orthogonal_projection_line:PerpLine → definition:circumcenter:Point* → orthogonal_projection_line:Point* → ask_distance_point_plane:AnswerDistance",
+  "orthogonal_projection_line:PerpLine → definition:circumcenter:Point* → orthogonal_projection_line:Point* → ask_length:AnswerDistance",
+  "orthogonal_projection_line:PerpLine → definition:circumcenter:Point* → orthogonal_projection_line:Point* → ask_length:AnswerLength",
+  "orthogonal_projection_line:PerpLine → definition:orthocenter:Point* → centroid:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "orthogonal_projection_line:PerpLine → definition:orthocenter:Point* → centroid:Point* → ask_angle_lines:AnswerAngleLines",
+  "orthogonal_projection_line:PerpLine → definition:orthocenter:Point* → centroid:Point* → ask_area:AnswerArea",
+  "orthogonal_projection_line:PerpLine → definition:orthocenter:Point* → centroid:Point* → ask_distance_point_plane:AnswerDistance",
+  "orthogonal_projection_line:PerpLine → definition:orthocenter:Point* → centroid:Point* → ask_length:AnswerDistance",
+  "orthogonal_projection_line:PerpLine → definition:orthocenter:Point* → centroid:Point* → ask_length:AnswerLength",
+  "orthogonal_projection_line:PerpLine → definition:orthocenter:Point* → midpoint:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "orthogonal_projection_line:PerpLine → definition:orthocenter:Point* → midpoint:Point* → ask_angle_lines:AnswerAngleLines",
+  "orthogonal_projection_line:PerpLine → definition:orthocenter:Point* → midpoint:Point* → ask_area:AnswerArea",
+  "orthogonal_projection_line:PerpLine → definition:orthocenter:Point* → midpoint:Point* → ask_distance_point_plane:AnswerDistance",
+  "orthogonal_projection_line:PerpLine → definition:orthocenter:Point* → midpoint:Point* → ask_length:AnswerDistance",
+  "orthogonal_projection_line:PerpLine → definition:orthocenter:Point* → midpoint:Point* → ask_length:AnswerLength",
+  "orthogonal_projection_line:PerpLine → definition:orthocenter:Point* → orthogonal_projection:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "orthogonal_projection_line:PerpLine → definition:orthocenter:Point* → orthogonal_projection:Point* → ask_angle_lines:AnswerAngleLines",
+  "orthogonal_projection_line:PerpLine → definition:orthocenter:Point* → orthogonal_projection:Point* → ask_area:AnswerArea",
+  "orthogonal_projection_line:PerpLine → definition:orthocenter:Point* → orthogonal_projection:Point* → ask_distance_point_plane:AnswerDistance",
+  "orthogonal_projection_line:PerpLine → definition:orthocenter:Point* → orthogonal_projection:Point* → ask_length:AnswerDistance",
+  "orthogonal_projection_line:PerpLine → definition:orthocenter:Point* → orthogonal_projection:Point* → ask_length:AnswerLength",
+  "orthogonal_projection_line:PerpLine → definition:orthocenter:Point* → orthogonal_projection_line:Foot → ask_length:AnswerDistance",
+  "orthogonal_projection_line:PerpLine → definition:orthocenter:Point* → orthogonal_projection_line:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "orthogonal_projection_line:PerpLine → definition:orthocenter:Point* → orthogonal_projection_line:Point* → ask_angle_lines:AnswerAngleLines",
+  "orthogonal_projection_line:PerpLine → definition:orthocenter:Point* → orthogonal_projection_line:Point* → ask_area:AnswerArea",
+  "orthogonal_projection_line:PerpLine → definition:orthocenter:Point* → orthogonal_projection_line:Point* → ask_distance_point_plane:AnswerDistance",
+  "orthogonal_projection_line:PerpLine → definition:orthocenter:Point* → orthogonal_projection_line:Point* → ask_length:AnswerDistance",
+  "orthogonal_projection_line:PerpLine → definition:orthocenter:Point* → orthogonal_projection_line:Point* → ask_length:AnswerLength",
+  "orthogonal_projection_line:Point* → centroid:Point* → centroid:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "orthogonal_projection_line:Point* → centroid:Point* → centroid:Point* → ask_angle_lines:AnswerAngleLines",
+  "orthogonal_projection_line:Point* → centroid:Point* → centroid:Point* → ask_area:AnswerArea",
+  "orthogonal_projection_line:Point* → centroid:Point* → centroid:Point* → ask_distance_point_plane:AnswerDistance",
+  "orthogonal_projection_line:Point* → centroid:Point* → centroid:Point* → ask_length:AnswerDistance",
+  "orthogonal_projection_line:Point* → centroid:Point* → centroid:Point* → ask_length:AnswerLength",
+  "orthogonal_projection_line:Point* → centroid:Point* → midpoint:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "orthogonal_projection_line:Point* → centroid:Point* → midpoint:Point* → ask_angle_lines:AnswerAngleLines",
+  "orthogonal_projection_line:Point* → centroid:Point* → midpoint:Point* → ask_area:AnswerArea",
+  "orthogonal_projection_line:Point* → centroid:Point* → midpoint:Point* → ask_distance_point_plane:AnswerDistance",
+  "orthogonal_projection_line:Point* → centroid:Point* → midpoint:Point* → ask_length:AnswerDistance",
+  "orthogonal_projection_line:Point* → centroid:Point* → midpoint:Point* → ask_length:AnswerLength",
+  "orthogonal_projection_line:Point* → centroid:Point* → orthogonal_projection:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "orthogonal_projection_line:Point* → centroid:Point* → orthogonal_projection:Point* → ask_angle_lines:AnswerAngleLines",
+  "orthogonal_projection_line:Point* → centroid:Point* → orthogonal_projection:Point* → ask_area:AnswerArea",
+  "orthogonal_projection_line:Point* → centroid:Point* → orthogonal_projection:Point* → ask_distance_point_plane:AnswerDistance",
+  "orthogonal_projection_line:Point* → centroid:Point* → orthogonal_projection:Point* → ask_length:AnswerDistance",
+  "orthogonal_projection_line:Point* → centroid:Point* → orthogonal_projection:Point* → ask_length:AnswerLength",
+  "orthogonal_projection_line:Point* → centroid:Point* → orthogonal_projection_line:Foot → ask_length:AnswerDistance",
+  "orthogonal_projection_line:Point* → centroid:Point* → orthogonal_projection_line:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "orthogonal_projection_line:Point* → centroid:Point* → orthogonal_projection_line:Point* → ask_angle_lines:AnswerAngleLines",
+  "orthogonal_projection_line:Point* → centroid:Point* → orthogonal_projection_line:Point* → ask_area:AnswerArea",
+  "orthogonal_projection_line:Point* → centroid:Point* → orthogonal_projection_line:Point* → ask_distance_point_plane:AnswerDistance",
+  "orthogonal_projection_line:Point* → centroid:Point* → orthogonal_projection_line:Point* → ask_length:AnswerDistance",
+  "orthogonal_projection_line:Point* → centroid:Point* → orthogonal_projection_line:Point* → ask_length:AnswerLength",
+  "orthogonal_projection_line:Point* → midpoint:Point* → centroid:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "orthogonal_projection_line:Point* → midpoint:Point* → centroid:Point* → ask_angle_lines:AnswerAngleLines",
+  "orthogonal_projection_line:Point* → midpoint:Point* → centroid:Point* → ask_area:AnswerArea",
+  "orthogonal_projection_line:Point* → midpoint:Point* → centroid:Point* → ask_distance_point_plane:AnswerDistance",
+  "orthogonal_projection_line:Point* → midpoint:Point* → centroid:Point* → ask_length:AnswerDistance",
+  "orthogonal_projection_line:Point* → midpoint:Point* → centroid:Point* → ask_length:AnswerLength",
+  "orthogonal_projection_line:Point* → midpoint:Point* → midpoint:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "orthogonal_projection_line:Point* → midpoint:Point* → midpoint:Point* → ask_angle_lines:AnswerAngleLines",
+  "orthogonal_projection_line:Point* → midpoint:Point* → midpoint:Point* → ask_area:AnswerArea",
+  "orthogonal_projection_line:Point* → midpoint:Point* → midpoint:Point* → ask_distance_point_plane:AnswerDistance",
+  "orthogonal_projection_line:Point* → midpoint:Point* → midpoint:Point* → ask_length:AnswerDistance",
+  "orthogonal_projection_line:Point* → midpoint:Point* → midpoint:Point* → ask_length:AnswerLength",
+  "orthogonal_projection_line:Point* → midpoint:Point* → orthogonal_projection:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "orthogonal_projection_line:Point* → midpoint:Point* → orthogonal_projection:Point* → ask_angle_lines:AnswerAngleLines",
+  "orthogonal_projection_line:Point* → midpoint:Point* → orthogonal_projection:Point* → ask_area:AnswerArea",
+  "orthogonal_projection_line:Point* → midpoint:Point* → orthogonal_projection:Point* → ask_distance_point_plane:AnswerDistance",
+  "orthogonal_projection_line:Point* → midpoint:Point* → orthogonal_projection:Point* → ask_length:AnswerDistance",
+  "orthogonal_projection_line:Point* → midpoint:Point* → orthogonal_projection:Point* → ask_length:AnswerLength",
+  "orthogonal_projection_line:Point* → midpoint:Point* → orthogonal_projection_line:Foot → ask_length:AnswerDistance",
+  "orthogonal_projection_line:Point* → midpoint:Point* → orthogonal_projection_line:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "orthogonal_projection_line:Point* → midpoint:Point* → orthogonal_projection_line:Point* → ask_angle_lines:AnswerAngleLines",
+  "orthogonal_projection_line:Point* → midpoint:Point* → orthogonal_projection_line:Point* → ask_area:AnswerArea",
+  "orthogonal_projection_line:Point* → midpoint:Point* → orthogonal_projection_line:Point* → ask_distance_point_plane:AnswerDistance",
+  "orthogonal_projection_line:Point* → midpoint:Point* → orthogonal_projection_line:Point* → ask_length:AnswerDistance",
+  "orthogonal_projection_line:Point* → midpoint:Point* → orthogonal_projection_line:Point* → ask_length:AnswerLength",
+  "orthogonal_projection_line:Point* → orthogonal_projection:Point* → centroid:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "orthogonal_projection_line:Point* → orthogonal_projection:Point* → centroid:Point* → ask_angle_lines:AnswerAngleLines",
+  "orthogonal_projection_line:Point* → orthogonal_projection:Point* → centroid:Point* → ask_area:AnswerArea",
+  "orthogonal_projection_line:Point* → orthogonal_projection:Point* → centroid:Point* → ask_distance_point_plane:AnswerDistance",
+  "orthogonal_projection_line:Point* → orthogonal_projection:Point* → centroid:Point* → ask_length:AnswerDistance",
+  "orthogonal_projection_line:Point* → orthogonal_projection:Point* → centroid:Point* → ask_length:AnswerLength",
+  "orthogonal_projection_line:Point* → orthogonal_projection:Point* → midpoint:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "orthogonal_projection_line:Point* → orthogonal_projection:Point* → midpoint:Point* → ask_angle_lines:AnswerAngleLines",
+  "orthogonal_projection_line:Point* → orthogonal_projection:Point* → midpoint:Point* → ask_area:AnswerArea",
+  "orthogonal_projection_line:Point* → orthogonal_projection:Point* → midpoint:Point* → ask_distance_point_plane:AnswerDistance",
+  "orthogonal_projection_line:Point* → orthogonal_projection:Point* → midpoint:Point* → ask_length:AnswerDistance",
+  "orthogonal_projection_line:Point* → orthogonal_projection:Point* → midpoint:Point* → ask_length:AnswerLength",
+  "orthogonal_projection_line:Point* → orthogonal_projection:Point* → orthogonal_projection:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "orthogonal_projection_line:Point* → orthogonal_projection:Point* → orthogonal_projection:Point* → ask_angle_lines:AnswerAngleLines",
+  "orthogonal_projection_line:Point* → orthogonal_projection:Point* → orthogonal_projection:Point* → ask_area:AnswerArea",
+  "orthogonal_projection_line:Point* → orthogonal_projection:Point* → orthogonal_projection:Point* → ask_distance_point_plane:AnswerDistance",
+  "orthogonal_projection_line:Point* → orthogonal_projection:Point* → orthogonal_projection:Point* → ask_length:AnswerDistance",
+  "orthogonal_projection_line:Point* → orthogonal_projection:Point* → orthogonal_projection:Point* → ask_length:AnswerLength",
+  "orthogonal_projection_line:Point* → orthogonal_projection:Point* → orthogonal_projection_line:Foot → ask_length:AnswerDistance",
+  "orthogonal_projection_line:Point* → orthogonal_projection:Point* → orthogonal_projection_line:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "orthogonal_projection_line:Point* → orthogonal_projection:Point* → orthogonal_projection_line:Point* → ask_angle_lines:AnswerAngleLines",
+  "orthogonal_projection_line:Point* → orthogonal_projection:Point* → orthogonal_projection_line:Point* → ask_area:AnswerArea",
+  "orthogonal_projection_line:Point* → orthogonal_projection:Point* → orthogonal_projection_line:Point* → ask_distance_point_plane:AnswerDistance",
+  "orthogonal_projection_line:Point* → orthogonal_projection:Point* → orthogonal_projection_line:Point* → ask_length:AnswerDistance",
+  "orthogonal_projection_line:Point* → orthogonal_projection:Point* → orthogonal_projection_line:Point* → ask_length:AnswerLength",
+  "orthogonal_projection_line:Point* → orthogonal_projection_line:PerpLine → definition:circumcenter:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "orthogonal_projection_line:Point* → orthogonal_projection_line:PerpLine → definition:circumcenter:Point* → ask_angle_lines:AnswerAngleLines",
+  "orthogonal_projection_line:Point* → orthogonal_projection_line:PerpLine → definition:circumcenter:Point* → ask_area:AnswerArea",
+  "orthogonal_projection_line:Point* → orthogonal_projection_line:PerpLine → definition:circumcenter:Point* → ask_distance_point_plane:AnswerDistance",
+  "orthogonal_projection_line:Point* → orthogonal_projection_line:PerpLine → definition:circumcenter:Point* → ask_length:AnswerDistance",
+  "orthogonal_projection_line:Point* → orthogonal_projection_line:PerpLine → definition:circumcenter:Point* → ask_length:AnswerLength",
+  "orthogonal_projection_line:Point* → orthogonal_projection_line:PerpLine → definition:orthocenter:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "orthogonal_projection_line:Point* → orthogonal_projection_line:PerpLine → definition:orthocenter:Point* → ask_angle_lines:AnswerAngleLines",
+  "orthogonal_projection_line:Point* → orthogonal_projection_line:PerpLine → definition:orthocenter:Point* → ask_area:AnswerArea",
+  "orthogonal_projection_line:Point* → orthogonal_projection_line:PerpLine → definition:orthocenter:Point* → ask_distance_point_plane:AnswerDistance",
+  "orthogonal_projection_line:Point* → orthogonal_projection_line:PerpLine → definition:orthocenter:Point* → ask_length:AnswerDistance",
+  "orthogonal_projection_line:Point* → orthogonal_projection_line:PerpLine → definition:orthocenter:Point* → ask_length:AnswerLength",
+  "orthogonal_projection_line:Point* → orthogonal_projection_line:Point* → centroid:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "orthogonal_projection_line:Point* → orthogonal_projection_line:Point* → centroid:Point* → ask_angle_lines:AnswerAngleLines",
+  "orthogonal_projection_line:Point* → orthogonal_projection_line:Point* → centroid:Point* → ask_area:AnswerArea",
+  "orthogonal_projection_line:Point* → orthogonal_projection_line:Point* → centroid:Point* → ask_distance_point_plane:AnswerDistance",
+  "orthogonal_projection_line:Point* → orthogonal_projection_line:Point* → centroid:Point* → ask_length:AnswerDistance",
+  "orthogonal_projection_line:Point* → orthogonal_projection_line:Point* → centroid:Point* → ask_length:AnswerLength",
+  "orthogonal_projection_line:Point* → orthogonal_projection_line:Point* → midpoint:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "orthogonal_projection_line:Point* → orthogonal_projection_line:Point* → midpoint:Point* → ask_angle_lines:AnswerAngleLines",
+  "orthogonal_projection_line:Point* → orthogonal_projection_line:Point* → midpoint:Point* → ask_area:AnswerArea",
+  "orthogonal_projection_line:Point* → orthogonal_projection_line:Point* → midpoint:Point* → ask_distance_point_plane:AnswerDistance",
+  "orthogonal_projection_line:Point* → orthogonal_projection_line:Point* → midpoint:Point* → ask_length:AnswerDistance",
+  "orthogonal_projection_line:Point* → orthogonal_projection_line:Point* → midpoint:Point* → ask_length:AnswerLength",
+  "orthogonal_projection_line:Point* → orthogonal_projection_line:Point* → orthogonal_projection:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "orthogonal_projection_line:Point* → orthogonal_projection_line:Point* → orthogonal_projection:Point* → ask_angle_lines:AnswerAngleLines",
+  "orthogonal_projection_line:Point* → orthogonal_projection_line:Point* → orthogonal_projection:Point* → ask_area:AnswerArea",
+  "orthogonal_projection_line:Point* → orthogonal_projection_line:Point* → orthogonal_projection:Point* → ask_distance_point_plane:AnswerDistance",
+  "orthogonal_projection_line:Point* → orthogonal_projection_line:Point* → orthogonal_projection:Point* → ask_length:AnswerDistance",
+  "orthogonal_projection_line:Point* → orthogonal_projection_line:Point* → orthogonal_projection:Point* → ask_length:AnswerLength",
+  "orthogonal_projection_line:Point* → orthogonal_projection_line:Point* → orthogonal_projection_line:Foot → ask_length:AnswerDistance",
+  "orthogonal_projection_line:Point* → orthogonal_projection_line:Point* → orthogonal_projection_line:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "orthogonal_projection_line:Point* → orthogonal_projection_line:Point* → orthogonal_projection_line:Point* → ask_angle_lines:AnswerAngleLines",
+  "orthogonal_projection_line:Point* → orthogonal_projection_line:Point* → orthogonal_projection_line:Point* → ask_area:AnswerArea",
+  "orthogonal_projection_line:Point* → orthogonal_projection_line:Point* → orthogonal_projection_line:Point* → ask_distance_point_plane:AnswerDistance",
+  "orthogonal_projection_line:Point* → orthogonal_projection_line:Point* → orthogonal_projection_line:Point* → ask_length:AnswerDistance",
+  "orthogonal_projection_line:Point* → orthogonal_projection_line:Point* → orthogonal_projection_line:Point* → ask_length:AnswerLength",
+  "orthogonal_projection_line:Point* → translate_point:PerpLine → definition:circumcenter:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "orthogonal_projection_line:Point* → translate_point:PerpLine → definition:circumcenter:Point* → ask_angle_lines:AnswerAngleLines",
+  "orthogonal_projection_line:Point* → translate_point:PerpLine → definition:circumcenter:Point* → ask_area:AnswerArea",
+  "orthogonal_projection_line:Point* → translate_point:PerpLine → definition:circumcenter:Point* → ask_distance_point_plane:AnswerDistance",
+  "orthogonal_projection_line:Point* → translate_point:PerpLine → definition:circumcenter:Point* → ask_length:AnswerDistance",
+  "orthogonal_projection_line:Point* → translate_point:PerpLine → definition:circumcenter:Point* → ask_length:AnswerLength",
+  "orthogonal_projection_line:Point* → translate_point:PerpLine → definition:orthocenter:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "orthogonal_projection_line:Point* → translate_point:PerpLine → definition:orthocenter:Point* → ask_angle_lines:AnswerAngleLines",
+  "orthogonal_projection_line:Point* → translate_point:PerpLine → definition:orthocenter:Point* → ask_area:AnswerArea",
+  "orthogonal_projection_line:Point* → translate_point:PerpLine → definition:orthocenter:Point* → ask_distance_point_plane:AnswerDistance",
+  "orthogonal_projection_line:Point* → translate_point:PerpLine → definition:orthocenter:Point* → ask_length:AnswerDistance",
+  "orthogonal_projection_line:Point* → translate_point:PerpLine → definition:orthocenter:Point* → ask_length:AnswerLength",
+  "translate_point:PerpLine → definition:circumcenter:Point* → centroid:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "translate_point:PerpLine → definition:circumcenter:Point* → centroid:Point* → ask_angle_lines:AnswerAngleLines",
+  "translate_point:PerpLine → definition:circumcenter:Point* → centroid:Point* → ask_area:AnswerArea",
+  "translate_point:PerpLine → definition:circumcenter:Point* → centroid:Point* → ask_distance_point_plane:AnswerDistance",
+  "translate_point:PerpLine → definition:circumcenter:Point* → centroid:Point* → ask_length:AnswerDistance",
+  "translate_point:PerpLine → definition:circumcenter:Point* → centroid:Point* → ask_length:AnswerLength",
+  "translate_point:PerpLine → definition:circumcenter:Point* → midpoint:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "translate_point:PerpLine → definition:circumcenter:Point* → midpoint:Point* → ask_angle_lines:AnswerAngleLines",
+  "translate_point:PerpLine → definition:circumcenter:Point* → midpoint:Point* → ask_area:AnswerArea",
+  "translate_point:PerpLine → definition:circumcenter:Point* → midpoint:Point* → ask_distance_point_plane:AnswerDistance",
+  "translate_point:PerpLine → definition:circumcenter:Point* → midpoint:Point* → ask_length:AnswerDistance",
+  "translate_point:PerpLine → definition:circumcenter:Point* → midpoint:Point* → ask_length:AnswerLength",
+  "translate_point:PerpLine → definition:circumcenter:Point* → orthogonal_projection:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "translate_point:PerpLine → definition:circumcenter:Point* → orthogonal_projection:Point* → ask_angle_lines:AnswerAngleLines",
+  "translate_point:PerpLine → definition:circumcenter:Point* → orthogonal_projection:Point* → ask_area:AnswerArea",
+  "translate_point:PerpLine → definition:circumcenter:Point* → orthogonal_projection:Point* → ask_distance_point_plane:AnswerDistance",
+  "translate_point:PerpLine → definition:circumcenter:Point* → orthogonal_projection:Point* → ask_length:AnswerDistance",
+  "translate_point:PerpLine → definition:circumcenter:Point* → orthogonal_projection:Point* → ask_length:AnswerLength",
+  "translate_point:PerpLine → definition:circumcenter:Point* → orthogonal_projection_line:Foot → ask_length:AnswerDistance",
+  "translate_point:PerpLine → definition:circumcenter:Point* → orthogonal_projection_line:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "translate_point:PerpLine → definition:circumcenter:Point* → orthogonal_projection_line:Point* → ask_angle_lines:AnswerAngleLines",
+  "translate_point:PerpLine → definition:circumcenter:Point* → orthogonal_projection_line:Point* → ask_area:AnswerArea",
+  "translate_point:PerpLine → definition:circumcenter:Point* → orthogonal_projection_line:Point* → ask_distance_point_plane:AnswerDistance",
+  "translate_point:PerpLine → definition:circumcenter:Point* → orthogonal_projection_line:Point* → ask_length:AnswerDistance",
+  "translate_point:PerpLine → definition:circumcenter:Point* → orthogonal_projection_line:Point* → ask_length:AnswerLength",
+  "translate_point:PerpLine → definition:orthocenter:Point* → centroid:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "translate_point:PerpLine → definition:orthocenter:Point* → centroid:Point* → ask_angle_lines:AnswerAngleLines",
+  "translate_point:PerpLine → definition:orthocenter:Point* → centroid:Point* → ask_area:AnswerArea",
+  "translate_point:PerpLine → definition:orthocenter:Point* → centroid:Point* → ask_distance_point_plane:AnswerDistance",
+  "translate_point:PerpLine → definition:orthocenter:Point* → centroid:Point* → ask_length:AnswerDistance",
+  "translate_point:PerpLine → definition:orthocenter:Point* → centroid:Point* → ask_length:AnswerLength",
+  "translate_point:PerpLine → definition:orthocenter:Point* → midpoint:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "translate_point:PerpLine → definition:orthocenter:Point* → midpoint:Point* → ask_angle_lines:AnswerAngleLines",
+  "translate_point:PerpLine → definition:orthocenter:Point* → midpoint:Point* → ask_area:AnswerArea",
+  "translate_point:PerpLine → definition:orthocenter:Point* → midpoint:Point* → ask_distance_point_plane:AnswerDistance",
+  "translate_point:PerpLine → definition:orthocenter:Point* → midpoint:Point* → ask_length:AnswerDistance",
+  "translate_point:PerpLine → definition:orthocenter:Point* → midpoint:Point* → ask_length:AnswerLength",
+  "translate_point:PerpLine → definition:orthocenter:Point* → orthogonal_projection:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "translate_point:PerpLine → definition:orthocenter:Point* → orthogonal_projection:Point* → ask_angle_lines:AnswerAngleLines",
+  "translate_point:PerpLine → definition:orthocenter:Point* → orthogonal_projection:Point* → ask_area:AnswerArea",
+  "translate_point:PerpLine → definition:orthocenter:Point* → orthogonal_projection:Point* → ask_distance_point_plane:AnswerDistance",
+  "translate_point:PerpLine → definition:orthocenter:Point* → orthogonal_projection:Point* → ask_length:AnswerDistance",
+  "translate_point:PerpLine → definition:orthocenter:Point* → orthogonal_projection:Point* → ask_length:AnswerLength",
+  "translate_point:PerpLine → definition:orthocenter:Point* → orthogonal_projection_line:Foot → ask_length:AnswerDistance",
+  "translate_point:PerpLine → definition:orthocenter:Point* → orthogonal_projection_line:Point* → ask_angle_line_plane:AnswerAngleLinePlane",
+  "translate_point:PerpLine → definition:orthocenter:Point* → orthogonal_projection_line:Point* → ask_angle_lines:AnswerAngleLines",
+  "translate_point:PerpLine → definition:orthocenter:Point* → orthogonal_projection_line:Point* → ask_area:AnswerArea",
+  "translate_point:PerpLine → definition:orthocenter:Point* → orthogonal_projection_line:Point* → ask_distance_point_plane:AnswerDistance",
+  "translate_point:PerpLine → definition:orthocenter:Point* → orthogonal_projection_line:Point* → ask_length:AnswerDistance",
+  "translate_point:PerpLine → definition:orthocenter:Point* → orthogonal_projection_line:Point* → ask_length:AnswerLength"
+ ],
+ "definitions": {
+  "orthocenter": {
+   "phrase": "trực tâm\\s+(?:của\\s+)?(?:(?:tam giác|Δ)\\s*)?(?P<ops>{P}{P}{P})(?![\\w'])",
+   "loci": [
+    {
+     "through": "A",
+     "perp": [
+      "B",
+      "C"
+     ]
+    },
+    {
+     "through": "B",
+     "perp": [
+      "C",
+      "A"
+     ]
+    },
+    {
+     "through": "C",
+     "perp": [
+      "A",
+      "B"
+     ]
+    }
+   ],
+   "regresses_into": "PerpLine",
+   "realized_by_function": null
+  },
+  "circumcenter": {
+   "phrase": "tâm\\s+(?:của\\s+)?đường tròn ngoại tiếp\\s+(?:(?:tam giác|Δ)\\s*)?(?P<ops>{P}{P}{P})(?![\\w'])",
+   "loci": [
+    {
+     "through": [
+      "midpoint",
+      "A",
+      "B"
+     ],
+     "perp": [
+      "A",
+      "B"
+     ]
+    },
+    {
+     "through": [
+      "midpoint",
+      "B",
+      "C"
+     ],
+     "perp": [
+      "B",
+      "C"
+     ]
+    },
+    {
+     "through": [
+      "midpoint",
+      "C",
+      "A"
+     ],
+     "perp": [
+      "C",
+      "A"
+     ]
+    }
+   ],
+   "regresses_into": "PerpLine",
+   "realized_by_function": null
+  }
+ }
+}

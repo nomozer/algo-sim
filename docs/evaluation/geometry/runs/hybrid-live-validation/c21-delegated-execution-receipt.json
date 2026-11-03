@@ -1,0 +1,125 @@
+{
+  "blocker": "OWNER_ACTION_REQUIRED: PAID_PROJECT_NOT_VERIFIED",
+  "status": "BLOCKED_PREFLIGHT",
+  "stop_reason": "PAID_PROJECT_NOT_VERIFIED",
+  "PROVIDER_CALLS": 0,
+  "COST": "USD 0.00",
+  "H1_STATUS": "NOT_MEASURED",
+  "EXACT_OWNER_ACTION_REQUIRED": {
+    "choose_one_of": [
+      {
+        "option": "A_CLOUD_BILLING_API",
+        "steps": [
+          "Set GOOGLE_CLOUD_PROJECT=<your-paid-gcp-project-id> in D:/Documents/projects/algo-sim/backend/.env or process environment.",
+          "Provide a valid Cloud Billing OAuth access token via GOOGLE_OAUTH_ACCESS_TOKEN or run `gcloud auth application-default login` with `gcloud` on PATH so `projects/<project-id>/billingInfo` confirms `billingEnabled: true`."
+        ]
+      },
+      {
+        "option": "B_OWNER_PAID_PROJECT_ATTESTATION",
+        "steps": [
+          "Create an Owner-authored JSON file (e.g. D:/Documents/projects/algo-sim/owner-paid-attestation.json) with schema='owner-paid-project-attestation/1', authorization_source='EXPLICIT_OWNER_SEPARATE_STATEMENT', paid_project_confirmed=true, statement_ref='<your-own-ref-id>', statement_quote='<your explicit statement >= 10 chars confirming the API key belongs to a Paid Tier project>', and optional project_id='<gcp-project-id>'."
+        ]
+      }
+    ],
+    "then_resume": "Re-invoke the agent (or run `--delegated-c21 --paid-attestation <path>` for Option B) to execute K-1 -> S-2 -> R-1 automatically within <= 70 requests / USD 4.00 on frozen candidate 79bbc053."
+  },
+  "schema": "c21-delegated-execution-receipt/1",
+  "authorization_mode": "EXPLICIT_OWNER_DELEGATED_EXECUTION",
+  "authorization_source": "EXPLICIT_OWNER_INSTRUCTION",
+  "directive_id": "EXECUTE_REAL_GEMINI_LIVE_EVALUATION_2026_11_03",
+  "authorized_scope": [
+    "K-1",
+    "S-2",
+    "R-1"
+  ],
+  "excluded_scope": [
+    "H-1",
+    "PRODUCTION_CUTOVER",
+    "MERGE_PUSH"
+  ],
+  "authorized_model": "gemini-2.5-flash",
+  "candidate_commit": "79bbc0531df89d3757ae16a6d8c5c0388fdac84b",
+  "runtime_identity": {
+    "measured_system": "6202a6a67b555a0d18b59c0edbea7c396b8fe6f1488fb1984f4e7663be1e1421",
+    "cache_version": "131",
+    "model": "gemini-2.5-flash",
+    "skills_sha256": "1dd37ccce05a9c15a4b399ff848226525413f351ce607659b9d4c0c28ea217d2",
+    "paired_harness_sha256": "4af1dc76355ec4f59d1f9045b7cee03d40b1bab3528290963776be85daa408d6",
+    "runner_sha256": "e9c6ad4388032f06949ac6c0dd5d06b2882be576c0564ff4a5143e6e48229438",
+    "scorer_sha256": "8c330bd493f9d401f579b6383f1a1df2bc9172eee2530cf187be2024801b5a2d"
+  },
+  "per_pilot_caps": {
+    "K-1": {
+      "max_requests": 16,
+      "max_usd": 1.0
+    },
+    "S-2": {
+      "max_requests": 36,
+      "max_usd": 2.0
+    },
+    "R-1": {
+      "max_requests": 18,
+      "max_usd": 1.0
+    }
+  },
+  "global_caps": {
+    "max_requests": 70,
+    "max_usd": 4.0
+  },
+  "executed_at": "2026-11-03T07:17:46Z",
+  "credentials_summary": {
+    "api_key_present": true,
+    "api_key_source": "root_dotenv",
+    "project_id_present": false,
+    "project_source": "missing",
+    "oauth_token_present": false
+  },
+  "paid_project_verification": {
+    "verified": false,
+    "stop_reason": "PAID_PROJECT_NOT_VERIFIED",
+    "detail": "No Cloud Billing API credentials/project_id and no separate explicit Owner paid-project attestation; GEMINI_API_KEY/.env presence never implies paid billing."
+  },
+  "templates_verified": {
+    "K-1": {
+      "template_name": "k1-owner-approval.template.json",
+      "template_git_blob": "b9f0b87b8bff917c5b5c785a0822156e98e6f1ca",
+      "corpus_sha256": "6eeab278aef771c14ac1849363af3f87d52e8d90f6d27c1d5441ad8308acc080",
+      "cases": 16,
+      "max_requests": 16,
+      "max_usd": 1.0
+    },
+    "S-2": {
+      "template_name": "s2-owner-approval.template.json",
+      "template_git_blob": "87aa2b92a26fb66077b36ae32d5a72f8d79de4b6",
+      "corpus_sha256": "3f1682bd6adbc5f21cb504a6b25f6ccc226c9b0d791f05fcb2eeb6a9a6fc6791",
+      "cases": 36,
+      "max_requests": 36,
+      "max_usd": 2.0
+    },
+    "R-1": {
+      "template_name": "r1-owner-approval.template.json",
+      "template_git_blob": "ce104c37c5bfd67ac7d4ff34e981565f65c0e393",
+      "corpus_sha256": "250466ebdf5bcb435a2b803ed9443ef30b7f37818a3ae9f7e90a40625e84b7c6",
+      "cases": 18,
+      "max_requests": 18,
+      "max_usd": 1.0
+    }
+  },
+  "verified_conditions": [
+    "candidate_product_freeze_matched",
+    "default_mode_llm_only_preserved",
+    "authorized_model_gemini_2_5_flash_pinned_no_fallback",
+    "corpora_k1_s2_r1_validated",
+    "approval_templates_k1_s2_r1_bound_to_runtime_identity",
+    "gemini_api_key_present_via_root_dotenv"
+  ],
+  "unverified_conditions": [
+    "paid_project_billing_status_unverified"
+  ],
+  "model_availability": "NOT_MEASURED_PRE_REQUEST_GATE_BLOCKED",
+  "approvals_created": [],
+  "total_http_requests": 0,
+  "total_spent_upper_usd": 0.0,
+  "total_spent_reported_usd": "NOT_MEASURED",
+  "pilots": []
+}

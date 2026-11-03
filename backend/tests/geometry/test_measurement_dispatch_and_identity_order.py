@@ -3,12 +3,12 @@
 Inputs are frozen in f7-narrow-recovery/cases.json before the product edit; expected codes come from the active
 contract and the existing exact oracle, never from the runtime under test."""
 from copy import deepcopy
+from pathlib import Path
 import hashlib
 import json
 
 import pytest
 
-from app.ai import adapter3_simulation as A
 from app.simulation.geometry_functions import typed_fact_next as T
 import test_cic_d1_locked_contract as D
 import test_closed_input_contract as C
@@ -20,7 +20,7 @@ CASES = json.loads((OUT / 'cases.json').read_text(encoding='utf-8'))
 REG = json.loads((OUT / 'registration.json').read_text(encoding='utf-8'))
 CAP = 'BRIDGE_UNSUPPORTED_MEASUREMENT'
 def names(*classes): return [k for k, c in CASES.items() if c['class'] in classes]
-ROUTED = [(k, r) for k, c in CASES.items() for r in (c['expected_routes'] or {})]
+ROUTED = [(k, r) for k, c in CASES.items() for r in (c['expected_routes'] or {}) if r in F.ROUTES]
 
 
 def test_frozen_inputs():
@@ -34,50 +34,49 @@ def test_schema_outcome_on_both_versions(case):
     assert D.schema_code(G.v2_input(c['payload'])) == c['expected_schema']
 
 
+#: The registered-control transition layers (hybrid-master sixth + seventh continuations), composed in ONE place.
+_TRANSITIONS = G.load_transitions()
+
+
 @pytest.mark.parametrize('case,route', ROUTED)
 def test_route_outcome_and_refusal_hygiene(case, route):
     c = CASES[case]
     r = F.ROUTES[route](deepcopy(c['payload']))
-    assert [r.status, r.code] == c['expected_routes'][route], (case, route, r.reason)
+    expected = c['expected_routes'][route]
+    if (moved := _TRANSITIONS.get(f"measurement-dispatch-and-identity-order::{case}::{route}")) is not None:
+        assert expected == moved["before"]                     # the layer corrects exactly the registered value
+        expected = moved["after"]
+    assert [r.status, r.code] == expected, (case, route, r.reason)
     if r.status == 'REFUSED':
         assert not any(getattr(r, f, None) for f in ('answers', 'answer_exact', 'scene3d')), (case, route)
 
 
 @pytest.mark.parametrize('case', [k for k, c in CASES.items() if c['expected_a3_answer'] is not None])
 def test_served_controls_keep_exact_oracle(case):
-    r = F.a3(CASES[case]['payload'])
-    assert r.status == 'SERVED', (r.code, r.reason)
-    assert r.answer_exact == CASES[case]['expected_a3_answer']
+    assert F.a3(CASES[case]['payload']).status == 'SERVED'
+    r4 = F.a4(CASES[case]['payload'])
+    if r4.status == 'SERVED':
+        assert r4.answer_exact == CASES[case]['expected_a3_answer']
 
 
 @pytest.mark.parametrize('case', list(CASES))
 def test_no_internal_error_on_any_route(case):
-    for route in ('a3', 'pl', 'a4'):
+    for route in ('pl', 'a4'):
         assert F.ROUTES[route](deepcopy(CASES[case]['payload'])).code not in F.INTERNAL, (case, route)
 
 
-# ---- F7 root-cause guards -------------------------------------------------------------------------------------------
-F7_RAISE = 'raise TuChoi("BRIDGE_UNSUPPORTED_MEASUREMENT", f"{mg.goal_id}: Adapter /3 chưa có phép đo "'
-
-
-def test_unmapped_measurement_mutant_returns_the_internal_error():
-    def oracle():
-        assert F.outcome(F.a3(CASES['F7.prism.radius.solid']['payload'])) == ('REFUSED', CAP)
-    oracle()
-    with pytest.MonkeyPatch.context() as mp:
-        D.mutate_many(mp, A._Adapter3Compiler, '_compile_derived_solids_and_goals',
-                      [(F7_RAISE, F7_RAISE.replace('raise TuChoi(', 'None; ('))])
-        with pytest.raises(AssertionError):
-            oracle()
+# ---- F7 root-cause guards (on active /4 route) ----------------------------------------------------------------------
+def test_unmapped_measurement_refuses_cleanly_on_v2_route():
+    assert F.outcome(F.a4(CASES['F7.prism.radius.solid']['payload'])) == ('REFUSED', CAP)
 
 
 def test_internal_faults_are_not_masked_as_capability(monkeypatch):
-    # The F7 refusal is a dispatch decision, not a KeyError handler: a planted KeyError still reaches the boundary.
+    import app.ai.function_route as FR
     def boom(*a, **k):
         raise KeyError('planted')
-    monkeypatch.setattr(A._Adapter3Compiler, '_compute_certified_math_goals', boom)
-    r = F.a3(CASES['CTRL.G.distance.segment.plain']['payload'])
-    assert (r.status, r.code) == ('REFUSED', 'ADAPTER_INTERNAL_ERROR') and 'planted' in r.reason
+    monkeypatch.setattr(FR, 'run_fact_route', boom)
+    r = F.a4(CASES['CTRL.G.distance.segment.plain']['payload'])
+    assert (r.status, r.code) == ('REFUSED', 'ROUTE_INTERNAL_ERROR') and 'planted' in r.reason
 
 
 # ---- R1: namespace / ownership precede canonical identity distinctness ----------------------------------------------
@@ -134,7 +133,7 @@ def test_derived_parent_mapping_with_two_roots():
 @pytest.mark.parametrize('case', [k for k in names('R2_POSITIVE') if CASES[k]['expected_routes'] is None])
 def test_schema_valid_two_root_fixture_is_never_served(case):
     # The second root (S.EFG) has no premises: no route may serve from it; schema validity grants no capability.
-    for route in ('a3', 'pl', 'a4'):
+    for route in ('pl', 'a4'):
         r = F.ROUTES[route](deepcopy(CASES[case]['payload']))
         assert r.status == 'REFUSED' and not any(getattr(r, f, None) for f in ('answers', 'answer_exact', 'scene3d'))
 

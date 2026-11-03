@@ -1,0 +1,43 @@
+{
+  "schema": "hybrid-master-paired-heldout/2",
+  "author": "<HO_TEN_TAC_GIA_DOC_LAP>",
+  "author_affiliation": "<DON_VI_CONG_TAC_HOAC_TRUONG>",
+  "authoring_independence": "ESTABLISHED",
+  "written_before_any_system_run": true,
+  "independence_evidence": "<CAM_KET_NGUON_GOC: bien soan moi 100%, giai tay/SymPy doc lap truoc moi lan chay AlgoSim>",
+  "cases": [
+    {
+      "id": "<H1-S01>",
+      "problem_text": "<DE_BAI_TIENG_VIET_NGUYEN_VAN_SO_LIEU_CU_THE>",
+      "expect": "SERVE",
+      "stratum": {
+        "family": "<pyramid|prism|cuboid|cube|sphere|cylinder|cone>",
+        "question": "<section_measure|distance|angle|volume|area>"
+      },
+      "oracle": {
+        "<distance|angle_cos_sq|angle_cos|volume|area|lateral_area|radius|volume_ratio|residual_volume>": [
+          "<BIEU_THUC_CHINH_XAC_VD_2√6/3_HOAC_36π>"
+        ]
+      },
+      "oracle_derivation": "<LOI_GIAI_DAN_XUAT_TOAN_HOC_DOC_LAP>",
+      "semantic_annotations": {
+        "explicit_goals": [
+          "<construct_plane_section_NEU_CO_MENH_LENH_XAC_DINH_THIET_DIEN>",
+          "<volume|area|distance|angle_cos_sq|angle_cos|lateral_area|radius|volume_ratio|residual_volume>"
+        ]
+      },
+      "premise_sentences": [
+        "<CAU_GIA_THIET_1>"
+      ],
+      "provenance": "<BIEN_SOAN_DOC_LAP_NGAY_YYYY-MM-DD>"
+    },
+    {
+      "id": "<H1-R01>",
+      "problem_text": "<DE_BAI_KIEM_TRA_TU_CHOI_AN_TOAN>",
+      "expect": "REFUSE",
+      "refusal_class": "<OUT_OF_DOMAIN|CONTRADICTORY_DATA|MISSING_DATA>",
+      "expected_clarification_or_refusal_note": "<LY_DO_TU_CHOI_HOAC_LAM_RO>",
+      "provenance": "<BIEN_SOAN_DOC_LAP_NGAY_YYYY-MM-DD>"
+    }
+  ]
+}

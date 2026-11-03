@@ -1,0 +1,26 @@
+{
+  "schema": "full-t3-receipt/1",
+  "candidate_commit": "180db769f18dba6060da0781cfb7aff9a373d224",
+  "product_commit": "d331e75b5bbf15722eca77c54e398173eefec98d",
+  "worktree": "detached clean worktree hm-t3-180db769",
+  "source_tree_before": "",
+  "source_tree_after": "",
+  "started_utc": "2026-11-03T10:43:52.023178+00:00",
+  "finished_utc": "2026-11-03T10:57:39.746233+00:00",
+  "exit_code": 0,
+  "verdict": "FULL_PRODUCT_GATE_PASS",
+  "summaries": [
+    "16698 passed, 7 skipped, 2 deselected, 15 xfailed, 1 warning in 797.86s (0:13:17)",
+    "\u001b[2m Test Files \u001b[22m \u001b[1m\u001b[32m85 passed\u001b[39m\u001b[22m\u001b[90m (85)\u001b[39m",
+    "\u001b[2m      Tests \u001b[22m \u001b[1m\u001b[32m1502 passed\u001b[39m\u001b[22m\u001b[90m (1502)\u001b[39m",
+    "FULL_PRODUCT_GATE_PASS"
+  ],
+  "pre_freeze_verify_exit": 0,
+  "post_freeze_verify_exit": 0,
+  "freeze_sha256_before": "324a8e36a243420ac2aa9a16d92a3e0f3c1b4aa3dc51bc566d45c9cf3900bb1a",
+  "freeze_sha256_after": "324a8e36a243420ac2aa9a16d92a3e0f3c1b4aa3dc51bc566d45c9cf3900bb1a",
+  "live_provider_calls": 0,
+  "allow_live_ai": "0",
+  "stdout_log_sha256": "4a017c70d9042b94d68ba28a4bd7a62d575e63fd288401897822f5aebf97b265",
+  "stdout_log_bytes": 36433
+}

@@ -1,0 +1,20 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "ALGOSIM_MASTER_HYBRID_BACKEND_REPLACEMENT (ninth continuation: multi-object FactGraph, certified insphere, sphere-plane tangency, and composite relations on /4)",
+  "corrects": "docs/evaluation/geometry/runs/hybrid-master-circumscribed-spheres/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "current_candidate_hash": "9583018dd582a90db47ff89d3525fc7bc55ffb503a1448a243ee72c3a8efa90e",
+  "current_product_commit": "fa1ed27711897149b753b03adbd54195763c153a",
+  "current_candidate_source": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+  "diverged": true,
+  "reason": "Backend only, offline, on top of the db1ac63a candidate: additive typed-fact-next/2 GeometricRelationSpecV2 (circumscribes, inscribed_in, tangent_to + contact_ref) and SolidSpec.inscribed_in (/1 schema untouched); certified sphere inscribed in a convex polyhedron across all boundary faces (_tam_noi_tiep_da_dien over exact Fraction + multiquadratic _QField, NO_INSCRIBED_SPHERE, face coplanarity & convexity checks, strict inward half-spaces, strict relint face contacts, independent 9V^2 = r^2*(sum S_k)^2 identity); certified sphere-plane tangency (_chan_tiep_xuc_mat, d^2 = R^2 vs PLANE_INTERSECTS_SPHERE_NOT_TANGENT / PLANE_DOES_NOT_TOUCH_SPHERE, non-collinear witness triple, optional contact_ref); composite topologies (multi-polyhedron shared_faces + sphere, dual named/unnamed spheres, polyhedron section + sphere coexistence, axial cylinder/cone + circumscribed/inscribed spheres); explicit planner dependency DAG + composition_classification; closed Vietnamese Source Gate grammar; 4-layer relation_certificates (geometric-relation-certificate/1); independent review READY in round 3 (registry /26, planner /22, engine /18). Wave 3 67/72 (72/72 negatives refused, 0 wrong-served, 0 transitions), locked 96/96, 203 probes 0 wrong-served, 32/32 registered curved controls unchanged. The default LLM_ONLY path, its cache identity, prompts and route A's provider surface are unchanged; the /4 provider response schema widened (model surface changed for the /4 arm only).",
+  "cache_version": 131,
+  "cache_version_hien_tai": 131,
+  "cache_decision": "NO BUMP: LLM_ONLY untouched (CACHE_VERSION keys the /api/analyze response cache); Route D /4 has no response cache and its rows are keyed by the Route D surface (registry /26, planner /22, engine /18); refusals are never cached.",
+  "hieu_luc_len_ket_qua_da_do": {
+    "historical_measurements": "UNCHANGED",
+    "live_requests": 0,
+    "so_lieu_lượt_đo_cuối": "UNCHANGED: historical measurements are not rescored."
+  }
+}

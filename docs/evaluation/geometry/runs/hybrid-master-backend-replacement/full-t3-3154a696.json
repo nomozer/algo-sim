@@ -1,0 +1,23 @@
+{
+ "schema": "hybrid-master-backend-replacement/full-t3/1",
+ "verdict": "FULL_PRODUCT_GATE_PASS",
+ "attempt": 2,
+ "attempt_1": {"head": "3154a696", "verdict": "FULL_PRODUCT_GATE_FAIL", "failed": 1, "passed": 16541, "failure": "tests/geometry/test_s2_student_language_pilot_runner.py::test_c15_the_registered_r1_corpus_and_its_gold_replay_are_locked: the receipt's corpus_sha256 hashed LF bytes; the fresh checkout (core.autocrlf=true) holds CRLF. Fixed test-only at 7e072c7e (LF-normalized compare); candidate unchanged.", "log_sha256_local": "95df607f99af1591b33ded1ab3bb73aa9f68876aa4e457182902a18795af744f"},
+ "exit_code": 0,
+ "command": "cd frontend && node scripts/full-gate.mjs",
+ "worktree": ".superpowers/worktrees/hm-t3-7e9e479d (fresh, detached; tracked and untracked clean after the run; post-run freeze_evaluation_candidate.py --verify MATCH; backend/.venv and frontend/node_modules junctions to the main checkout, removed with [IO.Directory]::Delete; git unregistered the worktree, the leftover checkout directory could not be deleted in this session and is reported to the Owner)",
+ "head": "7e9e479d",
+ "candidate": "3154a696",
+ "product_commit": "9c561ca62e1a193697e5b7b69f1bdf77fa8bd770",
+ "measured_system": {"tree_hash": "1725590664c916d3ee1e79b8095f36dab28f43da8732339a25ef95c5b525b5c1", "files": 118},
+ "cache_version": "131",
+ "default_mode": "LLM_ONLY",
+ "pytest": {"passed": 16542, "skipped": 7, "deselected": 2, "xfailed": 15, "failed": 0, "seconds": 619.31},
+ "vitest": {"files": 84, "passed": 1424},
+ "build": "PASS",
+ "demo_replay": "PASS (5/5)",
+ "demo_crash_surface": "PASS (6/6 refusal boundaries typed, 0 thrown as 500)",
+ "T0_T2": "COVERED_BY_T3",
+ "log_sha256_local": "3ae451aa627a5818a8b31f8b25faf145a44db5f1e286cedd4c919930ed88879c",
+ "provider_calls": 0
+}

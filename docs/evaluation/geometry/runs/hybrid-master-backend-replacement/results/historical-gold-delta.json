@@ -1,0 +1,35 @@
+{
+  "schema": "HISTORICAL_GOLD_REMEASURE/1",
+  "measured_receipt": "docs/evaluation/geometry/runs/independent-nlu-extraction-evaluation/results/gold/gold_rows.json",
+  "applies_after": "docs/evaluation/geometry/runs/source-gate-hardening/results/historical-gold-delta.json",
+  "cause": "Continuation 11 semantic shape-kind grounding (`registry /28`, `engine /20`): base polygon shape predicates without leading `có` (`Hình chóp S.ABCD đáy là hình vuông...`) and `Hình chóp S.ABCD có đáy là hình vuông cạnh 2...` are now grounded on the deterministic gold arm; all 3 affected rows lie in the `dev` split (`0` `locked` rows changed), advancing `D02` and `D06` to their downstream refusal gates and serving `D07` at its preregistered exact answer (`d² = 1`).",
+  "model_calls": 0,
+  "rows_compared": 60,
+  "served_before": 12,
+  "served_after": 13,
+  "changed": {
+    "D02": {
+      "before": {"status": "REFUSED", "code": "OBJECT_NOT_IN_QUOTE", "values": {}},
+      "after": {"status": "REFUSED", "code": "UNGROUNDED_VALUE", "values": {}},
+      "split": "dev",
+      "reading": "Base `đáy là hình vuông` without `có` is now grounded; `cạnh bằng 2` without `có` remains outside SG-3 role-value binding ⇒ `UNGROUNDED_VALUE`. Refusal-code change only; served count unchanged."
+    },
+    "D06": {
+      "before": {"status": "REFUSED", "code": "OBJECT_NOT_IN_QUOTE", "values": {}},
+      "after": {"status": "REFUSED", "code": "NOT_ASKED_IN_SOURCE", "values": {}},
+      "split": "dev",
+      "reading": "Base `đáy là hình vuông cạnh 2` is now grounded; `Tính cos² của góc...` remains outside the closed ask grammar ⇒ `NOT_ASKED_IN_SOURCE`. Refusal-code change only; served count unchanged."
+    },
+    "D07": {
+      "before": {"status": "REFUSED", "code": "OBJECT_NOT_IN_QUOTE", "values": {}},
+      "after": {"status": "SERVED", "code": null, "values": {"f5": "1"}},
+      "split": "dev",
+      "independent_expectation": {
+        "r1": {"value_squared": "1", "exact": "1"},
+        "source": "inputs/corpus-authoring/corpus.json expected_values (preregistered); gold_disposition answer_all"
+      },
+      "hand_check": "Square ABCD side 2, SA ⊥ (ABCD), SA = 2, M = midpoint(SC) ⇒ height of M above (ABCD) is SA/2 = 1 ⇒ d(M, (ABCD)) = 1, d² = 1.",
+      "reading": "Midpoint-to-plane distance on right-edge square pyramid now served via generalized Point(midpoint) effect-chain contract; exact value `f5 = 1` matches preregistered oracle."
+    }
+  }
+}

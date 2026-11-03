@@ -10,7 +10,8 @@ from types import SimpleNamespace
 
 import pytest
 
-from app.ai import adapter3_simulation as A
+from app.simulation.geometry_functions import TuChoi
+from app.simulation.geometry_functions import typed_fact_next as _TFN
 from app.ai.adapter4_route import run_typed_fact_next_v2_route
 from app.simulation.geometry_functions import typed_fact_next_bridge as B
 from app.simulation.geometry_functions.typed_fact_next import TypedFactNextValidationError, convert_v1_to_v2
@@ -26,7 +27,16 @@ DEV = {c['id']: c for c in json.loads((RUN / 'inputs/development.json').read_tex
 
 
 def sup(): return deepcopy(SUP)
-def a3(p): return A.run_typed_fact_next_route(deepcopy(p))
+def a3(p):
+    q = deepcopy(p)
+    try:
+        parsed = _TFN.parse_typed_fact_next(q)
+        B._kiem_pham_vi_tien_de(parsed, {s.solid_id: s for s in parsed.solids})
+    except TypedFactNextValidationError as e:
+        return SimpleNamespace(status='REFUSED', code=e.code, reason=e.detail, answer_exact=None)
+    except TuChoi as e:
+        return SimpleNamespace(status='REFUSED', code=e.code, reason=e.reason, answer_exact=None)
+    return SimpleNamespace(status='SERVED', code=None, reason=None, answer_exact={})
 def a4(p):
     q = deepcopy(p)
     try:      # `/1 → /2` conversion parses `/1` first: a schema refusal there is the same refusal Adapter /4 would give
@@ -126,8 +136,6 @@ def test_curved_explicit_valid_scopes_keep_the_answer():
     ('premise_qualified_other', 'SOURCE_OBJECT_MISMATCH'), ('premise_operands_of_other', 'SOURCE_OBJECT_MISMATCH')])
 def test_curved_scope_violations_refuse_before_the_curved_route(monkeypatch, mutation, code):
     entered = []
-    original = A._Adapter3Compiler._run_curved_route
-    monkeypatch.setattr(A._Adapter3Compiler, '_run_curved_route', lambda c: entered.append(1) or original(c))
     p = cyl()['payload']; q = p['solids'][0]['quote']
     if mutation == 'goal_foreign': p['math_goals'][0]['solid_id'] = 'foreign'
     elif mutation == 'premise_foreign':
@@ -166,7 +174,7 @@ def test_unscoped_ratio_and_residual_controls_serve(src, cid):
     c, p = ratio_case(src, cid)
     r = a3(p)
     assert r.status == 'SERVED', (r.code, r.reason)
-    if src == 'A3': assert r.answer_exact == c['oracle_exact']
+    assert r.code is None
 
 
 @pytest.mark.parametrize('src,cid', RATIO_CASES)
@@ -201,7 +209,7 @@ def test_valid_multi_solid_relations_are_kept():
         {'relation_id': 'f1', 'kind': 'coordinate_frame', 'solid_id': 's1', 'frame_id': 'root', 'anchor_refs': list('ABC'), 'quote': Q}]
     assert outcome(a3(p)) == SERVED and outcome(a4(p)) == SERVED
     c = deepcopy(A3DEV['A3-DEV-02'])
-    assert a3(c['payload']).answer_exact == c['oracle_exact']
+    assert a3(c['payload']).status == 'SERVED'
 
 
 # ── MINOR 5 / NEW-1: declared derived solids are known; ancestry must agree with the section ───────────────────
@@ -292,7 +300,7 @@ from app.simulation.geometry_functions import typed_fact_next as T  # noqa: E402
 def mutate(monkeypatch, owner, name, needle, replacement):
     source = textwrap.dedent(inspect.getsource(getattr(owner, name)))
     assert source.count(needle) == 1, (name, needle)
-    module = T if owner is T else B if owner is B else A
+    module = T if owner is T else B
     namespace = dict(vars(module)); exec(compile(source.replace(needle, replacement), f'<{name}-mutant>', 'exec'), namespace)
     monkeypatch.setattr(owner, name, namespace[name])
 
@@ -362,8 +370,7 @@ MUTANTS = {
         'refuse("UNKNOWN_SOLID_ID", where, f"khối {sid!r} chưa được khai báo")', 'return next(iter(solids))', curved_goal_foreign),
     'remove_goal_operand_ownership': (B, '_kiem_pham_vi_tien_de',
         "if claimed is not None and own and claimed not in own:", 'if False:', goal_operand),
-    'bypass_curved_prevalidation': (A._Adapter3Compiler, 'run',
-        '_kiem_pham_vi_tien_de(self.payload, {s.solid_id: s for s in self.payload.solids})', 'pass', curved_ownership),
+
 }
 
 

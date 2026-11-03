@@ -1,0 +1,103 @@
+{
+ "schema": "c21-delegated-execution-receipt/1",
+ "authorization_mode": "EXPLICIT_OWNER_DELEGATED_EXECUTION",
+ "authorization_source": "EXPLICIT_OWNER_INSTRUCTION",
+ "directive_id": "CONTINUATION_21_MASTER_DIRECTIVE",
+ "authorized_scope": [
+  "K-1",
+  "S-2",
+  "R-1"
+ ],
+ "excluded_scope": [
+  "H-1",
+  "PRODUCTION_CUTOVER",
+  "MERGE_PUSH"
+ ],
+ "authorized_model": "gemini-2.5-flash",
+ "candidate_commit": "15d236eb",
+ "runtime_identity": {
+  "measured_system": "3711d4eeee260ffdbe50871c59b66922d470c99908eead729810c473d6ef8773",
+  "cache_version": "131",
+  "model": "gemini-2.5-flash",
+  "skills_sha256": "39f16325e7e6bf0bd720f46751a96db84bfa4be005ca8143d51552a00baa62f7",
+  "paired_harness_sha256": "2ac9577ff68e15ebdf345577bea20ae4116ce26654b64d63e82b92b7619e5ada",
+  "runner_sha256": "8691bf113b57a78094bd7738719cfdf2f0ec2dfcd0631687afaf7e4798213423",
+  "scorer_sha256": "8c330bd493f9d401f579b6383f1a1df2bc9172eee2530cf187be2024801b5a2d"
+ },
+ "per_pilot_caps": {
+  "K-1": {
+   "max_requests": 16,
+   "max_usd": 1.0
+  },
+  "S-2": {
+   "max_requests": 36,
+   "max_usd": 2.0
+  },
+  "R-1": {
+   "max_requests": 18,
+   "max_usd": 1.0
+  }
+ },
+ "global_caps": {
+  "max_requests": 70,
+  "max_usd": 4.0
+ },
+ "executed_at": "2026-11-02T14:51:52Z",
+ "credentials_summary": {
+  "api_key_present": true,
+  "api_key_source": "root_dotenv",
+  "project_id_present": false,
+  "project_source": "missing",
+  "oauth_token_present": false
+ },
+ "paid_project_verification": {
+  "verified": false,
+  "stop_reason": "PAID_PROJECT_NOT_VERIFIED",
+  "detail": "No Cloud Billing API credentials/project_id and no separate explicit Owner paid-project attestation; GEMINI_API_KEY/.env presence never implies paid billing."
+ },
+ "templates_verified": {
+  "K-1": {
+   "template_name": "k1-owner-approval.template.json",
+   "template_git_blob": "ee581d674cbc578731422f58c2b6376b24198cfe",
+   "corpus_sha256": "6eeab278aef771c14ac1849363af3f87d52e8d90f6d27c1d5441ad8308acc080",
+   "cases": 16,
+   "max_requests": 16,
+   "max_usd": 1.0
+  },
+  "S-2": {
+   "template_name": "s2-owner-approval.template.json",
+   "template_git_blob": "528622dda95180b022ab0c0580a0ebf04dc83d19",
+   "corpus_sha256": "3f1682bd6adbc5f21cb504a6b25f6ccc226c9b0d791f05fcb2eeb6a9a6fc6791",
+   "cases": 36,
+   "max_requests": 36,
+   "max_usd": 2.0
+  },
+  "R-1": {
+   "template_name": "r1-owner-approval.template.json",
+   "template_git_blob": "f20279a96e6dd0ac71a4526e7f0333209b811707",
+   "corpus_sha256": "250466ebdf5bcb435a2b803ed9443ef30b7f37818a3ae9f7e90a40625e84b7c6",
+   "cases": 18,
+   "max_requests": 18,
+   "max_usd": 1.0
+  }
+ },
+ "verified_conditions": [
+  "candidate_product_freeze_matched",
+  "default_mode_llm_only_preserved",
+  "authorized_model_gemini_2_5_flash_pinned_no_fallback",
+  "corpora_k1_s2_r1_validated",
+  "approval_templates_k1_s2_r1_bound_to_runtime_identity",
+  "gemini_api_key_present_via_root_dotenv"
+ ],
+ "unverified_conditions": [
+  "paid_project_billing_status_unverified"
+ ],
+ "status": "BLOCKED_PREFLIGHT",
+ "stop_reason": "PAID_PROJECT_NOT_VERIFIED",
+ "model_availability": "NOT_MEASURED_PRE_REQUEST_GATE_BLOCKED",
+ "approvals_created": [],
+ "total_http_requests": 0,
+ "total_spent_upper_usd": 0.0,
+ "total_spent_reported_usd": "NOT_MEASURED",
+ "pilots": []
+}

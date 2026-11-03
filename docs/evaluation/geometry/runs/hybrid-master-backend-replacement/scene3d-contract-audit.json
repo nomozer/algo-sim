@@ -1,0 +1,997 @@
+{
+ "classification": "OFFLINE_DETERMINISTIC_FIXTURE_TEST",
+ "provider_calls": 0,
+ "head": "af3bea320e95df58cff215681ab747743567f766",
+ "summary": {
+  "rows": 105,
+  "by_group": {
+   "polyhedra (S-2)": {
+    "served": 17,
+    "violations": 0,
+    "not_served": 19
+   },
+   "described points (R-1)": {
+    "served": 11,
+    "violations": 0,
+    "not_served": 7
+   },
+   "constraint planes (K-1)": {
+    "served": 4,
+    "violations": 0
+   },
+   "refusals (K-1)": {
+    "not_served": 4,
+    "violations": 0
+   },
+   "defined points (K-1)": {
+    "served": 6,
+    "violations": 0
+   },
+   "clarifications (K-1)": {
+    "not_served": 2,
+    "violations": 0
+   },
+   "curved solids": {
+    "served": 17,
+    "violations": 0,
+    "not_served": 1
+   },
+   "composite solids": {
+    "served": 17,
+    "violations": 0
+   }
+  },
+  "violations": [],
+  "planner_labels_of_served": {
+   "SOURCE_EXPLICIT_SEQUENCE": 41,
+   "REGISTERED_DECOMPOSITION": 31
+  }
+ },
+ "rows": [
+  {
+   "group": "polyhedra (S-2)",
+   "id": "S2-A-I02_ve",
+   "served": true,
+   "code": null,
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": "SOURCE_EXPLICIT_SEQUENCE"
+  },
+  {
+   "group": "polyhedra (S-2)",
+   "id": "S2-A-I04_mo_phong",
+   "served": true,
+   "code": null,
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": "SOURCE_EXPLICIT_SEQUENCE"
+  },
+  {
+   "group": "polyhedra (S-2)",
+   "id": "S2-A-I05_cho_minh_xem",
+   "served": true,
+   "code": null,
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": "SOURCE_EXPLICIT_SEQUENCE"
+  },
+  {
+   "group": "polyhedra (S-2)",
+   "id": "S2-A-I08_trailing_ve",
+   "served": true,
+   "code": null,
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": "SOURCE_EXPLICIT_SEQUENCE"
+  },
+  {
+   "group": "polyhedra (S-2)",
+   "id": "S2-A-I09_trailing_mo_phong_hinh",
+   "served": true,
+   "code": null,
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": "SOURCE_EXPLICIT_SEQUENCE"
+  },
+  {
+   "group": "polyhedra (S-2)",
+   "id": "S2-A-I12_trailing_point",
+   "served": true,
+   "code": null,
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": "SOURCE_EXPLICIT_SEQUENCE"
+  },
+  {
+   "group": "polyhedra (S-2)",
+   "id": "S2-B-I07_ve_va_tinh",
+   "served": true,
+   "code": null,
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": "SOURCE_EXPLICIT_SEQUENCE"
+  },
+  {
+   "group": "polyhedra (S-2)",
+   "id": "S2-B-I10_ve_roi_tinh",
+   "served": true,
+   "code": null,
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": "SOURCE_EXPLICIT_SEQUENCE"
+  },
+  {
+   "group": "polyhedra (S-2)",
+   "id": "S2-B-I11_mo_phong_va_tinh_SC",
+   "served": true,
+   "code": null,
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": "SOURCE_EXPLICIT_SEQUENCE"
+  },
+  {
+   "group": "polyhedra (S-2)",
+   "id": "S2-B-P07_shared_intermediate_two_goals",
+   "served": true,
+   "code": null,
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": "SOURCE_EXPLICIT_SEQUENCE"
+  },
+  {
+   "group": "polyhedra (S-2)",
+   "id": "S2-B-P09_student_chain",
+   "served": true,
+   "code": null,
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": "SOURCE_EXPLICIT_SEQUENCE"
+  },
+  {
+   "group": "polyhedra (S-2)",
+   "id": "S2-B-A03_control_with_dimensions",
+   "served": true,
+   "code": null,
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": "SOURCE_EXPLICIT_SEQUENCE"
+  },
+  {
+   "group": "polyhedra (S-2)",
+   "id": "S2-C-A01_goc_chieu",
+   "served": false,
+   "code": "AMBIGUOUS_FACT",
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": null
+  },
+  {
+   "group": "polyhedra (S-2)",
+   "id": "S2-C-D05_projection_missing_target",
+   "served": false,
+   "code": "AMBIGUOUS_FACT",
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": null
+  },
+  {
+   "group": "polyhedra (S-2)",
+   "id": "S2-C-D06_unnamed_prism",
+   "served": false,
+   "code": "AMBIGUOUS_FACT",
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": null
+  },
+  {
+   "group": "polyhedra (S-2)",
+   "id": "S2-C-C04_angle_plane_missing",
+   "served": false,
+   "code": "AMBIGUOUS_FACT",
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": null
+  },
+  {
+   "group": "polyhedra (S-2)",
+   "id": "S2-C-C05_draw_then_compute",
+   "served": false,
+   "code": "AMBIGUOUS_FACT",
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": null
+  },
+  {
+   "group": "polyhedra (S-2)",
+   "id": "S2-C-C06_square_without_side",
+   "served": false,
+   "code": "AMBIGUOUS_FACT",
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": null
+  },
+  {
+   "group": "polyhedra (S-2)",
+   "id": "S2-D-D03_contradictory_length",
+   "served": false,
+   "code": "INCONSISTENT_FACTS",
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": null
+  },
+  {
+   "group": "polyhedra (S-2)",
+   "id": "S2-D-D04_two_values_same_segment",
+   "served": false,
+   "code": "INCONSISTENT_FACTS",
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": null
+  },
+  {
+   "group": "polyhedra (S-2)",
+   "id": "S2-D-D07_cube_rectangle_base",
+   "served": false,
+   "code": "INCONSISTENT_FACTS",
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": null
+  },
+  {
+   "group": "polyhedra (S-2)",
+   "id": "S2-D-D08_cube_tall",
+   "served": false,
+   "code": "INCONSISTENT_FACTS",
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": null
+  },
+  {
+   "group": "polyhedra (S-2)",
+   "id": "S2-D-D09_base_edge_perp_base",
+   "served": false,
+   "code": "INCONSISTENT_FACTS",
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": null
+  },
+  {
+   "group": "polyhedra (S-2)",
+   "id": "S2-D-D10_square_diagonal_3",
+   "served": false,
+   "code": "INCONSISTENT_FACTS",
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": null
+  },
+  {
+   "group": "polyhedra (S-2)",
+   "id": "S2-E-E01_oxyz",
+   "served": false,
+   "code": "OUT_OF_SCOPE",
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": null
+  },
+  {
+   "group": "polyhedra (S-2)",
+   "id": "S2-E-E02_truncated_pyramid",
+   "served": false,
+   "code": "OUT_OF_SCOPE",
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": null
+  },
+  {
+   "group": "polyhedra (S-2)",
+   "id": "S2-E-E03_volume_maximum",
+   "served": false,
+   "code": "OUT_OF_SCOPE",
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": null
+  },
+  {
+   "group": "polyhedra (S-2)",
+   "id": "S2-E-E06_word_problem_rate",
+   "served": false,
+   "code": "OUT_OF_SCOPE",
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": null
+  },
+  {
+   "group": "polyhedra (S-2)",
+   "id": "S2-E-E04_locus",
+   "served": false,
+   "code": "OUT_OF_SCOPE",
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": null
+  },
+  {
+   "group": "polyhedra (S-2)",
+   "id": "S2-E-E05_translation",
+   "served": false,
+   "code": "OUT_OF_SCOPE",
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": null
+  },
+  {
+   "group": "polyhedra (S-2)",
+   "id": "S2-F-S02_vuong_goc_day",
+   "served": true,
+   "code": null,
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": "SOURCE_EXPLICIT_SEQUENCE"
+  },
+  {
+   "group": "polyhedra (S-2)",
+   "id": "S2-F-S03_symbol_perp",
+   "served": true,
+   "code": null,
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": "SOURCE_EXPLICIT_SEQUENCE"
+  },
+  {
+   "group": "polyhedra (S-2)",
+   "id": "S2-F-S07_typo_tone",
+   "served": false,
+   "code": "UNGROUNDED_VALUE",
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": null
+  },
+  {
+   "group": "polyhedra (S-2)",
+   "id": "S2-F-S08_altitude_wording",
+   "served": true,
+   "code": null,
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": "SOURCE_EXPLICIT_SEQUENCE"
+  },
+  {
+   "group": "polyhedra (S-2)",
+   "id": "S2-F-F05_kc_mp_shorthand",
+   "served": true,
+   "code": null,
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": "SOURCE_EXPLICIT_SEQUENCE"
+  },
+  {
+   "group": "polyhedra (S-2)",
+   "id": "S2-F-F06_dt_mp_shorthand",
+   "served": true,
+   "code": null,
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": "SOURCE_EXPLICIT_SEQUENCE"
+  },
+  {
+   "group": "described points (R-1)",
+   "id": "R1-A01",
+   "served": true,
+   "code": null,
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": "SOURCE_EXPLICIT_SEQUENCE"
+  },
+  {
+   "group": "described points (R-1)",
+   "id": "R1-A02",
+   "served": true,
+   "code": null,
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": "REGISTERED_DECOMPOSITION"
+  },
+  {
+   "group": "described points (R-1)",
+   "id": "R1-A03",
+   "served": true,
+   "code": null,
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": "SOURCE_EXPLICIT_SEQUENCE"
+  },
+  {
+   "group": "described points (R-1)",
+   "id": "R1-A04",
+   "served": true,
+   "code": null,
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": "SOURCE_EXPLICIT_SEQUENCE"
+  },
+  {
+   "group": "described points (R-1)",
+   "id": "R1-A05",
+   "served": true,
+   "code": null,
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": "SOURCE_EXPLICIT_SEQUENCE"
+  },
+  {
+   "group": "described points (R-1)",
+   "id": "R1-B01",
+   "served": true,
+   "code": null,
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": "REGISTERED_DECOMPOSITION"
+  },
+  {
+   "group": "described points (R-1)",
+   "id": "R1-B02",
+   "served": true,
+   "code": null,
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": "REGISTERED_DECOMPOSITION"
+  },
+  {
+   "group": "described points (R-1)",
+   "id": "R1-C01",
+   "served": true,
+   "code": null,
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": "SOURCE_EXPLICIT_SEQUENCE"
+  },
+  {
+   "group": "described points (R-1)",
+   "id": "R1-C02",
+   "served": true,
+   "code": null,
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": "REGISTERED_DECOMPOSITION"
+  },
+  {
+   "group": "described points (R-1)",
+   "id": "R1-D01",
+   "served": true,
+   "code": null,
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": "SOURCE_EXPLICIT_SEQUENCE"
+  },
+  {
+   "group": "described points (R-1)",
+   "id": "R1-D02",
+   "served": true,
+   "code": null,
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": "SOURCE_EXPLICIT_SEQUENCE"
+  },
+  {
+   "group": "described points (R-1)",
+   "id": "R1-E01",
+   "served": false,
+   "code": "AMBIGUOUS_FACT",
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": null
+  },
+  {
+   "group": "described points (R-1)",
+   "id": "R1-E02",
+   "served": false,
+   "code": "AMBIGUOUS_FACT",
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": null
+  },
+  {
+   "group": "described points (R-1)",
+   "id": "R1-F01",
+   "served": false,
+   "code": "BRIDGE_UNSUPPORTED_DESCRIBED_POINT",
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": null
+  },
+  {
+   "group": "described points (R-1)",
+   "id": "R1-F02",
+   "served": false,
+   "code": "BRIDGE_UNSUPPORTED_DESCRIBED_POINT",
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": null
+  },
+  {
+   "group": "described points (R-1)",
+   "id": "R1-F03",
+   "served": false,
+   "code": "OUT_OF_SCOPE",
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": null
+  },
+  {
+   "group": "described points (R-1)",
+   "id": "R1-G01",
+   "served": false,
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": null
+  },
+  {
+   "group": "described points (R-1)",
+   "id": "R1-G02",
+   "served": false,
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": null
+  },
+  {
+   "group": "constraint planes (K-1)",
+   "id": "K-A01",
+   "served": true,
+   "code": null,
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": "REGISTERED_DECOMPOSITION"
+  },
+  {
+   "group": "constraint planes (K-1)",
+   "id": "K-A02",
+   "served": true,
+   "code": null,
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": "REGISTERED_DECOMPOSITION"
+  },
+  {
+   "group": "constraint planes (K-1)",
+   "id": "K-A03",
+   "served": true,
+   "code": null,
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": "REGISTERED_DECOMPOSITION"
+  },
+  {
+   "group": "constraint planes (K-1)",
+   "id": "K-A04",
+   "served": true,
+   "code": null,
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": "REGISTERED_DECOMPOSITION"
+  },
+  {
+   "group": "refusals (K-1)",
+   "id": "K-B01",
+   "served": false,
+   "code": "PLANE_NOT_UNIQUE",
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": null
+  },
+  {
+   "group": "refusals (K-1)",
+   "id": "K-B02",
+   "served": false,
+   "code": "INCONSISTENT_FACTS",
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": null
+  },
+  {
+   "group": "defined points (K-1)",
+   "id": "K-C01",
+   "served": true,
+   "code": null,
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": "REGISTERED_DECOMPOSITION"
+  },
+  {
+   "group": "defined points (K-1)",
+   "id": "K-C02",
+   "served": true,
+   "code": null,
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": "REGISTERED_DECOMPOSITION"
+  },
+  {
+   "group": "defined points (K-1)",
+   "id": "K-C03",
+   "served": true,
+   "code": null,
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": "REGISTERED_DECOMPOSITION"
+  },
+  {
+   "group": "defined points (K-1)",
+   "id": "K-C04",
+   "served": true,
+   "code": null,
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": "REGISTERED_DECOMPOSITION"
+  },
+  {
+   "group": "defined points (K-1)",
+   "id": "K-C05",
+   "served": true,
+   "code": null,
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": "REGISTERED_DECOMPOSITION"
+  },
+  {
+   "group": "defined points (K-1)",
+   "id": "K-C06",
+   "served": true,
+   "code": null,
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": "REGISTERED_DECOMPOSITION"
+  },
+  {
+   "group": "refusals (K-1)",
+   "id": "K-D01",
+   "served": false,
+   "code": "DEGENERATE_POINTS",
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": null
+  },
+  {
+   "group": "refusals (K-1)",
+   "id": "K-D02",
+   "served": false,
+   "code": "DEGENERATE_POINTS",
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": null
+  },
+  {
+   "group": "clarifications (K-1)",
+   "id": "K-E01",
+   "served": false,
+   "code": "AMBIGUOUS_FACT",
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": null
+  },
+  {
+   "group": "clarifications (K-1)",
+   "id": "K-E02",
+   "served": false,
+   "code": "AMBIGUOUS_FACT",
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": null
+  },
+  {
+   "group": "curved solids",
+   "id": "cyl.V",
+   "served": true,
+   "code": null,
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": "SOURCE_EXPLICIT_SEQUENCE"
+  },
+  {
+   "group": "curved solids",
+   "id": "cyl.Sxq",
+   "served": true,
+   "code": null,
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": "SOURCE_EXPLICIT_SEQUENCE"
+  },
+  {
+   "group": "curved solids",
+   "id": "cyl.Stp",
+   "served": true,
+   "code": null,
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": "SOURCE_EXPLICIT_SEQUENCE"
+  },
+  {
+   "group": "curved solids",
+   "id": "cyl.r",
+   "served": true,
+   "code": null,
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": "SOURCE_EXPLICIT_SEQUENCE"
+  },
+  {
+   "group": "curved solids",
+   "id": "cone.V",
+   "served": true,
+   "code": null,
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": "SOURCE_EXPLICIT_SEQUENCE"
+  },
+  {
+   "group": "curved solids",
+   "id": "cone.Sxq",
+   "served": true,
+   "code": null,
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": "SOURCE_EXPLICIT_SEQUENCE"
+  },
+  {
+   "group": "curved solids",
+   "id": "cone.Stp",
+   "served": true,
+   "code": null,
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": "SOURCE_EXPLICIT_SEQUENCE"
+  },
+  {
+   "group": "curved solids",
+   "id": "coneL.V",
+   "served": true,
+   "code": null,
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": "SOURCE_EXPLICIT_SEQUENCE"
+  },
+  {
+   "group": "curved solids",
+   "id": "coneL.Sxq",
+   "served": true,
+   "code": null,
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": "SOURCE_EXPLICIT_SEQUENCE"
+  },
+  {
+   "group": "curved solids",
+   "id": "coneR.Sxq",
+   "served": true,
+   "code": null,
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": "SOURCE_EXPLICIT_SEQUENCE"
+  },
+  {
+   "group": "curved solids",
+   "id": "coneR.V",
+   "served": true,
+   "code": null,
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": "SOURCE_EXPLICIT_SEQUENCE"
+  },
+  {
+   "group": "curved solids",
+   "id": "sph.S",
+   "served": true,
+   "code": null,
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": "SOURCE_EXPLICIT_SEQUENCE"
+  },
+  {
+   "group": "curved solids",
+   "id": "sph.V",
+   "served": true,
+   "code": null,
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": "SOURCE_EXPLICIT_SEQUENCE"
+  },
+  {
+   "group": "curved solids",
+   "id": "cylR.V",
+   "served": true,
+   "code": null,
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": "SOURCE_EXPLICIT_SEQUENCE"
+  },
+  {
+   "group": "curved solids",
+   "id": "cylR.Sxq",
+   "served": true,
+   "code": null,
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": "SOURCE_EXPLICIT_SEQUENCE"
+  },
+  {
+   "group": "curved solids",
+   "id": "cylR.Stp",
+   "served": false,
+   "code": "EXACT_DOMAIN_EXCEEDED",
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": null
+  },
+  {
+   "group": "curved solids",
+   "id": "cylTop.V",
+   "served": true,
+   "code": null,
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": "SOURCE_EXPLICIT_SEQUENCE"
+  },
+  {
+   "group": "curved solids",
+   "id": "coneOf.V",
+   "served": true,
+   "code": null,
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": "SOURCE_EXPLICIT_SEQUENCE"
+  },
+  {
+   "group": "composite solids",
+   "id": "cr.cube_2.inscribed.radius",
+   "served": true,
+   "code": null,
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": "REGISTERED_DECOMPOSITION"
+  },
+  {
+   "group": "composite solids",
+   "id": "cr.cube_2.inscribed.area",
+   "served": true,
+   "code": null,
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": "REGISTERED_DECOMPOSITION"
+  },
+  {
+   "group": "composite solids",
+   "id": "cr.cube_2.inscribed.volume_rel_v2",
+   "served": true,
+   "code": null,
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": "REGISTERED_DECOMPOSITION"
+  },
+  {
+   "group": "composite solids",
+   "id": "cr.cube_2.circumscribes_rel_v2",
+   "served": true,
+   "code": null,
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": "REGISTERED_DECOMPOSITION"
+  },
+  {
+   "group": "composite solids",
+   "id": "cr.cube_2.dual_spheres.multi_goal",
+   "served": true,
+   "code": null,
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": "REGISTERED_DECOMPOSITION"
+  },
+  {
+   "group": "composite solids",
+   "id": "cr.pyr_sq_6_4.inscribed.radius",
+   "served": true,
+   "code": null,
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": "REGISTERED_DECOMPOSITION"
+  },
+  {
+   "group": "composite solids",
+   "id": "cr.pyr_sq_6_4.inscribed.all_faces_wording",
+   "served": true,
+   "code": null,
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": "REGISTERED_DECOMPOSITION"
+  },
+  {
+   "group": "composite solids",
+   "id": "cr.pyr_sq_6_4.dual_spheres.distinct_centers",
+   "served": true,
+   "code": null,
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": "REGISTERED_DECOMPOSITION"
+  },
+  {
+   "group": "composite solids",
+   "id": "cr.prism_345_h2.inscribed.area",
+   "served": true,
+   "code": null,
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": "REGISTERED_DECOMPOSITION"
+  },
+  {
+   "group": "composite solids",
+   "id": "cr.prism_345_h2.dual_spheres.multi_goal",
+   "served": true,
+   "code": null,
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": "REGISTERED_DECOMPOSITION"
+  },
+  {
+   "group": "composite solids",
+   "id": "cr.tetra_asym_132.inscribed.named_center",
+   "served": true,
+   "code": null,
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": "REGISTERED_DECOMPOSITION"
+  },
+  {
+   "group": "composite solids",
+   "id": "cr.tetra_asym_132.tangent_plane_with_contact_point",
+   "served": true,
+   "code": null,
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": "REGISTERED_DECOMPOSITION"
+  },
+  {
+   "group": "composite solids",
+   "id": "cr.shared_base_pyramids_plus_inscribed_sphere",
+   "served": true,
+   "code": null,
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": "REGISTERED_DECOMPOSITION"
+  },
+  {
+   "group": "composite solids",
+   "id": "cr.cube_section_plus_inscribed_sphere",
+   "served": true,
+   "code": null,
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": "REGISTERED_DECOMPOSITION"
+  },
+  {
+   "group": "composite solids",
+   "id": "cr.cylinder_r3_h6.inscribed.volume",
+   "served": true,
+   "code": null,
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": "REGISTERED_DECOMPOSITION"
+  },
+  {
+   "group": "composite solids",
+   "id": "cr.cylinder_r3_h6.dual_spheres",
+   "served": true,
+   "code": null,
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": "REGISTERED_DECOMPOSITION"
+  },
+  {
+   "group": "composite solids",
+   "id": "cr.cone_r3_h4.dual_spheres",
+   "served": true,
+   "code": null,
+   "violations": [],
+   "stage_latency": "UNKNOWN_NOT_INSTRUMENTED",
+   "planner_label": "REGISTERED_DECOMPOSITION"
+  }
+ ]
+}

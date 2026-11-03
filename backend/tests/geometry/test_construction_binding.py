@@ -91,9 +91,7 @@ HOP_DE = "Cho hình hộp chữ nhật ABCD.A'B'C'D' có AB = 3, AD = 4, AA' = 5
 
 def _hop(van: str, them: list[dict], of: str, wrt: str):
     """Hình hộp chữ nhật (họ W14, chương trình compiler) + `van`, thêm `them` + d_kq = d(of, wrt)."""
-    from tests.geometry import test_cuboid_cube_production_route as M
-
-    t0, pay0 = M._cuboid_p01_payload()
+    t0, pay0 = W._hop_chu_nhat_payload()
     raw = W.chuong_trinh(W.hop_dong(t0, pay0))
     pay = copy.deepcopy(pay0)
     pay["obligations"] = [{"kind": "distance", "container": wrt, "witness": "d_kq", "wrt": of}]
@@ -272,12 +270,10 @@ def test_diem_phu_tro_mang_xuat_xu_phu_tro_diem_cua_de_mang_quan_he():
 # ── nguyên nhân và lời cho người học (§16.4) ─────────────────────────────────────────────────
 
 def test_ma_chua_doi_chieu_co_nguyen_nhan_chua_ro_va_khong_gui_di_sua():
-    from app.ai.pipeline import KHONG_SUA_NGUON
     from app.simulation.semantic_program.refusal_cause import theo_ma
 
     assert theo_ma("CONSTRUCTION_BINDING_UNVERIFIED") == "UNKNOWN"
     assert theo_ma("CONSTRUCTION_NOT_TEXT_BOUND") == "CONSTRUCTION"
-    assert "CONSTRUCTION_BINDING_UNVERIFIED" in KHONG_SUA_NGUON
 
 
 def _loi(**env) -> str:

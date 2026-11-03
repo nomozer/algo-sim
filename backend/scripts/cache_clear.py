@@ -71,7 +71,12 @@ def main() -> int:
             return 0
 
         if a.de:
+            # LLM_ONLY rows are keyed by the normalized text; Route D rows (`ROUTE_D_CACHE_POLICY`) by an identity that
+            # also binds the recorded extraction, so they are matched by their EXACT stored text (architecture review M-4).
             n = s.query(SimulationCache).filter_by(key=_cache_key(a.de)).delete()
+            n += s.query(SimulationCache).filter(SimulationCache.problem_text == a.de,
+                                                 SimulationCache.policy_version.like("%:route-d")).delete(
+                synchronize_session=False)
             if n == 0:
                 # Khoá băm theo text ĐÃ CHUẨN HOÁ — lệch một dấu cách là lệch
                 # khoá. Nói ra, đừng để người dùng tưởng đã xoá.

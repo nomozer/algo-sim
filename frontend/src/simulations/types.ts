@@ -408,4 +408,8 @@ export interface SimulationEnvelope {
   notes: string | null;
   /** Kết quả stage analyze của pipeline (nếu đến từ /api/analyze) — chỉ để hiển thị. */
   analysis?: unknown;
+  /** Đề NGUYÊN VĂN người học đã gửi (gõ tay hoặc đã duyệt từ ảnh), do `store.loadEnvelope` đóng dấu — chỉ để hiển thị
+   *  ở «Đề bài». Nằm TRONG envelope để Lịch sử, Thư viện và bài giao cho lớp mang theo. `description` không phải đề:
+   *  tuyến Hybrid đặt ở đó một câu miễn trừ, nên đọc nó làm đề là mất mọi giả thiết (⊥, ∥, số đo). */
+  problem_statement?: string | null;
 }

@@ -35,7 +35,7 @@
 - **Ranh giới LLM và Tất định:** LLM chỉ trích xuất ngữ nghĩa và cấu trúc dữ kiện (`RequestContract`). Engine tất định sở hữu hoàn toàn trạng thái, tọa độ và tính toán hình học.
 - **Không hardcode:** Tuyệt đối không hardcode case ID, nhãn đỉnh, dữ kiện đề bài, hoặc đáp số kỳ vọng vào mã sản phẩm.
 - **Fail-closed:** Bất kỳ mâu thuẫn dữ kiện nào trong đề bài phải dẫn đến từ chối an toàn (`unsupported` / `inconsistent`), không xấp xỉ gây hiểu lầm.
-- **Chế độ mặc định:** Mặc định của sản phẩm hiện tại vẫn là `LLM_ONLY`. Tuyệt đối không tự ý đổi default mode sang compiler-first khi chưa vượt qua đủ 20 cổng tại [`docs/MIGRATION_CHECKLIST.md`](docs/MIGRATION_CHECKLIST.md).
+- **Chế độ mặc định:** Tuyến sản phẩm mặc định của `POST /api/analyze` là **Hybrid `/4`** (`HYBRID_ROUTE_MODE = live`; `staging-replay` chỉ dành cho dev/test offline; thực thi `LLM_ONLY` đã gỡ bỏ và tuyệt đối không có fallback ngầm). Trạng thái các cổng chuyển đổi và giới hạn kiểm chứng độc lập được theo dõi tại [`docs/MIGRATION_CHECKLIST.md`](docs/MIGRATION_CHECKLIST.md) và [`docs/CURRENT_STATE.md`](docs/CURRENT_STATE.md).
 
 ---
 

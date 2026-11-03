@@ -7,7 +7,7 @@ so the route sees exactly what a provider would return for that text. DEVELOPMEN
 output, not a language-understanding measurement. 0 provider calls.
 
     cd backend && PYTHONIOENCODING=utf-8 .venv/Scripts/python.exe scripts/export_hybrid_v2_local_corpus.py --out <file>
-    # then: HYBRID_V2_LOCAL=offline-replay HYBRID_V2_LOCAL_REPLAY_CORPUS=<file> (loopback clients only)
+    # then: HYBRID_ROUTE_MODE=staging-replay=offline-replay HYBRID_ROUTE_MODE=staging-replay_REPLAY_CORPUS=<file> (loopback clients only)
 """
 from __future__ import annotations
 

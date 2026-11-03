@@ -1,0 +1,484 @@
+{
+ "schema": "pedagogical-prefix-ui-audit/1",
+ "classification": "REAL_BROWSER_AND_UVICORN_STAGING_REPLAY_PRE_FIX",
+ "source_commit": "5abf8c20",
+ "live_provider_calls": 0,
+ "analyze_calls": 30,
+ "page_or_console_errors": 0,
+ "cases_total": 30,
+ "stages": [
+  "load",
+  "steps (every Bước sau)",
+  "steps_panel",
+  "show_all",
+  "quantities (every quantity inspector)",
+  "tree_inspector (every component inspector)"
+ ],
+ "answer_statement_rule": "(=|bằng|là) <rendered Mode B value or oracle value> not followed by a digit, fraction, radical or π",
+ "raw_dom_dump_sha256": "ac6884959b7fbccb70cfe7cb0de2c63f94387f2775ffd557ab48313c755ba5f2",
+ "raw_dom_dump": "NOT_COMMITTED (session scratchpad)",
+ "summary": {
+  "answer_statements_in_student_mode": 0,
+  "autoplay": 0,
+  "opened_at_step_1": 30,
+  "stage_observations": 0,
+  "de_panel_is_submitted_text": 0,
+  "mode_b_shows_results": 29
+ },
+ "cases": [
+  {
+   "case_id": "cr.cube_2.dual_spheres.multi_goal",
+   "category": "01_polyhedra",
+   "initial_step": "Bước 1/17",
+   "final_step": "Bước 17/17",
+   "autoplay": false,
+   "stage_observations": 0,
+   "de_panel_is_submitted_text": false,
+   "de_panel_text": "Quan sát mô hình dựng từ dữ kiện; các kiểm tra trên hình không phải chứng minh tổng quát.",
+   "mode_b_requested_results": [
+    "12π",
+    "4π",
+    "V(ABCD.A′B′C′D′) = 8"
+   ],
+   "student_mode_answer_statements": [],
+   "error": null
+  },
+  {
+   "case_id": "cr.tetra_asym_132.inscribed.named_center",
+   "category": "01_polyhedra",
+   "initial_step": "Bước 1/7",
+   "final_step": "Bước 7/7",
+   "autoplay": false,
+   "stage_observations": 0,
+   "de_panel_is_submitted_text": false,
+   "de_panel_text": "Quan sát mô hình dựng từ dữ kiện; các kiểm tra trên hình không phải chứng minh tổng quát.",
+   "mode_b_requested_results": [
+    "d(A, I) = √3/3",
+    "1/3"
+   ],
+   "student_mode_answer_statements": [],
+   "error": null
+  },
+  {
+   "case_id": "S2-B-I07_ve_va_tinh",
+   "category": "02_pyramids",
+   "initial_step": "Bước 1/4",
+   "final_step": "Bước 4/4",
+   "autoplay": false,
+   "stage_observations": 0,
+   "de_panel_is_submitted_text": false,
+   "de_panel_text": "Quan sát mô hình dựng từ dữ kiện; các kiểm tra trên hình không phải chứng minh tổng quát.",
+   "mode_b_requested_results": [
+    "V(S.ABCD) = 8/3"
+   ],
+   "student_mode_answer_statements": [],
+   "error": null
+  },
+  {
+   "case_id": "S2-F-S02_vuong_goc_day",
+   "category": "02_pyramids",
+   "initial_step": "Bước 1/4",
+   "final_step": "Bước 4/4",
+   "autoplay": false,
+   "stage_observations": 0,
+   "de_panel_is_submitted_text": false,
+   "de_panel_text": "Quan sát mô hình dựng từ dữ kiện; các kiểm tra trên hình không phải chứng minh tổng quát.",
+   "mode_b_requested_results": [
+    "V(S.ABCD) = 8/3"
+   ],
+   "student_mode_answer_statements": [],
+   "error": null
+  },
+  {
+   "case_id": "S2-B-A03_control_with_dimensions",
+   "category": "03_prisms",
+   "initial_step": "Bước 1/6",
+   "final_step": "Bước 6/6",
+   "autoplay": false,
+   "stage_observations": 0,
+   "de_panel_is_submitted_text": false,
+   "de_panel_text": "Quan sát mô hình dựng từ dữ kiện; các kiểm tra trên hình không phải chứng minh tổng quát.",
+   "mode_b_requested_results": [
+    "V(ABC.A′B′C′) = √3"
+   ],
+   "student_mode_answer_statements": [],
+   "error": null
+  },
+  {
+   "case_id": "cr.prism_345_h2.inscribed.area",
+   "category": "03_prisms",
+   "initial_step": "Bước 1/8",
+   "final_step": "Bước 8/8",
+   "autoplay": false,
+   "stage_observations": 0,
+   "de_panel_is_submitted_text": false,
+   "de_panel_text": "Quan sát mô hình dựng từ dữ kiện; các kiểm tra trên hình không phải chứng minh tổng quát.",
+   "mode_b_requested_results": [
+    "4π"
+   ],
+   "student_mode_answer_statements": [],
+   "error": null
+  },
+  {
+   "case_id": "S2-F-F05_kc_mp_shorthand",
+   "category": "04_distance_and_angle",
+   "initial_step": "Bước 1/5",
+   "final_step": "Bước 5/5",
+   "autoplay": false,
+   "stage_observations": 0,
+   "de_panel_is_submitted_text": false,
+   "de_panel_text": "Quan sát mô hình dựng từ dữ kiện; các kiểm tra trên hình không phải chứng minh tổng quát.",
+   "mode_b_requested_results": [
+    "d(A, (SBC)) = √2"
+   ],
+   "student_mode_answer_statements": [],
+   "error": null
+  },
+  {
+   "case_id": "S2-F-F06_dt_mp_shorthand",
+   "category": "04_distance_and_angle",
+   "initial_step": "Bước 1/6",
+   "final_step": "Bước 6/6",
+   "autoplay": false,
+   "stage_observations": 0,
+   "de_panel_is_submitted_text": false,
+   "de_panel_text": "Quan sát mô hình dựng từ dữ kiện; các kiểm tra trên hình không phải chứng minh tổng quát.",
+   "mode_b_requested_results": [
+    "cos²(SC, (ABCD)) = 2/3"
+   ],
+   "student_mode_answer_statements": [],
+   "error": null
+  },
+  {
+   "case_id": "R1-D01",
+   "category": "04_distance_and_angle",
+   "initial_step": "Bước 1/6",
+   "final_step": "Bước 6/6",
+   "autoplay": false,
+   "stage_observations": 0,
+   "de_panel_is_submitted_text": false,
+   "de_panel_text": "Quan sát mô hình dựng từ dữ kiện; các kiểm tra trên hình không phải chứng minh tổng quát.",
+   "mode_b_requested_results": [
+    "d(M, A′) = √41/2"
+   ],
+   "student_mode_answer_statements": [],
+   "error": null
+  },
+  {
+   "case_id": "R1-A05",
+   "category": "05_area_and_volume",
+   "initial_step": "Bước 1/6",
+   "final_step": "Bước 6/6",
+   "autoplay": false,
+   "stage_observations": 0,
+   "de_panel_is_submitted_text": false,
+   "de_panel_text": "Quan sát mô hình dựng từ dữ kiện; các kiểm tra trên hình không phải chứng minh tổng quát.",
+   "mode_b_requested_results": [
+    "S(MSC) = √6"
+   ],
+   "student_mode_answer_statements": [],
+   "error": null
+  },
+  {
+   "case_id": "CORPUS-DEV10-prism-area",
+   "category": "05_area_and_volume",
+   "initial_step": "Bước 1/17",
+   "final_step": "Bước 17/17",
+   "autoplay": false,
+   "stage_observations": 0,
+   "de_panel_is_submitted_text": false,
+   "de_panel_text": "Quan sát mô hình dựng từ dữ kiện; các kiểm tra trên hình không phải chứng minh tổng quát.",
+   "mode_b_requested_results": [
+    "a²√3/4"
+   ],
+   "student_mode_answer_statements": [],
+   "error": null
+  },
+  {
+   "case_id": "PARTIAL-1of2-construct",
+   "category": "06_plane_sections",
+   "initial_step": "Bước 1/17",
+   "final_step": "Bước 17/17",
+   "autoplay": false,
+   "stage_observations": 0,
+   "de_panel_is_submitted_text": false,
+   "de_panel_text": "Quan sát mô hình dựng từ dữ kiện; các kiểm tra trên hình không phải chứng minh tổng quát.",
+   "mode_b_requested_results": [],
+   "student_mode_answer_statements": [],
+   "error": null
+  },
+  {
+   "case_id": "R1-C02",
+   "category": "06_plane_sections",
+   "initial_step": "Bước 1/15",
+   "final_step": "Bước 15/15",
+   "autoplay": false,
+   "stage_observations": 0,
+   "de_panel_is_submitted_text": false,
+   "de_panel_text": "Quan sát mô hình dựng từ dữ kiện; các kiểm tra trên hình không phải chứng minh tổng quát.",
+   "mode_b_requested_results": [
+    "3/2"
+   ],
+   "student_mode_answer_statements": [],
+   "error": null
+  },
+  {
+   "case_id": "sph.V",
+   "category": "07_curved_solids",
+   "initial_step": "Bước 1/2",
+   "final_step": "Bước 2/2",
+   "autoplay": false,
+   "stage_observations": 0,
+   "de_panel_is_submitted_text": false,
+   "de_panel_text": "Quan sát mô hình dựng từ dữ kiện; các kiểm tra trên hình không phải chứng minh tổng quát.",
+   "mode_b_requested_results": [
+    "36π"
+   ],
+   "student_mode_answer_statements": [],
+   "error": null
+  },
+  {
+   "case_id": "cyl.Stp",
+   "category": "07_curved_solids",
+   "initial_step": "Bước 1/4",
+   "final_step": "Bước 4/4",
+   "autoplay": false,
+   "stage_observations": 0,
+   "de_panel_is_submitted_text": false,
+   "de_panel_text": "Quan sát mô hình dựng từ dữ kiện; các kiểm tra trên hình không phải chứng minh tổng quát.",
+   "mode_b_requested_results": [
+    "48π"
+   ],
+   "student_mode_answer_statements": [],
+   "error": null
+  },
+  {
+   "case_id": "coneR.Sxq",
+   "category": "07_curved_solids",
+   "initial_step": "Bước 1/2",
+   "final_step": "Bước 2/2",
+   "autoplay": false,
+   "stage_observations": 0,
+   "de_panel_is_submitted_text": false,
+   "de_panel_text": "Quan sát mô hình dựng từ dữ kiện; các kiểm tra trên hình không phải chứng minh tổng quát.",
+   "mode_b_requested_results": [
+    "4π√2"
+   ],
+   "student_mode_answer_statements": [],
+   "error": null
+  },
+  {
+   "case_id": "cone.par.S",
+   "category": "07_curved_solids",
+   "initial_step": "Bước 1/4",
+   "final_step": "Bước 4/4",
+   "autoplay": false,
+   "stage_observations": 0,
+   "de_panel_is_submitted_text": false,
+   "de_panel_text": "Quan sát mô hình dựng từ dữ kiện; các kiểm tra trên hình không phải chứng minh tổng quát.",
+   "mode_b_requested_results": [
+    "81π/16"
+   ],
+   "student_mode_answer_statements": [],
+   "error": null
+  },
+  {
+   "case_id": "cr.shared_base_pyramids_plus_inscribed_sphere",
+   "category": "08_multi_object_geometry",
+   "initial_step": "Bước 1/9",
+   "final_step": "Bước 9/9",
+   "autoplay": false,
+   "stage_observations": 0,
+   "de_panel_is_submitted_text": false,
+   "de_panel_text": "Quan sát mô hình dựng từ dữ kiện; các kiểm tra trên hình không phải chứng minh tổng quát.",
+   "mode_b_requested_results": [
+    "9π",
+    "V(T.ABCD) = 72"
+   ],
+   "student_mode_answer_statements": [],
+   "error": null
+  },
+  {
+   "case_id": "cr.cube_section_plus_inscribed_sphere",
+   "category": "08_multi_object_geometry",
+   "initial_step": "Bước 1/17",
+   "final_step": "Bước 17/17",
+   "autoplay": false,
+   "stage_observations": 0,
+   "de_panel_is_submitted_text": false,
+   "de_panel_text": "Quan sát mô hình dựng từ dữ kiện; các kiểm tra trên hình không phải chứng minh tổng quát.",
+   "mode_b_requested_results": [
+    "4π/3",
+    "4"
+   ],
+   "student_mode_answer_statements": [],
+   "error": null
+  },
+  {
+   "case_id": "cone.residual",
+   "category": "08_multi_object_geometry",
+   "initial_step": "Bước 1/5",
+   "final_step": "Bước 5/5",
+   "autoplay": false,
+   "stage_observations": 0,
+   "de_panel_is_submitted_text": false,
+   "de_panel_text": "Quan sát mô hình dựng từ dữ kiện; các kiểm tra trên hình không phải chứng minh tổng quát.",
+   "mode_b_requested_results": [
+    "21π/2"
+   ],
+   "student_mode_answer_statements": [],
+   "error": null
+  },
+  {
+   "case_id": "R1-A01",
+   "category": "09_described_points",
+   "initial_step": "Bước 1/6",
+   "final_step": "Bước 6/6",
+   "autoplay": false,
+   "stage_observations": 0,
+   "de_panel_is_submitted_text": false,
+   "de_panel_text": "Quan sát mô hình dựng từ dữ kiện; các kiểm tra trên hình không phải chứng minh tổng quát.",
+   "mode_b_requested_results": [
+    "d(M, (SCD)) = √2"
+   ],
+   "student_mode_answer_statements": [],
+   "error": null
+  },
+  {
+   "case_id": "R1-A02",
+   "category": "09_described_points",
+   "initial_step": "Bước 1/8",
+   "final_step": "Bước 8/8",
+   "autoplay": false,
+   "stage_observations": 0,
+   "de_panel_is_submitted_text": false,
+   "de_panel_text": "Quan sát mô hình dựng từ dữ kiện; các kiểm tra trên hình không phải chứng minh tổng quát.",
+   "mode_b_requested_results": [
+    "d(H, H1) = 2√6/3"
+   ],
+   "student_mode_answer_statements": [],
+   "error": null
+  },
+  {
+   "case_id": "K-A01",
+   "category": "10_constrained_planes",
+   "initial_step": "Bước 1/15",
+   "final_step": "Bước 15/15",
+   "autoplay": false,
+   "stage_observations": 0,
+   "de_panel_is_submitted_text": false,
+   "de_panel_text": "Quan sát mô hình dựng từ dữ kiện; các kiểm tra trên hình không phải chứng minh tổng quát.",
+   "mode_b_requested_results": [
+    "S(ABNH) = 3√2/2"
+   ],
+   "student_mode_answer_statements": [],
+   "error": null
+  },
+  {
+   "case_id": "K-A03",
+   "category": "10_constrained_planes",
+   "initial_step": "Bước 1/13",
+   "final_step": "Bước 13/13",
+   "autoplay": false,
+   "stage_observations": 0,
+   "de_panel_is_submitted_text": false,
+   "de_panel_text": "Quan sát mô hình dựng từ dữ kiện; các kiểm tra trên hình không phải chứng minh tổng quát.",
+   "mode_b_requested_results": [
+    "S(B′C′A) = √61"
+   ],
+   "student_mode_answer_statements": [],
+   "error": null
+  },
+  {
+   "case_id": "R1-B01",
+   "category": "11_orthocenter_and_circumcenter",
+   "initial_step": "Bước 1/14",
+   "final_step": "Bước 14/14",
+   "autoplay": false,
+   "stage_observations": 0,
+   "de_panel_is_submitted_text": false,
+   "de_panel_text": "Quan sát mô hình dựng từ dữ kiện; các kiểm tra trên hình không phải chứng minh tổng quát.",
+   "mode_b_requested_results": [
+    "2304/625"
+   ],
+   "student_mode_answer_statements": [],
+   "error": null
+  },
+  {
+   "case_id": "K-C01",
+   "category": "11_orthocenter_and_circumcenter",
+   "initial_step": "Bước 1/14",
+   "final_step": "Bước 14/14",
+   "autoplay": false,
+   "stage_observations": 0,
+   "de_panel_is_submitted_text": false,
+   "de_panel_text": "Quan sát mô hình dựng từ dữ kiện; các kiểm tra trên hình không phải chứng minh tổng quát.",
+   "mode_b_requested_results": [
+    "d(I, (SAB)) = 1"
+   ],
+   "student_mode_answer_statements": [],
+   "error": null
+  },
+  {
+   "case_id": "K-C02",
+   "category": "11_orthocenter_and_circumcenter",
+   "initial_step": "Bước 1/17",
+   "final_step": "Bước 17/17",
+   "autoplay": false,
+   "stage_observations": 0,
+   "de_panel_is_submitted_text": false,
+   "de_panel_text": "Quan sát mô hình dựng từ dữ kiện; các kiểm tra trên hình không phải chứng minh tổng quát.",
+   "mode_b_requested_results": [
+    "d(I, (ABCD)) = 1/4"
+   ],
+   "student_mode_answer_statements": [],
+   "error": null
+  },
+  {
+   "case_id": "S2-B-P07_shared_intermediate_two_goals",
+   "category": "12_registered_multi_function_composition",
+   "initial_step": "Bước 1/6",
+   "final_step": "Bước 6/6",
+   "autoplay": false,
+   "stage_observations": 0,
+   "de_panel_is_submitted_text": false,
+   "de_panel_text": "Quan sát mô hình dựng từ dữ kiện; các kiểm tra trên hình không phải chứng minh tổng quát.",
+   "mode_b_requested_results": [
+    "d(M, (ABCD)) = 1",
+    "d(A, M) = √3"
+   ],
+   "student_mode_answer_statements": [],
+   "error": null
+  },
+  {
+   "case_id": "S2-B-P09_student_chain",
+   "category": "12_registered_multi_function_composition",
+   "initial_step": "Bước 1/5",
+   "final_step": "Bước 5/5",
+   "autoplay": false,
+   "stage_observations": 0,
+   "de_panel_is_submitted_text": false,
+   "de_panel_text": "Quan sát mô hình dựng từ dữ kiện; các kiểm tra trên hình không phải chứng minh tổng quát.",
+   "mode_b_requested_results": [
+    "d(A, M) = √3"
+   ],
+   "student_mode_answer_statements": [],
+   "error": null
+  },
+  {
+   "case_id": "K-C03",
+   "category": "12_registered_multi_function_composition",
+   "initial_step": "Bước 1/16",
+   "final_step": "Bước 16/16",
+   "autoplay": false,
+   "stage_observations": 0,
+   "de_panel_is_submitted_text": false,
+   "de_panel_text": "Quan sát mô hình dựng từ dữ kiện; các kiểm tra trên hình không phải chứng minh tổng quát.",
+   "mode_b_requested_results": [
+    "d(I, C) = √66/4"
+   ],
+   "student_mode_answer_statements": [],
+   "error": null
+  }
+ ]
+}

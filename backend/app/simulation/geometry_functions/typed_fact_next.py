@@ -63,6 +63,31 @@ def parse_qualified_ref(ref: str) -> tuple[str | None, str]:
     return m.group("solid_id"), m.group("label")
 
 
+#: R-1 (thirteenth continuation, `/2` additive): a point the source DESCRIBES without naming it ("hình chiếu vuông góc
+#: của A lên SD") is declared once in `TypedFactNextPayloadV2.described_points` and referenced as `@id` where a point
+#: label would stand — in a measurement goal's point operands, a section's `through_point`, or another described point.
+#: It is never a fact and never a label: the bridge hands the planner its description, the planner builds it from the
+#: Registry's descriptor contracts, the Source Gate reads the description in the source and the engine checks it.
+DESCRIBED_REF_RE = re.compile(r"@(?P<id>[A-Za-z][A-Za-z0-9_]{0,31})")
+#: Kind → its operand fields (Registry descriptor contracts): `pt` one point, `pt2` two points (a segment / line), `labels3`
+#: exactly three labels, `labels3+` a plane of ≥ 3 labels. Point operands may be described refs; planes / polygons are labels.
+DESCRIBED_POINT_FIELDS = {"midpoint": {"segment": "pt2"}, "centroid": {"polygon": "labels3"},
+                          "orthogonal_projection": {"point": "pt", "plane": "labels3+"},
+                          "orthogonal_projection_line": {"point": "pt", "line": "pt2"},
+                          "intersect_line_line": {"line1": "pt2", "line2": "pt2"},
+                          "intersect_line_plane": {"line": "pt2", "plane": "labels3+"},
+                          # C18: named by a PROPERTY of a triangle — no function builds them; the planner composes one
+                          "orthocenter": {"polygon": "labels3"}, "circumcenter": {"polygon": "labels3"}}
+#: Goal target keys whose values are point operands (a described ref may stand there); planes stay labels.
+DESCRIBED_GOAL_KEYS = ("point", "segment", "line", "line1", "line2", "polygon")
+#: Nesting bound of described points (the bridge certifies one description per question; the planner's effect search is bounded at depth 4 since C18).
+MAX_DESCRIBED_DEPTH = 2
+
+
+def is_described_ref(value: Any) -> bool:
+    return isinstance(value, str) and DESCRIBED_REF_RE.fullmatch(value.strip()) is not None
+
+
 # Closed input contract: the runtime authority; run-local JSON is its preregistered snapshot.
 KIND_ALLOWED_FIELDS = {'math_goal': {'volume_ratio': ['denominator_solid_id', 'goal_id', 'kind', 'numerator_solid_id', 'quote'],
                'residual_volume': ['cut_solid_id', 'goal_id', 'kind', 'parent_solid_id', 'quote'],
@@ -152,6 +177,14 @@ KIND_ALLOWED_FIELDS = {'math_goal': {'volume_ratio': ['denominator_solid_id', 'g
                                    'relation_id',
                                    'section_id',
                                    'solid_id']}}
+KIND_ALLOWED_FIELDS_V2 = {
+    'relation_v2': {
+        **KIND_ALLOWED_FIELDS['relation'],
+        'circumscribes': ['kind', 'quote', 'relation_id', 'solid_a', 'solid_b'],
+        'inscribed_in': ['kind', 'quote', 'relation_id', 'solid_a', 'solid_b'],
+        'tangent_to': ['contact_ref', 'entity_b', 'kind', 'quote', 'relation_id', 'solid_a', 'solid_b'],
+    }
+}
 GOAL_OPERAND_SHAPES = {'point': 'ref',
  'segment': 'refs2=',
  'line': 'refs2=',
@@ -178,7 +211,8 @@ GOAL_TARGET_ALTERNATIVES = {'distance': [['segment'],
 
 _KIND_GROUPS = {"MathGoalSpec": ("math_goal", "INVALID_MATH_GOAL"),
                 "SimulationGoalSpec": ("simulation_goal", "INVALID_SIMULATION_GOAL"),
-                "GeometricRelationSpec": ("relation", "INVALID_RELATION_SPEC")}
+                "GeometricRelationSpec": ("relation", "INVALID_RELATION_SPEC"),
+                "GeometricRelationSpecV2": ("relation_v2", "INVALID_RELATION_SPEC")}
 
 
 def _validate_goal_target(goal) -> None:
@@ -219,8 +253,9 @@ class ClosedNextModel(BaseModel):
     @classmethod
     def _closed_kind_fields(cls, value):
         policy = _KIND_GROUPS.get(cls.__name__)  # S4: one per-kind field applicability authority
-        if policy and isinstance(value, dict) and value.get("kind") in KIND_ALLOWED_FIELDS[policy[0]]:
-            unexpected = set(value) - set(KIND_ALLOWED_FIELDS[policy[0]][value["kind"]])
+        table = KIND_ALLOWED_FIELDS_V2 if policy and policy[0] == "relation_v2" else KIND_ALLOWED_FIELDS
+        if policy and isinstance(value, dict) and value.get("kind") in table[policy[0]]:
+            unexpected = set(value) - set(table[policy[0]][value["kind"]])
             if unexpected:
                 raise TypedFactNextValidationError(policy[1], f"{value['kind']}: inapplicable fields {sorted(unexpected)}")
         return value
@@ -236,6 +271,8 @@ class SolidSpec(ClosedNextModel):
     rim_point: NonEmptyText | None = None
     radius: NonEmptyText | None = None
     height: NonEmptyText | None = None
+    circumscribes: IdentifierStr | None = None
+    inscribed_in: IdentifierStr | None = None
     notation: NonEmptyText
     quote: NonEmptyText
     vertex_bindings: dict[Label, Label] = Field(default_factory=dict)
@@ -257,6 +294,22 @@ class SolidSpec(ClosedNextModel):
                 raise TypedFactNextValidationError(
                     "INVALID_SOLID_NOTATION",
                     f"Prism notation {self.notation!r} must have two disjoint congruent-length base cycles of >=3 vertices.",
+                )
+        if self.circumscribes is not None and self.inscribed_in is not None:
+            raise TypedFactNextValidationError(
+                "SOURCE_OBJECT_MISMATCH",
+                f"Solid {self.solid_id!r} cannot simultaneously declare circumscribes and inscribed_in.",
+            )
+        if (rel_host := self.circumscribes or self.inscribed_in) is not None:
+            from app.simulation.geometry import curved as CV
+
+            loai = CV.LOAI_TU_NGUON.get(self.solid_type)
+            if loai is None or CV.KHOI_CONG[loai].co_truc or any(
+                x is not None for x in (self.apex_or_top, self.rim_point, self.radius, self.height)
+            ):
+                raise TypedFactNextValidationError(
+                    "SOURCE_OBJECT_MISMATCH",
+                    f"Solid {self.solid_id!r} anchored to {rel_host!r} must be an axisless curved solid derived solely from the host solid.",
                 )
         local_set = set(self.local_vertices())
         for local_v in self.vertex_bindings:
@@ -336,8 +389,8 @@ _ARGS_GOC_VUONG = ({"vertices": "refs3=", "right_at": "ref"}, {"vertex": "ref", 
 
 
 def _hinh_dung(value: Any, shape: str) -> bool:
-    if shape == "ref":
-        return isinstance(value, str) and _QUALIFIED_REF_RE.match(value.strip()) is not None
+    if shape == "ref":      # a described ref passes here; the payload checks it is declared and where it stands (R-1)
+        return isinstance(value, str) and (_QUALIFIED_REF_RE.match(value.strip()) is not None or is_described_ref(value))
     if shape.startswith("refs"):
         n, exact = int(shape[4:].rstrip("=")), shape.endswith("=")
         return (isinstance(value, (list, tuple)) and all(_hinh_dung(x, "ref") for x in value)
@@ -388,9 +441,14 @@ class _PlaneSectionBase(ClosedNextModel):
         "parallel_to_base_at_ratio",
         "plane_equation",
         "axial_section",
+        # a sphere (run `hybrid-master-backend-replacement`, additive): the plane at a stated distance from the centre,
+        # or through the centre ("qua tâm" states no number, so it carries none)
+        "at_distance_from_center",
+        "through_center",
     ]
     through_point: NonEmptyText | None = None
     distance_from_base: NonEmptyText | None = None
+    distance_from_center: NonEmptyText | None = None
     ratio_from_apex: NonEmptyText | None = None
     equation_coeffs: tuple[NonEmptyText, NonEmptyText, NonEmptyText, NonEmptyText] | None = None
     section_shape: Literal["polygon", "circle", "ellipse"] | None = None
@@ -412,7 +470,8 @@ class _PlaneSectionBase(ClosedNextModel):
                     "INVALID_DERIVED_SECTION",
                     f"Section {self.section_id!r} ({self.plane_kind}) requires 'through_point'.",
                 )
-            parse_qualified_ref(self.through_point)
+            if not is_described_ref(self.through_point):     # a described point: the payload checks it (R-1)
+                parse_qualified_ref(self.through_point)
         elif self.plane_kind == "parallel_to_base_at_distance":
             if not self.distance_from_base:
                 raise TypedFactNextValidationError(
@@ -424,6 +483,12 @@ class _PlaneSectionBase(ClosedNextModel):
                 raise TypedFactNextValidationError(
                     "INVALID_DERIVED_SECTION",
                     f"Section {self.section_id!r} requires 'ratio_from_apex'.",
+                )
+        elif self.plane_kind == "at_distance_from_center":
+            if not self.distance_from_center:
+                raise TypedFactNextValidationError(
+                    "INVALID_DERIVED_SECTION",
+                    f"Section {self.section_id!r} requires 'distance_from_center'.",
                 )
         elif self.plane_kind == "plane_equation":
             if self.equation_coeffs is None or len(self.equation_coeffs) != 4:
@@ -500,14 +565,63 @@ class StatedIntersectionSpec(ClosedNextModel):
         return self
 
 
+#: Arity of each stated plane constraint (C17): points the plane contains (a line AB is its two points), a line it is
+#: parallel to, a plane it is perpendicular to.
+PLANE_CONSTRAINT_ARITY = {"contains_points": (1, 4), "parallel_to_line": (2, 2), "perpendicular_to_plane": (3, 4)}
+
+
+class PlaneConstraintSpec(ClosedNextModel):
+    """ONE relation the source states about a plane it defines by relations (`plane_kind = "constrained"`) — never a
+    construction step: which witness points build the plane is the planner's choice, and the engine proves the plane
+    exists and is unique from every stated constraint."""
+
+    kind: Literal["contains_points", "parallel_to_line", "perpendicular_to_plane"]
+    operands: tuple[NonEmptyText, ...]
+
+    @model_validator(mode="after")
+    def _validate_operands(self) -> "PlaneConstraintSpec":
+        lo, hi = PLANE_CONSTRAINT_ARITY[self.kind]
+        refs = [parse_qualified_ref(p) for p in self.operands]
+        if not lo <= len(refs) <= hi or len(set(refs)) != len(refs):
+            raise TypedFactNextValidationError(
+                "INVALID_DERIVED_SECTION", f"plane constraint {self.kind} needs {lo}..{hi} distinct labels")
+        return self
+
+
 class DerivedPlaneSectionSpecV2(_PlaneSectionBase):
     """`typed-fact-next/2` section (run `hybrid-contract-v2`): inputs say only what the source says. The section boundary,
     its derived vertices and its closure certificate are ENGINE outputs. `declared_boundary` is an author's claim (cyclic
     order of edges) that is always verified, never trusted. There is no input flag that waives the closure proof: whether
-    a closed boundary is required follows from the goals (a derived solid needs it)."""
+    a closed boundary is required follows from the goals (a derived solid needs it). C17 (additive, `/2` only): a plane
+    the source defines by relations is `plane_kind = "constrained"` with its stated `constraints`."""
 
+    plane_kind: Literal[
+        "through_point_parallel_plane",
+        "through_point_perpendicular_line",
+        "through_point_parallel_two_lines",
+        "parallel_to_base_at_distance",
+        "parallel_to_base_at_ratio",
+        "plane_equation",
+        "axial_section",
+        "at_distance_from_center",
+        "through_center",
+        "constrained",
+    ]
+    constraints: tuple[PlaneConstraintSpec, ...] = ()
     stated_intersections: tuple[StatedIntersectionSpec, ...] = ()
     declared_boundary: tuple[tuple[NonEmptyText, NonEmptyText], ...] | None = None
+
+    @model_validator(mode="after")
+    def _validate_constraints(self) -> "DerivedPlaneSectionSpecV2":
+        if (self.plane_kind == "constrained") != bool(self.constraints):
+            raise TypedFactNextValidationError(
+                "INVALID_DERIVED_SECTION", f"Section {self.section_id!r}: exactly a constrained plane carries constraints")
+        if self.constraints and (self.through_point is not None
+                                 or not any(c.kind == "contains_points" for c in self.constraints)):
+            raise TypedFactNextValidationError(
+                "INVALID_DERIVED_SECTION",
+                f"Section {self.section_id!r}: a constrained plane names the points it contains in its constraints")
+        return self
 
     @model_validator(mode="after")
     def _validate_statements(self) -> "DerivedPlaneSectionSpecV2":
@@ -609,6 +723,44 @@ class GeometricRelationSpec(ClosedNextModel):
                     "INVALID_RELATION_SPEC",
                     f"Relation {self.relation_id!r} ('coordinate_frame') requires 'solid_id' and 'frame_id'.",
                 )
+        return self
+
+
+class GeometricRelationSpecV2(GeometricRelationSpec):
+    """`typed-fact-next/2` explicit inter-object geometric relation (`circumscribes`, `inscribed_in`, `tangent_to`)."""
+
+    kind: Literal[
+        "containment",
+        "shared_vertices",
+        "shared_faces",
+        "parallel",
+        "perpendicular",
+        "section_membership",
+        "coordinate_frame",
+        "circumscribes",
+        "inscribed_in",
+        "tangent_to",
+    ]
+    contact_ref: NonEmptyText | None = None
+
+    @model_validator(mode="after")
+    def _validate_v2_relation_fields(self) -> "GeometricRelationSpecV2":
+        if self.kind in ("circumscribes", "inscribed_in"):
+            if not self.solid_a or not self.solid_b:
+                raise TypedFactNextValidationError(
+                    "INVALID_RELATION_SPEC",
+                    f"Relation {self.relation_id!r} ({self.kind!r}) requires 'solid_a' and 'solid_b'.",
+                )
+        elif self.kind == "tangent_to":
+            if not self.solid_a or not self.solid_b or len(self.entity_b) < 3:
+                raise TypedFactNextValidationError(
+                    "INVALID_RELATION_SPEC",
+                    f"Relation {self.relation_id!r} ('tangent_to') requires 'solid_a', 'solid_b', and >=3-point 'entity_b'.",
+                )
+            for p in self.entity_b:
+                parse_qualified_ref(p)
+            if self.contact_ref is not None:
+                parse_qualified_ref(self.contact_ref)
         return self
 
 
@@ -737,12 +889,14 @@ class TypedFactNextPayload(ClosedNextModel):
                 "SCHEMA_VERSION_MISMATCH",
                 f"Expected schema_version={self._VERSION!r}, got {self.schema_version!r}.",
             )
-        if not self.solids:
+        # `/2` honest exit (SL-2): a payload that only reports what it could not read declares no solid or goal
+        unresolved = bool(getattr(self, "unresolved", ()))
+        if not self.solids and not unresolved:
             raise TypedFactNextValidationError(
                 "EMPTY_SOLIDS",
                 "TypedFactNextPayload requires at least one declared solid.",
             )
-        if not self.simulation_goals:
+        if not self.simulation_goals and not unresolved:
             raise TypedFactNextValidationError(
                 "EMPTY_SIMULATION_GOALS",
                 "TypedFactNextPayload is simulation-first and requires at least one simulation_goal.",
@@ -769,6 +923,15 @@ class TypedFactNextPayload(ClosedNextModel):
                     f"Derived section {sec.section_id!r} references unknown solid {sec.target_solid_id!r}.",
                 )
             section_ids.add(sec.section_id)
+
+        relation_ids: set[str] = set()
+        for rel in self.relations:
+            if rel.relation_id in relation_ids:
+                raise TypedFactNextValidationError(
+                    "INVALID_RELATION_SPEC",
+                    f"Duplicate relation_id {rel.relation_id!r}.",
+                )
+            relation_ids.add(rel.relation_id)
 
         sim_goal_ids: set[str] = set()
         derived_solid_ids: set[str] = set()
@@ -828,9 +991,52 @@ class TypedFactNextPayload(ClosedNextModel):
                     "UNKNOWN_SOLID_ID",
                     f"Math goal {mg.goal_id!r} references unknown cut solid {mg.cut_solid_id!r}.",
                 )
+        _check_described_refs(self)
         _validate_declared_solid_scope(self, all_solid_ids)
         _validate_goal_identities(self)
         return self
+
+
+def _strings(value: Any):
+    """Every string of a dumped payload except source text (quotes may contain anything)."""
+    if isinstance(value, dict):
+        for k, v in value.items():
+            if k not in ("quote", "problem_text"):
+                yield from _strings(v)
+    elif isinstance(value, (list, tuple)):
+        for v in value:
+            yield from _strings(v)
+    elif isinstance(value, str):
+        yield value
+
+
+def described_ref_uses(p: "TypedFactNextPayload") -> list[tuple[str, str]]:
+    """`(consumer, described id)` of every described ref standing where one may (R-1): a measurement goal's point operand,
+    a section's `through_point`, a point operand of another described point (consumer `@id`)."""
+    uses: list[tuple[str, str]] = []
+    for mg in p.math_goals:
+        if mg.kind == "measurement":
+            for k in DESCRIBED_GOAL_KEYS:
+                v = mg.target.get(k)
+                uses += [(mg.goal_id, x.strip()[1:]) for x in (v if isinstance(v, (list, tuple)) else [v])
+                         if is_described_ref(x)]
+    uses += [(s.section_id, s.through_point.strip()[1:]) for s in p.derived_sections if is_described_ref(s.through_point)]
+    for d in getattr(p, "described_points", ()):
+        uses += [(f"@{d.described_id}", x.strip()[1:]) for x in d.point_operands() if is_described_ref(x)]
+    return uses
+
+
+def _check_described_refs(p: "TypedFactNextPayload") -> None:
+    """Every `@id` stands where a described point may and names a declared one. `/1` declares none, so it refuses any
+    (with the code an unreadable operand always had there)."""
+    uses = described_ref_uses(p)
+    if sum(map(is_described_ref, _strings(p.model_dump()))) != len(uses):
+        raise TypedFactNextValidationError("INVALID_DESCRIBED_POINT",
+                                           "a described point (@id) stands where only a label may (premise, plane, relation)")
+    declared = {d.described_id for d in getattr(p, "described_points", ())}
+    if missing := sorted({i for _c, i in uses if i not in declared}):
+        code = "UNKNOWN_DERIVED_REFERENCE" if hasattr(p, "described_points") else "INVALID_MATH_GOAL"
+        raise TypedFactNextValidationError(code, f"described point(s) {missing} are not declared")
 
 
 def _solid_aliases(solid: SolidSpec) -> set[str]:
@@ -901,6 +1107,22 @@ def canonical_vertex_ref(p: "TypedFactNextPayload", ref: str, scope: str | None 
     return next(iter(identities), label)
 
 
+def _described_consumer_scopes(p: "TypedFactNextPayload") -> dict[str, set[str | None]]:
+    consumer_scope = {mg.goal_id: measurement_scope(p, mg) for mg in p.math_goals if mg.kind == "measurement"}
+    consumer_scope |= {s.section_id: s.target_solid_id for s in p.derived_sections}
+    uses = described_ref_uses(p)
+    out: dict[str, set[str | None]] = {}
+    for d in getattr(p, "described_points", ()):
+        scopes, frontier, seen = set(), {f"@{d.described_id}"}, set()
+        while frontier:                                   # up the (acyclic, checked in `/2`) chain of consumers
+            seen |= frontier
+            nxt = {c for c, i in uses if f"@{i}" in frontier}
+            scopes |= {consumer_scope.get(c) for c in nxt if not c.startswith("@")}
+            frontier = {c for c in nxt if c.startswith("@")} - seen
+        out[d.described_id] = scopes
+    return out
+
+
 def _validate_goal_identities(p: "TypedFactNextPayload") -> None:
     for goal in p.math_goals:
         if goal.kind != "measurement":
@@ -908,18 +1130,35 @@ def _validate_goal_identities(p: "TypedFactNextPayload") -> None:
         scope = measurement_scope(p, goal)
         for key, refs in goal.target.items():
             if GOAL_OPERAND_SHAPES[key].startswith("refs"):
-                identities = [canonical_vertex_ref(p, ref, scope) for ref in refs]
+                identities = [ref.strip() if is_described_ref(ref) else canonical_vertex_ref(p, ref, scope) for ref in refs]
                 if len(set(identities)) != len(identities):
                     raise TypedFactNextValidationError("INVALID_MATH_GOAL", f"{goal.goal_id}: repeated identity in {key!r}")
+    desc_scopes = _described_consumer_scopes(p)
+    for d in getattr(p, "described_points", ()):
+        claimed = [s for s in desc_scopes.get(d.described_id, set()) if s is not None]
+        scope = claimed[0] if len(claimed) == 1 else None
+        for key, shape in DESCRIBED_POINT_FIELDS[d.kind].items():
+            if shape != "pt":
+                refs = getattr(d, key)
+                identities = [ref.strip() if is_described_ref(ref) else canonical_vertex_ref(p, ref, scope) for ref in refs]
+                if len(set(identities)) != len(identities):
+                    raise TypedFactNextValidationError(
+                        "INVALID_DESCRIBED_POINT", f"{d.described_id}: repeated identity in {key!r}")
 
 
 def constructed_names(p: "TypedFactNextPayload") -> set[str]:
     """Labels the payload itself introduces as constructed points (premise outputs, named section points)."""
+    root_labels = {v for s in p.solids for v in (*s.local_vertices(), *map(s.canonical_vertex, s.local_vertices()))}
     names = {parse_qualified_ref(prem.args[out])[1] for prem in p.premises
              if (out := CONSTRUCTED_OUTPUTS.get(prem.kind)) and isinstance(prem.args.get(out), str)}
     for sec in p.derived_sections:
         names.update(getattr(sec, "named_intersections", {}).values())
         names.update(s.point for s in getattr(sec, "stated_intersections", ()) if s.point)
+    for r in p.relations:
+        if getattr(r, "contact_ref", None):
+            lbl = parse_qualified_ref(r.contact_ref)[1]
+            if lbl not in root_labels:
+                names.add(lbl)
     return names
 
 
@@ -939,10 +1178,11 @@ def scope_records(p: "TypedFactNextPayload") -> list[tuple[str, str, str | None,
         recs.append(("premise", f"p{i}", prem.solid_id or resolve_solid_name(p, prem.args.get("solid")), refs, False))
     for sec in p.derived_sections:
         refs = [x for x in (sec.through_point, *(sec.parallel_plane or ()), *(sec.perpendicular_line or ()),
-                            *(sec.parallel_line_a or ()), *(sec.parallel_line_b or ())) if x]
+                            *(sec.parallel_line_a or ()), *(sec.parallel_line_b or ())) if x and not is_described_ref(x)]
         refs += [x for e in getattr(sec, "cut_edges", ()) for x in e]
         refs += [x for k in getattr(sec, "named_intersections", {}) for x in split_edge_key(k)]
         refs += [x for s in getattr(sec, "stated_intersections", ()) for x in s.edge]
+        refs += [x for c in getattr(sec, "constraints", ()) for x in c.operands if not is_described_ref(x)]   # C17
         refs += [x for e in (getattr(sec, "declared_boundary", None) or ()) for x in e]
         recs.append(("section", sec.section_id, sec.target_solid_id, refs, False))
     ids = {s.solid_id for s in p.solids} | set(parents) | set(sections)
@@ -953,7 +1193,8 @@ def scope_records(p: "TypedFactNextPayload") -> list[tuple[str, str, str | None,
         recs.append(("relation", r.relation_id, r.solid_a or r.solid_id,
                      [*r.face_a, *r.entity_a, *(a for a, _b in r.pairs)], r.kind == "shared_faces"))
         recs.append(("relation", r.relation_id, r.solid_b or r.solid_id,
-                     [*r.face_b, *r.entity_b, *(b for _a, b in r.pairs)], r.kind == "shared_faces"))
+                     [*r.face_b, *r.entity_b, *(b for _a, b in r.pairs),
+                      *([r.contact_ref] if getattr(r, "contact_ref", None) else ())], r.kind == "shared_faces"))
         recs.append(("relation", r.relation_id, single,
                      [*(_chain_refs(r.container_ref) if r.container_ref and not whole else ()),
                       *([r.member_ref] if r.member_ref else ()), *r.member_refs, *r.anchor_refs], r.kind == "coordinate_frame"))
@@ -969,8 +1210,16 @@ def scope_records(p: "TypedFactNextPayload") -> list[tuple[str, str, str | None,
         t = mg.target
         sec = sections.get(t["section_id"]) if isinstance(t.get("section_id"), str) else None
         scope = measurement_scope(p, mg)
-        refs = [x for k in GOAL_OPERAND_KEYS if k in t for x in (t[k] if isinstance(t[k], (list, tuple)) else [t[k]])]
+        refs = [x for k in GOAL_OPERAND_KEYS if k in t for x in (t[k] if isinstance(t[k], (list, tuple)) else [t[k]])
+                if not is_described_ref(x)]
         recs.append(("math_goal", mg.goal_id, scope, refs, False))
+    # R-1: the labels of a described point belong to every solid scope claimed by its consumers (else None when unscoped)
+    desc_scopes = _described_consumer_scopes(p)
+    for d in getattr(p, "described_points", ()):
+        refs = [x for x in (*d.point_operands(), *(d.plane or ()), *(d.polygon or ())) if not is_described_ref(x)]
+        claimed = sorted(s for s in desc_scopes.get(d.described_id, set()) if s is not None)
+        for scope in (claimed or [None]):
+            recs.append(("described_point", d.described_id, scope, refs, False))
     return recs
 
 
@@ -1004,6 +1253,8 @@ def _validate_declared_solid_scope(p: "TypedFactNextPayload", known: set[str]) -
             return None
         hits = [s for s, spec in solids.items() if name in _solid_aliases(spec)] or [n for n in known if n == name] \
             if isinstance(name, str) else []
+        if name == "()" and len(hits) > 1 and scope is not None:
+            return scope if scope in hits else hits[0]
         if len(hits) != 1:
             refuse("UNKNOWN_SOLID_ID" if scope is not None else "UNKNOWN_SOLID", where,
                    f"khối {name!r} không xác định duy nhất")
@@ -1027,6 +1278,20 @@ def _validate_declared_solid_scope(p: "TypedFactNextPayload", known: set[str]) -
     def family(scope: str | None) -> set[str]:
         return {scope, parents[scope]} if scope in parents else {scope}
 
+    from ..geometry import curved as CV
+
+    axial_curved_types = tuple(k for k, v in CV.LOAI_TU_NGUON.items() if CV.KHOI_CONG[v].co_truc)
+    axisless_curved_types = tuple(k for k, v in CV.LOAI_TU_NGUON.items() if not CV.KHOI_CONG[v].co_truc)
+    host_types = ("pyramid", "prism", *axial_curved_types) if isinstance(p, TypedFactNextPayloadV2) else ("pyramid", "prism")
+    sphere_bindings: dict[str, tuple[str, str]] = {}
+    for s in p.solids:
+        for rel_kind, host_sid in (("circumscribes", s.circumscribes), ("inscribed_in", s.inscribed_in)):
+            if host_sid is not None:
+                declared(host_sid, s.solid_id)                                                  # S1
+                if host_sid == s.solid_id or solids[host_sid].solid_type not in host_types:     # S3
+                    refuse("SOURCE_OBJECT_MISMATCH", s.solid_id,
+                           f"khối neo {host_sid!r} ({rel_kind}) phải là khối chủ hợp lệ đã khai báo khác {s.solid_id!r}")
+                sphere_bindings[s.solid_id] = (rel_kind, host_sid)
     for i, prem in enumerate(p.premises, 1):
         where = f"p{i}"
         scope = declared(prem.solid_id, where)
@@ -1041,6 +1306,40 @@ def _validate_declared_solid_scope(p: "TypedFactNextPayload", known: set[str]) -
             one_solid(r.relation_id, r.solid_id, section_of(r.section_id, r.relation_id))
         if r.container_ref in known:                                                       # S3: whole-solid container
             one_solid(r.relation_id, r.solid_id, r.container_ref)
+        if r.kind in ("circumscribes", "inscribed_in"):
+            sph_spec = solids.get(r.solid_a or "")
+            host_spec = solids.get(r.solid_b or "")
+            if (
+                sph_spec is None
+                or host_spec is None
+                or r.solid_a == r.solid_b
+                or sph_spec.solid_type not in axisless_curved_types
+                or any(x is not None for x in (sph_spec.apex_or_top, sph_spec.rim_point, sph_spec.radius, sph_spec.height))
+                or host_spec.solid_type not in host_types
+            ):                                                                             # S3
+                refuse("SOURCE_OBJECT_MISMATCH", r.relation_id,
+                       f"quan hệ {r.kind!r} đòi hỏi solid_a là mặt cầu suy ra và solid_b là khối chủ hợp lệ")
+            if r.solid_a in sphere_bindings and sphere_bindings[r.solid_a] != (r.kind, r.solid_b):
+                refuse("SOURCE_OBJECT_MISMATCH", r.relation_id,
+                       f"mặt cầu {r.solid_a!r} có khai báo quan hệ mâu thuẫn {sphere_bindings[r.solid_a]} vs {(r.kind, r.solid_b)}")
+            sphere_bindings[r.solid_a] = (r.kind, r.solid_b)
+        elif r.kind == "tangent_to":
+            sph_spec = solids.get(r.solid_a or "")
+            host_spec = solids.get(r.solid_b or "")
+            if (
+                sph_spec is None
+                or host_spec is None
+                or r.solid_a == r.solid_b
+                or sph_spec.solid_type not in axisless_curved_types
+                or host_spec.solid_type not in ("pyramid", "prism")
+            ):                                                                             # S3
+                refuse("SOURCE_OBJECT_MISMATCH", r.relation_id,
+                       "quan hệ 'tangent_to' đòi hỏi solid_a là mặt cầu và solid_b là khối đa diện")
+    for sph_id, (_rk, host_id) in sphere_bindings.items():
+        ctr = solids[sph_id].center
+        if ctr is not None:
+            for v in {ctr, solids[sph_id].canonical_vertex(ctr)}:
+                owners_of.setdefault(v, set()).add(host_id)
     for g in p.simulation_goals:
         declared(g.parent_solid_id, g.goal_id)
         if g.target_section_id in sections:
@@ -1086,12 +1385,166 @@ def _validate_declared_solid_scope(p: "TypedFactNextPayload", known: set[str]) -
                 refuse("SOURCE_OBJECT_MISMATCH", where, f"{label!r} chỉ là đỉnh của khối khác, không thuộc {base!r}")
 
 
+#: SL-2 (tenth continuation): the `/2` honest exit, parity with the flat contract's `ambiguous` / `unsupported`. Closed
+#: vocabularies only, so the model writes nothing a learner reads; the server builds the clarification text.
+UNRESOLVED_KINDS = ("ambiguous", "missing_operand", "unrecognized_term", "unsupported")
+MISSING_ROLES = ("source_point", "target_line_or_plane", "relation_kind", "solid_notation", "dimension", "goal_object")
+CANDIDATE_RELATIONS = ("orthogonal_projection", "intersection", "midpoint", "centroid", "perpendicular", "parallel",
+                       "angle", "distance")
+CLARIFICATION_SCHEMA_VERSION = "route-d-clarification/1"
+
+
+class UnresolvedSpec(ClosedNextModel):
+    """A clause the extractor cannot represent without guessing: an undefined term, a missing operand, several readings,
+    or a request outside the library. Never a fact; any entry refuses the payload (`bridge_v2`)."""
+
+    unresolved_id: IdentifierStr
+    kind: Literal[*UNRESOLVED_KINDS]
+    quote: NonEmptyText
+    subject_ref: Label | None = None
+    missing_roles: tuple[Literal[*MISSING_ROLES], ...] = ()
+    candidate_relations: tuple[Literal[*CANDIDATE_RELATIONS], ...] = Field(default=(), max_length=3)
+
+    @model_validator(mode="after")
+    def _subject_in_quote(self) -> "UnresolvedSpec":
+        from app.simulation.geometry_functions.registry import chuan_hoa
+
+        if len(re.findall(r"\w", self.quote)) < 2:          # a quote must locate words, not a stray mark
+            raise TypedFactNextValidationError(
+                "INVALID_TYPED_FACT_NEXT", f"Unresolved {self.unresolved_id!r}: quote locates no wording.")
+        # the label is canonical (A′ → A'), so it is matched against the canonical spelling of its own quote
+        if self.subject_ref is not None and not re.search(rf"(?<![\w']){re.escape(self.subject_ref)}(?![\w'])",
+                                                          chuan_hoa(self.quote)):
+            raise TypedFactNextValidationError(
+                "INVALID_TYPED_FACT_NEXT", f"Unresolved {self.unresolved_id!r}: subject {self.subject_ref!r} is not in its quote.")
+        return self
+
+
+_VAI_THIEU_HOI = {"source_point": "của điểm nào", "target_line_or_plane": "lên đường thẳng hoặc mặt phẳng nào",
+                  "relation_kind": "theo quan hệ hình học nào", "solid_notation": "với tên các đỉnh nào",
+                  "dimension": "với số đo nào", "goal_object": "với đối tượng nào"}
+_VAI_THIEU_TEN = {"source_point": "điểm được dùng", "target_line_or_plane": "đường thẳng hoặc mặt phẳng nhận",
+                  "relation_kind": "quan hệ hình học", "solid_notation": "tên các đỉnh của hình",
+                  "dimension": "các số đo cần thiết", "goal_object": "đối tượng cần dựng hoặc tính"}
+_QUAN_HE_TEN = {"orthogonal_projection": "hình chiếu", "intersection": "giao điểm", "midpoint": "trung điểm",
+                "centroid": "trọng tâm", "perpendicular": "vuông góc", "parallel": "song song", "angle": "góc",
+                "distance": "khoảng cách"}
+_NLU_LOAI = {"ambiguous": "AMBIGUOUS", "missing_operand": "MISSING_DATA", "unrecognized_term": "UNRECOGNIZED_WORDING",
+             "unsupported": "VALID_BUT_UNSUPPORTED"}
+
+
+def quote_spans(text: str, quote: str) -> list[list[int]]:
+    """Every half-open occurrence of `quote` in `text`, overlapping ones too (none is chosen)."""
+    spans, k = [], text.find(quote)
+    while k != -1:
+        spans.append([k, k + len(quote)])
+        k = text.find(quote, k + 1)
+    return spans
+
+
+def clarification_record(u: UnresolvedSpec, problem_text: str) -> dict[str, Any]:
+    """`route-d-clarification/1`, written by the server from `u`'s closed fields and verbatim quote: every occurrence of
+    the quote (overlapping ones too), the NLU class, and one short question — none for `unsupported`, which no answer
+    from the learner can fix. Candidate readings are offered, never chosen."""
+    spans = quote_spans(problem_text, u.quote)
+    question = None
+    roles = tuple(dict.fromkeys(u.missing_roles))
+    if u.kind != "unsupported":
+        quan_he = " hay ".join(_QUAN_HE_TEN[c] for c in dict.fromkeys(u.candidate_relations))
+        if quan_he:
+            hoi = " và ".join(_VAI_THIEU_HOI[r] for r in roles)
+            chu = f"{u.subject_ref} là " if u.subject_ref else "nói "
+            question = f"Trong “{u.quote}”, bạn muốn {chu}{quan_he}{' ' + hoi if hoi else ''}?"
+        else:
+            ten = " và ".join(_VAI_THIEU_TEN[r] for r in roles) or "ý muốn nói"
+            question = f"Trong “{u.quote}”, bạn hãy nói rõ {ten}."
+    return {"schema_version": CLARIFICATION_SCHEMA_VERSION, "unresolved_id": u.unresolved_id, "kind": u.kind,
+            "nlu_class": _NLU_LOAI[u.kind], "quote": u.quote, "spans": spans, "subject_ref": u.subject_ref,
+            "missing_roles": list(roles), "candidate_relations": list(dict.fromkeys(u.candidate_relations)),
+            "question": question}
+
+
+class DescribedPointSpec(ClosedNextModel):
+    """Một điểm đề MÔ TẢ mà không đặt tên (trung điểm của SC, hình chiếu vuông góc của A lên SD, ...). quote là nguyên văn
+    cụm mô tả; chỉ điền các toán hạng của kind (midpoint: segment; centroid: polygon; orthogonal_projection: point,
+    plane; orthogonal_projection_line: point, line; intersect_line_line: line1, line2; intersect_line_plane: line, plane;
+    orthocenter — trực tâm, circumcenter — tâm đường tròn ngoại tiếp: polygon, ba đỉnh của tam giác).
+    Chỗ dùng điểm này ghi '@' + described_id. (R-1: never a fact, never a label — `DESCRIBED_REF_RE`.)"""
+
+    described_id: Annotated[str, StringConstraints(strip_whitespace=True, pattern=r"^[A-Za-z][A-Za-z0-9_]{0,31}$")]
+    kind: Literal[*DESCRIBED_POINT_FIELDS]
+    quote: NonEmptyText
+    point: NonEmptyText | None = None
+    segment: tuple[NonEmptyText, ...] | None = None
+    polygon: tuple[NonEmptyText, ...] | None = None
+    line: tuple[NonEmptyText, ...] | None = None
+    line1: tuple[NonEmptyText, ...] | None = None
+    line2: tuple[NonEmptyText, ...] | None = None
+    plane: tuple[NonEmptyText, ...] | None = None
+
+    @model_validator(mode="after")
+    def _operands(self) -> "DescribedPointSpec":
+        fields = DESCRIBED_POINT_FIELDS[self.kind]
+        given = {k for k in ("point", "segment", "polygon", "line", "line1", "line2", "plane") if getattr(self, k) is not None}
+        if given != set(fields):
+            raise TypedFactNextValidationError(
+                "INVALID_DESCRIBED_POINT", f"{self.described_id}: {self.kind} takes exactly {sorted(fields)}, got {sorted(given)}")
+        for key, shape in fields.items():
+            v = getattr(self, key)
+            vals = [v] if shape == "pt" else list(v)
+            n_ok = len(vals) == {"pt": 1, "pt2": 2, "labels3": 3}.get(shape, len(vals)) and len(vals) >= (3 if shape == "labels3+" else 1)
+            ok = n_ok and all(_QUALIFIED_REF_RE.match(x) or (shape in ("pt", "pt2") and is_described_ref(x)) for x in vals)
+            if not ok or len(set(vals)) != len(vals) or f"@{self.described_id}" in vals:
+                raise TypedFactNextValidationError(
+                    "INVALID_DESCRIBED_POINT", f"{self.described_id}: malformed operand {key!r} for {self.kind}")
+        return self
+
+    def point_operands(self) -> tuple[str, ...]:
+        """Its point operands (where a described ref may stand), in field order."""
+        return tuple(x for k, shape in DESCRIBED_POINT_FIELDS[self.kind].items() if shape in ("pt", "pt2")
+                     for x in ([getattr(self, k)] if shape == "pt" else getattr(self, k)))
+
+
 class TypedFactNextPayloadV2(TypedFactNextPayload):
     """`typed-fact-next/2` (run `hybrid-contract-v2`, owner D1): `/1` with the section split into stated intersections
-    and an optional declared boundary. Everything else keeps the `/1` shape and cross-reference checks."""
+    and an optional declared boundary, plus `/2` composite geometric relations (`GeometricRelationSpecV2`) and the
+    honest exit `unresolved` (SL-2)."""
 
     _VERSION: ClassVar[str] = TYPED_FACT_NEXT_V2_SCHEMA_VERSION
     derived_sections: tuple[DerivedPlaneSectionSpecV2, ...] = ()
+    relations: tuple[GeometricRelationSpecV2, ...] = ()
+    unresolved: tuple[UnresolvedSpec, ...] = ()
+    described_points: tuple[DescribedPointSpec, ...] = ()
+
+    @model_validator(mode="after")
+    def _validate_unresolved_ids(self) -> "TypedFactNextPayloadV2":
+        ids = [u.unresolved_id for u in self.unresolved]
+        if len(ids) != len(set(ids)):
+            raise TypedFactNextValidationError("INVALID_TYPED_FACT_NEXT", "Duplicate unresolved_id.")
+        return self
+
+    @model_validator(mode="after")
+    def _validate_described_points(self) -> "TypedFactNextPayloadV2":
+        """R-1 graph checks (placement and declaration are checked by `_check_described_refs` in the base payload): ids
+        unique, every declared point used, no cycle, nesting ≤ `MAX_DESCRIBED_DEPTH`."""
+        ids = [d.described_id for d in self.described_points]
+        if len(ids) != len(set(ids)):
+            raise TypedFactNextValidationError("INVALID_DESCRIBED_POINT", "Duplicate described_id.")
+        uses = described_ref_uses(self)
+        if unused := sorted(set(ids) - {i for _c, i in uses}):
+            raise TypedFactNextValidationError("DANGLING_DEPENDENCY", f"described point(s) {unused} are declared but unused")
+        inner = {d.described_id: [x.strip()[1:] for x in d.point_operands() if is_described_ref(x)]
+                 for d in self.described_points}
+
+        def depth(i: str, path: tuple[str, ...]) -> int:
+            if i in path:
+                raise TypedFactNextValidationError("DEPENDENCY_CYCLE", f"described point {i!r} depends on itself")
+            return max((1 + depth(j, (*path, i)) for j in inner[i]), default=0)
+
+        if any(depth(i, ()) > MAX_DESCRIBED_DEPTH - 1 for i in ids):
+            raise TypedFactNextValidationError("PLAN_TOO_LARGE",
+                                               f"described points nest deeper than {MAX_DESCRIBED_DEPTH} levels")
+        return self
 
 
 def parse_typed_fact_next(raw: dict[str, Any] | TypedFactNextPayload) -> TypedFactNextPayload:

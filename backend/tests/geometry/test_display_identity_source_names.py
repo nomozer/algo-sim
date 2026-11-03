@@ -155,9 +155,11 @@ def test_adapter4_never_names_an_object_through_a_point_without_notation(adapter
 
 
 def test_adapter3_is_not_reachable_from_the_product():
-    # Adapter /3 still spells `MI1I2I3` through points it declares unnamed (run report §P2). It is a research builder
-    # with no product consumer: the frontend accepts only `hybrid-route-d-simulation/4`, and no product module imports it.
-    nguoi_dung = [p.relative_to(_ROOT).as_posix() for p in (_ROOT / "backend/app").rglob("*.py")
-                  if p.name != "adapter3_simulation.py"
-                  and re.search(r"\badapter3_simulation\b", p.read_text(encoding="utf-8"))]
-    assert nguoi_dung == []
+    app = Path(__file__).resolve().parents[2] / "app"
+    assert not (app / "ai" / "adapter3_simulation.py").exists()
+    importers = [
+        p.relative_to(app).as_posix()
+        for p in app.rglob("*.py")
+        if re.search(r"\badapter3_simulation\b", p.read_text(encoding="utf-8"))
+    ]
+    assert importers == []

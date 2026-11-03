@@ -382,7 +382,7 @@ def test_17_replay_SCALAR_MODE_trung_thuc_tron_duong():
 
 
 def test_18_replay_SCALAR_MODE_co_trace_va_scene3d():
-    from app.ai.pipeline import _dung_scene3d
+    from tests.geometry.scene3d_test_helper import _dung_scene3d
 
     spec = SemanticProgramSpec.model_validate(
         _chuong_trinh_height(do_bang_measure=True))
