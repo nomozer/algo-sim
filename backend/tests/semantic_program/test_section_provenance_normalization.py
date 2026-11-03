@@ -47,13 +47,19 @@ from app.simulation.semantic_program.interpreter import SemanticProgramInterpret
 from app.simulation.semantic_program.obligations import Obligation
 from app.simulation.semantic_program.request_contract import RequestContract
 from app.simulation.semantic_program.route import verify_and_compile
-from tests.test_photo_problem_live_runner import (  # noqa: F401 — fixture `de` dùng qua tên
-    CA_P1,
-    RNB,
-    de,
-    kho,
-)
-from tests.test_photo_problem_semantic_integration import R
+from pathlib import Path
+import sys as _sys
+_sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "scripts"))
+import replay_negative_boundaries as RNB  # noqa: E402
+
+CA_P1 = "p1_chop_thiet_dien_khoang_cach"
+CA_P6 = "p6_thiet_dien_elip_cua_hinh_tru"
+
+
+@pytest.fixture(scope="module")
+def de() -> dict[str, str]:
+    d = RNB.doc_de_bai()
+    return {"C01": d[CA_P1], "C02": d[CA_P6]}
 
 P1 = RNB.doc_raw_theo_thu_tu(CA_P1)
 P1_ANALYZE = P1["semantic_analyze"][0]
@@ -449,58 +455,32 @@ def test_O_route_decision_va_final_memory_khong_doi(de):
     assert (o.stage_reached, o.servable) == ("served", True)
 
 
-# ══ P · ĐƯỜNG CHẠY THẬT ════════════════════════════════════════════════════
-def test_P_normalizer_DUOC_GOI_trong_pipeline(de):
-    """Quét AST — `_dung_scene3d` phải gọi normalizer SAU `build_scene3d`."""
-    import ast
+# ══ P · ĐƯỜNG DỰNG CẢNH CHIA SẺ ════════════════════════════════════════════
+def test_P_normalizer_DUOC_GOI_trong_adapter4_va_helper(de):
+    """`adapter4_route` và `scene3d_test_helper` đều gọi `normalize_section_provenance` sau `build_scene3d`."""
     import inspect
+    from app.ai import adapter4_route as A4
+    from tests.geometry import scene3d_test_helper as STH
 
-    from app.ai import pipeline as P
+    than_sth = inspect.getsource(STH)
+    assert "build_scene3d" in than_sth and "normalize_section_provenance" in than_sth
+    assert than_sth.index("build_scene3d") < than_sth.index("normalize_section_provenance")
+    than_a4 = inspect.getsource(A4)
+    assert "section_id" in than_a4 and "closure_certificate" in than_a4 and "section_certificates" in than_a4
 
-    than = inspect.getsource(P._dung_scene3d)
-    ten = {getattr(g.func, "id", None) or getattr(g.func, "attr", None)
-           for g in ast.walk(ast.parse(than.strip())) if isinstance(g, ast.Call)}
-    assert "normalize_section_provenance" in ten, "pipeline KHÔNG gọi normalizer"
-    assert than.index("build_scene3d") < than.index("normalize_section_provenance")
-
-
-def test_P_run_pipeline_THAT_phuc_vu_ca_da_chuan_hoa(monkeypatch, de):
-    """END-TO-END, 0 mạng: chương trình dùng `construct_polygon` + hợp đồng có
-    `section_matches` ⇒ cảnh ra `section` và route phục vụ."""
-    import asyncio
-
-    from app.ai import pipeline as P
-
-    raw = dict(RNB.doc_raw_theo_thu_tu(CA_P1))
-    ana = json.loads(raw["semantic_analyze"][0])
-    ana.setdefault("obligations", []).append(
-        {"kind": "section_matches", "container": "T", "witness": None,
-         "solid": "S.ABCD", "plane": "alpha_plane"})
-    raw["semantic_analyze"] = [json.dumps(ana, ensure_ascii=False)]
-    raw["semantic_program"] = [json.dumps(_prog_polygon_thay_section(), ensure_ascii=False)]
-
-    monkeypatch.setattr(P, "call_gemini", R.ProviderPhatLaiTheoThuTu(raw))
-    with R.NetworkGuard() as g:
-        env = asyncio.run(P.run_pipeline(de["C01"], "REPLAY_KHONG_PHAI_KEY", semantic_route="serve"))
-
-    assert list(g.attempts) == [], "lượt này phải 0 request mạng"
-    assert env["status"] == "ok", (env.get("stage_reached"), env.get("error_code"))
-    sec = [o for o in env["scene3d"]["objects"] if o["type"] == "section"]
-    assert len(sec) >= 1, "đường chạy thật KHÔNG sinh được vật section"
-
-
-def test_P_run_pipeline_ca_p1_goc_van_phuc_vu(monkeypatch, de):
-    """Cửa sổ chứng cho test trên: p1 nguyên vẹn vẫn `ok`."""
-    import asyncio
-
-    from app.ai import pipeline as P
-
-    monkeypatch.setattr(P, "call_gemini", R.ProviderPhatLaiTheoThuTu(R.doc_raw_theo_thu_tu(CA_P1)))
-    with R.NetworkGuard() as g:
-        env = asyncio.run(P.run_pipeline(de["C01"], "REPLAY_KHONG_PHAI_KEY", semantic_route="serve"))
-
-    assert list(g.attempts) == []
-    assert env["status"] == "ok", (env.get("stage_reached"), env.get("error_code"))
+    hd = build_request_contract(
+        json.loads(P1_ANALYZE) | {
+            "obligations": json.loads(P1_ANALYZE).get("obligations", [])
+            + [{"kind": "section_matches", "container": "T", "witness": None, "solid": "S.ABCD", "plane": "alpha_plane"}]
+        },
+        problem_text=de["C01"],
+        domain=DOMAIN_HINH_HOC,
+    )
+    val = V.validate_semantic_program(_prog_polygon_thay_section())
+    assert val.ok and val.spec is not None
+    canh = STH._dung_scene3d(val.spec, hd)
+    assert canh is not None
+    assert len([o for o in canh["objects"] if o["type"] == "section"]) >= 1
 
 
 # ══ Q · R · không rò rỉ, không mạng ════════════════════════════════════════

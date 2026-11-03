@@ -1024,8 +1024,10 @@ def run_hybrid(text: str, extractor, deadline_s: float = 15.0) -> tuple[dict[str
 
 
 async def run_llm_only(text: str, api_key: str) -> dict[str, Any]:
-    from app.ai.pipeline import route_policy_snapshot, run_pipeline
-    return await run_pipeline(text, api_key, route_policy=route_policy_snapshot({}))
+    raise LiveRefused(
+        "LLM_ONLY_RETIRED: LLM_ONLY production orchestrator has been retired; "
+        "use pre-cutover tag pre-hybrid-cutover-f986e897 for historical LLM_ONLY runs."
+    )
 
 
 def hybrid_transport(api_key: str, sleep=time.sleep):

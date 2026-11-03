@@ -103,13 +103,6 @@ def test_taxonomy_chia_DU_va_KHONG_CHONG_LAN():
     assert not (geo & tin), f"nghĩa vụ nằm ở cả hai miền: {sorted(geo & tin)}"
 
 
-def test_hai_mien_dung_HAI_SKILL_khac_nhau():
-    assert DP.analyze_skill_for(DP.DOMAIN_HINH_HOC) == "geometry_analyze"
-    assert DP.analyze_skill_for(DP.DOMAIN_TIN_HOC) == "semantic_analyze"
-    for ten in ("geometry_analyze", "semantic_analyze"):
-        assert (_GOC / "backend" / "app" / "ai" / "skills" / f"{ten}.md").exists()
-
-
 def test_prescribed_procedure_VANG_MAT_o_mien_hinh_hoc():
     """Đề hình học không "ép thuật toán". Để trường ấy ở đó là mời model điền
     một cơ chế mà đề không hề đòi — đúng lỗi `prescribed_procedure` bịa."""

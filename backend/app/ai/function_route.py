@@ -672,8 +672,8 @@ def _vet_tu_choi(trace: list[dict[str, Any]]) -> list[dict[str, Any]]:
 
 def run_typed_fact_next_planner_route(raw: Any) -> KetQuaTuyen:
     """TypedFactNext → pure bridge → the ONE planner / Source Gate / engine of route B (`run_fact_route`). Research
-    only (run `typedfactnext-planner-bridge`): not wired to `/api/analyze`; Adapter /3 (`run_typed_fact_next_route`) is
-    left as it is. A construct `TypedFact` cannot express is refused (`BRIDGE_UNSUPPORTED_*`), never re-routed."""
+    only (run `typedfactnext-planner-bridge`): not wired to `/api/analyze`; Adapter /4 (`run_typed_fact_next_v2_route`) is
+    the active `/2` product route. A construct `TypedFact` cannot express is refused (`BRIDGE_UNSUPPORTED_*`), never re-routed."""
     from app.simulation.geometry_functions import TuChoi
     from app.simulation.geometry_functions.typed_fact_next_bridge import BRIDGE_VERSION, bridge
 

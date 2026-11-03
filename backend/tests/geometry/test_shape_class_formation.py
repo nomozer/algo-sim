@@ -19,7 +19,7 @@ from pathlib import Path
 
 import pytest
 
-from app.ai.pipeline import _dung_scene3d
+from tests.geometry.scene3d_test_helper import _dung_scene3d
 from tests.geometry import route_cases as W
 
 SP = Path(__file__).resolve().parents[2] / "app" / "simulation" / "semantic_program"
@@ -133,21 +133,6 @@ def test_moi_buoc_hinh_hoc_doi_hinh(ho):
             continue
         assert (s["visible_ids"] != p["visible_ids"]
                 or s["geometry_progress"] != p["geometry_progress"]), (ho, k)
-
-
-@pytest.mark.parametrize("ho", sorted(W.HO))
-def test_loi_ke_compiler_khop_vat(ho):
-    """Lời kể của compiler nói "đường cao" thì bước ấy phải dựng một ĐOẠN (W13)."""
-    from app.simulation.geometry_compiler import compiler as C
-    from app.simulation.geometry_compiler.contract_adapter import build_fact_graph
-
-    ct, _raw = _ho(ho)
-    bd = C.bien_dich(build_fact_graph(ct).graph)
-    kieu = {d["name"]: d["type"] for d in bd.program["memory_declarations"]}
-    for b in bd.construction_steps:
-        if "đường cao" in b.mo_ta.lower():
-            assert any(kieu.get(o) == "segment3" for o in b.scene_object_ids), (
-                ho, b.index, b.mo_ta, b.scene_object_ids)
 
 
 @pytest.mark.parametrize("ho", sorted(W.HO))
@@ -418,7 +403,6 @@ def _bo_to_po_va_quan_he(payload: dict) -> dict:
 
 def _mo_ho() -> list[tuple[str, object, dict]]:
     """Tứ diện, lăng trụ tam giác, lập phương — không tô-pô hợp đồng, không quan hệ đường cao."""
-    from tests.geometry import test_cuboid_cube_production_route as Q
     from tests.geometry import test_source_grounding_closure as T
 
     ra = []
@@ -427,7 +411,7 @@ def _mo_ho() -> list[tuple[str, object, dict]]:
                W.chuong_trinh(W.hop_dong(t, p))))
     ra.append(("lang_tru_tam_giac", W.hop_dong(T.PRISM_TEXT, _bo_to_po_va_quan_he(T._prism_payload())),
                W.chuong_trinh(T._contract(T.PRISM_TEXT, T._prism_payload()))))
-    t, p = Q._cube_p01_payload()
+    t, p = W._lap_phuong_payload()
     ra.append(("lap_phuong", W.hop_dong(t, _bo_to_po_va_quan_he(p)), W.chuong_trinh(W.hop_dong(t, p))))
     return ra
 
@@ -511,34 +495,6 @@ def test_bang_mat_hong_bi_luoc_do_chan(mat):
             s["vertices"] = ["S", "A", "B", "C"]
             s["faces"] = mat
     assert not validate_semantic_program(raw).ok
-
-
-def test_bang_mat_hong_qua_api_khong_500(monkeypatch):
-    """GUARD: chương trình mô hình với bảng mặt hỏng ⇒ HTTP 200, `unsupported`, không 500."""
-    from fastapi.testclient import TestClient
-
-    from app.ai import pipeline as PL
-    from app.main import app
-    from app.persistence.db import init_db
-
-    monkeypatch.setenv("GEMINI_API_KEY", "khoa-gia")
-    monkeypatch.delenv("GEOMETRY_COMPILER_MODE", raising=False)
-    init_db()
-    ct, raw = _ho("chop_tam_giac")
-    for s in raw["statements"]:
-        if s["kind"] == "construct_solid":
-            s["faces"] = [[1, 2, 3], [0, 1, 2], [0, 2, 3], [0, 3, 9]]
-    text = W.CHOP_TAM_GIAC_TEXT + " (W14 bảng mặt hỏng qua API)"
-    tra_loi = [json.dumps(W.chop_tam_giac_payload()), json.dumps(raw, default=str)]
-
-    async def fake_transport(*_a, **_k):
-        tra_loi.append(tra_loi[-1])
-        return tra_loi.pop(0)
-
-    monkeypatch.setattr(PL, "call_gemini", fake_transport)
-    res = TestClient(app).post("/api/analyze", json={"input": {"type": "text", "content": text}})
-    assert res.status_code == 200, res.text
-    assert res.json()["status"] == "unsupported", res.json().get("status")
 
 
 def _canon_sha(sp) -> str:
@@ -633,7 +589,17 @@ def test_chan_cao_chua_dung_thi_khong_chen(vi_tri):
 # ── Khoá kiến trúc ──────────────────────────────────────────────────────────
 
 def test_planner_khong_re_nhanh_theo_ho():
-    from app.simulation.geometry_compiler.compiler import SUPPORTED_FAMILIES
+    SUPPORTED_FAMILIES = (
+        "right_triangle_base_pyramid_volume",
+        "right_triangle_base_right_prism_volume",
+        "rectangular_base_pyramid_volume",
+        "rectangular_cuboid_volume",
+        "cube_volume",
+        "right_square_prism_volume",
+        "oblique_prism_volume",
+        "polygon_base_pyramid_volume",
+        "polygon_base_right_prism_volume",
+    )
 
     tep = [SP / "formation.py", SP / "solid_faces.py"]
     for f in tep:

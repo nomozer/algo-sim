@@ -109,7 +109,7 @@ def _served_simson_midpoint():
 
 
 def _preview_policy():
-    from app.ai.pipeline import route_policy_snapshot
+    from app.ai.route_policy import route_policy_snapshot
     return route_policy_snapshot({"HYBRID_ROUTE_D_PREVIEW": "1"}, preview=True)
 
 

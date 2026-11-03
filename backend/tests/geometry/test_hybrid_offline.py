@@ -67,15 +67,16 @@ def test_disabled_and_default_policy_never_invoke_extractor(monkeypatch):
 
 
 def test_offline_policy_uses_existing_route_snapshot_and_cannot_enter_default_cache():
-    from app.ai.pipeline import RoutePolicy, route_policy_snapshot
+    from app.ai.route_policy import RoutePolicy, route_policy_snapshot
     from app.main import _policy_identity, CACHE_VERSION
     policy = enabled()
     assert isinstance(policy, RoutePolicy)
-    assert policy.geometry_compiler_mode == 'LLM_ONLY'
+    assert policy.default_route_mode == 'HYBRID'
     assert policy.response_contract == 'typed-fact-next/2'
     assert dict(policy.preview_surface)['adapter_version'] == 'hybrid-simulation-adapter/4'
     assert route_policy_snapshot({}).response_contract == 'flat'
-    assert _policy_identity(route_policy_snapshot({})) == CACHE_VERSION
+    from app.main import ROUTE_D_CACHE_POLICY
+    assert _policy_identity(route_policy_snapshot({})) == ROUTE_D_CACHE_POLICY
     with pytest.raises(ValueError):
         _policy_identity(policy)
 

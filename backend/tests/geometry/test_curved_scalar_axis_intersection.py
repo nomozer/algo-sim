@@ -292,7 +292,7 @@ def test_S_duong_san_pham_di_TRON_voi_cach_khai_height(kind, r, h, z, do, mong):
 
 
 def test_S_scene3d_mang_circle3_dung_producer_va_phu_thuoc():
-    from app.ai import pipeline
+    from tests.geometry import scene3d_test_helper as pipeline
 
     do = [("bk", "radius"), ("dt", "area")]
     spec = _spec_vo_huong("cylinder", 9, 20, 10, do)

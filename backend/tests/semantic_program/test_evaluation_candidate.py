@@ -177,14 +177,15 @@ def test_ma_san_pham_bao_trum_dung_cac_module_cua_route():
     fz = _freeze_module()
     phu = {f.relative_to(ROOT).as_posix() for f in fz._measured_system_files()}
     for bat_buoc in (
-        "backend/app/ai/pipeline.py",
+        "backend/app/ai/route_policy.py",
+        "backend/app/ai/hybrid_offline.py",
+        "backend/app/ai/typed_fact_next_extraction.py",
+        "backend/app/ai/adapter4_route.py",
         "backend/app/ai/gemini.py",
-        # Hai prompt của ĐƯỜNG SẢN PHẨM. `semantic_program.md`/
-        # `semantic_analyze.md` là prompt của miền Tin học — sau
-        # `LEGACY_INFORMATICS_REMOVAL` không lượt nào gửi chúng nữa, nên khai
-        # chúng ở đây là khai một cổng canh một cánh cửa không còn ai đi qua.
-        "backend/app/ai/skills/geometry_analyze.md",
-        "backend/app/ai/skills/geometry_program_generator.md",
+        "backend/app/ai/skills/transcribe.md",
+        "backend/app/simulation/geometry_functions/planner.py",
+        "backend/app/simulation/geometry_functions/registry.py",
+        "backend/app/simulation/geometry_functions/engine.py",
         "backend/app/simulation/semantic_program/route.py",
         "backend/app/simulation/semantic_program/interpreter.py",
         "backend/app/simulation/semantic_program/validator.py",

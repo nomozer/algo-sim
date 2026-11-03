@@ -2,7 +2,7 @@
 """Hybrid V2 (`scene3d-to-hybrid-v2-replacement`): canonical `measurement` goals with `goal_type: "angle"` reach the ONE
 planner/engine through the `/4` bridge — before this, every angle goal was `BRIDGE_UNSUPPORTED_MEASUREMENT`.
 
-Target keys: `{line, plane}` and `{line1, line2}` (what `adapter3_simulation` reads) plus `{plane1, plane2}` (the
+Target keys: `{line, plane}` and `{line1, line2}` (what `typed_fact_next` reads) plus `{plane1, plane2}` (the
 planner's dihedral question). The answer is cos² — exact. Closed-form oracles from the stated facts of a triangular prism
 ABC.A'B'C' with a right angle at A, AB = x, AC = y (independent of engine layout):
 

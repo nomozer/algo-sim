@@ -12,7 +12,7 @@ from fastapi.testclient import TestClient
 import pytest
 
 import app.main as main
-from app.ai import pipeline as PL
+from app.ai import route_policy as PL
 
 ROOT = Path(__file__).resolve().parents[2]
 RUN = ROOT / 'docs/evaluation/geometry/runs/contract-driven-goal-composition'
@@ -103,42 +103,6 @@ def test_clients_cannot_supply_model_facts_or_enable_live(preview):
     r = preview.post(URL, json={'problem_text': CORPUS['positive'][0]['text'],
                                'facts': CORPUS['positive'][0]['payload'], 'allow_live_ai': True})
     assert r.status_code == 422
-
-
-def test_llm_only_byte_parity_against_pre_wiring_baseline(monkeypatch):
-    from tests.geometry.test_prism_production_route import _prism_p01_contract
-    from app.simulation.geometry_compiler.routing import quyet_dinh_dinh_tuyen
-    text, contract = _prism_p01_contract()
-    program = quyet_dinh_dinh_tuyen(contract, {'GEOMETRY_COMPILER_MODE': 'DETERMINISTIC_FIRST'}).program
-    async def analyze(*a, **k): return contract, None
-    async def synthesize(*a, **k): return json.dumps(program)
-    monkeypatch.setattr(PL, 'stage_semantic_analyze', analyze)
-    monkeypatch.setattr(PL, 'call_gemini', synthesize)
-    monkeypatch.setattr(main, '_cache_lookup', lambda *a: None)
-    monkeypatch.setenv('GEMINI_API_KEY', 'offline-key')
-    monkeypatch.delenv('GEOMETRY_COMPILER_MODE', raising=False)
-    monkeypatch.setenv('SEMANTIC_TELEMETRY', '0')
-    replies = []
-    for enabled in ('0', '1'):
-        monkeypatch.setenv('HYBRID_ROUTE_D_PREVIEW', enabled)
-        r = TestClient(main.app).post('/api/analyze', json={'input': {'type': 'text', 'content': text}})
-        assert r.status_code == 200 and r.json()['status'] == 'ok', r.text
-        replies.append(r.json())
-    assert replies[0] == replies[1]
-    # Run `segment-witness-cache-invalidation` (CACHE_VERSION 127): the served prism scene now carries a certified
-    # `segment3.perpendicular_witness` on each lateral edge AD, BE, CF — the ONLY intended difference from the
-    # pre-wiring baseline. The historical digest is unchanged; it is compared with the witness removed.
-    seg = [o for o in replies[0]['scene3d']['objects'] if o['type'] == 'segment3']
-    assert {o['perpendicular_witness']['from']: o['perpendicular_witness']['foot_id']
-            for o in seg if 'perpendicular_witness' in o} == {'D': 'A', 'E': 'B', 'F': 'C'}
-    baseline = json.loads(json.dumps(replies[0]))
-    for o in baseline['scene3d']['objects']:
-        if o['type'] == 'segment3':
-            o.pop('perpendicular_witness', None)
-    digest = hashlib.sha256(json.dumps(baseline, ensure_ascii=False, sort_keys=True).encode()).hexdigest()
-    print('PRE_WIRING_LLM_ONLY_SHA256=' + digest)
-    # Captured on clean 6592306d before any product edit (canonical full HTTP response).
-    assert digest == 'e6695fe6f9dfe2cdce9c005bd2b61fe42853b6eef87e6d6deae7d0250ad39f05'
 
 
 @pytest.mark.parametrize('case', CORPUS['positive'], ids=lambda c: c['id'])
@@ -359,8 +323,7 @@ c = TestClient(app)
 assert c.get('/api/health').status_code == 200
 d = c.get('/api/diagnostics/runtime').json()
 assert d['hybrid_route_d_preview'] == {'enabled': False}, d['hybrid_route_d_preview']
-loaded = [m for m in sys.modules if m.startswith(('app.ai.hybrid_preview','app.ai.fact_extraction',
-          'app.ai.function_calling','app.ai.function_route','app.simulation.geometry_functions'))]
+loaded = [m for m in sys.modules if m.startswith('app.ai.hybrid_preview')]
 assert not loaded, loaded
 '''
     env = {k: v for k, v in os.environ.items() if k not in ('HYBRID_ROUTE_D_PREVIEW', 'HYBRID_ROUTE_D_PREVIEW_TOKEN')}
@@ -438,8 +401,8 @@ def test_live_flag_and_api_key_still_cannot_reach_a_provider(preview, monkeypatc
 
 def test_preview_policy_does_not_change_analyze_or_default_cache_identity(preview, monkeypatch):
     default = PL.route_policy_snapshot({})
-    assert main._policy_identity(default) == main.CACHE_VERSION
-    assert main._policy_identity(PL.route_policy_snapshot()) == main.CACHE_VERSION
+    assert main._policy_identity(default) == main.ROUTE_D_CACHE_POLICY
+    assert main._policy_identity(PL.route_policy_snapshot()) == main.ROUTE_D_CACHE_POLICY
     active = PL.route_policy_snapshot(preview=True)
     assert active.fingerprint() != default.fingerprint()
     with pytest.raises(ValueError): main._policy_identity(active)
@@ -457,19 +420,12 @@ def test_preview_policy_does_not_change_analyze_or_default_cache_identity(previe
 def test_diagnostics_report_versions_and_state_but_no_secret(preview):
     from app.ai.hybrid_preview import preview_identity
     data = preview.get('/api/diagnostics/runtime').json()
-    assert data['route_policy']['geometry_compiler_mode'] == 'LLM_ONLY'
+    assert data['route_policy']['default_route_mode'] == 'HYBRID'
     identity = data['hybrid_route_d_preview']
     assert identity['enabled'] is True
     for key, value in preview_identity().items(): assert identity[key] == value
     assert TOKEN not in json.dumps(data)
     assert URL not in preview.get('/openapi.json').json()['paths']
-
-
-def test_default_runtime_never_loads_route_d_even_with_preview_flag_on(tmp_path, monkeypatch):
-    from tests.geometry.test_structured_geometry_relations import _module_nap_luc_chay, _ROUTE_D
-    monkeypatch.setenv('HYBRID_ROUTE_D_PREVIEW', '1')
-    loaded = _module_nap_luc_chay(tmp_path)
-    assert not any(name.startswith(_ROUTE_D) for name in loaded)
 
 
 def test_endpoint_takes_one_policy_snapshot(preview, monkeypatch):
@@ -496,7 +452,7 @@ from app.main import app
 r = TestClient(app, client=('127.0.0.1',1234)).post('/api/preview/hybrid', json={'problem_text':'Cho hình chóp S.ABCD.'})
 assert r.status_code == 404, r.text
 assert r.json()['reason_code'] == 'PREVIEW_DISABLED'
-assert not any(m.startswith(('app.ai.hybrid_preview','app.ai.fact_extraction','app.ai.function_route','app.simulation.geometry_functions')) for m in sys.modules)
+assert not any(m.startswith(('app.ai.hybrid_preview','app.ai.fact_extraction')) for m in sys.modules)
 '''
     env = {**os.environ, 'HYBRID_ROUTE_D_PREVIEW': '0', 'ALLOW_LIVE_AI': '0'}
     r = subprocess.run([sys.executable, '-c', code], cwd=ROOT/'backend', env=env, capture_output=True, text=True, timeout=90)

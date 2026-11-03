@@ -89,24 +89,22 @@ def staging_env(tmp_path, monkeypatch):
     )
     monkeypatch.delenv("GEMINI_API_KEY", raising=False)
     monkeypatch.delenv("ALLOW_LIVE_AI", raising=False)
-    monkeypatch.delenv("HYBRID_V2_LOCAL", raising=False)
     monkeypatch.setenv("HYBRID_REPLAY_CORPUS", str(corpus_path))
-
-    def no_llm_only(*_a, **_k):
-        raise AssertionError("Silent fallback to LLM_ONLY occurred on Hybrid route")
-
-    monkeypatch.setattr(main_module, "run_pipeline", no_llm_only)
+    assert not hasattr(main_module, "run_pipeline")
     yield prism, contradict, corpus_path
 
 
-def test_default_hybrid_route_mode_is_off_and_runtime_diagnostics_stay_isolated(monkeypatch):
+def test_default_hybrid_route_mode_is_live_and_off_or_unknown_is_invalid(monkeypatch):
     monkeypatch.delenv("HYBRID_ROUTE_MODE", raising=False)
-    assert main_module.hybrid_route_mode() == "off"
-    monkeypatch.setenv("HYBRID_ROUTE_MODE", "unexpected-mode")
-    assert main_module.hybrid_route_mode() == "off"
+    assert main_module.hybrid_route_mode() == "live"
+    for invalid_mode in ("off", "unexpected-mode"):
+        monkeypatch.setenv("HYBRID_ROUTE_MODE", invalid_mode)
+        assert main_module.hybrid_route_mode() == "invalid"
     monkeypatch.delenv("HYBRID_ROUTE_MODE", raising=False)
     ident = runtime_identity()
-    assert ident["hybrid_route"] == {"mode": "off", "enabled": False}
+    assert ident["hybrid_route"]["mode"] == "live"
+    assert ident["hybrid_route"]["enabled"] is True
+    assert ident["hybrid_route"]["adapter_version"] == "hybrid-simulation-adapter/4" 
 
 
 def test_staging_replay_serves_docker_bridge_client_with_explicit_simulated_marker_and_cache(staging_env, monkeypatch):
@@ -181,17 +179,17 @@ def test_live_mode_requires_allow_live_ai_and_api_key_without_fallback(staging_e
     prism, _, _ = staging_env
     monkeypatch.setenv("HYBRID_ROUTE_MODE", "live")
 
-    # 1. ALLOW_LIVE_AI unset -> 503 LIVE_AI_DISABLED even if GEMINI_API_KEY is present
+    # 1. Explicit ALLOW_LIVE_AI=0 kill-switch -> 503 LIVE_AI_DISABLED even if GEMINI_API_KEY is present
     monkeypatch.setenv("GEMINI_API_KEY", SECRET_KEY)
-    monkeypatch.delenv("ALLOW_LIVE_AI", raising=False)
+    monkeypatch.setenv("ALLOW_LIVE_AI", "0")
     r1 = _post(prism["problem_text"])
     assert r1.status_code == 503
     assert r1.json()["reason_code"] == "LIVE_AI_DISABLED"
     assert r1.json()["failure_kind"] == "INFRASTRUCTURE_FAILURE"
     assert SECRET_KEY not in r1.text
 
-    # 2. ALLOW_LIVE_AI=1 but GEMINI_API_KEY missing -> 503 MISSING_API_KEY
-    monkeypatch.setenv("ALLOW_LIVE_AI", "1")
+    # 2. Default product mode (no opt-in ALLOW_LIVE_AI flag required) with GEMINI_API_KEY missing -> 503 MISSING_API_KEY
+    monkeypatch.delenv("ALLOW_LIVE_AI", raising=False)
     monkeypatch.delenv("GEMINI_API_KEY", raising=False)
     r2 = _post(prism["problem_text"])
     assert r2.status_code == 503
@@ -309,24 +307,17 @@ def test_live_mode_deadline_maps_to_504_and_rollback_to_off_restores_llm_only(st
     assert res_timeout.json()["reason_code"] == "HYBRID_DEADLINE_EXCEEDED"
     assert res_timeout.json()["failure_kind"] == "INFRASTRUCTURE_FAILURE"
 
-    # Rollback to `off` restores LLM_ONLY untouched, and runtime diagnostics never leak GEMINI_API_KEY
+    # Setting `HYBRID_ROUTE_MODE=off` fails closed with 503 INVALID_HYBRID_ROUTE_MODE (no LLM_ONLY fallback)
     ident_live = runtime_identity()
     assert ident_live["hybrid_route"]["mode"] == "live"
     assert ident_live["hybrid_route"]["enabled"] is True
     assert SECRET_KEY not in json.dumps(ident_live, ensure_ascii=False)
 
     monkeypatch.setenv("HYBRID_ROUTE_MODE", "off")
-    llm_calls = []
-
-    async def fake_llm(text, api_key, **kwargs):
-        llm_calls.append(text)
-        return {"status": "ok", "simulation_id": "generic.semantic_program", "marker": "LLM_ONLY_RESTORED"}
-
-    monkeypatch.setattr(main_module, "run_pipeline", fake_llm)
-    res_rb = _post(prism["problem_text"])
-    assert res_rb.status_code == 200
-    assert res_rb.json()["marker"] == "LLM_ONLY_RESTORED"
-    assert len(llm_calls) == 1
+    res_off = _post(prism["problem_text"])
+    assert res_off.status_code == 503
+    assert res_off.json()["reason_code"] == "INVALID_HYBRID_ROUTE_MODE"
+    assert res_off.json()["failure_kind"] == "INFRASTRUCTURE_FAILURE"
 
 
 def test_staging_replay_serves_and_refuses_all_16_scope_classes():

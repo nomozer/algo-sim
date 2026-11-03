@@ -448,15 +448,15 @@ def test_function_route_fails_closed_when_continuity_validation_detects_violatio
 # ── 4. API Opt-in (`staging-replay`) and Production Default / Rollback (`LLM_ONLY`, `off`) ──────────────────────────
 
 
-def test_analyze_api_opt_in_staging_replay_and_rollback_keep_llm_only_default_intact(monkeypatch, tmp_path):
+def test_analyze_api_hybrid_default_staging_replay_and_fail_closed_invalid_mode(monkeypatch, tmp_path):
     from app.ai.hybrid_offline import LOCAL_REPLAY_SCHEMA
     import app.main as main
-    from app.simulation.geometry_compiler import routing
 
-    assert routing.CHE_DO_MAC_DINH == "LLM_ONLY"
-    assert routing.che_do({}) == "LLM_ONLY"
-    assert main.CACHE_VERSION == "131"
-    assert main.hybrid_route_mode() == "off"
+    assert not (Path(main.__file__).resolve().parent / "simulation" / "geometry_compiler").exists()
+    assert not (Path(main.__file__).resolve().parent / "ai" / "pipeline.py").exists()
+    assert main.CACHE_VERSION == "132"
+    monkeypatch.delenv("HYBRID_ROUTE_MODE", raising=False)
+    assert main.hybrid_route_mode() == "live"
 
     case, row = _c26_row("k1-live.jsonl", "K-A03")
     normed = _normalize_transport_payload(deepcopy(row["raw_extraction"]))
@@ -480,6 +480,8 @@ def test_analyze_api_opt_in_staging_replay_and_rollback_keep_llm_only_default_in
     steps = body["envelope"]["scene3d"]["formation"]["steps"]
     assert steps and "step_summary" in steps[0] and steps[0]["coordinate_frame_id"] == "canonical_chart_v1"
 
-    # Rollback to HYBRID_ROUTE_MODE=off immediately disables Hybrid route on /api/analyze
+    # Setting HYBRID_ROUTE_MODE=off fails closed with 503 INVALID_HYBRID_ROUTE_MODE
     monkeypatch.setenv("HYBRID_ROUTE_MODE", "off")
-    assert main.hybrid_route_mode() == "off"
+    assert main.hybrid_route_mode() == "invalid"
+    r_off = client.post("/api/analyze", json={"input": {"type": "text", "content": case["problem_text"]}})
+    assert r_off.status_code == 503 and r_off.json()["reason_code"] == "INVALID_HYBRID_ROUTE_MODE"

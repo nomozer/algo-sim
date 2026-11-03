@@ -251,7 +251,7 @@ def test_schema_IR_THAT_khong_lam_vo_payload(monkeypatch):
 
 def test_moi_schema_PRODUCTION_khac_van_gui_duoc_nhu_cu():
     """Bản sửa chỉ được chạm đúng schema IR. Nếu nó vô tình làm schema của
-    `geometry_analyze` mất `responseSchema` thì constrained decoding của ĐƯỜNG
+    `typed_fact_next_v2` mất `responseSchema` thì constrained decoding của ĐƯỜNG
     SẢN PHẨM hỏng theo, và hỏng câm.
 
     ⚠️ Trước `LEGACY_INFORMATICS_REMOVAL` test này soi ba schema: `analyze`,
@@ -263,7 +263,7 @@ def test_moi_schema_PRODUCTION_khac_van_gui_duoc_nhu_cu():
         analyze_schema_for,
     )
 
-    for ten, s in (("geometry_analyze", analyze_schema_for("hinh_hoc")),):
+    for ten, s in (("typed_fact_next_v2", analyze_schema_for("hinh_hoc")),):
         ra = gemini._sanitize_gemini_schema(s)
         assert ra is not None, f"{ten}: schema production bị bỏ, không được"
         assert "properties" in ra, f"{ten}: mất nội dung sau khi dọn"

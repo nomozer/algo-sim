@@ -49,13 +49,9 @@ def env(tmp_path, monkeypatch):
     path = tmp_path / "corpus.json"
     _write(path, raw)
     monkeypatch.delenv("GEMINI_API_KEY", raising=False)
-    monkeypatch.setenv("HYBRID_V2_LOCAL", "offline-replay")
-    monkeypatch.setenv("HYBRID_V2_LOCAL_REPLAY_CORPUS", str(path))
-
-    def pipeline_must_not_run(*_a, **_k):
-        raise AssertionError("LLM_ONLY pipeline ran on the Hybrid path (silent fallback)")
-
-    monkeypatch.setattr(main_module, "run_pipeline", pipeline_must_not_run)
+    monkeypatch.setenv("HYBRID_ROUTE_MODE", "staging-replay")
+    monkeypatch.setenv("HYBRID_REPLAY_CORPUS", str(path))
+    assert not hasattr(main_module, "run_pipeline")
     _purge(raw["problem_text"])
     yield raw, path
     _purge(raw["problem_text"])
@@ -85,13 +81,13 @@ def test_served_result_is_cached_and_a_repeat_is_a_hit_without_re_execution(env,
 def test_route_d_rows_never_reuse_the_llm_only_key_or_policy(env):
     raw, path = env
     _post(raw["problem_text"])
-    prep = H.prepare_local_replay(raw["problem_text"], str(path))
+    prep = H.prepare_staging_replay(raw["problem_text"], str(path))
     assert prep.cache_key is not None and prep.cache_key != _cache_key(raw["problem_text"])
     with SessionLocal() as s:
         row = s.query(SimulationCache).filter_by(key=prep.cache_key).one()
         assert row.policy_version == main_module.ROUTE_D_CACHE_POLICY
-        assert main_module._cache_lookup(s, prep.cache_key, main_module._policy_identity(
-            main_module.route_policy_snapshot())) is None                   # LLM_ONLY identity cannot read it
+        assert main_module._cache_lookup(s, prep.cache_key, "131") is None          # legacy v131 identity cannot read it
+        assert main_module._cache_lookup(s, prep.cache_key, "131:route-d") is None
         assert s.query(SimulationCache).filter_by(key=_cache_key(raw["problem_text"])).count() == 0
 
 
@@ -118,13 +114,13 @@ def test_a_changed_route_surface_misses(env, monkeypatch):
 
 def test_identity_is_bound_to_the_exact_source_not_a_normalized_one(env):
     raw, path = env
-    a = H.prepare_local_replay(raw["problem_text"], str(path))
+    a = H.prepare_staging_replay(raw["problem_text"], str(path))
     variant = "  " + raw["problem_text"].upper()                         # same LLM_ONLY key (normalized), other source
     assert _cache_key(variant) == _cache_key(raw["problem_text"])
     changed = deepcopy(raw)
     changed["problem_text"] = variant
     _write(path, raw, changed)
-    b = H.prepare_local_replay(variant, str(path))
+    b = H.prepare_staging_replay(variant, str(path))
     assert a.cache_key and b.cache_key and a.cache_key != b.cache_key
 
 
@@ -133,13 +129,13 @@ def test_refusals_are_never_cached(env):
     text = raw["problem_text"] + " Tính thêm thể tích khối lăng trụ."
     r = _post(text)
     assert r.json()["route_d"]["status"] == "REFUSED"
-    assert H.prepare_local_replay(text, str(path)).cache_key is None    # nothing recorded ⇒ not cacheable
+    assert H.prepare_staging_replay(text, str(path)).cache_key is None    # nothing recorded ⇒ not cacheable
     bad = deepcopy(raw)
     bad["premises"][1]["args"]["value"] = "7"                           # text says AB = 6
     _write(path, bad)
     r = _post(raw["problem_text"])
     assert r.json()["route_d"]["status"] == "REFUSED" and r.headers["x-algosim-cache"] == "none"
-    key = H.prepare_local_replay(raw["problem_text"], str(path)).cache_key
+    key = H.prepare_staging_replay(raw["problem_text"], str(path)).cache_key
     with SessionLocal() as s:
         assert s.query(SimulationCache).filter_by(key=key).count() == 0
 
@@ -148,7 +144,7 @@ def test_refusals_are_never_cached(env):
 def test_a_stored_row_that_is_not_a_served_response_is_a_miss_and_is_replaced(env, monkeypatch, stored):
     raw, path = env
     runs = _count_route_runs(monkeypatch)
-    key = H.prepare_local_replay(raw["problem_text"], str(path)).cache_key
+    key = H.prepare_staging_replay(raw["problem_text"], str(path)).cache_key
     with SessionLocal() as s:
         s.add(SimulationCache(key=key, problem_text=raw["problem_text"], simulation_id="poison", envelope_json=stored,
                               dsl_version=main_module.DSL_VERSION, policy_version=main_module.ROUTE_D_CACHE_POLICY))
@@ -182,7 +178,7 @@ def _mutant(monkeypatch, module, name, old, new):
 
 
 def test_mutant_identity_without_the_recorded_extraction_is_caught(env, monkeypatch):
-    _mutant(monkeypatch, H, "prepare_local_replay", "'recorded_extraction': recorded,", "")
+    _mutant(monkeypatch, H, "prepare_staging_replay", "'recorded_extraction': recorded,", "")
     with pytest.raises(AssertionError):
         test_a_changed_recorded_extraction_for_the_same_text_misses(env, monkeypatch)
 
@@ -191,7 +187,7 @@ def test_mutant_reusing_a_non_served_row_is_caught(env, monkeypatch):
     _mutant(monkeypatch, main_module, "_served_route_d",
             'if isinstance(body, dict) and (body.get("route_d") or {}).get("status") == "SERVED"', "if True")
     raw, path = env
-    key = H.prepare_local_replay(raw["problem_text"], str(path)).cache_key
+    key = H.prepare_staging_replay(raw["problem_text"], str(path)).cache_key
     with SessionLocal() as s:
         s.add(SimulationCache(key=key, problem_text=raw["problem_text"], simulation_id="poison",
                               envelope_json=json.dumps({"route_d": {"status": "REFUSED"}, "envelope": {}}),
@@ -208,7 +204,7 @@ def test_the_ops_script_can_delete_a_route_d_row_by_its_exact_text(env, monkeypa
 
     raw, path = env
     assert _post(raw["problem_text"]).headers["x-algosim-cache"] == "miss"
-    key = H.prepare_local_replay(raw["problem_text"], str(path)).cache_key
+    key = H.prepare_staging_replay(raw["problem_text"], str(path)).cache_key
     spec = importlib.util.spec_from_file_location("cache_clear", Path(__file__).resolve().parents[1] / "scripts/cache_clear.py")
     cc = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(cc)
@@ -219,45 +215,39 @@ def test_the_ops_script_can_delete_a_route_d_row_by_its_exact_text(env, monkeypa
     assert _post(raw["problem_text"]).headers["x-algosim-cache"] == "miss"
 
 
-# ── D-12: rollback is the routing switch, never a silent fallback ────────────────────────────────────────────────────
+# ── Post-cutover cache isolation & fail-closed invalid route mode ─────────────────────────────────────────────────────
 
-def _fake_llm_only(monkeypatch, calls):
-    async def fake(text, api_key, **kwargs):
-        calls.append(kwargs["route_policy"])
-        return dict(LLM_ONLY_SENTINEL)
-    monkeypatch.setattr(main_module, "run_pipeline", fake)
-    monkeypatch.setenv("GEMINI_API_KEY", "offline-test-key-never-sent")
+def test_bidirectional_cache_isolation_between_legacy_rows_and_hybrid_132(env, monkeypatch):
+    raw, path = env
+    text = raw["problem_text"]
+    legacy_key = _cache_key(text)
+    with SessionLocal() as s:
+        s.query(SimulationCache).filter_by(key=legacy_key).delete()
+        s.add(SimulationCache(
+            key=legacy_key,
+            problem_text=text,
+            simulation_id="generic.semantic_program",
+            envelope_json=json.dumps(LLM_ONLY_SENTINEL),
+            dsl_version=main_module.DSL_VERSION,
+            policy_version="131",
+        ))
+        s.commit()
 
+    # Legacy 131 row never contaminates Hybrid 132 `/api/analyze`
+    r_hybrid = _post(text)
+    assert r_hybrid.status_code == 200 and r_hybrid.headers["x-algosim-cache"] == "miss"
+    assert r_hybrid.json()["route_d"]["status"] == "SERVED"
+    assert "marker" not in r_hybrid.json()
 
-def test_rollback_after_a_hybrid_session_runs_llm_only_untouched_and_re_enabling_reuses_route_d(env, monkeypatch):
-    raw, _ = env
-    assert _post(raw["problem_text"]).headers["x-algosim-cache"] == "miss"     # Hybrid session wrote a Route D row
-    calls = []
-    _fake_llm_only(monkeypatch, calls)
-    monkeypatch.delenv("HYBRID_V2_LOCAL")                                       # ROLLBACK_TO_LEGACY_MODE
-    body = _post(raw["problem_text"]).json()
-    assert body["marker"] == "LLM_ONLY" and "route_d" not in body and len(calls) == 1
-    assert calls[0].hybrid_preview_enabled is False and calls[0].fingerprint() is None   # default policy, unchanged
-    cached = _post(raw["problem_text"]).json()                                   # LLM_ONLY's own row, not Route D's
-    assert cached["marker"] == "LLM_ONLY" and cached["cached"] is True and len(calls) == 1
-    monkeypatch.setenv("HYBRID_V2_LOCAL", "offline-replay")                      # re-enable
-    r = _post(raw["problem_text"])
-    assert r.headers["x-algosim-cache"] == "hit" and r.json()["route_d"]["status"] == "SERVED"
+    # And `HYBRID_ROUTE_MODE=off` fails closed with 503 INVALID_HYBRID_ROUTE_MODE (never reads legacy row)
+    monkeypatch.setenv("HYBRID_ROUTE_MODE", "off")
+    r_off = _post(text)
+    assert r_off.status_code == 503
+    assert r_off.json()["reason_code"] == "INVALID_HYBRID_ROUTE_MODE"
 
-
-def test_llm_only_response_is_identical_with_or_without_route_d_rows_present(env, monkeypatch):
-    raw, _ = env
-    calls = []
-    monkeypatch.delenv("HYBRID_V2_LOCAL")
-    _fake_llm_only(monkeypatch, calls)
-    before = _post(raw["problem_text"]).content
-    _purge(raw["problem_text"])
-    monkeypatch.setenv("HYBRID_V2_LOCAL", "offline-replay")
-    monkeypatch.setattr(main_module, "run_pipeline", lambda *a, **k: (_ for _ in ()).throw(AssertionError("fallback")))
-    assert _post(raw["problem_text"]).headers["x-algosim-cache"] == "miss"
-    monkeypatch.delenv("HYBRID_V2_LOCAL")
-    _fake_llm_only(monkeypatch, calls)
-    assert _post(raw["problem_text"]).content == before
+    with SessionLocal() as s:
+        s.query(SimulationCache).filter_by(key=legacy_key).delete()
+        s.commit()
 
 
 # ── The declared gate: typed refusals, no fallback, no partial scene ─────────────────────────────────────────────────
@@ -306,9 +296,9 @@ def test_an_adapter_fault_is_a_typed_technical_refusal_not_a_500_or_fallback(env
     monkeypatch.setattr(H, "build_adapter4_response", broken)
     r = _post(raw["problem_text"])
     body = r.json()
-    assert r.status_code == 200 and body["route_d"]["status"] == "REFUSED"
-    assert body["envelope"]["reason_code"] == "ADAPTER_INTERNAL_ERROR" and "scene3d" not in body["envelope"]
-    assert r.headers["x-algosim-cache"] == "none"
+    assert r.status_code == 503 and body["failure_kind"] == "INFRASTRUCTURE_FAILURE"
+    assert body["reason_code"] == "ADAPTER_INTERNAL_ERROR" and "envelope" not in body
+    assert r.headers["cache-control"] == "no-store"
 
 
 def _route_d_rows(text):
@@ -318,17 +308,17 @@ def _route_d_rows(text):
 
 def test_a_doubly_faulted_adapter_is_still_typed_and_the_next_request_recovers(env, monkeypatch):
     """Review M-3: the fault handler re-ran the function that had just failed, so a fault in the refusal path itself
-    escaped as an HTTP 500. Repeated faults stay typed technical refusals; nothing is cached or partially stored, and
-    the route serves again once the fault is gone (no poisoned state)."""
+    escaped as an HTTP 500. Repeated faults stay typed 503 infrastructure failures; nothing is cached or partially stored,
+    and the route serves again once the fault is gone (no poisoned state)."""
     raw, _ = env
     real = H.build_adapter4_response
     monkeypatch.setattr(H, "build_adapter4_response", lambda result, source: (_ for _ in ()).throw(RuntimeError("bug")))
     for _ in range(2):
         r = _post(raw["problem_text"])
         body = r.json()
-        assert r.status_code == 200 and body["route_d"]["status"] == "REFUSED"
-        assert body["envelope"]["reason_code"] == "ADAPTER_INTERNAL_ERROR" and "scene3d" not in body["envelope"]
-        assert r.headers["x-algosim-cache"] == "none" and _route_d_rows(raw["problem_text"]) == 0
+        assert r.status_code == 503 and body["failure_kind"] == "INFRASTRUCTURE_FAILURE"
+        assert body["reason_code"] == "ADAPTER_INTERNAL_ERROR" and "envelope" not in body
+        assert r.headers["cache-control"] == "no-store" and _route_d_rows(raw["problem_text"]) == 0
     monkeypatch.setattr(H, "build_adapter4_response", real)
     r = _post(raw["problem_text"])
     assert r.json()["route_d"]["status"] == "SERVED" and r.headers["x-algosim-cache"] == "miss"
@@ -343,8 +333,8 @@ def test_a_broken_refusal_classifier_on_a_refused_route_is_typed_not_a_500(env, 
     _write(path, bad)
     monkeypatch.setattr(P, "classify_refusal", lambda *a, **k: (_ for _ in ()).throw(RuntimeError("bug")))
     r = _post(bad["problem_text"])
-    assert r.status_code == 200 and r.json()["route_d"]["status"] == "REFUSED"
-    assert r.json()["envelope"]["reason_code"] in {"ADAPTER_INTERNAL_ERROR", "ROUTE_INTERNAL_ERROR"}
+    assert r.status_code == 503 and r.json()["failure_kind"] == "INFRASTRUCTURE_FAILURE"
+    assert r.json()["reason_code"] in {"ADAPTER_INTERNAL_ERROR", "ROUTE_INTERNAL_ERROR"}
 
 
 def test_an_unexpected_exception_anywhere_in_the_route_is_a_typed_technical_refusal(env, monkeypatch):
@@ -352,8 +342,8 @@ def test_an_unexpected_exception_anywhere_in_the_route_is_a_typed_technical_refu
     monkeypatch.setattr(H, "extract_typed_fact_next_v2", lambda *a: (_ for _ in ()).throw(KeyError("bug")))
     r = _post(raw["problem_text"])
     body = r.json()
-    assert r.status_code == 200 and body["route_d"]["status"] == "REFUSED" and "scene3d" not in body["envelope"]
-    assert body["envelope"]["reason_code"] == "ROUTE_INTERNAL_ERROR" and r.headers["x-algosim-cache"] == "none"
+    assert r.status_code == 503 and body["failure_kind"] == "INFRASTRUCTURE_FAILURE" and "envelope" not in body
+    assert body["reason_code"] == "ROUTE_INTERNAL_ERROR" and r.headers["cache-control"] == "no-store"
     result = H.LocalReplay(raw["problem_text"], {}, H.hybrid_offline_policy({"HYBRID_ROUTE_D_PREVIEW": "1"}), None).run()
     assert result.receipt["failure_kind"] == "TECHNICAL_FAILURE" and result.receipt["source_references"] == []
     assert "bug" not in json.dumps(result.response, ensure_ascii=False)               # no exception prose leaks
@@ -370,8 +360,10 @@ def test_a_deadline_is_a_typed_technical_refusal(env, monkeypatch):
     raw, _ = env
     clock = iter(range(0, 10_000, 100))
     monkeypatch.setattr(H, "perf_counter", lambda: next(clock))           # every stage looks 100 s long
-    body = _post(raw["problem_text"]).json()
-    assert body["route_d"]["status"] == "REFUSED" and body["envelope"]["reason_code"] == "HYBRID_DEADLINE_EXCEEDED"
+    r = _post(raw["problem_text"])
+    body = r.json()
+    assert r.status_code == 504 and body["failure_kind"] == "INFRASTRUCTURE_FAILURE"
+    assert body["reason_code"] == "HYBRID_DEADLINE_EXCEEDED"
 
 
 def test_runtime_call_trace_goes_through_extraction_route_d_and_adapter4(env, monkeypatch):

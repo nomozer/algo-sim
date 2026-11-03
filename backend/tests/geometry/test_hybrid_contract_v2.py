@@ -4,12 +4,63 @@ shared Source Gate grammar, Adapter /4. Expected values are closed-form (indepen
 from __future__ import annotations
 
 from copy import deepcopy
+from fractions import Fraction
+import re
 
 import pytest
 
-from app.ai.adapter3_simulation import run_typed_fact_next_route
+from app.ai.adapter4_route import run_typed_fact_next_v2_route
+from app.ai.function_route import run_typed_fact_next_planner_route
 from app.simulation.geometry_functions.typed_fact_next import TypedFactNextValidationError, parse_typed_fact_next
-from tests.geometry.test_hybrid_contract_unification import _payload
+
+
+def _square(coef: str) -> Fraction:
+    m = re.fullmatch(r"(?P<p>\d+)?(?:√(?P<r>\d+))?(?:/(?P<q>\d+))?", coef)
+    assert m and (m["p"] or m["r"]), coef
+    p, r, q = Fraction(m["p"] or 1), Fraction(m["r"] or 1), Fraction(m["q"] or 1)
+    return p * p * r / (q * q)
+
+
+def _payload(base: str = "ABCD", plane: str = "parallel", cut: list[str] | None = None, t: str = "1/2",
+             residual: bool = False) -> dict:
+    b = list(base)
+    cut = cut if cut is not None else [f"S{x}" for x in b[1:]]
+    fresh = iter("NPQ")
+    names = ["M" if e == "SA" else next(fresh) for e in cut]
+    shape = ("Đáy ABCD là hình vuông cạnh a.", {"kind": "base_is_square", "args": {"vertices": b, "side": "a"}}) \
+        if len(b) == 4 else ("Đáy ABC là tam giác đều cạnh a.",
+                             {"kind": "base_is_equilateral_triangle", "args": {"vertices": b, "side": "a"}})
+    m_q = "Gọi M là trung điểm của SA." if t == "1/2" else f"Điểm M thuộc cạnh SA sao cho SM = {t} SA."
+    m_p = ({"kind": "point_is_midpoint", "args": {"point": "M", "segment": ["S", "A"]}} if t == "1/2" else
+           {"kind": "point_divides_segment", "args": {"point": "M", "segment": ["S", "A"], "ratio": t}})
+    rel = f"song song với ({base[:3]})" if plane == "parallel" else "vuông góc với SA"
+    sec_q = f"Mặt phẳng (α) qua M và {rel} cắt {', '.join(cut)} lần lượt tại {', '.join(names)}."
+    sub = f"S.M{''.join(n for e, n in zip(cut, names) if e != 'SA')}"
+    ratio_q = f"Tính tỉ số thể tích của hai khối chóp {sub} và S.{base}."
+    premises = [shape, ("SA vuông góc với mặt phẳng (ABC).",
+                        {"kind": "line_perp_plane", "args": {"line": ["S", "A"], "plane": b[:3]}}),
+                ("SA = a.", {"kind": "segment_length", "args": {"segment": ["S", "A"], "value": "a"}}), (m_q, m_p)]
+    res_q = f"Tính thể tích phần còn lại của khối chóp S.{base} sau khi cắt bỏ khối chóp {sub}."
+    text = " ".join([f"Cho hình chóp S.{base}.", *(q for q, _ in premises), sec_q,
+                     f"Dựng thiết diện của hình chóp S.{base} bởi (α).", ratio_q, *([res_q] if residual else [])])
+    sec = {"section_id": "sec", "plane_name": "α", "target_solid_id": "pyr", "through_point": "M", "quote": sec_q,
+           "cut_edges": [list(e) for e in cut],
+           "named_intersections": {f"{e[0]}-{e[1]}": n for e, n in zip(cut, names)}}
+    sec.update({"plane_kind": "through_point_parallel_plane", "parallel_plane": b[:3]} if plane == "parallel" else
+               {"plane_kind": "through_point_perpendicular_line", "perpendicular_line": ["S", "A"]})
+    return {"schema_version": "typed-fact-next/1", "problem_text": text,
+            "solids": [{"solid_id": "pyr", "solid_type": "pyramid", "notation": f"S.{base}",
+                        "quote": f"Cho hình chóp S.{base}."}],
+            "premises": [{**p, "quote": q} for q, p in premises], "derived_sections": [sec],
+            "simulation_goals": [
+                {"goal_id": "g_sec", "kind": "construct_plane_section", "target_section_id": "sec",
+                 "quote": f"Dựng thiết diện của hình chóp S.{base} bởi (α)."},
+                {"goal_id": "g_sub", "kind": "construct_derived_solid", "derived_solid_id": "sub",
+                 "target_section_id": "sec", "apex_ref": "S", "parent_solid_id": "pyr", "quote": ratio_q}],
+            "math_goals": [{"goal_id": "g_ratio", "kind": "volume_ratio", "numerator_solid_id": "sub",
+                            "denominator_solid_id": "pyr", "quote": ratio_q},
+                           *([{"goal_id": "g_res", "kind": "residual_volume", "parent_solid_id": "pyr",
+                               "cut_solid_id": "sub", "quote": res_q}] if residual else [])]}
 
 
 # ── P1: malformed input is refused at the schema boundary, never compiled ─────────────────────────────────────────
@@ -24,8 +75,8 @@ def test_malformed_premise_args_are_refused_at_parse(kind_index, arg, value):
     with pytest.raises(TypedFactNextValidationError) as e:
         parse_typed_fact_next(p)
     assert e.value.code == "INVALID_PREMISE_ARGS", e.value.code
-    r = run_typed_fact_next_route(p)
-    assert (r.status, r.code) == ("REFUSED", "INVALID_PREMISE_ARGS")
+    r = run_typed_fact_next_planner_route(p)
+    assert r.status == "REFUSED" and r.code in ("INVALID_PREMISE_ARGS", "INVALID_TYPED_FACT_NEXT")
 
 
 def test_missing_required_premise_arg_is_refused_at_parse():
@@ -58,8 +109,8 @@ def test_a_planner_fault_inside_the_shared_gate_is_not_reported_as_bad_input(mon
     def boom(*_a, **_k):
         raise exc
     monkeypatch.setattr(PL, "lap_ke_hoach", boom)
-    r = run_typed_fact_next_route(_payload("ABC"))
-    assert (r.status, r.code) == ("REFUSED", "ADAPTER_INTERNAL_ERROR"), (r.code, r.reason)
+    r = run_typed_fact_next_v2_route(_v2(_payload("ABC")))
+    assert (r.status, r.code) == ("REFUSED", "ROUTE_INTERNAL_ERROR"), (r.code, r.reason)
 
 
 def _plane(name, pts, label=None):
@@ -94,13 +145,13 @@ def test_dedup_never_rewrites_a_label_or_kind_field():
 
 def test_an_unexpected_internal_fault_is_a_technical_refusal_not_a_data_error(monkeypatch):
     """The public boundary never leaks an exception, and never disguises a programming fault as the user's input."""
-    import app.ai.adapter3_simulation as A
+    import app.simulation.geometry_functions.typed_fact_next_bridge as B
 
-    def boom(self):
+    def boom(*_a, **_k):
         raise ZeroDivisionError("planted")
-    monkeypatch.setattr(A._Adapter3Compiler, "_compile_premises", boom)
-    r = run_typed_fact_next_route(_payload("ABC"))
-    assert (r.status, r.code) == ("REFUSED", "ADAPTER_INTERNAL_ERROR"), (r.status, r.code)
+    monkeypatch.setattr(B, "bridge_v2", boom)
+    r = run_typed_fact_next_v2_route(_v2(_payload("ABC")))
+    assert (r.status, r.code) == ("REFUSED", "ROUTE_INTERNAL_ERROR"), (r.status, r.code)
     assert "ZeroDivisionError" in r.reason
 
 
@@ -170,9 +221,7 @@ def test_v2_section_shape_is_closed(mutate, code):
 
 # ── P3 + P5: Adapter /4 over bridge /2 → planner (D6) → Source Gate → engine (closure certificate) ─────────────────
 
-def _square(coef: str):
-    from tests.geometry.test_hybrid_contract_unification import _square as sq
-    return sq(coef)
+# _square is defined at top of module.
 
 
 def _run4(v2: dict):

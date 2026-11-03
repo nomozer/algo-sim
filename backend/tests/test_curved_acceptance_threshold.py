@@ -258,7 +258,7 @@ def test_C7_rubric_khop_hanh_vi_THUC_cua_scorer():
 def _mo(tmp, **kw):
     return mo_run(
         tmp / "run", run_id="test-run", muc_dich="test",
-        runner=str(GOC / "scripts" / "run_curved_acceptance.py"),
+        runner=str(GOC / "scripts" / "measurement_policy.py"),
         ca=[{"id": "x", "loai": "duong", "de": "d", "mong": ["1"]}],
         model=kw.pop("model", {"provider": "gia"}),
         chinh_sach_sua="test", ngan_sach_goi=0, bo_qua_dirty=True, **kw)

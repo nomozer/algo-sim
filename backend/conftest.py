@@ -139,6 +139,7 @@ def block_real_network(monkeypatch):
     import app.persistence.db  # noqa: F401
 
     monkeypatch.delenv("GEMINI_API_KEY", raising=False)
+    monkeypatch.delenv("ALLOW_LIVE_AI", raising=False)
 
     # Chặn ở TRANSPORT MẠNG THẬT, không phải ở client: TestClient của FastAPI
     # dùng ASGITransport (in-process, không ra mạng) nên vẫn chạy bình thường.

@@ -131,7 +131,7 @@ def test_06_danh_tinh_khop_he_hien_tai(mt):
     # 127 -> 128 (visual-hybrid-final-corrections): tên hiển thị backend — mặt phẳng tên đề viết, chu trình thiết diện (envelope phục vụ đổi).
     # 128 -> 129 (sphere-sample-source-authority): mặt phẳng cắt khối cong (đường tròn/elip giao) mang vai CONSTRUCT_CUTTING_OBJECT thay CONSTRUCT_AUXILIARY_GEOMETRY trong envelope phục vụ; row v128 thật vẫn HIT (runs/sphere-sample-source-authority/cache/decision.json).
     # 130 -> 131 (geometry-generalization-and-pedagogical-construction): cạnh thiết diện mang lý do đã kiểm chính xác (`justification_text`, envelope phục vụ đổi; row v130 phải MISS).
-    assert CACHE_VERSION == "131"
+    assert CACHE_VERSION == "132"
 
 
 # ══ C · THỨ ma trận nói ĐÃ SẴN SÀNG thì phải CÓ MẶT ════════════════════

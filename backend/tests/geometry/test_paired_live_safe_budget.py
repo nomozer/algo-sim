@@ -169,8 +169,15 @@ def test_02_request_cannot_exceed_remaining_usd_and_marks_incomplete_paired_eval
             },
         }, request=req)
 
+    from app.ai import gemini
+
+    async def fake_llm_only_wire(text: str, key: str) -> dict:
+        await gemini.call_gemini(key, "transcribe", text)
+        return {"status": "unsupported", "failure_category": "capability_gap"}
+
     monkeypatch.setenv("ALLOW_LIVE_AI", "1")
     monkeypatch.setenv("GEMINI_API_KEY", "offline-test-key")
+    monkeypatch.setattr(E, "run_llm_only", fake_llm_only_wire)
     monkeypatch.setattr(httpx, "post", provider)
     monkeypatch.setattr(httpx.AsyncClient, "post", fake_async_post)
 

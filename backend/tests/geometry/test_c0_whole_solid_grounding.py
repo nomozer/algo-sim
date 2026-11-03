@@ -15,7 +15,6 @@ from fractions import Fraction
 
 import pytest
 
-from app.ai import pipeline as PL
 from app.simulation.semantic_program.assumption_gate import _doc_de
 from app.simulation.semantic_program.interpreter import SemanticProgramInterpreter
 from app.simulation.semantic_program.route import verify_and_compile
@@ -78,19 +77,3 @@ def test_thieu_du_kien_khong_phai_mau_thuan(de):
     assert {r.kind for r in rb} & {"cube", "cube_edge", "height"}      # đọc được khẳng định, nhưng không có toạ độ
     assert _mau_thuan_c0(rb, _KhongDiem(), inv) == []
 
-
-def test_mau_thuan_toan_khoi_khong_co_scene3d_qua_pipeline(monkeypatch):
-    de, contract, sp = hop_dong_va_chuong_trinh("CU_C_cuboid_oblique_lateral")
-
-    async def analyze(*_a, **_k):
-        return contract, None
-
-    async def program(*_a, **_k):
-        return sp, None
-
-    monkeypatch.setattr(PL, "stage_semantic_analyze", analyze)
-    monkeypatch.setattr(PL, "stage_semantic_program", program)
-    monkeypatch.delenv("GEOMETRY_COMPILER_MODE", raising=False)
-    env = asyncio.run(PL.run_pipeline(de, "fake_key"))
-    assert env.get("status") != "ok" and not env.get("scene3d"), env
-    assert env.get("reason_code") == MA and env.get("refusal_cause") == "SOURCE"

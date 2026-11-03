@@ -45,6 +45,37 @@ sys.path.insert(0, str(BE))
 sys.path.insert(0, str(BE / "scripts"))
 GOC = BE.parent
 
+RUN_THESIS_FINAL = (
+    GOC
+    / "docs"
+    / "evaluation"
+    / "geometry"
+    / "thesis-final-acceptance"
+    / "thesis-final-20260908T160224Z"
+)
+
+
+def doc_de_bai() -> dict[str, str]:
+    """Read frozen problem texts from historical thesis-final CORPUS.json (0 network calls)."""
+    corpus = json.loads((RUN_THESIS_FINAL.parent / "CORPUS.json").read_text(encoding="utf-8"))
+    return {
+        c["id"]: c["problem_text"]
+        for c in (corpus.get("negative_cases", []) + corpus.get("positive_cases", []))
+    }
+
+
+def doc_raw_theo_thu_tu(case_id: str) -> dict[str, list[str]]:
+    """Read frozen raw JSON artifacts from historical thesis-final run (verified by sha256, 0 network calls)."""
+    hang: dict[str, list[tuple[int, str]]] = {"semantic_analyze": [], "semantic_program": []}
+    for f in (RUN_THESIS_FINAL / "raw" / case_id).iterdir():
+        j = json.loads(f.read_text(encoding="utf-8"))
+        thuc = hashlib.sha256(j["raw_text"].encode("utf-8")).hexdigest()
+        if thuc != j["raw_sha256"]:
+            raise RuntimeError(f"{case_id}/{f.name}: raw_text sha256 mismatch")
+        chang = "semantic_analyze" if j["stage"] == "analyze" else "semantic_program"
+        hang[chang].append((int(f.stem.rsplit("_", 1)[1]), j["raw_text"]))
+    return {k: [t for _, t in sorted(v)] for k, v in hang.items()}
+
 RUN = (GOC / "docs" / "evaluation" / "geometry" / "thesis-final-acceptance"
        / "thesis-final-20260908T160224Z")
 OUT_MAC_DINH = (GOC / "docs" / "evaluation" / "geometry"
@@ -286,129 +317,7 @@ def _thuan_json(x: Any) -> Any:
 
 
 # ══════════════════════════════════════════════════════════════════════════
-# §4 · MỘT CA — bảy biên
-# ══════════════════════════════════════════════════════════════════════════
-def replay_case(case_id: str, text: str) -> dict[str, Any]:
-    import asyncio
-
-    from app.ai import pipeline
-    from app.learner_messages import attach_learner_reason
-    from app.simulation.semantic_program.domain_profile import (
-        DOMAIN_HINH_HOC, co_duong_thuc_thi, detect_domain,
-    )
-
-    raw = doc_raw(case_id)
-    prov = ProviderPhatLai(raw)
-    ghi = GhiBien()
-
-    # ── biên 1–2: TẤT ĐỊNH, 0 lượt gọi, chạy được ngoài mọi stub ──────────
-    bien1 = {"detect_domain": detect_domain(text)}
-    bien2 = {"co_duong_thuc_thi": co_duong_thuc_thi(text, DOMAIN_HINH_HOC)}
-
-    cu = pipeline.call_gemini
-    pipeline.call_gemini = prov
-    try:
-        with NetworkGuard() as g:
-            env = asyncio.run(pipeline.run_pipeline(
-                text, "REPLAY_KHONG_PHAI_KEY", observer=ghi,
-                semantic_route="serve"))
-        cham_mang = list(g.attempts)
-    finally:
-        pipeline.call_gemini = cu
-
-    phan_hoi = attach_learner_reason(env)
-
-    def _ev(t: str) -> list[dict]:
-        return [e for e in ghi.events if e["type"] == t]
-
-    return {
-        "case_id": case_id,
-        "problem_sha256": _bam(text.encode("utf-8")),
-        "provider_calls_replayed": prov.calls,
-        "raw_stages_available": sorted(raw),
-        "network_touch_attempts": cham_mang,
-        "boundaries": {
-            "1_domain": bien1,
-            "2_scope": bien2,
-            "3_semantic_analyze": _ev("semantic_contract"),
-            "4_semantic_program": [e for e in _ev("semantic_route")
-                                   if e.get("stage_reached") in
-                                   ("semantic_analyze", "semantic_program")],
-            "5_verify_execute": [e for e in _ev("semantic_route")
-                                 if e.get("stage_reached") not in
-                                 ("semantic_analyze", "semantic_program")],
-            "6_envelope_backend": _thuan_json(env),
-            "7_product_response_adapter": _thuan_json(phan_hoi),
-        },
-        "contract_fields": {
-            "status": env.get("status"),
-            "stage_reached": env.get("stage_reached"),
-            "failure_category": env.get("failure_category"),
-            "error_code": env.get("error_code"),
-            "learner_reason_present": bool(phan_hoi.get("learner_reason")),
-        },
-        "event_log": ghi.events,
-    }
 
 
-# ══════════════════════════════════════════════════════════════════════════
-# §5 · CLI
-# ══════════════════════════════════════════════════════════════════════════
-def doc_de_bai() -> dict[str, str]:
-    corpus = json.loads(
-        (RUN.parent / "CORPUS.json").read_text(encoding="utf-8"))
-    ra = {}
-    for c in corpus["negative_cases"] + corpus["positive_cases"]:
-        ra[c["id"]] = c["problem_text"]
-    return ra
-
-
-def main() -> int:
-    ap = argparse.ArgumentParser()
-    ap.add_argument("--out-dir", default=str(OUT_MAC_DINH))
-    ap.add_argument("--label", default="before",
-                    help="'before' hoặc 'after' — tên file kết quả")
-    ap.add_argument("--faultcheck", action="store_true",
-                    help="chứng minh guard mạng có răng trước khi phát lại")
-    ap.add_argument("--cases", nargs="*", default=list(CA_AM))
-    a = ap.parse_args()
-
-    out = Path(a.out_dir)
-    out.mkdir(parents=True, exist_ok=True)
-
-    guard = kiem_guard_co_rang() if a.faultcheck else {"SKIPPED": True}
-    if a.faultcheck and not guard["PASS"]:
-        print("GUARD MẠNG KHÔNG CÓ RĂNG:", json.dumps(guard, ensure_ascii=False))
-        return 2
-
-    de = doc_de_bai()
-    ket: dict[str, Any] = {
-        "label": a.label,
-        "run_source": RUN.relative_to(GOC).as_posix(),
-        "network_guard_faultcheck": guard,
-        "cases": {},
-    }
-    for cid in a.cases:
-        ket["cases"][cid] = replay_case(cid, de[cid])
-
-    ket["APPLICATION_LLM_CALLS"] = 0
-    ket["REAL_PROVIDER_CALLS"] = 0
-
-    p = out / f"BOUNDARY_REPLAY_{a.label.upper()}.json"
-    p.write_text(json.dumps(ket, ensure_ascii=False, indent=1),
-                 encoding="utf-8")
-
-    for cid, r in ket["cases"].items():
-        cf = r["contract_fields"]
-        print(f"{cid}")
-        print(f"  status={cf['status']}  stage_reached={cf['stage_reached']}")
-        print(f"  failure_category={cf['failure_category']}  "
-              f"error_code={cf['error_code']}")
-        print(f"  provider replay: {r['provider_calls_replayed']}  "
-              f"network touches: {r['network_touch_attempts']}")
-    print(f"\nghi: {p.relative_to(GOC).as_posix()}")
-    return 0
-
-
-if __name__ == "__main__":
-    raise SystemExit(main())
+def replay_case(*_a, **_kw):
+    raise RuntimeError('LLM_ONLY boundary replay retired in Hybrid cutover')

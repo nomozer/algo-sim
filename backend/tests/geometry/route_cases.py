@@ -10,17 +10,18 @@ from __future__ import annotations
 import copy
 import json
 from fractions import Fraction
+from pathlib import Path
 from typing import Any, Callable
 
-from app.ai.pipeline import _dung_scene3d
-from app.simulation.geometry_compiler import compiler as C
-from app.simulation.geometry_compiler.contract_adapter import build_fact_graph
 from app.simulation.semantic_program.analyze_contract import build_request_contract
 from app.simulation.semantic_program.contract import SemanticProgramSpec
 from app.simulation.semantic_program.interpreter import SemanticProgramInterpreter
 from app.simulation.semantic_program.route import verify_and_compile
+from tests.geometry.scene3d_test_helper import _dung_scene3d
 
-# ── Sáu họ của compiler, mỗi họ có ĐỀ thật ─────────────────────────────────
+_PROGRAMS: dict[str, dict] = json.loads(
+    (Path(__file__).with_name("route_cases_programs.json")).read_text(encoding="utf-8")
+)
 
 CHOP_TAM_GIAC_TEXT = (
     "Cho hình chóp S.ABC có đáy ABC là tam giác vuông tại A, AB = 3, AC = 4. "
@@ -54,15 +55,55 @@ def chop_tam_giac():
 
 
 def lang_tru_tam_giac():
-    from tests.geometry.test_prism_production_route import _prism_p01_contract
-
-    return _prism_p01_contract()
+    text = (
+        "Cho hình lăng trụ đứng ABC.DEF có đáy ABC là tam giác vuông tại A, "
+        "AB = 3, AC = 4. Cạnh bên AD = 5. Tính thể tích khối lăng trụ ABC.DEF."
+    )
+    payload = {
+        "input_facts": [
+            {"id": "fact_len_AB", "kind": "float", "label": "AB", "value": ["3"]},
+            {"id": "fact_len_AC", "kind": "float", "label": "AC", "value": ["4"]},
+            {"id": "fact_len_AD", "kind": "float", "label": "AD", "value": ["5"]},
+        ],
+        "geometric_relations": [
+            {"kind": "perpendicular_lines", "line": ["A", "B"], "other_line": ["A", "C"],
+             "source_fact_id": "fact_perp_base", "model_assumption": False},
+            {"kind": "perpendicular_line_plane", "line": ["A", "D"], "plane": ["A", "B", "C"],
+             "source_fact_id": "fact_perp_lateral", "model_assumption": False},
+        ],
+        "obligations": [{"kind": "volume", "container": "solid_ABCDEF", "witness": "the_tich_lang_tru"}],
+        "solid_topology": {
+            "solid_kind": "prism",
+            "base_cycle": ["A", "B", "C"],
+            "top_cycle": ["D", "E", "F"],
+            "correspondence": [["A", "D"], ["B", "E"], ["C", "F"]],
+        },
+    }
+    return text, hop_dong(text, payload)
 
 
 def chop_chu_nhat():
-    from tests.geometry.test_rectangular_pyramid_production_route import _rect_pyramid_contract
-
-    return _rect_pyramid_contract()
+    text = (
+        "Cho hình chóp S.ABCD có đáy ABCD là hình chữ nhật, AB = 3, AD = 4. "
+        "Cạnh bên SA vuông góc với mặt phẳng đáy, SA = 6. Tính thể tích khối chóp S.ABCD."
+    )
+    payload = {
+        "input_facts": [
+            {"id": "fact_len_AB", "kind": "float", "label": "AB", "value": ["3"]},
+            {"id": "fact_len_AD", "kind": "float", "label": "AD", "value": ["4"]},
+            {"id": "fact_len_SA", "kind": "float", "label": "SA", "value": ["6"]},
+        ],
+        "geometric_relations": [
+            {"kind": "perpendicular_lines", "line": ["A", "B"], "other_line": ["A", "D"],
+             "source_fact_id": "fact_perp_base", "model_assumption": False},
+            {"kind": "perpendicular_line_plane", "line": ["S", "A"], "plane": ["A", "B", "C"],
+             "source_fact_id": "fact_perp_lateral", "model_assumption": False},
+        ],
+        "obligations": [{"kind": "volume", "container": "khoi_chop", "witness": "v"}],
+        "solid_topology": {"solid_kind": "pyramid", "apex": "S",
+                           "base_cycle": ["A", "B", "C", "D"], "base_shape": "rectangle"},
+    }
+    return text, hop_dong(text, payload)
 
 
 CHOP_VUONG_TEXT = (
@@ -72,8 +113,6 @@ CHOP_VUONG_TEXT = (
 
 
 def chop_vuong():
-    """Biến thể đáy VUÔNG của họ chóp chữ nhật — có đề thật (dựng của test compiler chỉ
-    mang đề giả không có số, nên grounding từ chối nó)."""
     payload = {
         "input_facts": [
             {"id": "fact_len_AB", "kind": "float", "label": "AB", "value": ["3"]},
@@ -92,23 +131,105 @@ def chop_vuong():
     return CHOP_VUONG_TEXT, hop_dong(CHOP_VUONG_TEXT, payload)
 
 
-def _tu_payload(ten: str):
-    from tests.geometry import test_cuboid_cube_production_route as M
+def _square_prism_control_payload() -> tuple[str, dict]:
+    text = (
+        "Cho hình lăng trụ đứng có đáy là hình vuông cạnh 3, chiều cao bằng 7. "
+        "Tính thể tích khối lăng trụ đứng đó."
+    )
+    payload = {
+        "input_facts": [
+            {"id": "fact_base_edge", "kind": "float", "label": "AB", "value": ["3"]},
+            {"id": "fact_height", "kind": "float", "label": "AA'", "value": ["7"]},
+        ],
+        "geometric_relations": [
+            {"kind": "perpendicular_lines", "line": ["A", "B"], "other_line": ["A", "D"],
+             "source_fact_id": "fact_perp_base", "model_assumption": False},
+            {"kind": "perpendicular_line_plane", "line": ["A'", "A"], "plane": ["A", "B", "D"],
+             "source_fact_id": "fact_perp_lat", "model_assumption": False},
+        ],
+        "obligations": [{"kind": "volume", "container": "khoi_lang_tru", "witness": "V"}],
+        "solid_topology": {
+            "solid_kind": "prism",
+            "base_cycle": ["A", "B", "C", "D"],
+            "top_cycle": ["A'", "B'", "C'", "D'"],
+            "correspondence": [["A", "A'"], ["B", "B'"], ["C", "C'"], ["D", "D'"]],
+            "base_shape": "square",
+            "lateral_structure": "right",
+            "solid_subkind": "right_square_prism",
+            "source_grounding": "hình lăng trụ đứng có đáy là hình vuông",
+        },
+    }
+    return text, payload
 
-    text, payload = getattr(M, ten)()
-    return text, hop_dong(text, payload)
+
+def _hop_chu_nhat_payload() -> tuple[str, dict]:
+    text = (
+        "Cho hình hộp chữ nhật ABCD.A'B'C'D' có AB = 3, AD = 4, AA' = 5. "
+        "Tính thể tích khối hộp chữ nhật ABCD.A'B'C'D'."
+    )
+    payload = {
+        "input_facts": [
+            {"id": "fact_ab", "kind": "float", "label": "AB", "value": ["3"]},
+            {"id": "fact_ad", "kind": "float", "label": "AD", "value": ["4"]},
+            {"id": "fact_aa_prime", "kind": "float", "label": "AA'", "value": ["5"]},
+        ],
+        "geometric_relations": [
+            {"kind": "perpendicular_lines", "line": ["A", "B"], "other_line": ["A", "D"],
+             "source_fact_id": "fact_perp_base", "model_assumption": False},
+            {"kind": "perpendicular_line_plane", "line": ["A'", "A"], "plane": ["A", "B", "D"],
+             "source_fact_id": "fact_perp_lat", "model_assumption": False},
+        ],
+        "obligations": [{"kind": "volume", "container": "khoi_hop", "witness": "V"}],
+        "solid_topology": {
+            "solid_kind": "prism",
+            "base_cycle": ["A", "B", "C", "D"],
+            "top_cycle": ["A'", "B'", "C'", "D'"],
+            "correspondence": [["A", "A'"], ["B", "B'"], ["C", "C'"], ["D", "D'"]],
+            "base_shape": "rectangle",
+            "lateral_structure": "right",
+            "solid_subkind": "cuboid",
+            "source_grounding": "hình hộp chữ nhật",
+        },
+    }
+    return text, payload
 
 
 def hop_chu_nhat():
-    return _tu_payload("_cuboid_p01_payload")
+    text, payload = _hop_chu_nhat_payload()
+    return text, hop_dong(text, payload)
+
+
+def _lap_phuong_payload() -> tuple[str, dict]:
+    text = "Cho hình lập phương ABCD.A'B'C'D' có cạnh bằng 4. Tính thể tích của hình lập phương đó."
+    payload = {
+        "input_facts": [{"id": "fact_edge", "kind": "float", "label": "AB", "value": ["4"]}],
+        "geometric_relations": [
+            {"kind": "perpendicular_lines", "line": ["A", "B"], "other_line": ["A", "D"],
+             "source_fact_id": "fact_perp_base", "model_assumption": False},
+        ],
+        "obligations": [{"kind": "volume", "container": "khoi_hop", "witness": "V"}],
+        "solid_topology": {
+            "solid_kind": "prism",
+            "base_cycle": ["A", "B", "C", "D"],
+            "top_cycle": ["A'", "B'", "C'", "D'"],
+            "correspondence": [["A", "A'"], ["B", "B'"], ["C", "C'"], ["D", "D'"]],
+            "base_shape": "square",
+            "lateral_structure": "right",
+            "solid_subkind": "cube",
+            "source_grounding": "hình lập phương",
+        },
+    }
+    return text, payload
 
 
 def lap_phuong():
-    return _tu_payload("_cube_p01_payload")
+    text, payload = _lap_phuong_payload()
+    return text, hop_dong(text, payload)
 
 
 def lang_tru_day_vuong():
-    return _tu_payload("_square_prism_control_payload")
+    text, payload = _square_prism_control_payload()
+    return text, hop_dong(text, payload)
 
 
 HO: dict[str, Callable[[], tuple[str, Any]]] = {
@@ -119,16 +240,93 @@ HO: dict[str, Callable[[], tuple[str, Any]]] = {
     "lap_phuong": lap_phuong,
     "lang_tru_day_vuong": lang_tru_day_vuong,
 }
-LOP = {"chop_tam_giac": "PYRAMID_LIKE", "chop_chu_nhat": "PYRAMID_LIKE",
-       "lang_tru_tam_giac": "PRISM_LIKE", "hop_chu_nhat": "PRISM_LIKE",
-       "lap_phuong": "PRISM_LIKE", "lang_tru_day_vuong": "PRISM_LIKE"}
+LOP = {
+    "chop_tam_giac": "PYRAMID_LIKE",
+    "chop_chu_nhat": "PYRAMID_LIKE",
+    "lang_tru_tam_giac": "PRISM_LIKE",
+    "hop_chu_nhat": "PRISM_LIKE",
+    "lap_phuong": "PRISM_LIKE",
+    "lang_tru_day_vuong": "PRISM_LIKE",
+}
+
+_TEXT_TO_KEY = {
+    CHOP_TAM_GIAC_TEXT: "chop_tam_giac",
+    CHOP_VUONG_TEXT: "chop_vuong",
+}
 
 
 def chuong_trinh(contract) -> dict:
-    """Chương trình compiler cho hợp đồng (raw dict, có `spec_version`)."""
-    bd = C.bien_dich(build_fact_graph(contract).graph)
-    assert bd.program is not None, (bd.status, bd.reason_code, bd.diagnostics)
-    return {"spec_version": "1.0", **bd.program}
+    """Chương trình tất định cho hợp đồng chuẩn (0-LLM fixture)."""
+    pt = getattr(contract, "problem_text", "") or ""
+    if pt in _TEXT_TO_KEY:
+        return copy.deepcopy(_PROGRAMS[_TEXT_TO_KEY[pt]])
+    for key, fn in HO.items():
+        if fn()[0] == pt:
+            return copy.deepcopy(_PROGRAMS[key])
+    if "cạnh 4, chiều cao bằng 4" in pt:
+        return copy.deepcopy(_PROGRAMS["square_prism_4x4"])
+    rels = list(getattr(contract, "geometric_relations", ()) or ())
+    lp = next((r for r in rels if r.kind == "perpendicular_line_plane" and len(r.line) == 2 and len(r.plane) == 3), None)
+    ll = next((r for r in rels if r.kind == "perpendicular_lines" and len(r.line) == 2 and len(r.other_line) == 2), None)
+    if lp is not None and ll is not None:
+        common = set(ll.line) & set(ll.other_line)
+        if len(common) == 1 and common <= set(lp.line) and common <= set(lp.plane):
+            foot = next(iter(common))
+            apex = next(v for v in lp.line if v != foot)
+            adj1 = next(v for v in ll.line if v != foot)
+            adj2 = next(v for v in ll.other_line if v != foot)
+            vmap = {"A": foot, "B": adj1, "C": adj2, "S": apex}
+            facts_by_pair: dict[frozenset[str], Any] = {}
+            for f in getattr(contract, "input_facts", ()) or ():
+                lbl = str(getattr(f, "label", "") or "")
+                if len(lbl) == 2:
+                    facts_by_pair[frozenset((lbl[0], lbl[1]))] = f
+            f_ab = facts_by_pair.get(frozenset((foot, adj1)))
+            f_ac = facts_by_pair.get(frozenset((foot, adj2)))
+            f_sa = facts_by_pair.get(frozenset((apex, foot)))
+            if f_ab and f_ac and f_sa:
+                prog = copy.deepcopy(_PROGRAMS["chop_tam_giac"])
+                name_map = {
+                    **vmap,
+                    "AB_length": f"{foot}{adj1}_length",
+                    "AC_length": f"{foot}{adj2}_length",
+                    "SA_length": f"{apex}{foot}_length",
+                    "day_ABC": f"day_{foot}{adj1}{adj2}",
+                    "dien_tich_day_ABC": f"dien_tich_day_{foot}{adj1}{adj2}",
+                }
+                fact_meta = {
+                    "AB_length": (f_ab.fact_id, str(f_ab.values[0])),
+                    "AC_length": (f_ac.fact_id, str(f_ac.values[0])),
+                    "SA_length": (f_sa.fact_id, str(f_sa.values[0])),
+                }
+                for d in prog["memory_declarations"]:
+                    old_n = d["name"]
+                    if old_n in fact_meta:
+                        d["source_fact_id"], d["initial_value"] = fact_meta[old_n]
+                    d["name"] = name_map.get(old_n, old_n)
+
+                def _walk(node, key=None):
+                    if isinstance(node, str):
+                        if key in ("kind", "quantity", "op", "title", "label"):
+                            return node
+                        return name_map.get(node, node)
+                    if isinstance(node, list):
+                        return [_walk(x, key) for x in node]
+                    if isinstance(node, dict):
+                        return {k: _walk(v, k) for k, v in node.items()}
+                    return node
+
+                prog["statements"] = _walk(prog["statements"])
+                for s in prog["statements"]:
+                    if s.get("kind") == "declare_point":
+                        if s["target_var"] == adj1:
+                            s["at"] = [str(f_ab.values[0]), "0", "0"]
+                        elif s["target_var"] == adj2:
+                            s["at"] = ["0", str(f_ac.values[0]), "0"]
+                        elif s["target_var"] == apex:
+                            s["at"] = ["0", "0", str(f_sa.values[0])]
+                return prog
+    raise KeyError(f"Unmapped fixture contract text: {pt!r}")
 
 
 def spec_cua(program: dict) -> SemanticProgramSpec:
@@ -136,7 +334,6 @@ def spec_cua(program: dict) -> SemanticProgramSpec:
 
 
 def chay(contract, program: dict | None = None, **kw):
-    """→ (spec, outcome, scene | None) qua đúng route sản phẩm."""
     sp = spec_cua(program if program is not None else chuong_trinh(contract))
     out = verify_and_compile(contract, sp, **kw)
     return sp, out, (_dung_scene3d(sp, contract) if out.executable else None)
@@ -145,8 +342,6 @@ def chay(contract, program: dict | None = None, **kw):
 def bo_nho_cuoi(sp: SemanticProgramSpec) -> dict:
     return SemanticProgramInterpreter().execute(sp).final_memory
 
-
-# ── Đọc cảnh ────────────────────────────────────────────────────────────────
 
 def dinh_cua(o: dict) -> frozenset:
     return frozenset(o.get("vertex_ids") or o.get("endpoint_ids") or ())
@@ -176,8 +371,6 @@ def thu_tu_vai_tro(scene: dict, vai: list[str]) -> list[int]:
             for r in vai]
 
 
-# ── W12 — kênh giả định (ASSUMPTION_CHANNEL_PROBE_79eb1e59) ─────────────────
-
 def _w12():
     from tests.geometry import test_source_grounding_closure as T
 
@@ -185,10 +378,6 @@ def _w12():
 
 
 def kenh_gia_dinh(channel: str) -> tuple[Any, dict]:
-    """Lăng trụ KHÔNG có "AD = 5"; chương trình đặt D ở cao 5 qua `channel`.
-
-    Chép đúng script của phép dò W12 (log `ASSUMPTION_CHANNEL_PROBE_79eb1e59`).
-    """
     T = _w12()
     raw = copy.deepcopy(T._program_with_height_5())
     if channel != "given_length":
@@ -204,17 +393,13 @@ def kenh_gia_dinh(channel: str) -> tuple[Any, dict]:
     return T._contract(T.PRISM_WITHOUT_AD, T._prism_payload()), raw
 
 
-# ── Ca đối kháng của cổng giả định (Task 2 Step 2) ──────────────────────────
-
 def _xoay(p):
-    """Phép quay HỮU TỈ (ma trận trực chuẩn ×3, định thức +1)."""
     x, y, z = (Fraction(str(c)) for c in p)
     m = ((-1, -2, -2), (-2, -1, 2), (-2, 2, -1))
     return [str(sum(Fraction(a) * v for a, v in zip(row, (x, y, z))) / 3) for row in m]
 
 
 def doi_toa_do(raw: dict, f: Callable) -> dict:
-    """Áp `f` lên MỌI toạ độ literal (declare_point `at` + `initial_value` của point3)."""
     raw = copy.deepcopy(raw)
     for s in raw["statements"]:
         if s.get("kind") == "declare_point" and "at" in s:
@@ -226,7 +411,6 @@ def doi_toa_do(raw: dict, f: Callable) -> dict:
 
 
 def ca_xy_length_gia_dinh() -> tuple[Any, dict]:
-    """(1) Thiếu AD, chương trình khai thêm `AD_length = 5` LAYOUT_DERIVED không nguồn."""
     contract, raw = kenh_gia_dinh("layout_derived")
     raw["memory_declarations"].append(
         {"name": "AD_length", "type": "float", "provenance": "LAYOUT_DERIVED",
@@ -235,7 +419,6 @@ def ca_xy_length_gia_dinh() -> tuple[Any, dict]:
 
 
 def ca_xoay_thieu_AD() -> tuple[Any, dict]:
-    """(2) Phép dò W12 dưới một phép quay hữu tỉ 3-D; AD vẫn thiếu."""
     contract, raw = kenh_gia_dinh("layout_derived")
     return contract, doi_toa_do(raw, _xoay)
 
@@ -247,18 +430,8 @@ LANG_TRU_DAY_VUONG_THIEU_CAO = (
 
 
 def ca_canh_khac_che_chieu_cao() -> tuple[Any, dict]:
-    """(3) Đáy vuông cạnh 4, đề KHÔNG cho chiều cao; chương trình đặt chiều cao 4."""
-    from tests.geometry.test_cuboid_cube_production_route import _square_prism_control_payload
-
     _text, payload = _square_prism_control_payload()
-    day_du = copy.deepcopy(payload)
-    for f in day_du["input_facts"]:
-        if f["label"] == "AB":
-            f["value"] = ["4"]
-        if f["label"] == "AA'":
-            f["value"] = ["4"]
-    text_du = LANG_TRU_DAY_VUONG_THIEU_CAO.replace("cạnh 4.", "cạnh 4, chiều cao bằng 4.")
-    raw = chuong_trinh(hop_dong(text_du, day_du))
+    raw = copy.deepcopy(_PROGRAMS["square_prism_4x4"])
     cao = {"AA_prime_length"}
     raw["memory_declarations"] = [d for d in raw["memory_declarations"] if d["name"] not in cao]
     thieu = copy.deepcopy(payload)
@@ -278,7 +451,6 @@ def _diem_gia_dinh(ten: str, xyz: list) -> dict:
 
 
 def ca_lang_tru_xien() -> tuple[Any, dict]:
-    """(4) Lăng trụ XIÊN, đề không cho cạnh bên/chiều cao; vectơ tịnh tiến giả định."""
     payload = {
         "input_facts": [
             {"id": "fact_len_AB", "kind": "float", "label": "AB", "value": ["3"]},
@@ -318,7 +490,6 @@ CHOP_CHAN_AN_TEXT = (
 
 
 def ca_chan_duong_cao_an() -> tuple[Any, dict]:
-    """(5) Chân đường cao không được cho; đáp số (d(S, BC)) phụ thuộc vị trí chân."""
     payload = {
         "input_facts": [
             {"id": "fact_len_AB", "kind": "float", "label": "AB", "value": ["3"]},
@@ -347,21 +518,18 @@ def ca_chan_duong_cao_an() -> tuple[Any, dict]:
 
 
 def hop_dong_khong_de(contract):
-    """Cùng hợp đồng, BỎ đề — ca chính sách tin cậy (5a)."""
     return contract.model_copy(update={"problem_text": ""})
 
 
 def _p01_them(cau_them: str, nghia_vu_them: list[dict]) -> tuple[Any, dict]:
-    """Lăng trụ P01 (đủ dữ kiện) + một câu và nghĩa vụ thêm; chương trình P01 gốc."""
     T = _w12()
     payload = T._prism_payload()
     payload["obligations"] = payload["obligations"] + nghia_vu_them
-    raw = chuong_trinh(T._contract(T.PRISM_TEXT, T._prism_payload()))
+    raw = copy.deepcopy(_PROGRAMS["lang_tru_tam_giac"])
     return hop_dong(T.PRISM_TEXT + cau_them, payload), raw
 
 
 def ca_nhan_vo_huong_gia_dinh() -> tuple[Any, dict]:
-    """(8) Cấu hình ĐỒNG DẠNG tham chiếu, nhưng đáp số = V × |AM| với M giả định (|AM| = 1)."""
     ct, raw = _p01_them(" Cho điểm M bất kỳ.", [])
     raw["memory_declarations"] += [_diem_gia_dinh("M", [1, 0, 0]),
                                    {"name": "k", "type": "float"}]
@@ -378,7 +546,6 @@ def ca_nhan_vo_huong_gia_dinh() -> tuple[Any, dict]:
 
 
 def ca_hai_dap_so_mot_phu_thuoc() -> tuple[Any, dict]:
-    """Review Focus 4: thể tích (đủ dữ kiện) + |AM| với M chỉ được nhắc tên."""
     ct, raw = _p01_them(" Cho điểm M bất kỳ. Tính khoảng cách AM.",
                         [{"kind": "distance", "container": "A", "witness": "d_AM", "wrt": "M"}])
     raw["memory_declarations"] += [_diem_gia_dinh("M", [0, 0, 7]),
@@ -390,7 +557,6 @@ def ca_hai_dap_so_mot_phu_thuoc() -> tuple[Any, dict]:
 
 
 def ca_hai_dap_so_mot_ngoai_pham_vi() -> tuple[Any, dict]:
-    """(11) Thể tích (trong PHEP_DO_C1) + cos² góc AD với (ABC) (ngoài phạm vi chứng chỉ)."""
     ct, raw = _p01_them(" Tính cos² của góc giữa AD và mặt phẳng (ABC).",
                         [{"kind": "angle_cos_sq", "container": "dt_AD", "witness": "g",
                           "wrt": "mp_ABC"}])
@@ -406,8 +572,6 @@ def ca_hai_dap_so_mot_ngoai_pham_vi() -> tuple[Any, dict]:
     return ct, raw
 
 
-# ── Chương trình gold tuyến LLM (corpus khoá luận, 0 lượt gọi) ──────────────
-
 GOLD_KHOI_DA_DIEN = ("p1_chop_thiet_dien_khoang_cach", "p2_chop_day_ngu_giac_lom")
 
 
@@ -421,7 +585,6 @@ def gold(case_id: str) -> tuple[str, Any, dict]:
 
 
 def mau_offline_co_khoi() -> list[tuple[str, dict]]:
-    """Bài mẫu offline (tĩnh, không qua route) có `construct_solid`."""
     from scripts import build_geometry_samples as B
 
     ra = []
@@ -433,7 +596,6 @@ def mau_offline_co_khoi() -> list[tuple[str, dict]]:
 
 
 def nguon_khoi() -> list[tuple[str, SemanticProgramSpec]]:
-    """Mọi chương trình có khối đa diện mà W14 đặc tả: sáu họ, gold, mẫu offline."""
     ra = [(f"ho:{ten}", spec_cua(chuong_trinh(f()[1]))) for ten, f in HO.items()]
     ra += [(f"gold:{cid}", spec_cua(gold(cid)[2])) for cid in GOLD_KHOI_DA_DIEN]
     ra += [(f"mau:{sid}", spec_cua(prog)) for sid, prog in mau_offline_co_khoi()]

@@ -367,6 +367,9 @@ IDENTITY_DELTAS = (
                   "engine_version": ("geometry-function-engine/23", "geometry-function-engine/24")}},
     {"run": "hybrid-master-backend-replacement",           # final backend product completion: midpoint/angle parity (registry /33)
      "versions": {"registry_version": ("geometry-functions/32", "geometry-functions/33")}},
+    {"run": "hybrid-master-backend-replacement",           # final hybrid architecture cutover: HYBRID official default product mode
+     "versions": {"default_product_mode": ("LLM_ONLY", "HYBRID"),
+                  "product_enablement": ("NO-GO", "ACTIVE")}},
 )
 
 

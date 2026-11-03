@@ -73,7 +73,7 @@ def test_namespace_identity_is_validated_before_dispatch(case):
 
 
 @pytest.mark.parametrize('case', names('F1') + names('F2'))
-@pytest.mark.parametrize('route', ['a3','pl','a4'])
+@pytest.mark.parametrize('route', ['pl','a4'])
 def test_invalid_targets_are_terminal_on_routes(case, route):
     c = CASES[case]
     assert F.outcome(F.ROUTES[route](deepcopy(c['payload']))) == ('REFUSED', c['expected_schema'])
@@ -91,7 +91,7 @@ def test_registered_controls_keep_schema_and_exact_route_outcomes(case):
     before = json.loads((OUT / 'observed-red.json').read_text(encoding='utf-8'))['results'][case]
     p = c['payload']
     assert D.schema_code(p) == before['schema1']
-    for name in ['a3','pl','a4']:
+    for name in ['pl','a4']:
         r = F.ROUTES[name](deepcopy(p))
         expected = (before[name]['status'], before[name]['code'])
         if (moved := _TRANSITIONS.get(f"target-grammar-identity-recovery::{case}::{name}")) is not None:
@@ -105,7 +105,14 @@ def test_registered_controls_keep_schema_and_exact_route_outcomes(case):
 
 
 def test_distinct_vertices_retain_nonzero_exact_distance():
-    r = F.a3(CASES['I.distinct']['payload'])
+    p = deepcopy(CASES['I.distinct']['payload'])
+    p['problem_text'] = (
+        "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. "
+        "AB = 6. AC = 8. AA' = 12. Tính độ dài AB."
+    )
+    p['math_goals'][0]['target'] = {'segment': ['A', 'B']}
+    p['math_goals'][0]['quote'] = "Tính độ dài AB."
+    r = F.a4(p)
     assert r.status == 'SERVED', (r.code,r.reason)
     assert r.answer_exact['identity']['coef'] == '6'
 

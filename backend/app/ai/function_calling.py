@@ -210,12 +210,22 @@ class ProviderHTTPError(RuntimeError):
         self.status_code, self.body = status_code, body
 
 
-def live_transport(api_key: str, model: str | None = None, timeout_seconds: float = 60.0) -> Callable[..., dict]:
-    """Transport THẬT (không dùng trong lượt này). Kiểm `ALLOW_LIVE_AI` ở MỖI lần gửi; khoá trong header; ghi `ApiBudget`
-    và `usageMetadata` như `gemini.call_gemini` để trần ngân sách của bộ đo áp được."""
+def live_transport(
+    api_key: str,
+    model: str | None = None,
+    timeout_seconds: float = 60.0,
+    *,
+    require_allow_live_ai: bool = True,
+) -> Callable[..., dict]:
+    """Transport Gemini `generateContent` có trần thời gian và hạch toán `ApiBudget`.
+    Mặc định bộ đánh giá/nghiên cứu đòi `ALLOW_LIVE_AI=1`; tuyến sản phẩm (`require_allow_live_ai=False`) hoạt động
+    bình thường khi có `GEMINI_API_KEY` và chỉ dừng khi quản trị viên chủ động đặt `ALLOW_LIVE_AI=0`."""
     def gui(payload: dict, *, is_retry: bool = False, timeout_override: float | None = None) -> dict:
-        if os.environ.get("ALLOW_LIVE_AI") != "1":
-            raise LiveAIDisabled("ALLOW_LIVE_AI != 1 — không gửi request thật")
+        if require_allow_live_ai:
+            if os.environ.get("ALLOW_LIVE_AI") != "1":
+                raise LiveAIDisabled("ALLOW_LIVE_AI != 1 — không gửi request thật")
+        elif os.environ.get("ALLOW_LIVE_AI") == "0":
+            raise LiveAIDisabled("ALLOW_LIVE_AI=0 — máy chủ đang khoá kết nối live AI")
         import httpx
 
         from app.ai import gemini

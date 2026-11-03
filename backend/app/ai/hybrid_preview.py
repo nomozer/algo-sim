@@ -45,7 +45,7 @@ def preview_identity(contract: str = "flat") -> dict[str, str]:
 def preview_runtime_identity(policy) -> dict[str, Any]:
     surface = dict(policy.preview_surface) if policy.hybrid_preview_enabled else preview_identity(policy.response_contract)
     return {**surface, "enabled": policy.hybrid_preview_enabled, "fingerprint": policy.fingerprint(),
-            "default_product_mode": "LLM_ONLY", "product_enablement": "NO-GO"}
+            "default_product_mode": "HYBRID", "product_enablement": "ACTIVE"}
 
 
 class PreviewInvalid(ValueError):

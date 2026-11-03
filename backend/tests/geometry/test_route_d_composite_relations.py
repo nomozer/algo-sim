@@ -23,7 +23,7 @@ from pathlib import Path
 
 import pytest
 
-from app.ai.adapter3_simulation import run_typed_fact_next_route
+from app.ai.function_route import run_typed_fact_next_planner_route
 from app.ai.adapter4_route import build_adapter4_response, run_typed_fact_next_v2_route
 from app.simulation.geometry.radical import parse_exact
 from app.simulation.geometry_functions.typed_fact_next import (
@@ -200,7 +200,7 @@ def test_scope_directionality_and_legacy_v1_isolation() -> None:
 
     v1_field = deepcopy(next(x[1] for x in P.POSITIVE_CASES if x[0] == "cr.cube_2.inscribed.radius"))
     v1_field["schema_version"] = "typed-fact-next/1"
-    res_v1 = run_typed_fact_next_route(v1_field)
+    res_v1 = run_typed_fact_next_planner_route(v1_field)
     assert res_v1.status == "REFUSED"
 
 

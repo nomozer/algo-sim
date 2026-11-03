@@ -17,7 +17,6 @@ from fractions import Fraction
 
 import pytest
 
-from app.ai import pipeline as PL
 from app.simulation.semantic_program.interpreter import SemanticProgramInterpreter
 from app.simulation.semantic_program.route import verify_and_compile
 from app.simulation.semantic_program.shape_constraint import doc_rang_buoc
@@ -82,23 +81,6 @@ def test_chop_deu_khong_ten_khong_gan_vao_khoi_nao(rid):
 def test_khong_phat_khang_dinh_chop_deu_sai(de, deu):
     """Phủ định, đáy ≠ 3/4 đỉnh, chóp không "đều": không khẳng định chóp đều nào."""
     assert {r.entities for r in doc_rang_buoc(de) if r.kind in DEU} == deu
-
-
-def test_mau_thuan_khong_co_scene3d_qua_pipeline(monkeypatch):
-    de, contract, sp = _ca("P1_C_square")
-
-    async def analyze(*_a, **_k):
-        return contract, None
-
-    async def program(*_a, **_k):
-        return sp, None
-
-    monkeypatch.setattr(PL, "stage_semantic_analyze", analyze)
-    monkeypatch.setattr(PL, "stage_semantic_program", program)
-    monkeypatch.delenv("GEOMETRY_COMPILER_MODE", raising=False)
-    env = asyncio.run(PL.run_pipeline(de, "fake_key"))
-    assert env.get("status") != "ok" and not env.get("scene3d"), env
-    assert env.get("reason_code") == MA and env.get("refusal_cause") == "SOURCE"
 
 
 # ══ C1 — luật tương đương (`c1_rule`) ════════════════════════════════════════

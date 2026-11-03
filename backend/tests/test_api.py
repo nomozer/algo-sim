@@ -75,136 +75,112 @@ def test_analyze_input_sai_bi_400():
     assert res.status_code == 400
 
 
-def test_analyze_anh_hop_le_thieu_key_bao_503():
-    """Ảnh cần key để phiên dịch — chưa có key → 503 (không phải lỗi input)."""
-    # Ảnh phải là ảnh THẬT: từ PHOTO_PROBLEM_TO_SCENE_END_TO_END, tệp hỏng bị
-    # chặn 400 TRƯỚC khi hỏi tới key (§4) — `PNG_HEADER + b"data"` nay là tệp hỏng.
-    import io
-
+def test_analyze_anh_truc_tiep_bi_chan_va_image_extract_thieu_key_bao_503():
+    """`/api/analyze` từ chối ảnh trực tiếp (400 IMAGE_DIRECT_UNSUPPORTED); `/api/image/extract` thiếu key trả 503."""
     from PIL import Image
 
     buf = io.BytesIO()
     Image.new("RGB", (8, 8), (255, 255, 255)).save(buf, format="PNG")
     img = base64.b64encode(buf.getvalue()).decode()
-    res = client.post(
+    r_direct = client.post(
         "/api/analyze", json={"input": {"type": "image", "content": img, "mime_type": "image/png"}}
     )
-    assert res.status_code == 503
-    assert "GEMINI_API_KEY" in res.json()["error"]
+    assert r_direct.status_code == 400
+    assert r_direct.json()["reason_code"] == "IMAGE_DIRECT_UNSUPPORTED"
+
+    r_extract = client.post("/api/image/extract", json={"content": img, "mime_type": "image/png"})
+    assert r_extract.status_code == 503
+    assert "GEMINI_API_KEY" in r_extract.json()["error"]
 
 
-def test_moi_loai_input_di_qua_cung_pipeline(monkeypatch):
-    """§1, §6: text/code/docx sau chuẩn hóa đều gọi CHUNG run_pipeline với text."""
-    monkeypatch.setenv("GEMINI_API_KEY", "khoa-gia")
-    # Cache key phụ thuộc CACHE_VERSION — dùng version riêng mỗi lần chạy để
-    # test tất định (không trúng cache của lần chạy trước), dọn rows ở cuối.
-    import uuid
+def test_moi_loai_input_van_ban_di_qua_cung_hybrid_route(monkeypatch, tmp_path):
+    """text và docx sau chuẩn hóa đều đi qua chung `_analyze_hybrid_route` (không còn `run_pipeline`)."""
+    from app.ai import hybrid_offline as HO
+    from tests.geometry.test_typed_fact_next_v2_distance_bridge import _prism
 
-    monkeypatch.setattr(main_module, "CACHE_VERSION", f"test-{uuid.uuid4()}")
-    seen: list[str] = []
-
-    async def fake_pipeline(text, api_key, pattern_store=None, **kw):
-        seen.append(text)
-        return {
-            "status": "ok",
-            "simulation_id": "algorithm.find_max",
-            "domain": "algorithm",
-            "visual_mode": "2d",
-            "title": "t",
-            "description": "d",
-            "config": {"algorithm_id": "find_max", "data": {"array": [1, 2]}},
-            "notes": None,
-        }
-
-    monkeypatch.setattr(main_module, "run_pipeline", fake_pipeline)
+    payload = _prism()
+    corpus_file = tmp_path / "replay.json"
+    corpus_file.write_text(
+        json.dumps({"schema": HO.LOCAL_REPLAY_SCHEMA, "outputs": {payload["problem_text"]: payload}}, ensure_ascii=False),
+        encoding="utf-8",
+    )
+    monkeypatch.setenv("HYBRID_ROUTE_MODE", "staging-replay")
+    monkeypatch.setenv("HYBRID_REPLAY_CORPUS", str(corpus_file))
     init_db()
-
-    # ⚠️ MỌI đầu vào phải là ĐỀ HÌNH HỌC. Sau `GEOMETRY_PRODUCT_CUTOVER`, biên
-    # API từ chối đề ngoài miền TRƯỚC khi gọi `run_pipeline` — mà thứ test này
-    # khẳng định là *ba loại đầu vào đều TỚI được `run_pipeline`*. Dùng đề Tin
-    # học ở đây là để cổng phạm vi trả lời hộ, và test đỏ vì một lý do khác hẳn.
-    hh = "Cho hình chóp S.ABCD, tính khoảng cách từ A đến mặt phẳng (SBD)."
-    # text
-    r1 = client.post("/api/analyze", json={"input": {"type": "text", "content": hh}})
-    assert r1.status_code == 200
-    # docx
-    r3 = client.post("/api/analyze", json={"input": {"type": "document", "content": _docx_b64(["Cho tứ diện ABCD, tính thể tích khối tứ diện."]), "filename": "de.docx"}})
-    assert r3.status_code == 200
-    assert "tính thể tích khối tứ diện" in seen[-1]
-
-    # ─── ĐẦU VÀO `code` NAY KHÔNG TỚI PIPELINE, VÀ ĐÓ LÀ SỰ THẬT MỚI ───────
-    #
-    # Chuẩn hoá bọc nội dung trong hàng rào ```python, và chính hàng rào ấy làm
-    # `detect_domain` trả `tin_hoc` bất kể nội dung bên trong. Sau cutover, biên
-    # API từ chối mọi thứ ngoài miền hình học ⇒ **đầu vào code không còn lối vào
-    # sản phẩm**.
-    #
-    # Ghi thành một khẳng định chứ không lách: một đề hình học không đến dưới
-    # dạng mã nguồn, nên đây là hệ quả chấp nhận được — nhưng nó phải NHÌN THẤY
-    # ĐƯỢC ở test, không im lặng trôi đi.
-    r2 = client.post("/api/analyze", json={"input": {
-        "type": "code",
-        "content": "# dựng hình chóp S.ABCD rồi tính khoảng cách tới mặt phẳng\n",
-        "filename": "a.py"}})
-    assert r2.status_code == 200
-    assert r2.json()["failure_category"] == "out_of_scope"
-
-    assert len(seen) == 2  # text + docx tới pipeline; `code` bị cổng miền chặn
     with SessionLocal() as sess:
-        for text in seen:
-            sess.query(SimulationCache).filter_by(problem_text=text).delete()
+        sess.query(SimulationCache).filter_by(problem_text=payload["problem_text"]).delete()
+        sess.commit()
+
+    seen: list[str] = []
+    real_hybrid = main_module._analyze_hybrid_route
+
+    async def spy_hybrid(text, mode, api_key, session_cookie):
+        seen.append(text)
+        return await real_hybrid(text, mode, api_key, session_cookie)
+
+    monkeypatch.setattr(main_module, "_analyze_hybrid_route", spy_hybrid)
+    assert not hasattr(main_module, "run_pipeline")
+
+    r1 = client.post("/api/analyze", json={"input": {"type": "text", "content": payload["problem_text"]}})
+    r2 = client.post(
+        "/api/analyze",
+        json={"input": {"type": "document", "content": _docx_b64([payload["problem_text"]]), "filename": "de.docx"}},
+    )
+    assert r1.status_code == r2.status_code == 200
+    assert r1.json()["route_d"]["status"] == "SERVED"
+    assert r2.json()["route_d"]["status"] == "SERVED"
+    assert len(seen) == 2 and all("ABC.A'B'C'" in s for s in seen)
+
+    r_code = client.post(
+        "/api/analyze",
+        json={"input": {"type": "code", "content": "def binary_search(a, x):\n    return -1\n", "filename": "bs.py"}},
+    )
+    assert r_code.status_code == 200
+    assert r_code.json()["status"] == "unsupported"
+    assert r_code.json()["failure_category"] == "out_of_scope"
+
+    with SessionLocal() as sess:
+        sess.query(SimulationCache).filter_by(problem_text=payload["problem_text"]).delete()
         sess.commit()
 
 
 def test_analyze_thieu_key_bao_huong_dan():
-    res = _analyze("Lớp có 40 bạn, tìm bạn điểm cao nhất lớp")
+    res = _analyze("Cho hình chóp S.ABCD có đáy là hình vuông cạnh 4, SA = 6. Tính thể tích khối chóp S.ABCD.")
     assert res.status_code == 503
     assert "GEMINI_API_KEY" in res.json()["error"]
 
 
-def test_analyze_trung_de_lay_envelope_tu_ngan_hang():
-    """Cache: đề trùng → envelope từ DB, không đụng Gemini, không cần key."""
+def test_analyze_trung_de_lay_envelope_tu_ngan_hang(monkeypatch, tmp_path):
+    """Cache Hybrid `/4`: đề trùng → phản hồi từ DB (`X-Algosim-Cache: hit`), không cần key."""
+    from app.ai import hybrid_offline as HO
+    from tests.geometry.test_typed_fact_next_v2_distance_bridge import _prism
+
     init_db()
-    text = "Đề test cache M3: tìm số lớn nhất trong dãy 3; 1; 2 nhé"
-    envelope = {
-        "status": "ok",
-        "simulation_id": "algorithm.find_max",
-        "domain": "algorithm",
-        "visual_mode": "2d",
-        "title": "Tìm max",
-        "description": "Dãy 3 số → giá trị lớn nhất",
-        "config": {
-            "problem": {"summary": "Tìm max", "input": "i", "output": "o"},
-            "algorithm_id": "find_max",
-            "data": {"array": [3, 1, 2], "labels": None, "target": None, "condition": None, "order": None},
-            "data_generated": False,
-            "notes": None,
-        },
-        "notes": None,
-        "analysis": {"goal": "Tìm max"},
-    }
-    key = _cache_key(text)
+    payload = _prism()
+    text = payload["problem_text"]
+    corpus_file = tmp_path / "replay.json"
+    corpus_file.write_text(
+        json.dumps({"schema": HO.LOCAL_REPLAY_SCHEMA, "outputs": {text: payload}}, ensure_ascii=False),
+        encoding="utf-8",
+    )
+    monkeypatch.setenv("HYBRID_ROUTE_MODE", "staging-replay")
+    monkeypatch.setenv("HYBRID_REPLAY_CORPUS", str(corpus_file))
+    plan = HO.prepare_staging_replay(text, str(corpus_file))
+    assert plan is not None and plan.cache_key is not None
     with SessionLocal() as s:
-        s.query(SimulationCache).filter_by(key=key).delete()
-        s.add(SimulationCache(
-            key=key, problem_text=text, simulation_id="algorithm.find_max",
-            envelope_json=json.dumps(envelope),
-            dsl_version=DSL_VERSION, policy_version=main_module.CACHE_VERSION,
-        ))
+        s.query(SimulationCache).filter_by(key=plan.cache_key).delete()
         s.commit()
 
-    res = _analyze(text)
-    assert res.status_code == 200
-    body = res.json()
-    assert body["cached"] is True
-    assert body["source"] == "exact_cache"
-    assert body["simulation_id"] == "algorithm.find_max"
+    r1 = _analyze(text)
+    assert r1.status_code == 200 and r1.headers["x-algosim-cache"] == "miss"
+    r2 = _analyze(text)
+    assert r2.status_code == 200 and r2.headers["x-algosim-cache"] == "hit"
+    assert r2.json()["route_d"]["status"] == "SERVED"
 
-    # M7.13B: hit phải tăng hit_count + counter exact_cache_hits
     with SessionLocal() as s:
-        row = s.query(SimulationCache).filter_by(key=key).first()
-        assert row.hit_count == 1
-        s.query(SimulationCache).filter_by(key=key).delete()
+        row = s.query(SimulationCache).filter_by(key=plan.cache_key).first()
+        assert row is not None and row.hit_count == 1
+        s.query(SimulationCache).filter_by(key=plan.cache_key).delete()
         s.commit()
 
 
@@ -746,7 +722,7 @@ def test_cache_version_9_cu_bi_invalidate_sau_bump_10():
     # 128 -> 129 (sphere-sample-source-authority): mat phang cat khoi cong mang vai CONSTRUCT_CUTTING_OBJECT trong envelope phuc vu; row v128 THAT van HIT: runs/sphere-sample-source-authority/cache/decision.json (khoa bang tests/test_cache_curved_cutting_plane_invalidation.py).
     # 129 -> 130 (scene3d-to-hybrid-v2-replacement): nhan chung goc vuong / u_to, buoc dung cua vat do assign sinh, ten mat phang (alpha) va ten nhieu diem kiem dong phang trong envelope phuc vu; row v129 THAT van HIT: runs/scene3d-to-hybrid-v2-replacement/cache/decision.json (khoa bang tests/test_cache_right_angle_witness_invalidation.py).
     # 130 -> 131 (geometry-generalization-and-pedagogical-construction): canh thiet dien mang ly do da kiem chinh xac (justification_text + details.justification) trong envelope phuc vu; row v130 phai MISS (khoa bang tests/test_cache_section_justification_invalidation.py).
-    assert main_module.CACHE_VERSION == "131"
+    assert main_module.CACHE_VERSION == "132"
     init_db()
     text = "Đề kiểm invalidate cache sau khi thêm computation-ownership gate (M13)"
     key = _cache_key(text)
@@ -763,149 +739,145 @@ def test_cache_version_9_cu_bi_invalidate_sau_bump_10():
         s.commit()
 
 
-def test_ghi_de_cache_cu_sau_bump_KHONG_vo_khoa(monkeypatch):
-    """Đề ĐÃ TỪNG phân tích, gặp `CACHE_VERSION` mới ⇒ phải ghi đè, không 500.
+def test_ghi_de_cache_cu_sau_bump_KHONG_vo_khoa(monkeypatch, tmp_path):
+    """Đề đã có hàng cache của phiên bản cũ, gặp `CACHE_VERSION = 132` ⇒ phải ghi đè sạch, không 500."""
+    from app.ai import hybrid_offline as HO
+    from tests.geometry.test_typed_fact_next_v2_distance_bridge import _prism
 
-    LỖI THẬT, CÂM SUỐT NHIỀU LẦN BUMP: tra cứu trượt vì `policy_version` khác,
-    nhánh ghi lại tìm thấy hàng cũ theo `key` và `session.delete(...)` rồi
-    `session.add(...)` trong CÙNG một flush — SQLAlchemy phát INSERT **trước**
-    DELETE, nên đụng `UNIQUE(key)`. Người dùng nhận 500 cho đúng những đề họ đã
-    xem trước đó.
-
-    Không lộ ra suốt thời gian dài vì test luôn chạy trên DB sạch; nó chỉ hiện
-    khi DB còn hàng của lần bump trước. Test này DỰNG LẠI đúng tình huống ấy.
-    """
-    monkeypatch.setenv("GEMINI_API_KEY", "khoa-gia")
     init_db()
-    # Đề HÌNH HỌC: cổng phạm vi ở biên API chặn mọi miền khác trước khi tới
-    # pipeline, nên một đề trung tính sẽ không bao giờ chạm được đường cache.
-    text = ("Cho hình chóp S.ABCD, tính khoảng cách từ A đến (SBD) — "
-            "đề đã phân tích ở phiên bản cache cũ, nay gặp bump mới")
-    key = _cache_key(text)
+    payload = _prism()
+    text = payload["problem_text"]
+    corpus_file = tmp_path / "replay.json"
+    corpus_file.write_text(
+        json.dumps({"schema": HO.LOCAL_REPLAY_SCHEMA, "outputs": {text: payload}}, ensure_ascii=False),
+        encoding="utf-8",
+    )
+    monkeypatch.setenv("HYBRID_ROUTE_MODE", "staging-replay")
+    monkeypatch.setenv("HYBRID_REPLAY_CORPUS", str(corpus_file))
+    plan = HO.prepare_staging_replay(text, str(corpus_file))
+    assert plan is not None and plan.cache_key is not None
+    key = plan.cache_key
 
     with SessionLocal() as s:
         s.query(SimulationCache).filter_by(key=key).delete()
         s.add(SimulationCache(
-            key=key, problem_text=text, simulation_id="generic.rule_scene",
+            key=key, problem_text=text, simulation_id="generic.semantic_program",
             envelope_json='{"status":"ok"}', dsl_version=DSL_VERSION,
-            policy_version="1",  # phiên bản CŨ ⇒ tra cứu sẽ trượt
+            policy_version="131:route-d",
         ))
         s.commit()
 
-    async def fake_ok(t, api_key, pattern_store=None, **kw):
-        return {"status": "ok", "simulation_id": "generic.rule_scene",
-                "config": {"objects": [], "frames": []}, "source": "composed"}
-
-    monkeypatch.setattr(main_module, "run_pipeline", fake_ok)
-    res = client.post("/api/analyze",
-                      json={"input": {"type": "text", "content": text}})
+    res = client.post("/api/analyze", json={"input": {"type": "text", "content": text}})
     assert res.status_code == 200, res.text
 
     with SessionLocal() as s:
         rows = s.query(SimulationCache).filter_by(key=key).all()
         assert len(rows) == 1, "phải còn ĐÚNG một hàng — ghi đè, không nhân bản"
-        assert rows[0].policy_version == main_module.CACHE_VERSION
+        assert rows[0].policy_version == main_module.ROUTE_D_CACHE_POLICY
         s.query(SimulationCache).filter_by(key=key).delete()
         s.commit()
 
 
-def test_khong_cache_ket_qua_unsupported(monkeypatch):
-    """M7.8 §5: unsupported KHÔNG được cache → tránh kẹt kết quả cũ khi
-    năng lực classify/DSL cải thiện."""
-    monkeypatch.setenv("GEMINI_API_KEY", "khoa-gia")
+def test_khong_cache_ket_qua_unsupported(monkeypatch, tmp_path):
+    """Kết quả từ chối (`REFUSED` / `unsupported`) KHÔNG được lưu vào `SimulationCache`."""
+    from copy import deepcopy
+    from app.ai import hybrid_offline as HO
+    from tests.geometry.test_typed_fact_next_v2_distance_bridge import _prism
+
     init_db()
-    text = "Đề test không cache unsupported: một bài vượt năng lực hiện tại nhé"
+    bad = deepcopy(_prism())
+    bad["problem_text"] = bad["problem_text"].replace("AA' = 12.", "AA' = 12. BC = 11.")
+    bad["premises"].append({"kind": "segment_length", "args": {"segment": ["B", "C"], "value": "11"}, "quote": "BC = 11."})
+    text = bad["problem_text"]
+    corpus_file = tmp_path / "replay.json"
+    corpus_file.write_text(
+        json.dumps({"schema": HO.LOCAL_REPLAY_SCHEMA, "outputs": {text: bad}}, ensure_ascii=False),
+        encoding="utf-8",
+    )
+    monkeypatch.setenv("HYBRID_ROUTE_MODE", "staging-replay")
+    monkeypatch.setenv("HYBRID_REPLAY_CORPUS", str(corpus_file))
+    plan = HO.prepare_staging_replay(text, str(corpus_file))
+    assert plan is not None and plan.cache_key is not None
 
-    async def fake_unsupported(t, api_key, pattern_store=None, **kw):
-        return {"status": "unsupported", "reason": "vượt năng lực"}
-
-    monkeypatch.setattr(main_module, "run_pipeline", fake_unsupported)
-
-    key = _cache_key(text)
     with SessionLocal() as s:
-        s.query(SimulationCache).filter_by(key=key).delete()
+        s.query(SimulationCache).filter_by(key=plan.cache_key).delete()
         s.commit()
 
     res = _analyze(text)
     assert res.status_code == 200
-    assert res.json()["status"] == "unsupported"
+    assert res.json()["route_d"]["status"] == "REFUSED"
+    assert res.json()["envelope"]["status"] == "unsupported"
 
-    # KHÔNG được lưu vào ngân hàng bài
     with SessionLocal() as s:
-        assert s.query(SimulationCache).filter_by(key=key).first() is None
+        assert s.query(SimulationCache).filter_by(key=plan.cache_key).first() is None
 
 
-def test_exact_cache_lan_hai_khong_goi_pipeline(monkeypatch):
-    """M7.13B case A: cùng đề ok gửi 2 lần → lần 2 exact cache hit, pipeline
-    KHÔNG được gọi lại (0 call LLM), counter exact_cache_hits tăng."""
-    monkeypatch.setenv("GEMINI_API_KEY", "khoa-gia")
-    import uuid
+def test_exact_cache_lan_hai_khong_goi_lai_route(monkeypatch, tmp_path):
+    """Cùng đề SERVED gửi 2 lần → lần 2 exact cache hit, route Hybrid không chạy lại."""
+    from app.ai import hybrid_offline as HO
+    from tests.geometry.test_typed_fact_next_v2_distance_bridge import _prism
 
-    monkeypatch.setattr(main_module, "CACHE_VERSION", f"test-{uuid.uuid4()}")
-    calls: list[str] = []
-
-    async def fake_pipeline(text, api_key, pattern_store=None, **kw):
-        calls.append(text)
-        return {
-            "status": "ok",
-            "simulation_id": "algorithm.find_max",
-            "domain": "algorithm",
-            "visual_mode": "2d",
-            "title": "t",
-            "description": "d",
-            "config": {"algorithm_id": "find_max", "data": {"array": [1, 2]}},
-            "notes": None,
-            "source": "composed",
-        }
-
-    monkeypatch.setattr(main_module, "run_pipeline", fake_pipeline)
     init_db()
-    # Đề HÌNH HỌC — xem chú thích cùng lý do ở `test_ghi_de_cache_cu_sau_bump`.
-    text = "Đề test exact cache M7.13B: cho tứ diện ABCD, tính thể tích khối đó"
-
+    payload = _prism()
+    text = payload["problem_text"]
+    corpus_file = tmp_path / "replay.json"
+    corpus_file.write_text(
+        json.dumps({"schema": HO.LOCAL_REPLAY_SCHEMA, "outputs": {text: payload}}, ensure_ascii=False),
+        encoding="utf-8",
+    )
+    monkeypatch.setenv("HYBRID_ROUTE_MODE", "staging-replay")
+    monkeypatch.setenv("HYBRID_REPLAY_CORPUS", str(corpus_file))
+    plan = HO.prepare_staging_replay(text, str(corpus_file))
+    assert plan is not None and plan.cache_key is not None
     with SessionLocal() as s:
+        s.query(SimulationCache).filter_by(key=plan.cache_key).delete()
+        s.commit()
         before = {r.name: r.count for r in s.query(ReuseMetric).all()}
 
+    calls: list[int] = []
+    real_run = HO.run_typed_fact_next_v2_route
+    monkeypatch.setattr(HO, "run_typed_fact_next_v2_route", lambda p: calls.append(1) or real_run(p))
+
     r1 = _analyze(text)
-    assert r1.status_code == 200 and "cached" not in r1.json()
+    assert r1.status_code == 200 and r1.headers["x-algosim-cache"] == "miss"
     r2 = _analyze(text)
-    assert r2.status_code == 200
-    assert r2.json()["cached"] is True
-    assert r2.json()["source"] == "exact_cache"
-    assert len(calls) == 1  # lần 2 KHÔNG chạy pipeline
+    assert r2.status_code == 200 and r2.headers["x-algosim-cache"] == "hit"
+    assert len(calls) == 1
 
     with SessionLocal() as s:
         after = {r.name: r.count for r in s.query(ReuseMetric).all()}
         assert after.get("exact_cache_hits", 0) == before.get("exact_cache_hits", 0) + 1
         assert after.get("compose_new_count", 0) == before.get("compose_new_count", 0) + 1
-        assert after.get("estimated_llm_calls_saved", 0) >= before.get("estimated_llm_calls_saved", 0) + 3
-        s.query(SimulationCache).filter_by(key=_cache_key(text)).delete()
+        assert after.get("estimated_llm_calls_saved", 0) >= before.get("estimated_llm_calls_saved", 0) + 1
+        s.query(SimulationCache).filter_by(key=plan.cache_key).delete()
         s.commit()
 
 
 def test_endpoint_tutor_flow_da_xoa():
-    """M3 §8: decompose/chat không còn tồn tại — không giữ code chết."""
+    """M3 §8: decompose/chat/explain không còn tồn tại — không giữ code chết."""
     assert client.post("/api/decompose", json={"problemText": "x" * 20}).status_code == 404
     assert client.post("/api/chat", json={"message": "hi"}).status_code == 404
-    # repo-cleanup: trợ giúp giải thích của miền Tin học (người gọi duy nhất `AIHelpPanel` không còn gắn vào giao diện).
     assert client.post("/api/explain", json={"simulation_id": "x", "explain_context": {},
                                              "question": "Vì sao?"}).status_code == 404
 
 
-def test_bo_skill_moi_ton_tai_skill_cu_da_xoa():
+def test_chi_con_transcribe_skill_va_cac_skill_legacy_da_xoa():
     from app.ai.gemini import SKILLS_DIR, load_skill
 
-    for name in ("analyze", "classify", "simulate", "explain"):
-        content = load_skill(name)
-        assert len(content) > 200, f"skill {name} quá ngắn"
-    # Skill tutor-flow cũ không còn file
-    assert not Path(SKILLS_DIR / "decompose.md").exists()
-    assert not Path(SKILLS_DIR / "tutor.md").exists()
-    # explain không được điều khiển mô phỏng, không step_status
-    explain = load_skill("explain")
-    assert "KHÔNG điều khiển" in explain
-    assert "step_status" not in explain
-    # analyze mô tả đúng bản chất hệ thống, không còn 'gia sư'
-    analyze = load_skill("analyze")
-    assert "mô phỏng tương tác 2D/3D" in analyze
-    assert "gia sư" not in analyze.lower()
+    transcribe = load_skill("transcribe")
+    assert len(transcribe) > 200
+    for retired in (
+        "analyze.md",
+        "classify.md",
+        "simulate.md",
+        "explain.md",
+        "adapt.md",
+        "edit.md",
+        "semantic_analyze.md",
+        "semantic_program.md",
+        "geometry_analyze.md",
+        "geometry_program_generator.md",
+        "decompose.md",
+        "tutor.md",
+    ):
+        assert not (SKILLS_DIR / retired).exists(), f"Skill legacy vẫn còn trên đĩa: {retired}"

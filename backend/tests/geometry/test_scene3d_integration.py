@@ -17,7 +17,7 @@ import json
 
 import pytest
 
-from app.ai.pipeline import _dung_scene3d, _envelope_tu_route_sinh
+from tests.geometry.scene3d_test_helper import _dung_scene3d, _envelope_tu_route_sinh
 from app.simulation.semantic_program.contract import SemanticProgramSpec
 from app.simulation.semantic_program.route import verify_and_compile
 

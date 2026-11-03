@@ -1,12 +1,8 @@
-"""Internal opt-in Hybrid integration. No live transport or automatic fallback; this module never touches the cache.
+"""Official Hybrid `/4` execution orchestrator (`live` default and `staging-replay` development/test replay).
 
-The source-only injected extractor is trusted local code, not client-supplied code. The deadline/cancellation policy
-is cooperative between synchronous stages; a future live transport needs its own bounded I/O timeout.
-
-Migration Stage 2 (run `scene3d-to-hybrid-v2-replacement`): `run_local_replay` is reachable from `/api/analyze` only
-when the server sets `HYBRID_V2_LOCAL=offline-replay` and the client is loopback (`main._hybrid_v2_local`). The default
-route stays `LLM_ONLY`; a Hybrid refusal is returned as a refusal, never re-run on `LLM_ONLY`. Only SERVED results are
-stored, by `main`, in their own Route D namespace under `prepare_local_replay(...).cache_key` (hybrid-master D-02).
+`POST /api/analyze` routes through `prepare_live_hybrid` (`HYBRID_ROUTE_MODE=live`, default) or `prepare_staging_replay`
+(`HYBRID_ROUTE_MODE=staging-replay`). There is no fallback to any legacy `LLM_ONLY` pipeline. Only SERVED results are
+cached by `main` under `ROUTE_D_CACHE_POLICY` (`prepare_live_hybrid(...).cache_key` / `prepare_staging_replay(...).cache_key`).
 """
 from __future__ import annotations
 
@@ -25,7 +21,7 @@ from app.ai.adapter4_route import (
     ADAPTER_V4_VERSION, ROUTE_D_SIMULATION_V4_SCHEMA_VERSION,
     adapter_fault_response, build_adapter4_response, run_typed_fact_next_v2_route,
 )
-from app.ai.pipeline import RoutePolicy, route_policy_snapshot
+from app.ai.route_policy import RoutePolicy, route_policy_snapshot
 from app.ai.typed_fact_next_extraction import (
     Extractor, ReplayExtractor, TransportExtractor, extract_typed_fact_next_v2,
 )
@@ -34,10 +30,10 @@ from app.simulation.geometry_functions import KetQuaTuyen
 from app.simulation.geometry_functions.typed_fact_next import TYPED_FACT_NEXT_V2_SCHEMA_VERSION
 
 
-#: Provider, transport, schema-framing and internal technical fault codes on the selectable Hybrid `/4` route.
+#: Provider, transport, schema-framing and internal technical fault codes on the Hybrid `/4` route.
 #: Surfaced as recoverable HTTP infrastructure errors (`502`/`503`/`504`), never mislabeled as mathematical refusals.
 HYBRID_INFRASTRUCTURE_CODES = frozenset({
-    "LIVE_AI_DISABLED", "MISSING_API_KEY", "STAGING_CORPUS_UNAVAILABLE",
+    "LIVE_AI_DISABLED", "MISSING_API_KEY", "STAGING_CORPUS_UNAVAILABLE", "INVALID_HYBRID_ROUTE_MODE",
     "PROVIDER_ERROR", "PROVIDER_BLOCKED", "PROVIDER_REFUSED", "NO_CANDIDATE",
     "PROVIDER_RESPONSE_INVALID", "MALFORMED_RESPONSE_PART", "JSON_INVALID",
     "RESPONSE_TRUNCATED", "MAX_TOKENS",
@@ -339,7 +335,7 @@ def _live_provider_transport(
     deadline_seconds: float | None = None,
     sleep=time.sleep,
 ) -> Callable[[dict[str, Any]], dict[str, Any]]:
-    """Bounded Gemini `generateContent` transport (`x-goog-api-key` header, `ALLOW_LIVE_AI=1` enforced per send,
+    """Bounded Gemini `generateContent` transport (`x-goog-api-key` header, `ALLOW_LIVE_AI=0` kill-switch respected,
     deadline-aware transient retries, proper `ApiBudget` retry accounting, zero model fallback)."""
     import httpx
 
@@ -349,7 +345,12 @@ def _live_provider_transport(
     per_attempt = _finite_pos(timeout_seconds, 60.0)
     total_deadline = _finite_pos(deadline_seconds, per_attempt * 3.0)
     resolved_model = (model or '').strip() or gemini.MODEL
-    send_once = live_transport(api_key, model=resolved_model, timeout_seconds=per_attempt)
+    try:
+        send_once = live_transport(
+            api_key, model=resolved_model, timeout_seconds=per_attempt, require_allow_live_ai=False
+        )
+    except TypeError:
+        send_once = live_transport(api_key, model=resolved_model, timeout_seconds=per_attempt)
 
     def send(request: dict[str, Any]) -> dict[str, Any]:
         deadline_at = perf_counter() + total_deadline
@@ -441,13 +442,18 @@ def prepare_live_hybrid(problem_text: str, *, model: str | None = None) -> LiveH
 
 
 def hybrid_route_identity(mode: str, env: Mapping[str, str]) -> dict[str, Any]:
-    """Diagnostics snapshot for `/api/diagnostics/runtime` when `HYBRID_ROUTE_MODE != 'off'` (never exposes secrets)."""
+    """Diagnostics snapshot for `/api/diagnostics/runtime` (never exposes secrets)."""
     surface = _surface()
+    valid = mode in ('staging-replay', 'live')
+    extraction_mode = (
+        'REPLAY_STAGING_SIMULATED' if mode == 'staging-replay'
+        else ('LIVE_GEMINI_STRUCTURED' if mode == 'live' else 'INVALID_HYBRID_ROUTE_MODE')
+    )
     return {
         'mode': mode,
-        'enabled': mode in ('staging-replay', 'live'),
+        'enabled': valid,
         'simulated': mode == 'staging-replay',
-        'extraction_mode': 'REPLAY_STAGING_SIMULATED' if mode == 'staging-replay' else 'LIVE_GEMINI_STRUCTURED',
+        'extraction_mode': extraction_mode,
         'registry_version': surface['registry_version'],
         'planner_version': surface['planner_version'],
         'engine_version': surface['engine_version'],
@@ -456,6 +462,6 @@ def hybrid_route_identity(mode: str, env: Mapping[str, str]) -> dict[str, Any]:
         'response_contract': surface['response_contract'],
         'extraction_surface': _tfn_extraction.typed_fact_next_surface_fingerprint(),
         'gemini_model': resolve_hybrid_gemini_model(env),
-        'allow_live_ai': env.get('ALLOW_LIVE_AI') == '1',
-        'replay_corpus_configured': bool(env.get('HYBRID_REPLAY_CORPUS') or env.get('HYBRID_V2_LOCAL_REPLAY_CORPUS')),
+        'allow_live_ai': env.get('ALLOW_LIVE_AI') != '0',
+        'replay_corpus_configured': bool(env.get('HYBRID_REPLAY_CORPUS')),
     }

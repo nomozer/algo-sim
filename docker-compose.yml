@@ -44,16 +44,9 @@ services:
       - "8000:8000"
     environment:
       DATABASE_URL: postgresql+psycopg2://algosim:algosim@db:5432/algosim
-      # Route sinh ngữ nghĩa: off (mặc định) | shadow | serve.
-      # `off` giữ production đúng hành vi cũ; bật là quyết định vận hành TƯỜNG
-      # MINH, không phải tác dụng phụ của việc nâng cấp. Xem
-      # `app/main.py::semantic_route_mode`.
-      #   SEMANTIC_ROUTE_MODE=serve docker compose up -d backend
-      SEMANTIC_ROUTE_MODE: ${SEMANTIC_ROUTE_MODE:-off}
-      # Tuyến Hybrid `/4`: off (mặc định giữ LLM_ONLY) | staging-replay | live.
-      HYBRID_ROUTE_MODE: ${HYBRID_ROUTE_MODE:-off}
+      # Tuyến chính thức Hybrid `/4`: live (mặc định sản phẩm) | staging-replay (phát lại kho kiểm thử).
+      HYBRID_ROUTE_MODE: ${HYBRID_ROUTE_MODE:-live}
       HYBRID_REPLAY_CORPUS: ${HYBRID_REPLAY_CORPUS:-}
-      ALLOW_LIVE_AI: ${ALLOW_LIVE_AI:-0}
       # Telemetry chẩn đoán route ngữ nghĩa — THỤ ĐỘNG, mặc định tắt.
       # Đọc ở `GET /api/diagnostics/semantic`. Bật khi cần biết một lượt chết ở
       # tầng nào; không bật thì mỗi lượt live chỉ trả về "unsupported" trống.

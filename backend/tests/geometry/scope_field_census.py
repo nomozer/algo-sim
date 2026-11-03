@@ -17,7 +17,7 @@ from pydantic import BaseModel
 from app.simulation.geometry_functions import typed_fact_next as T
 
 ROOT = Path(__file__).resolve().parents[3]
-ROUTE_MODULES = ('backend/app/ai/adapter3_simulation.py', 'backend/app/ai/adapter4_route.py',
+ROUTE_MODULES = ('backend/app/ai/adapter4_route.py',
                  'backend/app/simulation/geometry_functions/typed_fact_next_bridge.py',
                  'backend/app/simulation/geometry_functions/typed_fact_next.py')
 

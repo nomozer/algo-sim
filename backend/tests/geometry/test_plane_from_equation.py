@@ -116,7 +116,7 @@ def test_03_giao_hinh_tru_tra_dung_elip_va_dien_tich():
 
 def test_04_diem_neo_KHONG_phai_diem_cua_de():
     """Điểm neo là chi tiết thực thi — nó KHÔNG được thành một vật có tên."""
-    from app.ai.pipeline import _dung_scene3d
+    from tests.geometry.scene3d_test_helper import _dung_scene3d
 
     canh = _dung_scene3d(
         SemanticProgramSpec.model_validate(_g_phep_moi()), _hd()) or {}
@@ -384,7 +384,7 @@ def test_27_khai_bao_muc_tieu_KHONG_can_xuat_xu_vi_no_duoc_DUNG():
 
 # ══ §10 · TRACE VÀ SCENE3D ══════════════════════════════════════════════
 def test_28_dung_MOT_buoc_dung_va_loi_ke_noi_PHUONG_TRINH():
-    from app.ai.pipeline import _dung_scene3d
+    from tests.geometry.scene3d_test_helper import _dung_scene3d
 
     canh = _dung_scene3d(
         SemanticProgramSpec.model_validate(_g_phep_moi()), _hd()) or {}
@@ -397,7 +397,7 @@ def test_28_dung_MOT_buoc_dung_va_loi_ke_noi_PHUONG_TRINH():
 
 def test_29_loi_ke_KHONG_nhac_diem_neo_canonical():
     """Điểm neo là chi tiết thực thi. Gọi tên nó là dạy một điểm đề không có."""
-    from app.ai.pipeline import _dung_scene3d
+    from tests.geometry.scene3d_test_helper import _dung_scene3d
 
     canh = _dung_scene3d(
         SemanticProgramSpec.model_validate(_g_phep_moi()), _hd()) or {}
@@ -407,7 +407,7 @@ def test_29_loi_ke_KHONG_nhac_diem_neo_canonical():
 
 
 def test_30_mat_phang_vao_canh_voi_du_diem_va_phap_tuyen():
-    from app.ai.pipeline import _dung_scene3d
+    from tests.geometry.scene3d_test_helper import _dung_scene3d
 
     canh = _dung_scene3d(
         SemanticProgramSpec.model_validate(_g_phep_moi()), _hd()) or {}

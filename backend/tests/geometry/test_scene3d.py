@@ -253,19 +253,28 @@ def test_envelope_P6_ELIP_qua_duoc_BIEN_VAN_CHUYEN(monkeypatch):
     của hình trụ) đo một `Ellipse3`: route vẫn `served`, rồi `main.py`
     `json.dumps` envelope để ghi cache ⇒ HTTP 500. Kiểm qua đúng biên sản phẩm.
     """
-    import asyncio
     import json
-
-    from app.ai import pipeline as PL
+    import sys as _sys
+    from pathlib import Path
+    from app.simulation.semantic_program.analyze_contract import build_request_contract
+    from app.simulation.semantic_program.domain_profile import DOMAIN_HINH_HOC
     from app.simulation.semantic_program.transport import check_envelope_transport
-    from tests.test_photo_problem_live_runner import CA_P6, RNB
+    from app.simulation.semantic_program.validator import validate_semantic_program
+    from tests.geometry.scene3d_test_helper import _dung_scene3d, _envelope_tu_route_sinh
 
-    monkeypatch.setattr(PL, "call_gemini",
-                        RNB.ProviderPhatLaiTheoThuTu(RNB.doc_raw_theo_thu_tu(CA_P6)))
-    with RNB.NetworkGuard() as g:
-        env = asyncio.run(PL.run_pipeline(RNB.doc_de_bai()[CA_P6], "REPLAY_KHONG_PHAI_KEY",
-                                          semantic_route="serve"))
-    assert not g.attempts
+    _sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "scripts"))
+    import replay_negative_boundaries as RNB
+
+    ca_p6 = "p6_thiet_dien_elip_cua_hinh_tru"
+    raw = RNB.doc_raw_theo_thu_tu(ca_p6)
+    text = RNB.doc_de_bai()[ca_p6]
+    hd = build_request_contract(json.loads(raw["semantic_analyze"][0]), problem_text=text, domain=DOMAIN_HINH_HOC)
+    val = validate_semantic_program(json.loads(raw["semantic_program"][0]))
+    from app.simulation.semantic_program.route import verify_and_compile
+
+    assert val.ok and val.spec is not None
+    out = verify_and_compile(hd, val.spec).model_copy(update={"scene3d": _dung_scene3d(val.spec, hd)})
+    env = _envelope_tu_route_sinh(out, json.loads(raw["semantic_analyze"][0]), {})
     assert env["status"] == "ok"
     assert check_envelope_transport(env) is None
     gia_tri = [e["details"]["value"] for e in env["scene3d"]["events"]
@@ -273,7 +282,6 @@ def test_envelope_P6_ELIP_qua_duoc_BIEN_VAN_CHUYEN(monkeypatch):
                and e["details"]["value"].get("kind") == "ellipse3"]
     assert gia_tri, "giá trị đo Ellipse3 phải ra biên dưới dạng cấu trúc `ellipse3`"
     assert json.loads(json.dumps(gia_tri[0])) == gia_tri[0]
-
 
 def test_timeline_details_KIEU_LA_bi_TU_CHOI_khong_di_tho():
     """Kiểu runtime chưa có biểu diễn ⇒ ném, không lọt tới `json.dumps` của API."""

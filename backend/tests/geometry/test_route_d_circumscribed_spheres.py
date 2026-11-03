@@ -20,7 +20,7 @@ from pathlib import Path
 
 import pytest
 
-from app.ai.adapter3_simulation import run_typed_fact_next_route
+from app.ai.function_route import run_typed_fact_next_planner_route
 from app.ai.adapter4_route import run_typed_fact_next_v2_route
 from app.simulation.geometry.radical import from_json, parse_exact
 from app.simulation.geometry_functions.typed_fact_next import (
@@ -164,7 +164,7 @@ def test_circumscribed_sphere_scope_violations_refuse() -> None:
 def test_legacy_adapter3_refuses_circumscribed_sphere_without_expanding_legacy() -> None:
     v1 = deepcopy(next(x[1] for x in P.POSITIVE_CASES if x[0] == "cs.cube_2.surface_area"))
     v1["schema_version"] = "typed-fact-next/1"
-    res = run_typed_fact_next_route(v1)
+    res = run_typed_fact_next_planner_route(v1)
     assert res.status == "REFUSED"
     assert convert_v1_to_v2(v1, route="bridge")["solids"][1]["circumscribes"] == "poly"
 

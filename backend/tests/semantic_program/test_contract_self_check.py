@@ -34,7 +34,6 @@ from pathlib import Path
 
 import pytest
 
-from app.ai.gemini import load_skill
 from app.simulation.semantic_program import contract as C
 from app.simulation.semantic_program.grammar_card import grammar_card
 from app.simulation.semantic_program.measure_contract import (
@@ -42,7 +41,6 @@ from app.simulation.semantic_program.measure_contract import (
     quantity_trong_contract,
 )
 
-_SKILL = "geometry_program_generator"
 
 
 def _tap_kind(alias) -> set[str]:
@@ -102,41 +100,24 @@ def _dinh_danh_trong(van: str) -> set[str]:
     return {t for t in ra if t and t not in _KHONG_PHAI_IR}
 
 
-# ══ ① BỀ MẶT MÔ HÌNH ⊆ SCHEMA ═══════════════════════════════════════════
-@pytest.mark.parametrize("nguon", ["skill", "the"])
-def test_prompt_khong_quang_cao_thu_schema_KHONG_CO(nguon):
-    van = (load_skill(_SKILL) if nguon == "skill"
-           else grammar_card("hinh_hoc"))
+# ══ ① THẺ VĂN PHẠM HÌNH HỌC ⊆ SCHEMA ════════════════════════════════════
+def test_the_khong_quang_cao_thu_schema_KHONG_CO():
+    van = grammar_card("hinh_hoc")
     hop_le = _moi_dinh_danh_IR()
     la = _dinh_danh_trong(van) - hop_le
-    assert not la, (
-        f"prompt/thẻ ({nguon}) quảng cáo định danh KHÔNG có trong schema: "
-        f"{sorted(la)}. Mô hình sẽ cố phát chúng rồi bị từ chối — đúng cách "
-        "`fp_6` đốt cả hai lượt vì `perpendicular`.")
+    assert not la, f"thẻ văn phạm quảng cáo định danh KHÔNG có trong schema: {sorted(la)}"
 
 
 @pytest.mark.parametrize("tu", ["perpendicular", "parallel", "coplanar",
                                 "point_on_line", "point_on_plane",
                                 "obligations", "witness"])
-def test_TU_VUNG_NGHIA_VU_da_bien_khoi_be_mat_tong_hop(tu):
-    """Từ vựng nghĩa vụ thuộc phía HỢP ĐỒNG (`analyze`), không phải phía
-    chương trình. Nêu nó ở prompt tổng hợp là mời mô hình phát một thứ không
-    có ô để nhận."""
-    van = load_skill(_SKILL) + grammar_card("hinh_hoc")
-    # KHỚP NGUYÊN ĐỊNH DANH, không khớp chuỗi con. Điều bị cấm là *"bề mặt mời
-    # mô hình phát `perpendicular`"*; `plane_perpendicular_to_line` là một
-    # `kind` HỢP LỆ mà mô hình phát được, và cấm nó vì chứa chữ ấy là biến một
-    # guard đúng thành một bộ lọc chính tả. Ranh giới `[A-Za-z0-9_]` giữ nguyên
-    # răng: một `perpendicular` đứng một mình vẫn ĐỎ.
+def test_TU_VUNG_NGHIA_VU_khong_xuat_hien_nhu_dinh_danh_IR_trong_the(tu):
+    van = grammar_card("hinh_hoc")
     mau = re.compile(rf"(?<![A-Za-z0-9_]){re.escape(tu)}(?![A-Za-z0-9_])")
-    assert not mau.search(van), (
-        f"bề mặt tổng hợp còn nhắc `{tu}` như một định danh riêng — mô hình "
-        "không có cách nào phát nó")
+    assert not mau.search(van), f"thẻ còn nhắc `{tu}` như một định danh riêng"
 
 
 def test_schema_THAT_SU_khong_co_truong_obligations():
-    """Neo cho hai test trên: nếu mai schema CÓ trường ấy thì chúng phải được
-    xem lại, chứ không im lặng tiếp tục cấm."""
     assert "obligations" not in C.SemanticProgramSpec.model_fields
     assert "perpendicular" not in _tap_kind(C.ValueExpr)
     assert "perpendicular" not in _tap_kind(C.SemanticStatement)
@@ -155,16 +136,6 @@ def test_moi_kieu_toan_hang_deu_la_MemoryType_hop_le():
 
 
 def test_the_hinh_hoc_khong_bo_sot_phep_do_nao():
-    """Ngược lại chiều ①: bảng có mà thẻ không nói thì mô hình không biết dùng."""
     the = grammar_card("hinh_hoc")
     for q in BANG_PHEP_DO:
-        assert q in the, f"`{q}` có trong bảng nhưng KHÔNG tới tay mô hình"
-
-
-# ══ ③ PROMPT KHÔNG ĐƯỢC NHẮC LẠI THỨ THẺ ĐÃ NÓI ════════════════════════
-def test_prompt_khong_chep_lai_bang_kieu_cua_the():
-    """Hai bản của cùng một bảng kiểu sẽ trôi. Thẻ là bản sinh ra từ thẩm
-    quyền; prompt chỉ được TRỎ tới nó."""
-    van = load_skill(_SKILL)
-    assert "of:point3" not in van and "of:vector3" not in van, (
-        "prompt chép lại chữ ký kiểu — để thẻ nói, prompt trỏ")
+        assert q in the, f"`{q}` có trong bảng nhưng KHÔNG có trong thẻ"

@@ -1,26 +1,5 @@
 # -*- coding: utf-8 -*-
-"""CHUỖI MIỀN — một hằng số, không phải một chuỗi gõ tay. 0 API call.
-
-─── LỖI NÓ BỊT, VÀ NÓ ĐÃ XẢY RA HAI LẦN ───────────────────────────────────
-
-`program_skill_for(domain)` so `domain == "hinh_hoc"`. Mọi chuỗi khác rơi vào
-nhánh `else` và trả `"semantic_program"` — **prompt Tin học**. Không có lỗi,
-không có cảnh báo: một đề hình học lặng lẽ được viết chương trình bằng hợp
-đồng của môn khác, rồi trượt ở chỗ trông như mô hình kém.
-
-    LẦN 1 (đã sửa) — `stage_semantic_program` viết CỨNG `"semantic_program"`,
-    nên `geometry_program_generator.md` không có người gọi nào trong `app/`.
-    Docstring của hàm ấy còn giữ nguyên lời kể.
-
-    LẦN 2 (2026-08-31, tìm ra ở wave này) — SẢN PHẨM đã đúng, nhưng BỘ ĐO thì
-    không: `run_generalization_matrix.py` và `probe_dihedral_synthesis.py`
-    truyền `domain="geometry"`. Cả GENERALIZATION MATRIX lẫn bốn probe nhị
-    diện đo hình học bằng prompt Tin học. Không con số nào của hai tuyến ấy
-    nói về `geometry_program_generator.md`.
-
-Hai lần cùng một hình: một chuỗi tự do ở chỗ đáng lẽ là một hằng số. Test này
-là hàng rào thứ ba, và nó canh cả `scripts/` — vì lần thứ hai xảy ra ở đó.
-"""
+"""CHUỖI MIỀN — hằng số tất định cho cổng phạm vi và định danh miền. 0 API call."""
 from __future__ import annotations
 
 import ast
@@ -33,9 +12,8 @@ from app.simulation.semantic_program.domain_profile import (
     DOMAIN_HINH_HOC,
     DOMAIN_TIN_HOC,
     DOMAINS,
-    MienKhongHopLe,
-    analyze_skill_for,
-    program_skill_for,
+    co_duong_thuc_thi,
+    detect_domain,
 )
 
 _SCRIPTS = Path(__file__).resolve().parents[2] / "scripts"
@@ -43,11 +21,6 @@ _SCRIPTS = Path(__file__).resolve().parents[2] / "scripts"
 
 @lru_cache(maxsize=None)
 def _moi_loi_goi(f: Path) -> tuple[ast.Call, ...]:
-    """Mọi `ast.Call` trong file. Cây cú pháp, không phải văn bản.
-
-    Một file không parse được là một file không kiểm được, và im lặng bỏ qua
-    nó là mở đúng cửa guard này định đóng — nên nó ĐỎ.
-    """
     cay = ast.parse(f.read_text(encoding="utf-8", errors="replace"))
     return tuple(n for n in ast.walk(cay) if isinstance(n, ast.Call))
 
@@ -57,36 +30,11 @@ def _ten_goi(goi: ast.Call) -> str:
     return getattr(fn, "attr", None) or getattr(fn, "id", "") or ""
 
 
-def test_chuoi_la_nay_NEM_thay_vi_roi_vao_prompt_TIN_HOC():
-    """Cửa `else` đã đóng (2026-09-01).
-
-    Bản trước của test này khẳng định chiều NGƯỢC LẠI — nó *ghi lại* hành vi
-    `"geometry"` → prompt Tin học để hành vi ấy không bị đọc như lỗi đánh máy
-    vô hại. Ghi lại một cái bẫy không gỡ được cái bẫy: nó vẫn cắn lần thứ hai.
-
-    `else → Tin học` là một mặc định im lặng cho một câu hỏi không có mặc
-    định. Nay miền lạ NÉM, trước khi tiêu một call nào.
-    """
-    with pytest.raises(MienKhongHopLe):
-        program_skill_for("geometry")
-    with pytest.raises(MienKhongHopLe):
-        analyze_skill_for("geometry")
-    assert program_skill_for(DOMAIN_HINH_HOC) == "geometry_program_generator"
-    assert analyze_skill_for(DOMAIN_HINH_HOC) == "geometry_analyze"
-
-
-@pytest.mark.parametrize("xau", ["", "Geometry", "HINH_HOC", "hinh hoc",
-                                 "geometry_3d", None, 0])
-def test_moi_bien_the_GAN_DUNG_deu_nem(xau):
-    """Gần đúng là nguy hiểm nhất: nó trông như đã dùng hằng số."""
-    with pytest.raises(MienKhongHopLe):
-        program_skill_for(xau)
-
-
-def test_duong_TIN_HOC_hop_le_van_di_duoc():
-    """Đóng `else` không được chặn miền Tin học — nó đi bằng hằng số của nó."""
-    assert program_skill_for(DOMAIN_TIN_HOC) == "semantic_program"
-    assert analyze_skill_for(DOMAIN_TIN_HOC) == "semantic_analyze"
+def test_chi_mien_hinh_hoc_co_duong_thuc_thi_san_pham():
+    assert set(DOMAINS) == {DOMAIN_HINH_HOC, DOMAIN_TIN_HOC}
+    assert co_duong_thuc_thi("Tính diện tích thiết diện.", DOMAIN_HINH_HOC) is True
+    assert co_duong_thuc_thi("Tính diện tích thiết diện.", DOMAIN_TIN_HOC) is False
+    assert detect_domain("Cho hình chóp S.ABCD có đáy là hình vuông.") == DOMAIN_HINH_HOC
 
 
 @pytest.mark.parametrize("f", sorted(_SCRIPTS.glob("*.py")))
@@ -143,7 +91,8 @@ def test_moi_lenh_goi_TONG_HOP_deu_truyen_domain(f):
             "truyền `domain=` — tầng tổng hợp sẽ im lặng dùng prompt Tin học")
 
 
-def test_moi_mien_deu_co_skill_rieng():
-    """Thêm một miền mà quên skill thì nó cũng lặng lẽ dùng prompt Tin học."""
-    assert {program_skill_for(d) for d in DOMAINS} == {
-        "semantic_program", "geometry_program_generator"}
+def test_chi_giu_skill_transcribe_sau_khi_retire_llm_only():
+    """Sau khi retire `LLM_ONLY`, `skills/` chỉ giữ `transcribe.md` cho `/api/image/extract`."""
+    from app.ai.gemini import SKILLS_DIR
+
+    assert [p.name for p in sorted(SKILLS_DIR.glob("*.md"))] == ["transcribe.md"]

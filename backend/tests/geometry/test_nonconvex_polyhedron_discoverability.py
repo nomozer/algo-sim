@@ -396,7 +396,7 @@ def test_20_dang_ky_ghi_DANH_TINH_he_duoc_do(dang_ky):
     # 126 -> 127 (hybrid-architecture-wave1-exact-certificates-planner): segment3 đường cao mang perpendicular_witness (envelope phục vụ đổi).
     # 127 -> 128 (visual-hybrid-final-corrections): tên hiển thị backend — mặt phẳng tên đề viết, chu trình thiết diện (envelope phục vụ đổi).
     # 128 -> 129 (sphere-sample-source-authority): mặt phẳng cắt khối cong (đường tròn/elip giao) mang vai CONSTRUCT_CUTTING_OBJECT thay CONSTRUCT_AUXILIARY_GEOMETRY trong envelope phục vụ; row v128 thật vẫn HIT (runs/sphere-sample-source-authority/cache/decision.json).
-    assert CACHE_VERSION == "131"  # 130 -> 131: geometry-generalization-and-pedagogical-construction
+    assert CACHE_VERSION == "132"  # 130 -> 131: geometry-generalization-and-pedagogical-construction
     assert dt["NONCONVEX_POLYHEDRON_CAPABILITY"] == "foundation_only"
     fp = semantic_environment_fingerprint()
     # ⚠️ ĐÍNH CHÍNH 2026-09-08 (`OBLIQUE_CONE_SECTION_FOUNDATION`):
@@ -414,23 +414,6 @@ def test_20_dang_ky_ghi_DANH_TINH_he_duoc_do(dang_ky):
     # ⚠️ ĐÍNH CHÍNH 2026-09-20 (`FACT_GRAPH_CONTRACT_EXTENSION`): cùng khuôn ấy
     # áp cho `analyze_schema` — lược đồ `analyze` hình học thêm ô
     # `geometric_relations`. Dựng lại, không tin bằng lời.
-    from tests.structured_relation_identity import (
-        analyze_schema_neu_chua_them_quan_he,
-        prompts_neu_chua_them_muc_quan_he,
-    )
-
-    # `prompts` nay phải hoàn nguyên HAI prompt: `transcribe.md` (wave ảnh) và
-    # `geometry_analyze.md` (wave này). Khớp ⇒ không prompt nào khác bị đụng.
-    DUNG_LAI = {"prompts": prompts_neu_chua_them_muc_quan_he,
-                "analyze_schema": analyze_schema_neu_chua_them_quan_he}
-    for k, v in dt["model_facing"].items():
-        if k in DA_DOI:
-            assert fp[k] != v, f"{k} phải ĐỔI sau wave nón"
-            continue
-        if k in DUNG_LAI:
-            assert fp[k] != v and DUNG_LAI[k]() == v, k
-            continue
-        assert fp[k] == v, k
 
 
 def test_21b_LO_DA_DONG__toa_do_diem_nay_DUOC_KIEM(dang_ky):

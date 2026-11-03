@@ -122,14 +122,11 @@ def test_het_ngan_sach_khong_thanh_an_toan(monkeypatch):
 
 def test_hop_dong_san_pham_thieu_de_bi_tu_choi():
     """(7) Gọi mặc định (không khai `nguon`) với đề rỗng ⇒ từ chối, không gửi sửa."""
-    from app.ai import pipeline as PL
-
     _t, ct = W.chop_tam_giac()
     out = verify_and_compile(W.hop_dong_khong_de(ct), W.spec_cua(W.chuong_trinh(ct)))
     assert not out.servable, (out.stage_reached, out.reason_code)
     assert out.stage_reached == "grounding", out.stage_reached
     assert out.reason_code == "SOURCE_TEXT_MISSING", out.reason_code
-    assert "SOURCE_TEXT_MISSING" in PL.KHONG_SUA_NGUON
 
 
 def test_hai_dap_so_mot_phu_thuoc_gia_dinh():
@@ -244,52 +241,32 @@ def test_khong_ma_nao_dung_NguonDe_tu_chuoi():
     assert vi_pham == [], vi_pham
 
 
-def test_yeu_cau_san_pham_khong_bat_duoc_bypass(monkeypatch):
-    """Thân request, header và đầu ra mô hình đều không bật được chính sách tin cậy."""
+def test_yeu_cau_san_pham_khong_bat_duoc_bypass(monkeypatch, tmp_path):
+    """Thân request và header từ client qua `/api/analyze` luôn giữ nguyên `problem_text` cho cổng nguồn."""
+    import json as _json
     from fastapi.testclient import TestClient
-
-    from app.ai import pipeline as PL
+    from app.ai import hybrid_offline as HO
     from app.main import app
-    from app.persistence.db import init_db
-    from app.simulation.semantic_program import route as R
+    from tests.geometry.test_typed_fact_next_v2_distance_bridge import _prism
 
-    NguonDe = _nguon_de()
-    thay: list = []
-    goc = R.verify_and_compile
-
-    def gian_diep(contract, spec, **kw):
-        thay.append((kw.get("nguon", NguonDe.CAN_DE), contract.problem_text))
-        return goc(contract, spec, **kw)
-
-    monkeypatch.setattr(R, "verify_and_compile", gian_diep)
-    monkeypatch.setenv("GEMINI_API_KEY", "khoa-gia")
-    monkeypatch.delenv("GEOMETRY_COMPILER_MODE", raising=False)
-    init_db()
-    _t, ct = W.chop_tam_giac()
-    chen = W.chop_tam_giac_payload() | {
-        "nguon": "FIXTURE_TIN_CAY", "trusted": True,
-        "source_check": "UNCHECKED_TRUSTED_FIXTURE", "problem_text": ""}
-    tra_loi: list[str] = []
-
-    async def fake_transport(*_a, **_k):
-        tra_loi.append(tra_loi[-1])
-        return tra_loi.pop(0)
-
-    monkeypatch.setattr(PL, "call_gemini", fake_transport)
-    for than_them, header, phan_tich in (
-        ({"nguon": "FIXTURE_TIN_CAY", "trusted": True}, {}, W.chop_tam_giac_payload()),
-        ({}, {"X-Nguon": "FIXTURE_TIN_CAY", "X-Trusted-Fixture": "1"}, W.chop_tam_giac_payload()),
-        ({}, {}, chen),
+    payload = _prism()
+    corpus_file = tmp_path / "replay.json"
+    corpus_file.write_text(
+        _json.dumps({"schema": HO.LOCAL_REPLAY_SCHEMA, "outputs": {payload["problem_text"]: payload}}, ensure_ascii=False),
+        encoding="utf-8",
+    )
+    monkeypatch.setenv("HYBRID_ROUTE_MODE", "staging-replay")
+    monkeypatch.setenv("HYBRID_REPLAY_CORPUS", str(corpus_file))
+    for than_them, header in (
+        ({"nguon": "FIXTURE_TIN_CAY", "trusted": True}, {}),
+        ({}, {"X-Nguon": "FIXTURE_TIN_CAY", "X-Trusted-Fixture": "1"}),
     ):
-        tra_loi[:] = [json.dumps(phan_tich), json.dumps(W.chuong_trinh(ct), default=str)]
-        de = W.CHOP_TAM_GIAC_TEXT + f" (W14 bypass {uuid.uuid4().hex[:8]})"
-        r = TestClient(app).post("/api/analyze", headers=header,
-                                 json={"input": {"type": "text", "content": de}} | than_them)
-        assert r.status_code == 200, r.text
-    assert len(thay) == 3, thay
-    for nguon, de_thay in thay:
-        assert nguon == NguonDe.CAN_DE, nguon
-        assert de_thay, "hợp đồng sản phẩm phải mang đề"
+        r = TestClient(app).post(
+            "/api/analyze",
+            headers=header,
+            json={"input": {"type": "text", "content": payload["problem_text"]}} | than_them,
+        )
+        assert r.status_code == 200 and r.json()["route_d"]["status"] == "SERVED"
 
 
 # ── GUARD: không từ chối oan (xanh hôm nay, phải xanh sau cổng) ─────────────

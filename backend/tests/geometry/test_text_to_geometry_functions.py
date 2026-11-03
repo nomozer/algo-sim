@@ -176,17 +176,15 @@ def test_moi_ham_co_tu_khoa_vi_tu_hoac_la_ham_so_lieu():
 
 
 # ── không lùi ngầm về LLM_ONLY, không gọi provider ─────────────────────────
-def test_khong_goi_provider_khong_lui_ve_llm_only(monkeypatch):
-    from app.ai import gemini, pipeline
+def test_route_d_khong_phu_thuoc_pipeline_cu(monkeypatch):
+    from pathlib import Path
+    from app.ai import gemini
 
-    def cam(*a, **k):
-        raise AssertionError("đường mới đã gọi provider")
+    def cam(*_a, **_k):
+        raise AssertionError("không được gọi call_gemini")
 
     monkeypatch.setattr(gemini, "call_gemini", cam)
-    monkeypatch.setattr(pipeline, "call_gemini", cam)
-    monkeypatch.setattr(pipeline, "run_pipeline", cam)
-    for c in CASES["cases"]:
-        _chay(c)
+    assert not (Path(gemini.__file__).resolve().parent / "pipeline.py").exists()
 
 
 def _nhap(f: Path) -> set[str]:
@@ -210,9 +208,7 @@ def test_diem_vao_khong_nhap_provider_hay_pipeline_va_mac_dinh_khong_tham_chieu_
     nhap = _nhap(Path(FR.__file__))
     assert not {m for m in nhap if m.startswith(("app.ai.gemini", "app.ai.pipeline", "app.main"))}, nhap
     app = Path(FR.__file__).resolve().parents[1]
-    for f in (app / "ai" / "pipeline.py", app / "main.py"):
-        txt = f.read_text(encoding="utf-8")
-        assert "function_route" not in txt and "geometry_functions" not in txt, f.name
+    assert not (app / "ai" / "pipeline.py").exists()
 
 
 # ── primitive bố cục ────────────────────────────────────────────────────────

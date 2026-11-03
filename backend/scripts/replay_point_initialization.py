@@ -30,7 +30,7 @@ GOC = Path(__file__).resolve().parents[1]
 if str(GOC) not in sys.path:
     sys.path.insert(0, str(GOC))
 
-from app.ai import pipeline  # noqa: E402
+from tests.geometry.scene3d_test_helper import _dung_scene3d  # noqa: E402
 from app.simulation.semantic_program.obligations import Obligation  # noqa: E402
 from app.simulation.semantic_program.request_contract import (  # noqa: E402
     RequestContract,
@@ -140,7 +140,7 @@ def chay(nhan: str, spec_json: dict, hd: RequestContract) -> dict[str, Any]:
     ra["postconditions"] = "PASS" if out.servable else (
         "FAIL" if out.stage_reached == "postconditions" else "NOT_REACHED")
     try:
-        canh = pipeline._dung_scene3d(val.spec, hd) or {}
+        canh = _dung_scene3d(val.spec, hd) or {}
         ra["scene3d"] = len(canh.get("objects", [])) if out.servable else None
     except Exception as e:                                        # noqa: BLE001
         ra["scene3d"] = f"{type(e).__name__}"

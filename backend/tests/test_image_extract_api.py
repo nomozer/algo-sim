@@ -173,35 +173,40 @@ def test_chuoi_nguy_hiem_trong_anh_tra_ve_nhu_DU_LIEU(monkeypatch):
     assert set(d) == {"status", "extraction", "assessment", "image", "provenance", "cached"}
 
 
-# ── nhánh `image` cũ của `/api/analyze` ─────────────────────────
+# ── ranh giới 2 tầng: `/api/image/extract` -> văn bản đã xem lại -> `/api/analyze` ──
 
-def _chuan_bi_analyze(monkeypatch):
+def test_analyze_image_truc_tiep_bi_tu_choi_400_khong_cham_hybrid(monkeypatch):
     monkeypatch.setenv("GEMINI_API_KEY", "khoa-gia")
-    monkeypatch.setattr(main_module, "CACHE_VERSION", f"test-{uuid.uuid4()}")
-    init_db()
-    thay: list[str] = []
+    goi: list[str] = []
 
-    async def fake_pipeline(text, api_key, **kw):
-        thay.append(text)
-        return {"status": "unsupported", "reason": "gia", "failure_category": "insufficient_specification"}
+    async def cam(*a, **k):
+        goi.append("called")
+        raise AssertionError("không được chạm _analyze_hybrid_route khi gửi image trực tiếp")
 
-    monkeypatch.setattr(main_module, "run_pipeline", fake_pipeline)
-    return thay
-
-
-def test_analyze_image_toi_pipeline_bang_VAN_BAN_da_trich(monkeypatch):
-    thay = _chuan_bi_analyze(monkeypatch)
-    _gia(monkeypatch, _ban_ghi())
-    r = client.post("/api/analyze", json={"input": {"type": "image", "content": _b64(), "mime_type": "image/png"}})
-    assert r.status_code == 200
-    assert thay == [DE]
-
-
-def test_analyze_image_chi_co_hinh_KHONG_toi_pipeline(monkeypatch):
-    thay = _chuan_bi_analyze(monkeypatch)
-    _gia(monkeypatch, _ban_ghi(problem_text_verbatim="", problem_text_normalized="", has_diagram=True,
-                               diagram_observations=["Một hình chóp."]))
+    monkeypatch.setattr(main_module, "_analyze_hybrid_route", cam)
     r = client.post("/api/analyze", json={"input": {"type": "image", "content": _b64(), "mime_type": "image/png"}})
     assert r.status_code == 400
-    assert "chỉ có hình vẽ" in r.json()["error"]
-    assert thay == []
+    assert r.json()["reason_code"] == "IMAGE_DIRECT_UNSUPPORTED"
+    assert goi == []
+
+
+def test_hai_tang_image_extract_sang_analyze_text_di_qua_hybrid(monkeypatch, tmp_path):
+    from app.ai import hybrid_offline as HO
+    from tests.geometry.test_typed_fact_next_v2_distance_bridge import _prism
+
+    payload = _prism()
+    corpus_file = tmp_path / "replay.json"
+    corpus_file.write_text(
+        json.dumps({"schema": HO.LOCAL_REPLAY_SCHEMA, "outputs": {payload["problem_text"]: payload}}, ensure_ascii=False),
+        encoding="utf-8",
+    )
+    monkeypatch.setenv("GEMINI_API_KEY", "khoa-gia")
+    monkeypatch.setenv("HYBRID_ROUTE_MODE", "staging-replay")
+    monkeypatch.setenv("HYBRID_REPLAY_CORPUS", str(corpus_file))
+    init_db()
+    _gia(monkeypatch, _ban_ghi(problem_text_verbatim=payload["problem_text"], problem_text_normalized=payload["problem_text"]))
+    ext = _post(content=_b64(), mime_type="image/png").json()
+    assert ext["status"] == "ok" and ext["assessment"]["status"] == "ready_for_review"
+    r = client.post("/api/analyze", json={"input": {"type": "text", "content": ext["assessment"]["problem_text"]}})
+    assert r.status_code == 200
+    assert r.json()["route_d"]["status"] == "SERVED"

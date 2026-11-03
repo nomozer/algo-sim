@@ -156,7 +156,7 @@ def test_dry_run_scores_both_arms_pairs_them_and_never_touches_a_provider(tmp_pa
     assert s["HYBRID"]["usd_total"] == "UNKNOWN"                              # no usage ⇒ UNKNOWN, not 0
     written = _rows(tmp_path / "rows.jsonl")                                   # M1: streamed JSONL, header … summary
     assert [w["type"] for w in written] == ["header"] + ["row"] * 6 + ["summary"]
-    assert out["completed"] is True and written[0]["runtime_identity"]["cache_version"] == "131"
+    assert out["completed"] is True and written[0]["runtime_identity"]["cache_version"] == "132"
 
 
 def test_hybrid_arm_passes_the_production_domain_gate_first(tmp_path):
@@ -586,6 +586,16 @@ def test_the_runtime_ceiling_is_the_exact_payload_bound_per_request(tmp_path, mo
         async_calls.append(url)
         raise AssertionError("an over-ceiling LLM_ONLY request was sent")
 
+    import asyncio as _asyncio
+    with pytest.raises(E.LiveRefused, match="LLM_ONLY_RETIRED"):
+        _asyncio.run(E.run_llm_only("test", "k"))
+
+    async def uncapped_async_arm(text, api_key):
+        from app.ai import gemini
+        await gemini.call_gemini(api_key, "transcribe", text)
+        return {"status": "unsupported"}
+
+    monkeypatch.setattr(E, "run_llm_only", uncapped_async_arm)
     monkeypatch.setattr(E, "worst_case_request_usd", lambda corpus, approval: 0.0)
     monkeypatch.setattr(httpx.AsyncClient, "post", never)
     monkeypatch.setenv("ALLOW_LIVE_AI", "1")
@@ -644,9 +654,9 @@ def test_an_identity_change_mid_run_stops_before_the_next_request(tmp_path, monk
     assert out["stop_reason"] == "IDENTITY_CHANGED" and provider.calls == 1
 
 
-def test_the_real_llm_only_arm_is_held_by_the_same_request_cap(tmp_path, monkeypatch):
-    """Production `run_pipeline` → `call_gemini` (not a fake): its HTTP attempts pass the same budget, so the cap holds
-    across both arms. The mock provider answers 429 forever; nothing reaches the network (conftest guard)."""
+def test_the_real_async_transport_arm_is_held_by_the_same_request_cap(tmp_path, monkeypatch):
+    """Async `call_gemini` transport HTTP attempts pass the same budget as sync `live_transport`.
+    The mock provider answers 429 forever; nothing reaches the network (conftest guard)."""
     async_calls = []
 
     async def rate_limited(self, url, *a, **k):
@@ -654,6 +664,12 @@ def test_the_real_llm_only_arm_is_held_by_the_same_request_cap(tmp_path, monkeyp
         return httpx.Response(429, json={"error": {"code": 429}}, request=httpx.Request("POST", url))
 
     import app.ai.gemini as gemini
+
+    async def async_transport_arm(text, api_key):
+        await gemini.call_gemini(api_key, "transcribe", text)
+        return {"status": "unsupported"}
+
+    monkeypatch.setattr(E, "run_llm_only", async_transport_arm)
     monkeypatch.setattr(gemini, "BACKOFF_BASE_SECONDS", 0.0)
     monkeypatch.setattr(httpx.AsyncClient, "post", rate_limited)
     monkeypatch.setenv("ALLOW_LIVE_AI", "1")

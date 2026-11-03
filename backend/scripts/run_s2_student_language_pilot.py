@@ -1311,7 +1311,7 @@ def run_delegated_c21_suite(
     campaign (`campaign_id`) may run a canary (`only_case_ids`) and then the full suite reusing the canary rows
     (`reuse_rows_from`) under the canary's carried ledger (`carry_ledger`)."""
     from app.ai import gemini
-    from app.ai.pipeline import route_policy_snapshot
+    from app.ai.route_policy import route_policy_snapshot
 
     repo_cwd = git_cwd or BACKEND.parent
     specs = pilot_specs or default_c21_pilot_specs()
@@ -1320,8 +1320,8 @@ def run_delegated_c21_suite(
     ident = runtime_identity()
     if ident["model"] != DELEGATED_AUTHORIZED_MODEL or gemini.MODEL != DELEGATED_AUTHORIZED_MODEL:
         raise LiveRefused(f"runtime model is not {DELEGATED_AUTHORIZED_MODEL}")
-    if route_policy_snapshot({}).geometry_compiler_mode != "LLM_ONLY":
-        raise LiveRefused("production default mode is no longer LLM_ONLY")
+    if route_policy_snapshot({}).default_route_mode != "HYBRID":
+        raise LiveRefused("production default mode is not HYBRID")
     cand_file = BACKEND.parent / "docs" / "evaluation" / "semantic-benchmark" / "EVALUATION_CANDIDATE.json"
     if cand_file.is_file():
         cand = json.loads(cand_file.read_text(encoding="utf-8"))

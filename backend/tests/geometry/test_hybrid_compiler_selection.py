@@ -247,13 +247,12 @@ def test_adapter_du_kien_tu_choi_phan_hoi_hong():
     assert FE.run_ai_fact_route(c["text"], _Gia(_body(c["b_facts"], "SAFETY"))).code == "PROVIDER_REFUSED"
 
 
-def test_khong_lui_ve_llm_only(monkeypatch):
-    from app.ai import gemini, pipeline
+def test_planner_va_route_khong_goi_provider_hay_pipeline_cu(monkeypatch):
+    from pathlib import Path
+    from app.ai import gemini
 
-    def cam(*a, **k):
-        raise AssertionError("đã chạm LLM_ONLY/provider")
+    def cam(*_a, **_k):
+        raise AssertionError("không được gọi provider trong kiểm thử chọn hàm tất định")
 
     monkeypatch.setattr(gemini, "call_gemini", cam)
-    monkeypatch.setattr(pipeline, "run_pipeline", cam)
-    for c in HOLD.values():
-        FE.run_ai_fact_route(c["text"], _Gia(_body(c["b_facts"])))
+    assert not (Path(gemini.__file__).resolve().parent / "pipeline.py").exists()

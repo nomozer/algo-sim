@@ -484,7 +484,7 @@ def _chay(spec=None):
 
 
 def _canh(spec=None):
-    from app.ai.pipeline import _dung_scene3d
+    from tests.geometry.scene3d_test_helper import _dung_scene3d
     from app.simulation.semantic_program.contract import SemanticProgramSpec
 
     return _dung_scene3d(

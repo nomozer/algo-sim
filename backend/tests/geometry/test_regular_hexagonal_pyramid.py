@@ -15,7 +15,7 @@ from fractions import Fraction
 
 import pytest
 
-from app.ai.pipeline import _dung_scene3d
+from tests.geometry.scene3d_test_helper import _dung_scene3d
 from app.simulation.semantic_program.assumption_gate import do_luong_cua
 from app.simulation.semantic_program.route import verify_and_compile
 from app.simulation.semantic_program.shape_constraint import che_muc_tieu, doc_rang_buoc, phan_chua_doc

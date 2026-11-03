@@ -16,11 +16,9 @@ import json
 
 import pytest
 
-from app.ai import pipeline as PL
-from app.learner_messages import attach_learner_reason
-from app.simulation.geometry_compiler.compiler import bien_dich
-from app.simulation.geometry_compiler.contract_adapter import build_fact_graph
-from app.simulation.geometry_compiler.routing import quyet_dinh_dinh_tuyen
+import copy
+from pathlib import Path
+
 from app.simulation.semantic_program import grounding_gate as G
 from app.simulation.semantic_program.analyze_contract import build_request_contract
 from app.simulation.semantic_program.route import verify_and_compile
@@ -62,10 +60,12 @@ def _contract(text: str, payload: dict):
     return build_request_contract(payload, problem_text=text, domain="hinh_hoc")
 
 
+_PROGRAMS = json.loads((Path(__file__).with_name("route_cases_programs.json")).read_text(encoding="utf-8"))
+
+
 def _program_with_height_5() -> dict:
     """The program a model writes when it believes AD = 5 (compiled from the full text)."""
-    graph = build_fact_graph(_contract(PRISM_TEXT, _prism_payload())).graph
-    return {"spec_version": "1.0", **bien_dich(graph).program}
+    return copy.deepcopy(_PROGRAMS["lang_tru_tam_giac"])
 
 
 def _spec(program: dict):
@@ -76,37 +76,10 @@ def _spec(program: dict):
 
 # ── Task test 7 + the mandatory probe: the PRODUCTION boundary refuses ────────
 
-def test_production_route_refuses_a_height_the_problem_does_not_state(monkeypatch):
-    monkeypatch.delenv("GEOMETRY_COMPILER_MODE", raising=False)  # default LLM_ONLY
-    responses = [json.dumps(_prism_payload()), json.dumps(_program_with_height_5(), default=str)]
-    calls: list[str] = []
-
-    async def fake_transport(*_args, **_kwargs):
-        calls.append("call")
-        return responses[len(calls) - 1]
-
-    monkeypatch.setattr(PL, "call_gemini", fake_transport)
-    env = attach_learner_reason(asyncio.run(PL.run_pipeline(PRISM_WITHOUT_AD, "fake_key")))
-
-    assert env["status"] == "unsupported", env
-    assert "scene3d" not in env and "final_memory" not in env
-    assert env["error_code"] == "input_not_grounded"
-    assert env["stage_reached"] == "grounding"
-    assert env["reason_code"] == G.ERR_GIVEN_KHONG_CO_TRONG_DE
-    # A source defect is not a writing defect: no repair round is spent on it.
-    assert len(calls) == 2
-    msg = env["learner_reason"]
-    assert "đề" in msg and "_" not in msg and "GIVEN" not in msg
-
-
-def test_compiler_route_never_turns_a_claimed_length_into_a_given_fact():
+def test_contract_never_turns_a_claimed_length_into_a_source_invariant():
     contract = _contract(PRISM_WITHOUT_AD, _prism_payload())
     assert contract.fact("fact_len_AD").provenance == "claimed"
-    # The length invariants come from the SOURCE, not from an unproven analyze value.
     assert not any(set(b.points) == {"A", "D"} for b in contract.source_invariants)
-    decision = quyet_dinh_dinh_tuyen(contract, {"GEOMETRY_COMPILER_MODE": "DETERMINISTIC_FIRST"})
-    assert decision.decision != "USE_COMPILER"
-    assert decision.reason_code == "REQUIRED_FACT_MISSING"
 
 
 def test_the_same_height_stated_in_the_text_is_accepted_with_its_evidence():
@@ -163,21 +136,6 @@ def test_unit_in_the_evidence_contradicting_the_fact_is_a_conflict():
 
 # ── Task tests 10–11: legitimate derivations and layout are not GIVEN ────────
 
-def test_cube_equal_edges_are_derived_and_not_refused_as_ungrounded():
-    from tests.geometry.test_cuboid_cube_production_route import _cube_p01_payload
-
-    text, payload = _cube_p01_payload()
-    contract = _contract(text, payload)
-    spec = _spec({"spec_version": "1.0", **bien_dich(build_fact_graph(contract).graph).program})
-    outcome = verify_and_compile(contract, spec)
-    assert outcome.servable, outcome.details
-    ground = G.check_grounding(contract, spec)
-    given = {e["name"] for e in ground.given_evidence}
-    # "có cạnh bằng 4": ONE given edge; the other edges are computed from it.
-    assert given == {"AB_length"}
-    assert {"AD_length", "AA_prime_length"}.isdisjoint(given)
-
-
 def test_layout_derived_coordinates_are_never_given_evidence():
     contract = _contract(PRISM_TEXT, _prism_payload())
     ground = G.check_grounding(contract, _spec(_program_with_height_5()))
@@ -194,7 +152,6 @@ def test_grounding_refusal_codes_are_a_closed_stable_set():
         "GIVEN_VALUE_NOT_IN_SOURCE", "SOURCE_SPAN_MISMATCH", "SOURCE_EVIDENCE_CONFLICT",
         "SOURCE_TEXT_MISSING", "GIVEN_ONLY_IN_GOAL_CLAUSE"})
     # A source defect is never sent back to the model to "repair".
-    assert G.MA_LOI_NGUON <= PL.KHONG_SUA_NGUON
     contract = _contract(PRISM_WITHOUT_AD, _prism_payload())
     outcome = verify_and_compile(contract, _spec(_program_with_height_5()))
     assert not outcome.servable and outcome.scene3d is None
@@ -262,7 +219,8 @@ def test_the_source_length_reader_never_truncates_a_number(text, expected):
 # so the gate read the fact as RELATIONAL (no numbers to compare) and accepted
 # the coordinates, and the claim no longer builds a coordinate invariant.
 
-def test_a_point_pinned_to_an_unstated_coordinate_claim_is_refused(monkeypatch):
+def test_a_point_pinned_to_an_unstated_coordinate_claim_is_refused():
+    from app.learner_messages import attach_learner_reason
     from scripts import replay_negative_boundaries as RNB
 
     case = "p1_chop_thiet_dien_khoang_cach"
@@ -270,20 +228,20 @@ def test_a_point_pinned_to_an_unstated_coordinate_claim_is_refused(monkeypatch):
     text = RNB.doc_de_bai()[case]
     cut = text.replace(" và đỉnh S(0;0;6)", "")
     assert cut != text
-    monkeypatch.delenv("GEOMETRY_COMPILER_MODE", raising=False)
-    responses = [raw["semantic_analyze"][0], raw["semantic_program"][0]]
-    calls: list[str] = []
-
-    async def fake_transport(*_args, **_kwargs):
-        calls.append("call")
-        return responses[len(calls) - 1]
-
-    monkeypatch.setattr(PL, "call_gemini", fake_transport)
-    env = attach_learner_reason(asyncio.run(PL.run_pipeline(cut, "fake_key")))
-    assert env["status"] == "unsupported", env.get("status")
+    contract = _contract(cut, json.loads(raw["semantic_analyze"][0]))
+    out = verify_and_compile(contract, _spec(json.loads(raw["semantic_program"][0])))
+    assert not out.servable and out.scene3d is None
+    env = attach_learner_reason({
+        "status": "unsupported",
+        "stage_reached": out.stage_reached,
+        "error_code": out.error_code,
+        "reason_code": out.reason_code,
+        "reason_subjects": list(out.reason_subjects or ()),
+        "refusal_cause": out.refusal_cause,
+    })
+    assert env["status"] == "unsupported"
     assert "scene3d" not in env
     assert env["reason_code"] == G.ERR_GIVEN_KHONG_CO_TRONG_DE
-    assert len(calls) == 2
 
 
 def test_a_paraphrased_relation_without_numbers_still_grounds_coordinates():
@@ -408,4 +366,3 @@ def test_chung_minh_biet_du_kien_sau_biet_van_la_du_kien():
 
 def test_ma_chi_trong_muc_tieu_la_ma_nguon_khong_gui_sua():
     assert "GIVEN_ONLY_IN_GOAL_CLAUSE" in G.MA_LOI_NGUON
-    assert G.MA_LOI_NGUON <= PL.KHONG_SUA_NGUON

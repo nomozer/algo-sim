@@ -587,7 +587,7 @@ def _candidate_summary(repo_root: Path) -> dict[str, Any]:
     cand_path = repo_root / "docs" / "evaluation" / "semantic-benchmark" / "EVALUATION_CANDIDATE.json"
     cand = json.loads(cand_path.read_text(encoding="utf-8"))
     from app.ai.adapter4_route import ADAPTER_V4_VERSION
-    from app.ai.pipeline import route_policy_snapshot
+    from app.ai.route_policy import route_policy_snapshot
     from app.main import hybrid_route_mode
     from app.simulation.geometry_functions.engine import ENGINE_VERSION
     from app.simulation.geometry_functions.planner import PLANNER_VERSION
@@ -606,7 +606,7 @@ def _candidate_summary(repo_root: Path) -> dict[str, Any]:
         "engine_version": ENGINE_VERSION,
         "typed_fact_next_version": TYPED_FACT_NEXT_V2_SCHEMA_VERSION,
         "adapter_version": ADAPTER_V4_VERSION,
-        "default_mode": route_policy_snapshot({}).geometry_compiler_mode,
+        "default_mode": route_policy_snapshot({}).default_route_mode,
         "hybrid_route_mode_default": hybrid_route_mode(),
         "cache_version": cand["cache_version"],
     }

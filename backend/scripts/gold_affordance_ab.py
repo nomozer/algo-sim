@@ -310,7 +310,7 @@ def _bam(x: Any) -> str:
 
 
 def chay_gold(ca: dict) -> dict[str, Any]:
-    from app.ai import pipeline
+    from tests.geometry.scene3d_test_helper import _dung_scene3d
 
     cid = ca["case_id"]
     f, spec_json, ob = gold(cid)
@@ -338,7 +338,7 @@ def chay_gold(ca: dict) -> dict[str, Any]:
     kq["thuc_te"] = thuc
     kq["exact_match"] = thuc == ca["exact_expected_results"]
     try:
-        canh = pipeline._dung_scene3d(spec, hd) or {}
+        canh = _dung_scene3d(spec, hd) or {}
         ten = {o.get("name") or o.get("id") for o in canh.get("objects", [])}
         kq["scene3d_ok"] = all(w in ten for _, _, w in ob)
     except Exception as e:                                        # noqa: BLE001

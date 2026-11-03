@@ -243,6 +243,10 @@ def semantic_environment_fingerprint() -> dict:
     bump theo quy ước — chỉ là chưa có máy canh. Muốn phủ nốt thì mở rộng
     **chính hàm này**, đừng dựng vân tay thứ hai.
     """
+    from app.ai.adapter4_route import ADAPTER_V4_VERSION, ROUTE_D_SIMULATION_V4_SCHEMA_VERSION
+    from app.ai.typed_fact_next_extraction import typed_fact_next_surface_fingerprint
+    from app.simulation.geometry_functions import engine, planner, registry
+    from app.simulation.geometry_functions.typed_fact_next import TYPED_FACT_NEXT_V2_SCHEMA_VERSION
     from app.simulation.semantic_program.analyze_contract import (
         SEMANTIC_ANALYZE_SCHEMA,
         analyze_schema_for,
@@ -254,16 +258,24 @@ def semantic_environment_fingerprint() -> dict:
     def _bam_json(x) -> str:
         return _bam(json.dumps(x, ensure_ascii=False, sort_keys=True))
 
+    hybrid_surface = {
+        "registry_version": registry.REGISTRY_VERSION,
+        "planner_version": planner.PLANNER_VERSION,
+        "engine_version": engine.ENGINE_VERSION,
+        "response_contract": TYPED_FACT_NEXT_V2_SCHEMA_VERSION,
+        "adapter_version": ADAPTER_V4_VERSION,
+        "envelope_version": ROUTE_D_SIMULATION_V4_SCHEMA_VERSION,
+    }
+
     return {
-        # `tong` băm bảng `{tên skill: băm nội dung}` đã sắp khoá, và `_bam`
-        # chuẩn hoá CRLF→LF — nên vân tay không đổi vì hệ điều hành, đường dẫn
-        # checkout hay thứ tự đọc thư mục. Chỉ NỘI DUNG đổi mới đổi.
         "prompts": vt["tong"],
         "grammar_card": vt["grammar_card"],
         "synthesis_schema": _bam_json(generate_json_schema()),
         "analyze_schema": _bam_json(
             [SEMANTIC_ANALYZE_SCHEMA, analyze_schema_for("hinh_hoc")]),
         "capability": stable_capability_hash(),
+        "typed_fact_next_surface": typed_fact_next_surface_fingerprint(),
+        "hybrid_route_surface": _bam_json(hybrid_surface),
     }
 
 
@@ -274,75 +286,42 @@ def semantic_environment_hash() -> str:
 
 
 def runtime_identity() -> dict:
-    """Danh tính runtime máy-đọc. `git_sha`/`build_timestamp` được BAKE lúc build
-    image (build-arg → env); ngoài Docker thì báo "unknown" trung thực thay vì
-    đoán — doctor sẽ xử lý riêng trường hợp đó."""
-    # Nhập muộn: main.py import module này, tránh vòng import.
-    from app.main import CACHE_VERSION, hybrid_route_mode, semantic_route_mode
-    from app.ai.pipeline import HYBRID_PREVIEW_TOKEN_MIN_LENGTH, route_policy_snapshot
+    """Danh tính runtime máy-đọc cho kiến trúc chính thức Hybrid `/4`."""
+    from app.main import CACHE_VERSION, hybrid_route_mode
+    from app.ai.hybrid_offline import hybrid_route_identity
+    from app.ai.route_policy import HYBRID_PREVIEW_TOKEN_MIN_LENGTH, route_policy_snapshot
 
     kn = capability_fingerprint()
     env = dict(os.environ)
     policy = route_policy_snapshot(env)
     preview = route_policy_snapshot(env, preview=True)
-    # `/api/health` calls this every few seconds (Docker healthcheck, frontend): with the preview OFF it must not load
-    # Route D at all, or a research import error would make the product container unhealthy.
     route_d: dict = {"enabled": False}
     if preview.hybrid_preview_enabled:
-        # Diagnostics-only boundary, reached only with the operator flag on.
         from app.ai.hybrid_preview import preview_runtime_identity
 
         route_d = {**preview_runtime_identity(preview), "token_configured":
                    len(env.get("HYBRID_ROUTE_D_PREVIEW_TOKEN", "")) >= HYBRID_PREVIEW_TOKEN_MIN_LENGTH}
     h_mode = hybrid_route_mode()
-    hybrid_rt: dict = {"mode": "off", "enabled": False}
-    if h_mode != "off":
-        # Lazy diagnostics boundary: Route D modules stay unimported when `HYBRID_ROUTE_MODE=off` (D-01).
-        from app.ai.hybrid_offline import hybrid_route_identity
-
-        hybrid_rt = hybrid_route_identity(h_mode, env)
+    hybrid_rt = hybrid_route_identity(h_mode, env)
     return {
-        "route_policy": {"geometry_compiler_mode": policy.geometry_compiler_mode,
+        "route_policy": {"default_route_mode": policy.default_route_mode,
                          "fingerprint": policy.fingerprint()},
         "hybrid_route": hybrid_rt,
+        "hybrid_route_mode": h_mode,
         "hybrid_route_d_preview": route_d,
         "git_sha": os.getenv("ALGOSIM_GIT_SHA", "unknown"),
         "build_timestamp": os.getenv("ALGOSIM_BUILD_TIME", "unknown"),
         "cache_version": CACHE_VERSION,
-        # ─── ĐẾM NĂNG LỰC HÌNH HỌC, thay cho đếm target Tin học ────────────
-        #
-        # `family_count`/`target_count`/`registered_*_ids` cũ đếm 24 target của
-        # danh mục đã gỡ. Giữ những khoá ấy mà cho chúng giá trị 0 là để lại một
-        # con số đọc như "hệ mất hết năng lực"; bỏ hẳn và đếm đúng thứ đang chạy
-        # thì `runtime_doctor` mới nói được điều nó sinh ra để nói.
         "domain": "hinh_hoc",
         "expression_count": len(kn["bieu_thuc"]),
         "construct_statement_count": len(kn["cau_lenh_dung"]),
         "measure_count": len(kn["phep_do"]),
         "obligation_count": len(kn["nghia_vu"]),
         "stable_capability_hash": stable_capability_hash(),
-        # Vân tay PROMPT. Ba trường trước đó (`git_sha`, `cache_version`,
-        # `stable_capability_hash`) đều KHỚP khi một prompt cũ đang được gửi đi,
-        # vì không trường nào trong chúng đọc một file `.md`.
         "skills": skill_fingerprint(),
-        # ─── CỜ VẬN HÀNH — KHÔNG phải danh tính mã, nhưng quyết định HÀNH VI ──
-        #
-        # `runtime_doctor` từng báo PASS trọn vẹn trong khi `SEMANTIC_ROUTE_MODE`
-        # là `off`, tức route sinh KHÔNG CHẠY và mọi đề hình học rơi xuống
-        # classifier. Mã khớp từng bit, hành vi thì khác hẳn — và "PASS" đọc
-        # thành "mọi thứ đúng".
-        #
-        # Đo được 2026-08-25: một lượt `docker compose up -d --build` không kèm
-        # env kéo cờ về mặc định `off` mà không gì báo. Chúng phải HIỆN RA.
-        # Doctor không phán chúng đúng/sai — `off` là lựa chọn hợp lệ cho bản
-        # chạy thật — nhưng người đọc phải thấy, và `--doi-mode` cho phép khai
-        # kỳ vọng khi lượt này là một lượt ĐO.
-        "semantic_route_mode": semantic_route_mode(),
         "semantic_telemetry": os.getenv("SEMANTIC_TELEMETRY", "0"),
         "gemini_model": os.getenv("GEMINI_MODEL", "gemini-2.5-flash"),
         "dev_reload": os.getenv("DEV_RELOAD", "0"),
-        # `simulation_id` DUY NHẤT sản phẩm phát ra. Không còn danh mục target,
-        # nên không còn `registered_target_ids`/`family_ids`/`selector_tokens`.
         "simulation_id": "generic.semantic_program",
         "expressions": sorted(kn["bieu_thuc"]),
         "construct_statements": sorted(kn["cau_lenh_dung"]),

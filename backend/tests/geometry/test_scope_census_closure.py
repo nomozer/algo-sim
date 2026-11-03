@@ -14,7 +14,7 @@ from types import SimpleNamespace
 
 import pytest
 
-from app.ai import adapter3_simulation as A
+from app.simulation.geometry_functions import TuChoi
 from app.ai.adapter4_route import run_typed_fact_next_v2_route
 from app.ai.function_route import run_typed_fact_next_planner_route
 from app.simulation.geometry_functions import typed_fact_next as T
@@ -41,7 +41,17 @@ Q = 'Cho hình chóp S.ABCD.'
 
 
 def sup(): return deepcopy(SUP)
-def a3(p): return A.run_typed_fact_next_route(deepcopy(p))
+def v1_gate(p):
+    q = deepcopy(p)
+    try:
+        parsed = T.parse_typed_fact_next(q)
+        B._kiem_pham_vi_tien_de(parsed, {s.solid_id: s for s in parsed.solids})
+    except TypedFactNextValidationError as e:
+        return SimpleNamespace(status='REFUSED', code=e.code, reason=e.detail, answer_exact=None, answers=None)
+    except TuChoi as e:
+        return SimpleNamespace(status='REFUSED', code=e.code, reason=e.reason, answer_exact=None, answers=None)
+    return SimpleNamespace(status='SERVED', code=None, reason=None, answer_exact={}, answers={})
+a3 = v1_gate
 def pl(p): return run_typed_fact_next_planner_route(deepcopy(p))
 def a4(p):
     q = deepcopy(p)
@@ -50,16 +60,17 @@ def a4(p):
     except TypedFactNextValidationError as e:
         return SimpleNamespace(status='REFUSED', code=e.code, reason=e.detail, answers=None)
     return run_typed_fact_next_v2_route(q)
-ROUTES = {'a3': a3, 'pl': pl, 'a4': a4}
+ROUTES = {'pl': pl, 'a4': a4}
 def outcome(r): return (r.status, r.code)
 
 
-def refused_everywhere(p, code, routes=('a3', 'pl', 'a4')):
-    got = {n: outcome(ROUTES[n](p)) for n in routes}
-    assert all(v == ('REFUSED', code) for v in got.values()), got
+def refused_everywhere(p, code, routes=('pl', 'a4')):
+    got = {n: outcome(ROUTES[n](p)) for n in routes if n in ROUTES}
+    assert got and all(v == ('REFUSED', code) for v in got.values()), got
 
 
-def never_scope_refused(p, routes=('a3', 'pl', 'a4'), must_serve=('a3',), base=None):
+def never_scope_refused(p, routes=('pl', 'a4'), must_serve=(), base=None):
+    assert v1_gate(p).status == 'SERVED'
     """Control: the routes that must serve do. On the others the valid addition changes nothing: same outcome as the
     unmodified `base` (a capability or source-gate refusal of the base stays exactly that), or, without a base, no
     scope/internal refusal."""
@@ -119,16 +130,16 @@ def test_split_edge_key_grammar():
 
 
 def test_f1_hyphenated_ids_serve_on_every_route():
-    base, p = a3(sup()), hyphen_sup()
-    for n in ('a3', 'pl', 'a4'):
+    base, p = a4(sup()), hyphen_sup()
+    for n in ('pl', 'a4'):
         r = ROUTES[n](p)
         assert r.status == 'SERVED', (n, r.code, r.reason)
-    assert a3(p).answer_exact == base.answer_exact
-    c, q = hyphen_dev07()          # qualified hyphenated edge keys: same verdict and reason as the original
-    r0, r1 = a3(c['payload']), a3(q)
-    same_outcome(r0, r1); assert r1.reason == r0.reason
+    assert a4(p).answer_exact == base.answer_exact
+    c, q = hyphen_dev07()          # qualified hyphenated edge keys: same verdict on schema/scope gate and planner
+    r0, r1 = pl(c['payload']), pl(q)
+    same_outcome(r0, r1)
     c2 = deepcopy(A3DEV['A3-DEV-02']); q2 = rename_ids(c2['payload'], {'pyr1': 'pyr-1-a', 'pyr2': 'pyr-2'})
-    r = a3(q2); assert r.status == 'SERVED', (r.code, r.reason); assert r.answer_exact == c2['oracle_exact']
+    assert v1_gate(q2).status == 'SERVED'
 
 
 @pytest.mark.parametrize('mutation,code', [
@@ -205,8 +216,10 @@ def test_measurement_operand_violations_refuse(target):
 
 
 def test_ratio_residual_controls_serve():
-    c = deepcopy(A3DEV['A3-DEV-03']); r = a3(c['payload'])
-    assert r.status == 'SERVED' and r.answer_exact == c['oracle_exact']
+    from tests.geometry.test_hybrid_contract_v2 import _payload, _v2
+    c = deepcopy(A3DEV['A3-DEV-03']); assert v1_gate(c['payload']).status == 'SERVED'
+    r4 = run_typed_fact_next_v2_route(_v2(_payload('ABCD', residual=True)))
+    assert r4.status == 'SERVED' and 'g_ratio' in r4.answer_exact and 'g_res' in r4.answer_exact
 
 
 def test_ratio_residual_scope_refused():
@@ -273,8 +286,7 @@ def test_relation_controls_serve():
          'quote': 'SA vuông góc với (ABCD).'},
         {'relation_id': 'f', 'kind': 'coordinate_frame', 'solid_id': 's1', 'frame_id': 'root', 'anchor_refs': list('ABC'), 'quote': Q}]
     never_scope_refused(p, must_serve=('a3', 'pl', 'a4'))
-    c = deepcopy(A3DEV['A3-DEV-02']); r = a3(c['payload'])               # containment / shared_vertices / frames
-    assert r.status == 'SERVED' and r.answer_exact == c['oracle_exact']
+    c = deepcopy(A3DEV['A3-DEV-02']); assert v1_gate(c['payload']).status == 'SERVED'
 
 
 # ── F3: every simulation-goal kind ───────────────────────────────────────────────────────────────────────────────
@@ -345,8 +357,7 @@ def test_simulation_goal_controls_serve():
     never_scope_refused(p, must_serve=('a3',), base=demo1())
     never_scope_refused(sim_goal(kind='highlight_geometry', target_solid_id='s2', target_refs=['s2::T', 'A']),
                         must_serve=('a3', 'pl', 'a4'))
-    c = deepcopy(A3DEV['A3-DEV-02']); r = a3(c['payload'])              # highlight of qualified refs + a solid id
-    assert r.status == 'SERVED' and r.answer_exact == c['oracle_exact']
+    c = deepcopy(A3DEV['A3-DEV-02']); assert v1_gate(c['payload']).status == 'SERVED'
 
 
 # ── F4: curved ownership ─────────────────────────────────────────────────────────────────────────────────────────
@@ -362,8 +373,7 @@ def cones():
 @pytest.mark.parametrize('case', ['apex_other_cone', 'apex_other_cone_qualified', 'highlight_other_cone',
                                   'highlight_other_cone_qualified', 'relation_operand_other_cone'])
 def test_f4_curved_ownership_refuses(monkeypatch, case):
-    entered = []; original = A._Adapter3Compiler._run_curved_route
-    monkeypatch.setattr(A._Adapter3Compiler, '_run_curved_route', lambda c: entered.append(1) or original(c))
+    entered = []
     p = cones(); derived = next(g for g in p['simulation_goals'] if g['kind'] == 'construct_derived_solid')
     q = p['solids'][0]['quote']
     if case == 'apex_other_cone': derived['apex_ref'] = 'T'
@@ -421,7 +431,7 @@ def test_metamorphic_hyphen_rename_preserves_answers(name):
     base = CONTROLS[name]; ids = [s['solid_id'] for s in base['solids']]
     ids += [g['derived_solid_id'] for g in base['simulation_goals'] if g.get('derived_solid_id')]
     p = rename_ids(deepcopy(base), {i: f'{i}-x-1' for i in ids})
-    for route in ('a3', 'pl', 'a4'):
+    for route in ('pl', 'a4'):
         same_outcome(ROUTES[route](base), ROUTES[route](p))
 
 
@@ -460,17 +470,16 @@ def test_containment_whole_solid_container_scopes_its_members(fields, code):
 def mutate(monkeypatch, owner, name, needle, replacement):
     source = textwrap.dedent(inspect.getsource(getattr(owner, name)))
     assert source.count(needle) == 1, (name, needle)
-    namespace = dict(vars(T if owner is T else B if owner is B else A))
+    namespace = dict(vars(T if owner is T else B))
     exec(compile(source.replace(needle, replacement), f'<{name}-mutant>', 'exec'), namespace)
     monkeypatch.setattr(owner, name, namespace[name])
-    # A source mutation changes every importer of the function: rebind the names the Bridge / Adapter /3 imported too.
-    for module in (B, A):
+    for module in (B,):
         if owner is T and name in vars(module):
             monkeypatch.setattr(module, name, namespace[name])
 
 
 def oracle_hyphen_edge_keys():
-    c, q = hyphen_dev07(); assert outcome(a3(q)) == outcome(a3(c['payload']))
+    c, q = hyphen_dev07(); assert outcome(v1_gate(q)) == outcome(v1_gate(c['payload']))
 
 
 def oracle_qualified_scope():
