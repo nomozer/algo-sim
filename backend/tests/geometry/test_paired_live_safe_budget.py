@@ -487,3 +487,68 @@ def test_14_campaign_max_requests_enforced_before_http_send(tmp_path, monkeypatc
     assert out["budget_ledger"]["actual_http_request_count"] == 2
     assert out["stop_reason"] == "REQUEST_CAP"
     assert out["run_status"] == "INCOMPLETE_PAIRED_EVALUATION"
+
+
+# 15. C28 §VII–§IX: Scene3D boundary audit, planner composition provenance, clarification & 2x2 paired matrix
+def test_15_c28_scene3d_boundary_planner_provenance_and_paired_matrix(tmp_path):
+    from app.ai.typed_fact_next_extraction import ReplayExtractor
+
+    hybrid_env, _ = E.run_hybrid(
+        SERVED_FIXTURE["problem_text"],
+        ReplayExtractor({SERVED_FIXTURE["problem_text"]: SERVED_FIXTURE}),
+    )
+    assert hybrid_env["status"] == "ok"
+
+    corpus = {
+        "schema": "hybrid-master-paired-heldout/2",
+        "cases": [
+            {
+                "id": "C28-POS-1",
+                "problem_text": SERVED_FIXTURE["problem_text"],
+                "expect": "SERVE",
+                "oracle": {"distance": ["12"]},
+                "semantic_annotations": {"explicit_goals": ["distance"]},
+                "dry_run": {
+                    "hybrid_extraction": SERVED_FIXTURE,
+                    "llm_only_envelope": hybrid_env,
+                },
+            },
+            {
+                "id": "C28-NEG-1",
+                "problem_text": "Giải phương trình bậc hai x^2 - 5x + 6 = 0.",
+                "expect": "REFUSE",
+                "refusal_class": "OUT_OF_DOMAIN",
+                "dry_run": {
+                    "hybrid_extraction": None,
+                    "llm_only_envelope": {"status": "unsupported", "failure_category": "out_of_scope", "error_code": "OUT_OF_SCOPE"},
+                },
+            },
+        ],
+    }
+    cpath = tmp_path / "c28-dry.json"
+    cpath.write_text(json.dumps(corpus, ensure_ascii=False), encoding="utf-8")
+    out = E.evaluate(cpath, tmp_path / "c28-out.jsonl", approval=None)
+
+    by = {(r["case_id"], r["arm"]): r for r in out["rows"]}
+    h_pos = by[("C28-POS-1", "HYBRID")]
+    l_pos = by[("C28-POS-1", "LLM_ONLY")]
+    assert h_pos["served_correct"] is True
+    assert h_pos["planner_composition"] in ("REGISTERED_DECOMPOSITION", "SOURCE_EXPLICIT_SEQUENCE", "DISCOVERED_FUNCTION_COMPOSITION")
+    assert h_pos["clarification_requested"] is False
+    assert h_pos["semantic_goal_correct"] is True
+    assert h_pos["strict_contract_correct"] is True
+
+    for row in (h_pos, l_pos):
+        sc = row["scene_contract"]
+        assert sc["envelope_valid"] is True
+        assert sc["object_identity_unique"] is True
+        assert sc["dependency_order_valid"] is True
+        assert sc["explanation_certificate_linked"] is True
+        assert sc["target_quantity_mapped"] is True
+
+    paired = out["summary"]["paired"]
+    assert paired["both_correct"] == 1
+    assert paired["both_incorrect"] == 0
+    assert paired["served_correct_diff"] == 0.0
+    assert out["summary"]["HYBRID"]["scene_contract_all_valid"] == 1
+    assert out["summary"]["HYBRID"]["pedagogical_human_validation"] == "NOT_EVALUATED_BY_H1_AUTOMATED_HARNESS"

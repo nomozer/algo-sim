@@ -201,7 +201,90 @@ def refusal_class(arm: str, envelope: dict[str, Any] | None, code: str | None) -
     return "UNSPECIFIC"
 
 
-def score(case: dict[str, Any], envelope: dict[str, Any] | None, arm: str = "HYBRID") -> dict[str, Any]:
+def audit_scene_contract(envelope: dict[str, Any] | None, route_d: dict[str, Any] | None = None) -> dict[str, Any] | None:
+    """Verify C28 §IX Scene3D & pedagogical boundary contract on a served envelope without mutating scoring outcomes."""
+    if not isinstance(envelope, dict) or envelope.get("status") != "ok":
+        return None
+    scene = envelope.get("scene3d")
+    if not isinstance(scene, dict):
+        return {
+            "envelope_valid": False,
+            "object_identity_unique": False,
+            "dependency_order_valid": False,
+            "section_object_valid": None,
+            "explanation_certificate_linked": False,
+            "target_quantity_mapped": False,
+        }
+    from app.ai.hybrid_preview import _noi_chung_minh, _validate_scene
+    from app.simulation.semantic_program.pipeline_adapter import validate_semantic_envelope_config
+
+    cfg = envelope.get("config")
+    env_valid = (
+        isinstance(cfg, dict)
+        and not validate_semantic_envelope_config(cfg)
+        and not cfg.get("execution_truncated")
+    )
+    objs = scene.get("objects")
+    id_unique = (
+        isinstance(objs, list)
+        and bool(objs)
+        and all(isinstance(o, dict) and isinstance(o.get("id"), str) and o["id"] for o in objs)
+        and len({o["id"] for o in objs}) == len(objs)
+    )
+    try:
+        _validate_scene(scene)
+        dep_valid = True
+    except Exception:  # noqa: BLE001 — reported as False in structural audit, never crashes a scored row
+        dep_valid = False
+
+    sec_objs = [o for o in (objs or ()) if isinstance(o, dict) and o.get("type") == "section"]
+    route_secs = (route_d or {}).get("sections") if isinstance(route_d, dict) else None
+    if not sec_objs and not route_secs:
+        sec_valid: bool | None = None
+    else:
+        poly_ok = bool(sec_objs) and all(
+            (isinstance(o.get("polygon"), list) and len(o["polygon"]) >= 3) or o.get("curve_kind") == "circle"
+            for o in sec_objs
+        )
+        cert_ok = True if route_secs is None else (len(route_secs) == len(sec_objs))
+        sec_valid = poly_ok and cert_ok
+
+    events = scene.get("events") if isinstance(scene.get("events"), list) else []
+    steps = ((scene.get("formation") or {}).get("steps")) if isinstance(scene.get("formation"), dict) else []
+    texts = [envelope.get("title", ""), envelope.get("description", "")]
+    if isinstance(cfg, dict):
+        texts += [f.get("narration", "") for f in (cfg.get("frames") or ()) if isinstance(f, dict)]
+    texts += [e.get(k, "") for e in events if isinstance(e, dict) for k in ("learner_text", "explanation")]
+    texts += [s.get("learner_text", "") for s in (steps or ()) if isinstance(s, dict)]
+    has_step_prose = bool(events) and any(
+        isinstance(e, dict) and bool(str(e.get("learner_text") or e.get("explanation") or "").strip())
+        for e in events
+    )
+    cert_auth_ok = (
+        True
+        if not isinstance(route_d, dict)
+        else route_d.get("source_verification") == {"authority": "registry.kiem_nguon"}
+    )
+    expl_linked = has_step_prose and not any(_noi_chung_minh(t) for t in texts) and cert_auth_ok
+
+    try:
+        mapped = served_quantities(envelope)
+        qty_mapped = bool(mapped) and set(mapped) <= set(KINDS.values())
+    except Exception:  # noqa: BLE001
+        qty_mapped = False
+
+    return {
+        "envelope_valid": env_valid,
+        "object_identity_unique": id_unique,
+        "dependency_order_valid": dep_valid,
+        "section_object_valid": sec_valid,
+        "explanation_certificate_linked": expl_linked,
+        "target_quantity_mapped": qty_mapped,
+    }
+
+
+def score(case: dict[str, Any], envelope: dict[str, Any] | None, arm: str = "HYBRID",
+          *, route_d: dict[str, Any] | None = None) -> dict[str, Any]:
     """Primary rule (§4): served-correct ⇔ served ∧ expected-serve ∧ for every asked kind the served target values are
     exactly the oracle's (each oracle value shown; no other value of that kind shown — a wrong value the learner sees
     is never "correct"). `served_correct_lenient` (oracle ⊆ shown) is reported as a sensitivity check only. Targets of
@@ -222,7 +305,8 @@ def score(case: dict[str, Any], envelope: dict[str, Any] | None, arm: str = "HYB
             "refusal_code": None if served else code, "refusal_class": klass, "extra_same_kind_values": extra,
             "unverified_extra_targets": {k: [str(x) for x in v] for k, v in got.items() if k not in oracle},
             "served_quantities": {k: [str(x) for x in v] for k, v in got.items()},
-            "stage_reached": (envelope or {}).get("stage_reached")}
+            "stage_reached": (envelope or {}).get("stage_reached"),
+            "scene_contract": audit_scene_contract(envelope, route_d) if served else None}
 
 
 def wilson(k: int, n: int, z: float = 1.959964) -> tuple[float, float] | None:
@@ -292,20 +376,49 @@ def summarize(rows: list[dict[str, Any]]) -> dict[str, Any]:
             "usd_reported_total": sum(x for r in rs if isinstance(x := r.get("usd_floor"), (int, float))),
             "exercised": len(rs) - sum(r["technical_failure"] for r in rs),
             "usd_per_served_correct": "UNKNOWN" if unknown or not ok else sum(usd) / ok,
+            "clarification_requests": sum(bool(r.get("clarification_requested")) for r in rs),
+            "scene_contract_all_valid": sum(
+                isinstance(sc := r.get("scene_contract"), dict)
+                and all(v is True for v in sc.values() if v is not None)
+                for r in rs
+            ),
+            "pedagogical_human_validation": "NOT_EVALUATED_BY_H1_AUTOMATED_HARNESS",
         }
+        if arm == "HYBRID":
+            out[arm]["planner_composition_counts"] = dict(
+                collections.Counter(r["planner_composition"] for r in rs if r.get("planner_composition"))
+            )
+            if any(r.get("semantic_goal_correct") is not None for r in pos):
+                out[arm]["semantic_served_correct"] = sum(
+                    bool(r["served_correct"] and r.get("semantic_goal_correct")) for r in pos
+                )
+                out[arm]["strict_served_correct"] = sum(
+                    bool(r["served_correct"] and r.get("strict_contract_correct")) for r in pos
+                )
     if rows:                   # always reported, so a run stopped inside its first arm still names its unpaired cases
         a, b = "HYBRID", "LLM_ONLY"
         by = {(r["case_id"], r["arm"]): r for r in rows}
         ids = sorted({i for i, _ in by if (i, a) in by and (i, b) in by})
+        pos_ids = [i for i in ids if by[i, a]["expect"] == "SERVE"]
 
         def disc(field):
             return (sum(by[i, a][field] and not by[i, b][field] for i in ids),
                     sum(by[i, b][field] and not by[i, a][field] for i in ids))
 
         (oa, ob), (wa, wb) = disc("served_correct"), disc("wrong_served")
+        both_ok = sum(by[i, a]["served_correct"] and by[i, b]["served_correct"] for i in pos_ids)
+        both_bad = sum(not by[i, a]["served_correct"] and not by[i, b]["served_correct"] for i in pos_ids)
+        n_pos = len(pos_ids)
+        diff = (oa - ob) / n_pos if n_pos else None
+        diff_ci: tuple[float, float] | None = None
+        if n_pos:
+            se = math.sqrt(max(0.0, (oa + ob) / n_pos - (diff or 0.0) ** 2) / n_pos)
+            diff_ci = (max(-1.0, (diff or 0.0) - 1.959964 * se), min(1.0, (diff or 0.0) + 1.959964 * se))
         out["paired"] = {"arms": [a, b], "complete_pairs": len(ids), "paired_case_ids": ids,
                          "unpaired_cases": sorted({r["case_id"] for r in rows} - set(ids)),
+                         "both_correct": both_ok, "both_incorrect": both_bad,
                          f"served_correct_only_{a}": oa, f"served_correct_only_{b}": ob,
+                         "served_correct_diff": diff, "served_correct_diff_ci95": diff_ci,
                          "served_correct_mcnemar_p": mcnemar_exact(oa, ob),
                          f"wrong_served_only_{a}": wa, f"wrong_served_only_{b}": wb,
                          "wrong_served_mcnemar_p": mcnemar_exact(wa, wb)}
@@ -840,6 +953,31 @@ def _guard_sends(budget: SafeCampaignBudget, approval: dict[str, Any]):
 
 # ── arms ─────────────────────────────────────────────────────────────────────────────────────────────────────────────
 
+def _extract_goal_kinds_from_v2(raw_payload: Any) -> list[str] | None:
+    """Extract canonical user-requested goal kinds from a validated `TypedFactNextPayloadV2` without storing raw prose."""
+    if not isinstance(raw_payload, dict):
+        return None
+    from app.simulation.geometry_functions.typed_fact_next import TypedFactNextValidationError, parse_typed_fact_next_v2
+
+    try:
+        p = parse_typed_fact_next_v2(raw_payload)
+    except TypedFactNextValidationError:
+        return None
+    sim_kinds = [sg.kind for sg in p.simulation_goals if sg.kind != "construct_object"]
+    math_kinds = [mg.goal_type if mg.kind == "measurement" else mg.kind for mg in p.math_goals]
+    return sim_kinds + math_kinds
+
+
+def _goal_kinds_match_explicit(observed_kinds: list[str] | None, explicit_goals: list[str]) -> bool:
+    if observed_kinds is None:
+        return False
+
+    def _canon(k: str) -> str:
+        return "angle" if k in ("angle_cos_sq", "angle_cos") else k
+
+    return sorted(map(_canon, observed_kinds)) == sorted(map(_canon, explicit_goals))
+
+
 def run_hybrid(text: str, extractor, deadline_s: float = 15.0) -> tuple[dict[str, Any] | None, dict[str, Any]]:
     """The production opt-in path minus HTTP: the same domain gate as `/api/analyze` (`main._ngoai_pham_vi`), then
     `run_hybrid_offline`."""
@@ -849,11 +987,26 @@ def run_hybrid(text: str, extractor, deadline_s: float = 15.0) -> tuple[dict[str
     out_of_scope = _ngoai_pham_vi(text)
     if out_of_scope is not None:
         return out_of_scope, {"hybrid_code": out_of_scope.get("error_code"), "source_references": [],
-                              "certificate_verified": False, "failure_stage": "domain_gate"}
-    result = run_hybrid_offline(text, extractor, policy=hybrid_offline_policy({"HYBRID_ROUTE_D_PREVIEW": "1"}),
+                              "certificate_verified": False, "planner_composition": None,
+                              "clarification_requested": False, "extracted_goal_kinds": None,
+                              "failure_stage": "domain_gate"}
+
+    captured: dict[str, Any] = {"raw": None}
+
+    class _CapturingExtractor:
+        def extract(self, source_text: str) -> dict[str, Any] | None:
+            raw = extractor.extract(source_text)
+            captured["raw"] = raw
+            return raw
+
+    result = run_hybrid_offline(text, _CapturingExtractor(), policy=hybrid_offline_policy({"HYBRID_ROUTE_D_PREVIEW": "1"}),
                                 timeout_seconds=deadline_s)
     stages = {s["name"]: s for s in result.receipt["stages"]}
     eng = result.receipt.get("engine") or {}
+    route_d = result.response.get("route_d") or {}
+    planner_meta = route_d.get("planner") or {}
+    tel = planner_meta.get("search_telemetry") or {}
+    clar = bool(((route_d.get("refusal") or {}).get("clarification")))
     return result.response.get("envelope"), {
         "source_references": result.receipt["source_references"],
         "hybrid_code": result.receipt.get("code"),
@@ -861,8 +1014,12 @@ def run_hybrid(text: str, extractor, deadline_s: float = 15.0) -> tuple[dict[str
         "source_grounding": result.receipt["source_gate"]["status"],
         "certificate_verified": eng.get("status") == "VERIFIED",
         "planner_status": (result.receipt.get("planner") or {}).get("status"),
+        "planner_composition": tel.get("classification"),
+        "clarification_requested": clar,
+        "extracted_goal_kinds": _extract_goal_kinds_from_v2(captured["raw"]),
         "failure_stage": result.receipt.get("failure_stage"),
         "failure_kind": result.receipt.get("failure_kind"),
+        "_route_d_for_audit": route_d,
     }
 
 
@@ -996,6 +1153,15 @@ def evaluate(corpus_path: Path, out_path: Path, approval: dict[str, Any] | None,
                     technical = True
                 except Exception as exc:  # noqa: BLE001 — recorded as infrastructure, never as a model/geometry result
                     technical, extra = True, {"exception": type(exc).__name__}
+                route_d_audit = extra.pop("_route_d_for_audit", None)
+                if arm != "HYBRID":
+                    extra.setdefault(
+                        "clarification_requested",
+                        bool(envelope) and (
+                            envelope.get("status") == "clarification_needed"
+                            or envelope.get("failure_category") == "clarification"
+                        ),
+                    )
                 usage = usage_report()
                 arm_upper_dec = budget.arm_upper_decimal() if budget is not None else None
                 upper: float | str = float(arm_upper_dec) if arm_upper_dec is not None else "UNKNOWN"
@@ -1009,7 +1175,18 @@ def evaluate(corpus_path: Path, out_path: Path, approval: dict[str, Any] | None,
                        "usd": usd(usage, approval), "usd_floor": usd(usage, approval, floor=True),
                        "usd_upper": upper, "technical_failure": technical, **extra}
                 try:
-                    row.update(score(case, envelope, arm), outcome="SCORED")
+                    row.update(score(case, envelope, arm, route_d=route_d_audit), outcome="SCORED")
+                    exp_goals = ((case.get("semantic_annotations") or {}).get("explicit_goals")
+                                 if isinstance(case.get("semantic_annotations"), dict) else None)
+                    if arm == "HYBRID" and isinstance(exp_goals, list) and exp_goals:
+                        goal_match = _goal_kinds_match_explicit(row.get("extracted_goal_kinds"), exp_goals)
+                        row["semantic_goal_correct"] = goal_match and bool(row["served_correct"])
+                        row["strict_contract_correct"] = (
+                            bool(row.get("extraction_valid"))
+                            and row.get("source_grounding") == "VERIFIED"
+                            and goal_match
+                            and bool(row["served_correct"])
+                        )
                 except Exception as exc:  # noqa: BLE001 — never lose a paid row to a scorer bug
                     row.update(served=False, served_correct=False, served_correct_lenient=False, wrong_served=False,
                                false_refusal=False, refusal_reason_correct=False, outcome="SCORER_ERROR",

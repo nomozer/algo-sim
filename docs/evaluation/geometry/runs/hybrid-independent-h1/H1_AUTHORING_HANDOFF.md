@@ -99,7 +99,7 @@ Chia chính xác **5 bài cho mỗi lớp**:
 > **Cấm sao chép hoặc biến thể từ ví dụ minh họa dưới đây:**
 > Hai câu đề mẫu `H1-S01` và `H1-R01` bên dưới **đã nằm công khai trong kho mã nguồn AlgoSim**. Tác giả **tuyệt đối không** đưa nguyên văn hai câu này vào `h1-independent-corpus.json`, và **tuyệt đối không** chỉ đổi tên đỉnh/mặt phẳng (`S.ABCD` → `P.MNPQ`, `(P)` → `(Q)`) hoặc đổi số đo (`4` → `6`, `3` → `5`) trên cùng khung câu chữ. Bộ kiểm định niêm phong tự động quét cả trùng khớp nguyên văn (`exact_overlap_cases`) lẫn trùng khớp khung cấu trúc đã che nhãn đỉnh/số đo (`structural_template_clones`) và sẽ chặn không cho niêm phong bộ đề.
 
-File bàn giao đặt tên `h1-independent-corpus.json` (mã hóa `UTF-8`, không chứa trường `dry_run`), tuân thủ cấu trúc tương thích ngược hoàn toàn với bộ chạy kiểm định bắt cặp và bổ sung đầy đủ trường kiểm toán độc lập:
+File bàn giao đặt tên `h1-independent-corpus.json` (mã hóa `UTF-8`, không chứa trường `dry_run`), điền trực tiếp từ mẫu khung trống [`h1-corpus-template.json`](h1-corpus-template.json) trong cùng thư mục này (tương thích ngược với bộ chạy bắt cặp và bổ sung đầy đủ các trường kiểm toán độc lập):
 
 ```json
 {
@@ -153,10 +153,17 @@ File bàn giao đặt tên `h1-independent-corpus.json` (mã hóa `UTF-8`, khôn
 
 ---
 
-## 6. Checklist Tự Kiểm Trước Khi Tác Giả Gửi Lại Cho Owner
+## 6. Mười Điều Kiện Nghiệm Thu Đầu Vào & Checklist Tự Kiểm Trước Khi Gửi Lại Cho Owner
 
-- [ ] Tổng số đề đúng **60** (`id` duy nhất, không có hai `problem_text` trùng nhau).
-- [ ] Đúng **45** đề `expect = "SERVE"` và đúng **15** đề `expect = "REFUSE"` gồm **5** `OUT_OF_DOMAIN`, **5** `CONTRADICTORY_DATA`, **5** `MISSING_DATA`.
-- [ ] Mọi họ hình (`pyramid`, `prism`, `cuboid`, `cube`, `sphere`, `cylinder`, `cone`) và mọi nhóm câu hỏi đều có ít nhất `3` bài `SERVE`.
-- [ ] Không có câu `"Chứng minh …"`, không có bài chỉ dựng hình không hỏi đại lượng, không có tham số chữ `"cạnh a"`, không có số thập phân xấp xỉ, và mọi đáp số chứa cả `π` lẫn `√` đều viết `π` trước `√`.
-- [ ] Mọi `oracle` đều có `oracle_derivation` giải độc lập; mọi bài đều có `provenance` rõ ràng; không chép nguyên văn hay đổi tên đỉnh/số đo từ ví dụ trong tài liệu này hoặc bất kỳ đề có sẵn nào; không đề nào từng được chạy qua AlgoSim trước khi niêm phong.
+Bộ kiểm định tiếp nhận tự động kiểm tra đủ **10 điều kiện** dưới đây trước khi niêm phong SHA-256; bất kỳ mục nào không đạt sẽ được trả về tác giả chỉnh sửa **trước** mọi lượt chạy hệ thống:
+
+1. [ ] **Schema hợp lệ:** `schema = "hybrid-master-paired-heldout/2"`, mã hóa `UTF-8`, không có khóa `dry_run`, đầy đủ các trường theo [`h1-corpus-template.json`](h1-corpus-template.json).
+2. [ ] **Đúng 60 mã đề duy nhất:** Tổng cộng `60` bài (`id` không trùng, `problem_text` không rỗng và không trùng lặp nội bộ).
+3. [ ] **Đúng phân tầng `45 + 5/5/5`:** Đúng **45** bài `expect = "SERVE"` và đúng **15** bài `expect = "REFUSE"` gồm **5** `OUT_OF_DOMAIN`, **5** `CONTRADICTORY_DATA`, **5** `MISSING_DATA`.
+4. [ ] **Đủ 7 họ hình học và 5 nhóm câu hỏi đã đăng ký:** Trên 45 bài `SERVE`, mọi giá trị `stratum.family` (`pyramid`, `prism`, `cuboid`, `cube`, `sphere`, `cylinder`, `cone`) và `stratum.question` (`section_measure`, `distance`, `angle`, `volume`, `area`) đều có **ít nhất `3` bài**.
+5. [ ] **Oracle biểu thức chính xác:** Mọi giá trị trong `oracle` parse được qua ngữ pháp chính xác (số nguyên, phân số tối giản, căn thức rút gọn, `π` đứng trước `√`; cấm số thập phân xấp xỉ và cấm tham số chữ `"cạnh a"`).
+6. [ ] **Dẫn xuất toán học kiểm tra được (`oracle_derivation`):** Mọi bài `SERVE` đều có lời giải/công thức dẫn xuất tường minh do tác giả tính độc lập (không lấy từ AlgoSim hay Gemini).
+7. [ ] **Chú giải mục tiêu ngữ nghĩa hợp lệ (`semantic_annotations.explicit_goals`):** Khớp đúng các khóa `oracle` và tuân thủ quy ước Mục 3 (ghi thêm `"construct_plane_section"` **khi và chỉ khi** đề có mệnh lệnh xác định/tìm/dựng/vẽ thiết diện tường minh).
+8. [ ] **Không trùng chính xác với bất kỳ tài liệu/test nào trong kho mã nguồn:** `0` ca trùng nguyên văn (kể cả hai ví dụ `H1-S01`, `H1-R01` ở Mục 5).
+9. [ ] **Không sao chép cấu trúc trá hình:** Không đổi tên đỉnh, mặt phẳng hoặc nhân tỉ lệ số đo trên khung câu chữ có sẵn.
+10. [ ] **Hồ sơ độc lập của tác giả đầy đủ:** Điền rõ `author`, `author_affiliation`, `written_before_any_system_run = true`, `independence_evidence`, và `provenance` cho từng bài.

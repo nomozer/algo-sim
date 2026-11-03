@@ -1,0 +1,21 @@
+{
+  "schema": "algosim-publication-safety-receipt/1",
+  "checked_at_date": "2026-11-03",
+  "c27_head_commit": "7a2a7592b3eef03afb74b64778e42b2a2311a933",
+  "branch_range_scan": {
+    "command": "python backend/scripts/check_publication_safety.py --range main..HEAD",
+    "scanned_objects": 1342,
+    "scanned_commit_messages": 194,
+    "violations": 0,
+    "pending_exception": 0,
+    "verdict": "PASS"
+  },
+  "full_head_tree_scan": {
+    "command": "python backend/scripts/check_publication_safety.py --head",
+    "scanned_objects": 27055,
+    "scanned_commit_messages": 0,
+    "new_branch_violations": 0,
+    "preexisting_main_pending_exceptions": 103,
+    "verdict": "BLOCKED_ON_PREEXISTING_MAIN_PENDING_EXCEPTIONS"
+  }
+}

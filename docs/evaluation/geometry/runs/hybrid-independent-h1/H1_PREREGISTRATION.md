@@ -1,6 +1,6 @@
 # Tiền Đăng Ký Đánh Giá Độc Lập H-1 & So Sánh Bắt Cặp Live (`H1_PREREGISTRATION`)
 
-**Chiến dịch:** `H1_PAIRED_LIVE_EVALUATION` · **Master Epic:** `ALGOSIM_MASTER_HYBRID_BACKEND_REPLACEMENT` · **Nhiệm vụ:** `C27` · **Phạm vi:** `BACKEND_ONLY` (`frontend/**`: 0 thay đổi) · **Ngày đăng ký:** `2026-11-03`.
+**Chiến dịch:** `H1_PAIRED_LIVE_EVALUATION` · **Master Epic:** `ALGOSIM_MASTER_HYBRID_BACKEND_REPLACEMENT` · **Nhiệm vụ:** `C28` · **Phạm vi:** `BACKEND_ONLY` (`frontend/**`: 0 thay đổi) · **Ngày đăng ký:** `2026-11-03`.
 
 > [!IMPORTANT]
 > **Trạng thái niêm phong trước thực thi (`0` live provider calls):**
@@ -20,7 +20,7 @@ Không có bất kỳ thay đổi mã sản phẩm nào trong `backend/app/**` k
 | Thành phần | Giá trị đã khóa | Nguồn xác minh |
 |---|---|---|
 | Nhánh làm việc | `research/hybrid-master-backend-replacement` | Git worktree sạch |
-| Checkpoint cơ sở | `ffb4a7b6e39e4d5e757058b5d3ac9205b1ddcc76` | `git rev-parse` |
+| Checkpoint cơ sở | `7a2a7592b3eef03afb74b64778e42b2a2311a933` | `git rev-parse` |
 | Commit mã sản phẩm | `d331e75b5bbf15722eca77c54e398173eefec98d` | [`EVALUATION_CANDIDATE.json`](../../../semantic-benchmark/EVALUATION_CANDIDATE.json) |
 | Frozen candidate commit | `180db769` (`manifest sha256 = 218404c8794861b1…`) | `freeze_evaluation_candidate.py --verify` (`MATCH`) |
 | `measured_system` | `276fc548196e13eaa0ca7635428248dcaee7be79b79dff58c24a0478cddd4c63` (`118` files) | `runtime_identity()` |
@@ -31,8 +31,8 @@ Không có bất kỳ thay đổi mã sản phẩm nào trong `backend/app/**` k
 | Simulation Adapter | `hybrid-simulation-adapter/4` | `backend/app/ai/adapter4_route.py` |
 | Chế độ sản phẩm mặc định | `DEFAULT_MODE = "LLM_ONLY"`, `HYBRID_ROUTE_MODE = "off"`, `CACHE_VERSION = "131"` | `backend/app/main.py`, `backend/app/ai/pipeline.py` |
 | Model live | `gemini-2.5-flash` (`skills_sha256 = 1dd37ccce05a9c15…`) | `backend/app/ai/gemini.py` |
-| Paired harness | `4ba15bc19964f7d72b5072e81ffca39b0863b12e141e7e8de03ccf1d18c9f0bf` | [`run_paired_route_evaluation.py`](../../../../../backend/scripts/run_paired_route_evaluation.py) |
-| Equivalence & sealing scorer | `49bd9343b1af67dceda2cd8276aa23e016074d55bedc8db85fd956816fd4a896` | [`score_independent_holdout_equivalence.py`](../../../../../backend/scripts/score_independent_holdout_equivalence.py) |
+| Paired harness | `8af7ca1f27e7ca3fb4e58ba7e0e067bc17973d8254a086e6c39d896078cd2e1f` | [`run_paired_route_evaluation.py`](../../../../../backend/scripts/run_paired_route_evaluation.py) |
+| Equivalence & sealing scorer | `7ada8a0616e9482b4984e92e86804bfc60deab540a505a10da65d8436ceba391` | [`score_independent_holdout_equivalence.py`](../../../../../backend/scripts/score_independent_holdout_equivalence.py) |
 | Chính sách chi phí & ngân sách | `SafeCampaignBudget` (`decimal.Decimal`, đơn giá chuẩn `\$0.30 / 1M` in · `\$2.50 / 1M` out+think; đề xuất `300` req / `\$5.00` chờ duyệt) | [`PAIRED_LIVE_BUDGET_PROPOSAL.md`](PAIRED_LIVE_BUDGET_PROPOSAL.md) |
 
 **Cam kết đóng băng (§II & §VI):**
@@ -90,10 +90,11 @@ Ngay khi nhận file `h1-independent-corpus.json` từ tác giả độc lập d
 1. **Kiểm tra định dạng & duy nhất ID (`1_format_validated`):** Xác thực schema `hybrid-master-paired-heldout/2`, không có `dry_run`, đúng 60 `case_id` duy nhất và `problem_text` không rỗng.
 2. **Kiểm tra trùng lặp, nhiễm phát triển & sao chép khung đề (`2_duplication_and_contamination_checked`):**
    - Quét toàn bộ kho mã nguồn (kể cả các ví dụ minh họa trong `H1_AUTHORING_HANDOFF.md` và `corpus-template.json`): trùng khớp chính xác (`exact_overlap_cases`) hoặc trùng khớp khung cấu trúc khi chỉ đổi tên đỉnh và thay số đo (`structural_template_clone_cases` qua `_scan_structural_template_clones`) **chặn cứng niêm phong**; trùng khớp shingle 8 từ $\ge 50\%$ (`near_overlap_cases`) buộc dừng rà soát.
-3. **Xác minh số lượng & phân tầng (`3_count_and_stratification_45_5_5_5_verified`):** Đúng `60` ca = `45 SERVE` + `5 OUT_OF_DOMAIN` + `5 CONTRADICTORY_DATA` + `5 MISSING_DATA`.
-4. **Xác minh oracle chính xác & bằng chứng tác giả độc lập (`4_independent_oracle_parsed_exact`):**
-   - Mọi giá trị trong `oracle` parse thành công qua `radical.parse_exact` (cấm xấp xỉ thập phân).
-   - Hàm `_verify_authoring_independence` **từ chối** đóng dấu `ESTABLISHED` nếu JSON chỉ điền chữ `"ESTABLISHED"` suông: bắt buộc có định danh tác giả con người cụ thể (không phải agent/AI/placeholder), hồ sơ cam kết nguồn gốc độc lập (`author_provenance` / `independence_attestation`), và lời giải dẫn xuất độc lập cho các bài `SERVE`.
+3. **Xác minh số lượng, phân tầng & độ phủ họ hình (`3_count_and_stratification_45_5_5_5_verified`):** Đúng `60` ca = `45 SERVE` + `5 OUT_OF_DOMAIN` + `5 CONTRADICTORY_DATA` + `5 MISSING_DATA`, đồng thời `_verify_stratum_coverage` xác minh đủ cả `7` họ hình (`pyramid`, `prism`, `cuboid`, `cube`, `sphere`, `cylinder`, `cone`) và `5` nhóm câu hỏi (`section_measure`, `distance`, `angle`, `volume`, `area`) với mỗi nhóm $\ge 3$ bài `SERVE`.
+4. **Xác minh oracle chính xác, chú giải ngữ nghĩa P1 & bằng chứng tác giả độc lập (`4_independent_oracle_parsed_exact`):**
+   - Mọi giá trị trong `oracle` parse thành công qua `radical.parse_exact` (cấm xấp xỉ thập phân); `_assess_oracle_verification` kiểm tra dẫn xuất ký hiệu và gắn nhãn rõ `PENDING_HUMAN_EXPERT_VERIFICATION` cho tới khi có đối soát toán học của chuyên gia con người.
+   - Hàm `_verify_semantic_annotations` kiểm tra `semantic_annotations.explicit_goals` phủ đủ khóa `oracle` và nhất quán hai chiều với quy ước **P1**.
+   - Hàm `_verify_authoring_independence` **từ chối** đóng dấu `ESTABLISHED` nếu JSON chỉ điền chữ `"ESTABLISHED"` suông: bắt buộc có định danh tác giả con người cụ thể (không phải agent/AI/placeholder), hồ sơ cam kết nguồn gốc độc lập (`author_affiliation` + `independence_evidence`), và lời giải dẫn xuất độc lập cho các bài `SERVE`.
 5. **Ghi mã băm bất biến (`5_corpus_and_oracle_sha256_recorded`):** Tính và lưu `corpus_sha256` (trên byte nguyên văn của file) và `oracle_sha256` (`compute_oracle_sha256` trên biểu diễn chuẩn hóa của 60 mục tiêu/oracle).
 6. **Niêm phong manifest đánh giá (`6_evaluation_manifest_sealed`):** Cập nhật `H1_CORPUS_INTEGRITY.json` sang `CORPUS_SEALED_AWAITING_BUDGET` và commit trước request đầu tiên.
 7. **Khóa đăng ký trước (`7_candidate_scorer_model_budget_acceptance_preregistered`):** Đã hoàn tất tại tài liệu này (`180db769`, `gemini-2.5-flash`, `SafeCampaignBudget`, acceptance §7).
@@ -140,6 +141,11 @@ Phán quyết máy `acceptance()` trong [`run_paired_route_evaluation.py`](../..
    - **Statistical significance (Ý nghĩa thống kê):** Trị số $p < 0.05$ của kiểm định McNemar chỉ kiểm định giả thuyết bác bỏ bằng nhau trên cặp bất đồng $(n_{10}, n_{01})$. **Tuyệt đối không gọi một kết quả McNemar không có ý nghĩa thống kê ($p \ge 0.05$) là bằng chứng chứng minh hai hệ thống tương đương.**
    - **Evidence of non-inferiority (Bằng chứng không kém hơn):** Đánh giá dựa trên biên độ hiệu tỉ lệ bắt cặp $\Delta$ và cận dưới khoảng tin cậy so với ngưỡng biên $-5\text{ pp}$ đã đăng ký trước.
    - **Generalization claims (Phạm vi tổng quát hóa):** Với $N = 60$ bài và `0` lỗi `wrong_served`, khoảng tin cậy Wilson 95% là $[0.0\%, 6.02\%]$ — **tuyệt đối không kết luận hệ thống có `0%` lỗi thực tế chỉ vì quan sát `0/60` lỗi trên mẫu**, và không ngoại suy sang các lớp hình học nằm ngoài phân bố lấy mẫu của `H-1`.
+
+### 4.4. Ranh Giới Hợp Đồng `Scene3D` & Chất Lượng Sư Phạm (C28 §IX)
+
+- Trên mọi dòng `SERVED` của cả hai nhánh `LLM_ONLY` và `HYBRID`, hàm `audit_scene_contract()` trong [`run_paired_route_evaluation.py`](../../../../../backend/scripts/run_paired_route_evaluation.py) kiểm tra tự động 6 bất biến hợp đồng backend mà không sửa `frontend/**`: `envelope_valid`, `object_identity_unique`, `dependency_order_valid`, `section_object_valid`, `explanation_certificate_linked`, và `target_quantity_mapped`.
+- **Ranh giới sư phạm bắt buộc khai báo rõ:** `H-1` chỉ gồm các bài có đại lượng định lượng (loại trừ bài chỉ dựng hình và bài chứng minh). Do đó, việc vượt qua kiểm tra `scene_contract` và đúng đáp số toán học **không chứng minh chất lượng sư phạm đã được kiểm chứng** (`pedagogical_human_validation = "NOT_EVALUATED_BY_H1_AUTOMATED_HARNESS"` — không thay thế đánh giá của giáo viên/học sinh về tính mạch lạc của lời dẫn dựng hình).
 
 ---
 

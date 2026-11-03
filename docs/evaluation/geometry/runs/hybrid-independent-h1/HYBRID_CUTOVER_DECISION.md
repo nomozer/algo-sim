@@ -1,17 +1,19 @@
 # Báo Cáo Tổng Hợp & Quyết Định Chuyển Đổi Kiến Trúc Hybrid (`HYBRID_CUTOVER_DECISION`)
 
-**Run:** `hybrid-independent-h1` · **Master Epic:** `ALGOSIM_MASTER_HYBRID_BACKEND_REPLACEMENT` · **Nhiệm vụ:** `C27` · **Phạm vi:** `BACKEND_ONLY` (`frontend/**` và `backend/app/**`: `0` thay đổi) · **Ngày lập:** `2026-11-03`.
+**Run:** `hybrid-independent-h1` · **Master Epic:** `ALGOSIM_MASTER_HYBRID_BACKEND_REPLACEMENT` · **Nhiệm vụ:** `C28` · **Phạm vi:** `BACKEND_ONLY` (`frontend/**` và `backend/app/**`: `0` thay đổi) · **Ngày lập:** `2026-11-03`.
 
 > [!IMPORTANT]
-> **Phán quyết hiện hành dựa trên hợp đồng nghiệm thu (`0` lượt gọi Gemini live trong phiên C27):**
-> - `H1_AUTHORING_INDEPENDENCE` = **`NOT_ESTABLISHED`** (chưa có bộ 60 đề `H-1` từ tác giả con người độc lập trên đĩa; agent tuân thủ tuyệt đối lệnh cấm tự sáng tác đề).
+> **Phán quyết hiện hành dựa trên hợp đồng nghiệm thu (`0` lượt gọi Gemini live trong phiên C28):**
+> - `EXECUTION_GATE_STATUS` = **`BLOCKED_EXTERNAL_AUTHOR`** (chưa có tệp `h1-independent-corpus.json` trên đĩa; tuân thủ C28 §III & §XIII không tự sáng tác đề và không tạo báo cáo kết quả giả).
+> - `H1_AUTHORING_INDEPENDENCE` = **`NOT_ESTABLISHED`**.
 > - `H1_MEASUREMENT` = **`NOT_MEASURED`**.
 > - `PAIRED_LIVE_EVALUATION_COMPLETE` = **`NO`**.
 > - `LIVE_GEMINI_QUALITY_VALIDATED` = **`NO`** (dữ liệu live hiện có là C26 trên `K-1/S-2/R-1` đã dùng trong quá trình phát triển).
+> - `PEDAGOGICAL_HUMAN_VALIDATION` = **`NOT_EVALUATED`** (`H-1` loại trừ bài chỉ dựng hình / bài chứng minh và không thay thế đánh giá của giáo viên/học sinh).
 > - `HYBRID_CUTOVER_DECISION` = **`HYBRID_CUTOVER_BLOCKED`** (`DEFAULT_MODE = "LLM_ONLY"` và `HYBRID_ROUTE_MODE = "off"` giữ nguyên).
 > - `LEGACY_REMOVAL_DECISION` = **`LEGACY_REMOVAL_BLOCKED`** (`LLM_ONLY` chưa được phép gỡ bỏ).
 
-*(Tuân thủ §X & §XII: Tệp `H1_PAIRED_LIVE_EVALUATION_REPORT.md` **không được tạo** khi phép đo live trên `H-1` chưa diễn ra; không tạo báo cáo kết quả giả hoặc bảng trống).*
+*(Tuân thủ C28 §X & §XIII: Tệp `H1_PAIRED_LIVE_EVALUATION_REPORT.md` **không được tạo** khi phép đo live trên `H-1` chưa diễn ra; không tạo báo cáo kết quả giả hoặc bảng trống).*
 
 ---
 
@@ -22,7 +24,7 @@
 2. **Hybrid có đúng toán học và an toàn hơn hoặc ít nhất đáp ứng được tiêu chí thay thế `LLM_ONLY` không?**
    - **Về an toàn toán học trên dữ liệu đã đo:** `HYBRID` đạt **`0 / 70` ca `wrong_served`** (`37 / 37` ca phục vụ khớp chính xác biểu thức căn thức/$\pi$ kèm chứng chỉ exact kernel, `0 / 29` bài âm tính bị phục vụ). Tuy nhiên, **chưa đủ điều kiện thay thế `LLM_ONLY`** vì phép đo bắt cặp trực tiếp trên cùng 60 đề `H-1` độc lập chưa được thực thi (Tiêu chí `0..7` của Hợp đồng §7 chưa thể đánh giá).
 3. **Hybrid có đáp ứng yêu cầu cấu trúc mô phỏng và dựng hình không?**
-   - **Có trong phạm vi `geometry-functions/32` đã đăng ký.** Adapter `/4` xuất đầy đủ hợp đồng `scene3d` (đỉnh, cạnh, mặt, giao tuyến/thiết diện có giải thích bước dựng, đại lượng mục tiêu và chứng chỉ kiểm chứng), giữ nguyên tương thích 100% với frontend hiện hữu (`41 / 41` preview fixtures khóa cứng, Full T3 `16,698` pytest + `1,502` vitest PASS tại `180db769`). Với câu gộp *"Xác định thiết diện… và tính diện tích"*, chính sách **P1** (`h1-section-determination-equivalence/1`) xác nhận `HYBRID` xuất đồng thời cả đối tượng mô phỏng `construct_plane_section` và đại lượng `area` đúng hợp đồng sản phẩm.
+   - **Có về mặt hợp đồng cấu trúc `Scene3D` trong phạm vi `geometry-functions/32` đã đăng ký, kèm ranh giới sư phạm minh bạch (C28 §IX).** Adapter `/4` xuất đầy đủ hợp đồng `scene3d` (đỉnh, cạnh, mặt, giao tuyến/thiết diện có giải thích bước dựng, đại lượng mục tiêu và chứng chỉ kiểm chứng), giữ nguyên tương thích 100% với frontend hiện hữu (`41 / 41` preview fixtures khóa cứng, Full T3 `16,698` pytest + `1,502` vitest PASS tại `180db769`), và bộ chạy bắt cặp kiểm toán tự động 6 bất biến `audit_scene_contract()` trên mọi ca `SERVED` của cả hai nhánh. Tuy nhiên, `H-1` loại trừ bài chỉ dựng hình / bài chứng minh nên **không chứng minh chất lượng sư phạm đã được con người kiểm chứng** (`PEDAGOGICAL_HUMAN_VALIDATION = NOT_EVALUATED`). Với câu gộp *"Xác định thiết diện… và tính diện tích"*, chính sách **P1** (`h1-section-determination-equivalence/1`) xác nhận `HYBRID` xuất đồng thời cả đối tượng mô phỏng `construct_plane_section` và đại lượng `area` đúng hợp đồng sản phẩm.
 4. **Chi phí, token và độ trễ của Hybrid so với `LLM_ONLY` như thế nào?**
    - **So sánh bắt cặp trực tiếp trên `H-1` đang ở trạng thái `NOT_MEASURED`;** trên telemetry thực tế hiện có, `HYBRID` tốn đúng `1` lời gọi trích xuất/bài qua cổng miền (trung bình `4,295` tokens/call, **`\$0.00507`/call**, độ trễ trung vị **`7.81 s`/bài** trên C26), trong khi `LLM_ONLY` cần chuỗi `1` lời gọi `semantic_analyze` + `1..3` lời gọi `semantic_program` tuần tự (ước tính **`~\$0.020 – \$0.026`/bài**). Kiểm định chính thức Tiêu chí 4 (latency) và Tiêu chí 5 (USD upper của `HYBRID` $\le$ USD lower của `LLM_ONLY`) sẽ được quyết định trên lượt chạy bắt cặp `H-1`.
 5. **Có thể chuyển `/api/analyze` sang Hybrid mà không làm mất những chức năng quan trọng không?**
@@ -34,20 +36,20 @@
 
 ---
 
-## 2. Candidate Identity, Harness Hashes & Kiểm Thử C27 (§I, §VI, §XI)
+## 2. Candidate Identity, Harness Hashes & Kiểm Thử C27–C28 (§I, §IV, §IX)
 
-Toàn bộ kiểm tra xác nhận mã sản phẩm không thay đổi kể từ Full T3 PASS của C26, trong khi bộ công cụ đánh giá và ngân sách của C27 đã được khóa mã băm mới tại [`H1_CORPUS_INTEGRITY.json`](H1_CORPUS_INTEGRITY.json):
+Toàn bộ kiểm tra xác nhận mã sản phẩm không thay đổi kể từ Full T3 PASS của C26, an toàn công bố trên nhánh đạt `PASS` ([`publication-safety-receipt.json`](publication-safety-receipt.json): `--range main..HEAD` quét `1,342` đối tượng + `194` commit message, `0` vi phạm; `--head` không phát sinh vi phạm mới ngoài `103` mục `PENDING_OWNER_DECISION` tồn tại sẵn từ `main`), và bộ công cụ tiếp nhận/chấm điểm C28 đã được khóa mã băm mới tại [`H1_CORPUS_INTEGRITY.json`](H1_CORPUS_INTEGRITY.json):
 
 - **Frozen candidate commit:** `180db769` (`EVALUATION_CANDIDATE.json` `sha256 = 218404c8794861b1…`, `freeze_evaluation_candidate.py --verify` $\rightarrow$ **`MATCH`**).
 - **Product commit:** `d331e75b5bbf15722eca77c54e398173eefec98d` (`measured_system = 276fc548196e13ea…`, `118` files).
 - **Phiên bản các tầng tất định:** `geometry-functions/32` · `geometry-fact-planner/26` · `geometry-function-engine/24` · `typed-fact-next/2` · `hybrid-simulation-adapter/4`.
 - **Cấu hình an toàn sản phẩm hiện hành:** `DEFAULT_MODE = "LLM_ONLY"`, `HYBRID_ROUTE_MODE = "off"`, `CACHE_VERSION = "131"`, `model = "gemini-2.5-flash"`.
 - **Mã băm công cụ đánh giá đã khóa:**
-  - `paired_harness_sha256` ([`run_paired_route_evaluation.py`](../../../../../backend/scripts/run_paired_route_evaluation.py)): `4ba15bc19964f7d72b5072e81ffca39b0863b12e141e7e8de03ccf1d18c9f0bf`.
-  - `equivalence_scorer_sha256` ([`score_independent_holdout_equivalence.py`](../../../../../backend/scripts/score_independent_holdout_equivalence.py)): `49bd9343b1af67dceda2cd8276aa23e016074d55bedc8db85fd956816fd4a896`.
-- **Kiểm chứng TDD RED $\rightarrow$ GREEN trong C27:**
-  - [`test_paired_live_safe_budget.py`](../../../../../backend/tests/geometry/test_paired_live_safe_budget.py): **`17 / 17` PASS** (bao phủ đầy đủ 14 kịch bản bắt buộc §IV.5: preflight `\$5.00`, chặn vượt số dư, thiếu/khuyết `usageMetadata`, timeout, retry `429`/`5xx`, lỗi `400`/`429`/`500`, đặt chỗ đồng thời đa luồng không vượt trần, số học `Decimal` không lệch `float`, chống dùng lại approval `.consumed`, bất biến sổ cái C21/C26, mọi luật stop, chặn gọi provider khi approval thiếu trường, không fallback sang `LLM_ONLY`, chặn `REQUEST_CAP` trước khi gửi).
-  - [`test_independent_holdout_equivalence.py`](../../../../../backend/tests/geometry/test_independent_holdout_equivalence.py): **`7 / 7` PASS** (chính sách P1 Trường hợp A/B/C, phát hiện chép nguyên văn ví dụ handoff, phát hiện sao chép khung đề đổi tên đỉnh/số đo, từ chối `"ESTABLISHED"` không kèm bằng chứng tác giả & dẫn xuất oracle).
+  - `paired_harness_sha256` ([`run_paired_route_evaluation.py`](../../../../../backend/scripts/run_paired_route_evaluation.py)): `8af7ca1f27e7ca3fb4e58ba7e0e067bc17973d8254a086e6c39d896078cd2e1f`.
+  - `equivalence_scorer_sha256` ([`score_independent_holdout_equivalence.py`](../../../../../backend/scripts/score_independent_holdout_equivalence.py)): `7ada8a0616e9482b4984e92e86804bfc60deab540a505a10da65d8436ceba391`.
+- **Kiểm chứng TDD RED $\rightarrow$ GREEN trong C27–C28:**
+  - [`test_paired_live_safe_budget.py`](../../../../../backend/tests/geometry/test_paired_live_safe_budget.py): **`18 / 18` PASS** (14 kịch bản ngân sách `SafeCampaignBudget`, kiểm toán 6 bất biến hợp đồng `Scene3D`, phân loại `planner_composition`, `clarification_requested`, chấm ba tầng thời gian thực và ma trận bắt cặp $2 \times 2$).
+  - [`test_independent_holdout_equivalence.py`](../../../../../backend/tests/geometry/test_independent_holdout_equivalence.py): **`9 / 9` PASS** (chính sách P1 Trường hợp A/B/C, phát hiện chép nguyên văn ví dụ handoff & sao chép khung đề đổi tên đỉnh/số đo, kiểm tra 10 điều kiện tiếp nhận §IV gồm độ phủ `≥ 3` bài cho đủ `7` họ hình và `5` nhóm câu hỏi, nhất quán `semantic_annotations` hai chiều, mẫu khung sạch [`h1-corpus-template.json`](h1-corpus-template.json) và kết xuất bảng đối chiếu bắt cặp).
   - Hồi quy bộ công cụ hiện hữu: `test_paired_route_evaluation.py` (**`54 / 54` PASS**), `test_s2_student_language_pilot_runner.py` + `test_s2_student_language_pilot_harness.py` (**`109 / 109` PASS**).
 
 ---
@@ -78,10 +80,10 @@ Toàn bộ kiểm tra xác nhận mã sản phẩm không thay đổi kể từ 
 
 ---
 
-## 5. Hành Động Cụ Thể Duy Nhất Cần Từ Owner Để Thực Thi Ngay H-1 Paired Live (§XII)
+## 5. Hành Động Cụ Thể Duy Nhất Cần Từ Owner Để Thực Thi Ngay H-1 Paired Live (C28 §III & §XIII)
 
-1. **Bàn giao bộ đề độc lập `H-1` (60 đề):**
-   - Chuyển [`H1_AUTHORING_HANDOFF.md`](H1_AUTHORING_HANDOFF.md) và [`corpus-template.json`](../hybrid-master-backend-replacement/heldout-authoring/corpus-template.json) cho một tác giả con người độc lập để tạo `docs/evaluation/geometry/runs/hybrid-independent-h1/h1-independent-corpus.json` (`45 SERVE` + `5 OUT_OF_DOMAIN` + `5 CONTRADICTORY_DATA` + `5 MISSING_DATA`, không chép ví dụ repo, không chỉ đổi tên đỉnh/số đo, có kèm hồ sơ nguồn gốc tác giả và dẫn xuất oracle độc lập).
+1. **Bàn giao gói tài liệu sạch cho tác giả độc lập để tạo bộ đề `H-1` (60 đề):**
+   - Gửi trực tiếp **hai tệp tự chứa duy nhất** trong thư mục này cho tác giả con người độc lập: [`H1_AUTHORING_HANDOFF.md`](H1_AUTHORING_HANDOFF.md) và [`h1-corpus-template.json`](h1-corpus-template.json) để biên soạn `docs/evaluation/geometry/runs/hybrid-independent-h1/h1-independent-corpus.json` (`45 SERVE` phủ đủ `≥ 3` bài cho cả `7` họ hình và `5` nhóm câu hỏi + `5 OUT_OF_DOMAIN` + `5 CONTRADICTORY_DATA` + `5 MISSING_DATA`, đạt đủ 10 điều kiện nghiệm thu đầu vào ở `H1_AUTHORING_HANDOFF.md` §6).
 2. **Phê duyệt ngân sách an toàn `\$5.00` trong `paired-live-owner-approval.json`:**
    - Sau khi chạy lệnh niêm phong Bước 1 ở [`PAIRED_LIVE_BUDGET_PROPOSAL.md`](PAIRED_LIVE_BUDGET_PROPOSAL.md) §5 để lấy `corpus_sha256` và `oracle_sha256`, Owner tạo `docs/evaluation/geometry/runs/hybrid-independent-h1/paired-live-owner-approval.json` từ mẫu [`paired-live-owner-approval.template.json`](paired-live-owner-approval.template.json) với:
      - `paid_project_confirmed = true`,

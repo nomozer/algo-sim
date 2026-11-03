@@ -233,11 +233,14 @@ def test_h1_corpus_integrity_receipt_honest_pre_corpus_and_sealing_guards(tmp_pa
     subprocess.run(["git", "commit", "-m", "init"], cwd=fake_repo, check=True, capture_output=True)
 
     cases = []
+    families = ("pyramid", "prism", "cuboid", "cube", "sphere", "cylinder", "cone")
+    questions = ("section_measure", "distance", "angle", "volume", "area")
     for i in range(45):
         cases.append({
             "id": f"H1-S{i + 1:02d}",
             "problem_text": f"Cho tứ diện vuông OABC có OA = {i + 3}, OB = {i + 4}, OC = {i + 5} và câu dẫn bối cảnh riêng biệt thứ {'một ' * ((i % 4) + 1)}số {i + 100}. Tính thể tích khối tứ diện OABC.",
             "expect": "SERVE",
+            "stratum": {"family": families[i % len(families)], "question": questions[i % len(questions)]},
             "oracle": {"volume": [f"{(i + 3) * (i + 4) * (i + 5)}/6"]},
             "oracle_derivation": f"V = 1/6 * OA * OB * OC = 1/6 * {i + 3} * {i + 4} * {i + 5}.",
             "semantic_annotations": {"explicit_goals": ["volume"]},
@@ -328,3 +331,121 @@ def test_h1_corpus_integrity_receipt_honest_pre_corpus_and_sealing_guards(tmp_pa
     assert cloned["status"] == "CORPUS_NEEDS_REVIEW"
     assert cloned["sealing_checklist"]["6_evaluation_manifest_sealed"] is False
     assert "H1-S01" in cloned["contamination_scan"]["structural_template_clones"]
+
+
+def test_c28_stratum_semantic_annotations_oracle_review_and_template_completeness(tmp_path):
+    # 1. Self-contained handoff template inside hybrid-independent-h1/ must exist and declare all required C28 fields
+    tpl_path = REPO / "docs" / "evaluation" / "geometry" / "runs" / "hybrid-independent-h1" / "h1-corpus-template.json"
+    assert tpl_path.is_file(), "h1-corpus-template.json must exist in hybrid-independent-h1/"
+    tpl = json.loads(tpl_path.read_text(encoding="utf-8"))
+    assert tpl["schema"] == "hybrid-master-paired-heldout/2"
+    for top_key in ("author", "author_affiliation", "authoring_independence", "written_before_any_system_run", "independence_evidence"):
+        assert top_key in tpl
+    serve_tpl, refuse_tpl = tpl["cases"][0], tpl["cases"][1]
+    for k in ("id", "problem_text", "expect", "oracle", "oracle_derivation", "stratum", "semantic_annotations", "provenance"):
+        assert k in serve_tpl
+    for k in ("id", "problem_text", "expect", "refusal_class", "provenance"):
+        assert k in refuse_tpl
+
+    # 2. Verify C28 §IV checks 4 (7 families >=3 & 5 questions >=3), 6 (oracle review status), and 7 (P1 semantic annotations)
+    fake_repo = tmp_path / "repo2"
+    (fake_repo / "docs" / "evaluation" / "semantic-benchmark").mkdir(parents=True)
+    cand_src = REPO / "docs" / "evaluation" / "semantic-benchmark" / "EVALUATION_CANDIDATE.json"
+    (fake_repo / "docs" / "evaluation" / "semantic-benchmark" / "EVALUATION_CANDIDATE.json").write_bytes(cand_src.read_bytes())
+    import subprocess
+    subprocess.run(["git", "init"], cwd=fake_repo, check=True, capture_output=True)
+    subprocess.run(["git", "config", "user.email", "test@example.com"], cwd=fake_repo, check=True)
+    subprocess.run(["git", "config", "user.name", "Test"], cwd=fake_repo, check=True)
+    (fake_repo / "README.md").write_text("clean\n", encoding="utf-8")
+    subprocess.run(["git", "add", "README.md"], cwd=fake_repo, check=True)
+    subprocess.run(["git", "commit", "-m", "init"], cwd=fake_repo, check=True, capture_output=True)
+
+    families = ("pyramid", "prism", "cuboid", "cube", "sphere", "cylinder", "cone")
+    questions = ("section_measure", "distance", "angle", "volume", "area")
+    valid_cases = []
+    for i in range(45):
+        valid_cases.append({
+            "id": f"H1-S{i + 1:02d}",
+            "problem_text": f"Cho khối đa diện thử nghiệm riêng biệt số {i + 200} với nhánh từ ngữ {'bổ trợ ' * ((i % 4) + 1)}và cạnh gốc {i + 5}. Tính thể tích khối đó.",
+            "expect": "SERVE",
+            "stratum": {"family": families[i % len(families)], "question": questions[i % len(questions)]},
+            "oracle": {"volume": [f"{i + 5}"]},
+            "oracle_derivation": f"Theo công thức thể tích chuẩn: V = {i + 5}.",
+            "semantic_annotations": {"explicit_goals": ["volume"]},
+            "provenance": "Biên soạn độc lập ngày 2026-11-03.",
+        })
+    for idx, rclass in enumerate(("OUT_OF_DOMAIN",) * 5 + ("CONTRADICTORY_DATA",) * 5 + ("MISSING_DATA",) * 5):
+        valid_cases.append({
+            "id": f"H1-R{idx + 1:02d}",
+            "problem_text": f"Đề kiểm tra từ chối an toàn độc lập số {idx + 300} lớp {rclass}.",
+            "expect": "REFUSE",
+            "refusal_class": rclass,
+            "provenance": "Biên soạn độc lập ngày 2026-11-03.",
+        })
+
+    base_doc = {
+        "schema": "hybrid-master-paired-heldout/2",
+        "author": "Giáo viên Toán Độc Lập B",
+        "author_affiliation": "THPT Độc Lập",
+        "authoring_independence": "ESTABLISHED",
+        "written_before_any_system_run": True,
+        "independence_evidence": "Biên soạn mới hoàn toàn ngày 2026-11-03, giải độc lập bằng tay và SymPy.",
+    }
+    cpath = fake_repo / "h1.json"
+
+    # 2a. Missing `cone` family (< 3 cases) blocks stratification sealing
+    skewed_cases = [dict(c, stratum={"family": "pyramid", "question": "volume"}) if c["expect"] == "SERVE" else dict(c)
+                    for c in valid_cases]
+    cpath.write_text(json.dumps({**base_doc, "cases": skewed_cases}, ensure_ascii=False), encoding="utf-8")
+    skewed_res = S.build_h1_corpus_integrity_receipt(cpath, repo_root=fake_repo)
+    assert skewed_res["sealing_checklist"]["3_count_and_stratification_45_5_5_5_verified"] is False
+    assert skewed_res["status"] == "CORPUS_NEEDS_REVIEW"
+    assert "INSUFFICIENT_STRATUM_COVERAGE" in skewed_res["blocking_conditions"]
+
+    # 2b. P1 semantic_annotations mismatch (area-only text claiming construct_plane_section) blocks sealing
+    bad_sem_cases = [dict(c) for c in valid_cases]
+    bad_sem_cases[0] = {
+        **bad_sem_cases[0],
+        "problem_text": "Cho khối chóp riêng biệt số 991 có cạnh đáy 4 và chiều cao 6. Tính diện tích thiết diện của khối chóp cắt bởi mặt phẳng (P).",
+        "oracle": {"area": ["8"]},
+        "semantic_annotations": {"explicit_goals": ["construct_plane_section", "area"]},
+    }
+    cpath.write_text(json.dumps({**base_doc, "cases": bad_sem_cases}, ensure_ascii=False), encoding="utf-8")
+    bad_sem_res = S.build_h1_corpus_integrity_receipt(cpath, repo_root=fake_repo)
+    assert bad_sem_res["status"] == "CORPUS_NEEDS_REVIEW"
+    assert "INVALID_SEMANTIC_ANNOTATIONS" in bad_sem_res["blocking_conditions"]
+
+    # 2c. Valid corpus records oracle_verification with honest expert review status
+    cpath.write_text(json.dumps({**base_doc, "cases": valid_cases}, ensure_ascii=False), encoding="utf-8")
+    ok_res = S.build_h1_corpus_integrity_receipt(cpath, repo_root=fake_repo)
+    assert ok_res["status"] == "CORPUS_SEALED_AWAITING_BUDGET"
+    assert ok_res["stratum_coverage"]["valid"] is True
+    assert ok_res["oracle_verification"]["exact_syntax_verified"] is True
+    assert ok_res["oracle_verification"]["expert_mathematical_review_status"] == "PENDING_HUMAN_EXPERT_VERIFICATION"
+
+
+def test_c28_paired_comparison_markdown_table():
+    corpus = {
+        "cases": [
+            {"id": "H1-S01", "expect": "SERVE", "oracle": {"volume": ["12"]}},
+            {"id": "H1-R01", "expect": "REFUSE", "refusal_class": "CONTRADICTORY_DATA"},
+        ]
+    }
+    rows = [
+        {"type": "row", "case_id": "H1-S01", "arm": "LLM_ONLY", "expect": "SERVE", "served": False,
+         "served_correct": False, "wrong_served": False, "false_refusal": True, "refusal_class": "UNSPECIFIC",
+         "served_quantities": {}, "technical_failure": False},
+        {"type": "row", "case_id": "H1-S01", "arm": "HYBRID", "expect": "SERVE", "served": True,
+         "served_correct": True, "wrong_served": False, "false_refusal": False, "refusal_class": None,
+         "served_quantities": {"volume": ["12"]}, "technical_failure": False},
+        {"type": "row", "case_id": "H1-R01", "arm": "LLM_ONLY", "expect": "REFUSE", "served": False,
+         "served_correct": False, "wrong_served": False, "false_refusal": False, "refusal_reason_correct": False,
+         "refusal_class": "UNSPECIFIC", "served_quantities": {}, "technical_failure": False},
+        {"type": "row", "case_id": "H1-R01", "arm": "HYBRID", "expect": "REFUSE", "served": False,
+         "served_correct": False, "wrong_served": False, "false_refusal": False, "refusal_reason_correct": True,
+         "refusal_class": "CONTRADICTORY_DATA", "served_quantities": {}, "technical_failure": False},
+    ]
+    md = S.render_paired_comparison_table(corpus, rows)
+    assert "| Case | H-1 Oracle | LLM_ONLY | HYBRID | Comparison |" in md
+    assert "| `H1-S01` |" in md and "HYBRID_ONLY_CORRECT" in md
+    assert "| `H1-R01` |" in md and "BOTH_REFUSED" in md

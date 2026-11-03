@@ -211,6 +211,18 @@ MODEL_REQUEST_COUNT = 0
 CORRECTS = NONE
 CORRECTED_BY = NONE
 
+## CONTINUATION_ID = HYBRID_MASTER_C28_H1_INTAKE_GATE_AND_EXTERNAL_AUTHOR_HANDOFF
+
+REPORT = docs/evaluation/geometry/runs/hybrid-independent-h1/HYBRID_CUTOVER_DECISION.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-independent-h1/
+CLASSIFICATION = BLOCKED_EXTERNAL_AUTHOR + H1_INTAKE_AND_SCENE3D_BOUNDARY_HARDENING (0 live provider calls; product unchanged at d331e75b, frozen candidate 180db769, 118 files 276fc548… MATCH, DEFAULT_MODE = LLM_ONLY, HYBRID_ROUTE_MODE = off, CACHE_VERSION = 131, frontend/** untouched; C27 publication safety verified main..HEAD scanned=1342 messages=194 violations=0 PASS) — completes self-contained clean authoring package (H1_AUTHORING_HANDOFF.md + h1-corpus-template.json), 10-gate H-1 intake verification in score_independent_holdout_equivalence.py (7ada8a06; 7 solid families and 5 question groups >= 3 SERVE cases each, bidirectional P1 semantic_annotations validation, oracle derivation verification status, paired comparison table renderer; 9/9 pytest PASS), and Scene3D contract boundary + planner composition + clarification + 2x2 paired matrix audit in run_paired_route_evaluation.py (8af7ca1f; 18/18 + 54/54 pytest PASS); EXECUTION_GATE_STATUS = BLOCKED_EXTERNAL_AUTHOR; H1_AUTHORING_INDEPENDENCE = NOT_ESTABLISHED; H1_MEASUREMENT = NOT_MEASURED; PAIRED_LIVE_EVALUATION_COMPLETE = NO; PEDAGOGICAL_HUMAN_VALIDATION = NOT_EVALUATED; HYBRID_CUTOVER_BLOCKED; LEGACY_REMOVAL_BLOCKED
+VERIFICATION = HYBRID_CUTOVER_DECISION.md; H1_AUTHORING_HANDOFF.md; h1-corpus-template.json; H1_PREREGISTRATION.md; H1_CORPUS_INTEGRITY.json; PAIRED_LIVE_BUDGET_PROPOSAL.md; publication-safety-receipt.json; paired-live-owner-approval.template.json; c26-three-tier-verification.json; run.json; README.md
+CODE_COMMIT = d331e75b5bbf15722eca77c54e398173eefec98d (product unchanged; evaluation scripts/tests/docs only)
+CANDIDATE_COMMIT = 180db769
+MODEL_REQUEST_COUNT = 0
+CORRECTS = NONE
+CORRECTED_BY = NONE
+
 ## WAVE_ID = ALGOSIM_W4_END_TO_END_GEOMETRY_AND_PEDAGOGICAL_SIMULATION
 
 REPORT = docs/evaluation/geometry/runs/geometry-generalization-and-pedagogical-construction/report.md

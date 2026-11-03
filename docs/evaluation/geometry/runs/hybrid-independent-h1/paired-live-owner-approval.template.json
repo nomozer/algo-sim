@@ -20,7 +20,7 @@
   "authoring_independence": "NOT_ESTABLISHED",
   "evaluator_independence": "NOT_ESTABLISHED",
   "measured_system": "276fc548196e13eaa0ca7635428248dcaee7be79b79dff58c24a0478cddd4c63",
-  "harness_sha256": "4ba15bc19964f7d72b5072e81ffca39b0863b12e141e7e8de03ccf1d18c9f0bf",
-  "equivalence_scorer_sha256": "49bd9343b1af67dceda2cd8276aa23e016074d55bedc8db85fd956816fd4a896",
+  "harness_sha256": "8af7ca1f27e7ca3fb4e58ba7e0e067bc17973d8254a086e6c39d896078cd2e1f",
+  "equivalence_scorer_sha256": "7ada8a0616e9482b4984e92e86804bfc60deab540a505a10da65d8436ceba391",
   "semantic_equivalence_policy": "h1-section-determination-equivalence/1"
 }

@@ -40,6 +40,10 @@ from score_s2_student_language_pilot import _rate_or_unknown  # noqa: E402
 
 SEMANTIC_EQUIVALENCE_POLICY = "h1-section-determination-equivalence/1"
 INTEGRITY_SCHEMA = "h1-corpus-integrity/1"
+REGISTERED_FAMILIES = ("pyramid", "prism", "cuboid", "cube", "sphere", "cylinder", "cone")
+REGISTERED_QUESTIONS = ("section_measure", "distance", "angle", "volume", "area")
+MIN_CASES_PER_STRATUM = 3
+ALLOWED_EXPLICIT_GOALS = frozenset(P.KINDS.values()) | {"angle", "construct_plane_section"}
 
 #: Explicit Vietnamese imperative clauses requesting section determination/construction in the source text.
 #: Matches e.g. "Xác định thiết diện...", "Tìm thiết diện...", "Dựng thiết diện...", "Vẽ thiết diện...".
@@ -454,6 +458,131 @@ def _verify_authoring_independence(corpus: dict[str, Any]) -> tuple[str, list[st
     return ("ESTABLISHED" if not missing else "NOT_ESTABLISHED"), missing
 
 
+def _verify_stratum_coverage(cases: list[dict[str, Any]]) -> dict[str, Any]:
+    """Verify C28 §IV.4: every registered solid family (7) and question type (5) has >= 3 SERVE cases."""
+    fam_counts = {f: 0 for f in REGISTERED_FAMILIES}
+    q_counts = {q: 0 for q in REGISTERED_QUESTIONS}
+    deficits: list[str] = []
+    for c in cases:
+        if c.get("expect") != "SERVE":
+            continue
+        st = c.get("stratum")
+        fam = st.get("family") if isinstance(st, dict) else None
+        q = st.get("question") if isinstance(st, dict) else None
+        if fam in fam_counts:
+            fam_counts[fam] += 1
+        else:
+            deficits.append(f"{c.get('id')}:unknown_or_missing_family:{fam!r}")
+        if q in q_counts:
+            q_counts[q] += 1
+        else:
+            deficits.append(f"{c.get('id')}:unknown_or_missing_question:{q!r}")
+    for fam, n in fam_counts.items():
+        if n < MIN_CASES_PER_STRATUM:
+            deficits.append(f"family:{fam}:{n}<{MIN_CASES_PER_STRATUM}")
+    for q, n in q_counts.items():
+        if n < MIN_CASES_PER_STRATUM:
+            deficits.append(f"question:{q}:{n}<{MIN_CASES_PER_STRATUM}")
+    return {"valid": not deficits, "families": fam_counts, "questions": q_counts, "deficits": deficits}
+
+
+def _verify_semantic_annotations(cases: list[dict[str, Any]]) -> dict[str, Any]:
+    """Verify C28 §IV.7 & §V (P1): `semantic_annotations.explicit_goals` uses closed goal kinds, covers every oracle key,
+    and includes `construct_plane_section` iff `problem_text` contains an explicit section-determination clause."""
+    issues: list[str] = []
+    for c in cases:
+        if c.get("expect") != "SERVE":
+            continue
+        cid = c.get("id", "?")
+        sem = c.get("semantic_annotations")
+        goals = sem.get("explicit_goals") if isinstance(sem, dict) else None
+        if not isinstance(goals, list) or not goals or not all(isinstance(g, str) and g in ALLOWED_EXPLICIT_GOALS for g in goals):
+            issues.append(f"{cid}:invalid_or_unknown_explicit_goals")
+            continue
+        goal_set = set(goals)
+        for ok_key in (c.get("oracle") or {}):
+            accepted = {ok_key, "angle"} if ok_key in ("angle_cos_sq", "angle_cos") else {ok_key}
+            if not (goal_set & accepted):
+                issues.append(f"{cid}:oracle_kind_missing_from_explicit_goals:{ok_key}")
+        wants_sec = has_explicit_section_determination_request(c.get("problem_text", ""))
+        has_sec = "construct_plane_section" in goal_set
+        if wants_sec != has_sec:
+            issues.append(f"{cid}:p1_section_goal_mismatch(text_explicit={wants_sec},annotated={has_sec})")
+    return {"valid": not issues, "issues": issues}
+
+
+def _assess_oracle_verification(corpus: dict[str, Any]) -> dict[str, Any]:
+    """Verify C28 §IV.5–6: exact syntax is machine-verified; independent mathematical truth requires explicit human/expert
+    review status rather than assuming prose derivations are error-free."""
+    weak_derivations: list[str] = []
+    for c in corpus.get("cases") or ():
+        if c.get("expect") != "SERVE":
+            continue
+        deriv = str(c.get("oracle_derivation") or "")
+        if not re.search(r"[0-9=+\-*/√π^]", deriv):
+            weak_derivations.append(str(c.get("id", "?")))
+    expert_verified = (
+        corpus.get("expert_oracle_review") == "VERIFIED_BY_HUMAN_EXPERT"
+        and _is_non_placeholder_text(corpus.get("expert_reviewer"), min_len=3)
+    )
+    return {
+        "exact_syntax_verified": True,
+        "derivations_have_symbolic_steps": not weak_derivations,
+        "weak_derivation_cases": weak_derivations,
+        "expert_mathematical_review_status": (
+            "VERIFIED_BY_HUMAN_EXPERT" if expert_verified else "PENDING_HUMAN_EXPERT_VERIFICATION"
+        ),
+    }
+
+
+def render_paired_comparison_table(corpus: dict[str, Any], rows: list[dict[str, Any]]) -> str:
+    """Render the C28 §VIII per-case paired comparison table (`| Case | H-1 Oracle | LLM_ONLY | HYBRID | Comparison |`)."""
+    by = {(r["case_id"], r["arm"]): r for r in rows if r.get("type") == "row"}
+    lines = [
+        "| Case | H-1 Oracle | LLM_ONLY | HYBRID | Comparison |",
+        "|---|---|---|---|---|",
+    ]
+    for c in corpus.get("cases") or ():
+        cid = c["id"]
+        oracle_desc = (
+            ", ".join(f"{k}={v}" for k, v in sorted((c.get("oracle") or {}).items()))
+            if c.get("expect") == "SERVE"
+            else f"REFUSE:{c.get('refusal_class')}"
+        )
+        l_row, h_row = by.get((cid, "LLM_ONLY")), by.get((cid, "HYBRID"))
+
+        def _fmt(r: dict[str, Any] | None) -> str:
+            if r is None:
+                return "UNMEASURED"
+            if r.get("technical_failure"):
+                return "TECH_FAILURE"
+            if r.get("served"):
+                tag = "SERVED_OK" if r.get("served_correct") else "WRONG_SERVED"
+                return f"{tag} ({r.get('served_quantities')})"
+            return f"REFUSED:{r.get('refusal_class') or 'UNSPECIFIC'}"
+
+        if l_row is None or h_row is None:
+            comp = "INCOMPLETE_PAIR"
+        elif c.get("expect") == "SERVE":
+            lc, hc = bool(l_row.get("served_correct")), bool(h_row.get("served_correct"))
+            comp = (
+                "BOTH_CORRECT" if (lc and hc)
+                else "HYBRID_ONLY_CORRECT" if hc
+                else "LLM_ONLY_CORRECT" if lc
+                else "BOTH_INCORRECT"
+            )
+        else:
+            ls, hs = bool(l_row.get("served")), bool(h_row.get("served"))
+            comp = (
+                "BOTH_REFUSED" if (not ls and not hs)
+                else "HYBRID_WRONG_SERVED_NEGATIVE" if (hs and not ls)
+                else "LLM_ONLY_WRONG_SERVED_NEGATIVE" if (ls and not hs)
+                else "BOTH_WRONG_SERVED_NEGATIVE"
+            )
+        lines.append(f"| `{cid}` | `{oracle_desc}` | {_fmt(l_row)} | {_fmt(h_row)} | `{comp}` |")
+    return "\n".join(lines) + "\n"
+
+
 def _candidate_summary(repo_root: Path) -> dict[str, Any]:
     cand_path = repo_root / "docs" / "evaluation" / "semantic-benchmark" / "EVALUATION_CANDIDATE.json"
     cand = json.loads(cand_path.read_text(encoding="utf-8"))
@@ -570,6 +699,9 @@ def build_h1_corpus_integrity_receipt(
 
     template_clones = _scan_structural_template_clones(cases, repo_root, exclude=corpus_path)
     indep, missing_indep = _verify_authoring_independence(corpus)
+    stratum_cov = _verify_stratum_coverage(cases)
+    sem_check = _verify_semantic_annotations(cases)
+    oracle_ver = _assess_oracle_verification(corpus)
     author = str(corpus.get("author") or "").strip()
     c_sha = P.sha256_file(corpus_path)
     o_sha = compute_oracle_sha256(cases)
@@ -582,13 +714,20 @@ def build_h1_corpus_integrity_receipt(
             "llm_only_output_reservation_tokens": P.MODEL_OUTPUT_LIMIT,
         },
     )
-    clean_seal = indep == "ESTABLISHED" and not near_hits and not template_clones
+    clean_seal = (
+        indep == "ESTABLISHED"
+        and stratum_cov["valid"]
+        and sem_check["valid"]
+        and oracle_ver["derivations_have_symbolic_steps"]
+        and not near_hits
+        and not template_clones
+    )
 
     sealing_steps.update({
         "1_format_validated": True,
         "2_duplication_and_contamination_checked": True,
-        "3_count_and_stratification_45_5_5_5_verified": True,
-        "4_independent_oracle_parsed_exact": True,
+        "3_count_and_stratification_45_5_5_5_verified": exact_comp and stratum_cov["valid"],
+        "4_independent_oracle_parsed_exact": oracle_ver["exact_syntax_verified"] and oracle_ver["derivations_have_symbolic_steps"],
         "5_corpus_and_oracle_sha256_recorded": True,
         "6_evaluation_manifest_sealed": clean_seal,
     })
@@ -614,6 +753,9 @@ def build_h1_corpus_integrity_receipt(
             "MISSING_DATA": 5,
         },
         "composition_observed": {"total": len(cases), "SERVE": serve_n, **ref_counts},
+        "stratum_coverage": stratum_cov,
+        "semantic_annotations_validation": sem_check,
+        "oracle_verification": oracle_ver,
         "contamination_scan": {
             "exact_overlap_cases": exact_hits,
             "near_overlap_cases": near_hits,
@@ -632,6 +774,9 @@ def build_h1_corpus_integrity_receipt(
         "sealing_checklist": sealing_steps,
         "blocking_conditions": (
             (["AUTHORING_INDEPENDENCE_NOT_ESTABLISHED"] if indep != "ESTABLISHED" else [])
+            + (["INSUFFICIENT_STRATUM_COVERAGE"] if not stratum_cov["valid"] else [])
+            + (["INVALID_SEMANTIC_ANNOTATIONS"] if not sem_check["valid"] else [])
+            + (["WEAK_ORACLE_DERIVATION_REQUIRES_AUTHOR_REVISION"] if not oracle_ver["derivations_have_symbolic_steps"] else [])
             + (["NEAR_OVERLAP_REQUIRES_MANUAL_REVIEW"] if near_hits else [])
             + (["STRUCTURAL_TEMPLATE_CLONE_REQUIRES_REWRITE"] if template_clones else [])
             + ["PAIRED_LIVE_CAMPAIGN_BUDGET_NOT_APPROVED_BY_OWNER"]
@@ -665,7 +810,21 @@ def main(argv: list[str] | None = None) -> int:
     p_score.add_argument("jsonl", type=Path, nargs="+")
     p_score.add_argument("--out", type=Path, default=None)
 
+    p_table = sub.add_parser("paired-table", help="Render C28 60-case paired comparison Markdown table")
+    p_table.add_argument("--corpus", type=Path, required=True)
+    p_table.add_argument("--rows", type=Path, required=True)
+    p_table.add_argument("--out", type=Path, default=None)
+
     args = ap.parse_args(argv)
+    if args.cmd == "paired-table":
+        corpus_doc = json.loads(args.corpus.read_text(encoding="utf-8"))
+        md = render_paired_comparison_table(corpus_doc, _load_jsonl_rows([args.rows]))
+        if args.out is not None:
+            args.out.parent.mkdir(parents=True, exist_ok=True)
+            args.out.write_text(md, encoding="utf-8", newline="\n")
+        else:
+            print(md, end="")
+        return 0
     if args.cmd == "integrity":
         res = build_h1_corpus_integrity_receipt(args.corpus)
     else:
