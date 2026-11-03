@@ -1,6 +1,6 @@
 {
  "schema": "legacy-dependency-inventory/1",
- "head": "d5c4098b36bedb0ddad7a4fd44759554d0e36c81",
+ "head": "79bbc0531df89d3757ae16a6d8c5c0388fdac84b",
  "product_uncommitted": false,
  "method": "static AST import graph incl. function-level imports; over-approximates load closures",
  "roots": {
@@ -627,7 +627,7 @@
     "app.simulation.semantic_program.simulation_state",
     "app.simulation.semantic_program.transport"
    ],
-   "lines": 571
+   "lines": 575
   },
   {
    "module": "app.simulation.geometry.section",
@@ -780,7 +780,7 @@
     "app.ai.hybrid_preview",
     "app.simulation.geometry_functions"
    ],
-   "lines": 4503
+   "lines": 4504
   },
   {
    "module": "app.simulation.geometry_functions.planner",
@@ -822,7 +822,7 @@
     "app.simulation.geometry_functions.typed_fact_next",
     "app.simulation.geometry_functions.typed_fact_next_bridge"
    ],
-   "lines": 6721
+   "lines": 6722
   },
   {
    "module": "app.simulation.geometry_functions.typed_fact_next",

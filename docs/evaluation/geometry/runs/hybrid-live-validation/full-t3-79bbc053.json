@@ -1,0 +1,83 @@
+{
+  "schema": "hybrid-live-validation/full-t3/1",
+  "verdict": "FULL_PRODUCT_GATE_PASS",
+  "attempt": 2,
+  "attempt_1": {
+    "head": "d5c4098b",
+    "product_commit": "55db50c3582c4f67375ef316ed81741083d827ef",
+    "measured_system": {
+      "tree_hash": "f4ed426ae45f2d1db5c50a2be30df10a0f980bb1b6e49d8dc0f6a0b7506c9d2b",
+      "files": 118
+    },
+    "verdict": "FULL_PRODUCT_GATE_FAIL",
+    "exit_code": 1,
+    "pytest": {
+      "passed": 16669,
+      "failed": 1,
+      "failure": "tests/geometry/test_thesis_acceptance_matrix.py::test_C2b_candidate_hien_tai_phai_duoc_KHAI (KeyError: 'so_lieu_lượt_đo_cuối' — hybrid-live-validation/candidate_divergence.json used ASCII key 'so_lieu_luot_do_cuoi'; fixed in commit 10ea9acd)"
+    },
+    "vitest": {
+      "files": 85,
+      "passed": 1502
+    },
+    "build": "PASS",
+    "demo_replay": "PASS (5/5)",
+    "demo_crash_surface": "PASS (6/6, 0 thrown as 500)",
+    "worktree_cleanup": ".superpowers/worktrees/hm-t3-d5c4098b removed cleanly after non-recursive Junction delete",
+    "log": "outside the worktree (.superpowers/worktrees/t3-d5c4098b.log), NOT_COMMITTED",
+    "log_sha256_local": "b0f2023572e09532381c7a0ebd7004ba180c15dd3eafc2ffe2f6ef5589d9bc6b",
+    "provider_calls": 0
+  },
+  "exit_code": 0,
+  "command": "cd frontend && ALGO_SIM_PYTHON=D:\\Documents\\projects\\algo-sim\\backend\\.venv\\Scripts\\python.exe ALLOW_LIVE_AI=0 cmd /c \"node scripts/full-gate.mjs > t3-79bbc053.log 2>&1\"",
+  "invocation_note": "An initial PowerShell '*>' anonymous-pipe redirection on hm-t3-79bbc053 stalled at 7% inside tests/geometry/test_completion_runner_repair.py due to Windows pipe handle inheritance; cancelled cleanly, verified git status empty and freeze_evaluation_candidate.py --verify MATCH, and re-run with cmd.exe native disk-file redirection ('> ... 2>&1') to completion.",
+  "worktree": ".superpowers/worktrees/hm-t3-79bbc053 (fresh, detached at 79bbc053; pre-run and post-run freeze_evaluation_candidate.py --verify MATCH; git status clean before and after the run; frontend/node_modules verified as Junction and removed non-recursively; root frontend/node_modules verified intact; git worktree remove --force succeeded and the directory is gone)",
+  "head": "79bbc0531df89d3757ae16a6d8c5c0388fdac84b",
+  "candidate": "79bbc0531df89d3757ae16a6d8c5c0388fdac84b",
+  "product_commit": "57457fc4c59094c5e57dd934bffd73533d82b81e",
+  "measured_system": {
+    "tree_hash": "6202a6a67b555a0d18b59c0edbea7c396b8fe6f1488fb1984f4e7663be1e1421",
+    "files": 118
+  },
+  "cache_version": "131",
+  "default_mode": "LLM_ONLY",
+  "hybrid_route_mode_default": "off",
+  "registry_version": "geometry-functions/32",
+  "planner_version": "geometry-fact-planner/26",
+  "engine_version": "geometry-function-engine/24",
+  "adapter_version": "hybrid-simulation-adapter/4",
+  "pytest": {
+    "passed": 16673,
+    "failed": 0,
+    "skipped": 7,
+    "deselected": 2,
+    "xfailed": 15,
+    "warnings": 1,
+    "pytest_seconds": 600.07,
+    "gate_wall_seconds": 604.5
+  },
+  "vitest": {
+    "files": 85,
+    "passed": 1502,
+    "failed": 0,
+    "gate_wall_seconds": 14.3
+  },
+  "build": {
+    "status": "PASS",
+    "gate_wall_seconds": 10.4
+  },
+  "demo_replay": {
+    "status": "PASS (5/5)",
+    "gate_wall_seconds": 0.6
+  },
+  "demo_crash_surface": {
+    "status": "PASS (6/6, 0 thrown as 500)",
+    "gate_wall_seconds": 0.5
+  },
+  "total_wall_seconds": 630.2,
+  "T0_T2": "COVERED_BY_T3",
+  "node_harness": "NOT_RUN_BY_T3 (frontend/** untouched by this run)",
+  "log": "outside the worktree (.superpowers/worktrees/t3-79bbc053.log), NOT_COMMITTED",
+  "log_sha256_local": "79af887e3f7b1bb51e3deaa71eec8ed02a8e0134a134c4171be9c3250eb162f3",
+  "provider_calls": 0
+}

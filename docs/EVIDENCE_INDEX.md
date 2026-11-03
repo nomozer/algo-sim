@@ -161,6 +161,18 @@ CODE_COMMIT = adf4a1139f389133fe855845b5f149a3691a36d1
 CANDIDATE_COMMIT = fba8b7a7
 MODEL_REQUEST_COUNT = 0
 CORRECTS = HYBRID_MASTER_C22_REAL_PRODUCT_INTEGRATION (candidate identity and template blobs; hybrid-master-product-integration/candidate_divergence.json corrected by pedagogical-simulation-integration/candidate_divergence.json)
+CORRECTED_BY = HYBRID_MASTER_C24_LIVE_VALIDATION_AND_BACKEND_REPAIR (candidate identity and template measured_system only: product 57457fc4 / candidate 79bbc053 / measured_system 6202a6a6; divergence layer hybrid-live-validation/candidate_divergence.json; the C23 receipts are unchanged and not rescored)
+
+## CONTINUATION_ID = HYBRID_MASTER_C24_LIVE_VALIDATION_AND_BACKEND_REPAIR
+
+REPORT = docs/evaluation/geometry/runs/hybrid-live-validation/HYBRID_BACKEND_VALIDATION_AND_CUTOVER_REPORT.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-live-validation/
+CLASSIFICATION = LIVE_PREFLIGHT_BLOCKED (PAID_PROJECT_NOT_VERIFIED; 0 live provider requests; LIVE_GEMINI_MEASURED = NO) + POST_FEEDBACK_DEVELOPMENT_REGRESSION (gold TypedFactNext replay; Wave 3 is development-contaminated, not held-out) - BACKEND_HYBRID_OFFLINE_VERIFIED; PLANNER_COMPOSITION_VERIFIED as registered decomposition; GENUINE_DISCOVERY_NOT_ESTABLISHED; HYBRID_CUTOVER_BLOCKED; LEGACY_REMOVAL_BLOCKED - Source Gate wording repairs + stated-cut coverage certificate + exact-radical input bound (registry /32, engine /24); Wave 3 67 -> 72/72 served correct, 72/72 refused (62 -> 65 exact reason), 0 wrong-served; locked 96/96; probes 203 clean; C18 composition 480/480 + 24/24; static legacy dependency inventory (13 LEGACY_ONLY, 6 HYBRID_REQUIRED, 74 SHARED_COMPONENT, 3 UNCERTAIN_DEPENDENCY); candidate 79bbc053 (product 57457fc4, 118 files 6202a6a6); Full T3 attempt 1 at d5c4098b FAIL (1 divergence-layer key), attempt 2 at 79bbc053 FULL_PRODUCT_GATE_PASS (16673 pytest, 1502 vitest)
+VERIFICATION = HYBRID_BACKEND_VALIDATION_AND_CUTOVER_REPORT.md; live-preflight.json; gold-replay-regression.json; wave3-gold-replay.json; planner-composition-c18-probe.json; measurement-probe.json; legacy-dependency-inventory.json; tools/legacy_dependency_inventory.py; full-t3-79bbc053.json; independent-review.md; candidate_divergence.json; frozen-evaluation-candidate.json; ../hybrid-master-backend-replacement/k1-owner-approval.template.json; s2-owner-approval.template.json; r1-owner-approval.template.json
+CODE_COMMIT = 57457fc4c59094c5e57dd934bffd73533d82b81e
+CANDIDATE_COMMIT = 79bbc053
+MODEL_REQUEST_COUNT = 0
+CORRECTS = HYBRID_MASTER_C23_PEDAGOGICAL_SIMULATION_INTEGRATION (candidate identity and template measured_system only; pedagogical-simulation-integration/candidate_divergence.json corrected by hybrid-live-validation/candidate_divergence.json)
 CORRECTED_BY = NONE
 ## WAVE_ID = ALGOSIM_W4_END_TO_END_GEOMETRY_AND_PEDAGOGICAL_SIMULATION
 

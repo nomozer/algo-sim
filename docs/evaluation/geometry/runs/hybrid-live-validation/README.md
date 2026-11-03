@@ -8,11 +8,14 @@ Live Gemini validation, failure-driven backend repair and LLM_ONLY replacement r
   before any request: 0 HTTP requests, USD 0.00. No `LIVE_GEMINI_EVALUATION_REPORT.md` exists because nothing was
   measured live.
 - `candidate_divergence.json` - corrects `../pedagogical-simulation-integration/candidate_divergence.json`; candidate
-  product `55db50c3`, 118 files, `f4ed426a…` (`frozen-evaluation-candidate.json`). The `fba8b7a7` candidate and every
+  product `57457fc4`, 118 files, `6202a6a6…` (`frozen-evaluation-candidate.json`; first freeze `d5c4098b` at `55db50c3` / `f4ed426a…` superseded after review round 1). The `fba8b7a7` candidate and every
   earlier receipt stay byte-for-byte.
 - `gold-replay-regression.json` + `wave3-gold-replay.json` - Wave 3 (144) / locked development (96) / reviewer probes
   (203) replayed on gold TypedFactNext payloads at the candidate (offline, 0 provider calls).
-- `planner-composition-*.json` - C11/C18 composition probes re-run at the candidate.
+- `planner-composition-c18-probe.json` + `measurement-probe.json` - C18 composition probe and the S.ABCD measurement probe
+  re-run at the candidate (the C11 matrix tool aborts on its own pre-C16 expectation, also at `adf4a113`).
 - `legacy-dependency-inventory.json` (`tools/legacy_dependency_inventory.py`) - static import inventory of the LLM_ONLY
   and Hybrid closures.
-- `full-t3-*.json` - Full T3 at the frozen candidate on a clean detached worktree.
+- `full-t3-79bbc053.json` - Full T3 at the frozen candidate on a clean detached worktree (attempt 1 at `d5c4098b` failed on
+  one divergence-layer key; recorded in the same receipt).
+- `independent-review.md` - fresh-context adversarial review rounds.

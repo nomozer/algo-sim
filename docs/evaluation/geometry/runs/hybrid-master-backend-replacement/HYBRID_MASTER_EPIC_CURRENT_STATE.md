@@ -991,3 +991,13 @@ Run `../pedagogical-simulation-integration/`; report `ALGOSIM_PEDAGOGICAL_SIMULA
 - **Verification:** E2E 7/7 (37 student-mode checks, positive control 43/44); Full T3 PASS at `dbc0316c` (16,652 / 1,502).
 - **Open:** step list shows the whole construction plan on one click (Owner product decision); live `K-1`/`S-2`/`R-1`/`H-1`
   `NOT_MEASURED`; Owner cutover/merge/push GO required.
+
+## Twenty-fourth continuation (Live Gemini validation, failure-driven backend repair & cutover readiness), 2026-11-03: `BACKEND_HYBRID_OFFLINE_VERIFIED` · `LIVE_GEMINI_MEASURED = NO` (`PAID_PROJECT_NOT_VERIFIED`) · `HYBRID_CUTOVER_BLOCKED`
+
+Run `../hybrid-live-validation/`; report `HYBRID_BACKEND_VALIDATION_AND_CUTOVER_REPORT.md`. `0` live Gemini calls (USD 0.00).
+
+- **Live:** one preflight with the runner's own `verify_paid_project`: API key present, no project id / billing token / Owner attestation ⇒ `BLOCKED_PREFLIGHT` before request 1 (`live-preflight.json`). Unblock: Cloud Billing API (project id + OAuth) or an Owner-written `owner-paid-project-attestation/1`; then `--delegated-c21` runs K-1 → S-2 → R-1 on this candidate.
+- **Gold-replay repairs (`55db50c3`, review round 1 `57457fc4`; registry `/32`, engine `/24`):** Source Gate wording, stated-cut coverage certificate, exact-radical input bound. Wave 3 `72/72` + `72/72` (`65` exact reason), `0` wrong-served; locked `96/96`; probes clean; C18 `480/480` + `24/24`.
+- **Legacy inventory:** 13 `LEGACY_ONLY`, 6 `HYBRID_REQUIRED`, 74 `SHARED_COMPONENT`, 3 `UNCERTAIN_DEPENDENCY`; removal order in the report §18 (move `RoutePolicy` out of `ai/pipeline.py` first).
+- **Candidate:** product `57457fc4`, candidate `79bbc053` (`118` files `6202a6a6…`); Full T3 attempt 2 `FULL_PRODUCT_GATE_PASS` (`16673` pytest, `1502` vitest).
+- **Remaining:** `PAID_PROJECT_NOT_VERIFIED`; H-1 independent author; Owner cutover/merge/push GO; genuine discovery not established.

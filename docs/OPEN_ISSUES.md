@@ -2,6 +2,20 @@
 
 **Integration update 2026-10-30:** W3-F2 resolution below is now on local main `15a8e1ac`; earlier “not on main” labels are historical. Publication retains 105 baseline head findings (104 pending findings, 1 additional test vector), not new W3-F2 regressions: 95 traceback, 5 Google-key test vectors and 5 other security-pattern findings. Narrow Owner policy and closure: `evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/integration/report.md`. This does not resolve the historical publication debt globally.
 
+### ISSUE-ARCH-PARTIAL-STATED-CUT-NAMING
+
+- **status:** OPEN (found 2026-11-03 by the independent review of run `hybrid-live-validation`, MINOR-2 / R-5; reproduced on
+  mutated Wave 3 payloads, A04 stating only "cắt SC tại N", A07 stating only AA').
+- **cause:** the `/2` stated-cut certificate (`DINH_CAT_CANH`) names only the through-point and the stated lateral cuts. Engine
+  `/24` `chung_chi_phu_dinh` refuses `SECTION_BOUNDARY_INCOMPLETE` when they miss a vertex of the exact cross-section (before
+  `/24` the route served it and Adapter `/4` rejected it as `PREVIEW_RESULT_INVALID`). The same problem with no stated cut is
+  served as an engine-derived section.
+- **impact:** legitimate partial naming is refused, and the learner sees the "dữ kiện mâu thuẫn / suy biến" message
+  (`hybrid_preview` maps the code to `INVALID_DATA`). Fail-closed: nothing refused was ever served.
+- **repair:** for `derive = True`, add engine-certified `derived_fresh` vertices on unstated cut lateral edges and fall back to the
+  engine-derived section for base/top-edge vertices; or give partial naming its own code in the unsupported category. RED first.
+- **source:** `evaluation/geometry/runs/hybrid-live-validation/independent-review.md`.
+
 ### ISSUE-ARCH-HISTORY-REOPEN-DROPS-SCENE3D
 
 - **status:** OPEN (found 2026-11-03 by the independent review, round 2, of run `pedagogical-simulation-integration`; read
