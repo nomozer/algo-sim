@@ -73,17 +73,19 @@ TYPED_FACT_NEXT_SYSTEM_INSTRUCTION = (
     "right_prism ['base=A,B,C','top=A\\',B\\',C\\''] (dùng cho lăng trụ đứng/đều, hình hộp chữ nhật, hình lập phương — "
     "chỉ thêm regular_polygon/rectangle/segment_length cho mặt hoặc cạnh đề thực sự nêu); "
     "regular_polygon ['vertices=A,B,C,...', tuỳ chọn 'side=2'] (dùng cho tam giác đều, hình vuông, lục giác đều — ví dụ "
-    "quote='đáy ABCD là hình vuông cạnh 2'; KHÔNG thêm rectangle hay segment_length trùng lặp cho hình vuông); "
+    "quote='đáy ABCD là hình vuông cạnh 2'; hình vuông KHÔNG BAO GIỜ khai rectangle; cạnh của nó ghi vào side của chính "
+    "premise này, KHÔNG tách thành segment_length 'cạnh 2'); "
     "rectangle ['vertices=A,B,C,D'] (chỉ khi đề nêu hình chữ nhật); "
     "right_angle ['vertex=A','rays=B,C'] (vertex là đỉnh góc vuông, rays là 2 điểm trên 2 cạnh góc vuông); "
-    "segment_length ['segment=S,A','value=2'] (dùng cho mọi độ dài cạnh/đoạn có tên 2 mút như SA=2, AA'=5); "
+    "segment_length ['segment=S,A','value=2'] (dùng cho mọi độ dài cạnh/đoạn có tên 2 mút như SA=2, AA'=5, MM'=5 — không ghi "
+    "thành height); "
     "height ['value=2', tuỳ chọn 'solid=s1'] (chỉ khi đề nêu chữ chiều cao/đường cao bằng số mà không ghi theo đoạn 2 mút); "
     "equal_length ['segment_a=S,A','segment_b=S,B']; "
     "perpendicular_line_plane ['line=S,A','plane=A,B,C,...'] (dùng cho 'SA vuông góc (ABCD)'); "
     "perpendicular_lines ['line1=S,A','line2=B,C']; "
     "face_perpendicular_base ['face=S,A,B','base=A,B,C,...']; "
     "altitude ['apex=S','foot=H', tuỳ chọn 'solid=s1'] (chỉ dùng khi đề nêu chữ 'đường cao'/'chiều cao' gắn với chân H, "
-    "quote PHẢI bao gồm cả tên khối lẫn cụm đường cao); "
+    "quote PHẢI bao gồm cả tên khối lẫn cụm đường cao; KHÔNG tự suy altitude từ câu 'SA vuông góc với (ABCD)'); "
     "midpoint ['point=M','segment=A,B']; divide_segment ['point=M','segment=A,B','ratio=2'] (đúng hướng tỉ số); "
     "centroid ['point=G','polygon=A,B,C']; "
     "orthogonal_projection ['point=A','image=H','plane=S,B,C']; "
@@ -128,7 +130,10 @@ TYPED_FACT_NEXT_SYSTEM_INSTRUCTION = (
     "quỹ tích/tập hợp điểm, phép biến hình, điểm đối xứng, bài toán thực tế vận tốc/thời gian (kind='unsupported') ⇒ "
     "ghi quote nguyên văn mệnh đề gây vướng, missing_roles thuộc {source_point, target_line_or_plane, relation_kind, "
     "solid_notation, dimension, goal_object}, candidate_relations (tối đa 3) thuộc {orthogonal_projection, intersection, "
-    "midpoint, centroid, perpendicular, parallel, angle, distance}; subject_ref chỉ điền khi là đúng 1 nhãn đỉnh nằm "
+    "midpoint, centroid, perpendicular, parallel, angle, distance}. Nếu đề nhắc tới mặt phẳng/đường thẳng/điểm đích hoặc "
+    "kích thước cần dùng mà KHÔNG nêu tên hay giá trị ('góc giữa SB và mặt phẳng', 'hình chiếu vuông góc của A' không nói "
+    "lên đâu, 'hình vuông' không có cạnh khi phải tính) thì ghi unresolved kind='missing_operand' — tuyệt đối không tự "
+    "điền tên hay số. subject_ref chỉ điền khi là đúng 1 nhãn đỉnh nằm "
     "nguyên văn trong quote đó. Nếu chưa khai được khối hợp lệ có tên đỉnh thì để solids=[], premises=[], "
     "simulation_goals=[], math_goals=[]. Đề rõ ngữ pháp hình học nhưng mâu thuẫn số học hoặc mặt phẳng ràng buộc chưa "
     "đủ xác định duy nhất thì KHÔNG đưa vào unresolved — vẫn trích đầy đủ để bộ kiểm tất định từ chối."
@@ -652,6 +657,201 @@ def _normalize_transport_payload(data: Any) -> Any:
                 norm_unres.append(u_clean)
             out["unresolved"] = norm_unres
 
+    return _repair_observed_wire_shapes(out)
+
+
+# ── C26: exact, meaning-preserving repairs of wire shapes OBSERVED in live Gemini Run 3 ───────────────────────────────
+# Each repair only re-files what the source states verbatim into the slot the contract expects; quotes stay verbatim
+# substrings of `problem_text` and every repaired item still goes through the Source Gate. Anything not uniquely
+# determined is left untouched (and fails closed downstream).
+
+#: "M là trung điểm của AB" / "Gọi N là …": the clause NAMES the point (a premise), it does not describe an unnamed one.
+_NAMED_CLAUSE_RE = re.compile(r"^\s*(?:[Gg]ọi\s+)?(?P<label>[A-Z][0-9]*'*)\s+là\s+")
+#: described kind → (premise kind, the premise arg that carries the named point); operand keys are shared.
+_NAMED_POINT_PREMISE = {
+    "midpoint": ("midpoint", "point"),
+    "centroid": ("centroid", "point"),
+    "intersect_line_line": ("intersect_line_line", "point"),
+    "intersect_line_plane": ("intersect_line_plane", "point"),
+    "orthogonal_projection": ("orthogonal_projection", "image"),
+    "orthogonal_projection_line": ("orthogonal_projection_line", "image"),
+}
+_SIDE_CLAUSE_RE = re.compile(r"^cạnh\s+(?P<value>\S+)$")
+_SEGMENT_EQ_RE = re.compile(r"^\s*(?P<lhs>[A-Z0-9']+)\s*=\s*(?P<value>\S+?)\s*$")
+
+
+def _replace_refs(value: Any, mapping: Mapping[str, str]) -> Any:
+    if isinstance(value, str):
+        return mapping.get(value.strip(), value)
+    if isinstance(value, list):
+        return [_replace_refs(v, mapping) for v in value]
+    if isinstance(value, dict):
+        return {k: (v if k == "quote" else _replace_refs(v, mapping)) for k, v in value.items()}
+    return value
+
+
+def _named_described_points_to_premises(out: dict[str, Any], single_solid_id: str | None) -> None:
+    """A described point whose quote names it ("M là trung điểm của AB") becomes the matching premise; refs `@id` to it
+    become the label. Unconvertible kinds (orthocenter/circumcenter have no premise) and refs still pointing at an
+    unconverted described point are left as they are."""
+    dps = out.get("described_points")
+    premises = out.get("premises")
+    if not isinstance(dps, list) or not isinstance(premises, list):
+        return
+    mapping: dict[str, str] = {}
+    pending = [dp for dp in dps if isinstance(dp, dict)]
+    changed = True
+    while changed:
+        changed = False
+        for dp in list(pending):
+            m = _NAMED_CLAUSE_RE.match(str(dp.get("quote") or ""))
+            spec = _NAMED_POINT_PREMISE.get(dp.get("kind"))
+            if not m or spec is None or not isinstance(dp.get("described_id"), str):
+                continue
+            kind, point_key = spec
+            fields = DESCRIBED_POINT_FIELDS[dp["kind"]]
+            if set(fields) - set(dp) or any(k in dp for k in (point_key, "point") if k not in fields):
+                continue
+            args = {k: _replace_refs(dp[k], mapping) for k in fields}
+            flat = [x for v in args.values() for x in (v if isinstance(v, list) else [v])]
+            if any(isinstance(x, str) and x.strip().startswith("@") for x in flat):
+                continue                                  # depends on a described point not (yet) converted
+            label = m.group("label")
+            args[point_key] = label
+            premise = {"kind": kind, "args": args, "quote": dp["quote"]}
+            if single_solid_id is not None:
+                premise["solid_id"] = single_solid_id
+            if not any(isinstance(p, dict) and p.get("kind") == kind and (p.get("args") or {}) == args
+                       for p in premises):
+                premises.append(premise)
+            mapping[f"@{dp['described_id'].strip()}"] = label
+            pending.remove(dp)
+            changed = True
+    if not mapping:
+        return
+    out["described_points"] = [_replace_refs(dp, mapping) for dp in pending]
+    if not out["described_points"]:
+        out.pop("described_points")
+    for key in ("math_goals", "derived_sections", "relations", "simulation_goals"):
+        if isinstance(out.get(key), list):
+            out[key] = [_replace_refs(item, mapping) for item in out[key]]
+
+
+def _polygon_edges(vertices: list[str]) -> set[frozenset[str]]:
+    return {frozenset((vertices[i], vertices[(i + 1) % len(vertices)])) for i in range(len(vertices))}
+
+
+def _repair_square_premises(out: dict[str, Any], text: str) -> None:
+    premises = out.get("premises")
+    if not isinstance(premises, list):
+        return
+
+    def verts(p: dict[str, Any]) -> list[str] | None:
+        v = (p.get("args") or {}).get("vertices")
+        return v if isinstance(v, list) and all(isinstance(x, str) for x in v) else None
+
+    # "hình vuông" filed as `rectangle`: a square is the regular quadrilateral of the contract.
+    kept: list[Any] = []
+    for p in premises:
+        q = str(p.get("quote") or "") if isinstance(p, dict) else ""
+        if (isinstance(p, dict) and p.get("kind") == "rectangle" and "hình vuông" in q and "chữ nhật" not in q
+                and (v := verts(p)) and len(v) == 4):
+            if any(isinstance(o, dict) and o.get("kind") == "regular_polygon" and set(verts(o) or ()) == set(v)
+                   for o in premises):
+                continue                                  # duplicate of the regular_polygon already filed
+            p = {**p, "kind": "regular_polygon"}
+        kept.append(p)
+    premises[:] = kept
+
+    for p in premises:
+        if not (isinstance(p, dict) and p.get("kind") == "regular_polygon" and (v := verts(p))):
+            continue
+        q = str(p.get("quote") or "")
+        name = "".join(v)
+        # the polygon's quote must name it: take the immediately preceding "(đáy) ABCD là " of the same clause
+        if name not in q and q and text.count(q) == 1:
+            start = text.index(q)
+            for prefix in (f"đáy {name} là ", f"{name} là "):
+                if text[:start].endswith(prefix):
+                    p["quote"] = q = prefix + q
+                    break
+        # "hình vuông cạnh 2" split into a side-less polygon + a bare "cạnh 2" length on one of its edges
+        for s in list(premises):
+            if not (isinstance(s, dict) and s.get("kind") == "segment_length"):
+                continue
+            sm = _SIDE_CLAUSE_RE.match(str(s.get("quote") or ""))
+            seg = (s.get("args") or {}).get("segment")
+            if not sm or not isinstance(seg, list) or frozenset(seg) not in _polygon_edges(v):
+                continue
+            value = str((s.get("args") or {}).get("value"))
+            if value != sm.group("value"):
+                continue
+            side = (p.get("args") or {}).get("side")
+            if side is None:
+                for sep in (" ", ", "):
+                    joined = q + sep + s["quote"]
+                    if joined in text:
+                        p["args"] = {**p["args"], "side": value}
+                        p["quote"] = q = joined
+                        premises.remove(s)
+                        break
+            elif str(side) == value and s["quote"] in q:
+                premises.remove(s)                         # restates the side the polygon already carries
+
+
+def _repair_restated_premises(out: dict[str, Any], text: str, single_solid_id: str | None) -> None:
+    premises = out.get("premises")
+    if not isinstance(premises, list):
+        return
+    perp = {frozenset((p.get("args") or {}).get("line") or ()) for p in premises
+            if isinstance(p, dict) and p.get("kind") == "perpendicular_line_plane"}
+    seg_quotes = {p.get("quote") for p in premises if isinstance(p, dict) and p.get("kind") == "segment_length"}
+    solids = [s for s in out.get("solids") or () if isinstance(s, dict)]
+    labels = sorted({tok for s in solids for tok in re.findall(r"[A-Z][0-9]*'*", str(s.get("notation") or ""))},
+                    key=len, reverse=True)
+    kept: list[Any] = []
+    for p in premises:
+        if not isinstance(p, dict):
+            kept.append(p)
+            continue
+        q = str(p.get("quote") or "")
+        args = p.get("args") or {}
+        if p.get("kind") == "altitude" and "đường cao" not in q and "chiều cao" not in q:
+            if frozenset((args.get("apex"), args.get("foot"))) in perp:
+                continue                                   # an inference from "SA ⊥ (ABCD)", not a stated altitude
+        if p.get("kind") == "height" and (m := _SEGMENT_EQ_RE.match(q)) and str(args.get("value")) == m.group("value"):
+            if q in seg_quotes:
+                continue                                   # "AA' = 2" already filed as the segment it names
+            lhs, toks = m.group("lhs"), []
+            while lhs:
+                tok = next((t for t in labels if lhs.startswith(t)), None)
+                if tok is None:
+                    break
+                toks.append(tok)
+                lhs = lhs[len(tok):]
+            if not lhs and len(toks) == 2 and toks[0] != toks[1]:
+                p = {**p, "kind": "segment_length", "args": {"segment": toks, "value": m.group("value")}}
+        if (p.get("kind") == "altitude" and single_solid_id is not None and solids
+                and not any(str(s.get("notation")) in q for s in solids)):
+            sq = str(solids[0].get("quote") or "")
+            if sq and text.count(sq) == 1 and text.count(q) == 1:
+                a, b = text.index(sq), text.index(q)
+                span = text[a:b + len(q)]
+                if a < b and not re.search(r"[.?!;]\s", span):
+                    p = {**p, "quote": span}               # bind "đường cao SA" to the one solid of its sentence
+        kept.append(p)
+    premises[:] = kept
+
+
+def _repair_observed_wire_shapes(out: dict[str, Any]) -> dict[str, Any]:
+    text = out.get("problem_text")
+    if not isinstance(text, str):
+        return out
+    solids = [s for s in out.get("solids") or () if isinstance(s, dict)]
+    single = (solids[0].get("solid_id") if len(solids) == 1 and isinstance(solids[0].get("solid_id"), str) else None)
+    _named_described_points_to_premises(out, single)
+    _repair_square_premises(out, text)
+    _repair_restated_premises(out, text, single)
     return out
 
 
