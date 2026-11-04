@@ -46,7 +46,7 @@
 ### ISSUE-ARCH-ROUTE-D-DIACRITIC-FREE-INPUT
 
 - **status:** OPEN, waiting for an Owner decision (S-1 in `evaluation/geometry/runs/hybrid-master-backend-replacement/owner-go-request.md`).
-- **cause:** `detect_domain` refuses space-geometry text typed without diacritics as out of scope on every route, the `LLM_ONLY` default included. On Route D the closed Source Gate grammars would then refuse it as well.
+- **cause:** `detect_domain` refuses space-geometry text typed without diacritics as out of scope (`GATE_OUT_OF_SCOPE`) at the pre-provider gate on the active Hybrid `/4` default route (`POST /api/analyze`; legacy `LLM_ONLY` execution was retired on 2026-11-04). Behind the domain gate, Route D's closed Source Gate grammars would refuse unaccented text as well.
 - **evidence:** probe row S05 in `evaluation/geometry/runs/hybrid-master-backend-replacement/student-language-probe.json`.
 - **update 2026-11-01 (eleventh continuation, offline prototype only):** `backend/scripts/s1_diacritic_offline.py` (`0` imports in `backend/app/`, `detect_domain` untouched) implements a strictly isolated, span-preserving normalization prototype (`norm_char_to_raw_span`, `verify_no_forged_quotes`, mixed-IME `_ascii_fold`, and polysemy flags `NEEDS_CLARIFICATION` for `goc`/`day`/`tam`/`canh`/`duong` and lowercase solid labels), verified on `s1-diacritic-development-corpus.json` (`16/16`, `test_s1_diacritic_free_offline.py`; `s1-diacritic-free-offline-audit.md`). Production integration remains gated on Owner decision `S-1`.
 
@@ -1017,46 +1017,50 @@
 - **description:** Primitive compiler hiện tại chỉ hỗ trợ một họ bài toán đơn lẻ là tính thể tích khối chóp có đáy tam giác vuông (`right_triangle_base_pyramid_volume`).
 - **evidence:** `backend/app/simulation/compiler/primitive_compiler.py`, báo cáo `docs/evaluation/reports/GEOMETRY_FACT_GRAPH_AND_PRIMITIVE_COMPILER_VERTICAL_SLICE.md`.
 - **impact:** Hệ thống chưa thể biên dịch tất định các họ hình học không gian phổ biến khác trong chương trình THPT.
-- **scope:** `backend/app/simulation/compiler/`
-- **status:** OPEN
+- **scope:** `backend/app/simulation/compiler/` (HISTORICAL_REMOVED)
+- **status:** SUPERSEDED_BY_HYBRID_CUTOVER (2026-11-04; original status `OPEN` preserved for history)
+- **cutover_audit (2026-11-04):** Compiler C (`app/simulation/geometry_compiler/*`) and `LLM_ONLY` (`app/ai/pipeline.py`) were retired in `FINAL_HYBRID_ARCHITECTURE_CUTOVER` (`docs/evaluation/geometry/runs/hybrid-master-backend-replacement/ALGOSIM_HYBRID_CUTOVER_FINAL_REPORT.md`); `POST /api/analyze` now runs Hybrid `/4` (`TypedFactNext /2` → `Source Gate` → `Planner /26` → `Registry /33` → `Exact Kernel /24` → `Adapter /4`). Remaining Hybrid capability/validation boundaries (`INDEPENDENT_H1_VALIDATION = NOT_MEASURED`) are tracked separately.
 - **w13_audit:** the description and paths are stale at `bf5a7907` — the package is `backend/app/simulation/geometry_compiler/` and `compiler.py:41-53` supports six families (right-triangle pyramid and prism, rectangular pyramid, cuboid, cube, right square prism). What remains narrow is listed by layer in `docs/architecture/geometry_capability_matrix_v2.json` (`L08 compiler_rule`) and in `ISSUE-ARCH-FORMATION-PER-FAMILY-SEQUENCE`.
 - **oblique-prism (2026-10-09):** seventh family `oblique_prism_volume` (G04: right-triangle/rectangle/square base, foot of a lateral height at a named base vertex, rational height) — `docs/evaluation/geometry/runs/oblique-prism/`. Still narrow: foot at a midpoint/centroid and angle-defined obliquity are refused (`ISSUE-ARCH-OBLIQUE-PRISM-FOOT-VOCABULARY`).
 - **general-polygon-base (2026-10-09):** families `polygon_base_pyramid_volume` / `polygon_base_right_prism_volume` (G05: convex base fixed by k − 2 consecutive right angles — right trapezoid, right triangle with the apex edge at any vertex, n-gons). Still narrow: `ISSUE-ARCH-G05-REMAINING-BASES`.
 - **owner_class:** ARCHITECTURE
-- **suggested_wave:** P1 (Primitive Compiler Expansion)
-- **default_switch_blocker:** YES
+- **suggested_wave:** P1 (Primitive Compiler Expansion — historical)
+- **default_switch_blocker:** NO (retired in Hybrid `/4` cutover)
 
 ### ISSUE-ARCH-NO-COMPILER-FIRST-ROUTING
 - **description:** Cổng định tuyến compiler-first trong pipeline chính chưa được xây dựng; hệ thống hiện tại vẫn đi qua LLM synthesis mặc định.
 - **evidence:** `backend/app/ai/pipeline.py`, cờ `DEFAULT_MODE = LLM_ONLY`.
 - **impact:** Người dùng chưa được hưởng lợi từ tốc độ và tính tất định của compiler trong luồng chạy thực tế.
-- **scope:** `backend/app/ai/pipeline.py`
-- **status:** OPEN
+- **scope:** `backend/app/ai/pipeline.py` (HISTORICAL_REMOVED)
+- **status:** SUPERSEDED_BY_HYBRID_CUTOVER (2026-11-04; original status `OPEN` preserved for history)
+- **cutover_audit (2026-11-04):** `POST /api/analyze` routes exclusively through Hybrid `/4` (`HYBRID_ROUTE_MODE = live` default, `staging-replay` for dev/test); `pipeline.py`, `DEFAULT_MODE = LLM_ONLY`, and `GEOMETRY_COMPILER_MODE` have been deleted.
 - **cfr_audit:** (2026-10-05, `cuboid-final-review`) the description is stale: the routing gate exists and is wired opt-in — `backend/app/simulation/geometry_compiler/routing.py::quyet_dinh_dinh_tuyen`, called from `backend/app/ai/pipeline.py` after analyze; the compiler runs only with `GEOMETRY_COMPILER_MODE=DETERMINISTIC_FIRST`, the default `LLM_ONLY` returns `DISABLED`. What stays open is the default switch itself (`MIGRATION_CHECKLIST.md` GATE-11 audit line); the status is left to the migration wave.
 - **owner_class:** ARCHITECTURE
-- **suggested_wave:** P5 (Migration)
-- **default_switch_blocker:** YES
+- **suggested_wave:** P5 (Migration — historical)
+- **default_switch_blocker:** NO (retired in Hybrid `/4` cutover)
 
 ### ISSUE-ARCH-NO-FALLBACK-MECHANISM
 - **description:** Chưa có cơ chế chuyển giao tự động và an toàn từ compiler sang LLM synthesis khi bài toán nằm ngoài tập primitive được hỗ trợ.
 - **evidence:** `backend/app/simulation/compiler/` chưa có module router/fallback adapter.
 - **impact:** Nếu bật compiler-first mà gặp bài toán không thuộc diện hỗ trợ thì hệ thống sẽ dừng thay vì fallback.
-- **scope:** `backend/app/ai/pipeline.py`
-- **status:** OPEN
+- **scope:** `backend/app/ai/pipeline.py` (HISTORICAL_REMOVED)
+- **status:** SUPERSEDED_BY_HYBRID_CUTOVER (2026-11-04; original status `OPEN` preserved for history)
+- **cutover_audit (2026-11-04):** By architectural rule, Hybrid `/4` enforces strict fail-closed refusal (`capability_gap` / `insufficient_specification` / `geometry_generation_failed` / `route-d-clarification/1` / HTTP `502`/`503`/`504` `INFRASTRUCTURE_FAILURE`) with **zero fallback** to per-problem LLM synthesis (`LLM_ONLY` execution removed).
 - **cfr_audit:** (2026-10-05, `cuboid-final-review`) the evidence path is stale (the package is `backend/app/simulation/geometry_compiler/`) and so is the description: `routing.py` returns `FALLBACK_TO_LLM` for `UNSUPPORTED` (unit test `backend/tests/geometry/test_geometry_primitive_compiler.py::test_AD_unsupported_tra_fallback_cho_caller_chu_khong_tu_gui`) and `pipeline.py` sends every decision other than `USE_COMPILER`/`REFUSE` on to `stage_semantic_program`. No test drives that fallback branch through `run_pipeline` yet (`MIGRATION_CHECKLIST.md` GATE-12 audit line); the status is left to the migration wave.
 - **owner_class:** ARCHITECTURE
-- **suggested_wave:** P5 (Migration)
-- **default_switch_blocker:** YES
+- **suggested_wave:** P5 (Migration — historical)
+- **default_switch_blocker:** NO (retired in Hybrid `/4` cutover)
 
 ### ISSUE-ARCH-NO-CANARY-OR-ROLLBACK
 - **description:** Chưa có cơ chế phân luồng canary để thử nghiệm tỉ lệ nhỏ trên production và chưa có kịch bản rollback tức thì khi gặp lỗi biên dịch.
 - **evidence:** Chưa có middleware/routing layer hỗ trợ canary splitting trong `backend/app/main.py`.
 - **impact:** Rủi ro gián đoạn dịch vụ khi kích hoạt tính năng mới trên toàn hệ thống.
 - **scope:** `backend/app/`
-- **status:** OPEN
+- **status:** OPEN (canary traffic splitting / automated circuit breaker not implemented; architectural rollback defined via Git/deployment tag)
+- **cutover_audit (2026-11-04):** `LLM_ONLY` execution was removed in `FINAL_HYBRID_ARCHITECTURE_CUTOVER`, so `HYBRID_ROUTE_MODE=off` returns HTTP `503 INVALID_HYBRID_ROUTE_MODE` (not an in-process legacy rollback); `ALLOW_LIVE_AI=0` provides an emergency live-provider stop (`503 LIVE_AI_DISABLED`), and full architectural rollback is Git/deployment version rollback to tag `pre-hybrid-cutover-f986e897` (`PRODUCTION_DEPLOYMENT_VERIFIED = NO`).
 - **owner_class:** OPERATIONS / ARCHITECTURE
 - **suggested_wave:** P5 (Migration)
-- **default_switch_blocker:** YES
+- **default_switch_blocker:** NO (default cutover executed by Owner directive on 2026-11-04)
 
 ### ISSUE-ARCH-NO-SPATIAL-LAYOUT-SOLVER
 - **description:** Chưa có bộ giải bố cục không gian 3D tự động; tọa độ các điểm hiện do các bước dựng hình cơ sở xác định cục bộ, có thể gây mất cân đối thị giác ở các góc phức tạp.

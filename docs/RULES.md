@@ -101,19 +101,14 @@ Tên đề tài (giữ nguyên chính xác):
 > không tồn tại.
 >
 > **Vai trò của LLM trên kiến trúc sản phẩm chính thức hiện hành (`Hybrid /4`):**
-> - **Tuyến sản phẩm mặc định (`HYBRID_ROUTE_MODE = live`; `staging-replay` cho dev/test):**
->   AI chỉ trích xuất **JSON Typed Facts** (`TypedFactNext`) kèm trích
->   dẫn nguyên văn câu đề → **Source Gate / Semantic Grounding** → **Goal-Directed Construction
->   Planner tất định** tự chọn và phối hợp **Geometry Functions** → **Compiler /
->   Construction IR** → **Exact Geometry Kernel** → **Adapter `/4` / Scene3D** (xem
+> - **Tuyến sản phẩm mặc định của `POST /api/analyze` (`HYBRID_ROUTE_MODE = live`; `staging-replay` cho replay offline dev/test):**
+>   `Vietnamese Problem → Gemini → TypedFactNext /2 → Source Gate → FactGraph → Planner /26 → Registry /33 → Exact Kernel /24 → Adapter /4 → Scene3D + Construction Steps + Results`
+>   Gemini chỉ trích xuất **JSON Typed Facts** theo hợp đồng chính **`TypedFactNext /2`** (`typed-fact-next/2`, qua `bridge_v2`) kèm trích dẫn nguyên văn câu đề → **Source Gate** (`registry.kiem_nguon`) đối chiếu câu đề → **FactGraph & Planner `/26`** tự chọn và phối hợp tất định các hàm trong **Registry `/33`** → **Exact Kernel `/24`** tính toán hình học chính xác (`Fraction`, `Radical`, metric Gram) → **Adapter `/4`** xuất `Scene3D`, các bước dựng liên tục và kết quả (xem
 >   [`architecture/HYBRID_B_TARGET_ARCHITECTURE_DECISION.md`](architecture/HYBRID_B_TARGET_ARCHITECTURE_DECISION.md)
 >   và [`architecture/TEXT_TO_GEOMETRY_FUNCTIONS_CONTRACT.md`](architecture/TEXT_TO_GEOMETRY_FUNCTIONS_CONTRACT.md)).
-> - **Đã gỡ bỏ khỏi thực thi (`LEGACY_EXECUTION_RETIRED`):**
->   Orchestrator `LLM_ONLY` cũ (`pipeline.py`, tổng hợp chương trình bởi LLM), `Adapter /3`
->   và lát cắt `geometry_compiler/` cũ đã ngừng sử dụng và bị xoá khỏi mã sản phẩm;
->   không còn fallback ngầm về tổng hợp chương trình. `semantic_program/route.py` chỉ còn
->   giữ vai trò kiểm định IR/Scene3D tất định dùng chung (`COMPATIBILITY_REQUIRED`).
->   Trạng thái cổng chuyển đổi và giới hạn nghiên cứu độc lập (`H-1`) được ghi nhận trung thực tại
+> - **Đã gỡ bỏ khỏi thực thi (`LEGACY_EXECUTION_RETIRED = YES`, `LEGACY_FULLY_RETIRED = NO`):**
+>   Orchestrator `LLM_ONLY` cũ (`pipeline.py`, sinh chương trình riêng cho từng đề), `Adapter /3` (`adapter3_simulation.py`), lát cắt `Compiler C` (`geometry_compiler/`) và các cờ cũ (`HYBRID_V2_LOCAL`, `GEOMETRY_COMPILER_MODE`) đã bị xoá; tuyệt đối không khôi phục hay fallback ngầm về legacy. `HYBRID_ROUTE_MODE=off` trả lỗi HTTP `503 INVALID_HYBRID_ROUTE_MODE`; thiếu `GEMINI_API_KEY` ở chế độ `live` trả HTTP `503 MISSING_API_KEY`; rollback kiến trúc là rollback phiên bản Git/deployment trước cutover (`pre-hybrid-cutover-f986e897`). `RequestContract` và `semantic_program/route.py::verify_and_compile` chỉ còn giữ vai trò kiểm định IR/Scene3D tất định dùng chung (`COMPATIBILITY_REQUIRED`).
+>   Giới hạn kiểm chứng (`PRODUCTION_DEPLOYMENT_VERIFIED = NO`, `INDEPENDENT_H1_VALIDATION = NOT_MEASURED`) được ghi nhận trung thực tại
 >   [`MIGRATION_CHECKLIST.md`](MIGRATION_CHECKLIST.md) và [`CURRENT_STATE.md`](CURRENT_STATE.md).
 >
 > Ranh giới R0 **không** vì thế mà lỏng đi — nó chặt hơn: LLM tuyệt đối không
@@ -125,7 +120,7 @@ Tên đề tài (giữ nguyên chính xác):
 ### 3a. Phạm vi cốt lõi
 
 1. **Đọc đề tiếng Việt có kiểm chứng nguồn:**
-   - Trên tuyến sản phẩm chính thức (**Hybrid `/4`**): AI trích xuất JSON Typed Facts (`TypedFactNext`) kèm trích dẫn nguyên văn → Source Gate / Semantic Grounding → Planner tất định tự phối hợp Geometry Functions → Compiler / Construction IR (không còn tuyến LLM tự sinh chương trình `LLM_ONLY`).
+   - Trên tuyến sản phẩm chính thức (**Hybrid `/4`**): Gemini trích xuất JSON Typed Facts theo `TypedFactNext /2` kèm trích dẫn nguyên văn → Source Gate (`registry.kiem_nguon`) → FactGraph & Planner `/26` tự phối hợp hàm trong Registry `/33` → Exact Kernel `/24` → Adapter `/4` (không sinh chương trình riêng theo đề; tuyến `LLM_ONLY`, `Adapter /3` và `Compiler C` đã gỡ bỏ).
 2. Cổng tất định kiểm định **fail-closed**: tĩnh · grounding nguồn · phủ · hậu điều kiện · chứng chỉ giả định.
 3. Deterministic engine **sở hữu** state, timeline, bố cục khung affine + metric Gram và result; nhân hình học tính
    **chính xác** (hữu tỉ + căn), không `float`.
@@ -199,7 +194,10 @@ patch wave**, và báo đúng bốn mục:
 12. **Cấm cắt câm** — chạm trần ngân sách phải **BÁO**, không được lặng lẽ giao
     một phần. Sinh ra từ sự cố `MAX_REVEAL_STEPS` cắt `steps[:20]` không báo lỗi.
     Ngân sách **thực thi** và ngân sách **trình bày** là hai thứ khác nhau (§4.3).
-13. **Nghĩa vụ đóng băng trước khi sinh chương trình** — `analyze` khai, server
-    đóng băng thành `RequestContract`; stage sinh **không** được khai lại hay
-    sửa. Đây là separation of responsibility, **không phải** independent oracle
-    (§5.2).
+13. **Tách biệt trích xuất dữ kiện và thực thi tất định** — trên tuyến chính thức
+    **Hybrid `/4`**, Gemini chỉ trích xuất dữ kiện, quan hệ và mục tiêu theo hợp đồng
+    đóng `TypedFactNext /2` để Source Gate xác minh theo nguyên văn câu đề; Planner `/26`,
+    Registry `/33`, Exact Kernel `/24` và Adapter `/4` thực thi tất định mà không gọi
+    lại LLM để sinh hay sửa chương trình (`RequestContract` chỉ giữ vai trò tương thích
+    nội bộ `COMPATIBILITY_REQUIRED` trong `semantic_program/route.py` và truyền
+    `solid_topology` tất định).

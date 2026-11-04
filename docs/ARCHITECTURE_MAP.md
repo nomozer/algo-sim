@@ -22,76 +22,59 @@ trúc thật sự đổi; sửa `CODE_INDEX.md` khi module/export công khai đ�
 
 Học sinh nhập một đề bài hình học không gian bằng lời/hình ảnh tiếng Việt → LLM **chỉ** trích xuất ngữ nghĩa và dữ kiện có cấu trúc → **hệ thống tất định** kiểm chứng nguồn, lập kế hoạch/chương trình dựng hình, tính toán chính xác và xuất hoạt cảnh `Scene3D` tương tác. Mục tiêu sản phẩm là **mô phỏng 3D hình học không gian tương tác**, không phải hệ thống tự động giải và chứng minh mọi bài toán. Toàn bộ chuỗi chữ hiển thị và prompt đều bằng tiếng Việt.
 
-## 2. Luồng xử lý hình học (Tuyến Mặc Định Hiện Hành `AS-IS` & Kiến Trúc Mục Tiêu `TO-BE: Hybrid`)
+## 2. Luồng xử lý hình học (Kiến trúc chính thức hiện hành `AS-IS: Hybrid /4` trên `POST /api/analyze`)
 
-### 2a. Sơ đồ tổng thể
+### 2a. Sơ đồ tổng thể (`Hybrid /4`)
 
 ```text
-[1] TUYẾN SẢN PHẨM MẶC ĐỊNH HIỆN HÀNH (AS-IS: DEFAULT_MODE = LLM_ONLY)
-Input text/image
-  → Ingestion (chuẩn hóa đầu vào)
-  → Analyze LLM (`stage_semantic_analyze`) → `RequestContract` + `structured_relations`
-  → [Mặc định `LLM_ONLY`]: LLM Synthesis (`stage_semantic_program`) → `SemanticProgramSpec` ứng viên
-    *(Nhánh opt-in lịch sử `geometry_compiler/`: `FactGraph` → `primitive_compiler` cho 6 họ bài cố định; giữ nguyên, không mở rộng tiếp)*
-  → Scene Builder & Interpreter (`hoan_thien_dung_hinh` → thực thi chương trình ngữ nghĩa, dẫn xuất tọa độ/bước)
-  → Construction Binding & Source Grounding Gates (`construction_binding`, `grounding_gate`)
-  → Assumption Certificate Gate (w15, chặng `assumption`: giá trị số người học thấy phải có chứng chỉ C0/C1 — §2e)
-  → Visual Obligation Gate (kiểm định bao phủ nghĩa vụ trực quan C1/C2)
-  → Frontend Step Replay & `Scene3DExplorer` (diễn hoạt từng bước, tua, tương tác camera)
-
-[2] KIẾN TRÚC MỤC TIÊU (TO-BE: Hybrid — đang phát triển/đánh giá, chưa bật làm mặc định sản phẩm)
-Vietnamese Problem
-  → AI JSON Typed Facts (`TypedFact` ở `fact_extraction.py` `hybrid-semantic-extraction/3`,
-    hoặc `TypedFactNext` ở `typed_fact_next.py` `typed-fact-next/1` · canonical `typed-fact-next/2` qua
-    `typed_fact_next_bridge.py::bridge_v2` → Adapter `/4` `adapter4_route.py` `hybrid-simulation-adapter/4`;
-    `/1` → `/2` chỉ qua `convert_v1_to_v2(route=…)` có nhãn tuyến; chưa có caller HTTP/frontend cho `/4`)
-  → Semantic Grounding (`kiem_nguon` 6 tầng tại `registry.py`, đối chiếu nguyên văn câu đề)
-  → Goal-Directed Construction Planner (`planner.py`, `geometry-fact-planner/15`:
-    tất định tự chọn và phối hợp các hàm từ thư viện 37 hàm `geometry-functions/14`)
-  → Compiler / Construction IR
-  → Geometry Functions / Engine / Kernel (`engine.py` `geometry-function-engine/14`,
-    `adapter3_simulation.py` `hybrid-simulation-adapter/3`, khung affine + metric Gram chính xác)
-  → `Scene3D` + `chart_metric` → `Scene3DExplorer`
+Vietnamese Problem (text hoặc văn bản đã qua checkpoint người học từ /api/image/extract)
+  → Pre-Provider Mode & Domain Gate (`main.py`: `HYBRID_ROUTE_MODE=live` mặc định · `staging-replay` dev/test;
+    ngoài miền ⇒ `GATE_OUT_OF_SCOPE` 0 lượt gọi; cấu hình/provider lỗi ⇒ HTTP 502/503/504 `INFRASTRUCTURE_FAILURE`)
+  → Gemini Extraction (`typed_fact_next_extraction.py` → `TypedFactNext /2` `typed-fact-next/2` kèm trích dẫn câu đề;
+    không sinh chương trình giải riêng cho từng đề)
+  → Bridge & Clarification (`typed_fact_next_bridge.py::bridge_v2` `typed-fact-next-bridge/2`;
+    mục chưa rõ khả giải ⇒ từ chối `AMBIGUOUS_FACT` kèm `route-d-clarification/1`)
+  → Source Gate (`registry.py::kiem_nguon`: xác minh trích dẫn nguyên văn, vai trò mệnh đề, phủ định, vị từ, số đo)
+  → FactGraph & Planner `/26` (`planner.py` `geometry-fact-planner/26`: tất định tự chọn & phối hợp hàm từ
+    Registry `/33` `geometry-functions/33`, 49 hàm)
+  → Exact Kernel `/24` (`engine.py` `geometry-function-engine/24` + `simulation/geometry/` + `certificates.py`
+    + `semantic_program/interpreter.py`: khung affine + metric Gram chính xác `Fraction`/`Radical`)
+  → Adapter `/4` & Shared IR Verifier (`adapter4_route.py` `hybrid-simulation-adapter/4`, schema `hybrid-route-d-simulation/4`,
+    `construction_continuity.py`, kiểm định qua `semantic_program/route.py::verify_and_compile` `COMPATIBILITY_REQUIRED`,
+    `CACHE_VERSION = 132` / `ROUTE_D_CACHE_POLICY = 132:route-d`)
+  → `Scene3D` + Bước dựng tích lũy liên tục + Kết quả chính xác → `Scene3DExplorer`
 ```
 
-### 2a.1 Đối chiếu tuyến sản phẩm thật (`AS-IS`) với kiến trúc mục tiêu (`TO-BE: Hybrid`)
+### 2a.1 Bảng tóm tắt các tầng của tuyến sản phẩm hiện hành (`AS-IS: Hybrid /4`)
 
-| Yêu cầu | Đã có trên tuyến mặc định (`AS-IS: LLM_ONLY`) | Đã có trên kiến trúc mục tiêu (`TO-BE: Hybrid`) | Còn thiếu / giới hạn trước khi đổi mặc định | Caller & Bằng chứng |
-|---|---|---|---|---|
-| Nhận đề chữ hoặc ảnh | `/api/analyze` chuẩn hoá text/docx; `/api/image/extract` đọc ảnh rồi buộc người học xem, sửa và xác nhận văn bản trước khi phân tích | dùng chung tầng chuẩn hoá văn bản đầu vào | chưa có pipeline tự tách vùng/OCR camera tổng quát; ảnh chỉ đi tiếp sau checkpoint người dùng | `ProblemInput.tsx` → `main.py::extract_image` / `main.py::analyze`; `test_image_extract_api.py`, `test_photo_problem_vision_checkpoint.py` |
-| Trích dữ kiện và nghĩa vụ | `stage_semantic_analyze` tạo `RequestContract`; `structured_relations.py` chuẩn hoá quan hệ có `source_fact_id` và cờ giả định | `fact_extraction.py` (`hybrid-semantic-extraction/3`, contract `flat`) và `typed_fact_next.py` (`typed-fact-next/1`) trích JSON Typed Facts có trích dẫn câu đề | cần nghiệm thu live E2E theo ngân sách và vượt đủ 20 cổng tại `docs/MIGRATION_CHECKLIST.md` | `_semantic_route_attempt`; `fact_route.py`; `adapter3_simulation.py`; `test_typedfact_next_adapter3.py` |
-| Lập kế hoạch & chọn hàm dựng | mặc định `LLM_ONLY`: `stage_semantic_program` sinh `SemanticProgramSpec` (nhánh `geometry_compiler` chỉ chạy khi opt-in cho 6 họ bài cũ) | `planner.py` (`geometry-fact-planner/15`) tất định tự phối hợp 37 hàm trong `registry.py` (`geometry-functions/14`) từ Typed Facts (không để AI tự ghép chương trình) | chưa bật làm mặc định của `/api/analyze` (`DEFAULT_MODE = LLM_ONLY`) | `planner.py::lap_ke_hoach_tu_facts`; `test_hybrid_goal_decomposition.py`, `test_wave3a_adapter3_integration.py` |
-| Backend thực thi/tính/kiểm | validator + static check → formation → interpreter/kernel exact → construction/source/postcondition/assumption/visual gates; R0 không gọi model sau IR | `kiem_nguon` 6 tầng → `engine.py` (`geometry-function-engine/14`: khung affine + metric Gram hữu tỉ, kiểm mọi dữ kiện, chứng chỉ thể tích) + `adapter3_simulation.py` (`hybrid-simulation-adapter/3`) → IR → kernel chính xác | khối chóp cụt rời và mặt cắt elip của nón nghiêng ở trình duyệt vẫn là giới hạn đã ghi nhận | `route.verify_and_compile`; `engine.py`; `adapter3_simulation.py`; `test_mocked_production_e2e.py`, `test_simulation_coverage_curved.py` |
-| Trả JSON và hiển thị 3D | envelope `generic.semantic_program` mang trace/config và `scene3d`; store nạp envelope, `SimulationWorkspace` gắn `Scene3DExplorer` | xuất `Scene3D` + `chart_metric` (và `/api/preview/hybrid` khi bật cờ preview qua `hybrid_preview.py` `hybrid-preview-adapter/2`) | bảng màu vật liệu `Scene3D` cuối cùng đang chờ Owner phê duyệt trong phiên nghiên cứu thiết kế riêng | `_envelope_tu_route_sinh` / `hybrid_preview.py` → `Scene3DExplorer`; `product-envelope-rendering.test.tsx`, `Scene3DExplorer.test.tsx` |
+| Yêu cầu | Thực thi trên tuyến chính thức (`AS-IS: Hybrid /4`) | Giới hạn hiện hành (ghi nhận trung thực) | Caller & Bằng chứng |
+|---|---|---|---|
+| Nhận đề chữ hoặc ảnh | `/api/analyze` chuẩn hoá văn bản; `/api/image/extract` đọc ảnh rồi buộc người học kiểm tra và xác nhận văn bản trước khi phân tích | chưa có pipeline tự tách vùng/OCR camera tự động không qua checkpoint người dùng | `ProblemInput.tsx` → `main.py::extract_image` / `main.py::analyze`; `test_image_extract_api.py`, `test_photo_problem_vision_checkpoint.py` |
+| Trích dữ kiện, quan hệ, mục tiêu | `typed_fact_next_extraction.py` trích JSON `TypedFactNext /2` (`typed-fact-next/2`) qua `bridge_v2` (`typed-fact-next-bridge/2`); làm rõ qua `route-d-clarification/1` | kiểm định độc lập trên 60 đề mới `H-1` chưa thực hiện (`INDEPENDENT_H1_VALIDATION = NOT_MEASURED`) | `hybrid_offline.py`; `typed_fact_next_extraction.py`; `test_hybrid_cutover_verification.py` |
+| Xác minh nguồn & lập kế hoạch | `kiem_nguon` (`registry.py`) xác minh câu đề → `planner.py` (`geometry-fact-planner/26`) tự phối hợp tất định 49 hàm trong `registry.py` (`geometry-functions/33`) | chỉ giải các cấu hình biểu diễn được trong thư viện hàm và ngữ pháp nguồn đã đăng ký (không giải mọi bài hình không gian bất kỳ) | `registry.py::kiem_nguon`; `planner.py::lap_ke_hoach_tu_facts`; `test_final_backend_product_completion.py` |
+| Tính toán chính xác & dựng bước liên tục | `engine.py` (`geometry-function-engine/24`) + `simulation/geometry/` (`Fraction`, `Radical`, metric Gram) + `construction_continuity.py` + `route.py::verify_and_compile` | khối tròn xoay nghiêng/ghép phức tạp ngoài lát cắt đăng ký sẽ từ chối fail-closed (`capability_gap`) | `engine.py`; `function_route.py`; `adapter4_route.py`; `test_final_backend_product_completion.py` |
+| Trả JSON, cache & hiển thị 3D | `adapter4_route.py` xuất envelope `generic.semantic_program` (`hybrid-route-d-simulation/4`, `CACHE_VERSION = 132`); `SimulationWorkspace` gắn `Scene3DExplorer` | `PRODUCTION_DEPLOYMENT_VERIFIED = NO`, `NEW_LIVE_SMOKE_NOT_MEASURED` | `main.py::_analyze_hybrid_route` → `Scene3DExplorer`; `product-envelope-rendering.test.tsx`, `Scene3DExplorer.test.tsx` |
 
-`FactGraph`/primitive compiler (`geometry_compiler/`) là lát cắt thực nghiệm thế hệ trước (viết chuỗi lệnh theo từng họ bài khi opt-in), **không phải** kiến trúc **Hybrid** mục tiêu. Tag Git
-`SEMANTIC_PROGRAM_CONTRACT_V1` là **mốc lịch sử** tại commit `8dbd5bc7`: nó thêm contract/validator/schema V1; contract hiện
-hành đã tiếp tục tiến hoá và được khoá bằng code Pydantic + hai schema sinh đồng bộ. Tag không được dùng làm version runtime,
-không có script nào resolve tag này, và không bị di chuyển/xoá trong cleanup.
+Tag Git `SEMANTIC_PROGRAM_CONTRACT_V1` là **mốc lịch sử** tại commit `8dbd5bc7`; contract IR hiện hành được khoá bằng code Pydantic + hai schema sinh đồng bộ. Tag rollback trước cutover Hybrid `/4` là `pre-hybrid-cutover-f986e897`.
 
-### 2b. Phân định các chế độ kiến trúc
+### 2b. Phân định chế độ hiện hành, phần tương thích giữ lại và mã legacy đã xoá
 
-1. **Tuyến sản phẩm đang chạy mặc định (`AS-IS: DEFAULT_MODE = LLM_ONLY`; cache đọc tại `backend/app/main.py`, trạng thái tích hợp ở `CURRENT_STATE.md`):**
-   - Đề bài qua Analyze LLM tạo `RequestContract`.
-   - `stage_semantic_program` gọi Gemini để tổng hợp `SemanticProgramSpec`.
-   - Cổng tất định kiểm định tĩnh, thực thi sinh timeline, kiểm tra ràng buộc nguồn/chứng chỉ giả định và nghĩa vụ trực quan.
-   - Giữ làm tuyến mặc định hiện hành và đường đối chứng; không thêm năng lực mô phỏng mới trên `LLM_ONLY` (`docs/architecture/TEXT_TO_GEOMETRY_FUNCTIONS_DECISION.md`).
+1. **Tuyến sản phẩm mặc định duy nhất (`AS-IS: Hybrid /4` trên `POST /api/analyze`; [`ALGOSIM_HYBRID_CUTOVER_FINAL_REPORT.md`](evaluation/geometry/runs/hybrid-master-backend-replacement/ALGOSIM_HYBRID_CUTOVER_FINAL_REPORT.md)):**
+   - `HYBRID_ROUTE_MODE=live` là mặc định (thiếu `GEMINI_API_KEY` trả HTTP `503 MISSING_API_KEY`; `ALLOW_LIVE_AI=0` trả HTTP `503 LIVE_AI_DISABLED`).
+   - `HYBRID_ROUTE_MODE=staging-replay` chỉ dùng cho replay offline trong development/test.
+   - `HYBRID_ROUTE_MODE=off` (hoặc giá trị không hợp lệ) **không** fallback về `LLM_ONLY` mà trả HTTP `503 INVALID_HYBRID_ROUTE_MODE`.
+   - Rollback kiến trúc thực hiện qua phiên bản Git/deployment trước cutover (`pre-hybrid-cutover-f986e897`).
 
-2. **Lát cắt compiler theo họ bài thế hệ cũ (`geometry_compiler/` — Opt-In Historical Slice, KHÔNG đánh đồng với Hybrid):**
-   - Triển khai trên 6 họ bài cố định (`geometry_compiler/compiler.py::SUPPORTED_FAMILIES`), nhận `RequestContract` + `structured_relations` qua `FactGraph` để sinh `SemanticProgramSpec`.
-   - Giữ nguyên trạng thái opt-in để bảo toàn kiểm thử hồi quy lịch sử, **không mở rộng tiếp và không phải kiến trúc Hybrid mục tiêu**.
+2. **Thành phần tương thích giữ lại (`COMPATIBILITY_REQUIRED`, `LEGACY_FULLY_RETIRED = NO`):**
+   - `semantic_program/route.py::verify_and_compile`, `formation.py`, `interpreter.py`, `scene3d.py` và `request_contract.py` được giữ làm hạ tầng kiểm định IR/Scene3D tất định dùng chung phía sau `engine.py` và `adapter4_route.py`. `RequestContract` **không** còn là đầu ra trích xuất của LLM.
 
-3. **Kiến trúc mục tiêu (`TO-BE: Hybrid` — [`HYBRID_B_TARGET_ARCHITECTURE_DECISION.md`](architecture/HYBRID_B_TARGET_ARCHITECTURE_DECISION.md), [`TEXT_TO_GEOMETRY_FUNCTIONS_CONTRACT.md`](architecture/TEXT_TO_GEOMETRY_FUNCTIONS_CONTRACT.md), [`TYPEDFACT_NEXT_ADAPTER3_CONTRACT.md`](architecture/TYPEDFACT_NEXT_ADAPTER3_CONTRACT.md)):**
-   - **AI chỉ trích xuất JSON Typed Facts** (`TypedFact` / `TypedFactNext`) kèm trích dẫn nguyên văn câu đề (`fact_extraction.py` `hybrid-semantic-extraction/3`, `typed_fact_next.py` `typed-fact-next/1`).
-   - **Semantic Grounding (`kiem_nguon` 6 tầng tại `registry.py`):** Kiểm chứng trích dẫn nguồn, vai trò mệnh đề, phủ định, vị từ, giá trị và văn phạm câu hỏi.
-   - **Goal-Directed Construction Planner tất định (`planner.py`, `geometry-fact-planner/15`):** Tự phân rã mục tiêu và phối hợp các hàm trong thư viện **Geometry Functions** (`registry.py`, `geometry-functions/14`, 37 hàm) mà không để LLM tự chọn chuỗi hàm. Phạm vi đã đo: phối hợp mục tiêu tổng quát **có biên** trong Registry (độ sâu 3, ≤ 64 lời gọi) + điều phối riêng cho thiết diện (chọn đỉnh cắt `Meet`) viết tay — **không** phải bộ lập kế hoạch hình học tổng quát ([`PLANNER_GENERALIZATION_GAP_REPORT.md`](evaluation/geometry/runs/hybrid-session4a-readiness/PLANNER_GENERALIZATION_GAP_REPORT.md)).
-   - **Compiler / Construction IR & Engine / Kernel (`engine.py` `geometry-function-engine/14`, `adapter3_simulation.py` `hybrid-simulation-adapter/3`):** Chuẩn hoá quan hệ có tiền điều kiện, tự tính bố cục khung affine + metric Gram hữu tỉ $G$, kiểm lại mọi dữ kiện, biên dịch qua IR/Kernel và xuất `Scene3D`.
-   - *(Lưu ý: Tuyến đối chứng "Baseline A" nơi AI gọi trực tiếp hàm dựng qua `function_calling.py` chỉ dùng để so sánh thực nghiệm. Cả tuyến **Hybrid** lẫn Baseline A đều chưa bật làm mặc định của sản phẩm cho tới khi vượt qua đủ 20 cổng tại `docs/MIGRATION_CHECKLIST.md`.)*
+3. **Thành phần legacy đã loại bỏ khỏi thực thi (`LEGACY_EXECUTION_RETIRED = YES`):**
+   - Orchestrator `LLM_ONLY` (`app/ai/pipeline.py` — sinh chương trình theo từng đề), `Adapter /3` (`app/ai/adapter3_simulation.py`), lát cắt `Compiler C` (`app/simulation/geometry_compiler/*`) và các cờ `HYBRID_V2_LOCAL`, `GEOMETRY_COMPILER_MODE` đã bị xoá khỏi mã sản phẩm.
 
-4. **Các thành phần chưa triển khai hoặc đang mở:**
-   - Bộ giải bố cục không gian đa mục tiêu tổng quát cho mọi cấu hình bất kỳ ngoài các lớp khung affine + Gram đã đăng ký.
-   - Đường ống bóc tách vùng ảnh / OCR tự động hoàn toàn không cần checkpoint xác nhận của người học.
-   - Chuyển đổi mặc định sản phẩm sang **Hybrid** (cần hoàn tất đánh giá live theo ngân sách và vượt đủ 20 cổng tại `docs/MIGRATION_CHECKLIST.md`).
+4. **Các giới hạn và hạng mục nghiên cứu đang mở:**
+   - Kiểm định độc lập trên bộ 60 đề tiếng Việt mới `H-1` (`INDEPENDENT_H1_VALIDATION = NOT_MEASURED`; không đánh đồng C26 hay Full T3 với `H-1`).
+   - Xác minh live smoke mới sau cutover (`NEW_LIVE_SMOKE_NOT_MEASURED`) và triển khai production (`PRODUCTION_DEPLOYMENT_VERIFIED = NO`).
+   - Bộ giải bố cục không gian đa mục tiêu tổng quát ngoài các lớp khung affine + Gram đã đăng ký, và OCR ảnh tự động không cần checkpoint người học.
 
 ### 2c. Scene3D edge identity và occlusion (amendment 2026-09-28)
 
@@ -124,12 +107,11 @@ hiện hành chỉ nằm ở `docs/CURRENT_STATE.md`.
 
 ### 2d. Dựng hình theo lớp hình và chính sách nguồn (w14)
 
-- **Một bước bổ sung, mọi tuyến.** `semantic_program/formation.py::hoan_thien_dung_hinh`
-  chạy ngay đầu `route.verify_and_compile` và `pipeline._dung_scene3d`: cùng đầu vào
+- **Một bước bổ sung trong bộ kiểm định IR dùng chung.** `semantic_program/formation.py::hoan_thien_dung_hinh`
+  chạy ngay đầu `route.verify_and_compile` (`COMPATIBILITY_REQUIRED` phía sau `engine.py` / `adapter4_route.py`; `pipeline._dung_scene3d` đã gỡ ở cutover Hybrid `/4`): cùng đầu vào
   tất định ⇒ cùng spec, nên số khung envelope = số bước formation (#31). Nó chèn
   đáy/đáy trên còn thiếu, đường cao và cạnh bên thành câu lệnh thật trước
-  `construct_solid` — mỗi bước là một sự kiện trace thật — cho chương trình compiler
-  LẪN LLM. Không đổi bản gốc, lũy đẳng; đầu ra phải qua lược đồ + `kiem_tinh`, hỏng
+  `construct_solid` — mỗi bước là một sự kiện trace thật. Không đổi bản gốc, lũy đẳng; đầu ra phải qua lược đồ + `kiem_tinh`, hỏng
   thì giữ bản gốc (`COMPLETION_REJECTED_INVALID_OUTPUT`). Bước này ở server nên bề
   mặt mô hình không đổi.
 - **Thẩm quyền topology, theo thứ tự:** `contract.solid_topology` khớp khối → quan hệ
@@ -149,8 +131,7 @@ hiện hành chỉ nằm ở `docs/CURRENT_STATE.md`.
   không đọc từ HTTP, mô hình hay cấu hình; không đường sản phẩm nào khai.
 - **Một từ vựng nối độ dài** (`segment_relation._NOI_DO_DAI`) dùng chung cho bộ đọc
   độ dài và nhãn bằng chứng GIVEN.
-- **Chưa có:** dựng hình khối cong; đường cao khi chân là điểm dẫn xuất chưa dựng.
-  (Cổng giả định: có từ w15 — §2e.)
+- *(Lưu ý lịch sử w14: khối tròn xoay cơ sở và các bước dựng liên tục trên Route D `/4` đã được bổ sung ở các đợt sau qua `engine.py`, `function_route.py` và `construction_continuity.py`; cổng giả định có từ w15 — §2e.)*
 
 ### 2e. Ràng buộc đọc từ đề và chứng chỉ giả định (w15)
 
@@ -226,7 +207,7 @@ Thẩm quyền đăng ký: [`docs/architecture/ASSUMPTION_CERTIFICATE_AMENDMENT.
   hỏi CÓ toạ độ, không đọc giá trị. Grounding ⑥/⑦ vẫn chặn sớm hơn các ca của chúng.
 - **Thi hành.** Từ chối ở chặng `assumption` (`INPUT_NOT_GROUNDED`;
   `ASSUMPTION_DETERMINES_ANSWER` nêu đại lượng thiếu, hoặc `ASSUMPTION_INVARIANCE_UNPROVEN`);
-  `pipeline.KHONG_SUA_NGUON` không gửi đi sửa; `learner_messages` có hai câu tiếng Việt.
+  không gửi đi sửa bằng LLM (`pipeline.KHONG_SUA_NGUON` thời trước cutover đã gỡ cùng `LLM_ONLY`); `learner_messages` có hai câu tiếng Việt.
   U3: chỉ TỪ CHỐI khi `neu_khoi_da_dien` đúng; ngoài vùng ghi `assumption_enforced = false`.
   U5: `CLOSURE_MULTIPLE_DEFINITIONS` bị từ chối ở MỌI vùng. Lỗi bên trong cổng ⇒ từ chối
   có mã trong vùng, không bao giờ HTTP 500.
@@ -244,7 +225,7 @@ Thẩm quyền đăng ký: [`docs/architecture/ASSUMPTION_CERTIFICATE_AMENDMENT.
   độc lập tái hiện tập đã duyệt ở camera đăng ký lẫn camera mới, và sản phẩm = oracle trên
   mọi trạng thái; khác đi là lỗi. Registry người không bao giờ bị sửa.
 
-**Ranh giới R0 nằm ngay sau bước sinh chương trình ngữ nghĩa.** Không có lượt gọi model nào sau đó; `servable` quyết định có phát canonical.
+**Ranh giới R0 trên kiến trúc Hybrid `/4` nằm ngay sau bước trích xuất `TypedFactNext /2`.** Không có lượt gọi model nào để sinh hay sửa chương trình sau đó; Source Gate, Planner `/26`, Exact Kernel `/24` và `servable` của bộ kiểm định tất định quyết định có phát canonical hay không.
 
 Chi tiết dành cho khoá luận — sơ đồ, vùng LLM/tất định, đường từ chối:
 **`docs/research/thesis/THESIS_ARCHITECTURE.md`**.
@@ -267,14 +248,14 @@ Chi tiết dành cho khoá luận — sơ đồ, vùng LLM/tất định, đư�
 | Luật hợp lệ của spec | `semantic_program/contract.py` (Pydantic) + `ir_static_check.kiem_tinh` (+ mirror JSON Schema, hai bản) | lược đồ rồi mới tới thẩm định tĩnh |
 | Timeline / state / kết quả | **engine tất định** (`semantic_program/interpreter.py` + `simulation/geometry/`) | LLM **không bao giờ** |
 | Đại lượng (khoảng cách, góc, thể tích) | `simulation/geometry/measure.py` — `Fraction` + `Radical` | **không có `float`** trong miền hình học |
-| **Chương trình ngữ nghĩa (IR)** | LLM tổng hợp, **server đóng băng nghĩa vụ trước** (`RequestContract`) | IR là *chương trình ứng viên*; chạy nó KHÔNG phải việc của LLM |
+| **Chương trình ngữ nghĩa (IR)** | **Engine tất định** phát ra qua `ir_builders.py` từ kế hoạch của `Planner /26` (`RequestContract` chỉ giữ vai trò `COMPATIBILITY_REQUIRED` nội bộ) | LLM **không** sinh chương trình IR theo từng đề (`LLM_ONLY` đã gỡ) |
 | **Trace thực thi** | `semantic_program/interpreter.py` — **authority tất định** | ngân sách **thực thi**; chạm trần phải BÁO |
 | **Khung hình (frame)** | `semantic_program/visual_adapter.py` | song ánh `frame k ⇔ trace[k]` — điều kiện để bất biến #31 là định lý |
-| **Thư viện hàm, Planner & Engine của kiến trúc Hybrid** | `geometry_functions/registry.py` (`geometry-functions/14`, 37 hàm) · `planner.py` (`geometry-fact-planner/15`) · `engine.py` (`geometry-function-engine/14`) · `adapter3_simulation.py` (`hybrid-simulation-adapter/3`) | AI chỉ trích xuất `TypedFact` / `TypedFactNext`; Planner tất định phối hợp hàm; Engine sở hữu khung affine + metric Gram và kiểm chứng mọi dữ kiện |
+| **Trích xuất, Planner, Registry, Engine & Adapter của kiến trúc chính thức `Hybrid /4`** | `typed_fact_next.py` (`typed-fact-next/2`) · `typed_fact_next_bridge.py` (`typed-fact-next-bridge/2`) · `registry.py` (`geometry-functions/33`, 49 hàm, `kiem_nguon`) · `planner.py` (`geometry-fact-planner/26`) · `engine.py` (`geometry-function-engine/24`) · `adapter4_route.py` (`hybrid-simulation-adapter/4`) | Gemini chỉ trích xuất `TypedFactNext /2`; Source Gate xác minh câu đề; Planner tất định phối hợp hàm; Engine sở hữu khung affine + metric Gram chính xác; Adapter `/4` xuất `Scene3D` + bước dựng liên tục |
 | **Bước xem (view step) & dòng thời gian dựng hình** | `semantic_program/pacer.py` (2D dự phòng) · `scene3d-model.ts::geometryTimeline` (Scene3D, #35) | ngân sách **trình bày**, tách hẳn ngân sách thực thi; phân hoạch đầy đủ, không cắt câm |
 | **Bố cục/kích thước canvas & camera 3D** | **RENDERER** (`scene3d-camera.ts`, `scene3d-view.tsx`, `interaction-state.ts`) — không bao giờ là engine state | xem quy tắc renderer-neutral ở §3b bên dưới |
 | Định tuyến bài → mô phỏng | `domain_profile.co_duong_thuc_thi` (TẤT ĐỊNH, 0 lượt gọi) | không còn classify; đề không ánh xạ tới nghĩa vụ có checker ⇒ chặn trước mọi lượt gọi |
-| Phán quyết "có phát hay không" | `route.verify_and_compile` → `servable` (tuyến `LLM_ONLY`) · `kiem_nguon` + `engine` + `validate_geometry_v2` (tuyến **Hybrid**) | `executable` mà `not servable` = `verification_gap`, **không** được gộp |
+| Phán quyết "có phát hay không" | `kiem_nguon` + `planner` + `engine` + `construction_continuity` + `adapter4_route` (`route.verify_and_compile` → `servable`) trên tuyến chính thức **Hybrid `/4`** | `executable` mà `not servable` = `verification_gap`, **không** được gộp |
 | Đúng/sai của kết quả hình học | **chỉ engine/checker tất định** (`geometry_obligations.py::GEOMETRY_CHECKERS`, hậu điều kiện, chứng chỉ thể tích) | không còn bề mặt phán quyết cho học sinh (#10, #11) |
 | Cấu hình đang chạy | store (`active.config`) — **opaque**, bất biến | store mù domain |
 | Mặt trình bày đang mở (home/workspace/history) | store — `view` (M9-UX1) | trình bày thuần, không đụng engine |
@@ -301,11 +282,11 @@ History schema/records remain unchanged; reopen revalidates before restoring pro
 ## 4. Hướng phụ thuộc (không được đảo)
 
 ```
-# Tuyến sản phẩm mặc định (AS-IS: LLM_ONLY — 2026-08-20) — KHÔNG được đảo:
-contract ← validator / ir_static_check ← formation ← interpreter (geometry kernel) ← visual_adapter ← pacer ← envelope ← pipeline ← main
+# Tuyến sản phẩm mặc định hiện hành (AS-IS: Hybrid /4 — 2026-11-04) — KHÔNG được đảo:
+typed_fact_next ← typed_fact_next_bridge ← registry ← planner / engine ← function_route / construction_continuity ← adapter4_route ← hybrid_offline ← main
 
-# Kiến trúc mục tiêu (TO-BE: Hybrid) — KHÔNG được đảo:
-registry ← planner / engine ← fact_route / adapter3_simulation ← hybrid_preview
+# Hạ tầng kiểm định IR & Scene3D tất định dùng chung (COMPATIBILITY_REQUIRED) — KHÔNG được đảo:
+contract ← validator / ir_static_check ← formation ← interpreter (geometry kernel) ← visual_adapter ← pacer ← pipeline_adapter / route ← adapter4_route
 
 # Frontend — KHÔNG được đảo:
 types ← registry ← store ← components
@@ -352,7 +333,7 @@ Store **không** biết domain (không import Trace/SimulationSpec/mảng).
 | 18 | **LỊCH SỬ** — **Nghĩa của chiều sâu 3D phải TRUNG THỰC, và chỉ nghĩa SƯ PHẠM mới được bày cho học sinh** (M10, siết ở W4B-2R): module có 3D khai `threeD.role` = `pedagogical` (Z mã hoá biến khái niệm thật — `network.protocol_encapsulation`: **Z = tầng giao thức**, X = chiều truyền). W4B-2R nâng M10 từ *khai báo trung thực* lên *chính sách*: `architectural_poc` (Z chỉ là bố cục) **KHÔNG đủ tư cách bày toggle 2D/3D** — đó chính là `2D_AND_3D_BY_DEFAULT`. Tiền lệ: `network.packet_routing` tự khai `architectural_poc` + `meaningOfZ = "bố cục, không mang nghĩa khái niệm"`, nên W4B-2R **hạ nó về 2D_ONLY và gỡ `ui3d.tsx`**. Danh mục nay **22 × 2D_ONLY · 0 × 3D_ONLY · 1 × 2D_AND_3D_JUSTIFIED**. PDU là state ngữ nghĩa dùng chung (2D+3D đọc cùng), 3D không tính lại PDU | Không áp dụng như đã viết: chính sách biểu diễn quản các module Tin học tự chọn nghĩa cho Z; ở hình học Z là toạ độ thật từ kernel chính xác. Glyph mạng và hai test gỡ ở `6703c48a`; `threeD` và `representationPolicyOf` còn sót trong `types.ts`, `renderer.ts`, không module nào khai. Kế nhiệm: hợp đồng khuất/hiện `OCCLUSION_AND_SCENE_IDENTITY_AMENDMENT.md` (sản phẩm phân loại, oracle độc lập kiểm) | kế nhiệm: `scene3d-occlusion-gates.test.ts`; bốn cảnh W14 đổi còn chờ người duyệt (`ISSUE-EVAL-HUMAN-VISIBILITY-REGISTRY-PREDATES-S4`) |
 | 19 | **Alembic sở hữu schema Postgres bền** (DB-HARDEN-2, *chất lượng triển khai — không phải đóng góp học thuật*): tạo & tiến hoá schema PostgreSQL do **Alembic** sở hữu DUY NHẤT (`alembic upgrade head` ở entrypoint Docker). `create_all()` chỉ dành cho SQLite ephemeral/test, KHÔNG phải cơ chế migration của Postgres; runtime **không** lặng lẽ `create_all()` trên Postgres (quyết định theo `engine.dialect.name`, không string-check URL). Không tự động `stamp` DB lạ | `db.py::init_db` (gate qua `sqlite_owns_schema`) + entrypoint Docker | `test_db_ownership.py`, `test_migration_drift.py` (cổng chống trôi, có fault-injection proof), `test_postgres_integration.py` (smoke opt-in) |
 | 20 | **LỊCH SỬ** — **Toán hạng numeric/logical của một rule generic phải có nguồn giá trị theo hợp đồng ngữ nghĩa DẪN XUẤT TỪ MANIFEST — không có thì reject, không bao giờ hoá 0 im lặng** (M13): validator hai tầng từ chối operand không phải *value-provider* của role rule cần (`INVALID_SOURCE` — vd `edge`/`node` không có `value`) và từ chối derived-target sai role theo `role_satisfies()` — subtyping **MỘT CHIỀU** dẫn xuất từ `role_compatibility` trong contract (M13 hotfix: `logical` satisfies `numeric` — boolean executor sinh đúng 0/1, KHÔNG runtime conversion; vd `weighted_sum` numeric vẫn không được ghi vào `node` relational). Mọi cặp khác **DENY mặc định**; chiều ngược `numeric ↛ logical` LUÔN deny (đó chính là coercion ngầm `v>=1` mà check này sinh ra để diệt) — chỉ mở cặp mới khi matrix audit chứng minh được fixture thật; runtime hai tầng KHÔNG BAO GIỜ seed/fallback một giá trị thiếu/chưa resolve thành 0 — ném lỗi TYPED fail-closed tại ranh giới evaluator (4 mã: `invalid_numeric_source` / `missing_weight` / `unresolved_dependency_after_bound` / `non_finite_numeric_value`). Sự cố gốc đã sửa: `weighted_sum` ăn input là id một `edge` (fixture "pseudo-Dijkstra" — TÁI DỰNG, artifact gốc không khôi phục được từ cache/localStorage) từng lặng lẽ hoá 0 → cảnh "chạy" đủ bước, kết quả sai câm; validator siết chặt tự động bảo vệ luôn cả đường pattern-reuse (fixture cũ mang shape cấm bị chặn ngay ở cổng 1 `run_gates`, không cần sửa riêng) | Không áp dụng: rule generic, DSL và hợp đồng dẫn xuất từ manifest đã gỡ (`e664f683`, `6703c48a`). Kế nhiệm trong IR: toán hạng là TÊN; validator và static check từ chối tên chưa khai, sai kiểu, dùng trước khi dựng, bằng mã có kiểu; phép dựng hỏng làm chương trình hỏng | kế nhiệm: `test_geometry_ir.py::test_tham_chieu_ten_KHONG_KHAI_bi_VALIDATOR_bat_tinh` · `test_geometry_ir.py::test_dung_SAI_KIEU_thi_hong` · `test_geometry_ir.py::test_giao_duong_CHEO_NHAU_thi_chuong_trinh_HONG` |
-| 22 | **Bộ đo phải gọi đúng production orchestration của `/api/analyze`; không tái dựng riêng chuỗi analyze → synthesize → gate → execute.** Observer chỉ được thu event, không đổi routing/retry/gate/output; `observer=None` phải giữ hành vi sản phẩm. Runner nghiệm thu hiện hành gọi các stage sản phẩm và cửa `route.py::verify_and_compile`; bằng chứng catalog Tin học M14/M16 đã retire sau khi consumer nghiên cứu của nó kết thúc. | `pipeline.py::run_pipeline` · `run_thesis_final_acceptance.py` · `semantic_program/route.py::verify_and_compile` | `test_synthesis_repair_trace.py::test_F2_pipeline__final_memory_chuong_trinh_so_luot_GIONG_khi_co_observer` · `test_thesis_runner_alignment.py` |
+| 22 | **Bộ đo phải gọi đúng production orchestration của `/api/analyze`; không tái dựng riêng chuỗi xử lý ngoài tuyến sản phẩm.** Telemetry/trace chỉ được thu event thụ động, không đổi routing/gate/output. Từ cutover Hybrid `/4` (2026-11-04), `/api/analyze` đi qua `_analyze_hybrid_route` → `hybrid_offline.py::run_hybrid_offline` → `adapter4_route.py::run_typed_fact_next_v2_route` / `build_adapter4_response` → `route.py::verify_and_compile` (`pipeline.py` và `run_thesis_final_acceptance.py` đã retire cùng `LLM_ONLY`). | `main.py::_analyze_hybrid_route` · `adapter4_route.py::run_typed_fact_next_v2_route` · `semantic_program/route.py::verify_and_compile` · `scripts/replay_demo_cases.py` | `test_hybrid_cutover_verification.py` · `test_final_backend_product_completion.py` |
 | 23 | **LỊCH SỬ** — **Mechanism ownership được khai ở mức FamilyMembership; mechanism taxonomy dùng canonical namespaced IDs với một compatibility alias boundary duy nhất; consistency gate so sánh tín hiệu cơ chế có cấu trúc trên final route sau bounded reclassification** (M15). Giải thích: family mới khai `owned_mechanisms` máy-đọc-được ngay trên membership; giá trị analyze legacy được normalize tại ĐÚNG MỘT chỗ (`canonical_mechanism` — alias một chiều, không phải taxonomy thứ hai); gate và descriptor CHỈ so canonical values; route-consistency chạy trên FINAL route (không route-dependent gate nào chạy trên route tạm — `analyze → classify → recovery ≤1 reclassify → FINAL ROUTE → gates → simulate`); cơ chế không sở hữu → retry có giới hạn (cross-family mismatch, `ROUTE_MECHANISM_FAMILY_MISMATCH`) hoặc fail-closed `capability_gap` (cùng-family unowned, `GATE_MECHANISM_OWNERSHIP`); định tuyến KHÔNG dựa keyword-patch — chỉ so tín hiệu cấu trúc. Giá trị analyze-exposed không ai sở hữu phải khai tường minh trong `INTENTIONAL_GAP_MECHANISMS` (owned XOR intentional-gap) | Không áp dụng: classify, họ và taxonomy cơ chế đã gỡ (`e664f683`, `6d5f5fda`); tuyến hình học không classify (`domain_profile.py::detect_domain` tất định) | bằng chứng: `test_geometry_route_independence.py` (vòng phục hồi của classifier nằm trong danh sách tên bị cấm trên tuyến hình học) |
 | 21 | *Đang khoá ở dạng hiện hành (2026-10-05): yêu cầu giữ nguyên, cơ chế đổi — cổng phủ C₁a/C₁b; phần cơ chế M13 dưới đây là lịch sử.* **Yêu cầu tính-kết-quả-thuật-toán mà không có executor tất định nào sở hữu → `capability_gap` trên đường generic, KHÔNG dựng cảnh minh hoạ đáp án** (M13): SERVER ra phán quyết cuối, tất định, trên **tín hiệu CÓ CẤU TRÚC** — hai kênh bổ sung nhau: (1) `known_gap_roles()` lọt vào `unsupported_capabilities` của representation plan (vd role `arbitrary_algorithm`); (2) `analysis.result_ownership` **fail-closed** — chỉ `"provided"`/`"rule_derivable"` được đi tiếp, `"algorithmic"` HOẶC thiếu/ngoài enum đều → gap (không default sang giá trị nào). Kênh 2 bắt được cả khi kênh 1 bị bỏ sót role (không phụ thuộc MỘT kênh prompt duy nhất). Giữ nguyên carve-out chuyên biệt (bất biến #5 — gap của DSL generic không lây sang specialized). Đây là lớp phòng thủ TRƯỚC khi simulate chạy (chặn ở classify/analyze), bổ sung — không thay thế — invariant #20 (chặn Ở VALIDATOR nếu vẫn lọt qua tới đó); artifact "pseudo-Dijkstra" là ca cụ thể bị #20 chặn, còn #21 là cơ chế chặn SỚM HƠN dựa trên ý định của đề bài | `coverage_gate.py` — C₁a: mọi nghĩa vụ cần một bước phủ; C₁b: nhân chứng phải dẫn xuất từ dữ liệu, đáp án khai hay gán thẳng bị từ chối; họ ngoài phạm vi: `product_capability.py`. Cơ chế M13 gỡ ở `e664f683` | `test_geometry_coverage_gate.py` (khai/gán thẳng đáp án ⇒ trượt; phụ thuộc rỗng ⇒ cả ca đúng cũng trượt — khoá hồi quy) · `test_coverage_gate_c1a.py` |
 

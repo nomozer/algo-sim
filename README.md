@@ -15,46 +15,22 @@ bằng **số chính xác tuyệt đối** — không làm tròn ở bất kỳ 
 không phải một chi tiết kĩ thuật. Mục tiêu của sản phẩm là **mô phỏng 3D hình học
 không gian tương tác**, không phải hệ thống tự động giải và chứng minh mọi bài toán.
 
-Hệ thống phân biệt rõ **tuyến sản phẩm mặc định hiện hành (`AS-IS`)** và **kiến trúc
-mục tiêu (`TO-BE: Hybrid`)**:
-
-### Tuyến sản phẩm mặc định hiện hành (`AS-IS: DEFAULT_MODE = LLM_ONLY`)
+Kiến trúc giải toán và mô phỏng chính thức của sản phẩm trên `POST /api/analyze` là **Hybrid `/4`** (`HYBRID_ROUTE_MODE = live` mặc định; `staging-replay` cho replay offline trong phát triển/kiểm thử; tuyến `LLM_ONLY`, `Adapter /3` và `Compiler C` cũ đã gỡ bỏ, không có fallback ngầm):
 
 ```
 đề tiếng Việt
-   → LLM: đọc đề        → RequestContract  (dữ kiện + nghĩa vụ, ĐÓNG BĂNG)
-   → LLM: tổng hợp      → Semantic Program (các BƯỚC DỰNG, không có toạ độ kết quả)
+   → Gemini: trích xuất → TypedFactNext /2 (dữ kiện, quan hệ, mục tiêu + trích dẫn nguyên văn câu đề)
    ─────────────────── từ đây trở đi KHÔNG có LLM ───────────────────
-   → thẩm định lược đồ · thẩm định tĩnh
-   → đối chiếu dữ kiện với câu đề · chứng chỉ giả định · đối chiếu phép dựng
-   → thực thi (số hữu tỉ + căn, CHÍNH XÁC)
-   → checker (kiểm lại kết luận từ HÌNH, không tin con số chương trình khai)
-   → trace + cảnh 3D
+   → Source Gate (xác minh trích dẫn nguồn, vai trò mệnh đề, phủ định, số đo; cần làm rõ ⇒ route-d-clarification/1)
+   → FactGraph & Planner /26 (tất định tự chọn và phối hợp hàm từ Registry /33)
+   → Exact Kernel /24 (khung affine + metric Gram chính xác Fraction / Radical + chứng chỉ hình học)
+   → Adapter /4 (kiểm định IR/Scene3D + bước dựng tích lũy liên tục + kết quả chính xác)
+   → Scene3D + Construction Steps + Results
 ```
 
-### Kiến trúc mục tiêu (`TO-BE: Hybrid` — đang phát triển và đánh giá, chưa bật làm mặc định)
+*(Chi tiết kiến trúc và trạng thái các cổng kiểm chứng xem tại [`docs/ARCHITECTURE_MAP.md`](docs/ARCHITECTURE_MAP.md), [`docs/CURRENT_STATE.md`](docs/CURRENT_STATE.md) và [`docs/MIGRATION_CHECKLIST.md`](docs/MIGRATION_CHECKLIST.md).)*
 
-```
-đề tiếng Việt
-   → AI: trích xuất     → JSON Typed Facts (TypedFact / TypedFactNext)
-   ─────────────────── từ đây trở đi KHÔNG có LLM ───────────────────
-   → Semantic Grounding (đối chiếu nguyên văn câu đề, vai trò mệnh đề, đơn vị)
-   → Goal-Directed Construction Planner (tất định tự phối hợp Geometry Functions)
-   → Compiler / Construction IR
-   → Geometry Functions / Engine / Kernel (khung affine + metric Gram chính xác)
-   → Scene3D
-```
-
-*(Tuyến sản phẩm mặc định chưa chuyển sang **Hybrid** cho tới khi vượt qua đủ 20 cổng tại
-[`docs/MIGRATION_CHECKLIST.md`](docs/MIGRATION_CHECKLIST.md); chi tiết tại
-[`docs/ARCHITECTURE_MAP.md`](docs/ARCHITECTURE_MAP.md) và [`docs/architecture/README.md`](docs/architecture/README.md).)*
-
-LLM **không bao giờ** phát một toạ độ kết quả. Nó nói *"giao tuyến của (SAB)
-và (SCD)"* (trên tuyến `LLM_ONLY`) hoặc chỉ trích xuất dữ kiện có kiểu kèm trích
-dẫn nguyên văn câu đề (trên kiến trúc **Hybrid**); toạ độ và phép dựng do nhân hình
-học tính. Mọi toán hạng hình học trong chương trình là **TÊN** của một vật đã dựng
-— cưỡng chế ở lược đồ, không phải nhắc trong prompt. LLM không sinh hoạt hình,
-không sinh toạ độ, không quyết đúng/sai.
+Gemini **không bao giờ** phát toạ độ kết quả và **không** sinh chương trình giải riêng cho từng đề bài. Nó chỉ trích xuất dữ kiện, quan hệ và mục tiêu hình học theo hợp đồng đóng `TypedFactNext /2` kèm trích dẫn nguyên văn câu đề; toàn bộ việc kiểm nguồn, chọn hàm dựng, tính toạ độ/metric Gram, kiểm chứng và xuất hoạt cảnh `Scene3D` đều do engine tất định thực hiện.
 
 Một bài mới trong phạm vi các bước dựng đã có **không cần mã riêng theo dạng
 bài**; bài ngoài phạm vi ấy bị **từ chối có cấu trúc** (nói dừng ở chặng nào, vì
@@ -80,10 +56,8 @@ Năng lực chính xác của sản phẩm (họ khối, phép dựng, phép đo
 
 - Chỉ những bài **biểu diễn được bằng các bước dựng hiện có**; phủ chương trình
   Toán 11–12 là một phần, có chủ đích.
-- Trên tuyến sản phẩm mặc định (`LLM_ONLY`), khối có mặt cong (cầu, trụ, nón),
-  nhiều khối trong một đề và đề từ ảnh chụp **chưa** là năng lực sản phẩm đầy đủ
-  (các lát cắt mở rộng trên kiến trúc **Hybrid** được kiểm chứng riêng theo từng
-  đợt trong [`docs/architecture/README.md`](docs/architecture/README.md)).
+- Tuyến mặc định **Hybrid `/4`** hỗ trợ các lớp đa diện, thiết diện, khoảng cách/góc/thể tích và các lát cắt khối tròn xoay/nhiều khối đã đăng ký trong `Registry /33`, nhưng **không** tuyên bố giải mọi bài hình học không gian bất kỳ; đề từ ảnh chụp chỉ đi tiếp sau bước người học kiểm tra và xác nhận văn bản.
+- **Giới hạn kiểm chứng hiện hành:** Kiểm định độc lập trên bộ 60 đề tiếng Việt mới `H-1` (`INDEPENDENT_H1_VALIDATION = NOT_MEASURED`), live smoke sau cutover (`NEW_LIVE_SMOKE_NOT_MEASURED`) và xác minh triển khai production (`PRODUCTION_DEPLOYMENT_VERIFIED = NO`) vẫn chưa thực hiện.
 - Kéo–thả liên tục kiểu GeoGebra nằm ngoài phạm vi: tương tác là chọn và tua bước.
 - **Tác động lên người học chưa được đánh giá** — kiểm thử kỹ thuật không thay
   thực nghiệm sư phạm.
