@@ -739,26 +739,26 @@ module tồn tại mà không ai gọi thì không phải năng lực đang ch�
 `docs/evaluation/geometry/runs/repo-cleanup/relocated/capability-descriptors.json` là snapshot nguyên byte nằm trong
 inventory của chính run `repo-cleanup`; không còn consumer/test sống và không được regenerate thành dữ liệu hình học.
 
-## 0b. Điểm vào (entry point) — đã xác minh tồn tại ở baseline này
+## 0b. Điểm vào (entry point) — đã xác minh tồn tại trên `main` (Hybrid `/4`)
 
 | Vai trò | Vị trí |
 |---|---|
-| HTTP surface | `backend/app/main.py` — `/api/analyze`, `/api/image/extract`, `/api/health`, `/api/diagnostics/runtime`, `/api/diagnostics/semantic` |
+| HTTP surface | `backend/app/main.py` — `POST /api/analyze` (tuyến sản phẩm **Hybrid `/4`** mặc định: `HYBRID_ROUTE_MODE = live`, `staging-replay` cho dev/test, `CACHE_VERSION = 132`), `/api/image/extract`, `/api/health`, `/api/diagnostics/runtime`, `/api/diagnostics/semantic`, `/api/preview/hybrid` (loopback fixture preview) |
 | Router gắn thêm | `accounts/router.py` · `accounts/classroom_router.py` · `accounts/session_router.py` (`include_router` ở `main.py`) |
-| Production pipeline | `ai/pipeline.py::run_pipeline(text, api_key, pattern_store=None, observer=None)` |
-| Hai stage LLM (tất cả) | `ai/pipeline.py::stage_semantic_analyze` (đề → `RequestContract`) · `stage_semantic_program` (contract → IR ứng viên, ≤`TRAN_SUA` lượt sửa) |
-| Phán quyết tất định | `semantic_program/route.py::verify_and_compile` — MỘT cửa, mọi cổng nằm sau nó |
-| Fail-closed ngoài miền | `main.py` (biên API) và `pipeline.py::run_pipeline` — đề không phải hình học ⇒ `unsupported` + `out_of_scope`, **0 lượt gọi** |
+| Production pipeline (`Hybrid /4`) | `backend/app/main.py::_analyze_hybrid_route` → `backend/app/ai/hybrid_offline.py` (`prepare_live_hybrid` / `prepare_staging_replay` → `run_hybrid_offline`) → `backend/app/ai/adapter4_route.py` (`run_typed_fact_next_v2_route` / `build_adapter4_response`) |
+| Trích xuất LLM duy nhất | `backend/app/ai/typed_fact_next_extraction.py` → `backend/app/simulation/geometry_functions/typed_fact_next.py` (`typed-fact-next/2`, qua `typed_fact_next_bridge.py::bridge_v2`) — chỉ trích xuất dữ kiện, quan hệ và mục tiêu kèm trích dẫn câu đề; **không** sinh chương trình giải |
+| Cổng nguồn, lập kế hoạch & nhân hình học | `registry.py::kiem_nguon` (`geometry-functions/33`, 49 hàm) → `planner.py` (`geometry-fact-planner/26`) → `engine.py` (`geometry-function-engine/24`) → `function_route.py` + `construction_continuity.py` |
+| Kiểm định IR/Scene3D dùng chung (`COMPATIBILITY_REQUIRED`) | `backend/app/simulation/semantic_program/route.py::verify_and_compile` — kiểm định tất định IR, hậu điều kiện, chứng chỉ và `Scene3D` cho Adapter `/4` |
+| Fail-closed ngoài miền & hạ tầng | `backend/app/main.py` — đề ngoài miền ⇒ `unsupported` + `out_of_scope` (`GATE_OUT_OF_SCOPE`, **0 lượt gọi**); cấu hình/provider lỗi ⇒ HTTP `502`/`503`/`504` (`MISSING_API_KEY`, `LIVE_AI_DISABLED`, `INVALID_HYBRID_ROUTE_MODE`, v.v., `Cache-Control: no-store`) |
 | Registry (FE) | `simulations/registry.ts` — `registerSimulation` / `getSimulation` / `listSimulations`; nạp qua `simulations/index.ts::registerAllSimulations()` gọi ở `main.tsx` **trước** render |
 | Executor dispatch (FE) | `state/store.ts::loadEnvelope` gọi `getSimulation(id).validateConfig/init` — store **domain-blind** |
 | Mặt 3D | `components/SimulationWorkspace.tsx` gắn `Scene3DExplorer` khi envelope mang `scene3d` hợp lệ (`hopLeScene3D`) — **không** đi qua registry |
 | Lịch sử zero-AI | `state/history.ts` — `HISTORY_SCHEMA_VERSION`, `createHistoryStore`, `historyStore` |
 | Đo lường telemetry & audit tài liệu | `backend/scripts/audit_docs_information_architecture.py` · `backend/scripts/collect_docs_telemetry_evidence.py` · `backend/scripts/pytest_telemetry_plugin.py` |
 
-⛔ **Đã gỡ khỏi bảng này** (`GEOMETRY_PRODUCT_CUTOVER` → `FINAL_DEAD_EVALUATION_CLEANUP`):
-`/api/edit`, `/api/manifest`; ba stage `stage_analyze`/`stage_classify`/`stage_simulate`;
-`classify_with_one_route_recovery`; `app/validation/` (12 validator);
-⛔ `simulation/catalog.py::CATALOG` — tất cả đều **đã gỡ**, tra ở git history.
+⛔ **Đã gỡ khỏi bảng này (`HISTORICAL_REMOVED`):**
+- `FINAL_HYBRID_ARCHITECTURE_CUTOVER` (2026-11-04): orchestrator `LLM_ONLY` (`app/ai/pipeline.py`, `stage_semantic_analyze`, `stage_semantic_program`), `Adapter /3` (`app/ai/adapter3_simulation.py`), `Compiler C` (`app/simulation/geometry_compiler/*`) và 10 skill prompt tổng hợp cũ — tất cả **đã gỡ**, tuyệt đối không khôi phục.
+- `GEOMETRY_PRODUCT_CUTOVER` → `FINAL_DEAD_EVALUATION_CLEANUP`: `/api/edit`, `/api/manifest`; ba stage `stage_analyze`/`stage_classify`/`stage_simulate`; `classify_with_one_route_recovery`; `app/validation/` (12 validator); `simulation/catalog.py::CATALOG` — tất cả **đã gỡ**, tra ở git history.
 
 ## 0c. Trừu tượng DÙNG CHUNG — bắt buộc reuse, cấm viết bản thứ hai
 
@@ -768,7 +768,7 @@ nhiệm ở đây, mở đúng module đó — bản thứ hai là cách kho nà
 | Trách nhiệm | Module | Ghi chú |
 |---|---|---|
 | Dò miền + đường thực thi | `semantic_program/domain_profile.py` | `DOMAIN_HINH_HOC`, `co_duong_thuc_thi`, `khop_ky_hieu`, `program_skill_for`/`analyze_skill_for`. **Tất định, 0 lượt gọi.** Đề không ánh xạ được tới một nghĩa vụ CÓ checker ⇒ chặn trước mọi lượt LLM |
-| Hợp đồng yêu cầu | `semantic_program/request_contract.py` + `analyze_contract.py` | `RequestContract` — dữ kiện đề bài **đã đóng băng** sau analyze. Mọi cổng phía sau đối chiếu với nó, không đối chiếu với văn bản gốc |
+| Hợp đồng yêu cầu nội bộ (`COMPATIBILITY_REQUIRED`) | `semantic_program/request_contract.py` + `analyze_contract.py` | **Không** phải hợp đồng trích xuất của Gemini (Gemini dùng `TypedFactNext /2`); chỉ còn phục vụ bộ kiểm định IR dùng chung `semantic_program/route.py::verify_and_compile` và truyền `solid_topology` tất định từ `engine.py` sang `formation.py` |
 | Hợp đồng IR | `semantic_program/contract.py` | `SemanticProgramSpec` (Pydantic) + `SPEC_VERSION` + bốn biên chuẩn hoá. Sinh JSON Schema qua `scripts/export_semantic_program_schema.py` (**hai bản**, khoá bởi `test_schema_sync.py`) |
 | Thẩm quyền KIỂU | `semantic_program/ir_static_check.py` | `_CHU_KY` (chữ ký biểu thức) · `_KIEU_DUNG` (phép dựng sinh ra gì) · `_TOAN_HANG_LENH` (ô toán hạng). **Nguồn duy nhất** — prompt, validator, grammar card đều dẫn xuất |
 | Thẩm quyền PHÉP ĐO | `semantic_program/measure_contract.py::BANG_PHEP_DO` → `_KIEU_DO` | đại lượng nào đo được, đo *của* gì và *so với* gì |
@@ -776,8 +776,8 @@ nhiệm ở đây, mở đúng module đó — bản thứ hai là cách kho nà
 | Chuẩn hoá công thái | `semantic_program/hoisting.py` | nâng biểu thức lồng thành binding tạm; `contract.canonical_geometry_name` bóc `{"kind":"var"}`. Hai cơ chế, **cố ý không gộp** |
 | Cổng grounding | `semantic_program/grounding_gate.py` | chương trình lấy dữ liệu ở đâu ra. Không truy được về đề ⇒ `INPUT_NOT_GROUNDED` |
 | Cổng phủ (trung thực năng lực) | `semantic_program/coverage_gate.py` | `check_structural_coverage` (C₁a, trước khi chạy) + `check_realized_coverage` (C₁b, sau khi chạy). Phân biệt *không có đường* (chặn) với *có đường, thiếu checker* (đi tiếp, `servable=False`) |
-| Compiler hình học TẤT ĐỊNH (OPT-IN) | `simulation/geometry_compiler/` | `fact_graph.py` (GeometryFactGraph, canonical + `kiem_mau_thuan`/`kiem_xuat_xu`; từ 2026-09-21 `kiem_mau_thuan` có lớp thứ ba `_kiem_nhieu_dinh_vuong` — luật `LUAT_NHIEU_DINH_VUONG` = `MULTIPLE_RIGHT_ANGLE_VERTICES_IN_TRIANGLE`, mã `MA_MAU_THUAN_QUAN_HE` = `STRUCTURED_RELATION_CONTRADICTION`; `MA_MAU_THUAN` là bảng DUY NHẤT các mã "dữ kiện tự mâu thuẫn" mà định tuyến đọc; `MauThuanFact` mang `rule_id`/`chan_doan`/`bang_chung` từ vựng đóng) · `contract_adapter.py` (RequestContract → FactGraph; `KetQuaAdapter.rule_id` + `evidence`) · `primitives.py` (registry gồm 7 hàm, có `construct_prism`, biên dịch về IR HIỆN CÓ) · `compiler.py` (hỗ trợ 2 họ: pyramid và prism `SUPPORTED_FAMILY_PRISM` = `right_triangle_base_right_prism_volume`, eligibility + canonical layout + 7 bước `BuocDung` trace) · `routing.py` (`LLM_ONLY` mặc định / `DETERMINISTIC_FIRST` opt-in; mâu thuẫn ⇒ `REFUSE`, không lùi về LLM). ⚠️ **CHƯA nối vào `app/ai`** — hành vi mặc định không đổi |
-| Text → GEOMETRY FUNCTIONS (kiến trúc ĐÍCH — `docs/architecture/TEXT_TO_GEOMETRY_FUNCTIONS_DECISION.md`; KHÔNG phải mặc định sản phẩm) | `simulation/geometry_functions/` | `registry.py` (`geometry-functions/2`) — thư viện hàm ĐÓNG cho AI (`REGISTRY`: 24 `FunctionSpec`, đối số Pydantic `extra="forbid"`, không ô toạ độ; `ExactNumber` nhận độ dài ký hiệu `a`), `doc_ke_hoach` (lược đồ ⇒ `SCHEMA_INVALID`; `DUPLICATE_CALL_ID` · `DANGLING_DEPENDENCY` · `DEPENDENCY_CYCLE`), `kiem_nguon` (cổng nguồn 5 tầng: vị trí quote bỏ qua khoảng trắng `QUOTE_NOT_IN_SOURCE` · `UNKNOWN_LABEL`; vai trò mệnh đề `GOAL_CLAUSE_NOT_PREMISE` · `CONDITIONAL_CLAUSE`; phủ định trong mệnh đề `NEGATED_CLAUSE`; vị từ + tham chiếu `PREDICATE_NOT_IN_QUOTE` · `PLANE_NOT_IN_QUOTE` · `ROLE_NOT_IN_QUOTE`; giá trị căn theo nhãn đoạn `AMBIGUOUS_VALUE_QUOTE` · `UNGROUNDED_VALUE`), `doc_so`, `function_declarations`, `TuChoi` · `engine.py` — `dung_tu_loi_goi` (dựng + kiểm + thực thi, KHÔNG bày cảnh: `app/simulation` không nhập `scene3d`), `_Dung` (khối → bố cục đáy khung affine + Gram G₂ → `do_dai` hợp nhất (đề · `equal_length` · hình đã dựng · cạnh đa giác đều; lệch ⇒ `INCONSISTENT_FACTS` ngay) → `_rang_buoc_vuong` chuẩn hoá ⊥ mặt / đường cao / hình chiếu có tiền điều kiện (`PRECONDITION_FAILED`, `FOOT_NOT_IN_PLANE`) · `_hai_duong_cat_nhau` · `_mat_ben_vuong_goc_day` (chân DẪN XUẤT) · trọng tâm · tịnh tiến → kiểm MỌI dữ kiện: `INCONSISTENT_FACTS` vs `ENGINE_SELF_CHECK_FAILED`), `_don_vi` (độ dài ký hiệu đồng bậc, `NON_HOMOGENEOUS_LENGTHS`), `BAC_DAI_LUONG`, `regular_polygon_chart` (k ∈ {3,4,6}), `ir_name`, `dinh_dang`; phát IR qua bộ tạo câu lệnh trung lập `backend/app/simulation/semantic_program/ir_builders.py` (dời từ `primitives.py`, compiler re-export), chạy interpreter + `geometry/metric.py` SẴN CÓ. ĐIỂM VÀO: `backend/app/ai/function_route.py::run_function_route` (bày cảnh + `chart_metric` + `length_unit`; không nhập `pipeline`/`gemini`). ADAPTER AI: `backend/app/ai/function_calling.py` — `gemini_function_declarations` (tập con OpenAPI), `build_request` (ANY/VALIDATED + `allowedFunctionNames`, `MAX_OUTPUT_TOKENS`), `parse_response` (finishReason, `functionCall` song song, trùng, phụ thuộc), `run_ai_function_route` (một lượt gọi/đề qua `transport`), `surface_fingerprint`, `live_transport` (cổng `ALLOW_LIVE_AI`, khoá trong header; CHƯA dùng). NHÁNH B THỰC NGHIỆM (run `hybrid-compiler-selection`, KHÔNG thay mặc định): `backend/app/simulation/geometry_functions/planner.py` — `TypedFact` (dữ kiện có kiểu, phẳng: 11 loại, vai trò premise/prove/condition/question, `negated`, `ambiguous`, nguồn), `lap_ke_hoach` (dữ kiện → lời gọi REGISTRY: chọn hàm theo loại + kiểu toán hạng, mở rộng định nghĩa chóp đều / lập phương / hộp chữ nhật / tứ diện đều, giải "cạnh bên/cạnh đáy/chiều cao/cạnh"; `AMBIGUOUS_FACT` · `AMBIGUOUS_REFERENCE` · `CONDITIONAL_CLAUSE` · `FACT_INCOMPLETE` · `UNSUPPORTED_CAPABILITY` · `PLAN_TOO_LARGE`; `MAX_CALLS`), `KeHoach`, `PLANNER_VERSION`; `backend/app/ai/function_route.py::run_fact_route` (planner → `run_function_route`; kiểm điều phải chứng minh `PROOF_GOAL_FALSE`, mệnh đề phủ định — đúng ⇒ `INCONSISTENT_FACTS`, không kiểm được ⇒ `NEGATED_CLAUSE`, `FIGURE_NOT_UNIQUE` không lấy mẫu); `backend/app/ai/fact_extraction.py` (structured output, provider giả; tái dùng `_openapi`/`live_transport` của adapter A); engine thêm `KetQuaTuyen.details/planner/checker` (`_kiem_tren_hinh`: một mệnh đề trên hình đã dựng qua `_dung_khong`; câu hỏi/`unsupported` ⇒ không kiểm được). Run: `docs/evaluation/geometry/runs/hybrid-compiler-selection/`. A/B offline: `backend/scripts/hybrid_ab_offline.py` (`facts_from_calls` chuyển CƠ HỌC cho parity, `phan_hang`, `dap_so_khop`); test `backend/tests/geometry/test_hybrid_compiler_selection.py`. Đường mặc định không với tới các module này — bao đóng import khoá ở `test_structured_geometry_relations.py::test_Y…`. Fixture runner: `backend/scripts/run_text_to_functions_fixtures.py` (`--fixtures`, `--via-fake-gemini`). Test: `backend/tests/geometry/test_text_to_geometry_functions.py`, `backend/tests/geometry/test_ai_function_route.py`. Run: `docs/evaluation/geometry/runs/text-to-geometry-functions/`, `docs/evaluation/geometry/runs/ai-function-route/` |
+| Compiler C lịch sử (`HISTORICAL_REMOVED`) | `app/simulation/geometry_compiler/` (đã gỡ) | Gói compiler 6–9 họ bài thế hệ cũ đã bị xoá ở `FINAL_HYBRID_ARCHITECTURE_CUTOVER` (2026-11-04); tuyệt đối không khôi phục |
+| Tuyến sản phẩm chính thức **Hybrid `/4`** (`POST /api/analyze`) | `backend/app/simulation/geometry_functions/` + `backend/app/ai/adapter4_route.py` | **Kiến trúc mặc định hiện hành** (`docs/architecture/HYBRID_B_TARGET_ARCHITECTURE_DECISION.md`, `docs/evaluation/geometry/runs/hybrid-master-backend-replacement/ALGOSIM_HYBRID_CUTOVER_FINAL_REPORT.md`): `typed_fact_next.py` (`typed-fact-next/2`) + `backend/app/ai/typed_fact_next_extraction.py` + `typed_fact_next_bridge.py` (`typed-fact-next-bridge/2`, làm rõ `route-d-clarification/1`) → `registry.py` (`geometry-functions/33`, 49 hàm, Source Gate `kiem_nguon`) → `planner.py` (`geometry-fact-planner/26`, FactGraph + lập kế hoạch mục tiêu tất định) → `engine.py` (`geometry-function-engine/24`, khung affine + metric Gram chính xác, chứng chỉ `certificates.py`, phát IR qua `backend/app/simulation/semantic_program/ir_builders.py`) → `backend/app/ai/function_route.py` + `construction_continuity.py` → `backend/app/ai/adapter4_route.py` (`hybrid-simulation-adapter/4`, schema `hybrid-route-d-simulation/4`, `CACHE_VERSION = 132` / `ROUTE_D_CACHE_POLICY = 132:route-d`) + `backend/app/ai/hybrid_offline.py` (`live` / `staging-replay`) + `backend/app/ai/route_policy.py`. Khoá bởi `backend/tests/geometry/test_hybrid_cutover_verification.py` và `backend/tests/geometry/test_final_backend_product_completion.py` |
 | Chuẩn hoá xuất xứ THIẾT DIỆN | `semantic_program/section_provenance.py` | `normalize_section_provenance` · `chan_doan_chuan_hoa` · `CANONICAL_SECTION_KIND`. `polygon3` → `section` CHỈ KHI có `section_matches` với `solid`/`plane` giải được và chu trình khớp `cross_section`. Chạy ở `pipeline._dung_scene3d` NGAY SAU `build_scene3d`, TRƯỚC cổng trực quan. Immutable · idempotent · không import `scene3d` |
 | Cổng phủ TRỰC QUAN | `semantic_program/visual_obligations.py` | `check_visual_obligations` · `ap_dung` · `chan_doan_truc_quan` · `kieu_canh_yeu_cau`. Hỏi *vật đề bảo VẼ có trong cảnh không* — kiểu · xuất xứ · topology. Chạy ở `pipeline` SAU `_dung_scene3d`, TRƯỚC `served`; **không import `scene3d`** (nhận cảnh dạng dict). Phát `ErrorCode.VISUAL_OBLIGATION_UNCOVERED` |
 | Hậu điều kiện | `semantic_program/postconditions.py` | C₂ server-owned + `check_source_invariants` |
@@ -785,11 +785,11 @@ nhiệm ở đây, mở đúng module đó — bản thứ hai là cách kho nà
 | Máy thực thi IR | `semantic_program/interpreter.py` + `geometry_exec.py` | `SemanticProgramInterpreter` — cầu nối IR ↔ nhân hình học |
 | Nhân hình học CHÍNH XÁC | `simulation/geometry/` | bốn tầng **một chiều** `exact → predicates → kernel → measure` (+ `radical.py`, `section.py`, `curved.py`). `Fraction` + `Radical(he·π^mu·√can)`, **không float** |
 | Bề mặt học sinh | `semantic_program/learner_surface.py` + `app/learner_messages.py` | KHÔNG để lộ token kỹ thuật; FE render qua MỘT `UnsupportedNotice`. `learner_reason` tra `_MSG_THEO_MA[error_code]` **trước** `failure_category` — mã chi tiết hơn loại, và lời khuyên đúng cho mã này là lời hứa sai cho mã kia |
-| Từ chối CÓ CẤU TRÚC | `route.hong_truoc_khi_dung_ir` + `pipeline._that_bai_hinh_hoc` + `UnsupportedNotice::NHAN_GIAI_DOAN`/`NHAN_LOAI_VAN_DE` | Backend sở hữu `stage_reached`·`failure_category`·`error_code`; FE chỉ TRA NHÃN tiếng Việt (khoá kĩ thuật vào, tên ra). Thiếu trường ⇒ *"Không xác định được từ phản hồi cũ"*, **không** dò chuỗi. Khoá: `test_product_response_contract.py` + `refusal-contract.test.tsx` |
+| Từ chối CÓ CẤU TRÚC | `hybrid_preview.py::classify_refusal` + `adapter4_route.py` + `route.hong_truoc_khi_dung_ir` + `UnsupportedNotice::NHAN_GIAI_DOAN`/`NHAN_LOAI_VAN_DE` | Backend sở hữu `stage_reached`·`failure_category`·`error_code` (`reason_code` + `route-d-clarification/1` khi cần làm rõ); lỗi hạ tầng trả HTTP `502`/`503`/`504` (`failure_kind="INFRASTRUCTURE_FAILURE"`, `no-store`); FE chỉ TRA NHÃN tiếng Việt. Khoá: `test_product_response_contract.py` + `test_hybrid_cutover_verification.py` + `refusal-contract.test.tsx` |
 | Transport / envelope | `semantic_program/transport.py` + `pipeline_adapter.py` | `check_envelope_transport`; `SIMULATION_ID = "generic.semantic_program"` — id DUY NHẤT sản phẩm phát ra |
 | Trace → cảnh 3D | `semantic_program/scene3d.py` + `visual_adapter.py` + `simulation_state.py` | `RENDER_HINT` khoá đồng bộ với `scene3d-model.ts::RENDER_KINDS` (`test_scene3d_ts_sync.py`) |
 | Danh tính runtime | `app/runtime_identity.py` + `scripts/runtime_doctor.py` | `stable_capability_hash()` dẫn từ bốn bảng thẩm quyền — thêm một phép dựng là hash đổi, không sửa tay |
-| Observer đánh giá | `ai/pipeline.py::run_pipeline(observer=…)` | THỤ ĐỘNG — `None` ⇒ production không đổi một bit (bất biến #22). *2026-10-05 (`cuboid-acceptance`):* tham số thụ động là `run_pipeline(observer=…)` (khoá: `test_synthesis_repair_trace.py::test_F2_…`); lớp `AttemptObserver` (`evaluation/observer.py`) đã gỡ ở `repo-cleanup` cùng cả gói `app/evaluation/` |
+| Trace & telemetry theo lượt (`Hybrid /4`) | `backend/app/ai/route_trace.py` + `backend/app/ai/telemetry.py` | Thu thập sự kiện/token/latency thụ động trên tuyến Hybrid `/4` mà không đổi phán quyết hay đầu ra toán học; `pipeline.py::run_pipeline(observer=…)` đã gỡ cùng `LLM_ONLY` (`HISTORICAL_REMOVED`) |
 
 > **Lịch sử:** bảng này trước đây liệt kê `sufficiency_gate`, `completeness_gate`,
 > `pipeline_stages`, `mechanism_gate`, `computation_gate`, `structure_gate`,
@@ -798,45 +798,22 @@ nhiệm ở đây, mở đúng module đó — bản thứ hai là cách kho nà
 > `LEGACY_INFORMATICS_REMOVAL` và `FINAL_DEAD_EVALUATION_CLEANUP`. Tra chúng
 > trong git history, không tra ở đây.
 
-## 0d. Luồng chính (đọc kỹ trước khi thêm nhánh mới)
+## 0d. Luồng chính trên `POST /api/analyze` (`Hybrid /4` — đọc kỹ trước khi sửa)
 
-**Hai lượt LLM, không một lượt thừa.** Nguồn: `pipeline.py::_chay_duong_hinh_hoc`.
+**Chỉ trích xuất `TypedFactNext /2`, 0 sinh chương trình riêng cho từng đề, 0 fallback về `LLM_ONLY`.** Nguồn: `backend/app/main.py::_analyze_hybrid_route` → `backend/app/ai/hybrid_offline.py` → `backend/app/ai/adapter4_route.py`.
 
-1. **Cổng miền** — `/api/analyze` → `run_pipeline` dò miền. Không phải hình học
-   ⇒ `unsupported` + `out_of_scope`, **0 lượt gọi**. Fail-closed ở cả biên API
-   (`main.py`) lẫn pipeline.
-2. **Cổng đường thực thi** — `co_duong_thuc_thi(text, DOMAIN_HINH_HOC)`: đề có
-   ánh xạ được tới một nghĩa vụ **có checker** không. Tất định, **trước** mọi
-   lượt gọi. Không ⇒ `not_simulation_suitable`.
-3. **Analyze [LLM #1]** — `stage_semantic_analyze` đọc đề, trả `RequestContract`
-   (điểm, quan hệ, đại lượng phải tính). Contract **đóng băng** từ đây.
-4. **Tổng hợp [LLM #2]** — `stage_semantic_program` sinh `SemanticProgramSpec`
-   ứng viên từ contract + thẻ văn phạm. ≤ `TRAN_SUA` lượt sửa, lý do từ chối
-   nhồi ngược vào prompt — **không** phải retry HTTP.
-5. **Chuẩn hoá tất định** — bốn biên trong `contract.py` + `hoisting.py`. Đếm ở
-   `coercion_stats.py`: gộp im lặng thì không phân biệt được *"mô hình thỉnh
-   thoảng viết dạng khác"* với *"hợp đồng đang mô tả sai"*.
-6. **Phán quyết** — `route.verify_and_compile`, thứ tự **có ý nghĩa**:
-   grounding → C₁a phủ cấu trúc → thẩm định tĩnh (`ir_static_check`) →
-   **interpreter** → C₁b phủ đã hiện thực → bất biến nguồn → C₂ hậu điều kiện →
-   transport → bề mặt học sinh. `servable` là thứ duy nhất quyết định có phát
-   hay không.
-7. **Envelope + Scene3D** — `pipeline_adapter` biên dịch trace thành
-   `ValidatedSimulationEnvelope` mang `simulation_id = generic.semantic_program`
-   và một `scene3d`.
-8. **Frontend** — `store.loadEnvelope` → `module.validateConfig` → `init`;
-   `SimulationWorkspace` gắn `Scene3DExplorer` khi `hopLeScene3D(scene3d)`.
-   State là **ngữ nghĩa thuần**, không toạ độ pixel; renderer chỉ ĐỌC.
-9. **Cache hit** — chỉ cache analyze **thành công**, khoá theo text đã chuẩn hoá
-   + `CACHE_VERSION`.
-10. **History reopen** — `store.reopenFromHistory` → thẳng vào engine tất định,
-    **0 gọi AI** (bất biến #17).
-11. **Từ chối** — bất kỳ cổng nào chặn → `unsupported` + `failure_category` +
-    thông điệp học sinh; **không** dựng cảnh minh hoạ, không đoán toạ độ.
+1. **Cổng chế độ & miền** — `main.py` kiểm tra `HYBRID_ROUTE_MODE` (`live` mặc định; `staging-replay` cho dev/test; `off` hoặc giá trị lạ trả HTTP `503 INVALID_HYBRID_ROUTE_MODE`), sau đó `detect_domain(text)`: không phải hình học không gian ⇒ `status="unsupported"`, `failure_category="out_of_scope"`, `error_code="GATE_OUT_OF_SCOPE"`, **0 lượt gọi Gemini**.
+2. **Cache chính xác theo surface** — `hybrid_offline.py::prepare_live_hybrid` (hoặc `prepare_staging_replay`) tạo `cache_key` và `main.py::_cache_lookup` tra cache theo nguyên văn đề + `ROUTE_D_CACHE_POLICY = "132:route-d"` + fingerprint phiên bản (`typed-fact-next/2`, `planner/26`, `registry/33`, `engine/24`, `adapter/4`) + model/prompt fingerprint. Chỉ lưu phản hồi `status == "ok"`.
+3. **Trích xuất có cấu trúc [Gemini]** — ở `live` (cần `GEMINI_API_KEY` và `ALLOW_LIVE_AI != 0`; thiếu khoá trả HTTP `503 MISSING_API_KEY`; tắt cờ trả `503 LIVE_AI_DISABLED`), `typed_fact_next_extraction.py` trích xuất `TypedFactNext /2` (`typed-fact-next/2`) kèm trích dẫn nguyên văn câu đề; ở `staging-replay`, đọc bản ghi replay offline. Lỗi mạng/timeout/JSON/truncation trả HTTP `502`/`503`/`504` (`failure_kind="INFRASTRUCTURE_FAILURE"`, `Cache-Control: no-store`).
+4. **Bridge & Làm rõ (`Clarification`)** — `typed_fact_next_bridge.py::bridge_v2` chuyển sang `TypedFact` nội bộ; nếu có `UnresolvedSpec` khả giải (`ambiguous`, `missing_operand`, `unrecognized_term`) ⇒ từ chối `AMBIGUOUS_FACT` kèm bản ghi `route-d-clarification/1`.
+5. **Source Gate (`registry.kiem_nguon`)** — xác minh trích dẫn nguyên văn, vai trò mệnh đề, phủ định, vị từ và số đo theo câu đề trước khi lập kế hoạch.
+6. **FactGraph & Planner `/26`** — `planner.py` (`geometry-fact-planner/26`) tự chọn và kết hợp tất định các hàm trong **Registry `/33`** (`registry.py`, `geometry-functions/33`, 49 hàm).
+7. **Exact Kernel `/24` & Liên tục dựng hình** — `engine.py` (`geometry-function-engine/24`) dựng khung affine + metric Gram chính xác (`Fraction`, `Radical` tại `simulation/geometry/`), kiểm tra mọi dữ kiện và chứng chỉ (`certificates.py`), phát IR qua `ir_builders.py` + `interpreter.py`; `function_route.py` và `construction_continuity.py` gắn bước dựng tích lũy liên tục và kiểm 7 bất biến liên tục.
+8. **Adapter `/4` & Bộ kiểm định IR dùng chung** — `adapter4_route.py` (`hybrid-simulation-adapter/4`, schema `hybrid-route-d-simulation/4`) kiểm định qua `semantic_program/route.py::verify_and_compile` (`COMPATIBILITY_REQUIRED`) và xuất `ValidatedSimulationEnvelope` (`simulation_id = generic.semantic_program`) chứa `Scene3D`, các bước dựng và kết quả chính xác.
+9. **Frontend & History reopen** — `store.loadEnvelope` → `SimulationWorkspace` gắn `Scene3DExplorer` (chỉ ĐỌC state ngữ nghĩa); `store.reopenFromHistory` nạp thẳng vào engine tất định với **0 gọi AI** (bất biến #17).
+10. **Từ chối fail-closed** — thiếu dữ kiện (`insufficient_specification`), mâu thuẫn/suy biến (`geometry_generation_failed`), chưa đối chiếu nguồn (`verification_gap`), vượt năng lực (`capability_gap`) đều trả `status="unsupported"` trung thực; **không** tự bịa giả thiết, **không** vẽ cảnh xấp xỉ.
 
-**Ranh giới R0 nằm giữa bước 4 và 5.** LLM sở hữu *chương trình ứng viên*; mọi
-toạ độ, đại lượng, phán quyết đúng/sai đều do tầng tất định tính. Không lượt gọi
-nào sau bước 4.
+**Ranh giới LLM / Tất định nằm ngay sau bước 3.** Gemini chỉ trích xuất dữ kiện có kiểu (`TypedFactNext /2`); mọi bước kiểm nguồn, lập kế hoạch, tọa độ/metric Gram, dựng hình và phán quyết đúng/sai đều 100% tất định.
 
 > **Lịch sử:** luồng cũ (analyze → representation plan → classify → ≤1 route
 > recovery → 4 cổng computation/mechanism/input-sufficiency/completeness →
@@ -865,7 +842,8 @@ Giới hạn của hệ **đang chạy** (hình học 3D). Diễn giải + bằn
 | `ANALYZE_SOURCE_FACT_COMPLETENESS` | **PARTIAL** — quan sát trên 4 đề, **chưa đo lặp lại** |
 | ~~`SECTION_COPLANAR_EDGE_GAP`~~ | **CLOSED 2026-09-02** — nguyên nhân: một cạnh nằm trong mặt phẳng cắt thuộc HAI mặt kề nên cả hai cùng báo một đoạn, vòng nối vấp bản sao. Sửa bằng **khử trùng đoạn theo cặp đầu mút chính xác**. (SAC), (SBD), ACC′A′ nay dựng được; mặt phẳng trùng một mặt cho ra chính mặt ấy |
 | ~~`MISLEADING_MALFORMED_SOLID_MESSAGE`~~ | **CLOSED 2026-09-02** — `MALFORMED_SOLID` nay CHỈ dành cho khối thật sự hỏng; thêm `SECTION_INTERSECTION_DEGENERATE` (giao ở chiều thấp) và `SECTION_CONSTRUCTION_INTERNAL_FAILURE` (lỗi của chính phép dựng) |
-| chỉ khối **lồi**, **không** mặt cong (cầu/trụ/nón) | giới hạn phạm vi |
+| khối tròn xoay cơ sở (trụ/nón/cầu) đã hỗ trợ theo lát cắt đăng ký trên **Hybrid `/4`**; khối tròn xoay nghiêng/ghép phức tạp và nón cụt tổng quát | giới hạn phạm vi đăng ký (`Registry /33`, `Scene3D`) |
+| `INDEPENDENT_H1_VALIDATION` / `PRODUCTION_DEPLOYMENT_VERIFIED` | **`NOT_MEASURED` / `NO`** — bộ 60 đề độc lập `H-1` và live smoke/deployment sau cutover chưa đo |
 | `CURRICULUM_SUPPORT` | **PARTIAL** — phủ một phần, có chủ đích |
 | `LEARNER_IMPACT_NOT_EVALUATED` | **OPEN / ngoài phạm vi** |
 | `ANALYZE_STABILITY` | **NOT_MEASURED_BY_SCOPE_DECISION** — không kết luận ổn định/không ổn định |

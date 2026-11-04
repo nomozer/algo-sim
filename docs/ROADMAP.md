@@ -1,5 +1,7 @@
 # ROADMAP.md — Lộ trình nghiên cứu và phát triển AlgoSim
 
+**CURRENT 2026-11-04 — Final Hybrid Architecture Cutover integrated on `main` (`evaluation/geometry/runs/hybrid-master-backend-replacement/ALGOSIM_HYBRID_CUTOVER_FINAL_REPORT.md`):** `POST /api/analyze` uses **Hybrid `/4`** as the official default (`HYBRID_ROUTE_MODE = live`, `staging-replay` for dev/test, `CACHE_VERSION = 132`, `typed-fact-next/2` → `Source Gate` → `geometry-fact-planner/26` → `geometry-functions/33` → `geometry-function-engine/24` → `hybrid-simulation-adapter/4`; `LLM_ONLY`, `Adapter /3`, and `Compiler C` execution removed; zero legacy fallback). Explicit boundaries preserved: `HYBRID_DEFAULT_CUTOVER_COMPLETE = YES`, `LEGACY_EXECUTION_RETIRED = YES`, `LEGACY_FULLY_RETIRED = NO`, `PRODUCTION_DEPLOYMENT_VERIFIED = NO`, `INDEPENDENT_H1_VALIDATION = NOT_MEASURED`, `NEW_LIVE_SMOKE_NOT_MEASURED`. Historical snapshots below retain their original point-in-time context.
+
 **LOCAL 2026-10-24 — Hybrid B1/B2 offline:** research/hybrid-primary-b1-b2-offline from C0; product c3c1eb80. Internal source-text/V2 orchestration and product Adapter /4 wrapper; default LLM_ONLY, flat, cache127, memory32 and Hybrid NO-GO unchanged. No main merge/push/live. New evidence and owner-review handoff: `evaluation/geometry/runs/hybrid-primary-b1-b2-offline/`; historical snapshots below retain their original scope.
 
 **LOCAL Session 2 (2026-10-22):** next research step is the owner's decisions D1–D6 (`evaluation/geometry/runs/backend-hybrid-contract-unification/CONTRACT_DECISION_PROPOSAL.md`): `typed-fact-next/2` section contract, Source Gate strictness, gate grammar coverage, IR budget policy, version labels, planner-derived cuts. Live extraction and production enablement still need separate GO.
@@ -14,7 +16,9 @@
 
 ## 0. Canonical Next Action
 
-**CURRENT 2026-10-30 — Master Hybrid Epic:** W4 reached `W4_REMOTE_VERIFIED` at `94055c98`; repository cleanup completed safely with retained exceptions recorded in `evaluation/geometry/runs/geometry-generalization-and-pedagogical-construction/integration/cleanup-inventory.json`. `CANONICAL_NEXT_ACTION` = continue `ALGOSIM_MASTER_HYBRID_BACKEND_REPLACEMENT`: audit existing Hybrid owners, establish the master contract in `architecture/`, then implement the reusable backend gaps on a new branch from integrated main. No frontend development, live provider calls without a budget, default-mode change before all migration gates, or premature legacy deletion. Earlier next-action entries below are historical and do not revoke the current Owner authorization.
+**CURRENT 2026-11-04 — Post-Cutover Research & Validation Priority:** With `FINAL_HYBRID_ARCHITECTURE_CUTOVER` integrated on `main` (`dacd7f5e`, product `52205f45`, frozen candidate `f5f2c147`, detached Full T3 `FULL_PRODUCT_GATE_PASS`), `CANONICAL_NEXT_ACTION` = Owner priority decision (`POST_NLU_BASELINE_RESEARCH_PRIORITY_DECISION`) across remaining unmeasured milestones: (1) independent 60-problem `H-1` corpus authoring & live evaluation under a registered budget (`INDEPENDENT_H1_VALIDATION = NOT_MEASURED`; C26 and Full T3 are not `H-1`), (2) post-cutover live smoke & production deployment verification (`NEW_LIVE_SMOKE_NOT_MEASURED`, `PRODUCTION_DEPLOYMENT_VERIFIED = NO`), or (3) P4/P6 thesis experiments (`OCR_AFTER_FAMILY_EXPANSION`, learner usability). Do not reintroduce retired `LLM_ONLY`, `Adapter /3`, or `Compiler C`. Earlier entries below are preserved as historical logs.
+
+**2026-10-30 — Master Hybrid Epic (historical):** W4 reached `W4_REMOTE_VERIFIED` at `94055c98`; repository cleanup completed safely with retained exceptions recorded in `evaluation/geometry/runs/geometry-generalization-and-pedagogical-construction/integration/cleanup-inventory.json`. `CANONICAL_NEXT_ACTION` = continue `ALGOSIM_MASTER_HYBRID_BACKEND_REPLACEMENT`: audit existing Hybrid owners, establish the master contract in `architecture/`, then implement the reusable backend gaps on a new branch from integrated main. No frontend development, live provider calls without a budget, default-mode change before all migration gates, or premature legacy deletion. Earlier next-action entries below are historical and do not revoke the current Owner authorization.
 
 **2026-10-30, W3-F2 integration REMOTE_VERIFIED:** `CANONICAL_NEXT_ACTION` = consider the workflow proposal at `evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/integration/workflow-proposal.md` as a separate decision; integration/cleanup dispositions are in that run's report. No new product task, global security reduction or Hybrid enablement is authorized. Older next-action snapshots below retain their historical context.
 
@@ -493,9 +497,7 @@ tiếp (G14), tiếp xúc (G15): phần lớn MISSING — để sau (§0.4).
 
 ### 0.3 Hồi quy bắt buộc cho mọi lát cắt mới
 
-Sáu họ compiler hiện có (bộ trình duyệt desktop/mobile), corpus gold (AC2 18/18 trong vùng chứng chỉ), năm ca demo
-(`replay_demo_cases.py`), bề mặt sập (`audit_demo_crash_surface.py`), T3 `full-gate.mjs`. Không hàng đang phục vụ nào
-bị từ chối mới mà không có quyết định ghi trước.
+Bộ hồi quy trên tuyến mặc định **Hybrid `/4`** (`test_hybrid_cutover_verification.py`, `test_final_backend_product_completion.py`, các bộ unit/replay Route D `/4`), năm ca demo (`replay_demo_cases.py`), bề mặt sập (`audit_demo_crash_surface.py`), và cổng sản phẩm đầy đủ T3 `full-gate.mjs` trong git worktree detached sạch (`freeze_evaluation_candidate.py --verify`). *(Lưu ý lịch sử: 6 họ `Compiler C` cũ đã gỡ ở cutover 2026-11-04.)* Không ca đang phục vụ nào bị từ chối mới mà không có quyết định ghi trước.
 
 ### 0.4 Để sau, không tuyên bố đã hỗ trợ
 
@@ -515,7 +517,8 @@ khoá luận: [`POST_THESIS_BACKLOG.md`](POST_THESIS_BACKLOG.md) — phụ lục
 - W19 (2026-10-04): `docs/` chia bốn vùng và có catalog đóng. Lần report organization đã hợp nhất vào `docs-cleanup` sau đó chuyển 156/167 báo cáo
   khỏi gốc theo vai trò, giữ 11 ngoại lệ path-bound được ghi từng file; `ISSUE-DOCS-HISTORICAL-REPORTS-AT-DOCS-ROOT` đã đóng.
 
-### P1 — Primitive Compiler Expansion (Mở Rộng Compiler Cơ Sở)
+### P1 — Primitive Compiler Expansion (Mở Rộng Compiler Cơ Sở — Lịch sử trước Cutover Hybrid `/4`)
+> *(Cập nhật 2026-11-04: Lát cắt `Compiler C` / `geometry_compiler` ở P1 đã hoàn thành vai trò nghiên cứu trung gian và được gỡ bỏ khi chuyển mặc định sang **Hybrid `/4`**; hợp đồng topology khối đa diện và bộ kiểm định IR dùng chung vẫn được tái sử dụng. Nội dung dưới đây giữ nguyên làm hồ sơ lịch sử.)*
 - **Họ bài thứ hai:** Đã chọn và tiền đăng ký họ Lăng trụ đứng có đáy là tam giác vuông (`right_triangle_base_right_prism_volume`) tại `docs/evaluation/geometry/photo-problem-to-scene/primitive-compiler-second-family-selection/report.md`.
 - **Evidence Repair:** Đã hoàn tất đính chính bằng chứng lựa chọn, phân loại `CURRICULUM_EVIDENCE = NOT_ESTABLISHED_OFFLINE`, tái thẩm định ma trận thực chứng (Candidate B đạt 94.375% chuẩn hóa, vượt qua 4 kịch bản robustness), vạch rõ 12 tầng kỹ thuật cho vertical slice tại `docs/evaluation/geometry/photo-problem-to-scene/second-family-preregistration-evidence-repair/report.md`.
 - **Source Scope Reconciliation:** Đã hoàn tất đối soát danh tính mã nguồn tại `docs/evaluation/geometry/photo-problem-to-scene/second-family-source-scope-reconciliation/report.md`. Xác định `primitives.py:REGISTRY` có đúng 6 hàm, `SourceInvariant` có 5 kind, `RELATION_KINDS` hiện có đủ biểu diễn, IR (`construct_solid`), kernel và frontend được tái sử dụng nguyên trạng.
@@ -543,7 +546,8 @@ khoá luận: [`POST_THESIS_BACKLOG.md`](POST_THESIS_BACKLOG.md) — phụ lục
 - OCR bóc tách văn bản đề bài tiếng Việt kèm ký hiệu toán học.
 - Benchmark đánh giá độ bền vững trước nhiễu ảnh thực tế (ánh sáng, độ nghiêng, độ mờ).
 
-### P5 — Migration Architecture (Chuyển Giao Sang Compiler-First)
+### P5 — Migration Architecture (Chuyển Giao Kiến Trúc — Đã Cutover Sang Hybrid `/4`, Còn Cổng Kiểm Chứng Độc Lập)
+> *(Cập nhật 2026-11-04: Sản phẩm đã bỏ hướng `compiler-first + fallback sang LLM_ONLY` của thế hệ cũ để chuyển thẳng `POST /api/analyze` sang **Hybrid `/4`** fail-closed không fallback (`HYBRID_DEFAULT_CUTOVER_COMPLETE = YES`, `LEGACY_EXECUTION_RETIRED = YES`, tag rollback `pre-hybrid-cutover-f986e897`). Các mục P5 gốc dưới đây là kế hoạch lịch sử thời `Compiler C`; trạng thái kiểm chứng hiện hành gồm `INDEPENDENT_H1_VALIDATION = NOT_MEASURED` và `PRODUCTION_DEPLOYMENT_VERIFIED = NO` xem tại [`MIGRATION_CHECKLIST.md`](MIGRATION_CHECKLIST.md) §2.)*
 - Xây dựng cổng định tuyến `compiler-first`: ưu tiên chạy compiler nếu bài toán đủ điều kiện (`is_compiler_eligible`).
 - Cơ chế chuyển tiếp an toàn sang LLM fallback khi bài toán chưa thuộc tập primitive hỗ trợ.
 - Cơ chế triển khai canary (phân luồng tỉ lệ thực nghiệm) và rollback tự động khi phát hiện dị thường.

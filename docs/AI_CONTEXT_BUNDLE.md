@@ -20,32 +20,24 @@
 
 ## 1. Product và ranh giới
 
-AlgoSim chuyển đề hình học không gian tiếng Việt thành Semantic Program và
-Scene3D tương tác. LLM chỉ trích xuất/tổng hợp cấu trúc; engine tất định sở hữu
-tọa độ, thực thi, đo lường, correctness và scene state.
+AlgoSim chuyển đề hình học không gian tiếng Việt thành `Scene3D` tương tác, các bước dựng liên tục và đáp số chính xác qua kiến trúc chính thức **Hybrid `/4`**:
+`Vietnamese Problem → Gemini → TypedFactNext /2 → Source Gate → FactGraph → Planner /26 → Registry /33 → Exact Kernel /24 → Adapter /4 → Scene3D + Construction Steps + Results`
+Gemini chỉ trích xuất dữ kiện, quan hệ và mục tiêu (`TypedFactNext /2`); không sinh chương trình giải riêng cho từng đề. Engine tất định sở hữu hoàn toàn tọa độ, thực thi, đo lường, correctness và scene state. (`RequestContract` chỉ còn giữ vai trò tương thích nội bộ `COMPATIBILITY_REQUIRED` trong `semantic_program/route.py` và truyền `solid_topology` tất định.)
 
-- `DEFAULT_MODE = HYBRID` (`HYBRID_ROUTE_MODE = live`; `LLM_ONLY` retired; `INDEPENDENT_H1_VALIDATION = NOT_MEASURED`, `docs/MIGRATION_CHECKLIST.md`).
-- `CACHE_VERSION = 132` (`ROUTE_D_CACHE_POLICY = 132:route-d`, bumped on Hybrid `/4` default cutover; prior historical bumps in `CURRENT_STATE.md`).
-  117 ở exact-dimensions — bộ đọc độ dài không lấy vế đầu của biểu thức); provider-facing fingerprint `b1714b566e25c912…`
-  không đổi. Run mobile-canvas-fit không bump (chỉ frontend).
-- Mọi wave từ w09 chạy offline: `LIVE_GEMINI_REQUESTS = 0`.
-- Không hardcode case/label/answer vào product; mâu thuẫn phải fail-closed.
+- `POST /api/analyze` chạy **Hybrid `/4`** mặc định (`HYBRID_ROUTE_MODE = live`; `staging-replay` cho replay offline dev/test; `HYBRID_ROUTE_MODE=off` trả HTTP `503 INVALID_HYBRID_ROUTE_MODE`; thiếu `GEMINI_API_KEY` ở `live` trả HTTP `503 MISSING_API_KEY`; `ALLOW_LIVE_AI=0` trả HTTP `503 LIVE_AI_DISABLED`; **0 fallback** về `LLM_ONLY`).
+- `CACHE_VERSION = 132` (`ROUTE_D_CACHE_POLICY = 132:route-d`; lịch sử các đợt bump trước ở `CURRENT_STATE.md`).
+- Đã gỡ bỏ: thực thi `LLM_ONLY` (`pipeline.py`), `Adapter /3` (`adapter3_simulation.py`), `Compiler C` (`geometry_compiler/*`) và các cờ cũ `HYBRID_V2_LOCAL`, `GEOMETRY_COMPILER_MODE`. Rollback kiến trúc là rollback Git/deployment về tag `pre-hybrid-cutover-f986e897`.
+- Không hardcode case/label/tọa độ/answer vào mã sản phẩm; thiếu dữ kiện, mâu thuẫn, ngoài phạm vi, cần làm rõ (`route-d-clarification/1`) hoặc lỗi hạ tầng phải fail-closed trung thực.
 
 ## 2. Repository state hiện tại
 
-Cập nhật 2026-10-19 — mới hơn khối "LOCAL override" ở đầu file; tường thuật cũ ở đó và §5–§6 có thể lỗi thời (việc mở: `OPEN_ISSUES.md`; việc kế tiếp: `ROADMAP.md` §0).
+Cập nhật 2026-11-04 (sau `FINAL_HYBRID_ARCHITECTURE_CUTOVER` trên `main`; các mục cũ ở §4–§6 bên dưới là bối cảnh lịch sử trước cutover; việc mở: `OPEN_ISSUES.md`; lộ trình: `ROADMAP.md` §0).
 ```text
-MAIN = origin/main (2026-10-27) includes hybrid-v2-holdout-failure-repair (product e3678608 repairing holdout defects M1-M5 in registry/18 + planner/17, candidate e7bcff31, R2_AUXILIARY_POINT_NOTATION_DEFERRED, H039/H040 adjudicated in h039-h040-adjudication-receipt.json, MERGED_PUSHED_VERIFIED): runs/hybrid-v2-holdout-failure-repair/handoff.md
-SGH_STATE = product 602316ed · candidate c5a83b74 (112 file 0512dbc5…) · review PASS · T3 2d0641f4 PASS · corpus 18/18, BH2A 11/12 · SGH blind 6/10 pos (10/16 math, 8/16 tuple, 5/5 neg, threshold NOT MET); FOLLOWUP_AB (`research/hybrid-source-gate-followup-ab`, product `68acc140`, candidate `b5e80380` / `de66bd5c…`, review PASS, T3 `b0b2a3c3` PASS): fixes Defect Classes A (`_kiem_don_vi_hoi`/`_kiem_du_kien_cau_hoi` unnamed-point multi-goal boundary) & B (`_kiem_nguon_dong`/`_cau_tien_de_dong_hop_le` compound premises on `line_ref` slice) -> SGH post-feedback regression 10/10 pos (16/16 math), 5/5 neg, 0 false serves; BH2A 11/12 + `BH2A-03-variant-ABCD` served `a√10` (`runs/source-gate-followup-ab/handoff.md`)
-PRODUCT_STATE = CACHE_VERSION 130 · DEFAULT_MODE LLM_ONLY · flat · Hybrid opt-in only, product NO-GO · route D registry/18 · planner/17 · engine/14 · adapter/4 · Full T3 PASS e7bcff31 (12471/1417)
-SCENE3D = M2 #7, F1, F2 xong; P0–P3 owner duyệt hình trên bộ cảnh mẫu (chỉ phạm vi đó); "chọn kết quả" trên canvas chưa kiểm; KHÔNG Product E2E PASS
-HYBRID = product enablement NO-GO · không frontend caller /api/preview/hybrid · không tích hợp provider live · không GO LIVE
-OPEN = F3–F6 + thiếu fixture insufficient_specification+SOURCE · SOURCE-LENGTH-READER-VECTOR-ZERO · CACHE-HISTORICAL-MODE-UNKNOWN · SCENE3D-ALTITUDE-CERTIFICATE-MISSING · offline Product E2E chưa đạt (OPEN_ISSUES.md)
-EXTRACTION_V2 = prompt v2 NO-GO, không ở main; phần an toàn trên main = e4fff851 + aa0da02b + 0507cb01 (runs/extraction-v2-integration-record, CORRECTED_BY); không có T3 riêng tại các commit đó
-LOCAL_ONLY = nhánh research/hybrid-semantic-extraction-v2, research/compact-geometry-dsl, integration/extraction-v2-safety, commit 471a2c79, tag evidence/extraction-v2-pilot — chưa push
-PRESERVATION = bundle + bản sao non-Git ngoài repo D:/algo-sim-preservation-20261018 (GO_PRESERVE_PARTIAL: 20 thư mục khoá ACL và secret chưa chép; cùng một SSD) — chưa cleanup
-NEXT_ACTION = owner chọn ưu tiên giữa các wave cần duyệt riêng (vector-zero, chứng nhận chiều cao, F3–F6 offline); ROADMAP §0
-WAVE2C_3A = Wave 2C on main `1613e0d3` (BH2C blind 11/11 pos, 13/13 neg, 0 wrong serves); TypedFactNext + Adapter /3 on main `f2bc01e3` (`typed-fact-next/1` + `hybrid-simulation-adapter/3`, product `61d6f44b`, candidate `09f97a28` / `42f6ae2c…`, T3 `80f47de9`/`7eadd56b` PASS, dev 10/10 pos, 6/6 neg, 4/4 demos); local Wave 3A `research/hybrid-wave3a-volume-reasoning` (product `4c282ecd`, candidate `0a4b6d70` / `df262376…`, review round 2 PASS, T3 `373116d2` PASS, dev 18/18 pos, 14/14 neg); combined reconciliation `research/integration-wave3a-adapter3` from `f2bc01e3` (product `fb63df66`, candidate `e345e717` / `81778092…` across 114 files, review PASS, T3 `cb09d8f9` PASS 11,427/1,150, `runs/wave3a-adapter3-integration/report.md`)
+MAIN = origin/main includes Final Hybrid Architecture Cutover (merge dacd7f5e; product 52205f45; frozen candidate f5f2c147, 102 measured files 765487a4b48e7d52…; clean detached Full T3 FULL_PRODUCT_GATE_PASS: 13762 pytest / 1502 vitest, full-t3-f5f2c147.json)
+PRODUCT_STATE = DEFAULT_MODE HYBRID (/4) · HYBRID_ROUTE_MODE live (staging-replay dev/test) · CACHE_VERSION 132 (132:route-d) · typed-fact-next/2 · geometry-fact-planner/26 · geometry-functions/33 · geometry-function-engine/24 · hybrid-simulation-adapter/4
+CUTOVER_STATUS = HYBRID_DEFAULT_CUTOVER_COMPLETE=YES · LEGACY_EXECUTION_RETIRED=YES · LEGACY_FULLY_RETIRED=NO (semantic_program/route.py COMPATIBILITY_REQUIRED) · PRODUCTION_DEPLOYMENT_VERIFIED=NO · INDEPENDENT_H1_VALIDATION=NOT_MEASURED · NEW_LIVE_SMOKE_NOT_MEASURED
+ROLLBACK = Git/deployment version rollback to tag pre-hybrid-cutover-f986e897 (f986e897; optional ALLOW_LIVE_AI=0 emergency stop); HYBRID_ROUTE_MODE=off returns 503 INVALID_HYBRID_ROUTE_MODE (no LLM_ONLY fallback)
+OPEN = INDEPENDENT_H1_VALIDATION (60-case external H-1 corpus not yet authored/measured; C26/Full T3 are not H-1) · ISSUE-ARCH-PARTIAL-STATED-CUT-NAMING · ISSUE-ARCH-HISTORY-REOPEN-DROPS-SCENE3D · ISSUE-ARCH-ROUTE-D-DIACRITIC-FREE-INPUT (OPEN_ISSUES.md)
 ```
 
 Thay đổi chưa commit của người dùng: không restore, sửa, stage hoặc commit khi chưa được cho phép rõ ràng (xoá favicon đã
@@ -201,11 +193,7 @@ Thay đổi chưa commit của người dùng: không restore, sửa, stage ho�
 
 ## 6. Bước tiếp theo duy nhất
 
-Run hiện tại: `hybrid-goal-decomposition` (LOCAL, nhánh nghiên cứu; lát 1 B26; product f874b4dd, candidate cac3022f, cache125); trước đó `hybrid-compiler-capability-audit` (không đổi sản phẩm), `geometry-library-important-fixes` (product 4ad89909), `geometry-library-expansion` (8ff994c6) và review `geometry-library-integration-review`.
-Run A/B trước: `hybrid-ab-pilot-readiness` (product `cfe2ada5`, candidate `12da4768`, giữ nguyên).
-344 focused PASS, 9 mutation killed, 24+288 fake/network=0; clean backend8068 PASS/1 skip/2 deselected; report.md của run.
-Offline readiness GO có giới hạn; human review chưa phê duyệt; SMOKE/FULL live NO-GO, không merge/push/default change. `frontend/public/favicon.svg` là của user.
-Correction của hybrid cũ: object-binding chính xác, configuration ≠ proof; current divergence authority ở run mới, lịch sử giữ nguyên.
+Trạng thái hiện hành (2026-11-04): **Hybrid `/4`** đã tích hợp làm kiến trúc mặc định trên `main` (`ALGOSIM_HYBRID_CUTOVER_FINAL_REPORT.md`); kiểm định độc lập trên tập 60 đề mới `H-1` (`INDEPENDENT_H1_VALIDATION = NOT_MEASURED`), live smoke sau cutover (`NEW_LIVE_SMOKE_NOT_MEASURED`) và xác minh triển khai production (`PRODUCTION_DEPLOYMENT_VERIFIED = NO`) vẫn chờ thực hiện theo quyết định và ngân sách của Owner. Các đoạn dưới khối `CANONICAL_NEXT_ACTION` là nhật ký bàn giao lịch sử trước cutover (giữ nguyên để truy vết).
 
 ```text
 CANONICAL_NEXT_ACTION = POST_NLU_BASELINE_RESEARCH_PRIORITY_DECISION
@@ -234,8 +222,7 @@ phê duyệt tường minh thì merge thẳng vào `main` (không PR), chạy c�
 push, kiểm SHA remote, xoá nhánh đã merge. Việc kế tiếp chạy trên **nhánh mới rẽ từ `main` đã tích hợp và cập
 nhật**, bắt đầu ở **W1**. Đề xuất (người dùng chưa chọn): chóp tứ giác đều + chín chỉnh sửa giao diện, slug
 `regular-square-pyramid`, run đầu `regular-square-pyramid-w01` — `HANDOFF.md` §4 của run `cuboid-acceptance`.
-Ràng buộc: `LLM_ONLY`; 0 lượt gọi live khi chưa có quyết định ngân sách; `CACHE_VERSION` quyết bằng
-bằng chứng; sửa `frontend/src` ⇒ đóng băng lại candidate; không push/merge.
+*(Lưu ý lịch sử: dòng ràng buộc `LLM_ONLY` của đợt `cuboid-acceptance` đã hết hiệu lực từ cutover Hybrid `/4` ngày 2026-11-04; giữ luật 0 lượt gọi live khi chưa đăng ký ngân sách, `CACHE_VERSION` quyết bằng bằng chứng, không tự ý push/merge.)*
 
 ## 7. Evidence có thẩm quyền
 

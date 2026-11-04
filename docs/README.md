@@ -28,7 +28,7 @@
 - [`TEST_TIERS.md`](TEST_TIERS.md) — bốn tầng test; chỉ T3 được nói "sản phẩm xanh".
 - [`DEMO_RUNBOOK.md`](DEMO_RUNBOOK.md) — chạy buổi demo từ bản dựng, 0 lượt gọi model.
 - [`DESIGN_BRIEF.md`](DESIGN_BRIEF.md) — brief UI/UX (khác `../DESIGN.md` là token giao diện).
-- [`MIGRATION_CHECKLIST.md`](MIGRATION_CHECKLIST.md) — 20 cổng trước khi đổi `LLM_ONLY` sang compiler-first.
+- [`MIGRATION_CHECKLIST.md`](MIGRATION_CHECKLIST.md) — các cổng chuyển đổi Hybrid `/4` (`D-01..D-13`), giới hạn kiểm chứng độc lập (`H-1`) và lưu trữ lịch sử 20 cổng Compiler C.
 - Lệnh chạy nhanh và kiểm thử: [`../README.md`](../README.md) §4; lệnh đầy đủ cho người sửa mã: [`OPERATIONS.md`](OPERATIONS.md) và [`TEST_TIERS.md`](TEST_TIERS.md).
 
 ## 3. Việc còn mở
