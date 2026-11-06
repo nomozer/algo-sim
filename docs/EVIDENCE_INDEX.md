@@ -1,5 +1,18 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = AXO_REPOSITORY_BASELINE
+
+REPORT = docs/evaluation/geometry/runs/axo-repository-baseline/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/axo-repository-baseline/
+START_BASE = main = origin/main 64847c1e → 3a8a2f31 (--no-ff merge of chore/axo-postmerge-branding-consolidation 7976cd2e, pushed non-force)
+CODE_COMMIT = NONE (docs + git housekeeping only)
+CLASSIFICATION = REPOSITORY_BASELINE (BASELINE_READY_WITH_RETAINED_ITEMS): seal MATCH on main, publication PASS, branding 9/9 and camera 10/10 on main's build; 4 merged branches deleted, 4 clean worktrees unregistered (2 directories left mid-delete, verified 0 unknown files); integration/axo-hybrid4-reliability and leftover directories kept (BACKUP_REQUIRED: single physical disk).
+PRODUCT_CHANGE = NO
+MODEL_REQUEST_COUNT = 0
+VERIFICATION = report.md
+CORRECTS = docs/evaluation/geometry/runs/axo-postmerge-consolidation/report.md §K item 7 (branch now merged and pushed)
+CORRECTED_BY = NONE
+
 ## WAVE_ID = AXO_POSTMERGE_CONSOLIDATION
 
 REPORT = docs/evaluation/geometry/runs/axo-postmerge-consolidation/report.md
