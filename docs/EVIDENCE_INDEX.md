@@ -1,5 +1,161 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = AXO_PREMERGE_CLOSURE
+
+REPORT = docs/evaluation/geometry/runs/axo-premerge-closure/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/axo-premerge-closure/
+START_BASE = b0c2dfe5 (integration/axo-hybrid4-reliability); main = origin/main = merge-base bb61a804
+CODE_COMMIT = 8db058d3 (session required before provider work) + 9a7c0ce9 + cee124a1; candidate frozen by 33e1cda2 (103 files 09c1a089…, CACHE_VERSION 132 unchanged)
+CLASSIFICATION = PREMERGE_CLOSURE (not merged, not pushed); squash merge READY_TO_MERGE (simulated tree = tested tree aacd8777, publication PASS 0 new); merge with history BLOCKED on three blob exceptions (two test constants whose flagged lines already exist on origin/main, one raw log removed from HEAD that echoed a test-only key sentinel); session-less provider access closed (backend + real Chrome); T3 PASS at 33e1cda2 (single run), node harness 0 fail; browser 41/41, 8/8, 30/30, 2/2; POSTGRES_NOT_TESTED.
+PRODUCT_CHANGE = YES (integration branch only; backend accounts + frontend client retry)
+MODEL_REQUEST_COUNT = 0
+VERIFICATION = report.md; run.json; handoff.md; browser-*/; camera-*/; logs/
+CORRECTS = docs/evaluation/geometry/runs/axo-final-reliability-premerge-gate/report.md §1 limit (c) (session-less requests unlimited → closed)
+CORRECTED_BY = NONE
+
+## WAVE_ID = AXO_FINAL_RELIABILITY_PREMERGE_GATE
+
+REPORT = docs/evaluation/geometry/runs/axo-final-reliability-premerge-gate/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/axo-final-reliability-premerge-gate/
+START_BASE = c5cef563 (integration/axo-hybrid4-reliability)
+CODE_COMMIT = 38cb181d (test fixture) + 43e8fb8c (usage ledger, migration e437149641fa) + 4bcc1368 (test password); candidate frozen by 4a05ccff (103 files 5a7f4eba…, CACHE_VERSION 132 unchanged)
+CLASSIFICATION = INTEGRATION_BRANCH_PREMERGE_GATE (not merged, not pushed); T3 flake root cause = StaticPool test fixture (7/16 → 30/30 under load); product usage ledger: atomic per-attempt reservation (guest trial + daily quota) with storage-level uniqueness, red 8/11 → 11/11, 110/110 under load; 1 577 payloads classified (436 certified, 156 construction, 985 contract refusals, 0 internal/uncertified) and 1 577/1 577 consistent in the frontend; branch vs main: 1 intended difference; Scene3D 30/30 + 41/41 + 8/8; T3 PASS at 4a05ccff (single run), node harness 0 fail; publication: one finding created by this task in local history (blob 23109136), HEAD 97 pending (was 98); POSTGRES_NOT_TESTED; LIVE_NOT_TESTED.
+PRODUCT_CHANGE = YES (integration branch only; backend accounts/usage + migration)
+MODEL_REQUEST_COUNT = 0
+VERIFICATION = report.md; run.json; handoff.md; inputs/classification-summary.json; tools/; camera-*/; browser-*/; logs/
+CORRECTS = docs/evaluation/geometry/runs/axo-end-to-end-authority-scene3d-usability/report.md §11.7 (telemetry write-loss: root cause of the T3 flake was the test fixture's shared connection; the product's quota accounting defects are fixed here)
+CORRECTED_BY = AXO_PREMERGE_CLOSURE (docs/evaluation/geometry/runs/axo-premerge-closure/report.md)
+
+## WAVE_ID = AXO_END_TO_END_AUTHORITY_SCENE3D_USABILITY
+
+REPORT = docs/evaluation/geometry/runs/axo-end-to-end-authority-scene3d-usability/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/axo-end-to-end-authority-scene3d-usability/
+START_BASE = 667fff7a (integration/axo-hybrid4-reliability)
+CODE_COMMIT = 751d9eff (certificate authority) + e1309a79 (near zoom, label wheel); candidate frozen by b1282aee (103 files 5ef50761… unchanged, CACHE_VERSION unchanged)
+CLASSIFICATION = INTEGRATION_BRANCH_AUTHORITY_AND_SCENE3D_USABILITY (not merged, not pushed); 434 regenerated served cases replayed through the workspace pipeline: 18 certified answers rejected (primed section labels) or downgraded (metric heuristic) → 434/434; near zoom limit from real surface support (sphere 5.40 → 10.00) and wheel over labels; prism offline layers correct, live NOT_TESTED; server history VERIFIED on SQLite, PostgreSQL BLOCKED; T3 run 1 FAIL (unrelated telemetry concurrency test), run 2 PASS at b1282aee; node harness 0 fail; browser camera 30/30, E2E 41/41, two-tab 8/8, corpus 12/12, authority 21/21; performance unchanged.
+PRODUCT_CHANGE = YES (integration branch only; frontend only)
+MODEL_REQUEST_COUNT = 0
+VERIFICATION = report.md; run.json; handoff.md; inputs/; tools/; camera-*/; browser-*/; perf/*/receipt.json; logs/
+CORRECTS = docs/evaluation/geometry/runs/axo-final-mathematical-reliability/report.md §11.5 (heuristic risk "no counterexample" → 7 counterexamples found and fixed)
+CORRECTED_BY = AXO_FINAL_RELIABILITY_PREMERGE_GATE (docs/evaluation/geometry/runs/axo-final-reliability-premerge-gate/report.md)
+
+## WAVE_ID = AXO_FINAL_MATHEMATICAL_RELIABILITY
+
+REPORT = docs/evaluation/geometry/runs/axo-final-mathematical-reliability/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/axo-final-mathematical-reliability/
+START_BASE = 59ed17b4 (integration/axo-hybrid4-reliability; main bb61a804 fully contained); started by Codex (interrupted uncommitted by its usage limit), resumed by Claude
+CODE_COMMIT = ac71a439 (Codex work as found) + e2f0cb90 (sample-record reopen fix, edge-case tests); candidate frozen by 5af750e8 (103 files 5ef50761… unchanged, CACHE_VERSION unchanged)
+CLASSIFICATION = INTEGRATION_BRANCH_MATHEMATICAL_RELIABILITY (not merged, not pushed); backend exact route agrees with 12 hand oracles plus 7 edge cases (exterior intersection, parallel, skew, zero length, line⊥line ≠ height) with no backend defect found; frontend: history keeps source-bound answer evidence, no insufficiency claim from a missing certificate, no catalog statement borrowed by unstamped records, sample records reopen as samples; T3 FULL_PRODUCT_GATE_PASS at 5af750e8, node harness 0 fail, browser corpus 12/12, E2E 41/41, two-tab 8/8, camera 10/10; publication: task range PASS, HEAD/integration unchanged pending owner exceptions.
+PRODUCT_CHANGE = YES (integration branch only; frontend only)
+MODEL_REQUEST_COUNT = 0
+VERIFICATION = report.md; run.json; handoff.md; plan.md; progress.md; inputs/; tools/; browser-*/; logs/
+CORRECTS = NONE
+CORRECTED_BY = AXO_END_TO_END_AUTHORITY_SCENE3D_USABILITY (docs/evaluation/geometry/runs/axo-end-to-end-authority-scene3d-usability/report.md)
+
+## WAVE_ID = AXO_FINAL_EDUCATIONAL_VIEWER_READINESS
+
+REPORT = docs/evaluation/geometry/runs/axo-final-educational-viewer-readiness/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/axo-final-educational-viewer-readiness/
+START_BASE = 1be6a7ae (integration/axo-hybrid4-reliability; main bb61a804 fully contained); started by Codex (interrupted at 21ab6fa7 by its usage limit), resumed by Claude
+CODE_COMMIT = frontend 21ab6fa7794df2b402ee6792180217b916676fa1, backend 703f3b5d (candidate frozen by 4e7ea0dc: 103 files 5ef50761…, CACHE_VERSION 132 unchanged)
+CLASSIFICATION = INTEGRATION_BRANCH_VIEWER_READINESS (not merged, not pushed); hover drawn without geometry rebuild (262/110 GPU objects and 51–55 ms long tasks per hover → 0); restored camera keeps scene zoom/clip bounds; section narration explains certified cuts through unnamed vertices from engine provenance; Source Gate grounds the three-point plane in all standard wordings (held-out 8/16 → 16/16); T3 FULL_PRODUCT_GATE_PASS at bac9e065, node harness 0 fail, browser two-tab 8/8, E2E 41/41, UI 40/40, camera 10/10, orbit gate DAT; performance within variation besides the hover gain; publication BLOCKED_BY_OWNER_DECISION (6533b586 + 98 pending, classified metadata-only).
+PRODUCT_CHANGE = YES (integration branch only)
+MODEL_REQUEST_COUNT = 0
+VERIFICATION = report.md; run.json; handoff.md; plan.md; publication-audit.json; wording-holdout.json; wording-holdout-after.json; hover-*/; camera-*/; final/; perf/; logs/
+CORRECTS = docs/evaluation/geometry/runs/axo-hybrid4-capability-scene3d-reliability/report.md §L (hover-in rebuild "open" → fixed; three-point step text incomplete → fixed; three-point wording coverage → extended)
+CORRECTED_BY = NONE
+
+## WAVE_ID = AXO_HYBRID4_CAPABILITY_SCENE3D_RELIABILITY
+
+REPORT = docs/evaluation/geometry/runs/axo-hybrid4-capability-scene3d-reliability/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/axo-hybrid4-capability-scene3d-reliability/
+START_BASE = d3da429b (integration/axo-hybrid4-reliability; main bb61a804 fully contained)
+CODE_COMMIT = e23e3983e7b7b7bd83d5b180337768d05042578e (candidate frozen by ac8e610d: 103 files f75779e2…, CACHE_VERSION 132 unchanged, cache identity re-locked)
+CLASSIFICATION = INTEGRATION_BRANCH_CAPABILITY_AND_RELIABILITY (not merged into main, not pushed); Hybrid /4 serves sections by the plane through three named points (bridge maps /2 constrained-with-only-contains_points to the existing planner section; Case C end to end, 14 served cases exact against an independent oracle, 0 incorrect); orbit gate v4 (display-frame counter, rebuild/steady-state allocation criterion, evidence windows red) gives DAT on the candidate; drag start no longer rebuilds the scene; projection step titles fixed; node harness 0 failures (frozen oracle blobs repinned, hashes unchanged); per-request token telemetry; PostgreSQL 16 migration/history verified; single-process idempotency assumption locked; performance within variation; publication BLOCKED on owner decisions (6533b586 + 98 pending, classified).
+PRODUCT_CHANGE = YES (integration branch only)
+MODEL_REQUEST_COUNT = 0
+VERIFICATION = report.md; run.json; handoff.md; logs/; fixtures/; frozen-oracle-sources/; generalization-results.json; tools/three_point_generalization_eval.py; two-tab-1/2; e2e-scene-consistency/; ui-run/; camera-views/; orbit-gate/; perf/
+CORRECTS = docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/report.md (orbit gate KHONG_ON_DINH "pre-existing, root cause not investigated" → measurement artefact of gate v3 on a demand-driven renderer, fixed in the gate; /2 three-point plane "owner decision" → implemented without a schema change; 2 node-harness failures "inherited, not edited" → repinned with unchanged hashes)
+CORRECTED_BY = AXO_FINAL_EDUCATIONAL_VIEWER_READINESS (docs/evaluation/geometry/runs/axo-final-educational-viewer-readiness/report.md)
+
+## WAVE_ID = AXO_HYBRID4_FINAL_PREMERGE_HARDENING
+
+REPORT = docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/
+START_BASE = 01cfda03 (integration/axo-hybrid4-reliability; main bb61a804 fully contained)
+CODE_COMMIT = b98a470b86eb3759c2b267a1457ecf17bc1b7473 (candidate frozen by 09634f92: 103 files a0cb684e…, CACHE_VERSION 132 unchanged)
+CLASSIFICATION = INTEGRATION_BRANCH_PRE_MERGE_HARDENING (not merged into main, not pushed); Case C locked on engine + /4 envelope (/2 cannot express a three-named-point plane: owner decision); server idempotency of /api/analyze per attempt key (single process); two real Chrome tabs found and fixed a localStorage lost update (one key per record), 8/8 after; server history tie order fixed; telemetry replay double count fixed, write moved after response; registry false INCONSISTENT_FACTS on quadrilateral "vuông tại A" fixed; 9 retired Axo engine regressions restored on /4; cold-open regression of the previous report not reproduced (ABBA, 48 samples); publication: 1 historical fixture finding (6533b586) OWNER_DECISION_REQUIRED, 98 pending unchanged; orbit gate KHONG_ON_DINH on baseline and candidate alike.
+PRODUCT_CHANGE = YES (integration branch only)
+MODEL_REQUEST_COUNT = 0
+VERIFICATION = report.md; run.json; handoff.md; logs/; two-tab-run-1..4/receipt.json; e2e-scene-consistency/receipt.json; ui-run/receipt.json; perf/ (nav-*, perf-*/receipt.json.gz, perf-summary.json, navigation-raw-samples.json, cold-open-phases/); orbit-gate*/ORBIT_GATE.json
+CORRECTS = docs/evaluation/geometry/runs/axo-hybrid4-integration-reliability/report.md (open items: two tabs NOT TESTED → tested, lost update found and fixed; server idempotency NOT IMPLEMENTED → implemented; Case C without a main test → locked; cold-open P95 rise "unexplained" → not reproduced under alternation)
+CORRECTED_BY = AXO_HYBRID4_CAPABILITY_SCENE3D_RELIABILITY (docs/evaluation/geometry/runs/axo-hybrid4-capability-scene3d-reliability/report.md)
+
+## WAVE_ID = AXO_HYBRID4_INTEGRATION_RELIABILITY
+
+REPORT = docs/evaluation/geometry/runs/axo-hybrid4-integration-reliability/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/axo-hybrid4-integration-reliability/
+START_BASE = main bb61a804eb2b476f796e28176084ea41b0bed92e + integration/axo-pedagogical-construction-hardening 67f780ca9711a866727741f16bd09ab5ad5d3849 (merge base f986e897)
+CODE_COMMIT = 0d17276cba961a6f4f182fcc58124e1f3d853821 (branch integration/axo-hybrid4-reliability, merge 75d88a31)
+CLASSIFICATION = INTEGRATION_BRANCH_ACCEPTANCE; READY_FOR_USER_REVIEW (not merged into main, not pushed); Axo frontend integrated onto Hybrid /4 main; Adapter /3 kept retired, Axo "oblique_cylinder" extraction literal not carried; Adapter /4 source_provenance/relation_certificates now reach Scene3D; attempt identity created per send (retry = same attempt, second send = new attempt, reopen keeps id); statement provenance unified with main's client stamp, no backend envelope/cache change; deep-frozen Scene3D survives every listed interaction (guard shown red on the old in-place write); T3 FULL_PRODUCT_GATE_PASS at d221c5a4 (pytest 13782, vitest 1925); E2E 36/36; UI harness 2 x 40/40; performance vs Axo 67f780ca without frame/render/context/buffer change, one unexplained cold-open P95 rise; main's UI cannot run the same scenarios (recorded).
+PRODUCT_CHANGE = YES (integration branch only)
+MODEL_REQUEST_COUNT = 0
+VERIFICATION = report.md; run.json; plan.md; logs/t3-full-gate-d221c5a4.log; logs/t3-full-gate-0151cc68-build-fail.log; logs/pytest-merged-before-seal-summary.txt; logs/pytest-17-on-main.log; logs/e2e-final.log; logs/vitest-merged-summary.json; browser/receipt.json; ui-run-1/receipt.json; ui-run-2/receipt.json; perf-before-axo/receipt.json; perf-after-final/receipt.json; nav-before-axo/receipt.json; nav-after-final/receipt.json; perf-before/receipt.json; nav-before/ (main baseline incompatibility)
+CORRECTS = docs/evaluation/geometry/runs/axo-data-identity-test-hardening/report.md §C/§I (content-based submission key replaced by per-send attempt identity; proposed backend `problem` envelope field rejected after cache-boundary review)
+CORRECTED_BY = AXO_HYBRID4_FINAL_PREMERGE_HARDENING (docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/report.md)
+
+## WAVE_ID = AXO_DATA_IDENTITY_TEST_HARDENING
+
+REPORT = docs/evaluation/geometry/runs/axo-data-identity-test-hardening/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/axo-data-identity-test-hardening/
+START_BASE = 28c7943b
+CODE_COMMIT = 7a46646e38c0358db851f0e16a3ac1d1e9f15369
+CLASSIFICATION = FRONTEND_DATA_IDENTITY_AND_TEST_RELIABILITY; READY_FOR_USER_REVIEW (not merged, not pushed); submission identity (submissionIdOf) separated from compiled-geometry identity (historyIdOf) with legacy records read/reused, never rewritten; submissions keep their own URL/UI snapshot/statement (no sample presentation by compiled match); statement source learner/catalog/missing; viewer no longer mutates envelope Scene3D (caused duplicate records on reopen); vitest 5 s timeouts root-caused as CPU oversubscription, test.maxWorkers = half logical cores, 7 clean full runs; family07 fixture D/D1 statement ambiguity corrected in the synthetic statement (frozen data untouched); E2E 27/27, UI harness 2 x 40/40, paired performance and navigation without regression. BLOCKED: original problem text from server needs the Hybrid /4 contract proposed in report §I.
+PRODUCT_CHANGE = YES (frontend only; 0 backend edits)
+MODEL_REQUEST_COUNT = 0
+VERIFICATION = report.md; run.json; plan.md; candidate_divergence.json; vitest-timing.json; browser-final/receipt.json; browser/receipt.json (diagnostic); ui-final-1/receipt.json; ui-final-2/receipt.json; perf-before-final/receipt.json; perf-after-final/receipt.json; nav-before-final/receipt.json; nav-after-final/receipt.json
+CORRECTS = docs/evaluation/geometry/runs/axo-scene-identity-cleanup/report.md §F/§G (vitest timeouts: cause established as worker oversubscription, not unexplained machine load; history key risk: resolved by submission identity instead of being deferred)
+CORRECTED_BY = AXO_HYBRID4_INTEGRATION_RELIABILITY (docs/evaluation/geometry/runs/axo-hybrid4-integration-reliability/report.md)
+
+## WAVE_ID = AXO_SCENE_IDENTITY_CLEANUP
+
+REPORT = docs/evaluation/geometry/runs/axo-scene-identity-cleanup/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/axo-scene-identity-cleanup/
+START_BASE = d349ee01123ff2f1d97b18d46e921b1dec17240f
+CODE_COMMIT = 68c05cabcad2711f7eb440e7e3707300c489532f
+CLASSIFICATION = FRONTEND_CLEANUP_AND_IDENTITY_ACCEPTANCE; READY_FOR_USER_REVIEW (not merged, not pushed); answer presentation removed from the construction flow (finalConclusions, reveal button, conclusion panel, CSS) with goalCompletion/tapKetQuaCuoi/certificates kept; statement bound to the opening (ActiveSimulation.problemStatement) — fixes a shared-record regression introduced by AXO_RESULT_REVEAL_CONSISTENCY; no title-based scene recovery; 360 px harness failure root-caused (selection restored by per-problem recovery leaked from an earlier check) and fixed in the harness, full UI harness 3 x 40/40; browser E2E 23/23 incl. real Chrome 110% zoom; paired performance shows no regression; vitest all assertions pass but one heavy test times out at 5 s per full run under current machine load (also on unchanged HEAD).
+PRODUCT_CHANGE = YES (frontend only; 0 backend edits)
+MODEL_REQUEST_COUNT = 0
+VERIFICATION = report.md; run.json; plan.md; candidate_divergence.json; browser-final/receipt.json; browser-try/receipt.json (diagnostic); ui-run-1/receipt.json; ui-run-2/receipt.json; ui-run-3/receipt.json; perf-before/receipt.json; perf-after/receipt.json
+CORRECTS = docs/evaluation/geometry/runs/axo-result-reveal-consistency/report.md §B1 and §B3 (product decision: answers are no longer presented, not merely deferred; statement source from the history record replaced by the per-opening statement) and §E (360 px case: cause established — harness state leak, not a timing race)
+CORRECTED_BY = AXO_DATA_IDENTITY_TEST_HARDENING (docs/evaluation/geometry/runs/axo-data-identity-test-hardening/report.md)
+
+## WAVE_ID = AXO_RESULT_REVEAL_CONSISTENCY
+
+REPORT = docs/evaluation/geometry/runs/axo-result-reveal-consistency/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/axo-result-reveal-consistency/
+START_BASE = 219434ea87b5916e51a9d0d4a8cefdd8e78eebe8
+CODE_COMMIT = 514d34d4c375af58430d55721bd32bde056f5ae1 (also 69b9497f24698d334092244bd58c02615179ad95)
+CLASSIFICATION = FRONTEND_PEDAGOGY_AND_CONSISTENCY_ACCEPTANCE; READY_FOR_USER_REVIEW (not merged, not pushed); final results only after "Xem kết quả" (no answer text in DOM before the request, hidden again on step back, replay and problem switch); dock statement from the open record's original input (Hybrid /4 description is a notice); synthetic sphere fixtures no longer inherit the S.ABCD sample; tangent-plane radius step no longer claims an intersection circle; paired performance before/after shows no regression; 124/124 Vitest files (1803 tests), build, docs gate, candidate --verify PASS; browser E2E 24/24; harness UI 39/40 (one sequence-only intermittent case, recorded).
+PRODUCT_CHANGE = YES (frontend SimulationWorkspace, global.css, scene3d-semantic-policy narration only; 0 backend edits)
+MODEL_REQUEST_COUNT = 0
+VERIFICATION = report.md; run.json; plan.md; candidate_divergence.json; browser-final/receipt.json; ui-final/receipt.json; ui-360-recheck/receipt.json; ui-360-sequence/receipt.json; perf-before/receipt.json; perf-after/receipt.json; sphere-audit/probe.json
+CORRECTS = docs/evaluation/geometry/runs/axo-performance-completeness/ui-final/{greatCircleScene,tangentScene}.png (interpretation only: those screenshots show the S.ABCD sample's statement and a technical title because the fixtures inherited samples[0]; their geometry assertions stand)
+CORRECTED_BY = AXO_SCENE_IDENTITY_CLEANUP (docs/evaluation/geometry/runs/axo-scene-identity-cleanup/report.md)
+
+## WAVE_ID = AXO_PERFORMANCE_COMPLETENESS
+
+REPORT = docs/evaluation/geometry/runs/axo-performance-completeness/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/axo-performance-completeness/
+START_BASE = 4ed8cb3e262280fe3bf6caab0045185a9bc0e52d
+CODE_COMMIT = 34c779e1eb258240c595315db2219c788ba9462a
+CLASSIFICATION = FRONTEND_PERFORMANCE_AND_COMPLETENESS_ACCEPTANCE; READY_FOR_USER_REVIEW (not merged, not pushed); OrbitControls/wheel RAF coalescing (pooled orbit median 270.8 ms -> 7.0 ms, 3.7 -> 142.9-144.9 FPS, renders/frame 243-451 -> 1); semantic rim GPU buffer reuse (0 net step buffer leaks, 1 WebGL context across 25 switches); final-step verified requested conclusions gated by tapKetQuaCuoi + DERIVED_VERIFIED; 8/8 independent Fraction math checks; 12x3 multi-angle cross-family visual screenshots; 7 responsive widths + 110% effective DPR zoom; 121/121 Vitest files (1787 tests) + offline governance gates PASS.
+PRODUCT_CHANGE = YES (frontend renderer scheduling, semantic rim reuse, and final requested conclusions only; 0 backend edits)
+MODEL_REQUEST_COUNT = 0
+VERIFICATION = report.md; run.json; plan.md; candidate_divergence.json; check-mathematics.py; mathematics.json; before-symmetric/receipt.json; before-complete-scenes/receipt.json; after-hardware/receipt.json; after-final/receipt.json; after-dense-complete/receipt.json; nav-before/receipt.json; nav-after/receipt.json; memory-final/receipt.json; visual-final/receipt.json; ui-final/receipt.json; ui-mobile-recheck/receipt.json; ui-width-1280/receipt.json; zoom-check/receipt.json
+CORRECTS = NONE (same-run diagnostic attempts are explicitly excluded from acceptance statistics)
+CORRECTED_BY = NONE
+
 ## CONTINUATION_ID = W4_MAIN_INTEGRATION_AND_REPOSITORY_CLEANUP
 
 REPORT = docs/evaluation/geometry/runs/geometry-generalization-and-pedagogical-construction/integration/report.md

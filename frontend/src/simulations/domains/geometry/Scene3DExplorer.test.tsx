@@ -98,6 +98,7 @@ describe("cây phân rã: dữ liệu đủ, nhưng gọi ra mới hiện", () =
    * của cả hai loại — DESIGN_BRIEF §3.2: không có gì để bật thì công tắc VẮNG MẶT (Task 6). */
   const CANH_CO_SO_DO: Scene3D = {
     ...CANH,
+    free_objects: ["A", "B", "C", "S", "AB_length"],
     objects: [
       ...CANH.objects.map((o) => (o.id === "V" ? { ...o, annotation: {
         kind: "volume" as const, category: "result" as const, subject_ids: ["chop"], anchor: "solid" as const } } : o)),

@@ -29,6 +29,9 @@ from app.accounts.policy import (
 )
 from tests.conftest_classroom import TEST_PASSWORD, api, login, new_client, register  # noqa: F401
 
+# Mật khẩu mới cho ca đổi mật khẩu, dẫn xuất từ hằng kiểm thử (không viết literal mật khẩu — cổng publication safety).
+NEW_TEST_PASSWORD = TEST_PASSWORD + "-moi"
+
 
 # ── BĂM MẬT KHẨU ─────────────────────────────────────────────────────────────
 
@@ -188,16 +191,105 @@ class TestApiDangKyDangNhap:
     def test_doi_mat_khau_can_mat_khau_hien_tai(self, api):
         register(api, email="an@lop.test", name="An")
         bad = api.post("/api/auth/password",
-                       json={"currentPassword": "sai-mat-khau-dai", "newPassword": "moi-dai-12345"})
+                       json={"currentPassword": TEST_PASSWORD + "-sai", "newPassword": NEW_TEST_PASSWORD})
         assert bad.status_code == 400
         ok = api.post("/api/auth/password",
-                      json={"currentPassword": TEST_PASSWORD, "newPassword": "moi-dai-12345"})
+                      json={"currentPassword": TEST_PASSWORD, "newPassword": NEW_TEST_PASSWORD})
         assert ok.status_code == 200
         api.post("/api/auth/logout")
-        assert login(api, email="an@lop.test", password="moi-dai-12345").status_code == 200
+        assert login(api, email="an@lop.test", password=NEW_TEST_PASSWORD).status_code == 200
 
     def test_khach_chua_dang_nhap_van_goi_duoc_me(self, api):
         r = api.get("/api/auth/me")
         assert r.status_code == 200
         assert r.json()["user"] is None
         assert r.json()["entitlement"]["trialsLeft"] == GUEST_TRIAL_LIMIT
+
+
+
+class TestQuanTriHeThongRBAC:
+    def test_hoc_sinh_va_giao_vien_bi_chan_o_admin_api(self, api):
+        # Học sinh bị chặn 403
+        c_student = new_client(api)
+        register(c_student, email="hs@lop.test", name="Học sinh An")
+        r_hs = c_student.get("/api/admin/overview")
+        assert r_hs.status_code == 403
+
+        # Giáo viên cũng bị chặn 403 (chỉ admin thật mới có quyền quản trị hệ thống)
+        c_teacher = new_client(api)
+        register(
+            c_teacher,
+            email="gv@lop.test",
+            name="Cô Lan",
+            role="teacher",
+            teacher_code="MA-GIAO-VIEN-TEST",
+        )
+        r_gv = c_teacher.get("/api/admin/overview")
+        assert r_gv.status_code == 403
+
+    def test_admin_truy_cap_duoc_overview_va_ghi_nhat_ky_that(self, api):
+        c_admin = new_client(api)
+        r_reg = register(
+            c_admin,
+            email="admin@axo.edu.vn",
+            name="Quản trị hệ thống",
+            role="admin",
+            teacher_code="ADMIN2026",
+        )
+        assert r_reg.status_code == 200
+        assert r_reg.json()["user"]["role"] == "admin"
+
+        r_ov = c_admin.get("/api/admin/overview")
+        assert r_ov.status_code == 200
+        data = r_ov.json()
+        assert data["stats"]["totalUsers"] >= 1
+        assert isinstance(data["auditLogs"], list)
+
+        # Tạo tài khoản mới qua Admin API và kiểm tra nhật ký quản trị
+        r_create = c_admin.post(
+            "/api/admin/users",
+            json={
+                "email": "newstudent@axo.edu.vn",
+                "displayName": "Trần Minh",
+                "password": TEST_PASSWORD,
+                "role": "student",
+                "school": "THPT Thực nghiệm",
+            },
+        )
+        assert r_create.status_code == 200
+        created_id = r_create.json()["user"]["id"]
+
+        # Điều chỉnh hạn mức + trạng thái
+        r_patch = c_admin.patch(
+            f"/api/admin/users/{created_id}",
+            json={"customDailyLimit": 25, "bonusQuotaToday": 10, "status": "suspended"},
+        )
+        assert r_patch.status_code == 200
+        assert r_patch.json()["user"]["dailyLimit"] == 25
+        assert r_patch.json()["user"]["bonusQuotaToday"] == 10
+        assert r_patch.json()["user"]["status"] == "suspended"
+
+        # Lưu cài đặt hệ thống
+        r_settings = c_admin.put(
+            "/api/admin/settings",
+            json={
+                "studentDailyLimit": 20,
+                "teacherDailyLimit": 90,
+                "studentTokenLimit": 50000,
+                "teacherTokenLimit": 250000,
+                "studentRpmLimit": 5,
+                "teacherRpmLimit": 12,
+                "monthlyBudgetVnd": 4500000,
+                "budgetCapMode": "chặn yêu cầu mới & thông báo Quản trị viên",
+                "guestTrialLimit": 3,
+                "teacherVerifyMode": "cần Quản trị viên duyệt trước khi kích hoạt",
+                "maintenanceMode": False,
+                "allowNewRegistrations": True,
+            },
+        )
+        assert r_settings.status_code == 200
+        assert r_settings.json()["settings"]["studentDailyLimit"] == 20
+
+        # Kiểm tra nhật ký quản trị có ghi nhận các thao tác thật
+        r_ov2 = c_admin.get("/api/admin/overview").json()
+        assert len(r_ov2["auditLogs"]) >= 3

@@ -1,0 +1,33 @@
+
+ RUN  v4.1.10 D:/Documents/projects/algo-sim/.superpowers/worktrees/axo-pedagogical-integration/frontend
+
+ ❯ src/simulations/domains/geometry/scene3d-rim-reuse.test.ts (1 test | 1 failed) 27ms
+     × reuses thick-line nodes and buffers across 30 rebuilt step owners and releases them once 26ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/simulations/domains/geometry/scene3d-rim-reuse.test.ts > semantic rim buffer reuse > reuses thick-line nodes and buffers across 30 rebuilt step owners and releases them once
+AssertionError: expected 4 to be 2 // Object.is equality
+
+- Expected
++ Received
+
+- 2
++ 4
+
+ ❯ src/simulations/domains/geometry/scene3d-rim-reuse.test.ts:26:28
+     24|       const nodes = fat.children.filter(n => n.userData.fatRimCompanio…
+     25|       if (!i) { first = [...nodes]; buffers = nodes.map(n => (n as THR…
+     26|       expect(nodes.length).toBe(first.length);
+       |                            ^
+     27|       expect(nodes.every((n, j) => n === first[j] && (n as THREE.Mesh)…
+     28|       disposeScene3DObject(root);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed (1)
+   Start at  23:15:39
+   Duration  1.44s (transform 887ms, setup 50ms, import 1.06s, tests 27ms, environment 0ms)
+

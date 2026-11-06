@@ -1,0 +1,45 @@
+// Reference copy of the authority audit harness used by this run. To rerun: copy into frontend/src/ as a .test.ts,
+// then AUDIT_CORPUS=<collect_served_corpus.py output> AUDIT_OUT=<fresh.json> npx vitest run --maxWorkers=1 <file>. Remove after.
+
+import { readFileSync, writeFileSync } from "node:fs";
+import { it } from "vitest";
+import { docPhanHoiHybrid, hybridViewCua } from "./simulations/domains/geometry/hybrid-preview-adapter";
+import { attachHybridViewToScene, type Scene3D } from "./simulations/domains/geometry/scene3d-model";
+import { withSubEntities } from "./simulations/domains/geometry/scene3d-subentities";
+import { buildPedagogicalConstructionPlan, verifySceneMathematicalConsistency } from "./simulations/domains/geometry/scene3d-semantic-policy";
+import { evaluateStudentPresentationPolicy } from "./simulations/domains/geometry/scene3d-student-presentation-policy";
+
+it("authority audit", () => {
+  const { rows } = JSON.parse(readFileSync(process.env.AUDIT_CORPUS!, "utf8"));
+  const out: unknown[] = [];
+  const tally: Record<string, number> = {};
+  for (const row of rows.filter((r: { response?: unknown }) => r.response)) {
+    let verdict = "reached";
+    const detail: Record<string, unknown> = { key: row.key, source: row.source, answers: row.answers };
+    try {
+      const d = docPhanHoiHybrid(structuredClone(row.response));
+      if (!d.ok) { verdict = "decode_rejected"; detail.reason = d.reason; }
+      else {
+        const scene = d.envelope.scene3d as Scene3D;
+        const view = hybridViewCua(d.envelope);
+        attachHybridViewToScene(scene, view);
+        const mv = verifySceneMathematicalConsistency(scene);
+        const plan = buildPedagogicalConstructionPlan(withSubEntities(scene));
+        const g = plan.goalCompletion;
+        const ids = new Set((view?.answers ?? []).map((a) => a.quantity_id));
+        detail.status = g.status; detail.headline = g.headline; detail.mv = mv.valid;
+        detail.items = g.items.map((i) => ({ id: i.id, prov: i.provenance, value: i.valueText }));
+        const policy = evaluateStudentPresentationPolicy(scene, g);
+        detail.notice = policy.showDiagnosticNotice;
+        if (!mv.valid) verdict = "math_verification_invalid";
+        else if (g.status !== "reached") verdict = `not_reached:${g.items.map((i) => i.provenance).join(",")}`;
+        else if (![...ids].every((id) => g.items.some((i) => i.id === id && i.provenance === "DERIVED_VERIFIED"))) verdict = "answer_not_verified";
+        else if (policy.showDiagnosticNotice) verdict = "notice_shown";
+      }
+    } catch (e) { verdict = "throw"; detail.error = String(e).slice(0, 200); }
+    tally[verdict.split(":")[0]] = (tally[verdict.split(":")[0]] ?? 0) + 1;
+    if (verdict !== "reached") out.push({ verdict, ...detail });
+  }
+  writeFileSync(process.env.AUDIT_OUT!, JSON.stringify({ tally, failures: out }, null, 1));
+  console.log(JSON.stringify(tally));
+}, 600_000);

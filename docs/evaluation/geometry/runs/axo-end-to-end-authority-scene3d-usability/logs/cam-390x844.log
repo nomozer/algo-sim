@@ -1,0 +1,11 @@
+FAIL pyramid-section: zoom out distance 9.682910721344566
+PASS pyramid-three-point-pentagon
+FAIL oblique-prism: zoom out distance 23.65859237382302
+PASS cube-hexagon
+PASS sphere-cut-by-plane
+PASS plane-tangent-to-sphere
+PASS cylinder-circular-section
+PASS cone-axial-section
+PASS right-prism
+FAIL nested-pyramids: zoom out distance 5.266726443008842
+{"pass":7,"total":10}

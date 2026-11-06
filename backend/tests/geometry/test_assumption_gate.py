@@ -261,7 +261,8 @@ def test_yeu_cau_san_pham_khong_bat_duoc_bypass(monkeypatch, tmp_path):
         ({"nguon": "FIXTURE_TIN_CAY", "trusted": True}, {}),
         ({}, {"X-Nguon": "FIXTURE_TIN_CAY", "X-Trusted-Fixture": "1"}),
     ):
-        r = TestClient(app).post(
+        from tests.route_client import route_client
+        r = route_client(app).post(
             "/api/analyze",
             headers=header,
             json={"input": {"type": "text", "content": payload["problem_text"]}} | than_them,

@@ -1,0 +1,23 @@
+{
+  "run_id": "construction-integrity-audit",
+  "date": "2026-11-01",
+  "agent": "Antigravity",
+  "authorization": "Task prompt 2026-11-01 (AXO Construction Integrity Audit & Pedagogical Sequencing on feat/axo-v27-frontend-integration). No GO to merge or push.",
+  "branch": "feat/axo-v27-frontend-integration",
+  "product_commit": "3bb051a087e2e340b81517a44ad6878de8c681c1",
+  "measured_system": {
+    "files": 118,
+    "tree_hash": "4b7114965da230650e2ab0570ee158d24b6fee4e3cdece689ecd40b50a290866"
+  },
+  "cache_version": 130,
+  "cache_decision": "NO_BUMP: default LLM_ONLY pipeline does not import adapter3_simulation; route D simulation excluded from product cache",
+  "default_mode": "LLM_ONLY",
+  "hybrid": "OPT_IN_ONLY",
+  "provider_calls": 0,
+  "verification": {
+    "backend_targeted": "74 passed, 5 xfailed (test_construction_integrity_audit, test_simulation_coverage_curved, test_oblique_cylinder_ellipse, test_scene3d_ts_sync, test_typedfact_next_adapter3)",
+    "frontend_vitest": "95 files passed, 1574 tests passed",
+    "frontend_build": "tsc -b && vite build exit 0",
+    "playwright_visual_audit": "10 multi-family cases, 77 PNG captures, 0 console.error, 0 pageerror"
+  }
+}

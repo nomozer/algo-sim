@@ -1,0 +1,46 @@
+// Reference copy of the frontend replay used by this run (copy into frontend/src as a .test.ts, set AUDIT_CORPUS to
+// the classify_corpus.py output and AUDIT_OUT to a fresh file, run with --maxWorkers=1, then remove it).
+
+import { readFileSync, writeFileSync } from "node:fs";
+import { it } from "vitest";
+import { docPhanHoiHybrid, hybridViewCua } from "./simulations/domains/geometry/hybrid-preview-adapter";
+import { attachHybridViewToScene, type Scene3D } from "./simulations/domains/geometry/scene3d-model";
+import { withSubEntities } from "./simulations/domains/geometry/scene3d-subentities";
+import { buildPedagogicalConstructionPlan, verifySceneMathematicalConsistency } from "./simulations/domains/geometry/scene3d-semantic-policy";
+
+it("classified audit", () => {
+  const { rows } = JSON.parse(readFileSync(process.env.AUDIT_CORPUS!, "utf8"));
+  const tally: Record<string, number> = {};
+  const bad: unknown[] = [];
+  for (const row of rows.filter((r: { response?: unknown }) => r.response)) {
+    let v = "";
+    const d = docPhanHoiHybrid(structuredClone(row.response));
+    if (row.status === "REFUSED") {
+      const env = d.ok ? (d.envelope as Record<string, unknown>) : null;
+      v = !d.ok ? `refused_decode_rejected:${d.reason}`
+        : env!.status !== "unsupported" || "scene3d" in env! ? "refused_shown_as_scene"
+        : env!.reason_code !== row.response.envelope.reason_code || env!.failure_category !== row.category ? "refused_category_changed"
+        : "refused_consistent";
+    } else if (!d.ok) v = `served_decode_rejected:${d.reason}`;
+    else {
+      const scene = d.envelope.scene3d as Scene3D;
+      attachHybridViewToScene(scene, hybridViewCua(d.envelope));
+      const mv = verifySceneMathematicalConsistency(scene);
+      const g = buildPedagogicalConstructionPlan(withSubEntities(scene)).goalCompletion;
+      const want = Object.entries(row.answers as Record<string, { coef: string }>);
+      // Angles are certified as an exact cos² and shown as "cos² φ = <coef>" (or "90° (cos² φ = 0)").
+      const same = (text: string | null | undefined, coef: string, kind: string) => kind === "angle"
+        ? (text ?? "").match(/cos² φ = ([^)]+)\)?$/u)?.[1]?.trim() === coef : text === coef;
+      const ok = want.every(([k, a]) => g.items.some((i) => i.id === `kq_${k}` && i.provenance === "DERIVED_VERIFIED" && same(i.valueText, a.coef, i.kind)));
+      v = !mv.valid ? "served_math_invalid"
+        // Construction-only: goals are constructed objects (section, point, solid) — never a number or a quantity.
+        : want.length === 0 ? (g.items.every((i) => i.valueText == null && !scene.objects.some((o) => o.id === i.id && o.type === "quantity"))
+          ? "construction_consistent" : `construction_claims_value:${g.status}`)
+        : g.status !== "reached" ? `served_not_reached:${g.status}` : !ok ? "served_value_mismatch" : "served_reached";
+    }
+    const k = v.split(":")[0];
+    tally[k] = (tally[k] ?? 0) + 1;
+    if (!["refused_consistent", "served_reached", "construction_consistent"].includes(k)) bad.push({ key: row.key, v, text: row.problem_text.slice(0, 160) });
+  }
+  writeFileSync(process.env.AUDIT_OUT!, JSON.stringify({ tally, bad }, null, 1));
+}, 900_000);

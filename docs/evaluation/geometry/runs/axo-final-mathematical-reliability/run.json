@@ -1,0 +1,42 @@
+{
+  "run_id": "axo-final-mathematical-reliability",
+  "task": "axo-final-mathematical-reliability",
+  "wave": 1,
+  "date": "2026-11-06",
+  "branch": "integration/axo-hybrid4-reliability",
+  "baseline": "59ed17b4427887462a2db67a9106e4186112e42a",
+  "status": "READY_FOR_OWNER_REVIEW",
+  "agents": ["Codex (interrupted by usage limit, uncommitted)", "Claude (resumed)"],
+  "exclusive_write_access": "OWNER_CONFIRMED_IN_CHAT",
+  "provider_calls": 0,
+  "commits": [
+    {"sha": "ac71a439c", "role": "Codex work committed as found"},
+    {"sha": "e2f0cb908", "role": "sample-record reopen regression fix; backend edge-case tests; CODE_INDEX; browser evidence"},
+    {"sha": "5af750e86", "role": "evaluation candidate refreeze (product commit identity only)"}
+  ],
+  "t3_tested_tree": "5af750e86",
+  "defects": [
+    {"id": "R-1", "kind": "regression introduced by the uncommitted Codex change", "mathematical": false,
+     "red": "phase-b-views reopenFromHistory sample identity", "fixed_in": "e2f0cb908", "fault_injection": "killed"}
+  ],
+  "backend_mathematical_defects_found": 0,
+  "verification": {
+    "backend_math_suite": "20 passed (12 corpus + 7 edge cases + 1 non-uniqueness witness)",
+    "edge_case_mutants": "2/2 killed",
+    "vitest_full": "132 files / 1964 passed (before fix: 1 failed)",
+    "typecheck_build": "PASS",
+    "docs_gate": "42 passed",
+    "browser": {"mathematical_corpus": "12/12", "scene_consistency": "41/41", "two_tab": "8/8", "camera": "10/10"},
+    "candidate_verify": "MATCH 103 files 5ef50761",
+    "t3": "FULL_PRODUCT_GATE_PASS (508.3 s; pytest 13862 passed, 7 skipped, 3 deselected, 9 xfailed)",
+    "node_harness": "155 tests, 153 pass, 0 fail, 2 environment skips",
+    "publication": {"task_range": "PASS", "head": "BLOCKED 98 pending owner exceptions, 0 new", "integration_range": "BLOCKED 1 historical fixture 28be1ef6"},
+    "postgres": "NOT_RUN",
+    "live": "NOT_RUN (forbidden)"
+  },
+  "cache_version_changed": false,
+  "model_surface_changed": false,
+  "merged": false,
+  "pushed": false,
+  "owner_decisions": ["publication exceptions", "merge/push", "optional registered live run for the original prism warning"]
+}

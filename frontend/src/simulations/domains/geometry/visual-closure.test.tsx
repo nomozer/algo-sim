@@ -5,6 +5,7 @@ import * as THREE from "three";
 import { Scene3DExplorer } from "./Scene3DExplorer";
 import { buildObject3D } from "./scene3d-view";
 import { PHONG_CACH_SCENE3D } from "./scene3d-roles";
+import { modulateSemanticColor } from "./scene3d-semantic-policy";
 import type { Scene3D, SceneObject } from "./scene3d-model";
 import { tapKetQuaCuoi } from "./scene3d-model";
 import fixture from "./scene3d-section-fixture.json";
@@ -64,10 +65,9 @@ describe("Owner F1: one formula region per selected quantity", () => {
   });
 
   it("preserves the inspector formula in Mode A for a non-final measurement", () => {
-    const scene = officialScene("triangular_pyramid");
-    const quantity = scene.objects.find(o => o.formula && o.value != null && !tapKetQuaCuoi(scene).has(o.id))!;
+    const quantity = officialScene("triangular_pyramid").objects.find(o => o.formula && o.value != null && !tapKetQuaCuoi(officialScene("triangular_pyramid")).has(o.id))!;
     learner.selected = quantity.id;
-    const html = renderToString(<Scene3DExplorer scene={scene} />);
+    const html = renderToString(<Scene3DExplorer scene={officialScene("triangular_pyramid")} />);
     expect(html).toContain(`data-formula-entity="${quantity.id}"`);
     expect(html).not.toContain("data-math-analysis-panel");
   });
@@ -83,14 +83,16 @@ function borderColors(object: THREE.Object3D): number[] {
   return colors;
 }
 
-describe("Owner F2: selected section preserves semantic fill and geometry", () => {
-  it.each(["section", "polygon3"] as const)("highlights only the selected %s boundary in cobalt", type => {
+describe("Selected section preserves semantic terracotta hue and geometry", () => {
+  it.each(["section", "polygon3"] as const)("modulates the selected %s boundary within terracotta without recoloring to cobalt or teal", type => {
     const input: SceneObject = { ...section, type, surface_role: "SECTION_REGION" };
     const before = JSON.stringify(input);
     const neutral = buildObject3D(input, false)!;
     const selected = buildObject3D(input, "dich")!;
     expect(borderColors(neutral)).toContain(0xc85a32);
-    expect(borderColors(selected)).toContain(0x2563eb);
+    expect(borderColors(selected)).toContain(modulateSemanticColor(0xc85a32, "selected"));
+    expect(borderColors(selected)).not.toContain(0x2563eb);
+    expect(borderColors(selected)).not.toContain(0x0f766e);
     const fills: THREE.Mesh[] = [];
     selected.traverse(child => { if (child.name.startsWith("section_fill:") || child.name.startsWith("polygon_fill:")) fills.push(child as THREE.Mesh); });
     expect(fills.length).toBeGreaterThan(0);
@@ -100,19 +102,18 @@ describe("Owner F2: selected section preserves semantic fill and geometry", () =
   });
 });
 
-it("Owner P3.3: a standalone sphere has one presentation reference and no extra meridians", () => {
+it("Owner P3.3: a standalone sphere has one presentation reference and no extra meridians or artificial silhouette stroke", () => {
   const sphere: SceneObject = { id: "sphere", label: "Mặt cầu", type: "curved_solid", render: "curved_solid",
     origin: "derived", producer: "construct_curved", depends: [], curved_kind: "ball",
     anchor: ["0", "0", "0"], radius_sq: "25", height_sq: "0" };
   const object = buildObject3D(sphere, false)!;
   let lines = 0;
-  // The camera silhouette (one closed line) is the outline, not a circle on the sphere.
-  object.traverse(child => { if ((child as THREE.Line).isLine && !child.name.startsWith("sphere_silhouette:")) lines++; });
-  expect(lines).toBe(2); // solid and dashed rendering passes of one circle, never two scene entities
-  expect(object.getObjectByName("sphere_silhouette:sphere")).toBeDefined();
+  object.traverse(child => { if ((child as THREE.Line).isLine) lines++; });
+  expect(lines).toBe(2); // solid and dashed rendering passes of one equator circle, zero extra strokes or meridians
+  expect(object.getObjectByName("sphere_silhouette:sphere")).toBeUndefined();
   const reference = object.getObjectByName("sphere_reference:sphere")!;
   expect(reference.userData.presentationReference.authoritative).toBe(false);
   const referenceLines: THREE.Line[] = [];
   reference.traverse(child => { if ((child as THREE.Line).isLine) referenceLines.push(child as THREE.Line); });
-  expect(referenceLines).toHaveLength(lines);
+  expect(referenceLines).toHaveLength(2);
 });

@@ -1,0 +1,3 @@
+PASSED tests/test_postgres_axo_history_migration.py::test_axo_migrations_and_history_api_on_postgres
+PASSED tests/test_postgres_integration.py::test_postgres_migrate_persist_reconnect
+2 passed, 1 warning in 21.49s

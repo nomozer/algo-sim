@@ -1,0 +1,143 @@
+FFF.F..FFFF                                                              [100%]
+================================== FAILURES ===================================
+___________ test_two_tabs_of_one_guest_get_at_most_the_trial_limit ____________
+
+api = <starlette.testclient.TestClient object at 0x0000026C391070E0>
+route = {'delay': 0.4, 'runs': 2}
+
+    def test_two_tabs_of_one_guest_get_at_most_the_trial_limit(api, route):  # noqa: F811
+        api.get("/api/auth/me")
+        r1, r2 = _concurrently(lambda: _post(api, _key(1)), lambda: _post(api, _key(2)))
+>       assert sorted([_served(r1), _served(r2)]) == [False, True], (r1.status_code, r2.status_code)
+E       AssertionError: (200, 200)
+E       assert [True, True] == [False, True]
+E         
+E         At index 0 diff: True != False
+E         Use -v to get more diff
+
+tests\test_analysis_usage_ledger.py:138: AssertionError
+____________ test_concurrent_submits_never_exceed_the_daily_quota _____________
+
+api = <starlette.testclient.TestClient object at 0x0000026C39373C50>
+route = {'delay': 0.4, 'runs': 3}
+
+    def test_concurrent_submits_never_exceed_the_daily_quota(api, route):  # noqa: F811
+        client, uid = _user(api, "quota@algosim.edu.vn", limit=2, used=1)
+        rs = _concurrently(*[(lambda k=k: _post(client, _key(k))) for k in (1, 2, 3)])
+>       assert sum(map(_served, rs)) == 1, [r.status_code for r in rs]
+E       AssertionError: [200, 200, 200]
+E       assert 3 == 1
+E        +  where 3 = sum(<map object at 0x0000026C3AB4A230>)
+E        +    where <map object at 0x0000026C3AB4A230> = map(_served, [<Response [200 OK]>, <Response [200 OK]>, <Response [200 OK]>])
+
+tests\test_analysis_usage_ledger.py:146: AssertionError
+__________ test_concurrent_attempts_of_one_account_are_each_counted ___________
+
+api = <starlette.testclient.TestClient object at 0x0000026C3AB8F560>
+route = {'delay': 0.4, 'runs': 6}
+
+    def test_concurrent_attempts_of_one_account_are_each_counted(api, route):  # noqa: F811
+        client, uid = _user(api, "many@algosim.edu.vn", limit=50)
+        rs = _concurrently(*[(lambda k=k: _post(client, _key(k))) for k in range(6)])
+        assert all(map(_served, rs))
+>       assert _used_today(uid) == 6
+E       assert 1 == 6
+E        +  where 1 = _used_today(1)
+
+tests\test_analysis_usage_ledger.py:155: AssertionError
+_____ test_retry_of_a_served_attempt_after_a_restart_is_not_charged_again _____
+
+api = <starlette.testclient.TestClient object at 0x0000026C3ACABC50>
+route = {'delay': 0.4, 'runs': 2}
+
+    def test_retry_of_a_served_attempt_after_a_restart_is_not_charged_again(api, route):  # noqa: F811
+        client, uid = _user(api, "restart@algosim.edu.vn", limit=5)
+        assert _served(_post(client, _key(7)))
+        idem._entries.clear()                            # the in-process idempotency table is lost on restart
+        assert _served(_post(client, _key(7)))
+>       assert _used_today(uid) == 1
+E       assert 2 == 1
+E        +  where 2 = _used_today(1)
+
+tests\test_analysis_usage_ledger.py:170: AssertionError
+__ test_a_served_analysis_is_never_left_uncharged_when_the_quota_write_fails __
+
+api = <starlette.testclient.TestClient object at 0x0000026C3ACA8800>
+route = {'delay': 0.4, 'runs': 1}, fail_writes = []
+
+    def test_a_served_analysis_is_never_left_uncharged_when_the_quota_write_fails(api, route, fail_writes):  # noqa: F811
+        client, uid = _user(api, "lock@algosim.edu.vn", limit=5)
+        fail_writes.append("update user_account_meta")
+        r = _post(client, _key(11))
+        fail_writes.clear()
+>       assert not (_served(r) and _used_today(uid) == 0), "analysis served without charging the daily quota"
+E       AssertionError: analysis served without charging the daily quota
+E       assert not (True and 0 == 0)
+E        +  where True = _served(<Response [200 OK]>)
+E        +  and   0 = _used_today(1)
+
+tests\test_analysis_usage_ledger.py:216: AssertionError
+_____ test_a_telemetry_failure_is_logged_and_never_loses_the_quota_charge _____
+
+api = <starlette.testclient.TestClient object at 0x0000026C3AC0D550>
+route = {'delay': 0.4, 'runs': 1}, fail_writes = []
+caplog = <_pytest.logging.LogCaptureFixture object at 0x0000026C3AC88500>
+
+    def test_a_telemetry_failure_is_logged_and_never_loses_the_quota_charge(api, route, fail_writes, caplog):  # noqa: F811
+        client, uid = _user(api, "telemetry@algosim.edu.vn", limit=5)
+        fail_writes.append("insert into admin_analysis_telemetry")
+        with caplog.at_level(logging.WARNING):
+            r = _post(client, _key(12))
+        fail_writes.clear()
+        assert _served(r)
+>       assert _used_today(uid) == 1
+E       assert 0 == 1
+E        +  where 0 = _used_today(1)
+
+tests\test_analysis_usage_ledger.py:228: AssertionError
+_____________ test_a_reservation_counts_before_the_provider_runs ______________
+
+api = <starlette.testclient.TestClient object at 0x0000026C39373800>
+route = {'delay': 0.4, 'runs': 1}
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x0000026C3ADA3FE0>
+
+    def test_a_reservation_counts_before_the_provider_runs(api, route, monkeypatch):  # noqa: F811
+        """Process killed after the analysis but before finalisation: the attempt is already counted (fail closed)."""
+        import app.main as M
+        client, uid = _user(api, "crash@algosim.edu.vn", limit=5)
+        seen = {}
+        original = M._analyze_hybrid_route
+    
+        async def observe(*a, **k):
+            seen["used_during_run"] = _used_today(uid)
+            return await original(*a, **k)
+    
+        monkeypatch.setattr(M, "_analyze_hybrid_route", observe)
+        assert _served(_post(client, _key(13)))
+>       assert seen["used_during_run"] == 1 and _used_today(uid) == 1
+E       assert (0 == 1)
+
+tests\test_analysis_usage_ledger.py:245: AssertionError
+________ test_the_ledger_has_one_row_per_attempt_at_the_storage_layer _________
+
+    def test_the_ledger_has_one_row_per_attempt_at_the_storage_layer():
+>       from app.persistence.classroom_models import AnalysisUsageLedger
+E       ImportError: cannot import name 'AnalysisUsageLedger' from 'app.persistence.classroom_models' (D:\Documents\projects\algo-sim\.superpowers\worktrees\axo-hybrid4-integration\backend\app\persistence\classroom_models.py)
+
+tests\test_analysis_usage_ledger.py:249: ImportError
+============================== warnings summary ===============================
+..\..\..\..\backend\.venv\Lib\site-packages\fastapi\testclient.py:1
+  D:\Documents\projects\algo-sim\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/test_analysis_usage_ledger.py::test_two_tabs_of_one_guest_get_at_most_the_trial_limit
+FAILED tests/test_analysis_usage_ledger.py::test_concurrent_submits_never_exceed_the_daily_quota
+FAILED tests/test_analysis_usage_ledger.py::test_concurrent_attempts_of_one_account_are_each_counted
+FAILED tests/test_analysis_usage_ledger.py::test_retry_of_a_served_attempt_after_a_restart_is_not_charged_again
+FAILED tests/test_analysis_usage_ledger.py::test_a_served_analysis_is_never_left_uncharged_when_the_quota_write_fails
+FAILED tests/test_analysis_usage_ledger.py::test_a_telemetry_failure_is_logged_and_never_loses_the_quota_charge
+FAILED tests/test_analysis_usage_ledger.py::test_a_reservation_counts_before_the_provider_runs
+FAILED tests/test_analysis_usage_ledger.py::test_the_ledger_has_one_row_per_attempt_at_the_storage_layer
+8 failed, 3 passed, 1 warning in 9.50s

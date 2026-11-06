@@ -1,0 +1,201 @@
+{
+ "method": "ABBA: perf-1-B, perf-2-C, perf-3r-C (perf-3-C interrupted by session end, partial, excluded), perf-4-B; 15 s orbit per scene",
+ "scenes": {
+  "thiet-dien-chop": {
+   "B": {
+    "stepMedian": 65.2,
+    "stepP95": 84,
+    "loadMedian": 129.1,
+    "frameMedian": 6.9,
+    "frameP95": 7.1,
+    "slowFrameRatio": 0.001,
+    "callbackP95": 7.7,
+    "rendersPerFrameMax": 1,
+    "heapAfterMB": 43.4,
+    "gpuCreateMinusDelete": 0,
+    "nStep": 48
+   },
+   "C": {
+    "stepMedian": 62.2,
+    "stepP95": 82.3,
+    "loadMedian": 124.4,
+    "frameMedian": 6.9,
+    "frameP95": 7.1,
+    "slowFrameRatio": 0.0005,
+    "callbackP95": 6,
+    "rendersPerFrameMax": 1,
+    "heapAfterMB": 39.8,
+    "gpuCreateMinusDelete": 0,
+    "nStep": 48
+   }
+  },
+  "cau-cat-mat-phang": {
+   "B": {
+    "stepMedian": 55.7,
+    "stepP95": 71.3,
+    "loadMedian": 100.2,
+    "frameMedian": 6.9,
+    "frameP95": 7.1,
+    "slowFrameRatio": 0.0005,
+    "callbackP95": 6.7,
+    "rendersPerFrameMax": 1,
+    "heapAfterMB": 26.3,
+    "gpuCreateMinusDelete": 0,
+    "nStep": 48
+   },
+   "C": {
+    "stepMedian": 57.1,
+    "stepP95": 66.8,
+    "loadMedian": 97.8,
+    "frameMedian": 7,
+    "frameP95": 13.9,
+    "slowFrameRatio": 0.002,
+    "callbackP95": 8.4,
+    "rendersPerFrameMax": 1,
+    "heapAfterMB": 29.8,
+    "gpuCreateMinusDelete": 0,
+    "nStep": 48
+   }
+  },
+  "non-thiet-dien-truc": {
+   "B": {
+    "stepMedian": 37.8,
+    "stepP95": 52.4,
+    "loadMedian": 67.3,
+    "frameMedian": 6.9,
+    "frameP95": 7.1,
+    "slowFrameRatio": 0.0005,
+    "callbackP95": 3.7,
+    "rendersPerFrameMax": 1,
+    "heapAfterMB": 32.5,
+    "gpuCreateMinusDelete": 0,
+    "nStep": 48
+   },
+   "C": {
+    "stepMedian": 37.0,
+    "stepP95": 45.9,
+    "loadMedian": 68.1,
+    "frameMedian": 6.9,
+    "frameP95": 7.1,
+    "slowFrameRatio": 0.0005,
+    "callbackP95": 3.8,
+    "rendersPerFrameMax": 1,
+    "heapAfterMB": 43.9,
+    "gpuCreateMinusDelete": 0,
+    "nStep": 48
+   }
+  },
+  "tru-thiet-dien-tron": {
+   "B": {
+    "stepMedian": 44.6,
+    "stepP95": 60.5,
+    "loadMedian": 94.4,
+    "frameMedian": 6.9,
+    "frameP95": 7.1,
+    "slowFrameRatio": 0.0009,
+    "callbackP95": 6.6,
+    "rendersPerFrameMax": 1,
+    "heapAfterMB": 43.7,
+    "gpuCreateMinusDelete": 0,
+    "nStep": 48
+   },
+   "C": {
+    "stepMedian": 43.2,
+    "stepP95": 54.8,
+    "loadMedian": 94.8,
+    "frameMedian": 6.9,
+    "frameP95": 7.1,
+    "slowFrameRatio": 0.0005,
+    "callbackP95": 7.5,
+    "rendersPerFrameMax": 1,
+    "heapAfterMB": 46.4,
+    "gpuCreateMinusDelete": 0,
+    "nStep": 48
+   }
+  },
+  "cube-hexagon": {
+   "B": {
+    "stepMedian": 75.4,
+    "stepP95": 96.2,
+    "loadMedian": 155.2,
+    "frameMedian": 6.9,
+    "frameP95": 7.1,
+    "slowFrameRatio": 0.0009,
+    "callbackP95": 6,
+    "rendersPerFrameMax": 1,
+    "heapAfterMB": 50.9,
+    "gpuCreateMinusDelete": 0,
+    "nStep": 48
+   },
+   "C": {
+    "stepMedian": 71.6,
+    "stepP95": 81.3,
+    "loadMedian": 142.7,
+    "frameMedian": 6.9,
+    "frameP95": 7.1,
+    "slowFrameRatio": 0.0014,
+    "callbackP95": 5.9,
+    "rendersPerFrameMax": 1,
+    "heapAfterMB": 49.5,
+    "gpuCreateMinusDelete": 0,
+    "nStep": 48
+   }
+  },
+  "oblique-prism": {
+   "B": {
+    "stepMedian": 42.3,
+    "stepP95": 61,
+    "loadMedian": 89.3,
+    "frameMedian": 6.9,
+    "frameP95": 7.1,
+    "slowFrameRatio": 0.0005,
+    "callbackP95": 4.4,
+    "rendersPerFrameMax": 1,
+    "heapAfterMB": 36.3,
+    "gpuCreateMinusDelete": 0,
+    "nStep": 48
+   },
+   "C": {
+    "stepMedian": 38.4,
+    "stepP95": 44.9,
+    "loadMedian": 85.4,
+    "frameMedian": 6.9,
+    "frameP95": 7.1,
+    "slowFrameRatio": 0.0005,
+    "callbackP95": 3.9,
+    "rendersPerFrameMax": 1,
+    "heapAfterMB": 40.9,
+    "gpuCreateMinusDelete": 0,
+    "nStep": 48
+   }
+  },
+  "dense-multi-solid": {
+   "B": {
+    "stepMedian": 53.1,
+    "stepP95": 60.7,
+    "loadMedian": 113.5,
+    "frameMedian": 6.9,
+    "frameP95": 7.1,
+    "slowFrameRatio": 0.0005,
+    "callbackP95": 3.5,
+    "rendersPerFrameMax": 1,
+    "heapAfterMB": 37.1,
+    "gpuCreateMinusDelete": 0,
+    "nStep": 48
+   },
+   "C": {
+    "stepMedian": 52.2,
+    "stepP95": 58.4,
+    "loadMedian": 101.2,
+    "frameMedian": 6.9,
+    "frameP95": 7,
+    "slowFrameRatio": 0.0005,
+    "callbackP95": 3.5,
+    "rendersPerFrameMax": 1,
+    "heapAfterMB": 46.5,
+    "gpuCreateMinusDelete": 0,
+    "nStep": 48
+   }
+  }
+ }
+}

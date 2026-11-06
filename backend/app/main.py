@@ -10,16 +10,19 @@ from __future__ import annotations
 
 import hashlib
 import json
+import logging
 import math
 import os
 import hmac
 import ipaddress
+import time
 from datetime import datetime, timezone
 from typing import Any, Literal
 
-from fastapi import Cookie, FastAPI, Request
+from fastapi import Cookie, FastAPI, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
+from starlette.background import BackgroundTask
 from pydantic import BaseModel, ConfigDict, Field
 from sqlalchemy.exc import IntegrityError
 
@@ -47,6 +50,7 @@ from app.ai.route_trace import (
     lan_gan_nhat,
     theo_id,
 )
+from app import idempotency
 from app.ingestion.input import IngestError, ingest_to_text
 from app.ingestion.image import ImageRejected, decode_image_base64, normalize_image
 from app.ingestion.image_extraction import (
@@ -60,12 +64,23 @@ from app.learner_messages import attach_learner_reason
 from app.runtime_identity import runtime_identity
 from app.accounts import service as accounts_service
 from app.accounts.policy import Role as AccountRole, entitlement_for
-from app.accounts.router import router as accounts_router
+from app.accounts.router import (
+    check_analyze_quota_and_maintenance,
+    SESSION_REQUIRED,
+    finalize_analysis_usage,
+    issue_guest_session,
+    record_analyze_telemetry,
+    reserve_analysis_usage,
+    set_session_cookie,
+    router as accounts_router,
+)
 from app.accounts.classroom_router import router as classroom_router
 from app.accounts.session_router import router as session_router
+from app.ai.telemetry import begin_request_usage
 from app.persistence.classroom_models import User as AccountUser
 
 app = FastAPI(title="AlgoSim backend", version="0.3.0")
+_telemetry_log = logging.getLogger("algosim.telemetry")
 
 # Dev dùng vite proxy nên CORS không bắt buộc; mở sẵn cho trường hợp gọi thẳng
 app.add_middleware(
@@ -81,6 +96,45 @@ init_db()
 app.include_router(accounts_router)
 app.include_router(classroom_router)
 app.include_router(session_router)
+
+
+@app.middleware("http")
+async def _analyze_operational_telemetry_middleware(request: Request, call_next):
+    if request.method != "POST" or request.url.path != "/api/analyze":
+        return await call_next(request)
+    t0 = time.perf_counter()
+    # Tokens of THIS request only (a process-wide before/after delta charged overlapping requests each other's).
+    usage_this = begin_request_usage()
+    response = await call_next(request)
+    # The outcome is read from the body, so it is buffered (product /4 responses are ≲ 70 KB; measured cost ≈ 1.5 ms/MB,
+    # run axo-hybrid4-final-premerge-hardening). An idempotent replay ran nothing: it is neither a new analysis nor a
+    # new quota unit, so it is not recorded again.
+    body_bytes = b"".join([chunk async for chunk in response.body_iterator])
+    latency_ms = int((time.perf_counter() - t0) * 1000)
+    usage_after = {stage: dict(vals) for stage, vals in usage_this.items()}
+
+    def _record() -> None:
+        # Observational telemetry only (the usage ledger that limits access is written in the request itself):
+        # a lost row must not fail the learner's response, but it is never silent.
+        try:
+            record_analyze_telemetry(
+                algosim_session=request.cookies.get(accounts_service.SESSION_COOKIE),
+                status_code=response.status_code,
+                body_bytes=body_bytes,
+                latency_ms=latency_ms,
+                usage_before={},
+                usage_after=usage_after,
+            )
+        except Exception:
+            _telemetry_log.warning("analysis telemetry row not recorded", exc_info=True)
+
+    replayed = response.headers.get("Idempotent-Replayed") == "true"
+    # DB write AFTER the response is sent, in the threadpool (Starlette background task): not on the event loop, not
+    # in the learner's latency. Same bytes, same raw header list (duplicates such as `Vary` survive).
+    out = Response(content=body_bytes, status_code=response.status_code,
+                   background=None if replayed else BackgroundTask(_record))
+    out.raw_headers = list(response.raw_headers)
+    return out
 
 MISSING_KEY_MSG = (
     "Máy chủ chưa cấu hình GEMINI_API_KEY. Tạo file algo-sim/backend/.env "
@@ -921,17 +975,6 @@ def _cache_lookup(session, key: str, policy_version: str | None = None) -> Simul
     return row
 
 
-def _consume_guest_trial(session, token: str | None) -> None:
-    """Ghi nhận khách vừa tiêu một lượt. Không phải khách ⇒ no-op.
-
-    Đặt ở đây (chứ không trong `accounts.service`) vì nó là luật của ĐIỂM VÀO
-    analyze: chỉ lượt chạy RA ĐƯỢC mô phỏng mới tính.
-    """
-    auth = accounts_service.load_session(session, token)
-    if auth is not None:
-        accounts_service.consume_guest_trial(session, auth)
-
-
 # `/api/manifest` đã gỡ: nó phơi manifest của DSL Tin học, thứ không còn tồn
 # tại. Hợp đồng mà LLM đọc cho miền hình học là THẺ VĂN PHẠM, và nó sinh từ
 # `contract.py` rồi ghép thẳng vào user message — không có bề mặt HTTP nào để
@@ -991,6 +1034,13 @@ def _cong_luot_thu(algosim_session: str | None) -> JSONResponse | None:
     """
     with SessionLocal() as session:
         auth = accounts_service.load_session(session, algosim_session)
+        if auth is None:                      # no provider call without a server-issued session
+            token = issue_guest_session(session)
+            session.commit()
+            refused = JSONResponse(status_code=SESSION_REQUIRED[0], content=SESSION_REQUIRED[1],
+                                   headers={"Cache-Control": "no-store"})
+            set_session_cookie(refused, token)
+            return refused
         role = None
         if auth is not None and auth.user_id is not None:
             user = session.get(AccountUser, auth.user_id)
@@ -1003,6 +1053,10 @@ def _cong_luot_thu(algosim_session: str | None) -> JSONResponse | None:
                 "error": "Em đã dùng hết lượt mô phỏng thử. Đăng nhập để tiếp tục thực hành.",
                 "reason_code": "guest_trial_exhausted",
             })
+        quota_gate = check_analyze_quota_and_maintenance(session, algosim_session)
+        if quota_gate is not None:
+            session.commit()
+            return JSONResponse(status_code=quota_gate[0], content=quota_gate[1])
         session.commit()
     return None
 
@@ -1218,21 +1272,54 @@ async def _analyze_hybrid_route(text: str, mode: str, api_key: str | None, algos
                 except IntegrityError:
                     session.rollback()
 
-    if response["route_d"]["status"] == "SERVED":
-        with SessionLocal() as session:
-            _consume_guest_trial(session, algosim_session)
-            session.commit()
+    # The guest trial / daily quota of a SERVED result is charged by the usage ledger (`_analyze_counted`).
     return JSONResponse(content=response, headers={"Cache-Control": "no-store", "X-Algosim-Cache": state})
 
 
 @app.post("/api/analyze")
 async def analyze(body: AnalyzeBody, request: Request, algosim_session: str | None = Cookie(default=None)):
     """Điểm vào sản phẩm chính thức: đề bài tiếng Việt -> Hybrid `/4` (`Scene3D` + dựng hình từng bước + lời giải + đáp số chính xác).
-    Cổng lượt dùng thử đứng trước mọi khâu xử lý khác."""
-    chan = _cong_luot_thu(algosim_session)
-    if chan is not None:
-        return chan
+    Cổng lượt dùng thử đứng trước mọi khâu xử lý khác — sau cổng idempotency (`app/idempotency.py`): một lượt đã
+    phục vụ được phát lại nguyên văn, không tiêu lượt lần hai."""
+    key = request.headers.get(idempotency.HEADER)
+    return await idempotency.run_once(key, algosim_session, body.model_dump_json(),
+                                      lambda: _analyze_counted(body, algosim_session, key))
 
+
+def _served(resp: Any) -> bool:
+    if getattr(resp, "status_code", None) != 200:
+        return False
+    try:
+        return json.loads(resp.body).get("route_d", {}).get("status") == "SERVED"
+    except Exception:
+        return False
+
+
+async def _analyze_counted(body: AnalyzeBody, algosim_session: str | None, attempt_key: str | None):
+    """Usage ledger around one execution: reserve (gate + atomic counter) BEFORE any provider work, then charge when
+    SERVED or release + refund otherwise (`app/accounts/router.py`). A ledger failure answers 503 and runs nothing."""
+    from starlette.concurrency import run_in_threadpool
+
+    try:
+        res = await run_in_threadpool(reserve_analysis_usage, algosim_session, attempt_key)
+    except Exception:
+        _telemetry_log.exception("usage ledger reservation failed; the analysis was not run")
+        return _hybrid_infra_error("USAGE_LEDGER_UNAVAILABLE")
+    if isinstance(res, tuple):
+        refused = JSONResponse(status_code=res[0], content=res[1], headers={"Cache-Control": "no-store"})
+        if len(res) == 3:                     # session_required: the issued guest session rides on this refusal
+            set_session_cookie(refused, res[2])
+        return refused
+    served = False
+    try:
+        resp = await _analyze_once(body, algosim_session)
+        served = _served(resp)
+        return resp
+    finally:
+        await run_in_threadpool(finalize_analysis_usage, res, served)
+
+
+async def _analyze_once(body: AnalyzeBody, algosim_session: str | None):
     che_do_hybrid = hybrid_route_mode()
     if che_do_hybrid not in HYBRID_ROUTE_MODES:
         return _hybrid_infra_error("INVALID_HYBRID_ROUTE_MODE")

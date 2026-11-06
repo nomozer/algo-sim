@@ -306,7 +306,7 @@ describe("(5D) ranh giới: renderer không suy luận hình học", () => {
               "./scene3d-edge-visibility",
               "./polygon-triangulate", "./scene3d-roles",
               "./scene3d-annotations", "./scene3d-auxiliary", "./scene3d-chart",
-              "./scene3d-witness-gate"]).toContain(i);
+              "./scene3d-witness-gate", "./scene3d-semantic-policy"]).toContain(i);
     }
   });
 

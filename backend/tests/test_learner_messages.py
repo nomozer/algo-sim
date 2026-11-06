@@ -23,6 +23,14 @@ from app.main import app
 
 client = TestClient(app)
 
+
+@pytest.fixture(autouse=True)
+def _signed_in():
+    """`/api/analyze` runs nothing without a server-issued session (`session_required`)."""
+    from tests.route_client import sign_in
+    client.cookies.clear()
+    sign_in(client)
+
 # Token kỹ thuật CẤM xuất hiện trong văn bản học sinh: snake_case id, JSON
 # path, dấu ngoặc nhọn schema, tên exception. (Cho phép chữ thường có gạch
 # dưới trong… không — cấm hẳn snake_case.)

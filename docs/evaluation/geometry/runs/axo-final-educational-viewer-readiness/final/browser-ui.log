@@ -1,0 +1,40 @@
+PASS sphere final step carries no answer surface, given data stays
+PASS one-step sphere Play Pause and renderer reuse
+PASS X selection preserves IX, hiding X preserves sphere, Undo and Ctrl+Z
+PASS camera panels, zoom reversal, reset and geometric orbit center
+PASS canonical and Vietnamese URLs, per-problem Back Forward F5 snapshots
+PASS sphere boundary greatCircleScene
+PASS sphere boundary tangentScene
+PASS sphere boundary nonIntersectingScene
+PASS 22 problem switches retain one WebGL context with collected heap samples
+PASS responsive 360 cau-the-tich cards, labels and scrolling
+PASS responsive 360 cau-cat-mat-phang cards, labels and scrolling
+PASS responsive 360 thiet-dien-chop cards, labels and scrolling
+PASS responsive 360 tru-thiet-dien-tron cards, labels and scrolling
+PASS responsive 360 non-thiet-dien-truc cards, labels and scrolling
+PASS responsive 390 cau-the-tich cards, labels and scrolling
+PASS responsive 390 cau-cat-mat-phang cards, labels and scrolling
+PASS responsive 390 thiet-dien-chop cards, labels and scrolling
+PASS responsive 390 tru-thiet-dien-tron cards, labels and scrolling
+PASS responsive 390 non-thiet-dien-truc cards, labels and scrolling
+PASS responsive 430 cau-the-tich cards, labels and scrolling
+PASS responsive 430 cau-cat-mat-phang cards, labels and scrolling
+PASS responsive 430 thiet-dien-chop cards, labels and scrolling
+PASS responsive 430 tru-thiet-dien-tron cards, labels and scrolling
+PASS responsive 430 non-thiet-dien-truc cards, labels and scrolling
+PASS responsive 768 cau-the-tich cards, labels and scrolling
+PASS responsive 768 cau-cat-mat-phang cards, labels and scrolling
+PASS responsive 768 thiet-dien-chop cards, labels and scrolling
+PASS responsive 768 tru-thiet-dien-tron cards, labels and scrolling
+PASS responsive 768 non-thiet-dien-truc cards, labels and scrolling
+PASS responsive 1024 cau-the-tich cards, labels and scrolling
+PASS responsive 1024 cau-cat-mat-phang cards, labels and scrolling
+PASS responsive 1024 thiet-dien-chop cards, labels and scrolling
+PASS responsive 1024 tru-thiet-dien-tron cards, labels and scrolling
+PASS responsive 1024 non-thiet-dien-truc cards, labels and scrolling
+PASS responsive 1440 cau-the-tich cards, labels and scrolling
+PASS responsive 1440 cau-cat-mat-phang cards, labels and scrolling
+PASS responsive 1440 thiet-dien-chop cards, labels and scrolling
+PASS responsive 1440 tru-thiet-dien-tron cards, labels and scrolling
+PASS responsive 1440 non-thiet-dien-truc cards, labels and scrolling
+PASS desktop browser zoom 110 percent

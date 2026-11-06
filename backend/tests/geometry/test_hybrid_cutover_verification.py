@@ -193,7 +193,9 @@ def test_default_analyze_route_call_graph_and_retired_legacy_absence(monkeypatch
     transport_calls: list[str] = []
     _install_transport_map(monkeypatch, {text: payload}, transport_calls)
 
+    from tests.route_client import sign_in
     with TestClient(M.app) as client:
+        sign_in(client)
         resp = client.post("/api/analyze", json={"input": {"type": "text", "content": text}})
 
     assert resp.status_code == 200
@@ -364,7 +366,9 @@ def test_api_analyze_11_scenarios_cache_isolation_and_fail_closed_modes(monkeypa
         transport_calls,
     )
 
+    from tests.route_client import sign_in
     with TestClient(M.app) as client:
+        sign_in(client)
         # (1) Valid geometry
         r1 = client.post("/api/analyze", json={"input": {"type": "text", "content": valid_pyr_text}})
         assert r1.status_code == 200 and r1.json()["route_d"]["status"] == "SERVED"

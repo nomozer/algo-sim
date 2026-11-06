@@ -1,0 +1,164 @@
+{
+  "schema": "axo-two-tab/1",
+  "dist": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\axo-hybrid4-integration\\frontend\\dist-twotab",
+  "provider_calls": 0,
+  "fixtures": [
+    "cr.cube_2.dual_spheres.multi_goal",
+    "S2-B-I07_ve_va_tinh",
+    "S2-B-A03_control_with_dimensions"
+  ],
+  "checks": [
+    {
+      "name": "1. A and B send two different problems at the same time",
+      "evidence": {
+        "a": "a6dd5218a3a0a139fb5330f6d705db665",
+        "b": "a60c98f832d8ed51fcadc8423f4692d9c"
+      },
+      "status": "FAIL",
+      "error": "record a60c98f832d8ed51fcadc8423f4692d9c lost (seen from a tab)"
+    },
+    {
+      "name": "2. A and B send the same problem at the same time ⇒ two independent attempts",
+      "evidence": {
+        "a": "af008de30d73a66dd614f512f2057ba1c",
+        "b": "aaf2af5e5ccd51cceaa2abfea22929b12"
+      },
+      "status": "FAIL",
+      "error": "record a60c98f832d8ed51fcadc8423f4692d9c lost (seen from a tab)"
+    },
+    {
+      "name": "3. A saves history while B is reading and touching history (persistence race, repeated)",
+      "evidence": {
+        "uiRounds": 6,
+        "directRecords": 50,
+        "bCursorSeenByA": 2
+      },
+      "status": "FAIL",
+      "error": "record a60c98f832d8ed51fcadc8423f4692d9c lost (seen from a tab)"
+    },
+    {
+      "name": "4. B reloads after A updated ⇒ B keeps its own attempt and sees A's records",
+      "status": "FAIL",
+      "error": "page.waitForSelector: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#dock-steps-ul [data-step]') to be visible\u001b[22m\n"
+    },
+    {
+      "name": "5. A and B navigate and reopen different records, Back/Forward per tab",
+      "status": "FAIL",
+      "error": "page.waitForFunction: Timeout 30000ms exceeded."
+    },
+    {
+      "name": "6. A and B operate Scene3D, camera and steps independently",
+      "status": "FAIL",
+      "error": "locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#dock-steps-ul [data-step=\"0\"]')\u001b[22m\n"
+    },
+    {
+      "name": "7. A plays the construction while B creates a new attempt",
+      "evidence": {
+        "aId": "ab61b7de042b4c707fc24be52556a3aa7",
+        "b": "ad69b2360f29ddeec724fd0ad9632b6c6",
+        "aPlayingDuringB": false
+      },
+      "status": "FAIL",
+      "error": "record a60c98f832d8ed51fcadc8423f4692d9c lost (seen from a tab)"
+    },
+    {
+      "name": "retry: a 502 then 200 inside one send reuses the same Idempotency-Key and records one attempt",
+      "status": "FAIL",
+      "error": "Expected values to be strictly equal:\n\n30 !== 31\n"
+    }
+  ],
+  "forbidden": [],
+  "browser": "157.0.8103.38",
+  "summary": {
+    "pass": 0,
+    "total": 8,
+    "attempts": 63,
+    "analyzeRequests": 14
+  },
+  "analyzeLog": [
+    {
+      "key": "a60c98f832d8ed51fcadc8423f4692d9c",
+      "text": "Vẽ hình chóp S.ABCD có đáy ABCD là hình ",
+      "tab": "B",
+      "status": 200
+    },
+    {
+      "key": "a6dd5218a3a0a139fb5330f6d705db665",
+      "text": "Cho hình lập phương ABCD.A'B'C'D' có cạn",
+      "tab": "A",
+      "status": 200
+    },
+    {
+      "key": "aaf2af5e5ccd51cceaa2abfea22929b12",
+      "text": "Cho lăng trụ xiên ABC.A'B'C' có đáy ABC ",
+      "tab": "B",
+      "status": 200
+    },
+    {
+      "key": "af008de30d73a66dd614f512f2057ba1c",
+      "text": "Cho lăng trụ xiên ABC.A'B'C' có đáy ABC ",
+      "tab": "A",
+      "status": 200
+    },
+    {
+      "key": "a629502297e6230f9bb842adb5d25ef60",
+      "text": "Cho hình lập phương ABCD.A'B'C'D' có cạn",
+      "tab": "A",
+      "status": 200
+    },
+    {
+      "key": "a1663340e84f952740ce0fb87137db7df",
+      "text": "Vẽ hình chóp S.ABCD có đáy ABCD là hình ",
+      "tab": "A",
+      "status": 200
+    },
+    {
+      "key": "a80f7b343602db53773abd00dba9d5d6e",
+      "text": "Cho lăng trụ xiên ABC.A'B'C' có đáy ABC ",
+      "tab": "A",
+      "status": 200
+    },
+    {
+      "key": "ac314ff5015986218568ed2668d68f2b1",
+      "text": "Cho hình lập phương ABCD.A'B'C'D' có cạn",
+      "tab": "A",
+      "status": 200
+    },
+    {
+      "key": "a772a01fb2bd621a682c1405ab1842e5d",
+      "text": "Vẽ hình chóp S.ABCD có đáy ABCD là hình ",
+      "tab": "A",
+      "status": 200
+    },
+    {
+      "key": "afb467b61289c21c89fe064ebf1f06c10",
+      "text": "Cho lăng trụ xiên ABC.A'B'C' có đáy ABC ",
+      "tab": "A",
+      "status": 200
+    },
+    {
+      "key": "ab61b7de042b4c707fc24be52556a3aa7",
+      "text": "Vẽ hình chóp S.ABCD có đáy ABCD là hình ",
+      "tab": "A",
+      "status": 200
+    },
+    {
+      "key": "ad69b2360f29ddeec724fd0ad9632b6c6",
+      "text": "Cho hình lập phương ABCD.A'B'C'D' có cạn",
+      "tab": "B",
+      "status": 200
+    },
+    {
+      "key": "a5327480a408ad77749edec9b0387a93a",
+      "text": "Vẽ hình chóp S.ABCD có đáy ABCD là hình ",
+      "tab": "A",
+      "status": 502
+    },
+    {
+      "key": "a5327480a408ad77749edec9b0387a93a",
+      "text": "Vẽ hình chóp S.ABCD có đáy ABCD là hình ",
+      "tab": "A",
+      "status": 200
+    }
+  ]
+}

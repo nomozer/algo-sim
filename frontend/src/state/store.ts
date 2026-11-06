@@ -1,7 +1,26 @@
 import { create } from "zustand";
+import {
+  canonicalPathForView,
+  resolveLocationRoute,
+  type AxoErrorKind,
+} from "../components/AxoErrorExperience";
 import type { AnalysisUnsupported } from "../core/types";
+import { publicCatalog } from "../data/offline-catalog";
+import { GEOMETRY_SAMPLES } from "../data/geometry-samples";
+import type { AxoClientError, ClientFailureContract } from "../llm/client";
 import { getSimulation } from "../simulations/registry";
-import { historyStore, type HistoryItem } from "./history";
+import { useAuthStore } from "./auth";
+import {
+  clearServerHistory,
+  deleteServerHistoryItem,
+  fetchServerHistory,
+  historyIdOf,
+  historyStore,
+  normalizeStatement,
+  touchServerHistory,
+  upsertServerHistory,
+  type HistoryItem,
+} from "./history";
 import type {
   SimAction,
   ConfigResult,
@@ -24,6 +43,12 @@ export interface ActiveSimulation {
   config: unknown;
   /** Engine state — module sở hữu, store chỉ cầm hộ. */
   state: unknown;
+  /**
+   * Đề gốc đi kèm CHÍNH lần mở này (đề học sinh gửi khi phân tích, hoặc đề đã lưu khi mở lại từ Lịch sử).
+   * Gắn vào `active` chứ không đọc từ bản ghi lịch sử: một bản ghi (khoá `simulation_id + config`) có thể
+   * dùng chung với bài mẫu, nên mở bài mẫu từ Thư viện không được hiện đề của một lần gửi khác.
+   */
+  problemStatement?: string | null;
 }
 
 
@@ -36,13 +61,41 @@ export interface ActiveSimulation {
  * loại "hai nơi làm một việc" mà M9-UX7 đã gỡ một lần.
  */
 export type AppView =
-  | "home" | "workspace" | "library" | "history"
-  | "classes" | "assignments" | "observe" | "account" | "monitor";
+  | "home" | "workspace" | "library" | "history" | "not_found"
+  | "classes" | "assignments" | "observe" | "account" | "monitor"
+  | "login" | "register" | "forgot" | "reset" | "admin";
+
+export interface RouteFailureState {
+  readonly kind: AxoErrorKind;
+  readonly requestedPath?: string | null;
+}
+
+const SAFE_ESCAPE_VIEWS = new Set<AppView>([
+  "home",
+  "library",
+  "history",
+  "classes",
+  "assignments",
+  "observe",
+  "account",
+  "monitor",
+]);
+
+function pushSafeRoute(stack: readonly AppView[], next: AppView): AppView[] {
+  if (!SAFE_ESCAPE_VIEWS.has(next)) return [...stack];
+  if (stack[stack.length - 1] === next) return [...stack];
+  const updated = [...stack, next];
+  return updated.length > 24 ? updated.slice(updated.length - 24) : updated;
+}
 
 interface AppState {
   problemText: string;
   analyzing: boolean;
   analysisError: string | null;
+  clientFailure: ClientFailureContract | null;
+  routeFailure: RouteFailureState | null;
+  validRouteStack: AppView[];
+  hasInAppNavigation: boolean;
   unsupported: AnalysisUnsupported | null;
   activeSampleId: string | null;
 
@@ -141,9 +194,15 @@ interface AppState {
   setProblemText: (text: string) => void;
   setAnalyzing: (v: boolean) => void;
   setAnalysisError: (msg: string | null) => void;
+  setClientFailure: (failure: ClientFailureContract | null) => void;
+  reportNetworkFailure: (err: AxoClientError | ClientFailureContract) => void;
+  syncLocationRoute: (pathname: string, hash?: string, search?: string) => void;
+  escapeFromError: () => AppView;
   /** `originalInput`: đề gốc (text đã chuẩn hoá) — lưu vào lịch sử nếu có. */
-  loadEnvelope: (env: SimulationEnvelope, sampleId?: string, originalInput?: string) => void;
+  /** `recordId`: ID lần học (lần gửi mới từ `newAttemptId`, hoặc bản ghi đang mở lại) — xem `historyStore.record`. */
+  loadEnvelope: (env: SimulationEnvelope, sampleId?: string, originalInput?: string, recordId?: string) => void;
   loadUnsupported: (u: AnalysisUnsupported) => void;
+  clearUnsupported: () => void;
 
   /** M9-UX1 — điều hướng trình bày + lịch sử bền. */
   goHome: () => void;
@@ -191,6 +250,14 @@ interface AppState {
   setView: (view: AppView) => void;
   setActiveAssignment: (a: { id: number; title: string; instruction: string } | null) => void;
 
+  /** Axo V2.7 Phase D: Modal Cài đặt tài khoản (#user-account-settings-modal) & email khôi phục mật khẩu */
+  accountModalOpen: boolean;
+  accountModalTab: "profile" | "security";
+  openAccountModal: (tab?: "profile" | "security") => void;
+  closeAccountModal: () => void;
+  authResetEmail: string;
+  setAuthResetEmail: (email: string) => void;
+
   /** M8: đổi renderer — CHỈ đổi trường trình bày, không đụng active. */
   setVisualMode: (mode: VisualMode) => void;
   reset: () => void;
@@ -198,6 +265,7 @@ interface AppState {
 
 
 export const useAppStore = create<AppState>((set, get) => {
+  let hasHydratedLocation = false;
   /** Chạy một phép biến đổi qua timeline capability; không có thì bỏ qua. */
   function withTimeline(
     fn: (tl: TimelineCapability<unknown>, state: unknown) => unknown,
@@ -212,7 +280,11 @@ export const useAppStore = create<AppState>((set, get) => {
       // M9-UX1: ghi tiến độ TRÌNH BÀY vào lịch sử bền (cursor là tất định nên
       // goToStep khôi phục đúng). Chỉ storage — không set() để khỏi re-render.
       if (activeHistoryId) {
-        historyStore.touch(activeHistoryId, { lastCursor: mod.timeline.currentStep(next) });
+        const lastCursor = mod.timeline.currentStep(next);
+        historyStore.touch(activeHistoryId, { lastCursor });
+        if (useAuthStore.getState().user !== null) {
+          void touchServerHistory(activeHistoryId, { lastCursor });
+        }
       }
     }
   }
@@ -223,6 +295,10 @@ export const useAppStore = create<AppState>((set, get) => {
     problemText: "",
     analyzing: false,
     analysisError: null,
+    clientFailure: null,
+    routeFailure: null,
+    validRouteStack: ["home"],
+    hasInAppNavigation: false,
     unsupported: null,
     activeSampleId: null,
     view: "home",
@@ -256,15 +332,18 @@ export const useAppStore = create<AppState>((set, get) => {
     visualMode: "2d",
 
     setProblemText: (text) => set({ problemText: text }),
+    // Hybrid /4 (main 6fc6b309): một lần phân tích MỚI thất bại không được để lại mô phỏng/bài giao/lựa chọn của bài
+    // trước cạnh thông báo lỗi của bài khác. Giữ `clientFailure` và ngăn điều hướng của trải nghiệm lỗi Axo.
     setAnalyzing: (v) => set(v ? { analyzing: true, unsupported: null } : { analyzing: false }),
     setAnalysisError: (msg) =>
-      set(
+      set((s) =>
         msg === null
-          ? { analysisError: null }
+          ? { analysisError: null, clientFailure: null }
           : /lượt mô phỏng thử/.test(msg)
-            ? { analysisError: msg, unsupported: null }
+            ? { analysisError: msg, unsupported: null, clientFailure: s.clientFailure }
             : {
                 analysisError: msg,
+                clientFailure: s.clientFailure,
                 unsupported: null,
                 active: null,
                 activeAssignment: null,
@@ -273,13 +352,166 @@ export const useAppStore = create<AppState>((set, get) => {
                 activeSampleId: null,
                 playing: false,
                 view: "home",
+                hasInAppNavigation: true,
+                validRouteStack: pushSafeRoute(s.validRouteStack, "home"),
               },
       ),
+    setClientFailure: (failure) => set({ clientFailure: failure }),
+    reportNetworkFailure: (err) => {
+      const contract: ClientFailureContract = {
+        kind: err.kind,
+        code: err.code,
+        status: err.status,
+        message: err.message,
+      };
+      set({
+        clientFailure: contract,
+        routeFailure: { kind: "network_failure" },
+        analyzing: false,
+        playing: false,
+      });
+    },
+    syncLocationRoute: (pathname, hash = "", search = "") => {
+      const wasHydrated = hasHydratedLocation;
+      hasHydratedLocation = true;
+      const hadNav = get().hasInAppNavigation || wasHydrated;
+      const decision = resolveLocationRoute(pathname, hash, search);
+      if (decision.kind === "not_found") {
+        set({
+          view: "not_found",
+          routeFailure: { kind: "not_found", requestedPath: decision.requestedPath },
+          playing: false,
+          hasInAppNavigation: hadNav,
+        });
+        return;
+      }
+      if (decision.kind === "sample") {
+        const entry = publicCatalog().find((s) => s.id === decision.sampleId);
+        if (entry) {
+          set({ routeFailure: null });
+          get().loadEnvelope(entry.envelope, entry.id);
+          if (get().active === null && get().unsupported === null) {
+            set({
+              view: "workspace",
+              routeFailure: { kind: "unsupported_simulation", requestedPath: pathname },
+              hasInAppNavigation: hadNav,
+            });
+            return;
+          }
+          if (!hadNav) set({ hasInAppNavigation: false });
+        }
+        return;
+      }
+      if (decision.kind === "history_item") {
+        set({ routeFailure: null });
+        get().reopenFromHistory(decision.historyId);
+        if (get().active === null) {
+          set({
+            view: "workspace",
+            routeFailure: { kind: "unsupported_simulation", requestedPath: pathname },
+            hasInAppNavigation: hadNav,
+          });
+          return;
+        }
+        if (!hadNav) set({ hasInAppNavigation: false });
+        return;
+      }
+      if (decision.kind === "workspace_root") {
+        if (get().active !== null || get().unsupported !== null) {
+          set({ view: "workspace", routeFailure: null, hasInAppNavigation: hadNav });
+        } else {
+          set((s) => ({
+            view: "home",
+            routeFailure: null,
+            hasInAppNavigation: hadNav,
+            validRouteStack: pushSafeRoute(s.validRouteStack, "home"),
+          }));
+          if (typeof window !== "undefined" && typeof window.history?.replaceState === "function") {
+            try {
+              window.history.replaceState({ axoView: "home", sampleId: null }, "", "/");
+            } catch {
+              /* bỏ qua nếu môi trường kiểm thử chặn replaceState */
+            }
+          }
+        }
+        return;
+      }
+      const nextView = decision.view;
+      set((s) => ({
+        view: nextView,
+        routeFailure: null,
+        hasInAppNavigation: hadNav,
+        history: nextView === "history" || nextView === "home" ? historyStore.list() : s.history,
+        validRouteStack: pushSafeRoute(s.validRouteStack, nextView),
+      }));
+    },
+    escapeFromError: () => {
+      const {
+        view,
+        returnView,
+        validRouteStack,
+        hasInAppNavigation,
+        routeFailure,
+        clientFailure,
+        analysisError,
+      } = get();
+      let target: AppView = "home";
+      let nextStack: AppView[] = ["home"];
+      if (hasInAppNavigation) {
+        const safeCandidates = validRouteStack.filter((v) => SAFE_ESCAPE_VIEWS.has(v));
+        const hasOverlayOnSafeView =
+          SAFE_ESCAPE_VIEWS.has(view)
+          && (routeFailure !== null || clientFailure !== null || analysisError !== null);
+        if (hasOverlayOnSafeView) {
+          target = view;
+          nextStack = safeCandidates.length > 0 ? safeCandidates : pushSafeRoute(["home"], target);
+        } else if (view === "workspace" || view === "not_found") {
+          target =
+            safeCandidates[safeCandidates.length - 1] ??
+            (SAFE_ESCAPE_VIEWS.has(returnView) ? returnView : "home");
+          nextStack = safeCandidates.length > 0 ? safeCandidates : pushSafeRoute(["home"], target);
+        } else if (safeCandidates.length > 1) {
+          nextStack = safeCandidates.slice(0, -1);
+          target = nextStack[nextStack.length - 1] ?? "home";
+        } else {
+          target = safeCandidates[0] ?? "home";
+          nextStack = pushSafeRoute(["home"], target);
+        }
+      }
+      set({
+        view: target,
+        active: null,
+        activeAssignment: null,
+        activeHistoryId: null,
+        unsupported: null,
+        analysisError: null,
+        clientFailure: null,
+        routeFailure: null,
+        activeSampleId: null,
+        playing: false,
+        validRouteStack: nextStack,
+        history: historyStore.list(),
+      });
+      if (typeof window !== "undefined" && typeof window.history?.replaceState === "function") {
+        try {
+          window.history.replaceState(
+            { axoView: target },
+            "",
+            canonicalPathForView(target, null),
+          );
+        } catch {
+          /* môi trường sandbox không cho phép replaceState thì giữ state bộ nhớ */
+        }
+      }
+      return target;
+    },
 
 
-    loadEnvelope: (envIn, sampleId, originalInput) => {
-      // «Đề bài» = đề người học đã gửi, đóng dấu vào envelope để mọi lối mở lại (Lịch sử, Thư viện, bài giao) mang theo.
-      const deGui = originalInput?.trim();
+    loadEnvelope: (envIn, sampleId, originalInput, recordId) => {
+      // «Đề bài» = đề người học đã gửi, đóng dấu vào envelope để mọi lối mở lại (Lịch sử, Thư viện, bài giao) mang theo
+      // (main 928fb880). Mở bài mẫu TƯỜNG MINH không bao giờ đóng dấu; envelope đã mang đề đóng dấu (vd bài giao) là
+      // một lần gửi với đề ấy, không phải bài mẫu.
+      const deGui = sampleId ? undefined : (originalInput?.trim() || envIn.problem_statement?.trim() || undefined);
       const env = deGui ? { ...envIn, problem_statement: deGui } : envIn;
       const mod = getSimulation(env.simulation_id);
       if (!mod) {
@@ -322,25 +554,45 @@ export const useAppStore = create<AppState>((set, get) => {
         });
         return;
       }
-      // M9-UX1: mô phỏng validate + khởi tạo thành công → ghi lịch sử bền
-      // (dedup theo simulation_id + config; mở lại chỉ touch, không nhân bản).
-      const item = historyStore.record(env, originalInput ?? null);
-      const nextActive = {
+      // M9-UX1: mô phỏng validate + khởi tạo thành công → ghi lịch sử bền.
+      // Ngữ cảnh trình bày:
+      //  - mở bài mẫu TƯỜNG MINH (`sampleId`) là mở bài mẫu: đề lấy từ danh mục, mọi đề kèm theo bị bỏ qua;
+      //  - lần mở không kèm đề giữ trạng thái thiếu đề; chương trình trùng không chứng minh nguồn đề;
+      //  - một lần gửi (có đề) trùng chương trình với bài mẫu vẫn là lần gửi: khoá bản ghi, URL, snapshot UI và đề
+      //    là của chính nó (`historyStore.record` khoá theo `submissionIdOf`).
+      const statementInput = normalizeStatement(deGui);
+      const resolvedSampleId = sampleId ?? null;
+      const sampleStatement = sampleId ? GEOMETRY_SAMPLES.find((s) => s.id === sampleId)?.problemText : null;
+      const savedEnvelope = sampleStatement ? { ...env, problem_statement: sampleStatement } : env;
+      // Mở bài mẫu tường minh không bao giờ ghi vào bản ghi lần học được truyền kèm.
+      const item = historyStore.record(savedEnvelope, statementInput, sampleId ? undefined : recordId);
+      if (useAuthStore.getState().user !== null) {
+        const hasScene3d = Boolean((env as { scene3d?: unknown }).scene3d);
+        const stepCount = hasScene3d ? 0 : (mod.timeline ? mod.timeline.stepCount(initialState) : 0);
+        void upsertServerHistory(item, { sampleId: resolvedSampleId, stepCount });
+      }
+      const nextActive: ActiveSimulation = {
         moduleId: mod.id,
         envelope: env,
         config: result.config,
         state: initialState,
+        problemStatement: deGui ?? null,
       };
       /* M18-UI — MỘT MÔ PHỎNG TẠI MỘT THỜI ĐIỂM.
          Nhiều phiên (W4B-2Z §26) đã GỠ: mở thêm bài thứ hai không phải việc học
          sinh làm trong một tiết, và dải tab nó sinh ra cạnh tranh chỗ với sân
          khấu. Bài đang xem bị THAY, không bị mất — `historyStore.record` ngay
          trên đã ghi nó vào Lịch sử, mở lại vẫn 0 gọi AI. */
-      set({
+      const prevView = get().view;
+      const nextReturnView =
+        prevView === "workspace" || prevView === "not_found" ? get().returnView : prevView;
+      set((s) => ({
         active: nextActive,
         unsupported: null,
         analysisError: null,
-        activeSampleId: sampleId ?? null,
+        clientFailure: null,
+        routeFailure: null,
+        activeSampleId: resolvedSampleId,
         playing: false,
         /* W4B-2Z: mô phỏng MỚI luôn mở ở chế độ Quan sát — cờ chế độ không được
            rò từ bài trước sang bài sau (với một phiên thì khó thấy, với nhiều
@@ -352,14 +604,16 @@ export const useAppStore = create<AppState>((set, get) => {
         visualMode: "2d",
         view: "workspace",
         // Đổi bài ngay trong xưởng không phải "trang trước" — giữ đích quay lại cũ.
-        returnView: get().view === "workspace" ? get().returnView : get().view,
+        returnView: SAFE_ESCAPE_VIEWS.has(nextReturnView) ? nextReturnView : "home",
+        hasInAppNavigation: true,
+        validRouteStack: pushSafeRoute(s.validRouteStack, nextReturnView),
         history: historyStore.list(),
         activeHistoryId: item.id,
-      });
+      }));
     },
 
     roiXuong: () => {
-      const ve = get().returnView;
+      const ve = SAFE_ESCAPE_VIEWS.has(get().returnView) ? get().returnView : "home";
       get().goHome();
       get().setView(ve);
     },
@@ -367,7 +621,7 @@ export const useAppStore = create<AppState>((set, get) => {
     /* W4B-2Z §26 — về Home KHÔNG đóng phiên nào: chụp bản làm việc lại trước
        khi rời đi, nếu không quay lại phiên sẽ mất chỗ đang dở. */
     goHome: () =>
-      set({
+      set((s) => ({
         view: "home",
         active: null,
         /* M18 — rời sân khấu là rời bài: nếu giữ lại, một mô phỏng tự luyện mở
@@ -376,29 +630,70 @@ export const useAppStore = create<AppState>((set, get) => {
         activeHistoryId: null,
         unsupported: null,
         analysisError: null,
+        clientFailure: null,
+        routeFailure: null,
         activeSampleId: null,
         playing: false,
+        hasInAppNavigation: true,
+        validRouteStack: pushSafeRoute(s.validRouteStack, "home"),
         history: historyStore.list(),
-      }),
+      })),
 
-    openHistory: () => set({ view: "history", history: historyStore.list() }),
+    openHistory: () =>
+      set((s) => ({
+        view: "history",
+        routeFailure: null,
+        hasInAppNavigation: true,
+        validRouteStack: pushSafeRoute(s.validRouteStack, "history"),
+        history: historyStore.list(),
+      })),
 
-    openLibrary: () => set({ view: "library" }),
+    openLibrary: () =>
+      set((s) => ({
+        view: "library",
+        routeFailure: null,
+        hasInAppNavigation: true,
+        validRouteStack: pushSafeRoute(s.validRouteStack, "library"),
+      })),
 
     /* M18 — điều hướng mức ứng dụng. Đổi mặt trình bày KHÔNG đụng `active`:
        rời sang "Lớp của em" rồi quay lại phải thấy đúng mô phỏng đang dở. */
-    setView: (view) => set(
-      view === "history" ? { view, history: historyStore.list() } : { view }),
+    setView: (view) =>
+      set((s) => ({
+        view,
+        routeFailure: view === "not_found" ? s.routeFailure : null,
+        hasInAppNavigation: view === "not_found" ? s.hasInAppNavigation : true,
+        validRouteStack: pushSafeRoute(s.validRouteStack, view),
+        ...(view === "history" || view === "home" ? { history: historyStore.list() } : {}),
+      })),
     setActiveAssignment: (a) => set({ activeAssignment: a }),
     setSemanticFocus: (f) => set({ semanticFocus: f }),
 
     reopenFromHistory: (id) => {
       const item = historyStore.list().find((x) => x.id === id);
       if (!item) return;
+      const savedCursor = item.lastCursor;
+      // History opens its own saved statement; matching catalog geometry cannot recover missing original wording.
+      // Bản ghi là bài mẫu chỉ khi CHÍNH nó mang bằng chứng: không có đề người học, khoá biên dịch của bài mẫu và dấu
+      // `problem_statement` mà lần mở bài mẫu tường minh đã ghi (`loadEnvelope`). Bản ghi cũ không dấu vẫn là "thiếu đề".
+      const sampleId = item.originalInput
+        ? undefined
+        : GEOMETRY_SAMPLES.find((s) => historyIdOf(s.envelope) === item.id
+          && s.problemText === item.envelope.problem_statement)?.id;
       // Envelope đã validate + engine tất định → 0 gọi AI, không đi pipeline.
-      get().loadEnvelope(item.envelope, undefined, item.originalInput ?? undefined);
+      // Mở lại = cùng lần học: truyền chính ID bản ghi để không bị khoá lại theo nội dung (giữ ID qua reload/Back/Forward).
+      // Bài mẫu được khoá bằng `historyIdOf`, chính là `item.id` theo điều kiện trên.
+      get().loadEnvelope(item.envelope, sampleId, item.originalInput ?? undefined, item.id);
       if (get().active) {
-        if (item.lastCursor !== null) get().goToStep(item.lastCursor);
+        if (savedCursor !== null) {
+          get().goToStep(savedCursor);
+          // Cảnh 3D có số bước dựng nhiều hơn `view_steps` 2D: giữ nguyên `savedCursor` trong `historyStore`
+          // để `AxoWorkspaceV62` khôi phục đúng bước dựng 3D mà không bị timeline 2D kẹp cụt.
+          if (Boolean((item.envelope as { scene3d?: unknown }).scene3d)) {
+            historyStore.touch(item.id, { lastCursor: savedCursor });
+            set({ history: historyStore.list() });
+          }
+        }
         if (item.visualMode) get().setVisualMode(item.visualMode);
       }
     },
@@ -406,15 +701,22 @@ export const useAppStore = create<AppState>((set, get) => {
     removeHistoryItem: (id) => {
       historyStore.remove(id);
       set({ history: historyStore.list() });
+      if (useAuthStore.getState().user !== null) {
+        void deleteServerHistoryItem(id);
+      }
     },
 
     clearHistory: () => {
       historyStore.clear();
       set({ history: [] });
+      if (useAuthStore.getState().user !== null) {
+        void clearServerHistory();
+      }
     },
 
     loadUnsupported: (u) =>
-      set({
+      set((s) => ({
+        view: "home",
         active: null,
         activeAssignment: null,
         semanticFocus: null,
@@ -423,8 +725,11 @@ export const useAppStore = create<AppState>((set, get) => {
         analysisError: null,
         activeSampleId: null,
         playing: false,
-        view: "home",
-      }),
+        hasInAppNavigation: true,
+        validRouteStack: pushSafeRoute(s.validRouteStack, "home"),
+      })),
+
+    clearUnsupported: () => set({ unsupported: null }),
 
     dispatch: (action) => {
       const { active } = get();
@@ -495,23 +800,42 @@ export const useAppStore = create<AppState>((set, get) => {
     setAiOpen: (v) => set({ aiOpen: v }),
     setExploreOpen: (v) => set({ exploreOpen: v }),
 
+    accountModalOpen: false,
+    accountModalTab: "profile",
+    openAccountModal: (tab = "profile") =>
+      set({ accountModalOpen: true, accountModalTab: tab }),
+    closeAccountModal: () => set({ accountModalOpen: false }),
+    authResetEmail: "",
+    setAuthResetEmail: (email) => set({ authResetEmail: email }),
+
     // M8: CHỈ đổi trường trình bày. Không đụng active (engine state/cursor giữ
     // nguyên khối), không rebuild, không gọi mạng.
     setVisualMode: (mode) => {
       set({ visualMode: mode });
       // M9-UX1: visual mode là tiến độ trình bày an toàn → ghi vào lịch sử.
       const id = get().activeHistoryId;
-      if (id) historyStore.touch(id, { visualMode: mode });
+      if (id) {
+        historyStore.touch(id, { visualMode: mode });
+        if (useAuthStore.getState().user !== null) {
+          void touchServerHistory(id, { visualMode: mode });
+        }
+      }
     },
 
     // Dọn RUNTIME — lịch sử bền KHÔNG bị đụng (hai đời sống tách biệt, M9-UX1).
     /* `reset` là "về trạng thái sạch" (dùng ở test và thoát hẳn). Khác
        `goHome`: goHome giữ lịch sử hiển thị, reset dọn cả bàn làm việc. */
-    reset: () =>
+    reset: () => {
+      hasHydratedLocation = false;
       set({
         active: null,
         unsupported: null,
         analysisError: null,
+        clientFailure: null,
+        routeFailure: null,
+        validRouteStack: ["home"],
+        hasInAppNavigation: false,
+        returnView: "home",
         activeSampleId: null,
         playing: false,
         exploreOpen: false,
@@ -519,6 +843,25 @@ export const useAppStore = create<AppState>((set, get) => {
         view: "home",
         activeHistoryId: null,
         history: historyStore.list(),
-      }),
+      });
+    },
   };
+});
+
+/* Đồng bộ lịch sử theo tài khoản khi trạng thái đăng nhập thay đổi. */
+useAuthStore.subscribe((state, prevState) => {
+  const prevId = prevState.user?.id ?? null;
+  const nextId = state.user?.id ?? null;
+  if (prevId === nextId) return;
+  if (nextId === null) {
+    historyStore.clear();
+    useAppStore.setState({ history: [], activeHistoryId: null });
+    return;
+  }
+  void fetchServerHistory().then((items) => {
+    if (items === null) return;
+    if (useAuthStore.getState().user?.id !== nextId) return;
+    historyStore.replaceAll?.(items);
+    useAppStore.setState({ history: historyStore.list() });
+  });
 });

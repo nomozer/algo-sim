@@ -250,6 +250,7 @@ describe("H2 · tầng nhấn mạnh causal", () => {
     }) as unknown as Scene3D["objects"][number];
     const canh: Scene3D = {
       ...CANH,
+      free_objects: ["A", "B", "C", "S", "AB", "SA"],
       objects: [
         ...CANH.objects.filter((o) => o.id !== "V"),
         q("AB", "free", []), q("SA", "free", []),

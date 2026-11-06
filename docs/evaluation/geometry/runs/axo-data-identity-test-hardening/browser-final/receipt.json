@@ -1,0 +1,308 @@
+{
+  "schema": "axo-scene-consistency/1",
+  "dist": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\axo-pedagogical-integration\\frontend\\dist-reveal",
+  "provider_calls": 0,
+  "checks": [
+    {
+      "name": "route thiet-dien-chop: statement/title/scene consistent, no answer surface at first and final step",
+      "evidence": {
+        "url": "http://127.0.0.1:50219/simulation/pyramid-cross-section",
+        "title": "Thiết diện của hình chóp cắt bởi mặt phẳng qua ba trung điểm",
+        "steps": 10,
+        "renderedFirst": 18,
+        "renderedLast": 18
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "route mat-cheo-sac: statement/title/scene consistent, no answer surface at first and final step",
+      "evidence": {
+        "url": "http://127.0.0.1:50219/simulation/pyramid-diagonal-section",
+        "title": "Thiết diện của hình chóp theo mặt phẳng chéo (SAC)",
+        "steps": 6,
+        "renderedFirst": 13,
+        "renderedLast": 13
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "route vuong-goc-chop: statement/title/scene consistent, no answer surface at first and final step",
+      "evidence": {
+        "url": "http://127.0.0.1:50219/simulation/pyramid-line-plane-angle",
+        "title": "Đường thẳng vuông góc với mặt phẳng trong hình chóp",
+        "steps": 5,
+        "renderedFirst": 13,
+        "renderedLast": 13
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "route mp-vuong-goc-duong: statement/title/scene consistent, no answer surface at first and final step",
+      "evidence": {
+        "url": "http://127.0.0.1:50219/simulation/pyramid-perpendicular-plane-distance",
+        "title": "Mặt phẳng qua một điểm và vuông góc với đường thẳng cho trước",
+        "steps": 7,
+        "renderedFirst": 15,
+        "renderedLast": 15
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "route the-tich-chop: statement/title/scene consistent, no answer surface at first and final step",
+      "evidence": {
+        "url": "http://127.0.0.1:50219/simulation/pyramid-volume-and-altitude",
+        "title": "Thể tích khối chóp và khoảng cách từ đỉnh đến đáy",
+        "steps": 4,
+        "renderedFirst": 11,
+        "renderedLast": 11
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "route cau-the-tich: statement/title/scene consistent, no answer surface at first and final step",
+      "evidence": {
+        "url": "http://127.0.0.1:50219/simulation/sphere-radius-and-volume",
+        "title": "Bán kính và thể tích khối cầu",
+        "steps": 1,
+        "renderedFirst": 4,
+        "renderedLast": 4
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "route cau-cat-mat-phang: statement/title/scene consistent, no answer surface at first and final step",
+      "evidence": {
+        "url": "http://127.0.0.1:50219/simulation/sphere-plane-intersection",
+        "title": "Đường tròn giao của mặt phẳng và mặt cầu",
+        "steps": 5,
+        "renderedFirst": 9,
+        "renderedLast": 9
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "route tru-truc-xien: statement/title/scene consistent, no answer surface at first and final step",
+      "evidence": {
+        "url": "http://127.0.0.1:50219/simulation/tilted-right-cylinder-metrics",
+        "title": "Hình trụ tròn xoay có trục đặt nghiêng",
+        "steps": 3,
+        "renderedFirst": 8,
+        "renderedLast": 8
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "route tru-thiet-dien-tron: statement/title/scene consistent, no answer surface at first and final step",
+      "evidence": {
+        "url": "http://127.0.0.1:50219/simulation/cylinder-perpendicular-section",
+        "title": "Thiết diện vuông góc trục của hình trụ",
+        "steps": 6,
+        "renderedFirst": 10,
+        "renderedLast": 10
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "route non-duong-sinh: statement/title/scene consistent, no answer surface at first and final step",
+      "evidence": {
+        "url": "http://127.0.0.1:50219/simulation/cone-slant-height-and-surface",
+        "title": "Đường sinh, thể tích và diện tích xung quanh hình nón",
+        "steps": 4,
+        "renderedFirst": 8,
+        "renderedLast": 8
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "route non-thiet-dien-truc: statement/title/scene consistent, no answer surface at first and final step",
+      "evidence": {
+        "url": "http://127.0.0.1:50219/simulation/cone-axial-section",
+        "title": "Thiết diện qua trục của hình nón",
+        "steps": 5,
+        "renderedFirst": 9,
+        "renderedLast": 9
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "given data and narration remain per step (cau-cat-mat-phang)",
+      "evidence": [
+        {
+          "step": 0,
+          "title": "1 Dựng mặt cầu tâm I, bán kính R = IX Đề choĐặt tâm I, lấy điểm tham chiếu X trên mặt cầu "
+        },
+        {
+          "step": 1,
+          "title": "2 Dựng mặt phẳng cắt (P) Được dựngXác định mặt phẳng cắt (P) theo khoảng cách từ tâm mặt c"
+        },
+        {
+          "step": 2,
+          "title": "3 Xác định hình chiếu vuông góc H của tâm I và đoạn IH Hình phụHạ IH ⊥ (P) tại H; điểm H l"
+        },
+        {
+          "step": 3,
+          "title": "4 Xác định điểm M thuộc giao tuyến và tam giác vuông IHM Hình phụLấy điểm M chung của mặt "
+        },
+        {
+          "step": 4,
+          "title": "5 Dựng đường tròn thiết diện giao của mặt cầu và (P) Được suy raMặt phẳng cắt mặt cầu tạo "
+        }
+      ],
+      "status": "PASS"
+    },
+    {
+      "name": "two problems with the same title keep separate statement and scene; history A → B → A",
+      "evidence": [
+        {
+          "id": "s1d7lrkeek8j",
+          "statement": "Đề A: mặt cầu tâm I ",
+          "steps": 1
+        },
+        {
+          "id": "s1lvf2iryevp",
+          "statement": "Đề B: mặt cầu bán kí",
+          "steps": 5
+        },
+        {
+          "id": "s1d7lrkeek8j",
+          "statement": "Đề A: mặt cầu tâm I ",
+          "steps": 1
+        }
+      ],
+      "status": "PASS"
+    },
+    {
+      "name": "legacy record without scene3d and a sample-like title gets an honest missing-data notice",
+      "evidence": {
+        "notice": true
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "the viewer never mutates the opened Scene3D; reopening keeps the same record (no duplicate)",
+      "evidence": {
+        "id": "symsf1wenql",
+        "mutated": false,
+        "sameAfterReopen": true,
+        "countBefore": 15,
+        "countAfter": 15
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "submission sharing a sample program: own record and URL, statement survives reload, sample untouched",
+      "evidence": {
+        "submission": "s1h8a7r23ag0",
+        "url": "/simulation/s1h8a7r23ag0"
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "two statements compiling to the same program keep two records; selection does not cross records",
+      "evidence": {
+        "id1": "s1uh2f2baely",
+        "id2": "s1oyslh7nthf",
+        "selectedInFirst": "cau__radius"
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "legacy record without a stored statement says so (no model description as statement)",
+      "evidence": {
+        "text": "Bản ghi này không lưu đề gốc. Mô tả mô hình do hệ thống tạo: Lời mô tả kỹ thuật của hệ thống."
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "reload (F5) restores the same record, statement and step",
+      "evidence": {
+        "step": 1,
+        "url": "http://127.0.0.1:50219/simulation/cylinder-perpendicular-section"
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "rapid switching, switching during playback, Back/Forward keep record and scene together",
+      "evidence": {
+        "canvases": 1
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "responsive 360px: final step layout, no answer surface",
+      "evidence": {
+        "docWidth": 360,
+        "vw": 360,
+        "canvasH": 438
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "responsive 390px: final step layout, no answer surface",
+      "evidence": {
+        "docWidth": 390,
+        "vw": 390,
+        "canvasH": 438
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "responsive 430px: final step layout, no answer surface",
+      "evidence": {
+        "docWidth": 430,
+        "vw": 430,
+        "canvasH": 462
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "responsive 768px: final step layout, no answer surface",
+      "evidence": {
+        "docWidth": 768,
+        "vw": 768,
+        "canvasH": 854
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "responsive 1024px: final step layout, no answer surface",
+      "evidence": {
+        "docWidth": 1024,
+        "vw": 1024,
+        "canvasH": 854
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "responsive 1440px: final step layout, no answer surface",
+      "evidence": {
+        "docWidth": 1440,
+        "vw": 1440,
+        "canvasH": 854
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "REAL Chrome page zoom 110% (default_zoom_level preference, no DPR emulation)",
+      "evidence": {
+        "dpr": 1.100000023841858,
+        "innerWidth": 1293,
+        "outerWidth": 1440,
+        "docWidth": 1293,
+        "dockRight": 1293,
+        "statementRight": 1277,
+        "changeButtonRight": 1279,
+        "canvasRight": 933,
+        "html": false
+      },
+      "status": "PASS"
+    }
+  ],
+  "forbidden": [],
+  "browser": "157.0.8103.38",
+  "pageErrors": [],
+  "summary": {
+    "pass": 27,
+    "fail": 0
+  }
+}

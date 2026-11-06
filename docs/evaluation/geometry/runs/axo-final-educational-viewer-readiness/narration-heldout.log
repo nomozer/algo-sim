@@ -1,0 +1,9 @@
+
+ RUN  v4.1.10 D:/Documents/projects/algo-sim/.superpowers/worktrees/axo-hybrid4-integration/frontend
+
+
+ Test Files  1 passed (1)
+      Tests  11 passed (11)
+   Start at  12:33:58
+   Duration  1.12s (transform 587ms, setup 36ms, import 679ms, tests 208ms, environment 0ms)
+

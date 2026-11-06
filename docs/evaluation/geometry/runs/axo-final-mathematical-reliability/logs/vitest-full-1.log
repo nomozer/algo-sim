@@ -1,0 +1,33 @@
+
+ RUN  v4.1.10 D:/Documents/projects/algo-sim/.superpowers/worktrees/axo-hybrid4-integration/frontend
+
+ ❯ src/components/phase-b-views.test.tsx (15 tests | 1 failed) 514ms
+     × Finalization & Integration: moTaBuocDungHienThi diễn giải nhãn ký hiệu trần từ metadata SceneObject, reopenFromHistory bảo toàn bước dựng 3D và HomeView hiển thị từ chối kiểm chứng 10ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/components/phase-b-views.test.tsx > Axo V2.7 Phase B — Header Logo, Homepage, Library & History (P3–P8) > Finalization & Integration: moTaBuocDungHienThi diễn giải nhãn ký hiệu trần từ metadata SceneObject, reopenFromHistory bảo toàn bước dựng 3D và HomeView hiển thị từ chối kiểm chứng
+AssertionError: expected null to be 'thiet-dien-chop' // Object.is equality
+
+- Expected:
+"thiet-dien-chop"
+
++ Received:
+null
+
+ ❯ src/components/phase-b-views.test.tsx:670:51
+    668|     useAppStore.getState().reopenFromHistory(saved.id);
+    669|     expect(historyStore.list()[0].lastCursor).toBe(8);
+    670|     expect(useAppStore.getState().activeSampleId).toBe(sectionSample!.…
+       |                                                   ^
+    671|
+    672|     // Kiểm chứng loadUnsupported không render thẻ lớn #home-composer-…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 131 passed (132)
+      Tests  1 failed | 1962 passed (1963)
+   Start at  17:25:34
+   Duration  45.86s (transform 4.56s, setup 1.57s, import 26.88s, tests 37.45s, environment 12ms)
+

@@ -76,7 +76,7 @@ describe("D — xưởng 3D không phụ thuộc cột điều hướng thườn
     /* Đường ra nay là chính thanh trên, nên nó phải dựng KHÔNG điều kiện theo
        trang: `App` chỉ được rẽ nhánh theo ĐÃ ĐĂNG NHẬP CHƯA, không theo
        `inWorkspace` — rẽ theo trang là đúng cách chip «Menu» cũ sinh ra. */
-    expect(APP).toMatch(/\{user\s*\n?\s*\?\s*<TopNav \/>/);
+    expect(APP).toMatch(/<TopNav \/>/);
     expect(APP).not.toMatch(/inWorkspace[^\n]*<TopNav/);
 
     const nav = SRC("./TopNav.tsx");
@@ -90,7 +90,7 @@ describe("D — xưởng 3D không phụ thuộc cột điều hướng thườn
     expect(xuong).not.toContain("Mở điều hướng");
 
     // Và khách vẫn phải có lối về: dấu hiệu sản phẩm ở thanh trên đưa về nhà.
-    expect(APP).toMatch(/nav-wordmark/);
+    expect(nav).toMatch(/nav-wordmark/);
   });
 });
 

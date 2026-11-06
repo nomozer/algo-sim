@@ -1,0 +1,36 @@
+{
+  "schema": "axo-session-required/1",
+  "dist": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\axo-hybrid4-integration\\frontend\\dist",
+  "provider_calls": 0,
+  "browser": "157.0.8103.38",
+  "checks": [
+    {
+      "name": "no session at send: one refusal issues the cookie, the same attempt is retried once and served",
+      "status": "PASS",
+      "requests": 2
+    },
+    {
+      "name": "a page whose cookie never arrives gets the refusal once per send, never a loop",
+      "status": "PASS",
+      "requests": 2
+    }
+  ],
+  "forbidden": [],
+  "pageErrors": [],
+  "summary": {
+    "pass": 2,
+    "total": 2
+  },
+  "log": [
+    {
+      "key": "a1060d0c3ea620fc7f096a59a12792173",
+      "cookie": null,
+      "text": "Cho hình lăng trụ đứng ABC.DEF"
+    },
+    {
+      "key": "a1060d0c3ea620fc7f096a59a12792173",
+      "cookie": null,
+      "text": "Cho hình lăng trụ đứng ABC.DEF"
+    }
+  ]
+}

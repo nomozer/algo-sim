@@ -11,7 +11,16 @@
  * phép so hay đáp số nào đọc chúng — backend đã tính mọi đại lượng chính xác trong khung.
  */
 import type { Exact, ExactVec3, Scene3D, SceneObject } from "./scene3d-model";
-import { hopLeChartMetric, toNumber, toVec3 } from "./scene3d-model";
+import {
+  exactSceneOriginOf,
+  hopLeChartMetric,
+  isSceneWorldTransformed,
+  markSceneWorldTransformed,
+  registerDerivedSceneParent,
+  registerExactSceneOrigin,
+  toNumber,
+  toVec3,
+} from "./scene3d-model";
 
 type M3 = [[number, number, number], [number, number, number], [number, number, number]];
 
@@ -61,10 +70,35 @@ const xau = (x: number): Exact => {
 };
 
 const _daVe = new WeakSet<Scene3D>();
+const _veKhongGianCache = new WeakMap<Scene3D, { sig: string; result: Scene3D }>();
+
+function chartCacheSig(scene: Scene3D): string {
+  const m = scene.chart_metric
+    ? scene.chart_metric.map((r) => r.join(",")).join(";")
+    : "";
+  const objSig = scene.objects
+    .map((o) => {
+      const coord =
+        o.xyz?.join(",")
+        ?? o.point_a?.join(",")
+        ?? o.anchor?.join(",")
+        ?? o.center?.join(",")
+        ?? o.point?.join(",")
+        ?? o.vertices?.[0]?.join(",")
+        ?? o.polygon?.[0]?.join(",")
+        ?? "";
+      return `${o.id}@${coord}`;
+    })
+    .join(";");
+  return `${m}|${scene.objects.length}|${scene.events.length}|${objSig}`;
+}
 
 /** Cảnh với toạ độ THẾ GIỚI — chính `scene` khi không có metric khung (không sao chép, không đổi một byte). */
 export function veKhongGian(scene: Scene3D): Scene3D {
-  if (_daVe.has(scene)) return scene;
+  if (_daVe.has(scene) || isSceneWorldTransformed(scene)) return scene;
+  const _sig = chartCacheSig(scene);
+  const _cached = _veKhongGianCache.get(scene);
+  if (_cached && _cached.sig === _sig) return _cached.result;
   const t = maTranKhung(scene);
   if (!t) return scene;
   const tn = nghichChuyenVi(t);
@@ -99,6 +133,10 @@ export function veKhongGian(scene: Scene3D): Scene3D {
   };
   const ra: Scene3D = { ...scene, objects: scene.objects.map(vat) };
   _daVe.add(ra);
+  markSceneWorldTransformed(ra);
+  registerDerivedSceneParent(ra, scene);
+  registerExactSceneOrigin(ra, exactSceneOriginOf(scene));
+  _veKhongGianCache.set(scene, { sig: _sig, result: ra });
   return ra;
 }
 

@@ -1,0 +1,4069 @@
+{
+  "schema": "axo-performance/1",
+  "dist": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\axo-pedagogical-integration\\frontend\\dist",
+  "seconds": 15,
+  "headed": true,
+  "software": false,
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "dpr": 1,
+  "provider_calls": 0,
+  "rows": [],
+  "errors": [],
+  "forbidden": [],
+  "browser": "157.0.8103.38",
+  "gpu": {
+    "devices": [
+      {
+        "vendorId": 32902,
+        "deviceId": 39528,
+        "subSysId": 356061221,
+        "revision": 1,
+        "vendorString": "",
+        "deviceString": "Intel(R) UHD Graphics",
+        "driverVendor": "Intel",
+        "driverVersion": "30.0.100.9864"
+      },
+      {
+        "vendorId": 4318,
+        "deviceId": 8093,
+        "subSysId": 356126757,
+        "revision": 161,
+        "vendorString": "",
+        "deviceString": "NVIDIA GeForce GTX 1650",
+        "driverVendor": "",
+        "driverVersion": "32.0.16.1062"
+      },
+      {
+        "vendorId": 32902,
+        "deviceId": 39528,
+        "subSysId": 356061221,
+        "revision": 1,
+        "vendorString": "",
+        "deviceString": "Intel(R) UHD Graphics",
+        "driverVendor": "",
+        "driverVersion": "30.0.100.9864"
+      },
+      {
+        "vendorId": 5140,
+        "deviceId": 140,
+        "subSysId": 0,
+        "revision": 0,
+        "vendorString": "",
+        "deviceString": "Microsoft Basic Render Driver",
+        "driverVendor": "",
+        "driverVersion": "10.0.26100.9711"
+      }
+    ],
+    "auxAttributes": {
+      "amdSwitchable": false,
+      "bgra8OverlaySupport": "SCALING",
+      "canSupportThreadedTextureMailbox": false,
+      "directComposition": true,
+      "directMLFeatureLevel": "Not supported",
+      "directRenderingVersion": "",
+      "displayType": "ANGLE_D3D11",
+      "dx12FeatureLevel": "Not supported",
+      "glExtensions": "GL_AMD_performance_monitor GL_ANGLE_base_vertex_base_instance_shader_builtin GL_ANGLE_blob_cache GL_ANGLE_client_arrays GL_ANGLE_clip_cull_distance GL_ANGLE_copy_texture_3d GL_ANGLE_depth_texture GL_ANGLE_framebuffer_blit GL_ANGLE_framebuffer_multisample GL_ANGLE_get_serialized_context_string GL_ANGLE_get_tex_level_parameter GL_ANGLE_instanced_arrays GL_ANGLE_memory_size GL_ANGLE_multiview_multisample GL_ANGLE_pack_reverse_row_order GL_ANGLE_polygon_mode GL_ANGLE_program_binary_readiness_query GL_ANGLE_program_cache_control GL_ANGLE_provoking_vertex GL_ANGLE_renderability_validation GL_ANGLE_request_extension GL_ANGLE_robust_client_memory GL_ANGLE_shader_pixel_local_storage GL_ANGLE_shader_pixel_local_storage_coherent GL_ANGLE_stencil_texturing GL_ANGLE_texture_compression_dxt3 GL_ANGLE_texture_compression_dxt5 GL_ANGLE_texture_multisample GL_ANGLE_texture_usage GL_ANGLE_translated_shader_source GL_APPLE_clip_distance GL_ARM_rgba8 GL_CHROMIUM_bind_generates_resource GL_CHROMIUM_bind_uniform_location GL_CHROMIUM_copy_compressed_texture GL_CHROMIUM_copy_texture GL_CHROMIUM_lose_context GL_EXT_EGL_image_external_wrap_modes GL_EXT_base_instance GL_EXT_blend_func_extended GL_EXT_blend_minmax GL_EXT_clip_control GL_EXT_clip_cull_distance GL_EXT_color_buffer_float GL_EXT_color_buffer_half_float GL_EXT_conservative_depth GL_EXT_debug_label GL_EXT_debug_marker GL_EXT_depth_clamp GL_EXT_discard_framebuffer GL_EXT_disjoint_timer_query GL_EXT_draw_buffers GL_EXT_draw_buffers_indexed GL_EXT_draw_elements_base_vertex GL_EXT_float_blend GL_EXT_frag_depth GL_EXT_instanced_arrays GL_EXT_map_buffer_range GL_EXT_occlusion_query_boolean GL_EXT_polygon_offset_clamp GL_EXT_read_format_bgra GL_EXT_render_snorm GL_EXT_robustness GL_EXT_sRGB GL_EXT_shader_texture_lod GL_EXT_texture_border_clamp GL_EXT_texture_compression_bptc GL_EXT_texture_compression_dxt1 GL_EXT_texture_compression_rgtc GL_EXT_texture_compression_s3tc_srgb GL_EXT_texture_filter_anisotropic GL_EXT_texture_format_BGRA8888 GL_EXT_texture_mirror_clamp_to_edge GL_EXT_texture_norm16 GL_EXT_texture_rg GL_EXT_texture_storage GL_EXT_texture_type_2_10_10_10_REV GL_EXT_unpack_subimage GL_KHR_debug GL_KHR_parallel_shader_compile GL_KHR_robustness GL_NV_EGL_stream_consumer_external GL_NV_fence GL_NV_framebuffer_blit GL_NV_pack_subimage GL_NV_pixel_buffer_object GL_NV_shader_noperspective_interpolation GL_OES_EGL_image GL_OES_EGL_image_external GL_OES_EGL_image_external_essl3 GL_OES_depth24 GL_OES_depth32 GL_OES_draw_buffers_indexed GL_OES_draw_elements_base_vertex GL_OES_element_index_uint GL_OES_fbo_render_mipmap GL_OES_get_program_binary GL_OES_mapbuffer GL_OES_packed_depth_stencil GL_OES_required_internalformat GL_OES_rgb8_rgba8 GL_OES_sample_variables GL_OES_shader_multisample_interpolation GL_OES_standard_derivatives GL_OES_surfaceless_context GL_OES_texture_border_clamp GL_OES_texture_float GL_OES_texture_float_linear GL_OES_texture_half_float GL_OES_texture_half_float_linear GL_OES_texture_npot GL_OES_texture_stencil8 GL_OES_texture_storage_multisample_2d_array GL_OES_vertex_array_object GL_OVR_multiview GL_OVR_multiview2 ",
+      "glImplementationParts": "(gl=egl-angle,angle=d3d11)",
+      "glRenderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x00009A68) Direct3D11 vs_5_0 ps_5_0, D3D11-30.0.100.9864)",
+      "glResetNotificationStrategy": 33362,
+      "glVendor": "Google Inc. (Intel)",
+      "glVersion": "OpenGL ES 3.0 (ANGLE 2.1.29097 git hash: 751417514a52)",
+      "glWsExtensions": "EGL_EXT_create_context_robustness EGL_ANGLE_d3d_share_handle_client_buffer EGL_ANGLE_d3d_texture_client_buffer EGL_ANGLE_surface_d3d_texture_2d_share_handle EGL_ANGLE_query_surface_pointer EGL_ANGLE_window_fixed_size EGL_ANGLE_keyed_mutex EGL_ANGLE_surface_orientation EGL_ANGLE_direct_composition EGL_NV_post_sub_buffer EGL_KHR_create_context EGL_KHR_image EGL_KHR_image_base EGL_KHR_gl_texture_2D_image EGL_KHR_gl_texture_cubemap_image EGL_KHR_gl_renderbuffer_image EGL_KHR_get_all_proc_addresses EGL_KHR_stream EGL_KHR_stream_consumer_gltexture EGL_NV_stream_consumer_gltexture_yuv EGL_ANGLE_stream_producer_d3d_texture EGL_ANGLE_create_context_webgl_compatibility EGL_CHROMIUM_create_context_bind_generates_resource EGL_CHROMIUM_sync_control EGL_EXT_pixel_format_float EGL_KHR_surfaceless_context EGL_ANGLE_display_texture_share_group EGL_ANGLE_display_semaphore_share_group EGL_ANGLE_create_context_client_arrays EGL_ANGLE_program_cache_control EGL_ANGLE_robust_resource_initialization EGL_ANGLE_create_context_extensions_enabled EGL_ANDROID_blob_cache EGL_ANDROID_recordable EGL_ANGLE_image_d3d11_texture EGL_ANGLE_create_context_backwards_compatible EGL_KHR_no_config_context EGL_KHR_create_context_no_error EGL_KHR_reusable_sync EGL_ANGLE_memory_usage_report ",
+      "glWsVendor": "Google Inc. (Intel)",
+      "glWsVersion": "1.5 (ANGLE 2.1.29097 git hash: 751417514a52)",
+      "inProcessGpu": false,
+      "initializationTime": 0.085516,
+      "isAsan": false,
+      "isClangCoverage": false,
+      "jpegDecodeAcceleratorSupported": false,
+      "maxMsaaSamples": "16",
+      "nv12OverlaySupport": "SCALING",
+      "optimus": false,
+      "p010OverlaySupport": "SOFTWARE",
+      "passthroughCmdDecoder": true,
+      "pixelShaderVersion": "5.0",
+      "processCrashCount": 0,
+      "rgb10a2OverlaySupport": "SCALING",
+      "sandboxed": false,
+      "skiaBackendType": "GaneshGL",
+      "subpixelFontRendering": true,
+      "supportsD3dSharedImages": false,
+      "supportsDirectML": false,
+      "supportsDx12": false,
+      "supportsOverlays": true,
+      "supportsVulkan": false,
+      "targetCpuBits": 64,
+      "vertexShaderVersion": "5.0",
+      "visibilityCallbackCallCount": 0,
+      "vulkanVersion": "Not supported",
+      "yuy2OverlaySupport": "SCALING"
+    },
+    "featureStatus": {
+      "2d_canvas": "enabled",
+      "direct_rendering_display_compositor": "disabled_off_ok",
+      "gpu_compositing": "enabled",
+      "multiple_raster_threads": "enabled_on",
+      "opengl": "enabled_on",
+      "rasterization": "enabled",
+      "skia_graphite": "disabled_off",
+      "trees_in_viz": "disabled_off",
+      "video_decode": "enabled",
+      "video_encode": "enabled",
+      "webgl": "enabled",
+      "webgpu": "enabled",
+      "webnn": "disabled_off"
+    },
+    "driverBugWorkarounds": [
+      "d3d12_encode_packed_format_dpb_sizing",
+      "disable_d3d12_av1_multi_ref_encoding",
+      "disable_d3d12_h264_encoder_non_reference_frames",
+      "disable_d3d12_h264_encoding",
+      "disable_d3d12_hevc_encoding",
+      "disable_d3d12_video_encoder",
+      "disable_direct_composition_sw_video_overlays",
+      "disable_hevc_hmft_cbr_encoding",
+      "disable_video_overlay_if_moving",
+      "disable_vp9_hmft_temporal_encoding",
+      "disable_vp_auto_hdr",
+      "enable_bgra8_overlays_with_yuv_overlay_support",
+      "enable_webgl_timer_query_extensions",
+      "exit_on_context_lost",
+      "force_dcomp_triple_buffer_video_swap_chain",
+      "force_rgb10a2_overlay_support",
+      "limit_d3d12_av1_profile_to_main",
+      "max_msaa_sample_count_4",
+      "msaa_is_slow",
+      "no_downscaled_overlay_promotion",
+      "supports_two_yuv_hardware_overlays",
+      "use_first_valid_ref_for_av1_invalid_ref",
+      "disabled_extension_GL_KHR_blend_equation_advanced",
+      "disabled_extension_GL_KHR_blend_equation_advanced_coherent"
+    ],
+    "videoDecoding": [],
+    "videoEncoding": []
+  },
+  "uiChecks": [
+    {
+      "name": "sphere requested results and backward spoiler masking",
+      "evidence": {
+        "sphere": {
+          "camera": {
+            "position": [
+              7.0567552070175,
+              4.410472004385937,
+              5.2925664052631225
+            ],
+            "view_matrix_column_major": [
+              -0.52999894000318,
+              -0.455083644614378,
+              0.715541752799933,
+              0,
+              0.8479983040050881,
+              -0.2844272778839862,
+              0.4472135954999581,
+              0,
+              -5.551115123125784e-17,
+              0.8438009243891598,
+              0.5366563145999492,
+              0,
+              -2.2314958366836997e-16,
+              -1.2239074145343915e-15,
+              -9.862115214666707,
+              1
+            ],
+            "projection_matrix_column_major": [
+              1.695748990847373,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              -0.03499999999999997,
+              -1.0003000450067514,
+              -1,
+              0,
+              0,
+              -0.060009001350262554,
+              0
+            ],
+            "viewport_width": 1080,
+            "viewport_height": 854,
+            "device_pixel_ratio": 1
+          },
+          "target": [
+            0,
+            0,
+            0
+          ],
+          "visible": [],
+          "hidden": [],
+          "mixed": [],
+          "spans": [],
+          "duplicates": [],
+          "rendered": [
+            "I",
+            "A",
+            "cau__radius",
+            "cau"
+          ],
+          "witnesses": [],
+          "fat": {
+            "totalLines": 3,
+            "maxSectionBorderWidth": 0,
+            "maxVisibleEdgeWidth": 0,
+            "minHiddenEdgeWidth": 2.14
+          },
+          "goal": {
+            "status": "reached",
+            "primaryKind": "volume",
+            "headline": "Bán kính mặt cầu: 3 · Thể tích khối cầu: 36π",
+            "detail": "Xác định tại Bước 1/1: Dựng mặt cầu tâm I đi qua A",
+            "items": [
+              {
+                "id": "R",
+                "kind": "radius",
+                "label": "Bán kính mặt cầu",
+                "valueText": "3",
+                "witnessSummary": null,
+                "reachedAtStepIndex": 0,
+                "reachedStepTitle": "Dựng mặt cầu tâm I đi qua A",
+                "carrierIds": [
+                  "cau"
+                ],
+                "provenance": "DERIVED_VERIFIED"
+              },
+              {
+                "id": "V",
+                "kind": "volume",
+                "label": "Thể tích khối cầu",
+                "valueText": "36π",
+                "witnessSummary": null,
+                "reachedAtStepIndex": 0,
+                "reachedStepTitle": "Dựng mặt cầu tâm I đi qua A",
+                "carrierIds": [
+                  "cau"
+                ],
+                "provenance": "DERIVED_VERIFIED"
+              }
+            ],
+            "reachedAtStepIndex": 0
+          },
+          "rendererStats": null
+        }
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "one-step sphere Play Pause and renderer reuse",
+      "evidence": {
+        "during": {
+          "progress": 0.007,
+          "uRad": 0,
+          "showRefPt": false,
+          "uShell": 0,
+          "ballIds": [
+            "cau"
+          ]
+        },
+        "after": {
+          "camera": {
+            "position": [
+              7.0567552070175,
+              4.410472004385937,
+              5.2925664052631225
+            ],
+            "view_matrix_column_major": [
+              -0.52999894000318,
+              -0.455083644614378,
+              0.715541752799933,
+              0,
+              0.8479983040050881,
+              -0.2844272778839862,
+              0.4472135954999581,
+              0,
+              -5.551115123125784e-17,
+              0.8438009243891598,
+              0.5366563145999492,
+              0,
+              -2.2314958366836997e-16,
+              -1.2239074145343915e-15,
+              -9.862115214666707,
+              1
+            ],
+            "projection_matrix_column_major": [
+              1.695748990847373,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              -0.03499999999999997,
+              -1.0003000450067514,
+              -1,
+              0,
+              0,
+              -0.060009001350262554,
+              0
+            ],
+            "viewport_width": 1080,
+            "viewport_height": 854,
+            "device_pixel_ratio": 1
+          },
+          "target": [
+            0,
+            0,
+            0
+          ],
+          "visible": [],
+          "hidden": [],
+          "mixed": [],
+          "spans": [],
+          "duplicates": [],
+          "rendered": [
+            "I",
+            "A",
+            "cau__radius",
+            "cau"
+          ],
+          "witnesses": [],
+          "fat": {
+            "totalLines": 3,
+            "maxSectionBorderWidth": 0,
+            "maxVisibleEdgeWidth": 0,
+            "minHiddenEdgeWidth": 2.58
+          },
+          "goal": {
+            "status": "reached",
+            "primaryKind": "volume",
+            "headline": "Bán kính mặt cầu: 3 · Thể tích khối cầu: 36π",
+            "detail": "Xác định tại Bước 1/1: Dựng mặt cầu tâm I đi qua A",
+            "items": [
+              {
+                "id": "R",
+                "kind": "radius",
+                "label": "Bán kính mặt cầu",
+                "valueText": "3",
+                "witnessSummary": null,
+                "reachedAtStepIndex": 0,
+                "reachedStepTitle": "Dựng mặt cầu tâm I đi qua A",
+                "carrierIds": [
+                  "cau"
+                ],
+                "provenance": "DERIVED_VERIFIED"
+              },
+              {
+                "id": "V",
+                "kind": "volume",
+                "label": "Thể tích khối cầu",
+                "valueText": "36π",
+                "witnessSummary": null,
+                "reachedAtStepIndex": 0,
+                "reachedStepTitle": "Dựng mặt cầu tâm I đi qua A",
+                "carrierIds": [
+                  "cau"
+                ],
+                "provenance": "DERIVED_VERIFIED"
+              }
+            ],
+            "reachedAtStepIndex": 0
+          },
+          "rendererStats": null
+        }
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "X selection preserves IX, hiding X preserves sphere, Undo and Ctrl+Z",
+      "evidence": {
+        "afterHide": {
+          "camera": {
+            "position": [
+              12.083350803758696,
+              7.552094252349185,
+              9.062513102819018
+            ],
+            "view_matrix_column_major": [
+              -0.5299989400031798,
+              -0.45508364461437784,
+              0.7155417527999327,
+              0,
+              0.8479983040050878,
+              -0.28442727788398603,
+              0.44721359549995776,
+              0,
+              -2.77555756156289e-17,
+              0.8438009243891592,
+              0.5366563145999493,
+              0,
+              0,
+              0,
+              -16.886996120738225,
+              1
+            ],
+            "projection_matrix_column_major": [
+              1.695748990847373,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              -0.03500000000000006,
+              -1.0003701757704329,
+              -1,
+              0,
+              0,
+              -0.10001850878862167,
+              0
+            ],
+            "viewport_width": 1080,
+            "viewport_height": 854,
+            "device_pixel_ratio": 1
+          },
+          "target": [
+            0,
+            0,
+            0
+          ],
+          "visible": [],
+          "hidden": [],
+          "mixed": [],
+          "spans": [],
+          "duplicates": [],
+          "rendered": [
+            "I",
+            "cau__radius",
+            "cau"
+          ],
+          "witnesses": [],
+          "fat": {
+            "totalLines": 3,
+            "maxSectionBorderWidth": 0,
+            "maxVisibleEdgeWidth": 0,
+            "minHiddenEdgeWidth": 2.37
+          },
+          "goal": {
+            "status": "reached",
+            "primaryKind": "area",
+            "headline": "Bán kính đường tròn thiết diện: 4 · Diện tích hình tròn thiết diện: 16π",
+            "detail": "S = πr² = 16π (Bước 5/5)",
+            "items": [
+              {
+                "id": "r",
+                "kind": "radius",
+                "label": "Bán kính đường tròn thiết diện",
+                "valueText": "4",
+                "witnessSummary": "R = 5, d(I, (P)) = 3 ⇒ r = √(R² − d²) = 4",
+                "reachedAtStepIndex": 4,
+                "reachedStepTitle": "Dựng đường tròn thiết diện giao của mặt cầu và (P)",
+                "carrierIds": [
+                  "C"
+                ],
+                "provenance": "DERIVED_VERIFIED"
+              },
+              {
+                "id": "S",
+                "kind": "area",
+                "label": "Diện tích hình tròn thiết diện",
+                "valueText": "16π",
+                "witnessSummary": "S = πr² = 16π",
+                "reachedAtStepIndex": 4,
+                "reachedStepTitle": "Dựng đường tròn thiết diện giao của mặt cầu và (P)",
+                "carrierIds": [
+                  "C"
+                ],
+                "provenance": "DERIVED_VERIFIED"
+              }
+            ],
+            "reachedAtStepIndex": 4
+          },
+          "rendererStats": null
+        },
+        "restored": {
+          "camera": {
+            "position": [
+              12.083350803758696,
+              7.552094252349185,
+              9.062513102819018
+            ],
+            "view_matrix_column_major": [
+              -0.5299989400031798,
+              -0.45508364461437784,
+              0.7155417527999327,
+              0,
+              0.8479983040050878,
+              -0.28442727788398603,
+              0.44721359549995776,
+              0,
+              -2.77555756156289e-17,
+              0.8438009243891592,
+              0.5366563145999493,
+              0,
+              0,
+              0,
+              -16.886996120738225,
+              1
+            ],
+            "projection_matrix_column_major": [
+              1.695748990847373,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              -0.03500000000000006,
+              -1.0003701757704329,
+              -1,
+              0,
+              0,
+              -0.10001850878862167,
+              0
+            ],
+            "viewport_width": 1080,
+            "viewport_height": 854,
+            "device_pixel_ratio": 1
+          },
+          "target": [
+            0,
+            0,
+            0
+          ],
+          "visible": [],
+          "hidden": [],
+          "mixed": [],
+          "spans": [],
+          "duplicates": [],
+          "rendered": [
+            "I",
+            "cau__ref_pt",
+            "cau__radius",
+            "cau"
+          ],
+          "witnesses": [],
+          "fat": {
+            "totalLines": 3,
+            "maxSectionBorderWidth": 0,
+            "maxVisibleEdgeWidth": 0,
+            "minHiddenEdgeWidth": 2.2
+          },
+          "goal": {
+            "status": "reached",
+            "primaryKind": "area",
+            "headline": "Bán kính đường tròn thiết diện: 4 · Diện tích hình tròn thiết diện: 16π",
+            "detail": "S = πr² = 16π (Bước 5/5)",
+            "items": [
+              {
+                "id": "r",
+                "kind": "radius",
+                "label": "Bán kính đường tròn thiết diện",
+                "valueText": "4",
+                "witnessSummary": "R = 5, d(I, (P)) = 3 ⇒ r = √(R² − d²) = 4",
+                "reachedAtStepIndex": 4,
+                "reachedStepTitle": "Dựng đường tròn thiết diện giao của mặt cầu và (P)",
+                "carrierIds": [
+                  "C"
+                ],
+                "provenance": "DERIVED_VERIFIED"
+              },
+              {
+                "id": "S",
+                "kind": "area",
+                "label": "Diện tích hình tròn thiết diện",
+                "valueText": "16π",
+                "witnessSummary": "S = πr² = 16π",
+                "reachedAtStepIndex": 4,
+                "reachedStepTitle": "Dựng đường tròn thiết diện giao của mặt cầu và (P)",
+                "carrierIds": [
+                  "C"
+                ],
+                "provenance": "DERIVED_VERIFIED"
+              }
+            ],
+            "reachedAtStepIndex": 4
+          },
+          "rendererStats": null
+        }
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "camera panels, zoom reversal, reset and geometric orbit center",
+      "evidence": {
+        "original": {
+          "camera": {
+            "position": [
+              7.298778031415207,
+              4.583769975651972,
+              7.724055037381879
+            ],
+            "view_matrix_column_major": [
+              -0.49999999999999967,
+              -0.5566703992264191,
+              0.6634139481689387,
+              0,
+              0.8660254037844387,
+              -0.32139380484326924,
+              0.38302222155948895,
+              0,
+              -2.7755575615628907e-17,
+              0.7660444431189781,
+              0.6427876096865391,
+              0,
+              -0.32027222831138447,
+              -0.3807604861174914,
+              -11.56272378438775,
+              1
+            ],
+            "projection_matrix_column_major": [
+              1.6957489908473733,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              -0.03500000000000006,
+              -1.0002789878317324,
+              -1,
+              0,
+              0,
+              -0.055797566346490524,
+              0
+            ],
+            "viewport_width": 1080,
+            "viewport_height": 854,
+            "device_pixel_ratio": 1
+          },
+          "target": [
+            0.875,
+            0.875,
+            1.5
+          ],
+          "visible": [
+            "chop::edge:B-C",
+            "chop::edge:B-S",
+            "chop::edge:C-D",
+            "chop::edge:C-S",
+            "chop::edge:D-S"
+          ],
+          "hidden": [
+            "chop::edge:A-B",
+            "chop::edge:A-D",
+            "chop::edge:A-S"
+          ],
+          "mixed": [],
+          "spans": [
+            {
+              "edge_id": "chop::edge:A-B",
+              "t0": 0,
+              "t1": 1,
+              "visibility": "HIDDEN"
+            },
+            {
+              "edge_id": "chop::edge:A-D",
+              "t0": 0,
+              "t1": 1,
+              "visibility": "HIDDEN"
+            },
+            {
+              "edge_id": "chop::edge:A-S",
+              "t0": 0,
+              "t1": 1,
+              "visibility": "HIDDEN"
+            },
+            {
+              "edge_id": "chop::edge:B-C",
+              "t0": 0,
+              "t1": 1,
+              "visibility": "VISIBLE"
+            },
+            {
+              "edge_id": "chop::edge:B-S",
+              "t0": 0,
+              "t1": 1,
+              "visibility": "VISIBLE"
+            },
+            {
+              "edge_id": "chop::edge:C-D",
+              "t0": 0,
+              "t1": 1,
+              "visibility": "VISIBLE"
+            },
+            {
+              "edge_id": "chop::edge:C-S",
+              "t0": 0,
+              "t1": 1,
+              "visibility": "VISIBLE"
+            },
+            {
+              "edge_id": "chop::edge:D-S",
+              "t0": 0,
+              "t1": 1,
+              "visibility": "VISIBLE"
+            }
+          ],
+          "duplicates": [],
+          "rendered": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "S",
+            "M",
+            "N",
+            "P",
+            "sd",
+            "Q",
+            "chop",
+            "mp",
+            "thiet_dien#4cf",
+            "day_ABCD",
+            "chieu_cao_SA",
+            "canh_ben_S_B",
+            "canh_ben_S_C",
+            "canh_ben_S_D"
+          ],
+          "witnesses": [],
+          "fat": {
+            "totalLines": 19,
+            "maxSectionBorderWidth": 5.34,
+            "maxVisibleEdgeWidth": 4.27,
+            "minHiddenEdgeWidth": 2.43
+          },
+          "goal": {
+            "status": "reached",
+            "primaryKind": "section",
+            "headline": "Dựng các giao tuyến và hoàn thiện thiết diện (MNPQ)",
+            "detail": "Giao tuyến trên từng mặt: (MNP) ∩ (SAB) = MN, (MNP) ∩ (SBC) = NP, (MNP) ∩ (SCD) = PQ, (MNP) ∩ (SAD) = QM ⇒ khép kín miền thiết diện (MNPQ) (MN ∥ AB, NP ∥ BC, PQ ∥ CD, QM ∥ DA)",
+            "items": [
+              {
+                "id": "thiet_dien",
+                "kind": "section",
+                "label": "Dựng các giao tuyến và hoàn thiện thiết diện (MNPQ)",
+                "valueText": null,
+                "witnessSummary": "Giao tuyến trên từng mặt: (MNP) ∩ (SAB) = MN, (MNP) ∩ (SBC) = NP, (MNP) ∩ (SCD) = PQ, (MNP) ∩ (SAD) = QM ⇒ khép kín miền thiết diện (MNPQ) (MN ∥ AB, NP ∥ BC, PQ ∥ CD, QM ∥ DA)",
+                "reachedAtStepIndex": 9,
+                "reachedStepTitle": "Dựng các giao tuyến và hoàn thiện thiết diện (MNPQ)",
+                "carrierIds": [
+                  "thiet_dien"
+                ],
+                "provenance": "DERIVED_VERIFIED"
+              }
+            ],
+            "reachedAtStepIndex": 9
+          },
+          "rendererStats": null
+        },
+        "collapsed": {
+          "camera": {
+            "position": [
+              7.298778031415207,
+              4.583769975651972,
+              7.724055037381879
+            ],
+            "view_matrix_column_major": [
+              -0.49999999999999967,
+              -0.5566703992264191,
+              0.6634139481689387,
+              0,
+              0.8660254037844387,
+              -0.32139380484326924,
+              0.38302222155948895,
+              0,
+              -2.7755575615628907e-17,
+              0.7660444431189781,
+              0.6427876096865391,
+              0,
+              -0.32027222831138447,
+              -0.3807604861174914,
+              -11.56272378438775,
+              1
+            ],
+            "projection_matrix_column_major": [
+              1.2718117431355298,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              -0.03500000000000006,
+              -1.0002789878317324,
+              -1,
+              0,
+              0,
+              -0.055797566346490524,
+              0
+            ],
+            "viewport_width": 1440,
+            "viewport_height": 854,
+            "device_pixel_ratio": 1
+          },
+          "target": [
+            0.875,
+            0.875,
+            1.5
+          ],
+          "visible": [
+            "chop::edge:B-C",
+            "chop::edge:B-S",
+            "chop::edge:C-D",
+            "chop::edge:C-S",
+            "chop::edge:D-S"
+          ],
+          "hidden": [
+            "chop::edge:A-B",
+            "chop::edge:A-D",
+            "chop::edge:A-S"
+          ],
+          "mixed": [],
+          "spans": [
+            {
+              "edge_id": "chop::edge:A-B",
+              "t0": 0,
+              "t1": 1,
+              "visibility": "HIDDEN"
+            },
+            {
+              "edge_id": "chop::edge:A-D",
+              "t0": 0,
+              "t1": 1,
+              "visibility": "HIDDEN"
+            },
+            {
+              "edge_id": "chop::edge:A-S",
+              "t0": 0,
+              "t1": 1,
+              "visibility": "HIDDEN"
+            },
+            {
+              "edge_id": "chop::edge:B-C",
+              "t0": 0,
+              "t1": 1,
+              "visibility": "VISIBLE"
+            },
+            {
+              "edge_id": "chop::edge:B-S",
+              "t0": 0,
+              "t1": 1,
+              "visibility": "VISIBLE"
+            },
+            {
+              "edge_id": "chop::edge:C-D",
+              "t0": 0,
+              "t1": 1,
+              "visibility": "VISIBLE"
+            },
+            {
+              "edge_id": "chop::edge:C-S",
+              "t0": 0,
+              "t1": 1,
+              "visibility": "VISIBLE"
+            },
+            {
+              "edge_id": "chop::edge:D-S",
+              "t0": 0,
+              "t1": 1,
+              "visibility": "VISIBLE"
+            }
+          ],
+          "duplicates": [],
+          "rendered": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "S",
+            "M",
+            "N",
+            "P",
+            "sd",
+            "Q",
+            "chop",
+            "mp",
+            "thiet_dien#4cf",
+            "day_ABCD",
+            "chieu_cao_SA",
+            "canh_ben_S_B",
+            "canh_ben_S_C",
+            "canh_ben_S_D"
+          ],
+          "witnesses": [],
+          "fat": {
+            "totalLines": 19,
+            "maxSectionBorderWidth": 5.34,
+            "maxVisibleEdgeWidth": 4.27,
+            "minHiddenEdgeWidth": 2.43
+          },
+          "goal": {
+            "status": "reached",
+            "primaryKind": "section",
+            "headline": "Dựng các giao tuyến và hoàn thiện thiết diện (MNPQ)",
+            "detail": "Giao tuyến trên từng mặt: (MNP) ∩ (SAB) = MN, (MNP) ∩ (SBC) = NP, (MNP) ∩ (SCD) = PQ, (MNP) ∩ (SAD) = QM ⇒ khép kín miền thiết diện (MNPQ) (MN ∥ AB, NP ∥ BC, PQ ∥ CD, QM ∥ DA)",
+            "items": [
+              {
+                "id": "thiet_dien",
+                "kind": "section",
+                "label": "Dựng các giao tuyến và hoàn thiện thiết diện (MNPQ)",
+                "valueText": null,
+                "witnessSummary": "Giao tuyến trên từng mặt: (MNP) ∩ (SAB) = MN, (MNP) ∩ (SBC) = NP, (MNP) ∩ (SCD) = PQ, (MNP) ∩ (SAD) = QM ⇒ khép kín miền thiết diện (MNPQ) (MN ∥ AB, NP ∥ BC, PQ ∥ CD, QM ∥ DA)",
+                "reachedAtStepIndex": 9,
+                "reachedStepTitle": "Dựng các giao tuyến và hoàn thiện thiết diện (MNPQ)",
+                "carrierIds": [
+                  "thiet_dien"
+                ],
+                "provenance": "DERIVED_VERIFIED"
+              }
+            ],
+            "reachedAtStepIndex": 9
+          },
+          "rendererStats": null
+        },
+        "reset": {
+          "camera": {
+            "position": [
+              7.298778031415207,
+              4.583769975651972,
+              7.724055037381879
+            ],
+            "view_matrix_column_major": [
+              -0.49999999999999967,
+              -0.5566703992264191,
+              0.6634139481689387,
+              0,
+              0.8660254037844387,
+              -0.32139380484326924,
+              0.38302222155948895,
+              0,
+              -2.7755575615628907e-17,
+              0.7660444431189781,
+              0.6427876096865391,
+              0,
+              -0.32027222831138447,
+              -0.3807604861174914,
+              -11.56272378438775,
+              1
+            ],
+            "projection_matrix_column_major": [
+              1.6957489908473733,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              -0.03500000000000006,
+              -1.0002789878317324,
+              -1,
+              0,
+              0,
+              -0.055797566346490524,
+              0
+            ],
+            "viewport_width": 1080,
+            "viewport_height": 854,
+            "device_pixel_ratio": 1
+          },
+          "target": [
+            0.875,
+            0.875,
+            1.5
+          ],
+          "visible": [
+            "chop::edge:B-C",
+            "chop::edge:B-S",
+            "chop::edge:C-D",
+            "chop::edge:C-S",
+            "chop::edge:D-S"
+          ],
+          "hidden": [
+            "chop::edge:A-B",
+            "chop::edge:A-D",
+            "chop::edge:A-S"
+          ],
+          "mixed": [],
+          "spans": [
+            {
+              "edge_id": "chop::edge:A-B",
+              "t0": 0,
+              "t1": 1,
+              "visibility": "HIDDEN"
+            },
+            {
+              "edge_id": "chop::edge:A-D",
+              "t0": 0,
+              "t1": 1,
+              "visibility": "HIDDEN"
+            },
+            {
+              "edge_id": "chop::edge:A-S",
+              "t0": 0,
+              "t1": 1,
+              "visibility": "HIDDEN"
+            },
+            {
+              "edge_id": "chop::edge:B-C",
+              "t0": 0,
+              "t1": 1,
+              "visibility": "VISIBLE"
+            },
+            {
+              "edge_id": "chop::edge:B-S",
+              "t0": 0,
+              "t1": 1,
+              "visibility": "VISIBLE"
+            },
+            {
+              "edge_id": "chop::edge:C-D",
+              "t0": 0,
+              "t1": 1,
+              "visibility": "VISIBLE"
+            },
+            {
+              "edge_id": "chop::edge:C-S",
+              "t0": 0,
+              "t1": 1,
+              "visibility": "VISIBLE"
+            },
+            {
+              "edge_id": "chop::edge:D-S",
+              "t0": 0,
+              "t1": 1,
+              "visibility": "VISIBLE"
+            }
+          ],
+          "duplicates": [],
+          "rendered": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "S",
+            "M",
+            "N",
+            "P",
+            "sd",
+            "Q",
+            "chop",
+            "mp",
+            "thiet_dien#4cf",
+            "day_ABCD",
+            "chieu_cao_SA",
+            "canh_ben_S_B",
+            "canh_ben_S_C",
+            "canh_ben_S_D"
+          ],
+          "witnesses": [],
+          "fat": {
+            "totalLines": 19,
+            "maxSectionBorderWidth": 5.34,
+            "maxVisibleEdgeWidth": 4.27,
+            "minHiddenEdgeWidth": 2.43
+          },
+          "goal": {
+            "status": "reached",
+            "primaryKind": "section",
+            "headline": "Dựng các giao tuyến và hoàn thiện thiết diện (MNPQ)",
+            "detail": "Giao tuyến trên từng mặt: (MNP) ∩ (SAB) = MN, (MNP) ∩ (SBC) = NP, (MNP) ∩ (SCD) = PQ, (MNP) ∩ (SAD) = QM ⇒ khép kín miền thiết diện (MNPQ) (MN ∥ AB, NP ∥ BC, PQ ∥ CD, QM ∥ DA)",
+            "items": [
+              {
+                "id": "thiet_dien",
+                "kind": "section",
+                "label": "Dựng các giao tuyến và hoàn thiện thiết diện (MNPQ)",
+                "valueText": null,
+                "witnessSummary": "Giao tuyến trên từng mặt: (MNP) ∩ (SAB) = MN, (MNP) ∩ (SBC) = NP, (MNP) ∩ (SCD) = PQ, (MNP) ∩ (SAD) = QM ⇒ khép kín miền thiết diện (MNPQ) (MN ∥ AB, NP ∥ BC, PQ ∥ CD, QM ∥ DA)",
+                "reachedAtStepIndex": 9,
+                "reachedStepTitle": "Dựng các giao tuyến và hoàn thiện thiết diện (MNPQ)",
+                "carrierIds": [
+                  "thiet_dien"
+                ],
+                "provenance": "DERIVED_VERIFIED"
+              }
+            ],
+            "reachedAtStepIndex": 9
+          },
+          "rendererStats": null
+        }
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "canonical and Vietnamese URLs, per-problem Back Forward F5 snapshots",
+      "evidence": {
+        "restoredStep": "2",
+        "url": "http://127.0.0.1:55594/simulation/sphere-radius-and-volume"
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "sphere boundary greatCircleScene",
+      "evidence": {
+        "file": "greatCircleScene.png",
+        "state": {
+          "camera": {
+            "position": [
+              12.083350803758696,
+              7.552094252349185,
+              9.062513102819018
+            ],
+            "view_matrix_column_major": [
+              -0.5299989400031798,
+              -0.45508364461437784,
+              0.7155417527999327,
+              0,
+              0.8479983040050878,
+              -0.28442727788398603,
+              0.44721359549995776,
+              0,
+              -2.77555756156289e-17,
+              0.8438009243891592,
+              0.5366563145999493,
+              0,
+              0,
+              0,
+              -16.886996120738225,
+              1
+            ],
+            "model_matrix_column_major": [
+              1,
+              0,
+              0,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0,
+              1
+            ],
+            "projection_matrix_column_major": [
+              1.695748990847373,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              -0.03500000000000006,
+              -1.0003701757704329,
+              -1,
+              0,
+              0,
+              -0.10001850878862167,
+              0
+            ],
+            "viewport_width": 1080,
+            "viewport_height": 854,
+            "device_pixel_ratio": 1
+          },
+          "target": [
+            0,
+            0,
+            0
+          ],
+          "visible": [],
+          "hidden": [],
+          "mixed": [],
+          "spans": [],
+          "duplicates": [],
+          "rendered": [
+            "I",
+            "ball_0",
+            "mp_0",
+            "c_great",
+            "c_great__rim_pt",
+            "c_great__sph_rad"
+          ],
+          "witnesses": [],
+          "fat": {
+            "totalLines": 9,
+            "maxSectionBorderWidth": 5.34,
+            "maxVisibleEdgeWidth": 0,
+            "minHiddenEdgeWidth": 2.19
+          },
+          "goal": {
+            "status": "reached",
+            "primaryKind": "section",
+            "headline": "Dựng đường tròn thiết diện giao của (S) và (P)",
+            "detail": "Mặt phẳng đi qua tâm mặt cầu tạo giao tuyến là đường tròn lớn cùng tâm với mặt cầu",
+            "items": [
+              {
+                "id": "c_great",
+                "kind": "section",
+                "label": "Dựng đường tròn thiết diện giao của (S) và (P)",
+                "valueText": null,
+                "witnessSummary": "Mặt phẳng đi qua tâm mặt cầu tạo giao tuyến là đường tròn lớn cùng tâm với mặt cầu",
+                "reachedAtStepIndex": 3,
+                "reachedStepTitle": "Dựng đường tròn thiết diện giao của (S) và (P)",
+                "carrierIds": [
+                  "c_great"
+                ],
+                "provenance": "DERIVED_VERIFIED"
+              }
+            ],
+            "reachedAtStepIndex": 3
+          },
+          "rendererStats": null
+        }
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "sphere boundary tangentScene",
+      "evidence": {
+        "file": "tangentScene.png",
+        "state": {
+          "camera": {
+            "position": [
+              12.083350803758696,
+              7.552094252349185,
+              9.062513102819018
+            ],
+            "view_matrix_column_major": [
+              -0.5299989400031798,
+              -0.45508364461437784,
+              0.7155417527999327,
+              0,
+              0.8479983040050878,
+              -0.28442727788398603,
+              0.44721359549995776,
+              0,
+              -2.77555756156289e-17,
+              0.8438009243891592,
+              0.5366563145999493,
+              0,
+              0,
+              0,
+              -16.886996120738225,
+              1
+            ],
+            "model_matrix_column_major": [
+              1,
+              0,
+              0,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0,
+              1
+            ],
+            "projection_matrix_column_major": [
+              1.695748990847373,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              -0.03500000000000006,
+              -1.0003701757704329,
+              -1,
+              0,
+              0,
+              -0.10001850878862167,
+              0
+            ],
+            "viewport_width": 1080,
+            "viewport_height": 854,
+            "device_pixel_ratio": 1
+          },
+          "target": [
+            0,
+            0,
+            0
+          ],
+          "visible": [],
+          "hidden": [],
+          "mixed": [],
+          "spans": [],
+          "duplicates": [],
+          "rendered": [
+            "O_sph",
+            "ball_k",
+            "mp_tan",
+            "ball_k__mp_tan__center",
+            "ball_k__mp_tan__dist"
+          ],
+          "witnesses": [
+            "perpendicular:ball_k__mp_tan__center"
+          ],
+          "fat": {
+            "totalLines": 7,
+            "maxSectionBorderWidth": 0,
+            "maxVisibleEdgeWidth": 0,
+            "minHiddenEdgeWidth": 2.14
+          },
+          "goal": {
+            "status": "reached",
+            "primaryKind": "construction",
+            "headline": "Xác định hình chiếu vuông góc H của tâm K và đoạn KH",
+            "detail": "Hạ KH ⊥ (α) tại H; điểm H là tâm của đường tròn giao tuyến trên (α)",
+            "items": [
+              {
+                "id": "ball_k__mp_tan__dist",
+                "kind": "construction",
+                "label": "Xác định hình chiếu vuông góc H của tâm K và đoạn KH",
+                "valueText": null,
+                "witnessSummary": null,
+                "reachedAtStepIndex": 3,
+                "reachedStepTitle": "Xác định hình chiếu vuông góc H của tâm K và đoạn KH",
+                "carrierIds": [
+                  "ball_k__mp_tan__dist"
+                ],
+                "provenance": "DERIVED_VERIFIED"
+              }
+            ],
+            "reachedAtStepIndex": 3
+          },
+          "rendererStats": null
+        }
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "sphere boundary nonIntersectingScene",
+      "evidence": {
+        "refused": true,
+        "text": "—\nTạm dừng dựng hìnhMâu thuẫn dữ kiện"
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "22 problem switches retain one WebGL context with collected heap samples",
+      "evidence": {
+        "contexts": 1,
+        "heap": [
+          {
+            "i": 0,
+            "usedSize": 16080040,
+            "totalSize": 16887808,
+            "embedderHeapUsedSize": 2151504,
+            "backingStorageSize": 3793356
+          },
+          {
+            "i": 3,
+            "usedSize": 18111968,
+            "totalSize": 20692992,
+            "embedderHeapUsedSize": 2276976,
+            "backingStorageSize": 7238240
+          },
+          {
+            "i": 6,
+            "usedSize": 19155968,
+            "totalSize": 20955136,
+            "embedderHeapUsedSize": 2329720,
+            "backingStorageSize": 7238862
+          },
+          {
+            "i": 9,
+            "usedSize": 19618276,
+            "totalSize": 21217280,
+            "embedderHeapUsedSize": 2234104,
+            "backingStorageSize": 7238862
+          },
+          {
+            "i": 12,
+            "usedSize": 19896208,
+            "totalSize": 21217280,
+            "embedderHeapUsedSize": 2372944,
+            "backingStorageSize": 7238862
+          },
+          {
+            "i": 15,
+            "usedSize": 20065572,
+            "totalSize": 21479424,
+            "embedderHeapUsedSize": 2271896,
+            "backingStorageSize": 7238862
+          },
+          {
+            "i": 18,
+            "usedSize": 20466264,
+            "totalSize": 22265856,
+            "embedderHeapUsedSize": 2407872,
+            "backingStorageSize": 7238862
+          },
+          {
+            "i": 21,
+            "usedSize": 20624792,
+            "totalSize": 22265856,
+            "embedderHeapUsedSize": 2521896,
+            "backingStorageSize": 7238862
+          }
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "responsive 360 cau-the-tich cards, labels and scrolling",
+      "evidence": {
+        "dimensions": {
+          "documentWidth": 360,
+          "viewport": 360,
+          "canvas": {
+            "width": 360,
+            "height": 438
+          },
+          "touchAction": "none"
+        },
+        "cards": [
+          {
+            "id": "cau__radius",
+            "left": 16,
+            "right": 344,
+            "height": 138.08750915527344,
+            "titleRight": 115.77499771118164,
+            "closeLeft": 300.20001220703125,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "cau",
+            "left": 16,
+            "right": 344,
+            "height": 156.72500610351562,
+            "titleRight": 130.46249771118164,
+            "closeLeft": 300.20001220703125,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "I",
+            "left": 16,
+            "right": 344,
+            "height": 156.72500610351562,
+            "titleRight": 77.1875,
+            "closeLeft": 300.20001220703125,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "A",
+            "left": 16,
+            "right": 344,
+            "height": 156.72500610351562,
+            "titleRight": 89.4749984741211,
+            "closeLeft": 300.20001220703125,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          }
+        ],
+        "file": "responsive-360-cau-the-tich.png"
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "responsive 360 cau-cat-mat-phang cards, labels and scrolling",
+      "status": "FAIL",
+      "error": "locator.click: Timeout 20000ms exceeded."
+    },
+    {
+      "name": "responsive 360 thiet-dien-chop cards, labels and scrolling",
+      "evidence": {
+        "dimensions": {
+          "documentWidth": 360,
+          "viewport": 360,
+          "canvas": {
+            "width": 360,
+            "height": 438
+          },
+          "touchAction": "none"
+        },
+        "cards": [
+          {
+            "id": "thiet_dien",
+            "left": 16,
+            "right": 344,
+            "height": 236.53750610351562,
+            "titleRight": 162.39999771118164,
+            "closeLeft": 300.20001220703125,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "M",
+            "left": 16,
+            "right": 344,
+            "height": 138.08750915527344,
+            "titleRight": 92.9000015258789,
+            "closeLeft": 300.20001220703125,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "N",
+            "left": 16,
+            "right": 344,
+            "height": 138.08750915527344,
+            "titleRight": 90.63750076293945,
+            "closeLeft": 300.20001220703125,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "P",
+            "left": 16,
+            "right": 344,
+            "height": 138.08750915527344,
+            "titleRight": 88.2750015258789,
+            "closeLeft": 300.20001220703125,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "Q",
+            "left": 16,
+            "right": 344,
+            "height": 138.08750915527344,
+            "titleRight": 121.46249771118164,
+            "closeLeft": 300.20001220703125,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "chop",
+            "left": 16,
+            "right": 344,
+            "height": 138.08750915527344,
+            "titleRight": 159.67499923706055,
+            "closeLeft": 300.20001220703125,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "mp",
+            "left": 16,
+            "right": 344,
+            "height": 138.08750915527344,
+            "titleRight": 157.78750228881836,
+            "closeLeft": 300.20001220703125,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "A",
+            "left": 16,
+            "right": 344,
+            "height": 161.9875030517578,
+            "titleRight": 89.4749984741211,
+            "closeLeft": 300.20001220703125,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          }
+        ],
+        "file": "responsive-360-thiet-dien-chop.png"
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "responsive 360 tru-thiet-dien-tron cards, labels and scrolling",
+      "evidence": {
+        "dimensions": {
+          "documentWidth": 360,
+          "viewport": 360,
+          "canvas": {
+            "width": 360,
+            "height": 438
+          },
+          "touchAction": "none"
+        },
+        "cards": [
+          {
+            "id": "C",
+            "left": 16,
+            "right": 344,
+            "height": 175.3625030517578,
+            "titleRight": 156.85000228881836,
+            "closeLeft": 300.20001220703125,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "tru",
+            "left": 16,
+            "right": 344,
+            "height": 156.72500610351562,
+            "titleRight": 123.92499923706055,
+            "closeLeft": 300.20001220703125,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "P",
+            "left": 16,
+            "right": 344,
+            "height": 138.08750915527344,
+            "titleRight": 134.51250076293945,
+            "closeLeft": 300.20001220703125,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "O",
+            "left": 16,
+            "right": 344,
+            "height": 138.08750915527344,
+            "titleRight": 83.1500015258789,
+            "closeLeft": 300.20001220703125,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "O_prime",
+            "left": 16,
+            "right": 344,
+            "height": 138.08750915527344,
+            "titleRight": 87.0999984741211,
+            "closeLeft": 300.20001220703125,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "tru__base_bot",
+            "left": 16,
+            "right": 344,
+            "height": 138.08750915527344,
+            "titleRight": 162.85000228881836,
+            "closeLeft": 300.20001220703125,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "tru__axis",
+            "left": 16,
+            "right": 344,
+            "height": 156.72500610351562,
+            "titleRight": 140.64999771118164,
+            "closeLeft": 300.20001220703125,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "tru__base_top",
+            "left": 16,
+            "right": 344,
+            "height": 138.08750915527344,
+            "titleRight": 166.79999923706055,
+            "closeLeft": 300.20001220703125,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          }
+        ],
+        "file": "responsive-360-tru-thiet-dien-tron.png"
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "responsive 360 non-thiet-dien-truc cards, labels and scrolling",
+      "evidence": {
+        "dimensions": {
+          "documentWidth": 360,
+          "viewport": 360,
+          "canvas": {
+            "width": 360,
+            "height": 438
+          },
+          "touchAction": "none"
+        },
+        "cards": [
+          {
+            "id": "td",
+            "left": 16,
+            "right": 344,
+            "height": 138.08750915527344,
+            "titleRight": 146.00000381469727,
+            "closeLeft": 300.20001220703125,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "S",
+            "left": 16,
+            "right": 344,
+            "height": 138.08750915527344,
+            "titleRight": 84.17499923706055,
+            "closeLeft": 300.20001220703125,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "A",
+            "left": 16,
+            "right": 344,
+            "height": 138.08750915527344,
+            "titleRight": 89.4749984741211,
+            "closeLeft": 300.20001220703125,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "B",
+            "left": 16,
+            "right": 344,
+            "height": 138.08750915527344,
+            "titleRight": 88.63750076293945,
+            "closeLeft": 300.20001220703125,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "O",
+            "left": 16,
+            "right": 344,
+            "height": 138.08750915527344,
+            "titleRight": 83.1500015258789,
+            "closeLeft": 300.20001220703125,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "non__radius",
+            "left": 16,
+            "right": 344,
+            "height": 138.08750915527344,
+            "titleRight": 121.52499771118164,
+            "closeLeft": 300.20001220703125,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "non__base_bot",
+            "left": 16,
+            "right": 344,
+            "height": 138.08750915527344,
+            "titleRight": 148.79999923706055,
+            "closeLeft": 300.20001220703125,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "non__axis",
+            "left": 16,
+            "right": 344,
+            "height": 156.72500610351562,
+            "titleRight": 134.02499771118164,
+            "closeLeft": 300.20001220703125,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          }
+        ],
+        "file": "responsive-360-non-thiet-dien-truc.png"
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "responsive 390 cau-the-tich cards, labels and scrolling",
+      "evidence": {
+        "dimensions": {
+          "documentWidth": 390,
+          "viewport": 390,
+          "canvas": {
+            "width": 390,
+            "height": 438
+          },
+          "touchAction": "none"
+        },
+        "cards": [
+          {
+            "id": "cau__radius",
+            "left": 16,
+            "right": 374.3999938964844,
+            "height": 138.08750915527344,
+            "titleRight": 115.77499771118164,
+            "closeLeft": 330.6000061035156,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "cau",
+            "left": 16,
+            "right": 374.3999938964844,
+            "height": 156.72500610351562,
+            "titleRight": 130.46249771118164,
+            "closeLeft": 330.6000061035156,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "I",
+            "left": 16,
+            "right": 374.3999938964844,
+            "height": 156.72500610351562,
+            "titleRight": 77.1875,
+            "closeLeft": 330.6000061035156,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "A",
+            "left": 16,
+            "right": 374.3999938964844,
+            "height": 156.72500610351562,
+            "titleRight": 89.4749984741211,
+            "closeLeft": 330.6000061035156,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          }
+        ],
+        "file": "responsive-390-cau-the-tich.png"
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "responsive 390 cau-cat-mat-phang cards, labels and scrolling",
+      "evidence": {
+        "dimensions": {
+          "documentWidth": 390,
+          "viewport": 390,
+          "canvas": {
+            "width": 390,
+            "height": 438
+          },
+          "touchAction": "none"
+        },
+        "cards": [
+          {
+            "id": "C",
+            "left": 16,
+            "right": 374.3999938964844,
+            "height": 175.3625030517578,
+            "titleRight": 172.16250228881836,
+            "closeLeft": 330.6000061035156,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "cau",
+            "left": 16,
+            "right": 374.3999938964844,
+            "height": 156.72500610351562,
+            "titleRight": 130.46249771118164,
+            "closeLeft": 330.6000061035156,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "P",
+            "left": 16,
+            "right": 374.3999938964844,
+            "height": 156.72500610351562,
+            "titleRight": 134.21249771118164,
+            "closeLeft": 330.6000061035156,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "C__center",
+            "left": 16,
+            "right": 374.3999938964844,
+            "height": 156.72500610351562,
+            "titleRight": 83.25,
+            "closeLeft": 330.6000061035156,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "C__rim_pt",
+            "left": 16,
+            "right": 374.3999938964844,
+            "height": 156.72500610351562,
+            "titleRight": 92.9000015258789,
+            "closeLeft": 330.6000061035156,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "I",
+            "left": 16,
+            "right": 374.3999938964844,
+            "height": 156.72500610351562,
+            "titleRight": 77.1875,
+            "closeLeft": 330.6000061035156,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "cau__radius",
+            "left": 16,
+            "right": 374.3999938964844,
+            "height": 156.72500610351562,
+            "titleRight": 189.47500228881836,
+            "closeLeft": 330.6000061035156,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "C__dist",
+            "left": 16,
+            "right": 374.3999938964844,
+            "height": 138.08750915527344,
+            "titleRight": 165.53750228881836,
+            "closeLeft": 330.6000061035156,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          }
+        ],
+        "file": "responsive-390-cau-cat-mat-phang.png"
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "responsive 390 thiet-dien-chop cards, labels and scrolling",
+      "evidence": {
+        "dimensions": {
+          "documentWidth": 390,
+          "viewport": 390,
+          "canvas": {
+            "width": 390,
+            "height": 438
+          },
+          "touchAction": "none"
+        },
+        "cards": [
+          {
+            "id": "thiet_dien",
+            "left": 16,
+            "right": 374.3999938964844,
+            "height": 236.53750610351562,
+            "titleRight": 162.39999771118164,
+            "closeLeft": 330.6000061035156,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "M",
+            "left": 16,
+            "right": 374.3999938964844,
+            "height": 138.08750915527344,
+            "titleRight": 92.9000015258789,
+            "closeLeft": 330.6000061035156,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "N",
+            "left": 16,
+            "right": 374.3999938964844,
+            "height": 138.08750915527344,
+            "titleRight": 90.63750076293945,
+            "closeLeft": 330.6000061035156,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "P",
+            "left": 16,
+            "right": 374.3999938964844,
+            "height": 138.08750915527344,
+            "titleRight": 88.2750015258789,
+            "closeLeft": 330.6000061035156,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "Q",
+            "left": 16,
+            "right": 374.3999938964844,
+            "height": 138.08750915527344,
+            "titleRight": 121.46249771118164,
+            "closeLeft": 330.6000061035156,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "chop",
+            "left": 16,
+            "right": 374.3999938964844,
+            "height": 138.08750915527344,
+            "titleRight": 159.67499923706055,
+            "closeLeft": 330.6000061035156,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "mp",
+            "left": 16,
+            "right": 374.3999938964844,
+            "height": 138.08750915527344,
+            "titleRight": 157.78750228881836,
+            "closeLeft": 330.6000061035156,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "A",
+            "left": 16,
+            "right": 374.3999938964844,
+            "height": 161.9875030517578,
+            "titleRight": 89.4749984741211,
+            "closeLeft": 330.6000061035156,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          }
+        ],
+        "file": "responsive-390-thiet-dien-chop.png"
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "responsive 390 tru-thiet-dien-tron cards, labels and scrolling",
+      "evidence": {
+        "dimensions": {
+          "documentWidth": 390,
+          "viewport": 390,
+          "canvas": {
+            "width": 390,
+            "height": 438
+          },
+          "touchAction": "none"
+        },
+        "cards": [
+          {
+            "id": "C",
+            "left": 16,
+            "right": 374.3999938964844,
+            "height": 175.3625030517578,
+            "titleRight": 156.85000228881836,
+            "closeLeft": 330.6000061035156,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "tru",
+            "left": 16,
+            "right": 374.3999938964844,
+            "height": 156.72500610351562,
+            "titleRight": 123.92499923706055,
+            "closeLeft": 330.6000061035156,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "P",
+            "left": 16,
+            "right": 374.3999938964844,
+            "height": 138.08750915527344,
+            "titleRight": 134.51250076293945,
+            "closeLeft": 330.6000061035156,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "O",
+            "left": 16,
+            "right": 374.3999938964844,
+            "height": 138.08750915527344,
+            "titleRight": 83.1500015258789,
+            "closeLeft": 330.6000061035156,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "O_prime",
+            "left": 16,
+            "right": 374.3999938964844,
+            "height": 138.08750915527344,
+            "titleRight": 87.0999984741211,
+            "closeLeft": 330.6000061035156,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "tru__base_bot",
+            "left": 16,
+            "right": 374.3999938964844,
+            "height": 138.08750915527344,
+            "titleRight": 162.85000228881836,
+            "closeLeft": 330.6000061035156,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "tru__axis",
+            "left": 16,
+            "right": 374.3999938964844,
+            "height": 156.72500610351562,
+            "titleRight": 140.64999771118164,
+            "closeLeft": 330.6000061035156,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "tru__base_top",
+            "left": 16,
+            "right": 374.3999938964844,
+            "height": 138.08750915527344,
+            "titleRight": 166.79999923706055,
+            "closeLeft": 330.6000061035156,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          }
+        ],
+        "file": "responsive-390-tru-thiet-dien-tron.png"
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "responsive 390 non-thiet-dien-truc cards, labels and scrolling",
+      "evidence": {
+        "dimensions": {
+          "documentWidth": 390,
+          "viewport": 390,
+          "canvas": {
+            "width": 390,
+            "height": 438
+          },
+          "touchAction": "none"
+        },
+        "cards": [
+          {
+            "id": "td",
+            "left": 16,
+            "right": 374.3999938964844,
+            "height": 138.08750915527344,
+            "titleRight": 146.00000381469727,
+            "closeLeft": 330.6000061035156,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "S",
+            "left": 16,
+            "right": 374.3999938964844,
+            "height": 138.08750915527344,
+            "titleRight": 84.17499923706055,
+            "closeLeft": 330.6000061035156,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "A",
+            "left": 16,
+            "right": 374.3999938964844,
+            "height": 138.08750915527344,
+            "titleRight": 89.4749984741211,
+            "closeLeft": 330.6000061035156,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "B",
+            "left": 16,
+            "right": 374.3999938964844,
+            "height": 138.08750915527344,
+            "titleRight": 88.63750076293945,
+            "closeLeft": 330.6000061035156,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "O",
+            "left": 16,
+            "right": 374.3999938964844,
+            "height": 138.08750915527344,
+            "titleRight": 83.1500015258789,
+            "closeLeft": 330.6000061035156,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "non__radius",
+            "left": 16,
+            "right": 374.3999938964844,
+            "height": 138.08750915527344,
+            "titleRight": 121.52499771118164,
+            "closeLeft": 330.6000061035156,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "non__base_bot",
+            "left": 16,
+            "right": 374.3999938964844,
+            "height": 138.08750915527344,
+            "titleRight": 148.79999923706055,
+            "closeLeft": 330.6000061035156,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "non__axis",
+            "left": 16,
+            "right": 374.3999938964844,
+            "height": 156.72500610351562,
+            "titleRight": 134.02499771118164,
+            "closeLeft": 330.6000061035156,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          }
+        ],
+        "file": "responsive-390-non-thiet-dien-truc.png"
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "responsive 430 cau-the-tich cards, labels and scrolling",
+      "evidence": {
+        "dimensions": {
+          "documentWidth": 430,
+          "viewport": 430,
+          "canvas": {
+            "width": 430,
+            "height": 462
+          },
+          "touchAction": "none"
+        },
+        "cards": [
+          {
+            "id": "cau__radius",
+            "left": 16,
+            "right": 414.3999938964844,
+            "height": 138.08750915527344,
+            "titleRight": 115.77499771118164,
+            "closeLeft": 370.6000061035156,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "cau",
+            "left": 16,
+            "right": 414.3999938964844,
+            "height": 156.72500610351562,
+            "titleRight": 130.46249771118164,
+            "closeLeft": 370.6000061035156,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "I",
+            "left": 16,
+            "right": 414.3999938964844,
+            "height": 138.08750915527344,
+            "titleRight": 77.1875,
+            "closeLeft": 370.6000061035156,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "A",
+            "left": 16,
+            "right": 414.3999938964844,
+            "height": 156.72500610351562,
+            "titleRight": 89.4749984741211,
+            "closeLeft": 370.6000061035156,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          }
+        ],
+        "file": "responsive-430-cau-the-tich.png"
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "responsive 430 cau-cat-mat-phang cards, labels and scrolling",
+      "evidence": {
+        "dimensions": {
+          "documentWidth": 430,
+          "viewport": 430,
+          "canvas": {
+            "width": 430,
+            "height": 462
+          },
+          "touchAction": "none"
+        },
+        "cards": [
+          {
+            "id": "C",
+            "left": 16,
+            "right": 414.3999938964844,
+            "height": 175.3625030517578,
+            "titleRight": 172.16250228881836,
+            "closeLeft": 370.6000061035156,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "cau",
+            "left": 16,
+            "right": 414.3999938964844,
+            "height": 156.72500610351562,
+            "titleRight": 130.46249771118164,
+            "closeLeft": 370.6000061035156,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "P",
+            "left": 16,
+            "right": 414.3999938964844,
+            "height": 138.08750915527344,
+            "titleRight": 134.21249771118164,
+            "closeLeft": 370.6000061035156,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "C__center",
+            "left": 16,
+            "right": 414.3999938964844,
+            "height": 156.72500610351562,
+            "titleRight": 83.25,
+            "closeLeft": 370.6000061035156,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "C__rim_pt",
+            "left": 16,
+            "right": 414.3999938964844,
+            "height": 156.72500610351562,
+            "titleRight": 92.9000015258789,
+            "closeLeft": 370.6000061035156,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "I",
+            "left": 16,
+            "right": 414.3999938964844,
+            "height": 138.08750915527344,
+            "titleRight": 77.1875,
+            "closeLeft": 370.6000061035156,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "cau__radius",
+            "left": 16,
+            "right": 414.3999938964844,
+            "height": 156.72500610351562,
+            "titleRight": 189.47500228881836,
+            "closeLeft": 370.6000061035156,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "C__dist",
+            "left": 16,
+            "right": 414.3999938964844,
+            "height": 138.08750915527344,
+            "titleRight": 165.53750228881836,
+            "closeLeft": 370.6000061035156,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          }
+        ],
+        "file": "responsive-430-cau-cat-mat-phang.png"
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "responsive 430 thiet-dien-chop cards, labels and scrolling",
+      "evidence": {
+        "dimensions": {
+          "documentWidth": 430,
+          "viewport": 430,
+          "canvas": {
+            "width": 430,
+            "height": 462
+          },
+          "touchAction": "none"
+        },
+        "cards": [
+          {
+            "id": "thiet_dien",
+            "left": 16,
+            "right": 414.3999938964844,
+            "height": 217.90000915527344,
+            "titleRight": 162.39999771118164,
+            "closeLeft": 370.6000061035156,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "M",
+            "left": 16,
+            "right": 414.3999938964844,
+            "height": 138.08750915527344,
+            "titleRight": 92.9000015258789,
+            "closeLeft": 370.6000061035156,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "N",
+            "left": 16,
+            "right": 414.3999938964844,
+            "height": 138.08750915527344,
+            "titleRight": 90.63750076293945,
+            "closeLeft": 370.6000061035156,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "P",
+            "left": 16,
+            "right": 414.3999938964844,
+            "height": 138.08750915527344,
+            "titleRight": 88.2750015258789,
+            "closeLeft": 370.6000061035156,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "Q",
+            "left": 16,
+            "right": 414.3999938964844,
+            "height": 138.08750915527344,
+            "titleRight": 121.46249771118164,
+            "closeLeft": 370.6000061035156,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "chop",
+            "left": 16,
+            "right": 414.3999938964844,
+            "height": 138.08750915527344,
+            "titleRight": 159.67499923706055,
+            "closeLeft": 370.6000061035156,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "mp",
+            "left": 16,
+            "right": 414.3999938964844,
+            "height": 138.08750915527344,
+            "titleRight": 157.78750228881836,
+            "closeLeft": 370.6000061035156,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "A",
+            "left": 16,
+            "right": 414.3999938964844,
+            "height": 161.9875030517578,
+            "titleRight": 89.4749984741211,
+            "closeLeft": 370.6000061035156,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          }
+        ],
+        "file": "responsive-430-thiet-dien-chop.png"
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "responsive 430 tru-thiet-dien-tron cards, labels and scrolling",
+      "evidence": {
+        "dimensions": {
+          "documentWidth": 430,
+          "viewport": 430,
+          "canvas": {
+            "width": 430,
+            "height": 462
+          },
+          "touchAction": "none"
+        },
+        "cards": [
+          {
+            "id": "C",
+            "left": 16,
+            "right": 414.3999938964844,
+            "height": 175.3625030517578,
+            "titleRight": 156.85000228881836,
+            "closeLeft": 370.6000061035156,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "tru",
+            "left": 16,
+            "right": 414.3999938964844,
+            "height": 156.72500610351562,
+            "titleRight": 123.92499923706055,
+            "closeLeft": 370.6000061035156,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "P",
+            "left": 16,
+            "right": 414.3999938964844,
+            "height": 138.08750915527344,
+            "titleRight": 134.51250076293945,
+            "closeLeft": 370.6000061035156,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "O",
+            "left": 16,
+            "right": 414.3999938964844,
+            "height": 138.08750915527344,
+            "titleRight": 83.1500015258789,
+            "closeLeft": 370.6000061035156,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "O_prime",
+            "left": 16,
+            "right": 414.3999938964844,
+            "height": 138.08750915527344,
+            "titleRight": 87.0999984741211,
+            "closeLeft": 370.6000061035156,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "tru__base_bot",
+            "left": 16,
+            "right": 414.3999938964844,
+            "height": 138.08750915527344,
+            "titleRight": 162.85000228881836,
+            "closeLeft": 370.6000061035156,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "tru__axis",
+            "left": 16,
+            "right": 414.3999938964844,
+            "height": 156.72500610351562,
+            "titleRight": 140.64999771118164,
+            "closeLeft": 370.6000061035156,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "tru__base_top",
+            "left": 16,
+            "right": 414.3999938964844,
+            "height": 138.08750915527344,
+            "titleRight": 166.79999923706055,
+            "closeLeft": 370.6000061035156,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          }
+        ],
+        "file": "responsive-430-tru-thiet-dien-tron.png"
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "responsive 430 non-thiet-dien-truc cards, labels and scrolling",
+      "evidence": {
+        "dimensions": {
+          "documentWidth": 430,
+          "viewport": 430,
+          "canvas": {
+            "width": 430,
+            "height": 462
+          },
+          "touchAction": "none"
+        },
+        "cards": [
+          {
+            "id": "td",
+            "left": 16,
+            "right": 414.3999938964844,
+            "height": 138.08750915527344,
+            "titleRight": 146.00000381469727,
+            "closeLeft": 370.6000061035156,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "S",
+            "left": 16,
+            "right": 414.3999938964844,
+            "height": 138.08750915527344,
+            "titleRight": 84.17499923706055,
+            "closeLeft": 370.6000061035156,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "A",
+            "left": 16,
+            "right": 414.3999938964844,
+            "height": 138.08750915527344,
+            "titleRight": 89.4749984741211,
+            "closeLeft": 370.6000061035156,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "B",
+            "left": 16,
+            "right": 414.3999938964844,
+            "height": 138.08750915527344,
+            "titleRight": 88.63750076293945,
+            "closeLeft": 370.6000061035156,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "O",
+            "left": 16,
+            "right": 414.3999938964844,
+            "height": 138.08750915527344,
+            "titleRight": 83.1500015258789,
+            "closeLeft": 370.6000061035156,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "non__radius",
+            "left": 16,
+            "right": 414.3999938964844,
+            "height": 138.08750915527344,
+            "titleRight": 121.52499771118164,
+            "closeLeft": 370.6000061035156,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "non__base_bot",
+            "left": 16,
+            "right": 414.3999938964844,
+            "height": 138.08750915527344,
+            "titleRight": 148.79999923706055,
+            "closeLeft": 370.6000061035156,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "non__axis",
+            "left": 16,
+            "right": 414.3999938964844,
+            "height": 156.72500610351562,
+            "titleRight": 134.02499771118164,
+            "closeLeft": 370.6000061035156,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          }
+        ],
+        "file": "responsive-430-non-thiet-dien-truc.png"
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "responsive 768 cau-the-tich cards, labels and scrolling",
+      "evidence": {
+        "dimensions": {
+          "documentWidth": 768,
+          "viewport": 768,
+          "canvas": {
+            "width": 472,
+            "height": 854
+          },
+          "touchAction": "none"
+        },
+        "cards": [
+          {
+            "id": "cau__radius",
+            "left": 488.8000183105469,
+            "right": 752.0000305175781,
+            "height": 145.52500915527344,
+            "titleRight": 588.5750350952148,
+            "closeLeft": 712.2000122070312,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "cau",
+            "left": 488.8000183105469,
+            "right": 752.0000305175781,
+            "height": 164.16250610351562,
+            "titleRight": 603.2625350952148,
+            "closeLeft": 712.2000122070312,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "I",
+            "left": 488.8000183105469,
+            "right": 752.0000305175781,
+            "height": 145.52500915527344,
+            "titleRight": 549.9875373840332,
+            "closeLeft": 712.2000122070312,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "A",
+            "left": 488.8000183105469,
+            "right": 752.0000305175781,
+            "height": 145.52500915527344,
+            "titleRight": 562.2750358581543,
+            "closeLeft": 712.2000122070312,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          }
+        ],
+        "file": "responsive-768-cau-the-tich.png"
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "responsive 768 cau-cat-mat-phang cards, labels and scrolling",
+      "evidence": {
+        "dimensions": {
+          "documentWidth": 768,
+          "viewport": 768,
+          "canvas": {
+            "width": 472,
+            "height": 854
+          },
+          "touchAction": "none"
+        },
+        "cards": [
+          {
+            "id": "C",
+            "left": 488.8000183105469,
+            "right": 752.0000305175781,
+            "height": 182.8000030517578,
+            "titleRight": 644.9625396728516,
+            "closeLeft": 712.2000122070312,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "cau",
+            "left": 488.8000183105469,
+            "right": 752.0000305175781,
+            "height": 164.16250610351562,
+            "titleRight": 603.2625350952148,
+            "closeLeft": 712.2000122070312,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "P",
+            "left": 488.8000183105469,
+            "right": 752.0000305175781,
+            "height": 145.52500915527344,
+            "titleRight": 607.0125350952148,
+            "closeLeft": 712.2000122070312,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "C__center",
+            "left": 488.8000183105469,
+            "right": 752.0000305175781,
+            "height": 145.52500915527344,
+            "titleRight": 556.0500373840332,
+            "closeLeft": 712.2000122070312,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "C__rim_pt",
+            "left": 488.8000183105469,
+            "right": 752.0000305175781,
+            "height": 145.52500915527344,
+            "titleRight": 565.7000389099121,
+            "closeLeft": 712.2000122070312,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "I",
+            "left": 488.8000183105469,
+            "right": 752.0000305175781,
+            "height": 145.52500915527344,
+            "titleRight": 549.9875373840332,
+            "closeLeft": 712.2000122070312,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "cau__radius",
+            "left": 488.8000183105469,
+            "right": 752.0000305175781,
+            "height": 164.16250610351562,
+            "titleRight": 662.2750396728516,
+            "closeLeft": 712.2000122070312,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "C__dist",
+            "left": 488.8000183105469,
+            "right": 752.0000305175781,
+            "height": 145.52500915527344,
+            "titleRight": 638.3375396728516,
+            "closeLeft": 712.2000122070312,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          }
+        ],
+        "file": "responsive-768-cau-cat-mat-phang.png"
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "responsive 768 thiet-dien-chop cards, labels and scrolling",
+      "evidence": {
+        "dimensions": {
+          "documentWidth": 768,
+          "viewport": 768,
+          "canvas": {
+            "width": 472,
+            "height": 854
+          },
+          "touchAction": "none"
+        },
+        "cards": [
+          {
+            "id": "thiet_dien",
+            "left": 488.8000183105469,
+            "right": 752.0000305175781,
+            "height": 243.97500610351562,
+            "titleRight": 635.2000350952148,
+            "closeLeft": 712.2000122070312,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "M",
+            "left": 488.8000183105469,
+            "right": 752.0000305175781,
+            "height": 126.88750457763672,
+            "titleRight": 565.7000389099121,
+            "closeLeft": 712.2000122070312,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "N",
+            "left": 488.8000183105469,
+            "right": 752.0000305175781,
+            "height": 126.88750457763672,
+            "titleRight": 563.4375381469727,
+            "closeLeft": 712.2000122070312,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "P",
+            "left": 488.8000183105469,
+            "right": 752.0000305175781,
+            "height": 126.88750457763672,
+            "titleRight": 561.0750389099121,
+            "closeLeft": 712.2000122070312,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "Q",
+            "left": 488.8000183105469,
+            "right": 752.0000305175781,
+            "height": 145.52500915527344,
+            "titleRight": 594.2625350952148,
+            "closeLeft": 712.2000122070312,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "chop",
+            "left": 488.8000183105469,
+            "right": 752.0000305175781,
+            "height": 126.88750457763672,
+            "titleRight": 632.4750366210938,
+            "closeLeft": 712.2000122070312,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "mp",
+            "left": 488.8000183105469,
+            "right": 752.0000305175781,
+            "height": 145.52500915527344,
+            "titleRight": 630.5875396728516,
+            "closeLeft": 712.2000122070312,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "A",
+            "left": 488.8000183105469,
+            "right": 752.0000305175781,
+            "height": 169.4250030517578,
+            "titleRight": 562.2750358581543,
+            "closeLeft": 712.2000122070312,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          }
+        ],
+        "file": "responsive-768-thiet-dien-chop.png"
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "responsive 768 tru-thiet-dien-tron cards, labels and scrolling",
+      "evidence": {
+        "dimensions": {
+          "documentWidth": 768,
+          "viewport": 768,
+          "canvas": {
+            "width": 472,
+            "height": 854
+          },
+          "touchAction": "none"
+        },
+        "cards": [
+          {
+            "id": "C",
+            "left": 488.8000183105469,
+            "right": 752.0000305175781,
+            "height": 182.8000030517578,
+            "titleRight": 629.6500396728516,
+            "closeLeft": 712.2000122070312,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "tru",
+            "left": 488.8000183105469,
+            "right": 752.0000305175781,
+            "height": 145.52500915527344,
+            "titleRight": 596.7250366210938,
+            "closeLeft": 712.2000122070312,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "P",
+            "left": 488.8000183105469,
+            "right": 752.0000305175781,
+            "height": 126.88750457763672,
+            "titleRight": 607.3125381469727,
+            "closeLeft": 712.2000122070312,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "O",
+            "left": 488.8000183105469,
+            "right": 752.0000305175781,
+            "height": 126.88750457763672,
+            "titleRight": 555.9500389099121,
+            "closeLeft": 712.2000122070312,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "O_prime",
+            "left": 488.8000183105469,
+            "right": 752.0000305175781,
+            "height": 126.88750457763672,
+            "titleRight": 559.9000358581543,
+            "closeLeft": 712.2000122070312,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "tru__base_bot",
+            "left": 488.8000183105469,
+            "right": 752.0000305175781,
+            "height": 145.52500915527344,
+            "titleRight": 635.6500396728516,
+            "closeLeft": 712.2000122070312,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "tru__axis",
+            "left": 488.8000183105469,
+            "right": 752.0000305175781,
+            "height": 145.52500915527344,
+            "titleRight": 613.4500350952148,
+            "closeLeft": 712.2000122070312,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "tru__base_top",
+            "left": 488.8000183105469,
+            "right": 752.0000305175781,
+            "height": 145.52500915527344,
+            "titleRight": 639.6000366210938,
+            "closeLeft": 712.2000122070312,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          }
+        ],
+        "file": "responsive-768-tru-thiet-dien-tron.png"
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "responsive 768 non-thiet-dien-truc cards, labels and scrolling",
+      "evidence": {
+        "dimensions": {
+          "documentWidth": 768,
+          "viewport": 768,
+          "canvas": {
+            "width": 472,
+            "height": 854
+          },
+          "touchAction": "none"
+        },
+        "cards": [
+          {
+            "id": "td",
+            "left": 488.8000183105469,
+            "right": 752.0000305175781,
+            "height": 145.52500915527344,
+            "titleRight": 618.8000411987305,
+            "closeLeft": 712.2000122070312,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "S",
+            "left": 488.8000183105469,
+            "right": 752.0000305175781,
+            "height": 145.52500915527344,
+            "titleRight": 556.9750366210938,
+            "closeLeft": 712.2000122070312,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "A",
+            "left": 488.8000183105469,
+            "right": 752.0000305175781,
+            "height": 145.52500915527344,
+            "titleRight": 562.2750358581543,
+            "closeLeft": 712.2000122070312,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "B",
+            "left": 488.8000183105469,
+            "right": 752.0000305175781,
+            "height": 126.88750457763672,
+            "titleRight": 561.4375381469727,
+            "closeLeft": 712.2000122070312,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "O",
+            "left": 488.8000183105469,
+            "right": 752.0000305175781,
+            "height": 126.88750457763672,
+            "titleRight": 555.9500389099121,
+            "closeLeft": 712.2000122070312,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "non__radius",
+            "left": 488.8000183105469,
+            "right": 752.0000305175781,
+            "height": 126.88750457763672,
+            "titleRight": 594.3250350952148,
+            "closeLeft": 712.2000122070312,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "non__base_bot",
+            "left": 488.8000183105469,
+            "right": 752.0000305175781,
+            "height": 145.52500915527344,
+            "titleRight": 621.6000366210938,
+            "closeLeft": 712.2000122070312,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "non__axis",
+            "left": 488.8000183105469,
+            "right": 752.0000305175781,
+            "height": 145.52500915527344,
+            "titleRight": 606.8250350952148,
+            "closeLeft": 712.2000122070312,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          }
+        ],
+        "file": "responsive-768-non-thiet-dien-truc.png"
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "responsive 1024 cau-the-tich cards, labels and scrolling",
+      "evidence": {
+        "dimensions": {
+          "documentWidth": 1024,
+          "viewport": 1024,
+          "canvas": {
+            "width": 704,
+            "height": 854
+          },
+          "touchAction": "none"
+        },
+        "cards": [
+          {
+            "id": "cau__radius",
+            "left": 720.7999877929688,
+            "right": 1008,
+            "height": 126.88750457763672,
+            "titleRight": 820.5750350952148,
+            "closeLeft": 968.2000122070312,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "cau",
+            "left": 720.7999877929688,
+            "right": 1008,
+            "height": 145.52500915527344,
+            "titleRight": 835.2625350952148,
+            "closeLeft": 968.2000122070312,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "I",
+            "left": 720.7999877929688,
+            "right": 1008,
+            "height": 145.52500915527344,
+            "titleRight": 781.9875373840332,
+            "closeLeft": 968.2000122070312,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "A",
+            "left": 720.7999877929688,
+            "right": 1008,
+            "height": 145.52500915527344,
+            "titleRight": 794.2750358581543,
+            "closeLeft": 968.2000122070312,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          }
+        ],
+        "file": "responsive-1024-cau-the-tich.png"
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "responsive 1024 cau-cat-mat-phang cards, labels and scrolling",
+      "evidence": {
+        "dimensions": {
+          "documentWidth": 1024,
+          "viewport": 1024,
+          "canvas": {
+            "width": 704,
+            "height": 854
+          },
+          "touchAction": "none"
+        },
+        "cards": [
+          {
+            "id": "C",
+            "left": 720.7999877929688,
+            "right": 1008,
+            "height": 182.8000030517578,
+            "titleRight": 876.9625396728516,
+            "closeLeft": 968.2000122070312,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "cau",
+            "left": 720.7999877929688,
+            "right": 1008,
+            "height": 145.52500915527344,
+            "titleRight": 835.2625350952148,
+            "closeLeft": 968.2000122070312,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "P",
+            "left": 720.7999877929688,
+            "right": 1008,
+            "height": 145.52500915527344,
+            "titleRight": 839.0125350952148,
+            "closeLeft": 968.2000122070312,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "C__center",
+            "left": 720.7999877929688,
+            "right": 1008,
+            "height": 145.52500915527344,
+            "titleRight": 788.0500373840332,
+            "closeLeft": 968.2000122070312,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "C__rim_pt",
+            "left": 720.7999877929688,
+            "right": 1008,
+            "height": 145.52500915527344,
+            "titleRight": 797.7000389099121,
+            "closeLeft": 968.2000122070312,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "I",
+            "left": 720.7999877929688,
+            "right": 1008,
+            "height": 145.52500915527344,
+            "titleRight": 781.9875373840332,
+            "closeLeft": 968.2000122070312,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "cau__radius",
+            "left": 720.7999877929688,
+            "right": 1008,
+            "height": 145.52500915527344,
+            "titleRight": 894.2750396728516,
+            "closeLeft": 968.2000122070312,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "C__dist",
+            "left": 720.7999877929688,
+            "right": 1008,
+            "height": 145.52500915527344,
+            "titleRight": 870.3375396728516,
+            "closeLeft": 968.2000122070312,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          }
+        ],
+        "file": "responsive-1024-cau-cat-mat-phang.png"
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "responsive 1024 thiet-dien-chop cards, labels and scrolling",
+      "evidence": {
+        "dimensions": {
+          "documentWidth": 1024,
+          "viewport": 1024,
+          "canvas": {
+            "width": 704,
+            "height": 854
+          },
+          "touchAction": "none"
+        },
+        "cards": [
+          {
+            "id": "thiet_dien",
+            "left": 720.7999877929688,
+            "right": 1008,
+            "height": 243.97500610351562,
+            "titleRight": 867.2000350952148,
+            "closeLeft": 968.2000122070312,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "M",
+            "left": 720.7999877929688,
+            "right": 1008,
+            "height": 126.88750457763672,
+            "titleRight": 797.7000389099121,
+            "closeLeft": 968.2000122070312,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "N",
+            "left": 720.7999877929688,
+            "right": 1008,
+            "height": 126.88750457763672,
+            "titleRight": 795.4375381469727,
+            "closeLeft": 968.2000122070312,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "P",
+            "left": 720.7999877929688,
+            "right": 1008,
+            "height": 126.88750457763672,
+            "titleRight": 793.0750389099121,
+            "closeLeft": 968.2000122070312,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "Q",
+            "left": 720.7999877929688,
+            "right": 1008,
+            "height": 145.52500915527344,
+            "titleRight": 826.2625350952148,
+            "closeLeft": 968.2000122070312,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "chop",
+            "left": 720.7999877929688,
+            "right": 1008,
+            "height": 126.88750457763672,
+            "titleRight": 864.4750366210938,
+            "closeLeft": 968.2000122070312,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "mp",
+            "left": 720.7999877929688,
+            "right": 1008,
+            "height": 145.52500915527344,
+            "titleRight": 862.5875396728516,
+            "closeLeft": 968.2000122070312,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "A",
+            "left": 720.7999877929688,
+            "right": 1008,
+            "height": 150.78750610351562,
+            "titleRight": 794.2750358581543,
+            "closeLeft": 968.2000122070312,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          }
+        ],
+        "file": "responsive-1024-thiet-dien-chop.png"
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "responsive 1024 tru-thiet-dien-tron cards, labels and scrolling",
+      "evidence": {
+        "dimensions": {
+          "documentWidth": 1024,
+          "viewport": 1024,
+          "canvas": {
+            "width": 704,
+            "height": 854
+          },
+          "touchAction": "none"
+        },
+        "cards": [
+          {
+            "id": "C",
+            "left": 720.7999877929688,
+            "right": 1008,
+            "height": 182.8000030517578,
+            "titleRight": 861.6500396728516,
+            "closeLeft": 968.2000122070312,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "tru",
+            "left": 720.7999877929688,
+            "right": 1008,
+            "height": 145.52500915527344,
+            "titleRight": 828.7250366210938,
+            "closeLeft": 968.2000122070312,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "P",
+            "left": 720.7999877929688,
+            "right": 1008,
+            "height": 126.88750457763672,
+            "titleRight": 839.3125381469727,
+            "closeLeft": 968.2000122070312,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "O",
+            "left": 720.7999877929688,
+            "right": 1008,
+            "height": 126.88750457763672,
+            "titleRight": 787.9500389099121,
+            "closeLeft": 968.2000122070312,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "O_prime",
+            "left": 720.7999877929688,
+            "right": 1008,
+            "height": 126.88750457763672,
+            "titleRight": 791.9000358581543,
+            "closeLeft": 968.2000122070312,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "tru__base_bot",
+            "left": 720.7999877929688,
+            "right": 1008,
+            "height": 126.88750457763672,
+            "titleRight": 867.6500396728516,
+            "closeLeft": 968.2000122070312,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "tru__axis",
+            "left": 720.7999877929688,
+            "right": 1008,
+            "height": 145.52500915527344,
+            "titleRight": 845.4500350952148,
+            "closeLeft": 968.2000122070312,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "tru__base_top",
+            "left": 720.7999877929688,
+            "right": 1008,
+            "height": 126.88750457763672,
+            "titleRight": 871.6000366210938,
+            "closeLeft": 968.2000122070312,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          }
+        ],
+        "file": "responsive-1024-tru-thiet-dien-tron.png"
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "responsive 1024 non-thiet-dien-truc cards, labels and scrolling",
+      "evidence": {
+        "dimensions": {
+          "documentWidth": 1024,
+          "viewport": 1024,
+          "canvas": {
+            "width": 704,
+            "height": 854
+          },
+          "touchAction": "none"
+        },
+        "cards": [
+          {
+            "id": "td",
+            "left": 720.7999877929688,
+            "right": 1008,
+            "height": 126.88750457763672,
+            "titleRight": 850.8000411987305,
+            "closeLeft": 968.2000122070312,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "S",
+            "left": 720.7999877929688,
+            "right": 1008,
+            "height": 145.52500915527344,
+            "titleRight": 788.9750366210938,
+            "closeLeft": 968.2000122070312,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "A",
+            "left": 720.7999877929688,
+            "right": 1008,
+            "height": 145.52500915527344,
+            "titleRight": 794.2750358581543,
+            "closeLeft": 968.2000122070312,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "B",
+            "left": 720.7999877929688,
+            "right": 1008,
+            "height": 126.88750457763672,
+            "titleRight": 793.4375381469727,
+            "closeLeft": 968.2000122070312,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "O",
+            "left": 720.7999877929688,
+            "right": 1008,
+            "height": 126.88750457763672,
+            "titleRight": 787.9500389099121,
+            "closeLeft": 968.2000122070312,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "non__radius",
+            "left": 720.7999877929688,
+            "right": 1008,
+            "height": 126.88750457763672,
+            "titleRight": 826.3250350952148,
+            "closeLeft": 968.2000122070312,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "non__base_bot",
+            "left": 720.7999877929688,
+            "right": 1008,
+            "height": 126.88750457763672,
+            "titleRight": 853.6000366210938,
+            "closeLeft": 968.2000122070312,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "non__axis",
+            "left": 720.7999877929688,
+            "right": 1008,
+            "height": 145.52500915527344,
+            "titleRight": 838.8250350952148,
+            "closeLeft": 968.2000122070312,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          }
+        ],
+        "file": "responsive-1024-non-thiet-dien-truc.png"
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "responsive 1440 cau-the-tich cards, labels and scrolling",
+      "evidence": {
+        "dimensions": {
+          "documentWidth": 1440,
+          "viewport": 1440,
+          "canvas": {
+            "width": 1080,
+            "height": 854
+          },
+          "touchAction": "none"
+        },
+        "cards": [
+          {
+            "id": "cau__radius",
+            "left": 1096.800048828125,
+            "right": 1424.0000610351562,
+            "height": 126.88750457763672,
+            "titleRight": 1196.5749740600586,
+            "closeLeft": 1384.2000732421875,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "cau",
+            "left": 1096.800048828125,
+            "right": 1424.0000610351562,
+            "height": 145.52500915527344,
+            "titleRight": 1211.2624740600586,
+            "closeLeft": 1384.2000732421875,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "I",
+            "left": 1096.800048828125,
+            "right": 1424.0000610351562,
+            "height": 145.52500915527344,
+            "titleRight": 1157.987476348877,
+            "closeLeft": 1384.2000732421875,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "A",
+            "left": 1096.800048828125,
+            "right": 1424.0000610351562,
+            "height": 145.52500915527344,
+            "titleRight": 1170.274974822998,
+            "closeLeft": 1384.2000732421875,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          }
+        ],
+        "file": "responsive-1440-cau-the-tich.png"
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "responsive 1440 cau-cat-mat-phang cards, labels and scrolling",
+      "evidence": {
+        "dimensions": {
+          "documentWidth": 1440,
+          "viewport": 1440,
+          "canvas": {
+            "width": 1080,
+            "height": 854
+          },
+          "touchAction": "none"
+        },
+        "cards": [
+          {
+            "id": "C",
+            "left": 1096.800048828125,
+            "right": 1424.0000610351562,
+            "height": 164.16250610351562,
+            "titleRight": 1252.9624786376953,
+            "closeLeft": 1384.2000732421875,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "cau",
+            "left": 1096.800048828125,
+            "right": 1424.0000610351562,
+            "height": 145.52500915527344,
+            "titleRight": 1211.2624740600586,
+            "closeLeft": 1384.2000732421875,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "P",
+            "left": 1096.800048828125,
+            "right": 1424.0000610351562,
+            "height": 145.52500915527344,
+            "titleRight": 1215.0124740600586,
+            "closeLeft": 1384.2000732421875,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "C__center",
+            "left": 1096.800048828125,
+            "right": 1424.0000610351562,
+            "height": 145.52500915527344,
+            "titleRight": 1164.049976348877,
+            "closeLeft": 1384.2000732421875,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "C__rim_pt",
+            "left": 1096.800048828125,
+            "right": 1424.0000610351562,
+            "height": 145.52500915527344,
+            "titleRight": 1173.6999778747559,
+            "closeLeft": 1384.2000732421875,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "I",
+            "left": 1096.800048828125,
+            "right": 1424.0000610351562,
+            "height": 145.52500915527344,
+            "titleRight": 1157.987476348877,
+            "closeLeft": 1384.2000732421875,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "cau__radius",
+            "left": 1096.800048828125,
+            "right": 1424.0000610351562,
+            "height": 145.52500915527344,
+            "titleRight": 1270.2749786376953,
+            "closeLeft": 1384.2000732421875,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "C__dist",
+            "left": 1096.800048828125,
+            "right": 1424.0000610351562,
+            "height": 126.88750457763672,
+            "titleRight": 1246.3374786376953,
+            "closeLeft": 1384.2000732421875,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          }
+        ],
+        "file": "responsive-1440-cau-cat-mat-phang.png"
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "responsive 1440 thiet-dien-chop cards, labels and scrolling",
+      "evidence": {
+        "dimensions": {
+          "documentWidth": 1440,
+          "viewport": 1440,
+          "canvas": {
+            "width": 1080,
+            "height": 854
+          },
+          "touchAction": "none"
+        },
+        "cards": [
+          {
+            "id": "thiet_dien",
+            "left": 1096.800048828125,
+            "right": 1424.0000610351562,
+            "height": 225.33750915527344,
+            "titleRight": 1243.1999740600586,
+            "closeLeft": 1384.2000732421875,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "M",
+            "left": 1096.800048828125,
+            "right": 1424.0000610351562,
+            "height": 126.88750457763672,
+            "titleRight": 1173.6999778747559,
+            "closeLeft": 1384.2000732421875,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "N",
+            "left": 1096.800048828125,
+            "right": 1424.0000610351562,
+            "height": 126.88750457763672,
+            "titleRight": 1171.4374771118164,
+            "closeLeft": 1384.2000732421875,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "P",
+            "left": 1096.800048828125,
+            "right": 1424.0000610351562,
+            "height": 126.88750457763672,
+            "titleRight": 1169.0749778747559,
+            "closeLeft": 1384.2000732421875,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "Q",
+            "left": 1096.800048828125,
+            "right": 1424.0000610351562,
+            "height": 126.88750457763672,
+            "titleRight": 1202.2624740600586,
+            "closeLeft": 1384.2000732421875,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "chop",
+            "left": 1096.800048828125,
+            "right": 1424.0000610351562,
+            "height": 126.88750457763672,
+            "titleRight": 1240.4749755859375,
+            "closeLeft": 1384.2000732421875,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "mp",
+            "left": 1096.800048828125,
+            "right": 1424.0000610351562,
+            "height": 126.88750457763672,
+            "titleRight": 1238.5874786376953,
+            "closeLeft": 1384.2000732421875,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "A",
+            "left": 1096.800048828125,
+            "right": 1424.0000610351562,
+            "height": 150.78750610351562,
+            "titleRight": 1170.274974822998,
+            "closeLeft": 1384.2000732421875,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          }
+        ],
+        "file": "responsive-1440-thiet-dien-chop.png"
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "responsive 1440 tru-thiet-dien-tron cards, labels and scrolling",
+      "evidence": {
+        "dimensions": {
+          "documentWidth": 1440,
+          "viewport": 1440,
+          "canvas": {
+            "width": 1080,
+            "height": 854
+          },
+          "touchAction": "none"
+        },
+        "cards": [
+          {
+            "id": "C",
+            "left": 1096.800048828125,
+            "right": 1424.0000610351562,
+            "height": 164.16250610351562,
+            "titleRight": 1237.6499786376953,
+            "closeLeft": 1384.2000732421875,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "tru",
+            "left": 1096.800048828125,
+            "right": 1424.0000610351562,
+            "height": 145.52500915527344,
+            "titleRight": 1204.7249755859375,
+            "closeLeft": 1384.2000732421875,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "P",
+            "left": 1096.800048828125,
+            "right": 1424.0000610351562,
+            "height": 126.88750457763672,
+            "titleRight": 1215.3124771118164,
+            "closeLeft": 1384.2000732421875,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "O",
+            "left": 1096.800048828125,
+            "right": 1424.0000610351562,
+            "height": 126.88750457763672,
+            "titleRight": 1163.9499778747559,
+            "closeLeft": 1384.2000732421875,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "O_prime",
+            "left": 1096.800048828125,
+            "right": 1424.0000610351562,
+            "height": 126.88750457763672,
+            "titleRight": 1167.899974822998,
+            "closeLeft": 1384.2000732421875,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "tru__base_bot",
+            "left": 1096.800048828125,
+            "right": 1424.0000610351562,
+            "height": 126.88750457763672,
+            "titleRight": 1243.6499786376953,
+            "closeLeft": 1384.2000732421875,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "tru__axis",
+            "left": 1096.800048828125,
+            "right": 1424.0000610351562,
+            "height": 145.52500915527344,
+            "titleRight": 1221.4499740600586,
+            "closeLeft": 1384.2000732421875,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "tru__base_top",
+            "left": 1096.800048828125,
+            "right": 1424.0000610351562,
+            "height": 126.88750457763672,
+            "titleRight": 1247.5999755859375,
+            "closeLeft": 1384.2000732421875,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          }
+        ],
+        "file": "responsive-1440-tru-thiet-dien-tron.png"
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "responsive 1440 non-thiet-dien-truc cards, labels and scrolling",
+      "evidence": {
+        "dimensions": {
+          "documentWidth": 1440,
+          "viewport": 1440,
+          "canvas": {
+            "width": 1080,
+            "height": 854
+          },
+          "touchAction": "none"
+        },
+        "cards": [
+          {
+            "id": "td",
+            "left": 1096.800048828125,
+            "right": 1424.0000610351562,
+            "height": 126.88750457763672,
+            "titleRight": 1226.7999801635742,
+            "closeLeft": 1384.2000732421875,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "S",
+            "left": 1096.800048828125,
+            "right": 1424.0000610351562,
+            "height": 126.88750457763672,
+            "titleRight": 1164.9749755859375,
+            "closeLeft": 1384.2000732421875,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "A",
+            "left": 1096.800048828125,
+            "right": 1424.0000610351562,
+            "height": 126.88750457763672,
+            "titleRight": 1170.274974822998,
+            "closeLeft": 1384.2000732421875,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "B",
+            "left": 1096.800048828125,
+            "right": 1424.0000610351562,
+            "height": 126.88750457763672,
+            "titleRight": 1169.4374771118164,
+            "closeLeft": 1384.2000732421875,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "O",
+            "left": 1096.800048828125,
+            "right": 1424.0000610351562,
+            "height": 126.88750457763672,
+            "titleRight": 1163.9499778747559,
+            "closeLeft": 1384.2000732421875,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "non__radius",
+            "left": 1096.800048828125,
+            "right": 1424.0000610351562,
+            "height": 126.88750457763672,
+            "titleRight": 1202.3249740600586,
+            "closeLeft": 1384.2000732421875,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "non__base_bot",
+            "left": 1096.800048828125,
+            "right": 1424.0000610351562,
+            "height": 126.88750457763672,
+            "titleRight": 1229.5999755859375,
+            "closeLeft": 1384.2000732421875,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          },
+          {
+            "id": "non__axis",
+            "left": 1096.800048828125,
+            "right": 1424.0000610351562,
+            "height": 145.52500915527344,
+            "titleRight": 1214.8249740600586,
+            "closeLeft": 1384.2000732421875,
+            "titleOverflow": 0,
+            "cardOverflow": 0
+          }
+        ],
+        "file": "responsive-1440-non-thiet-dien-truc.png"
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "desktop browser zoom 110 percent",
+      "evidence": {
+        "width": 1310,
+        "dpr": 1.0999999940395355,
+        "scrollWidth": 1310,
+        "method": "CDP effective CSS viewport and DPR equivalent; browser UI zoom itself NOT TESTED"
+      },
+      "status": "PASS"
+    }
+  ],
+  "summary": {
+    "stepMs": {
+      "n": 0,
+      "median": null,
+      "p95": null,
+      "p99": null,
+      "max": null
+    },
+    "frameMs": {
+      "n": 0,
+      "median": null,
+      "p95": null,
+      "p99": null,
+      "max": null
+    }
+  }
+}

@@ -235,3 +235,133 @@ class ClassroomSession(Base):
     active: Mapped[bool] = mapped_column(Boolean, default=True)
     started_at: Mapped[datetime] = mapped_column(DateTime, default=_now)
     updated_at: Mapped[datetime] = mapped_column(DateTime, default=_now)
+
+
+
+class LearningHistoryEntry(Base):
+    """Lịch sử tự học gắn với từng tài khoản (`user_id`).
+
+    Mỗi hàng là một phiên tự học đã mở (từ Thư viện hoặc từ đề nhập qua Composer).
+    Khoá định danh theo bài (`history_key`) kết hợp `user_id` đảm bảo mở lại cùng
+    một bài sẽ cập nhật `last_viewed_at`/`last_cursor` chứ không nhân bản bản ghi,
+    và dữ liệu của User A tách biệt tuyệt đối với User B.
+    """
+
+    __tablename__ = "learning_history_entries"
+    __table_args__ = (
+        UniqueConstraint("user_id", "history_key", name="uq_learning_history_per_user"),
+    )
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    user_id: Mapped[int] = mapped_column(ForeignKey("users.id"), index=True)
+    history_key: Mapped[str] = mapped_column(String(80), index=True)
+    sample_id: Mapped[str | None] = mapped_column(String(80), nullable=True)
+    title: Mapped[str] = mapped_column(String(240))
+    simulation_id: Mapped[str] = mapped_column(String(80))
+    domain: Mapped[str] = mapped_column(String(40), default="geometry")
+    envelope_json: Mapped[str] = mapped_column(Text)
+    original_input: Mapped[str | None] = mapped_column(Text, nullable=True)
+    last_cursor: Mapped[int] = mapped_column(Integer, default=0)
+    step_count: Mapped[int] = mapped_column(Integer, default=0)
+    visual_mode: Mapped[str] = mapped_column(String(8), default="3d")
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=_now)
+    updated_at: Mapped[datetime] = mapped_column(DateTime, default=_now)
+    last_viewed_at: Mapped[datetime] = mapped_column(DateTime, default=_now)
+
+
+class UserAccountMeta(Base):
+    """Siêu dữ liệu hồ sơ, trạng thái quản trị và hạn mức AI theo ngày của tài khoản (`users.id`)."""
+
+    __tablename__ = "user_account_meta"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    user_id: Mapped[int] = mapped_column(
+        ForeignKey("users.id"), unique=True, index=True
+    )
+    status: Mapped[str | None] = mapped_column(String(32), nullable=True)
+    school: Mapped[str] = mapped_column(String(200), default="")
+    grade: Mapped[str] = mapped_column(String(64), default="")
+    class_name: Mapped[str] = mapped_column(String(64), default="")
+    workplace: Mapped[str] = mapped_column(String(200), default="")
+    subject: Mapped[str] = mapped_column(
+        String(120), default="Toán Hình học không gian"
+    )
+    admin_note: Mapped[str] = mapped_column(Text, default="")
+    custom_daily_limit: Mapped[int | None] = mapped_column(Integer, nullable=True)
+    token_cap: Mapped[int | None] = mapped_column(Integer, nullable=True)
+    bonus_quota_today: Mapped[int] = mapped_column(Integer, default=0)
+    used_today: Mapped[int] = mapped_column(Integer, default=0)
+    usage_date: Mapped[str] = mapped_column(String(16), default="")
+    password_reset_requested_at: Mapped[str | None] = mapped_column(
+        String(64), nullable=True
+    )
+    updated_at: Mapped[datetime] = mapped_column(DateTime, default=_now)
+
+
+class AdminSystemSetting(Base):
+    """Cấu hình toàn hệ thống lưu bền vững trong SQLite qua các lần khởi động lại backend."""
+
+    __tablename__ = "admin_system_settings"
+
+    key: Mapped[str] = mapped_column(String(64), primary_key=True)
+    value_json: Mapped[str] = mapped_column(Text, default="{}")
+    updated_at: Mapped[datetime] = mapped_column(DateTime, default=_now)
+
+
+class AdminAuditLogEntry(Base):
+    """Nhật ký thao tác quản trị hệ thống lưu bền vững trong SQLite."""
+
+    __tablename__ = "admin_audit_logs"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    audit_key: Mapped[str] = mapped_column(String(64), index=True)
+    timestamp_display: Mapped[str] = mapped_column(String(64))
+    time_ts: Mapped[int] = mapped_column(Integer, index=True)
+    actor: Mapped[str] = mapped_column(String(200))
+    action: Mapped[str] = mapped_column(String(160))
+    target: Mapped[str] = mapped_column(String(200))
+    detail: Mapped[str] = mapped_column(Text, default="")
+    severity: Mapped[str] = mapped_column(String(32), default="info")
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=_now, index=True)
+
+
+class AnalysisUsageLedger(Base):
+    """One row per analysis ATTEMPT that limits access (guest trial or daily quota) — the usage ledger.
+
+    Separate from `AdminAnalysisTelemetry` (observational, best effort). The unique `(scope, attempt_key)` makes a
+    retry of the same attempt — after a lost response, a 502 or a process restart — reuse its row instead of charging
+    again. States: `reserved` (counted before the provider runs) → `charged` (served) | `released` (not served,
+    counter refunded). A row left `reserved` means the process stopped before finalising: the attempt stays counted.
+    """
+
+    __tablename__ = "analysis_usage_ledger"
+    __table_args__ = (UniqueConstraint("scope", "attempt_key", name="uq_analysis_usage_attempt"),)
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    scope: Mapped[str] = mapped_column(String(80))            # "user:<users.id>" | "guest:<auth_sessions.id>"
+    attempt_key: Mapped[str] = mapped_column(String(128))
+    state: Mapped[str] = mapped_column(String(16), index=True)
+    usage_date: Mapped[str] = mapped_column(String(16), default="")
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=_now)
+    updated_at: Mapped[datetime] = mapped_column(DateTime, default=_now)
+
+
+class AdminAnalysisTelemetry(Base):
+    """Số liệu vận hành thực tế của `/api/analyze` (không lưu prompt hay khóa bí mật)."""
+
+    __tablename__ = "admin_analysis_telemetry"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    user_id: Mapped[int | None] = mapped_column(Integer, nullable=True, index=True)
+    role: Mapped[str] = mapped_column(String(32), default="guest")
+    outcome: Mapped[str] = mapped_column(String(32), index=True)
+    cached: Mapped[bool] = mapped_column(Boolean, default=False)
+    model_id: Mapped[str] = mapped_column(String(120), default="")
+    latency_ms: Mapped[int] = mapped_column(Integer, default=0)
+    tokens_measured: Mapped[bool] = mapped_column(Boolean, default=False)
+    input_tokens: Mapped[int] = mapped_column(Integer, default=0)
+    output_tokens: Mapped[int] = mapped_column(Integer, default=0)
+    thoughts_tokens: Mapped[int] = mapped_column(Integer, default=0)
+    total_tokens: Mapped[int] = mapped_column(Integer, default=0)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=_now, index=True)
+

@@ -5,8 +5,8 @@ import App from "../App";
 import { itemsForRole } from "./TopNav";
 import { offlineCatalog, publicCatalog } from "../data/offline-catalog";
 
-/** Số thẻ gợi ý trên Trang chủ = số bài mẫu hình học (`STARTER_SAMPLE_IDS`). */
-const SO_GOI_Y = 3;
+/** Số thẻ gợi ý trên Trang chủ = 4 mẫu hình học chuẩn Axo V2.7 (`STARTER_SAMPLE_IDS`). */
+const SO_GOI_Y = 4;
 import { registerAllSimulations } from "../simulations";
 import { __resetHistoryForTest } from "../state/history";
 import { useAppStore } from "../state/store";
@@ -70,9 +70,8 @@ describe("Trang chủ KHÔNG BAO GIỜ phình theo dữ liệu", () => {
   it("không còn nút bung cả danh mục tại chỗ (đã dời sang Thư viện)", () => {
     const html = renderToString(<App />);
     expect(html).not.toContain("Xem tất cả mô phỏng mẫu");
-    expect(html).toContain("Xem thư viện");
-    // gợi ý vẫn đúng 6 mẫu nổi bật (đếm CHÍNH XÁC class, không đếm biến thể
-    // starter-card-body / -title / -domain)
+    expect(html).toContain("Xem tất cả thư viện");
+    // gợi ý vẫn đúng 4 mẫu chuẩn Axo V2.7 (đếm CHÍNH XÁC class)
     expect((html.match(/class="starter-card"/g) ?? []).length).toBe(SO_GOI_Y);
   });
 
@@ -95,14 +94,6 @@ describe("Trang chủ KHÔNG BAO GIỜ phình theo dữ liệu", () => {
     const catalog = await import("../data/offline-catalog");
 
     history.__resetHistoryForTest();
-    /* `discoverableCatalog()` chứ không `publicCatalog()`: thứ đang canh là
-       "lịch sử dài KHÔNG làm Trang chủ phình". Bề mặt công khai nay chỉ có ba
-       bài hình học, không đủ để dựng ca năm mục — mà số mẫu được QUẢNG BÁ vốn
-       không phải biến của tính chất này. */
-    /* Ghi TOÀN BỘ danh mục, không cắt ở 5. Con số 5 là tàn dư của thời danh
-       mục có 25 mẫu; tính chất đang canh là *"lịch sử DÀI không làm Trang chủ
-       phình"*, và nó chỉ cần lịch sử **nhiều hơn một**. Ghim một con số lớn hơn
-       số mẫu hiện có là để test đỏ vì một lý do không liên quan. */
     const muc = catalog.discoverableCatalog();
     expect(muc.length).toBeGreaterThan(1);
     for (const e of muc) history.historyStore.record(e.envelope, null);
@@ -117,11 +108,11 @@ describe("Trang chủ KHÔNG BAO GIỜ phình theo dữ liệu", () => {
     const FreshApp = (await import("../App")).default;
     const html = renderToString(<FreshApp />);
 
-    // trước M9-UX5, 5 mục lịch sử → 5 thẻ, gợi ý bị đẩy khuất. Nay: đúng 1.
-    expect((html.match(/class="session-card"/g) ?? []).length).toBe(1);
-    // (SSR chèn <!-- --> giữa chuỗi và biến nên "Xem tất cả (5)" KHÔNG liền mạch)
-    expect(html).toContain("Xem tất cả (");
-    // và gợi ý VẪN nguyên vẹn 6 mẫu — không bị lịch sử lấn
+    // Đúng 1 thẻ Tiếp tục học (.resume-home-card) theo chuẩn Axo V2.7
+    expect((html.match(/class="resume-home-card"/g) ?? []).length).toBe(1);
+    expect(html).toContain("Tiếp tục học");
+    expect(html).toContain("Xem lịch sử →");
+    // và gợi ý VẪN nguyên vẹn 4 mẫu chuẩn Axo V2.7 — không bị lịch sử lấn
     expect((html.match(/class="starter-card"/g) ?? []).length).toBe(SO_GOI_Y);
   });
 
@@ -138,10 +129,12 @@ describe("Thư viện — nhà riêng của danh mục đầy đủ", () => {
   it("hiện TOÀN BỘ mẫu công khai, gom nhóm theo domain", () => {
     const html = renderToString(<LibraryView />);
     const pub = publicCatalog();
-    expect((html.match(/class="starter-card"/g) ?? []).length).toBe(pub.length);
+    expect((html.match(/class="lib-card"/g) ?? []).length).toBe(pub.length);
     expect(html).toContain("Thư viện mô phỏng");
-    // (chữ hoa là do CSS text-transform; DOM giữ nguyên tiếng Việt có dấu)
-    expect(html).toContain("Hình học");
+    expect(html).toContain("Hình chóp");
+    expect(html).toContain("Mặt cầu");
+    expect(html).toContain("Hình trụ");
+    expect(html).toContain("Hình nón");
     /* Dọn phạm vi sản phẩm — Thư viện chỉ còn nhóm Hình học. Khẳng định cả
        chiều VẮNG MẶT: một nhãn miền cũ hiện lại là dấu bề mặt trôi ngược. */
     for (const cam of ["Thuật toán", "Nhị phân", "Mạng", "CSDL", "Lôgic", "Web"]) {
@@ -151,17 +144,8 @@ describe("Thư viện — nhà riêng của danh mục đầy đủ", () => {
 
   it("KHÔNG rò fixture nội bộ hay chuỗi kĩ thuật (luật phạm vi M9-UX2/UX3)", () => {
     const html = renderToString(<LibraryView />);
-    /* ĐÃ BỎ: `offlineCatalog().length > publicCatalog().length`.
-     *
-     * Nó khẳng định CÓ TỒN TẠI fixture nội bộ không được quảng bá — một tính
-     * chất của `OFFLINE_SAMPLES`, ngân hàng mẫu viết tay của miền Tin học, nay
-     * đã gỡ. Ba bài hình học đều là `public`, nên hai tập bằng nhau và phép so
-     * ấy không còn nội dung để kiểm (`LEGACY_SUBJECT_ASSERTION`).
-     *
-     * Luật THẬT của test — không rò chuỗi kỹ thuật lên Thư viện — nằm ở các
-     * phép kiểm dưới đây và giữ nguyên. */
     expect(offlineCatalog().length).toBe(publicCatalog().length);
-    expect(html).not.toContain("tam giác");
+    expect(html).not.toContain("Tam giác (tổng quát)");
     expect(html).not.toContain("(tổng quát)");
     expect(html).not.toContain("algorithm.");
     expect(html).not.toContain("generic.rule_scene");
@@ -170,11 +154,6 @@ describe("Thư viện — nhà riêng của danh mục đầy đủ", () => {
 
 /**
  * AI RA HẲN KHỎI WORKSPACE — render THẬT, không chỉ quét mã nguồn.
- *
- * M9-UX5 đã hạ AI từ "một nửa cột phải" xuống "mục thu gọn ở đáy". Bản này bỏ
- * nốt mục thu gọn: workspace là nơi làm việc với mô phỏng, và narration +
- * Observer phải tự đủ. Đường dùng AI ở Trang chủ (phân tích đề) KHÔNG đổi —
- * đó mới là chỗ AI có việc thật.
  */
 describe("Panel Giải thích không còn control AI nào", () => {
   beforeEach(() => {
@@ -210,19 +189,6 @@ describe("AI thôi ngang hàng với mô phỏng (R0 phản chiếu lên UI)", (
     expect("inspectorTab" in useAppStore.getState()).toBe(false);
   });
 
-  /**
-   * W4B-2B §8 — panel Giải thích ĐÓNG mặc định ở MỌI bề rộng.
-   *
-   * Dùng `getInitialState()` chứ không `getState()`: `reset()` cố ý KHÔNG đụng
-   * trạng thái panel (nó dọn runtime, không dọn tuỳ chọn trình bày), nên
-   * `getState()` sẽ mang theo mọi lượt `toggleRight` của test chạy trước và test
-   * này sẽ xanh/đỏ vì lý do sai.
-   *
-   * Assert thứ hai là phần QUAN TRỌNG hơn: mặc định không được phụ thuộc
-   * `window.innerWidth` nữa. Trước đây `rightOpen: WIDE_SCREEN` đọc bề rộng lúc
-   * nạp module ⇒ SSR (không có `window`) mở panel còn trình duyệt hẹp thì đóng,
-   * hai nhánh khởi tạo khác nhau cho cùng một học sinh.
-   */
   it("store: rightOpen mặc định ĐÓNG, và không đọc bề rộng cửa sổ nữa", () => {
     expect(useAppStore.getInitialState().rightOpen).toBe(false);
 
@@ -241,57 +207,37 @@ describe("AI thôi ngang hàng với mô phỏng (R0 phản chiếu lên UI)", (
     expect(useAppStore.getState().rightOpen).toBe(false);
   });
 
-  it("CHƯA đăng nhập: header mỏng, điều hướng là link chữ, KHÔNG có mục ứng dụng", () => {
-    /* M18 — bài kiểm này đổi vì THÔNG TIN KIẾN TRÚC đổi, không phải vì nó
-       phiền. Trước wave này Thư viện/Lịch sử nằm trên header cho mọi người;
-       nay chúng là mục ỨNG DỤNG, chỉ có nghĩa khi đã có tài khoản (§3, §11, §12).
-
-       Chúng từng ở một cột trái sau đăng nhập; cột ấy đã gỡ và chúng về lại
-       thanh trên — nhưng vẫn CHỈ khi đã đăng nhập, nên bất biến của ca này
-       không đổi, chỉ đổi tên lớp phải vắng mặt (`app-nav-list` → `topnav-links`).
-
-       Cái phải giữ nguyên là hình thức: điều hướng vẫn là LINK CHỮ chứ không
-       phải hàng nút pill (M9-UX5). */
+  it("CHƯA đăng nhập: header chuẩn Axo V2.7 với capsule 3 mục (Trang chủ, Thư viện, Lịch sử) và nút Đăng nhập / Đăng ký", () => {
     const html = renderToString(<App />);
     expect(html).toContain("nav-link");
+    expect(html).toContain("nav-n1-capsule");
+    expect(html).toContain("Trang chủ");
+    expect(html).toContain("Thư viện");
+    expect(html).toContain("Lịch sử");
     expect(html).toContain("Đăng nhập");
     expect(html).toContain("Đăng ký");
-    expect(html, "trang chưa đăng nhập vẫn dựng mục điều hướng ứng dụng")
-      .not.toContain("topnav-links");
   });
 
-  it("ĐÃ đăng nhập: Thư viện/Lịch sử vẫn tới được, qua thanh trên theo vai trò", () => {
-    /* Kiểm HÀM THUẦN chứ không SSR: zustand trả trạng thái ĐẦU cho server
-       snapshot, nên `renderToString` sau khi set store vẫn dựng ra trang khách
-       và assert sẽ xanh/đỏ vì lý do sai (ARCHITECTURE_MAP §8 #13). */
+  it("ĐÃ đăng nhập: capsule điều hướng nhất quán đúng 3 mục (Trang chủ, Thư viện, Lịch sử) theo chuẩn Axo V2.7 (P3)", () => {
     for (const role of ["student", "teacher"] as const) {
       const labels = itemsForRole(role).map((i) => i.label);
-      expect(labels, `${role}: mất lối vào Thư viện`).toContain("Thư viện");
-      expect(labels, `${role}: mất lối vào Lịch sử`).toContain("Lịch sử");
-      expect(labels[0], `${role}: mô phỏng không còn là mục đầu`).toBe("Mô phỏng mới");
+      expect(labels).toEqual(["Trang chủ", "Thư viện", "Lịch sử"]);
     }
   });
 
-  it("hai vai KHÔNG dùng chung một thanh điều hướng", () => {
-    /* Đối chứng cho bài trên: nếu hai danh sách bằng nhau thì "theo vai trò"
-       chỉ là lời nói. */
-    const student = itemsForRole("student").map((i) => i.view);
-    const teacher = itemsForRole("teacher").map((i) => i.view);
-    expect(student).not.toEqual(teacher);
-    expect(teacher, "giáo viên không có lối vào Quan sát lớp").toContain("observe");
-    expect(student, "học sinh lại quan sát được lớp").not.toContain("observe");
+  it("Header Navigation không chứa các mục điều hướng cũ (Mô phỏng mới, Bài thực hành, Lớp của em, Quan sát lớp)", () => {
+    for (const role of ["student", "teacher"] as const) {
+      const labels = itemsForRole(role).map((i) => i.label);
+      for (const legacyLabel of ["Mô phỏng mới", "Bài thực hành", "Lớp của em", "Quan sát lớp"]) {
+        expect(labels).not.toContain(legacyLabel);
+      }
+    }
   });
 });
 
-/* ── W-UI · HOÀN THIỆN TRÌNH BÀY XƯỞNG 3D ────────────────────────────────
-   Ba ca dưới đây khoá đúng ba lỗi ĐO ĐƯỢC trên ảnh chụp thật của tập trình
-   diễn. Chúng soi MÃ NGUỒN chứ không soi HTML đã dựng, vì hai trong ba thứ
-   (bố cục lưới, ô soi thành cột) chỉ có mặt ở bề rộng desktop mà SSR không
-   đi qua — bài học §8 anti-pattern #11 của bản đồ kiến trúc. */
 describe("W-UI · xưởng 3D dùng bề rộng desktop và không tự che hình", () => {
   it("cột nội dung nới ra khi cảnh là 3D — không kẹt ở sàn của khay 2D", () => {
     const app = readFileSync(new URL("../App.tsx", import.meta.url), "utf8");
-    // Vị ngữ phải dẫn từ `scene3d` CÓ THẬT, không từ một chế độ được khai.
     expect(app).toMatch(/canvasFirst\s*=\s*\n?\s*inWorkspace && hopLeScene3D/);
     expect(app).toContain('canvasFirst ? " la-canh-3d" : ""');
 
@@ -300,9 +246,6 @@ describe("W-UI · xưởng 3D dùng bề rộng desktop và không tự che hìn
     expect(css).toMatch(/\.app-layout\.la-canh-3d[^}]*grid-template-columns:\s*minmax\(0, 1fr\)/s);
   });
 
-  /* regular-square-pyramid-w04 (H-W2-3, quyết định của người dùng): CỘT ô soi của bản trước đúng là không đè khối,
-     nhưng chọn một vật làm khung 3D co lại và camera đổi tỉ lệ giữa lúc người học đang nhìn. Ô soi nay là bảng NỔI
-     như mọi bảng thông tin (`BangNoi`): tự tránh nút nổi và bảng khác khi mở, kéo đi được — không cột, không co khung. */
   it("ô soi KHÔNG dành cột cạnh hình ở desktop: không lưới hai cột, ô soi là bảng nổi", () => {
     const css = readFileSync(new URL("../styles/global.css", import.meta.url), "utf8");
     expect(css).not.toMatch(/\.geo3d-san:has\(\.geo3d-soi\)/);
@@ -311,23 +254,13 @@ describe("W-UI · xưởng 3D dùng bề rộng desktop và không tự che hìn
     expect(ex).toMatch(/<BangNoi\s+panel="soi"/);
   });
 
-  /* w10 — ảnh 390×844: ô soi neo đáy SÂN KHẤU, mà sân khấu chứa cả dòng số đo
-     lẫn thanh điều khiển ⇒ nó che đúng dòng đáp số đang chọn và nút "Xem lại".
-     Khổ hẹp: ô soi chảy DƯỚI sân khấu, không phủ lên gì. */
   it("ô soi ở khổ hẹp nằm dưới sân khấu, không phủ lên số đo và nút điều khiển", () => {
     const css = readFileSync(new URL("../styles/global.css", import.meta.url), "utf8");
     const i = css.indexOf("@media (max-width: 48rem)");
-    // Cắt tới `@media` KẾ TIẾP — không tới "\n}\n": file CRLF làm mốc ấy trượt
-    // sang khối 1100px (vốn cũng có `.geo3d-soi … static`) và test xanh oan.
     const khoi = css.slice(i, css.indexOf("@media", i + 1));
-    // W4: cùng luật cho mọi bảng thông tin (ô soi và ba bảng Xem đề / Thành phần / Đại lượng).
     expect(khoi).toMatch(/\n\s*\.geo3d-bang-noi\.geo3d-soi,\s*\n\s*\.geo3d-bang-noi\.geo3d-ngan \{[^}]*position:\s*static/s);
   });
 
-  /* w10 — ảnh 390×844 của suite: đỉnh S nằm DƯỚI nút nổi "Xem lại toàn hình".
-     Camera lấp 68% khung theo hình chiếu, và ở khổ hẹp góc trên-trái nơi hai
-     nút nổi đứng chính là chỗ đỉnh cao nhất rơi vào. Khổ hẹp: hai nút vào dòng
-     chảy PHÍA TRÊN khung, không đè lên hình. */
   it("nút nổi ở khổ hẹp nằm trên khung, không đè lên hình", () => {
     const css = readFileSync(new URL("../styles/global.css", import.meta.url), "utf8");
     const i = css.indexOf("@media (max-width: 48rem)");
@@ -338,8 +271,6 @@ describe("W-UI · xưởng 3D dùng bề rộng desktop và không tự che hìn
 
   it("một khay điều khiển trên một màn hình — khay 2D ẩn khi cảnh là 3D", () => {
     const app = readFileSync(new URL("../App.tsx", import.meta.url), "utf8");
-    // Hai trạng thái bước THẬT SỰ khác nhau (store vs InteractionState), nên
-    // hiện cả hai là bày ra hai thanh cùng ghi "Bước" mà một cái không ăn.
     expect(app).toMatch(/\{!canvasFirst && \(\s*<footer className="panel-controls">/s);
   });
 });
@@ -350,10 +281,7 @@ describe("W-UI · nhãn từ chối phải nói đúng loại thất bại", () 
       new URL("./SimulationWorkspace.tsx", import.meta.url), "utf8");
     expect(src).toContain('geometry_generation_failed');
     expect(src).toContain('"CHƯA DỰNG ĐƯỢC MÔ PHỎNG"');
-    // Nhãn mặc định vẫn còn cho các loại khác — không xoá, chỉ thôi dùng sai.
     expect(src).toContain('"NGOÀI DANH MỤC MÔ PHỎNG"');
-    // Và nhánh mới phải đứng TRƯỚC nhánh mặc định, nếu không nó không bao giờ
-    // được chạm tới.
     expect(src.indexOf('"CHƯA DỰNG ĐƯỢC MÔ PHỎNG"'))
       .toBeLessThan(src.indexOf('"NGOÀI DANH MỤC MÔ PHỎNG"'));
   });

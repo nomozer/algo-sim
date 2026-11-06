@@ -22,6 +22,14 @@ from app.persistence.db import init_db
 
 client = TestClient(main_module.app)
 
+
+@pytest.fixture(autouse=True)
+def _signed_in():
+    """Image extraction runs nothing without a server-issued session (`session_required`)."""
+    from tests.route_client import sign_in
+    client.cookies.clear()
+    sign_in(client)
+
 DE = "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với đáy và SA = 3. Tính thể tích khối chóp."
 TRUONG_PROVENANCE = {"vision_model_identity", "vision_prompt_version", "vision_schema_version",
                      "semantic_prompt_version", "cache_version"}
@@ -104,8 +112,10 @@ def test_khach_het_luot_thu_KHONG_goi_duoc_provider_doc_anh(monkeypatch):
     token = khach.cookies.get("algosim_session")
     assert token, "chưa cấp cookie phiên"
     with main_module.SessionLocal() as s:
+        from app.accounts import service as accounts_service
+        auth = accounts_service.load_session(s, token)
         for _ in range(GUEST_TRIAL_LIMIT):
-            main_module._consume_guest_trial(s, token)
+            accounts_service.consume_guest_trial(s, auth)
         s.commit()
     r = khach.post("/api/image/extract", json={"content": _b64(), "mime_type": "image/png"})
     assert r.status_code == 402

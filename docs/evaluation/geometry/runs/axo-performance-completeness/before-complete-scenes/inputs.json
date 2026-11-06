@@ -1,0 +1,971 @@
+[
+  {
+    "id": "cube-hexagon",
+    "description": "Cho hình lập phương PQRS.P′Q′R′S′ cạnh 2. Gọi U, V, W lần lượt là trung điểm của PQ, QR, RR′. Dựng thiết diện của hình lập phương bởi mặt phẳng (UVW).",
+    "scene3d": {
+      "chart_metric": [
+        [
+          "1",
+          "0",
+          "0"
+        ],
+        [
+          "0",
+          "1",
+          "0"
+        ],
+        [
+          "0",
+          "0",
+          "1"
+        ]
+      ],
+      "free_objects": [
+        "P",
+        "Q",
+        "R",
+        "S",
+        "P_p",
+        "Q_p",
+        "R_p",
+        "S_p"
+      ],
+      "objects": [
+        {
+          "id": "P",
+          "type": "point3",
+          "label": "P",
+          "notation": "P",
+          "origin": "free",
+          "render": "point_marker",
+          "depends": [],
+          "xyz": [
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        {
+          "id": "Q",
+          "type": "point3",
+          "label": "Q",
+          "notation": "Q",
+          "origin": "free",
+          "render": "point_marker",
+          "depends": [],
+          "xyz": [
+            "2",
+            "0",
+            "0"
+          ]
+        },
+        {
+          "id": "R",
+          "type": "point3",
+          "label": "R",
+          "notation": "R",
+          "origin": "free",
+          "render": "point_marker",
+          "depends": [],
+          "xyz": [
+            "2",
+            "2",
+            "0"
+          ]
+        },
+        {
+          "id": "S",
+          "type": "point3",
+          "label": "S",
+          "notation": "S",
+          "origin": "free",
+          "render": "point_marker",
+          "depends": [],
+          "xyz": [
+            "0",
+            "2",
+            "0"
+          ]
+        },
+        {
+          "id": "P_p",
+          "type": "point3",
+          "label": "P′",
+          "notation": "P′",
+          "origin": "free",
+          "render": "point_marker",
+          "depends": [],
+          "xyz": [
+            "0",
+            "0",
+            "2"
+          ]
+        },
+        {
+          "id": "Q_p",
+          "type": "point3",
+          "label": "Q′",
+          "notation": "Q′",
+          "origin": "free",
+          "render": "point_marker",
+          "depends": [],
+          "xyz": [
+            "2",
+            "0",
+            "2"
+          ]
+        },
+        {
+          "id": "R_p",
+          "type": "point3",
+          "label": "R′",
+          "notation": "R′",
+          "origin": "free",
+          "render": "point_marker",
+          "depends": [],
+          "xyz": [
+            "2",
+            "2",
+            "2"
+          ]
+        },
+        {
+          "id": "S_p",
+          "type": "point3",
+          "label": "S′",
+          "notation": "S′",
+          "origin": "free",
+          "render": "point_marker",
+          "depends": [],
+          "xyz": [
+            "0",
+            "2",
+            "2"
+          ]
+        },
+        {
+          "id": "day_PQRS",
+          "type": "polygon3",
+          "label": "Đáy PQRS",
+          "notation": "PQRS",
+          "origin": "derived",
+          "render": "polygon",
+          "surface_role": "BASE_REGION",
+          "formation_roles": [
+            "CONSTRUCT_BASE"
+          ],
+          "depends": [
+            "P",
+            "Q",
+            "R",
+            "S"
+          ],
+          "vertex_ids": [
+            "P",
+            "Q",
+            "R",
+            "S"
+          ],
+          "vertices": [
+            [
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "2",
+              "0",
+              "0"
+            ],
+            [
+              "2",
+              "2",
+              "0"
+            ],
+            [
+              "0",
+              "2",
+              "0"
+            ]
+          ]
+        },
+        {
+          "id": "khoi_hop",
+          "type": "solid",
+          "shape_class": "BOX_LIKE",
+          "label": "Hình lập phương PQRS.P′Q′R′S′",
+          "notation": "PQRS.P′Q′R′S′",
+          "origin": "derived",
+          "render": "mesh",
+          "formation_roles": [
+            "CLOSE_SOLID"
+          ],
+          "depends": [
+            "P",
+            "Q",
+            "R",
+            "S",
+            "P_p",
+            "Q_p",
+            "R_p",
+            "S_p"
+          ],
+          "vertex_ids": [
+            "P",
+            "Q",
+            "R",
+            "S",
+            "P_p",
+            "Q_p",
+            "R_p",
+            "S_p"
+          ],
+          "vertices": [
+            [
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "2",
+              "0",
+              "0"
+            ],
+            [
+              "2",
+              "2",
+              "0"
+            ],
+            [
+              "0",
+              "2",
+              "0"
+            ],
+            [
+              "0",
+              "0",
+              "2"
+            ],
+            [
+              "2",
+              "0",
+              "2"
+            ],
+            [
+              "2",
+              "2",
+              "2"
+            ],
+            [
+              "0",
+              "2",
+              "2"
+            ]
+          ],
+          "faces": [
+            [
+              0,
+              1,
+              2,
+              3
+            ],
+            [
+              4,
+              5,
+              6,
+              7
+            ],
+            [
+              0,
+              1,
+              5,
+              4
+            ],
+            [
+              1,
+              2,
+              6,
+              5
+            ],
+            [
+              2,
+              3,
+              7,
+              6
+            ],
+            [
+              3,
+              0,
+              4,
+              7
+            ]
+          ]
+        },
+        {
+          "id": "U_pt",
+          "type": "point3",
+          "label": "U",
+          "notation": "U",
+          "origin": "derived",
+          "producer": "midpoint",
+          "render": "point_marker",
+          "depends": [
+            "P",
+            "Q"
+          ],
+          "xyz": [
+            "1",
+            "0",
+            "0"
+          ]
+        },
+        {
+          "id": "V_pt",
+          "type": "point3",
+          "label": "V",
+          "notation": "V",
+          "origin": "derived",
+          "producer": "midpoint",
+          "render": "point_marker",
+          "depends": [
+            "Q",
+            "R"
+          ],
+          "xyz": [
+            "2",
+            "1",
+            "0"
+          ]
+        },
+        {
+          "id": "W_pt",
+          "type": "point3",
+          "label": "W",
+          "notation": "W",
+          "origin": "derived",
+          "producer": "midpoint",
+          "render": "point_marker",
+          "depends": [
+            "R",
+            "R_p"
+          ],
+          "xyz": [
+            "2",
+            "2",
+            "1"
+          ]
+        },
+        {
+          "id": "mp_UVW",
+          "type": "plane3",
+          "label": "Mặt phẳng (UVW)",
+          "notation": "(UVW)",
+          "origin": "derived",
+          "producer": "construct_plane",
+          "render": "surface",
+          "formation_roles": [
+            "CONSTRUCT_CUTTING_OBJECT"
+          ],
+          "depends": [
+            "U_pt",
+            "V_pt",
+            "W_pt"
+          ],
+          "point": [
+            "1",
+            "0",
+            "0"
+          ],
+          "normal": [
+            "1",
+            "-1",
+            "1"
+          ]
+        },
+        {
+          "id": "X_pt",
+          "type": "point3",
+          "label": "X",
+          "notation": "X",
+          "origin": "derived",
+          "producer": "midpoint",
+          "render": "point_marker",
+          "depends": [
+            "R_p",
+            "S_p"
+          ],
+          "xyz": [
+            "1",
+            "2",
+            "2"
+          ]
+        },
+        {
+          "id": "Y_pt",
+          "type": "point3",
+          "label": "Y",
+          "notation": "Y",
+          "origin": "derived",
+          "producer": "midpoint",
+          "render": "point_marker",
+          "depends": [
+            "P_p",
+            "S_p"
+          ],
+          "xyz": [
+            "0",
+            "1",
+            "2"
+          ]
+        },
+        {
+          "id": "Z_pt",
+          "type": "point3",
+          "label": "Z",
+          "notation": "Z",
+          "origin": "derived",
+          "producer": "midpoint",
+          "render": "point_marker",
+          "depends": [
+            "P",
+            "P_p"
+          ],
+          "xyz": [
+            "0",
+            "0",
+            "1"
+          ]
+        },
+        {
+          "id": "td_hex",
+          "type": "section",
+          "label": "Thiết diện lục giác UVWXYZ",
+          "notation": "UVWXYZ",
+          "origin": "derived",
+          "producer": "plane_solid_section",
+          "render": "polygon",
+          "surface_role": "SECTION_REGION",
+          "depends": [
+            "khoi_hop",
+            "mp_UVW"
+          ],
+          "vertex_ids": [
+            "U_pt",
+            "V_pt",
+            "W_pt",
+            "X_pt",
+            "Y_pt",
+            "Z_pt"
+          ],
+          "polygon": [
+            [
+              "1",
+              "0",
+              "0"
+            ],
+            [
+              "2",
+              "1",
+              "0"
+            ],
+            [
+              "2",
+              "2",
+              "1"
+            ],
+            [
+              "1",
+              "2",
+              "2"
+            ],
+            [
+              "0",
+              "1",
+              "2"
+            ],
+            [
+              "0",
+              "0",
+              "1"
+            ]
+          ]
+        }
+      ],
+      "events": [
+        {
+          "step_index": 0,
+          "action": "INIT",
+          "object": null,
+          "depends": [],
+          "explanation": "Init"
+        },
+        {
+          "step_index": 1,
+          "action": "CREATE",
+          "object": "day_PQRS",
+          "depends": [
+            "P",
+            "Q",
+            "R",
+            "S"
+          ],
+          "explanation": "Đáy PQRS"
+        },
+        {
+          "step_index": 2,
+          "action": "CREATE",
+          "object": "khoi_hop",
+          "depends": [
+            "P",
+            "Q",
+            "R",
+            "S",
+            "P_p",
+            "Q_p",
+            "R_p",
+            "S_p"
+          ],
+          "explanation": "Khối lập phương"
+        },
+        {
+          "step_index": 3,
+          "action": "CREATE",
+          "object": "U_pt",
+          "depends": [
+            "P",
+            "Q"
+          ],
+          "explanation": "U"
+        },
+        {
+          "step_index": 4,
+          "action": "CREATE",
+          "object": "V_pt",
+          "depends": [
+            "Q",
+            "R"
+          ],
+          "explanation": "V"
+        },
+        {
+          "step_index": 5,
+          "action": "CREATE",
+          "object": "W_pt",
+          "depends": [
+            "R",
+            "R_p"
+          ],
+          "explanation": "W"
+        },
+        {
+          "step_index": 6,
+          "action": "CREATE",
+          "object": "mp_UVW",
+          "depends": [
+            "U_pt",
+            "V_pt",
+            "W_pt"
+          ],
+          "explanation": "(UVW)"
+        },
+        {
+          "step_index": 7,
+          "action": "CREATE",
+          "object": "X_pt",
+          "depends": [
+            "R_p",
+            "S_p"
+          ],
+          "explanation": "X"
+        },
+        {
+          "step_index": 8,
+          "action": "CREATE",
+          "object": "Y_pt",
+          "depends": [
+            "P_p",
+            "S_p"
+          ],
+          "explanation": "Y"
+        },
+        {
+          "step_index": 9,
+          "action": "CREATE",
+          "object": "Z_pt",
+          "depends": [
+            "P",
+            "P_p"
+          ],
+          "explanation": "Z"
+        },
+        {
+          "step_index": 10,
+          "action": "CREATE",
+          "object": "td_hex",
+          "depends": [
+            "khoi_hop",
+            "mp_UVW"
+          ],
+          "explanation": "Thiết diện UVWXYZ"
+        }
+      ]
+    }
+  },
+  {
+    "id": "oblique-prism",
+    "description": "Dựng lăng trụ xiên ABC.A′B′C′ với đáy ABC và đường cao A′H vuông góc với (ABC), H thuộc đáy. Phân biệt đường cao với cạnh bên AA′.",
+    "scene3d": {
+      "chart_metric": [
+        [
+          "1",
+          "0",
+          "0"
+        ],
+        [
+          "0",
+          "1",
+          "0"
+        ],
+        [
+          "0",
+          "0",
+          "1"
+        ]
+      ],
+      "free_objects": [
+        "A",
+        "B",
+        "C",
+        "H",
+        "Ap",
+        "Bp",
+        "Cp"
+      ],
+      "objects": [
+        {
+          "id": "A",
+          "type": "point3",
+          "label": "A",
+          "notation": "A",
+          "origin": "free",
+          "render": "point_marker",
+          "depends": [],
+          "xyz": [
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        {
+          "id": "B",
+          "type": "point3",
+          "label": "B",
+          "notation": "B",
+          "origin": "free",
+          "render": "point_marker",
+          "depends": [],
+          "xyz": [
+            "4",
+            "0",
+            "0"
+          ]
+        },
+        {
+          "id": "C",
+          "type": "point3",
+          "label": "C",
+          "notation": "C",
+          "origin": "free",
+          "render": "point_marker",
+          "depends": [],
+          "xyz": [
+            "0",
+            "4",
+            "0"
+          ]
+        },
+        {
+          "id": "H",
+          "type": "point3",
+          "label": "H",
+          "notation": "H",
+          "origin": "free",
+          "render": "point_marker",
+          "depends": [],
+          "xyz": [
+            "1",
+            "1",
+            "0"
+          ]
+        },
+        {
+          "id": "Ap",
+          "type": "point3",
+          "label": "A′",
+          "notation": "A′",
+          "origin": "free",
+          "render": "point_marker",
+          "depends": [],
+          "xyz": [
+            "1",
+            "1",
+            "4"
+          ]
+        },
+        {
+          "id": "Bp",
+          "type": "point3",
+          "label": "B′",
+          "notation": "B′",
+          "origin": "free",
+          "render": "point_marker",
+          "depends": [],
+          "xyz": [
+            "5",
+            "1",
+            "4"
+          ]
+        },
+        {
+          "id": "Cp",
+          "type": "point3",
+          "label": "C′",
+          "notation": "C′",
+          "origin": "free",
+          "render": "point_marker",
+          "depends": [],
+          "xyz": [
+            "1",
+            "5",
+            "4"
+          ]
+        },
+        {
+          "id": "base_ABC",
+          "type": "polygon3",
+          "label": "Đáy ABC",
+          "notation": "ABC",
+          "origin": "derived",
+          "render": "polygon",
+          "surface_role": "BASE_REGION",
+          "formation_roles": [
+            "CONSTRUCT_BASE"
+          ],
+          "depends": [
+            "A",
+            "B",
+            "C"
+          ],
+          "vertex_ids": [
+            "A",
+            "B",
+            "C"
+          ],
+          "vertices": [
+            [
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "4",
+              "0",
+              "0"
+            ],
+            [
+              "0",
+              "4",
+              "0"
+            ]
+          ]
+        },
+        {
+          "id": "alt_ApH",
+          "type": "segment3",
+          "label": "Đường cao A′H",
+          "notation": "A′H",
+          "origin": "derived",
+          "render": "segment",
+          "formation_roles": [
+            "CONSTRUCT_HEIGHT"
+          ],
+          "depends": [
+            "Ap",
+            "H"
+          ],
+          "endpoint_ids": [
+            "Ap",
+            "H"
+          ],
+          "point_a": [
+            "1",
+            "1",
+            "4"
+          ],
+          "point_b": [
+            "1",
+            "1",
+            "0"
+          ],
+          "perpendicular_witness": {
+            "from": "Ap",
+            "foot": [
+              "1",
+              "1",
+              "0"
+            ],
+            "foot_id": "H",
+            "on": "base_ABC",
+            "relation": "line_perpendicular_plane",
+            "marker": {
+              "u": [
+                "1",
+                "0",
+                "0"
+              ],
+              "v": [
+                "0",
+                "0",
+                "1"
+              ]
+            }
+          }
+        },
+        {
+          "id": "oblique_prism",
+          "type": "solid",
+          "shape_class": "PRISM_LIKE",
+          "label": "Hình lăng trụ xiên ABC.A′B′C′",
+          "notation": "ABC.A′B′C′",
+          "origin": "derived",
+          "render": "mesh",
+          "formation_roles": [
+            "CLOSE_SOLID"
+          ],
+          "depends": [
+            "A",
+            "B",
+            "C",
+            "Ap",
+            "Bp",
+            "Cp"
+          ],
+          "vertex_ids": [
+            "A",
+            "B",
+            "C",
+            "Ap",
+            "Bp",
+            "Cp"
+          ],
+          "vertices": [
+            [
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "4",
+              "0",
+              "0"
+            ],
+            [
+              "0",
+              "4",
+              "0"
+            ],
+            [
+              "1",
+              "1",
+              "4"
+            ],
+            [
+              "5",
+              "1",
+              "4"
+            ],
+            [
+              "1",
+              "5",
+              "4"
+            ]
+          ],
+          "faces": [
+            [
+              0,
+              1,
+              2
+            ],
+            [
+              3,
+              4,
+              5
+            ],
+            [
+              0,
+              1,
+              4,
+              3
+            ],
+            [
+              1,
+              2,
+              5,
+              4
+            ],
+            [
+              2,
+              0,
+              3,
+              5
+            ]
+          ]
+        }
+      ],
+      "events": [
+        {
+          "step_index": 0,
+          "action": "INIT",
+          "object": null,
+          "depends": [],
+          "explanation": "Khởi tạo."
+        },
+        {
+          "step_index": 1,
+          "action": "CREATE",
+          "object": "base_ABC",
+          "depends": [
+            "A",
+            "B",
+            "C"
+          ],
+          "explanation": "Dựng đáy ABC."
+        },
+        {
+          "step_index": 2,
+          "action": "CREATE",
+          "object": "alt_ApH",
+          "depends": [
+            "Ap",
+            "H"
+          ],
+          "explanation": "Hạ đường cao A′H ⊥ (ABC)."
+        },
+        {
+          "step_index": 3,
+          "action": "CREATE",
+          "object": "oblique_prism",
+          "depends": [
+            "A",
+            "B",
+            "C",
+            "Ap",
+            "Bp",
+            "Cp"
+          ],
+          "explanation": "Khép hình lăng trụ xiên."
+        }
+      ]
+    }
+  }
+]

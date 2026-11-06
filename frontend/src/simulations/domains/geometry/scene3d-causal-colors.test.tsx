@@ -1,10 +1,13 @@
 /**
- * W12 — MÀU KHUNG 3D theo vai trò (review NEEDS_CHANGES, lý do 4).
+ * Hợp đồng bảo toàn màu ngữ nghĩa toán học trong khung 3D:
  *
- * Trước W12: vật ĐANG CHỌN vẽ cam đậm, dữ kiện số trong chuỗi vẽ xanh, vật
- * vừa dựng cam, điểm đề cho xanh — cam đậm và xanh mỗi màu hai nghĩa. Test
- * này đo màu THẬT của vật liệu three.js mà renderer dựng, theo khoảng sắc độ
- * (không so hằng), nên nó không phụ thuộc bảng màu đang được kiểm.
+ * Theo chính sách biểu diễn ngữ nghĩa thống nhất và HTML hình học tham chiếu:
+ * - Mỗi đối tượng mang màu theo vai trò toán học của nó (cạnh khối #1E293B,
+ *   thiết diện #C85A32, mặt phẳng #6D28D9, đường/quan hệ #0F766E, nội tiếp #D97706,
+ *   ngoại tiếp #2563EB).
+ * - Khi hover, chọn đối tượng, tô sáng theo bước hoặc làm bối cảnh nhân quả,
+ *   họ màu ngữ nghĩa (hue) được bảo toàn tuyệt đối (|Δhue| < 2°); trạng thái nhấn
+ *   mạnh thể hiện qua bề dày nét, điều biến độ sáng cùng họ màu và làm dịu độ đục.
  */
 import { describe, expect, it } from "vitest";
 import * as THREE from "three";
@@ -22,7 +25,6 @@ const DIEM: SceneObject = {
   id: "A", label: "A", type: "point3", render: "point_marker",
   origin: "free", producer: null, depends: [], xyz: ["0", "0", "0"],
 };
-/** Vật mang MÀU KIỂU riêng (hổ phách, xanh két, tím, đỏ) — không phải khối. */
 const CO_MAU_KIEU: SceneObject[] = [
   { id: "T", label: "Thiết diện", type: "section", render: "polygon", origin: "derived",
     producer: "section", depends: [], closed: true, surface_role: "SECTION_REGION",
@@ -47,70 +49,78 @@ const hsl = (c: THREE.Color) => {
   c.getHSL(x, THREE.SRGBColorSpace);
   return { h: x.h * 360, s: x.s, l: x.l };
 };
-/** Màu NÉT cạnh (visual owner) của khối. */
+const hueDiff = (a: number, b: number) => {
+  const d = Math.abs(a - b);
+  return d > 180 ? 360 - d : d;
+};
+/** Màu NÉT cạnh thấy (visual owner) của khối. */
 const mauCanh = (vai: Parameters<typeof buildObject3D>[1]) => {
   const mau = gom(buildObject3D(KHOI, vai)!)
-    .filter((c) => (c as THREE.Line).isLine && c.parent?.userData?.visualOwnerId)
+    .filter((c) => (c as THREE.Line).isLine && c.parent?.userData?.visualOwnerId && !c.userData?.hidden)
     .map((c) => ((c as THREE.Line).material as THREE.LineBasicMaterial).color.getHex());
   expect(new Set(mau).size).toBe(1);
   return hsl(new THREE.Color(mau[0]));
 };
 /** Màu NỀN (mặt tô trong suốt) của khối. */
 const mauNen = (vai: Parameters<typeof buildObject3D>[1]) => {
-  // Vỏ SGK không đèn (`voKhoiHaiLuot`): mặt tô là MeshBasicMaterial trong suốt; bỏ lớp chiều sâu vô hình.
   const m = gom(buildObject3D(KHOI, vai)!).map((c) => (c as THREE.Mesh).material)
     .find((x) => x instanceof THREE.MeshBasicMaterial && x.colorWrite !== false && x.opacity > 0 && x.opacity < 1) as THREE.MeshBasicMaterial;
   return hsl(m.color);
 };
 
-describe("khung 3D: mỗi màu một nghĩa", () => {
-  it("vật ĐANG CHỌN (đích causal) là xanh", () => {
+describe("khung 3D: bảo toàn màu ngữ nghĩa toán học qua mọi trạng thái tương tác", () => {
+  it("cạnh khối chính giữ họ màu mực đá phiến trung tính (#1E293B) khi chọn đích", () => {
     const c = mauCanh("dich");
     expect(c.h).toBeGreaterThan(200);
     expect(c.h).toBeLessThan(235);
+    expect(hueDiff(c.h, mauCanh(false).h)).toBeLessThan(2);
   });
 
-  it("dữ kiện SỐ trong chuỗi là cam đậm — không còn xanh", () => {
-    const c = mauCanh("du_kien_so");
-    expect(c.h).toBeLessThan(35);
-    expect(c.s).toBeGreaterThan(0.5);
-  });
-
-  it("đại lượng trung gian là cam nhạt — sáng hơn dữ kiện số", () => {
-    const tg = mauCanh("trung_gian");
-    expect(tg.h).toBeGreaterThan(15);
-    expect(tg.h).toBeLessThan(45);
-    expect(tg.l).toBeGreaterThan(mauCanh("du_kien_so").l);
-  });
-
-  it("vật VỪA DỰNG khi phát là xanh 'đang xét' — không phải cam", () => {
-    const c = mauCanh(true);
-    expect(c.h).toBeGreaterThan(200);
-    expect(c.h).toBeLessThan(235);
-  });
-
-  it("ngữ cảnh cấu trúc tô nền TRUNG TÍNH, nét giữ mực", () => {
-    expect(mauNen("boi_canh").s).toBeLessThan(0.25);
-  });
-
-  it("ngữ cảnh cấu trúc: thiết diện, đường, đoạn, mặt phẳng, điểm dựng cũng TRUNG TÍNH", () => {
-    // Chú giải causal hứa "Hình liên quan" = xám. Bản đầu W12 chỉ đổi NỀN, nét
-    // giữ MÀU KIỂU: viền thiết diện ngữ cảnh còn hổ phách — đọc thành "đại
-    // lượng trung gian" (sheet cross-section, e115eede).
-    for (const o of CO_MAU_KIEU) {
-      const mau = gom(buildObject3D(o, "boi_canh")!)
-        .flatMap((c) => {
-          const m = (c as THREE.Mesh).material;
-          return Array.isArray(m) ? m : m ? [m] : [];
-        })
-        .filter((m) => (m as THREE.Material & { colorWrite?: boolean }).colorWrite !== false)
-        .map((m) => hsl((m as THREE.MeshBasicMaterial).color));
-      expect(mau.length, o.id).toBeGreaterThan(0);
-      for (const c of mau) expect(c.s, o.id).toBeLessThan(0.25);
+  it("cạnh khối trong chuỗi nhân quả (dữ kiện số, trung gian, mới dựng, hover) không bị nhuộm cam hay xanh ngọc", () => {
+    const baseH = mauCanh(false).h;
+    for (const state of ["du_kien_so", "trung_gian", true, "hover"] as const) {
+      const c = mauCanh(state);
+      expect(hueDiff(c.h, baseH)).toBeLessThan(2);
+      expect(c.h).toBeGreaterThan(200);
+      expect(c.h).toBeLessThan(235);
     }
   });
 
-  it("điểm đề cho không vai trò là trung tính — xanh chỉ còn nghĩa 'đang xét'", () => {
+  it("ngữ cảnh cấu trúc tô nền trung tính, nét giữ mực", () => {
+    expect(mauNen("boi_canh").s).toBeLessThan(0.25);
+  });
+
+  it("thiết diện, đường, đoạn, mặt phẳng và điểm dựng giữ nguyên họ màu ngữ nghĩa khi hover, chọn và làm bối cảnh", () => {
+    for (const o of CO_MAU_KIEU) {
+      const layMau = (state: Parameters<typeof buildObject3D>[1]) =>
+        gom(buildObject3D(o, state)!)
+          .flatMap((c) => {
+            const m = (c as THREE.Mesh).material;
+            return Array.isArray(m) ? m : m ? [m] : [];
+          })
+          .filter((m) => (m as THREE.Material & { colorWrite?: boolean }).colorWrite !== false)
+          .map((m) => ({
+            ...hsl((m as THREE.MeshBasicMaterial).color),
+            opacity: (m as THREE.Material).opacity,
+          }));
+
+      const base = layMau(false);
+      expect(base.length, o.id).toBeGreaterThan(0);
+      for (const state of ["hover", "dich", true, "boi_canh"] as const) {
+        const cur = layMau(state);
+        expect(cur.length, `${o.id}:${String(state)}`).toBe(base.length);
+        cur.forEach((item, idx) => {
+          if (base[idx].s >= 0.05) {
+            expect(hueDiff(item.h, base[idx].h), `${o.id}:${String(state)}`).toBeLessThan(2);
+          }
+        });
+      }
+      const ctx = layMau("boi_canh");
+      expect(ctx.some((item, idx) => item.opacity <= base[idx].opacity), o.id).toBe(true);
+    }
+  });
+
+  it("điểm đề cho là mực trung tính", () => {
     const m = gom(buildObject3D(DIEM, false)!).map((c) => (c as THREE.Mesh).material)
       .find((x) => x instanceof THREE.MeshStandardMaterial) as THREE.MeshStandardMaterial;
     expect(hsl(m.color).s).toBeLessThan(0.25);

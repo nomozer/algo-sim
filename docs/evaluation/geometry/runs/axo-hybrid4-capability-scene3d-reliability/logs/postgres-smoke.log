@@ -1,0 +1,5 @@
+.                                                                        [100%]
+=================================== PASSES ====================================
+=========================== short test summary info ===========================
+PASSED tests/test_postgres_integration.py::test_postgres_migrate_persist_reconnect
+1 passed in 24.43s

@@ -14,7 +14,9 @@ import {
 } from "./scene3d-view";
 import type { SceneObject } from "./scene3d-model";
 import { DAU_DINH_PX, banKinhBamPx, coDauDinhPx, donViMoiPx } from "./pick-target";
-import { MAU_VAI_TRO } from "./scene3d-roles";
+import { PHONG_CACH_SCENE3D } from "./scene3d-roles";
+import { modulateSemanticColor } from "./scene3d-semantic-policy";
+import { dongBoNetDayManHinh } from "./scene3d-edge-visibility";
 
 /**
  * NÉT LIỀN / NÉT KHUẤT THEO CAMERA — hợp đồng CẤU TRÚC.
@@ -185,7 +187,7 @@ describe("hidden-line — cấu trúc cảnh", () => {
     const canh = con.filter((c) => (c as THREE.Line).isLine && c.parent?.userData?.visualOwnerId)
       .map((c) => (c as THREE.Line).material as THREE.LineBasicMaterial);
     // W12: đích là XANH "đang xét" (bảng vai trò dùng chung với bảng lời giải).
-    expect(new Set(canh.map((m) => m.color.getHex()))).toEqual(new Set([MAU_VAI_TRO.dich]));
+    expect(new Set(canh.map((m) => m.color.getHex()))).toEqual(new Set([modulateSemanticColor(PHONG_CACH_SCENE3D.colors.canh, "selected")]));
     expect(canh.some((m) => m instanceof THREE.LineDashedMaterial)).toBe(true);
   });
 
@@ -365,7 +367,7 @@ describe("hidden-line — cấu trúc cảnh", () => {
     const c = new THREE.Color(mau);
     const hsl = { h: 0, s: 0, l: 0 };
     c.getHSL(hsl, THREE.SRGBColorSpace);   // mặc định là không gian TUYẾN TÍNH
-    expect(mau).toBe(MAU_VAI_TRO.moi_dung);
+    expect(mau).toBe(modulateSemanticColor(PHONG_CACH_SCENE3D.colors.canh, "selected"));
     expect(hsl.h * 360).toBeGreaterThan(200);
     expect(hsl.h * 360).toBeLessThan(235);  // xanh, không phải cam/hổ phách/vàng
     expect(hsl.l).toBeLessThan(0.6);        // đủ đậm cho nét 1 px trên nền sáng
@@ -558,6 +560,82 @@ describe("chấm đỉnh và đường phụ", () => {
     const tdBorders = gom(objTd).filter((c) => (c as THREE.Line).isLine && c.userData?.nonCanonicalBorderLine);
     expect(tdBorders.length).toBeGreaterThan(0);
     expect(mpBorders).toHaveLength(0);
+  });
+
+  it("BỔ SUNG §A: chuẩn hoá nét đứt ngắn mảnh theo matphang.html, liền pha qua span đứt đoạn, ổn định khi Orbit/Zoom và viền liên tục cho nhiều mặt phẳng cùng tồn tại", () => {
+    // 1. Textbook dash cadence calibrated to matphang.html (dashLen=0.16, gapLen=0.12 on dk≈7.45)
+    expect(PHONG_CACH_SCENE3D.dash.relative).toBeLessThanOrEqual(0.028);
+    expect(PHONG_CACH_SCENE3D.dash.gapRatio).toBeGreaterThanOrEqual(0.65);
+    expect(PHONG_CACH_SCENE3D.dash.gapRatio).toBeLessThanOrEqual(0.80);
+
+    // 2. duongHaiLuot hidden pass uses gapRatio instead of 1:1 gap=dash
+    const builtLine = buildObject3D(DUONG, false, undefined, [[0, 0, 0], [4, 4, 0]])!;
+    const khuatPass = gom(builtLine).find((c) => c.name.endsWith(":khuat")) as THREE.Line;
+    expect(khuatPass).toBeDefined();
+    const khuatMat = khuatPass.material as THREE.LineDashedMaterial;
+    expect(khuatMat.gapSize / khuatMat.dashSize).toBeCloseTo(PHONG_CACH_SCENE3D.dash.gapRatio, 4);
+
+    // 3. Split spans along a partially occluded edge carry cumulative dashDistanceOffset & transfer to LineMaterial.dashOffset; zoomDashScale adapts smoothly while pure Orbit keeps phase locked
+    const partial: SceneObject = {
+      id: "partial_dash", label: "Partial occluder", type: "solid", render: "mesh",
+      origin: "derived", producer: "construct_solid", depends: [],
+      vertices: [
+        ["-3", "0", "0"], ["3", "0", "0"], ["0", "-3", "0"],
+        ["-1", "-1", "1"], ["1", "-1", "1"], ["0", "1", "1"],
+      ],
+      vertex_ids: ["A", "B", "C", "P", "Q", "R"],
+      faces: [[0, 1, 2], [3, 4, 5]],
+    };
+    const goc = new THREE.Group();
+    const objPartial = buildObject3D(partial, false)!;
+    goc.add(objPartial);
+    const cam = new THREE.PerspectiveCamera(45, 4 / 3, 0.1, 100);
+    cam.position.set(0, 0, 6);
+    cam.lookAt(0, 0, 0);
+    cam.updateMatrixWorld(true);
+    cam.updateProjectionMatrix();
+    updateCanonicalEdgeVisibility(goc, cam, "800x600@1");
+    const abOwner = gom(objPartial).find((c) => c.userData?.visualOwnerId === "partial_dash::edge:A-B")!;
+    const hiddenChild = abOwner.children.find((c) => c.userData?.hidden === true) as THREE.Line | undefined;
+    expect(hiddenChild).toBeDefined();
+    expect(Number(hiddenChild!.userData?.dashDistanceOffset)).toBeGreaterThan(0.5);
+
+    const netDay = new THREE.Group();
+    dongBoNetDayManHinh([goc], netDay, 800, 600, true, 0, 1.0);
+    const fatHidden = netDay.children.find((c) => ((c as any).material as any)?.dashed === true) as any;
+    expect(fatHidden).toBeDefined();
+    const scaleDefault = fatHidden.material.dashScale;
+    const offsetDefault = fatHidden.material.dashOffset;
+    expect(offsetDefault).toBeGreaterThan(0);
+
+    // Zooming in (zoomDashScale = 1.6 > 1) increases dashScale smoothly so world dashes stay crisp in screen px
+    dongBoNetDayManHinh([goc], netDay, 800, 600, true, 0, 1.6);
+    expect(fatHidden.material.dashScale).toBeCloseTo(scaleDefault * 1.6, 5);
+
+    // 4. Coexisting multi-planes ((SAC) & (SBD)) keep continuous dimmed violet borders behind solid (never dashed)
+    const multiScene: any = {
+      objects: [
+        { id: "chop", type: "solid", label: "S.ABCD", origin: "derived", producer: "construct_solid", render: "mesh", depends: [], vertices: [["0", "0", "3"], ["0", "0", "0"], ["2", "0", "0"], ["2", "2", "0"], ["0", "2", "0"]], vertex_ids: ["S", "A", "B", "C", "D"], faces: [[1, 2, 3, 4], [0, 1, 2], [0, 2, 3], [0, 3, 4], [0, 4, 1]] },
+        { id: "mp1", type: "plane3", label: "(SAC)", notation: "(SAC)", origin: "derived", producer: "construct_plane", render: "surface", depends: ["S", "A", "C"], point: ["0", "0", "3"], normal: ["1", "-1", "0"] },
+        { id: "mp2", type: "plane3", label: "(SBD)", notation: "(SBD)", origin: "derived", producer: "construct_plane", render: "surface", depends: ["S", "B", "D"], point: ["0", "0", "3"], normal: ["3", "3", "2"] },
+      ],
+      events: [],
+      free_objects: [],
+    };
+    const rootMulti = new THREE.Group();
+    rootMulti.add(
+      buildObject3D(multiScene.objects[0], false, undefined, [[0, 0, 0], [2, 2, 3]], undefined, undefined, undefined, false, "primary", false, true, false, multiScene)!,
+      buildObject3D(multiScene.objects[1], false, undefined, [[0, 0, 0], [2, 2, 3]], undefined, undefined, undefined, false, "primary", false, true, false, multiScene)!,
+      buildObject3D(multiScene.objects[2], false, undefined, [[0, 0, 0], [2, 2, 3]], undefined, undefined, undefined, false, "primary", false, true, false, multiScene)!,
+    );
+    cam.position.set(6, 5, 4);
+    cam.lookAt(1, 1, 1);
+    cam.updateMatrixWorld(true);
+    cam.updateProjectionMatrix();
+    updateCanonicalEdgeVisibility(rootMulti, cam, "800x600@1");
+    const multiPlaneBorders = gom(rootMulti).filter((c) => (c as THREE.Line).isLine && c.name.startsWith("plane_border:"));
+    expect(multiPlaneBorders.length).toBeGreaterThan(0);
+    expect(multiPlaneBorders.every((c) => !((c as THREE.Line).material instanceof THREE.LineDashedMaterial))).toBe(true);
   });
 });
 

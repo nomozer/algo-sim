@@ -1,0 +1,38 @@
+{
+  "run_id": "axo-final-reliability-premerge-gate",
+  "date": "2026-11-06",
+  "branch": "integration/axo-hybrid4-reliability",
+  "baseline": "c5cef5637",
+  "status": "READY_FOR_OWNER_REVIEW",
+  "conditions": ["publication finding created by this task in local unpushed history (blob 23109136)", "POSTGRES_NOT_TESTED", "LIVE_NOT_TESTED"],
+  "provider_calls": 0,
+  "commits": [
+    {"sha": "38cb181d8", "role": "test fixture: one SQLite connection per request thread (T3 flake root cause)"},
+    {"sha": "43e8fb8c4", "role": "atomic per-attempt usage ledger for guest trial and daily quota; migration e437149641fa"},
+    {"sha": "4bcc13684", "role": "test-account password generated at run time (publication finding removed from HEAD)"},
+    {"sha": "4a05ccff4", "role": "candidate freeze 5a7f4eba (103 files), CACHE_VERSION 132, template rebind"}
+  ],
+  "root_causes": {
+    "t3_flake": "StaticPool in the api test fixture shared one sqlite3 connection across request threads; telemetry swallowed the error",
+    "usage": ["check-then-act gate", "read-modify-write +1", "daily quota inside swallowed telemetry", "no durable per-attempt identity"]
+  },
+  "verification": {
+    "flake_repro": {"before": "7/16 red under 4 CPU burners", "after_fixture_fix": "30/30", "after_ledger": "20/20"},
+    "usage_ledger_tests": {"before": "8 red / 3 green", "after": "11/11", "stress": "10 runs x 11 = 110/110 under load"},
+    "mathematical_classification": {"unique_payloads": 1577, "served_certified": 436, "served_construction": 156, "refused_contract": 985,
+      "refused_internal": 0, "served_uncertified": 0, "errors": 0, "frontend_consistent": "1577/1577",
+      "expectation_mismatches": 61, "expectation_mismatches_identical_on_main": true, "branch_vs_main_differences": 1},
+    "prism": {"oracle": "30", "typing_variants": "5/5 SERVED 30", "live": "LIVE_NOT_TESTED"},
+    "scene3d": {"camera": "30/30 (1440x900, 820x1180, 390x844)", "consistency": "41/41 incl. real Chrome 110%", "two_tab": "8/8", "frontend_changed": false},
+    "t3": [{"tree": "4a05ccff4", "run": 1, "result": "FULL_PRODUCT_GATE_PASS", "pytest": "13874 passed, 7 skipped, 3 deselected, 9 xfailed", "vitest": "133/2000"}],
+    "node_harness": "155 tests, 153 pass, 0 fail, 2 environment skips",
+    "migration": "upgrade/downgrade/upgrade + alembic check clean on SQLite",
+    "ledger_cost_ms": {"guest_median": 12.39, "guest_p95": 16.1, "student_median": 14.54, "student_p95": 18.47},
+    "postgres": "POSTGRES_NOT_TESTED (Docker not running; not started)"
+  },
+  "cache_version_changed": false,
+  "model_surface_changed": false,
+  "schema_migration_added": "e437149641fa (additive)",
+  "merged": false,
+  "pushed": false
+}

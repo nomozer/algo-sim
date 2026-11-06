@@ -1,9 +1,12 @@
 import { describe, expect, it } from "vitest";
 import {
   createHistoryStore,
+  HISTORY_ITEM_KEY_PREFIX,
   HISTORY_MAX_ITEMS,
   HISTORY_SCHEMA_VERSION,
   historyIdOf,
+  memoryStorage,
+  newAttemptId,
   type StorageLike,
 } from "./history";
 import type { SimulationEnvelope } from "../simulations/types";
@@ -22,15 +25,10 @@ import type { SimulationEnvelope } from "../simulations/types";
  * branch/camera).
  */
 
-function fakeStorage(): StorageLike & { raw: Map<string, string> } {
-  const raw = new Map<string, string>();
-  return {
-    raw,
-    getItem: (k) => raw.get(k) ?? null,
-    setItem: (k, v) => void raw.set(k, v),
-    removeItem: (k) => void raw.delete(k),
-  };
-}
+const fakeStorage = memoryStorage;
+const LEGACY_KEY = "algosim.history.v1";
+const itemRaws = (storage: StorageLike & { raw: Map<string, string> }) =>
+  [...storage.raw.entries()].filter(([k]) => k.startsWith(HISTORY_ITEM_KEY_PREFIX)).map(([, v]) => v);
 
 function envelope(id: string, config: unknown, title = "Bài mẫu"): SimulationEnvelope {
   return {
@@ -102,12 +100,11 @@ describe("touch — tiến độ trình bày an toàn", () => {
 });
 
 describe("(18)(19) chống hỏng — corrupt & schema cũ bị bỏ qua êm", () => {
-  it("JSON rác toàn cục → list() = [] (không ném)", () => {
+  it("JSON rác (khoá cũ lẫn khoá bản ghi) → list() = [] (không ném)", () => {
     const storage = fakeStorage();
     const store = createHistoryStore(storage);
-    storage.raw.set([...storage.raw.keys()][0] ?? "algosim.history.v1", "{không phải json");
-    // ép ghi key đúng
-    storage.setItem("algosim.history.v1", "{không phải json");
+    storage.setItem(LEGACY_KEY, "{không phải json");
+    storage.setItem(`${HISTORY_ITEM_KEY_PREFIX}x`, "{không phải json");
     expect(() => store.list()).not.toThrow();
     expect(store.list()).toEqual([]);
   });
@@ -116,10 +113,8 @@ describe("(18)(19) chống hỏng — corrupt & schema cũ bị bỏ qua êm", (
     const storage = fakeStorage();
     const store = createHistoryStore(storage);
     const good = store.record(envelope("network.packet_routing", NET_CONFIG), null);
-    const arr = JSON.parse(storage.getItem("algosim.history.v1")!);
-    arr.push({ id: "x", schemaVersion: 999, title: "bản tương lai" });
-    arr.push({ hoàn: "toàn rác" });
-    storage.setItem("algosim.history.v1", JSON.stringify(arr));
+    storage.setItem(`${HISTORY_ITEM_KEY_PREFIX}x`, JSON.stringify({ id: "x", schemaVersion: 999, title: "bản tương lai" }));
+    storage.setItem(`${HISTORY_ITEM_KEY_PREFIX}y`, JSON.stringify({ hoàn: "toàn rác" }));
 
     const listed = store.list();
     expect(listed).toHaveLength(1);
@@ -162,13 +157,15 @@ describe("(22)(23)(24)(25) whitelist — không secret, không state tạm", () 
     store.record(env, null);
     store.touch(store.list()[0].id, { lastCursor: 1, visualMode: "2d" });
 
-    const raw = storage.getItem("algosim.history.v1")!;
+    const raws = itemRaws(storage);
+    expect(raws).toHaveLength(1);
+    const raw = raws[0];
     expect(raw).not.toContain("LEAK");
     expect(raw).not.toContain("api_key");
     for (const forbidden of ["prediction", "branch", "camera", "webgl"]) {
       expect(raw.toLowerCase()).not.toContain(forbidden);
     }
-    const item = JSON.parse(raw)[0];
+    const item = JSON.parse(raw);
     expect(Object.keys(item).sort()).toEqual(
       [
         "id",
@@ -201,5 +198,50 @@ describe("(26) sống sót qua reload (instance mới, cùng storage)", () => {
     expect(got.lastCursor).toBe(3);
     expect(got.visualMode).toBe("3d");
     expect(got.envelope.simulation_id).toBe("network.packet_routing");
+  });
+});
+
+describe("khoá cũ một-mảng → khoá từng bản ghi", () => {
+  it("bản ghi trong khoá cũ được chuyển sang, giữ nguyên trường, khoá cũ bị xoá", () => {
+    const storage = fakeStorage();
+    const old = createHistoryStore(storage).record(envelope("network.packet_routing", NET_CONFIG), "đề cũ");
+    const legacy = [{ ...old, id: "hcu", lastCursor: 4 }];
+    storage.raw.clear();
+    storage.setItem(LEGACY_KEY, JSON.stringify(legacy));
+    const got = createHistoryStore(storage).list();
+    expect(got.map((x) => [x.id, x.lastCursor, x.originalInput])).toEqual([["hcu", 4, "đề cũ"]]);
+    expect(storage.getItem(LEGACY_KEY)).toBeNull();
+    expect(storage.getItem(`${HISTORY_ITEM_KEY_PREFIX}hcu`)).not.toBeNull();
+  });
+});
+
+describe("hai tab, localStorage thấy nhau TRỄ (bản sao từng renderer)", () => {
+  /** Mỗi tab đọc bản sao riêng chỉ đồng bộ khi `sync()`; ghi thì đi thẳng vào kho chung (như Chromium). */
+  function tabView(shared: ReturnType<typeof memoryStorage>) {
+    let copy = new Map(shared.raw);
+    const view: StorageLike & { sync(): void } = {
+      getItem: (k) => copy.get(k) ?? null,
+      setItem: (k, v) => { copy.set(k, v); shared.raw.set(k, v); },
+      removeItem: (k) => { copy.delete(k); shared.raw.delete(k); },
+      key: (i) => [...copy.keys()][i] ?? null,
+      get length() { return copy.size; },
+      sync: () => { copy = new Map(shared.raw); },
+    };
+    return view;
+  }
+
+  it("hai tab ghi hai lần gửi gần như cùng lúc ⇒ không mất bản ghi nào", () => {
+    const shared = memoryStorage();
+    const [va, vb] = [tabView(shared), tabView(shared)];
+    const [a, b] = [createHistoryStore(va), createHistoryStore(vb)];
+    const [idA, idB] = [newAttemptId(), newAttemptId()];
+    a.record(envelope("network.packet_routing", NET_CONFIG), "đề A", idA);
+    b.record(envelope("logic.and_gate", { inputA: 1 }), "đề B", idB);    // B chưa thấy bản ghi của A
+    b.touch(idB, { lastCursor: 2 });
+    a.touch(idA, { lastCursor: 3 });                                      // A chưa thấy bản ghi của B
+    va.sync(); vb.sync();
+    for (const s of [a, b]) {
+      expect(s.list().map((x) => [x.id, x.lastCursor]).sort()).toEqual([[idA, 3], [idB, 2]].sort());
+    }
   });
 });

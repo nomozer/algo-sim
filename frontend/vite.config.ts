@@ -1,3 +1,4 @@
+import { availableParallelism } from "node:os";
 import { defineConfig } from "vitest/config";
 import react from "@vitejs/plugin-react";
 
@@ -9,6 +10,17 @@ export default defineConfig({
    * Write+Read) làm `npm run dev` chết với `EPERM … unlink node_modules/.vite/deps/chunk-*.js` mỗi lần Vite cần tối ưu
    * lại. Mỗi checkout có `frontend/` riêng ⇒ cache riêng, đúng chủ. Gitignore: `.vite-cache/`. */
   cacheDir: ".vite-cache",
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes("node_modules/three")) return "vendor-three";
+          if (id.includes("geometry-samples")) return "geometry-samples";
+          return undefined;
+        },
+      },
+    },
+  },
   server: {
     port: 3000,
     /* W4B-2D §0 — MỘT CỔNG DUY NHẤT, HỎNG THÌ KÊU TO.
@@ -34,5 +46,9 @@ export default defineConfig({
   test: {
     // M7.14T: guard offline — mọi fetch trong test đều ném lỗi (0 network call)
     setupFiles: ["./src/test-setup.ts"],
+    // Tranh chấp CPU, không phải test chậm: mặc định vitest 4 mở (luồng logic − 1) fork; trên máy 12 luồng/16 GiB,
+    // hai test hình học nặng (chạy riêng ~1.3 s) lên 2.5–6.5 s và vượt 5 s ở bộ đầy đủ. Với số worker = nửa số luồng
+    // (≈ số nhân vật lý) chúng còn 1.4–1.9 s mà tổng thời gian bộ không tăng đáng kể (đo: axo-data-identity-test-hardening).
+    maxWorkers: Math.min(2, Math.max(1, Math.floor(availableParallelism() / 2))),
   },
 });

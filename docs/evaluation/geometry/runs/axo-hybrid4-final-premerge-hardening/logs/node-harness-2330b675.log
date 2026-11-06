@@ -1,0 +1,224 @@
+✔ laOrphan: thiếu/sai chứng nhận hoặc chủ sở hữu còn sống ⇒ GIU (1.0217ms)
+✔ laOrphan: chủ sở hữu chết ⇒ DON; Chrome của phiên còn chạy ⇒ DIET_ROI_DON (0.375ms)
+✔ ungVienGoc: biến môi trường trước, D: trên Windows, rồi thư mục tạm của hệ (1.5331ms)
+✔ conSong: tiến trình này sống, tiến trình đã thoát thì không (57.2335ms)
+✔ donOrphan: chỉ xoá thư mục có chứng nhận và chủ sở hữu đã chết; không đụng phiên sống, thư mục lạ (218.6503ms)
+✔ tối thiểu: chỉ ảnh oracle, tập duyệt và ảnh lỗi được chụp (7.6454ms)
+✔ ba lớp lỗi tách nhau: môi trường · bộ đo · phép kiểm sản phẩm (0.4379ms)
+fatal: path 'backend/tests/geometry/test_prism_production_route.py' does not exist in 'HEAD'
+fatal: path 'backend/tests/geometry/test_prism_production_route.py' does not exist in 'HEAD'
+✔ causal closure reports every pair independently (3.9363ms)
+✔ event closure uses events only and rejects conflicting transport declarations (2.2353ms)
+✔ topology counts unique undirected edges (0.6861ms)
+✔ CSS readiness is driven by computed sentinel styles, not stylesheet rules (0.8181ms)
+✔ manifest requires frozen independent oracle source (0.6915ms)
+✖ frozen source hashes use canonical Git blobs, independent of checkout newlines (39.3391ms)
+✔ semantic polling returns on state change without a fixed readiness sleep (0.2595ms)
+✔ formation uses exact snapshots and proves forward plus backward playback (0.4222ms)
+✔ formation ignores answer aliases, which the tree never lists separately (0.404ms)
+✔ alias tree rows: none of its own, whether or not it shares the source label (0.4081ms)
+✔ raw token leakage and formula references are payload-driven (6.4242ms)
+✔ all required fault injections fail with their exact reason code (0.7192ms)
+✔ ULP drift counts as settled; a real move does not (0.1995ms)
+✔ settle gate waits for consecutive stable frames, then returns the settled camera (0.4081ms)
+✔ camera that never settles fails with SETTLING_TIMEOUT and a diagnostic (0.7864ms)
+✔ immutable window: only a settled, unchanged, zero-recompute window of 120 frames passes (0.1861ms)
+✔ orbit plan: rotated view keeps quality AND changes the hidden-edge set (31.807ms)
+✔ rotated gate rejects the w10 rotated cameras the reviewer flagged (23.6704ms)
+✔ planned gesture camera: rotating about Z through the target keeps distance and elevation (0.5802ms)
+✔ planned gesture camera with a display rotation (regular-triangular-pyramid-w01): orbit in WORLD, recompose view × model (0.6371ms)
+✔ exact-dimensions: a sheared chart (model = T, not orthogonal) measures like the world scene (39.0391ms)
+✔ planned orbit: every candidate passes the perspective gate on its simulated camera (13.1301ms)
+✔ rotated gate: a key vertex under an overlay is not readable evidence (0.5724ms)
+✔ causal tiers: numerical givens, numerical intermediates, structural context (0.5804ms)
+✔ role hues: the role oranges, amber and blue classify; neutrals and type colours do not (0.3887ms)
+✔ canvas role hues: an orange or blue pixel needs a DRAWN object carrying that role (0.5469ms)
+✔ vertex marker diameter is measured through the camera, in CSS px (0.1834ms)
+✔ geometry timeline: steps open only at construction events that change the figure (5.6381ms)
+✔ geometry steps: a genuine observation passes; each injected fault fails its own check (2.7164ms)
+✔ orbit plan: a crowded section scene still gets a rotation that keeps depth (5.0798ms)
+✔ orbit plan: no qualifying rotation ⇒ null, never a guess (0.1927ms)
+✔ learner playback: one press plays every GEOMETRY step once and stops at the last one (1.253ms)
+✔ learner playback: every known state-machine fault is caught by its own check (1.2427ms)
+✔ formation roles: a genuine three-way agreement passes for every class (1.174ms)
+✔ formation roles: each injected fault fails with its reason (1.1036ms)
+✔ structured references: a renderer-faithful observation passes on every family fixture (5.3902ms)
+✔ structured references: each of (a)-(d) fails on its own injected fault (3.0891ms)
+✖ manifest refuses a scenario whose role coverage would silently enforce nothing (27.1569ms)
+✔ section fill: deltaE76 is CIE76 on sRGB D65 (0.2651ms)
+✔ section fill: a genuine fill passes on the closed step (0.3334ms)
+✔ section fill: a missing fill fails on the closed step (0.1151ms)
+✔ section fill: a fill present before closing fails (0.1322ms)
+✔ section fill: a fill not removed after stepping back fails (0.0875ms)
+✔ section fill: the old 0.16 coplanar composite fails the registered threshold (0.1072ms)
+✔ section fill: no samples never passes (0.0747ms)
+✔ section fill: interior samples keep the registered margin from every projected edge (2.279ms)
+✔ section fill: a polygon behind the camera gives no samples (the gate fails safe) (0.142ms)
+✔ manifest requires three distinct negative kinds per scenario (1.6696ms)
+✔ manifest: extra refusal kinds come from a closed set and always declare their cause (1.8502ms)
+✔ section fill: thresholds in code equal the pre-registered ones (1.7223ms)
+✔ section fill sampler: margin around EVERY projected solid edge and vertex marker (§11) (2.9505ms)
+✔ section fill sampler: no sample under a DOM label box over the canvas (§11 measures the fill) (1.58ms)
+✔ under-edges sampling: core band within 1 CSS px of a crossing edge, references 4 px aside (3.1078ms)
+✔ SECTION_FILL_UNDER_EDGES: an edge drawn above the fill passes, even half-covered and dashed (0.6298ms)
+✔ SECTION_FILL_UNDER_EDGES: the fill drawn over the edge fails (0.265ms)
+✔ section-fill page code compiles (no identifier clash with the shared PNG prelude) (34.6202ms)
+✔ SECTION_FILL_UNDER_EDGES: an edge that is not drawn fails; no crossing edge is not a pass (0.3184ms)
+✔ annotation oracle: a result label only from its concluding event (0.7617ms)
+✔ annotation oracle: a segment label waits for its segment to be built, in every mode (0.4326ms)
+✔ annotation oracle: compact default, selection focus, same_as, show-all (0.9947ms)
+✔ solution oracle merges a same_as measurement into the row it points to (0.2392ms)
+✔ learner mode A: final results are absent from the solution and annotation oracles (0.5031ms)
+✔ one detail region and witness drawn exactly for shown distance labels (0.3926ms)
+✔ annotation boxes: inside, near the independently projected anchor, no overlaps (1.1642ms)
+✔ show-all isolation and causal restore record each state separately (1.084ms)
+✔ show-all isolation is measured against the state BEFORE the first toggle (0.355ms)
+✔ every span the product classifies HIDDEN is drawn dashed, highlighted or not (0.4549ms)
+✔ causal restore: capture noise (≤ 1 per channel) is not a change; anything larger is (0.2999ms)
+✔ role tokens are machine data: on screen they are a raw-token leak (7.8396ms)
+✔ §0.1-1/2 quantity picker: genuine drawer passes; each injected fault fails with its own code (1.3805ms)
+✔ learner mode A quantity picker: no final row; a leaked final row fails PICKER_FINAL_SHOWN (0.6995ms)
+✔ §0.1-3/4/5 steps panel: synced at every step, jump and close keep sync; faults fail their own code (3.7969ms)
+✔ §0.1-1 geometry steps: results hidden while the solution is collapsed is in sync, a leaked card is not (1.1087ms)
+✔ §0.1 evidence verdict: answer judged on the OPEN solution; leaked card, picker and panel faults fail (0.2834ms)
+✔ learner policy evidence verdict: hidden in mode A, exactly once in mode B; each fault fails its own code (0.1788ms)
+✔ playback: the Đại lượng panel closed shows nothing; the final step must be observed with it open (0.2934ms)
+✔ §0.1-1 structured references: a result hidden with the collapsed solution counts when the drawer lists it (2.2941ms)
+✔ floating panel gate: passes the measured shape; each injected fault has its code (0.7089ms)
+✔ narrow steps sheet gate: each injected fault has its code (0.3776ms)
+✔ auxiliary oracle and gate: helper lines leave after their task, a measured-only plane is hidden (0.6013ms)
+✔ grid gate: default off, toggles without touching camera, step, selection, figure or occlusion (0.2354ms)
+✔ a measured-only helper plane opens no geometry step; every static step stays red (0.7663ms)
+✔ desktop panel gate: every injected fault has its code (1.231ms)
+✔ mobile panel gate: every injected fault has its code (0.6761ms)
+✔ layout gate: every injected fault has its code (0.5444ms)
+✔ direct-select gate: every injected fault has its code (0.254ms)
+✔ tree gate: every injected fault has its code (0.2397ms)
+✔ desktop panel gate: after resize a panel is lost only when neither its close button nor its header is reachable (0.1149ms)
+✔ layout gate: the WebGL canvas follows its container (no stale drawing-buffer size) (0.0935ms)
+✔ focus gate: a clean focused workspace passes (0.356ms)
+✔ focus gate: each injected fault is named (1.0538ms)
+✔ repo root keeps a Windows path with spaces (no %20) (1.3825ms)
+﹣ explicit interpreter is verified and reported (0.2709ms) # SKIP
+✔ missing explicit interpreter fails closed, never falls back to PATH (1.9027ms)
+✔ an executable that is not the backend Python is rejected (63.4082ms)
+﹣ interpreter version mismatch is rejected (0.1462ms) # SKIP
+✔ detached tree without a venv reports every candidate it tried (42.1676ms)
+✔ gate propagates the child exit code and spawn errors (123.0317ms)
+✔ identity is v3 (1.5061ms)
+✔ thresholds are exactly v1's (1.3494ms)
+✔ horizontal drag scales with canvas height (OrbitControls rotates 2π·dx/clientHeight) (0.4192ms)
+✔ settle parameters are the registered ones (0.2431ms)
+✔ axis consistency is angle-weighted: a near-static tail cannot dilute a real rotation (v2 defect) (8.8502ms)
+✔ a genuinely drifting axis still fails consistency (1.1718ms)
+✔ settled = every per-frame rotation in the last 30 animation frames is under 0.01° (1.5833ms)
+✔ a camera that never settled is a named failure, before any angle is trusted (0.9441ms)
+✔ a drag that cannot fit in the canvas is a named failure, never clipped silently (0.2806ms)
+✔ v1 classifications are unchanged (0.4123ms)
+✔ intact independent synthetic conic passes (196.8376ms)
+✔ local loss of 20% of the hidden arc cannot pass through aggregate coverage (264.9832ms)
+✔ a label covering only part of a boundary makes the frame uncertifiable (87.7277ms)
+✔ conic sampling is independent of the 96-chord renderer and lies on the source plane (2.796ms)
+✔ unknown polygon parent cannot certify visibility (0.3997ms)
+✔ malformed polygon face 0,1,99 cannot crash or invent visibility (0.3099ms)
+✔ malformed polygon face 0,0,0 cannot crash or invent visibility (0.181ms)
+✔ other polygon3 regions and unsupported conics are never silently omitted (0.8192ms)
+✔ all pixels masked is uncertifiable rather than proof of missing cobalt (21.3682ms)
+✔ hidden polygon completeness without a dash bound cannot be certified (127.1185ms)
+✔ a hidden polygon with a declared dash bound detects local missing ink (58.755ms)
+✔ camera tilt preserves independent source visibility under inverse model rotation (1.7758ms)
+✔ edge-on front and hidden arcs sharing the same pixels are uncertifiable (85.9886ms)
+✔ V2 rejects wrong boundary even when the other role remains correct: 0,117,222 (160.1246ms)
+✔ V2 rejects wrong boundary even when the other role remains correct: 200,90,50 (86.0742ms)
+✔ V2 rejects wrong fill even when the other role remains correct: 251,146,60 (144.5303ms)
+✔ V2 rejects wrong fill even when the other role remains correct: 37,99,235 (238.9515ms)
+✔ V2 rejects a tiny second selected boundary without relying on global blue area (116.3809ms)
+✔ policy frame passes: cobalt boundary, terracotta fill (74.1381ms)
+✔ missing cobalt boundary (terracotta outline) fails (17.3208ms)
+✔ wrong boundary colour (magenta) fails (14.1802ms)
+✔ rejects an incorrect cobalt palette even within the locked blue hue band (37.4468ms)
+✔ rejects an incorrect terracotta palette even within the orange hue band (26.1349ms)
+✔ detects a missing quarter of one visible edge (32.5316ms)
+✔ does not aggregate away a missing hidden edge (27.4512ms)
+✔ detects a small second section that incorrectly has a cobalt boundary (36.9091ms)
+✔ cone visibility uses the sloped normal, not only the radial direction (2.1983ms)
+✔ camera model transform is inverted before visibility classification (1.6314ms)
+✔ one edge without cobalt fails (28.3469ms)
+✔ fill recoloured cobalt or grey fails (67.654ms)
+✔ cobalt drawn on another object (wrong selection) fails (24.4423ms)
+✔ an overlay covering a whole edge prevents full certification (23.187ms)
+✔ verdict separates a wrong frame from an unobservable one (41.9182ms)
+✔ an edge-on curve is uncertifiable, not passed, when its arcs cannot be separated (124.0125ms)
+✔ an edge-on curve with no cobalt at all still fails (7.734ms)
+✔ a hidden edge keeps the dashed-ink threshold without borrowing coverage from another edge (62.0197ms)
+✔ project + sectionBoundaryWorld place a circle on a sphere (1.0008ms)
+✔ a dashed hidden arc of a curve passes as one arc even where a short chord falls in a dash gap (53.2718ms)
+✔ a hidden arc with 40% of its dashes missing fails (internal review I3: 0.4 let ~55% go missing) (50.1008ms)
+✔ a curve whose hidden arc is not drawn at all still fails (50.2454ms)
+ℹ tests 155
+ℹ suites 0
+ℹ pass 151
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 2
+ℹ todo 0
+ℹ duration_ms 1921.4342
+
+✖ failing tests:
+
+test at scripts\compiler-scene-replay-lib.node-test.mjs:131:1
+✖ frozen source hashes use canonical Git blobs, independent of checkout newlines (39.3391ms)
+  Error: Command failed: git show HEAD:backend/tests/geometry/test_prism_production_route.py
+  fatal: path 'backend/tests/geometry/test_prism_production_route.py' does not exist in 'HEAD'
+  
+      at genericNodeError (node:internal/errors:985:15)
+      at wrappedFn (node:internal/errors:539:14)
+      at checkExecSyncError (node:child_process:925:11)
+      at execFileSync (node:child_process:961:15)
+      at sha256GitBlob (file:///D:/Documents/projects/algo-sim/.superpowers/worktrees/t3-2330b675/frontend/scripts/compiler-scene-replay-lib.mjs:1242:19)
+      at validateSuiteManifest (file:///D:/Documents/projects/algo-sim/.superpowers/worktrees/t3-2330b675/frontend/scripts/compiler-scene-replay-lib.mjs:1296:11)
+      at TestContext.<anonymous> (file:///D:/Documents/projects/algo-sim/.superpowers/worktrees/t3-2330b675/frontend/scripts/compiler-scene-replay-lib.node-test.mjs:136:16)
+      at Test.runInAsyncScope (node:async_hooks:214:14)
+      at Test.run (node:internal/test_runner/test:1106:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:788:18) {
+    status: 128,
+    signal: null,
+    output: [ null, <Buffer >, <Buffer 66 61 74 61 6c 3a 20 70 61 74 68 20 27 62 61 63 6b 65 6e 64 2f 74 65 73 74 73 2f 67 65 6f 6d 65 74 72 79 2f 74 65 73 74 5f 70 72 69 73 6d 5f 70 72 6f ... 43 more bytes> ],
+    pid: 9380,
+    stdout: <Buffer >,
+    stderr: <Buffer 66 61 74 61 6c 3a 20 70 61 74 68 20 27 62 61 63 6b 65 6e 64 2f 74 65 73 74 73 2f 67 65 6f 6d 65 74 72 79 2f 74 65 73 74 5f 70 72 69 73 6d 5f 70 72 6f ... 43 more bytes>
+  }
+
+test at scripts\compiler-scene-replay-lib.node-test.mjs:862:1
+✖ manifest refuses a scenario whose role coverage would silently enforce nothing (27.1569ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /formation_coverage:triangular_pyramid/. Input:
+  
+  'Error: Command failed: git show HEAD:backend/tests/geometry/test_prism_production_route.py\n' +
+    "fatal: path 'backend/tests/geometry/test_prism_production_route.py' does not exist in 'HEAD'\n"
+  
+      at TestContext.<anonymous> (file:///D:/Documents/projects/algo-sim/.superpowers/worktrees/t3-2330b675/frontend/scripts/compiler-scene-replay-lib.node-test.mjs:869:12)
+      at Test.runInAsyncScope (node:async_hooks:214:14)
+      at Test.run (node:internal/test_runner/test:1106:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:788:18)
+      at Test.postRun (node:internal/test_runner/test:1235:19)
+      at Test.run (node:internal/test_runner/test:1163:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:788:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: Command failed: git show HEAD:backend/tests/geometry/test_prism_production_route.py
+    fatal: path 'backend/tests/geometry/test_prism_production_route.py' does not exist in 'HEAD'
+    
+        at genericNodeError (node:internal/errors:985:15)
+        at wrappedFn (node:internal/errors:539:14)
+        at checkExecSyncError (node:child_process:925:11)
+        at execFileSync (node:child_process:961:15)
+        at sha256GitBlob (file:///D:/Documents/projects/algo-sim/.superpowers/worktrees/t3-2330b675/frontend/scripts/compiler-scene-replay-lib.mjs:1242:19)
+        at validateSuiteManifest (file:///D:/Documents/projects/algo-sim/.superpowers/worktrees/t3-2330b675/frontend/scripts/compiler-scene-replay-lib.mjs:1296:11)
+        at file:///D:/Documents/projects/algo-sim/.superpowers/worktrees/t3-2330b675/frontend/scripts/compiler-scene-replay-lib.node-test.mjs:869:25
+        at getActual (node:assert:611:5)
+        at strict.throws (node:assert:759:24)
+        at TestContext.<anonymous> (file:///D:/Documents/projects/algo-sim/.superpowers/worktrees/t3-2330b675/frontend/scripts/compiler-scene-replay-lib.node-test.mjs:869:12),
+    expected: /formation_coverage:triangular_pyramid/,
+    operator: 'throws',
+    diff: 'simple'
+  }

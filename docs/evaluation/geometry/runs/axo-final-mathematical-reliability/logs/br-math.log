@@ -1,0 +1,13 @@
+PASS mathematical authority right-prism: composer, attempt, history, reload, no answer surface
+PASS mathematical authority oblique-prism: composer, attempt, history, reload, no answer surface
+PASS mathematical authority pyramid-base-area: composer, attempt, history, reload, no answer surface
+PASS mathematical authority cone-volume: composer, attempt, history, reload, no answer surface
+PASS mathematical authority cylinder-section: composer, attempt, history, reload, no answer surface
+PASS mathematical authority sphere-volume: composer, attempt, history, reload, no answer surface
+PASS mathematical authority sphere-plane: composer, attempt, history, reload, no answer surface
+PASS mathematical authority polygon-section: composer, attempt, history, reload, no answer surface
+PASS mathematical authority contradiction: composer, attempt, history, reload, no answer surface
+PASS mathematical authority exact-domain: composer, attempt, history, reload, no answer surface
+PASS mathematical authority equivalent-wording: composer, attempt, history, reload, no answer surface
+PASS mathematical authority renamed-points: composer, attempt, history, reload, no answer surface
+{"pass":12,"fail":0}

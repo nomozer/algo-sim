@@ -75,6 +75,14 @@ client = TestClient(main_module.app)
 
 
 @pytest.fixture(autouse=True)
+def _signed_in():
+    """Image extraction runs nothing without a server-issued session (`session_required`)."""
+    from tests.route_client import sign_in
+    client.cookies.clear()
+    sign_in(client)
+
+
+@pytest.fixture(autouse=True)
 def _cache_sach():
     ie.EXTRACTION_CACHE.clear()
     yield

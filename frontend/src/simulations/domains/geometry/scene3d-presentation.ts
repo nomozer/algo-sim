@@ -97,9 +97,18 @@ export function veTrenKhung(o: Pick<SceneObject, "render">): boolean {
 export function uuTienNhan(
   o: Pick<SceneObject, "id" | "origin">,
   dangChon: string | null,
+  stepRole?: "PRIMARY" | "SUPPORT" | "CONTEXT" | "INACTIVE",
 ): number {
-  if (dangChon && o.id === dangChon) return 3;
-  return o.origin === "derived" ? 2 : 1;
+  if (stepRole === undefined) {
+    if (dangChon && o.id === dangChon) return 3;
+    return o.origin === "derived" ? 2 : 1;
+  }
+  if (dangChon && o.id === dangChon) return 5;
+  if (stepRole === "PRIMARY") return o.origin === "derived" ? 4.2 : 3.8;
+  if (stepRole === "SUPPORT") return o.origin === "derived" ? 3.2 : 2.6;
+  if (o.origin === "derived") return 2;
+  if (stepRole === "CONTEXT") return 0.8;
+  return 1;
 }
 
 /** Khe tối thiểu (điểm ảnh) giữa hai hộp nhãn điểm đang hiện. */
@@ -112,12 +121,13 @@ export const KHE_NHAN_PX = 2;
  * nào không đè lên một nhãn đã giữ. Không tìm cách xê dịch nhãn — xê dịch làm
  * nhãn rời khỏi vật nó gọi tên, và lúc ấy hình sai theo một kiểu khác.
  *
- * "Đè" là hộp THẬT `w × h` của nhãn chạm nhau (cộng khe `KHE_NHAN_PX`); hộp đặt như `scene3d-view` đặt nhãn:
+ * "Đè" là hộp THẬT `w × h` của nhãn chạm nhau (cộng khe `khePx`); hộp đặt như `scene3d-view` đặt nhãn:
  * `translate(-50%,-140%)` từ neo (x, y). Bản trước dùng một cửa sổ cố định 68×22 px, cỡ cho câu mô tả dài thời
  * trước; với ký hiệu ngắn nó giấu oan đỉnh S cạnh H1 và A′, B′ cạnh H1 (run `scene3d-construction-audit`).
  */
 export function locNhanChongNhau(
   nhan: { id: string; x: number; y: number; lx?: number; ly?: number; duoi?: boolean; uuTien: number; w: number; h: number }[],
+  khePx: number = KHE_NHAN_PX,
 ): Set<string> {
   const hop = (n: { x: number; y: number; lx?: number; ly?: number; duoi?: boolean; w: number; h: number }) =>
     n.lx !== undefined && n.ly !== undefined
@@ -130,7 +140,7 @@ export function locNhanChongNhau(
   for (const n of [...nhan].sort((a, b) => b.uuTien - a.uuTien || a.id.localeCompare(b.id))) {
     const [l, t, r, b] = hop(n);
     const dung = giu.some(([gl, gt, gr, gb]) =>
-      l < gr + KHE_NHAN_PX && gl < r + KHE_NHAN_PX && t < gb + KHE_NHAN_PX && gt < b + KHE_NHAN_PX);
+      l < gr + khePx && gl < r + khePx && t < gb + khePx && gt < b + khePx);
     if (dung) continue;
     giu.push([l, t, r, b]);
     ket.add(n.id);

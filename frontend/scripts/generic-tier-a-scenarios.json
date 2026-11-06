@@ -46,7 +46,7 @@
       ],
       "oracle_source": {
         "kind": "canonical_request_contract_and_fact_graph",
-        "path": "backend/tests/geometry/test_prism_production_route.py",
+        "path": "docs/evaluation/geometry/runs/axo-hybrid4-capability-scene3d-reliability/frozen-oracle-sources/test_prism_production_route.py.txt",
         "sha256": "18170a7853fd454e1ce8a83c4d5e9339820a1aa922c0c3ccc49a8283500e1b8e",
         "hash_basis": "git_blob_at_measurement_commit",
         "symbol": "_pyramid_control_contract"
@@ -81,7 +81,7 @@
       ],
       "oracle_source": {
         "kind": "canonical_request_contract_and_fact_graph",
-        "path": "backend/tests/geometry/test_prism_production_route.py",
+        "path": "docs/evaluation/geometry/runs/axo-hybrid4-capability-scene3d-reliability/frozen-oracle-sources/test_prism_production_route.py.txt",
         "sha256": "18170a7853fd454e1ce8a83c4d5e9339820a1aa922c0c3ccc49a8283500e1b8e",
         "hash_basis": "git_blob_at_measurement_commit",
         "symbol": "_prism_p01_contract"
@@ -116,7 +116,7 @@
       ],
       "oracle_source": {
         "kind": "canonical_request_contract_and_fact_graph",
-        "path": "backend/tests/geometry/test_rectangular_pyramid_production_route.py",
+        "path": "docs/evaluation/geometry/runs/axo-hybrid4-capability-scene3d-reliability/frozen-oracle-sources/test_rectangular_pyramid_production_route.py.txt",
         "sha256": "85403c6bf35ac6386b44c8f3cc9e99f81c88897372d1183fb670773635735e7c",
         "hash_basis": "git_blob_at_measurement_commit",
         "symbol": "_rect_pyramid_contract"
@@ -152,7 +152,7 @@
       ],
       "oracle_source": {
         "kind": "canonical_request_contract_and_fact_graph",
-        "path": "backend/tests/geometry/test_cuboid_cube_production_route.py",
+        "path": "docs/evaluation/geometry/runs/axo-hybrid4-capability-scene3d-reliability/frozen-oracle-sources/test_cuboid_cube_production_route.py.txt",
         "sha256": "4f9fb1e61f6122f6953915981175a6fdd2a4732f9b1d51c16712a37c9f0fdfa9",
         "hash_basis": "git_blob_at_measurement_commit",
         "symbol": "_cuboid_p01_payload"
@@ -189,7 +189,7 @@
       ],
       "oracle_source": {
         "kind": "canonical_request_contract_and_fact_graph",
-        "path": "backend/tests/geometry/test_cuboid_cube_production_route.py",
+        "path": "docs/evaluation/geometry/runs/axo-hybrid4-capability-scene3d-reliability/frozen-oracle-sources/test_cuboid_cube_production_route.py.txt",
         "sha256": "4f9fb1e61f6122f6953915981175a6fdd2a4732f9b1d51c16712a37c9f0fdfa9",
         "hash_basis": "git_blob_at_measurement_commit",
         "symbol": "_cube_p01_payload"

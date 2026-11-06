@@ -219,8 +219,12 @@ def verify_16_classes(corpus_path: Path) -> tuple[dict[str, Any], list[dict[str,
     frontend_fixtures: list[dict[str, Any]] = []
     seen_fixture_ids: set[str] = set()
 
-    with patch.dict(os.environ, env, clear=False):
+    # `/api/analyze` runs nothing without a server-issued session, and a guest holds one trial: this offline verifier
+    # opens a real guest session and lifts only ITS trial ceiling while it runs (no account is created).
+    from app.accounts import policy
+    with patch.dict(os.environ, env, clear=False), patch.object(policy, "GUEST_TRIAL_LIMIT", 10**6):
         client = TestClient(app)
+        client.get("/api/auth/me")
         for cat_id, cat_label, expected_mode, specs in SIXTEEN_CLASSES:
             rows: list[dict[str, Any]] = []
             for cid, rules in specs:
@@ -371,8 +375,9 @@ def verify_16_classes(corpus_path: Path) -> tuple[dict[str, Any], list[dict[str,
 
     # Include `S2-C-D06_unnamed_prism` so existing Vitest named test cases stay present in the same single fixture bundle.
     if "S2-C-D06_unnamed_prism" not in seen_fixture_ids:
-        with patch.dict(os.environ, env, clear=False):
+        with patch.dict(os.environ, env, clear=False), patch.object(policy, "GUEST_TRIAL_LIMIT", 10**6):
             client = TestClient(app)
+            client.get("/api/auth/me")
             c = case_by_id["S2-C-D06_unnamed_prism"]
             res = client.post("/api/analyze", json={"input": {"type": "text", "content": c["problem_text"]}})
             assert res.status_code == 200

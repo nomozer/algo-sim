@@ -64,6 +64,7 @@ def chuong_trinh_thiet_dien() -> dict[str, Any]:
             *[_diem(n, v) for n, v in DAY.items()],
             _diem("S", [0, 0, 4]),
             _khai("M", "point3"), _khai("N", "point3"), _khai("P", "point3"),
+            _khai("sd", "line3"), _khai("Q", "point3"),
             _khai("chop", "solid"), _khai("mp", "plane3"),
             _khai("thiet_dien", "section"),
         ],
@@ -78,6 +79,10 @@ def chuong_trinh_thiet_dien() -> dict[str, Any]:
              "expr": {"kind": "midpoint", "a": "S", "b": "C"}},
             {"kind": "construct_plane", "target_var": "mp", "label": "(MNP)",
              "through": ["M", "N", "P"]},
+            {"kind": "construct_line", "target_var": "sd", "label": "SD",
+             "through_a": "S", "through_b": "D"},
+            {"kind": "construct_point", "target_var": "Q", "label": "Q",
+             "expr": {"kind": "intersect_line_plane", "line": "sd", "plane": "mp"}},
             {"kind": "construct_section", "target_var": "thiet_dien",
              "label": "thiết diện", "solid": "chop", "plane": "mp"},
         ],
@@ -477,6 +482,15 @@ BAI_MAU = [
     ("non-thiet-dien-truc", _CONG, chuong_trinh_non_thiet_dien_truc),
 ]
 
+#: Năm bài mẫu chóp S.ABCD có dữ kiện nguyên văn "đáy ABCD là hình vuông cạnh 2, SA vuông góc với mặt phẳng đáy".
+_CHOP_SA_VUONG_DAY = frozenset({
+    "thiet-dien-chop",
+    "mat-cheo-sac",
+    "vuong-goc-chop",
+    "mp-vuong-goc-duong",
+    "the-tich-chop",
+})
+
 #: NGHĨA VỤ ĐỀ HỎI, viết tay từ câu chữ của từng đề (không suy từ chương trình): `(kind, chủ thể, đại lượng)`.
 #: Sản phẩm nhận chúng từ `analyze` qua `RequestContract`; thiếu chúng thì chỉ phép đo CUỐI được coi là đáp số, và
 #: đề hỏi hai đại lượng sẽ lộ đại lượng kia ở chế độ học sinh. Đại lượng phụ (`h` của trụ xiên) không có ở đây.
@@ -496,6 +510,7 @@ DE_HOI: dict[str, tuple[tuple[str, str, str], ...]] = {
 #: Dữ kiện ĐỀ CHO của bài mẫu (`InputFact`): khai báo `GIVEN` trỏ tới đây bằng `source_fact_id`, và tầng trình bày
 #: lấy nhãn từ đây (`_nhan_du_kien_tu_fact`) — không đặt tên tay trong cảnh. Nhãn là chữ của đề.
 DU_KIEN: dict[str, tuple[tuple[str, str, tuple[Any, ...]], ...]] = {
+    **{ma: (("f_sa_vuong_day", "SA vuông góc với mặt phẳng đáy", ()),) for ma in _CHOP_SA_VUONG_DAY},
     "cau-cat-mat-phang": (("f_ban_kinh", "bán kính mặt cầu", (5,)),),
     "tru-thiet-dien-tron": (("f_ban_kinh_day", "bán kính đáy", (2,)),),
 }
@@ -503,11 +518,16 @@ DU_KIEN: dict[str, tuple[tuple[str, str, tuple[Any, ...]], ...]] = {
 
 def main() -> int:
     from app.simulation.semantic_program.contract import SemanticProgramSpec
+    from app.simulation.semantic_program.formation import hoan_thien_dung_hinh
     from app.simulation.semantic_program.interpreter import (
         SemanticProgramInterpreter,
     )
     from app.simulation.semantic_program.obligations import Obligation
-    from app.simulation.semantic_program.request_contract import InputFact, RequestContract
+    from app.simulation.semantic_program.request_contract import (
+        InputFact,
+        PyramidTopologySpec,
+        RequestContract,
+    )
     from app.simulation.semantic_program.pipeline_adapter import (
         compile_semantic_program_to_envelope,
     )
@@ -515,10 +535,41 @@ def main() -> int:
     from app.simulation.semantic_program.simulation_state import (
         build_simulation_state,
     )
+    from app.simulation.semantic_program.structured_relations import GeometricRelation
 
     ra: list[dict[str, Any]] = []
     for ma, nhom, dung in BAI_MAU:
         spec = SemanticProgramSpec.model_validate(dung())
+        # Hợp đồng như sản phẩm có: đề nguyên văn (`problemText` ghi ra bên dưới — neo tên mặt phẳng khai),
+        # tô-pô & quan hệ vuông góc có kiểu (cho `hoan_thien_dung_hinh` và chứng chỉ Gram `SA ⊥ (ABCD)`),
+        # và nghĩa vụ đề hỏi (`DE_HOI` — đáp số nào ẩn ở chế độ học sinh).
+        la_chop_sa = ma in _CHOP_SA_VUONG_DAY
+        hop_dong = RequestContract(
+            problem_text=spec.description or spec.title,
+            obligations=tuple(
+                Obligation(kind=k, container=c, params={"witness": w}) for k, c, w in DE_HOI.get(ma, ())
+            ),
+            input_facts=tuple(InputFact(fact_id=f, label=n, values=v) for f, n, v in DU_KIEN.get(ma, ())),
+            solid_topology=(
+                PyramidTopologySpec(apex="S", base_cycle=("A", "B", "C", "D"), base_shape="square")
+                if la_chop_sa else None
+            ),
+            geometric_relations=(
+                (
+                    GeometricRelation(
+                        kind="perpendicular_line_plane",
+                        line=("S", "A"),
+                        plane=("A", "B", "C"),
+                        source_fact_id="f_sa_vuong_day",
+                        model_assumption=False,
+                    ),
+                )
+                if la_chop_sa else ()
+            ),
+        )
+        # Bổ sung bước dựng theo lớp hình (`formation.hoan_thien_dung_hinh`: đáy → đường cao → cạnh bên → khép khối)
+        # đúng như đường sản phẩm `pipeline.py`, không viết tay từng đoạn.
+        spec = hoan_thien_dung_hinh(spec, hop_dong).spec
         env = compile_semantic_program_to_envelope(spec)
         # Cảnh 3D dựng đúng đường sản phẩm dựng (`pipeline._dung_scene3d`):
         # interpreter → simulation_state → scene3d. Không có đường tắt nào ở
@@ -529,11 +580,6 @@ def main() -> int:
         if ket.status != "completed":
             print(f"DỪNG: {ma} không chạy trọn — {ket.status}", file=sys.stderr)
             return 2
-        # Hợp đồng như sản phẩm có: đề nguyên văn (`problemText` ghi ra bên dưới — neo tên mặt phẳng khai) và nghĩa
-        # vụ đề hỏi (`DE_HOI` — đáp số nào ẩn ở chế độ học sinh).
-        hop_dong = RequestContract(problem_text=spec.description or spec.title, obligations=tuple(
-            Obligation(kind=k, container=c, params={"witness": w}) for k, c, w in DE_HOI.get(ma, ())),
-            input_facts=tuple(InputFact(fact_id=f, label=n, values=v) for f, n, v in DU_KIEN.get(ma, ())))
         canh = build_scene3d(build_simulation_state(spec, ket, hop_dong))
         if not canh["objects"]:
             print(f"DỪNG: {ma} không dựng ra cảnh 3D nào", file=sys.stderr)

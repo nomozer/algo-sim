@@ -106,14 +106,14 @@ export function readAsBase64(file: Blob): Promise<string> {
 
 /** Đọc file đã chọn thành InputPayload; ném lỗi nếu đuôi không hỗ trợ. */
 export async function fileToPayload(file: File): Promise<InputPayload> {
-  const kind = kindFromFile(file.name);
+  const kind = kindFromFile(file.name) ?? (isImageFile(file) ? "image" : null);
   if (!kind) {
     throw new Error(
       "Định dạng file không được hỗ trợ. Chọn .py (mã nguồn), .docx (Word) hoặc ảnh .png/.jpg/.webp.",
     );
   }
   const ext = extOf(file.name);
-  const mime = MIME_BY_EXT[ext];
+  const mime = kind === "image" ? imageMimeOf(file) : MIME_BY_EXT[ext];
   if (kind === "code") {
     return { type: "code", content: await readAsText(file), filename: file.name };
   }
@@ -123,4 +123,171 @@ export async function fileToPayload(file: File): Promise<InputPayload> {
     filename: file.name,
     mime_type: mime,
   };
+}
+
+/* ── Axo V2.7 Phase A (P5.4 & Decision D3) — Kiểm tra tệp đính kèm & trạng thái nút Dựng hình → ── */
+
+export const MAX_ATTACHMENT_BYTES = 10 * 1024 * 1024;
+export const MAX_ATTACHMENTS = 10;
+
+/** Danh sách định dạng tệp được nhận trên Composer hình học Axo V2.7 (không bao gồm .py hoặc .pdf). */
+export const COMPOSER_ACCEPT = ".png,.jpg,.jpeg,.webp,.docx";
+
+export interface ComposerAttachmentItem {
+  id: string;
+  file: File;
+  name: string;
+  size: number;
+  sizeFormatted: string;
+  ext: string;
+  kind: Exclude<InputKind, "text"> | "pdf";
+  previewUrl?: string;
+  status?: "loading" | "ready" | "error";
+  errorMessage?: string;
+}
+
+export type ComposerFileRejectionCode =
+  | "empty_file"
+  | "too_large"
+  | "pdf_unsupported"
+  | "unsupported_format"
+  | "duplicate_file"
+  | "too_many_files";
+
+export type ComposerFileValidationResult =
+  | {
+      ok: true;
+      kind: Exclude<InputKind, "text">;
+      ext: string;
+    }
+  | {
+      ok: false;
+      code: ComposerFileRejectionCode;
+      reason: string;
+    };
+
+/** Định dạng dung lượng tệp thực tế từ `file.size` (không giả lập dung lượng). */
+export function formatAttachmentSize(bytes: number): string {
+  if (!Number.isFinite(bytes) || bytes <= 0) return "0 B";
+  if (bytes < 1024) return `${Math.round(bytes)} B`;
+  const kb = bytes / 1024;
+  if (kb < 1024) return `${kb < 10 ? kb.toFixed(1) : Math.round(kb)} KB`;
+  const mb = kb / 1024;
+  return `${mb.toFixed(2)} MB`;
+}
+
+/** Tách phần thân và phần đuôi (kèm dấu chấm) để hiển thị gọn trên thẻ tệp. */
+export function splitAttachmentName(fullName: string): { stem: string; extWithDot: string } {
+  const safe = (fullName || "tep-dinh-kem").trim();
+  const dot = safe.lastIndexOf(".");
+  if (dot <= 0 || dot === safe.length - 1) {
+    return { stem: safe, extWithDot: "" };
+  }
+  return {
+    stem: safe.slice(0, dot),
+    extWithDot: safe.slice(dot).toLowerCase(),
+  };
+}
+
+/**
+ * Kiểm tra tệp đính kèm theo đúng khả năng xử lý thực của backend (Decision D3 & P6.4–P6.5):
+ * - Từ chối rõ ràng `.pdf` vì backend hiện chưa có bộ đọc PDF.
+ * - Từ chối định dạng lạ (không bao giờ gán mặc định sang một `kind` hợp lệ).
+ * - Từ chối tệp rỗng (`<= 0` byte) hoặc vượt quá 10 MB.
+ * - Từ chối tệp trùng lặp hoặc vượt quá số lượng tối đa.
+ */
+export function validateComposerFile(
+  file: { name: string; size: number; type?: string },
+  existingFiles: ReadonlyArray<{ name: string; size: number }> = [],
+): ComposerFileValidationResult {
+  const ext = extOf(file.name);
+  const mime = (file.type ?? "").toLowerCase().trim();
+
+  if (ext === ".pdf" || mime === "application/pdf") {
+    return {
+      ok: false,
+      code: "pdf_unsupported",
+      reason:
+        "Chưa hỗ trợ đọc trực tiếp tệp PDF (.pdf). Vui lòng đính kèm ảnh chụp đề bài (.png, .jpg, .webp) hoặc tệp Word (.docx).",
+    };
+  }
+
+  const kind: "image" | "document" | null = isImageFile(file)
+    ? "image"
+    : ext === ".docx"
+      ? "document"
+      : null;
+
+  if (!kind) {
+    return {
+      ok: false,
+      code: "unsupported_format",
+      reason:
+        "Định dạng tệp chưa được hỗ trợ. Vui lòng chọn ảnh đề bài (.png, .jpg, .webp) hoặc tệp Word (.docx).",
+    };
+  }
+
+  if (!Number.isFinite(file.size) || file.size <= 0) {
+    return {
+      ok: false,
+      code: "empty_file",
+      reason: `Tệp "${file.name}" đang rỗng (0 B). Vui lòng chọn tệp có nội dung.`,
+    };
+  }
+
+  if (file.size > MAX_ATTACHMENT_BYTES) {
+    return {
+      ok: false,
+      code: "too_large",
+      reason: `Tệp "${file.name}" vượt quá giới hạn 10 MB.`,
+    };
+  }
+
+  if (existingFiles.some((f) => f.name === file.name && f.size === file.size)) {
+    return {
+      ok: false,
+      code: "duplicate_file",
+      reason: `Tệp "${file.name}" đã có trong danh sách đính kèm.`,
+    };
+  }
+
+  if (existingFiles.length >= MAX_ATTACHMENTS) {
+    return {
+      ok: false,
+      code: "too_many_files",
+      reason: `Chỉ đính kèm tối đa ${MAX_ATTACHMENTS} tệp cho một đề toán.`,
+    };
+  }
+
+  const normalizedExt =
+    ext ||
+    (mime === "image/png"
+      ? ".png"
+      : mime === "image/webp"
+        ? ".webp"
+        : kind === "image"
+          ? ".jpg"
+          : "");
+
+  return {
+    ok: true,
+    kind,
+    ext: normalizedExt,
+  };
+}
+
+/**
+ * Nguồn chân lý duy nhất cho trạng thái bật/tắt nút `Dựng hình →` (P4.1 & Decision adjustment):
+ * - Không áp đặt ngưỡng tối thiểu 10 ký tự.
+ * - Chỉ cần văn bản sau khi `trim()` không rỗng HOẶC có ít nhất 1 tệp hợp lệ được backend hỗ trợ.
+ * - Khóa khi đang xử lý (`isSubmitting`) hoặc đang đọc tệp (`isUploading`).
+ */
+export function canSubmitComposer(
+  problemText: string,
+  acceptedAttachmentsCount: number,
+  isSubmitting: boolean,
+  isUploading = false,
+): boolean {
+  if (isSubmitting || isUploading) return false;
+  return problemText.trim().length > 0 || acceptedAttachmentsCount > 0;
 }

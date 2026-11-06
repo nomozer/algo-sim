@@ -1,0 +1,16 @@
+# alembic round trip, scratch SQLite, HEAD 6d0796d4, 2026-11-05T19:10:43Z
+INFO  [alembic.runtime.migration] Running upgrade  -> 72095b7dd318, initial schema (simulation_cache, simulation_patterns, reuse_metrics)
+INFO  [alembic.runtime.migration] Running upgrade 72095b7dd318 -> f32f9b107b77, m18 accounts and classroom
+INFO  [alembic.runtime.migration] Running upgrade f32f9b107b77 -> a1c7e4b90d52, live classroom session + semantic focus
+seed users: 1 | version: a1c7e4b90d52 | axo tables: []
+INFO  [alembic.runtime.migration] Running upgrade a1c7e4b90d52 -> c4e8a91b2f03, learning history entries per user
+INFO  [alembic.runtime.migration] Running upgrade c4e8a91b2f03 -> d5f9b82c3a14, admin persistence and telemetry tables
+after-upgrade users: 1 | version: d5f9b82c3a14 | axo tables: ['admin_analysis_telemetry', 'admin_audit_logs', 'admin_system_settings', 'learning_history_entries', 'user_account_meta']
+INFO  [alembic.runtime.migration] Running downgrade d5f9b82c3a14 -> c4e8a91b2f03, admin persistence and telemetry tables
+INFO  [alembic.runtime.migration] Running downgrade c4e8a91b2f03 -> a1c7e4b90d52, learning history entries per user
+after-downgrade users: 1 | version: a1c7e4b90d52 | axo tables: []
+INFO  [alembic.runtime.migration] Running upgrade a1c7e4b90d52 -> c4e8a91b2f03, learning history entries per user
+INFO  [alembic.runtime.migration] Running upgrade c4e8a91b2f03 -> d5f9b82c3a14, admin persistence and telemetry tables
+re-upgrade users: 1 | version: d5f9b82c3a14 | axo tables: ['admin_analysis_telemetry', 'admin_audit_logs', 'admin_system_settings', 'learning_history_entries', 'user_account_meta']
+d5f9b82c3a14 (head)
+No new upgrade operations detected.

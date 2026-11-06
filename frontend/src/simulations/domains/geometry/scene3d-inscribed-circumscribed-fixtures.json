@@ -1,0 +1,381 @@
+{
+  "base_circles_square_pyramid": {
+    "id": "base_circles_square_pyramid",
+    "title": "Hình chóp tứ giác đều S.ABCD — Đường tròn nội tiếp & ngoại tiếp đáy",
+    "description": "Cho hình chóp tứ giác đều S.ABCD có đáy ABCD là hình vuông tâm O, cạnh bằng 4, chiều cao SO = 4. Gọi M là trung điểm cạnh AB. Dựng đường tròn nội tiếp đáy (O; OM) và đường tròn ngoại tiếp đáy (O; OB).",
+    "scene3d": {
+      "coordinate_frame": "cartesian_3d_right_handed",
+      "free_objects": ["A", "B", "C", "D", "S"],
+      "objects": [
+        {
+          "id": "A",
+          "label": "Điểm A",
+          "notation": "A",
+          "type": "point3",
+          "render": "point_marker",
+          "origin": "free",
+          "producer": null,
+          "depends": [],
+          "xyz": ["-2", "-2", "0"]
+        },
+        {
+          "id": "B",
+          "label": "Điểm B",
+          "notation": "B",
+          "type": "point3",
+          "render": "point_marker",
+          "origin": "free",
+          "producer": null,
+          "depends": [],
+          "xyz": ["2", "-2", "0"]
+        },
+        {
+          "id": "C",
+          "label": "Điểm C",
+          "notation": "C",
+          "type": "point3",
+          "render": "point_marker",
+          "origin": "free",
+          "producer": null,
+          "depends": [],
+          "xyz": ["2", "2", "0"]
+        },
+        {
+          "id": "D",
+          "label": "Điểm D",
+          "notation": "D",
+          "type": "point3",
+          "render": "point_marker",
+          "origin": "free",
+          "producer": null,
+          "depends": [],
+          "xyz": ["-2", "2", "0"]
+        },
+        {
+          "id": "S",
+          "label": "Đỉnh S",
+          "notation": "S",
+          "type": "point3",
+          "render": "point_marker",
+          "origin": "free",
+          "producer": null,
+          "depends": [],
+          "xyz": ["0", "0", "4"]
+        },
+        {
+          "id": "chop",
+          "label": "Hình chóp S.ABCD",
+          "notation": "S.ABCD",
+          "type": "solid",
+          "render": "mesh",
+          "origin": "derived",
+          "producer": "construct_solid",
+          "depends": ["A", "B", "C", "D", "S"],
+          "vertex_ids": ["A", "B", "C", "D", "S"],
+          "vertices": [
+            ["-2", "-2", "0"],
+            ["2", "-2", "0"],
+            ["2", "2", "0"],
+            ["-2", "2", "0"],
+            ["0", "0", "4"]
+          ],
+          "faces": [
+            [0, 1, 2, 3],
+            [4, 0, 1],
+            [4, 1, 2],
+            [4, 2, 3],
+            [4, 3, 0]
+          ]
+        },
+        {
+          "id": "O",
+          "label": "Tâm đáy O",
+          "notation": "O",
+          "type": "point3",
+          "render": "point_marker",
+          "origin": "derived",
+          "producer": "midpoint",
+          "depends": ["A", "C"],
+          "xyz": ["0", "0", "0"]
+        },
+        {
+          "id": "M",
+          "label": "Tiếp điểm M trên AB",
+          "notation": "M",
+          "type": "point3",
+          "render": "point_marker",
+          "origin": "derived",
+          "producer": "midpoint",
+          "depends": ["A", "B"],
+          "xyz": ["0", "-2", "0"]
+        },
+        {
+          "id": "SO",
+          "label": "Đường cao SO",
+          "notation": "SO",
+          "type": "segment3",
+          "render": "segment",
+          "origin": "derived",
+          "producer": "construct_segment",
+          "depends": ["S", "O"],
+          "point_a": ["0", "0", "4"],
+          "point_b": ["0", "0", "0"],
+          "perpendicular_witness": {
+            "from": "S",
+            "foot_id": "O",
+            "foot": ["0", "0", "0"],
+            "on": "chop",
+            "relation": "perpendicular_line_plane",
+            "marker": {
+              "u": ["0", "-1", "0"],
+              "v": ["0", "0", "1"]
+            }
+          }
+        },
+        {
+          "id": "c_in",
+          "label": "Đường tròn nội tiếp đáy (O; OM)",
+          "notation": "(O; r)",
+          "type": "circle3",
+          "render": "circle",
+          "origin": "derived",
+          "producer": "construct_circle",
+          "depends": ["O", "M"],
+          "center": ["0", "0", "0"],
+          "normal": ["0", "0", "1"],
+          "radius_sq": "4"
+        },
+        {
+          "id": "c_out",
+          "label": "Đường tròn ngoại tiếp đáy (O; OB)",
+          "notation": "(O; R)",
+          "type": "circle3",
+          "render": "circle",
+          "origin": "derived",
+          "producer": "construct_circle",
+          "depends": ["O", "B"],
+          "center": ["0", "0", "0"],
+          "normal": ["0", "0", "1"],
+          "radius_sq": "8"
+        }
+      ],
+      "events": [
+        { "step_index": 0, "action": "INIT", "object": null, "objects": ["A", "B", "C", "D", "S"], "depends": [], "explanation": "Đặt các điểm đề cho vào không gian." },
+        { "step_index": 1, "action": "CREATE", "object": "chop", "depends": ["A", "B", "C", "D", "S"], "explanation": "Dựng hình chóp S.ABCD." },
+        { "step_index": 2, "action": "CREATE", "object": "O", "depends": ["A", "C"], "explanation": "Xác định tâm O của đáy ABCD." },
+        { "step_index": 3, "action": "CREATE", "object": "SO", "depends": ["S", "O"], "explanation": "Kẻ đường cao SO vuông góc với đáy." },
+        { "step_index": 4, "action": "CREATE", "object": "M", "depends": ["A", "B"], "explanation": "Lấy trung điểm M của AB làm tiếp điểm." },
+        { "step_index": 5, "action": "CREATE", "object": "c_in", "depends": ["O", "M"], "explanation": "Dựng đường tròn nội tiếp đáy tâm O bán kính OM = 2." },
+        { "step_index": 6, "action": "CREATE", "object": "c_out", "depends": ["O", "B"], "explanation": "Dựng đường tròn ngoại tiếp đáy tâm O đi qua A, B, C, D." }
+      ],
+      "formation": {
+        "steps": [
+          { "step_index": 0, "visible_ids": ["A", "B", "C", "D", "S"], "focus_ids": ["A", "B", "C", "D", "S"], "geometry_progress": [] },
+          { "step_index": 1, "visible_ids": ["A", "B", "C", "D", "S", "chop"], "focus_ids": ["chop"], "geometry_progress": [] },
+          { "step_index": 2, "visible_ids": ["A", "B", "C", "D", "S", "chop", "O"], "focus_ids": ["O"], "geometry_progress": [] },
+          { "step_index": 3, "visible_ids": ["A", "B", "C", "D", "S", "chop", "O", "SO"], "focus_ids": ["SO"], "geometry_progress": [] },
+          { "step_index": 4, "visible_ids": ["A", "B", "C", "D", "S", "chop", "O", "SO", "M"], "focus_ids": ["M"], "geometry_progress": [] },
+          { "step_index": 5, "visible_ids": ["A", "B", "C", "D", "S", "chop", "O", "SO", "M", "c_in"], "focus_ids": ["c_in"], "geometry_progress": [] },
+          { "step_index": 6, "visible_ids": ["A", "B", "C", "D", "S", "chop", "O", "SO", "M", "c_in", "c_out"], "focus_ids": ["c_out"], "geometry_progress": [] }
+        ]
+      }
+    }
+  },
+  "insphere_square_pyramid": {
+    "id": "insphere_square_pyramid",
+    "title": "Hình chóp tứ giác đều S.ABCD — Mặt cầu nội tiếp",
+    "description": "Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng 6 và chiều cao SO = 4. Xác định tâm I(0; 0; 3/2) và dựng mặt cầu nội tiếp hình chóp tiếp xúc đáy tại O và các mặt bên (tiếp điểm T trên mặt SAB).",
+    "scene3d": {
+      "coordinate_frame": "cartesian_3d_right_handed",
+      "free_objects": ["A", "B", "C", "D", "S"],
+      "objects": [
+        {
+          "id": "A",
+          "label": "Điểm A",
+          "notation": "A",
+          "type": "point3",
+          "render": "point_marker",
+          "origin": "free",
+          "producer": null,
+          "depends": [],
+          "xyz": ["-3", "-3", "0"]
+        },
+        {
+          "id": "B",
+          "label": "Điểm B",
+          "notation": "B",
+          "type": "point3",
+          "render": "point_marker",
+          "origin": "free",
+          "producer": null,
+          "depends": [],
+          "xyz": ["3", "-3", "0"]
+        },
+        {
+          "id": "C",
+          "label": "Điểm C",
+          "notation": "C",
+          "type": "point3",
+          "render": "point_marker",
+          "origin": "free",
+          "producer": null,
+          "depends": [],
+          "xyz": ["3", "3", "0"]
+        },
+        {
+          "id": "D",
+          "label": "Điểm D",
+          "notation": "D",
+          "type": "point3",
+          "render": "point_marker",
+          "origin": "free",
+          "producer": null,
+          "depends": [],
+          "xyz": ["-3", "3", "0"]
+        },
+        {
+          "id": "S",
+          "label": "Đỉnh S",
+          "notation": "S",
+          "type": "point3",
+          "render": "point_marker",
+          "origin": "free",
+          "producer": null,
+          "depends": [],
+          "xyz": ["0", "0", "4"]
+        },
+        {
+          "id": "chop",
+          "label": "Hình chóp S.ABCD",
+          "notation": "S.ABCD",
+          "type": "solid",
+          "render": "mesh",
+          "origin": "derived",
+          "producer": "construct_solid",
+          "depends": ["A", "B", "C", "D", "S"],
+          "vertex_ids": ["A", "B", "C", "D", "S"],
+          "vertices": [
+            ["-3", "-3", "0"],
+            ["3", "-3", "0"],
+            ["3", "3", "0"],
+            ["-3", "3", "0"],
+            ["0", "0", "4"]
+          ],
+          "faces": [
+            [0, 1, 2, 3],
+            [4, 0, 1],
+            [4, 1, 2],
+            [4, 2, 3],
+            [4, 3, 0]
+          ]
+        },
+        {
+          "id": "O",
+          "label": "Tâm đáy O",
+          "notation": "O",
+          "type": "point3",
+          "render": "point_marker",
+          "origin": "derived",
+          "producer": "midpoint",
+          "depends": ["A", "C"],
+          "xyz": ["0", "0", "0"]
+        },
+        {
+          "id": "I",
+          "label": "Tâm cầu nội tiếp I",
+          "notation": "I",
+          "type": "point3",
+          "render": "point_marker",
+          "origin": "derived",
+          "producer": "divide_segment",
+          "depends": ["O", "S"],
+          "xyz": ["0", "0", "3/2"]
+        },
+        {
+          "id": "T",
+          "label": "Tiếp điểm T trên (SAB)",
+          "notation": "T",
+          "type": "point3",
+          "render": "point_marker",
+          "origin": "derived",
+          "producer": "project_onto",
+          "depends": ["I", "chop"],
+          "xyz": ["0", "-6/5", "12/5"]
+        },
+        {
+          "id": "SO",
+          "label": "Trục cao SO",
+          "notation": "SO",
+          "type": "segment3",
+          "render": "segment",
+          "origin": "derived",
+          "producer": "construct_segment",
+          "depends": ["S", "O"],
+          "point_a": ["0", "0", "4"],
+          "point_b": ["0", "0", "0"],
+          "perpendicular_witness": {
+            "from": "S",
+            "foot_id": "O",
+            "foot": ["0", "0", "0"],
+            "on": "chop",
+            "relation": "perpendicular_line_plane",
+            "marker": {
+              "u": ["1", "0", "0"],
+              "v": ["0", "0", "1"]
+            }
+          }
+        },
+        {
+          "id": "cau_noi",
+          "label": "Mặt cầu nội tiếp (I; r)",
+          "notation": "(I; r)",
+          "type": "curved_solid",
+          "render": "curved_solid",
+          "curved_kind": "ball",
+          "origin": "derived",
+          "producer": "construct_curved_solid.ball",
+          "depends": ["I", "T"],
+          "anchor": ["0", "0", "3/2"],
+          "rim_point": ["0", "0", "0"],
+          "radius_sq": "9/4",
+          "height_sq": "0"
+        },
+        {
+          "id": "r_in",
+          "label": "Bán kính mặt cầu nội tiếp",
+          "notation": "r",
+          "type": "quantity",
+          "render": "readout",
+          "origin": "derived",
+          "producer": "measure",
+          "depends": ["cau_noi"],
+          "display_group": ["target"],
+          "exact": "3/2",
+          "value": "3/2"
+        }
+      ],
+      "events": [
+        { "step_index": 0, "action": "INIT", "object": null, "objects": ["A", "B", "C", "D", "S"], "depends": [], "explanation": "Đặt các đỉnh hình chóp S.ABCD." },
+        { "step_index": 1, "action": "CREATE", "object": "chop", "depends": ["A", "B", "C", "D", "S"], "explanation": "Dựng hình chóp tứ giác đều S.ABCD." },
+        { "step_index": 2, "action": "CREATE", "object": "O", "depends": ["A", "C"], "explanation": "Xác định tâm đáy O." },
+        { "step_index": 3, "action": "CREATE", "object": "SO", "depends": ["S", "O"], "explanation": "Dựng đường cao SO." },
+        { "step_index": 4, "action": "CREATE", "object": "I", "depends": ["O", "S"], "explanation": "Xác định tâm mặt cầu nội tiếp I trên trục SO." },
+        { "step_index": 5, "action": "CREATE", "object": "T", "depends": ["I", "chop"], "explanation": "Chiếu I vuông góc lên mặt bên (SAB) được tiếp điểm T." },
+        { "step_index": 6, "action": "CREATE", "object": "cau_noi", "depends": ["I", "T"], "explanation": "Dựng mặt cầu nội tiếp tâm I bán kính r = IO = IT = 3/2." },
+        { "step_index": 7, "action": "MEASURE", "object": "r_in", "depends": ["cau_noi"], "explanation": "Kết luận: bán kính mặt cầu nội tiếp r = 3/2." }
+      ],
+      "formation": {
+        "steps": [
+          { "step_index": 0, "visible_ids": ["A", "B", "C", "D", "S"], "focus_ids": ["A", "B", "C", "D", "S"], "geometry_progress": [] },
+          { "step_index": 1, "visible_ids": ["A", "B", "C", "D", "S", "chop"], "focus_ids": ["chop"], "geometry_progress": [] },
+          { "step_index": 2, "visible_ids": ["A", "B", "C", "D", "S", "chop", "O"], "focus_ids": ["O"], "geometry_progress": [] },
+          { "step_index": 3, "visible_ids": ["A", "B", "C", "D", "S", "chop", "O", "SO"], "focus_ids": ["SO"], "geometry_progress": [] },
+          { "step_index": 4, "visible_ids": ["A", "B", "C", "D", "S", "chop", "O", "SO", "I"], "focus_ids": ["I"], "geometry_progress": [] },
+          { "step_index": 5, "visible_ids": ["A", "B", "C", "D", "S", "chop", "O", "SO", "I", "T"], "focus_ids": ["T"], "geometry_progress": [] },
+          { "step_index": 6, "visible_ids": ["A", "B", "C", "D", "S", "chop", "O", "SO", "I", "T", "cau_noi"], "focus_ids": ["cau_noi"], "geometry_progress": [] },
+          { "step_index": 7, "visible_ids": ["A", "B", "C", "D", "S", "chop", "O", "SO", "I", "T", "cau_noi", "r_in"], "focus_ids": ["r_in"], "geometry_progress": [] }
+        ]
+      }
+    }
+  }
+}

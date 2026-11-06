@@ -174,9 +174,9 @@ describe('final visual quality', () => {
     const sphGroup = buildObject3D(sphObj, false, undefined, diemNen)!;
     const depthPrepasses = sphGroup.children.filter((c) => c.userData?.chieuSau || c.userData?.chieuSauMatTruoc);
     expect(depthPrepasses.map((c) => c.renderOrder).sort((a, b) => a - b)).toEqual([5, 7.5]);
-    // The camera silhouette is one closed line (screen-width pass); nothing else may draw contours on the sphere.
-    const sphereContours = sphGroup.children.filter((c) => (c as THREE.Line).isLine);
-    expect(sphereContours.map((c) => c.name)).toEqual([`sphere_silhouette:${sphObj.id}`]);
+    // Per matphang.html: no artificial camera-facing sphere_silhouette stroke; only the non-authoritative 3D reference equator.
+    expect(sphGroup.getObjectByName(`sphere_silhouette:${sphObj.id}`)).toBeUndefined();
+    expect(sphGroup.getObjectByName(`sphere_reference:${sphObj.id}`)).toBeDefined();
 
     const secNormal = buildObject3D(secObj, false, undefined, diemNen, undefined, undefined, undefined, false)!;
     const fillNormal = secNormal.children.find((c) => c.name.startsWith('section_fill:')) as THREE.Mesh;

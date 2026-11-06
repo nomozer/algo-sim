@@ -171,7 +171,7 @@ export function SimulationControls() {
     return () => window.removeEventListener("keydown", onKey);
   }, [timeline]);
 
-  if (!active || !mod) return null;
+  if (!active || !mod || active.envelope.domain === "geometry") return null;
 
   /* W4B-2Z §20/§23 — Thử thách là HÀNH ĐỘNG PHỤ NẰM CẠNH ĐIỀU KHIỂN, không phải
      một dải nội dung dưới mô hình. Đặt ở đây (thay vì trong `SimulationWorkspace`)

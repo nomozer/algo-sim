@@ -1,0 +1,1326 @@
+{
+  "multi_layer_aux_pyramid": {
+    "title": "Hình chóp đều đa lớp trong suốt & hình phụ",
+    "description": "Hình chóp tứ giác đều S.ABCD có đường chéo phụ AC, BD, đường cao SO, đường tròn nội tiếp đáy và mặt phẳng cắt (P) tạo thiết diện MNPQ.",
+    "scene3d": {
+      "free_objects": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "S"
+      ],
+      "objects": [
+        {
+          "id": "A",
+          "label": "Điểm A",
+          "notation": "A",
+          "type": "point3",
+          "render": "point_marker",
+          "origin": "free",
+          "producer": null,
+          "depends": [],
+          "xyz": [
+            "-2",
+            "-2",
+            "0"
+          ],
+          "display_group": [
+            "given"
+          ]
+        },
+        {
+          "id": "B",
+          "label": "Điểm B",
+          "notation": "B",
+          "type": "point3",
+          "render": "point_marker",
+          "origin": "free",
+          "producer": null,
+          "depends": [],
+          "xyz": [
+            "2",
+            "-2",
+            "0"
+          ],
+          "display_group": [
+            "given"
+          ]
+        },
+        {
+          "id": "C",
+          "label": "Điểm C",
+          "notation": "C",
+          "type": "point3",
+          "render": "point_marker",
+          "origin": "free",
+          "producer": null,
+          "depends": [],
+          "xyz": [
+            "2",
+            "2",
+            "0"
+          ],
+          "display_group": [
+            "given"
+          ]
+        },
+        {
+          "id": "D",
+          "label": "Điểm D",
+          "notation": "D",
+          "type": "point3",
+          "render": "point_marker",
+          "origin": "free",
+          "producer": null,
+          "depends": [],
+          "xyz": [
+            "-2",
+            "2",
+            "0"
+          ],
+          "display_group": [
+            "given"
+          ]
+        },
+        {
+          "id": "S",
+          "label": "Đỉnh S",
+          "notation": "S",
+          "type": "point3",
+          "render": "point_marker",
+          "origin": "free",
+          "producer": null,
+          "depends": [],
+          "xyz": [
+            "0",
+            "0",
+            "5"
+          ],
+          "display_group": [
+            "given"
+          ]
+        },
+        {
+          "id": "chop",
+          "label": "Hình chóp đều S.ABCD",
+          "notation": "S.ABCD",
+          "type": "solid",
+          "render": "mesh",
+          "origin": "derived",
+          "producer": "construct_solid",
+          "shape_class": "PYRAMID_LIKE",
+          "depends": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "S"
+          ],
+          "vertex_ids": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "S"
+          ],
+          "vertices": [
+            [
+              "-2",
+              "-2",
+              "0"
+            ],
+            [
+              "2",
+              "-2",
+              "0"
+            ],
+            [
+              "2",
+              "2",
+              "0"
+            ],
+            [
+              "-2",
+              "2",
+              "0"
+            ],
+            [
+              "0",
+              "0",
+              "5"
+            ]
+          ],
+          "faces": [
+            [
+              0,
+              1,
+              2,
+              3
+            ],
+            [
+              0,
+              1,
+              4
+            ],
+            [
+              1,
+              2,
+              4
+            ],
+            [
+              2,
+              3,
+              4
+            ],
+            [
+              3,
+              0,
+              4
+            ]
+          ],
+          "display_group": [
+            "given"
+          ]
+        },
+        {
+          "id": "AC",
+          "label": "Đường chéo AC",
+          "notation": "AC",
+          "type": "line3",
+          "render": "line",
+          "origin": "derived",
+          "producer": "construct_line",
+          "formation_roles": [
+            "CONSTRUCT_AUXILIARY_GEOMETRY"
+          ],
+          "display_group": [
+            "construction"
+          ],
+          "depends": [
+            "A",
+            "C"
+          ],
+          "point": [
+            "-2",
+            "-2",
+            "0"
+          ],
+          "direction": [
+            "4",
+            "4",
+            "0"
+          ]
+        },
+        {
+          "id": "BD",
+          "label": "Đường chéo BD",
+          "notation": "BD",
+          "type": "line3",
+          "render": "line",
+          "origin": "derived",
+          "producer": "construct_line",
+          "formation_roles": [
+            "CONSTRUCT_AUXILIARY_GEOMETRY"
+          ],
+          "display_group": [
+            "construction"
+          ],
+          "depends": [
+            "B",
+            "D"
+          ],
+          "point": [
+            "2",
+            "-2",
+            "0"
+          ],
+          "direction": [
+            "-4",
+            "4",
+            "0"
+          ]
+        },
+        {
+          "id": "O",
+          "label": "Tâm đáy O",
+          "notation": "O",
+          "type": "point3",
+          "render": "point_marker",
+          "origin": "derived",
+          "producer": "intersect_line_line",
+          "depends": [
+            "AC",
+            "BD"
+          ],
+          "xyz": [
+            "0",
+            "0",
+            "0"
+          ],
+          "display_group": [
+            "construction"
+          ]
+        },
+        {
+          "id": "SO",
+          "label": "Đường cao SO",
+          "notation": "SO",
+          "type": "segment3",
+          "render": "segment",
+          "origin": "derived",
+          "producer": "construct_segment",
+          "depends": [
+            "S",
+            "O"
+          ],
+          "endpoints": [
+            [
+              "0",
+              "0",
+              "5"
+            ],
+            [
+              "0",
+              "0",
+              "0"
+            ]
+          ],
+          "display_group": [
+            "construction"
+          ],
+          "perpendicular_witness": {
+            "foot": [
+              "0",
+              "0",
+              "0"
+            ],
+            "on": "chop",
+            "marker": {
+              "u": [
+                "1",
+                "0",
+                "0"
+              ],
+              "v": [
+                "0",
+                "0",
+                "1"
+              ]
+            },
+            "can_present_as_proven": true,
+            "certificate": "regular_pyramid_altitude"
+          }
+        },
+        {
+          "id": "c_in",
+          "label": "Đường tròn nội tiếp đáy",
+          "notation": "(O; r)",
+          "type": "circle3",
+          "render": "circle",
+          "origin": "derived",
+          "producer": "construct_inscribed_circle",
+          "semantic_role": "INSCRIBED_CIRCLE",
+          "surface_role": "BASE_REGION",
+          "depends": [
+            "O",
+            "chop"
+          ],
+          "center": [
+            "0",
+            "0",
+            "0"
+          ],
+          "normal": [
+            "0",
+            "0",
+            "1"
+          ],
+          "radius_sq": "4",
+          "fill_visible": true,
+          "display_group": [
+            "construction"
+          ]
+        },
+        {
+          "id": "P_cut",
+          "label": "Mặt phẳng cắt (P)",
+          "notation": "(P)",
+          "type": "plane3",
+          "render": "surface",
+          "origin": "derived",
+          "producer": "construct_plane",
+          "surface_role": "CUTTING_PLANE",
+          "formation_roles": [
+            "CONSTRUCT_CUTTING_OBJECT"
+          ],
+          "depends": [
+            "chop"
+          ],
+          "point": [
+            "2",
+            "0",
+            "2"
+          ],
+          "normal": [
+            "1",
+            "0",
+            "5"
+          ],
+          "display_group": [
+            "construction"
+          ]
+        },
+        {
+          "id": "td_poly",
+          "label": "Thiết diện MNPQ",
+          "notation": "(MNPQ)",
+          "type": "section",
+          "render": "polygon",
+          "origin": "derived",
+          "producer": "construct_section",
+          "surface_role": "SECTION_REGION",
+          "formation_roles": [
+            "PRODUCE_SECTION_RESULT"
+          ],
+          "depends": [
+            "chop",
+            "P_cut"
+          ],
+          "polygon": [
+            [
+              "-26/27",
+              "-26/27",
+              "70/27"
+            ],
+            [
+              "26/23",
+              "-26/23",
+              "50/23"
+            ],
+            [
+              "26/23",
+              "26/23",
+              "50/23"
+            ],
+            [
+              "-26/27",
+              "26/27",
+              "70/27"
+            ]
+          ],
+          "closed": true,
+          "fill_visible": true,
+          "display_group": [
+            "construction",
+            "target"
+          ]
+        },
+        {
+          "id": "M",
+          "label": "Giao điểm M",
+          "notation": "M",
+          "type": "point3",
+          "render": "point_marker",
+          "origin": "derived",
+          "producer": "intersect_line_plane",
+          "depends": [
+            "chop",
+            "P_cut"
+          ],
+          "xyz": [
+            "-26/27",
+            "-26/27",
+            "70/27"
+          ],
+          "display_group": [
+            "construction"
+          ]
+        },
+        {
+          "id": "N",
+          "label": "Giao điểm N",
+          "notation": "N",
+          "type": "point3",
+          "render": "point_marker",
+          "origin": "derived",
+          "producer": "intersect_line_plane",
+          "depends": [
+            "chop",
+            "P_cut"
+          ],
+          "xyz": [
+            "26/23",
+            "-26/23",
+            "50/23"
+          ],
+          "display_group": [
+            "construction"
+          ]
+        },
+        {
+          "id": "P",
+          "label": "Giao điểm P",
+          "notation": "P",
+          "type": "point3",
+          "render": "point_marker",
+          "origin": "derived",
+          "producer": "intersect_line_plane",
+          "depends": [
+            "chop",
+            "P_cut"
+          ],
+          "xyz": [
+            "26/23",
+            "26/23",
+            "50/23"
+          ],
+          "display_group": [
+            "construction"
+          ]
+        },
+        {
+          "id": "Q",
+          "label": "Giao điểm Q",
+          "notation": "Q",
+          "type": "point3",
+          "render": "point_marker",
+          "origin": "derived",
+          "producer": "intersect_line_plane",
+          "depends": [
+            "chop",
+            "P_cut"
+          ],
+          "xyz": [
+            "-26/27",
+            "26/27",
+            "70/27"
+          ],
+          "display_group": [
+            "construction"
+          ]
+        }
+      ],
+      "events": [
+        {
+          "step_index": 0,
+          "semantic_kind": "EXPLANATION",
+          "action": "INIT",
+          "object": null,
+          "depends": [],
+          "explanation": "Khởi tạo các đỉnh A, B, C, D, S."
+        },
+        {
+          "step_index": 1,
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "action": "CREATE",
+          "object": "chop",
+          "depends": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "S"
+          ],
+          "explanation": "Dựng hình chóp đều S.ABCD."
+        },
+        {
+          "step_index": 2,
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "action": "CREATE",
+          "object": "AC",
+          "depends": [
+            "A",
+            "C"
+          ],
+          "explanation": "Kẻ đường chéo phụ AC."
+        },
+        {
+          "step_index": 3,
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "action": "CREATE",
+          "object": "BD",
+          "depends": [
+            "B",
+            "D"
+          ],
+          "explanation": "Kẻ đường chéo phụ BD."
+        },
+        {
+          "step_index": 4,
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "action": "CREATE",
+          "object": "O",
+          "depends": [
+            "AC",
+            "BD"
+          ],
+          "explanation": "Xác định tâm đáy O = AC ∩ BD."
+        },
+        {
+          "step_index": 5,
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "action": "CREATE",
+          "object": "SO",
+          "depends": [
+            "S",
+            "O"
+          ],
+          "explanation": "Dựng đường cao SO vuông góc với đáy."
+        },
+        {
+          "step_index": 6,
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "action": "CREATE",
+          "object": "c_in",
+          "depends": [
+            "O",
+            "chop"
+          ],
+          "explanation": "Dựng đường tròn nội tiếp đáy ABCD."
+        },
+        {
+          "step_index": 7,
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "action": "CREATE",
+          "object": "P_cut",
+          "depends": [
+            "chop"
+          ],
+          "explanation": "Dựng mặt phẳng cắt (P) nghiêng qua khối chóp."
+        },
+        {
+          "step_index": 8,
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "action": "CREATE",
+          "object": "td_poly",
+          "depends": [
+            "chop",
+            "P_cut"
+          ],
+          "explanation": "Xác định thiết diện tứ giác MNPQ của (P) với hình chóp."
+        }
+      ],
+      "formation": {
+        "steps": [
+          {
+            "step_index": 0,
+            "semantic_kind": "EXPLANATION",
+            "visible_ids": [
+              "A",
+              "B",
+              "C",
+              "D",
+              "S"
+            ],
+            "geometry_progress": []
+          },
+          {
+            "step_index": 1,
+            "semantic_kind": "GEOMETRY_CONSTRUCTION",
+            "visible_ids": [
+              "A",
+              "B",
+              "C",
+              "D",
+              "S",
+              "chop"
+            ],
+            "geometry_progress": []
+          },
+          {
+            "step_index": 2,
+            "semantic_kind": "GEOMETRY_CONSTRUCTION",
+            "visible_ids": [
+              "A",
+              "B",
+              "C",
+              "D",
+              "S",
+              "chop",
+              "AC"
+            ],
+            "geometry_progress": []
+          },
+          {
+            "step_index": 3,
+            "semantic_kind": "GEOMETRY_CONSTRUCTION",
+            "visible_ids": [
+              "A",
+              "B",
+              "C",
+              "D",
+              "S",
+              "chop",
+              "AC",
+              "BD"
+            ],
+            "geometry_progress": []
+          },
+          {
+            "step_index": 4,
+            "semantic_kind": "GEOMETRY_CONSTRUCTION",
+            "visible_ids": [
+              "A",
+              "B",
+              "C",
+              "D",
+              "S",
+              "chop",
+              "AC",
+              "BD",
+              "O"
+            ],
+            "geometry_progress": []
+          },
+          {
+            "step_index": 5,
+            "semantic_kind": "GEOMETRY_CONSTRUCTION",
+            "visible_ids": [
+              "A",
+              "B",
+              "C",
+              "D",
+              "S",
+              "chop",
+              "AC",
+              "BD",
+              "O",
+              "SO"
+            ],
+            "geometry_progress": []
+          },
+          {
+            "step_index": 6,
+            "semantic_kind": "GEOMETRY_CONSTRUCTION",
+            "visible_ids": [
+              "A",
+              "B",
+              "C",
+              "D",
+              "S",
+              "chop",
+              "AC",
+              "BD",
+              "O",
+              "SO",
+              "c_in"
+            ],
+            "geometry_progress": []
+          },
+          {
+            "step_index": 7,
+            "semantic_kind": "GEOMETRY_CONSTRUCTION",
+            "visible_ids": [
+              "A",
+              "B",
+              "C",
+              "D",
+              "S",
+              "chop",
+              "AC",
+              "BD",
+              "O",
+              "SO",
+              "c_in",
+              "P_cut"
+            ],
+            "geometry_progress": []
+          },
+          {
+            "step_index": 8,
+            "semantic_kind": "GEOMETRY_CONSTRUCTION",
+            "visible_ids": [
+              "A",
+              "B",
+              "C",
+              "D",
+              "S",
+              "chop",
+              "AC",
+              "BD",
+              "O",
+              "SO",
+              "c_in",
+              "P_cut",
+              "td_poly",
+              "M",
+              "N",
+              "P",
+              "Q"
+            ],
+            "geometry_progress": [
+              {
+                "object_id": "td_poly",
+                "visible_edge_ids": [
+                  "e1",
+                  "e2",
+                  "e3",
+                  "e4"
+                ],
+                "ordered_construction_ids": [
+                  "e1",
+                  "e2",
+                  "e3",
+                  "e4"
+                ],
+                "closed": true,
+                "fill_visible": true
+              }
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "coincident_elements_pyramid": {
+    "title": "Hình chóp có điểm trùng, đoạn trùng cạnh và nhãn gần nhau",
+    "description": "Hình chóp S.ABCD có SA ⊥ (ABCD), chân đường cao H trùng A, đoạn AB trùng cạnh đáy, trung điểm M và hình chiếu K gần nhau trên SB.",
+    "scene3d": {
+      "free_objects": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "S"
+      ],
+      "objects": [
+        {
+          "id": "A",
+          "label": "Đỉnh A",
+          "notation": "A",
+          "type": "point3",
+          "render": "point_marker",
+          "origin": "free",
+          "producer": null,
+          "depends": [],
+          "xyz": [
+            "0",
+            "0",
+            "0"
+          ],
+          "display_group": [
+            "given"
+          ]
+        },
+        {
+          "id": "B",
+          "label": "Đỉnh B",
+          "notation": "B",
+          "type": "point3",
+          "render": "point_marker",
+          "origin": "free",
+          "producer": null,
+          "depends": [],
+          "xyz": [
+            "3",
+            "0",
+            "0"
+          ],
+          "display_group": [
+            "given"
+          ]
+        },
+        {
+          "id": "C",
+          "label": "Đỉnh C",
+          "notation": "C",
+          "type": "point3",
+          "render": "point_marker",
+          "origin": "free",
+          "producer": null,
+          "depends": [],
+          "xyz": [
+            "3",
+            "3",
+            "0"
+          ],
+          "display_group": [
+            "given"
+          ]
+        },
+        {
+          "id": "D",
+          "label": "Đỉnh D",
+          "notation": "D",
+          "type": "point3",
+          "render": "point_marker",
+          "origin": "free",
+          "producer": null,
+          "depends": [],
+          "xyz": [
+            "0",
+            "3",
+            "0"
+          ],
+          "display_group": [
+            "given"
+          ]
+        },
+        {
+          "id": "S",
+          "label": "Đỉnh S",
+          "notation": "S",
+          "type": "point3",
+          "render": "point_marker",
+          "origin": "free",
+          "producer": null,
+          "depends": [],
+          "xyz": [
+            "0",
+            "0",
+            "4"
+          ],
+          "display_group": [
+            "given"
+          ]
+        },
+        {
+          "id": "chop",
+          "label": "Hình chóp S.ABCD",
+          "notation": "S.ABCD",
+          "type": "solid",
+          "render": "mesh",
+          "origin": "derived",
+          "producer": "construct_solid",
+          "shape_class": "PYRAMID_LIKE",
+          "depends": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "S"
+          ],
+          "vertex_ids": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "S"
+          ],
+          "vertices": [
+            [
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "3",
+              "0",
+              "0"
+            ],
+            [
+              "3",
+              "3",
+              "0"
+            ],
+            [
+              "0",
+              "3",
+              "0"
+            ],
+            [
+              "0",
+              "0",
+              "4"
+            ]
+          ],
+          "faces": [
+            [
+              0,
+              1,
+              2,
+              3
+            ],
+            [
+              0,
+              1,
+              4
+            ],
+            [
+              1,
+              2,
+              4
+            ],
+            [
+              2,
+              3,
+              4
+            ],
+            [
+              3,
+              0,
+              4
+            ]
+          ],
+          "display_group": [
+            "given"
+          ]
+        },
+        {
+          "id": "H",
+          "label": "Chân đường cao H (trùng A)",
+          "notation": "H",
+          "type": "point3",
+          "render": "point_marker",
+          "origin": "derived",
+          "producer": "construct_point.project_onto",
+          "depends": [
+            "S",
+            "chop"
+          ],
+          "xyz": [
+            "0",
+            "0",
+            "0"
+          ],
+          "display_group": [
+            "construction"
+          ]
+        },
+        {
+          "id": "seg_AB",
+          "label": "Đoạn thẳng AB trùng cạnh đáy",
+          "notation": "AB",
+          "type": "segment3",
+          "render": "segment",
+          "origin": "derived",
+          "producer": "construct_segment",
+          "depends": [
+            "A",
+            "B"
+          ],
+          "endpoints": [
+            [
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "3",
+              "0",
+              "0"
+            ]
+          ],
+          "display_group": [
+            "construction"
+          ]
+        },
+        {
+          "id": "SB_line",
+          "label": "Đường thẳng SB",
+          "notation": "SB",
+          "type": "line3",
+          "render": "line",
+          "origin": "derived",
+          "producer": "construct_line",
+          "formation_roles": [
+            "CONSTRUCT_AUXILIARY_GEOMETRY"
+          ],
+          "depends": [
+            "S",
+            "B"
+          ],
+          "point": [
+            "0",
+            "0",
+            "4"
+          ],
+          "direction": [
+            "3",
+            "0",
+            "-4"
+          ],
+          "display_group": [
+            "construction"
+          ]
+        },
+        {
+          "id": "M",
+          "label": "Trung điểm M của SB",
+          "notation": "M",
+          "type": "point3",
+          "render": "point_marker",
+          "origin": "derived",
+          "producer": "construct_point.midpoint",
+          "depends": [
+            "S",
+            "B"
+          ],
+          "xyz": [
+            "3/2",
+            "0",
+            "2"
+          ],
+          "display_group": [
+            "construction"
+          ]
+        },
+        {
+          "id": "K",
+          "label": "Hình chiếu K của A lên SB",
+          "notation": "K",
+          "type": "point3",
+          "render": "point_marker",
+          "origin": "derived",
+          "producer": "construct_point.project_onto",
+          "depends": [
+            "SB_line",
+            "A"
+          ],
+          "xyz": [
+            "48/25",
+            "0",
+            "36/25"
+          ],
+          "display_group": [
+            "construction",
+            "target"
+          ]
+        },
+        {
+          "id": "AK",
+          "label": "Đoạn vuông góc AK",
+          "notation": "AK",
+          "type": "segment3",
+          "render": "segment",
+          "origin": "derived",
+          "producer": "construct_segment",
+          "depends": [
+            "A",
+            "K"
+          ],
+          "endpoints": [
+            [
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "48/25",
+              "0",
+              "36/25"
+            ]
+          ],
+          "display_group": [
+            "construction",
+            "target"
+          ],
+          "perpendicular_witness": {
+            "foot": [
+              "48/25",
+              "0",
+              "36/25"
+            ],
+            "on": "SB_line",
+            "marker": {
+              "u": [
+                "3",
+                "0",
+                "-4"
+              ],
+              "v": [
+                "-48",
+                "0",
+                "-36"
+              ]
+            },
+            "can_present_as_proven": true,
+            "certificate": "projection_onto_line"
+          }
+        }
+      ],
+      "events": [
+        {
+          "step_index": 0,
+          "semantic_kind": "EXPLANATION",
+          "action": "INIT",
+          "object": null,
+          "depends": [],
+          "explanation": "Khởi tạo các đỉnh A, B, C, D, S."
+        },
+        {
+          "step_index": 1,
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "action": "CREATE",
+          "object": "chop",
+          "depends": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "S"
+          ],
+          "explanation": "Dựng hình chóp vuông góc S.ABCD (SA ⊥ đáy)."
+        },
+        {
+          "step_index": 2,
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "action": "CREATE",
+          "object": "H",
+          "depends": [
+            "S",
+            "chop"
+          ],
+          "explanation": "Chân đường cao H từ S xuống (ABCD) trùng với A."
+        },
+        {
+          "step_index": 3,
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "action": "CREATE",
+          "object": "seg_AB",
+          "depends": [
+            "A",
+            "B"
+          ],
+          "explanation": "Xét đoạn thẳng AB trùng cạnh đáy."
+        },
+        {
+          "step_index": 4,
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "action": "CREATE",
+          "object": "M",
+          "depends": [
+            "S",
+            "B"
+          ],
+          "explanation": "Gọi M là trung điểm cạnh bên SB."
+        },
+        {
+          "step_index": 5,
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "action": "CREATE",
+          "object": "K",
+          "depends": [
+            "SB_line",
+            "A"
+          ],
+          "explanation": "Kẻ AK vuông góc với SB tại K (gần M)."
+        },
+        {
+          "step_index": 6,
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "action": "CREATE",
+          "object": "AK",
+          "depends": [
+            "A",
+            "K"
+          ],
+          "explanation": "Hoàn tất đoạn vuông góc AK ⊥ SB."
+        }
+      ],
+      "formation": {
+        "steps": [
+          {
+            "step_index": 0,
+            "semantic_kind": "EXPLANATION",
+            "visible_ids": [
+              "A",
+              "B",
+              "C",
+              "D",
+              "S"
+            ],
+            "geometry_progress": []
+          },
+          {
+            "step_index": 1,
+            "semantic_kind": "GEOMETRY_CONSTRUCTION",
+            "visible_ids": [
+              "A",
+              "B",
+              "C",
+              "D",
+              "S",
+              "chop"
+            ],
+            "geometry_progress": []
+          },
+          {
+            "step_index": 2,
+            "semantic_kind": "GEOMETRY_CONSTRUCTION",
+            "visible_ids": [
+              "A",
+              "B",
+              "C",
+              "D",
+              "S",
+              "chop",
+              "H"
+            ],
+            "geometry_progress": []
+          },
+          {
+            "step_index": 3,
+            "semantic_kind": "GEOMETRY_CONSTRUCTION",
+            "visible_ids": [
+              "A",
+              "B",
+              "C",
+              "D",
+              "S",
+              "chop",
+              "H",
+              "seg_AB"
+            ],
+            "geometry_progress": []
+          },
+          {
+            "step_index": 4,
+            "semantic_kind": "GEOMETRY_CONSTRUCTION",
+            "visible_ids": [
+              "A",
+              "B",
+              "C",
+              "D",
+              "S",
+              "chop",
+              "H",
+              "seg_AB",
+              "SB_line",
+              "M"
+            ],
+            "geometry_progress": []
+          },
+          {
+            "step_index": 5,
+            "semantic_kind": "GEOMETRY_CONSTRUCTION",
+            "visible_ids": [
+              "A",
+              "B",
+              "C",
+              "D",
+              "S",
+              "chop",
+              "H",
+              "seg_AB",
+              "SB_line",
+              "M",
+              "K"
+            ],
+            "geometry_progress": []
+          },
+          {
+            "step_index": 6,
+            "semantic_kind": "GEOMETRY_CONSTRUCTION",
+            "visible_ids": [
+              "A",
+              "B",
+              "C",
+              "D",
+              "S",
+              "chop",
+              "H",
+              "seg_AB",
+              "SB_line",
+              "M",
+              "K",
+              "AK"
+            ],
+            "geometry_progress": []
+          }
+        ]
+      }
+    }
+  }
+}

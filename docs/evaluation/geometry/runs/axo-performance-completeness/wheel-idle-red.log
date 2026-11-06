@@ -1,0 +1,33 @@
+
+ RUN  v4.1.10 D:/Documents/projects/algo-sim/.superpowers/worktrees/axo-pedagogical-integration/frontend
+
+ ❯ src/simulations/domains/geometry/scene3d-frame-scheduling.test.ts (2 tests | 1 failed) 10ms
+     × does not latch controlsInteracting after OrbitControls has ended a wheel gesture 8ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/simulations/domains/geometry/scene3d-frame-scheduling.test.ts > camera frame scheduling > does not latch controlsInteracting after OrbitControls has ended a wheel gesture
+AssertionError: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ src/simulations/domains/geometry/scene3d-frame-scheduling.test.ts:21:19
+     19|       return controlsInteracting;
+     20|     `);
+     21|     expect(run()).toBe(false);
+       |                   ^
+     22|   });
+     23|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 1 passed (2)
+   Start at  17:44:56
+   Duration  560ms (transform 36ms, setup 50ms, import 17ms, tests 10ms, environment 0ms)
+

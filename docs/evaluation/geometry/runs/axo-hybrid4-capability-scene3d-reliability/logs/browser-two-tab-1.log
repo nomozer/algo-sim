@@ -1,0 +1,9 @@
+PASS 1. A and B send two different problems at the same time
+PASS 2. A and B send the same problem at the same time ⇒ two independent attempts
+PASS 3. A saves history while B is reading and touching history (persistence race, repeated)
+PASS 4. B reloads after A updated ⇒ B keeps its own attempt and sees A's records
+PASS 5. A and B navigate and reopen different records, Back/Forward per tab
+PASS 6. A and B operate Scene3D, camera and steps independently
+PASS 7. A plays the construction while B creates a new attempt
+PASS retry: a 502 then 200 inside one send reuses the same Idempotency-Key and records one attempt
+{"pass":8,"total":8,"attempts":29,"analyzeRequests":14}

@@ -45,12 +45,15 @@ def isolated_sqlite_db(tmp_path, monkeypatch):
     monkeypatch.setattr(db_module, "engine", test_engine)
     monkeypatch.setattr(db_module, "SessionLocal", TestSession)
     monkeypatch.setattr(main_module, "SessionLocal", TestSession)
+    import app.accounts.router as router_module      # sessions and the usage ledger live behind the accounts router
+    monkeypatch.setattr(router_module, "SessionLocal", TestSession)
     yield TestSession
     test_engine.dispose()
 
 
 def _post(text: str, client=DOCKER_BRIDGE_CLIENT):
-    return TestClient(app, client=client).post("/api/analyze", json={"input": {"type": "text", "content": text}})
+    from tests.route_client import route_client
+    return route_client(app, client=client).post("/api/analyze", json={"input": {"type": "text", "content": text}})
 
 
 def _gemini_ok_body(payload: dict) -> dict:
@@ -167,7 +170,8 @@ def test_staging_replay_refuses_direct_image_before_vision_ingestion(staging_env
         raise AssertionError("Vision ingestion ran in staging-replay")
 
     monkeypatch.setattr(main_module, "ingest_to_text", vision_must_not_run)
-    res = TestClient(app, client=DOCKER_BRIDGE_CLIENT).post(
+    from tests.route_client import route_client
+    res = route_client(app, client=DOCKER_BRIDGE_CLIENT).post(
         "/api/analyze",
         json={"input": {"type": "image", "content": "not-base64", "mime_type": "image/png"}},
     )

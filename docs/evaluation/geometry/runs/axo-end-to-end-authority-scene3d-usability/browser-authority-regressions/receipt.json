@@ -1,0 +1,398 @@
+{
+  "schema": "axo-scene-consistency/1",
+  "dist": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\axo-hybrid4-integration\\frontend\\dist",
+  "provider_calls": 0,
+  "checks": [
+    {
+      "name": "mathematical authority 6e36dee94c8239be: composer, attempt, history, reload, no answer surface",
+      "evidence": {
+        "status": "reached",
+        "attempt": "a0cbd734386d60dcca7cefcf429db4b1d",
+        "answerBinding": [
+          {
+            "quantity_id": "kq_q",
+            "coefficient": "30",
+            "symbolic": "30",
+            "dim": 0,
+            "unit": null
+          }
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "mathematical authority 1d98b06589729774: composer, attempt, history, reload, no answer surface",
+      "evidence": {
+        "status": "reached",
+        "attempt": "acc528c4bf5c476cf03325aee94bffcfe",
+        "answerBinding": [
+          {
+            "quantity_id": "kq_mg1",
+            "coefficient": "12π",
+            "symbolic": "12π",
+            "dim": 0,
+            "unit": null
+          }
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "mathematical authority ec8bbd1bfecb0c84: composer, attempt, history, reload, no answer surface",
+      "evidence": {
+        "status": "reached",
+        "attempt": "a1d6f3e6c8a306f87f7d8492146b7537d",
+        "answerBinding": [
+          {
+            "quantity_id": "kq_mg1",
+            "coefficient": "9π",
+            "symbolic": "9π",
+            "dim": 0,
+            "unit": null
+          }
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "mathematical authority 21a45675dbc60f06: composer, attempt, history, reload, no answer surface",
+      "evidence": {
+        "status": "reached",
+        "attempt": "a1e739de618c2e1a48ef0f61d7887626c",
+        "answerBinding": [
+          {
+            "quantity_id": "kq_mg2",
+            "coefficient": "4π/81",
+            "symbolic": "4π/81",
+            "dim": 0,
+            "unit": null
+          },
+          {
+            "quantity_id": "kq_mg1",
+            "coefficient": "1/3",
+            "symbolic": "1/3",
+            "dim": 0,
+            "unit": null
+          }
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "mathematical authority 55b934e45b5dc7a4: composer, attempt, history, reload, no answer surface",
+      "evidence": {
+        "status": "reached",
+        "attempt": "a552bd9cbee3b58df711811546a455a79",
+        "answerBinding": [
+          {
+            "quantity_id": "kq_mg2",
+            "coefficient": "√3/3",
+            "symbolic": "√3/3",
+            "dim": 0,
+            "unit": null
+          },
+          {
+            "quantity_id": "kq_mg1",
+            "coefficient": "1/3",
+            "symbolic": "1/3",
+            "dim": 0,
+            "unit": null
+          }
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "mathematical authority c4a8e107e6c96703: composer, attempt, history, reload, no answer surface",
+      "evidence": {
+        "status": "reached",
+        "attempt": "afd206cc497fd23d1a9e36345728cd1ed",
+        "answerBinding": [
+          {
+            "quantity_id": "kq_mg2",
+            "coefficient": "3/2",
+            "symbolic": "3/2",
+            "dim": 0,
+            "unit": null
+          },
+          {
+            "quantity_id": "kq_mg1",
+            "coefficient": "17/4",
+            "symbolic": "17/4",
+            "dim": 0,
+            "unit": null
+          }
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "mathematical authority 657daaafa384981d: composer, attempt, history, reload, no answer surface",
+      "evidence": {
+        "status": "reached",
+        "attempt": "a9651f57750dac746bbf6449a784a21f6",
+        "answerBinding": [
+          {
+            "quantity_id": "kq_mg1",
+            "coefficient": "6π√2",
+            "symbolic": "6π√2",
+            "dim": 0,
+            "unit": null
+          }
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "mathematical authority fac6571ae2d00901: composer, attempt, history, reload, no answer surface",
+      "evidence": {
+        "status": "reached",
+        "attempt": "a2109eeb854b0546cb7d4652aab5e9c6f",
+        "answerBinding": [
+          {
+            "quantity_id": "kq_mg1",
+            "coefficient": "6π",
+            "symbolic": "6π",
+            "dim": 0,
+            "unit": null
+          }
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "mathematical authority 7f1945aa7373a724: composer, attempt, history, reload, no answer surface",
+      "evidence": {
+        "status": "reached",
+        "attempt": "a5ecf0d7b2e21da01bdef93ae20cb845e",
+        "answerBinding": [
+          {
+            "quantity_id": "kq_mg1",
+            "coefficient": "4π",
+            "symbolic": "4π",
+            "dim": 0,
+            "unit": null
+          }
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "mathematical authority 17042e33f1cdee7a: composer, attempt, history, reload, no answer surface",
+      "evidence": {
+        "status": "reached",
+        "attempt": "a07736111eb7d9f91a0f2e5ec925ba429",
+        "answerBinding": [
+          {
+            "quantity_id": "kq_mg2",
+            "coefficient": "4π/3",
+            "symbolic": "4π/3",
+            "dim": 0,
+            "unit": null
+          },
+          {
+            "quantity_id": "kq_mg1",
+            "coefficient": "29π",
+            "symbolic": "29π",
+            "dim": 0,
+            "unit": null
+          }
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "mathematical authority ed8f11b8aa49478e: composer, attempt, history, reload, no answer surface",
+      "evidence": {
+        "status": "reached",
+        "attempt": "a31ecd92c4db6346e8f417b3cef924186",
+        "answerBinding": [
+          {
+            "quantity_id": "kq_mg1",
+            "coefficient": "25√6/4",
+            "symbolic": "25√6/4",
+            "dim": 0,
+            "unit": null
+          }
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "mathematical authority 4029b2cce7b7f5bc: composer, attempt, history, reload, no answer surface",
+      "evidence": {
+        "status": "reached",
+        "attempt": "a95278d58c4cdbec58a76af48139fdf27",
+        "answerBinding": [
+          {
+            "quantity_id": "kq_mg1",
+            "coefficient": "3√5",
+            "symbolic": "3√5",
+            "dim": 0,
+            "unit": null
+          }
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "mathematical authority 22948a2f96870c0e: composer, attempt, history, reload, no answer surface",
+      "evidence": {
+        "status": "reached",
+        "attempt": "a68c40cb11e39544ddee1af0600b3cea4",
+        "answerBinding": [
+          {
+            "quantity_id": "kq_mg1",
+            "coefficient": "12√5",
+            "symbolic": "12√5",
+            "dim": 0,
+            "unit": null
+          }
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "mathematical authority 740147c88de948c9: composer, attempt, history, reload, no answer surface",
+      "evidence": {
+        "status": "reached",
+        "attempt": "a25510d8aa31f3c3e54bfe719059255cf",
+        "answerBinding": [
+          {
+            "quantity_id": "kq_mg1",
+            "coefficient": "3√5",
+            "symbolic": "3√5",
+            "dim": 0,
+            "unit": null
+          }
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "mathematical authority bb940b35b5a56ab1: composer, attempt, history, reload, no answer surface",
+      "evidence": {
+        "status": "reached",
+        "attempt": "a2c441172ca77119ba3551d386388899b",
+        "answerBinding": [
+          {
+            "quantity_id": "kq_mg1",
+            "coefficient": "3√5",
+            "symbolic": "3√5",
+            "dim": 0,
+            "unit": null
+          }
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "mathematical authority 0f0bd5958e48d44c: composer, attempt, history, reload, no answer surface",
+      "evidence": {
+        "status": "reached",
+        "attempt": "a3d95494e876c7e2b162ce00a9cf1704a",
+        "answerBinding": [
+          {
+            "quantity_id": "kq_mg1",
+            "coefficient": "25√6/4",
+            "symbolic": "25√6/4",
+            "dim": 0,
+            "unit": null
+          }
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "mathematical authority 1b8f8660ee409649: composer, attempt, history, reload, no answer surface",
+      "evidence": {
+        "status": "reached",
+        "attempt": "a1d5cfa415077eaeb28c5722a411d16e8",
+        "answerBinding": [
+          {
+            "quantity_id": "kq_mg1",
+            "coefficient": "6√14",
+            "symbolic": "6a²√14",
+            "dim": 2,
+            "unit": "a"
+          }
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "mathematical authority 103cb503aad14ae8: composer, attempt, history, reload, no answer surface",
+      "evidence": {
+        "status": "reached",
+        "attempt": "aec6ccc532441a95b74a067cdc12a4556",
+        "answerBinding": [
+          {
+            "quantity_id": "kq_mg1",
+            "coefficient": "24√5",
+            "symbolic": "24√5",
+            "dim": 0,
+            "unit": null
+          }
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "mathematical authority b8ae85c370b22b87: composer, attempt, history, reload, no answer surface",
+      "evidence": {
+        "status": "reached",
+        "attempt": "a28aeaefc65536c9c0bd4c609bcae965e",
+        "answerBinding": [
+          {
+            "quantity_id": "kq_mg1",
+            "coefficient": "32√14/3",
+            "symbolic": "32√14/3",
+            "dim": 0,
+            "unit": null
+          }
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "mathematical authority 31efde6f5f875832: composer, attempt, history, reload, no answer surface",
+      "evidence": {
+        "status": "reached",
+        "attempt": "a1e0065f3de1f56b9f9ad6012f6dcf024",
+        "answerBinding": [
+          {
+            "quantity_id": "kq_mg1",
+            "coefficient": "6√5",
+            "symbolic": "6√5",
+            "dim": 0,
+            "unit": null
+          }
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "mathematical authority 28dac412f827ee65: composer, attempt, history, reload, no answer surface",
+      "evidence": {
+        "status": "reached",
+        "attempt": "a96867bdeecd91b454bf81c74212008a7",
+        "answerBinding": [
+          {
+            "quantity_id": "kq_mg1",
+            "coefficient": "6√5",
+            "symbolic": "6√5",
+            "dim": 0,
+            "unit": null
+          }
+        ]
+      },
+      "status": "PASS"
+    }
+  ],
+  "forbidden": [],
+  "browser": "157.0.8103.38",
+  "summary": {
+    "pass": 21,
+    "fail": 0
+  }
+}

@@ -38,8 +38,8 @@ function quayRoiDuoi() {
   return tuThe;
 }
 
-test("identity is v3", () => {
-  assert.equal(GATE_VERSION, "scene3d-orbit-gate/3");
+test("identity is v4 (frame counter = display frames, gate heartbeat; thresholds unchanged)", () => {
+  assert.equal(GATE_VERSION, "scene3d-orbit-gate/4");
 });
 
 test("thresholds are exactly v1's", () => {

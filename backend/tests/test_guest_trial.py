@@ -45,6 +45,7 @@ class TestLuotDungThu:
         503 — tức chưa có mô phỏng nào. Lượt phải còn nguyên, nếu không một đề
         hỏng vì lỗi máy chủ lại tiêu mất cơ hội duy nhất của người dùng.
         """
+        api.get("/api/auth/me")              # the guest session the app opens on first load
         r = analyze(api)
         assert r.status_code == 503
         assert api.get("/api/auth/me").json()["entitlement"]["trialsLeft"] == GUEST_TRIAL_LIMIT
@@ -109,6 +110,9 @@ def _use_up_trial(client):
     client.get("/api/auth/me")  # đảm bảo có phiên
     token = client.cookies.get("algosim_session")
     assert token, "chưa cấp cookie phiên"
-    with main_mod.SessionLocal() as session:
-        main_mod._consume_guest_trial(session, token)
-        session.commit()
+    from app.accounts.router import finalize_analysis_usage, reserve_analysis_usage
+
+    # The usage ledger is that path: reserve an attempt, then charge it as served.
+    reservation = reserve_analysis_usage(token, "a" + "e" * 32)
+    assert not isinstance(reservation, tuple), reservation
+    finalize_analysis_usage(reservation, served=True)

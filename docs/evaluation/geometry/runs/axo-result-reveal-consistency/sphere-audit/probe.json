@@ -1,0 +1,113 @@
+{
+  "cau-the-tich": [
+    {
+      "step": "1 Dựng mặt cầu tâm I đi qua A Đề choĐặt tâm I, nối bán kính R = IA tới điểm A thuộc mặt cầu rồi dựng mặt cầu hoàn chỉnh",
+      "rendered": [
+        "I",
+        "A",
+        "cau__radius",
+        "cau"
+      ],
+      "sphereRef": {
+        "cau": {
+          "maxOverlap": 0,
+          "opacityScale": 1
+        }
+      },
+      "dup": []
+    }
+  ],
+  "cau-cat-mat-phang": [
+    {
+      "step": "1 Dựng mặt cầu tâm I, bán kính R = IX Đề choĐặt tâm I, lấy điểm tham chiếu X trên mặt cầu để mở bán kính R = IX rồi dựng mặt cầu hoàn chỉnh",
+      "rendered": [
+        "I",
+        "cau__ref_pt",
+        "cau__radius",
+        "cau"
+      ],
+      "sphereRef": {
+        "cau": {
+          "maxOverlap": 0,
+          "opacityScale": 1
+        }
+      },
+      "dup": []
+    },
+    {
+      "step": "2 Dựng mặt phẳng cắt (P) Được dựngXác định mặt phẳng cắt (P) theo khoảng cách từ tâm mặt cầu đề cho",
+      "rendered": [
+        "I",
+        "cau__ref_pt",
+        "cau__radius",
+        "cau",
+        "P"
+      ],
+      "sphereRef": {
+        "cau": {
+          "maxOverlap": 0,
+          "opacityScale": 1
+        }
+      },
+      "dup": []
+    },
+    {
+      "step": "3 Xác định hình chiếu vuông góc H của tâm I và đoạn IH Hình phụHạ IH ⊥ (P) tại H; điểm H là tâm của đường tròn giao tuyến trên (P)",
+      "rendered": [
+        "I",
+        "cau",
+        "P",
+        "C__center",
+        "C__dist"
+      ],
+      "sphereRef": {
+        "cau": {
+          "maxOverlap": 0,
+          "opacityScale": 1
+        }
+      },
+      "dup": []
+    },
+    {
+      "step": "4 Xác định điểm M thuộc giao tuyến và tam giác vuông IHM Hình phụLấy điểm M chung của mặt cầu và (P), nối bán kính mặt cầu IM và bán kính giao tuyến HM (IH ⊥ HM)",
+      "rendered": [
+        "I",
+        "cau",
+        "P",
+        "C__center",
+        "C__dist",
+        "C__rim_pt",
+        "C__sec_rad",
+        "C__sph_rad"
+      ],
+      "sphereRef": {
+        "cau": {
+          "maxOverlap": 0,
+          "opacityScale": 1
+        }
+      },
+      "dup": []
+    },
+    {
+      "step": "5 Dựng đường tròn thiết diện giao của mặt cầu và (P) Được suy raMặt phẳng cắt mặt cầu tạo đường tròn giao tuyến nhận hình chiếu vuông góc của tâm mặt cầu làm tâm",
+      "rendered": [
+        "I",
+        "cau",
+        "P",
+        "C__center",
+        "C__dist",
+        "C__rim_pt",
+        "C__sec_rad",
+        "C__sph_rad",
+        "C"
+      ],
+      "sphereRef": {
+        "cau": {
+          "maxOverlap": 0,
+          "opacityScale": 1
+        }
+      },
+      "dup": []
+    }
+  ]
+}

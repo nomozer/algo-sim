@@ -1,0 +1,24 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "axo-performance-completeness — frontend camera RAF coalescing, semantic rim GPU buffer reuse, and final-step verified requested conclusions (34c779e1)",
+  "corrects": "docs/evaluation/geometry/runs/axo-pedagogical-construction-hardening/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "joined_branch_heads": {
+    "main": "main f986e897 (product 61ade29e, layers through geometry-generalization-and-pedagogical-construction preserved byte-for-byte)",
+    "axo_frontend": "feat/axo-v27-frontend-integration 6b980f2b (layers through goal-aware-visual-scaffolding preserved byte-for-byte)"
+  },
+  "current_candidate_hash": "6809d79b51f6e47be1e8af03ae065563b2028fcd823c22a91b61600b242d7fad",
+  "current_product_commit": "34c779e1eb258240c595315db2219c788ba9462a",
+  "current_candidate_source": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+  "diverged": true,
+  "reason": "Frontend-only root-cause fixes on integration/axo-pedagogical-construction-hardening (product commit 34c779e1): OrbitControls/wheel RAF coalescing in scene3d-view.tsx, semantic rim thick-line buffer reuse in scene3d-edge-visibility.ts, and final-step verified requested goal conclusions in scene3d-student-presentation-policy.ts and SimulationWorkspace.tsx. Backend measured_system (118 files, 6809d79b51f6e47b...) and historical benchmark receipts remain byte-for-byte unchanged.",
+  "cache_version": 131,
+  "cache_version_hien_tai": 131,
+  "cache_decision": "RETAIN 131: semantic_environment_fingerprint() matches backend/cache_identity.lock.json at CACHE_VERSION=131 identically; zero backend edits.",
+  "hieu_luc_len_ket_qua_da_do": {
+    "historical_measurements": "UNCHANGED",
+    "live_requests": 0,
+    "so_lieu_lượt_đo_cuối": "UNCHANGED: historical measurements and every earlier candidate layer remain preserved byte-for-byte; no earlier result is re-scored."
+  }
+}

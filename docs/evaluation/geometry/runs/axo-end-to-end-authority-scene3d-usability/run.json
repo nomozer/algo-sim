@@ -1,0 +1,42 @@
+{
+  "run_id": "axo-end-to-end-authority-scene3d-usability",
+  "date": "2026-11-06",
+  "branch": "integration/axo-hybrid4-reliability",
+  "baseline": "667fff7a9",
+  "status": "READY_FOR_OWNER_REVIEW",
+  "provider_calls": 0,
+  "commits": [
+    {"sha": "751d9eff5", "role": "backend certificate authority for source-bound Hybrid answers; primed section labels"},
+    {"sha": "e1309a798", "role": "near zoom limit from real surface support; wheel over labels; camera observability check"},
+    {"sha": "b1282aee6", "role": "evaluation candidate refreeze (product commit identity only)"}
+  ],
+  "defects": [
+    {"id": "A-1", "layer": "frontend Adapter /4 decode", "cases": 11, "symptom": "certified answer refused as HYBRID_RESPONSE_INVALID", "fixed_in": "751d9eff5"},
+    {"id": "A-2", "layer": "frontend provenance", "cases": 7, "symptom": "certified answer shown as not verified (UNDERDETERMINED)", "fixed_in": "751d9eff5"},
+    {"id": "A-3", "layer": "frontend provenance", "symptom": "mismatching binding not classified inconsistent", "fixed_in": "751d9eff5"},
+    {"id": "D-1", "layer": "Scene3D camera", "symptom": "near zoom on curved solids pushed the goal object out of frame", "fixed_in": "e1309a798"},
+    {"id": "D-2", "layer": "Scene3D input", "symptom": "wheel over a label did not zoom", "fixed_in": "e1309a798"}
+  ],
+  "backend_mathematical_defects_found": 0,
+  "verification": {
+    "authority_audit": {"payloads": 2204, "unique": 1572, "served_with_answer": 434, "before": {"reached": 416, "decode_rejected": 11, "not_reached": 7}, "after": {"reached": 434}},
+    "prism": {"oracle": "30", "offline_layers": "reference reading correct at every layer; 3 alternative extractions refused", "live": "LIVE_NOT_TESTED"},
+    "vitest_full": "133 files / 2000 passed",
+    "build": "PASS",
+    "pytest_related": "67 passed",
+    "browser": {"camera": "30/30 (1440x900, 820x1180, 390x844)", "consistency": "41/41", "two_tab": "8/8", "mathematical_corpus": "12/12", "authority_regressions": "21/21"},
+    "performance": "B C C B, no measurable change (step median 54.8/47.7 vs 54.0/47.8 ms)",
+    "candidate_verify": "MATCH 103 files 5ef50761",
+    "t3": [{"tree": "b1282aee6", "run": 1, "result": "FULL_PRODUCT_GATE_FAIL", "failed": "tests/test_analyze_idempotency.py::test_overlapping_analyses_are_charged_only_their_own_tokens", "diagnosis": "passes alone 3/3; outside the change; telemetry write swallowed under concurrent SQLite load (INFERRED)"},
+           {"tree": "b1282aee6", "run": 2, "result": "FULL_PRODUCT_GATE_PASS", "pytest": "13863 passed, 7 skipped, 3 deselected, 9 xfailed"}],
+    "node_harness": "155 tests, 153 pass, 0 fail, 2 environment skips",
+    "server_history": "VERIFIED on SQLite (backend verbatim + frontend DTO path)",
+    "postgres": "BLOCKED (Docker not running; not started)",
+    "publication": {"task_range": "PASS (667fff7a..48eb751d, 363 blobs)", "head": "BLOCKED 98 pending owner exceptions, 0 new"}
+  },
+  "cache_version_changed": false,
+  "model_surface_changed": false,
+  "merged": false,
+  "pushed": false,
+  "owner_decisions": ["publication exceptions", "merge/push", "live prism run (1 call)", "telemetry write-loss follow-up"]
+}

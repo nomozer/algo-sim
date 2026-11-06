@@ -71,14 +71,30 @@ def _as_int(value: Any) -> int:
         return 0
 
 
+#: Bộ đếm CỦA MỘT REQUEST (middleware `/api/analyze` mở). contextvars đi theo task con và `run_in_threadpool`, nên
+#: lượt gọi provider trong luồng worker cộng đúng vào request của nó; hai request chồng nhau không tính token của nhau.
+_request_usage: contextvars.ContextVar[dict[str, dict[str, int]] | None] = contextvars.ContextVar(
+    "request_usage", default=None)
+
+
+def begin_request_usage() -> dict[str, dict[str, int]]:
+    """Mở bộ đếm riêng cho request hiện tại và trả nó (đọc sau khi request xong)."""
+    acc: dict[str, dict[str, int]] = defaultdict(lambda: defaultdict(int))
+    _request_usage.set(acc)
+    return acc
+
+
 def record_usage(stage: str, usage: dict[str, Any] | None) -> None:
-    """Cộng dồn `usageMetadata` của một lượt gọi vào bộ đếm của `stage`."""
+    """Cộng dồn `usageMetadata` của một lượt gọi vào bộ đếm của `stage` (toàn tiến trình và của request, nếu có)."""
     if not usage:
         return
-    bucket = _usage[stage]
-    for local, remote in _FIELDS.items():
-        bucket[local] += _as_int(usage.get(remote))
-    bucket["calls"] += 1
+    for buckets in (_usage, _request_usage.get()):
+        if buckets is None:
+            continue
+        bucket = buckets[stage]
+        for local, remote in _FIELDS.items():
+            bucket[local] += _as_int(usage.get(remote))
+        bucket["calls"] += 1
 
 
 def usage_report() -> dict[str, dict[str, int]]:

@@ -1,0 +1,175 @@
+{
+  "schema": "axo-two-tab/1",
+  "dist": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\axo-hybrid4-integration\\frontend\\dist-twotab",
+  "provider_calls": 0,
+  "fixtures": [
+    "cr.cube_2.dual_spheres.multi_goal",
+    "S2-B-I07_ve_va_tinh",
+    "S2-B-A03_control_with_dimensions"
+  ],
+  "checks": [
+    {
+      "name": "1. A and B send two different problems at the same time",
+      "evidence": {
+        "a": "a183c0afe00a3acf661cf48632f8788b5",
+        "b": "a74e9380d964cbca36af56aa5c92cb01a"
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "2. A and B send the same problem at the same time ⇒ two independent attempts",
+      "evidence": {
+        "a": "a8e4a02f344bdf12776914775d4d053a8",
+        "b": "a4f0cf34bd98377e623c65ef95d26e51d"
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "3. A saves history while B is reading and touching history (persistence race, repeated)",
+      "evidence": {
+        "uiRounds": 6,
+        "directRecords": 16,
+        "bCursorSeenByA": 2
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "4. B reloads after A updated ⇒ B keeps its own attempt and sees A's records",
+      "evidence": {
+        "a": "a6d726b5552934822f857795d95308377",
+        "bId": "ae4cebd968d426800b3802eff7469b528"
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "5. A and B navigate and reopen different records, Back/Forward per tab",
+      "evidence": {
+        "ra": "a74e9380d964cbca36af56aa5c92cb01a",
+        "rb": "a183c0afe00a3acf661cf48632f8788b5"
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "6. A and B operate Scene3D, camera and steps independently",
+      "evidence": {
+        "aStep": 3,
+        "bStep": 0
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "7. A plays the construction while B creates a new attempt",
+      "evidence": {
+        "aId": "a74e9380d964cbca36af56aa5c92cb01a",
+        "b": "a40934ff4c149682d9814c76d3713054f",
+        "aPlayingDuringB": false
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "retry: a 502 then 200 inside one send reuses the same Idempotency-Key and records one attempt",
+      "evidence": {
+        "a": "a9dcc50e44bdd45982bed3f4ae09a7c85",
+        "keys": [
+          "a9dcc50e44bdd45982bed3f4ae09a7c85",
+          "a9dcc50e44bdd45982bed3f4ae09a7c85"
+        ]
+      },
+      "status": "PASS"
+    }
+  ],
+  "forbidden": [],
+  "browser": "157.0.8103.38",
+  "summary": {
+    "pass": 8,
+    "total": 8,
+    "attempts": 29,
+    "analyzeRequests": 14
+  },
+  "analyzeLog": [
+    {
+      "key": "a74e9380d964cbca36af56aa5c92cb01a",
+      "text": "Vẽ hình chóp S.ABCD có đáy ABCD là hình ",
+      "tab": "B",
+      "status": 200
+    },
+    {
+      "key": "a183c0afe00a3acf661cf48632f8788b5",
+      "text": "Cho hình lập phương ABCD.A'B'C'D' có cạn",
+      "tab": "A",
+      "status": 200
+    },
+    {
+      "key": "a4f0cf34bd98377e623c65ef95d26e51d",
+      "text": "Cho lăng trụ xiên ABC.A'B'C' có đáy ABC ",
+      "tab": "B",
+      "status": 200
+    },
+    {
+      "key": "a8e4a02f344bdf12776914775d4d053a8",
+      "text": "Cho lăng trụ xiên ABC.A'B'C' có đáy ABC ",
+      "tab": "A",
+      "status": 200
+    },
+    {
+      "key": "a7fe2e83432e3f15cb081bd5f53ed5103",
+      "text": "Cho hình lập phương ABCD.A'B'C'D' có cạn",
+      "tab": "A",
+      "status": 200
+    },
+    {
+      "key": "a0dcc0ef2abf4aa37bb4f03b6479713ab",
+      "text": "Vẽ hình chóp S.ABCD có đáy ABCD là hình ",
+      "tab": "A",
+      "status": 200
+    },
+    {
+      "key": "a2ab4c25f3d5322abd29815465f885777",
+      "text": "Cho lăng trụ xiên ABC.A'B'C' có đáy ABC ",
+      "tab": "A",
+      "status": 200
+    },
+    {
+      "key": "a43af0f592e7dbf047fa54f364d3dafba",
+      "text": "Cho hình lập phương ABCD.A'B'C'D' có cạn",
+      "tab": "A",
+      "status": 200
+    },
+    {
+      "key": "a7b08759639608b6fe2bc7f73fd65cc1d",
+      "text": "Vẽ hình chóp S.ABCD có đáy ABCD là hình ",
+      "tab": "A",
+      "status": 200
+    },
+    {
+      "key": "a936efa6904c2785f28911be2371c479d",
+      "text": "Cho lăng trụ xiên ABC.A'B'C' có đáy ABC ",
+      "tab": "A",
+      "status": 200
+    },
+    {
+      "key": "a6d726b5552934822f857795d95308377",
+      "text": "Vẽ hình chóp S.ABCD có đáy ABCD là hình ",
+      "tab": "A",
+      "status": 200
+    },
+    {
+      "key": "a40934ff4c149682d9814c76d3713054f",
+      "text": "Cho hình lập phương ABCD.A'B'C'D' có cạn",
+      "tab": "B",
+      "status": 200
+    },
+    {
+      "key": "a9dcc50e44bdd45982bed3f4ae09a7c85",
+      "text": "Vẽ hình chóp S.ABCD có đáy ABCD là hình ",
+      "tab": "A",
+      "status": 502
+    },
+    {
+      "key": "a9dcc50e44bdd45982bed3f4ae09a7c85",
+      "text": "Vẽ hình chóp S.ABCD có đáy ABCD là hình ",
+      "tab": "A",
+      "status": 200
+    }
+  ]
+}

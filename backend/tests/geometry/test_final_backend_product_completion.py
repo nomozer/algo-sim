@@ -470,8 +470,8 @@ def test_analyze_api_hybrid_default_staging_replay_and_fail_closed_invalid_mode(
     monkeypatch.setenv("HYBRID_ROUTE_MODE", "staging-replay")
     monkeypatch.setenv("HYBRID_REPLAY_CORPUS", str(fixture_file))
 
-    client = TestClient(main.app)
-    client.get("/api/auth/session")
+    from tests.route_client import route_client
+    client = route_client(main.app)
     resp = client.post("/api/analyze", json={"input": {"type": "text", "content": case["problem_text"]}})
     assert resp.status_code == 200, resp.text
     body = resp.json()

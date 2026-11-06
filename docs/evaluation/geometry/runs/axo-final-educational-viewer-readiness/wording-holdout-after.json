@@ -1,0 +1,152 @@
+{
+  "provider_calls": 0,
+  "live_extraction_accuracy": "NOT_MEASURED",
+  "prompt_changed": false,
+  "prompt_three_point_rule_present": true,
+  "rows": [
+    {
+      "family": "pyramid",
+      "notation": "O.KLMN",
+      "wording": "named_plane",
+      "reversed_premises": false,
+      "status": "SERVED",
+      "classification": "CORRECTLY_SERVED",
+      "section_vertices": 4
+    },
+    {
+      "family": "pyramid",
+      "notation": "O.KLMN",
+      "wording": "section_by",
+      "reversed_premises": false,
+      "status": "SERVED",
+      "classification": "CORRECTLY_SERVED",
+      "section_vertices": 4
+    },
+    {
+      "family": "pyramid",
+      "notation": "O.KLMN",
+      "wording": "three_points",
+      "reversed_premises": false,
+      "status": "SERVED",
+      "classification": "CORRECTLY_SERVED",
+      "section_vertices": 4
+    },
+    {
+      "family": "pyramid",
+      "notation": "O.KLMN",
+      "wording": "three_points_named",
+      "reversed_premises": false,
+      "status": "SERVED",
+      "classification": "CORRECTLY_SERVED",
+      "section_vertices": 4
+    },
+    {
+      "family": "pyramid",
+      "notation": "O.KLMN",
+      "wording": "named_plane",
+      "reversed_premises": true,
+      "status": "SERVED",
+      "classification": "CORRECTLY_SERVED",
+      "section_vertices": 4
+    },
+    {
+      "family": "pyramid",
+      "notation": "O.KLMN",
+      "wording": "section_by",
+      "reversed_premises": true,
+      "status": "SERVED",
+      "classification": "CORRECTLY_SERVED",
+      "section_vertices": 4
+    },
+    {
+      "family": "pyramid",
+      "notation": "O.KLMN",
+      "wording": "three_points",
+      "reversed_premises": true,
+      "status": "SERVED",
+      "classification": "CORRECTLY_SERVED",
+      "section_vertices": 4
+    },
+    {
+      "family": "pyramid",
+      "notation": "O.KLMN",
+      "wording": "three_points_named",
+      "reversed_premises": true,
+      "status": "SERVED",
+      "classification": "CORRECTLY_SERVED",
+      "section_vertices": 4
+    },
+    {
+      "family": "pyramid",
+      "notation": "T.EFGH",
+      "wording": "named_plane",
+      "reversed_premises": false,
+      "status": "SERVED",
+      "classification": "CORRECTLY_SERVED",
+      "section_vertices": 4
+    },
+    {
+      "family": "pyramid",
+      "notation": "T.EFGH",
+      "wording": "section_by",
+      "reversed_premises": false,
+      "status": "SERVED",
+      "classification": "CORRECTLY_SERVED",
+      "section_vertices": 4
+    },
+    {
+      "family": "pyramid",
+      "notation": "T.EFGH",
+      "wording": "three_points",
+      "reversed_premises": false,
+      "status": "SERVED",
+      "classification": "CORRECTLY_SERVED",
+      "section_vertices": 4
+    },
+    {
+      "family": "pyramid",
+      "notation": "T.EFGH",
+      "wording": "three_points_named",
+      "reversed_premises": false,
+      "status": "SERVED",
+      "classification": "CORRECTLY_SERVED",
+      "section_vertices": 4
+    },
+    {
+      "family": "pyramid",
+      "notation": "T.EFGH",
+      "wording": "named_plane",
+      "reversed_premises": true,
+      "status": "SERVED",
+      "classification": "CORRECTLY_SERVED",
+      "section_vertices": 4
+    },
+    {
+      "family": "pyramid",
+      "notation": "T.EFGH",
+      "wording": "section_by",
+      "reversed_premises": true,
+      "status": "SERVED",
+      "classification": "CORRECTLY_SERVED",
+      "section_vertices": 4
+    },
+    {
+      "family": "pyramid",
+      "notation": "T.EFGH",
+      "wording": "three_points",
+      "reversed_premises": true,
+      "status": "SERVED",
+      "classification": "CORRECTLY_SERVED",
+      "section_vertices": 4
+    },
+    {
+      "family": "pyramid",
+      "notation": "T.EFGH",
+      "wording": "three_points_named",
+      "reversed_premises": true,
+      "status": "SERVED",
+      "classification": "CORRECTLY_SERVED",
+      "section_vertices": 4
+    }
+  ]
+}

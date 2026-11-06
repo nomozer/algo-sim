@@ -13,6 +13,7 @@ import { diemHuuHan, type Scene3D, type SceneObject } from "./scene3d-model";
 import { hangCuThe } from "./pick-target";
 import { semanticTree } from "./interaction-state";
 import { PHONG_CACH_SCENE3D } from "./scene3d-roles";
+import { modulateSemanticColor } from "./scene3d-semantic-policy";
 
 describe("Session 1 (P2–P5) — Unified Geometry Visual System & Curved Solid Presentation", () => {
   it("unifies curved_solid surface material with polyhedral mesh palette (DESIGN sky, common normal / selected opacity)", () => {
@@ -262,7 +263,7 @@ describe("Session 1 (P2–P5) — Unified Geometry Visual System & Curved Solid 
     const secRim = builtSelected.children.find(
       (c): c is THREE.Mesh => c instanceof THREE.Mesh && c !== secFill,
     )!;
-    expect((secRim.material as THREE.MeshBasicMaterial).color.getHex()).toBe(0x2563eb);
+    expect((secRim.material as THREE.MeshBasicMaterial).color.getHex()).toBe(modulateSemanticColor(PHONG_CACH_SCENE3D.colors.sectionOutline, "selected"));
   });
 
   it("pilots illustration-quality multi-pixel Line2 hierarchy, single-pass outward polyhedral shells, section-coincident base yielding, standalone plane visibility, and outward radial vertex labels", () => {

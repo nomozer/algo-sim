@@ -25,7 +25,7 @@ import { Component, type ErrorInfo, type ReactNode } from "react";
  *   · `setTimeout` / `requestAnimationFrame` — kể cả vòng vẽ của Three.js;
  *   · lỗi ném từ chính fallback này.
  *
- * Nói *"đã chặn mọi lỗi frontend"* sau khi thêm boundary là một tuyên bố sai.
+ * Nói *"đã chặn mọi lỗi frontend"* sau khi thêm boundary là sai.
  * `docs/REACT_ERROR_BOUNDARY_HARDENING.md` phân loại từng lớp còn hở.
  *
  * ─── LỖI MIỀN KHÔNG ĐI QUA ĐÂY ──────────────────────────────────────────
@@ -49,6 +49,10 @@ interface Props {
   resetKey?: string;
   /** Nhãn miền, chỉ để ghi log — không hiện cho người học. */
   mien: string;
+  /** Tín hiệu thông báo lên shell ngoài để khôi phục thanh điều hướng khi chế độ tập trung bị vỡ. */
+  onCatch?: (loi: Error) => void;
+  /** Tín hiệu thông báo lên shell ngoài khi boundary tự phục hồi (HMR) hoặc thử lại thành công. */
+  onRecover?: () => void;
   /**
    * Giao diện thay thế. Nhận `thuLai` để dựng nút phục hồi.
    *
@@ -56,17 +60,47 @@ interface Props {
    * `scene.objects`, không vật đang chọn, không khung hiện tại. Nó dựng từ chữ
    * tĩnh và một callback, nếu không thì lỗi lặp vô hạn ngay trong lưới cuối.
    */
-  fallback: (thuLai: () => void) => ReactNode;
+  fallback: (
+    thuLai: () => void,
+    meta: { readonly canRetry: boolean; readonly retryCount: number },
+  ) => ReactNode;
 }
 
 interface State {
   hong: boolean;
   /** Khoá đã thấy ở lần dựng trước — để phát hiện đổi bài. */
   khoa?: string;
+  /** Số lần đã thử phục hồi thủ công trên cùng một `resetKey` (có trần để chống vòng lặp crash). */
+  soLanThuLai?: number;
+  /** Số lần đã tự phục hồi theo tín hiệu cập nhật mã (Vite HMR) trên cùng một `resetKey`. */
+  hmrEpoch?: number;
 }
 
+export interface ErrorBoundaryRecoverySignal {
+  readonly kind: "hmr_update" | "route_change";
+  readonly isDocumentHidden?: boolean;
+  readonly nextResetKey?: string;
+}
+
+const MAX_HMR_AUTO_RECOVERIES = 2;
+
 export class ErrorBoundary extends Component<Props, State> {
-  state: State = { hong: false };
+  state: State = { hong: false, soLanThuLai: 0, hmrEpoch: 0 };
+  private _mounted = false;
+
+  private readonly _onViteAfterUpdate = (): void => {
+    if (!this._mounted) return;
+    const hidden = typeof document !== "undefined" && document.visibilityState === "hidden";
+    const next = ErrorBoundary.deriveRecoveryFromSignal(this.state, {
+      kind: "hmr_update",
+      isDocumentHidden: hidden,
+    });
+    if (next) {
+      this.setState(next, () => {
+        this.props.onRecover?.();
+      });
+    }
+  };
 
   static getDerivedStateFromError(): Partial<State> {
     return { hong: true };
@@ -78,8 +112,65 @@ export class ErrorBoundary extends Component<Props, State> {
    * không bao giờ bị fallback của bài cũ chặn mất một nhịp.
    */
   static getDerivedStateFromProps(p: Props, s: State): Partial<State> | null {
-    if (p.resetKey !== s.khoa) return { hong: false, khoa: p.resetKey };
+    if (p.resetKey !== s.khoa) {
+      return { hong: false, khoa: p.resetKey, soLanThuLai: 0, hmrEpoch: 0 };
+    }
     return null;
+  }
+
+  /**
+   * Chuyển trạng thái phục hồi có điều kiện (tín hiệu HMR trong dev hoặc đổi đường dẫn hợp lệ):
+   * - Không bao giờ chạy khi tab đang ẩn (`isDocumentHidden === true`).
+   * - Giới hạn nghiêm ngặt `MAX_HMR_AUTO_RECOVERIES` trên cùng một `resetKey` để tránh vòng lặp remount vô hạn.
+   */
+  static deriveRecoveryFromSignal(
+    current: State,
+    signal: ErrorBoundaryRecoverySignal,
+  ): State | null {
+    if (!current.hong) return null;
+    if (signal.isDocumentHidden) return null;
+    if (signal.kind === "route_change") {
+      if (signal.nextResetKey !== undefined && signal.nextResetKey !== current.khoa) {
+        return {
+          ...current,
+          hong: false,
+          khoa: signal.nextResetKey,
+          soLanThuLai: 0,
+          hmrEpoch: 0,
+        };
+      }
+      return null;
+    }
+    if (signal.kind === "hmr_update") {
+      const hmrCount = current.hmrEpoch ?? 0;
+      if (hmrCount >= MAX_HMR_AUTO_RECOVERIES) return null;
+      return {
+        ...current,
+        hong: false,
+        hmrEpoch: hmrCount + 1,
+      };
+    }
+    return null;
+  }
+
+  override componentDidMount(): void {
+    this._mounted = true;
+    const hot = (import.meta as unknown as {
+      hot?: {
+        on?: (event: string, cb: () => void) => void;
+      };
+    }).hot;
+    hot?.on?.("vite:afterUpdate", this._onViteAfterUpdate);
+  }
+
+  override componentWillUnmount(): void {
+    this._mounted = false;
+    const hot = (import.meta as unknown as {
+      hot?: {
+        off?: (event: string, cb: () => void) => void;
+      };
+    }).hot;
+    hot?.off?.("vite:afterUpdate", this._onViteAfterUpdate);
   }
 
   componentDidCatch(loi: Error, tin: ErrorInfo): void {
@@ -91,11 +182,20 @@ export class ErrorBoundary extends Component<Props, State> {
      * gửi gì ra ngoài. */
     // eslint-disable-next-line no-console
     console.error(`[ErrorBoundary:${this.props.mien}]`, loi, tin.componentStack);
+    this.props.onCatch?.(loi);
   }
 
   render(): ReactNode {
     if (!this.state.hong) return this.props.children;
-    return this.props.fallback(() => this.setState({ hong: false }));
+    const retryCount = this.state.soLanThuLai ?? 0;
+    const canRetry = retryCount < 1;
+    return this.props.fallback(
+      () =>
+        this.setState({ hong: false, soLanThuLai: retryCount + 1 }, () => {
+          this.props.onRecover?.();
+        }),
+      { canRetry, retryCount },
+    );
   }
 }
 

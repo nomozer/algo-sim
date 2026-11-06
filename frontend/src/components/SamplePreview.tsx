@@ -1,456 +1,531 @@
+import type { ReactNode } from "react";
+
 /**
- * SamplePreview (M9-UX2 · mở rộng M9-UX3) — preview TRỰC QUAN cho starter card.
- *
- * Thuần trình bày: SVG tĩnh, DỮ LIỆU AN TOÀN CỐ ĐỊNH — không chạy engine,
- * không đụng state, không fetch, không nhân bản logic domain (đây là "tranh
- * minh hoạ", không phải mô phỏng thứ hai). Kind suy từ ĐỊNH DANH simulation_id
- * hoặc metadata `preview` tường minh của mẫu — không bao giờ từ chuỗi tiêu đề.
- * Id lạ → fallback "generic" (icon node-edge trung tính) — không bao giờ ném.
- *
- * M9-UX3 — LUẬT: MỘT TRANH = MỘT CƠ CHẾ = MỘT BÀI.
- * Tranh phải vẽ đúng cơ chế ẩn của CHÍNH bài đó (nguyên tắc sư phạm #6,
- * COVERAGE §2.6) — cùng cơ chế mà `decision.ts` (M9-S1) đem ra hỏi học sinh.
- * Trước M9-UX3, 8 bài thuật toán chen vào 3 tranh, và hai trong số đó DẠY SAI:
- * linear_search mượn tranh trái/giữa/phải của binary_search (tìm tuần tự không
- * có mid), insertion_sort mượn mũi tên ĐỔI CHỖ của bubble_sort (chèn là DỜI).
- * Khoá bằng test "không hai bài thuật toán nào dùng chung một tranh".
+ * Thumbnail SVG chuẩn Axo V2.7 (P4.3) — chuyển nguyên vẹn 11 renderer bài toán
+ * (`PROBLEM_THUMBNAIL_RENDERERS`) và 4 renderer phân loại (`getCategoryThumbnailSVG`)
+ * từ `axo-unified-ui-v2-7-composer-validation-divider-review.html` (dòng 12404–13699).
  */
 
-export type PreviewKind =
-  | "algorithm-bars"
-  | "bars-min"
-  | "sum-threshold"
-  | "count-threshold"
-  | "linear-scan"
-  | "search-range"
-  | "sort-swap"
-  | "insertion-lift"
-  | "binary-bits"
-  | "network-path"
-  | "network-encapsulation"
-  | "logic-gate"
-  | "web-structure"
-  | "generic";
+export type PreviewKind = "geometry";
 
-const KIND_BY_SIM_ID: Record<string, PreviewKind> = {
-  "algorithm.find_max": "algorithm-bars",
-  "algorithm.find_min": "bars-min",
-  "algorithm.sum_if": "sum-threshold",
-  "algorithm.count_if": "count-threshold",
-  "algorithm.linear_search": "linear-scan",
-  "algorithm.binary_search": "search-range",
-  "algorithm.bubble_sort": "sort-swap",
-  "algorithm.insertion_sort": "insertion-lift",
-  "binary.decimal_to_binary": "binary-bits",
-  "network.packet_routing": "network-path",
-  "network.protocol_encapsulation": "network-encapsulation",
-  "logic.and_gate": "logic-gate",
-};
-
-export function previewKindOf(simId: string, explicit?: string): PreviewKind {
-  if (explicit && isPreviewKind(explicit)) return explicit;
-  return KIND_BY_SIM_ID[simId] ?? "generic";
+export function previewKindOf(_simId: string): PreviewKind {
+  return "geometry";
 }
 
-function isPreviewKind(s: string): s is PreviewKind {
-  return s in RENDERERS;
-}
+const GEO_THUMB_PALETTE = {
+  ink: "#1E293B",
+  dashed: "#64748B",
+  shellFill: "rgba(148, 163, 184, 0.11)",
+  shellFillStrong: "rgba(148, 163, 184, 0.17)",
+  terracotta: "#C85A32",
+  terracottaFill: "rgba(200, 90, 50, 0.25)",
+  teal: "#0F766E",
+  tealFill: "rgba(15, 118, 110, 0.16)",
+  cobalt: "#2563EB",
+  amber: "#D97706",
+  amberFill: "rgba(217, 119, 6, 0.18)",
+  planeFill: "rgba(109, 40, 217, 0.07)",
+  planeStroke: "rgba(109, 40, 217, 0.36)",
+  planeLabel: "#6D28D9",
+} as const;
 
-/* Dữ liệu minh hoạ TĨNH — chỉ để tranh đẹp, không phải sự thật engine. */
-const BARS = [34, 22, 46, 16, 28];
-const SORT_BARS = [18, 40, 28, 34, 46];
-/** Cột cho cảnh "có ngưỡng": 3 cột vượt ngưỡng, 2 cột dưới. */
-const THRESHOLD_BARS = [30, 16, 38, 12, 28];
-const THRESHOLD_Y = 24; // y của đường ngưỡng trong viewBox 0 0 96 56
-
-function Bars() {
-  // cột CAO NHẤT tô xanh — cơ chế find_max: "giá trị đang thắng"
-  const maxIdx = BARS.indexOf(Math.max(...BARS));
-  return (
-    <svg viewBox="0 0 96 56" className="sample-preview-svg" aria-hidden="true">
-      {BARS.map((h, i) => (
-        <rect
-          key={i}
-          x={8 + i * 17}
-          y={50 - h}
-          width={12}
-          height={h}
-          rx={2}
-          fill={i === maxIdx ? "var(--accent-green)" : "#cfe3f7"}
-        />
-      ))}
-    </svg>
-  );
-}
-
-function BarsMin() {
-  // cột THẤP NHẤT tô tím — cùng bố cục Bars, khác ĐÍCH. Phân biệt tức thì.
-  const minIdx = BARS.indexOf(Math.min(...BARS));
-  return (
-    <svg viewBox="0 0 96 56" className="sample-preview-svg" aria-hidden="true">
-      {BARS.map((h, i) => (
-        <rect
-          key={i}
-          x={8 + i * 17}
-          y={50 - h}
-          width={12}
-          height={h}
-          rx={2}
-          fill={i === minIdx ? "var(--accent-purple)" : "#cfe3f7"}
-        />
-      ))}
-      <path d="M 55 30 l -4 5 h 8 z" fill="var(--accent-purple)" />
-    </svg>
-  );
-}
-
-/** Cột + đường ngưỡng nét đứt — nền chung của sum_if và count_if. */
-function ThresholdBars({ fill }: { fill: string }) {
+function GeoPt({
+  x,
+  y,
+  label,
+  dx,
+  dy,
+  color,
+  r,
+}: {
+  x: number;
+  y: number;
+  label?: string;
+  dx?: number;
+  dy?: number;
+  color?: string;
+  r?: number;
+}) {
+  const c = color || GEO_THUMB_PALETTE.ink;
+  const rad = r || 2.3;
+  const tx = x + (dx !== undefined ? dx : 0);
+  const ty = y + (dy !== undefined ? dy : -5);
   return (
     <>
-      <line
-        x1={4}
-        y1={THRESHOLD_Y}
-        x2={92}
-        y2={THRESHOLD_Y}
-        stroke="var(--accent-orange)"
-        strokeWidth={1.2}
-        strokeDasharray="3 2"
-      />
-      {THRESHOLD_BARS.map((h, i) => (
-        <rect
-          key={i}
-          x={8 + i * 17}
-          y={46 - h}
-          width={12}
-          height={h}
-          rx={2}
-          fill={46 - h < THRESHOLD_Y ? fill : "var(--hairline)"}
-        />
-      ))}
+      <circle cx={x} cy={y} r={rad} fill={c} />
+      {label ? (
+        <text
+          x={tx}
+          y={ty}
+          fontFamily="Plus Jakarta Sans, sans-serif"
+          fontSize="11"
+          fontWeight="700"
+          fill={c}
+          paintOrder="stroke"
+          stroke="#f8f6f1"
+          strokeWidth="2.4"
+          strokeLinejoin="round"
+          textAnchor="middle"
+        >
+          {label}
+        </text>
+      ) : null}
     </>
   );
 }
 
-function SumThreshold() {
-  // cơ chế sum_if: chỉ cột VƯỢT NGƯỠNG mới được CỘNG DỒN vào tổng.
+function GeoRightAngle({
+  vx,
+  vy,
+  ux,
+  uy,
+  wx,
+  wy,
+  size,
+  color,
+}: {
+  vx: number;
+  vy: number;
+  ux: number;
+  uy: number;
+  wx: number;
+  wy: number;
+  size?: number;
+  color?: string;
+}) {
+  const s = size || 6.5;
+  const c = color || GEO_THUMB_PALETTE.teal;
+  const uLen = Math.hypot(ux, uy) || 1;
+  const wLen = Math.hypot(wx, wy) || 1;
+  const u1x = (ux / uLen) * s;
+  const u1y = (uy / uLen) * s;
+  const w1x = (wx / wLen) * s;
+  const w1y = (wy / wLen) * s;
+  const p1x = (vx + u1x).toFixed(1);
+  const p1y = (vy + u1y).toFixed(1);
+  const p2x = (vx + u1x + w1x).toFixed(1);
+  const p2y = (vy + u1y + w1y).toFixed(1);
+  const p3x = (vx + w1x).toFixed(1);
+  const p3y = (vy + w1y).toFixed(1);
   return (
-    <svg viewBox="0 0 96 56" className="sample-preview-svg" aria-hidden="true">
-      <ThresholdBars fill="var(--accent-green)" />
-      <rect x={58} y={0} width={36} height={13} rx={3} fill="var(--accent-green)" />
-      <text x={76} y={9.5} textAnchor="middle" fontSize={9} fontWeight={700} fill="#fff">
-        Σ 96
+    <polyline
+      points={`${p1x},${p1y} ${p2x},${p2y} ${p3x},${p3y}`}
+      fill="none"
+      stroke={c}
+      strokeWidth="1.25"
+      strokeLinejoin="round"
+    />
+  );
+}
+
+function GeoMidTick({
+  x1,
+  y1,
+  x2,
+  y2,
+  color,
+}: {
+  x1: number;
+  y1: number;
+  x2: number;
+  y2: number;
+  color?: string;
+}) {
+  const mx = (x1 + x2) / 2;
+  const my = (y1 + y2) / 2;
+  const dx = x2 - x1;
+  const dy = y2 - y1;
+  const len = Math.hypot(dx, dy) || 1;
+  const nx = (-dy / len) * 3.2;
+  const ny = (dx / len) * 3.2;
+  return (
+    <line
+      x1={(mx - nx).toFixed(1)}
+      y1={(my - ny).toFixed(1)}
+      x2={(mx + nx).toFixed(1)}
+      y2={(my + ny).toFixed(1)}
+      stroke={color || GEO_THUMB_PALETTE.terracotta}
+      strokeWidth="1.35"
+    />
+  );
+}
+
+const PROBLEM_THUMBNAIL_RENDERERS: Record<string, () => ReactNode> = {
+  // 1. Hình chóp tam giác S.ABC với mặt cắt qua 3 trung điểm M, N, P
+  "thiet-dien-chop": () => (
+    <>
+      <polygon points="88,13 30,80 82,97 148,76" fill={GEO_THUMB_PALETTE.shellFill} />
+      <line x1="30" y1="80" x2="148" y2="76" stroke={GEO_THUMB_PALETTE.dashed} strokeWidth="1.2" strokeDasharray="4,3" />
+      <polygon points="44,50 92,62 136,44 92,35" fill={GEO_THUMB_PALETTE.planeFill} stroke={GEO_THUMB_PALETTE.planeStroke} strokeWidth="0.95" />
+      <polygon points="59,46.5 85,55 118,44.5" fill={GEO_THUMB_PALETTE.terracottaFill} />
+      <line x1="59" y1="46.5" x2="118" y2="44.5" stroke={GEO_THUMB_PALETTE.terracotta} strokeWidth="1.4" strokeDasharray="3.5,2.5" />
+      <polyline points="59,46.5 85,55 118,44.5" fill="none" stroke={GEO_THUMB_PALETTE.terracotta} strokeWidth="1.8" strokeLinejoin="round" />
+      <polyline points="30,80 82,97 148,76" fill="none" stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.55" strokeLinejoin="round" />
+      <line x1="88" y1="13" x2="30" y2="80" stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.55" />
+      <line x1="88" y1="13" x2="82" y2="97" stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.55" />
+      <line x1="88" y1="13" x2="148" y2="76" stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.55" />
+      <GeoMidTick x1={88} y1={13} x2={59} y2={46.5} />
+      <GeoMidTick x1={59} y1={46.5} x2={30} y2={80} />
+      <GeoMidTick x1={88} y1={13} x2={118} y2={44.5} />
+      <GeoMidTick x1={118} y1={44.5} x2={148} y2={76} />
+      <GeoPt x={88} y={13} label="S" dx={0} dy={-4} color={GEO_THUMB_PALETTE.ink} />
+      <GeoPt x={30} y={80} label="A" dx={-8} dy={4} color={GEO_THUMB_PALETTE.ink} />
+      <GeoPt x={82} y={97} label="B" dx={0} dy={10} color={GEO_THUMB_PALETTE.ink} />
+      <GeoPt x={148} y={76} label="C" dx={8} dy={4} color={GEO_THUMB_PALETTE.ink} />
+      <GeoPt x={59} y={46.5} label="M" dx={-9} dy={-2} color={GEO_THUMB_PALETTE.terracotta} r={2.5} />
+      <GeoPt x={85} y={55} label="N" dx={7} dy={9} color={GEO_THUMB_PALETTE.terracotta} r={2.5} />
+      <GeoPt x={118} y={44.5} label="P" dx={9} dy={-2} color={GEO_THUMB_PALETTE.terracotta} r={2.5} />
+    </>
+  ),
+
+  // 2. Hình chóp tứ giác đều S.ABCD với thiết diện tứ giác MNPQ
+  "mat-cheo-sac": () => (
+    <>
+      <polygon points="90,12 28,76 70,96 150,80" fill={GEO_THUMB_PALETTE.shellFill} />
+      <line x1="28" y1="76" x2="110" y2="60" stroke={GEO_THUMB_PALETTE.dashed} strokeWidth="1.15" strokeDasharray="4,3" />
+      <line x1="110" y1="60" x2="150" y2="80" stroke={GEO_THUMB_PALETTE.dashed} strokeWidth="1.15" strokeDasharray="4,3" />
+      <line x1="90" y1="12" x2="110" y2="60" stroke={GEO_THUMB_PALETTE.dashed} strokeWidth="1.15" strokeDasharray="4,3" />
+      <line x1="28" y1="76" x2="150" y2="80" stroke={GEO_THUMB_PALETTE.dashed} strokeWidth="0.95" strokeDasharray="3,3" />
+      <line x1="70" y1="96" x2="110" y2="60" stroke={GEO_THUMB_PALETTE.dashed} strokeWidth="0.95" strokeDasharray="3,3" />
+      <line x1="90" y1="12" x2="90" y2="78" stroke={GEO_THUMB_PALETTE.teal} strokeWidth="1.35" strokeDasharray="3,2.5" />
+      <GeoRightAngle vx={90} vy={78} ux={0} uy={-1} wx={1} wy={0} size={5.5} color={GEO_THUMB_PALETTE.teal} />
+      <polygon points="18,78 72,92 158,52 104,34" fill={GEO_THUMB_PALETTE.planeFill} stroke={GEO_THUMB_PALETTE.planeStroke} strokeWidth="0.9" />
+      <polygon points="52,51 78,66 126,53 102,40" fill={GEO_THUMB_PALETTE.terracottaFill} />
+      <polyline points="52,51 102,40 126,53" fill="none" stroke={GEO_THUMB_PALETTE.terracotta} strokeWidth="1.35" strokeDasharray="3.5,2.5" />
+      <polyline points="52,51 78,66 126,53" fill="none" stroke={GEO_THUMB_PALETTE.terracotta} strokeWidth="1.8" strokeLinejoin="round" />
+      <polyline points="28,76 70,96 150,80" fill="none" stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.55" strokeLinejoin="round" />
+      <line x1="90" y1="12" x2="28" y2="76" stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.55" />
+      <line x1="90" y1="12" x2="70" y2="96" stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.55" />
+      <line x1="90" y1="12" x2="150" y2="80" stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.55" />
+      <GeoPt x={90} y={12} label="S" dx={0} dy={-3.5} color={GEO_THUMB_PALETTE.ink} />
+      <GeoPt x={28} y={76} label="A" dx={-8} dy={4} color={GEO_THUMB_PALETTE.ink} />
+      <GeoPt x={70} y={96} label="B" dx={-2} dy={10} color={GEO_THUMB_PALETTE.ink} />
+      <GeoPt x={150} y={80} label="C" dx={8} dy={4} color={GEO_THUMB_PALETTE.ink} />
+      <GeoPt x={110} y={60} label="D" dx={7} dy={-3} color={GEO_THUMB_PALETTE.dashed} r={2.0} />
+      <GeoPt x={52} y={51} label="M" dx={-9} dy={-2} color={GEO_THUMB_PALETTE.terracotta} r={2.4} />
+      <GeoPt x={78} y={66} label="N" dx={-6} dy={10} color={GEO_THUMB_PALETTE.terracotta} r={2.4} />
+      <GeoPt x={126} y={53} label="P" dx={9} dy={2} color={GEO_THUMB_PALETTE.terracotta} r={2.4} />
+      <GeoPt x={102} y={40} label="Q" dx={7} dy={-4} color={GEO_THUMB_PALETTE.terracotta} r={2.2} />
+    </>
+  ),
+
+  // 3. Hình chóp S.ABC có cạnh bên SA ⊥ (ABC)
+  "vuong-goc-chop": () => (
+    <>
+      <polygon points="44,16 44,78 96,96 148,72" fill={GEO_THUMB_PALETTE.shellFill} />
+      <polygon points="44,78 96,96 148,72" fill="rgba(15, 118, 110, 0.08)" />
+      <line x1="44" y1="78" x2="148" y2="72" stroke={GEO_THUMB_PALETTE.dashed} strokeWidth="1.2" strokeDasharray="4,3" />
+      <line x1="44" y1="78" x2="120" y2="85" stroke={GEO_THUMB_PALETTE.teal} strokeWidth="1.35" strokeDasharray="3.5,2.5" />
+      <line x1="44" y1="16" x2="120" y2="85" stroke={GEO_THUMB_PALETTE.terracotta} strokeWidth="1.65" />
+      <GeoRightAngle vx={120} vy={85} ux={-76} uy={-7} wx={28} wy={-13} size={6} color={GEO_THUMB_PALETTE.terracotta} />
+      <GeoRightAngle vx={44} vy={78} ux={0} uy={-62} wx={52} wy={18} size={7.5} color={GEO_THUMB_PALETTE.teal} />
+      <GeoRightAngle vx={44} vy={78} ux={0} uy={-62} wx={104} wy={-6} size={6.5} color={GEO_THUMB_PALETTE.teal} />
+      <polyline points="44,78 96,96 148,72" fill="none" stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.6" strokeLinejoin="round" />
+      <line x1="44" y1="16" x2="96" y2="96" stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.55" />
+      <line x1="44" y1="16" x2="148" y2="72" stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.55" />
+      <line x1="44" y1="16" x2="44" y2="78" stroke={GEO_THUMB_PALETTE.teal} strokeWidth="2.4" />
+      <GeoPt x={44} y={16} label="S" dx={-9} dy={2} color={GEO_THUMB_PALETTE.teal} r={2.7} />
+      <GeoPt x={44} y={78} label="A" dx={-9} dy={4} color={GEO_THUMB_PALETTE.teal} r={2.7} />
+      <GeoPt x={96} y={96} label="B" dx={0} dy={10} color={GEO_THUMB_PALETTE.ink} />
+      <GeoPt x={148} y={72} label="C" dx={8} dy={4} color={GEO_THUMB_PALETTE.ink} />
+      <GeoPt x={120} y={85} label="M" dx={9} dy={6} color={GEO_THUMB_PALETTE.terracotta} r={2.3} />
+      <text x="19" y="51" fontFamily="JetBrains Mono, monospace" fontSize="11" fontWeight="700" fill={GEO_THUMB_PALETTE.teal}>
+        SA⊥
       </text>
-    </svg>
-  );
-}
+    </>
+  ),
 
-function CountThreshold() {
-  // cơ chế count_if: cùng ngưỡng, nhưng ĐẾM chứ không cộng — đây đúng là chỗ
-  // học sinh hay lẫn sum với count, nên hai tranh phải khác nhau thấy được.
-  return (
-    <svg viewBox="0 0 96 56" className="sample-preview-svg" aria-hidden="true">
-      <ThresholdBars fill="var(--primary)" />
-      <circle cx={80} cy={7} r={7} fill="var(--primary)" />
-      <text x={80} y={10.5} textAnchor="middle" fontSize={9} fontWeight={700} fill="#fff">
-        3
+  // 4. Mặt phẳng (α) đi qua điểm M và vuông góc với đường thẳng SA cho trước
+  "mp-vuong-goc-duong": () => (
+    <>
+      <polygon points="74,14 28,84 90,96 148,74" fill={GEO_THUMB_PALETTE.shellFill} />
+      <line x1="28" y1="84" x2="148" y2="74" stroke={GEO_THUMB_PALETTE.dashed} strokeWidth="1.15" strokeDasharray="4,3" />
+      <polygon points="24,38 78,24 128,64 74,80" fill="rgba(109, 40, 217, 0.11)" stroke="#6D28D9" strokeWidth="1.2" />
+      <polygon points="51,49 84,65 108,42" fill={GEO_THUMB_PALETTE.terracottaFill} />
+      <line x1="51" y1="49" x2="108" y2="42" stroke={GEO_THUMB_PALETTE.terracotta} strokeWidth="1.35" strokeDasharray="3.5,2.5" />
+      <polyline points="51,49 84,65 108,42" fill="none" stroke={GEO_THUMB_PALETTE.terracotta} strokeWidth="1.75" strokeLinejoin="round" />
+      <GeoRightAngle vx={51} vy={49} ux={23} uy={-35} wx={33} wy={16} size={6.8} color={GEO_THUMB_PALETTE.teal} />
+      <GeoRightAngle vx={51} vy={49} ux={-23} uy={35} wx={57} wy={-7} size={6.2} color={GEO_THUMB_PALETTE.teal} />
+      <polyline points="28,84 90,96 148,74" fill="none" stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.5" />
+      <line x1="74" y1="14" x2="90" y2="96" stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.5" />
+      <line x1="74" y1="14" x2="148" y2="74" stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.5" />
+      <line x1="74" y1="14" x2="28" y2="84" stroke={GEO_THUMB_PALETTE.teal} strokeWidth="2.2" />
+      <GeoPt x={74} y={14} label="S" dx={0} dy={-4} color={GEO_THUMB_PALETTE.teal} r={2.5} />
+      <GeoPt x={28} y={84} label="A" dx={-8} dy={4} color={GEO_THUMB_PALETTE.teal} r={2.5} />
+      <GeoPt x={90} y={96} label="B" dx={0} dy={10} color={GEO_THUMB_PALETTE.ink} />
+      <GeoPt x={148} y={74} label="C" dx={8} dy={4} color={GEO_THUMB_PALETTE.ink} />
+      <GeoPt x={51} y={49} label="M" dx={-10} dy={-2} color={GEO_THUMB_PALETTE.terracotta} r={2.8} />
+      <text x="116" y="62" fontFamily="Plus Jakarta Sans, sans-serif" fontStyle="italic" fontSize="11" fontWeight="700" fill="#6D28D9">
+        (α)
       </text>
-    </svg>
-  );
-}
+    </>
+  ),
 
-function LinearScan() {
-  // cơ chế linear_search: QUÉT TRÁI → PHẢI. Ô đã xem xám đi, kính lúp dừng ở ô
-  // đang xét. TUYỆT ĐỐI không trái/giữa/phải — tìm tuần tự không có mid.
-  const scanned = 3; // 3 ô đã xem, ô thứ 4 (idx 3) đang xét
-  return (
-    <svg viewBox="0 0 96 56" className="sample-preview-svg" aria-hidden="true">
-      {[0, 1, 2, 3, 4].map((i) => (
-        <rect
-          key={i}
-          x={6 + i * 17}
-          y={i === scanned ? 18 : 20}
-          width={13}
-          height={i === scanned ? 21 : 17}
-          rx={2}
-          fill={i < scanned ? "#eef1f4" : i === scanned ? "var(--primary)" : "#cfe3f7"}
-          stroke={i < scanned ? "var(--hairline)" : "none"}
-        />
-      ))}
-      {/* mũi tên tiến trình quét, từ trái tới ô đang xét */}
-      <path d="M 12 46 h 46" stroke="var(--ink-faint)" strokeWidth={1.2} strokeDasharray="2 2" />
-      <path d="M 62 46 l -5 -3 v 6 z" fill="var(--ink-faint)" />
-      {/* kính lúp trên ô đang xét */}
-      <circle cx={62} cy={9} r={4.5} fill="none" stroke="var(--primary)" strokeWidth={1.8} />
-      <line x1={65} y1={12} x2={67.5} y2={14.5} stroke="var(--primary)" strokeWidth={1.8} />
-    </svg>
-  );
-}
-
-function SearchRange() {
-  return (
-    <svg viewBox="0 0 96 56" className="sample-preview-svg" aria-hidden="true">
-      {[0, 1, 2, 3, 4, 5, 6].map((i) => (
-        <rect
-          key={i}
-          x={5 + i * 13}
-          y={20}
-          width={10}
-          height={16}
-          rx={2}
-          fill={i < 2 ? "var(--hairline)" : i === 4 ? "var(--primary)" : "#cfe3f7"}
-        />
-      ))}
-      <path d="M 62 14 l -5 5 h 10 z" fill="var(--primary)" />
-      <text x={9} y={48} fontSize={8} fill="var(--ink-quiet)">
-        trái
+  // 5. Thể tích khối chóp và khoảng cách SH từ đỉnh S đến mặt đáy (ABC)
+  "the-tich-chop": () => (
+    <>
+      <polygon points="88,13 28,78 84,97 148,76" fill={GEO_THUMB_PALETTE.shellFill} />
+      <polygon points="28,78 84,97 148,76" fill={GEO_THUMB_PALETTE.amberFill} />
+      <line x1="28" y1="78" x2="148" y2="76" stroke={GEO_THUMB_PALETTE.amber} strokeWidth="1.4" strokeDasharray="4,3" />
+      <line x1="28" y1="78" x2="88" y2="83" stroke={GEO_THUMB_PALETTE.dashed} strokeWidth="1.1" strokeDasharray="3,2.5" />
+      <line x1="88" y1="13" x2="88" y2="83" stroke={GEO_THUMB_PALETTE.teal} strokeWidth="2.3" strokeDasharray="4,2.5" />
+      <GeoRightAngle vx={88} vy={83} ux={0} uy={-70} wx={-60} wy={-5} size={6.8} color={GEO_THUMB_PALETTE.teal} />
+      <GeoRightAngle vx={88} vy={83} ux={0} uy={-70} wx={60} wy={-7} size={6.8} color={GEO_THUMB_PALETTE.teal} />
+      <polyline points="28,78 84,97 148,76" fill="none" stroke={GEO_THUMB_PALETTE.amber} strokeWidth="1.8" strokeLinejoin="round" />
+      <line x1="88" y1="13" x2="28" y2="78" stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.55" />
+      <line x1="88" y1="13" x2="84" y2="97" stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.55" />
+      <line x1="88" y1="13" x2="148" y2="76" stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.55" />
+      <rect x="93" y="40" width="17" height="15" rx="3" fill="rgba(240,253,250,0.92)" stroke="rgba(15,118,110,0.35)" strokeWidth="0.9" />
+      <text x="101.5" y="51" fontFamily="JetBrains Mono, monospace" fontSize="11" fontWeight="700" fill={GEO_THUMB_PALETTE.teal} textAnchor="middle">
+        h
       </text>
-      <text x={57} y={48} fontSize={8} fill="var(--primary-active)">
-        giữa
+      <text x="114" y="89" fontFamily="Plus Jakarta Sans, sans-serif" fontStyle="italic" fontSize="11" fontWeight="700" fill="#B45309">
+        Sđáy
       </text>
-      <text x={80} y={48} fontSize={8} fill="var(--ink-quiet)">
-        phải
+      <GeoPt x={88} y={13} label="S" dx={0} dy={-4} color={GEO_THUMB_PALETTE.ink} />
+      <GeoPt x={28} y={78} label="A" dx={-8} dy={4} color={GEO_THUMB_PALETTE.ink} />
+      <GeoPt x={84} y={97} label="B" dx={-2} dy={10} color={GEO_THUMB_PALETTE.ink} />
+      <GeoPt x={148} y={76} label="C" dx={8} dy={4} color={GEO_THUMB_PALETTE.ink} />
+      <GeoPt x={88} y={83} label="H" dx={-8} dy={-3} color={GEO_THUMB_PALETTE.teal} r={2.5} />
+    </>
+  ),
+
+  // 6. Mặt cầu S(O, R) cắt bởi mặt phẳng (α) theo đường tròn giao tuyến C(H, r)
+  "cau-cat-mat-phang": () => (
+    <>
+      <polygon points="22,80 140,88 158,56 40,48" fill={GEO_THUMB_PALETTE.planeFill} stroke={GEO_THUMB_PALETTE.planeStroke} strokeWidth="1" />
+      <circle cx="88" cy="49" r="37" fill={GEO_THUMB_PALETTE.shellFill} stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.6" />
+      <path d="M 51 49 A 37 9.5 0 0 1 125 49" fill="none" stroke={GEO_THUMB_PALETTE.dashed} strokeWidth="1" strokeDasharray="3.5,3" />
+      <path d="M 51 49 A 37 9.5 0 0 0 125 49" fill="none" stroke={GEO_THUMB_PALETTE.dashed} strokeWidth="1" opacity="0.65" />
+      <ellipse cx="88" cy="68" rx="30" ry="8.5" fill={GEO_THUMB_PALETTE.terracottaFill} />
+      <path d="M 58 68 A 30 8.5 0 0 1 118 68" fill="none" stroke={GEO_THUMB_PALETTE.terracotta} strokeWidth="1.35" strokeDasharray="3.5,2.5" />
+      <path d="M 58 68 A 30 8.5 0 0 0 118 68" fill="none" stroke={GEO_THUMB_PALETTE.terracotta} strokeWidth="1.8" />
+      <line x1="88" y1="49" x2="88" y2="68" stroke={GEO_THUMB_PALETTE.teal} strokeWidth="1.8" />
+      <line x1="88" y1="68" x2="118" y2="68" stroke={GEO_THUMB_PALETTE.terracotta} strokeWidth="1.6" />
+      <line x1="88" y1="49" x2="118" y2="68" stroke={GEO_THUMB_PALETTE.cobalt} strokeWidth="1.4" strokeDasharray="3,2" />
+      <GeoRightAngle vx={88} vy={68} ux={0} uy={-19} wx={30} wy={0} size={5.2} color={GEO_THUMB_PALETTE.teal} />
+      <GeoPt x={88} y={49} label="O" dx={-8} dy={2} color={GEO_THUMB_PALETTE.ink} r={2.5} />
+      <GeoPt x={88} y={68} label="H" dx={-8} dy={5} color={GEO_THUMB_PALETTE.teal} r={2.5} />
+      <GeoPt x={118} y={68} label="M" dx={8} dy={4} color={GEO_THUMB_PALETTE.terracotta} r={2.4} />
+      <text
+        x="103"
+        y="65.5"
+        fontFamily="JetBrains Mono, monospace"
+        fontSize="11"
+        fontWeight="700"
+        fill={GEO_THUMB_PALETTE.terracotta}
+        paintOrder="stroke"
+        stroke="#f8f6f1"
+        strokeWidth="2.4"
+        strokeLinejoin="round"
+      >
+        r
       </text>
-    </svg>
-  );
-}
-
-function SortSwap() {
-  // cơ chế bubble_sort: ĐỔI CHỖ cặp kề nhau — hai mũi tên vòng NGƯỢC nhau,
-  // hai cột cùng được tô cam (cả hai cùng di chuyển).
-  return (
-    <svg viewBox="0 0 96 56" className="sample-preview-svg" aria-hidden="true">
-      {SORT_BARS.map((h, i) => (
-        <rect
-          key={i}
-          x={8 + i * 17}
-          y={50 - h}
-          width={12}
-          height={h}
-          rx={2}
-          fill={
-            i === 1 || i === 2
-              ? "var(--accent-orange)"
-              : i === 4
-                ? "var(--accent-green)"
-                : "#cfe3f7"
-          }
-        />
-      ))}
-      {/* hai cung ngược chiều = hoán vị tại chỗ của cặp đang so sánh */}
-      <path
-        d="M 31 6 q 8 -7 17 0"
-        fill="none"
-        stroke="var(--accent-orange-deep)"
-        strokeWidth={1.5}
-        markerEnd="url(#swap-arr)"
-      />
-      <path
-        d="M 48 7 q -8 7 -17 0"
-        fill="none"
-        stroke="var(--accent-orange-deep)"
-        strokeWidth={1.5}
-        markerEnd="url(#swap-arr)"
-      />
-      <defs>
-        <marker id="swap-arr" markerWidth="6" markerHeight="6" refX="4" refY="3" orient="auto">
-          <path d="M0,0 L5,3 L0,6 z" fill="var(--accent-orange-deep)" />
-        </marker>
-      </defs>
-    </svg>
-  );
-}
-
-function InsertionLift() {
-  // cơ chế insertion_sort: NHẤC phần tử ra khỏi hàng rồi DỜI vào đúng chỗ.
-  // KHÔNG phải đổi chỗ — decision.ts hỏi "dời?", không hỏi "đổi chỗ?".
-  const rest = [
-    { x: 8, h: 16 },
-    { x: 25, h: 24 },
-    { x: 59, h: 32 },
-    { x: 76, h: 42 },
-  ];
-  return (
-    <svg viewBox="0 0 96 56" className="sample-preview-svg" aria-hidden="true">
-      {rest.map((b, i) => (
-        <rect key={i} x={b.x} y={50 - b.h} width={12} height={b.h} rx={2} fill="#cfe3f7" />
-      ))}
-      {/* chỗ trống nó vừa rời khỏi */}
-      <rect
-        x={42}
-        y={30}
-        width={12}
-        height={20}
-        rx={2}
-        fill="none"
-        stroke="var(--hairline)"
-        strokeDasharray="2 2"
-      />
-      {/* phần tử đang được cầm trên tay */}
-      <rect x={42} y={2} width={12} height={20} rx={2} fill="var(--accent-orange)" />
-      {/* dời xuống chỗ chèn */}
-      <path
-        d="M 48 24 v 4"
-        stroke="var(--accent-orange-deep)"
-        strokeWidth={1.6}
-        markerEnd="url(#lift-arr)"
-      />
-      <defs>
-        <marker id="lift-arr" markerWidth="6" markerHeight="6" refX="4" refY="3" orient="auto">
-          <path d="M0,0 L5,3 L0,6 z" fill="var(--accent-orange-deep)" />
-        </marker>
-      </defs>
-    </svg>
-  );
-}
-
-function BinaryBits() {
-  const bits = ["1", "1", "0", "1"];
-  const weights = ["8", "4", "2", "1"];
-  return (
-    <svg viewBox="0 0 96 56" className="sample-preview-svg" aria-hidden="true">
-      {bits.map((b, i) => (
-        <g key={i}>
-          <rect
-            x={10 + i * 20}
-            y={12}
-            width={16}
-            height={20}
-            rx={3}
-            fill={b === "1" ? "var(--primary)" : "#eef4fb"}
-            stroke="var(--hairline)"
-          />
-          <text
-            x={18 + i * 20}
-            y={26}
-            textAnchor="middle"
-            fontSize={11}
-            fontWeight={700}
-            fill={b === "1" ? "#fff" : "var(--ink-quiet)"}
-          >
-            {b}
-          </text>
-          <text x={18 + i * 20} y={44} textAnchor="middle" fontSize={8} fill="var(--ink-quiet)">
-            {weights[i]}
-          </text>
-        </g>
-      ))}
-    </svg>
-  );
-}
-
-function NetworkPath() {
-  const nodes = [
-    { x: 12, y: 40 },
-    { x: 38, y: 16 },
-    { x: 62, y: 40 },
-    { x: 86, y: 16 },
-  ];
-  return (
-    <svg viewBox="0 0 96 56" className="sample-preview-svg" aria-hidden="true">
-      {nodes.slice(0, -1).map((n, i) => (
-        <line
-          key={i}
-          x1={n.x}
-          y1={n.y}
-          x2={nodes[i + 1].x}
-          y2={nodes[i + 1].y}
-          stroke="var(--primary)"
-          strokeWidth={2}
-        />
-      ))}
-      {nodes.map((n, i) => (
-        <circle
-          key={i}
-          cx={n.x}
-          cy={n.y}
-          r={6}
-          fill="var(--surface)"
-          stroke={i === 0 ? "var(--accent-sky)" : i === nodes.length - 1 ? "var(--accent-green)" : "var(--accent-purple)"}
-          strokeWidth={2}
-        />
-      ))}
-      <circle cx={50} cy={28} r={4} fill="var(--accent-pink)" stroke="#fff" strokeWidth={1.5} />
-    </svg>
-  );
-}
-
-/**
- * network.protocol_encapsulation — cơ chế: PDU LỚN DẦN khi đóng gói qua các tầng.
- * Các đoạn rộng dần (payload → +TCP → +IP → +LINK/FCS): payload xanh lá, header
- * xanh da trời, trailer cam. Đúng cơ chế bài dạy (một tranh = một cơ chế, #6).
- */
-function NetworkEncap() {
-  return (
-    <svg viewBox="0 0 96 56" className="sample-preview-svg" aria-hidden="true">
-      <rect x={8} y={8} width={34} height={8} rx={2} fill="var(--accent-green)" />
-      <rect x={8} y={20} width={48} height={8} rx={2} fill="var(--accent-sky)" />
-      <rect x={8} y={32} width={62} height={8} rx={2} fill="var(--accent-sky)" opacity={0.6} />
-      <rect x={8} y={44} width={80} height={8} rx={2} fill="var(--accent-orange)" opacity={0.7} />
-    </svg>
-  );
-}
-
-function LogicGate() {
-  return (
-    <svg viewBox="0 0 96 56" className="sample-preview-svg" aria-hidden="true">
-      <circle cx={12} cy={18} r={5} fill="var(--accent-green)" />
-      <circle cx={12} cy={38} r={5} fill="var(--hairline)" />
-      <line x1={17} y1={18} x2={34} y2={22} stroke="var(--ink-faint)" strokeWidth={1.5} />
-      <line x1={17} y1={38} x2={34} y2={34} stroke="var(--ink-faint)" strokeWidth={1.5} />
-      <rect x={34} y={16} width={26} height={24} rx={5} fill="#eef4fb" stroke="var(--hairline)" />
-      <text x={47} y={31} textAnchor="middle" fontSize={9} fontWeight={700} fill="var(--ink-secondary)">
-        AND
+      <text x="142" y="84" fontFamily="Plus Jakarta Sans, sans-serif" fontStyle="italic" fontSize="11" fontWeight="700" fill="#6D28D9">
+        (α)
       </text>
-      <line x1={60} y1={28} x2={76} y2={28} stroke="var(--ink-faint)" strokeWidth={1.5} />
-      <circle cx={83} cy={28} r={6} fill="#f3f0e9" stroke="var(--accent-orange)" strokeWidth={2} />
-    </svg>
-  );
-}
+    </>
+  ),
 
-function WebStructure() {
-  return (
-    <svg viewBox="0 0 96 56" className="sample-preview-svg" aria-hidden="true">
-      <rect x={14} y={8} width={68} height={40} rx={4} fill="var(--surface)" stroke="var(--hairline)" />
-      <rect x={20} y={14} width={40} height={7} rx={2} fill="var(--primary)" opacity={0.85} />
-      <rect x={20} y={27} width={56} height={4} rx={2} fill="var(--hairline)" />
-      <rect x={20} y={35} width={48} height={4} rx={2} fill="var(--hairline)" />
-    </svg>
-  );
-}
+  // 7. Bán kính và cấu trúc khối cầu S(O, R)
+  "cau-the-tich": () => (
+    <>
+      <circle cx="90" cy="55" r="39" fill={GEO_THUMB_PALETTE.shellFillStrong} stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.65" />
+      <ellipse cx="90" cy="55" rx="39" ry="11.5" fill={GEO_THUMB_PALETTE.amberFill} />
+      <path d="M 51 55 A 39 11.5 0 0 1 129 55" fill="none" stroke={GEO_THUMB_PALETTE.amber} strokeWidth="1.3" strokeDasharray="4,3" />
+      <path d="M 51 55 A 39 11.5 0 0 0 129 55" fill="none" stroke={GEO_THUMB_PALETTE.amber} strokeWidth="1.75" />
+      <path d="M 90 16 A 13 39 0 0 0 90 94" fill="none" stroke={GEO_THUMB_PALETTE.dashed} strokeWidth="1.1" strokeDasharray="3.5,3" />
+      <path d="M 90 16 A 13 39 0 0 1 90 94" fill="none" stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.25" opacity="0.7" />
+      <line x1="90" y1="16" x2="90" y2="94" stroke={GEO_THUMB_PALETTE.teal} strokeWidth="1.2" strokeDasharray="3,2.5" />
+      <line x1="90" y1="55" x2="126" y2="40" stroke={GEO_THUMB_PALETTE.terracotta} strokeWidth="2.1" />
+      <text x="108" y="42" fontFamily="JetBrains Mono, monospace" fontSize="11" fontWeight="700" fill={GEO_THUMB_PALETTE.terracotta} textAnchor="middle">
+        R
+      </text>
+      <GeoPt x={90} y={55} label="O" dx={-8} dy={4} color={GEO_THUMB_PALETTE.ink} r={2.7} />
+      <GeoPt x={126} y={40} label="A" dx={8} dy={-2} color={GEO_THUMB_PALETTE.terracotta} r={2.6} />
+    </>
+  ),
 
-function GenericIcon() {
-  return (
-    <svg viewBox="0 0 96 56" className="sample-preview-svg" aria-hidden="true">
-      <circle cx={30} cy={20} r={7} fill="var(--surface)" stroke="var(--accent-teal)" strokeWidth={2} />
-      <circle cx={66} cy={36} r={7} fill="var(--surface)" stroke="var(--accent-purple)" strokeWidth={2} />
-      <line x1={36} y1={24} x2={60} y2={33} stroke="var(--ink-faint)" strokeWidth={1.5} />
-    </svg>
-  );
-}
+  // 8. Thiết diện vuông góc trục OO′ của hình trụ
+  "tru-thiet-dien-tron": () => (
+    <>
+      <rect x="54" y="22" width="72" height="66" fill={GEO_THUMB_PALETTE.shellFill} />
+      <polygon points="28,65 138,71 154,45 44,39" fill={GEO_THUMB_PALETTE.planeFill} stroke={GEO_THUMB_PALETTE.planeStroke} strokeWidth="0.95" />
+      <ellipse cx="90" cy="22" rx="36" ry="9.5" fill={GEO_THUMB_PALETTE.shellFillStrong} stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.55" />
+      <ellipse cx="90" cy="55" rx="36" ry="9.5" fill={GEO_THUMB_PALETTE.terracottaFill} />
+      <path d="M 54 55 A 36 9.5 0 0 1 126 55" fill="none" stroke={GEO_THUMB_PALETTE.terracotta} strokeWidth="1.35" strokeDasharray="3.5,2.5" />
+      <path d="M 54 55 A 36 9.5 0 0 0 126 55" fill="none" stroke={GEO_THUMB_PALETTE.terracotta} strokeWidth="1.8" />
+      <path d="M 54 88 A 36 9.5 0 0 1 126 88" fill="none" stroke={GEO_THUMB_PALETTE.dashed} strokeWidth="1.15" strokeDasharray="4,3" />
+      <path d="M 54 88 A 36 9.5 0 0 0 126 88" fill="none" stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.55" />
+      <line x1="54" y1="22" x2="54" y2="88" stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.55" />
+      <line x1="126" y1="22" x2="126" y2="88" stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.55" />
+      <line x1="90" y1="22" x2="90" y2="88" stroke={GEO_THUMB_PALETTE.teal} strokeWidth="1.5" strokeDasharray="3.5,2.5" />
+      <line x1="90" y1="55" x2="126" y2="55" stroke={GEO_THUMB_PALETTE.terracotta} strokeWidth="1.65" />
+      <GeoRightAngle vx={90} vy={55} ux={0} uy={-20} wx={20} wy={0} size={5.2} color={GEO_THUMB_PALETTE.teal} />
+      <GeoPt x={90} y={22} label="O′" dx={-9} dy={-1} color={GEO_THUMB_PALETTE.ink} r={2.2} />
+      <GeoPt x={90} y={55} label="H" dx={-8} dy={4} color={GEO_THUMB_PALETTE.teal} r={2.5} />
+      <GeoPt x={126} y={55} label="M" dx={9} dy={3} color={GEO_THUMB_PALETTE.terracotta} r={2.4} />
+      <GeoPt x={90} y={88} label="O" dx={-8} dy={4} color={GEO_THUMB_PALETTE.ink} r={2.2} />
+    </>
+  ),
 
-const RENDERERS: Record<PreviewKind, () => JSX.Element> = {
-  "algorithm-bars": Bars,
-  "bars-min": BarsMin,
-  "sum-threshold": SumThreshold,
-  "count-threshold": CountThreshold,
-  "linear-scan": LinearScan,
-  "search-range": SearchRange,
-  "sort-swap": SortSwap,
-  "insertion-lift": InsertionLift,
-  "binary-bits": BinaryBits,
-  "network-path": NetworkPath,
-  "network-encapsulation": NetworkEncap,
-  "logic-gate": LogicGate,
-  "web-structure": WebStructure,
-  generic: GenericIcon,
+  // 9. Hình trụ và quan hệ giữa đường sinh với hai mặt đáy song song
+  "tru-truc-xien": () => (
+    <>
+      <rect x="52" y="22" width="76" height="66" fill={GEO_THUMB_PALETTE.shellFill} />
+      <rect x="90" y="22" width="38" height="66" fill={GEO_THUMB_PALETTE.tealFill} />
+      <ellipse cx="90" cy="22" rx="38" ry="10" fill={GEO_THUMB_PALETTE.amberFill} stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.55" />
+      <ellipse cx="90" cy="88" rx="38" ry="10" fill={GEO_THUMB_PALETTE.amberFill} />
+      <path d="M 52 88 A 38 10 0 0 1 128 88" fill="none" stroke={GEO_THUMB_PALETTE.dashed} strokeWidth="1.2" strokeDasharray="4,3" />
+      <path d="M 52 88 A 38 10 0 0 0 128 88" fill="none" stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.55" />
+      <line x1="52" y1="22" x2="52" y2="88" stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.55" />
+      <line x1="90" y1="22" x2="90" y2="88" stroke={GEO_THUMB_PALETTE.teal} strokeWidth="1.75" strokeDasharray="4,2.5" />
+      <line x1="128" y1="22" x2="128" y2="88" stroke={GEO_THUMB_PALETTE.terracotta} strokeWidth="2.4" />
+      <line x1="90" y1="22" x2="128" y2="22" stroke={GEO_THUMB_PALETTE.teal} strokeWidth="1.6" />
+      <line x1="90" y1="88" x2="128" y2="88" stroke={GEO_THUMB_PALETTE.teal} strokeWidth="1.6" />
+      <GeoRightAngle vx={90} vy={22} ux={0} uy={18} wx={18} wy={0} size={5.5} color={GEO_THUMB_PALETTE.teal} />
+      <GeoRightAngle vx={90} vy={88} ux={0} uy={-18} wx={18} wy={0} size={5.5} color={GEO_THUMB_PALETTE.teal} />
+      <GeoRightAngle vx={128} vy={88} ux={0} uy={-18} wx={-18} wy={0} size={5.5} color={GEO_THUMB_PALETTE.terracotta} />
+      <text x="137" y="58" fontFamily="JetBrains Mono, monospace" fontSize="11" fontWeight="700" fill={GEO_THUMB_PALETTE.terracotta}>
+        l
+      </text>
+      <text x="109" y="84" fontFamily="JetBrains Mono, monospace" fontSize="11" fontWeight="700" fill={GEO_THUMB_PALETTE.teal} textAnchor="middle">
+        R
+      </text>
+      <GeoPt x={90} y={22} label="O′" dx={-9} dy={2} color={GEO_THUMB_PALETTE.ink} r={2.3} />
+      <GeoPt x={128} y={22} label="A′" dx={9} dy={2} color={GEO_THUMB_PALETTE.terracotta} r={2.4} />
+      <GeoPt x={90} y={88} label="O" dx={-8} dy={4} color={GEO_THUMB_PALETTE.ink} r={2.3} />
+      <GeoPt x={128} y={88} label="A" dx={8} dy={4} color={GEO_THUMB_PALETTE.terracotta} r={2.4} />
+    </>
+  ),
+
+  // 10. Thiết diện qua trục SO của hình nón (Tam giác cân SAB)
+  "non-thiet-dien-truc": () => (
+    <>
+      <polygon points="36,92 144,92 128,10 52,10" fill={GEO_THUMB_PALETTE.planeFill} stroke={GEO_THUMB_PALETTE.planeStroke} strokeWidth="0.9" />
+      <polygon points="90,15 46,85 134,85" fill={GEO_THUMB_PALETTE.terracottaFill} />
+      <path d="M 46 85 A 44 11 0 0 1 134 85" fill="none" stroke={GEO_THUMB_PALETTE.dashed} strokeWidth="1.2" strokeDasharray="4,3" />
+      <path d="M 46 85 A 44 11 0 0 0 134 85" fill="none" stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.6" />
+      <line x1="46" y1="85" x2="134" y2="85" stroke={GEO_THUMB_PALETTE.terracotta} strokeWidth="1.65" strokeDasharray="4,2.5" />
+      <line x1="90" y1="15" x2="46" y2="85" stroke={GEO_THUMB_PALETTE.terracotta} strokeWidth="1.9" />
+      <line x1="90" y1="15" x2="134" y2="85" stroke={GEO_THUMB_PALETTE.terracotta} strokeWidth="1.9" />
+      <line x1="90" y1="15" x2="90" y2="85" stroke={GEO_THUMB_PALETTE.teal} strokeWidth="1.5" strokeDasharray="3.5,2.5" />
+      <GeoRightAngle vx={90} vy={85} ux={0} uy={-20} wx={20} wy={0} size={5.5} color={GEO_THUMB_PALETTE.teal} />
+      <GeoPt x={90} y={15} label="S" dx={0} dy={-4} color={GEO_THUMB_PALETTE.ink} r={2.6} />
+      <GeoPt x={46} y={85} label="A" dx={-8} dy={4} color={GEO_THUMB_PALETTE.terracotta} r={2.4} />
+      <GeoPt x={134} y={85} label="B" dx={8} dy={4} color={GEO_THUMB_PALETTE.terracotta} r={2.4} />
+      <GeoPt x={90} y={85} label="O" dx={-7} dy={7} color={GEO_THUMB_PALETTE.teal} r={2.4} />
+    </>
+  ),
+
+  // 11. Đường sinh SA = l, đường cao SO = h và bán kính đáy OA = R trong hình nón
+  "non-duong-sinh": () => (
+    <>
+      <polygon points="86,15 42,85 130,85" fill={GEO_THUMB_PALETTE.shellFill} />
+      <polygon points="86,15 86,85 130,85" fill={GEO_THUMB_PALETTE.tealFill} />
+      <path d="M 42 85 A 44 11 0 0 1 130 85" fill="none" stroke={GEO_THUMB_PALETTE.dashed} strokeWidth="1.2" strokeDasharray="4,3" />
+      <path d="M 42 85 A 44 11 0 0 0 130 85" fill="none" stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.6" />
+      <line x1="86" y1="15" x2="42" y2="85" stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.45" />
+      <line x1="86" y1="15" x2="86" y2="85" stroke={GEO_THUMB_PALETTE.teal} strokeWidth="2.1" strokeDasharray="4,2.5" />
+      <line x1="86" y1="85" x2="130" y2="85" stroke={GEO_THUMB_PALETTE.cobalt} strokeWidth="2.0" />
+      <line x1="86" y1="15" x2="130" y2="85" stroke={GEO_THUMB_PALETTE.terracotta} strokeWidth="2.35" />
+      <GeoRightAngle vx={86} vy={85} ux={0} uy={-20} wx={20} wy={0} size={6.2} color={GEO_THUMB_PALETTE.teal} />
+      <text x="75" y="55" fontFamily="JetBrains Mono, monospace" fontSize="11" fontWeight="700" fill={GEO_THUMB_PALETTE.teal}>
+        h
+      </text>
+      <text x="108" y="81" fontFamily="JetBrains Mono, monospace" fontSize="11" fontWeight="700" fill={GEO_THUMB_PALETTE.cobalt} textAnchor="middle">
+        R
+      </text>
+      <text x="116" y="48" fontFamily="JetBrains Mono, monospace" fontSize="11" fontWeight="700" fill={GEO_THUMB_PALETTE.terracotta}>
+        l
+      </text>
+      <GeoPt x={86} y={15} label="S" dx={0} dy={-4} color={GEO_THUMB_PALETTE.ink} r={2.6} />
+      <GeoPt x={86} y={85} label="O" dx={-7} dy={5} color={GEO_THUMB_PALETTE.teal} r={2.5} />
+      <GeoPt x={130} y={85} label="A" dx={8} dy={4} color={GEO_THUMB_PALETTE.terracotta} r={2.6} />
+    </>
+  ),
 };
 
-export function SamplePreview({ kind }: { kind: PreviewKind }) {
-  const Render = RENDERERS[kind] ?? GenericIcon;
+function renderCategoryFallback(category?: string): ReactNode {
+  if (category === "Mặt cầu") {
+    return (
+      <svg viewBox="0 0 180 110" data-thumb-fallback="true" aria-hidden="true">
+        <polygon points="24,78 142,86 158,56 42,48" fill="#4F46E5" fillOpacity="0.08" stroke="rgba(79,70,229,0.28)" strokeWidth="1" />
+        <circle cx="90" cy="54" r="38" fill="rgba(148,163,184,0.12)" stroke="#1E293B" strokeWidth="1.6" />
+        <ellipse cx="90" cy="54" rx="38" ry="10" fill="none" stroke="#64748B" strokeWidth="1" strokeDasharray="4,3" />
+        <ellipse cx="90" cy="69" rx="31" ry="9" fill="#C85A32" fillOpacity="0.28" stroke="#C85A32" strokeWidth="1.7" />
+        <line x1="90" y1="54" x2="90" y2="69" stroke="#0F766E" strokeWidth="1.6" />
+        <line x1="90" y1="69" x2="121" y2="69" stroke="#C85A32" strokeWidth="1.5" strokeDasharray="3,2" />
+        <circle cx="90" cy="54" r="2.6" fill="#1E293B" />
+        <circle cx="90" cy="69" r="2.6" fill="#C85A32" />
+      </svg>
+    );
+  }
+  if (category === "Hình trụ") {
+    return (
+      <svg viewBox="0 0 180 110" data-thumb-fallback="true" aria-hidden="true">
+        <rect x="52" y="24" width="76" height="62" fill="rgba(148,163,184,0.12)" />
+        <ellipse cx="90" cy="24" rx="38" ry="10" fill="rgba(148,163,184,0.16)" stroke="#1E293B" strokeWidth="1.55" />
+        <ellipse cx="90" cy="56" rx="38" ry="10" fill="#C85A32" fillOpacity="0.26" stroke="#C85A32" strokeWidth="1.65" />
+        <path d="M 52 86 A 38 10 0 0 1 128 86" fill="none" stroke="#64748B" strokeWidth="1.15" strokeDasharray="4,3" />
+        <path d="M 52 86 A 38 10 0 0 0 128 86" fill="none" stroke="#1E293B" strokeWidth="1.55" />
+        <line x1="52" y1="24" x2="52" y2="86" stroke="#1E293B" strokeWidth="1.55" />
+        <line x1="128" y1="24" x2="128" y2="86" stroke="#1E293B" strokeWidth="1.55" />
+        <line x1="90" y1="24" x2="90" y2="86" stroke="#0F766E" strokeWidth="1.4" strokeDasharray="3,3" />
+      </svg>
+    );
+  }
+  if (category === "Hình nón") {
+    return (
+      <svg viewBox="0 0 180 110" data-thumb-fallback="true" aria-hidden="true">
+        <polygon points="90,16 46,84 134,84" fill="#C85A32" fillOpacity="0.24" />
+        <path d="M 46 84 A 44 11 0 0 1 134 84" fill="none" stroke="#64748B" strokeWidth="1.2" strokeDasharray="4,3" />
+        <path d="M 46 84 A 44 11 0 0 0 134 84" fill="none" stroke="#1E293B" strokeWidth="1.6" />
+        <line x1="90" y1="16" x2="46" y2="84" stroke="#1E293B" strokeWidth="1.65" />
+        <line x1="90" y1="16" x2="134" y2="84" stroke="#1E293B" strokeWidth="1.65" />
+        <line x1="90" y1="16" x2="90" y2="84" stroke="#0F766E" strokeWidth="1.5" strokeDasharray="3,2" />
+        <line x1="46" y1="84" x2="134" y2="84" stroke="#C85A32" strokeWidth="1.5" strokeDasharray="4,3" />
+        <circle cx="90" cy="16" r="2.8" fill="#1E293B" />
+        <circle cx="90" cy="84" r="2.6" fill="#0F766E" />
+      </svg>
+    );
+  }
   return (
-    <span className="sample-preview">
-      <Render />
-    </span>
+    <svg viewBox="0 0 180 110" data-thumb-fallback="true" aria-hidden="true">
+      <polygon points="90,14 34,76 76,96 146,80" fill="rgba(100,116,139,0.10)" />
+      <line x1="34" y1="76" x2="112" y2="60" stroke="#64748B" strokeWidth="1.2" strokeDasharray="4,3" />
+      <line x1="112" y1="60" x2="146" y2="80" stroke="#64748B" strokeWidth="1.2" strokeDasharray="4,3" />
+      <line x1="90" y1="14" x2="112" y2="60" stroke="#64748B" strokeWidth="1.2" strokeDasharray="4,3" />
+      <polygon points="54,54 82,66 125,57 104,42" fill="#C85A32" fillOpacity="0.28" stroke="#C85A32" strokeWidth="1.6" />
+      <line x1="90" y1="14" x2="88" y2="75" stroke="#0F766E" strokeWidth="1.4" strokeDasharray="3,2" />
+      <polyline points="34,76 76,96 146,80" fill="none" stroke="#1E293B" strokeWidth="1.6" />
+      <line x1="90" y1="14" x2="34" y2="76" stroke="#1E293B" strokeWidth="1.6" />
+      <line x1="90" y1="14" x2="76" y2="96" stroke="#1E293B" strokeWidth="1.6" />
+      <line x1="90" y1="14" x2="146" y2="80" stroke="#1E293B" strokeWidth="1.6" />
+      <circle cx="90" cy="14" r="2.8" fill="#1E293B" />
+    </svg>
   );
+}
+
+export function SamplePreview({
+  sampleId,
+  category,
+}: {
+  kind?: PreviewKind;
+  sampleId?: string | null;
+  category?: string;
+}) {
+  if (sampleId && PROBLEM_THUMBNAIL_RENDERERS[sampleId]) {
+    return (
+      <svg
+        viewBox="0 0 180 110"
+        data-thumb-id={sampleId}
+        data-thumb-fallback="false"
+        aria-hidden="true"
+      >
+        {PROBLEM_THUMBNAIL_RENDERERS[sampleId]()}
+      </svg>
+    );
+  }
+  return renderCategoryFallback(category);
 }

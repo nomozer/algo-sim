@@ -1,0 +1,27 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "axo-pedagogical-construction-hardening — separate-branch integration of feat/axo-v27-frontend-integration (6b980f2b) with main (f986e897) preserving exact Q^3 pedagogical construction DAG, 3D right-angle invariants, W4 certified section-edge justifications, and runtime recovery (765d017f)",
+  "corrects": [
+    "docs/evaluation/geometry/runs/construction-integrity-audit/candidate_divergence.json",
+    "docs/evaluation/geometry/runs/hybrid-v2-planner-generalization/candidate_divergence.json"
+  ],
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "joined_branch_heads": {
+    "main": "main f986e897 (product 61ade29e, layers through geometry-generalization-and-pedagogical-construction preserved byte-for-byte)",
+    "axo_frontend": "feat/axo-v27-frontend-integration 6b980f2b (layers through goal-aware-visual-scaffolding preserved byte-for-byte)"
+  },
+  "current_candidate_hash": "6809d79b51f6e47be1e8af03ae065563b2028fcd823c22a91b61600b242d7fad",
+  "current_product_commit": "215e664d76fb2d980535db90c56f0d8ced121384",
+  "current_candidate_source": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+  "diverged": true,
+  "reason": "Separate-branch integration (integration/axo-pedagogical-construction-hardening, merge 765d017f) joining main (W2/W3/W4 exact radical normalization, Adapter /4 Category A identity, cross-sentence plane grounding, certified section-edge justifications, and CIC-D1 closed input contract) with feat/axo-v27-frontend-integration (Axo V2.7/V2.8 workspace, unified SemanticConstructionContract, 7-role pedagogical DAG, non-spoiler student presentation policy, true 3D right-angle witness foreshortening guard, sphere-plane regime completeness, and WebGL/ErrorBoundary runtime recovery). Both branches had independently corrected hybrid-v2-nl-certificates-e2e; this layer joins the two correction chains while preserving every historical receipt byte-for-byte.",
+  "cache_version": 131,
+  "cache_version_hien_tai": 131,
+  "cache_decision": "RETAIN 131: semantic_environment_fingerprint() matches backend/cache_identity.lock.json at CACHE_VERSION=131 identically; default LLM_ONLY /api/analyze route, prompts, schemas, and grammar cards are unchanged.",
+  "hieu_luc_len_ket_qua_da_do": {
+    "historical_measurements": "UNCHANGED",
+    "live_requests": 0,
+    "so_lieu_lượt_đo_cuối": "UNCHANGED: historical measurements and every earlier candidate layer on both joined branches are preserved byte-for-byte; no earlier result is re-scored against the integrated code."
+  }
+}

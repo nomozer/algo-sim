@@ -1,0 +1,718 @@
+{
+  "schema": "axo-scene-consistency/1",
+  "dist": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\axo-hybrid4-integration\\frontend\\dist",
+  "provider_calls": 0,
+  "checks": [
+    {
+      "name": "route thiet-dien-chop: statement/title/scene consistent, no answer surface at first and final step",
+      "evidence": {
+        "url": "http://127.0.0.1:52150/simulation/pyramid-cross-section",
+        "title": "Thiết diện của hình chóp cắt bởi mặt phẳng qua ba trung điểm",
+        "steps": 10,
+        "renderedFirst": 18,
+        "renderedLast": 18
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "route mat-cheo-sac: statement/title/scene consistent, no answer surface at first and final step",
+      "evidence": {
+        "url": "http://127.0.0.1:52150/simulation/pyramid-diagonal-section",
+        "title": "Thiết diện của hình chóp theo mặt phẳng chéo (SAC)",
+        "steps": 6,
+        "renderedFirst": 13,
+        "renderedLast": 13
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "route vuong-goc-chop: statement/title/scene consistent, no answer surface at first and final step",
+      "evidence": {
+        "url": "http://127.0.0.1:52150/simulation/pyramid-line-plane-angle",
+        "title": "Đường thẳng vuông góc với mặt phẳng trong hình chóp",
+        "steps": 5,
+        "renderedFirst": 13,
+        "renderedLast": 13
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "route mp-vuong-goc-duong: statement/title/scene consistent, no answer surface at first and final step",
+      "evidence": {
+        "url": "http://127.0.0.1:52150/simulation/pyramid-perpendicular-plane-distance",
+        "title": "Mặt phẳng qua một điểm và vuông góc với đường thẳng cho trước",
+        "steps": 7,
+        "renderedFirst": 15,
+        "renderedLast": 15
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "route the-tich-chop: statement/title/scene consistent, no answer surface at first and final step",
+      "evidence": {
+        "url": "http://127.0.0.1:52150/simulation/pyramid-volume-and-altitude",
+        "title": "Thể tích khối chóp và khoảng cách từ đỉnh đến đáy",
+        "steps": 4,
+        "renderedFirst": 11,
+        "renderedLast": 11
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "route cau-the-tich: statement/title/scene consistent, no answer surface at first and final step",
+      "evidence": {
+        "url": "http://127.0.0.1:52150/simulation/sphere-radius-and-volume",
+        "title": "Bán kính và thể tích khối cầu",
+        "steps": 1,
+        "renderedFirst": 4,
+        "renderedLast": 4
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "route cau-cat-mat-phang: statement/title/scene consistent, no answer surface at first and final step",
+      "evidence": {
+        "url": "http://127.0.0.1:52150/simulation/sphere-plane-intersection",
+        "title": "Đường tròn giao của mặt phẳng và mặt cầu",
+        "steps": 5,
+        "renderedFirst": 9,
+        "renderedLast": 9
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "route tru-truc-xien: statement/title/scene consistent, no answer surface at first and final step",
+      "evidence": {
+        "url": "http://127.0.0.1:52150/simulation/tilted-right-cylinder-metrics",
+        "title": "Hình trụ tròn xoay có trục đặt nghiêng",
+        "steps": 3,
+        "renderedFirst": 8,
+        "renderedLast": 8
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "route tru-thiet-dien-tron: statement/title/scene consistent, no answer surface at first and final step",
+      "evidence": {
+        "url": "http://127.0.0.1:52150/simulation/cylinder-perpendicular-section",
+        "title": "Thiết diện vuông góc trục của hình trụ",
+        "steps": 6,
+        "renderedFirst": 10,
+        "renderedLast": 10
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "route non-duong-sinh: statement/title/scene consistent, no answer surface at first and final step",
+      "evidence": {
+        "url": "http://127.0.0.1:52150/simulation/cone-slant-height-and-surface",
+        "title": "Đường sinh, thể tích và diện tích xung quanh hình nón",
+        "steps": 4,
+        "renderedFirst": 8,
+        "renderedLast": 8
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "route non-thiet-dien-truc: statement/title/scene consistent, no answer surface at first and final step",
+      "evidence": {
+        "url": "http://127.0.0.1:52150/simulation/cone-axial-section",
+        "title": "Thiết diện qua trục của hình nón",
+        "steps": 5,
+        "renderedFirst": 9,
+        "renderedLast": 9
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "given data and narration remain per step (cau-cat-mat-phang)",
+      "evidence": [
+        {
+          "step": 0,
+          "title": "1 Dựng mặt cầu tâm I, bán kính R = IX Đề choĐặt tâm I, lấy điểm tham chiếu X trên mặt cầu "
+        },
+        {
+          "step": 1,
+          "title": "2 Dựng mặt phẳng cắt (P) Được dựngXác định mặt phẳng cắt (P) theo khoảng cách từ tâm mặt c"
+        },
+        {
+          "step": 2,
+          "title": "3 Xác định hình chiếu vuông góc H của tâm I và đoạn IH Hình phụHạ IH ⊥ (P) tại H; điểm H l"
+        },
+        {
+          "step": 3,
+          "title": "4 Xác định điểm M thuộc giao tuyến và tam giác vuông IHM Hình phụLấy điểm M chung của mặt "
+        },
+        {
+          "step": 4,
+          "title": "5 Dựng đường tròn thiết diện giao của mặt cầu và (P) Được suy raMặt phẳng cắt mặt cầu tạo "
+        }
+      ],
+      "status": "PASS"
+    },
+    {
+      "name": "two problems with the same title keep separate statement and scene; history A → B → A",
+      "evidence": [
+        {
+          "id": "s1d7lrkeek8j",
+          "statement": "Đề A: mặt cầu tâm I ",
+          "steps": 1
+        },
+        {
+          "id": "s1lvf2iryevp",
+          "statement": "Đề B: mặt cầu bán kí",
+          "steps": 5
+        },
+        {
+          "id": "s1d7lrkeek8j",
+          "statement": "Đề A: mặt cầu tâm I ",
+          "steps": 1
+        }
+      ],
+      "status": "PASS"
+    },
+    {
+      "name": "legacy record without scene3d and a sample-like title gets an honest missing-data notice",
+      "evidence": {
+        "notice": true
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "real composer: two independent sends of the same statement ⇒ two attempts; a 502 then 200 retry ⇒ one attempt; reload keeps it",
+      "evidence": {
+        "attempts": [
+          "aa24c6288e02c7033f1e461caea20024a",
+          "a1dc2a82ea35a3fa86b8428eae9c338c9",
+          "a9f97d4a6e3fa8ca0b396d99da229e42a"
+        ],
+        "retryCalls": 2,
+        "fixture": "cr.cube_2.dual_spheres.multi_goal"
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "deep-frozen Scene3D survives every interaction (cau-cat-mat-phang): render, steps, play/replay, orbit, zoom, select, hide, isolate, restore, dock, switch, history",
+      "evidence": {
+        "steps": 5,
+        "pageErrorsDuringCheck": 0
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "deep-frozen Scene3D survives every interaction (thiet-dien-chop): render, steps, play/replay, orbit, zoom, select, hide, isolate, restore, dock, switch, history",
+      "evidence": {
+        "steps": 10,
+        "pageErrorsDuringCheck": 0
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "deep-frozen Scene3D survives every interaction (non-thiet-dien-truc): render, steps, play/replay, orbit, zoom, select, hide, isolate, restore, dock, switch, history",
+      "evidence": {
+        "steps": 5,
+        "pageErrorsDuringCheck": 0
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "the viewer never mutates the opened Scene3D; reopening keeps the same record (no duplicate)",
+      "evidence": {
+        "id": "symsf1wenql",
+        "mutated": false,
+        "sameAfterReopen": true,
+        "countBefore": 21,
+        "countAfter": 21
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "submission sharing a sample program: own record and URL, statement survives reload, sample untouched",
+      "evidence": {
+        "submission": "s1h8a7r23ag0",
+        "url": "/simulation/s1h8a7r23ag0"
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "two statements compiling to the same program keep two records; selection does not cross records",
+      "evidence": {
+        "id1": "s1uh2f2baely",
+        "id2": "s1oyslh7nthf",
+        "selectedInFirst": "cau__radius"
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "legacy record without a stored statement says so (no model description as statement)",
+      "evidence": {
+        "text": "Bản ghi này không lưu đề gốc. Mô tả mô hình do hệ thống tạo: Lời mô tả kỹ thuật của hệ thống."
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "reload (F5) restores the same record, statement and step",
+      "evidence": {
+        "step": 1,
+        "url": "http://127.0.0.1:52150/simulation/cylinder-perpendicular-section"
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "rapid switching, switching during playback, Back/Forward keep record and scene together",
+      "evidence": {
+        "canvases": 1
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "capture thiet-dien-chop: first, middle, last step and two extra camera angles",
+      "evidence": {
+        "steps": 10,
+        "shots": [
+          "scene-thiet-dien-chop-first.png",
+          "scene-thiet-dien-chop-middle.png",
+          "scene-thiet-dien-chop-last.png",
+          "scene-thiet-dien-chop-last-angle-a.png",
+          "scene-thiet-dien-chop-last-angle-b.png"
+        ],
+        "edges": {
+          "visible": 6,
+          "hidden": 2
+        }
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "capture mat-cheo-sac: first, middle, last step and two extra camera angles",
+      "evidence": {
+        "steps": 6,
+        "shots": [
+          "scene-mat-cheo-sac-first.png",
+          "scene-mat-cheo-sac-middle.png",
+          "scene-mat-cheo-sac-last.png",
+          "scene-mat-cheo-sac-last-angle-a.png",
+          "scene-mat-cheo-sac-last-angle-b.png"
+        ],
+        "edges": {
+          "visible": 7,
+          "hidden": 1
+        }
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "capture tru-truc-xien: first, middle, last step and two extra camera angles",
+      "evidence": {
+        "steps": 3,
+        "shots": [
+          "scene-tru-truc-xien-first.png",
+          "scene-tru-truc-xien-middle.png",
+          "scene-tru-truc-xien-last.png",
+          "scene-tru-truc-xien-last-angle-a.png",
+          "scene-tru-truc-xien-last-angle-b.png"
+        ],
+        "edges": {
+          "visible": 0,
+          "hidden": 0
+        }
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "capture non-thiet-dien-truc: first, middle, last step and two extra camera angles",
+      "evidence": {
+        "steps": 5,
+        "shots": [
+          "scene-non-thiet-dien-truc-first.png",
+          "scene-non-thiet-dien-truc-middle.png",
+          "scene-non-thiet-dien-truc-last.png",
+          "scene-non-thiet-dien-truc-last-angle-a.png",
+          "scene-non-thiet-dien-truc-last-angle-b.png"
+        ],
+        "edges": {
+          "visible": 0,
+          "hidden": 0
+        }
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "capture cau-cat-mat-phang: first, middle, last step and two extra camera angles",
+      "evidence": {
+        "steps": 5,
+        "shots": [
+          "scene-cau-cat-mat-phang-first.png",
+          "scene-cau-cat-mat-phang-middle.png",
+          "scene-cau-cat-mat-phang-last.png",
+          "scene-cau-cat-mat-phang-last-angle-a.png",
+          "scene-cau-cat-mat-phang-last-angle-b.png"
+        ],
+        "edges": {
+          "visible": 0,
+          "hidden": 0
+        }
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "responsive 360px: final step layout, no answer surface",
+      "evidence": {
+        "docWidth": 360,
+        "vw": 360,
+        "canvasH": 438
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "responsive 390px: final step layout, no answer surface",
+      "evidence": {
+        "docWidth": 390,
+        "vw": 390,
+        "canvasH": 438
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "responsive 430px: final step layout, no answer surface",
+      "evidence": {
+        "docWidth": 430,
+        "vw": 430,
+        "canvasH": 462
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "responsive 768px: final step layout, no answer surface",
+      "evidence": {
+        "docWidth": 768,
+        "vw": 768,
+        "canvasH": 854
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "responsive 820px: final step layout, no answer surface",
+      "evidence": {
+        "docWidth": 820,
+        "vw": 820,
+        "canvasH": 854
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "responsive 1024px: final step layout, no answer surface",
+      "evidence": {
+        "docWidth": 1024,
+        "vw": 1024,
+        "canvasH": 854
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "responsive 1280px: final step layout, no answer surface",
+      "evidence": {
+        "docWidth": 1280,
+        "vw": 1280,
+        "canvasH": 754
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "responsive 1440px: final step layout, no answer surface",
+      "evidence": {
+        "docWidth": 1440,
+        "vw": 1440,
+        "canvasH": 854
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "starting a drag over an object does not rebuild the scene (thiet-dien-chop): 0 GPU buffers/programs deleted",
+      "evidence": [
+        {
+          "phase": "pointer-enter",
+          "c": 0,
+          "d": 0,
+          "contexts": 1,
+          "hovered": "chop::edge:C-S",
+          "builds": 2,
+          "longTasks": []
+        },
+        {
+          "phase": "hover-A-to-B",
+          "c": 0,
+          "d": 0,
+          "contexts": 1,
+          "hovered": "chop::edge:B-S",
+          "builds": 2,
+          "longTasks": []
+        },
+        {
+          "phase": "pointer-leave",
+          "c": 0,
+          "d": 0,
+          "contexts": 1,
+          "hovered": null,
+          "builds": 2,
+          "longTasks": []
+        },
+        {
+          "phase": "click-select",
+          "c": 262,
+          "d": 262,
+          "contexts": 1,
+          "hovered": "chop::edge:C-S",
+          "builds": 3,
+          "longTasks": [
+            85
+          ]
+        },
+        {
+          "phase": "start-drag-hovered",
+          "c": 0,
+          "d": 0,
+          "contexts": 1,
+          "hovered": "chop::edge:C-S",
+          "builds": 3,
+          "longTasks": []
+        },
+        {
+          "phase": "drag",
+          "c": 0,
+          "d": 0,
+          "contexts": 1,
+          "hovered": "chop::edge:C-S",
+          "builds": 3,
+          "longTasks": []
+        },
+        {
+          "phase": "release",
+          "c": 0,
+          "d": 0,
+          "contexts": 1,
+          "hovered": "chop::edge:C-S",
+          "builds": 3,
+          "longTasks": []
+        },
+        {
+          "phase": "step",
+          "c": 74,
+          "d": 262,
+          "contexts": 1,
+          "hovered": null,
+          "builds": 4,
+          "longTasks": []
+        },
+        {
+          "phase": "dock-collapse",
+          "c": 0,
+          "d": 0,
+          "contexts": 1,
+          "hovered": null,
+          "builds": 4,
+          "longTasks": []
+        }
+      ],
+      "status": "PASS"
+    },
+    {
+      "name": "starting a drag over an object does not rebuild the scene (non-thiet-dien-truc): 0 GPU buffers/programs deleted",
+      "evidence": [
+        {
+          "phase": "pointer-enter",
+          "c": 0,
+          "d": 0,
+          "contexts": 1,
+          "hovered": "td",
+          "builds": 2,
+          "longTasks": []
+        },
+        {
+          "phase": "hover-A-to-B",
+          "c": 0,
+          "d": 0,
+          "contexts": 1,
+          "hovered": "td:0:0",
+          "builds": 2,
+          "longTasks": []
+        },
+        {
+          "phase": "pointer-leave",
+          "c": 0,
+          "d": 0,
+          "contexts": 1,
+          "hovered": null,
+          "builds": 2,
+          "longTasks": []
+        },
+        {
+          "phase": "click-select",
+          "c": 85,
+          "d": 85,
+          "contexts": 1,
+          "hovered": "td",
+          "builds": 3,
+          "longTasks": []
+        },
+        {
+          "phase": "start-drag-hovered",
+          "c": 0,
+          "d": 0,
+          "contexts": 1,
+          "hovered": "td",
+          "builds": 3,
+          "longTasks": []
+        },
+        {
+          "phase": "drag",
+          "c": 0,
+          "d": 0,
+          "contexts": 1,
+          "hovered": "td",
+          "builds": 3,
+          "longTasks": []
+        },
+        {
+          "phase": "release",
+          "c": 0,
+          "d": 0,
+          "contexts": 1,
+          "hovered": "td",
+          "builds": 3,
+          "longTasks": []
+        },
+        {
+          "phase": "step",
+          "c": 36,
+          "d": 85,
+          "contexts": 1,
+          "hovered": null,
+          "builds": 4,
+          "longTasks": []
+        },
+        {
+          "phase": "dock-collapse",
+          "c": 0,
+          "d": 0,
+          "contexts": 1,
+          "hovered": null,
+          "builds": 4,
+          "longTasks": []
+        }
+      ],
+      "status": "PASS"
+    },
+    {
+      "name": "starting a drag over an object does not rebuild the scene (cau-cat-mat-phang): 0 GPU buffers/programs deleted",
+      "evidence": [
+        {
+          "phase": "pointer-enter",
+          "c": 0,
+          "d": 0,
+          "contexts": 1,
+          "hovered": "P",
+          "builds": 2,
+          "longTasks": []
+        },
+        {
+          "phase": "hover-A-to-B",
+          "c": 0,
+          "d": 0,
+          "contexts": 1,
+          "hovered": "P:0:0",
+          "builds": 2,
+          "longTasks": []
+        },
+        {
+          "phase": "pointer-leave",
+          "c": 0,
+          "d": 0,
+          "contexts": 1,
+          "hovered": null,
+          "builds": 2,
+          "longTasks": []
+        },
+        {
+          "phase": "click-select",
+          "c": 109,
+          "d": 110,
+          "contexts": 1,
+          "hovered": "P",
+          "builds": 3,
+          "longTasks": [
+            51
+          ]
+        },
+        {
+          "phase": "start-drag-hovered",
+          "c": 0,
+          "d": 0,
+          "contexts": 1,
+          "hovered": "P",
+          "builds": 3,
+          "longTasks": []
+        },
+        {
+          "phase": "drag",
+          "c": 0,
+          "d": 0,
+          "contexts": 1,
+          "hovered": "P",
+          "builds": 3,
+          "longTasks": []
+        },
+        {
+          "phase": "release",
+          "c": 0,
+          "d": 0,
+          "contexts": 1,
+          "hovered": "P",
+          "builds": 3,
+          "longTasks": []
+        },
+        {
+          "phase": "step",
+          "c": 38,
+          "d": 109,
+          "contexts": 1,
+          "hovered": null,
+          "builds": 4,
+          "longTasks": []
+        },
+        {
+          "phase": "dock-collapse",
+          "c": 0,
+          "d": 0,
+          "contexts": 1,
+          "hovered": null,
+          "builds": 4,
+          "longTasks": []
+        }
+      ],
+      "status": "PASS"
+    },
+    {
+      "name": "REAL Chrome page zoom 110% (default_zoom_level preference, no DPR emulation)",
+      "evidence": {
+        "dpr": 1.100000023841858,
+        "innerWidth": 1293,
+        "outerWidth": 1440,
+        "docWidth": 1293,
+        "dockRight": 1293,
+        "statementRight": 1277,
+        "changeButtonRight": 1279,
+        "canvasRight": 933,
+        "html": false
+      },
+      "status": "PASS"
+    }
+  ],
+  "forbidden": [],
+  "browser": "157.0.8103.38",
+  "pageErrors": [],
+  "summary": {
+    "pass": 41,
+    "fail": 0
+  }
+}

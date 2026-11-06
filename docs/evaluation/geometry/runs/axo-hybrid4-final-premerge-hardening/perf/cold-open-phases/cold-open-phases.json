@@ -1,0 +1,433 @@
+{
+  "sample": "pyramid-cross-section",
+  "dists": {
+    "A": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\perf-base-67f780ca\\frontend\\dist-perf",
+    "B": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\axo-hybrid4-integration\\frontend\\dist-perf"
+  },
+  "gpu": null,
+  "browser": "157.0.8103.38",
+  "order": [
+    "A",
+    "B",
+    "B",
+    "A",
+    "B",
+    "A",
+    "A",
+    "B",
+    "A",
+    "B",
+    "B",
+    "A",
+    "B",
+    "A",
+    "A",
+    "B",
+    "A",
+    "B",
+    "B",
+    "A",
+    "B",
+    "A",
+    "A",
+    "B"
+  ],
+  "rows": [
+    {
+      "build": "A",
+      "htmlResponseEnd": 3.7999999970197678,
+      "scriptsFetched": 50.69999999552965,
+      "scriptBytes": 2041048,
+      "domContentLoaded": 100.29999999701977,
+      "glContext": 185.5,
+      "firstDraw": 286,
+      "renderedObjectsSeenBy": 427.69999999552965
+    },
+    {
+      "build": "B",
+      "htmlResponseEnd": 4.699999995529652,
+      "scriptsFetched": 48.69999999552965,
+      "scriptBytes": 2046535,
+      "domContentLoaded": 100.19999999552965,
+      "glContext": 189.29999999701977,
+      "firstDraw": 294.6000000014901,
+      "renderedObjectsSeenBy": 376.1000000014901
+    },
+    {
+      "build": "B",
+      "htmlResponseEnd": 3.899999998509884,
+      "scriptsFetched": 36.899999998509884,
+      "scriptBytes": 2046535,
+      "domContentLoaded": 88.39999999850988,
+      "glContext": 173.5,
+      "firstDraw": 258.8999999985099,
+      "renderedObjectsSeenBy": 364.8999999985099
+    },
+    {
+      "build": "A",
+      "htmlResponseEnd": 4.200000002980232,
+      "scriptsFetched": 39.80000000447035,
+      "scriptBytes": 2041048,
+      "domContentLoaded": 80.80000000447035,
+      "glContext": 156.90000000596046,
+      "firstDraw": 245.20000000298023,
+      "renderedObjectsSeenBy": 351.90000000596046
+    },
+    {
+      "build": "B",
+      "htmlResponseEnd": 4,
+      "scriptsFetched": 41.899999998509884,
+      "scriptBytes": 2046535,
+      "domContentLoaded": 94.39999999850988,
+      "glContext": 175.10000000149012,
+      "firstDraw": 277.79999999701977,
+      "renderedObjectsSeenBy": 373.3999999985099
+    },
+    {
+      "build": "A",
+      "htmlResponseEnd": 5,
+      "scriptsFetched": 45.70000000298023,
+      "scriptBytes": 2041048,
+      "domContentLoaded": 93,
+      "glContext": 172.60000000149012,
+      "firstDraw": 254.70000000298023,
+      "renderedObjectsSeenBy": 353
+    },
+    {
+      "build": "A",
+      "htmlResponseEnd": 4.100000001490116,
+      "scriptsFetched": 35.600000001490116,
+      "scriptBytes": 2041048,
+      "domContentLoaded": 80.60000000149012,
+      "glContext": 155.60000000149012,
+      "firstDraw": 239.39999999850988,
+      "renderedObjectsSeenBy": 332.8999999985099
+    },
+    {
+      "build": "B",
+      "htmlResponseEnd": 3.2999999970197678,
+      "scriptsFetched": 35.5,
+      "scriptBytes": 2046535,
+      "domContentLoaded": 78.39999999850988,
+      "glContext": 156.10000000149012,
+      "firstDraw": 238.10000000149012,
+      "renderedObjectsSeenBy": 324.8999999985099
+    },
+    {
+      "build": "A",
+      "htmlResponseEnd": 3.899999998509884,
+      "scriptsFetched": 37.5,
+      "scriptBytes": 2041048,
+      "domContentLoaded": 79.60000000149012,
+      "glContext": 157.5,
+      "firstDraw": 248.29999999701977,
+      "renderedObjectsSeenBy": 343.5
+    },
+    {
+      "build": "B",
+      "htmlResponseEnd": 2.5,
+      "scriptsFetched": 27.700000002980232,
+      "scriptBytes": 2046535,
+      "domContentLoaded": 79.30000000447035,
+      "glContext": 171.60000000149012,
+      "firstDraw": 255.30000000447035,
+      "renderedObjectsSeenBy": 364.1000000014901
+    },
+    {
+      "build": "B",
+      "htmlResponseEnd": 3,
+      "scriptsFetched": 55.20000000298023,
+      "scriptBytes": 2046535,
+      "domContentLoaded": 91.5,
+      "glContext": 189,
+      "firstDraw": 282.6000000014901,
+      "renderedObjectsSeenBy": 385.3999999985099
+    },
+    {
+      "build": "A",
+      "htmlResponseEnd": 4.200000002980232,
+      "scriptsFetched": 41.30000000447035,
+      "scriptBytes": 2041048,
+      "domContentLoaded": 88.80000000447035,
+      "glContext": 170,
+      "firstDraw": 255.60000000149012,
+      "renderedObjectsSeenBy": 357.30000000447035
+    },
+    {
+      "build": "B",
+      "htmlResponseEnd": 4.699999995529652,
+      "scriptsFetched": 36.100000001490116,
+      "scriptBytes": 2046535,
+      "domContentLoaded": 90.5,
+      "glContext": 169.60000000149012,
+      "firstDraw": 260.69999999552965,
+      "renderedObjectsSeenBy": 352.6000000014901
+    },
+    {
+      "build": "A",
+      "htmlResponseEnd": 3.7999999970197678,
+      "scriptsFetched": 36.899999998509884,
+      "scriptBytes": 2041048,
+      "domContentLoaded": 84.79999999701977,
+      "glContext": 166,
+      "firstDraw": 243.79999999701977,
+      "renderedObjectsSeenBy": 337.19999999552965
+    },
+    {
+      "build": "A",
+      "htmlResponseEnd": 4.0999999940395355,
+      "scriptsFetched": 46.79999999701977,
+      "scriptBytes": 2041048,
+      "domContentLoaded": 78.69999999552965,
+      "glContext": 159.69999999552965,
+      "firstDraw": 245,
+      "renderedObjectsSeenBy": 340.29999999701977
+    },
+    {
+      "build": "B",
+      "htmlResponseEnd": 2.899999998509884,
+      "scriptsFetched": 31.5,
+      "scriptBytes": 2046535,
+      "domContentLoaded": 79.19999999552965,
+      "glContext": 157.5,
+      "firstDraw": 237.29999999701977,
+      "renderedObjectsSeenBy": 376.29999999701977
+    },
+    {
+      "build": "A",
+      "htmlResponseEnd": 4.199999995529652,
+      "scriptsFetched": 40.69999999552965,
+      "scriptBytes": 2041048,
+      "domContentLoaded": 87.69999999552965,
+      "glContext": 172.39999999850988,
+      "firstDraw": 261.3999999985099,
+      "renderedObjectsSeenBy": 357.8999999985099
+    },
+    {
+      "build": "B",
+      "htmlResponseEnd": 3.2000000029802322,
+      "scriptsFetched": 33.5,
+      "scriptBytes": 2046535,
+      "domContentLoaded": 88,
+      "glContext": 165.10000000149012,
+      "firstDraw": 244,
+      "renderedObjectsSeenBy": 346.20000000298023
+    },
+    {
+      "build": "B",
+      "htmlResponseEnd": 3.2999999970197678,
+      "scriptsFetched": 34.69999999552965,
+      "scriptBytes": 2046535,
+      "domContentLoaded": 87,
+      "glContext": 171.89999999850988,
+      "firstDraw": 247.10000000149012,
+      "renderedObjectsSeenBy": 332.29999999701977
+    },
+    {
+      "build": "A",
+      "htmlResponseEnd": 5.5,
+      "scriptsFetched": 39.29999999701977,
+      "scriptBytes": 2041048,
+      "domContentLoaded": 80.29999999701977,
+      "glContext": 152.79999999701977,
+      "firstDraw": 238.09999999403954,
+      "renderedObjectsSeenBy": 317.3999999985099
+    },
+    {
+      "build": "B",
+      "htmlResponseEnd": 2.5999999940395355,
+      "scriptsFetched": 28.399999998509884,
+      "scriptBytes": 2046535,
+      "domContentLoaded": 76,
+      "glContext": 154.89999999850988,
+      "firstDraw": 237.59999999403954,
+      "renderedObjectsSeenBy": 309.5
+    },
+    {
+      "build": "A",
+      "htmlResponseEnd": 5.399999998509884,
+      "scriptsFetched": 50.19999999552965,
+      "scriptBytes": 2041048,
+      "domContentLoaded": 87.39999999850988,
+      "glContext": 164.5,
+      "firstDraw": 244,
+      "renderedObjectsSeenBy": 321.69999999552965
+    },
+    {
+      "build": "A",
+      "htmlResponseEnd": 3.7999999970197678,
+      "scriptsFetched": 33.19999999552965,
+      "scriptBytes": 2041048,
+      "domContentLoaded": 77.10000000149012,
+      "glContext": 150.39999999850988,
+      "firstDraw": 232.89999999850988,
+      "renderedObjectsSeenBy": 313.69999999552965
+    },
+    {
+      "build": "B",
+      "htmlResponseEnd": 3.5,
+      "scriptsFetched": 32.70000000298023,
+      "scriptBytes": 2046535,
+      "domContentLoaded": 78.60000000149012,
+      "glContext": 151.80000000447035,
+      "firstDraw": 230.20000000298023,
+      "renderedObjectsSeenBy": 302
+    }
+  ],
+  "summary": {
+    "A": {
+      "htmlResponseEnd": {
+        "median": 4.2,
+        "p95": 5.4
+      },
+      "scriptsFetched": {
+        "median": 40.7,
+        "p95": 50.2
+      },
+      "domContentLoaded": {
+        "median": 84.8,
+        "p95": 93
+      },
+      "glContext": {
+        "median": 164.5,
+        "p95": 172.6
+      },
+      "firstDraw": {
+        "median": 245.2,
+        "p95": 261.4
+      },
+      "renderedObjectsSeenBy": {
+        "median": 343.5,
+        "p95": 357.9
+      }
+    },
+    "B": {
+      "htmlResponseEnd": {
+        "median": 3.3,
+        "p95": 4.7
+      },
+      "scriptsFetched": {
+        "median": 35.5,
+        "p95": 48.7
+      },
+      "domContentLoaded": {
+        "median": 88,
+        "p95": 94.4
+      },
+      "glContext": {
+        "median": 171.6,
+        "p95": 189
+      },
+      "firstDraw": {
+        "median": 255.3,
+        "p95": 282.6
+      },
+      "renderedObjectsSeenBy": {
+        "median": 364.1,
+        "p95": 376.3
+      }
+    }
+  },
+  "profiles": {
+    "A": [
+      {
+        "where": "((program))",
+        "selfMs": 215.5
+      },
+      {
+        "where": "assets/index-CFu3HblB.js",
+        "selfMs": 92.2
+      },
+      {
+        "where": "(getProgramInfoLog)",
+        "selfMs": 48.6
+      },
+      {
+        "where": "assets/vendor-three-DZzGZQF_.js",
+        "selfMs": 40
+      },
+      {
+        "where": "((idle))",
+        "selfMs": 27.7
+      },
+      {
+        "where": "((garbage collector))",
+        "selfMs": 17.9
+      },
+      {
+        "where": "(getShaderInfoLog)",
+        "selfMs": 8.2
+      },
+      {
+        "where": "(getExtension)",
+        "selfMs": 4
+      },
+      {
+        "where": "(getContext)",
+        "selfMs": 4
+      },
+      {
+        "where": "(get ready)",
+        "selfMs": 3.6
+      },
+      {
+        "where": "(getProgramParameter)",
+        "selfMs": 1.3
+      },
+      {
+        "where": "(setAttribute)",
+        "selfMs": 1.2
+      }
+    ],
+    "B": [
+      {
+        "where": "((program))",
+        "selfMs": 155.3
+      },
+      {
+        "where": "assets/index-wnJvHD7n.js",
+        "selfMs": 89.8
+      },
+      {
+        "where": "(getProgramInfoLog)",
+        "selfMs": 54.1
+      },
+      {
+        "where": "((idle))",
+        "selfMs": 43.5
+      },
+      {
+        "where": "assets/vendor-three-DZzGZQF_.js",
+        "selfMs": 41.8
+      },
+      {
+        "where": "(getShaderInfoLog)",
+        "selfMs": 9.7
+      },
+      {
+        "where": "(getContext)",
+        "selfMs": 4.5
+      },
+      {
+        "where": "((garbage collector))",
+        "selfMs": 4.1
+      },
+      {
+        "where": "(get ready)",
+        "selfMs": 4
+      },
+      {
+        "where": "(shaderSource)",
+        "selfMs": 3
+      },
+      {
+        "where": "(getExtension)",
+        "selfMs": 2.9
+      },
+      {
+        "where": "(program)",
+        "selfMs": 2.7
+      }
+    ]
+  }
+}

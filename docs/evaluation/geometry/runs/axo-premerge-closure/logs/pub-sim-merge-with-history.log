@@ -1,0 +1,3 @@
+VIOLATION rule=HARDCODED_PASSWORD path=backend/tests/conftest_classroom.py blob=23109136246969205f96e638c0a14af7fd301ef5 line=24
+VIOLATION rule=HARDCODED_PASSWORD path=backend/tests/test_auth_api.py blob=28be1ef6cc0e861fbd0e77c72b6fd03fa454bd93 line=197
+SUMMARY scanned=3743 messages=144 violations=2 pending_exception=0 verdict=BLOCKED

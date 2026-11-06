@@ -1,0 +1,2 @@
+VIOLATION rule=HARDCODED_PASSWORD path=backend/tests/test_auth_api.py blob=28be1ef6cc0e861fbd0e77c72b6fd03fa454bd93 line=197
+SUMMARY scanned=1930 messages=114 violations=1 pending_exception=0 verdict=BLOCKED

@@ -1,0 +1,80 @@
+{
+  "method": "independent Python standard-library Fraction algebra; no application imports",
+  "rows": [
+    {
+      "name": "sphere radius and volume",
+      "status": "PASS",
+      "evidence": {
+        "radius": "3",
+        "volume": "36π",
+        "derivation": "R² = IA·IA; V/π = (4/3)R³"
+      }
+    },
+    {
+      "name": "sphere-plane circle radius and area",
+      "status": "PASS",
+      "evidence": {
+        "d_squared": "9",
+        "circle_radius_squared": "16",
+        "circle_area": "16π"
+      }
+    },
+    {
+      "name": "pyramid section and midpoints",
+      "status": "PASS",
+      "evidence": {
+        "midpoints": "M,N,P exact",
+        "section_vertices": 4,
+        "section_plane_z": "2"
+      }
+    },
+    {
+      "name": "cube closed hexagon",
+      "status": "PASS",
+      "evidence": {
+        "vertices": 6,
+        "squared_edge_length": "2",
+        "coplanar": true,
+        "cyclic_order": true
+      }
+    },
+    {
+      "name": "oblique prism altitude and parallel bases",
+      "status": "PASS",
+      "evidence": {
+        "parallel_bases_translation": [
+          "1",
+          "1",
+          "4"
+        ],
+        "height_squared": "16",
+        "lateral_edge_is_altitude": false
+      }
+    },
+    {
+      "name": "cylinder perpendicular circular section",
+      "status": "PASS",
+      "evidence": {
+        "section_radius_squared": "4",
+        "section_plane_perpendicular_to_axis": true
+      }
+    },
+    {
+      "name": "cone axial triangle area",
+      "status": "PASS",
+      "evidence": {
+        "triangle_area": "12",
+        "independent_cross_product_area_squared": "144"
+      }
+    },
+    {
+      "name": "point-plane distance",
+      "status": "PASS",
+      "evidence": {
+        "quantity_id": "kc",
+        "distance_squared": "50/3",
+        "method": "(n·(A-P))²/(n·n)"
+      }
+    }
+  ]
+}

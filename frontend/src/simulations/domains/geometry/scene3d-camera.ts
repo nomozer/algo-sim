@@ -269,6 +269,17 @@ export const NGUONG_GOC_NHIN = {
 /** Cực đại diện tích bao / độ sâu của cảnh trên lưới hướng — mẫu số của ngưỡng. */
 export interface TranGocNhin { dienTichBao: number; doSau: number }
 
+export interface TuyChonHuongNhin {
+  /** Pháp tuyến đơn vị của các miền/mặt trọng tâm (thiết diện, tam giác qua trục, mặt phẳng nghiên cứu, tam giác nhân chứng vuông góc). */
+  matTrongTam?: Diem3[];
+  /** Cặp tâm hai đáy khối trụ `[tamDuoi, tamTren, banKinh]` để tránh góc nhìn làm hai đáy chồng lấn hoặc một đáy bị nhìn nghiêng bẹt. */
+  capDayTru?: [Diem3, Diem3, number][];
+  /** Các mặt nắp ngang của khối đa diện hai đáy (`[tamMat, phapTuyenDonVi]`, vd lăng trụ / hình hộp) để tránh góc nhìn phối cảnh làm mặt đáy trên bị bẹt thành đường thẳng. */
+  matCap?: [Diem3, Diem3][];
+  /** Cảnh có khối tròn xoay (nón/trụ) kết hợp mặt/tam giác trọng tâm — tránh hướng nhìn trùng khít đường sinh biên làm cạnh thiết diện đè lên đường bao khối. */
+  coKhoiCong?: boolean;
+}
+
 export function datNguong(q: ChatLuongGocNhin, tran: TranGocNhin): boolean {
   return q.dienTichBao >= NGUONG_GOC_NHIN.tiLeDienTichBao * tran.dienTichBao
     && q.doSau >= NGUONG_GOC_NHIN.tiLeDoSau * tran.doSau
@@ -296,20 +307,140 @@ export function doLuoiGocNhin(diem: Diem3[], canh: [number, number][], mat: numb
   return { cac, tran };
 }
 
+function doMoMatTrongTam(
+  huong: Diem3,
+  matTrongTam: readonly Diem3[],
+  coKhoiCong = false,
+): { tb: number; minNghieng: number; coMatDung: boolean } {
+  if (matTrongTam.length === 0) return { tb: 0, minNghieng: 1, coMatDung: false };
+  const d = chuan(huong);
+  let tong = 0;
+  let minNghieng = Infinity;
+  let coMatDung = false;
+  let dem = 0;
+  for (const rawN of matTrongTam) {
+    const len = Math.hypot(...rawN);
+    if (!(len > 1e-9)) continue;
+    const n: Diem3 = [rawN[0] / len, rawN[1] / len, rawN[2] / len];
+    const mo = Math.abs(tich(n, d));
+    const kich = coKhoiCong && Math.abs(n[2]) < 0.35
+      ? (mo <= 0.87 ? mo / 0.87 : Math.max(0.74, 1 - 0.95 * ((mo - 0.87) / 0.13)))
+      : Math.min(mo, 0.94) / 0.94;
+    tong += kich;
+    dem += 1;
+    if (Math.abs(n[2]) < 0.90) {
+      coMatDung = true;
+      minNghieng = Math.min(minNghieng, mo);
+    }
+  }
+  return {
+    tb: dem > 0 ? tong / dem : 0,
+    minNghieng: Number.isFinite(minNghieng) ? minNghieng : 1,
+    coMatDung,
+  };
+}
+
+function uocLuongCameraPhoiCanh(diem: Diem3[], d: Diem3): Diem3 {
+  if (diem.length >= 2) {
+    const kn = khungNhinSuPham(diem, [], [], 40, 1.25, d, { tiLeDoc: 0.67 });
+    if (kn) return kn.viTri;
+  }
+  return [d[0] * 10, d[1] * 10, d[2] * 10];
+}
+
+function kiemMoPhoiCanhNapDaDien(camEst: Diem3, matCap: readonly [Diem3, Diem3][]): boolean {
+  for (const [tamMat, phap] of matCap) {
+    const tia = chuan(tru(camEst, tamMat));
+    if (Math.abs(tich(phap, tia)) < 0.22) return false;
+  }
+  return true;
+}
+
+function diemTachDayTru(
+  huong: Diem3,
+  camEst: Diem3,
+  capDayTru: readonly [Diem3, Diem3, number][],
+): { hopLe: boolean; thuong: number } {
+  if (capDayTru.length === 0) return { hopLe: true, thuong: 0 };
+  const d = chuan(huong);
+  let hopLe = true;
+  let tong = 0;
+  for (const [c0, c1, r] of capDayTru) {
+    const truc = tru(c1, c0);
+    const h = Math.hypot(...truc);
+    if (!(h > 1e-6)) continue;
+    const doc = tich(truc, d);
+    const hChieu = Math.sqrt(Math.max(0, h * h - doc * doc));
+    const u: Diem3 = [truc[0] / h, truc[1] / h, truc[2] / h];
+    const banTrucNho = Math.max(0, r) * Math.abs(tich(u, d));
+    const moDay0 = Math.abs(tich(u, chuan(tru(camEst, c0))));
+    const moDay1 = Math.abs(tich(u, chuan(tru(camEst, c1))));
+    if (r > 1e-6 && (hChieu < 1.05 * banTrucNho || Math.min(moDay0, moDay1) < 0.22)) hopLe = false;
+    tong += (r > 1e-6 ? Math.min(1, hChieu / (1.35 * r)) : Math.min(1, hChieu / h)) * Math.min(1, Math.min(moDay0, moDay1) / 0.35);
+  }
+  return { hopLe, thuong: tong / capDayTru.length };
+}
+
 /** Hướng nhìn tốt nhất trên lưới. Đạt ngưỡng trước; trong số đạt, cân diện
  *  tích, khoảng hở và độ sâu, trừ một chút cho việc xa hướng quen thuộc cũ để
  *  hình giữ tư thế sách giáo khoa. Không hướng nào đạt ⇒ hướng điểm cao nhất. */
-export function chonHuongNhin(diem: Diem3[], canh: [number, number][], mat: number[][]): Diem3 {
+export function chonHuongNhin(
+  diem: Diem3[], canh: [number, number][], mat: number[][], tuyChon?: TuyChonHuongNhin,
+): Diem3 {
   const quen = HUONG_SGK;
   const { cac, tran } = doLuoiGocNhin(diem, canh, mat);
-  let tot: { huong: Diem3; diem: number; dat: boolean } | null = null;
-  for (const { huong, q } of cac) {
-    const dat = datNguong(q, tran);
-    const diemSo = q.dienTichBao / (tran.dienTichBao || 1) + 2 * Math.min(q.khoangDinhCanhMin, 0.2)
-      + Math.min(q.khoangDinhMin, 0.38) + 0.5 * q.doSau / (tran.doSau || 1)
-      - LUC_KEO_SGK * (1 - tich(huong, quen));
-    if (!tot || (dat && !tot.dat) || (dat === tot.dat && diemSo > tot.diem)) {
-      tot = { huong, diem: diemSo, dat };
+  const matTrongTam = tuyChon?.matTrongTam ?? [];
+  const capDayTru = tuyChon?.capDayTru ?? [];
+  const matCap = tuyChon?.matCap ?? [];
+  const coKhoiCong = Boolean(tuyChon?.coKhoiCong);
+  const coTuyChon = matTrongTam.length > 0 || capDayTru.length > 0 || matCap.length > 0;
+
+  if (!coTuyChon) {
+    let tot: { huong: Diem3; diem: number; dat: boolean } | null = null;
+    for (const { huong, q } of cac) {
+      const dat = datNguong(q, tran);
+      const diemSo = q.dienTichBao / (tran.dienTichBao || 1) + 2 * Math.min(q.khoangDinhCanhMin, 0.2)
+        + Math.min(q.khoangDinhMin, 0.38) + 0.5 * q.doSau / (tran.doSau || 1)
+        - LUC_KEO_SGK * (1 - tich(huong, quen));
+      if (!tot || (dat && !tot.dat) || (dat === tot.dat && diemSo > tot.diem)) {
+        tot = { huong, diem: diemSo, dat };
+      }
+    }
+    return tot ? tot.huong : quen;
+  }
+
+  const danhSach = cac.map(({ huong, q }) => {
+    const d = chuan(huong);
+    const camEst = uocLuongCameraPhoiCanh(diem, d);
+    const mo = doMoMatTrongTam(huong, matTrongTam, coKhoiCong);
+    const truInfo = diemTachDayTru(huong, camEst, capDayTru);
+    const napMo = kiemMoPhoiCanhNapDaDien(camEst, matCap);
+    const datKhongDetNap = truInfo.hopLe && napMo;
+    const datCoBan = datNguong(q, tran) && datKhongDetNap;
+    const datMo = !mo.coMatDung || mo.minNghieng >= 0.55;
+    return { huong, q, mo, truInfo, datKhongDetNap, datCoBan, datDayDu: datCoBan && datMo };
+  });
+  const coUngVienMo = danhSach.some((x) => x.datDayDu);
+  const coUngVienCoBan = danhSach.some((x) => x.datCoBan);
+
+  let tot: { huong: Diem3; diem: number; hang: number } | null = null;
+  for (const item of danhSach) {
+    const { huong, q, mo, truInfo, datKhongDetNap, datCoBan, datDayDu } = item;
+    const hang = coUngVienMo
+      ? (datDayDu ? 3 : datCoBan ? 2 : datKhongDetNap ? 1 : 0)
+      : coUngVienCoBan
+        ? (datCoBan ? 2 : datKhongDetNap ? 1 : 0)
+        : (datKhongDetNap ? 1 : 0);
+    const lucKeo = mo.coMatDung ? 0.55 : LUC_KEO_SGK;
+    const diemSo = q.dienTichBao / (tran.dienTichBao || 1)
+      + 2.2 * Math.min(q.khoangDinhCanhMin, 0.22)
+      + Math.min(q.khoangDinhMin, 0.38)
+      + 0.5 * q.doSau / (tran.doSau || 1)
+      + (matTrongTam.length > 0 ? 2.6 * mo.tb : 0)
+      + (capDayTru.length > 0 ? 0.45 * truInfo.thuong : 0)
+      - lucKeo * (1 - tich(huong, quen));
+    if (!tot || hang > tot.hang || (hang === tot.hang && diemSo > tot.diem)) {
+      tot = { huong, diem: diemSo, hang };
     }
   }
   return tot ? tot.huong : quen;
@@ -417,4 +548,311 @@ export function huongLenHienThi(day: Diem3[], dinh: Diem3): Diem3 | null {
   if (!(Math.hypot(...n) > 0)) return null;
   const len = chuan(tich(tru(dinh, day[0]), n) < 0 ? [-n[0], -n[1], -n[2]] : n);
   return Math.abs(len[2]) > 1 - 1e-9 ? null : len;
+}
+
+export interface TamXoayOnDinh {
+  tamXoay: Diem3;
+  banKinhKhoi: number;
+  diemKhoiChinh: Diem3[];
+  /** The main (outer) solids the centre was taken from; their real surfaces bound the near zoom limit. */
+  khoiChinh?: readonly LoaiKhoiTamXoay[];
+}
+
+export type LoaiKhoiTamXoay =
+  | { loai: "solid"; vertices: readonly Diem3[]; faces: readonly number[][] }
+  | {
+      loai: "curved_solid";
+      curvedKind: string;
+      anchor: Diem3;
+      radius: number;
+      apexOrTop: Diem3;
+      pts: readonly Diem3[];
+    };
+
+export interface VungAnToanNdc {
+  xMin?: number;
+  xMax?: number;
+  yMin?: number;
+  yMax?: number;
+}
+
+function trongTamTheTichDaDien(verts: readonly Diem3[], faces: readonly number[][]): { tam: Diem3; vol: number } {
+  const n = verts.length;
+  if (n === 0) return { tam: [0, 0, 0], vol: 0 };
+  const v0: Diem3 = [
+    verts.reduce((s, p) => s + p[0], 0) / n,
+    verts.reduce((s, p) => s + p[1], 0) / n,
+    verts.reduce((s, p) => s + p[2], 0) / n,
+  ];
+  let tongVol6 = 0;
+  const tichLuy: Diem3 = [0, 0, 0];
+  let tongDienTich2 = 0;
+  const tichLuyMat: Diem3 = [0, 0, 0];
+
+  for (const f of faces) {
+    if (f.length < 3) continue;
+    const a = verts[f[0]];
+    if (!a) continue;
+    for (let i = 1; i < f.length - 1; i++) {
+      const b = verts[f[i]];
+      const c = verts[f[i + 1]];
+      if (!b || !c) continue;
+      const crMat = cheo(tru(b, a), tru(c, a));
+      const dt2 = Math.hypot(...crMat);
+      if (dt2 > 1e-12) {
+        tongDienTich2 += dt2;
+        tichLuyMat[0] += (dt2 * (a[0] + b[0] + c[0])) / 3;
+        tichLuyMat[1] += (dt2 * (a[1] + b[1] + c[1])) / 3;
+        tichLuyMat[2] += (dt2 * (a[2] + b[2] + c[2])) / 3;
+      }
+      const cr = cheo(tru(b, v0), tru(c, v0));
+      const vol6 = Math.abs(tich(tru(a, v0), cr));
+      if (vol6 > 1e-12) {
+        tongVol6 += vol6;
+        tichLuy[0] += vol6 * 0.25 * (v0[0] + a[0] + b[0] + c[0]);
+        tichLuy[1] += vol6 * 0.25 * (v0[1] + a[1] + b[1] + c[1]);
+        tichLuy[2] += vol6 * 0.25 * (v0[2] + a[2] + b[2] + c[2]);
+      }
+    }
+  }
+  if (tongVol6 > 1e-12) {
+    return {
+      tam: [tichLuy[0] / tongVol6, tichLuy[1] / tongVol6, tichLuy[2] / tongVol6],
+      vol: tongVol6 / 6,
+    };
+  }
+  if (tongDienTich2 > 1e-12) {
+    return {
+      tam: [tichLuyMat[0] / tongDienTich2, tichLuyMat[1] / tongDienTich2, tichLuyMat[2] / tongDienTich2],
+      vol: 0,
+    };
+  }
+  return { tam: v0, vol: 0 };
+}
+
+function hopBaoChuaHopBao(lon: HopBao, nho: HopBao, eps = 1e-4): boolean {
+  return (
+    lon.min[0] - eps <= nho.min[0] && nho.max[0] <= lon.max[0] + eps &&
+    lon.min[1] - eps <= nho.min[1] && nho.max[1] <= lon.max[1] + eps &&
+    lon.min[2] - eps <= nho.min[2] && nho.max[2] <= lon.max[2] + eps
+  );
+}
+
+/**
+ * Tính tâm xoay quỹ đạo ổn định (`OrbitControls.target`) từ dữ liệu số thuần của các khối hình học:
+ * - Ưu tiên khối chính (`solid`, `curved_solid`), loại trừ khối con nằm trọn bên trong khối bao lớn hơn
+ *   (ví dụ chóp con tỉ số thể tích, nón cụt phần trên, mặt cầu nội tiếp) để không kéo lệch trục đối xứng.
+ * - Kết hợp cân bằng 50/50 giữa trọng tâm thể tích `G_vol` và tâm hộp bao khối chính `C_aabb`:
+ *   giữ nguyên trục đối xứng trên chóp đều/lăng trụ/trụ/nón/cầu, đồng thời tách hẳn khỏi các điểm trung gian
+ *   như `P, M, N` trên chóp cạnh bên vuông góc đáy (`S.ABCD`).
+ * - Bất biến qua mọi bước dựng (chỉ đọc dữ liệu hình học hợp lệ, không làm lộ vật chưa xuất hiện trên canvas).
+ * - Khi bài không có khối đặc, fallback về trung bình khử trùng + tâm hộp bao của các đối tượng hữu hạn
+ *   (bỏ qua đường thẳng vô hạn và mặt phẳng mở rộng).
+ */
+export function tinhTamXoayTuKhoi(
+  dsKhoiDauVao: readonly LoaiKhoiTamXoay[],
+  diemDuPhong: readonly Diem3[],
+): TamXoayOnDinh | null {
+  const dsKhoi: { pts: Diem3[]; hop: HopBao; tamVol: Diem3; vol: number; nguon: LoaiKhoiTamXoay }[] = [];
+
+  for (const k of dsKhoiDauVao) {
+    if (k.loai === "solid" && k.vertices.length > 0) {
+      const verts: Diem3[] = k.vertices.map((v) => [v[0], v[1], v[2]]);
+      const hop = hopBaoCuaDiem(verts);
+      if (!hop) continue;
+      const { tam, vol } = trongTamTheTichDaDien(verts, k.faces);
+      dsKhoi.push({ pts: verts, hop, tamVol: tam, vol: Math.max(vol, 1e-6), nguon: k });
+    } else if (k.loai === "curved_solid" && Number.isFinite(k.radius) && k.radius > 0) {
+      const pts: Diem3[] = k.pts.map((p) => [p[0], p[1], p[2]]);
+      const hop = hopBaoCuaDiem(pts);
+      if (!hop) continue;
+      const r = k.radius;
+      const c = k.anchor;
+      const dinh = k.apexOrTop;
+      const chieuCao = Math.hypot(dinh[0] - c[0], dinh[1] - c[1], dinh[2] - c[2]);
+      let tamVol: Diem3 = [c[0], c[1], c[2]];
+      let vol = (4 / 3) * Math.PI * r * r * r;
+      if (k.curvedKind === "cylinder") {
+        tamVol = [(c[0] + dinh[0]) * 0.5, (c[1] + dinh[1]) * 0.5, (c[2] + dinh[2]) * 0.5];
+        vol = Math.PI * r * r * Math.max(chieuCao, 1e-6);
+      } else if (k.curvedKind === "cone") {
+        tamVol = [
+          0.75 * c[0] + 0.25 * dinh[0],
+          0.75 * c[1] + 0.25 * dinh[1],
+          0.75 * c[2] + 0.25 * dinh[2],
+        ];
+        vol = (1 / 3) * Math.PI * r * r * Math.max(chieuCao, 1e-6);
+      }
+      dsKhoi.push({ pts, hop, tamVol, vol: Math.max(vol, 1e-6), nguon: k });
+    }
+  }
+
+  if (dsKhoi.length > 0) {
+    const khoiNgoai = dsKhoi.filter(
+      (nho, idx) =>
+        !dsKhoi.some(
+          (lon, jdx) =>
+            jdx !== idx &&
+            lon.vol > nho.vol * (1 + 1e-4) &&
+            hopBaoChuaHopBao(lon.hop, nho.hop),
+        ),
+    );
+    const chon = khoiNgoai.length > 0 ? khoiNgoai : dsKhoi;
+    const diemKhoiChinh = chon.flatMap((k) => k.pts);
+    const hopChung = hopBaoCuaDiem(diemKhoiChinh);
+    if (hopChung) {
+      const tongVol = chon.reduce((s, k) => s + k.vol, 0) || 1;
+      const gVol: Diem3 = [
+        chon.reduce((s, k) => s + k.vol * k.tamVol[0], 0) / tongVol,
+        chon.reduce((s, k) => s + k.vol * k.tamVol[1], 0) / tongVol,
+        chon.reduce((s, k) => s + k.vol * k.tamVol[2], 0) / tongVol,
+      ];
+      const cAabb: Diem3 = [
+        (hopChung.min[0] + hopChung.max[0]) * 0.5,
+        (hopChung.min[1] + hopChung.max[1]) * 0.5,
+        (hopChung.min[2] + hopChung.max[2]) * 0.5,
+      ];
+      const tamXoay: Diem3 = [
+        (gVol[0] + cAabb[0]) * 0.5,
+        (gVol[1] + cAabb[1]) * 0.5,
+        (gVol[2] + cAabb[2]) * 0.5,
+      ];
+      const banKinhKhoi = Math.max(
+        0.25,
+        ...diemKhoiChinh.map((p) => Math.hypot(p[0] - tamXoay[0], p[1] - tamXoay[1], p[2] - tamXoay[2])),
+      );
+      return { tamXoay, banKinhKhoi, diemKhoiChinh, khoiChinh: chon.map((k) => k.nguon) };
+    }
+  }
+
+  // Chiến lược dự phòng cho bài không có solid: chỉ lấy đối tượng hữu hạn hợp lệ (bỏ line3 / plane3 vô hạn).
+  const huuHan: Diem3[] = diemDuPhong.filter((pm) => pm.every(Number.isFinite)).map((pm) => [pm[0], pm[1], pm[2]]);
+  const hopDuPhong = hopBaoCuaDiem(huuHan);
+  if (!hopDuPhong) return null;
+  const duyNhat: Diem3[] = [];
+  for (const p of huuHan) {
+    if (!duyNhat.some((q) => Math.hypot(p[0] - q[0], p[1] - q[1], p[2] - q[2]) < 1e-6)) {
+      duyNhat.push(p);
+    }
+  }
+  const tb: Diem3 = [
+    duyNhat.reduce((s, p) => s + p[0], 0) / duyNhat.length,
+    duyNhat.reduce((s, p) => s + p[1], 0) / duyNhat.length,
+    duyNhat.reduce((s, p) => s + p[2], 0) / duyNhat.length,
+  ];
+  const cAabb: Diem3 = [
+    (hopDuPhong.min[0] + hopDuPhong.max[0]) * 0.5,
+    (hopDuPhong.min[1] + hopDuPhong.max[1]) * 0.5,
+    (hopDuPhong.min[2] + hopDuPhong.max[2]) * 0.5,
+  ];
+  const tamXoay: Diem3 = [
+    (tb[0] + cAabb[0]) * 0.5,
+    (tb[1] + cAabb[1]) * 0.5,
+    (tb[2] + cAabb[2]) * 0.5,
+  ];
+  const banKinhKhoi = Math.max(
+    0.25,
+    ...duyNhat.map((p) => Math.hypot(p[0] - tamXoay[0], p[1] - tamXoay[1], p[2] - tamXoay[2])),
+  );
+  return { tamXoay, banKinhKhoi, diemKhoiChinh: duyNhat };
+}
+
+/**
+ * Khoảng TỰA của khối chính theo hướng nhìn `huong` (từ tâm xoay về phía camera): max⟨p − tâm, u⟩ trên mặt THẬT của khối
+ * — đỉnh đa diện; cầu c·u + r; trụ/nón: đĩa đáy/đỉnh c·u + r·√(1 − (n·u)²) (và đỉnh nón). Đây là chỗ mặt gần camera nhất
+ * thực sự nằm; cầu bao chỉ là cận trên (với khối cong nó TRÙNG mặt, nên không dùng được để giữ khoảng cách).
+ */
+export function khoangTuaTheoHuong(info: TamXoayOnDinh, huong: Diem3): number {
+  const len = Math.hypot(huong[0], huong[1], huong[2]);
+  if (!(len > 0)) return info.banKinhKhoi;
+  const u: Diem3 = [huong[0] / len, huong[1] / len, huong[2] / len];
+  const t = info.tamXoay;
+  const chieu = (p: readonly number[]) => (p[0] - t[0]) * u[0] + (p[1] - t[1]) * u[1] + (p[2] - t[2]) * u[2];
+  let tua = Math.max(0, ...info.diemKhoiChinh.map(chieu));
+  for (const k of info.khoiChinh ?? []) {
+    if (k.loai === "solid") {
+      for (const v of k.vertices) tua = Math.max(tua, chieu(v));
+      continue;
+    }
+    const truc: Diem3 = [k.apexOrTop[0] - k.anchor[0], k.apexOrTop[1] - k.anchor[1], k.apexOrTop[2] - k.anchor[2]];
+    const h = Math.hypot(...truc);
+    if ((k.curvedKind === "cylinder" || k.curvedKind === "cone") && h > 0) {
+      const nu = (truc[0] * u[0] + truc[1] * u[1] + truc[2] * u[2]) / h;
+      const vanh = k.radius * Math.sqrt(Math.max(0, 1 - nu * nu));
+      tua = Math.max(tua, chieu(k.anchor) + vanh, chieu(k.apexOrTop) + (k.curvedKind === "cylinder" ? vanh : 0));
+    } else {
+      tua = Math.max(tua, chieu(k.anchor) + k.radius);
+    }
+  }
+  return tua;
+}
+
+/** Mặt gần nhất của khối chính không bao giờ quá NỬA đường từ camera tới tâm xoay. */
+export const HE_SO_KHOANG_GAN_MAT = 2;
+
+/**
+ * Giới hạn zoom gần (`OrbitControls.minDistance`) theo hướng nhìn hiện tại. Giữ luật cũ (theo khung vừa và cầu bao) làm
+ * sàn, nâng lên `HE_SO_KHOANG_GAN_MAT × khoảng tựa` để camera không áp sát mặt thật của khối (cầu/trụ/nón), và chặn trên ở
+ * 0.8 khoảng khung vừa để luôn còn cận cảnh. Không đổi hình học — chỉ khoảng cách camera.
+ */
+export function khoangGanToiThieu(info: TamXoayOnDinh | null | undefined, huong: Diem3, khoangKhung: number): number {
+  const r = info?.banKinhKhoi;
+  if (!info || !(typeof r === "number" && Number.isFinite(r) && r > 1e-4)) return Math.max(0.8, khoangKhung * 0.42);
+  const cu = Math.max(0.5, Math.min(khoangKhung * 0.55, r * 1.08));
+  return Math.min(Math.max(cu, HE_SO_KHOANG_GAN_MAT * khoangTuaTheoHuong(info, huong)), Math.max(cu, khoangKhung * 0.8));
+}
+
+/**
+ * Đặt vị trí camera dọc theo hướng nhìn đi qua ĐÚNG `tamXoay` cố định sao cho mọi điểm hữu hạn `diem`
+ * đều nằm gọn trong vùng an toàn NDC `[xMin, xMax] × [yMin, yMax]`, tuyệt đối không dịch chuyển `nhinVao`
+ * khỏi tâm xoay chuẩn của khối hình học chính.
+ */
+export function khungNhinQuanhTam(
+  diem: readonly Diem3[],
+  tamXoay: Diem3,
+  fovDo: number,
+  tiLeKhung: number,
+  huongChon?: Diem3,
+  vungAnToanNdc?: VungAnToanNdc,
+): KhungNhin | null {
+  if (
+    diem.length === 0 ||
+    !tamXoay.every(Number.isFinite) ||
+    !Number.isFinite(fovDo) || fovDo <= 0 || fovDo >= 180 ||
+    !Number.isFinite(tiLeKhung) || tiLeKhung <= 0
+  ) {
+    return null;
+  }
+  const d = chuan(
+    huongChon && huongChon.every(Number.isFinite) && Math.hypot(...huongChon) > 1e-9
+      ? huongChon
+      : ([...HUONG] as Diem3),
+  );
+  const phai = chuan(Math.abs(d[2]) > 0.999 ? cheo([0, 1, 0], d) : cheo([0, 0, 1], d));
+  const len = cheo(d, phai);
+  const tanDoc = Math.tan((fovDo * Math.PI) / 360);
+  const tanNgang = tanDoc * tiLeKhung;
+  if (!(tanDoc > 0) || !(tanNgang > 0)) return null;
+
+  const xMin = Math.max(-0.92, Math.min(-0.15, vungAnToanNdc?.xMin ?? -TI_LE_LAP_KHUNG));
+  const xMax = Math.min(0.92, Math.max(0.15, vungAnToanNdc?.xMax ?? TI_LE_LAP_KHUNG));
+  const yMin = Math.max(-0.92, Math.min(-0.15, vungAnToanNdc?.yMin ?? -TI_LE_LAP_KHUNG));
+  const yMax = Math.min(0.92, Math.max(0.15, vungAnToanNdc?.yMax ?? TI_LE_LAP_KHUNG));
+
+  let k = KHOANG_TOI_THIEU;
+  for (const p of diem) {
+    if (!p.every(Number.isFinite)) continue;
+    const q = tru(p, tamXoay);
+    const s = tich(q, d);
+    const rx = tich(q, phai);
+    const ry = tich(q, len);
+    const kx = rx >= 0 ? rx / (xMax * tanNgang) : (-rx) / (-xMin * tanNgang);
+    const ky = ry >= 0 ? ry / (yMax * tanDoc) : (-ry) / (-yMin * tanDoc);
+    k = Math.max(k, s + Math.max(0.25, kx, ky));
+  }
+
+  return {
+    viTri: [tamXoay[0] + d[0] * k, tamXoay[1] + d[1] * k, tamXoay[2] + d[2] * k],
+    nhinVao: [tamXoay[0], tamXoay[1], tamXoay[2]],
+  };
 }

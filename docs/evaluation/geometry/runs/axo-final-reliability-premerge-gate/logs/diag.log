@@ -1,0 +1,40 @@
+== run 1
+record ok status=200
+record ok status=200
+1 passed, 1 warning in 2.53s
+== run 2
+record EXC status=200 FlushError: Instance <AdminAnalysisTelemetry at 0x29ded3921e0> has a NULL identity key.  If this is an auto-generated value, check that the database table allows generation of new primary key values, and that the mapped Column object is configured to expect these generated values.  Ensure also that this flush()
+record ok status=200
+1 failed, 1 warning in 2.44s
+== run 3
+record ok status=200
+record ok status=200
+1 passed, 1 warning in 2.35s
+== run 4
+record ok status=200
+record ok status=200
+1 passed, 1 warning in 2.57s
+== run 5
+record ok status=200
+record ok status=200
+1 passed, 1 warning in 2.54s
+== run 6
+record EXC status=200 IndexError: tuple index out of range
+record ok status=200
+1 failed, 1 warning in 2.35s
+== run 7
+record ok status=200
+record ok status=200
+1 passed, 1 warning in 2.15s
+== run 8
+record EXC status=200 IndexError: tuple index out of range
+record ok status=200
+1 failed, 1 warning in 2.28s
+== run 9
+record ok status=200
+record ok status=200
+1 passed, 1 warning in 2.13s
+== run 10
+record ok status=200
+record ok status=200
+1 passed, 1 warning in 2.11s

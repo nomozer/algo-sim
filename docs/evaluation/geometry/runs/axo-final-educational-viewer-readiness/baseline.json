@@ -1,0 +1,319 @@
+{
+  "head": "1be6a7aeb13707f2083e51f7dcc9ab2274a7335b",
+  "branch": "integration/axo-hybrid4-reliability",
+  "main": "bb61a804eb2b476f796e28176084ea41b0bed92e",
+  "merge_base": "bb61a804eb2b476f796e28176084ea41b0bed92e",
+  "worktrees": [
+    {
+      "path": "<repo>",
+      "metadata": [
+        "HEAD bb61a804eb2b476f796e28176084ea41b0bed92e",
+        "branch refs/heads/main"
+      ],
+      "status": "GIT_STATUS_UNAVAILABLE_EXIT_128"
+    },
+    {
+      "path": "<repo>\\.superpowers\\worktrees\\axo-hybrid4-integration",
+      "metadata": [
+        "HEAD 1be6a7aeb13707f2083e51f7dcc9ab2274a7335b",
+        "branch refs/heads/integration/axo-hybrid4-reliability"
+      ],
+      "status": [
+        "M frontend/scripts/axo-scene-consistency-browser-check.mjs",
+        " M frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+        "?? docs/evaluation/geometry/runs/axo-final-educational-viewer-readiness/",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-capability-scene3d-reliability/perf/perf-1-B/receipt.json",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-capability-scene3d-reliability/perf/perf-2-C/receipt.json",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-capability-scene3d-reliability/perf/perf-3-C/cau-cat-mat-phang-angle-0.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-capability-scene3d-reliability/perf/perf-3-C/cau-cat-mat-phang-angle-1.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-capability-scene3d-reliability/perf/perf-3-C/cau-cat-mat-phang-angle-2.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-capability-scene3d-reliability/perf/perf-3-C/cau-cat-mat-phang-trace.json.gz",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-capability-scene3d-reliability/perf/perf-3-C/cube-hexagon-angle-0.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-capability-scene3d-reliability/perf/perf-3-C/cube-hexagon-angle-1.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-capability-scene3d-reliability/perf/perf-3-C/cube-hexagon-angle-2.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-capability-scene3d-reliability/perf/perf-3-C/cube-hexagon-trace.json.gz",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-capability-scene3d-reliability/perf/perf-3-C/dense-multi-solid-angle-0.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-capability-scene3d-reliability/perf/perf-3-C/dense-multi-solid-angle-1.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-capability-scene3d-reliability/perf/perf-3-C/dense-multi-solid-angle-2.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-capability-scene3d-reliability/perf/perf-3-C/dense-multi-solid-trace.json.gz",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-capability-scene3d-reliability/perf/perf-3-C/non-thiet-dien-truc-angle-0.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-capability-scene3d-reliability/perf/perf-3-C/non-thiet-dien-truc-angle-1.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-capability-scene3d-reliability/perf/perf-3-C/non-thiet-dien-truc-angle-2.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-capability-scene3d-reliability/perf/perf-3-C/non-thiet-dien-truc-trace.json.gz",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-capability-scene3d-reliability/perf/perf-3-C/oblique-prism-angle-0.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-capability-scene3d-reliability/perf/perf-3-C/oblique-prism-angle-1.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-capability-scene3d-reliability/perf/perf-3-C/oblique-prism-angle-2.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-capability-scene3d-reliability/perf/perf-3-C/oblique-prism-trace.json.gz",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-capability-scene3d-reliability/perf/perf-3-C/receipt.json",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-capability-scene3d-reliability/perf/perf-3-C/thiet-dien-chop-angle-0.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-capability-scene3d-reliability/perf/perf-3-C/thiet-dien-chop-angle-1.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-capability-scene3d-reliability/perf/perf-3-C/thiet-dien-chop-angle-2.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-capability-scene3d-reliability/perf/perf-3-C/thiet-dien-chop-trace.json.gz",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-capability-scene3d-reliability/perf/perf-3-C/tru-thiet-dien-tron-angle-0.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-capability-scene3d-reliability/perf/perf-3-C/tru-thiet-dien-tron-angle-1.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-capability-scene3d-reliability/perf/perf-3-C/tru-thiet-dien-tron-angle-2.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-capability-scene3d-reliability/perf/perf-3-C/tru-thiet-dien-tron-trace.json.gz",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-capability-scene3d-reliability/perf/perf-4-B/cau-cat-mat-phang-angle-0.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-capability-scene3d-reliability/perf/perf-4-B/cau-cat-mat-phang-angle-1.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-capability-scene3d-reliability/perf/perf-4-B/cau-cat-mat-phang-angle-2.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-capability-scene3d-reliability/perf/perf-4-B/cau-cat-mat-phang-trace.json.gz",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-capability-scene3d-reliability/perf/perf-4-B/cube-hexagon-angle-0.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-capability-scene3d-reliability/perf/perf-4-B/cube-hexagon-angle-1.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-capability-scene3d-reliability/perf/perf-4-B/cube-hexagon-angle-2.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-capability-scene3d-reliability/perf/perf-4-B/cube-hexagon-trace.json.gz",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-capability-scene3d-reliability/perf/perf-4-B/dense-multi-solid-angle-0.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-capability-scene3d-reliability/perf/perf-4-B/dense-multi-solid-angle-1.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-capability-scene3d-reliability/perf/perf-4-B/dense-multi-solid-angle-2.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-capability-scene3d-reliability/perf/perf-4-B/dense-multi-solid-trace.json.gz",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-capability-scene3d-reliability/perf/perf-4-B/non-thiet-dien-truc-angle-0.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-capability-scene3d-reliability/perf/perf-4-B/non-thiet-dien-truc-angle-1.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-capability-scene3d-reliability/perf/perf-4-B/non-thiet-dien-truc-angle-2.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-capability-scene3d-reliability/perf/perf-4-B/non-thiet-dien-truc-trace.json.gz",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-capability-scene3d-reliability/perf/perf-4-B/oblique-prism-angle-0.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-capability-scene3d-reliability/perf/perf-4-B/oblique-prism-angle-1.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-capability-scene3d-reliability/perf/perf-4-B/oblique-prism-angle-2.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-capability-scene3d-reliability/perf/perf-4-B/oblique-prism-trace.json.gz",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-capability-scene3d-reliability/perf/perf-4-B/receipt.json",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-capability-scene3d-reliability/perf/perf-4-B/thiet-dien-chop-angle-0.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-capability-scene3d-reliability/perf/perf-4-B/thiet-dien-chop-angle-1.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-capability-scene3d-reliability/perf/perf-4-B/thiet-dien-chop-angle-2.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-capability-scene3d-reliability/perf/perf-4-B/thiet-dien-chop-trace.json.gz",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-capability-scene3d-reliability/perf/perf-4-B/tru-thiet-dien-tron-angle-0.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-capability-scene3d-reliability/perf/perf-4-B/tru-thiet-dien-tron-angle-1.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-capability-scene3d-reliability/perf/perf-4-B/tru-thiet-dien-tron-angle-2.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-capability-scene3d-reliability/perf/perf-4-B/tru-thiet-dien-tron-trace.json.gz",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/perf/perf-1-B/receipt.json",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/perf/perf-2-C/receipt.json",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/perf/perf-3-C/cau-cat-mat-phang-angle-0.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/perf/perf-3-C/cau-cat-mat-phang-angle-1.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/perf/perf-3-C/cau-cat-mat-phang-angle-2.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/perf/perf-3-C/cau-cat-mat-phang-trace.json.gz",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/perf/perf-3-C/receipt.json",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/perf/perf-3-C/thiet-dien-chop-angle-0.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/perf/perf-3-C/thiet-dien-chop-angle-1.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/perf/perf-3-C/thiet-dien-chop-angle-2.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/perf/perf-3-C/thiet-dien-chop-trace.json.gz",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/perf/perf-3r-C/cau-cat-mat-phang-angle-0.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/perf/perf-3r-C/cau-cat-mat-phang-angle-1.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/perf/perf-3r-C/cau-cat-mat-phang-angle-2.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/perf/perf-3r-C/cau-cat-mat-phang-trace.json.gz",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/perf/perf-3r-C/cube-hexagon-angle-0.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/perf/perf-3r-C/cube-hexagon-angle-1.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/perf/perf-3r-C/cube-hexagon-angle-2.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/perf/perf-3r-C/cube-hexagon-trace.json.gz",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/perf/perf-3r-C/dense-multi-solid-angle-0.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/perf/perf-3r-C/dense-multi-solid-angle-1.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/perf/perf-3r-C/dense-multi-solid-angle-2.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/perf/perf-3r-C/dense-multi-solid-trace.json.gz",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/perf/perf-3r-C/non-thiet-dien-truc-angle-0.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/perf/perf-3r-C/non-thiet-dien-truc-angle-1.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/perf/perf-3r-C/non-thiet-dien-truc-angle-2.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/perf/perf-3r-C/non-thiet-dien-truc-trace.json.gz",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/perf/perf-3r-C/oblique-prism-angle-0.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/perf/perf-3r-C/oblique-prism-angle-1.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/perf/perf-3r-C/oblique-prism-angle-2.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/perf/perf-3r-C/oblique-prism-trace.json.gz",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/perf/perf-3r-C/receipt.json",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/perf/perf-3r-C/thiet-dien-chop-angle-0.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/perf/perf-3r-C/thiet-dien-chop-angle-1.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/perf/perf-3r-C/thiet-dien-chop-angle-2.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/perf/perf-3r-C/thiet-dien-chop-trace.json.gz",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/perf/perf-3r-C/tru-thiet-dien-tron-angle-0.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/perf/perf-3r-C/tru-thiet-dien-tron-angle-1.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/perf/perf-3r-C/tru-thiet-dien-tron-angle-2.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/perf/perf-3r-C/tru-thiet-dien-tron-trace.json.gz",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/perf/perf-4-B/cau-cat-mat-phang-angle-0.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/perf/perf-4-B/cau-cat-mat-phang-angle-1.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/perf/perf-4-B/cau-cat-mat-phang-angle-2.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/perf/perf-4-B/cau-cat-mat-phang-trace.json.gz",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/perf/perf-4-B/cube-hexagon-angle-0.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/perf/perf-4-B/cube-hexagon-angle-1.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/perf/perf-4-B/cube-hexagon-angle-2.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/perf/perf-4-B/cube-hexagon-trace.json.gz",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/perf/perf-4-B/dense-multi-solid-angle-0.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/perf/perf-4-B/dense-multi-solid-angle-1.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/perf/perf-4-B/dense-multi-solid-angle-2.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/perf/perf-4-B/dense-multi-solid-trace.json.gz",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/perf/perf-4-B/non-thiet-dien-truc-angle-0.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/perf/perf-4-B/non-thiet-dien-truc-angle-1.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/perf/perf-4-B/non-thiet-dien-truc-angle-2.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/perf/perf-4-B/non-thiet-dien-truc-trace.json.gz",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/perf/perf-4-B/oblique-prism-angle-0.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/perf/perf-4-B/oblique-prism-angle-1.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/perf/perf-4-B/oblique-prism-angle-2.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/perf/perf-4-B/oblique-prism-trace.json.gz",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/perf/perf-4-B/receipt.json",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/perf/perf-4-B/thiet-dien-chop-angle-0.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/perf/perf-4-B/thiet-dien-chop-angle-1.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/perf/perf-4-B/thiet-dien-chop-angle-2.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/perf/perf-4-B/thiet-dien-chop-trace.json.gz",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/perf/perf-4-B/tru-thiet-dien-tron-angle-0.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/perf/perf-4-B/tru-thiet-dien-tron-angle-1.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/perf/perf-4-B/tru-thiet-dien-tron-angle-2.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/perf/perf-4-B/tru-thiet-dien-tron-trace.json.gz",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/two-tab-run-1/failure-1-A.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/two-tab-run-1/failure-1-B.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/two-tab-run-1/failure-2-A.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/two-tab-run-1/failure-2-B.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/two-tab-run-1/failure-3-A.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/two-tab-run-1/failure-3-B.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/two-tab-run-1/failure-4-A.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/two-tab-run-1/failure-4-B.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/two-tab-run-1/failure-5-A.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/two-tab-run-1/failure-5-B.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/two-tab-run-1/failure-6-A.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/two-tab-run-1/failure-6-B.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/two-tab-run-1/failure-7-A.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/two-tab-run-1/failure-7-B.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/two-tab-run-1/failure-8-A.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/two-tab-run-1/failure-8-B.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/two-tab-run-2/failure-2-A.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/two-tab-run-2/failure-2-B.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/two-tab-run-2/failure-3-A.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/two-tab-run-2/failure-3-B.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/two-tab-run-2/failure-4-A.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/two-tab-run-2/failure-4-B.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/two-tab-run-2/failure-5-A.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/two-tab-run-2/failure-5-B.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/two-tab-run-2/failure-6-A.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/two-tab-run-2/failure-6-B.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/two-tab-run-2/failure-7-A.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/two-tab-run-2/failure-7-B.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/two-tab-run-2/failure-8-A.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-final-premerge-hardening/two-tab-run-2/failure-8-B.png",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-integration-reliability/nav-after/",
+        "?? docs/evaluation/geometry/runs/axo-hybrid4-integration-reliability/perf-after/",
+        "?? frontend/dist-diag/",
+        "?? frontend/dist-inject/",
+        "?? frontend/dist-int/",
+        "?? frontend/dist-perf/",
+        "?? frontend/dist-readiness-after/",
+        "?? frontend/dist-readiness-before/",
+        "?? frontend/dist-twotab/",
+        "?? frontend/src/simulations/domains/geometry/scene3d-hover.test.ts"
+      ]
+    },
+    {
+      "path": "<repo>\\.superpowers\\worktrees\\axo-pedagogical-integration",
+      "metadata": [
+        "HEAD 67f780ca9711a866727741f16bd09ab5ad5d3849",
+        "branch refs/heads/integration/axo-pedagogical-construction-hardening"
+      ],
+      "status": "GIT_STATUS_UNAVAILABLE_EXIT_128"
+    },
+    {
+      "path": "<repo>\\.superpowers\\worktrees\\axo-performance-baseline",
+      "metadata": [
+        "HEAD 4ed8cb3e262280fe3bf6caab0045185a9bc0e52d",
+        "detached"
+      ],
+      "status": "GIT_STATUS_UNAVAILABLE_EXIT_128"
+    },
+    {
+      "path": "<repo>\\.superpowers\\worktrees\\axo-performance-verifier",
+      "metadata": [
+        "HEAD 219434ea87b5916e51a9d0d4a8cefdd8e78eebe8",
+        "detached"
+      ],
+      "status": "GIT_STATUS_UNAVAILABLE_EXIT_128"
+    },
+    {
+      "path": "<repo>\\.superpowers\\worktrees\\axo-v27-frontend-integration",
+      "metadata": [
+        "HEAD 6b980f2bbf37df6313809519387a907e27c5db55",
+        "branch refs/heads/feat/axo-v27-frontend-integration"
+      ],
+      "status": "GIT_STATUS_UNAVAILABLE_EXIT_128"
+    },
+    {
+      "path": "<repo>\\.superpowers\\worktrees\\independent-section-holdout",
+      "metadata": [
+        "HEAD f7f177a626c33bb13aa40d3a904c82266ed8a276",
+        "branch refs/heads/research/hybrid-v2-independent-vietnamese-section-holdout"
+      ],
+      "status": "GIT_STATUS_UNAVAILABLE_EXIT_128"
+    },
+    {
+      "path": "<repo>\\.superpowers\\worktrees\\s3d-hybrid-v2",
+      "metadata": [
+        "HEAD 3dcd6d9fbdc5627197537dc79c1e609ac3e03bea",
+        "branch refs/heads/research/scene3d-to-hybrid-v2-replacement",
+        "prunable gitdir file points to non-existent location"
+      ],
+      "status": "NOT_PRESENT"
+    },
+    {
+      "path": "<repo>\\.superpowers\\worktrees\\s3d-hybrid-v2-codex",
+      "metadata": [
+        "HEAD e336e0dfee30968b27887bcf446d9ec7ad610f54",
+        "branch refs/heads/research/scene3d-hybrid-v2-codex",
+        "prunable gitdir file points to non-existent location"
+      ],
+      "status": "NOT_PRESENT"
+    },
+    {
+      "path": "<repo>\\.superpowers\\worktrees\\scene3d-visual-correction",
+      "metadata": [
+        "HEAD 08929b893337e770649b9d854c8c71c4434edc29",
+        "branch refs/heads/research/scene3d-owner-math-visual-final",
+        "prunable gitdir file points to non-existent location"
+      ],
+      "status": "NOT_PRESENT"
+    },
+    {
+      "path": "<repo>\\.superpowers\\worktrees\\visual-hybrid-integration",
+      "metadata": [
+        "HEAD 13d28b844925ee0c9adb02698b54597c8f9d6eee",
+        "detached",
+        "prunable gitdir file points to non-existent location"
+      ],
+      "status": "NOT_PRESENT"
+    },
+    {
+      "path": "<repo>\\.superpowers\\worktrees\\w3-f2-adapter3-t3",
+      "metadata": [
+        "HEAD 6516d5d46379a4d4f251c4fa29e6a16191a79ca6",
+        "detached"
+      ],
+      "status": "GIT_STATUS_UNAVAILABLE_EXIT_128"
+    },
+    {
+      "path": "<repo>\\.superpowers\\worktrees\\w3-f2-ratio-projection-language-grounding",
+      "metadata": [
+        "HEAD 15a8e1ac327e7ec5197ebe5d08330afb444b9571",
+        "branch refs/heads/research/hybrid-v2-w3-f2-ratio-projection-language-grounding"
+      ],
+      "status": "GIT_STATUS_UNAVAILABLE_EXIT_128"
+    },
+    {
+      "path": "<repo>\\.superpowers\\worktrees\\w3-f2-ratio-projection-language-grounding\\.superpowers\\worktrees\\w3-f2-target-grammar-identity-compat",
+      "metadata": [
+        "HEAD a0fd23776610cf5a9a0763ff76b26938f668aa2f",
+        "detached"
+      ],
+      "status": "GIT_STATUS_UNAVAILABLE_EXIT_128"
+    },
+    {
+      "path": "<repo>\\.superpowers\\worktrees\\w3-f2-solid-scope-t3",
+      "metadata": [
+        "HEAD 55bdd332e3e1042f104fff350be573b295e33a8b",
+        "detached"
+      ],
+      "status": "GIT_STATUS_UNAVAILABLE_EXIT_128"
+    },
+    {
+      "path": "<repo>\\.superpowers\\worktrees\\w3-f2-unified-scope-t3",
+      "metadata": [
+        "HEAD cd8de3986d5d9103b7a9dbc8fb2311d05e5c44c9",
+        "detached"
+      ],
+      "status": "GIT_STATUS_UNAVAILABLE_EXIT_128"
+    }
+  ],
+  "resources": {
+    "freeGiB": 6.595928192138672,
+    "totalGiB": 15.784477233886719,
+    "logicalCPUs": 12
+  },
+  "provider_calls": 0
+}

@@ -1,0 +1,39 @@
+
+ RUN  v4.1.10 D:/Documents/projects/algo-sim/.superpowers/worktrees/axo-hybrid4-integration/frontend
+
+ ❯ src/simulations/domains/geometry/scene3d-hover.test.ts (2 tests | 2 failed) 7ms
+     × restores colors/state without replacing geometry, materials, children or semantic colors 4ms
+     × addresses a canonical edge owned by another object and preserves selected emphasis 1ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/simulations/domains/geometry/scene3d-hover.test.ts > transient hover on existing render objects > restores colors/state without replacing geometry, materials, children or semantic colors
+TypeError: applyHoverFeedback is not a function
+ ❯ src/simulations/domains/geometry/scene3d-hover.test.ts:16:18
+     14|     const ids = [line.uuid, line.geometry.uuid, line.material.uuid, pr…
+     15|     const original = line.material.color.getHex();
+     16|     const undo = applyHoverFeedback(root, "renamed-solid", new Set());
+       |                  ^
+     17|     expect(line.material.color.getHex()).toBe(modulateSemanticColor(or…
+     18|     expect(line.userData.interactionState).toBe("hover");
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  src/simulations/domains/geometry/scene3d-hover.test.ts > transient hover on existing render objects > addresses a canonical edge owned by another object and preserves selected emphasis
+TypeError: applyHoverFeedback is not a function
+ ❯ src/simulations/domains/geometry/scene3d-hover.test.ts:36:18
+     34|     edge.add(line); owner.add(edge); root.add(owner);
+     35|     const base = material.color.getHex();
+     36|     const undo = applyHoverFeedback(root, "auxiliary", new Set(["outer…
+       |                  ^
+     37|     expect(material.color.getHex()).toBe(modulateSemanticColor(base, "…
+     38|     edge.userData.interactionState = "selected";
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed (2)
+   Start at  12:22:51
+   Duration  1.14s (transform 743ms, setup 36ms, import 890ms, tests 7ms, environment 0ms)
+

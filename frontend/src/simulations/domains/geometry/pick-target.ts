@@ -65,7 +65,7 @@ export function donViMoiPx(sau: number, fovDo: number, caoKhungPx: number): numb
  * thế giới nên đây là phép quy đổi xấp xỉ, và nó chỉ cần đúng cỡ.
  */
 export const DICH_DIEM_PX = 12;
-export const DICH_CANH_PX = 8;
+export const DICH_CANH_PX = 10;
 
 /**
  * Khoảng camera → thế giới, ở góc nhìn mặc định của khung hình học.
@@ -123,8 +123,8 @@ export function nguongBamCanh(khoangCam: number): number {
  * chóp là câu trả lời đúng về mặt hình học nhưng vô dụng với người đang học.
  */
 export const HANG_CU_THE: Record<string, number> = {
-  point3: 0, edge: 1, segment3: 1, face: 2, polygon3: 3, circle3: 3, ellipse3: 3, line3: 3, plane3: 3,
-  quantity: 4, section: 3, solid: 5, curved_solid: 5, cylinder: 5, cone: 5, sphere: 5,
+  point3: 0, edge: 1, segment3: 1, line3: 1, circle3: 2, ellipse3: 2, section: 2, polygon3: 2, face: 3, plane3: 4,
+  quantity: 4, solid: 5, curved_solid: 5, cylinder: 5, cone: 5, sphere: 5,
 };
 
 export function hangCuThe(loai: string | undefined): number {

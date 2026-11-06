@@ -1,0 +1,20 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "construction-integrity-audit — oblique/uncertified cylinder guard, exact Q3 rim decomposition, given-only dimension annotations, and pure-construction pedagogical sequencing (3bb051a0)",
+  "corrects": "docs/evaluation/geometry/runs/hybrid-v2-nl-certificates-e2e/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "current_candidate_hash": "4b7114965da230650e2ab0570ee158d24b6fee4e3cdece689ecd40b50a290866",
+  "current_product_commit": "3bb051a087e2e340b81517a44ad6878de8c681c1",
+  "current_candidate_source": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+  "diverged": true,
+  "reason": "adapter3_simulation.py (hybrid-simulation-adapter/3): fail-closed oblique/uncertified axial solid guard (_text_contradicts_right_axial_solid -> CURVED_PRIMITIVE_BLOCKED_BY_KERNEL), exact rational sum-of-two-squares rim placement on Q^3, and verified is_given:true quantity annotations for direct given dimensions; frontend Scene3D pedagogical sequencer & renderer (scene3d-semantic-policy.ts, scene3d-annotations.ts, scene3d-edge-visibility.ts, scene3d-view.tsx, SimulationWorkspace.tsx): removal of pure answer-calculation steps from construction timeline, zero numerical answer leakage on header/ARIA, sheared 3D oblique cylinder mesh + silhouette tangent planes, and given-only step-bound dimension labels. Default /api/analyze (LLM_ONLY) does not import adapter3_simulation.",
+  "cache_version": 130,
+  "cache_version_hien_tai": 130,
+  "cache_decision": "NO_BUMP 130: default LLM_ONLY pipeline does not import adapter3_simulation; no prompt, schema, grammar card, capability table or routing policy changed; route D preview/simulation is excluded from the product cache.",
+  "hieu_luc_len_ket_qua_da_do": {
+    "historical_measurements": "UNCHANGED",
+    "live_requests": 0,
+    "so_lieu_lượt_đo_cuối": "UNCHANGED: historical measurements are not rescored."
+  }
+}

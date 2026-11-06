@@ -26,7 +26,8 @@ LLM_ONLY_SENTINEL = {"status": "ok", "simulation_id": "llm-only-sentinel", "mark
 
 
 def _post(text, client=LOOPBACK):
-    return TestClient(app, client=client).post("/api/analyze", json={"input": {"type": "text", "content": text}})
+    from tests.route_client import route_client
+    return route_client(app, client=client).post("/api/analyze", json={"input": {"type": "text", "content": text}})
 
 
 def _write(path, *payloads):

@@ -16,7 +16,7 @@ import { withSubEntities } from "../simulations/domains/geometry/scene3d-subenti
 import { __resetHistoryForTest } from "../state/history";
 import { useAppStore } from "../state/store";
 import { buildFailureMessage } from "./photo-problem-flow";
-import { UnsupportedNotice } from "./SimulationWorkspace";
+import { SimulationWorkspace, UnsupportedNotice } from "./SimulationWorkspace";
 
 type FixtureRow = {
   id: string;
@@ -398,8 +398,19 @@ describe("Hybrid /4 product integration — «Đề bài» là đề người h�
   });
 
   it("SimulationWorkspace đưa đề nguyên văn vào «Đề bài» trước description/title", () => {
-    const src = readFileSync(resolve(__dirname, "SimulationWorkspace.tsx"), "utf8");
-    expect(src).toMatch(/de=\{active\.envelope\.problem_statement\s*\|\|\s*active\.envelope\.description/);
+    // Tích hợp Axo (axo-hybrid4-integration-reliability): thay quét chuỗi nguồn bằng hành vi. Envelope đã đóng dấu
+    // `problem_statement` (như bài giao cho lớp) mở KHÔNG kèm đề vẫn hiện đề nguyên văn, không hiện lời miễn trừ.
+    const row = served[0];
+    const env = docPhanHoiPhanTich(structuredClone(row.response));
+    if (env.status !== "ok") throw new Error(row.id);
+    const stamped = { ...env, problem_statement: row.problem_text };
+    useAppStore.getState().loadEnvelope(stamped);
+    Object.assign(useAppStore.getInitialState(), useAppStore.getState());
+    const html = renderToString(<SimulationWorkspace />);
+    const statement = html.match(/id="dock-prob-statement"[^>]*data-statement-source="([a-z]+)"[^>]*>([\s\S]*?)<\/div>/u);
+    expect(statement?.[1]).toBe("learner");
+    expect(statement?.[2]?.replace(/<[^>]+>/gu, "")).toContain(row.problem_text.slice(0, 20));
+    if (env.description) expect(statement?.[2] ?? "").not.toContain(env.description);
   });
 
   it("đề có ký hiệu ⊥ / ∥ / ′ đi qua store không bị chuẩn hoá", () => {

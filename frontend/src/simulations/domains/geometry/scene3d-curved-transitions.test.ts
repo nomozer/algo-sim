@@ -95,7 +95,7 @@ describe("standalone sphere presentation reference", () => {
     const root = buildObject3D(sphere, false)!;
     const reference = root.getObjectByName("sphere_reference:sphere");
     expect(reference).toBeDefined();
-    expect(reference!.userData.presentationReference).toEqual({ role: "REFERENCE_CURVE", source_object_id: "sphere", authoritative: false });
+    expect(reference!.userData.presentationReference).toEqual({ role: "REFERENCE_GREAT_CIRCLE", source_object_id: "sphere", authoritative: false });
     const signatures: string[] = [];
     for (const eye of [new THREE.Vector3(8, 3, 6), new THREE.Vector3(-8, -3, 6)]) {
       updateCanonicalEdgeVisibility(root, cameraAt(eye), "1440x900@1");
@@ -109,26 +109,23 @@ describe("standalone sphere presentation reference", () => {
     expect(reference!.getObjectByName("section_fill:sphere")).toBeUndefined();
   });
 
-  it.each([[1440, 900], [390, 844]])("keeps the sphere silhouette closed but lighter than a solid edge at %i px", (width, height) => {
+  it.each([[1440, 900], [390, 844]])("omits artificial sphere_silhouette stroke per matphang.html while keeping translucent 3D shell and screen-width edges at %i px", (width, height) => {
     const sphere: SceneObject = { ...cylinder, id: "sphere", curved_kind: "ball", height_sq: "0", apex_or_top: undefined };
     const root = new THREE.Group();
-    root.add(buildObject3D(sphere, false)!);
+    const builtSphere = buildObject3D(sphere, false)!;
+    root.add(builtSphere);
     updateCanonicalEdgeVisibility(root, cameraAt(new THREE.Vector3(8, 3, 6)), "1440x900@1");
-    const outline = root.getObjectByName("sphere_silhouette:sphere") as THREE.Line;
-    expect(outline.isLine).toBe(true);
-    const pos = outline.geometry.getAttribute("position");
-    expect([pos.getX(0), pos.getY(0), pos.getZ(0)]).toEqual([pos.getX(pos.count - 1), pos.getY(pos.count - 1), pos.getZ(pos.count - 1)]);
-    expect((outline.material as THREE.LineBasicMaterial).depthTest).toBe(false);
+    expect(root.getObjectByName("sphere_silhouette:sphere")).toBeUndefined();
+    const shell = builtSphere.children.find((c) => (c as THREE.Mesh).isMesh && c.userData?.voKhoi) as THREE.Mesh;
+    expect(shell).toBeDefined();
+    expect((shell.material as THREE.MeshBasicMaterial).opacity).toBeCloseTo(0.12, 3);
     const edge = new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(), new THREE.Vector3(1, 0, 0)]), new THREE.LineBasicMaterial());
     edge.name = "comparison_edge";
     root.add(edge);
     const fat = new THREE.Group();
     dongBoNetDayManHinh([root], fat, width, height);
-    const ve = fat.getObjectByName("fat:sphere_silhouette:sphere") as unknown as { material: { linewidth: number; dashed: boolean } };
+    expect(fat.getObjectByName("fat:sphere_silhouette:sphere")).toBeUndefined();
     const normal = fat.getObjectByName("fat:comparison_edge") as unknown as { material: { linewidth: number } };
-    expect(ve.material.dashed).toBe(false);
-    expect(ve.material.linewidth).toBeGreaterThan(1);
-    expect(ve.material.linewidth).toBeLessThan(normal.material.linewidth * 0.8);
     expect(normal.material.linewidth).toBe(Number((PHONG_CACH_SCENE3D.fatPx.edge * heSoNetTheoKhung(height)).toFixed(2)));
   });
 
@@ -147,11 +144,12 @@ describe("standalone sphere presentation reference", () => {
     expect(hidden.color.getHex()).toBe(PHONG_CACH_SCENE3D.colors.hiddenEdge);
   });
 
-  it("can suppress the reference for a real sphere-plane scene without suppressing its silhouette", () => {
+  it("can suppress the reference for a coincident great-circle cut while keeping the 3D sphere shell and no extra silhouette stroke", () => {
     const sphere: SceneObject = { ...cylinder, id: "sphere", curved_kind: "ball", height_sq: "0", apex_or_top: undefined };
     const root = buildObject3D(sphere, false, undefined, [], undefined, undefined, undefined, false, "primary", true, false)!;
     expect(root.getObjectByName("sphere_reference:sphere")).toBeUndefined();
-    updateCanonicalEdgeVisibility(root, cameraAt(new THREE.Vector3(8, 3, 6)));
-    expect(root.getObjectByName("sphere_silhouette:sphere")!.visible).toBe(true);
+    expect(root.getObjectByName("sphere_silhouette:sphere")).toBeUndefined();
+    const shell = root.children.find((c) => (c as THREE.Mesh).isMesh && c.userData?.voKhoi);
+    expect(shell).toBeDefined();
   });
 });

@@ -1,0 +1,185 @@
+{
+  "schema": "axo-scene-consistency/1",
+  "dist": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\axo-hybrid4-integration\\frontend\\dist",
+  "provider_calls": 0,
+  "checks": [
+    {
+      "name": "mathematical authority right-prism: composer, attempt, history, reload, no answer surface",
+      "evidence": {
+        "status": "reached",
+        "attempt": "a6cf716bd2fa3c2ef995996041155c775",
+        "answerBinding": [
+          {
+            "quantity_id": "kq_q",
+            "coefficient": "30",
+            "symbolic": "30",
+            "dim": 0,
+            "unit": null
+          }
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "mathematical authority oblique-prism: composer, attempt, history, reload, no answer surface",
+      "evidence": {
+        "status": "REFUSED",
+        "code": "UNDERDETERMINED_POINT",
+        "category": "insufficient_specification"
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "mathematical authority pyramid-base-area: composer, attempt, history, reload, no answer surface",
+      "evidence": {
+        "status": "REFUSED",
+        "code": "BRIDGE_UNSUPPORTED_PREMISE",
+        "category": "capability_gap"
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "mathematical authority cone-volume: composer, attempt, history, reload, no answer surface",
+      "evidence": {
+        "status": "reached",
+        "attempt": "a53323119f76c5e4c6f161636aa6dbce8",
+        "answerBinding": [
+          {
+            "quantity_id": "kq_mg1",
+            "coefficient": "12π",
+            "symbolic": "12π",
+            "dim": 0,
+            "unit": null
+          }
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "mathematical authority cylinder-section: composer, attempt, history, reload, no answer surface",
+      "evidence": {
+        "status": "reached",
+        "attempt": "a18f2290545018aad3ded015d674ad099",
+        "answerBinding": [
+          {
+            "quantity_id": "kq_mg1",
+            "coefficient": "9π",
+            "symbolic": "9π",
+            "dim": 0,
+            "unit": null
+          }
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "mathematical authority sphere-volume: composer, attempt, history, reload, no answer surface",
+      "evidence": {
+        "status": "reached",
+        "attempt": "a9e8dfafe9d5f76371b6b531a7ae6b572",
+        "answerBinding": [
+          {
+            "quantity_id": "kq_mg1",
+            "coefficient": "36π",
+            "symbolic": "36π",
+            "dim": 0,
+            "unit": null
+          }
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "mathematical authority sphere-plane: composer, attempt, history, reload, no answer surface",
+      "evidence": {
+        "status": "reached",
+        "attempt": "ab4d70dd61943d93e78b546d37aaecca8",
+        "answerBinding": [
+          {
+            "quantity_id": "kq_mg1",
+            "coefficient": "16π",
+            "symbolic": "16π",
+            "dim": 0,
+            "unit": null
+          }
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "mathematical authority polygon-section: composer, attempt, history, reload, no answer surface",
+      "evidence": {
+        "status": "reached",
+        "attempt": "a92649ddfdc1f02c05fae676ceb9c749a",
+        "answerBinding": [
+          {
+            "quantity_id": "kq_q1",
+            "coefficient": "4",
+            "symbolic": "4",
+            "dim": 0,
+            "unit": null
+          }
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "mathematical authority contradiction: composer, attempt, history, reload, no answer surface",
+      "evidence": {
+        "status": "REFUSED",
+        "code": "INCONSISTENT_FACTS",
+        "category": "geometry_generation_failed"
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "mathematical authority exact-domain: composer, attempt, history, reload, no answer surface",
+      "evidence": {
+        "status": "REFUSED",
+        "code": "EXACT_DOMAIN_EXCEEDED",
+        "category": "capability_gap"
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "mathematical authority equivalent-wording: composer, attempt, history, reload, no answer surface",
+      "evidence": {
+        "status": "reached",
+        "attempt": "a09f86c322addaf8571612e337c353fe0",
+        "answerBinding": [
+          {
+            "quantity_id": "kq_q",
+            "coefficient": "30",
+            "symbolic": "30",
+            "dim": 0,
+            "unit": null
+          }
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "mathematical authority renamed-points: composer, attempt, history, reload, no answer surface",
+      "evidence": {
+        "status": "reached",
+        "attempt": "adde50649cabba4640da703f4fcbe93a7",
+        "answerBinding": [
+          {
+            "quantity_id": "kq_q",
+            "coefficient": "30",
+            "symbolic": "30",
+            "dim": 0,
+            "unit": null
+          }
+        ]
+      },
+      "status": "PASS"
+    }
+  ],
+  "forbidden": [],
+  "browser": "157.0.8103.38",
+  "summary": {
+    "pass": 12,
+    "fail": 0
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "run_id": "axo-result-reveal-consistency",
+  "task_slug": "axo-result-reveal-consistency",
+  "date": "2026-11-05",
+  "branch": "integration/axo-pedagogical-construction-hardening",
+  "before_commit": "219434ea87b5916e51a9d0d4a8cefdd8e78eebe8",
+  "baseline_product_commit": "34c779e1eb258240c595315db2219c788ba9462a",
+  "product_commits": [
+    "69b9497f24698d334092244bd58c02615179ad95",
+    "514d34d4c375af58430d55721bd32bde056f5ae1"
+  ],
+  "measured_system": {
+    "files": 118,
+    "tree_hash": "6809d79b51f6e47be1e8af03ae065563b2028fcd823c22a91b61600b242d7fad"
+  },
+  "cache_version": 131,
+  "provider_calls": 0,
+  "protected_file": "frontend/index.html",
+  "protected_sha256": "3B8A5566454E42BA624C4611C82B792EC8ED1CAFC062C0041ADC11DEEB44A69F",
+  "status": "READY_FOR_USER_REVIEW",
+  "verification": {
+    "frontend_vitest": "124 files passed, 1803 tests passed",
+    "frontend_build": "tsc -b && vite build exit 0",
+    "docs_gate": "tests/geometry/test_docs_information_architecture.py 42 passed",
+    "candidate_seal": "freeze_evaluation_candidate.py run in a clean detached worktree at 514d34d4; --verify PASS",
+    "browser_reveal_consistency": "browser-final/receipt.json 24/24 PASS (11 product routes, reveal flows, switching, Back/Forward, 7 widths, 110% DPR equivalent)",
+    "browser_ui_harness": "ui-final/receipt.json 39/40 PASS; responsive 360 cau-cat-mat-phang fails only in the full sequence, PASS 5/5 isolated (ui-360-recheck) and 6/6 with its predecessor (ui-360-sequence)",
+    "performance_pair": "perf-before (34c779e1) vs perf-after (69b9497f), same machine and script: pooled frame median 7.0 -> 6.9 ms, renders/frame 1 -> 1, step change 68.2/111.3 -> 58.1/95.7 ms (n=168), balanced GPU buffers, 1 WebGL context"
+  },
+  "diagnostic_only_left_untracked": {
+    "browser-1": "first E2E run; 4 failures were a checker false positive on polygon render keys (id#<n>c...). Not acceptance evidence.",
+    "browser": "E2E run on the build before the reveal-button width fix and the tangent narration fix; superseded by browser-final.",
+    "ui-after": "harness UI run before the tangent narration fix; superseded by ui-final."
+  }
+}

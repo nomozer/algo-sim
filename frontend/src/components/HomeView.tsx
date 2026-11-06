@@ -1,122 +1,115 @@
-import { HomeWorkStrip } from "./HomeWorkStrip";
-import { DOMAIN_COLOR, DOMAIN_LABEL, starterEntries, type CatalogEntry } from "../data/offline-catalog";
+import {
+  geometryShapeLabel,
+  publicCatalog,
+  starterEntries,
+  type CatalogEntry,
+} from "../data/offline-catalog";
 import { useAppStore } from "../state/store";
 import { ProblemInput } from "./ProblemInput";
-import { previewKindOf, SamplePreview } from "./SamplePreview";
+import { SamplePreview } from "./SamplePreview";
 import { SessionCard } from "./SessionCard";
-import { UnsupportedNotice } from "./SimulationWorkspace";
 
 /**
- * HOME (M9-UX1 · dọn lại M9-UX5) — trạng thái vào app: MỘT hành động chính.
+ * Trang chủ Axo V2.7 (Phase B — Full UI Replacement).
  *
- * M9-UX5 — HOME KHÔNG BAO GIỜ PHÌNH. Ba thứ bị gỡ vì chúng làm Home to dần theo
- * lượng dữ liệu, đúng thứ khiến nó "rối":
- *   1. Nút "Xem tất cả mô phỏng mẫu (12)" — bung cả danh mục ngay tại chỗ.
- *      Danh mục đầy đủ nay có nhà riêng: `LibraryView` (mục Thư viện trên header).
- *   2. Danh sách "Tiếp tục học" nhiều thẻ — học sinh học dở 30 bài thì gợi ý bị
- *      đẩy khuất. Nay CHỈ MỘT thẻ gần nhất; phần còn lại ở trang Lịch sử.
- *   3. Phụ đề hai dòng + hàng chip "thử đề mẫu AI" — phụ đề trùng ý tiêu đề, còn
- *      3 đề chip thì TRÙNG NỘI DUNG với 3 bài mẫu ngay bên dưới (chỉ khác là tốn
- *      một lượt gọi API). Trang chủ nên có ĐÚNG MỘT đường dùng AI: gõ đề của em.
- *
- * Thứ tự: composer → gợi ý (6 nổi bật) → tiếp tục học (1 thẻ).
- * "Tiếp tục học" nằm DƯỚI gợi ý: Home dẫn bằng khám phá, không dẫn bằng đống bài
- * đang học dở của người dùng cũ.
+ * Chuyển nguyên vẹn cấu trúc từ `#view-home` của `axo-unified-ui-v2-7-composer-validation-divider-review.html`:
+ * - `.home-page-container` (max-width: 1120px, padding: 28px 24px 48px, gap: 28px)
+ * - `.hero-composer-zone`: `.hero-title` + `.hero-sub` + `.composer-card`
+ * - `.home-section` (Gợi ý khám phá): `.home-sec-bar` + `.starter-grid` (4 `.starter-card`)
+ * - `.home-section#home-resume-section` (Tiếp tục học): `.home-sec-bar` + `.resume-home-card`
  */
 
-export function formatRelativeTime(ts: number, nowMs = Date.now()): string {
-  const s = Math.max(0, Math.floor((nowMs - ts) / 1000));
-  if (s < 60) return "vừa xong";
-  const m = Math.floor(s / 60);
-  if (m < 60) return `${m} phút trước`;
-  const h = Math.floor(m / 60);
-  if (h < 24) return `${h} giờ trước`;
-  const d = Math.floor(h / 24);
-  if (d < 7) return `${d} ngày trước`;
-  return new Date(ts).toLocaleDateString("vi-VN");
-}
+const DAY_MS = 86_400_000;
 
-function StarterCard({
-  entry,
-  onPick,
-}: {
-  entry: CatalogEntry;
-  onPick: (envelope: CatalogEntry["envelope"], sampleId: string) => void;
-}) {
-  return (
-    <button className="starter-card" onClick={() => onPick(entry.envelope, entry.id)}>
-      <SamplePreview kind={previewKindOf(entry.simId, entry.preview)} />
-      <span className="starter-card-body">
-        <strong className="starter-card-title">{entry.title}</strong>
-        <span className="starter-card-domain">
-          <span className="starter-dot" style={{ background: DOMAIN_COLOR[entry.domain] }} />
-          {DOMAIN_LABEL[entry.domain]}
-        </span>
-      </span>
-    </button>
-  );
+/** Hàm thuần — test được với mốc `now` cố định, không lệ thuộc đồng hồ thật. */
+export function formatRelativeTime(ts: number, now: number = Date.now()): string {
+  const diff = Math.max(0, now - ts);
+  const mins = Math.floor(diff / 60_000);
+  if (mins < 1) return "vừa xong";
+  if (mins < 60) return `${mins} phút trước`;
+  const hours = Math.floor(mins / 60);
+  if (hours < 24) return `${hours} giờ trước`;
+  const days = Math.floor(diff / DAY_MS);
+  if (days === 1) return "hôm qua";
+  if (days < 7) return `${days} ngày trước`;
+  const d = new Date(ts);
+  return `${d.getDate()}/${d.getMonth() + 1}`;
 }
 
 export function HomeView() {
-  const loadEnvelope = useAppStore((s) => s.loadEnvelope);
-  const unsupported = useAppStore((s) => s.unsupported);
   const history = useAppStore((s) => s.history);
   const reopenFromHistory = useAppStore((s) => s.reopenFromHistory);
   const openHistory = useAppStore((s) => s.openHistory);
   const openLibrary = useAppStore((s) => s.openLibrary);
+  const loadEnvelope = useAppStore((s) => s.loadEnvelope);
 
   const starters = starterEntries();
+  const totalPublic = publicCatalog().length;
   const latest = history[0] ?? null;
 
+  const openSample = (entry: CatalogEntry) => {
+    loadEnvelope(entry.envelope, entry.id);
+  };
+
   return (
-    <div className="home-view">
-      <h1 className="home-title">Em muốn dựng hình nào?</h1>
+    <div className="page-container home-container" id="view-home">
+      <section className="home-hero" aria-label="Nhập đề bài hình học">
+        <h1 className="home-hero-title">Em muốn dựng hình nào?</h1>
+        <div className="home-composer">
+          <ProblemInput />
+        </div>
+      </section>
 
-      {/* Dải việc đứng TRÊN ô nhập: câu hỏi "có bài nào đang chờ không" phải
-          được trả lời trước khi mời người dùng bắt đầu một việc mới. Không có
-          lớp/bài thì nó không dựng gì. */}
-      <HomeWorkStrip />
-
-      <div className="home-composer">
-        <ProblemInput />
-        {/* (M17-VR1) DÙNG CHUNG UnsupportedNotice — trước đây trang chủ có bản
-            sao riêng render `unsupported.reason` (văn bản KỸ THUẬT), bỏ qua
-            `learner_reason` mà M17 W0 gắn ở biên API → học sinh thấy chuỗi như
-            "arbitrary_algorithm". Một nguồn duy nhất, không lệch nữa. */}
-        {unsupported && (
-          <div role="status">
-            <UnsupportedNotice unsupported={unsupported} />
-          </div>
-        )}
-      </div>
-
-      <section className="home-section">
-        <div className="home-section-head">
-          <h2 className="home-section-title">Gợi ý khám phá</h2>
-          <button className="link-btn" onClick={openLibrary}>
-            Xem thư viện
+      <section className="home-section" aria-label="Gợi ý khám phá">
+        <div className="home-sec-bar">
+          <h2 className="home-sec-title">Gợi ý khám phá</h2>
+          <button
+            type="button"
+            className="btn-sec-link"
+            id="btn-home-to-library"
+            onClick={openLibrary}
+          >
+            {`Xem tất cả thư viện (${totalPublic}) →`}
           </button>
         </div>
-        <div className="starter-grid">
-          {starters.map((e) => (
-            <StarterCard key={e.id} entry={e} onPick={loadEnvelope} />
-          ))}
+
+        <div className="starter-grid" id="home-starter-grid">
+          {starters.map((s) => {
+            const shapeLabel = geometryShapeLabel(s.id);
+            return (
+              <button
+                key={s.id}
+                type="button"
+                className="starter-card"
+                data-starter-prob={s.id}
+                onClick={() => openSample(s)}
+                aria-label={`Mở mẫu: ${s.title} (${shapeLabel})`}
+              >
+                <div className="starter-thumb" aria-hidden="true">
+                  <SamplePreview sampleId={s.id} category={shapeLabel} />
+                </div>
+                <span className="starter-cat">{shapeLabel}</span>
+                <span className="starter-title">{s.title}</span>
+              </button>
+            );
+          })}
         </div>
       </section>
 
       {latest && (
-        <section className="home-section">
-          <div className="home-section-head">
-            <h2 className="home-section-title">Tiếp tục học</h2>
-            {history.length > 1 && (
-              <button className="link-btn" onClick={openHistory}>
-                Xem tất cả ({history.length})
-              </button>
-            )}
+        <section className="home-section" id="home-resume-section" aria-label="Tiếp tục học">
+          <div className="home-sec-bar">
+            <h2 className="home-sec-title">Tiếp tục học</h2>
+            <button
+              type="button"
+              className="btn-sec-link"
+              id="btn-home-to-history"
+              onClick={openHistory}
+            >
+              Xem lịch sử →
+            </button>
           </div>
-          <div className="session-list">
-            <SessionCard item={latest} onOpen={() => reopenFromHistory(latest.id)} />
-          </div>
+          <SessionCard item={latest} onOpen={() => reopenFromHistory(latest.id)} />
         </section>
       )}
     </div>

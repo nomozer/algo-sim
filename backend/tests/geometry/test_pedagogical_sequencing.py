@@ -91,3 +91,84 @@ def test_an_oblique_prism_is_not_declared_right():
     from app.simulation.geometry_functions.engine import hop_dong_to_po_da_khai
     c = N(fn='prism', args=N(base=['A', 'B', 'C'], top=["A'", "B'", "C'"], right=False), quotes=("Cho lăng trụ ABC.A’B’C’.",))
     assert hop_dong_to_po_da_khai((c,)).solid_topology.lateral_structure is None
+
+
+def test_section_mab_orders_m_after_solid_and_never_fabricates_perpendicular_height():
+    from tests.geometry import hybrid_compiler_benchmark as HB
+    sec_q = 'Xác định thiết diện của hình chóp S.ABCD với (MAB).'
+    ask_q = 'Tính diện tích thiết diện của hình chóp S.ABCD với (MAB).'
+    q, f = HB._with(
+        HB._square(),
+        HB._mid('fm', 'M', 'S', 'C'),
+        HB._f('fsec', 'section', sec_q, solid='S.ABCD', points=['M', 'A', 'B']),
+        HB._ask('q', ask_q, 'area', solid='S.ABCD', points=['M', 'A', 'B']),
+    )
+    r = run_fact_route(' '.join(q), {'facts': f})
+    assert r.status == 'SERVED', (r.code, r.reason)
+    assert check(r.scene3d) == {'O1': [], 'O2': [], 'O3': [], 'O4': []}
+    from tests.geometry.construction_sequencing import first_steps
+    first = first_steps(r.scene3d)
+    assert first['khoi_S_ABCD'] < first['M']
+    by_id = {o['id']: o for o in r.scene3d['objects']}
+    assert by_id['canh_ben_S_A'].get('perpendicular_witness') is not None
+
+    # Dropping SA ⊥ (ABCD) leaves the metric section area underdetermined; Route D refuses rather than assuming SA ⊥ (ABCD).
+    q_no_perp = [s for s in q if 'vuông góc' not in s]
+    f_no_perp = [x for x in f if x['id'] != 'f3']
+    r_no_perp = run_fact_route(' '.join(q_no_perp), {'facts': f_no_perp})
+    assert r_no_perp.status == 'REFUSED' and not r_no_perp.scene3d
+
+
+def test_valid_exterior_q_on_extended_sd_preserves_pedagogical_order():
+    from fractions import Fraction as F
+    from tests.geometry import hybrid_compiler_benchmark as HB
+    q_base, f_base = HB._square()
+    q_base[3] = 'SA = 4.'
+    f_base[3]['quotes'] = ['SA = 4.']
+    f_base[3]['value'] = '4'
+    q, f = HB._with(
+        (q_base, f_base),
+        HB._f('fm', 'point_def', 'Gọi M là điểm thuộc cạnh SA sao cho SM = 3MA.',
+              point='M', point_kind='divide_segment', points=['S', 'A'], value='3/4'),
+        HB._mid('fn', 'N', 'S', 'B'),
+        HB._f('fp', 'point_def', 'Gọi P là điểm thuộc cạnh SC sao cho SP = 3PC.',
+              point='P', point_kind='divide_segment', points=['S', 'C'], value='3/4'),
+        HB._ilp('fq', 'Q', 'SD', 'MNP'),
+        HB._f('fsec', 'section', 'Xác định thiết diện của hình chóp S.ABCD với (MNP).',
+              solid='S.ABCD', points=['M', 'N', 'P']),
+        HB._ask('q', 'Tính độ dài SQ.', 'length', points=['S', 'Q']),
+    )
+    r = run_fact_route(' '.join(q), {'facts': f})
+    assert r.status == 'SERVED', (r.code, r.reason)
+    assert check(r.scene3d) == {'O1': [], 'O2': [], 'O3': [], 'O4': []}
+    pts = {o['id']: [F(c) for c in o['xyz']] for o in r.scene3d['objects'] if o['type'] == 'point3'}
+    s, d, q_pt = pts['S'], pts['D'], pts['Q']
+    # Verify Q = S + (3/2)(D - S), strictly exterior beyond D (t = 3/2 > 1).
+    assert [q_pt[i] - s[i] for i in range(3)] == [F(3, 2) * (d[i] - s[i]) for i in range(3)]
+
+
+def test_contradictory_q_premises_are_refused_fail_closed():
+    from tests.geometry import hybrid_compiler_benchmark as HB
+    # Case 1: invalid segment division ratio t = 3/2 > 1 claimed as interior segment point.
+    q1, f1 = HB._with(
+        HB._square(),
+        HB._f('fq', 'point_def', 'Lấy Q trên đoạn SD với tỉ số SQ/SD = 3/2.',
+              point='Q', point_kind='divide_segment', points=['S', 'D'], value='3/2'),
+        HB._ask('q', 'Tính độ dài SQ.', 'length', points=['S', 'Q']),
+    )
+    r1 = run_fact_route(' '.join(q1), {'facts': f1})
+    assert r1.status == 'REFUSED' and r1.code == 'INVALID_RATIO' and not r1.scene3d
+
+    # Case 2: M, N, P midpoints of SA, SB, SC force Q = SD ∩ (MNP) to be midpoint of SD, contradicting SQ = 6.
+    q2, f2 = HB._with(
+        HB._square(),
+        HB._mid('fm', 'M', 'S', 'A'),
+        HB._mid('fn', 'N', 'S', 'B'),
+        HB._mid('fp', 'P', 'S', 'C'),
+        HB._ilp('fq', 'Q', 'SD', 'MNP'),
+        HB._f('flen', 'length', 'SQ = 6.', points=['S', 'Q'], measure='segment', value='6'),
+        HB._ask('q', 'Tính độ dài SQ.', 'length', points=['S', 'Q']),
+    )
+    r2 = run_fact_route(' '.join(q2), {'facts': f2})
+    assert r2.status == 'REFUSED' and not r2.scene3d
+

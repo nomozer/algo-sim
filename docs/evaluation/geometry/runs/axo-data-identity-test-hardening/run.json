@@ -1,0 +1,30 @@
+{
+  "run_id": "axo-data-identity-test-hardening",
+  "task_slug": "axo-data-identity-test-hardening",
+  "date": "2026-11-05",
+  "branch": "integration/axo-pedagogical-construction-hardening",
+  "before_commit": "28c7943b",
+  "before_product_commit": "68c05cabcad2711f7eb440e7e3707300c489532f",
+  "product_commit": "7a46646e38c0358db851f0e16a3ac1d1e9f15369",
+  "measured_system": { "files": 118, "tree_hash": "6809d79b51f6e47be1e8af03ae065563b2028fcd823c22a91b61600b242d7fad" },
+  "cache_version": 131,
+  "provider_calls": 0,
+  "protected_file": "frontend/index.html",
+  "protected_sha256": "3B8A5566454E42BA624C4611C82B792EC8ED1CAFC062C0041ADC11DEEB44A69F",
+  "status": "READY_FOR_USER_REVIEW",
+  "verification": {
+    "typecheck_build": "tsc -b && vite build exit 0",
+    "vitest": "7 independent full runs with test.maxWorkers = half logical cores: 0 failures, 0 timeouts; final code 2 x 1843/1843 (vitest-timing.json)",
+    "vitest_worker_experiment": "default 11 workers: heavy tests 2.5-6.5 s, 2 timeouts in 1 of 2 runs; 6 workers 1.4-1.9 s; 4 workers 1.5-1.9 s",
+    "browser_e2e": "browser-final/receipt.json 27/27",
+    "ui_harness": "ui-final-1, ui-final-2: 40/40 each on final code; ui-run-1, ui-run-2: 40/40 each before the viewer fix",
+    "performance_pair": "perf-before-final (68c05cab) vs perf-after-final (7a46646e): frame median 7.0 -> 6.9 ms, renders/frame 1, step 58.9/133.4 -> 53.1/85.3 ms, open 119.7 -> 111.6 ms, 1 WebGL context, balanced buffers",
+    "navigation_pair": "nav-before-final vs nav-after-final: all medians within 2%",
+    "candidate_seal": "frozen in a clean detached worktree at 7a46646e; --verify PASS"
+  },
+  "diagnostic": {
+    "browser": "committed: first E2E run (25/26) that exposed the viewer mutating Scene3D (C4)",
+    "perf-before / perf-after / nav-before / nav-after / ui-run-1 / ui-run-2": "left untracked: runs before the viewer fix, superseded by *-final"
+  },
+  "blocked": ["original problem text from server for records without originalInput requires the Hybrid /4 envelope contract in report section I"]
+}

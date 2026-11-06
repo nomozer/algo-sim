@@ -1,0 +1,20 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "axo-result-reveal-consistency — learner-requested final results, statement bound to the open record, tangent-plane narration (69b9497f, 514d34d4)",
+  "corrects": "docs/evaluation/geometry/runs/axo-performance-completeness/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "current_candidate_hash": "6809d79b51f6e47be1e8af03ae065563b2028fcd823c22a91b61600b242d7fad",
+  "current_product_commit": "514d34d4c375af58430d55721bd32bde056f5ae1",
+  "current_candidate_source": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+  "diverged": true,
+  "reason": "Frontend-only changes on integration/axo-pedagogical-construction-hardening: final conclusions behind a learner-pressed reveal (SimulationWorkspace.tsx), dock statement taken from the open record's original input before envelope.description (SimulationWorkspace.tsx), and tangent-plane radius narration (scene3d-semantic-policy.ts). Backend measured_system (118 files, 6809d79b51f6e47b...) and historical benchmark receipts remain byte-for-byte unchanged.",
+  "cache_version": 131,
+  "cache_version_hien_tai": 131,
+  "cache_decision": "RETAIN 131: zero backend edits; no prompt, schema or routing policy change.",
+  "hieu_luc_len_ket_qua_da_do": {
+    "historical_measurements": "UNCHANGED",
+    "live_requests": 0,
+    "so_lieu_lượt_đo_cuối": "UNCHANGED: no earlier result is re-scored."
+  }
+}

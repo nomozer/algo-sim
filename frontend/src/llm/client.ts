@@ -18,12 +18,93 @@ export interface ServerHealth {
 const CONNECT_HELP =
   "Không kết nối được máy chủ phân tích. Mở cửa sổ lệnh trong thư mục algo-sim và chạy: docker compose up -d --build";
 
-async function postJson<T>(url: string, payload: unknown, signal?: AbortSignal): Promise<T> {
+export type ClientFailureCode =
+  | "NETWORK_UNREACHABLE"
+  | "SERVICE_UNAVAILABLE"
+  | "QUOTA_EXCEEDED"
+  | "MAINTENANCE_MODE"
+  | "ACCOUNT_LOCKED"
+  | "INVALID_INPUT"
+  | "NOT_FOUND"
+  | "HTTP_ERROR";
+
+export interface ClientFailureContract {
+  readonly kind: "network" | "http";
+  readonly code: ClientFailureCode;
+  readonly status?: number;
+  readonly message: string;
+}
+
+export class AxoClientError extends Error implements ClientFailureContract {
+  readonly kind: "network" | "http";
+  readonly code: ClientFailureCode;
+  readonly status?: number;
+  readonly transient?: boolean;
+
+  constructor(opts: {
+    kind: "network" | "http";
+    code: ClientFailureCode;
+    message: string;
+    status?: number;
+    transient?: boolean;
+  }) {
+    super(opts.message);
+    this.name = "AxoClientError";
+    this.kind = opts.kind;
+    this.code = opts.code;
+    this.status = opts.status;
+    this.transient = opts.transient;
+  }
+
+  toContract(): ClientFailureContract {
+    return {
+      kind: this.kind,
+      code: this.code,
+      status: this.status,
+      message: this.message,
+    };
+  }
+}
+
+export interface AnalyzeRetryPolicy {
+  maxRetries?: number;
+  baseDelayMs?: number;
+  isDocumentHidden?: () => boolean;
+}
+
+function classifyHttpFailureCode(
+  status: number,
+  rec: Record<string, unknown> | null,
+): ClientFailureCode {
+  const rawCode = String(rec?.code ?? rec?.error_code ?? "").toUpperCase();
+  if (status === 404 || rawCode === "NOT_FOUND") return "NOT_FOUND";
+  if (rawCode === "MAINTENANCE_MODE") return "MAINTENANCE_MODE";
+  if (status === 429 || rawCode === "QUOTA_EXCEEDED" || rawCode === "RATE_LIMITED") {
+    return "QUOTA_EXCEEDED";
+  }
+  if (status === 423 || rawCode === "ACCOUNT_LOCKED") return "ACCOUNT_LOCKED";
+  if (status === 503 || rawCode === "SERVICE_UNAVAILABLE" || rawCode === "MISSING_API_KEY") {
+    return "SERVICE_UNAVAILABLE";
+  }
+  if (status === 400 || status === 422 || rawCode === "INVALID_INPUT") {
+    return "INVALID_INPUT";
+  }
+  return "HTTP_ERROR";
+}
+
+async function postJson<T>(
+  url: string,
+  payload: unknown,
+  signal?: AbortSignal,
+  extraHeaders?: Record<string, string>,
+  sessionRetried = false,
+): Promise<T> {
   let res: Response;
   try {
     res = await fetch(url, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      headers: { "Content-Type": "application/json", ...extraHeaders },
       body: JSON.stringify(payload),
       signal,
     });
@@ -31,7 +112,12 @@ async function postJson<T>(url: string, payload: unknown, signal?: AbortSignal):
     // Huỷ CHỦ ĐỘNG (người học thay/xoá ảnh) không phải lỗi kết nối — ném nguyên
     // để nơi gọi nhận ra và im lặng, thay vì hiện lời nhắc bật máy chủ.
     if ((err as { name?: string } | null)?.name === "AbortError") throw err;
-    throw new Error(CONNECT_HELP);
+    throw new AxoClientError({
+      kind: "network",
+      code: "NETWORK_UNREACHABLE",
+      message: CONNECT_HELP,
+      transient: err instanceof TypeError,
+    });
   }
 
   let body: unknown = null;
@@ -42,18 +128,94 @@ async function postJson<T>(url: string, payload: unknown, signal?: AbortSignal):
   }
 
   if (!res.ok) {
+    const rec = body && typeof body === "object" ? (body as Record<string, unknown>) : null;
+    // No valid session: the server ran nothing and set a fresh guest session cookie on this refusal. Send the same
+    // request (same attempt ID) exactly once more; a second refusal is the answer.
+    if (res.status === 401 && rec?.reason_code === "session_required" && !sessionRetried && !signal?.aborted) {
+      return postJson<T>(url, payload, signal, extraHeaders, true);
+    }
+    const rawMsg = rec?.error ?? rec?.detail;
     const msg =
-      body && typeof body === "object" && "error" in body
-        ? String((body as { error: unknown }).error)
+      typeof rawMsg === "string" && rawMsg.trim().length > 0
+        ? rawMsg
         : `Máy chủ trả lỗi HTTP ${res.status}.`;
-    throw new Error(msg);
+    throw new AxoClientError({
+      kind: "http",
+      code: classifyHttpFailureCode(res.status, rec),
+      status: res.status,
+      message: msg,
+      transient: res.status === 502 || res.status === 504,
+    });
   }
   return body as T;
 }
 
+function defaultDocumentHidden(): boolean {
+  return typeof document !== "undefined" && document.visibilityState === "hidden";
+}
+
+function waitBackoff(ms: number, signal?: AbortSignal): Promise<void> {
+  return new Promise((resolve, reject) => {
+    if (signal?.aborted) {
+      reject(Object.assign(new Error("Aborted"), { name: "AbortError" }));
+      return;
+    }
+    const timer = setTimeout(() => {
+      signal?.removeEventListener("abort", onAbort);
+      resolve();
+    }, ms);
+    const onAbort = () => {
+      clearTimeout(timer);
+      reject(Object.assign(new Error("Aborted"), { name: "AbortError" }));
+    };
+    signal?.addEventListener("abort", onAbort, { once: true });
+  });
+}
+
+async function postJsonWithBoundedRetry<T>(
+  url: string,
+  payload: unknown,
+  signal?: AbortSignal,
+  policy?: AnalyzeRetryPolicy,
+  extraHeaders?: Record<string, string>,
+): Promise<T> {
+  const rawMaxRetries = policy?.maxRetries ?? 2;
+  const maxRetries = Number.isFinite(rawMaxRetries)
+    ? Math.max(0, Math.min(3, Math.trunc(rawMaxRetries)))
+    : 2;
+  const rawBaseDelayMs = policy?.baseDelayMs ?? 180;
+  const baseDelayMs = Number.isFinite(rawBaseDelayMs)
+    ? Math.max(1, Math.min(2000, Math.trunc(rawBaseDelayMs)))
+    : 180;
+  const isHidden = policy?.isDocumentHidden ?? defaultDocumentHidden;
+
+  let attempt = 0;
+  for (;;) {
+    try {
+      return await postJson<T>(url, payload, signal, extraHeaders);
+    } catch (err) {
+      if (
+        !(err instanceof AxoClientError)
+        || !err.transient
+        || attempt >= maxRetries
+        || signal?.aborted
+        || isHidden()
+      ) {
+        throw err;
+      }
+      const delayMs = baseDelayMs * 2 ** attempt;
+      attempt += 1;
+      await waitBackoff(delayMs, signal);
+      if (signal?.aborted || isHidden()) {
+        throw err;
+      }
+    }
+  }
+}
+
 export async function fetchHealth(): Promise<ServerHealth | null> {
   try {
-    const res = await fetch("/api/health");
+    const res = await fetch("/api/health", { credentials: "include" });
     if (!res.ok) return null;
     return (await res.json()) as ServerHealth;
   } catch {
@@ -61,11 +223,24 @@ export async function fetchHealth(): Promise<ServerHealth | null> {
   }
 }
 
-/** Pipeline phân tích: đầu vào chuẩn hóa text/document/code/image (M4). */
+/** Pipeline phân tích: đầu vào chuẩn hóa text/document/code/image (M4), có retry giới hạn cho lỗi mạng/gateway tạm thời.
+ *  `attemptId` (một lần bấm gửi) đi thành `Idempotency-Key`; mọi lần thử lại trong lời gọi này dùng CHUNG nó, nên máy chủ
+ *  chạy tuyến tối đa một lần cho lượt gửi ấy (`backend/app/idempotency.py`). */
 export async function analyzeViaServer(
   input: InputPayload,
+  signal?: AbortSignal,
+  retryPolicy?: AnalyzeRetryPolicy,
+  attemptId?: string,
 ): Promise<SimulationEnvelope | AnalysisUnsupported> {
-  return docPhanHoiPhanTich(await postJson<unknown>("/api/analyze", { input }));
+  return docPhanHoiPhanTich(
+    await postJsonWithBoundedRetry<unknown>(
+      "/api/analyze",
+      { input },
+      signal,
+      retryPolicy,
+      attemptId ? { "Idempotency-Key": attemptId } : undefined,
+    ),
+  );
 }
 
 /**
@@ -174,4 +349,4 @@ export async function extractImageViaServer(
 }
 
 /* repo-cleanup: `editViaServer` (`/api/edit`, gỡ ở LEGACY_INFORMATICS_REMOVAL) và `explainViaServer` (`/api/explain`,
- * người gọi duy nhất là `AIHelpPanel` không còn gắn vào giao diện) đã gỡ cùng route backend. */
+   gỡ ở M13 — không còn người gọi trực tiếp) đã xoá cùng 2 endpoint backend không người gọi. */

@@ -1,0 +1,30 @@
+
+ RUN  v4.1.10 D:/Documents/projects/algo-sim/.superpowers/worktrees/axo-hybrid4-integration/frontend
+
+ ❯ src/simulations/domains/geometry/scene3d-section-narration.test.ts (9 tests | 1 failed) 183ms
+     × is independent of point notation and object order 12ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/simulations/domains/geometry/scene3d-section-narration.test.ts > closed section narration consumes certified topology > is independent of point notation and object order
+AssertionError: expected 'Ngoài các điểm U, V, W, mặt phẳng cắt…' to contain 'LR'
+
+Expected: "LR"
+Received: "Ngoài các điểm U, V, W, mặt phẳng cắt còn gặp các cạnh QR, KR. Các giao điểm này cùng các đỉnh đã có tạo thành thiết diện ngũ giác."
+
+ ❯ src/simulations/domains/geometry/scene3d-section-narration.test.ts:51:34
+     49|     const nar = narration(scene, sec);
+     50|     expect(nar.conciseRationale).toContain("QR");
+     51|     expect(nar.conciseRationale).toContain("LR");
+       |                                  ^
+     52|     expect(nar.detailedEvidence.filter(s => s.startsWith("Trên mặt "))…
+     53|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 8 passed (9)
+   Start at  12:31:30
+   Duration  1.10s (transform 591ms, setup 37ms, import 684ms, tests 183ms, environment 0ms)
+

@@ -1,0 +1,36 @@
+
+ RUN  v4.1.10 D:/Documents/projects/algo-sim/.superpowers/worktrees/axo-pedagogical-integration/frontend
+
+ ❯ src/simulations/domains/geometry/scene3d-final-conclusions.test.tsx (4 tests | 1 failed) 158ms
+     × excludes certified auxiliary measurements that are absent from requested result targets 7ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/simulations/domains/geometry/scene3d-final-conclusions.test.tsx > requested final conclusions > excludes certified auxiliary measurements that are absent from requested result targets
+AssertionError: expected [ 'R', 'V', 'aux-radius' ] to deeply equal [ 'R', 'V' ]
+
+- Expected
++ Received
+
+  [
+    "R",
+    "V",
++   "aux-radius",
+  ]
+
+ ❯ src/simulations/domains/geometry/scene3d-final-conclusions.test.tsx:46:118
+     44|     const plan = buildPedagogicalConstructionPlan(scene);
+     45|     expect(plan.goalCompletion.items.some(i => i.id === extra.id && i.…
+     46|     expect(evaluateStudentPresentationPolicy(plan.scene, plan.goalComp…
+       |                                                                                                                      ^
+     47|   });
+     48| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 3 passed (4)
+   Start at  23:28:43
+   Duration  1.69s (transform 1.09s, setup 36ms, import 1.30s, tests 158ms, environment 0ms)
+

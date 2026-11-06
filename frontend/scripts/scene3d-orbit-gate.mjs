@@ -88,7 +88,7 @@ export const NGUONG = {
  * nên canvas cao lên (545→683 px) làm cú kéo hụt dưới 360°, còn đuôi damping bị cắt. Từ v2: kéo theo chiều cao, đọc
  * sau khi lắng. v3: trục nhất quán tính theo trọng số góc, tiêu chí lắng theo độ/khung. `NGUONG` giữ nguyên.
  */
-export const GATE_VERSION = "scene3d-orbit-gate/3";
+export const GATE_VERSION = "scene3d-orbit-gate/4";
 export const KEO = {
   /** Kéo ngang = hệ số × chiều cao canvas ⇒ danh định 1,25 × 360° = 450°, biên cố định trên 360°. */
   NGANG_THEO_CAO: 1.25,
@@ -154,10 +154,10 @@ export function phucVu(thuMuc, thieuChunk = false) {
 /* ─── móc đo, tiêm TRƯỚC mọi script của trang ─── */
 const MOC = `
 (function () {
-  var D = { tuThe: [], draws: 0, buffers: 0, programs: 0, canvasTao: 0, ctxs: 0, moc: '', raf: 0 };
+  var D = { tuThe: [], draws: 0, buffers: 0, programs: 0, xoaBuffers: 0, xoaPrograms: 0, canvasTao: 0, ctxs: 0, moc: '', raf: 0 };
   window.__QUAY__ = D;
   D.reset = function (nhan) { D.moc = nhan; D.tuThe.length = 0; D.draws = 0;
-    D.buffers = 0; D.programs = 0; D.canvasTao = 0; };
+    D.buffers = 0; D.programs = 0; D.xoaBuffers = 0; D.xoaPrograms = 0; D.canvasTao = 0; };
 
   var ceGoc = Document.prototype.createElement;
   Document.prototype.createElement = function (t) {
@@ -222,6 +222,9 @@ const MOC = `
       ctx.drawArrays = function () { D.draws += 1; return da.apply(null, arguments); };
       ctx.createBuffer = function () { D.buffers += 1; return cb.apply(null, arguments); };
       ctx.createProgram = function () { D.programs += 1; return cp.apply(null, arguments); };
+      var xb = ctx.deleteBuffer.bind(ctx), xp = ctx.deleteProgram.bind(ctx);
+      ctx.deleteBuffer = function () { D.xoaBuffers += 1; return xb.apply(null, arguments); };
+      ctx.deleteProgram = function () { D.xoaPrograms += 1; return xp.apply(null, arguments); };
       ctx.uniformMatrix4fv = function (loc, tr, v) {
         if (v && v.length === 16) {
           var k = khoaViTri(loc);
@@ -236,10 +239,17 @@ const MOC = `
     return ctx;
   };
 
+  /* v4: đếm KHUNG MÀN HÌNH, mỗi khung đúng một lần (khoá theo timestamp rAF), bằng nhịp riêng của cổng. v3 đếm lời
+   * gọi rAF của TRANG: renderer theo nhu cầu (Axo, \`vong\`) ngừng xin rAF khi camera đã dừng, nên D.raf đóng băng và
+   * cửa sổ "lắng 30 khung" kẹt vĩnh viễn trên đuôi damping (đo thật: camera dừng hẳn sau ≈470 ms, cổng vẫn
+   * KHONG_ON_DINH sau 20 s). Ngưỡng không đổi; khung không vẽ = không ma trận mới = không chuyển động thấy được. */
   var raf = window.requestAnimationFrame.bind(window);
+  var tCuoi = -1;
+  function nhip(t) { if (t !== tCuoi) { tCuoi = t; D.raf += 1; chot(); } }
   window.requestAnimationFrame = function (fn) {
-    return raf(function (t) { D.raf += 1; chot(); return fn(t); });
+    return raf(function (t) { nhip(t); return fn(t); });
   };
+  (function nhipCong(t) { if (t !== undefined) nhip(t); raf(nhipCong); })();
 })();
 `;
 
@@ -540,6 +550,7 @@ export async function motCa(sess, fx) {
   const doc = async () => JSON.parse(await sess.eval(
     "JSON.stringify({tuThe:window.__QUAY__.tuThe.slice(),draws:window.__QUAY__.draws,"
     + "buffers:window.__QUAY__.buffers,programs:window.__QUAY__.programs,"
+    + "xoaBuffers:window.__QUAY__.xoaBuffers,xoaPrograms:window.__QUAY__.xoaPrograms,"
     + "canvasTao:window.__QUAY__.canvasTao,ctxs:window.__QUAY__.ctxs})"));
   const dat = async (nhan) => sess.eval(
     `(function(){window.__QUAY__.reset('${nhan}');return 1})()`);
@@ -581,9 +592,27 @@ export async function motCa(sess, fx) {
 
   const tatCa = [...vong.tuThe, ...nhieuVong.tuThe, ...doc2.tuThe];
   const huong = sauHuong(tatCa);
-  const capPhat = vong.buffers + vong.programs + vong.canvasTao
-    + nhieuVong.buffers + nhieuVong.programs + nhieuVong.canvasTao
-    + doc2.buffers + doc2.programs + doc2.canvasTao;
+  /* v4 — cấp phát: three.js tải buffer lên GPU LƯỜI, ở lần vẽ đầu của một vật (vd nét khuất chỉ có nội dung khi
+   * nhìn từ dưới lên). Lần tải đầu ấy chỉ TẠO, không HUỶ, và không lặp lại. Dựng lại cảnh thì HUỶ cái cũ; rò rỉ /
+   * dựng mỗi khung thì TẠO lại ở mọi vòng. Nên: lặp nguyên chương trình kéo một lượt nữa và tính
+   *   capPhat = (huỷ ở cả hai lượt) + (tạo ở lượt lặp) + (canvas tạo ở cả hai lượt).
+   * Số thô của từng lượt được ghi lại; không ngưỡng nào đổi. */
+  await dat("lap");
+  await keo(keoNgang, 0, 70);
+  await keo(keoNgang, 0, 70);
+  await keo(keoNgang, 0, 70);
+  await keo(0, -380, 50);
+  await keo(0, 420, 55);
+  await keo(0, 420, 55);
+  const lap = await doc();
+  const luot1 = [vong, nhieuVong, doc2];
+  const capPhatThô = {
+    luot1: { tao: luot1.reduce((s, x) => s + x.buffers + x.programs, 0),
+      huy: luot1.reduce((s, x) => s + x.xoaBuffers + x.xoaPrograms, 0), canvas: luot1.reduce((s, x) => s + x.canvasTao, 0) },
+    lap: { tao: lap.buffers + lap.programs, huy: lap.xoaBuffers + lap.xoaPrograms, canvas: lap.canvasTao },
+  };
+  const capPhat = capPhatThô.luot1.huy + capPhatThô.luot1.canvas + capPhatThô.lap.tao + capPhatThô.lap.huy
+    + capPhatThô.lap.canvas;
 
   return {
     tag: fx.tag,
@@ -620,6 +649,7 @@ export async function motCa(sess, fx) {
     huong,
     snap: demSnap(vong.tuThe) + demSnap(nhieuVong.tuThe),
     capPhat,
+    capPhatThô,
     ctxs: vong.ctxs,
     draws: vong.draws,
   };

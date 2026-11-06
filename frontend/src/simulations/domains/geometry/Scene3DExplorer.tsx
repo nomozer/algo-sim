@@ -37,6 +37,7 @@ import {
 import type { MucPhanTichToan, RouteDSimulationSummary, Scene3D } from "./scene3d-model";
 import { veKhongGian } from "./scene3d-chart";
 import {
+  attachHybridViewToScene, hienBieuThucDaiLuong, hienSo,
   coherentFormula,
   geometryAnchor,
   geometryNarrationAt,
@@ -44,7 +45,7 @@ import {
   geometryStepOf,
   ghiChuGiaTriDung,
   objectsAt,
-  hienSo,
+
   phanTichToanHocCuaCanh,
   quantityChoices,
   tapKetQuaCuoi,
@@ -87,6 +88,8 @@ import {
   quantitySources,
 } from "./scene3d-annotations";
 import { MenuCongCu, NhomLop, hoTroToanManHinh } from "./scene3d-tool-menu";
+import { resolveStudentObjectPresentation } from "./scene3d-semantic-policy";
+import { MathDisplay } from "./scene3d-view";
 import { IconBack, IconExperiment, IconReset } from "../../../components/icons";
 
 const NHOM_BUNG = "face";
@@ -119,11 +122,6 @@ const CHU_GIAI_VAI_TRO: { lop: string; chu: string }[] = [
  *
  * Nay dòng ấy đọc thẳng `o.role` — backend quyết, phía này chỉ bày ra.
  */
-
-function MathDisplay({ text }: { text: string }) {
-  return <>{text.split(/(\^-?\d+)/).map((part, i) => /^\^-?\d+$/.test(part)
-    ? <sup key={i}>{part.slice(1)}</sup> : part)}</>;
-}
 
 function NutCay({
   nut, chon, onChon, tapNguon, duong, moNhom, onDoiNhom,
@@ -224,7 +222,7 @@ export function Scene3DExplorer({
   routeDSimulation?: RouteDSimulationSummary | null;
 }) {
   // exact-dimensions: toạ độ KHUNG → không gian Euclid MỘT lần (đồng nhất ⇒ chính cảnh cũ) — `scene3d-chart`.
-  const scene = useMemo(() => veKhongGian(sceneKhung), [sceneKhung]);
+  const scene = useMemo(() => { attachHybridViewToScene(sceneKhung, hybrid); return veKhongGian(sceneKhung); }, [sceneKhung, hybrid]);
   // MẶT và CẠNH sinh MỘT LẦN cho mỗi cảnh. Bỏ bước này là bỏ luôn khả năng
   // bấm vào một mặt — cây mất hai hạng mục và raycast chỉ còn trúng khối.
   const day = useMemo(() => withSubEntities(scene), [scene]);
@@ -378,6 +376,10 @@ export function Scene3DExplorer({
     onFocus?.(id, "SELECT_ENTITY");
   };
   const ctThietDien = dangChon ? sectionDetails(day, dangChon.id) : null;
+  const presSoi = useMemo(
+    () => (dangChon ? resolveStudentObjectPresentation(day, dangChon.id, buocHien) : null),
+    [day, dangChon, buocHien],
+  );
   const formula = dangChon ? coherentFormula(day, dangChon) : null;
   const formulaInAnalysis = moBang.has("phan-tich") && dangChon
     ? [...phanTich.requestedResults, ...phanTich.derivedMeasurements].find((m) =>
@@ -398,8 +400,8 @@ export function Scene3DExplorer({
     if (!o) return ten(id);
     // Chỉ chế độ A giấu đáp số. Chế độ B (`aa458cc3`, cổng khoá `mode_b_reveal`): đúng một mục «Kết quả» mang đáp số.
     if (dapAnAn.has(id)) return o.notation || ten(id);
-    const soDung = `${hienSo(o.exact, o.value)}${ghiChuGiaTriDung(day)}`;
-    return `${o.notation || ten(id)} = ${soDung}`;
+    const expr = hienBieuThucDaiLuong(o) ?? hienSo(o.exact, o.value); const soDung = expr ? `${expr}${ghiChuGiaTriDung(day, expr, o.annotation?.kind)}` : "";
+    return soDung ? `${o.notation || ten(id)} = ${soDung}` : ten(id);
   };
   /* W05 · E: một mục của bảng «Đại lượng» thay dòng của thẻ lời giải: nhãn backend (`label`) rồi `ký hiệu = giá
      trị`. Không dựng tên từ kiểu hay phép dựng — `display_names.py` là thẩm quyền đặt tên duy nhất. */
@@ -611,13 +613,17 @@ export function Scene3DExplorer({
           <BangNoi
             panel="soi"
             className="geo3d-soi"
-            tieuDe={ctThietDien?.cycleLabel ?? dangChon.label}
+            tieuDe={ctThietDien?.cycleLabel ?? presSoi?.title ?? dangChon.label}
             tieuDeLop="geo3d-soi-ten"
             nhanDong="Bỏ chọn"
             onDong={() => chon(null)}
           >
            <div className="geo3d-soi-than">
-            {dangChon.role && <p className="geo3d-soi-vai">{dangChon.role}</p>}
+            {(presSoi ? `${presSoi.role} · ${presSoi.description}` : dangChon.role) && (
+              <p className="geo3d-soi-vai">
+                <MathDisplay text={presSoi ? `${presSoi.role} · ${presSoi.description}` : (dangChon.role ?? "")} />
+              </p>
+            )}
 
             {dangChon.parent && (
               <p className="geo3d-soi-thuoc">
@@ -631,12 +637,12 @@ export function Scene3DExplorer({
             )}
             {formula && !formulaInAnalysis && !dapAnAn.has(dangChon.id) && (
               <p className="geo3d-soi-cong-thuc" data-formula-entity={dangChon.id}>
-                {formula.text}
+                <MathDisplay text={formula.text} />
               </p>
             )}
             {!formula && !formulaInAnalysis && laDaiLuong && !dapAnAn.has(dangChon.id) && (
               <p className="geo3d-soi-cong-thuc" data-value-entity={dangChon.id}>
-                {giaTri(dangChon.id)}
+                <MathDisplay text={giaTri(dangChon.id)} />
               </p>
             )}
 

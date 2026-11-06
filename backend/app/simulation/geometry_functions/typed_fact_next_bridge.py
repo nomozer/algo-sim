@@ -387,6 +387,18 @@ def _angle_question(g) -> dict[str, Any]:
     raise TuChoi("INVALID_MATH_GOAL", f"{g.goal_id}: mục tiêu angle thiếu toán hạng hợp lệ", (g.goal_id,))
 
 
+def _la_mat_qua_ba_diem(sec: DerivedPlaneSectionSpec | DerivedPlaneSectionSpecV2) -> bool:
+    """A `/2` plane given ONLY as "contains these three named points" — the plane (MNP), no relation to ground."""
+    cs = getattr(sec, "constraints", ())
+    return (sec.plane_kind == "constrained" and len(cs) == 1 and cs[0].kind == "contains_points"
+            and len(cs[0].operands) == 3)
+
+
+def _ten_mat_khai(sec: DerivedPlaneSectionSpec | DerivedPlaneSectionSpecV2) -> str:
+    """The plane name the scene must display: a three-point plane is named by its points, "(MNP)"."""
+    return "".join(_refs(sec.constraints[0].operands)) if _la_mat_qua_ba_diem(sec) else sec.plane_name
+
+
 def _mat_fact(sec: DerivedPlaneSectionSpec | DerivedPlaneSectionSpecV2, solids: dict[str, Any],
               asked: list[str], mo_ta: dict[str, dict[str, Any]] | None = None) -> dict[str, Any]:
     """The section fact's PLANE (shared by `/1` and `/2`). A described through-point (R-1) becomes route B's described
@@ -395,6 +407,16 @@ def _mat_fact(sec: DerivedPlaneSectionSpec | DerivedPlaneSectionSpecV2, solids: 
         if any(is_described_ref(p) for c in sec.constraints for p in c.operands):
             raise TuChoi("BRIDGE_UNSUPPORTED_DESCRIBED_POINT", f"{sec.section_id}: điểm mô tả trong ràng buộc mặt chưa hỗ trợ",
                          (sec.section_id,))
+        if _la_mat_qua_ba_diem(sec):
+            # "(MNP)": the plane IS its three named points — the planner's three-point section (same fact as `/1`); the
+            # Source Gate grounds "cắt bởi (MNP)" in the quote, the engine proves the points distinct and not collinear
+            # and computes the bounded section (an exterior line–plane intersection is never a vertex).
+            pts = _refs(sec.constraints[0].operands)
+            if len(set(pts)) != 3:
+                raise TuChoi("DEGENERATE_POINTS", f"{sec.section_id}: ({''.join(pts)}) không xác định một mặt phẳng",
+                             (sec.section_id,))
+            return {"id": sec.section_id, "kind": "section", "role": "question" if asked else "premise",
+                    "quotes": [sec.quote, *asked], "solid": solids[sec.target_solid_id].notation, "points": pts}
         f = {"id": sec.section_id, "kind": "section", "role": "question" if asked else "premise",
              "quotes": [sec.quote, *asked], "solid": solids[sec.target_solid_id].notation,
              "plane_constraints": [{"kind": c.kind, "points": _refs(c.operands)} for c in sec.constraints]}
@@ -477,6 +499,13 @@ def _section_fact_v2(sec: DerivedPlaneSectionSpecV2, solids: dict[str, Any], ask
     """`/2`: stated intersections are the stated cuts (names aligned, None = stated but unnamed); the planner may derive
     the vertex of an UNSTATED lateral edge where a closed boundary is required (D6); a declared boundary is verified."""
     f = _mat_fact(sec, solids, asked, mo_ta)
+    if _la_mat_qua_ba_diem(sec):
+        # The engine derives every vertex of a three-point section; stated cuts / a declared boundary have no carrier on
+        # that function yet — refused, never silently dropped.
+        if sec.stated_intersections or sec.declared_boundary is not None:
+            raise TuChoi("UNSUPPORTED_CAPABILITY", f"{sec.section_id}: giao điểm/biên khai sẵn trên mặt qua ba điểm chưa hỗ trợ",
+                         (sec.section_id,))
+        return f
     if extra := _v2_plane_def_quotes(sec, problem_text):
         f["quotes"] = list(dict.fromkeys([*extra, *f["quotes"]]))
     f["cut_edges"] = [_refs(s.edge) for s in sec.stated_intersections]
@@ -597,7 +626,7 @@ def _ket_cau_noi(p: TypedFactNextPayload, facts: list[dict[str, Any]], version: 
                                        "scope_validation_version": "typed-fact-next-scope/1",
                                        "validated_premise_scopes": scoped,
                                        "declared_length_unit": p.length_unit,
-                                       "declared_plane_names": {s.section_id: s.plane_name for s in p.derived_sections},
+                                       "declared_plane_names": {s.section_id: _ten_mat_khai(s) for s in p.derived_sections},
                                        "problem_text": p.problem_text}}
 
 
@@ -900,6 +929,8 @@ def _bridge(p: TypedFactNextPayload, section_fact, version: str, v2: bool) -> di
                 if g_solid != sec.target_solid_id:
                     raise TuChoi("SOURCE_OBJECT_MISMATCH", f"{g.goal_id}: khối {g_solid!r} không khớp khối của thiết diện {sec.section_id!r}", (g.goal_id,))
             f = _mat_fact(sec, solids, [], mo_ta)
+            if _la_mat_qua_ba_diem(sec):     # "diện tích thiết diện đó": the plane is named where the section is stated
+                q["quotes"] = list(dict.fromkeys([g.quote, sec.quote]))
             facts.append({**q, "quantity": "area", **{k: f[k] for k in ("solid", "point", "point_kind", "points",
                                                                          "plane_relation", "points_b", "points_a",
                                                                          "plane_name", "plane_constraints") if k in f}})
@@ -917,5 +948,5 @@ def _bridge(p: TypedFactNextPayload, section_fact, version: str, v2: bool) -> di
                                        "scope_validation_version": "typed-fact-next-scope/1",
                                        "validated_premise_scopes": scoped,
                                        "declared_length_unit": p.length_unit,
-                                       "declared_plane_names": {s.section_id: s.plane_name for s in p.derived_sections},
+                                       "declared_plane_names": {s.section_id: _ten_mat_khai(s) for s in p.derived_sections},
                                        "problem_text": p.problem_text}}

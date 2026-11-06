@@ -223,6 +223,24 @@ export interface SceneObject {
   /** Lớp hình của khối (backend `formation.lop_khoi`): `PYRAMID_LIKE` · `PRISM_LIKE` · `SECTION`. */
   shape_class?: string;
   surface_role?: SurfaceRole;
+  /** Vai trò ngữ nghĩa toán học tường minh (tương thích ngược: vắng mặt sẽ xác định tất định từ dữ liệu hình học đã xác minh). */
+  semantic_role?:
+    | "SOLID_SHELL"
+    | "BOUNDARY_AND_INTERSECTION"
+    | "HIDDEN_EDGE"
+    | "RESULT_SECTION"
+    | "GEOMETRIC_PLANE"
+    | "INSCRIBED_CIRCLE"
+    | "CIRCUMSCRIBED_CIRCLE"
+    | "INSCRIBED_SPHERE"
+    | "CIRCUMSCRIBED_SPHERE"
+    | "STANDALONE_SPHERE"
+    | "REFERENCE_EQUATOR"
+    | "REFERENCE_GREAT_CIRCLE"
+    | "CERTIFIED_RELATION_MARKER"
+    | "AUXILIARY_CONSTRUCTION";
+  /** `false` khi vật chỉ là tham chiếu/phụ trợ giải thích ở tầng trình bày, không phải dữ kiện đề cho hay vật thẩm quyền của Kernel. */
+  authoritative?: boolean;
   occludes_edges?: boolean;
   /**
    * BỐN TRƯỜNG TƯƠNG TÁC — dữ liệu TRÌNH BÀY, không đi vào phép tính nào.
@@ -310,7 +328,12 @@ export interface SceneObject {
    * nằm trên mặt nào"* — đúng câu học sinh phải trả lời khi dựng trên giấy —
    * và suy lại nó ở đây thì phải làm hình học, thứ tầng nhìn không được làm.
    */
-  steps?: { face_index: number; a: ExactVec3; b: ExactVec3 }[];
+  steps?: {
+    face_index: number | null;
+    a: ExactVec3;
+    b: ExactVec3;
+    parallel_face_edge?: [number, number] | number[] | null;
+  }[];
   vertex_sources?: SectionVertexSource[];
   endpoint_entities?: SectionEndpointEntity[];
   identity_diagnostics?: string[];
@@ -324,6 +347,8 @@ export interface SceneObject {
    * Cần con số thì đọc `exact`, cần vẽ thì đây không phải nguồn.
    */
   value?: Exact;
+  /** Biểu thức ký hiệu gốc của đề bài khi hình dựng dùng độ dài chuẩn hóa (vd `"2a"`, `"4a"`, `"2a + b"`). */
+  symbolic?: string | null;
   /**
    * CẤU TRÚC của đại lượng — nguồn, còn `value` là dẫn xuất.
    *
@@ -389,6 +414,46 @@ export function hienSo(x: ExactNumberJson | undefined, duPhong = ""): string {
   const can = x.radicand === 1 ? "" : `√${x.radicand}`;
   const goc = `${dau}${heSo}${pi}${can}`;
   return mau === 1 ? goc : `${goc}/${mau}`;
+}
+
+const GIA_TRI_DAI_LUONG_CHUA_BIET = new Set([
+  "",
+  "?",
+  "unknown",
+  "UNKNOWN",
+  "undefined",
+  "null",
+  "NaN",
+  "Infinity",
+  "-Infinity",
+]);
+
+/** Kiểm tra đại lượng mang giá trị rỗng hoặc ký hiệu giữ chỗ chưa biết (`"?"`, `"unknown"`, `"NaN"`...). */
+export function laGiaTriDaiLuongChuaBiet(raw: string | null | undefined): boolean {
+  if (typeof raw !== "string") return true;
+  const t = raw.trim();
+  return t.length === 0 || GIA_TRI_DAI_LUONG_CHUA_BIET.has(t);
+}
+
+/**
+ * Định dạng biểu thức có thẩm quyền của một đối tượng `quantity` mà không tính toán lại:
+ * ưu tiên `symbolic` (biểu thức chứa tham số đề cho), kế đến cấu trúc chính xác `exact` (`hienSo`),
+ * cuối cùng là `value`. Trả về `null` nếu thiếu giá trị hoặc là placeholder chưa biết.
+ */
+export function hienBieuThucDaiLuong(
+  o: Pick<SceneObject, "symbolic" | "exact" | "value">,
+): string | null {
+  if (typeof o.symbolic === "string" && !laGiaTriDaiLuongChuaBiet(o.symbolic)) {
+    return o.symbolic.trim();
+  }
+  if (o.exact) {
+    const ex = hienSo(o.exact, typeof o.value === "string" ? o.value : "");
+    return laGiaTriDaiLuongChuaBiet(ex) ? null : ex.trim();
+  }
+  if (typeof o.value === "string" && !laGiaTriDaiLuongChuaBiet(o.value)) {
+    return o.value.trim();
+  }
+  return null;
 }
 
 /**
@@ -512,8 +577,9 @@ export interface SceneEvent {
   explanation: string;
   learner_text?: string;
   /** W4 · Vì sao của bước, chỉ khi backend KIỂM CHÍNH XÁC được quan hệ nó nêu (`details.justification`). */
-  justification_text?: string;
+  justification_text?: string | null;
   display_label?: string;
+  details?: Record<string, unknown>;
   semantic_kind?: FormationSemanticKind;
   diagnostics?: string[];
 }
@@ -532,6 +598,8 @@ export interface FormationStep {
   focus_ids: string[];
   readout_ids: string[];
   learner_text: string;
+  justification_text?: string | null;
+  details?: Record<string, unknown>;
   semantic_kind?: FormationSemanticKind;
   geometry_progress?: GeometryProgress[];
 }
@@ -574,7 +642,7 @@ export interface QuantityAnnotation {
     /** `relation: "common_perpendicular"` (khoảng cách hai đường chéo nhau): đầu kia của đoạn vuông góc chung không
      *  phải điểm có tên ⇒ toạ độ chính xác ở đây (`from` là id đường kia), và `second` là dấu vuông góc ở chân ấy. */
     from_point?: ExactVec3;
-    second?: { foot: ExactVec3; on: string; marker: { u: ExactVec3; v: ExactVec3; u_to?: string } };
+    second?: { foot: ExactVec3; on: string; foot_id?: string; marker: { u: ExactVec3; v: ExactVec3; u_to?: string } };
   };
 }
 
@@ -687,9 +755,26 @@ export function highlightedAt(scene: Scene3D, step: number): string[] {
  * MỘT chỗ sinh lời chú thích cho mọi nơi hiện giá trị (nhãn số đo, ô soi, lời kể bước đo). Cảnh không có
  * `length_unit` (mọi cảnh LLM_ONLY) ⇒ chuỗi rỗng, hành vi cũ giữ nguyên.
  */
-export function ghiChuGiaTriDung(scene: Pick<Scene3D, "length_unit">): string {
+export function ghiChuGiaTriDung(
+  scene: Pick<Scene3D, "length_unit">,
+  valueText?: string | null,
+  kind?: QuantityAnnotation["kind"],
+): string {
   const lu = scene.length_unit;
-  return lu && lu.is_given === false && lu.display_scale ? ` (trên hình dựng, ${lu.display_scale})` : "";
+  if (!lu || lu.is_given !== false) return "";
+  if (kind === "angle") return "";
+  if (typeof valueText === "string") {
+    const trimmed = valueText.trim();
+    if (/°|\brad\b/iu.test(trimmed)) return "";
+    if (!laGiaTriDaiLuongChuaBiet(trimmed) && /[A-Za-z]/u.test(trimmed.replace(/\brad\b/giu, ""))) {
+      return "";
+    }
+  }
+  if (lu.display_scale && lu.display_scale.trim()) {
+    return ` (trên hình dựng, ${lu.display_scale.trim()})`;
+  }
+  const sym = lu.symbol?.trim();
+  return sym ? ` (trên hình dựng chuẩn hóa ${sym} = 1)` : "";
 }
 
 /** Lời kể của bước hiện tại — Tier 1, do engine sinh từ trạng thái thật. */
@@ -940,18 +1025,21 @@ export function cauTrucGocNhin(objects: SceneObject[]) {
   const mat: number[][] = [];
   const chiSo = new Map<string, number>();
   const daCo = new Set<string>();
-  const dinh = (v: ExactVec3) => {
-    const p = toVec3(v);
+  const dinhSo = (p: Vec3) => {
     const k = p.map((x) => x.toFixed(9)).join(",");
     if (!chiSo.has(k)) { chiSo.set(k, diem.length); diem.push(p); }
     return chiSo.get(k)!;
+  };
+  const dinh = (v: ExactVec3) => dinhSo(toVec3(v));
+  const themCanh = (a: number, b: number) => {
+    const [x, y] = a < b ? [a, b] : [b, a];
+    if (x !== y && !daCo.has(`${x}-${y}`)) { daCo.add(`${x}-${y}`); canh.push([x, y]); }
   };
   const vong = (ds: number[]) => {
     mat.push(ds);
     ds.forEach((a, i) => {
       const b = ds[(i + 1) % ds.length];
-      const [x, y] = a < b ? [a, b] : [b, a];
-      if (x !== y && !daCo.has(`${x}-${y}`)) { daCo.add(`${x}-${y}`); canh.push([x, y]); }
+      themCanh(a, b);
     });
   };
   for (const o of objects) {
@@ -959,6 +1047,55 @@ export function cauTrucGocNhin(objects: SceneObject[]) {
     if (o.type === "solid" && o.vertices && o.faces) {
       const g = o.vertices.map(dinh);
       for (const f of o.faces) vong(f.map((i) => g[i]));
+    } else if (o.type === "curved_solid" && o.anchor) {
+      const tam = toVec3(o.anchor);
+      const iTam = dinhSo(tam);
+      const rSq = o.radius_sq ? toNumber(o.radius_sq) : 0;
+      const r = rSq > 0
+        ? Math.sqrt(rSq)
+        : o.rim_point
+          ? Math.hypot(...toVec3(o.rim_point).map((v, k) => v - tam[k]))
+          : 0;
+      const hSq = o.height_sq ? toNumber(o.height_sq) : 0;
+      const h = hSq > 0 ? Math.sqrt(hSq) : 0;
+      const dinhTren: Vec3 | null = o.apex_or_top
+        ? toVec3(o.apex_or_top)
+        : o.curved_kind !== "ball" && h > 0
+          ? [tam[0], tam[1], tam[2] + h]
+          : null;
+      if (o.curved_kind !== "ball" && dinhTren && r > 1e-6) {
+        const truc: Vec3 = [dinhTren[0] - tam[0], dinhTren[1] - tam[1], dinhTren[2] - tam[2]];
+        const lenTruc = Math.hypot(...truc);
+        if (lenTruc > 1e-6) {
+          const iTren = dinhSo(dinhTren);
+          themCanh(iTam, iTren);
+          const u: Vec3 = [truc[0] / lenTruc, truc[1] / lenTruc, truc[2] / lenTruc];
+          const [e1, e2] = truc_vuong_goc(u);
+          const dayPts: Vec3[] = [
+            [tam[0] + r * e1[0], tam[1] + r * e1[1], tam[2] + r * e1[2]],
+            [tam[0] + r * e2[0], tam[1] + r * e2[1], tam[2] + r * e2[2]],
+            [tam[0] - r * e1[0], tam[1] - r * e1[1], tam[2] - r * e1[2]],
+            [tam[0] - r * e2[0], tam[1] - r * e2[1], tam[2] - r * e2[2]],
+          ];
+          const gDay = dayPts.map(dinhSo);
+          vong(gDay);
+          if (o.curved_kind === "cylinder") {
+            const napPts: Vec3[] = [
+              [dinhTren[0] + r * e1[0], dinhTren[1] + r * e1[1], dinhTren[2] + r * e1[2]],
+              [dinhTren[0] + r * e2[0], dinhTren[1] + r * e2[1], dinhTren[2] + r * e2[2]],
+              [dinhTren[0] - r * e1[0], dinhTren[1] - r * e1[1], dinhTren[2] - r * e1[2]],
+              [dinhTren[0] - r * e2[0], dinhTren[1] - r * e2[1], dinhTren[2] - r * e2[2]],
+            ];
+            const gNap = napPts.map(dinhSo);
+            vong(gNap);
+            themCanh(gDay[0], gNap[0]);
+            themCanh(gDay[2], gNap[2]);
+          } else {
+            themCanh(gDay[0], iTren);
+            themCanh(gDay[2], iTren);
+          }
+        }
+      }
     } else if (o.polygon && o.polygon.length >= 3) {
       vong(o.polygon.map(dinh));
     } else if (o.xyz) {
@@ -1196,9 +1333,9 @@ export function moRongDaGiacMatPhang(
     const tMax = Math.max(...tList);
     const spanS = Math.max(sMax - sMin, co);
     const spanT = Math.max(tMax - tMin, co);
-    const heSoLe = goc && goc.length === 3 ? 0.20 : 0.12;
-    const padS = Math.max(spanS * heSoLe, co * 0.32);
-    const padT = Math.max(spanT * heSoLe, co * 0.32);
+    const heSoLe = goc && goc.length === 3 ? 0.45 : 0.42;
+    const padS = Math.max(spanS * heSoLe, co * 1.15);
+    const padT = Math.max(spanT * heSoLe, co * 1.15);
     const s0 = sMin - padS;
     const s1 = sMax + padS;
     const t0 = tMin - padT;
@@ -1232,8 +1369,8 @@ export function moRongDaGiacMatPhang(
     const tMax = Math.max(...tList);
     const spanS = Math.max(sMax - sMin, co);
     const spanT = Math.max(tMax - tMin, co);
-    const padS = Math.max(spanS * 0.12, co * 0.32);
-    const padT = Math.max(spanT * 0.08, co * 0.28);
+    const padS = Math.max(spanS * (goc.length === 3 ? 0.30 : 0.22), co * 0.82);
+    const padT = Math.max(spanT * (goc.length === 3 ? 0.24 : 0.16), co * 0.68);
     const s0 = sMin - padS;
     const s1 = sMax + padS;
     const t0 = Math.max(tFloor, tMin - padT);
@@ -1286,7 +1423,8 @@ export function moRongDaGiacMatPhang(
 export function diemNeoNhanMatPhang(
   diemMp: Vec3, phapTuyen: Vec3, diem: Vec3[],
 ): Vec3 | null {
-  const mo = moRongDaGiacMatPhang(diemMp, phapTuyen, diem);
+  const goc = daGiacMatPhang(diemMp, phapTuyen, diem);
+  const moRieng = moRongDaGiacMatPhang(diemMp, phapTuyen, diem, goc); const mo = moRieng ?? goc;
   if (!mo || mo.length < 3) return null;
   const m = mo.length;
   const tam: Vec3 = [
@@ -1294,19 +1432,36 @@ export function diemNeoNhanMatPhang(
     mo.reduce((s, p) => s + p[1], 0) / m,
     mo.reduce((s, p) => s + p[2], 0) / m,
   ];
+  const diemTranh: Vec3[] = moRieng ? [...diem] : [tam];
+  if (goc && goc.length >= 3) {
+    const gLen = goc.length;
+    const tamGoc: Vec3 = [
+      goc.reduce((s, p) => s + p[0], 0) / gLen,
+      goc.reduce((s, p) => s + p[1], 0) / gLen,
+      goc.reduce((s, p) => s + p[2], 0) / gLen,
+    ];
+    diemTranh.push(tamGoc);
+    for (let i = 0; moRieng && i < gLen; i++) {
+      const a = goc[i];
+      const b = goc[(i + 1) % gLen];
+      diemTranh.push(a);
+      diemTranh.push([(a[0] + b[0]) / 2, (a[1] + b[1]) / 2, (a[2] + b[2]) / 2]);
+      diemTranh.push([0.5 * a[0] + 0.5 * tamGoc[0], 0.5 * a[1] + 0.5 * tamGoc[1], 0.5 * a[2] + 0.5 * tamGoc[2]]);
+    }
+  }
   const ungVien: Vec3[] = [];
   for (let i = 0; i < m; i++) {
     const a = mo[i];
     const b = mo[(i + 1) % m];
-    ungVien.push([0.80 * a[0] + 0.20 * tam[0], 0.80 * a[1] + 0.20 * tam[1], 0.80 * a[2] + 0.20 * tam[2]]);
+    ungVien.push([0.90 * a[0] + 0.10 * tam[0], 0.90 * a[1] + 0.10 * tam[1], 0.90 * a[2] + 0.10 * tam[2]]);
     const mid: Vec3 = [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2, (a[2] + b[2]) / 2];
-    ungVien.push([0.84 * mid[0] + 0.16 * tam[0], 0.84 * mid[1] + 0.16 * tam[1], 0.84 * mid[2] + 0.16 * tam[2]]);
+    ungVien.push([0.92 * mid[0] + 0.08 * tam[0], 0.92 * mid[1] + 0.08 * tam[1], 0.92 * mid[2] + 0.08 * tam[2]]);
   }
   let tot: Vec3 = ungVien[0];
   let diemTot = -Infinity;
   for (const u of ungVien) {
-    const kcMin = diem.length > 0
-      ? Math.min(...diem.map((p) => Math.hypot(u[0] - p[0], u[1] - p[1], u[2] - p[2])))
+    const kcMin = diemTranh.length > 0
+      ? Math.min(...diemTranh.map((p) => Math.hypot(u[0] - p[0], u[1] - p[1], u[2] - p[2])))
       : 1;
     const diemSo = kcMin + 0.08 * (u[2] - tam[2]);
     if (diemSo > diemTot) {
@@ -1321,7 +1476,10 @@ export function diemNeoNhanMatPhang(
  *  góc rơi trên đường ấy — chân thường không phải điểm của cảnh, nên thiếu nó thì chân ngoài cạnh nằm ngoài nét vẽ. */
 export function diemChoDuong(objects: SceneObject[], duongId: string): Vec3[] {
   const chan = objects.flatMap((o) => [o.annotation?.witness, o.perpendicular_witness])
-    .filter((w) => w?.on === duongId).map((w) => toVec3(w!.foot));
+    .flatMap((w) => [
+      ...(w?.on === duongId && w.foot ? [toVec3(w.foot)] : []),
+      ...(w?.second?.on === duongId && w.second.foot ? [toVec3(w.second.foot)] : []),
+    ]);
   return [...diemHuuHan(objects), ...chan];
 }
 
@@ -1368,7 +1526,7 @@ export function doanDuongThang(diemDuong: Vec3, huong: Vec3, diem: Vec3[]): [Vec
   const khoangTrenDuong = onHi - onLo;
   if (khoangTrenDuong > 1e-5) {
     const giuaOn = (onLo + onHi) / 2;
-    const duoi = Math.max(khoangTrenDuong * (PLANE_PATCH_MARGIN - 1), cheo * 0.08);
+    const duoi = Math.max(khoangTrenDuong * 0.14, cheo * 0.055);
     const nuaOn = khoangTrenDuong / 2 + duoi;
     return [tai(giuaOn - nuaOn), tai(giuaOn + nuaOn)];
   }
@@ -1443,7 +1601,7 @@ export function huongChanVuongGoc(chan: Vec3, u: Vec3, diem: Vec3[], v?: Vec3): 
  *
  * Đặt cạnh `PLANE_DISPLAY_SIZE` — cùng loại hằng số, cùng lý do tồn tại.
  */
-export const VONG_CHIA = 48;
+export const VONG_CHIA = 72;
 export const LINE_DISPLAY_HALF_LENGTH = 6;
 
 /* ══ PHÁT LẠI — hàm THUẦN, không React, không three ══════════════════════
@@ -1755,15 +1913,21 @@ export function solutionAt(scene: Scene3D, step: number): SolutionLayer {
     const id = sk?.object;
     const o = id ? byId.get(id) : undefined;
     const loai = _loaiSuKien(scene, k);
+    const laDuKienDeCho = Boolean(
+      o
+      && classifyQuantityProvenance(o, scene) === "GIVEN"
+      && o.annotation?.role !== "result"
+      && o.annotation?.category !== "result",
+    );
     const laKetQua = loai === "FINAL_RESULT"
-      || (!loai && sk?.action === "MEASURE" && Boolean(o && (o.type === "quantity" || o.value !== undefined) && (o.render === "readout" || o.render === "non_visual")));
+      || (!loai && sk?.action === "MEASURE" && !laDuKienDeCho && Boolean(o && (o.type === "quantity" || o.value !== undefined) && (o.render === "readout" || o.render === "non_visual")));
     if (!laKetQua || !id || !o || ketQua.has(id)) continue;
     ketQua.add(id);
     results.push(dong(id, k, narrationAt(scene, k)));
   }
   const hien = new Set(objectsAt(scene, g.anchor).map((o) => o.id));
   const givens = scene.objects
-    .filter((o) => o.type === "quantity" && o.render === "readout" && o.origin === "free"
+    .filter((o) => o.type === "quantity" && o.render === "readout" && classifyQuantityProvenance(o, scene) === "GIVEN"
       && hien.has(o.id) && !ketQua.has(o.id))
     .map((o) => dong(o.id, 0, ""));
   const daCo = new Set([...ketQua, ...givens.map((x) => x.id)]);
@@ -1845,16 +2009,24 @@ export function tapKetQuaCuoi(
       ra.add(o.id);
     }
   }
+  const byId = new Map(scene.objects.map((x) => [x.id, x]));
+  const laDuKienDeCho = (x?: SceneObject): boolean =>
+    Boolean(
+      x
+      && classifyQuantityProvenance(x, scene) === "GIVEN"
+      && x.annotation?.role !== "result"
+      && x.annotation?.category !== "result",
+    );
   let doi = true;
   while (doi) {
     doi = false;
     for (const o of scene.objects) {
       for (const s of [o.annotation?.same_as, o.alias_of]) {
         if (!s) continue;
-        if (ra.has(o.id) && !ra.has(s)) {
+        if (ra.has(o.id) && !ra.has(s) && !laDuKienDeCho(byId.get(s))) {
           ra.add(s);
           doi = true;
-        } else if (ra.has(s) && !ra.has(o.id)) {
+        } else if (ra.has(s) && !ra.has(o.id) && !laDuKienDeCho(o)) {
           ra.add(o.id);
           doi = true;
         }
@@ -1917,6 +2089,7 @@ export interface MucPhanTichToan {
   basisLabels: string[];
   entityId: string | null;
   certificateRule: string | null;
+  provenance?: CanonicalMathProvenance;
 }
 
 export interface BangPhanTichToan {
@@ -1939,7 +2112,7 @@ export function phanLoaiVat(
     if (kq.has(object.id) && !object.id.startsWith("kq_vcert")) {
       return "REQUESTED_RESULT";
     }
-    if (object.origin === "free" || object.annotation?.role === "given") {
+    if (classifyQuantityProvenance(object, scene) === "GIVEN") {
       return "GIVEN_DIMENSION";
     }
     return "DERIVED_MEASUREMENT";
@@ -1947,7 +2120,11 @@ export function phanLoaiVat(
   if (object.perpendicular_witness?.can_present_as_proven) {
     return "MATHEMATICAL_CERTIFICATE";
   }
-  if (object.source?.assumption) {
+  if (
+    object.perpendicular_witness?.status === "GIVEN"
+    || Boolean(object.perpendicular_witness?.certificate)
+    || object.source?.assumption
+  ) {
     return "GIVEN_RELATION";
   }
   return "GEOMETRY_IDENTITY";
@@ -1994,18 +2171,25 @@ export function phanTichToanHocCuaCanh(
     const ha = hybridAnsById.get(o.id);
     if (ha) return ha.includes("=") ? ha.slice(ha.lastIndexOf("=") + 1).trim() : ha;
     const dv = o.annotation?.unit ? ` ${o.annotation.unit}` : "";
-    return `${hienSo(o.exact, o.value)}${dv}${ghiChuGiaTriDung(scene)}`;
+    const expr = hienBieuThucDaiLuong(o) ?? hienSo(o.exact, o.value);
+    return `${expr}${dv}${ghiChuGiaTriDung(scene, expr, o.annotation?.kind)}`;
   };
 
   const givenDimensions: MucPhanTichToan[] = [];
   const daGomGiven = new Set<string>();
+  const daGomCanhGiven = new Set<string>();
+  const khoaCapGiven = (a: string, b: string) => (a < b ? `${a}\u0000${b}` : `${b}\u0000${a}`);
   for (const o of scene.objects) {
-    if (o.type !== "quantity" || o.value == null) continue;
-    if (o.origin !== "free" && o.annotation?.role !== "given") continue;
+    if (o.type !== "quantity" || (o.value == null && !hienBieuThucDaiLuong(o))) continue;
+    if (o.authoritative === false) continue;
+    if (classifyQuantityProvenance(o, scene) !== "GIVEN") continue;
     if (ketQua.has(o.id)) continue;
     const goc = o.annotation?.same_as ?? o.alias_of ?? o.id;
     if (daGomGiven.has(goc)) continue;
     daGomGiven.add(goc);
+    if (o.annotation?.anchor === "segment" && o.annotation.subject_ids.length === 2) {
+      daGomCanhGiven.add(khoaCapGiven(o.annotation.subject_ids[0], o.annotation.subject_ids[1]));
+    }
     givenDimensions.push({
       id: o.id,
       category: "GIVEN_DIMENSION",
@@ -2018,7 +2202,24 @@ export function phanTichToanHocCuaCanh(
       certificateRule: null,
     });
   }
-  if (scene.length_unit?.display_scale && givenDimensions.length === 0) {
+  for (const hd of certifiedHybridGivenDimensions(scene)) {
+    const capKey = khoaCapGiven(hd.subjectIds[0], hd.subjectIds[1]);
+    if (daGomCanhGiven.has(capKey) || daGomGiven.has(hd.id)) continue;
+    daGomCanhGiven.add(capKey);
+    daGomGiven.add(hd.id);
+    givenDimensions.push({
+      id: hd.id,
+      category: "GIVEN_DIMENSION",
+      label: hd.label,
+      notation: hd.notation,
+      valueDisplay: `${hd.valueDisplay}${ghiChuGiaTriDung(scene, hd.valueDisplay, "length")}`,
+      formula: null,
+      basisLabels: [],
+      entityId: null,
+      certificateRule: "registry.kiem_nguon",
+    });
+  }
+  if (scene.length_unit?.display_scale && scene.length_unit.is_given === true && givenDimensions.length === 0) {
     givenDimensions.push({
       id: "length_unit",
       category: "GIVEN_DIMENSION",
@@ -2045,19 +2246,23 @@ export function phanTichToanHocCuaCanh(
     const goc = o.annotation?.same_as ?? o.alias_of ?? o.id;
     if (daGomStep.has(goc) || daGomStep.has(o.id)) continue;
     if (ketQua.has(o.id) && !o.id.startsWith("kq_vcert")) continue;
+    const prov = classifySceneEntityProvenance(scene, o);
+    if (prov === "INVALID" || prov === "ILLUSTRATIVE") continue;
     daGomStep.add(goc);
     daGomStep.add(o.id);
-    const cf = coherentFormula(scene, o);
+    const isUnder = prov === "UNDERDETERMINED";
+    const cf = isUnder ? null : coherentFormula(scene, o);
     derivedMeasurements.push({
       id: o.id,
       category: "DERIVED_MEASUREMENT",
       label: o.label,
       notation: o.notation ?? null,
-      valueDisplay: hienGiaTri(o),
+      valueDisplay: isUnder ? "Chưa đủ dữ kiện xác định duy nhất" : hienGiaTri(o),
       formula: cf && cf.references.length > 0 ? cf.text : null,
       basisLabels: numericalBasis(scene, o).map(tenNgan),
       entityId: o.id,
       certificateRule: null,
+      provenance: prov,
     });
   }
 
@@ -2071,20 +2276,25 @@ export function phanTichToanHocCuaCanh(
     if (o.id.startsWith("kq_vcert")) continue;
     const goc = o.annotation?.same_as ?? o.alias_of ?? o.id;
     if (daGomKq.has(goc) || daGomKq.has(o.id)) continue;
+    const rg = routeGoalByKernelVar.get(o.id);
+    const certRule = typeof rg?.certificate?.rule === "string" ? rg.certificate.rule : null;
+    const prov: CanonicalMathProvenance = certRule ? "DERIVED_VERIFIED" : classifySceneEntityProvenance(scene, o);
+    if (prov === "INVALID" || prov === "ILLUSTRATIVE") continue;
     daGomKq.add(goc);
     daGomKq.add(o.id);
-    const cf = coherentFormula(scene, o);
-    const rg = routeGoalByKernelVar.get(o.id);
+    const isUnder = prov === "UNDERDETERMINED";
+    const cf = isUnder ? null : coherentFormula(scene, o);
     requestedResults.push({
       id: o.id,
       category: "REQUESTED_RESULT",
       label: o.label,
       notation: o.notation ?? null,
-      valueDisplay: hienGiaTri(o),
+      valueDisplay: isUnder ? "Chưa đủ dữ kiện xác định duy nhất" : hienGiaTri(o),
       formula: cf && cf.references.length > 0 ? cf.text : null,
       basisLabels: numericalBasis(scene, o).map(tenNgan),
       entityId: o.id,
-      certificateRule: typeof rg?.certificate?.rule === "string" ? rg.certificate.rule : null,
+      certificateRule: certRule,
+      provenance: prov,
     });
   }
 
@@ -2140,12 +2350,13 @@ export function phanTichToanHocCuaCanh(
   // Nhiều điểm cùng MỘT giả định (vd mọi đỉnh "hệ trục …") ⇒ một dòng, không lặp từng điểm; giả định riêng giữ dòng của điểm.
   const diemTheoGiaDinh = new Map<string, SceneObject[]>();
   for (const o of scene.objects) {
-    if (o.type === "point3" && o.source?.assumption) {
+    if (o.authoritative !== false && o.type === "point3" && o.source?.assumption) {
       diemTheoGiaDinh.set(o.source.assumption, [...(diemTheoGiaDinh.get(o.source.assumption) ?? []), o]);
     }
   }
   const giaDinhDaGhi = new Set<string>();
   for (const o of scene.objects) {
+    if (o.authoritative === false) continue;
     if (o.perpendicular_witness?.can_present_as_proven) {
       certificates.push({
         id: `cert:perp:${o.id}`,
@@ -2157,6 +2368,35 @@ export function phanTichToanHocCuaCanh(
         basisLabels: (o.depends ?? []).map(tenNgan),
         entityId: o.id,
         certificateRule: o.perpendicular_witness.certificate ?? null,
+      });
+    } else if (
+      o.perpendicular_witness
+      && (o.perpendicular_witness.status === "GIVEN" || Boolean(o.perpendicular_witness.certificate))
+    ) {
+      const w = o.perpendicular_witness;
+      const fromObj = w.from ? byId.get(w.from) : undefined;
+      const onObj = w.on ? byId.get(w.on) : undefined;
+      const footObj = w.foot_id ? byId.get(w.foot_id) : undefined;
+      const segSym =
+        o.notation?.trim()
+        || (fromObj?.notation && footObj?.notation ? `${fromObj.notation}${footObj.notation}` : o.label);
+      const onSym = onObj?.notation?.trim()
+        ? (onObj.type === "polygon3" || onObj.type === "plane3"
+            ? `(${onObj.notation.replace(/^\(|\)$/gu, "")})`
+            : onObj.notation)
+        : (onObj ? tenNgan(onObj.id) : "");
+      const footSuffix = footObj?.notation ? ` tại ${footObj.notation}` : "";
+      const perpDisplay = onSym ? `${segSym} ⊥ ${onSym}${footSuffix}` : (o.role ?? "Quan hệ vuông góc từ giả thiết");
+      givenRelations.push({
+        id: `rel:perp:${o.id}`,
+        category: "GIVEN_RELATION",
+        label: o.label,
+        notation: o.notation ?? null,
+        valueDisplay: perpDisplay,
+        formula: null,
+        basisLabels: (o.depends ?? []).map(tenNgan),
+        entityId: o.id,
+        certificateRule: w.certificate ?? null,
       });
     } else if (o.type === "section" || o.surface_role === "SECTION_REGION") {
       certificates.push({
@@ -2231,6 +2471,37 @@ export function phanTichToanHocCuaCanh(
     }
   }
 
+  for (const cd of certifiedCuttingPlaneDistanceGivens(scene)) {
+    if (daGomGiven.has(cd.id)) continue;
+    daGomGiven.add(cd.id);
+    givenDimensions.push({
+      id: cd.id,
+      category: "GIVEN_DIMENSION",
+      label: cd.label,
+      notation: cd.notation,
+      valueDisplay: `${cd.valueDisplay}${ghiChuGiaTriDung(scene, cd.valueDisplay, "distance")}`,
+      formula: null,
+      basisLabels: [],
+      entityId: null,
+      certificateRule: "exact_plane_distance",
+      provenance: "GIVEN",
+    });
+  }
+
+  for (const item of givenDimensions) {
+    item.provenance ??= "GIVEN";
+  }
+  for (const item of certificates) {
+    item.provenance ??= "DERIVED_VERIFIED";
+  }
+  for (const item of givenRelations) {
+    item.provenance ??= item.id.startsWith("rel:assump:") ? "ILLUSTRATIVE" : "GIVEN";
+  }
+  for (const item of [...derivedMeasurements, ...requestedResults]) {
+    const qObj = item.entityId ? byId.get(item.entityId) : undefined;
+    item.provenance ??= qObj ? classifySceneEntityProvenance(scene, qObj) : "DERIVED_VERIFIED";
+  }
+
   // Unknown internal names remain available through entity ids, never as learner labels.
   for (const item of [...givenDimensions, ...givenRelations, ...derivedMeasurements, ...requestedResults, ...certificates]) {
     if (!learnerTextIsSafe(scene, item.label)) item.label = "Đại lượng hoặc quan hệ đã kiểm chứng";
@@ -2249,3 +2520,1480 @@ export function phanTichToanHocCuaCanh(
 }
 
 
+
+export interface AttachedHybridSceneMetadata {
+  adapter_version?: string;
+  /** Source-bound exact answers (`HybridPreviewView.answers`): quantity ID + coefficient checked against the scene. */
+  answers?: readonly { quantity_id: string; coefficient?: string }[];
+  source_provenance?: readonly {
+    id?: string | null;
+    fn?: string;
+    args?: Record<string, unknown> | null;
+    quotes?: readonly string[];
+    origin?: string | null;
+    fact_id?: string | null;
+    kind?: string;
+    verified?: boolean;
+    polygon?: readonly string[];
+    edge?: readonly string[];
+    points?: readonly string[];
+    vertex?: string;
+    rays?: readonly (readonly string[])[];
+    line?: string;
+    plane?: readonly string[];
+    value_display?: string | null;
+  }[];
+  relation_certificates?: readonly {
+    relation_id?: string | null;
+    kind?: string;
+    verified?: boolean;
+    schema?: string;
+    SOURCE_GROUNDING_PROOF?: { verified: boolean; [k: string]: unknown } | null;
+    GEOMETRIC_RELATION_PROOF?: { verified: boolean; [k: string]: unknown } | null;
+    KERNEL_EXECUTION_PROOF?: { verified: boolean; [k: string]: unknown } | null;
+    RESULT_CERTIFICATE?: { verified: boolean; [k: string]: unknown } | null;
+    rule?: string | null;
+    details?: Record<string, unknown> | null;
+  }[];
+}
+
+const _exactSceneOrigin = new WeakMap<object, Scene3D>();
+const _worldTransformedScenes = new WeakSet<object>();
+const _hybridViewByScene = new WeakMap<object, AttachedHybridSceneMetadata>();
+
+/**
+ * Đính kèm metadata `HybridPreviewView` đã kiểm chứng vào một cảnh mà KHÔNG sửa đổi (`mutate`) payload `envelope.scene3d`.
+ * Tự động kế thừa qua `registerExactSceneOrigin` và `propagateSceneLineage`.
+ */
+export function attachHybridViewToScene<T extends AttachedHybridSceneMetadata>(
+  scene: Pick<Scene3D, "objects"> | null | undefined,
+  view: T | null | undefined,
+): void {
+  if (!scene || typeof scene !== "object") return;
+  if (!view) {
+    _hybridViewByScene.delete(scene as object);
+    return;
+  }
+  _hybridViewByScene.set(scene as object, view);
+  const exact = _exactSceneOrigin.get(scene as object);
+  if (exact && exact !== scene) {
+    _hybridViewByScene.set(exact as object, view);
+  }
+}
+
+export function hybridViewOfScene<T extends AttachedHybridSceneMetadata = AttachedHybridSceneMetadata>(
+  scene: Pick<Scene3D, "objects"> | null | undefined,
+): T | null {
+  if (!scene || typeof scene !== "object") return null;
+  const direct = _hybridViewByScene.get(scene as object);
+  if (direct) return direct as T;
+  const orig = _exactSceneOrigin.get(scene as object);
+  if (orig && orig !== scene) {
+    return (_hybridViewByScene.get(orig as object) as T | undefined) ?? null;
+  }
+  return null;
+}
+
+/**
+ * Liên kết cảnh hiển thị (đã qua Cholesky `veKhongGian` làm tròn 1e-9 sang thế giới Euclid)
+ * với cảnh hữu tỉ gốc trên khung affine `Q^3` + `chart_metric`, đảm bảo mọi phép kiểm chứng
+ * đại số và suy dẫn kết luận toán học luôn chạy trên tọa độ phân số chính xác tuyệt đối.
+ */
+export function registerExactSceneOrigin(displayScene: Scene3D, exactScene: Scene3D): Scene3D {
+  if (displayScene !== exactScene) {
+    const rootExact = exactSceneOriginOf(exactScene);
+    _exactSceneOrigin.set(displayScene, rootExact);
+    const hv = _hybridViewByScene.get(exactScene as object) ?? _hybridViewByScene.get(rootExact as object);
+    if (hv) {
+      _hybridViewByScene.set(displayScene as object, hv);
+    }
+  }
+  return displayScene;
+}
+
+export function exactSceneOriginOf<T extends Pick<Scene3D, "objects">>(scene: T): T {
+  return (_exactSceneOrigin.get(scene as object) as unknown as T | undefined) ?? scene;
+}
+
+export function markSceneWorldTransformed(scene: Scene3D): Scene3D {
+  _worldTransformedScenes.add(scene);
+  return scene;
+}
+
+const _derivedSceneParent = new WeakMap<object, Scene3D>();
+
+export function registerDerivedSceneParent(nextScene: Scene3D, prevScene: Scene3D): Scene3D {
+  if (nextScene !== prevScene) {
+    _derivedSceneParent.set(nextScene, prevScene);
+  }
+  return nextScene;
+}
+
+export function derivedSceneParentOf(scene: Pick<Scene3D, "objects">): Scene3D | undefined {
+  return _derivedSceneParent.get(scene as object);
+}
+
+export function isSceneWorldTransformed(scene: Pick<Scene3D, "objects">): boolean {
+  return _worldTransformedScenes.has(scene as object);
+}
+
+export function propagateSceneLineage(nextScene: Scene3D, prevScene: Scene3D, exactNextOverride?: Scene3D): Scene3D {
+  registerDerivedSceneParent(nextScene, prevScene);
+  if (nextScene === prevScene) return nextScene;
+  if (isSceneWorldTransformed(prevScene)) {
+    markSceneWorldTransformed(nextScene);
+  }
+  const prevHv = hybridViewOfScene(prevScene);
+  if (prevHv) {
+    _hybridViewByScene.set(nextScene as object, prevHv);
+    if (exactNextOverride) {
+      _hybridViewByScene.set(exactNextOverride as object, prevHv);
+    }
+  }
+  if (exactNextOverride) {
+    registerExactSceneOrigin(nextScene, exactNextOverride);
+  } else {
+    const orig = exactSceneOriginOf(prevScene);
+    if (orig !== prevScene) {
+      registerExactSceneOrigin(nextScene, orig);
+    }
+  }
+  return nextScene;
+}
+
+/**
+ * Kiểm tra cấu trúc và tính hợp lệ phân số (`Exact`) sâu của `Scene3D` trước khi đưa vào sequencer / renderer.
+ * Dùng `toNumber` làm thẩm quyền duy nhất kiểm tra chuỗi tọa độ (tuyệt đối không dùng float parser phụ).
+ */
+export function inspectScene3DPayloadIntegrity(
+  raw: unknown,
+): { valid: true } | { valid: false; reason: string } {
+  if (!raw || typeof raw !== "object") {
+    return { valid: false, reason: "Dữ liệu Scene3D không phải đối tượng hợp lệ." };
+  }
+  const s = raw as Record<string, unknown>;
+  if (!Array.isArray(s.objects) || !Array.isArray(s.events) || !Array.isArray(s.free_objects)) {
+    return { valid: false, reason: "Dữ liệu Scene3D thiếu danh sách đối tượng hoặc sự kiện dựng hình." };
+  }
+  if (s.free_objects.some((id) => typeof id !== "string" || !id.trim())) {
+    return { valid: false, reason: "Danh sách đối tượng tự do chứa định danh không hợp lệ." };
+  }
+
+  const hopLeExact = (v: unknown): boolean => {
+    if (typeof v !== "string" && (typeof v !== "number" || !Number.isFinite(v))) return false;
+    try {
+      toNumber(v as Exact);
+      return true;
+    } catch {
+      return false;
+    }
+  };
+  const hopLeVec3 = (v: unknown): boolean =>
+    Array.isArray(v) && v.length === 3 && v.every(hopLeExact);
+
+  if (s.chart_metric !== undefined && s.chart_metric !== null) {
+    if (
+      !Array.isArray(s.chart_metric)
+      || s.chart_metric.length !== 3
+      || s.chart_metric.some((row) => !Array.isArray(row) || row.length !== 3 || row.some((c) => !hopLeExact(c)))
+    ) {
+      return { valid: false, reason: "Ma trận chart_metric của Scene3D sai cấu trúc phân số." };
+    }
+  }
+
+  const singleVecKeys = ["xyz", "point", "normal", "direction", "point_a", "point_b", "center", "axis"] as const;
+  const listVecKeys = ["vertices", "polygon"] as const;
+
+  for (const obj of s.objects) {
+    if (!obj || typeof obj !== "object") {
+      return { valid: false, reason: "Scene3D chứa phần tử đối tượng rỗng hoặc sai kiểu." };
+    }
+    const rec = obj as Record<string, unknown>;
+    if (typeof rec.id !== "string" || !rec.id.trim() || typeof rec.type !== "string" || !rec.type.trim()) {
+      return { valid: false, reason: "Đối tượng trong Scene3D thiếu mã định danh hoặc kiểu hình học." };
+    }
+    if (rec.depends !== undefined && (!Array.isArray(rec.depends) || rec.depends.some((d) => typeof d !== "string"))) {
+      return { valid: false, reason: `Đối tượng ${rec.id} có danh sách phụ thuộc sai kiểu.` };
+    }
+    if (rec.type === "point3" && rec.render !== "non_visual" && !hopLeVec3(rec.xyz)) {
+      return { valid: false, reason: `Điểm ${rec.id} thiếu hoặc sai tọa độ không gian 3 chiều.` };
+    }
+    for (const k of singleVecKeys) {
+      if (rec[k] !== undefined && rec[k] !== null && !hopLeVec3(rec[k])) {
+        return { valid: false, reason: `Trường tọa độ ${k} của ${rec.id} không phải bộ ba phân số hợp lệ.` };
+      }
+    }
+    for (const k of listVecKeys) {
+      if (rec[k] !== undefined && rec[k] !== null) {
+        if (!Array.isArray(rec[k]) || (rec[k] as unknown[]).some((pt) => !hopLeVec3(pt))) {
+          return { valid: false, reason: `Danh sách tọa độ ${k} của ${rec.id} không hợp lệ.` };
+        }
+      }
+    }
+    for (const scalarKey of ["radius_sq", "height_sq", "semi_major_sq", "semi_minor_sq"] as const) {
+      if (rec[scalarKey] !== undefined && rec[scalarKey] !== null && !hopLeExact(rec[scalarKey])) {
+        return { valid: false, reason: `Tham số ${scalarKey} của ${rec.id} không phải phân số hợp lệ.` };
+      }
+    }
+  }
+
+  for (const ev of s.events) {
+    if (!ev || typeof ev !== "object") {
+      return { valid: false, reason: "Sự kiện dựng hình trong Scene3D sai cấu trúc." };
+    }
+    const rec = ev as Record<string, unknown>;
+    if (typeof rec.step_index !== "number" || !Number.isInteger(rec.step_index) || typeof rec.action !== "string") {
+      return { valid: false, reason: "Sự kiện dựng hình thiếu chỉ số bước hoặc hành động hợp lệ." };
+    }
+  }
+
+  return { valid: true };
+}
+
+export type QuantityProvenance = "GIVEN" | "CERTIFIED_DERIVED" | "UNVERIFIED" | "DISPLAY_ONLY";
+
+/**
+ * Phân loại nguồn gốc nhận thức (epistemic provenance) của một đại lượng trong `Scene3D`:
+ * - `GIVEN`: dữ kiện trực tiếp được chứng thực từ đề bài (`origin === "free"` và không bị hạ bậc bởi `source`,
+ *   đồng thời nằm trong `scene.free_objects` khi không có khóa `source` xác thực riêng).
+ * - `CERTIFIED_DERIVED`: đại lượng suy ra hoặc đáp số do Kernel chứng nhận (`origin === "derived"` / `role: "intermediate" | "result"`).
+ * - `UNVERIFIED`: đại lượng giả định bố cục / minh họa hoặc chưa đủ chứng thực.
+ * - `DISPLAY_ONLY`: đối tượng trình bày không mang thẩm quyền toán học.
+ */
+export function classifyQuantityProvenance(
+  o: SceneObject,
+  scene?: Partial<Pick<Scene3D, "free_objects" | "objects">> | null,
+): QuantityProvenance {
+  const src = o.source as Record<string, unknown> | undefined;
+  if (o.authoritative === false || src?.provenance === "DISPLAY_ONLY") {
+    return "DISPLAY_ONLY";
+  }
+  const explicitRole = o.annotation?.role as string | undefined;
+  const explicitCat = o.annotation?.category as string | undefined;
+  const hasDerivedMarkers =
+    o.origin === "derived"
+    || o.producer != null
+    || Boolean(src?.instruction);
+  const sourceClaimsExplicitGiven =
+    src?.provenance === "GIVEN"
+    || src?.is_given === true
+    || Boolean(src?.fact_id);
+  const claimsExplicitGiven =
+    sourceClaimsExplicitGiven
+    || explicitRole === "given";
+  if (hasDerivedMarkers && claimsExplicitGiven) {
+    return "UNVERIFIED";
+  }
+  if (
+    src?.is_given === false
+    || src?.provenance === "MODEL_ASSUMPTION"
+    || src?.assumption === "LAYOUT_DERIVED"
+    || src?.provenance === "LAYOUT_DERIVED"
+    || src?.assumption === "ILLUSTRATIVE_CONFIGURATION"
+    || src?.provenance === "ILLUSTRATIVE_CONFIGURATION"
+    || src?.assumption === "ILLUSTRATIVE_CHOICE"
+    || src?.provenance === "ILLUSTRATIVE_CHOICE"
+    || src?.provenance === "UNVERIFIED"
+    || src?.assumption === "UNVERIFIED"
+    || src?.binding === "AUXILIARY"
+    || (typeof src?.assumption === "string" && src.assumption.trim().length > 0)
+  ) {
+    return "UNVERIFIED";
+  }
+  const hasExplicitSourceKeys = Boolean(src && Object.keys(src).length > 0);
+  const inFreeObjects = scene && Array.isArray(scene.free_objects)
+    ? scene.free_objects.includes(o.id)
+    : true;
+  const sourceConfirmsGiven =
+    sourceClaimsExplicitGiven
+    || (!hasExplicitSourceKeys && inFreeObjects);
+  if (
+    o.origin === "free"
+    && !hasDerivedMarkers
+    && explicitRole !== "intermediate"
+    && explicitRole !== "result"
+    && explicitRole !== "answer"
+    && explicitCat !== "result"
+    && explicitCat !== "answer"
+    && sourceConfirmsGiven
+  ) {
+    return "GIVEN";
+  }
+  if (
+    o.origin === "derived"
+    && o.producer === null
+    && !src?.instruction
+    && o.exact == null
+    && !(o.dependency_edges && o.dependency_edges.length > 0)
+    && !o.formula
+    && !o.annotation?.witness
+  ) {
+    return "UNVERIFIED";
+  }
+  if (
+    hasDerivedMarkers
+    || explicitRole === "intermediate"
+    || explicitRole === "result"
+    || explicitRole === "answer"
+    || explicitCat === "result"
+    || explicitCat === "answer"
+  ) {
+    return "CERTIFIED_DERIVED";
+  }
+  return "UNVERIFIED";
+}
+
+export interface CertifiedHybridGivenDimension {
+  id: string;
+  subjectIds: [string, string];
+  notation: string;
+  label: string;
+  valueDisplay: string;
+}
+
+const chuanKyHieuDiem = (s: string): string => s.replace(/″/g, "''").replace(/[′’]/g, "'").trim();
+
+/**
+ * Đọc các kích thước đề cho (`segment_length`, `regular_polygon.side`) đã được `registry.kiem_nguon`
+ * chứng thực trong `HybridPreviewView.source_provenance` (Adapter /4) mà KHÔNG sửa đổi `scene.objects`.
+ */
+export function certifiedHybridGivenDimensions(
+  scene: Pick<Scene3D, "objects">,
+): CertifiedHybridGivenDimension[] {
+  const hv = hybridViewOfScene(scene);
+  const provList = hv?.source_provenance;
+  if (!Array.isArray(provList) || provList.length === 0) return [];
+
+  const timDiem = (rawName: unknown): SceneObject | null => {
+    if (typeof rawName !== "string" || !rawName.trim()) return null;
+    const norm = chuanKyHieuDiem(rawName);
+    const hits = scene.objects.filter(
+      (o) =>
+        o.type === "point3"
+        && Boolean(o.xyz)
+        && (o.id === rawName || (typeof o.notation === "string" && chuanKyHieuDiem(o.notation) === norm)),
+    );
+    return hits.length === 1 ? hits[0]! : null;
+  };
+  const kyHieuDiemNgan = (pt: SceneObject): string => pt.notation?.trim() || pt.label?.trim() || pt.id;
+  const khoaCapDiem = (a: string, b: string) => (a < b ? `${a}\u0000${b}` : `${b}\u0000${a}`);
+
+  const out: CertifiedHybridGivenDimension[] = [];
+  const seenSeg = new Set<string>();
+
+  for (let i = 0; i < provList.length; i += 1) {
+    const sp = provList[i];
+    if (!sp || sp.verified === false) continue;
+    const hasQuotes = Array.isArray(sp.quotes) && sp.quotes.some((q: unknown) => typeof q === "string" && q.trim().length > 0);
+    if (sp.verified !== true && !hasQuotes) continue;
+
+    const fn = sp.fn ?? sp.kind ?? "";
+    const args = sp.args && typeof sp.args === "object" ? sp.args : null;
+
+    if (fn === "segment_length") {
+      const segRaw = Array.isArray(args?.segment)
+        ? args.segment
+        : Array.isArray(sp.edge)
+          ? sp.edge
+          : null;
+      const valRaw = typeof args?.value === "string" ? args.value : sp.value_display;
+      if (!segRaw || segRaw.length !== 2 || typeof valRaw !== "string" || !valRaw.trim()) continue;
+      const ptA = timDiem(segRaw[0]);
+      const ptB = timDiem(segRaw[1]);
+      if (!ptA || !ptB || ptA.id === ptB.id) continue;
+      const key = khoaCapDiem(ptA.id, ptB.id);
+      if (seenSeg.has(key)) continue;
+      seenSeg.add(key);
+      const notation = `${kyHieuDiemNgan(ptA)}${kyHieuDiemNgan(ptB)}`;
+      out.push({
+        id: `hybrid_given:${sp.id ?? sp.fact_id ?? i}:${ptA.id}-${ptB.id}`,
+        subjectIds: [ptA.id, ptB.id],
+        notation,
+        label: `Độ dài ${notation}`,
+        valueDisplay: valRaw.trim(),
+      });
+    } else if (fn === "regular_polygon") {
+      const vertsRaw = Array.isArray(args?.vertices)
+        ? args.vertices
+        : Array.isArray(sp.polygon)
+          ? sp.polygon
+          : null;
+      const sideRaw = typeof args?.side === "string" ? args.side : sp.value_display;
+      if (!vertsRaw || vertsRaw.length < 3 || typeof sideRaw !== "string" || !sideRaw.trim()) continue;
+      const pt0 = timDiem(vertsRaw[0]);
+      const pt1 = timDiem(vertsRaw[1]);
+      if (!pt0 || !pt1 || pt0.id === pt1.id) continue;
+      const key = khoaCapDiem(pt0.id, pt1.id);
+      if (seenSeg.has(key)) continue;
+      seenSeg.add(key);
+      const notation = `${kyHieuDiemNgan(pt0)}${kyHieuDiemNgan(pt1)}`;
+      out.push({
+        id: `hybrid_given:${sp.id ?? sp.fact_id ?? i}:${pt0.id}-${pt1.id}`,
+        subjectIds: [pt0.id, pt1.id],
+        notation,
+        label: `Cạnh đáy ${notation}`,
+        valueDisplay: sideRaw.trim(),
+      });
+    }
+  }
+  return out;
+}
+
+export type CanonicalMathProvenance =
+  | "GIVEN"
+  | "DERIVED_VERIFIED"
+  | "ILLUSTRATIVE"
+  | "UNDERDETERMINED"
+  | "INVALID";
+
+export interface CertifiedCuttingPlaneDistanceGiven {
+  id: string;
+  centerId: string;
+  planeId: string;
+  circleId: string;
+  segmentSubjectIds: [string, string] | null;
+  notation: string;
+  label: string;
+  valueDisplay: string;
+}
+
+interface ExactBigFrac {
+  num: bigint;
+  den: bigint;
+}
+
+function gcdBigIntModel(a: bigint, b: bigint): bigint {
+  let x = a < 0n ? -a : a;
+  let y = b < 0n ? -b : b;
+  while (y !== 0n) {
+    const t = x % y;
+    x = y;
+    y = t;
+  }
+  return x === 0n ? 1n : x;
+}
+
+function normBigFrac(num: bigint, den: bigint): ExactBigFrac | null {
+  if (den === 0n) return null;
+  const s = den < 0n ? -1n : 1n;
+  const n = num * s;
+  const d = den * s;
+  const g = gcdBigIntModel(n, d);
+  return { num: n / g, den: d / g };
+}
+
+function parseExactBigFrac(v: unknown): ExactBigFrac | null {
+  if (typeof v === "number" && Number.isInteger(v)) {
+    return { num: BigInt(v), den: 1n };
+  }
+  if (typeof v !== "string") return null;
+  const m = /^\s*(-?\d+)(?:\/(\d+))?\s*$/.exec(v);
+  if (!m) return null;
+  return normBigFrac(BigInt(m[1]), m[2] !== undefined ? BigInt(m[2]) : 1n);
+}
+
+function addBigFrac(a: ExactBigFrac, b: ExactBigFrac): ExactBigFrac {
+  return normBigFrac(a.num * b.den + b.num * a.den, a.den * b.den)!;
+}
+
+function subBigFrac(a: ExactBigFrac, b: ExactBigFrac): ExactBigFrac {
+  return normBigFrac(a.num * b.den - b.num * a.den, a.den * b.den)!;
+}
+
+function mulBigFrac(a: ExactBigFrac, b: ExactBigFrac): ExactBigFrac {
+  return normBigFrac(a.num * b.num, a.den * b.den)!;
+}
+
+function bigIntFloorSqrt(n: bigint): bigint {
+  if (n <= 0n) return 0n;
+  if (n < 4n) return 1n;
+  let x = 1n << BigInt((n.toString(2).length + 1) >> 1);
+  while (true) {
+    const nx = (x + n / x) >> 1n;
+    if (nx >= x) return x;
+    x = nx;
+  }
+}
+
+function formatExactSqrtBigFrac(sq: ExactBigFrac): string | null {
+  if (sq.num < 0n || sq.den <= 0n) return null;
+  if (sq.num === 0n) return "0";
+  const prod = sq.num * sq.den;
+  const root = bigIntFloorSqrt(prod);
+  if (root * root === prod) {
+    const exactRat = normBigFrac(root, sq.den);
+    if (!exactRat) return null;
+    return exactRat.den === 1n ? exactRat.num.toString() : `${exactRat.num}/${exactRat.den}`;
+  }
+  if (prod > 100_000_000n) {
+    return null;
+  }
+  let k = 1n;
+  let rem = prod;
+  for (let d = 2n; d * d <= rem; d += d === 2n ? 1n : 2n) {
+    while (rem % (d * d) === 0n) {
+      k *= d;
+      rem /= d * d;
+    }
+  }
+  const reduced = normBigFrac(k, sq.den);
+  if (!reduced) return null;
+  if (rem === 1n) {
+    return reduced.den === 1n ? reduced.num.toString() : `${reduced.num}/${reduced.den}`;
+  }
+  const rad = `${reduced.num === 1n ? "" : reduced.num.toString()}√${rem}`;
+  return reduced.den === 1n ? rad : `${rad}/${reduced.den}`;
+}
+
+function exactGramDistanceSquared(
+  exactScene: Pick<Scene3D, "chart_metric">,
+  a: readonly [unknown, unknown, unknown],
+  b: readonly [unknown, unknown, unknown],
+): ExactBigFrac | null {
+  const pa = [parseExactBigFrac(a[0]), parseExactBigFrac(a[1]), parseExactBigFrac(a[2])];
+  const pb = [parseExactBigFrac(b[0]), parseExactBigFrac(b[1]), parseExactBigFrac(b[2])];
+  if (pa.some((x) => !x) || pb.some((x) => !x)) return null;
+  const dv = [
+    subBigFrac(pa[0]!, pb[0]!),
+    subBigFrac(pa[1]!, pb[1]!),
+    subBigFrac(pa[2]!, pb[2]!),
+  ];
+  const rawG = !isSceneWorldTransformed(exactScene as Pick<Scene3D, "objects">) ? exactScene.chart_metric : undefined;
+  let sum: ExactBigFrac = { num: 0n, den: 1n };
+  for (let i = 0; i < 3; i += 1) {
+    for (let j = 0; j < 3; j += 1) {
+      const gij = rawG ? parseExactBigFrac(rawG[i]?.[j]) : { num: i === j ? 1n : 0n, den: 1n };
+      if (!gij) return null;
+      sum = addBigFrac(sum, mulBigFrac(gij, mulBigFrac(dv[i], dv[j])));
+    }
+  }
+  return sum;
+}
+
+/**
+ * Suy xuất khoảng cách đề cho `d(I, (P))` bằng số học phân số chính xác trên `exactSceneOriginOf(scene)`
+ * khi mặt cầu tâm `I` (bán kính `GIVEN`) bị cắt bởi mặt phẳng phương trình độc lập `(P)` (`depends === []`)
+ * ngoài hệ trục Oxyz (tương ứng `construct_plane_from_equation`). Không sửa payload `scene.objects`.
+ */
+export function certifiedCuttingPlaneDistanceGivens(
+  scene: Pick<Scene3D, "objects" | "free_objects" | "chart_metric">,
+): CertifiedCuttingPlaneDistanceGiven[] {
+  const exact = exactSceneOriginOf(scene);
+  const hasOxyz = exact.objects.some(
+    (o) => (o.type === "line3" || o.type === "vector3") && /^(?:Ox|Oy|Oz)$/u.test((o.notation ?? o.label ?? o.id).trim()),
+  );
+  if (hasOxyz) return [];
+  const exactById = new Map(exact.objects.map((o) => [o.id, o]));
+  const dispById = new Map(scene.objects.map((o) => [o.id, o]));
+  const out: CertifiedCuttingPlaneDistanceGiven[] = [];
+
+  for (const circ of exact.objects) {
+    if (circ.type !== "circle3" || !circ.center || circ.center.length !== 3) continue;
+    const deps = circ.depends ?? [];
+    const ball = deps.map((id) => exactById.get(id)).find((o) => o?.type === "curved_solid" && o.curved_kind === "ball");
+    const plane = deps.map((id) => exactById.get(id)).find((o) => o?.type === "plane3" && o.origin === "derived" && (o.depends ?? []).length === 0);
+    if (!ball || !plane) continue;
+    const centerPt = (ball.depends ?? []).map((id) => exactById.get(id)).find((o) => o?.type === "point3" && Boolean(o.xyz));
+    const hasGivenRad =
+      (ball.depends ?? []).some((id) => {
+        const q = exactById.get(id);
+        return Boolean(q && q.type === "quantity" && classifyQuantityProvenance(q, exact) === "GIVEN");
+      })
+      || (ball.dependency_edges ?? []).some((e) => {
+        const q = exactById.get(e.source_id);
+        return Boolean(e.relation === "numerical" && q && q.type === "quantity" && classifyQuantityProvenance(q, exact) === "GIVEN");
+      });
+    if (!centerPt?.xyz || !hasGivenRad) continue;
+
+    // Không nhân đôi nếu cảnh đã có quantity GIVEN đo khoảng cách I -> (P)
+    const alreadyExplicit = exact.objects.some(
+      (q) =>
+        q.type === "quantity"
+        && classifyQuantityProvenance(q, exact) === "GIVEN"
+        && (q.depends ?? []).includes(centerPt.id)
+        && (q.depends ?? []).includes(plane.id),
+    );
+    if (alreadyExplicit) continue;
+
+    const dSq = exactGramDistanceSquared(exact, circ.center as [unknown, unknown, unknown], centerPt.xyz as [unknown, unknown, unknown]);
+    if (!dSq || dSq.num <= 0n) continue;
+    const valStr = formatExactSqrtBigFrac(dSq);
+    if (!valStr) continue;
+
+    const cSym = centerPt.notation?.trim() || centerPt.id;
+    const rawPlaneSym = (plane.notation?.trim() || plane.label?.replace(/^Mặt\s+phẳng\s+/iu, "").trim() || plane.id);
+    const pSym = rawPlaneSym.startsWith("(") && rawPlaneSym.endsWith(")") ? rawPlaneSym : `(${rawPlaneSym})`;
+    const notation = `d(${cSym}, ${pSym})`;
+    let footPtId: string | null = null;
+    for (const cand of dispById.values()) {
+      if (cand.type === "point3" && cand.id !== centerPt.id && Boolean(cand.xyz)) {
+        if (cand.perpendicular_witness?.from === centerPt.id && cand.perpendicular_witness?.on === plane.id) {
+          footPtId = cand.id;
+          break;
+        }
+        const candXyz = (exactById.get(cand.id)?.xyz ?? cand.xyz) as [unknown, unknown, unknown];
+        const zeroDist = exactGramDistanceSquared(exact, circ.center as [unknown, unknown, unknown], candXyz);
+        if (zeroDist && zeroDist.num === 0n) {
+          footPtId = cand.id;
+        }
+      } else if (cand.type === "segment3" && cand.perpendicular_witness?.on === plane.id && cand.endpoint_ids?.length === 2) {
+        const [u, v] = cand.endpoint_ids;
+        if (u === centerPt.id && dispById.get(v)?.type === "point3") { footPtId = v; break; }
+        if (v === centerPt.id && dispById.get(u)?.type === "point3") { footPtId = u; break; }
+      }
+    }
+    const segIds: [string, string] | null = footPtId ? [centerPt.id, footPtId] : null;
+    out.push({
+      id: `plane_dist_given:${ball.id}:${plane.id}`,
+      centerId: centerPt.id,
+      planeId: plane.id,
+      circleId: circ.id,
+      segmentSubjectIds: segIds,
+      notation,
+      label: `Khoảng cách từ ${cSym} đến ${pSym}`,
+      valueDisplay: valStr,
+    });
+  }
+  return out;
+}
+
+function isRigidGaugeAssumptionText(text: unknown): boolean {
+  if (typeof text !== "string") return false;
+  const s = text.trim();
+  return (
+    /^hệ\s+trục\s+(?:do\s+đề\s+chọn|đã\s+chọn)$/iu.test(s)
+    || /^chọn\s+(?:tâm|đỉnh|điểm)\s+\S+\s+làm\s+gốc\s+to[ạa]\s+độ$/iu.test(s)
+    || /^đặt\s+.+(?:tại\s+gốc\s+to[ạa]\s+độ|làm\s+gốc\s+to[ạa]\s+độ|dọc\s+trục\s+.+|trên\s+pháp\s+tuyến\s+.+)$/iu.test(s)
+  );
+}
+
+function hasNonRigidMetricSource(o: SceneObject | undefined): boolean {
+  if (!o) return false;
+  const src = o.source as Record<string, unknown> | undefined;
+  if (!src) return false;
+  if (src.is_given === false) return true;
+  const prov = typeof src.provenance === "string" ? src.provenance.trim().toUpperCase() : "";
+  const assumpRaw = typeof src.assumption === "string" ? src.assumption.trim() : "";
+  const assumpUpper = assumpRaw.toUpperCase();
+  const nonRigidTokens = new Set([
+    "UNDERDETERMINED",
+    "UNKNOWN",
+    "UNVERIFIED",
+    "ILLUSTRATIVE",
+    "ILLUSTRATIVE_CHOICE",
+    "ILLUSTRATIVE_CONFIGURATION",
+  ]);
+  if (nonRigidTokens.has(prov) || nonRigidTokens.has(assumpUpper)) return true;
+  if (prov === "LAYOUT_DERIVED" || assumpUpper === "LAYOUT_DERIVED") {
+    return o.type === "quantity" || assumpUpper === "LAYOUT_DERIVED";
+  }
+  if (prov === "MODEL_ASSUMPTION" && !isRigidGaugeAssumptionText(assumpRaw || src.model_assumption)) {
+    return true;
+  }
+  if (assumpRaw && !isRigidGaugeAssumptionText(assumpRaw)) {
+    return true;
+  }
+  return false;
+}
+
+interface SceneMetricRigidityAnalysis {
+  illustrativePolyIds: Set<string>;
+  unpinnedPointIds: Set<string>;
+}
+
+const _rigidityCache = new WeakMap<object, SceneMetricRigidityAnalysis>();
+
+function analyzeSceneMetricRigidity(
+  scene: Pick<Scene3D, "objects" | "free_objects" | "chart_metric">,
+): SceneMetricRigidityAnalysis {
+  const exact = exactSceneOriginOf(scene);
+  const cached = _rigidityCache.get(exact as object);
+  if (cached) return cached;
+
+  const empty: SceneMetricRigidityAnalysis = {
+    illustrativePolyIds: new Set<string>(),
+    unpinnedPointIds: new Set<string>(),
+  };
+  const hasOxyz = exact.objects.some(
+    (o) => (o.type === "line3" || o.type === "vector3") && /^(?:Ox|Oy|Oz)$/u.test((o.notation ?? o.label ?? o.id).trim()),
+  );
+  if (hasOxyz) {
+    _rigidityCache.set(exact as object, empty);
+    return empty;
+  }
+
+  // Nếu chart_metric khác ma trận đơn vị, metric đã được compiler nhúng trực tiếp vào Gram matrix.
+  if (!isSceneWorldTransformed(exact) && Array.isArray(exact.chart_metric) && exact.chart_metric.length === 3) {
+    let isIdentity = true;
+    for (let i = 0; i < 3; i += 1) {
+      for (let j = 0; j < 3; j += 1) {
+        const f = parseExactBigFrac(exact.chart_metric[i]?.[j]);
+        const target = i === j ? 1n : 0n;
+        if (!f || f.den !== 1n || f.num !== target) {
+          isIdentity = false;
+        }
+      }
+    }
+    if (!isIdentity) {
+      _rigidityCache.set(exact as object, empty);
+      return empty;
+    }
+  }
+
+  const givenQuantities = exact.objects.filter(
+    (o) => o.type === "quantity" && !o.annotation?.same_as && classifyQuantityProvenance(o, exact) === "GIVEN",
+  );
+  const hybridGivenDims = certifiedHybridGivenDimensions(scene);
+  if (givenQuantities.length === 0 && hybridGivenDims.length === 0) {
+    _rigidityCache.set(exact as object, empty);
+    return empty;
+  }
+
+  const byId = new Map(exact.objects.map((o) => [o.id, o]));
+  const illustrativePolyIds = new Set<string>();
+  const unpinnedPointIds = new Set<string>();
+  const pairKey = (a: string, b: string) => (a < b ? `${a}\u0000${b}` : `${b}\u0000${a}`);
+
+  const hybridMeta = hybridViewOfScene(scene) ?? hybridViewOfScene(exact);
+  const provList = hybridMeta?.source_provenance ?? [];
+
+  const entityPointsIfContainedInBase = (
+    objId: string,
+    basePolyId: string,
+    vertSet: ReadonlySet<string>,
+  ): string[] | null => {
+    if (objId === basePolyId) return [...vertSet];
+    const ent = byId.get(objId);
+    if (!ent) return null;
+    if (ent.type === "point3") {
+      return vertSet.has(ent.id) ? [ent.id] : null;
+    }
+    if (ent.type === "segment3" || ent.type === "line3" || ent.type === "vector3") {
+      const pts = [...new Set([...(ent.endpoint_ids ?? []), ...(ent.depends ?? [])])].filter(
+        (id) => byId.get(id)?.type === "point3",
+      );
+      return pts.length > 0 && pts.every((p) => vertSet.has(p)) ? pts : null;
+    }
+    if (ent.type === "polygon3" || ent.type === "plane3") {
+      const pts = [...new Set([...(ent.vertex_ids ?? []), ...(ent.depends ?? [])])].filter(
+        (id) => byId.get(id)?.type === "point3",
+      );
+      return pts.length >= 3 && pts.every((p) => vertSet.has(p)) ? pts : null;
+    }
+    return null;
+  };
+
+  const entityTransitivePoints = (rootId: string): Set<string> => {
+    const out = new Set<string>();
+    const vis = new Set<string>();
+    const qIds = [rootId];
+    while (qIds.length > 0) {
+      const cid = qIds.shift()!;
+      if (vis.has(cid)) continue;
+      vis.add(cid);
+      const ent = byId.get(cid);
+      if (!ent) continue;
+      if (ent.type === "point3") out.add(ent.id);
+      for (const nx of [...(ent.vertex_ids ?? []), ...(ent.endpoint_ids ?? []), ...(ent.depends ?? [])]) {
+        if (!vis.has(nx)) qIds.push(nx);
+      }
+    }
+    return out;
+  };
+
+  const rawSubjectIdsOfGiven = (q: SceneObject): string[] => {
+    const subs = q.annotation?.subject_ids?.length ? q.annotation.subject_ids : (q.depends ?? []);
+    return subs.filter((id): id is string => typeof id === "string" && id.trim().length > 0);
+  };
+  const detachedGivenScalarIds = givenQuantities
+    .filter((q) => rawSubjectIdsOfGiven(q).length === 0)
+    .map((q) => q.id);
+
+  // Gom các đa giác đáy theo khối đa diện chủ quản để nhận diện cặp đáy tịnh tiến của lăng trụ / hình hộp
+  const basePolys = exact.objects.filter(
+    (o) =>
+      o.type === "polygon3"
+      && !o.id.includes("__")
+      && (o.surface_role === "BASE_REGION" || (o.formation_roles ?? []).includes("CONSTRUCT_BASE"))
+      && !(o.formation_roles ?? []).includes("CONSTRUCT_TRANSLATED_FACE"),
+  );
+  const primaryBaseIdsBySolid = new Map<string, string>();
+  for (const bp of basePolys) {
+    const vIds = [...new Set([...(bp.vertex_ids ?? []), ...(bp.depends ?? [])])].filter(
+      (id) => byId.get(id)?.type === "point3",
+    );
+    const hs = exact.objects.find(
+      (o) => o.type === "solid" && vIds.length >= 3 && vIds.every((v) => (o.vertex_ids ?? o.depends ?? []).includes(v)),
+    );
+    if (hs && !primaryBaseIdsBySolid.has(hs.id)) {
+      primaryBaseIdsBySolid.set(hs.id, bp.id);
+    }
+  }
+
+  for (const basePoly of basePolys) {
+    const vertIds = [...new Set([...(basePoly.vertex_ids ?? []), ...(basePoly.depends ?? [])])].filter(
+      (id) => byId.get(id)?.type === "point3",
+    );
+    const m = vertIds.length;
+    if (m < 3) continue;
+    if (
+      vertIds.every((id) => {
+        const p = byId.get(id);
+        return p?.origin === "derived" && Boolean(p.producer) && !hasNonRigidMetricSource(p);
+      })
+    ) {
+      // Đa giác đáy của khối con dẫn xuất (vd S.MI1I2I3 với M, I1, I2, I3 là trung điểm/giao điểm đã chứng minh)
+      // kế thừa độ cứng từ các đỉnh gốc qua đồ thị phụ thuộc thay vì đòi dữ kiện cạnh riêng.
+      continue;
+    }
+    const vertSet = new Set(vertIds);
+    const polySyms = new Set(
+      vertIds.map((id) => (byId.get(id)?.notation ?? id).trim()).filter(Boolean),
+    );
+
+    const hostSolid = exact.objects.find(
+      (o) => o.type === "solid" && vertIds.every((v) => (o.vertex_ids ?? o.depends ?? []).includes(v)),
+    );
+    // Nếu đây là mặt đáy thứ hai của cùng một hình hộp / lăng trụ (vd day_A'B'C'D' khi day_ABCD đã là đáy gốc),
+    // nó sẽ được xét cùng bậc tự do tịnh tiến của khối thay vì đòi lại một bộ cạnh đề cho trùng lặp trên nắp trên.
+    if (hostSolid && primaryBaseIdsBySolid.get(hostSolid.id) && primaryBaseIdsBySolid.get(hostSolid.id) !== basePoly.id) {
+      continue;
+    }
+
+    const textDecl = !hasNonRigidMetricSource(basePoly) && !hasNonRigidMetricSource(hostSolid)
+      ? `${basePoly.label ?? ""} ${basePoly.role ?? ""} ${hostSolid?.label ?? ""} ${hostSolid?.role ?? ""}`
+      : "";
+
+    const genericDof = 2 * m - 3;
+    let neededDof = genericDof;
+    let isIsoscelesTriangle = m === 3 && /tam\s+giác\s+cân/iu.test(textDecl) && !/vuông\s+cân/iu.test(textDecl);
+    let isRhombus = m === 4 && /hình\s+thoi/iu.test(textDecl);
+    let isParallelogram = m === 4 && /hình\s+bình\s+hành/iu.test(textDecl);
+    let isNonRightTrapezoid = m === 4 && /hình\s+thang/iu.test(textDecl) && !/hình\s+thang\s+vuông/iu.test(textDecl);
+
+    if (/hình\s+vuông|hình\s+lập\s+phương|tứ\s+diện\s+đều|tam\s+giác\s+đều|ngũ\s+giác\s+đều|lục\s+giác\s+đều|đa\s+giác\s+đều|vuông\s+cân|(?:chóp|lăng\s+trụ)[^.,;]*\bđều\b/iu.test(textDecl)) {
+      neededDof = 1;
+    } else if (/hình\s+chữ\s+nhật|hình\s+hộp\s+chữ\s+nhật|hình\s+thoi|tam\s+giác\s+vuông|tam\s+giác\s+cân/iu.test(textDecl)) {
+      neededDof = Math.min(neededDof, 2);
+    } else if (/hình\s+bình\s+hành|hình\s+thang\s+vuông|hình\s+thang\s+cân/iu.test(textDecl)) {
+      neededDof = Math.min(neededDof, 3);
+    } else if (isNonRightTrapezoid) {
+      neededDof = Math.min(neededDof, 4);
+    }
+
+    const hasVertNonRigid = vertIds.some((id) => hasNonRigidMetricSource(byId.get(id)));
+    if (!hasVertNonRigid && !hasNonRigidMetricSource(basePoly) && !hasNonRigidMetricSource(hostSolid)) {
+      const hasRightVertexGauge = vertIds.some((id) =>
+        /đỉnh\s+vuông|cạnh\s+góc\s+vuông/iu.test(String(byId.get(id)?.source?.assumption ?? "")),
+      );
+      if (m === 3 && hasRightVertexGauge) {
+        neededDof = Math.min(neededDof, 2);
+      }
+      if (!/hình\s+bình\s+hành|hình\s+thang|tứ\s+giác\s+lồi/iu.test(textDecl)) {
+        const certifiedKernelArea = exact.objects.find((qo) => {
+          if (
+            qo.type !== "quantity"
+            || qo.origin !== "derived"
+            || qo.annotation?.kind !== "area"
+            || qo.exact == null
+            || hasNonRigidMetricSource(qo)
+          ) {
+            return false;
+          }
+          const structHitsBase =
+            (qo.depends ?? []).includes(basePoly.id)
+            || (qo.annotation?.subject_ids ?? []).includes(basePoly.id)
+            || (qo.dependency_edges ?? []).some((e) => e.relation === "structural" && e.source_id === basePoly.id);
+          if (!structHitsBase) return false;
+          const numEdges = (qo.dependency_edges ?? []).filter((e) => e.relation === "numerical");
+          if (numEdges.length < 2) return false;
+          return numEdges.every((e) => {
+            const sq = byId.get(e.source_id);
+            return Boolean(sq && sq.type === "quantity" && classifyQuantityProvenance(sq, exact) === "GIVEN");
+          });
+        });
+        if (certifiedKernelArea) {
+          const numCount = (certifiedKernelArea.dependency_edges ?? []).filter((e) => e.relation === "numerical").length;
+          neededDof = Math.min(neededDof, numCount);
+        } else if (
+          detachedGivenScalarIds.length >= 2
+          && exact.objects.some(
+            (qo) =>
+              qo.type === "quantity"
+              && qo.origin === "derived"
+              && qo.annotation?.kind === "area"
+              && qo.exact != null
+              && !hasNonRigidMetricSource(qo)
+              && ((qo.depends ?? []).includes(basePoly.id) || (qo.annotation?.subject_ids ?? []).includes(basePoly.id)),
+          )
+          && exact.objects.some(
+            (ptO) =>
+              ptO.type === "point3"
+              && ptO.origin === "derived"
+              && (ptO.depends ?? []).length === 2
+              && (ptO.depends ?? []).every((did) => {
+                const dobj = byId.get(did);
+                return dobj?.type === "line3" || dobj?.type === "segment3";
+              })
+              && [...entityTransitivePoints(ptO.id)].filter((pid) => pid !== ptO.id).every((pid) => vertSet.has(pid)),
+          )
+        ) {
+          // Chóp đều từ compiler chính tắc (tâm đáy O là giao hai đường chéo + biến vô hướng canh_day & chieu_cao)
+          neededDof = 1;
+        }
+      }
+    }
+
+    const inPlaneRightVerts = new Set<string>();
+    for (let spIdx = 0; spIdx < provList.length; spIdx++) {
+      const sp = provList[spIdx];
+      if (!sp || sp.verified === false) continue;
+      const fn = (sp.fn ?? sp.kind ?? "").trim().toLowerCase();
+      const argsRec = sp.args && typeof sp.args === "object" ? sp.args : {};
+      const polyRaw = sp.polygon as unknown;
+      const explicitPolyMatch =
+        typeof polyRaw === "string"
+        && (polyRaw.trim() === basePoly.id || polySyms.has(polyRaw.trim()));
+      const rawVerts = [
+        ...(Array.isArray(polyRaw) ? (polyRaw as unknown[]) : []),
+        ...(Array.isArray(sp.points) ? sp.points : []),
+        ...(Array.isArray(argsRec.vertices) ? (argsRec.vertices as unknown[]) : []),
+      ];
+      const matchesBase =
+        explicitPolyMatch
+        || (rawVerts.length > 0 && rawVerts.every((t) => typeof t === "string" && (vertSet.has(t.trim()) || polySyms.has(t.trim()))));
+      if (!matchesBase) continue;
+      if (fn === "regular_polygon" || fn === "square" || fn === "equilateral_triangle") {
+        neededDof = 1;
+      } else if (fn === "rectangle" || fn === "right_triangle") {
+        neededDof = Math.min(neededDof, 2);
+      } else if (fn === "rhombus") {
+        isRhombus = true;
+        neededDof = Math.min(neededDof, 2);
+      } else if (fn === "isosceles_triangle") {
+        isIsoscelesTriangle = true;
+        neededDof = Math.min(neededDof, 2);
+      } else if (fn === "parallelogram") {
+        isParallelogram = true;
+        neededDof = Math.min(neededDof, 3);
+      } else if (fn === "trapezoid") {
+        isNonRightTrapezoid = true;
+        neededDof = Math.min(neededDof, 4);
+      } else if (fn === "right_angle" || fn === "line_perp_line" || fn === "perpendicular_lines") {
+        const vSym = typeof sp.vertex === "string" ? sp.vertex.trim() : "";
+        const matchedVid = vSym
+          ? vertIds.find((vid) => vid === vSym || (byId.get(vid)?.notation ?? "").trim() === vSym)
+          : undefined;
+        inPlaneRightVerts.add(matchedVid ?? `__prov_ra_${spIdx}`);
+      }
+    }
+
+    // Nhân chứng vuông góc phẳng nằm trọn trong mặt đáy: giảm trên genericDof (tối đa m-1 góc vuông độc lập),
+    // tuyệt đối không trừ lặp lần hai trên họ đã hàm chứa góc vuông (tam giác vuông / hình chữ nhật / hình thang vuông).
+    for (const o of exact.objects) {
+      if (hasNonRigidMetricSource(o)) continue;
+      const w = o.perpendicular_witness ?? o.annotation?.witness;
+      if (!w) continue;
+      if (
+        w.relation !== "line_perp_line"
+        && w.relation !== "lines_perpendicular"
+        && w.relation !== "perpendicular_lines"
+      ) {
+        continue;
+      }
+      if (!w.from || !w.on) continue;
+      const fromInBase = entityPointsIfContainedInBase(w.from, basePoly.id, vertSet);
+      const onInBase = entityPointsIfContainedInBase(w.on, basePoly.id, vertSet);
+      if (!fromInBase || !onInBase) continue;
+      const fId = w.foot_id ?? vertIds.find((vid) => {
+        const vp = byId.get(vid);
+        return Boolean(vp?.xyz && w.foot && vp.xyz.every((c, idx) => String(c) === String(w.foot![idx])));
+      });
+      if (fId && vertSet.has(fId)) {
+        inPlaneRightVerts.add(fId);
+      }
+    }
+    const maxIndependentRightAngles = m === 3 ? 1 : Math.max(0, m - 1);
+    const rightAngleCount = Math.min(maxIndependentRightAngles, inPlaneRightVerts.size);
+    if (rightAngleCount > 0) {
+      neededDof = Math.min(neededDof, Math.max(1, genericDof - rightAngleCount));
+      if (isIsoscelesTriangle || isRhombus) {
+        neededDof = 1;
+      } else if (isParallelogram) {
+        neededDof = Math.min(neededDof, 2);
+      } else if (isNonRightTrapezoid) {
+        neededDof = Math.min(neededDof, 3);
+      }
+    }
+
+    const givenBaseEdges = new Map<string, [string, string]>();
+    let extraInPlaneConstraints = 0;
+
+    for (const q of givenQuantities) {
+      const rawSubs = rawSubjectIdsOfGiven(q);
+      if (rawSubs.length === 0) continue;
+      const resolvedPerSub = rawSubs.map((sid) => entityPointsIfContainedInBase(sid, basePoly.id, vertSet));
+      if (resolvedPerSub.some((pts) => pts === null)) {
+        // Có chủ thể nằm ngoài mặt đáy (vd góc giữa SB và đáy, khoảng cách đường chéo ngoài đáy...) -> không tính vào DoF đáy!
+        continue;
+      }
+      if (
+        rawSubs.length === 2
+        && byId.get(rawSubs[0])?.type === "point3"
+        && byId.get(rawSubs[1])?.type === "point3"
+        && rawSubs[0] !== rawSubs[1]
+      ) {
+        givenBaseEdges.set(pairKey(rawSubs[0], rawSubs[1]), [rawSubs[0], rawSubs[1]]);
+      } else if (
+        rawSubs.length === 1
+        && byId.get(rawSubs[0])?.type === "segment3"
+        && resolvedPerSub[0]!.length === 2
+        && resolvedPerSub[0]![0] !== resolvedPerSub[0]![1]
+      ) {
+        const [u, v] = resolvedPerSub[0]!;
+        givenBaseEdges.set(pairKey(u, v), [u, v]);
+      } else {
+        extraInPlaneConstraints += 1;
+      }
+    }
+    for (const hd of hybridGivenDims) {
+      const [u, v] = hd.subjectIds;
+      if (vertSet.has(u) && vertSet.has(v) && u !== v) {
+        givenBaseEdges.set(pairKey(u, v), [u, v]);
+      }
+    }
+
+    const detachedBaseContribution = givenBaseEdges.size === 0 && extraInPlaneConstraints === 0 && detachedGivenScalarIds.length > 0 ? 1 : 0;
+    const inPlaneCount = givenBaseEdges.size + extraInPlaneConstraints + detachedBaseContribution;
+    const siblingTopPolys = exact.objects.filter(
+      (tp) =>
+        tp.type === "polygon3"
+        && tp.id !== basePoly.id
+        && !tp.id.includes("__")
+        && (
+          (tp.formation_roles ?? []).includes("CONSTRUCT_TRANSLATED_FACE")
+          || (hostSolid && primaryBaseIdsBySolid.get(hostSolid.id) === basePoly.id && tp.surface_role === "BASE_REGION")
+        ),
+    );
+
+    if (inPlaneCount < neededDof || hasVertNonRigid) {
+      illustrativePolyIds.add(basePoly.id);
+      const outPerpFootId =
+        exact.objects
+          .map((o) => o.perpendicular_witness)
+          .find((w) => w && w.on === basePoly.id && w.foot_id && vertSet.has(w.foot_id))?.foot_id ?? null;
+
+      const pinned = new Set<string>();
+      const edgesList = [...givenBaseEdges.values()];
+      if (edgesList.length > 0) {
+        const anchorEdge =
+          (outPerpFootId ? edgesList.find(([u, v]) => u === outPerpFootId || v === outPerpFootId) : undefined)
+          ?? edgesList[0];
+        if (!outPerpFootId || anchorEdge[0] === outPerpFootId || anchorEdge[1] === outPerpFootId) {
+          pinned.add(anchorEdge[0]);
+          pinned.add(anchorEdge[1]);
+        } else {
+          pinned.add(outPerpFootId);
+        }
+      } else {
+        pinned.add(outPerpFootId ?? vertIds[0]);
+      }
+
+      for (const vid of vertIds) {
+        if (!pinned.has(vid) || hasNonRigidMetricSource(byId.get(vid))) {
+          unpinnedPointIds.add(vid);
+        }
+      }
+
+      for (const topPoly of siblingTopPolys) {
+        const topVerts = [...new Set([...(topPoly.vertex_ids ?? []), ...(topPoly.depends ?? [])])].filter(
+          (id) => byId.get(id)?.type === "point3",
+        );
+        if (topVerts.length === vertIds.length) {
+          illustrativePolyIds.add(topPoly.id);
+          topVerts.forEach((tv, idx) => {
+            if (unpinnedPointIds.has(vertIds[idx])) {
+              unpinnedPointIds.add(tv);
+            }
+          });
+        }
+      }
+    }
+
+    // Kiểm tra bậc tự do chiều cao / cạnh bên ngoài mặt phẳng đáy cho khối chóp và khối lăng trụ
+    if (hostSolid) {
+      const solidVerts = [...new Set([...(hostSolid.vertex_ids ?? []), ...(hostSolid.depends ?? [])])].filter(
+        (id) => byId.get(id)?.type === "point3",
+      );
+      const outOfPlaneVerts = solidVerts.filter((id) => !vertSet.has(id));
+      if (outOfPlaneVerts.length > 0) {
+        const outVertSet = new Set(outOfPlaneVerts);
+        const isRegularAllEqualSolid =
+          !illustrativePolyIds.has(basePoly.id)
+          && !hasNonRigidMetricSource(hostSolid)
+          && /hình\s+lập\s+phương|tứ\s+diện\s+đều|bát\s+diện\s+đều|khối\s+đa\s+diện\s+đều/iu.test(textDecl);
+
+        const hasExplicitOutGiven =
+          givenQuantities.some((q) => {
+            const rSubs = rawSubjectIdsOfGiven(q);
+            if (rSubs.length === 0) return false;
+            return rSubs.some((sid) => {
+              if (sid === hostSolid.id || outVertSet.has(sid)) return true;
+              const pts = entityTransitivePoints(sid);
+              return [...pts].some((pid) => outVertSet.has(pid));
+            });
+          })
+          || hybridGivenDims.some((hd) => outVertSet.has(hd.subjectIds[0]) || outVertSet.has(hd.subjectIds[1]))
+          || detachedGivenScalarIds.length >= 2
+          || exact.objects.some((qo) => {
+            if (
+              qo.type !== "quantity"
+              || qo.origin !== "derived"
+              || qo.annotation?.kind !== "volume"
+              || qo.exact == null
+              || hasNonRigidMetricSource(qo)
+            ) {
+              return false;
+            }
+            const hitsSolid = (qo.depends ?? []).includes(hostSolid.id) || (qo.annotation?.subject_ids ?? []).includes(hostSolid.id);
+            if (!hitsSolid) return false;
+            return (qo.dependency_edges ?? []).some((e) => {
+              if (e.relation !== "numerical") return false;
+              const sq = byId.get(e.source_id);
+              if (!sq || sq.type !== "quantity" || classifyQuantityProvenance(sq, exact) !== "GIVEN") return false;
+              const rSubs = rawSubjectIdsOfGiven(sq);
+              return rSubs.length === 0 || rSubs.some((sid) => entityPointsIfContainedInBase(sid, basePoly.id, vertSet) === null);
+            });
+          });
+
+        if (!isRegularAllEqualSolid && !hasExplicitOutGiven) {
+          for (const ov of outOfPlaneVerts) {
+            unpinnedPointIds.add(ov);
+          }
+          for (const tp of siblingTopPolys) {
+            illustrativePolyIds.add(tp.id);
+          }
+        }
+      }
+    }
+  }
+
+  // Kiểm tra bậc tự do bán kính & chiều cao trục cho khối tròn xoay (cylinder / cone)
+  for (const cs of exact.objects) {
+    if (cs.type !== "curved_solid" || (cs.curved_kind !== "cylinder" && cs.curved_kind !== "cone")) continue;
+    const csPts = (cs.depends ?? []).filter((id) => byId.get(id)?.type === "point3");
+    if (csPts.length < 2) continue;
+    const baseCenterId =
+      csPts.find((pid) => {
+        const pt = byId.get(pid);
+        const ref = cs.anchor ?? cs.center;
+        return Boolean(pt?.xyz && ref && pt.xyz.every((c, idx) => String(c) === String(ref[idx])));
+      }) ?? csPts[0]!;
+    const rimOrOtherIds = csPts.filter((pid) => pid !== baseCenterId);
+    const axisEndId =
+      rimOrOtherIds.find((pid) => {
+        const pt = byId.get(pid);
+        return Boolean(pt?.xyz && cs.apex_or_top && pt.xyz.every((c, idx) => String(c) === String(cs.apex_or_top![idx])));
+      }) ?? rimOrOtherIds[0]!;
+    const rimIds = csPts.filter((pid) => pid !== baseCenterId && pid !== axisEndId);
+
+    const directScalarGivensOnCs = new Set<string>(
+      [
+        ...(cs.depends ?? []),
+        ...(cs.dependency_edges ?? []).filter((e) => e.relation === "numerical").map((e) => e.source_id),
+      ].filter((id) => {
+        const q = byId.get(id);
+        return Boolean(q && q.type === "quantity" && classifyQuantityProvenance(q, exact) === "GIVEN");
+      }),
+    );
+
+    const hasExplicitRimGeomGiven =
+      givenQuantities.some((q) => {
+        const rSubs = rawSubjectIdsOfGiven(q);
+        return rimIds.some((rid) => rSubs.includes(rid) || rSubs.some((sid) => entityTransitivePoints(sid).has(rid)));
+      })
+      || hybridGivenDims.some((hd) => rimIds.includes(hd.subjectIds[0]) || rimIds.includes(hd.subjectIds[1]));
+
+    const hasExplicitAxisGeomGiven =
+      givenQuantities.some((q) => {
+        if (directScalarGivensOnCs.has(q.id)) return false;
+        const rSubs = rawSubjectIdsOfGiven(q);
+        return rSubs.some((sid) => sid === axisEndId || entityTransitivePoints(sid).has(axisEndId));
+      })
+      || hybridGivenDims.some((hd) => hd.subjectIds[0] === axisEndId || hd.subjectIds[1] === axisEndId);
+
+    const scalarPool = new Set<string>([...directScalarGivensOnCs, ...detachedGivenScalarIds]);
+    const rimScalarConsumed = hasExplicitRimGeomGiven ? 0 : 1;
+    const hasRimGiven = hasExplicitRimGeomGiven || scalarPool.size >= 1;
+    const hasAxisGiven = hasExplicitAxisGeomGiven || scalarPool.size >= rimScalarConsumed + 1;
+
+    if (!hasRimGiven) {
+      for (const rid of rimIds) unpinnedPointIds.add(rid);
+      if (rimIds.length === 0) unpinnedPointIds.add(baseCenterId);
+    }
+    if (!hasAxisGiven) {
+      unpinnedPointIds.add(axisEndId);
+    }
+  }
+
+  const res: SceneMetricRigidityAnalysis = { illustrativePolyIds, unpinnedPointIds };
+  _rigidityCache.set(exact as object, res);
+  return res;
+}
+
+/**
+ * Kiểm tra xem một đại lượng suy dẫn `q` có bị thiếu bậc tự do xác định duy nhất (`UNDERDETERMINED`) hay không:
+ * - Chặn đại lượng phụ thuộc nguồn `ILLUSTRATIVE_CHOICE` / `LAYOUT_DERIVED` / `is_given === false` / `UNVERIFIED`.
+ * - Chặn diện tích/thể tích/độ dài phụ thuộc đỉnh đáy chưa ghim cứng khi đa giác đáy thiếu ràng buộc Euclid,
+ *   nhưng giữ nguyên `DERIVED_VERIFIED` cho các bất biến thực sự đã ghim (như `SB = 2a√5`, `d(S, (ABC)) = 4a`).
+ */
+export function isDerivedQuantityMetricallyUnderdetermined(
+  scene: Pick<Scene3D, "objects" | "free_objects" | "chart_metric">,
+  q: SceneObject,
+): boolean {
+  if (q.type !== "quantity") return false;
+  if (!hienBieuThucDaiLuong(q)) return true;
+
+  const exact = exactSceneOriginOf(scene);
+  const byId = new Map(exact.objects.map((o) => [o.id, o]));
+  const exactQ = byId.get(q.id) ?? q;
+  if (hasNonRigidMetricSource(exactQ)) return true;
+
+  const { illustrativePolyIds, unpinnedPointIds } = analyzeSceneMetricRigidity(scene);
+
+  // Bất biến khoảng cách từ đỉnh tới mặt phẳng đáy dọc theo đường cao đã chứng nhận (vd d(S, (ABC)) = SA = 4a)
+  // độc lập với vị trí minh họa của đỉnh đáy thứ ba trong mặt phẳng đáy khi SA ⊥ (ABC) đã được chứng nhận.
+  const ann = exactQ.annotation;
+  const prod = exactQ.producer ?? (exactQ.source as Record<string, unknown> | undefined)?.instruction ?? "";
+  const isDistanceMeasure = ann?.kind === "distance" || String(prod).includes("distance");
+  if (isDistanceMeasure) {
+    const depObjs = [...new Set([...(exactQ.depends ?? []), ...(ann?.subject_ids ?? [])])]
+      .map((id) => byId.get(id))
+      .filter((o): o is SceneObject => Boolean(o));
+    const fromPt = depObjs.find((o) => o.type === "point3");
+    const planeOrPoly = depObjs.find((o) => o.type === "polygon3" || o.type === "plane3");
+    if (
+      fromPt
+      && planeOrPoly
+      && !hasNonRigidMetricSource(fromPt)
+      && !hasNonRigidMetricSource(planeOrPoly)
+      && !unpinnedPointIds.has(fromPt.id)
+    ) {
+      const hasCertifiedPerpHeight = exact.objects.some((o) => {
+        if (hasNonRigidMetricSource(o)) return false;
+        const pw = o.perpendicular_witness;
+        if (!pw || pw.from !== fromPt.id || pw.on !== planeOrPoly.id) return false;
+        const footId = pw.foot_id ?? exact.objects.find(
+          (p) => p.type === "point3" && p.xyz && pw.foot && p.xyz.every((c, idx) => String(c) === String(pw.foot![idx])),
+        )?.id;
+        const footPt = footId ? byId.get(footId) : undefined;
+        if (!footId || !footPt || hasNonRigidMetricSource(footPt) || unpinnedPointIds.has(footId)) return false;
+        return exact.objects.some((gq) => {
+          if (gq.type !== "quantity" || hasNonRigidMetricSource(gq) || classifyQuantityProvenance(gq, exact) !== "GIVEN") {
+            return false;
+          }
+          const gqSubs = [...(gq.depends ?? []), ...(gq.annotation?.subject_ids ?? [])];
+          return gqSubs.includes(fromPt.id) && gqSubs.includes(footId);
+        });
+      });
+      if (hasCertifiedPerpHeight) {
+        return false;
+      }
+    }
+  }
+
+  // Bất biến thiết diện tròn vuông góc trục hình trụ: r = R và S = πR² độc lập với chiều cao OO′ khi bán kính R đã cho
+  const isRadOrArea =
+    ann?.kind === "length"
+    || ann?.kind === "area"
+    || String(prod).includes("radius")
+    || String(prod).includes("area");
+  if (isRadOrArea && (exactQ.depends ?? []).length === 1) {
+    const secCirc = byId.get(exactQ.depends![0]!);
+    if (secCirc?.type === "circle3" && !hasNonRigidMetricSource(secCirc)) {
+      const cDeps = (secCirc.depends ?? []).map((id) => byId.get(id)).filter((o): o is SceneObject => Boolean(o));
+      const cyl = cDeps.find((o) => o.type === "curved_solid" && o.curved_kind === "cylinder");
+      const cutPlane = cDeps.find((o) => o.type === "plane3");
+      if (cyl && cutPlane && !hasNonRigidMetricSource(cyl) && !hasNonRigidMetricSource(cutPlane)) {
+        const cylHasGivenRad = [
+          ...(cyl.depends ?? []),
+          ...(cyl.dependency_edges ?? []).filter((e) => e.relation === "numerical").map((e) => e.source_id),
+        ].some((id) => {
+          const sq = byId.get(id);
+          return Boolean(sq && sq.type === "quantity" && classifyQuantityProvenance(sq, exact) === "GIVEN");
+        });
+        const cylBase = cyl.anchor ?? cyl.center;
+        const cylTop = cyl.apex_or_top;
+        const planePerpAxis = Boolean(
+          cutPlane.normal
+            && cylBase
+            && cylTop
+            && (() => {
+              const nx = parseExactBigFrac(cutPlane.normal[0]);
+              const ny = parseExactBigFrac(cutPlane.normal[1]);
+              const nz = parseExactBigFrac(cutPlane.normal[2]);
+              const bx = parseExactBigFrac(cylBase[0]);
+              const by = parseExactBigFrac(cylBase[1]);
+              const bz = parseExactBigFrac(cylBase[2]);
+              const tx = parseExactBigFrac(cylTop[0]);
+              const ty = parseExactBigFrac(cylTop[1]);
+              const tz = parseExactBigFrac(cylTop[2]);
+              if (!nx || !ny || !nz || !bx || !by || !bz || !tx || !ty || !tz) return false;
+              const ax = subBigFrac(tx, bx);
+              const ay = subBigFrac(ty, by);
+              const az = subBigFrac(tz, bz);
+              const cx = subBigFrac(mulBigFrac(ny, az), mulBigFrac(nz, ay));
+              const cy = subBigFrac(mulBigFrac(nz, ax), mulBigFrac(nx, az));
+              const cz = subBigFrac(mulBigFrac(nx, ay), mulBigFrac(ny, ax));
+              return cx.num === 0n && cy.num === 0n && cz.num === 0n && (ax.num !== 0n || ay.num !== 0n || az.num !== 0n);
+            })(),
+        );
+        if (cylHasGivenRad && planePerpAxis) {
+          return false;
+        }
+      }
+    }
+  }
+
+  // 1. Kiểm tra lan truyền nguồn phi-bất-biến (minh họa / bố cục / chưa xác thực)
+  const visitedSrc = new Set<string>();
+  const srcQueue: SceneObject[] = [exactQ];
+  while (srcQueue.length > 0) {
+    const cur = srcQueue.shift()!;
+    if (visitedSrc.has(cur.id)) continue;
+    visitedSrc.add(cur.id);
+    if (hasNonRigidMetricSource(cur)) return true;
+    if (cur.id !== exactQ.id && cur.type === "quantity" && cur.origin === "free" && classifyQuantityProvenance(cur, exact) !== "GIVEN") {
+      return true;
+    }
+    const nextIds = [
+      ...(cur.depends ?? []),
+      ...(cur.dependency_edges ?? []).map((e) => e.source_id),
+      ...(cur.annotation?.subject_ids ?? []),
+    ];
+    for (const nid of nextIds) {
+      const nextObj = byId.get(nid);
+      if (nextObj && !visitedSrc.has(nextObj.id)) srcQueue.push(nextObj);
+    }
+  }
+
+  // 2. Kiểm tra độ cứng Euclid trên mặt đáy đa giác (nếu cảnh có khai báo dữ kiện metric tường minh)
+  if (illustrativePolyIds.size === 0 && unpinnedPointIds.size === 0) {
+    return false;
+  }
+
+  const visitedGeo = new Set<string>();
+  const geoQueue: SceneObject[] = [exactQ];
+  while (geoQueue.length > 0) {
+    const cur = geoQueue.shift()!;
+    if (visitedGeo.has(cur.id)) continue;
+    visitedGeo.add(cur.id);
+    if (cur.id !== exactQ.id) {
+      if (illustrativePolyIds.has(cur.id) || unpinnedPointIds.has(cur.id)) {
+        return true;
+      }
+      if ((cur.vertex_ids ?? []).some((vid) => unpinnedPointIds.has(vid))) {
+        return true;
+      }
+    }
+    const nextIds = [
+      ...(cur.depends ?? []),
+      ...(cur.annotation?.subject_ids ?? []),
+      ...(cur.dependency_edges ?? []).map((e) => e.source_id),
+    ];
+    for (const nid of nextIds) {
+      const nextObj = byId.get(nid);
+      if (nextObj && !visitedGeo.has(nextObj.id)) geoQueue.push(nextObj);
+    }
+  }
+
+  return false;
+}
+
+/**
+ * Ràng buộc đáp số Hybrid `/4` của một đại lượng: `MATCH` khi view đính kèm cảnh trỏ đáp số vào đại lượng này và hệ số
+ * khớp giá trị cảnh chính xác (hệ số vắng ⇒ view đã qua `kiemHybridView` ở biên vào: giải mã, lịch sử); `MISMATCH` khi
+ * hệ số lệch; `null` khi không có ràng buộc (bài mẫu, bản ghi cũ) — khi đó heuristic hình học vẫn áp dụng.
+ */
+function hybridAnswerBinding(
+  scene: Pick<Scene3D, "objects">,
+  q: SceneObject,
+): "MATCH" | "MISMATCH" | null {
+  const exact = exactSceneOriginOf(scene);
+  const answer = (hybridViewOfScene(scene) ?? hybridViewOfScene(exact))?.answers?.find((a) => a.quantity_id === q.id);
+  if (!answer) return null;
+  if (answer.coefficient === undefined) return "MATCH";
+  const value = (exact.objects.find((o) => o.id === q.id) ?? q).value;
+  const gon = (s: unknown) => String(s ?? "").replace(/\s+/g, "");
+  return value != null && gon(answer.coefficient) === gon(value) ? "MATCH" : "MISMATCH";
+}
+
+/**
+ * Phân loại provenance chuẩn hóa xuyên suốt (`GIVEN`, `DERIVED_VERIFIED`, `ILLUSTRATIVE`, `UNDERDETERMINED`, `INVALID`)
+ * cho mọi thực thể trong `Scene3D`.
+ */
+export function classifySceneEntityProvenance(
+  scene: Pick<Scene3D, "objects" | "free_objects" | "chart_metric">,
+  o: SceneObject,
+): CanonicalMathProvenance {
+  const src = o.source as Record<string, unknown> | undefined;
+  const claimsGiven = src?.provenance === "GIVEN" || src?.is_given === true || Boolean(src?.fact_id);
+  if ((o.origin === "derived" || o.producer != null) && claimsGiven) {
+    return "INVALID";
+  }
+  if (claimsGiven && hasNonRigidMetricSource(o)) {
+    return "INVALID";
+  }
+
+  if (o.type === "quantity") {
+    const qp = classifyQuantityProvenance(o, scene);
+    if (qp === "GIVEN") return "GIVEN";
+    // A source-bound Hybrid /4 answer is certified by the backend (exact kernel + `certify_answer`); the display layer
+    // never re-decides it. A binding that disagrees with the scene is inconsistent, not "insufficient data".
+    const binding = qp === "CERTIFIED_DERIVED" ? hybridAnswerBinding(scene, o) : null;
+    if (binding === "MATCH") return "DERIVED_VERIFIED";
+    if (binding === "MISMATCH") return "INVALID";
+    if (qp === "CERTIFIED_DERIVED") {
+      return isDerivedQuantityMetricallyUnderdetermined(scene, o) ? "UNDERDETERMINED" : "DERIVED_VERIFIED";
+    }
+    if (qp === "DISPLAY_ONLY" || hasNonRigidMetricSource(o)) return "ILLUSTRATIVE";
+    if (o.origin === "derived") return "INVALID";
+    return "UNDERDETERMINED";
+  }
+
+  if (o.semantic_role === "AUXILIARY_CONSTRUCTION") {
+    return "DERIVED_VERIFIED";
+  }
+  if (o.authoritative === false) {
+    return o.perpendicular_witness?.status === "GIVEN" ? "GIVEN" : "ILLUSTRATIVE";
+  }
+  if (hasNonRigidMetricSource(o)) {
+    return "ILLUSTRATIVE";
+  }
+
+  const { illustrativePolyIds, unpinnedPointIds } = analyzeSceneMetricRigidity(scene);
+  if (illustrativePolyIds.has(o.id) || unpinnedPointIds.has(o.id)) {
+    return "ILLUSTRATIVE";
+  }
+  if (o.type === "point3" && typeof src?.assumption === "string" && src.assumption.trim().length > 0) {
+    return "ILLUSTRATIVE";
+  }
+  if (o.perpendicular_witness?.status === "GIVEN" || claimsGiven) {
+    return "GIVEN";
+  }
+  if (o.origin === "free") {
+    return (scene.free_objects ?? []).includes(o.id) ? "GIVEN" : "UNDERDETERMINED";
+  }
+  if (o.origin === "derived") {
+    if (
+      o.type === "solid"
+      && [...(o.depends ?? []), ...(o.vertex_ids ?? [])].some(
+        (id) => illustrativePolyIds.has(id) || unpinnedPointIds.has(id),
+      )
+    ) {
+      return "ILLUSTRATIVE";
+    }
+    return "DERIVED_VERIFIED";
+  }
+  return "UNDERDETERMINED";
+}

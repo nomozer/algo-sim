@@ -31,7 +31,14 @@ export function auxiliaryObjects(scene: Scene3D): Map<string, HinhPhu> {
   const ra = new Map<string, HinhPhu>();
   const n = stepCount(scene);
   const loai = new Map(scene.objects.map((o) => [o.id, o.type]));
-  const duongChieu = new Set(scene.objects.flatMap((o) => o.perpendicular_witness?.on ? [o.perpendicular_witness.on] : []));
+  const duongChieu = new Set(scene.objects.flatMap((o) => [
+    ...(o.perpendicular_witness?.on ? [o.perpendicular_witness.on] : []),
+    ...(o.type === "point3"
+      && (o.depends ?? []).filter((id) => loai.get(id) === "line3").length === 1
+      && (o.depends ?? []).some((id) => loai.get(id) === "point3")
+      ? (o.depends ?? []).filter((id) => loai.get(id) === "line3")
+      : []),
+  ]));
   const dinhKhoi = new Set(scene.objects.flatMap((o) =>
     (o.type === "solid" || o.type === "curved_solid") ? [...(o.depends ?? []), ...(o.vertex_ids ?? [])] : []));
   // Tập đỉnh của từng MẶT khối (id thực thể) — mặt phẳng qua các đỉnh của một mặt đã nằm trên hình (G7: thay cho
@@ -40,6 +47,35 @@ export function auxiliaryObjects(scene: Scene3D): Map<string, HinhPhu> {
     ? o.faces.map((f) => new Set(f.map((i) => o.vertex_ids![i]))) : []);
   const laMatCuaKhoi = (o: { depends?: string[] }) =>
     matKhoi.some((m) => (o.depends ?? []).every((id) => m.has(id)));
+  const nonQtyChildrenOf = (id: string) =>
+    scene.objects.filter((x) => !x.parent && x.type !== "quantity" && x.depends?.includes(id));
+  // Mặt phẳng / đường thẳng phụ trợ trung gian chỉ phục vụ xác định tâm của khối cầu (`curved_solid` `ball`,
+  // ví dụ các mặt phẳng trung trực và trục ngoại tiếp): hiện trong các bước xác định tâm, tự ẩn sau khi hoàn tất.
+  const laKhungDungTamMatCau = (startId: string): boolean => {
+    const first = nonQtyChildrenOf(startId);
+    if (first.length === 0) return false;
+    const visited = new Set<string>([startId]);
+    const stack = [...first];
+    let sawSphereLeaf = false;
+    let sawCenterPoint = false;
+    while (stack.length > 0) {
+      const cur = stack.pop()!;
+      if (visited.has(cur.id)) continue;
+      visited.add(cur.id);
+      if (cur.type === "curved_solid" && cur.curved_kind === "ball") {
+        sawSphereLeaf = true;
+        continue;
+      }
+      if (cur.type === "point3") sawCenterPoint = true;
+      if (cur.type !== "plane3" && cur.type !== "line3" && cur.type !== "point3") {
+        return false;
+      }
+      const next = nonQtyChildrenOf(cur.id);
+      if (next.length === 0) return false;
+      stack.push(...next);
+    }
+    return sawSphereLeaf && sawCenterPoint;
+  };
   for (const o of scene.objects) {
     const vai = o.formation_roles ?? [];
     const nhom = o.display_group ?? [];
@@ -62,17 +98,106 @@ export function auxiliaryObjects(scene: Scene3D): Map<string, HinhPhu> {
           continue;
         }
       }
+      if (
+        o.origin === "derived"
+        && (o.type === "plane3" || o.type === "line3")
+        && !nhom.includes("given")
+        && !nhom.includes("target")
+        && !duongChieu.has(o.id)
+        && laKhungDungTamMatCau(o.id)
+      ) {
+        const dungTam = con.filter((x) => x.type !== "quantity").map((x) => x.id);
+        const k = [...Array(n).keys()].find((s) => {
+          const hien = new Set(objectsAt(scene, s).map((x) => x.id));
+          return dungTam.every((id) => hien.has(id));
+        });
+        if (k !== undefined) {
+          ra.set(o.id, { loai: "dung", xongTai: k });
+          continue;
+        }
+      }
     }
     if (o.origin !== "derived" || vai.length !== 1 || vai[0] !== VAI_PHU
         || nhom.includes("given") || nhom.includes("target")) continue;
+    const extendAcrossTrailingMeasures = (baseStep: number): number => {
+      let endFrame = baseStep;
+      while (endFrame + 1 < n) {
+        const nextEv = scene.events.find((e) => e.step_index === endFrame + 1) ?? scene.events[endFrame + 1];
+        if (nextEv?.action !== "MEASURE") break;
+        endFrame += 1;
+      }
+      return endFrame;
+    };
+    if (o.authoritative === false && o.semantic_role === "AUXILIARY_CONSTRUCTION") {
+      const finalPresentIds = new Set(objectsAt(scene, n - 1).map((x) => x.id));
+      const isSpherePlaneAux = (o.display_group ?? []).includes("sphere_plane_aux");
+      const curvedSectionsOnWitnessPlane =
+        isSpherePlaneAux
+          ? scene.objects
+              .filter(
+                (sec) =>
+                  sec.type === "circle3"
+                  && sec.surface_role !== "BASE_REGION"
+                  && ((o.depends ?? []).length === 0
+                    || (o.depends ?? []).some((depId) => (sec.depends ?? []).includes(depId) || sec.id === depId)),
+              )
+              .map((sec) => sec.id)
+          : o.perpendicular_witness?.on
+            ? scene.objects
+                .filter(
+                  (sec) =>
+                    (sec.type === "circle3" || sec.type === "ellipse3")
+                    && sec.surface_role !== "BASE_REGION"
+                    && (sec.depends ?? []).includes(o.perpendicular_witness!.on),
+                )
+                .map((sec) => sec.id)
+            : [];
+      const targetCheckIds = [
+        o.id,
+        ...con.filter((x) => x.type !== "quantity").map((x) => x.id),
+        ...curvedSectionsOnWitnessPlane,
+      ].filter((id) => finalPresentIds.has(id));
+      const k = [...Array(n).keys()].find((s) => {
+        const hien = new Set(objectsAt(scene, s).map((x) => x.id));
+        return targetCheckIds.length > 0
+          ? targetCheckIds.every((id) => hien.has(id))
+          : hien.has(o.id);
+      });
+      if (k !== undefined) {
+        const gStep = geometryTimeline(scene)[geometryStepOf(scene, k)];
+        ra.set(o.id, { loai: "dung", xongTai: extendAcrossTrailingMeasures(gStep ? gStep.anchor : k) });
+      }
+      continue;
+    }
     if (o.type === "point3") {
       const diemPhuMp = !o.perpendicular_witness
         && (o.depends ?? []).some((id) => loai.get(id) === "vector3")
         && con.length > 0 && con.every((x) => x.type === "plane3");
+      const authCon = con.filter((x) => x.authoritative !== false && x.type !== "quantity");
+      const diemPhuKhongKyHieu =
+        !o.notation
+        && !o.perpendicular_witness
+        && (o.depends ?? []).length === 2
+        && (o.depends ?? []).every((id) => loai.get(id) === "point3")
+        && authCon.length > 0
+        && authCon.every((x) => x.type === "point3" && Boolean(x.notation));
+      if (diemPhuKhongKyHieu) {
+        const k = [...Array(n).keys()].find((s) => {
+          const hien = new Set(objectsAt(scene, s).map((x) => x.id));
+          return authCon.every((c) => hien.has(c.id));
+        });
+        if (k !== undefined) {
+          const gStep = geometryTimeline(scene)[geometryStepOf(scene, k)];
+          ra.set(o.id, { loai: "dung", xongTai: extendAcrossTrailingMeasures(gStep ? gStep.anchor : k) });
+        }
+        continue;
+      }
       if (!diemPhuMp) continue;
     } else if (o.type === "line3") {
       if (duongChieu.has(o.id)) continue;
-    } else if (o.type !== "plane3") {
+    } else if (o.type === "plane3") {
+      if (duongChieu.has(o.id) && !laMatCuaKhoi(o)) continue;
+    } else {
       continue;
     }
     const dung = con.filter((x) => x.type !== "quantity").map((x) => x.id);
@@ -94,9 +219,32 @@ export function auxiliaryObjects(scene: Scene3D): Map<string, HinhPhu> {
 export function auxiliaryHiddenAt(scene: Scene3D, step: number, shown: boolean, selectedId: string | null): Set<string> {
   if (shown) return new Set();
   const k = clampStep(scene, step);
+  const phu = auxiliaryObjects(scene);
   const tieuDiem = selectedId ? new Set([selectedId, ...dependencyClosure(scene, selectedId)]) : new Set<string>();
+  if (selectedId) {
+    const selectedObj = scene.objects.find((x) => x.id === selectedId);
+    const isSelectedAuxLike = Boolean(
+      selectedObj
+      && (phu.has(selectedId)
+        || (selectedObj.display_group ?? []).includes("sphere_foundation_ref")
+        || selectedObj.authoritative === false
+        || selectedObj.semantic_role === "AUXILIARY_CONSTRUCTION"),
+    );
+    if (isSelectedAuxLike) {
+      for (const o of scene.objects) {
+        if (!phu.has(o.id)) continue;
+        const refs = [...(o.depends ?? []), ...(o.endpoint_ids ?? [])];
+        if (refs.includes(selectedId)) {
+          tieuDiem.add(o.id);
+          for (const depId of dependencyClosure(scene, o.id)) {
+            tieuDiem.add(depId);
+          }
+        }
+      }
+    }
+  }
   const ra = new Set<string>();
-  for (const [id, h] of auxiliaryObjects(scene)) {
+  for (const [id, h] of phu) {
     if (!tieuDiem.has(id) && k > h.xongTai) ra.add(id);
   }
   return ra;

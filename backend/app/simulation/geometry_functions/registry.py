@@ -1206,7 +1206,10 @@ def _co_mat(quotes: tuple[str, ...], mp: list[str], cho_day: bool = True) -> boo
     """Mặt phẳng được nhắc: nhóm nhãn trùng tập điểm (`(ABC)`, `SAB`), hoặc — với mặt ĐÁY — chữ "đáy"."""
     if cho_day and any("đáy" in q.lower() for q in quotes):
         return True
-    return any(set(p) == set(mp) for q in quotes for _a, _b, phan in _tu_nhan(q) for p in phan if len(p) >= 3)
+    if any(set(p) == set(mp) for q in quotes for _a, _b, phan in _tu_nhan(q) for p in phan if len(p) >= 3):
+        return True
+    # "mặt phẳng (đi) qua (ba điểm) U, V, W" — the plane named by its three points written as a list
+    return any(set(_nhan_cum(m[1])) == set(mp) for q in quotes for m in _MAT_QUA_DS.finditer(q))
 
 
 def _la_doan(phan: list[list[str]], seg: list[str]) -> bool:
@@ -3411,8 +3414,17 @@ def _rang_buoc_cuc_bo_khop(r: Any, c: LoiGoi, de: str) -> bool:
 #: Một mặt phẳng toán hạng như đề viết: nhóm ≥ 3 nhãn (có hoặc không ngoặc, "mặt phẳng"), hay "(mặt) đáy".
 #: Nhãn phân biệt hoa thường dù cả mẫu không phân biệt: "qua" không phải một mặt phẳng.
 _NHOM_NHAN = r"(?-i:[A-Z][0-9]*'?(?:[A-Z][0-9]*'?){2,})"
+#: "U, V, W" / "U, V và W" — exactly three point labels written as a list (a plane given by its three named points).
+_DS_BA_DIEM = r"(?-i:[A-Z][0-9]*'?)(?:\s*(?:,|và)\s*(?-i:[A-Z][0-9]*'?)){2}(?![\w'])"
+#: "mặt phẳng (đi) qua (ba điểm) U, V, W" names the same plane as "(UVW)"; the list sits in the same operand group, so
+#: every reader of `_tap_mat` sees the same label set. A single "qua M" never matches (three labels required).
 _MAT_TOAN_HANG = (r"(?:(?:hai|2|các)\s+mặt phẳng\s+)?(?:(?:mặt phẳng|mp|mặt bên|mặt đáy)\s*)?"
-                  r"(?:\((" + _NHOM_NHAN + r")\)|(" + _NHOM_NHAN + r")|(?:mặt\s+)?(đáy))(?![\w'])")
+                  r"(?:\((" + _NHOM_NHAN + r")\)|(?:(?:đi\s+)?qua\s+(?:(?:ba|3)\s+điểm\s+)?)?(" + _NHOM_NHAN + r"|"
+                  + _DS_BA_DIEM + r")|(?:mặt\s+)?(đáy))(?![\w'])")
+_MAT_QUA_DS = re.compile(r"(?:mặt phẳng|mp)\s*(?:\([^()]*\)\s*)?,?\s*(?:đi\s+)?qua\s+(?:(?:ba|3)\s+điểm\s+)?("
+                         + _DS_BA_DIEM + r")", re.IGNORECASE)
+#: Optional appositive after a named plane: "(UVW) đi qua ba điểm U, V, W" — read, and checked to name the SAME points.
+_MAT_DONG_VI = r"(?:\s*,?\s*(?:đi\s+)?qua\s+(?:(?:ba|3)\s+điểm\s+)?(?P<dongvi>" + _DS_BA_DIEM + r"))?"
 #: Cụm vai trò gọi tên MẶT CẮT của một thiết diện. "song song với …" / "vuông góc với …" là phép dựng khác — không gắn.
 #: Từ loại khối; "chóp" / "lăng trụ" / "tứ diện" cũng viết trần như `_MO_KHOI_DUNG` (run `hybrid-v2-planner-generalization`).
 _TU_KHOI = r"(?:(?:hình|khối)\s+(?:chóp|lăng trụ|lập phương|hộp|tứ diện)|chóp|lăng trụ|tứ diện)"
@@ -3422,8 +3434,8 @@ _KHOI_NGU = (rf"(?:{_TU_KHOI}(?:\s+(?:đứng|đều|tam giác|tứ giác|chữ 
 #: Đầu mệnh đề (đầu đề, sau . ; : ,) — "(P) cắt …" chỉ khi (P) là CHỦ NGỮ của mệnh đề (second re-verification, N1).
 _DAU_MENH_DE = r"(?:^|(?<=[.;:,])|(?<=[.;:,]\s))\s*"
 _CAT_BOI = [re.compile(p, re.IGNORECASE) for p in (
-    r"(?:(?:khi\s+(?:bị\s+)?|bị\s+)?(?:cắt bởi|tạo bởi))\s+" + _MAT_TOAN_HANG,
-    r"thiết diện\s+(?:của\s+|(?:được\s+)?tạo bởi\s+)?" + _KHOI_NGU + r"(?:với|và)\s+" + _MAT_TOAN_HANG,
+    r"(?:(?:khi\s+(?:bị\s+)?|bị\s+)?(?:cắt bởi|tạo bởi))\s+" + _MAT_TOAN_HANG + _MAT_DONG_VI,
+    r"thiết diện\s+(?:của\s+|(?:được\s+)?tạo bởi\s+)?" + _KHOI_NGU + r"(?:với|và)\s+" + _MAT_TOAN_HANG + _MAT_DONG_VI,
     r"(?<!\w)do\s+" + _MAT_TOAN_HANG + r"\s+cắt(?!\w)",
     _DAU_MENH_DE + _MAT_TOAN_HANG + r"\s+cắt\s+(?:hình|khối)(?:[^.;]|\.(?=[A-Z]))*?theo\s+(?:một\s+)?thiết diện",
 )]
@@ -3441,8 +3453,12 @@ _NOI_DU_KIEN_CUC_BO = re.compile(r"[\s,;:.?!]*(?:(?:biết|rằng|với|cho|tron
 
 
 def _mat_cum(n: str) -> str:
+    # Same plane grammar as `_MAT_TOAN_HANG`: "(UVW)", "UVW", "đáy", or "(đi) qua (ba điểm) U, V, W"; a named plane may
+    # carry the appositive "đi qua ba điểm U, V, W", which `_mat_cua` checks names the same points.
     return (rf"(?:(?:hai|2|các)\s+mặt phẳng\s+)?(?:(?:mặt phẳng|mp|mặt bên|mặt đáy)\s*)?"
-            rf"(?:\((?P<{n}p>{_NHOM_NHAN})\)|(?<![\w'.])(?P<{n}b>{_NHOM_NHAN})|(?:mặt\s+)?(?P<{n}d>đáy))(?![\w'])")
+            rf"(?:\((?P<{n}p>{_NHOM_NHAN})\)|(?:(?:đi\s+)?qua\s+(?:(?:ba|3)\s+điểm\s+)?)?(?<![\w'.])(?P<{n}b>{_NHOM_NHAN}"
+            rf"|{_DS_BA_DIEM})|(?:mặt\s+)?(?P<{n}d>đáy))(?![\w'])"
+            rf"(?:\s*,?\s*(?:đi\s+)?qua\s+(?:(?:ba|3)\s+điểm\s+)?(?P<{n}dv>{_DS_BA_DIEM}))?")
 
 
 def _doan_cum(n: str) -> str:
@@ -3462,7 +3478,9 @@ def _nhan_cum(s: str | None) -> list[str]:
 
 def _mat_cua(m: re.Match, n: str, khoi: dict) -> frozenset | None:
     if nhom := m[n + "p"] or m[n + "b"]:
-        return frozenset(_nhan_cum(nhom))
+        mat = frozenset(_nhan_cum(nhom))
+        dv = m.groupdict().get(n + "dv")
+        return mat if not dv or frozenset(_nhan_cum(dv)) == mat else None    # appositive must name the same points
     return next(iter(khoi.values())) if m[n + "d"] and len(khoi) == 1 else None    # "đáy": đáy của khối duy nhất
 
 
@@ -3682,6 +3700,11 @@ def _phan_loai_hinh_2d(pred: str, n_verts: int, role: str = "") -> tuple[str, tu
         return ("rhombus", ())
     if "lục giác đều" in s or ("lục giác" in r and "đều" in s):
         return ("regular_hexagon", ())
+    if n_verts >= 4 and "đều" not in s:
+        # A named quadrilateral (or larger) "vuông tại A" / "cân" states an ANGLE or equal sides, never a triangle kind:
+        # certifying it as a triangle on four vertices refused consistent right-trapezoid data as INCONSISTENT_FACTS.
+        # The right angle itself is a premise the engine builds and checks.
+        return None
     if "vuông cân" in s:
         return ("right_isosceles_triangle", at[:1])
     if "vuông" in s and "hình vuông" not in s and "thang" not in s:
@@ -5706,6 +5729,7 @@ def mat_cat_dung_nguon(c: LoiGoi, calls: tuple[LoiGoi, ...]) -> bool:
     day = khoi.get(c.args.solid)
     return any(
         _tap_mat(m, 1, day) == frozenset(c.args.plane)
+        and (not (m.groupdict().get("dongvi")) or frozenset(re.findall(r"[A-Z][0-9]*'?", m["dongvi"])) == frozenset(c.args.plane))
         and (bool(ky_hieu or _TU_LOAI.search(m[0])) or _chi_mot_khoi_3d(khoi, calls))
         and _cum_goi_khoi(m[0], c.args.solid, calls)
         for q in c.quotes for mau in _CAT_BOI for m in mau.finditer(q)

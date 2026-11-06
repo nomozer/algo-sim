@@ -1,0 +1,5 @@
+reference (NFC)          -> SERVED   None None answers={'q': '30'}
+NFD combining marks      -> SERVED   None None answers={'q': '30'}
+double spaces            -> SERVED   None None answers={'q': '30'}
+no spaces around =       -> SERVED   None None answers={'q': '30'}
+non-breaking spaces      -> SERVED   None None answers={'q': '30'}

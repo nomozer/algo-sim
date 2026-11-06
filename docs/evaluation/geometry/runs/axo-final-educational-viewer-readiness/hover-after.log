@@ -1,0 +1,4 @@
+PASS starting a drag over an object does not rebuild the scene (thiet-dien-chop): 0 GPU buffers/programs deleted
+PASS starting a drag over an object does not rebuild the scene (non-thiet-dien-truc): 0 GPU buffers/programs deleted
+PASS starting a drag over an object does not rebuild the scene (cau-cat-mat-phang): 0 GPU buffers/programs deleted
+{"pass":3,"fail":0}

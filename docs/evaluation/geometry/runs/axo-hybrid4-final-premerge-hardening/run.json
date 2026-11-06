@@ -1,0 +1,45 @@
+{
+  "run_id": "axo-hybrid4-final-premerge-hardening",
+  "date": "2026-11-06",
+  "branch": "integration/axo-hybrid4-reliability",
+  "start": "01cfda03",
+  "main": "bb61a804eb2b476f796e28176084ea41b0bed92e",
+  "commits": [
+    "ce676a17",
+    "8248eae0",
+    "6d0796d4",
+    "c8e4bb17",
+    "4e5a7af7",
+    "b98a470b",
+    "09634f92",
+    "2330b675"
+  ],
+  "product_commit": "b98a470b86eb3759c2b267a1457ecf17bc1b7473",
+  "measured_system": {
+    "files": 103,
+    "tree_hash": "a0cb684ee74a61af8260b2f32808fe0fe8e94f2fb3b9502ce2a0c609c96a5150"
+  },
+  "cache_version": 132,
+  "provider_calls": 0,
+  "performance_baseline": "67f780ca (Axo, production build in a fresh detached worktree)",
+  "gpu": "Intel(R) UHD Graphics, ANGLE Direct3D11 (from SystemInfo)",
+  "verification": {
+    "two_tab": "two-tab-run-2 0/8 before fix (lost update confirmed after convergence); two-tab-run-3, two-tab-run-4 8/8 after 4e5a7af7",
+    "e2e_scene_consistency": "36/36",
+    "ui_harness": "40/40",
+    "orbit_gate": "KHONG_ON_DINH on baseline and candidate alike (pre-existing)",
+    "navigation": "ABBA 8 runs x 12 = 48 samples per build; cold open median/p95 204.8/299.0 -> 190.2/285.2 ms",
+    "scenes": "ABBA perf-1-B, perf-2-C, perf-3r-C, perf-4-B (perf-3-C interrupted, excluded)",
+    "publication_safety": "range 1 violation (6533b586 test fixture, OWNER_DECISION_REQUIRED); head 98 pending, 0 new",
+    "t3": "FULL_PRODUCT_GATE_PASS at 2330b675: pytest 13820 passed / 7 skipped / 9 xfailed; vitest 128 files / 1929; tsc+build; demo replay 5/5; crash surface pass (logs/t3-full-gate-2330b675.log)",
+    "node_harness": "151/155 pass, 2 fail inherited from main (manifest pins file deleted by main 52205f45), 2 skipped (logs/node-harness-2330b675.log)"
+  },
+  "status": "READY_FOR_OWNER_REVIEW",
+  "tested_tree": "2330b675 (clean detached worktree)",
+  "owner_decisions": [
+    "publication exception 6533b586 / test_auth_api.py blob 28be1ef6 (OWNER_DECISION_REQUIRED)",
+    "98 pre-existing pending publication entries",
+    "TypedFactNext /2 plane through three named points",
+    "merge/push permission"
+  ]
+}

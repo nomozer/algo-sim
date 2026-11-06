@@ -1,0 +1,49 @@
+{
+  "run_id": "axo-final-educational-viewer-readiness",
+  "date": "2026-11-06",
+  "branch": "integration/axo-hybrid4-reliability",
+  "started_by": "Codex (interrupted by usage limit at 21ab6fa7 + uncommitted edits)",
+  "resumed_by": "Claude",
+  "start": "1be6a7ae",
+  "main": "bb61a804eb2b476f796e28176084ea41b0bed92e",
+  "commits": {
+    "codex": [
+      "0fb49397",
+      "5558b1ba",
+      "21ab6fa7"
+    ],
+    "claude": [
+      "6dbbd019",
+      "a994790f",
+      "703f3b5d",
+      "4e7ea0dc",
+      "bac9e065"
+    ]
+  },
+  "product_commits": {
+    "frontend": "21ab6fa7",
+    "backend": "703f3b5d"
+  },
+  "measured_system": {
+    "files": 103,
+    "tree_hash": "5ef507610daadec73f4e62bf618881f4f25990705dd1a7b4fcbe55719823be31"
+  },
+  "cache_version": 132,
+  "provider_calls": 0,
+  "tested_tree": "bac9e065 (clean detached worktree)",
+  "verification": {
+    "t3": "FULL_PRODUCT_GATE_PASS: pytest 13842 passed / 7 skipped / 9 xfailed; vitest 131 files / 1943; tsc+build; demo 5/5",
+    "node_harness": "153/155, 0 fail, 2 environment skips",
+    "browser_final": "two-tab 8/8, E2E 41/41 (widths 360-1440 incl. 820/1280, Chrome zoom 110%), UI 40/40, camera views 10/10, orbit gate DAT x3",
+    "hover": "GPU objects per hover enter/leave 262/110 -> 0; long tasks 51-55 ms -> none",
+    "wording_holdout": "before 8/16 served (8 INCORRECTLY_REFUSED), after 16/16",
+    "performance": "navigation 4 ABBA runs x12, scenes clean runs perf-3/4/5/6 (perf-1/2 excluded: overlapped a pytest run); within variation except the hover gain",
+    "publication": "task range PASS; integration 1 historical TEST_FIXTURE; head 98 pending (95 traceback, 2 placeholder, 1 fixture)",
+    "postgres": "NOT_RUN in this task (persistence untouched; Docker not started)"
+  },
+  "status": "BLOCKED_BY_OWNER_DECISION",
+  "owner_decisions": [
+    "publication exceptions (6533b586 and 98 pending)",
+    "merge/push permission"
+  ]
+}

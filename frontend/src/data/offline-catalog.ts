@@ -1,4 +1,6 @@
 import { GEOMETRY_SAMPLES } from "./geometry-samples";
+import { normalizeCylinderEnvelopeTitle } from "../simulations/domains/geometry/scene3d-semantic-policy";
+import type { Scene3D } from "../simulations/domains/geometry/scene3d-model";
 import type { Domain, SimulationEnvelope } from "../simulations/types";
 
 /**
@@ -16,6 +18,8 @@ import type { Domain, SimulationEnvelope } from "../simulations/types";
 
 export interface CatalogEntry {
   id: string;
+  /** Định danh URL tiếng Anh chữ thường phân tách bằng dấu gạch nối (§8). */
+  slug: string;
   title: string;
   simId: string;
   domain: Domain;
@@ -23,6 +27,64 @@ export interface CatalogEntry {
   visibility: "public" | "internal_fixture";
   /** Gợi ý preview tường minh (vd generic không tự nói lên từ simId). */
   preview?: string;
+}
+
+export const CANONICAL_SAMPLE_SLUGS: Readonly<Record<string, string>> = Object.freeze({
+  "thiet-dien-chop": "pyramid-cross-section",
+  "mat-cheo-sac": "pyramid-diagonal-section",
+  "vuong-goc-chop": "pyramid-line-plane-angle",
+  "mp-vuong-goc-duong": "pyramid-perpendicular-plane-distance",
+  "the-tich-chop": "pyramid-volume-and-altitude",
+  "cau-cat-mat-phang": "sphere-plane-intersection",
+  "cau-the-tich": "sphere-radius-and-volume",
+  "tru-thiet-dien-tron": "cylinder-perpendicular-section",
+  "tru-truc-xien": "tilted-right-cylinder-metrics",
+  "non-thiet-dien-truc": "cone-axial-section",
+  "non-duong-sinh": "cone-slant-height-and-surface",
+});
+
+function toAsciiHyphenSlug(raw: string): string {
+  const cleaned = raw
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[đĐ]/g, "d")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+  return cleaned || "geometry-problem";
+}
+
+function buildCanonicalSlugRegistry(): {
+  byId: ReadonlyMap<string, string>;
+  bySlug: ReadonlyMap<string, string>;
+} {
+  const byId = new Map<string, string>();
+  const bySlug = new Map<string, string>();
+  for (const s of GEOMETRY_SAMPLES) {
+    const base = CANONICAL_SAMPLE_SLUGS[s.id] ?? toAsciiHyphenSlug(s.id);
+    let candidate = base;
+    let suffix = 2;
+    while (bySlug.has(candidate) && bySlug.get(candidate) !== s.id) {
+      candidate = `${base}-${suffix}`;
+      suffix += 1;
+    }
+    byId.set(s.id, candidate);
+    bySlug.set(candidate, s.id);
+  }
+  return { byId, bySlug };
+}
+
+const _slugRegistry = buildCanonicalSlugRegistry();
+
+/** Trả về slug tiếng Anh chuẩn cho `sampleId` (hoặc giữ nguyên mã định danh lịch sử `h...`). */
+export function canonicalSlugForSampleId(sampleIdOrToken: string): string {
+  const trimmed = sampleIdOrToken.trim();
+  if (!trimmed) return "";
+  const direct = _slugRegistry.byId.get(trimmed);
+  if (direct) return direct;
+  const fromAlias = _slugRegistry.bySlug.get(trimmed.toLowerCase());
+  if (fromAlias) return _slugRegistry.byId.get(fromAlias) ?? trimmed.toLowerCase();
+  return trimmed;
 }
 
 export const DOMAIN_COLOR: Record<Domain, string> = {
@@ -51,30 +113,57 @@ export const DOMAIN_LABEL: Record<Domain, string> = {
   generic: "Tổng quát",
 };
 
+let _offlineCatalogMemo: CatalogEntry[] | null = null;
+let _discoverableCatalogMemo: CatalogEntry[] | null = null;
+let _publicCatalogMemo: CatalogEntry[] | null = null;
+let _sampleIdByConfigKeyMemo: Map<string, string> | null = null;
+
+function sampleIdByConfigKey(): ReadonlyMap<string, string> {
+  if (_sampleIdByConfigKeyMemo) return _sampleIdByConfigKeyMemo;
+  const m = new Map<string, string>();
+  for (const s of GEOMETRY_SAMPLES) {
+    m.set(`${s.envelope.simulation_id}|${JSON.stringify(s.envelope.config)}`, s.id);
+  }
+  _sampleIdByConfigKeyMemo = m;
+  return m;
+}
+
 /** TOÀN BỘ mẫu (kể cả fixture nội bộ) — cho test/dev/regression. */
 export function offlineCatalog(): CatalogEntry[] {
-  return [
-    // HÌNH HỌC — envelope SINH RA từ kernel, không viết tay (xem
-    // `geometry-samples.ts`). `domain` đọc từ envelope chứ không gán cứng
-    // "geometry" ở đây: gán cứng là dựng nguồn sự thật thứ hai, và nó sẽ lệch
-    // đúng lúc backend đổi nhãn miền.
-    //
-    // ⚠️ Hai nguồn cũ (`SAMPLES` — bài mẫu Tin học soạn sẵn; `OFFLINE_SAMPLES`
-    // — mẫu viết tay cho dev) đã gỡ cùng chín domain Tin học. Đây nay là nguồn
-    // DUY NHẤT của danh mục offline, và nó là nguồn SINH RA chứ không viết tay
-    // — tức bài mẫu không thể mang một toạ độ do người gõ vào.
+  if (_offlineCatalogMemo) return [..._offlineCatalogMemo];
+  // HÌNH HỌC — envelope SINH RA từ kernel, không viết tay (xem
+  // `geometry-samples.ts`). `domain` đọc từ envelope chứ không gán cứng
+  // "geometry" ở đây: gán cứng là dựng nguồn sự thật thứ hai, và nó sẽ lệch
+  // đúng lúc backend đổi nhãn miền.
+  //
+  // ⚠️ Hai nguồn cũ (`SAMPLES` — bài mẫu Tin học soạn sẵn; `OFFLINE_SAMPLES`
+  // — mẫu viết tay cho dev) đã gỡ cùng chín domain Tin học. Đây nay là nguồn
+  // DUY NHẤT của danh mục offline, và nó là nguồn SINH RA chứ không viết tay
+  // — tức bài mẫu không thể mang một toạ độ do người gõ vào.
+  const built: CatalogEntry[] = [
     ...GEOMETRY_SAMPLES.map(
-      (s): CatalogEntry => ({
-        id: s.id,
-        title: s.envelope.title,
-        simId: s.envelope.simulation_id,
-        domain: s.envelope.domain,
-        envelope: s.envelope,
-        visibility: "public",
-        preview: s.group,
-      }),
+      (s): CatalogEntry => {
+        const sc = (s.envelope as unknown as { scene3d?: Scene3D }).scene3d;
+        const normalizedTitle = normalizeCylinderEnvelopeTitle(s.envelope.title, sc);
+        const normalizedEnvelope =
+          normalizedTitle !== s.envelope.title
+            ? { ...s.envelope, title: normalizedTitle }
+            : s.envelope;
+        return {
+          id: s.id,
+          slug: canonicalSlugForSampleId(s.id),
+          title: normalizedTitle,
+          simId: s.envelope.simulation_id,
+          domain: s.envelope.domain,
+          envelope: normalizedEnvelope,
+          visibility: "public",
+          preview: s.group,
+        };
+      },
     ),
   ];
+  _offlineCatalogMemo = built;
+  return [...built];
 }
 
 /**
@@ -142,7 +231,20 @@ export const FOCUS_SIM_IDS: readonly string[] = [
  * metadata của từng mẫu.
  */
 export function publicCatalog(): CatalogEntry[] {
-  return discoverableCatalog().filter((e) => PRODUCT_DOMAINS.includes(e.domain));
+  if (!_publicCatalogMemo) {
+    _publicCatalogMemo = discoverableCatalog().filter((e) => PRODUCT_DOMAINS.includes(e.domain));
+  }
+  return [..._publicCatalogMemo];
+}
+
+/** Phân giải bài mẫu công khai theo `slug` tiếng Anh chuẩn HOẶC `id` tiếng Việt cũ (tương thích ngược §8). */
+export function resolveSampleByRouteToken(token: string | null | undefined): CatalogEntry | undefined {
+  if (!token) return undefined;
+  const trimmed = token.trim();
+  if (!trimmed) return undefined;
+  const lower = trimmed.toLowerCase();
+  const pub = publicCatalog();
+  return pub.find((e) => e.slug === lower || e.id === trimmed || e.id.toLowerCase() === lower);
 }
 
 /**
@@ -166,7 +268,10 @@ export function publicCatalog(): CatalogEntry[] {
  * ngưỡng là bỏ luôn thứ guard đang canh.
  */
 export function discoverableCatalog(): CatalogEntry[] {
-  return offlineCatalog().filter((e) => e.visibility === "public");
+  if (!_discoverableCatalogMemo) {
+    _discoverableCatalogMemo = offlineCatalog().filter((e) => e.visibility === "public");
+  }
+  return [..._discoverableCatalogMemo];
 }
 
 /**
@@ -178,9 +283,19 @@ export function discoverableCatalog(): CatalogEntry[] {
  */
 const STARTER_SAMPLE_IDS = [
   "thiet-dien-chop",
-  "vuong-goc-chop",
-  "the-tich-chop",
+  "cau-cat-mat-phang",
+  "tru-thiet-dien-tron",
+  "non-thiet-dien-truc",
 ];
+
+/** Nhãn phân loại khối hình học hiển thị trên thẻ gợi ý khám phá (Axo V2.7 P6). */
+export function geometryShapeLabel(sampleId: string): string {
+  const canonicalId = _slugRegistry.bySlug.get(sampleId.toLowerCase()) ?? sampleId;
+  if (canonicalId.startsWith("cau-")) return "Mặt cầu";
+  if (canonicalId.startsWith("tru-")) return "Hình trụ";
+  if (canonicalId.startsWith("non-")) return "Hình nón";
+  return "Hình chóp";
+}
 
 export function starterEntries(): CatalogEntry[] {
   const pub = publicCatalog();
@@ -190,4 +305,89 @@ export function starterEntries(): CatalogEntry[] {
     if (entry) out.push(entry);
   }
   return out;
+}
+
+
+export const LIBRARY_CATEGORY_ORDER = [
+  "all",
+  "Hình chóp",
+  "Mặt cầu",
+  "Hình trụ",
+  "Hình nón",
+] as const;
+
+export type LibraryCategory = (typeof LIBRARY_CATEGORY_ORDER)[number];
+
+/** Đề bài đầy đủ của mẫu hình học (hiển thị ở mô tả thẻ Thư viện Axo V2.7). */
+export function problemTextForSample(sampleId: string): string {
+  const canonicalId = _slugRegistry.bySlug.get(sampleId.toLowerCase()) ?? sampleId;
+  const sample = GEOMETRY_SAMPLES.find((s) => s.id === canonicalId);
+  return sample?.problemText ?? "";
+}
+
+/**
+ * Khớp mẫu hình học từ `id`/`slug` hoặc `simulation_id + config` (tất định). KHÔNG khớp theo tiêu đề:
+ * hai đề khác nhau có thể trùng tiêu đề, nên tiêu đề không phải bằng chứng là cùng một bài.
+ */
+export function resolveGeometrySampleId(
+  target:
+    | { id?: string | null; title?: string | null; envelope?: SimulationEnvelope | null }
+    | null
+    | undefined,
+): string | null {
+  if (!target) return null;
+  if (target.id) {
+    const byRouteToken = resolveSampleByRouteToken(target.id);
+    if (byRouteToken) return byRouteToken.id;
+    const byDirectId = GEOMETRY_SAMPLES.find((s) => s.id === target.id);
+    if (byDirectId) return byDirectId.id;
+  }
+  if (target.envelope) {
+    const byConfig = sampleIdByConfigKey().get(
+      `${target.envelope.simulation_id}|${JSON.stringify(target.envelope.config)}`,
+    );
+    if (byConfig) return byConfig;
+  }
+  return null;
+}
+
+/**
+ * Khôi phục `scene3d` tất định từ `GEOMETRY_SAMPLES` cho các bản ghi lịch sử
+ * được lưu trước khi `sanitizeEnvelope` giữ lại `scene3d`, miễn là bản ghi đó
+ * khớp chính xác bài mẫu công khai theo `simulation_id` + `config` (cùng chương trình đã biên dịch).
+ * Không khớp theo tiêu đề; bản ghi không khớp được trả nguyên trạng (không có `scene3d`) để
+ * xưởng báo thiếu dữ liệu thay vì gán cảnh của một bài mẫu trông giống.
+ */
+export function recoverCatalogScene3D(env: SimulationEnvelope): SimulationEnvelope {
+  const raw = env as SimulationEnvelope & { scene3d?: unknown };
+  if (raw.scene3d !== undefined && raw.scene3d !== null) {
+    return env;
+  }
+  const matchedId = sampleIdByConfigKey().get(`${env.simulation_id}|${JSON.stringify(env.config)}`);
+  if (matchedId) {
+    const byConfig = GEOMETRY_SAMPLES.find((s) => s.id === matchedId);
+    if (byConfig) {
+      const sampleScene = (byConfig.envelope as SimulationEnvelope & { scene3d?: unknown }).scene3d;
+      return { ...env, scene3d: sampleScene } as SimulationEnvelope;
+    }
+  }
+  return env;
+}
+
+/** Nhãn loại hình học (`Hình chóp`, `Mặt cầu`, `Hình trụ`, `Hình nón`) cho mục lịch sử hoặc mẫu. */
+export function geometryCategoryForItem(
+  target:
+    | { id?: string | null; title?: string | null; envelope?: SimulationEnvelope | null }
+    | null
+    | undefined,
+): Exclude<LibraryCategory, "all"> {
+  const sampleId = resolveGeometrySampleId(target);
+  if (sampleId) {
+    return geometryShapeLabel(sampleId) as Exclude<LibraryCategory, "all">;
+  }
+  const text = `${target?.title ?? ""} ${target?.envelope?.title ?? ""}`.toLowerCase();
+  if (text.includes("mặt cầu") || text.includes("khối cầu")) return "Mặt cầu";
+  if (text.includes("hình trụ") || text.includes("khối trụ")) return "Hình trụ";
+  if (text.includes("hình nón") || text.includes("khối nón")) return "Hình nón";
+  return "Hình chóp";
 }

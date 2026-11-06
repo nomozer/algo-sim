@@ -1,0 +1,4 @@
+VIOLATION rule=HARDCODED_PASSWORD path=backend/tests/conftest_classroom.py blob=23109136246969205f96e638c0a14af7fd301ef5 line=24
+VIOLATION rule=HARDCODED_PASSWORD path=backend/tests/test_auth_api.py blob=28be1ef6cc0e861fbd0e77c72b6fd03fa454bd93 line=197
+VIOLATION rule=GOOGLE_API_KEY path=docs/evaluation/geometry/runs/axo-premerge-closure/logs/an1.log blob=f4b76988c5c8249e4ae9e3cf01b0ca85dd9af441 line=865
+SUMMARY scanned=4027 messages=146 violations=3 pending_exception=0 verdict=BLOCKED

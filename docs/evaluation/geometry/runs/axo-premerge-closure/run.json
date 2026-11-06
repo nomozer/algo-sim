@@ -1,0 +1,36 @@
+{
+  "run_id": "axo-premerge-closure",
+  "date": "2026-11-07",
+  "branch": "integration/axo-hybrid4-reliability",
+  "baseline": "b0c2dfe52",
+  "main": "bb61a804e (= origin/main = merge-base)",
+  "status": {"squash_merge": "READY_TO_MERGE", "merge_with_history": "BLOCKED (blob exceptions 23109136, 28be1ef6, f4b76988)", "merged": false, "pushed": false},
+  "deployment_conditions": ["POSTGRES_NOT_TESTED", "alembic upgrade head (e437149641fa)"],
+  "provider_calls": 0,
+  "commits": [
+    {"sha": "8db058d3c", "role": "no provider work without a server-issued session (analyze + image extract), client retries once"},
+    {"sha": "9a7c0ce94", "role": "test type fix caught by tsc -b"},
+    {"sha": "cee124a11", "role": "real-Chrome session_required check"},
+    {"sha": "33e1cda25", "role": "candidate freeze 09c1a089 (103 files), CACHE_VERSION 132, template rebind"}
+  ],
+  "tested_tree": {"commit": "33e1cda25", "tree": "aacd8777aeacd4bbe8e1adb7055e353db109b596"},
+  "final_head": {"commit": "7c52aecc8", "tree": "0d7ddd8a214b8d632d9df8a66b49bc23e096cc95", "differs_from_tested_tree": "docs/ only",
+                 "squash_publication": "PASS 0 (3328 blobs)", "history_publication": "BLOCKED 3 (23109136, 28be1ef6, f4b76988)"},
+  "merge_simulation": {
+    "merge_with_history": {"commit": "ae3425f4b (temporary)", "tree": "aacd8777", "publication": "BLOCKED 2 (23109136, 28be1ef6); flagged lines identical to lines on origin/main"},
+    "squash": {"commit": "54490776f (temporary)", "tree": "aacd8777", "publication": "PASS 0 (3047 blobs)"}
+  },
+  "verification": {
+    "session_quota": {"backend": "15/15; stress 10 x 15 = 150/150 under 4 CPU burners", "browser_session_required": "2/2", "route_tests": "579 passed"},
+    "vitest": "134 files / 2003", "build": "PASS after one FAIL (fixed 9a7c0ce9)",
+    "browser": {"consistency": "41/41 incl. real Chrome 110%", "two_tab": "8/8", "camera": "30/30", "stale_dist_runs": "kept as stale-dist-*, not counted"},
+    "seal": "MATCH 09c1a089 (103 files)",
+    "t3": [{"tree": "33e1cda25", "run": 1, "result": "FULL_PRODUCT_GATE_PASS", "pytest": "13878 passed, 7 skipped, 3 deselected, 9 xfailed", "vitest": "134/2003"}],
+    "node_harness": "155: 153 pass, 0 fail, 2 environment skips",
+    "head_publication": "97 pending, all identical blobs to origin/main",
+    "postgres": "POSTGRES_NOT_TESTED (Docker down, no service, port 5432 closed; nothing started)"
+  },
+  "limits": ["per-session quota only, no per-person abuse limit", "in-process idempotency (single worker shipped)", "LIVE_NOT_TESTED prism"],
+  "cache_version_changed": false,
+  "model_surface_changed": false
+}

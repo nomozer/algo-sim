@@ -1,0 +1,20 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "goal-aware-visual-scaffolding — 4-tier step visual role policy (PRIMARY/CONTEXT/SUPPORT/INACTIVE), bounded cutting-plane collar & retirement lifecycle, non-spoiler section completion narration, and spatial-relation witness prominence (487d483b)",
+  "corrects": "docs/evaluation/geometry/runs/construction-integrity-audit/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "current_candidate_hash": "4b7114965da230650e2ab0570ee158d24b6fee4e3cdece689ecd40b50a290866",
+  "current_product_commit": "487d483bfcf24a5f26e41ab9aa9460be6139720f",
+  "current_candidate_source": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+  "diverged": true,
+  "reason": "Frontend-only Scene3D goal-aware visual scaffolding (scene3d-semantic-policy.ts, scene3d-edge-visibility.ts, scene3d-view.tsx): metadata-driven 4-tier StepVisualRole policy (PRIMARY/CONTEXT/SUPPORT/INACTIVE), compact coplanar cutting-plane collar (cutCollarScale=0.68) with automatic retirement upon filled section completion (restorable via #chk-aux or direct Study Dock selection), non-spoiler observable section completion narration, nonCanonicalLoop plane-border attenuation, and PRIMARY perpendicular-witness emphasis. Zero edits to backend/app or semantic_program contract; measured_system tree_hash (4b711496...) unchanged.",
+  "cache_version": 130,
+  "cache_version_hien_tai": 130,
+  "cache_decision": "NO_BUMP 130: frontend-only Scene3D presentation policy; default LLM_ONLY /api/analyze pipeline, prompts, schemas, grammar cards, and backend code are untouched.",
+  "hieu_luc_len_ket_qua_da_do": {
+    "historical_measurements": "UNCHANGED",
+    "live_requests": 0,
+    "so_lieu_lượt_đo_cuối": "UNCHANGED: historical measurements are not rescored."
+  }
+}

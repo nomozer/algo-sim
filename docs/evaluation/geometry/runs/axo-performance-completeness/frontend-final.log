@@ -1,0 +1,13 @@
+
+> algo-sim-frontend@0.1.0 test
+> vitest run
+
+
+ RUN  v4.1.10 D:/Documents/projects/algo-sim/.superpowers/worktrees/axo-pedagogical-integration/frontend
+
+
+ Test Files  121 passed (121)
+      Tests  1786 passed (1786)
+   Start at  17:49:59
+   Duration  22.53s (transform 17.24s, setup 3.34s, import 60.55s, tests 109.68s, environment 23ms)
+

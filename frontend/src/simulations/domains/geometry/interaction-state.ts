@@ -30,7 +30,7 @@ import {
   type SceneObject,
   type VisualTransform,
   type VisualVec3,
-  clampStep,
+  clampStep, classifyQuantityProvenance,
   laSoTrinhBayHopLe,
   toNumber,
 } from "./scene3d-model";
@@ -195,7 +195,7 @@ export function tangNhanManh(scene: Scene3D, id: string): Map<string, TangNhanMa
   }
   const ra = new Map<string, TangNhanManh>([[id, "dich"]]);
   for (const x of dependencyClosure(scene, id)) {
-    ra.set(x, !so.has(x) ? "boi_canh" : theoId.get(x)?.origin === "free" ? "du_kien_so" : "trung_gian");
+    ra.set(x, !so.has(x) ? "boi_canh" : (theoId.get(x) && classifyQuantityProvenance(theoId.get(x)!, scene) === "GIVEN") ? "du_kien_so" : "trung_gian");
   }
   /* regular-triangular-pyramid-w01 · D2: đại lượng không có hình — vật học sinh cần NHÌN là CHỦ THỂ nhãn của nó (đoạn
      SO của chiều cao, đáy ABCD của diện tích) do backend gắn (`annotation.subject_ids`), không phải phụ thuộc tính

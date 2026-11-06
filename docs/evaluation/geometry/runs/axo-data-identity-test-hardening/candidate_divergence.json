@@ -1,0 +1,20 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "axo-data-identity-test-hardening — submission vs compiled-geometry identity, statement provenance, viewer no longer mutates Scene3D, vitest worker cap (7a46646e)",
+  "corrects": "docs/evaluation/geometry/runs/axo-scene-identity-cleanup/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "current_candidate_hash": "6809d79b51f6e47be1e8af03ae065563b2028fcd823c22a91b61600b242d7fad",
+  "current_product_commit": "7a46646e38c0358db851f0e16a3ac1d1e9f15369",
+  "current_candidate_source": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+  "diverged": true,
+  "reason": "Frontend-only changes: history keys (submissionIdOf/sceneDigestOf), presentation context in loadEnvelope/reopenFromHistory, statement source in SimulationWorkspace, render-copy for the sphere runtime flag in scene3d-view, vitest maxWorkers in vite.config. Backend measured_system (118 files, 6809d79b51f6e47b...) and historical benchmark receipts unchanged.",
+  "cache_version": 131,
+  "cache_version_hien_tai": 131,
+  "cache_decision": "RETAIN 131: zero backend edits; no prompt, schema or routing policy change.",
+  "hieu_luc_len_ket_qua_da_do": {
+    "historical_measurements": "UNCHANGED",
+    "live_requests": 0,
+    "so_lieu_lượt_đo_cuối": "UNCHANGED: no earlier result is re-scored."
+  }
+}

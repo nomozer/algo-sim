@@ -1,0 +1,105 @@
+{
+ "provider_calls": 0,
+ "summary": {
+  "CORRECTLY_SERVED": 6,
+  "CORRECTLY_REFUSED": 3,
+  "INCORRECTLY_REFUSED": 0,
+  "INCORRECTLY_SERVED": 0
+ },
+ "rows": [
+  {
+   "case": "wording 'cắt bởi (MNP)' without 'mặt phẳng'",
+   "expected": "SERVE",
+   "status": "SERVED",
+   "code": null,
+   "vertices": 4,
+   "area": "3√5/8",
+   "oracle": {
+    "vertices": 4,
+    "area2": "45/64"
+   },
+   "class": "CORRECTLY_SERVED"
+  },
+  {
+   "case": "wording 'Tìm thiết diện … cắt bởi mặt phẳng (MNP)', points on SB/SD/SC",
+   "expected": "SERVE",
+   "status": "SERVED",
+   "code": null,
+   "vertices": 4,
+   "area": "4",
+   "oracle": {
+    "vertices": 4,
+    "area2": "16"
+   },
+   "class": "CORRECTLY_SERVED"
+  },
+  {
+   "case": "letters O.KLMN / X,Y,Z, side 6, height 3, mixed ratios",
+   "expected": "SERVE",
+   "status": "SERVED",
+   "code": null,
+   "vertices": 4,
+   "area": "9√149/10",
+   "oracle": {
+    "vertices": 4,
+    "area2": "12069/100"
+   },
+   "class": "CORRECTLY_SERVED"
+  },
+  {
+   "case": "points on apex edges and a base edge (SA, SC, AB)",
+   "expected": "SERVE",
+   "status": "SERVED",
+   "code": null,
+   "vertices": 5,
+   "area": "5√3/4",
+   "oracle": {
+    "vertices": 5,
+    "area2": "75/16"
+   },
+   "class": "CORRECTLY_SERVED"
+  },
+  {
+   "case": "right prism DEF.D'E'F', premise order shuffled, mid-height plane",
+   "expected": "SERVE",
+   "status": "SERVED",
+   "code": null,
+   "vertices": 3,
+   "area": "6",
+   "oracle": {
+    "vertices": 3,
+    "area2": "36"
+   },
+   "class": "CORRECTLY_SERVED"
+  },
+  {
+   "case": "plane equal to a face (SAB)",
+   "expected": "REFUSE_OR_FACE",
+   "status": "SERVED",
+   "code": null,
+   "vertices": 3,
+   "class": "CORRECTLY_SERVED"
+  },
+  {
+   "case": "three collinear points on a base edge (A, M, B)",
+   "expected": "REFUSE",
+   "status": "REFUSED",
+   "code": "COLLINEAR_POINTS",
+   "class": "CORRECTLY_REFUSED"
+  },
+  {
+   "case": "undeclared points X, Y",
+   "expected": "REFUSE",
+   "status": "REFUSED",
+   "code": "UNDERDETERMINED_POINT",
+   "class": "CORRECTLY_REFUSED"
+  },
+  {
+   "case": "section request that never names the plane",
+   "expected": "REFUSE",
+   "status": "REFUSED",
+   "code": "PLANE_NOT_IN_QUOTE",
+   "class": "CORRECTLY_REFUSED"
+  }
+ ]
+}

@@ -1,0 +1,138 @@
+{
+  "gate_version": "scene3d-orbit-gate/3",
+  "keo": {
+    "NGANG_THEO_CAO": 1.25,
+    "CHO_ON_DINH_MS": 20000,
+    "KHUNG_LANG": 30,
+    "NGUONG_LANG_DO": 0.01
+  },
+  "commit": "09634f922fa59eaa13b260d3c6a457d8ea02d7df",
+  "chay_luc": "2026-11-06T02:03:55.836Z",
+  "tiem": null,
+  "nguong": {
+    "CHUAN_TRUC": 0.99,
+    "VONG_NGANG_DO": 360,
+    "COS_CUC": 0.9,
+    "SNAP_DO": 25
+  },
+  "ca": [
+    {
+      "tag": "p1",
+      "caoCanvas": 758,
+      "keoNgangPx": 948,
+      "khungHep": false,
+      "khongOnDinh": true,
+      "docDuocCamera": true,
+      "khungDo": {
+        "yen": 0,
+        "vong": 203,
+        "nhieuVong": 409,
+        "doc": 303
+      },
+      "yenTong": 0,
+      "vongNgangDo": 382.65619730954836,
+      "nhieuVongDo": 764.4577201256933,
+      "chuanTruc": 1,
+      "trucQuayVec": [
+        0,
+        0,
+        1
+      ],
+      "trucTen": "Z",
+      "cucMin": -0.9999874830245972,
+      "cucMax": 0.9999874830245972,
+      "huong": {
+        "truoc": true,
+        "sau": true,
+        "trai": true,
+        "phai": true,
+        "tren": true,
+        "duoi": true
+      },
+      "snap": 0,
+      "capPhat": 0,
+      "ctxs": 1,
+      "draws": 4884,
+      "trangThai": "KHONG_ON_DINH"
+    },
+    {
+      "tag": "p6",
+      "caoCanvas": 758,
+      "keoNgangPx": 948,
+      "khungHep": false,
+      "khongOnDinh": true,
+      "docDuocCamera": true,
+      "khungDo": {
+        "yen": 0,
+        "vong": 174,
+        "nhieuVong": 340,
+        "doc": 271
+      },
+      "yenTong": 0,
+      "vongNgangDo": 381.81465289476,
+      "nhieuVongDo": 764.5099764083863,
+      "chuanTruc": 1,
+      "trucQuayVec": [
+        0,
+        0,
+        1
+      ],
+      "trucTen": "Z",
+      "cucMin": -0.9999874830245972,
+      "cucMax": 0.9999874830245972,
+      "huong": {
+        "truoc": true,
+        "sau": true,
+        "trai": true,
+        "phai": true,
+        "tren": true,
+        "duoi": true
+      },
+      "snap": 0,
+      "capPhat": 4,
+      "ctxs": 1,
+      "draws": 3179,
+      "trangThai": "KHONG_ON_DINH"
+    },
+    {
+      "tag": "p7",
+      "caoCanvas": 758,
+      "keoNgangPx": 948,
+      "khungHep": false,
+      "khongOnDinh": true,
+      "docDuocCamera": true,
+      "khungDo": {
+        "yen": 0,
+        "vong": 165,
+        "nhieuVong": 324,
+        "doc": 254
+      },
+      "yenTong": 0,
+      "vongNgangDo": 381.7992751499692,
+      "nhieuVongDo": 764.483236051876,
+      "chuanTruc": 1,
+      "trucQuayVec": [
+        0,
+        0,
+        1
+      ],
+      "trucTen": "Z",
+      "cucMin": -0.9999874830245972,
+      "cucMax": 0.9999874830245972,
+      "huong": {
+        "truoc": true,
+        "sau": true,
+        "trai": true,
+        "phai": true,
+        "tren": true,
+        "duoi": true
+      },
+      "snap": 0,
+      "capPhat": 0,
+      "ctxs": 1,
+      "draws": 2880,
+      "trangThai": "KHONG_ON_DINH"
+    }
+  ],
+  "dat": false
+}

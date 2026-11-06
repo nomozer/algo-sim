@@ -12,6 +12,7 @@ liệu test sinh tại chỗ.
 
 from __future__ import annotations
 
+import secrets
 import tempfile
 import uuid
 from pathlib import Path
@@ -21,7 +22,8 @@ from fastapi.testclient import TestClient
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-TEST_PASSWORD = "matkhau-test-12345"
+# Generated per test session: no credential-shaped literal in the repository (publication scan `HARDCODED_PASSWORD`).
+TEST_PASSWORD = "t" + secrets.token_hex(8)
 
 
 @pytest.fixture()
@@ -37,8 +39,6 @@ def api(monkeypatch):
     Chỉ có HAI nơi mở phiên DB (`app.main` và `app.accounts.router`), nên trỏ
     lại đúng hai cái tên đó là đủ, và nó không đụng gì tới metadata.
     """
-    from sqlalchemy.pool import StaticPool
-
     import app.accounts.router as router_mod
     import app.main as main_mod
     import app.persistence.classroom_models  # noqa: F401  (đăng ký bảng)
@@ -49,10 +49,14 @@ def api(monkeypatch):
     # Mã giáo viên: cố định trong test để kiểm được cả nhánh đúng lẫn nhánh sai.
     monkeypatch.setenv("ALGOSIM_TEACHER_SIGNUP_CODE", "MA-GIAO-VIEN-TEST")
 
+    # A file DB with the default pool: one connection per thread, like the product engine
+    # (`app.persistence.db._engine_kwargs`). `StaticPool` shared ONE sqlite3 connection between the threads of
+    # concurrent requests, which interleaved their cursors (FlushError "NULL identity key", IndexError) — the
+    # T3 flake of `test_overlapping_analyses_are_charged_only_their_own_tokens` (run
+    # axo-final-reliability-premerge-gate).
     engine = create_engine(
         f"sqlite:///{db_path}",
         connect_args={"check_same_thread": False},
-        poolclass=StaticPool,
     )
     db_mod.Base.metadata.create_all(engine)
     TestSession = sessionmaker(bind=engine, autoflush=False)

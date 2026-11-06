@@ -1,0 +1,28 @@
+{
+  "run_id": "axo-hybrid4-integration-reliability",
+  "task_slug": "axo-hybrid4-integration-reliability",
+  "date": "2026-11-05/2026-11-06",
+  "branch": "integration/axo-hybrid4-reliability",
+  "main": "bb61a804eb2b476f796e28176084ea41b0bed92e",
+  "axo_branch_head": "67f780ca9711a866727741f16bd09ab5ad5d3849",
+  "merge_base": "f986e897bd266d06d4a9c5fa78c05463b7b247bf",
+  "commits": ["75d88a31", "0d17276c", "bb2f88a1", "0151cc68", "d221c5a4", "1383614d", "cb564b1e"],
+  "product_commit": "0d17276cba961a6f4f182fcc58124e1f3d853821",
+  "measured_system": { "files": 102, "tree_hash": "731ee9391bb618bbe6334b9d955a9581c7575083937fa1752c0b57fc3c4bf742" },
+  "cache_version": 132,
+  "provider_calls": 0,
+  "status": "READY_FOR_USER_REVIEW",
+  "verification": {
+    "t3_full_gate": "FULL_PRODUCT_GATE_PASS at d221c5a4 in a clean detached worktree (logs/t3-full-gate-d221c5a4.log); first attempt at 0151cc68 failed typecheck (logs/t3-full-gate-0151cc68-build-fail.log)",
+    "pytest": "13782 passed, 7 skipped, 9 xfailed (inside T3)",
+    "vitest": "128 files / 1925 tests (inside T3)",
+    "browser_e2e": "browser/receipt.json 36/36",
+    "ui_harness": "ui-run-1, ui-run-2: 40/40 each",
+    "performance_pair": "perf-before-axo (67f780ca) vs perf-after-final (d221c5a4)",
+    "navigation_pair": "nav-before-axo vs nav-after-final",
+    "main_baseline": "perf-before/, nav-before/: main's UI lacks the Axo library/step dock/entity chips, scenarios time out (kept as evidence)"
+  },
+  "diagnostic_left_untracked": ["perf-after/", "nav-after/"],
+  "publication_safety": "head BLOCKED like main (98 pending owner decisions, 0 new); range BLOCKED by 1 historical Axo blob 6533b586 (test password literal), fixed in tree by cb564b1e, needs owner exception",
+  "open": ["two real browser tabs NOT TESTED", "server-side idempotency NOT IMPLEMENTED", "Case C invariant without a main test", "cold open P95 unexplained"]
+}

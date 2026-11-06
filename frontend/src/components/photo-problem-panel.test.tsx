@@ -102,7 +102,7 @@ describe("ô nhập đề — hai lối vào ảnh, luồng gõ tay còn nguyên
   });
 
   it("luồng gõ tay KHÔNG đổi: ô nhập, nút gửi, nút + vẫn ở đó; chưa có khối ảnh", () => {
-    expect(html).toContain('placeholder="Nhập đề hình học không gian, hoặc tải lên tệp đề…"');
+    expect(html).toContain('placeholder="Nhập đề toán hình học không gian..."');
     expect(html).toContain('aria-label="Phân tích đề bằng AI"');
     expect(html).toContain('aria-label="Tải tệp đề"');
     expect(html).not.toContain("photo-panel");

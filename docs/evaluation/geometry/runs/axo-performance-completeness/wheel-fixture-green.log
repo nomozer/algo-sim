@@ -1,0 +1,9 @@
+
+ RUN  v4.1.10 D:/Documents/projects/algo-sim/.superpowers/worktrees/axo-pedagogical-integration/frontend
+
+
+ Test Files  2 passed (2)
+      Tests  11 passed (11)
+   Start at  17:45:19
+   Duration  4.94s (transform 1.57s, setup 118ms, import 1.86s, tests 2.76s, environment 0ms)
+

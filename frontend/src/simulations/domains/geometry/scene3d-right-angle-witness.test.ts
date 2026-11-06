@@ -171,12 +171,21 @@ describe("G1 — BC ⊥ (SAB) (vuong-goc-chop thật): dấu từ phép đo cos�
 });
 
 describe("đoạn chứng minh không vẽ chồng lên cạnh đã có", () => {
-  it("the-tich-chop: chân A, cạnh dấu chĩa B — AB là cạnh đáy ⇒ không vẽ đoạn chứng minh thứ hai", () => {
+  it("the-tich-chop: chiều cao SA mang chứng chỉ vuông góc tại A, không sinh trùng nhân chứng thứ hai; AB là cạnh đáy ⇒ không vẽ đoạn chứng minh thứ hai", () => {
     const s = canh("the-tich-chop");
-    const ws = nhanChungKetQua(s);
-    expect(ws.length).toBeGreaterThan(0);
-    const w = ws.find((x) => x.uTo)!;
-    expect(w.foot).toEqual(toVec3(s.objects.find((o) => o.id === "A")!.xyz!));
+    const sa = s.objects.find((o) => o.id === "chieu_cao_SA")!;
+    expect(sa.perpendicular_witness?.can_present_as_proven).toBe(true);
+    expect(toVec3(sa.perpendicular_witness!.foot)).toEqual(toVec3(s.objects.find((o) => o.id === "A")!.xyz!));
+    expect(nhanChungKetQua(s)).toEqual([]);
+    const w: WitnessShown = {
+      id: "chieu_cao_SA",
+      vai: "hinh_chieu",
+      from: toVec3(s.objects.find((o) => o.id === "S")!.xyz!),
+      foot: toVec3(sa.perpendicular_witness!.foot),
+      u: toVec3(sa.perpendicular_witness!.marker.u),
+      v: toVec3(sa.perpendicular_witness!.marker.v),
+      uTo: toVec3(s.objects.find((o) => o.id === "B")!.xyz!),
+    };
     const nhom = vatNhanChung(w, [], undefined, false, doanDaVe(s.objects));
     expect(nhom.children.some((x) => x.name.startsWith("witness_leg:"))).toBe(false);
   });
@@ -223,13 +232,13 @@ describe("khoảng cách hai đường chéo nhau: đoạn vuông góc chung do 
 });
 
 describe("chấm chân không chồng lên một điểm có tên", () => {
-  const s = canh("the-tich-chop");
-  const w = nhanChungKetQua(s).find((x) => x.uTo)!;
+  const s = canh("vuong-goc-chop");
+  const w = nhanChungKetQua(s)[0]!;
   const chams = (nhom: THREE.Group) => nhom.children.filter((x) => (x as THREE.Mesh).isMesh);
 
-  it("chân ≡ đỉnh A đã vẽ ⇒ không có chấm chân thứ hai (A không bị tô thành điểm dẫn xuất)", () => {
-    const A = toVec3(s.objects.find((o) => o.id === "A")!.xyz!);
-    expect(chams(vatNhanChung(w, [], undefined, false, doanDaVe(s.objects), [A]))).toHaveLength(0);
+  it("chân ≡ đỉnh B đã vẽ ⇒ không có chấm chân thứ hai (B không bị tô thành điểm dẫn xuất)", () => {
+    const B = toVec3(s.objects.find((o) => o.id === "B")!.xyz!);
+    expect(chams(vatNhanChung(w, [], undefined, false, doanDaVe(s.objects), [B]))).toHaveLength(0);
   });
 
   it("chân không trùng điểm có tên nào ⇒ chấm chân vẫn đánh dấu chân", () => {

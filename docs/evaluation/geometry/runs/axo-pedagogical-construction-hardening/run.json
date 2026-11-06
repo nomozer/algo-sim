@@ -1,0 +1,27 @@
+{
+  "run_id": "axo-pedagogical-construction-hardening",
+  "date": "2026-11-04",
+  "agent": "Antigravity",
+  "authorization": "Task prompt 2026-11-04 (AXO — Root-Cause Stabilization & Cross-Family Scene3D Acceptance). Local integration branch only; main and feat/axo-v27-frontend-integration untouched; no merge to main, no push to remote.",
+  "branch": "integration/axo-pedagogical-construction-hardening",
+  "joined_branches": {
+    "main": "f986e897bd266d06d4a9c5fa78c05463b7b247bf",
+    "feat_axo_v27_frontend_integration": "6b980f2b09333e790cf7ab0d81d7fa016686359d"
+  },
+  "product_commit": "215e664d76fb2d980535db90c56f0d8ced121384",
+  "measured_system": {
+    "files": 118,
+    "tree_hash": "6809d79b51f6e47be1e8af03ae065563b2028fcd823c22a91b61600b242d7fad"
+  },
+  "cache_version": 131,
+  "cache_decision": "RETAIN 131: main's v131 certified section-edge justification contract and cache_identity.lock.json match semantic_environment_fingerprint() identically; default LLM_ONLY /api/analyze pipeline untouched.",
+  "default_mode": "LLM_ONLY",
+  "hybrid": "OPT_IN_ONLY",
+  "provider_calls": 0,
+  "verification": {
+    "frontend_vitest": "118 files passed, 1778 tests passed",
+    "frontend_build": "tsc -b && vite build exit 0 (3 JS chunks: vendor-three, geometry-samples, index)",
+    "backend_offline_pytest": "13374 geometry tests + holdout readiness + docs IA + benchmark seal passed offline (ALLOW_LIVE_AI=0, 0 provider calls)",
+    "playwright_visual_audit": "12/12 live WebGL acceptance checks passed (0 console.error, 0 pageerror) + Before/After 6-stage open-latency & 22-switch memory/context benchmarks (warm reopen median 362.70 -> 146.20 ms, P95 584.75 -> 176.80 ms; 22-switch median 336.45 -> 175.15 ms, P95 869.94 -> 241.59 ms; WebGL contexts 34 -> 1)"
+  }
+}

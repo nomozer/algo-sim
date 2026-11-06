@@ -32,6 +32,8 @@ export const KHOA_HYBRID_VIEW = "hybrid_preview";
 /** Đáp số tổng quát của một đại lượng kết quả: `answers[id]` ↔ đại lượng cảnh `kq_<id>` (engine.py `kq_{c.id}`). */
 export interface HybridAnswerView {
   quantity_id: string;
+  /** Exact coefficient checked against the scene at transport; retained for history revalidation. */
+  coefficient?: string;
   /** Đáp số dạng chữ của backend, vd `a³√3/3`. */
   symbolic: string;
   /** Bậc theo đơn vị ký hiệu (0 ⇒ không thứ nguyên / đề dùng số). */
@@ -52,12 +54,59 @@ export interface HybridObservationView {
   anchor_step: number;
 }
 
+/** `route_d.source_provenance` của Adapter /4 (`adapter4_route.py`): dữ kiện đã đối chiếu nguyên văn đề. */
+export interface HybridSourceProvenanceEntry {
+  /** Định danh lời gọi của Adapter /4 (`result.calls[].id`) hoặc định danh dữ kiện mở rộng (`fact_id`). */
+  id?: string;
+  fact_id?: string | null;
+  /** Tên hàm Registry của Adapter /4 (`regular_polygon`, `rectangle`, `right_angle`, `segment_length`...). */
+  fn?: string;
+  kind?: string;
+  args?: Record<string, unknown>;
+  quotes?: string[];
+  verified?: boolean;
+  polygon?: string[];
+  edge?: string[];
+  points?: string[];
+  vertex?: string;
+  rays?: string[][];
+  line?: string;
+  plane?: string[];
+  value_display?: string | null;
+}
+
+export interface HybridRelationProofLayer {
+  verified: true;
+  [key: string]: unknown;
+}
+
+/** `route_d.relation_certificates` (`geometric-relation-certificate/1`, bốn tầng chứng cứ, hoặc dạng rút gọn đã kiểm). */
+export interface HybridRelationCertificateEntry {
+  schema_version?: string;
+  relation_id?: string | null;
+  relation_kind?: string;
+  subject_id?: string;
+  target_id?: string;
+  SOURCE_GROUNDING_PROOF?: HybridRelationProofLayer;
+  GEOMETRIC_RELATION_PROOF?: HybridRelationProofLayer;
+  KERNEL_EXECUTION_PROOF?: HybridRelationProofLayer;
+  RESULT_CERTIFICATE?: HybridRelationProofLayer;
+  kind?: string;
+  verified?: boolean;
+  rule?: string | null;
+  details?: Record<string, unknown> | null;
+}
+
 export interface HybridPreviewView {
   adapter_version: typeof HYBRID_PREVIEW_ADAPTER | typeof HYBRID_SIMULATION_ADAPTER;
   answers: HybridAnswerView[];
   observations: HybridObservationView[];
   /** Adapter /4 certificates and provenance, never promoted to source givens. */
   sections?: HybridSectionView[];
+  /** Mang tiếp `route_d.source_provenance`/`relation_certificates` đã kiểm để Scene3D gắn dữ kiện đề cho với nguồn
+   *  (`scene3d-model.ts`, `scene3d-semantic-policy.ts`); chỉ phần tử `verified: true` hoặc có trích dẫn mới qua. */
+  source_provenance?: HybridSourceProvenanceEntry[];
+  relation_certificates?: HybridRelationCertificateEntry[];
 }
 
 export interface HybridSectionView {
@@ -411,6 +460,84 @@ function kiemEngineDerivedSection(
 }
 
 /** Malformed scene shapes refuse instead of throwing (the boundary never raises). */
+function laMangChuoiKhongRong(x: unknown): x is string[] {
+  return Array.isArray(x) && x.every((item) => typeof item === "string" && item.trim().length > 0);
+}
+
+/** Phần tử provenance chỉ qua khi đã xác minh (`verified: true`) hoặc mang trích dẫn nguyên văn; `verified: false` ⇒ từ chối. */
+function kiemSourceProvenance(raw: unknown): string | null {
+  if (!Array.isArray(raw)) return "source_provenance phải là mảng";
+  for (const item of raw) {
+    if (!laDoiTuong(item)) return "source_provenance có phần tử sai dạng";
+    const hasFn = typeof item.fn === "string" && item.fn.trim().length > 0;
+    const hasKind = typeof item.kind === "string" && item.kind.trim().length > 0;
+    if (!hasFn && !hasKind) return "source_provenance có phần tử thiếu fn/kind hợp lệ";
+    if (item.fn !== undefined && !hasFn) return "source_provenance.fn sai dạng";
+    if (item.kind !== undefined && !hasKind) return "source_provenance.kind sai dạng";
+    if (item.id !== undefined && (typeof item.id !== "string" || !item.id.trim())) return "source_provenance.id sai dạng";
+    if (item.args !== undefined && !laDoiTuong(item.args)) return "source_provenance.args sai dạng";
+    if (item.quotes !== undefined && (!laMangChuoiKhongRong(item.quotes) || item.quotes.length === 0)) return "source_provenance.quotes sai dạng";
+    if (item.fact_id != null && typeof item.fact_id !== "string") return "source_provenance.fact_id sai dạng";
+    if (item.verified !== undefined && typeof item.verified !== "boolean") return "source_provenance.verified sai dạng";
+    if (item.verified === false) return "source_provenance chưa được xác minh";
+    if (item.verified !== true && !(laMangChuoiKhongRong(item.quotes) && item.quotes.length > 0)) {
+      return "source_provenance thiếu bằng chứng quotes hoặc cờ verified";
+    }
+    if (item.polygon != null && (!laMangChuoiKhongRong(item.polygon) || item.polygon.length < 3)) return "source_provenance.polygon sai dạng";
+    if (item.edge != null && (!laMangChuoiKhongRong(item.edge) || item.edge.length !== 2)) return "source_provenance.edge sai dạng";
+    if (item.points != null && !laMangChuoiKhongRong(item.points)) return "source_provenance.points sai dạng";
+    if (item.plane != null && !laMangChuoiKhongRong(item.plane)) return "source_provenance.plane sai dạng";
+    if (item.vertex != null && (typeof item.vertex !== "string" || !item.vertex.trim())) return "source_provenance.vertex sai dạng";
+    if (item.rays != null && (!Array.isArray(item.rays) || item.rays.some((r) => !laMangChuoiKhongRong(r) || r.length < 2))) {
+      return "source_provenance.rays sai dạng";
+    }
+    if (item.value_display != null && typeof item.value_display !== "string") return "source_provenance.value_display sai dạng";
+  }
+  return null;
+}
+
+const CAC_TANG_CHUNG_CHI_QUAN_HE = ["SOURCE_GROUNDING_PROOF", "GEOMETRIC_RELATION_PROOF", "KERNEL_EXECUTION_PROOF", "RESULT_CERTIFICATE"] as const;
+
+/** Chứng chỉ quan hệ: bản bốn tầng phải đủ cả bốn tầng `verified: true`; bản rút gọn phải `verified: true`. */
+function kiemRelationCertificates(raw: unknown): string | null {
+  if (!Array.isArray(raw)) return "relation_certificates phải là mảng";
+  for (const item of raw) {
+    if (!laDoiTuong(item)) return "relation_certificates có phần tử sai dạng";
+    const laBonTang = item.schema_version === "geometric-relation-certificate/1"
+      || typeof item.relation_kind === "string" || CAC_TANG_CHUNG_CHI_QUAN_HE.some((k) => k in item);
+    if (laBonTang) {
+      if ((item.schema_version !== undefined && item.schema_version !== "geometric-relation-certificate/1")
+        || typeof item.relation_id !== "string" || !item.relation_id.trim()
+        || typeof item.relation_kind !== "string" || !item.relation_kind.trim()
+        || typeof item.subject_id !== "string" || !item.subject_id.trim()
+        || typeof item.target_id !== "string" || !item.target_id.trim()) return "relation_certificates 4 tầng sai dạng";
+      for (const layerKey of CAC_TANG_CHUNG_CHI_QUAN_HE) {
+        const lp = item[layerKey];
+        if (!laDoiTuong(lp) || lp.verified !== true) return `relation_certificates thiếu hoặc chưa kiểm chứng tầng ${layerKey}`;
+      }
+      continue;
+    }
+    if (typeof item.kind !== "string" || !item.kind.trim() || item.verified !== true
+      || (item.relation_id != null && typeof item.relation_id !== "string")
+      || (item.rule != null && typeof item.rule !== "string")
+      || (item.details != null && !laDoiTuong(item.details))) return "relation_certificates có phần tử sai dạng hoặc chưa kiểm chứng";
+  }
+  return null;
+}
+
+/** Kiểm cả hai khối provenance tuỳ chọn của Adapter /4 (dùng chung cho biên vận chuyển và biên module). */
+function kiemProvenanceAdapter4(src: Record<string, unknown>): string | null {
+  if (src.source_provenance !== undefined) {
+    const e = kiemSourceProvenance(src.source_provenance);
+    if (e) return e;
+  }
+  if (src.relation_certificates !== undefined) {
+    const e = kiemRelationCertificates(src.relation_certificates);
+    if (e) return e;
+  }
+  return null;
+}
+
 function kiemSections(sections: unknown, scene: Scene3D): string | null {
   try {
     return kiemSectionsCore(sections, scene);
@@ -443,13 +570,14 @@ function kiemSectionsCore(sections: unknown, scene: Scene3D): string | null {
     const labels = new Set<string>();
     for (const v of s.vertices) {
       const luat = laDoiTuong(v) ? LUAT_NGUON[String(v.provenance)] : undefined;
+      // A vertex label is the source name (`A'`); the scene keys points by entity ID (`A_prime`) — resolve, never compare.
+      const named = laDoiTuong(v) && typeof v.label === "string" ? diem(v.label) : [];
       if (!laDoiTuong(v) || !luat || typeof v.label !== "string" || labels.has(v.label)
         || typeof v.stated !== "boolean" || (luat.stated !== undefined && v.stated !== luat.stated)
         || !Array.isArray(v.edge) || v.edge.length !== 2 || !v.edge.every((id) => typeof id === "string" && diem(id).length === 1)
-        || !scene.objects.some((o) => o.id === v.label && o.type === "point3" && (v.provenance !== "DERIVED_FRESH" || o.origin === "derived"))) return "provenance đỉnh thiết diện sai";
+        || named.length !== 1 || (v.provenance === "DERIVED_FRESH" && named[0].origin !== "derived")) return "provenance đỉnh thiết diện sai";
       labels.add(v.label);
-      const point = scene.objects.find((o) => o.id === v.label && o.type === "point3");
-      if (!point) return "thiếu điểm thiết diện";
+      const point = named[0];
       const laDiemPhu = point.notation == null && point.role === VAI_DIEM_PHU && !point.display_group?.includes("given");
       if (luat.phu === true && !laDiemPhu) return "điểm suy diễn không được giả làm dữ kiện";
       if (luat.phu === false && point.notation == null) return "điểm suy diễn không được giả làm dữ kiện";
@@ -475,7 +603,7 @@ function kiemSectionsCore(sections: unknown, scene: Scene3D): string | null {
       || !laDoiTuong(s.closure_certificate) || s.closure_certificate.verified !== true
       || typeof s.closure_certificate.rule !== "string" || !s.closure_certificate.rule || !Array.isArray(s.closure_certificate.boundary)
       || !cungChuTrinh(s.boundary, s.closure_certificate.boundary)) return "chứng chỉ chu trình thiết diện lệch";
-    const points = s.boundary.map((id) => scene.objects.find((o) => o.id === id)?.xyz);
+    const points = s.boundary.map((label) => { const p = diem(label); return p.length === 1 ? p[0].xyz : undefined; });
     if (points.some((p) => !p) || !cungChuTrinh(points, obj.polygon)) return "chu trình thiết diện lệch cảnh";
   }
   if (scene.objects.filter((o) => o.type === "section").length !== ids.size) return "thiếu thiết diện";
@@ -577,6 +705,8 @@ export function dungHybridView(routeD: unknown, scene: Scene3D): { view: HybridP
       || routeD.source_verification.authority !== "registry.kiem_nguon") return { reason: "authority Adapter /4 không hợp lệ" };
     const error = kiemSections(routeD.sections, scene);
     if (error) return { reason: error };
+    const provError = kiemProvenanceAdapter4(routeD);
+    if (provError) return { reason: provError };
   } else if (!laDoiTuong(id) || id.adapter_version !== HYBRID_PREVIEW_ADAPTER) return { reason: "adapter_version không được hỗ trợ" };
 
   // §4 — length_unit của route_d phải đúng là length_unit của cảnh (một nguồn).
@@ -604,7 +734,7 @@ export function dungHybridView(routeD: unknown, scene: Scene3D): { view: HybridP
     const giaTri = giaTriCanh(scene, qid);
     // Hình dựng ở a = 1 ⇒ giá trị trên cảnh = hệ số. Lệch ⇒ đáp số không thuộc cảnh này.
     if (giaTri == null || giaTri !== gon(ex.coef)) return { reason: `đáp số ${k} không khớp đại lượng ${qid} của cảnh` };
-    answers.push({ quantity_id: qid, symbolic: sym, dim, unit });
+    answers.push({ quantity_id: qid, coefficient: giaTri, symbolic: sym, dim, unit });
   }
 
   const planner = routeD.planner;
@@ -637,7 +767,11 @@ export function dungHybridView(routeD: unknown, scene: Scene3D): { view: HybridP
     }
   }
   return { view: { adapter_version: v4 ? HYBRID_SIMULATION_ADAPTER : HYBRID_PREVIEW_ADAPTER, answers, observations,
-    ...(v4 ? { sections: structuredClone(routeD.sections) as HybridSectionView[] } : {}) } };
+    ...(v4 ? { sections: structuredClone(routeD.sections) as HybridSectionView[] } : {}),
+    ...(v4 && routeD.source_provenance !== undefined
+      ? { source_provenance: structuredClone(routeD.source_provenance) as HybridSourceProvenanceEntry[] } : {}),
+    ...(v4 && routeD.relation_certificates !== undefined
+      ? { relation_certificates: structuredClone(routeD.relation_certificates) as HybridRelationCertificateEntry[] } : {}) } };
 }
 
 /**
@@ -691,6 +825,8 @@ export function kiemHybridView(view: unknown, scene: Scene3D | undefined): strin
   if (view.adapter_version === HYBRID_SIMULATION_ADAPTER) {
     const error = kiemSections(view.sections, scene);
     if (error) return error;
+    const provError = kiemProvenanceAdapter4(view);
+    if (provError) return provError;
   }
   if (!Array.isArray(view.answers) || !Array.isArray(view.observations)) return "hybrid_preview sai dạng";
   const daCo = new Set<string>();
@@ -703,6 +839,10 @@ export function kiemHybridView(view: unknown, scene: Scene3D | undefined): strin
       return "đáp số trỏ vào đại lượng không có trong cảnh hoặc sai dạng";
     }
     daCo.add(String(a.quantity_id));
+    if (a.coefficient !== undefined && (typeof a.coefficient !== "string"
+      || gon(a.coefficient) !== giaTriCanh(scene, String(a.quantity_id)))) {
+      return "hệ số đáp số không khớp đại lượng của cảnh";
+    }
   }
   const buocCuoi = Math.max(0, ...scene.events.map((e) => e.step_index));
   for (const o of view.observations) {

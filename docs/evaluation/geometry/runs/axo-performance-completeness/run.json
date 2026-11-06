@@ -1,0 +1,25 @@
+{
+  "run_id": "axo-performance-completeness",
+  "task_slug": "axo-performance-completeness",
+  "date": "2026-11-04/2026-11-05",
+  "branch": "integration/axo-pedagogical-construction-hardening",
+  "before_commit": "4ed8cb3e262280fe3bf6caab0045185a9bc0e52d",
+  "product_commit": "34c779e1eb258240c595315db2219c788ba9462a",
+  "measured_system": {
+    "files": 118,
+    "tree_hash": "6809d79b51f6e47be1e8af03ae065563b2028fcd823c22a91b61600b242d7fad"
+  },
+  "cache_version": 131,
+  "provider_calls": 0,
+  "protected_file": "frontend/index.html",
+  "protected_sha256": "3B8A5566454E42BA624C4611C82B792EC8ED1CAFC062C0041ADC11DEEB44A69F",
+  "status": "READY_FOR_USER_REVIEW",
+  "verification": {
+    "math_oracle": "8/8 PASS (check-mathematics.py -> mathematics.json, independent Python Fraction algebra)",
+    "frontend_vitest": "121 files passed, 1787 tests passed",
+    "frontend_build": "tsc -b && vite build exit 0",
+    "browser_orbit_step_benchmark": "7 scenes x 15s continuous orbit + 24 step toggles + 8 variants: pooled median frame interval 270.8 ms (~3.7 FPS) -> 7.0 ms (142.9-144.9 FPS), renders/frame 243-451 -> 1",
+    "browser_navigation": "12 cold/warm/back/forward cycles symmetric before/after (nav-before, nav-after), 0 WebGL canvases on /library",
+    "browser_memory_and_ui": "1 WebGL context across 3 warmup + 22 problem switches (heap 15.40 -> 18.67 MiB); 7 viewport widths (360,390,430,768,1024,1280,1440 px) + 110% effective DPR zoom + 12x3 multi-angle visual screenshots"
+  }
+}

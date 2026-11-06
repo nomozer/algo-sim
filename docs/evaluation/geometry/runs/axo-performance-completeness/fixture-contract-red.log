@@ -1,0 +1,30 @@
+
+ RUN  v4.1.10 D:/Documents/projects/algo-sim/.superpowers/worktrees/axo-pedagogical-integration/frontend
+
+ ❯ src/simulations/domains/geometry/axo-cross-family-scene3d-acceptance.test.tsx (9 tests | 1 failed) 1863ms
+     × test polygon carriers follow the Scene3D render contract and actually build visible geometry 8ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/simulations/domains/geometry/axo-cross-family-scene3d-acceptance.test.tsx > AXO — Cross-Family Scene3D Stabilization & Acceptance Suite (§4–§9) > test polygon carriers follow the Scene3D render contract and actually build visible geometry
+AssertionError: base_ABC: expected 'surface' to be 'polygon' // Object.is equality
+
+Expected: "polygon"
+Received: "surface"
+
+ ❯ src/simulations/domains/geometry/axo-cross-family-scene3d-acceptance.test.tsx:357:42
+    355|     for (const scene of [RIGHT_PRISM_SCENE, OBLIQUE_PRISM_SCENE, CUBE_…
+    356|       for (const object of scene.objects.filter(o => o.type === "secti…
+    357|         expect(object.render, object.id).toBe("polygon");
+       |                                          ^
+    358|         const built = buildObject3D(object, false);
+    359|         expect(built, object.id).not.toBeNull();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 8 passed (9)
+   Start at  17:42:27
+   Duration  6.95s (transform 3.56s, setup 79ms, import 4.55s, tests 1.86s, environment 0ms)
+

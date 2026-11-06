@@ -1,0 +1,40 @@
+PASS route thiet-dien-chop: statement/title/scene consistent, no answer surface at first and final step
+PASS route mat-cheo-sac: statement/title/scene consistent, no answer surface at first and final step
+PASS route vuong-goc-chop: statement/title/scene consistent, no answer surface at first and final step
+PASS route mp-vuong-goc-duong: statement/title/scene consistent, no answer surface at first and final step
+PASS route the-tich-chop: statement/title/scene consistent, no answer surface at first and final step
+PASS route cau-the-tich: statement/title/scene consistent, no answer surface at first and final step
+PASS route cau-cat-mat-phang: statement/title/scene consistent, no answer surface at first and final step
+PASS route tru-truc-xien: statement/title/scene consistent, no answer surface at first and final step
+PASS route tru-thiet-dien-tron: statement/title/scene consistent, no answer surface at first and final step
+PASS route non-duong-sinh: statement/title/scene consistent, no answer surface at first and final step
+PASS route non-thiet-dien-truc: statement/title/scene consistent, no answer surface at first and final step
+PASS given data and narration remain per step (cau-cat-mat-phang)
+PASS two problems with the same title keep separate statement and scene; history A → B → A
+PASS legacy record without scene3d and a sample-like title gets an honest missing-data notice
+PASS real composer: two independent sends of the same statement ⇒ two attempts; a 502 then 200 retry ⇒ one attempt; reload keeps it
+PASS deep-frozen Scene3D survives every interaction (cau-cat-mat-phang): render, steps, play/replay, orbit, zoom, select, hide, isolate, restore, dock, switch, history
+PASS deep-frozen Scene3D survives every interaction (thiet-dien-chop): render, steps, play/replay, orbit, zoom, select, hide, isolate, restore, dock, switch, history
+PASS deep-frozen Scene3D survives every interaction (non-thiet-dien-truc): render, steps, play/replay, orbit, zoom, select, hide, isolate, restore, dock, switch, history
+PASS the viewer never mutates the opened Scene3D; reopening keeps the same record (no duplicate)
+PASS submission sharing a sample program: own record and URL, statement survives reload, sample untouched
+PASS two statements compiling to the same program keep two records; selection does not cross records
+PASS legacy record without a stored statement says so (no model description as statement)
+PASS reload (F5) restores the same record, statement and step
+PASS rapid switching, switching during playback, Back/Forward keep record and scene together
+PASS capture thiet-dien-chop: first, middle, last step and two extra camera angles
+PASS capture mat-cheo-sac: first, middle, last step and two extra camera angles
+PASS capture tru-truc-xien: first, middle, last step and two extra camera angles
+PASS capture non-thiet-dien-truc: first, middle, last step and two extra camera angles
+PASS capture cau-cat-mat-phang: first, middle, last step and two extra camera angles
+PASS responsive 360px: final step layout, no answer surface
+PASS responsive 390px: final step layout, no answer surface
+PASS responsive 430px: final step layout, no answer surface
+PASS responsive 768px: final step layout, no answer surface
+PASS responsive 1024px: final step layout, no answer surface
+PASS responsive 1440px: final step layout, no answer surface
+PASS REAL Chrome page zoom 110% (default_zoom_level preference, no DPR emulation)
+PASS starting a drag over an object does not rebuild the scene (thiet-dien-chop): 0 GPU buffers/programs deleted
+PASS starting a drag over an object does not rebuild the scene (non-thiet-dien-truc): 0 GPU buffers/programs deleted
+PASS starting a drag over an object does not rebuild the scene (cau-cat-mat-phang): 0 GPU buffers/programs deleted
+{"pass":39,"fail":0}

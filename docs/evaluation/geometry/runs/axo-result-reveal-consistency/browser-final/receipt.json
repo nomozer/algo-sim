@@ -1,0 +1,296 @@
+{
+  "schema": "axo-result-reveal/1",
+  "dist": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\axo-pedagogical-integration\\frontend\\dist-reveal",
+  "provider_calls": 0,
+  "checks": [
+    {
+      "name": "route consistency thiet-dien-chop",
+      "evidence": {
+        "url": "http://127.0.0.1:54169/simulation/pyramid-cross-section",
+        "title": "Thiết diện của hình chóp cắt bởi mặt phẳng qua ba trung điểm",
+        "steps": 10,
+        "renderedFirst": 18,
+        "renderedLast": 18,
+        "hasReveal": false
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "route consistency mat-cheo-sac",
+      "evidence": {
+        "url": "http://127.0.0.1:54169/simulation/pyramid-diagonal-section",
+        "title": "Thiết diện của hình chóp theo mặt phẳng chéo (SAC)",
+        "steps": 6,
+        "renderedFirst": 13,
+        "renderedLast": 13,
+        "hasReveal": false
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "route consistency vuong-goc-chop",
+      "evidence": {
+        "url": "http://127.0.0.1:54169/simulation/pyramid-line-plane-angle",
+        "title": "Đường thẳng vuông góc với mặt phẳng trong hình chóp",
+        "steps": 5,
+        "renderedFirst": 13,
+        "renderedLast": 13,
+        "hasReveal": true
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "route consistency mp-vuong-goc-duong",
+      "evidence": {
+        "url": "http://127.0.0.1:54169/simulation/pyramid-perpendicular-plane-distance",
+        "title": "Mặt phẳng qua một điểm và vuông góc với đường thẳng cho trước",
+        "steps": 7,
+        "renderedFirst": 15,
+        "renderedLast": 15,
+        "hasReveal": true
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "route consistency the-tich-chop",
+      "evidence": {
+        "url": "http://127.0.0.1:54169/simulation/pyramid-volume-and-altitude",
+        "title": "Thể tích khối chóp và khoảng cách từ đỉnh đến đáy",
+        "steps": 4,
+        "renderedFirst": 11,
+        "renderedLast": 11,
+        "hasReveal": true
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "route consistency cau-the-tich",
+      "evidence": {
+        "url": "http://127.0.0.1:54169/simulation/sphere-radius-and-volume",
+        "title": "Bán kính và thể tích khối cầu",
+        "steps": 1,
+        "renderedFirst": 4,
+        "renderedLast": 4,
+        "hasReveal": true
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "route consistency cau-cat-mat-phang",
+      "evidence": {
+        "url": "http://127.0.0.1:54169/simulation/sphere-plane-intersection",
+        "title": "Đường tròn giao của mặt phẳng và mặt cầu",
+        "steps": 5,
+        "renderedFirst": 9,
+        "renderedLast": 9,
+        "hasReveal": true
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "route consistency tru-truc-xien",
+      "evidence": {
+        "url": "http://127.0.0.1:54169/simulation/tilted-right-cylinder-metrics",
+        "title": "Hình trụ tròn xoay có trục đặt nghiêng",
+        "steps": 3,
+        "renderedFirst": 8,
+        "renderedLast": 8,
+        "hasReveal": true
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "route consistency tru-thiet-dien-tron",
+      "evidence": {
+        "url": "http://127.0.0.1:54169/simulation/cylinder-perpendicular-section",
+        "title": "Thiết diện vuông góc trục của hình trụ",
+        "steps": 6,
+        "renderedFirst": 10,
+        "renderedLast": 10,
+        "hasReveal": true
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "route consistency non-duong-sinh",
+      "evidence": {
+        "url": "http://127.0.0.1:54169/simulation/cone-slant-height-and-surface",
+        "title": "Đường sinh, thể tích và diện tích xung quanh hình nón",
+        "steps": 4,
+        "renderedFirst": 8,
+        "renderedLast": 8,
+        "hasReveal": true
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "route consistency non-thiet-dien-truc",
+      "evidence": {
+        "url": "http://127.0.0.1:54169/simulation/cone-axial-section",
+        "title": "Thiết diện qua trục của hình nón",
+        "steps": 5,
+        "renderedFirst": 9,
+        "renderedLast": 9,
+        "hasReveal": true
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "Next to final: hidden, reveal, collapse, reopen, back and return",
+      "evidence": {
+        "conclusion": "KẾT LUẬN\nBán kính đường tròn thiết diện\n4\nR = 5, d(I, (P)) = 3 ⇒ r = √(R² − d²) = 4\nDiện tích hình tròn thiết diện\n16π\nS = πr² = 16π"
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "Play to final keeps result hidden; replay hides an open result",
+      "evidence": {
+        "steps": 5
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "switching problems never carries the result or another scene",
+      "evidence": {
+        "ok": true
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "rapid switching, switching during Play, Back/Forward",
+      "evidence": {
+        "afterBurst": "mat-cheo-sac",
+        "history": [
+          "non-thiet-dien-truc",
+          "cau-cat-mat-phang"
+        ],
+        "contexts": 1
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "reveal toggle latency (click → next painted frame)",
+      "evidence": {
+        "open": {
+          "n": 20,
+          "median": 12.199999999254942,
+          "p95": 12.900000000372529,
+          "max": 12.900000000372529
+        },
+        "close": {
+          "n": 20,
+          "median": 12.299999998882413,
+          "p95": 12.800000000745058,
+          "max": 12.800000000745058
+        }
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "responsive 360px final step with result open",
+      "evidence": {
+        "left": 16,
+        "right": 344,
+        "height": 142.65625,
+        "docWidth": 360,
+        "vw": 360,
+        "vh": 844,
+        "canvasH": 438
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "responsive 390px final step with result open",
+      "evidence": {
+        "left": 16,
+        "right": 374,
+        "height": 142.65625,
+        "docWidth": 390,
+        "vw": 390,
+        "vh": 844,
+        "canvasH": 438
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "responsive 430px final step with result open",
+      "evidence": {
+        "left": 16,
+        "right": 414,
+        "height": 142.65625,
+        "docWidth": 430,
+        "vw": 430,
+        "vh": 844,
+        "canvasH": 462
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "responsive 768px final step with result open",
+      "evidence": {
+        "left": 489,
+        "right": 752,
+        "height": 142.65625,
+        "docWidth": 768,
+        "vw": 768,
+        "vh": 900,
+        "canvasH": 854
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "responsive 1024px final step with result open",
+      "evidence": {
+        "left": 721,
+        "right": 1008,
+        "height": 142.65625,
+        "docWidth": 1024,
+        "vw": 1024,
+        "vh": 900,
+        "canvasH": 854
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "responsive 1280px final step with result open",
+      "evidence": {
+        "left": 961,
+        "right": 1264,
+        "height": 142.65625,
+        "docWidth": 1280,
+        "vw": 1280,
+        "vh": 900,
+        "canvasH": 854
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "responsive 1440px final step with result open",
+      "evidence": {
+        "left": 1097,
+        "right": 1424,
+        "height": 142.65625,
+        "docWidth": 1440,
+        "vw": 1440,
+        "vh": 900,
+        "canvasH": 854
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "110% zoom equivalent (1310px CSS, DPR 1.1) with result open",
+      "evidence": {
+        "docWidth": 1310,
+        "vw": 1310
+      },
+      "status": "PASS"
+    }
+  ],
+  "forbidden": [],
+  "browser": "157.0.8103.38",
+  "pageErrors": [],
+  "summary": {
+    "pass": 24,
+    "fail": 0
+  }
+}

@@ -1,24 +1,39 @@
 import { useEffect, useReducer, useRef, useState } from "react";
 import { useAppStore } from "../state/store";
 import { useAuthStore } from "../state/auth";
-import { IconAttach, IconSend } from "./icons";
+import { newAttemptId } from "../state/history";
+import { useToastStore } from "./TopNav";
 import {
+  IconCamera,
+  IconClose,
+  IconPlus,
+  IconUpload,
+} from "./icons";
+import {
+  AxoClientError,
   analyzeViaServer,
   extractImageViaServer,
   fetchHealth,
+  type ClientFailureContract,
   type ServerHealth,
 } from "../llm/client";
 import {
+  COMPOSER_ACCEPT,
   IMAGE_ACCEPT,
-  acceptAttr,
+  canSubmitComposer,
   fileToPayload,
+  formatAttachmentSize,
   imageMimeOf,
   isImageFile,
-  kindFromFile,
-  kindLabel,
   readAsBase64,
+  splitAttachmentName,
+  validateComposerFile,
+  type ComposerAttachmentItem,
 } from "../llm/input";
+import type { AnalysisUnsupported } from "../core/types";
+import type { SimulationEnvelope } from "../simulations/types";
 import { PhotoProblemPanel } from "./PhotoProblemPanel";
+import { AxoScrollbar } from "./AxoScrollbar";
 import {
   buildFailureMessage,
   canBuild,
@@ -28,55 +43,467 @@ import {
   photoReducer,
 } from "./photo-problem-flow";
 
+const MISSING_PREMISE_CODES = new Set([
+  "GIVEN_VALUE_NOT_IN_SOURCE",
+  "ASSUMPTION_DETERMINES_ANSWER",
+  "MISSING_CURVED_DIMENSION",
+  "UNDERDETERMINED_POINT",
+]);
+
+const INCONSISTENT_PREMISE_CODES = new Set([
+  "INCONSISTENT_FACTS",
+  "SOURCE_SHAPE_CONTRADICTS_COORDINATES",
+]);
+
+const SOURCE_CONFLICT_CODES = new Set([
+  "NON_POSITIVE_LENGTH",
+  "PLANE_DOES_NOT_CUT",
+  "PLANE_OVERDETERMINED",
+  "COLLINEAR_PLANE",
+  "CONCURRENT_BASE",
+]);
+
+function normalizeDisplayBrand(text: string): string {
+  return text
+    .replace(/\bAlgoSim\b/g, "Axo")
+    .replace(/^Không xác định được[:\s—–-]*/i, "")
+    .trim();
+}
+
+function isSafeFallbackReason(text: string): boolean {
+  if (!text) return false;
+  return !/Traceback|ValidationError|pydantic|_[a-z0-9]+_[a-z0-9]+/i.test(text);
+}
+
+export interface HomeRefusalPresentation {
+  title: string;
+  body: string;
+  hint: string;
+}
+
+export function describeHomeRefusal(
+  unsupported: AnalysisUnsupported,
+): HomeRefusalPresentation {
+  const rec = unsupported as AnalysisUnsupported & {
+    error_code?: string;
+    reason_code?: string;
+  };
+  const cat = rec.failure_category ?? "";
+  const errCode = rec.error_code ?? "";
+  const reasonCode = rec.reason_code ?? "";
+  const cause = rec.refusal_cause;
+
+  const isOutOfScope =
+    cat === "out_of_scope" || errCode === "OUT_OF_SCOPE" || reasonCode === "not_geometry";
+  const isMissingPremise =
+    cat === "insufficient_specification" || MISSING_PREMISE_CODES.has(errCode);
+  const isInconsistentPremise =
+    INCONSISTENT_PREMISE_CODES.has(errCode) ||
+    (cause === "SOURCE" && SOURCE_CONFLICT_CODES.has(errCode));
+  const isCapabilityGap =
+    cat === "capability_gap" ||
+    cat === "not_simulation_suitable" ||
+    errCode === "UNSUPPORTED" ||
+    reasonCode === "not_simulation_suitable" ||
+    reasonCode === "requested_operation_uncovered";
+
+  let title = "Đề bài chưa được hỗ trợ";
+  let hint = "Bạn có thể thử các bài về thiết diện, khoảng cách, góc hoặc thể tích.";
+
+  if (isOutOfScope) {
+    title = "Đề bài chưa được hỗ trợ";
+  } else if (isMissingPremise) {
+    title = "Đề bài chưa đủ dữ kiện để dựng hình";
+    hint = "Bạn có thể bổ sung dữ kiện còn thiếu ngay trên ô nhập rồi nhấn Dựng hình.";
+  } else if (isInconsistentPremise) {
+    title = "Dữ kiện đề bài chưa nhất quán";
+    hint = "Bạn có thể kiểm tra lại số liệu và quan hệ trong đề ngay trên ô nhập.";
+  } else if (isCapabilityGap) {
+    title = "Axo chưa hỗ trợ phép dựng này";
+  }
+
+  const rawLearner = typeof unsupported.learner_reason === "string"
+    ? normalizeDisplayBrand(unsupported.learner_reason)
+    : "";
+  const rawReason = typeof unsupported.reason === "string"
+    ? normalizeDisplayBrand(unsupported.reason)
+    : "";
+
+  const body =
+    rawLearner ||
+    (isOutOfScope
+      ? "Axo hiện hỗ trợ mô phỏng hình học không gian. Bạn có thể thử các bài về thiết diện, khoảng cách, góc hoặc thể tích."
+      : (isSafeFallbackReason(rawReason) ? rawReason : "") ||
+        (isMissingPremise
+          ? "Đề bài còn thiếu dữ kiện cần thiết để xác định hình không gian duy nhất."
+          : "Hệ thống chưa thể tạo mô phỏng đã kiểm chứng từ nội dung đề hiện tại."));
+
+  return { title, body, hint };
+}
+
+export interface ComposerErrorPresentation {
+  tone: "info" | "error";
+  title: string;
+  description: string;
+}
+
+export function describeComposerError(
+  analysisError: string | null,
+  health: ServerHealth | null | "loading",
+  clientFailure: ClientFailureContract | null = null,
+): ComposerErrorPresentation | null {
+  if (clientFailure) {
+    switch (clientFailure.code) {
+      case "QUOTA_EXCEEDED":
+        return {
+          tone: "info",
+          title: "Đã dùng hết hạn mức dựng hình hôm nay",
+          description: normalizeDisplayBrand(clientFailure.message),
+        };
+      case "MAINTENANCE_MODE":
+        return {
+          tone: "info",
+          title: "Hệ thống đang bảo trì",
+          description: normalizeDisplayBrand(clientFailure.message),
+        };
+      case "ACCOUNT_LOCKED":
+        return {
+          tone: "error",
+          title: "Tài khoản đang tạm khóa",
+          description: normalizeDisplayBrand(clientFailure.message),
+        };
+      case "NETWORK_UNREACHABLE":
+        if (health === null || health === "loading" || health.hasKey) {
+          return {
+            tone: "error",
+            title: "Không kết nối được máy chủ",
+            description:
+              "Vui lòng kiểm tra kết nối mạng rồi nhấn Dựng hình lại. Nội dung đề và tệp đính kèm vẫn được giữ nguyên.",
+          };
+        }
+        return {
+          tone: "info",
+          title: "Dịch vụ phân tích đề hiện chưa sẵn sàng",
+          description:
+            "Máy chủ chưa bật kết nối AI cho đề tự nhập. Bạn vẫn có thể mở các mô hình mẫu bên dưới.",
+        };
+      case "SERVICE_UNAVAILABLE":
+        return {
+          tone: "info",
+          title: "Dịch vụ phân tích đề hiện chưa sẵn sàng",
+          description:
+            "Máy chủ chưa bật kết nối AI cho đề tự nhập. Bạn vẫn có thể mở các mô hình mẫu bên dưới.",
+        };
+      case "INVALID_INPUT":
+        return {
+          tone: "info",
+          title: "Chưa đủ thông tin đề bài",
+          description: normalizeDisplayBrand(clientFailure.message),
+        };
+      case "NOT_FOUND":
+        return {
+          tone: "error",
+          title: "Không tìm thấy tài nguyên yêu cầu",
+          description: normalizeDisplayBrand(clientFailure.message),
+        };
+      case "HTTP_ERROR":
+        return {
+          tone: "error",
+          title: "Máy chủ trả về lỗi khi phân tích",
+          description: normalizeDisplayBrand(clientFailure.message),
+        };
+    }
+  }
+
+  if (!analysisError || /lượt mô phỏng thử/.test(analysisError)) return null;
+
+  if (/sử dụng hết hạn mức|hết hạn mức.*lượt dựng hình/i.test(analysisError)) {
+    return {
+      tone: "info",
+      title: "Đã dùng hết hạn mức dựng hình hôm nay",
+      description: normalizeDisplayBrand(analysisError),
+    };
+  }
+
+  if (/chế độ bảo trì/i.test(analysisError)) {
+    return {
+      tone: "info",
+      title: "Hệ thống đang bảo trì",
+      description: normalizeDisplayBrand(analysisError),
+    };
+  }
+
+  if (/tạm khóa bởi Quản trị viên/i.test(analysisError)) {
+    return {
+      tone: "error",
+      title: "Tài khoản đang tạm khóa",
+      description: normalizeDisplayBrand(analysisError),
+    };
+  }
+
+  const isNetworkOffline =
+    /Không kết nối được máy chủ|Failed to fetch|NetworkError|Load failed/i.test(analysisError);
+  const isServiceUnavailable =
+    /chưa cấu hình|thiếu khóa|API key|503|chưa sẵn sàng/i.test(analysisError) ||
+    (!isNetworkOffline && health !== "loading" && health !== null && !health.hasKey);
+  const isInputValidation =
+    /Đề bài quá ngắn|tối thiểu 10 ký tự|Chế độ lưu đệm chưa hỗ trợ|Chế độ kiểm chứng không dùng mạng/i.test(
+      analysisError,
+    );
+
+  if (isNetworkOffline && (health === null || health === "loading" || health.hasKey)) {
+    return {
+      tone: "error",
+      title: "Không kết nối được máy chủ",
+      description:
+        "Vui lòng kiểm tra kết nối mạng rồi nhấn Dựng hình lại. Nội dung đề và tệp đính kèm vẫn được giữ nguyên.",
+    };
+  }
+
+  if (isServiceUnavailable) {
+    return {
+      tone: "info",
+      title: "Dịch vụ phân tích đề hiện chưa sẵn sàng",
+      description:
+        "Máy chủ chưa bật kết nối AI cho đề tự nhập. Bạn vẫn có thể mở các mô hình mẫu bên dưới.",
+    };
+  }
+
+  if (isInputValidation) {
+    return {
+      tone: "info",
+      title: "Chưa đủ thông tin đề bài",
+      description: normalizeDisplayBrand(analysisError),
+    };
+  }
+
+  return {
+    tone: "error",
+    title: "Dựng hình chưa thành công",
+    description:
+      "Máy chủ gặp sự cố tạm thời khi xử lý yêu cầu. Nội dung đề và tệp đính kèm vẫn được giữ nguyên để thử lại.",
+  };
+}
+
+export interface RunComposerSubmitOptions {
+  canSubmit: boolean;
+  lockRef: { current: boolean };
+  abortRef?: { current: AbortController | null };
+  problemText: string;
+  attachment: ComposerAttachmentItem | null;
+  health: ServerHealth | null | "loading";
+  analyzeFn?: typeof analyzeViaServer;
+}
+
+export async function runComposerSubmit({
+  canSubmit,
+  lockRef,
+  abortRef,
+  problemText,
+  attachment,
+  health,
+  analyzeFn = analyzeViaServer,
+}: RunComposerSubmitOptions): Promise<void> {
+  if (!canSubmit || lockRef.current) return;
+  lockRef.current = true;
+  // Một lần bấm gửi = một lần học. Thử lại mạng nằm trong `analyzeFn` nên dùng chung ID này.
+  const attemptId = newAttemptId();
+
+  const ctl = typeof AbortController !== "undefined" ? new AbortController() : null;
+  if (abortRef) abortRef.current = ctl;
+
+  const store = useAppStore.getState();
+  store.setAnalysisError(null);
+  store.clearUnsupported();
+  useToastStore.getState().dismissToast("composer-refusal");
+  store.setAnalyzing(true);
+
+  try {
+    const payload = attachment
+      ? await fileToPayload(attachment.file)
+      : { type: "text" as const, content: problemText.trim() };
+
+    const result = await analyzeFn(payload, ctl?.signal, undefined, attemptId);
+    if (ctl?.signal.aborted) return;
+
+    if (result.status === "ok") {
+      store.loadEnvelope(
+        result as SimulationEnvelope,
+        undefined,
+        attachment ? undefined : problemText.trim(),
+        attemptId,
+      );
+      if (useAuthStore.getState().user !== null) {
+        void useAuthStore.getState().refresh();
+      }
+    } else {
+      const unsupportedRes = result as AnalysisUnsupported;
+      store.loadUnsupported(unsupportedRes);
+      const refusalView = describeHomeRefusal(unsupportedRes);
+      const description =
+        refusalView.hint && !refusalView.body.includes(refusalView.hint)
+          ? `${refusalView.body} ${refusalView.hint}`
+          : refusalView.body;
+      useToastStore.getState().showToast({
+        id: "composer-refusal",
+        tone: "info",
+        title: refusalView.title,
+        description,
+        durationMs: 8500,
+      });
+    }
+  } catch (err) {
+    if ((err as { name?: string } | null)?.name === "AbortError" || ctl?.signal.aborted) {
+      return;
+    }
+    const contract = err instanceof AxoClientError ? err.toContract() : null;
+    const message = err instanceof Error ? err.message : String(err);
+    store.setClientFailure(contract);
+    store.setAnalysisError(message);
+
+    const errView = describeComposerError(message, health, contract);
+    if (errView) {
+      useToastStore.getState().showToast({
+        tone: errView.tone,
+        title: errView.title,
+        description: errView.description,
+        durationMs: 7000,
+      });
+    }
+  } finally {
+    if (!abortRef || abortRef.current === ctl) {
+      if (abortRef) abortRef.current = null;
+      store.setAnalyzing(false);
+      lockRef.current = false;
+    }
+  }
+}
+
+/** Kích thước chiều cao ô nhập theo V2.7 + yêu cầu co giãn 3 dòng mặc định của chủ dự án (Phase C.4 P2). */
+const COMPOSER_MIN_H_DESKTOP = 76;
+const COMPOSER_MIN_H_MOBILE = 72;
+const COMPOSER_MAX_H = 220;
+
+function getComposerMinHeight(): number {
+  if (typeof window !== "undefined" && window.innerWidth <= 640) {
+    return COMPOSER_MIN_H_MOBILE;
+  }
+  return COMPOSER_MIN_H_DESKTOP;
+}
+
+let attachmentSeq = 0;
+
 /**
- * Nhập đề: gõ văn bản HOẶC tải tệp (.docx / .py / ảnh) — M4.
- * Mọi đầu vào chuẩn hóa thành InputPayload rồi gọi /api/analyze (một contract).
- * Việc gọi Gemini do backend đảm nhiệm (trình duyệt không giữ API key).
- *
- * M9-UX4 — MỘT DẠNG DUY NHẤT, và CHỈ SỐNG Ở TRANG CHỦ.
- * M9-UX3 từng tách hai vỏ hero/compact vì `InputPanel` (cột trái workspace) cũng
- * nhúng composer. M9-UX4 gỡ composer khỏi workspace — Trang chủ LÀ nơi phân tích
- * đề, giữ thêm một bản trong cột 270px là hai nơi làm cùng một việc. Vỏ "compact"
- * hết người dùng nên gỡ luôn, không nuôi code chết.
- *
- * M9-UX5 — HỘP nhiều dòng thay pill một dòng, nút `+` / gửi nằm ở ĐÁY hộp.
- * Hàng chip "thử đề mẫu AI" (`SAMPLE_PROMPTS`) đã GỠ: 3 đề đó trùng nội dung với
- * 3 bài mẫu ngay bên dưới Trang chủ, chỉ khác là tốn một lượt gọi API. Trang chủ
- * có ĐÚNG MỘT đường dùng AI: gõ đề của chính em. (`SAMPLE_PROMPTS` vẫn còn trong
- * `sim-samples.ts` cho dev/test — chỉ không quảng bá cho học sinh.)
- *
- * PHOTO_PROBLEM_TO_SCENE_END_TO_END (2026-09-13) — ẢNH ĐỀ BÀI CÓ BƯỚC XEM LẠI.
- * Ảnh (từ "Chụp ảnh", "Tải ảnh" hay nút `+`) KHÔNG còn gửi thẳng vào
- * `/api/analyze`: nó đi `/api/image/extract` → người học đọc lại, sửa, xác nhận
- * → "Dựng mô phỏng" gửi VĂN BẢN qua `analyzeViaServer`, đúng đường gõ tay. Luồng
- * gõ tay và `.docx` giữ nguyên. Luật trạng thái: `photo-problem-flow.ts`.
+ * Axo V2.7 Slice 2 — Homepage Composer tích hợp chức năng thực tế:
+ * - Nhập văn bản đề toán hình học không gian (tự giãn chiều cao, không yêu cầu tối thiểu 10 ký tự).
+ * - Đính kèm tệp hợp lệ (`.docx`, `.png`, `.jpg`, `.jpeg`, `.webp`, mã nguồn `.py`...) hiển thị trên dải thẻ ngang.
+ * - Từ chối tệp `.pdf` rõ ràng theo quyết định D3 (backend chưa có bộ đọc PDF).
+ * - Menu `+` ở góc dưới trái (Tải tệp từ thiết bị, Chụp ảnh đề bài, Đọc đề từ ảnh OCR).
+ * - Modal `Tất cả tệp đính kèm` khi có từ 2 tệp trở lên.
+ * - Nút `Dựng hình →` 3 trạng thái (Disabled / Idle / Loading `[Spinner] Đang dựng hình...`) nối với API thật.
+ * - Thông báo lỗi / dịch vụ chưa sẵn sàng qua `useToastStore` góc trên bên phải.
  */
-export function ProblemInput() {
+export interface ProblemInputProps {
+  initialAttachments?: ComposerAttachmentItem[];
+  initialPlusMenuOpen?: boolean;
+  initialAllFilesModalOpen?: boolean;
+}
+
+export function ProblemInput({
+  initialAttachments = [],
+  initialPlusMenuOpen = false,
+  initialAllFilesModalOpen = false,
+}: ProblemInputProps = {}) {
   const problemText = useAppStore((s) => s.problemText);
   const setProblemText = useAppStore((s) => s.setProblemText);
   const analyzing = useAppStore((s) => s.analyzing);
   const analysisError = useAppStore((s) => s.analysisError);
+
   const [health, setHealth] = useState<ServerHealth | null | "loading">("loading");
-  const [file, setFile] = useState<File | null>(null);
-  /* W5X — XEM TRƯỚC ẢNH ĐÃ DÁN.
-     Dùng `URL.createObjectURL` chứ KHÔNG đọc thành `data:` URL: ảnh đề bài của
-     học sinh có thể vài MB, mà `data:` sẽ nhét trọn base64 vào React state rồi
-     vào cả DOM. `objectURL` chỉ là một con trỏ — nhưng nó GIỮ tệp trong bộ nhớ
-     tới khi được thu hồi, nên phải `revokeObjectURL` khi đổi/bỏ tệp. Không thu
-     hồi thì mỗi lần chọn lại một ảnh là rò thêm một tệp. */
-  const [preview, setPreview] = useState<string | null>(null);
-  const [fileError, setFileError] = useState<string | null>(null);
+  const [attachments, setAttachments] = useState<ComposerAttachmentItem[]>(
+    initialAttachments,
+  );
+  const [plusMenuOpen, setPlusMenuOpen] = useState(initialPlusMenuOpen);
+  const [allFilesModalOpen, setAllFilesModalOpen] = useState(
+    initialAllFilesModalOpen,
+  );
+  const [previewModalFileId, setPreviewModalFileId] = useState<string | null>(
+    null,
+  );
+
   const fileInputRef = useRef<HTMLInputElement>(null);
   const textRef = useRef<HTMLTextAreaElement>(null);
+  const plusMenuAnchorRef = useRef<HTMLDivElement>(null);
+  const filesRowRef = useRef<HTMLDivElement>(null);
+  const attachmentsRef = useRef<ComposerAttachmentItem[]>([]);
+  const submittingRef = useRef(false);
+  const analyzeAbortRef = useRef<AbortController | null>(null);
+  const allFilesListRef = useRef<HTMLDivElement>(null);
+  const [filesOverflow, setFilesOverflow] = useState<{ left: boolean; right: boolean }>({
+    left: false,
+    right: false,
+  });
 
   const [photo, dispatchPhoto] = useReducer(photoReducer, initialPhotoState);
   const [photoPreview, setPhotoPreview] = useState<string | null>(null);
   const uploadImageRef = useRef<HTMLInputElement>(null);
   const cameraImageRef = useRef<HTMLInputElement>(null);
-  /* Chốt ĐỒNG BỘ chống bấm lặp: `dispatch` chỉ đổi state ở lượt render sau, nên
-     hai cú bấm trong cùng một khung vẫn thấy state cũ. Ref thì thấy ngay. */
   const readAbortRef = useRef<AbortController | null>(null);
   const buildingRef = useRef(false);
+
+  useEffect(() => {
+    attachmentsRef.current = attachments;
+  }, [attachments]);
+
+  function syncFilesOverflow(el: HTMLDivElement | null) {
+    if (!el) {
+      setFilesOverflow((prev) =>
+        prev.left || prev.right ? { left: false, right: false } : prev,
+      );
+      return;
+    }
+    const nextLeft = el.scrollLeft > 2;
+    const nextRight = el.scrollLeft + el.clientWidth < el.scrollWidth - 2;
+    setFilesOverflow((prev) =>
+      prev.left === nextLeft && prev.right === nextRight
+        ? prev
+        : { left: nextLeft, right: nextRight },
+    );
+  }
+
+  useEffect(() => {
+    const el = filesRowRef.current;
+    syncFilesOverflow(el);
+    if (!el) return;
+    let ro: ResizeObserver | null = null;
+    if (typeof ResizeObserver !== "undefined") {
+      ro = new ResizeObserver(() => syncFilesOverflow(filesRowRef.current));
+      ro.observe(el);
+    }
+    const onWinResize = () => syncFilesOverflow(filesRowRef.current);
+    if (typeof window !== "undefined") {
+      window.addEventListener("resize", onWinResize);
+    }
+    return () => {
+      ro?.disconnect();
+      if (typeof window !== "undefined") {
+        window.removeEventListener("resize", onWinResize);
+      }
+    };
+  }, [attachments.length]);
+
+  // Thu hồi toàn bộ objectURL khi tháo component để tránh rò bộ nhớ.
+  useEffect(() => {
+    return () => {
+      analyzeAbortRef.current?.abort();
+      readAbortRef.current?.abort();
+      for (const item of attachmentsRef.current) {
+        if (item.previewUrl && typeof URL !== "undefined" && typeof URL.revokeObjectURL === "function") {
+          URL.revokeObjectURL(item.previewUrl);
+        }
+      }
+    };
+  }, []);
 
   useEffect(() => {
     let cancelled = false;
@@ -88,35 +515,168 @@ export function ProblemInput() {
     };
   }, [analyzing]);
 
-  const photoActive = photo.phase !== "empty";
-  // Có tệp → gửi tệp; không thì gửi văn bản (≥10 ký tự). Ảnh có luồng riêng.
-  const canAnalyze =
-    !analyzing && !photoActive && (file !== null || problemText.trim().length >= 10);
+  // Tự đóng modal Tất cả tệp hoặc modal xem trước nếu người dùng xóa tệp.
+  useEffect(() => {
+    if (attachments.length === 0 && allFilesModalOpen) {
+      setAllFilesModalOpen(false);
+    }
+    if (previewModalFileId && !attachments.some((a) => a.id === previewModalFileId)) {
+      setPreviewModalFileId(null);
+    }
+  }, [attachments, allFilesModalOpen, previewModalFileId]);
 
-  // Pill cao dần theo nội dung (tới ~6 dòng). DOM thuần, không state, không store.
-/** Trần chiều cao ô nhập — MỘT nguồn, dùng cho cả JS lẫn CSS (`--composer-max`).
- *
- * W5V — trước đây có HAI trần cho cùng một hành vi: JS kẹp 148px còn CSS kẹp
- * 200px. Chữ vượt 148 là bị cuộn trong khi hộp vẫn còn chỗ, nên phần đầu đề bài
- * khuất đi mà nhìn thì tưởng ô chưa đầy. Hai con số cho một luật thì luôn có một
- * con số sai, và ở đây nó sai theo hướng giấu mất chữ người dùng vừa gõ. */
-const COMPOSER_MAX_H = 320;
+  // Đóng menu `+`, modal Tất cả tệp hoặc modal xem trước tệp khi bấm ra ngoài hoặc nhấn Escape.
+  useEffect(() => {
+    if (!plusMenuOpen && !allFilesModalOpen && !previewModalFileId) return;
 
-  function autoGrow(el: HTMLTextAreaElement) {
-    el.style.height = "auto";
-    el.style.height = `${Math.min(el.scrollHeight, COMPOSER_MAX_H)}px`;
+    function handleMouseDown(e: MouseEvent) {
+      const target = e.target as Node | null;
+      if (
+        plusMenuOpen &&
+        plusMenuAnchorRef.current &&
+        target &&
+        !plusMenuAnchorRef.current.contains(target)
+      ) {
+        setPlusMenuOpen(false);
+      }
+    }
+
+    function handleKeyDown(e: KeyboardEvent) {
+      if (e.key === "Escape") {
+        if (previewModalFileId) {
+          setPreviewModalFileId(null);
+        } else if (allFilesModalOpen) {
+          setAllFilesModalOpen(false);
+        } else if (plusMenuOpen) {
+          setPlusMenuOpen(false);
+        }
+      }
+    }
+
+    document.addEventListener("mousedown", handleMouseDown);
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("mousedown", handleMouseDown);
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [plusMenuOpen, allFilesModalOpen, previewModalFileId]);
+
+  // Xem trước ảnh cho luồng OCR PhotoProblemPanel.
+  useEffect(() => {
+    const f = photo.file as File | null;
+    if (!f || typeof URL === "undefined" || typeof URL.createObjectURL !== "function") {
+      setPhotoPreview(null);
+      return;
+    }
+    const url = URL.createObjectURL(f);
+    setPhotoPreview(url);
+    return () => {
+      if (typeof URL.revokeObjectURL === "function") {
+        URL.revokeObjectURL(url);
+      }
+    };
+  }, [photo.file]);
+
+  const readyAttachments = attachments.filter(
+    (a) => a.status !== "loading" && a.status !== "error",
+  );
+  const isUploadingAny = attachments.some((a) => a.status === "loading");
+  const canSubmit = canSubmitComposer(
+    problemText,
+    readyAttachments.length,
+    analyzing,
+    isUploadingAny,
+  );
+
+  function syncTextareaHeight(el: HTMLTextAreaElement | null) {
+    if (!el) return;
+    const minH = getComposerMinHeight();
+    const val = el.value ?? "";
+    if (val.length === 0) {
+      el.style.height = `${minH}px`;
+      el.style.overflowY = "hidden";
+      return;
+    }
+    el.style.height = "0px";
+    const measured = el.scrollHeight;
+    let targetH = minH;
+    if (measured > 0) {
+      targetH = Math.min(Math.max(measured, minH), COMPOSER_MAX_H);
+      el.style.overflowY = measured > COMPOSER_MAX_H ? "auto" : "hidden";
+    } else {
+      const explicitLines = val.split("\n").length;
+      const approxWrappedLines = Math.ceil(val.length / 72);
+      const totalLines = Math.max(explicitLines, approxWrappedLines);
+      const lineH = minH === COMPOSER_MIN_H_MOBILE ? 22 : 24;
+      const padV = minH === COMPOSER_MIN_H_MOBILE ? 6 : 4;
+      const calcH = totalLines <= 3 ? minH : totalLines * lineH + padV;
+      targetH = Math.min(Math.max(calcH, minH), COMPOSER_MAX_H);
+      el.style.overflowY = calcH > COMPOSER_MAX_H ? "auto" : "hidden";
+    }
+    el.style.height = `${targetH}px`;
   }
+
+  useEffect(() => {
+    syncTextareaHeight(textRef.current);
+  }, [problemText]);
+
+  useEffect(() => {
+    const el = textRef.current;
+    if (!el) return;
+    syncTextareaHeight(el);
+    const onResize = () => syncTextareaHeight(textRef.current);
+    if (typeof window !== "undefined") {
+      window.addEventListener("resize", onResize);
+    }
+    let ro: ResizeObserver | null = null;
+    if (typeof ResizeObserver !== "undefined") {
+      ro = new ResizeObserver(() => syncTextareaHeight(textRef.current));
+      ro.observe(el);
+    }
+    if (typeof document !== "undefined" && document.fonts?.ready) {
+      void document.fonts.ready.then(() => syncTextareaHeight(textRef.current));
+    }
+    return () => {
+      if (typeof window !== "undefined") {
+        window.removeEventListener("resize", onResize);
+      }
+      ro?.disconnect();
+    };
+  }, []);
 
   function onChangeText(e: React.ChangeEvent<HTMLTextAreaElement>) {
     setProblemText(e.target.value);
-    autoGrow(e.target);
+    const st = useAppStore.getState();
+    if (st.unsupported) st.clearUnsupported();
+    if (st.analysisError && !/lượt mô phỏng thử/.test(st.analysisError)) {
+      st.setAnalysisError(null);
+    }
+    syncTextareaHeight(e.target);
   }
 
-  // Enter = gửi, Shift+Enter = xuống dòng (quy ước quen thuộc của ô chat).
   function onKeyDown(e: React.KeyboardEvent<HTMLTextAreaElement>) {
-    if (e.key === "Enter" && !e.shiftKey) {
-      e.preventDefault();
-      if (canAnalyze) void onAnalyze();
+    if (e.key !== "Enter") return;
+
+    const nativeEvt = e.nativeEvent as unknown as {
+      isComposing?: boolean;
+      keyCode?: number;
+    } | null;
+    const isComposing =
+      Boolean(nativeEvt?.isComposing) ||
+      (e as unknown as { isComposing?: boolean }).isComposing === true ||
+      nativeEvt?.keyCode === 229 ||
+      (e as unknown as { keyCode?: number }).keyCode === 229;
+
+    if (isComposing) return;
+
+    if (e.shiftKey) {
+      if (analyzing) e.preventDefault();
+      return;
+    }
+
+    e.preventDefault();
+    if (canSubmit) {
+      void onAnalyze();
     }
   }
 
@@ -125,104 +685,129 @@ const COMPOSER_MAX_H = 320;
     readAbortRef.current = null;
   }
 
-  // Rời trang chủ giữa lúc đang đọc ⇒ huỷ, không để phản hồi về một component đã tháo.
-  useEffect(() => () => readAbortRef.current?.abort(), []);
+  function addFilesToComposer(pickedList: File[]) {
+    if (pickedList.length === 0) return;
+
+    const nextItems: ComposerAttachmentItem[] = [];
+    const workingExisting = [
+      ...attachments.map((a) => ({ name: a.name, size: a.size })),
+    ];
+
+    for (const picked of pickedList) {
+      const check = validateComposerFile(picked, workingExisting);
+      if (!check.ok) {
+        useToastStore.getState().showToast({
+          tone: "error",
+          title:
+            check.code === "pdf_unsupported"
+              ? "Chưa hỗ trợ tệp PDF"
+              : "Không thể đính kèm tệp",
+          description: check.reason,
+        });
+        continue;
+      }
+
+      let previewUrl: string | undefined;
+      if (
+        check.kind === "image" &&
+        typeof URL !== "undefined" &&
+        typeof URL.createObjectURL === "function"
+      ) {
+        try {
+          previewUrl = URL.createObjectURL(picked);
+        } catch {
+          previewUrl = undefined;
+        }
+      }
+
+      attachmentSeq += 1;
+      nextItems.push({
+        id: `att-${Date.now()}-${attachmentSeq}`,
+        file: picked,
+        name: picked.name,
+        size: picked.size,
+        sizeFormatted: formatAttachmentSize(picked.size),
+        ext: check.ext,
+        kind: check.kind,
+        previewUrl,
+      });
+      workingExisting.push({ name: picked.name, size: picked.size });
+    }
+
+    if (nextItems.length > 0) {
+      setAttachments((prev) => [...prev, ...nextItems]);
+    }
+  }
+
+  function onPickFiles(e: React.ChangeEvent<HTMLInputElement>) {
+    const list = e.target.files ? Array.from(e.target.files) : [];
+    addFilesToComposer(list);
+    e.target.value = "";
+  }
+
+  function removeAttachment(id: string) {
+    setAttachments((prev) => {
+      const target = prev.find((item) => item.id === id);
+      if (
+        target?.previewUrl &&
+        typeof URL !== "undefined" &&
+        typeof URL.revokeObjectURL === "function"
+      ) {
+        URL.revokeObjectURL(target.previewUrl);
+      }
+      return prev.filter((item) => item.id !== id);
+    });
+  }
 
   function acceptImage(picked: File | null) {
-    setFileError(null);
     if (!picked) return;
     if (!isImageFile(picked)) {
-      setFileError("Chỉ nhận ảnh PNG, JPEG hoặc WEBP.");
+      const msg = "Chỉ nhận ảnh PNG, JPEG hoặc WEBP.";
+      useToastStore.getState().showToast({
+        tone: "error",
+        title: "Không thể đính kèm ảnh",
+        description: msg,
+      });
       return;
     }
     const problem = clientFileProblem(picked);
     if (problem) {
-      setFileError(problem);
+      useToastStore.getState().showToast({
+        tone: "error",
+        title: "Không thể đính kèm ảnh",
+        description: problem,
+      });
       return;
     }
     cancelRead();
-    setFile(null);
     dispatchPhoto({ type: "select", file: picked });
   }
 
   function onPickImage(e: React.ChangeEvent<HTMLInputElement>) {
     acceptImage(e.target.files?.[0] ?? null);
-    // Xoá giá trị để chọn lại CÙNG một ảnh vẫn phát `onChange`.
     e.target.value = "";
   }
 
-  function onPickFile(e: React.ChangeEvent<HTMLInputElement>) {
-    setFileError(null);
-    const picked = e.target.files?.[0] ?? null;
-    if (!picked) return;
-    if (isImageFile(picked)) {
-      // Ảnh từ nút `+` cũng đi luồng có bước xem lại — không có đường thứ hai.
-      acceptImage(picked);
-      if (fileInputRef.current) fileInputRef.current.value = "";
-      return;
-    }
-    if (!kindFromFile(picked.name)) {
-      setFileError(
-        "Định dạng không hỗ trợ. Chọn .py, .docx hoặc ảnh .png/.jpg/.webp.",
-      );
-      if (fileInputRef.current) fileInputRef.current.value = "";
-      return;
-    }
-    setFile(picked);
-  }
-
-  /* Sinh và THU HỒI ảnh xem trước theo vòng đời của `file`. Đặt trong `useEffect`
-     chứ không trong `onPickFile`: tệp còn bị bỏ bằng `removeFile` và bị thay khi
-     chọn tệp khác, nên nơi duy nhất thấy đủ mọi lối đổi là hiệu ứng theo `file`. */
-  useEffect(() => {
-    if (!file || kindFromFile(file.name) !== "image") {
-      setPreview(null);
-      return;
-    }
-    const url = URL.createObjectURL(file);
-    setPreview(url);
-    return () => URL.revokeObjectURL(url);
-  }, [file]);
-
-  // Cùng luật W5X cho ảnh đề bài của luồng xem lại.
-  useEffect(() => {
-    const f = photo.file as File | null;
-    if (!f) {
-      setPhotoPreview(null);
-      return;
-    }
-    const url = URL.createObjectURL(f);
-    setPhotoPreview(url);
-    return () => URL.revokeObjectURL(url);
-  }, [photo.file]);
-
-  function removeFile() {
-    setFile(null);
-    setFileError(null);
-    if (fileInputRef.current) fileInputRef.current.value = "";
-  }
-
   async function onAnalyze() {
-    const store = useAppStore.getState();
-    store.setAnalysisError(null);
-    store.setAnalyzing(true);
-    try {
-      const payload = file
-        ? await fileToPayload(file)
-        : { type: "text" as const, content: problemText.trim() };
-      const result = await analyzeViaServer(payload);
-      if (result.status === "ok") {
-        // originalInput vào lịch sử: CHỈ text an toàn (tệp có thể là nhị phân
-        // base64 — chính sách M9-UX1 cấm persist blob).
-        store.loadEnvelope(result, undefined, file ? undefined : problemText.trim());
-      } else {
-        store.loadUnsupported(result);
-      }
-    } catch (err) {
-      store.setAnalysisError(err instanceof Error ? err.message : String(err));
-    } finally {
-      store.setAnalyzing(false);
+    if (readyAttachments.length > 1) {
+      useToastStore.getState().showToast({
+        id: "composer-multi-file-limit",
+        tone: "info",
+        title: "Mỗi lượt dựng hình xử lý 1 tệp đề bài",
+        description:
+          "Hệ thống hiện phân tích từng tệp một. Vui lòng giữ lại 1 tệp cần dựng rồi nhấn Dựng hình.",
+        durationMs: 7000,
+      });
+      return;
     }
+    await runComposerSubmit({
+      canSubmit,
+      lockRef: submittingRef,
+      abortRef: analyzeAbortRef,
+      problemText,
+      attachment: readyAttachments[0] ?? null,
+      health,
+    });
   }
 
   async function onReadPhoto() {
@@ -236,15 +821,21 @@ const COMPOSER_MAX_H = 320;
       const content = await readAsBase64(picked);
       if (ctl.signal.aborted) return;
       const response = await extractImageViaServer(
-        { content, mime_type: imageMimeOf(picked), filename: picked.name, rotation: photo.rotation },
+        {
+          content,
+          mime_type: imageMimeOf(picked),
+          filename: picked.name,
+          rotation: photo.rotation,
+        },
         ctl.signal,
       );
-      if (!ctl.signal.aborted) dispatchPhoto({ type: "read-success", requestId, response });
+      if (!ctl.signal.aborted) {
+        dispatchPhoto({ type: "read-success", requestId, response });
+      }
     } catch (err) {
       if (ctl.signal.aborted) return;
       const message = err instanceof Error ? err.message : String(err);
       if (/lượt mô phỏng thử/.test(message)) {
-        // Hết lượt thử: dùng lại đúng thẻ mời đăng nhập bên dưới, không băng đỏ thứ hai.
         useAppStore.getState().setAnalysisError(message);
         dispatchPhoto({ type: "read-failure", requestId, message: "" });
       } else {
@@ -259,56 +850,68 @@ const COMPOSER_MAX_H = 320;
     if (!canBuild(photo) || buildingRef.current) return;
     buildingRef.current = true;
     const text = photo.text.trim();
+    const attemptId = newAttemptId();
     dispatchPhoto({ type: "build-start" });
     const store = useAppStore.getState();
     store.setAnalysisError(null);
     store.setAnalyzing(true);
     try {
-      const result = await analyzeViaServer({ type: "text", content: text });
+      const result = await analyzeViaServer({ type: "text", content: text }, undefined, undefined, attemptId);
       if (result.status === "ok") {
-        store.loadEnvelope(result, undefined, text);
+        store.loadEnvelope(result, undefined, text, attemptId);
         dispatchPhoto({ type: "build-end" });
       } else {
-        // §6: GIỮ ảnh và nội dung đã đọc để người học sửa tiếp — không rời trang.
-        dispatchPhoto({ type: "build-failure", message: buildFailureMessage(result) });
+        dispatchPhoto({
+          type: "build-failure",
+          message: buildFailureMessage(result),
+        });
       }
     } catch (err) {
-      store.setAnalysisError(err instanceof Error ? err.message : String(err));
+      const contract = err instanceof AxoClientError ? err.toContract() : null;
+      const message = err instanceof Error ? err.message : String(err);
+      store.setClientFailure(contract);
+      store.setAnalysisError(message);
       dispatchPhoto({ type: "build-end" });
+      const errView = describeComposerError(message, health, contract);
+      if (errView) {
+        useToastStore.getState().showToast({
+          tone: errView.tone,
+          title: errView.title,
+          description: errView.description,
+        });
+      }
     } finally {
       store.setAnalyzing(false);
       buildingRef.current = false;
     }
   }
 
-  // M9-UX2 §9: trạng thái kĩ thuật GIỮ IM khi mọi thứ ổn — học sinh không cần
-  // biết "ngân hàng bài: N". Chỉ nói khi có việc phải làm (server tắt/thiếu key).
   const serverStatus =
     health === null ? (
-      <span className="hint" style={{ color: "var(--accent-orange)" }}>
-        ● Máy chủ phân tích chưa chạy — vẫn dùng được các mô phỏng mẫu bên dưới
+      <span className="composer-sr-only">
+        Máy chủ phân tích chưa chạy — vẫn dùng được các mô phỏng mẫu bên dưới
       </span>
     ) : health !== "loading" && !health.hasKey ? (
-      <span className="hint" style={{ color: "var(--accent-orange)" }}>
-        ● Máy chủ thiếu khóa AI — vẫn dùng được các mô phỏng mẫu bên dưới
+      <span className="composer-sr-only">
+        Máy chủ thiếu khóa AI — vẫn dùng được các mô phỏng mẫu bên dưới
       </span>
     ) : null;
 
   return (
     <div className="composer-hero">
-      {/* M9-UX5 — HỘP nhiều dòng (không còn pill một dòng): ô gõ ở trên, hai nút
-          tròn ở đáy — `+` trái (tải tệp), gửi phải. Placeholder được nói đủ ý vì
-          hộp cao sẵn, không sợ cắt cụt như pill. */}
-      <div className={`composer-box${analyzing ? " is-busy" : ""}`}>
+      <div
+        className={`composer-card composer-box${analyzing ? " is-busy" : ""}`}
+        id="home-composer-box"
+      >
         <input
           ref={fileInputRef}
+          id="home-file-input"
           type="file"
-          accept={acceptAttr()}
-          onChange={onPickFile}
+          accept={COMPOSER_ACCEPT}
+          multiple
+          onChange={onPickFiles}
           style={{ display: "none" }}
         />
-        {/* Hai lối vào ảnh đề bài. `capture` chỉ là GỢI Ý mở máy ảnh sau trên
-            điện thoại; trình duyệt máy tính bỏ qua và mở hộp chọn tệp. */}
         <input
           ref={cameraImageRef}
           type="file"
@@ -325,85 +928,505 @@ const COMPOSER_MAX_H = 320;
           style={{ display: "none" }}
         />
 
-        {/* W5W — TỆP ĐÍNH KÈM NẰM TRONG KHUNG SOẠN, TRÊN Ô NHẬP.
-            Trước đây nó là một khối full-width nằm NGOÀI `.composer-box`, nên
-            mắt đọc thành hai vật thể rời trong khi tệp là MỘT PHẦN của đề bài
-            sắp gửi. Khối ấy còn nặng hơn cả ô nhập, tức phần phụ lấn phần chính.
-            Nay là một chip gọn bên trong cùng một khung — một vật thể, một biên. */}
-        {file && (
-          <div className="composer-file">
-            {/* Ảnh thì xem trước được; `.docx`/`.py` thì không có gì để xem nên
-                KHÔNG dựng ô rỗng — chip chỉ còn tên tệp và loại. */}
-            {preview && (
-              <img className="composer-file-thumb" src={preview} alt={`Xem trước ${file.name}`} />
-            )}
-            <span className="composer-file-info">
-              <strong>{file.name}</strong>
-              <span className="hint">{kindLabel(kindFromFile(file.name) ?? "text")}</span>
-            </span>
-            <button
-              className="composer-file-remove"
-              onClick={removeFile}
-              title="Bỏ tệp"
-              aria-label={`Bỏ tệp ${file.name}`}
+        {attachments.length > 0 && (
+          <div
+            className="composer-files-wrap"
+            id="composer-files-wrap"
+            aria-label="Danh sách tệp đính kèm"
+          >
+            <div
+              className={`composer-files-scroll-shell${filesOverflow.left ? " has-overflow-left" : ""}${filesOverflow.right ? " has-overflow-right" : ""}`}
+              id="composer-files-scroll-shell"
             >
-              ×
-            </button>
+              <div
+                ref={filesRowRef}
+                className="composer-files-row"
+                id="composer-files-row"
+                role="region"
+                aria-label="Dải tệp đính kèm ngang"
+                tabIndex={filesOverflow.left || filesOverflow.right ? 0 : undefined}
+                onScroll={(e) => syncFilesOverflow(e.currentTarget)}
+                onKeyDown={(e) => {
+                  const el = e.currentTarget;
+                  if (e.key === "ArrowRight" && el.scrollWidth > el.clientWidth) {
+                    e.preventDefault();
+                    el.scrollLeft += 140;
+                    syncFilesOverflow(el);
+                  } else if (e.key === "ArrowLeft" && el.scrollWidth > el.clientWidth) {
+                    e.preventDefault();
+                    el.scrollLeft -= 140;
+                    syncFilesOverflow(el);
+                  }
+                }}
+                onWheel={(e) => {
+                  const el = e.currentTarget;
+                  if (Math.abs(e.deltaY) > Math.abs(e.deltaX) && el.scrollWidth > el.clientWidth) {
+                    el.scrollLeft += e.deltaY;
+                    syncFilesOverflow(el);
+                  }
+                }}
+              >
+                {attachments.map((att) => {
+                  const { stem, extWithDot } = splitAttachmentName(att.name);
+                  const extBadge = (att.ext.replace(".", "") || att.kind).toUpperCase();
+                  const isAttLoading = att.status === "loading";
+                  const isAttError = att.status === "error";
+                  const badgeClass = isAttLoading
+                    ? " badge-loading"
+                    : isAttError
+                      ? " badge-error"
+                      : att.kind === "document"
+                        ? " badge-docx"
+                        : att.kind === "pdf" || att.ext.toLowerCase() === ".pdf"
+                          ? " badge-pdf"
+                          : att.kind === "code"
+                            ? " badge-code"
+                            : "";
+                  const subText = isAttLoading
+                    ? `Đang tải lên · ${att.sizeFormatted}`
+                    : isAttError
+                      ? att.errorMessage || "Lỗi tải tệp"
+                      : `${extBadge} · ${att.sizeFormatted}`;
+                  return (
+                    <div
+                      key={att.id}
+                      className={`file-preview-card${isAttLoading ? " is-loading" : ""}${isAttError ? " is-error" : ""}`}
+                      data-file-id={att.id}
+                      role="button"
+                      tabIndex={0}
+                      title={att.name}
+                      aria-label={`Xem chi tiết tệp ${att.name}`}
+                      onClick={() => setPreviewModalFileId(att.id)}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter" || e.key === " ") {
+                          e.preventDefault();
+                          setPreviewModalFileId(att.id);
+                        }
+                      }}
+                    >
+                      <div className={`file-card-thumb${badgeClass}`}>
+                        {isAttLoading ? (
+                          <span className="composer-spin" aria-hidden="true" />
+                        ) : isAttError ? (
+                          <span>!</span>
+                        ) : att.previewUrl ? (
+                          <img
+                            className="composer-file-thumb"
+                            src={att.previewUrl}
+                            alt={`Xem trước ${att.name}`}
+                          />
+                        ) : (
+                          <span>{extBadge}</span>
+                        )}
+                      </div>
+                      <div className="file-card-meta">
+                        <div className="file-card-name-row" title={att.name}>
+                          <span className="file-name-stem">{stem}</span>
+                          <span className="file-name-ext">{extWithDot}</span>
+                        </div>
+                        <div className="file-card-sub">{subText}</div>
+                      </div>
+                      <button
+                        type="button"
+                        className="file-card-remove"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          removeAttachment(att.id);
+                        }}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter" || e.key === " ") {
+                            e.stopPropagation();
+                          }
+                        }}
+                        disabled={analyzing}
+                        title="Bỏ tệp"
+                        aria-label={`Bỏ tệp ${att.name}`}
+                      >
+                        <IconClose size={12} />
+                      </button>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
           </div>
         )}
 
         <textarea
           ref={textRef}
-          className="composer-text"
-          rows={1}
-          placeholder="Nhập đề hình học không gian, hoặc tải lên tệp đề…"
+          id="home-problem-input"
+          className="composer-textarea composer-text"
+          rows={3}
+          placeholder="Nhập đề toán hình học không gian..."
           aria-label="Đề bài hình học không gian"
+          aria-describedby="composer-submit-req-hint"
           value={problemText}
           onChange={onChangeText}
           onKeyDown={onKeyDown}
-          disabled={file !== null || photoActive}
+          readOnly={analyzing}
         />
 
-        <div className="composer-foot">
-          <div className="composer-tools">
-            <button
-              className="composer-attach"
-              onClick={() => fileInputRef.current?.click()}
-              title="Tải tệp đề (.docx / .py / ảnh)"
-              aria-label="Tải tệp đề"
-            >
-              <IconAttach size={17} />
-            </button>
+        <div className="composer-footer composer-foot">
+          <div className="composer-left-tools composer-tools">
+            <div className="plus-menu-anchor" ref={plusMenuAnchorRef}>
+              <button
+                type="button"
+                id="btn-composer-plus"
+                className={`btn-plus-trigger${plusMenuOpen ? " is-open" : ""}`}
+                onClick={() => setPlusMenuOpen((v) => !v)}
+                disabled={analyzing || photo.phase === "building"}
+                title="Đính kèm tệp hoặc chụp ảnh đề bài"
+                aria-label="Tải tệp đề"
+                aria-haspopup="menu"
+                aria-expanded={plusMenuOpen}
+              >
+                <IconPlus size={16} />
+              </button>
+
+              <div
+                id="plus-popover-menu"
+                className={`plus-popover-menu${plusMenuOpen ? " open" : ""}`}
+                role="menu"
+                aria-label="Tùy chọn đính kèm đề bài"
+              >
+                <button
+                  type="button"
+                  id="menu-item-upload-file"
+                  className="plus-menu-item"
+                  role="menuitem"
+                  onClick={() => {
+                    setPlusMenuOpen(false);
+                    fileInputRef.current?.click();
+                  }}
+                >
+                  <IconUpload size={16} />
+                  <span>Tải tệp từ thiết bị</span>
+                </button>
+                <button
+                  type="button"
+                  id="menu-item-camera"
+                  className="plus-menu-item"
+                  role="menuitem"
+                  aria-label="Chụp ảnh đề bài bằng máy ảnh"
+                  disabled={photo.phase === "building"}
+                  onClick={() => {
+                    setPlusMenuOpen(false);
+                    cameraImageRef.current?.click();
+                  }}
+                >
+                  <IconCamera size={16} />
+                  <span>Chụp ảnh đề bài</span>
+                </button>
+              </div>
+            </div>
+
             <button
               type="button"
-              className="composer-photo-btn"
-              onClick={() => cameraImageRef.current?.click()}
-              disabled={photo.phase === "building"}
-              aria-label="Chụp ảnh đề bài bằng máy ảnh"
-            >
-              Chụp ảnh
-            </button>
-            <button
-              type="button"
-              className="composer-photo-btn"
-              onClick={() => uploadImageRef.current?.click()}
-              disabled={photo.phase === "building"}
+              className="composer-sr-only"
               aria-label="Tải ảnh đề bài từ máy"
+              tabIndex={-1}
+              onClick={() => uploadImageRef.current?.click()}
             >
               Tải ảnh
             </button>
+
+            <span className="composer-hint-lbl">
+              Nhập đề bài hoặc chọn mẫu bên dưới
+            </span>
           </div>
+
           <button
-            className="composer-send"
-            onClick={onAnalyze}
-            disabled={!canAnalyze}
-            title="Phân tích đề bằng AI"
+            type="button"
+            id="btn-composer-send"
+            className={`btn-composer-submit${analyzing ? " is-loading" : ""}`}
+            onClick={() => void onAnalyze()}
+            disabled={!canSubmit}
+            aria-busy={analyzing}
+            aria-describedby="composer-submit-req-hint"
+            title="Dựng hình"
             aria-label="Phân tích đề bằng AI"
           >
-            {analyzing ? <span className="composer-spin" /> : <IconSend size={17} />}
+            {analyzing ? (
+              <span className="composer-submit-layer composer-submit-layer-loading">
+                <span className="composer-spin composer-submit-spinner" aria-hidden="true" />
+                <span className="composer-submit-label">Đang dựng hình...</span>
+              </span>
+            ) : (
+              <span className="composer-submit-layer composer-submit-layer-idle">
+                <span className="composer-submit-label">Dựng hình</span>
+                <span className="composer-submit-arrow" aria-hidden="true">→</span>
+              </span>
+            )}
           </button>
+
+          <span id="composer-submit-req-hint" className="composer-sr-only">
+            Cần nhập đề toán hoặc đính kèm ít nhất một tệp đề bài hợp lệ để bật nút Dựng hình.
+          </span>
         </div>
       </div>
+
+      {(() => {
+        const previewAtt = previewModalFileId
+          ? attachments.find((a) => a.id === previewModalFileId) ?? null
+          : null;
+        if (!previewAtt) return null;
+        const extBadge = (previewAtt.ext.replace(".", "") || previewAtt.kind).toUpperCase();
+        return (
+          <div
+            className="axo-modal-backdrop axo-att-modal-backdrop open"
+            id="composer-single-file-modal"
+            style={{ zIndex: 132 }}
+            role="dialog"
+            aria-modal="true"
+            aria-label={`Chi tiết tệp ${previewAtt.name}`}
+            onClick={(e) => {
+              if (e.target === e.currentTarget) setPreviewModalFileId(null);
+            }}
+          >
+            <div className="axo-modal-dialog axo-att-modal" style={{ maxWidth: 500 }}>
+              <div className="axo-modal-head axo-att-modal-head">
+                <span className="axo-modal-title axo-att-modal-title" id="file-modal-title">
+                  {previewAtt.name}
+                </span>
+                <button
+                  type="button"
+                  className="context-close-icon-btn axo-att-modal-close"
+                  id="btn-close-file-modal"
+                  onClick={() => setPreviewModalFileId(null)}
+                  aria-label="Đóng xem trước tệp"
+                >
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <line x1="18" y1="6" x2="6" y2="18" />
+                    <line x1="6" y1="6" x2="18" y2="18" />
+                  </svg>
+                </button>
+              </div>
+              <div className="axo-modal-body axo-att-modal-body" id="file-modal-body">
+                {previewAtt.previewUrl ? (
+                  <div className="file-modal-preview-stage single-file-preview-box">
+                    <img
+                      className="single-file-preview-img"
+                      src={previewAtt.previewUrl}
+                      alt={`Xem trước ${previewAtt.name}`}
+                    />
+                  </div>
+                ) : (
+                  <div
+                    className="file-modal-preview-stage single-file-preview-box"
+                    style={{ flexDirection: "column", gap: 8, textAlign: "center", minHeight: 160 }}
+                  >
+                    <span
+                      className={`role-chip ${extBadge === "PDF" ? "locked" : "student"}`}
+                      style={{ fontSize: 12.5, padding: "4px 12px" }}
+                    >
+                      {`Tệp ${extBadge} · ${previewAtt.sizeFormatted}`}
+                    </span>
+                    <div style={{ maxWidth: 420, color: "var(--ink-secondary)", fontSize: 12.6 }}>
+                      {`Định dạng ${extBadge} chưa hỗ trợ hiển thị bản xem trước trực tiếp. Nội dung tệp sẽ được trích xuất khi bấm Dựng hình.`}
+                    </div>
+                  </div>
+                )}
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    gap: 8,
+                    flexWrap: "wrap",
+                    fontSize: 12,
+                    color: "var(--ink-muted)",
+                    textAlign: "left",
+                  }}
+                >
+                  <span>
+                    Định dạng: <strong>{extBadge}</strong> · Dung lượng:{" "}
+                    <strong>{previewAtt.sizeFormatted}</strong>
+                  </span>
+                  <span>
+                    Tên đầy đủ: <strong>{previewAtt.name}</strong>
+                  </span>
+                </div>
+                <div
+                  style={{
+                    background: "var(--canvas-soft)",
+                    border: "1px solid var(--hairline)",
+                    borderRadius: 8,
+                    padding: "10px 12px",
+                    fontSize: 12.3,
+                    color: "var(--ink-secondary)",
+                    textAlign: "left",
+                  }}
+                >
+                  <strong>Trạng thái tệp:</strong>{" "}
+                  {previewAtt.status === "loading"
+                    ? "Đang tải lên..."
+                    : previewAtt.status === "error"
+                      ? previewAtt.errorMessage || "Lỗi tải tệp"
+                      : "Đã đính kèm · Sẵn sàng phân tích khi bấm Dựng hình."}
+                </div>
+                <div className="all-files-modal-foot">
+                  <button
+                    type="button"
+                    className="btn-admin-sm warn"
+                    onClick={() => {
+                      removeAttachment(previewAtt.id);
+                      setPreviewModalFileId(null);
+                    }}
+                    disabled={analyzing}
+                  >
+                    Gỡ tệp
+                  </button>
+                  <button
+                    type="button"
+                    className="btn-auth-primary"
+                    style={{ height: 34, padding: "0 16px" }}
+                    onClick={() => setPreviewModalFileId(null)}
+                  >
+                    Đóng
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      })()}
+
+      {allFilesModalOpen && attachments.length > 0 && (
+        <div
+          className="axo-modal-backdrop axo-att-modal-backdrop open"
+          id="composer-all-files-modal"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="composer-all-files-modal-title"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) setAllFilesModalOpen(false);
+          }}
+        >
+          <div className="axo-modal-dialog axo-att-modal" style={{ maxWidth: 520 }}>
+            <div className="axo-modal-head axo-att-modal-head">
+              <span
+                className="axo-modal-title axo-att-modal-title"
+                id="composer-all-files-modal-title"
+              >
+                {`Tất cả tệp đề toán đính kèm (${attachments.length})`}
+              </span>
+              <button
+                type="button"
+                className="context-close-icon-btn axo-att-modal-close"
+                id="btn-close-composer-all-files-modal"
+                onClick={() => setAllFilesModalOpen(false)}
+                aria-label="Đóng danh sách tệp đính kèm"
+              >
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <line x1="18" y1="6" x2="6" y2="18" />
+                  <line x1="6" y1="6" x2="18" y2="18" />
+                </svg>
+              </button>
+            </div>
+            <div className="axo-modal-body axo-att-modal-body">
+              <div className="axo-att-modal-sub">
+                Danh sách các tệp đề bài đã đính kèm. Bạn có thể xem trước nội dung hoặc gỡ từng tệp trước khi bấm <strong>Dựng hình</strong>.
+              </div>
+              <div
+                className="all-files-modal-list axo-custom-scroll"
+                id="composer-all-files-modal-list"
+                ref={allFilesListRef}
+                role="list"
+              >
+                {attachments.map((att, idx) => {
+                  const extBadge = (att.ext.replace(".", "") || att.kind).toUpperCase();
+                  const isAttLoading = att.status === "loading";
+                  const isAttError = att.status === "error";
+                  const badgeClass = isAttLoading
+                    ? " badge-loading"
+                    : isAttError
+                      ? " badge-error"
+                      : att.kind === "pdf" || extBadge === "PDF"
+                        ? " badge-pdf"
+                        : att.kind === "document" || extBadge === "DOCX"
+                          ? " badge-docx"
+                          : !att.previewUrl
+                            ? " badge-txt"
+                            : "";
+                  const statusLabel = isAttLoading
+                    ? "Đang tải lên"
+                    : isAttError
+                      ? att.errorMessage || "Lỗi tải tệp"
+                      : "Đã đính kèm";
+                  return (
+                    <div
+                      key={att.id}
+                      className="all-files-modal-item"
+                      role="listitem"
+                      data-modal-file-id={att.id}
+                    >
+                      <div className="all-files-modal-item-left">
+                        <div className={`file-card-thumb${badgeClass}`}>
+                          {isAttLoading ? (
+                            <span className="composer-spin" aria-hidden="true" />
+                          ) : isAttError ? (
+                            <span>!</span>
+                          ) : att.previewUrl ? (
+                            <img
+                              className="composer-file-thumb"
+                              src={att.previewUrl}
+                              alt={att.name}
+                            />
+                          ) : (
+                            <span>{extBadge}</span>
+                          )}
+                        </div>
+                        <div className="all-files-modal-item-meta">
+                          <div className="all-files-modal-item-name" title={att.name}>
+                            {`#${idx + 1} · ${att.name}`}
+                          </div>
+                          <div className="all-files-modal-item-sub">
+                            {`${extBadge} · ${att.sizeFormatted} · ${statusLabel}`}
+                          </div>
+                        </div>
+                      </div>
+                      <div className="all-files-modal-item-actions">
+                        <button
+                          type="button"
+                          className="btn-admin-sm"
+                          data-modal-preview-file-id={att.id}
+                          onClick={() => setPreviewModalFileId(att.id)}
+                        >
+                          Xem trước
+                        </button>
+                        <button
+                          type="button"
+                          className="file-card-remove"
+                          data-modal-remove-file-id={att.id}
+                          onClick={() => removeAttachment(att.id)}
+                          disabled={analyzing}
+                          aria-label={`Gỡ tệp ${att.name}`}
+                          title="Gỡ tệp này"
+                          style={{ position: "static", width: 28, height: 28 }}
+                        >
+                          ×
+                        </button>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+              <AxoScrollbar targetRef={allFilesListRef} />
+              <div className="all-files-modal-foot">
+                <button
+                  type="button"
+                  className="btn-auth-primary"
+                  id="btn-done-composer-all-files-modal"
+                  style={{ height: 34, padding: "0 16px" }}
+                  onClick={() => setAllFilesModalOpen(false)}
+                >
+                  Đóng
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       <PhotoProblemPanel
         state={photo}
@@ -423,34 +1446,33 @@ const COMPOSER_MAX_H = 320;
         onBuild={() => void onBuildPhoto()}
       />
 
-      {fileError && <div className="error-banner">{fileError}</div>}
       {serverStatus}
-      {/* M18 §5 — HẾT LƯỢT THỬ KHÔNG PHẢI LÀ MỘT LỖI.
-          Khách vừa chạy xong một mô phỏng thật; đây là lúc nói cho họ biết tài
-          khoản mở thêm được gì, chứ không phải lúc dựng một băng đỏ. Mô phỏng
-          vừa chạy KHÔNG bị xoá — nó vẫn nằm nguyên trong phiên. */}
       {analysisError && /lượt mô phỏng thử/.test(analysisError) ? (
         <div className="trial-gate">
           <strong>Em đã dùng hết lượt mô phỏng thử.</strong>
           <p>Đăng nhập để tiếp tục — tài khoản cho phép:</p>
           <ul>
-            <li>lưu và mở lại mô phỏng đã làm</li>
-            <li>vào lớp bằng mã giáo viên đưa</li>
-            <li>nhận và làm bài thực hành</li>
+            <li>lưu lịch sử học tập và mở lại đúng bước dựng</li>
+            <li>tiếp tục học các mô hình 3D trên mọi thiết bị</li>
+            <li>quản lý danh sách đề toán đã phân tích</li>
           </ul>
           <div className="trial-gate-actions">
-            <button type="button" className="btn-primary"
-              onClick={() => useAuthStore.getState().openAuthGate("register")}>
+            <button
+              type="button"
+              className="btn-primary"
+              onClick={() => useAuthStore.getState().openAuthGate("register")}
+            >
               Tạo tài khoản
             </button>
-            <button type="button" className="btn-utility"
-              onClick={() => useAuthStore.getState().openAuthGate("login")}>
+            <button
+              type="button"
+              className="btn-utility"
+              onClick={() => useAuthStore.getState().openAuthGate("login")}
+            >
               Đăng nhập
             </button>
           </div>
         </div>
-      ) : analysisError ? (
-        <div className="error-banner">{analysisError}</div>
       ) : null}
     </div>
   );

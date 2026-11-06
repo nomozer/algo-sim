@@ -219,7 +219,8 @@ def test_12_loi_hau_kiem_KHONG_BAO_GIO_la_tu_choi_an_toan(monkeypatch):
     Image.new("RGB", (40, 30), (255, 255, 255)).save(buf, format="PNG")
     import base64
 
-    r = TestClient(main.app).post("/api/image/extract", json={
+    from tests.route_client import route_client
+    r = route_client(main.app).post("/api/image/extract", json={
         "content": base64.b64encode(buf.getvalue()).decode(), "mime_type": "image/png"})
     assert r.status_code == 502, r.text
     body = r.json()

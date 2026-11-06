@@ -27,10 +27,12 @@
  */
 import {
   BIEN_DOI_DONG_NHAT,
+  propagateSceneLineage,
   type ExactVec3,
   type Scene3D,
   type SceneObject,
 } from "./scene3d-model";
+import { vaiTroMien } from "./scene3d-roles";
 
 /** Ngăn cách id khối với phần con. Không xuất hiện trong tên biến chương trình. */
 export const NGAN_CACH = "::";
@@ -190,6 +192,51 @@ function _khoaToa(v: ExactVec3): string {
  * Hai điểm ngữ nghĩa cùng toạ độ ⇒ **bỏ**, không chọn bừa một cái: một cái tên
  * sai còn tệ hơn không tên.
  */
+/**
+ * Điểm dựng phụ nội bộ chỉ phục vụ xác định một mặt phẳng cắt/mặt phẳng phụ
+ * (ví dụ ảnh tịnh tiến `H = translate(M, AB)` khi đề chỉ cho mặt phẳng `(α)` qua `M` song song đáy).
+ * Điểm loại này không phải đỉnh có tên mà đề bài đặt trên cạnh khối, nên không bao giờ được
+ * gán làm tên đỉnh thiết diện hay lộ vào chip/diễn giải mặt cắt.
+ */
+export function laDiemPhuDungMatPhang(
+  scene: Pick<Scene3D, "objects">,
+  o: SceneObject,
+  theoId?: ReadonlyMap<string, SceneObject>,
+): boolean {
+  if (isSubEntity(o.id) || o.type !== "point3") return false;
+  const nhom = o.display_group ?? [];
+  if (nhom.includes("given") || nhom.includes("target")) return false;
+  if (o.label === "Điểm dựng phụ") return true;
+  if (o.authoritative === false && o.semantic_role === "AUXILIARY_CONSTRUCTION") return true;
+  if (o.origin !== "derived" || o.perpendicular_witness) return false;
+  const map = theoId ?? new Map(scene.objects.map((x) => [x.id, x]));
+  const deps = o.depends ?? [];
+  // Giao điểm đường – mặt (`depends: [line3, plane3]`) là thực thể cắt thật, không phải điểm phụ dựng mặt phẳng
+  if (
+    deps.length === 2
+    && deps.some((id) => map.get(id)?.type === "line3" || map.get(id)?.type === "segment3")
+    && deps.some((id) => map.get(id)?.type === "plane3")
+  ) {
+    return false;
+  }
+  const vai = o.formation_roles ?? [];
+  const laTinhTienPhu =
+    (vai.includes("CONSTRUCT_AUXILIARY_GEOMETRY")
+      && (o.source?.instruction === "construct_point.translate"
+        || deps.some((id) => map.get(id)?.type === "vector3")))
+    || (o.role === "Điểm dựng phụ" && deps.every((id) => {
+      const t = map.get(id)?.type;
+      return t === "point3" || t === "vector3" || t === undefined;
+    }));
+  if (!laTinhTienPhu) return false;
+  const coMatHoacKhoi = scene.objects.some((x) => x.type === "plane3" || x.type === "solid");
+  if (!coMatHoacKhoi) return true;
+  const con = scene.objects.filter(
+    (x) => !x.parent && !isSubEntity(x.id) && x.type !== "quantity" && (x.depends ?? []).includes(o.id),
+  );
+  return con.length > 0 && con.every((x) => x.type === "plane3");
+}
+
 function _banDoDiem(scene: Scene3D): Map<string, SceneObject | null> {
   const m = new Map<string, SceneObject | null>();
   for (const o of scene.objects) {
@@ -211,12 +258,22 @@ function _banDoDiem(scene: Scene3D): Map<string, SceneObject | null> {
  *  truyền các vật CÓ MẶT ở bước đang xem, để một điểm không mang trước vai trò của thiết diện chưa dựng (#31). */
 export function diemTaiDinhThietDien(scene: Pick<Scene3D, "objects">): Set<string> {
   const dinh = new Set<string>();
+  const theoId = new Map(scene.objects.map((x) => [x.id, x]));
   for (const o of scene.objects) {
-    if (o.type === "section" && o.polygon) for (const v of o.polygon) dinh.add(_khoaToa(v));
+    const laMienThietDien = o.type === "section" || (o.type === "polygon3" && vaiTroMien(o) === "section" && !(o.parent && (o.display_group ?? []).includes("face")));
+    const poly = o.polygon ?? o.vertices; if (laMienThietDien && poly) for (const v of poly) dinh.add(_khoaToa(v));
   }
   const ra = new Set<string>();
   for (const o of scene.objects) {
-    if (!isSubEntity(o.id) && o.type === "point3" && o.xyz && dinh.has(_khoaToa(o.xyz))) ra.add(o.id);
+    if (
+      !isSubEntity(o.id)
+      && o.type === "point3"
+      && o.xyz
+      && !laDiemPhuDungMatPhang(scene, o, theoId)
+      && dinh.has(_khoaToa(o.xyz))
+    ) {
+      ra.add(o.id);
+    }
   }
   return ra;
 }
@@ -243,12 +300,15 @@ function _diemCuaDinh(
   return (sec.polygon ?? []).map((v, k) => {
     const khoa = _khoaToa(v);
     const mot = diem.get(khoa);
-    if (mot !== null) return mot ?? null;
+    if (mot !== null) {
+      if (!mot || laDiemPhuDungMatPhang(scene, mot, theoId)) return null;
+      return mot;
+    }
     const canh = sec.vertex_sources?.[k]?.solid_edge_vertex_indices;
     if (!khoi?.vertex_ids || !mat || !canh || canh.length !== 2) return null;
     const uv = canh.map((i) => khoi.vertex_ids![i]);
     const ung = scene.objects.filter((p) => {
-      if (isSubEntity(p.id) || p.type !== "point3" || !p.xyz || _khoaToa(p.xyz) !== khoa
+      if (isSubEntity(p.id) || p.type !== "point3" || !p.xyz || laDiemPhuDungMatPhang(scene, p, theoId) || _khoaToa(p.xyz) !== khoa
         || p.depends.length !== 2) return false;
       const toanHang = p.depends.map((d) => theoId.get(d));
       const duong = toanHang.find((x) => x?.type === "line3");
@@ -323,13 +383,18 @@ export function deriveSectionSubEntities(scene: Scene3D): SubEntity[] {
         ? o.steps.map((s) => ({ a: s.a, b: s.b, mat: s.face_index }))
         : poly.map((v, i) => ({ a: v, b: poly[(i + 1) % poly.length], mat: null }));
 
+    const theoId = new Map(scene.objects.map((x) => [x.id, x]));
     canh.forEach((c, i) => {
-      const nA = diem.get(_khoaToa(c.a));
-      const nB = diem.get(_khoaToa(c.b));
+      const rawA = diem.get(_khoaToa(c.a));
+      const rawB = diem.get(_khoaToa(c.b));
+      const nA = rawA && !laDiemPhuDungMatPhang(scene, rawA, theoId) ? rawA : null;
+      const nB = rawB && !laDiemPhuDungMatPhang(scene, rawB, theoId) ? rawB : null;
+      const symA = nA?.notation ?? (nA?.label && nA.label.length <= 4 ? nA.label : null);
+      const symB = nB?.notation ?? (nB?.label && nB.label.length <= 4 ? nB.label : null);
       ra.push({
         id: o.boundary_edge_ids?.[i] ?? sectionEdgeId(o.id, i),
-        label: nA && nB
-          ? `${nA.notation ?? nA.label}${nB.notation ?? nB.label}`
+        label: symA && symB
+          ? `${symA}${symB}`
           : `Cạnh ${i + 1}`,
         type: "edge",
         render: "line",
@@ -391,7 +456,7 @@ export function sectionCycleLabel(
    *
    * Không có ký hiệu ⇒ trả `null` để nơi gọi lùi về nhãn của chính thiết diện.
    * Ghép nửa ký hiệu nửa tên là tệ hơn cả hai. */
-  const ten = sec.polygon.map((v) => diem.get(_khoaToa(v))?.notation);
+  const ten = _diemCuaDinh(scene, sec, diem).map((p) => p?.notation);
   return ten.every((t): t is string => !!t) ? ten.join("") : null;
 }
 
@@ -461,12 +526,45 @@ export function sectionViewIds(scene: Scene3D, id: string): string[] {
  * Trả một `Scene3D` mới; `scene` gốc không bị chạm. Hai danh sách song song
  * là chỗ chọn-ở-cây và chọn-ở-khung-nhìn sẽ tra hai bảng khác nhau rồi lệch.
  */
-export function withSubEntities(scene: Scene3D): Scene3D {
-  const con = [...deriveVisualSubEntities(scene), ...deriveSectionSubEntities(scene)];
-  return con.length === 0
-    ? scene
-    : { ...scene, objects: [...scene.objects, ...con] };
+function subEntityCacheSig(scene: Scene3D): string {
+  const objSig = scene.objects
+    .map((o) => {
+      const coord =
+        o.xyz?.join(",")
+        ?? o.point_a?.join(",")
+        ?? o.anchor?.join(",")
+        ?? o.center?.join(",")
+        ?? o.point?.join(",")
+        ?? o.vertices?.[0]?.join(",")
+        ?? o.polygon?.[0]?.join(",")
+        ?? "";
+      return `${o.id}@${coord}`;
+    })
+    .join("|");
+  return `${scene.objects.length}:${scene.events.length}:${objSig}`;
 }
+
+const _withSubEntitiesCache = new WeakMap<Scene3D, { sig: string; result: Scene3D }>();
+
+export function withSubEntities(scene: Scene3D): Scene3D {
+  const sig = subEntityCacheSig(scene);
+  const hit = _withSubEntitiesCache.get(scene);
+  if (hit && hit.sig === sig) return hit.result;
+  if (scene.objects.some((o) => isSubEntity(o.id))) {
+    _withSubEntitiesCache.set(scene, { sig, result: scene });
+    return scene;
+  }
+  const con = [...deriveVisualSubEntities(scene), ...deriveSectionSubEntities(scene)];
+  const result = con.length === 0
+    ? scene
+    : propagateSceneLineage({ ...scene, objects: [...scene.objects, ...con] }, scene);
+  _withSubEntitiesCache.set(scene, { sig, result });
+  if (result !== scene) {
+    _withSubEntitiesCache.set(result, { sig: subEntityCacheSig(result), result });
+  }
+  return result;
+}
+
 
 
 /**

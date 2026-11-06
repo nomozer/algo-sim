@@ -1,0 +1,118 @@
+
+ RUN  v4.1.10 D:/Documents/projects/algo-sim/.superpowers/worktrees/axo-hybrid4-integration/frontend
+
+ ❯ src/simulations/domains/geometry/scene3d-section-narration.test.ts (9 tests | 9 failed) 182ms
+     × covers every face trace and anonymous vertex: case_c_pentagon_exterior_q_on_line 72ms
+     × covers every face trace and anonymous vertex: renamed_square_pyramid 20ms
+     × covers every face trace and anonymous vertex: rectangle_base_quadrilateral 12ms
+     × covers every face trace and anonymous vertex: triangular_pyramid_triangle 11ms
+     × covers every face trace and anonymous vertex: plane_through_two_solid_vertices 8ms
+     × covers every face trace and anonymous vertex: right_prism_mixed_points 21ms
+     × covers every face trace and anonymous vertex: oblique_prism 12ms
+     × covers every face trace and anonymous vertex: cube_hexagon 17ms
+     × is independent of point notation and object order 8ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 9 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/simulations/domains/geometry/scene3d-section-narration.test.ts > closed section narration consumes certified topology > covers every face trace and anonymous vertex: case_c_pentagon_exterior_q_on_line
+AssertionError: expected [] to have a length of 5 but got +0
+
+- Expected
++ Received
+
+- 5
++ 0
+
+ ❯ src/simulations/domains/geometry/scene3d-section-narration.test.ts:23:26
+     21|       const nar = narration(scene, sec);
+     22|       const traceLines = nar.detailedEvidence.filter(s => s.startsWith…
+     23|       expect(traceLines).toHaveLength(sec.steps!.length);
+       |                          ^
+     24|       const solid = scene.objects.find(o => o.type === "solid" && sec.…
+     25|       const names = sectionDetails(scene, sec.id)!.vertexNames;
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/9]⎯
+
+ FAIL  src/simulations/domains/geometry/scene3d-section-narration.test.ts > closed section narration consumes certified topology > covers every face trace and anonymous vertex: renamed_square_pyramid
+ FAIL  src/simulations/domains/geometry/scene3d-section-narration.test.ts > closed section narration consumes certified topology > covers every face trace and anonymous vertex: rectangle_base_quadrilateral
+AssertionError: expected [] to have a length of 4 but got +0
+
+- Expected
++ Received
+
+- 4
++ 0
+
+ ❯ src/simulations/domains/geometry/scene3d-section-narration.test.ts:23:26
+     21|       const nar = narration(scene, sec);
+     22|       const traceLines = nar.detailedEvidence.filter(s => s.startsWith…
+     23|       expect(traceLines).toHaveLength(sec.steps!.length);
+       |                          ^
+     24|       const solid = scene.objects.find(o => o.type === "solid" && sec.…
+     25|       const names = sectionDetails(scene, sec.id)!.vertexNames;
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/9]⎯
+
+ FAIL  src/simulations/domains/geometry/scene3d-section-narration.test.ts > closed section narration consumes certified topology > covers every face trace and anonymous vertex: triangular_pyramid_triangle
+ FAIL  src/simulations/domains/geometry/scene3d-section-narration.test.ts > closed section narration consumes certified topology > covers every face trace and anonymous vertex: plane_through_two_solid_vertices
+ FAIL  src/simulations/domains/geometry/scene3d-section-narration.test.ts > closed section narration consumes certified topology > covers every face trace and anonymous vertex: right_prism_mixed_points
+ FAIL  src/simulations/domains/geometry/scene3d-section-narration.test.ts > closed section narration consumes certified topology > covers every face trace and anonymous vertex: oblique_prism
+AssertionError: expected [] to have a length of 3 but got +0
+
+- Expected
++ Received
+
+- 3
++ 0
+
+ ❯ src/simulations/domains/geometry/scene3d-section-narration.test.ts:23:26
+     21|       const nar = narration(scene, sec);
+     22|       const traceLines = nar.detailedEvidence.filter(s => s.startsWith…
+     23|       expect(traceLines).toHaveLength(sec.steps!.length);
+       |                          ^
+     24|       const solid = scene.objects.find(o => o.type === "solid" && sec.…
+     25|       const names = sectionDetails(scene, sec.id)!.vertexNames;
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/9]⎯
+
+ FAIL  src/simulations/domains/geometry/scene3d-section-narration.test.ts > closed section narration consumes certified topology > covers every face trace and anonymous vertex: cube_hexagon
+AssertionError: expected [] to have a length of 6 but got +0
+
+- Expected
++ Received
+
+- 6
++ 0
+
+ ❯ src/simulations/domains/geometry/scene3d-section-narration.test.ts:23:26
+     21|       const nar = narration(scene, sec);
+     22|       const traceLines = nar.detailedEvidence.filter(s => s.startsWith…
+     23|       expect(traceLines).toHaveLength(sec.steps!.length);
+       |                          ^
+     24|       const solid = scene.objects.find(o => o.type === "solid" && sec.…
+     25|       const names = sectionDetails(scene, sec.id)!.vertexNames;
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/9]⎯
+
+ FAIL  src/simulations/domains/geometry/scene3d-section-narration.test.ts > closed section narration consumes certified topology > is independent of point notation and object order
+AssertionError: expected 'Nối các đoạn giao tuyến (UV ⊂ (TLK), …' to contain 'QR'
+
+Expected: "QR"
+Received: "Nối các đoạn giao tuyến (UV ⊂ (TLK), VW ⊂ (TQL)) để khép kín thiết diện (UVW)."
+
+ ❯ src/simulations/domains/geometry/scene3d-section-narration.test.ts:50:34
+     48|     const sec = scene.objects.find(o => o.type === "section")!;
+     49|     const nar = narration(scene, sec);
+     50|     expect(nar.conciseRationale).toContain("QR");
+       |                                  ^
+     51|     expect(nar.conciseRationale).toContain("LR");
+     52|     expect(nar.detailedEvidence.filter(s => s.startsWith("Trên mặt "))…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/9]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  9 failed (9)
+   Start at  12:30:05
+   Duration  1.12s (transform 579ms, setup 36ms, import 672ms, tests 182ms, environment 0ms)
+

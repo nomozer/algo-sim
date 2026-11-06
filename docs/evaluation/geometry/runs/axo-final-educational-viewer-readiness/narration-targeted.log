@@ -1,0 +1,30 @@
+
+ RUN  v4.1.10 D:/Documents/projects/algo-sim/.superpowers/worktrees/axo-hybrid4-integration/frontend
+
+ ❯ src/simulations/domains/geometry/axo-pedagogical-presentation-hardening.test.tsx (8 tests | 1 failed) 1892ms
+       × separates actionTitle, exact-verified conciseRationale, and lossless canonicalized detailedEvidence with collapsed [data-step-evidence-toggle] drawer 11ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/simulations/domains/geometry/axo-pedagogical-presentation-hardening.test.tsx > AXO System-Wide Pedagogical Presentation Hardening & Regression Audit (§3–§11) > §6 — Root-Cause `PedagogicalNarrationPolicy` for Verbose Step Cards (`thiet-dien-chop` & General Polyhedral Sections) > separates actionTitle, exact-verified conciseRationale, and lossless canonicalized detailedEvidence with collapsed [data-step-evidence-toggle] drawer
+AssertionError: expected 'Giao tuyến trên từng mặt: (MNP) ∩ (SA…' not to contain '(ABS)'
+
+Expected: "(ABS)"
+Received: "Giao tuyến trên từng mặt: (MNP) ∩ (SAB) = MN, (MNP) ∩ (SBC) = NP, (MNP) ∩ (SCD) = PQ, (MNP) ∩ (SAD) = QM ⇒ khép kín miền thiết diện (MNPQ) (MN ∥ AB, NP ∥ BC, PQ ∥ CD, QM ∥ DA) | Định lý giao tuyến song song: mặt phẳng (MNP) lần lượt song song với AB ⊂ (SAB), DA ⊂ (SAD), CD ⊂ (SCD), BC ⊂ (SBC), nên giao tuyến trên từng mặt tương ứng song song với cạnh đó. | Trên mặt (ABS), nối N với M. | Trên mặt (DAS), nối M với Q. | Trên mặt (CDS), nối Q với P. | Trên mặt (BCS), nối P với N."
+
+ ❯ src/simulations/domains/geometry/axo-pedagogical-presentation-hardening.test.tsx:629:34
+    627|       expect(joinedEvidence).toContain("(SBC)");
+    628|       expect(joinedEvidence).toContain("(SCD)");
+    629|       expect(joinedEvidence).not.toContain("(ABS)");
+       |                                  ^
+    630|       // Lossless preservation of parallel segment relations
+    631|       expect(joinedEvidence).toContain("MN ∥ AB");
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 3 passed (4)
+      Tests  1 failed | 32 passed (33)
+   Start at  12:31:42
+   Duration  3.38s (transform 1.67s, setup 95ms, import 2.33s, tests 2.86s, environment 0ms)
+

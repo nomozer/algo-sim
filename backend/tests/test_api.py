@@ -30,6 +30,14 @@ def no_api_key(monkeypatch):
     monkeypatch.delenv("GEMINI_API_KEY", raising=False)
 
 
+@pytest.fixture(autouse=True)
+def signed_in():
+    """Routing/caching tests run as a signed-in account (a request without a session runs nothing)."""
+    from tests.route_client import sign_in
+    client.cookies.clear()
+    sign_in(client)
+
+
 def _analyze(text: str):
     return client.post("/api/analyze", json={"input": {"type": "text", "content": text}})
 

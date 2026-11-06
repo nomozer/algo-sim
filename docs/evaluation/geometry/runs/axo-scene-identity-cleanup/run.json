@@ -1,0 +1,32 @@
+{
+  "run_id": "axo-scene-identity-cleanup",
+  "task_slug": "axo-scene-identity-cleanup",
+  "date": "2026-11-05",
+  "branch": "integration/axo-pedagogical-construction-hardening",
+  "before_commit": "d349ee01123ff2f1d97b18d46e921b1dec17240f",
+  "before_product_commit": "514d34d4c375af58430d55721bd32bde056f5ae1",
+  "product_commit": "68c05cabcad2711f7eb440e7e3707300c489532f",
+  "measured_system": {
+    "files": 118,
+    "tree_hash": "6809d79b51f6e47be1e8af03ae065563b2028fcd823c22a91b61600b242d7fad"
+  },
+  "cache_version": 131,
+  "provider_calls": 0,
+  "protected_file": "frontend/index.html",
+  "protected_sha256": "3B8A5566454E42BA624C4611C82B792EC8ED1CAFC062C0041ADC11DEEB44A69F",
+  "status": "READY_FOR_USER_REVIEW",
+  "verification": {
+    "typecheck_build": "tsc -b && vite build exit 0",
+    "frontend_vitest": "124 files / 1807 tests; all assertions pass in 4 full runs, each run had one 5000 ms timeout in a heavy test (cross-family x3, ui-ux audit x1); unchanged HEAD d349ee01 control: 1 of 2 runs timed out on the same test",
+    "docs_gate": "test_docs_information_architecture.py 42 passed",
+    "candidate_seal": "frozen in a clean detached worktree at 68c05cab; --verify PASS",
+    "browser_e2e": "browser-final/receipt.json 23/23 PASS",
+    "ui_harness": "ui-run-1, ui-run-2, ui-run-3: 40/40 PASS each (independent processes)",
+    "real_browser_zoom_110": "Chrome default_zoom_level preference, no DPR emulation: devicePixelRatio 1.1, all key element rects inside the 1293 px viewport",
+    "performance_pair": "perf-before (514d34d4) vs perf-after (68c05cab): frame median 7.0 -> 7.0 ms, renders/frame 1, step 67.5/149.6 -> 71.4/124.8 ms, long tasks 5 -> 6, 1 WebGL context, balanced buffers"
+  },
+  "diagnostic": {
+    "browser-try": "first E2E run (committed): exposed the shared-record statement regression (22/23), fixed by ActiveSimulation.problemStatement",
+    "browser": "E2E before the rect-based zoom assertion (left untracked; superseded by browser-final)"
+  }
+}

@@ -3,6 +3,8 @@ import * as THREE from "three";
 import { Line2 } from "three/addons/lines/Line2.js";
 import { LineGeometry } from "three/addons/lines/LineGeometry.js";
 import { LineMaterial } from "three/addons/lines/LineMaterial.js";
+import { LineSegments2 } from "three/addons/lines/LineSegments2.js";
+import { LineSegmentsGeometry } from "three/addons/lines/LineSegmentsGeometry.js";
 import { chiaTamGiac } from "./polygon-triangulate";
 import { toVec3, type SceneObject } from "./scene3d-model";
 import { PHONG_CACH_SCENE3D } from "./scene3d-roles";
@@ -399,8 +401,114 @@ export interface CurvedSolidVolumeMeta {
   top: THREE.Vector3 | null;
   radius: number;
   height: number;
+  /** Orthonormal basis `(u1, u2)` in the base plane when an oblique cylinder's base normal is non-parallel to `top - anchor`. */
+  capBasis?: [THREE.Vector3, THREE.Vector3];
   /** Inverse presentation transform; intersections stay in the primitive's original local frame. */
   worldToLocal?: THREE.Matrix4;
+}
+
+export function resolveObliqueCylinderCapBasis(
+  anchor: THREE.Vector3,
+  top: THREE.Vector3,
+  rawCapNormal: THREE.Vector3 | null,
+): { u1: THREE.Vector3; u2: THREE.Vector3; normal: THREE.Vector3 } | null {
+  if (!rawCapNormal) return null;
+  const d = top.clone().sub(anchor);
+  const dLen = d.length();
+  const nLen = rawCapNormal.length();
+  if (!(dLen > 1e-6) || !(nLen > 1e-6)) return null;
+  const dHat = d.clone().divideScalar(dLen);
+  const nHat = rawCapNormal.clone().divideScalar(nLen);
+  if (nHat.dot(dHat) < 0) nHat.negate();
+  const crossMag = new THREE.Vector3().crossVectors(dHat, nHat).length();
+  // Right cylinder: cap normal is parallel to center-line => keep standard CylinderGeometry path.
+  if (crossMag <= 1e-4 || Math.abs(nHat.dot(dHat)) <= 1e-4) return null;
+  let u1 = dHat.clone().addScaledVector(nHat, -dHat.dot(nHat));
+  if (u1.lengthSq() <= 1e-10) {
+    const fallback = Math.abs(nHat.x) < 0.9 ? new THREE.Vector3(1, 0, 0) : new THREE.Vector3(0, 1, 0);
+    u1 = new THREE.Vector3().crossVectors(nHat, fallback);
+  }
+  u1.normalize();
+  const u2 = new THREE.Vector3().crossVectors(nHat, u1).normalize();
+  return { u1, u2, normal: nHat };
+}
+
+export function buildObliqueCylinderGeometry(
+  anchor: THREE.Vector3,
+  top: THREE.Vector3,
+  u1: THREE.Vector3,
+  u2: THREE.Vector3,
+  radius: number,
+  radialSegments: number,
+): THREE.BufferGeometry {
+  const segs = Math.max(16, radialSegments);
+  const positions: number[] = [];
+  const normals: number[] = [];
+  const indices: number[] = [];
+  const d = top.clone().sub(anchor);
+  const capN = new THREE.Vector3().crossVectors(u1, u2).normalize();
+  if (capN.dot(d) < 0) capN.negate();
+
+  // 1. Lateral sheared surface (2 * (segs + 1) vertices)
+  for (let i = 0; i <= segs; i += 1) {
+    const theta = (i / segs) * Math.PI * 2;
+    const c = Math.cos(theta);
+    const s = Math.sin(theta);
+    const offset = u1.clone().multiplyScalar(radius * c).addScaledVector(u2, radius * s);
+    const tangent = u1.clone().multiplyScalar(-s).addScaledVector(u2, c);
+    const outN = new THREE.Vector3().crossVectors(tangent, d).normalize();
+    const pBot = anchor.clone().add(offset);
+    const pTop = top.clone().add(offset);
+    positions.push(pBot.x, pBot.y, pBot.z, pTop.x, pTop.y, pTop.z);
+    normals.push(outN.x, outN.y, outN.z, outN.x, outN.y, outN.z);
+  }
+  for (let i = 0; i < segs; i += 1) {
+    const b0 = i * 2;
+    const t0 = b0 + 1;
+    const b1 = b0 + 2;
+    const t1 = b0 + 3;
+    indices.push(b0, b1, t1, b0, t1, t0);
+  }
+
+  // 2. Bottom cap (outward normal -capN)
+  const botCenterIdx = positions.length / 3;
+  positions.push(anchor.x, anchor.y, anchor.z);
+  normals.push(-capN.x, -capN.y, -capN.z);
+  for (let i = 0; i <= segs; i += 1) {
+    const theta = (i / segs) * Math.PI * 2;
+    const p = anchor.clone()
+      .addScaledVector(u1, radius * Math.cos(theta))
+      .addScaledVector(u2, radius * Math.sin(theta));
+    positions.push(p.x, p.y, p.z);
+    normals.push(-capN.x, -capN.y, -capN.z);
+  }
+  for (let i = 0; i < segs; i += 1) {
+    indices.push(botCenterIdx, botCenterIdx + 1 + i + 1, botCenterIdx + 1 + i);
+  }
+
+  // 3. Top cap (outward normal +capN)
+  const topCenterIdx = positions.length / 3;
+  positions.push(top.x, top.y, top.z);
+  normals.push(capN.x, capN.y, capN.z);
+  for (let i = 0; i <= segs; i += 1) {
+    const theta = (i / segs) * Math.PI * 2;
+    const p = top.clone()
+      .addScaledVector(u1, radius * Math.cos(theta))
+      .addScaledVector(u2, radius * Math.sin(theta));
+    positions.push(p.x, p.y, p.z);
+    normals.push(capN.x, capN.y, capN.z);
+  }
+  for (let i = 0; i < segs; i += 1) {
+    indices.push(topCenterIdx, topCenterIdx + 1 + i, topCenterIdx + 1 + i + 1);
+  }
+
+  const geo = new THREE.BufferGeometry();
+  geo.setAttribute("position", new THREE.Float32BufferAttribute(positions, 3));
+  geo.setAttribute("normal", new THREE.Float32BufferAttribute(normals, 3));
+  geo.setIndex(indices);
+  geo.computeBoundingBox();
+  geo.computeBoundingSphere();
+  return geo;
 }
 
 /** Compile occluders once when sampling a true 3D curve, rather than rebuilding triangles per point. */
@@ -408,10 +516,35 @@ export function createWorldPointOcclusionTest(
   camera: THREE.Vector3,
   occluders: readonly WorldSolidOccluder[],
   curved: readonly CurvedSolidVolumeMeta[],
-): (point: THREE.Vector3) => boolean {
+): (point: THREE.Vector3, curveNormal?: THREE.Vector3, checkHostBackface?: boolean) => boolean {
   const triangles = occludingTriangles(occluders.map(o => o.solid), occluders.map(o => o.matrixWorld));
-  const excluded = new Set<string>();
-  return point => pointIsHidden(point, camera, triangles, excluded) || diemVanhCongBiChe(point, camera, curved);
+  const emptyExcluded = new Set<string>();
+  const closestTmp = new THREE.Vector3();
+  const diffTmp = new THREE.Vector3();
+  const toCamTmp = new THREE.Vector3();
+  return (point: THREE.Vector3, curveNormal?: THREE.Vector3, checkHostBackface = true) => {
+    if (curveNormal) {
+      const excluded = new Set<string>();
+      const containingNormals: THREE.Vector3[] = [];
+      for (const triangle of triangles) {
+        if (Math.abs(triangle.normal.dot(curveNormal)) < 0.999) continue;
+        if (triangle.box.distanceToPoint(point) > 1e-4) continue;
+        if (Math.abs(triangle.normal.dot(diffTmp.subVectors(point, triangle.a))) > 1e-4) continue;
+        if (triangle.tri.closestPointToPoint(point, closestTmp).distanceTo(point) <= 1e-4) {
+          excluded.add(triangle.surfaceId);
+          containingNormals.push(triangle.normal);
+        }
+      }
+      if (pointIsHidden(point, camera, triangles, excluded)) return true;
+      if (diemVanhCongBiChe(point, camera, curved)) return true;
+      if (checkHostBackface && containingNormals.length > 0) {
+        toCamTmp.subVectors(camera, point);
+        if (!containingNormals.some((n) => n.dot(toCamTmp) > 1e-6)) return true;
+      }
+      return false;
+    }
+    return pointIsHidden(point, camera, triangles, emptyExcluded) || diemVanhCongBiChe(point, camera, curved);
+  };
 }
 
 /** Host-quadric tangencies seed even arbitrarily short front arcs between uniform probes. */
@@ -429,12 +562,26 @@ export function curvedSurfaceTangentTurns(
     const eye = volume.worldToLocal ? camera.clone().applyMatrix4(volume.worldToLocal) : camera;
     const axis = volume.top?.clone().sub(volume.anchor).normalize();
     const values: number[] = [];
+    const obBasis = volume.kind === "cylinder" && volume.top && volume.capBasis ? volume.capBasis : null;
+    const obD = obBasis && volume.top ? volume.top.clone().sub(volume.anchor) : null;
+    const obN = obBasis ? new THREE.Vector3().crossVectors(obBasis[0], obBasis[1]) : null;
+    const obDenom = obD && obN ? obN.dot(obD) : 0;
     for (const point of points) {
       const relative = point.clone().sub(volume.anchor), direction = eye.clone().sub(point);
       const normal = relative.clone();
       let residual: number;
       if (volume.kind === "ball") {
         residual = relative.lengthSq() - volume.radius ** 2;
+      } else if (obBasis && obD && obN && Math.abs(obDenom) > 1e-8) {
+        const s = relative.dot(obN) / obDenom;
+        if (s < -1e-6 || s > 1 + 1e-6) break;
+        const inCap = relative.clone().addScaledVector(obD, -s);
+        const cx = inCap.dot(obBasis[0]);
+        const cy = inCap.dot(obBasis[1]);
+        residual = cx * cx + cy * cy - volume.radius ** 2;
+        const tangent = obBasis[0].clone().multiplyScalar(-cy).addScaledVector(obBasis[1], cx);
+        normal.crossVectors(tangent, obD);
+        if (obDenom < 0) normal.negate();
       } else {
         if (!axis || volume.height <= 0) break;
         const z = relative.dot(axis);
@@ -444,7 +591,7 @@ export function curvedSurfaceTangentTurns(
         residual = normal.lengthSq() - (volume.radius * fraction) ** 2;
         if (volume.kind === "cone") normal.addScaledVector(axis, volume.radius ** 2 * fraction / volume.height);
       }
-      if (Math.abs(residual) > 1e-8 * Math.max(1, volume.radius ** 2)) break;
+      if (Math.abs(residual) > 1e-6 * Math.max(1, volume.radius ** 2)) break;
       values.push(normal.dot(direction));
     }
     if (values.length !== 8) continue; // not a curve on this solid's side surface
@@ -473,11 +620,47 @@ export function diemVanhCongBiChe(
     if (vol.kind === "ball") {
       const rel = point.clone().sub(vol.anchor);
       const t = Math.max(0, Math.min(1, -rel.dot(dir) / dir.lengthSq()));
-      if (rel.addScaledVector(dir, t).lengthSq() < r * r * (1 - 1e-10)) return true;
+      const c0 = rel.lengthSq() - r * r;
+      const onBallBias = c0 < 0 && c0 > -r * r * 2e-6 ? c0 : 0;
+      if (rel.addScaledVector(dir, t).lengthSq() - r * r - onBallBias < -r * r * 1e-10) return true;
       continue;
     }
     const h = vol.height;
     if (!vol.top || h <= 1e-6) continue;
+    if (vol.kind === "cylinder" && vol.capBasis) {
+      const [u1, u2] = vol.capBasis;
+      const dVec = new THREE.Vector3().subVectors(vol.top, vol.anchor);
+      const capN = new THREE.Vector3().crossVectors(u1, u2);
+      const denom = capN.dot(dVec);
+      if (Math.abs(denom) > 1e-8) {
+        const ptRel = new THREE.Vector3().subVectors(point, vol.anchor);
+        const s0 = ptRel.dot(capN) / denom;
+        const ds = dir.dot(capN) / denom;
+        let tLo = 0;
+        let tHi = 1;
+        if (Math.abs(ds) < 1e-12) {
+          if (s0 <= 0 || s0 >= 1) continue;
+        } else {
+          const t0 = -s0 / ds;
+          const t1 = (1 - s0) / ds;
+          tLo = Math.max(tLo, Math.min(t0, t1));
+          tHi = Math.min(tHi, Math.max(t0, t1));
+        }
+        if (tLo >= tHi) continue;
+        const pCap = ptRel.clone().addScaledVector(dVec, -s0);
+        const dCap = dir.clone().addScaledVector(dVec, -ds);
+        const px = pCap.dot(u1), py = pCap.dot(u2);
+        const dx = dCap.dot(u1), dy = dCap.dot(u2);
+        const qa = dx * dx + dy * dy;
+        const qb = 2 * (px * dx + py * dy);
+        const at = (t: number) => (px + dx * t) ** 2 + (py + dy * t) ** 2 - r * r;
+        let minimum = Math.min(at(tLo), at(tHi));
+        if (qa > 0) minimum = Math.min(minimum, at(Math.max(tLo, Math.min(tHi, -qb / (2 * qa)))));
+        const onCylBias = tLo === 0 && at(0) < 0 && at(0) > -r * r * 2e-6 ? at(0) : 0;
+        if (minimum - onCylBias < -r * r * 1e-9) return true;
+        continue;
+      }
+    }
     const axis = new THREE.Vector3().subVectors(vol.top, vol.anchor).normalize();
     const ptRel = new THREE.Vector3().subVectors(point, vol.anchor);
     const zPt = ptRel.dot(axis);
@@ -503,7 +686,8 @@ export function diemVanhCongBiChe(
     const at = (t: number) => ptPerp.clone().addScaledVector(dPerp, t).lengthSq() - (r0 + dr * t) ** 2;
     let minimum = Math.min(at(tLo), at(tHi));
     if (qa > 0) minimum = Math.min(minimum, at(Math.max(tLo, Math.min(tHi, -qb / (2 * qa)))));
-    if (minimum < -r * r * 1e-10) return true;
+    const onConeBias = tLo === 0 && at(0) < 0 && at(0) > -r * r * 2e-6 ? at(0) : 0;
+    if (minimum - onConeBias < -r * r * 1e-10) return true;
   }
   return false;
 }
@@ -516,19 +700,36 @@ export function updateCurvedSolidSilhouette(candidate: THREE.Object3D, camera: T
   const eye = candidate.worldToLocal(camera.position.clone());
   const { anchor, top, radius: r, height: h, kind } = meta;
   if (kind === "ball") {
-    const outline = candidate.getObjectByName(`sphere_silhouette:${meta.id}`);
-    if (!outline) return;
-    const towardEye = eye.clone().sub(anchor), distance = towardEye.length();
-    outline.visible = distance > r;
-    if (outline.visible) {
-      towardEye.divideScalar(distance);
-      outline.position.copy(anchor).addScaledVector(towardEye, r * r / distance);
-      outline.quaternion.setFromUnitVectors(new THREE.Vector3(0, 0, 1), towardEye);
-      outline.scale.setScalar(r * Math.sqrt(1 - r * r / (distance * distance)));
-    }
+    return;
   } else if (top && h > 0) {
     const outline = candidate.getObjectByName(`curved_silhouette:${meta.id}`);
     if (!outline) return;
+    if (kind === "cylinder" && meta.capBasis) {
+      const [u1, u2] = meta.capBasis;
+      const dVec = top.clone().sub(anchor);
+      const rel = eye.clone().sub(anchor);
+      const capCross = new THREE.Vector3().crossVectors(u1, u2);
+      const sign = capCross.dot(dVec) < 0 ? -1 : 1;
+      const A = sign * new THREE.Vector3().crossVectors(u2, dVec).dot(rel);
+      const B = -sign * new THREE.Vector3().crossVectors(u1, dVec).dot(rel);
+      const C = sign * r * capCross.dot(dVec);
+      const rho = Math.hypot(A, B);
+      outline.visible = rho > Math.abs(C) + 1e-8;
+      if (outline.visible) {
+        const phi = Math.atan2(B, A);
+        const alpha = Math.acos(Math.max(-1, Math.min(1, C / rho)));
+        outline.children.forEach((child, i) => {
+          const theta = phi + (i ? -alpha : alpha);
+          const offset = u1.clone().multiplyScalar(r * Math.cos(theta)).addScaledVector(u2, r * Math.sin(theta));
+          const a = anchor.clone().add(offset);
+          const b = top.clone().add(offset);
+          const pos = (child as THREE.Line).geometry.getAttribute("position") as THREE.BufferAttribute;
+          pos.setXYZ(0, a.x, a.y, a.z); pos.setXYZ(1, b.x, b.y, b.z); pos.needsUpdate = true;
+          (child as THREE.Line).geometry.computeBoundingSphere();
+        });
+      }
+      return;
+    }
     const axis = top.clone().sub(anchor).normalize(), relative = eye.clone().sub(anchor);
     const axial = relative.dot(axis), radial = relative.addScaledVector(axis, -axial);
     const distance = radial.length(), cosine = distance > 0 ? r * (kind === "cone" ? 1 - axial / h : 1) / distance : Infinity;
@@ -554,6 +755,7 @@ export interface FatLineSyncSummary {
   maxVisibleEdgeWidth: number;
   minHiddenEdgeWidth: number;
   sourceLines: THREE.Line[];
+  sourceRimObjects: THREE.Object3D[];
 }
 
 export function taoGiuAmNetDay(): THREE.Object3D[] {
@@ -589,7 +791,22 @@ export function taoGiuAmNetDay(): THREE.Object3D[] {
   dashedHold.frustumCulled = false;
   solidHold.raycast = () => {};
   dashedHold.raycast = () => {};
-  return [solidHold, dashedHold];
+  const segGeo = new LineSegmentsGeometry();
+  segGeo.setPositions([0, 0, 0, 1, 0, 0]);
+  const segMat = new LineMaterial({
+    color: 0x1e293b,
+    linewidth: 1.8,
+    dashed: false,
+    transparent: true,
+    opacity: 0,
+    depthTest: false,
+    depthWrite: false,
+  });
+  segMat.colorWrite = false;
+  const segHold = new LineSegments2(segGeo, segMat);
+  segHold.frustumCulled = false;
+  segHold.raycast = () => {};
+  return [solidHold, dashedHold, segHold];
 }
 
 /**
@@ -624,21 +841,68 @@ function capNhatLine2TaiCho(line2: Line2, coords: Float32Array): boolean {
   return true;
 }
 
+function capNhatLineSegments2TaiCho(
+  seg2: LineSegments2,
+  coords: Float32Array,
+  segCount: number,
+): boolean {
+  const g = seg2.geometry as LineSegmentsGeometry;
+  const start = g.attributes.instanceStart as THREE.InterleavedBufferAttribute | undefined;
+  const needed = segCount * 6;
+  if (!start || segCount < 1 || start.data.array.length < needed) {
+    return false;
+  }
+  const dst = start.data.array as Float32Array;
+  dst.set(coords.subarray(0, needed), 0);
+  g.instanceCount = segCount;
+  start.data.needsUpdate = true;
+  return true;
+}
+
+interface CurvedRimLike {
+  objectId: string;
+  rimRole?: "section" | "base" | "reference" | "inscribed" | "circumscribed";
+  highlighted?: boolean;
+  interactionState?: "neutral" | "hover" | "selected";
+  thayMesh: THREE.Mesh;
+  khuatMesh: THREE.Mesh;
+  thayNet: THREE.LineSegments;
+  khuatNet: THREE.LineSegments;
+}
+
 export function dongBoNetDayManHinh(
   roots: readonly THREE.Object3D[],
   fatGroup: THREE.Group,
   wCss: number,
   hCss: number,
+  dashedHiddenShown = true,
+  stepPulse = 0,
+  zoomDashScale = 1,
 ): FatLineSyncSummary {
+  const clampedPulse = Number.isFinite(stepPulse) ? Math.max(0, Math.min(1, stepPulse)) : 0;
+  const resolveStepRole = (n: THREE.Object3D | null | undefined): "new" | "dep" | undefined => {
+    for (let cur = n; cur; cur = cur.parent) {
+      const r = cur.userData?.stepHighlightRole as "new" | "dep" | undefined;
+      if (r === "new" || r === "dep") return r;
+    }
+    return undefined;
+  };
   const activeLines: THREE.Line[] = [];
+  const activeRims: { node: THREE.Object3D; rim: CurvedRimLike }[] = [];
+  const sourceRimObjects: THREE.Object3D[] = [];
   for (const r of roots) {
     r.updateMatrixWorld(true);
     r.traverse((node) => {
-      if (!(node as THREE.Line).isLine || (node as THREE.LineSegments).isLineSegments) return;
       for (let p: THREE.Object3D | null = node; p; p = p.parent) {
         if (!p.visible) return;
         if (p === r) break;
       }
+      const rim = node.userData?.curvedRimLoop as CurvedRimLike | undefined;
+      if (rim?.thayNet && rim?.khuatNet && rim?.thayMesh && rim?.khuatMesh) {
+        activeRims.push({ node, rim });
+        return;
+      }
+      if (!(node as THREE.Line).isLine || (node as THREE.LineSegments).isLineSegments) return;
       const line = node as THREE.Line;
       const mat = line.material as (THREE.LineBasicMaterial | THREE.LineDashedMaterial) | undefined;
       if (!mat || mat.colorWrite === false || (mat.transparent && mat.opacity <= 0.01) || line.name.endsWith(":proxy")) {
@@ -659,6 +923,7 @@ export function dongBoNetDayManHinh(
   const resW = Math.max(1, wCss);
   const resH = Math.max(1, hCss);
   const heSoNet = heSoNetTheoKhung(hCss);
+  const w = PHONG_CACH_SCENE3D.fatPx;
   let maxSectionBorderWidth = 0;
   let maxVisibleEdgeWidth = 0;
   let minHiddenEdgeWidth = Infinity;
@@ -666,39 +931,117 @@ export function dongBoNetDayManHinh(
   activeLines.forEach((line) => {
     const mat = line.material as THREE.LineBasicMaterial | THREE.LineDashedMaterial;
     const pos = line.geometry.getAttribute("position") as THREE.BufferAttribute;
+    const continuousPlaneBorder = Boolean(
+      line.userData?.continuousPlaneBorder
+      || line.parent?.userData?.nonCanonicalLoop?.continuousPlaneBorder,
+    );
     const isDashed =
-      line.userData?.hidden === true
-      || (mat as THREE.LineDashedMaterial).isLineDashedMaterial === true
-      || line.name.endsWith(":khuat");
+      !continuousPlaneBorder
+      && (
+        line.userData?.hidden === true
+        || (mat as THREE.LineDashedMaterial).isLineDashedMaterial === true
+        || line.name.endsWith(":khuat")
+      );
+    const isUnoccludedForcedDash = Boolean(line.userData?.forceDashed === true && line.userData?.hidden !== true);
+    if (!dashedHiddenShown && isDashed && !isUnoccludedForcedDash) {
+      return;
+    }
     const isPlaneBorder =
       Boolean(line.parent?.userData?.nonCanonicalLoop?.isPlaneBorder)
       || line.name.startsWith("plane_border:");
+    const isPlaneCornerArc = line.name.startsWith("plane_corner_arc:");
+    const isLineExtension = Boolean(
+      line.userData?.semanticLineRole === "line_extension"
+      || line.parent?.userData?.semanticLineRole === "line_extension",
+    );
+    const isAuxiliaryLine = Boolean(
+      line.userData?.semanticLineRole === "auxiliary_line"
+      || line.parent?.userData?.semanticLineRole === "auxiliary_line",
+    );
+    const isSolidEdgeRole = Boolean(
+      line.userData?.semanticLineRole === "solid_edge"
+      || line.parent?.userData?.semanticLineRole === "solid_edge",
+    );
+    const isIntersectionLine = Boolean(
+      line.userData?.semanticLineRole === "intersection_line"
+      || line.parent?.userData?.semanticLineRole === "intersection_line",
+    );
     const isSectionOrPolyBorder =
       !isPlaneBorder
-      && (line.name.startsWith("section_border:") || line.name.startsWith("polygon_border:"));
+      && !isPlaneCornerArc
+      && !isLineExtension
+      && !isAuxiliaryLine
+      && !isSolidEdgeRole
+      && (isIntersectionLine || line.name.startsWith("section_border:") || line.name.startsWith("polygon_border:"));
     const isPerpOrWitness =
-      line.name.startsWith("perp_marker:") || Boolean(line.parent?.userData?.nhanChung);
-    const isHighlighted = Boolean(
-      line.userData?.sang
-      || line.parent?.userData?.highlighted
-      || (mat.linewidth && mat.linewidth >= 2.6),
-    );
+      line.name.startsWith("perp_marker")
+      || Boolean(line.parent?.userData?.nhanChung)
+      || Boolean(
+        line.userData?.semanticLineRole === "perpendicular_witness"
+        || line.parent?.userData?.semanticLineRole === "perpendicular_witness",
+      );
+    const interactionState = (
+      line.userData?.interactionState
+      ?? line.parent?.userData?.interactionState
+      ?? (
+        line.userData?.sang
+        || line.parent?.userData?.highlighted
+        || (mat.linewidth && mat.linewidth >= 2.6)
+          ? "selected"
+          : "neutral"
+      )
+    ) as "neutral" | "hover" | "selected";
 
-    const w = PHONG_CACH_SCENE3D.fatPx;
-    const raw = isPlaneBorder
-      ? (isHighlighted ? w.selectedPlane : w.plane)
-      : isSectionOrPolyBorder
-        ? (isHighlighted ? w.selectedSection : isDashed ? w.hiddenSection : w.section)
-        : isPerpOrWitness
-          ? (isDashed ? w.hiddenPerpendicular : w.perpendicular)
-          : line.name.startsWith("sphere_silhouette:")
-            ? w.edge * 0.65 // A sphere's continuous outline stays subordinate to its true section curve.
-            : (isHighlighted ? w.selectedEdge : isDashed ? w.hiddenEdge : w.edge);
-    const widthPx = Number((raw * heSoNet).toFixed(2));
+    const raw = isPlaneCornerArc
+      ? (interactionState === "selected" ? 2.0 : 1.55)
+      : isPlaneBorder
+        ? (interactionState === "selected"
+          ? w.selectedPlane
+          : interactionState === "hover"
+            ? w.hoverPlane
+            : w.plane * ((line.parent?.userData?.planeBorderWidthScale as number | undefined) ?? 1))
+        : isLineExtension
+          ? (interactionState === "selected" ? 2.8 : interactionState === "hover" ? 2.4 : 2.0)
+          : isSectionOrPolyBorder
+            ? (interactionState === "selected"
+              ? w.selectedSection
+              : interactionState === "hover"
+                ? w.hoverSection
+                : isDashed
+                  ? w.hiddenSection
+                  : w.section)
+            : isPerpOrWitness
+              ? (interactionState === "selected"
+                ? w.selectedEdge * 0.85
+                : isDashed
+                  ? w.hiddenPerpendicular
+                  : w.perpendicular)
+              : isAuxiliaryLine
+                  ? (interactionState === "selected"
+                    ? w.selectedEdge
+                    : interactionState === "hover"
+                      ? w.hoverEdge
+                      : isDashed
+                        ? w.hiddenAuxiliary
+                        : w.auxiliary)
+                  : (interactionState === "selected"
+                    ? w.selectedEdge
+                    : interactionState === "hover"
+                      ? w.hoverEdge
+                      : isDashed
+                        ? w.hiddenEdge
+                        : w.edge);
+    const lineStepRole = clampedPulse > 0.005 && interactionState === "neutral" ? resolveStepRole(line) : undefined;
+    const lineStepBoost = lineStepRole === "new"
+      ? 1 + 0.24 * clampedPulse
+      : lineStepRole === "dep"
+        ? 1 + 0.11 * clampedPulse
+        : 1;
+    const widthPx = Number((raw * lineStepBoost * heSoNet).toFixed(2));
 
     if (isSectionOrPolyBorder && !isDashed) {
       maxSectionBorderWidth = Math.max(maxSectionBorderWidth, widthPx);
-    } else if (!isPlaneBorder && !isPerpOrWitness && !isDashed) {
+    } else if (!isPlaneBorder && !isPerpOrWitness && !isAuxiliaryLine && !isDashed) {
       maxVisibleEdgeWidth = Math.max(maxVisibleEdgeWidth, widthPx);
     }
     if (isDashed) {
@@ -782,9 +1125,18 @@ export function dongBoNetDayManHinh(
     }
     if (isDashed) {
       const dm = mat as THREE.LineDashedMaterial;
-      lm.dashSize = dm.dashSize || 0.14;
-      lm.gapSize = dm.gapSize || 0.10;
-      lm.dashScale = 1;
+      const clampedZoomScale = Number.isFinite(zoomDashScale)
+        ? Math.max(0.55, Math.min(2.2, zoomDashScale))
+        : 1;
+      const roleDashFactor = isAuxiliaryLine || isLineExtension ? 1.14 : isPerpOrWitness ? 1.08 : 1;
+      const effDashScale = clampedZoomScale * roleDashFactor;
+      lm.dashSize = dm.dashSize || PHONG_CACH_SCENE3D.dash.fallback;
+      lm.gapSize = dm.gapSize || lm.dashSize * PHONG_CACH_SCENE3D.dash.gapRatio;
+      lm.dashScale = effDashScale;
+      const rawDistOffset = Number(line.userData?.dashDistanceOffset) || 0;
+      lm.dashOffset = rawDistOffset * effDashScale;
+    } else {
+      lm.dashOffset = 0;
     }
     line2.renderOrder = line.renderOrder;
     line2.name = `fat:${line.name}`;
@@ -795,11 +1147,192 @@ export function dongBoNetDayManHinh(
     for (let k = daDung.get(n) ?? 0; k < nhom.length; k += 1) nhom[k].visible = false;
   }
 
+  // Đồng bộ vành cong (đường tròn, elip, nắp trụ/nón, vòng tham chiếu cầu) qua `LineSegments2` theo điểm ảnh màn hình
+  // để độ dày nét đều 360° không bị co 1px ở cung trước/sau khi chiếu phối cảnh, đồng thời tái sử dụng buffer GPU tại chỗ.
+  const rimSegMap: Map<string, LineSegments2> =
+    (fatGroup.userData.rimSegMap as Map<string, LineSegments2> | undefined) ?? new Map();
+  fatGroup.userData.rimSegMap = rimSegMap;
+  const usedRimKeys = new Set<string>();
+  const rimNameCounts = new Map<string, number>();
+  let totalRimPasses = 0;
+
+  for (const { node, rim } of activeRims) {
+    const baseRimLabel = node.name || rim.objectId;
+    const dupIdx = rimNameCounts.get(baseRimLabel) ?? 0;
+    rimNameCounts.set(baseRimLabel, dupIdx + 1);
+    const uniqueRimLabel = dupIdx === 0 ? baseRimLabel : `${baseRimLabel}#${dupIdx}`;
+    for (const part of [rim.thayMesh, rim.khuatMesh, rim.thayNet, rim.khuatNet]) {
+      if (part.visible) sourceRimObjects.push(part);
+    }
+    const role: "section" | "base" | "reference" | "inscribed" | "circumscribed" =
+      rim.rimRole
+      ?? (node.userData?.presentationReference || node.name.startsWith("sphere_reference:")
+        ? "reference"
+        : node.name.startsWith("ellipse:") || Boolean(node.getObjectByName?.(`section_fill:${rim.objectId}`))
+          ? "section"
+          : "base");
+    const rimState = (
+      rim.interactionState
+      ?? node.userData?.interactionState
+      ?? (rim.highlighted || node.userData?.highlighted ? "selected" : "neutral")
+    ) as "neutral" | "hover" | "selected";
+    const passes: { suffix: "thay" | "khuat"; netSrc: THREE.LineSegments; meshSrc: THREE.Mesh; isHidden: boolean }[] = [
+      { suffix: "thay", netSrc: rim.thayNet, meshSrc: rim.thayMesh, isHidden: false },
+      { suffix: "khuat", netSrc: rim.khuatNet, meshSrc: rim.khuatMesh, isHidden: true },
+    ];
+    for (const pass of passes) {
+      if (pass.isHidden && !dashedHiddenShown) continue;
+      if (!pass.netSrc.visible) continue;
+      const matSrc = pass.meshSrc.material as THREE.MeshBasicMaterial | undefined;
+      if (!matSrc || matSrc.colorWrite === false || (matSrc.transparent && matSrc.opacity <= 0.01)) continue;
+      const posAttr = pass.netSrc.geometry?.getAttribute?.("position") as THREE.BufferAttribute | undefined;
+      if (!posAttr || posAttr.count < 2) continue;
+      const drawVerts = Math.min(pass.netSrc.geometry.drawRange.count, posAttr.count);
+      const segCount = Math.floor(drawVerts / 2);
+      if (segCount < 1) continue;
+
+      const rawRim = role === "reference"
+        ? (rimState === "selected"
+          ? (pass.isHidden ? w.edge * 0.63 : w.edge * 0.74)
+          : rimState === "hover"
+            ? (pass.isHidden ? w.edge * 0.56 : w.edge * 0.65)
+            : (pass.isHidden ? w.edge * 0.50 : w.edge * 0.58))
+        : role === "section"
+          ? (rimState === "selected"
+            ? w.selectedSection
+            : rimState === "hover"
+              ? w.hoverSection
+              : pass.isHidden
+                ? w.hiddenSection
+                : w.section)
+          : role === "inscribed" || role === "circumscribed"
+            ? (rimState === "selected"
+              ? 4.4
+              : rimState === "hover"
+                ? 3.9
+                : pass.isHidden
+                  ? 2.35
+                  : 3.4)
+            : (rimState === "selected"
+              ? w.selectedEdge
+              : rimState === "hover"
+                ? w.hoverEdge
+                : pass.isHidden
+                  ? w.hiddenEdge
+                  : w.edge);
+      const rimStepRole = clampedPulse > 0.005 && rimState === "neutral" ? resolveStepRole(node) : undefined;
+      const rimStepBoost = rimStepRole === "new"
+        ? 1 + 0.24 * clampedPulse
+        : rimStepRole === "dep"
+          ? 1 + 0.11 * clampedPulse
+          : 1;
+      const widthPx = Number((rawRim * rimStepBoost * heSoNet).toFixed(2));
+
+      if (role === "section" && !pass.isHidden) {
+        maxSectionBorderWidth = Math.max(maxSectionBorderWidth, widthPx);
+      } else if ((role === "base" || role === "inscribed" || role === "circumscribed") && !pass.isHidden) {
+        maxVisibleEdgeWidth = Math.max(maxVisibleEdgeWidth, widthPx);
+      }
+      if (pass.isHidden) {
+        minHiddenEdgeWidth = Math.min(minHiddenEdgeWidth, widthPx);
+      }
+
+      // Step owners get new UUIDs; their semantic rims keep the same reusable GPU buffers.
+      const key = `${uniqueRimLabel}:${rim.objectId}:${pass.suffix}`;
+      usedRimKeys.add(key);
+      totalRimPasses += 1;
+      let seg2 = rimSegMap.get(key);
+      const capSegs = Math.max(2048, Math.ceil(posAttr.count / 2));
+      if (!seg2) {
+        const g = new LineSegmentsGeometry();
+        const initBuf = new Float32Array(capSegs * 6);
+        g.setPositions(initBuf);
+        const startAttr = g.attributes.instanceStart as THREE.InterleavedBufferAttribute | undefined;
+        startAttr?.data.setUsage(THREE.DynamicDrawUsage);
+        const m = new LineMaterial({
+          color: 0x1e293b,
+          linewidth: widthPx,
+          dashed: false,
+          transparent: true,
+          opacity: 1,
+          depthTest: false,
+          depthWrite: false,
+        });
+        seg2 = new LineSegments2(g, m);
+        seg2.frustumCulled = false;
+        seg2.raycast = () => {};
+        seg2.userData.voHan = true;
+        seg2.userData.fatRimCompanion = true;
+        rimSegMap.set(key, seg2);
+        fatGroup.add(seg2);
+      }
+
+      const neededCoords = segCount * 6;
+      let coords = seg2.userData.coordsCache as Float32Array | undefined;
+      let changed = seg2.userData.segCount !== segCount || !coords || coords.length < neededCoords;
+      if (!coords || coords.length < neededCoords) {
+        coords = new Float32Array(Math.max(neededCoords, capSegs * 6));
+        seg2.userData.coordsCache = coords;
+      }
+      for (let i = 0; i < segCount * 2; i += 1) {
+        tmp.fromBufferAttribute(posAttr, i).applyMatrix4(pass.netSrc.matrixWorld);
+        const base = i * 3;
+        if (
+          !changed
+          && (Math.abs(coords[base] - tmp.x) > 1e-6
+            || Math.abs(coords[base + 1] - tmp.y) > 1e-6
+            || Math.abs(coords[base + 2] - tmp.z) > 1e-6)
+        ) {
+          changed = true;
+        }
+        coords[base] = tmp.x;
+        coords[base + 1] = tmp.y;
+        coords[base + 2] = tmp.z;
+      }
+
+      if (changed) {
+        seg2.userData.segCount = segCount;
+        if (!capNhatLineSegments2TaiCho(seg2, coords, segCount)) {
+          seg2.geometry?.dispose?.();
+          const g = new LineSegmentsGeometry();
+          const newBuf = new Float32Array(Math.max(neededCoords, capSegs * 6));
+          newBuf.set(coords.subarray(0, neededCoords), 0);
+          g.setPositions(newBuf);
+          g.instanceCount = segCount;
+          const startAttr = g.attributes.instanceStart as THREE.InterleavedBufferAttribute | undefined;
+          startAttr?.data.setUsage(THREE.DynamicDrawUsage);
+          seg2.geometry = g;
+        }
+      }
+
+      const lm = seg2.material as LineMaterial;
+      lm.color.copy(matSrc.color);
+      lm.linewidth = widthPx;
+      lm.resolution.set(resW, resH);
+      lm.transparent = true;
+      lm.opacity = matSrc.opacity ?? 1;
+      lm.depthTest = matSrc.depthTest;
+      lm.depthWrite = false;
+      lm.depthFunc = matSrc.depthFunc;
+      lm.polygonOffset = matSrc.polygonOffset;
+      lm.polygonOffsetFactor = matSrc.polygonOffsetFactor;
+      lm.polygonOffsetUnits = matSrc.polygonOffsetUnits;
+      seg2.renderOrder = pass.meshSrc.renderOrder;
+      seg2.name = `fat_rim:${uniqueRimLabel}:${pass.suffix}`;
+      seg2.visible = true;
+    }
+  }
+
+  for (const [key, seg2] of rimSegMap) {
+    if (!usedRimKeys.has(key)) seg2.visible = false;
+  }
+
   return {
-    totalLines: activeLines.length,
+    totalLines: activeLines.length + totalRimPasses,
     maxSectionBorderWidth,
     maxVisibleEdgeWidth,
     minHiddenEdgeWidth: Number.isFinite(minHiddenEdgeWidth) ? minHiddenEdgeWidth : 0,
     sourceLines: activeLines,
+    sourceRimObjects,
   };
 }

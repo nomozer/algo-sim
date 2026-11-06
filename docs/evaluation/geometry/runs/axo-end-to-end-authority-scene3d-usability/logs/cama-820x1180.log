@@ -1,0 +1,11 @@
+PASS pyramid-section
+PASS pyramid-three-point-pentagon
+PASS oblique-prism
+PASS cube-hexagon
+PASS sphere-cut-by-plane
+PASS plane-tangent-to-sphere
+PASS cylinder-circular-section
+PASS cone-axial-section
+PASS right-prism
+PASS nested-pyramids
+{"pass":10,"total":10}

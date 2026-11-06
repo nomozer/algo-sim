@@ -139,7 +139,7 @@ def list_assignments(caller: Caller = Depends(get_caller)):
     không thuộc về, kể cả khi đoán đúng id.
     """
     user = caller.require_user()
-    if Role(user.role) is Role.TEACHER:
+    if caller.role is Role.TEACHER:
         rows = caller.db.execute(
             select(Assignment).join(Classroom, Classroom.id == Assignment.classroom_id)
             .where(Classroom.teacher_id == user.id)
@@ -178,7 +178,7 @@ def open_assignment(assignment_id: int, caller: Caller = Depends(get_caller)):
     if a is None:
         raise HTTPException(404, "Không tìm thấy bài thực hành.")
     c = caller.db.get(Classroom, a.classroom_id)
-    if Role(user.role) is Role.TEACHER:
+    if caller.role is Role.TEACHER:
         if c is None or c.teacher_id != user.id:
             raise HTTPException(404, "Không tìm thấy bài thực hành.")
     else:

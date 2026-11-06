@@ -1,0 +1,396 @@
+{
+ "schema": "vitest-timing/1",
+ "machine": {
+  "logicalCores": 12,
+  "ramGiB": 16,
+  "node": "v24.13.0",
+  "vitest": "4.1.10"
+ },
+ "note": "heavy = axo-cross-family-scene3d-acceptance §9.1 gate and axo-ui-ux-and-pedagogical-presentation-audit §8.12 gate; default 5000 ms per-test timeout",
+ "runs": [
+  {
+   "label": "workers=default run1",
+   "code": "pre-fix tree (identity change in progress; 2 test-expectation failures unrelated to timing)",
+   "files": 125,
+   "tests": 1815,
+   "passed": 1813,
+   "failed": [
+    {
+     "file": "axo-error-navigation-matrix.test.tsx",
+     "timeout": false
+    },
+    {
+     "file": "phase-b-views.test.tsx",
+     "timeout": false
+    }
+   ],
+   "heavyMs": [
+    2815,
+    2501
+   ],
+   "testsOver3s": [
+    {
+     "file": "axo-runtime-recovery.test.tsx",
+     "ms": 7838
+    },
+    {
+     "file": "axo-reliability-gate.test.tsx",
+     "ms": 6318
+    },
+    {
+     "file": "scene3d-hybrid-contract-matrix.test.ts",
+     "ms": 8274
+    }
+   ]
+  },
+  {
+   "label": "workers=default run2",
+   "code": "pre-fix tree (identity change in progress; 2 test-expectation failures unrelated to timing)",
+   "files": 125,
+   "tests": 1815,
+   "passed": 1811,
+   "failed": [
+    {
+     "file": "axo-error-navigation-matrix.test.tsx",
+     "timeout": false
+    },
+    {
+     "file": "phase-b-views.test.tsx",
+     "timeout": false
+    },
+    {
+     "file": "axo-cross-family-scene3d-acceptance.test.tsx",
+     "timeout": true
+    },
+    {
+     "file": "axo-ui-ux-and-pedagogical-presentation-audit.test.tsx",
+     "timeout": true
+    }
+   ],
+   "heavyMs": [
+    6487,
+    6312
+   ],
+   "testsOver3s": [
+    {
+     "file": "axo-runtime-recovery.test.tsx",
+     "ms": 7660
+    },
+    {
+     "file": "axo-cross-family-scene3d-acceptance.test.tsx",
+     "ms": 6487
+    },
+    {
+     "file": "axo-final-pedagogical-geometry-acceptance-gate.test.tsx",
+     "ms": 3453
+    },
+    {
+     "file": "axo-pedagogical-presentation-hardening.test.tsx",
+     "ms": 4320
+    },
+    {
+     "file": "axo-pedagogical-presentation-hardening.test.tsx",
+     "ms": 4099
+    },
+    {
+     "file": "axo-reliability-gate.test.tsx",
+     "ms": 5697
+    },
+    {
+     "file": "axo-ui-ux-and-pedagogical-presentation-audit.test.tsx",
+     "ms": 6312
+    },
+    {
+     "file": "scene3d-cross-family-audit.test.tsx",
+     "ms": 4644
+    },
+    {
+     "file": "scene3d-hybrid-contract-matrix.test.ts",
+     "ms": 12484
+    }
+   ]
+  },
+  {
+   "label": "workers=6 run1",
+   "code": "pre-fix tree (identity change in progress; 2 test-expectation failures unrelated to timing)",
+   "files": 125,
+   "tests": 1815,
+   "passed": 1813,
+   "failed": [
+    {
+     "file": "axo-error-navigation-matrix.test.tsx",
+     "timeout": false
+    },
+    {
+     "file": "phase-b-views.test.tsx",
+     "timeout": false
+    }
+   ],
+   "heavyMs": [
+    1473,
+    1369
+   ],
+   "testsOver3s": [
+    {
+     "file": "axo-runtime-recovery.test.tsx",
+     "ms": 4334
+    },
+    {
+     "file": "scene3d-hybrid-contract-matrix.test.ts",
+     "ms": 5188
+    }
+   ]
+  },
+  {
+   "label": "workers=6 run2",
+   "code": "pre-fix tree (identity change in progress; 2 test-expectation failures unrelated to timing)",
+   "files": 125,
+   "tests": 1815,
+   "passed": 1813,
+   "failed": [
+    {
+     "file": "axo-error-navigation-matrix.test.tsx",
+     "timeout": false
+    },
+    {
+     "file": "phase-b-views.test.tsx",
+     "timeout": false
+    }
+   ],
+   "heavyMs": [
+    1874,
+    1413
+   ],
+   "testsOver3s": [
+    {
+     "file": "axo-runtime-recovery.test.tsx",
+     "ms": 4159
+    },
+    {
+     "file": "scene3d-hybrid-contract-matrix.test.ts",
+     "ms": 5872
+    }
+   ]
+  },
+  {
+   "label": "workers=4 run1",
+   "code": "pre-fix tree (identity change in progress; 2 test-expectation failures unrelated to timing)",
+   "files": 125,
+   "tests": 1815,
+   "passed": 1813,
+   "failed": [
+    {
+     "file": "axo-error-navigation-matrix.test.tsx",
+     "timeout": false
+    },
+    {
+     "file": "phase-b-views.test.tsx",
+     "timeout": false
+    }
+   ],
+   "heavyMs": [
+    1499,
+    1721
+   ],
+   "testsOver3s": [
+    {
+     "file": "axo-runtime-recovery.test.tsx",
+     "ms": 3359
+    },
+    {
+     "file": "scene3d-hybrid-contract-matrix.test.ts",
+     "ms": 4180
+    }
+   ]
+  },
+  {
+   "label": "workers=4 run2",
+   "code": "pre-fix tree (identity change in progress; 2 test-expectation failures unrelated to timing)",
+   "files": 125,
+   "tests": 1815,
+   "passed": 1813,
+   "failed": [
+    {
+     "file": "axo-error-navigation-matrix.test.tsx",
+     "timeout": false
+    },
+    {
+     "file": "phase-b-views.test.tsx",
+     "timeout": false
+    }
+   ],
+   "heavyMs": [
+    1471,
+    1924
+   ],
+   "testsOver3s": [
+    {
+     "file": "axo-runtime-recovery.test.tsx",
+     "ms": 3258
+    },
+    {
+     "file": "scene3d-hybrid-contract-matrix.test.ts",
+     "ms": 4484
+    }
+   ]
+  },
+  {
+   "label": "config maxWorkers=6 run1",
+   "code": "tree with vite.config fix",
+   "files": 126,
+   "tests": 1842,
+   "passed": 1842,
+   "failed": [],
+   "heavyMs": [
+    1996,
+    1808
+   ],
+   "testsOver3s": [
+    {
+     "file": "axo-runtime-recovery.test.tsx",
+     "ms": 4469
+    },
+    {
+     "file": "scene3d-hybrid-contract-matrix.test.ts",
+     "ms": 5961
+    }
+   ]
+  },
+  {
+   "label": "config maxWorkers=6 run2",
+   "code": "tree with vite.config fix",
+   "files": 126,
+   "tests": 1842,
+   "passed": 1842,
+   "failed": [],
+   "heavyMs": [
+    1641,
+    1641
+   ],
+   "testsOver3s": [
+    {
+     "file": "axo-runtime-recovery.test.tsx",
+     "ms": 4115
+    },
+    {
+     "file": "scene3d-hybrid-contract-matrix.test.ts",
+     "ms": 5328
+    }
+   ]
+  },
+  {
+   "label": "config maxWorkers=6 run3",
+   "code": "tree with vite.config fix",
+   "files": 126,
+   "tests": 1842,
+   "passed": 1842,
+   "failed": [],
+   "heavyMs": [
+    1582,
+    1498
+   ],
+   "testsOver3s": [
+    {
+     "file": "axo-runtime-recovery.test.tsx",
+     "ms": 3984
+    },
+    {
+     "file": "scene3d-hybrid-contract-matrix.test.ts",
+     "ms": 5264
+    }
+   ]
+  },
+  {
+   "label": "config maxWorkers=6 run4",
+   "code": "tree with vite.config fix",
+   "files": 126,
+   "tests": 1842,
+   "passed": 1842,
+   "failed": [],
+   "heavyMs": [
+    1906,
+    1668
+   ],
+   "testsOver3s": [
+    {
+     "file": "axo-runtime-recovery.test.tsx",
+     "ms": 3991
+    },
+    {
+     "file": "scene3d-hybrid-contract-matrix.test.ts",
+     "ms": 5440
+    }
+   ]
+  },
+  {
+   "label": "config maxWorkers=6 run5",
+   "code": "tree with vite.config fix",
+   "files": 126,
+   "tests": 1842,
+   "passed": 1842,
+   "failed": [],
+   "heavyMs": [
+    1918,
+    1672
+   ],
+   "testsOver3s": [
+    {
+     "file": "axo-runtime-recovery.test.tsx",
+     "ms": 4185
+    },
+    {
+     "file": "scene3d-hybrid-contract-matrix.test.ts",
+     "ms": 6083
+    }
+   ]
+  },
+  {
+   "label": "final run1",
+   "code": "7a46646e",
+   "files": 126,
+   "tests": 1843,
+   "passed": 1843,
+   "failed": [],
+   "heavyMs": [
+    1830,
+    1675
+   ],
+   "testsOver3s": [
+    {
+     "file": "axo-runtime-recovery.test.tsx",
+     "ms": 4834
+    },
+    {
+     "file": "axo-reliability-gate.test.tsx",
+     "ms": 3115
+    },
+    {
+     "file": "scene3d-hybrid-contract-matrix.test.ts",
+     "ms": 6388
+    }
+   ]
+  },
+  {
+   "label": "final run2",
+   "code": "7a46646e",
+   "files": 126,
+   "tests": 1843,
+   "passed": 1843,
+   "failed": [],
+   "heavyMs": [
+    1638,
+    1663
+   ],
+   "testsOver3s": [
+    {
+     "file": "axo-runtime-recovery.test.tsx",
+     "ms": 4102
+    },
+    {
+     "file": "scene3d-hybrid-contract-matrix.test.ts",
+     "ms": 5368
+    }
+   ]
+  }
+ ]
+}

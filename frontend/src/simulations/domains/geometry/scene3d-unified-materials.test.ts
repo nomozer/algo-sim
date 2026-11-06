@@ -4,6 +4,7 @@ import {
   boVanhDayTrung, buildObject3D, canonicalEdgeMaterial, datKhoiCongKhongChe, disposeScene3DObject, updateCanonicalEdgeVisibility,
 } from "./scene3d-view";
 import * as roles from "./scene3d-roles";
+import { modulateSemanticColor } from "./scene3d-semantic-policy";
 import type { Scene3D, SceneObject } from "./scene3d-model";
 import { diemVanhCongBiChe, classifyWorldSegmentVisibility, type CurvedSolidVolumeMeta } from "./scene3d-edge-visibility";
 
@@ -81,22 +82,24 @@ describe("curved visibility follows the ray and finite solid", () => {
 });
 
 describe("shared semantic material behavior", () => {
-  it("sphere outline is the camera tangent circle rather than an equator", () => {
+  it("standalone sphere renders translucent 3D shell and horizontal 3D reference equator without any artificial sphere_silhouette stroke", () => {
     const input: SceneObject = { ...common, depends: [], id: "sphere", type: "curved_solid", render: "curved_solid",
       curved_kind: "ball", anchor: ["1", "2", "3"], radius_sq: "4", height_sq: "0" };
     const root = new THREE.Group(), built = buildObject3D(input, false)!;
     root.add(built);
+    expect(built.getObjectByName("sphere_silhouette:sphere")).toBeUndefined();
+    const shell = built.children.find((c) => (c as THREE.Mesh).isMesh && c.userData?.voKhoi) as THREE.Mesh;
+    expect(shell).toBeDefined();
+    expect((shell.material as THREE.MeshBasicMaterial).color.getHex()).toBe(0x7c8b9e);
+    const eq = built.getObjectByName("sphere_reference:sphere")!;
+    expect(eq).toBeDefined();
     const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
     for (const eye of [[9, 4, 5], [-7, -4, 5], [7, 4, -5]]) {
       camera.position.set(...eye as [number, number, number]); camera.lookAt(1, 2, 3); camera.updateMatrixWorld();
       updateCanonicalEdgeVisibility(root, camera);
-      const outline = built.getObjectByName("sphere_silhouette:sphere") as THREE.Mesh;
-      expect(outline).toBeDefined();
-      built.updateMatrixWorld(true);
-      const point = new THREE.Vector3(1, 0, 0).applyMatrix4(outline.matrixWorld);
-      const radial = point.clone().sub(new THREE.Vector3(1, 2, 3));
-      expect(radial.length()).toBeCloseTo(2, 5);
-      expect(radial.dot(camera.position.clone().sub(point))).toBeCloseTo(0, 5);
+      const rim = eq.userData.curvedRimLoop;
+      expect(rim.thayNet.geometry.drawRange.count).toBeGreaterThan(0);
+      expect(rim.khuatNet.geometry.drawRange.count).toBeGreaterThan(0);
     }
   });
   it.each(["cylinder", "cone"] as const)("%s renders its physical rims and camera-tangent generators without inventing scene entities", kind => {
@@ -135,7 +138,8 @@ describe("shared semantic material behavior", () => {
         const m = (n as THREE.Mesh).material as THREE.MeshBasicMaterial | undefined;
         if (m?.color && m.colorWrite !== false && !n.name.startsWith("section_fill:")) colors.push(m.color.getHex());
       });
-      expect(colors).toContain(0x0f766e);
+      expect(colors).toContain(modulateSemanticColor(0xc85a32, "hover"));
+      expect(colors).not.toContain(0x0f766e);
       expect(colors).not.toContain(0x2563eb);
     }
   });
@@ -244,24 +248,31 @@ describe("shared semantic material behavior", () => {
     return camera;
   };
 
-  it("never shows a silhouette that no camera update has placed", () => {
+  it("never shows a cone/cylinder silhouette before camera update, and never creates a sphere_silhouette on balls", () => {
     const cylinder: SceneObject = { ...ball, id: "cyl", curved_kind: "cylinder", apex_or_top: ["1", "1", "3"], height_sq: "9/4" };
-    for (const o of [ball, cylinder]) {
+    const cone: SceneObject = { ...ball, id: "cone", curved_kind: "cone", apex_or_top: ["1", "1", "3"], height_sq: "9/4" };
+    expect(buildObject3D(ball, false)!.getObjectByName("sphere_silhouette:ball")).toBeUndefined();
+    for (const o of [cylinder, cone]) {
       const built = buildObject3D(o, false)!;
-      const outline = built.getObjectByName(`sphere_silhouette:${o.id}`) ?? built.getObjectByName(`curved_silhouette:${o.id}`);
+      const outline = built.getObjectByName(`curved_silhouette:${o.id}`);
       expect([o.id, outline!.visible]).toEqual([o.id, false]);
     }
   });
 
-  it("places the silhouette of a curved solid that does not occlude (secondary solid sharing the primary's frame)", () => {
-    const root = new THREE.Group(), built = buildObject3D(ball, false)!;
-    root.add(built);
-    datKhoiCongKhongChe(built);
+  it("places lateral generators on non-occluding cylinder/cone and preserves self-occluding equator on non-occluding sphere", () => {
+    const cylinder: SceneObject = { ...ball, id: "cyl", curved_kind: "cylinder", apex_or_top: ["1", "1", "3"], height_sq: "9/4" };
+    const root = new THREE.Group();
+    const builtCyl = buildObject3D(cylinder, false)!;
+    const builtBall = buildObject3D(ball, false)!;
+    root.add(builtCyl, builtBall);
+    datKhoiCongKhongChe(builtCyl);
+    datKhoiCongKhongChe(builtBall);
     updateCanonicalEdgeVisibility(root, lookFrom([12, 9, 10]));
-    const outline = built.getObjectByName("sphere_silhouette:ball")!;
-    expect(outline.visible).toBe(true);
-    expect(outline.position.distanceTo(new THREE.Vector3(1, 1, 1.5))).toBeGreaterThan(0); // moved off the anchor, toward the eye
-    expect(Math.hypot(outline.scale.x - 1)).toBeGreaterThan(1e-6);                       // not the unplaced unit ring
+    expect(builtCyl.getObjectByName("curved_silhouette:cyl")!.visible).toBe(true);
+    expect(builtBall.getObjectByName("sphere_silhouette:ball")).toBeUndefined();
+    const eqRim = builtBall.getObjectByName("sphere_reference:ball")!.userData.curvedRimLoop;
+    expect(eqRim.thayNet.geometry.drawRange.count).toBeGreaterThan(0);
+    expect(eqRim.khuatNet.geometry.drawRange.count).toBeGreaterThan(0);
   });
 
   it("classifies a polyhedron's edges by solid faces only, also when a curved solid encloses it", () => {

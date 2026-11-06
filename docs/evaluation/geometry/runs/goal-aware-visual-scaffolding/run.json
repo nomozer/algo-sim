@@ -1,0 +1,22 @@
+{
+  "run_id": "goal-aware-visual-scaffolding",
+  "date": "2026-11-01",
+  "agent": "Antigravity",
+  "authorization": "Task prompt 2026-11-01 (AXO — Goal-Aware Visual Scaffolding & Construction Step Refinement on feat/axo-v27-frontend-integration). Frontend-only scope; no GO to merge or push.",
+  "branch": "feat/axo-v27-frontend-integration",
+  "product_commit": "487d483bfcf24a5f26e41ab9aa9460be6139720f",
+  "measured_system": {
+    "files": 118,
+    "tree_hash": "4b7114965da230650e2ab0570ee158d24b6fee4e3cdece689ecd40b50a290866"
+  },
+  "cache_version": 130,
+  "cache_decision": "NO_BUMP: frontend-only Scene3D visual scaffolding and step salience lifecycle; backend/app and semantic_program contract untouched",
+  "default_mode": "LLM_ONLY",
+  "hybrid": "OPT_IN_ONLY",
+  "provider_calls": 0,
+  "verification": {
+    "frontend_vitest": "96 files passed, 1582 tests passed",
+    "frontend_build": "tsc -b && vite build exit 0",
+    "playwright_visual_audit": "30 cross-family cases (11 catalog + 19 hybrid), desktop 1440x900 + mobile 390x844 + multi-angle orbits + aux/select/label/autoplay checks, 0 console.error, 0 pageerror"
+  }
+}

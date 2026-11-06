@@ -1,0 +1,42 @@
+{
+  "run_id": "axo-hybrid4-capability-scene3d-reliability",
+  "date": "2026-11-06",
+  "branch": "integration/axo-hybrid4-reliability",
+  "start": "d3da429b",
+  "main": "bb61a804eb2b476f796e28176084ea41b0bed92e",
+  "commits": [
+    "555802da",
+    "e3960bd2",
+    "286e4820",
+    "abf3d403",
+    "e23e3983",
+    "ac8e610d",
+    "69c5e910"
+  ],
+  "product_commit": "e23e3983e7b7b7bd83d5b180337768d05042578e",
+  "measured_system": {
+    "files": 103,
+    "tree_hash": "f75779e2fc9ac6ded5e6ffa70d2d2a1de94a4495f145a2474f1ab199c4ada92a"
+  },
+  "cache_version": 132,
+  "provider_calls": 0,
+  "verification": {
+    "case_c_end_to_end": "served, pentagon, Q never a vertex, 11√6/8 (test)",
+    "three_point_suite": "8 served exact vs independent oracle + 5 refusals; fault injection 11/19 red",
+    "generalization": "6 CORRECTLY_SERVED, 3 CORRECTLY_REFUSED, 0 incorrect (generalization-results.json)",
+    "orbit_gate_v4": "candidate DAT/DAT/DAT; injected per-frame rebuild TU_KHOP_KHUNG; injected endless damping KHONG_ON_DINH",
+    "browser": "two-tab 8/8 x2, E2E 39/39, UI 40/40, camera views 8/8",
+    "node_harness": "153/155, 0 fail, 2 environment skips",
+    "postgres": "2/2 PASSED on postgres:16-alpine",
+    "performance": "ABBA, within variation (perf-summary.json, navigation-raw-samples.json)",
+    "publication": "wave range PASS; integration range 1 historical fixture finding; head 98 pending — OWNER_DECISION_REQUIRED",
+    "t3": "FULL_PRODUCT_GATE_PASS at 69c5e910: pytest 13836 passed / 7 skipped / 9 xfailed; vitest 129 files / 1930; tsc+build; demo 5/5"
+  },
+  "status": "READY_FOR_OWNER_REVIEW",
+  "tested_tree": "69c5e910 (clean detached worktree)",
+  "owner_decisions": [
+    "publication exception 6533b586 / test_auth_api.py blob 28be1ef6",
+    "98 pending publication entries (incl. traceback logs showing the local user name)",
+    "merge/push permission"
+  ]
+}

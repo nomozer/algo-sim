@@ -1,0 +1,1 @@
+{"guest": {"attempts": 200, "median_ms": 12.39, "p95_ms": 16.1}, "student": {"attempts": 200, "median_ms": 14.54, "p95_ms": 18.47}}
