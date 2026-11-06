@@ -11,6 +11,7 @@ import { __resetHistoryForTest } from "../../../state/history";
 import type { SimulationEnvelope } from "../../types";
 import { hienSo, hopLeScene3D, objectsAt, stepCount, type Scene3D } from "./scene3d-model";
 import { entitiesPresentAt } from "./scene3d-subentities";
+import { displayBrand } from "../../../branding";
 
 /**
  * PHẢN HỒI SẢN PHẨM CỦA LƯỢT ĐO CUỐI PHẢI DỰNG THÀNH MÔ PHỎNG.
@@ -359,7 +360,7 @@ describe("ca âm được trình bày an toàn", () => {
         (u as { error_code?: string }).error_code === "requested_operation_uncovered";
       expect(html).toContain(
         ngoaiBaoDong ? "NGOÀI PHẠM VI DỰNG HÌNH" : "CHƯA DỰNG ĐƯỢC MÔ PHỎNG");
-      expect(html).toContain(f.envelope.learner_reason!);
+      expect(html).toContain(displayBrand(f.envelope.learner_reason!));   // shown under the Axo name
       // Hai sự thật có cấu trúc phải LÊN MÀN HÌNH, không chỉ nằm trong JSON.
       expect(html).toContain("Dừng ở bước");
       expect(html).toContain("Loại vấn đề");

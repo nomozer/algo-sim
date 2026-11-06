@@ -40,8 +40,9 @@ ROLLBACK = Git/deployment version rollback to tag pre-hybrid-cutover-f986e897 (f
 OPEN = INDEPENDENT_H1_VALIDATION (60-case external H-1 corpus not yet authored/measured; C26/Full T3 are not H-1) · ISSUE-ARCH-PARTIAL-STATED-CUT-NAMING · ISSUE-ARCH-HISTORY-REOPEN-DROPS-SCENE3D · ISSUE-ARCH-ROUTE-D-DIACRITIC-FREE-INPUT (OPEN_ISSUES.md)
 ```
 
-Thay đổi chưa commit của người dùng: không restore, sửa, stage hoặc commit khi chưa được cho phép rõ ràng (xoá favicon đã
-được cho phép và commit ở f89a1a8b). Không amend/rebase/squash chuỗi commit đã được evidence tham chiếu.
+Thay đổi chưa commit của người dùng: không restore, sửa, stage hoặc commit khi chưa được cho phép rõ ràng (xoá favicon AlgoSim
+cũ đã được cho phép và commit ở f89a1a8b; favicon HIỆN HÀNH là logo Axo `frontend/public/favicon.svg`, khôi phục ở run
+`axo-postmerge-consolidation` — đừng gỡ lại theo bản ghi cũ). Không amend/rebase/squash chuỗi commit đã được evidence tham chiếu.
 
 ## 3. Tài liệu nằm ở đâu
 

@@ -24,6 +24,7 @@ import type {
   WorkspaceProps,
 } from "../simulations/types";
 import { useAppStore } from "../state/store";
+import { displayBrand } from "../branding";
 import { historyStore, touchServerHistory } from "../state/history";
 import { recoverCatalogScene3D } from "../data/offline-catalog";
 import { GEOMETRY_SAMPLES } from "../data/geometry-samples";
@@ -3627,7 +3628,7 @@ export function UnsupportedNotice({
       ? null
       : "Nếu đề thuộc dạng hệ dựng được (thiết diện, giao tuyến, khoảng cách, góc, thể tích), em có thể gửi lại để hệ dựng lại."
     : outOfScope
-    ? "AlgoSim mô phỏng hình học không gian — thử một bài về giao tuyến, thiết diện, quan hệ song song–vuông góc, khoảng cách hoặc thể tích."
+    ? "Axo mô phỏng hình học không gian — thử một bài về giao tuyến, thiết diện, quan hệ song song–vuông góc, khoảng cách hoặc thể tích."
     : notSimulatable
     ? "Nội dung này đọc hiểu là đủ. Muốn xem một quá trình chạy từng bước thì cần đề có dữ liệu và thao tác trên dữ liệu."
     /* Câu chốt phải nói ĐÚNG hướng đang mở, nếu không nó tự hứa một danh mục
@@ -3671,14 +3672,15 @@ export function UnsupportedNotice({
      `reason` sau (envelope cũ, khoá bởi `learner-error.test.tsx`). Chỉ thêm
      nấc CUỐI cho envelope không có cả hai — trước bản này nấc ấy render một
      chuỗi rỗng. */
-  const loiKe =
-    unsupported.learner_reason ?? unsupported.reason ?? MO_TA_TU_CHOI_CHUNG;
+  // Server refusal copy (and old cached envelopes) may still say "AlgoSim": the learner reads the Axo name.
+  const loiKe = displayBrand(
+    unsupported.learner_reason ?? unsupported.reason ?? MO_TA_TU_CHOI_CHUNG);
   const cauHoiLamRo = unsupported.clarification?.question ?? null;
   return (
     <section className="card">
       <span className="eyebrow">{geometricRefusal?.title ?? (failedVerification ? "CHƯA KIỂM CHỨNG ĐƯỢC MÔ PHỎNG" : eyebrow)}</span>
       <p style={{ marginTop: "var(--sp-sm)" }}>{geometricRefusal
-        ? cutExplanation !== null ? `Không thể dựng giao tuyến. ${cutExplanation || geometricRefusal.reason}` : unsupported.learner_reason ?? geometricRefusal.reason
+        ? displayBrand(cutExplanation !== null ? `Không thể dựng giao tuyến. ${cutExplanation || geometricRefusal.reason}` : unsupported.learner_reason ?? geometricRefusal.reason)
         : loiKe}</p>
       <dl className="refusal-facts">
         <div>
@@ -3701,7 +3703,7 @@ export function UnsupportedNotice({
 
 /** Câu thay cho `reason` kỹ thuật khi envelope cũ không có `learner_reason`. */
 const MO_TA_TU_CHOI_CHUNG =
-  "AlgoSim chưa tạo được mô phỏng cho đề này và không hiển thị hình chưa " +
+  "Axo chưa tạo được mô phỏng cho đề này và không hiển thị hình chưa " +
   "được kiểm chứng.";
 
 /**

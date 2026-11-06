@@ -18,11 +18,13 @@ import { SimulationControls } from "./components/SimulationControls";
 import { SimulationWorkspace } from "./components/SimulationWorkspace";
 import {
   computeAdaptiveHeaderState,
+  TEN_TRANG,
   ToastContainer,
   TopNav,
   TopNavAccount,
   type AdaptiveHeaderState,
 } from "./components/TopNav";
+import { pageTitle } from "./branding";
 import { AxoScrollbar } from "./components/AxoScrollbar";
 import { recoverCatalogScene3D } from "./data/offline-catalog";
 import { hopLeScene3D } from "./simulations/domains/geometry/scene3d-model";
@@ -143,6 +145,13 @@ export default function App() {
       window.removeEventListener("popstate", applyBrowserLocation);
     };
   }, [refresh, syncLocationRoute]);
+
+  // Browser tab: "Axo" on the home page, "<page> | Axo" elsewhere (the 3D workspace is named by its role).
+  useEffect(() => {
+    if (typeof document === "undefined") return;
+    document.title = pageTitle(view === "home" ? null
+      : view === "workspace" ? "Mô phỏng hình học 3D" : TEN_TRANG[view] ?? null);
+  }, [view]);
 
   useEffect(() => {
     if (typeof window === "undefined" || typeof window.history?.pushState !== "function") return;
