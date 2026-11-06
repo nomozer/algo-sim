@@ -46,7 +46,8 @@
     "t3": [{"commit": "14810326d", "worktree": "clean detached", "run": 1, "result": "FULL_PRODUCT_GATE_PASS",
             "pytest": "13878 passed, 7 skipped, 3 deselected, 9 xfailed", "vitest": "135 files / 2007", "build": "PASS", "demo": "5/5", "crash_surface": "6/6"}],
     "node_harness": "155: 153 pass, 0 fail, 2 skipped",
-    "publication": "see report.md §J"
+    "publication": {"range_origin_main_to_ab2e293b": "PASS (139 blobs, 3 messages, 0 violations)",
+                    "head": "BLOCKED 97 PENDING_OWNER_DECISION, all pre-existing on main; none new"}
   },
   "cache_version_changed": false,
   "model_surface_changed": false,

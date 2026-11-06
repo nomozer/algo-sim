@@ -135,7 +135,8 @@ Trường `dist` trong ba receipt Scene3D được thay bằng `<worktree>/front
 | docs IA + evaluation candidate | 68/68; `test_current_state_identity.py` 3/3 |
 | T3 (`full-gate.mjs`) tại 14810326, worktree detached sạch, 1 lượt | **FULL_PRODUCT_GATE_PASS** — pytest 13 878 passed / 7 skipped / 3 deselected / 9 xfailed; vitest 135 / 2007; build PASS; demo 5/5; bề mặt sập 6/6 |
 | node harness (`node --test "scripts/*.node-test.mjs"`), cùng worktree | 155: 153 pass, 0 fail, 2 skip môi trường |
-| publication scan | PUBLICATION_SCAN_PLACEHOLDER |
+| publication `--range origin/main..ab2e293b` | **PASS**: 139 blob mới, 3 thông điệp commit, 0 vi phạm |
+| publication `--head` | BLOCKED 97 `PENDING_OWNER_DECISION` — đều có sẵn trên `main` (range scan: 0 blob mới bị đánh dấu); run không tự duyệt ngoại lệ |
 
 ## K. Trạng thái và việc còn mở
 
