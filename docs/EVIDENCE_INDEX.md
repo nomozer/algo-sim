@@ -1,5 +1,18 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = AXO_GIT_CLEANUP
+
+REPORT = docs/evaluation/geometry/runs/axo-git-cleanup/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/axo-git-cleanup/
+START_BASE = main = origin/main 30e26353
+CODE_COMMIT = NONE (git housekeeping + docs only)
+CLASSIFICATION = CLEANUP_COMPLETED_WITH_BLOCKERS: branches 11 → 8, worktrees 7 → 4, leftover directories 13 → 11 (two fully deleted, seven reduced to Codex-sandbox-owned files the account cannot delete, four kept for unreadable ACL subtrees); every remaining file classified Git/archive/cache; two dangling cited commits pinned under refs/archive/evidence-index; private archive 10 316 files SHA-256 OK; EXTERNAL_BACKUP_PENDING.
+PRODUCT_CHANGE = NO
+MODEL_REQUEST_COUNT = 0
+VERIFICATION = report.md
+CORRECTS = docs/evaluation/geometry/runs/axo-repository-baseline/report.md §2–§3 (branch/worktree inventory superseded)
+CORRECTED_BY = NONE
+
 ## WAVE_ID = AXO_REPOSITORY_BASELINE
 
 REPORT = docs/evaluation/geometry/runs/axo-repository-baseline/report.md
