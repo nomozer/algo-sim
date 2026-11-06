@@ -1,0 +1,257 @@
+{
+  "schema": "axo-branding/1",
+  "distIndexSha256": "5dee40c13ae4e458faae96e15ad8a26a66b17f219984ebc037b0b0996ec44e29",
+  "expectAxo": true,
+  "provider_calls": 0,
+  "browser": "157.0.8103.38",
+  "pages": [
+    {
+      "route": "/",
+      "viewport": "1440x900",
+      "title": "Axo — Mô phỏng tương tác",
+      "icon": [
+        "/favicon.svg"
+      ],
+      "headerLogo": true,
+      "algoSimVisible": false,
+      "iconFetch": {
+        "status": 200,
+        "type": "image/svg+xml",
+        "sha256": "71eb0df90387ecaa474a00b1bb1c9e881b19087497b8ee9ffb3a3d78a7bc49f5"
+      },
+      "afterReload": {
+        "title": "Axo — Mô phỏng tương tác",
+        "icon": [
+          "/favicon.svg"
+        ],
+        "headerLogo": true,
+        "algoSimVisible": false
+      },
+      "failed": [],
+      "consoleErrors": []
+    },
+    {
+      "route": "/library",
+      "viewport": "1440x900",
+      "title": "Thư viện | Axo",
+      "icon": [
+        "/favicon.svg"
+      ],
+      "headerLogo": true,
+      "algoSimVisible": false,
+      "iconFetch": {
+        "status": 200,
+        "type": "image/svg+xml",
+        "sha256": "71eb0df90387ecaa474a00b1bb1c9e881b19087497b8ee9ffb3a3d78a7bc49f5"
+      },
+      "afterReload": {
+        "title": "Thư viện | Axo",
+        "icon": [
+          "/favicon.svg"
+        ],
+        "headerLogo": true,
+        "algoSimVisible": false
+      },
+      "failed": [],
+      "consoleErrors": []
+    },
+    {
+      "route": "/history",
+      "viewport": "1440x900",
+      "title": "Lịch sử | Axo",
+      "icon": [
+        "/favicon.svg"
+      ],
+      "headerLogo": true,
+      "algoSimVisible": false,
+      "iconFetch": {
+        "status": 200,
+        "type": "image/svg+xml",
+        "sha256": "71eb0df90387ecaa474a00b1bb1c9e881b19087497b8ee9ffb3a3d78a7bc49f5"
+      },
+      "afterReload": {
+        "title": "Lịch sử | Axo",
+        "icon": [
+          "/favicon.svg"
+        ],
+        "headerLogo": true,
+        "algoSimVisible": false
+      },
+      "failed": [],
+      "consoleErrors": []
+    },
+    {
+      "route": "/simulation/thiet-dien-chop",
+      "viewport": "1440x900",
+      "title": "Mô phỏng hình học 3D | Axo",
+      "icon": [
+        "/favicon.svg"
+      ],
+      "headerLogo": true,
+      "algoSimVisible": false,
+      "iconFetch": {
+        "status": 200,
+        "type": "image/svg+xml",
+        "sha256": "71eb0df90387ecaa474a00b1bb1c9e881b19087497b8ee9ffb3a3d78a7bc49f5"
+      },
+      "afterReload": {
+        "title": "Mô phỏng hình học 3D | Axo",
+        "icon": [
+          "/favicon.svg"
+        ],
+        "headerLogo": true,
+        "algoSimVisible": false
+      },
+      "failed": [],
+      "consoleErrors": []
+    },
+    {
+      "route": "/",
+      "viewport": "390x844",
+      "title": "Axo — Mô phỏng tương tác",
+      "icon": [
+        "/favicon.svg"
+      ],
+      "headerLogo": true,
+      "algoSimVisible": false,
+      "iconFetch": {
+        "status": 200,
+        "type": "image/svg+xml",
+        "sha256": "71eb0df90387ecaa474a00b1bb1c9e881b19087497b8ee9ffb3a3d78a7bc49f5"
+      },
+      "afterReload": {
+        "title": "Axo — Mô phỏng tương tác",
+        "icon": [
+          "/favicon.svg"
+        ],
+        "headerLogo": true,
+        "algoSimVisible": false
+      },
+      "failed": [],
+      "consoleErrors": []
+    },
+    {
+      "route": "/library",
+      "viewport": "390x844",
+      "title": "Thư viện | Axo",
+      "icon": [
+        "/favicon.svg"
+      ],
+      "headerLogo": true,
+      "algoSimVisible": false,
+      "iconFetch": {
+        "status": 200,
+        "type": "image/svg+xml",
+        "sha256": "71eb0df90387ecaa474a00b1bb1c9e881b19087497b8ee9ffb3a3d78a7bc49f5"
+      },
+      "afterReload": {
+        "title": "Thư viện | Axo",
+        "icon": [
+          "/favicon.svg"
+        ],
+        "headerLogo": true,
+        "algoSimVisible": false
+      },
+      "failed": [],
+      "consoleErrors": []
+    },
+    {
+      "route": "/history",
+      "viewport": "390x844",
+      "title": "Lịch sử | Axo",
+      "icon": [
+        "/favicon.svg"
+      ],
+      "headerLogo": true,
+      "algoSimVisible": false,
+      "iconFetch": {
+        "status": 200,
+        "type": "image/svg+xml",
+        "sha256": "71eb0df90387ecaa474a00b1bb1c9e881b19087497b8ee9ffb3a3d78a7bc49f5"
+      },
+      "afterReload": {
+        "title": "Lịch sử | Axo",
+        "icon": [
+          "/favicon.svg"
+        ],
+        "headerLogo": true,
+        "algoSimVisible": false
+      },
+      "failed": [],
+      "consoleErrors": []
+    },
+    {
+      "route": "/simulation/thiet-dien-chop",
+      "viewport": "390x844",
+      "title": "Mô phỏng hình học 3D | Axo",
+      "icon": [
+        "/favicon.svg"
+      ],
+      "headerLogo": true,
+      "algoSimVisible": false,
+      "iconFetch": {
+        "status": 200,
+        "type": "image/svg+xml",
+        "sha256": "71eb0df90387ecaa474a00b1bb1c9e881b19087497b8ee9ffb3a3d78a7bc49f5"
+      },
+      "afterReload": {
+        "title": "Mô phỏng hình học 3D | Axo",
+        "icon": [
+          "/favicon.svg"
+        ],
+        "headerLogo": true,
+        "algoSimVisible": false
+      },
+      "failed": [],
+      "consoleErrors": []
+    }
+  ],
+  "checks": [
+    {
+      "name": "/ @1440x900",
+      "status": "PASS"
+    },
+    {
+      "name": "/library @1440x900",
+      "status": "PASS"
+    },
+    {
+      "name": "/history @1440x900",
+      "status": "PASS"
+    },
+    {
+      "name": "/simulation/thiet-dien-chop @1440x900",
+      "status": "PASS"
+    },
+    {
+      "name": "/ @390x844",
+      "status": "PASS"
+    },
+    {
+      "name": "/library @390x844",
+      "status": "PASS"
+    },
+    {
+      "name": "/history @390x844",
+      "status": "PASS"
+    },
+    {
+      "name": "/simulation/thiet-dien-chop @390x844",
+      "status": "PASS"
+    },
+    {
+      "name": "in-app navigation retitles the tab",
+      "status": "PASS"
+    }
+  ],
+  "navigation": {
+    "library": "Thư viện | Axo",
+    "history": "Lịch sử | Axo",
+    "home": "Axo — Mô phỏng tương tác"
+  },
+  "faviconDirect": 200,
+  "summary": {
+    "pass": 9,
+    "total": 9
+  }
+}

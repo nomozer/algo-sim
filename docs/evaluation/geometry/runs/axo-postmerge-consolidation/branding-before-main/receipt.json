@@ -1,0 +1,188 @@
+{
+  "schema": "axo-branding/1",
+  "distIndexSha256": "baf4ae347fe2d41f0d79be069785f51f867dcabfff27f938aa0685124e57867a",
+  "expectAxo": false,
+  "provider_calls": 0,
+  "browser": "157.0.8103.38",
+  "pages": [
+    {
+      "route": "/",
+      "viewport": "1440x900",
+      "title": "AlgoSim — Mô phỏng tương tác",
+      "icon": [
+        "data:,"
+      ],
+      "headerLogo": true,
+      "algoSimVisible": false,
+      "iconFetch": null,
+      "afterReload": {
+        "title": "AlgoSim — Mô phỏng tương tác",
+        "icon": [
+          "data:,"
+        ],
+        "headerLogo": true,
+        "algoSimVisible": false
+      },
+      "failed": [],
+      "consoleErrors": []
+    },
+    {
+      "route": "/library",
+      "viewport": "1440x900",
+      "title": "AlgoSim — Mô phỏng tương tác",
+      "icon": [
+        "data:,"
+      ],
+      "headerLogo": true,
+      "algoSimVisible": false,
+      "iconFetch": null,
+      "afterReload": {
+        "title": "AlgoSim — Mô phỏng tương tác",
+        "icon": [
+          "data:,"
+        ],
+        "headerLogo": true,
+        "algoSimVisible": false
+      },
+      "failed": [],
+      "consoleErrors": []
+    },
+    {
+      "route": "/history",
+      "viewport": "1440x900",
+      "title": "AlgoSim — Mô phỏng tương tác",
+      "icon": [
+        "data:,"
+      ],
+      "headerLogo": true,
+      "algoSimVisible": false,
+      "iconFetch": null,
+      "afterReload": {
+        "title": "AlgoSim — Mô phỏng tương tác",
+        "icon": [
+          "data:,"
+        ],
+        "headerLogo": true,
+        "algoSimVisible": false
+      },
+      "failed": [],
+      "consoleErrors": []
+    },
+    {
+      "route": "/simulation/thiet-dien-chop",
+      "viewport": "1440x900",
+      "title": "AlgoSim — Mô phỏng tương tác",
+      "icon": [
+        "data:,"
+      ],
+      "headerLogo": true,
+      "algoSimVisible": false,
+      "iconFetch": null,
+      "afterReload": {
+        "title": "AlgoSim — Mô phỏng tương tác",
+        "icon": [
+          "data:,"
+        ],
+        "headerLogo": true,
+        "algoSimVisible": false
+      },
+      "failed": [],
+      "consoleErrors": []
+    },
+    {
+      "route": "/",
+      "viewport": "390x844",
+      "title": "AlgoSim — Mô phỏng tương tác",
+      "icon": [
+        "data:,"
+      ],
+      "headerLogo": true,
+      "algoSimVisible": false,
+      "iconFetch": null,
+      "afterReload": {
+        "title": "AlgoSim — Mô phỏng tương tác",
+        "icon": [
+          "data:,"
+        ],
+        "headerLogo": true,
+        "algoSimVisible": false
+      },
+      "failed": [],
+      "consoleErrors": []
+    },
+    {
+      "route": "/library",
+      "viewport": "390x844",
+      "title": "AlgoSim — Mô phỏng tương tác",
+      "icon": [
+        "data:,"
+      ],
+      "headerLogo": true,
+      "algoSimVisible": false,
+      "iconFetch": null,
+      "afterReload": {
+        "title": "AlgoSim — Mô phỏng tương tác",
+        "icon": [
+          "data:,"
+        ],
+        "headerLogo": true,
+        "algoSimVisible": false
+      },
+      "failed": [],
+      "consoleErrors": []
+    },
+    {
+      "route": "/history",
+      "viewport": "390x844",
+      "title": "AlgoSim — Mô phỏng tương tác",
+      "icon": [
+        "data:,"
+      ],
+      "headerLogo": true,
+      "algoSimVisible": false,
+      "iconFetch": null,
+      "afterReload": {
+        "title": "AlgoSim — Mô phỏng tương tác",
+        "icon": [
+          "data:,"
+        ],
+        "headerLogo": true,
+        "algoSimVisible": false
+      },
+      "failed": [],
+      "consoleErrors": []
+    },
+    {
+      "route": "/simulation/thiet-dien-chop",
+      "viewport": "390x844",
+      "title": "AlgoSim — Mô phỏng tương tác",
+      "icon": [
+        "data:,"
+      ],
+      "headerLogo": true,
+      "algoSimVisible": false,
+      "iconFetch": null,
+      "afterReload": {
+        "title": "AlgoSim — Mô phỏng tương tác",
+        "icon": [
+          "data:,"
+        ],
+        "headerLogo": true,
+        "algoSimVisible": false
+      },
+      "failed": [],
+      "consoleErrors": []
+    }
+  ],
+  "checks": [],
+  "navigation": {
+    "library": "AlgoSim — Mô phỏng tương tác",
+    "history": "AlgoSim — Mô phỏng tương tác",
+    "home": "AlgoSim — Mô phỏng tương tác"
+  },
+  "faviconDirect": "page.goto: net::ERR_HTTP_RESPONSE_CODE_FAILURE at http://127.0.0.1:63891/favicon",
+  "summary": {
+    "pass": 0,
+    "total": 0
+  }
+}
