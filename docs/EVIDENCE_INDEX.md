@@ -1,5 +1,18 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = AXO_POSTMERGE_CONSOLIDATION
+
+REPORT = docs/evaluation/geometry/runs/axo-postmerge-consolidation/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/axo-postmerge-consolidation/
+START_BASE = main 64847c1e (squash of integration/axo-hybrid4-reliability c7ae6947, tree 9eb132ff)
+CODE_COMMIT = 9904265b (Axo favicon + tab titles + research scope doc); candidate re-frozen by 14810326 (103 files 09c1a089…, unchanged; CACHE_VERSION 132 unchanged)
+CLASSIFICATION = POSTMERGE_CONSOLIDATION (branch chore/axo-postmerge-branding-consolidation, not merged, not pushed); favicon dropped by merge 75d88a31 restored byte-identical (blob 0ff1b07e); seal on main red after squash (product_commit_sha 8db058d3 off main) fixed on the branch; integration-worktree evidence archived privately with SHA-256 (947/947) + verified git bundle; browser branding 9/9, camera 10/10 ×2, consistency 41/41.
+PRODUCT_CHANGE = YES (frontend display only: index.html, public/favicon.svg, App.tsx title, learner copy brand)
+MODEL_REQUEST_COUNT = 0
+VERIFICATION = report.md; run.json; handoff.md; branding-*/; scene3d-*/; evidence-archive.sha256
+CORRECTS = docs/evaluation/geometry/runs/axo-premerge-closure/report.md seal claim, valid on the integration branch only (squash leaves product_commit_sha off main)
+CORRECTED_BY = NONE
+
 ## WAVE_ID = AXO_PREMERGE_CLOSURE
 
 REPORT = docs/evaluation/geometry/runs/axo-premerge-closure/report.md

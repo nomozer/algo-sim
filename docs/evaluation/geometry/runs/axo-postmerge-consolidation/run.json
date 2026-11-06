@@ -1,0 +1,55 @@
+{
+  "run_id": "axo-postmerge-consolidation",
+  "date": "2026-11-07",
+  "branch": "chore/axo-postmerge-branding-consolidation",
+  "baseline": "64847c1ee (main = origin/main, tree 9eb132ff)",
+  "status": "COMPLETED_WITH_RETAINED_EVIDENCE",
+  "merged": false,
+  "pushed": false,
+  "provider_calls": 0,
+  "commits": [
+    {"sha": "9904265b8", "role": "Axo favicon (blob 0ff1b07e) + tab titles + learner copy brand + research scope doc + branding browser check"},
+    {"sha": "14810326d", "role": "candidate re-freeze in clean detached worktree (103 files 09c1a089 unchanged, CACHE_VERSION 132)"}
+  ],
+  "root_cause": {
+    "favicon": "merge 75d88a31 kept main's favicon removal (f89a1a8b, old AlgoSim icon 5918c602) over Axo's new favicon.svg; squash 64847c1e carried it",
+    "title": "<title> was never Axo on any branch; app never set document.title",
+    "seal": "squash leaves product_commit_sha 8db058d3 off main => --verify red on main"
+  },
+  "evidence_archive": {
+    "location": "private local folder next to the repository, outside every worktree (algo-sim-private-archive/axo-hybrid4-integration-2026-11-07/); not uploaded",
+    "files": 947, "bytes": 364993332,
+    "manifest_sha256": "87aa6f0916b51fa37372e81cf921b2050505962999eb88aedea4888812903221",
+    "checksums": "evidence-archive.sha256 (this run)",
+    "verify": "947/947 sha256 OK after copy",
+    "bundle": {"file": "integration-axo-hybrid4-reliability.bundle", "sha256": "939b4cff82c2f067df27be7530ee145d8ca368dbefb86ebd3b5a111f33e0e07e",
+               "head": "c7ae69472 refs/heads/integration/axo-hybrid4-reliability", "prerequisite": "bb61a804 (on main)",
+               "verify": "git bundle verify OK", "restore_test": "fresh repo: restored = c7ae6947, tree 9eb132ff",
+               "contains_flagged_blobs": ["23109136", "28be1ef6", "f4b76988"], "publish": "NEVER"},
+    "copies": 1,
+    "same_disk_as_repo": true
+  },
+  "cleanup": {
+    "integration_worktree": "registration removed (git worktree remove --force after archive); directory deletion stopped mid-way (Invalid argument); leftover 27576 files verified: 27160 = branch blobs, 353 = archived sha256, 63 cache, 0 unknown; deleting the leftover was denied by the session's permission classifier => LEFTOVER_DIRECTORY_PENDING_OWNER",
+    "integration_branch": "kept (cited by EVIDENCE_INDEX; flagged blobs; not pushed)",
+    "pruned_worktree_metadata": ["s3d-hybrid-v2", "s3d-hybrid-v2-codex", "scene3d-visual-correction", "visual-hybrid-integration"],
+    "pruned_reason": "directories absent; HEADs reachable from main; branches untouched",
+    "temporary_worktrees_removed": ["wt-before", "wt-freeze", "wt-t3"],
+    "untouched_worktrees": ["axo-pedagogical-integration", "axo-performance-baseline", "axo-performance-verifier", "axo-v27-frontend-integration", "independent-section-holdout", "w3-f2-*"]
+  },
+  "verification": {
+    "branding_browser": {"before": "branding-before-main/ (record only): AlgoSim title on 4 routes x 2 viewports, icon data:, /favicon.svg 404",
+                         "after": "branding-after/ 9/9 PASS: Axo titles, /favicon.svg 200 image/svg+xml sha256 71eb0df9, reload stable, in-app navigation retitles, 0 failed requests, 0 console errors"},
+    "scene3d": {"camera_1440x900": "10/10", "camera_390x844": "10/10", "consistency": "41/41 incl. real Chrome 110%"},
+    "seal": "MATCH 09c1a089 (103 files) at 14810326",
+    "docs_ia_and_candidate": "68/68", "current_state_identity": "3/3",
+    "t3": [{"commit": "14810326d", "worktree": "clean detached", "run": 1, "result": "FULL_PRODUCT_GATE_PASS",
+            "pytest": "13878 passed, 7 skipped, 3 deselected, 9 xfailed", "vitest": "135 files / 2007", "build": "PASS", "demo": "5/5", "crash_surface": "6/6"}],
+    "node_harness": "155: 153 pass, 0 fail, 2 skipped",
+    "publication": {"range_origin_main_to_ab2e293b": "PASS (139 blobs, 3 messages, 0 violations)",
+                    "head": "BLOCKED 97 PENDING_OWNER_DECISION, all pre-existing on main; none new"}
+  },
+  "cache_version_changed": false,
+  "model_surface_changed": false,
+  "measured_system_changed": false
+}

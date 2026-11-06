@@ -1,5 +1,6 @@
 import { useEffect, useReducer, useRef, useState } from "react";
 import { useAppStore } from "../state/store";
+import { displayBrand } from "../branding";
 import { useAuthStore } from "../state/auth";
 import { newAttemptId } from "../state/history";
 import { useToastStore } from "./TopNav";
@@ -64,8 +65,7 @@ const SOURCE_CONFLICT_CODES = new Set([
 ]);
 
 function normalizeDisplayBrand(text: string): string {
-  return text
-    .replace(/\bAlgoSim\b/g, "Axo")
+  return displayBrand(text)
     .replace(/^Không xác định được[:\s—–-]*/i, "")
     .trim();
 }

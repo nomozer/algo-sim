@@ -39,6 +39,7 @@ import {
 } from "../simulations/domains/geometry/scene3d-chart";
 import { Scene3DExplorer } from "../simulations/domains/geometry/Scene3DExplorer";
 import { buildObject3D } from "../simulations/domains/geometry/scene3d-view";
+import { displayBrand } from "../branding";
 
 const RUNS_DIR = join(__dirname, "..", "..", "..", "docs", "evaluation", "geometry", "runs");
 // Run `hybrid-v2-backend-generalization`: H03 now names its base plane (ABCD); earlier bundles stay as evidence.
@@ -564,7 +565,7 @@ describe("Hybrid Preview Contract v2 — 41 fixtures & F1–F6", () => {
         const out = renderToString(
           <UnsupportedNotice unsupported={env} />,
         ).replace(/<!--.*?-->/g, "");
-        expect(out, row.id).toContain(env.learner_reason);
+        expect(out, row.id).toContain(displayBrand(env.learner_reason));   // shown under the Axo name
         expect(out, row.id).not.toContain(env.reason_code);
         expect(out, row.id).not.toContain(env.failure_category);
         expect(out, row.id).not.toContain("hybrid-route-d-preview");

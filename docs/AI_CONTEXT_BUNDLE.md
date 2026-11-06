@@ -34,14 +34,16 @@ Gemini chỉ trích xuất dữ kiện, quan hệ và mục tiêu (`TypedFactNex
 Cập nhật 2026-11-04 (sau `FINAL_HYBRID_ARCHITECTURE_CUTOVER` trên `main`; các mục cũ ở §4–§6 bên dưới là bối cảnh lịch sử trước cutover; việc mở: `OPEN_ISSUES.md`; lộ trình: `ROADMAP.md` §0).
 ```text
 MAIN = origin/main includes Final Hybrid Architecture Cutover (merge dacd7f5e; product 52205f45; frozen candidate f5f2c147, 102 measured files 765487a4b48e7d52…; clean detached Full T3 FULL_PRODUCT_GATE_PASS: 13762 pytest / 1502 vitest, full-t3-f5f2c147.json)
+AXO = main 64847c1e is the squash of the Axo Hybrid /4 reliability branch (2026-11-07); its candidate seal is red on main (product_commit_sha off main) until branch chore/axo-postmerge-branding-consolidation (Axo favicon + tab titles + re-freeze, NOT merged) lands — run axo-postmerge-consolidation
 PRODUCT_STATE = DEFAULT_MODE HYBRID (/4) · HYBRID_ROUTE_MODE live (staging-replay dev/test) · CACHE_VERSION 132 (132:route-d) · typed-fact-next/2 · geometry-fact-planner/26 · geometry-functions/33 · geometry-function-engine/24 · hybrid-simulation-adapter/4
 CUTOVER_STATUS = HYBRID_DEFAULT_CUTOVER_COMPLETE=YES · LEGACY_EXECUTION_RETIRED=YES · LEGACY_FULLY_RETIRED=NO (semantic_program/route.py COMPATIBILITY_REQUIRED) · PRODUCTION_DEPLOYMENT_VERIFIED=NO · INDEPENDENT_H1_VALIDATION=NOT_MEASURED · NEW_LIVE_SMOKE_NOT_MEASURED
 ROLLBACK = Git/deployment version rollback to tag pre-hybrid-cutover-f986e897 (f986e897; optional ALLOW_LIVE_AI=0 emergency stop); HYBRID_ROUTE_MODE=off returns 503 INVALID_HYBRID_ROUTE_MODE (no LLM_ONLY fallback)
 OPEN = INDEPENDENT_H1_VALIDATION (60-case external H-1 corpus not yet authored/measured; C26/Full T3 are not H-1) · ISSUE-ARCH-PARTIAL-STATED-CUT-NAMING · ISSUE-ARCH-HISTORY-REOPEN-DROPS-SCENE3D · ISSUE-ARCH-ROUTE-D-DIACRITIC-FREE-INPUT (OPEN_ISSUES.md)
 ```
 
-Thay đổi chưa commit của người dùng: không restore, sửa, stage hoặc commit khi chưa được cho phép rõ ràng (xoá favicon đã
-được cho phép và commit ở f89a1a8b). Không amend/rebase/squash chuỗi commit đã được evidence tham chiếu.
+Thay đổi chưa commit của người dùng: không restore, sửa, stage hoặc commit khi chưa được cho phép rõ ràng (xoá favicon AlgoSim
+cũ đã được cho phép và commit ở f89a1a8b; favicon HIỆN HÀNH là logo Axo `frontend/public/favicon.svg`, khôi phục ở run
+`axo-postmerge-consolidation` — đừng gỡ lại theo bản ghi cũ). Không amend/rebase/squash chuỗi commit đã được evidence tham chiếu.
 
 ## 3. Tài liệu nằm ở đâu
 
