@@ -365,3 +365,25 @@ export const IconPanel = ({ side, ...p }: IconProps & { side: "left" | "right" }
     <path d={side === "left" ? "M9 4v16" : "M15 4v16"} />
   </Svg>
 );
+
+export const IconTrash = (p: IconProps) => (
+  <Svg {...p}>
+    <path d="M3 6h18" />
+    <path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2" />
+    <path d="M10 11v6M14 11v6" />
+  </Svg>
+);
+
+export const IconZoomIn = (p: IconProps) => (
+  <Svg {...p}>
+    <circle cx="11" cy="11" r="7" />
+    <path d="M20 20l-3.5-3.5M11 8v6M8 11h6" />
+  </Svg>
+);
+
+export const IconZoomOut = (p: IconProps) => (
+  <Svg {...p}>
+    <circle cx="11" cy="11" r="7" />
+    <path d="M20 20l-3.5-3.5M8 11h6" />
+  </Svg>
+);

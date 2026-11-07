@@ -366,18 +366,31 @@ export interface UnifiedCandidateProblem {
   page_number: number | null;
   has_figure: boolean;
   problem_text: string | null;
+  source_attachment_ids?: string[];
 }
 
-export interface UnifiedInputPrepareRequest {
+export interface UnifiedInputAttachmentPayload {
+  attachment_id: string;
+  order_index: number;
+  source_type?: "camera" | "upload" | "image" | "pdf" | "docx" | "document" | "paste";
   content: string;
   mime_type?: string;
   filename?: string;
+}
+
+export interface UnifiedInputPrepareRequest {
+  request_id?: string;
+  content?: string;
+  mime_type?: string;
+  filename?: string;
+  attachments?: UnifiedInputAttachmentPayload[];
   user_text?: string;
   selected_candidate_id?: string;
 }
 
 export interface UnifiedInputPrepareResponse {
   schema: "unified-input-prepare/1";
+  request_id?: string;
   status: "ready" | "needs_selection" | "needs_confirmation" | "rejected";
   source_kind: "image" | "pdf" | "docx";
   problem_text: string;
