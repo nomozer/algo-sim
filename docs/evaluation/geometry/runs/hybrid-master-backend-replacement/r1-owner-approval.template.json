@@ -8,7 +8,7 @@
   "input_usd_per_million": 0.3,
   "output_usd_per_million": 2.5,
   "corpus_sha256": "250466ebdf5bcb435a2b803ed9443ef30b7f37818a3ae9f7e90a40625e84b7c6",
-  "measured_system": "be2c37fd9fb8f19c768ba496b779f8245b2bb6eaebc23d8c3b7244828090601f",
+  "measured_system": "befb10b57ebf4049d77b48319f9ad99ffd6b9de013ef867671411f9a0d31262c",
   "runner_sha256": "10bc64bb4b5533c6b1136611e5d55ee3de98260e69057df6ca3641ed1f16645c",
   "paired_harness_sha256": "73a8270a0556ba09db711b38e8c4bad81f2b95cdbee1bd632f43e0f6153d7df6",
   "scorer_sha256": "8c330bd493f9d401f579b6383f1a1df2bc9172eee2530cf187be2024801b5a2d"
