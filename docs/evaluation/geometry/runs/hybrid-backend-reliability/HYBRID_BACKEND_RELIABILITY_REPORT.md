@@ -194,7 +194,13 @@ Theo thứ tự (mọi test 0 lượt gọi mạng, guard `conftest.py`):
 | `test_cache_identity.py` | 15/15 (bề mặt mô hình không đổi) |
 | `freeze_evaluation_candidate.py --verify` | khớp: 103 file `be2c37fd…` |
 
-**Full T3** (`npm run test:full` = pytest · vitest · build (typecheck) · replay demo · crash-surface): __T3__
+**Full T3** (`frontend/scripts/full-gate.mjs` = pytest · vitest · typecheck + build · demo replay · crash surface), một lượt,
+worktree detached sạch tại **`f453065e`** (HEAD chứa product `cb79848f` + candidate `2eba49ed` + bằng chứng), `git status` sạch
+trước và sau: **`FULL_PRODUCT_GATE_PASS`** 516.6 s — pytest **13 911 passed** / 7 skipped / 3 deselected / 9 xfailed; vitest
+**135 file / 2 007 test** passed; typecheck + build production PASS; demo `DEMO_REPLAY_PASS 5/5`; bề mặt sập 6/6 đúng kỳ vọng,
+0 lần ném 500. Log ngoài kho (không commit traceback thô), sha256 `229e5ffd383c8c6d7990f5e5fd2508652c864a24bf81b67a2cde2a9e09111bd5`.
+Commit sau đó chỉ sửa báo cáo này (không đổi mã) — không chạy lại T3. Publication `--range origin/main..HEAD`: 78 blob,
+0 vi phạm, **PASS**.
 
 ## 11. Giới hạn còn lại
 
@@ -207,4 +213,17 @@ Theo thứ tự (mọi test 0 lượt gọi mạng, guard `conftest.py`):
 
 ## 12. Quyết định cuối
 
-__DECISION__
+**`HYBRID_BACKEND_RELIABILITY_COMPLETE`** — cho phần offline, trên candidate `cb79848f`.
+
+Đối chiếu tiêu chí §XIII của nhiệm vụ: (1) đường HTTP Hybrid xác minh trên frontend/backend hiện tại — 994 đề HTTP + 392/392
+qua bộ đọc frontend; (2) không còn P0/P1 đã phát hiện mà chưa xử lý — F1, F2 sửa; (3)–(4) Source Gate giữ đúng 48/48 méo nghĩa,
+trích xuất đã lưu không bị chấp nhận sai; (5)–(6) đáp số khớp oracle của các bộ hiện có, 0 wrong-served; (7)–(9) Scene3D, bước
+dựng và đáp số nhất quán (0 phát hiện hợp đồng, `DERIVED_VERIFIED` 392/392); (10) cache và lỗi provider đúng hợp đồng; (11)–(12)
+có baseline hiệu năng, không giữ tối ưu nào vì không có điểm nghẽn đáng sửa; (13)–(14) regression mục tiêu và Full T3 PASS;
+(15) mọi thay đổi đã commit trên nhánh.
+
+Không suy ra từ đây: Gemini live đạt (`LIVE_SMOKE_NOT_AUTHORIZED`), khái quát hoá độc lập (`INDEPENDENT_H1_VALIDATION =
+NOT_MEASURED`), hay Postgres/production (`POSTGRES_NOT_TESTED`, `PRODUCTION_DEPLOYMENT_VERIFIED = NO`).
+
+Việc của Owner: (a) xem nhánh `feat/hybrid-backend-reliability` và quyết merge/push (agent không tự làm); (b) nếu muốn live
+smoke, phê duyệt ngân sách cụ thể — đề xuất của nhiệm vụ (≤ 25 request, ≤ USD 1.00) vẫn chờ; (c) ghi nhận sự cố §9.
