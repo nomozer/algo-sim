@@ -1,0 +1,51 @@
+{
+ "landscape": {
+  "file": "landscape-de-va-hinh.png",
+  "stored_size": [
+   1600,
+   1000
+  ],
+  "red_stored": [
+   500,
+   300,
+   1099,
+   699
+  ]
+ },
+ "portrait": {
+  "file": "portrait-de-va-hinh.jpg",
+  "stored_size": [
+   1000,
+   1600
+  ],
+  "red_stored": [
+   200,
+   700,
+   599,
+   1299
+  ]
+ },
+ "exif6": {
+  "file": "exif6-xoay.jpg",
+  "stored_size": [
+   1600,
+   1000
+  ],
+  "red_stored": [
+   500,
+   300,
+   1099,
+   699
+  ],
+  "displayed_size": [
+   1000,
+   1600
+  ],
+  "red_displayed": [
+   300,
+   500,
+   699,
+   1099
+  ]
+ }
+}

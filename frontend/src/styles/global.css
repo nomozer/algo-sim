@@ -439,32 +439,203 @@ html {
   outline-offset: 2px;
 }
 
-.photo-panel {
+/* ── Hộp thoại ẢNH ĐỀ BÀI (PhotoProblemDialog): máy ảnh trực tiếp · khoanh vùng · đọc · xem lại ───────── */
+.axo-modal-dialog.photo-dialog {
+  width: min(680px, 100%);
+  max-height: calc(100dvh - 24px);
+}
+
+.photo-dialog .axo-modal-close {
+  width: 36px;
+  height: 36px;
+}
+
+.photo-dialog .btn-utility,
+.photo-dialog .btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 40px;
+}
+
+.photo-dialog-body {
   display: flex;
   flex-direction: column;
   gap: var(--sp-sm);
   min-width: 0;
-  padding: var(--sp-sm);
-  border: 1px solid var(--hairline);
-  border-radius: var(--rounded-lg);
-  background: var(--surface);
+  overflow-y: auto;
+  overscroll-behavior: contain;
 }
 
-.photo-head {
+.photo-dialog-actions {
   display: flex;
   flex-wrap: wrap;
-  align-items: flex-start;
-  gap: var(--sp-sm);
+  justify-content: flex-end;
+  align-items: center;
+  gap: var(--sp-xs);
 }
 
-/* Ô VUÔNG chứa ảnh: xoay 90° một ảnh ngang vẫn nằm gọn trong khung, không tràn. */
-.photo-figure {
-  flex: 0 0 auto;
+.photo-camera,
+.photo-editor,
+.photo-prepared,
+.photo-review-screen,
+.photo-error {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-sm);
+  min-width: 0;
+}
+
+.photo-camera-stage {
+  position: relative;
   display: grid;
   place-items: center;
-  width: 160px;
+  width: 100%;
+  min-height: 220px;
+  max-height: min(56dvh, 460px);
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border: 1px solid var(--hairline);
+  border-radius: var(--rounded-md);
+  background: var(--ink);
+}
+
+.photo-camera-video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-height: min(56dvh, 460px);
+  object-fit: contain;
+}
+
+.photo-camera-loading {
+  position: absolute;
+  margin: 0;
+  padding: 6px 12px;
+  border-radius: var(--rounded-full);
+  background: rgba(0, 0, 0, 0.68);
+  color: var(--on-primary);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.photo-camera-hint {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--ink-secondary);
+}
+
+.photo-camera-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-xs);
+}
+
+.photo-camera-tools {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--sp-xs);
+}
+
+.photo-camera-shutter {
+  min-height: 44px;
+  padding: 0 20px;
+  font-weight: 600;
+}
+
+@media (max-width: 640px) {
+  .photo-dialog .axo-modal-close {
+    width: 44px;
+    height: 44px;
+  }
+
+  .photo-dialog .btn-utility,
+  .photo-dialog .btn-primary {
+    min-height: 44px;
+  }
+
+  .photo-camera-stage {
+    aspect-ratio: 4 / 3;
+    max-height: 48dvh;
+  }
+
+  .photo-camera-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .photo-camera-tools {
+    width: 100%;
+  }
+
+  .photo-camera-tools > button {
+    flex: 1 1 0;
+    padding-inline: 10px;
+    font-size: 13.5px;
+    white-space: nowrap;
+  }
+
+  .photo-camera-shutter {
+    width: 100%;
+    min-height: 46px;
+  }
+}
+
+/* Khung khoanh vùng: ảnh luôn nằm trọn trong vùng nhìn, tay nắm to hơn cho ngón tay. */
+.photo-crop-stage {
+  display: grid;
+  place-items: center;
+  min-height: 160px;
+  padding: var(--sp-xs);
+  border: 1px solid var(--hairline);
+  border-radius: var(--rounded-md);
+  background: var(--canvas-soft);
+}
+
+.photo-crop {
+  --rc-drag-handle-size: 14px;
+  --rc-drag-handle-mobile-size: 28px;
+  --rc-border-color: rgba(255, 255, 255, 0.95);
   max-width: 100%;
-  aspect-ratio: 1;
+  max-height: min(48dvh, 440px);
+  touch-action: none;
+}
+
+.photo-crop img.photo-crop-image {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: min(48dvh, 440px);
+  object-fit: contain;
+  user-select: none;
+}
+
+.photo-crop-size {
+  margin: 0;
+  font-size: 12.5px;
+  color: var(--ink-secondary);
+  font-variant-numeric: tabular-nums;
+}
+
+.photo-editor-tools {
+  justify-content: flex-start;
+}
+
+.photo-editor .hint {
+  margin: 0;
+}
+
+/* Ảnh SẼ/ĐÃ gửi. Ô có chiều cao cố định: ảnh xoay 90° (CSS) vẫn nằm gọn, không tràn. */
+.photo-sent {
+  display: grid;
+  place-items: center;
+  height: min(44vh, 380px);
   margin: 0;
   overflow: hidden;
   border: 1px solid var(--hairline);
@@ -472,21 +643,25 @@ html {
   background: var(--canvas-soft);
 }
 
-.photo-preview {
+.photo-sent.is-compact {
+  height: min(30vh, 240px);
+  margin-top: var(--sp-xs);
+}
+
+.photo-sent-image {
   display: block;
   max-width: 100%;
   max-height: 100%;
   object-fit: contain;
-  transition: transform 0.2s ease;
 }
 
-.photo-actions {
-  flex: 1 1 200px;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: var(--sp-xs);
-  min-width: 0;
+.photo-sent.is-turned .photo-sent-image {
+  max-width: min(44vh, 380px);
+  max-height: 100vw;
+}
+
+.photo-sent.is-compact.is-turned .photo-sent-image {
+  max-width: min(30vh, 240px);
 }
 
 .photo-status {
@@ -596,13 +771,6 @@ html {
 .photo-confirm input {
   flex: 0 0 auto;
   margin-top: 3px;
-}
-
-.photo-build {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: var(--sp-sm);
 }
 
 .starter-grid {

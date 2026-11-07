@@ -1,4 +1,4 @@
-import { useEffect, useReducer, useRef, useState } from "react";
+import { useCallback, useEffect, useReducer, useRef, useState } from "react";
 import { useAppStore } from "../state/store";
 import { displayBrand } from "../branding";
 import { useAuthStore } from "../state/auth";
@@ -33,15 +33,16 @@ import {
 } from "../llm/input";
 import type { AnalysisUnsupported } from "../core/types";
 import type { SimulationEnvelope } from "../simulations/types";
-import { PhotoProblemPanel } from "./PhotoProblemPanel";
+import { PhotoProblemDialog } from "./PhotoProblemDialog";
 import { AxoScrollbar } from "./AxoScrollbar";
 import {
-  buildFailureMessage,
-  canBuild,
+  canAccept,
   canRead,
   clientFileProblem,
   initialPhotoState,
+  photoReadErrorMessage,
   photoReducer,
+  type PhotoUpload,
 } from "./photo-problem-flow";
 
 const MISSING_PREMISE_CODES = new Set([
@@ -445,11 +446,16 @@ export function ProblemInput({
   });
 
   const [photo, dispatchPhoto] = useReducer(photoReducer, initialPhotoState);
-  const [photoPreview, setPhotoPreview] = useState<string | null>(null);
+  const [photoDialogOpen, setPhotoDialogOpen] = useState(false);
   const uploadImageRef = useRef<HTMLInputElement>(null);
   const cameraImageRef = useRef<HTMLInputElement>(null);
   const readAbortRef = useRef<AbortController | null>(null);
-  const buildingRef = useRef(false);
+  // Ổn định qua các lần render: `PhotoCropEditor` giải mã lại ảnh mỗi khi callback này đổi danh tính.
+  const onPhotoInvalid = useCallback((message: string) => {
+    readAbortRef.current?.abort();
+    readAbortRef.current = null;
+    dispatchPhoto({ type: "image-invalid", message });
+  }, []);
 
   useEffect(() => {
     attachmentsRef.current = attachments;
@@ -561,22 +567,6 @@ export function ProblemInput({
     };
   }, [plusMenuOpen, allFilesModalOpen, previewModalFileId]);
 
-  // Xem trước ảnh cho luồng OCR PhotoProblemPanel.
-  useEffect(() => {
-    const f = photo.file as File | null;
-    if (!f || typeof URL === "undefined" || typeof URL.createObjectURL !== "function") {
-      setPhotoPreview(null);
-      return;
-    }
-    const url = URL.createObjectURL(f);
-    setPhotoPreview(url);
-    return () => {
-      if (typeof URL.revokeObjectURL === "function") {
-        URL.revokeObjectURL(url);
-      }
-    };
-  }, [photo.file]);
-
   const readyAttachments = attachments.filter(
     (a) => a.status !== "loading" && a.status !== "error",
   );
@@ -685,7 +675,13 @@ export function ProblemInput({
     readAbortRef.current = null;
   }
 
-  function addFilesToComposer(pickedList: File[]) {
+  function addFilesToComposer(allPicked: File[]) {
+    if (allPicked.length === 0) return;
+    // ẢNH đi luồng đọc ảnh (hộp thoại khoanh vùng → xem lại), KHÔNG thành tệp đính kèm: `/api/analyze` chỉ nhận văn bản
+    // (ảnh gửi thẳng ⇒ 400 `IMAGE_DIRECT_UNSUPPORTED`). Một ảnh mỗi lượt; tệp khác vẫn đính kèm như cũ.
+    const image = allPicked.find((f) => isImageFile(f));
+    const pickedList = allPicked.filter((f) => !isImageFile(f));
+    if (image) acceptImage(image);
     if (pickedList.length === 0) return;
 
     const nextItems: ComposerAttachmentItem[] = [];
@@ -780,7 +776,8 @@ export function ProblemInput({
       return;
     }
     cancelRead();
-    dispatchPhoto({ type: "select", file: picked });
+    dispatchPhoto({ type: "select", file: picked });   // KHÔNG tự đọc: người học khoanh vùng/xoay rồi mới bấm đọc
+    setPhotoDialogOpen(true);
   }
 
   function onPickImage(e: React.ChangeEvent<HTMLInputElement>) {
@@ -810,23 +807,19 @@ export function ProblemInput({
     });
   }
 
+  /** Gửi ĐÚNG MỘT ảnh — ảnh đã chuẩn bị (`photo.upload`): tệp đã cắt (`rotation = 0`) hoặc tệp gốc + góc xoay. */
   async function onReadPhoto() {
-    if (!canRead(photo) || readAbortRef.current) return;
-    const picked = photo.file as File;
+    if (!canRead(photo) || readAbortRef.current || !photo.upload) return;
+    const { file: picked, rotation } = photo.upload;
     const requestId = photo.requestId + 1;
     dispatchPhoto({ type: "read-start" });
     const ctl = new AbortController();
     readAbortRef.current = ctl;
     try {
-      const content = await readAsBase64(picked);
+      const content = await readAsBase64(picked as unknown as Blob);
       if (ctl.signal.aborted) return;
       const response = await extractImageViaServer(
-        {
-          content,
-          mime_type: imageMimeOf(picked),
-          filename: picked.name,
-          rotation: photo.rotation,
-        },
+        { content, mime_type: imageMimeOf(picked), filename: picked.name, rotation },
         ctl.signal,
       );
       if (!ctl.signal.aborted) {
@@ -834,7 +827,8 @@ export function ProblemInput({
       }
     } catch (err) {
       if (ctl.signal.aborted) return;
-      const message = err instanceof Error ? err.message : String(err);
+      const message = photoReadErrorMessage(err);
+      if (message === null) return;
       if (/lượt mô phỏng thử/.test(message)) {
         useAppStore.getState().setAnalysisError(message);
         dispatchPhoto({ type: "read-failure", requestId, message: "" });
@@ -846,44 +840,31 @@ export function ProblemInput({
     }
   }
 
-  async function onBuildPhoto() {
-    if (!canBuild(photo) || buildingRef.current) return;
-    buildingRef.current = true;
-    const text = photo.text.trim();
-    const attemptId = newAttemptId();
-    dispatchPhoto({ type: "build-start" });
-    const store = useAppStore.getState();
-    store.setAnalysisError(null);
-    store.setAnalyzing(true);
-    try {
-      const result = await analyzeViaServer({ type: "text", content: text }, undefined, undefined, attemptId);
-      if (result.status === "ok") {
-        store.loadEnvelope(result, undefined, text, attemptId);
-        dispatchPhoto({ type: "build-end" });
-      } else {
-        dispatchPhoto({
-          type: "build-failure",
-          message: buildFailureMessage(result),
-        });
-      }
-    } catch (err) {
-      const contract = err instanceof AxoClientError ? err.toContract() : null;
-      const message = err instanceof Error ? err.message : String(err);
-      store.setClientFailure(contract);
-      store.setAnalysisError(message);
-      dispatchPhoto({ type: "build-end" });
-      const errView = describeComposerError(message, health, contract);
-      if (errView) {
-        useToastStore.getState().showToast({
-          tone: errView.tone,
-          title: errView.title,
-          description: errView.description,
-        });
-      }
-    } finally {
-      store.setAnalyzing(false);
-      buildingRef.current = false;
-    }
+  function closePhotoDialog() {
+    cancelRead();
+    dispatchPhoto({ type: "remove" });
+    setPhotoDialogOpen(false);
+  }
+
+  /**
+   * Văn bản ĐÃ XEM LẠI vào ô nhập đề — đúng đường gõ tay; KHÔNG gọi `/api/analyze` (người học bấm "Dựng hình" như mọi
+   * lần). Ảnh và bản trích xuất bị bỏ khỏi trạng thái: một đề chỉ nằm ở một chỗ (`problemText`).
+   */
+  function acceptPhotoText() {
+    if (!canAccept(photo)) return;
+    setProblemText(photo.text.trim());
+    closePhotoDialog();
+    window.setTimeout(() => {
+      textRef.current?.focus();
+      syncTextareaHeight(textRef.current);
+    }, 0);
+    useToastStore.getState().showToast({
+      id: "photo-text-accepted",
+      tone: "info",
+      title: "Đã đưa đề vào ô nhập",
+      description: "Em xem lại lần cuối rồi bấm Dựng hình.",
+      durationMs: 5000,
+    });
   }
 
   const serverStatus =
@@ -1074,7 +1055,7 @@ export function ProblemInput({
                 id="btn-composer-plus"
                 className={`btn-plus-trigger${plusMenuOpen ? " is-open" : ""}`}
                 onClick={() => setPlusMenuOpen((v) => !v)}
-                disabled={analyzing || photo.phase === "building"}
+                disabled={analyzing}
                 title="Đính kèm tệp hoặc chụp ảnh đề bài"
                 aria-label="Tải tệp đề"
                 aria-haspopup="menu"
@@ -1107,11 +1088,14 @@ export function ProblemInput({
                   id="menu-item-camera"
                   className="plus-menu-item"
                   role="menuitem"
-                  aria-label="Chụp ảnh đề bài bằng máy ảnh"
-                  disabled={photo.phase === "building"}
+                  aria-haspopup="dialog"
                   onClick={() => {
                     setPlusMenuOpen(false);
-                    cameraImageRef.current?.click();
+                    if (photo.phase !== "empty") {
+                      cancelRead();
+                      dispatchPhoto({ type: "remove" });
+                    }
+                    setPhotoDialogOpen(true);
                   }}
                 >
                   <IconCamera size={16} />
@@ -1428,22 +1412,33 @@ export function ProblemInput({
         </div>
       )}
 
-      <PhotoProblemPanel
+      <PhotoProblemDialog
+        open={photoDialogOpen}
         state={photo}
-        previewUrl={photoPreview}
-        onRotate={() => {
-          cancelRead();
-          dispatchPhoto({ type: "rotate" });
-        }}
-        onReplace={() => uploadImageRef.current?.click()}
-        onRemove={() => {
+        composerText={problemText}
+        onClose={closePhotoDialog}
+        onPickFile={() => uploadImageRef.current?.click()}
+        onNativeCamera={() => cameraImageRef.current?.click()}
+        onCaptured={(file) => acceptImage(file)}
+        onChangeImage={() => {
           cancelRead();
           dispatchPhoto({ type: "remove" });
         }}
+        onRotate={(direction) => dispatchPhoto({ type: "rotate", direction })}
+        onPrepare={(upload: PhotoUpload) => dispatchPhoto({ type: "prepare", upload })}
+        onInvalid={onPhotoInvalid}
+        onEditImage={() => {
+          cancelRead();
+          dispatchPhoto({ type: "edit-image" });
+        }}
         onRead={() => void onReadPhoto()}
+        onCancelRead={() => {
+          cancelRead();
+          dispatchPhoto({ type: "read-cancel" });
+        }}
         onEdit={(text) => dispatchPhoto({ type: "edit", text })}
         onConfirm={(value) => dispatchPhoto({ type: "confirm", value })}
-        onBuild={() => void onBuildPhoto()}
+        onAccept={acceptPhotoText}
       />
 
       {serverStatus}

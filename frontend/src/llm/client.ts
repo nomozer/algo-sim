@@ -40,6 +40,8 @@ export class AxoClientError extends Error implements ClientFailureContract {
   readonly code: ClientFailureCode;
   readonly status?: number;
   readonly transient?: boolean;
+  /** `reason_code` máy đọc của máy chủ (vd `LIVE_AI_DISABLED`) — CHỈ để chọn lời báo, KHÔNG BAO GIỜ hiển thị. */
+  readonly reasonCode?: string;
 
   constructor(opts: {
     kind: "network" | "http";
@@ -47,6 +49,7 @@ export class AxoClientError extends Error implements ClientFailureContract {
     message: string;
     status?: number;
     transient?: boolean;
+    reasonCode?: string;
   }) {
     super(opts.message);
     this.name = "AxoClientError";
@@ -54,6 +57,7 @@ export class AxoClientError extends Error implements ClientFailureContract {
     this.code = opts.code;
     this.status = opts.status;
     this.transient = opts.transient;
+    this.reasonCode = opts.reasonCode;
   }
 
   toContract(): ClientFailureContract {
@@ -145,6 +149,7 @@ async function postJson<T>(
       status: res.status,
       message: msg,
       transient: res.status === 502 || res.status === 504,
+      reasonCode: typeof rec?.reason_code === "string" ? rec.reason_code : undefined,
     });
   }
   return body as T;

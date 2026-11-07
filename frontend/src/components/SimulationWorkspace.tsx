@@ -469,24 +469,6 @@ export function AxoWorkspaceV62({
     selected_id: resolveInitialSelectedId(),
   }));
   const [moc, setMoc] = useState<SeenMarks>(CHUA_THAY);
-  const [undoStack, setUndoStack] = useState<
-    Array<{
-      tt: InteractionState;
-      xray: boolean;
-      hinhPhu: boolean;
-      luoi: boolean;
-      showShell: boolean;
-      showVertexLabels: boolean;
-      showPlane: boolean;
-      showSection: boolean;
-      showAxes: boolean;
-      showDimensionLabels: boolean;
-      showRightAngles: boolean;
-      showDashedHidden: boolean;
-      shellOpacityPct: number;
-      planeOpacityPct: number;
-    }>
-  >([]);
   const [dangPhat, setDangPhat] = useState(false);
   const [fitToken, setFitToken] = useState(0);
   const [replayNonce, setReplayNonce] = useState(0);
@@ -594,7 +576,6 @@ export function AxoWorkspaceV62({
     latestCameraPoseRef.current = snap?.camera ?? null;
     setGeoCustomPos(null);
     setMoreEntitiesOpen(false);
-    setUndoStack([]);
     setExpandedEvidenceStep(null);
     if (webglLifecycleRef.current.phase !== "healthy" || stageWebglFailed || viewerBoundaryCrashed) {
       setViewerMountGen((n) => n + 1);
@@ -653,95 +634,7 @@ export function AxoWorkspaceV62({
     }
   };
 
-  const latestUndoStateRef = useRef({
-    tt,
-    xray,
-    hinhPhu,
-    luoi,
-    showShell,
-    showVertexLabels,
-    showPlane,
-    showSection,
-    showAxes,
-    showDimensionLabels,
-    showRightAngles,
-    showDashedHidden,
-    shellOpacityPct,
-    planeOpacityPct,
-  });
-  latestUndoStateRef.current = {
-    tt,
-    xray,
-    hinhPhu,
-    luoi,
-    showShell,
-    showVertexLabels,
-    showPlane,
-    showSection,
-    showAxes,
-    showDimensionLabels,
-    showRightAngles,
-    showDashedHidden,
-    shellOpacityPct,
-    planeOpacityPct,
-  };
-
-  const pushUndoSnapshot = () => {
-    const cur = latestUndoStateRef.current;
-    const snap = {
-      tt: {
-        ...cur.tt,
-        hidden_ids: [...cur.tt.hidden_ids],
-        isolated_ids: [...cur.tt.isolated_ids],
-        exploded_groups: [...cur.tt.exploded_groups],
-        transparent_ids: [...cur.tt.transparent_ids],
-      },
-      xray: cur.xray,
-      hinhPhu: cur.hinhPhu,
-      luoi: cur.luoi,
-      showShell: cur.showShell,
-      showVertexLabels: cur.showVertexLabels,
-      showPlane: cur.showPlane,
-      showSection: cur.showSection,
-      showAxes: cur.showAxes,
-      showDimensionLabels: cur.showDimensionLabels,
-      showRightAngles: cur.showRightAngles,
-      showDashedHidden: cur.showDashedHidden,
-      shellOpacityPct: cur.shellOpacityPct,
-      planeOpacityPct: cur.planeOpacityPct,
-    };
-    setUndoStack((prev) => (prev.length >= 30 ? [...prev.slice(prev.length - 29), snap] : [...prev, snap]));
-  };
-
-  const handleUndoInteraction = () => {
-    if (undoStack.length === 0) return;
-    const snap = undoStack[undoStack.length - 1]!;
-    setUndoStack((prev) => prev.slice(0, -1));
-    setDangPhat(false);
-    setTt(snap.tt);
-    persistStepProgress(snap.tt.current_step);
-    onFocus?.(snap.tt.selected_id, snap.tt.selected_id === null ? "clear" : "select");
-    setXray(snap.xray);
-    setHinhPhu(snap.hinhPhu);
-    setLuoi(snap.luoi);
-    setShowShell(snap.showShell);
-    setShowVertexLabels(snap.showVertexLabels);
-    setShowPlane(snap.showPlane);
-    setShowSection(snap.showSection);
-    setShowAxes(snap.showAxes);
-    setShowDimensionLabels(snap.showDimensionLabels);
-    setShowRightAngles(snap.showRightAngles);
-    setShowDashedHidden(snap.showDashedHidden);
-    setShellOpacityPct(snap.shellOpacityPct);
-    setPlaneOpacityPct(snap.planeOpacityPct);
-  };
-  const handleUndoInteractionRef = useRef(handleUndoInteraction);
-  handleUndoInteractionRef.current = handleUndoInteraction;
-
-  const setStep = (next: number | ((prev: number) => number), recordUndo = true) => {
-    if (recordUndo) {
-      pushUndoSnapshot();
-    }
+  const setStep = (next: number | ((prev: number) => number)) => {
     setTt((prevState) => {
       const rawNext = typeof next === "function" ? next(prevState.current_step) : next;
       const anchored = resolvePedagogicalStepAnchor(rawNext);
@@ -771,7 +664,7 @@ export function AxoWorkspaceV62({
       return undefined;
     }
     const timer = setInterval(() => {
-      setStep((s) => nextPedagogicalAnchor(s), false);
+      setStep((s) => nextPedagogicalAnchor(s));
     }, PLAYBACK_INTERVAL_MS);
     return () => clearInterval(timer);
   }, [dangPhat, cuoi, giamChuyenDong, stageControlsInteractive, day, dsBuoc]);
@@ -877,13 +770,6 @@ export function AxoWorkspaceV62({
         }
         return;
       }
-      if ((e.ctrlKey || e.metaKey) && !e.shiftKey && !e.altKey && e.key.toLowerCase() === "z") {
-        if (stageControlsInteractive && undoStack.length > 0) {
-          e.preventDefault();
-          handleUndoInteractionRef.current();
-        }
-        return;
-      }
       if (target?.closest('button, [role="button"], a, summary')) {
         return;
       }
@@ -916,15 +802,11 @@ export function AxoWorkspaceV62({
     day,
     dsBuoc,
     stageControlsInteractive,
-    undoStack,
   ]);
 
   const theoId = useMemo(() => new Map(day.objects.map((o) => [o.id, o])), [day]);
   const chon = (id: string | null) => {
     const safeId = id && isSelectableAtAnchor(id, buocHien) ? id : null;
-    if (safeId !== tt.selected_id) {
-      pushUndoSnapshot();
-    }
     setTt((s) => select(s, safeId));
     onFocus?.(safeId, safeId === null ? "clear" : "select");
   };
@@ -1132,7 +1014,6 @@ export function AxoWorkspaceV62({
   };
 
   const handleResetView = () => {
-    pushUndoSnapshot();
     setTt((s) => showAll(clearIsolate(select(s, null))));
     setTbPos(null);
     setGeoCustomPos(null);
@@ -1202,7 +1083,6 @@ export function AxoWorkspaceV62({
   }, [viewerUnavailable]);
 
   const handleResetDisplayOpts = () => {
-    pushUndoSnapshot();
     setShowShell(true);
     setShowVertexLabels(true);
     setShowPlane(true);
@@ -1217,9 +1097,6 @@ export function AxoWorkspaceV62({
   };
 
   const handleResetGeoCustom = () => {
-    if (shellOpacityPct !== 12 || planeOpacityPct !== 8) {
-      pushUndoSnapshot();
-    }
     setShellOpacityPct(12);
     setPlaneOpacityPct(8);
   };
@@ -2018,10 +1895,7 @@ export function AxoWorkspaceV62({
                     type="checkbox"
                     id="chk-shell"
                     checked={showShell}
-                    onChange={(e) => {
-                      pushUndoSnapshot();
-                      setShowShell(e.target.checked);
-                    }}
+                    onChange={(e) => setShowShell(e.target.checked)}
                   />
                 </label>
                 <label className="tb-pop-item tb-pop-row" htmlFor="chk-labels">
@@ -2030,10 +1904,7 @@ export function AxoWorkspaceV62({
                     type="checkbox"
                     id="chk-labels"
                     checked={showVertexLabels}
-                    onChange={(e) => {
-                      pushUndoSnapshot();
-                      setShowVertexLabels(e.target.checked);
-                    }}
+                    onChange={(e) => setShowVertexLabels(e.target.checked)}
                   />
                 </label>
                 <label className="tb-pop-item tb-pop-row" htmlFor="chk-dimensions">
@@ -2042,10 +1913,7 @@ export function AxoWorkspaceV62({
                     type="checkbox"
                     id="chk-dimensions"
                     checked={showDimensionLabels}
-                    onChange={(e) => {
-                      pushUndoSnapshot();
-                      setShowDimensionLabels(e.target.checked);
-                    }}
+                    onChange={(e) => setShowDimensionLabels(e.target.checked)}
                   />
                 </label>
                 <label className="tb-pop-item tb-pop-row" htmlFor="chk-plane">
@@ -2054,10 +1922,7 @@ export function AxoWorkspaceV62({
                     type="checkbox"
                     id="chk-plane"
                     checked={showPlane}
-                    onChange={(e) => {
-                      pushUndoSnapshot();
-                      setShowPlane(e.target.checked);
-                    }}
+                    onChange={(e) => setShowPlane(e.target.checked)}
                   />
                 </label>
                 <label className="tb-pop-item tb-pop-row" htmlFor="chk-section">
@@ -2066,10 +1931,7 @@ export function AxoWorkspaceV62({
                     type="checkbox"
                     id="chk-section"
                     checked={showSection}
-                    onChange={(e) => {
-                      pushUndoSnapshot();
-                      setShowSection(e.target.checked);
-                    }}
+                    onChange={(e) => setShowSection(e.target.checked)}
                   />
                 </label>
 
@@ -2084,10 +1946,7 @@ export function AxoWorkspaceV62({
                     type="checkbox"
                     id="chk-aux"
                     checked={hinhPhu}
-                    onChange={(e) => {
-                      pushUndoSnapshot();
-                      setHinhPhu(e.target.checked);
-                    }}
+                    onChange={(e) => setHinhPhu(e.target.checked)}
                   />
                 </label>
                 <label className="tb-pop-item tb-pop-row" htmlFor="chk-axes">
@@ -2096,10 +1955,7 @@ export function AxoWorkspaceV62({
                     type="checkbox"
                     id="chk-axes"
                     checked={showAxes}
-                    onChange={(e) => {
-                      pushUndoSnapshot();
-                      setShowAxes(e.target.checked);
-                    }}
+                    onChange={(e) => setShowAxes(e.target.checked)}
                   />
                 </label>
                 <label className="tb-pop-item tb-pop-row" htmlFor="chk-grid">
@@ -2108,10 +1964,7 @@ export function AxoWorkspaceV62({
                     type="checkbox"
                     id="chk-grid"
                     checked={luoi}
-                    onChange={(e) => {
-                      pushUndoSnapshot();
-                      setLuoi(e.target.checked);
-                    }}
+                    onChange={(e) => setLuoi(e.target.checked)}
                   />
                 </label>
               </div>
@@ -2229,30 +2082,11 @@ export function AxoWorkspaceV62({
                 data-tooltip="X-ray (Nhìn xuyên mặt khuất)"
                 aria-label="Chế độ X-ray (nhìn xuyên khối)"
                 aria-pressed={xray}
-                onClick={() => {
-                  pushUndoSnapshot();
-                  setXray((v) => !v);
-                }}
+                onClick={() => setXray((v) => !v)}
               >
                 <svg viewBox="0 0 24 24" aria-hidden="true">
                   <path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6-10-6-10-6Z" />
                   <circle cx="12" cy="12" r="3" />
-                </svg>
-              </button>
-
-              <button
-                type="button"
-                className="tb-btn"
-                id="btn-undo-interaction"
-                title="Hoàn tác thao tác vừa thực hiện (Ctrl+Z)"
-                data-tooltip="Hoàn tác (Ctrl+Z)"
-                aria-label="Hoàn tác thao tác"
-                disabled={undoStack.length === 0}
-                onClick={handleUndoInteraction}
-              >
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M9 14 4 9l5-5" />
-                  <path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11" />
                 </svg>
               </button>
 
@@ -2450,7 +2284,6 @@ export function AxoWorkspaceV62({
                     step={1}
                     value={shellOpacityPct}
                     aria-label="Độ đục vỏ khối"
-                    onPointerDown={() => pushUndoSnapshot()}
                     onChange={(e) => setShellOpacityPct(Number(e.target.value))}
                   />
                   <div className="geo-custom-hints">
@@ -2479,7 +2312,6 @@ export function AxoWorkspaceV62({
                     step={1}
                     value={planeOpacityPct}
                     aria-label="Độ đậm mặt phẳng cắt"
-                    onPointerDown={() => pushUndoSnapshot()}
                     onChange={(e) => setPlaneOpacityPct(Number(e.target.value))}
                   />
                   <div className="geo-custom-hints">
@@ -2789,10 +2621,7 @@ export function AxoWorkspaceV62({
                   type="button"
                   className="context-action-pill"
                   id="btn-restore-hidden-objects"
-                  onClick={() => {
-                    pushUndoSnapshot();
-                    setTt((s) => showAll(clearIsolate(s)));
-                  }}
+                  onClick={() => setTt((s) => showAll(clearIsolate(s)))}
                 >
                   Hiện lại tất cả
                 </button>
@@ -2943,7 +2772,6 @@ export function AxoWorkspaceV62({
                         id="btn-card-isolate"
                         className={`context-action-pill${tt.isolated_ids.includes(dangChon.id) ? " is-active" : ""}`}
                         onClick={() => {
-                          pushUndoSnapshot();
                           setTt((s) =>
                             s.isolated_ids.includes(dangChon.id)
                               ? clearIsolate(s)
@@ -2963,7 +2791,6 @@ export function AxoWorkspaceV62({
                         id="btn-card-hide"
                         className={`context-action-pill${tt.hidden_ids.includes(dangChon.id) ? " is-active" : ""}`}
                         onClick={() => {
-                          pushUndoSnapshot();
                           setTt((s) =>
                             s.hidden_ids.includes(dangChon.id)
                               ? show(s, dangChon.id)

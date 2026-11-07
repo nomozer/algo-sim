@@ -6,7 +6,7 @@
 
 ## Axo × Hybrid `/4` integration — attempt identity & provenance (integration branch, 2026-11-06)
 
-- **Attempt identity.** `newAttemptId()` (`frontend/src/state/history.ts`, `a` + 128-bit hex via `getRandomValues`) is created ONCE per send in `runComposerSubmit` / photo build (`frontend/src/components/ProblemInput.tsx`) and passed as `loadEnvelope(env, sampleId, input, recordId)`. `historyStore.record(env, input, recordId)` keys the record by `recordId` when given (network retries live inside one `analyzeViaServer` call ⇒ one attempt; a second send ⇒ a second attempt); `reopenFromHistory` passes the record's own id so reload/Back/Forward keep it. Content keys (`submissionIdOf`, `historyIdOf`) remain only for openings without an attempt (samples, assignments, legacy records). Lock: `frontend/src/components/attempt-identity.test.tsx` (real submit path, frozen Hybrid `/4` response).
+- **Attempt identity.** `newAttemptId()` (`frontend/src/state/history.ts`, `a` + 128-bit hex via `getRandomValues`) is created ONCE per send in `runComposerSubmit` (`frontend/src/components/ProblemInput.tsx`; a photo's reviewed text goes through the same submit) and passed as `loadEnvelope(env, sampleId, input, recordId)`. `historyStore.record(env, input, recordId)` keys the record by `recordId` when given (network retries live inside one `analyzeViaServer` call ⇒ one attempt; a second send ⇒ a second attempt); `reopenFromHistory` passes the record's own id so reload/Back/Forward keep it. Content keys (`submissionIdOf`, `historyIdOf`) remain only for openings without an attempt (samples, assignments, legacy records). Lock: `frontend/src/components/attempt-identity.test.tsx` (real submit path, frozen Hybrid `/4` response).
 - **Statement provenance.** `main`'s client-side stamp `envelope.problem_statement` (928fb880) is kept and unified with Axo's per-opening `ActiveSimulation.problemStatement`: an explicit sample opening ignores any stamp on the incoming envelope (statement from the catalog `problemText`), but since run `axo-final-mathematical-reliability` its SAVED history record is stamped with that `problemText` so a later reopen shows the sample's own wording; an opening without a statement never borrows a catalog statement from equal `simulation_id + config` (pre-change sample records without a stamp reopen as "missing statement"); an already-stamped envelope (assignment, stamped sample record) opens as a learner statement; `sanitizeEnvelope` keeps `problem_statement`. Nothing is added to the backend envelope or its cache.
 - **Adapter `/4` provenance carried to Scene3D.** `frontend/src/simulations/domains/geometry/hybrid-preview-adapter.ts` is `main`'s contract validator plus Axo's `kiemSourceProvenance` / `kiemRelationCertificates`, so `route_d.source_provenance` and `relation_certificates` (sent by `backend/app/ai/adapter4_route.py`, dropped by `main`'s frontend) reach `HybridPreviewView` for `scene3d-model.ts` / `scene3d-semantic-policy.ts`; only `verified: true` or quoted entries pass.
 - **Plane through three named points on Hybrid /4 (capability completion, 2026-11-06).** `backend/app/simulation/geometry_functions/typed_fact_next_bridge.py`: a `/2` derived section with `plane_kind="constrained"` whose ONLY constraint is `contains_points` of three labels (`_la_mat_qua_ba_diem`) is bridged to the planner's existing three-point section fact (`{"kind": "section", "points": [...]}` → registry `section(solid, plane)`), the same fact `/1` already used; the Source Gate grounds "cắt bởi (MNP)" (`registry.mat_cat_dung_nguon`), the engine proves distinct/non-collinear points (`COLLINEAR_POINTS`) and derives every vertex of the bounded section; repeated labels refuse `DEGENERATE_POINTS`/`INVALID_DERIVED_SECTION`, stated cuts or a declared boundary on such a plane refuse `UNSUPPORTED_CAPABILITY` (never dropped); the declared plane name checked against the scene is `(MNP)` (`_ten_mat_khai`); an area goal on that section carries the section's quote. Extraction prompt rule 4 (`backend/app/ai/typed_fact_next_extraction.py`) tells the model how to encode "(MNP)"; cache identity re-locked without a `CACHE_VERSION` bump (only previously refused inputs change). Locks: `backend/tests/geometry/test_hybrid4_case_c_exterior_intersection.py`, `backend/tests/geometry/test_hybrid4_three_point_plane_sections.py` (independent exact oracle).
@@ -1906,33 +1906,62 @@ hai vỏ hero/compact vì `InputPanel` cũng nhúng composer; M9-UX4 gỡ compos
 workspace nên vỏ `compact` hết người dùng → gỡ prop `variant`, không nuôi code
 chết. `SAMPLE_PROMPTS` hiện thành chip bấm được dưới ô nhập (điền sẵn đề, học
 sinh vẫn phải tự bấm gửi — không lén tiêu lượt gọi AI). Tests: `catalog.test.tsx`.
-Notes (PHOTO_PROBLEM_TO_SCENE_END_TO_END, 2026-09-13): thêm **Chụp ảnh**
-(`capture="environment"`) và **Tải ảnh** cạnh nút `+`, gom trong `.composer-tools`.
-MỌI ảnh — kể cả chọn từ `+` — đi luồng xem lại: `/api/image/extract` →
-`PhotoProblemPanel` → "Dựng mô phỏng" gửi VĂN BẢN qua `analyzeViaServer`. Luồng gõ
-tay và `.docx` giữ nguyên. Chống bấm lặp bằng ref đồng bộ (`readAbortRef`,
-`buildingRef`) cộng reducer; thay/xoay/xoá ảnh ⇒ `AbortController.abort()` (huỷ
-phía client; lượt gọi provider phía server vẫn chạy hết). Dựng không thành ⇒ GIỮ
-ảnh và nội dung, không `loadUnsupported`. Tests: `photo-problem-panel.test.tsx`.
+Notes (run `image-capture-crop-extraction`, 2026-11-07; thay bản 2026-09-13): mục `+` "Chụp ảnh đề bài" mở
+`PhotoProblemDialog` (không mở máy ảnh lúc tải trang); `input[capture=environment]` (máy ảnh gốc của điện thoại) và
+input tải ảnh vẫn ẩn trong ô nhập. MỌI ảnh — kể cả chọn qua "Tải tệp từ thiết bị" (`addFilesToComposer` tách ảnh ra) —
+đi luồng đọc ảnh, không thành tệp đính kèm: `/api/analyze` chỉ nhận văn bản (ảnh gửi thẳng ⇒ 400
+`IMAGE_DIRECT_UNSUPPORTED`). `onReadPhoto` gửi ĐÚNG MỘT ảnh (`photo.upload`: vùng đã cắt, `rotation = 0`; hoặc tệp gốc +
+góc xoay) qua `extractImageViaServer`; lỗi → `photoReadErrorMessage`. `acceptPhotoText` đưa văn bản ĐÃ XEM LẠI vào
+`problemText` rồi đóng hộp thoại — KHÔNG gọi `/api/analyze` (người học bấm "Dựng hình" như gõ tay; mã lần học sinh ở
+`runComposerSubmit` như mọi lần). Chống bấm lặp bằng `readAbortRef` + reducer; đóng/huỷ ⇒ `AbortController.abort()`.
+Tests: `photo-problem-panel.test.tsx`.
 
 ### `components/PhotoProblemPanel.tsx` · Change impact: offline
-Khối ẢNH ĐỀ BÀI, thuần trình bày: xem trước (xoay bằng CSS) · Xoay/Thay/Xoá · Đọc
-· bản chép nguyên văn · công thức chuẩn hoá · chỗ đọc chưa chắc · vùng mất · mâu
-thuẫn chữ–hình · quan sát từ hình (nhãn "chỉ để tham khảo, không dùng làm dữ
-kiện") · ô nội dung có `label` · ô xác nhận · Dựng. Không hiện mã từ chối/cờ —
-chỉ `learner_message` / `flag_messages` của máy chủ. Chuỗi đọc từ ảnh luôn đi
-dạng chữ (React thoát ký tự). CSS: khối `.photo-*` + `.composer-photo-btn` trong
-`global.css`. Tests: `photo-problem-panel.test.tsx`.
+Phần thân màn XEM LẠI của `PhotoProblemDialog`, thuần trình bày: ô nội dung có `label` (sửa ký hiệu, tên đỉnh, số liệu;
+không tự sửa quan hệ) · ô xác nhận · lý do chưa dùng được (`#photo-accept-hint`) · chỗ đọc chưa chắc · vùng mất · mâu
+thuẫn chữ–hình · công thức chuẩn hoá · quan sát từ hình (nhãn "chỉ để tham khảo, không dùng làm dữ kiện") · bản chép
+nguyên văn. Không hiện mã từ chối/cờ — chỉ `learner_message` / `flag_messages`. Chuỗi đọc từ ảnh luôn đi dạng chữ.
+Tests: `photo-problem-panel.test.tsx`.
+
+### `components/PhotoProblemDialog.tsx` · Change impact: offline
+Hộp thoại ẢNH ĐỀ BÀI (run `image-capture-crop-extraction`): mở thẳng màn MÁY ẢNH TRỰC TIẾP (`camera`, không có màn lựa
+chọn trung gian) → CHỈNH ẢNH (`PhotoCropEditor`) → ẢNH SẼ GỬI + ĐANG ĐỌC (huỷ được) → XEM LẠI (`PhotoProblemPanel`, đối
+chiếu ảnh đã đọc, "Dùng đề này" hỏi trước khi thay nội dung ô nhập đang có) → LỖI (đọc lại / chỉnh lại / chụp ảnh khác /
+chọn ảnh từ máy). Dùng lớp `.axo-modal-*`; focus vào khi mở, bẫy Tab, Escape/nút đóng/bấm nền để đóng, trả focus khi đóng.
+Tests: `photo-problem-panel.test.tsx`.
+
+### `components/PhotoCropEditor.tsx` · Change impact: offline
+KHOANH VÙNG · XOAY thủ công bằng `react-image-crop` (ISC, 0 dependency, ghim `11.1.2`): khung bắt đầu bằng cả ảnh, tự do tỉ
+lệ, kéo/đổi cỡ bằng chuột · chạm · bàn phím (`ariaLabels` tiếng Việt); Xoay trái/phải · Đặt lại khung · Đổi ảnh · Giữ
+nguyên ảnh (gửi tệp gốc + `rotation`) · Cắt theo khung (`renderPhotoUpload`, pixel gốc). Kiểm trần 40 triệu điểm ảnh sau
+khi giải mã. Mọi object URL thu hồi khi đổi ảnh/góc hay tháo. Kiểm trên Chrome: `frontend/scripts/photo-problem-browser-check.mjs`.
+
+### `components/PhotoCameraView.tsx` · Change impact: offline
+Camera-First UX qua `getUserMedia` (chỉ sau thao tác chủ động; cần HTTPS hoặc localhost): desktop mở webcam mặc định
+(`initialCameraTarget`, `buildCameraConstraints`, không dựa bề rộng màn hình qua `isMobileCameraPreferred`), di động ưu tiên
+`facingMode: { ideal: "environment" }` kèm `fallbackCameraConstraints` khi camera sau vắng; đổi máy ảnh (`canSwitchCamera`,
+`nextCameraTarget`), chọn ảnh có sẵn tại chỗ, dự phòng `input[capture=environment]` khi lỗi trên di động; `cameraSupport`,
+`cameraErrorMessage`, `browserCameraSupport`. Luồng DỪNG ngay khi chụp, đổi camera, đóng hay tháo; ảnh chụp ở độ phân giải
+thật của luồng, JPEG 0.95. Tests: `photo-problem-panel.test.tsx`; trình duyệt: `photo-problem-browser-check.mjs`.
+
+### `components/photo-image-tools.ts` · Change impact: offline
+Toán học xoay/khoanh vùng thuần + Canvas: `cropToPixels` (% → pixel GỐC, kẹp biên, ε chống lệch 1 px, `null` khi rỗng),
+`rotationMatrix`/`applyMatrix`/`rotatedSize`/`rotateLeft`/`rotateRight` (90° theo chiều kim đồng hồ, sau EXIF — cùng thứ
+tự backend), `exportScale` (cạnh dài ≤ `PHOTO_SEND_MAX_SIDE` = 3072, như `MAX_SEND_SIDE` của máy chủ), `exceedsPixelLimit`
+(`PHOTO_MAX_PIXELS`), `exportFormats` (PNG giữ PNG, ảnh chụp JPEG 0.92 → 0.85, không nén mạnh), `uploadFileName`,
+`renderPhotoUpload` (một `drawImage` qua ma trận, giải phóng canvas), `renderRotatedPreview`, `loadImage`. Tests:
+`photo-image-tools.test.ts`.
 
 ### `components/photo-problem-flow.ts` · Change impact: offline
-Trạng thái THUẦN của luồng ảnh — tách khỏi component vì vitest chạy môi trường
-`node`. Exports: `photoReducer`, `initialPhotoState`, `canRead`, `canBuild`,
-`buildBlocker`, `needsConfirmation`, `photoStatusText`, `buildOutcome` (chỉ để
-chọn lời: `INSUFFICIENT_GEOMETRIC_CONSTRAINTS` / `UNSUPPORTED_PROBLEM`),
-`buildFailureMessage`, `clientFileProblem`, `describeUncertainToken`,
-`PHOTO_MAX_BYTES`. Ba luật: `requestId` tăng khi ảnh/góc xoay đổi ⇒ phản hồi cũ
-bị BỎ; `read-start`/`build-start` là no-op khi chưa đủ điều kiện; bị từ chối hoặc
-cần xác nhận ⇒ phải đánh dấu xác nhận mới dựng. Tests: `photo-problem-flow.test.ts`.
+Trạng thái THUẦN của luồng ảnh — tách khỏi component vì vitest chạy môi trường `node`. Pha: `empty` · `selected` (chỉnh
+ảnh) · `prepared` (ảnh sẽ gửi, `PhotoUpload`) · `reading` · `review` · `error`. Exports: `photoReducer`,
+`initialPhotoState`, `canRead`, `canAccept`, `acceptBlocker`, `needsConfirmation`, `needsReplaceConfirmation`,
+`photoStatusText`, `photoReadErrorMessage` (đọc `AxoClientError.reasonCode`: `LIVE_AI_DISABLED` / 503 thiếu khoá → lời
+người học, không lộ tên cấu hình), `clientFileProblem`, `describeUncertainToken`, `nextRotation`, `PHOTO_MAX_BYTES`.
+Bốn luật: `requestId` tăng khi ảnh/góc xoay/ảnh gửi đổi ⇒ phản hồi cũ bị BỎ (kể cả sau `read-cancel`); chọn ảnh không tự
+đọc và `read-start` là no-op khi chưa đủ điều kiện; bị từ chối hoặc cần xác nhận ⇒ phải đánh dấu xác nhận mới dùng văn
+bản; văn bản chỉ vào Ô NHẬP, không tự dựng (`buildFailureMessage`/`buildOutcome` của đường "dựng từ ảnh" cũ đã gỡ). Tests:
+`photo-problem-flow.test.ts`.
 
 ### `llm/input.ts` · Change impact: offline
 Phân loại tệp người dùng chọn → `InputPayload` (M4): `kindFromFile`, `acceptAttr`,
