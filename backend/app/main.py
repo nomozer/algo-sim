@@ -1379,6 +1379,8 @@ async def image_extract(
     except ImageRejected as err:
         return JSONResponse(status_code=400, content={"error": str(err), "reason_code": err.code})
 
+    if os.getenv("ALLOW_LIVE_AI") == "0":   # the same emergency stop as `/api/analyze`: before cache and provider
+        return _hybrid_infra_error("LIVE_AI_DISABLED")
     api_key = os.getenv("GEMINI_API_KEY")
     if not api_key:
         return JSONResponse(status_code=503, content={"error": MISSING_KEY_MSG})

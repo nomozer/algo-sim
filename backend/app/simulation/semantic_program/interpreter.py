@@ -149,6 +149,7 @@ class SemanticProgramInterpreter:
             getattr(d, "provenance", None) == "LAYOUT_DERIVED"
             for d in spec.memory_declarations
         )
+        self._kieu_khai = {d.name: d.type for d in spec.memory_declarations}
         self._last_solid_vertex_count = 0
         self._last_solid_is_pyramid = False
 
@@ -254,6 +255,13 @@ class SemanticProgramInterpreter:
                 lbl = str(stmt.label).strip()
                 if lbl:
                     narration = f"Tính {lbl[:1].lower() + lbl[1:]}: {val}."
+            if not narration and self._kieu_khai.get(stmt.target_var) in GEOMETRY_TYPES:
+                # A geometric object is NAMED, never printed: `str()` of a kernel value is its Python repr
+                # ("Circle3(center=Vec3(x=Fraction(0, 1), …"), not learner text (run `hybrid-backend-reliability`).
+                from .display_names import MO_TA_KIEU, ky_hieu_dai_luong
+                target_symbol = ky_hieu_dai_luong(stmt.target_var)
+                noun = MO_TA_KIEU[self._kieu_khai[stmt.target_var]].lower()
+                narration = f"Dựng {noun} {target_symbol}." if target_symbol else f"Dựng {noun} cần dùng."
             if not narration:
                 from .display_names import ky_hieu_dai_luong
                 target_symbol = ky_hieu_dai_luong(stmt.target_var)
