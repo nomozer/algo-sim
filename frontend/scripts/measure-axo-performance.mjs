@@ -277,18 +277,17 @@ try {
       assert.equal(await page.evaluate(() => window.__axoMeasure.contexts), contexts);
       return { during, after: await snapshot() };
     });
-    await check('X selection preserves IX, hiding X preserves sphere, Undo and Ctrl+Z', async () => {
+    await check('X selection preserves IX, hiding X preserves sphere, restore hidden and native Ctrl+Z', async () => {
       await loadSample('cau-cat-mat-phang');
+      assert.equal(await page.locator('#btn-undo-interaction').count(), 0);
       await stepTo(0); await selectChip('cau__ref_pt');
       let state = await snapshot();
       assert.ok(state.rendered.includes('cau__radius'), 'IX must be rendered with X');
       await page.locator('#btn-card-hide').click();
       await page.waitForFunction(() => window.__geo3d_auxiliary_hidden_ids.includes('cau__ref_pt') || !window.__geo3d_rendered_object_ids.includes('cau__ref_pt'));
       state = await snapshot(); assert.ok(state.rendered.includes('cau'), 'Sphere must survive hiding X');
-      await page.locator('#btn-undo-interaction').click();
+      await page.locator('#btn-restore-hidden-objects').click();
       await page.waitForFunction(() => window.__geo3d_rendered_object_ids.includes('cau__ref_pt'));
-      await page.keyboard.press('Control+z');
-      await page.waitForFunction(() => !window.__geo3d_selected_id);
       await selectChip('cau__ref_pt');
       await page.evaluate(() => { const input = document.createElement('input'); input.id = 'acceptance-text'; document.body.append(input); input.focus(); });
       await page.keyboard.type('abc'); await page.keyboard.press('Control+z');

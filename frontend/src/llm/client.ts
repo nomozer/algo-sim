@@ -40,6 +40,8 @@ export class AxoClientError extends Error implements ClientFailureContract {
   readonly code: ClientFailureCode;
   readonly status?: number;
   readonly transient?: boolean;
+  /** `reason_code` máy đọc của máy chủ (vd `LIVE_AI_DISABLED`) — CHỈ để chọn lời báo, KHÔNG BAO GIỜ hiển thị. */
+  readonly reasonCode?: string;
 
   constructor(opts: {
     kind: "network" | "http";
@@ -47,6 +49,7 @@ export class AxoClientError extends Error implements ClientFailureContract {
     message: string;
     status?: number;
     transient?: boolean;
+    reasonCode?: string;
   }) {
     super(opts.message);
     this.name = "AxoClientError";
@@ -54,6 +57,7 @@ export class AxoClientError extends Error implements ClientFailureContract {
     this.code = opts.code;
     this.status = opts.status;
     this.transient = opts.transient;
+    this.reasonCode = opts.reasonCode;
   }
 
   toContract(): ClientFailureContract {
@@ -145,6 +149,7 @@ async function postJson<T>(
       status: res.status,
       message: msg,
       transient: res.status === 502 || res.status === 504,
+      reasonCode: typeof rec?.reason_code === "string" ? rec.reason_code : undefined,
     });
   }
   return body as T;
@@ -350,3 +355,52 @@ export async function extractImageViaServer(
 
 /* repo-cleanup: `editViaServer` (`/api/edit`, gỡ ở LEGACY_INFORMATICS_REMOVAL) và `explainViaServer` (`/api/explain`,
    gỡ ở M13 — không còn người gọi trực tiếp) đã xoá cùng 2 endpoint backend không người gọi. */
+
+/* ── Chuẩn bị đầu vào thống nhất (Ảnh · PDF · DOCX · Văn bản kèm tệp) ───────── */
+
+export interface UnifiedCandidateProblem {
+  candidate_id: string;
+  label: string;
+  preview_snippet: string;
+  preview_data_url: string | null;
+  page_number: number | null;
+  has_figure: boolean;
+  problem_text: string | null;
+}
+
+export interface UnifiedInputPrepareRequest {
+  content: string;
+  mime_type?: string;
+  filename?: string;
+  user_text?: string;
+  selected_candidate_id?: string;
+}
+
+export interface UnifiedInputPrepareResponse {
+  schema: "unified-input-prepare/1";
+  status: "ready" | "needs_selection" | "needs_confirmation" | "rejected";
+  source_kind: "image" | "pdf" | "docx";
+  problem_text: string;
+  learner_message: string | null;
+  reason_code: string | null;
+  flag_messages: string[];
+  uncertain_tokens: PhotoUncertainToken[];
+  missing_regions: string[];
+  candidates: UnifiedCandidateProblem[];
+  provenance: Record<string, unknown>;
+  metrics: {
+    vlm_calls: number;
+    used_vlm: boolean;
+    raw_input_bytes: number;
+    vlm_payload_bytes: number;
+    uncropped_baseline_bytes: number;
+    processing_ms: number;
+  };
+}
+
+export async function prepareUnifiedInputViaServer(
+  req: UnifiedInputPrepareRequest,
+  signal?: AbortSignal,
+): Promise<UnifiedInputPrepareResponse> {
+  return postJson("/api/input/prepare", req, signal);
+}

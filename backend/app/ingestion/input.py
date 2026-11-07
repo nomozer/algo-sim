@@ -10,15 +10,13 @@ from __future__ import annotations
 
 import base64
 import binascii
-import io
-import zipfile
 
 # ── Giới hạn ──────────────────────────────────────────────────
 # Giới hạn và phép kiểm ẢNH không nằm ở đây nữa: thẩm quyền duy nhất là
 # `app/ingestion/image.py` (PHOTO_PROBLEM_TO_SCENE_END_TO_END, 2026-09-13).
 MAX_TEXT_CHARS = 8000
 MAX_CODE_CHARS = 30_000
-MAX_DOCX_BYTES = 2 * 1024 * 1024
+MAX_DOCX_BYTES = 10 * 1024 * 1024
 
 DOCX_MIME = "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
 
@@ -58,33 +56,25 @@ def _language_from_filename(filename: str | None) -> str:
 
 
 def _extract_docx_text(raw: bytes) -> str:
-    """Trích text từ .docx (§3): paragraph + text trong bảng, chuẩn hóa khoảng
-    trắng, reject file hỏng. Dùng python-docx; không gửi binary cho LLM."""
-    from docx import Document  # import trễ để test không cần thư viện nếu không chạm docx
-    from docx.opc.exceptions import PackageNotFoundError
+    """Trích text từ .docx (§3 & Unified Input §10.D): paragraph + bảng + công thức OMML + hộp nổi."""
+    from app.ingestion.document_reader import InputPrepareRejected, extract_docx_structured
 
-    # File giả đuôi: .docx thật là zip (bắt đầu bằng "PK")
     if not raw.startswith(b"PK"):
         raise IngestError("File .docx không hợp lệ (sai định dạng hoặc đã hỏng).")
 
     try:
-        document = Document(io.BytesIO(raw))
-    except (PackageNotFoundError, zipfile.BadZipFile, KeyError, ValueError):
-        raise IngestError("Không đọc được file .docx (có thể đã hỏng hoặc không đúng định dạng Word).")
+        parsed = extract_docx_structured(raw)
+    except InputPrepareRejected as err:
+        raise IngestError(
+            f"Không đọc được file .docx ({err})."
+        ) from err
 
-    lines: list[str] = []
-    for para in document.paragraphs:
-        text = " ".join(para.text.split())
-        if text:
-            lines.append(text)
-    for table in document.tables:
-        for row in table.rows:
-            cells = [" ".join(cell.text.split()) for cell in row.cells]
-            cells = [c for c in cells if c]
-            if cells:
-                lines.append(" | ".join(cells))
+    if parsed.has_unreadable_ole_equation and parsed.formula_count == 0:
+        raise IngestError(
+            "File .docx chứa công thức nhị phân cũ (MathType/OLE) không đọc được chính xác."
+        )
 
-    result = "\n".join(lines).strip()
+    result = parsed.full_text.strip()
     if not result:
         raise IngestError("File .docx không có nội dung văn bản nào đọc được.")
     return result[:MAX_TEXT_CHARS]
@@ -102,7 +92,7 @@ async def ingest_to_text(
     - text: dùng thẳng.
     - code: đọc trực tiếp, giữ nguyên xuống dòng/indent, bọc trong khối
       ```<lang>``` để analyze hiểu đây là code. KHÔNG execute (§4, §8).
-    - document (.docx): python-docx trích text (§3).
+    - document (.docx): trích xuất văn bản + bảng + công thức OMML (§3).
     - image: Gemini Vision phiên dịch thành text rồi mới vào pipeline (§5).
 
     Ném IngestError (→ 400) khi input sai; cần api_key riêng cho image.
@@ -128,11 +118,10 @@ async def ingest_to_text(
         return _extract_docx_text(raw)
 
     if input_type == "image":
-        # ĐƯỜNG CŨ, KHÔNG CÓ BƯỚC XEM LẠI. Sản phẩm nay đi `/api/image/extract`
-        # → người học sửa → `/api/analyze` dạng `text`. Nhánh này được giữ cho
-        # hợp đồng `InputPayload` cũ, nhưng đi qua ĐÚNG thẩm quyền chuẩn hoá và
-        # đọc ảnh của đường mới, và đóng chặt hơn nó: bản trích xuất nào cần
-        # người xem lại thì ở đây bị TỪ CHỐI, vì không có ai để xem lại.
+        # ĐƯỜNG CŨ, KHÔNG CÓ BƯỚC XEM LẠI. Sản phẩm nay đi `/api/input/prepare` (hoặc `/api/image/extract`)
+        # → `/api/analyze` dạng `text`. Nhánh này được giữ cho hợp đồng `InputPayload` cũ,
+        # nhưng đi qua ĐÚNG thẩm quyền chuẩn hoá và đọc ảnh của đường mới, và đóng chặt hơn nó:
+        # bản trích xuất nào cần người xem lại thì ở đây bị TỪ CHỐI, vì không có ai để xem lại.
         from app.ingestion.image import ImageRejected, decode_image_base64, normalize_image
         from app.ingestion.image_extraction import (
             REJECTION_MESSAGES,

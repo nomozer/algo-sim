@@ -680,7 +680,10 @@ describe("AXO — Cross-Family Scene3D Stabilization & Acceptance Suite (§4–�
       expect(html, `${item.kind} card should mount`).toContain('class="context-object-card"');
       expect(html, `${item.kind} card must expose #btn-card-hide`).toContain('id="btn-card-hide"');
       expect(html, `${item.kind} card must expose #btn-card-isolate`).toContain('id="btn-card-isolate"');
-      expect(html, `${item.kind} workspace must expose #btn-undo-interaction`).toContain('id="btn-undo-interaction"');
+      expect(html, `${item.kind} workspace must omit redundant #btn-undo-interaction`).not.toContain('id="btn-undo-interaction"');
+      expect(html, `${item.kind} workspace must keep #btn-reset-pos`).toContain('id="btn-reset-pos"');
+      expect(html, `${item.kind} workspace must keep #btn-xray`).toContain('id="btn-xray"');
+      expect(html, `${item.kind} workspace must keep #playback-pa-capsule`).toContain('id="playback-pa-capsule"');
       // Never leak internal coordinate-embedding assumption on synthetic scenes
       expect(html, `${item.kind} must not leak coordinate-system boilerplate`).not.toMatch(
         /Giả thiết dựng:[\s\S]{0,120}(?:hệ\s+trục|gốc\s+tọa\s+độ|gốc\s+toạ\s+độ)/iu,

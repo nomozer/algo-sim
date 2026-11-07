@@ -6,7 +6,7 @@
 
 ## Axo × Hybrid `/4` integration — attempt identity & provenance (integration branch, 2026-11-06)
 
-- **Attempt identity.** `newAttemptId()` (`frontend/src/state/history.ts`, `a` + 128-bit hex via `getRandomValues`) is created ONCE per send in `runComposerSubmit` / photo build (`frontend/src/components/ProblemInput.tsx`) and passed as `loadEnvelope(env, sampleId, input, recordId)`. `historyStore.record(env, input, recordId)` keys the record by `recordId` when given (network retries live inside one `analyzeViaServer` call ⇒ one attempt; a second send ⇒ a second attempt); `reopenFromHistory` passes the record's own id so reload/Back/Forward keep it. Content keys (`submissionIdOf`, `historyIdOf`) remain only for openings without an attempt (samples, assignments, legacy records). Lock: `frontend/src/components/attempt-identity.test.tsx` (real submit path, frozen Hybrid `/4` response).
+- **Attempt identity.** `newAttemptId()` (`frontend/src/state/history.ts`, `a` + 128-bit hex via `getRandomValues`) is created ONCE per send in `runComposerSubmit` (`frontend/src/components/ProblemInput.tsx`; a photo's reviewed text goes through the same submit) and passed as `loadEnvelope(env, sampleId, input, recordId)`. `historyStore.record(env, input, recordId)` keys the record by `recordId` when given (network retries live inside one `analyzeViaServer` call ⇒ one attempt; a second send ⇒ a second attempt); `reopenFromHistory` passes the record's own id so reload/Back/Forward keep it. Content keys (`submissionIdOf`, `historyIdOf`) remain only for openings without an attempt (samples, assignments, legacy records). Lock: `frontend/src/components/attempt-identity.test.tsx` (real submit path, frozen Hybrid `/4` response).
 - **Statement provenance.** `main`'s client-side stamp `envelope.problem_statement` (928fb880) is kept and unified with Axo's per-opening `ActiveSimulation.problemStatement`: an explicit sample opening ignores any stamp on the incoming envelope (statement from the catalog `problemText`), but since run `axo-final-mathematical-reliability` its SAVED history record is stamped with that `problemText` so a later reopen shows the sample's own wording; an opening without a statement never borrows a catalog statement from equal `simulation_id + config` (pre-change sample records without a stamp reopen as "missing statement"); an already-stamped envelope (assignment, stamped sample record) opens as a learner statement; `sanitizeEnvelope` keeps `problem_statement`. Nothing is added to the backend envelope or its cache.
 - **Adapter `/4` provenance carried to Scene3D.** `frontend/src/simulations/domains/geometry/hybrid-preview-adapter.ts` is `main`'s contract validator plus Axo's `kiemSourceProvenance` / `kiemRelationCertificates`, so `route_d.source_provenance` and `relation_certificates` (sent by `backend/app/ai/adapter4_route.py`, dropped by `main`'s frontend) reach `HybridPreviewView` for `scene3d-model.ts` / `scene3d-semantic-policy.ts`; only `verified: true` or quoted entries pass.
 - **Plane through three named points on Hybrid /4 (capability completion, 2026-11-06).** `backend/app/simulation/geometry_functions/typed_fact_next_bridge.py`: a `/2` derived section with `plane_kind="constrained"` whose ONLY constraint is `contains_points` of three labels (`_la_mat_qua_ba_diem`) is bridged to the planner's existing three-point section fact (`{"kind": "section", "points": [...]}` → registry `section(solid, plane)`), the same fact `/1` already used; the Source Gate grounds "cắt bởi (MNP)" (`registry.mat_cat_dung_nguon`), the engine proves distinct/non-collinear points (`COLLINEAR_POINTS`) and derives every vertex of the bounded section; repeated labels refuse `DEGENERATE_POINTS`/`INVALID_DERIVED_SECTION`, stated cuts or a declared boundary on such a plane refuse `UNSUPPORTED_CAPABILITY` (never dropped); the declared plane name checked against the scene is `(MNP)` (`_ten_mat_khai`); an area goal on that section carries the section's quote. Extraction prompt rule 4 (`backend/app/ai/typed_fact_next_extraction.py`) tells the model how to encode "(MNP)"; cache identity re-locked without a `CACHE_VERSION` bump (only previously refused inputs change). Locks: `backend/tests/geometry/test_hybrid4_case_c_exterior_intersection.py`, `backend/tests/geometry/test_hybrid4_three_point_plane_sections.py` (independent exact oracle).
@@ -1766,8 +1766,33 @@ Tests: `test_image_extraction.py`, `test_image_extract_api.py`,
 không còn giới hạn · lược đồ đầy đủ và Pydantic giữ nguyên · không sửa tại chỗ · xác định ·
 request thật mang lược đồ gửi ở biên HTTP · hậu kiểm 502 không phải từ chối đề bài).
 
+### `ingestion/region_detector.py` · Change impact: offline
+Pipeline thị giác máy tính tất định (Pillow tăng tốc C, 0 lượt gọi AI) tách vùng bài toán từ ảnh chụp / trang PDF scan:
+`assess_and_enhance_image` (đánh giá thiếu sáng/mờ, cân bằng tương phản vừa phải), `detect_page_boundary` (loại bỏ nền bàn/mép sách),
+`estimate_and_correct_skew` (ước lượng góc nghiêng cực đại phương sai chiếu ngang và xoay bù), `_segment_layout_blocks`,
+`_group_problem_clusters` (gom khối văn bản + hình vẽ không gian bên phải/bên dưới + nhãn ký hiệu nhỏ `A′`, `⟂`, `∥`, `α`, lọc header/footer/số trang),
+`_expand_to_clear_ink_border` (nới khung tới viền giấy sạch, chống xén mất nhãn đỉnh) và `detect_problem_regions` → `RegionDetectionReport`
+(tự động lùi về ảnh chuẩn hoá toàn trang khi độ tin cậy tách vùng thấp). Tests: `test_unified_input_20_cases.py`.
+
+### `ingestion/document_reader.py` · Change impact: offline
+Bộ đọc tài liệu cấu trúc & phân tích chỉ dẫn gõ tay kèm tệp (0 lượt gọi AI khi văn bản/công thức đầy đủ):
+`sniff_input_file_kind` (kiểm magic bytes thật, chặn tệp giả mạo đuôi, HEIC/HEIF, macro `.docm`, zip bomb, XXE),
+`omml_to_text` (chuyển đổi công thức Word OMML `<m:oMath>` — phân số, căn thức, số mũ, chỉ số dưới, ký hiệu hình học — sang ký pháp toán chuẩn; phát hiện công thức nhị phân OLE cũ),
+`extract_docx_structured` (đọc đoạn văn, bảng `w:tbl`, hộp văn bản nổi `w:txbxContent`, ảnh nhúng `word/media/*` đúng thứ tự),
+`extract_pdf_structured` + `render_pdf_page_normalized` (`pymupdf` đọc text layer theo trang, phát hiện hình vẽ vector/bitmap, chỉ rasterize đúng trang cần thiết ở 200 DPI khi PDF scan),
+`parse_user_composer_instruction`, `split_text_into_problems`, `select_text_candidate`, `merge_supplemental_text`.
+Tests: `test_unified_input_20_cases.py`.
+
+### `ingestion/unified_input.py` · Change impact: targeted live (chỉ khi ảnh / PDF scan / DOCX thuần ảnh cần VLM)
+Điều phối chuẩn bị đầu vào thống nhất (`prepare_unified_input` → `UnifiedPrepareResult`, schema `unified-input-prepare/1`) cho `POST /api/input/prepare`:
+kết hợp văn bản gõ tay trong ô nhập + tệp đính kèm (`PNG`/`JPEG`/`WEBP`, `PDF` có text layer hoặc scan, `DOCX` có OMML/bảng/ảnh nhúng);
+tự động thử lại trên ảnh toàn trang nếu bản cắt vùng bị VLM báo `missing_regions` / `IMAGE_NOT_READABLE`;
+trả `ready` (chuyển thẳng sang Hybrid `/4` → `Scene3D`), `needs_selection` (nhiều bài chưa rõ bài cần dựng),
+`needs_confirmation` (chỉ khi ký hiệu thực sự bất định) hoặc `rejected` (fail-closed kèm thông báo trung thực), cùng telemetry `vlm_calls`, `vlm_payload_bytes`, `uncropped_baseline_bytes`.
+Tests: `test_unified_input_20_cases.py`; đánh giá 20 ca: `backend/scripts/evaluate_unified_input_corpus.py`.
+
 ### `main.py` · Change impact: offline (trừ khi đổi CACHE_VERSION/pipeline)
-FastAPI: `POST /api/analyze`, `POST /api/image/extract`, `GET /api/health`, `GET /api/diagnostics/*`
+FastAPI: `POST /api/analyze`, `POST /api/input/prepare`, `POST /api/image/extract`, `GET /api/health`, `GET /api/diagnostics/*`
 (*repo-cleanup:* `/api/edit` gỡ ở LEGACY_INFORMATICS_REMOVAL, `/api/explain` gỡ ở `repo-cleanup` — khoá 404 ở
 `test_api.py::test_endpoint_tutor_flow_da_xoa`; `/api/manifest` không còn). Exports: `app`, `CACHE_VERSION`,
 `_cache_key`, `_cache_lookup`, `_policy_identity` (cache theo tuyến — run `hybrid-pre-main-hardening`). Tests: `test_api.py`,
@@ -1900,40 +1925,36 @@ bằng test "không hai bài thuật toán nào dùng chung một tranh".
 Tests: `catalog.test.tsx`.
 
 ### `components/ProblemInput.tsx` · Change impact: offline
-M9-UX4 — MỘT dạng duy nhất (pill: ô tự cao dần, kẹp tệp + nút gửi nằm TRONG ô,
-Enter gửi / Shift+Enter xuống dòng) và **chỉ sống ở Trang chủ**. M9-UX3 từng có
-hai vỏ hero/compact vì `InputPanel` cũng nhúng composer; M9-UX4 gỡ composer khỏi
-workspace nên vỏ `compact` hết người dùng → gỡ prop `variant`, không nuôi code
-chết. `SAMPLE_PROMPTS` hiện thành chip bấm được dưới ô nhập (điền sẵn đề, học
-sinh vẫn phải tự bấm gửi — không lén tiêu lượt gọi AI). Tests: `catalog.test.tsx`.
-Notes (PHOTO_PROBLEM_TO_SCENE_END_TO_END, 2026-09-13): thêm **Chụp ảnh**
-(`capture="environment"`) và **Tải ảnh** cạnh nút `+`, gom trong `.composer-tools`.
-MỌI ảnh — kể cả chọn từ `+` — đi luồng xem lại: `/api/image/extract` →
-`PhotoProblemPanel` → "Dựng mô phỏng" gửi VĂN BẢN qua `analyzeViaServer`. Luồng gõ
-tay và `.docx` giữ nguyên. Chống bấm lặp bằng ref đồng bộ (`readAbortRef`,
-`buildingRef`) cộng reducer; thay/xoay/xoá ảnh ⇒ `AbortController.abort()` (huỷ
-phía client; lượt gọi provider phía server vẫn chạy hết). Dựng không thành ⇒ GIỮ
-ảnh và nội dung, không `loadUnsupported`. Tests: `photo-problem-panel.test.tsx`.
+Ô nhập đề thống nhất (Unified Problem Input Composer) ở Trang chủ: hỗ trợ đồng thời 3 phương thức trong CÙNG MỘT ô nhập
+— gõ/dán văn bản trực tiếp (`#home-problem-input`), chụp ảnh đề bài qua Camera-First tối giản (`#menu-item-camera` → `PhotoProblemDialog`),
+và chọn tệp từ thiết bị (`#menu-item-upload-file`: `.png`, `.jpg`, `.jpeg`, `.webp`, `.pdf`, `.docx`; từ chối tường minh `.heic`/`.heif`).
+Mọi ảnh, PDF và DOCX đều đính kèm thành chip trong `#composer-files-wrap` (nguyên tắc **Đính kèm ≠ Xử lý**: 0 lượt gọi AI trước khi bấm `Dựng hình →`,
+xem chi tiết/đổi tệp/gỡ tệp giữ nguyên văn bản đã gõ, thu hồi toàn bộ `objectURL`). Khi bấm `Dựng hình →` (`runComposerSubmit`),
+tệp đính kèm + văn bản gõ kèm đi qua `prepareUnifiedInputViaServer` (`/api/input/prepare`) rồi chuyển thẳng sang `analyzeViaServer` (`/api/analyze` Hybrid `/4` → `Scene3D`),
+có nút `#btn-composer-cancel` (`cancelComposerSubmit`) huỷ an toàn request đang chạy. Tests: `slice2-composer.test.tsx`, `photo-problem-panel.test.tsx`.
 
 ### `components/PhotoProblemPanel.tsx` · Change impact: offline
-Khối ẢNH ĐỀ BÀI, thuần trình bày: xem trước (xoay bằng CSS) · Xoay/Thay/Xoá · Đọc
-· bản chép nguyên văn · công thức chuẩn hoá · chỗ đọc chưa chắc · vùng mất · mâu
-thuẫn chữ–hình · quan sát từ hình (nhãn "chỉ để tham khảo, không dùng làm dữ
-kiện") · ô nội dung có `label` · ô xác nhận · Dựng. Không hiện mã từ chối/cờ —
-chỉ `learner_message` / `flag_messages` của máy chủ. Chuỗi đọc từ ảnh luôn đi
-dạng chữ (React thoát ký tự). CSS: khối `.photo-*` + `.composer-photo-btn` trong
-`global.css`. Tests: `photo-problem-panel.test.tsx`.
+Khung hỗ trợ trực tiếp bên dưới ô nhập đề sau khi bấm `Dựng hình →` (mặc định `idle` ẩn hoàn toàn — không bắt người học qua màn hình trung gian khi đề rõ):
+`#composer-candidate-picker` (`needs_selection`: chạm chọn 1 bước bài toán ứng viên khi ảnh/PDF/DOCX có nhiều bài độc lập mà chưa có chỉ dẫn chọn bài)
+và `#composer-extraction-confirm` (`needs_confirmation`: chỉ hiện phần ký hiệu đọc chưa chắc chắn hoặc vùng nghi bị che kèm ô sửa nhanh trước khi dựng 3D).
+Tests: `photo-problem-panel.test.tsx`.
+
+### `components/PhotoProblemDialog.tsx` · Change impact: offline
+Hộp thoại chụp ảnh đề bài tối giản (`#photo-camera-dialog`, Camera-First UX): mở thẳng `PhotoCameraView`, không có màn khoanh vùng thủ công,
+xoay ảnh hay xác nhận nhiều bước. Chụp xong 1 ảnh ⇒ dừng `MediaStream`, đính kèm ảnh thành chip trong `#composer-files-wrap` và đóng hộp thoại ngay;
+bẫy Tab, đóng bằng Escape / nút đóng / bấm nền, trả focus về nút mở. Tests: `photo-problem-panel.test.tsx`; trình duyệt: `photo-problem-browser-check.mjs`.
+
+### `components/PhotoCameraView.tsx` · Change impact: offline
+Khung ngắm máy ảnh trực tiếp tối giản qua `getUserMedia` (chỉ khởi động khi người học bấm “Chụp ảnh đề bài”):
+mobile hiển thị video chiếm vùng chính + nút chụp tròn ở giữa dưới (`#btn-photo-capture`) + nút thư viện ảnh bên trái + nút đổi camera bên phải chỉ khi khả dụng (`canSwitchCamera`);
+desktop hiển thị hộp thoại webcam gọn với nút kích thước chuẩn `DESIGN.md`. Phân biệt rõ 4 thông báo lỗi trung tính (`cameraErrorMessage`: từ chối quyền,
+không tìm thấy camera, thiết bị không khả dụng, lỗi chưa xác định) kèm lối chọn tệp dự phòng; giải phóng mọi `MediaStreamTrack` ngay khi chụp, đổi camera, chọn tệp hoặc đóng.
+Tests: `photo-problem-panel.test.tsx`; trình duyệt: `photo-problem-browser-check.mjs`.
 
 ### `components/photo-problem-flow.ts` · Change impact: offline
-Trạng thái THUẦN của luồng ảnh — tách khỏi component vì vitest chạy môi trường
-`node`. Exports: `photoReducer`, `initialPhotoState`, `canRead`, `canBuild`,
-`buildBlocker`, `needsConfirmation`, `photoStatusText`, `buildOutcome` (chỉ để
-chọn lời: `INSUFFICIENT_GEOMETRIC_CONSTRAINTS` / `UNSUPPORTED_PROBLEM`),
-`buildFailureMessage`, `clientFileProblem`, `describeUncertainToken`,
-`PHOTO_MAX_BYTES`. Ba luật: `requestId` tăng khi ảnh/góc xoay đổi ⇒ phản hồi cũ
-bị BỎ; `read-start`/`build-start` là no-op khi chưa đủ điều kiện; bị từ chối hoặc
-cần xác nhận ⇒ phải đánh dấu xác nhận mới dựng. Tests: `photo-problem-flow.test.ts`.
-
+Trạng thái thuần của khung hỗ trợ đầu vào thống nhất (`unifiedAssistReducer`, `initialUnifiedAssistState`, `assistBlocker`, `canConfirmAssistText`: pha `idle` · `needs_selection` · `needs_confirmation`),
+cùng các hàm chuẩn hoá thông báo người học (`photoReadErrorMessage` ẩn tên biến môi trường kỹ thuật, `clientFileProblem`, `describeUncertainToken`, `PHOTO_MAX_BYTES`).
+Tests: `photo-problem-flow.test.ts`.
 ### `llm/input.ts` · Change impact: offline
 Phân loại tệp người dùng chọn → `InputPayload` (M4): `kindFromFile`, `acceptAttr`,
 `kindLabel`, `extOf`, `fileToPayload`, `readAsBase64` (base64 THUẦN, đã bỏ tiền tố

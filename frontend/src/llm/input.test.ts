@@ -1,10 +1,12 @@
 import { describe, expect, it } from "vitest";
 import {
+  COMPOSER_ACCEPT,
   IMAGE_ACCEPT,
   MAX_ATTACHMENTS,
   MAX_ATTACHMENT_BYTES,
   acceptAttr,
   canSubmitComposer,
+  composerAttachmentMimeOf,
   extOf,
   formatAttachmentSize,
   imageMimeOf,
@@ -16,8 +18,9 @@ import {
 } from "./input";
 
 describe("ảnh đề bài (PHOTO_PROBLEM_TO_SCENE_END_TO_END)", () => {
-  it("accept của Chụp ảnh / Tải ảnh chỉ gồm ba MIME ảnh", () => {
+  it("accept của Chụp ảnh / Tải ảnh chỉ gồm ba MIME ảnh; COMPOSER_ACCEPT hỗ trợ ảnh, PDF và DOCX", () => {
     expect(IMAGE_ACCEPT).toBe("image/png,image/jpeg,image/webp");
+    expect(COMPOSER_ACCEPT).toBe(".png,.jpg,.jpeg,.webp,.pdf,.docx");
   });
 
   it("nhận ảnh theo MIME TRƯỚC — ảnh máy ảnh có thể không có đuôi", () => {
@@ -33,11 +36,6 @@ describe("ảnh đề bài (PHOTO_PROBLEM_TO_SCENE_END_TO_END)", () => {
     expect(imageMimeOf({ name: "x.bin", type: "" })).toBeUndefined();
   });
 });
-
-/**
- * Test phần phân loại file (pure) — M4 §13 frontend:
- * nhận đúng loại từ đuôi, từ chối đuôi không hỗ trợ.
- */
 
 describe("extOf", () => {
   it("lấy đuôi chữ thường, rỗng khi không có", () => {
@@ -92,27 +90,50 @@ describe("acceptAttr / kindLabel", () => {
   });
 });
 
-describe("Axo V2.7 Slice 2 — validateComposerFile & canSubmitComposer", () => {
-  it("từ chối tệp PDF (.pdf) rõ ràng theo quyết định D3, không giả hỗ trợ", () => {
+describe("Axo Unified Problem Input — validateComposerFile & canSubmitComposer", () => {
+  it("chấp nhận tệp PDF (.pdf) hợp lệ trên Composer thống nhất và khai đúng MIME application/pdf", () => {
     const resByExt = validateComposerFile({
       name: "de-thi-hk1.pdf",
       size: 120_000,
       type: "application/pdf",
     });
-    expect(resByExt.ok).toBe(false);
-    if (!resByExt.ok) {
-      expect(resByExt.code).toBe("pdf_unsupported");
-      expect(resByExt.reason).toContain("PDF");
-    }
+    expect(resByExt).toEqual({
+      ok: true,
+      kind: "pdf",
+      ext: ".pdf",
+    });
 
     const resByMime = validateComposerFile({
       name: "tai-lieu",
       size: 50_000,
       type: "application/pdf",
     });
-    expect(resByMime.ok).toBe(false);
-    if (!resByMime.ok) {
-      expect(resByMime.code).toBe("pdf_unsupported");
+    expect(resByMime).toEqual({
+      ok: true,
+      kind: "pdf",
+      ext: ".pdf",
+    });
+
+    expect(
+      composerAttachmentMimeOf({
+        file: { name: "de-thi-hk1.pdf", type: "" } as File,
+        kind: "pdf",
+        ext: ".pdf",
+      }),
+    ).toBe("application/pdf");
+  });
+
+  it("từ chối tường minh ảnh HEIC/HEIF (fail-closed, hướng dẫn chuyển sang JPG/PNG hoặc PDF/DOCX)", () => {
+    const resHeic = validateComposerFile({
+      name: "IMG_0042.HEIC",
+      size: 420_000,
+      type: "image/heic",
+    });
+    expect(resHeic.ok).toBe(false);
+    if (!resHeic.ok) {
+      expect(resHeic.code).toBe("heic_unsupported");
+      expect(resHeic.reason).toContain("HEIC/HEIF");
+      expect(resHeic.reason).toMatch(/JPG\/PNG/);
     }
   });
 
@@ -171,7 +192,7 @@ describe("Axo V2.7 Slice 2 — validateComposerFile & canSubmitComposer", () => 
     }
   });
 
-  it("chấp nhận .docx, .png, .jpg, .webp hợp lệ và từ chối .py trên Composer hình học (P5.4)", () => {
+  it("chấp nhận .docx, .png, .jpg, .webp hợp lệ và từ chối .py trên Composer hình học", () => {
     expect(validateComposerFile({ name: "de-chop.docx", size: 18_432 })).toEqual({
       ok: true,
       kind: "document",
@@ -192,12 +213,9 @@ describe("Axo V2.7 Slice 2 — validateComposerFile & canSubmitComposer", () => 
   it("canSubmitComposer: không áp đặt tối thiểu 10 ký tự; tắt khi rỗng/whitespace/bận, bật khi có chữ hoặc tệp", () => {
     expect(canSubmitComposer("", 0, false)).toBe(false);
     expect(canSubmitComposer("   \n\t  ", 0, false)).toBe(false);
-    // Kể cả văn bản ngắn < 10 ký tự vẫn được bật nút Dựng hình →
     expect(canSubmitComposer("S.ABC", 0, false)).toBe(true);
     expect(canSubmitComposer("Cho hình chóp S.ABCD", 0, false)).toBe(true);
-    // Không chữ nhưng có 1 tệp hợp lệ → bật
     expect(canSubmitComposer("", 1, false)).toBe(true);
-    // Đang gửi hoặc đang đọc tệp → khóa
     expect(canSubmitComposer("Cho hình chóp S.ABCD", 1, true)).toBe(false);
     expect(canSubmitComposer("Cho hình chóp S.ABCD", 1, false, true)).toBe(false);
   });

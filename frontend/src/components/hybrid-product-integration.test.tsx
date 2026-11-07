@@ -15,7 +15,6 @@ import { hopLeScene3D, phanTichToanHocCuaCanh } from "../simulations/domains/geo
 import { withSubEntities } from "../simulations/domains/geometry/scene3d-subentities";
 import { __resetHistoryForTest } from "../state/history";
 import { useAppStore } from "../state/store";
-import { buildFailureMessage } from "./photo-problem-flow";
 import { SimulationWorkspace, UnsupportedNotice } from "./SimulationWorkspace";
 
 type FixtureRow = {
@@ -280,14 +279,6 @@ describe("Hybrid /4 product integration — recoverable infrastructure errors cl
     useAppStore.getState().loadEnvelope({ ...servedEnv, simulation_id: "unknown.sim" } as any);
     expect(useAppStore.getState().activeAssignment).toBeNull();
     expect(useAppStore.getState().semanticFocus).toBeNull();
-  });
-
-  it("includes route-d-clarification/1 question in Photo Review -> Build failure message without duplicating", () => {
-    const refusalEnv = docPhanHoiPhanTich(fixtureOf("S2-C-A01_goc_chieu"));
-    expect(refusalEnv.status).toBe("unsupported");
-    if (refusalEnv.status !== "unsupported") return;
-    const msg = buildFailureMessage(refusalEnv);
-    expect(msg).toContain(refusalEnv.clarification!.question!);
   });
 });
 

@@ -1,0 +1,23 @@
+{
+  "run_id": "image-capture-crop-extraction",
+  "task_slug": "image-capture-crop-extraction",
+  "naming_policy": "docs/evaluation/RUN_NAMING.md",
+  "date": "2026-11-07",
+  "branch": "feat/image-capture-crop-extraction",
+  "start_head": "68a795b0928c2f451829e95e493878262fc7655e",
+  "product_commit": "89539b6849df13fc8c03f0f35d2ef025badc004e",
+  "candidate_measured_system": "c03372f7c66c33d67b8cf561635057ebdf0aca50288cae56767c8e3215b60d35",
+  "cache_version": "132",
+  "default_mode": "HYBRID",
+  "live_model_requests": 0,
+  "verification_limits": {
+    "REAL_CAMERA_DEVICE_VERIFIED": "NO",
+    "LIVE_GEMINI_IMAGE_EXTRACTION_VERIFIED": "NO",
+    "OFFLINE_EXTRACTION_VERIFIED": "YES"
+  },
+  "artifacts": {
+    "twenty_case_metrics": "unified-input-20-case-metrics.json",
+    "browser_e2e_receipt": "browser/PHOTO_BROWSER_CHECK.json"
+  },
+  "human_visual_review": "NOT_APPROVED"
+}
