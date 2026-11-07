@@ -2,13 +2,12 @@ import { useEffect, useRef, useState } from "react";
 import { IconCamera, IconImage, IconSwitchCamera } from "./icons";
 
 /**
- * Máy ảnh trực tiếp (Camera-First UX) cho luồng ẢNH ĐỀ BÀI (run `image-capture-crop-extraction`).
- *
+ * Máy ảnh trực tiếp tối giản (Camera-First UX):
  * - Chỉ khởi động khi người học bấm “Chụp ảnh đề bài”; không bao giờ chạy lúc tải trang.
- * - Desktop/laptop mở webcam mặc định của hệ thống (không ép chọn thiết bị trước, không dùng riêng bề rộng màn hình).
- * - Mobile ưu tiên camera sau (`facingMode: { ideal: "environment" }`), tự lùi về camera khả dụng nếu camera sau vắng.
- * - Có đổi máy ảnh khi nhiều camera hoặc thiết bị di động hỗ trợ trước/sau, và luôn có lối chọn ảnh từ máy ngay tại chỗ.
- * - Mọi `MediaStreamTrack` dừng ngay khi chụp, đổi camera, đóng hộp thoại hoặc tháo component.
+ * - Mobile: khung ngắm là nội dung chính, nút chụp tròn chính giữa phía dưới, nút mở thư viện ảnh bên trái,
+ *   nút đổi máy ảnh bên phải chỉ hiện khi thực sự khả dụng.
+ * - Desktop: hộp thoại webcam gọn với nút kích thước chuẩn theo DESIGN.md, không mở màn crop sau khi chụp.
+ * - Chụp xong: dừng MediaStream ngay lập tức, trả File ảnh về ô nhập đề để tự đính kèm thành chip và đóng hộp thoại.
  */
 
 export type CameraSupport = { ok: true } | { ok: false; message: string };
@@ -32,33 +31,38 @@ export function cameraSupport(env: {
   hasGetUserMedia: boolean;
 }): CameraSupport {
   if (env.isSecureContext === false) {
-    return { ok: false, message: "Máy ảnh chỉ dùng được khi trang mở qua HTTPS. Em chọn ảnh từ máy nhé." };
+    return { ok: false, message: "Máy ảnh chỉ dùng được khi trang mở qua kết nối bảo mật (HTTPS). Em chọn ảnh từ máy nhé." };
   }
   if (!env.hasGetUserMedia) {
-    return { ok: false, message: "Trình duyệt này không mở được máy ảnh. Em chọn ảnh từ máy nhé." };
+    return { ok: false, message: "Trình duyệt này không hỗ trợ mở máy ảnh trực tiếp. Em chọn ảnh từ máy nhé." };
   }
   return { ok: true };
 }
 
-/** Lỗi `getUserMedia` → lời ngắn gọn cho người học (DOMException theo đặc tả Media Capture). */
+/**
+ * Thông báo lỗi máy ảnh ngắn, trung tính, phân biệt rõ 4 nhóm trạng thái (§7):
+ * 1. Từ chối quyền  2. Không tìm thấy camera  3. Thiết bị không khả dụng  4. Lỗi chưa xác định.
+ */
 export function cameraErrorMessage(err: unknown): string {
   const name = (err as { name?: string } | null)?.name ?? "";
   switch (name) {
     case "NotAllowedError":
+    case "PermissionDeniedError":
     case "SecurityError":
-      return "Trình duyệt chưa cho phép dùng máy ảnh. Em cấp quyền máy ảnh hoặc chọn ảnh từ máy.";
+      return "Quyền truy cập máy ảnh đã bị từ chối. Em cấp quyền máy ảnh trong trình duyệt hoặc chọn ảnh từ máy.";
     case "NotFoundError":
-    case "OverconstrainedError":
-      return "Không tìm thấy máy ảnh khả dụng trên thiết bị này. Em chọn ảnh từ máy nhé.";
+    case "DevicesNotFoundError":
+      return "Không tìm thấy máy ảnh trên thiết bị này. Em chọn ảnh từ máy nhé.";
     case "NotReadableError":
-    case "AbortError":
-      return "Máy ảnh đang bận ở ứng dụng khác. Em đóng ứng dụng đó rồi thử lại, hoặc chọn ảnh từ máy.";
+    case "TrackStartError":
+    case "OverconstrainedError":
+      return "Máy ảnh hiện không khả dụng. Em thử lại hoặc chọn ảnh từ máy.";
     default:
-      return "Chưa mở được máy ảnh. Em thử lại hoặc chọn ảnh từ máy.";
+      return "Không mở được máy ảnh do lỗi chưa xác định. Em thử lại hoặc chọn ảnh từ máy.";
   }
 }
 
-/** Nhận diện thiết bị di động theo tín hiệu năng lực thiết bị + UA, KHÔNG dựa vào bề rộng màn hình. */
+/** Nhận diện thiết bị di động theo tín hiệu năng lực thiết bị + UA, không phụ thuộc riêng bề rộng cửa sổ. */
 export function isMobileCameraPreferred(sig: CameraDeviceSignals): boolean {
   if (sig.userAgentDataMobile === true) return true;
   if (sig.userAgentDataMobile === false) return false;
@@ -109,8 +113,22 @@ function uniqueIds(ids: readonly string[]): string[] {
   return [...new Set(ids.map((id) => id.trim()).filter(Boolean))];
 }
 
-export function canSwitchCamera(videoDeviceIds: readonly string[], mobile: boolean): boolean {
-  return uniqueIds(videoDeviceIds).length > 1 || mobile;
+/**
+ * Nút đổi camera chỉ xuất hiện khi có > 1 thiết bị ghi hình, hoặc trên di động khi danh sách
+ * thiết bị chưa liệt kê rõ ID (ẩn danh). Nếu đã liệt kê xong và xác nhận chỉ có <= 1 camera
+ * có ID rõ ràng trên desktop/tablet thì ẩn nút đổi camera (§5, §6).
+ */
+export function canSwitchCamera(
+  videoDeviceIds: readonly string[],
+  mobile: boolean,
+  enumeratedCount?: number,
+): boolean {
+  const distinct = uniqueIds(videoDeviceIds);
+  if (distinct.length > 1) return true;
+  if (typeof enumeratedCount === "number" && enumeratedCount <= 1 && distinct.length === enumeratedCount) {
+    return false;
+  }
+  return mobile;
 }
 
 export function nextCameraTarget(
@@ -156,6 +174,7 @@ export function PhotoCameraView({ onCapture, onPickFile, onNativeCamera }: Photo
   const [target, setTarget] = useState<CameraTarget>(() => initialCameraTarget(mobile));
   const [attempt, setAttempt] = useState(0);
   const [videoIds, setVideoIds] = useState<string[]>([]);
+  const [enumeratedCount, setEnumeratedCount] = useState<number | undefined>(undefined);
   const [activeDeviceId, setActiveDeviceId] = useState("");
   const [ready, setReady] = useState(false);
   const [switching, setSwitching] = useState(false);
@@ -165,6 +184,12 @@ export function PhotoCameraView({ onCapture, onPickFile, onNativeCamera }: Photo
   const streamRef = useRef<MediaStream | null>(null);
 
   const support = browserCameraSupport();
+
+  function releaseCurrentStream() {
+    stopStream(streamRef.current);
+    streamRef.current = null;
+    if (videoRef.current) videoRef.current.srcObject = null;
+  }
 
   useEffect(() => {
     const check = browserCameraSupport();
@@ -180,9 +205,7 @@ export function PhotoCameraView({ onCapture, onPickFile, onNativeCamera }: Photo
     setReady(false);
 
     async function openCamera() {
-      stopStream(streamRef.current);
-      streamRef.current = null;
-      if (videoRef.current) videoRef.current.srcObject = null;
+      releaseCurrentStream();
 
       let stream: MediaStream;
       try {
@@ -222,7 +245,9 @@ export function PhotoCameraView({ onCapture, onPickFile, onNativeCamera }: Photo
           .enumerateDevices()
           .then((list) => {
             if (cancelled) return;
-            setVideoIds(list.filter((d) => d.kind === "videoinput").map((d) => d.deviceId));
+            const vids = list.filter((d) => d.kind === "videoinput");
+            setEnumeratedCount(vids.length);
+            setVideoIds(vids.map((d) => d.deviceId));
           })
           .catch(() => undefined);
       }
@@ -244,25 +269,31 @@ export function PhotoCameraView({ onCapture, onPickFile, onNativeCamera }: Photo
 
     return () => {
       cancelled = true;
-      stopStream(streamRef.current);
-      streamRef.current = null;
-      if (videoRef.current) videoRef.current.srcObject = null;
+      releaseCurrentStream();
     };
   }, [target, attempt]);
 
   function switchCamera() {
     if (switching) return;
-    stopStream(streamRef.current);
-    streamRef.current = null;
+    releaseCurrentStream();
     setSwitching(true);
     setTarget((cur) => nextCameraTarget(cur, activeDeviceId, videoIds, mobile));
   }
 
   function retryCamera() {
-    stopStream(streamRef.current);
-    streamRef.current = null;
+    releaseCurrentStream();
     setTarget(initialCameraTarget(mobile));
     setAttempt((n) => n + 1);
+  }
+
+  function handlePickFile() {
+    releaseCurrentStream();
+    onPickFile();
+  }
+
+  function handleNativeCamera() {
+    releaseCurrentStream();
+    onNativeCamera();
   }
 
   function capture() {
@@ -279,40 +310,38 @@ export function PhotoCameraView({ onCapture, onPickFile, onNativeCamera }: Photo
         canvas.width = 0;
         canvas.height = 0;
         if (!blob) {
-          setError("Chưa chụp được ảnh. Em thử lại nhé.");
+          setError("Chưa ghi nhận được khung hình. Em thử lại hoặc chọn ảnh từ máy.");
           return;
         }
-        stopStream(streamRef.current);
-        streamRef.current = null;
-        if (videoRef.current) videoRef.current.srcObject = null;
-        onCapture(new File([blob], `anh-chup-${Date.now()}.jpg`, { type: "image/jpeg" }));
+        releaseCurrentStream();
+        onCapture(new File([blob], `anh-de-${Date.now()}.jpg`, { type: "image/jpeg" }));
       },
       "image/jpeg",
-      0.95,
+      0.94,
     );
   }
 
-  const showSwitch = canSwitchCamera(videoIds, mobile);
+  const showSwitch = canSwitchCamera(videoIds, mobile, enumeratedCount);
 
   if (error) {
     return (
-      <div className="photo-camera">
+      <div className="photo-camera photo-error">
         <p className="photo-alert" role="alert">
           {error}
         </p>
         <div className="photo-dialog-actions">
           {support.ok && (
             <button type="button" id="btn-photo-retry-camera" className="btn-utility" onClick={retryCamera}>
-              Thử lại máy ảnh
+              Thử lại
             </button>
           )}
           {mobile && (
-            <button type="button" id="btn-photo-native-camera" className="btn-utility" onClick={onNativeCamera}>
+            <button type="button" id="btn-photo-native-camera" className="btn-utility" onClick={handleNativeCamera}>
               <IconCamera size={16} />
-              <span>Mở máy ảnh thiết bị</span>
+              <span>Máy ảnh thiết bị</span>
             </button>
           )}
-          <button type="button" id="btn-photo-pick-fallback" className="btn-primary" onClick={onPickFile}>
+          <button type="button" id="btn-photo-pick-fallback" className="btn-primary" onClick={handlePickFile}>
             <IconImage size={16} />
             <span>Chọn ảnh từ máy</span>
           </button>
@@ -336,44 +365,56 @@ export function PhotoCameraView({ onCapture, onPickFile, onNativeCamera }: Photo
         />
         {!ready && (
           <p className="photo-camera-loading" role="status" aria-live="polite">
-            Đang mở máy ảnh…
+            Đang mở máy ảnh...
           </p>
         )}
       </div>
 
-      <p className="photo-camera-hint">
-        Canh trọn đề bài và hình vẽ trong khung.
-      </p>
-
       <div className="photo-camera-bar">
-        <div className="photo-camera-tools">
-          <button type="button" id="btn-photo-library" className="btn-utility" onClick={onPickFile}>
+        <div className="photo-camera-slot-side">
+          <button
+            type="button"
+            id="btn-photo-library"
+            className="btn-utility photo-camera-side-btn"
+            onClick={handlePickFile}
+            aria-label="Mở thư viện ảnh từ thiết bị"
+          >
             <IconImage size={16} />
-            <span>Chọn ảnh có sẵn</span>
+            <span className="photo-camera-side-label">Chọn ảnh từ máy</span>
           </button>
-          {showSwitch && (
+        </div>
+
+        <div className="photo-camera-slot-center">
+          <button
+            type="button"
+            id="btn-photo-capture"
+            className="btn-primary photo-camera-shutter"
+            onClick={capture}
+            disabled={!ready || switching}
+            aria-label="Chụp ảnh đề bài"
+            title="Chụp ảnh"
+          >
+            <span className="photo-shutter-disc" aria-hidden="true" />
+            <IconCamera size={16} />
+            <span className="photo-shutter-label">Chụp ảnh</span>
+          </button>
+        </div>
+
+        <div className="photo-camera-slot-side is-end">
+          {showSwitch ? (
             <button
               type="button"
               id="btn-photo-switch-camera"
-              className="btn-utility"
+              className="btn-utility photo-camera-side-btn"
               onClick={switchCamera}
               disabled={switching}
+              aria-label="Đổi máy ảnh"
             >
               <IconSwitchCamera size={16} />
-              <span>Đổi máy ảnh</span>
+              <span className="photo-camera-side-label">Đổi camera</span>
             </button>
-          )}
+          ) : null}
         </div>
-        <button
-          type="button"
-          id="btn-photo-capture"
-          className="btn-primary photo-camera-shutter"
-          onClick={capture}
-          disabled={!ready || switching}
-        >
-          <IconCamera size={18} />
-          <span>Chụp ảnh</span>
-        </button>
       </div>
     </div>
   );

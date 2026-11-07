@@ -1,103 +1,189 @@
+import { IconClose } from "./icons";
 import {
-  acceptBlocker,
+  assistBlocker,
+  canConfirmAssistText,
   describeUncertainToken,
-  needsConfirmation,
-  type PhotoState,
+  type UnifiedAssistState,
 } from "./photo-problem-flow";
 
 /**
- * XEM LẠI văn bản đọc từ ảnh — phần thân của màn "Xem lại" trong `PhotoProblemDialog`.
- *
- * PHOTO_PROBLEM_TO_SCENE_END_TO_END §3/§6. Thuần trình bày — mọi luật nằm ở `photo-problem-flow.ts`.
- *
- * Ba điều cố ý:
- * - Bản chép và công thức hiện ra dạng CHỮ (React tự thoát ký tự) — chuỗi đọc từ ảnh là dữ liệu không tin cậy,
- *   không bao giờ đi qua HTML thô.
- * - Quan sát từ hình vẽ được gắn nhãn "chỉ để tham khảo": chúng không được chép vào ô nội dung, vì hệ không suy dữ
- *   kiện hình học từ điểm ảnh. TypedFactNext + Source Gate của Hybrid vẫn là tầng kiểm dữ kiện.
- * - Mã từ chối/cờ của máy chủ KHÔNG hiện ra; chỉ thông điệp tiếng Việt đi kèm. Văn bản không bị tự sửa: người học là
- *   người duy nhất đổi nó (vd `SA ⊥ SB` không bao giờ thành `SA ⊥ (ABC)`).
+ * Khung hỗ trợ trực tiếp bên dưới ô nhập đề (`#composer-assist-panel`):
+ * 1. `needs_selection`: khi ảnh/PDF/DOCX có nhiều bài độc lập mà học sinh chưa gõ chỉ dẫn chọn bài,
+ *    hiển thị các nút ứng viên để chạm chọn 1 bước (không bắt kéo khung crop).
+ * 2. `needs_confirmation`: khi trích xuất ảnh có ký hiệu chưa chắc chắn hoặc vùng bị che khuất,
+ *    hiển thị đúng danh sách điểm cần kiểm tra kèm ô sửa nhanh văn bản trước khi dựng hình 3D.
  */
 export interface PhotoProblemPanelProps {
-  state: PhotoState;
-  onEdit(text: string): void;
-  onConfirm(value: boolean): void;
+  state: UnifiedAssistState;
+  busy?: boolean;
+  onSelectCandidate(candidateId: string): void;
+  onEditDraft(text: string): void;
+  onToggleConfirm(value: boolean): void;
+  onSubmitConfirmed(): void;
+  onDismiss(): void;
 }
 
-function Khoi({ tieuDe, muc }: { tieuDe: string; muc: string[] }) {
-  if (muc.length === 0) return null;
-  return (
-    <div className="photo-block">
-      <h3 className="photo-block-title">{tieuDe}</h3>
-      <ul className="photo-list">
-        {muc.map((m, i) => (
-          <li key={i}>{m}</li>
-        ))}
-      </ul>
-    </div>
-  );
-}
+export function PhotoProblemPanel({
+  state,
+  busy = false,
+  onSelectCandidate,
+  onEditDraft,
+  onToggleConfirm,
+  onSubmitConfirmed,
+  onDismiss,
+}: PhotoProblemPanelProps) {
+  if (state.phase === "idle") return null;
 
-export function PhotoProblemPanel({ state, onEdit, onConfirm }: PhotoProblemPanelProps) {
-  const danhGia = state.response?.assessment;
-  const trich = state.response?.extraction;
-  if (!danhGia || !trich) return null;
-  const chan = acceptBlocker(state);
-
-  return (
-    <div className="photo-review">
-      {danhGia.status === "rejected" && danhGia.learner_message && (
-        <div className="photo-alert" role="alert">
-          {danhGia.learner_message}
+  if (state.phase === "needs_selection") {
+    return (
+      <section
+        className="composer-assist-card"
+        id="composer-candidate-picker"
+        aria-label="Chọn bài toán cần dựng hình"
+      >
+        <div className="composer-assist-head">
+          <p className="composer-assist-title" role="status" aria-live="polite">
+            {state.learnerMessage ?? "Chọn bài toán muốn dựng hình"}
+          </p>
+          <button
+            type="button"
+            className="context-close-icon-btn"
+            onClick={onDismiss}
+            disabled={busy}
+            aria-label="Đóng bảng chọn bài"
+          >
+            <IconClose size={15} />
+          </button>
         </div>
-      )}
-      {danhGia.flag_messages.length > 0 && (
+
+        <div className="composer-candidate-list" role="list">
+          {state.candidates.map((cand) => (
+            <button
+              key={cand.candidate_id}
+              type="button"
+              className="composer-candidate-btn"
+              data-candidate-id={cand.candidate_id}
+              disabled={busy}
+              onClick={() => onSelectCandidate(cand.candidate_id)}
+            >
+              {cand.preview_data_url && (
+                <img
+                  className="composer-candidate-thumb"
+                  src={cand.preview_data_url}
+                  alt={cand.label}
+                />
+              )}
+              <span className="composer-candidate-meta">
+                <span className="composer-candidate-label">{cand.label}</span>
+                {cand.preview_snippet && (
+                  <span className="composer-candidate-snippet">{cand.preview_snippet}</span>
+                )}
+              </span>
+            </button>
+          ))}
+        </div>
+      </section>
+    );
+  }
+
+  const blocker = assistBlocker(state);
+  const canConfirm = canConfirmAssistText(state) && !busy;
+
+  return (
+    <section
+      className="composer-assist-card photo-review"
+      id="composer-extraction-confirm"
+      aria-label="Xác nhận nội dung trích xuất"
+    >
+      <div className="composer-assist-head">
+        <p className="composer-assist-title" role="status" aria-live="polite">
+          {state.learnerMessage ?? "Kiểm tra nhanh nội dung trước khi dựng hình"}
+        </p>
+        <button
+          type="button"
+          className="context-close-icon-btn"
+          onClick={onDismiss}
+          disabled={busy}
+          aria-label="Đóng bảng xác nhận"
+        >
+          <IconClose size={15} />
+        </button>
+      </div>
+
+      {state.flagMessages.length > 0 && (
         <ul className="photo-warnings">
-          {danhGia.flag_messages.map((m) => (
+          {state.flagMessages.map((m) => (
             <li key={m}>{m}</li>
           ))}
         </ul>
       )}
 
+      {state.uncertainTokens.length > 0 && (
+        <div className="photo-block">
+          <h3 className="photo-block-title">Chỗ đọc chưa chắc chắn</h3>
+          <ul className="photo-list">
+            {state.uncertainTokens.map((t, idx) => (
+              <li key={`${t.token}-${idx}`}>{describeUncertainToken(t)}</li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      {state.missingRegions.length > 0 && (
+        <div className="photo-block">
+          <h3 className="photo-block-title">Phần nội dung nghi bị che hoặc mất</h3>
+          <ul className="photo-list">
+            {state.missingRegions.map((m, idx) => (
+              <li key={idx}>{m}</li>
+            ))}
+          </ul>
+        </div>
+      )}
+
       <label className="photo-label" htmlFor="photo-problem-text">
-        Nội dung đề đọc từ ảnh — em sửa ký hiệu, tên đỉnh, số liệu nếu đọc sai
+        Nội dung đề sẽ dùng để dựng hình — em sửa lại ký hiệu nếu cần
       </label>
       <textarea
         id="photo-problem-text"
         className="photo-text"
-        rows={7}
-        value={state.text}
-        onChange={(e) => onEdit(e.target.value)}
+        rows={4}
+        value={state.draftText}
+        onChange={(e) => onEditDraft(e.target.value)}
+        disabled={busy}
         spellCheck={false}
       />
 
-      {needsConfirmation(state) && (
-        <label className="photo-confirm">
-          <input type="checkbox" checked={state.confirmed} onChange={(e) => onConfirm(e.target.checked)} />
-          <span>Em đã đọc lại và sửa nội dung cho khớp với ảnh</span>
-        </label>
-      )}
-      {chan && (
-        <p id="photo-accept-hint" className="hint">
-          {chan}
+      <label className="photo-confirm">
+        <input
+          type="checkbox"
+          id="chk-confirm-extracted-text"
+          checked={state.confirmed}
+          disabled={busy}
+          onChange={(e) => onToggleConfirm(e.target.checked)}
+        />
+        <span>Em đã kiểm tra và xác nhận nội dung đề khớp với tài liệu</span>
+      </label>
+
+      {blocker && (
+        <p id="photo-accept-hint" className="composer-assist-hint">
+          {blocker}
         </p>
       )}
 
-      <Khoi tieuDe="Chỗ đọc chưa chắc chắn" muc={trich.uncertain_tokens.map(describeUncertainToken)} />
-      <Khoi tieuDe="Phần ảnh không đọc được" muc={trich.missing_regions} />
-      <Khoi tieuDe="Chữ và hình vẽ mâu thuẫn" muc={trich.text_diagram_conflicts} />
-      <Khoi
-        tieuDe="Công thức đã chuẩn hoá"
-        muc={trich.math_expressions.map((e) =>
-          e.normalized === e.verbatim ? e.normalized : `${e.normalized}  (ảnh ghi: ${e.verbatim})`,
-        )}
-      />
-      <Khoi tieuDe="Quan sát từ hình vẽ — chỉ để tham khảo, không dùng làm dữ kiện" muc={trich.diagram_observations} />
-
-      <details className="photo-details">
-        <summary>Bản chép nguyên văn từ ảnh</summary>
-        <pre className="photo-verbatim">{trich.problem_text_verbatim || "(không đọc được chữ nào)"}</pre>
-      </details>
-    </div>
+      <div className="photo-dialog-actions">
+        <button type="button" className="btn-utility" onClick={onDismiss} disabled={busy}>
+          Huỷ
+        </button>
+        <button
+          type="button"
+          id="btn-confirm-extracted-build"
+          className="btn-primary"
+          disabled={!canConfirm}
+          onClick={onSubmitConfirmed}
+        >
+          Xác nhận & Dựng hình
+        </button>
+      </div>
+    </section>
   );
 }

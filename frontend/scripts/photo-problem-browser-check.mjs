@@ -1,205 +1,321 @@
 /**
- * photo-problem-browser-check.mjs — CAMERA-FIRST → KHOANH VÙNG/XOAY → ĐỌC → XEM LẠI → Ô NHẬP → DỰNG & TOOLBAR 3D.
+ * photo-problem-browser-check.mjs — Ô NHẬP THỐNG NHẤT · CAMERA-FIRST TỐI GIẢN · ĐÍNH KÈM ẢNH/PDF/DOCX · CHỈ XỬ LÝ KHI BẤM "DỰNG HÌNH" · SCENE3D.
  *
- * Run `image-capture-crop-extraction` trên Chrome thật với bản dựng tĩnh `dist/`, **0 lượt gọi model**: mọi `/api/*`
- * bị chặn ở BIÊN MẠNG (`interceptJson`) và trả JSON đóng băng (phản hồi đọc ảnh do backend dựng, envelope p3).
- * Máy ảnh là máy ảnh GIẢ: `getUserMedia` + `enumerateDevices` bị thay bằng luồng `canvas.captureStream()` (hoặc từ chối
- * `NotAllowedError` / vắng camera sau `OverconstrainedError`).
+ * Chạy trên Chrome thật với bản dựng tĩnh `dist/`, **0 lượt gọi model thật**: mọi `/api/*`
+ * bị chặn ở BIÊN MẠNG (`interceptJson`) và trả JSON đóng băng khớp hợp đồng `POST /api/input/prepare` + `POST /api/analyze`.
+ * Máy ảnh là máy ảnh GIẢ LẬP (`getUserMedia` + `enumerateDevices` qua `canvas.captureStream()`).
  *
- * ⚠️ Bằng chứng FIXTURE cho GIAO DIỆN. Không chứng minh provider thật đọc được ảnh thật, cũng không chứng minh máy ảnh
- * vật lý trên thiết bị thật (`REAL_CAMERA_DEVICE_VERIFIED = NO`, `REAL_DEVICE_CAMERA_NOT_VERIFIED`).
+ * Bằng chứng FIXTURE cho GIAO DIỆN & LUỒNG TƯƠNG TÁC:
+ * - `REAL_CAMERA_DEVICE_VERIFIED = "NO"` (`REAL_DEVICE_CAMERA_NOT_VERIFIED`)
+ * - `LIVE_GEMINI_IMAGE_EXTRACTION_VERIFIED = "NO"`
+ * - `APPLICATION_LLM_CALLS = 0`
  *
- * Khung: 1440×900 · 1309×818 DPR 1.1 (Chrome phóng 110 %) · 768×1024 DPR 2 (Tablet chạm) · 390×844 DPR 2 (Mobile chạm).
- * Kiểm:
- *   A  tải trang KHÔNG gọi camera; bấm “Chụp ảnh đề bài” mở THẲNG màn camera (không qua hộp thoại chọn trung gian),
- *      desktop ưu tiên webcam mặc định, mobile/tablet ưu tiên facingMode environment; đổi máy ảnh dừng luồng cũ → chụp
- *      dừng luồng mới → vào chỉnh ảnh; đổi ảnh → chọn ảnh có sẵn dừng camera & KHÔNG tự đọc; đặt lại khung + kéo khung
- *      (chuột / chạm) đúng vùng đỏ ⇒ ảnh GỬI ĐI có đúng cỡ 600×400 đỏ; bấm Đọc hai lần = MỘT yêu cầu; xem lại + sửa ký
- *      hiệu toán; hỏi trước khi thay chữ đang gõ; “Dùng đề này” KHÔNG tự gọi /api/analyze; thu hồi hết object URL; bấm
- *      #btn-composer-send ⇒ /api/analyze nhận đúng văn bản đã sửa → cảnh 3D; thanh công cụ 3D không còn #btn-undo-interaction
- *      dư thừa và vẫn giữ đủ #btn-reset-pos, #btn-xray, điều hướng bước #pa-next
- *   B  ảnh dọc + Xoay phải + Giữ nguyên ⇒ gửi TỆP GỐC nguyên byte + rotation 90; Escape giữ chữ đang gõ; mở lại vào thẳng camera
- *   C  Xoay phải rồi cắt ⇒ vùng gửi đi đổi chiều đúng (400×600), vẫn đỏ
- *   D  ảnh EXIF orientation 6 ⇒ khoanh theo ảnh NGƯỜI HỌC THẤY (đã áp EXIF), vùng gửi đi đúng
- *   E  máy chủ tắt đọc ảnh (503 LIVE_AI_DISABLED) ⇒ lời người học, không lộ tên cấu hình; thử lại được
- *   F  đóng hộp thoại khi đang mở máy ảnh ⇒ mọi track kết thúc (`ended`); trên mobile khi camera sau báo OverconstrainedError ⇒ tự fallback
- *   G  từ chối quyền máy ảnh ⇒ lời dễ hiểu, bấm chọn ảnh từ máy ngay tại chỗ (không bật hộp thoại chọn khác)
- *   H  không tràn ngang ở cả camera · khoanh vùng · xem lại; bẫy Tab giữ focus trong hộp thoại
- *   I  luồng GÕ TAY không hồi quy
+ * Bốn khung nhìn bắt buộc (§22):
+ *   1. Desktop 1440×900 DPR 1
+ *   2. Chrome phóng 110% (1309×818 DPR 1.1)
+ *   3. Tablet 768×1024 DPR 2 (chạm)
+ *   4. Mobile 390×844 DPR 2 (chạm)
  *
- * Cờ: --bo-qua-build · --ra <thư mục> · --tiem <lech-khung|tu-dong-doc>
- * ⚠️ Backtick KHÔNG được xuất hiện trong chuỗi tiêm vào trang.
+ * Quy tắc: KHÔNG BAO GIỜ dùng ký tự backtick bên trong chuỗi JS tiêm vào trình duyệt.
  */
-import { mkdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
+import { mkdtempSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { execFileSync } from "node:child_process";
+import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 import { BrowserSession, sleep } from "./browser-runner.mjs";
 import { kiemDistMoi, phucVu } from "./scene3d-orbit-gate.mjs";
 
-const CO = Object.fromEntries(process.argv.slice(2).reduce((a, x, i, ds) => {
-  if (x.startsWith("--")) a.push([x.slice(2), ds[i + 1]?.startsWith("--") ? true : ds[i + 1] ?? true]);
-  return a;
-}, []));
+const CO = Object.fromEntries(
+  process.argv.slice(2).reduce((a, x, i, ds) => {
+    if (x.startsWith("--")) {
+      a.push([x.slice(2), ds[i + 1]?.startsWith("--") ? true : ds[i + 1] ?? true]);
+    }
+    return a;
+  }, []),
+);
+
 const GOC = resolve(import.meta.dirname, "..", "..");
 const FE = join(GOC, "frontend");
 const DIST = join(FE, "dist");
 const RUN = join(GOC, "docs", "evaluation", "geometry", "runs", "image-capture-crop-extraction");
 const RA = resolve(CO.ra ?? join(RUN, "browser"));
-const TIEM = CO.tiem ? String(CO.tiem) : null;
 
-const CU = join(GOC, "docs", "evaluation", "geometry", "photo-problem-to-scene");
-const REVIEW = JSON.parse(readFileSync(join(CU, "browser_fixture_review.json"), "utf-8"));
-const ENVELOPE = JSON.parse(readFileSync(join(GOC, "docs", "evaluation", "geometry",
-  "product-ui-result-rendering", "fixtures", "p3_mat_cau_va_thiet_dien_tron.json"), "utf-8")).envelope;
-const FX = JSON.parse(readFileSync(join(RUN, "fixtures", "fixtures.json"), "utf-8"));
-const anh = (k) => join(RUN, "fixtures", FX[k].file);
-const DE_GOC = REVIEW.assessment.problem_text;
-const DE_SUA = DE_GOC.replace("I(0;0;0)", "I(0; 0; 0)") + "\nSA ⊥ SB, AB ∥ CD, A′.";
-const DE_CU = "Đề em đang gõ dở.";
-const DE_GO_TAY = "Cho hình chóp S.ABCD có đáy là hình vuông cạnh 2, SA vuông góc với đáy, SA = 3. Tính thể tích khối chóp.";
+const ENVELOPE = JSON.parse(
+  readFileSync(
+    join(
+      GOC,
+      "docs",
+      "evaluation",
+      "geometry",
+      "product-ui-result-rendering",
+      "fixtures",
+      "p3_mat_cau_va_thiet_dien_tron.json",
+    ),
+    "utf-8",
+  ),
+).envelope;
 
-/* Ghi lại TRONG TRANG: yêu cầu /api/*, thân yêu cầu đọc ảnh, object URL còn sống, cú bấm input tệp. */
-const MOC = "(function(){var goc=window.fetch;window.__ANH__=[];window.__THAN_ANH__=null;"
+const ANH_CORPUS = join(
+  GOC,
+  "docs",
+  "evaluation",
+  "geometry",
+  "photo-problem-to-scene",
+  "corpus",
+  "c08_de_va_hinh_chop.png",
+);
+
+const DE_BO_SUNG = "Hình vẽ nằm trong file, dữ kiện bổ sung là SA = 4";
+const DE_TRICH_XUAT =
+  "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với mặt phẳng đáy. Biết SA = 4. Tính thể tích khối chóp S.ABCD.";
+const DE_BAI_2 =
+  "Cho mặt cầu tâm I bán kính R = 5 và mặt phẳng (P) cách I một khoảng bằng 3. Dựng đường tròn giao tuyến của (P) và mặt cầu.";
+const DE_CHUA_CHAC =
+  "Cho mặt cầu tâm I(0;0;0) bán kính R = 5 cắt mặt phẳng (P) theo giao tuyến đường tròn.";
+const DE_DA_SUA =
+  "Cho mặt cầu tâm I(0; 0; 0) bán kính R = 5 cắt mặt phẳng (P) theo giao tuyến đường tròn, SA ⊥ SB, A′.";
+const DE_GO_TAY =
+  "Cho hình chóp S.ABCD có đáy là hình vuông cạnh 2, SA vuông góc với đáy, SA = 3. Tính thể tích khối chóp.";
+
+/** Sinh bảng CRC32 & gói ZIP STORE không nén để tạo tệp .docx hợp lệ 100% trong thư mục tạm. */
+const CRC_TABLE = (() => {
+  const t = new Uint32Array(256);
+  for (let i = 0; i < 256; i++) {
+    let c = i;
+    for (let k = 0; k < 8; k++) c = c & 1 ? 0xedb88320 ^ (c >>> 1) : c >>> 1;
+    t[i] = c >>> 0;
+  }
+  return t;
+})();
+
+function crc32(buf) {
+  let c = 0xffffffff;
+  for (let i = 0; i < buf.length; i++) c = CRC_TABLE[(c ^ buf[i]) & 0xff] ^ (c >>> 8);
+  return (c ^ 0xffffffff) >>> 0;
+}
+
+function buildMinimalStoreZip(entries) {
+  const localParts = [];
+  const centralParts = [];
+  let offset = 0;
+  for (const [name, contentStr] of entries) {
+    const nameBuf = Buffer.from(name, "utf-8");
+    const dataBuf = Buffer.from(contentStr, "utf-8");
+    const sum = crc32(dataBuf);
+
+    const lh = Buffer.alloc(30);
+    lh.writeUInt32LE(0x04034b50, 0);
+    lh.writeUInt16LE(20, 4);
+    lh.writeUInt16LE(0, 6);
+    lh.writeUInt16LE(0, 8);
+    lh.writeUInt16LE(0, 10);
+    lh.writeUInt16LE(0, 12);
+    lh.writeUInt32LE(sum, 14);
+    lh.writeUInt32LE(dataBuf.length, 18);
+    lh.writeUInt32LE(dataBuf.length, 22);
+    lh.writeUInt16LE(nameBuf.length, 26);
+    lh.writeUInt16LE(0, 28);
+    localParts.push(lh, nameBuf, dataBuf);
+
+    const ch = Buffer.alloc(46);
+    ch.writeUInt32LE(0x02014b50, 0);
+    ch.writeUInt16LE(20, 4);
+    ch.writeUInt16LE(20, 6);
+    ch.writeUInt16LE(0, 8);
+    ch.writeUInt16LE(0, 10);
+    ch.writeUInt16LE(0, 12);
+    ch.writeUInt16LE(0, 14);
+    ch.writeUInt32LE(sum, 16);
+    ch.writeUInt32LE(dataBuf.length, 20);
+    ch.writeUInt32LE(dataBuf.length, 24);
+    ch.writeUInt16LE(nameBuf.length, 28);
+    ch.writeUInt16LE(0, 30);
+    ch.writeUInt16LE(0, 32);
+    ch.writeUInt16LE(0, 34);
+    ch.writeUInt16LE(0, 36);
+    ch.writeUInt32LE(0, 38);
+    ch.writeUInt32LE(offset, 42);
+    centralParts.push(ch, nameBuf);
+
+    offset += lh.length + nameBuf.length + dataBuf.length;
+  }
+  const centralBuf = Buffer.concat(centralParts);
+  const eocd = Buffer.alloc(22);
+  eocd.writeUInt32LE(0x06054b50, 0);
+  eocd.writeUInt16LE(0, 4);
+  eocd.writeUInt16LE(0, 6);
+  eocd.writeUInt16LE(entries.length, 8);
+  eocd.writeUInt16LE(entries.length, 10);
+  eocd.writeUInt32LE(centralBuf.length, 12);
+  eocd.writeUInt32LE(offset, 16);
+  eocd.writeUInt16LE(0, 20);
+  return Buffer.concat([...localParts, centralBuf, eocd]);
+}
+
+function taoTepTam(thuMucTam) {
+  const pdfPath = join(thuMucTam, "de-hinh-khong-gian.pdf");
+  const pdfMultiPath = join(thuMucTam, "de-nhieu-bai.pdf");
+  const docxPath = join(thuMucTam, "de-chop-sabcd.docx");
+  const minimalPdf = Buffer.from(
+    "%PDF-1.4\n1 0 obj<</Type/Catalog/Pages 2 0 R>>endobj\n2 0 obj<</Type/Pages/Count 1/Kids[3 0 R]>>endobj\n3 0 obj<</Type/Page/Parent 2 0 R/MediaBox[0 0 595 842]>>endobj\ntrailer<</Root 1 0 R>>\n%%EOF\n",
+    "utf-8",
+  );
+  writeFileSync(pdfPath, minimalPdf);
+  writeFileSync(pdfMultiPath, minimalPdf);
+  const docxBuf = buildMinimalStoreZip([
+    [
+      "[Content_Types].xml",
+      '<?xml version="1.0" encoding="UTF-8"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"/>',
+    ],
+    [
+      "word/document.xml",
+      '<?xml version="1.0" encoding="UTF-8"?><w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:body><w:p><w:r><w:t>Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với đáy.</w:t></w:r></w:p></w:body></w:document>',
+    ],
+  ]);
+  writeFileSync(docxPath, docxBuf);
+  return { pdfPath, pdfMultiPath, docxPath };
+}
+
+/* Ghi nhận trong trang: mọi yêu cầu /api/*, các objectURL đang sống, cú bấm input[capture]. Không chứa backtick. */
+const MOC =
+  "(function(){var goc=window.fetch;window.__API__=[];"
   + "window.fetch=function(u,o){try{var url=String((u&&u.url)||u);if(url.indexOf('/api/')>=0){"
-  + "var b=o&&o.body?String(o.body):'';var r={url:url,len:b.length};"
-  + "if(url.indexOf('/api/image/extract')>=0){var j=JSON.parse(b);r.rotation=j.rotation;r.mime=j.mime_type;r.contentLen=(j.content||'').length;window.__THAN_ANH__=j;}"
+  + "var b=o&&o.body?String(o.body):'';var r={url:url,len:b.length,ts:Date.now()};"
+  + "if(url.indexOf('/api/input/prepare')>=0){var j=JSON.parse(b);r.filename=j.filename;r.mime=j.mime_type;r.userText=j.user_text||null;r.selectedCandidateId=j.selected_candidate_id||null;r.contentLen=(j.content||'').length;}"
   + "if(url.indexOf('/api/analyze')>=0){var k=JSON.parse(b);r.input=k.input;}"
-  + "window.__ANH__.push(r);}}catch(e){}return goc.apply(this,arguments);};"
+  + "window.__API__.push(r);}}catch(e){}return goc.apply(this,arguments);};"
   + "var tao=URL.createObjectURL.bind(URL),thu=URL.revokeObjectURL.bind(URL);window.__URL__=new Set();"
   + "URL.createObjectURL=function(x){var u=tao(x);window.__URL__.add(u);return u;};"
   + "URL.revokeObjectURL=function(u){window.__URL__.delete(u);return thu(u);};"
   + "var bam=HTMLInputElement.prototype.click;window.__BAM_INPUT__=[];"
-  + "HTMLInputElement.prototype.click=function(){window.__BAM_INPUT__.push({type:this.type,capture:this.getAttribute('capture')});"
+  + "HTMLInputElement.prototype.click=function(){window.__BAM_INPUT__.push({id:this.id||'',type:this.type,capture:this.getAttribute('capture')});"
   + "if(this.getAttribute('capture'))return;return bam.apply(this,arguments);};})();";
 
-/* Máy ảnh GIẢ: 2 videoinput (cam-1 1280×720, cam-2 960×720), ghi nhận constraints, đếm stop(), kiểm từ chối & fallback. */
-const MAY_ANH = (cheDo) => "(function(){window.__CAM__={calls:0,stopped:0,streams:[],constraints:[]};"
-  + "if(!navigator.mediaDevices)return;"
-  + "navigator.mediaDevices.enumerateDevices=function(){return Promise.resolve("
-  + (cheDo === "khong-co"
-    ? "[]"
-    : "[{deviceId:'cam-1',kind:'videoinput',label:'Camera 1',groupId:'g1'},{deviceId:'cam-2',kind:'videoinput',label:'Camera 2',groupId:'g2'}]")
-  + ");};"
-  + "navigator.mediaDevices.getUserMedia=function(c){window.__CAM__.calls++;"
-  + "try{window.__CAM__.constraints.push(JSON.parse(JSON.stringify(c||{})));}catch(e){window.__CAM__.constraints.push({});}"
-  + (cheDo === "tu-choi"
-    ? "return Promise.reject(new DOMException('denied','NotAllowedError'));"
-    : cheDo === "khong-co"
-      ? "return Promise.reject(new DOMException('none','NotFoundError'));"
-      : (cheDo === "sau-vang"
+/* Máy ảnh giả lập: 2 camera, 1 camera, từ chối quyền, không có thiết bị, bận thiết bị, hoặc lỗi camera sau trên di động. */
+function taoMayAnhGia(cheDo) {
+  const dsThietBi =
+    cheDo === "khong-co"
+      ? "[]"
+      : cheDo === "mot-cam"
+        ? "[{deviceId:'cam-1',kind:'videoinput',label:'Camera 1',groupId:'g1'}]"
+        : "[{deviceId:'cam-1',kind:'videoinput',label:'Camera 1',groupId:'g1'},{deviceId:'cam-2',kind:'videoinput',label:'Camera 2',groupId:'g2'}]";
+
+  let thanGetUserMedia = "";
+  if (cheDo === "tu-choi") {
+    thanGetUserMedia = "return Promise.reject(new DOMException('denied','NotAllowedError'));";
+  } else if (cheDo === "khong-co") {
+    thanGetUserMedia = "return Promise.reject(new DOMException('none','NotFoundError'));";
+  } else if (cheDo === "ban") {
+    thanGetUserMedia = "return Promise.reject(new DOMException('busy','NotReadableError'));";
+  } else {
+    const loiCamSau =
+      cheDo === "sau-vang"
         ? "if(c&&c.video&&typeof c.video==='object'&&c.video.facingMode){return Promise.reject(new DOMException('no-rear','OverconstrainedError'));}"
-        : "")
-        + "var dev=(c&&c.video&&typeof c.video==='object'&&c.video.deviceId&&c.video.deviceId.exact)?c.video.deviceId.exact:'cam-1';"
-        + "var cv=document.createElement('canvas');cv.width=(dev==='cam-2'?960:1280);cv.height=720;var x=cv.getContext('2d');"
-        + "function ve(){x.fillStyle='#ffffff';x.fillRect(0,0,cv.width,cv.height);x.fillStyle='#dc0000';x.fillRect(240,180,480,320);}"
-        + "ve();var s=cv.captureStream(15);var t=setInterval(ve,100);s.getTracks().forEach(function(k){"
-        + "k.getSettings=function(){return {deviceId:dev,width:cv.width,height:cv.height};};"
-        + "var st=k.stop.bind(k);k.stop=function(){window.__CAM__.stopped++;clearInterval(t);st();};});"
-        + "window.__CAM__.streams.push(s);return Promise.resolve(s);")
-  + "};})();";
+        : "";
+    thanGetUserMedia =
+      loiCamSau
+      + "var dev=(c&&c.video&&typeof c.video==='object'&&c.video.deviceId&&c.video.deviceId.exact)?c.video.deviceId.exact:'cam-1';"
+      + "var cv=document.createElement('canvas');cv.width=(dev==='cam-2'?960:1280);cv.height=720;var x=cv.getContext('2d');"
+      + "function ve(){x.fillStyle='#f8fafc';x.fillRect(0,0,cv.width,cv.height);x.fillStyle='#1e293b';x.fillRect(180,140,cv.width-360,cv.height-280);}"
+      + "ve();var s=cv.captureStream(15);var t=setInterval(ve,100);s.getTracks().forEach(function(k){"
+      + "k.getSettings=function(){return {deviceId:dev,width:cv.width,height:cv.height};};"
+      + "var st=k.stop.bind(k);k.stop=function(){window.__CAM__.stopped++;clearInterval(t);st();};});"
+      + "window.__CAM__.streams.push(s);return Promise.resolve(s);";
+  }
+
+  return (
+    "(function(){window.__CAM__={calls:0,stopped:0,streams:[],constraints:[]};"
+    + "if(!navigator.mediaDevices)return;"
+    + "navigator.mediaDevices.enumerateDevices=function(){return Promise.resolve("
+    + dsThietBi
+    + ");};"
+    + "navigator.mediaDevices.getUserMedia=function(c){window.__CAM__.calls++;"
+    + "try{window.__CAM__.constraints.push(JSON.parse(JSON.stringify(c||{})));}catch(e){window.__CAM__.constraints.push({});}"
+    + thanGetUserMedia
+    + "};})()"
+  );
+}
+
+if (MOC.includes("\x60") || taoMayAnhGia("gia").includes("\x60")) {
+  throw new Error("Chuỗi tiêm vào trình duyệt tuyệt đối không được chứa ký tự backtick.");
+}
 
 async function cho(sess, bieuThuc, ms = 20000) {
   const t0 = Date.now();
   while (Date.now() - t0 < ms) {
-    if (await sess.eval(`(function(){try{return !!(${bieuThuc})}catch(e){return false}})()`)) return true;
-    await sleep(120);
+    const ok = await sess.eval("(function(){try{return !!(" + bieuThuc + ")}catch(e){return false}})()");
+    if (ok) return true;
+    await sleep(110);
   }
   return false;
 }
 
-const json = async (sess, bieuThuc) => JSON.parse(await sess.eval(`(async function(){return JSON.stringify(await (${bieuThuc}));})()`));
+const json = async (sess, bieuThuc) =>
+  JSON.parse(await sess.eval("(async function(){return JSON.stringify(await (" + bieuThuc + "));})()"));
 
 async function datTep(sess, selector, duongDan) {
-  const r = await sess._send("Runtime.evaluate", { expression: `document.querySelector(${JSON.stringify(selector)})` });
+  const r = await sess._send("Runtime.evaluate", {
+    expression: "document.querySelector(" + JSON.stringify(selector) + ")",
+  });
   const objectId = r.result?.result?.objectId;
   if (!objectId) return false;
   await sess._send("DOM.setFileInputFiles", { files: [duongDan], objectId });
   return true;
 }
-const INPUT_TAI = "input[type=file][accept='image/png,image/jpeg,image/webp']:not([capture])";
 
-/** Bấm nút theo CHỮ (trong hộp thoại nếu có). `lan = 2` ⇒ hai cú bấm trong CÙNG một khung. */
-function bam(sess, chu, lan = 1) {
-  return sess.eval("(function(){var g=document.querySelector('[role=dialog]')||document;"
-    + "var b=Array.prototype.slice.call(g.querySelectorAll('button'))"
-    + `.find(function(x){return x.textContent.replace(/\\s+/g,' ').trim()===${JSON.stringify(chu)}});`
-    + `if(!b||b.disabled)return false;for(var i=0;i<${lan};i++)b.click();return true})()`);
-}
+const INPUT_ANH_PHU = "input[type=file][accept='image/png,image/jpeg,image/webp']:not([capture])";
 
 function goChu(sess, selector, giaTri) {
-  return sess.eval(`(function(){var t=document.querySelector(${JSON.stringify(selector)});if(!t)return false;`
-    + "var set=Object.getOwnPropertyDescriptor(HTMLTextAreaElement.prototype,'value').set;"
-    + `set.call(t,${JSON.stringify(giaTri)});t.dispatchEvent(new Event('input',{bubbles:true}));return true})()`);
+  return sess.eval(
+    "(function(){var t=document.querySelector("
+      + JSON.stringify(selector)
+      + ");if(!t)return false;"
+      + "var set=Object.getOwnPropertyDescriptor(HTMLTextAreaElement.prototype,'value').set;"
+      + "set.call(t,"
+      + JSON.stringify(giaTri)
+      + ");t.dispatchEvent(new Event('input',{bubbles:true}));return true})()",
+  );
 }
 
-const manHinh = (sess) => sess.eval("(function(){var d=document.querySelector('[role=dialog]');return d?d.getAttribute('data-photo-screen'):null})()");
-
-async function moHopThoai(sess) {
+async function moCameraTuMenu(sess) {
   await sess.eval("(function(){document.querySelector('#btn-composer-plus').click();return 1})()");
   await cho(sess, "document.querySelector('#menu-item-camera')", 4000);
   await sess.eval("(function(){document.querySelector('#menu-item-camera').click();return 1})()");
-  return cho(sess, "document.querySelector('[role=dialog][data-photo-screen]')", 4000);
+  return cho(sess, "document.querySelector('#photo-camera-dialog')", 4000);
 }
 
-/** Kéo từ (x1, y1) tới (x2, y2): chuột (desktop) hoặc chạm (tablet/mobile) — đều sinh pointer event thật. */
-async function keo(sess, x1, y1, x2, y2, cham) {
-  const buoc = 8;
-  if (cham) {
-    await sess._send("Input.dispatchTouchEvent", { type: "touchStart", touchPoints: [{ x: x1, y: y1 }] });
-    for (let i = 1; i <= buoc; i++) {
-      await sess._send("Input.dispatchTouchEvent", { type: "touchMove",
-        touchPoints: [{ x: x1 + ((x2 - x1) * i) / buoc, y: y1 + ((y2 - y1) * i) / buoc }] });
-    }
-    await sess._send("Input.dispatchTouchEvent", { type: "touchEnd", touchPoints: [] });
-  } else {
-    await sess._send("Input.dispatchMouseEvent", { type: "mouseMoved", x: x1, y: y1 });
-    await sess._send("Input.dispatchMouseEvent", { type: "mousePressed", x: x1, y: y1, button: "left", buttons: 1, clickCount: 1 });
-    for (let i = 1; i <= buoc; i++) {
-      await sess._send("Input.dispatchMouseEvent", { type: "mouseMoved", button: "left", buttons: 1,
-        x: x1 + ((x2 - x1) * i) / buoc, y: y1 + ((y2 - y1) * i) / buoc });
-    }
-    await sess._send("Input.dispatchMouseEvent", { type: "mouseReleased", x: x2, y: y2, button: "left", buttons: 0, clickCount: 1 });
-  }
-  await sleep(150);
+async function trongKhung(sess, rongThietBi) {
+  return json(
+    sess,
+    "(function(){var w="
+      + String(rongThietBi)
+      + ";var ra={thietBi:w,innerWidth:window.innerWidth,cuonNgang:document.documentElement.scrollWidth,ngoai:[]};"
+      + "Array.prototype.slice.call(document.querySelectorAll('#home-composer-box,[role=dialog],[role=dialog] button,.photo-camera-stage,#composer-candidate-picker,#composer-extraction-confirm')).forEach(function(e){"
+      + "var r=e.getBoundingClientRect();if(r.width>0&&(r.left<-1.5||r.right>w+1.5))ra.ngoai.push({id:e.id||String(e.className),trai:Math.round(r.left),phai:Math.round(r.right)});});"
+      + "return ra;})()",
+  );
 }
 
-/** Kéo góc TRÊN-TRÁI và DƯỚI-PHẢI của khung (đang = cả ảnh) tới vùng đỏ [x0, y0, x1, y1] (pixel gốc của ảnh hiển thị). */
-async function khoanh(sess, red, cham) {
-  const docHinh = () => json(sess, "(function(){var i=document.querySelector('.photo-crop-image');var r=i.getBoundingClientRect();"
-    + "var tay=function(o){var h=document.querySelector('.ReactCrop__drag-handle.ord-'+o).getBoundingClientRect();return [h.left+h.width/2,h.top+h.height/2]};"
-    + "return {l:r.left,t:r.top,w:r.width,h:r.height,nw:i.naturalWidth,nh:i.naturalHeight,tl:tay('nw'),br:tay('se')}})()");
-  const hinh = await docHinh();
-  const lech = TIEM === "lech-khung" ? 40 : 0;
-  const den = (h, px, py) => [h.l + (px / h.nw) * h.w + lech, h.t + (py / h.nh) * h.h];
-  const [ax, ay] = den(hinh, red[0], red[1]);
-  await keo(sess, hinh.tl[0], hinh.tl[1], ax, ay, cham);
-  const hinh2 = await docHinh();
-  const [bx, by] = den(hinh2, red[2] + 1, red[3] + 1);
-  await keo(sess, hinh2.br[0], hinh2.br[1], bx, by, cham);
-  return hinh2;
-}
-
-/** Giải mã ẢNH ĐÃ GỬI trong trang: cỡ thật + màu tại bốn góc trong (6 %) và tâm. */
-function giaiMaAnhGui(sess) {
-  return json(sess, "new Promise(function(res){var j=window.__THAN_ANH__;if(!j){res(null);return;}var im=new Image();"
-    + "im.onload=function(){var c=document.createElement('canvas');c.width=im.naturalWidth;c.height=im.naturalHeight;var x=c.getContext('2d');x.drawImage(im,0,0);"
-    + "var w=c.width,h=c.height,p=function(fx,fy){var d=x.getImageData(Math.floor(w*fx),Math.floor(h*fy),1,1).data;return [d[0],d[1],d[2]]};"
-    + "res({w:w,h:h,mime:j.mime_type,rotation:j.rotation,mau:[p(0.06,0.06),p(0.94,0.06),p(0.06,0.94),p(0.94,0.94),p(0.5,0.5)]});};"
-    + "im.onerror=function(){res({loi:1})};im.src='data:'+j.mime_type+';base64,'+j.content;})");
-}
-const doHet = (mau) => mau.every(([r, g, b]) => r > 170 && g < 70 && b < 70);
-const gan = (a, b, sai = 6) => Math.abs(a - b) <= sai;
-
-async function moTrang(cong, khung, { camera = "gia", doc = "review" } = {}) {
-  const sess = new BrowserSession({ viewport: khung.w, height: khung.h, webgl: true,
-    url: `http://127.0.0.1:${cong}`, napModuleDev: false });
+async function moTrang(cong, khung, { camera = "gia", cheDoPrepare = "ready" } = {}) {
+  const sess = new BrowserSession({
+    viewport: khung.w,
+    height: khung.h,
+    webgl: true,
+    url: "http://127.0.0.1:" + String(cong),
+    napModuleDev: false,
+  });
   await sess.open();
-  await sess._send("Emulation.setDeviceMetricsOverride",
-    { width: khung.w, height: khung.h, deviceScaleFactor: khung.dpr, mobile: !!khung.cham });
+  await sess._send("Emulation.setDeviceMetricsOverride", {
+    width: khung.w,
+    height: khung.h,
+    deviceScaleFactor: khung.dpr,
+    mobile: !!khung.cham,
+  });
   if (khung.cham) {
     await sess._send("Emulation.setTouchEmulationEnabled", { enabled: true, maxTouchPoints: 5 });
     await sess._send("Emulation.setUserAgentOverride", {
-      userAgent: "Mozilla/5.0 (Linux; Android 14; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Mobile Safari/537.36",
+      userAgent:
+        "Mozilla/5.0 (Linux; Android 14; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Mobile Safari/537.36",
       userAgentMetadata: {
         brands: [{ brand: "Chromium", version: "130" }],
         fullVersionList: [{ brand: "Chromium", version: "130.0.0.0" }],
@@ -211,321 +327,587 @@ async function moTrang(cong, khung, { camera = "gia", doc = "review" } = {}) {
       },
     });
   }
-  await sess.interceptJson("*/api/*", async ({ url }) => {
+
+  await sess.interceptJson("*/api/*", async ({ url, request }) => {
     const p = new URL(url).pathname;
-    if (p === "/api/image/extract") {
-      await sleep(400);                                   // cú bấm thứ hai phải rơi vào lúc ĐANG đọc
-      if (doc === "tat") {
-        return { status: 503, body: { error: "Chế độ trích xuất trực tiếp (live AI) đang bị khoá bởi cấu hình máy chủ (ALLOW_LIVE_AI=0).",
-          reason_code: "LIVE_AI_DISABLED", failure_kind: "INFRASTRUCTURE_FAILURE" } };
+    if (p === "/api/input/prepare") {
+      const postData = request?.postData;
+      const req = postData ? JSON.parse(postData) : {};
+      if (cheDoPrepare === "cham") {
+        await sleep(550);
+      } else {
+        await sleep(180);
       }
-      return { status: 200, body: REVIEW };
+      if (cheDoPrepare === "tat") {
+        return {
+          status: 503,
+          body: {
+            error: "Chế độ trích xuất trực tiếp (live AI) đang bị khoá bởi cấu hình máy chủ (ALLOW_LIVE_AI=0).",
+            reason_code: "LIVE_AI_DISABLED",
+            failure_kind: "INFRASTRUCTURE_FAILURE",
+          },
+        };
+      }
+      if (cheDoPrepare === "confirm") {
+        return {
+          status: 200,
+          body: {
+            schema: "unified-input-prepare/1",
+            status: "needs_confirmation",
+            source_kind: "image",
+            problem_text: DE_CHUA_CHAC,
+            learner_message: "Ảnh có một ký hiệu nhỏ hơi mờ, em kiểm tra nhanh trước khi dựng hình.",
+            reason_code: null,
+            flag_messages: ["Phần rìa tạp chí trên đầu trang đã được tự động loại bỏ."],
+            uncertain_tokens: [
+              { token: "R = 5", alternatives: ["R = 3"], location: "dòng 1", reason: "nét in mảnh" },
+            ],
+            missing_regions: [],
+            candidates: [],
+            provenance: { noise_filtered: true },
+            metrics: {
+              vlm_calls: 1,
+              used_vlm: true,
+              raw_input_bytes: 8200,
+              vlm_payload_bytes: 5400,
+              uncropped_baseline_bytes: 8200,
+              processing_ms: 120,
+            },
+          },
+        };
+      }
+      if ((req.filename || "").includes("nhieu-bai") && !req.selected_candidate_id) {
+        return {
+          status: 200,
+          body: {
+            schema: "unified-input-prepare/1",
+            status: "needs_selection",
+            source_kind: "pdf",
+            problem_text: "",
+            learner_message: "Tài liệu có 2 bài toán độc lập. Em chạm chọn bài muốn dựng hình.",
+            reason_code: "MULTIPLE_PROBLEMS_DETECTED",
+            flag_messages: [],
+            uncertain_tokens: [],
+            missing_regions: [],
+            candidates: [
+              {
+                candidate_id: "cand-1",
+                label: "Bài 1 (Trang 1)",
+                preview_snippet: "Cho hình chóp S.ABC có đáy đều cạnh a...",
+                preview_data_url: null,
+                page_number: 1,
+                has_figure: false,
+                problem_text: DE_GO_TAY,
+              },
+              {
+                candidate_id: "cand-2",
+                label: "Bài 2 (Trang 1 · kèm hình vẽ)",
+                preview_snippet: "Cho mặt cầu tâm I bán kính R = 5 và mặt phẳng (P)...",
+                preview_data_url: null,
+                page_number: 1,
+                has_figure: true,
+                problem_text: DE_BAI_2,
+              },
+            ],
+            provenance: { page_count: 1 },
+            metrics: {
+              vlm_calls: 0,
+              used_vlm: false,
+              raw_input_bytes: 1024,
+              vlm_payload_bytes: 0,
+              uncropped_baseline_bytes: 0,
+              processing_ms: 18,
+            },
+          },
+        };
+      }
+      const chosenText = req.selected_candidate_id === "cand-2" ? DE_BAI_2 : DE_TRICH_XUAT;
+      return {
+        status: 200,
+        body: {
+          schema: "unified-input-prepare/1",
+          status: "ready",
+          source_kind: (req.filename || "").endsWith(".docx")
+            ? "docx"
+            : (req.filename || "").endsWith(".pdf")
+              ? "pdf"
+              : "image",
+          problem_text: chosenText,
+          learner_message: null,
+          reason_code: null,
+          flag_messages: [],
+          uncertain_tokens: [],
+          missing_regions: [],
+          candidates: [],
+          provenance: { supplemental_merged: Boolean(req.user_text) },
+          metrics: {
+            vlm_calls: 0,
+            used_vlm: false,
+            raw_input_bytes: 2048,
+            vlm_payload_bytes: 0,
+            uncropped_baseline_bytes: 0,
+            processing_ms: 24,
+          },
+        },
+      };
     }
     if (p === "/api/analyze") return { status: 200, body: ENVELOPE };
     if (p === "/api/health") return { status: 200, body: { ok: true, hasKey: true, cachedProblems: 0 } };
+    if (p.startsWith("/api/auth/")) return { status: 200, body: { authenticated: false, user: null } };
     return { status: 404, body: { error: "không có trong bản kiểm" } };
   });
-  await sess._send("Page.addScriptToEvaluateOnNewDocument", { source: MOC + MAY_ANH(camera) });
+
+  await sess._send("Page.addScriptToEvaluateOnNewDocument", { source: MOC + taoMayAnhGia(camera) });
   await sess._send("Page.reload", {});
   await cho(sess, "document.querySelector('#btn-composer-plus')");
   return sess;
 }
 
-async function trongKhung(sess, rongThietBi) {
-  return json(sess, `(function(){var w=${rongThietBi};`
-    + "var ra={thietBi:w,innerWidth:window.innerWidth,cuonNgang:document.documentElement.scrollWidth,ngoai:[]};"
-    + "Array.prototype.slice.call(document.querySelectorAll('[role=dialog],[role=dialog] button,.photo-camera-stage,.photo-crop-image,.photo-text')).forEach(function(e){"
-    + "var r=e.getBoundingClientRect();if(r.width>0&&(r.left<-1||r.right>w+1))ra.ngoai.push({lop:String(e.className),trai:Math.round(r.left),phai:Math.round(r.right)});});"
-    + "return ra;})()");
-}
-
-async function motKhung(cong, khung) {
-  const ten = `${khung.w}x${khung.h}@${khung.dpr}`;
+async function motKhung(cong, khung, tepTam) {
+  const ten = khung.w + "x" + khung.h + "@" + khung.dpr;
   const ca = { khung: ten, cham: !!khung.cham, kiem: {} };
-  const k = (ma, dat, chiTiet) => { ca.kiem[ma] = { dat: !!dat, ...(chiTiet === undefined ? {} : { chiTiet }) }; };
+  const k = (ma, dat, chiTiet) => {
+    ca.kiem[ma] = { dat: !!dat, ...(chiTiet === undefined ? {} : { chiTiet }) };
+  };
   mkdirSync(RA, { recursive: true });
-  const chup = (sess, buoc) => sess.screenshot(join(RA, `${TIEM ? `tiem-${TIEM}-` : ""}${ten}-${buoc}.png`));
+  const chup = (sess, buoc) => sess.screenshot(join(RA, ten + "-" + buoc + ".png"));
   const loiTrang = [];
 
-  /* ── A. Camera-First → Đổi camera → Chụp → Đổi ảnh/Thư viện → Khoanh vùng → Đọc → Xem lại → Ô nhập → Dựng & Toolbar 3D ── */
+  /* ── A. Camera-First tối giản → đổi camera → chụp 1 ảnh → tự đính kèm chip, đóng dialog ngay, 0 màn crop, 0 AI sớm ── */
   let sess = await moTrang(cong, khung);
   try {
     const camLucTaiTrang = await sess.eval("window.__CAM__.calls");
-    await goChu(sess, ".composer-text", DE_CU);
-    const mo = await moHopThoai(sess);
-    const sanCam1 = await cho(sess, "(function(){var v=document.querySelector('.photo-camera-video');return v&&v.videoWidth===1280&&!!document.querySelector('#btn-photo-switch-camera')})()", 8000);
+    await goChu(sess, "#home-problem-input", DE_BO_SUNG);
+    const mo = await moCameraTuMenu(sess);
+    const sanCam1 = await cho(
+      sess,
+      "(function(){var v=document.querySelector('.photo-camera-video');return v&&v.videoWidth===1280&&!!document.querySelector('#btn-photo-switch-camera')})()",
+      8000,
+    );
     await sleep(120);
-    const chon = await json(sess, "(function(){var d=document.querySelector('[role=dialog]');var c=window.__CAM__;return{"
-      + "man:d.getAttribute('data-photo-screen'),tieuDe:(document.querySelector('#photo-dialog-title')||{}).textContent,"
-      + "nhan:d.getAttribute('aria-labelledby'),focusTrong:d.contains(document.activeElement),"
-      + "nut:Array.prototype.slice.call(d.querySelectorAll('button')).map(function(b){return b.textContent.replace(/\\s+/g,' ').trim()}),"
-      + "calls:c.calls,c0:c.constraints[0]||null}})()");
+    const infoCam = await json(
+      sess,
+      "(function(){var d=document.querySelector('#photo-camera-dialog');var dr=d.getBoundingClientRect();"
+        + "var sh=document.querySelector('#btn-photo-capture').getBoundingClientRect();"
+        + "var disc=document.querySelector('.photo-shutter-disc').getBoundingClientRect();"
+        + "var lib=document.querySelector('#btn-photo-library').getBoundingClientRect();"
+        + "var sw=document.querySelector('#btn-photo-switch-camera').getBoundingClientRect();"
+        + "var c=window.__CAM__;return{"
+        + "man:d.getAttribute('data-photo-screen'),tieuDe:(document.querySelector('#photo-dialog-title')||{}).textContent,"
+        + "focusTrong:d.contains(document.activeElement),dialogW:Math.round(dr.width),"
+        + "shutterW:Math.round(sh.width),shutterH:Math.round(sh.height),"
+        + "discW:Math.round(disc.width),discH:Math.round(disc.height),"
+        + "shutterLechTam:Math.round(Math.abs((sh.left+sh.width/2)-(dr.left+dr.width/2))),"
+        + "thuTuTraiPhai:(lib.left<sh.left&&sh.right<=sw.right),"
+        + "calls:c.calls,c0:c.constraints[0]||null}})()",
+    );
     const dungRangBuocDau = khung.cham
-      ? chon.c0?.video?.facingMode?.ideal === "environment" && !chon.c0?.video?.deviceId
-      : !!chon.c0?.video && !chon.c0?.video?.facingMode && !chon.c0?.video?.deviceId;
-    k("A1_CAMERA_TRUC_TIEP_TU_MENU", camLucTaiTrang === 0 && mo && sanCam1 && chon.man === "camera"
-      && chon.tieuDe === "Chụp ảnh đề bài" && chon.nhan && chon.focusTrong
-      && !chon.nut.includes("Chụp bằng máy ảnh") && chon.nut.includes("Chọn ảnh có sẵn")
-      && chon.nut.includes("Đổi máy ảnh") && chon.nut.includes("Chụp ảnh")
-      && chon.calls === 1 && dungRangBuocDau, { camLucTaiTrang, ...chon });
+      ? infoCam.c0?.video?.facingMode?.ideal === "environment" && !infoCam.c0?.video?.deviceId
+      : !!infoCam.c0?.video && !infoCam.c0?.video?.facingMode && !infoCam.c0?.video?.deviceId;
+    const dungBoCucCamera =
+      khung.w <= 640
+        ? infoCam.shutterW === 64
+          && infoCam.shutterH === 64
+          && infoCam.discW === 48
+          && infoCam.discH === 48
+          && infoCam.shutterLechTam <= 6
+          && infoCam.thuTuTraiPhai
+        : infoCam.dialogW <= 564 && infoCam.thuTuTraiPhai;
+
+    k(
+      "A1_CAMERA_TOI_GIAN_TRUC_TIEP",
+      camLucTaiTrang === 0
+        && mo
+        && sanCam1
+        && infoCam.man === "camera"
+        && infoCam.tieuDe === "Chụp ảnh đề bài"
+        && infoCam.focusTrong
+        && infoCam.calls === 1
+        && dungRangBuocDau
+        && dungBoCucCamera,
+      { camLucTaiTrang, ...infoCam },
+    );
 
     await chup(sess, "0-camera");
 
-    // Đổi máy ảnh (cam-1 1280 → cam-2 960), xác nhận luồng cũ dừng rồi bấm Chụp ảnh → vào thẳng Khoanh vùng
-    await bam(sess, "Đổi máy ảnh");
-    const sanCam2 = await cho(sess, "(function(){var v=document.querySelector('.photo-camera-video');return v&&v.videoWidth===960})()", 6000);
-    await bam(sess, "Chụp ảnh");
-    const vaoTuChup = await cho(sess, "document.querySelector('.photo-crop-image')&&document.querySelector('.photo-crop-image').naturalWidth===960", 8000);
-    const sauChup = await json(sess, "(function(){var c=window.__CAM__;return{calls:c.calls,c1:c.constraints[1]||null,"
-      + "ended:c.streams.every(function(s){return s.getTracks().every(function(t){return t.readyState==='ended'})}),"
-      + "anh:[document.querySelector('.photo-crop-image').naturalWidth,document.querySelector('.photo-crop-image').naturalHeight]}})()");
-    k("A2_DOI_CAMERA_VA_CHUP_DUNG_LUONG", sanCam2 && vaoTuChup && sauChup.calls === 2
-      && sauChup.c1?.video?.deviceId?.exact === "cam-2" && sauChup.ended
-      && sauChup.anh[0] === 960 && sauChup.anh[1] === 720, sauChup);
+    // Đổi sang cam-2 (960x720), chụp 1 ảnh -> dừng toàn bộ track, đóng dialog, đính kèm thẳng thành chip trong composer!
+    await sess.eval("(function(){document.querySelector('#btn-photo-switch-camera').click();return 1})()");
+    const sanCam2 = await cho(
+      sess,
+      "(function(){var v=document.querySelector('.photo-camera-video');return v&&v.videoWidth===960})()",
+      6000,
+    );
+    await sess.eval("(function(){document.querySelector('#btn-photo-capture').click();return 1})()");
+    const daDinhKemChip = await cho(
+      sess,
+      "!document.querySelector('#photo-camera-dialog')&&!!document.querySelector('#composer-files-wrap .file-preview-card .composer-file-thumb')",
+      8000,
+    );
+    const sauChup = await json(
+      sess,
+      "(function(){var c=window.__CAM__;return{"
+        + "calls:c.calls,c1:c.constraints[1]||null,"
+        + "ended:c.streams.every(function(s){return s.getTracks().every(function(t){return t.readyState==='ended'})}),"
+        + "khongCoManCrop:!document.querySelector('.photo-crop-image'),"
+        + "giuChuGoTay:document.querySelector('#home-problem-input').value,"
+        + "apiTruocDungHinh:window.__API__.filter(function(r){return r.url.indexOf('/api/input/prepare')>=0||r.url.indexOf('/api/image/extract')>=0||r.url.indexOf('/api/analyze')>=0}).length"
+        + "}})()",
+    );
+    k(
+      "A2_CHUP_TU_DINH_KEM_KHONG_MAN_CROP_KHONG_GOI_AI",
+      sanCam2
+        && daDinhKemChip
+        && sauChup.calls === 2
+        && sauChup.c1?.video?.deviceId?.exact === "cam-2"
+        && sauChup.ended
+        && sauChup.khongCoManCrop
+        && sauChup.giuChuGoTay === DE_BO_SUNG
+        && sauChup.apiTruocDungHinh === 0,
+      sauChup,
+    );
 
-    // Đổi ảnh → về màn camera → chọn ảnh có sẵn từ thư viện ⇒ luồng camera dừng ngay & không tự gọi /api/image/extract
-    await bam(sess, "Đổi ảnh");
-    await cho(sess, "(function(){var v=document.querySelector('.photo-camera-video');return v&&v.videoWidth>0})()", 6000);
-    await datTep(sess, INPUT_TAI, anh("landscape"));
-    const vaoChinh = await cho(sess, `document.querySelector('.photo-crop-image')&&document.querySelector('.photo-crop-image').naturalWidth===${FX.landscape.stored_size[0]}`, 8000);
-    const camDungKhiChonAnh = await sess.eval("window.__CAM__.streams.every(function(s){return s.getTracks().every(function(t){return t.readyState==='ended'})})");
-    if (TIEM === "tu-dong-doc") { await bam(sess, "Giữ nguyên ảnh"); await sleep(200); await bam(sess, "Đọc đề trong ảnh"); await sleep(600); }
-    const docSom = (await json(sess, "window.__ANH__")).filter((r) => r.url.includes("/api/image/extract")).length;
-    k("A_CHON_ANH_KHONG_TU_DOC", vaoChinh && camDungKhiChonAnh && docSom === 0,
-      { vaoChinh, camDungKhiChonAnh, soYeuCauDoc: docSom });
-    if (TIEM === "tu-dong-doc") { ca.dat = false; return ca; }
+    await chup(sess, "1-attached-chip");
 
-    await chup(sess, "1-chinh-anh");
-    // Khoanh thử → Đặt lại khung về cả ảnh → Khoanh lại vùng đỏ (kiểm cả Reset & Chỉnh lại vùng crop)
-    await khoanh(sess, FX.landscape.red_stored, !!khung.cham);
-    await bam(sess, "Đặt lại khung");
-    const daDatLai = await cho(sess, "((document.querySelector('.photo-crop-size')||{}).textContent||'').indexOf('Cả ảnh')>=0", 3000);
-    const hinh = await khoanh(sess, FX.landscape.red_stored, !!khung.cham);
-    const nhanCo = await sess.eval("(document.querySelector('.photo-crop-size')||{}).textContent||''");
-    await chup(sess, "2-da-khoanh");
-    await bam(sess, "Cắt theo khung");
-    const sanSang = await cho(sess, "document.querySelector('[role=dialog]').getAttribute('data-photo-screen')==='prepared'", 8000);
-    await bam(sess, "Đọc đề trong ảnh", 2);
-    const daDoc = await cho(sess, "document.querySelector('#photo-problem-text')", 8000);
-    const yc = (await json(sess, "window.__ANH__")).filter((r) => r.url.includes("/api/image/extract"));
-    k("A_BAM_DOC_HAI_LAN_CHI_MOT_YEU_CAU", daDatLai && sanSang && daDoc && yc.length === 1,
-      { daDatLai, soYeuCauDoc: yc.length });
-    const gui = await giaiMaAnhGui(sess);
-    k("A_CAT_DUNG_PIXEL", gui && gan(gui.w, 600) && gan(gui.h, 400) && gui.rotation === 0 && gui.mime === "image/png" && doHet(gui.mau),
-      { anhGui: gui, nhanCo, hienThi: { w: Math.round(hinh.w), h: Math.round(hinh.h), goc: [hinh.nw, hinh.nh] } });
+    /* ── C. Xem trước chip · đổi sang PDF · đổi sang DOCX · xoá tệp · thu hồi hết objectURL · 0 AI trước khi bấm Dựng hình ── */
+    await sess.eval("(function(){document.querySelector('#composer-files-wrap .file-preview-card').click();return 1})()");
+    const moXemTruoc = await cho(sess, "!!document.querySelector('#composer-single-file-modal .single-file-preview-img')", 4000);
+    await sess.eval("(function(){document.querySelector('#btn-replace-file-modal').click();return 1})()");
+    await datTep(sess, "#home-file-input", tepTam.pdfPath);
+    const daDoiSangPdf = await cho(
+      sess,
+      "document.querySelector('#composer-files-wrap .file-name-ext')&&document.querySelector('#composer-files-wrap .file-name-ext').textContent==='.pdf'",
+      5000,
+    );
 
-    const xemLai = await json(sess, "(function(){var t=document.querySelector('#photo-problem-text');return{giaTri:t.value,nhan:t.labels.length,"
-      + "xacNhan:!!document.querySelector('.photo-confirm input'),doiChieu:!!document.querySelector('[role=dialog] details img, [role=dialog] details summary')}})()");
-    await goChu(sess, "#photo-problem-text", DE_SUA);
-    await sess.eval("(function(){var c=document.querySelector('.photo-confirm input');if(c&&!c.checked)c.click();return 1})()");
-    await chup(sess, "3-xem-lai");
-    await bam(sess, "Dùng đề này");
-    const hoiThay = await cho(sess, "Array.prototype.slice.call(document.querySelectorAll('[role=dialog] [role=alert]')).some(function(e){return e.textContent.indexOf('Thay bằng đề vừa đọc')>=0})", 3000);
-    const oNhapChuaDoi = (await sess.eval("document.querySelector('.composer-text').value")) === DE_CU;
-    await bam(sess, "Thay nội dung");
-    const dong = await cho(sess, "!document.querySelector('[role=dialog]')", 4000);
-    const oNhap = await sess.eval("document.querySelector('.composer-text').value");
-    const sauDung = (await json(sess, "window.__ANH__")).filter((r) => r.url.includes("/api/analyze")).length;
-    k("A_XEM_LAI_SUA_VA_HOI_TRUOC_KHI_THAY", xemLai.giaTri === DE_GOC && xemLai.nhan === 1 && hoiThay && oNhapChuaDoi
-      && dong && oNhap === DE_SUA.trim(), { ...xemLai, hoiThay, oNhapChuaDoi, oNhapSau: oNhap });
-    k("A_DUNG_DE_NAY_KHONG_TU_GIAI", sauDung === 0, { soYeuCauDung: sauDung });
-    const urlSong = await sess.eval("window.__URL__.size");
-    k("A_THU_HOI_OBJECT_URL", urlSong === 0, { urlConSong: urlSong });
+    // Đổi tiếp sang DOCX và xác nhận 0 objectURL rò rỉ từ ảnh cũ, 0 lượt gọi AI khi đính kèm PDF/DOCX
+    await sess.eval("(function(){document.querySelector('#composer-files-wrap .file-preview-card').click();return 1})()");
+    await cho(sess, "!!document.querySelector('#btn-replace-file-modal')", 4000);
+    await sess.eval("(function(){document.querySelector('#btn-replace-file-modal').click();return 1})()");
+    await datTep(sess, "#home-file-input", tepTam.docxPath);
+    const daDoiSangDocx = await cho(
+      sess,
+      "document.querySelector('#composer-files-wrap .file-name-ext')&&document.querySelector('#composer-files-wrap .file-name-ext').textContent==='.docx'",
+      5000,
+    );
+    const trangThaiDoiTep = await json(
+      sess,
+      "(function(){return{urlConSong:window.__URL__.size,chu:document.querySelector('#home-problem-input').value,"
+        + "apiTruocDungHinh:window.__API__.filter(function(r){return r.url.indexOf('/api/input/prepare')>=0||r.url.indexOf('/api/image/extract')>=0||r.url.indexOf('/api/analyze')>=0}).length}})()",
+    );
 
-    await cho(sess, "!document.querySelector('#btn-composer-send').disabled", 4000);
-    await sess.eval("(function(){document.querySelector('#btn-composer-send').click();return 1})()");
-    const canh = await cho(sess, "document.querySelector('.geo3d-canvas canvas')", 30000);
-    const dung = (await json(sess, "window.__ANH__")).filter((r) => r.url.includes("/api/analyze"));
-    k("A_DUNG_HINH_BANG_VAN_BAN_DA_SUA", canh && dung.length === 1 && dung[0]?.input?.type === "text"
-      && dung[0]?.input?.content === DE_SUA.trim(), { soYeuCauDung: dung.length, input: dung[0]?.input });
+    // Xoá hẳn chip, đính kèm lại ảnh rồi đính kèm lại DOCX để kiểm cả xoá tệp & đính kèm ảnh từ máy
+    await sess.eval("(function(){document.querySelector('#composer-files-wrap .file-card-remove').click();return 1})()");
+    const daXoaChip = await cho(sess, "!document.querySelector('#composer-files-wrap')", 4000);
+    await datTep(sess, "#home-file-input", ANH_CORPUS);
+    const daChonAnh = await cho(
+      sess,
+      "document.querySelector('#composer-files-wrap .file-name-ext')&&document.querySelector('#composer-files-wrap .file-name-ext').textContent==='.png'",
+      5000,
+    );
+    await sess.eval("(function(){document.querySelector('#composer-files-wrap .file-card-remove').click();return 1})()");
+    await cho(sess, "!document.querySelector('#composer-files-wrap')", 4000);
+    const urlSauKhiXoaAnh = await sess.eval("window.__URL__.size");
 
-    // Kiểm thanh công cụ Scene3D: đã xoá #btn-undo-interaction dư thừa, vẫn hoạt động điều hướng bước (#pa-prev/#pa-next) và #btn-reset-pos
-    await cho(sess, "document.querySelector('#floating-toolbar-3d')", 6000);
-    const buocTruoc = await sess.eval("(document.querySelector('#pa-counter')||{}).textContent||''");
-    await sess.eval("(function(){var p=document.querySelector('#pa-prev');var n=document.querySelector('#pa-next');if(p&&!p.disabled)p.click();else if(n&&!n.disabled)n.click();var r=document.querySelector('#btn-reset-pos');if(r)r.click();return 1})()");
+    await datTep(sess, "#home-file-input", tepTam.docxPath);
+    await cho(sess, "!!document.querySelector('#composer-files-wrap .file-preview-card')", 4000);
+
+    k(
+      "C_CHON_ANH_PDF_DOCX_DOI_XOA_KHONG_RO_URL_KHONG_GOI_AI",
+      moXemTruoc
+        && daDoiSangPdf
+        && daDoiSangDocx
+        && daXoaChip
+        && daChonAnh
+        && trangThaiDoiTep.urlConSong === 0
+        && urlSauKhiXoaAnh === 0
+        && trangThaiDoiTep.chu === DE_BO_SUNG
+        && trangThaiDoiTep.apiTruocDungHinh === 0,
+      { moXemTruoc, daDoiSangPdf, daDoiSangDocx, daXoaChip, daChonAnh, urlSauKhiXoaAnh, ...trangThaiDoiTep },
+    );
+
+    /* ── D. Kết hợp văn bản gõ tay + DOCX -> Bấm "Dựng hình" (chống bấm đúp) -> /api/input/prepare -> /api/analyze -> Scene3D ── */
+    await sess.eval(
+      "(function(){var b=document.querySelector('#btn-composer-send');b.click();b.click();return 1})()",
+    );
+    const lenCanh3D = await cho(sess, "!!document.querySelector('.geo3d-canvas canvas')", 30000);
     await sleep(250);
-    const tb = await json(sess, "(function(){return{khongUndo:!document.querySelector('#btn-undo-interaction'),"
-      + "coReset:!!document.querySelector('#btn-reset-pos'),coXray:!!document.querySelector('#btn-xray'),"
-      + "coDisplay:!!document.querySelector('#btn-display-pop'),coGeoCustom:!!document.querySelector('#btn-geo-custom-pop'),"
-      + "buocSau:(document.querySelector('#pa-counter')||{}).textContent||''}})()");
-    k("A_THANH_CONG_CU_3D_KHONG_CON_UNDO_THUA", tb.khongUndo && tb.coReset && tb.coXray && tb.coDisplay
-      && tb.coGeoCustom && tb.buocSau !== "" && (tb.buocSau !== buocTruoc || buocTruoc.includes("/1")),
-      { buocTruoc, ...tb });
+    const kqDung = await json(
+      sess,
+      "(function(){var api=window.__API__.filter(function(r){return r.url.indexOf('/api/health')<0});"
+        + "var prep=api.filter(function(r){return r.url.indexOf('/api/input/prepare')>=0});"
+        + "var ana=api.filter(function(r){return r.url.indexOf('/api/analyze')>=0});"
+        + "var tb=document.querySelector('#floating-toolbar-3d');"
+        + "return{soPrep:prep.length,soAna:ana.length,prep0:prep[0]||null,ana0:ana[0]||null,"
+        + "coToolbar:!!tb,khongConUndo:!document.querySelector('#btn-undo-interaction'),"
+        + "coReset:!!document.querySelector('#btn-reset-pos'),coXray:!!document.querySelector('#btn-xray'),"
+        + "coNext:!!document.querySelector('#pa-next')}})()",
+    );
+    if (kqDung.coNext) {
+      await sess.eval("(function(){var n=document.querySelector('#pa-next');if(n&&!n.disabled)n.click();return 1})()");
+    }
+    const vanConCanvas = await sess.eval("!!document.querySelector('.geo3d-canvas canvas')");
+    k(
+      "D_KET_HOP_CHU_VA_TEP_DUNG_SCENE3D_KHONG_ANH_HUONG_BUOC_DUNG",
+      lenCanh3D
+        && vanConCanvas
+        && kqDung.soPrep === 1
+        && kqDung.soAna === 1
+        && kqDung.prep0?.filename === "de-chop-sabcd.docx"
+        && kqDung.prep0?.userText === DE_BO_SUNG
+        && kqDung.ana0?.input?.content === DE_TRICH_XUAT
+        && kqDung.coToolbar
+        && kqDung.khongConUndo
+        && kqDung.coReset
+        && kqDung.coXray,
+      kqDung,
+    );
 
-    await sleep(400);
-    await chup(sess, "4-canh");
+    await chup(sess, "2-scene3d");
     loiTrang.push(...sess.consoleEvents.filter((e) => e.loai === "exception"));
   } finally {
     await sess.close();
   }
 
-  /* ── B. ảnh dọc + xoay + giữ nguyên ⇒ tệp gốc nguyên byte + rotation; Escape giữ chữ đang gõ; mở lại vào thẳng camera ── */
-  sess = await moTrang(cong, khung);
+  /* ── B. Trên desktop chỉ có 1 camera: ẩn nút đổi camera; đóng bằng Escape dừng toàn bộ MediaStreamTrack ── */
+  sess = await moTrang(cong, khung, { camera: "mot-cam" });
   try {
-    await goChu(sess, ".composer-text", DE_CU);
-    await moHopThoai(sess);
-    await datTep(sess, INPUT_TAI, anh("portrait"));
-    await cho(sess, "document.querySelector('.photo-crop-image')&&document.querySelector('.photo-crop-image').naturalWidth>0");
-    await bam(sess, "Xoay phải");
-    const xoay = await cho(sess, "(function(){var i=document.querySelector('.photo-crop-image');return i&&i.naturalWidth>i.naturalHeight})()", 6000);
-    await bam(sess, "Giữ nguyên ảnh");
-    await cho(sess, "document.querySelector('[role=dialog]').getAttribute('data-photo-screen')==='prepared'", 6000);
-    await bam(sess, "Đọc đề trong ảnh");
-    await cho(sess, "document.querySelector('#photo-problem-text')", 8000);
-    const r = (await json(sess, "window.__ANH__")).find((x) => x.url.includes("/api/image/extract"));
-    const goc = Math.ceil(statSync(anh("portrait")).size / 3) * 4;
-    k("B_GIU_NGUYEN_GUI_TEP_GOC_VA_GOC_XOAY", xoay && r?.rotation === 90 && r?.mime === "image/jpeg" && r?.contentLen === goc,
-      { xoayHienThi: xoay, rotation: r?.rotation, mime: r?.mime, contentLen: r?.contentLen, mong: goc });
+    await goChu(sess, "#home-problem-input", DE_BO_SUNG);
+    await moCameraTuMenu(sess);
+    await cho(sess, "(function(){var v=document.querySelector('.photo-camera-video');return v&&v.videoWidth>0})()", 6000);
+    await sleep(150);
+    const coNutDoi = await sess.eval("!!document.querySelector('#btn-photo-switch-camera')");
     await sess._send("Input.dispatchKeyEvent", { type: "keyDown", key: "Escape", code: "Escape", windowsVirtualKeyCode: 27 });
     await sess._send("Input.dispatchKeyEvent", { type: "keyUp", key: "Escape", code: "Escape", windowsVirtualKeyCode: 27 });
-    const dongEsc = await cho(sess, "!document.querySelector('[role=dialog]')", 3000);
-    const giuChu = (await sess.eval("document.querySelector('.composer-text').value")) === DE_CU;
-    await moHopThoai(sess);
-    const moLai = await manHinh(sess);
-    await sess.eval("(function(){document.querySelector('[role=dialog] .axo-modal-close').click();return 1})()");
-    await sleep(150);
-    const camDung = await sess.eval("window.__CAM__.streams.every(function(s){return s.getTracks().every(function(t){return t.readyState==='ended'})})");
-    k("B_ESCAPE_GIU_CHU_MO_LAI_VE_CAMERA", dongEsc && giuChu && moLai === "camera" && camDung,
-      { dongEsc, giuChu, moLai, camDung });
+    const daDong = await cho(sess, "!document.querySelector('#photo-camera-dialog')", 4000);
+    const sauEsc = await json(
+      sess,
+      "(function(){var c=window.__CAM__;return{"
+        + "ended:c.streams.every(function(s){return s.getTracks().every(function(t){return t.readyState==='ended'})}),"
+        + "chu:document.querySelector('#home-problem-input').value}})()",
+    );
+    const dungAnNutDoi = khung.cham ? true : !coNutDoi;
+    k("B_MOT_CAMERA_VA_ESCAPE_DUNG_TRACK", dungAnNutDoi && daDong && sauEsc.ended && sauEsc.chu === DE_BO_SUNG, {
+      coNutDoi,
+      daDong,
+      ...sauEsc,
+    });
     loiTrang.push(...sess.consoleEvents.filter((e) => e.loai === "exception"));
   } finally {
     await sess.close();
   }
 
-  /* ── C. xoay rồi cắt · D. EXIF orientation 6 ── */
-  for (const [ma, khoa, xoayPhai, mong] of [["C_XOAY_ROI_CAT_DUNG_CHIEU", "landscape", true, [400, 600]],
-    ["D_EXIF_KHOANH_THEO_ANH_NGUOI_HOC_THAY", "exif6", false, [400, 600]]]) {
-    sess = await moTrang(cong, khung);
-    try {
-      await moHopThoai(sess);
-      await datTep(sess, INPUT_TAI, anh(khoa));
-      await cho(sess, "document.querySelector('.photo-crop-image')&&document.querySelector('.photo-crop-image').naturalWidth>0");
-      let red = FX[khoa].red_displayed ?? FX[khoa].red_stored;
-      if (xoayPhai) {
-        await bam(sess, "Xoay phải");
-        await cho(sess, "(function(){var i=document.querySelector('.photo-crop-image');return i&&i.naturalHeight>i.naturalWidth})()", 6000);
-        const [W0, H0] = FX[khoa].stored_size;
-        const nat = await json(sess, "[document.querySelector('.photo-crop-image').naturalWidth,document.querySelector('.photo-crop-image').naturalHeight]");
-        const s = nat[0] / H0;
-        red = [(H0 - 1 - red[3]) * s, red[0] * s, (H0 - 1 - red[1]) * s, red[2] * s];
-        void W0;
-      }
-      const nat = await json(sess, "[document.querySelector('.photo-crop-image').naturalWidth,document.querySelector('.photo-crop-image').naturalHeight]");
-      await khoanh(sess, red, !!khung.cham);
-      await bam(sess, "Cắt theo khung");
-      await cho(sess, "document.querySelector('[role=dialog]').getAttribute('data-photo-screen')==='prepared'", 8000);
-      await bam(sess, "Đọc đề trong ảnh");
-      await cho(sess, "document.querySelector('#photo-problem-text')", 8000);
-      const gui = await giaiMaAnhGui(sess);
-      k(ma, gui && gan(gui.w, mong[0], 8) && gan(gui.h, mong[1], 8) && gui.rotation === 0 && doHet(gui.mau),
-        { anhGui: gui, anhHienThi: nat });
-      loiTrang.push(...sess.consoleEvents.filter((e) => e.loai === "exception"));
-    } finally {
-      await sess.close();
-    }
-  }
-
-  /* ── E. máy chủ tắt đọc ảnh ── */
-  sess = await moTrang(cong, khung, { doc: "tat" });
-  try {
-    await moHopThoai(sess);
-    await datTep(sess, INPUT_TAI, anh("landscape"));
-    await cho(sess, "document.querySelector('.photo-crop-image')&&document.querySelector('.photo-crop-image').naturalWidth>0");
-    await bam(sess, "Giữ nguyên ảnh");
-    await cho(sess, "document.querySelector('[role=dialog]').getAttribute('data-photo-screen')==='prepared'", 6000);
-    await bam(sess, "Đọc đề trong ảnh");
-    const loi = await cho(sess, "document.querySelector('[role=dialog]').getAttribute('data-photo-screen')==='error'", 8000);
-    const chu = await sess.eval("document.querySelector('[role=dialog]').textContent");
-    k("E_TAT_DOC_ANH_LOI_NGUOI_HOC", loi && /tạm tắt/.test(chu) && !/ALLOW_LIVE_AI|LIVE_AI_DISABLED|GEMINI/.test(chu)
-      && /Thử đọc lại/.test(chu), { chu: chu.slice(0, 240) });
-    await chup(sess, "5-loi");
-    loiTrang.push(...sess.consoleEvents.filter((e) => e.loai === "exception"));
-  } finally {
-    await sess.close();
-  }
-
-  /* ── F. đóng máy ảnh giải phóng track (+ trên mobile/tablet kiểm fallback khi camera sau vắng) ── */
-  sess = await moTrang(cong, khung, { camera: khung.cham ? "sau-vang" : "gia" });
-  try {
-    await moHopThoai(sess);
-    const san = await cho(sess, "(function(){var v=document.querySelector('.photo-camera-video');return v&&v.videoWidth>0})()", 8000);
-    await sess.eval("(function(){document.querySelector('[role=dialog] .axo-modal-close').click();return 1})()");
-    await sleep(250);
-    const dongMa = await json(sess, "(function(){var c=window.__CAM__;return{calls:c.calls,stopped:c.stopped,"
-      + "ended:c.streams.every(function(s){return s.getTracks().every(function(t){return t.readyState==='ended'})})}})()");
-    const mongCalls = khung.cham ? 2 : 1;
-    k("F_DONG_KHI_DANG_MO_MAY_ANH_DUNG_LUONG", san && dongMa.calls === mongCalls && dongMa.stopped >= 1 && dongMa.ended,
-      { san, mongCalls, ...dongMa });
-    loiTrang.push(...sess.consoleEvents.filter((e) => e.loai === "exception"));
-  } finally {
-    await sess.close();
-  }
-
-  /* ── G. từ chối quyền máy ảnh ⇒ báo lỗi ngắn gọn + chọn ảnh từ máy ngay tại chỗ (trên mobile có thêm lối máy ảnh gốc) ── */
-  sess = await moTrang(cong, khung, { camera: "tu-choi" });
-  try {
-    await moHopThoai(sess);
-    const bao = await cho(sess, "(function(){var a=document.querySelector('[role=dialog] [role=alert]');return a&&a.textContent.indexOf('cấp quyền máy ảnh')>=0})()", 6000);
-    const nutLoi = await json(sess, "Array.prototype.slice.call(document.querySelectorAll('[role=dialog] button')).map(function(b){return b.textContent.replace(/\\s+/g,' ').trim()})");
-    if (khung.cham) {
-      await bam(sess, "Mở máy ảnh thiết bị");
-    }
-    const bamNative = khung.cham ? (await json(sess, "window.__BAM_INPUT__")).some((b) => b.capture === "environment") : true;
-    await datTep(sess, INPUT_TAI, anh("landscape"));
-    const vaoChinhTuLoi = await cho(sess, "document.querySelector('.photo-crop-image')&&document.querySelector('.photo-crop-image').naturalWidth>0", 6000);
-    k("G_TU_CHOI_QUYEN_VAN_CHON_ANH_DUOC", bao && nutLoi.includes("Chọn ảnh từ máy")
-      && !nutLoi.includes("Chụp bằng máy ảnh") && bamNative && vaoChinhTuLoi,
-      { bao, nutLoi, bamNative, vaoChinhTuLoi });
-    loiTrang.push(...sess.consoleEvents.filter((e) => e.loai === "exception"));
-  } finally {
-    await sess.close();
-  }
-
-  /* ── H. bố cục không tràn ngang (camera · khoanh vùng · xem lại) + bẫy Tab ── */
+  /* ── E. Tài liệu nhiều bài (needs_selection) -> bảng chọn 1 chạm bên dưới ô nhập -> dựng đúng bài đã chọn ── */
   sess = await moTrang(cong, khung);
   try {
-    await moHopThoai(sess);
+    await datTep(sess, "#home-file-input", tepTam.pdfMultiPath);
+    await cho(sess, "!!document.querySelector('#composer-files-wrap .file-preview-card')", 4000);
+    await sess.eval("(function(){document.querySelector('#btn-composer-send').click();return 1})()");
+    const hienChonBai = await cho(sess, "!!document.querySelector('#composer-candidate-picker [data-candidate-id=\"cand-2\"]')", 8000);
+    const khongTuDoanBaiDau = await sess.eval(
+      "window.__API__.filter(function(r){return r.url.indexOf('/api/analyze')>=0}).length===0",
+    );
+    await sleep(220);
+    await chup(sess, "3-candidate-picker");
+    await sess.eval("(function(){document.querySelector('[data-candidate-id=\"cand-2\"]').click();return 1})()");
+    const lenCanhBai2 = await cho(sess, "!!document.querySelector('.geo3d-canvas canvas')", 30000);
+    const anaBai2 = await json(
+      sess,
+      "window.__API__.filter(function(r){return r.url.indexOf('/api/analyze')>=0})",
+    );
+    k(
+      "E_NHIEU_BAI_CHON_1_CHAM_KHONG_TU_DOAN",
+      hienChonBai && khongTuDoanBaiDau && lenCanhBai2 && anaBai2.length === 1 && anaBai2[0]?.input?.content === DE_BAI_2,
+      { hienChonBai, khongTuDoanBaiDau, lenCanhBai2, soAna: anaBai2.length },
+    );
+    loiTrang.push(...sess.consoleEvents.filter((e) => e.loai === "exception"));
+  } finally {
+    await sess.close();
+  }
+
+  /* ── F1. Huỷ xử lý đang chạy (#btn-composer-cancel) giữ nguyên văn bản & chip đính kèm ── */
+  sess = await moTrang(cong, khung, { cheDoPrepare: "cham" });
+  try {
+    await goChu(sess, "#home-problem-input", DE_BO_SUNG);
+    await datTep(sess, "#home-file-input", ANH_CORPUS);
+    await cho(sess, "!!document.querySelector('#composer-files-wrap .file-preview-card')", 4000);
+    await sess.eval("(function(){document.querySelector('#btn-composer-send').click();return 1})()");
+    const hienNutHuy = await cho(sess, "!!document.querySelector('#btn-composer-cancel')", 4000);
+    await sess.eval("(function(){document.querySelector('#btn-composer-cancel').click();return 1})()");
+    await sleep(650);
+    const sauHuy = await json(
+      sess,
+      "(function(){return{dangChay:document.querySelector('#btn-composer-send').getAttribute('aria-busy'),"
+        + "conChip:!!document.querySelector('#composer-files-wrap .file-preview-card'),"
+        + "conChu:document.querySelector('#home-problem-input').value,"
+        + "soAna:window.__API__.filter(function(r){return r.url.indexOf('/api/analyze')>=0}).length}})()",
+    );
+    k(
+      "F1_HUY_DANG_CHAY_GIU_NGUYEN_TEP_VA_CHU",
+      hienNutHuy && sauHuy.dangChay === "false" && sauHuy.conChip && sauHuy.conChu === DE_BO_SUNG && sauHuy.soAna === 0,
+      { hienNutHuy, ...sauHuy },
+    );
+    loiTrang.push(...sess.consoleEvents.filter((e) => e.loai === "exception"));
+  } finally {
+    await sess.close();
+  }
+
+  /* ── F2. Nhiễu trang sách được lọc + xác nhận ký hiệu mờ (needs_confirmation) cho phép sửa văn bản trước khi dựng ── */
+  sess = await moTrang(cong, khung, { cheDoPrepare: "confirm" });
+  try {
+    await datTep(sess, "#home-file-input", ANH_CORPUS);
+    await cho(sess, "!!document.querySelector('#composer-files-wrap .file-preview-card')", 4000);
+    await sess.eval("(function(){document.querySelector('#btn-composer-send').click();return 1})()");
+    const hienXacNhan = await cho(sess, "!!document.querySelector('#composer-extraction-confirm #photo-problem-text')", 8000);
+    const khoaTruocTick = await sess.eval("document.querySelector('#btn-confirm-extracted-build').disabled");
+    await goChu(sess, "#photo-problem-text", DE_DA_SUA);
+    await sess.eval("(function(){document.querySelector('#chk-confirm-extracted-text').click();return 1})()");
+    await cho(sess, "!document.querySelector('#btn-confirm-extracted-build').disabled", 3000);
+    await sess.eval("(function(){document.querySelector('#btn-confirm-extracted-build').click();return 1})()");
+    const lenCanhSauSua = await cho(sess, "!!document.querySelector('.geo3d-canvas canvas')", 30000);
+    const anaSua = await json(
+      sess,
+      "window.__API__.filter(function(r){return r.url.indexOf('/api/analyze')>=0})",
+    );
+    k(
+      "F2_LOC_NHIEU_VA_SUA_NOI_DUNG_CHUA_CHAC_CHAN",
+      hienXacNhan && khoaTruocTick && lenCanhSauSua && anaSua.length === 1 && anaSua[0]?.input?.content === DE_DA_SUA,
+      { hienXacNhan, khoaTruocTick, lenCanhSauSua },
+    );
+    loiTrang.push(...sess.consoleEvents.filter((e) => e.loai === "exception"));
+  } finally {
+    await sess.close();
+  }
+
+  /* ── G. Lỗi quyền / không có camera / thiết bị bận có thông báo phân biệt rõ + fallback chọn ảnh; mobile tự lùi khi camera sau lỗi ── */
+  sess = await moTrang(cong, khung, { camera: "tu-choi" });
+  try {
+    await moCameraTuMenu(sess);
+    const hienLoiQuyen = await cho(sess, "!!document.querySelector('[role=alert]')", 5000);
+    const loiQuyen = await sess.eval("(document.querySelector('[role=alert]')||{}).textContent||''");
+    if (khung.cham) {
+      await sess.eval("(function(){var b=document.querySelector('#btn-photo-native-camera');if(b)b.click();return 1})()");
+    }
+    const bamNative = khung.cham
+      ? (await json(sess, "window.__BAM_INPUT__")).some((b) => b.capture === "environment")
+      : true;
+    await sess.eval("(function(){document.querySelector('#btn-photo-pick-fallback').click();return 1})()");
+    await datTep(sess, INPUT_ANH_PHU, ANH_CORPUS);
+    const dinhKemTuFallback = await cho(
+      sess,
+      "!document.querySelector('#photo-camera-dialog')&&!!document.querySelector('#composer-files-wrap .file-preview-card')",
+      6000,
+    );
+    k(
+      "G1_LOI_QUYEN_CAMERA_VA_FALLBACK_CHON_ANH",
+      hienLoiQuyen && loiQuyen.includes("từ chối") && bamNative && dinhKemTuFallback,
+      { loiQuyen, bamNative, dinhKemTuFallback },
+    );
+    loiTrang.push(...sess.consoleEvents.filter((e) => e.loai === "exception"));
+  } finally {
+    await sess.close();
+  }
+
+  sess = await moTrang(cong, khung, { camera: "khong-co" });
+  let loiKhongCo = "";
+  try {
+    await moCameraTuMenu(sess);
+    await cho(sess, "!!document.querySelector('[role=alert]')", 5000);
+    loiKhongCo = await sess.eval("(document.querySelector('[role=alert]')||{}).textContent||''");
+    loiTrang.push(...sess.consoleEvents.filter((e) => e.loai === "exception"));
+  } finally {
+    await sess.close();
+  }
+
+  sess = await moTrang(cong, khung, { camera: khung.cham ? "sau-vang" : "ban" });
+  try {
+    await moCameraTuMenu(sess);
+    if (khung.cham) {
+      const tuLuiThanhCong = await cho(
+        sess,
+        "(function(){var v=document.querySelector('.photo-camera-video');return v&&v.videoWidth>0&&window.__CAM__.calls===2})()",
+        8000,
+      );
+      k("G2_PHAN_BIET_LOI_THIET_BI_VA_FALLBACK_MOBILE", loiKhongCo.includes("Không tìm thấy máy ảnh") && tuLuiThanhCong, {
+        loiKhongCo,
+        tuLuiThanhCong,
+      });
+    } else {
+      await cho(sess, "!!document.querySelector('[role=alert]')", 5000);
+      const loiBan = await sess.eval("(document.querySelector('[role=alert]')||{}).textContent||''");
+      k(
+        "G2_PHAN_BIET_LOI_THIET_BI_VA_FALLBACK_MOBILE",
+        loiKhongCo.includes("Không tìm thấy máy ảnh") && loiBan.includes("không khả dụng"),
+        { loiKhongCo, loiBan },
+      );
+    }
+    loiTrang.push(...sess.consoleEvents.filter((e) => e.loai === "exception"));
+  } finally {
+    await sess.close();
+  }
+
+  /* ── H. Hạ tầng tắt đọc ảnh (503 LIVE_AI_DISABLED) không lộ biến môi trường + không tràn ngang + bẫy Tab giữ focus ── */
+  sess = await moTrang(cong, khung, { cheDoPrepare: "tat" });
+  try {
+    await moCameraTuMenu(sess);
     await cho(sess, "(function(){var v=document.querySelector('.photo-camera-video');return v&&v.videoWidth>0})()", 8000);
-    const k0 = await trongKhung(sess, khung.w);
+    const kCam = await trongKhung(sess, khung.w);
     for (let i = 0; i < 6; i++) {
       await sess._send("Input.dispatchKeyEvent", { type: "keyDown", key: "Tab", code: "Tab", windowsVirtualKeyCode: 9 });
       await sess._send("Input.dispatchKeyEvent", { type: "keyUp", key: "Tab", code: "Tab", windowsVirtualKeyCode: 9 });
     }
-    const giuFocus = await sess.eval("(function(){var d=document.querySelector('[role=dialog]');return !!d&&d.contains(document.activeElement)})()");
-    await datTep(sess, INPUT_TAI, anh("portrait"));
-    await cho(sess, "document.querySelector('.photo-crop-image')&&document.querySelector('.photo-crop-image').naturalWidth>0");
-    const k1 = await trongKhung(sess, khung.w);
-    await bam(sess, "Giữ nguyên ảnh");
-    await cho(sess, "document.querySelector('[role=dialog]').getAttribute('data-photo-screen')==='prepared'", 6000);
-    await bam(sess, "Đọc đề trong ảnh");
-    await cho(sess, "document.querySelector('#photo-problem-text')", 8000);
-    const k2 = await trongKhung(sess, khung.w);
-    const ok = (x) => x.innerWidth <= khung.w + 1 && x.cuonNgang <= khung.w + 1 && x.ngoai.length === 0;
-    k("H_KHONG_TRAN_NGANG_VA_GIU_FOCUS", giuFocus && ok(k0) && ok(k1) && ok(k2),
-      { giuFocus, camera: k0, chinhAnh: k1, xemLai: k2 });
+    const giuFocus = await sess.eval(
+      "(function(){var d=document.querySelector('#photo-camera-dialog');return !!d&&d.contains(document.activeElement)})()",
+    );
+    await sess.eval("(function(){document.querySelector('#btn-photo-dialog-close').click();return 1})()");
+    await cho(sess, "!document.querySelector('#photo-camera-dialog')", 4000);
+
+    await datTep(sess, "#home-file-input", ANH_CORPUS);
+    await cho(sess, "!!document.querySelector('#composer-files-wrap .file-preview-card')", 4000);
+    await sess.eval("(function(){document.querySelector('#btn-composer-send').click();return 1})()");
+    const hienLoi503 = await cho(
+      sess,
+      "document.body.innerText.indexOf('chưa sẵn sàng')>=0||document.body.innerText.indexOf('tạm tắt')>=0",
+      6000,
+    );
+    const khongLoBien = await sess.eval(
+      "document.body.innerText.indexOf('ALLOW_LIVE_AI')<0&&document.body.innerText.indexOf('GEMINI_API_KEY')<0",
+    );
+    const kHome = await trongKhung(sess, khung.w);
+    const okKhung = (x) => x.innerWidth <= khung.w + 1 && x.cuonNgang <= khung.w + 1 && x.ngoai.length === 0;
+    k(
+      "H_503_AN_BIEN_KHONG_TRAN_NGANG_VA_BAY_TAB",
+      giuFocus && hienLoi503 && khongLoBien && okKhung(kCam) && okKhung(kHome),
+      { giuFocus, hienLoi503, khongLoBien, kCam, kHome },
+    );
     loiTrang.push(...sess.consoleEvents.filter((e) => e.loai === "exception"));
   } finally {
     await sess.close();
   }
 
-  /* ── I. luồng gõ tay không hồi quy ── */
+  /* ── I. Luồng gõ tay thuần văn bản không hồi quy ── */
   sess = await moTrang(cong, khung);
   try {
-    await goChu(sess, ".composer-text", DE_GO_TAY);
+    await goChu(sess, "#home-problem-input", DE_GO_TAY);
     await cho(sess, "!document.querySelector('#btn-composer-send').disabled", 4000);
     await sess.eval("(function(){document.querySelector('#btn-composer-send').click();return 1})()");
-    const canh = await cho(sess, "document.querySelector('.geo3d-canvas canvas')", 30000);
-    const yc = await json(sess, "window.__ANH__");
+    const canh = await cho(sess, "!!document.querySelector('.geo3d-canvas canvas')", 30000);
+    const yc = await json(sess, "window.__API__.filter(function(r){return r.url.indexOf('/api/health')<0})");
     const dung = yc.filter((r) => r.url.includes("/api/analyze"));
-    k("I_GO_TAY_KHONG_HOI_QUY", canh && dung.length === 1 && dung[0]?.input?.content === DE_GO_TAY
-      && yc.every((r) => !r.url.includes("/api/image/extract")), { soYeuCauDung: dung.length });
+    k(
+      "I_GO_TAY_THUAN_KHONG_HOI_QUY",
+      canh
+        && dung.length === 1
+        && dung[0]?.input?.content === DE_GO_TAY
+        && yc.every((r) => !r.url.includes("/api/input/prepare") && !r.url.includes("/api/image/extract")),
+      { soYeuCau: yc.length, soAnalyze: dung.length },
+    );
     loiTrang.push(...sess.consoleEvents.filter((e) => e.loai === "exception"));
   } finally {
     await sess.close();
   }
 
   ca.loiTrang = loiTrang;
-  k("Z_KHONG_LOI_TRANG", loiTrang.length === 0, loiTrang.slice(0, 5));
+  k("Z_KHONG_LOI_CONSOLE_EXCEPTION", loiTrang.length === 0, loiTrang.slice(0, 5));
   ca.dat = Object.values(ca.kiem).every((x) => x.dat);
   return ca;
 }
@@ -536,14 +918,18 @@ export async function chay() {
     execFileSync("npm", ["run", "build"], { cwd: FE, stdio: "pipe", shell: true, timeout: 600000 });
   }
   kiemDistMoi();
+  const thuMucTam = mkdtempSync(join(tmpdir(), "axo-unified-e2e-"));
+  const tepTam = taoTepTam(thuMucTam);
   const { sv, cong } = await phucVu(DIST);
   const kq = {
+    schema: "unified-problem-input-browser-check/1",
     commit,
     chay_luc: new Date().toISOString(),
-    tiem: TIEM,
-    BANG_CHUNG: "FIXTURE_UI — provider và dựng hình bị chặn ở biên mạng; máy ảnh GIẢ (getUserMedia + enumerateDevices bị thay)",
+    BANG_CHUNG:
+      "FIXTURE_UI — /api/input/prepare và /api/analyze bị chặn ở biên mạng; máy ảnh GIẢ LẬP (getUserMedia + enumerateDevices qua canvas.captureStream)",
     APPLICATION_LLM_CALLS: 0,
     REAL_CAMERA_DEVICE_VERIFIED: "NO",
+    LIVE_GEMINI_IMAGE_EXTRACTION_VERIFIED: "NO",
     CAMERA_VERIFICATION_NOTE: "REAL_DEVICE_CAMERA_NOT_VERIFIED",
     ca: [],
   };
@@ -555,19 +941,21 @@ export async function chay() {
   ];
   try {
     for (const khung of KHUNG) {
-      const ca = await motKhung(cong, khung);
+      const ca = await motKhung(cong, khung, tepTam);
       kq.ca.push(ca);
-      for (const [ma, v] of Object.entries(ca.kiem)) console.log(`  ${ca.khung} ${ma}: ${v.dat ? "ĐẠT" : "KHÔNG ĐẠT"}`);
-      if (TIEM) break;
+      for (const [ma, v] of Object.entries(ca.kiem)) {
+        console.log("  " + ca.khung + " " + ma + ": " + (v.dat ? "ĐẠT" : "KHÔNG ĐẠT"));
+      }
     }
   } finally {
     sv.close();
+    rmSync(thuMucTam, { recursive: true, force: true });
   }
   kq.dat = kq.ca.every((c) => c.dat);
   mkdirSync(RA, { recursive: true });
-  const ten = TIEM ? `PHOTO_BROWSER_CHECK_TIEM_${TIEM}.json` : "PHOTO_BROWSER_CHECK.json";
-  writeFileSync(join(RA, ten), JSON.stringify(kq, null, 2), { encoding: "utf-8", flag: "wx" });
-  console.log(`→ ${join(RA, ten)}  ${kq.dat ? "ĐẠT" : "KHÔNG ĐẠT"}`);
+  const duongDanJson = join(RA, "PHOTO_BROWSER_CHECK.json");
+  writeFileSync(duongDanJson, JSON.stringify(kq, null, 2) + "\n", "utf-8");
+  console.log("-> " + duongDanJson + "  " + (kq.dat ? "ĐẠT" : "KHÔNG ĐẠT"));
   return kq;
 }
 

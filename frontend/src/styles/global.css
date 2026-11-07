@@ -439,9 +439,9 @@ html {
   outline-offset: 2px;
 }
 
-/* ── Hộp thoại ẢNH ĐỀ BÀI (PhotoProblemDialog): máy ảnh trực tiếp · khoanh vùng · đọc · xem lại ───────── */
+/* ── Hộp thoại CHỤP ẢNH ĐỀ BÀI tối giản (Camera-First UX) & khung hỗ trợ đầu vào thống nhất ───────── */
 .axo-modal-dialog.photo-dialog {
-  width: min(680px, 100%);
+  width: min(560px, 100%);
   max-height: calc(100dvh - 24px);
 }
 
@@ -456,7 +456,7 @@ html {
   align-items: center;
   justify-content: center;
   gap: 6px;
-  min-height: 40px;
+  min-height: 38px;
 }
 
 .photo-dialog-body {
@@ -477,9 +477,6 @@ html {
 }
 
 .photo-camera,
-.photo-editor,
-.photo-prepared,
-.photo-review-screen,
 .photo-error {
   display: flex;
   flex-direction: column;
@@ -493,7 +490,7 @@ html {
   place-items: center;
   width: 100%;
   min-height: 220px;
-  max-height: min(56dvh, 460px);
+  max-height: min(52dvh, 390px);
   aspect-ratio: 4 / 3;
   overflow: hidden;
   border: 1px solid var(--hairline);
@@ -505,7 +502,7 @@ html {
   display: block;
   width: 100%;
   height: 100%;
-  max-height: min(56dvh, 460px);
+  max-height: min(52dvh, 390px);
   object-fit: contain;
 }
 
@@ -520,35 +517,62 @@ html {
   font-weight: 500;
 }
 
-.photo-camera-hint {
-  margin: 0;
-  font-size: 13px;
-  line-height: 1.4;
-  color: var(--ink-secondary);
-}
-
 .photo-camera-bar {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  justify-content: space-between;
   gap: var(--sp-xs);
 }
 
-.photo-camera-tools {
+.photo-camera-slot-side {
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
-  gap: var(--sp-xs);
+  justify-content: flex-start;
+  min-width: 0;
+}
+
+.photo-camera-slot-side.is-end {
+  justify-content: flex-end;
+}
+
+.photo-camera-slot-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.photo-camera-side-btn {
+  min-height: 38px;
+  padding: 0 12px;
+  font-size: 13.5px;
+  white-space: nowrap;
+}
+
+.photo-camera-side-label {
+  line-height: 1.2;
 }
 
 .photo-camera-shutter {
-  min-height: 44px;
-  padding: 0 20px;
+  min-height: 38px;
+  padding: 0 18px;
   font-weight: 600;
+  white-space: nowrap;
+}
+
+.photo-shutter-disc {
+  display: none;
+}
+
+.photo-shutter-label {
+  line-height: 1.2;
 }
 
 @media (max-width: 640px) {
+  .axo-modal-dialog.photo-dialog {
+    width: 100%;
+    max-height: calc(100dvh - 16px);
+  }
+
   .photo-dialog .axo-modal-close {
     width: 44px;
     height: 44px;
@@ -560,116 +584,176 @@ html {
   }
 
   .photo-camera-stage {
-    aspect-ratio: 4 / 3;
-    max-height: 48dvh;
+    aspect-ratio: 3 / 4;
+    min-height: 50dvh;
+    max-height: 64dvh;
+  }
+
+  .photo-camera-video {
+    max-height: 64dvh;
+    object-fit: cover;
   }
 
   .photo-camera-bar {
-    flex-direction: column;
-    align-items: stretch;
+    padding-top: var(--sp-xxs);
   }
 
-  .photo-camera-tools {
-    width: 100%;
+  .photo-dialog .btn-utility.photo-camera-side-btn {
+    width: 44px;
+    height: 44px;
+    min-height: 44px;
+    padding: 0;
+    border-radius: var(--rounded-full);
   }
 
-  .photo-camera-tools > button {
-    flex: 1 1 0;
-    padding-inline: 10px;
-    font-size: 13.5px;
-    white-space: nowrap;
+  .photo-camera-side-label {
+    display: none;
   }
 
-  .photo-camera-shutter {
-    width: 100%;
-    min-height: 46px;
+  .photo-dialog .btn-primary.photo-camera-shutter {
+    width: 64px;
+    height: 64px;
+    min-height: 64px;
+    padding: 0;
+    border-radius: var(--rounded-full);
+  }
+
+  .photo-camera-shutter svg,
+  .photo-shutter-label {
+    display: none;
+  }
+
+  .photo-shutter-disc {
+    flex: 0 0 48px;
+    display: block;
+    width: 48px;
+    height: 48px;
+    border-radius: var(--rounded-full);
+    border: 2.5px solid currentColor;
   }
 }
 
-/* Khung khoanh vùng: ảnh luôn nằm trọn trong vùng nhìn, tay nắm to hơn cho ngón tay. */
-.photo-crop-stage {
+.btn-composer-cancel {
+  height: 36px;
+  padding: 0 14px;
+  border: 1px solid var(--hairline);
+  border-radius: var(--rounded-full);
+  background: var(--surface);
+  color: var(--ink-secondary);
+  font: inherit;
+  font-size: 13.5px;
+  font-weight: 500;
+  cursor: pointer;
+  flex: 0 0 auto;
+  transition: background-color 0.12s ease, border-color 0.12s ease, color 0.12s ease;
+}
+
+.btn-composer-cancel:hover {
+  background: var(--canvas-soft);
+  border-color: var(--ink-faint);
+  color: var(--ink);
+}
+
+.btn-composer-cancel:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.composer-assist-card {
+  margin-top: var(--sp-sm);
+  padding: var(--sp-md);
+  border: 1px solid var(--hairline);
+  border-radius: var(--rounded-lg);
+  background: var(--surface);
+  box-shadow: var(--shadow-soft);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-sm);
+  text-align: left;
+}
+
+.composer-assist-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--sp-xs);
+}
+
+.composer-assist-title {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.45;
+  color: var(--ink);
+}
+
+.composer-candidate-list {
   display: grid;
-  place-items: center;
-  min-height: 160px;
-  padding: var(--sp-xs);
+  gap: var(--sp-xs);
+}
+
+.composer-candidate-btn {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-sm);
+  width: 100%;
+  padding: 10px 12px;
   border: 1px solid var(--hairline);
   border-radius: var(--rounded-md);
   background: var(--canvas-soft);
+  color: var(--ink);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.14s ease, background-color 0.14s ease;
 }
 
-.photo-crop {
-  --rc-drag-handle-size: 14px;
-  --rc-drag-handle-mobile-size: 28px;
-  --rc-border-color: rgba(255, 255, 255, 0.95);
-  max-width: 100%;
-  max-height: min(48dvh, 440px);
-  touch-action: none;
+.composer-candidate-btn:hover:not(:disabled) {
+  border-color: var(--primary);
+  background: var(--surface);
 }
 
-.photo-crop img.photo-crop-image {
-  display: block;
-  width: auto;
-  height: auto;
-  max-width: 100%;
-  max-height: min(48dvh, 440px);
-  object-fit: contain;
-  user-select: none;
+.composer-candidate-btn:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
 }
 
-.photo-crop-size {
-  margin: 0;
+.composer-candidate-thumb {
+  width: 56px;
+  height: 42px;
+  object-fit: cover;
+  border-radius: var(--rounded-xs);
+  border: 1px solid var(--hairline);
+  background: var(--surface);
+  flex: 0 0 auto;
+}
+
+.composer-candidate-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.composer-candidate-label {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.composer-candidate-snippet {
   font-size: 12.5px;
-  color: var(--ink-secondary);
-  font-variant-numeric: tabular-nums;
-}
-
-.photo-editor-tools {
-  justify-content: flex-start;
-}
-
-.photo-editor .hint {
-  margin: 0;
-}
-
-/* Ảnh SẼ/ĐÃ gửi. Ô có chiều cao cố định: ảnh xoay 90° (CSS) vẫn nằm gọn, không tràn. */
-.photo-sent {
-  display: grid;
-  place-items: center;
-  height: min(44vh, 380px);
-  margin: 0;
+  color: var(--ink-muted);
   overflow: hidden;
-  border: 1px solid var(--hairline);
-  border-radius: var(--rounded-md);
-  background: var(--canvas-soft);
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-.photo-sent.is-compact {
-  height: min(30vh, 240px);
-  margin-top: var(--sp-xs);
-}
-
-.photo-sent-image {
-  display: block;
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
-}
-
-.photo-sent.is-turned .photo-sent-image {
-  max-width: min(44vh, 380px);
-  max-height: 100vw;
-}
-
-.photo-sent.is-compact.is-turned .photo-sent-image {
-  max-width: min(30vh, 240px);
-}
-
-.photo-status {
+.composer-assist-hint {
   margin: 0;
-  min-height: 1.35em;
   font-size: 13px;
-  line-height: 1.35;
-  color: var(--ink-secondary);
+  color: var(--ink-muted);
 }
 
 .photo-review {
@@ -718,30 +802,10 @@ html {
   color: var(--ink);
 }
 
-.photo-details summary {
-  cursor: pointer;
-  font-size: 13px;
-  color: var(--ink-secondary);
-}
-
-.photo-verbatim {
-  max-height: 240px;
-  margin: var(--sp-xs) 0 0;
-  padding: var(--sp-xs);
-  overflow-y: auto;
-  border-radius: var(--rounded-sm);
-  background: var(--canvas-soft);
-  font-family: inherit;
-  font-size: 13px;
-  line-height: 1.5;
-  white-space: pre-wrap;
-  overflow-wrap: anywhere;
-}
-
 .photo-text {
   box-sizing: border-box;
   width: 100%;
-  min-height: 120px;
+  min-height: 110px;
   padding: var(--sp-xs);
   border: 1px solid var(--hairline);
   border-radius: var(--rounded-xs);

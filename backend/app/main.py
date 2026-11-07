@@ -948,6 +948,17 @@ class ImageExtractBody(BaseModel):
     rotation: Literal[0, 90, 180, 270] = 0
 
 
+class InputPrepareBody(BaseModel):
+    """Yêu cầu chuẩn bị đầu vào thống nhất (Ảnh / PDF / DOCX + văn bản chỉ dẫn trong ô nhập)."""
+
+    model_config = ConfigDict(extra="forbid")
+    content: str
+    mime_type: str | None = None
+    filename: str | None = None
+    user_text: str | None = Field(default=None, max_length=8000)
+    selected_candidate_id: str | None = Field(default=None, max_length=120)
+
+
 def _cache_key(text: str) -> str:
     """M7.13B: version KHÔNG nướng vào key nữa — lưu ở CỘT (dsl_version/
     policy_version) và lọc lúc lookup. Row version cũ nhìn thấy được để
@@ -1403,6 +1414,82 @@ async def image_extract(
             "reason_code": VisionUnavailable.code,
         })
     return ket_qua.to_response()
+
+
+@app.post("/api/input/prepare")
+async def input_prepare(
+    body: InputPrepareBody, algosim_session: str | None = Cookie(default=None)
+):
+    """Chuẩn bị đầu vào thống nhất sau khi học sinh bấm 'Dựng hình' (Ảnh · PDF · DOCX · Văn bản kèm tệp).
+
+    Tài liệu có text layer sạch (PDF text / DOCX + công thức OMML) được đọc tất định với 0 lượt gọi AI;
+    chỉ ảnh hoặc trang scan mới đi qua phát hiện vùng CV nhẹ rồi gọi VLM khi cần.
+    """
+    chan = _cong_luot_thu(algosim_session)
+    if chan is not None:
+        return chan
+
+    from app.ingestion.document_reader import InputPrepareRejected
+    from app.ingestion.unified_input import (
+        LiveVisionDisabledError,
+        MissingVisionKeyError,
+        prepare_unified_input,
+    )
+
+    api_key = os.getenv("GEMINI_API_KEY")
+    try:
+        ket_qua = await prepare_unified_input(
+            content=body.content,
+            declared_mime=body.mime_type,
+            filename=body.filename,
+            user_text=body.user_text,
+            selected_candidate_id=body.selected_candidate_id,
+            api_key=api_key,
+            cache_version=CACHE_VERSION,
+        )
+    except InputPrepareRejected as err:
+        return JSONResponse(
+            status_code=400,
+            headers={"Cache-Control": "no-store"},
+            content={"error": str(err), "reason_code": err.code},
+        )
+    except LiveVisionDisabledError:
+        return _hybrid_infra_error("LIVE_AI_DISABLED")
+    except MissingVisionKeyError:
+        return JSONResponse(
+            status_code=503,
+            headers={"Cache-Control": "no-store"},
+            content={"error": MISSING_KEY_MSG, "reason_code": "MISSING_API_KEY"},
+        )
+    except VisionBusy:
+        return JSONResponse(
+            status_code=429,
+            headers={"Cache-Control": "no-store"},
+            content={
+                "error": "Máy đang đọc một tệp ảnh khác. Em thử lại sau vài giây nhé.",
+                "reason_code": VisionBusy.code,
+            },
+        )
+    except VisionContractError:
+        return JSONResponse(
+            status_code=502,
+            headers={"Cache-Control": "no-store"},
+            content={
+                "error": "Chưa đọc được nội dung ảnh theo đúng khuôn. Em thử lại, hoặc gõ đề vào ô nhập.",
+                "reason_code": VisionContractError.code,
+            },
+        )
+    except VisionUnavailable:
+        return JSONResponse(
+            status_code=503,
+            headers={"Cache-Control": "no-store"},
+            content={
+                "error": "Dịch vụ đọc ảnh đang bận hoặc mất kết nối. Em thử lại sau, hoặc gõ đề vào ô nhập.",
+                "reason_code": VisionUnavailable.code,
+            },
+        )
+
+    return JSONResponse(content=ket_qua.to_dict(), headers={"Cache-Control": "no-store"})
 
 
 # ── `/api/edit` ĐÃ GỠ (LEGACY_INFORMATICS_REMOVAL) ─────────────────────────

@@ -1,7 +1,7 @@
 /**
- * Chuẩn hóa file người dùng chọn về InputPayload chung (M4).
- * Phần phân loại (kindFromFile / acceptAttr) là pure → test được;
- * fileToPayload đọc nội dung file (text hoặc base64) ở trình duyệt.
+ * Chuẩn hóa file người dùng chọn về InputPayload và tệp đính kèm thống nhất trên Composer.
+ * Phần phân loại (kindFromFile / acceptAttr / validateComposerFile) là pure → test được;
+ * fileToPayload / readAsBase64 đọc nội dung file ở trình duyệt.
  */
 
 export type InputKind = "text" | "code" | "document" | "image";
@@ -16,6 +16,7 @@ export interface InputPayload {
 const CODE_EXTS = [".py", ".js", ".ts", ".c", ".cpp", ".java", ".pas"];
 const IMAGE_EXTS = [".png", ".jpg", ".jpeg", ".webp"];
 const DOC_EXTS = [".docx"];
+const HEIC_EXTS = [".heic", ".heif"];
 
 /** Đuôi file (chữ thường, kèm dấu chấm) hoặc "" nếu không có. */
 export function extOf(filename: string): string {
@@ -32,7 +33,7 @@ export function kindFromFile(filename: string): Exclude<InputKind, "text"> | nul
   return null;
 }
 
-/** Thuộc tính accept cho <input type="file">. */
+/** Thuộc tính accept cho <input type="file"> truyền thống. */
 export function acceptAttr(): string {
   return [...CODE_EXTS, ...IMAGE_EXTS, ...DOC_EXTS].join(",");
 }
@@ -41,7 +42,7 @@ export function acceptAttr(): string {
  *  Máy chủ vẫn là thẩm quyền: nó soi NỘI DUNG tệp, không tin MIME này. */
 export const IMAGE_MIME_TYPES = ["image/png", "image/jpeg", "image/webp"] as const;
 
-/** `accept` cho hai nút "Chụp ảnh" / "Tải ảnh". */
+/** `accept` cho luồng chụp ảnh trực tiếp. */
 export const IMAGE_ACCEPT = IMAGE_MIME_TYPES.join(",");
 
 function laMimeAnh(type: string | undefined): type is (typeof IMAGE_MIME_TYPES)[number] {
@@ -77,6 +78,7 @@ const MIME_BY_EXT: Record<string, string> = {
   ".jpg": "image/jpeg",
   ".jpeg": "image/jpeg",
   ".webp": "image/webp",
+  ".pdf": "application/pdf",
   ".docx": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
 };
 
@@ -90,12 +92,20 @@ function readAsText(file: File): Promise<string> {
 }
 
 /** Đọc tệp thành chuỗi base64 THUẦN (đã bỏ tiền tố `data:<mime>;base64,`). */
-export function readAsBase64(file: Blob): Promise<string> {
+export async function readAsBase64(file: Blob): Promise<string> {
+  if (typeof FileReader === "undefined") {
+    const buf = new Uint8Array(await file.arrayBuffer());
+    let binary = "";
+    const chunk = 0x8000;
+    for (let i = 0; i < buf.length; i += chunk) {
+      binary += String.fromCharCode(...buf.subarray(i, i + chunk));
+    }
+    return btoa(binary);
+  }
   return new Promise((resolve, reject) => {
     const r = new FileReader();
     r.onload = () => {
       const result = String(r.result ?? "");
-      // data URL "data:<mime>;base64,<payload>" → lấy phần payload
       const comma = result.indexOf(",");
       resolve(comma >= 0 ? result.slice(comma + 1) : result);
     };
@@ -125,13 +135,15 @@ export async function fileToPayload(file: File): Promise<InputPayload> {
   };
 }
 
-/* ── Axo V2.7 Phase A (P5.4 & Decision D3) — Kiểm tra tệp đính kèm & trạng thái nút Dựng hình → ── */
+/* ── Unified Problem Input — Kiểm tra tệp đính kèm & trạng thái nút Dựng hình ── */
 
 export const MAX_ATTACHMENT_BYTES = 10 * 1024 * 1024;
 export const MAX_ATTACHMENTS = 10;
 
-/** Danh sách định dạng tệp được nhận trên Composer hình học Axo V2.7 (không bao gồm .py hoặc .pdf). */
-export const COMPOSER_ACCEPT = ".png,.jpg,.jpeg,.webp,.docx";
+/** Định dạng tệp đính kèm thống nhất trên Composer hình học: Ảnh (PNG/JPG/WEBP), PDF và Word (.docx). */
+export const COMPOSER_ACCEPT = ".png,.jpg,.jpeg,.webp,.pdf,.docx";
+
+export type ComposerAttachmentKind = Exclude<InputKind, "text"> | "pdf";
 
 export interface ComposerAttachmentItem {
   id: string;
@@ -140,7 +152,7 @@ export interface ComposerAttachmentItem {
   size: number;
   sizeFormatted: string;
   ext: string;
-  kind: Exclude<InputKind, "text"> | "pdf";
+  kind: ComposerAttachmentKind;
   previewUrl?: string;
   status?: "loading" | "ready" | "error";
   errorMessage?: string;
@@ -149,7 +161,7 @@ export interface ComposerAttachmentItem {
 export type ComposerFileRejectionCode =
   | "empty_file"
   | "too_large"
-  | "pdf_unsupported"
+  | "heic_unsupported"
   | "unsupported_format"
   | "duplicate_file"
   | "too_many_files";
@@ -157,7 +169,7 @@ export type ComposerFileRejectionCode =
 export type ComposerFileValidationResult =
   | {
       ok: true;
-      kind: Exclude<InputKind, "text">;
+      kind: "image" | "document" | "pdf";
       ext: string;
     }
   | {
@@ -166,7 +178,7 @@ export type ComposerFileValidationResult =
       reason: string;
     };
 
-/** Định dạng dung lượng tệp thực tế từ `file.size` (không giả lập dung lượng). */
+/** Định dạng dung lượng tệp thực tế từ `file.size`. */
 export function formatAttachmentSize(bytes: number): string {
   if (!Number.isFinite(bytes) || bytes <= 0) return "0 B";
   if (bytes < 1024) return `${Math.round(bytes)} B`;
@@ -189,12 +201,23 @@ export function splitAttachmentName(fullName: string): { stem: string; extWithDo
   };
 }
 
+/** MIME khai kèm khi gửi tệp đính kèm sang `/api/input/prepare`. */
+export function composerAttachmentMimeOf(
+  item: Pick<ComposerAttachmentItem, "file" | "kind" | "ext">,
+): string | undefined {
+  if (item.kind === "image") return imageMimeOf(item.file);
+  if (item.kind === "pdf" || item.ext === ".pdf") return "application/pdf";
+  if (item.kind === "document" || item.ext === ".docx") {
+    return MIME_BY_EXT[".docx"];
+  }
+  return MIME_BY_EXT[item.ext];
+}
+
 /**
- * Kiểm tra tệp đính kèm theo đúng khả năng xử lý thực của backend (Decision D3 & P6.4–P6.5):
- * - Từ chối rõ ràng `.pdf` vì backend hiện chưa có bộ đọc PDF.
- * - Từ chối định dạng lạ (không bao giờ gán mặc định sang một `kind` hợp lệ).
- * - Từ chối tệp rỗng (`<= 0` byte) hoặc vượt quá 10 MB.
- * - Từ chối tệp trùng lặp hoặc vượt quá số lượng tối đa.
+ * Kiểm tra tệp đính kèm cục bộ trước khi người dùng bấm "Dựng hình" (0 lượt gọi AI):
+ * - Chấp nhận ảnh (`.png`, `.jpg`, `.jpeg`, `.webp`), `.pdf` và `.docx`.
+ * - Từ chối tường minh `.heic`/`.heif` (chưa có bộ giải mã HEIF trên máy chủ — không giả hỗ trợ).
+ * - Từ chối định dạng lạ, tệp rỗng (`<= 0` byte), vượt quá 10 MB, trùng lặp hoặc quá số lượng.
  */
 export function validateComposerFile(
   file: { name: string; size: number; type?: string },
@@ -203,27 +226,29 @@ export function validateComposerFile(
   const ext = extOf(file.name);
   const mime = (file.type ?? "").toLowerCase().trim();
 
-  if (ext === ".pdf" || mime === "application/pdf") {
+  if (HEIC_EXTS.includes(ext) || mime === "image/heic" || mime === "image/heif") {
     return {
       ok: false,
-      code: "pdf_unsupported",
+      code: "heic_unsupported",
       reason:
-        "Chưa hỗ trợ đọc trực tiếp tệp PDF (.pdf). Vui lòng đính kèm ảnh chụp đề bài (.png, .jpg, .webp) hoặc tệp Word (.docx).",
+        "Định dạng ảnh HEIC/HEIF chưa được hỗ trợ trực tiếp. Vui lòng lưu sang JPG/PNG hoặc chọn tệp PDF/DOCX.",
     };
   }
 
-  const kind: "image" | "document" | null = isImageFile(file)
+  const kind: "image" | "document" | "pdf" | null = isImageFile(file)
     ? "image"
-    : ext === ".docx"
-      ? "document"
-      : null;
+    : ext === ".pdf" || mime === "application/pdf"
+      ? "pdf"
+      : ext === ".docx" || mime === MIME_BY_EXT[".docx"]
+        ? "document"
+        : null;
 
   if (!kind) {
     return {
       ok: false,
       code: "unsupported_format",
       reason:
-        "Định dạng tệp chưa được hỗ trợ. Vui lòng chọn ảnh đề bài (.png, .jpg, .webp) hoặc tệp Word (.docx).",
+        "Định dạng tệp chưa được hỗ trợ. Vui lòng chọn ảnh (.png, .jpg, .webp), tệp PDF (.pdf) hoặc Word (.docx).",
     };
   }
 
@@ -267,7 +292,9 @@ export function validateComposerFile(
         ? ".webp"
         : kind === "image"
           ? ".jpg"
-          : "");
+          : kind === "pdf"
+            ? ".pdf"
+            : ".docx");
 
   return {
     ok: true,
@@ -277,9 +304,8 @@ export function validateComposerFile(
 }
 
 /**
- * Nguồn chân lý duy nhất cho trạng thái bật/tắt nút `Dựng hình →` (P4.1 & Decision adjustment):
- * - Không áp đặt ngưỡng tối thiểu 10 ký tự.
- * - Chỉ cần văn bản sau khi `trim()` không rỗng HOẶC có ít nhất 1 tệp hợp lệ được backend hỗ trợ.
+ * Nguồn chân lý duy nhất cho trạng thái bật/tắt nút `Dựng hình →`:
+ * - Chỉ cần văn bản sau khi `trim()` không rỗng HOẶC có ít nhất 1 tệp hợp lệ được hỗ trợ.
  * - Khóa khi đang xử lý (`isSubmitting`) hoặc đang đọc tệp (`isUploading`).
  */
 export function canSubmitComposer(

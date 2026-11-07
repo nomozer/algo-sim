@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useReducer, useRef, useState } from "react";
+import { useEffect, useReducer, useRef, useState } from "react";
 import { useAppStore } from "../state/store";
 import { displayBrand } from "../branding";
 import { useAuthStore } from "../state/auth";
@@ -13,19 +13,18 @@ import {
 import {
   AxoClientError,
   analyzeViaServer,
-  extractImageViaServer,
   fetchHealth,
+  prepareUnifiedInputViaServer,
   type ClientFailureContract,
   type ServerHealth,
+  type UnifiedInputPrepareResponse,
 } from "../llm/client";
 import {
   COMPOSER_ACCEPT,
   IMAGE_ACCEPT,
   canSubmitComposer,
-  fileToPayload,
+  composerAttachmentMimeOf,
   formatAttachmentSize,
-  imageMimeOf,
-  isImageFile,
   readAsBase64,
   splitAttachmentName,
   validateComposerFile,
@@ -34,15 +33,14 @@ import {
 import type { AnalysisUnsupported } from "../core/types";
 import type { SimulationEnvelope } from "../simulations/types";
 import { PhotoProblemDialog } from "./PhotoProblemDialog";
+import { PhotoProblemPanel } from "./PhotoProblemPanel";
 import { AxoScrollbar } from "./AxoScrollbar";
 import {
-  canAccept,
-  canRead,
-  clientFileProblem,
-  initialPhotoState,
+  canConfirmAssistText,
+  initialUnifiedAssistState,
   photoReadErrorMessage,
-  photoReducer,
-  type PhotoUpload,
+  unifiedAssistReducer,
+  type UnifiedAssistState,
 } from "./photo-problem-flow";
 
 const MISSING_PREMISE_CODES = new Set([
@@ -294,6 +292,22 @@ export interface RunComposerSubmitOptions {
   attachment: ComposerAttachmentItem | null;
   health: ServerHealth | null | "loading";
   analyzeFn?: typeof analyzeViaServer;
+  prepareFn?: typeof prepareUnifiedInputViaServer;
+  selectedCandidateId?: string;
+  overridePreparedText?: string;
+  onAssistRequired?: (response: UnifiedInputPrepareResponse) => void;
+}
+
+/** Huỷ chủ động lượt đang trích xuất / dựng hình: giữ nguyên nội dung gõ tay và tệp đính kèm. */
+export function cancelComposerSubmit(
+  lockRef: { current: boolean },
+  abortRef?: { current: AbortController | null },
+): void {
+  const ctl = abortRef?.current ?? null;
+  if (abortRef) abortRef.current = null;
+  lockRef.current = false;
+  ctl?.abort();
+  useAppStore.getState().setAnalyzing(false);
 }
 
 export async function runComposerSubmit({
@@ -304,6 +318,10 @@ export async function runComposerSubmit({
   attachment,
   health,
   analyzeFn = analyzeViaServer,
+  prepareFn = prepareUnifiedInputViaServer,
+  selectedCandidateId,
+  overridePreparedText,
+  onAssistRequired,
 }: RunComposerSubmitOptions): Promise<void> {
   if (!canSubmit || lockRef.current) return;
   lockRef.current = true;
@@ -320,18 +338,68 @@ export async function runComposerSubmit({
   store.setAnalyzing(true);
 
   try {
-    const payload = attachment
-      ? await fileToPayload(attachment.file)
-      : { type: "text" as const, content: problemText.trim() };
+    let finalProblemText = "";
 
-    const result = await analyzeFn(payload, ctl?.signal, undefined, attemptId);
+    if (typeof overridePreparedText === "string") {
+      finalProblemText = overridePreparedText.trim();
+    } else if (!attachment) {
+      finalProblemText = problemText.trim();
+    } else {
+      const content = await readAsBase64(attachment.file);
+      if (ctl?.signal.aborted) return;
+
+      const prepared = await prepareFn(
+        {
+          content,
+          mime_type: composerAttachmentMimeOf(attachment),
+          filename: attachment.name,
+          user_text: problemText.trim() || undefined,
+          selected_candidate_id: selectedCandidateId,
+        },
+        ctl?.signal,
+      );
+      if (ctl?.signal.aborted) return;
+
+      if (prepared.status === "needs_selection" || prepared.status === "needs_confirmation") {
+        onAssistRequired?.(prepared);
+        return;
+      }
+
+      if (prepared.status === "rejected") {
+        const rejectionTitle =
+          prepared.reason_code === "DOCX_UNREADABLE_EQUATION"
+            ? "Công thức trong tệp Word chưa đọc được"
+            : "Chưa trích xuất được đề bài";
+        const rejectionDesc = normalizeDisplayBrand(
+          prepared.learner_message ||
+            "Tệp đính kèm chưa có nội dung đề toán hình học không gian rõ ràng. Em kiểm tra lại tệp hoặc nhập đề trực tiếp.",
+        );
+        useToastStore.getState().showToast({
+          id: "composer-refusal",
+          tone: "info",
+          title: rejectionTitle,
+          description: rejectionDesc,
+          durationMs: 8500,
+        });
+        return;
+      }
+
+      finalProblemText = prepared.problem_text.trim();
+    }
+
+    const result = await analyzeFn(
+      { type: "text", content: finalProblemText },
+      ctl?.signal,
+      undefined,
+      attemptId,
+    );
     if (ctl?.signal.aborted) return;
 
     if (result.status === "ok") {
       store.loadEnvelope(
         result as SimulationEnvelope,
         undefined,
-        attachment ? undefined : problemText.trim(),
+        finalProblemText,
         attemptId,
       );
       if (useAuthStore.getState().user !== null) {
@@ -358,11 +426,12 @@ export async function runComposerSubmit({
       return;
     }
     const contract = err instanceof AxoClientError ? err.toContract() : null;
-    const message = err instanceof Error ? err.message : String(err);
+    const rawMsg = err instanceof Error ? err.message : String(err);
+    const safeMsg = photoReadErrorMessage(err) ?? rawMsg;
     store.setClientFailure(contract);
-    store.setAnalysisError(message);
+    store.setAnalysisError(safeMsg);
 
-    const errView = describeComposerError(message, health, contract);
+    const errView = describeComposerError(safeMsg, health, contract);
     if (errView) {
       useToastStore.getState().showToast({
         tone: errView.tone,
@@ -394,26 +463,30 @@ function getComposerMinHeight(): number {
 
 let attachmentSeq = 0;
 
+function revokePreviewUrl(url: string | undefined) {
+  if (url && typeof URL !== "undefined" && typeof URL.revokeObjectURL === "function") {
+    URL.revokeObjectURL(url);
+  }
+}
+
 /**
- * Axo V2.7 Slice 2 — Homepage Composer tích hợp chức năng thực tế:
- * - Nhập văn bản đề toán hình học không gian (tự giãn chiều cao, không yêu cầu tối thiểu 10 ký tự).
- * - Đính kèm tệp hợp lệ (`.docx`, `.png`, `.jpg`, `.jpeg`, `.webp`, mã nguồn `.py`...) hiển thị trên dải thẻ ngang.
- * - Từ chối tệp `.pdf` rõ ràng theo quyết định D3 (backend chưa có bộ đọc PDF).
- * - Menu `+` ở góc dưới trái (Tải tệp từ thiết bị, Chụp ảnh đề bài, Đọc đề từ ảnh OCR).
- * - Modal `Tất cả tệp đính kèm` khi có từ 2 tệp trở lên.
- * - Nút `Dựng hình →` 3 trạng thái (Disabled / Idle / Loading `[Spinner] Đang dựng hình...`) nối với API thật.
- * - Thông báo lỗi / dịch vụ chưa sẵn sàng qua `useToastStore` góc trên bên phải.
+ * Axo Unified Problem Input Composer:
+ * - Nhập văn bản trực tiếp, chụp ảnh đề bài (Camera-First tối giản) hoặc đính kèm tệp (`.png`, `.jpg`, `.jpeg`, `.webp`, `.pdf`, `.docx`).
+ * - Nguyên tắc Đính kèm ≠ Xử lý: trước khi bấm `Dựng hình →`, chỉ kiểm tra cục bộ và tạo chip đính kèm (0 lượt gọi AI).
+ * - Khi bấm `Dựng hình →`: tự động tách vùng nội dung, đọc PDF/DOCX/OMML, gộp chỉ dẫn gõ tay và chuyển qua Hybrid `/4` → `Scene3D`.
  */
 export interface ProblemInputProps {
   initialAttachments?: ComposerAttachmentItem[];
   initialPlusMenuOpen?: boolean;
   initialAllFilesModalOpen?: boolean;
+  initialAssistState?: UnifiedAssistState;
 }
 
 export function ProblemInput({
   initialAttachments = [],
   initialPlusMenuOpen = false,
   initialAllFilesModalOpen = false,
+  initialAssistState = initialUnifiedAssistState,
 }: ProblemInputProps = {}) {
   const problemText = useAppStore((s) => s.problemText);
   const setProblemText = useAppStore((s) => s.setProblemText);
@@ -431,8 +504,16 @@ export function ProblemInput({
   const [previewModalFileId, setPreviewModalFileId] = useState<string | null>(
     null,
   );
+  const [photoDialogOpen, setPhotoDialogOpen] = useState(false);
+  const [assist, dispatchAssist] = useReducer(
+    unifiedAssistReducer,
+    initialAssistState,
+  );
 
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const uploadImageRef = useRef<HTMLInputElement>(null);
+  const cameraImageRef = useRef<HTMLInputElement>(null);
+  const replaceTargetIdRef = useRef<string | null>(null);
   const textRef = useRef<HTMLTextAreaElement>(null);
   const plusMenuAnchorRef = useRef<HTMLDivElement>(null);
   const filesRowRef = useRef<HTMLDivElement>(null);
@@ -444,18 +525,6 @@ export function ProblemInput({
     left: false,
     right: false,
   });
-
-  const [photo, dispatchPhoto] = useReducer(photoReducer, initialPhotoState);
-  const [photoDialogOpen, setPhotoDialogOpen] = useState(false);
-  const uploadImageRef = useRef<HTMLInputElement>(null);
-  const cameraImageRef = useRef<HTMLInputElement>(null);
-  const readAbortRef = useRef<AbortController | null>(null);
-  // Ổn định qua các lần render: `PhotoCropEditor` giải mã lại ảnh mỗi khi callback này đổi danh tính.
-  const onPhotoInvalid = useCallback((message: string) => {
-    readAbortRef.current?.abort();
-    readAbortRef.current = null;
-    dispatchPhoto({ type: "image-invalid", message });
-  }, []);
 
   useEffect(() => {
     attachmentsRef.current = attachments;
@@ -498,15 +567,12 @@ export function ProblemInput({
     };
   }, [attachments.length]);
 
-  // Thu hồi toàn bộ objectURL khi tháo component để tránh rò bộ nhớ.
+  // Thu hồi toàn bộ objectURL và huỷ request đang chạy khi tháo component để tránh rò bộ nhớ.
   useEffect(() => {
     return () => {
       analyzeAbortRef.current?.abort();
-      readAbortRef.current?.abort();
       for (const item of attachmentsRef.current) {
-        if (item.previewUrl && typeof URL !== "undefined" && typeof URL.revokeObjectURL === "function") {
-          URL.revokeObjectURL(item.previewUrl);
-        }
+        revokePreviewUrl(item.previewUrl);
       }
     };
   }, []);
@@ -670,33 +736,24 @@ export function ProblemInput({
     }
   }
 
-  function cancelRead() {
-    readAbortRef.current?.abort();
-    readAbortRef.current = null;
-  }
-
-  function addFilesToComposer(allPicked: File[]) {
+  function addFilesToComposer(allPicked: File[], opts?: { replaceId?: string | null }) {
     if (allPicked.length === 0) return;
-    // ẢNH đi luồng đọc ảnh (hộp thoại khoanh vùng → xem lại), KHÔNG thành tệp đính kèm: `/api/analyze` chỉ nhận văn bản
-    // (ảnh gửi thẳng ⇒ 400 `IMAGE_DIRECT_UNSUPPORTED`). Một ảnh mỗi lượt; tệp khác vẫn đính kèm như cũ.
-    const image = allPicked.find((f) => isImageFile(f));
-    const pickedList = allPicked.filter((f) => !isImageFile(f));
-    if (image) acceptImage(image);
-    if (pickedList.length === 0) return;
 
+    const replaceId = opts?.replaceId ?? null;
+    const baseExisting = replaceId
+      ? attachments.filter((a) => a.id !== replaceId)
+      : attachments;
+    const workingExisting = baseExisting.map((a) => ({ name: a.name, size: a.size }));
     const nextItems: ComposerAttachmentItem[] = [];
-    const workingExisting = [
-      ...attachments.map((a) => ({ name: a.name, size: a.size })),
-    ];
 
-    for (const picked of pickedList) {
+    for (const picked of allPicked) {
       const check = validateComposerFile(picked, workingExisting);
       if (!check.ok) {
         useToastStore.getState().showToast({
           tone: "error",
           title:
-            check.code === "pdf_unsupported"
-              ? "Chưa hỗ trợ tệp PDF"
+            check.code === "heic_unsupported"
+              ? "Chưa hỗ trợ định dạng HEIC/HEIF"
               : "Không thể đính kèm tệp",
           description: check.reason,
         });
@@ -726,67 +783,70 @@ export function ProblemInput({
         ext: check.ext,
         kind: check.kind,
         previewUrl,
+        status: "ready",
       });
       workingExisting.push({ name: picked.name, size: picked.size });
     }
 
     if (nextItems.length > 0) {
-      setAttachments((prev) => [...prev, ...nextItems]);
+      dispatchAssist({ type: "reset" });
+      setAttachments((prev) => {
+        if (!replaceId) {
+          return [...prev, ...nextItems];
+        }
+        const replaced = prev.find((item) => item.id === replaceId);
+        revokePreviewUrl(replaced?.previewUrl);
+        const idx = prev.findIndex((item) => item.id === replaceId);
+        if (idx < 0) return [...prev, ...nextItems];
+        const copy = [...prev];
+        copy.splice(idx, 1, ...nextItems);
+        return copy;
+      });
     }
   }
 
   function onPickFiles(e: React.ChangeEvent<HTMLInputElement>) {
     const list = e.target.files ? Array.from(e.target.files) : [];
-    addFilesToComposer(list);
+    const replaceId = replaceTargetIdRef.current;
+    replaceTargetIdRef.current = null;
+    addFilesToComposer(list, { replaceId });
+    e.target.value = "";
+  }
+
+  function onPickImage(e: React.ChangeEvent<HTMLInputElement>) {
+    const picked = e.target.files?.[0] ?? null;
+    const replaceId = replaceTargetIdRef.current;
+    replaceTargetIdRef.current = null;
+    if (picked) {
+      addFilesToComposer([picked], { replaceId });
+    }
     e.target.value = "";
   }
 
   function removeAttachment(id: string) {
+    dispatchAssist({ type: "reset" });
     setAttachments((prev) => {
       const target = prev.find((item) => item.id === id);
-      if (
-        target?.previewUrl &&
-        typeof URL !== "undefined" &&
-        typeof URL.revokeObjectURL === "function"
-      ) {
-        URL.revokeObjectURL(target.previewUrl);
-      }
+      revokePreviewUrl(target?.previewUrl);
       return prev.filter((item) => item.id !== id);
     });
   }
 
-  function acceptImage(picked: File | null) {
-    if (!picked) return;
-    if (!isImageFile(picked)) {
-      const msg = "Chỉ nhận ảnh PNG, JPEG hoặc WEBP.";
-      useToastStore.getState().showToast({
-        tone: "error",
-        title: "Không thể đính kèm ảnh",
-        description: msg,
-      });
-      return;
-    }
-    const problem = clientFileProblem(picked);
-    if (problem) {
-      useToastStore.getState().showToast({
-        tone: "error",
-        title: "Không thể đính kèm ảnh",
-        description: problem,
-      });
-      return;
-    }
-    cancelRead();
-    dispatchPhoto({ type: "select", file: picked });   // KHÔNG tự đọc: người học khoanh vùng/xoay rồi mới bấm đọc
-    setPhotoDialogOpen(true);
+  function triggerReplaceAttachment(id: string) {
+    replaceTargetIdRef.current = id;
+    setPreviewModalFileId(null);
+    fileInputRef.current?.click();
   }
 
-  function onPickImage(e: React.ChangeEvent<HTMLInputElement>) {
-    acceptImage(e.target.files?.[0] ?? null);
-    e.target.value = "";
+  function closePhotoDialog() {
+    setPhotoDialogOpen(false);
   }
 
-  async function onAnalyze() {
-    if (readyAttachments.length > 1) {
+  async function onAnalyze(opts?: {
+    selectedCandidateId?: string;
+    overridePreparedText?: string;
+  }) {
+    if (readyAttachments.length > 1 && !opts?.overridePreparedText) {
       useToastStore.getState().showToast({
         id: "composer-multi-file-limit",
         tone: "info",
@@ -797,74 +857,29 @@ export function ProblemInput({
       });
       return;
     }
+    dispatchAssist({ type: "reset" });
     await runComposerSubmit({
-      canSubmit,
+      canSubmit: Boolean(opts?.overridePreparedText) || canSubmit,
       lockRef: submittingRef,
       abortRef: analyzeAbortRef,
       problemText,
       attachment: readyAttachments[0] ?? null,
       health,
+      selectedCandidateId: opts?.selectedCandidateId,
+      overridePreparedText: opts?.overridePreparedText,
+      onAssistRequired: (response) => {
+        dispatchAssist({ type: "from-prepare", response });
+      },
     });
   }
 
-  /** Gửi ĐÚNG MỘT ảnh — ảnh đã chuẩn bị (`photo.upload`): tệp đã cắt (`rotation = 0`) hoặc tệp gốc + góc xoay. */
-  async function onReadPhoto() {
-    if (!canRead(photo) || readAbortRef.current || !photo.upload) return;
-    const { file: picked, rotation } = photo.upload;
-    const requestId = photo.requestId + 1;
-    dispatchPhoto({ type: "read-start" });
-    const ctl = new AbortController();
-    readAbortRef.current = ctl;
-    try {
-      const content = await readAsBase64(picked as unknown as Blob);
-      if (ctl.signal.aborted) return;
-      const response = await extractImageViaServer(
-        { content, mime_type: imageMimeOf(picked), filename: picked.name, rotation },
-        ctl.signal,
-      );
-      if (!ctl.signal.aborted) {
-        dispatchPhoto({ type: "read-success", requestId, response });
-      }
-    } catch (err) {
-      if (ctl.signal.aborted) return;
-      const message = photoReadErrorMessage(err);
-      if (message === null) return;
-      if (/lượt mô phỏng thử/.test(message)) {
-        useAppStore.getState().setAnalysisError(message);
-        dispatchPhoto({ type: "read-failure", requestId, message: "" });
-      } else {
-        dispatchPhoto({ type: "read-failure", requestId, message });
-      }
-    } finally {
-      if (readAbortRef.current === ctl) readAbortRef.current = null;
-    }
+  function onSelectAssistCandidate(candidateId: string) {
+    void onAnalyze({ selectedCandidateId: candidateId });
   }
 
-  function closePhotoDialog() {
-    cancelRead();
-    dispatchPhoto({ type: "remove" });
-    setPhotoDialogOpen(false);
-  }
-
-  /**
-   * Văn bản ĐÃ XEM LẠI vào ô nhập đề — đúng đường gõ tay; KHÔNG gọi `/api/analyze` (người học bấm "Dựng hình" như mọi
-   * lần). Ảnh và bản trích xuất bị bỏ khỏi trạng thái: một đề chỉ nằm ở một chỗ (`problemText`).
-   */
-  function acceptPhotoText() {
-    if (!canAccept(photo)) return;
-    setProblemText(photo.text.trim());
-    closePhotoDialog();
-    window.setTimeout(() => {
-      textRef.current?.focus();
-      syncTextareaHeight(textRef.current);
-    }, 0);
-    useToastStore.getState().showToast({
-      id: "photo-text-accepted",
-      tone: "info",
-      title: "Đã đưa đề vào ô nhập",
-      description: "Em xem lại lần cuối rồi bấm Dựng hình.",
-      durationMs: 5000,
-    });
+  function onSubmitConfirmedAssist() {
+    if (!canConfirmAssistText(assist)) return;
+    void onAnalyze({ overridePreparedText: assist.draftText });
   }
 
   const serverStatus =
@@ -1077,6 +1092,7 @@ export function ProblemInput({
                   role="menuitem"
                   onClick={() => {
                     setPlusMenuOpen(false);
+                    replaceTargetIdRef.current = null;
                     fileInputRef.current?.click();
                   }}
                 >
@@ -1091,10 +1107,6 @@ export function ProblemInput({
                   aria-haspopup="dialog"
                   onClick={() => {
                     setPlusMenuOpen(false);
-                    if (photo.phase !== "empty") {
-                      cancelRead();
-                      dispatchPhoto({ type: "remove" });
-                    }
                     setPhotoDialogOpen(true);
                   }}
                 >
@@ -1109,7 +1121,10 @@ export function ProblemInput({
               className="composer-sr-only"
               aria-label="Tải ảnh đề bài từ máy"
               tabIndex={-1}
-              onClick={() => uploadImageRef.current?.click()}
+              onClick={() => {
+                replaceTargetIdRef.current = null;
+                uploadImageRef.current?.click();
+              }}
             >
               Tải ảnh
             </button>
@@ -1118,6 +1133,18 @@ export function ProblemInput({
               Nhập đề bài hoặc chọn mẫu bên dưới
             </span>
           </div>
+
+          {analyzing && (
+            <button
+              type="button"
+              id="btn-composer-cancel"
+              className="btn-composer-cancel"
+              onClick={() => cancelComposerSubmit(submittingRef, analyzeAbortRef)}
+              aria-label="Huỷ quá trình dựng hình đang chạy"
+            >
+              Huỷ
+            </button>
+          )}
 
           <button
             type="button"
@@ -1148,6 +1175,16 @@ export function ProblemInput({
           </span>
         </div>
       </div>
+
+      <PhotoProblemPanel
+        state={assist}
+        busy={analyzing}
+        onSelectCandidate={onSelectAssistCandidate}
+        onEditDraft={(text) => dispatchAssist({ type: "edit-draft", text })}
+        onToggleConfirm={(value) => dispatchAssist({ type: "toggle-confirm", value })}
+        onSubmitConfirmed={onSubmitConfirmedAssist}
+        onDismiss={() => dispatchAssist({ type: "reset" })}
+      />
 
       {(() => {
         const previewAtt = previewModalFileId
@@ -1206,7 +1243,7 @@ export function ProblemInput({
                       {`Tệp ${extBadge} · ${previewAtt.sizeFormatted}`}
                     </span>
                     <div style={{ maxWidth: 420, color: "var(--ink-secondary)", fontSize: 12.6 }}>
-                      {`Định dạng ${extBadge} chưa hỗ trợ hiển thị bản xem trước trực tiếp. Nội dung tệp sẽ được trích xuất khi bấm Dựng hình.`}
+                      {`Nội dung tệp ${extBadge} sẽ được trích xuất tự động khi bấm Dựng hình.`}
                     </div>
                   </div>
                 )}
@@ -1249,6 +1286,15 @@ export function ProblemInput({
                       : "Đã đính kèm · Sẵn sàng phân tích khi bấm Dựng hình."}
                 </div>
                 <div className="all-files-modal-foot">
+                  <button
+                    type="button"
+                    id="btn-replace-file-modal"
+                    className="btn-admin-sm"
+                    onClick={() => triggerReplaceAttachment(previewAtt.id)}
+                    disabled={analyzing}
+                  >
+                    Đổi tệp
+                  </button>
                   <button
                     type="button"
                     className="btn-admin-sm warn"
@@ -1414,31 +1460,22 @@ export function ProblemInput({
 
       <PhotoProblemDialog
         open={photoDialogOpen}
-        state={photo}
-        composerText={problemText}
         onClose={closePhotoDialog}
-        onPickFile={() => uploadImageRef.current?.click()}
-        onNativeCamera={() => cameraImageRef.current?.click()}
-        onCaptured={(file) => acceptImage(file)}
-        onChangeImage={() => {
-          cancelRead();
-          dispatchPhoto({ type: "remove" });
+        onPickFile={() => {
+          setPhotoDialogOpen(false);
+          replaceTargetIdRef.current = readyAttachments.length === 1 ? readyAttachments[0]!.id : null;
+          uploadImageRef.current?.click();
         }}
-        onRotate={(direction) => dispatchPhoto({ type: "rotate", direction })}
-        onPrepare={(upload: PhotoUpload) => dispatchPhoto({ type: "prepare", upload })}
-        onInvalid={onPhotoInvalid}
-        onEditImage={() => {
-          cancelRead();
-          dispatchPhoto({ type: "edit-image" });
+        onNativeCamera={() => {
+          setPhotoDialogOpen(false);
+          replaceTargetIdRef.current = readyAttachments.length === 1 ? readyAttachments[0]!.id : null;
+          cameraImageRef.current?.click();
         }}
-        onRead={() => void onReadPhoto()}
-        onCancelRead={() => {
-          cancelRead();
-          dispatchPhoto({ type: "read-cancel" });
+        onCaptured={(file) => {
+          const replaceId = readyAttachments.length === 1 ? readyAttachments[0]!.id : null;
+          addFilesToComposer([file], { replaceId });
+          setPhotoDialogOpen(false);
         }}
-        onEdit={(text) => dispatchPhoto({ type: "edit", text })}
-        onConfirm={(value) => dispatchPhoto({ type: "confirm", value })}
-        onAccept={acceptPhotoText}
       />
 
       {serverStatus}

@@ -1766,8 +1766,33 @@ Tests: `test_image_extraction.py`, `test_image_extract_api.py`,
 không còn giới hạn · lược đồ đầy đủ và Pydantic giữ nguyên · không sửa tại chỗ · xác định ·
 request thật mang lược đồ gửi ở biên HTTP · hậu kiểm 502 không phải từ chối đề bài).
 
+### `ingestion/region_detector.py` · Change impact: offline
+Pipeline thị giác máy tính tất định (Pillow tăng tốc C, 0 lượt gọi AI) tách vùng bài toán từ ảnh chụp / trang PDF scan:
+`assess_and_enhance_image` (đánh giá thiếu sáng/mờ, cân bằng tương phản vừa phải), `detect_page_boundary` (loại bỏ nền bàn/mép sách),
+`estimate_and_correct_skew` (ước lượng góc nghiêng cực đại phương sai chiếu ngang và xoay bù), `_segment_layout_blocks`,
+`_group_problem_clusters` (gom khối văn bản + hình vẽ không gian bên phải/bên dưới + nhãn ký hiệu nhỏ `A′`, `⟂`, `∥`, `α`, lọc header/footer/số trang),
+`_expand_to_clear_ink_border` (nới khung tới viền giấy sạch, chống xén mất nhãn đỉnh) và `detect_problem_regions` → `RegionDetectionReport`
+(tự động lùi về ảnh chuẩn hoá toàn trang khi độ tin cậy tách vùng thấp). Tests: `test_unified_input_20_cases.py`.
+
+### `ingestion/document_reader.py` · Change impact: offline
+Bộ đọc tài liệu cấu trúc & phân tích chỉ dẫn gõ tay kèm tệp (0 lượt gọi AI khi văn bản/công thức đầy đủ):
+`sniff_input_file_kind` (kiểm magic bytes thật, chặn tệp giả mạo đuôi, HEIC/HEIF, macro `.docm`, zip bomb, XXE),
+`omml_to_text` (chuyển đổi công thức Word OMML `<m:oMath>` — phân số, căn thức, số mũ, chỉ số dưới, ký hiệu hình học — sang ký pháp toán chuẩn; phát hiện công thức nhị phân OLE cũ),
+`extract_docx_structured` (đọc đoạn văn, bảng `w:tbl`, hộp văn bản nổi `w:txbxContent`, ảnh nhúng `word/media/*` đúng thứ tự),
+`extract_pdf_structured` + `render_pdf_page_normalized` (`pymupdf` đọc text layer theo trang, phát hiện hình vẽ vector/bitmap, chỉ rasterize đúng trang cần thiết ở 200 DPI khi PDF scan),
+`parse_user_composer_instruction`, `split_text_into_problems`, `select_text_candidate`, `merge_supplemental_text`.
+Tests: `test_unified_input_20_cases.py`.
+
+### `ingestion/unified_input.py` · Change impact: targeted live (chỉ khi ảnh / PDF scan / DOCX thuần ảnh cần VLM)
+Điều phối chuẩn bị đầu vào thống nhất (`prepare_unified_input` → `UnifiedPrepareResult`, schema `unified-input-prepare/1`) cho `POST /api/input/prepare`:
+kết hợp văn bản gõ tay trong ô nhập + tệp đính kèm (`PNG`/`JPEG`/`WEBP`, `PDF` có text layer hoặc scan, `DOCX` có OMML/bảng/ảnh nhúng);
+tự động thử lại trên ảnh toàn trang nếu bản cắt vùng bị VLM báo `missing_regions` / `IMAGE_NOT_READABLE`;
+trả `ready` (chuyển thẳng sang Hybrid `/4` → `Scene3D`), `needs_selection` (nhiều bài chưa rõ bài cần dựng),
+`needs_confirmation` (chỉ khi ký hiệu thực sự bất định) hoặc `rejected` (fail-closed kèm thông báo trung thực), cùng telemetry `vlm_calls`, `vlm_payload_bytes`, `uncropped_baseline_bytes`.
+Tests: `test_unified_input_20_cases.py`; đánh giá 20 ca: `backend/scripts/evaluate_unified_input_corpus.py`.
+
 ### `main.py` · Change impact: offline (trừ khi đổi CACHE_VERSION/pipeline)
-FastAPI: `POST /api/analyze`, `POST /api/image/extract`, `GET /api/health`, `GET /api/diagnostics/*`
+FastAPI: `POST /api/analyze`, `POST /api/input/prepare`, `POST /api/image/extract`, `GET /api/health`, `GET /api/diagnostics/*`
 (*repo-cleanup:* `/api/edit` gỡ ở LEGACY_INFORMATICS_REMOVAL, `/api/explain` gỡ ở `repo-cleanup` — khoá 404 ở
 `test_api.py::test_endpoint_tutor_flow_da_xoa`; `/api/manifest` không còn). Exports: `app`, `CACHE_VERSION`,
 `_cache_key`, `_cache_lookup`, `_policy_identity` (cache theo tuyến — run `hybrid-pre-main-hardening`). Tests: `test_api.py`,
@@ -1900,69 +1925,36 @@ bằng test "không hai bài thuật toán nào dùng chung một tranh".
 Tests: `catalog.test.tsx`.
 
 ### `components/ProblemInput.tsx` · Change impact: offline
-M9-UX4 — MỘT dạng duy nhất (pill: ô tự cao dần, kẹp tệp + nút gửi nằm TRONG ô,
-Enter gửi / Shift+Enter xuống dòng) và **chỉ sống ở Trang chủ**. M9-UX3 từng có
-hai vỏ hero/compact vì `InputPanel` cũng nhúng composer; M9-UX4 gỡ composer khỏi
-workspace nên vỏ `compact` hết người dùng → gỡ prop `variant`, không nuôi code
-chết. `SAMPLE_PROMPTS` hiện thành chip bấm được dưới ô nhập (điền sẵn đề, học
-sinh vẫn phải tự bấm gửi — không lén tiêu lượt gọi AI). Tests: `catalog.test.tsx`.
-Notes (run `image-capture-crop-extraction`, 2026-11-07; thay bản 2026-09-13): mục `+` "Chụp ảnh đề bài" mở
-`PhotoProblemDialog` (không mở máy ảnh lúc tải trang); `input[capture=environment]` (máy ảnh gốc của điện thoại) và
-input tải ảnh vẫn ẩn trong ô nhập. MỌI ảnh — kể cả chọn qua "Tải tệp từ thiết bị" (`addFilesToComposer` tách ảnh ra) —
-đi luồng đọc ảnh, không thành tệp đính kèm: `/api/analyze` chỉ nhận văn bản (ảnh gửi thẳng ⇒ 400
-`IMAGE_DIRECT_UNSUPPORTED`). `onReadPhoto` gửi ĐÚNG MỘT ảnh (`photo.upload`: vùng đã cắt, `rotation = 0`; hoặc tệp gốc +
-góc xoay) qua `extractImageViaServer`; lỗi → `photoReadErrorMessage`. `acceptPhotoText` đưa văn bản ĐÃ XEM LẠI vào
-`problemText` rồi đóng hộp thoại — KHÔNG gọi `/api/analyze` (người học bấm "Dựng hình" như gõ tay; mã lần học sinh ở
-`runComposerSubmit` như mọi lần). Chống bấm lặp bằng `readAbortRef` + reducer; đóng/huỷ ⇒ `AbortController.abort()`.
-Tests: `photo-problem-panel.test.tsx`.
+Ô nhập đề thống nhất (Unified Problem Input Composer) ở Trang chủ: hỗ trợ đồng thời 3 phương thức trong CÙNG MỘT ô nhập
+— gõ/dán văn bản trực tiếp (`#home-problem-input`), chụp ảnh đề bài qua Camera-First tối giản (`#menu-item-camera` → `PhotoProblemDialog`),
+và chọn tệp từ thiết bị (`#menu-item-upload-file`: `.png`, `.jpg`, `.jpeg`, `.webp`, `.pdf`, `.docx`; từ chối tường minh `.heic`/`.heif`).
+Mọi ảnh, PDF và DOCX đều đính kèm thành chip trong `#composer-files-wrap` (nguyên tắc **Đính kèm ≠ Xử lý**: 0 lượt gọi AI trước khi bấm `Dựng hình →`,
+xem chi tiết/đổi tệp/gỡ tệp giữ nguyên văn bản đã gõ, thu hồi toàn bộ `objectURL`). Khi bấm `Dựng hình →` (`runComposerSubmit`),
+tệp đính kèm + văn bản gõ kèm đi qua `prepareUnifiedInputViaServer` (`/api/input/prepare`) rồi chuyển thẳng sang `analyzeViaServer` (`/api/analyze` Hybrid `/4` → `Scene3D`),
+có nút `#btn-composer-cancel` (`cancelComposerSubmit`) huỷ an toàn request đang chạy. Tests: `slice2-composer.test.tsx`, `photo-problem-panel.test.tsx`.
 
 ### `components/PhotoProblemPanel.tsx` · Change impact: offline
-Phần thân màn XEM LẠI của `PhotoProblemDialog`, thuần trình bày: ô nội dung có `label` (sửa ký hiệu, tên đỉnh, số liệu;
-không tự sửa quan hệ) · ô xác nhận · lý do chưa dùng được (`#photo-accept-hint`) · chỗ đọc chưa chắc · vùng mất · mâu
-thuẫn chữ–hình · công thức chuẩn hoá · quan sát từ hình (nhãn "chỉ để tham khảo, không dùng làm dữ kiện") · bản chép
-nguyên văn. Không hiện mã từ chối/cờ — chỉ `learner_message` / `flag_messages`. Chuỗi đọc từ ảnh luôn đi dạng chữ.
+Khung hỗ trợ trực tiếp bên dưới ô nhập đề sau khi bấm `Dựng hình →` (mặc định `idle` ẩn hoàn toàn — không bắt người học qua màn hình trung gian khi đề rõ):
+`#composer-candidate-picker` (`needs_selection`: chạm chọn 1 bước bài toán ứng viên khi ảnh/PDF/DOCX có nhiều bài độc lập mà chưa có chỉ dẫn chọn bài)
+và `#composer-extraction-confirm` (`needs_confirmation`: chỉ hiện phần ký hiệu đọc chưa chắc chắn hoặc vùng nghi bị che kèm ô sửa nhanh trước khi dựng 3D).
 Tests: `photo-problem-panel.test.tsx`.
 
 ### `components/PhotoProblemDialog.tsx` · Change impact: offline
-Hộp thoại ẢNH ĐỀ BÀI (run `image-capture-crop-extraction`): mở thẳng màn MÁY ẢNH TRỰC TIẾP (`camera`, không có màn lựa
-chọn trung gian) → CHỈNH ẢNH (`PhotoCropEditor`) → ẢNH SẼ GỬI + ĐANG ĐỌC (huỷ được) → XEM LẠI (`PhotoProblemPanel`, đối
-chiếu ảnh đã đọc, "Dùng đề này" hỏi trước khi thay nội dung ô nhập đang có) → LỖI (đọc lại / chỉnh lại / chụp ảnh khác /
-chọn ảnh từ máy). Dùng lớp `.axo-modal-*`; focus vào khi mở, bẫy Tab, Escape/nút đóng/bấm nền để đóng, trả focus khi đóng.
-Tests: `photo-problem-panel.test.tsx`.
-
-### `components/PhotoCropEditor.tsx` · Change impact: offline
-KHOANH VÙNG · XOAY thủ công bằng `react-image-crop` (ISC, 0 dependency, ghim `11.1.2`): khung bắt đầu bằng cả ảnh, tự do tỉ
-lệ, kéo/đổi cỡ bằng chuột · chạm · bàn phím (`ariaLabels` tiếng Việt); Xoay trái/phải · Đặt lại khung · Đổi ảnh · Giữ
-nguyên ảnh (gửi tệp gốc + `rotation`) · Cắt theo khung (`renderPhotoUpload`, pixel gốc). Kiểm trần 40 triệu điểm ảnh sau
-khi giải mã. Mọi object URL thu hồi khi đổi ảnh/góc hay tháo. Kiểm trên Chrome: `frontend/scripts/photo-problem-browser-check.mjs`.
+Hộp thoại chụp ảnh đề bài tối giản (`#photo-camera-dialog`, Camera-First UX): mở thẳng `PhotoCameraView`, không có màn khoanh vùng thủ công,
+xoay ảnh hay xác nhận nhiều bước. Chụp xong 1 ảnh ⇒ dừng `MediaStream`, đính kèm ảnh thành chip trong `#composer-files-wrap` và đóng hộp thoại ngay;
+bẫy Tab, đóng bằng Escape / nút đóng / bấm nền, trả focus về nút mở. Tests: `photo-problem-panel.test.tsx`; trình duyệt: `photo-problem-browser-check.mjs`.
 
 ### `components/PhotoCameraView.tsx` · Change impact: offline
-Camera-First UX qua `getUserMedia` (chỉ sau thao tác chủ động; cần HTTPS hoặc localhost): desktop mở webcam mặc định
-(`initialCameraTarget`, `buildCameraConstraints`, không dựa bề rộng màn hình qua `isMobileCameraPreferred`), di động ưu tiên
-`facingMode: { ideal: "environment" }` kèm `fallbackCameraConstraints` khi camera sau vắng; đổi máy ảnh (`canSwitchCamera`,
-`nextCameraTarget`), chọn ảnh có sẵn tại chỗ, dự phòng `input[capture=environment]` khi lỗi trên di động; `cameraSupport`,
-`cameraErrorMessage`, `browserCameraSupport`. Luồng DỪNG ngay khi chụp, đổi camera, đóng hay tháo; ảnh chụp ở độ phân giải
-thật của luồng, JPEG 0.95. Tests: `photo-problem-panel.test.tsx`; trình duyệt: `photo-problem-browser-check.mjs`.
-
-### `components/photo-image-tools.ts` · Change impact: offline
-Toán học xoay/khoanh vùng thuần + Canvas: `cropToPixels` (% → pixel GỐC, kẹp biên, ε chống lệch 1 px, `null` khi rỗng),
-`rotationMatrix`/`applyMatrix`/`rotatedSize`/`rotateLeft`/`rotateRight` (90° theo chiều kim đồng hồ, sau EXIF — cùng thứ
-tự backend), `exportScale` (cạnh dài ≤ `PHOTO_SEND_MAX_SIDE` = 3072, như `MAX_SEND_SIDE` của máy chủ), `exceedsPixelLimit`
-(`PHOTO_MAX_PIXELS`), `exportFormats` (PNG giữ PNG, ảnh chụp JPEG 0.92 → 0.85, không nén mạnh), `uploadFileName`,
-`renderPhotoUpload` (một `drawImage` qua ma trận, giải phóng canvas), `renderRotatedPreview`, `loadImage`. Tests:
-`photo-image-tools.test.ts`.
+Khung ngắm máy ảnh trực tiếp tối giản qua `getUserMedia` (chỉ khởi động khi người học bấm “Chụp ảnh đề bài”):
+mobile hiển thị video chiếm vùng chính + nút chụp tròn ở giữa dưới (`#btn-photo-capture`) + nút thư viện ảnh bên trái + nút đổi camera bên phải chỉ khi khả dụng (`canSwitchCamera`);
+desktop hiển thị hộp thoại webcam gọn với nút kích thước chuẩn `DESIGN.md`. Phân biệt rõ 4 thông báo lỗi trung tính (`cameraErrorMessage`: từ chối quyền,
+không tìm thấy camera, thiết bị không khả dụng, lỗi chưa xác định) kèm lối chọn tệp dự phòng; giải phóng mọi `MediaStreamTrack` ngay khi chụp, đổi camera, chọn tệp hoặc đóng.
+Tests: `photo-problem-panel.test.tsx`; trình duyệt: `photo-problem-browser-check.mjs`.
 
 ### `components/photo-problem-flow.ts` · Change impact: offline
-Trạng thái THUẦN của luồng ảnh — tách khỏi component vì vitest chạy môi trường `node`. Pha: `empty` · `selected` (chỉnh
-ảnh) · `prepared` (ảnh sẽ gửi, `PhotoUpload`) · `reading` · `review` · `error`. Exports: `photoReducer`,
-`initialPhotoState`, `canRead`, `canAccept`, `acceptBlocker`, `needsConfirmation`, `needsReplaceConfirmation`,
-`photoStatusText`, `photoReadErrorMessage` (đọc `AxoClientError.reasonCode`: `LIVE_AI_DISABLED` / 503 thiếu khoá → lời
-người học, không lộ tên cấu hình), `clientFileProblem`, `describeUncertainToken`, `nextRotation`, `PHOTO_MAX_BYTES`.
-Bốn luật: `requestId` tăng khi ảnh/góc xoay/ảnh gửi đổi ⇒ phản hồi cũ bị BỎ (kể cả sau `read-cancel`); chọn ảnh không tự
-đọc và `read-start` là no-op khi chưa đủ điều kiện; bị từ chối hoặc cần xác nhận ⇒ phải đánh dấu xác nhận mới dùng văn
-bản; văn bản chỉ vào Ô NHẬP, không tự dựng (`buildFailureMessage`/`buildOutcome` của đường "dựng từ ảnh" cũ đã gỡ). Tests:
-`photo-problem-flow.test.ts`.
-
+Trạng thái thuần của khung hỗ trợ đầu vào thống nhất (`unifiedAssistReducer`, `initialUnifiedAssistState`, `assistBlocker`, `canConfirmAssistText`: pha `idle` · `needs_selection` · `needs_confirmation`),
+cùng các hàm chuẩn hoá thông báo người học (`photoReadErrorMessage` ẩn tên biến môi trường kỹ thuật, `clientFileProblem`, `describeUncertainToken`, `PHOTO_MAX_BYTES`).
+Tests: `photo-problem-flow.test.ts`.
 ### `llm/input.ts` · Change impact: offline
 Phân loại tệp người dùng chọn → `InputPayload` (M4): `kindFromFile`, `acceptAttr`,
 `kindLabel`, `extOf`, `fileToPayload`, `readAsBase64` (base64 THUẦN, đã bỏ tiền tố

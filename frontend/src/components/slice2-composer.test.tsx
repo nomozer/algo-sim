@@ -150,9 +150,9 @@ describe("Axo V2.7 Slice 2 — 18 Component & Integration Cases (P11.2 & P11.3)"
       size: 100_000,
       type: "application/pdf",
     });
-    expect(pdfCheck.ok).toBe(false);
-    if (!pdfCheck.ok) {
-      expect(pdfCheck.code).toBe("pdf_unsupported");
+    expect(pdfCheck.ok).toBe(true);
+    if (pdfCheck.ok) { expect(pdfCheck.kind).toBe("pdf"); } else {
+      throw new Error("Expected PDF to be accepted");
     }
 
     const exeCheck = validateComposerFile({
