@@ -2,10 +2,19 @@
 
 CANONICAL_NEXT_ACTION = POST_NLU_BASELINE_RESEARCH_PRIORITY_DECISION
 
+## Gemini credential transport & integration — 2026-11-07
+
+Run `gemini-credential-transport`: the image-read transport sends the Gemini key only as `x-goog-api-key` (product `6f184bda`);
+offline tests block the socket layer and guard every spawned Python child (`ad78aea6`, test-only); candidate `b8e20c8f`
+(103 files `befb10b5…`), `CACHE_VERSION` 132. Incident of the reliability run reconciled: count and spend **UNKNOWN**
+(≤ 8 calls / ≤ 16 HTTP attempts), no key exposure found. Branch `feat/hybrid-backend-reliability` (both runs) merged `--no-ff`
+into `main` and pushed on Owner instruction; merge commit and remote HEAD in `git log`. Report:
+`evaluation/geometry/runs/gemini-credential-transport/report.md`.
+
 ## Hybrid backend reliability — 2026-11-07
 
 **HYBRID_BACKEND_RELIABILITY_COMPLETE** (offline) on branch `feat/hybrid-backend-reliability` from `main = origin/main = e1a41ebe`;
-not merged, not pushed. Product `cb79848f` (narration names geometric values `05cf4db1`; image reads honour `ALLOW_LIVE_AI=0`;
+merged into `main` later the same day (section above). Product `cb79848f` (narration names geometric values `05cf4db1`; image reads honour `ALLOW_LIVE_AI=0`;
 validator-refused extractions no longer leak their payload), candidate frozen `2eba49ed` (103 files `be2c37fd…`), `CACHE_VERSION`
 132 unchanged. HTTP replay of 994 stored `/2` texts through `/api/analyze` (staging-replay): 548 served, 0 contract findings,
 0 wrong-served across 52 Source Gate distortions. `LIVE_SMOKE_NOT_AUTHORIZED`; an earlier version of the run's offline tool

@@ -4,6 +4,19 @@
 Retired branch names now have local `refs/archive/repository-closure/` references and a verified private self-contained bundle.
 Existing evidence and historical reports below are unchanged; no research result is reinterpreted by this Git-state update.
 
+## WAVE_ID = GEMINI_CREDENTIAL_TRANSPORT
+
+REPORT = docs/evaluation/geometry/runs/gemini-credential-transport/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/gemini-credential-transport/
+START_BASE = feat/hybrid-backend-reliability 5d2d1c4c (main = origin/main e1a41ebe)
+CODE_COMMIT = 6f184bda (Gemini key only in the x-goog-api-key header); ad78aea6 (test-only: loopback socket guard + every spawned Python child guarded); candidate b8e20c8f (103 files befb10b5…); CACHE_VERSION 132 unchanged
+CLASSIFICATION = SECURITY_FIX_AND_INTEGRATION: key-in-URL proven with a fake key and removed; spawned test children shown to recover the real key from backend/.env, now blocked; incident reconciled (count UNKNOWN ≤ 8 calls / ≤ 16 HTTP attempts, spend UNKNOWN, no key exposure found); merged --no-ff into main and pushed per Owner instruction.
+PRODUCT_CHANGE = YES (backend transport only)
+MODEL_REQUEST_COUNT = 0
+VERIFICATION = report.md; run.json
+CORRECTS = docs/evaluation/geometry/runs/hybrid-backend-reliability/HYBRID_BACKEND_RELIABILITY_REPORT.md §9 (incident bound refined: ≤ 16 HTTP attempts, spend UNKNOWN, key exposure not found; original text unchanged)
+CORRECTED_BY = NONE
+
 ## WAVE_ID = HYBRID_BACKEND_RELIABILITY
 
 REPORT = docs/evaluation/geometry/runs/hybrid-backend-reliability/HYBRID_BACKEND_RELIABILITY_REPORT.md
@@ -15,7 +28,7 @@ PRODUCT_CHANGE = YES (backend only)
 MODEL_REQUEST_COUNT = 0 intentional; UNKNOWN (≤ 8) unauthorized vision requests from an earlier tool version (report §9)
 VERIFICATION = HYBRID_BACKEND_RELIABILITY_REPORT.md; run.json; results/; tools/
 CORRECTS = NONE
-CORRECTED_BY = NONE
+CORRECTED_BY = docs/evaluation/geometry/runs/gemini-credential-transport/report.md §3 (incident reconciliation)
 
 ## WAVE_ID = AXO_GIT_CLEANUP
 

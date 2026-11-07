@@ -1,0 +1,29 @@
+{
+  "run_id": "gemini-credential-transport",
+  "date": "2026-11-07",
+  "branch": "feat/hybrid-backend-reliability",
+  "baseline": "5d2d1c4ce (branch HEAD after run hybrid-backend-reliability); main = origin/main = e1a41ebe2 (unchanged after git fetch)",
+  "provider_calls": 0,
+  "commits": [
+    {"sha": "6f184bdab", "role": "product: Gemini key only in x-goog-api-key header (gemini.call_gemini); network error raised from None"},
+    {"sha": "ad78aea63", "role": "test-only: loopback socket guard in-process + tests/offline_child sitecustomize for every spawned Python child"},
+    {"sha": "b8e20c8fd", "role": "candidate freeze at ad78aea6 (product 6f184bda): 103 files befb10b5…, clean detached worktree; K-1/R-1/S-2 rebound"}
+  ],
+  "candidate": {"product_commit": "6f184bdab2b4c32beb3b1dcb4e06ca2e071b5277", "measured_system_files": 103,
+                "measured_system_tree_hash": "befb10b57ebf4049d77b48319f9ad99ffd6b9de013ef867671411f9a0d31262c"},
+  "cache_version": {"value": "132", "bumped": false,
+                    "reason": "authentication is in no cache key: image cache key = vision_identity (model, prompt, schema, semantic prompt, cache version); Route D keys unchanged; test_cache_identity 15/15"},
+  "evidence": {
+    "key_in_url_before_fix": "httpx INFO line printed the (fake) key in full when INFO logging enabled",
+    "child_key_before_fix": "spawned child after load_dotenv: key present = True; with layer 3: False",
+    "targeted": "1040 passed + 10 candidate-seal failures (green after freeze)"
+  },
+  "incident_reconciliation": {
+    "UNAUTHORIZED_REQUEST_COUNT": "UNKNOWN (<= 8 successful call_gemini calls, <= 16 HTTP attempts)",
+    "UNAUTHORIZED_SPEND": "UNKNOWN (no billing access; gcloud not installed)",
+    "key_exposure": "NOT_FOUND (no logging configured in the probe; 0 key-in-URL / key-shaped tokens in scratch, task logs, 34 temp DB dirs; 0 commits)",
+    "learner_data_sent": "NO (synthetic blank images)",
+    "rotation": "NOT_REQUIRED_BY_EVIDENCE; Owner decision",
+    "corrects": "hybrid-backend-reliability report §9 (interpretation layer; original unchanged)"
+  }
+}

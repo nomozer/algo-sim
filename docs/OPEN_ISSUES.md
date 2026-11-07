@@ -868,7 +868,10 @@
   reaches no handler by default and the raised `RuntimeError` texts carry status/body, not the URL (latent, not observed).
 - **impact:** key exposure only if a deployment enables INFO logging for `httpx` or logs request URLs.
 - **scope:** move the key to the header in `call_gemini`; check `test_image_extract_api.py` / gemini transport tests.
-- **status:** OPEN (P3)
+- **status:** RESOLVED (2026-11-07, run `gemini-credential-transport`): the key travels only as `x-goog-api-key`; the
+  httpx INFO line was shown to carry it before the fix (fake key); locked by `tests/test_gemini.py` (real
+  `httpx.AsyncClient` over `MockTransport`: header, clean URL/body/log, retries, 400/401/403/429/500, sanitized network
+  error) and `test_image_extract_api.py::test_doc_anh_qua_transport_that_khoa_chi_trong_header`. Original status: OPEN (P3).
 - **owner_class:** OPS
 - **default_switch_blocker:** NO
 - **owner_class:** ARCHITECTURE
