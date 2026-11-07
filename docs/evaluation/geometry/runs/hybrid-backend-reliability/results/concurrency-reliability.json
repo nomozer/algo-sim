@@ -1,0 +1,113 @@
+{
+ "environment": {
+  "mode": "staging-replay",
+  "provider_calls": 0,
+  "workers": 8,
+  "texts": 60,
+  "rounds": 4
+ },
+ "isolation": {
+  "rounds": [
+   {
+    "round": 0,
+    "requests": 76,
+    "body_mismatch": 0,
+    "5xx": 0
+   },
+   {
+    "round": 1,
+    "requests": 76,
+    "body_mismatch": 0,
+    "5xx": 0
+   },
+   {
+    "round": 2,
+    "requests": 76,
+    "body_mismatch": 0,
+    "5xx": 0
+   },
+   {
+    "round": 3,
+    "requests": 76,
+    "body_mismatch": 0,
+    "5xx": 0
+   }
+  ],
+  "total_body_mismatch": 0,
+  "total_5xx": 0,
+  "served_texts": 31,
+  "refused_texts": 29
+ },
+ "bad_input": {
+  "not_json": {
+   "status": 422,
+   "leak": false,
+   "reason_code": null
+  },
+  "missing_input": {
+   "status": 422,
+   "leak": false,
+   "reason_code": null
+  },
+  "wrong_type": {
+   "status": 422,
+   "leak": false,
+   "reason_code": null
+  },
+  "content_not_string": {
+   "status": 422,
+   "leak": false,
+   "reason_code": null
+  },
+  "image_direct": {
+   "status": 400,
+   "leak": false,
+   "reason_code": "IMAGE_DIRECT_UNSUPPORTED"
+  },
+  "empty": {
+   "status": 400,
+   "leak": false,
+   "reason_code": null
+  },
+  "too_short": {
+   "status": 400,
+   "leak": false,
+   "reason_code": null
+  },
+  "oversized_2mb": {
+   "status": 400,
+   "leak": false,
+   "reason_code": null
+  },
+  "unknown_geometry_text": {
+   "status": 200,
+   "leak": false,
+   "reason_code": null
+  }
+ },
+ "stampede": {
+  "threads": 8,
+  "statuses": [
+   200
+  ],
+  "identical_bodies": true,
+  "cache_rows": 1,
+  "cache_states": [
+   "hit",
+   "hit",
+   "hit",
+   "hit",
+   "hit",
+   "hit",
+   "hit",
+   "miss"
+  ]
+ },
+ "traced_memory_after_gc_bytes": [
+  2260194,
+  2244883,
+  2251135,
+  2256291
+ ],
+ "memory_growth_last_vs_second_round_bytes": 11408
+}

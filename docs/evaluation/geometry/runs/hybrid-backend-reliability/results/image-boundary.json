@@ -1,0 +1,61 @@
+{
+ "environment": {
+  "network": "blocked",
+  "GEMINI_API_KEY": "absent",
+  "provider_calls": 0
+ },
+ "cases": {
+  "crop_png_300x80": {
+   "status": 503,
+   "reason_code": "LIVE_AI_DISABLED"
+  },
+  "crop_jpeg_300x80": {
+   "status": 503,
+   "reason_code": "LIVE_AI_DISABLED"
+  },
+  "crop_webp_300x80": {
+   "status": 503,
+   "reason_code": "LIVE_AI_DISABLED"
+  },
+  "canvas_png_rgba": {
+   "status": 503,
+   "reason_code": "LIVE_AI_DISABLED"
+  },
+  "jpeg_exif_orientation_6": {
+   "status": 503,
+   "reason_code": "LIVE_AI_DISABLED"
+  },
+  "tiny_1x1": {
+   "status": 503,
+   "reason_code": "LIVE_AI_DISABLED"
+  },
+  "photo_6000x4000_jpeg": {
+   "status": 503,
+   "reason_code": "LIVE_AI_DISABLED"
+  },
+  "png_labelled_jpeg": {
+   "status": 400,
+   "reason_code": "IMAGE_TYPE_MISMATCH"
+  },
+  "bomb_9000x9000_png": {
+   "status": 400,
+   "reason_code": "IMAGE_TOO_MANY_PIXELS"
+  },
+  "gif": {
+   "status": 400,
+   "reason_code": "IMAGE_UNSUPPORTED_FORMAT"
+  },
+  "over_10mb": {
+   "status": 400,
+   "reason_code": "IMAGE_TOO_LARGE"
+  },
+  "rotation_90": {
+   "status": 503,
+   "reason_code": "LIVE_AI_DISABLED"
+  },
+  "valid_with_ALLOW_LIVE_AI_0": {
+   "status": 503,
+   "reason_code": "LIVE_AI_DISABLED"
+  }
+ }
+}

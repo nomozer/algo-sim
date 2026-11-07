@@ -4,6 +4,19 @@
 Retired branch names now have local `refs/archive/repository-closure/` references and a verified private self-contained bundle.
 Existing evidence and historical reports below are unchanged; no research result is reinterpreted by this Git-state update.
 
+## WAVE_ID = HYBRID_BACKEND_RELIABILITY
+
+REPORT = docs/evaluation/geometry/runs/hybrid-backend-reliability/HYBRID_BACKEND_RELIABILITY_REPORT.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-backend-reliability/
+START_BASE = main = origin/main e1a41ebe
+CODE_COMMIT = 05cf4db1 (step narration names geometric values; image reads honour ALLOW_LIVE_AI=0) + cb79848f (validator-refusal payload leak); candidate 2eba49ed (103 files be2c37fd…); CACHE_VERSION 132 unchanged
+CLASSIFICATION = OFFLINE_STAGING_REPLAY_DEVELOPMENT (branch feat/hybrid-backend-reliability, not merged, not pushed): HTTP replay 994 texts / 548 served / 0 contract findings; Source Gate 48 distortions 0 wrong-served; frontend audit 392/392; per-stage latency baseline; bounded concurrency 0 mismatch / 0 5xx; not H-1, no independent evaluator.
+PRODUCT_CHANGE = YES (backend only)
+MODEL_REQUEST_COUNT = 0 intentional; UNKNOWN (≤ 8) unauthorized vision requests from an earlier tool version (report §9)
+VERIFICATION = HYBRID_BACKEND_RELIABILITY_REPORT.md; run.json; results/; tools/
+CORRECTS = NONE
+CORRECTED_BY = NONE
+
 ## WAVE_ID = AXO_GIT_CLEANUP
 
 REPORT = docs/evaluation/geometry/runs/axo-git-cleanup/report.md

@@ -1,0 +1,52 @@
+{
+ "counts": {
+  "texts": 994,
+  "http": {
+   "200": 994
+  },
+  "served": 548,
+  "refused": 445,
+  "hit_ok": 548,
+  "hit_mismatch": 0,
+  "http_vs_direct_mismatch": 0,
+  "contract_findings": 0,
+  "refusal_categories": {
+   "insufficient_specification": 32,
+   "capability_gap": 69,
+   "geometry_generation_failed": 94,
+   "verification_gap": 250
+  },
+  "earlier_extraction_refusal": 25,
+  "domain_gate": 1,
+  "latency_ms": {
+   "miss": {
+    "n": 548,
+    "p50": 77.2,
+    "p95": 112.5,
+    "max": 1578.4,
+    "mean": 83.2
+   },
+   "hit": {
+    "n": 548,
+    "p50": 34.9,
+    "p95": 43.0,
+    "max": 887.2,
+    "mean": 39.5
+   },
+   "refused": {
+    "n": 445,
+    "p50": 32.9,
+    "p95": 45.6,
+    "max": 129.2,
+    "mean": 33.6
+   }
+  }
+ },
+ "findings": [
+  {
+   "key": "222edcacd63c",
+   "issue": "domain gate gate_out_of_scope; direct route would be REFUSED",
+   "text": "Trong không gian Oxyz, cho điểm A(1; 2; 3) và mặt phẳng (P): 2x - y + 2z - 3 = 0. Tính khoảng cách từ A đến mặt phẳng (P)."
+  }
+ ]
+}

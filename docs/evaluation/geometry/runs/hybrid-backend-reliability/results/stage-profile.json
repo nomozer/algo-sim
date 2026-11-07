@@ -1,0 +1,634 @@
+{
+ "environment": {
+  "python": "3.12.10",
+  "platform": "win32",
+  "mode": "staging-replay",
+  "provider_calls": 0,
+  "texts": 994,
+  "served": 548,
+  "note": "inclusive stage times; see module docstring for nesting"
+ },
+ "cold_miss_served": {
+  "adapter4": {
+   "n": 548,
+   "p50_ms": 7.5,
+   "p95_ms": 11.89,
+   "p99_ms": 60.13,
+   "mean_ms": 7.8
+  },
+  "bridge_v2": {
+   "n": 548,
+   "p50_ms": 0.72,
+   "p95_ms": 1.1,
+   "p99_ms": 1.54,
+   "mean_ms": 0.83
+  },
+  "cache_lookup": {
+   "n": 548,
+   "p50_ms": 0.57,
+   "p95_ms": 0.84,
+   "p99_ms": 1.29,
+   "mean_ms": 0.62
+  },
+  "cache_store": {
+   "n": 548,
+   "p50_ms": 5.77,
+   "p95_ms": 7.55,
+   "p99_ms": 9.78,
+   "mean_ms": 6.08
+  },
+  "continuity_enrich": {
+   "n": 548,
+   "p50_ms": 0.26,
+   "p95_ms": 0.44,
+   "p99_ms": 0.69,
+   "mean_ms": 0.35
+  },
+  "continuity_validate": {
+   "n": 548,
+   "p50_ms": 0.37,
+   "p95_ms": 0.61,
+   "p99_ms": 0.99,
+   "mean_ms": 0.48
+  },
+  "cpu_total": {
+   "n": 548,
+   "p50_ms": 62.5,
+   "p95_ms": 109.38,
+   "p99_ms": 140.62,
+   "mean_ms": 65.29
+  },
+  "engine": {
+   "n": 548,
+   "p50_ms": 19.15,
+   "p95_ms": 36.35,
+   "p99_ms": 46.02,
+   "mean_ms": 19.7
+  },
+  "extraction_validation": {
+   "n": 548,
+   "p50_ms": 2.26,
+   "p95_ms": 3.66,
+   "p99_ms": 4.49,
+   "mean_ms": 2.23
+  },
+  "http_total": {
+   "n": 548,
+   "p50_ms": 76.98,
+   "p95_ms": 124.28,
+   "p99_ms": 145.44,
+   "mean_ms": 77.54
+  },
+  "interpreter_exec": {
+   "n": 548,
+   "p50_ms": 6.25,
+   "p95_ms": 12.18,
+   "p99_ms": 58.18,
+   "mean_ms": 6.8
+  },
+  "ir_validate": {
+   "n": 548,
+   "p50_ms": 0.43,
+   "p95_ms": 0.68,
+   "p99_ms": 0.88,
+   "mean_ms": 0.44
+  },
+  "json_dumps": {
+   "n": 548,
+   "p50_ms": 0.63,
+   "p95_ms": 0.96,
+   "p99_ms": 1.24,
+   "mean_ms": 0.61
+  },
+  "orchestrator": {
+   "n": 548,
+   "p50_ms": 37.8,
+   "p95_ms": 66.49,
+   "p99_ms": 103.21,
+   "mean_ms": 37.29
+  },
+  "planner": {
+   "n": 548,
+   "p50_ms": 1.2,
+   "p95_ms": 1.87,
+   "p99_ms": 2.52,
+   "mean_ms": 1.15
+  },
+  "prepare_replay": {
+   "n": 548,
+   "p50_ms": 2.2,
+   "p95_ms": 2.82,
+   "p99_ms": 4.1,
+   "mean_ms": 2.36
+  },
+  "scene3d_build": {
+   "n": 548,
+   "p50_ms": 0.46,
+   "p95_ms": 0.74,
+   "p99_ms": 1.07,
+   "mean_ms": 0.46
+  },
+  "source_gate": {
+   "n": 548,
+   "p50_ms": 9.58,
+   "p95_ms": 19.73,
+   "p99_ms": 27.56,
+   "mean_ms": 10.59
+  },
+  "telemetry_background": {
+   "n": 548,
+   "p50_ms": 5.56,
+   "p95_ms": 7.5,
+   "p99_ms": 10.86,
+   "mean_ms": 5.96
+  },
+  "usage_finalize": {
+   "n": 548,
+   "p50_ms": 3.75,
+   "p95_ms": 4.96,
+   "p99_ms": 7.48,
+   "mean_ms": 3.89
+  },
+  "usage_reserve": {
+   "n": 548,
+   "p50_ms": 10.52,
+   "p95_ms": 13.63,
+   "p99_ms": 19.36,
+   "mean_ms": 11.05
+  }
+ },
+ "cold_refused": {
+  "adapter4": {
+   "n": 445,
+   "p50_ms": 0.02,
+   "p95_ms": 0.04,
+   "p99_ms": 0.06,
+   "mean_ms": 0.03
+  },
+  "bridge_v2": {
+   "n": 355,
+   "p50_ms": 0.69,
+   "p95_ms": 1.07,
+   "p99_ms": 1.62,
+   "mean_ms": 0.7
+  },
+  "cache_lookup": {
+   "n": 446,
+   "p50_ms": 0.57,
+   "p95_ms": 0.9,
+   "p99_ms": 1.11,
+   "mean_ms": 0.61
+  },
+  "cpu_total": {
+   "n": 446,
+   "p50_ms": 31.25,
+   "p95_ms": 46.88,
+   "p99_ms": 62.5,
+   "mean_ms": 26.03
+  },
+  "engine": {
+   "n": 239,
+   "p50_ms": 3.58,
+   "p95_ms": 14.11,
+   "p99_ms": 30.22,
+   "mean_ms": 4.95
+  },
+  "extraction_validation": {
+   "n": 445,
+   "p50_ms": 2.28,
+   "p95_ms": 3.69,
+   "p99_ms": 4.85,
+   "mean_ms": 2.13
+  },
+  "http_total": {
+   "n": 446,
+   "p50_ms": 31.19,
+   "p95_ms": 46.62,
+   "p99_ms": 79.69,
+   "mean_ms": 32.95
+  },
+  "interpreter_exec": {
+   "n": 4,
+   "p50_ms": 1.58,
+   "p95_ms": 2.09,
+   "p99_ms": 2.09,
+   "mean_ms": 1.44
+  },
+  "ir_validate": {
+   "n": 4,
+   "p50_ms": 0.42,
+   "p95_ms": 0.47,
+   "p99_ms": 0.47,
+   "mean_ms": 0.37
+  },
+  "json_dumps": {
+   "n": 446,
+   "p50_ms": 0.02,
+   "p95_ms": 0.04,
+   "p99_ms": 0.05,
+   "mean_ms": 0.02
+  },
+  "orchestrator": {
+   "n": 445,
+   "p50_ms": 5.11,
+   "p95_ms": 16.09,
+   "p99_ms": 35.43,
+   "mean_ms": 6.32
+  },
+  "planner": {
+   "n": 261,
+   "p50_ms": 1.19,
+   "p95_ms": 1.85,
+   "p99_ms": 2.84,
+   "mean_ms": 1.33
+  },
+  "prepare_replay": {
+   "n": 446,
+   "p50_ms": 2.21,
+   "p95_ms": 2.74,
+   "p99_ms": 3.89,
+   "mean_ms": 2.29
+  },
+  "source_gate": {
+   "n": 239,
+   "p50_ms": 3.23,
+   "p95_ms": 12.85,
+   "p99_ms": 25.62,
+   "mean_ms": 4.24
+  },
+  "telemetry_background": {
+   "n": 446,
+   "p50_ms": 4.55,
+   "p95_ms": 6.75,
+   "p99_ms": 8.82,
+   "mean_ms": 4.98
+  },
+  "usage_finalize": {
+   "n": 446,
+   "p50_ms": 4.04,
+   "p95_ms": 5.23,
+   "p99_ms": 7.07,
+   "mean_ms": 4.2
+  },
+  "usage_reserve": {
+   "n": 446,
+   "p50_ms": 10.37,
+   "p95_ms": 13.8,
+   "p99_ms": 18.39,
+   "mean_ms": 10.9
+  }
+ },
+ "warm_miss_served": {
+  "adapter4": {
+   "n": 548,
+   "p50_ms": 7.55,
+   "p95_ms": 11.46,
+   "p99_ms": 68.71,
+   "mean_ms": 7.91
+  },
+  "bridge_v2": {
+   "n": 548,
+   "p50_ms": 0.72,
+   "p95_ms": 1.1,
+   "p99_ms": 1.49,
+   "mean_ms": 0.83
+  },
+  "cache_lookup": {
+   "n": 548,
+   "p50_ms": 0.57,
+   "p95_ms": 0.83,
+   "p99_ms": 1.24,
+   "mean_ms": 0.61
+  },
+  "cache_store": {
+   "n": 548,
+   "p50_ms": 5.75,
+   "p95_ms": 7.29,
+   "p99_ms": 9.94,
+   "mean_ms": 6.0
+  },
+  "continuity_enrich": {
+   "n": 548,
+   "p50_ms": 0.26,
+   "p95_ms": 0.46,
+   "p99_ms": 0.76,
+   "mean_ms": 0.37
+  },
+  "continuity_validate": {
+   "n": 548,
+   "p50_ms": 0.37,
+   "p95_ms": 0.6,
+   "p99_ms": 0.87,
+   "mean_ms": 0.36
+  },
+  "cpu_total": {
+   "n": 548,
+   "p50_ms": 62.5,
+   "p95_ms": 109.38,
+   "p99_ms": 156.25,
+   "mean_ms": 66.26
+  },
+  "engine": {
+   "n": 548,
+   "p50_ms": 18.71,
+   "p95_ms": 35.15,
+   "p99_ms": 45.12,
+   "mean_ms": 19.09
+  },
+  "extraction_validation": {
+   "n": 548,
+   "p50_ms": 2.24,
+   "p95_ms": 3.57,
+   "p99_ms": 4.04,
+   "mean_ms": 2.2
+  },
+  "http_total": {
+   "n": 548,
+   "p50_ms": 75.83,
+   "p95_ms": 122.05,
+   "p99_ms": 156.08,
+   "mean_ms": 76.33
+  },
+  "interpreter_exec": {
+   "n": 548,
+   "p50_ms": 6.18,
+   "p95_ms": 11.99,
+   "p99_ms": 65.07,
+   "mean_ms": 6.75
+  },
+  "ir_validate": {
+   "n": 548,
+   "p50_ms": 0.43,
+   "p95_ms": 0.66,
+   "p99_ms": 0.93,
+   "mean_ms": 0.44
+  },
+  "json_dumps": {
+   "n": 548,
+   "p50_ms": 0.65,
+   "p95_ms": 0.98,
+   "p99_ms": 1.31,
+   "mean_ms": 0.62
+  },
+  "orchestrator": {
+   "n": 548,
+   "p50_ms": 37.16,
+   "p95_ms": 63.87,
+   "p99_ms": 113.05,
+   "mean_ms": 37.14
+  },
+  "planner": {
+   "n": 548,
+   "p50_ms": 1.2,
+   "p95_ms": 1.88,
+   "p99_ms": 2.79,
+   "mean_ms": 1.47
+  },
+  "prepare_replay": {
+   "n": 548,
+   "p50_ms": 2.18,
+   "p95_ms": 2.61,
+   "p99_ms": 3.81,
+   "mean_ms": 2.41
+  },
+  "scene3d_build": {
+   "n": 548,
+   "p50_ms": 0.46,
+   "p95_ms": 0.81,
+   "p99_ms": 1.25,
+   "mean_ms": 0.78
+  },
+  "source_gate": {
+   "n": 548,
+   "p50_ms": 8.96,
+   "p95_ms": 19.0,
+   "p99_ms": 21.2,
+   "mean_ms": 10.1
+  },
+  "telemetry_background": {
+   "n": 548,
+   "p50_ms": 5.5,
+   "p95_ms": 7.47,
+   "p99_ms": 9.83,
+   "mean_ms": 5.84
+  },
+  "usage_finalize": {
+   "n": 548,
+   "p50_ms": 3.67,
+   "p95_ms": 4.81,
+   "p99_ms": 7.5,
+   "mean_ms": 3.89
+  },
+  "usage_reserve": {
+   "n": 548,
+   "p50_ms": 10.38,
+   "p95_ms": 13.7,
+   "p99_ms": 16.38,
+   "mean_ms": 10.74
+  }
+ },
+ "warm_refused": {
+  "adapter4": {
+   "n": 445,
+   "p50_ms": 0.02,
+   "p95_ms": 0.03,
+   "p99_ms": 0.04,
+   "mean_ms": 0.02
+  },
+  "bridge_v2": {
+   "n": 355,
+   "p50_ms": 0.7,
+   "p95_ms": 0.98,
+   "p99_ms": 1.11,
+   "mean_ms": 0.68
+  },
+  "cache_lookup": {
+   "n": 446,
+   "p50_ms": 0.57,
+   "p95_ms": 0.8,
+   "p99_ms": 0.97,
+   "mean_ms": 0.6
+  },
+  "cpu_total": {
+   "n": 446,
+   "p50_ms": 31.25,
+   "p95_ms": 46.88,
+   "p99_ms": 46.88,
+   "mean_ms": 25.22
+  },
+  "engine": {
+   "n": 239,
+   "p50_ms": 3.51,
+   "p95_ms": 12.84,
+   "p99_ms": 16.66,
+   "mean_ms": 4.38
+  },
+  "extraction_validation": {
+   "n": 445,
+   "p50_ms": 2.18,
+   "p95_ms": 3.55,
+   "p99_ms": 3.95,
+   "mean_ms": 2.07
+  },
+  "http_total": {
+   "n": 446,
+   "p50_ms": 31.02,
+   "p95_ms": 43.34,
+   "p99_ms": 56.99,
+   "mean_ms": 32.06
+  },
+  "interpreter_exec": {
+   "n": 4,
+   "p50_ms": 1.54,
+   "p95_ms": 1.94,
+   "p99_ms": 1.94,
+   "mean_ms": 1.38
+  },
+  "ir_validate": {
+   "n": 4,
+   "p50_ms": 0.47,
+   "p95_ms": 0.49,
+   "p99_ms": 0.49,
+   "mean_ms": 0.38
+  },
+  "json_dumps": {
+   "n": 446,
+   "p50_ms": 0.02,
+   "p95_ms": 0.03,
+   "p99_ms": 0.05,
+   "mean_ms": 0.02
+  },
+  "orchestrator": {
+   "n": 445,
+   "p50_ms": 4.99,
+   "p95_ms": 15.44,
+   "p99_ms": 20.68,
+   "mean_ms": 5.82
+  },
+  "planner": {
+   "n": 261,
+   "p50_ms": 1.2,
+   "p95_ms": 1.61,
+   "p99_ms": 2.05,
+   "mean_ms": 1.12
+  },
+  "prepare_replay": {
+   "n": 446,
+   "p50_ms": 2.18,
+   "p95_ms": 2.57,
+   "p99_ms": 3.36,
+   "mean_ms": 2.23
+  },
+  "source_gate": {
+   "n": 239,
+   "p50_ms": 3.19,
+   "p95_ms": 11.54,
+   "p99_ms": 15.1,
+   "mean_ms": 3.71
+  },
+  "telemetry_background": {
+   "n": 446,
+   "p50_ms": 4.47,
+   "p95_ms": 5.79,
+   "p99_ms": 8.47,
+   "mean_ms": 4.77
+  },
+  "usage_finalize": {
+   "n": 446,
+   "p50_ms": 3.96,
+   "p95_ms": 5.04,
+   "p99_ms": 7.51,
+   "mean_ms": 4.13
+  },
+  "usage_reserve": {
+   "n": 446,
+   "p50_ms": 10.3,
+   "p95_ms": 13.47,
+   "p99_ms": 17.25,
+   "mean_ms": 11.03
+  }
+ },
+ "cache_hit_served": {
+  "cache_lookup": {
+   "n": 548,
+   "p50_ms": 0.75,
+   "p95_ms": 0.99,
+   "p99_ms": 1.21,
+   "mean_ms": 0.77
+  },
+  "cpu_total": {
+   "n": 548,
+   "p50_ms": 31.25,
+   "p95_ms": 46.88,
+   "p99_ms": 46.88,
+   "mean_ms": 24.72
+  },
+  "http_total": {
+   "n": 548,
+   "p50_ms": 32.32,
+   "p95_ms": 37.9,
+   "p99_ms": 87.99,
+   "mean_ms": 33.75
+  },
+  "json_dumps": {
+   "n": 548,
+   "p50_ms": 0.63,
+   "p95_ms": 0.96,
+   "p99_ms": 1.08,
+   "mean_ms": 0.61
+  },
+  "prepare_replay": {
+   "n": 548,
+   "p50_ms": 2.2,
+   "p95_ms": 2.56,
+   "p99_ms": 3.06,
+   "mean_ms": 2.25
+  },
+  "telemetry_background": {
+   "n": 548,
+   "p50_ms": 5.4,
+   "p95_ms": 6.71,
+   "p99_ms": 11.1,
+   "mean_ms": 5.76
+  },
+  "usage_finalize": {
+   "n": 548,
+   "p50_ms": 3.48,
+   "p95_ms": 4.41,
+   "p99_ms": 7.7,
+   "mean_ms": 3.81
+  },
+  "usage_reserve": {
+   "n": 548,
+   "p50_ms": 10.27,
+   "p95_ms": 13.48,
+   "p99_ms": 16.22,
+   "mean_ms": 10.75
+  }
+ },
+ "cache_states": {
+  "cold": {
+   "miss": 548,
+   "none": 445,
+   "null": 1
+  },
+  "hit": {
+   "hit": 548
+  },
+  "warm": {
+   "miss": 548,
+   "none": 445,
+   "null": 1
+  }
+ },
+ "hit_rate_second_request_of_served": 1.0,
+ "response_bytes_served": {
+  "p50": 70935,
+  "max": 119848
+ },
+ "memory_peak_bytes_served_miss": {
+  "p50": 663675,
+  "p95": 1037452,
+  "max": 12247716
+ }
+}

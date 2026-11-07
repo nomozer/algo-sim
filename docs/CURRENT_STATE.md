@@ -2,6 +2,16 @@
 
 CANONICAL_NEXT_ACTION = POST_NLU_BASELINE_RESEARCH_PRIORITY_DECISION
 
+## Hybrid backend reliability — 2026-11-07
+
+**HYBRID_BACKEND_RELIABILITY_COMPLETE** (offline) on branch `feat/hybrid-backend-reliability` from `main = origin/main = e1a41ebe`;
+not merged, not pushed. Product `cb79848f` (narration names geometric values `05cf4db1`; image reads honour `ALLOW_LIVE_AI=0`;
+validator-refused extractions no longer leak their payload), candidate frozen `2eba49ed` (103 files `be2c37fd…`), `CACHE_VERSION`
+132 unchanged. HTTP replay of 994 stored `/2` texts through `/api/analyze` (staging-replay): 548 served, 0 contract findings,
+0 wrong-served across 52 Source Gate distortions. `LIVE_SMOKE_NOT_AUTHORIZED`; an earlier version of the run's offline tool
+reached the real vision provider ≤ 8 times (blank synthetic images, unauthorized, count UNKNOWN) — disclosed in the report.
+Report: `evaluation/geometry/runs/hybrid-backend-reliability/HYBRID_BACKEND_RELIABILITY_REPORT.md`.
+
 ## Repository closure — 2026-11-07
 
 **REPOSITORY_CLEAN_WITH_EXTERNAL_BLOCKERS.** Cleanup starts at `main = origin/main = cb2a416e`; the closure commit changes only
