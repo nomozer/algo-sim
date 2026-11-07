@@ -16,7 +16,12 @@
   "evidence": {
     "key_in_url_before_fix": "httpx INFO line printed the (fake) key in full when INFO logging enabled",
     "child_key_before_fix": "spawned child after load_dotenv: key present = True; with layer 3: False",
-    "targeted": "1040 passed + 10 candidate-seal failures (green after freeze)"
+    "targeted": "1040 passed + 10 candidate-seal failures (green after freeze)",
+    "publication_safety": "--range origin/main..HEAD at e86d81e4: 98 blobs, 0 violations, PASS",
+    "full_t3": {"commit": "e86d81e45", "worktree": "clean detached, clean before and after", "verdict": "FULL_PRODUCT_GATE_PASS",
+                "pytest": "13925 passed / 7 skipped / 3 deselected / 9 xfailed", "vitest": "135 files / 2007 tests",
+                "build": "PASS", "demo_replay": "5/5", "crash_surface": "6/6, 0 x 500", "seconds": 642.8,
+                "log_sha256": "b39a67b89bfac8ea93423cab023fe0869f3f4fae097853974bab8000baff6f8c (log kept outside the repo)"}
   },
   "incident_reconciliation": {
     "UNAUTHORIZED_REQUEST_COUNT": "UNKNOWN (<= 8 successful call_gemini calls, <= 16 HTTP attempts)",
