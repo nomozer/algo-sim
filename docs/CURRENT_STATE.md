@@ -2,6 +2,44 @@
 
 CANONICAL_NEXT_ACTION = POST_NLU_BASELINE_RESEARCH_PRIORITY_DECISION
 
+## Repository closure — 2026-11-07
+
+**REPOSITORY_CLEAN_WITH_EXTERNAL_BLOCKERS.** Cleanup starts at `main = origin/main = cb2a416e`; the closure commit changes only
+this page and `EVIDENCE_INDEX.md`. Local branches **8 → 2**, GitHub branches **5 → 1**, registered worktrees **4 → 3**,
+old leftover directories **11 → 1** (the nested `w3-f2-target-grammar-identity-compat` is included). No product change or new worktree.
+
+- `main` is the development baseline. The other local branch, `integration/axo-hybrid4-reliability` (`c7ae6947`), is retained
+  solely for **EXTERNAL_BACKUP_PENDING**. Its tree equals squash `64847c1e`; its flagged historical blobs must not be pushed.
+- Six retired local branch names were deleted after archival: `feat/real-model-pilot-tooling`, `research/compact-geometry-dsl`,
+  `research/hybrid-next-architecture-gap-audit`, `research/hybrid-semantic-extraction-v2`,
+  `research/hybrid-v2-independent-vietnamese-section-holdout`, `research/nl-to-scene3d-e2e-readiness`.
+  Their original objects remain under `refs/archive/repository-closure/local/<original-branch>`.
+  These are historical studies; the G05 runner depends on retired `pipeline.py`, DSL is NO-GO, and v2 safety fixes were selectively integrated.
+- All four old GitHub branches were deleted after owner/admin, zero open PRs, protection, workflow/deployment and fresh HEAD checks.
+  Original remote objects remain under `refs/archive/repository-closure/remote/<original-branch>`; no historical objects were uploaded.
+- `w3-f2-adapter3-t3` and its directory were removed after preserving unique files and unlinking its shared `node_modules` junction.
+  The shared main-checkout dependencies remain intact. All eligible old directories were actually removed.
+- Two detached worktrees remain because of unreadable paths: `axo-pedagogical-integration` (two `.pytest_cache` directories)
+  and `w3-f2-ratio-projection-language-grounding` (17 directories under `.superpowers/f2/` plus `backend/.pytest_cache`).
+  The former retains one tracked `frontend/index.html` change (byte-equivalent to `main`) and 287 untracked files;
+  all readable changes are accounted for in Git or verified private archives, including its generated build.
+- The only old leftover is `hybrid-primary-b1-b2-offline/.superpowers/hybrid-primary-b1-b2-offline-claude/pytest/pytest-of-Bunny`;
+  all readable sibling data was preserved or verified and removed. Unreadable content remains **UNKNOWN**; the owner must enable
+  inspection before any deletion decision. No ownership or ACL was changed. Main's two unreadable `.pytest_cache` paths also remain.
+- The six root `.playwright-mcp/` untracked files were old UI snapshots/DevTools output, preserved byte-for-byte before removal.
+  They explain the original Git Graph “Uncommitted Changes (6)”; it was actual untracked data, not evidence of a stale display.
+- Private recovery: `D:/Documents/projects/algo-sim-private-archive/final-repository-closure-2026-11-07/RESTORE.md` and `MANIFEST.json`.
+  The self-contained `repository-before-closure.bundle` has SHA-256
+  `5e6661a9f38979fcc49851deab1dd881beaf71b07e4c0dcde1334648c74d0b33`;
+  all **23 original refs / 3,257 reachable commits** were restored and checked. Both older incremental bundles were also restored
+  against a main-only bare repository. The temporary bare repository was removed. Existing evidence-index archive refs remain intact.
+  Old archives: **11 manifests / 10,316 entries** verified; new preservation: **8 manifests / 6,913 entries** verified.
+  Audit details and exact unreadable paths are retained privately under `closure-audit/`.
+- Independent backup is still pending: C: and D: share physical disk 0. Preserve the archive and retained Hybrid source branch
+  until the owner supplies an authorized independent device. No suitable independent device was present.
+- Seal remains MATCH (**103 files**, `09c1a089ce7faf12…`); publication head has **97 existing pending findings**.
+  Closure publication is checked on its documentation-only range; no full product suite or provider request was run.
+
 **INTEGRATED 2026-11-07 — Axo baseline on `main` (`origin/main` = `3a8a2f31`, pushed non-force).** Squash `64847c1e` of the Axo Hybrid `/4` reliability branch, then `--no-ff` merge `3a8a2f31` of the Axo favicon / tab-title fix (`frontend/public/favicon.svg`, title `Axo — Mô phỏng tương tác`) with the candidate re-freeze (product `9904265b`, `103` measured files `09c1a089…`, seal MATCH; `CACHE_VERSION = 132` unchanged). `POSTGRES_NOT_TESTED`; production `alembic upgrade head` (`e437149641fa`) not run. Reports: `evaluation/geometry/runs/axo-postmerge-consolidation/report.md`, `evaluation/geometry/runs/axo-repository-baseline/report.md`.
 
 **INTEGRATED CUTOVER 2026-11-04 — Final Hybrid Architecture Cutover (Owner-directed): `HYBRID_DEFAULT_CUTOVER_COMPLETE = YES` · `LEGACY_EXECUTION_RETIRED = YES` · `LEGACY_FULLY_RETIRED = NO` · `PRODUCTION_DEPLOYMENT_VERIFIED = NO` · `INDEPENDENT_H1_VALIDATION = NOT_MEASURED` · `NEW_LIVE_SMOKE_NOT_MEASURED`.** Replaces the default `POST /api/analyze` production route with Hybrid `/4` (`Vietnamese Geometry Problem -> Gemini -> TypedFactNext /2 -> Source Gate -> FactGraph -> Planner /26 -> Registry /33 -> Compiler/IR -> Exact Geometry Kernel -> Adapter /4 -> Scene3D + Construction Steps + Explanation + Exact Results`) with `HYBRID_ROUTE_MODE` defaulting to `live` (`staging-replay` retained for dev/test, `ALLOW_LIVE_AI=0` explicit kill-switch, `503 INVALID_HYBRID_ROUTE_MODE` on `off`/unknown, zero fallback to `LLM_ONLY`). Retires 18 `LEGACY_ONLY` product files (`backend/app/ai/pipeline.py`, `adapter3_simulation.py`, `backend/app/simulation/geometry_compiler/*`, and 10 legacy `.md` prompts while preserving `skills/transcribe.md` for `/api/image/extract`), 54 pure-legacy scripts, and 91 pure-legacy tests; preserves `semantic_program/route.py` + IR verifier as `COMPATIBILITY_REQUIRED` for shared IR/Scene3D verification and T3 demo gates (`LEGACY_FULLY_RETIRED = NO`), plus all shared geometry kernel, Scene3D, construction continuity (`created_ids`, `reused_ids`, `highlighted_ids`, `retired_ids`, `step_summary`, `verification_refs`, `coordinate_frame_id`), preview, auth, classroom, and persistence components (`frontend/**` untouched). Product `52205f45`, frozen candidate `f5f2c147` (`102` measured files `765487a4b48e7d52…`, clean tree; prior candidate `017bfb9f` preserved in `evaluation/geometry/runs/hybrid-master-backend-replacement/frozen-evaluation-candidate-017bfb9f.json`; templates rebound `1cf8225c`/`7200a3bc`/`a81f822c`; clean detached Full T3 `FULL_PRODUCT_GATE_PASS`: `13,762` pytest, `1,502` vitest, `full-t3-f5f2c147.json`), `CACHE_VERSION = 132` (`ROUTE_D_CACHE_POLICY = 132:route-d`), pre-cutover deployment rollback tag `pre-hybrid-cutover-f986e897` (`f986e897bd266d06d4a9c5fa78c05463b7b247bf`), integrated onto `main` via `--no-ff` merge `dacd7f5e` (`dacd7f5ecb104908bfc2f8a327868a0b032e9f0c`) and pushed non-force to `origin/main`, `DOCUMENTATION_COMMIT_ROLE = SELF`. Report: `evaluation/geometry/runs/hybrid-master-backend-replacement/ALGOSIM_HYBRID_CUTOVER_FINAL_REPORT.md`.

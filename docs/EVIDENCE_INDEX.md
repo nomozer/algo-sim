@@ -1,5 +1,9 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+**Git state / recovery update, 2026-11-07:** see [CURRENT_STATE — repository closure](CURRENT_STATE.md#repository-closure--2026-11-07).
+Retired branch names now have local `refs/archive/repository-closure/` references and a verified private self-contained bundle.
+Existing evidence and historical reports below are unchanged; no research result is reinterpreted by this Git-state update.
+
 ## WAVE_ID = AXO_GIT_CLEANUP
 
 REPORT = docs/evaluation/geometry/runs/axo-git-cleanup/report.md
