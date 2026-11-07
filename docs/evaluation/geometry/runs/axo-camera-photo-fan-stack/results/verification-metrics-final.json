@@ -1,0 +1,148 @@
+{
+  "designVersion": "camera-photo-fan-stack-v1",
+  "prototypeRelativePath": "docs/evaluation/geometry/runs/axo-camera-photo-fan-stack/prototype/axo_camera_first_ux_prototype.html",
+  "prototypeSha256": "ef1ea35a33a4c6af7f3e59afef337144a701c164e55fe5910452b20a442f5fb8",
+  "standaloneFileUrlOpen": "PASS",
+  "externalNetworkRequests": 0,
+  "consoleAndPageErrors": 0,
+  "audit10Risks": {
+    "02_hover_never_collapses_between_cards": "PASS",
+    "01_fan_never_occludes_critical_controls": "PASS",
+    "03_nth_photo_matches_exact_original_data": "PASS",
+    "04_gt5_photos_viewer_accesses_all_photos": "PASS",
+    "07_zoom_pan_uses_fullres_source_not_thumbnail": "PASS",
+    "08_keyboard_escape_focus_and_reduced_motion": "PASS",
+    "06_close_and_done_preserve_existing_attachments": "PASS",
+    "05_mobile_single_tap_opens_photo_tray": "PASS",
+    "10_short_screens_zero_overflow_touch_targets_ok": "PASS",
+    "09_chrome_zoom_110_dialog_stable": "PASS"
+  },
+  "fanGeometryDesktop": {
+    "collapsedSpanPx": 69.4,
+    "fannedSpanPx": 206.2,
+    "dialogSizeShiftPx": 0,
+    "shutterShiftPx": 0,
+    "doneBtnShiftPx": 0,
+    "fannedCardCentersX": [
+      782,
+      821,
+      860,
+      899,
+      935
+    ]
+  },
+  "pointerSweepContinuity": {
+    "cardsSwept": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      1
+    ],
+    "dwellMsPerStep": 130,
+    "prematureCollapseCount": 0
+  },
+  "gt5PhotosAudit": {
+    "sessionCountTested": 7,
+    "visualFanCardCap": 5,
+    "viewerReachedIndex0To6": true,
+    "escapeFromIndex0FocusRestoredTo": "btn-fan-card-0"
+  },
+  "previewVisibilityComparison": {
+    "4:3": {
+      "toanKhungVisiblePct": 100,
+      "tranManVisiblePct": 34.7
+    },
+    "16:9": {
+      "toanKhungVisiblePct": 100,
+      "tranManVisiblePct": 26
+    },
+    "3:4": {
+      "toanKhungVisiblePct": 100,
+      "tranManVisiblePct": 61.6
+    }
+  },
+  "cases20": {
+    "01_zero_photos": "PASS",
+    "02_one_photo_no_fan_no_count": "PASS",
+    "03_two_photos_stacked": "PASS",
+    "04_three_photos_stacked": "PASS",
+    "05_five_photos_stacked": "PASS",
+    "06_desktop_hover_opens_fan": "PASS",
+    "07_pointer_sweep_between_fanned_cards_zero_flicker": "PASS",
+    "08_hover_out_collapses_fan": "PASS",
+    "09_click_card_while_fan_open": "PASS",
+    "10_open_viewer_zoom_pan_prev_next": "PASS",
+    "11_delete_photo": "PASS",
+    "12_undo_delete": "PASS",
+    "14_return_to_camera": "PASS",
+    "13_retake_photo_in_place": "PASS",
+    "18_keyboard_focus_arrow_enter_escape": "PASS",
+    "19_prefers_reduced_motion": "PASS",
+    "15_press_xong_attaches_to_composer": "PASS",
+    "16_close_with_photos_preserves_composer": "PASS",
+    "17_mobile_single_tap_opens_tray_viewer": "PASS",
+    "20_zero_overflow_and_zero_shutter_occlusion_all_6_viewports": "PASS"
+  },
+  "viewports6": {
+    "1440x900": {
+      "status": "PASS",
+      "overflowX": 0,
+      "overflowY": 0,
+      "dialogSize": "576x578",
+      "fanCollapsedSpanPx": 69.4,
+      "fanOpenSpanPx": 206.2
+    },
+    "390x844": {
+      "status": "PASS",
+      "overflowX": 0,
+      "overflowY": 0,
+      "shutterCenterPx": 195,
+      "stackButtonSize": "58x48"
+    },
+    "390x560": {
+      "status": "PASS",
+      "overflowX": 0,
+      "overflowY": 0,
+      "sensorBoxPx": "374x281",
+      "shutterCenterPx": 195
+    },
+    "390x500": {
+      "status": "PASS",
+      "overflowX": 0,
+      "overflowY": 0,
+      "sensorBoxPx": "374x281",
+      "shutterCenterPx": 195
+    },
+    "768x1024": {
+      "status": "PASS",
+      "overflowX": 0,
+      "overflowY": 0,
+      "scrollW": 768,
+      "scrollH": 1024,
+      "sensorBoxPx": "752x564",
+      "shutterCenterPx": 384,
+      "stackOverlapsShutter": false,
+      "visibleFraction": 1
+    },
+    "desktop_chrome_zoom_110%": {
+      "status": "PASS",
+      "dpr": 1.1,
+      "innerViewport": "1293x767",
+      "dialogSize": "576x578",
+      "overflowX": 0,
+      "overflowY": 0
+    }
+  },
+  "curatedScreenshots": [
+    "01-desktop-fan-stack-collapsed.png",
+    "02-desktop-fan-stack-open-hover.png",
+    "05-viewer-highres-zoom-pan.png",
+    "08-desktop-close-inline-confirm.png",
+    "03-mobile-390x844-camera-3photos-stack.png",
+    "04-mobile-390x844-photo-tray-open.png",
+    "07-mobile-short-390x500-stack.png",
+    "06-desktop-real-chrome-zoom-110-fan-open.png"
+  ]
+}

@@ -1,0 +1,4974 @@
+<!DOCTYPE html>
+  <!--
+  AXO — CAMERA-FIRST UX SPECIFICATION PROTOTYPE (PHOTO FAN STACK · SCOPE LOCKED)
+  ==============================================================================
+  RÀNG BUỘC KHÓA PHẠM VI (SCOPE LOCK):
+  - Đặc tả này CHỈ chốt trải nghiệm Camera-First: Mobile/Tablet Fullscreen Camera,
+    Desktop Camera Dialog, preview mặc định Toàn khung / tùy chọn Tràn màn, chụp
+    liên tiếp nhiều ảnh, Photo Fan Stack (xếp chồng gọn, hover/focus xòe quạt mượt
+    trên desktop, 1 chạm mở khay xem ảnh trên mobile, không lặp nhãn số đếm), nút
+    Xong cố định, phân tách Đóng và Xong, 5 trạng thái lỗi camera, màn xem ảnh gốc
+    Zoom/Pan/Chụp lại/Xóa/Hoàn tác, và điểm kết nối đính kèm ảnh về Composer.
+  - Header Axo, Logo, Navigation, Tài khoản, Trang chủ, các thẻ gợi ý và bố cục
+    Composer tổng thể trong tệp HTML này CHỈ LÀ NGỮ CẢNH MÔ PHỎNG ĐIỂM NỐI,
+    KHÔNG PHẢI đặc tả thay thế giao diện sản phẩm hiện tại của Axo.
+  - Khi triển khai Frontend, bắt buộc tích hợp module Camera vào giao diện Axo
+    đang vận hành trên main thay vì sao chép trang chủ của prototype này.
+  ==============================================================================
+-->
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Axo — Camera-First UX Redesign &amp; Interactive Prototype</title>
+  <style>
+    /* ==========================================================================
+       1. AXO DESIGN SYSTEM TOKENS (Synchronized with DESIGN.md & tokens.css)
+       ========================================================================== */
+    :root {
+      --font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+      --primary: #0075de;
+      --primary-active: #005bab;
+      --secondary: #213183;
+      --on-primary: #ffffff;
+
+      --canvas: #ffffff;
+      --canvas-soft: #f6f5f4;
+      --surface: #ffffff;
+      --surface-subtle: #fbfbfa;
+
+      --ink: #000000;
+      --ink-secondary: #31302e;
+      --ink-muted: #615d59;
+      --ink-quiet: #716d69; /* >= 4.5:1 AA floor on white/warm-paper */
+      --ink-faint: #a39e98; /* Strictly strokes/hairlines, NEVER text */
+      --hairline: #e6e6e6;
+      --border-strong: #d4d1cc;
+
+      --accent-sky: #62aef0;
+      --accent-sky-tint: #dcebfa;
+      --accent-sky-soft: #f2f8fe;
+      --accent-orange: #dd5b00;
+      --accent-orange-deep: #793400;
+      --accent-green-deep: #0f6622;
+
+      --camera-ground: #0b0c0e;
+      --camera-elevated: #16181c;
+      --camera-glass: rgba(16, 18, 22, 0.66);
+      --camera-glass-strong: rgba(16, 18, 22, 0.84);
+      --camera-hairline: rgba(255, 255, 255, 0.18);
+
+      --radius-xs: 4px;
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-pill: 9999px;
+
+      --shadow-soft:
+        rgba(0, 0, 0, 0.01) 0px 0.175px 1.041px,
+        rgba(0, 0, 0, 0.02) 0px 0.8px 2.925px,
+        rgba(0, 0, 0, 0.027) 0px 2.025px 7.847px,
+        rgba(0, 0, 0, 0.04) 0px 4px 18px;
+
+      --shadow-elevated:
+        rgba(0, 0, 0, 0.03) 0px 2px 6px,
+        rgba(0, 0, 0, 0.04) 0px 8px 24px,
+        rgba(0, 0, 0, 0.06) 0px 23px 52px;
+
+      --safe-top: env(safe-area-inset-top, 0px);
+      --safe-bottom: env(safe-area-inset-bottom, 0px);
+      --safe-left: env(safe-area-inset-left, 0px);
+      --safe-right: env(safe-area-inset-right, 0px);
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      font-family: var(--font-family);
+      color: var(--ink);
+      background: var(--canvas-soft);
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+      overscroll-behavior: none;
+    }
+
+    button, textarea, select, input {
+      font-family: inherit;
+    }
+
+    button {
+      cursor: pointer;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    button:disabled {
+      cursor: not-allowed;
+      opacity: 0.42;
+    }
+
+    /* Distinct Keyboard Focus Visibility (WCAG 2.2 AA & web-design-guidelines) */
+    button:focus-visible,
+    textarea:focus-visible,
+    select:focus-visible,
+    [tabindex]:focus-visible {
+      outline: 2.5px solid var(--primary);
+      outline-offset: 2px;
+      box-shadow: 0 0 0 4px rgba(0, 117, 222, 0.22);
+    }
+
+    .dark-surface button:focus-visible,
+    .dark-surface [tabindex]:focus-visible {
+      outline: 2.5px solid #6ec1ff;
+      outline-offset: 3px;
+      box-shadow: 0 0 0 5px rgba(0, 117, 222, 0.48);
+    }
+
+    ::selection {
+      background: var(--accent-sky-tint);
+      color: var(--ink);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+      .photo-fan-stack.is-fan-open .fan-card-btn {
+        transform: translate3d(var(--fan-x, 0px), var(--fan-y, 0px), 0) rotate(0deg) scale(1) !important;
+      }
+      .photo-fan-stack.is-fan-open .fan-card-btn:hover,
+      .photo-fan-stack.is-fan-open .fan-card-btn:focus-visible {
+        transform: translate3d(var(--fan-x, 0px), calc(var(--fan-y, 0px) - 3px), 0) rotate(0deg) scale(1.04) !important;
+      }
+    }
+
+    /* Studio preview wrapper ONLY when desktop user explicitly previews handheld frame */
+    #viewport-root {
+      width: 100%;
+      height: 100dvh;
+      overflow: hidden;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--canvas-soft);
+    }
+
+    #viewport-root.framed-device-preview {
+      background: #1c1d20;
+      padding: 16px;
+    }
+
+    #axo-stage {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      overflow: hidden;
+      background: var(--canvas-soft);
+      display: flex;
+      flex-direction: column;
+    }
+
+    #viewport-root.framed-device-preview #axo-stage {
+      border-radius: 28px;
+      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.48), 0 0 0 1px rgba(255, 255, 255, 0.14);
+    }
+
+    /* ==========================================================================
+       2. AXO SETTLED V2.7 HEADER & UNIFIED COMPOSER SEAM (Faithful to Product)
+       ========================================================================== */
+    .axo-header {
+      height: 52px;
+      min-height: 52px;
+      padding: 0 clamp(14px, 3vw, 24px);
+      background: var(--canvas);
+      border-bottom: 1px solid var(--hairline);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+      align-items: center;
+      gap: 12px;
+      flex-shrink: 0;
+    }
+
+    .axo-brand {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      min-width: 0;
+      justify-self: start;
+    }
+
+    .axo-logo-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      min-height: 36px;
+      padding: 4px 6px 4px 2px;
+      border: 0;
+      border-radius: 7px;
+      background: transparent;
+      color: var(--ink);
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .axo-logo-btn:hover {
+      opacity: 0.85;
+    }
+
+    .axo-logo-svg {
+      width: 22px;
+      height: 22px;
+      display: block;
+      flex-shrink: 0;
+    }
+
+    .nav-wordmark-text {
+      line-height: 1;
+      font-weight: 700;
+      font-size: 15px;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      user-select: none;
+    }
+
+    .nav-n1-capsule {
+      display: inline-flex;
+      align-items: center;
+      gap: 2px;
+      padding: 3px;
+      background: var(--canvas-soft);
+      border: 1px solid var(--hairline);
+      border-radius: var(--radius-pill);
+      justify-self: center;
+      max-width: 100%;
+    }
+
+    .nav-n1-item {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      min-height: 30px;
+      padding: 4px 12px;
+      border: 0;
+      border-radius: var(--radius-pill);
+      background: transparent;
+      color: var(--ink-muted);
+      font-size: 12.5px;
+      font-weight: 500;
+      line-height: 1.2;
+      white-space: nowrap;
+    }
+
+    .nav-n1-item:hover {
+      color: var(--ink);
+      background: rgba(255, 255, 255, 0.65);
+    }
+
+    .nav-n1-item.is-active {
+      background: var(--surface);
+      color: var(--ink);
+      font-weight: 600;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .nav-n1-item.is-active svg {
+      color: var(--primary);
+    }
+
+    .axo-header-right {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      justify-self: end;
+      gap: 8px;
+    }
+
+    .notif-trigger-btn {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      border: 1px solid var(--hairline);
+      background: var(--surface);
+      color: var(--ink-secondary);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+    }
+
+    .notif-trigger-btn:hover {
+      background: var(--canvas-soft);
+      color: var(--ink);
+    }
+
+    .user-profile-btn {
+      min-height: 34px;
+      padding: 3px 10px 3px 4px;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--hairline);
+      background: var(--surface);
+      color: var(--ink-secondary);
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 12.5px;
+      font-weight: 500;
+    }
+
+    .user-profile-btn:hover {
+      background: var(--canvas-soft);
+    }
+
+    .user-avatar-dot {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--accent-sky-tint);
+      color: var(--primary-active);
+      font-size: 11.5px;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    @media (max-width: 720px) {
+      .user-name-txt {
+        display: none;
+      }
+      .user-profile-btn {
+        padding: 3px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .topnav-label {
+        display: none;
+      }
+      .nav-n1-item {
+        min-width: 38px;
+        min-height: 34px;
+        padding: 6px 9px;
+      }
+    }
+
+    .home-main {
+      flex: 1;
+      overflow-y: auto;
+      overscroll-behavior-y: contain;
+      padding: clamp(18px, 4.5vh, 48px) 16px 28px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .composer-column {
+      width: 100%;
+      max-width: 660px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .hero-header {
+      text-align: center;
+    }
+
+    .hero-title {
+      margin: 0;
+      font-size: clamp(21px, 3vw, 29px);
+      line-height: 1.2;
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      color: var(--ink);
+    }
+
+    /* Unified Composer Card */
+    .composer-card {
+      background: var(--surface);
+      border: 1px solid var(--hairline);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-soft);
+      display: flex;
+      flex-direction: column;
+      transition: border-color 140ms ease, box-shadow 140ms ease;
+    }
+
+    .composer-card:focus-within {
+      border-color: #b8d8f8;
+      box-shadow: var(--shadow-soft), 0 0 0 3px rgba(0, 117, 222, 0.08);
+    }
+
+    /* Clean Single-Row Attachment Strip (§13: >=44x44px pure view thumbnails, ZERO micro buttons) */
+    .attachment-tray {
+      padding: 10px 12px 4px;
+      border-bottom: 1px solid #f0efed;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .attachment-tray-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      font-size: 12px;
+      color: var(--ink-quiet);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .attachment-strip {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      overflow-x: auto;
+      overscroll-behavior-x: contain;
+      padding: 2px 2px 6px;
+      scrollbar-width: thin;
+    }
+
+    .attachment-strip::-webkit-scrollbar {
+      height: 5px;
+    }
+
+    .attachment-strip::-webkit-scrollbar-thumb {
+      background: rgba(0, 0, 0, 0.18);
+      border-radius: var(--radius-pill);
+    }
+
+    .photo-thumb-open {
+      position: relative;
+      width: 64px;
+      height: 64px;
+      padding: 0;
+      border-radius: 10px;
+      border: 1px solid var(--border-strong);
+      background: var(--canvas-soft);
+      flex-shrink: 0;
+      overflow: hidden;
+      display: block;
+      transition: border-color 120ms ease, transform 90ms ease;
+    }
+
+    .photo-thumb-open:hover {
+      border-color: var(--primary);
+    }
+
+    .photo-thumb-open:active {
+      transform: scale(0.97);
+    }
+
+    .photo-thumb-open img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .photo-order-badge {
+      position: absolute;
+      top: 4px;
+      left: 4px;
+      min-width: 20px;
+      height: 20px;
+      padding: 0 6px;
+      border-radius: var(--radius-pill);
+      background: rgba(11, 12, 14, 0.80);
+      color: #ffffff;
+      font-size: 11px;
+      font-weight: 700;
+      line-height: 20px;
+      text-align: center;
+      pointer-events: none;
+    }
+
+    .add-more-tile {
+      height: 64px;
+      min-width: 68px;
+      padding: 0 10px;
+      border-radius: 10px;
+      border: 1px dashed var(--border-strong);
+      background: var(--surface-subtle);
+      color: var(--ink-secondary);
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+      font-size: 11.5px;
+      font-weight: 600;
+      flex-shrink: 0;
+      white-space: nowrap;
+    }
+
+    .add-more-tile:hover {
+      background: var(--canvas-soft);
+      border-color: var(--ink-quiet);
+    }
+
+    .composer-textarea-wrap {
+      padding: 10px 13px 6px;
+    }
+
+    .composer-textarea {
+      width: 100%;
+      min-height: 54px;
+      max-height: 130px;
+      border: 0;
+      padding: 0;
+      resize: none;
+      background: transparent;
+      color: var(--ink);
+      font-size: 16px; /* >=16px prevents iOS Safari auto-zoom on focus */
+      line-height: 1.45;
+    }
+
+    .composer-textarea::placeholder {
+      color: var(--ink-quiet);
+    }
+
+    .composer-textarea:focus-visible {
+      outline: none;
+      box-shadow: none;
+    }
+
+    .composer-footer {
+      padding: 7px 10px 8px 10px;
+      border-top: 1px solid #f0efed;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      flex-wrap: nowrap;
+    }
+
+    .composer-tools {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-width: 0;
+    }
+
+    .tool-btn {
+      min-height: 44px;
+      padding: 0 11px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--hairline);
+      background: var(--surface);
+      color: var(--ink-secondary);
+      font-size: 13px;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+      transition: background 120ms ease, border-color 120ms ease;
+    }
+
+    .tool-btn:hover {
+      background: var(--canvas-soft);
+      border-color: var(--border-strong);
+    }
+
+    .submit-btn {
+      min-height: 44px;
+      padding: 0 16px;
+      border-radius: var(--radius-pill);
+      border: 0;
+      background: var(--primary);
+      color: var(--on-primary);
+      font-size: 13.5px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+      flex-shrink: 0;
+      transition: background 120ms ease;
+    }
+
+    .submit-btn:hover:not(:disabled) {
+      background: var(--primary-active);
+    }
+
+    .composer-notice {
+      margin: 0 12px 8px;
+      padding: 8px 12px;
+      border-radius: var(--radius-sm);
+      background: var(--accent-sky-soft);
+      border: 1px solid #cbe3fb;
+      color: var(--primary-active);
+      font-size: 12.5px;
+      line-height: 1.4;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .composer-notice-btn {
+      min-height: 36px;
+      padding: 0 10px;
+      border-radius: 7px;
+      border: 1px solid #b8d8f8;
+      background: #ffffff;
+      color: var(--primary-active);
+      font-size: 12px;
+      font-weight: 600;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .sample-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .sample-chip {
+      min-height: 40px;
+      padding: 6px 13px;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--hairline);
+      background: var(--surface);
+      color: var(--ink-secondary);
+      font-size: 12.5px;
+      font-weight: 500;
+    }
+
+    .sample-chip:hover {
+      background: var(--surface-subtle);
+      border-color: var(--border-strong);
+    }
+
+    /* ==========================================================================
+       3. MOBILE & TOUCH-TABLET TRUE FULLSCREEN CAMERA (§3, §4, §6, §8, §9)
+          Default: Structured 3-zone Full-Frame ("Toàn khung") so 100% of sensor
+          frame is visible with zero cropped edge formulas and zero control overlap.
+          Optional: Edge-to-edge "Tràn màn" (cover) toggle.
+       ========================================================================== */
+    .camera-fullscreen {
+      position: absolute;
+      inset: 0;
+      z-index: 40;
+      width: 100%;
+      height: 100%;
+      background: var(--camera-ground);
+      color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+      user-select: none;
+    }
+
+    /* Dedicated Top Bar in upper dark optical zone */
+    .cam-fs-top {
+      position: relative;
+      z-index: 5;
+      flex-shrink: 0;
+      padding:
+        calc(max(10px, var(--safe-top)) + 2px)
+        calc(max(14px, var(--safe-right)))
+        8px
+        calc(max(14px, var(--safe-left)));
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .camera-fullscreen.is-cover-mode .cam-fs-top {
+      padding-bottom: 14px;
+      background: linear-gradient(to bottom, rgba(8, 9, 12, 0.74) 0%, rgba(8, 9, 12, 0.28) 68%, transparent 100%);
+    }
+
+    /* Center Stage: Default "Toàn khung" guarantees 100% uncropped frame visibility */
+    .cam-fs-stage {
+      position: relative;
+      z-index: 2;
+      flex: 1 1 0%;
+      min-height: 0;
+      width: 100%;
+      container-type: size;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2px calc(max(8px, var(--safe-right))) 2px calc(max(8px, var(--safe-left)));
+      overflow: hidden;
+    }
+
+    .camera-sensor-box {
+      position: relative;
+      aspect-ratio: var(--stream-aspect, 3 / 4);
+      width: min(100cqw, calc(100cqh * var(--stream-ratio-num, 0.75)));
+      max-width: 100%;
+      max-height: 100%;
+      border-radius: 10px;
+      overflow: hidden;
+      background: #14161a;
+      box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.18), 0 10px 28px rgba(0, 0, 0, 0.45);
+    }
+
+    .camera-sensor-box img.live-feed-img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+
+    /* Optional "Tràn màn" (cover) mode */
+    .camera-fullscreen.is-cover-mode .cam-fs-stage {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      padding: 0;
+      container-type: normal;
+    }
+
+    .camera-fullscreen.is-cover-mode .camera-sensor-box {
+      width: 100%;
+      height: 100%;
+      aspect-ratio: auto;
+      border-radius: 0;
+      box-shadow: none;
+    }
+
+    .camera-fullscreen.is-cover-mode .camera-sensor-box img.live-feed-img {
+      object-fit: cover;
+    }
+
+    .shutter-flash {
+      position: absolute;
+      inset: 0;
+      z-index: 4;
+      background: rgba(255, 255, 255, 0.80);
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 110ms ease-out;
+    }
+
+    .shutter-flash.active {
+      opacity: 1;
+    }
+
+    [role="dialog"][tabindex="-1"]:focus {
+      outline: none;
+      box-shadow: none;
+    }
+
+    .cam-glass-btn {
+      min-width: 44px;
+      min-height: 44px;
+      padding: 0 12px;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--camera-hairline);
+      background: var(--camera-glass);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      color: #ffffff;
+      font-size: 12.5px;
+      font-weight: 600;
+      white-space: nowrap;
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .cam-glass-btn.icon-only {
+      width: 44px;
+      padding: 0;
+    }
+
+    .cam-glass-btn:hover {
+      background: var(--camera-glass-strong);
+    }
+
+    .cam-top-right-tools {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .cam-status-pill {
+      max-width: min(54vw, 250px);
+      min-height: 36px;
+      padding: 5px 12px;
+      border-radius: var(--radius-pill);
+      background: var(--camera-glass-strong);
+      border: 1px solid var(--camera-hairline);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      color: #ffffff;
+      font-size: 12px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .cam-status-pill.retake-mode {
+      background: rgba(0, 91, 171, 0.90);
+      border-color: rgba(140, 204, 255, 0.58);
+    }
+
+    .cam-pill-action {
+      min-height: 28px;
+      padding: 0 8px;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(255, 255, 255, 0.32);
+      background: rgba(255, 255, 255, 0.15);
+      color: #ffffff;
+      font-size: 11.5px;
+      font-weight: 700;
+    }
+
+    /* Dedicated Bottom Thumb Bar — Symmetric 1fr-auto-1fr locks Shutter dead-center */
+    .cam-fs-bottom-wrap {
+      position: relative;
+      z-index: 5;
+      flex-shrink: 0;
+      padding:
+        10px
+        calc(max(16px, var(--safe-right)))
+        calc(max(14px, var(--safe-bottom)) + 2px)
+        calc(max(16px, var(--safe-left)));
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .camera-fullscreen.is-cover-mode .cam-fs-bottom-wrap {
+      padding-top: 18px;
+      background: linear-gradient(to top, rgba(8, 9, 12, 0.86) 0%, rgba(8, 9, 12, 0.44) 64%, transparent 100%);
+    }
+
+    .cam-fs-bottom {
+      width: 100%;
+      max-width: 460px; /* Keeps tablet 768x1024 controls ergonomically grouped */
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+      align-items: center;
+      gap: 10px;
+    }
+
+    .cam-slot-left {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      min-width: 0;
+    }
+
+    .cam-slot-right {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      min-width: 0;
+    }
+
+    .cam-round-control {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: 1px solid var(--camera-hairline);
+      background: var(--camera-glass);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      color: #ffffff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+    }
+
+    .cam-round-control:hover {
+      background: var(--camera-glass-strong);
+    }
+
+    /* Tactile Circular Shutter Button (Mobile: 70px, Short-screen: 56px) */
+    .shutter-btn {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      border: 3.5px solid #ffffff;
+      background: rgba(255, 255, 255, 0.18);
+      padding: 4px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.36);
+      transition: transform 90ms ease, background 120ms ease;
+    }
+
+    .shutter-btn:active {
+      transform: scale(0.93);
+    }
+
+    .shutter-disc {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: #ffffff;
+      display: block;
+      transition: transform 90ms ease;
+    }
+
+    .shutter-btn:hover .shutter-disc {
+      transform: scale(0.96);
+    }
+
+    /* ==========================================================================
+       3A-FAN. PHOTO FAN STACK (§3, §4, §5, §13)
+               - 0 photos: hidden
+               - 1 photo: single clean thumbnail, no fan effect, no count label
+               - 2..5+ photos: compact physical deck; on Desktop hover/focus-within
+                 fans out in a smooth 200ms upward arc with a T-shaped contiguous
+                 hover bridge so moving between cards NEVER flickers or collapses;
+                 on Mobile 1-tap opens session photo tray without hover fan-out.
+       ========================================================================== */
+    @keyframes fanCardCapturePop {
+      0% {
+        opacity: 0.65;
+        filter: brightness(1.18);
+      }
+      100% {
+        opacity: 1;
+        filter: brightness(1);
+      }
+    }
+
+    @keyframes shutterCapturePulse {
+      0% { box-shadow: 0 0 0 0 rgba(98, 174, 240, 0.65), 0 4px 18px rgba(0, 0, 0, 0.36); }
+      100% { box-shadow: 0 0 0 10px rgba(98, 174, 240, 0), 0 4px 18px rgba(0, 0, 0, 0.36); }
+    }
+
+    .shutter-btn.just-shot,
+    .desktop-shutter-btn.just-shot {
+      animation: shutterCapturePulse 220ms cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* Mobile 1-Tap Photo Stack Button (No hover fan-out, >= 48x48 touch target) */
+    .mobile-fan-stack-btn {
+      position: relative;
+      width: 58px;
+      height: 48px;
+      padding: 0;
+      border: 0;
+      border-radius: 12px;
+      background: transparent;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .mobile-fan-stack-btn:active {
+      transform: scale(0.95);
+    }
+
+    .mobile-stack-card {
+      position: absolute;
+      width: 42px;
+      height: 42px;
+      border-radius: 8px;
+      overflow: hidden;
+      background: #ffffff;
+      border: 1.5px solid rgba(255, 255, 255, 0.92);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.48);
+      transform: translate3d(var(--stack-x, 0px), var(--stack-y, 0px), 0) rotate(var(--stack-rot, 0deg)) scale(var(--stack-scale, 1));
+      transition: transform 160ms cubic-bezier(0.22, 1, 0.36, 1);
+      pointer-events: none;
+    }
+
+    .mobile-stack-card.just-captured {
+      animation: fanCardCapturePop 180ms ease-out;
+    }
+
+    .mobile-stack-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Desktop Photo Fan Stack Container (Fixed layout footprint: never shifts Shutter or Xong) */
+    .photo-fan-stack {
+      position: relative;
+      width: 56px;
+      height: 42px;
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 12;
+    }
+
+    /* T-shaped contiguous pointer bridge when fanned:
+       - Base pad stays strictly inside the 56x42 slot (never blocks Shutter or Xong)
+       - Upper arc pad spans the full fanned card arc above the footer so moving
+         between any of the 2..5 fanned thumbnails never drops pointer hover! */
+    .fan-hover-bridge-base,
+    .fan-hover-bridge-arc {
+      display: none;
+      position: absolute;
+      pointer-events: auto;
+      background: transparent;
+    }
+
+    .photo-fan-stack.is-fan-open .fan-hover-bridge-base {
+      display: block;
+      left: -6px;
+      right: -4px;
+      top: -12px;
+      bottom: -4px;
+      z-index: 1;
+    }
+
+    .photo-fan-stack.is-fan-open .fan-hover-bridge-arc {
+      display: block;
+      left: calc(-90px * var(--fan-spread-scale, 1));
+      right: calc(-74px * var(--fan-spread-scale, 1));
+      top: -82px;
+      height: 76px;
+      z-index: 1;
+    }
+
+    .fan-card-btn {
+      position: absolute;
+      width: 44px;
+      height: 44px;
+      padding: 0;
+      border-radius: 8px;
+      overflow: hidden;
+      background: #ffffff;
+      border: 1.5px solid #ffffff;
+      box-shadow:
+        0 0 0 1px rgba(15, 23, 42, 0.15),
+        0 4px 11px rgba(15, 23, 42, 0.18);
+      transform-origin: 50% 85%;
+      transform: translate3d(var(--stack-x, 0px), var(--stack-y, 0px), 0) rotate(var(--stack-rot, 0deg)) scale(var(--stack-scale, 1));
+      transition:
+        transform 170ms cubic-bezier(0.4, 0, 0.2, 1),
+        box-shadow 160ms ease,
+        border-color 140ms ease;
+      z-index: var(--card-z, 2);
+    }
+
+    .fan-card-btn.just-captured {
+      animation: fanCardCapturePop 180ms ease-out;
+    }
+
+    .fan-card-btn img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      pointer-events: none;
+    }
+
+    /* Single-photo hover on Desktop: gentle crisp elevation, NO fan-out */
+    .photo-fan-stack[data-fan-capable="false"] .fan-card-btn:hover,
+    .photo-fan-stack[data-fan-capable="false"] .fan-card-btn:focus-visible {
+      transform: translate3d(0, -2px, 0) scale(1.05);
+      border-color: var(--primary);
+      box-shadow:
+        0 0 0 1.5px var(--primary),
+        0 6px 16px rgba(0, 117, 222, 0.22);
+    }
+
+    /* Multi-photo Desktop Fan-Out (~200ms smooth deceleration) */
+    .photo-fan-stack.is-fan-open .fan-card-btn {
+      transform: translate3d(var(--fan-x, 0px), var(--fan-y, 0px), 0) rotate(var(--fan-rot, 0deg)) scale(1);
+      transition:
+        transform 200ms cubic-bezier(0.22, 1, 0.36, 1),
+        box-shadow 180ms ease,
+        border-color 140ms ease;
+      box-shadow:
+        0 0 0 1px rgba(15, 23, 42, 0.16),
+        0 8px 20px rgba(15, 23, 42, 0.24);
+    }
+
+    .photo-fan-stack.is-fan-open .fan-card-btn:hover,
+    .photo-fan-stack.is-fan-open .fan-card-btn:focus-visible {
+      z-index: 40 !important;
+      border-color: var(--primary);
+      transform: translate3d(var(--fan-x, 0px), calc(var(--fan-y, 0px) - 6px), 0) rotate(calc(var(--fan-rot, 0deg) * 0.35)) scale(1.11);
+      box-shadow:
+        0 0 0 2px var(--primary),
+        0 12px 26px rgba(15, 23, 42, 0.32);
+    }
+
+    /* Fixed Primary "Xong" Pill in Camera (Zero redundant count suffix) */
+    .cam-done-btn {
+      min-height: 48px;
+      padding: 0 16px;
+      border-radius: var(--radius-pill);
+      border: 0;
+      background: var(--primary);
+      color: var(--on-primary);
+      font-size: 14px;
+      font-weight: 600;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.34);
+    }
+
+    .cam-done-btn:hover {
+      background: var(--primary-active);
+    }
+
+    /* Keyboard-safe / Short Mobile Viewport Adaptation (height <= 600px, e.g. 390x560 & 390x500) */
+    @media (max-height: 600px) {
+      .cam-fs-top {
+        padding-top: max(6px, var(--safe-top));
+        padding-bottom: 4px;
+      }
+      .cam-fs-bottom-wrap {
+        padding-top: 6px;
+        padding-bottom: max(8px, var(--safe-bottom));
+      }
+      .shutter-btn {
+        width: 56px;
+        height: 56px;
+      }
+      .cam-done-btn,
+      .mobile-fan-stack-btn,
+      .cam-round-control {
+        min-height: 44px;
+      }
+      .mobile-fan-stack-btn {
+        height: 44px;
+      }
+      .mobile-stack-card {
+        width: 38px;
+        height: 38px;
+      }
+      .cam-round-control {
+        width: 44px;
+        height: 44px;
+      }
+    }
+
+    /* ==========================================================================
+       3B. STREAMLINED MASTER-DETAIL SESSION PHOTO TRAY (§5, §6)
+           Single selected photo stage + numbered thumbnail strip + ONE shared
+           action bar ([Chụp lại] [Xóa]) — zero repeated buttons under thumbnails!
+       ========================================================================== */
+    .cam-session-drawer-scrim {
+      position: absolute;
+      inset: 0;
+      z-index: 20;
+      background: rgba(5, 6, 8, 0.72);
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+    }
+
+    .cam-session-drawer {
+      width: 100%;
+      max-width: 520px;
+      max-height: calc(100% - 12px);
+      background: #17191e;
+      border-top: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 18px 18px 0 0;
+      padding: 12px 16px calc(max(14px, var(--safe-bottom)) + 4px);
+      color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      overflow-y: auto;
+    }
+
+    .cam-drawer-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .cam-drawer-title {
+      margin: 0;
+      font-size: 14.5px;
+      font-weight: 600;
+    }
+
+    .tray-selected-stage {
+      position: relative;
+      width: 100%;
+      height: clamp(138px, 31dvh, 240px);
+      background: #0d0f13;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 6px;
+      overflow: hidden;
+    }
+
+    @media (max-height: 580px) {
+      .tray-selected-stage {
+        height: clamp(104px, 24dvh, 148px);
+      }
+    }
+
+    .tray-selected-stage img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      display: block;
+      border-radius: 6px;
+    }
+
+    .tray-stage-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.24);
+      background: rgba(16, 18, 22, 0.78);
+      color: #ffffff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+    }
+
+    .tray-stage-nav.prev { left: 8px; }
+    .tray-stage-nav.next { right: 8px; }
+
+    .tray-thumb-strip {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      overflow-x: auto;
+      overscroll-behavior-x: contain;
+      padding: 2px 2px 4px;
+    }
+
+    .tray-thumb-btn {
+      position: relative;
+      width: 54px;
+      height: 54px;
+      padding: 0;
+      border-radius: 9px;
+      border: 2px solid rgba(255, 255, 255, 0.18);
+      background: #0f1014;
+      overflow: hidden;
+      flex-shrink: 0;
+      opacity: 0.72;
+      transition: opacity 120ms ease, border-color 120ms ease, transform 90ms ease;
+    }
+
+    .tray-thumb-btn[aria-selected="true"] {
+      border-color: #62aef0;
+      box-shadow: 0 0 0 2px rgba(0, 117, 222, 0.55);
+      opacity: 1;
+    }
+
+    .tray-thumb-btn img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .tray-undo-bar {
+      padding: 6px 10px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      font-size: 12.5px;
+    }
+
+    .tray-shared-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .tray-action-btn {
+      min-height: 46px;
+      padding: 0 12px;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      background: rgba(255, 255, 255, 0.09);
+      color: #ffffff;
+      font-size: 13px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      white-space: nowrap;
+    }
+
+    .tray-action-btn:hover {
+      background: rgba(255, 255, 255, 0.16);
+    }
+
+    .tray-action-btn.danger {
+      border-color: rgba(248, 113, 113, 0.42);
+      background: rgba(220, 38, 38, 0.16);
+      color: #fecaca;
+    }
+
+    .tray-action-btn.danger:hover {
+      background: rgba(220, 38, 38, 0.28);
+    }
+
+    /* ==========================================================================
+       3C. INLINE CLOSE CONFIRMATION OVER CAMERA (§7, §8 — Zero Nested Modals)
+       ========================================================================== */
+    .cam-close-confirm-scrim {
+      position: absolute;
+      inset: 0;
+      z-index: 25;
+      background: rgba(5, 6, 8, 0.68);
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding: 12px;
+    }
+
+    .cam-close-confirm-card {
+      width: 100%;
+      max-width: 420px;
+      background: #1a1d24;
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 16px;
+      padding: 16px;
+      box-shadow: 0 16px 42px rgba(0, 0, 0, 0.50);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .camera-dialog .cam-close-confirm-scrim {
+      align-items: center;
+      background: rgba(15, 17, 21, 0.56);
+    }
+
+    .camera-dialog .cam-close-confirm-card {
+      background: var(--surface);
+      color: var(--ink);
+      border: 1px solid var(--hairline);
+      box-shadow: var(--shadow-elevated);
+    }
+
+    .confirm-title {
+      margin: 0;
+      font-size: 15px;
+      font-weight: 600;
+      line-height: 1.35;
+    }
+
+    .confirm-desc {
+      margin: 4px 0 0;
+      font-size: 13px;
+      line-height: 1.45;
+      opacity: 0.82;
+    }
+
+    .confirm-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .confirm-btn {
+      min-height: 45px;
+      width: 100%;
+      padding: 0 14px;
+      border-radius: 10px;
+      font-size: 13.5px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .confirm-btn.keep {
+      border: 0;
+      background: var(--primary);
+      color: #ffffff;
+    }
+
+    .confirm-btn.keep:hover {
+      background: var(--primary-active);
+    }
+
+    .confirm-btn.discard {
+      border: 1px solid rgba(248, 113, 113, 0.44);
+      background: rgba(220, 38, 38, 0.16);
+      color: #fecaca;
+    }
+
+    .camera-dialog .confirm-btn.discard {
+      border-color: #f3c6c6;
+      background: #fff6f6;
+      color: #b42318;
+    }
+
+    .confirm-btn.cancel {
+      border: 1px solid rgba(255, 255, 255, 0.20);
+      background: rgba(255, 255, 255, 0.08);
+      color: #ffffff;
+    }
+
+    .camera-dialog .confirm-btn.cancel {
+      border-color: var(--hairline);
+      background: var(--surface);
+      color: var(--ink-secondary);
+    }
+
+    /* ==========================================================================
+       4. DESKTOP COMPACT CAMERA DIALOG (§10, §11 — Balanced, Zero Tech Badges)
+       ========================================================================== */
+    .dialog-backdrop {
+      position: absolute;
+      inset: 0;
+      z-index: 40;
+      background: rgba(15, 15, 15, 0.44);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    .camera-dialog {
+      position: relative;
+      width: min(92vw, 576px);
+      max-height: calc(100dvh - 32px);
+      background: var(--surface);
+      border: 1px solid var(--hairline);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-elevated);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .camera-dialog.error-only {
+      width: min(92vw, 430px);
+    }
+
+    .dialog-header {
+      padding: 10px 12px 10px 16px;
+      border-bottom: 1px solid var(--hairline);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .dialog-title-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-width: 0;
+    }
+
+    .dialog-title {
+      margin: 0;
+      font-size: 14.5px;
+      font-weight: 600;
+      color: var(--ink);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .dialog-badge {
+      padding: 2px 9px;
+      border-radius: var(--radius-pill);
+      background: var(--accent-sky-soft);
+      border: 1px solid #cbe3fb;
+      color: var(--primary-active);
+      font-size: 11.5px;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .dialog-close-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--ink-muted);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .dialog-close-btn:hover {
+      background: var(--canvas-soft);
+      color: var(--ink);
+    }
+
+    /* Dynamic Aspect-Ratio Stage: True source aspect ratio, fits Chrome Zoom 110% */
+    .dialog-stage-wrap {
+      padding: 10px 12px;
+      background: var(--canvas-soft);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex: 1;
+      min-height: 0;
+    }
+
+    .dialog-video-frame {
+      position: relative;
+      border-radius: 11px;
+      overflow: hidden;
+      border: 1px solid var(--border-strong);
+      background: var(--camera-ground);
+      aspect-ratio: var(--stream-aspect, 4 / 3);
+      max-height: min(56dvh, 410px);
+      max-width: 100%;
+      width: auto;
+      height: auto;
+      margin: 0 auto;
+    }
+
+    .dialog-video-frame.landscape-stream {
+      width: 100%;
+    }
+
+    .dialog-video-frame.portrait-stream {
+      height: min(55dvh, 400px);
+    }
+
+    .dialog-video-frame img.live-feed-img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+
+    .dialog-video-frame.is-cover-mode img.live-feed-img {
+      object-fit: cover;
+    }
+
+    .dialog-footer {
+      position: relative;
+      z-index: 8;
+      padding: 10px 14px;
+      border-top: 1px solid var(--hairline);
+      background: var(--surface);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .dialog-left-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-width: 0;
+    }
+
+    .dialog-right-actions {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .desktop-shutter-group {
+      position: relative;
+      z-index: 15;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+    }
+
+    .desktop-shutter-btn {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: 2.5px solid var(--ink);
+      background: var(--surface);
+      padding: 3px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 90ms ease, border-color 120ms ease;
+    }
+
+    .desktop-shutter-btn:hover {
+      border-color: var(--primary);
+    }
+
+    .desktop-shutter-btn:active {
+      transform: scale(0.94);
+    }
+
+    .desktop-shutter-disc {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: var(--ink);
+      transition: background 120ms ease;
+    }
+
+    .desktop-shutter-btn:hover .desktop-shutter-disc {
+      background: var(--primary);
+    }
+
+    .desktop-shutter-caption {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--ink-secondary);
+      line-height: 1;
+    }
+
+    .secondary-btn {
+      min-height: 40px;
+      padding: 0 12px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--hairline);
+      background: var(--surface);
+      color: var(--ink-secondary);
+      font-size: 12.5px;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      white-space: nowrap;
+    }
+
+    .secondary-btn:hover:not(:disabled) {
+      background: var(--canvas-soft);
+      border-color: var(--border-strong);
+    }
+
+    .dialog-right-actions .primary-pill-btn {
+      position: relative;
+      z-index: 15;
+    }
+
+    .primary-pill-btn {
+      min-height: 40px;
+      padding: 0 16px;
+      border-radius: var(--radius-pill);
+      border: 0;
+      background: var(--primary);
+      color: var(--on-primary);
+      font-size: 13px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      white-space: nowrap;
+    }
+
+    .primary-pill-btn:hover:not(:disabled) {
+      background: var(--primary-active);
+    }
+
+    /* ==========================================================================
+       5. CAMERA ERROR STATES (§15 — Concise, Honest, Zero Dead Video Box)
+       ========================================================================== */
+    .mobile-error-screen {
+      position: absolute;
+      inset: 0;
+      z-index: 40;
+      background: #111317;
+      color: #ffffff;
+      padding:
+        calc(max(12px, var(--safe-top)) + 2px)
+        20px
+        calc(max(20px, var(--safe-bottom)) + 6px);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .mobile-error-card {
+      margin: auto;
+      width: 100%;
+      max-width: 332px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .error-icon-circle {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 2px;
+    }
+
+    .mobile-error-card .error-icon-circle {
+      background: rgba(255, 255, 255, 0.09);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      color: rgba(255, 255, 255, 0.88);
+    }
+
+    .mobile-error-title {
+      margin: 0;
+      font-size: 17px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+
+    .mobile-error-desc {
+      margin: 0;
+      font-size: 13.5px;
+      line-height: 1.5;
+      color: rgba(255, 255, 255, 0.74);
+    }
+
+    .mobile-error-actions {
+      width: 100%;
+      margin-top: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+    }
+
+    .mobile-error-primary {
+      min-height: 46px;
+      width: 100%;
+      border-radius: var(--radius-pill);
+      border: 0;
+      background: var(--primary);
+      color: #ffffff;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .mobile-error-secondary {
+      min-height: 46px;
+      width: 100%;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.08);
+      color: #ffffff;
+      font-size: 13.5px;
+      font-weight: 500;
+    }
+
+    .desktop-error-body {
+      padding: 18px 18px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .desktop-error-lead {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .desktop-error-lead .error-icon-circle {
+      width: 40px;
+      height: 40px;
+      flex-shrink: 0;
+      background: var(--canvas-soft);
+      border: 1px solid var(--hairline);
+      color: var(--ink-secondary);
+    }
+
+    .desktop-error-title {
+      margin: 0;
+      font-size: 14.5px;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    .desktop-error-desc {
+      margin: 4px 0 0;
+      font-size: 13px;
+      line-height: 1.5;
+      color: var(--ink-muted);
+    }
+
+    .desktop-error-actions {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 8px;
+      padding-top: 2px;
+    }
+
+    /* ==========================================================================
+       6. HIGH-RES ZOOM & PAN IMAGE PREVIEW VIEWER (§13, §14)
+          Full-res worksheet image, zoom controls, drag-to-pan, reorder & delete.
+       ========================================================================== */
+    .lightbox-backdrop {
+      position: absolute;
+      inset: 0;
+      z-index: 50;
+      background: rgba(11, 12, 14, 0.82);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: clamp(0px, 2vw, 20px);
+    }
+
+    .lightbox-card {
+      width: min(100%, 820px);
+      height: min(100%, 720px);
+      max-height: 100%;
+      background: var(--surface);
+      border: 1px solid var(--hairline);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-elevated);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    @media (max-width: 680px) {
+      .lightbox-backdrop {
+        padding: 0;
+      }
+      .lightbox-card {
+        width: 100%;
+        height: 100%;
+        border-radius: 0;
+        border: 0;
+      }
+    }
+
+    .lightbox-header {
+      padding: calc(max(8px, var(--safe-top))) 12px 8px 14px;
+      border-bottom: 1px solid var(--hairline);
+      background: var(--surface);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .zoom-toolbar {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 2px;
+      border-radius: var(--radius-pill);
+      background: var(--canvas-soft);
+      border: 1px solid var(--hairline);
+    }
+
+    .zoom-btn {
+      min-width: 38px;
+      min-height: 38px;
+      padding: 0 9px;
+      border-radius: var(--radius-pill);
+      border: 0;
+      background: transparent;
+      color: var(--ink-secondary);
+      font-size: 12.5px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .zoom-btn:hover:not(:disabled) {
+      background: var(--surface);
+      color: var(--ink);
+    }
+
+    .lightbox-stage {
+      flex: 1;
+      min-height: 0;
+      background: #14161a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px;
+      position: relative;
+      overflow: hidden;
+      user-select: none;
+    }
+
+    .lightbox-stage.is-zoomed {
+      cursor: grab;
+      touch-action: none;
+    }
+
+    .lightbox-stage.is-zoomed.is-panning {
+      cursor: grabbing;
+    }
+
+    .lightbox-pan-canvas {
+      max-width: 100%;
+      max-height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform-origin: center center;
+      will-change: transform;
+    }
+
+    .lightbox-pan-canvas img {
+      max-width: 100%;
+      max-height: min(68dvh, 560px);
+      border-radius: 6px;
+      object-fit: contain;
+      display: block;
+      pointer-events: none;
+      box-shadow: 0 8px 28px rgba(0, 0, 0, 0.42);
+    }
+
+    .lightbox-nav-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 4;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.26);
+      background: rgba(16, 18, 22, 0.78);
+      color: #ffffff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+    }
+
+    .lightbox-nav-btn.prev { left: 10px; }
+    .lightbox-nav-btn.next { right: 10px; }
+
+    .lightbox-footer {
+      padding: 10px 12px calc(max(10px, var(--safe-bottom)));
+      border-top: 1px solid var(--hairline);
+      background: var(--surface);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      flex-wrap: wrap;
+      flex-shrink: 0;
+    }
+
+    .lightbox-actions-left,
+    .lightbox-actions-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .danger-btn {
+      min-height: 40px;
+      padding: 0 12px;
+      border-radius: var(--radius-sm);
+      border: 1px solid #f3c6c6;
+      background: #fff6f6;
+      color: #b42318;
+      font-size: 12.5px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      white-space: nowrap;
+    }
+
+    .danger-btn:hover {
+      background: #feeceb;
+    }
+
+    @media (max-width: 680px) {
+      .zoom-btn {
+        min-width: 44px;
+        min-height: 44px;
+      }
+      .lightbox-actions-left,
+      .lightbox-actions-right {
+        width: 100%;
+        justify-content: space-between;
+      }
+      .lightbox-actions-left .secondary-btn {
+        flex: 1 1 0;
+        padding: 0 8px;
+      }
+      .lightbox-footer .secondary-btn,
+      .lightbox-footer .danger-btn,
+      .lightbox-footer .primary-pill-btn {
+        min-height: 44px;
+      }
+    }
+
+    .cam-mini-btn {
+      min-height: 36px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.20);
+      background: rgba(255, 255, 255, 0.10);
+      color: #ffffff;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 0 10px;
+    }
+
+    /* ==========================================================================
+       7. FLOATING PROTOTYPE STATE INSPECTOR (Collapsible, Zero Interference)
+       ========================================================================== */
+    .proto-inspector {
+      position: fixed;
+      right: 12px;
+      bottom: 12px;
+      z-index: 90;
+      font-family: var(--font-family);
+    }
+
+    /* Move inspector to top-right when fullscreen camera is open so bottom shutter bar is 100% unobstructed */
+    .proto-inspector.camera-active-pos {
+      bottom: auto;
+      top: 64px;
+    }
+
+    .proto-toggle-pill {
+      min-height: 36px;
+      padding: 0 12px;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      background: rgba(17, 19, 24, 0.88);
+      backdrop-filter: blur(10px);
+      color: #ffffff;
+      font-size: 12px;
+      font-weight: 600;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .proto-panel {
+      width: min(92vw, 356px);
+      max-height: min(80dvh, 580px);
+      overflow-y: auto;
+      background: rgba(20, 22, 27, 0.95);
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 14px;
+      padding: 12px;
+      color: #f3f4f6;
+      box-shadow: 0 16px 44px rgba(0, 0, 0, 0.42);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      font-size: 12px;
+    }
+
+    .proto-panel-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .proto-section-label {
+      font-size: 10.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: #9ca3af;
+      margin-bottom: 5px;
+    }
+
+    .proto-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5px;
+    }
+
+    .proto-preset-btn {
+      text-align: left;
+      padding: 6px 8px;
+      border-radius: 7px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      background: rgba(255, 255, 255, 0.06);
+      color: #e5e7eb;
+      font-size: 11.5px;
+      font-weight: 500;
+      line-height: 1.28;
+    }
+
+    .proto-preset-btn[aria-pressed="true"] {
+      background: var(--primary);
+      border-color: #62aef0;
+      color: #ffffff;
+      font-weight: 600;
+    }
+
+    .proto-select-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .proto-select {
+      background: #262932;
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 6px;
+      padding: 4px 7px;
+      font-size: 11.5px;
+      max-width: 195px;
+    }
+
+    .proto-metric-box {
+      padding: 8px 9px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      font-size: 11px;
+      line-height: 1.45;
+      color: #d1d5db;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+  </style>
+</head>
+<body>
+  <!-- Hidden real file input so "Chọn ảnh có sẵn / Tải ảnh lên" works with real user files OR simulated fixtures -->
+  <input id="real-file-picker" class="sr-only" type="file" accept="image/jpeg,image/png,image/webp" multiple />
+
+  <div id="viewport-root">
+    <div id="axo-stage"></div>
+  </div>
+
+  <!-- Collapsible Prototype Inspector (Hidden automatically when ?clean=1) -->
+  <aside id="proto-inspector" class="proto-inspector" aria-label="Bảng điều khiển Prototype"></aside>
+
+  <script>
+    /* ==========================================================================
+       1. HIGH-RES VIETNAMESE 3D GEOMETRY WORKSHEET FIXTURE GENERATOR
+          - Tests §3 edge cases: long prose, formulas right near left/right edges,
+            and 3D diagram on the right across 4:3, 16:9, and 3:4 sources.
+          - Supports >= 5 distinct photos (§4, §16) and separate lightweight
+            thumbnails vs full-resolution images for crisp Zoom & Pan (§14).
+       ========================================================================== */
+    const FIXTURE_SPECS = [
+      {
+        id: 'fixture-1',
+        shortLabel: 'Đề chóp S.ABCD & hình bên phải',
+        sourceNote: 'Tờ đề in · Câu 4a (Đề dài, công thức sát hai mép & hình 3D bên phải)',
+        kind: 'statement'
+      },
+      {
+        id: 'fixture-2',
+        shortLabel: 'Hình biểu diễn S.ABCD trên vở ô ly',
+        sourceNote: 'Vở ô ly · Hình vẽ SA ⊥ (ABCD), chiếu vuông góc H, K',
+        kind: 'diagram'
+      },
+      {
+        id: 'fixture-3',
+        shortLabel: 'Câu b, c: Thiết diện & khoảng cách',
+        sourceNote: 'Tờ đề in · Câu 4b, 4c (Thiết diện (AHK) & d(O, (SBC)))',
+        kind: 'questions'
+      },
+      {
+        id: 'fixture-4',
+        shortLabel: 'Câu d: Mặt cầu ngoại tiếp chóp',
+        sourceNote: 'Tờ đề in · Tâm I trung điểm SC và bán kính R = a√5',
+        kind: 'sphere'
+      },
+      {
+        id: 'fixture-5',
+        shortLabel: 'Ghi chú góc nhị diện [S, BC, A]',
+        sourceNote: 'Sổ tay · Góc phẳng nhị diện ∠SBA = 60° & thể tích khối chóp',
+        kind: 'dihedral'
+      }
+    ];
+
+    const GENERATED_CACHE = new Map();
+
+    function getRatioDimensions(ratioKey) {
+      if (ratioKey === '16:9') {
+        return { w: 1920, h: 1080, cssAspect: '16 / 9', ratioNum: 16 / 9, isPortrait: false };
+      }
+      if (ratioKey === '3:4') {
+        return { w: 1200, h: 1600, cssAspect: '3 / 4', ratioNum: 3 / 4, isPortrait: true };
+      }
+      return { w: 1600, h: 1200, cssAspect: '4 / 3', ratioNum: 4 / 3, isPortrait: false };
+    }
+
+    function drawPaperSheetBase(ctx, w, h, variant) {
+      const deskGrad = ctx.createLinearGradient(0, 0, w, h);
+      deskGrad.addColorStop(0, '#36302a');
+      deskGrad.addColorStop(0.55, '#29241f');
+      deskGrad.addColorStop(1, '#201c18');
+      ctx.fillStyle = deskGrad;
+      ctx.fillRect(0, 0, w, h);
+
+      ctx.strokeStyle = 'rgba(255, 245, 230, 0.035)';
+      ctx.lineWidth = 2;
+      for (let y = 20; y < h; y += 38) {
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.bezierCurveTo(w * 0.35, y + 5, w * 0.7, y - 5, w, y + 2);
+        ctx.stroke();
+      }
+
+      // Tight realistic margin so worksheet reaches near sensor edges (tests cover vs contain clipping!)
+      const padX = Math.round(w * 0.026);
+      const padY = Math.round(h * 0.032);
+      const pw = w - padX * 2;
+      const ph = h - padY * 2;
+
+      ctx.save();
+      ctx.shadowColor = 'rgba(0, 0, 0, 0.42)';
+      ctx.shadowBlur = 24;
+      ctx.shadowOffsetY = 8;
+
+      const isGrid = variant === 'diagram' || variant === 'dihedral';
+      const paperGrad = ctx.createLinearGradient(padX, padY, padX + pw, padY + ph);
+      paperGrad.addColorStop(0, isGrid ? '#fcfcf9' : '#fbfaf6');
+      paperGrad.addColorStop(1, isGrid ? '#f3f4ef' : '#f2efe8');
+      ctx.fillStyle = paperGrad;
+      ctx.fillRect(padX, padY, pw, ph);
+      ctx.shadowColor = 'transparent';
+
+      if (isGrid) {
+        ctx.strokeStyle = 'rgba(98, 145, 195, 0.20)';
+        ctx.lineWidth = 1;
+        const step = Math.round(Math.min(pw, ph) / 24);
+        for (let x = padX + step; x < padX + pw; x += step) {
+          ctx.beginPath();
+          ctx.moveTo(x, padY);
+          ctx.lineTo(x, padY + ph);
+          ctx.stroke();
+        }
+        for (let y = padY + step; y < padY + ph; y += step) {
+          ctx.beginPath();
+          ctx.moveTo(padX, y);
+          ctx.lineTo(padX + pw, y);
+          ctx.stroke();
+        }
+      }
+
+      ctx.restore();
+      return { padX, padY, pw, ph };
+    }
+
+    function drawWrappedText(ctx, text, x, y, maxWidth, lineHeight) {
+      const words = text.split(' ');
+      let line = '';
+      let cy = y;
+      for (let i = 0; i < words.length; i++) {
+        const test = line ? line + ' ' + words[i] : words[i];
+        if (ctx.measureText(test).width > maxWidth && line) {
+          ctx.fillText(line, x, cy);
+          line = words[i];
+          cy += lineHeight;
+        } else {
+          line = test;
+        }
+      }
+      if (line) {
+        ctx.fillText(line, x, cy);
+        cy += lineHeight;
+      }
+      return cy;
+    }
+
+    function drawPyramidFigure(ctx, cx, cy, scale, withSphere = false) {
+      const S = { x: cx - 0.24 * scale, y: cy - 0.43 * scale };
+      const A = { x: cx - 0.24 * scale, y: cy + 0.16 * scale };
+      const B = { x: cx - 0.47 * scale, y: cy + 0.39 * scale };
+      const C = { x: cx + 0.27 * scale, y: cy + 0.39 * scale };
+      const D = { x: cx + 0.49 * scale, y: cy + 0.16 * scale };
+      const O = { x: (A.x + C.x) / 2, y: (A.y + C.y) / 2 };
+      const H = { x: S.x + (B.x - S.x) * 0.46, y: S.y + (B.y - S.y) * 0.46 };
+      const K = { x: S.x + (D.x - S.x) * 0.44, y: S.y + (D.y - S.y) * 0.44 };
+      const I = { x: (S.x + C.x) / 2, y: (S.y + C.y) / 2 };
+
+      ctx.save();
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+
+      if (withSphere) {
+        const rad = Math.hypot(S.x - I.x, S.y - I.y) * 1.06;
+        ctx.strokeStyle = 'rgba(0, 91, 171, 0.55)';
+        ctx.lineWidth = Math.max(2, scale * 0.008);
+        ctx.beginPath();
+        ctx.arc(I.x, I.y, rad, 0, Math.PI * 2);
+        ctx.stroke();
+
+        ctx.setLineDash([scale * 0.022, scale * 0.018]);
+        ctx.beginPath();
+        ctx.ellipse(I.x, I.y, rad, rad * 0.28, 0, 0, Math.PI * 2);
+        ctx.stroke();
+        ctx.setLineDash([]);
+      }
+
+      ctx.fillStyle = 'rgba(0, 117, 222, 0.10)';
+      ctx.beginPath();
+      ctx.moveTo(A.x, A.y);
+      ctx.lineTo(H.x, H.y);
+      ctx.lineTo(K.x, K.y);
+      ctx.closePath();
+      ctx.fill();
+
+      ctx.strokeStyle = '#3b4252';
+      ctx.lineWidth = Math.max(2, scale * 0.0085);
+      ctx.setLineDash([scale * 0.026, scale * 0.018]);
+      const hiddenPairs = [[S, A], [A, B], [A, D], [A, C], [B, D], [A, H], [A, K]];
+      for (const [p, q] of hiddenPairs) {
+        ctx.beginPath();
+        ctx.moveTo(p.x, p.y);
+        ctx.lineTo(q.x, q.y);
+        ctx.stroke();
+      }
+
+      ctx.setLineDash([]);
+      ctx.strokeStyle = '#14213d';
+      ctx.lineWidth = Math.max(2.4, scale * 0.0105);
+      const solidPairs = [[S, B], [S, C], [S, D], [B, C], [C, D], [H, K]];
+      for (const [p, q] of solidPairs) {
+        ctx.beginPath();
+        ctx.moveTo(p.x, p.y);
+        ctx.lineTo(q.x, q.y);
+        ctx.stroke();
+      }
+
+      const r = scale * 0.04;
+      ctx.strokeStyle = '#b45309';
+      ctx.lineWidth = Math.max(1.8, scale * 0.0075);
+      ctx.beginPath();
+      ctx.moveTo(A.x, A.y - r);
+      ctx.lineTo(A.x + r, A.y - r);
+      ctx.lineTo(A.x + r, A.y);
+      ctx.stroke();
+
+      const pts = [
+        ['S', S, -16, -10],
+        ['A', A, -20, -4],
+        ['B', B, -22, 18],
+        ['C', C, 10, 20],
+        ['D', D, 11, 4],
+        ['O', O, 6, 18],
+        ['H', H, -24, -2],
+        ['K', K, 10, -6]
+      ];
+      if (withSphere) pts.push(['I', I, 10, -6]);
+
+      ctx.font = `700 ${Math.round(scale * 0.066)}px Georgia, "Times New Roman", serif`;
+      for (const [name, p, dx, dy] of pts) {
+        ctx.fillStyle = name === 'H' || name === 'K' || name === 'I' ? '#005bab' : '#111827';
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, Math.max(3, scale * 0.0125), 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillText(name, p.x + dx * (scale / 320), p.y + dy * (scale / 320));
+      }
+      ctx.restore();
+    }
+
+    function renderWorksheetBundle(specIndex, ratioKey) {
+      const cacheKey = `${specIndex}:${ratioKey}`;
+      if (GENERATED_CACHE.has(cacheKey)) return GENERATED_CACHE.get(cacheKey);
+
+      const spec = FIXTURE_SPECS[specIndex % FIXTURE_SPECS.length];
+      const { w, h } = getRatioDimensions(ratioKey);
+      const canvas = document.createElement('canvas');
+      canvas.width = w;
+      canvas.height = h;
+      const ctx = canvas.getContext('2d');
+
+      const { padX, padY, pw, ph } = drawPaperSheetBase(ctx, w, h, spec.kind);
+      const unit = Math.min(pw, ph);
+      // Edge-close horizontal padding so formulas sit right near left & right margins (§3 test)
+      const edgeLeft = padX + Math.round(pw * 0.022);
+      const edgeRight = padX + pw - Math.round(pw * 0.022);
+      const contentW = edgeRight - edgeLeft;
+      let y = padY + Math.round(ph * 0.075);
+
+      if (spec.kind === 'statement') {
+        // Left & right header edge markers
+        const headerFontPx = Math.round(Math.min(unit * 0.026, contentW * 0.0185));
+        ctx.fillStyle = '#57534e';
+        ctx.font = `600 ${headerFontPx}px Inter, sans-serif`;
+        ctx.textAlign = 'left';
+        ctx.fillText('MÃ ĐỀ 104 · HÌNH HỌC KHÔNG GIAN 11', edgeLeft, y);
+        ctx.textAlign = 'right';
+        ctx.fillText('TRANG 1/2 · KIỂM TRA HỌC KỲ', edgeRight, y);
+        ctx.textAlign = 'left';
+
+        y += Math.round(unit * 0.024);
+        ctx.strokeStyle = '#d4d0c8';
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        ctx.moveTo(edgeLeft, y);
+        ctx.lineTo(edgeRight, y);
+        ctx.stroke();
+
+        // Edge-anchored given formula strip right near left & right borders (§3)
+        const edgeFormulaPx = Math.round(Math.min(unit * 0.031, contentW * 0.0195));
+        y += Math.round(unit * 0.056);
+        ctx.fillStyle = '#005bab';
+        ctx.font = `700 ${edgeFormulaPx}px "Times New Roman", serif`;
+        ctx.textAlign = 'left';
+        ctx.fillText('[GT trái: SA ⊥ (ABCD), AB = BC = 2a]', edgeLeft, y);
+        ctx.textAlign = 'right';
+        ctx.fillText('[GT phải: SA = 2a√3, ∠(SC,(ABCD)) = 60°]', edgeRight, y);
+        ctx.textAlign = 'left';
+
+        // Long problem statement spanning full width
+        y += Math.round(unit * 0.062);
+        ctx.fillStyle = '#0f172a';
+        ctx.font = `700 ${Math.round(unit * 0.042)}px "Times New Roman", Georgia, serif`;
+        ctx.fillText('Câu 4 (3,0 điểm).', edgeLeft, y);
+
+        y += Math.round(unit * 0.056);
+        ctx.fillStyle = '#1c1917';
+        ctx.font = `400 ${Math.round(unit * 0.037)}px "Times New Roman", Georgia, serif`;
+        y = drawWrappedText(
+          ctx,
+          'Cho hình chóp S.ABCD có đáy ABCD là hình vuông tâm O, cạnh bằng 2a. Đường thẳng SA vuông góc với mặt phẳng đáy (ABCD) và có độ dài SA = 2a√3. Gọi H, K lần lượt là hình chiếu vuông góc của đỉnh A lên các cạnh bên SB và SD; mặt phẳng (AHK) cắt cạnh bên SC tại điểm M.',
+          edgeLeft,
+          y,
+          contentW,
+          Math.round(unit * 0.054)
+        );
+
+        // Two-column lower region: Left = sub-questions with small subscripts, Right = 3D figure (§3)
+        const splitY = y + Math.round(unit * 0.02);
+        const leftColW = Math.round(contentW * 0.56);
+        ctx.fillStyle = '#1c1917';
+        ctx.font = `400 ${Math.round(unit * 0.035)}px "Times New Roman", Georgia, serif`;
+        let ly = drawWrappedText(
+          ctx,
+          'a) Chứng minh rằng BC ⊥ (SAB), CD ⊥ (SAD), từ đó suy ra AH ⊥ (SBC) và đường thẳng SC ⊥ mp(AHK).',
+          edgeLeft,
+          splitY,
+          leftColW,
+          Math.round(unit * 0.05)
+        );
+        ly += Math.round(unit * 0.018);
+        ly = drawWrappedText(
+          ctx,
+          'b) Tính diện tích tứ giác thiết diện AHKM và khoảng cách d(O, (SBC)) = ½·AH = a√3/2 theo tham số a.',
+          edgeLeft,
+          ly,
+          leftColW,
+          Math.round(unit * 0.05)
+        );
+
+        // Right-aligned 3D diagram reaching close to right worksheet border (§3)
+        const figCx = padX + pw * 0.79;
+        const figCy = Math.min(padY + ph * 0.72, splitY + unit * 0.2);
+        const figScale = Math.min(pw * 0.34, ph * 0.42);
+        drawPyramidFigure(ctx, figCx, figCy, figScale, false);
+
+        // Bottom left/right edge formulas
+        const bottomFontPx = Math.round(Math.min(unit * 0.028, contentW * 0.019));
+        const bottomY = padY + ph - Math.round(unit * 0.035);
+        ctx.fillStyle = '#44403c';
+        ctx.font = `600 ${bottomFontPx}px "Times New Roman", serif`;
+        ctx.textAlign = 'left';
+        ctx.fillText('Đáy: S(ABCD) = 4a², AC = 2a√2', edgeLeft, bottomY);
+        ctx.textAlign = 'right';
+        ctx.fillText('Hình 4.1 (bên phải): S.ABCD, AH ⊥ SB', edgeRight, bottomY);
+        ctx.textAlign = 'left';
+      } else if (spec.kind === 'diagram') {
+        ctx.fillStyle = '#1e3a8a';
+        ctx.font = `700 ${Math.round(unit * 0.040)}px Inter, sans-serif`;
+        ctx.fillText('Ảnh 2 · Hình biểu diễn Chóp S.ABCD (SA ⊥ đáy, AH ⊥ SB, AK ⊥ SD)', edgeLeft, y);
+
+        ctx.fillStyle = '#334155';
+        ctx.font = `500 ${Math.round(Math.min(unit * 0.031, contentW * 0.022))}px "Times New Roman", serif`;
+        ctx.fillText('Chú thích nhỏ: 1/AH² = 1/SA² + 1/AB² = 1/(12a²) + 1/(4a²) = 1/(3a²) ⇒ AH = a√3', edgeLeft, y + Math.round(unit * 0.052));
+
+        drawPyramidFigure(ctx, padX + pw * 0.50, padY + ph * 0.57, unit * 0.66, false);
+
+        ctx.fillStyle = '#7c2d12';
+        ctx.font = `700 ${Math.round(unit * 0.033)}px "Times New Roman", serif`;
+        ctx.fillText('SA = 2a√3', edgeLeft + 10, padY + ph * 0.48);
+        ctx.textAlign = 'right';
+        ctx.fillText('SD = √(SA² + AD²) = 4a', edgeRight - 10, padY + ph * 0.48);
+        ctx.textAlign = 'left';
+      } else if (spec.kind === 'questions') {
+        ctx.fillStyle = '#57534e';
+        ctx.font = `600 ${Math.round(unit * 0.030)}px Inter, sans-serif`;
+        ctx.fillText('ẢNH 3 · PHẦN CÂU HỎI TÍNH TOÁN CHI TIẾT (CÂU 4b, 4c)', edgeLeft, y);
+
+        y += Math.round(unit * 0.07);
+        ctx.fillStyle = '#1c1917';
+        ctx.font = `400 ${Math.round(unit * 0.040)}px "Times New Roman", Georgia, serif`;
+        y = drawWrappedText(
+          ctx,
+          'b) Xác định thiết diện của hình chóp S.ABCD cắt bởi mặt phẳng (α) đi qua A và vuông góc với cạnh bên SC. Tính diện tích thiết diện AHKM theo a.',
+          edgeLeft,
+          y,
+          contentW,
+          Math.round(unit * 0.06)
+        );
+        y += Math.round(unit * 0.025);
+        y = drawWrappedText(
+          ctx,
+          'c) Tính thể tích khối chóp S.ABCD và khoảng cách từ tâm O của hình vuông đáy đến mặt phẳng (SBC) theo a.',
+          edgeLeft,
+          y,
+          contentW,
+          Math.round(unit * 0.06)
+        );
+
+        y += Math.round(unit * 0.04);
+        const boxH = Math.round(unit * 0.22);
+        ctx.fillStyle = '#f5f3ee';
+        ctx.strokeStyle = '#c7c2b8';
+        ctx.lineWidth = 1.5;
+        ctx.fillRect(edgeLeft, y, contentW, boxH);
+        ctx.strokeRect(edgeLeft, y, contentW, boxH);
+
+        const boxFontPx = Math.round(Math.min(unit * 0.030, contentW * 0.021));
+        ctx.fillStyle = '#0f172a';
+        ctx.font = `600 ${boxFontPx}px "Times New Roman", serif`;
+        ctx.fillText('Công thức kiểm tra chữ nhỏ:   V(S.ABCD) = (1/3)·SA·S(ABCD) = (8a³√3)/3', edgeLeft + 18, y + Math.round(boxH * 0.40));
+        ctx.fillStyle = '#005bab';
+        ctx.fillText('Tỉ số khoảng cách:   d(O,(SBC)) / d(A,(SBC)) = CO / CA = 1/2  ⇒  d(O,(SBC)) = (a√3)/2', edgeLeft + 18, y + Math.round(boxH * 0.76));
+      } else if (spec.kind === 'sphere') {
+        ctx.fillStyle = '#0f172a';
+        ctx.font = `700 ${Math.round(unit * 0.038)}px "Times New Roman", Georgia, serif`;
+        ctx.fillText('Ảnh 4 · Câu 4d: Mặt cầu ngoại tiếp hình chóp S.ABCD', edgeLeft, y);
+
+        y += Math.round(unit * 0.064);
+        ctx.fillStyle = '#1c1917';
+        ctx.font = `400 ${Math.round(unit * 0.037)}px "Times New Roman", Georgia, serif`;
+        drawWrappedText(
+          ctx,
+          'd) Chứng minh năm điểm S, A, B, C, D cùng thuộc mặt cầu đường kính SC. Xác định tâm I là trung điểm của SC và tính bán kính R = SC/2 = √(SA² + AC²)/2 = a√5.',
+          edgeLeft,
+          y,
+          Math.round(contentW * 0.56),
+          Math.round(unit * 0.056)
+        );
+        drawPyramidFigure(ctx, padX + pw * 0.77, padY + ph * 0.58, Math.min(pw * 0.35, ph * 0.50), true);
+      } else {
+        ctx.fillStyle = '#1e3a8a';
+        ctx.font = `700 ${Math.round(unit * 0.038)}px Inter, sans-serif`;
+        ctx.fillText('Ảnh 5 · Ghi chú bổ sung: Góc nhị diện [S, BC, A]', edgeLeft, y);
+
+        y += Math.round(unit * 0.068);
+        ctx.fillStyle = '#1f2937';
+        ctx.font = `400 ${Math.round(unit * 0.038)}px Georgia, serif`;
+        y = drawWrappedText(
+          ctx,
+          '• Vì BC ⊥ AB và BC ⊥ SA nên BC ⊥ (SAB) ⇒ BC ⊥ SB. Do đó góc phẳng nhị diện [S, BC, A] chính là góc ∠SBA.',
+          edgeLeft,
+          y,
+          contentW,
+          Math.round(unit * 0.058)
+        );
+        y += Math.round(unit * 0.025);
+        drawWrappedText(
+          ctx,
+          '• Trong tam giác vuông SAB tại A: tan ∠SBA = SA / AB = (2a√3) / (2a) = √3  ⇒  ∠SBA = 60°.',
+          edgeLeft,
+          y,
+          contentW,
+          Math.round(unit * 0.058)
+        );
+      }
+
+      const fullDataUrl = canvas.toDataURL('image/jpeg', 0.92);
+
+      // Separate lightweight thumbnail (320px max edge) so Lightbox proves genuine full-res loading (§14)
+      const scaleThumb = 320 / Math.max(w, h);
+      const thumbCanvas = document.createElement('canvas');
+      thumbCanvas.width = Math.round(w * scaleThumb);
+      thumbCanvas.height = Math.round(h * scaleThumb);
+      const tctx = thumbCanvas.getContext('2d');
+      tctx.drawImage(canvas, 0, 0, thumbCanvas.width, thumbCanvas.height);
+      const thumbUrl = thumbCanvas.toDataURL('image/jpeg', 0.84);
+
+      const bundle = { fullDataUrl, thumbUrl, width: w, height: h };
+      GENERATED_CACHE.set(cacheKey, bundle);
+      return bundle;
+    }
+
+    let photoSeq = 0;
+    function createFixturePhoto(index, ratioKey, sourceType = 'camera_photo') {
+      const spec = FIXTURE_SPECS[index % FIXTURE_SPECS.length];
+      const bundle = renderWorksheetBundle(index, ratioKey);
+      photoSeq += 1;
+      return {
+        id: `att-${photoSeq}`,
+        fixtureIndex: index % FIXTURE_SPECS.length,
+        title: spec.shortLabel,
+        sourceNote: spec.sourceNote,
+        sourceType,
+        fullDataUrl: bundle.fullDataUrl,
+        thumbUrl: bundle.thumbUrl,
+        width: bundle.width,
+        height: bundle.height,
+        ratioKey
+      };
+    }
+
+    /* ==========================================================================
+       2. ERROR CATALOG (§11, §15 — Zero Technical Codes in Student Copy)
+       ========================================================================== */
+    const CAMERA_ERRORS = {
+      permission_denied: {
+        code: 'permission_denied',
+        inspectorLabel: 'Từ chối quyền (NotAllowedError)',
+        title: 'Không mở được máy ảnh.',
+        body: 'Trình duyệt đang chặn quyền máy ảnh cho trang này. Em có thể cho phép lại trên thanh địa chỉ hoặc chọn ảnh có sẵn.',
+        canRetry: true
+      },
+      not_found: {
+        code: 'not_found',
+        inspectorLabel: 'Không tìm thấy camera (NotFoundError)',
+        title: 'Không tìm thấy máy ảnh.',
+        body: 'Thiết bị hiện không có máy ảnh khả dụng. Em hãy chọn ảnh đề bài có sẵn trong máy.',
+        canRetry: true
+      },
+      temporarily_unavailable: {
+        code: 'temporarily_unavailable',
+        inspectorLabel: 'Tạm không khả dụng (NotReadableError)',
+        title: 'Máy ảnh tạm thời không khả dụng.',
+        body: 'Chưa nhận được tín hiệu hình ảnh lúc này. Em có thể thử lại hoặc chọn ảnh có sẵn.',
+        canRetry: true
+      },
+      unsupported: {
+        code: 'unsupported',
+        inspectorLabel: 'Trình duyệt không hỗ trợ',
+        title: 'Trình duyệt không hỗ trợ chụp trực tiếp.',
+        body: 'Em vẫn có thể chọn ảnh đề bài có sẵn từ thiết bị để tiếp tục.',
+        canRetry: false
+      },
+      unknown: {
+        code: 'unknown',
+        inspectorLabel: 'Lỗi chưa xác định',
+        title: 'Không mở được máy ảnh.',
+        body: 'Em có thể thử lại hoặc chọn ảnh có sẵn.',
+        canRetry: true
+      }
+    };
+
+    /* ==========================================================================
+       3. PROTOTYPE APPLICATION STATE & RESPONSIVE POLICY
+       ========================================================================== */
+    const params = new URLSearchParams(window.location.search);
+    const hideInspector = params.get('clean') === '1';
+
+    const state = {
+      deviceMode: 'auto',
+      activePreset: 1,
+
+      // Composer state
+      composerText: 'Ghi chú: Tính thêm khoảng cách từ tâm O đến mặt phẳng (SBC).',
+      composerAttachments: [],
+      composerNotice: '',
+      lastDeletedComposerPhoto: null, // { photo, oldIndex }
+      aiCallCount: 0, // Strictly 0 until explicit "Dựng hình"
+
+      // Camera lifecycle state (Single canonical flow: Mở → Chụp 1..N → Xong → Composer)
+      cameraOpen: true,
+      cameraErrorKey: null,
+      videoRatio: params.get('ratio') || '4:3', // Default 4:3 document sensor so full-frame framing is immediately testable
+      cameraCount: 2,
+      facingMode: 'environment',
+      previewFitMode: 'contain', // §8 Mandatory Default: 'contain' ("Toàn khung") never crops edge math!
+      sessionCaptures: [],
+      sessionDrawerOpen: false,
+      sessionSelectedIndex: 0,
+      lastDeletedSessionPhoto: null, // { photo, oldIndex }
+      closeConfirmOpen: false,
+      retakeTarget: null, // null | { scope: 'session' | 'composer', index: number }
+      transientCameraStatus: '',
+      liveAnnouncement: '',
+      shutterFlash: false,
+      justShotPulse: false,
+      justCapturedId: null,
+      fanOpen: false,
+
+      // Unified High-Res Zoom & Pan Viewer state ('session' from Camera Fan/Tray | 'composer' from Composer)
+      lightboxScope: 'composer',
+      lightboxIndex: null,
+      lightboxZoom: 1,
+      lightboxPanX: 0,
+      lightboxPanY: 0,
+
+      inspectorExpanded: false
+    };
+
+    let statusTimer = null;
+    let fanLeaveTimer = null;
+    let captureFeedbackTimer = null;
+    let keyboardModality = false;
+
+    function getActiveSensorRatio() {
+      if (state.videoRatio && state.videoRatio !== 'auto') return state.videoRatio;
+      const ctx = getEffectiveSurface();
+      if (ctx.surface === 'fullscreen') {
+        const effW = ctx.frameOnDesktop ? ctx.frameW : window.innerWidth;
+        const effH = ctx.frameOnDesktop ? ctx.frameH : window.innerHeight;
+        return effH >= effW ? '3:4' : '4:3';
+      }
+      return '4:3';
+    }
+
+    function getEffectiveSurface() {
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+      const coarse = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
+
+      if (state.deviceMode === 'mobile') {
+        return { surface: 'fullscreen', kind: 'mobile', frameOnDesktop: w > 520, frameW: 390, frameH: Math.min(844, h - 32) };
+      }
+      if (state.deviceMode === 'tablet') {
+        return { surface: 'fullscreen', kind: 'tablet', frameOnDesktop: w > 900, frameW: 768, frameH: Math.min(1024, h - 32) };
+      }
+      if (state.deviceMode === 'desktop') {
+        return { surface: 'dialog', kind: 'desktop', frameOnDesktop: false };
+      }
+
+      if (w <= 680 || h <= 560) {
+        return { surface: 'fullscreen', kind: 'mobile', frameOnDesktop: false };
+      }
+      if ((coarse && w <= 1024) || (w <= 820 && h >= 900)) {
+        return { surface: 'fullscreen', kind: 'tablet', frameOnDesktop: false };
+      }
+      return { surface: 'dialog', kind: 'desktop', frameOnDesktop: false };
+    }
+
+    /* Compute bounded physical stack & desktop fan-out geometry for 1..5+ photos (§3).
+       Shows up to 5 latest cards in the visual deck while preserving true sessionIndex
+       and scaling horizontal spread if dialog width is tighter than 576px. */
+    function getFanGeometry(shotCount) {
+      if (shotCount <= 0) return [];
+      const visibleCount = Math.min(shotCount, 5);
+      const startIdx = shotCount - visibleCount;
+      const dialogW = Math.min(576, Math.max(320, window.innerWidth - 32));
+      const spreadScale = Math.max(0.66, Math.min(1, (dialogW - 360) / 216));
+
+      const DESKTOP_STACK = {
+        1: [[0, 0, 0, 1]],
+        2: [[-5, -2, -6, 0.96], [4, 1, 4, 1]],
+        3: [[-7, -2, -8, 0.94], [0, -3, -1, 0.97], [6, 1, 6, 1]],
+        4: [[-8, -2, -9, 0.92], [-3, -3, -3, 0.95], [3, -2, 3, 0.98], [7, 1, 7, 1]],
+        5: [[-9, -2, -10, 0.90], [-4.5, -3, -5, 0.93], [0, -3.5, 0, 0.96], [4.5, -2, 4.5, 0.98], [8, 1, 8, 1]]
+      };
+
+      const DESKTOP_FAN = {
+        1: [[0, 0, 0]],
+        2: [[-28, -52, -8], [18, -52, 8]],
+        3: [[-48, -50, -11], [-8, -58, 0], [32, -50, 11]],
+        4: [[-64, -48, -13], [-26, -56, -4.5], [12, -56, 4.5], [50, -48, 13]],
+        5: [[-82, -46, -14], [-45, -55, -7], [-8, -60, 0], [29, -55, 7], [66, -46, 14]]
+      };
+
+      const MOBILE_STACK = {
+        1: [[0, 0, 0, 1]],
+        2: [[-4, -2, -6, 0.95], [3, 1, 4, 1]],
+        3: [[-6, -2, -8, 0.93], [0, -2.5, -1, 0.97], [5, 1, 5, 1]],
+        4: [[-6.5, -2, -9, 0.91], [-2, -3, -3, 0.94], [2.5, -1.5, 2.5, 0.97], [6, 1, 6, 1]],
+        5: [[-7, -2, -10, 0.89], [-3.5, -2.8, -5, 0.92], [0, -3.2, 0, 0.95], [3.5, -1.5, 4, 0.98], [6.5, 1, 6.5, 1]]
+      };
+
+      const dStack = DESKTOP_STACK[visibleCount];
+      const dFan = DESKTOP_FAN[visibleCount];
+      const mStack = MOBILE_STACK[visibleCount];
+
+      const items = [];
+      for (let k = 0; k < visibleCount; k += 1) {
+        const sessionIndex = startIdx + k;
+        const photo = state.sessionCaptures[sessionIndex];
+        const [sx, sy, srot, sscale] = dStack[k];
+        const [fx, fy, frot] = dFan[k];
+        const [mx, my, mrot, mscale] = mStack[k];
+        items.push({
+          slotIndex: k,
+          sessionIndex,
+          photo,
+          zIndex: 2 + k,
+          stackX: sx,
+          stackY: sy,
+          stackRot: srot,
+          stackScale: sscale,
+          fanX: Math.round(fx * spreadScale * 10) / 10,
+          fanY: fy,
+          fanRot: Math.round(frot * spreadScale * 10) / 10,
+          mobStackX: mx,
+          mobStackY: my,
+          mobStackRot: mrot,
+          mobStackScale: mscale
+        });
+      }
+      return items;
+    }
+
+    function showTransientCameraStatus(msg, ms = 1600) {
+      state.transientCameraStatus = msg;
+      if (statusTimer) clearTimeout(statusTimer);
+      statusTimer = setTimeout(() => {
+        state.transientCameraStatus = '';
+        renderApp();
+      }, ms);
+    }
+
+    function buildFixtureList(count, ratio) {
+      const list = [];
+      for (let i = 0; i < count; i += 1) {
+        list.push(createFixturePhoto(i, ratio));
+      }
+      return list;
+    }
+
+    /* ==========================================================================
+       4. INTERACTIVE PRESETS FOR QUICK INSPECTION (All 20 cases work live too!)
+       ========================================================================== */
+    function applyPreset(presetNum, fromUrl = false) {
+      state.activePreset = presetNum;
+      state.lightboxIndex = null;
+      state.lightboxScope = 'composer';
+      state.lightboxZoom = 1;
+      state.lightboxPanX = 0;
+      state.lightboxPanY = 0;
+      state.sessionDrawerOpen = false;
+      state.sessionSelectedIndex = 0;
+      state.lastDeletedSessionPhoto = null;
+      state.lastDeletedComposerPhoto = null;
+      state.closeConfirmOpen = false;
+      state.retakeTarget = null;
+      state.composerNotice = '';
+      state.transientCameraStatus = '';
+      state.fanOpen = false;
+      state.justCapturedId = null;
+      state.justShotPulse = false;
+
+      const realW = window.innerWidth;
+      const realH = window.innerHeight;
+      const isNativeTouchDevice = (window.matchMedia && window.matchMedia('(pointer: coarse)').matches && realW <= 1024)
+        || realW <= 680
+        || realH <= 560;
+
+      switch (presetNum) {
+        case 1: // Mobile: 0 ảnh (Toàn khung)
+          state.deviceMode = isNativeTouchDevice ? 'auto' : 'mobile';
+          state.previewFitMode = 'contain';
+          state.cameraOpen = true;
+          state.cameraErrorKey = null;
+          state.sessionCaptures = [];
+          break;
+        case 2: // Mobile: 1 ảnh
+          state.deviceMode = isNativeTouchDevice ? 'auto' : 'mobile';
+          state.previewFitMode = 'contain';
+          state.cameraOpen = true;
+          state.cameraErrorKey = null;
+          state.sessionCaptures = buildFixtureList(1, getActiveSensorRatio());
+          break;
+        case 3: // Mobile: Stack 3 ảnh
+          state.deviceMode = isNativeTouchDevice ? 'auto' : 'mobile';
+          state.previewFitMode = 'contain';
+          state.cameraOpen = true;
+          state.cameraErrorKey = null;
+          state.sessionCaptures = buildFixtureList(3, getActiveSensorRatio());
+          break;
+        case 4: // Mobile: Khay xem ảnh (1 chạm mở)
+          state.deviceMode = isNativeTouchDevice ? 'auto' : 'mobile';
+          state.previewFitMode = 'contain';
+          state.cameraOpen = true;
+          state.cameraErrorKey = null;
+          state.sessionCaptures = buildFixtureList(3, getActiveSensorRatio());
+          state.sessionDrawerOpen = true;
+          state.sessionSelectedIndex = 1;
+          break;
+        case 5: // Desktop: 0 ảnh
+          state.deviceMode = realW >= 900 ? 'auto' : 'desktop';
+          state.previewFitMode = 'contain';
+          state.cameraOpen = true;
+          state.cameraErrorKey = null;
+          state.sessionCaptures = [];
+          break;
+        case 6: // Desktop: 1 ảnh (Không xòe quạt, không lặp nhãn)
+          state.deviceMode = realW >= 900 ? 'auto' : 'desktop';
+          state.previewFitMode = 'contain';
+          state.cameraOpen = true;
+          state.cameraErrorKey = null;
+          state.sessionCaptures = buildFixtureList(1, '4:3');
+          break;
+        case 7: // Desktop: Photo Fan Stack 3 ảnh
+          state.deviceMode = realW >= 900 ? 'auto' : 'desktop';
+          state.previewFitMode = 'contain';
+          state.cameraOpen = true;
+          state.cameraErrorKey = null;
+          state.sessionCaptures = buildFixtureList(3, '4:3');
+          break;
+        case 8: // Desktop: Photo Fan Stack 5 ảnh (Hover/Focus xòe quạt)
+          state.deviceMode = realW >= 900 ? 'auto' : 'desktop';
+          state.previewFitMode = 'contain';
+          state.cameraOpen = true;
+          state.cameraErrorKey = null;
+          state.sessionCaptures = buildFixtureList(5, '4:3');
+          break;
+        case 9: // Viewer Zoom & Pan (Mở trực tiếp từ Photo Fan Stack)
+          state.deviceMode = realW >= 900 ? 'auto' : 'desktop';
+          state.previewFitMode = 'contain';
+          state.cameraOpen = true;
+          state.cameraErrorKey = null;
+          state.sessionCaptures = buildFixtureList(5, '4:3');
+          state.lightboxScope = 'session';
+          state.lightboxIndex = 1;
+          state.lightboxZoom = 1.75;
+          break;
+        case 10: // Xác nhận Đóng khi đã chụp ảnh
+          state.deviceMode = 'auto';
+          state.previewFitMode = 'contain';
+          state.cameraOpen = true;
+          state.cameraErrorKey = null;
+          state.sessionCaptures = buildFixtureList(2, getActiveSensorRatio());
+          state.closeConfirmOpen = true;
+          break;
+        case 11: // Camera lỗi (5 trạng thái)
+          state.deviceMode = 'auto';
+          state.cameraOpen = true;
+          state.cameraErrorKey = state.cameraErrorKey || 'permission_denied';
+          state.sessionCaptures = [];
+          break;
+        case 12: // Composer: 5 ảnh đính kèm
+          state.deviceMode = 'auto';
+          state.cameraOpen = false;
+          state.cameraErrorKey = null;
+          state.composerAttachments = buildFixtureList(5, '4:3');
+          break;
+      }
+
+      if (!fromUrl) renderApp({ manageFocus: true });
+    }
+
+    /* ==========================================================================
+       5. CORE CAMERA, PHOTO FAN STACK, VIEWER & CLOSE/DONE INTERACTIONS
+       ========================================================================== */
+    function openCameraFromComposer() {
+      state.cameraOpen = true;
+      state.cameraErrorKey = null;
+      state.sessionCaptures = [];
+      state.sessionDrawerOpen = false;
+      state.sessionSelectedIndex = 0;
+      state.lastDeletedSessionPhoto = null;
+      state.closeConfirmOpen = false;
+      state.retakeTarget = null;
+      state.fanOpen = false;
+      state.composerNotice = '';
+      state.transientCameraStatus = '';
+      renderApp({ manageFocus: true, focusSelector: '#btn-cam-shutter' });
+    }
+
+    function scheduleCaptureFeedbackCleanup() {
+      if (captureFeedbackTimer) clearTimeout(captureFeedbackTimer);
+      captureFeedbackTimer = setTimeout(() => {
+        state.shutterFlash = false;
+        state.justShotPulse = false;
+        state.justCapturedId = null;
+        document.querySelectorAll('.shutter-flash.active').forEach(el => el.classList.remove('active'));
+        document.querySelectorAll('.just-shot').forEach(el => el.classList.remove('just-shot'));
+        document.querySelectorAll('.just-captured').forEach(el => el.classList.remove('just-captured'));
+      }, 190);
+    }
+
+    // Synchronous, non-blocking shutter (§5): zero modal, zero big toast, instant consecutive capture
+    function triggerShutter() {
+      if (state.cameraErrorKey || state.closeConfirmOpen) return;
+
+      let nextFixtureIdx = (state.composerAttachments.length + state.sessionCaptures.length) % FIXTURE_SPECS.length;
+      if (state.retakeTarget) {
+        nextFixtureIdx = state.retakeTarget.index % FIXTURE_SPECS.length;
+      }
+
+      // Captures 100% of source frame (videoWidth × videoHeight) regardless of CSS preview mode (§8)
+      const captured = createFixturePhoto(nextFixtureIdx, getActiveSensorRatio(), 'camera_photo');
+      state.lastDeletedSessionPhoto = null;
+
+      if (state.retakeTarget) {
+        const target = state.retakeTarget;
+        state.retakeTarget = null;
+        if (target.scope === 'composer') {
+          state.composerAttachments.splice(target.index, 1, captured);
+          state.cameraOpen = false;
+          state.lightboxScope = 'composer';
+          state.lightboxIndex = target.index;
+          state.lightboxZoom = 1;
+          state.lightboxPanX = 0;
+          state.lightboxPanY = 0;
+          renderApp({ manageFocus: true, focusSelector: '#btn-lb-close' });
+          return;
+        }
+        state.sessionCaptures.splice(target.index, 1, captured);
+        state.sessionSelectedIndex = target.index;
+        state.shutterFlash = true;
+        state.justShotPulse = true;
+        state.justCapturedId = captured.id;
+        state.liveAnnouncement = `Đã chụp thay thế ảnh thứ ${target.index + 1}`;
+        renderApp({ manageFocus: true, focusSelector: '#btn-cam-shutter' });
+        scheduleCaptureFeedbackCleanup();
+        return;
+      }
+
+      state.sessionCaptures.push(captured);
+      state.sessionSelectedIndex = state.sessionCaptures.length - 1;
+      state.shutterFlash = true;
+      state.justShotPulse = true;
+      state.justCapturedId = captured.id;
+      state.liveAnnouncement = `Đã chụp ảnh thứ ${state.sessionCaptures.length}`;
+      renderApp();
+      scheduleCaptureFeedbackCleanup();
+    }
+
+    // Fixed "Xong" (§5, §7): Commit all session photos in order to Composer & close camera
+    function commitSessionAndClose() {
+      const newCount = state.sessionCaptures.length;
+      state.retakeTarget = null;
+      state.sessionDrawerOpen = false;
+      state.closeConfirmOpen = false;
+      state.lastDeletedSessionPhoto = null;
+      state.transientCameraStatus = '';
+      state.fanOpen = false;
+      state.lightboxIndex = null;
+
+      if (newCount > 0) {
+        state.composerAttachments = [...state.composerAttachments, ...state.sessionCaptures];
+        state.sessionCaptures = [];
+      }
+      state.composerNotice = '';
+      state.lastDeletedComposerPhoto = null;
+      state.cameraOpen = false;
+      state.cameraErrorKey = null;
+      renderApp({ manageFocus: true, focusSelector: '#btn-submit-build' });
+    }
+
+    // "Đóng" / Escape (§7):
+    // - 0 new session photos => immediate close to Composer (0 confirmation)
+    // - >= 1 new session photos => show compact inline choice (Keep / Discard new / Continue)
+    function requestCloseCamera() {
+      state.fanOpen = false;
+      if (state.sessionCaptures.length === 0) {
+        state.retakeTarget = null;
+        state.sessionDrawerOpen = false;
+        state.closeConfirmOpen = false;
+        state.lastDeletedSessionPhoto = null;
+        state.transientCameraStatus = '';
+        state.cameraOpen = false;
+        state.cameraErrorKey = null;
+        renderApp({ manageFocus: true, focusSelector: '#btn-open-camera' });
+        return;
+      }
+      state.sessionDrawerOpen = false;
+      state.transientCameraStatus = '';
+      state.closeConfirmOpen = true;
+      renderApp({ manageFocus: true, focusSelector: '#btn-confirm-keep' });
+    }
+
+    function discardSessionAndClose() {
+      state.sessionCaptures = [];
+      state.retakeTarget = null;
+      state.sessionDrawerOpen = false;
+      state.closeConfirmOpen = false;
+      state.lastDeletedSessionPhoto = null;
+      state.transientCameraStatus = '';
+      state.fanOpen = false;
+      state.lightboxIndex = null;
+      state.cameraOpen = false;
+      state.cameraErrorKey = null;
+      renderApp({ manageFocus: true, focusSelector: '#btn-open-camera' });
+    }
+
+    function openSessionPhotoViewer(idx) {
+      if (idx < 0 || idx >= state.sessionCaptures.length) return;
+      state.sessionDrawerOpen = false;
+      state.closeConfirmOpen = false;
+      state.fanOpen = false;
+      state.sessionSelectedIndex = idx;
+      state.lightboxScope = 'session';
+      state.lightboxIndex = idx;
+      state.lightboxZoom = 1;
+      state.lightboxPanX = 0;
+      state.lightboxPanY = 0;
+      renderApp({ manageFocus: true, focusSelector: '#btn-zoom-in' });
+    }
+
+    function closeLightboxViewer() {
+      const scope = state.lightboxScope;
+      const prevIdx = state.lightboxIndex || 0;
+      state.lightboxIndex = null;
+      state.lightboxZoom = 1;
+      state.lightboxPanX = 0;
+      state.lightboxPanY = 0;
+
+      if (scope === 'session' && state.cameraOpen) {
+        const ctx = getEffectiveSurface();
+        const minFanSessionIdx = Math.max(0, state.sessionCaptures.length - 5);
+        const clampedFanIdx = Math.max(minFanSessionIdx, Math.min(prevIdx, state.sessionCaptures.length - 1));
+        const focusTarget = ctx.surface === 'fullscreen'
+          ? (state.sessionCaptures.length > 0 ? '#btn-session-stack' : '#btn-cam-shutter')
+          : (state.sessionCaptures.length > 0 ? `[data-action="open-session-photo"][data-index="${clampedFanIdx}"]` : '#btn-cam-shutter');
+        renderApp({ manageFocus: true, focusSelector: focusTarget });
+        return;
+      }
+      renderApp({ manageFocus: true, focusSelector: `#thumb-open-${prevIdx}` });
+    }
+
+    function deleteSelectedSessionPhoto(explicitIdx) {
+      const idx = typeof explicitIdx === 'number' ? explicitIdx : state.sessionSelectedIndex;
+      if (idx < 0 || idx >= state.sessionCaptures.length) return;
+      const [removed] = state.sessionCaptures.splice(idx, 1);
+      state.lastDeletedSessionPhoto = { photo: removed, oldIndex: idx };
+
+      if (state.lightboxIndex !== null && state.lightboxScope === 'session') {
+        state.lightboxZoom = 1;
+        state.lightboxPanX = 0;
+        state.lightboxPanY = 0;
+        if (state.sessionCaptures.length === 0) {
+          state.lightboxIndex = null;
+          state.sessionSelectedIndex = 0;
+          renderApp({ manageFocus: true, focusSelector: '#btn-undo-live-delete' });
+          return;
+        }
+        state.lightboxIndex = Math.min(idx, state.sessionCaptures.length - 1);
+        state.sessionSelectedIndex = state.lightboxIndex;
+        renderApp({ manageFocus: true, focusSelector: '#btn-undo-session-delete' });
+        return;
+      }
+
+      if (state.sessionCaptures.length === 0) {
+        state.sessionDrawerOpen = false;
+        state.sessionSelectedIndex = 0;
+        renderApp({ manageFocus: true, focusSelector: '#btn-undo-live-delete' });
+        return;
+      }
+      if (state.sessionSelectedIndex >= state.sessionCaptures.length) {
+        state.sessionSelectedIndex = state.sessionCaptures.length - 1;
+      }
+      renderApp({ manageFocus: true, focusSelector: '#btn-undo-session-delete' });
+    }
+
+    function undoDeleteSessionPhoto() {
+      if (!state.lastDeletedSessionPhoto) return;
+      const { photo, oldIndex } = state.lastDeletedSessionPhoto;
+      const insertAt = Math.min(oldIndex, state.sessionCaptures.length);
+      state.sessionCaptures.splice(insertAt, 0, photo);
+      state.sessionSelectedIndex = insertAt;
+      state.lastDeletedSessionPhoto = null;
+      if (state.lightboxIndex !== null && state.lightboxScope === 'session') {
+        state.lightboxIndex = insertAt;
+        state.lightboxZoom = 1;
+        state.lightboxPanX = 0;
+        state.lightboxPanY = 0;
+      }
+      renderApp({ manageFocus: true });
+    }
+
+    function startRetakeFromSession(idx) {
+      state.lightboxIndex = null;
+      state.sessionDrawerOpen = false;
+      state.closeConfirmOpen = false;
+      state.fanOpen = false;
+      state.retakeTarget = { scope: 'session', index: idx };
+      state.transientCameraStatus = '';
+      renderApp({ manageFocus: true, focusSelector: '#btn-cam-shutter' });
+    }
+
+    function startRetakeFromComposer(idx) {
+      state.lightboxIndex = null;
+      state.cameraOpen = true;
+      state.cameraErrorKey = null;
+      state.sessionCaptures = [];
+      state.sessionDrawerOpen = false;
+      state.closeConfirmOpen = false;
+      state.fanOpen = false;
+      state.retakeTarget = { scope: 'composer', index: idx };
+      state.transientCameraStatus = '';
+      renderApp({ manageFocus: true, focusSelector: '#btn-cam-shutter' });
+    }
+
+    function removeComposerPhoto(idx) {
+      if (idx < 0 || idx >= state.composerAttachments.length) return;
+      const [removed] = state.composerAttachments.splice(idx, 1);
+      state.lastDeletedComposerPhoto = { photo: removed, oldIndex: idx };
+      state.composerNotice = `Đã xóa Ảnh #${idx + 1} khỏi ô nhập.`;
+
+      if (state.lightboxIndex !== null && state.lightboxScope === 'composer') {
+        state.lightboxZoom = 1;
+        state.lightboxPanX = 0;
+        state.lightboxPanY = 0;
+        if (state.composerAttachments.length === 0) {
+          state.lightboxIndex = null;
+        } else if (state.lightboxIndex >= state.composerAttachments.length) {
+          state.lightboxIndex = state.composerAttachments.length - 1;
+        }
+      }
+      renderApp({ manageFocus: true });
+    }
+
+    function undoRemoveComposerPhoto() {
+      if (!state.lastDeletedComposerPhoto) return;
+      const { photo, oldIndex } = state.lastDeletedComposerPhoto;
+      const insertAt = Math.min(oldIndex, state.composerAttachments.length);
+      state.composerAttachments.splice(insertAt, 0, photo);
+      state.lastDeletedComposerPhoto = null;
+      state.composerNotice = '';
+      renderApp({ manageFocus: true, focusSelector: `#thumb-open-${insertAt}` });
+    }
+
+    function moveComposerPhoto(idx, delta) {
+      const next = idx + delta;
+      if (next < 0 || next >= state.composerAttachments.length) return;
+      const copy = [...state.composerAttachments];
+      const [item] = copy.splice(idx, 1);
+      copy.splice(next, 0, item);
+      state.composerAttachments = copy;
+      if (state.lightboxScope === 'composer' && state.lightboxIndex === idx) state.lightboxIndex = next;
+      renderApp({
+        manageFocus: true,
+        focusSelector: delta < 0 ? '#btn-lb-move-prev' : '#btn-lb-move-next'
+      });
+    }
+
+    function setLightboxZoom(nextZoom) {
+      const clamped = Math.max(1, Math.min(3, Math.round(nextZoom * 100) / 100));
+      state.lightboxZoom = clamped;
+      if (clamped <= 1) {
+        state.lightboxPanX = 0;
+        state.lightboxPanY = 0;
+      } else {
+        const maxPan = (clamped - 1) * 320;
+        state.lightboxPanX = Math.max(-maxPan, Math.min(maxPan, state.lightboxPanX));
+        state.lightboxPanY = Math.max(-maxPan, Math.min(maxPan, state.lightboxPanY));
+      }
+      const panCanvas = document.getElementById('lightbox-pan-canvas');
+      const stageEl = document.getElementById('lightbox-stage');
+      const zoomReadout = document.getElementById('btn-zoom-reset');
+      if (panCanvas && stageEl) {
+        panCanvas.style.transform = `translate3d(${state.lightboxPanX}px, ${state.lightboxPanY}px, 0) scale(${state.lightboxZoom})`;
+        stageEl.classList.toggle('is-zoomed', state.lightboxZoom > 1);
+        if (zoomReadout) zoomReadout.textContent = `${Math.round(state.lightboxZoom * 100)}%`;
+        const outBtn = document.getElementById('btn-zoom-out');
+        const inBtn = document.getElementById('btn-zoom-in');
+        if (outBtn) outBtn.disabled = state.lightboxZoom <= 1;
+        if (inBtn) inBtn.disabled = state.lightboxZoom >= 3;
+      } else {
+        renderApp();
+      }
+    }
+
+    function pickFromLibrarySimulatedOrReal(ev) {
+      if (ev && ev.shiftKey) {
+        const input = document.getElementById('real-file-picker');
+        if (input) input.click();
+        return;
+      }
+      const nextIdx = (state.composerAttachments.length + state.sessionCaptures.length) % FIXTURE_SPECS.length;
+      const picked = createFixturePhoto(nextIdx, '4:3', 'uploaded_image');
+      if (state.sessionCaptures.length > 0) {
+        state.composerAttachments = [...state.composerAttachments, ...state.sessionCaptures, picked];
+        state.sessionCaptures = [];
+      } else {
+        state.composerAttachments = [...state.composerAttachments, picked];
+      }
+      state.cameraOpen = false;
+      state.cameraErrorKey = null;
+      state.closeConfirmOpen = false;
+      state.sessionDrawerOpen = false;
+      state.fanOpen = false;
+      state.lightboxIndex = null;
+      state.composerNotice = '';
+      renderApp({ manageFocus: true, focusSelector: '#btn-submit-build' });
+    }
+
+    /* ==========================================================================
+       6. AUTHENTIC AXO BRAND LOGO & AUTHORED STROKE ICONS (§12)
+       ========================================================================== */
+    const ICONS = {
+      // Exact IconAxoLogo geometry from frontend/public/favicon.svg & icons.tsx
+      axoLogo: `<svg class="axo-logo-svg" viewBox="16 56 516 434" aria-hidden="true"><g transform="translate(18.0 59.5)" fill="currentColor" fill-rule="evenodd"><path fill="#FFFFFF" d="M 360,424.417 C 321.899,421.398 207.388,411.261 168.5,407.465 C 160.25,406.66 138.425,404.639 120,402.974 C 34.032,395.206 14.363,393.182 10.953,391.756 C 6.537,389.908 2.412,385.108 0.898,380.055 C -0.294,376.075 0.113,365.966 3.52,315 C 4.837,295.283 6.75,264.271 11.998,177.5 C 13.062,159.9 14.872,127.95 16.019,106.5 C 17.166,85.05 18.555,65.787 19.106,63.693 C 21.15,55.926 25.307,52.925 53.9,38.581 C 93.438,18.747 129.552,1.987 135.363,0.777 C 140.539,-0.3 179.318,2.781 327,16.004 C 350.925,18.146 394.575,21.945 424,24.446 C 453.425,26.947 479.478,29.461 481.895,30.032 C 492.374,32.507 495.48,37.638 496.403,54 C 497.635,75.837 501.972,155.59 503.5,184.5 C 504.343,200.45 505.914,228.575 506.993,247 C 508.071,265.425 509.44,289.632 510.035,300.793 C 511.466,327.633 511.365,327.991 498.16,343.198 C 488.187,354.683 447.888,402.13 436.12,416.242 C 427.58,426.483 424.36,428.034 411.934,427.893 C 406.745,427.833 383.375,426.269 360,424.417 Z"/><path d="M 360,424.417 C 321.899,421.398 207.388,411.261 168.5,407.465 C 160.25,406.66 138.425,404.639 120,402.974 C 34.032,395.206 14.363,393.182 10.953,391.756 C 6.537,389.908 2.412,385.108 0.898,380.055 C -0.294,376.075 0.113,365.966 3.52,315 C 4.837,295.283 6.75,264.271 11.998,177.5 C 13.062,159.9 14.872,127.95 16.019,106.5 C 17.166,85.05 18.555,65.787 19.106,63.693 C 21.15,55.926 25.307,52.925 53.9,38.581 C 93.438,18.747 129.552,1.987 135.363,0.777 C 140.539,-0.3 179.318,2.781 327,16.004 C 350.925,18.146 394.575,21.945 424,24.446 C 453.425,26.947 479.478,29.461 481.895,30.032 C 492.374,32.507 495.48,37.638 496.403,54 C 497.635,75.837 501.972,155.59 503.5,184.5 C 504.343,200.45 505.914,228.575 506.993,247 C 508.071,265.425 509.44,289.632 510.035,300.793 C 511.466,327.633 511.365,327.991 498.16,343.198 C 488.187,354.683 447.888,402.13 436.12,416.242 C 427.58,426.483 424.36,428.034 411.934,427.893 C 406.745,427.833 383.375,426.269 360,424.417 Z M 409,407 C 410.1,405.9 411,404.212 411,403.25 C 410.999,401.156 404.103,291.621 400.469,236 C 399.05,214.275 396.64,176.968 395.113,153.096 C 392.404,110.74 392.282,109.647 390.058,107.846 C 388.804,106.831 386.816,105.999 385.639,105.997 C 381.137,105.992 280.07,97.112 170,87.052 C 131.633,83.546 106.434,81.32 67.5,78 C 47.244,76.272 43.197,76.355 41.036,78.544 C 38.93,80.677 37.855,96.127 27.994,266 C 25.775,304.225 23.519,341.078 22.98,347.895 C 21.501,366.605 21.672,372.393 23.759,374.282 C 25.163,375.552 36.012,376.802 77.509,380.473 C 106.104,383.002 146.15,386.629 166.5,388.533 C 186.85,390.436 221.275,393.558 243,395.469 C 264.725,397.38 290.6,399.664 300.5,400.543 C 407.323,410.032 406.044,409.956 409,407 Z M 455.043,361.294 C 466.844,347.706 479.356,333.418 482.846,329.544 C 486.337,325.67 489.56,321.562 490.009,320.416 C 490.833,318.309 490.633,313.906 487.005,254.5 C 485.079,222.947 483.96,202.451 478.86,105.25 C 477.588,81.014 476.183,62 475.664,62 C 473.564,62 415.834,103.313 415.1,105.341 C 414.104,108.092 415.934,141.946 423.026,252 C 425.17,285.275 427.857,327.125 428.997,345 C 431.278,380.756 431.771,386 432.854,386 C 433.256,386 443.241,374.882 455.043,361.294 Z M 431.098,66.487 C 446.719,55.755 459.624,46.609 459.775,46.162 C 459.927,45.715 450.927,44.58 439.775,43.641 C 428.624,42.701 412.3,41.286 403.5,40.495 C 394.7,39.704 372.2,37.703 353.5,36.049 C 258.227,27.62 214.329,23.616 182.639,20.466 C 163.466,18.56 145.766,17 143.306,17 C 139.794,17 134.715,18.897 119.667,25.828 C 82.958,42.736 54.062,56.504 54.031,57.101 C 54.014,57.432 57.712,57.974 62.25,58.306 C 66.787,58.638 98.4,61.391 132.5,64.424 C 210.984,71.405 250.659,74.802 319.5,80.436 C 349.75,82.912 376.3,85.101 378.5,85.301 C 380.7,85.5 387.044,85.739 392.598,85.832 L 402.696,86 L 431.098,66.487 Z M 318.5,364.436 C 299.506,362.646 298.429,362.382 294.105,358.476 C 291.057,355.722 288.52,350.99 280.935,333.907 C 272.666,315.283 271.178,312.588 268.52,311.413 C 266.859,310.679 256.95,309.382 246.5,308.531 C 236.05,307.68 220.3,306.351 211.5,305.577 C 153.442,300.473 155.293,300.578 152.736,302.253 C 151.421,303.115 145.673,311.623 139.963,321.16 C 134.253,330.697 128.285,339.731 126.7,341.236 C 121.913,345.781 118.222,346.206 98.338,344.496 C 74.742,342.468 74.608,342.439 70.529,338.592 C 67.55,335.782 67,334.592 67,330.948 C 67,326.933 69.7,322.59 105.783,268.566 C 142.058,214.255 167.983,174.869 185.651,147.228 C 194.828,132.871 195.418,132.194 200.873,129.754 C 204.979,127.917 206.078,127.869 218.873,128.965 C 237.937,130.598 242.75,131.572 246.716,134.597 C 250.31,137.338 254.372,145.307 302.236,243.5 C 358.964,359.881 356.438,354.076 353.085,360.341 C 349.956,366.188 344.248,366.864 318.5,364.436 Z M 246.429,261.429 C 247.293,260.564 248,259.421 248,258.887 C 248,257.997 234.98,229.001 223.465,204.25 C 220.843,198.613 218.329,194 217.879,194 C 217.429,194 215.554,196.363 213.711,199.25 C 208.428,207.529 182.097,251.584 181.497,253.148 C 181.199,253.923 181.552,255.373 182.281,256.37 C 183.418,257.925 187.291,258.507 209.553,260.467 C 242.233,263.346 244.454,263.404 246.429,261.429 Z"/></g></svg>`,
+      home: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>`,
+      library: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>`,
+      history: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l4 2"/></svg>`,
+      bell: `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>`,
+      close: `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>`,
+      camera: `<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3.5"/></svg>`,
+      cameraOff: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="2" y1="2" x2="22" y2="22"/><path d="M7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16"/><path d="M9.5 4h5L17 7h3a2 2 0 0 1 2 2v7.5"/><path d="M14.12 14.12a3.5 3.5 0 0 1-4.24-4.24"/></svg>`,
+      gallery: `<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2.5"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>`,
+      switchCam: `<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 11A8.1 8.1 0 0 0 4.5 9M4 5v4h4"/><path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4"/></svg>`,
+      fitToggle: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/><rect x="7" y="7" width="10" height="10" rx="1.2"/></svg>`,
+      fitCover: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>`,
+      check: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>`,
+      arrowRight: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg>`,
+      arrowLeft: `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5m6 6-6-6 6-6"/></svg>`,
+      chevronLeft: `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>`,
+      chevronRight: `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>`,
+      chevronUp: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m18 15-6-6-6 6"/></svg>`,
+      trash: `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>`,
+      zoomIn: `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>`,
+      zoomOut: `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="8" y1="11" x2="14" y2="11"/></svg>`,
+      plus: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>`
+    };
+
+    /* ==========================================================================
+       7. VIEW RENDERERS
+       ========================================================================== */
+    function escapeHtml(str) {
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    function getLiveCameraFeedUrl() {
+      const nextIdx = state.retakeTarget
+        ? state.retakeTarget.index % FIXTURE_SPECS.length
+        : (state.composerAttachments.length + state.sessionCaptures.length) % FIXTURE_SPECS.length;
+      return renderWorksheetBundle(nextIdx, getActiveSensorRatio()).fullDataUrl;
+    }
+
+    function renderComposerMarkup(backgroundInert) {
+      const count = state.composerAttachments.length;
+      const canSubmit = count > 0 || state.composerText.trim().length > 0;
+
+      const trayMarkup = count > 0 ? `
+        <div class="attachment-tray" role="region" aria-label="Ảnh đề bài đã đính kèm">
+          <div class="attachment-tray-meta">
+            <span><strong>${count} ảnh đính kèm</strong> · Chạm ảnh để xem lớn${count > 1 ? ', đổi thứ tự' : ''} hoặc xóa</span>
+          </div>
+          <div class="attachment-strip">
+            ${state.composerAttachments.map((att, idx) => `
+              <button
+                type="button"
+                id="thumb-open-${idx}"
+                class="photo-thumb-open"
+                data-action="open-lightbox"
+                data-index="${idx}"
+                aria-label="Xem lớn Ảnh ${idx + 1}: ${escapeHtml(att.title)}"
+              >
+                <img src="${att.thumbUrl}" alt="${escapeHtml(att.title)}" />
+                <span class="photo-order-badge" aria-hidden="true">${idx + 1}</span>
+              </button>
+            `).join('')}
+            <button
+              type="button"
+              id="btn-composer-add-more"
+              class="add-more-tile"
+              data-action="open-camera"
+              aria-label="Chụp thêm ảnh đề bài"
+            >
+              ${ICONS.plus}
+              <span>Chụp thêm</span>
+            </button>
+          </div>
+        </div>
+      ` : '';
+
+      const noticeMarkup = state.composerNotice ? `
+        <div class="composer-notice" role="status" aria-live="polite">
+          <span>${escapeHtml(state.composerNotice)}</span>
+          <div style="display:flex;align-items:center;gap:6px;flex-shrink:0;">
+            ${state.lastDeletedComposerPhoto ? `
+              <button type="button" id="btn-undo-composer-delete" class="composer-notice-btn" style="min-height:44px;padding:0 12px;" data-action="undo-composer-delete">Hoàn tác</button>
+            ` : ''}
+            <button type="button" id="btn-dismiss-notice" class="composer-notice-btn" style="min-height:44px;padding:0 12px;" data-action="dismiss-notice">Ẩn</button>
+          </div>
+        </div>
+      ` : '';
+
+      return `
+        <div id="app-main" style="display:flex;flex-direction:column;width:100%;height:100%;" ${backgroundInert ? 'inert aria-hidden="true"' : ''}>
+          <!-- Authentic Settled Axo V2.7 Header (TopNav + IconAxoLogo — §12) -->
+          <header class="axo-header">
+            <div class="axo-brand">
+              <button type="button" class="axo-logo-btn" data-action="go-home" aria-label="Trang chủ Axo">
+                ${ICONS.axoLogo}
+                <span class="nav-wordmark-text">Axo</span>
+              </button>
+            </div>
+
+            <nav class="nav-n1-capsule" aria-label="Điều hướng chính">
+              <button type="button" class="nav-n1-item is-active" aria-current="page">
+                ${ICONS.home}
+                <span class="topnav-label">Trang chủ</span>
+              </button>
+              <button type="button" class="nav-n1-item" data-action="sample-toast">
+                ${ICONS.library}
+                <span class="topnav-label">Thư viện</span>
+              </button>
+              <button type="button" class="nav-n1-item" data-action="sample-toast">
+                ${ICONS.history}
+                <span class="topnav-label">Lịch sử</span>
+              </button>
+            </nav>
+
+            <div class="axo-header-right">
+              <button type="button" class="notif-trigger-btn" data-action="sample-toast" aria-label="Thông báo">
+                ${ICONS.bell}
+              </button>
+              <button type="button" class="user-profile-btn" data-action="sample-toast" aria-label="Tài khoản học sinh">
+                <span class="user-avatar-dot" aria-hidden="true">M</span>
+                <span class="user-name-txt">Minh Anh</span>
+              </button>
+            </div>
+          </header>
+
+          <main class="home-main">
+            <div class="composer-column">
+              <div class="hero-header">
+                <h1 class="hero-title">Em muốn dựng hình nào?</h1>
+              </div>
+
+              <section class="composer-card" aria-label="Ô nhập đề bài">
+                ${trayMarkup}
+                <div class="composer-textarea-wrap">
+                  <label for="problem-textarea" class="sr-only">Nội dung đề bài hoặc ghi chú bổ sung</label>
+                  <textarea
+                    id="problem-textarea"
+                    class="composer-textarea"
+                    rows="2"
+                    placeholder="Nhập đề hình học không gian hoặc ghi chú thêm cho ảnh chụp..."
+                  >${escapeHtml(state.composerText)}</textarea>
+                </div>
+
+                ${noticeMarkup}
+
+                <div class="composer-footer">
+                  <div class="composer-tools">
+                    <button type="button" id="btn-open-camera" class="tool-btn" data-action="open-camera">
+                      ${ICONS.camera}
+                      <span>Chụp ảnh</span>
+                    </button>
+                    <button type="button" id="btn-pick-library" class="tool-btn" data-action="pick-library">
+                      ${ICONS.gallery}
+                      <span>Chọn ảnh</span>
+                    </button>
+                  </div>
+
+                  <button
+                    type="button"
+                    id="btn-submit-build"
+                    class="submit-btn"
+                    data-action="submit-build"
+                    ${canSubmit ? '' : 'disabled'}
+                  >
+                    <span>Dựng hình</span>
+                    ${ICONS.arrowRight}
+                  </button>
+                </div>
+              </section>
+
+              <div class="sample-row" aria-label="Gợi ý đề mẫu">
+                <button type="button" class="sample-chip" data-action="fill-sample-1">Chóp S.ABCD đáy vuông, SA ⊥ đáy</button>
+                <button type="button" class="sample-chip" data-action="fill-sample-2">Thiết diện lăng trụ đứng ABC.A'B'C'</button>
+              </div>
+            </div>
+          </main>
+        </div>
+      `;
+    }
+
+    /* Streamlined Master-Detail Mobile Photo Viewer/Tray (§4):
+       1-tap open from Mobile Photo Stack · clean thumbnails without big order numbers ·
+       prev/next · deep Zoom/Pan jump · Retake · Delete · 1-tap Undo · Return to Camera */
+    function renderSessionDrawer() {
+      const shotCount = state.sessionCaptures.length;
+      if (!state.sessionDrawerOpen || shotCount === 0) return '';
+
+      const selIdx = Math.max(0, Math.min(state.sessionSelectedIndex, shotCount - 1));
+      const selected = state.sessionCaptures[selIdx];
+      const drawerTitle = shotCount === 1
+        ? 'Ảnh đã chụp'
+        : `Ảnh thứ ${selIdx + 1} trong ${shotCount} ảnh`;
+
+      return `
+        <div id="cam-session-drawer-scrim" class="cam-session-drawer-scrim" data-action="scrim-close-drawer">
+          <div id="cam-session-drawer" class="cam-session-drawer" role="region" aria-label="Khay xem ảnh đã chụp">
+            <div class="cam-drawer-header">
+              <h3 class="cam-drawer-title">${escapeHtml(drawerTitle)}</h3>
+              <div style="display:flex;align-items:center;gap:6px;flex-shrink:0;">
+                <button
+                  type="button"
+                  id="btn-tray-zoom"
+                  class="cam-glass-btn"
+                  style="min-height:44px;padding:0 12px;"
+                  data-action="open-session-photo"
+                  data-index="${selIdx}"
+                  aria-label="Phóng to để đọc chi tiết công thức"
+                >
+                  ${ICONS.zoomIn}
+                  <span>Phóng to</span>
+                </button>
+                <button
+                  type="button"
+                  id="btn-close-drawer"
+                  class="cam-glass-btn"
+                  style="min-height:44px;padding:0 14px;"
+                  data-action="close-session-drawer"
+                >Đóng</button>
+              </div>
+            </div>
+
+            <div class="tray-selected-stage">
+              ${shotCount > 1 ? `
+                <button
+                  type="button"
+                  id="btn-tray-prev"
+                  class="tray-stage-nav prev"
+                  data-action="tray-prev"
+                  ${selIdx === 0 ? 'disabled' : ''}
+                  aria-label="Xem ảnh trước"
+                >${ICONS.chevronLeft}</button>
+              ` : ''}
+              <img
+                id="tray-selected-img"
+                src="${selected.fullDataUrl}"
+                alt="${escapeHtml(drawerTitle)}: ${escapeHtml(selected.title)}"
+              />
+              ${shotCount > 1 ? `
+                <button
+                  type="button"
+                  id="btn-tray-next"
+                  class="tray-stage-nav next"
+                  data-action="tray-next"
+                  ${selIdx === shotCount - 1 ? 'disabled' : ''}
+                  aria-label="Xem ảnh tiếp theo"
+                >${ICONS.chevronRight}</button>
+              ` : ''}
+            </div>
+
+            ${shotCount > 1 ? `
+              <div class="tray-thumb-strip" role="tablist" aria-label="Danh sách ảnh trong phiên">
+                ${state.sessionCaptures.map((p, idx) => `
+                  <button
+                    type="button"
+                    id="btn-tray-thumb-${idx}"
+                    class="tray-thumb-btn"
+                    role="tab"
+                    aria-selected="${idx === selIdx}"
+                    data-action="select-tray-photo"
+                    data-index="${idx}"
+                    aria-label="Ảnh thứ ${idx + 1} trong ${shotCount} ảnh: ${escapeHtml(p.title)}"
+                  >
+                    <img src="${p.thumbUrl}" alt="" />
+                  </button>
+                `).join('')}
+              </div>
+            ` : ''}
+
+            ${state.lastDeletedSessionPhoto ? `
+              <div class="tray-undo-bar" role="status" aria-live="polite">
+                <span>Đã xóa ảnh khỏi phiên chụp</span>
+                <button
+                  type="button"
+                  id="btn-undo-session-delete"
+                  class="cam-glass-btn"
+                  style="min-height:44px;padding:0 12px;font-size:12px;"
+                  data-action="undo-session-delete"
+                >Hoàn tác</button>
+              </div>
+            ` : ''}
+
+            <div class="tray-shared-actions">
+              <button
+                type="button"
+                id="btn-tray-retake"
+                class="tray-action-btn"
+                data-action="retake-session-photo"
+                data-index="${selIdx}"
+              >
+                ${ICONS.camera}
+                <span>Chụp lại</span>
+              </button>
+              <button
+                type="button"
+                id="btn-tray-delete"
+                class="tray-action-btn danger"
+                data-action="delete-session-photo"
+                data-index="${selIdx}"
+              >
+                ${ICONS.trash}
+                <span>Xóa ảnh</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    /* Compact Inline Close Confirmation on Camera UI (§7 — Zero Nested Modals, Preserves Composer Photos) */
+    function renderInlineCloseConfirm() {
+      const shotCount = state.sessionCaptures.length;
+      if (!state.closeConfirmOpen || shotCount === 0) return '';
+      const existingCount = state.composerAttachments.length;
+      const subText = existingCount > 0
+        ? 'Ảnh đã đính kèm trước đó trong ô nhập vẫn được giữ nguyên.'
+        : 'Chọn giữ để đưa ảnh vào ô nhập đề bài, hoặc bỏ ảnh mới chụp trong phiên này.';
+
+      return `
+        <div id="cam-close-confirm-scrim" class="cam-close-confirm-scrim" data-action="scrim-cancel-close-confirm">
+          <div id="cam-close-confirm" class="cam-close-confirm-card" role="region" aria-labelledby="confirm-close-title">
+            <div>
+              <h3 id="confirm-close-title" class="confirm-title">Giữ ảnh vừa chụp trước khi đóng?</h3>
+              <p class="confirm-desc">${escapeHtml(subText)}</p>
+            </div>
+            <div class="confirm-actions">
+              <button type="button" id="btn-confirm-keep" class="confirm-btn keep" data-action="confirm-keep-photos">
+                ${ICONS.check}
+                <span>Giữ ảnh</span>
+              </button>
+              <button type="button" id="btn-confirm-discard" class="confirm-btn discard" data-action="confirm-discard-photos">
+                <span>Bỏ ảnh mới</span>
+              </button>
+              <button type="button" id="btn-confirm-cancel" class="confirm-btn cancel" data-action="cancel-close-confirm">
+                <span>Tiếp tục chụp</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderMobileFullscreenCamera(backgroundInert = false) {
+      if (state.cameraErrorKey) {
+        const err = CAMERA_ERRORS[state.cameraErrorKey] || CAMERA_ERRORS.unknown;
+        const keptCount = state.sessionCaptures.length;
+        return `
+          <div class="mobile-error-screen dark-surface" role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="mob-err-title" ${backgroundInert ? 'inert aria-hidden="true"' : ''}>
+            <div>
+              <button type="button" id="btn-cam-close" class="cam-glass-btn" data-action="close-camera" aria-label="Đóng máy ảnh">
+                ${ICONS.close}
+                <span>Đóng</span>
+              </button>
+            </div>
+
+            <div class="mobile-error-card">
+              <div class="error-icon-circle" aria-hidden="true">${ICONS.cameraOff}</div>
+              <h2 id="mob-err-title" class="mobile-error-title">${escapeHtml(err.title)}</h2>
+              <p class="mobile-error-desc">${escapeHtml(err.body)}</p>
+              ${keptCount > 0 ? `<p class="mobile-error-desc" style="color:#93c5fd;font-size:12.5px;">Ảnh đã chụp trước đó trong phiên vẫn được giữ an toàn.</p>` : ''}
+              <div class="mobile-error-actions">
+                <button type="button" id="btn-err-library" class="mobile-error-primary" data-action="pick-library">Chọn ảnh có sẵn</button>
+                ${err.canRetry ? `<button type="button" id="btn-err-retry" class="mobile-error-secondary" data-action="retry-camera">Thử lại</button>` : ''}
+              </div>
+            </div>
+
+            <div style="height:20px;" aria-hidden="true"></div>
+            ${renderInlineCloseConfirm()}
+          </div>
+        `;
+      }
+
+      const activeRatio = getActiveSensorRatio();
+      const dims = getRatioDimensions(activeRatio);
+      const shotCount = state.sessionCaptures.length;
+      const fanItems = getFanGeometry(shotCount);
+      const fanSpreadScale = Math.round(Math.max(0.66, Math.min(1, (Math.min(576, Math.max(320, window.innerWidth - 32)) - 360) / 216)) * 100) / 100;
+      const isContain = state.previewFitMode === 'contain';
+      const fitIcon = isContain ? ICONS.fitToggle : ICONS.fitCover;
+      const fitAria = isContain
+        ? 'Đang xem Toàn khung (không cắt mép đề), nhấn để chuyển sang Tràn màn'
+        : 'Đang xem Tràn màn, nhấn để chuyển về Toàn khung';
+
+      let centerTopMarkup = '<span aria-hidden="true"></span>';
+      let centerHasPill = false;
+      if (state.retakeTarget) {
+        centerHasPill = true;
+        centerTopMarkup = `
+          <button
+            type="button"
+            id="btn-cancel-retake"
+            class="cam-glass-btn"
+            style="background:rgba(0,91,171,0.92);border-color:rgba(140,204,255,0.58);"
+            data-action="cancel-retake"
+            aria-label="Đang chụp lại ảnh thứ ${state.retakeTarget.index + 1}, nhấn để hủy chụp lại"
+          >
+            <span>Đang chụp lại · Hủy</span>
+          </button>
+        `;
+      } else if (shotCount === 0 && state.lastDeletedSessionPhoto) {
+        centerHasPill = true;
+        centerTopMarkup = `
+          <button
+            type="button"
+            id="btn-undo-live-delete"
+            class="cam-glass-btn"
+            data-action="undo-session-delete"
+          >
+            <span>Đã xóa · Hoàn tác</span>
+          </button>
+        `;
+      } else if (state.transientCameraStatus) {
+        centerHasPill = true;
+        centerTopMarkup = `
+          <div class="cam-status-pill" role="status" aria-live="polite">
+            ${escapeHtml(state.transientCameraStatus)}
+          </div>
+        `;
+      }
+
+      const compactTopRight = centerHasPill || shotCount > 0;
+
+      return `
+        <div class="camera-fullscreen dark-surface ${!isContain ? 'is-cover-mode' : ''}" role="dialog" tabindex="-1" aria-modal="true" aria-label="Máy ảnh chụp đề bài" ${backgroundInert ? 'inert aria-hidden="true"' : ''}>
+          <div class="sr-only" role="status" aria-live="polite">${escapeHtml(state.liveAnnouncement)}</div>
+
+          <!-- Top Bar in dedicated upper dark zone (Minimal: Close + conditional Retake/Undo + Library/Fit/Switch) -->
+          <div class="cam-fs-top">
+            <button
+              type="button"
+              id="btn-cam-close"
+              class="cam-glass-btn icon-only"
+              data-action="close-camera"
+              aria-label="Đóng máy ảnh"
+            >
+              ${ICONS.close}
+            </button>
+
+            ${centerTopMarkup}
+
+            <div class="cam-top-right-tools">
+              ${shotCount > 0 ? `
+                <button
+                  type="button"
+                  id="btn-top-library"
+                  class="cam-glass-btn icon-only"
+                  data-action="pick-library"
+                  aria-label="Chọn ảnh có sẵn"
+                  title="Chọn ảnh có sẵn"
+                >
+                  ${ICONS.gallery}
+                </button>
+              ` : ''}
+              <button
+                type="button"
+                id="btn-toggle-fit"
+                class="cam-glass-btn ${compactTopRight ? 'icon-only' : ''}"
+                data-action="toggle-preview-fit"
+                aria-label="${fitAria}"
+                title="${fitAria}"
+              >
+                ${fitIcon}
+                ${compactTopRight ? '' : `<span>${isContain ? 'Toàn khung' : 'Tràn màn'}</span>`}
+              </button>
+              ${shotCount > 0 && state.cameraCount > 1 ? `
+                <button
+                  type="button"
+                  id="btn-top-switch"
+                  class="cam-glass-btn icon-only"
+                  data-action="switch-camera"
+                  aria-label="Đổi ống kính máy ảnh"
+                  title="Đổi ống kính máy ảnh"
+                >
+                  ${ICONS.switchCam}
+                </button>
+              ` : ''}
+            </div>
+          </div>
+
+          <!-- Optical Preview Stage: Default "Toàn khung" shows 100% of source frame without cropping edge math (§8) -->
+          <div class="cam-fs-stage">
+            <div
+              id="camera-sensor-box"
+              class="camera-sensor-box"
+              style="--stream-aspect: ${dims.cssAspect}; --stream-ratio-num: ${dims.ratioNum};"
+            >
+              <img
+                id="live-feed-img"
+                class="live-feed-img"
+                src="${getLiveCameraFeedUrl()}"
+                alt="Khung ngắm trực tiếp đề hình học không gian"
+              />
+              <div class="shutter-flash ${state.shutterFlash ? 'active' : ''}" aria-hidden="true"></div>
+            </div>
+          </div>
+
+          <!-- Bottom Thumb Bar: Symmetric 1fr-auto-1fr locks Shutter dead-center (§4, §10) -->
+          <div class="cam-fs-bottom-wrap">
+            <div class="cam-fs-bottom">
+              <div class="cam-slot-left">
+                ${shotCount > 0 ? `
+                  <button
+                    type="button"
+                    id="btn-session-stack"
+                    class="mobile-fan-stack-btn"
+                    data-action="open-session-drawer"
+                    aria-label="${shotCount === 1 ? 'Mở khay xem ảnh đã chụp' : `Mở khay xem ${shotCount} ảnh đã chụp`}"
+                  >
+                    ${fanItems.map(item => `
+                      <span
+                        class="mobile-stack-card ${state.justCapturedId === item.photo.id ? 'just-captured' : ''}"
+                        style="z-index:${item.zIndex};--stack-x:${item.mobStackX}px;--stack-y:${item.mobStackY}px;--stack-rot:${item.mobStackRot}deg;--stack-scale:${item.mobStackScale};"
+                        aria-hidden="true"
+                      >
+                        <img src="${item.photo.thumbUrl}" alt="" />
+                      </span>
+                    `).join('')}
+                  </button>
+                ` : `
+                  <button
+                    type="button"
+                    id="btn-cam-library"
+                    class="cam-round-control"
+                    data-action="pick-library"
+                    aria-label="Chọn ảnh có sẵn"
+                  >
+                    ${ICONS.gallery}
+                  </button>
+                `}
+              </div>
+
+              <button
+                type="button"
+                id="btn-cam-shutter"
+                class="shutter-btn ${state.justShotPulse ? 'just-shot' : ''}"
+                data-action="shutter"
+                aria-label="${state.retakeTarget ? `Chụp thay thế ảnh thứ ${state.retakeTarget.index + 1}` : shotCount > 0 ? 'Chụp thêm ảnh tiếp theo' : 'Chụp ảnh đề bài'}"
+              >
+                <span class="shutter-disc" aria-hidden="true"></span>
+              </button>
+
+              <div class="cam-slot-right">
+                ${shotCount > 0 ? `
+                  <button
+                    type="button"
+                    id="btn-cam-done"
+                    class="cam-done-btn"
+                    data-action="done-camera"
+                    aria-label="${shotCount === 1 ? 'Xong, đưa ảnh vào ô nhập' : `Xong, đưa ${shotCount} ảnh vào ô nhập`}"
+                  >
+                    <span>Xong</span>
+                    ${ICONS.check}
+                  </button>
+                ` : state.cameraCount > 1 ? `
+                  <button
+                    type="button"
+                    id="btn-cam-switch"
+                    class="cam-round-control"
+                    data-action="switch-camera"
+                    aria-label="Đổi ống kính máy ảnh"
+                  >
+                    ${ICONS.switchCam}
+                  </button>
+                ` : '<span style="width:48px;height:48px;" aria-hidden="true"></span>'}
+              </div>
+            </div>
+          </div>
+
+          ${renderSessionDrawer()}
+          ${renderInlineCloseConfirm()}
+        </div>
+      `;
+    }
+
+    function renderDesktopCameraDialog(backgroundInert = false) {
+      if (state.cameraErrorKey) {
+        const err = CAMERA_ERRORS[state.cameraErrorKey] || CAMERA_ERRORS.unknown;
+        return `
+          <div class="dialog-backdrop" data-action="backdrop-close" ${backgroundInert ? 'inert aria-hidden="true"' : ''}>
+            <div class="camera-dialog error-only" role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="desk-err-title">
+              <div class="dialog-header">
+                <div class="dialog-title-group">
+                  <h2 class="dialog-title">Chụp ảnh đề bài</h2>
+                </div>
+                <button type="button" id="btn-cam-close" class="dialog-close-btn" data-action="close-camera" aria-label="Đóng hộp thoại">
+                  ${ICONS.close}
+                </button>
+              </div>
+
+              <div class="desktop-error-body">
+                <div class="desktop-error-lead">
+                  <div class="error-icon-circle" aria-hidden="true">${ICONS.cameraOff}</div>
+                  <div>
+                    <h3 id="desk-err-title" class="desktop-error-title">${escapeHtml(err.title)}</h3>
+                    <p class="desktop-error-desc">${escapeHtml(err.body)}</p>
+                  </div>
+                </div>
+                <div class="desktop-error-actions">
+                  ${err.canRetry ? `<button type="button" id="btn-err-retry" class="secondary-btn" data-action="retry-camera">Thử lại</button>` : ''}
+                  <button type="button" id="btn-err-library" class="primary-pill-btn" data-action="pick-library">Chọn ảnh có sẵn</button>
+                </div>
+              </div>
+              ${renderInlineCloseConfirm()}
+            </div>
+          </div>
+        `;
+      }
+
+      const activeRatio = getActiveSensorRatio();
+      const dims = getRatioDimensions(activeRatio);
+      const shotCount = state.sessionCaptures.length;
+      const fanItems = getFanGeometry(shotCount);
+      const fanSpreadScale = Math.round(Math.max(0.66, Math.min(1, (Math.min(576, Math.max(320, window.innerWidth - 32)) - 360) / 216)) * 100) / 100;
+      const isContain = state.previewFitMode === 'contain';
+      const fitIcon = isContain ? ICONS.fitToggle : ICONS.fitCover;
+      const fitAria = isContain
+        ? 'Đang xem Toàn khung (không cắt mép đề), nhấn để chuyển sang Tràn màn'
+        : 'Đang xem Tràn màn, nhấn để chuyển về Toàn khung';
+
+      // Zero redundant "Đã chụp N ảnh" badge (§2, §5); only indicate active Retake mode
+      const badgeLabel = state.retakeTarget ? 'Đang chụp lại ảnh' : '';
+
+      return `
+        <div class="dialog-backdrop" data-action="backdrop-close" ${backgroundInert ? 'inert aria-hidden="true"' : ''}>
+          <div class="camera-dialog" role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="desk-cam-title">
+            <div class="sr-only" role="status" aria-live="polite">${escapeHtml(state.liveAnnouncement)}</div>
+
+            <div class="dialog-header">
+              <div class="dialog-title-group">
+                <h2 id="desk-cam-title" class="dialog-title">Chụp ảnh đề bài</h2>
+                ${badgeLabel ? `<span class="dialog-badge">${escapeHtml(badgeLabel)}</span>` : ''}
+              </div>
+              <button
+                type="button"
+                id="btn-cam-close"
+                class="dialog-close-btn"
+                data-action="close-camera"
+                aria-label="Đóng hộp thoại máy ảnh"
+              >
+                ${ICONS.close}
+              </button>
+            </div>
+
+            <div class="dialog-stage-wrap">
+              <div
+                id="camera-sensor-box"
+                class="dialog-video-frame ${dims.isPortrait ? 'portrait-stream' : 'landscape-stream'} ${!isContain ? 'is-cover-mode' : ''}"
+                style="--stream-aspect: ${dims.cssAspect};"
+              >
+                <img
+                  id="live-feed-img"
+                  class="live-feed-img"
+                  src="${getLiveCameraFeedUrl()}"
+                  alt="Khung xem máy ảnh đề bài hình học"
+                />
+                <div class="shutter-flash ${state.shutterFlash ? 'active' : ''}" aria-hidden="true"></div>
+              </div>
+            </div>
+
+            <div class="dialog-footer">
+              <div class="dialog-left-actions">
+                <button type="button" id="btn-desk-library" class="secondary-btn" data-action="pick-library">
+                  ${ICONS.gallery}
+                  <span>Chọn ảnh</span>
+                </button>
+                ${state.cameraCount > 1 ? `
+                  <button type="button" id="btn-desk-switch" class="secondary-btn" style="padding:0 10px;" data-action="switch-camera" aria-label="Đổi máy ảnh" title="Đổi máy ảnh">
+                    ${ICONS.switchCam}
+                  </button>
+                ` : ''}
+                ${shotCount > 0 ? `
+                  <button
+                    type="button"
+                    id="btn-toggle-fit"
+                    class="secondary-btn"
+                    style="padding:0 10px;"
+                    data-action="toggle-preview-fit"
+                    aria-label="${fitAria}"
+                    title="${fitAria}"
+                  >
+                    ${fitIcon}
+                  </button>
+                ` : ''}
+              </div>
+
+              <div class="desktop-shutter-group">
+                <button
+                  type="button"
+                  id="btn-cam-shutter"
+                  class="desktop-shutter-btn ${state.justShotPulse ? 'just-shot' : ''}"
+                  data-action="shutter"
+                  aria-label="${state.retakeTarget ? `Chụp thay thế ảnh thứ ${state.retakeTarget.index + 1}` : shotCount > 0 ? 'Chụp thêm ảnh tiếp theo' : 'Chụp ảnh'}"
+                >
+                  <span class="desktop-shutter-disc" aria-hidden="true"></span>
+                </button>
+                <span class="desktop-shutter-caption">${state.retakeTarget ? 'Thay ảnh' : 'Chụp ảnh'}</span>
+              </div>
+
+              <div class="dialog-right-actions">
+                ${shotCount > 0 ? `
+                  <div
+                    id="photo-fan-stack"
+                    class="photo-fan-stack ${state.fanOpen && shotCount > 1 ? 'is-fan-open' : ''}"
+                    data-fan-capable="${shotCount > 1 ? 'true' : 'false'}"
+                    data-shot-count="${shotCount}"
+                    style="--fan-spread-scale:${fanSpreadScale};"
+                    role="group"
+                    aria-label="${shotCount === 1 ? 'Ảnh đã chụp' : `Nhóm ${shotCount} ảnh đã chụp`}"
+                  >
+                    <span class="fan-hover-bridge-base" aria-hidden="true"></span>
+                    <span class="fan-hover-bridge-arc" aria-hidden="true"></span>
+                    ${fanItems.map(item => `
+                      <button
+                        type="button"
+                        id="btn-fan-card-${item.slotIndex}"
+                        class="fan-card-btn ${state.justCapturedId === item.photo.id ? 'just-captured' : ''}"
+                        data-action="open-session-photo"
+                        data-index="${item.sessionIndex}"
+                        style="--card-z:${item.zIndex};--stack-x:${item.stackX}px;--stack-y:${item.stackY}px;--stack-rot:${item.stackRot}deg;--stack-scale:${item.stackScale};--fan-x:${item.fanX}px;--fan-y:${item.fanY}px;--fan-rot:${item.fanRot}deg;"
+                        aria-label="${shotCount === 1 ? `Xem ảnh đã chụp: ${escapeHtml(item.photo.title)}` : `Ảnh thứ ${item.sessionIndex + 1} trong ${shotCount} ảnh: ${escapeHtml(item.photo.title)}`}"
+                      >
+                        <img src="${item.photo.thumbUrl}" alt="" />
+                      </button>
+                    `).join('')}
+                  </div>
+                  <button
+                    type="button"
+                    id="btn-cam-done"
+                    class="primary-pill-btn"
+                    data-action="done-camera"
+                    aria-label="${shotCount === 1 ? 'Xong, đưa ảnh vào ô nhập' : `Xong, đưa ${shotCount} ảnh vào ô nhập`}"
+                  >
+                    <span>Xong</span>
+                    ${ICONS.check}
+                  </button>
+                ` : state.lastDeletedSessionPhoto ? `
+                  <button type="button" id="btn-undo-live-delete" class="secondary-btn" data-action="undo-session-delete">Hoàn tác xóa</button>
+                  <button
+                    type="button"
+                    id="btn-toggle-fit"
+                    class="secondary-btn"
+                    style="padding:0 10px;"
+                    data-action="toggle-preview-fit"
+                    aria-label="${fitAria}"
+                    title="${fitAria}"
+                  >
+                    ${fitIcon}
+                  </button>
+                ` : `
+                  <button
+                    type="button"
+                    id="btn-toggle-fit"
+                    class="secondary-btn"
+                    data-action="toggle-preview-fit"
+                    aria-label="${fitAria}"
+                    title="${fitAria}"
+                  >
+                    ${fitIcon}
+                    <span>${isContain ? 'Toàn khung' : 'Tràn màn'}</span>
+                  </button>
+                `}
+              </div>
+            </div>
+
+            ${renderInlineCloseConfirm()}
+          </div>
+        </div>
+      `;
+    }
+
+    function renderReadableLightbox() {
+      const isSession = state.lightboxScope === 'session';
+      const list = isSession ? state.sessionCaptures : state.composerAttachments;
+      if (state.lightboxIndex === null || !list[state.lightboxIndex]) return '';
+      const idx = state.lightboxIndex;
+      const total = list.length;
+      const photo = list[idx];
+      const zoomPct = Math.round(state.lightboxZoom * 100);
+      const lbHeading = isSession
+        ? (total === 1
+          ? `Ảnh đã chụp · ${photo.title}`
+          : `Ảnh thứ ${idx + 1} trong ${total} ảnh · ${photo.title}`)
+        : `Ảnh ${idx + 1}/${total} · ${photo.title}`;
+
+      return `
+        <div class="lightbox-backdrop" data-action="scrim-close-lightbox">
+          <div class="lightbox-card" role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="lb-title">
+            <div class="lightbox-header">
+              <div class="dialog-title-group">
+                <h2 id="lb-title" class="dialog-title">${escapeHtml(lbHeading)}</h2>
+              </div>
+
+              <div style="display:flex;align-items:center;gap:8px;flex-shrink:0;">
+                <div class="zoom-toolbar" role="group" aria-label="Phóng to thu nhỏ ảnh">
+                  <button
+                    type="button"
+                    id="btn-zoom-out"
+                    class="zoom-btn"
+                    data-action="zoom-out"
+                    ${state.lightboxZoom <= 1 ? 'disabled' : ''}
+                    aria-label="Thu nhỏ"
+                  >${ICONS.zoomOut}</button>
+                  <button
+                    type="button"
+                    id="btn-zoom-reset"
+                    class="zoom-btn"
+                    data-action="zoom-toggle"
+                    aria-label="Mức phóng hiện tại ${zoomPct}%, nhấn để đổi nhanh"
+                  >${zoomPct}%</button>
+                  <button
+                    type="button"
+                    id="btn-zoom-in"
+                    class="zoom-btn"
+                    data-action="zoom-in"
+                    ${state.lightboxZoom >= 3 ? 'disabled' : ''}
+                    aria-label="Phóng to đọc công thức"
+                  >${ICONS.zoomIn}</button>
+                </div>
+
+                <button type="button" id="btn-lb-close" class="dialog-close-btn" style="min-width:44px;min-height:44px;" data-action="close-lightbox" aria-label="${isSession ? 'Quay lại máy ảnh' : 'Đóng xem trước ảnh'}">
+                  ${ICONS.close}
+                </button>
+              </div>
+            </div>
+
+            <div
+              id="lightbox-stage"
+              class="lightbox-stage ${state.lightboxZoom > 1 ? 'is-zoomed' : ''}"
+            >
+              ${total > 1 ? `
+                <button type="button" id="btn-lb-prev" class="lightbox-nav-btn prev" data-action="lb-prev" ${idx === 0 ? 'disabled' : ''} aria-label="Ảnh trước">${ICONS.chevronLeft}</button>
+              ` : ''}
+              <div
+                id="lightbox-pan-canvas"
+                class="lightbox-pan-canvas"
+                style="transform: translate3d(${state.lightboxPanX}px, ${state.lightboxPanY}px, 0) scale(${state.lightboxZoom});"
+              >
+                <img id="lightbox-full-img" src="${photo.fullDataUrl}" alt="${escapeHtml(photo.title)}" />
+              </div>
+              ${total > 1 ? `
+                <button type="button" id="btn-lb-next" class="lightbox-nav-btn next" data-action="lb-next" ${idx === total - 1 ? 'disabled' : ''} aria-label="Ảnh tiếp theo">${ICONS.chevronRight}</button>
+              ` : ''}
+            </div>
+
+            ${isSession && state.lastDeletedSessionPhoto ? `
+              <div class="composer-notice" role="status" aria-live="polite" style="margin:10px 16px 0;">
+                <span>Đã xóa ảnh khỏi phiên chụp.</span>
+                <button type="button" id="btn-undo-session-delete" class="composer-notice-btn" style="min-height:40px;padding:0 12px;" data-action="undo-session-delete">Hoàn tác</button>
+              </div>
+            ` : ''}
+
+            <div class="lightbox-footer">
+              <div class="lightbox-actions-left">
+                ${isSession ? `
+                  <button type="button" id="btn-lb-retake" class="secondary-btn" data-action="retake-session-photo" data-index="${idx}">
+                    ${ICONS.camera}
+                    <span>Chụp lại</span>
+                  </button>
+                ` : `
+                  <button type="button" id="btn-lb-retake" class="secondary-btn" data-action="retake-composer-photo" data-index="${idx}">
+                    ${ICONS.camera}
+                    <span>Chụp lại</span>
+                  </button>
+                  ${total > 1 ? `
+                    <button type="button" id="btn-lb-move-prev" class="secondary-btn" data-action="move-photo-prev" data-index="${idx}" ${idx === 0 ? 'disabled' : ''} aria-label="Đưa Ảnh ${idx + 1} lên trước">
+                      ${ICONS.arrowLeft}
+                      <span>Lên trước</span>
+                    </button>
+                    <button type="button" id="btn-lb-move-next" class="secondary-btn" data-action="move-photo-next" data-index="${idx}" ${idx === total - 1 ? 'disabled' : ''} aria-label="Đưa Ảnh ${idx + 1} ra sau">
+                      <span>Ra sau</span>
+                      ${ICONS.arrowRight}
+                    </button>
+                  ` : ''}
+                `}
+              </div>
+
+              <div class="lightbox-actions-right">
+                <button
+                  type="button"
+                  id="btn-lb-delete"
+                  class="danger-btn"
+                  data-action="${isSession ? 'delete-session-photo' : 'remove-composer-photo'}"
+                  data-index="${idx}"
+                >
+                  ${ICONS.trash}
+                  <span>Xóa ảnh</span>
+                </button>
+                <button type="button" id="btn-lb-done" class="primary-pill-btn" data-action="close-lightbox">
+                  ${isSession ? 'Quay lại máy ảnh' : 'Đóng'}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function measureVisibleSourceFraction() {
+      const box = document.getElementById('camera-sensor-box');
+      if (!box) return null;
+      const rect = box.getBoundingClientRect();
+      if (!rect.width || !rect.height) return null;
+      const dims = getRatioDimensions(getActiveSensorRatio());
+      const srcAspect = dims.w / dims.h;
+      const boxAspect = rect.width / rect.height;
+      if (state.previewFitMode === 'contain') {
+        return 1.0;
+      }
+      // Under object-fit: cover, rendered media overflows on the wider axis
+      return boxAspect < srcAspect ? (boxAspect / srcAspect) : (srcAspect / boxAspect);
+    }
+
+    function renderInspector() {
+      const container = document.getElementById('proto-inspector');
+      if (hideInspector) {
+        container.style.display = 'none';
+        return;
+      }
+      container.style.display = 'block';
+      const ctx = getEffectiveSurface();
+      container.classList.toggle('camera-active-pos', state.cameraOpen && ctx.surface === 'fullscreen');
+
+      if (!state.inspectorExpanded) {
+        container.innerHTML = `
+          <button type="button" id="btn-proto-inspector" class="proto-toggle-pill" style="min-height:44px;" data-action="toggle-inspector" aria-expanded="false">
+            <span>Inspector · #${state.activePreset}</span>
+            ${ICONS.chevronUp}
+          </button>
+        `;
+        return;
+      }
+
+      const presets = [
+        [1, '1. Mobile: 0 ảnh'],
+        [2, '2. Mobile: 1 ảnh'],
+        [3, '3. Mobile: Stack 3 ảnh'],
+        [4, '4. Mobile: Khay xem ảnh'],
+        [5, '5. Desktop: 0 ảnh'],
+        [6, '6. Desktop: 1 ảnh'],
+        [7, '7. Desktop: Fan 3 ảnh'],
+        [8, '8. Desktop: Fan 5 ảnh'],
+        [9, '9. Viewer Zoom & Pan'],
+        [10, '10. Xác nhận Đóng'],
+        [11, '11. Camera lỗi (5 mã)'],
+        [12, '12. Composer: 5 ảnh']
+      ];
+
+      const activeRatio = getActiveSensorRatio();
+      const dims = getRatioDimensions(activeRatio);
+      const visFrac = measureVisibleSourceFraction();
+      const visText = visFrac !== null ? `${(visFrac * 100).toFixed(1)}%` : 'N/A (ngoài camera)';
+
+      container.innerHTML = `
+        <div class="proto-panel">
+          <div class="proto-panel-head">
+            <strong>Prototype Inspector (Chỉ dành cho Dev/Review)</strong>
+            <button type="button" class="cam-mini-btn" style="min-height:34px;padding:0 10px;" data-action="toggle-inspector" aria-expanded="true">Thu gọn</button>
+          </div>
+
+          <div>
+            <div class="proto-section-label">Chuyển nhanh trạng thái Photo Fan Stack &amp; Camera</div>
+            <div class="proto-grid">
+              ${presets.map(([num, label]) => `
+                <button
+                  type="button"
+                  class="proto-preset-btn"
+                  data-action="select-preset"
+                  data-preset="${num}"
+                  aria-pressed="${state.activePreset === num}"
+                >${label}</button>
+              `).join('')}
+            </div>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:6px;">
+            <div class="proto-section-label">Thông số cảm biến &amp; thiết bị (Ẩn khỏi UI học sinh)</div>
+
+            <label class="proto-select-row">
+              <span>Bề mặt thiết bị:</span>
+              <select class="proto-select" data-control="deviceMode">
+                <option value="auto" ${state.deviceMode === 'auto' ? 'selected' : ''}>Tự động theo viewport</option>
+                <option value="mobile" ${state.deviceMode === 'mobile' ? 'selected' : ''}>Khung Mobile 390×844</option>
+                <option value="tablet" ${state.deviceMode === 'tablet' ? 'selected' : ''}>Khung Tablet 768×1024</option>
+                <option value="desktop" ${state.deviceMode === 'desktop' ? 'selected' : ''}>Desktop Dialog</option>
+              </select>
+            </label>
+
+            <label class="proto-select-row">
+              <span>Tỷ lệ nguồn camera:</span>
+              <select class="proto-select" data-control="videoRatio">
+                <option value="4:3" ${state.videoRatio === '4:3' ? 'selected' : ''}>4:3 (${dims.w}×${dims.h} tài liệu)</option>
+                <option value="16:9" ${state.videoRatio === '16:9' ? 'selected' : ''}>16:9 (1920×1080 rộng)</option>
+                <option value="3:4" ${state.videoRatio === '3:4' ? 'selected' : ''}>3:4 (1200×1600 dọc)</option>
+                <option value="auto" ${state.videoRatio === 'auto' ? 'selected' : ''}>Tự động theo hướng màn</option>
+              </select>
+            </label>
+
+            <label class="proto-select-row">
+              <span>Số ống kính:</span>
+              <select class="proto-select" data-control="cameraCount">
+                <option value="2" ${state.cameraCount === 2 ? 'selected' : ''}>2 camera (Hiện nút Đổi)</option>
+                <option value="1" ${state.cameraCount === 1 ? 'selected' : ''}>1 camera (Ẩn nút Đổi)</option>
+              </select>
+            </label>
+
+            <label class="proto-select-row">
+              <span>Giả lập lỗi API:</span>
+              <select class="proto-select" data-control="cameraErrorKey">
+                <option value="" ${!state.cameraErrorKey ? 'selected' : ''}>Không lỗi (Stream hoạt động)</option>
+                ${Object.values(CAMERA_ERRORS).map(e => `
+                  <option value="${e.code}" ${state.cameraErrorKey === e.code ? 'selected' : ''}>${e.inspectorLabel}</option>
+                `).join('')}
+              </select>
+            </label>
+          </div>
+
+          <div class="proto-metric-box">
+            <div>• Nguồn giả lập: <strong>${activeRatio} (${dims.w}×${dims.h}px)</strong></div>
+            <div>• Tỷ lệ khung nguồn nhìn thấy: <strong>${visText}</strong> (${state.previewFitMode === 'contain' ? 'Toàn khung' : 'Tràn màn'})</div>
+            <div>• Hiển thị nhóm ảnh: <strong>Photo Fan Stack + Xong cố định (0 lặp số lượng)</strong></div>
+            <div style="color:#93c5fd;">• Tự gọi Gemini khi chụp: <strong>${state.aiCallCount}</strong></div>
+            <div style="color:#fcd34d;">• Khóa phạm vi: <strong>Chỉ chốt Camera-First; Header &amp; Composer là ngữ cảnh minh họa</strong></div>
+          </div>
+        </div>
+      `;
+    }
+
+    /* ==========================================================================
+       8. MASTER RENDER, PHOTO FAN CONTROLLER, POINTER ZOOM/PAN & FOCUS TRAP
+       ========================================================================== */
+    function renderApp(options = {}) {
+      const root = document.getElementById('viewport-root');
+      const stage = document.getElementById('axo-stage');
+      const ctx = getEffectiveSurface();
+
+      if (ctx.frameOnDesktop) {
+        root.classList.add('framed-device-preview');
+        stage.style.width = `${ctx.frameW}px`;
+        stage.style.height = `${ctx.frameH}px`;
+      } else {
+        root.classList.remove('framed-device-preview');
+        stage.style.width = '100%';
+        stage.style.height = '100%';
+      }
+
+      const lightboxOpen = state.lightboxIndex !== null;
+      const overlayActive = state.cameraOpen || lightboxOpen;
+
+      let html = '';
+      if (state.cameraOpen && ctx.surface === 'fullscreen') {
+        html = renderMobileFullscreenCamera(lightboxOpen);
+        if (lightboxOpen) {
+          html += renderReadableLightbox();
+        }
+      } else {
+        html = renderComposerMarkup(overlayActive);
+        if (state.cameraOpen && ctx.surface === 'dialog') {
+          html += renderDesktopCameraDialog(lightboxOpen);
+        }
+        if (lightboxOpen) {
+          html += renderReadableLightbox();
+        }
+      }
+
+      stage.innerHTML = html;
+      renderInspector();
+      bindPhotoFanInteractions();
+      bindLightboxPanAndZoom();
+
+      const textarea = document.getElementById('problem-textarea');
+      if (textarea) {
+        textarea.addEventListener('input', (ev) => {
+          state.composerText = ev.target.value;
+          const submitBtn = document.getElementById('btn-submit-build');
+          if (submitBtn) {
+            submitBtn.disabled = !(state.composerAttachments.length > 0 || state.composerText.trim().length > 0);
+          }
+        });
+      }
+
+      if (options.manageFocus) {
+        requestAnimationFrame(() => {
+          const activeDialog = document.querySelector('.lightbox-card')
+            || stage.querySelector('[role="dialog"][aria-modal="true"]:not([inert])');
+          if (activeDialog && !keyboardModality && !state.closeConfirmOpen && !options.focusSelector) {
+            activeDialog.focus();
+            return;
+          }
+          const preferred = options.focusSelector ? stage.querySelector(options.focusSelector) : null;
+          if (preferred && !preferred.disabled) {
+            preferred.focus();
+            return;
+          }
+          if (state.lightboxIndex !== null) {
+            const lbClose = document.getElementById('btn-lb-close');
+            if (lbClose) lbClose.focus();
+          } else if (state.closeConfirmOpen) {
+            const keepBtn = document.getElementById('btn-confirm-keep');
+            if (keepBtn) keepBtn.focus();
+          } else if (state.cameraOpen) {
+            const primaryCam = document.getElementById('btn-cam-shutter')
+              || document.getElementById('btn-err-library')
+              || document.getElementById('btn-cam-close');
+            if (primaryCam) primaryCam.focus();
+          }
+        });
+      }
+    }
+
+    /* Desktop Photo Fan Stack Controller (§3, §9, §13):
+       Toggles .is-fan-open directly on the live DOM node (never rebuilding stage.innerHTML)
+       so CSS 200ms transform transitions remain silky smooth with zero pointer flicker. */
+    function bindPhotoFanInteractions() {
+      const fanEl = document.getElementById('photo-fan-stack');
+      if (!fanEl) return;
+      const fanCapable = fanEl.getAttribute('data-fan-capable') === 'true';
+
+      const setFanOpenDom = (open) => {
+        if (!fanCapable) {
+          state.fanOpen = false;
+          fanEl.classList.remove('is-fan-open');
+          return;
+        }
+        state.fanOpen = open;
+        fanEl.classList.toggle('is-fan-open', open);
+      };
+
+      fanEl.addEventListener('pointerenter', (ev) => {
+        if (ev.pointerType === 'touch') return;
+        if (fanLeaveTimer) {
+          clearTimeout(fanLeaveTimer);
+          fanLeaveTimer = null;
+        }
+        setFanOpenDom(true);
+      });
+
+      fanEl.addEventListener('pointermove', (ev) => {
+        if (ev.pointerType === 'touch') return;
+        if (fanLeaveTimer) {
+          clearTimeout(fanLeaveTimer);
+          fanLeaveTimer = null;
+        }
+        if (fanCapable && !state.fanOpen) {
+          setFanOpenDom(true);
+        }
+      });
+
+      fanEl.addEventListener('pointerleave', (ev) => {
+        if (ev.pointerType === 'touch') return;
+        if (fanLeaveTimer) clearTimeout(fanLeaveTimer);
+        fanLeaveTimer = setTimeout(() => {
+          if (!fanEl.matches(':focus-within')) {
+            setFanOpenDom(false);
+          }
+        }, 95);
+      });
+
+      fanEl.addEventListener('focusin', () => {
+        if (!fanCapable) return;
+        if (fanLeaveTimer) {
+          clearTimeout(fanLeaveTimer);
+          fanLeaveTimer = null;
+        }
+        setFanOpenDom(true);
+      });
+
+      fanEl.addEventListener('focusout', (ev) => {
+        if (!fanEl.contains(ev.relatedTarget) && !fanEl.matches(':hover')) {
+          setFanOpenDom(false);
+        }
+      });
+
+      fanEl.addEventListener('keydown', (ev) => {
+        if (ev.key !== 'ArrowLeft' && ev.key !== 'ArrowRight') return;
+        const cards = Array.from(fanEl.querySelectorAll('.fan-card-btn'));
+        if (cards.length <= 1) return;
+        const curIdx = cards.indexOf(document.activeElement);
+        if (curIdx === -1) return;
+        ev.preventDefault();
+        setFanOpenDom(true);
+        const nextIdx = ev.key === 'ArrowLeft'
+          ? Math.max(0, curIdx - 1)
+          : Math.min(cards.length - 1, curIdx + 1);
+        cards[nextIdx].focus();
+      });
+    }
+
+    function bindLightboxPanAndZoom() {
+      const stageEl = document.getElementById('lightbox-stage');
+      const panCanvas = document.getElementById('lightbox-pan-canvas');
+      if (!stageEl || !panCanvas) return;
+
+      let dragging = false;
+      let startX = 0;
+      let startY = 0;
+      let originPanX = 0;
+      let originPanY = 0;
+
+      stageEl.addEventListener('dblclick', (ev) => {
+        if (ev.target.closest('button')) return;
+        setLightboxZoom(state.lightboxZoom > 1 ? 1 : 2);
+      });
+
+      stageEl.addEventListener('wheel', (ev) => {
+        ev.preventDefault();
+        const step = ev.deltaY < 0 ? 0.25 : -0.25;
+        setLightboxZoom(state.lightboxZoom + step);
+      }, { passive: false });
+
+      stageEl.addEventListener('pointerdown', (ev) => {
+        if (state.lightboxZoom <= 1 || ev.target.closest('button')) return;
+        dragging = true;
+        startX = ev.clientX;
+        startY = ev.clientY;
+        originPanX = state.lightboxPanX;
+        originPanY = state.lightboxPanY;
+        stageEl.classList.add('is-panning');
+        if (stageEl.setPointerCapture) {
+          try { stageEl.setPointerCapture(ev.pointerId); } catch (_) {}
+        }
+      });
+
+      stageEl.addEventListener('pointermove', (ev) => {
+        if (!dragging) return;
+        const maxPan = (state.lightboxZoom - 1) * 320;
+        const nx = Math.max(-maxPan, Math.min(maxPan, originPanX + (ev.clientX - startX)));
+        const ny = Math.max(-maxPan, Math.min(maxPan, originPanY + (ev.clientY - startY)));
+        state.lightboxPanX = Math.round(nx);
+        state.lightboxPanY = Math.round(ny);
+        panCanvas.style.transform = `translate3d(${state.lightboxPanX}px, ${state.lightboxPanY}px, 0) scale(${state.lightboxZoom})`;
+      });
+
+      const stopDrag = () => {
+        if (!dragging) return;
+        dragging = false;
+        stageEl.classList.remove('is-panning');
+      };
+      stageEl.addEventListener('pointerup', stopDrag);
+      stageEl.addEventListener('pointercancel', stopDrag);
+    }
+
+    window.addEventListener('pointerdown', () => { keyboardModality = false; }, true);
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Tab' || e.key === 'Enter' || e.key === ' ' || e.key === 'Escape' || e.key.startsWith('Arrow')) {
+        keyboardModality = true;
+      }
+    }, true);
+
+    /* ==========================================================================
+       9. EVENT DELEGATION & MODAL FOCUS TRAP / ESCAPE KEYBOARD NAVIGATION
+       ========================================================================== */
+    document.addEventListener('click', (ev) => {
+      const btn = ev.target.closest('[data-action]');
+      if (!btn || btn.disabled) return;
+      const action = btn.getAttribute('data-action');
+      if (
+        (action === 'backdrop-close'
+          || action === 'scrim-close-lightbox'
+          || action === 'scrim-close-drawer'
+          || action === 'scrim-cancel-close-confirm')
+        && ev.target !== btn
+      ) {
+        return;
+      }
+      const idx = Number(btn.getAttribute('data-index') || 0);
+
+      switch (action) {
+        case 'go-home':
+          state.composerNotice = '';
+          renderApp();
+          break;
+        case 'open-camera':
+          openCameraFromComposer();
+          break;
+        case 'shutter':
+          triggerShutter();
+          break;
+        case 'done-camera':
+          commitSessionAndClose();
+          break;
+        case 'close-camera':
+        case 'backdrop-close':
+          requestCloseCamera();
+          break;
+        case 'confirm-keep-photos':
+          commitSessionAndClose();
+          break;
+        case 'confirm-discard-photos':
+          discardSessionAndClose();
+          break;
+        case 'cancel-close-confirm':
+        case 'scrim-cancel-close-confirm':
+          state.closeConfirmOpen = false;
+          renderApp({ manageFocus: true, focusSelector: '#btn-cam-shutter' });
+          break;
+        case 'cancel-retake':
+          if (state.retakeTarget && state.retakeTarget.scope === 'composer') {
+            const retIdx = state.retakeTarget.index;
+            state.retakeTarget = null;
+            state.cameraOpen = false;
+            state.lightboxScope = 'composer';
+            state.lightboxIndex = retIdx;
+            renderApp({ manageFocus: true, focusSelector: '#btn-lb-close' });
+          } else {
+            state.retakeTarget = null;
+            renderApp({ manageFocus: true, focusSelector: '#btn-cam-shutter' });
+          }
+          break;
+        case 'switch-camera':
+          state.facingMode = state.facingMode === 'environment' ? 'user' : 'environment';
+          showTransientCameraStatus(state.facingMode === 'environment' ? 'Camera sau' : 'Camera trước', 1300);
+          renderApp();
+          break;
+        case 'toggle-preview-fit':
+          state.previewFitMode = state.previewFitMode === 'cover' ? 'contain' : 'cover';
+          renderApp();
+          break;
+        case 'open-session-photo':
+          openSessionPhotoViewer(idx);
+          break;
+        case 'open-session-drawer':
+          state.sessionDrawerOpen = true;
+          state.closeConfirmOpen = false;
+          if (state.sessionSelectedIndex >= state.sessionCaptures.length) {
+            state.sessionSelectedIndex = Math.max(0, state.sessionCaptures.length - 1);
+          }
+          renderApp({ manageFocus: true, focusSelector: '#btn-close-drawer' });
+          break;
+        case 'close-session-drawer':
+        case 'scrim-close-drawer':
+          state.sessionDrawerOpen = false;
+          renderApp({ manageFocus: true, focusSelector: '#btn-session-stack' });
+          break;
+        case 'select-tray-photo':
+          state.sessionSelectedIndex = idx;
+          renderApp({ manageFocus: true, focusSelector: `#btn-tray-thumb-${idx}` });
+          break;
+        case 'tray-prev':
+          if (state.sessionSelectedIndex > 0) {
+            state.sessionSelectedIndex -= 1;
+            renderApp();
+          }
+          break;
+        case 'tray-next':
+          if (state.sessionSelectedIndex < state.sessionCaptures.length - 1) {
+            state.sessionSelectedIndex += 1;
+            renderApp();
+          }
+          break;
+        case 'delete-session-photo':
+          deleteSelectedSessionPhoto(idx);
+          break;
+        case 'undo-session-delete':
+          undoDeleteSessionPhoto();
+          break;
+        case 'retake-session-photo':
+          startRetakeFromSession(idx);
+          break;
+        case 'pick-library':
+          pickFromLibrarySimulatedOrReal(ev);
+          break;
+        case 'retry-camera':
+          state.cameraErrorKey = null;
+          showTransientCameraStatus('Đã kết nối lại máy ảnh', 1300);
+          renderApp({ manageFocus: true, focusSelector: '#btn-cam-shutter' });
+          break;
+        case 'open-lightbox':
+          state.lightboxScope = 'composer';
+          state.lightboxIndex = idx;
+          state.lightboxZoom = 1;
+          state.lightboxPanX = 0;
+          state.lightboxPanY = 0;
+          renderApp({ manageFocus: true, focusSelector: '#btn-zoom-in' });
+          break;
+        case 'close-lightbox':
+        case 'scrim-close-lightbox':
+          closeLightboxViewer();
+          break;
+        case 'zoom-in':
+          setLightboxZoom(state.lightboxZoom === 1 ? 1.75 : state.lightboxZoom < 2.5 ? 2.5 : 3);
+          break;
+        case 'zoom-out':
+          setLightboxZoom(state.lightboxZoom > 2.5 ? 2.5 : state.lightboxZoom > 1.75 ? 1.75 : 1);
+          break;
+        case 'zoom-toggle':
+          setLightboxZoom(state.lightboxZoom > 1 ? 1 : 1.75);
+          break;
+        case 'lb-prev':
+          if (state.lightboxIndex > 0) {
+            state.lightboxIndex -= 1;
+            if (state.lightboxScope === 'session') state.sessionSelectedIndex = state.lightboxIndex;
+            state.lightboxZoom = 1;
+            state.lightboxPanX = 0;
+            state.lightboxPanY = 0;
+            renderApp();
+          }
+          break;
+        case 'lb-next':
+          {
+            const activeList = state.lightboxScope === 'session' ? state.sessionCaptures : state.composerAttachments;
+            if (state.lightboxIndex < activeList.length - 1) {
+              state.lightboxIndex += 1;
+              if (state.lightboxScope === 'session') state.sessionSelectedIndex = state.lightboxIndex;
+              state.lightboxZoom = 1;
+              state.lightboxPanX = 0;
+              state.lightboxPanY = 0;
+              renderApp();
+            }
+          }
+          break;
+        case 'remove-composer-photo':
+          removeComposerPhoto(idx);
+          break;
+        case 'undo-composer-delete':
+          undoRemoveComposerPhoto();
+          break;
+        case 'retake-composer-photo':
+          startRetakeFromComposer(idx);
+          break;
+        case 'move-photo-prev':
+          moveComposerPhoto(idx, -1);
+          break;
+        case 'move-photo-next':
+          moveComposerPhoto(idx, 1);
+          break;
+        case 'dismiss-notice':
+          state.composerNotice = '';
+          state.lastDeletedComposerPhoto = null;
+          renderApp();
+          break;
+        case 'submit-build':
+          state.composerNotice = `Sẵn sàng gửi ${state.composerAttachments.length} ảnh + văn bản tới bước chuẩn bị đề bài (chỉ thực thi khi học sinh bấm Dựng hình).`;
+          state.lastDeletedComposerPhoto = null;
+          renderApp();
+          break;
+        case 'fill-sample-1':
+          state.composerText = 'Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2a, SA ⊥ (ABCD) và SA = 2a√3.';
+          renderApp();
+          break;
+        case 'fill-sample-2':
+          state.composerText = 'Cho lăng trụ đứng ABC.A\'B\'C\' có đáy ABC vuông tại A, AA\' = 3a. Dựng thiết diện qua A và trung điểm BB\'.';
+          renderApp();
+          break;
+        case 'sample-toast':
+          state.composerNotice = 'Prototype này tập trung kiểm chứng luồng Camera-First & Photo Fan Stack.';
+          state.lastDeletedComposerPhoto = null;
+          renderApp();
+          break;
+        case 'toggle-inspector':
+          state.inspectorExpanded = !state.inspectorExpanded;
+          renderInspector();
+          break;
+        case 'select-preset':
+          applyPreset(Number(btn.getAttribute('data-preset')));
+          break;
+      }
+    });
+
+    document.addEventListener('change', (ev) => {
+      const ctrl = ev.target.getAttribute('data-control');
+      if (!ctrl) return;
+      const val = ev.target.value;
+      if (ctrl === 'deviceMode') state.deviceMode = val;
+      if (ctrl === 'videoRatio') state.videoRatio = val;
+      if (ctrl === 'cameraCount') state.cameraCount = Number(val);
+      if (ctrl === 'cameraErrorKey') {
+        state.cameraErrorKey = val || null;
+        if (state.cameraErrorKey) state.cameraOpen = true;
+      }
+      renderApp({ manageFocus: true });
+    });
+
+    // Real file picker support (Shift+Click on Chọn ảnh or OS file selection)
+    document.getElementById('real-file-picker').addEventListener('change', (ev) => {
+      const files = Array.from(ev.target.files || []);
+      if (!files.length) return;
+      files.forEach((f, i) => {
+        const reader = new FileReader();
+        reader.onload = () => {
+          const dataUrl = String(reader.result);
+          state.composerAttachments.push({
+            id: `real-${Date.now()}-${i}`,
+            fixtureIndex: 0,
+            title: f.name,
+            sourceNote: 'Ảnh tải từ thiết bị',
+            sourceType: 'uploaded_image',
+            fullDataUrl: dataUrl,
+            thumbUrl: dataUrl,
+            width: 1600,
+            height: 1200,
+            ratioKey: '4:3'
+          });
+          state.cameraOpen = false;
+          state.cameraErrorKey = null;
+          renderApp();
+        };
+        reader.readAsDataURL(f);
+      });
+    });
+
+    // Escape dismissal (Viewer -> Close Confirm -> Mobile Tray -> Open Fan -> Camera), Zoomed Keyboard Pan & Modal Focus Trap (WCAG 2.2 AA)
+    document.addEventListener('keydown', (ev) => {
+      if (ev.key === 'Escape') {
+        if (state.lightboxIndex !== null) {
+          ev.preventDefault();
+          closeLightboxViewer();
+          return;
+        }
+        if (state.closeConfirmOpen) {
+          ev.preventDefault();
+          state.closeConfirmOpen = false;
+          renderApp({ manageFocus: true, focusSelector: '#btn-cam-shutter' });
+          return;
+        }
+        if (state.sessionDrawerOpen) {
+          ev.preventDefault();
+          state.sessionDrawerOpen = false;
+          renderApp({ manageFocus: true, focusSelector: '#btn-session-stack' });
+          return;
+        }
+        const fanEl = document.getElementById('photo-fan-stack');
+        if (fanEl && fanEl.classList.contains('is-fan-open')) {
+          ev.preventDefault();
+          state.fanOpen = false;
+          fanEl.classList.remove('is-fan-open');
+          const doneBtn = document.getElementById('btn-cam-done');
+          if (doneBtn && fanEl.contains(document.activeElement)) {
+            doneBtn.focus();
+          }
+          return;
+        }
+        if (state.cameraOpen) {
+          ev.preventDefault();
+          requestCloseCamera();
+          return;
+        }
+      }
+
+      // Keyboard accessible pan when zoomed in Lightbox (WCAG 2.5.7) or prev/next photo at 100% zoom
+      if (state.lightboxIndex !== null && state.lightboxZoom === 1 && (ev.key === 'ArrowLeft' || ev.key === 'ArrowRight')) {
+        const activeList = state.lightboxScope === 'session' ? state.sessionCaptures : state.composerAttachments;
+        if (activeList.length > 1) {
+          ev.preventDefault();
+          if (ev.key === 'ArrowLeft' && state.lightboxIndex > 0) {
+            state.lightboxIndex -= 1;
+            if (state.lightboxScope === 'session') state.sessionSelectedIndex = state.lightboxIndex;
+            renderApp();
+          } else if (ev.key === 'ArrowRight' && state.lightboxIndex < activeList.length - 1) {
+            state.lightboxIndex += 1;
+            if (state.lightboxScope === 'session') state.sessionSelectedIndex = state.lightboxIndex;
+            renderApp();
+          }
+          return;
+        }
+      }
+
+      if (state.lightboxIndex !== null && state.lightboxZoom > 1 && ev.key.startsWith('Arrow')) {
+        ev.preventDefault();
+        const step = 52;
+        if (ev.key === 'ArrowLeft') state.lightboxPanX += step;
+        if (ev.key === 'ArrowRight') state.lightboxPanX -= step;
+        if (ev.key === 'ArrowUp') state.lightboxPanY += step;
+        if (ev.key === 'ArrowDown') state.lightboxPanY -= step;
+        setLightboxZoom(state.lightboxZoom);
+        return;
+      }
+
+      if (ev.key === 'Tab') {
+        const stage = document.getElementById('axo-stage');
+        const subTrap = document.querySelector('.lightbox-card')
+          || document.getElementById('cam-close-confirm')
+          || document.getElementById('cam-session-drawer')
+          || stage.querySelector('[role="dialog"][aria-modal="true"]:not([inert])');
+        if (!subTrap) return;
+
+        const focusables = Array.from(
+          subTrap.querySelectorAll('button:not(:disabled), [href], input:not(:disabled), select:not(:disabled), textarea:not(:disabled), [tabindex]:not([tabindex="-1"])')
+        ).filter(el => el.offsetParent !== null);
+
+        if (focusables.length === 0) return;
+        const first = focusables[0];
+        const last = focusables[focusables.length - 1];
+
+        if (ev.shiftKey && (document.activeElement === first || !subTrap.contains(document.activeElement))) {
+          ev.preventDefault();
+          last.focus();
+        } else if (!ev.shiftKey && (document.activeElement === last || !subTrap.contains(document.activeElement))) {
+          ev.preventDefault();
+          first.focus();
+        }
+      }
+    });
+
+    window.addEventListener('resize', () => renderApp());
+
+    // Initialize from optional URL query params (?state=1..12, ?shots=0..7, ?surface=mobile|tablet|desktop, ?fan=1, ?error=..., ?ratio=..., ?cameras=1|2)
+    const initialPreset = Number(params.get('state') || 1);
+    applyPreset(initialPreset >= 1 && initialPreset <= 12 ? initialPreset : 1, true);
+
+    if (params.get('surface') && ['auto', 'mobile', 'tablet', 'desktop'].includes(params.get('surface'))) {
+      state.deviceMode = params.get('surface');
+    }
+    if (params.has('shots')) {
+      const requestedShots = Math.max(0, Math.min(10, Number(params.get('shots') || 0)));
+      state.cameraOpen = true;
+      state.cameraErrorKey = null;
+      state.sessionCaptures = buildFixtureList(requestedShots, getActiveSensorRatio());
+      state.sessionSelectedIndex = Math.max(0, requestedShots - 1);
+    }
+    if (params.get('fan') === '1' && state.sessionCaptures.length > 1) {
+      state.fanOpen = true;
+    }
+    if (params.get('error') && CAMERA_ERRORS[params.get('error')]) {
+      state.cameraErrorKey = params.get('error');
+      state.cameraOpen = true;
+    }
+    if (params.get('cameras')) {
+      state.cameraCount = Number(params.get('cameras')) === 1 ? 1 : 2;
+    }
+    renderApp({ manageFocus: true });
+  </script>
+</body>
+</html>
