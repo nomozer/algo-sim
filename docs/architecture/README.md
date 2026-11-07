@@ -26,6 +26,7 @@
 | [`COMPOSITE_GEOMETRY_CONTRACT.md`](COMPOSITE_GEOMETRY_CONTRACT.md) | Wave 2C: hình chóp dẫn xuất và nhiều hình chóp có mặt chung trong cùng một hệ trục hữu tỉ + Gram (`composite-geometry`) |
 | [`TYPEDFACT_NEXT_ADAPTER3_CONTRACT.md`](TYPEDFACT_NEXT_ADAPTER3_CONTRACT.md) | TypedFactNext (`typed-fact-next/1`) & Adapter /3 (`hybrid-simulation-adapter/3`): hợp đồng biểu diễn dữ kiện hướng mô phỏng (đỉnh thiết diện không tên, khối dẫn xuất, định danh đỉnh có tiền tố khối `solid_id::label`) (`typedfact-next-adapter3-simulation`) |
 | [`WAVE3A_CONTRACT_DECISION.md`](WAVE3A_CONTRACT_DECISION.md) | Wave 3A: tỉ số thể tích chính xác (`ask_volume_ratio`) và thể tích phần còn lại có chứng chỉ bao hàm/tách rời (`ask_residual_volume`) (`volume-reasoning`) |
+| [`CAMERA_FIRST_PHOTO_FAN_STACK_SPEC.md`](CAMERA_FIRST_PHOTO_FAN_STACK_SPEC.md) | đặc tả UX Camera-First & Photo Fan Stack đã đóng băng thiết kế (`camera-photo-fan-stack-v1`): Mobile Fullscreen, Desktop Dialog, Photo Fan Stack, Viewer Zoom/Pan, phân tách Đóng/Xong và ranh giới tích hợp không đổi giao diện `main` (`axo-camera-photo-fan-stack`) |
 
 ## Tiền đăng ký và snapshot (bất biến)
 

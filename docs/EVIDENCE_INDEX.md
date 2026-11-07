@@ -4,6 +4,19 @@
 Retired branch names now have local `refs/archive/repository-closure/` references and a verified private self-contained bundle.
 Existing evidence and historical reports below are unchanged; no research result is reinterpreted by this Git-state update.
 
+## WAVE_ID = AXO_CAMERA_PHOTO_FAN_STACK_DESIGN
+
+REPORT = docs/evaluation/geometry/runs/axo-camera-photo-fan-stack/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/axo-camera-photo-fan-stack/
+START_BASE = main = origin/main bb4d6b55
+CODE_COMMIT = NONE (design specification, offline HTML prototype, frontend/backend handoff, and browser audit only)
+CLASSIFICATION = DESIGN_SPECIFICATION_AND_PROTOTYPE_AUDIT: Camera-First UX with Photo Fan Stack frozen at camera-photo-fan-stack-v1 (prototype SHA-256 ef1ea35a…); 10/10 Photo Fan Stack risks, 20/20 interactive cases, and 6/6 Chrome viewports (including real 110% Chrome zoom and 390x500 short screen) PASS with 0 external requests; REAL_CAMERA_DEVICE_VERIFIED = NO; LIVE_AI_MULTI_IMAGE_VERIFIED = NO; CAMERA_IMPLEMENTATION_PENDING = YES.
+PRODUCT_CHANGE = NO
+MODEL_REQUEST_COUNT = 0
+VERIFICATION = report.md; run.json; FRONTEND_BACKEND_HANDOFF.md; prototype/axo_camera_first_ux_prototype.html; tools/verify-camera-photo-fan-stack.mjs; results/verification-metrics-final.json
+CORRECTS = NONE
+CORRECTED_BY = NONE
+
 ## WAVE_ID = GEMINI_CREDENTIAL_TRANSPORT
 
 REPORT = docs/evaluation/geometry/runs/gemini-credential-transport/report.md

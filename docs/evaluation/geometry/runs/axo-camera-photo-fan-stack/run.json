@@ -1,0 +1,32 @@
+{
+  "run_id": "axo-camera-photo-fan-stack",
+  "wave_id": "AXO_CAMERA_PHOTO_FAN_STACK_DESIGN",
+  "task_type": "DESIGN_FREEZE_AND_UX_SPECIFICATION",
+  "design_version": "camera-photo-fan-stack-v1",
+  "date": "2026-11-08",
+  "start_base_branch": "main",
+  "start_base_sha": "bb4d6b55346bc35e42bf19796b9c1f2310b9c8c0",
+  "design_branch": "design/axo-camera-photo-fan-stack",
+  "product_change": false,
+  "model_request_count": 0,
+  "camera_implementation_pending": true,
+  "real_camera_device_verified": false,
+  "live_ai_multi_image_verified": false,
+  "backend_frontend_worktrees_created": false,
+  "prototype": {
+    "path": "docs/evaluation/geometry/runs/axo-camera-photo-fan-stack/prototype/axo_camera_first_ux_prototype.html",
+    "sha256": "ef1ea35a33a4c6af7f3e59afef337144a701c164e55fe5910452b20a442f5fb8",
+    "offline_self_contained": true,
+    "external_network_requests": 0
+  },
+  "specification_path": "docs/architecture/CAMERA_FIRST_PHOTO_FAN_STACK_SPEC.md",
+  "handoff_path": "docs/evaluation/geometry/runs/axo-camera-photo-fan-stack/FRONTEND_BACKEND_HANDOFF.md",
+  "verification": {
+    "script": "docs/evaluation/geometry/runs/axo-camera-photo-fan-stack/tools/verify-camera-photo-fan-stack.mjs",
+    "metrics": "docs/evaluation/geometry/runs/axo-camera-photo-fan-stack/results/verification-metrics-final.json",
+    "audit_10_risks_passed": "10/10",
+    "cases_passed": "20/20",
+    "viewports_passed": "6/6",
+    "console_and_page_errors": 0
+  }
+}
