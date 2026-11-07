@@ -948,13 +948,27 @@ class ImageExtractBody(BaseModel):
     rotation: Literal[0, 90, 180, 270] = 0
 
 
-class InputPrepareBody(BaseModel):
-    """Yêu cầu chuẩn bị đầu vào thống nhất (Ảnh / PDF / DOCX + văn bản chỉ dẫn trong ô nhập)."""
+class InputPrepareAttachment(BaseModel):
+    """Một tệp đính kèm trong yêu cầu chuẩn bị đầu vào đa ảnh/đa tệp."""
 
     model_config = ConfigDict(extra="forbid")
+    attachment_id: str = Field(min_length=1, max_length=120)
+    order_index: int = Field(default=0, ge=0, le=50)
+    source_type: Literal["camera", "upload", "image", "pdf", "docx", "document", "paste"] = "upload"
     content: str
     mime_type: str | None = None
     filename: str | None = None
+
+
+class InputPrepareBody(BaseModel):
+    """Yêu cầu chuẩn bị đầu vào thống nhất (1 hoặc nhiều Ảnh / PDF / DOCX + văn bản chỉ dẫn trong ô nhập)."""
+
+    model_config = ConfigDict(extra="forbid")
+    request_id: str | None = Field(default=None, max_length=120)
+    content: str | None = None
+    mime_type: str | None = None
+    filename: str | None = None
+    attachments: list[InputPrepareAttachment] | None = Field(default=None)
     user_text: str | None = Field(default=None, max_length=8000)
     selected_candidate_id: str | None = Field(default=None, max_length=120)
 
@@ -1442,16 +1456,21 @@ async def input_prepare(
             content=body.content,
             declared_mime=body.mime_type,
             filename=body.filename,
+            attachments=[a.model_dump() for a in body.attachments] if body.attachments is not None else None,
+            request_id=body.request_id,
             user_text=body.user_text,
             selected_candidate_id=body.selected_candidate_id,
             api_key=api_key,
             cache_version=CACHE_VERSION,
         )
     except InputPrepareRejected as err:
+        err_payload: dict[str, Any] = {"error": str(err), "reason_code": err.code}
+        if body.request_id is not None:
+            err_payload["request_id"] = body.request_id
         return JSONResponse(
             status_code=400,
             headers={"Cache-Control": "no-store"},
-            content={"error": str(err), "reason_code": err.code},
+            content=err_payload,
         )
     except LiveVisionDisabledError:
         return _hybrid_infra_error("LIVE_AI_DISABLED")

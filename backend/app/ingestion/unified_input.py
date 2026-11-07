@@ -11,9 +11,12 @@ Hợp đồng (§9–§18):
 
 from __future__ import annotations
 
+import hashlib
 import os
+import re
 import time
-from dataclasses import dataclass, field
+from collections.abc import Mapping, Sequence
+from dataclasses import dataclass, field, replace
 from typing import Any, Literal
 
 from app.ingestion.document_reader import (
@@ -45,6 +48,8 @@ from app.ingestion.region_detector import (
 from app.simulation.semantic_program.domain_profile import DOMAIN_HINH_HOC, detect_domain
 
 UNIFIED_INPUT_SCHEMA = "unified-input-prepare/1"
+MAX_PREPARE_ATTACHMENTS = 10
+MAX_TOTAL_ATTACHMENT_BYTES = 25 * 1024 * 1024
 
 
 class LiveVisionDisabledError(RuntimeError):
@@ -64,6 +69,7 @@ class UnifiedCandidateItem:
     page_number: int | None = None
     has_figure: bool = False
     problem_text: str | None = None
+    source_attachment_ids: tuple[str, ...] = ()
 
     def to_dict(self) -> dict[str, Any]:
         return {
@@ -74,6 +80,7 @@ class UnifiedCandidateItem:
             "page_number": self.page_number,
             "has_figure": self.has_figure,
             "problem_text": self.problem_text,
+            "source_attachment_ids": list(self.source_attachment_ids),
         }
 
 
@@ -90,9 +97,13 @@ class UnifiedPrepareOutcome:
     candidates: tuple[UnifiedCandidateItem, ...] = ()
     provenance: dict[str, Any] = field(default_factory=dict)
     metrics: dict[str, Any] = field(default_factory=dict)
+    request_id: str | None = None
 
     def to_dict(self) -> dict[str, Any]:
-        return {
+        prov = dict(self.provenance)
+        if self.request_id is not None and "request_id" not in prov:
+            prov["request_id"] = self.request_id
+        out: dict[str, Any] = {
             "schema": UNIFIED_INPUT_SCHEMA,
             "status": self.status,
             "source_kind": self.source_kind,
@@ -103,9 +114,12 @@ class UnifiedPrepareOutcome:
             "uncertain_tokens": list(self.uncertain_tokens),
             "missing_regions": list(self.missing_regions),
             "candidates": [c.to_dict() for c in self.candidates],
-            "provenance": dict(self.provenance),
+            "provenance": prov,
             "metrics": dict(self.metrics),
         }
+        if self.request_id is not None:
+            out["request_id"] = self.request_id
+        return out
 
 
 def _require_vision_key(api_key: str | None) -> str:
@@ -346,6 +360,7 @@ async def _process_normalized_visual_page(
     prov_common["has_associated_figure"] = (
         prov_common["has_associated_figure"] or ext_res.extraction.has_diagram
     )
+    prov_common["extraction_confidence"] = ext_res.extraction.confidence
 
     metrics_now = {
         "vlm_calls": vlm_calls,
@@ -356,6 +371,17 @@ async def _process_normalized_visual_page(
     }
 
     assessment = ext_res.assessment
+    raw_uncertain = tuple(t.model_dump() for t in ext_res.extraction.uncertain_tokens)
+    raw_missing = tuple(ext_res.extraction.missing_regions)
+    raw_flags = tuple(
+        FLAG_MESSAGES[f]
+        for f in (
+            ("UNCERTAIN_TOKENS",) if ext_res.extraction.uncertain_tokens else ()
+        )
+        + (("MISSING_REGIONS",) if ext_res.extraction.missing_regions else ())
+        + (("LOW_CONFIDENCE",) if ext_res.extraction.confidence < 0.7 else ())
+        if f in FLAG_MESSAGES
+    )
 
     # 4. Trường hợp ảnh chỉ có hình vẽ (`MISSING_PROBLEM_TEXT`) nhưng học sinh đã gõ đầy đủ lời đề trong ô nhập (§4)!
     if assessment.status == "rejected":
@@ -381,6 +407,9 @@ async def _process_normalized_visual_page(
             problem_text=assessment.problem_text,
             learner_message=REJECTION_MESSAGES.get(rej_code, REJECTION_MESSAGES["IMAGE_NOT_READABLE"]),
             reason_code=rej_code,
+            flag_messages=raw_flags,
+            uncertain_tokens=raw_uncertain,
+            missing_regions=raw_missing,
             provenance=prov_common,
             metrics={
                 **metrics_now,
@@ -457,7 +486,7 @@ async def _process_normalized_visual_page(
     )
 
 
-async def prepare_unified_input(
+async def _prepare_single_attachment(
     *,
     content: str,
     declared_mime: str | None = None,
@@ -467,7 +496,7 @@ async def prepare_unified_input(
     api_key: str | None = None,
     cache_version: str | None = None,
 ) -> UnifiedPrepareOutcome:
-    """Điểm vào thống nhất cho mọi tệp đính kèm khi người học bấm "Dựng hình"."""
+    """Xử lý chuẩn bị trên một tệp đính kèm đơn lẻ."""
     t0 = time.perf_counter()
     raw = decode_attachment_base64(content)
     raw_len = len(raw)
@@ -758,4 +787,737 @@ async def prepare_unified_input(
         provenance_base=prov_docx,
         metrics_base=metrics_docx,
         t0=t0,
+    )
+
+
+_EXPLICIT_PROBLEM_HEADER_RE = re.compile(
+    r"^\s*(?:bài(?:\s+toán)?|câu|ví\s+dụ|problem)\s*(\d+|[ivx]+)\b[:.)\s-]*",
+    re.IGNORECASE,
+)
+_SOLID_OPENING_RE = re.compile(
+    r"\bcho\s+(?:hình\s+chóp|khối\s+chóp|tứ\s+diện|khối\s+tứ\s+diện|hình\s+lăng\s+trụ|khối\s+lăng\s+trụ|"
+    r"hình\s+hộp|khối\s+hộp|hình\s+lập\s+phương|khối\s+lập\s+phương|hình\s+nón|khối\s+nón|"
+    r"hình\s+trụ|khối\s+trụ|mặt\s+cầu|khối\s+cầu|tam\s+giác|hình\s+vuông|hình\s+chữ\s+nhật|hình\s+thang|hình\s+bình\s+hành)\b",
+    re.IGNORECASE,
+)
+_QUESTION_GOAL_RE = re.compile(
+    r"(?:\b(?:tính|xác\s+định|chứng\s+minh|tìm|hỏi|dựng\s+thiết\s+diện|tính\s+thể\s+tích|"
+    r"tính\s+khoảng\s+cách|tính\s+góc|tính\s+diện\s+tích|tính\s+bán\s+kính|tỉ\s+số\s+thể\s+tích)\b|\?)",
+    re.IGNORECASE,
+)
+_CONTINUATION_GEOMETRY_CUE_RE = re.compile(
+    r"\b(?:tính|chứng\s+minh|xác\s+định|tìm|khoảng\s+cách|thể\s+tích|góc\s+giữa|diện\s+tích|bán\s+kính|"
+    r"trung\s+điểm|trọng\s+tâm|hình\s+chiếu|vuông\s+góc|song\s+song|mặt\s+phẳng|đường\s+thẳng|"
+    r"cạnh\s+bên|cạnh\s+đáy|thiết\s+diện|giao\s+tuyến|giao\s+điểm)\b",
+    re.IGNORECASE,
+)
+_NON_GEOMETRY_DOMAIN_CUE_RE = re.compile(
+    r"\b(?:mảng|thuật\s+toán|quy\s+hoạch\s+động|cây\s+nhị\s+phân|đồ\s+thị\s+có\s+hướng|"
+    r"phản\s+ứng\s+hóa\s+học|điện\s+trở|dao\s+động\s+điều\s+hòa)\b",
+    re.IGNORECASE,
+)
+
+
+def _norm_compare_line(s: str) -> str:
+    return re.sub(r"[\s,.;:!?-]+", " ", s.strip().lower()).strip()
+
+
+def _split_clauses_or_lines(text: str) -> list[str]:
+    lines: list[str] = []
+    for raw_line in text.splitlines():
+        cleaned = raw_line.strip()
+        if not cleaned:
+            continue
+        parts = [p.strip() for p in re.split(r"(?<=[.?!])\s+", cleaned) if p.strip()]
+        lines.extend(parts if parts else [cleaned])
+    return lines
+
+
+def _segments_have_overlap(seg_a: str, seg_b: str) -> bool:
+    na = _norm_compare_line(seg_a)
+    nb = _norm_compare_line(seg_b)
+    if not na or not nb:
+        return False
+    if len(na) >= 12 and (na in nb or nb in na):
+        return True
+    clauses_a = [_norm_compare_line(c) for c in _split_clauses_or_lines(seg_a) if len(_norm_compare_line(c)) >= 10]
+    clauses_b = [_norm_compare_line(c) for c in _split_clauses_or_lines(seg_b) if len(_norm_compare_line(c)) >= 10]
+    return bool(set(clauses_a) & set(clauses_b))
+
+
+def merge_overlapping_problem_segments(segments: Sequence[str]) -> tuple[str, bool]:
+    """Ghép các đoạn đề từ nhiều ảnh theo đúng thứ tự, khử các dòng/mệnh đề trùng lặp ở ranh giới."""
+    cleaned_segs = [s.strip() for s in segments if s and s.strip()]
+    if not cleaned_segs:
+        return "", False
+    if len(cleaned_segs) == 1:
+        return cleaned_segs[0], False
+
+    deduplicated = False
+    acc_clauses: list[str] = []
+    acc_norms: list[str] = []
+
+    for seg in cleaned_segs:
+        seg_norm = _norm_compare_line(seg)
+        joined_acc_norm = " ".join(acc_norms)
+        if acc_norms and seg_norm and seg_norm in joined_acc_norm:
+            deduplicated = True
+            continue
+        if acc_norms and joined_acc_norm and joined_acc_norm in seg_norm:
+            deduplicated = True
+            acc_clauses = _split_clauses_or_lines(seg)
+            acc_norms = [_norm_compare_line(c) for c in acc_clauses]
+            continue
+
+        seg_clauses = _split_clauses_or_lines(seg)
+        seg_clause_norms = [_norm_compare_line(c) for c in seg_clauses]
+
+        # Kiểm tra khớp hậu tố của acc với tiền tố của seg.
+        overlap_k = 0
+        max_k = min(len(acc_norms), len(seg_clause_norms))
+        for k in range(max_k, 0, -1):
+            if acc_norms[-k:] == seg_clause_norms[:k]:
+                overlap_k = k
+                break
+
+        if overlap_k > 0:
+            deduplicated = True
+            for c, cn in zip(seg_clauses[overlap_k:], seg_clause_norms[overlap_k:]):
+                if cn and cn not in acc_norms:
+                    acc_clauses.append(c)
+                    acc_norms.append(cn)
+        else:
+            for c, cn in zip(seg_clauses, seg_clause_norms):
+                if cn and len(cn) >= 12 and cn in acc_norms:
+                    deduplicated = True
+                    continue
+                acc_clauses.append(c)
+                acc_norms.append(cn)
+
+    return "\n".join(acc_clauses).strip(), deduplicated
+
+
+def _has_problem_question_or_goal(text: str) -> bool:
+    return bool(_QUESTION_GOAL_RE.search(text or ""))
+
+
+def _is_complete_standalone_problem(text: str) -> bool:
+    if not text or len(text.strip()) < 20:
+        return False
+    return bool(_SOLID_OPENING_RE.search(text)) and _has_problem_question_or_goal(text)
+
+
+def _extract_problem_header_label(text: str, *, fallback_index: int, filename: str | None = None) -> str:
+    m = _EXPLICIT_PROBLEM_HEADER_RE.match(text or "")
+    suffix = f" ({filename})" if filename else ""
+    if m:
+        raw_head = m.group(0).strip().rstrip(":.-)")
+        return f"{raw_head}{suffix}"
+    return f"Bài {fallback_index}{suffix}"
+
+
+@dataclass(frozen=True)
+class _TextSegmentUnit:
+    attachment_id: str
+    source_attachment_ids: tuple[str, ...]
+    order_index: int
+    filename: str | None
+    source_kind: Literal["image", "pdf", "docx"]
+    problem_text: str
+    has_figure: bool
+    needs_confirmation: bool
+    flag_messages: tuple[str, ...]
+    uncertain_tokens: tuple[dict[str, Any], ...]
+    missing_regions: tuple[str, ...]
+    provenance: dict[str, Any]
+
+
+def _are_independent_problem_units(units: Sequence[_TextSegmentUnit]) -> bool:
+    """Phân định nhiều ảnh là các bài độc lập (§10.3) hay các phần của cùng 1 bài (§10.1)."""
+    if len(units) < 2:
+        return False
+
+    # Nếu hai đoạn liên tiếp trùng lặp một phần văn bản -> chụp chồng lấn của cùng 1 bài.
+    for idx in range(len(units) - 1):
+        if _segments_have_overlap(units[idx].problem_text, units[idx + 1].problem_text):
+            return False
+
+    # Nếu đoạn phía sau mở đầu bằng nhãn Bài/Câu/Ví dụ tường minh và đoạn đầu đã có câu hỏi hoặc mở đầu bài riêng.
+    for idx in range(1, len(units)):
+        m_curr = _EXPLICIT_PROBLEM_HEADER_RE.match(units[idx].problem_text)
+        if m_curr:
+            m_prev = _EXPLICIT_PROBLEM_HEADER_RE.match(units[0].problem_text)
+            if not m_prev or m_prev.group(1).lower() != m_curr.group(1).lower():
+                return True
+
+    # Nếu có >= 2 đoạn mà mỗi đoạn đều tự giới thiệu khối hình ("Cho hình ...") VÀ tự có câu hỏi ("Tính...") -> các bài độc lập.
+    standalone_count = sum(1 for u in units if _is_complete_standalone_problem(u.problem_text))
+    if standalone_count >= 2:
+        return True
+
+    return False
+
+
+def _stamp_single_outcome(
+    outcome: UnifiedPrepareOutcome,
+    *,
+    attachment_id: str,
+    request_id: str | None,
+) -> UnifiedPrepareOutcome:
+    stamped_candidates = tuple(
+        replace(
+            c,
+            source_attachment_ids=c.source_attachment_ids or (attachment_id,),
+        )
+        for c in outcome.candidates
+    )
+    prov = dict(outcome.provenance)
+    if "source_attachment_ids" not in prov:
+        prov["source_attachment_ids"] = [attachment_id]
+    if request_id is not None:
+        prov["request_id"] = request_id
+    return replace(
+        outcome,
+        candidates=stamped_candidates,
+        provenance=prov,
+        request_id=request_id,
+    )
+
+
+async def prepare_unified_input(
+    *,
+    content: str | None = None,
+    declared_mime: str | None = None,
+    filename: str | None = None,
+    attachments: Sequence[Mapping[str, Any]] | None = None,
+    request_id: str | None = None,
+    user_text: str | None = None,
+    selected_candidate_id: str | None = None,
+    api_key: str | None = None,
+    cache_version: str | None = None,
+) -> UnifiedPrepareOutcome:
+    """Điểm vào thống nhất cho 1 hoặc nhiều tệp đính kèm khi người học bấm "Dựng hình"."""
+    t0 = time.perf_counter()
+
+    # 1. Tương thích ngược với luồng 1 tệp truyền thống (`attachments` trống hoặc không gửi).
+    if attachments is None:
+        if not content:
+            raise InputPrepareRejected("EMPTY_ATTACHMENT_PAYLOAD", "Thiếu dữ liệu tệp đính kèm.")
+        single_out = await _prepare_single_attachment(
+            content=content,
+            declared_mime=declared_mime,
+            filename=filename,
+            user_text=user_text,
+            selected_candidate_id=selected_candidate_id,
+            api_key=api_key,
+            cache_version=cache_version,
+        )
+        return _stamp_single_outcome(single_out, attachment_id="att-1", request_id=request_id)
+
+    if len(attachments) == 0:
+        if content:
+            single_out = await _prepare_single_attachment(
+                content=content,
+                declared_mime=declared_mime,
+                filename=filename,
+                user_text=user_text,
+                selected_candidate_id=selected_candidate_id,
+                api_key=api_key,
+                cache_version=cache_version,
+            )
+            return _stamp_single_outcome(single_out, attachment_id="att-1", request_id=request_id)
+        raise InputPrepareRejected("EMPTY_ATTACHMENT_PAYLOAD", "Danh sách tệp đính kèm trống.")
+
+    if len(attachments) > MAX_PREPARE_ATTACHMENTS:
+        raise InputPrepareRejected(
+            "TOO_MANY_ATTACHMENTS",
+            f"Chỉ hỗ trợ tối đa {MAX_PREPARE_ATTACHMENTS} tệp đính kèm trong một lần chuẩn bị.",
+        )
+
+    # Kiểm tra trùng `attachment_id` và chuẩn hóa thứ tự `order_index`.
+    seen_ids: set[str] = set()
+    indexed_attachments: list[tuple[int, int, Mapping[str, Any]]] = []
+    for idx, att in enumerate(attachments):
+        aid = str(att.get("attachment_id") or "").strip()
+        if not aid:
+            raise InputPrepareRejected("INVALID_ATTACHMENT_ID", "Thiếu attachment_id cho tệp đính kèm.")
+        if aid in seen_ids:
+            raise InputPrepareRejected("DUPLICATE_ATTACHMENT_ID", f"Trùng lặp attachment_id: {aid}.")
+        seen_ids.add(aid)
+        order_idx = int(att.get("order_index", idx))
+        indexed_attachments.append((order_idx, idx, att))
+
+    indexed_attachments.sort(key=lambda item: (item[0], item[1]))
+    ordered_attachments = [item[2] for item in indexed_attachments]
+
+    # Xác thực kích thước và định dạng của toàn bộ tệp đính kèm trước khi xử lý.
+    total_raw_bytes = 0
+    decoded_cache: dict[str, tuple[bytes, Literal["image", "pdf", "docx"], str]] = {}
+    for att in ordered_attachments:
+        aid = str(att["attachment_id"]).strip()
+        raw_bytes = decode_attachment_base64(str(att.get("content") or ""))
+        total_raw_bytes += len(raw_bytes)
+        if total_raw_bytes > MAX_TOTAL_ATTACHMENT_BYTES:
+            raise InputPrepareRejected(
+                "TOTAL_ATTACHMENTS_TOO_LARGE",
+                "Tổng dung lượng các tệp đính kèm vượt quá giới hạn 25 MB.",
+            )
+        kind, actual_mime = sniff_input_file_kind(
+            raw_bytes,
+            att.get("mime_type"),
+            att.get("filename"),
+        )
+        decoded_cache[aid] = (raw_bytes, kind, actual_mime)
+
+    # Nếu chỉ có đúng 1 phần tử trong `attachments`, giữ nguyên hành vi 1 tệp kèm `source_attachment_ids`.
+    if len(ordered_attachments) == 1:
+        only_att = ordered_attachments[0]
+        only_id = str(only_att["attachment_id"]).strip()
+        inner_sel = selected_candidate_id
+        if inner_sel and inner_sel.startswith(f"{only_id}:"):
+            inner_sel = inner_sel[len(only_id) + 1 :]
+            if inner_sel == "problem-1":
+                inner_sel = None
+        single_out = await _prepare_single_attachment(
+            content=str(only_att.get("content") or ""),
+            declared_mime=only_att.get("mime_type"),
+            filename=only_att.get("filename"),
+            user_text=user_text,
+            selected_candidate_id=inner_sel,
+            api_key=api_key,
+            cache_version=cache_version,
+        )
+        return _stamp_single_outcome(single_out, attachment_id=only_id, request_id=request_id)
+
+    # ── LUỒNG ĐA ẢNH / ĐA TỆP (`len(ordered_attachments) >= 2`) ───────────────
+    directive = parse_user_composer_instruction(user_text)
+
+    # Nếu `selected_candidate_id` chỉ định rõ một `attachment_id` cụ thể (`{aid}:{inner_id}`),
+    # xác định xem có phải người học vừa chọn 1 bài từ danh sách `needs_selection` đa ảnh không.
+    targeted_att_id: str | None = None
+    targeted_inner_id: str | None = None
+    if selected_candidate_id and ":" in selected_candidate_id:
+        prefix, rest = selected_candidate_id.split(":", 1)
+        if prefix in seen_ids:
+            targeted_att_id = prefix
+            targeted_inner_id = None if rest == "problem-1" else rest
+
+    seen_image_hashes: dict[str, str] = {}
+    duplicate_Target_map: dict[str, list[str]] = {}
+    deduplicated_attachment_ids: list[str] = []
+    diagram_only_ids: list[str] = []
+    multi_problem_candidates: list[UnifiedCandidateItem] = []
+    text_units: list[_TextSegmentUnit] = []
+
+    total_vlm_calls = 0
+    total_vlm_payload_bytes = 0
+    total_uncropped_bytes = 0
+    any_used_vlm = False
+    primary_source_kind: Literal["image", "pdf", "docx"] = decoded_cache[
+        str(ordered_attachments[0]["attachment_id"]).strip()
+    ][1]
+
+    for pos, att in enumerate(ordered_attachments):
+        aid = str(att["attachment_id"]).strip()
+        # Nếu người học đã chọn đích danh một bài ở `targeted_att_id` khác, bỏ qua việc gọi VLM trên các ảnh bài độc lập khác.
+        if targeted_att_id is not None and aid != targeted_att_id:
+            continue
+
+        raw_bytes, kind, actual_mime = decoded_cache[aid]
+        if kind == "image":
+            try:
+                norm = normalize_image(raw_bytes, actual_mime)
+            except ImageRejected as err:
+                raise InputPrepareRejected(err.code, str(err)) from err
+            if norm.sha256 in seen_image_hashes:
+                orig_id = seen_image_hashes[norm.sha256]
+                duplicate_Target_map.setdefault(orig_id, []).append(aid)
+                deduplicated_attachment_ids.append(aid)
+                continue
+            seen_image_hashes[norm.sha256] = aid
+
+        inner_sel_for_att = targeted_inner_id if aid == targeted_att_id else None
+        out = await _prepare_single_attachment(
+            content=str(att.get("content") or ""),
+            declared_mime=att.get("mime_type"),
+            filename=att.get("filename"),
+            user_text=user_text if targeted_att_id == aid else None,
+            selected_candidate_id=inner_sel_for_att,
+            api_key=api_key,
+            cache_version=cache_version,
+        )
+
+        m = out.metrics
+        total_vlm_calls += int(m.get("vlm_calls", 0))
+        total_vlm_payload_bytes += int(m.get("vlm_payload_bytes", 0))
+        total_uncropped_bytes += int(m.get("uncropped_baseline_bytes", 0))
+        any_used_vlm = any_used_vlm or bool(m.get("used_vlm"))
+
+        # Phân loại kết quả từng tệp:
+        if out.status == "rejected":
+            # Ảnh chỉ có hình vẽ (`MISSING_PROBLEM_TEXT`): giữ lại để ghép với ảnh chữ cùng bài (§10.1, §13.5).
+            if out.reason_code == "MISSING_PROBLEM_TEXT":
+                diagram_only_ids.append(aid)
+                continue
+
+            # Trường hợp mảnh đề tiếp nối (vd: chỉ chứa câu hỏi "Tính khoảng cách từ A đến (SBC)...")
+            # bị bộ nhận miền đơn lẻ đánh dấu `UNSUPPORTED_PROBLEM` vì phần "Cho hình chóp..." nằm ở ảnh trước:
+            cand_text = (out.problem_text or "").strip()
+            if (
+                out.reason_code == "UNSUPPORTED_PROBLEM"
+                and len(cand_text) >= 10
+                and _CONTINUATION_GEOMETRY_CUE_RE.search(cand_text)
+                and not _NON_GEOMETRY_DOMAIN_CUE_RE.search(cand_text)
+            ):
+                ext_conf = float(out.provenance.get("extraction_confidence", 0.9))
+                needs_conf = bool(
+                    out.uncertain_tokens
+                    or out.missing_regions
+                    or ext_conf < 0.7
+                )
+                text_units.append(
+                    _TextSegmentUnit(
+                        attachment_id=aid,
+                        source_attachment_ids=(aid,),
+                        order_index=int(att.get("order_index", pos)),
+                        filename=att.get("filename"),
+                        source_kind=out.source_kind,
+                        problem_text=cand_text,
+                        has_figure=bool(out.provenance.get("has_associated_figure")),
+                        needs_confirmation=needs_conf,
+                        flag_messages=out.flag_messages,
+                        uncertain_tokens=out.uncertain_tokens,
+                        missing_regions=out.missing_regions,
+                        provenance=out.provenance,
+                    )
+                )
+                continue
+
+            # Các lỗi từ chối thực sự (ảnh mờ không đọc được, ngoài miền, rỗng): fail-closed ngay!
+            prov_rej = {
+                **out.provenance,
+                "failed_attachment_id": aid,
+                "source_attachment_ids": [aid],
+            }
+            return replace(
+                out,
+                provenance=prov_rej,
+                metrics={
+                    "vlm_calls": total_vlm_calls,
+                    "used_vlm": any_used_vlm,
+                    "raw_input_bytes": total_raw_bytes,
+                    "vlm_payload_bytes": total_vlm_payload_bytes,
+                    "uncropped_baseline_bytes": total_uncropped_bytes,
+                    "processing_ms": round((time.perf_counter() - t0) * 1000.0, 2),
+                },
+                request_id=request_id,
+            )
+
+        if out.status == "needs_selection":
+            att_label = att.get("filename") or f"Ảnh {pos + 1}"
+            for c in out.candidates:
+                prefixed_id = c.candidate_id if c.candidate_id.startswith(f"{aid}:") else f"{aid}:{c.candidate_id}"
+                multi_problem_candidates.append(
+                    UnifiedCandidateItem(
+                        candidate_id=prefixed_id,
+                        label=f"{c.label} · {att_label}",
+                        preview_snippet=c.preview_snippet,
+                        preview_data_url=c.preview_data_url,
+                        page_number=c.page_number,
+                        has_figure=c.has_figure,
+                        problem_text=c.problem_text,
+                        source_attachment_ids=(aid,),
+                    )
+                )
+            continue
+
+        # `status` là `ready` hoặc `needs_confirmation`:
+        text_units.append(
+            _TextSegmentUnit(
+                attachment_id=aid,
+                source_attachment_ids=(aid,),
+                order_index=int(att.get("order_index", pos)),
+                filename=att.get("filename"),
+                source_kind=out.source_kind,
+                problem_text=out.problem_text.strip(),
+                has_figure=bool(out.provenance.get("has_associated_figure")),
+                needs_confirmation=(out.status == "needs_confirmation"),
+                flag_messages=out.flag_messages,
+                uncertain_tokens=out.uncertain_tokens,
+                missing_regions=out.missing_regions,
+                provenance=out.provenance,
+            )
+        )
+
+    # Gắn các `attachment_id` ảnh trùng lặp vào `source_attachment_ids` của đơn vị gốc tương ứng.
+    if duplicate_Target_map:
+        updated_units: list[_TextSegmentUnit] = []
+        for u in text_units:
+            dups = duplicate_Target_map.get(u.attachment_id, [])
+            if dups:
+                updated_units.append(
+                    replace(u, source_attachment_ids=tuple(list(u.source_attachment_ids) + dups))
+                )
+            else:
+                updated_units.append(u)
+        text_units = updated_units
+
+    common_metrics = {
+        "vlm_calls": total_vlm_calls,
+        "used_vlm": any_used_vlm,
+        "raw_input_bytes": total_raw_bytes,
+        "vlm_payload_bytes": total_vlm_payload_bytes,
+        "uncropped_baseline_bytes": total_uncropped_bytes,
+    }
+
+    # Trường hợp 0: Không có đoạn văn bản nào mà chỉ toàn ảnh hình vẽ (`diagram_only_ids`).
+    if not text_units and not multi_problem_candidates:
+        if diagram_only_ids and directive.is_standalone_problem:
+            return UnifiedPrepareOutcome(
+                status="ready",
+                source_kind=primary_source_kind,
+                problem_text=directive.raw_text,
+                provenance={
+                    "source_attachment_ids": list(diagram_only_ids),
+                    "diagram_attachment_ids": list(diagram_only_ids),
+                    "has_associated_figure": True,
+                    "diagram_paired_with_user_text": True,
+                    "user_directive_applied": True,
+                },
+                metrics={
+                    **common_metrics,
+                    "processing_ms": round((time.perf_counter() - t0) * 1000.0, 2),
+                },
+                request_id=request_id,
+            )
+        return UnifiedPrepareOutcome(
+            status="rejected",
+            source_kind=primary_source_kind,
+            learner_message=REJECTION_MESSAGES["MISSING_PROBLEM_TEXT"],
+            reason_code="MISSING_PROBLEM_TEXT",
+            provenance={
+                "source_attachment_ids": list(diagram_only_ids),
+                "diagram_attachment_ids": list(diagram_only_ids),
+                "has_associated_figure": bool(diagram_only_ids),
+            },
+            metrics={
+                **common_metrics,
+                "processing_ms": round((time.perf_counter() - t0) * 1000.0, 2),
+            },
+            request_id=request_id,
+        )
+
+    # Trường hợp 1: Có ít nhất một tệp chứa nhiều bài (`multi_problem_candidates` khác rỗng).
+    if multi_problem_candidates:
+        combined_candidates: list[UnifiedCandidateItem] = list(multi_problem_candidates)
+        for idx, u in enumerate(text_units):
+            combined_candidates.append(
+                UnifiedCandidateItem(
+                    candidate_id=f"{u.attachment_id}:problem-1",
+                    label=_extract_problem_header_label(
+                        u.problem_text, fallback_index=idx + 1, filename=u.filename
+                    ),
+                    preview_snippet=u.problem_text[:140],
+                    preview_data_url=None,
+                    page_number=None,
+                    has_figure=u.has_figure,
+                    problem_text=u.problem_text,
+                    source_attachment_ids=u.source_attachment_ids,
+                )
+            )
+        all_sids = [str(a["attachment_id"]).strip() for a in ordered_attachments]
+        return UnifiedPrepareOutcome(
+            status="needs_selection",
+            source_kind=primary_source_kind,
+            learner_message=(
+                f"Phát hiện {len(combined_candidates)} bài toán trong các ảnh đã gửi. "
+                "Em chạm chọn bài muốn dựng nhé."
+            ),
+            reason_code="MULTIPLE_PROBLEMS_DETECTED",
+            candidates=tuple(combined_candidates),
+            provenance={
+                "source_attachment_ids": all_sids,
+                "diagram_attachment_ids": list(diagram_only_ids),
+                "has_associated_figure": any(c.has_figure for c in combined_candidates) or bool(diagram_only_ids),
+            },
+            metrics={
+                **common_metrics,
+                "processing_ms": round((time.perf_counter() - t0) * 1000.0, 2),
+            },
+            request_id=request_id,
+        )
+
+    # Trường hợp 2: Nhiều ảnh thuộc các bài toán độc lập (§10.3).
+    if targeted_att_id is None and _are_independent_problem_units(text_units):
+        # Kiểm tra nếu người học đã chọn bằng `selected_candidate_id` không có prefix hoặc chỉ dẫn `Bài X` trong ô nhập:
+        chosen_unit: _TextSegmentUnit | None = None
+        if selected_candidate_id:
+            for u in text_units:
+                if selected_candidate_id in (u.attachment_id, f"{u.attachment_id}:problem-1"):
+                    chosen_unit = u
+                    break
+        elif directive.target_problem_index is not None and 0 <= directive.target_problem_index < len(text_units):
+            chosen_unit = text_units[directive.target_problem_index]
+
+        if chosen_unit is None:
+            indep_candidates: list[UnifiedCandidateItem] = []
+            for idx, u in enumerate(text_units):
+                indep_candidates.append(
+                    UnifiedCandidateItem(
+                        candidate_id=f"{u.attachment_id}:problem-1",
+                        label=_extract_problem_header_label(
+                            u.problem_text, fallback_index=idx + 1, filename=u.filename
+                        ),
+                        preview_snippet=u.problem_text[:140],
+                        preview_data_url=None,
+                        page_number=None,
+                        has_figure=u.has_figure or bool(diagram_only_ids),
+                        problem_text=u.problem_text,
+                        source_attachment_ids=u.source_attachment_ids,
+                    )
+                )
+            all_sids = [str(a["attachment_id"]).strip() for a in ordered_attachments]
+            return UnifiedPrepareOutcome(
+                status="needs_selection",
+                source_kind=primary_source_kind,
+                learner_message=(
+                    f"Phát hiện {len(indep_candidates)} bài toán độc lập từ các ảnh đã đính kèm. "
+                    "Em chạm chọn đúng bài muốn dựng nhé."
+                ),
+                reason_code="MULTIPLE_PROBLEMS_DETECTED",
+                candidates=tuple(indep_candidates),
+                provenance={
+                    "source_attachment_ids": all_sids,
+                    "diagram_attachment_ids": list(diagram_only_ids),
+                    "has_associated_figure": any(u.has_figure for u in text_units) or bool(diagram_only_ids),
+                    "multi_image_mode": "independent_problems",
+                },
+                metrics={
+                    **common_metrics,
+                    "processing_ms": round((time.perf_counter() - t0) * 1000.0, 2),
+                },
+                request_id=request_id,
+            )
+
+        text_units = [chosen_unit]
+
+    # Trường hợp 3: Một bài toán trải trên nhiều ảnh (hoặc 1 bài đã chọn + ảnh hình vẽ đi kèm, §10.1).
+    merged_raw_text, deduplicated_overlap = merge_overlapping_problem_segments(
+        [u.problem_text for u in text_units]
+    )
+    final_text = merge_supplemental_text(merged_raw_text, directive)
+
+    source_ids_ordered: list[str] = []
+    for u in text_units:
+        for sid in u.source_attachment_ids:
+            if sid not in source_ids_ordered:
+                source_ids_ordered.append(sid)
+    if targeted_att_id is None:
+        for did in diagram_only_ids:
+            if did not in source_ids_ordered:
+                source_ids_ordered.append(did)
+
+    has_figure_combined = any(u.has_figure for u in text_units) or bool(diagram_only_ids)
+    combined_flags: list[str] = []
+    combined_uncertain: list[dict[str, Any]] = []
+    combined_missing: list[str] = []
+    for u in text_units:
+        for f in u.flag_messages:
+            if f not in combined_flags:
+                combined_flags.append(f)
+        for ut in u.uncertain_tokens:
+            combined_uncertain.append(ut)
+        for mr in u.missing_regions:
+            if mr not in combined_missing:
+                combined_missing.append(mr)
+
+    prov_combined: dict[str, Any] = {
+        "source_attachment_ids": source_ids_ordered,
+        "diagram_attachment_ids": list(diagram_only_ids) if targeted_att_id is None else [],
+        "deduplicated_attachment_ids": deduplicated_attachment_ids,
+        "deduplicated_overlap": deduplicated_overlap or bool(deduplicated_attachment_ids),
+        "has_associated_figure": has_figure_combined,
+        "multi_image_merged": len(text_units) > 1 or bool(diagram_only_ids) or bool(deduplicated_attachment_ids),
+        "supplemental_merged": bool(directive.supplemental_text) and final_text != merged_raw_text,
+    }
+    if targeted_att_id is not None:
+        prov_combined["selected_candidate_id"] = selected_candidate_id
+
+    if detect_domain(final_text) != DOMAIN_HINH_HOC:
+        return UnifiedPrepareOutcome(
+            status="rejected",
+            source_kind=primary_source_kind,
+            problem_text=final_text,
+            learner_message=REJECTION_MESSAGES["UNSUPPORTED_PROBLEM"],
+            reason_code="UNSUPPORTED_PROBLEM",
+            provenance=prov_combined,
+            metrics={
+                **common_metrics,
+                "processing_ms": round((time.perf_counter() - t0) * 1000.0, 2),
+            },
+            request_id=request_id,
+        )
+
+    # Kiểm tra độ đầy đủ của đề ghép từ nhiều ảnh (§10.1): nếu vẫn thiếu phần câu hỏi/yêu cầu, không tự suy diễn mà trả `needs_confirmation`.
+    if not _has_problem_question_or_goal(final_text):
+        incomplete_msg = (
+            "Đề bài ghép từ các ảnh hiện chưa có câu hỏi hoặc yêu cầu cần tính/chứng minh. "
+            "Em kiểm tra và bổ sung phần còn thiếu trước khi dựng hình nhé."
+        )
+        if incomplete_msg not in combined_flags:
+            combined_flags.insert(0, incomplete_msg)
+        missing_q = "Thiếu câu hỏi hoặc yêu cầu kết thúc đề bài"
+        if missing_q not in combined_missing:
+            combined_missing.append(missing_q)
+        return UnifiedPrepareOutcome(
+            status="needs_confirmation",
+            source_kind=primary_source_kind,
+            problem_text=final_text,
+            learner_message=incomplete_msg,
+            reason_code="INCOMPLETE_MULTI_IMAGE_PROBLEM",
+            flag_messages=tuple(combined_flags),
+            uncertain_tokens=tuple(combined_uncertain),
+            missing_regions=tuple(combined_missing),
+            provenance=prov_combined,
+            metrics={
+                **common_metrics,
+                "processing_ms": round((time.perf_counter() - t0) * 1000.0, 2),
+            },
+            request_id=request_id,
+        )
+
+    # Bảo toàn trạng thái `needs_confirmation` nếu bất kỳ ảnh thành phần nào có độ tin cậy thấp hoặc ký hiệu chưa chắc chắn (§13.11).
+    if any(u.needs_confirmation for u in text_units) or combined_uncertain or combined_missing:
+        lead_msg = (
+            combined_flags[0]
+            if combined_flags
+            else "Có ký hiệu đọc chưa chắc chắn trong các ảnh đã chụp — em kiểm tra nhanh trước khi dựng."
+        )
+        return UnifiedPrepareOutcome(
+            status="needs_confirmation",
+            source_kind=primary_source_kind,
+            problem_text=final_text,
+            learner_message=lead_msg,
+            reason_code="EXTRACTION_NEEDS_CONFIRMATION",
+            flag_messages=tuple(combined_flags),
+            uncertain_tokens=tuple(combined_uncertain),
+            missing_regions=tuple(combined_missing),
+            provenance=prov_combined,
+            metrics={
+                **common_metrics,
+                "processing_ms": round((time.perf_counter() - t0) * 1000.0, 2),
+            },
+            request_id=request_id,
+        )
+
+    return UnifiedPrepareOutcome(
+        status="ready",
+        source_kind=primary_source_kind,
+        problem_text=final_text,
+        provenance=prov_combined,
+        metrics={
+            **common_metrics,
+            "processing_ms": round((time.perf_counter() - t0) * 1000.0, 2),
+        },
+        request_id=request_id,
     )
