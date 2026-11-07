@@ -1,0 +1,767 @@
+{
+  "schema": "unified-problem-input-browser-check/1",
+  "commit": "68a795b0928c2f451829e95e493878262fc7655e",
+  "chay_luc": "2026-11-07T11:33:32.574Z",
+  "BANG_CHUNG": "FIXTURE_UI — /api/input/prepare và /api/analyze bị chặn ở biên mạng; máy ảnh GIẢ LẬP (getUserMedia + enumerateDevices qua canvas.captureStream)",
+  "APPLICATION_LLM_CALLS": 0,
+  "REAL_CAMERA_DEVICE_VERIFIED": "NO",
+  "LIVE_GEMINI_IMAGE_EXTRACTION_VERIFIED": "NO",
+  "CAMERA_VERIFICATION_NOTE": "REAL_DEVICE_CAMERA_NOT_VERIFIED",
+  "ca": [
+    {
+      "khung": "1440x900@1",
+      "cham": false,
+      "kiem": {
+        "A1_CAMERA_TOI_GIAN_TRUC_TIEP": {
+          "dat": true,
+          "chiTiet": {
+            "camLucTaiTrang": 0,
+            "man": "camera",
+            "tieuDe": "Chụp ảnh đề bài",
+            "focusTrong": true,
+            "dialogW": 560,
+            "shutterW": 132,
+            "shutterH": 38,
+            "discW": 0,
+            "discH": 0,
+            "shutterLechTam": 0,
+            "thuTuTraiPhai": true,
+            "calls": 1,
+            "c0": {
+              "video": {
+                "width": {
+                  "ideal": 2560
+                },
+                "height": {
+                  "ideal": 1920
+                }
+              },
+              "audio": false
+            }
+          }
+        },
+        "A2_CHUP_TU_DINH_KEM_KHONG_MAN_CROP_KHONG_GOI_AI": {
+          "dat": true,
+          "chiTiet": {
+            "calls": 2,
+            "c1": {
+              "video": {
+                "deviceId": {
+                  "exact": "cam-2"
+                },
+                "width": {
+                  "ideal": 2560
+                },
+                "height": {
+                  "ideal": 1920
+                }
+              },
+              "audio": false
+            },
+            "ended": true,
+            "khongCoManCrop": true,
+            "giuChuGoTay": "Hình vẽ nằm trong file, dữ kiện bổ sung là SA = 4",
+            "apiTruocDungHinh": 0
+          }
+        },
+        "C_CHON_ANH_PDF_DOCX_DOI_XOA_KHONG_RO_URL_KHONG_GOI_AI": {
+          "dat": true,
+          "chiTiet": {
+            "moXemTruoc": true,
+            "daDoiSangPdf": true,
+            "daDoiSangDocx": true,
+            "daXoaChip": true,
+            "daChonAnh": true,
+            "urlSauKhiXoaAnh": 0,
+            "urlConSong": 0,
+            "chu": "Hình vẽ nằm trong file, dữ kiện bổ sung là SA = 4",
+            "apiTruocDungHinh": 0
+          }
+        },
+        "D_KET_HOP_CHU_VA_TEP_DUNG_SCENE3D_KHONG_ANH_HUONG_BUOC_DUNG": {
+          "dat": true,
+          "chiTiet": {
+            "soPrep": 1,
+            "soAna": 1,
+            "prep0": {
+              "url": "/api/input/prepare",
+              "len": 1048,
+              "ts": 1794051216530,
+              "filename": "de-chop-sabcd.docx",
+              "mime": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+              "userText": "Hình vẽ nằm trong file, dữ kiện bổ sung là SA = 4",
+              "selectedCandidateId": null,
+              "contentLen": 852
+            },
+            "ana0": {
+              "url": "/api/analyze",
+              "len": 169,
+              "ts": 1794051216726,
+              "input": {
+                "type": "text",
+                "content": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với mặt phẳng đáy. Biết SA = 4. Tính thể tích khối chóp S.ABCD."
+              }
+            },
+            "coToolbar": true,
+            "khongConUndo": true,
+            "coReset": true,
+            "coXray": true,
+            "coNext": true
+          }
+        },
+        "B_MOT_CAMERA_VA_ESCAPE_DUNG_TRACK": {
+          "dat": true,
+          "chiTiet": {
+            "coNutDoi": false,
+            "daDong": true,
+            "ended": true,
+            "chu": "Hình vẽ nằm trong file, dữ kiện bổ sung là SA = 4"
+          }
+        },
+        "E_NHIEU_BAI_CHON_1_CHAM_KHONG_TU_DOAN": {
+          "dat": true,
+          "chiTiet": {
+            "hienChonBai": true,
+            "khongTuDoanBaiDau": true,
+            "lenCanhBai2": true,
+            "soAna": 1
+          }
+        },
+        "F1_HUY_DANG_CHAY_GIU_NGUYEN_TEP_VA_CHU": {
+          "dat": true,
+          "chiTiet": {
+            "hienNutHuy": true,
+            "dangChay": "false",
+            "conChip": true,
+            "conChu": "Hình vẽ nằm trong file, dữ kiện bổ sung là SA = 4",
+            "soAna": 0
+          }
+        },
+        "F2_LOC_NHIEU_VA_SUA_NOI_DUNG_CHUA_CHAC_CHAN": {
+          "dat": true,
+          "chiTiet": {
+            "hienXacNhan": true,
+            "khoaTruocTick": true,
+            "lenCanhSauSua": true
+          }
+        },
+        "G1_LOI_QUYEN_CAMERA_VA_FALLBACK_CHON_ANH": {
+          "dat": true,
+          "chiTiet": {
+            "loiQuyen": "Quyền truy cập máy ảnh đã bị từ chối. Em cấp quyền máy ảnh trong trình duyệt hoặc chọn ảnh từ máy.",
+            "bamNative": true,
+            "dinhKemTuFallback": true
+          }
+        },
+        "G2_PHAN_BIET_LOI_THIET_BI_VA_FALLBACK_MOBILE": {
+          "dat": true,
+          "chiTiet": {
+            "loiKhongCo": "Không tìm thấy máy ảnh trên thiết bị này. Em chọn ảnh từ máy nhé.",
+            "loiBan": "Máy ảnh hiện không khả dụng. Em thử lại hoặc chọn ảnh từ máy."
+          }
+        },
+        "H_503_AN_BIEN_KHONG_TRAN_NGANG_VA_BAY_TAB": {
+          "dat": true,
+          "chiTiet": {
+            "giuFocus": true,
+            "hienLoi503": true,
+            "khongLoBien": true,
+            "kCam": {
+              "thietBi": 1440,
+              "innerWidth": 1440,
+              "cuonNgang": 1440,
+              "ngoai": []
+            },
+            "kHome": {
+              "thietBi": 1440,
+              "innerWidth": 1440,
+              "cuonNgang": 1440,
+              "ngoai": []
+            }
+          }
+        },
+        "I_GO_TAY_THUAN_KHONG_HOI_QUY": {
+          "dat": true,
+          "chiTiet": {
+            "soYeuCau": 2,
+            "soAnalyze": 1
+          }
+        },
+        "Z_KHONG_LOI_CONSOLE_EXCEPTION": {
+          "dat": true,
+          "chiTiet": []
+        }
+      },
+      "loiTrang": [],
+      "dat": true
+    },
+    {
+      "khung": "1309x818@1.1",
+      "cham": false,
+      "kiem": {
+        "A1_CAMERA_TOI_GIAN_TRUC_TIEP": {
+          "dat": true,
+          "chiTiet": {
+            "camLucTaiTrang": 0,
+            "man": "camera",
+            "tieuDe": "Chụp ảnh đề bài",
+            "focusTrong": true,
+            "dialogW": 560,
+            "shutterW": 132,
+            "shutterH": 38,
+            "discW": 0,
+            "discH": 0,
+            "shutterLechTam": 0,
+            "thuTuTraiPhai": true,
+            "calls": 1,
+            "c0": {
+              "video": {
+                "width": {
+                  "ideal": 2560
+                },
+                "height": {
+                  "ideal": 1920
+                }
+              },
+              "audio": false
+            }
+          }
+        },
+        "A2_CHUP_TU_DINH_KEM_KHONG_MAN_CROP_KHONG_GOI_AI": {
+          "dat": true,
+          "chiTiet": {
+            "calls": 2,
+            "c1": {
+              "video": {
+                "deviceId": {
+                  "exact": "cam-2"
+                },
+                "width": {
+                  "ideal": 2560
+                },
+                "height": {
+                  "ideal": 1920
+                }
+              },
+              "audio": false
+            },
+            "ended": true,
+            "khongCoManCrop": true,
+            "giuChuGoTay": "Hình vẽ nằm trong file, dữ kiện bổ sung là SA = 4",
+            "apiTruocDungHinh": 0
+          }
+        },
+        "C_CHON_ANH_PDF_DOCX_DOI_XOA_KHONG_RO_URL_KHONG_GOI_AI": {
+          "dat": true,
+          "chiTiet": {
+            "moXemTruoc": true,
+            "daDoiSangPdf": true,
+            "daDoiSangDocx": true,
+            "daXoaChip": true,
+            "daChonAnh": true,
+            "urlSauKhiXoaAnh": 0,
+            "urlConSong": 0,
+            "chu": "Hình vẽ nằm trong file, dữ kiện bổ sung là SA = 4",
+            "apiTruocDungHinh": 0
+          }
+        },
+        "D_KET_HOP_CHU_VA_TEP_DUNG_SCENE3D_KHONG_ANH_HUONG_BUOC_DUNG": {
+          "dat": true,
+          "chiTiet": {
+            "soPrep": 1,
+            "soAna": 1,
+            "prep0": {
+              "url": "/api/input/prepare",
+              "len": 1048,
+              "ts": 1794051243347,
+              "filename": "de-chop-sabcd.docx",
+              "mime": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+              "userText": "Hình vẽ nằm trong file, dữ kiện bổ sung là SA = 4",
+              "selectedCandidateId": null,
+              "contentLen": 852
+            },
+            "ana0": {
+              "url": "/api/analyze",
+              "len": 169,
+              "ts": 1794051243548,
+              "input": {
+                "type": "text",
+                "content": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với mặt phẳng đáy. Biết SA = 4. Tính thể tích khối chóp S.ABCD."
+              }
+            },
+            "coToolbar": true,
+            "khongConUndo": true,
+            "coReset": true,
+            "coXray": true,
+            "coNext": true
+          }
+        },
+        "B_MOT_CAMERA_VA_ESCAPE_DUNG_TRACK": {
+          "dat": true,
+          "chiTiet": {
+            "coNutDoi": false,
+            "daDong": true,
+            "ended": true,
+            "chu": "Hình vẽ nằm trong file, dữ kiện bổ sung là SA = 4"
+          }
+        },
+        "E_NHIEU_BAI_CHON_1_CHAM_KHONG_TU_DOAN": {
+          "dat": true,
+          "chiTiet": {
+            "hienChonBai": true,
+            "khongTuDoanBaiDau": true,
+            "lenCanhBai2": true,
+            "soAna": 1
+          }
+        },
+        "F1_HUY_DANG_CHAY_GIU_NGUYEN_TEP_VA_CHU": {
+          "dat": true,
+          "chiTiet": {
+            "hienNutHuy": true,
+            "dangChay": "false",
+            "conChip": true,
+            "conChu": "Hình vẽ nằm trong file, dữ kiện bổ sung là SA = 4",
+            "soAna": 0
+          }
+        },
+        "F2_LOC_NHIEU_VA_SUA_NOI_DUNG_CHUA_CHAC_CHAN": {
+          "dat": true,
+          "chiTiet": {
+            "hienXacNhan": true,
+            "khoaTruocTick": true,
+            "lenCanhSauSua": true
+          }
+        },
+        "G1_LOI_QUYEN_CAMERA_VA_FALLBACK_CHON_ANH": {
+          "dat": true,
+          "chiTiet": {
+            "loiQuyen": "Quyền truy cập máy ảnh đã bị từ chối. Em cấp quyền máy ảnh trong trình duyệt hoặc chọn ảnh từ máy.",
+            "bamNative": true,
+            "dinhKemTuFallback": true
+          }
+        },
+        "G2_PHAN_BIET_LOI_THIET_BI_VA_FALLBACK_MOBILE": {
+          "dat": true,
+          "chiTiet": {
+            "loiKhongCo": "Không tìm thấy máy ảnh trên thiết bị này. Em chọn ảnh từ máy nhé.",
+            "loiBan": "Máy ảnh hiện không khả dụng. Em thử lại hoặc chọn ảnh từ máy."
+          }
+        },
+        "H_503_AN_BIEN_KHONG_TRAN_NGANG_VA_BAY_TAB": {
+          "dat": true,
+          "chiTiet": {
+            "giuFocus": true,
+            "hienLoi503": true,
+            "khongLoBien": true,
+            "kCam": {
+              "thietBi": 1309,
+              "innerWidth": 1309,
+              "cuonNgang": 1309,
+              "ngoai": []
+            },
+            "kHome": {
+              "thietBi": 1309,
+              "innerWidth": 1309,
+              "cuonNgang": 1309,
+              "ngoai": []
+            }
+          }
+        },
+        "I_GO_TAY_THUAN_KHONG_HOI_QUY": {
+          "dat": true,
+          "chiTiet": {
+            "soYeuCau": 2,
+            "soAnalyze": 1
+          }
+        },
+        "Z_KHONG_LOI_CONSOLE_EXCEPTION": {
+          "dat": true,
+          "chiTiet": []
+        }
+      },
+      "loiTrang": [],
+      "dat": true
+    },
+    {
+      "khung": "768x1024@2",
+      "cham": true,
+      "kiem": {
+        "A1_CAMERA_TOI_GIAN_TRUC_TIEP": {
+          "dat": true,
+          "chiTiet": {
+            "camLucTaiTrang": 0,
+            "man": "camera",
+            "tieuDe": "Chụp ảnh đề bài",
+            "focusTrong": true,
+            "dialogW": 560,
+            "shutterW": 132,
+            "shutterH": 38,
+            "discW": 0,
+            "discH": 0,
+            "shutterLechTam": 0,
+            "thuTuTraiPhai": true,
+            "calls": 1,
+            "c0": {
+              "video": {
+                "facingMode": {
+                  "ideal": "environment"
+                },
+                "width": {
+                  "ideal": 2560
+                },
+                "height": {
+                  "ideal": 1920
+                }
+              },
+              "audio": false
+            }
+          }
+        },
+        "A2_CHUP_TU_DINH_KEM_KHONG_MAN_CROP_KHONG_GOI_AI": {
+          "dat": true,
+          "chiTiet": {
+            "calls": 2,
+            "c1": {
+              "video": {
+                "deviceId": {
+                  "exact": "cam-2"
+                },
+                "width": {
+                  "ideal": 2560
+                },
+                "height": {
+                  "ideal": 1920
+                }
+              },
+              "audio": false
+            },
+            "ended": true,
+            "khongCoManCrop": true,
+            "giuChuGoTay": "Hình vẽ nằm trong file, dữ kiện bổ sung là SA = 4",
+            "apiTruocDungHinh": 0
+          }
+        },
+        "C_CHON_ANH_PDF_DOCX_DOI_XOA_KHONG_RO_URL_KHONG_GOI_AI": {
+          "dat": true,
+          "chiTiet": {
+            "moXemTruoc": true,
+            "daDoiSangPdf": true,
+            "daDoiSangDocx": true,
+            "daXoaChip": true,
+            "daChonAnh": true,
+            "urlSauKhiXoaAnh": 0,
+            "urlConSong": 0,
+            "chu": "Hình vẽ nằm trong file, dữ kiện bổ sung là SA = 4",
+            "apiTruocDungHinh": 0
+          }
+        },
+        "D_KET_HOP_CHU_VA_TEP_DUNG_SCENE3D_KHONG_ANH_HUONG_BUOC_DUNG": {
+          "dat": true,
+          "chiTiet": {
+            "soPrep": 1,
+            "soAna": 1,
+            "prep0": {
+              "url": "/api/input/prepare",
+              "len": 1048,
+              "ts": 1794051271133,
+              "filename": "de-chop-sabcd.docx",
+              "mime": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+              "userText": "Hình vẽ nằm trong file, dữ kiện bổ sung là SA = 4",
+              "selectedCandidateId": null,
+              "contentLen": 852
+            },
+            "ana0": {
+              "url": "/api/analyze",
+              "len": 169,
+              "ts": 1794051271327,
+              "input": {
+                "type": "text",
+                "content": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với mặt phẳng đáy. Biết SA = 4. Tính thể tích khối chóp S.ABCD."
+              }
+            },
+            "coToolbar": true,
+            "khongConUndo": true,
+            "coReset": true,
+            "coXray": true,
+            "coNext": true
+          }
+        },
+        "B_MOT_CAMERA_VA_ESCAPE_DUNG_TRACK": {
+          "dat": true,
+          "chiTiet": {
+            "coNutDoi": false,
+            "daDong": true,
+            "ended": true,
+            "chu": "Hình vẽ nằm trong file, dữ kiện bổ sung là SA = 4"
+          }
+        },
+        "E_NHIEU_BAI_CHON_1_CHAM_KHONG_TU_DOAN": {
+          "dat": true,
+          "chiTiet": {
+            "hienChonBai": true,
+            "khongTuDoanBaiDau": true,
+            "lenCanhBai2": true,
+            "soAna": 1
+          }
+        },
+        "F1_HUY_DANG_CHAY_GIU_NGUYEN_TEP_VA_CHU": {
+          "dat": true,
+          "chiTiet": {
+            "hienNutHuy": true,
+            "dangChay": "false",
+            "conChip": true,
+            "conChu": "Hình vẽ nằm trong file, dữ kiện bổ sung là SA = 4",
+            "soAna": 0
+          }
+        },
+        "F2_LOC_NHIEU_VA_SUA_NOI_DUNG_CHUA_CHAC_CHAN": {
+          "dat": true,
+          "chiTiet": {
+            "hienXacNhan": true,
+            "khoaTruocTick": true,
+            "lenCanhSauSua": true
+          }
+        },
+        "G1_LOI_QUYEN_CAMERA_VA_FALLBACK_CHON_ANH": {
+          "dat": true,
+          "chiTiet": {
+            "loiQuyen": "Quyền truy cập máy ảnh đã bị từ chối. Em cấp quyền máy ảnh trong trình duyệt hoặc chọn ảnh từ máy.",
+            "bamNative": true,
+            "dinhKemTuFallback": true
+          }
+        },
+        "G2_PHAN_BIET_LOI_THIET_BI_VA_FALLBACK_MOBILE": {
+          "dat": true,
+          "chiTiet": {
+            "loiKhongCo": "Không tìm thấy máy ảnh trên thiết bị này. Em chọn ảnh từ máy nhé.",
+            "tuLuiThanhCong": true
+          }
+        },
+        "H_503_AN_BIEN_KHONG_TRAN_NGANG_VA_BAY_TAB": {
+          "dat": true,
+          "chiTiet": {
+            "giuFocus": true,
+            "hienLoi503": true,
+            "khongLoBien": true,
+            "kCam": {
+              "thietBi": 768,
+              "innerWidth": 768,
+              "cuonNgang": 768,
+              "ngoai": []
+            },
+            "kHome": {
+              "thietBi": 768,
+              "innerWidth": 768,
+              "cuonNgang": 768,
+              "ngoai": []
+            }
+          }
+        },
+        "I_GO_TAY_THUAN_KHONG_HOI_QUY": {
+          "dat": true,
+          "chiTiet": {
+            "soYeuCau": 2,
+            "soAnalyze": 1
+          }
+        },
+        "Z_KHONG_LOI_CONSOLE_EXCEPTION": {
+          "dat": true,
+          "chiTiet": []
+        }
+      },
+      "loiTrang": [],
+      "dat": true
+    },
+    {
+      "khung": "390x844@2",
+      "cham": true,
+      "kiem": {
+        "A1_CAMERA_TOI_GIAN_TRUC_TIEP": {
+          "dat": true,
+          "chiTiet": {
+            "camLucTaiTrang": 0,
+            "man": "camera",
+            "tieuDe": "Chụp ảnh đề bài",
+            "focusTrong": true,
+            "dialogW": 358,
+            "shutterW": 64,
+            "shutterH": 64,
+            "discW": 48,
+            "discH": 48,
+            "shutterLechTam": 0,
+            "thuTuTraiPhai": true,
+            "calls": 1,
+            "c0": {
+              "video": {
+                "facingMode": {
+                  "ideal": "environment"
+                },
+                "width": {
+                  "ideal": 2560
+                },
+                "height": {
+                  "ideal": 1920
+                }
+              },
+              "audio": false
+            }
+          }
+        },
+        "A2_CHUP_TU_DINH_KEM_KHONG_MAN_CROP_KHONG_GOI_AI": {
+          "dat": true,
+          "chiTiet": {
+            "calls": 2,
+            "c1": {
+              "video": {
+                "deviceId": {
+                  "exact": "cam-2"
+                },
+                "width": {
+                  "ideal": 2560
+                },
+                "height": {
+                  "ideal": 1920
+                }
+              },
+              "audio": false
+            },
+            "ended": true,
+            "khongCoManCrop": true,
+            "giuChuGoTay": "Hình vẽ nằm trong file, dữ kiện bổ sung là SA = 4",
+            "apiTruocDungHinh": 0
+          }
+        },
+        "C_CHON_ANH_PDF_DOCX_DOI_XOA_KHONG_RO_URL_KHONG_GOI_AI": {
+          "dat": true,
+          "chiTiet": {
+            "moXemTruoc": true,
+            "daDoiSangPdf": true,
+            "daDoiSangDocx": true,
+            "daXoaChip": true,
+            "daChonAnh": true,
+            "urlSauKhiXoaAnh": 0,
+            "urlConSong": 0,
+            "chu": "Hình vẽ nằm trong file, dữ kiện bổ sung là SA = 4",
+            "apiTruocDungHinh": 0
+          }
+        },
+        "D_KET_HOP_CHU_VA_TEP_DUNG_SCENE3D_KHONG_ANH_HUONG_BUOC_DUNG": {
+          "dat": true,
+          "chiTiet": {
+            "soPrep": 1,
+            "soAna": 1,
+            "prep0": {
+              "url": "/api/input/prepare",
+              "len": 1048,
+              "ts": 1794051299389,
+              "filename": "de-chop-sabcd.docx",
+              "mime": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+              "userText": "Hình vẽ nằm trong file, dữ kiện bổ sung là SA = 4",
+              "selectedCandidateId": null,
+              "contentLen": 852
+            },
+            "ana0": {
+              "url": "/api/analyze",
+              "len": 169,
+              "ts": 1794051299588,
+              "input": {
+                "type": "text",
+                "content": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với mặt phẳng đáy. Biết SA = 4. Tính thể tích khối chóp S.ABCD."
+              }
+            },
+            "coToolbar": true,
+            "khongConUndo": true,
+            "coReset": true,
+            "coXray": true,
+            "coNext": true
+          }
+        },
+        "B_MOT_CAMERA_VA_ESCAPE_DUNG_TRACK": {
+          "dat": true,
+          "chiTiet": {
+            "coNutDoi": false,
+            "daDong": true,
+            "ended": true,
+            "chu": "Hình vẽ nằm trong file, dữ kiện bổ sung là SA = 4"
+          }
+        },
+        "E_NHIEU_BAI_CHON_1_CHAM_KHONG_TU_DOAN": {
+          "dat": true,
+          "chiTiet": {
+            "hienChonBai": true,
+            "khongTuDoanBaiDau": true,
+            "lenCanhBai2": true,
+            "soAna": 1
+          }
+        },
+        "F1_HUY_DANG_CHAY_GIU_NGUYEN_TEP_VA_CHU": {
+          "dat": true,
+          "chiTiet": {
+            "hienNutHuy": true,
+            "dangChay": "false",
+            "conChip": true,
+            "conChu": "Hình vẽ nằm trong file, dữ kiện bổ sung là SA = 4",
+            "soAna": 0
+          }
+        },
+        "F2_LOC_NHIEU_VA_SUA_NOI_DUNG_CHUA_CHAC_CHAN": {
+          "dat": true,
+          "chiTiet": {
+            "hienXacNhan": true,
+            "khoaTruocTick": true,
+            "lenCanhSauSua": true
+          }
+        },
+        "G1_LOI_QUYEN_CAMERA_VA_FALLBACK_CHON_ANH": {
+          "dat": true,
+          "chiTiet": {
+            "loiQuyen": "Quyền truy cập máy ảnh đã bị từ chối. Em cấp quyền máy ảnh trong trình duyệt hoặc chọn ảnh từ máy.",
+            "bamNative": true,
+            "dinhKemTuFallback": true
+          }
+        },
+        "G2_PHAN_BIET_LOI_THIET_BI_VA_FALLBACK_MOBILE": {
+          "dat": true,
+          "chiTiet": {
+            "loiKhongCo": "Không tìm thấy máy ảnh trên thiết bị này. Em chọn ảnh từ máy nhé.",
+            "tuLuiThanhCong": true
+          }
+        },
+        "H_503_AN_BIEN_KHONG_TRAN_NGANG_VA_BAY_TAB": {
+          "dat": true,
+          "chiTiet": {
+            "giuFocus": true,
+            "hienLoi503": true,
+            "khongLoBien": true,
+            "kCam": {
+              "thietBi": 390,
+              "innerWidth": 390,
+              "cuonNgang": 390,
+              "ngoai": []
+            },
+            "kHome": {
+              "thietBi": 390,
+              "innerWidth": 390,
+              "cuonNgang": 390,
+              "ngoai": []
+            }
+          }
+        },
+        "I_GO_TAY_THUAN_KHONG_HOI_QUY": {
+          "dat": true,
+          "chiTiet": {
+            "soYeuCau": 2,
+            "soAnalyze": 1
+          }
+        },
+        "Z_KHONG_LOI_CONSOLE_EXCEPTION": {
+          "dat": true,
+          "chiTiet": []
+        }
+      },
+      "loiTrang": [],
+      "dat": true
+    }
+  ],
+  "dat": true
+}
