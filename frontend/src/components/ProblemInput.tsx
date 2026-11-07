@@ -288,8 +288,10 @@ export interface RunComposerSubmitOptions {
   canSubmit: boolean;
   lockRef: { current: boolean };
   abortRef?: { current: AbortController | null };
+  requestIdRef?: { current: string | null };
   problemText: string;
-  attachment: ComposerAttachmentItem | null;
+  attachment?: ComposerAttachmentItem | null;
+  attachments?: ComposerAttachmentItem[];
   health: ServerHealth | null | "loading";
   analyzeFn?: typeof analyzeViaServer;
   prepareFn?: typeof prepareUnifiedInputViaServer;
@@ -314,8 +316,10 @@ export async function runComposerSubmit({
   canSubmit,
   lockRef,
   abortRef,
+  requestIdRef,
   problemText,
-  attachment,
+  attachment = null,
+  attachments,
   health,
   analyzeFn = analyzeViaServer,
   prepareFn = prepareUnifiedInputViaServer,
@@ -327,6 +331,9 @@ export async function runComposerSubmit({
   lockRef.current = true;
   // Một lần bấm gửi = một lần học. Thử lại mạng nằm trong `analyzeFn` nên dùng chung ID này.
   const attemptId = newAttemptId();
+  if (requestIdRef) {
+    requestIdRef.current = attemptId;
+  }
 
   const ctl = typeof AbortController !== "undefined" ? new AbortController() : null;
   if (abortRef) abortRef.current = ctl;
@@ -337,28 +344,55 @@ export async function runComposerSubmit({
   useToastStore.getState().dismissToast("composer-refusal");
   store.setAnalyzing(true);
 
+  const targetAttachments =
+    attachments && attachments.length > 0
+      ? attachments
+      : attachment
+        ? [attachment]
+        : [];
+
   try {
     let finalProblemText = "";
 
     if (typeof overridePreparedText === "string") {
       finalProblemText = overridePreparedText.trim();
-    } else if (!attachment) {
+    } else if (targetAttachments.length === 0) {
       finalProblemText = problemText.trim();
     } else {
-      const content = await readAsBase64(attachment.file);
+      const contents = await Promise.all(
+        targetAttachments.map((item) => readAsBase64(item.file)),
+      );
       if (ctl?.signal.aborted) return;
+      if (requestIdRef?.current && requestIdRef.current !== attemptId) return;
+
+      const firstAtt = targetAttachments[0]!;
+      const attachmentPayloads = targetAttachments.map((item, idx) => ({
+        attachment_id: item.id,
+        order_index: idx,
+        source_type: (item.kind === "image" ? "camera" : item.kind) as
+          | "camera"
+          | "pdf"
+          | "document",
+        content: contents[idx]!,
+        mime_type: composerAttachmentMimeOf(item),
+        filename: item.name,
+      }));
 
       const prepared = await prepareFn(
         {
-          content,
-          mime_type: composerAttachmentMimeOf(attachment),
-          filename: attachment.name,
+          request_id: attemptId,
+          content: contents[0]!,
+          mime_type: composerAttachmentMimeOf(firstAtt),
+          filename: firstAtt.name,
+          attachments: attachmentPayloads,
           user_text: problemText.trim() || undefined,
           selected_candidate_id: selectedCandidateId,
         },
         ctl?.signal,
       );
       if (ctl?.signal.aborted) return;
+      if (requestIdRef?.current && requestIdRef.current !== attemptId) return;
+      if (prepared.request_id && prepared.request_id !== attemptId) return;
 
       if (prepared.status === "needs_selection" || prepared.status === "needs_confirmation") {
         onAssistRequired?.(prepared);
@@ -520,6 +554,7 @@ export function ProblemInput({
   const attachmentsRef = useRef<ComposerAttachmentItem[]>([]);
   const submittingRef = useRef(false);
   const analyzeAbortRef = useRef<AbortController | null>(null);
+  const activePrepareRequestIdRef = useRef<string | null>(null);
   const allFilesListRef = useRef<HTMLDivElement>(null);
   const [filesOverflow, setFilesOverflow] = useState<{ left: boolean; right: boolean }>({
     left: false,
@@ -814,16 +849,17 @@ export function ProblemInput({
   }
 
   function onPickImage(e: React.ChangeEvent<HTMLInputElement>) {
-    const picked = e.target.files?.[0] ?? null;
+    const pickedList = e.target.files ? Array.from(e.target.files) : [];
     const replaceId = replaceTargetIdRef.current;
     replaceTargetIdRef.current = null;
-    if (picked) {
-      addFilesToComposer([picked], { replaceId });
+    if (pickedList.length > 0) {
+      addFilesToComposer(pickedList, { replaceId });
     }
     e.target.value = "";
   }
 
   function removeAttachment(id: string) {
+    activePrepareRequestIdRef.current = null;
     dispatchAssist({ type: "reset" });
     setAttachments((prev) => {
       const target = prev.find((item) => item.id === id);
@@ -846,24 +882,15 @@ export function ProblemInput({
     selectedCandidateId?: string;
     overridePreparedText?: string;
   }) {
-    if (readyAttachments.length > 1 && !opts?.overridePreparedText) {
-      useToastStore.getState().showToast({
-        id: "composer-multi-file-limit",
-        tone: "info",
-        title: "Mỗi lượt dựng hình xử lý 1 tệp đề bài",
-        description:
-          "Hệ thống hiện phân tích từng tệp một. Vui lòng giữ lại 1 tệp cần dựng rồi nhấn Dựng hình.",
-        durationMs: 7000,
-      });
-      return;
-    }
     dispatchAssist({ type: "reset" });
     await runComposerSubmit({
       canSubmit: Boolean(opts?.overridePreparedText) || canSubmit,
       lockRef: submittingRef,
       abortRef: analyzeAbortRef,
+      requestIdRef: activePrepareRequestIdRef,
       problemText,
       attachment: readyAttachments[0] ?? null,
+      attachments: readyAttachments,
       health,
       selectedCandidateId: opts?.selectedCandidateId,
       overridePreparedText: opts?.overridePreparedText,
@@ -920,6 +947,7 @@ export function ProblemInput({
           ref={uploadImageRef}
           type="file"
           accept={IMAGE_ACCEPT}
+          multiple
           onChange={onPickImage}
           style={{ display: "none" }}
         />
@@ -1463,17 +1491,20 @@ export function ProblemInput({
         onClose={closePhotoDialog}
         onPickFile={() => {
           setPhotoDialogOpen(false);
-          replaceTargetIdRef.current = readyAttachments.length === 1 ? readyAttachments[0]!.id : null;
+          replaceTargetIdRef.current = null;
           uploadImageRef.current?.click();
         }}
         onNativeCamera={() => {
           setPhotoDialogOpen(false);
-          replaceTargetIdRef.current = readyAttachments.length === 1 ? readyAttachments[0]!.id : null;
+          replaceTargetIdRef.current = null;
           cameraImageRef.current?.click();
         }}
         onCaptured={(file) => {
-          const replaceId = readyAttachments.length === 1 ? readyAttachments[0]!.id : null;
-          addFilesToComposer([file], { replaceId });
+          addFilesToComposer([file]);
+          setPhotoDialogOpen(false);
+        }}
+        onCapturedBatch={(files) => {
+          addFilesToComposer(files);
           setPhotoDialogOpen(false);
         }}
       />
