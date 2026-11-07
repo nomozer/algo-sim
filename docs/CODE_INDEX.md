@@ -1126,8 +1126,10 @@ Exports: `MODEL`, `SKILLS_DIR`, `MAX_ATTEMPTS`, `TRANSIENT_STATUS`, `load_skill`
 Deps: httpx. Consumers: `ai/pipeline`, `ai/edit`, `ai/explain`, `ingestion/input`
 (mỗi module có **binding riêng** — mock một chỗ không che chỗ khác).
 Tests: `test_gemini.py` (fake transport), `test_live_budget.py`.
-Notes: **biên mạng duy nhất** của hệ. Guard offline nằm ở `conftest.py`, KHÔNG ở
-đây (test_gemini có quyền dùng transport giả). `ApiBudget` inert khi `BUDGET=None`.
+Notes: transport của đường **đọc ảnh** (consumer sản phẩm duy nhất còn lại: `ingestion/image_extraction.py`); tuyến
+Hybrid đi qua `ai/function_calling.live_transport`. Khoá đi **chỉ trong header `x-goog-api-key`**, không trong URL/body;
+lỗi mạng ném `from None` (run `gemini-credential-transport`). Guard offline nằm ở `conftest.py`, KHÔNG ở đây
+(test_gemini có quyền dùng transport giả / `httpx.MockTransport`). `ApiBudget` inert khi `BUDGET=None`.
 
 ### `ai/pipeline.py` · Change impact: targeted live
 > *2026-10-05 (`cuboid-acceptance`):* phần Tin học của mục này (classify, pattern reuse, M13–M15, các test nêu ở
@@ -1780,8 +1782,11 @@ provider). Cổng lượt dùng thử tách thành `_cong_luot_thu`, dùng CHUNG
 `/api/analyze` — chỉ KIỂM, không TIÊU lượt. Tests: `test_image_extract_api.py`.
 
 ### `conftest.py` · Change impact: offline
-**Hard guard**: patch transport mạng thật của httpx + gỡ `GEMINI_API_KEY`.
-Exports: `BLOCK_MESSAGE`, `live_allowed`. Tests: `test_offline_guard.py`.
+**Hard guard**, ba lớp (tắt cả ba chỉ khi `ALLOW_LIVE_AI=1`): (1) import `db` rồi gỡ `GEMINI_API_KEY`; (2) patch transport
+mạng thật của httpx; (3) socket chỉ nối loopback (`tests/offline_child/offline_socket_guard.py`, nguồn duy nhất) và
+`tests/offline_child` lên đầu `PYTHONPATH` ⇒ mọi tiến trình Python CON chạy `tests/offline_child/sitecustomize.py`:
+`GEMINI_API_KEY=""` trước khi `.env` kịp nạp lại, cùng guard socket + httpx (run `gemini-credential-transport`).
+Exports: `BLOCK_MESSAGE`, `live_allowed`, `OFFLINE_CHILD_DIR`. Tests: `test_offline_guard.py`.
 
 ---
 

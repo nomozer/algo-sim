@@ -1,0 +1,49 @@
+// TEMPORARY harness (run hybrid-backend-reliability), deleted after use; reference copy in the run's tools/.
+// AUDIT_CORPUS=<http_e2e_replay served-responses.json> AUDIT_OUT=<fresh.json> npx vitest run tmp-audit --maxWorkers=1
+import { readFileSync, writeFileSync } from "node:fs";
+import { it } from "vitest";
+import { docPhanHoiPhanTich } from "../src/llm/client";
+import { hybridViewCua } from "../src/simulations/domains/geometry/hybrid-preview-adapter";
+import { attachHybridViewToScene, type Scene3D } from "../src/simulations/domains/geometry/scene3d-model";
+import { withSubEntities } from "../src/simulations/domains/geometry/scene3d-subentities";
+import { buildPedagogicalConstructionPlan, verifySceneMathematicalConsistency } from "../src/simulations/domains/geometry/scene3d-semantic-policy";
+import { evaluateStudentPresentationPolicy } from "../src/simulations/domains/geometry/scene3d-student-presentation-policy";
+
+const REPR = /\b(Fraction|Vec3|Plane3|Line3|Circle3|Ellipse3|Radical)\(/;
+
+it("authority audit over HTTP-collected /4 bodies", () => {
+  const { rows } = JSON.parse(readFileSync(process.env.AUDIT_CORPUS!, "utf8"));
+  const out: unknown[] = [];
+  const tally: Record<string, number> = {};
+  for (const row of rows) {
+    let verdict = "reached";
+    const detail: Record<string, unknown> = { key: row.key, answers: row.answers };
+    try {
+      // The SAME entry the product uses on the /api/analyze body (llm/client.ts).
+      const env = docPhanHoiPhanTich(structuredClone(row.response)) as { status?: string; scene3d?: Scene3D; error_code?: string };
+      if (env.status !== "ok") { verdict = "decode_rejected"; detail.reason = env.error_code; }
+      else {
+        const scene = env.scene3d as Scene3D;
+        const view = hybridViewCua(env);
+        attachHybridViewToScene(scene, view);
+        const mv = verifySceneMathematicalConsistency(scene);
+        const plan = buildPedagogicalConstructionPlan(withSubEntities(scene));
+        const g = plan.goalCompletion;
+        const ids = new Set((view?.answers ?? []).map((a) => a.quantity_id));
+        detail.status = g.status; detail.mv = mv.valid;
+        detail.items = g.items.map((i) => ({ id: i.id, prov: i.provenance, value: i.valueText }));
+        const policy = evaluateStudentPresentationPolicy(scene, g);
+        const learnerText = JSON.stringify({ plan, items: g.items, headline: g.headline });
+        if (!mv.valid) verdict = "math_verification_invalid";
+        else if (g.status !== "reached") verdict = `not_reached:${g.items.map((i) => i.provenance).join(",")}`;
+        else if (![...ids].every((id) => g.items.some((i) => i.id === id && i.provenance === "DERIVED_VERIFIED"))) verdict = "answer_not_verified";
+        else if (policy.showDiagnosticNotice) verdict = "notice_shown";
+        else if (REPR.test(learnerText)) verdict = "internal_repr_in_learner_plan";
+      }
+    } catch (e) { verdict = "throw"; detail.error = String(e).slice(0, 200); }
+    tally[verdict.split(":")[0]] = (tally[verdict.split(":")[0]] ?? 0) + 1;
+    if (verdict !== "reached") out.push({ verdict, ...detail });
+  }
+  writeFileSync(process.env.AUDIT_OUT!, JSON.stringify({ tally, failures: out }, null, 1), { flag: "wx" });
+  console.log(JSON.stringify(tally));
+}, 900_000);

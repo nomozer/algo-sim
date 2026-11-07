@@ -52,6 +52,32 @@ def test_invalid_or_unbound_extraction_is_refused(change, code):
     assert result.payload is None and result.code == code
 
 
+@pytest.mark.parametrize("change,code", [
+    (lambda p: p["simulation_goals"][0].update(target_solid_id="nope"), "UNKNOWN_SOLID_ID"),   # raised in a validator
+    (lambda p: p["solids"][0].update(coordinates=[0, 0, 0]), "INVALID_TYPED_FACT_NEXT"),       # control: plain schema
+])
+def test_a_refused_extraction_releases_its_payload_and_error(change, code):
+    """Found by the bounded load check of run `hybrid-backend-reliability`: live parsed payloads grew by one per refused
+    request, forever. `_parse` re-raised the validator's error `from` pydantic's ValidationError inside the `except`
+    block; that ValidationError holds the same error in `errors()[i]['ctx']`, so error → cause/traceback frame →
+    ValidationError → error is a cycle through a pydantic-core object, which gc.collect() never freed."""
+    import gc
+
+    from app.ai.typed_fact_next_extraction import ReplayExtractor, extract_typed_fact_next_v2
+    from app.simulation.geometry_functions.typed_fact_next import TypedFactNextValidationError
+
+    def live() -> int:
+        gc.collect()
+        return sum(1 for o in gc.get_objects() if isinstance(o, TypedFactNextValidationError))
+
+    raw = payload()
+    change(raw)
+    before = live()
+    for _ in range(50):
+        assert extract_typed_fact_next_v2(TEXT, ReplayExtractor({TEXT: deepcopy(raw)})).code == code
+    assert live() - before <= 1
+
+
 def test_unknown_replay_source_is_an_explicit_extraction_failure():
     from app.ai.typed_fact_next_extraction import ReplayExtractor, extract_typed_fact_next_v2
     result = extract_typed_fact_next_v2(TEXT, ReplayExtractor({}))

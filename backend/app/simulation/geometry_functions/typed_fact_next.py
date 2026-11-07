@@ -1599,18 +1599,31 @@ def _parse(model: type[TypedFactNextPayload], raw: Any) -> TypedFactNextPayload:
             "SCHEMA_VERSION_MISMATCH",
             f"Expected schema_version={model._VERSION!r}, got {version!r}.",
         )
+    inner = None
     try:
         return model.model_validate(raw)
     except TypedFactNextValidationError:
         raise
     except Exception as exc:
-        errors = getattr(exc, "errors", None)
-        if callable(errors):
-            for item in errors():
-                inner = (item.get("ctx") or {}).get("error")
-                if isinstance(inner, TypedFactNextValidationError):
-                    raise inner from exc
-        raise TypedFactNextValidationError(
-            "INVALID_TYPED_FACT_NEXT",
-            str(exc),
-        ) from exc
+        inner = _validator_error(exc)
+        if inner is None:
+            raise TypedFactNextValidationError(
+                "INVALID_TYPED_FACT_NEXT",
+                str(exc),
+            ) from exc
+    # Re-raised OUTSIDE the except block, not `from exc`, and with no local of this frame still reaching the
+    # ValidationError (run `hybrid-backend-reliability`): it holds `inner` in `errors()[i]['ctx']`, and this frame enters
+    # `inner`'s traceback, so any such reference closes a cycle through a pydantic-core object that gc never frees —
+    # one leaked payload graph per refused request.
+    raise inner
+
+
+def _validator_error(exc: Exception) -> TypedFactNextValidationError | None:
+    """The typed error a model validator raised, unwrapped from pydantic's ValidationError (own frame: holds nothing)."""
+    errors = getattr(exc, "errors", None)
+    if callable(errors):
+        for item in errors():
+            inner = (item.get("ctx") or {}).get("error")
+            if isinstance(inner, TypedFactNextValidationError):
+                return inner
+    return None

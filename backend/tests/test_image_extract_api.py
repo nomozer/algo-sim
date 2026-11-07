@@ -100,6 +100,42 @@ def test_anh_hop_le_nhung_thieu_key_503():
     assert r.status_code == 503
 
 
+def _gemini_qua_mock_transport(monkeypatch, body: dict):
+    """The REAL `gemini.call_gemini` over an `httpx.MockTransport` (no network: conftest blocks only real transports)."""
+    import httpx
+
+    from app.ai import gemini
+
+    real_client, seen = httpx.AsyncClient, []
+
+    def handler(request):
+        seen.append(request)
+        return httpx.Response(200, json={"candidates": [{"content": {"parts": [
+            {"text": json.dumps(body, ensure_ascii=False)}]}}]}, request=request)
+
+    monkeypatch.setattr(gemini.httpx, "AsyncClient",
+                        lambda **kw: real_client(transport=httpx.MockTransport(handler), **kw))
+    return seen
+
+
+def test_doc_anh_qua_transport_that_khoa_chi_trong_header(monkeypatch):
+    """Run `gemini-credential-transport`: the image path's own transport now sends the key only as `x-goog-api-key`;
+    the response contract is unchanged; and without a key no request is made at all."""
+    fake = "AIza" + "FAKE_IMAGE_TEST_ONLY_0123456789abcd"
+    seen = _gemini_qua_mock_transport(monkeypatch, _ban_ghi())
+    monkeypatch.delenv("GEMINI_API_KEY", raising=False)
+    assert _post(content=_b64(), mime_type="image/png").status_code == 503 and seen == []    # missing key: no call
+
+    monkeypatch.setenv("GEMINI_API_KEY", fake)
+    r = _post(content=_b64(), mime_type="image/png")
+    assert r.status_code == 200, r.text
+    d = r.json()
+    assert d["status"] == "ok" and d["assessment"]["problem_text"] == DE and d["cached"] is False
+    assert TRUONG_PROVENANCE <= set(d["provenance"])
+    assert len(seen) == 1 and seen[0].headers["x-goog-api-key"] == fake
+    assert fake not in str(seen[0].url) and not seen[0].url.query and fake not in r.text
+
+
 def test_khach_het_luot_thu_KHONG_goi_duoc_provider_doc_anh(monkeypatch):
     """Đọc ảnh cũng tiêu provider ⇒ đứng sau CÙNG cổng lượt thử với `/api/analyze`."""
     from app.accounts.policy import GUEST_TRIAL_LIMIT
@@ -143,6 +179,24 @@ def test_doc_anh_thanh_cong_cache_theo_NOI_DUNG_khong_theo_ten_tep(monkeypatch):
 
     d3 = _post(content=anh, mime_type="image/png", rotation=90).json()
     assert d3["cached"] is False and len(goi) == 2
+
+
+def test_cong_tac_dung_ALLOW_LIVE_AI_0_chan_ca_doc_anh(monkeypatch):
+    """The `ALLOW_LIVE_AI=0` emergency stop is the operator's way to halt live provider spend. It stopped
+    `/api/analyze` but `/api/image/extract` still reached the provider (run `hybrid-backend-reliability`, found when an
+    offline tool's popped key was refilled by `load_dotenv`). Same 503 `LIVE_AI_DISABLED` as analyze, 0 provider calls,
+    and a valid image's cached result is not served either (the stop is checked before the cache, like analyze)."""
+    monkeypatch.setenv("GEMINI_API_KEY", "khoa-gia")
+    goi = _gia(monkeypatch, _ban_ghi())
+    anh = _b64()
+    assert _post(content=anh, mime_type="image/png").status_code == 200 and len(goi) == 1   # cached now
+    monkeypatch.setenv("ALLOW_LIVE_AI", "0")
+    for content in (anh, _b64(mau=(0, 0, 0))):                 # cached and not cached
+        r = _post(content=content, mime_type="image/png")
+        assert r.status_code == 503 and r.json()["reason_code"] == "LIVE_AI_DISABLED", r.text
+        assert r.json()["failure_kind"] == "INFRASTRUCTURE_FAILURE" and r.headers["cache-control"] == "no-store"
+    assert len(goi) == 1
+    assert _post(content="@@@", mime_type="image/png").status_code == 400    # a bad image is still the learner's 400
 
 
 def test_loi_provider_503_KHONG_lo_chi_tiet(monkeypatch):

@@ -356,7 +356,7 @@ class _Client:
     async def __aexit__(self, *a):
         return False
 
-    async def post(self, url, json=None):
+    async def post(self, url, json=None, headers=None):
         self.posts += 1
         return self.resps.pop(0) if len(self.resps) > 1 else self.resps[0]
 

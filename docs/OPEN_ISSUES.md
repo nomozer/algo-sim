@@ -840,7 +840,40 @@
 - **evidence:** `backend/app/simulation/semantic_program/interpreter.py` (fallback narration of `AssignStmt`); `tests/geometry/test_oblique_prism.py::test_buoc_dung_ke_bang_ky_hieu_khong_in_repr` (compiler side).
 - **impact:** A served LLM program that builds a vector shows the repr in «Các bước dựng».
 - **scope:** `semantic_program/interpreter.py`; `CACHE_VERSION` (served envelope content changes ⇒ bump, precedent 103/112).
-- **status:** OPEN
+- **status:** RESOLVED (2026-11-07, run `hybrid-backend-reliability`). After the cutover the same fallback reached Hybrid `/4`
+  (no compiler program exists, so the `_compiler_geometry` gate never applied): the HTTP replay of every stored `/2` payload
+  found 24 `config.frames`/`view_steps` narrations printing `Circle3(…)`, `Plane3(…)`, `Line3(…)` across 15 served problems.
+  The generic `assign` narration now names any value whose DECLARED type is geometric (`MO_TA_KIEU`) and keeps scalar
+  values (`9/2`, `4π`, `2π√3`); locked by `backend/tests/geometry/test_step_narration_no_kernel_repr.py`. No
+  `CACHE_VERSION` bump: the field is not rendered by the current workspace (`AxoWorkspaceV62` receives `scene3d` only) and
+  scene, answers and certificates are byte-identical — reasons in the run report. Original status: OPEN.
+
+### ISSUE-ARCH-CONFIG-NARRATION-CHART-COORDINATES
+- **description:** The `config.frames`/`view_steps` narration of a served `/4` envelope still prints canonical-chart
+  coordinates for point constructions (`"Dựng điểm = (1, 0, 0)."`, circumscribed-sphere programs) — the layout chart, not
+  learner geometry, and no point name.
+- **evidence:** run `hybrid-backend-reliability` (HTTP replay); `semantic_program/interpreter.py` construct-point narration.
+- **impact:** none in the current UI: a valid `scene3d` renders through `AxoWorkspaceV62`, which does not read `config`
+  (step text comes from `scene3d.formation`). Visible only to a consumer of the raw `config`.
+- **scope:** interpreter narration of `construct_point`; same fallback family as `ISSUE-ARCH-LLM-VECTOR-ASSIGN-NARRATION`.
+- **status:** OPEN (P3)
+- **owner_class:** ARCHITECTURE
+- **default_switch_blocker:** NO
+
+### ISSUE-OPS-VISION-TRANSPORT-KEY-IN-URL
+- **description:** `app/ai/gemini.py::call_gemini` (only caller: `/api/image/extract`) sends the API key as the `?key=` query
+  parameter; the Hybrid transport sends it in the `x-goog-api-key` header. A URL is what httpx's INFO request log line and
+  any logged request URL carry.
+- **evidence:** `gemini.py` `url = …:generateContent?key={api_key}`; `app` configures no logging, so the httpx INFO line
+  reaches no handler by default and the raised `RuntimeError` texts carry status/body, not the URL (latent, not observed).
+- **impact:** key exposure only if a deployment enables INFO logging for `httpx` or logs request URLs.
+- **scope:** move the key to the header in `call_gemini`; check `test_image_extract_api.py` / gemini transport tests.
+- **status:** RESOLVED (2026-11-07, run `gemini-credential-transport`): the key travels only as `x-goog-api-key`; the
+  httpx INFO line was shown to carry it before the fix (fake key); locked by `tests/test_gemini.py` (real
+  `httpx.AsyncClient` over `MockTransport`: header, clean URL/body/log, retries, 400/401/403/429/500, sanitized network
+  error) and `test_image_extract_api.py::test_doc_anh_qua_transport_that_khoa_chi_trong_header`. Original status: OPEN (P3).
+- **owner_class:** OPS
+- **default_switch_blocker:** NO
 - **owner_class:** ARCHITECTURE
 - **suggested_wave:** next change that already bumps `CACHE_VERSION`
 - **default_switch_blocker:** NO

@@ -35,7 +35,7 @@ class _FakeClient:
     async def __aexit__(self, *a):
         return False
 
-    async def post(self, url, json=None):
+    async def post(self, url, json=None, headers=None):
         i = min(self.calls, len(self._responses) - 1)
         self.calls += 1
         return self._responses[i]
@@ -190,7 +190,7 @@ class _BatPayload:
     async def __aexit__(self, *a):
         return False
 
-    async def post(self, url, json=None):
+    async def post(self, url, json=None, headers=None):
         self.payload = json
         return self.resp
 
@@ -267,3 +267,81 @@ def test_moi_schema_PRODUCTION_khac_van_gui_duoc_nhu_cu():
         ra = gemini._sanitize_gemini_schema(s)
         assert ra is not None, f"{ten}: schema production bị bỏ, không được"
         assert "properties" in ra, f"{ten}: mất nội dung sau khi dọn"
+
+
+# ── KHOÁ API: chỉ đi trong header, không bao giờ trong URL/log/lỗi ───────────
+# `call_gemini` (đường đọc ảnh) từng gửi `...:generateContent?key=<khoá>` — cùng bài học pilot G05 mà tuyến Hybrid
+# (`function_calling.live_transport`) đã sửa: URL là thứ dòng INFO "HTTP Request: POST <url>" của httpx và mọi
+# `exc.request.url` mang theo (run `gemini-credential-transport`). Dùng `httpx.AsyncClient` THẬT trên `MockTransport`:
+# guard của conftest chỉ chặn transport mạng thật, nên đây vẫn 0 lượt ra mạng.
+
+import logging
+
+import httpx
+
+FAKE_KEY = "AIza" + "FAKE_TEST_ONLY_0123456789abcdefghijk"
+
+
+def _mock_transport(monkeypatch, statuses):
+    """Real AsyncClient over MockTransport answering `statuses` in order; records every request."""
+    real_client, seen = httpx.AsyncClient, []
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        seen.append(request)
+        status = statuses[min(len(seen) - 1, len(statuses) - 1)]
+        if status == "network":
+            raise httpx.ConnectError("connection refused", request=request)
+        body = OK_BODY if status == 200 else {"error": {"code": status, "message": "provider says no"}}
+        return httpx.Response(status, json=body)
+
+    monkeypatch.setattr(gemini.httpx, "AsyncClient",
+                        lambda **kw: real_client(transport=httpx.MockTransport(handler), **kw))
+    monkeypatch.setattr(gemini.asyncio, "sleep", _noop_sleep)
+    return seen
+
+
+def _assert_clean(request: httpx.Request) -> None:
+    assert request.headers["x-goog-api-key"] == FAKE_KEY
+    assert FAKE_KEY not in str(request.url) and "key=" not in str(request.url) and not request.url.query
+    assert FAKE_KEY.encode() not in request.content                      # not in the body either
+
+
+def test_khoa_chi_di_trong_header_va_url_va_log_sach(monkeypatch, caplog):
+    caplog.set_level(logging.DEBUG)                                      # the httpx INFO request line included
+    seen = _mock_transport(monkeypatch, [200])
+    assert asyncio.run(gemini.call_gemini(FAKE_KEY, "sys", "user")) == "kết quả"
+    assert len(seen) == 1
+    _assert_clean(seen[0])
+    assert str(seen[0].url).endswith(f"/models/{gemini.MODEL}:generateContent")
+    assert "HTTP Request: POST" in caplog.text                           # the line that used to carry the key
+    assert FAKE_KEY not in caplog.text
+
+
+def test_moi_lan_thu_lai_van_dung_header(monkeypatch):
+    seen = _mock_transport(monkeypatch, [503, 429, 200])
+    assert asyncio.run(gemini.call_gemini(FAKE_KEY, "sys", "user")) == "kết quả"
+    assert len(seen) == 3
+    for request in seen:
+        _assert_clean(request)
+
+
+@pytest.mark.parametrize("status,attempts", [(400, 1), (401, 1), (403, 1), (429, gemini.MAX_ATTEMPTS),
+                                             (500, gemini.MAX_ATTEMPTS)])
+def test_loi_http_giu_anh_xa_cu_va_khong_lo_khoa(monkeypatch, status, attempts):
+    seen = _mock_transport(monkeypatch, [status])
+    with pytest.raises(RuntimeError, match=str(status)) as exc:
+        asyncio.run(gemini.call_gemini(FAKE_KEY, "sys", "user"))
+    assert len(seen) == attempts                                         # 4xx not retried, transient retried
+    assert FAKE_KEY not in str(exc.value) and FAKE_KEY not in repr(exc.value)
+    for request in seen:
+        _assert_clean(request)
+
+
+def test_loi_mang_duoc_lam_sach_khong_mang_theo_request(monkeypatch):
+    seen = _mock_transport(monkeypatch, ["network"])
+    with pytest.raises(RuntimeError) as exc:
+        asyncio.run(gemini.call_gemini(FAKE_KEY, "sys", "user"))
+    assert len(seen) == gemini.MAX_ATTEMPTS
+    assert FAKE_KEY not in str(exc.value)
+    # The httpx error (holding the request, its URL and headers) is not chained onto what callers may log.
+    assert exc.value.__cause__ is None and exc.value.__suppress_context__ is True

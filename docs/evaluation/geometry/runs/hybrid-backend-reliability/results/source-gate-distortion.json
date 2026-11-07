@@ -1,0 +1,474 @@
+{
+ "summary": {
+  "cases": 50,
+  "ok": 50,
+  "no_base": 0,
+  "wrong_served": 0,
+  "controls_served": 2,
+  "codes": [
+   "CURVED_WORDING_UNSUPPORTED",
+   "INVALID_MATH_GOAL",
+   "NOT_ASKED_IN_SOURCE",
+   "PLANE_NOT_IN_QUOTE",
+   "PREDICATE_NOT_IN_QUOTE",
+   "QUOTE_NOT_IN_SOURCE",
+   "REQUEST_NOT_ANSWERED",
+   "ROLE_NOT_IN_QUOTE",
+   "SOURCE_OBJECT_MISMATCH",
+   "SOURCE_PREMISE_UNREAD",
+   "UNGROUNDED_VALUE"
+  ]
+ },
+ "rows": [
+  {
+   "id": "perp-line-line-SB",
+   "kind": "text",
+   "meaning": "SA⟂SB typed as SA⟂(ABCD)",
+   "expect_served": false,
+   "status": "REFUSED",
+   "code": "PLANE_NOT_IN_QUOTE",
+   "ok": true
+  },
+  {
+   "id": "perp-line-line-AB",
+   "kind": "text",
+   "meaning": "SA⟂AB typed as SA⟂(ABCD)",
+   "expect_served": false,
+   "status": "REFUSED",
+   "code": "PLANE_NOT_IN_QUOTE",
+   "ok": true
+  },
+  {
+   "id": "perp-negated",
+   "kind": "text",
+   "meaning": "negation dropped",
+   "expect_served": false,
+   "status": "REFUSED",
+   "code": "UNGROUNDED_VALUE",
+   "ok": true
+  },
+  {
+   "id": "perp-other-plane",
+   "kind": "text",
+   "meaning": "plane operand swapped",
+   "expect_served": false,
+   "status": "REFUSED",
+   "code": "PLANE_NOT_IN_QUOTE",
+   "ok": true
+  },
+  {
+   "id": "length-operand",
+   "kind": "text",
+   "meaning": "SB=2 typed as SA=2",
+   "expect_served": false,
+   "status": "REFUSED",
+   "code": "UNGROUNDED_VALUE",
+   "ok": true
+  },
+  {
+   "id": "length-value",
+   "kind": "text",
+   "meaning": "3 typed as 2",
+   "expect_served": false,
+   "status": "REFUSED",
+   "code": "UNGROUNDED_VALUE",
+   "ok": true
+  },
+  {
+   "id": "side-value",
+   "kind": "text",
+   "meaning": "side 5 typed as 2",
+   "expect_served": false,
+   "status": "REFUSED",
+   "code": "UNGROUNDED_VALUE",
+   "ok": true
+  },
+  {
+   "id": "base-rhombus",
+   "kind": "text",
+   "meaning": "rhombus typed as square",
+   "expect_served": false,
+   "status": "REFUSED",
+   "code": "PREDICATE_NOT_IN_QUOTE",
+   "ok": true
+  },
+  {
+   "id": "base-rectangle",
+   "kind": "text",
+   "meaning": "rectangle typed as square",
+   "expect_served": false,
+   "status": "REFUSED",
+   "code": "PREDICATE_NOT_IN_QUOTE",
+   "ok": true
+  },
+  {
+   "id": "target-solid",
+   "kind": "text",
+   "meaning": "S.ABC volume typed as S.ABCD",
+   "expect_served": false,
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "ok": true
+  },
+  {
+   "id": "volume-vs-area",
+   "kind": "text",
+   "meaning": "area question typed as volume",
+   "expect_served": false,
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "ok": true
+  },
+  {
+   "id": "midpoint-vs-member",
+   "kind": "text",
+   "meaning": "M∈AB typed as midpoint",
+   "expect_served": false,
+   "status": "REFUSED",
+   "code": "PREDICATE_NOT_IN_QUOTE",
+   "ok": true
+  },
+  {
+   "id": "midpoint-vs-on-segment",
+   "kind": "text",
+   "meaning": "N on SC typed as midpoint",
+   "expect_served": false,
+   "status": "REFUSED",
+   "code": "PREDICATE_NOT_IN_QUOTE",
+   "ok": true
+  },
+  {
+   "id": "centroid-vs-midpoint",
+   "kind": "text",
+   "meaning": "centroid typed as midpoint",
+   "expect_served": false,
+   "status": "REFUSED",
+   "code": "PREDICATE_NOT_IN_QUOTE",
+   "ok": true
+  },
+  {
+   "id": "angle-plane-vs-line",
+   "kind": "text",
+   "meaning": "line-line angle typed as line-plane",
+   "expect_served": false,
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "ok": true
+  },
+  {
+   "id": "distance-plane-vs-line",
+   "kind": "text",
+   "meaning": "point-line distance typed as point-plane",
+   "expect_served": false,
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "ok": true
+  },
+  {
+   "id": "distance-other-point",
+   "kind": "text",
+   "meaning": "point operand swapped",
+   "expect_served": false,
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "ok": true
+  },
+  {
+   "id": "right-angle-vertex",
+   "kind": "text",
+   "meaning": "right-angle vertex swapped",
+   "expect_served": false,
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "ok": true
+  },
+  {
+   "id": "prism-not-right",
+   "kind": "text",
+   "meaning": "oblique prism typed as right",
+   "expect_served": false,
+   "status": "REFUSED",
+   "code": "PREDICATE_NOT_IN_QUOTE",
+   "ok": true
+  },
+  {
+   "id": "prism-value",
+   "kind": "text",
+   "meaning": "13 typed as 12",
+   "expect_served": false,
+   "status": "REFUSED",
+   "code": "UNGROUNDED_VALUE",
+   "ok": true
+  },
+  {
+   "id": "regular-vs-plain-pyramid",
+   "kind": "text",
+   "meaning": "non-regular typed as regular",
+   "expect_served": false,
+   "status": "REFUSED",
+   "code": "PREDICATE_NOT_IN_QUOTE",
+   "ok": true
+  },
+  {
+   "id": "inscribed-vs-circum-cube",
+   "kind": "text",
+   "meaning": "circumscribed typed as inscribed",
+   "expect_served": false,
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "ok": true
+  },
+  {
+   "id": "inscribed-vs-circum-pyramid",
+   "kind": "text",
+   "meaning": "circumscribed typed as inscribed",
+   "expect_served": false,
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "ok": true
+  },
+  {
+   "id": "inscribed-vs-circum-cylinder",
+   "kind": "text",
+   "meaning": "circumscribed typed as inscribed",
+   "expect_served": false,
+   "status": "REFUSED",
+   "code": "CURVED_WORDING_UNSUPPORTED",
+   "ok": true
+  },
+  {
+   "id": "circum-vs-inscribed",
+   "kind": "text",
+   "meaning": "inscribed typed as circumscribed",
+   "expect_served": false,
+   "status": "REFUSED",
+   "code": "CURVED_WORDING_UNSUPPORTED",
+   "ok": true
+  },
+  {
+   "id": "cone-diameter",
+   "kind": "text",
+   "meaning": "diameter typed as radius",
+   "expect_served": false,
+   "status": "REFUSED",
+   "code": "CURVED_WORDING_UNSUPPORTED",
+   "ok": true
+  },
+  {
+   "id": "sphere-diameter",
+   "kind": "text",
+   "meaning": "diameter typed as radius",
+   "expect_served": false,
+   "status": "REFUSED",
+   "code": "CURVED_WORDING_UNSUPPORTED",
+   "ok": true
+  },
+  {
+   "id": "cone-vs-cylinder",
+   "kind": "text",
+   "meaning": "cylinder volume typed as cone",
+   "expect_served": false,
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "ok": true
+  },
+  {
+   "id": "cone-axis-vs-parallel",
+   "kind": "text",
+   "meaning": "parallel-to-axis typed as through-axis",
+   "expect_served": false,
+   "status": "REFUSED",
+   "code": "CURVED_WORDING_UNSUPPORTED",
+   "ok": true
+  },
+  {
+   "id": "cone-distance-from-apex",
+   "kind": "text",
+   "meaning": "from apex typed as from base",
+   "expect_served": false,
+   "status": "REFUSED",
+   "code": "CURVED_WORDING_UNSUPPORTED",
+   "ok": true
+  },
+  {
+   "id": "cylinder-r-h-swapped",
+   "kind": "text",
+   "meaning": "r/h swapped",
+   "expect_served": false,
+   "status": "REFUSED",
+   "code": "UNGROUNDED_VALUE",
+   "ok": true
+  },
+  {
+   "id": "section-area-vs-perimeter",
+   "kind": "text",
+   "meaning": "perimeter asked, area typed",
+   "expect_served": false,
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "ok": true
+  },
+  {
+   "id": "section-perp-vs-parallel-line",
+   "kind": "text",
+   "meaning": "∥ line typed as ⟂",
+   "expect_served": false,
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "ok": true
+  },
+  {
+   "id": "section-parallel-vs-perp-line",
+   "kind": "text",
+   "meaning": "⟂ typed as ∥",
+   "expect_served": false,
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "ok": true
+  },
+  {
+   "id": "section-perp-vs-parallel-plane",
+   "kind": "text",
+   "meaning": "∥ plane typed as ⟂ plane",
+   "expect_served": false,
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "ok": true
+  },
+  {
+   "id": "plane-parallel-plane-vs-line",
+   "kind": "text",
+   "meaning": "plane ∥ line typed as plane ∥ plane",
+   "expect_served": false,
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "ok": true
+  },
+  {
+   "id": "projection-vs-midpoint",
+   "kind": "text",
+   "meaning": "midpoint typed as projection",
+   "expect_served": false,
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "ok": true
+  },
+  {
+   "id": "two-goals-operand",
+   "kind": "text",
+   "meaning": "first goal operand swapped",
+   "expect_served": false,
+   "status": "REFUSED",
+   "code": "QUOTE_NOT_IN_SOURCE",
+   "ok": true
+  },
+  {
+   "id": "control-question-order",
+   "kind": "text",
+   "meaning": "CONTROL: same questions, other order",
+   "expect_served": true,
+   "status": "SERVED",
+   "code": null,
+   "ok": true
+  },
+  {
+   "id": "drop-goal-2of2-spheres",
+   "kind": "structural",
+   "meaning": "second asked quantity dropped",
+   "expect_served": false,
+   "status": "REFUSED",
+   "code": "REQUEST_NOT_ANSWERED",
+   "ok": true
+  },
+  {
+   "id": "drop-goal-1of2-spheres",
+   "kind": "structural",
+   "meaning": "first asked quantity dropped",
+   "expect_served": false,
+   "status": "REFUSED",
+   "code": "REQUEST_NOT_ANSWERED",
+   "ok": true
+  },
+  {
+   "id": "drop-goal-2of2-lengths",
+   "kind": "structural",
+   "meaning": "second asked quantity dropped",
+   "expect_served": false,
+   "status": "REFUSED",
+   "code": "REQUEST_NOT_ANSWERED",
+   "ok": true
+  },
+  {
+   "id": "drop-goal-1of2-lengths",
+   "kind": "structural",
+   "meaning": "first asked quantity dropped",
+   "expect_served": false,
+   "status": "REFUSED",
+   "code": "REQUEST_NOT_ANSWERED",
+   "ok": true
+  },
+  {
+   "id": "invent-perp-reused-quote",
+   "kind": "structural",
+   "meaning": "SB⟂(ABCD) invented under the SA⟂ quote",
+   "expect_served": false,
+   "status": "REFUSED",
+   "code": "ROLE_NOT_IN_QUOTE",
+   "ok": true
+  },
+  {
+   "id": "invent-length-reused-quote",
+   "kind": "structural",
+   "meaning": "SC=2 invented under the SA=2 quote",
+   "expect_served": false,
+   "status": "REFUSED",
+   "code": "UNGROUNDED_VALUE",
+   "ok": true
+  },
+  {
+   "id": "drop-premise-perp",
+   "kind": "structural",
+   "meaning": "stated premise silently dropped",
+   "expect_served": false,
+   "status": "REFUSED",
+   "code": "SOURCE_PREMISE_UNREAD",
+   "ok": true
+  },
+  {
+   "id": "drop-premise-length",
+   "kind": "structural",
+   "meaning": "stated length silently dropped",
+   "expect_served": false,
+   "status": "REFUSED",
+   "code": "SOURCE_PREMISE_UNREAD",
+   "ok": true
+  },
+  {
+   "id": "goal-type-swap",
+   "kind": "structural",
+   "meaning": "volume quote, area goal type",
+   "expect_served": false,
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "ok": true
+  },
+  {
+   "id": "goal-operand-retarget",
+   "kind": "structural",
+   "meaning": "goal operand differs from its quote",
+   "expect_served": false,
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "ok": true
+  },
+  {
+   "id": "control-duplicate-goal",
+   "kind": "structural",
+   "meaning": "CONTROL: same goal twice",
+   "expect_served": true,
+   "status": "SERVED",
+   "code": null,
+   "ok": true
+  }
+ ]
+}

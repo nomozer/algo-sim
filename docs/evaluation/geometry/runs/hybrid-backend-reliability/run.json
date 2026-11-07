@@ -1,0 +1,44 @@
+{
+  "run_id": "hybrid-backend-reliability",
+  "date": "2026-11-07",
+  "branch": "feat/hybrid-backend-reliability",
+  "baseline": "e1a41ebe2 (main = origin/main after git fetch; clean)",
+  "merged": false,
+  "pushed": false,
+  "commits": [
+    {"sha": "05cf4db1b", "role": "product: step narration names geometric values; /api/image/extract honours ALLOW_LIVE_AI=0"},
+    {"sha": "7d05948e8", "role": "candidate freeze at 05cf4db1 (superseded)"},
+    {"sha": "fd125f93a", "role": "preview fixture bundle fixtures-adapter-2-narration (1/41 fixtures differ in content: 2 narrations)"},
+    {"sha": "cb79848fc", "role": "product: validator-refused extractions no longer leak their payload (typed_fact_next._parse)"},
+    {"sha": "2eba49ed9", "role": "candidate freeze at cb79848f: 103 files be2c37fd…, clean detached worktree; K-1/R-1/S-2 templates rebound"}
+  ],
+  "candidate": {"product_commit": "cb79848fc63494d4f1a11a35403fd750254b1e01", "measured_system_files": 103,
+                "measured_system_tree_hash": "be2c37fd9fb8f19c768ba496b779f8245b2bb6eaebc23d8c3b7244828090601f"},
+  "cache_version": {"before": "132", "after": "132", "bumped": false,
+                    "reason": "no prompt, extraction surface or routing policy change; narration change only in envelope.config, not rendered by the current workspace; scene/answers/certificates byte-identical"},
+  "findings": {
+    "F1_P1": "validator-refused extraction leaked its parsed payload graph (cycle through pydantic-core ValidationError ctx); fixed cb79848f",
+    "F2_P1": "/api/image/extract ignored ALLOW_LIVE_AI=0; fixed 05cf4db1",
+    "F3_P2": "interpreter assign narration printed kernel reprs (24 narrations / 15 served problems); fixed 05cf4db1",
+    "R1_P3": "ISSUE-ARCH-CONFIG-NARRATION-CHART-COORDINATES (open)",
+    "R2_P3": "ISSUE-OPS-VISION-TRANSPORT-KEY-IN-URL (open)",
+    "R3": "visual_mode '2d' is inert metadata (not a defect)"
+  },
+  "measurement": {
+    "MEASUREMENT_CLASS": "OFFLINE_STAGING_REPLAY_DEVELOPMENT",
+    "HELD_OUT_CLAIM": "NONE (stored development corpora; distortions authored by this run; not H-1)",
+    "EVALUATOR_INDEPENDENCE": "NONE (same agent wrote fixes and probes)",
+    "http_e2e": "results/http-e2e-summary.json: 994 texts, 994 HTTP 200, 548 served, 0 contract findings, 548/548 byte-identical cache hits",
+    "source_gate_distortion": "results/source-gate-distortion.json: 50 cases (48 distortions + 2 controls), 0 wrong-served",
+    "frontend_audit": "results/frontend-authority-audit.json: 392/392 reached",
+    "stage_profile": "results/stage-profile.json",
+    "concurrency": "results/concurrency-reliability.json: 304 concurrent requests, 0 mismatch, 0 5xx",
+    "memory_retention": "results/memory-retention.json: 0 live payloads over 30 rounds",
+    "image_boundary": "results/image-boundary.json"
+  },
+  "live": {
+    "status": "LIVE_SMOKE_NOT_AUTHORIZED",
+    "intentional_provider_calls": 0,
+    "unauthorized_provider_calls": "UNKNOWN (≤ 8 successful vision responses; blank synthetic images; earlier tool version, see report §9)"
+  }
+}
