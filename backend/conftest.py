@@ -111,6 +111,23 @@ def live_allowed() -> bool:
     return os.getenv("ALLOW_LIVE_AI") == "1"
 
 
+# ── LỚP 3: biên SOCKET, và mọi tiến trình Python CON (run `gemini-credential-transport`) ────────────────────────
+#
+# Hai lớp dưới (`block_real_network`) chỉ có hiệu lực TRONG tiến trình pytest và chỉ với httpx. Một test spawn
+# `python script.py` thì tiến trình con import `app` → `db.py` chạy `load_dotenv` → KHOÁ THẬT quay lại, không guard nào.
+# Đúng hình dạng sự cố của run `hybrid-backend-reliability` (gỡ biến môi trường không phải là một biên).
+# - trong tiến trình này: socket chỉ được nối loopback (`offline_socket_guard.install`);
+# - với tiến trình con: thư mục `tests/offline_child` lên đầu `PYTHONPATH` ⇒ `site` tự import `sitecustomize` của nó:
+#   đặt `GEMINI_API_KEY=""` TRƯỚC khi `.env` kịp nạp (dotenv không đè biến đã có), cài cùng guard socket + chặn httpx.
+OFFLINE_CHILD_DIR = Path(__file__).resolve().parent / "tests" / "offline_child"
+if not live_allowed():
+    from tests.offline_child.offline_socket_guard import install as _cai_guard_socket
+
+    _cai_guard_socket()
+    os.environ["PYTHONPATH"] = os.pathsep.join(
+        p for p in (str(OFFLINE_CHILD_DIR), os.environ.get("PYTHONPATH", "")) if p)
+
+
 @pytest.fixture(autouse=True)
 def block_real_network(monkeypatch):
     """Chặn MỌI HTTP POST thật qua httpx + gỡ key thật khỏi môi trường.
