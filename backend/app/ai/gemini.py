@@ -183,10 +183,11 @@ async def call_gemini(
     thử lại và thời gian chờ cho một lượt gọi, không nâng được. Mặc định `None`
     giữ nguyên hành vi cũ cho mọi stage — đường ảnh dùng 2 lượt / 60 giây.
     """
-    url = (
-        "https://generativelanguage.googleapis.com/v1beta/models/"
-        f"{MODEL}:generateContent?key={api_key}"
-    )
+    # The key travels ONLY in the `x-goog-api-key` header, as on the Hybrid transport (`function_calling.live_transport`):
+    # a URL is what httpx's INFO line "HTTP Request: POST <url>" and every `exc.request.url` carry (run
+    # `gemini-credential-transport`; same lesson as pilot G05).
+    url = f"https://generativelanguage.googleapis.com/v1beta/models/{MODEL}:generateContent"
+    headers = {"x-goog-api-key": api_key}
     generation_config: dict = {"temperature": temperature}
     if response_schema is not None:
         # JSON mode giữ nguyên trong MỌI trường hợp — đầu ra vẫn phải là JSON.
@@ -221,12 +222,13 @@ async def call_gemini(
             if budget:
                 budget.note_request(is_retry=attempt > 0)  # vượt trần → BudgetExceeded
             try:
-                res = await client.post(url, json=payload)
+                res = await client.post(url, json=payload, headers=headers)
             except (httpx.TimeoutException, httpx.NetworkError) as e:
                 if attempt < tran_thu - 1:
                     await asyncio.sleep(BACKOFF_BASE_SECONDS * (2 ** attempt))
                     continue
-                raise RuntimeError(f"Gemini API timeout hoặc lỗi mạng: {e}")
+                # `from None`: the httpx error holds the request (URL + headers); it is not chained onto what is logged.
+                raise RuntimeError(f"Gemini API timeout hoặc lỗi mạng: {e}") from None
 
             if res.status_code == 200:
                 break

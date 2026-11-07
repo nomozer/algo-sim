@@ -100,6 +100,42 @@ def test_anh_hop_le_nhung_thieu_key_503():
     assert r.status_code == 503
 
 
+def _gemini_qua_mock_transport(monkeypatch, body: dict):
+    """The REAL `gemini.call_gemini` over an `httpx.MockTransport` (no network: conftest blocks only real transports)."""
+    import httpx
+
+    from app.ai import gemini
+
+    real_client, seen = httpx.AsyncClient, []
+
+    def handler(request):
+        seen.append(request)
+        return httpx.Response(200, json={"candidates": [{"content": {"parts": [
+            {"text": json.dumps(body, ensure_ascii=False)}]}}]}, request=request)
+
+    monkeypatch.setattr(gemini.httpx, "AsyncClient",
+                        lambda **kw: real_client(transport=httpx.MockTransport(handler), **kw))
+    return seen
+
+
+def test_doc_anh_qua_transport_that_khoa_chi_trong_header(monkeypatch):
+    """Run `gemini-credential-transport`: the image path's own transport now sends the key only as `x-goog-api-key`;
+    the response contract is unchanged; and without a key no request is made at all."""
+    fake = "AIza" + "FAKE_IMAGE_TEST_ONLY_0123456789abcd"
+    seen = _gemini_qua_mock_transport(monkeypatch, _ban_ghi())
+    monkeypatch.delenv("GEMINI_API_KEY", raising=False)
+    assert _post(content=_b64(), mime_type="image/png").status_code == 503 and seen == []    # missing key: no call
+
+    monkeypatch.setenv("GEMINI_API_KEY", fake)
+    r = _post(content=_b64(), mime_type="image/png")
+    assert r.status_code == 200, r.text
+    d = r.json()
+    assert d["status"] == "ok" and d["assessment"]["problem_text"] == DE and d["cached"] is False
+    assert TRUONG_PROVENANCE <= set(d["provenance"])
+    assert len(seen) == 1 and seen[0].headers["x-goog-api-key"] == fake
+    assert fake not in str(seen[0].url) and not seen[0].url.query and fake not in r.text
+
+
 def test_khach_het_luot_thu_KHONG_goi_duoc_provider_doc_anh(monkeypatch):
     """Đọc ảnh cũng tiêu provider ⇒ đứng sau CÙNG cổng lượt thử với `/api/analyze`."""
     from app.accounts.policy import GUEST_TRIAL_LIMIT
