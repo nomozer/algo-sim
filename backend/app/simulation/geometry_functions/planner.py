@@ -525,6 +525,8 @@ def _ke_hoach_cong(facts: list[TypedFact], k: KeHoach) -> KeHoach:
         else:
             raise TuChoi("CURVED_RELATION_UNSUPPORTED", f"{f.id}: dữ kiện {f.kind} chưa có quan hệ đã chứng nhận với khối "
                          "tròn xoay trên planner", (f.id,))
+    steps_c = _nguon_goc_buoc(k)
+    fn_c = {c["id"]: c["fn"] for c in k.calls}
     k.search_telemetry = {
         "classification": (
             "REGISTERED_DECOMPOSITION"
@@ -533,10 +535,15 @@ def _ke_hoach_cong(facts: list[TypedFact], k: KeHoach) -> KeHoach:
         ),
         "explored_states": 0,
         "candidate_evaluations": 0,
+        "candidate_count": 0,
+        "pruned_nodes": 0,
+        "rejection_reasons": [],
         "search_depth": 0,
         "reused_intermediates": 0,
-        **_nguon_goc_buoc(k),
+        **steps_c,
         "selected_functions": [c["fn"] for c in k.calls],
+        "selected_plan": [c["fn"] for c in k.calls],
+        "plan_cost": sum(1 for cid in steps_c["planner_originated_steps"] if fn_c.get(cid) not in DEFINITION_FUNCTIONS and not str(fn_c.get(cid, "")).startswith("ask_")),
         "available_effects": sorted({pc.effect.kind for sp in REGISTRY.values() for pc in planning_contracts(sp)}),
         "search_budget": {
             "max_depth": MAX_EFFECT_DEPTH,
@@ -698,6 +705,13 @@ def lap_ke_hoach(raw: Any, problem_text: str = "") -> KeHoach:
         or len(k.solids) > 1
         or any(c["fn"] == "sphere_tangent_plane" for c in k.calls)
     )
+    fn_by_id = {c["id"]: c["fn"] for c in k.calls}
+    aux_subgoals = [s for d in k.auxiliary for s in (d.get("search") or {}).get("subgoals") or ()]
+    pruned_count = len(k.resolver.rejected) + sum(len(s.get("rejected") or ()) for s in aux_subgoals)
+    rej_reasons = list(dict.fromkeys([
+        *(r["reason"] for r in k.resolver.rejected if r.get("reason")),
+        *(r["rejected"] for s in aux_subgoals for r in (s.get("rejected") or ()) if r.get("rejected")),
+    ]))
     k.search_telemetry = {
         "classification": (
             "DISCOVERED_FUNCTION_COMPOSITION"
@@ -708,10 +722,15 @@ def lap_ke_hoach(raw: Any, problem_text: str = "") -> KeHoach:
         ),
         "explored_states": k.resolver.needs,
         "candidate_evaluations": k.resolver.candidates,
+        "candidate_count": k.resolver.candidates,
+        "pruned_nodes": pruned_count,
+        "rejection_reasons": rej_reasons,
         "search_depth": k.resolver.depth_max,
         "reused_intermediates": k.resolver.reused,
         **steps,
         "selected_functions": [c["fn"] for c in k.calls],
+        "selected_plan": [c["fn"] for c in k.calls],
+        "plan_cost": sum(1 for cid in steps["planner_originated_steps"] if fn_by_id.get(cid) not in DEFINITION_FUNCTIONS and not str(fn_by_id.get(cid, "")).startswith("ask_")),
         "available_effects": sorted({pc.effect.kind for s in REGISTRY.values() for pc in planning_contracts(s)}),
         "search_budget": {
             "max_depth": MAX_EFFECT_DEPTH,
@@ -1775,28 +1794,15 @@ def _bo_ba_thang_hang(facts) -> list[tuple[str, str, str]]:
     return out
 
 
-def _phap_tuyen(q_mat: list[str], kh: _Khoi, k: KeHoach) -> dict:
-    """Goal regression of ONE `Normal(Q)` need (C17): every producer the Registry's contracts offer, cheapest first.
-    - a premise stating a line ⊥ Q reuses that line (cost 0, nothing built);
-    - each `Normal` contract (today `orthogonal_projection`) with a FREE point Z bound to every solid vertex not on Q —
-      a vertex of a face holding Q's labels lies on Q, so its foot is itself (rejected, never tried on coordinates).
-    Ties break on the vertex label's position in the solid, never on the problem's wording. The engine re-checks ⊥."""
-    tap_q = frozenset(q_mat)
-    ung_vien, loai = [], []
-    for pf in k.resolver.facts.values():
-        pa, pb = list(pf.points_a or ()), list(pf.points_b or ())
-        if (pf.kind == "perpendicular" and pf.role == "premise" and not pf.negated and len(pa) == 2 and len(pb) >= 3
-                and (tap_q <= frozenset(pb) or frozenset(pb) <= tap_q)):
-            chan = next((x for x in pa if x in pb or x in tap_q), pa[0])
-            ung_vien.append({"cost": 0, "producer": "premise", "fact": pf.id, "vector": [chan, next(x for x in pa if x != chan)]})
-    # Points known to lie on Q from STRUCTURE: stated collinear points on an edge/line and centroids of a triangle face.
-    trung = _bo_ba_thang_hang(k.resolver.facts.values())
-    trong_tam = [(pf.point, set(pf.points)) for pf in k.resolver.facts.values()
+def _diem_tren_mat(q_mat: list[str] | tuple[str, ...], facts, solids) -> set[str]:
+    """Points known to lie on plane `q_mat` from STRUCTURE: solid faces, collinear points on edges/lines, and centroids."""
+    trung = _bo_ba_thang_hang(facts)
+    trong_tam = [(pf.point, set(pf.points)) for pf in facts
                  if not pf.negated and pf.role == "premise" and pf.kind == "point_def"
                  and pf.point_kind == "centroid" and pf.point and len(pf.points or ()) == 3]
-    mats = [set(m) for m in _mat_cua_khoi(kh)]
+    mats = [set(m) for kh in solids for m in _mat_cua_khoi(kh)]
     duong = [set(t) for t in trung]
-    tren_q = set(tap_q)
+    tren_q = set(q_mat)
 
     def phang(chung: set) -> bool:                     # ≥ 3 shared points that are NOT all on one known line
         return len(chung) >= 3 and not any(chung <= ln for ln in duong)
@@ -1813,13 +1819,38 @@ def _phap_tuyen(q_mat: list[str], kh: _Khoi, k: KeHoach) -> dict:
         for m in mats:
             if phang(tren_q & m):
                 tren_q |= m
+    return tren_q
+
+
+def _phap_tuyen(q_mat: list[str], kh: _Khoi, k: KeHoach) -> dict:
+    """Goal regression of ONE `Normal(Q)` need (C17): every producer the Registry's contracts offer, cheapest first.
+    - a premise stating a line ⊥ Q or an existing projection onto Q reuses that normal vector (cost 0, nothing built);
+    - each `Normal` contract (today `orthogonal_projection`) with a FREE point Z bound to every solid vertex not on Q —
+      a vertex of a face holding Q's labels lies on Q, so its foot is itself (rejected, never tried on coordinates).
+    Ties break on the vertex label's position in the solid, never on the problem's wording. The engine re-checks ⊥."""
+    tap_q = frozenset(q_mat)
+    tren_q = _diem_tren_mat(q_mat, k.resolver.facts.values(), (kh,))
+    ung_vien, loai = [], []
+    for pf in k.resolver.facts.values():
+        pa, pb = list(pf.points_a or ()), list(pf.points_b or ())
+        if (pf.kind == "perpendicular" and pf.role == "premise" and not pf.negated and len(pa) == 2 and len(pb) >= 3
+                and (tap_q <= frozenset(pb) or frozenset(pb) <= tap_q or frozenset(pb) <= tren_q)):
+            chan = next((x for x in pa if x in pb or x in tren_q), pa[0])
+            ung_vien.append({"cost": 0, "producer": "premise", "fact": pf.id, "vector": [chan, next(x for x in pa if x != chan)]})
+        elif (pf.kind == "projection" and pf.role == "premise" and not pf.negated and not pf.line_ref
+                and pf.point and pf.at and len(pf.points or ()) >= 3
+                and (tap_q <= frozenset(pf.points) or frozenset(pf.points) <= tap_q or frozenset(pf.points) <= tren_q)):
+            if pf.point in tren_q:
+                loai.append({"producer": "premise", "point": pf.point, "rejected": "lies on the plane (solid structure)"})
+            else:
+                ung_vien.append({"cost": 0, "producer": "premise", "fact": pf.id, "vector": [pf.at, pf.point], "reused_projection": True})
     dinh = list(dict.fromkeys([*kh.day, *(kh.tren if kh.loai == "prism" else [kh.dinh])]))
     for spec in sorted(REGISTRY.values(), key=lambda s: s.name):
         for contract in planning_contracts(spec):
             if contract.effect.kind != "Normal":
                 continue
             for z in dinh:
-                if z in tren_q:
+                if z in tren_q or k.resolver._unmet(contract, {"Z": z, "Q": tuple(q_mat)}):
                     loai.append({"producer": spec.name, "point": z, "rejected": "lies on the plane (solid structure)"})
                     continue
                 ung_vien.append({"cost": 1, "producer": spec.name, "contract": contract, "point": z})
@@ -1881,6 +1912,8 @@ def _mat_rang_buoc(f: TypedFact, q: list[str], k: KeHoach, phat, khoi: str, fn: 
                 # that rule, not a composition search (any candidate yields the same plane) — so REGISTERED
                 cach = "registered"
                 if u["producer"] == "premise":
+                    if u.get("reused_projection"):
+                        k.resolver.reused += 1
                     vec, nguon = list(u["vector"]), {"producer": "premise", "fact": u["fact"]}
                 else:
                     h = moi_nhan()
@@ -2182,7 +2215,7 @@ class _EffectResolver:
     def _tren_mat(self, p, plane) -> bool:
         if not isinstance(plane, (list, tuple)):
             return False
-        verts = set(plane)
+        verts = _diem_tren_mat(plane, self.facts.values(), self.plan.solids.values())
         if isinstance(p, str):
             return p in verts
         if isinstance(p, tuple) and p[:1] == ("desc",) and p[2] and all(isinstance(x, str) for x in p[2]):

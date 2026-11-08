@@ -557,13 +557,7 @@ def parse_descriptor_inputs(
         out = sorted(out)
     elif kinds[0] == "Point" and len(kinds) == 2:
         ref_pts = out[1][1] if kinds[1] == "Line" else out[1]
-        if out[0] in ref_pts or (
-            isinstance(out[0], tuple)
-            and out[0][:1] == ("desc",)
-            and out[0][1] in ("midpoint", "centroid", "orthocenter", "circumcenter")
-            and all(isinstance(x, str) for x in out[0][2])
-            and set(out[0][2]) <= set(ref_pts)
-        ):
+        if out[0] in ref_pts:
             return None
     return tuple(out), extra_planes
 
@@ -662,7 +656,8 @@ REGISTRY: dict[str, FunctionSpec] = {s.name: s for s in (
        # C17: a NORMAL direction of a plane Q — Z − H for any point Z off Q, H its foot on Q. The planner chooses Z.
        planning_extra=(PlanningContract(
            (PlanningTerm("Point", ("Z",)), PlanningTerm("Plane", ("Q",))), PlanningTerm("Normal", ("Q",)), "normal_witness",
-           "orthogonal_projection", call=(("point", "Z"), ("plane", "Q"), ("image", "H")), fresh="H"),)),
+           "orthogonal_projection", call=(("point", "Z"), ("plane", "Q"), ("image", "H")), fresh="H",
+           free=("Z",), requires=(("off_plane", "Z", "Q"),)),)),
     _F("orthogonal_projection_line", ProjectionLineArgs, "construct", "Dựng ảnh hình chiếu vuông góc của điểm lên đường thẳng.",
        (("hình chiếu",),), segment_fields=("line",), point_fields=("image",),
        planning=PlanningContract((PlanningTerm("Point", ("P",)), PlanningTerm("Line", ("L",))),
@@ -5318,6 +5313,57 @@ def _rang_buoc_nguon(de: str) -> list[tuple[str, frozenset, tuple[int, int]]]:
     return out
 
 
+def _cung_mat_rang_buoc(pts_a: list[str] | tuple[str, ...], pts_b: list[str] | tuple[str, ...], calls: tuple[LoiGoi, ...]) -> bool:
+    """Structural coplanarity closure over declared solid faces and constructed collinear/coplanar points in `calls`."""
+    faces: list[set[str]] = []
+    collinear: list[tuple[str, str, str]] = []
+    centroids: list[tuple[str, set[str]]] = []
+    for c in calls:
+        if c.fn in ("pyramid", "regular_pyramid"):
+            ap, bs = c.args.apex, list(c.args.base)
+            faces.append(set(bs))
+            for idx in range(len(bs)):
+                faces.append({ap, bs[idx], bs[(idx + 1) % len(bs)]})
+        elif c.fn == "prism":
+            bs, tp = list(c.args.base), list(c.args.top)
+            faces.extend([set(bs), set(tp)])
+            for idx in range(len(bs)):
+                faces.append({bs[idx], bs[(idx + 1) % len(bs)], tp[(idx + 1) % len(tp)], tp[idx]})
+        elif c.fn in ("midpoint", "divide_segment"):
+            collinear.append((c.args.point, c.args.segment[0], c.args.segment[1]))
+        elif c.fn == "orthogonal_projection_line" and getattr(c.args, "line", None):
+            collinear.append((c.args.image, c.args.line[0], c.args.line[1]))
+        elif c.fn == "intersect_line_line":
+            collinear.append((c.args.point, c.args.line1[0], c.args.line1[1]))
+            collinear.append((c.args.point, c.args.line2[0], c.args.line2[1]))
+        elif c.fn == "intersect_line_plane":
+            collinear.append((c.args.point, c.args.line[0], c.args.line[1]))
+        elif c.fn == "centroid":
+            centroids.append((c.args.point, set(c.args.polygon)))
+    lines = [set(t) for t in collinear]
+
+    def closure(seed: list[str] | tuple[str, ...]) -> set[str]:
+        s = set(seed)
+        fs = [set(f) for f in faces]
+        for _ in range(3):
+            for m in fs:
+                m |= {x for x, a, b in collinear if a in m and b in m}
+                m |= {g for g, tri in centroids if tri <= m}
+            for x, a, b in collinear:
+                if len({x, a, b} & s) >= 2:
+                    s |= {x, a, b}
+            for g, tri in centroids:
+                if len((tri | {g}) & s) >= 3:
+                    s |= tri | {g}
+            for m in fs:
+                shared = s & m
+                if len(shared) >= 3 and not any(shared <= ln for ln in lines):
+                    s |= m
+        return s
+
+    return frozenset(pts_a) <= closure(pts_b) or frozenset(pts_b) <= closure(pts_a)
+
+
 def _kiem_mat_rang_buoc(d: dict, theo_id: dict, de: str, nhan: set[str], chiem: set[str], nhan_da_khai: set[str],
                         calls: tuple[LoiGoi, ...], ten_mat_phu: dict | None,
                         buoc: list[tuple[int, int]] | None = None) -> set[str]:
@@ -5372,8 +5418,19 @@ def _kiem_mat_rang_buoc(d: dict, theo_id: dict, de: str, nhan: set[str], chiem: 
                 raise sai("phương song song không phải đường đã nêu")
         elif w.get("producer") == "premise":
             pc = theo_id.get(w.get("fact"))
-            if (pc is None or pc.fn != "perpendicular_line_plane" or frozenset(pc.args.line) != frozenset(w["vector"])
-                    or not (frozenset(c["points"]) <= frozenset(pc.args.plane) or frozenset(pc.args.plane) <= frozenset(c["points"]))):
+            ok_perp = (
+                pc is not None
+                and pc.fn == "perpendicular_line_plane"
+                and frozenset(pc.args.line) == frozenset(w["vector"])
+                and _cung_mat_rang_buoc(c["points"], pc.args.plane, calls)
+            )
+            ok_proj = (
+                pc is not None
+                and pc.fn == "orthogonal_projection"
+                and list(w.get("vector") or ()) == [pc.args.image, pc.args.point]
+                and _cung_mat_rang_buoc(c["points"], pc.args.plane, calls)
+            )
+            if not (ok_perp or ok_proj):
                 raise sai("pháp tuyến không phải đường đề cho vuông góc với mặt")
         else:
             h = theo_id.get(w.get("call"))
