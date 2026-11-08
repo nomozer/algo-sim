@@ -367,6 +367,7 @@ export interface UnifiedCandidateProblem {
   has_figure: boolean;
   problem_text: string | null;
   source_attachment_ids?: string[];
+  source_bbox?: [number, number, number, number] | null;
 }
 
 export interface UnifiedInputAttachmentPayload {

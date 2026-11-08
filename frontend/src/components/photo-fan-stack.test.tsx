@@ -12,6 +12,7 @@ import {
   classifyCameraError,
   classifySupportError,
   isMobileCameraPreferred,
+  shouldUseFullscreenCamera,
 } from "./PhotoCameraView";
 import { PhotoProblemDialog } from "./PhotoProblemDialog";
 import { runComposerSubmit } from "./ProblemInput";
@@ -396,5 +397,33 @@ describe("Fullscreen Mobile/Tablet Optimization & Orientation-Aware Constraints 
         anyCoarsePointer: false,
       }),
     ).toBe(false);
+  });
+
+  it("shouldUseFullscreenCamera phân biệt chính xác Tablet cảm ứng (1024x768) với Desktop cửa sổ nhỏ (960x720, 1024x768 không cảm ứng) (§3)", () => {
+    const desktopSig = {
+      userAgent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+      userAgentDataMobile: false,
+      maxTouchPoints: 0,
+      anyCoarsePointer: false,
+    };
+    const tabletSig = {
+      userAgent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15",
+      userAgentDataMobile: false,
+      maxTouchPoints: 5,
+      anyCoarsePointer: true,
+    };
+
+    // Desktop 1440x900 -> Dialog (false)
+    expect(shouldUseFullscreenCamera({ width: 1440, height: 900 }, desktopSig)).toBe(false);
+    // Desktop cửa sổ nhỏ 1024x768 và 960x720 (không touch/coarse) -> giữ Desktop Dialog (false), không nhận nhầm là Tablet!
+    expect(shouldUseFullscreenCamera({ width: 1024, height: 768 }, desktopSig)).toBe(false);
+    expect(shouldUseFullscreenCamera({ width: 960, height: 720 }, desktopSig)).toBe(false);
+    // Tablet Landscape 1024x768 có cảm ứng -> Fullscreen (true)
+    expect(shouldUseFullscreenCamera({ width: 1024, height: 768 }, tabletSig)).toBe(true);
+    // Tablet Portrait 768x1024 -> Fullscreen (true)
+    expect(shouldUseFullscreenCamera({ width: 768, height: 1024 }, tabletSig)).toBe(true);
+    // Mobile 390x844 và 390x500 -> Fullscreen (true)
+    expect(shouldUseFullscreenCamera({ width: 390, height: 844 }, desktopSig)).toBe(true);
+    expect(shouldUseFullscreenCamera({ width: 390, height: 500 }, desktopSig)).toBe(true);
   });
 });
