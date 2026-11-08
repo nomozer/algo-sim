@@ -4,6 +4,19 @@
 Retired branch names now have local `refs/archive/repository-closure/` references and a verified private self-contained bundle.
 Existing evidence and historical reports below are unchanged; no research result is reinterpreted by this Git-state update.
 
+## WAVE_ID = ALGOSIM_LOCAL_FIRST_IMAGE_INGESTION
+
+REPORT = docs/evaluation/geometry/runs/algosim-local-first-image-ingestion/LOCAL_FIRST_IMAGE_INGESTION_REPORT.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/algosim-local-first-image-ingestion/
+START_BASE = feat/hybrid-goal-driven-planner 6dcdd690497c1aa3043188055e1dd4a738326a73 (product 6c961c884; main = origin/main bb046fa22aceff47abe22aa783aa64fc65caee13)
+CODE_COMMIT = c7b15b23a (measured_system tree hash 6290986dee3d1336a13611f0c0a452f90bfb40ab6d837c46396bcafb2cd5f81d across so_file=106 hashed entries / 105 unique files; baseline stabilization in engine.py & test_goal_driven_planner_generalization.py + local-first image ingestion, shadow compensation, deduplication, and zero-VLM user-edit preservation in region_detector.py, unified_input.py, document_reader.py, ProblemInput.tsx + E2E journey tests; CACHE_VERSION 132 unchanged)
+CLASSIFICATION = OFFLINE_LOCAL_FIRST_IMAGE_INGESTION_AND_E2E_VERIFICATION (branch feat/algosim-local-first-image-ingestion, not merged, not pushed): Section II stabilizes feat/hybrid-goal-driven-planner at 6dcdd6904 (PREVIOUS_CANDIDATE_FIXED_AND_VERIFIED, 115/115 passed); Sections III–XI verify local-first CV image preprocessing, shadow/low-light recovery, provider load reduction, and E2E Journeys A–E into Hybrid /4 Scene3D simulation (11/11 image classes PASS, class_05_shadowed recall 0.4233 -> 1.0000; 8/8 provider scenarios PASS, s6 user edit preserved with 0 VLM calls; median_preprocess_ms 1065.64 -> 656.05 ms, median_e2e_ms 2530.20 -> 1655.72 ms; LOCAL_FIRST_IMAGE_INGESTION_VERIFIED; END_TO_END_IMAGE_TO_SIMULATION_VERIFIED; PROVIDER_DEPENDENCY_REDUCED_AND_MEASURED; LIVE_CALLS_ZERO_BY_DIRECTIVE; INDEPENDENT_H1_VALIDATION = NOT_MEASURED).
+PRODUCT_CHANGE = YES (backend: engine.py, region_detector.py, unified_input.py, document_reader.py; frontend: ProblemInput.tsx)
+MODEL_REQUEST_COUNT = 0
+VERIFICATION = LOCAL_FIRST_IMAGE_INGESTION_REPORT.md; run.json; before_metrics.json; after_metrics.json; tools/measure_image_ingestion.py; backend/tests/test_local_first_image_ingestion_e2e.py; frontend/src/components/photo-problem-panel.test.tsx
+CORRECTS = NONE
+CORRECTED_BY = NONE
+
 ## WAVE_ID = HYBRID_GOAL_DRIVEN_PLANNER
 
 REPORT = docs/evaluation/geometry/runs/hybrid-goal-driven-planner/GOAL_DRIVEN_COMPOSITION_REPORT.md

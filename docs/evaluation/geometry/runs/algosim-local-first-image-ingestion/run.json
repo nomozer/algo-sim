@@ -1,0 +1,51 @@
+{
+  "run_id": "algosim-local-first-image-ingestion",
+  "date": "2026-11-09",
+  "branch": "feat/algosim-local-first-image-ingestion",
+  "baseline": "6dcdd690497c1aa3043188055e1dd4a738326a73 (feat/hybrid-goal-driven-planner verified candidate, product 6c961c884; main = origin/main = bb046fa22aceff47abe22aa783aa64fc65caee13)",
+  "merged": false,
+  "pushed": false,
+  "provider_calls": 0,
+  "commits": [
+    {
+      "sha": "c7b15b23a",
+      "role": "product & test: stabilize hybrid planner baseline (_Dung._kc2_do_dai d2==0 check + E9/Test5 metamorphic test alignment) and local-first intelligent image ingestion (local HSV shadow detection/illumination compensation & shadowed paper boundary preservation in region_detector.py, p1/p99 low-light dynamic range detection, predecoded/prenormalized deduplication in unified_input.py & region_detector.py, user-edited full problem preservation in document_reader.py::merge_supplemental_text, composer #home-problem-input auto-sync & zero-VLM re-submit on user edits in ProblemInput.tsx) + E2E journey tests (A-E)"
+    }
+  ],
+  "candidate": {
+    "measured_system_paths_count": 3,
+    "measured_system_hashed_entries_so_file": 106,
+    "measured_system_unique_files": 105,
+    "backend_app_files": 100,
+    "frontend_semantic_files": 5,
+    "duplicate_explicit_path": "frontend/src/simulations/domains/semantic/semantic_program.schema.json",
+    "measured_system_tree_hash": "6290986dee3d1336a13611f0c0a452f90bfb40ab6d837c46396bcafb2cd5f81d"
+  },
+  "cache_version": {
+    "before": "132",
+    "after": "132",
+    "bumped": false,
+    "reason": "no Hybrid /4 prompt, schema, or simulation envelope change; changes affect local-first image preprocessing, unified input text merge on user edits, and degenerate 0-length segment refusal when a == b"
+  },
+  "verdicts": {
+    "section_ii_verdict": "PREVIOUS_CANDIDATE_FIXED_AND_VERIFIED",
+    "image_ingestion_verdict": "LOCAL_FIRST_IMAGE_INGESTION_VERIFIED",
+    "e2e_verdict": "END_TO_END_IMAGE_TO_SIMULATION_VERIFIED",
+    "provider_load_verdict": "PROVIDER_DEPENDENCY_REDUCED_AND_MEASURED",
+    "live_verdict": "LIVE_CALLS_ZERO_BY_DIRECTIVE"
+  },
+  "measurement": {
+    "MEASUREMENT_CLASS": "OFFLINE_LOCAL_FIRST_IMAGE_INGESTION_AND_E2E_VERIFICATION",
+    "HELD_OUT_CLAIM": "NONE (INDEPENDENT_H1_VALIDATION = NOT_MEASURED)",
+    "EVALUATOR_INDEPENDENCE": "NONE (same agent implemented and verified)",
+    "before_receipt": "before_metrics.json",
+    "after_receipt": "after_metrics.json",
+    "image_classes_passed": "10/11 (90.9%) -> 11/11 (100.0%); class_05_shadowed region_containment_recall 0.4233 -> 1.0000; class_04_low_light enhanced_low_light False -> True",
+    "provider_scenarios_passed": "7/8 (87.5%) -> 8/8 (100.0%); s6_user_edits_extracted_text api_preserved_edit False -> True with 0 VLM calls and updated Hybrid /4 answer V = 8",
+    "performance": "median_preprocess_ms 1065.64 -> 656.05 (-38.4%), median_prepare_ms 1139.40 -> 742.14 (-34.9%), median_e2e_ms 2530.20 -> 1655.72 (-34.6%), max_peak_ram_kb 12592.9 -> 12493.0"
+  },
+  "live": {
+    "status": "LIVE_CALLS_ZERO_BY_DIRECTIVE",
+    "intentional_provider_calls": 0
+  }
+}
