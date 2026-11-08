@@ -43,9 +43,13 @@ export interface CameraErrorInfo {
   canRetry: boolean;
 }
 
+export type CameraDeviceKind = "phone" | "tablet" | "desktop" | "unknown";
+
 export interface CameraDeviceSignals {
   userAgentDataMobile?: boolean;
+  userAgentDataPlatform?: string;
   userAgent?: string;
+  platform?: string;
   maxTouchPoints?: number;
   anyCoarsePointer?: boolean;
 }
@@ -196,10 +200,122 @@ export function cameraErrorTitle(errMessage: string): string {
   return "Không thể mở máy ảnh";
 }
 
+/**
+ * Phân loại thiết bị thuần hàm (`phone` | `tablet` | `desktop` | `unknown`) từ các tín hiệu trình duyệt (§2, §3):
+ * - Tuyệt đối không dùng kích thước viewport (`window.innerWidth`/`innerHeight`) hay tỷ lệ thu phóng (`devicePixelRatio`).
+ * - Hỗ trợ nhận diện iPadOS chạy Safari ở chế độ desktop (`Macintosh`/`MacIntel` + `maxTouchPoints > 1`).
+ * - Hỗ trợ nhận diện Android tablet (có `Android` nhưng không có `Mobile` trong User-Agent).
+ * - Không nhầm laptop Windows/Linux/ChromeOS có màn hình cảm ứng thành điện thoại hay máy tính bảng.
+ */
+export function classifyCameraDevice(sig?: CameraDeviceSignals): CameraDeviceKind {
+  if (!sig) return "unknown";
+  const ua = (sig.userAgent ?? "").trim();
+  const plat = (sig.platform ?? "").trim();
+  const uaPlat = (sig.userAgentDataPlatform ?? "").trim();
+  const touchPoints = sig.maxTouchPoints ?? 0;
+
+  // 1. Điện thoại iOS tường minh (iPhone / iPod): phải kiểm tra trước Macintosh vì UA iPhone chứa "like Mac OS X"
+  if (
+    /\b(iPhone|iPod|Windows Phone|IEMobile|Opera Mini|BlackBerry|BB10)\b/i.test(ua) ||
+    /\b(iPhone|iPod)\b/i.test(plat) ||
+    /^iOS$/i.test(uaPlat)
+  ) {
+    return "phone";
+  }
+
+  // 2. iPad tường minh hoặc iPadOS Safari chế độ desktop (Macintosh/MacIntel có cảm ứng đa điểm > 1):
+  if (/\biPad\b/i.test(ua) || /\biPad\b/i.test(plat) || /\biPadOS\b/i.test(uaPlat)) {
+    return "tablet";
+  }
+  const isMacLike =
+    /\bMacintosh\b/i.test(ua) ||
+    /\b(MacIntel|MacPPC|Mac68K|Macintosh)\b/i.test(plat) ||
+    /^macOS$/i.test(uaPlat);
+  if (isMacLike && touchPoints > 1) {
+    return "tablet";
+  }
+
+  // 3. Máy tính bảng Android hoặc thiết bị bảng chuyên dụng (Kindle/Silk/PlayBook/Tablet):
+  const isAndroid = /\bAndroid\b/i.test(ua) || /^Android$/i.test(uaPlat);
+  if (/\b(Tablet|PlayBook|Silk|Kindle)\b/i.test(ua)) {
+    return "tablet";
+  }
+  if (isAndroid) {
+    if (/\bMobile\b/i.test(ua) || sig.userAgentDataMobile === true) {
+      return "phone";
+    }
+    return "tablet";
+  }
+
+  if (sig.userAgentDataMobile === true) {
+    return "phone";
+  }
+
+  // 4. Desktop / Laptop (Windows, macOS không cảm ứng đa điểm, Linux desktop, ChromeOS):
+  const isWindowsDesktop =
+    (/\b(Windows NT|Win64|Win32|WOW64)\b/i.test(ua) && !/\bWindows Phone\b/i.test(ua)) ||
+    /\b(Win32|Win64|Windows)\b/i.test(plat) ||
+    /^Windows$/i.test(uaPlat);
+  if (isWindowsDesktop) {
+    return "desktop";
+  }
+  if (isMacLike) {
+    return "desktop";
+  }
+  const isLinuxOrChromeOsDesktop =
+    (/\b(X11|CrOS|Linux)\b/i.test(ua) && !isAndroid) ||
+    (/\bLinux\b/i.test(plat) && !isAndroid) ||
+    /^(Linux|Chrome OS|Chromium OS)$/i.test(uaPlat);
+  if (isLinuxOrChromeOsDesktop) {
+    return "desktop";
+  }
+
+  // 5. Từ khóa Mobile trên UA di động khác:
+  if (/\bMobile\b/i.test(ua)) {
+    return "phone";
+  }
+
+  return "unknown";
+}
+
+/**
+ * Quy tắc hiển thị điểm vào máy ảnh `Chụp ảnh đề bài` trong menu dấu `+` của Composer (§3, §4):
+ * - `phone` hoặc `tablet` -> `true`
+ * - `desktop` hoặc `unknown` -> `false`
+ */
+export function shouldShowCameraEntry(sig?: CameraDeviceSignals): boolean {
+  const kind = classifyCameraDevice(sig);
+  return kind === "phone" || kind === "tablet";
+}
+
+export function readBrowserCameraDeviceSignals(): CameraDeviceSignals {
+  if (typeof navigator === "undefined") return {};
+  const nav = navigator as Navigator & {
+    userAgentData?: { mobile?: boolean; platform?: string };
+  };
+  const anyCoarsePointer =
+    typeof window !== "undefined" && typeof window.matchMedia === "function"
+      ? window.matchMedia("(any-pointer: coarse)").matches
+      : false;
+  return {
+    userAgentDataMobile: nav.userAgentData?.mobile,
+    userAgentDataPlatform: nav.userAgentData?.platform,
+    userAgent: nav.userAgent,
+    platform: nav.platform,
+    maxTouchPoints: nav.maxTouchPoints,
+    anyCoarsePointer,
+  };
+}
+
+export function detectShowCameraEntry(): boolean {
+  return shouldShowCameraEntry(readBrowserCameraDeviceSignals());
+}
+
 /** Nhận diện thiết bị di động / tablet theo tín hiệu năng lực thiết bị + UA, không phụ thuộc riêng bề rộng cửa sổ. */
 export function isMobileCameraPreferred(sig: CameraDeviceSignals): boolean {
-  if (sig.userAgentDataMobile === true) return true;
-  if (/Android|iPhone|iPad|iPod|Mobile|Tablet/i.test(sig.userAgent ?? "")) return true;
+  const kind = classifyCameraDevice(sig);
+  if (kind === "phone" || kind === "tablet") return true;
+  if (kind === "desktop") return false;
   if (sig.userAgentDataMobile === false) return false;
   return (sig.maxTouchPoints ?? 0) > 0 && Boolean(sig.anyCoarsePointer);
 }
@@ -236,22 +352,9 @@ export function shouldUseFullscreenCamera(
 export function detectMobileCameraPreferred(): boolean {
   const w = typeof window !== "undefined" ? window.innerWidth : 0;
   const h = typeof window !== "undefined" ? window.innerHeight : 0;
-  const nav =
-    typeof navigator !== "undefined"
-      ? (navigator as Navigator & { userAgentData?: { mobile?: boolean } })
-      : undefined;
-  const anyCoarsePointer =
-    typeof window !== "undefined" && typeof window.matchMedia === "function"
-      ? window.matchMedia("(any-pointer: coarse)").matches
-      : false;
   return shouldUseFullscreenCamera(
     { width: w, height: h },
-    {
-      userAgentDataMobile: nav?.userAgentData?.mobile,
-      userAgent: nav?.userAgent,
-      maxTouchPoints: nav?.maxTouchPoints,
-      anyCoarsePointer,
-    },
+    readBrowserCameraDeviceSignals(),
   );
 }
 
