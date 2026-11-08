@@ -1739,6 +1739,25 @@ def _mat_cua_khoi(kh: _Khoi) -> list[frozenset[str]]:
     return mats
 
 
+def _bo_ba_thang_hang(facts) -> list[tuple[str, str, str]]:
+    """Collinear triples (P, A, B) known purely from structural premise definitions (no coordinates)."""
+    out: list[tuple[str, str, str]] = []
+    for pf in facts:
+        if pf.negated or pf.role != "premise":
+            continue
+        if pf.kind == "point_def" and pf.point_kind in ("midpoint", "divide_segment") and pf.point and len(pf.points or ()) == 2:
+            out.append((pf.point, pf.points[0], pf.points[1]))
+        elif pf.kind == "projection" and pf.at and len(pf.points or ()) == 2:
+            out.append((pf.at, pf.points[0], pf.points[1]))
+        elif pf.kind == "point_def" and pf.point_kind == "intersect_line_line" and pf.point:
+            for seg in (pf.points_a, pf.points_b):
+                if len(seg or ()) == 2:
+                    out.append((pf.point, seg[0], seg[1]))
+        elif pf.kind == "point_def" and pf.point_kind == "intersect_line_plane" and pf.point and len(pf.points_a or ()) == 2:
+            out.append((pf.point, pf.points_a[0], pf.points_a[1]))
+    return out
+
+
 def _phap_tuyen(q_mat: list[str], kh: _Khoi, k: KeHoach) -> dict:
     """Goal regression of ONE `Normal(Q)` need (C17): every producer the Registry's contracts offer, cheapest first.
     - a premise stating a line ⊥ Q reuses that line (cost 0, nothing built);
@@ -1753,12 +1772,13 @@ def _phap_tuyen(q_mat: list[str], kh: _Khoi, k: KeHoach) -> dict:
                 and (tap_q <= frozenset(pb) or frozenset(pb) <= tap_q)):
             chan = next((x for x in pa if x in pb or x in tap_q), pa[0])
             ung_vien.append({"cost": 0, "producer": "premise", "fact": pf.id, "vector": [chan, next(x for x in pa if x != chan)]})
-    # Points known to lie on Q from STRUCTURE (review MINOR-1): a stated midpoint of an edge lies on that edge's faces,
-    # and two of {A, B, mid AB} on Q put the third on it; then a face sharing ≥ 3 such points IS Q.
-    trung = [(pf.point, *pf.points) for pf in k.resolver.facts.values()
-             if pf.kind == "point_def" and pf.point_kind == "midpoint" and pf.point and len(pf.points or ()) == 2]
+    # Points known to lie on Q from STRUCTURE: stated collinear points on an edge/line and centroids of a triangle face.
+    trung = _bo_ba_thang_hang(k.resolver.facts.values())
+    trong_tam = [(pf.point, set(pf.points)) for pf in k.resolver.facts.values()
+                 if not pf.negated and pf.role == "premise" and pf.kind == "point_def"
+                 and pf.point_kind == "centroid" and pf.point and len(pf.points or ()) == 3]
     mats = [set(m) for m in _mat_cua_khoi(kh)]
-    duong = [set(t) for t in trung]                    # the only collinear triples structure knows: A, B, mid AB
+    duong = [set(t) for t in trung]
     tren_q = set(tap_q)
 
     def phang(chung: set) -> bool:                     # ≥ 3 shared points that are NOT all on one known line
@@ -1766,9 +1786,13 @@ def _phap_tuyen(q_mat: list[str], kh: _Khoi, k: KeHoach) -> dict:
     for _ in range(3):
         for m in mats:
             m |= {x for x, a, b in trung if a in m and b in m}
+            m |= {g for g, tri in trong_tam if tri <= m}
         for x, a, b in trung:
             if len({x, a, b} & tren_q) >= 2:
                 tren_q |= {x, a, b}
+        for g, tri in trong_tam:
+            if len((tri | {g}) & tren_q) >= 3:
+                tren_q |= tri | {g}
         for m in mats:
             if phang(tren_q & m):
                 tren_q |= m
@@ -2118,8 +2142,8 @@ class _EffectResolver:
             return False
         ends = set(line[1])
         if isinstance(p, str):
-            return p in ends or any(f.kind == "point_def" and f.point_kind == "midpoint" and f.point == p and f.role == "premise"
-                                    and not f.negated and set(f.points or ()) == ends for f in self.facts.values())
+            return p in ends or any(x == p and {a, b} == ends
+                                    for x, a, b in _bo_ba_thang_hang(self.facts.values()))
         return isinstance(p, tuple) and p[:2] == ("desc", "midpoint") and set(p[2]) == ends
 
     def _binds(self, contract, env):
