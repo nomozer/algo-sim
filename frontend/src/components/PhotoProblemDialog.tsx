@@ -1,16 +1,21 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
-import { IconClose } from "./icons";
-import { PhotoCameraView, revokeSessionPhotoUrls } from "./PhotoCameraView";
+import { IconCheck } from "./icons";
+import {
+  detectMobileCameraPreferred,
+  PhotoCameraView,
+  revokeSessionPhotoUrls,
+} from "./PhotoCameraView";
 import type { CapturedSessionPhoto } from "./PhotoFanStack";
 
 /**
- * Hộp thoại chụp ảnh đề bài Camera-First & Photo Fan Stack (§4–§8, §12):
- * - Mở thẳng khung ngắm máy ảnh (mobile: toàn màn hình + nút chụp tròn ở giữa dưới;
- *   desktop: hộp thoại 576px gọn chuẩn DESIGN.md).
+ * Hộp thoại chụp ảnh đề bài Camera-First & Photo Fan Stack (§4–§12):
+ * - Mở thẳng khung ngắm máy ảnh (mobile/tablet: toàn màn hình nền tối `#0b0c0e` + nút chụp tròn trắng ở giữa dưới;
+ *   desktop: hộp thoại sáng 576px gọn chuẩn DESIGN.md).
  * - Cho phép chụp liên tiếp nhiều ảnh trong cùng phiên, xem lại độ phân giải gốc trong Photo Viewer,
- *   và chỉ đính kèm vào Composer khi bấm `Xong` (0 lượt gọi AI khi bấm `Xong`).
- * - Tách biệt rõ hành vi `Đóng` (hỏi xác nhận hủy phiên khi có ảnh chưa gắn) và `Xong` (đính kèm toàn bộ ảnh phiên vào Composer).
+ *   và chỉ đính kèm vào Composer khi bấm `Xong` hoặc `Giữ ảnh` (0 lượt gọi AI khi bấm `Xong`).
+ * - Tách biệt rõ hành vi `Đóng` (hiển thị hộp xác nhận nội tuyến 3 lựa chọn: `Giữ ảnh`, `Bỏ ảnh mới`, `Tiếp tục chụp`)
+ *   và `Xong` (đính kèm toàn bộ ảnh phiên vào Composer).
  */
 export interface PhotoProblemDialogProps {
   open: boolean;
@@ -39,6 +44,7 @@ export function PhotoProblemDialog({
   sessionPhotosRef.current = sessionPhotos;
 
   const [screenMode, setScreenMode] = useState<"camera" | "viewer">("camera");
+  const [isMobileSurface, setIsMobileSurface] = useState(detectMobileCameraPreferred);
   const [confirmDiscardOpen, setConfirmDiscardOpen] = useState(false);
 
   const discardAndCleanupSession = useCallback(() => {
@@ -54,6 +60,7 @@ export function PhotoProblemDialog({
       discardAndCleanupSession();
       return;
     }
+    setIsMobileSurface(detectMobileCameraPreferred());
     openerRef.current = document.activeElement;
     const t = window.setTimeout(() => {
       const first = dialogRef.current?.querySelector<HTMLElement>(FOCUSABLE);
@@ -84,6 +91,24 @@ export function PhotoProblemDialog({
 
   function confirmDiscardSession() {
     discardAndCleanupSession();
+    onClose();
+  }
+
+  function confirmAttachAndClose() {
+    const current = sessionPhotosRef.current;
+    const files = current.map((p) => p.file);
+    current.forEach((p) => revokeSessionPhotoUrls(p));
+    sessionPhotosRef.current = [];
+    setSessionPhotos([]);
+    setConfirmDiscardOpen(false);
+    setScreenMode("camera");
+    if (files.length > 0) {
+      if (onCapturedBatch) {
+        onCapturedBatch(files);
+      } else {
+        files.forEach((f) => onCaptured(f));
+      }
+    }
     onClose();
   }
 
@@ -123,71 +148,38 @@ export function PhotoProblemDialog({
     }
   }
 
+  const dialogClassName =
+    screenMode === "viewer"
+      ? "axo-modal-dialog photo-dialog is-viewer-dialog"
+      : isMobileSurface
+        ? "axo-modal-dialog photo-dialog camera-fullscreen dark-surface"
+        : "axo-modal-dialog photo-dialog camera-dialog";
+
   return (
     <div
-      className="axo-modal-backdrop open"
+      className={
+        screenMode === "viewer"
+          ? "axo-modal-backdrop open is-lightbox-backdrop"
+          : isMobileSurface
+            ? "axo-modal-backdrop open is-fullscreen-camera"
+            : "axo-modal-backdrop open"
+      }
       onMouseDown={(e) => {
         if (e.target === e.currentTarget) requestCloseDialog();
       }}
     >
       <div
         ref={dialogRef}
-        className="axo-modal-dialog photo-dialog"
+        className={dialogClassName}
         id="photo-camera-dialog"
         role="dialog"
         aria-modal="true"
-        aria-labelledby="photo-dialog-title"
+        aria-label="Chụp ảnh đề bài"
         tabIndex={-1}
         onKeyDown={onKeyDown}
         data-photo-screen={screenMode}
       >
-        <div className="axo-modal-header">
-          <span className="axo-modal-title" id="photo-dialog-title">
-            Chụp ảnh đề bài
-          </span>
-          <button
-            type="button"
-            id="btn-photo-dialog-close"
-            className="axo-modal-close"
-            onClick={requestCloseDialog}
-            aria-label="Đóng máy ảnh"
-          >
-            <IconClose size={18} />
-          </button>
-        </div>
-
-        {confirmDiscardOpen && (
-          <div
-            id="photo-close-confirm-bar"
-            className="photo-close-confirm-bar"
-            role="alertdialog"
-            aria-label="Xác nhận bỏ ảnh vừa chụp"
-          >
-            <span className="photo-close-confirm-text">
-              Bỏ ảnh vừa chụp trong phiên này?
-            </span>
-            <div className="photo-close-confirm-actions">
-              <button
-                type="button"
-                id="btn-photo-confirm-keep"
-                className="btn-utility"
-                onClick={() => setConfirmDiscardOpen(false)}
-              >
-                Tiếp tục chụp
-              </button>
-              <button
-                type="button"
-                id="btn-photo-confirm-discard"
-                className="btn-utility photo-btn-danger"
-                onClick={confirmDiscardSession}
-              >
-                Bỏ ảnh vừa chụp
-              </button>
-            </div>
-          </div>
-        )}
-
-        <div className="axo-modal-body photo-dialog-body">
+        <div className="photo-dialog-body">
           <PhotoCameraView
             onCapture={(f) => handleBatchCommitted([f])}
             onCaptureBatch={handleBatchCommitted}
@@ -199,14 +191,66 @@ export function PhotoProblemDialog({
               discardAndCleanupSession();
               onNativeCamera();
             }}
+            onRequestClose={requestCloseDialog}
             photos={sessionPhotos}
             onPhotosChange={(next) => {
               setSessionPhotos(next);
               if (next.length === 0) setConfirmDiscardOpen(false);
             }}
             onScreenModeChange={setScreenMode}
+            onMobileModeChange={setIsMobileSurface}
           />
         </div>
+
+        {confirmDiscardOpen && (
+          <div
+            className="cam-close-confirm-scrim"
+            onClick={() => setConfirmDiscardOpen(false)}
+          >
+            <div
+              id="photo-close-confirm-bar"
+              className="cam-close-confirm-card photo-close-confirm-bar"
+              role="alertdialog"
+              aria-modal="true"
+              aria-label="Xác nhận trước khi đóng máy ảnh"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <p className="cam-close-confirm-title">
+                Giữ ảnh vừa chụp trước khi đóng?
+              </p>
+              <p className="cam-close-confirm-sub">
+                Chọn giữ để đưa ảnh vào ô nhập đề bài, hoặc bỏ ảnh mới chụp trong phiên này.
+              </p>
+              <div className="cam-close-confirm-actions photo-close-confirm-actions">
+                <button
+                  type="button"
+                  id="btn-photo-confirm-attach"
+                  className="confirm-btn keep"
+                  onClick={confirmAttachAndClose}
+                >
+                  <IconCheck size={15} />
+                  <span>Giữ ảnh</span>
+                </button>
+                <button
+                  type="button"
+                  id="btn-photo-confirm-discard"
+                  className="confirm-btn discard"
+                  onClick={confirmDiscardSession}
+                >
+                  Bỏ ảnh mới
+                </button>
+                <button
+                  type="button"
+                  id="btn-photo-confirm-keep"
+                  className="confirm-btn cancel"
+                  onClick={() => setConfirmDiscardOpen(false)}
+                >
+                  Tiếp tục chụp
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

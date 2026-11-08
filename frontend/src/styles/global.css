@@ -440,69 +440,82 @@ html {
 }
 
 /* ── Hộp thoại CHỤP ẢNH ĐỀ BÀI (Camera-First & Photo Fan Stack) & khung hỗ trợ đầu vào thống nhất ───────── */
+.axo-modal-backdrop.open.is-fullscreen-camera {
+  padding: 0;
+  background: #0b0c0e;
+}
+
+.axo-modal-backdrop.open.is-lightbox-backdrop {
+  background: rgba(15, 16, 18, 0.86);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
 .axo-modal-dialog.photo-dialog {
-  width: min(576px, calc(100vw - 24px));
-  max-width: 576px;
-  max-height: calc(100dvh - 24px);
+  --stream-aspect: 4 / 3;
+  --tx: 0px;
+  --ty: 0px;
+  --rot: 0deg;
+  --z: 1;
+  --fan-tx: 0px;
+  --fan-ty: 0px;
+  --fan-rot: 0deg;
+  --fan-spread-scale: 1;
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  position: relative;
   display: flex;
   flex-direction: column;
-  overflow: visible;
+  padding: 0;
+  overflow: hidden;
 }
 
-.photo-dialog .axo-modal-close {
-  width: 36px;
-  height: 36px;
+/* 1. Desktop Camera Dialog (576px) */
+.axo-modal-dialog.photo-dialog.camera-dialog {
+  width: min(92vw, 576px);
+  max-width: 576px;
+  max-height: calc(100dvh - 32px);
+  border-radius: 16px;
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  box-shadow: var(--shadow-elevated);
 }
 
-.photo-dialog .btn-utility,
-.photo-dialog .btn-primary {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  min-height: 38px;
+/* 2. Mobile / Tablet Fullscreen Dark Camera (#0b0c0e) */
+.axo-modal-dialog.photo-dialog.camera-fullscreen.dark-surface {
+  width: 100vw;
+  max-width: 100vw;
+  height: 100dvh;
+  max-height: 100dvh;
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  background: #0b0c0e;
+  color: #ffffff;
+  box-shadow: none;
+  user-select: none;
 }
 
-.photo-close-confirm-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: var(--sp-xs);
-  padding: 10px var(--sp-md);
-  background: var(--canvas-soft);
-  border-bottom: 1px solid var(--hairline);
-}
-
-.photo-close-confirm-text {
-  font-size: 13.5px;
-  font-weight: 600;
-  color: var(--ink);
-}
-
-.photo-close-confirm-actions {
-  display: flex;
-  align-items: center;
-  gap: var(--sp-xs);
-}
-
-.photo-btn-danger {
-  color: var(--accent-orange-deep);
-  border-color: var(--hairline);
-}
-
-.photo-btn-danger:hover {
-  background: var(--canvas-soft);
-  color: var(--accent-orange-deep);
+/* 3. High-Res Lightbox Viewer Dialog (820×720px on Desktop, 100% on Mobile) */
+.axo-modal-dialog.photo-dialog.is-viewer-dialog {
+  width: min(100%, 820px);
+  max-width: 820px;
+  height: min(100%, 720px);
+  max-height: calc(100dvh - 32px);
+  border-radius: 16px;
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  box-shadow: var(--shadow-elevated);
 }
 
 .photo-dialog-body {
   display: flex;
   flex-direction: column;
-  gap: var(--sp-sm);
   min-width: 0;
+  min-height: 0;
   flex: 1 1 auto;
-  overflow: visible;
+  padding: 0;
+  overflow: hidden;
 }
 
 .photo-dialog-actions {
@@ -517,28 +530,131 @@ html {
 .photo-error {
   display: flex;
   flex-direction: column;
-  gap: var(--sp-sm);
   min-width: 0;
+  min-height: 0;
   flex: 1 1 auto;
 }
 
-.photo-camera-stage {
-  position: relative;
-  display: grid;
-  place-items: center;
+.desktop-camera-root {
+  display: flex;
+  flex-direction: column;
   width: 100%;
-  min-height: 240px;
-  max-height: min(54dvh, 390px);
-  aspect-ratio: 4 / 3;
-  overflow: hidden;
-  border: 1px solid var(--hairline);
-  border-radius: var(--rounded-md);
-  background: var(--ink);
-  transition: opacity 0.12s ease;
+  flex: 1 1 auto;
+  min-height: 0;
 }
 
-.photo-camera-stage.is-flashing {
-  opacity: 0.82;
+/* ── Desktop Dialog Header, Stage & Footer (§9) ──────────────────────────── */
+.dialog-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 12px 10px 16px;
+  border-bottom: 1px solid var(--hairline);
+  background: var(--surface);
+  flex-shrink: 0;
+}
+
+.dialog-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.dialog-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+}
+
+.dialog-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 2px 8px;
+  border-radius: var(--rounded-full);
+  background: var(--accent-sky-tint);
+  color: var(--primary-active);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.dialog-badge-cancel {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+
+.dialog-close-btn {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--ink-secondary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.dialog-close-btn:hover {
+  background: var(--canvas-soft);
+  color: var(--ink);
+}
+
+.dialog-stage-wrap {
+  padding: 10px 12px;
+  background: var(--canvas-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 0;
+  flex: 1 1 auto;
+}
+
+.dialog-video-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: var(--stream-aspect);
+  max-height: min(50dvh, 380px);
+  border-radius: 11px;
+  overflow: hidden;
+  background: #141619;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.camera-sensor-box {
+  position: relative;
+  aspect-ratio: var(--stream-aspect);
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 10px;
+  background: #14161a;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.14);
+}
+
+.dialog-video-frame .camera-sensor-box {
+  border-radius: 9px;
+  box-shadow: none;
 }
 
 .photo-camera-video,
@@ -546,7 +662,6 @@ html {
   display: block;
   width: 100%;
   height: 100%;
-  max-height: min(54dvh, 390px);
   object-fit: contain;
 }
 
@@ -554,36 +669,261 @@ html {
   object-fit: cover;
 }
 
-.photo-stage-top-bar {
+.shutter-flash {
   position: absolute;
-  top: 10px;
-  left: 10px;
-  right: 10px;
-  z-index: 4;
+  inset: 0;
+  background: #ffffff;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 12;
+  transition: opacity 90ms ease-out;
+}
+
+.shutter-flash.active {
+  opacity: 0.72;
+}
+
+.photo-camera-loading {
+  position: absolute;
+  z-index: 6;
+  margin: 0;
+  padding: 6px 12px;
+  border-radius: var(--rounded-full);
+  background: rgba(0, 0, 0, 0.68);
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.dialog-footer {
+  padding: 10px 14px;
+  border-top: 1px solid var(--hairline);
+  background: var(--surface);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.dialog-left-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-self: start;
+  min-width: 0;
+}
+
+.dialog-right-actions {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  justify-self: end;
+  min-width: 0;
+}
+
+.desktop-shutter-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  justify-self: center;
+}
+
+.desktop-shutter-btn {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 2.5px solid var(--ink);
+  background: var(--surface);
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 90ms ease, border-color 120ms ease;
+}
+
+.desktop-shutter-btn:hover:not(:disabled) {
+  border-color: var(--primary);
+}
+
+.desktop-shutter-btn:active:not(:disabled) {
+  transform: scale(0.94);
+}
+
+.desktop-shutter-btn:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+.desktop-shutter-disc {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: var(--ink);
+  transition: background-color 120ms ease;
+}
+
+.desktop-shutter-btn:hover:not(:disabled) .desktop-shutter-disc {
+  background: var(--primary);
+}
+
+.desktop-shutter-caption {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--ink-secondary);
+  line-height: 1;
+}
+
+.secondary-btn {
+  min-height: 40px;
+  padding: 0 12px;
+  border-radius: 8px;
+  border: 1px solid var(--hairline);
+  background: var(--surface);
+  color: var(--ink-secondary);
+  font: inherit;
+  font-size: 12.5px;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.secondary-btn.icon-only {
+  width: 40px;
+  padding: 0;
+}
+
+.secondary-btn:hover:not(:disabled) {
+  background: var(--canvas-soft);
+  border-color: var(--ink-faint);
+  color: var(--ink);
+}
+
+.secondary-btn.danger-btn {
+  color: #b42318;
+  border-color: rgba(180, 35, 24, 0.22);
+  background: #fef3f2;
+}
+
+.secondary-btn.danger-btn:hover:not(:disabled) {
+  background: #fee4e2;
+  color: #b42318;
+}
+
+.primary-pill-btn {
+  position: relative;
+  z-index: 15;
+  min-height: 40px;
+  padding: 0 16px;
+  border-radius: var(--rounded-full);
+  border: 0;
+  background: var(--primary);
+  color: var(--on-primary);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.primary-pill-btn:hover:not(:disabled) {
+  background: var(--primary-active);
+}
+
+/* ── Mobile & Tablet Fullscreen Dark Camera (§5, §6) ─────────────────────── */
+.cam-fs-root {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: #0b0c0e;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+}
+
+.cam-fs-top {
+  position: relative;
+  z-index: 25;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: var(--sp-xs);
-  pointer-events: none;
+  gap: 8px;
+  padding: calc(max(10px, var(--safe-top)) + 2px) 14px 8px;
+  flex-shrink: 0;
 }
 
-.photo-stage-spacer {
-  display: block;
-  width: 1px;
-  height: 1px;
-}
-
-.photo-retake-pill {
-  pointer-events: auto;
+.cam-top-right-tools {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 5px 10px;
+}
+
+.cam-top-spacer {
+  width: 44px;
+  height: 44px;
+  display: block;
+}
+
+.cam-glass-btn {
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0 13px;
   border-radius: var(--rounded-full);
-  background: rgba(20, 20, 19, 0.84);
-  color: var(--on-primary);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(20, 22, 26, 0.72);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: #ffffff;
+  font: inherit;
   font-size: 12.5px;
-  font-weight: 600;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  cursor: pointer;
+}
+
+.cam-glass-btn.pill {
+  padding: 0 13px;
+}
+
+.cam-glass-btn.icon-only {
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border-radius: 50%;
+}
+
+.cam-glass-btn:hover:not(:disabled) {
+  background: rgba(34, 38, 45, 0.88);
+}
+
+.cam-status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: var(--rounded-full);
+  background: rgba(20, 22, 26, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 12px;
+  font-weight: 500;
 }
 
 .photo-retake-cancel {
@@ -596,275 +936,142 @@ html {
   border: none;
   border-radius: var(--rounded-full);
   background: rgba(255, 255, 255, 0.16);
-  color: var(--on-primary);
+  color: #ffffff;
   cursor: pointer;
 }
 
-.photo-fit-toggle-btn {
-  pointer-events: auto;
-  display: inline-flex;
+.cam-fs-stage {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 30px;
-  padding: 0 11px;
-  border: 1px solid rgba(255, 255, 255, 0.24);
-  border-radius: var(--rounded-full);
-  background: rgba(20, 20, 19, 0.72);
-  color: var(--on-primary);
-  font: inherit;
-  font-size: 12px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background-color 0.14s ease;
+  padding: 4px 10px;
+  overflow: hidden;
 }
 
-.photo-fit-toggle-btn:hover {
-  background: rgba(20, 20, 19, 0.9);
-}
-
-.photo-camera-loading {
-  position: absolute;
-  margin: 0;
-  padding: 6px 12px;
-  border-radius: var(--rounded-full);
-  background: rgba(0, 0, 0, 0.68);
-  color: var(--on-primary);
-  font-size: 13px;
-  font-weight: 500;
-}
-
-.photo-undo-bar {
-  position: absolute;
-  bottom: 12px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 6;
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 6px 14px;
-  border-radius: var(--rounded-full);
-  background: rgba(20, 20, 19, 0.9);
-  color: var(--on-primary);
-  font-size: 13px;
-  font-weight: 500;
-  box-shadow: var(--shadow-soft);
-}
-
-.photo-undo-btn {
-  border: none;
-  background: transparent;
-  color: var(--on-primary);
-  font: inherit;
-  font-size: 13px;
-  font-weight: 700;
-  text-decoration: underline;
-  cursor: pointer;
-  padding: 2px 4px;
-}
-
-/* ── Khay ảnh nhanh trên Mobile (Photo Tray) ───────────────────────────────── */
-.photo-mobile-tray {
-  position: absolute;
-  left: 10px;
-  right: 10px;
-  bottom: 10px;
-  z-index: 7;
+.cam-fs-bottom-wrap {
+  position: relative;
+  z-index: 25;
+  flex-shrink: 0;
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  padding: 10px 12px;
-  border-radius: var(--rounded-md);
-  background: var(--surface);
-  border: 1px solid var(--hairline);
-  box-shadow: var(--shadow-elevated);
-}
-
-.photo-mobile-tray-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-}
-
-.photo-mobile-tray-title {
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--ink);
-}
-
-.photo-mobile-tray-close {
-  width: 28px;
-  height: 28px;
-  min-height: 28px;
-  padding: 0;
-  border-radius: var(--rounded-full);
-}
-
-.photo-mobile-tray-list {
-  display: flex;
-  align-items: center;
   gap: 10px;
-  overflow-x: auto;
-  padding-bottom: 2px;
+  padding: 8px 16px calc(max(16px, var(--safe-bottom)) + 4px);
 }
 
-.mobile-tray-card {
-  position: relative;
-  flex: 0 0 auto;
-}
-
-.mobile-tray-thumb-btn {
-  position: relative;
-  display: block;
-  width: 56px;
-  height: 70px;
-  padding: 0;
-  border: 1.5px solid var(--hairline);
-  border-radius: var(--rounded-sm);
-  overflow: hidden;
-  background: var(--ink);
-  cursor: pointer;
-}
-
-.mobile-tray-thumb-btn img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-.mobile-tray-index {
-  position: absolute;
-  bottom: 3px;
-  left: 3px;
-  min-width: 16px;
-  height: 16px;
-  padding: 0 4px;
-  border-radius: var(--rounded-full);
-  background: rgba(20, 20, 19, 0.78);
-  color: var(--on-primary);
-  font-size: 10px;
-  font-weight: 700;
-  line-height: 16px;
-  text-align: center;
-}
-
-.mobile-tray-delete-btn {
-  position: absolute;
-  top: -5px;
-  right: -5px;
-  width: 20px;
-  height: 20px;
-  padding: 0;
-  border: 1px solid var(--surface);
-  border-radius: var(--rounded-full);
-  background: var(--ink);
-  color: var(--on-primary);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-}
-
-/* ── Thanh điều khiển dưới của Camera ─────────────────────────────────────── */
-.photo-camera-bar {
-  position: relative;
+.cam-fs-bottom {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
   align-items: center;
-  gap: var(--sp-xs);
-  min-height: 54px;
+  gap: 12px;
+  max-width: 460px;
+  width: 100%;
+  margin: 0 auto;
 }
 
-.photo-camera-slot-side {
+.cam-slot-left {
+  justify-self: start;
   display: flex;
   align-items: center;
-  justify-content: flex-start;
   gap: 8px;
-  min-width: 0;
 }
 
-.photo-camera-slot-side.is-end {
-  justify-content: flex-end;
-  gap: 10px;
+.cam-slot-right {
+  justify-self: end;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
-.photo-camera-slot-center {
-  position: relative;
-  z-index: 25;
+.cam-round-control {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #ffffff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.cam-round-control:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.cam-round-spacer {
+  width: 48px;
+  height: 48px;
+  display: inline-block;
+}
+
+.shutter-btn {
+  justify-self: center;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  border: 3.5px solid #ffffff;
+  background: rgba(255, 255, 255, 0.18);
+  padding: 5px;
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
+  transition: transform 90ms ease, background-color 120ms ease;
 }
 
-.photo-camera-side-btn {
-  min-height: 38px;
-  padding: 0 12px;
-  font-size: 13.5px;
-  white-space: nowrap;
+.shutter-btn:active:not(:disabled) {
+  transform: scale(0.93);
 }
 
-.photo-camera-switch-btn {
-  width: 38px;
-  height: 38px;
-  min-height: 38px;
-  padding: 0;
+.shutter-btn:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+.shutter-disc {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: #ffffff;
+  transition: transform 90ms ease, background-color 120ms ease;
+}
+
+.shutter-btn:active:not(:disabled) .shutter-disc {
+  background: #e2e8f0;
+}
+
+.cam-done-btn {
+  min-height: 48px;
+  padding: 0 18px;
   border-radius: var(--rounded-full);
-  flex-shrink: 0;
-}
-
-.photo-camera-side-label {
-  line-height: 1.2;
-}
-
-.photo-camera-shutter {
-  position: relative;
-  z-index: 25;
-  width: 56px;
-  height: 56px;
-  min-height: 56px;
-  padding: 0;
-  border-radius: var(--rounded-full);
+  border: 0;
+  background: var(--primary);
+  color: #ffffff;
+  font: inherit;
+  font-size: 14px;
   font-weight: 600;
-  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   box-shadow: var(--shadow-soft);
-}
-
-.photo-camera-shutter svg,
-.photo-shutter-label {
-  display: none;
-}
-
-.photo-shutter-disc {
-  flex: 0 0 42px;
-  display: block;
-  width: 42px;
-  height: 42px;
-  border-radius: var(--rounded-full);
-  border: 2.5px solid currentColor;
-  transition: transform 0.12s ease;
-}
-
-.photo-camera-shutter:active .photo-shutter-disc {
-  transform: scale(0.92);
-}
-
-.photo-done-btn {
-  position: relative;
-  z-index: 25;
-  min-height: 38px;
-  padding: 0 14px;
-  border-radius: var(--rounded-full);
-  font-size: 13.5px;
-  font-weight: 600;
   white-space: nowrap;
+  cursor: pointer;
 }
 
-/* ── Photo Fan Stack (§6) ─────────────────────────────────────────────────── */
+.cam-done-btn:hover:not(:disabled) {
+  background: var(--primary-active);
+}
+
+/* ── Photo Fan Stack (§7 — Clean Physical Photo Cards, Zero Number Badges) ── */
 .photo-fan-cluster {
   position: relative;
-  z-index: 15;
+  z-index: 20;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -875,81 +1082,68 @@ html {
 }
 
 .photo-fan-stack {
-  --fan-tx: 0px;
-  --fan-ty: 0px;
-  --fan-rot: 0deg;
-  --fan-spread-scale: 1;
   position: relative;
-  width: 48px;
-  height: 46px;
-  display: flex;
+  width: 56px;
+  height: 42px;
+  flex-shrink: 0;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
+  z-index: 20;
 }
 
-/* Hover bridge vật lý giữ trạng thái xòe quạt mượt khi di chuột qua khe giữa các thẻ */
-.photo-fan-stack.is-fan-open::before {
-  content: "";
+.fan-hover-bridge-base,
+.fan-hover-bridge-arc {
   position: absolute;
-  left: -90px;
-  right: -74px;
-  top: -82px;
-  bottom: 0;
+  pointer-events: none;
+}
+
+.fan-hover-bridge-base {
+  inset: -8px -4px -6px -10px;
+}
+
+.fan-hover-bridge-arc {
+  left: -82px;
+  right: -54px;
+  top: -54px;
+  height: 54px;
+}
+
+.photo-fan-stack[data-fan-capable="true"] .fan-hover-bridge-base,
+.photo-fan-stack.is-fan-open .fan-hover-bridge-arc {
   pointer-events: auto;
 }
 
-.fan-card {
+.fan-card,
+.fan-card-btn {
   position: absolute;
-  inset: 0;
   width: 44px;
   height: 44px;
+  border-radius: 8px;
+  border: 1.5px solid #ffffff;
+  background: #1e2026;
   padding: 0;
-  border: 2px solid var(--surface);
-  border-radius: var(--rounded-sm);
-  background: var(--ink);
-  box-shadow: var(--shadow-soft);
   overflow: hidden;
+  box-shadow: var(--shadow-soft);
+  transform-origin: 50% 90%;
+  transform: translate3d(var(--tx), var(--ty), 0) rotate(var(--rot));
+  z-index: var(--z);
   cursor: pointer;
-  transform-origin: 50% 85%;
-  transform: translate3d(
-      calc(var(--fan-tx) * var(--fan-spread-scale)),
-      var(--fan-ty),
-      0
-    )
-    rotate(var(--fan-rot));
   transition:
-    transform 0.2s cubic-bezier(0.22, 1, 0.36, 1),
-    border-color 0.15s ease;
+    transform 200ms cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 140ms ease;
 }
 
 .fan-card-single {
-  position: relative;
-  transform: none;
+  position: absolute;
 }
 
 .fan-card-top {
-  border-color: var(--surface);
+  border-color: #ffffff;
 }
 
-.fan-card:hover,
-.fan-card:focus-visible {
-  border-color: var(--primary);
-  outline: none;
-}
-
-.photo-fan-stack.is-fan-open .fan-card:hover,
-.photo-fan-stack.is-fan-open .fan-card:focus-visible {
-  z-index: 40;
-  transform: translate3d(
-      calc(var(--fan-tx) * var(--fan-spread-scale)),
-      calc(var(--fan-ty) - 6px),
-      0
-    )
-    rotate(calc(var(--fan-rot) * 0.35))
-    scale(1.08);
-}
-
-.fan-card img {
+.fan-card img,
+.fan-card-btn img {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -957,72 +1151,553 @@ html {
   pointer-events: none;
 }
 
-.fan-card-order-badge {
+.photo-fan-stack.is-fan-open .fan-card-btn:hover,
+.photo-fan-stack.is-fan-open .fan-card-btn:focus-visible {
+  transform: translate3d(var(--tx), calc(var(--ty) - 6px), 0) rotate(calc(var(--rot) * 0.35)) scale(1.11);
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px var(--primary);
+  z-index: 40;
+  outline: none;
+}
+
+.photo-fan-stack:not(.is-fan-open) .fan-card-btn:hover,
+.photo-fan-stack:not(.is-fan-open) .fan-card-btn:focus-visible {
+  border-color: var(--primary);
+  outline: none;
+}
+
+@keyframes fanJustShotPulse {
+  0% {
+    transform: scale(1);
+  }
+  45% {
+    transform: scale(1.09);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.photo-fan-stack.is-just-shot,
+.mobile-fan-stack-btn.is-just-shot {
+  animation: fanJustShotPulse 220ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Mobile Photo Stack Button (58×48px container, 42×42px cards) */
+.mobile-fan-stack-btn {
+  position: relative;
+  width: 58px;
+  height: 48px;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.mobile-stack-card {
   position: absolute;
-  left: 3px;
-  bottom: 3px;
-  min-width: 15px;
-  height: 15px;
-  padding: 0 3px;
-  border-radius: var(--rounded-full);
-  background: rgba(20, 20, 19, 0.78);
-  color: var(--on-primary);
-  font-size: 9.5px;
-  font-weight: 700;
-  line-height: 15px;
-  text-align: center;
-  opacity: 0;
-  transition: opacity 0.14s ease;
+  width: 42px;
+  height: 42px;
+  border-radius: 8px;
+  border: 1.5px solid #ffffff;
+  background: #1e2026;
+  overflow: hidden;
+  box-shadow: var(--shadow-soft);
+  transform-origin: 50% 90%;
+  transform: translate3d(var(--tx), var(--ty), 0) rotate(var(--rot));
+  z-index: var(--z);
+  transition: transform 200ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.photo-fan-stack.is-fan-open .fan-card-order-badge {
-  opacity: 1;
+.mobile-stack-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
-.fan-overflow-badge {
+/* ── Mobile Photo Tray Master–Detail Bottom Sheet (§8) ───────────────────── */
+.cam-session-drawer-scrim {
   position: absolute;
-  top: 2px;
-  right: 2px;
-  min-width: 18px;
-  height: 16px;
-  padding: 0 4px;
-  border-radius: var(--rounded-full);
-  background: var(--primary);
-  color: var(--on-primary);
-  font-size: 10px;
-  font-weight: 700;
-  line-height: 16px;
-  text-align: center;
+  inset: 0;
+  z-index: 34;
+  background: rgba(0, 0, 0, 0.56);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
 }
 
-/* ── Photo Viewer độ phân giải gốc (§7) ───────────────────────────────────── */
-.photo-viewer {
+.cam-session-drawer {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 35;
+  background: #17191e;
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 18px 18px 0 0;
+  padding: 14px 16px calc(max(16px, var(--safe-bottom)) + 6px);
   display: flex;
   flex-direction: column;
-  gap: var(--sp-xs);
-  min-width: 0;
-  flex: 1 1 auto;
+  gap: 12px;
+  max-height: 78%;
+  color: #ffffff;
+  box-shadow: var(--shadow-elevated);
 }
 
-.photo-viewer-toolbar {
+.cam-drawer-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  flex-wrap: wrap;
-  gap: var(--sp-xs);
+  gap: 8px;
 }
 
-.photo-viewer-back-btn {
-  min-height: 34px;
-  padding: 0 11px;
-  font-size: 13px;
+.cam-drawer-title {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #ffffff;
 }
 
-.photo-viewer-meta {
+.cam-drawer-head-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.cam-drawer-close {
+  min-width: 40px;
+  min-height: 36px;
+  padding: 0 12px;
+  border-radius: var(--rounded-full);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+  font: inherit;
+  font-size: 12.5px;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  cursor: pointer;
+}
+
+.tray-selected-stage {
+  position: relative;
+  width: 100%;
+  height: min(34dvh, 228px);
+  border-radius: 12px;
+  background: #0d0f13;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tray-selected-stage img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  cursor: zoom-in;
+}
+
+.tray-stage-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(15, 17, 21, 0.72);
+  color: #ffffff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.tray-stage-nav.prev {
+  left: 8px;
+}
+
+.tray-stage-nav.next {
+  right: 8px;
+}
+
+.tray-stage-nav:disabled {
+  opacity: 0.28;
+  cursor: default;
+}
+
+.tray-thumb-strip {
   display: flex;
   align-items: center;
   gap: 8px;
+  overflow-x: auto;
+  padding: 2px 1px;
+}
+
+.tray-thumb-btn {
+  position: relative;
+  flex: 0 0 54px;
+  width: 54px;
+  height: 54px;
+  border-radius: 9px;
+  border: 2px solid rgba(255, 255, 255, 0.18);
+  background: #23262e;
+  padding: 0;
+  overflow: hidden;
+  opacity: 0.72;
+  cursor: pointer;
+  transition: opacity 140ms ease, border-color 140ms ease;
+}
+
+.tray-thumb-btn[aria-selected="true"] {
+  opacity: 1;
+  border-color: #62aef0;
+  box-shadow: 0 0 0 2px rgba(98, 174, 240, 0.28);
+}
+
+.tray-thumb-btn img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.tray-shared-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.tray-action-btn {
+  min-height: 42px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+  font: inherit;
+  font-size: 12.5px;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  cursor: pointer;
+}
+
+.tray-action-btn.danger {
+  color: #fda29b;
+  border-color: rgba(253, 162, 155, 0.22);
+  background: rgba(180, 35, 24, 0.18);
+}
+
+.tray-undo-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.1);
+  font-size: 12.5px;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.tray-undo-bar button {
+  border: 0;
+  background: transparent;
+  color: #62aef0;
+  font: inherit;
+  font-weight: 600;
+  font-size: 12.5px;
+  padding: 4px 6px;
+  cursor: pointer;
+}
+
+/* ── Inline Close Confirmation (§11 — 3 Actions: Giữ ảnh, Bỏ ảnh mới, Tiếp tục chụp) ── */
+.cam-close-confirm-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 45;
+  background: rgba(10, 12, 16, 0.62);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.camera-fullscreen .cam-close-confirm-scrim {
+  align-items: flex-end;
+  padding-bottom: calc(max(16px, var(--safe-bottom)) + 8px);
+}
+
+.cam-close-confirm-card {
+  width: min(100%, 360px);
+  border-radius: 14px;
+  background: var(--surface);
+  color: var(--ink);
+  border: 1px solid var(--hairline);
+  box-shadow: var(--shadow-elevated);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.camera-fullscreen .cam-close-confirm-card {
+  background: #1a1d24;
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.14);
+}
+
+.cam-close-confirm-title {
+  margin: 0;
+  font-size: 14.5px;
+  font-weight: 600;
+}
+
+.cam-close-confirm-sub {
+  margin: -4px 0 0;
+  font-size: 12.5px;
+  color: var(--ink-secondary);
+  line-height: 1.45;
+}
+
+.camera-fullscreen .cam-close-confirm-sub {
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.cam-close-confirm-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.confirm-btn {
+  min-height: 42px;
+  padding: 0 14px;
+  border-radius: 10px;
+  font: inherit;
   font-size: 13px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  cursor: pointer;
+}
+
+.confirm-btn.keep {
+  border: 0;
+  background: var(--primary);
+  color: #ffffff;
+}
+
+.confirm-btn.keep:hover {
+  background: var(--primary-active);
+}
+
+.confirm-btn.discard {
+  border: 1px solid rgba(180, 35, 24, 0.25);
+  background: #fef3f2;
+  color: #b42318;
+}
+
+.camera-fullscreen .confirm-btn.discard {
+  border-color: rgba(253, 162, 155, 0.28);
+  background: rgba(180, 35, 24, 0.22);
+  color: #fda29b;
+}
+
+.confirm-btn.cancel {
+  border: 1px solid var(--hairline);
+  background: var(--surface);
+  color: var(--ink-secondary);
+}
+
+.camera-fullscreen .confirm-btn.cancel {
+  border-color: rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+}
+
+/* ── Camera Error States (§15) ───────────────────────────────────────────── */
+.mobile-error-screen {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: #111317;
+  color: #ffffff;
+  padding: calc(max(12px, var(--safe-top)) + 2px) 20px calc(max(20px, var(--safe-bottom)) + 6px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.mobile-error-card {
+  margin: auto;
+  width: 100%;
+  max-width: 332px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.error-icon-circle {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2px;
+}
+
+.mobile-error-card .error-icon-circle {
+  background: rgba(255, 255, 255, 0.09);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.mobile-error-title {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.mobile-error-desc {
+  margin: 0;
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.74);
+  background: transparent;
+  border: 0;
+  padding: 0;
+}
+
+.mobile-error-actions {
+  width: 100%;
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.mobile-error-primary {
+  min-height: 46px;
+  width: 100%;
+  border-radius: var(--rounded-full);
+  border: 0;
+  background: var(--primary);
+  color: #ffffff;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.mobile-error-secondary {
+  min-height: 46px;
+  width: 100%;
+  border-radius: var(--rounded-full);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+  font: inherit;
+  font-size: 13.5px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.desktop-error-body {
+  padding: 18px 18px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.desktop-error-lead {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.desktop-error-lead .error-icon-circle {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  background: var(--canvas-soft);
+  border: 1px solid var(--hairline);
+  color: var(--ink-secondary);
+}
+
+.desktop-error-title {
+  margin: 0 0 4px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.desktop-error-desc {
+  margin: 0;
+  font-size: 13px;
+  color: var(--ink-secondary);
+  line-height: 1.5;
+  background: transparent;
+  border: 0;
+  padding: 0;
+}
+
+.desktop-error-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  padding-top: 4px;
+}
+
+/* ── High-Res Lightbox Photo Viewer (§10) ────────────────────────────────── */
+.lightbox-card {
+  width: 100%;
+  height: 100%;
+  background: var(--surface);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  flex: 1 1 auto;
+}
+
+.lightbox-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--hairline);
+  background: var(--surface);
+  flex-shrink: 0;
+}
+
+.lightbox-title {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--ink);
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .photo-viewer-position {
@@ -1032,53 +1707,101 @@ html {
 
 .photo-viewer-dims {
   font-size: 12px;
+  font-weight: 400;
   color: var(--ink-muted);
 }
 
-.photo-viewer-zoom-group {
+.lightbox-head-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.zoom-toolbar {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
+  gap: 2px;
+  padding: 2px;
+  border-radius: var(--rounded-full);
+  background: var(--canvas-soft);
+  border: 1px solid var(--hairline);
 }
 
-.photo-viewer-zoom-btn {
+.zoom-btn {
   width: 32px;
   height: 32px;
-  min-height: 32px;
-  padding: 0;
+  border-radius: 50%;
+  border: 0;
+  background: transparent;
+  color: var(--ink-secondary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
 }
 
-.photo-viewer-zoom-readout {
-  min-width: 52px;
-  height: 32px;
-  min-height: 32px;
-  padding: 0 8px;
-  font-size: 12.5px;
+.zoom-btn:hover:not(:disabled) {
+  background: var(--surface);
+  color: var(--ink);
+}
+
+.zoom-btn:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.zoom-readout {
+  min-width: 48px;
+  height: 28px;
+  padding: 0 6px;
+  border: 0;
+  border-radius: var(--rounded-full);
+  background: transparent;
+  color: var(--ink);
+  font: inherit;
+  font-size: 11.5px;
   font-weight: 600;
+  text-align: center;
+  cursor: pointer;
 }
 
-.photo-viewer-stage {
+.zoom-readout:hover {
+  background: var(--surface);
+}
+
+.lightbox-stage {
   position: relative;
-  display: grid;
-  place-items: center;
-  width: 100%;
-  min-height: 240px;
-  max-height: min(52dvh, 380px);
-  aspect-ratio: 4 / 3;
+  flex: 1 1 auto;
+  min-height: 260px;
+  background: #14161a;
   overflow: hidden;
-  border: 1px solid var(--hairline);
-  border-radius: var(--rounded-md);
-  background: var(--ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   user-select: none;
   touch-action: none;
 }
 
-.photo-viewer-stage.is-zoomed {
+.lightbox-stage.is-zoomed {
   cursor: grab;
 }
 
-.photo-viewer-stage.is-zoomed.is-dragging {
+.lightbox-stage.is-zoomed.is-dragging {
   cursor: grabbing;
+}
+
+.lightbox-pan-canvas {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 80ms ease-out;
+}
+
+.lightbox-stage.is-dragging .lightbox-pan-canvas {
+  transition: none;
 }
 
 .photo-viewer-img {
@@ -1086,96 +1809,113 @@ html {
   max-height: 100%;
   object-fit: contain;
   display: block;
-  transition: transform 0.08s ease-out;
+  pointer-events: none;
 }
 
-.photo-viewer-stage.is-dragging .photo-viewer-img {
-  transition: none;
-}
-
-.photo-viewer-nav {
+.lightbox-nav {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  z-index: 4;
-  width: 36px;
-  height: 36px;
-  min-height: 36px;
-  padding: 0;
-  border-radius: var(--rounded-full);
-  background: var(--surface);
-  box-shadow: var(--shadow-soft);
-}
-
-.photo-viewer-nav.is-prev {
-  left: 10px;
-}
-
-.photo-viewer-nav.is-next {
-  right: 10px;
-}
-
-.photo-viewer-filmstrip {
-  display: flex;
+  z-index: 6;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  background: rgba(20, 22, 26, 0.72);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #ffffff;
+  display: inline-flex;
   align-items: center;
-  gap: 8px;
-  overflow-x: auto;
-  padding: 2px 0;
-}
-
-.viewer-filmstrip-item {
-  position: relative;
-  flex: 0 0 auto;
-  width: 44px;
-  height: 54px;
-  padding: 0;
-  border: 2px solid var(--hairline);
-  border-radius: var(--rounded-sm);
-  overflow: hidden;
-  background: var(--ink);
+  justify-content: center;
   cursor: pointer;
 }
 
-.viewer-filmstrip-item.is-active {
-  border-color: var(--primary);
+.lightbox-nav:hover:not(:disabled) {
+  background: rgba(34, 38, 45, 0.9);
 }
 
-.viewer-filmstrip-item img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
+.lightbox-nav:disabled {
+  opacity: 0.28;
+  cursor: default;
 }
 
-.viewer-filmstrip-index {
+.lightbox-nav.prev {
+  left: 12px;
+}
+
+.lightbox-nav.next {
+  right: 12px;
+}
+
+.photo-undo-bar {
   position: absolute;
-  bottom: 2px;
-  right: 2px;
-  min-width: 15px;
-  height: 15px;
-  padding: 0 3px;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 8;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 14px;
   border-radius: var(--rounded-full);
-  background: rgba(20, 20, 19, 0.78);
-  color: var(--on-primary);
-  font-size: 9.5px;
-  font-weight: 700;
-  line-height: 15px;
-  text-align: center;
+  background: rgba(20, 20, 19, 0.9);
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 500;
+  box-shadow: var(--shadow-soft);
 }
 
-.photo-viewer-footer {
+.photo-undo-btn {
+  border: none;
+  background: transparent;
+  color: #62aef0;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 2px 4px;
+}
+
+.lightbox-footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 10px;
+  padding: 10px 14px calc(max(10px, var(--safe-bottom)));
+  border-top: 1px solid var(--hairline);
+  background: var(--surface);
+  flex-shrink: 0;
   flex-wrap: wrap;
-  gap: var(--sp-xs);
-  padding-top: 2px;
 }
 
-.photo-viewer-actions-left {
+.lightbox-footer-group {
   display: flex;
   align-items: center;
   gap: 8px;
+}
+
+/* Alias selectors for test/selector compatibility */
+.photo-viewer,
+.photo-viewer-zoom-group,
+.photo-viewer-zoom-btn,
+.photo-viewer-zoom-readout,
+.photo-viewer-nav,
+.photo-viewer-nav.is-prev,
+.photo-viewer-nav.is-next,
+.photo-viewer-footer,
+.photo-viewer-actions-left,
+.photo-viewer-back-btn,
+.photo-camera-stage,
+.photo-camera-bar,
+.photo-camera-slot-side,
+.photo-camera-slot-side.is-end,
+.photo-camera-slot-center,
+.photo-mobile-tray,
+.photo-close-confirm-bar,
+.photo-close-confirm-actions,
+.photo-retake-pill {
+  box-sizing: border-box;
 }
 
 @media (max-width: 820px) {
@@ -1183,137 +1923,45 @@ html {
     padding: 0;
   }
 
-  .axo-modal-dialog.photo-dialog {
+  .axo-modal-dialog.photo-dialog.is-viewer-dialog {
     width: 100vw;
     max-width: 100vw;
     height: 100dvh;
     max-height: 100dvh;
-    margin: 0;
     border-radius: 0;
-    border: none;
-  }
-
-  .photo-dialog .axo-modal-close {
-    width: 44px;
-    height: 44px;
-  }
-
-  .photo-dialog .btn-utility,
-  .photo-dialog .btn-primary {
-    min-height: 44px;
-  }
-
-  .photo-dialog-body {
-    flex: 1 1 auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding-bottom: max(12px, env(safe-area-inset-bottom));
-  }
-
-  .photo-camera {
-    flex: 1 1 auto;
-    justify-content: space-between;
-  }
-
-  .photo-camera-stage {
-    flex: 1 1 auto;
-    aspect-ratio: auto;
-    min-height: 220px;
-    max-height: calc(100dvh - 148px);
-  }
-
-  .photo-camera-video,
-  .photo-camera-video.is-contain {
-    max-height: calc(100dvh - 148px);
-    object-fit: contain;
-  }
-
-  .photo-camera-video.is-cover {
-    object-fit: cover;
-  }
-
-  .photo-camera-bar {
-    padding-top: var(--sp-xxs);
-    gap: 8px;
-  }
-
-  .photo-camera-slot-side,
-  .photo-camera-slot-side.is-end {
-    gap: 8px;
-  }
-
-  .photo-dialog .btn-utility.photo-camera-side-btn,
-  .photo-dialog .btn-utility.photo-camera-switch-btn {
-    width: 40px;
-    height: 40px;
-    min-height: 40px;
-    padding: 0;
-    border-radius: var(--rounded-full);
-  }
-
-  .photo-camera-side-label {
-    display: none;
-  }
-
-  .photo-dialog .btn-primary.photo-camera-shutter {
-    width: 56px;
-    height: 56px;
-    min-height: 56px;
-    padding: 0;
-    border-radius: var(--rounded-full);
-  }
-
-  .photo-shutter-disc {
-    flex: 0 0 42px;
-    width: 42px;
-    height: 42px;
-  }
-
-  .photo-fan-stack {
-    width: 40px;
-    height: 42px;
-  }
-
-  .fan-card {
-    width: 38px;
-    height: 40px;
-  }
-
-  .photo-dialog .btn-primary.photo-done-btn {
-    min-height: 40px;
-    padding: 0 12px;
-    font-size: 13px;
+    border: 0;
   }
 }
 
-@media (max-height: 580px) {
-  .axo-modal-dialog.photo-dialog .axo-modal-header {
-    padding-top: 8px;
+@media (max-height: 600px) {
+  .cam-fs-top {
+    padding-top: 6px;
+    padding-bottom: 4px;
+  }
+
+  .cam-fs-stage {
+    padding: 2px 8px;
+  }
+
+  .cam-fs-bottom-wrap {
+    padding-top: 4px;
     padding-bottom: 8px;
+    gap: 6px;
   }
 
-  .photo-camera-stage {
-    min-height: 170px;
-    max-height: calc(100dvh - 122px);
+  .shutter-btn {
+    width: 56px;
+    height: 56px;
+    border-width: 3px;
+    padding: 4px;
   }
 
-  .photo-camera-video,
-  .photo-camera-video.is-contain,
-  .photo-camera-video.is-cover {
-    max-height: calc(100dvh - 122px);
+  .dialog-stage-wrap {
+    padding: 6px 10px;
   }
 
-  .photo-dialog .btn-primary.photo-camera-shutter {
-    width: 52px;
-    height: 52px;
-    min-height: 52px;
-  }
-
-  .photo-shutter-disc {
-    flex: 0 0 38px;
-    width: 38px;
-    height: 38px;
+  .dialog-video-frame {
+    max-height: min(46dvh, 300px);
   }
 }
 

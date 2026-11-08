@@ -387,3 +387,16 @@ export const IconZoomOut = (p: IconProps) => (
     <path d="M20 20l-3.5-3.5M8 11h6" />
   </Svg>
 );
+
+export const IconFitContain = (p: IconProps) => (
+  <Svg {...p}>
+    <path d="M8 3H5a2 2 0 00-2 2v3m18 0V5a2 2 0 00-2-2h-3m0 18h3a2 2 0 002-2v-3M3 16v3a2 2 0 002 2h3" />
+    <rect x="7" y="7" width="10" height="10" rx="1.5" />
+  </Svg>
+);
+
+export const IconFitCover = (p: IconProps) => (
+  <Svg {...p}>
+    <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" />
+  </Svg>
+);

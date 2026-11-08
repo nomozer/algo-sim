@@ -1,13 +1,13 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
-  IconBack,
   IconCamera,
   IconCheck,
   IconClose,
+  IconFitContain,
+  IconFitCover,
   IconImage,
   IconNext,
   IconPrev,
-  IconReset,
   IconSwitchCamera,
   IconTrash,
   IconZoomIn,
@@ -16,11 +16,11 @@ import {
 import { PhotoFanStack, type CapturedSessionPhoto } from "./PhotoFanStack";
 
 /**
- * Máy ảnh trực tiếp Camera-First & Photo Fan Stack (§4–§8, §12):
+ * Máy ảnh trực tiếp Camera-First & Photo Fan Stack (§4–§12):
  * - Chỉ khởi động khi người học bấm “Chụp ảnh đề bài”; không bao giờ chạy lúc tải trang.
- * - Mobile/tablet: toàn màn hình, mặc định `Toàn khung` (`contain`) và có tùy chọn `Tràn màn` (`cover`),
- *   nút chụp tròn chính giữa phía dưới, chụp liên tiếp nhiều ảnh trong cùng phiên.
- * - Desktop: hộp thoại gọn 576px, Photo Fan Stack xòe mượt khi hover/focus với hover-bridge 140ms,
+ * - Mobile/tablet (<= 820px hoặc cao <= 560px): toàn màn hình nền tối `#0b0c0e`, mặc định `Toàn khung` (`contain`)
+ *   và có tùy chọn `Tràn màn` (`cover`), nút chụp tròn trắng chính giữa phía dưới, chụp liên tiếp nhiều ảnh.
+ * - Desktop: hộp thoại sáng gọn 576px, nút chụp vòng nhẫn mực + đĩa tròn giữa, Photo Fan Stack xòe mượt khi hover/focus,
  *   nút `Xong` cố định không lặp số lượng ảnh.
  * - Ảnh chụp luôn lấy từ khung cảm biến đầy đủ (`videoWidth × videoHeight`), tạo thumbnail riêng cho Fan Stack
  *   và giữ nguyên `File` gốc cùng `fullUrl` cho Photo Viewer (Zoom 100%–300%, Pan, Prev/Next, Chụp lại, Xóa + Hoàn tác 5s).
@@ -45,7 +45,7 @@ export type CameraFitMode = "contain" | "cover";
 const IDEAL_SIZE = { width: { ideal: 2560 }, height: { ideal: 1920 } } as const;
 const THUMB_MAX_DIM = 320;
 const UNDO_TIMEOUT_MS = 5000;
-const ZOOM_STEPS = [100, 150, 200, 300] as const;
+const ZOOM_STEPS = [100, 125, 150, 175, 200, 250, 300] as const;
 
 export function cameraSupport(env: {
   isSecureContext?: boolean;
@@ -89,6 +89,19 @@ export function cameraErrorMessage(err: unknown): string {
   }
 }
 
+export function cameraErrorTitle(errMessage: string): string {
+  if (/Không tìm thấy máy ảnh/i.test(errMessage)) {
+    return "Không tìm thấy máy ảnh.";
+  }
+  if (/không khả dụng/i.test(errMessage)) {
+    return "Máy ảnh tạm thời không khả dụng.";
+  }
+  if (/không hỗ trợ/i.test(errMessage)) {
+    return "Trình duyệt không hỗ trợ chụp trực tiếp.";
+  }
+  return "Không mở được máy ảnh.";
+}
+
 /** Nhận diện thiết bị di động theo tín hiệu năng lực thiết bị + UA, không phụ thuộc riêng bề rộng cửa sổ. */
 export function isMobileCameraPreferred(sig: CameraDeviceSignals): boolean {
   if (sig.userAgentDataMobile === true) return true;
@@ -98,24 +111,23 @@ export function isMobileCameraPreferred(sig: CameraDeviceSignals): boolean {
 }
 
 export function detectMobileCameraPreferred(): boolean {
+  if (typeof window !== "undefined") {
+    if (window.innerWidth > 0 && (window.innerWidth <= 820 || window.innerHeight <= 560)) {
+      return true;
+    }
+  }
   if (typeof navigator === "undefined") return false;
   const nav = navigator as Navigator & { userAgentData?: { mobile?: boolean } };
   const anyCoarsePointer =
     typeof window !== "undefined" && typeof window.matchMedia === "function"
       ? window.matchMedia("(any-pointer: coarse)").matches
       : false;
-  const narrowViewport =
-    typeof window !== "undefined" && typeof window.innerWidth === "number"
-      ? window.innerWidth <= 820
-      : false;
-  return (
-    isMobileCameraPreferred({
-      userAgentDataMobile: nav.userAgentData?.mobile,
-      userAgent: nav.userAgent,
-      maxTouchPoints: nav.maxTouchPoints,
-      anyCoarsePointer,
-    }) || (narrowViewport && anyCoarsePointer)
-  );
+  return isMobileCameraPreferred({
+    userAgentDataMobile: nav.userAgentData?.mobile,
+    userAgent: nav.userAgent,
+    maxTouchPoints: nav.maxTouchPoints,
+    anyCoarsePointer,
+  });
 }
 
 export function initialCameraTarget(mobile: boolean): CameraTarget {
@@ -234,7 +246,7 @@ async function createThumbnailUrl(
         resolve(URL.createObjectURL(thumbBlob));
       },
       "image/jpeg",
-      0.82,
+      0.84,
     );
   });
 }
@@ -244,9 +256,11 @@ export interface PhotoCameraViewProps {
   onCaptureBatch?(files: File[]): void;
   onPickFile(): void;
   onNativeCamera(): void;
+  onRequestClose?(): void;
   photos?: CapturedSessionPhoto[];
   onPhotosChange?(next: CapturedSessionPhoto[]): void;
   onScreenModeChange?(screen: "camera" | "viewer"): void;
+  onMobileModeChange?(isMobile: boolean): void;
 }
 
 interface DeletedPhotoUndoState {
@@ -259,9 +273,11 @@ export function PhotoCameraView({
   onCaptureBatch,
   onPickFile,
   onNativeCamera,
+  onRequestClose,
   photos: controlledPhotos,
   onPhotosChange,
   onScreenModeChange,
+  onMobileModeChange,
 }: PhotoCameraViewProps) {
   const [mobile, setMobile] = useState(detectMobileCameraPreferred);
   const [target, setTarget] = useState<CameraTarget>(() => initialCameraTarget(mobile));
@@ -274,6 +290,8 @@ export function PhotoCameraView({
   const [error, setError] = useState<string | null>(null);
   const [fitMode, setFitMode] = useState<CameraFitMode>("contain");
   const [shutterFlash, setShutterFlash] = useState(false);
+  const [justShotPulse, setJustShotPulse] = useState(false);
+  const [streamAspect, setStreamAspect] = useState<string>(() => (mobile ? "3 / 4" : "4 / 3"));
 
   const [internalPhotos, setInternalPhotos] = useState<CapturedSessionPhoto[]>([]);
   const photos = controlledPhotos ?? internalPhotos;
@@ -296,6 +314,7 @@ export function PhotoCameraView({
   // Viewer & Mobile Tray state
   const [viewerIndex, setViewerIndex] = useState<number | null>(null);
   const [mobileTrayOpen, setMobileTrayOpen] = useState(false);
+  const [traySelectedIndex, setTraySelectedIndex] = useState(0);
   const [retakeTargetId, setRetakeTargetId] = useState<string | null>(null);
   const [zoomPercent, setZoomPercent] = useState<number>(100);
   const [panOffset, setPanOffset] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
@@ -336,9 +355,22 @@ export function PhotoCameraView({
   }
 
   useEffect(() => {
+    onMobileModeChange?.(mobile);
+  }, [mobile, onMobileModeChange]);
+
+  useEffect(() => {
     if (typeof window === "undefined") return;
     const onResize = () => {
-      setMobile(detectMobileCameraPreferred());
+      const nextMobile = detectMobileCameraPreferred();
+      setMobile(nextMobile);
+      const v = videoRef.current;
+      if (v && v.videoWidth > 0 && v.videoHeight > 0) {
+        setStreamAspect(`${v.videoWidth} / ${v.videoHeight}`);
+      } else {
+        setStreamAspect(
+          window.innerHeight > window.innerWidth && window.innerWidth <= 820 ? "3 / 4" : "4 / 3",
+        );
+      }
     };
     window.addEventListener("resize", onResize);
     return () => window.removeEventListener("resize", onResize);
@@ -415,7 +447,10 @@ export function PhotoCameraView({
         void v
           .play()
           .then(() => {
-            if (!cancelled && v.videoWidth > 0) setReady(true);
+            if (!cancelled && v.videoWidth > 0) {
+              setReady(true);
+              setStreamAspect(`${v.videoWidth} / ${v.videoHeight}`);
+            }
           })
           .catch(() => undefined);
       }
@@ -464,6 +499,10 @@ export function PhotoCameraView({
     onNativeCamera();
   }
 
+  function toggleFitMode() {
+    setFitMode((m) => (m === "contain" ? "cover" : "contain"));
+  }
+
   function capture() {
     const v = videoRef.current;
     if (!v || !v.videoWidth || !v.videoHeight) return;
@@ -478,7 +517,9 @@ export function PhotoCameraView({
     ctx.drawImage(v, 0, 0, width, height);
 
     setShutterFlash(true);
-    window.setTimeout(() => setShutterFlash(false), 140);
+    setJustShotPulse(true);
+    window.setTimeout(() => setShutterFlash(false), 110);
+    window.setTimeout(() => setJustShotPulse(false), 260);
 
     canvas.toBlob(
       async (blob) => {
@@ -517,10 +558,15 @@ export function PhotoCameraView({
             if (replaced) revokeSessionPhotoUrls(replaced);
             const copy = [...prev];
             copy[idx] = newItem;
+            setTraySelectedIndex(idx);
             return copy;
           });
         } else {
-          updatePhotos((prev) => [...prev, newItem]);
+          updatePhotos((prev) => {
+            const next = [...prev, newItem];
+            setTraySelectedIndex(next.length - 1);
+            return next;
+          });
         }
       },
       "image/jpeg",
@@ -577,10 +623,14 @@ export function PhotoCameraView({
     if (nextLength <= 0) {
       setViewerIndex(null);
       setMobileTrayOpen(false);
-    } else if (viewerIndex !== null) {
-      setViewerIndex(Math.min(index, nextLength - 1));
-      setZoomPercent(100);
-      setPanOffset({ x: 0, y: 0 });
+      setTraySelectedIndex(0);
+    } else {
+      setTraySelectedIndex((cur) => Math.min(cur, nextLength - 1));
+      if (viewerIndex !== null) {
+        setViewerIndex(Math.min(index, nextLength - 1));
+        setZoomPercent(100);
+        setPanOffset({ x: 0, y: 0 });
+      }
     }
   }
 
@@ -596,6 +646,7 @@ export function PhotoCameraView({
       copy.splice(clampedIndex, 0, photo);
       return copy;
     });
+    setTraySelectedIndex(nextIdx);
     if (viewerIndex !== null) {
       setViewerIndex(nextIdx);
     }
@@ -616,7 +667,7 @@ export function PhotoCameraView({
       const idx = ZOOM_STEPS.indexOf(cur as (typeof ZOOM_STEPS)[number]);
       let next: number = cur;
       if (direction === "cycle") {
-        next = ZOOM_STEPS[(idx + 1) % ZOOM_STEPS.length] ?? 100;
+        next = cur === 100 ? 175 : 100;
       } else if (direction === "in") {
         next = ZOOM_STEPS[Math.min(ZOOM_STEPS.length - 1, Math.max(0, idx) + 1)] ?? 300;
       } else {
@@ -632,59 +683,75 @@ export function PhotoCameraView({
   const showSwitch = canSwitchCamera(videoIds, mobile, enumeratedCount);
   const currentViewerPhoto = viewerIndex !== null ? photos[viewerIndex] ?? null : null;
 
+  /* ── 1. HIGH-RES LIGHTBOX VIEWER (§10) ──────────────────────────────────── */
   if (currentViewerPhoto && viewerIndex !== null) {
     const scale = zoomPercent / 100;
-    return (
-      <div id="photo-viewer-panel" className="photo-viewer" data-photo-screen="viewer">
-        <div className="photo-viewer-toolbar">
-          <button
-            type="button"
-            id="btn-viewer-back"
-            className="btn-utility photo-viewer-back-btn"
-            onClick={closeViewer}
-          >
-            <IconBack size={16} />
-            <span>Quay lại camera</span>
-          </button>
+    const positionLabel =
+      photos.length === 1
+        ? "Ảnh đã chụp"
+        : `Ảnh thứ ${viewerIndex + 1} trong ${photos.length} ảnh`;
 
-          <div className="photo-viewer-meta" aria-live="polite">
+    return (
+      <div
+        id="photo-viewer-panel"
+        className="photo-viewer lightbox-card"
+        data-photo-screen="viewer"
+      >
+        <div className="lightbox-header">
+          <div className="lightbox-title" aria-live="polite">
             <span id="viewer-photo-indicator" className="photo-viewer-position">
-              Ảnh {viewerIndex + 1} / {photos.length}
+              {positionLabel}
             </span>
             <span className="photo-viewer-dims">
+              {" · "}
               {currentViewerPhoto.width}×{currentViewerPhoto.height}
             </span>
           </div>
 
-          <div className="photo-viewer-zoom-group" role="group" aria-label="Thu phóng ảnh">
+          <div className="lightbox-head-controls">
+            <div className="zoom-toolbar photo-viewer-zoom-group" role="group" aria-label="Thu phóng ảnh">
+              <button
+                type="button"
+                id="btn-viewer-zoom-out"
+                className="zoom-btn photo-viewer-zoom-btn"
+                onClick={() => stepZoom("out")}
+                disabled={zoomPercent <= 100}
+                aria-label="Thu nhỏ ảnh"
+                title="Thu nhỏ"
+              >
+                <IconZoomOut size={15} />
+              </button>
+              <button
+                type="button"
+                id="btn-viewer-zoom-reset"
+                className="zoom-readout photo-viewer-zoom-readout"
+                onClick={() => stepZoom("cycle")}
+                aria-label="Đổi mức phóng đại"
+                title="Đặt lại 100% hoặc phóng 175%"
+              >
+                {zoomPercent}%
+              </button>
+              <button
+                type="button"
+                id="btn-viewer-zoom-in"
+                className="zoom-btn photo-viewer-zoom-btn"
+                onClick={() => stepZoom("in")}
+                disabled={zoomPercent >= 300}
+                aria-label="Phóng to ảnh"
+                title="Phóng to kiểm tra chữ nhỏ"
+              >
+                <IconZoomIn size={15} />
+              </button>
+            </div>
+
             <button
               type="button"
-              id="btn-viewer-zoom-out"
-              className="btn-utility photo-viewer-zoom-btn"
-              onClick={() => stepZoom("out")}
-              disabled={zoomPercent <= 100}
-              aria-label="Thu nhỏ ảnh"
+              id="btn-viewer-close"
+              className="dialog-close-btn"
+              onClick={closeViewer}
+              aria-label="Đóng trình xem ảnh"
             >
-              <IconZoomOut size={15} />
-            </button>
-            <button
-              type="button"
-              id="btn-viewer-zoom-reset"
-              className="btn-utility photo-viewer-zoom-readout"
-              onClick={() => stepZoom("cycle")}
-              aria-label="Đổi mức phóng đại"
-            >
-              {zoomPercent}%
-            </button>
-            <button
-              type="button"
-              id="btn-viewer-zoom-in"
-              className="btn-utility photo-viewer-zoom-btn"
-              onClick={() => stepZoom("in")}
-              disabled={zoomPercent >= 300}
-              aria-label="Phóng to ảnh"
-            >
-              <IconZoomIn size={15} />
+              <IconClose size={18} />
             </button>
           </div>
         </div>
@@ -694,9 +761,9 @@ export function PhotoCameraView({
           className={
             zoomPercent > 100
               ? isDraggingPan
-                ? "photo-viewer-stage is-zoomed is-dragging"
-                : "photo-viewer-stage is-zoomed"
-              : "photo-viewer-stage"
+                ? "photo-viewer-stage lightbox-stage is-zoomed is-dragging"
+                : "photo-viewer-stage lightbox-stage is-zoomed"
+              : "photo-viewer-stage lightbox-stage"
           }
           data-zoom={String(zoomPercent)}
           onDoubleClick={() => stepZoom("cycle")}
@@ -719,8 +786,8 @@ export function PhotoCameraView({
             const dx = e.clientX - dragStartRef.current.startX;
             const dy = e.clientY - dragStartRef.current.startY;
             setPanOffset({
-              x: Math.max(-260, Math.min(260, dragStartRef.current.origX + dx)),
-              y: Math.max(-220, Math.min(220, dragStartRef.current.origY + dy)),
+              x: Math.max(-280, Math.min(280, dragStartRef.current.origX + dx)),
+              y: Math.max(-240, Math.min(240, dragStartRef.current.origY + dy)),
             });
           }}
           onPointerUp={() => {
@@ -736,35 +803,39 @@ export function PhotoCameraView({
             <button
               type="button"
               id="btn-viewer-prev"
-              className="btn-utility photo-viewer-nav is-prev"
+              className="lightbox-nav prev photo-viewer-nav is-prev"
               disabled={viewerIndex <= 0}
               onClick={() => openViewerAt(viewerIndex - 1)}
-              aria-label="Ảnh trước"
+              aria-label="Xem ảnh trước"
             >
               <IconPrev size={18} />
             </button>
           )}
 
-          <img
-            id="photo-viewer-full-img"
-            className="photo-viewer-img"
-            src={currentViewerPhoto.fullUrl}
-            alt={`Ảnh đề ${viewerIndex + 1} độ phân giải gốc`}
-            data-viewer-src="full"
-            draggable={false}
+          <div
+            className="lightbox-pan-canvas"
             style={{
               transform: `translate3d(${panOffset.x}px, ${panOffset.y}px, 0) scale(${scale})`,
             }}
-          />
+          >
+            <img
+              id="photo-viewer-full-img"
+              className="photo-viewer-img"
+              src={currentViewerPhoto.fullUrl}
+              alt={`Ảnh đề ${viewerIndex + 1} độ phân giải gốc`}
+              data-viewer-src="full"
+              draggable={false}
+            />
+          </div>
 
           {photos.length > 1 && (
             <button
               type="button"
               id="btn-viewer-next"
-              className="btn-utility photo-viewer-nav is-next"
+              className="lightbox-nav next photo-viewer-nav is-next"
               disabled={viewerIndex >= photos.length - 1}
               onClick={() => openViewerAt(viewerIndex + 1)}
-              aria-label="Ảnh tiếp theo"
+              aria-label="Xem ảnh tiếp theo"
             >
               <IconNext size={18} />
             </button>
@@ -772,7 +843,7 @@ export function PhotoCameraView({
 
           {undoState && (
             <div id="photo-undo-bar" className="photo-undo-bar" role="status" aria-live="polite">
-              <span>Đã xóa Ảnh {undoState.index + 1}</span>
+              <span>Đã xóa ảnh</span>
               <button
                 type="button"
                 id="btn-photo-undo-delete"
@@ -785,95 +856,38 @@ export function PhotoCameraView({
           )}
         </div>
 
-        {photos.length > 1 && (
-          <div className="photo-viewer-filmstrip" role="tablist" aria-label="Danh sách ảnh trong phiên">
-            {photos.map((item, idx) => (
-              <button
-                key={item.id}
-                id={`btn-viewer-thumb-${idx + 1}`}
-                type="button"
-                role="tab"
-                aria-selected={idx === viewerIndex}
-                className={idx === viewerIndex ? "viewer-filmstrip-item is-active" : "viewer-filmstrip-item"}
-                onClick={() => openViewerAt(idx)}
-                aria-label={`Chuyển tới ảnh ${idx + 1}`}
-              >
-                <img src={item.thumbUrl} alt={`Ảnh nhỏ ${idx + 1}`} draggable={false} />
-                <span className="viewer-filmstrip-index">{idx + 1}</span>
-              </button>
-            ))}
-          </div>
-        )}
-
-        <div className="photo-viewer-footer">
-          <div className="photo-viewer-actions-left">
+        <div className="lightbox-footer photo-viewer-footer">
+          <div className="lightbox-footer-group photo-viewer-actions-left">
             <button
               type="button"
               id="btn-viewer-retake"
-              className="btn-utility"
+              className="secondary-btn"
               onClick={() => handleStartRetake(viewerIndex)}
             >
-              <IconReset size={15} />
+              <IconCamera size={15} />
               <span>Chụp lại</span>
             </button>
+          </div>
+
+          <div className="lightbox-footer-group">
             <button
               type="button"
               id="btn-viewer-delete"
-              className="btn-utility photo-btn-danger"
+              className="secondary-btn danger-btn"
               onClick={() => handleDeletePhotoAt(viewerIndex)}
             >
               <IconTrash size={15} />
               <span>Xóa ảnh</span>
             </button>
-          </div>
-
-          <button
-            type="button"
-            id="btn-viewer-done"
-            className="btn-primary photo-done-btn"
-            onClick={handleCommitSession}
-          >
-            <IconCheck size={16} />
-            <span>Xong</span>
-          </button>
-        </div>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="photo-camera photo-error">
-        <p className="photo-alert" role="alert">
-          {error}
-        </p>
-        <div className="photo-dialog-actions">
-          {support.ok && (
-            <button type="button" id="btn-photo-retry-camera" className="btn-utility" onClick={retryCamera}>
-              Thử lại
-            </button>
-          )}
-          {mobile && (
-            <button type="button" id="btn-photo-native-camera" className="btn-utility" onClick={handleNativeCamera}>
-              <IconCamera size={16} />
-              <span>Máy ảnh thiết bị</span>
-            </button>
-          )}
-          <button type="button" id="btn-photo-pick-fallback" className="btn-primary" onClick={handlePickFile}>
-            <IconImage size={16} />
-            <span>Chọn ảnh từ máy</span>
-          </button>
-          {photos.length > 0 && (
             <button
               type="button"
-              id="btn-photo-done"
-              className="btn-primary photo-done-btn"
-              onClick={handleCommitSession}
+              id="btn-viewer-back"
+              className="primary-pill-btn photo-viewer-back-btn"
+              onClick={closeViewer}
             >
-              <IconCheck size={16} />
-              <span>Xong</span>
+              <span>Quay lại máy ảnh</span>
             </button>
-          )}
+          </div>
         </div>
       </div>
     );
@@ -882,30 +896,96 @@ export function PhotoCameraView({
   const retakeSlotNumber = retakeTargetId
     ? photos.findIndex((p) => p.id === retakeTargetId) + 1
     : 0;
+  const safeTrayIdx = Math.max(0, Math.min(traySelectedIndex, Math.max(0, photos.length - 1)));
+  const selectedTrayPhoto = photos[safeTrayIdx] ?? photos[photos.length - 1] ?? null;
 
-  return (
-    <div className="photo-camera">
-      <div className={shutterFlash ? "photo-camera-stage is-flashing" : "photo-camera-stage"}>
-        <video
-          ref={videoRef}
-          className={
-            fitMode === "cover"
-              ? "photo-camera-video is-cover"
-              : "photo-camera-video is-contain"
-          }
-          data-fit-mode={fitMode}
-          playsInline
-          muted
-          autoPlay
-          aria-label="Khung ngắm máy ảnh đề bài"
-          onLoadedMetadata={() => setReady(true)}
-          onLoadedData={() => setReady(true)}
-        />
+  /* ── 2. MOBILE & TABLET FULLSCREEN DARK CAMERA (§5, §6, §8) ─────────────── */
+  if (mobile) {
+    if (error) {
+      return (
+        <div className="photo-camera photo-error mobile-error-screen">
+          <div className="cam-fs-top">
+            <button
+              type="button"
+              id="btn-photo-dialog-close"
+              className="cam-glass-btn icon-only"
+              onClick={onRequestClose}
+              aria-label="Đóng máy ảnh"
+            >
+              <IconClose size={18} />
+            </button>
+            <span className="cam-top-spacer" />
+          </div>
 
-        <div className="photo-stage-top-bar">
+          <div className="mobile-error-card" role="alert">
+            <div className="error-icon-circle">
+              <IconCamera size={20} />
+            </div>
+            <h2 className="mobile-error-title">{cameraErrorTitle(error)}</h2>
+            <p className="mobile-error-desc photo-alert">{error}</p>
+            <div className="mobile-error-actions">
+              <button
+                type="button"
+                id="btn-photo-pick-fallback"
+                className="mobile-error-primary"
+                onClick={handlePickFile}
+              >
+                Chọn ảnh từ máy
+              </button>
+              {support.ok && (
+                <button
+                  type="button"
+                  id="btn-photo-retry-camera"
+                  className="mobile-error-secondary"
+                  onClick={retryCamera}
+                >
+                  Thử lại
+                </button>
+              )}
+              <button
+                type="button"
+                id="btn-photo-native-camera"
+                className="mobile-error-secondary"
+                onClick={handleNativeCamera}
+              >
+                Máy ảnh thiết bị
+              </button>
+              {photos.length > 0 && (
+                <button
+                  type="button"
+                  id="btn-photo-done"
+                  className="mobile-error-primary"
+                  onClick={handleCommitSession}
+                >
+                  Xong
+                </button>
+              )}
+            </div>
+          </div>
+          <div className="cam-top-spacer" />
+        </div>
+      );
+    }
+
+    return (
+      <div
+        className="photo-camera cam-fs-root"
+        style={{ "--stream-aspect": streamAspect } as React.CSSProperties}
+      >
+        <div className="cam-fs-top">
+          <button
+            type="button"
+            id="btn-photo-dialog-close"
+            className="cam-glass-btn icon-only"
+            onClick={onRequestClose}
+            aria-label="Đóng máy ảnh"
+          >
+            <IconClose size={18} />
+          </button>
+
           {retakeSlotNumber > 0 ? (
-            <div id="photo-retake-banner" className="photo-retake-pill" role="status">
-              <span>Đang chụp lại Ảnh {retakeSlotNumber}</span>
+            <div id="photo-retake-banner" className="cam-status-pill" role="status">
+              <span>Chụp lại ảnh {retakeSlotNumber}</span>
               <button
                 type="button"
                 id="btn-cancel-retake"
@@ -913,157 +993,598 @@ export function PhotoCameraView({
                 onClick={() => setRetakeTargetId(null)}
                 aria-label="Hủy chụp lại"
               >
-                <IconClose size={13} />
+                <IconClose size={12} />
               </button>
             </div>
-          ) : (
-            <span className="photo-stage-spacer" />
-          )}
+          ) : undoState && !mobileTrayOpen ? (
+            <div id="photo-undo-bar" className="cam-status-pill" role="status" aria-live="polite">
+              <span>Đã xóa ảnh</span>
+              <button
+                type="button"
+                id="btn-photo-undo-delete"
+                className="photo-undo-btn"
+                onClick={handleUndoDelete}
+              >
+                Hoàn tác
+              </button>
+            </div>
+          ) : null}
 
+          {photos.length > 0 ? (
+            <div className="cam-top-right-tools">
+              <button
+                type="button"
+                id="btn-photo-library"
+                className="cam-glass-btn icon-only"
+                onClick={handlePickFile}
+                aria-label="Chọn ảnh có sẵn từ thiết bị"
+                title="Chọn ảnh từ thiết bị"
+              >
+                <IconImage size={18} />
+              </button>
+              <button
+                type="button"
+                id="btn-photo-fit-mode"
+                className="cam-glass-btn icon-only"
+                data-fit-mode={fitMode}
+                onClick={toggleFitMode}
+                aria-label={
+                  fitMode === "contain"
+                    ? "Khung ngắm: Toàn khung. Chạm để đổi sang Tràn màn"
+                    : "Khung ngắm: Tràn màn. Chạm để đổi sang Toàn khung"
+                }
+                title={
+                  fitMode === "contain"
+                    ? "Đang Toàn khung (không cắt chữ sát mép)"
+                    : "Đang Tràn màn"
+                }
+              >
+                {fitMode === "contain" ? <IconFitContain size={16} /> : <IconFitCover size={16} />}
+              </button>
+              {showSwitch && (
+                <button
+                  type="button"
+                  id="btn-photo-switch-camera"
+                  className="cam-glass-btn icon-only"
+                  onClick={switchCamera}
+                  disabled={switching}
+                  aria-label="Đổi máy ảnh trước hoặc sau"
+                  title="Đổi máy ảnh"
+                >
+                  <IconSwitchCamera size={18} />
+                </button>
+              )}
+            </div>
+          ) : (
+            <button
+              type="button"
+              id="btn-photo-fit-mode"
+              className="cam-glass-btn pill"
+              data-fit-mode={fitMode}
+              onClick={toggleFitMode}
+              aria-label={
+                fitMode === "contain"
+                  ? "Khung ngắm: Toàn khung. Chạm để đổi sang Tràn màn"
+                  : "Khung ngắm: Tràn màn. Chạm để đổi sang Toàn khung"
+              }
+            >
+              {fitMode === "contain" ? <IconFitContain size={16} /> : <IconFitCover size={16} />}
+              <span>{fitMode === "contain" ? "Toàn khung" : "Tràn màn"}</span>
+            </button>
+          )}
+        </div>
+
+        <div className="cam-fs-stage photo-camera-stage">
+          <div className="camera-sensor-box">
+            <video
+              ref={videoRef}
+              className={
+                fitMode === "cover"
+                  ? "photo-camera-video is-cover"
+                  : "photo-camera-video is-contain"
+              }
+              data-fit-mode={fitMode}
+              playsInline
+              muted
+              autoPlay
+              aria-label="Khung ngắm máy ảnh đề bài"
+              onLoadedMetadata={() => {
+                setReady(true);
+                if (videoRef.current?.videoWidth && videoRef.current?.videoHeight) {
+                  setStreamAspect(
+                    `${videoRef.current.videoWidth} / ${videoRef.current.videoHeight}`,
+                  );
+                }
+              }}
+              onLoadedData={() => setReady(true)}
+            />
+            <div className={shutterFlash ? "shutter-flash active" : "shutter-flash"} />
+          </div>
+
+          {!ready && (
+            <p className="photo-camera-loading" role="status" aria-live="polite">
+              Đang mở máy ảnh...
+            </p>
+          )}
+        </div>
+
+        <div className="cam-fs-bottom-wrap">
+          <div className="cam-fs-bottom photo-camera-bar">
+            <div className="cam-slot-left photo-camera-slot-side">
+              {photos.length > 0 ? (
+                <PhotoFanStack
+                  photos={photos}
+                  isMobile={true}
+                  justShotPulse={justShotPulse}
+                  onOpenPhoto={openViewerAt}
+                  onOpenMobileTray={() => {
+                    setTraySelectedIndex(photos.length - 1);
+                    setMobileTrayOpen((v) => !v);
+                  }}
+                />
+              ) : (
+                <button
+                  type="button"
+                  id="btn-photo-library"
+                  className="cam-round-control"
+                  onClick={handlePickFile}
+                  aria-label="Chọn ảnh có sẵn từ thiết bị"
+                  title="Chọn ảnh từ thiết bị"
+                >
+                  <IconImage size={18} />
+                </button>
+              )}
+            </div>
+
+            <div className="photo-camera-slot-center">
+              <button
+                type="button"
+                id="btn-photo-capture"
+                className="shutter-btn"
+                onClick={capture}
+                disabled={!ready || switching}
+                aria-label={
+                  retakeSlotNumber > 0
+                    ? `Chụp thay ảnh thứ ${retakeSlotNumber}`
+                    : "Chụp ảnh đề bài"
+                }
+              >
+                <span className="shutter-disc" aria-hidden="true" />
+              </button>
+            </div>
+
+            <div className="cam-slot-right photo-camera-slot-side is-end">
+              {photos.length > 0 ? (
+                <button
+                  type="button"
+                  id="btn-photo-done"
+                  className="cam-done-btn"
+                  onClick={handleCommitSession}
+                  aria-label="Xong, đính kèm ảnh vào ô nhập đề bài"
+                >
+                  <span>Xong</span>
+                  <IconCheck size={15} />
+                </button>
+              ) : showSwitch ? (
+                <button
+                  type="button"
+                  id="btn-photo-switch-camera"
+                  className="cam-round-control"
+                  onClick={switchCamera}
+                  disabled={switching}
+                  aria-label="Đổi máy ảnh trước hoặc sau"
+                  title="Đổi máy ảnh"
+                >
+                  <IconSwitchCamera size={18} />
+                </button>
+              ) : (
+                <span className="cam-round-spacer" aria-hidden="true" />
+              )}
+            </div>
+          </div>
+        </div>
+
+        {/* Mobile Photo Tray Master–Detail Bottom Sheet (§8) */}
+        {mobileTrayOpen && photos.length > 0 && selectedTrayPhoto && (
+          <>
+            <div
+              className="cam-session-drawer-scrim"
+              onClick={() => setMobileTrayOpen(false)}
+            />
+            <div
+              id="photo-mobile-tray"
+              className="cam-session-drawer photo-mobile-tray"
+              role="dialog"
+              aria-label="Khay ảnh đã chụp"
+            >
+              <div className="cam-drawer-header">
+                <span className="cam-drawer-title">
+                  {photos.length === 1
+                    ? "Ảnh đã chụp"
+                    : `Ảnh thứ ${safeTrayIdx + 1} trong ${photos.length} ảnh`}
+                </span>
+                <div className="cam-drawer-head-actions">
+                  <button
+                    type="button"
+                    id="btn-tray-zoom"
+                    className="cam-drawer-close"
+                    onClick={() => openViewerAt(safeTrayIdx)}
+                  >
+                    <IconZoomIn size={14} />
+                    <span>Phóng to</span>
+                  </button>
+                  <button
+                    type="button"
+                    id="btn-mobile-tray-close"
+                    className="cam-drawer-close"
+                    onClick={() => setMobileTrayOpen(false)}
+                  >
+                    Đóng
+                  </button>
+                </div>
+              </div>
+
+              <div className="tray-selected-stage">
+                {photos.length > 1 && (
+                  <button
+                    type="button"
+                    id="btn-tray-prev"
+                    className="tray-stage-nav prev"
+                    disabled={safeTrayIdx <= 0}
+                    onClick={() => setTraySelectedIndex((i) => Math.max(0, i - 1))}
+                    aria-label="Xem ảnh trước trong khay"
+                  >
+                    <IconPrev size={16} />
+                  </button>
+                )}
+                <img
+                  id="tray-selected-img"
+                  src={selectedTrayPhoto.fullUrl}
+                  alt={`Xem trước đề bài ảnh ${safeTrayIdx + 1}`}
+                  onClick={() => openViewerAt(safeTrayIdx)}
+                />
+                {photos.length > 1 && (
+                  <button
+                    type="button"
+                    id="btn-tray-next"
+                    className="tray-stage-nav next"
+                    disabled={safeTrayIdx >= photos.length - 1}
+                    onClick={() =>
+                      setTraySelectedIndex((i) => Math.min(photos.length - 1, i + 1))
+                    }
+                    aria-label="Xem ảnh tiếp theo trong khay"
+                  >
+                    <IconNext size={16} />
+                  </button>
+                )}
+              </div>
+
+              <div
+                className="tray-thumb-strip"
+                role="tablist"
+                aria-label="Chọn ảnh trong phiên chụp"
+              >
+                {photos.map((item, idx) => (
+                  <button
+                    key={item.id}
+                    type="button"
+                    id={`btn-tray-open-${idx + 1}`}
+                    role="tab"
+                    className="tray-thumb-btn"
+                    aria-selected={idx === safeTrayIdx ? "true" : "false"}
+                    aria-label={`Chọn ảnh thứ ${idx + 1}`}
+                    onClick={() => setTraySelectedIndex(idx)}
+                  >
+                    <img src={item.thumbUrl} alt="" draggable={false} />
+                  </button>
+                ))}
+              </div>
+
+              {undoState && (
+                <div className="tray-undo-bar" role="status" aria-live="polite">
+                  <span>Đã xóa ảnh khỏi phiên chụp.</span>
+                  <button
+                    type="button"
+                    id="btn-photo-undo-delete"
+                    onClick={handleUndoDelete}
+                  >
+                    Hoàn tác
+                  </button>
+                </div>
+              )}
+
+              <div className="tray-shared-actions">
+                <button
+                  type="button"
+                  id="btn-tray-retake"
+                  className="tray-action-btn"
+                  onClick={() => handleStartRetake(safeTrayIdx)}
+                >
+                  <IconCamera size={15} />
+                  <span>Chụp lại</span>
+                </button>
+                <button
+                  type="button"
+                  id="btn-tray-delete"
+                  data-testid={`btn-tray-delete-${safeTrayIdx + 1}`}
+                  className="tray-action-btn danger"
+                  onClick={() => handleDeletePhotoAt(safeTrayIdx)}
+                >
+                  <IconTrash size={15} />
+                  <span>Xóa ảnh</span>
+                </button>
+              </div>
+            </div>
+          </>
+        )}
+      </div>
+    );
+  }
+
+  /* ── 3. DESKTOP CAMERA DIALOG (§9) ──────────────────────────────────────── */
+  if (error) {
+    return (
+      <div className="photo-camera photo-error desktop-camera-root">
+        <div className="dialog-header">
+          <div className="dialog-title-wrap">
+            <span className="dialog-title" id="photo-dialog-title">
+              Chụp ảnh đề bài
+            </span>
+          </div>
           <button
             type="button"
-            id="btn-photo-fit-mode"
-            className="photo-fit-toggle-btn"
-            onClick={() => setFitMode((m) => (m === "contain" ? "cover" : "contain"))}
-            aria-label={
-              fitMode === "contain"
-                ? "Đang ở chế độ Toàn khung. Bấm để chuyển sang Tràn màn"
-                : "Đang ở chế độ Tràn màn. Bấm để chuyển sang Toàn khung"
-            }
+            id="btn-photo-dialog-close"
+            className="dialog-close-btn"
+            onClick={onRequestClose}
+            aria-label="Đóng hộp thoại máy ảnh"
           >
-            <span>{fitMode === "contain" ? "Toàn khung" : "Tràn màn"}</span>
+            <IconClose size={18} />
           </button>
         </div>
 
-        {!ready && (
-          <p className="photo-camera-loading" role="status" aria-live="polite">
-            Đang mở máy ảnh...
-          </p>
-        )}
-
-        {undoState && (
-          <div id="photo-undo-bar" className="photo-undo-bar" role="status" aria-live="polite">
-            <span>Đã xóa ảnh</span>
-            <button
-              type="button"
-              id="btn-photo-undo-delete"
-              className="photo-undo-btn"
-              onClick={handleUndoDelete}
-            >
-              Hoàn tác
-            </button>
+        <div className="desktop-error-body" role="alert">
+          <div className="desktop-error-lead">
+            <div className="error-icon-circle">
+              <IconCamera size={20} />
+            </div>
+            <div>
+              <h3 className="desktop-error-title">{cameraErrorTitle(error)}</h3>
+              <p className="desktop-error-desc photo-alert">{error}</p>
+            </div>
           </div>
-        )}
-
-        {mobileTrayOpen && photos.length > 0 && (
-          <div
-            id="photo-mobile-tray"
-            className="photo-mobile-tray"
-            role="dialog"
-            aria-label="Khay ảnh vừa chụp"
-          >
-            <div className="photo-mobile-tray-header">
-              <span className="photo-mobile-tray-title">Ảnh vừa chụp</span>
+          <div className="desktop-error-actions">
+            {support.ok && (
               <button
                 type="button"
-                id="btn-mobile-tray-close"
-                className="btn-utility photo-mobile-tray-close"
-                onClick={() => setMobileTrayOpen(false)}
-                aria-label="Đóng khay ảnh"
+                id="btn-photo-retry-camera"
+                className="secondary-btn"
+                onClick={retryCamera}
               >
-                <IconClose size={15} />
+                Thử lại
               </button>
-            </div>
-            <div className="photo-mobile-tray-list">
-              {photos.map((item, idx) => (
-                <div key={item.id} className="mobile-tray-card">
-                  <button
-                    type="button"
-                    id={`btn-tray-open-${idx + 1}`}
-                    className="mobile-tray-thumb-btn"
-                    onClick={() => openViewerAt(idx)}
-                    aria-label={`Mở ảnh ${idx + 1}`}
-                  >
-                    <img src={item.thumbUrl} alt={`Ảnh ${idx + 1}`} draggable={false} />
-                    <span className="mobile-tray-index">{idx + 1}</span>
-                  </button>
-                  <button
-                    type="button"
-                    id={`btn-tray-delete-${idx + 1}`}
-                    className="mobile-tray-delete-btn"
-                    onClick={() => handleDeletePhotoAt(idx)}
-                    aria-label={`Xóa ảnh ${idx + 1}`}
-                  >
-                    <IconClose size={12} />
-                  </button>
-                </div>
-              ))}
-            </div>
+            )}
+            <button
+              type="button"
+              id="btn-photo-pick-fallback"
+              className="primary-pill-btn"
+              onClick={handlePickFile}
+            >
+              <IconImage size={16} />
+              <span>Chọn ảnh từ máy</span>
+            </button>
+            {photos.length > 0 && (
+              <button
+                type="button"
+                id="btn-photo-done"
+                className="primary-pill-btn"
+                onClick={handleCommitSession}
+              >
+                <span>Xong</span>
+                <IconCheck size={15} />
+              </button>
+            )}
           </div>
-        )}
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div
+      className="photo-camera desktop-camera-root"
+      style={{ "--stream-aspect": streamAspect } as React.CSSProperties}
+    >
+      <div className="dialog-header">
+        <div className="dialog-title-wrap">
+          <span className="dialog-title" id="photo-dialog-title">
+            Chụp ảnh đề bài
+          </span>
+          {retakeSlotNumber > 0 && (
+            <span id="photo-retake-banner" className="dialog-badge photo-retake-pill" role="status">
+              <span>Đang chụp lại ảnh</span>
+              <button
+                type="button"
+                id="btn-cancel-retake"
+                className="dialog-badge-cancel"
+                onClick={() => setRetakeTargetId(null)}
+                aria-label="Hủy chụp lại"
+              >
+                <IconClose size={11} />
+              </button>
+            </span>
+          )}
+        </div>
+        <button
+          type="button"
+          id="btn-photo-dialog-close"
+          className="dialog-close-btn"
+          onClick={onRequestClose}
+          aria-label="Đóng hộp thoại máy ảnh"
+        >
+          <IconClose size={18} />
+        </button>
       </div>
 
-      <div className="photo-camera-bar">
-        <div className="photo-camera-slot-side">
+      <div className="dialog-stage-wrap">
+        <div className="dialog-video-frame photo-camera-stage">
+          <div className="camera-sensor-box">
+            <video
+              ref={videoRef}
+              className={
+                fitMode === "cover"
+                  ? "photo-camera-video is-cover"
+                  : "photo-camera-video is-contain"
+              }
+              data-fit-mode={fitMode}
+              playsInline
+              muted
+              autoPlay
+              aria-label="Khung ngắm máy ảnh đề bài"
+              onLoadedMetadata={() => {
+                setReady(true);
+                if (videoRef.current?.videoWidth && videoRef.current?.videoHeight) {
+                  setStreamAspect(
+                    `${videoRef.current.videoWidth} / ${videoRef.current.videoHeight}`,
+                  );
+                }
+              }}
+              onLoadedData={() => setReady(true)}
+            />
+            <div className={shutterFlash ? "shutter-flash active" : "shutter-flash"} />
+          </div>
+
+          {!ready && (
+            <p className="photo-camera-loading" role="status" aria-live="polite">
+              Đang mở máy ảnh...
+            </p>
+          )}
+        </div>
+      </div>
+
+      <div className="dialog-footer photo-camera-bar">
+        <div className="dialog-left-actions photo-camera-slot-side">
           <button
             type="button"
             id="btn-photo-library"
-            className="btn-utility photo-camera-side-btn"
+            className="secondary-btn"
             onClick={handlePickFile}
-            aria-label="Mở thư viện ảnh từ thiết bị"
+            aria-label="Chọn ảnh từ máy"
           >
-            <IconImage size={16} />
-            <span className="photo-camera-side-label">Chọn ảnh từ máy</span>
+            <IconImage size={18} />
+            <span>Chọn ảnh</span>
           </button>
-          {showSwitch ? (
+          {showSwitch && (
             <button
               type="button"
               id="btn-photo-switch-camera"
-              className="btn-utility photo-camera-side-btn photo-camera-switch-btn"
+              className="secondary-btn icon-only"
               onClick={switchCamera}
               disabled={switching}
               aria-label="Đổi máy ảnh"
               title="Đổi máy ảnh"
             >
-              <IconSwitchCamera size={16} />
+              <IconSwitchCamera size={18} />
             </button>
-          ) : null}
-        </div>
-
-        <div className="photo-camera-slot-center">
-          <button
-            type="button"
-            id="btn-photo-capture"
-            className="btn-primary photo-camera-shutter"
-            onClick={capture}
-            disabled={!ready || switching}
-            aria-label="Chụp ảnh đề bài"
-            title="Chụp ảnh"
-          >
-            <span className="photo-shutter-disc" aria-hidden="true" />
-            <IconCamera size={16} />
-            <span className="photo-shutter-label">Chụp ảnh</span>
-          </button>
-        </div>
-
-        <div className="photo-camera-slot-side is-end">
-          <PhotoFanStack
-            photos={photos}
-            isMobile={mobile}
-            onOpenPhoto={openViewerAt}
-            onOpenMobileTray={() => setMobileTrayOpen((v) => !v)}
-          />
+          )}
           {photos.length > 0 && (
             <button
               type="button"
-              id="btn-photo-done"
-              className="btn-primary photo-done-btn"
-              onClick={handleCommitSession}
-              aria-label="Hoàn tất và đính kèm ảnh vào ô nhập"
+              id="btn-photo-fit-mode"
+              className="secondary-btn icon-only"
+              data-fit-mode={fitMode}
+              onClick={toggleFitMode}
+              aria-label={
+                fitMode === "contain"
+                  ? "Khung ngắm: Toàn khung. Bấm để đổi sang Tràn màn"
+                  : "Khung ngắm: Tràn màn. Bấm để đổi sang Toàn khung"
+              }
+              title={
+                fitMode === "contain"
+                  ? "Đang Toàn khung (không cắt chữ sát mép)"
+                  : "Đang Tràn màn"
+              }
             >
-              <IconCheck size={16} />
-              <span>Xong</span>
+              {fitMode === "contain" ? <IconFitContain size={16} /> : <IconFitCover size={16} />}
             </button>
+          )}
+        </div>
+
+        <div className="desktop-shutter-group photo-camera-slot-center">
+          <button
+            type="button"
+            id="btn-photo-capture"
+            className="desktop-shutter-btn"
+            onClick={capture}
+            disabled={!ready || switching}
+            aria-label={retakeSlotNumber > 0 ? "Chụp thay ảnh" : "Chụp ảnh đề bài"}
+          >
+            <span className="desktop-shutter-disc" aria-hidden="true" />
+          </button>
+          <span className="desktop-shutter-caption">
+            {retakeSlotNumber > 0 ? "Thay ảnh" : "Chụp ảnh"}
+          </span>
+        </div>
+
+        <div className="dialog-right-actions photo-camera-slot-side is-end">
+          {photos.length > 0 ? (
+            <>
+              {undoState && (
+                <button
+                  type="button"
+                  id="btn-photo-undo-delete"
+                  className="secondary-btn"
+                  onClick={handleUndoDelete}
+                >
+                  Hoàn tác
+                </button>
+              )}
+              <PhotoFanStack
+                photos={photos}
+                isMobile={false}
+                justShotPulse={justShotPulse}
+                onOpenPhoto={openViewerAt}
+                onOpenMobileTray={() => undefined}
+              />
+              <button
+                type="button"
+                id="btn-photo-done"
+                className="primary-pill-btn"
+                onClick={handleCommitSession}
+                aria-label="Xong, đính kèm ảnh vào ô nhập đề bài"
+              >
+                <span>Xong</span>
+                <IconCheck size={15} />
+              </button>
+            </>
+          ) : (
+            <>
+              {undoState && (
+                <button
+                  type="button"
+                  id="btn-photo-undo-delete"
+                  className="secondary-btn"
+                  onClick={handleUndoDelete}
+                >
+                  Hoàn tác xóa
+                </button>
+              )}
+              <button
+                type="button"
+                id="btn-photo-fit-mode"
+                className="secondary-btn"
+                data-fit-mode={fitMode}
+                onClick={toggleFitMode}
+                aria-label={
+                  fitMode === "contain"
+                    ? "Khung ngắm: Toàn khung. Bấm để đổi sang Tràn màn"
+                    : "Khung ngắm: Tràn màn. Bấm để đổi sang Toàn khung"
+                }
+                title="Đổi chế độ khung ngắm"
+              >
+                {fitMode === "contain" ? <IconFitContain size={16} /> : <IconFitCover size={16} />}
+                <span>{fitMode === "contain" ? "Toàn khung" : "Tràn màn"}</span>
+              </button>
+            </>
           )}
         </div>
       </div>

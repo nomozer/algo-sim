@@ -88,7 +88,7 @@ describe("PhotoFanStack (§6): 0 ảnh ẩn, 1 ảnh thẻ đơn, 2..5 ảnh x�
     }
   });
 
-  it("> 5 ảnh: giữ toàn bộ ảnh trong phiên nhưng quạt hiển thị tối đa 5 thẻ và có badge +N trên thẻ thứ 5", () => {
+  it("> 5 ảnh: giữ toàn bộ ảnh trong phiên nhưng quạt hiển thị tối đa 5 thẻ gần nhất và không vẽ badge +N hay số thứ tự đè lên thẻ", () => {
     const photos = Array.from({ length: 7 }, (_, i) => makeSessionPhoto(i));
     const html = renderToString(
       <PhotoFanStack photos={photos} isMobile={false} onOpenPhoto={noop} onOpenMobileTray={noop} />,
@@ -99,8 +99,9 @@ describe("PhotoFanStack (§6): 0 ảnh ẩn, 1 ảnh thẻ đơn, 2..5 ảnh x�
     expect(html).not.toContain('id="btn-photo-fan-card-2"');
     expect(html).toContain('id="btn-photo-fan-card-3"');
     expect(html).toContain('id="btn-photo-fan-card-7"');
-    expect(html).toContain('id="photo-fan-overflow-badge"');
-    expect(html).toContain("+<!-- -->2");
+    expect(html).not.toContain("photo-fan-overflow-badge");
+    expect(html).not.toContain("fan-card-order-badge");
+    expect(html).not.toContain("+2");
   });
 });
 
@@ -136,7 +137,7 @@ describe("PhotoCameraView & PhotoProblemDialog (§5, §7, §8): nút Xong cố �
       />,
     );
     expect(html).toContain('id="btn-photo-done"');
-    expect(html).toContain("<span>Xong</span></button>");
+    expect(html).toContain("<span>Xong</span>");
     expect(html).toContain('id="photo-fan-stack"');
     expect(html).not.toMatch(/Xong\s*\(\d+/i);
     expect(html).not.toMatch(/Dùng\s*\d+\s*ảnh/i);
