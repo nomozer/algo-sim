@@ -294,14 +294,14 @@ def _mo_ta_phang(p: TypedFactNextPayload) -> dict[str, dict[str, Any]]:
     import re
     from .registry import PlanningContract, _P1, chuan_hoa, descriptor_contracts
 
-    by_id = {d.described_id: d for d in getattr(p, "described_points", ())}
+    declared_leaf_by_id: dict[str, Any] = {}
     out: dict[str, dict[str, Any]] = {}
     for d in getattr(p, "described_points", ()):
         if any(is_described_ref(x) for x in d.point_operands()):
             if d.kind not in ("orthogonal_projection", "orthogonal_projection_line") or not is_described_ref(d.point):
                 raise TuChoi("BRIDGE_UNSUPPORTED_DESCRIBED_POINT", f"@{d.described_id}: điểm được mô tả qua một điểm được mô "
                              "tả khác chưa có chứng chỉ nguồn", (d.described_id,))
-            inner = by_id.get(d.point.strip()[1:])
+            inner = declared_leaf_by_id.get(d.point.strip()[1:])
             if inner is None or any(is_described_ref(x) for x in inner.point_operands()):
                 raise TuChoi("BRIDGE_UNSUPPORTED_DESCRIBED_POINT", f"@{d.described_id}: điểm được mô tả qua một điểm được mô "
                              "tả khác chưa có chứng chỉ nguồn", (d.described_id,))
@@ -324,6 +324,7 @@ def _mo_ta_phang(p: TypedFactNextPayload) -> dict[str, dict[str, Any]]:
                 "quote": d.quote,
             }
             continue
+        declared_leaf_by_id[d.described_id] = d
         labels = [x for k, shape in DESCRIBED_POINT_FIELDS[d.kind].items()
                   for x in ([getattr(d, k)] if shape == "pt" else getattr(d, k))]
         out[d.described_id] = {"point_kind": d.kind, "points": _refs(labels), "quote": d.quote}
