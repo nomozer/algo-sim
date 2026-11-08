@@ -400,3 +400,12 @@ export const IconFitCover = (p: IconProps) => (
     <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" />
   </Svg>
 );
+
+export const IconCameraOff = (p: IconProps) => (
+  <Svg {...p}>
+    <path d="M2 2l20 20" />
+    <path d="M7 7H4a2 2 0 00-2 2v9a2 2 0 002 2h16" />
+    <path d="M9.5 4h5L17 7h3a2 2 0 012 2v7.5" />
+    <path d="M14.12 14.12a3.5 3.5 0 01-4.24-4.24" />
+  </Svg>
+);

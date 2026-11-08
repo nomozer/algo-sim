@@ -470,7 +470,7 @@ html {
   overflow: hidden;
 }
 
-/* 1. Desktop Camera Dialog (576px) */
+/* 1. Desktop Camera Dialog (576px, or 432px compact when in Error State) */
 .axo-modal-dialog.photo-dialog.camera-dialog {
   width: min(92vw, 576px);
   max-width: 576px;
@@ -479,6 +479,12 @@ html {
   background: var(--surface);
   border: 1px solid var(--hairline);
   box-shadow: var(--shadow-elevated);
+}
+
+.axo-modal-dialog.photo-dialog.camera-dialog.is-error-dialog {
+  width: min(92vw, 436px);
+  max-width: 436px;
+  height: auto;
 }
 
 /* 2. Mobile / Tablet Fullscreen Dark Camera (#0b0c0e) */
@@ -719,7 +725,7 @@ html {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: 10px;
+  gap: 16px;
   justify-self: end;
   min-width: 0;
 }
@@ -1099,14 +1105,14 @@ html {
 }
 
 .fan-hover-bridge-base {
-  inset: -8px -4px -6px -10px;
+  inset: -10px 0 -4px -14px;
 }
 
 .fan-hover-bridge-arc {
-  left: -82px;
-  right: -54px;
-  top: -54px;
-  height: 54px;
+  left: -110px;
+  right: 8px;
+  top: -70px;
+  height: 66px;
 }
 
 .photo-fan-stack[data-fan-capable="true"] .fan-hover-bridge-base,
@@ -1421,12 +1427,12 @@ html {
   cursor: pointer;
 }
 
-/* ── Inline Close Confirmation (§11 — 3 Actions: Giữ ảnh, Bỏ ảnh mới, Tiếp tục chụp) ── */
+/* ── Compact Close Confirmation (§2–§4 — 2-Button Decision Row + Tertiary Cancel) ── */
 .cam-close-confirm-scrim {
   position: absolute;
   inset: 0;
   z-index: 45;
-  background: rgba(10, 12, 16, 0.62);
+  background: rgba(10, 12, 16, 0.48);
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
   display: flex;
@@ -1437,12 +1443,13 @@ html {
 
 .camera-fullscreen .cam-close-confirm-scrim {
   align-items: flex-end;
-  padding-bottom: calc(max(16px, var(--safe-bottom)) + 8px);
+  padding: 0;
+  background: rgba(8, 10, 14, 0.56);
 }
 
 .cam-close-confirm-card {
-  width: min(100%, 360px);
-  border-radius: 14px;
+  width: min(100%, 336px);
+  border-radius: 12px;
   background: var(--surface);
   color: var(--ink);
   border: 1px solid var(--hairline);
@@ -1454,20 +1461,27 @@ html {
 }
 
 .camera-fullscreen .cam-close-confirm-card {
-  background: #1a1d24;
+  width: 100%;
+  max-width: 520px;
+  margin: 0 auto;
+  background: #17191e;
   color: #ffffff;
-  border-color: rgba(255, 255, 255, 0.14);
+  border: 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 18px 18px 0 0;
+  padding: 16px 16px calc(max(16px, var(--safe-bottom)) + 6px);
 }
 
 .cam-close-confirm-title {
   margin: 0;
-  font-size: 14.5px;
+  font-size: 15px;
   font-weight: 600;
+  letter-spacing: -0.01em;
 }
 
 .cam-close-confirm-sub {
-  margin: -4px 0 0;
-  font-size: 12.5px;
+  margin: -6px 0 0;
+  font-size: 13px;
   color: var(--ink-secondary);
   line-height: 1.45;
 }
@@ -1479,13 +1493,26 @@ html {
 .cam-close-confirm-actions {
   display: flex;
   flex-direction: column;
+  gap: 6px;
+  margin-top: 2px;
+}
+
+.cam-close-confirm-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 8px;
 }
 
+@media (max-width: 310px) {
+  .cam-close-confirm-row {
+    grid-template-columns: 1fr;
+  }
+}
+
 .confirm-btn {
-  min-height: 42px;
-  padding: 0 14px;
-  border-radius: 10px;
+  min-height: 38px;
+  padding: 0 12px;
+  border-radius: 8px;
   font: inherit;
   font-size: 13px;
   font-weight: 600;
@@ -1493,13 +1520,21 @@ html {
   align-items: center;
   justify-content: center;
   gap: 6px;
+  white-space: nowrap;
   cursor: pointer;
+  transition: background-color 120ms ease, border-color 120ms ease, color 120ms ease;
+}
+
+.camera-fullscreen .confirm-btn {
+  min-height: 44px;
+  border-radius: 10px;
+  font-size: 13.5px;
 }
 
 .confirm-btn.keep {
-  border: 0;
+  border: 1px solid transparent;
   background: var(--primary);
-  color: #ffffff;
+  color: var(--on-primary);
 }
 
 .confirm-btn.keep:hover {
@@ -1507,37 +1542,61 @@ html {
 }
 
 .confirm-btn.discard {
-  border: 1px solid rgba(180, 35, 24, 0.25);
-  background: #fef3f2;
+  border: 1px solid var(--hairline);
+  background: var(--canvas-soft);
   color: #b42318;
+  font-weight: 500;
+}
+
+.confirm-btn.discard:hover {
+  border-color: rgba(180, 35, 24, 0.28);
+  background: #fef3f2;
 }
 
 .camera-fullscreen .confirm-btn.discard {
-  border-color: rgba(253, 162, 155, 0.28);
-  background: rgba(180, 35, 24, 0.22);
+  border-color: rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.08);
   color: #fda29b;
 }
 
+.camera-fullscreen .confirm-btn.discard:hover {
+  background: rgba(253, 162, 155, 0.14);
+}
+
 .confirm-btn.cancel {
-  border: 1px solid var(--hairline);
-  background: var(--surface);
+  min-height: 34px;
+  border: 1px solid transparent;
+  background: transparent;
   color: var(--ink-secondary);
+  font-size: 12.5px;
+  font-weight: 500;
+}
+
+.confirm-btn.cancel:hover {
+  background: var(--canvas-soft);
+  color: var(--ink);
 }
 
 .camera-fullscreen .confirm-btn.cancel {
-  border-color: rgba(255, 255, 255, 0.16);
-  background: rgba(255, 255, 255, 0.08);
+  min-height: 44px;
+  border-color: transparent;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.camera-fullscreen .confirm-btn.cancel:hover {
+  background: rgba(255, 255, 255, 0.06);
   color: #ffffff;
 }
 
-/* ── Camera Error States (§15) ───────────────────────────────────────────── */
+/* ── Camera Error States (§5–§7 — Clean Non-Repetitive Title + Description) ── */
 .mobile-error-screen {
   position: relative;
   width: 100%;
   height: 100%;
-  background: #111317;
+  background: #0b0c0e;
   color: #ffffff;
-  padding: calc(max(12px, var(--safe-top)) + 2px) 20px calc(max(20px, var(--safe-bottom)) + 6px);
+  padding: calc(max(10px, var(--safe-top)) + 2px) 20px calc(max(20px, var(--safe-bottom)) + 6px);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -1546,17 +1605,17 @@ html {
 .mobile-error-card {
   margin: auto;
   width: 100%;
-  max-width: 332px;
+  max-width: 320px;
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
 }
 
 .error-icon-circle {
-  width: 48px;
-  height: 48px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   display: inline-flex;
   align-items: center;
@@ -1565,34 +1624,37 @@ html {
 }
 
 .mobile-error-card .error-icon-circle {
-  background: rgba(255, 255, 255, 0.09);
+  background: rgba(255, 255, 255, 0.08);
   border: 1px solid rgba(255, 255, 255, 0.14);
   color: rgba(255, 255, 255, 0.88);
 }
 
 .mobile-error-title {
   margin: 0;
-  font-size: 17px;
+  font-size: 16.5px;
   font-weight: 600;
   letter-spacing: -0.01em;
+  line-height: 1.3;
 }
 
-.mobile-error-desc {
+.mobile-error-desc,
+.photo-error .mobile-error-desc {
   margin: 0;
-  font-size: 13.5px;
+  font-size: 13px;
   line-height: 1.5;
-  color: rgba(255, 255, 255, 0.74);
+  color: rgba(255, 255, 255, 0.72);
   background: transparent;
   border: 0;
+  border-radius: 0;
   padding: 0;
 }
 
 .mobile-error-actions {
   width: 100%;
-  margin-top: 8px;
+  margin-top: 10px;
   display: flex;
   flex-direction: column;
-  gap: 9px;
+  gap: 8px;
 }
 
 .mobile-error-primary {
@@ -1601,31 +1663,46 @@ html {
   border-radius: var(--rounded-full);
   border: 0;
   background: var(--primary);
-  color: #ffffff;
+  color: var(--on-primary);
   font: inherit;
   font-size: 14px;
   font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
   cursor: pointer;
 }
 
+.mobile-error-primary:hover {
+  background: var(--primary-active);
+}
+
 .mobile-error-secondary {
-  min-height: 46px;
+  min-height: 44px;
   width: 100%;
   border-radius: var(--rounded-full);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.07);
   color: #ffffff;
   font: inherit;
   font-size: 13.5px;
   font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
+}
+
+.mobile-error-secondary:hover {
+  background: rgba(255, 255, 255, 0.12);
 }
 
 .desktop-error-body {
   padding: 18px 18px 16px;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 16px;
 }
 
 .desktop-error-lead {
@@ -1634,9 +1711,15 @@ html {
   gap: 12px;
 }
 
+.desktop-error-copy {
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
 .desktop-error-lead .error-icon-circle {
-  width: 40px;
-  height: 40px;
+  width: 38px;
+  height: 38px;
+  margin-bottom: 0;
   flex-shrink: 0;
   background: var(--canvas-soft);
   border: 1px solid var(--hairline);
@@ -1645,18 +1728,21 @@ html {
 
 .desktop-error-title {
   margin: 0 0 4px;
-  font-size: 15px;
+  font-size: 14.5px;
   font-weight: 600;
+  line-height: 1.35;
   color: var(--ink);
 }
 
-.desktop-error-desc {
+.desktop-error-desc,
+.photo-error .desktop-error-desc {
   margin: 0;
   font-size: 13px;
   color: var(--ink-secondary);
   line-height: 1.5;
   background: transparent;
   border: 0;
+  border-radius: 0;
   padding: 0;
 }
 
@@ -1665,7 +1751,6 @@ html {
   align-items: center;
   justify-content: flex-end;
   gap: 8px;
-  padding-top: 4px;
 }
 
 /* ── High-Res Lightbox Photo Viewer (§10) ────────────────────────────────── */

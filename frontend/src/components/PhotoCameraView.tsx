@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
   IconCamera,
+  IconCameraOff,
   IconCheck,
   IconClose,
   IconFitContain,
@@ -21,12 +22,26 @@ import { PhotoFanStack, type CapturedSessionPhoto } from "./PhotoFanStack";
  * - Mobile/tablet (<= 820px hoặc cao <= 560px): toàn màn hình nền tối `#0b0c0e`, mặc định `Toàn khung` (`contain`)
  *   và có tùy chọn `Tràn màn` (`cover`), nút chụp tròn trắng chính giữa phía dưới, chụp liên tiếp nhiều ảnh.
  * - Desktop: hộp thoại sáng gọn 576px, nút chụp vòng nhẫn mực + đĩa tròn giữa, Photo Fan Stack xòe mượt khi hover/focus,
- *   nút `Xong` cố định không lặp số lượng ảnh.
+ *   nút `Xong` cố định không lặp số lượng ảnh và không bị chồng lấn bởi Fan Stack.
  * - Ảnh chụp luôn lấy từ khung cảm biến đầy đủ (`videoWidth × videoHeight`), tạo thumbnail riêng cho Fan Stack
  *   và giữ nguyên `File` gốc cùng `fullUrl` cho Photo Viewer (Zoom 100%–300%, Pan, Prev/Next, Chụp lại, Xóa + Hoàn tác 5s).
  */
 
 export type CameraSupport = { ok: true } | { ok: false; message: string };
+
+export type CameraErrorCode =
+  | "permission_denied"
+  | "not_found"
+  | "unavailable"
+  | "unsupported"
+  | "unknown";
+
+export interface CameraErrorInfo {
+  code: CameraErrorCode;
+  title: string;
+  description: string;
+  canRetry: boolean;
+}
 
 export interface CameraDeviceSignals {
   userAgentDataMobile?: boolean;
@@ -66,6 +81,79 @@ export function cameraSupport(env: {
   return { ok: true };
 }
 
+export function classifySupportError(env: {
+  isSecureContext?: boolean;
+  hasGetUserMedia: boolean;
+}): CameraErrorInfo | null {
+  if (env.isSecureContext === false) {
+    return {
+      code: "unsupported",
+      title: "Cần kết nối bảo mật (HTTPS)",
+      description:
+        "Trình duyệt chỉ cho phép mở camera trực tiếp trên kết nối HTTPS hoặc localhost. Hãy chọn ảnh đề bài có sẵn từ thiết bị.",
+      canRetry: false,
+    };
+  }
+  if (!env.hasGetUserMedia) {
+    return {
+      code: "unsupported",
+      title: "Trình duyệt không hỗ trợ chụp trực tiếp",
+      description:
+        "Trình duyệt hiện tại không cung cấp quyền truy cập camera trực tiếp. Hãy chọn ảnh đề bài có sẵn từ thiết bị.",
+      canRetry: false,
+    };
+  }
+  return null;
+}
+
+/**
+ * Phân loại lỗi camera thành 5 nhóm rõ ràng, tiêu đề và mô tả không lặp ý (§5–§7):
+ * 1. `permission_denied`  2. `not_found`  3. `unavailable`  4. `unsupported`  5. `unknown`.
+ */
+export function classifyCameraError(err: unknown): CameraErrorInfo {
+  const name = (err as { name?: string } | null)?.name ?? "";
+  switch (name) {
+    case "NotAllowedError":
+    case "PermissionDeniedError":
+    case "SecurityError":
+      return {
+        code: "permission_denied",
+        title: "Chưa có quyền truy cập máy ảnh",
+        description:
+          "Hãy cho phép quyền sử dụng camera trên trình duyệt rồi thử lại, hoặc chọn ảnh có sẵn.",
+        canRetry: true,
+      };
+    case "NotFoundError":
+    case "DevicesNotFoundError":
+      return {
+        code: "not_found",
+        title: "Không tìm thấy máy ảnh",
+        description:
+          "Không phát hiện thiết bị ghi hình trên máy này. Hãy chọn ảnh đề bài có sẵn từ thiết bị.",
+        canRetry: false,
+      };
+    case "NotReadableError":
+    case "TrackStartError":
+    case "OverconstrainedError":
+    case "AbortError":
+      return {
+        code: "unavailable",
+        title: "Không thể mở máy ảnh",
+        description:
+          "Không nhận được tín hiệu từ camera. Hãy đóng ứng dụng khác đang dùng camera rồi thử lại, hoặc chọn ảnh có sẵn.",
+        canRetry: true,
+      };
+    default:
+      return {
+        code: "unknown",
+        title: "Không thể mở máy ảnh",
+        description:
+          "Kiểm tra kết nối thiết bị hoặc quyền truy cập camera, hoặc chọn ảnh đề bài có sẵn.",
+        canRetry: true,
+      };
+  }
+}
+
 /**
  * Thông báo lỗi máy ảnh ngắn, trung tính, phân biệt rõ 4 nhóm trạng thái (§7):
  * 1. Từ chối quyền  2. Không tìm thấy camera  3. Thiết bị không khả dụng  4. Lỗi chưa xác định.
@@ -91,15 +179,15 @@ export function cameraErrorMessage(err: unknown): string {
 
 export function cameraErrorTitle(errMessage: string): string {
   if (/Không tìm thấy máy ảnh/i.test(errMessage)) {
-    return "Không tìm thấy máy ảnh.";
+    return "Không tìm thấy máy ảnh";
   }
-  if (/không khả dụng/i.test(errMessage)) {
-    return "Máy ảnh tạm thời không khả dụng.";
+  if (/từ chối|quyền/i.test(errMessage)) {
+    return "Chưa có quyền truy cập máy ảnh";
   }
   if (/không hỗ trợ/i.test(errMessage)) {
-    return "Trình duyệt không hỗ trợ chụp trực tiếp.";
+    return "Trình duyệt không hỗ trợ chụp trực tiếp";
   }
-  return "Không mở được máy ảnh.";
+  return "Không thể mở máy ảnh";
 }
 
 /** Nhận diện thiết bị di động theo tín hiệu năng lực thiết bị + UA, không phụ thuộc riêng bề rộng cửa sổ. */
@@ -199,6 +287,14 @@ export function browserCameraSupport(): CameraSupport {
   });
 }
 
+function browserSupportErrorInfo(): CameraErrorInfo | null {
+  const md = typeof navigator !== "undefined" ? navigator.mediaDevices : undefined;
+  return classifySupportError({
+    isSecureContext: typeof window !== "undefined" ? window.isSecureContext : undefined,
+    hasGetUserMedia: typeof md?.getUserMedia === "function",
+  });
+}
+
 function stopStream(stream: MediaStream | null) {
   stream?.getTracks().forEach((t) => t.stop());
 }
@@ -261,6 +357,7 @@ export interface PhotoCameraViewProps {
   onPhotosChange?(next: CapturedSessionPhoto[]): void;
   onScreenModeChange?(screen: "camera" | "viewer"): void;
   onMobileModeChange?(isMobile: boolean): void;
+  onErrorStateChange?(hasError: boolean): void;
 }
 
 interface DeletedPhotoUndoState {
@@ -272,12 +369,12 @@ export function PhotoCameraView({
   onCapture,
   onCaptureBatch,
   onPickFile,
-  onNativeCamera,
   onRequestClose,
   photos: controlledPhotos,
   onPhotosChange,
   onScreenModeChange,
   onMobileModeChange,
+  onErrorStateChange,
 }: PhotoCameraViewProps) {
   const [mobile, setMobile] = useState(detectMobileCameraPreferred);
   const [target, setTarget] = useState<CameraTarget>(() => initialCameraTarget(mobile));
@@ -287,7 +384,7 @@ export function PhotoCameraView({
   const [activeDeviceId, setActiveDeviceId] = useState("");
   const [ready, setReady] = useState(false);
   const [switching, setSwitching] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [errorInfo, setErrorInfo] = useState<CameraErrorInfo | null>(null);
   const [fitMode, setFitMode] = useState<CameraFitMode>("contain");
   const [shutterFlash, setShutterFlash] = useState(false);
   const [justShotPulse, setJustShotPulse] = useState(false);
@@ -329,8 +426,6 @@ export function PhotoCameraView({
   const streamRef = useRef<MediaStream | null>(null);
   const shotCounterRef = useRef(0);
 
-  const support = browserCameraSupport();
-
   const clearUndoTimer = useCallback(() => {
     if (undoTimerRef.current !== null) {
       window.clearTimeout(undoTimerRef.current);
@@ -359,6 +454,10 @@ export function PhotoCameraView({
   }, [mobile, onMobileModeChange]);
 
   useEffect(() => {
+    onErrorStateChange?.(Boolean(errorInfo));
+  }, [errorInfo, onErrorStateChange]);
+
+  useEffect(() => {
     if (typeof window === "undefined") return;
     const onResize = () => {
       const nextMobile = detectMobileCameraPreferred();
@@ -381,16 +480,16 @@ export function PhotoCameraView({
   }, [onScreenModeChange, viewerIndex]);
 
   useEffect(() => {
-    const check = browserCameraSupport();
-    if (!check.ok) {
-      setError(check.message);
+    const supportErr = browserSupportErrorInfo();
+    if (supportErr) {
+      setErrorInfo(supportErr);
       setReady(false);
       setSwitching(false);
       return;
     }
 
     let cancelled = false;
-    setError(null);
+    setErrorInfo(null);
     setReady(false);
 
     async function openCamera() {
@@ -403,7 +502,7 @@ export function PhotoCameraView({
         const fb = fallbackCameraConstraints(firstErr, target);
         if (!fb || cancelled) {
           if (!cancelled) {
-            setError(cameraErrorMessage(firstErr));
+            setErrorInfo(classifyCameraError(firstErr));
             setSwitching(false);
           }
           return;
@@ -412,7 +511,7 @@ export function PhotoCameraView({
           stream = await navigator.mediaDevices.getUserMedia(fb);
         } catch (secondErr) {
           if (!cancelled) {
-            setError(cameraErrorMessage(secondErr));
+            setErrorInfo(classifyCameraError(secondErr));
             setSwitching(false);
           }
           return;
@@ -466,15 +565,24 @@ export function PhotoCameraView({
     };
   }, [target, attempt, clearUndoTimer]);
 
-  // Khi quay về từ Viewer, gắn lại stream vào thẻ <video>
+  // Khi quay về từ Viewer hoặc hồi phục sau trạng thái lỗi (errorInfo -> null), gắn lại stream vào thẻ <video>
   useEffect(() => {
-    if (viewerIndex === null && videoRef.current && streamRef.current) {
-      if (videoRef.current.srcObject !== streamRef.current) {
-        videoRef.current.srcObject = streamRef.current;
-        void videoRef.current.play().catch(() => undefined);
+    const v = videoRef.current;
+    if (viewerIndex === null && errorInfo === null && v && streamRef.current) {
+      if (v.srcObject !== streamRef.current) {
+        v.srcObject = streamRef.current;
+        void v
+          .play()
+          .then(() => {
+            if (v.videoWidth > 0 && v.videoHeight > 0) {
+              setReady(true);
+              setStreamAspect(`${v.videoWidth} / ${v.videoHeight}`);
+            }
+          })
+          .catch(() => undefined);
       }
     }
-  }, [viewerIndex]);
+  }, [viewerIndex, errorInfo]);
 
   function switchCamera() {
     if (switching) return;
@@ -485,6 +593,8 @@ export function PhotoCameraView({
 
   function retryCamera() {
     releaseCurrentStream();
+    setErrorInfo(null);
+    setReady(false);
     setTarget(initialCameraTarget(mobile));
     setAttempt((n) => n + 1);
   }
@@ -492,11 +602,6 @@ export function PhotoCameraView({
   function handlePickFile() {
     releaseCurrentStream();
     onPickFile();
-  }
-
-  function handleNativeCamera() {
-    releaseCurrentStream();
-    onNativeCamera();
   }
 
   function toggleFitMode() {
@@ -526,7 +631,12 @@ export function PhotoCameraView({
         if (!blob) {
           canvas.width = 0;
           canvas.height = 0;
-          setError("Chưa ghi nhận được khung hình. Em thử lại hoặc chọn ảnh từ máy.");
+          setErrorInfo({
+            code: "unknown",
+            title: "Không thể chụp khung hình",
+            description: "Hãy thử chụp lại hoặc chọn ảnh đề bài có sẵn từ thiết bị.",
+            canRetry: true,
+          });
           return;
         }
         shotCounterRef.current += 1;
@@ -899,11 +1009,14 @@ export function PhotoCameraView({
   const safeTrayIdx = Math.max(0, Math.min(traySelectedIndex, Math.max(0, photos.length - 1)));
   const selectedTrayPhoto = photos[safeTrayIdx] ?? photos[photos.length - 1] ?? null;
 
-  /* ── 2. MOBILE & TABLET FULLSCREEN DARK CAMERA (§5, §6, §8) ─────────────── */
+  /* ── 2. MOBILE & TABLET FULLSCREEN DARK CAMERA (§5, §6, §7, §8) ─────────── */
   if (mobile) {
-    if (error) {
+    if (errorInfo) {
       return (
-        <div className="photo-camera photo-error mobile-error-screen">
+        <div
+          className="photo-camera photo-error mobile-error-screen"
+          data-error-code={errorInfo.code}
+        >
           <div className="cam-fs-top">
             <button
               type="button"
@@ -919,10 +1032,10 @@ export function PhotoCameraView({
 
           <div className="mobile-error-card" role="alert">
             <div className="error-icon-circle">
-              <IconCamera size={20} />
+              <IconCameraOff size={20} />
             </div>
-            <h2 className="mobile-error-title">{cameraErrorTitle(error)}</h2>
-            <p className="mobile-error-desc photo-alert">{error}</p>
+            <h2 className="mobile-error-title">{errorInfo.title}</h2>
+            <p className="mobile-error-desc photo-alert">{errorInfo.description}</p>
             <div className="mobile-error-actions">
               <button
                 type="button"
@@ -930,9 +1043,10 @@ export function PhotoCameraView({
                 className="mobile-error-primary"
                 onClick={handlePickFile}
               >
-                Chọn ảnh từ máy
+                <IconImage size={16} />
+                <span>Chọn ảnh</span>
               </button>
-              {support.ok && (
+              {errorInfo.canRetry && (
                 <button
                   type="button"
                   id="btn-photo-retry-camera"
@@ -942,14 +1056,6 @@ export function PhotoCameraView({
                   Thử lại
                 </button>
               )}
-              <button
-                type="button"
-                id="btn-photo-native-camera"
-                className="mobile-error-secondary"
-                onClick={handleNativeCamera}
-              >
-                Máy ảnh thiết bị
-              </button>
               {photos.length > 0 && (
                 <button
                   type="button"
@@ -1321,10 +1427,13 @@ export function PhotoCameraView({
     );
   }
 
-  /* ── 3. DESKTOP CAMERA DIALOG (§9) ──────────────────────────────────────── */
-  if (error) {
+  /* ── 3. DESKTOP CAMERA DIALOG (§6, §9) ──────────────────────────────────── */
+  if (errorInfo) {
     return (
-      <div className="photo-camera photo-error desktop-camera-root">
+      <div
+        className="photo-camera photo-error desktop-camera-root"
+        data-error-code={errorInfo.code}
+      >
         <div className="dialog-header">
           <div className="dialog-title-wrap">
             <span className="dialog-title" id="photo-dialog-title">
@@ -1345,15 +1454,15 @@ export function PhotoCameraView({
         <div className="desktop-error-body" role="alert">
           <div className="desktop-error-lead">
             <div className="error-icon-circle">
-              <IconCamera size={20} />
+              <IconCameraOff size={20} />
             </div>
-            <div>
-              <h3 className="desktop-error-title">{cameraErrorTitle(error)}</h3>
-              <p className="desktop-error-desc photo-alert">{error}</p>
+            <div className="desktop-error-copy">
+              <h3 className="desktop-error-title">{errorInfo.title}</h3>
+              <p className="desktop-error-desc photo-alert">{errorInfo.description}</p>
             </div>
           </div>
           <div className="desktop-error-actions">
-            {support.ok && (
+            {errorInfo.canRetry && (
               <button
                 type="button"
                 id="btn-photo-retry-camera"
@@ -1370,7 +1479,7 @@ export function PhotoCameraView({
               onClick={handlePickFile}
             >
               <IconImage size={16} />
-              <span>Chọn ảnh từ máy</span>
+              <span>Chọn ảnh</span>
             </button>
             {photos.length > 0 && (
               <button

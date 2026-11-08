@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
-import { IconCheck } from "./icons";
 import {
   detectMobileCameraPreferred,
   PhotoCameraView,
@@ -9,13 +8,15 @@ import {
 import type { CapturedSessionPhoto } from "./PhotoFanStack";
 
 /**
- * Hộp thoại chụp ảnh đề bài Camera-First & Photo Fan Stack (§4–§12):
+ * Hộp thoại chụp ảnh đề bài Camera-First & Photo Fan Stack (§2–§11):
  * - Mở thẳng khung ngắm máy ảnh (mobile/tablet: toàn màn hình nền tối `#0b0c0e` + nút chụp tròn trắng ở giữa dưới;
- *   desktop: hộp thoại sáng 576px gọn chuẩn DESIGN.md).
+ *   desktop: hộp thoại sáng 576px gọn chuẩn DESIGN.md, thu gọn khi ở trạng thái lỗi).
  * - Cho phép chụp liên tiếp nhiều ảnh trong cùng phiên, xem lại độ phân giải gốc trong Photo Viewer,
- *   và chỉ đính kèm vào Composer khi bấm `Xong` hoặc `Giữ ảnh` (0 lượt gọi AI khi bấm `Xong`).
- * - Tách biệt rõ hành vi `Đóng` (hiển thị hộp xác nhận nội tuyến 3 lựa chọn: `Giữ ảnh`, `Bỏ ảnh mới`, `Tiếp tục chụp`)
- *   và `Xong` (đính kèm toàn bộ ảnh phiên vào Composer).
+ *   và chỉ đính kèm vào Composer khi bấm `Xong` hoặc `Giữ ảnh và đóng` (0 lượt gọi AI khi bấm `Xong`).
+ * - Khi bấm `Đóng` lúc đã có ảnh mới:
+ *   + Desktop: hiển thị khung xác nhận nhỏ gọn trong phạm vi Camera Dialog với hàng 2 nút quyết định
+ *     (`Bỏ ảnh mới` | `Giữ ảnh và đóng`) và nút hủy `Tiếp tục chụp` bên dưới.
+ *   + Mobile: hiển thị bottom sheet nền tối đồng bộ Camera-First với touch target >= 44×44px.
  */
 export interface PhotoProblemDialogProps {
   open: boolean;
@@ -38,13 +39,17 @@ export function PhotoProblemDialog({
   onCapturedBatch,
 }: PhotoProblemDialogProps) {
   const dialogRef = useRef<HTMLDivElement>(null);
+  const confirmBarRef = useRef<HTMLDivElement>(null);
   const openerRef = useRef<Element | null>(null);
+  const committingRef = useRef(false);
+
   const [sessionPhotos, setSessionPhotos] = useState<CapturedSessionPhoto[]>([]);
   const sessionPhotosRef = useRef<CapturedSessionPhoto[]>(sessionPhotos);
   sessionPhotosRef.current = sessionPhotos;
 
   const [screenMode, setScreenMode] = useState<"camera" | "viewer">("camera");
   const [isMobileSurface, setIsMobileSurface] = useState(detectMobileCameraPreferred);
+  const [hasCameraError, setHasCameraError] = useState(false);
   const [confirmDiscardOpen, setConfirmDiscardOpen] = useState(false);
 
   const discardAndCleanupSession = useCallback(() => {
@@ -56,8 +61,10 @@ export function PhotoProblemDialog({
   }, []);
 
   useEffect(() => {
+    committingRef.current = false;
     if (!open) {
       discardAndCleanupSession();
+      setHasCameraError(false);
       return;
     }
     setIsMobileSurface(detectMobileCameraPreferred());
@@ -73,12 +80,31 @@ export function PhotoProblemDialog({
   }, [open, discardAndCleanupSession]);
 
   useEffect(() => {
+    if (!confirmDiscardOpen) return;
+    const t = window.setTimeout(() => {
+      const primaryBtn = confirmBarRef.current?.querySelector<HTMLElement>("#btn-photo-confirm-attach");
+      (primaryBtn ?? confirmBarRef.current)?.focus();
+    }, 0);
+    return () => window.clearTimeout(t);
+  }, [confirmDiscardOpen]);
+
+  useEffect(() => {
     return () => {
       sessionPhotosRef.current.forEach((p) => revokeSessionPhotoUrls(p));
     };
   }, []);
 
   if (!open) return null;
+
+  function dismissCloseConfirmation() {
+    setConfirmDiscardOpen(false);
+    window.setTimeout(() => {
+      const target =
+        dialogRef.current?.querySelector<HTMLElement>("#btn-photo-capture:not([disabled])") ??
+        dialogRef.current?.querySelector<HTMLElement>("#btn-photo-dialog-close");
+      target?.focus();
+    }, 0);
+  }
 
   function requestCloseDialog() {
     if (sessionPhotosRef.current.length > 0) {
@@ -90,11 +116,15 @@ export function PhotoProblemDialog({
   }
 
   function confirmDiscardSession() {
+    if (committingRef.current) return;
+    committingRef.current = true;
     discardAndCleanupSession();
     onClose();
   }
 
   function confirmAttachAndClose() {
+    if (committingRef.current) return;
+    committingRef.current = true;
     const current = sessionPhotosRef.current;
     const files = current.map((p) => p.file);
     current.forEach((p) => revokeSessionPhotoUrls(p));
@@ -113,13 +143,17 @@ export function PhotoProblemDialog({
   }
 
   function handleBatchCommitted(files: File[]) {
+    if (committingRef.current) return;
+    committingRef.current = true;
     setConfirmDiscardOpen(false);
     setSessionPhotos([]);
     sessionPhotosRef.current = [];
-    if (onCapturedBatch) {
-      onCapturedBatch(files);
-    } else {
-      files.forEach((f) => onCaptured(f));
+    if (files.length > 0) {
+      if (onCapturedBatch) {
+        onCapturedBatch(files);
+      } else {
+        files.forEach((f) => onCaptured(f));
+      }
     }
     onClose();
   }
@@ -128,14 +162,16 @@ export function PhotoProblemDialog({
     if (e.key === "Escape") {
       e.stopPropagation();
       if (confirmDiscardOpen) {
-        setConfirmDiscardOpen(false);
+        dismissCloseConfirmation();
         return;
       }
       requestCloseDialog();
       return;
     }
-    if (e.key !== "Tab" || !dialogRef.current) return;
-    const items = Array.from(dialogRef.current.querySelectorAll<HTMLElement>(FOCUSABLE));
+    if (e.key !== "Tab") return;
+    const scopeEl = confirmDiscardOpen ? confirmBarRef.current : dialogRef.current;
+    if (!scopeEl) return;
+    const items = Array.from(scopeEl.querySelectorAll<HTMLElement>(FOCUSABLE));
     if (items.length === 0) return;
     const first = items[0]!;
     const last = items[items.length - 1]!;
@@ -153,7 +189,9 @@ export function PhotoProblemDialog({
       ? "axo-modal-dialog photo-dialog is-viewer-dialog"
       : isMobileSurface
         ? "axo-modal-dialog photo-dialog camera-fullscreen dark-surface"
-        : "axo-modal-dialog photo-dialog camera-dialog";
+        : hasCameraError
+          ? "axo-modal-dialog photo-dialog camera-dialog is-error-dialog"
+          : "axo-modal-dialog photo-dialog camera-dialog";
 
   return (
     <div
@@ -199,51 +237,55 @@ export function PhotoProblemDialog({
             }}
             onScreenModeChange={setScreenMode}
             onMobileModeChange={setIsMobileSurface}
+            onErrorStateChange={setHasCameraError}
           />
         </div>
 
         {confirmDiscardOpen && (
           <div
             className="cam-close-confirm-scrim"
-            onClick={() => setConfirmDiscardOpen(false)}
+            onClick={dismissCloseConfirmation}
           >
             <div
+              ref={confirmBarRef}
               id="photo-close-confirm-bar"
               className="cam-close-confirm-card photo-close-confirm-bar"
               role="alertdialog"
               aria-modal="true"
-              aria-label="Xác nhận trước khi đóng máy ảnh"
+              aria-labelledby="cam-close-confirm-heading"
+              aria-describedby="cam-close-confirm-desc"
               onClick={(e) => e.stopPropagation()}
             >
-              <p className="cam-close-confirm-title">
-                Giữ ảnh vừa chụp trước khi đóng?
+              <p id="cam-close-confirm-heading" className="cam-close-confirm-title">
+                Đóng máy ảnh?
               </p>
-              <p className="cam-close-confirm-sub">
-                Chọn giữ để đưa ảnh vào ô nhập đề bài, hoặc bỏ ảnh mới chụp trong phiên này.
+              <p id="cam-close-confirm-desc" className="cam-close-confirm-sub">
+                Bạn muốn giữ các ảnh vừa chụp không?
               </p>
               <div className="cam-close-confirm-actions photo-close-confirm-actions">
-                <button
-                  type="button"
-                  id="btn-photo-confirm-attach"
-                  className="confirm-btn keep"
-                  onClick={confirmAttachAndClose}
-                >
-                  <IconCheck size={15} />
-                  <span>Giữ ảnh</span>
-                </button>
-                <button
-                  type="button"
-                  id="btn-photo-confirm-discard"
-                  className="confirm-btn discard"
-                  onClick={confirmDiscardSession}
-                >
-                  Bỏ ảnh mới
-                </button>
+                <div className="cam-close-confirm-row">
+                  <button
+                    type="button"
+                    id="btn-photo-confirm-discard"
+                    className="confirm-btn discard"
+                    onClick={confirmDiscardSession}
+                  >
+                    Bỏ ảnh mới
+                  </button>
+                  <button
+                    type="button"
+                    id="btn-photo-confirm-attach"
+                    className="confirm-btn keep"
+                    onClick={confirmAttachAndClose}
+                  >
+                    Giữ ảnh và đóng
+                  </button>
+                </div>
                 <button
                   type="button"
                   id="btn-photo-confirm-keep"
                   className="confirm-btn cancel"
-                  onClick={() => setConfirmDiscardOpen(false)}
+                  onClick={dismissCloseConfirmation}
                 >
                   Tiếp tục chụp
                 </button>
