@@ -3,8 +3,8 @@
 > **Run ID:** `hybrid-production-composition`
 > **Branch:** `feat/hybrid-production-composition`
 > **Base Commit (Verified Phase 0 Candidate):** `ad311e043` (`feat/hybrid-backend-capabilities`)
-> **Product Commit:** `73d055025` (`73d055025aa58cfb3d14be42e7f21e26a3eb9fa0`)
-> **Measured System:** `so_file = 106` hashed entries (`105` unique files: `100` in `backend/app` + `5` in `frontend/src/simulations/domains/semantic`), `tree_hash = 8213236916b27d8519805d41150e9e44f1b86161b39f0877aca1c64bb7bb17f2`, `CACHE_VERSION = 132` (unchanged)
+> **Product Commit:** `93b0dfcef` (`93b0dfceffc70246f12ed43e6388faaf27b5cecb`)
+> **Measured System:** `so_file = 106` hashed entries (`105` unique files: `100` in `backend/app` + `5` in `frontend/src/simulations/domains/semantic`), `tree_hash = 93f69bdd2ebe7a1092acef466579f23c0626a7cd2bc6b9d24b9e840bb212d4a9`, `CACHE_VERSION = 132` (unchanged)
 > **Phase 0 Verdict:** `PREVIOUS_CANDIDATE_VERIFIED`
 > **Phase 1 Verdict:** `PRODUCTION_DYNAMIC_COMPOSITION_VERIFIED`
 > **Live Provider Calls:** `0` (`ALLOW_LIVE_AI=0`)

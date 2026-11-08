@@ -8,7 +8,7 @@
   "provider_calls": 0,
   "commits": [
     {
-      "sha": "73d055025",
+      "sha": "93b0dfcef",
       "role": "product & test: production dynamic function composition (_EffectResolver composed step search_generated provenance, intermediate reuse across goals, bounded depth-2 projection over descriptor point_tree in typed_fact_next_bridge.py, recursive effect-chain Source Gate & Exact Kernel verification) + 11 composition & ablation tests"
     }
   ],
@@ -19,7 +19,7 @@
     "backend_app_files": 100,
     "frontend_semantic_files": 5,
     "duplicate_explicit_path": "frontend/src/simulations/domains/semantic/semantic_program.schema.json",
-    "measured_system_tree_hash": "8213236916b27d8519805d41150e9e44f1b86161b39f0877aca1c64bb7bb17f2"
+    "measured_system_tree_hash": "93f69bdd2ebe7a1092acef466579f23c0626a7cd2bc6b9d24b9e840bb212d4a9"
   },
   "registry_inventory": {
     "total_registered_functions": 49,
