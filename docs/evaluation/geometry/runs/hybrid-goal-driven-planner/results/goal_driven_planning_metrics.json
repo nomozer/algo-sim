@@ -1,0 +1,996 @@
+{
+  "schema": "goal-driven-planner-generalization-metrics/1",
+  "before_baseline_candidate": {
+    "case_count": 10,
+    "planner_cpu_ms": {
+      "p50": 1.733,
+      "p95": 3.302,
+      "max": 3.302
+    },
+    "kernel_cpu_ms": {
+      "p50": 37.331,
+      "p95": 196.094,
+      "max": 196.094
+    },
+    "route_cold_ms": {
+      "p50": 154.898,
+      "p95": 303.231,
+      "max": 303.231
+    },
+    "route_warm_ms": {
+      "p50": 30.733,
+      "p95": 64.344,
+      "max": 64.344
+    },
+    "peak_memory_kib_max": 820.59,
+    "cases": [
+      {
+        "id": "Phase0.1-in-plane-projection",
+        "family": "Phase 0.1 (In-Plane Projection)",
+        "status": "REFUSED",
+        "reason_code": null,
+        "answers": {},
+        "classification": null,
+        "explored_states": 0,
+        "candidate_evaluations": 0,
+        "candidate_count": 0,
+        "pruned_nodes": 0,
+        "rejection_reasons": {},
+        "selected_plan": [],
+        "plan_cost": 0,
+        "reused_intermediates": 0,
+        "search_generated_steps": 0,
+        "registered_decomposition_steps": 0,
+        "source_defined_steps": 0,
+        "search_depth": 0,
+        "plan_length": 0,
+        "planner_cpu_ms": 0.412,
+        "kernel_cpu_ms": 0.0,
+        "route_cold_ms": 11.965,
+        "route_warm_ms": 3.042,
+        "peak_memory_kib": 52.37,
+        "plan_calls": [],
+        "kernel_ok": false
+      },
+      {
+        "id": "A1-goal-only-point-line-distance",
+        "family": "Family A (Level 3 Goal-Only Foot)",
+        "status": "SERVED",
+        "reason_code": null,
+        "answers": {
+          "q1": "6√13/13"
+        },
+        "classification": "REGISTERED_DECOMPOSITION",
+        "explored_states": 5,
+        "candidate_evaluations": 2,
+        "candidate_count": 2,
+        "pruned_nodes": 0,
+        "rejection_reasons": {},
+        "selected_plan": [],
+        "plan_cost": 0,
+        "reused_intermediates": 0,
+        "search_generated_steps": [],
+        "registered_decomposition_steps": [
+          "q1_aux"
+        ],
+        "source_defined_steps": [],
+        "search_depth": 2,
+        "plan_length": 6,
+        "planner_cpu_ms": 2.937,
+        "kernel_cpu_ms": 196.094,
+        "route_cold_ms": 128.292,
+        "route_warm_ms": 26.193,
+        "peak_memory_kib": 461.24,
+        "plan_calls": [
+          "pyramid",
+          "regular_polygon",
+          "perpendicular_line_plane",
+          "segment_length",
+          "orthogonal_projection_line",
+          "ask_length"
+        ],
+        "kernel_ok": true
+      },
+      {
+        "id": "A2-goal-only-intersection-line-distance",
+        "family": "Family A (Level 3 2-Step Line+Foot)",
+        "status": "SERVED",
+        "reason_code": null,
+        "answers": {
+          "q1": "3"
+        },
+        "classification": "REGISTERED_DECOMPOSITION",
+        "explored_states": 7,
+        "candidate_evaluations": 3,
+        "candidate_count": 3,
+        "pruned_nodes": 0,
+        "rejection_reasons": {},
+        "selected_plan": [],
+        "plan_cost": 0,
+        "reused_intermediates": 1,
+        "search_generated_steps": [],
+        "registered_decomposition_steps": [
+          "q1_aux"
+        ],
+        "source_defined_steps": [],
+        "search_depth": 3,
+        "plan_length": 7,
+        "planner_cpu_ms": 2.413,
+        "kernel_cpu_ms": 39.623,
+        "route_cold_ms": 128.78,
+        "route_warm_ms": 18.566,
+        "peak_memory_kib": 257.51,
+        "plan_calls": [
+          "pyramid",
+          "regular_polygon",
+          "perpendicular_line_plane",
+          "segment_length",
+          "intersection_line",
+          "orthogonal_projection_line",
+          "ask_length"
+        ],
+        "kernel_ok": true
+      },
+      {
+        "id": "A3-goal-only-constrained-plane-section",
+        "family": "Family A (Level 3 Plane+Section)",
+        "status": "SERVED",
+        "reason_code": null,
+        "answers": {
+          "q1": "7√2/8"
+        },
+        "classification": "REGISTERED_DECOMPOSITION",
+        "explored_states": 0,
+        "candidate_evaluations": 0,
+        "candidate_count": 0,
+        "pruned_nodes": 0,
+        "rejection_reasons": {},
+        "selected_plan": [],
+        "plan_cost": 0,
+        "reused_intermediates": 0,
+        "search_generated_steps": [],
+        "registered_decomposition_steps": [
+          "sec1_normal1",
+          "sec1_witness1"
+        ],
+        "source_defined_steps": [],
+        "search_depth": 0,
+        "plan_length": 10,
+        "planner_cpu_ms": 1.172,
+        "kernel_cpu_ms": 42.528,
+        "route_cold_ms": 300.292,
+        "route_warm_ms": 57.127,
+        "peak_memory_kib": 745.69,
+        "plan_calls": [
+          "pyramid",
+          "regular_polygon",
+          "perpendicular_line_plane",
+          "segment_length",
+          "midpoint",
+          "midpoint",
+          "orthogonal_projection",
+          "translate_point",
+          "section",
+          "ask_section_area"
+        ],
+        "kernel_ok": true
+      },
+      {
+        "id": "B1-competing-perpline-orthocenter",
+        "family": "Family B (Competing PerpLine Plans)",
+        "status": "SERVED",
+        "reason_code": null,
+        "answers": {
+          "q1": "2"
+        },
+        "classification": "REGISTERED_DECOMPOSITION",
+        "explored_states": 24,
+        "candidate_evaluations": 17,
+        "candidate_count": 17,
+        "pruned_nodes": 6,
+        "rejection_reasons": {},
+        "selected_plan": [],
+        "plan_cost": 0,
+        "reused_intermediates": 0,
+        "search_generated_steps": [],
+        "registered_decomposition_steps": [
+          "q1_aux",
+          "q1_aux2",
+          "q1_aux3"
+        ],
+        "source_defined_steps": [],
+        "search_depth": 4,
+        "plan_length": 8,
+        "planner_cpu_ms": 3.302,
+        "kernel_cpu_ms": 14.758,
+        "route_cold_ms": 133.377,
+        "route_warm_ms": 25.709,
+        "peak_memory_kib": 505.3,
+        "plan_calls": [
+          "pyramid",
+          "regular_polygon",
+          "perpendicular_line_plane",
+          "segment_length",
+          "orthogonal_projection_line",
+          "orthogonal_projection_line",
+          "intersect_line_line",
+          "ask_length"
+        ],
+        "kernel_ok": true
+      },
+      {
+        "id": "B2-competing-perpline-circumcenter",
+        "family": "Family B (Precondition Pruning)",
+        "status": "SERVED",
+        "reason_code": null,
+        "answers": {
+          "q1": "√3"
+        },
+        "classification": "REGISTERED_DECOMPOSITION",
+        "explored_states": 24,
+        "candidate_evaluations": 20,
+        "candidate_count": 20,
+        "pruned_nodes": 9,
+        "rejection_reasons": {},
+        "selected_plan": [],
+        "plan_cost": 0,
+        "reused_intermediates": 0,
+        "search_generated_steps": [],
+        "registered_decomposition_steps": [
+          "q1_aux",
+          "q1_aux2",
+          "q1_aux3",
+          "q1_aux4",
+          "q1_aux5",
+          "q1_aux6",
+          "q1_aux7"
+        ],
+        "source_defined_steps": [],
+        "search_depth": 4,
+        "plan_length": 12,
+        "planner_cpu_ms": 2.963,
+        "kernel_cpu_ms": 17.869,
+        "route_cold_ms": 176.419,
+        "route_warm_ms": 35.274,
+        "peak_memory_kib": 721.89,
+        "plan_calls": [
+          "pyramid",
+          "regular_polygon",
+          "perpendicular_line_plane",
+          "segment_length",
+          "midpoint",
+          "orthogonal_projection_line",
+          "translate_point",
+          "midpoint",
+          "orthogonal_projection_line",
+          "translate_point",
+          "intersect_line_line",
+          "ask_length"
+        ],
+        "kernel_ok": true
+      },
+      {
+        "id": "B3a-competing-normal-premise-plane-equiv",
+        "family": "Family B (Competing Normal Premise Cost 0)",
+        "status": "SERVED",
+        "reason_code": null,
+        "answers": {
+          "q1": "3/2"
+        },
+        "classification": "REGISTERED_DECOMPOSITION",
+        "explored_states": 0,
+        "candidate_evaluations": 0,
+        "candidate_count": 0,
+        "pruned_nodes": 0,
+        "rejection_reasons": {},
+        "selected_plan": [],
+        "plan_cost": 0,
+        "reused_intermediates": 0,
+        "search_generated_steps": [],
+        "registered_decomposition_steps": [
+          "sec1_normal1",
+          "sec1_witness1"
+        ],
+        "source_defined_steps": [],
+        "search_depth": 0,
+        "plan_length": 10,
+        "planner_cpu_ms": 0.938,
+        "kernel_cpu_ms": 35.04,
+        "route_cold_ms": 296.869,
+        "route_warm_ms": 57.093,
+        "peak_memory_kib": 780.16,
+        "plan_calls": [
+          "pyramid",
+          "regular_polygon",
+          "perpendicular_line_plane",
+          "segment_length",
+          "midpoint",
+          "midpoint",
+          "orthogonal_projection",
+          "translate_point",
+          "section",
+          "ask_section_area"
+        ],
+        "kernel_ok": true
+      },
+      {
+        "id": "B3b-competing-normal-reuses-existing-projection",
+        "family": "Family B (Competing Normal Reuse Cost 0)",
+        "status": "SERVED",
+        "reason_code": null,
+        "answers": {
+          "q1": "7√2/8"
+        },
+        "classification": "REGISTERED_DECOMPOSITION",
+        "explored_states": 0,
+        "candidate_evaluations": 0,
+        "candidate_count": 0,
+        "pruned_nodes": 0,
+        "rejection_reasons": {},
+        "selected_plan": [],
+        "plan_cost": 0,
+        "reused_intermediates": 0,
+        "search_generated_steps": [],
+        "registered_decomposition_steps": [
+          "sec1_normal1",
+          "sec1_witness1"
+        ],
+        "source_defined_steps": [],
+        "search_depth": 0,
+        "plan_length": 11,
+        "planner_cpu_ms": 1.021,
+        "kernel_cpu_ms": 40.499,
+        "route_cold_ms": 303.231,
+        "route_warm_ms": 64.344,
+        "peak_memory_kib": 820.59,
+        "plan_calls": [
+          "pyramid",
+          "regular_polygon",
+          "perpendicular_line_plane",
+          "segment_length",
+          "midpoint",
+          "midpoint",
+          "orthogonal_projection",
+          "orthogonal_projection",
+          "translate_point",
+          "section",
+          "ask_section_area"
+        ],
+        "kernel_ok": true
+      },
+      {
+        "id": "D-shared-intermediates-three-goals",
+        "family": "Family D (Shared Intermediates Across 3 Goals)",
+        "status": "SERVED",
+        "reason_code": null,
+        "answers": {
+          "q3": "√5",
+          "q1": "4/3",
+          "q2": "2/3"
+        },
+        "classification": "DISCOVERED_FUNCTION_COMPOSITION",
+        "explored_states": 15,
+        "candidate_evaluations": 7,
+        "candidate_count": 7,
+        "pruned_nodes": 0,
+        "rejection_reasons": {},
+        "selected_plan": [],
+        "plan_cost": 0,
+        "reused_intermediates": 6,
+        "search_generated_steps": [
+          "q1_aux2"
+        ],
+        "registered_decomposition_steps": [
+          "q2_aux"
+        ],
+        "source_defined_steps": [
+          "q1_aux"
+        ],
+        "search_depth": 3,
+        "plan_length": 10,
+        "planner_cpu_ms": 2.294,
+        "kernel_cpu_ms": 32.031,
+        "route_cold_ms": 255.876,
+        "route_warm_ms": 50.992,
+        "peak_memory_kib": 660.84,
+        "plan_calls": [
+          "pyramid",
+          "regular_polygon",
+          "perpendicular_line_plane",
+          "segment_length",
+          "centroid",
+          "orthogonal_projection",
+          "orthogonal_projection_line",
+          "ask_distance_point_plane",
+          "ask_length",
+          "ask_area"
+        ],
+        "kernel_ok": true
+      },
+      {
+        "id": "E9-degenerate-coinciding-projection-segment",
+        "family": "Family E (Degenerate Segment Refusal)",
+        "status": "REFUSED",
+        "reason_code": null,
+        "answers": {},
+        "classification": null,
+        "explored_states": 0,
+        "candidate_evaluations": 0,
+        "candidate_count": 0,
+        "pruned_nodes": 0,
+        "rejection_reasons": {},
+        "selected_plan": [],
+        "plan_cost": 0,
+        "reused_intermediates": 0,
+        "search_generated_steps": 0,
+        "registered_decomposition_steps": 0,
+        "source_defined_steps": 0,
+        "search_depth": 0,
+        "plan_length": 0,
+        "planner_cpu_ms": 0.155,
+        "kernel_cpu_ms": 0.0,
+        "route_cold_ms": 13.758,
+        "route_warm_ms": 2.883,
+        "peak_memory_kib": 36.31,
+        "plan_calls": [],
+        "kernel_ok": false
+      }
+    ]
+  },
+  "after_goal_driven_candidate": {
+    "case_count": 10,
+    "planner_cpu_ms": {
+      "p50": 1.185,
+      "p95": 4.383,
+      "max": 4.383
+    },
+    "kernel_cpu_ms": {
+      "p50": 30.732,
+      "p95": 209.21,
+      "max": 209.21
+    },
+    "route_cold_ms": {
+      "p50": 185.786,
+      "p95": 370.572,
+      "max": 370.572
+    },
+    "route_warm_ms": {
+      "p50": 33.848,
+      "p95": 61.395,
+      "max": 61.395
+    },
+    "peak_memory_kib_max": 774.56,
+    "cases": [
+      {
+        "id": "Phase0.1-in-plane-projection",
+        "family": "Phase 0.1 (In-Plane Projection)",
+        "status": "SERVED",
+        "reason_code": null,
+        "answers": {
+          "q1": "√2/3",
+          "q2": "2√14/3"
+        },
+        "classification": "DISCOVERED_FUNCTION_COMPOSITION",
+        "explored_states": 11,
+        "candidate_evaluations": 5,
+        "candidate_count": 5,
+        "pruned_nodes": 0,
+        "rejection_reasons": [],
+        "selected_plan": [
+          "pyramid",
+          "regular_polygon",
+          "perpendicular_line_plane",
+          "segment_length",
+          "centroid",
+          "orthogonal_projection",
+          "ask_distance_point_plane",
+          "ask_length"
+        ],
+        "plan_cost": 2,
+        "reused_intermediates": 2,
+        "search_generated_steps": [
+          "q1_aux2"
+        ],
+        "registered_decomposition_steps": [],
+        "source_defined_steps": [
+          "q1_aux"
+        ],
+        "search_depth": 3,
+        "plan_length": 8,
+        "planner_cpu_ms": 4.383,
+        "kernel_cpu_ms": 209.21,
+        "route_cold_ms": 193.583,
+        "route_warm_ms": 34.749,
+        "peak_memory_kib": 625.69,
+        "plan_calls": [
+          "pyramid",
+          "regular_polygon",
+          "perpendicular_line_plane",
+          "segment_length",
+          "centroid",
+          "orthogonal_projection",
+          "ask_distance_point_plane",
+          "ask_length"
+        ],
+        "kernel_ok": true
+      },
+      {
+        "id": "A1-goal-only-point-line-distance",
+        "family": "Family A (Level 3 Goal-Only Foot)",
+        "status": "SERVED",
+        "reason_code": null,
+        "answers": {
+          "q1": "6√13/13"
+        },
+        "classification": "REGISTERED_DECOMPOSITION",
+        "explored_states": 5,
+        "candidate_evaluations": 2,
+        "candidate_count": 2,
+        "pruned_nodes": 0,
+        "rejection_reasons": [],
+        "selected_plan": [
+          "pyramid",
+          "regular_polygon",
+          "perpendicular_line_plane",
+          "segment_length",
+          "orthogonal_projection_line",
+          "ask_length"
+        ],
+        "plan_cost": 1,
+        "reused_intermediates": 0,
+        "search_generated_steps": [],
+        "registered_decomposition_steps": [
+          "q1_aux"
+        ],
+        "source_defined_steps": [],
+        "search_depth": 2,
+        "plan_length": 6,
+        "planner_cpu_ms": 0.924,
+        "kernel_cpu_ms": 16.822,
+        "route_cold_ms": 128.943,
+        "route_warm_ms": 26.134,
+        "peak_memory_kib": 346.49,
+        "plan_calls": [
+          "pyramid",
+          "regular_polygon",
+          "perpendicular_line_plane",
+          "segment_length",
+          "orthogonal_projection_line",
+          "ask_length"
+        ],
+        "kernel_ok": true
+      },
+      {
+        "id": "A2-goal-only-intersection-line-distance",
+        "family": "Family A (Level 3 2-Step Line+Foot)",
+        "status": "SERVED",
+        "reason_code": null,
+        "answers": {
+          "q1": "3"
+        },
+        "classification": "REGISTERED_DECOMPOSITION",
+        "explored_states": 7,
+        "candidate_evaluations": 3,
+        "candidate_count": 3,
+        "pruned_nodes": 0,
+        "rejection_reasons": [],
+        "selected_plan": [
+          "pyramid",
+          "regular_polygon",
+          "perpendicular_line_plane",
+          "segment_length",
+          "intersection_line",
+          "orthogonal_projection_line",
+          "ask_length"
+        ],
+        "plan_cost": 1,
+        "reused_intermediates": 1,
+        "search_generated_steps": [],
+        "registered_decomposition_steps": [
+          "q1_aux"
+        ],
+        "source_defined_steps": [],
+        "search_depth": 3,
+        "plan_length": 7,
+        "planner_cpu_ms": 1.228,
+        "kernel_cpu_ms": 24.995,
+        "route_cold_ms": 110.225,
+        "route_warm_ms": 21.035,
+        "peak_memory_kib": 249.37,
+        "plan_calls": [
+          "pyramid",
+          "regular_polygon",
+          "perpendicular_line_plane",
+          "segment_length",
+          "intersection_line",
+          "orthogonal_projection_line",
+          "ask_length"
+        ],
+        "kernel_ok": true
+      },
+      {
+        "id": "A3-goal-only-constrained-plane-section",
+        "family": "Family A (Level 3 Plane+Section)",
+        "status": "SERVED",
+        "reason_code": null,
+        "answers": {
+          "q1": "7√2/8"
+        },
+        "classification": "REGISTERED_DECOMPOSITION",
+        "explored_states": 0,
+        "candidate_evaluations": 0,
+        "candidate_count": 0,
+        "pruned_nodes": 3,
+        "rejection_reasons": [
+          "lies on the plane (solid structure)"
+        ],
+        "selected_plan": [
+          "pyramid",
+          "regular_polygon",
+          "perpendicular_line_plane",
+          "segment_length",
+          "midpoint",
+          "midpoint",
+          "orthogonal_projection",
+          "translate_point",
+          "section",
+          "ask_section_area"
+        ],
+        "plan_cost": 2,
+        "reused_intermediates": 0,
+        "search_generated_steps": [],
+        "registered_decomposition_steps": [
+          "sec1_normal1",
+          "sec1_witness1"
+        ],
+        "source_defined_steps": [],
+        "search_depth": 0,
+        "plan_length": 10,
+        "planner_cpu_ms": 1.074,
+        "kernel_cpu_ms": 54.257,
+        "route_cold_ms": 370.572,
+        "route_warm_ms": 60.734,
+        "peak_memory_kib": 762.85,
+        "plan_calls": [
+          "pyramid",
+          "regular_polygon",
+          "perpendicular_line_plane",
+          "segment_length",
+          "midpoint",
+          "midpoint",
+          "orthogonal_projection",
+          "translate_point",
+          "section",
+          "ask_section_area"
+        ],
+        "kernel_ok": true
+      },
+      {
+        "id": "B1-competing-perpline-orthocenter",
+        "family": "Family B (Competing PerpLine Plans)",
+        "status": "SERVED",
+        "reason_code": null,
+        "answers": {
+          "q1": "2"
+        },
+        "classification": "REGISTERED_DECOMPOSITION",
+        "explored_states": 24,
+        "candidate_evaluations": 17,
+        "candidate_count": 17,
+        "pruned_nodes": 6,
+        "rejection_reasons": [
+          "precondition: the point lies on the line"
+        ],
+        "selected_plan": [
+          "pyramid",
+          "regular_polygon",
+          "perpendicular_line_plane",
+          "segment_length",
+          "orthogonal_projection_line",
+          "orthogonal_projection_line",
+          "intersect_line_line",
+          "ask_length"
+        ],
+        "plan_cost": 3,
+        "reused_intermediates": 0,
+        "search_generated_steps": [],
+        "registered_decomposition_steps": [
+          "q1_aux",
+          "q1_aux2",
+          "q1_aux3"
+        ],
+        "source_defined_steps": [],
+        "search_depth": 4,
+        "plan_length": 8,
+        "planner_cpu_ms": 2.032,
+        "kernel_cpu_ms": 14.606,
+        "route_cold_ms": 135.007,
+        "route_warm_ms": 25.479,
+        "peak_memory_kib": 487.67,
+        "plan_calls": [
+          "pyramid",
+          "regular_polygon",
+          "perpendicular_line_plane",
+          "segment_length",
+          "orthogonal_projection_line",
+          "orthogonal_projection_line",
+          "intersect_line_line",
+          "ask_length"
+        ],
+        "kernel_ok": true
+      },
+      {
+        "id": "B2-competing-perpline-circumcenter",
+        "family": "Family B (Precondition Pruning)",
+        "status": "SERVED",
+        "reason_code": null,
+        "answers": {
+          "q1": "√3"
+        },
+        "classification": "REGISTERED_DECOMPOSITION",
+        "explored_states": 24,
+        "candidate_evaluations": 20,
+        "candidate_count": 20,
+        "pruned_nodes": 9,
+        "rejection_reasons": [
+          "precondition: the point lies on the line"
+        ],
+        "selected_plan": [
+          "pyramid",
+          "regular_polygon",
+          "perpendicular_line_plane",
+          "segment_length",
+          "midpoint",
+          "orthogonal_projection_line",
+          "translate_point",
+          "midpoint",
+          "orthogonal_projection_line",
+          "translate_point",
+          "intersect_line_line",
+          "ask_length"
+        ],
+        "plan_cost": 7,
+        "reused_intermediates": 0,
+        "search_generated_steps": [],
+        "registered_decomposition_steps": [
+          "q1_aux",
+          "q1_aux2",
+          "q1_aux3",
+          "q1_aux4",
+          "q1_aux5",
+          "q1_aux6",
+          "q1_aux7"
+        ],
+        "source_defined_steps": [],
+        "search_depth": 4,
+        "plan_length": 12,
+        "planner_cpu_ms": 3.512,
+        "kernel_cpu_ms": 15.899,
+        "route_cold_ms": 177.988,
+        "route_warm_ms": 32.946,
+        "peak_memory_kib": 708.63,
+        "plan_calls": [
+          "pyramid",
+          "regular_polygon",
+          "perpendicular_line_plane",
+          "segment_length",
+          "midpoint",
+          "orthogonal_projection_line",
+          "translate_point",
+          "midpoint",
+          "orthogonal_projection_line",
+          "translate_point",
+          "intersect_line_line",
+          "ask_length"
+        ],
+        "kernel_ok": true
+      },
+      {
+        "id": "B3a-competing-normal-premise-plane-equiv",
+        "family": "Family B (Competing Normal Premise Cost 0)",
+        "status": "SERVED",
+        "reason_code": null,
+        "answers": {
+          "q1": "3/2"
+        },
+        "classification": "REGISTERED_DECOMPOSITION",
+        "explored_states": 0,
+        "candidate_evaluations": 0,
+        "candidate_count": 0,
+        "pruned_nodes": 4,
+        "rejection_reasons": [
+          "lies on the plane (solid structure)"
+        ],
+        "selected_plan": [
+          "pyramid",
+          "regular_polygon",
+          "perpendicular_line_plane",
+          "segment_length",
+          "midpoint",
+          "midpoint",
+          "translate_point",
+          "section",
+          "ask_section_area"
+        ],
+        "plan_cost": 1,
+        "reused_intermediates": 0,
+        "search_generated_steps": [],
+        "registered_decomposition_steps": [
+          "sec1_witness1"
+        ],
+        "source_defined_steps": [],
+        "search_depth": 0,
+        "plan_length": 9,
+        "planner_cpu_ms": 0.92,
+        "kernel_cpu_ms": 38.152,
+        "route_cold_ms": 269.199,
+        "route_warm_ms": 55.602,
+        "peak_memory_kib": 691.74,
+        "plan_calls": [
+          "pyramid",
+          "regular_polygon",
+          "perpendicular_line_plane",
+          "segment_length",
+          "midpoint",
+          "midpoint",
+          "translate_point",
+          "section",
+          "ask_section_area"
+        ],
+        "kernel_ok": true
+      },
+      {
+        "id": "B3b-competing-normal-reuses-existing-projection",
+        "family": "Family B (Competing Normal Reuse Cost 0)",
+        "status": "SERVED",
+        "reason_code": null,
+        "answers": {
+          "q1": "7√2/8"
+        },
+        "classification": "REGISTERED_DECOMPOSITION",
+        "explored_states": 0,
+        "candidate_evaluations": 0,
+        "candidate_count": 0,
+        "pruned_nodes": 3,
+        "rejection_reasons": [
+          "lies on the plane (solid structure)"
+        ],
+        "selected_plan": [
+          "pyramid",
+          "regular_polygon",
+          "perpendicular_line_plane",
+          "segment_length",
+          "midpoint",
+          "midpoint",
+          "orthogonal_projection",
+          "translate_point",
+          "section",
+          "ask_section_area"
+        ],
+        "plan_cost": 1,
+        "reused_intermediates": 1,
+        "search_generated_steps": [],
+        "registered_decomposition_steps": [
+          "sec1_witness1"
+        ],
+        "source_defined_steps": [],
+        "search_depth": 0,
+        "plan_length": 10,
+        "planner_cpu_ms": 0.868,
+        "kernel_cpu_ms": 42.813,
+        "route_cold_ms": 301.372,
+        "route_warm_ms": 61.395,
+        "peak_memory_kib": 774.56,
+        "plan_calls": [
+          "pyramid",
+          "regular_polygon",
+          "perpendicular_line_plane",
+          "segment_length",
+          "midpoint",
+          "midpoint",
+          "orthogonal_projection",
+          "translate_point",
+          "section",
+          "ask_section_area"
+        ],
+        "kernel_ok": true
+      },
+      {
+        "id": "D-shared-intermediates-three-goals",
+        "family": "Family D (Shared Intermediates Across 3 Goals)",
+        "status": "SERVED",
+        "reason_code": null,
+        "answers": {
+          "q3": "√5",
+          "q1": "4/3",
+          "q2": "2/3"
+        },
+        "classification": "DISCOVERED_FUNCTION_COMPOSITION",
+        "explored_states": 15,
+        "candidate_evaluations": 7,
+        "candidate_count": 7,
+        "pruned_nodes": 0,
+        "rejection_reasons": [],
+        "selected_plan": [
+          "pyramid",
+          "regular_polygon",
+          "perpendicular_line_plane",
+          "segment_length",
+          "centroid",
+          "orthogonal_projection",
+          "orthogonal_projection_line",
+          "ask_distance_point_plane",
+          "ask_length",
+          "ask_area"
+        ],
+        "plan_cost": 3,
+        "reused_intermediates": 6,
+        "search_generated_steps": [
+          "q1_aux2"
+        ],
+        "registered_decomposition_steps": [
+          "q2_aux"
+        ],
+        "source_defined_steps": [
+          "q1_aux"
+        ],
+        "search_depth": 3,
+        "plan_length": 10,
+        "planner_cpu_ms": 2.274,
+        "kernel_cpu_ms": 36.468,
+        "route_cold_ms": 261.757,
+        "route_warm_ms": 49.109,
+        "peak_memory_kib": 660.15,
+        "plan_calls": [
+          "pyramid",
+          "regular_polygon",
+          "perpendicular_line_plane",
+          "segment_length",
+          "centroid",
+          "orthogonal_projection",
+          "orthogonal_projection_line",
+          "ask_distance_point_plane",
+          "ask_length",
+          "ask_area"
+        ],
+        "kernel_ok": true
+      },
+      {
+        "id": "E9-degenerate-coinciding-projection-segment",
+        "family": "Family E (Degenerate Segment Refusal)",
+        "status": "REFUSED",
+        "reason_code": null,
+        "answers": {},
+        "classification": null,
+        "explored_states": 0,
+        "candidate_evaluations": 0,
+        "candidate_count": 0,
+        "pruned_nodes": 0,
+        "rejection_reasons": {},
+        "selected_plan": [],
+        "plan_cost": 0,
+        "reused_intermediates": 0,
+        "search_generated_steps": 0,
+        "registered_decomposition_steps": 0,
+        "source_defined_steps": 0,
+        "search_depth": 0,
+        "plan_length": 7,
+        "planner_cpu_ms": 1.142,
+        "kernel_cpu_ms": 15.449,
+        "route_cold_ms": 100.946,
+        "route_warm_ms": 20.345,
+        "peak_memory_kib": 162.78,
+        "plan_calls": [
+          "pyramid",
+          "regular_polygon",
+          "perpendicular_line_plane",
+          "segment_length",
+          "midpoint",
+          "orthogonal_projection",
+          "ask_length"
+        ],
+        "kernel_ok": false
+      }
+    ]
+  }
+}

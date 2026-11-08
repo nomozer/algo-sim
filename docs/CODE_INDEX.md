@@ -1,5 +1,12 @@
 # CODE_INDEX.md — Chỉ mục module + BỘ NHỚ KIẾN TRÚC
 
+## Goal-Driven Planner & Generalization Verification (run `hybrid-goal-driven-planner`, 2026-11-08)
+
+| Path | Owns | Locked by |
+|---|---|---|
+| `backend/app/simulation/geometry_functions/registry.py` · `backend/app/simulation/geometry_functions/planner.py` · `backend/app/simulation/geometry_functions/engine.py` | Removes the overly restrictive `set(out[0][2]) <= set(ref_pts)` filter from `parse_descriptor_inputs` so mathematically valid projections of in-plane points ($P \in Q \implies \operatorname{proj}_Q(P) = P$) are served; adds `free=("Z",)` and `requires=(("off_plane", "Z", "Q"),)` to `orthogonal_projection.planning_extra[0]` (`Normal(Q)` contract); extracts structural coplanarity closure `_diem_tren_mat` for `_EffectResolver._tren_mat` and `_phap_tuyen`; extends `_phap_tuyen`, `_mat_rang_buoc_dung_nguon`, and `_Dung._kiem_mat_rang_buoc` so `Normal(Q)` reuses `perpendicular_line_plane`/`altitude` premises on structurally equivalent planes and existing `projection` premises (`reused_projection=True`) at `cost = 0`; enforces `DEGENERATE_POINTS` refusal on 0-length measured segments in `_Dung._kc2_do_dai`; and exposes `candidate_count`, `pruned_nodes`, `rejection_reasons`, `selected_plan`, and `plan_cost` in `search_telemetry` | `backend/tests/geometry/test_goal_driven_planner_generalization.py` |
+| `docs/evaluation/geometry/runs/hybrid-goal-driven-planner/tools/measure_goal_driven_planning.py` · `docs/evaluation/geometry/runs/hybrid-goal-driven-planner/results/goal_driven_planning_metrics.json` · `docs/evaluation/geometry/runs/hybrid-goal-driven-planner/GOAL_DRIVEN_COMPOSITION_REPORT.md` | Before/after performance and search-complexity benchmark across Phase 0.1 and Families A–E (`10` benchmark cases, `18` test functions in `test_goal_driven_planner_generalization.py`, planner CPU `p50 = 1.185 ms`, kernel CPU `p50 = 30.732 ms`, warm route `p50 = 33.848 ms`, `0` live Gemini calls) | `backend/tests/geometry/test_goal_driven_planner_generalization.py` |
+
 ## Production Dynamic Function Composition (run `hybrid-production-composition`, 2026-11-08)
 
 | Path | Owns | Locked by |

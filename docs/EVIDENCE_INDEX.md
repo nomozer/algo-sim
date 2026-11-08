@@ -4,6 +4,19 @@
 Retired branch names now have local `refs/archive/repository-closure/` references and a verified private self-contained bundle.
 Existing evidence and historical reports below are unchanged; no research result is reinterpreted by this Git-state update.
 
+## WAVE_ID = HYBRID_GOAL_DRIVEN_PLANNER
+
+REPORT = docs/evaluation/geometry/runs/hybrid-goal-driven-planner/GOAL_DRIVEN_COMPOSITION_REPORT.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-goal-driven-planner/
+START_BASE = feat/hybrid-production-composition fb291cba3069fa9f5fa8d28893c064b4ec523ae7 (product 93b0dfcef; main = origin/main bb046fa22aceff47abe22aa783aa64fc65caee13)
+CODE_COMMIT = 6c961c884 (measured_system tree hash 2dcfff5328656264cb1df117874b8714cb2be7e5fe05e60ab233e2dc83fa1fca across so_file=106 hashed entries / 105 unique files; goal-driven planner & generalization fixes in registry.py, planner.py, engine.py + 18 diagnostic/ablation tests in test_goal_driven_planner_generalization.py; CACHE_VERSION 132 unchanged)
+CLASSIFICATION = OFFLINE_GOAL_DRIVEN_PLANNER_AND_ABLATION_VERIFICATION (branch feat/hybrid-goal-driven-planner, not merged, not pushed): Phase 0 verifies feat/hybrid-production-composition at fb291cba3 (PREVIOUS_CANDIDATE_VERIFIED), reconciles exact test counts (13,993 collected, 13,989 passed, 1 skipped, 3 deselected), and proves/fixes the false refusal on in-plane projections in parse_descriptor_inputs; Phase A & B verify Level 1/2/3 planning taxonomy, competing candidate evaluation, precondition pruning, cost-0 premise & projection reuse for Normal(Q), fail-closed DEGENERATE_POINTS on 0-length measured segments, and Section IX Ablation Tests 1–5 (8/18 baseline -> 18/18 PASS; planner CPU p50=1.185 ms, kernel CPU p50=30.732 ms, warm route p50=33.848 ms; GOAL_DRIVEN_COMPOSITION_VERIFIED; INDEPENDENT_H1_VALIDATION = NOT_MEASURED).
+PRODUCT_CHANGE = YES (backend only: registry.py, planner.py, engine.py)
+MODEL_REQUEST_COUNT = 0
+VERIFICATION = GOAL_DRIVEN_COMPOSITION_REPORT.md; run.json; results/goal_driven_planning_metrics.json; tools/measure_goal_driven_planning.py; backend/tests/geometry/test_goal_driven_planner_generalization.py
+CORRECTS = NONE
+CORRECTED_BY = NONE
+
 ## WAVE_ID = HYBRID_PRODUCTION_COMPOSITION
 
 REPORT = docs/evaluation/geometry/runs/hybrid-production-composition/PRODUCTION_DYNAMIC_COMPOSITION_REPORT.md

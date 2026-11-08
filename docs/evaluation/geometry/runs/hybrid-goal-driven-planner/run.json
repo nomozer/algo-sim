@@ -1,0 +1,51 @@
+{
+  "run_id": "hybrid-goal-driven-planner",
+  "date": "2026-11-08",
+  "branch": "feat/hybrid-goal-driven-planner",
+  "baseline": "fb291cba3069fa9f5fa8d28893c064b4ec523ae7 (feat/hybrid-production-composition verified candidate, product 93b0dfcef; main = origin/main = bb046fa22aceff47abe22aa783aa64fc65caee13)",
+  "merged": false,
+  "pushed": false,
+  "provider_calls": 0,
+  "commits": [
+    {
+      "sha": "6c961c884",
+      "role": "product & test: goal-driven planner & generalization verification (remove overly restrictive in-plane projection filter in parse_descriptor_inputs, add free=('Z',) and requires=(('off_plane','Z','Q'),) to orthogonal_projection Normal(Q) contract, structural coplanarity closure _diem_tren_mat in _EffectResolver._tren_mat and _phap_tuyen, cost-0 premise & projection reuse in _phap_tuyen/registry/engine, DEGENERATE_POINTS check in _Dung._kc2_do_dai, and candidate_count/pruned_nodes/rejection_reasons/selected_plan/plan_cost search telemetry) + 18 diagnostic & ablation tests"
+    }
+  ],
+  "candidate": {
+    "measured_system_paths_count": 3,
+    "measured_system_hashed_entries_so_file": 106,
+    "measured_system_unique_files": 105,
+    "backend_app_files": 100,
+    "frontend_semantic_files": 5,
+    "duplicate_explicit_path": "frontend/src/simulations/domains/semantic/semantic_program.schema.json",
+    "measured_system_tree_hash": "2dcfff5328656264cb1df117874b8714cb2be7e5fe05e60ab233e2dc83fa1fca"
+  },
+  "registry_inventory": {
+    "total_registered_functions": 49,
+    "provider_offered_true": 31,
+    "provider_offered_false": 18,
+    "auxiliary_only_true": 1,
+    "provider_functions_exposed": 30
+  },
+  "cache_version": {
+    "before": "132",
+    "after": "132",
+    "bumped": false,
+    "reason": "no prompt, schema, or provider surface change; changes affect only previously refused in-plane nested projections, degenerate 0-length measured segments, and cost-0 normal reuse on constrained sections"
+  },
+  "phase0_verdict": "PREVIOUS_CANDIDATE_VERIFIED",
+  "goal_driven_planner_verdict": "GOAL_DRIVEN_COMPOSITION_VERIFIED",
+  "measurement": {
+    "MEASUREMENT_CLASS": "OFFLINE_GOAL_DRIVEN_PLANNER_AND_ABLATION_VERIFICATION",
+    "HELD_OUT_CLAIM": "NONE (INDEPENDENT_H1_VALIDATION = NOT_MEASURED)",
+    "EVALUATOR_INDEPENDENCE": "NONE (same agent implemented and verified)",
+    "telemetry_receipt": "results/goal_driven_planning_metrics.json",
+    "families_verified": "Phase 0.1 (valid in-plane projection proj_Q(P)=P), Family A (A1 goal-only point-line foot, A2 goal-only intersection_line+foot, A3 constrained plane section), Family B (B1 orthocenter competing PerpLine plans, B2 circumcenter off_line pruning, B3a cost-0 premise normal on structurally equivalent plane, B3b cost-0 reuse of existing projection, B3c Normal(Q) contract precondition & structural _tren_mat), Family C (Level 1 vs Level 2 vs Level 3 taxonomy), Family D (shared intermediates across 3 goals), Family E (E1–E13 negative/degenerate/budget refusals), Section IX Ablation Tests 1–5",
+    "performance": "planner_cpu_p50_ms=1.185, planner_cpu_p95_ms=4.383, kernel_cpu_p50_ms=30.732, route_warm_p50_ms=33.848, route_warm_p95_ms=61.395, route_cold_p50_ms=185.786, peak_memory_max_kib=774.56"
+  },
+  "live": {
+    "status": "LIVE_CALLS_ZERO_BY_DIRECTIVE",
+    "intentional_provider_calls": 0
+  }
+}
