@@ -521,12 +521,17 @@ async def _prepare_single_attachment(
     selected_candidate_id: str | None = None,
     api_key: str | None = None,
     cache_version: str | None = None,
+    predecoded: tuple[bytes, Literal["image", "pdf", "docx"], str] | None = None,
+    prenormalized_image: NormalizedImage | None = None,
 ) -> UnifiedPrepareOutcome:
     """Xử lý chuẩn bị trên một tệp đính kèm đơn lẻ."""
     t0 = time.perf_counter()
-    raw = decode_attachment_base64(content)
+    if predecoded is not None:
+        raw, kind, actual_mime = predecoded
+    else:
+        raw = decode_attachment_base64(content)
+        kind, actual_mime = sniff_input_file_kind(raw, declared_mime, filename)
     raw_len = len(raw)
-    kind, actual_mime = sniff_input_file_kind(raw, declared_mime, filename)
     directive = parse_user_composer_instruction(user_text)
 
     # Nếu ứng viên đã có sẵn `problem_text` từ bước tách văn bản trước đó, vẫn chạy lại trên tệp để xác thực tất định
@@ -534,10 +539,13 @@ async def _prepare_single_attachment(
 
     # ── NHÁNH A: ẢNH ĐỀ BÀI ──────────────────────────────────────────────────
     if kind == "image":
-        try:
-            norm = normalize_image(raw, actual_mime)
-        except ImageRejected as err:
-            raise InputPrepareRejected(err.code, str(err)) from err
+        if prenormalized_image is not None:
+            norm = prenormalized_image
+        else:
+            try:
+                norm = normalize_image(raw, actual_mime)
+            except ImageRejected as err:
+                raise InputPrepareRejected(err.code, str(err)) from err
         return await _process_normalized_visual_page(
             norm,
             directive,
@@ -1272,6 +1280,7 @@ async def prepare_unified_input(
             selected_candidate_id=inner_sel,
             api_key=api_key,
             cache_version=cache_version,
+            predecoded=decoded_cache[only_id],
         )
         return _stamp_single_outcome(single_out, attachment_id=only_id, request_id=request_id)
 
@@ -1311,17 +1320,18 @@ async def prepare_unified_input(
             continue
 
         raw_bytes, kind, actual_mime = decoded_cache[aid]
+        prenorm_img: NormalizedImage | None = None
         if kind == "image":
             try:
-                norm = normalize_image(raw_bytes, actual_mime)
+                prenorm_img = normalize_image(raw_bytes, actual_mime)
             except ImageRejected as err:
                 raise InputPrepareRejected(err.code, str(err)) from err
-            if norm.sha256 in seen_image_hashes:
-                orig_id = seen_image_hashes[norm.sha256]
+            if prenorm_img.sha256 in seen_image_hashes:
+                orig_id = seen_image_hashes[prenorm_img.sha256]
                 duplicate_Target_map.setdefault(orig_id, []).append(aid)
                 deduplicated_attachment_ids.append(aid)
                 continue
-            seen_image_hashes[norm.sha256] = aid
+            seen_image_hashes[prenorm_img.sha256] = aid
 
         inner_sel_for_att = targeted_inner_id if aid == targeted_att_id else None
         out = await _prepare_single_attachment(
@@ -1332,6 +1342,8 @@ async def prepare_unified_input(
             selected_candidate_id=inner_sel_for_att,
             api_key=api_key,
             cache_version=cache_version,
+            predecoded=decoded_cache[aid],
+            prenormalized_image=prenorm_img,
         )
 
         m = out.metrics

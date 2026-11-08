@@ -671,18 +671,21 @@ def test_family_d_shared_intermediate_results_across_multiple_goals():
 
 def test_family_e9_projection_coinciding_with_source_point_degenerate_segment_refused():
     """Family E.9: When a point `M` already lies on plane `(ABCD)` (`M = midpoint(AB)`), its orthogonal projection
-    onto `(ABCD)` coincides with `M` (`H = M`). Asking for the length of the segment connecting that projection with `M`
-    (`ask_length` on `[H, M]`) forms a degenerate 0-length segment and MUST fail closed with `DEGENERATE_POINTS`."""
+    onto `(ABCD)` coincides with `M` (`H = M`).
+    1. Using the degenerate 0-length segment `[H, M]` where a geometric line/direction is required (`ask_angle_line_plane`)
+       MUST fail closed with `DEGENERATE_POINTS`.
+    2. Measuring the point-to-point distance / length between `H` and `M` (`ask_length` on `[H, M]`) evaluates to `"0"`,
+       consistent with the explicit-premise sequence (`Gọi H là hình chiếu... Tính độ dài HM`)."""
     base_text, premises = _pyramid_base_premises("2", "2")
     premises = [
         *premises,
         {"kind": "midpoint", "args": {"point": "M", "segment": ["A", "B"]}, "quote": "Gọi M là trung điểm của AB", "solid_id": "s1"},
     ]
-    q_quote = "Tính độ dài đoạn thẳng nối hình chiếu vuông góc của trung điểm của AB lên mặt phẳng (ABCD) với M"
-    text = base_text + "Gọi M là trung điểm của AB. " + q_quote + "."
-    payload = {
+    q_deg = "Tính góc giữa đoạn thẳng nối hình chiếu vuông góc của trung điểm của AB lên mặt phẳng (ABCD) với M và mặt phẳng (SBC)"
+    text_deg = base_text + "Gọi M là trung điểm của AB. " + q_deg + "."
+    payload_deg = {
         "schema_version": "typed-fact-next/2",
-        "problem_text": text,
+        "problem_text": text_deg,
         "length_unit": "1",
         "solids": [{"solid_id": "s1", "solid_type": "pyramid", "notation": "S.ABCD", "quote": "Cho hình chóp S.ABCD"}],
         "premises": premises,
@@ -693,12 +696,25 @@ def test_family_e9_projection_coinciding_with_source_point_degenerate_segment_re
         ],
         "simulation_goals": [{"goal_id": "sg1", "kind": "construct_object", "target_solid_id": "s1", "quote": "Cho hình chóp S.ABCD"}],
         "math_goals": [
-            {"goal_id": "q1", "kind": "measurement", "goal_type": "distance", "target": {"segment": ["@h1", "M"]}, "quote": q_quote, "solid_id": "s1"}
+            {"goal_id": "q1", "kind": "measurement", "goal_type": "angle", "target": {"line": ["@h1", "M"], "plane": ["S", "B", "C"]}, "quote": q_deg, "solid_id": "s1"}
         ],
     }
-    route, env, _answers, _receipt = _run(text, payload)
-    assert route["status"] == "REFUSED"
-    assert env.get("reason_code") == "DEGENERATE_POINTS"
+    route_deg, env_deg, _answers_deg, _receipt_deg = _run(text_deg, payload_deg)
+    assert route_deg["status"] == "REFUSED"
+    assert env_deg.get("reason_code") == "DEGENERATE_POINTS"
+
+    q_len = "Tính độ dài đoạn thẳng nối hình chiếu vuông góc của trung điểm của AB lên mặt phẳng (ABCD) với M"
+    text_len = base_text + "Gọi M là trung điểm của AB. " + q_len + "."
+    payload_len = {
+        **payload_deg,
+        "problem_text": text_len,
+        "math_goals": [
+            {"goal_id": "q1", "kind": "measurement", "goal_type": "distance", "target": {"segment": ["@h1", "M"]}, "quote": q_len, "solid_id": "s1"}
+        ],
+    }
+    route_len, env_len, answers_len, _ = _run(text_len, payload_len)
+    assert route_len["status"] == "SERVED", env_len.get("reason_code")
+    assert answers_len == {"q1": "0"}
 
 
 def test_family_e1_to_e8_and_e10_to_e13_negative_adversarial_matrix(monkeypatch):
@@ -1063,34 +1079,70 @@ def test_section_ix_test4_competing_plans_evaluation_and_selection():
 
 def test_section_ix_test5_metamorphic_renaming_and_scaling():
     """Section IX Test 5 — Metamorphic Geometry Testing:
-    1. Vertex renaming (`S.ABCD` -> `P.MNPQ` with `side=2, height=3`): plan structure (`selected_functions`, `plan_cost`,
-       `search_depth`) is identical and exact answers (`4/3` for plane distance, `2/3` for line distance) are invariant.
-    2. Scaling (`k = 3`, `side=6, height=9`): linear distances scale by `k = 3` (`4/3 -> 4`, `2/3 -> 2`) and triangle area
-       scales by `k^2 = 9` (`√5 -> 9√5`)."""
-    # 1. Renamed vertices P.MNPQ (side=2, height=3)
-    base_renamed, prem_renamed = _pyramid_base_premises("2", "3", verts=("P", "M", "N", "E", "F"))
-    q1_ren = "Tính khoảng cách từ hình chiếu vuông góc của trọng tâm của tam giác PNE lên mặt phẳng (MNEF) đến mặt phẳng (PMF)"
-    q2_ren = "Tính khoảng cách từ hình chiếu vuông góc của trọng tâm của tam giác PNE lên mặt phẳng (MNEF) đến đường thẳng MN"
-    t_ren = base_renamed + q1_ren + ". " + q2_ren + "."
+    1. Vertex renaming (`S.ABCD` -> `T.MNPQ` with `side=2, height=3`): plan structure (`selected_functions`, `plan_cost`,
+       `search_depth`) is identical to `S.ABCD` and exact answers (`4/3` for plane distance, `2/3` for line distance,
+       `√5` for triangle area) are invariant.
+    2. Scaling (`k = 3`, `side=6, height=9` on `S.ABCD`): plan structure (`selected_functions`, `plan_cost`, `search_depth`)
+       is identical, linear distances scale by `k = 3` (`4/3 -> 4`, `2/3 -> 2`), and triangle area scales by `k^2 = 9`
+       (`√5 -> 9√5`)."""
+    # 0. Baseline S.ABCD (side=2, height=3)
+    base_orig, prem_orig = _pyramid_base_premises("2", "3", verts=("S", "A", "B", "C", "D"))
+    q1_orig = "Tính khoảng cách từ hình chiếu vuông góc của trọng tâm của tam giác SBC lên mặt phẳng (ABCD) đến mặt phẳng (SAD)"
+    q2_orig = "Tính khoảng cách từ hình chiếu vuông góc của trọng tâm của tam giác SBC lên mặt phẳng (ABCD) đến đường thẳng AB"
+    q3_orig = "Tính diện tích tam giác tạo bởi hình chiếu vuông góc của trọng tâm của tam giác SBC lên mặt phẳng (ABCD), S và A"
+    t_orig = base_orig + q1_orig + ". " + q2_orig + ". " + q3_orig + "."
+    r_orig, env_orig, a_orig, _ = _run(t_orig, {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": t_orig,
+        "length_unit": "1",
+        "solids": [{"solid_id": "s1", "solid_type": "pyramid", "notation": "S.ABCD", "quote": "Cho hình chóp S.ABCD"}],
+        "premises": prem_orig,
+        "relations": [],
+        "described_points": [
+            {"described_id": "g1", "kind": "centroid", "polygon": ["S", "B", "C"], "quote": "trọng tâm của tam giác SBC"},
+            {"described_id": "h1", "kind": "orthogonal_projection", "point": "@g1", "plane": ["A", "B", "C", "D"], "quote": "hình chiếu vuông góc của trọng tâm của tam giác SBC lên mặt phẳng (ABCD)"},
+        ],
+        "simulation_goals": [{"goal_id": "sg1", "kind": "construct_object", "target_solid_id": "s1", "quote": "Cho hình chóp S.ABCD"}],
+        "math_goals": [
+            {"goal_id": "q1", "kind": "measurement", "goal_type": "distance", "target": {"point": "@h1", "plane": ["S", "A", "D"]}, "quote": q1_orig, "solid_id": "s1"},
+            {"goal_id": "q2", "kind": "measurement", "goal_type": "distance", "target": {"point": "@h1", "line": ["A", "B"]}, "quote": q2_orig, "solid_id": "s1"},
+            {"goal_id": "q3", "kind": "measurement", "goal_type": "area", "target": {"polygon": ["@h1", "S", "A"]}, "quote": q3_orig, "solid_id": "s1"},
+        ],
+    })
+    assert r_orig["status"] == "SERVED", env_orig.get("reason_code")
+    assert a_orig == {"q1": "4/3", "q2": "2/3", "q3": "√5"}
+
+    # 1. Renamed vertices T.MNPQ (side=2, height=3)
+    base_renamed, prem_renamed = _pyramid_base_premises("2", "3", verts=("T", "M", "N", "P", "Q"))
+    q1_ren = "Tính khoảng cách từ hình chiếu vuông góc của trọng tâm của tam giác TNP lên mặt phẳng (MNPQ) đến mặt phẳng (TMQ)"
+    q2_ren = "Tính khoảng cách từ hình chiếu vuông góc của trọng tâm của tam giác TNP lên mặt phẳng (MNPQ) đến đường thẳng MN"
+    q3_ren = "Tính diện tích tam giác tạo bởi hình chiếu vuông góc của trọng tâm của tam giác TNP lên mặt phẳng (MNPQ), T và M"
+    t_ren = base_renamed + q1_ren + ". " + q2_ren + ". " + q3_ren + "."
     r_ren, env_ren, a_ren, _ = _run(t_ren, {
         "schema_version": "typed-fact-next/2",
         "problem_text": t_ren,
         "length_unit": "1",
-        "solids": [{"solid_id": "s1", "solid_type": "pyramid", "notation": "P.MNEF", "quote": "Cho hình chóp P.MNEF"}],
+        "solids": [{"solid_id": "s1", "solid_type": "pyramid", "notation": "T.MNPQ", "quote": "Cho hình chóp T.MNPQ"}],
         "premises": prem_renamed,
         "relations": [],
         "described_points": [
-            {"described_id": "g1", "kind": "centroid", "polygon": ["P", "N", "E"], "quote": "trọng tâm của tam giác PNE"},
-            {"described_id": "h1", "kind": "orthogonal_projection", "point": "@g1", "plane": ["M", "N", "E", "F"], "quote": "hình chiếu vuông góc của trọng tâm của tam giác PNE lên mặt phẳng (MNEF)"},
+            {"described_id": "g1", "kind": "centroid", "polygon": ["T", "N", "P"], "quote": "trọng tâm của tam giác TNP"},
+            {"described_id": "h1", "kind": "orthogonal_projection", "point": "@g1", "plane": ["M", "N", "P", "Q"], "quote": "hình chiếu vuông góc của trọng tâm của tam giác TNP lên mặt phẳng (MNPQ)"},
         ],
-        "simulation_goals": [{"goal_id": "sg1", "kind": "construct_object", "target_solid_id": "s1", "quote": "Cho hình chóp P.MNEF"}],
+        "simulation_goals": [{"goal_id": "sg1", "kind": "construct_object", "target_solid_id": "s1", "quote": "Cho hình chóp T.MNPQ"}],
         "math_goals": [
-            {"goal_id": "q1", "kind": "measurement", "goal_type": "distance", "target": {"point": "@h1", "plane": ["P", "M", "F"]}, "quote": q1_ren, "solid_id": "s1"},
+            {"goal_id": "q1", "kind": "measurement", "goal_type": "distance", "target": {"point": "@h1", "plane": ["T", "M", "Q"]}, "quote": q1_ren, "solid_id": "s1"},
             {"goal_id": "q2", "kind": "measurement", "goal_type": "distance", "target": {"point": "@h1", "line": ["M", "N"]}, "quote": q2_ren, "solid_id": "s1"},
+            {"goal_id": "q3", "kind": "measurement", "goal_type": "area", "target": {"polygon": ["@h1", "T", "M"]}, "quote": q3_ren, "solid_id": "s1"},
         ],
     })
     assert r_ren["status"] == "SERVED", env_ren.get("reason_code")
-    assert a_ren == {"q1": "4/3", "q2": "2/3"}
+    assert a_ren == a_orig == {"q1": "4/3", "q2": "2/3", "q3": "√5"}
+    tel_orig = r_orig["planner"]["search_telemetry"]
+    tel_ren = r_ren["planner"]["search_telemetry"]
+    assert tel_ren["selected_functions"] == tel_orig["selected_functions"]
+    assert tel_ren["plan_cost"] == tel_orig["plan_cost"] == 3
+    assert tel_ren["search_depth"] == tel_orig["search_depth"] == 3
 
     # 2. Scaled by k = 3 (side=6, height=9) on S.ABCD
     base_scaled, prem_scaled = _pyramid_base_premises("6", "9")
@@ -1118,5 +1170,9 @@ def test_section_ix_test5_metamorphic_renaming_and_scaling():
     })
     assert r_sc["status"] == "SERVED", env_sc.get("reason_code")
     assert a_sc == {"q1": "4", "q2": "2", "q3": "9√5"}
+    tel_sc = r_sc["planner"]["search_telemetry"]
+    assert tel_sc["selected_functions"] == tel_orig["selected_functions"]
+    assert tel_sc["plan_cost"] == tel_orig["plan_cost"] == 3
+    assert tel_sc["search_depth"] == tel_orig["search_depth"] == 3
     assert r_ren["planner"]["search_telemetry"]["plan_cost"] == 3
     assert r_sc["planner"]["search_telemetry"]["plan_cost"] == 3

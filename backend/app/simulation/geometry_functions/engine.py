@@ -3094,8 +3094,6 @@ class _Dung:
 
     def _kc2_do_dai(self, d: dict) -> Fraction:
         w = self._vec(d["operand"]["label"], d["target"]["point"])
-        if self.g(w, w) == 0:
-            raise TuChoi("DEGENERATE_POINTS", f"{d.get('ask', '')}: đoạn thẳng suy biến (hai đầu mút trùng tọa độ)", (d.get("ask", ""),))
         return self.g(w, w)
 
     def _kc2_dien_tich(self, d: dict) -> Fraction:

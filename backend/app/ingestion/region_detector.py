@@ -106,6 +106,8 @@ class ImageQualityReport:
     is_low_light: bool
     is_blank_or_unreadable: bool
     enhanced_low_light: bool
+    has_shadow: bool = False
+    enhanced_shadow: bool = False
 
 
 @dataclass(frozen=True)
@@ -184,7 +186,7 @@ def _histogram_percentile(hist: list[int], total: int, pct: float) -> int:
 
 
 def assess_and_enhance_image(rgb: Image.Image) -> tuple[Image.Image, ImageQualityReport]:
-    """Đánh giá chất lượng sáng/nét và nâng sáng nhẹ khi ảnh chụp thiếu sáng."""
+    """Đánh giá chất lượng sáng/nét, cân bằng bóng đổ cục bộ và nâng sáng khi ảnh chụp thiếu sáng."""
     w, h = rgb.size
     sample = rgb
     if max(w, h) > 640:
@@ -194,19 +196,67 @@ def assess_and_enhance_image(rgb: Image.Image) -> tuple[Image.Image, ImageQualit
     hist = gray.histogram()
     total = sample.size[0] * sample.size[1]
     mean_luma = ImageStat.Stat(gray).mean[0] if total > 0 else 0.0
+    p1 = _histogram_percentile(hist, total, 0.005)
     p5 = _histogram_percentile(hist, total, 0.05)
     p95 = _histogram_percentile(hist, total, 0.95)
-    dyn = max(0, p95 - p5)
+    p99 = _histogram_percentile(hist, total, 0.995)
+    dyn = max(0, p95 - p5, p99 - p1)
     edges = gray.filter(ImageFilter.FIND_EDGES)
     edge_energy = ImageStat.Stat(edges).mean[0] if total > 0 else 0.0
 
-    is_blank = dyn < 12 and edge_energy < 1.8
-    is_low_light = (mean_luma < 108.0 or p95 < 175) and not is_blank
+    is_blank = (p95 - p5) < 12 and (p99 - p1) < 18 and edge_energy < 1.8
+
+    # Phát hiện bóng đổ không đều (uneven illumination / shadow) trên nền giấy trung tính ở vùng trung tâm.
+    has_shadow = False
+    enhanced_shadow = False
+    gw, gh = 80, 60
+    bg_v_bytes = b""
+    bg_s_bytes = b""
+    v_p90 = 240
+    if not is_blank and w >= 120 and h >= 120:
+        small_hsv = sample.resize((gw, gh), Image.Resampling.BILINEAR).convert("HSV")
+        _, s_ch, v_ch = small_hsv.split()
+        bg_v = v_ch.filter(ImageFilter.MaxFilter(5)).filter(ImageFilter.BoxBlur(2))
+        bg_s = s_ch.filter(ImageFilter.MinFilter(5)).filter(ImageFilter.BoxBlur(2))
+        bg_v_bytes = bg_v.tobytes()
+        bg_s_bytes = bg_s.tobytes()
+        central_paper_v: list[int] = []
+        x_min, x_max = gw // 5, (gw * 4) // 5
+        y_min, y_max = gh // 6, (gh * 5) // 6
+        for gy in range(y_min, y_max):
+            row_off = gy * gw
+            for gx in range(x_min, x_max):
+                idx = row_off + gx
+                if bg_s_bytes[idx] <= 68 and bg_v_bytes[idx] >= 65:
+                    central_paper_v.append(bg_v_bytes[idx])
+        if len(central_paper_v) >= (gw * gh) // 6:
+            central_paper_v.sort()
+            v_p10 = central_paper_v[len(central_paper_v) // 10]
+            v_p90 = central_paper_v[(len(central_paper_v) * 9) // 10]
+            has_shadow = v_p90 >= 170 and v_p10 <= 145 and (v_p90 - v_p10) >= 52
+
+    is_low_light = ((mean_luma < 108.0 or p95 < 175) and not is_blank) or has_shadow
 
     enhanced = False
     out_rgb = rgb
-    if is_low_light and dyn >= 14:
-        stretched = ImageOps.autocontrast(rgb, cutoff=(0.4, 0.4))
+    if has_shadow and bg_v_bytes and bg_s_bytes:
+        alpha_grid = bytearray(gw * gh)
+        target_v = float(max(210, v_p90))
+        for idx in range(gw * gh):
+            lv = bg_v_bytes[idx]
+            ls = bg_s_bytes[idx]
+            if ls <= 68 and 65 <= lv < v_p90:
+                gain = min(2.9, target_v / float(max(65, lv)))
+                alpha_grid[idx] = min(255, max(0, int(round(((gain - 1.0) / 2.0) * 255.0))))
+        alpha_small = Image.frombytes("L", (gw, gh), bytes(alpha_grid)).filter(ImageFilter.BoxBlur(2))
+        alpha_full = alpha_small.resize((w, h), Image.Resampling.BILINEAR)
+        alpha_rgb = Image.merge("RGB", (alpha_full, alpha_full, alpha_full))
+        delta = ImageChops.multiply(rgb, alpha_rgb)
+        out_rgb = ImageChops.add(rgb, ImageChops.add(delta, delta))
+        enhanced = True
+        enhanced_shadow = True
+    elif is_low_light and dyn >= 14:
+        stretched = ImageOps.autocontrast(rgb, cutoff=(0.2, 0.2))
         # Nâng gamma nhẹ (0.82) để kéo nền giấy tối lên sáng rõ mà giữ nguyên nét mực đậm.
         lut = [min(255, int(round(((i / 255.0) ** 0.82) * 255.0))) for i in range(256)]
         out_rgb = stretched.point(lut * 3)
@@ -221,6 +271,8 @@ def assess_and_enhance_image(rgb: Image.Image) -> tuple[Image.Image, ImageQualit
         is_low_light=is_low_light,
         is_blank_or_unreadable=is_blank,
         enhanced_low_light=enhanced,
+        has_shadow=has_shadow,
+        enhanced_shadow=enhanced_shadow,
     )
 
 
@@ -286,8 +338,12 @@ def detect_page_boundary(rgb: Image.Image) -> tuple[BoundingBox, bool]:
 
     # Tìm thành phần liên thông lớn nhất của mặt giấy để không lấy nhầm vật sáng lẻ ở góc bàn.
     paper_mask = bytearray(gw * gh)
+    shadow_paper_s = max(32, i_s_med + 20)
+    shadow_paper_v = max(72, b_v_med + 16)
     for idx in range(gw * gh):
-        if v_bytes[idx] >= v_thresh and s_bytes[idx] <= s_thresh:
+        if (v_bytes[idx] >= v_thresh and s_bytes[idx] <= s_thresh) or (
+            colored_desk and s_bytes[idx] <= shadow_paper_s and v_bytes[idx] >= shadow_paper_v
+        ):
             paper_mask[idx] = 1
 
     visited = bytearray(gw * gh)
@@ -828,7 +884,7 @@ def detect_problem_regions(
         else enhanced_rgb
     )
 
-    pre_blocks, _, _, _ = _segment_layout_blocks(working_rgb)
+    pre_blocks, pre_ink_mask, pre_sx, pre_sy = _segment_layout_blocks(working_rgb)
     has_text_for_skew = sum(b.ink_pixels for b in pre_blocks if b.kind == "text") >= 350
     if has_text_for_skew:
         working_rgb, skew_angle, deskew_applied = estimate_and_correct_skew(working_rgb)
@@ -844,12 +900,18 @@ def detect_problem_regions(
         if quality.enhanced_low_light
         else normalized
     )
-    # Trang làm việc (đã tách nền bàn học / xoay thẳng khi tin cậy).
-    page_work_norm = (
-        _encode_rgb_to_normalized(working_rgb, normalized)
-        if (quality.enhanced_low_light or desk_trimmed or deskew_applied)
-        else normalized
-    )
+    _page_work_norm_cache: NormalizedImage | None = None
+
+    def _get_page_work_norm() -> NormalizedImage:
+        nonlocal _page_work_norm_cache
+        if _page_work_norm_cache is None:
+            if not desk_trimmed and not deskew_applied:
+                _page_work_norm_cache = full_orig_norm
+            elif quality.enhanced_low_light or desk_trimmed or deskew_applied:
+                _page_work_norm_cache = _encode_rgb_to_normalized(working_rgb, normalized)
+            else:
+                _page_work_norm_cache = normalized
+        return _page_work_norm_cache
 
     def _to_orig_bbox(wbox: BoundingBox) -> BoundingBox:
         base_box = page_bbox if desk_trimmed else BoundingBox(0, 0, orig_w, orig_h)
@@ -873,14 +935,17 @@ def detect_problem_regions(
             )
         return wbox
 
-    blocks, ink_mask, sx, sy = _segment_layout_blocks(working_rgb)
+    if deskew_applied:
+        blocks, ink_mask, sx, sy = _segment_layout_blocks(working_rgb)
+    else:
+        blocks, ink_mask, sx, sy = pre_blocks, pre_ink_mask, pre_sx, pre_sy
     meaningful = [b for b in blocks if b.kind != "noise"]
     total_meaningful_ink = sum(b.ink_pixels for b in meaningful)
 
     if not meaningful or total_meaningful_ink <= 0:
         return RegionDetectionResult(
             full_image=full_orig_norm,
-            prepared_image=page_work_norm,
+            prepared_image=_get_page_work_norm(),
             quality=quality,
             page_bbox=page_bbox,
             desk_trimmed=desk_trimmed,
@@ -964,7 +1029,7 @@ def detect_problem_regions(
         any_fig = any(c.has_figure for c in candidates)
         return RegionDetectionResult(
             full_image=full_orig_norm,
-            prepared_image=page_work_norm,
+            prepared_image=_get_page_work_norm(),
             quality=quality,
             page_bbox=page_bbox,
             desk_trimmed=desk_trimmed,
@@ -1002,7 +1067,7 @@ def detect_problem_regions(
     ):
         return RegionDetectionResult(
             full_image=full_orig_norm,
-            prepared_image=page_work_norm,
+            prepared_image=_get_page_work_norm(),
             quality=quality,
             page_bbox=page_bbox,
             desk_trimmed=desk_trimmed,

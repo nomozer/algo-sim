@@ -289,11 +289,19 @@ export function describeComposerError(
   };
 }
 
+export function attachmentBatchSignature(
+  items: readonly ComposerAttachmentItem[],
+): string {
+  if (items.length === 0) return "";
+  return items.map((a) => `${a.id}:${a.name}:${a.size}`).join("|");
+}
+
 export interface RunComposerSubmitOptions {
   canSubmit: boolean;
   lockRef: { current: boolean };
   abortRef?: { current: AbortController | null };
   requestIdRef?: { current: string | null };
+  extractedBatchRef?: { current: string | null };
   problemText: string;
   attachment?: ComposerAttachmentItem | null;
   attachments?: ComposerAttachmentItem[];
@@ -322,6 +330,7 @@ export async function runComposerSubmit({
   lockRef,
   abortRef,
   requestIdRef,
+  extractedBatchRef,
   problemText,
   attachment = null,
   attachments,
@@ -356,12 +365,27 @@ export async function runComposerSubmit({
         ? [attachment]
         : [];
 
+  const batchSig = attachmentBatchSignature(targetAttachments);
+
   try {
     let finalProblemText = "";
 
     if (typeof overridePreparedText === "string") {
       finalProblemText = overridePreparedText.trim();
+      if (finalProblemText) {
+        store.setProblemText(finalProblemText);
+      }
+      if (extractedBatchRef && batchSig) {
+        extractedBatchRef.current = batchSig;
+      }
     } else if (targetAttachments.length === 0) {
+      finalProblemText = problemText.trim();
+    } else if (
+      extractedBatchRef?.current &&
+      extractedBatchRef.current === batchSig &&
+      !selectedCandidateId &&
+      problemText.trim().length > 0
+    ) {
       finalProblemText = problemText.trim();
     } else {
       const contents = await Promise.all(
@@ -424,6 +448,12 @@ export async function runComposerSubmit({
       }
 
       finalProblemText = prepared.problem_text.trim();
+      if (finalProblemText) {
+        store.setProblemText(finalProblemText);
+      }
+      if (extractedBatchRef && batchSig) {
+        extractedBatchRef.current = batchSig;
+      }
     }
 
     const result = await analyzeFn(
@@ -565,6 +595,7 @@ export function ProblemInput({
   const submittingRef = useRef(false);
   const analyzeAbortRef = useRef<AbortController | null>(null);
   const activePrepareRequestIdRef = useRef<string | null>(null);
+  const extractedBatchRef = useRef<string | null>(null);
   const allFilesListRef = useRef<HTMLDivElement>(null);
   const [filesOverflow, setFilesOverflow] = useState<{ left: boolean; right: boolean }>({
     left: false,
@@ -834,6 +865,7 @@ export function ProblemInput({
     }
 
     if (nextItems.length > 0) {
+      extractedBatchRef.current = null;
       dispatchAssist({ type: "reset" });
       setAttachments((prev) => {
         if (!replaceId) {
@@ -870,6 +902,7 @@ export function ProblemInput({
 
   function removeAttachment(id: string) {
     activePrepareRequestIdRef.current = null;
+    extractedBatchRef.current = null;
     dispatchAssist({ type: "reset" });
     setAttachments((prev) => {
       const target = prev.find((item) => item.id === id);
@@ -898,6 +931,7 @@ export function ProblemInput({
       lockRef: submittingRef,
       abortRef: analyzeAbortRef,
       requestIdRef: activePrepareRequestIdRef,
+      extractedBatchRef,
       problemText,
       attachment: readyAttachments[0] ?? null,
       attachments: readyAttachments,
