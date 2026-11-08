@@ -37,6 +37,7 @@ from app.ingestion.image import ImageRejected, NormalizedImage, normalize_image
 from app.ingestion.image_extraction import (
     FLAG_MESSAGES,
     REJECTION_MESSAGES,
+    _THAM_CHIEU_HINH,
     ExtractionResult,
     extract_problem_from_image,
 )
@@ -70,9 +71,10 @@ class UnifiedCandidateItem:
     has_figure: bool = False
     problem_text: str | None = None
     source_attachment_ids: tuple[str, ...] = ()
+    source_bbox: tuple[float, float, float, float] | None = None
 
     def to_dict(self) -> dict[str, Any]:
-        return {
+        out: dict[str, Any] = {
             "candidate_id": self.candidate_id,
             "label": self.label,
             "preview_snippet": self.preview_snippet,
@@ -82,6 +84,9 @@ class UnifiedCandidateItem:
             "problem_text": self.problem_text,
             "source_attachment_ids": list(self.source_attachment_ids),
         }
+        if self.source_bbox is not None:
+            out["source_bbox"] = list(self.source_bbox)
+        return out
 
 
 @dataclass(frozen=True)
@@ -130,19 +135,31 @@ def _require_vision_key(api_key: str | None) -> str:
     return api_key
 
 
-def _text_candidates_to_items(pool: list[TextProblemCandidate]) -> tuple[UnifiedCandidateItem, ...]:
-    return tuple(
-        UnifiedCandidateItem(
-            candidate_id=c.candidate_id,
-            label=c.label,
-            preview_snippet=c.preview_snippet,
-            preview_data_url=None,
-            page_number=c.page_number,
-            has_figure=c.has_figure,
-            problem_text=c.problem_text,
+def _text_candidates_to_items(
+    pool: list[TextProblemCandidate],
+    *,
+    parent_bbox: tuple[float, float, float, float] | None = None,
+) -> tuple[UnifiedCandidateItem, ...]:
+    n = max(1, len(pool))
+    bx, by, bw, bh = parent_bbox if parent_bbox is not None else (0.0, 0.0, 1.0, 1.0)
+    band_h = round(bh / n, 4)
+    items: list[UnifiedCandidateItem] = []
+    for idx, c in enumerate(pool):
+        y_start = round(by + idx * band_h, 4)
+        h_cur = round(bh - idx * band_h, 4) if idx == n - 1 else band_h
+        items.append(
+            UnifiedCandidateItem(
+                candidate_id=c.candidate_id,
+                label=c.label,
+                preview_snippet=c.preview_snippet,
+                preview_data_url=None,
+                page_number=c.page_number,
+                has_figure=c.has_figure,
+                problem_text=c.problem_text,
+                source_bbox=(bx, y_start, bw, max(0.01, h_cur)),
+            )
         )
-        for c in pool
-    )
+    return tuple(items)
 
 
 def _region_candidates_to_items(
@@ -166,6 +183,7 @@ def _region_candidates_to_items(
                 page_number=page_number,
                 has_figure=r.has_figure,
                 problem_text=None,
+                source_bbox=r.normalized_bbox,
             )
         )
     return tuple(items)
@@ -361,6 +379,12 @@ async def _process_normalized_visual_page(
         prov_common["has_associated_figure"] or ext_res.extraction.has_diagram
     )
     prov_common["extraction_confidence"] = ext_res.extraction.confidence
+    prov_common["extracted_named_points"] = list(ext_res.extraction.named_points)
+    prov_common["extracted_named_lines"] = list(ext_res.extraction.named_lines)
+    prov_common["extracted_named_planes"] = list(ext_res.extraction.named_planes)
+    prov_common["extracted_named_solids"] = list(ext_res.extraction.named_solids)
+    prov_common["diagram_observations"] = list(ext_res.extraction.diagram_observations)
+    prov_common["text_diagram_conflicts"] = list(ext_res.extraction.text_diagram_conflicts)
 
     metrics_now = {
         "vlm_calls": vlm_calls,
@@ -433,7 +457,9 @@ async def _process_normalized_visual_page(
                 source_kind=source_kind,
                 learner_message=ambig_msg,
                 reason_code="MULTIPLE_PROBLEMS_DETECTED",
-                candidates=_text_candidates_to_items(pool_txt),
+                candidates=_text_candidates_to_items(
+                    pool_txt, parent_bbox=prov_common.get("selected_bbox")
+                ),
                 provenance=prov_common,
                 metrics={
                     **metrics_now,
@@ -937,18 +963,24 @@ def _are_independent_problem_units(units: Sequence[_TextSegmentUnit]) -> bool:
     if len(units) < 2:
         return False
 
-    # Nếu hai đoạn liên tiếp trùng lặp một phần văn bản -> chụp chồng lấn của cùng 1 bài.
-    for idx in range(len(units) - 1):
-        if _segments_have_overlap(units[idx].problem_text, units[idx + 1].problem_text):
-            return False
+    # Nếu bất kỳ cặp đoạn nào trùng lặp một phần văn bản -> chụp chồng lấn của cùng 1 bài (kể cả khi bị đảo thứ tự).
+    for i in range(len(units)):
+        for j in range(i + 1, len(units)):
+            if _segments_have_overlap(units[i].problem_text, units[j].problem_text):
+                return False
 
-    # Nếu đoạn phía sau mở đầu bằng nhãn Bài/Câu/Ví dụ tường minh và đoạn đầu đã có câu hỏi hoặc mở đầu bài riêng.
-    for idx in range(1, len(units)):
-        m_curr = _EXPLICIT_PROBLEM_HEADER_RE.match(units[idx].problem_text)
+    # Nếu các đoạn mở đầu bằng nhãn Bài/Câu/Ví dụ tường minh có số hiệu khác nhau.
+    explicit_nums: list[str] = []
+    for u in units:
+        m_curr = _EXPLICIT_PROBLEM_HEADER_RE.match(u.problem_text)
         if m_curr:
-            m_prev = _EXPLICIT_PROBLEM_HEADER_RE.match(units[0].problem_text)
-            if not m_prev or m_prev.group(1).lower() != m_curr.group(1).lower():
-                return True
+            explicit_nums.append(m_curr.group(1).lower())
+    if len(set(explicit_nums)) >= 2:
+        return True
+    if explicit_nums and len(explicit_nums) < len(units):
+        # Nếu một đoạn có nhãn Bài X còn đoạn kia cũng là một bài hoàn chỉnh độc lập -> các bài độc lập.
+        if sum(1 for u in units if _is_complete_standalone_problem(u.problem_text)) >= 2:
+            return True
 
     # Nếu có >= 2 đoạn mà mỗi đoạn đều tự giới thiệu khối hình ("Cho hình ...") VÀ tự có câu hỏi ("Tính...") -> các bài độc lập.
     standalone_count = sum(1 for u in units if _is_complete_standalone_problem(u.problem_text))
@@ -956,6 +988,160 @@ def _are_independent_problem_units(units: Sequence[_TextSegmentUnit]) -> bool:
         return True
 
     return False
+
+
+_PURE_QUESTION_START_RE = re.compile(
+    r"^\s*(?:[a-d]\s*[).:-]\s*)?(?:tính|xác\s+định|chứng\s+minh|tìm|hỏi|dựng\s+thiết\s+diện)\b",
+    re.IGNORECASE,
+)
+
+
+def _segment_semantic_role(text: str) -> int:
+    """Xác định vai trò ngữ nghĩa của mảnh đề thuộc cùng một bài toán:
+    - `0`: Mở đầu đề bài (`Cho hình chóp...`, `Cho lăng trụ...`, `Bài 1: Cho...`).
+    - `1`: Giả thiết tiếp nối / dựng điểm trung gian (`Gọi M là trung điểm...`, `Biết cạnh bên...`).
+    - `2`: Phần câu hỏi / yêu cầu kết thúc (`Tính thể tích...`, `a) Tính...`, `b) Tính khoảng cách...`).
+    """
+    cleaned = (text or "").strip()
+    if _SOLID_OPENING_RE.search(cleaned):
+        return 0
+    if _PURE_QUESTION_START_RE.match(cleaned):
+        return 2
+    if _has_problem_question_or_goal(cleaned) and len(_split_clauses_or_lines(cleaned)) <= 1:
+        return 2
+    return 1
+
+
+def _has_forward_boundary_overlap(first_text: str, second_text: str) -> bool:
+    """Kiểm tra hậu tố của `first_text` có trùng với tiền tố của `second_text` hay không."""
+    c1 = [_norm_compare_line(c) for c in _split_clauses_or_lines(first_text) if _norm_compare_line(c)]
+    c2 = [_norm_compare_line(c) for c in _split_clauses_or_lines(second_text) if _norm_compare_line(c)]
+    if not c1 or not c2:
+        return False
+    max_k = min(len(c1), len(c2))
+    for k in range(max_k, 0, -1):
+        if c1[-k:] == c2[:k] and any(len(tok) >= 10 for tok in c1[-k:]):
+            return True
+    return False
+
+
+def _order_same_problem_units(
+    units: Sequence[_TextSegmentUnit],
+) -> tuple[list[_TextSegmentUnit], bool]:
+    """Sắp xếp các mảnh của cùng 1 bài toán theo vai trò ngữ nghĩa + chồng lấn biên + `order_index` (§6.F)."""
+    if len(units) <= 1:
+        return list(units), False
+
+    initial = list(units)
+    # 1. Sắp theo (vai trò ngữ nghĩa 0 -> 1 -> 2, order_index).
+    ordered = sorted(
+        initial,
+        key=lambda u: (_segment_semantic_role(u.problem_text), u.order_index),
+    )
+
+    # 2. Nếu hai mảnh liền kề có cùng vai trò nhưng mảnh sau có hậu tố khớp tiền tố mảnh trước (chụp chồng lấn ngược),
+    # đảo cặp đó để câu nối khớp đúng chiều.
+    n = len(ordered)
+    for i in range(n - 1):
+        a, b = ordered[i], ordered[i + 1]
+        if (
+            _segment_semantic_role(a.problem_text) == _segment_semantic_role(b.problem_text)
+            and not _has_forward_boundary_overlap(a.problem_text, b.problem_text)
+            and _has_forward_boundary_overlap(b.problem_text, a.problem_text)
+        ):
+            ordered[i], ordered[i + 1] = b, a
+
+    reordered = [u.attachment_id for u in ordered] != [u.attachment_id for u in initial]
+    return ordered, reordered
+
+
+_TEXT_POINT_TOKEN_RE = re.compile(r"\b([A-Z][0-9']?)\b")
+
+
+def _extract_point_labels_from_text(text: str) -> list[str]:
+    """Trích xuất tập nhãn điểm viết hoa (vd: `S`, `A`, `B`, `C`, `D`, `A'`, `M`, `H`, `O`) xuất hiện trong lời đề."""
+    found: list[str] = []
+    # Cũng tách các cụm đỉnh nối liền như `S.ABCD`, `ABC.A'B'C'`, `(SBC)`, `SA`, `SB`
+    for token in re.findall(r"[A-Z][A-Z0-9'.]*", text or ""):
+        parts = [p for p in token.split(".") if p]
+        for part in parts:
+            for m in re.finditer(r"[A-Z][0-9']*", part):
+                pt = m.group(0)
+                if pt not in found:
+                    found.append(pt)
+    for m in _TEXT_POINT_TOKEN_RE.finditer(text or ""):
+        pt = m.group(1)
+        if pt not in found:
+            found.append(pt)
+    return found
+
+
+def _build_diagram_text_link(
+    final_text: str,
+    text_units: Sequence[_TextSegmentUnit],
+    diagram_provenances: Mapping[str, dict[str, Any]],
+) -> dict[str, Any]:
+    """Đối chiếu nhãn điểm, đường thẳng, mặt phẳng và quan sát từ hình vẽ với văn bản đề toán (§6.H)."""
+    diag_points: list[str] = []
+    diag_lines: list[str] = []
+    diag_planes: list[str] = []
+    diag_solids: list[str] = []
+    diag_obs: list[str] = []
+    diag_conflicts: list[str] = []
+
+    all_provs = [u.provenance for u in text_units] + list(diagram_provenances.values())
+    for p in all_provs:
+        for pt in p.get("extracted_named_points") or ():
+            s = str(pt).strip()
+            if s and s not in diag_points:
+                diag_points.append(s)
+        for ln in p.get("extracted_named_lines") or ():
+            s = str(ln).strip()
+            if s and s not in diag_lines:
+                diag_lines.append(s)
+        for pl in p.get("extracted_named_planes") or ():
+            s = str(pl).strip()
+            if s and s not in diag_planes:
+                diag_planes.append(s)
+        for sol in p.get("extracted_named_solids") or ():
+            s = str(sol).strip()
+            if s and s not in diag_solids:
+                diag_solids.append(s)
+        for ob in p.get("diagram_observations") or ():
+            s = str(ob).strip()
+            if s and s not in diag_obs:
+                diag_obs.append(s)
+        for cf in p.get("text_diagram_conflicts") or ():
+            s = str(cf).strip()
+            if s and s not in diag_conflicts:
+                diag_conflicts.append(s)
+
+    text_points = _extract_point_labels_from_text(final_text)
+    text_points_set = set(text_points)
+    matched_points = [pt for pt in diag_points if pt in text_points_set]
+    unreferenced_points = [pt for pt in diag_points if pt not in text_points_set]
+
+    if not diag_points:
+        alignment = "no_explicit_diagram_labels"
+    elif len(matched_points) == len(diag_points):
+        alignment = "aligned"
+    elif matched_points:
+        alignment = "partial"
+    else:
+        alignment = "disjoint"
+
+    return {
+        "text_point_labels": text_points,
+        "diagram_named_points": diag_points,
+        "diagram_named_lines": diag_lines,
+        "diagram_named_planes": diag_planes,
+        "diagram_named_solids": diag_solids,
+        "matched_points_in_text": matched_points,
+        "unreferenced_diagram_points": unreferenced_points,
+        "diagram_observations": diag_obs,
+        "text_diagram_conflicts": diag_conflicts,
+        "diagram_vertex_alignment": alignment,
+    }
 
 
 def _stamp_single_outcome(
@@ -1106,6 +1292,7 @@ async def prepare_unified_input(
     duplicate_Target_map: dict[str, list[str]] = {}
     deduplicated_attachment_ids: list[str] = []
     diagram_only_ids: list[str] = []
+    diagram_only_provenance: dict[str, dict[str, Any]] = {}
     multi_problem_candidates: list[UnifiedCandidateItem] = []
     text_units: list[_TextSegmentUnit] = []
 
@@ -1158,6 +1345,7 @@ async def prepare_unified_input(
             # Ảnh chỉ có hình vẽ (`MISSING_PROBLEM_TEXT`): giữ lại để ghép với ảnh chữ cùng bài (§10.1, §13.5).
             if out.reason_code == "MISSING_PROBLEM_TEXT":
                 diagram_only_ids.append(aid)
+                diagram_only_provenance[aid] = out.provenance
                 continue
 
             # Trường hợp mảnh đề tiếp nối (vd: chỉ chứa câu hỏi "Tính khoảng cách từ A đến (SBC)...")
@@ -1227,6 +1415,7 @@ async def prepare_unified_input(
                         has_figure=c.has_figure,
                         problem_text=c.problem_text,
                         source_attachment_ids=(aid,),
+                        source_bbox=c.source_bbox,
                     )
                 )
             continue
@@ -1402,13 +1591,15 @@ async def prepare_unified_input(
         text_units = [chosen_unit]
 
     # Trường hợp 3: Một bài toán trải trên nhiều ảnh (hoặc 1 bài đã chọn + ảnh hình vẽ đi kèm, §10.1).
+    upload_order_ids = [u.attachment_id for u in text_units]
+    ordered_text_units, semantic_reordered = _order_same_problem_units(text_units)
     merged_raw_text, deduplicated_overlap = merge_overlapping_problem_segments(
-        [u.problem_text for u in text_units]
+        [u.problem_text for u in ordered_text_units]
     )
     final_text = merge_supplemental_text(merged_raw_text, directive)
 
     source_ids_ordered: list[str] = []
-    for u in text_units:
+    for u in ordered_text_units:
         for sid in u.source_attachment_ids:
             if sid not in source_ids_ordered:
                 source_ids_ordered.append(sid)
@@ -1417,11 +1608,11 @@ async def prepare_unified_input(
             if did not in source_ids_ordered:
                 source_ids_ordered.append(did)
 
-    has_figure_combined = any(u.has_figure for u in text_units) or bool(diagram_only_ids)
+    has_figure_combined = any(u.has_figure for u in ordered_text_units) or bool(diagram_only_ids)
     combined_flags: list[str] = []
     combined_uncertain: list[dict[str, Any]] = []
     combined_missing: list[str] = []
-    for u in text_units:
+    for u in ordered_text_units:
         for f in u.flag_messages:
             if f not in combined_flags:
                 combined_flags.append(f)
@@ -1431,13 +1622,28 @@ async def prepare_unified_input(
             if mr not in combined_missing:
                 combined_missing.append(mr)
 
+    # Nếu đề bài có hình vẽ đi kèm (từ cùng ảnh hoặc ảnh hình vẽ rời) VÀ lời đề phụ thuộc hình vẽ ("như hình vẽ"),
+    # bật cờ `AMBIGUOUS_DIAGRAM` để yêu cầu người học xác nhận phần giả thiết chỉ có trên hình (§6.H).
+    needs_diagram_conf = False
+    if has_figure_combined and any(cue in final_text.lower() for cue in _THAM_CHIEU_HINH):
+        ambig_msg = FLAG_MESSAGES["AMBIGUOUS_DIAGRAM"]
+        if ambig_msg not in combined_flags:
+            combined_flags.append(ambig_msg)
+        needs_diagram_conf = True
+
+    active_diagram_provs = diagram_only_provenance if targeted_att_id is None else {}
+    diagram_text_link = _build_diagram_text_link(final_text, ordered_text_units, active_diagram_provs)
+
     prov_combined: dict[str, Any] = {
         "source_attachment_ids": source_ids_ordered,
+        "upload_order_attachment_ids": upload_order_ids,
+        "semantic_reordered": semantic_reordered,
         "diagram_attachment_ids": list(diagram_only_ids) if targeted_att_id is None else [],
         "deduplicated_attachment_ids": deduplicated_attachment_ids,
         "deduplicated_overlap": deduplicated_overlap or bool(deduplicated_attachment_ids),
         "has_associated_figure": has_figure_combined,
-        "multi_image_merged": len(text_units) > 1 or bool(diagram_only_ids) or bool(deduplicated_attachment_ids),
+        "diagram_text_link": diagram_text_link,
+        "multi_image_merged": len(ordered_text_units) > 1 or bool(diagram_only_ids) or bool(deduplicated_attachment_ids),
         "supplemental_merged": bool(directive.supplemental_text) and final_text != merged_raw_text,
     }
     if targeted_att_id is not None:
@@ -1487,7 +1693,7 @@ async def prepare_unified_input(
         )
 
     # Bảo toàn trạng thái `needs_confirmation` nếu bất kỳ ảnh thành phần nào có độ tin cậy thấp hoặc ký hiệu chưa chắc chắn (§13.11).
-    if any(u.needs_confirmation for u in text_units) or combined_uncertain or combined_missing:
+    if any(u.needs_confirmation for u in ordered_text_units) or needs_diagram_conf or combined_uncertain or combined_missing:
         lead_msg = (
             combined_flags[0]
             if combined_flags

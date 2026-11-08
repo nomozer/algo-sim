@@ -211,27 +211,48 @@ export function detectViewportOrientation(): CameraOrientation {
   return "landscape";
 }
 
-export function detectMobileCameraPreferred(): boolean {
-  if (typeof window !== "undefined" && window.innerWidth > 0 && window.innerHeight > 0) {
-    const w = window.innerWidth;
-    const h = window.innerHeight;
-    // Điện thoại / màn hình thấp hoặc Tablet dọc (vd: 768×1024, 820×1180) & Tablet ngang (vd: 1024×768)
-    if (w <= 820 || h <= 560 || (w <= 1024 && h <= 1366 && (h >= w || h <= 820))) {
+export function shouldUseFullscreenCamera(
+  viewport: { width: number; height: number },
+  sig: CameraDeviceSignals,
+): boolean {
+  const { width: w, height: h } = viewport;
+  const devicePrefersMobile = isMobileCameraPreferred(sig);
+  if (devicePrefersMobile) return true;
+  if (w > 0 && h > 0) {
+    // Khung cửa sổ quá hẹp/thấp không đủ chỗ cho hộp thoại Desktop 576×543px -> dùng fullscreen
+    if (w <= 640 || h <= 560) return true;
+    // Khung dọc điện thoại/tablet (vd: 768×1024, 820×1180) -> dùng fullscreen
+    if (w <= 820 && h > w) return true;
+    // Thiết bị có cảm ứng / con trỏ thô (iPad / Tablet thật xoay ngang 1024×768) -> dùng fullscreen,
+    // nhưng cửa sổ Desktop thu nhỏ (vd: 960×720 hoặc 1024×768 không cảm ứng) vẫn giữ Desktop Dialog.
+    const hasTouchOrCoarse = (sig.maxTouchPoints ?? 0) > 0 || Boolean(sig.anyCoarsePointer);
+    if (hasTouchOrCoarse && w <= 1024 && h <= 1366 && (h >= w || h <= 820)) {
       return true;
     }
   }
-  if (typeof navigator === "undefined") return false;
-  const nav = navigator as Navigator & { userAgentData?: { mobile?: boolean } };
+  return false;
+}
+
+export function detectMobileCameraPreferred(): boolean {
+  const w = typeof window !== "undefined" ? window.innerWidth : 0;
+  const h = typeof window !== "undefined" ? window.innerHeight : 0;
+  const nav =
+    typeof navigator !== "undefined"
+      ? (navigator as Navigator & { userAgentData?: { mobile?: boolean } })
+      : undefined;
   const anyCoarsePointer =
     typeof window !== "undefined" && typeof window.matchMedia === "function"
       ? window.matchMedia("(any-pointer: coarse)").matches
       : false;
-  return isMobileCameraPreferred({
-    userAgentDataMobile: nav.userAgentData?.mobile,
-    userAgent: nav.userAgent,
-    maxTouchPoints: nav.maxTouchPoints,
-    anyCoarsePointer,
-  });
+  return shouldUseFullscreenCamera(
+    { width: w, height: h },
+    {
+      userAgentDataMobile: nav?.userAgentData?.mobile,
+      userAgent: nav?.userAgent,
+      maxTouchPoints: nav?.maxTouchPoints,
+      anyCoarsePointer,
+    },
+  );
 }
 
 export function initialCameraTarget(mobile: boolean): CameraTarget {

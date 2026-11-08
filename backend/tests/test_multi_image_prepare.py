@@ -536,3 +536,406 @@ def test_10_request_id_echo_and_11_low_confidence_preserved_across_images(
             assert len(body["uncertain_tokens"]) == 1
             assert body["uncertain_tokens"][0]["token"] == "a√3"
             assert body["provenance"]["source_attachment_ids"] == ["a1", "a2"]
+
+
+def test_13_reversed_upload_order_semantic_and_overlap_reordering() -> None:
+    """(Situation F) Sắp xếp lại các ảnh thuộc cùng 1 bài khi người dùng chụp/tải ngược thứ tự (§6.F):
+    - 13A: `order_index=0` là câu hỏi kết thúc, `order_index=1` là giả thiết trung gian, `order_index=2` là câu mở đầu khối hình.
+    - 13B: 2 ảnh cùng vai trò ngữ nghĩa nhưng chụp chồng lấn ngược chiều (`order_index=0` nối sau `order_index=1`).
+    """
+    img_q = _make_distinct_image_b64(131)
+    img_mid = _make_distinct_image_b64(132)
+    img_open = _make_distinct_image_b64(133)
+
+    shas_q = _prepared_sha(img_q)
+    shas_mid = _prepared_sha(img_mid)
+
+    async def _fake_vlm_reversed(img: NormalizedImage, api_key: str, cache_version: str | None = None) -> ExtractionResult:
+        if img.sha256 in shas_q:
+            return _make_extraction_result(
+                "Tính thể tích khối chóp S.ABCD và khoảng cách từ A đến mặt phẳng (SBC)."
+            )
+        if img.sha256 in shas_mid:
+            return _make_extraction_result(
+                "Gọi M là trung điểm của SC, biết SA = a√3."
+            )
+        return _make_extraction_result(
+            "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với mặt phẳng (ABCD)."
+        )
+
+    with patch("app.ingestion.unified_input.extract_problem_from_image", side_effect=_fake_vlm_reversed):
+        out_rev = asyncio.run(
+            prepare_unified_input(
+                attachments=[
+                    {"attachment_id": "img-q", "order_index": 0, "content": img_q},
+                    {"attachment_id": "img-mid", "order_index": 1, "content": img_mid},
+                    {"attachment_id": "img-open", "order_index": 2, "content": img_open},
+                ],
+                api_key="fake-key",
+            )
+        )
+        assert out_rev.status == "ready"
+        assert out_rev.provenance["semantic_reordered"] is True
+        assert out_rev.provenance["upload_order_attachment_ids"] == ["img-q", "img-mid", "img-open"]
+        assert out_rev.provenance["source_attachment_ids"] == ["img-open", "img-mid", "img-q"]
+        assert out_rev.problem_text.startswith("Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a")
+        assert "Gọi M là trung điểm của SC" in out_rev.problem_text
+        assert out_rev.problem_text.endswith("Tính thể tích khối chóp S.ABCD và khoảng cách từ A đến mặt phẳng (SBC).")
+
+    # 13B: Chồng lấn biên ngược chiều giữa 2 mảnh cùng mở đầu bằng "Cho hình chóp S.ABCD":
+    img_ov_tail = _make_distinct_image_b64(134)
+    img_ov_head = _make_distinct_image_b64(135)
+    shas_tail = _prepared_sha(img_ov_tail)
+
+    async def _fake_vlm_overlap_rev(img: NormalizedImage, api_key: str, cache_version: str | None = None) -> ExtractionResult:
+        if img.sha256 in shas_tail:
+            return _make_extraction_result(
+                "SA vuông góc với mặt phẳng (ABCD) và SA = 2a.\nTính thể tích khối chóp S.ABCD."
+            )
+        return _make_extraction_result(
+            "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a.\nSA vuông góc với mặt phẳng (ABCD) và SA = 2a."
+        )
+
+    with patch("app.ingestion.unified_input.extract_problem_from_image", side_effect=_fake_vlm_overlap_rev):
+        out_ov = asyncio.run(
+            prepare_unified_input(
+                attachments=[
+                    {"attachment_id": "ov-tail", "order_index": 0, "content": img_ov_tail},
+                    {"attachment_id": "ov-head", "order_index": 1, "content": img_ov_head},
+                ],
+                api_key="fake-key",
+            )
+        )
+        assert out_ov.status == "ready"
+        assert out_ov.provenance["semantic_reordered"] is True
+        assert out_ov.provenance["deduplicated_overlap"] is True
+        assert out_ov.problem_text.count("SA vuông góc với mặt phẳng (ABCD) và SA = 2a.") == 1
+        assert out_ov.problem_text.startswith("Cho hình chóp S.ABCD")
+        assert out_ov.problem_text.endswith("Tính thể tích khối chóp S.ABCD.")
+
+
+def test_14_single_image_multiple_problems_preserves_source_bbox() -> None:
+    """(Situation G) 1 ảnh có nhiều bài bảo toàn cả `source_attachment_ids` lẫn `source_bbox` cho từng candidate (§6.G)."""
+    from app.ingestion.document_reader import decode_attachment_base64
+    from app.ingestion.image import normalize_image
+    from app.ingestion.region_detector import (
+        BoundingBox,
+        CandidateProblemRegion,
+        ImageQualityReport,
+        RegionDetectionResult,
+    )
+
+    img_b64 = _make_distinct_image_b64(141)
+    norm_img = normalize_image(decode_attachment_base64(img_b64), "image/png")
+
+    fake_reg = RegionDetectionResult(
+        full_image=norm_img,
+        prepared_image=norm_img,
+        quality=ImageQualityReport(
+            mean_luma=245.0,
+            p5_luma=30,
+            p95_luma=252,
+            dynamic_range=222,
+            edge_energy=18.5,
+            is_low_light=False,
+            is_blank_or_unreadable=False,
+            enhanced_low_light=False,
+        ),
+        page_bbox=BoundingBox(0, 0, norm_img.width, norm_img.height),
+        desk_trimmed=False,
+        skew_angle_deg=0.0,
+        deskew_applied=False,
+        blocks=(),
+        candidates=(
+            CandidateProblemRegion(
+                region_id="region-1",
+                index=0,
+                label="Bài 1 (nửa trên trang)",
+                bbox=BoundingBox(20, 20, 600, 180),
+                normalized_bbox=(0.0312, 0.0476, 0.9062, 0.3810),
+                has_figure=True,
+                text_block_count=1,
+                figure_block_count=1,
+                completeness_confidence=0.95,
+                preview_data_url="data:image/jpeg;base64,AA==",
+            ),
+            CandidateProblemRegion(
+                region_id="region-2",
+                index=1,
+                label="Bài 2 (nửa dưới trang)",
+                bbox=BoundingBox(20, 210, 600, 390),
+                normalized_bbox=(0.0312, 0.5000, 0.9062, 0.4286),
+                has_figure=False,
+                text_block_count=1,
+                figure_block_count=0,
+                completeness_confidence=0.95,
+                preview_data_url="data:image/jpeg;base64,BB==",
+            ),
+        ),
+        selected_bbox=BoundingBox(0, 0, norm_img.width, norm_img.height),
+        used_crop=False,
+        used_fallback_full_image=False,
+        has_associated_figure=True,
+        completeness_confidence=0.95,
+        ambiguous_multi_problem=True,
+    )
+
+    with patch("app.ingestion.unified_input.detect_problem_regions", return_value=fake_reg):
+        out = asyncio.run(
+            prepare_unified_input(
+                attachments=[
+                    {"attachment_id": "sheet-multi", "order_index": 0, "source_type": "camera", "content": img_b64}
+                ],
+                api_key="fake-key",
+            )
+        )
+        assert out.status == "needs_selection"
+        assert len(out.candidates) == 2
+        assert out.candidates[0].candidate_id == "region-1"
+        assert out.candidates[0].source_attachment_ids == ("sheet-multi",)
+        assert out.candidates[0].source_bbox == (0.0312, 0.0476, 0.9062, 0.3810)
+        assert out.candidates[1].candidate_id == "region-2"
+        assert out.candidates[1].source_attachment_ids == ("sheet-multi",)
+        assert out.candidates[1].source_bbox == (0.0312, 0.5000, 0.9062, 0.4286)
+
+
+def test_15_separate_diagram_entity_linking_and_ambiguous_diagram_flag() -> None:
+    """(Situation H) Ảnh hình vẽ riêng đi kèm ảnh đề chữ (§6.H):
+    - Đối chiếu nhãn đỉnh, đường thẳng, mặt phẳng và quan sát từ hình vẽ với lời đề trong `provenance["diagram_text_link"]`.
+    - Nếu lời đề phụ thuộc hình vẽ ("như hình vẽ") khi đi kèm ảnh hình vẽ rời -> trả `needs_confirmation` (`AMBIGUOUS_DIAGRAM`).
+    """
+    from app.ingestion.document_reader import decode_attachment_base64
+    from app.ingestion.image import normalize_image
+
+    img_text = _make_distinct_image_b64(151)
+    img_diag = _make_distinct_image_b64(152, draw_diagram=True)
+    shas_text = _prepared_sha(img_text)
+    norm_diag = normalize_image(decode_attachment_base64(img_diag), "image/png")
+
+    diag_ext = ExtractionResult(
+        raw_extraction=ImageProblemExtraction(
+            problem_text_verbatim="",
+            problem_text_normalized="",
+            math_expressions=[],
+            named_points=["S", "A", "B", "C", "D", "H"],
+            named_lines=["SA", "SB", "AH"],
+            named_planes=["(ABCD)", "(SBC)"],
+            named_solids=["S.ABCD"],
+            given_relations=["SA vuông góc (ABCD)", "AH vuông góc SB"],
+            diagram_observations=["Ký hiệu góc vuông tại A và tại H trên SB", "Cạnh AD và AB vẽ nét đứt"],
+            text_diagram_conflicts=[],
+            uncertain_tokens=[],
+            missing_regions=[],
+            has_diagram=True,
+            confidence=0.95,
+        ),
+        image=norm_diag,
+        identity={"vision_model_identity": "test-stub"},
+        cached=False,
+    )
+
+    async def _fake_vlm_aligned(img: NormalizedImage, api_key: str, cache_version: str | None = None) -> ExtractionResult:
+        if img.sha256 in shas_text:
+            return _make_extraction_result(
+                "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với (ABCD). "
+                "Gọi H là hình chiếu vuông góc của A trên SB. Tính khoảng cách từ H đến mặt phẳng (SCD)."
+            )
+        return diag_ext
+
+    with patch("app.ingestion.unified_input.extract_problem_from_image", side_effect=_fake_vlm_aligned):
+        out = asyncio.run(
+            prepare_unified_input(
+                attachments=[
+                    {"attachment_id": "txt-1", "order_index": 0, "content": img_text},
+                    {"attachment_id": "fig-1", "order_index": 1, "content": img_diag},
+                ],
+                api_key="fake-key",
+            )
+        )
+        assert out.status == "ready"
+        link = out.provenance["diagram_text_link"]
+        assert link["diagram_named_points"] == ["S", "A", "B", "C", "D", "H"]
+        assert link["matched_points_in_text"] == ["S", "A", "B", "C", "D", "H"]
+        assert link["unreferenced_diagram_points"] == []
+        assert link["diagram_vertex_alignment"] == "aligned"
+        assert "Ký hiệu góc vuông tại A và tại H trên SB" in link["diagram_observations"]
+
+    # Khi đề chữ ghi "như hình vẽ" đi kèm ảnh hình vẽ rời -> phải trả `needs_confirmation`:
+    async def _fake_vlm_ambig(img: NormalizedImage, api_key: str, cache_version: str | None = None) -> ExtractionResult:
+        if img.sha256 in shas_text:
+            return _make_extraction_result(
+                "Cho hình chóp S.ABCD có đáy ABCD là hình vuông và các kích thước như hình vẽ. "
+                "Tính thể tích khối chóp S.ABCD."
+            )
+        return diag_ext
+
+    with patch("app.ingestion.unified_input.extract_problem_from_image", side_effect=_fake_vlm_ambig):
+        out_ambig = asyncio.run(
+            prepare_unified_input(
+                attachments=[
+                    {"attachment_id": "txt-1", "order_index": 0, "content": img_text},
+                    {"attachment_id": "fig-1", "order_index": 1, "content": img_diag},
+                ],
+                api_key="fake-key",
+            )
+        )
+        assert out_ambig.status == "needs_confirmation"
+        assert any("hình vẽ" in msg for msg in out_ambig.flag_messages)
+
+
+def test_16_multi_image_to_hybrid_route_d_scene3d_e2e() -> None:
+    """(Part C — §7) Kiểm chứng toàn trình từ Multi-Image `prepare_unified_input` -> `TypedFactNext /2` ->
+    `Source Gate` -> `Planner /26` -> `Registry /33` -> `Exact Kernel /24` -> `Adapter /4` -> `Scene3D`
+    trên 4 họ hình học độc lập (Chóp `S.ABCD`, Lăng trụ đứng `ABC.A'B'C'`, Hình trụ `O.O'`, Mặt cầu `O`).
+    """
+    from fractions import Fraction as F
+    from app.ai.adapter4_route import build_adapter4_response, run_typed_fact_next_v2_route
+    from app.simulation.geometry.radical import parse_exact
+    from tests.geometry.test_hybrid4_three_point_plane_sections import (
+        _payload as _section_payload,
+        divide,
+        midpoint,
+        oracle_section,
+        pyramid_edges,
+        square_pyramid,
+        at,
+        mid,
+        coef_squared,
+    )
+    from tests.geometry.test_typed_fact_next_v2_distance_bridge import _prism
+
+    # 1. Bài 1 (Ghép từ 3 ảnh: mở đầu + điểm cắt M, N, P + câu hỏi thiết diện & diện tích chóp S.ABCD):
+    solid_pyr, prem_pyr = square_pyramid("S", "ABCD", 2, 4)
+    prem_pyr += [
+        divide("M", "S", "A", "3/4", "SM = 3MA"),
+        divide("N", "S", "B", "3/8", "SN = 3/5 NB"),
+        midpoint("P", "S", "C"),
+    ]
+    pyr_text, pyr_tfn = _section_payload(solid_pyr, prem_pyr, ["M", "N", "P"], area=True)
+    # Chia `pyr_text` thành 2 ảnh văn bản + 1 ảnh hình vẽ:
+    clauses = pyr_text.split(". ")
+    part1_text = ". ".join(clauses[:3]) + "."
+    part2_text = ". ".join(clauses[3:])
+    img1 = _make_distinct_image_b64(161)
+    img2 = _make_distinct_image_b64(162)
+    img3 = _make_distinct_image_b64(163, draw_diagram=True)
+    s1 = _prepared_sha(img1)
+    s2 = _prepared_sha(img2)
+
+    async def _vlm_pyr(img: NormalizedImage, api_key: str, cache_version: str | None = None) -> ExtractionResult:
+        if img.sha256 in s1:
+            return _make_extraction_result(part1_text)
+        if img.sha256 in s2:
+            return _make_extraction_result(part2_text)
+        return _make_extraction_result("", has_diagram=True)
+
+    with patch("app.ingestion.unified_input.extract_problem_from_image", side_effect=_vlm_pyr):
+        prep_pyr = asyncio.run(
+            prepare_unified_input(
+                attachments=[
+                    {"attachment_id": "pyr-1", "order_index": 0, "content": img1},
+                    {"attachment_id": "pyr-2", "order_index": 1, "content": img2},
+                    {"attachment_id": "pyr-fig", "order_index": 2, "content": img3},
+                ],
+                api_key="fake-key",
+            )
+        )
+    assert prep_pyr.status == "ready"
+    assert prep_pyr.problem_text.replace("\n", " ") == pyr_text
+    pyr_tfn["problem_text"] = prep_pyr.problem_text
+    r_pyr = run_typed_fact_next_v2_route(pyr_tfn)
+    assert r_pyr.status == "SERVED" and r_pyr.kernel_check is True
+    resp_pyr = build_adapter4_response(r_pyr, prep_pyr.problem_text)
+    assert resp_pyr["envelope"]["status"] == "ok"
+    assert resp_pyr["route_d"]["source_verification"] == {"authority": "registry.kiem_nguon"}
+    # Kiểm chứng diện tích thiết diện khớp tuyệt đối với oracle độc lập:
+    V_pyr = {"A": (0, 0, 0), "B": (2, 0, 0), "C": (2, 2, 0), "D": (0, 2, 0), "S": (0, 0, 4)}
+    plane_pts = (at(V_pyr["S"], V_pyr["A"], F(3, 4)), at(V_pyr["S"], V_pyr["B"], F(3, 8)), mid(V_pyr["S"], V_pyr["C"]))
+    expected_pyr = oracle_section(V_pyr, pyramid_edges("S", "ABCD"), plane_pts)
+    assert coef_squared(resp_pyr["route_d"]["answer_exact"]["q1"]["coef"]) == expected_pyr["area2"]
+    scene_pyr_objs = {o["id"]: o for o in r_pyr.scene3d["objects"]}
+    for v_lbl in ("S", "A", "B", "C", "D", "M", "N", "P"):
+        assert v_lbl in scene_pyr_objs and scene_pyr_objs[v_lbl]["type"] == "point3"
+
+    # 2. Bài 2 (Lăng trụ đứng `ABC.A'B'C'` vuông tại A, AB=6, AC=8, AA'=12, tính d(A, (BCC'B'))):
+    prism_tfn = _prism(
+        "ABC",
+        6,
+        8,
+        12,
+        ask=("Tính khoảng cách từ A đến mặt phẳng (BCC'B').", {"point": "A", "plane": ["B", "C", "C'"]}),
+    )
+    r_prism = run_typed_fact_next_v2_route(prism_tfn)
+    assert r_prism.status == "SERVED" and r_prism.kernel_check is True
+    resp_prism = build_adapter4_response(r_prism, prism_tfn["problem_text"])
+    assert resp_prism["envelope"]["status"] == "ok"
+    # d(A, (BCC'B')) = (6 * 8) / sqrt(6^2 + 8^2) = 48 / 10 = 24/5
+    assert resp_prism["route_d"]["answer_exact"]["q"]["coef"] == "24/5"
+    scene_prism_objs = {o["id"]: o for o in r_prism.scene3d["objects"]}
+    for v_lbl in ("A", "B", "C", "A_prime", "B_prime", "C_prime"):
+        assert v_lbl in scene_prism_objs and scene_prism_objs[v_lbl]["type"] == "point3"
+
+    # 3. Bài 3 (Hình trụ tâm O, O', bán kính 3, chiều cao 5, tính diện tích toàn phần):
+    cyl_quote = "Cho hình trụ có tâm hai đáy là O và O', điểm A thuộc đường tròn đáy tâm O, bán kính đáy bằng 3 và chiều cao bằng 5"
+    cyl_q = "Tính diện tích toàn phần của hình trụ"
+    cyl_tfn = {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": f"{cyl_quote}. {cyl_q}.",
+        "length_unit": "1",
+        "solids": [
+            {
+                "solid_id": "k",
+                "solid_type": "cylinder",
+                "notation": "O.O'",
+                "center": "O",
+                "apex_or_top": "O'",
+                "rim_point": "A",
+                "radius": "3",
+                "height": "5",
+                "quote": cyl_quote,
+            }
+        ],
+        "premises": [],
+        "derived_sections": [],
+        "relations": [],
+        "simulation_goals": [{"goal_id": "sg1", "kind": "construct_object", "target_solid_id": "k", "quote": cyl_quote}],
+        "math_goals": [{"goal_id": "mg1", "kind": "measurement", "goal_type": "area", "target": {"solid": "O.O'"}, "quote": cyl_q}],
+    }
+    r_cyl = run_typed_fact_next_v2_route(cyl_tfn)
+    assert r_cyl.status == "SERVED" and r_cyl.kernel_check is True
+    resp_cyl = build_adapter4_response(r_cyl, cyl_tfn["problem_text"])
+    assert resp_cyl["envelope"]["status"] == "ok"
+    # S_tp = 2*pi*3*5 + 2*pi*3^2 = 30pi + 18pi = 48pi
+    assert parse_exact(resp_cyl["route_d"]["answer_exact"]["mg1"]["coef"]) == parse_exact("48π")
+
+    # 4. Bài 4 (Mặt cầu tâm O, điểm A thuộc mặt cầu, bán kính 3, tính thể tích khối cầu):
+    sph_quote = "Cho mặt cầu tâm O, điểm A thuộc mặt cầu, bán kính bằng 3"
+    sph_q = "Tính thể tích khối cầu"
+    sph_tfn = {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": f"{sph_quote}. {sph_q}.",
+        "length_unit": "1",
+        "solids": [
+            {
+                "solid_id": "k",
+                "solid_type": "sphere",
+                "notation": "O",
+                "center": "O",
+                "rim_point": "A",
+                "radius": "3",
+                "quote": sph_quote,
+            }
+        ],
+        "premises": [],
+        "derived_sections": [],
+        "relations": [],
+        "simulation_goals": [{"goal_id": "sg1", "kind": "construct_object", "target_solid_id": "k", "quote": sph_quote}],
+        "math_goals": [{"goal_id": "mg1", "kind": "measurement", "goal_type": "volume", "target": {"solid_id": "k"}, "quote": sph_q}],
+    }
+    r_sph = run_typed_fact_next_v2_route(sph_tfn)
+    assert r_sph.status == "SERVED" and r_sph.kernel_check is True
+    resp_sph = build_adapter4_response(r_sph, sph_tfn["problem_text"])
+    assert resp_sph["envelope"]["status"] == "ok"
+    # V = (4/3)*pi*3^3 = 36pi
+    assert parse_exact(resp_sph["route_d"]["answer_exact"]["mg1"]["coef"]) == parse_exact("36π")
+
