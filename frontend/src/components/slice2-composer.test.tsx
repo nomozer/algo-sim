@@ -196,16 +196,31 @@ describe("Axo V2.7 Slice 2 — 18 Component & Integration Cases (P11.2 & P11.3)"
     expect(src).toContain("void onAnalyze()");
   });
 
-  it("12. Nút + mở và đóng menu đính kèm tệp (Tải tệp từ thiết bị, Chụp ảnh đề bài)", () => {
+  it("12. Nút + mở và đóng menu đính kèm tệp theo loại thiết bị (Desktop: chỉ Tải tệp từ thiết bị; Phone/Tablet: thêm Chụp ảnh đề bài)", () => {
     const closedHtml = renderToString(<ProblemInput />);
     expect(closedHtml).toContain('class="btn-plus-trigger"');
     expect(closedHtml).toContain('class="plus-popover-menu"');
 
-    const openHtml = renderToString(<ProblemInput initialPlusMenuOpen />);
-    expect(openHtml).toContain('class="btn-plus-trigger is-open"');
-    expect(openHtml).toContain('class="plus-popover-menu open"');
-    expect(openHtml).toContain("Tải tệp từ thiết bị");
-    expect(openHtml).toContain("Chụp ảnh đề bài");
+    const desktopOpenHtml = renderToString(<ProblemInput initialPlusMenuOpen />);
+    expect(desktopOpenHtml).toContain('class="btn-plus-trigger is-open"');
+    expect(desktopOpenHtml).toContain('class="plus-popover-menu open"');
+    expect(desktopOpenHtml).toContain("Tải tệp từ thiết bị");
+    expect(desktopOpenHtml).not.toContain("Chụp ảnh đề bài");
+    expect(desktopOpenHtml).not.toContain('id="menu-item-camera"');
+
+    const mobileOpenHtml = renderToString(
+      <ProblemInput
+        initialPlusMenuOpen
+        deviceSignals={{
+          userAgent: "Mozilla/5.0 (iPhone; CPU iPhone OS 17_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.4 Mobile/15E148 Safari/604.1",
+          platform: "iPhone",
+          maxTouchPoints: 5,
+        }}
+      />,
+    );
+    expect(mobileOpenHtml).toContain("Tải tệp từ thiết bị");
+    expect(mobileOpenHtml).toContain("Chụp ảnh đề bài");
+    expect(mobileOpenHtml).toContain('id="menu-item-camera"');
   });
 
   it("13. Xóa tệp khỏi hàng thẻ tệp chỉ xóa đúng tệp được chọn và cập nhật lại trạng thái nút", () => {

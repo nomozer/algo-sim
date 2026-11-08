@@ -33,6 +33,11 @@ import {
 import type { AnalysisUnsupported } from "../core/types";
 import type { SimulationEnvelope } from "../simulations/types";
 import { PhotoProblemDialog } from "./PhotoProblemDialog";
+import {
+  readBrowserCameraDeviceSignals,
+  shouldShowCameraEntry,
+  type CameraDeviceSignals,
+} from "./PhotoCameraView";
 import { PhotoProblemPanel } from "./PhotoProblemPanel";
 import { AxoScrollbar } from "./AxoScrollbar";
 import {
@@ -514,6 +519,7 @@ export interface ProblemInputProps {
   initialPlusMenuOpen?: boolean;
   initialAllFilesModalOpen?: boolean;
   initialAssistState?: UnifiedAssistState;
+  deviceSignals?: CameraDeviceSignals;
 }
 
 export function ProblemInput({
@@ -521,7 +527,11 @@ export function ProblemInput({
   initialPlusMenuOpen = false,
   initialAllFilesModalOpen = false,
   initialAssistState = initialUnifiedAssistState,
+  deviceSignals,
 }: ProblemInputProps = {}) {
+  const showCameraEntry = shouldShowCameraEntry(
+    deviceSignals ?? readBrowserCameraDeviceSignals(),
+  );
   const problemText = useAppStore((s) => s.problemText);
   const setProblemText = useAppStore((s) => s.setProblemText);
   const analyzing = useAppStore((s) => s.analyzing);
@@ -1099,7 +1109,11 @@ export function ProblemInput({
                 className={`btn-plus-trigger${plusMenuOpen ? " is-open" : ""}`}
                 onClick={() => setPlusMenuOpen((v) => !v)}
                 disabled={analyzing}
-                title="Đính kèm tệp hoặc chụp ảnh đề bài"
+                title={
+                  showCameraEntry
+                    ? "Đính kèm tệp hoặc chụp ảnh đề bài"
+                    : "Đính kèm tệp hoặc ảnh đề bài"
+                }
                 aria-label="Tải tệp đề"
                 aria-haspopup="menu"
                 aria-expanded={plusMenuOpen}
@@ -1127,20 +1141,22 @@ export function ProblemInput({
                   <IconUpload size={16} />
                   <span>Tải tệp từ thiết bị</span>
                 </button>
-                <button
-                  type="button"
-                  id="menu-item-camera"
-                  className="plus-menu-item"
-                  role="menuitem"
-                  aria-haspopup="dialog"
-                  onClick={() => {
-                    setPlusMenuOpen(false);
-                    setPhotoDialogOpen(true);
-                  }}
-                >
-                  <IconCamera size={16} />
-                  <span>Chụp ảnh đề bài</span>
-                </button>
+                {showCameraEntry && (
+                  <button
+                    type="button"
+                    id="menu-item-camera"
+                    className="plus-menu-item"
+                    role="menuitem"
+                    aria-haspopup="dialog"
+                    onClick={() => {
+                      setPlusMenuOpen(false);
+                      setPhotoDialogOpen(true);
+                    }}
+                  >
+                    <IconCamera size={16} />
+                    <span>Chụp ảnh đề bài</span>
+                  </button>
+                )}
               </div>
             </div>
 

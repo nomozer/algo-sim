@@ -10,10 +10,12 @@ import {
   cameraErrorMessage,
   cameraSupport,
   canSwitchCamera,
+  classifyCameraDevice,
   fallbackCameraConstraints,
   initialCameraTarget,
   isMobileCameraPreferred,
   nextCameraTarget,
+  shouldShowCameraEntry,
 } from "./PhotoCameraView";
 import { PhotoProblemDialog } from "./PhotoProblemDialog";
 import { PhotoProblemPanel } from "./PhotoProblemPanel";
@@ -46,14 +48,38 @@ function makeFakeAttachment(
 }
 
 describe("Camera-First UX tối giản (§5–§8): không có màn crop/xoay thủ công, 4 lỗi camera phân biệt rõ", () => {
-  it("ô nhập đề: menu + có Chụp ảnh đề bài & Tải tệp từ thiết bị; không mở camera lúc tải trang", () => {
-    const html = renderToString(<ProblemInput />);
-    expect(html).toContain("Chụp ảnh đề bài");
-    expect(html).toContain("Tải tệp từ thiết bị");
-    expect(html).toMatch(/id="menu-item-camera"[^>]*aria-haspopup="dialog"/);
-    expect(html).not.toContain("photo-camera-dialog");
-    expect(html).not.toContain("<video");
-    expect(html).toContain('accept=".png,.jpg,.jpeg,.webp,.pdf,.docx"');
+  it("ô nhập đề: menu + hiển thị theo loại thiết bị (Desktop ẩn Chụp ảnh đề bài, Phone/Tablet hiện Chụp ảnh đề bài & Tải tệp từ thiết bị); không mở camera lúc tải trang", () => {
+    const desktopHtml = renderToString(
+      <ProblemInput
+        deviceSignals={{
+          userAgent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+          platform: "Win32",
+          maxTouchPoints: 0,
+        }}
+      />,
+    );
+    expect(desktopHtml).not.toContain("Chụp ảnh đề bài");
+    expect(desktopHtml).not.toContain('id="menu-item-camera"');
+    expect(desktopHtml).toContain("Tải tệp từ thiết bị");
+    expect(desktopHtml).toContain('id="menu-item-upload-file"');
+    expect(desktopHtml).not.toContain("photo-camera-dialog");
+    expect(desktopHtml).not.toContain("<video");
+
+    const mobileHtml = renderToString(
+      <ProblemInput
+        deviceSignals={{
+          userAgent: "Mozilla/5.0 (iPhone; CPU iPhone OS 17_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.4 Mobile/15E148 Safari/604.1",
+          platform: "iPhone",
+          maxTouchPoints: 5,
+        }}
+      />,
+    );
+    expect(mobileHtml).toContain("Chụp ảnh đề bài");
+    expect(mobileHtml).toContain("Tải tệp từ thiết bị");
+    expect(mobileHtml).toMatch(/id="menu-item-camera"[^>]*aria-haspopup="dialog"/);
+    expect(mobileHtml).not.toContain("photo-camera-dialog");
+    expect(mobileHtml).not.toContain("<video");
+    expect(mobileHtml).toContain('accept=".png,.jpg,.jpeg,.webp,.pdf,.docx"');
   });
 
   it("PhotoProblemDialog mở thẳng khung ngắm máy ảnh tối giản, không có nút crop/xoay thủ công", () => {
@@ -375,5 +401,185 @@ describe("Khung hỗ trợ đầu vào thống nhất & luồng gửi kết hợ
     expect(lockRef.current).toBe(false);
     expect(useAppStore.getState().problemText).toBe("Cho hình chóp S.ABCD có SA = 4.");
     expect(useToastStore.getState().toasts).toHaveLength(0);
+  });
+});
+
+describe("Device-Aware Camera Entry (§2–§9): 15 kịch bản phân loại thiết bị thuần & tích hợp menu dấu +", () => {
+  it("15 kịch bản unit test phân loại thiết bị (classifyCameraDevice & shouldShowCameraEntry)", () => {
+    // 1. iPhone Safari
+    const iphoneSafari = {
+      userAgent:
+        "Mozilla/5.0 (iPhone; CPU iPhone OS 17_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.4 Mobile/15E148 Safari/604.1",
+      platform: "iPhone",
+      maxTouchPoints: 5,
+      anyCoarsePointer: true,
+    };
+    expect(classifyCameraDevice(iphoneSafari)).toBe("phone");
+    expect(shouldShowCameraEntry(iphoneSafari)).toBe(true);
+
+    // 2. Android Chrome phone
+    const androidPhone = {
+      userAgentDataMobile: true,
+      userAgentDataPlatform: "Android",
+      userAgent:
+        "Mozilla/5.0 (Linux; Android 14; Pixel 8) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Mobile Safari/537.36",
+      platform: "Linux armv81",
+      maxTouchPoints: 5,
+      anyCoarsePointer: true,
+    };
+    expect(classifyCameraDevice(androidPhone)).toBe("phone");
+    expect(shouldShowCameraEntry(androidPhone)).toBe(true);
+
+    // 3. iPad Safari (classic iPad UA)
+    const ipadSafari = {
+      userAgent:
+        "Mozilla/5.0 (iPad; CPU OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1",
+      platform: "iPad",
+      maxTouchPoints: 5,
+      anyCoarsePointer: true,
+    };
+    expect(classifyCameraDevice(ipadSafari)).toBe("tablet");
+    expect(shouldShowCameraEntry(ipadSafari)).toBe(true);
+
+    // 4. iPadOS desktop-style UA (`Macintosh` + `maxTouchPoints > 1`)
+    const ipadosDesktopStyle = {
+      userAgent:
+        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.4 Safari/605.1.15",
+      platform: "MacIntel",
+      maxTouchPoints: 5,
+      anyCoarsePointer: true,
+    };
+    expect(classifyCameraDevice(ipadosDesktopStyle)).toBe("tablet");
+    expect(shouldShowCameraEntry(ipadosDesktopStyle)).toBe(true);
+
+    // 5. Android tablet (không có `Mobile` trong UA)
+    const androidTablet = {
+      userAgentDataMobile: false,
+      userAgentDataPlatform: "Android",
+      userAgent:
+        "Mozilla/5.0 (Linux; Android 13; SM-X700) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+      platform: "Linux armv81",
+      maxTouchPoints: 5,
+      anyCoarsePointer: true,
+    };
+    expect(classifyCameraDevice(androidTablet)).toBe("tablet");
+    expect(shouldShowCameraEntry(androidTablet)).toBe(true);
+
+    // 6. Windows Chrome
+    const windowsChrome = {
+      userAgentDataMobile: false,
+      userAgentDataPlatform: "Windows",
+      userAgent:
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+      platform: "Win32",
+      maxTouchPoints: 0,
+      anyCoarsePointer: false,
+    };
+    expect(classifyCameraDevice(windowsChrome)).toBe("desktop");
+    expect(shouldShowCameraEntry(windowsChrome)).toBe(false);
+
+    // 7. Windows touch laptop (`maxTouchPoints > 0`)
+    const windowsTouchLaptop = {
+      userAgentDataMobile: false,
+      userAgentDataPlatform: "Windows",
+      userAgent:
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+      platform: "Win32",
+      maxTouchPoints: 10,
+      anyCoarsePointer: true,
+    };
+    expect(classifyCameraDevice(windowsTouchLaptop)).toBe("desktop");
+    expect(shouldShowCameraEntry(windowsTouchLaptop)).toBe(false);
+
+    // 8. macOS Safari
+    const macosSafari = {
+      userAgent:
+        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.4 Safari/605.1.15",
+      platform: "MacIntel",
+      maxTouchPoints: 0,
+      anyCoarsePointer: false,
+    };
+    expect(classifyCameraDevice(macosSafari)).toBe("desktop");
+    expect(shouldShowCameraEntry(macosSafari)).toBe(false);
+
+    // 9. Linux Chrome
+    const linuxChrome = {
+      userAgentDataMobile: false,
+      userAgentDataPlatform: "Linux",
+      userAgent:
+        "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+      platform: "Linux x86_64",
+      maxTouchPoints: 0,
+      anyCoarsePointer: false,
+    };
+    expect(classifyCameraDevice(linuxChrome)).toBe("desktop");
+    expect(shouldShowCameraEntry(linuxChrome)).toBe(false);
+
+    // 10. Trường hợp thiếu thông tin nhận diện
+    expect(classifyCameraDevice({})).toBe("unknown");
+    expect(shouldShowCameraEntry({})).toBe(false);
+    expect(classifyCameraDevice(undefined)).toBe("unknown");
+    expect(shouldShowCameraEntry(undefined)).toBe(false);
+
+    // 11. Laptop thu nhỏ cửa sổ 390px -> không hiển thị Chụp ảnh đề bài
+    // (hàm thuần không phụ thuộc vào window.innerWidth)
+    expect(classifyCameraDevice(windowsChrome)).toBe("desktop");
+    expect(shouldShowCameraEntry(windowsChrome)).toBe(false);
+
+    // 12. Tablet xoay ngang (1180x820) -> vẫn hiển thị Chụp ảnh đề bài
+    expect(classifyCameraDevice(ipadosDesktopStyle)).toBe("tablet");
+    expect(shouldShowCameraEntry(ipadosDesktopStyle)).toBe(true);
+    expect(classifyCameraDevice(androidTablet)).toBe("tablet");
+    expect(shouldShowCameraEntry(androidTablet)).toBe(true);
+
+    // 13. Desktop Chrome Zoom 110% -> không hiển thị Chụp ảnh đề bài
+    expect(shouldShowCameraEntry(windowsChrome)).toBe(false);
+
+    // 14. Desktop Chrome Zoom 150% -> không hiển thị Chụp ảnh đề bài
+    expect(shouldShowCameraEntry(macosSafari)).toBe(false);
+
+    // 15. Thiết bị không có webcam / thiếu navigator.mediaDevices -> không gọi getUserMedia lúc mở menu
+    expect(shouldShowCameraEntry({ userAgent: "", maxTouchPoints: 0 })).toBe(false);
+  });
+
+  it("React integration (§9): Desktop chỉ render #menu-item-upload-file (không dòng trống); Mobile/Tablet render cả #menu-item-upload-file và #menu-item-camera", () => {
+    const desktopOpenHtml = renderToString(
+      <ProblemInput
+        initialPlusMenuOpen
+        deviceSignals={{
+          userAgentDataMobile: false,
+          userAgentDataPlatform: "Windows",
+          userAgent:
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+          platform: "Win32",
+          maxTouchPoints: 10,
+        }}
+      />,
+    );
+    expect(desktopOpenHtml).toContain('id="plus-popover-menu"');
+    expect(desktopOpenHtml).toContain('id="menu-item-upload-file"');
+    expect(desktopOpenHtml).toContain("Tải tệp từ thiết bị");
+    expect(desktopOpenHtml).not.toContain('id="menu-item-camera"');
+    expect(desktopOpenHtml).not.toContain("Chụp ảnh đề bài");
+    // Chỉ có đúng 1 role="menuitem" trong plus-popover-menu trên desktop
+    const desktopMenuItems = desktopOpenHtml.match(/role="menuitem"/g) ?? [];
+    expect(desktopMenuItems).toHaveLength(1);
+
+    const ipadOpenHtml = renderToString(
+      <ProblemInput
+        initialPlusMenuOpen
+        deviceSignals={{
+          userAgent:
+            "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.4 Safari/605.1.15",
+          platform: "MacIntel",
+          maxTouchPoints: 5,
+        }}
+      />,
+    );
+    expect(ipadOpenHtml).toContain('id="menu-item-upload-file"');
+    expect(ipadOpenHtml).toContain('id="menu-item-camera"');
+    expect(ipadOpenHtml).toContain("Chụp ảnh đề bài");
+    const ipadMenuItems = ipadOpenHtml.match(/role="menuitem"/g) ?? [];
+    expect(ipadMenuItems).toHaveLength(2);
   });
 });
