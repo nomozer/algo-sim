@@ -589,12 +589,16 @@ export function PhotoCameraView({
     clearUndoTimer();
     const { photo, index } = undoState;
     setUndoState(null);
+    const nextIdx = Math.max(0, Math.min(index, photosRef.current.length));
     updatePhotos((prev) => {
       const clampedIndex = Math.max(0, Math.min(index, prev.length));
       const copy = [...prev];
       copy.splice(clampedIndex, 0, photo);
       return copy;
     });
+    if (viewerIndex !== null) {
+      setViewerIndex(nextIdx);
+    }
   }
 
   function handleStartRetake(index: number) {
@@ -764,6 +768,20 @@ export function PhotoCameraView({
             >
               <IconNext size={18} />
             </button>
+          )}
+
+          {undoState && (
+            <div id="photo-undo-bar" className="photo-undo-bar" role="status" aria-live="polite">
+              <span>Đã xóa Ảnh {undoState.index + 1}</span>
+              <button
+                type="button"
+                id="btn-photo-undo-delete"
+                className="photo-undo-btn"
+                onClick={handleUndoDelete}
+              >
+                Hoàn tác
+              </button>
+            </div>
           )}
         </div>
 
@@ -1001,13 +1019,13 @@ export function PhotoCameraView({
             <button
               type="button"
               id="btn-photo-switch-camera"
-              className="btn-utility photo-camera-side-btn"
+              className="btn-utility photo-camera-side-btn photo-camera-switch-btn"
               onClick={switchCamera}
               disabled={switching}
               aria-label="Đổi máy ảnh"
+              title="Đổi máy ảnh"
             >
               <IconSwitchCamera size={16} />
-              <span className="photo-camera-side-label">Đổi camera</span>
             </button>
           ) : null}
         </div>

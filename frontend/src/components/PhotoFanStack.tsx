@@ -30,8 +30,8 @@ export const FAN_LAYOUTS: Record<number, { collapsed: FanPose[]; open: FanPose[]
       { tx: 2, ty: 0, rot: 3 },
     ],
     open: [
-      { tx: -26, ty: -8, rot: -11 },
-      { tx: 24, ty: -6, rot: 9 },
+      { tx: -28, ty: -52, rot: -8 },
+      { tx: 18, ty: -52, rot: 8 },
     ],
   },
   3: {
@@ -41,9 +41,9 @@ export const FAN_LAYOUTS: Record<number, { collapsed: FanPose[]; open: FanPose[]
       { tx: 4, ty: 0, rot: 5 },
     ],
     open: [
-      { tx: -46, ty: -5, rot: -16 },
-      { tx: 0, ty: -14, rot: 0 },
-      { tx: 46, ty: -5, rot: 16 },
+      { tx: -48, ty: -50, rot: -11 },
+      { tx: -8, ty: -58, rot: 0 },
+      { tx: 32, ty: -50, rot: 11 },
     ],
   },
   4: {
@@ -54,10 +54,10 @@ export const FAN_LAYOUTS: Record<number, { collapsed: FanPose[]; open: FanPose[]
       { tx: 5, ty: 0, rot: 6 },
     ],
     open: [
-      { tx: -64, ty: -2, rot: -20 },
-      { tx: -22, ty: -13, rot: -7 },
-      { tx: 22, ty: -13, rot: 7 },
-      { tx: 64, ty: -2, rot: 20 },
+      { tx: -64, ty: -48, rot: -13 },
+      { tx: -26, ty: -56, rot: -4.5 },
+      { tx: 12, ty: -56, rot: 4.5 },
+      { tx: 50, ty: -48, rot: 13 },
     ],
   },
   5: {
@@ -69,11 +69,11 @@ export const FAN_LAYOUTS: Record<number, { collapsed: FanPose[]; open: FanPose[]
       { tx: 6, ty: 0, rot: 7 },
     ],
     open: [
-      { tx: -80, ty: 2, rot: -22 },
-      { tx: -40, ty: -10, rot: -11 },
-      { tx: 0, ty: -16, rot: 0 },
-      { tx: 40, ty: -10, rot: 11 },
-      { tx: 80, ty: 2, rot: 22 },
+      { tx: -82, ty: -46, rot: -14 },
+      { tx: -45, ty: -55, rot: -7 },
+      { tx: -8, ty: -60, rot: 0 },
+      { tx: 29, ty: -55, rot: 7 },
+      { tx: 66, ty: -46, rot: 14 },
     ],
   },
 };

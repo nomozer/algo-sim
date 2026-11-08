@@ -53,7 +53,7 @@ function makeFakeAttachment(
 describe("PhotoFanStack (§6): 0 ảnh ẩn, 1 ảnh thẻ đơn, 2..5 ảnh xếp quạt, > 5 ảnh hiện badge +N không thêm nhãn đếm thừa", () => {
   it("0 ảnh: không hiển thị fan stack, không hiển thị chữ 0 ảnh", () => {
     const html = renderToString(
-      <PhotoFanStack photos={[]} isMobile={false} onOpenViewer={noop} onOpenMobileTray={noop} />,
+      <PhotoFanStack photos={[]} isMobile={false} onOpenPhoto={noop} onOpenMobileTray={noop} />,
     );
     expect(html).toBe("");
   });
@@ -61,7 +61,7 @@ describe("PhotoFanStack (§6): 0 ảnh ẩn, 1 ảnh thẻ đơn, 2..5 ảnh x�
   it("1 ảnh: hiển thị một thẻ ảnh nhỏ duy nhất (#btn-photo-fan-single), không có hiệu ứng quạt và không có chữ đếm ảnh", () => {
     const p1 = makeSessionPhoto(0);
     const html = renderToString(
-      <PhotoFanStack photos={[p1]} isMobile={false} onOpenViewer={noop} onOpenMobileTray={noop} />,
+      <PhotoFanStack photos={[p1]} isMobile={false} onOpenPhoto={noop} onOpenMobileTray={noop} />,
     );
     expect(html).toContain('id="btn-photo-fan-single"');
     expect(html).not.toContain('id="btn-photo-fan-card-1"');
@@ -74,7 +74,7 @@ describe("PhotoFanStack (§6): 0 ảnh ẩn, 1 ảnh thẻ đơn, 2..5 ảnh x�
     for (const count of [2, 3, 4, 5]) {
       const photos = Array.from({ length: count }, (_, i) => makeSessionPhoto(i));
       const html = renderToString(
-        <PhotoFanStack photos={photos} isMobile={false} onOpenViewer={noop} onOpenMobileTray={noop} />,
+        <PhotoFanStack photos={photos} isMobile={false} onOpenPhoto={noop} onOpenMobileTray={noop} />,
       );
       expect(html).toContain('id="photo-fan-stack"');
       expect(html).toContain(`data-photo-count="${count}"`);
@@ -91,7 +91,7 @@ describe("PhotoFanStack (§6): 0 ảnh ẩn, 1 ảnh thẻ đơn, 2..5 ảnh x�
   it("> 5 ảnh: giữ toàn bộ ảnh trong phiên nhưng quạt hiển thị tối đa 5 thẻ và có badge +N trên thẻ thứ 5", () => {
     const photos = Array.from({ length: 7 }, (_, i) => makeSessionPhoto(i));
     const html = renderToString(
-      <PhotoFanStack photos={photos} isMobile={false} onOpenViewer={noop} onOpenMobileTray={noop} />,
+      <PhotoFanStack photos={photos} isMobile={false} onOpenPhoto={noop} onOpenMobileTray={noop} />,
     );
     expect(MAX_VISIBLE_FAN_CARDS).toBe(5);
     expect(html).toContain('data-photo-count="7"');
@@ -109,14 +109,10 @@ describe("PhotoCameraView & PhotoProblemDialog (§5, §7, §8): nút Xong cố �
     const html = renderToString(
       <PhotoCameraView
         photos={[]}
-        onAddPhoto={noop}
-        onReplacePhoto={noop}
-        onRemovePhoto={noop}
-        onRestorePhoto={noop}
-        onCommitDone={noop}
+        onCapture={noop}
+        onCaptureBatch={noop}
         onPickFile={noop}
         onNativeCamera={noop}
-        onClose={noop}
       />,
     );
     expect(html).toContain('id="btn-photo-fit-mode"');
@@ -133,14 +129,10 @@ describe("PhotoCameraView & PhotoProblemDialog (§5, §7, §8): nút Xong cố �
     const html = renderToString(
       <PhotoCameraView
         photos={photos}
-        onAddPhoto={noop}
-        onReplacePhoto={noop}
-        onRemovePhoto={noop}
-        onRestorePhoto={noop}
-        onCommitDone={noop}
+        onCapture={noop}
+        onCaptureBatch={noop}
         onPickFile={noop}
         onNativeCamera={noop}
-        onClose={noop}
       />,
     );
     expect(html).toContain('id="btn-photo-done"');
@@ -158,6 +150,7 @@ describe("PhotoCameraView & PhotoProblemDialog (§5, §7, §8): nút Xong cố �
         onClose={noop}
         onPickFile={noop}
         onNativeCamera={noop}
+        onCaptured={noop}
         onCapturedBatch={noop}
       />,
     );
@@ -199,7 +192,7 @@ describe("Gửi đa ảnh có thứ tự & chống race condition theo request_i
       provenance: {
         source_attachment_ids: (req.attachments ?? []).map((item) => item.attachment_id),
       },
-      request_id: req.request_id ?? null,
+      request_id: req.request_id,
       metrics: {
         vlm_calls: 3,
         used_vlm: true,
@@ -258,7 +251,7 @@ describe("Gửi đa ảnh có thứ tự & chống race condition theo request_i
         missing_regions: [],
         candidates: [],
         provenance: {},
-        request_id: req.request_id ?? null,
+        request_id: req.request_id,
         metrics: {
           vlm_calls: 1,
           used_vlm: true,
