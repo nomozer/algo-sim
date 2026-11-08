@@ -289,13 +289,41 @@ def _operand(t: dict[str, Any], key: str, n: int) -> list[str] | None:
 def _mo_ta_phang(p: TypedFactNextPayload) -> dict[str, dict[str, Any]]:
     """R-1 (layer 1): described id → the planner's description of that unnamed point, `{"point_kind", "points"}` with the
     labels flat in the Registry descriptor contract's input order — exactly what a route B question / section fact carries,
-    so the SAME planner, Source Gate and engine read it (no second path). A described point whose operand is itself
-    described is refused: the Source Gate certifies one description per question (`BRIDGE_UNSUPPORTED_DESCRIBED_POINT`)."""
+    so the SAME planner, Source Gate and engine read it (no second path). A 2-level nested description (`@outer` projecting
+    `@inner` onto a plane or line) carries `point_tree` when `@inner` matches its Registry descriptor contract phrase."""
+    import re
+    from .registry import PlanningContract, _P1, chuan_hoa, descriptor_contracts
+
+    by_id = {d.described_id: d for d in getattr(p, "described_points", ())}
     out: dict[str, dict[str, Any]] = {}
     for d in getattr(p, "described_points", ()):
         if any(is_described_ref(x) for x in d.point_operands()):
-            raise TuChoi("BRIDGE_UNSUPPORTED_DESCRIBED_POINT", f"@{d.described_id}: điểm được mô tả qua một điểm được mô "
-                         "tả khác chưa có chứng chỉ nguồn", (d.described_id,))
+            if d.kind not in ("orthogonal_projection", "orthogonal_projection_line") or not is_described_ref(d.point):
+                raise TuChoi("BRIDGE_UNSUPPORTED_DESCRIBED_POINT", f"@{d.described_id}: điểm được mô tả qua một điểm được mô "
+                             "tả khác chưa có chứng chỉ nguồn", (d.described_id,))
+            inner = by_id.get(d.point.strip()[1:])
+            if inner is None or any(is_described_ref(x) for x in inner.point_operands()):
+                raise TuChoi("BRIDGE_UNSUPPORTED_DESCRIBED_POINT", f"@{d.described_id}: điểm được mô tả qua một điểm được mô "
+                             "tả khác chưa có chứng chỉ nguồn", (d.described_id,))
+            if chuan_hoa(inner.quote) not in chuan_hoa(d.quote):
+                raise TuChoi("SOURCE_OBJECT_MISMATCH", f"@{d.described_id}: cụm mô tả {inner.quote!r} không nằm trong {d.quote!r}",
+                             (d.described_id,))
+            inner_dcs = [c for c in descriptor_contracts(inner.kind) if isinstance(c, PlanningContract) and c.call and isinstance(c.phrase, str)]
+            if ("c\u1ee7a" not in chuan_hoa(inner.quote).split()
+                    or not inner_dcs
+                    or not any(re.fullmatch(c.phrase.replace("{P}", _P1), chuan_hoa(inner.quote), re.I) for c in inner_dcs)):
+                raise TuChoi("BRIDGE_UNSUPPORTED_DESCRIBED_POINT", f"@{d.described_id}: điểm được mô tả qua một điểm được mô "
+                             "tả khác chưa có chứng chỉ nguồn", (d.described_id,))
+            inner_labels = [x for k, shape in DESCRIBED_POINT_FIELDS[inner.kind].items()
+                            for x in ([getattr(inner, k)] if shape == "pt" else getattr(inner, k))]
+            target_labels = list(d.plane if d.kind == "orthogonal_projection" else d.line)
+            out[d.described_id] = {
+                "point_kind": d.kind,
+                "points": _refs(target_labels),
+                "point_tree": {"point_kind": inner.kind, "points": _refs(inner_labels)},
+                "quote": d.quote,
+            }
+            continue
         labels = [x for k, shape in DESCRIBED_POINT_FIELDS[d.kind].items()
                   for x in ([getattr(d, k)] if shape == "pt" else getattr(d, k))]
         out[d.described_id] = {"point_kind": d.kind, "points": _refs(labels), "quote": d.quote}
@@ -312,7 +340,10 @@ def _mo_ta_cua(ref: str, mo_ta: dict[str, dict[str, Any]], consumer_quote: str, 
         raise TuChoi("UNKNOWN_DERIVED_REFERENCE", f"{where}: điểm mô tả {ref!r} không được khai", (where,))
     if chuan_hoa(d["quote"]) not in chuan_hoa(consumer_quote):
         raise TuChoi("SOURCE_OBJECT_MISMATCH", f"{where}: cụm mô tả {d['quote']!r} không nằm trong câu dùng nó", (where,))
-    return {"point_kind": d["point_kind"], "points": list(d["points"])}
+    res: dict[str, Any] = {"point_kind": d["point_kind"], "points": list(d["points"])}
+    if "point_tree" in d:
+        res["point_tree"] = dict(d["point_tree"])
+    return res
 
 
 def _cau_hoi_mo_ta(g, mo_ta: dict[str, dict[str, Any]]) -> dict[str, Any] | None:

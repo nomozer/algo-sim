@@ -517,7 +517,7 @@ def parse_descriptor_inputs(
     if not kinds:
         return None
     if all(k == "Point" for k in kinds):
-        if len(pts) != len(kinds) or len(set(pts)) != len(pts):
+        if len(pts) != len(kinds) or len(set(pts)) != len(pts) or not all(isinstance(x, str) for x in pts):
             return None
         return tuple(sorted(pts)), []
     i = 0
@@ -534,7 +534,7 @@ def parse_descriptor_inputs(
                 return None
             seg = pts[i:i + 2]
             i += 2
-            if len(set(seg)) != 2:
+            if not all(isinstance(x, str) for x in seg) or len(set(seg)) != 2:
                 return None
             out.append(("named", tuple(sorted(seg))))
         elif k == "Plane":
@@ -542,7 +542,7 @@ def parse_descriptor_inputs(
                 return None
             pl = pts[i:]
             i = len(pts)
-            if len(pl) < 3 or len(set(pl)) != len(pl):
+            if not all(isinstance(x, str) for x in pl) or len(pl) < 3 or len(set(pl)) != len(pl):
                 return None
             if len(pl) > 3:
                 extra_planes.append(list(pl))
@@ -557,7 +557,13 @@ def parse_descriptor_inputs(
         out = sorted(out)
     elif kinds[0] == "Point" and len(kinds) == 2:
         ref_pts = out[1][1] if kinds[1] == "Line" else out[1]
-        if out[0] in ref_pts:
+        if out[0] in ref_pts or (
+            isinstance(out[0], tuple)
+            and out[0][:1] == ("desc",)
+            and out[0][1] in ("midpoint", "centroid", "orthocenter", "circumcenter")
+            and all(isinstance(x, str) for x in out[0][2])
+            and set(out[0][2]) <= set(ref_pts)
+        ):
             return None
     return tuple(out), extra_planes
 
@@ -1902,29 +1908,36 @@ def _mat_nhan_hop_le(p: list[str] | tuple[str, ...]) -> bool:
     return len(p) >= 3 and len(set(p)) == len(p)
 
 
-def _khop_mo_ta_nguon(dc: PlanningContract, denv: dict[str, Any], m: re.Match, khoi: dict[str, frozenset]) -> bool:
+def _cum_mo_ta_long(outer_phrase: str, inner_phrase: str) -> str:
+    inner_renamed = re.sub(r"\(\?P<(\w+)>", r"(?P<in_\1>", inner_phrase)
+    return outer_phrase.replace("(?P<op_p>{P})(?![\\w'])", f"(?:{inner_renamed})")
+
+
+def _khop_mo_ta_nguon(dc: PlanningContract, denv: dict[str, Any], m: re.Match, khoi: dict[str, frozenset],
+                      prefix: str = "") -> bool:
     """Role-exact match of a source regex match `m` against a descriptor contract's bound `denv` slots."""
     gi = m.re.groupindex
-    if "ops" in gi:
+    g = lambda k: f"{prefix}{k}"  # noqa: E731
+    if g("ops") in gi:
         ops = [denv.get(t.operands[0]) for t in dc.inputs]
-        return sorted(_nhan_cum(m["ops"])) == sorted(ops)
-    if "op_p" in gi and m["op_p"] != denv.get("P"):
+        return sorted(_nhan_cum(m[g("ops")])) == sorted(ops)
+    if g("op_p") in gi and m[g("op_p")] != denv.get("P"):
         return False
-    if "op_l" in gi:
+    if g("op_l") in gi:
         ln = denv.get("L")
         if not (isinstance(ln, (list, tuple)) and len(ln) == 2 and ln[0] == "named"):
             return False
-        if sorted(_nhan_cum(m["op_l"])) != sorted(ln[1]):
+        if sorted(_nhan_cum(m[g("op_l")])) != sorted(ln[1]):
             return False
-    if "op_q" in gi:
+    if g("op_q") in gi:
         pl = denv.get("Q")
-        if not isinstance(pl, (list, tuple)) or not _cung_mat(frozenset(_nhan_cum(m["op_q"])), list(pl)):
+        if not isinstance(pl, (list, tuple)) or not _cung_mat(frozenset(_nhan_cum(m[g("op_q")])), list(pl)):
             return False
-    if "op_l1" in gi and "op_l2" in gi:
+    if g("op_l1") in gi and g("op_l2") in gi:
         l1, l2 = denv.get("L1"), denv.get("L2")
         if not (isinstance(l1, (list, tuple)) and isinstance(l2, (list, tuple)) and l1[0] == "named" and l2[0] == "named"):
             return False
-        said = {frozenset(_nhan_cum(m["op_l1"])), frozenset(_nhan_cum(m["op_l2"]))}
+        said = {frozenset(_nhan_cum(m[g("op_l1")])), frozenset(_nhan_cum(m[g("op_l2")]))}
         want = {frozenset(l1[1]), frozenset(l2[1])}
         if said != want:
             return False
@@ -2155,7 +2168,21 @@ def _kiem_result_binding(phu, calls, de, nhan, don_vi_de: set[str] = frozenset()
             dc, denv = desc[0][0], desc[0][1]
         if op.get('label') != p:
             raise TuChoi('AUXILIARY_RULE_MISMATCH', 'mục tiêu không đo từ điểm được mô tả', (ask.id,))
-        _kiem_chung_chi_mo_ta(dc, denv, op, nhan, (ask.id,))
+        inner_dc, inner_denv = None, {}
+        if (nested := op.get('nested')) is not None:
+            if not isinstance(nested, dict) or not isinstance(nested.get('label'), str):
+                raise TuChoi('AUXILIARY_RULE_MISMATCH', 'điểm mô tả lồng nhau không hợp lệ', (ask.id,))
+            inner_desc = [g for g in got if g[0].descriptor and g[0].descriptor == nested.get('descriptor')
+                          and values(g[0].effect, g[1]) == (nested['label'],)]
+            if not inner_desc:
+                raise TuChoi('AUXILIARY_RULE_MISMATCH', 'điểm mô tả bên trong không có trong chuỗi', (ask.id,))
+            inner_dc, inner_denv = inner_desc[0][0], inner_desc[0][1]
+            _kiem_chung_chi_mo_ta(inner_dc, inner_denv, nested, nhan, (ask.id,))
+            _kiem_chung_chi_mo_ta(dc, denv, op, nhan | {nested['label']}, (ask.id,))
+            desc_phrase = _cum_mo_ta_long(dc.phrase or '', inner_dc.phrase or '')
+        else:
+            _kiem_chung_chi_mo_ta(dc, denv, op, nhan, (ask.id,))
+            desc_phrase = dc.phrase or ''
         goal_kind = ans[0].goal
         slots = goal_slots(ans[0])[1:]
         if goal_kind is not None:            # target re-read slot by slot from the contract's typed inputs (one reader)
@@ -2185,11 +2212,13 @@ def _kiem_result_binding(phu, calls, de, nhan, don_vi_de: set[str] = frozenset()
         x = rest[0]
         g = producer(x[1]) if goal_kind is None and x[0] == 'result' else None
         # a goal contract may declare several closed wordings (operand orders): each is one exact pattern (M3)
-        patterns = (tuple(_mau_muc_tieu_mo_ta(p, dc.phrase or '') for p in _cac_cau(ans[0].phrase)) if goal_kind else
-                    (_mau_khoang_cach_mo_ta(dc.phrase or ''),))
+        patterns = (tuple(_mau_muc_tieu_mo_ta(p, desc_phrase) for p in _cac_cau(ans[0].phrase)) if goal_kind else
+                    (_mau_khoang_cach_mo_ta(desc_phrase),))
 
         def binds(m):
             if not _khop_mo_ta_nguon(dc, denv, m, khoi):
+                return False
+            if inner_dc is not None and not _khop_mo_ta_nguon(inner_dc, inner_denv, m, khoi, prefix="in_"):
                 return False
             if goal_kind is not None:        # wording groups by slot kind: t / t1,t2 points, m plane, l line
                 pts = [v for (_s, k), v in zip(slots, rest) if k == 'Point']
@@ -4239,7 +4268,9 @@ def _mau_hoi_tat_ca() -> tuple[re.Pattern[str], ...]:
     """EVERY object phrase a request can name — the per-function ask grammar, the auxiliary distance phrases and the
     contract phrases of unnamed points (Registry data). One inventory for request coverage (M1): no wording list."""
     ct = [p for s in REGISTRY.values() for p in planning_contracts(s)]
-    desc = tuple(p.phrase for p in ct if p.descriptor and isinstance(p.phrase, str))
+    base_desc = tuple(p.phrase for p in ct if p.descriptor and isinstance(p.phrase, str))
+    nested_desc = tuple(_cum_mo_ta_long(o, i) for o in base_desc if "(?P<op_p>{P})" in o for i in base_desc)
+    desc = (*base_desc, *nested_desc)
     goals = tuple(g for p in ct if p.goal for g in _cac_cau(p.phrase))
     return _mau_hoi_dong(desc, goals)
 

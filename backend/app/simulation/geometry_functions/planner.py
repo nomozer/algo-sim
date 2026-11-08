@@ -155,11 +155,13 @@ class TypedFact(BaseModel):
     plane_constraints: SkipJsonSchema[list[dict[str, Any]] | None] = None
     # Internal only (planner /20): a section / the small cone / a goal of THE solid of revolution, as the bridge read it.
     curved_part: SkipJsonSchema[dict[str, Any] | None] = None
+    # Internal only (Phase 1 dynamic composition): nested unnamed described point operand tree written by the `/2` bridge.
+    point_tree: SkipJsonSchema[dict[str, Any] | None] = None
 
 
 #: TypedFact fields only the deterministic bridge writes; a provider response carrying one is refused.
 INTERNAL_FACT_FIELDS = ("cut_edges", "cut_points", "plane_ref", "solid_refs", "derive_cuts", "boundary_edges", "curved",
-                        "curved_part", "plane_constraints")
+                        "curved_part", "plane_constraints", "point_tree")
 
 
 @dataclass
@@ -384,17 +386,33 @@ def _doi_tac(contract) -> bool:
     return kinds[:2] == ["Point", "Point"] and any(k in ("Line", "Plane") for k in kinds[2:])
 
 
+def _cay_mo_ta(f: TypedFact) -> tuple | None:
+    def build(kind: str | None, pts: list | tuple, child: dict | None = None) -> tuple | None:
+        if not kind:
+            return None
+        raw: list[Any] = list(pts or ())
+        if child is not None:
+            sub = build(child.get("point_kind"), child.get("points") or (), child.get("point_tree"))
+            if sub is None:
+                return None
+            raw = [sub, *raw]
+        for c in descriptor_contracts(kind):
+            if (r := parse_descriptor_inputs(c, raw)) is not None:
+                return ("desc", kind, r[0])
+        return None
+    return build(f.point_kind, f.points or (), f.point_tree)
+
+
 def _toan_hang_muc_tieu(f: TypedFact, contract) -> tuple | None:
     """Typed operands of a question on a DESCRIBED point for ONE goal contract, or None when the fact does not fill its
     slots. The described point fills the first slot; `points_a` (its named partner on a line, one label) the next Point
     slot; `points_b` the rest — one label per Point slot, exactly two labels for a Line slot, ≥ 3 for a Plane slot. Each
     list fills only the slots of its own operand: a position is never guessed inside a list."""
-    dcs = descriptor_contracts(f.point_kind)
-    parsed = next((r for c in dcs if (r := parse_descriptor_inputs(c, f.points or ())) is not None), None)
-    if parsed is None:
+    desc = _cay_mo_ta(f)
+    if desc is None:
         return None
     kinds = [k for _s, k in goal_slots(contract)]
-    head = [("desc", f.point_kind, parsed[0])] + list(f.points_a or [])
+    head = [desc] + list(f.points_a or [])
     if len(head) >= len(kinds) or any(k != "Point" for k in kinds[:len(head)]):
         return None
     rest, b = kinds[len(head):], list(f.points_b or [])
@@ -422,8 +440,7 @@ def _doc_toan_hang_mo_ta(f: TypedFact) -> None:
     contracts = descriptor_contracts(f.point_kind)
     if not contracts:
         raise TuChoi("UNSUPPORTED_CAPABILITY", f"{f.id}: không hàm nào của thư viện dựng được {f.point_kind}", (f.id,))
-    pts = f.points or []
-    if not any(parse_descriptor_inputs(c, pts) is not None for c in contracts):
+    if _cay_mo_ta(f) is None:
         raise TuChoi("FACT_INCOMPLETE", f"{f.id}: {f.point_kind} cần toán hạng phân biệt đúng kiểu hợp đồng", (f.id,))
     if goals:
         if f.line_ref or not any(_toan_hang_muc_tieu(f, c) for c in goals):
@@ -1313,9 +1330,9 @@ def _cau_hoi(f: TypedFact, q: list[str], k: KeHoach, khoi_cua, phat) -> dict:
         if len(b) > 3 and not f.line_ref:
             k.named_planes.append({"call": f.id, "labels": b})
         target = (("result", f.line_ref) if f.line_ref else ("named", tuple(sorted(b))) if len(b) == 2 else tuple(b[:3]))
-        dcs = descriptor_contracts(f.point_kind)
-        parsed = next(r for c in dcs if (r := parse_descriptor_inputs(c, f.points or ())) is not None)
-        return k.resolver.distance(f, ("desc", f.point_kind, parsed[0]), target)
+        desc = _cay_mo_ta(f)
+        assert desc is not None
+        return k.resolver.distance(f, desc, target)
     if f.line_ref:
         return k.resolver.distance(f, f.points_a[0], ("result", f.line_ref))
     if n == "volume":
@@ -1400,9 +1417,9 @@ def _cau_hoi(f: TypedFact, q: list[str], k: KeHoach, khoi_cua, phat) -> dict:
 def _phan_giai_diem_mat_phu(f: TypedFact, k: KeHoach) -> tuple[str, list[dict] | None, dict | None, list[str]]:
     if f.point is not None:
         return f.point, None, None, []
-    dcs = descriptor_contracts(f.point_kind)
-    parsed = next(r for c in dcs if (r := parse_descriptor_inputs(c, f.points or ())) is not None)
-    m, chain, p_labels = k.resolver.point(f, ("desc", f.point_kind, parsed[0]))
+    desc = _cay_mo_ta(f)
+    assert desc is not None
+    m, chain, p_labels = k.resolver.point(f, desc)
     return m, chain, {"descriptor": f.point_kind, "points": list(f.points or ()), "label": m}, p_labels
 
 
@@ -2162,10 +2179,22 @@ class _EffectResolver:
             envs = [{**e, s: z} for e in envs for z in (e.get("W") or ())] if env.get(s) is None else envs
         return envs
 
+    def _tren_mat(self, p, plane) -> bool:
+        if not isinstance(plane, (list, tuple)):
+            return False
+        verts = set(plane)
+        if isinstance(p, str):
+            return p in verts
+        if isinstance(p, tuple) and p[:1] == ("desc",) and p[2] and all(isinstance(x, str) for x in p[2]):
+            return set(p[2]) <= verts
+        return False
+
     def _unmet(self, contract, env) -> str | None:
         for pred, a, b in contract.requires:
             if pred == "off_line" and self._tren_duong(env.get(a), env.get(b)):
                 return "precondition: the point lies on the line"
+            if pred == "off_plane" and self._tren_mat(env.get(a), env.get(b)):
+                return "precondition: the point lies on the plane"
         return None
 
     def _resolve(self, kind, operands, depth=0):
@@ -2362,7 +2391,9 @@ class _EffectResolver:
         self.plan.trace[-1]['fact'] = fact.id
         if not answer:                     # provenance at emission (C16): what put this step in the plan
             # C18 review MAJOR-2: a step under a defined point realizes its DECLARED definition (`DINH_NGHIA_DIEM`)
+            composed = bool(contract.descriptor) and any(ch.fn is not None for ch in choice.inputs)
             self.plan.step_provenance[cid] = ('registered' if under
+                                              else 'search_generated' if composed
                                               else 'source_defined' if contract.descriptor
                                               else 'registered' if contract.source_policy in _RULE_POLICIES
                                               else 'search_generated')
@@ -2456,8 +2487,24 @@ class _EffectResolver:
         answer = choice.contract
         fresh = [(e, pc) for e in self.trail
                  if e['fresh'] and (pc := planning_contract(REGISTRY[e['fn']], e.get('effect'), e.get('descriptor'))) and pc.fresh]
+        op_cert: dict[str, Any] = {'descriptor': point[1], 'points': list(fact.points), 'label': env[answer.effect.operands[0]]}
+        if fact.point_tree:
+            outer_e = next(
+                e for e in self.trail
+                if (pc := planning_contract(REGISTRY[e['fn']], e.get('effect'), e.get('descriptor')))
+                and pc.descriptor == point[1]
+                and e['env'].get(pc.effect.operands[0]) == op_cert['label']
+            )
+            outer_pc = planning_contract(REGISTRY[outer_e['fn']], outer_e.get('effect'), outer_e.get('descriptor'))
+            in_lbl = outer_e['env'][outer_pc.inputs[0].operands[0]]
+            op_cert['points'] = [in_lbl, *fact.points]
+            op_cert['nested'] = {
+                'descriptor': fact.point_tree['point_kind'],
+                'points': list(fact.point_tree.get('points') or ()),
+                'label': in_lbl,
+            }
         cert = {'rule': 'effect-chain', 'effect_binding': True, 'goal': fact.id, 'ask': fact.id,
-                'operand': {'descriptor': point[1], 'points': list(fact.points), 'label': env[answer.effect.operands[0]]},
+                'operand': op_cert,
                 'target': (target if isinstance(target, dict) else {'point': target} if isinstance(target, str)
                            else {'points': list(target[1])} if target[0] == 'points'
                            else {'line_ref': target[1]} if target[0] == 'result'

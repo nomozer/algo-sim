@@ -2817,6 +2817,8 @@ class _Dung:
         """`effect-chain` (planner): the unnamed point IS what the source describes, checked on the built figure by a
         predicate keyed by the DESCRIPTION — not by whichever function the planner's contract chose to construct it."""
         op, ask = d.get("operand") or {}, (d.get("ask"),)
+        if isinstance(op.get("nested"), dict):
+            self.kiem_mo_ta({"operand": op["nested"], "ask": d.get("ask")})
         dung = _MO_TA.get(op.get("descriptor"))
         if dung is None:
             raise TuChoi("UNSUPPORTED_CAPABILITY", f"không có vị từ kiểm cho mô tả {op.get('descriptor')!r}", ask)
