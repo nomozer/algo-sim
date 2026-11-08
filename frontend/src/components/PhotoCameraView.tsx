@@ -56,8 +56,14 @@ export type CameraTarget =
   | { kind: "device"; deviceId: string };
 
 export type CameraFitMode = "contain" | "cover";
+export type CameraOrientation = "portrait" | "landscape";
 
 const IDEAL_SIZE = { width: { ideal: 2560 }, height: { ideal: 1920 } } as const;
+const IDEAL_PORTRAIT_SIZE = {
+  width: { ideal: 1920 },
+  height: { ideal: 2560 },
+  aspectRatio: { ideal: 0.75 },
+} as const;
 const THUMB_MAX_DIM = 320;
 const UNDO_TIMEOUT_MS = 5000;
 const ZOOM_STEPS = [100, 125, 150, 175, 200, 250, 300] as const;
@@ -190,17 +196,27 @@ export function cameraErrorTitle(errMessage: string): string {
   return "Không thể mở máy ảnh";
 }
 
-/** Nhận diện thiết bị di động theo tín hiệu năng lực thiết bị + UA, không phụ thuộc riêng bề rộng cửa sổ. */
+/** Nhận diện thiết bị di động / tablet theo tín hiệu năng lực thiết bị + UA, không phụ thuộc riêng bề rộng cửa sổ. */
 export function isMobileCameraPreferred(sig: CameraDeviceSignals): boolean {
   if (sig.userAgentDataMobile === true) return true;
+  if (/Android|iPhone|iPad|iPod|Mobile|Tablet/i.test(sig.userAgent ?? "")) return true;
   if (sig.userAgentDataMobile === false) return false;
-  if (/Android|iPhone|iPad|iPod|Mobile/i.test(sig.userAgent ?? "")) return true;
   return (sig.maxTouchPoints ?? 0) > 0 && Boolean(sig.anyCoarsePointer);
 }
 
+export function detectViewportOrientation(): CameraOrientation {
+  if (typeof window !== "undefined" && window.innerWidth > 0 && window.innerHeight > 0) {
+    return window.innerHeight > window.innerWidth ? "portrait" : "landscape";
+  }
+  return "landscape";
+}
+
 export function detectMobileCameraPreferred(): boolean {
-  if (typeof window !== "undefined") {
-    if (window.innerWidth > 0 && (window.innerWidth <= 820 || window.innerHeight <= 560)) {
+  if (typeof window !== "undefined" && window.innerWidth > 0 && window.innerHeight > 0) {
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+    // Điện thoại / màn hình thấp hoặc Tablet dọc (vd: 768×1024, 820×1180) & Tablet ngang (vd: 1024×768)
+    if (w <= 820 || h <= 560 || (w <= 1024 && h <= 1366 && (h >= w || h <= 820))) {
       return true;
     }
   }
@@ -222,18 +238,22 @@ export function initialCameraTarget(mobile: boolean): CameraTarget {
   return mobile ? { kind: "facing", facing: "environment" } : { kind: "default" };
 }
 
-export function buildCameraConstraints(target: CameraTarget): MediaStreamConstraints {
+export function buildCameraConstraints(
+  target: CameraTarget,
+  orientation?: CameraOrientation,
+): MediaStreamConstraints {
+  const sizeSpec = orientation === "portrait" ? IDEAL_PORTRAIT_SIZE : IDEAL_SIZE;
   switch (target.kind) {
     case "default":
-      return { video: { ...IDEAL_SIZE }, audio: false };
+      return { video: { ...sizeSpec }, audio: false };
     case "facing":
-      return { video: { facingMode: { ideal: target.facing }, ...IDEAL_SIZE }, audio: false };
+      return { video: { facingMode: { ideal: target.facing }, ...sizeSpec }, audio: false };
     case "device":
-      return { video: { deviceId: { exact: target.deviceId }, ...IDEAL_SIZE }, audio: false };
+      return { video: { deviceId: { exact: target.deviceId }, ...sizeSpec }, audio: false };
   }
 }
 
-/** Khi camera sau hoặc `deviceId` vừa chọn không khả dụng, lùi về bất kỳ camera nào dùng được. */
+/** Khi camera sau, tỷ lệ dọc hoặc `deviceId` vừa chọn không khả dụng, lùi về luồng ngang tiêu chuẩn hoặc bất kỳ camera nào dùng được. */
 export function fallbackCameraConstraints(err: unknown, target: CameraTarget): MediaStreamConstraints | null {
   const name = (err as { name?: string } | null)?.name ?? "";
   if (name !== "OverconstrainedError" && name !== "NotFoundError") return null;
@@ -377,6 +397,9 @@ export function PhotoCameraView({
   onErrorStateChange,
 }: PhotoCameraViewProps) {
   const [mobile, setMobile] = useState(detectMobileCameraPreferred);
+  const [viewportOrientation, setViewportOrientation] = useState<CameraOrientation>(
+    detectViewportOrientation,
+  );
   const [target, setTarget] = useState<CameraTarget>(() => initialCameraTarget(mobile));
   const [attempt, setAttempt] = useState(0);
   const [videoIds, setVideoIds] = useState<string[]>([]);
@@ -388,7 +411,14 @@ export function PhotoCameraView({
   const [fitMode, setFitMode] = useState<CameraFitMode>("contain");
   const [shutterFlash, setShutterFlash] = useState(false);
   const [justShotPulse, setJustShotPulse] = useState(false);
-  const [streamAspect, setStreamAspect] = useState<string>(() => (mobile ? "3 / 4" : "4 / 3"));
+  const [streamAspect, setStreamAspect] = useState<string>(() =>
+    detectViewportOrientation() === "portrait" ? "3 / 4" : "4 / 3",
+  );
+  const [videoDims, setVideoDims] = useState<{ width: number; height: number }>({
+    width: 0,
+    height: 0,
+  });
+  const orientationRef = useRef<CameraOrientation>(viewportOrientation);
 
   const [internalPhotos, setInternalPhotos] = useState<CapturedSessionPhoto[]>([]);
   const photos = controlledPhotos ?? internalPhotos;
@@ -443,6 +473,21 @@ export function PhotoCameraView({
     });
   }, [clearUndoTimer]);
 
+  const syncVideoDimensions = useCallback(() => {
+    const v = videoRef.current;
+    if (v && v.videoWidth > 0 && v.videoHeight > 0) {
+      setVideoDims({ width: v.videoWidth, height: v.videoHeight });
+      setStreamAspect(`${v.videoWidth} / ${v.videoHeight}`);
+      return;
+    }
+    const track = streamRef.current?.getVideoTracks?.()[0];
+    const settings = track?.getSettings?.();
+    if (settings?.width && settings?.height && settings.width > 0 && settings.height > 0) {
+      setVideoDims({ width: settings.width, height: settings.height });
+      setStreamAspect(`${settings.width} / ${settings.height}`);
+    }
+  }, []);
+
   function releaseCurrentStream() {
     stopStream(streamRef.current);
     streamRef.current = null;
@@ -461,14 +506,23 @@ export function PhotoCameraView({
     if (typeof window === "undefined") return;
     const onResize = () => {
       const nextMobile = detectMobileCameraPreferred();
+      const nextOrientation = detectViewportOrientation();
       setMobile(nextMobile);
+      if (nextOrientation !== orientationRef.current) {
+        orientationRef.current = nextOrientation;
+        setViewportOrientation(nextOrientation);
+        const track = streamRef.current?.getVideoTracks?.()[0];
+        if (track && typeof track.applyConstraints === "function") {
+          const nextSize = nextOrientation === "portrait" ? IDEAL_PORTRAIT_SIZE : IDEAL_SIZE;
+          void track.applyConstraints({ ...nextSize }).catch(() => undefined);
+        }
+      }
       const v = videoRef.current;
       if (v && v.videoWidth > 0 && v.videoHeight > 0) {
+        setVideoDims({ width: v.videoWidth, height: v.videoHeight });
         setStreamAspect(`${v.videoWidth} / ${v.videoHeight}`);
       } else {
-        setStreamAspect(
-          window.innerHeight > window.innerWidth && window.innerWidth <= 820 ? "3 / 4" : "4 / 3",
-        );
+        setStreamAspect(nextOrientation === "portrait" ? "3 / 4" : "4 / 3");
       }
     };
     window.addEventListener("resize", onResize);
@@ -494,10 +548,15 @@ export function PhotoCameraView({
 
     async function openCamera() {
       releaseCurrentStream();
+      const curOrientation = detectViewportOrientation();
+      orientationRef.current = curOrientation;
+      setViewportOrientation(curOrientation);
 
       let stream: MediaStream;
       try {
-        stream = await navigator.mediaDevices.getUserMedia(buildCameraConstraints(target));
+        stream = await navigator.mediaDevices.getUserMedia(
+          buildCameraConstraints(target, curOrientation),
+        );
       } catch (firstErr) {
         const fb = fallbackCameraConstraints(firstErr, target);
         if (!fb || cancelled) {
@@ -525,8 +584,13 @@ export function PhotoCameraView({
 
       streamRef.current = stream;
       const track = stream.getVideoTracks()[0];
-      const settingsId = track?.getSettings?.()?.deviceId ?? "";
+      const settings = track?.getSettings?.();
+      const settingsId = settings?.deviceId ?? "";
       setActiveDeviceId(settingsId);
+      if (settings?.width && settings?.height && settings.width > 0 && settings.height > 0) {
+        setVideoDims({ width: settings.width, height: settings.height });
+        setStreamAspect(`${settings.width} / ${settings.height}`);
+      }
 
       if (typeof navigator.mediaDevices.enumerateDevices === "function") {
         navigator.mediaDevices
@@ -546,8 +610,9 @@ export function PhotoCameraView({
         void v
           .play()
           .then(() => {
-            if (!cancelled && v.videoWidth > 0) {
+            if (!cancelled && v.videoWidth > 0 && v.videoHeight > 0) {
               setReady(true);
+              setVideoDims({ width: v.videoWidth, height: v.videoHeight });
               setStreamAspect(`${v.videoWidth} / ${v.videoHeight}`);
             }
           })
@@ -565,7 +630,7 @@ export function PhotoCameraView({
     };
   }, [target, attempt, clearUndoTimer]);
 
-  // Khi quay về từ Viewer hoặc hồi phục sau trạng thái lỗi (errorInfo -> null), gắn lại stream vào thẻ <video>
+  // Khi quay về từ Viewer, đổi giữa mobile/desktop, hoặc hồi phục sau trạng thái lỗi (errorInfo -> null), gắn lại stream vào thẻ <video>
   useEffect(() => {
     const v = videoRef.current;
     if (viewerIndex === null && errorInfo === null && v && streamRef.current) {
@@ -576,13 +641,14 @@ export function PhotoCameraView({
           .then(() => {
             if (v.videoWidth > 0 && v.videoHeight > 0) {
               setReady(true);
+              setVideoDims({ width: v.videoWidth, height: v.videoHeight });
               setStreamAspect(`${v.videoWidth} / ${v.videoHeight}`);
             }
           })
           .catch(() => undefined);
       }
     }
-  }, [viewerIndex, errorInfo]);
+  }, [viewerIndex, errorInfo, mobile]);
 
   function switchCamera() {
     if (switching) return;
@@ -1076,6 +1142,10 @@ export function PhotoCameraView({
     return (
       <div
         className="photo-camera cam-fs-root"
+        data-viewport-orientation={viewportOrientation}
+        data-stream-aspect={streamAspect}
+        data-video-width={videoDims.width || undefined}
+        data-video-height={videoDims.height || undefined}
         style={{ "--stream-aspect": streamAspect } as React.CSSProperties}
       >
         <div className="cam-fs-top">
@@ -1196,13 +1266,13 @@ export function PhotoCameraView({
               aria-label="Khung ngắm máy ảnh đề bài"
               onLoadedMetadata={() => {
                 setReady(true);
-                if (videoRef.current?.videoWidth && videoRef.current?.videoHeight) {
-                  setStreamAspect(
-                    `${videoRef.current.videoWidth} / ${videoRef.current.videoHeight}`,
-                  );
-                }
+                syncVideoDimensions();
               }}
-              onLoadedData={() => setReady(true)}
+              onResize={syncVideoDimensions}
+              onLoadedData={() => {
+                setReady(true);
+                syncVideoDimensions();
+              }}
             />
             <div className={shutterFlash ? "shutter-flash active" : "shutter-flash"} />
           </div>
@@ -1501,6 +1571,10 @@ export function PhotoCameraView({
   return (
     <div
       className="photo-camera desktop-camera-root"
+      data-viewport-orientation={viewportOrientation}
+      data-stream-aspect={streamAspect}
+      data-video-width={videoDims.width || undefined}
+      data-video-height={videoDims.height || undefined}
       style={{ "--stream-aspect": streamAspect } as React.CSSProperties}
     >
       <div className="dialog-header">
@@ -1551,13 +1625,13 @@ export function PhotoCameraView({
               aria-label="Khung ngắm máy ảnh đề bài"
               onLoadedMetadata={() => {
                 setReady(true);
-                if (videoRef.current?.videoWidth && videoRef.current?.videoHeight) {
-                  setStreamAspect(
-                    `${videoRef.current.videoWidth} / ${videoRef.current.videoHeight}`,
-                  );
-                }
+                syncVideoDimensions();
               }}
-              onLoadedData={() => setReady(true)}
+              onResize={syncVideoDimensions}
+              onLoadedData={() => {
+                setReady(true);
+                syncVideoDimensions();
+              }}
             />
             <div className={shutterFlash ? "shutter-flash active" : "shutter-flash"} />
           </div>
