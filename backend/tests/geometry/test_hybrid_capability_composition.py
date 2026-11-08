@@ -843,3 +843,91 @@ def test_gap2_adversarial_twins_never_hide_ungrounded_quotes_or_broken_goals():
     }
     res2 = extract_typed_fact_next_v2(text, ReplayExtractor({text: _normalize_transport_payload(raw_broken_goal)}))
     assert res2.payload is None and res2.code == "INVALID_MATH_GOAL"
+
+
+def test_gap1_extension_collinearity_and_described_point_on_line_precondition():
+    """Phase 0.1.A: Points on line extensions (outside segments) and unnamed described points on a line satisfy _tren_duong."""
+    facts = planner.doc_du_kien(
+        {
+            "facts": [
+                {"id": "s1", "kind": "solid", "role": "premise", "solid": "S.ABCD", "solid_type": "pyramid", "quotes": ["S.ABCD"]},
+                # E = intersection of line AB and line CD (or extension) lies on infinite line AB and infinite line CD
+                {
+                    "id": "p_ext",
+                    "kind": "point_def",
+                    "role": "premise",
+                    "point": "E",
+                    "point_kind": "intersect_line_line",
+                    "points_a": ["A", "B"],
+                    "points_b": ["C", "D"],
+                    "quotes": ["E là giao điểm của AB và CD"],
+                },
+                # Negated / conditional / prove facts must NEVER contribute to _bo_ba_thang_hang
+                {
+                    "id": "p_neg",
+                    "kind": "point_def",
+                    "role": "premise",
+                    "negated": True,
+                    "point": "K",
+                    "point_kind": "midpoint",
+                    "points": ["A", "B"],
+                    "quotes": ["K không là trung điểm của AB"],
+                },
+            ]
+        }
+    )
+    k = planner.KeHoach()
+    r = planner._EffectResolver(facts, k, lambda *a, **kw: {}, "")
+    line_ab = ("named", ("A", "B"))
+    line_cd = ("named", ("C", "D"))
+    assert r._tren_duong("E", line_ab) is True
+    assert r._tren_duong("E", line_cd) is True
+    assert r._tren_duong("K", line_ab) is False
+    assert r._tren_duong(("desc", "divide_segment", ("A", "B")), line_ab) is True
+    assert r._tren_duong(("desc", "orthogonal_projection_line", ("S", line_ab)), line_ab) is True
+    assert r._tren_duong(("desc", "intersect_line_line", (line_ab, line_cd)), line_ab) is True
+
+
+def test_gap2_multiple_independent_unresolved_items_preserved():
+    """Phase 0.1.B: Independent `unresolved` items in different clauses/subjects are never dropped when another item is structured."""
+    text = (
+        "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2. "
+        "Gọi K là trung điểm. "
+        "Gọi H là hình chiếu vuông góc của S."
+    )
+    raw = {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": text,
+        "length_unit": "1",
+        "solids": [{"solid_id": "s1", "solid_type": "pyramid", "notation": "S.ABCD", "quote": "Cho hình chóp S.ABCD"}],
+        "premises": deepcopy(BASE_PYRAMID_PREMISES[:1]),
+        "described_points": [],
+        "derived_sections": [],
+        "relations": [],
+        "simulation_goals": [],
+        "math_goals": [],
+        "unresolved": [
+            {
+                "unresolved_id": "u_k",
+                "kind": "missing_operand",
+                "subject_ref": "K",
+                "missing_roles": [],
+                "candidate_relations": [],
+                "quote": "Gọi K là trung điểm",
+            },
+            {
+                "unresolved_id": "u_h",
+                "kind": "missing_operand",
+                "subject_ref": "H",
+                "missing_roles": ["target_line_or_plane"],
+                "candidate_relations": ["orthogonal_projection"],
+                "quote": "Gọi H là hình chiếu vuông góc của S",
+            },
+        ],
+    }
+    norm = _normalize_transport_payload(raw)
+    assert [u["unresolved_id"] for u in norm["unresolved"]] == ["u_k", "u_h"]
+    res = extract_typed_fact_next_v2(text, ReplayExtractor({text: norm}))
+    assert res.payload is not None and res.code is None
+    assert [u.unresolved_id for u in res.payload.unresolved] == ["u_k", "u_h"]
+

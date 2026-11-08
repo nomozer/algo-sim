@@ -3,13 +3,14 @@
 - **Run ID:** `hybrid-backend-capabilities`
 - **Branch:** `feat/hybrid-backend-capabilities` (isolated backend worktree `.superpowers/worktrees/hybrid-backend-capabilities`)
 - **Base Commit (`main = origin/main`):** `bb046fa22aceff47abe22aa783aa64fc65caee13` (`bb046fa22`)
-- **Product & Test Commit:** `c6929ea34540d97d95d9ce6c00daa3c1efd807c4` (`c6929ea34`, `104` measured files, tree SHA-256 `20719d95c0f0263d95387f9b5c6f12f6f33e1cb48a3f6406150b19c02c207555`)
+- **Measured System Tree Hash:** `6e5e08c8a4ca0341b6c7c8ca57060fbaff74c7b86aa6ea3f12781005f494f8ed` (`so_file = 106` hashed entries across `MEASURED_SYSTEM_PATHS` = `105` unique files: `100` in `backend/app` + `5` in `frontend/src/simulations/domains/semantic`, with `semantic_program.schema.json` listed both via its directory and as an explicit path in `MEASURED_SYSTEM_PATHS`)
 - **Scope:** **BACKEND ONLY** (`backend/app/**`, `backend/tests/**`, `backend/scripts/**`, `docs/**`; `frontend/**` untouched)
 - **Measurement Class:** `OFFLINE_DETERMINISTIC_CAPABILITY_AND_REPLAY_DEVELOPMENT` (`ALLOW_LIVE_AI=0`, `0` live Gemini HTTP requests)
 - **Status Tokens:**
   - `HYBRID_CAPABILITY_DEVELOPMENT_COMPLETE`
   - `PLANNER_DYNAMIC_COMPOSITION_VERIFIED`
   - `BACKEND_CAPABILITY_BASELINE_COMPLETE`
+  - `PREVIOUS_CANDIDATE_VERIFIED`
 
 ---
 
@@ -30,7 +31,7 @@
 | Cache Policy | `backend/app/main.py`, `backend/app/ai/adapter4_route.py` | `CACHE_VERSION = "132"`, `ROUTE_D_CACHE_POLICY = "132:route-d"` |
 | Extraction Contract | `backend/app/simulation/geometry_functions/typed_fact_next.py`, `backend/app/ai/typed_fact_next_extraction.py` | `typed-fact-next/2` (`TYPED_FACT_NEXT_V2_SCHEMA_VERSION`), surface SHA-256 `4070fd8ca6d6f67375e4bb0138319290049d0d658a4ef3e5078073d7c3f8498c` (unchanged) |
 | Bridge & Scope Gate | `backend/app/simulation/geometry_functions/typed_fact_next_bridge.py` | `typed-fact-next-bridge/2`, `typed-fact-next-scope/1` |
-| Geometry Registry & Source Gate | `backend/app/simulation/geometry_functions/registry.py` | `geometry-functions/33` (42 registered `FunctionSpec` primitives: 34 provider-offered, 8 internal-only) |
+| Geometry Registry & Source Gate | `backend/app/simulation/geometry_functions/registry.py` | `geometry-functions/33` (`49` registered `FunctionSpec` primitives: `31` `provider_offered=True` [`30` in `PROVIDER_FUNCTIONS` + `1` `auxiliary_only=True` (`translate_point`)], `18` `provider_offered=False` internal-only) |
 | FactGraph & Goal-Directed Planner | `backend/app/simulation/geometry_functions/planner.py` | `geometry-fact-planner/26` |
 | Exact Geometry Kernel | `backend/app/simulation/geometry_functions/engine.py`, `backend/app/simulation/geometry/` | `geometry-function-engine/24` (`Fraction` / `Radical` exact arithmetic, `plane-section-certificate/1`) |
 | Shared IR & Scene3D Verifier | `backend/app/simulation/semantic_program/interpreter.py`, `route.py` | `COMPATIBILITY_REQUIRED` (`RequestContract` internal topology bridge only) |
@@ -69,10 +70,12 @@
        - Memoizes and reuses already-emitted identical calls at cost `0` (`reused_intermediates`).
 
 ### 2.3 Registry `/33` (`registry.py`)
-- **42 Registered Functions (`FunctionSpec`):**
-  - **8 Solid / Base Builders:** `pyramid_regular_base`, `pyramid_right_triangle_base`, `pyramid_triangle_base`, `prism_regular_base`, `prism_right_triangle_base`, `prism_triangle_base`, `Solid_cylinder`, `Solid_cone`, `Solid_sphere`, plus internal quad-base helpers (`quad_square`, `quad_rectangle`, `quad_rhombus`, `quad_parallelogram`, `quad_right_trapezoid`).
-  - **12 Point / Line / Section / Derived-Solid Constructors:** `midpoint`, `divide_segment`, `centroid`, `orthogonal_projection`, `orthogonal_projection_line`, `translate_point`, `line_perpendicular_in_plane`, `line_perpendicular_through_point`, `intersect_line_line`, `intersect_line_plane`, `skew_perpendicular_Points`, `section`, `section_through_parallel`, `section_by_two_lines`, `derived_pyramid`.
-  - **14 Measurement / Goal Evaluators:** `ask_volume`, `ask_volume_ratio`, `ask_residual_volume`, `ask_area`, `ask_section_area`, `ask_section_Through_parallel_area`, `ask_section_by_two_lines_area`, `ask_lateral_area`, `ask_radius`, `ask_length`, `ask_distance_point_plane`, `ask_distance_point_line`, `ask_distance_lines`, `ask_angle_line_plane`, `ask_angle_lines`, `ask_dihedral_angle`.
+- **`49` Registered Functions (`FunctionSpec` in `REGISTRY`):**
+  - **`31` `provider_offered=True`:** `30` exposed in `PROVIDER_FUNCTIONS` + `1` with `auxiliary_only=True` (`translate_point`).
+  - **`18` `provider_offered=False` (internal-only):** internal base/solid/section/measurement helpers (`quad_square`, `quad_rectangle`, `quad_rhombus`, `quad_parallelogram`, `quad_right_trapezoid`, `pyramid_regular_base`, `pyramid_right_triangle_base`, `pyramid_triangle_base`, `prism_regular_base`, `prism_right_triangle_base`, `prism_triangle_base`, `derived_pyramid`, `section`, `section_through_parallel`, `section_by_two_lines`, `ask_section_area`, `ask_section_Through_parallel_area`, `ask_section_by_two_lines_area`).
+  - **14 Solid / Base Builders:** `pyramid`, `regular_pyramid`, `prism`, `regular_prism`, `pyramid_regular_base`, `pyramid_right_triangle_base`, `pyramid_triangle_base`, `prism_regular_base`, `prism_right_triangle_base`, `prism_triangle_base`, `quad_square`, `quad_rectangle`, `quad_rhombus`, `quad_parallelogram`, `quad_right_trapezoid`, `cylinder`, `cone`, `sphere`.
+  - **15 Point / Line / Section / Derived-Solid Constructors:** `midpoint`, `divide_segment`, `centroid`, `orthogonal_projection`, `orthogonal_projection_line`, `translate_point`, `intersection_line`, `intersect_line_line`, `intersect_line_plane`, `section`, `section_through_parallel`, `section_by_two_lines`, `derived_pyramid`, `circumscribed_sphere`, `inscribed_sphere`.
+  - **16 Measurement / Goal Evaluators:** `ask_volume`, `ask_volume_ratio`, `ask_residual_volume`, `ask_area`, `ask_section_area`, `ask_section_Through_parallel_area`, `ask_section_by_two_lines_area`, `ask_lateral_area`, `ask_total_area`, `ask_radius`, `ask_length`, `ask_distance_point_plane`, `ask_distance_line_plane`, `ask_distance_planes`, `ask_distance_lines`, `ask_angle_line_plane`, `ask_angle_plane_plane`, `ask_angle_lines`.
 
 ### 2.4 Exact Geometry Kernel `/24` & IR Verification (`engine.py`, `radical.py`, `curved.py`, `interpreter.py`)
 - **Exact Symbolic Representation:** All coordinates and Gram metrics live in $\mathbb{Q}(\sqrt{d})$ (`Fraction` and normalized `Radical` with square-factor extraction before `MAX_RADICAND = 10**12`, `MAX_ABS_COEF = 10**12`).
@@ -182,15 +185,18 @@ From our Phase A capability discovery across the codebase and captured C26/Wave-
      - `point_def` with `point_kind == "intersect_line_line"` on both input segments `points_a` and `points_b`
      - `point_def` with `point_kind == "intersect_line_plane"` on the input line `points_a`
   2. Extended `_phap_tuyen(q_mat, kh, k)` to propagate both `_bo_ba_thang_hang` collinear triples and `centroid` triangle-face premises (`trong_tam`) in a 3-pass structural fixed-point closure over the solid's faces `mats` and target plane `tren_q`. Any solid vertex lying on the same face as `q_mat` is structurally rejected (`rejected: "lies on the plane (solid structure)"`) before candidate selection.
-  3. Extended `_EffectResolver._tren_duong(self, p, line)` to check `any(x == p and {a, b} == ends for x, a, b in _bo_ba_thang_hang(self.facts.values()))`, recognizing points defined on segment `ends` via `divide_segment`, `projection`, or line intersection while preserving Engine-level `COLLINEAR_POINTS` refusal (`K-D01`, `K-D02`) when a degenerate collinear triangle is passed as a triangle-center goal.
+  3. Extended `_EffectResolver._tren_duong(self, p, line)` to check both `any(x == p and {a, b} == ends for x, a, b in _bo_ba_thang_hang(self.facts.values()))` and unnamed described points `("desc", kind, ...)` on `ends` (`midpoint`, `divide_segment`, `orthogonal_projection_line`, `intersect_line_line`, `intersect_line_plane`), recognizing points defined on segment/line `ends` while preserving Engine-level `COLLINEAR_POINTS` refusal (`K-D01`, `K-D02`) when a degenerate collinear triangle is passed as a triangle-center goal.
 
 ### 7.2 Improvement 2 — Live-Observed Clarification Wire-Shape Normalization in `typed_fact_next_extraction.py`
 - **File Modified:** `backend/app/ai/typed_fact_next_extraction.py`
 - **Design & Implementation:**
   - Added `_repair_unresolved_clarifications(out, text)` inside `_repair_observed_wire_shapes(out)` (which runs on both live `TransportExtractor` and offline `extract_typed_fact_next_v2`):
-    1. When `unresolved` contains at least one primary entry with a verbatim quote (`u["quote"] in text`), non-empty `missing_roles`, and non-empty `candidate_relations`, secondary cascading entries that have a non-verbatim ellipsis quote (`"..." in u["quote"]`) or have both empty `missing_roles` and empty `candidate_relations` are pruned — **except** when `u["kind"] == "unsupported"` is nested inside or shares `subject_ref` with another `unresolved` entry (preserving `R1-F03` `OUT_OF_SCOPE` precedence).
+    1. When `unresolved` contains a primary entry `p` (`kind in ("ambiguous", "missing_operand")`, verbatim `p["quote"] in text`, non-empty `missing_roles`, and non-empty `candidate_relations`), a secondary entry `u` is pruned **only** when bound to `p` via one of three closed local companion relations:
+       - Non-verbatim ellipsis reference (`"..." in u["quote"]`) mentioning `p["subject_ref"]` (e.g. `S2-C-D05`),
+       - Empty-role/empty-relation `ambiguous`/`missing_operand` sub-span literally contained inside `p["quote"]` (`u["quote"] in p["quote"]`, e.g. `unr1` in `S2-C-A01`),
+       - Empty-role/empty-relation simulation-verb wrapper (`Mô phỏng/Vẽ/Dựng...`) mentioning `p["subject_ref"]` in the same sentence as `p["quote"]` (e.g. `unr3` in `S2-C-A01`) — **never** pruning `u["kind"] == "unsupported"` when nested inside or sharing `subject_ref` with a geometric relation (`R1-F03`), and **never** dropping independent `unresolved` items in other clauses or on other subjects.
     2. When `math_goals` contains an incomplete target dict (`not shape_valid`) whose `mg["quote"]` is verbatim in `text` and contains the verbatim `u["quote"]` of a `missing_operand`/`ambiguous` `unresolved` entry, the incomplete goal is folded into that `unresolved` entry (widening `u["quote"]` to the verbatim `mg["quote"]` when `u["quote"]` is a sub-phrase), preventing `INVALID_MATH_GOAL` from masking a genuine `route-d-clarification/1` response.
-  - **Fail-Closed Guarantees Preserved:** Single non-verbatim `unresolved` quotes still fail with `QUOTE_NOT_IN_SOURCE`; incomplete `math_goals` without a matching verbatim `unresolved` entry still fail with `INVALID_MATH_GOAL`; nested `unsupported` operands (`R1-F03`) still refuse with `OUT_OF_SCOPE`.
+  - **Fail-Closed Guarantees Preserved:** Single non-verbatim `unresolved` quotes still fail with `QUOTE_NOT_IN_SOURCE`; incomplete `math_goals` without a matching verbatim `unresolved` entry still fail with `INVALID_MATH_GOAL`; nested `unsupported` operands (`R1-F03`) still refuse with `OUT_OF_SCOPE`; independent `unresolved` items in different clauses/subjects are preserved (`test_gap2_multiple_independent_unresolved_items_preserved`).
 
 ---
 
@@ -204,7 +210,7 @@ From our Phase A capability discovery across the codebase and captured C26/Wave-
 | **Gap 1B** (`test_gap1b`) | $G$ centroid of $\triangle SAB$; section $(P)$ through $S, N \perp (SAG)$ | `REFUSED` (`ENGINE_SELF_CHECK_FAILED`: rejected only $\{A, S\}$, selected $B \in (SAG)$) | **`SERVED` (`VERIFIED`)**, rejected $\{A, B, S\}$, selected $C$, exact area `√5` |
 | **Gap 1C** (`test_gap1c`) | $H$ projection of $A$ on $SB$; section $(P)$ through $S, N \perp (SAH)$ | `REFUSED` (`ENGINE_SELF_CHECK_FAILED`: rejected only $\{A, S\}$, selected $B \in (SAH)$) | **`SERVED` (`VERIFIED`)**, rejected $\{A, B, S\}$, selected $C$, exact area `√5` |
 | **Gap 1D** (`test_gap1d`) | $O = AC \cap BD$; section $(P)$ through $S, N \perp (SCO)$ | `REFUSED` (`ENGINE_SELF_CHECK_FAILED`: rejected only $\{C, S\}$, selected $A \in (SCO)$) | **`SERVED` (`VERIFIED`)**, rejected $\{A, C, S\}$, selected $B$, exact area `√17/2` |
-| **Gap 1E** (`test_gap1e`) | `_EffectResolver._tren_duong("M", ("named", ("A", "B")))` for `divide_segment` $M \in AB$ | `False` (only checked `midpoint`) | **`True`** (while keeping `_tren_duong("B", ("named", ("A", "M"))) == False` so `K-D01`/`K-D02` refuse `COLLINEAR_POINTS`) |
+| **Gap 1E** (`test_gap1e` & `test_gap1_extension`) | `_EffectResolver._tren_duong` for `divide_segment` $M \in AB$ (inside or extension $k = 3/2$) and unnamed `("desc", ...)` points on $AB$ | `False` (only checked `midpoint`) | **`True`** (while keeping `_tren_duong("B", ("named", ("A", "M"))) == False` so `K-D01`/`K-D02` refuse `COLLINEAR_POINTS`) |
 | **Negative Twins** (`test_gap1_negative_twins`) | Through $A, S \perp (ABCD)$ (non-unique); through $A, M, N \perp (SAM)$ (coincides with base) | `REFUSED` (`PLANE_NOT_UNIQUE` / `SECTION_PLANE_IS_FACE`) | **`REFUSED` (`PLANE_NOT_UNIQUE` / `SECTION_PLANE_IS_FACE`, `0` wrong-served)** |
 
 ### 8.2 Proven Gap 2 — C26 Live-Replay Clarification Recovery (`70` Cases Across `K-1`, `S-2`, `R-1`)
@@ -225,14 +231,13 @@ From our Phase A capability discovery across the codebase and captured C26/Wave-
 ### 8.3 CPU, Memory & Latency Measurements
 From `docs/evaluation/geometry/runs/hybrid-backend-capabilities/results/capability_telemetry_metrics.json`:
 - **8 Profiled Composition & Constrained-Section Cases (`Case 1`, `Case 2`, `Case 3a`, `Case 3b`, `Gap 1A–1D`):**
-  - Extraction & Source-Quote Validation (`extract_typed_fact_next_v2`): `6.14 ms – 8.57 ms`
-  - Full Hybrid `/4` Route + Exact Kernel + Adapter `/4` + Continuity: `p50 = 228.44 ms`, `p95 = 743.42 ms` (cold first-run import/setup included; warm steady-state `218 ms – 272 ms`)
-  - Process CPU Time: `p50 = 234.38 ms`
-  - Peak Traced Memory (`tracemalloc`): `max = 1,356.65 KB` (`1.32 MB`, steady-state `774 KB – 816 KB`)
-- **70 C26 Offline Live-Replay Cases (`K-1`, `S-2`, `R-1`):**
-  - `K-1` (16 cases): `p50 = 56.31 ms`, `p95 = 97.16 ms`
-  - `S-2` (36 cases): `p50 = 24.87 ms`, `p95 = 39.92 ms`
-  - `R-1` (18 cases): `p50 = 40.02 ms`, `p95 = 103.41 ms`
+  - Cold-Start First Case (`Case1_Direct_Primitive`, includes initial module/schema setup): `wall = 551.41 ms`, `peak_memory = 954.09 KB`
+  - Warm Steady-State (`7` subsequent cases): `warm_wall_p50_ms = 243.50 ms`, `warm_wall_p95_ms = 295.70 ms`, `warm_cpu_p50_ms = 250.00 ms`, `warm_peak_memory_max_kb = 1,165.24 KB`
+  - All 8 Cases Combined (including cold start): `wall_p50_ms = 246.82 ms`, `wall_p95_ms = 551.41 ms`, `cpu_p50_ms = 250.00 ms`, `peak_memory_max_kb = 1,165.24 KB`
+- **70 C26 Offline Live-Replay Cases (`K-1`, `S-2`, `R-1`, exact values from `capability_telemetry_metrics.json`):**
+  - `K-1` (`16` cases): `latency_p50_ms = 39.41 ms`, `latency_p95_ms = 57.37 ms`
+  - `S-2` (`36` cases): `latency_p50_ms = 13.10 ms`, `latency_p95_ms = 27.65 ms`
+  - `R-1` (`18` cases): `latency_p50_ms = 21.35 ms`, `latency_p95_ms = 59.88 ms`
 
 ---
 
@@ -242,3 +247,17 @@ From `docs/evaluation/geometry/runs/hybrid-backend-capabilities/results/capabili
 2. **`ISSUE-ARCH-PARTIAL-STATED-CUT-NAMING`**: Partial stated lateral cut vertices in `DINH_CAT_CANH` refuse fail-closed with `SECTION_BOUNDARY_INCOMPLETE` when unstated lateral edges are also cut.
 3. **`ISSUE-ARCH-ROUTE-D-DIACRITIC-FREE-INPUT`**: Unaccented Vietnamese geometry input remains gated on Owner decision `S-1`.
 4. **Depth $\ge 2$ Nested `DescribedPointSpec` (`BRIDGE_UNSUPPORTED_DESCRIBED_POINT`)**: Describing a point via another unnamed `@id` point or using two `@id` points in one measurement goal remains fail-closed until Source Gate effect-chain certification is generalized.
+
+---
+
+## 10. Phase 0 Candidate Validation & Reconciliation (`PREVIOUS_CANDIDATE_VERIFIED`)
+
+1. **Edge-Case Hardening Verified (`test_hybrid_capability_composition.py` — `17/17 PASS`):**
+   - `test_gap1_extension_collinearity_and_described_point_on_line_precondition`: verifies `_bo_ba_thang_hang` and `_EffectResolver._tren_duong` on points dividing a segment with extension ratio ($k = 3/2 > 1$) and on unnamed `("desc", ...)` points (`divide_segment`, `orthogonal_projection_line`, `intersect_line_line`).
+   - `test_gap2_multiple_independent_unresolved_items_preserved`: verifies that `_repair_unresolved_clarifications` never drops an independent `unresolved` item in another clause or on another subject (`u_k` on `K`) when a structured `unresolved` item (`u_h` on `H`) is also present.
+2. **Numerical Reconciliation Across Report, `run.json`, `capability_telemetry_metrics.json`, and `EVALUATION_CANDIDATE.json`:**
+   - **Registry `/33` counts:** `49` total `FunctionSpec` in `REGISTRY` = `31` `provider_offered=True` (`30` exposed in `PROVIDER_FUNCTIONS` + `1` `auxiliary_only=True` `translate_point`) + `18` `provider_offered=False` (internal-only).
+   - **Candidate file counts:** `EVALUATION_CANDIDATE.json` hashes `so_file = 106` entries across `MEASURED_SYSTEM_PATHS` = `105` unique files (`100` in `backend/app` + `5` in `frontend/src/simulations/domains/semantic`), because `frontend/src/simulations/domains/semantic/semantic_program.schema.json` appears both inside the `frontend/src/simulations/domains/semantic` directory walk and as an explicit path in `MEASURED_SYSTEM_PATHS`.
+   - **Clarification before/after metrics:** `S-2` `CLARIFY` status recovered: `3/6 -> 5/6`; strict gold-verified `CORRECT_CLARIFICATION`: `0/6 -> 3/6`; `S-2` strict gold-projection E2E: `26/36 -> 29/36`.
+   - **Latency separation:** Cold-start first case (`551.41 ms`) vs warm steady-state (`warm_wall_p50_ms = 243.50 ms`, `warm_wall_p95_ms = 295.70 ms`) and C26 study replay (`K-1` `39.41 ms` / `57.37 ms`, `S-2` `13.10 ms` / `27.65 ms`, `R-1` `21.35 ms` / `59.88 ms`) match `results/capability_telemetry_metrics.json` to the decimal.
+3. **Verdict Token:** `PREVIOUS_CANDIDATE_VERIFIED`.

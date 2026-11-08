@@ -393,6 +393,23 @@ def main() -> int:
     all_wall = [c["performance"]["wall_ms"] for c in all_profiled]
     all_cpu = [c["performance"]["cpu_ms"] for c in all_profiled]
     all_mem = [c["performance"]["peak_memory_kb"] for c in all_profiled]
+    warm_wall = [c["performance"]["wall_ms"] for c in all_profiled[1:]]
+    warm_cpu = [c["performance"]["cpu_ms"] for c in all_profiled[1:]]
+    warm_mem = [c["performance"]["peak_memory_kb"] for c in all_profiled[1:]]
+
+    from scripts import freeze_evaluation_candidate as freeze_cand
+
+    measured_entries = freeze_cand._measured_system_files()
+    unique_measured = sorted({p.resolve() for p in measured_entries})
+    backend_app_files = [
+        p for p in unique_measured
+        if p.relative_to(ROOT).as_posix().startswith("backend/app/")
+    ]
+    frontend_semantic_files = [
+        p for p in unique_measured
+        if p.relative_to(ROOT).as_posix().startswith("frontend/src/simulations/domains/semantic/")
+    ]
+    cand_hash, cand_so_file = freeze_cand.measured_system_hash()
 
     report_data = {
         "schema": "hybrid-capability-telemetry-metrics/1",
@@ -401,6 +418,22 @@ def main() -> int:
             "registry": registry.REGISTRY_VERSION,
             "planner": planner.PLANNER_VERSION,
             "engine": engine.ENGINE_VERSION,
+        },
+        "registry_inventory": {
+            "total_registered_functions": len(registry.REGISTRY),
+            "provider_offered_true": sum(1 for f in registry.REGISTRY.values() if f.provider_offered),
+            "provider_offered_false": sum(1 for f in registry.REGISTRY.values() if not f.provider_offered),
+            "auxiliary_only_true": sum(1 for f in registry.REGISTRY.values() if f.auxiliary_only),
+            "provider_functions_exposed": len(registry.PROVIDER_FUNCTIONS),
+        },
+        "candidate_inventory": {
+            "measured_system_paths": list(freeze_cand.MEASURED_SYSTEM_PATHS),
+            "hashed_entries_so_file": cand_so_file,
+            "unique_measured_files": len(unique_measured),
+            "backend_app_files": len(backend_app_files),
+            "frontend_semantic_files": len(frontend_semantic_files),
+            "duplicate_explicit_path": "frontend/src/simulations/domains/semantic/semantic_program.schema.json",
+            "measured_system_tree_hash": cand_hash,
         },
         "composition_discriminating_probes": composition_cases,
         "gap1_constrained_plane_coplanarity": {
@@ -416,7 +449,7 @@ def main() -> int:
             "before_fix": {
                 "S-2_strict_gold_projection_correct": {"numerator": 26, "denominator": 36},
                 "S-2_correct_clarification": {"numerator": 0, "denominator": 6},
-                "S-2_clarify_status_recovered": {"numerator": 4, "denominator": 6},
+                "S-2_clarify_status_recovered": {"numerator": 3, "denominator": 6},
                 "failing_s2_clarify_cases": [
                     {"case_id": "S2-C-D05_projection_missing_target", "observed_status": "REFUSED", "hybrid_code": "QUOTE_NOT_IN_SOURCE", "hybrid_outcome": "WRONG_REASON_REFUSAL"},
                     {"case_id": "S2-C-C04_angle_plane_missing", "observed_status": "REFUSED", "hybrid_code": "INVALID_MATH_GOAL", "hybrid_outcome": "WRONG_REASON_REFUSAL"},
@@ -447,6 +480,13 @@ def main() -> int:
         "gold_replay_verification": gold_summary,
         "performance_summary": {
             "profiled_cases_count": len(all_profiled),
+            "cold_start_first_case_wall_ms": all_wall[0] if all_wall else 0.0,
+            "cold_start_first_case_peak_memory_kb": all_mem[0] if all_mem else 0.0,
+            "warm_steady_state_cases_count": len(warm_wall),
+            "warm_wall_p50_ms": _quantile(warm_wall, 0.5),
+            "warm_wall_p95_ms": _quantile(warm_wall, 0.95),
+            "warm_cpu_p50_ms": _quantile(warm_cpu, 0.5),
+            "warm_peak_memory_max_kb": round(max(warm_mem) if warm_mem else 0.0, 2),
             "wall_p50_ms": _quantile(all_wall, 0.5),
             "wall_p95_ms": _quantile(all_wall, 0.95),
             "cpu_p50_ms": _quantile(all_cpu, 0.5),

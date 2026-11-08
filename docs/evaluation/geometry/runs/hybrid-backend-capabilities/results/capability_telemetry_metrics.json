@@ -6,6 +6,26 @@
     "planner": "geometry-fact-planner/26",
     "engine": "geometry-function-engine/24"
   },
+  "registry_inventory": {
+    "total_registered_functions": 49,
+    "provider_offered_true": 31,
+    "provider_offered_false": 18,
+    "auxiliary_only_true": 1,
+    "provider_functions_exposed": 30
+  },
+  "candidate_inventory": {
+    "measured_system_paths": [
+      "backend/app",
+      "frontend/src/simulations/domains/semantic",
+      "frontend/src/simulations/domains/semantic/semantic_program.schema.json"
+    ],
+    "hashed_entries_so_file": 106,
+    "unique_measured_files": 105,
+    "backend_app_files": 100,
+    "frontend_semantic_files": 5,
+    "duplicate_explicit_path": "frontend/src/simulations/domains/semantic/semantic_program.schema.json",
+    "measured_system_tree_hash": "6e5e08c8a4ca0341b6c7c8ca57060fbaff74c7b86aa6ea3f12781005f494f8ed"
+  },
   "composition_discriminating_probes": [
     {
       "case_id": "Case1_Direct_Primitive",
@@ -32,11 +52,11 @@
         "normal_subgoals": []
       },
       "performance": {
-        "wall_ms": 634.662,
-        "extraction_validation_ms": 6.191,
-        "route_and_adapter_ms": 628.459,
-        "cpu_ms": 640.625,
-        "peak_memory_kb": 950.12
+        "wall_ms": 551.414,
+        "extraction_validation_ms": 6.799,
+        "route_and_adapter_ms": 544.605,
+        "cpu_ms": 546.875,
+        "peak_memory_kb": 954.09
       }
     },
     {
@@ -63,11 +83,11 @@
         "normal_subgoals": []
       },
       "performance": {
-        "wall_ms": 109.407,
-        "extraction_validation_ms": 4.752,
-        "route_and_adapter_ms": 104.648,
-        "cpu_ms": 109.375,
-        "peak_memory_kb": 357.59
+        "wall_ms": 99.316,
+        "extraction_validation_ms": 4.228,
+        "route_and_adapter_ms": 95.085,
+        "cpu_ms": 93.75,
+        "peak_memory_kb": 361.68
       }
     },
     {
@@ -95,11 +115,11 @@
         "normal_subgoals": []
       },
       "performance": {
-        "wall_ms": 317.045,
-        "extraction_validation_ms": 6.874,
-        "route_and_adapter_ms": 310.165,
-        "cpu_ms": 312.5,
-        "peak_memory_kb": 1168.12
+        "wall_ms": 295.702,
+        "extraction_validation_ms": 6.749,
+        "route_and_adapter_ms": 288.95,
+        "cpu_ms": 296.875,
+        "peak_memory_kb": 1165.24
       }
     },
     {
@@ -127,11 +147,11 @@
         "normal_subgoals": []
       },
       "performance": {
-        "wall_ms": 290.099,
-        "extraction_validation_ms": 10.365,
-        "route_and_adapter_ms": 279.731,
-        "cpu_ms": 281.25,
-        "peak_memory_kb": 1046.82
+        "wall_ms": 243.498,
+        "extraction_validation_ms": 7.813,
+        "route_and_adapter_ms": 235.682,
+        "cpu_ms": 250.0,
+        "peak_memory_kb": 1040.86
       }
     }
   ],
@@ -211,11 +231,11 @@
           ]
         },
         "performance": {
-          "wall_ms": 283.162,
-          "extraction_validation_ms": 6.967,
-          "route_and_adapter_ms": 276.192,
+          "wall_ms": 246.82,
+          "extraction_validation_ms": 6.889,
+          "route_and_adapter_ms": 239.928,
           "cpu_ms": 250.0,
-          "peak_memory_kb": 723.92
+          "peak_memory_kb": 721.39
         }
       },
       {
@@ -254,11 +274,11 @@
           ]
         },
         "performance": {
-          "wall_ms": 336.064,
-          "extraction_validation_ms": 6.456,
-          "route_and_adapter_ms": 329.605,
-          "cpu_ms": 343.75,
-          "peak_memory_kb": 767.66
+          "wall_ms": 219.669,
+          "extraction_validation_ms": 5.881,
+          "route_and_adapter_ms": 213.785,
+          "cpu_ms": 218.75,
+          "peak_memory_kb": 768.26
         }
       },
       {
@@ -297,11 +317,11 @@
           ]
         },
         "performance": {
-          "wall_ms": 309.429,
-          "extraction_validation_ms": 9.524,
-          "route_and_adapter_ms": 299.902,
-          "cpu_ms": 296.875,
-          "peak_memory_kb": 768.9
+          "wall_ms": 228.202,
+          "extraction_validation_ms": 6.399,
+          "route_and_adapter_ms": 221.801,
+          "cpu_ms": 218.75,
+          "peak_memory_kb": 753.82
         }
       },
       {
@@ -340,11 +360,11 @@
           ]
         },
         "performance": {
-          "wall_ms": 287.642,
-          "extraction_validation_ms": 8.078,
-          "route_and_adapter_ms": 279.56,
+          "wall_ms": 284.288,
+          "extraction_validation_ms": 6.158,
+          "route_and_adapter_ms": 278.127,
           "cpu_ms": 281.25,
-          "peak_memory_kb": 774.31
+          "peak_memory_kb": 799.61
         }
       }
     ]
@@ -360,7 +380,7 @@
         "denominator": 6
       },
       "S-2_clarify_status_recovered": {
-        "numerator": 4,
+        "numerator": 3,
         "denominator": 6
       },
       "failing_s2_clarify_cases": [
@@ -405,8 +425,8 @@
           "CORRECT_REFUSAL": 2,
           "CORRECT_CLARIFICATION": 2
         },
-        "latency_p50_ms": 44.697,
-        "latency_p95_ms": 82.963,
+        "latency_p50_ms": 39.412,
+        "latency_p95_ms": 57.373,
         "clarify_cases": [
           {
             "case_id": "K-E01",
@@ -416,7 +436,7 @@
             "end_to_end_correct": true,
             "reason_verified": true,
             "hybrid_outcome": "CORRECT_CLARIFICATION",
-            "latency_ms": 7.588
+            "latency_ms": 5.056
           },
           {
             "case_id": "K-E02",
@@ -426,7 +446,7 @@
             "end_to_end_correct": true,
             "reason_verified": true,
             "hybrid_outcome": "CORRECT_CLARIFICATION",
-            "latency_ms": 6.456
+            "latency_ms": 6.816
           }
         ]
       },
@@ -452,8 +472,8 @@
           "CORRECT_REFUSAL": 10,
           "FALSE_REFUSAL": 1
         },
-        "latency_p50_ms": 17.42,
-        "latency_p95_ms": 29.877,
+        "latency_p50_ms": 13.102,
+        "latency_p95_ms": 27.648,
         "clarify_cases": [
           {
             "case_id": "S2-C-A01_goc_chieu",
@@ -463,7 +483,7 @@
             "end_to_end_correct": true,
             "reason_verified": true,
             "hybrid_outcome": "CORRECT_CLARIFICATION",
-            "latency_ms": 2.662
+            "latency_ms": 3.547
           },
           {
             "case_id": "S2-C-D05_projection_missing_target",
@@ -473,7 +493,7 @@
             "end_to_end_correct": true,
             "reason_verified": true,
             "hybrid_outcome": "CORRECT_CLARIFICATION",
-            "latency_ms": 4.216
+            "latency_ms": 3.307
           },
           {
             "case_id": "S2-C-D06_unnamed_prism",
@@ -483,7 +503,7 @@
             "end_to_end_correct": false,
             "reason_verified": false,
             "hybrid_outcome": "WRONG_REASON_REFUSAL",
-            "latency_ms": 2.771
+            "latency_ms": 2.354
           },
           {
             "case_id": "S2-C-C04_angle_plane_missing",
@@ -493,7 +513,7 @@
             "end_to_end_correct": true,
             "reason_verified": true,
             "hybrid_outcome": "CORRECT_CLARIFICATION",
-            "latency_ms": 3.949
+            "latency_ms": 3.584
           },
           {
             "case_id": "S2-C-C05_draw_then_compute",
@@ -503,7 +523,7 @@
             "end_to_end_correct": false,
             "reason_verified": false,
             "hybrid_outcome": "WRONG_REASON_CLARIFICATION",
-            "latency_ms": 5.71
+            "latency_ms": 3.346
           },
           {
             "case_id": "S2-C-C06_square_without_side",
@@ -513,7 +533,7 @@
             "end_to_end_correct": false,
             "reason_verified": false,
             "hybrid_outcome": "WRONG_REASON_CLARIFICATION",
-            "latency_ms": 5.168
+            "latency_ms": 3.412
           }
         ]
       },
@@ -537,8 +557,8 @@
           "WRONG_REASON_REFUSAL": 2,
           "CORRECT_REFUSAL": 2
         },
-        "latency_p50_ms": 29.556,
-        "latency_p95_ms": 71.255,
+        "latency_p50_ms": 21.345,
+        "latency_p95_ms": 59.875,
         "clarify_cases": [
           {
             "case_id": "R1-E01",
@@ -548,7 +568,7 @@
             "end_to_end_correct": false,
             "reason_verified": false,
             "hybrid_outcome": "WRONG_REASON_CLARIFICATION",
-            "latency_ms": 4.239
+            "latency_ms": 3.288
           },
           {
             "case_id": "R1-E02",
@@ -558,7 +578,7 @@
             "end_to_end_correct": false,
             "reason_verified": false,
             "hybrid_outcome": "WRONG_REASON_REFUSAL",
-            "latency_ms": 8.386
+            "latency_ms": 5.972
           }
         ]
       },
@@ -646,9 +666,16 @@
   },
   "performance_summary": {
     "profiled_cases_count": 8,
-    "wall_p50_ms": 309.429,
-    "wall_p95_ms": 634.662,
-    "cpu_p50_ms": 296.875,
-    "peak_memory_max_kb": 1168.12
+    "cold_start_first_case_wall_ms": 551.414,
+    "cold_start_first_case_peak_memory_kb": 954.09,
+    "warm_steady_state_cases_count": 7,
+    "warm_wall_p50_ms": 243.498,
+    "warm_wall_p95_ms": 295.702,
+    "warm_cpu_p50_ms": 250.0,
+    "warm_peak_memory_max_kb": 1165.24,
+    "wall_p50_ms": 246.82,
+    "wall_p95_ms": 551.414,
+    "cpu_p50_ms": 250.0,
+    "peak_memory_max_kb": 1165.24
   }
 }

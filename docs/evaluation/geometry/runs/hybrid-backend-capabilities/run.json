@@ -13,9 +13,20 @@
     }
   ],
   "candidate": {
-    "product_commit": "c6929ea34540d97d95d9ce6c00daa3c1efd807c4",
-    "measured_system_files": 104,
-    "measured_system_tree_hash": "20719d95c0f0263d95387f9b5c6f12f6f33e1cb48a3f6406150b19c02c207555"
+    "measured_system_paths_count": 3,
+    "measured_system_hashed_entries_so_file": 106,
+    "measured_system_unique_files": 105,
+    "backend_app_files": 100,
+    "frontend_semantic_files": 5,
+    "duplicate_explicit_path": "frontend/src/simulations/domains/semantic/semantic_program.schema.json",
+    "measured_system_tree_hash": "6e5e08c8a4ca0341b6c7c8ca57060fbaff74c7b86aa6ea3f12781005f494f8ed"
+  },
+  "registry_inventory": {
+    "total_registered_functions": 49,
+    "provider_offered_true": 31,
+    "provider_offered_false": 18,
+    "auxiliary_only_true": 1,
+    "provider_functions_exposed": 30
   },
   "cache_version": {
     "before": "132",
@@ -24,20 +35,21 @@
     "reason": "no prompt, schema, or provider surface change; changes affect only previously refused/ungrounded planner and clarification paths; served positive responses unchanged"
   },
   "findings": {
-    "Gap1_P1": "planner _EffectResolver._tren_duong and _dong_phang_he_qua omitted structural collinearity (_bo_ba_thang_hang) and solid face coplanarity (_mat_coplanar_khoi), blocking line_intersection, orthogonal_projection_line, triangle_area, and triangle_orthocenter on midpoints/ratio points/projections; fixed in c6929ea34",
-    "Gap2_P1": "typed_fact_next_extraction._repair_unresolved_clarifications lacked C26 live Gemini unresolved wire-shape normalization (point -> subject_ref, missing_role -> missing_operand, quote fallback, unnested companion pruning); fixed in c6929ea34"
+    "Gap1_P1": "planner _EffectResolver._tren_duong and _phap_tuyen omitted structural collinearity (_bo_ba_thang_hang) and solid face coplanarity beyond midpoint (divide_segment, centroid, orthogonal_projection_line, intersect_line_line, intersect_line_plane) as well as unnamed described points ('desc', ...) on line; fixed and verified in test_hybrid_capability_composition.py",
+    "Gap2_P1": "typed_fact_next_extraction._repair_unresolved_clarifications lacked C26 live Gemini unresolved wire-shape normalization (cascading ellipsis secondary unresolved pruning, local companion empty-role sub-span/simulation-verb pruning without dropping independent unresolved items, and incomplete math_goal folding into verbatim unresolved); fixed and verified in test_hybrid_capability_composition.py"
   },
   "measurement": {
     "MEASUREMENT_CLASS": "OFFLINE_DETERMINISTIC_REPLAY_AND_COMPOSITION_TELEMETRY",
     "HELD_OUT_CLAIM": "NONE (stored C26 live-replay and K-1/S-2/R-1 gold corpora; not H-1)",
     "EVALUATOR_INDEPENDENCE": "NONE (same agent wrote fixes and probes)",
     "telemetry_receipt": "results/capability_telemetry_metrics.json",
-    "discriminating_cases": "Case 1 (SOURCE_EXPLICIT_SEQUENCE), Case 2 (REGISTERED_DECOMPOSITION), Case 3a/3b (DISCOVERED_FUNCTION_COMPOSITION via bounded backward effect-chaining search)",
-    "gap1_before_after": "4/4 structural coplanarity/collinearity composition families recovered (0 -> 1..2 normal candidates, 100% exact Fraction/Radical match)",
-    "gap2_c26_replay": "70/70 C26 live payloads replayed: 40/41 positive served exact, 29/29 negative refused/clarified, 0 wrong-served; S-2 CLARIFY status 4/6 -> 5/6, strict CORRECT_CLARIFICATION 0/6 -> 3/6, S-2 strict gold-projection E2E 26/36 -> 29/36",
+    "discriminating_cases": "Case 1 (SOURCE_EXPLICIT_SEQUENCE), Case 2 (REGISTERED_DECOMPOSITION), Case 3a/3b (REGISTERED_DECOMPOSITION via _EffectResolver._dinh_nghia locus regression with reused_intermediates=1)",
+    "gap1_before_after": "4/4 structural coplanarity/collinearity composition families recovered (REFUSED ENGINE_SELF_CHECK_FAILED -> SERVED VERIFIED, 100% exact Fraction/Radical match)",
+    "gap2_c26_replay": "70/70 C26 live payloads replayed: 40/41 positive served exact, 29/29 negative refused/clarified, 0 wrong-served; S-2 CLARIFY status 3/6 -> 5/6, strict CORRECT_CLARIFICATION 0/6 -> 3/6, S-2 strict gold-projection E2E 26/36 -> 29/36",
     "gold_replay": "K-1 16/16, S-2 35/36, R-1 18/18, 0 wrong-served",
-    "performance": "wall_p50_ms=228.44, cpu_p50_ms=234.38, peak_memory_max_kb=1356.65"
+    "performance": "cold_start_first_case_wall_ms=551.414, warm_wall_p50_ms=243.498, warm_wall_p95_ms=295.702, warm_cpu_p50_ms=250.0, warm_peak_memory_max_kb=1165.24, wall_p50_ms=246.82, wall_p95_ms=551.414, cpu_p50_ms=250.0, peak_memory_max_kb=1165.24"
   },
+  "phase0_verdict": "PREVIOUS_CANDIDATE_VERIFIED",
   "live": {
     "status": "LIVE_CALLS_ZERO_BY_DIRECTIVE",
     "intentional_provider_calls": 0

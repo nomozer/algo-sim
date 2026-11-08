@@ -2136,15 +2136,23 @@ class _EffectResolver:
                                                    "bound": bound})
 
     def _tren_duong(self, p, line) -> bool:
-        """STRUCTURE only, no coordinates: p is an endpoint of the named line, or the midpoint of its two endpoints (a
-        description, or a premise of the source). Anything else is not known here and is left to the engine's exact check."""
+        """STRUCTURE only, no coordinates: p is an endpoint of the named line, or a point structurally collinear with its
+        two endpoints (from a premise or an unnamed point description). Anything else is left to the engine's exact check."""
         if not (isinstance(line, tuple) and line[:1] == ("named",)):
             return False
         ends = set(line[1])
         if isinstance(p, str):
             return p in ends or any(x == p and {a, b} == ends
                                     for x, a, b in _bo_ba_thang_hang(self.facts.values()))
-        return isinstance(p, tuple) and p[:2] == ("desc", "midpoint") and set(p[2]) == ends
+        if not (isinstance(p, tuple) and len(p) == 3 and p[0] == "desc"):
+            return False
+        if p[1] in ("midpoint", "divide_segment") and len(p[2]) == 2:
+            return set(p[2]) == ends
+        if p[1] == "orthogonal_projection_line" and len(p[2]) == 2 and isinstance(p[2][1], tuple) and p[2][1][:1] == ("named",):
+            return set(p[2][1][1]) == ends
+        if p[1] in ("intersect_line_line", "intersect_line_plane") and p[2]:
+            return any(isinstance(seg, tuple) and seg[:1] == ("named",) and set(seg[1]) == ends for seg in p[2])
+        return False
 
     def _binds(self, contract, env):
         """Slot bindings of one contract: as the need gives them, or — a `free` slot — each point of the need's plane W, in

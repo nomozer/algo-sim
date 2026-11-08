@@ -871,25 +871,42 @@ def _repair_unresolved_clarifications(out: dict[str, Any], text: str) -> None:
     unres = out.get("unresolved")
     if not isinstance(unres, list) or not unres:
         return
-    if any(
-        isinstance(u, dict)
-        and isinstance(u.get("quote"), str)
-        and u["quote"]
-        and u["quote"] in text
-        and u.get("missing_roles")
-        and u.get("candidate_relations")
-        for u in unres
-    ):
-        out["unresolved"] = unres = [
-            u for u in unres
-            if not (
-                isinstance(u, dict)
-                and (
-                    "..." in str(u.get("quote") or "")
-                    or (not u.get("missing_roles") and not u.get("candidate_relations") and not (u.get("kind") == "unsupported" and any((u.get("quote") and u["quote"] in str(x.get("quote") or "")) or (u.get("subject_ref") and u.get("subject_ref") == x.get("subject_ref")) for x in unres if isinstance(x, dict) and x is not u)))
-                )
-            )
-        ]
+    primaries = [
+        p for p in unres
+        if isinstance(p, dict)
+        and p.get("kind") in ("ambiguous", "missing_operand")
+        and isinstance(p.get("quote"), str)
+        and p["quote"]
+        and p["quote"] in text
+        and p.get("missing_roles")
+        and p.get("candidate_relations")
+    ]
+    if primaries:
+        def _is_redundant_companion(u: Any) -> bool:
+            if not isinstance(u, dict):
+                return False
+            uq = str(u.get("quote") or "")
+            for p in primaries:
+                if p is u:
+                    continue
+                pq = p["quote"]
+                subj = p.get("subject_ref")
+                has_subj = bool(subj and re.search(rf"(?<![\w']){re.escape(str(subj))}(?![\w'])", uq))
+                if "..." in uq and uq not in text and has_subj:
+                    return True
+                if not u.get("missing_roles") and not u.get("candidate_relations") and uq:
+                    if u.get("kind") in ("ambiguous", "missing_operand") and uq in pq:
+                        return True
+                    if has_subj and uq in text and re.match(
+                        r"^\s*(?:mô\s+phỏng|vẽ|dựng|hiển\s+thị|biểu\s+diễn|minh\s+ho[ạa])\b", uq, re.IGNORECASE
+                    ):
+                        lo = min(text.index(uq), text.index(pq))
+                        hi = max(text.index(uq) + len(uq), text.index(pq) + len(pq))
+                        if not re.search(r"[.?!;]\s", text[lo:hi]):
+                            return True
+            return False
+
+        out["unresolved"] = unres = [u for u in unres if not _is_redundant_companion(u)]
     mgs = out.get("math_goals")
     if not isinstance(mgs, list) or not mgs:
         return
