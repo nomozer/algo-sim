@@ -6,7 +6,7 @@ import { registerAllSimulations } from "../simulations";
 import { __resetHistoryForTest } from "../state/history";
 import { useAppStore } from "../state/store";
 import { PhotoFanStack, FAN_LAYOUTS, MAX_VISIBLE_FAN_CARDS, type CapturedSessionPhoto } from "./PhotoFanStack";
-import { PhotoCameraView } from "./PhotoCameraView";
+import { PhotoCameraView, classifyCameraError, classifySupportError } from "./PhotoCameraView";
 import { PhotoProblemDialog } from "./PhotoProblemDialog";
 import { runComposerSubmit } from "./ProblemInput";
 import { useToastStore } from "./TopNav";
@@ -50,7 +50,7 @@ function makeFakeAttachment(
   };
 }
 
-describe("PhotoFanStack (§6): 0 ảnh ẩn, 1 ảnh thẻ đơn, 2..5 ảnh xếp quạt, > 5 ảnh hiện badge +N không thêm nhãn đếm thừa", () => {
+describe("PhotoFanStack (§6, §8): 0 ảnh ẩn, 1 ảnh thẻ đơn, 2..5 ảnh xếp quạt không chồng lấn nút Xong, > 5 ảnh tối đa 5 thẻ", () => {
   it("0 ảnh: không hiển thị fan stack, không hiển thị chữ 0 ảnh", () => {
     const html = renderToString(
       <PhotoFanStack photos={[]} isMobile={false} onOpenPhoto={noop} onOpenMobileTray={noop} />,
@@ -70,7 +70,7 @@ describe("PhotoFanStack (§6): 0 ảnh ẩn, 1 ảnh thẻ đơn, 2..5 ảnh x�
     expect(html).not.toMatch(/Đã chụp|\d+\s*ảnh|\d+\/\d+/i);
   });
 
-  it("2..5 ảnh: hiển thị PhotoFanStack (#photo-fan-stack) với đủ thẻ ảnh, dùng FAN_LAYOUTS và không có badge +N khi <= 5 ảnh", () => {
+  it("2..5 ảnh: hiển thị PhotoFanStack (#photo-fan-stack) với đủ thẻ ảnh, dùng FAN_LAYOUTS và không chồng lấn vùng nút Xong bên phải", () => {
     for (const count of [2, 3, 4, 5]) {
       const photos = Array.from({ length: count }, (_, i) => makeSessionPhoto(i));
       const html = renderToString(
@@ -83,8 +83,14 @@ describe("PhotoFanStack (§6): 0 ảnh ẩn, 1 ảnh thẻ đơn, 2..5 ảnh x�
       }
       expect(html).not.toContain("photo-fan-overflow-badge");
       expect(html).not.toMatch(/Đã chụp|\d+\s*ảnh|\d+\/\d+/i);
-      expect(FAN_LAYOUTS[count]?.open).toHaveLength(count);
+      const openPoses = FAN_LAYOUTS[count]?.open ?? [];
+      expect(openPoses).toHaveLength(count);
       expect(FAN_LAYOUTS[count]?.collapsed).toHaveLength(count);
+      // §8: Thẻ ngoài cùng bên phải khi xòe quạt phải nâng cao (ty <= -34) và giữ tx <= 14 để không chạm nút Xong
+      for (const pose of openPoses) {
+        expect(pose.tx).toBeLessThanOrEqual(14);
+        expect(pose.ty).toBeLessThanOrEqual(-34);
+      }
     }
   });
 
@@ -102,6 +108,42 @@ describe("PhotoFanStack (§6): 0 ảnh ẩn, 1 ảnh thẻ đơn, 2..5 ảnh x�
     expect(html).not.toContain("photo-fan-overflow-badge");
     expect(html).not.toContain("fan-card-order-badge");
     expect(html).not.toContain("+2");
+  });
+});
+
+describe("Phân loại lỗi Camera (§5–§7): tiêu đề và mô tả không lặp câu, canRetry chính xác", () => {
+  it("5 nhóm lỗi (permission_denied, not_found, unavailable, unsupported, unknown) không lặp nội dung giữa title và description", () => {
+    const errDenied = classifyCameraError({ name: "NotAllowedError" });
+    const errNotFound = classifyCameraError({ name: "NotFoundError" });
+    const errUnavailable = classifyCameraError({ name: "NotReadableError" });
+    const errUnknown = classifyCameraError({ name: "UnexpectedCameraError" });
+    const errHttps = classifySupportError({ isSecureContext: false, hasGetUserMedia: true })!;
+    const errNoApi = classifySupportError({ isSecureContext: true, hasGetUserMedia: false })!;
+
+    expect(errDenied.code).toBe("permission_denied");
+    expect(errDenied.canRetry).toBe(true);
+
+    expect(errNotFound.code).toBe("not_found");
+    expect(errNotFound.canRetry).toBe(false);
+
+    expect(errUnavailable.code).toBe("unavailable");
+    expect(errUnavailable.canRetry).toBe(true);
+
+    expect(errUnknown.code).toBe("unknown");
+    expect(errUnknown.canRetry).toBe(true);
+
+    expect(errHttps.code).toBe("unsupported");
+    expect(errHttps.canRetry).toBe(false);
+
+    expect(errNoApi.code).toBe("unsupported");
+    expect(errNoApi.canRetry).toBe(false);
+
+    for (const info of [errDenied, errNotFound, errUnavailable, errUnknown, errHttps, errNoApi]) {
+      expect(info.title.length).toBeGreaterThan(5);
+      expect(info.description.length).toBeGreaterThan(15);
+      expect(info.description.toLowerCase()).not.toContain(info.title.toLowerCase());
+      expect(info.description).not.toMatch(/tạm thời không khả dụng.*hiện không khả dụng/i);
+    }
   });
 });
 
