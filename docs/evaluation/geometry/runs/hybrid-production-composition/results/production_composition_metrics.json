@@ -1,0 +1,273 @@
+{
+  "schema": "production-dynamic-composition-metrics/1",
+  "case_count": 7,
+  "planner_cpu_ms": {
+    "p50": 1.782,
+    "max": 3.957
+  },
+  "route_cold_ms": {
+    "p50": 216.517,
+    "p95": 1599.86
+  },
+  "route_warm_ms": {
+    "p50": 40.794,
+    "p95": 55.332
+  },
+  "peak_memory_kib_max": 1891.28,
+  "cases": [
+    {
+      "id": "A1-centroid-proj-plane-dist",
+      "family": "Family A (Sequential 3-step)",
+      "status": "SERVED",
+      "answers": {
+        "q1": "4/3"
+      },
+      "classification": "DISCOVERED_FUNCTION_COMPOSITION",
+      "explored_states": 9,
+      "candidate_evaluations": 4,
+      "max_depth_reached": 3,
+      "pruned_nodes": 0,
+      "reused_intermediates": 0,
+      "search_generated_steps": [
+        "q1_aux2"
+      ],
+      "registered_decomposition_steps": [],
+      "source_defined_steps": [
+        "q1_aux"
+      ],
+      "planner_cpu_ms": 3.957,
+      "route_cold_ms": 1599.86,
+      "route_warm_ms": 22.948,
+      "peak_memory_kib": 1891.28,
+      "plan_calls": [
+        "pyramid",
+        "regular_polygon",
+        "perpendicular_line_plane",
+        "segment_length",
+        "centroid",
+        "orthogonal_projection",
+        "ask_distance_point_plane"
+      ]
+    },
+    {
+      "id": "A2-centroid-proj-plane-line-dist",
+      "family": "Family A (Sequential 4-step)",
+      "status": "SERVED",
+      "answers": {
+        "q1": "2/3"
+      },
+      "classification": "DISCOVERED_FUNCTION_COMPOSITION",
+      "explored_states": 9,
+      "candidate_evaluations": 4,
+      "max_depth_reached": 3,
+      "pruned_nodes": 0,
+      "reused_intermediates": 2,
+      "search_generated_steps": [
+        "q1_aux2"
+      ],
+      "registered_decomposition_steps": [
+        "q1_aux3"
+      ],
+      "source_defined_steps": [
+        "q1_aux"
+      ],
+      "planner_cpu_ms": 1.782,
+      "route_cold_ms": 160.729,
+      "route_warm_ms": 40.992,
+      "peak_memory_kib": 474.57,
+      "plan_calls": [
+        "pyramid",
+        "regular_polygon",
+        "perpendicular_line_plane",
+        "segment_length",
+        "centroid",
+        "orthogonal_projection",
+        "orthogonal_projection_line",
+        "ask_length"
+      ]
+    },
+    {
+      "id": "A3-midpoint-proj-line-plane-dist",
+      "family": "Family A (Sequential Line Proj)",
+      "status": "SERVED",
+      "answers": {
+        "q1": "1"
+      },
+      "classification": "DISCOVERED_FUNCTION_COMPOSITION",
+      "explored_states": 8,
+      "candidate_evaluations": 4,
+      "max_depth_reached": 3,
+      "pruned_nodes": 0,
+      "reused_intermediates": 0,
+      "search_generated_steps": [
+        "q1_aux2"
+      ],
+      "registered_decomposition_steps": [],
+      "source_defined_steps": [
+        "q1_aux"
+      ],
+      "planner_cpu_ms": 1.261,
+      "route_cold_ms": 143.815,
+      "route_warm_ms": 30.741,
+      "peak_memory_kib": 418.28,
+      "plan_calls": [
+        "pyramid",
+        "regular_polygon",
+        "perpendicular_line_plane",
+        "segment_length",
+        "midpoint",
+        "orthogonal_projection_line",
+        "ask_distance_point_plane"
+      ]
+    },
+    {
+      "id": "B1-shared-intermediate-two-goals",
+      "family": "Family B (Shared Intermediates)",
+      "status": "SERVED",
+      "answers": {
+        "q2": "√5",
+        "q1": "2/3"
+      },
+      "classification": "DISCOVERED_FUNCTION_COMPOSITION",
+      "explored_states": 12,
+      "candidate_evaluations": 5,
+      "max_depth_reached": 3,
+      "pruned_nodes": 0,
+      "reused_intermediates": 4,
+      "search_generated_steps": [
+        "q1_aux2"
+      ],
+      "registered_decomposition_steps": [
+        "q1_aux3"
+      ],
+      "source_defined_steps": [
+        "q1_aux"
+      ],
+      "planner_cpu_ms": 2.04,
+      "route_cold_ms": 207.682,
+      "route_warm_ms": 40.794,
+      "peak_memory_kib": 535.32,
+      "plan_calls": [
+        "pyramid",
+        "regular_polygon",
+        "perpendicular_line_plane",
+        "segment_length",
+        "centroid",
+        "orthogonal_projection",
+        "orthogonal_projection_line",
+        "ask_length",
+        "ask_area"
+      ]
+    },
+    {
+      "id": "C1-ratio-centroid-proj-multi-goal",
+      "family": "Family C (Ratio + Pyramid)",
+      "status": "SERVED",
+      "answers": {
+        "q1": "5/3",
+        "q2": "√29/3"
+      },
+      "classification": "DISCOVERED_FUNCTION_COMPOSITION",
+      "explored_states": 11,
+      "candidate_evaluations": 5,
+      "max_depth_reached": 3,
+      "pruned_nodes": 0,
+      "reused_intermediates": 2,
+      "search_generated_steps": [
+        "q1_aux2"
+      ],
+      "registered_decomposition_steps": [],
+      "source_defined_steps": [
+        "q1_aux"
+      ],
+      "planner_cpu_ms": 1.763,
+      "route_cold_ms": 226.171,
+      "route_warm_ms": 42.257,
+      "peak_memory_kib": 544.28,
+      "plan_calls": [
+        "pyramid",
+        "regular_polygon",
+        "perpendicular_line_plane",
+        "segment_length",
+        "divide_segment",
+        "centroid",
+        "orthogonal_projection",
+        "ask_distance_point_plane",
+        "ask_length"
+      ]
+    },
+    {
+      "id": "C2-right-prism-four-step-multi-goal",
+      "family": "Family C (Right Prism)",
+      "status": "SERVED",
+      "answers": {
+        "q2": "1",
+        "q1": "1"
+      },
+      "classification": "DISCOVERED_FUNCTION_COMPOSITION",
+      "explored_states": 11,
+      "candidate_evaluations": 6,
+      "max_depth_reached": 3,
+      "pruned_nodes": 0,
+      "reused_intermediates": 4,
+      "search_generated_steps": [
+        "q1_aux2"
+      ],
+      "registered_decomposition_steps": [
+        "q1_aux3"
+      ],
+      "source_defined_steps": [
+        "q1_aux"
+      ],
+      "planner_cpu_ms": 2.098,
+      "route_cold_ms": 311.274,
+      "route_warm_ms": 55.332,
+      "peak_memory_kib": 607.71,
+      "plan_calls": [
+        "prism",
+        "right_angle",
+        "segment_length",
+        "segment_length",
+        "segment_length",
+        "midpoint",
+        "orthogonal_projection",
+        "orthogonal_projection_line",
+        "ask_length",
+        "ask_distance_point_plane"
+      ]
+    },
+    {
+      "id": "Ablation-Control-Explicit-Premises",
+      "family": "Section VII Control (Explicit G, H)",
+      "status": "SERVED",
+      "answers": {
+        "q1": "2/3"
+      },
+      "classification": "REGISTERED_DECOMPOSITION",
+      "explored_states": 5,
+      "candidate_evaluations": 2,
+      "max_depth_reached": 2,
+      "pruned_nodes": 0,
+      "reused_intermediates": 0,
+      "search_generated_steps": [],
+      "registered_decomposition_steps": [
+        "q1_aux"
+      ],
+      "source_defined_steps": [],
+      "planner_cpu_ms": 1.295,
+      "route_cold_ms": 216.517,
+      "route_warm_ms": 32.267,
+      "peak_memory_kib": 504.4,
+      "plan_calls": [
+        "pyramid",
+        "regular_polygon",
+        "perpendicular_line_plane",
+        "segment_length",
+        "centroid",
+        "orthogonal_projection",
+        "orthogonal_projection_line",
+        "ask_length"
+      ]
+    }
+  ]
+}

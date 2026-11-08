@@ -4,6 +4,19 @@
 Retired branch names now have local `refs/archive/repository-closure/` references and a verified private self-contained bundle.
 Existing evidence and historical reports below are unchanged; no research result is reinterpreted by this Git-state update.
 
+## WAVE_ID = HYBRID_PRODUCTION_COMPOSITION
+
+REPORT = docs/evaluation/geometry/runs/hybrid-production-composition/PRODUCTION_DYNAMIC_COMPOSITION_REPORT.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-production-composition/
+START_BASE = feat/hybrid-backend-capabilities ad311e04372821c39f21f999d66316e99cc874ca (main = origin/main bb046fa22aceff47abe22aa783aa64fc65caee13)
+CODE_COMMIT = 73d055025 (measured_system tree hash 8213236916b27d8519805d41150e9e44f1b86161b39f0877aca1c64bb7bb17f2 across so_file=106 hashed entries / 105 unique files; production dynamic function composition in registry.py, typed_fact_next_bridge.py, planner.py, engine.py + 11 composition/ablation tests in test_production_dynamic_composition.py; CACHE_VERSION 132 unchanged)
+CLASSIFICATION = OFFLINE_PRODUCTION_DYNAMIC_COMPOSITION_AND_ABLATION (branch feat/hybrid-production-composition, not merged, not pushed): Phase 0 verifies and reconciles feat/hybrid-backend-capabilities at ad311e043 (PREVIOUS_CANDIDATE_VERIFIED); Phase 1 enables bounded depth-2 dynamic function composition (search_generated_steps != [], DISCOVERED_FUNCTION_COMPOSITION) on the production Hybrid /4 route with recursive effect-chain Source Gate & Exact Kernel verification and multi-goal intermediate reuse (Families A–D & Section VII ablation 11/11 PASS; planner CPU p50=1.782 ms, warm route p50=40.794 ms; PRODUCTION_DYNAMIC_COMPOSITION_VERIFIED; INDEPENDENT_H1_VALIDATION = NOT_MEASURED).
+PRODUCT_CHANGE = YES (backend only: registry.py, typed_fact_next_bridge.py, planner.py, engine.py)
+MODEL_REQUEST_COUNT = 0
+VERIFICATION = PRODUCTION_DYNAMIC_COMPOSITION_REPORT.md; run.json; results/production_composition_metrics.json; tools/measure_production_composition.py; backend/tests/geometry/test_production_dynamic_composition.py
+CORRECTS = NONE
+CORRECTED_BY = NONE
+
 ## WAVE_ID = HYBRID_BACKEND_CAPABILITIES
 
 REPORT = docs/evaluation/geometry/runs/hybrid-backend-capabilities/HYBRID_BACKEND_CAPABILITY_BASELINE.md

@@ -1,5 +1,12 @@
 # CODE_INDEX.md — Chỉ mục module + BỘ NHỚ KIẾN TRÚC
 
+## Production Dynamic Function Composition (run `hybrid-production-composition`, 2026-11-08)
+
+| Path | Owns | Locked by |
+|---|---|---|
+| `backend/app/simulation/geometry_functions/registry.py` · `backend/app/simulation/geometry_functions/typed_fact_next_bridge.py` · `backend/app/simulation/geometry_functions/planner.py` · `backend/app/simulation/geometry_functions/engine.py` | Enables bounded depth-2 dynamic function composition (`search_generated_steps != []`, `classification == "DISCOVERED_FUNCTION_COMPOSITION"`) on the production `Hybrid /4` route: adds `requires=(("off_plane", "P", "Q"),)` to `orthogonal_projection.planning` and recursive `effect-chain` phrase/call verification (`_cum_mo_ta_cay`, `cert["operand"]["nested"]`) in `registry.py`; bridges depth-2 projection-over-descriptor `DescribedPointSpec` chains (`point_tree`) with `"của"` quote grounding in `typed_fact_next_bridge.py` while keeping depth `>= 3`, non-projection outer descriptors, dual described points, and property-defined inner points (`orthocenter`, `circumcenter`) fail-closed (`BRIDGE_UNSUPPORTED_DESCRIBED_POINT`); extends `_cay_mo_ta`, `_EffectResolver._tren_duong`/`_tren_mat`, multi-goal intermediate reuse (`reused_intermediates`), composed-descriptor `'search_generated'` provenance in `_emit`, and nested `_chuoi` certificates in `planner.py`; and verifies nested `effect-chain` steps in `_Dung.kiem_chuoi` (`engine.py`) | `backend/tests/geometry/test_production_dynamic_composition.py` |
+| `docs/evaluation/geometry/runs/hybrid-production-composition/tools/measure_production_composition.py` · `docs/evaluation/geometry/runs/hybrid-production-composition/results/production_composition_metrics.json` · `docs/evaluation/geometry/runs/hybrid-production-composition/PRODUCTION_DYNAMIC_COMPOSITION_REPORT.md` | Offline production composition and ablation benchmark across Families A–D and Section VII ablation (`11/11` cases, planner CPU `p50 = 1.782 ms`, warm route `p50 = 40.794 ms`, `0` live Gemini calls) | `backend/tests/geometry/test_production_dynamic_composition.py` |
+
 ## Hybrid Backend Capability Discovery & Composition Development (run `hybrid-backend-capabilities`, 2026-11-08)
 
 | Path | Owns | Locked by |
