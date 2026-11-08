@@ -6,7 +6,13 @@ import { registerAllSimulations } from "../simulations";
 import { __resetHistoryForTest } from "../state/history";
 import { useAppStore } from "../state/store";
 import { PhotoFanStack, FAN_LAYOUTS, MAX_VISIBLE_FAN_CARDS, type CapturedSessionPhoto } from "./PhotoFanStack";
-import { PhotoCameraView, classifyCameraError, classifySupportError } from "./PhotoCameraView";
+import {
+  PhotoCameraView,
+  buildCameraConstraints,
+  classifyCameraError,
+  classifySupportError,
+  isMobileCameraPreferred,
+} from "./PhotoCameraView";
 import { PhotoProblemDialog } from "./PhotoProblemDialog";
 import { runComposerSubmit } from "./ProblemInput";
 import { useToastStore } from "./TopNav";
@@ -322,5 +328,73 @@ describe("Gửi đa ảnh có thứ tự & chống race condition theo request_i
     expect(prepareSpy).toHaveBeenCalledTimes(1);
     // Vì requestIdRef đã đổi sang request mới hơn nên phản hồi cũ bị chặn, không gọi analyzeSpy
     expect(analyzeSpy).not.toHaveBeenCalled();
+  });
+});
+
+describe("Fullscreen Mobile/Tablet Optimization & Orientation-Aware Constraints (§2–§6)", () => {
+  it("buildCameraConstraints yêu cầu ideal portrait (1920x2560, aspectRatio 0.75) khi orientation='portrait' và landscape (2560x1920) khi landscape/mặc định", () => {
+    const portraitEnv = buildCameraConstraints(
+      { kind: "facing", facing: "environment" },
+      "portrait",
+    );
+    expect(portraitEnv).toEqual({
+      audio: false,
+      video: {
+        facingMode: { ideal: "environment" },
+        width: { ideal: 1920 },
+        height: { ideal: 2560 },
+        aspectRatio: { ideal: 0.75 },
+      },
+    });
+
+    const landscapeEnv = buildCameraConstraints(
+      { kind: "facing", facing: "environment" },
+      "landscape",
+    );
+    expect(landscapeEnv).toEqual({
+      audio: false,
+      video: {
+        facingMode: { ideal: "environment" },
+        width: { ideal: 2560 },
+        height: { ideal: 1920 },
+      },
+    });
+
+    const defaultEnv = buildCameraConstraints({ kind: "device", deviceId: "cam-1" });
+    expect(defaultEnv).toEqual({
+      audio: false,
+      video: {
+        deviceId: { exact: "cam-1" },
+        width: { ideal: 2560 },
+        height: { ideal: 1920 },
+      },
+    });
+  });
+
+  it("isMobileCameraPreferred nhận diện đúng Mobile, Tablet Portrait (768x1024), Tablet Landscape (1024x768) và Desktop (1440x900)", () => {
+    expect(
+      isMobileCameraPreferred({
+        userAgent: "Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X)",
+        maxTouchPoints: 5,
+        anyCoarsePointer: true,
+      }),
+    ).toBe(true);
+
+    expect(
+      isMobileCameraPreferred({
+        userAgent: "Mozilla/5.0 (iPad; CPU OS 17_0 like Mac OS X)",
+        maxTouchPoints: 5,
+        anyCoarsePointer: true,
+      }),
+    ).toBe(true);
+
+    expect(
+      isMobileCameraPreferred({
+        userAgent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
+        userAgentDataMobile: false,
+        maxTouchPoints: 0,
+        anyCoarsePointer: false,
+      }),
+    ).toBe(false);
   });
 });

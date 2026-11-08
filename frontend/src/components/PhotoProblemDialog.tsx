@@ -254,41 +254,44 @@ export function PhotoProblemDialog({
               aria-modal="true"
               aria-labelledby="cam-close-confirm-heading"
               aria-describedby="cam-close-confirm-desc"
+              data-unattached-count={String(sessionPhotos.length)}
               onClick={(e) => e.stopPropagation()}
             >
               <p id="cam-close-confirm-heading" className="cam-close-confirm-title">
-                Đóng máy ảnh?
+                {`Bạn có ${sessionPhotos.length} ảnh chưa thêm vào đề`}
               </p>
               <p id="cam-close-confirm-desc" className="cam-close-confirm-sub">
-                Bạn muốn giữ các ảnh vừa chụp không?
+                Bạn muốn thêm các ảnh này trước khi đóng máy ảnh không?
               </p>
               <div className="cam-close-confirm-actions photo-close-confirm-actions">
                 <div className="cam-close-confirm-row">
                   <button
                     type="button"
-                    id="btn-photo-confirm-discard"
-                    className="confirm-btn discard"
-                    onClick={confirmDiscardSession}
+                    id="btn-photo-confirm-keep"
+                    className="confirm-btn secondary"
+                    onClick={dismissCloseConfirmation}
                   >
-                    Bỏ ảnh mới
+                    Tiếp tục chụp
                   </button>
                   <button
                     type="button"
                     id="btn-photo-confirm-attach"
-                    className="confirm-btn keep"
+                    className="confirm-btn primary"
                     onClick={confirmAttachAndClose}
                   >
-                    Giữ ảnh và đóng
+                    Thêm ảnh và thoát
                   </button>
                 </div>
-                <button
-                  type="button"
-                  id="btn-photo-confirm-keep"
-                  className="confirm-btn cancel"
-                  onClick={dismissCloseConfirmation}
-                >
-                  Tiếp tục chụp
-                </button>
+                <div className="cam-close-confirm-discard-row">
+                  <button
+                    type="button"
+                    id="btn-photo-confirm-discard"
+                    className="confirm-btn destructive-text"
+                    onClick={confirmDiscardSession}
+                  >
+                    {`Bỏ ${sessionPhotos.length} ảnh và thoát`}
+                  </button>
+                </div>
               </div>
             </div>
           </div>
