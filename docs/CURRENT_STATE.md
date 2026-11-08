@@ -2,6 +2,12 @@
 
 CANONICAL_NEXT_ACTION = POST_NLU_BASELINE_RESEARCH_PRIORITY_DECISION
 
+## Hybrid backend capability discovery & composition development — 2026-11-08
+
+**HYBRID_CAPABILITY_DEVELOPMENT_COMPLETE · PLANNER_DYNAMIC_COMPOSITION_VERIFIED · BACKEND_CAPABILITY_BASELINE_COMPLETE** (offline) on branch `feat/hybrid-backend-capabilities` from `main = origin/main = bb046fa22` (not merged, not pushed; `0` live Gemini calls; `frontend/**` untouched). Product & test commit `c6929ea34` (`104` measured files `20719d95c0f0263d…`, `CACHE_VERSION = 132` unchanged):
+1. **Gap 1 (`planner.py`):** `_EffectResolver._tren_duong` incorporates structural 3-point collinearity (`_bo_ba_thang_hang` where `p` is the constructed point on segment `ends`) and `_dong_phang_he_qua` incorporates structural solid face/base coplanarity (`_mat_coplanar_khoi`) + collinearity propagation into 4-point coplanarity, closing the structural coplanarity/collinearity gap (`0 -> 1..2` normal candidates, `100%` exact `Fraction`/`Radical` match across `line_intersection`, `orthogonal_projection_line`, `triangle_area`, and `triangle_orthocenter` over midpoints/ratio points/projections) while keeping degenerate collinear triangle goals fail-closed (`COLLINEAR_POINTS`).
+2. **Gap 2 (`typed_fact_next_extraction.py`):** `_repair_unresolved_clarifications` normalizes live Gemini `unresolved` wire-shape variants (`point -> subject_ref`, `kind: "missing_role" -> "missing_operand"`, verbatim `subject_ref` quote fallback, and unnested companion pruning while preserving nested/shared-subject `kind: "unsupported"` items for fail-closed `OUT_OF_SCOPE` precedence). On the 70-case C26 live-replay corpus, `40/41` positive cases are served exact (`0` wrong-served), `29/29` negative cases are refused/clarified, `S-2` `CLARIFY` status recovers `4/6 -> 5/6`, strict `CORRECT_CLARIFICATION` improves `0/6 -> 3/6`, and `S-2` strict gold-projection E2E improves `26/36 -> 29/36`; gold replay remains `K-1` `16/16`, `S-2` `35/36`, `R-1` `18/18` (`0` wrong-served). Report: `evaluation/geometry/runs/hybrid-backend-capabilities/HYBRID_BACKEND_CAPABILITY_BASELINE.md`.
+
 ## Gemini credential transport & integration — 2026-11-07
 
 Run `gemini-credential-transport`: the image-read transport sends the Gemini key only as `x-goog-api-key` (product `6f184bda`);

@@ -4,6 +4,19 @@
 Retired branch names now have local `refs/archive/repository-closure/` references and a verified private self-contained bundle.
 Existing evidence and historical reports below are unchanged; no research result is reinterpreted by this Git-state update.
 
+## WAVE_ID = HYBRID_BACKEND_CAPABILITIES
+
+REPORT = docs/evaluation/geometry/runs/hybrid-backend-capabilities/HYBRID_BACKEND_CAPABILITY_BASELINE.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-backend-capabilities/
+START_BASE = main = origin/main bb046fa22aceff47abe22aa783aa64fc65caee13
+CODE_COMMIT = c6929ea34540d97d95d9ce6c00daa3c1efd807c4 (planner structural collinearity/coplanarity in _EffectResolver + C26 live unresolved clarification wire-shape normalization in typed_fact_next_extraction.py + 15 composition/regression tests; 104 measured files 20719d95c0f0263d…; CACHE_VERSION 132 unchanged)
+CLASSIFICATION = OFFLINE_DETERMINISTIC_CAPABILITY_AND_REPLAY_DEVELOPMENT (branch feat/hybrid-backend-capabilities, not merged, not pushed): Phase A full backend capability baseline across 8 subsystems; Phase B closes Gap 1 (structural collinearity/coplanarity in planner _EffectResolver: 4/4 dynamic composition families recovered with exact Fraction/Radical agreement) and Gap 2 (C26 live Gemini unresolved wire-shape normalization: 70/70 C26 replay 40/41 positive served exact, 29/29 negative refused/clarified, 0 wrong-served; S-2 CLARIFY status 4/6 -> 5/6, strict CORRECT_CLARIFICATION 0/6 -> 3/6, S-2 strict E2E 26/36 -> 29/36); gold replay K-1 16/16, S-2 35/36, R-1 18/18; 13,961 backend pytest PASS; not H-1.
+PRODUCT_CHANGE = YES (backend only: planner.py, typed_fact_next_extraction.py)
+MODEL_REQUEST_COUNT = 0
+VERIFICATION = HYBRID_BACKEND_CAPABILITY_BASELINE.md; run.json; results/capability_telemetry_metrics.json; tools/measure_capability_composition.py; backend/tests/geometry/test_hybrid_capability_composition.py
+CORRECTS = NONE
+CORRECTED_BY = NONE
+
 ## WAVE_ID = AXO_CAMERA_PHOTO_FAN_STACK_DESIGN
 
 REPORT = docs/evaluation/geometry/runs/axo-camera-photo-fan-stack/report.md

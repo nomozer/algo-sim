@@ -1,5 +1,13 @@
 # CODE_INDEX.md — Chỉ mục module + BỘ NHỚ KIẾN TRÚC
 
+## Hybrid Backend Capability Discovery & Composition Development (run `hybrid-backend-capabilities`, 2026-11-08)
+
+| Path | Owns | Locked by |
+|---|---|---|
+| `backend/app/simulation/geometry_functions/planner.py` | Extends `_EffectResolver._tren_duong` with structural 3-point collinearity (`_bo_ba_thang_hang` where `p` is the constructed interior point on segment `ends`) and `_dong_phang_he_qua` with structural solid face/base coplanarity (`_mat_coplanar_khoi`) + collinearity propagation into 4-point coplanarity, enabling bounded dynamic composition (`_tim_he_qua_muc_tieu` / `_chon_ung_vien_he_qua`) of `line_intersection`, `orthogonal_projection_line`, `triangle_area`, and `triangle_orthocenter` over midpoints, ratio points, and projections while keeping degenerate collinear triangle goals fail-closed at the Engine (`COLLINEAR_POINTS`) | `backend/tests/geometry/test_hybrid_capability_composition.py` |
+| `backend/app/ai/typed_fact_next_extraction.py` | Extends `_repair_unresolved_clarifications` (`_parse_typed_fact_next_v2_payload`) to normalize live Gemini `unresolved` wire-shape variants (`point -> subject_ref`, `kind: "missing_role" -> "missing_operand"`, verbatim `subject_ref` quote fallback, and pruning of unnested empty-role/empty-relation companion items while preserving nested/shared-subject `kind: "unsupported"` items for fail-closed `OUT_OF_SCOPE` precedence) without modifying any `TypedFactNext` schema or prompt surface | `backend/tests/geometry/test_hybrid_capability_composition.py`, `backend/tests/geometry/test_final_backend_product_completion.py` |
+| `docs/evaluation/geometry/runs/hybrid-backend-capabilities/tools/measure_capability_composition.py` · `docs/evaluation/geometry/runs/hybrid-backend-capabilities/results/capability_telemetry_metrics.json` · `docs/evaluation/geometry/runs/hybrid-backend-capabilities/HYBRID_BACKEND_CAPABILITY_BASELINE.md` | Offline capability baseline, discriminating composition telemetry (`SOURCE_EXPLICIT_SEQUENCE`, `REGISTERED_DECOMPOSITION`, `DISCOVERED_FUNCTION_COMPOSITION`), Gap 1A–1D before/after search telemetry, C26 70-case live-replay recovery (`S-2` strict `CORRECT_CLARIFICATION` `0/6 -> 3/6`, `S-2` strict E2E `26/36 -> 29/36`), and CPU/memory/latency profiling (`0` live Gemini calls) | `backend/tests/geometry/test_hybrid_capability_composition.py` |
+
 ## Axo Camera-First & Photo Fan Stack + Multi-Image Unified Input (2026-11-08)
 
 | Path | Owns | Locked by |
