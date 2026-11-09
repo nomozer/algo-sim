@@ -129,7 +129,8 @@ class RegionDetectionResult:
     has_associated_figure: bool
     completeness_confidence: float
     ambiguous_multi_problem: bool
-    #: Crop chứa TRỌN mọi khối không-nhiễu của trang ⇒ ảnh đầy đủ chỉ thêm lề trống, đọc lại vô ích.
+    #: Crop chứa TRỌN mọi khối bố cục của trang (kể cả khối nhiễu) và trang chưa bị cắt nền bàn ⇒ ảnh đầy đủ chỉ
+    #: thêm lề trống, đọc lại vô ích.
     crop_holds_all_content: bool = False
 
 
