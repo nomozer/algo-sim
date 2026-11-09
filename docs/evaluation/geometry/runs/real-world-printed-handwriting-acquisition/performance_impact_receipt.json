@@ -1,0 +1,84 @@
+{
+  "schema": "algosim-performance-impact-receipt/1",
+  "generated_at_utc": "2026-11-09T19:05:02.501570+00:00",
+  "measurement_environment": {
+    "os": "Windows 11 (10.0.26100)",
+    "python_version": "3.12.10",
+    "architecture": "AMD64",
+    "logical_cpu_cores": 12,
+    "host_ram_gb": 15.78,
+    "gpu_required": false,
+    "pytorch_added_to_production": false,
+    "rust_migration_in_this_wave": false,
+    "low_end_hardware_target_status": "NOT_MEASURED_ON_PHYSICAL_LOW_END_HARDWARE (measured on 12-core / 15.78 GB Windows host; no low-end hardware PASS claimed per Section XI)."
+  },
+  "zero_default_bloat_verification": {
+    "vietocr_handwriting_onnx_loaded_on_text_route": false,
+    "vietocr_handwriting_onnx_loaded_on_printed_route": false,
+    "process_rss_before_text_route_mb": 78.52,
+    "process_rss_after_text_and_kernel_route_mb": 78.52,
+    "text_route_rss_delta_mb": 0.0
+  },
+  "stage_breakdown": {
+    "ocr_model_load_time": {
+      "tesseract_5_5_3_cli_init_ms": 59.53,
+      "rapidocr_ppocrv6_onnx_load_ms": 18.26,
+      "isolated_vietocr_hw_onnx_load_ms_eval_only": 1505.26
+    },
+    "ocr_memory_footprint": {
+      "tesseract_parent_rss_delta_mb": 1.2,
+      "rapidocr_onnx_rss_delta_mb": 86.4,
+      "isolated_vietocr_hw_onnx_rss_delta_mb_eval_only": 170.53,
+      "isolated_vietocr_hw_onnx_disk_mb": 73.47
+    },
+    "image_preprocessing_38_external_images": {
+      "p50_ms": 14.235,
+      "p95_ms": 47.891
+    },
+    "region_detection_38_external_images": {
+      "p50_ms": 65.14,
+      "p95_ms": 234.268
+    },
+    "dual_ocr_and_fidelity_gate_cost": {
+      "reconcile_plus_6_check_fidelity_p50_ms": 0.473,
+      "reconcile_plus_6_check_fidelity_p95_ms": 0.519,
+      "tesseract_plus_rapidocr_wall_ms_typical_printed": "1870–3620 ms on single-thread/CPU ONNX when image route invoked (0 ms on text-only route)."
+    },
+    "local_geometry_parser": {
+      "cold_uncached_ms": 12.484,
+      "warm_cached_p50_ms": 0.062,
+      "warm_cached_p95_ms": 0.07
+    },
+    "exact_kernel_planner_registry_adapter4": {
+      "cold_ms": 18.843,
+      "warm_p50_ms": 18.493,
+      "warm_p95_ms": 19.438,
+      "cpu_time_ms": 15.625
+    },
+    "scene3d_and_browser_reference": {
+      "scene3d_payload_generation_included_in_adapter4_ms": true,
+      "scene3d_first_usable_frame_status": "MEASURED_IN_HEADLESS_CHROMIUM_ON_HOST_ONLY (see `independent-h1-real-world-acceptance/low_end_hardware_performance_receipt.json`; physical 4 GB integrated-graphics laptop NOT_MEASURED).",
+      "previous_branch_browser_reference": {
+        "headless_chromium_playwright_verification": "VERIFIED_IN_PREVIOUS_WAVES (`verify_ux_and_scene3d_playwright.py`: 0 console errors, 0 page errors, WebGL canvas rendered)",
+        "browser_scene3d_viewer_recorded": {
+          "source_receipt": "docs/evaluation/geometry/runs/axo-final-educational-viewer-readiness/perf/perf-summary.json",
+          "time_to_first_usable_frame_median_ms": 96.2,
+          "time_to_first_usable_frame_range_ms": [
+            65.7,
+            137.3
+          ],
+          "step_transition_p95_median_ms": 56.7,
+          "frame_p95_max_ms": 7.0,
+          "effective_orbit_fps": 60.0,
+          "render_on_demand_rpf_max": 1,
+          "js_heap_range_mb": [
+            29.2,
+            54.3
+          ],
+          "gpu_resource_leak_balance": 0
+        },
+        "physical_integrated_gpu_fps_measurement": "NOT_MEASURED"
+      }
+    }
+  }
+}

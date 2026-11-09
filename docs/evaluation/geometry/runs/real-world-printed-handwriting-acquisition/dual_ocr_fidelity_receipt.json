@@ -1,0 +1,842 @@
+{
+  "schema": "algosim-dual-ocr-fidelity-receipt/1",
+  "generated_at_utc": "2026-11-09T19:03:49.452612+00:00",
+  "external_corpus_evaluated_count": 38,
+  "summary_on_38_external_images": {
+    "dual_ocr_agreed_count": 0,
+    "passed_all_6_fidelity_checks_zero_ai_served_count": 0,
+    "vision_or_confirmation_fallback_required_count": 38,
+    "corrupted_ocr_reaching_kernel_count": 0,
+    "wrong_served_from_ocr_count": 0,
+    "shared_ocr_misrecognition_observed_on_external_corpus": {
+      "observed": true,
+      "examples": [
+        "hd_q_7907931.jpg: stacked fraction choices `a√2 / 2` linearized into broken multi-line tokens by both Tesseract and RapidOCR.",
+        "hd_a_6043187.jpg & B2 notebook photos: both Tesseract and RapidOCR fail simultaneously on cursive handwriting and handwritten radicals (`CER >= 0.39`)."
+      ],
+      "safety_outcome": "100% blocked by `c3_parse_complete`, `c4_goal_complete`, `c5_no_suspicious_ocr_tokens`, and `c6_no_diagram_premise_gap` (`0` wrong-served)."
+    }
+  },
+  "targeted_symbol_disagreement_and_shared_error_probes": [
+    {
+      "probe_id": "prime_A_vs_A_prime",
+      "status": "REJECTED",
+      "chosen_route": "LOCAL_CV_REJECTED_OR_SELECTION",
+      "fallback_reason": "LIVE_AI_DISABLED",
+      "blocked_safely": true
+    },
+    {
+      "probe_id": "radical_sqrt3_vs_V3",
+      "status": "REJECTED",
+      "chosen_route": "LOCAL_CV_REJECTED_OR_SELECTION",
+      "fallback_reason": "LIVE_AI_DISABLED",
+      "blocked_safely": true
+    },
+    {
+      "probe_id": "digit_3_vs_8",
+      "status": "REJECTED",
+      "chosen_route": "LOCAL_CV_REJECTED_OR_SELECTION",
+      "fallback_reason": "LIVE_AI_DISABLED",
+      "blocked_safely": true
+    },
+    {
+      "probe_id": "perp_vs_parallel",
+      "status": "REJECTED",
+      "chosen_route": "LOCAL_CV_REJECTED_OR_SELECTION",
+      "fallback_reason": "LIVE_AI_DISABLED",
+      "blocked_safely": true
+    },
+    {
+      "probe_id": "negative_sign_injection",
+      "status": "REJECTED",
+      "chosen_route": "LOCAL_CV_REJECTED_OR_SELECTION",
+      "fallback_reason": "LIVE_AI_DISABLED",
+      "blocked_safely": true
+    },
+    {
+      "probe_id": "decimal_comma_2_5_vs_25",
+      "status": "REJECTED",
+      "chosen_route": "LOCAL_CV_REJECTED_OR_SELECTION",
+      "fallback_reason": "LIVE_AI_DISABLED",
+      "blocked_safely": true
+    },
+    {
+      "probe_id": "primed_plane_ABB_prime_A_prime_vs_ABBA",
+      "status": "REJECTED",
+      "chosen_route": "LOCAL_CV_REJECTED_OR_SELECTION",
+      "fallback_reason": "LIVE_AI_DISABLED",
+      "blocked_safely": true
+    },
+    {
+      "probe_id": "shared_ocr_misrecognition_both_corrupt_48C",
+      "status": "REJECTED",
+      "chosen_route": "LOCAL_CV_REJECTED_OR_SELECTION",
+      "fallback_reason": "LIVE_AI_DISABLED",
+      "blocked_safely": true
+    },
+    {
+      "probe_id": "diagram_embedded_dimension_not_in_text_vmmu_r28",
+      "status": "REJECTED",
+      "chosen_route": "LOCAL_CV_REJECTED_OR_SELECTION",
+      "fallback_reason": "LIVE_AI_DISABLED",
+      "blocked_safely": true
+    }
+  ],
+  "per_image": [
+    {
+      "image_id": "ext_prt_01_hd_q_5259753",
+      "filename": "hd_q_5259753.jpg",
+      "printed_or_handwritten": "PRINTED",
+      "corpus_subgroup": "A1_PRINTED_CAMERA_CAPTURED",
+      "dual_ocr_agreed": false,
+      "dual_ocr_reason_code": "PROBLEM_HEADER_MISMATCH_OR_MULTI_PROBLEM",
+      "fidelity_gate_passed": false,
+      "fidelity_failures": [
+        "geometric_relation_syntax",
+        "source_span_coverage",
+        "diagram_dependency_and_cross_engine"
+      ],
+      "router_status_offline": "REJECTED",
+      "router_chosen_route": "LOCAL_CV_REJECTED_OR_SELECTION",
+      "router_fallback_reason": "LIVE_AI_DISABLED",
+      "served_from_corrupted_ocr": false
+    },
+    {
+      "image_id": "ext_prt_02_hd_q_7922924",
+      "filename": "hd_q_7922924.jpg",
+      "printed_or_handwritten": "PRINTED",
+      "corpus_subgroup": "A2_PRINTED_DIGITAL_EXAM_RENDER",
+      "dual_ocr_agreed": false,
+      "dual_ocr_reason_code": "LINE_COUNT_MISMATCH",
+      "fidelity_gate_passed": false,
+      "fidelity_failures": [
+        "vertex_and_solid_consistency",
+        "dimension_and_number_fidelity",
+        "geometric_relation_syntax",
+        "goal_sentence_completeness",
+        "source_span_coverage",
+        "diagram_dependency_and_cross_engine"
+      ],
+      "router_status_offline": "REJECTED",
+      "router_chosen_route": "LOCAL_CV_REJECTED_OR_SELECTION",
+      "router_fallback_reason": "LIVE_AI_DISABLED",
+      "served_from_corrupted_ocr": false
+    },
+    {
+      "image_id": "ext_prt_03_hd_q_7907931",
+      "filename": "hd_q_7907931.jpg",
+      "printed_or_handwritten": "PRINTED",
+      "corpus_subgroup": "A2_PRINTED_DIGITAL_EXAM_RENDER",
+      "dual_ocr_agreed": false,
+      "dual_ocr_reason_code": "LINE_COUNT_MISMATCH",
+      "fidelity_gate_passed": false,
+      "fidelity_failures": [
+        "vertex_and_solid_consistency",
+        "dimension_and_number_fidelity",
+        "geometric_relation_syntax",
+        "goal_sentence_completeness",
+        "source_span_coverage",
+        "diagram_dependency_and_cross_engine"
+      ],
+      "router_status_offline": "REJECTED",
+      "router_chosen_route": "LOCAL_CV_REJECTED_OR_SELECTION",
+      "router_fallback_reason": "LIVE_AI_DISABLED",
+      "served_from_corrupted_ocr": false
+    },
+    {
+      "image_id": "ext_prt_04_hd_q_8436784",
+      "filename": "hd_q_8436784.jpg",
+      "printed_or_handwritten": "PRINTED",
+      "corpus_subgroup": "A2_PRINTED_DIGITAL_EXAM_RENDER",
+      "dual_ocr_agreed": false,
+      "dual_ocr_reason_code": "LINE_COUNT_MISMATCH",
+      "fidelity_gate_passed": false,
+      "fidelity_failures": [
+        "dimension_and_number_fidelity",
+        "geometric_relation_syntax",
+        "goal_sentence_completeness",
+        "source_span_coverage"
+      ],
+      "router_status_offline": "REJECTED",
+      "router_chosen_route": "LOCAL_CV_REJECTED_OR_SELECTION",
+      "router_fallback_reason": "LIVE_AI_DISABLED",
+      "served_from_corrupted_ocr": false
+    },
+    {
+      "image_id": "ext_prt_05_hd_q_7451806",
+      "filename": "hd_q_7451806.jpg",
+      "printed_or_handwritten": "PRINTED",
+      "corpus_subgroup": "A2_PRINTED_DIGITAL_EXAM_RENDER",
+      "dual_ocr_agreed": false,
+      "dual_ocr_reason_code": "LINE_COUNT_MISMATCH",
+      "fidelity_gate_passed": false,
+      "fidelity_failures": [
+        "vertex_and_solid_consistency",
+        "dimension_and_number_fidelity",
+        "geometric_relation_syntax",
+        "goal_sentence_completeness",
+        "source_span_coverage",
+        "diagram_dependency_and_cross_engine"
+      ],
+      "router_status_offline": "REJECTED",
+      "router_chosen_route": "LOCAL_CV_REJECTED_OR_SELECTION",
+      "router_fallback_reason": "LIVE_AI_DISABLED",
+      "served_from_corrupted_ocr": false
+    },
+    {
+      "image_id": "ext_prt_06_hd_q_1084979",
+      "filename": "hd_q_1084979.jpg",
+      "printed_or_handwritten": "PRINTED",
+      "corpus_subgroup": "A1_PRINTED_CAMERA_CAPTURED",
+      "dual_ocr_agreed": false,
+      "dual_ocr_reason_code": "MISSING_SECONDARY_OCR",
+      "fidelity_gate_passed": false,
+      "fidelity_failures": [
+        "vertex_and_solid_consistency",
+        "geometric_relation_syntax",
+        "goal_sentence_completeness",
+        "source_span_coverage"
+      ],
+      "router_status_offline": "REJECTED",
+      "router_chosen_route": "LOCAL_CV_REJECTED_OR_SELECTION",
+      "router_fallback_reason": "LIVE_AI_DISABLED",
+      "served_from_corrupted_ocr": false
+    },
+    {
+      "image_id": "ext_prt_07_hd_q_7958052",
+      "filename": "hd_q_7958052.jpg",
+      "printed_or_handwritten": "PRINTED",
+      "corpus_subgroup": "A1_PRINTED_CAMERA_CAPTURED",
+      "dual_ocr_agreed": false,
+      "dual_ocr_reason_code": "LINE_COUNT_MISMATCH",
+      "fidelity_gate_passed": false,
+      "fidelity_failures": [
+        "vertex_and_solid_consistency",
+        "geometric_relation_syntax",
+        "goal_sentence_completeness",
+        "source_span_coverage",
+        "diagram_dependency_and_cross_engine"
+      ],
+      "router_status_offline": "REJECTED",
+      "router_chosen_route": "LOCAL_CV_REJECTED_OR_SELECTION",
+      "router_fallback_reason": "LIVE_AI_DISABLED",
+      "served_from_corrupted_ocr": false
+    },
+    {
+      "image_id": "ext_prt_08_hd_q_7509702",
+      "filename": "hd_q_7509702.jpg",
+      "printed_or_handwritten": "PRINTED",
+      "corpus_subgroup": "A1_PRINTED_CAMERA_CAPTURED",
+      "dual_ocr_agreed": false,
+      "dual_ocr_reason_code": "DEGRADED_IMAGE_REQUIRES_VISION_FALLBACK",
+      "fidelity_gate_passed": false,
+      "fidelity_failures": [
+        "vertex_and_solid_consistency",
+        "dimension_and_number_fidelity",
+        "geometric_relation_syntax",
+        "goal_sentence_completeness",
+        "source_span_coverage",
+        "diagram_dependency_and_cross_engine"
+      ],
+      "router_status_offline": "NEEDS_SELECTION",
+      "router_chosen_route": "LOCAL_CV_REJECTED_OR_SELECTION",
+      "router_fallback_reason": "AMBIGUOUS_MULTI_PROBLEM",
+      "served_from_corrupted_ocr": false
+    },
+    {
+      "image_id": "ext_prt_09_vmmu_page_r4",
+      "filename": "vmmu_page_r4_Math_0445_test_258_question_14_page_2_key_B_vqa.png",
+      "printed_or_handwritten": "PRINTED",
+      "corpus_subgroup": "A3_VMMU_EXAM_SCAN_MIT",
+      "dual_ocr_agreed": false,
+      "dual_ocr_reason_code": "DEGRADED_IMAGE_REQUIRES_VISION_FALLBACK",
+      "fidelity_gate_passed": false,
+      "fidelity_failures": [
+        "vertex_and_solid_consistency",
+        "geometric_relation_syntax",
+        "goal_sentence_completeness",
+        "source_span_coverage",
+        "diagram_dependency_and_cross_engine"
+      ],
+      "router_status_offline": "NEEDS_SELECTION",
+      "router_chosen_route": "LOCAL_CV_REJECTED_OR_SELECTION",
+      "router_fallback_reason": "AMBIGUOUS_MULTI_PROBLEM",
+      "served_from_corrupted_ocr": false
+    },
+    {
+      "image_id": "ext_prt_10_vmmu_page_r7",
+      "filename": "vmmu_page_r7_Math_0307_test_059_question_49_page_6_key_A_vqa.png",
+      "printed_or_handwritten": "PRINTED",
+      "corpus_subgroup": "A3_VMMU_EXAM_SCAN_MIT",
+      "dual_ocr_agreed": false,
+      "dual_ocr_reason_code": "LINE_COUNT_MISMATCH",
+      "fidelity_gate_passed": false,
+      "fidelity_failures": [
+        "vertex_and_solid_consistency",
+        "geometric_relation_syntax",
+        "goal_sentence_completeness",
+        "source_span_coverage",
+        "diagram_dependency_and_cross_engine"
+      ],
+      "router_status_offline": "REJECTED",
+      "router_chosen_route": "LOCAL_CV_REJECTED_OR_SELECTION",
+      "router_fallback_reason": "LIVE_AI_DISABLED",
+      "served_from_corrupted_ocr": false
+    },
+    {
+      "image_id": "ext_prt_11_vmmu_page_r10",
+      "filename": "vmmu_page_r10_Math_0020_test_004_question_30_page_4_key_C_vqa.png",
+      "printed_or_handwritten": "PRINTED",
+      "corpus_subgroup": "A3_VMMU_EXAM_SCAN_MIT",
+      "dual_ocr_agreed": false,
+      "dual_ocr_reason_code": "LINE_COUNT_MISMATCH",
+      "fidelity_gate_passed": false,
+      "fidelity_failures": [
+        "vertex_and_solid_consistency",
+        "goal_sentence_completeness",
+        "source_span_coverage",
+        "diagram_dependency_and_cross_engine"
+      ],
+      "router_status_offline": "REJECTED",
+      "router_chosen_route": "LOCAL_CV_REJECTED_OR_SELECTION",
+      "router_fallback_reason": "LIVE_AI_DISABLED",
+      "served_from_corrupted_ocr": false
+    },
+    {
+      "image_id": "ext_prt_12_vmmu_page_r11",
+      "filename": "vmmu_page_r11_Math_0303_test_059_question_39_page_4_key_B_vqa.png",
+      "printed_or_handwritten": "PRINTED",
+      "corpus_subgroup": "A3_VMMU_EXAM_SCAN_MIT",
+      "dual_ocr_agreed": false,
+      "dual_ocr_reason_code": "LINE_COUNT_MISMATCH",
+      "fidelity_gate_passed": false,
+      "fidelity_failures": [
+        "vertex_and_solid_consistency",
+        "geometric_relation_syntax",
+        "goal_sentence_completeness",
+        "source_span_coverage",
+        "diagram_dependency_and_cross_engine"
+      ],
+      "router_status_offline": "REJECTED",
+      "router_chosen_route": "LOCAL_CV_REJECTED_OR_SELECTION",
+      "router_fallback_reason": "LIVE_AI_DISABLED",
+      "served_from_corrupted_ocr": false
+    },
+    {
+      "image_id": "ext_prt_13_vmmu_page_r25",
+      "filename": "vmmu_page_r25_Math_0143_test_024_question_48_page_6_key_B_vqa.png",
+      "printed_or_handwritten": "PRINTED",
+      "corpus_subgroup": "A3_VMMU_EXAM_SCAN_MIT",
+      "dual_ocr_agreed": false,
+      "dual_ocr_reason_code": "LINE_COUNT_MISMATCH",
+      "fidelity_gate_passed": false,
+      "fidelity_failures": [
+        "vertex_and_solid_consistency",
+        "dimension_and_number_fidelity",
+        "geometric_relation_syntax",
+        "goal_sentence_completeness",
+        "source_span_coverage",
+        "diagram_dependency_and_cross_engine"
+      ],
+      "router_status_offline": "REJECTED",
+      "router_chosen_route": "LOCAL_CV_REJECTED_OR_SELECTION",
+      "router_fallback_reason": "LIVE_AI_DISABLED",
+      "served_from_corrupted_ocr": false
+    },
+    {
+      "image_id": "ext_prt_14_vmmu_page_r26",
+      "filename": "vmmu_page_r26_Math_0120_test_020_question_40_page_7_key_B_vqa.png",
+      "printed_or_handwritten": "PRINTED",
+      "corpus_subgroup": "A3_VMMU_EXAM_SCAN_MIT",
+      "dual_ocr_agreed": false,
+      "dual_ocr_reason_code": "LINE_COUNT_MISMATCH",
+      "fidelity_gate_passed": false,
+      "fidelity_failures": [
+        "vertex_and_solid_consistency",
+        "geometric_relation_syntax",
+        "goal_sentence_completeness",
+        "source_span_coverage",
+        "diagram_dependency_and_cross_engine"
+      ],
+      "router_status_offline": "REJECTED",
+      "router_chosen_route": "LOCAL_CV_REJECTED_OR_SELECTION",
+      "router_fallback_reason": "LIVE_AI_DISABLED",
+      "served_from_corrupted_ocr": false
+    },
+    {
+      "image_id": "ext_prt_15_vmmu_page_r28",
+      "filename": "vmmu_page_r28_Math_0399_test_080_question_35_page_5_key_A_vqa.png",
+      "printed_or_handwritten": "PRINTED",
+      "corpus_subgroup": "A3_VMMU_EXAM_SCAN_MIT",
+      "dual_ocr_agreed": false,
+      "dual_ocr_reason_code": "LINE_COUNT_MISMATCH",
+      "fidelity_gate_passed": false,
+      "fidelity_failures": [
+        "vertex_and_solid_consistency",
+        "dimension_and_number_fidelity",
+        "geometric_relation_syntax",
+        "goal_sentence_completeness",
+        "source_span_coverage",
+        "diagram_dependency_and_cross_engine"
+      ],
+      "router_status_offline": "REJECTED",
+      "router_chosen_route": "LOCAL_CV_REJECTED_OR_SELECTION",
+      "router_fallback_reason": "LIVE_AI_DISABLED",
+      "served_from_corrupted_ocr": false
+    },
+    {
+      "image_id": "ext_hw_b1_01_hd_a_6043187",
+      "filename": "hd_a_6043187.jpg",
+      "printed_or_handwritten": "HANDWRITTEN",
+      "corpus_subgroup": "B1_HANDWRITTEN_PROBLEM_STATEMENT",
+      "dual_ocr_agreed": false,
+      "dual_ocr_reason_code": "LINE_COUNT_MISMATCH",
+      "fidelity_gate_passed": false,
+      "fidelity_failures": [
+        "vertex_and_solid_consistency",
+        "dimension_and_number_fidelity",
+        "geometric_relation_syntax",
+        "goal_sentence_completeness",
+        "source_span_coverage",
+        "diagram_dependency_and_cross_engine"
+      ],
+      "router_status_offline": "REJECTED",
+      "router_chosen_route": "LOCAL_CV_REJECTED_OR_SELECTION",
+      "router_fallback_reason": "LIVE_AI_DISABLED",
+      "served_from_corrupted_ocr": false
+    },
+    {
+      "image_id": "ext_hw_b2_01_hd_a_8349383",
+      "filename": "hd_a_8349383.jpg",
+      "printed_or_handwritten": "HANDWRITTEN",
+      "corpus_subgroup": "B2_HANDWRITTEN_SOLUTION_OR_DIAGRAM_ONLY",
+      "dual_ocr_agreed": false,
+      "dual_ocr_reason_code": "LINE_COUNT_MISMATCH",
+      "fidelity_gate_passed": false,
+      "fidelity_failures": [
+        "vertex_and_solid_consistency",
+        "dimension_and_number_fidelity",
+        "geometric_relation_syntax",
+        "goal_sentence_completeness",
+        "source_span_coverage",
+        "diagram_dependency_and_cross_engine"
+      ],
+      "router_status_offline": "REJECTED",
+      "router_chosen_route": "LOCAL_CV_REJECTED_OR_SELECTION",
+      "router_fallback_reason": "LIVE_AI_DISABLED",
+      "served_from_corrupted_ocr": false
+    },
+    {
+      "image_id": "ext_hw_b2_02_hd_a_7509702_2",
+      "filename": "hd_a_7509702_2.jpg",
+      "printed_or_handwritten": "HANDWRITTEN",
+      "corpus_subgroup": "B2_HANDWRITTEN_SOLUTION_OR_DIAGRAM_ONLY",
+      "dual_ocr_agreed": false,
+      "dual_ocr_reason_code": "DEGRADED_IMAGE_REQUIRES_VISION_FALLBACK",
+      "fidelity_gate_passed": false,
+      "fidelity_failures": [
+        "vertex_and_solid_consistency",
+        "dimension_and_number_fidelity",
+        "geometric_relation_syntax",
+        "goal_sentence_completeness",
+        "source_span_coverage",
+        "diagram_dependency_and_cross_engine"
+      ],
+      "router_status_offline": "NEEDS_SELECTION",
+      "router_chosen_route": "LOCAL_CV_REJECTED_OR_SELECTION",
+      "router_fallback_reason": "AMBIGUOUS_MULTI_PROBLEM",
+      "served_from_corrupted_ocr": false
+    },
+    {
+      "image_id": "ext_hw_b2_03_hd_a_7594768_2",
+      "filename": "hd_a_7594768_2.jpg",
+      "printed_or_handwritten": "HANDWRITTEN",
+      "corpus_subgroup": "B2_HANDWRITTEN_SOLUTION_OR_DIAGRAM_ONLY",
+      "dual_ocr_agreed": false,
+      "dual_ocr_reason_code": "DEGRADED_IMAGE_REQUIRES_VISION_FALLBACK",
+      "fidelity_gate_passed": false,
+      "fidelity_failures": [
+        "vertex_and_solid_consistency",
+        "dimension_and_number_fidelity",
+        "geometric_relation_syntax",
+        "goal_sentence_completeness",
+        "source_span_coverage",
+        "diagram_dependency_and_cross_engine"
+      ],
+      "router_status_offline": "NEEDS_SELECTION",
+      "router_chosen_route": "LOCAL_CV_REJECTED_OR_SELECTION",
+      "router_fallback_reason": "AMBIGUOUS_MULTI_PROBLEM",
+      "served_from_corrupted_ocr": false
+    },
+    {
+      "image_id": "ext_hw_b2_04_hd_a_7594768_1",
+      "filename": "hd_a_7594768_1.jpg",
+      "printed_or_handwritten": "HANDWRITTEN",
+      "corpus_subgroup": "B2_HANDWRITTEN_SOLUTION_OR_DIAGRAM_ONLY",
+      "dual_ocr_agreed": false,
+      "dual_ocr_reason_code": "MISSING_SECONDARY_OCR",
+      "fidelity_gate_passed": false,
+      "fidelity_failures": [
+        "vertex_and_solid_consistency",
+        "goal_sentence_completeness",
+        "source_span_coverage",
+        "diagram_dependency_and_cross_engine"
+      ],
+      "router_status_offline": "REJECTED",
+      "router_chosen_route": "LOCAL_CV_REJECTED_OR_SELECTION",
+      "router_fallback_reason": "LIVE_AI_DISABLED",
+      "served_from_corrupted_ocr": false
+    },
+    {
+      "image_id": "ext_hw_b2_05_hd_a_1084979_1",
+      "filename": "hd_a_1084979_1.jpg",
+      "printed_or_handwritten": "HANDWRITTEN",
+      "corpus_subgroup": "B2_HANDWRITTEN_SOLUTION_OR_DIAGRAM_ONLY",
+      "dual_ocr_agreed": false,
+      "dual_ocr_reason_code": "DEGRADED_IMAGE_REQUIRES_VISION_FALLBACK",
+      "fidelity_gate_passed": false,
+      "fidelity_failures": [
+        "vertex_and_solid_consistency",
+        "goal_sentence_completeness",
+        "source_span_coverage",
+        "diagram_dependency_and_cross_engine"
+      ],
+      "router_status_offline": "NEEDS_SELECTION",
+      "router_chosen_route": "LOCAL_CV_REJECTED_OR_SELECTION",
+      "router_fallback_reason": "AMBIGUOUS_MULTI_PROBLEM",
+      "served_from_corrupted_ocr": false
+    },
+    {
+      "image_id": "ext_hw_b2_06_hd_a_1084979_2",
+      "filename": "hd_a_1084979_2.jpg",
+      "printed_or_handwritten": "HANDWRITTEN",
+      "corpus_subgroup": "B2_HANDWRITTEN_SOLUTION_OR_DIAGRAM_ONLY",
+      "dual_ocr_agreed": false,
+      "dual_ocr_reason_code": "MISSING_SECONDARY_OCR",
+      "fidelity_gate_passed": false,
+      "fidelity_failures": [
+        "vertex_and_solid_consistency",
+        "dimension_and_number_fidelity",
+        "geometric_relation_syntax",
+        "goal_sentence_completeness",
+        "source_span_coverage",
+        "diagram_dependency_and_cross_engine"
+      ],
+      "router_status_offline": "REJECTED",
+      "router_chosen_route": "LOCAL_CV_REJECTED_OR_SELECTION",
+      "router_fallback_reason": "LIVE_AI_DISABLED",
+      "served_from_corrupted_ocr": false
+    },
+    {
+      "image_id": "ext_hw_b2_07_hd_a_1084979_3",
+      "filename": "hd_a_1084979_3.jpg",
+      "printed_or_handwritten": "HANDWRITTEN",
+      "corpus_subgroup": "B2_HANDWRITTEN_SOLUTION_OR_DIAGRAM_ONLY",
+      "dual_ocr_agreed": false,
+      "dual_ocr_reason_code": "MISSING_SECONDARY_OCR",
+      "fidelity_gate_passed": false,
+      "fidelity_failures": [
+        "vertex_and_solid_consistency",
+        "geometric_relation_syntax",
+        "goal_sentence_completeness",
+        "source_span_coverage",
+        "diagram_dependency_and_cross_engine"
+      ],
+      "router_status_offline": "REJECTED",
+      "router_chosen_route": "LOCAL_CV_REJECTED_OR_SELECTION",
+      "router_fallback_reason": "LIVE_AI_DISABLED",
+      "served_from_corrupted_ocr": false
+    },
+    {
+      "image_id": "ext_hw_b2_08_hd_a_171471_1",
+      "filename": "hd_a_171471_1.jpg",
+      "printed_or_handwritten": "HANDWRITTEN",
+      "corpus_subgroup": "B2_HANDWRITTEN_SOLUTION_OR_DIAGRAM_ONLY",
+      "dual_ocr_agreed": false,
+      "dual_ocr_reason_code": "MISSING_SECONDARY_OCR",
+      "fidelity_gate_passed": false,
+      "fidelity_failures": [
+        "vertex_and_solid_consistency",
+        "goal_sentence_completeness",
+        "source_span_coverage",
+        "diagram_dependency_and_cross_engine"
+      ],
+      "router_status_offline": "REJECTED",
+      "router_chosen_route": "LOCAL_CV_REJECTED_OR_SELECTION",
+      "router_fallback_reason": "LIVE_AI_DISABLED",
+      "served_from_corrupted_ocr": false
+    },
+    {
+      "image_id": "ext_hw_b2_09_hd_a_10810_3",
+      "filename": "hd_a_10810_3.jpg",
+      "printed_or_handwritten": "HANDWRITTEN",
+      "corpus_subgroup": "B2_HANDWRITTEN_SOLUTION_OR_DIAGRAM_ONLY",
+      "dual_ocr_agreed": false,
+      "dual_ocr_reason_code": "LINE_COUNT_MISMATCH",
+      "fidelity_gate_passed": false,
+      "fidelity_failures": [
+        "vertex_and_solid_consistency",
+        "goal_sentence_completeness",
+        "source_span_coverage",
+        "diagram_dependency_and_cross_engine"
+      ],
+      "router_status_offline": "REJECTED",
+      "router_chosen_route": "LOCAL_CV_REJECTED_OR_SELECTION",
+      "router_fallback_reason": "LIVE_AI_DISABLED",
+      "served_from_corrupted_ocr": false
+    },
+    {
+      "image_id": "ext_hw_b3_01_uit_hwdb_r0",
+      "filename": "uit_hwdb_test_r0.png",
+      "printed_or_handwritten": "HANDWRITTEN",
+      "corpus_subgroup": "B3_HANDWRITTEN_BENCHMARK_LINE",
+      "dual_ocr_agreed": false,
+      "dual_ocr_reason_code": "LINE_COUNT_MISMATCH",
+      "fidelity_gate_passed": false,
+      "fidelity_failures": [
+        "vertex_and_solid_consistency",
+        "geometric_relation_syntax",
+        "goal_sentence_completeness",
+        "source_span_coverage",
+        "diagram_dependency_and_cross_engine"
+      ],
+      "router_status_offline": "REJECTED",
+      "router_chosen_route": "LOCAL_CV_REJECTED_OR_SELECTION",
+      "router_fallback_reason": "LIVE_AI_DISABLED",
+      "served_from_corrupted_ocr": false
+    },
+    {
+      "image_id": "ext_hw_b3_02_uit_hwdb_r3",
+      "filename": "uit_hwdb_test_r3.png",
+      "printed_or_handwritten": "HANDWRITTEN",
+      "corpus_subgroup": "B3_HANDWRITTEN_BENCHMARK_LINE",
+      "dual_ocr_agreed": false,
+      "dual_ocr_reason_code": "GATE_OUT_OF_SCOPE",
+      "fidelity_gate_passed": false,
+      "fidelity_failures": [
+        "vertex_and_solid_consistency",
+        "dimension_and_number_fidelity",
+        "geometric_relation_syntax",
+        "goal_sentence_completeness",
+        "source_span_coverage",
+        "diagram_dependency_and_cross_engine"
+      ],
+      "router_status_offline": "REJECTED",
+      "router_chosen_route": "LOCAL_CV_REJECTED_OR_SELECTION",
+      "router_fallback_reason": "LIVE_AI_DISABLED",
+      "served_from_corrupted_ocr": false
+    },
+    {
+      "image_id": "ext_hw_b3_03_uit_hwdb_r5",
+      "filename": "uit_hwdb_test_r5.png",
+      "printed_or_handwritten": "HANDWRITTEN",
+      "corpus_subgroup": "B3_HANDWRITTEN_BENCHMARK_LINE",
+      "dual_ocr_agreed": false,
+      "dual_ocr_reason_code": "MISSING_SECONDARY_OCR",
+      "fidelity_gate_passed": false,
+      "fidelity_failures": [
+        "vertex_and_solid_consistency",
+        "geometric_relation_syntax",
+        "goal_sentence_completeness",
+        "source_span_coverage",
+        "diagram_dependency_and_cross_engine"
+      ],
+      "router_status_offline": "REJECTED",
+      "router_chosen_route": "LOCAL_CV_REJECTED_OR_SELECTION",
+      "router_fallback_reason": "LIVE_AI_DISABLED",
+      "served_from_corrupted_ocr": false
+    },
+    {
+      "image_id": "ext_hw_b3_04_uit_hwdb_r10",
+      "filename": "uit_hwdb_test_r10.png",
+      "printed_or_handwritten": "HANDWRITTEN",
+      "corpus_subgroup": "B3_HANDWRITTEN_BENCHMARK_LINE",
+      "dual_ocr_agreed": false,
+      "dual_ocr_reason_code": "LINE_COUNT_MISMATCH",
+      "fidelity_gate_passed": false,
+      "fidelity_failures": [
+        "vertex_and_solid_consistency",
+        "goal_sentence_completeness",
+        "source_span_coverage",
+        "diagram_dependency_and_cross_engine"
+      ],
+      "router_status_offline": "REJECTED",
+      "router_chosen_route": "LOCAL_CV_REJECTED_OR_SELECTION",
+      "router_fallback_reason": "LIVE_AI_DISABLED",
+      "served_from_corrupted_ocr": false
+    },
+    {
+      "image_id": "ext_hw_b3_05_uit_hwdb_r11",
+      "filename": "uit_hwdb_test_r11.png",
+      "printed_or_handwritten": "HANDWRITTEN",
+      "corpus_subgroup": "B3_HANDWRITTEN_BENCHMARK_LINE",
+      "dual_ocr_agreed": false,
+      "dual_ocr_reason_code": "MISSING_SECONDARY_OCR",
+      "fidelity_gate_passed": false,
+      "fidelity_failures": [
+        "vertex_and_solid_consistency",
+        "goal_sentence_completeness",
+        "source_span_coverage",
+        "diagram_dependency_and_cross_engine"
+      ],
+      "router_status_offline": "REJECTED",
+      "router_chosen_route": "LOCAL_CV_REJECTED_OR_SELECTION",
+      "router_fallback_reason": "LIVE_AI_DISABLED",
+      "served_from_corrupted_ocr": false
+    },
+    {
+      "image_id": "ext_hw_b3_06_uit_hwdb_r12",
+      "filename": "uit_hwdb_test_r12.png",
+      "printed_or_handwritten": "HANDWRITTEN",
+      "corpus_subgroup": "B3_HANDWRITTEN_BENCHMARK_LINE",
+      "dual_ocr_agreed": false,
+      "dual_ocr_reason_code": "MISSING_SECONDARY_OCR",
+      "fidelity_gate_passed": false,
+      "fidelity_failures": [
+        "vertex_and_solid_consistency",
+        "goal_sentence_completeness",
+        "source_span_coverage",
+        "diagram_dependency_and_cross_engine"
+      ],
+      "router_status_offline": "REJECTED",
+      "router_chosen_route": "LOCAL_CV_REJECTED_OR_SELECTION",
+      "router_fallback_reason": "LIVE_AI_DISABLED",
+      "served_from_corrupted_ocr": false
+    },
+    {
+      "image_id": "ext_diag_01_vmmu_crop_r4",
+      "filename": "vmmu_crop_r4_Math_0445_test_258_question_14_page_2_key_B_vqa.png",
+      "printed_or_handwritten": "PRINTED_DIAGRAM_ONLY",
+      "corpus_subgroup": "D_PRINTED_DIAGRAM_ONLY",
+      "dual_ocr_agreed": false,
+      "dual_ocr_reason_code": "MISSING_SECONDARY_OCR",
+      "fidelity_gate_passed": false,
+      "fidelity_failures": [
+        "vertex_and_solid_consistency",
+        "goal_sentence_completeness",
+        "source_span_coverage",
+        "diagram_dependency_and_cross_engine"
+      ],
+      "router_status_offline": "REJECTED",
+      "router_chosen_route": "LOCAL_CV_REJECTED_OR_SELECTION",
+      "router_fallback_reason": "LIVE_AI_DISABLED",
+      "served_from_corrupted_ocr": false
+    },
+    {
+      "image_id": "ext_diag_02_vmmu_crop_r7",
+      "filename": "vmmu_crop_r7_Math_0307_test_059_question_49_page_6_key_A_vqa.png",
+      "printed_or_handwritten": "PRINTED_DIAGRAM_ONLY",
+      "corpus_subgroup": "D_PRINTED_DIAGRAM_ONLY",
+      "dual_ocr_agreed": false,
+      "dual_ocr_reason_code": "MISSING_SECONDARY_OCR",
+      "fidelity_gate_passed": false,
+      "fidelity_failures": [
+        "vertex_and_solid_consistency",
+        "goal_sentence_completeness",
+        "source_span_coverage",
+        "diagram_dependency_and_cross_engine"
+      ],
+      "router_status_offline": "REJECTED",
+      "router_chosen_route": "LOCAL_CV_REJECTED_OR_SELECTION",
+      "router_fallback_reason": "LIVE_AI_DISABLED",
+      "served_from_corrupted_ocr": false
+    },
+    {
+      "image_id": "ext_diag_03_vmmu_crop_r10",
+      "filename": "vmmu_crop_r10_Math_0020_test_004_question_30_page_4_key_C_vqa.png",
+      "printed_or_handwritten": "PRINTED_DIAGRAM_ONLY",
+      "corpus_subgroup": "D_PRINTED_DIAGRAM_ONLY",
+      "dual_ocr_agreed": false,
+      "dual_ocr_reason_code": "MISSING_SECONDARY_OCR",
+      "fidelity_gate_passed": false,
+      "fidelity_failures": [
+        "vertex_and_solid_consistency",
+        "goal_sentence_completeness",
+        "source_span_coverage",
+        "diagram_dependency_and_cross_engine"
+      ],
+      "router_status_offline": "REJECTED",
+      "router_chosen_route": "LOCAL_CV_REJECTED_OR_SELECTION",
+      "router_fallback_reason": "LIVE_AI_DISABLED",
+      "served_from_corrupted_ocr": false
+    },
+    {
+      "image_id": "ext_diag_04_vmmu_crop_r11",
+      "filename": "vmmu_crop_r11_Math_0303_test_059_question_39_page_4_key_B_vqa.png",
+      "printed_or_handwritten": "PRINTED_DIAGRAM_ONLY",
+      "corpus_subgroup": "D_PRINTED_DIAGRAM_ONLY",
+      "dual_ocr_agreed": false,
+      "dual_ocr_reason_code": "LINE_COUNT_MISMATCH",
+      "fidelity_gate_passed": false,
+      "fidelity_failures": [
+        "vertex_and_solid_consistency",
+        "goal_sentence_completeness",
+        "source_span_coverage",
+        "diagram_dependency_and_cross_engine"
+      ],
+      "router_status_offline": "REJECTED",
+      "router_chosen_route": "LOCAL_CV_REJECTED_OR_SELECTION",
+      "router_fallback_reason": "LIVE_AI_DISABLED",
+      "served_from_corrupted_ocr": false
+    },
+    {
+      "image_id": "ext_diag_05_vmmu_crop_r25",
+      "filename": "vmmu_crop_r25_Math_0143_test_024_question_48_page_6_key_B_vqa.png",
+      "printed_or_handwritten": "PRINTED_DIAGRAM_ONLY",
+      "corpus_subgroup": "D_PRINTED_DIAGRAM_ONLY",
+      "dual_ocr_agreed": false,
+      "dual_ocr_reason_code": "DEGRADED_IMAGE_REQUIRES_VISION_FALLBACK",
+      "fidelity_gate_passed": false,
+      "fidelity_failures": [
+        "vertex_and_solid_consistency",
+        "goal_sentence_completeness",
+        "source_span_coverage",
+        "diagram_dependency_and_cross_engine"
+      ],
+      "router_status_offline": "NEEDS_SELECTION",
+      "router_chosen_route": "LOCAL_CV_REJECTED_OR_SELECTION",
+      "router_fallback_reason": "AMBIGUOUS_MULTI_PROBLEM",
+      "served_from_corrupted_ocr": false
+    },
+    {
+      "image_id": "ext_diag_06_vmmu_crop_r26",
+      "filename": "vmmu_crop_r26_Math_0120_test_020_question_40_page_7_key_B_vqa.png",
+      "printed_or_handwritten": "PRINTED_DIAGRAM_ONLY",
+      "corpus_subgroup": "D_PRINTED_DIAGRAM_ONLY",
+      "dual_ocr_agreed": false,
+      "dual_ocr_reason_code": "MISSING_SECONDARY_OCR",
+      "fidelity_gate_passed": false,
+      "fidelity_failures": [
+        "vertex_and_solid_consistency",
+        "dimension_and_number_fidelity",
+        "geometric_relation_syntax",
+        "goal_sentence_completeness",
+        "source_span_coverage",
+        "diagram_dependency_and_cross_engine"
+      ],
+      "router_status_offline": "REJECTED",
+      "router_chosen_route": "LOCAL_CV_REJECTED_OR_SELECTION",
+      "router_fallback_reason": "LIVE_AI_DISABLED",
+      "served_from_corrupted_ocr": false
+    },
+    {
+      "image_id": "ext_diag_07_vmmu_crop_r28",
+      "filename": "vmmu_crop_r28_Math_0399_test_080_question_35_page_5_key_A_vqa.png",
+      "printed_or_handwritten": "PRINTED_DIAGRAM_ONLY",
+      "corpus_subgroup": "D_PRINTED_DIAGRAM_ONLY",
+      "dual_ocr_agreed": false,
+      "dual_ocr_reason_code": "MISSING_SECONDARY_OCR",
+      "fidelity_gate_passed": false,
+      "fidelity_failures": [
+        "vertex_and_solid_consistency",
+        "goal_sentence_completeness",
+        "source_span_coverage",
+        "diagram_dependency_and_cross_engine"
+      ],
+      "router_status_offline": "REJECTED",
+      "router_chosen_route": "LOCAL_CV_REJECTED_OR_SELECTION",
+      "router_fallback_reason": "LIVE_AI_DISABLED",
+      "served_from_corrupted_ocr": false
+    }
+  ]
+}

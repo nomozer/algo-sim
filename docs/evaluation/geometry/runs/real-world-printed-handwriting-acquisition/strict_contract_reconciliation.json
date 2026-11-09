@@ -1,0 +1,249 @@
+{
+  "schema": "algosim-strict-contract-reconciliation/1",
+  "generated_at_utc": "2026-11-09T19:05:02.186832+00:00",
+  "c26_headline_metrics_reconciled": {
+    "mathematical_served_correct": "37/41",
+    "semantic_served_correct": "37/41",
+    "strict_served_correct": "30/41",
+    "served_strict_divergences_count": 7,
+    "refused_strict_divergences_count": 2,
+    "refused_strict_divergence_case_ids": [
+      "K-B01",
+      "K-B02"
+    ]
+  },
+  "five_question_determination_on_7_construct_plane_section_cases": {
+    "1_has_geometric_error": false,
+    "2_has_ordering_or_representation_difference": true,
+    "3_has_wrong_construction_on_scene3d": false,
+    "4_has_information_loss_planner_to_adapter": false,
+    "5_was_legacy_strict_contract_expectation_incomplete": true,
+    "summary": "All 7 cases (`K-A01..K-A04, R1-B01, R1-B02, R1-C02`) ask `'Xác định thiết diện... và tính diện tích thiết diện đó'` in the Vietnamese prompt. `TypedFactNext /2` faithfully extracts both `construct_plane_section` and `area(section)`. Removing `construct_plane_section` causes `Source Gate` (`registry.kiem_nguon`) to refuse with `SOURCE_OBJECT_MISMATCH`, proving `Adapter /4` + `Scene3D` is 100% mathematically and visually faithful while the older C26 strict benchmark expectation omitted the simulation goal."
+  },
+  "seven_served_section_cases": [
+    {
+      "case_id": "K-A01",
+      "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với mặt phẳng (ABCD) và SA = 2. Gọi M là trung điểm của AB. Gọi N là trung điểm của SC. Mặt phẳng (P) đi qua A, B và vuông góc với (SCD). Xác định thiết diện của hình chóp S.ABCD cắt bởi (P) và tính diện tích thiết diện đó.",
+      "source_explicitly_requests_section": true,
+      "q1_geometric_error": false,
+      "q2_representation_or_ordering_difference": "TypedFactNext /2 emits `simulation_goals=[construct_plane_section]` in addition to the area `math_goal`, whereas legacy C26 strict tuple `expected_goals` listed only the scalar area goal.",
+      "q3_scene3d_construction_valid": true,
+      "q4_planner_to_adapter_information_loss": false,
+      "q5_is_legacy_strict_gold_omission_invalid": true,
+      "proof_source_gate_refuses_if_section_omitted": {
+        "status_without_section_goal": "REFUSED",
+        "code_without_section_goal": "SOURCE_OBJECT_MISMATCH"
+      },
+      "certified_boundary": [
+        "A",
+        "B",
+        "section:td_sec1:point:on:khoi_S_ABCD::edge:S-C",
+        "section:td_sec1:point:on:khoi_S_ABCD::edge:S-D"
+      ],
+      "answer_exact": {
+        "mg1": {
+          "coef": "3√2/2",
+          "dim": 0,
+          "unit": null
+        }
+      },
+      "scene3d_continuity_errors": []
+    },
+    {
+      "case_id": "K-A02",
+      "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với mặt phẳng (ABCD) và SA = 2. Gọi M là trung điểm của AB. Gọi N là trung điểm của SC. Mặt phẳng (P) đi qua A, B và vuông góc với (SBD). Xác định thiết diện của hình chóp S.ABCD cắt bởi (P) và tính diện tích thiết diện đó.",
+      "source_explicitly_requests_section": true,
+      "q1_geometric_error": false,
+      "q2_representation_or_ordering_difference": "TypedFactNext /2 emits `simulation_goals=[construct_plane_section]` in addition to the area `math_goal`, whereas legacy C26 strict tuple `expected_goals` listed only the scalar area goal.",
+      "q3_scene3d_construction_valid": true,
+      "q4_planner_to_adapter_information_loss": false,
+      "q5_is_legacy_strict_gold_omission_invalid": true,
+      "proof_source_gate_refuses_if_section_omitted": {
+        "status_without_section_goal": "REFUSED",
+        "code_without_section_goal": "SOURCE_OBJECT_MISMATCH"
+      },
+      "certified_boundary": [
+        "A",
+        "B",
+        "section:td_sec1:point:on:khoi_S_ABCD::edge:S-C",
+        "section:td_sec1:point:on:khoi_S_ABCD::edge:S-D"
+      ],
+      "answer_exact": {
+        "mg1": {
+          "coef": "3√2/2",
+          "dim": 0,
+          "unit": null
+        }
+      },
+      "scene3d_continuity_errors": []
+    },
+    {
+      "case_id": "K-A03",
+      "problem_text": "Cho hình lăng trụ đứng ABC.A'B'C' có đáy ABC là tam giác vuông tại A, AB = 3, AC = 4 và AA' = 2. Gọi M là trung điểm của BC. Gọi N là trung điểm của A'B'. Mặt phẳng (P) chứa AB' và song song với BC. Xác định thiết diện của hình lăng trụ ABC.A'B'C' cắt bởi (P) và tính diện tích thiết diện đó.",
+      "source_explicitly_requests_section": true,
+      "q1_geometric_error": false,
+      "q2_representation_or_ordering_difference": "TypedFactNext /2 emits `simulation_goals=[construct_plane_section]` in addition to the area `math_goal`, whereas legacy C26 strict tuple `expected_goals` listed only the scalar area goal.",
+      "q3_scene3d_construction_valid": true,
+      "q4_planner_to_adapter_information_loss": false,
+      "q5_is_legacy_strict_gold_omission_invalid": true,
+      "proof_source_gate_refuses_if_section_omitted": {
+        "status_without_section_goal": "REFUSED",
+        "code_without_section_goal": "SOURCE_OBJECT_MISMATCH"
+      },
+      "certified_boundary": [
+        "B_prime",
+        "C_prime",
+        "A"
+      ],
+      "answer_exact": {
+        "math1": {
+          "coef": "√61",
+          "dim": 0,
+          "unit": null
+        }
+      },
+      "scene3d_continuity_errors": []
+    },
+    {
+      "case_id": "K-A04",
+      "problem_text": "Cho hình lăng trụ đứng ABC.A'B'C' có đáy ABC là tam giác vuông tại A, AB = 3, AC = 4 và AA' = 2. Gọi M là trung điểm của BC. Gọi N là trung điểm của A'B'. Mặt phẳng (P) chứa AC' và song song với BC. Xác định thiết diện của hình lăng trụ ABC.A'B'C' cắt bởi (P) và tính diện tích thiết diện đó.",
+      "source_explicitly_requests_section": true,
+      "q1_geometric_error": false,
+      "q2_representation_or_ordering_difference": "TypedFactNext /2 emits `simulation_goals=[construct_plane_section]` in addition to the area `math_goal`, whereas legacy C26 strict tuple `expected_goals` listed only the scalar area goal.",
+      "q3_scene3d_construction_valid": true,
+      "q4_planner_to_adapter_information_loss": false,
+      "q5_is_legacy_strict_gold_omission_invalid": true,
+      "proof_source_gate_refuses_if_section_omitted": {
+        "status_without_section_goal": "REFUSED",
+        "code_without_section_goal": "SOURCE_OBJECT_MISMATCH"
+      },
+      "certified_boundary": [
+        "B_prime",
+        "C_prime",
+        "A"
+      ],
+      "answer_exact": {
+        "mg1": {
+          "coef": "√61",
+          "dim": 0,
+          "unit": null
+        }
+      },
+      "scene3d_continuity_errors": []
+    },
+    {
+      "case_id": "R1-B01",
+      "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 3, SA vuông góc với mặt phẳng (ABCD) và SA = 4. Mặt phẳng (P) đi qua hình chiếu vuông góc của A lên SB và song song với mặt phẳng (ABCD). Xác định thiết diện của hình chóp S.ABCD cắt bởi (P) và tính diện tích thiết diện đó.",
+      "source_explicitly_requests_section": true,
+      "q1_geometric_error": false,
+      "q2_representation_or_ordering_difference": "TypedFactNext /2 emits `simulation_goals=[construct_plane_section]` in addition to the area `math_goal`, whereas legacy C26 strict tuple `expected_goals` listed only the scalar area goal.",
+      "q3_scene3d_construction_valid": true,
+      "q4_planner_to_adapter_information_loss": false,
+      "q5_is_legacy_strict_gold_omission_invalid": true,
+      "proof_source_gate_refuses_if_section_omitted": {
+        "status_without_section_goal": "REFUSED",
+        "code_without_section_goal": "SOURCE_OBJECT_MISMATCH"
+      },
+      "certified_boundary": [
+        "section:td_sec1:point:on:khoi_S_ABCD::edge:S-A",
+        "section:td_sec1:point:on:khoi_S_ABCD::edge:S-B",
+        "section:td_sec1:point:on:khoi_S_ABCD::edge:S-C",
+        "section:td_sec1:point:on:khoi_S_ABCD::edge:S-D"
+      ],
+      "answer_exact": {
+        "mg1": {
+          "coef": "2304/625",
+          "dim": 0,
+          "unit": null
+        }
+      },
+      "scene3d_continuity_errors": []
+    },
+    {
+      "case_id": "R1-B02",
+      "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 4, SA vuông góc với mặt phẳng (ABCD) và SA = 2. Mặt phẳng (P) đi qua trung điểm của SD và vuông góc với SA. Xác định thiết diện của hình chóp S.ABCD cắt bởi (P) và tính diện tích thiết diện đó.",
+      "source_explicitly_requests_section": true,
+      "q1_geometric_error": false,
+      "q2_representation_or_ordering_difference": "TypedFactNext /2 emits `simulation_goals=[construct_plane_section]` in addition to the area `math_goal`, whereas legacy C26 strict tuple `expected_goals` listed only the scalar area goal.",
+      "q3_scene3d_construction_valid": true,
+      "q4_planner_to_adapter_information_loss": false,
+      "q5_is_legacy_strict_gold_omission_invalid": true,
+      "proof_source_gate_refuses_if_section_omitted": {
+        "status_without_section_goal": "REFUSED",
+        "code_without_section_goal": "SOURCE_OBJECT_MISMATCH"
+      },
+      "certified_boundary": [
+        "section:td_sec1:point:on:khoi_S_ABCD::edge:S-A",
+        "section:td_sec1:point:on:khoi_S_ABCD::edge:S-B",
+        "section:td_sec1:point:on:khoi_S_ABCD::edge:S-C",
+        "section:td_sec1:point:on:khoi_S_ABCD::edge:S-D"
+      ],
+      "answer_exact": {
+        "mg1": {
+          "coef": "4",
+          "dim": 0,
+          "unit": null
+        }
+      },
+      "scene3d_continuity_errors": []
+    },
+    {
+      "case_id": "R1-C02",
+      "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với mặt phẳng (ABCD) và SA = 2. Mặt phẳng (P) đi qua giao điểm của AC và BD và song song với mặt phẳng (SAB). Xác định thiết diện của hình chóp S.ABCD cắt bởi (P) và tính diện tích thiết diện đó.",
+      "source_explicitly_requests_section": true,
+      "q1_geometric_error": false,
+      "q2_representation_or_ordering_difference": "TypedFactNext /2 emits `simulation_goals=[construct_plane_section]` in addition to the area `math_goal`, whereas legacy C26 strict tuple `expected_goals` listed only the scalar area goal.",
+      "q3_scene3d_construction_valid": true,
+      "q4_planner_to_adapter_information_loss": false,
+      "q5_is_legacy_strict_gold_omission_invalid": true,
+      "proof_source_gate_refuses_if_section_omitted": {
+        "status_without_section_goal": "REFUSED",
+        "code_without_section_goal": "SOURCE_OBJECT_MISMATCH"
+      },
+      "certified_boundary": [
+        "section:td_sec1:point:on:khoi_S_ABCD::edge:B-C",
+        "section:td_sec1:point:on:khoi_S_ABCD::edge:A-D",
+        "section:td_sec1:point:on:khoi_S_ABCD::edge:S-D",
+        "section:td_sec1:point:on:khoi_S_ABCD::edge:S-C"
+      ],
+      "answer_exact": {
+        "mg1": {
+          "coef": "3/2",
+          "dim": 0,
+          "unit": null
+        }
+      },
+      "scene3d_continuity_errors": []
+    }
+  ],
+  "two_refused_strict_divergences_note": [
+    {
+      "case_id": "K-B01",
+      "expected_outcome": "REFUSED_UNDERDETERMINED",
+      "observed_status": "REFUSED",
+      "mathematical_served_correct": null,
+      "mathematical_wrong_served": false,
+      "semantic_goal_correct": true,
+      "semantic_served_correct": null,
+      "semantic_wrong_served": false,
+      "strict_goal_correct": false,
+      "strict_contract_correct": false,
+      "strict_served_correct": null,
+      "strict_wrong_served": false
+    },
+    {
+      "case_id": "K-B02",
+      "expected_outcome": "REFUSED_INCONSISTENT",
+      "observed_status": "REFUSED",
+      "mathematical_served_correct": null,
+      "mathematical_wrong_served": false,
+      "semantic_goal_correct": true,
+      "semantic_served_correct": null,
+      "semantic_wrong_served": false,
+      "strict_goal_correct": false,
+      "strict_contract_correct": false,
+      "strict_served_correct": null,
+      "strict_wrong_served": false
+    }
+  ]
+}

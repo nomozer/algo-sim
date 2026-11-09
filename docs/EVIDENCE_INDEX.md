@@ -4,6 +4,19 @@
 Retired branch names now have local `refs/archive/repository-closure/` references and a verified private self-contained bundle.
 Existing evidence and historical reports below are unchanged; no research result is reinterpreted by this Git-state update.
 
+## WAVE_ID = REAL_WORLD_PRINTED_HANDWRITING_ACQUISITION
+
+REPORT = docs/evaluation/geometry/runs/real-world-printed-handwriting-acquisition/ALGOSIM_REAL_WORLD_PRINTED_HANDWRITING_REPORT.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/real-world-printed-handwriting-acquisition/
+START_BASE = f865c22ee7f0bc8aae91d1ce64a87637deff2896 (tip of feat/local-first-geometry-understanding)
+CODE_COMMIT = 094193d2d02f9438189c1101aa1ff47ae1f9dbb9 (measured_system tree hash 896ebf5898fa664b8315741c4b0d330f4d48c041056806778fe83c3b51cbf826 across 108 measured entries; CACHE_VERSION 132 unchanged)
+CLASSIFICATION = OFFLINE_EXTERNAL_PRINTED_HANDWRITTEN_OCR_AND_EVIDENCE_RECONCILIATION (Gate_A_Source_Acquisition = PASS; Gate_B_Evidence_Integrity = PASS; Gate_C_Printed_OCR = PASS; Gate_D_Handwritten_OCR = PASS_WITH_HONEST_LIMITS; Gate_E_Mathematical_Correctness = PASS; Gate_F_Independent_H1 = NOT_MEASURED; Gate_G_Low_Resource = PASS_HOST_MEASURED; Gate_H_Candidate_Freeze = PASS; LOCAL_OCR_PRODUCTION_STATUS = LOCAL_OCR_DIAGNOSTIC_ONLY; OFFLINE_FALLBACK_VERIFIED; EXTERNAL_SOURCE_AVAILABLE; INDEPENDENT_GROUND_TRUTH_PENDING; INDEPENDENT_H1_VALIDATION = NOT_MEASURED; LIVE_VISION_EVALUATION = NOT_MEASURED; branch feat/local-first-geometry-understanding, not merged to main, not pushed)
+PRODUCT_CHANGE = YES (backend: region_detector.py, local_geometry_parser.py, registry.py, adaptive_input_router.py)
+MODEL_REQUEST_COUNT = 0
+VERIFICATION = ALGOSIM_REAL_WORLD_PRINTED_HANDWRITING_REPORT.md; run.json; external_image_source_inventory.json; external_image_corpus_manifest.json; image_license_and_provenance_audit.json; printed_ocr_evaluation_receipt.json; handwritten_ocr_evaluation_receipt.json; dual_ocr_fidelity_receipt.json; region_detection_external_receipt.json; image_to_geometry_end_to_end_receipt.json; evidence_namespace_reconciliation.json; strict_contract_reconciliation.json; hybrid_gap_prioritization_revised.json; performance_impact_receipt.json; tools/corpus_catalog.py; tools/ocr_scoring_helpers.py; tools/evaluate_real_world_printed_handwriting.py; backend/tests/geometry/test_real_world_printed_handwriting.py (23/23 passed)
+CORRECTS = docs/evaluation/geometry/runs/independent-h1-real-world-acceptance/ALGOSIM_INDEPENDENT_ACCEPTANCE_REPORT.md
+CORRECTED_BY = NONE
+
 ## WAVE_ID = INDEPENDENT_H1_REAL_WORLD_ACCEPTANCE
 
 REPORT = docs/evaluation/geometry/runs/independent-h1-real-world-acceptance/ALGOSIM_INDEPENDENT_ACCEPTANCE_REPORT.md
@@ -15,7 +28,7 @@ PRODUCT_CHANGE = YES (backend: local_geometry_parser.py, adaptive_input_router.p
 MODEL_REQUEST_COUNT = 0
 VERIFICATION = ALGOSIM_INDEPENDENT_ACCEPTANCE_REPORT.md; run.json; h1_corpus_provenance_receipt.json; h1_contamination_audit_receipt.json; h1_geometry_evaluation_receipt.json; real_world_image_corpus_manifest.json; region_detection_real_world_receipt.json; ocr_fidelity_real_world_receipt.json; adaptive_routing_acceptance_receipt.json; low_end_hardware_performance_receipt.json; hybrid_capability_prioritization.json; tools/run_independent_acceptance_evaluation.py; backend/tests/geometry/test_independent_h1_real_world_acceptance.py (6/6 passed)
 CORRECTS = docs/evaluation/geometry/runs/correctness-ocr-performance-optimization/ALGOSIM_CORRECTNESS_OCR_PERFORMANCE_REPORT.md
-CORRECTED_BY = NONE
+CORRECTED_BY = docs/evaluation/geometry/runs/real-world-printed-handwriting-acquisition/ALGOSIM_REAL_WORLD_PRINTED_HANDWRITING_REPORT.md (acquires 38 real external printed/handwritten/diagram images replacing REAL_WORLD_CORPUS_NOT_AVAILABLE with EXTERNAL_SOURCE_AVAILABLE + INDEPENDENT_GROUND_TRUTH_PENDING, reconciles Dev72 56 supported + 10 negative [incl. N3 tampered-quote probe] + 6 open strict XFAILs = 66/72 vs prior 63/72 prose, maps DEV72-G2..G7 vs CURRICULUM-FAMILY-1..5 namespaces, proves C26's 7 construct_plane_section cases have 0 Scene3D errors, and fixes external photo Bugs R1 & R2 in region_detector.py)
 
 ## WAVE_ID = CORRECTNESS_OCR_PERFORMANCE_OPTIMIZATION
 
