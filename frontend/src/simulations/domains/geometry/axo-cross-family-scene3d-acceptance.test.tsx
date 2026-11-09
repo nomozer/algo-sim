@@ -466,7 +466,7 @@ describe("AXO — Cross-Family Scene3D Stabilization & Acceptance Suite (§4–�
     expect(presP?.description).toContain("vuông góc với OO′");
 
     // 3b. Tilted right circular cylinder (`tru-truc-xien` — right cylinder tilted in 3D space)
-    const tiltedEntry = publicCatalog().find((e) => e.id === "tru-truc-xien")!;
+    const tiltedEntry = offlineCatalog().find((e) => e.id === "tru-truc-xien")!;
     expect(tiltedEntry.title).toBe("Hình trụ tròn xoay có trục đặt nghiêng");
     const tiltedCylScene = prepareFullPipelineScene(sampleRawScene("tru-truc-xien"));
     const tiltedCylObj = tiltedCylScene.disp.objects.find((o) => o.type === "curved_solid" && o.curved_kind === "cylinder")!;
@@ -606,8 +606,8 @@ describe("AXO — Cross-Family Scene3D Stabilization & Acceptance Suite (§4–�
   });
 
   it("6. Context Object Card Across All 8 Entity Types & Auxiliary Toggle (§6.1, §9.12): zero coordinate-frame boilerplate leak, clean titles/roles, and interactive Hide/Isolate/Undo hooks rendered", () => {
-    const chopSample = publicCatalog().find((e) => e.id === "thiet-dien-chop")!;
-    const sphereSample = publicCatalog().find((e) => e.id === "cau-cat-mat-phang")!;
+    const chopSample = offlineCatalog().find((e) => e.id === "thiet-dien-chop")!;
+    const sphereSample = offlineCatalog().find((e) => e.id === "cau-cat-mat-phang")!;
     const chopRaw = (chopSample.envelope as unknown as { scene3d: Scene3D }).scene3d;
     const sphereRaw = (sphereSample.envelope as unknown as { scene3d: Scene3D }).scene3d;
     const chopPrep = prepareFullPipelineScene(chopRaw);

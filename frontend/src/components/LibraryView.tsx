@@ -28,6 +28,17 @@ import { GeometryFamilyIcon, normalizeGeometryFamily } from "./geometry2d";
 export const GROUP_ORDER: Domain[] = ["geometry"];
 
 const PROBLEM_CATALOG_ORDER: readonly string[] = [
+  "chop-thiet-dien-ba-diem",
+  "lap-phuong-thiet-dien-bat-ky",
+  "khoang-cach-diem-mat-phang-nghieng",
+  "goc-nhi-dien-hai-mat-phang",
+  "khoang-cach-hai-duong-cheo-nhau",
+  "lang-tru-tam-giac-thiet-dien",
+  "mat-cau-cat-mat-phang",
+  "oxyz-giao-diem-duong-mat",
+  "mat-phang-tiep-xuc-mat-cau",
+  "hinh-non-cat-song-song-day",
+  "chop-mat-cau-ngoai-tiep",
   "thiet-dien-chop",
   "cau-cat-mat-phang",
   "tru-thiet-dien-tron",

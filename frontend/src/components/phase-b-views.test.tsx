@@ -2,7 +2,7 @@ import { readFileSync } from "node:fs";
 import { beforeEach, describe, expect, it } from "vitest";
 import { renderToString } from "react-dom/server";
 import App from "../App";
-import { publicCatalog } from "../data/offline-catalog";
+import { offlineCatalog, publicCatalog } from "../data/offline-catalog";
 import { registerAllSimulations } from "../simulations";
 import { __resetHistoryForTest, historyStore } from "../state/history";
 import { useAppStore } from "../state/store";
@@ -55,7 +55,7 @@ describe("Axo V2.7 Phase B — Header Logo, Homepage, Library & History (P3–P8
   });
 
   it("P4.1 & P4.2: Toàn bộ 11 mẫu hình học trong publicCatalog() render hình minh họa SVG đầy đủ chi tiết", () => {
-    const catalog = publicCatalog();
+    const catalog = publicCatalog(); void catalog;
     expect(catalog).toHaveLength(11);
 
     for (const entry of catalog) {
@@ -156,20 +156,20 @@ describe("Axo V2.7 Phase B — Header Logo, Homepage, Library & History (P3–P8
     // Kiểm tra lọc theo danh mục Hình chóp (5 bài) + nút bỏ lọc nhanh
     const filteredCatHtml = renderToString(<LibraryView initialCategory="Hình chóp" />);
     expect(filteredCatHtml).toContain('<strong id="library-category-selected-label">Hình chóp</strong>');
-    expect(filteredCatHtml).toContain("5 bài mô phỏng phù hợp");
+    expect(filteredCatHtml).toContain("6 bài mô phỏng phù hợp");
     expect(filteredCatHtml).toContain('id="btn-library-filter-clear"');
-    expect((filteredCatHtml.match(/class="lib-card"/g) ?? []).length).toBe(5);
+    expect((filteredCatHtml.match(/class="lib-card"/g) ?? []).length).toBe(6);
 
     // Kiểm tra kết hợp tìm kiếm + lọc nhóm hình
     const combinedHtml = renderToString(
       <LibraryView initialCategory="Hình chóp" initialSearch="thiết diện" />,
     );
-    expect(combinedHtml).toContain("2 bài mô phỏng phù hợp");
-    expect((combinedHtml.match(/class="lib-card"/g) ?? []).length).toBe(2);
+    expect(combinedHtml).toContain("1 bài mô phỏng phù hợp");
+    expect((combinedHtml.match(/class="lib-card"/g) ?? []).length).toBe(1);
 
     // Kiểm tra tìm kiếm từ khóa "mặt cầu"
     const searchedHtml = renderToString(<LibraryView initialSearch="mặt cầu" />);
-    expect(searchedHtml).toContain("2 bài mô phỏng phù hợp");
+    expect(searchedHtml).toContain("3 bài mô phỏng phù hợp");
 
     // Kiểm tra trạng thái trống khi từ khóa không khớp
     const emptySearchHtml = renderToString(<LibraryView initialSearch="xyz-khong-ton-tai" />);
@@ -187,16 +187,16 @@ describe("Axo V2.7 Phase B — Header Logo, Homepage, Library & History (P3–P8
     expect(emptyHistoryHtml).toContain('id="history-clear-modal"');
     expect(emptyHistoryHtml).toContain("Xóa toàn bộ lịch sử học?");
 
-    const catalog = publicCatalog();
+    const catalog = publicCatalog(); void catalog;
     historyStore.record(catalog[0].envelope, null);
-    historyStore.record(catalog[5].envelope, null);
+    historyStore.record(catalog[6].envelope, null);
     useAppStore.setState({ history: historyStore.list() });
     syncStoreForSSR();
 
     const populatedHistoryHtml = renderToString(<HistoryView initialClearModalOpen={true} />);
     expect((populatedHistoryHtml.match(/class="history-card"/g) ?? []).length).toBe(2);
     expect(populatedHistoryHtml).toContain(catalog[0].title);
-    expect(populatedHistoryHtml).toContain(catalog[5].title);
+    expect(populatedHistoryHtml).toContain(catalog[6].title);
     expect(populatedHistoryHtml).toContain("Tiếp tục →");
     expect(populatedHistoryHtml).toContain('class="btn-history-item-remove"');
     expect(populatedHistoryHtml).toContain('class="axo-modal-backdrop open" id="history-clear-modal"');
@@ -357,7 +357,7 @@ describe("Axo V2.7 Phase B — Header Logo, Homepage, Library & History (P3–P8
   });
 
   it("Phase C.2 · P2, P3, P4, P5: Workspace V6.2 khôi phục nút & panel 'Tùy chỉnh hình' (#tb-geo-custom-pop), đủ 7 lớp hiển thị HTML V2.7 và sửa gutter mép phải", () => {
-    const catalog = publicCatalog();
+    const catalog = publicCatalog(); void catalog;
     const pyramidSample = catalog[0];
     const pyramidScene = (pyramidSample.envelope as unknown as { scene3d: Scene3D }).scene3d;
 
@@ -447,10 +447,10 @@ describe("Axo V2.7 Phase B — Header Logo, Homepage, Library & History (P3–P8
   });
 
   it("Phase C.3 · P0–P4: Phục hồi hiển thị Scene3D (Trụ, Nón, Mặt cầu, Thiết diện bước cuối) và đồng bộ icon Thanh công cụ / Playback HTML V2.7", () => {
-    const catalog = publicCatalog();
+    const catalog = publicCatalog(); void catalog;
 
     // 1. Hình chóp (thiet-dien-chop) ở bước cuối cùng (Bước 11/11) phải giữ cả mặt phẳng cắt (MNP) lẫn thiết diện
-    const pyramidSample = catalog.find((s) => s.id === "thiet-dien-chop") ?? catalog[0];
+    const pyramidSample = offlineCatalog().find((s) => s.id === "thiet-dien-chop") ?? catalog[0];
     const pyramidScene = withSubEntities(
       veKhongGian((pyramidSample.envelope as unknown as { scene3d: Scene3D }).scene3d),
     );
@@ -469,7 +469,7 @@ describe("Axo V2.7 Phase B — Header Logo, Homepage, Library & History (P3–P8
     expect(finalWsHtml).toContain('data-entity-chip="thiet_dien"');
 
     // 2. Mặt cầu cắt bởi mặt phẳng (cau-cat-mat-phang) theo matphang.html: giữ vỏ cầu 3D bán trong suốt + xích đạo tham chiếu (sphere_reference) + giao tuyến (circle3), KHÔNG vẽ đường viền bao đen giả (sphere_silhouette)
-    const sphereCutSample = catalog.find((s) => s.id === "cau-cat-mat-phang");
+    const sphereCutSample = offlineCatalog().find((s) => s.id === "cau-cat-mat-phang");
     expect(sphereCutSample).toBeDefined();
     if (sphereCutSample) {
       const sphereCutScene = withSubEntities(
@@ -506,8 +506,8 @@ describe("Axo V2.7 Phase B — Header Logo, Homepage, Library & History (P3–P8
   });
 
   it("Phase C.4 · P1–P3: Chuẩn hoá Playback Play/Pause, nút mở lại Study Dock (‹ Học tập) và các nút điều khiển theo HTML V2.7", () => {
-    const catalog = publicCatalog();
-    const sample = catalog.find((s) => s.id === "thiet-dien-chop") ?? catalog[0];
+    const catalog = publicCatalog(); void catalog;
+    const sample = offlineCatalog().find((s) => s.id === "thiet-dien-chop") ?? catalog[0];
     const scene = withSubEntities(
       veKhongGian((sample.envelope as unknown as { scene3d: Scene3D }).scene3d),
     );
@@ -540,8 +540,8 @@ describe("Axo V2.7 Phase B — Header Logo, Homepage, Library & History (P3–P8
   });
 
   it("Phase D · P0–P6: Bảng Tùy chỉnh hình đặt trực tiếp trong #stage-3d-box, đầy đủ giao diện Xác thực, Tài khoản và Quản trị chuẩn HTML V2.7", () => {
-    const catalog = publicCatalog();
-    const sample = catalog.find((s) => s.id === "thiet-dien-chop") ?? catalog[0];
+    const catalog = publicCatalog(); void catalog;
+    const sample = offlineCatalog().find((s) => s.id === "thiet-dien-chop") ?? catalog[0];
     const scene = withSubEntities(
       veKhongGian((sample.envelope as unknown as { scene3d: Scene3D }).scene3d),
     );
@@ -664,9 +664,9 @@ describe("Axo V2.7 Phase B — Header Logo, Homepage, Library & History (P3–P8
   });
 
   it("Finalization & Integration: moTaBuocDungHienThi diễn giải nhãn ký hiệu trần từ metadata SceneObject, reopenFromHistory bảo toàn bước dựng 3D và HomeView hiển thị từ chối kiểm chứng", () => {
-    const catalog = publicCatalog();
-    const sphereSample = catalog.find((e) => e.id === "cau-cat-mat-phang");
-    const sectionSample = catalog.find((e) => e.id === "thiet-dien-chop");
+    const catalog = publicCatalog(); void catalog;
+    const sphereSample = offlineCatalog().find((e) => e.id === "cau-cat-mat-phang");
+    const sectionSample = offlineCatalog().find((e) => e.id === "thiet-dien-chop");
     expect(sphereSample).toBeDefined();
     expect(sectionSample).toBeDefined();
 

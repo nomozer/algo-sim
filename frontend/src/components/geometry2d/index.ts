@@ -1,6 +1,9 @@
 export {
   Cone2D,
+  Cube2D,
   Cylinder2D,
+  DEFAULT_CUBE_FRAME,
+  DEFAULT_PRISM_FRAME,
   DEFAULT_PYRAMID_FRAME,
   GEO2D_TOKENS,
   Geo2DEdge,
@@ -12,6 +15,7 @@ export {
   Geometry2DFrame,
   PerpendicularMarker2D,
   Plane2D,
+  Prism2D,
   Pyramid2D,
   Section2D,
   Segment2D,

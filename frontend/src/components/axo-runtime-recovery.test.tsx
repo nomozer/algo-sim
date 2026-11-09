@@ -7,7 +7,7 @@ import * as THREE from "three";
 import * as ts from "typescript";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import App, { AppRoot } from "../App";
-import { publicCatalog } from "../data/offline-catalog";
+import { offlineCatalog, publicCatalog } from "../data/offline-catalog";
 import { AxoClientError, analyzeViaServer } from "../llm/client";
 import { registerAllSimulations } from "../simulations";
 import type { Scene3D } from "../simulations/domains/geometry/scene3d-model";
@@ -366,7 +366,7 @@ describe("AXO Master Continuation §4–§6: Root-Cause Runtime Recovery, Fault 
     const visibleTextOnly = recoveringHtml.replace(/<svg[\s\S]*?<\/svg>/gu, "");
     expect(visibleTextOnly).not.toContain("404");
 
-    const sample = publicCatalog().find((s) => s.id === "cau-cat-mat-phang") ?? publicCatalog()[0]!;
+    const sample = offlineCatalog().find((s) => s.id === "cau-cat-mat-phang") ?? publicCatalog()[0]!;
     const scene = (sample.envelope as unknown as { scene3d: Scene3D }).scene3d;
     const healthyWsHtml = renderToString(
       <AxoWorkspaceV62 scene={scene} de={sample.envelope.description} tieuDe={sample.title} />,

@@ -3,7 +3,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import { renderToString } from "react-dom/server";
 import App from "../App";
 import { itemsForRole } from "./TopNav";
-import { offlineCatalog, publicCatalog } from "../data/offline-catalog";
+import { discoverableCatalog, offlineCatalog, publicCatalog } from "../data/offline-catalog";
 
 /** Số thẻ gợi ý trên Trang chủ = 4 mẫu hình học chuẩn Axo V2.7 (`STARTER_SAMPLE_IDS`). */
 const SO_GOI_Y = 4;
@@ -144,7 +144,9 @@ describe("Thư viện — nhà riêng của danh mục đầy đủ", () => {
 
   it("KHÔNG rò fixture nội bộ hay chuỗi kĩ thuật (luật phạm vi M9-UX2/UX3)", () => {
     const html = renderToString(<LibraryView />);
-    expect(offlineCatalog().length).toBe(publicCatalog().length);
+    expect(discoverableCatalog().length).toBe(publicCatalog().length);
+    expect(publicCatalog().length).toBe(11);
+    expect(offlineCatalog().length).toBe(22);
     expect(html).not.toContain("Tam giác (tổng quát)");
     expect(html).not.toContain("(tổng quát)");
     expect(html).not.toContain("algorithm.");

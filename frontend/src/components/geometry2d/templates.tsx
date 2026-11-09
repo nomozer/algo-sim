@@ -2,7 +2,10 @@ import type { ReactNode } from "react";
 import type { GeometryFamilyId } from "./family-icons";
 import {
   Cone2D,
+  Cube2D,
   Cylinder2D,
+  DEFAULT_CUBE_FRAME,
+  DEFAULT_PRISM_FRAME,
   DEFAULT_PYRAMID_FRAME,
   GEO2D_TOKENS,
   Geo2DEllipseRim,
@@ -10,6 +13,7 @@ import {
   Geo2DPolygon,
   PerpendicularMarker2D,
   Plane2D,
+  Prism2D,
   Pyramid2D,
   Section2D,
   Segment2D,
@@ -31,7 +35,15 @@ export type GeometryTemplateId =
   | "cylinder.right-basic"
   | "cone.axial-section"
   | "cone.slant-generator"
-  | "cone.inscribed-cylinder";
+  | "cone.inscribed-cylinder"
+  | "cube.plane-section"
+  | "prism.plane-section"
+  | "pyramid.point-to-plane-distance"
+  | "pyramid.dihedral-angle"
+  | "pyramid.skew-lines-distance"
+  | "oxyz.line-plane-intersection"
+  | "sphere.tangent-plane"
+  | "cone.parallel-section";
 
 export interface VerifiedTemplateLabels {
   apex?: string;
@@ -865,6 +877,393 @@ export const GEOMETRY_TEMPLATES: Readonly<Record<GeometryTemplateId, GeometryTem
               variant="derived"
               showLabel={show && Boolean(options.labels?.secondRimPoint)}
             />
+          </>
+        );
+      },
+    },
+
+    "cube.plane-section": {
+      id: "cube.plane-section",
+      family: "pyramid",
+      titleVi: "Thiết diện lục giác đều của hình lập phương cắt bởi mặt phẳng",
+      invariants: [
+        "Hình lập phương ABCD.A'B'C'D' với 3 cạnh khuất AB, AD, AA' xuất phát từ đỉnh khuất A",
+        "6 đỉnh thiết diện M, N, E, P, F, Q lần lượt là trung điểm chính xác của AD, CD, CC', B'C', A'B', AA' (MN ∥ FP, NE ∥ QF, EP ∥ MQ)",
+        "Tổ hợp từ Plane2D + Cube2D + Section2D",
+      ],
+      render: (options) => {
+        const { A, B, C, D, A_prime: Ap, B_prime: Bp, C_prime: Cp } = DEFAULT_CUBE_FRAME;
+        const M: Point2D = [(A[0] + D[0]) * 0.5, (A[1] + D[1]) * 0.5];
+        const N: Point2D = [(C[0] + D[0]) * 0.5, (C[1] + D[1]) * 0.5];
+        const E: Point2D = [(C[0] + Cp[0]) * 0.5, (C[1] + Cp[1]) * 0.5];
+        const P: Point2D = [(Bp[0] + Cp[0]) * 0.5, (Bp[1] + Cp[1]) * 0.5];
+        const F: Point2D = [(Ap[0] + Bp[0]) * 0.5, (Ap[1] + Bp[1]) * 0.5];
+        const Q: Point2D = [(A[0] + Ap[0]) * 0.5, (A[1] + Ap[1]) * 0.5];
+        const planeSheet: readonly Point2D[] = [
+          [32, 24],
+          [116, 16],
+          [142, 86],
+          [56, 94],
+        ];
+        const show = options.mode === "verified";
+        const base = options.labels?.base ?? [];
+        const sec = options.labels?.section ?? [];
+        return (
+          <>
+            <Plane2D
+              points={planeSheet}
+              label={options.labels?.plane}
+              labelAt={[148, 34]}
+              showLabel={show && Boolean(options.labels?.plane)}
+            />
+            <Cube2D />
+            <Section2D
+              kind="polygon"
+              points={[M, N, E, P, F, Q]}
+              hiddenEdges={[true, false, false, false, false, true]}
+            />
+            <Geo2DPoint at={A} label={base[0]} dx={-8} dy={-4} showLabel={show && Boolean(base[0])} />
+            <Geo2DPoint at={B} label={base[1]} dx={-9} dy={5} showLabel={show && Boolean(base[1])} />
+            <Geo2DPoint at={C} label={base[2]} dx={4} dy={9} showLabel={show && Boolean(base[2])} />
+            <Geo2DPoint at={D} label={base[3]} dx={10} dy={2} showLabel={show && Boolean(base[3])} />
+            <Geo2DPoint at={M} label={sec[0]} dx={7} dy={-6} variant="derived" showLabel={show && Boolean(sec[0])} />
+            <Geo2DPoint at={N} label={sec[1]} dx={9} dy={6} variant="derived" showLabel={show && Boolean(sec[1])} />
+            <Geo2DPoint at={E} label={sec[2]} dx={9} dy={0} variant="derived" showLabel={show && Boolean(sec[2])} />
+            <Geo2DPoint at={P} label={sec[3]} dx={0} dy={-8} variant="derived" showLabel={show && Boolean(sec[3])} />
+            <Geo2DPoint at={F} label={sec[4]} dx={-9} dy={-5} variant="derived" showLabel={show && Boolean(sec[4])} />
+            <Geo2DPoint at={Q} label={sec[5]} dx={-9} dy={2} variant="derived" showLabel={show && Boolean(sec[5])} />
+          </>
+        );
+      },
+    },
+
+    "prism.plane-section": {
+      id: "prism.plane-section",
+      family: "pyramid",
+      titleVi: "Thiết diện của lăng trụ đứng tam giác cắt bởi mặt phẳng",
+      invariants: [
+        "Lăng trụ đứng tam giác ABC.A'B'C' với AA' ⊥ (ABC)",
+        "Thiết diện ngũ giác MNPQE cắt cả 5 mặt của lăng trụ với M ∈ AB (t=0.75), N trung điểm BC, P trung điểm CC', Q trung điểm A'C', E ∈ A'B' (t=0.25)",
+        "Tổ hợp từ Plane2D + Prism2D + Section2D",
+      ],
+      render: (options) => {
+        const { A, B, C, A_prime: Ap, B_prime: Bp, C_prime: Cp } = DEFAULT_PRISM_FRAME;
+        const M: Point2D = [A[0] + (B[0] - A[0]) * 0.75, A[1] + (B[1] - A[1]) * 0.75];
+        const N: Point2D = [(B[0] + C[0]) * 0.5, (B[1] + C[1]) * 0.5];
+        const P: Point2D = [(C[0] + Cp[0]) * 0.5, (C[1] + Cp[1]) * 0.5];
+        const Q: Point2D = [(Ap[0] + Cp[0]) * 0.5, (Ap[1] + Cp[1]) * 0.5];
+        const E: Point2D = [Ap[0] + (Bp[0] - Ap[0]) * 0.25, Ap[1] + (Bp[1] - Ap[1]) * 0.25];
+        const planeSheet: readonly Point2D[] = [
+          [32, 22],
+          [134, 24],
+          [138, 90],
+          [28, 92],
+        ];
+        const show = options.mode === "verified";
+        const base = options.labels?.base ?? [];
+        const sec = options.labels?.section ?? [];
+        return (
+          <>
+            <Plane2D
+              points={planeSheet}
+              label={options.labels?.plane}
+              labelAt={[148, 36]}
+              showLabel={show && Boolean(options.labels?.plane)}
+            />
+            <Prism2D rightAngleAtA />
+            <Section2D
+              kind="polygon"
+              points={[M, N, P, Q, E]}
+              hiddenEdges={[true, false, true, false, true]}
+            />
+            <Geo2DPoint at={A} label={base[0]} dx={-9} dy={-4} showLabel={show && Boolean(base[0])} />
+            <Geo2DPoint at={B} label={base[1]} dx={-9} dy={6} showLabel={show && Boolean(base[1])} />
+            <Geo2DPoint at={C} label={base[2]} dx={9} dy={5} showLabel={show && Boolean(base[2])} />
+            <Geo2DPoint at={M} label={sec[0]} dx={-10} dy={-2} variant="derived" showLabel={show && Boolean(sec[0])} />
+            <Geo2DPoint at={N} label={sec[1]} dx={0} dy={9} variant="derived" showLabel={show && Boolean(sec[1])} />
+            <Geo2DPoint at={P} label={sec[2]} dx={10} dy={0} variant="derived" showLabel={show && Boolean(sec[2])} />
+            <Geo2DPoint at={Q} label={sec[3]} dx={6} dy={-7} variant="derived" showLabel={show && Boolean(sec[3])} />
+            <Geo2DPoint at={E} label={sec[4]} dx={-9} dy={-5} variant="derived" showLabel={show && Boolean(sec[4])} />
+          </>
+        );
+      },
+    },
+
+    "pyramid.point-to-plane-distance": {
+      id: "pyramid.point-to-plane-distance",
+      family: "pyramid",
+      titleVi: "Khoảng cách từ điểm A đến mặt phẳng nghiêng (SBC)",
+      invariants: [
+        "Hình chóp S.ABC có SA ⊥ (ABC) tại A, đáy ABC vuông tại B",
+        "Hình chiếu vuông góc H của A trên mặt phẳng nghiêng (SBC) nằm trên cạnh SB, đoạn AH ⊥ (SBC) có ký hiệu góc vuông tại H",
+        "Tổ hợp từ Plane2D + Pyramid2D + Segment2D + PerpendicularMarker2D",
+      ],
+      render: (options) => {
+        const S: Point2D = [56, 14];
+        const A: Point2D = [56, 70];
+        const B: Point2D = [92, 92];
+        const C: Point2D = [142, 68];
+        const H: Point2D = [S[0] + (B[0] - S[0]) * 0.62, S[1] + (B[1] - S[1]) * 0.62];
+        const sbcSheet: readonly Point2D[] = [S, B, C];
+        const show = options.mode === "verified";
+        const base = options.labels?.base ?? [];
+        return (
+          <>
+            <Plane2D
+              points={sbcSheet}
+              label={options.labels?.plane}
+              labelAt={[132, 34]}
+              showLabel={show && Boolean(options.labels?.plane)}
+            />
+            <Geo2DPolygon points={[A, B, C]} fill={GEO2D_TOKENS.shellFill} />
+            <Geo2DPolygon points={[S, B, C]} fill="rgba(109, 40, 217, 0.14)" />
+            <Segment2D from={A} to={C} role="hidden" />
+            <Segment2D from={S} to={A} role="altitude-hidden" />
+            <Segment2D from={A} to={B} role="solid" />
+            <Segment2D from={B} to={C} role="solid" />
+            <Segment2D from={S} to={B} role="solid" />
+            <Segment2D from={S} to={C} role="solid" />
+            <Segment2D from={A} to={H} role="altitude" />
+            <Segment2D from={H} to={C} role="section-hidden" />
+            <PerpendicularMarker2D at={A} alongA={S} alongB={B} size={5.8} />
+            <PerpendicularMarker2D at={B} alongA={A} alongB={C} size={5.8} />
+            <PerpendicularMarker2D at={H} alongA={A} alongB={S} size={6.0} />
+            <Geo2DPoint at={S} label={options.labels?.apex} dx={0} dy={-8} showLabel={show && Boolean(options.labels?.apex)} />
+            <Geo2DPoint at={A} label={base[0]} dx={-9} dy={2} showLabel={show && Boolean(base[0])} />
+            <Geo2DPoint at={B} label={base[1]} dx={-4} dy={9} showLabel={show && Boolean(base[1])} />
+            <Geo2DPoint at={C} label={base[2]} dx={9} dy={3} showLabel={show && Boolean(base[2])} />
+            <Geo2DPoint at={H} label={options.labels?.foot} dx={10} dy={-4} variant="derived" showLabel={show && Boolean(options.labels?.foot)} />
+          </>
+        );
+      },
+    },
+
+    "pyramid.dihedral-angle": {
+      id: "pyramid.dihedral-angle",
+      family: "pyramid",
+      titleVi: "Góc nhị diện giữa hai mặt phẳng (SBC) và (ABC)",
+      invariants: [
+        "Giao tuyến Δ = BC được đánh dấu nổi bật; điểm H trên BC với AH ⊥ BC trong (ABC) và SH ⊥ BC trong (SBC)",
+        "Mặt phẳng phẳng nhị diện (SAH) vuông góc với giao tuyến BC tại H, tạo góc phẳng nhị diện SHA",
+        "Tổ hợp từ Plane2D + Section2D + Segment2D + PerpendicularMarker2D",
+      ],
+      render: (options) => {
+        const S: Point2D = [54, 14];
+        const A: Point2D = [54, 72];
+        const B: Point2D = [92, 94];
+        const C: Point2D = [140, 62];
+        const H: Point2D = [(B[0] + C[0]) * 0.5, (B[1] + C[1]) * 0.5];
+        const show = options.mode === "verified";
+        const base = options.labels?.base ?? [];
+        return (
+          <>
+            <Geo2DPolygon points={[A, B, C]} fill={GEO2D_TOKENS.baseFill} />
+            <Geo2DPolygon points={[S, B, C]} fill={GEO2D_TOKENS.shellFill} />
+            <Section2D kind="polygon" points={[S, A, H]} hiddenEdges={[true, true, false]} />
+            <Segment2D from={A} to={C} role="hidden" />
+            <Segment2D from={S} to={A} role="altitude-hidden" />
+            <Segment2D from={A} to={B} role="solid" />
+            <Segment2D from={S} to={B} role="solid" />
+            <Segment2D from={S} to={C} role="solid" />
+            <Segment2D from={B} to={C} role="target" />
+            <Segment2D from={A} to={H} role="altitude-hidden" />
+            <Segment2D from={S} to={H} role="section" />
+            <PerpendicularMarker2D at={A} alongA={S} alongB={H} size={5.8} />
+            <PerpendicularMarker2D at={H} alongA={A} alongB={B} size={5.8} />
+            <PerpendicularMarker2D at={H} alongA={S} alongB={C} size={5.8} />
+            <Geo2DPoint at={S} label={options.labels?.apex} dx={0} dy={-8} showLabel={show && Boolean(options.labels?.apex)} />
+            <Geo2DPoint at={A} label={base[0]} dx={-9} dy={2} showLabel={show && Boolean(base[0])} />
+            <Geo2DPoint at={B} label={base[1]} dx={-4} dy={9} showLabel={show && Boolean(base[1])} />
+            <Geo2DPoint at={C} label={base[2]} dx={9} dy={2} showLabel={show && Boolean(base[2])} />
+            <Geo2DPoint at={H} label={options.labels?.foot} dx={10} dy={5} variant="derived" showLabel={show && Boolean(options.labels?.foot)} />
+          </>
+        );
+      },
+    },
+
+    "pyramid.skew-lines-distance": {
+      id: "pyramid.skew-lines-distance",
+      family: "pyramid",
+      titleVi: "Đoạn vuông góc chung của hai đường thẳng chéo nhau",
+      invariants: [
+        "Hai đường thẳng chéo nhau SC và BD được tô nổi bật trong hình chóp S.ABCD",
+        "Đoạn vuông góc chung PQ nối P ∈ SC và Q ∈ BD kèm ký hiệu góc vuông tại cả hai chân P và Q",
+        "Tổ hợp từ Pyramid2D + Segment2D + PerpendicularMarker2D",
+      ],
+      render: (options) => {
+        const { S, A, B, C, D } = PYRAMID_FRAME;
+        const Q: Point2D = [(B[0] + D[0]) * 0.5, (B[1] + D[1]) * 0.5];
+        const P: Point2D = [S[0] + (C[0] - S[0]) * (2 / 3), S[1] + (C[1] - S[1]) * (2 / 3)];
+        const show = options.mode === "verified";
+        return (
+          <>
+            <Pyramid2D rightAngleAtA />
+            <Segment2D from={A} to={C} role="hidden" />
+            <Segment2D from={B} to={D} role="target" />
+            <Segment2D from={S} to={C} role="target" />
+            <Segment2D from={P} to={Q} role="altitude" />
+            <PerpendicularMarker2D at={P} alongA={Q} alongB={S} size={5.8} />
+            <PerpendicularMarker2D at={Q} alongA={P} alongB={B} size={5.8} />
+            {renderPyramidBaseAndApexPoints(options)}
+            <Geo2DPoint
+              at={P}
+              label={options.labels?.foot}
+              dx={10}
+              dy={-4}
+              variant="derived"
+              showLabel={show && Boolean(options.labels?.foot)}
+            />
+            <Geo2DPoint
+              at={Q}
+              label={options.labels?.center}
+              dx={-8}
+              dy={8}
+              variant="altitude"
+              showLabel={show && Boolean(options.labels?.center)}
+            />
+          </>
+        );
+      },
+    },
+
+    "oxyz.line-plane-intersection": {
+      id: "oxyz.line-plane-intersection",
+      family: "pyramid",
+      titleVi: "Giao điểm của đường thẳng và mặt phẳng trong không gian Oxyz",
+      invariants: [
+        "Hệ trục Oxyz và mặt phẳng chắn trục (P) qua A, B, C",
+        "Đường thẳng d = DE cắt mặt phẳng (P) tại giao điểm duy nhất M; hình chiếu vuông góc H của E lên (P) thỏa EH ⊥ HM",
+        "Tổ hợp từ Plane2D + Segment2D + PerpendicularMarker2D",
+      ],
+      render: (options) => {
+        const O: Point2D = [56, 72];
+        const A: Point2D = [32, 92];
+        const B: Point2D = [136, 84];
+        const C: Point2D = [56, 16];
+        const D: Point2D = [44, 86];
+        const E: Point2D = [126, 22];
+        const M: Point2D = [D[0] + (E[0] - D[0]) * 0.48, D[1] + (E[1] - D[1]) * 0.48];
+        const H: Point2D = [104, 56];
+        const show = options.mode === "verified";
+        const base = options.labels?.base ?? [];
+        return (
+          <>
+            <Plane2D
+              points={[C, A, B]}
+              label={options.labels?.plane}
+              labelAt={[142, 48]}
+              showLabel={show && Boolean(options.labels?.plane)}
+            />
+            <Segment2D from={O} to={A} role="hidden" />
+            <Segment2D from={O} to={B} role="hidden" />
+            <Segment2D from={O} to={C} role="hidden" />
+            <Segment2D from={A} to={B} role="solid" />
+            <Segment2D from={B} to={C} role="solid" />
+            <Segment2D from={C} to={A} role="solid" />
+            <Segment2D from={D} to={M} role="section-hidden" />
+            <Segment2D from={M} to={E} role="target" />
+            <Segment2D from={E} to={H} role="altitude-hidden" />
+            <Segment2D from={H} to={M} role="section" />
+            <PerpendicularMarker2D at={H} alongA={E} alongB={M} size={5.8} />
+            <Geo2DPoint at={O} label={options.labels?.center} dx={-8} dy={-4} showLabel={show && Boolean(options.labels?.center)} />
+            <Geo2DPoint at={A} label={base[0]} dx={-9} dy={4} showLabel={show && Boolean(base[0])} />
+            <Geo2DPoint at={B} label={base[1]} dx={9} dy={4} showLabel={show && Boolean(base[1])} />
+            <Geo2DPoint at={C} label={base[2]} dx={0} dy={-8} showLabel={show && Boolean(base[2])} />
+            <Geo2DPoint at={M} label={options.labels?.foot} dx={-9} dy={-6} variant="derived" showLabel={show && Boolean(options.labels?.foot)} />
+            <Geo2DPoint at={H} label={options.labels?.rimPoint} dx={10} dy={4} variant="altitude" showLabel={show && Boolean(options.labels?.rimPoint)} />
+          </>
+        );
+      },
+    },
+
+    "sphere.tangent-plane": {
+      id: "sphere.tangent-plane",
+      family: "sphere",
+      titleVi: "Mặt phẳng tiếp diện tiếp xúc với mặt cầu tại tiếp điểm A",
+      invariants: [
+        "Mặt cầu (S) tâm I(86, 62) bán kính R = 34; tiếp điểm A(86, 28) nằm trên mặt cầu",
+        "Mặt phẳng tiếp diện (P) đi qua A và vuông góc với bán kính IA tại duy nhất tiếp điểm A (IA ⊥ AB, IA ⊥ AC, không sinh đường tròn giao tuyến)",
+        "Tổ hợp từ Plane2D + Sphere2D + Segment2D + PerpendicularMarker2D",
+      ],
+      render: (options) => {
+        const I: Point2D = [86, 64];
+        const A: Point2D = [86, 30];
+        const B: Point2D = [126, 30];
+        const C: Point2D = [64, 18];
+        const planeSheet: readonly Point2D[] = [
+          [34, 38],
+          [144, 38],
+          [158, 18],
+          [48, 18],
+        ];
+        const show = options.mode === "verified";
+        return (
+          <>
+            <Sphere2D center={I} radius={34} equatorRy={9.5} equatorMode="front-solid" />
+            <Plane2D
+              points={planeSheet}
+              label={options.labels?.plane}
+              labelAt={[154, 44]}
+              showLabel={show && Boolean(options.labels?.plane)}
+            />
+            <Segment2D from={I} to={A} role="altitude" />
+            <Segment2D from={A} to={B} role="section" />
+            <Segment2D from={A} to={C} role="section-hidden" />
+            <Segment2D from={I} to={B} role="hidden" />
+            <PerpendicularMarker2D at={A} alongA={I} alongB={B} size={5.8} />
+            <Geo2DPoint at={I} label={options.labels?.center} dx={-9} dy={5} showLabel={show && Boolean(options.labels?.center)} />
+            <Geo2DPoint at={A} label={options.labels?.rimPoint} dx={-9} dy={-7} variant="derived" showLabel={show && Boolean(options.labels?.rimPoint)} />
+            <Geo2DPoint at={B} label={options.labels?.secondRimPoint} dx={9} dy={-5} variant="derived" showLabel={show && Boolean(options.labels?.secondRimPoint)} />
+          </>
+        );
+      },
+    },
+
+    "cone.parallel-section": {
+      id: "cone.parallel-section",
+      family: "cone",
+      titleVi: "Hình nón cắt bởi mặt phẳng song song với đáy",
+      invariants: [
+        "Hình nón đỉnh S(90, 14), tâm đáy O(90, 88), bán kính đáy OA = 40",
+        "Mặt phẳng (P) qua trung điểm I(90, 51) của trục SO song song với đáy, cắt hình nón theo đường tròn thiết diện (C) tâm I bán kính r' = IM = 20 = 1/2 R",
+        "Tổ hợp từ Plane2D + Cone2D + Section2D(ellipse) + Segment2D + PerpendicularMarker2D",
+      ],
+      render: (options) => {
+        const S: Point2D = [90, 14];
+        const O: Point2D = [90, 88];
+        const I: Point2D = [90, 51];
+        const rxBase = 40;
+        const ryBase = 10.5;
+        const rxSec = 20;
+        const rySec = 5.5;
+        const A: Point2D = [O[0] + rxBase, O[1]];
+        const M: Point2D = [I[0] + rxSec, I[1]];
+        const planeSheet: readonly Point2D[] = [
+          [38, 59],
+          [144, 59],
+          [156, 43],
+          [50, 43],
+        ];
+        const show = options.mode === "verified";
+        return (
+          <>
+            <Plane2D
+              points={planeSheet}
+              label={options.labels?.plane}
+              labelAt={[28, 51]}
+              showLabel={show && Boolean(options.labels?.plane)}
+            />
+            <Cone2D apex={S} baseCenter={O} rx={rxBase} ry={ryBase} showAxis />
+            <Section2D kind="ellipse" center={I} rx={rxSec} ry={rySec} />
+            <Segment2D from={O} to={A} role="section-hidden" />
+            <Segment2D from={I} to={M} role="section" />
+            <PerpendicularMarker2D at={I} alongA={S} alongB={M} size={5.4} />
+            <PerpendicularMarker2D at={O} alongA={S} alongB={A} size={5.6} />
+            <Geo2DPoint at={S} label={options.labels?.apex} dx={0} dy={-7} showLabel={show && Boolean(options.labels?.apex)} />
+            <Geo2DPoint at={O} label={options.labels?.center} dx={-8} dy={6} showLabel={show && Boolean(options.labels?.center)} />
+            <Geo2DPoint at={I} label={options.labels?.foot} dx={-8} dy={-5} variant="derived" showLabel={show && Boolean(options.labels?.foot)} />
+            <Geo2DPoint at={M} label={options.labels?.rimPoint} dx={9} dy={-5} variant="derived" showLabel={show && Boolean(options.labels?.rimPoint)} />
+            <Geo2DPoint at={A} label={options.labels?.secondRimPoint} dx={9} dy={2} showLabel={show && Boolean(options.labels?.secondRimPoint)} />
           </>
         );
       },

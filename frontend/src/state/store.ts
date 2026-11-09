@@ -5,7 +5,7 @@ import {
   type AxoErrorKind,
 } from "../components/AxoErrorExperience";
 import type { AnalysisUnsupported } from "../core/types";
-import { publicCatalog } from "../data/offline-catalog";
+import { offlineCatalog, publicCatalog } from "../data/offline-catalog";
 import { GEOMETRY_SAMPLES } from "../data/geometry-samples";
 import type { AxoClientError, ClientFailureContract } from "../llm/client";
 import { getSimulation } from "../simulations/registry";
@@ -386,7 +386,7 @@ export const useAppStore = create<AppState>((set, get) => {
         return;
       }
       if (decision.kind === "sample") {
-        const entry = publicCatalog().find((s) => s.id === decision.sampleId);
+        const entry = publicCatalog().find((s) => s.id === decision.sampleId) ?? offlineCatalog().find((s) => s.id === decision.sampleId);
         if (entry) {
           set({ routeFailure: null });
           get().loadEnvelope(entry.envelope, entry.id);

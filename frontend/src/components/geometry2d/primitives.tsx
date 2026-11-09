@@ -535,6 +535,133 @@ export function Pyramid2D({
   );
 }
 
+export const DEFAULT_CUBE_FRAME = {
+  A: [58, 66] as Point2D,
+  B: [34, 86] as Point2D,
+  C: [106, 92] as Point2D,
+  D: [130, 72] as Point2D,
+  A_prime: [58, 18] as Point2D,
+  B_prime: [34, 38] as Point2D,
+  C_prime: [106, 44] as Point2D,
+  D_prime: [130, 24] as Point2D,
+} as const;
+
+/**
+ * Thành phần Hình lập phương / Hình hộp 2D (`Cube2D`) có thể tái sử dụng độc lập hoặc kết hợp
+ * với mặt phẳng cắt (`Plane2D`), thiết diện đa giác (`Section2D`) và đoạn vuông góc (`Segment2D`).
+ */
+export function Cube2D({
+  base = [
+    DEFAULT_CUBE_FRAME.A,
+    DEFAULT_CUBE_FRAME.B,
+    DEFAULT_CUBE_FRAME.C,
+    DEFAULT_CUBE_FRAME.D,
+  ],
+  top = [
+    DEFAULT_CUBE_FRAME.A_prime,
+    DEFAULT_CUBE_FRAME.B_prime,
+    DEFAULT_CUBE_FRAME.C_prime,
+    DEFAULT_CUBE_FRAME.D_prime,
+  ],
+  emphasizeBase = false,
+}: {
+  base?: readonly [Point2D, Point2D, Point2D, Point2D];
+  top?: readonly [Point2D, Point2D, Point2D, Point2D];
+  emphasizeBase?: boolean;
+}) {
+  const [A, B, C, D] = base;
+  const [Ap, Bp, Cp, Dp] = top;
+  return (
+    <g data-geo2d-comp="cube">
+      <Geo2DPolygon
+        points={[A, B, C, D]}
+        fill={emphasizeBase ? GEO2D_TOKENS.baseFill : GEO2D_TOKENS.shellFill}
+      />
+      <Geo2DPolygon points={[Ap, Bp, Cp, Dp]} fill={GEO2D_TOKENS.shellFill} />
+      <Geo2DPolygon points={[B, C, Cp, Bp]} fill={GEO2D_TOKENS.shellFill} />
+      <Geo2DPolygon points={[C, D, Dp, Cp]} fill={GEO2D_TOKENS.shellFill} />
+
+      {/* 3 cạnh khuất xuất phát từ đỉnh khuất A phía sau: AB, AD, AA' */}
+      <Segment2D from={A} to={B} role="hidden" />
+      <Segment2D from={A} to={D} role="hidden" />
+      <Segment2D from={A} to={Ap} role="hidden" />
+
+      {/* 9 cạnh nhìn thấy */}
+      <Segment2D from={B} to={C} role="solid" />
+      <Segment2D from={C} to={D} role="solid" />
+      <Segment2D from={Ap} to={Bp} role="solid" />
+      <Segment2D from={Bp} to={Cp} role="solid" />
+      <Segment2D from={Cp} to={Dp} role="solid" />
+      <Segment2D from={Dp} to={Ap} role="solid" />
+      <Segment2D from={B} to={Bp} role="solid" />
+      <Segment2D from={C} to={Cp} role="solid" />
+      <Segment2D from={D} to={Dp} role="solid" />
+    </g>
+  );
+}
+
+export const DEFAULT_PRISM_FRAME = {
+  A: [58, 66] as Point2D,
+  B: [38, 88] as Point2D,
+  C: [124, 84] as Point2D,
+  A_prime: [58, 18] as Point2D,
+  B_prime: [38, 40] as Point2D,
+  C_prime: [124, 36] as Point2D,
+} as const;
+
+/**
+ * Thành phần Hình lăng trụ tam giác 2D (`Prism2D`) hỗ trợ lăng trụ đứng/xiên và thiết diện phẳng.
+ */
+export function Prism2D({
+  base = [
+    DEFAULT_PRISM_FRAME.A,
+    DEFAULT_PRISM_FRAME.B,
+    DEFAULT_PRISM_FRAME.C,
+  ],
+  top = [
+    DEFAULT_PRISM_FRAME.A_prime,
+    DEFAULT_PRISM_FRAME.B_prime,
+    DEFAULT_PRISM_FRAME.C_prime,
+  ],
+  emphasizeBase = false,
+  rightAngleAtA = true,
+}: {
+  base?: readonly [Point2D, Point2D, Point2D];
+  top?: readonly [Point2D, Point2D, Point2D];
+  emphasizeBase?: boolean;
+  rightAngleAtA?: boolean;
+}) {
+  const [A, B, C] = base;
+  const [Ap, Bp, Cp] = top;
+  return (
+    <g data-geo2d-comp="prism">
+      <Geo2DPolygon
+        points={[A, B, C]}
+        fill={emphasizeBase ? GEO2D_TOKENS.baseFill : GEO2D_TOKENS.shellFill}
+      />
+      <Geo2DPolygon points={[Ap, Bp, Cp]} fill={GEO2D_TOKENS.shellFill} />
+      <Geo2DPolygon points={[B, C, Cp, Bp]} fill={GEO2D_TOKENS.shellFill} />
+
+      {/* 3 cạnh khuất xuất phát từ đỉnh khuất A phía sau: AB, AC, AA' */}
+      <Segment2D from={A} to={B} role="hidden" />
+      <Segment2D from={A} to={C} role="hidden" />
+      <Segment2D from={A} to={Ap} role="altitude-hidden" />
+
+      {rightAngleAtA ? (
+        <PerpendicularMarker2D at={A} alongA={Ap} alongB={C} size={5.5} />
+      ) : null}
+
+      {/* 6 cạnh nhìn thấy */}
+      <Segment2D from={B} to={C} role="solid" />
+      <Segment2D from={Ap} to={Bp} role="solid" />
+      <Segment2D from={Bp} to={Cp} role="solid" />
+      <Segment2D from={Cp} to={Ap} role="solid" />
+      <Segment2D from={B} to={Bp} role="solid" />
+      <Segment2D from={C} to={Cp} role="solid" />
+    </g>
+  );
+}
+
 /**
  * Thành phần Mặt cầu 2D (`Sphere2D`) có thể dùng đơn lẻ hoặc kết hợp với mặt phẳng cắt / hình chóp nội tiếp.
  */

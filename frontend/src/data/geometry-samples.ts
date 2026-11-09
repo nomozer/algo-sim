@@ -8,8 +8,9 @@
  * do interpreter sinh, và `scene3d` là toạ độ do KERNEL tính. Viết tay chúng
  * là đặt toạ độ kết quả vào tay người, đúng thứ ranh giới R0 cấm.
  *
- * Nên file JSON cạnh đây là **SINH RA**:
+ * Nên các file JSON cạnh đây là **SINH RA**:
  *
+ *     cd backend && .venv/Scripts/python.exe scripts/build_advanced_geometry_samples.py
  *     cd backend && .venv/Scripts/python.exe scripts/build_geometry_samples.py
  *
  * Sửa đề bài hay các bước dựng thì sửa **script**, không sửa JSON — chạy lại
@@ -17,13 +18,13 @@
  *
  * ─── NHỮNG BÀI NÀY DẠY GÌ ───────────────────────────────────────────────
  *
- * Ba bài phủ đúng ba loại hoạt động TRONG PHẠM VI đề tài: dựng hình/thiết
- * diện · quan hệ song song–vuông góc · khoảng cách/thể tích/góc. Không có bài
- * "kéo để thấy bất biến" kiểu GeoGebra — thứ ấy liên tục và phá song ánh
- * `frame k ⇔ trace[k]`.
+ * Phủ đầy đủ các dạng hoạt động TRONG PHẠM VI đề tài hình học không gian THPT:
+ * dựng hình/thiết diện · quan hệ song song–vuông góc · khoảng cách/thể tích/góc
+ * · giao điểm đường–mặt trong Oxyz · mặt cầu cắt/tiếp xúc/ngoại tiếp · khối tròn xoay.
  */
 import type { SimulationEnvelope } from "../simulations/types";
-import raw from "./geometry-samples.json";
+import advancedRaw from "./advanced-geometry-samples.json";
+import legacyRaw from "./geometry-samples.json";
 
 export interface GeometrySample {
   id: string;
@@ -39,8 +40,18 @@ interface RawFile {
   samples: GeometrySample[];
 }
 
-export const GEOMETRY_SAMPLES: GeometrySample[] =
-  (raw as unknown as RawFile).samples;
+/** 11 bài toán hình học THPT nâng cao hiển thị công khai trong Thư viện. */
+export const PUBLIC_GEOMETRY_SAMPLES: GeometrySample[] =
+  (advancedRaw as unknown as RawFile).samples;
+
+/** 11 fixture hình học cũ được bảo toàn cho kiểm thử hồi quy và tương thích lịch sử/URL cũ. */
+export const LEGACY_GEOMETRY_SAMPLES: GeometrySample[] =
+  (legacyRaw as unknown as RawFile).samples;
+
+export const GEOMETRY_SAMPLES: GeometrySample[] = [
+  ...PUBLIC_GEOMETRY_SAMPLES,
+  ...LEGACY_GEOMETRY_SAMPLES,
+];
 
 /** Bài mẫu theo id, hoặc `undefined`. Không ném — id lạ đến từ URL cũ. */
 export function geometrySampleById(id: string): GeometrySample | undefined {

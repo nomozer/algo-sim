@@ -9,12 +9,14 @@ import { SamplePreview } from "../SamplePreview";
 import { stepCountOfEnvelope } from "../SessionCard";
 import {
   Cone2D,
+  Cube2D,
   Cylinder2D,
   GEOMETRY_FAMILY_ICONS,
   GEOMETRY_TEMPLATES,
   GeometryFamilyIcon,
   PerpendicularMarker2D,
   Plane2D,
+  Prism2D,
   Pyramid2D,
   SAMPLE_ILLUSTRATION_MAPPING,
   Section2D,
@@ -55,10 +57,12 @@ describe("Axo 2D Geometry Illustration System (Tier A Family Icons + Tier B Comp
     expect(normalizeGeometryFamily(null)).toBe("neutral");
   });
 
-  it("2. Composable 2D Components & Template Registry (Tier B): đủ 8 component thành phần và 14 template tổ hợp/cơ bản", () => {
+  it("2. Composable 2D Components & Template Registry (Tier B): đủ 10 component thành phần và 22 template tổ hợp/cơ bản", () => {
     const compSvg = renderToString(
       <svg viewBox="0 0 180 110">
         <Pyramid2D />
+        <Cube2D />
+        <Prism2D />
         <Sphere2D center={[90, 55]} radius={34} />
         <Cylinder2D bottomCenter={[90, 82]} topCenter={[90, 26]} rx={34} ry={10} />
         <Cone2D apex={[90, 18]} baseCenter={[90, 82]} rx={40} ry={12} />
@@ -69,6 +73,8 @@ describe("Axo 2D Geometry Illustration System (Tier A Family Icons + Tier B Comp
       </svg>,
     );
     expect(compSvg).toContain('data-geo2d-comp="pyramid"');
+    expect(compSvg).toContain('data-geo2d-comp="cube"');
+    expect(compSvg).toContain('data-geo2d-comp="prism"');
     expect(compSvg).toContain('data-geo2d-comp="sphere"');
     expect(compSvg).toContain('data-geo2d-comp="cylinder"');
     expect(compSvg).toContain('data-geo2d-comp="cone"');
@@ -91,6 +97,14 @@ describe("Axo 2D Geometry Illustration System (Tier A Family Icons + Tier B Comp
       "cone.axial-section",
       "cone.slant-generator",
       "cone.inscribed-cylinder",
+      "cube.plane-section",
+      "prism.plane-section",
+      "pyramid.point-to-plane-distance",
+      "pyramid.dihedral-angle",
+      "pyramid.skew-lines-distance",
+      "oxyz.line-plane-intersection",
+      "sphere.tangent-plane",
+      "cone.parallel-section",
     ]);
 
     for (const id of templateIds) {
@@ -261,28 +275,31 @@ describe("Axo 2D Geometry Illustration System (Tier A Family Icons + Tier B Comp
 
   it("6. Bảo toàn số bước dựng 3D và tích hợp đồng bộ trên Trang chủ & Thư viện", () => {
     const expectedSteps: Record<string, number> = {
-      "thiet-dien-chop": 10,
-      "mat-cheo-sac": 6,
-      "vuong-goc-chop": 5,
-      "mp-vuong-goc-duong": 7,
-      "the-tich-chop": 4,
-      "cau-cat-mat-phang": 5,
-      "cau-the-tich": 1,
-      "tru-thiet-dien-tron": 6,
-      "tru-truc-xien": 3,
-      "non-thiet-dien-truc": 5,
-      "non-duong-sinh": 4,
+      "chop-thiet-dien-ba-diem": 12,
+      "lap-phuong-thiet-dien-bat-ky": 13,
+      "khoang-cach-diem-mat-phang-nghieng": 10,
+      "goc-nhi-dien-hai-mat-phang": 12,
+      "khoang-cach-hai-duong-cheo-nhau": 13,
+      "lang-tru-tam-giac-thiet-dien": 11,
+      "mat-cau-cat-mat-phang": 10,
+      "oxyz-giao-diem-duong-mat": 10,
+      "mat-phang-tiep-xuc-mat-cau": 8,
+      "hinh-non-cat-song-song-day": 13,
+      "chop-mat-cau-ngoai-tiep": 17,
     };
 
     for (const entry of publicCatalog()) {
-      expect(stepCountOfEnvelope(entry.envelope)).toBe(expectedSteps[entry.id]);
+      expect(
+        stepCountOfEnvelope(entry.envelope),
+        `stepCount mismatch for ${entry.id}`,
+      ).toBe(expectedSteps[entry.id]);
     }
 
     const homeHtml = renderToString(<HomeView />);
     expect(homeHtml).toContain('data-thumb-template="pyramid.section"');
     expect(homeHtml).toContain('data-thumb-template="sphere.plane-section"');
-    expect(homeHtml).toContain('data-thumb-template="cylinder.perpendicular-section"');
-    expect(homeHtml).toContain('data-thumb-template="cone.axial-section"');
+    expect(homeHtml).toContain('data-thumb-template="cube.plane-section"');
+    expect(homeHtml).toContain('data-thumb-template="cone.parallel-section"');
 
     const libHtml = renderToString(<LibraryView />);
     expect(libHtml).toContain('data-family-icon="pyramid"');

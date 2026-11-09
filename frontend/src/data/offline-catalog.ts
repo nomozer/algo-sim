@@ -1,4 +1,8 @@
-import { GEOMETRY_SAMPLES } from "./geometry-samples";
+import {
+  GEOMETRY_SAMPLES,
+  LEGACY_GEOMETRY_SAMPLES,
+  PUBLIC_GEOMETRY_SAMPLES,
+} from "./geometry-samples";
 import { normalizeCylinderEnvelopeTitle } from "../simulations/domains/geometry/scene3d-semantic-policy";
 import type { Scene3D } from "../simulations/domains/geometry/scene3d-model";
 import type { Domain, SimulationEnvelope } from "../simulations/types";
@@ -10,7 +14,7 @@ import type { Domain, SimulationEnvelope } from "../simulations/types";
  *
  * M9-UX2 — LUẬT PHẠM VI: kiến trúc được phép tổng quát, nhưng danh mục CÔNG
  * KHAI khoanh trong phạm vi sản phẩm — nay là bài mẫu hình học không gian
- * (`geometry-samples`). `visibility` là metadata TƯỜNG MINH khai tại
+ * (`PUBLIC_GEOMETRY_SAMPLES`). `visibility` là metadata TƯỜNG MINH khai tại
  * định nghĩa mẫu (CẤM lọc theo chuỗi tiêu đề). Gỡ một mẫu khỏi danh mục công
  * khai KHÔNG gỡ năng lực đã nuôi nó — fixture nội bộ vẫn sống cho test/dev,
  * và lịch sử học mở lại bằng envelope nên không phụ thuộc danh mục.
@@ -30,6 +34,19 @@ export interface CatalogEntry {
 }
 
 export const CANONICAL_SAMPLE_SLUGS: Readonly<Record<string, string>> = Object.freeze({
+  // 11 bài toán hình học THPT nâng cao công khai
+  "chop-thiet-dien-ba-diem": "pyramid-three-point-section",
+  "lap-phuong-thiet-dien-bat-ky": "cube-hexagonal-plane-section",
+  "khoang-cach-diem-mat-phang-nghieng": "point-to-inclined-plane-distance",
+  "goc-nhi-dien-hai-mat-phang": "dihedral-angle-between-planes",
+  "khoang-cach-hai-duong-cheo-nhau": "skew-lines-common-perpendicular",
+  "lang-tru-tam-giac-thiet-dien": "triangular-prism-plane-section",
+  "mat-cau-cat-mat-phang": "sphere-secant-plane-intersection",
+  "oxyz-giao-diem-duong-mat": "oxyz-line-plane-intersection",
+  "mat-phang-tiep-xuc-mat-cau": "sphere-tangent-plane-contact",
+  "hinh-non-cat-song-song-day": "cone-parallel-base-section",
+  "chop-mat-cau-ngoai-tiep": "pyramid-circumscribed-sphere",
+  // 11 fixture hình học cũ bảo toàn cho kiểm thử & tương thích ngược
   "thiet-dien-chop": "pyramid-cross-section",
   "mat-cheo-sac": "pyramid-diagonal-section",
   "vuong-goc-chop": "pyramid-line-plane-angle",
@@ -128,76 +145,41 @@ function sampleIdByConfigKey(): ReadonlyMap<string, string> {
   return m;
 }
 
+function toCatalogEntry(
+  s: (typeof GEOMETRY_SAMPLES)[number],
+  visibility: "public" | "internal_fixture",
+): CatalogEntry {
+  const sc = (s.envelope as unknown as { scene3d?: Scene3D }).scene3d;
+  const normalizedTitle = normalizeCylinderEnvelopeTitle(s.envelope.title, sc);
+  const normalizedEnvelope =
+    normalizedTitle !== s.envelope.title
+      ? { ...s.envelope, title: normalizedTitle }
+      : s.envelope;
+  return {
+    id: s.id,
+    slug: canonicalSlugForSampleId(s.id),
+    title: normalizedTitle,
+    simId: s.envelope.simulation_id,
+    domain: s.envelope.domain,
+    envelope: normalizedEnvelope,
+    visibility,
+    preview: s.group,
+  };
+}
+
 /** TOÀN BỘ mẫu (kể cả fixture nội bộ) — cho test/dev/regression. */
 export function offlineCatalog(): CatalogEntry[] {
   if (_offlineCatalogMemo) return [..._offlineCatalogMemo];
-  // HÌNH HỌC — envelope SINH RA từ kernel, không viết tay (xem
-  // `geometry-samples.ts`). `domain` đọc từ envelope chứ không gán cứng
-  // "geometry" ở đây: gán cứng là dựng nguồn sự thật thứ hai, và nó sẽ lệch
-  // đúng lúc backend đổi nhãn miền.
-  //
-  // ⚠️ Hai nguồn cũ (`SAMPLES` — bài mẫu Tin học soạn sẵn; `OFFLINE_SAMPLES`
-  // — mẫu viết tay cho dev) đã gỡ cùng chín domain Tin học. Đây nay là nguồn
-  // DUY NHẤT của danh mục offline, và nó là nguồn SINH RA chứ không viết tay
-  // — tức bài mẫu không thể mang một toạ độ do người gõ vào.
   const built: CatalogEntry[] = [
-    ...GEOMETRY_SAMPLES.map(
-      (s): CatalogEntry => {
-        const sc = (s.envelope as unknown as { scene3d?: Scene3D }).scene3d;
-        const normalizedTitle = normalizeCylinderEnvelopeTitle(s.envelope.title, sc);
-        const normalizedEnvelope =
-          normalizedTitle !== s.envelope.title
-            ? { ...s.envelope, title: normalizedTitle }
-            : s.envelope;
-        return {
-          id: s.id,
-          slug: canonicalSlugForSampleId(s.id),
-          title: normalizedTitle,
-          simId: s.envelope.simulation_id,
-          domain: s.envelope.domain,
-          envelope: normalizedEnvelope,
-          visibility: "public",
-          preview: s.group,
-        };
-      },
-    ),
+    ...PUBLIC_GEOMETRY_SAMPLES.map((s) => toCatalogEntry(s, "public")),
+    ...LEGACY_GEOMETRY_SAMPLES.map((s) => toCatalogEntry(s, "internal_fixture")),
   ];
   _offlineCatalogMemo = built;
   return [...built];
 }
 
-/**
- * PHẠM VI SẢN PHẨM — miền nào được BÀY RA cho người dùng.
- *
- * Đề tài đổi 2026-08-24 (`STATUS_LEDGER §0-2026-08-24`): sản phẩm là hệ mô phỏng
- * **hình học không gian 3D**. Trước bản này `publicCatalog()` lọc theo
- * `FOCUS_SIM_IDS` — 13 target Tin học — nên Thư viện và Trang chủ bày ra một
- * danh mục thuật toán/mạng/cây, còn ba bài hình học thì KHÔNG lối nào tới được
- * (chúng mang `simulation_id` là `generic.semantic_program`, không nằm trong
- * danh sách ấy). Tức bề mặt công khai vẫn đang quảng bá đề tài cũ.
- *
- * ⚠️ Đây là hằng số của **BỀ MẶT**, không phải của **NĂNG LỰC**. Mười miền Tin
- * học vẫn đăng ký đầy đủ, vẫn chạy, vẫn mở lại được từ Lịch sử và từ bài giáo
- * viên đã giao, vẫn nguyên trong test/benchmark. Chúng chỉ thôi được BÀY. Xoá
- * chúng là chuyện khác hẳn và phải quyết riêng — de-expose trước, delete sau.
- */
 export const PRODUCT_DOMAINS: readonly Domain[] = ["geometry"];
 
-/**
- * W5P — TIÊU ĐIỂM KHOÁ LUẬN (ĐỀ CŨ): 13 target thuộc BA ĐIỂM NGHẼN nhận thức.
- *
- * ⚠️ KHÔNG còn lái bề mặt công khai — `publicCatalog()` nay hỏi `PRODUCT_DOMAINS`.
- * Giữ lại vì nó vẫn là mirror của `FOCUS_SIMULATION_IDS` bên backend và vẫn có
- * nghĩa cho lát đánh giá của đề cũ; đọc nó như **lịch sử khoa học**, không như
- * trạng thái sản phẩm.
- *
- * Mirror của `FOCUS_SIMULATION_IDS` bên `backend/app/simulation/catalog.py`
- * (cùng khuôn hai tầng như mọi hợp đồng khác trong repo).
- *
- * Nó khai TIÊU ĐIỂM, không khai NĂNG LỰC: 11 target ngoài danh sách vẫn đăng ký
- * đầy đủ, vẫn AI tới được, vẫn chạy trong test/regression — chỉ thôi được QUẢNG
- * BÁ ở Thư viện. Nguồn phán quyết: `docs/STATUS_LEDGER.md §0`.
- */
 export const FOCUS_SIM_IDS: readonly string[] = [
   "algorithm.find_max",
   "algorithm.find_min",
@@ -215,20 +197,7 @@ export const FOCUS_SIM_IDS: readonly string[] = [
 ];
 
 /**
- * Bài Thư viện bày cho học sinh = mẫu công khai VÀ thuộc tiêu điểm.
- *
- * Hai điều kiện là hai câu hỏi khác nhau, cố ý giữ tách: `visibility` nói "mẫu
- * này có phải fixture nội bộ không", `FOCUS_SIM_IDS` nói "target này có thuộc
- * tiêu điểm khoá luận không". Gộp lại thì đổi phạm vi đề tài sẽ phải đi sửa
- * metadata của từng mẫu.
- */
-/**
  * Danh mục NGƯỜI DÙNG THẤY: mẫu công khai VÀ thuộc phạm vi sản phẩm.
- *
- * Hai điều kiện là hai câu hỏi khác nhau, cố ý giữ tách: `visibility` nói "mẫu
- * này có phải fixture nội bộ không", `PRODUCT_DOMAINS` nói "miền này có thuộc
- * sản phẩm hiện tại không". Gộp lại thì mỗi lần đổi phạm vi sẽ phải đi sửa
- * metadata của từng mẫu.
  */
 export function publicCatalog(): CatalogEntry[] {
   if (!_publicCatalogMemo) {
@@ -237,35 +206,27 @@ export function publicCatalog(): CatalogEntry[] {
   return [..._publicCatalogMemo];
 }
 
-/** Phân giải bài mẫu công khai theo `slug` tiếng Anh chuẩn HOẶC `id` tiếng Việt cũ (tương thích ngược §8). */
+/**
+ * Phân giải bài mẫu theo `slug` tiếng Anh chuẩn HOẶC `id` tiếng Việt
+ * (ưu tiên `publicCatalog()`, fallback sang `offlineCatalog()` để giữ tương thích URL/phiên cũ §8).
+ */
 export function resolveSampleByRouteToken(token: string | null | undefined): CatalogEntry | undefined {
   if (!token) return undefined;
   const trimmed = token.trim();
   if (!trimmed) return undefined;
   const lower = trimmed.toLowerCase();
   const pub = publicCatalog();
-  return pub.find((e) => e.slug === lower || e.id === trimmed || e.id.toLowerCase() === lower);
+  const matchedPub = pub.find(
+    (e) => e.slug === lower || e.id === trimmed || e.id.toLowerCase() === lower,
+  );
+  if (matchedPub) return matchedPub;
+  return offlineCatalog().find(
+    (e) => e.slug === lower || e.id === trimmed || e.id.toLowerCase() === lower,
+  );
 }
 
 /**
  * Mẫu KHÔNG PHẢI fixture nội bộ — bất kể miền.
- *
- * ─── VÌ SAO TÁCH KHỎI `publicCatalog()` ──────────────────────────────────
- *
- * Hai câu hỏi khác nhau đã có lúc trùng đáp án nên bị dùng lẫn:
- *
- *   "mẫu này có phải fixture nội bộ không"   → `discoverableCatalog()`
- *   "miền này có thuộc sản phẩm hiện tại không" → `publicCatalog()`
- *
- * Lúc sản phẩm còn là Tin học thì hai tập trùng nhau, nên các cross-lock
- * (`capability-descriptors`, `generation-parity`, `target-certification`,
- * `experience-manifest`) đều hỏi `publicCatalog()` — trong khi thứ chúng thật
- * sự canh là **target có bịa ra một mẫu không có thật hay không**, chuyện của
- * runtime chứ không phải chuyện của bề mặt quảng bá.
- *
- * Thu hẹp bề mặt xuống hình học làm hai tập tách ra, và các guard ấy đỏ vì
- * **hỏi nhầm câu**, không vì hệ hỏng. Nên tách tên chứ không nới ngưỡng: nới
- * ngưỡng là bỏ luôn thứ guard đang canh.
  */
 export function discoverableCatalog(): CatalogEntry[] {
   if (!_discoverableCatalogMemo) {
@@ -275,25 +236,38 @@ export function discoverableCatalog(): CatalogEntry[] {
 }
 
 /**
- * Gợi ý trên Trang chủ — bộ NHỎ chọn lọc, không đổ cả danh mục dài.
- *
- * Chọn theo **id mẫu**, không theo `simId` như bản cũ: mọi bài hình học dùng
- * chung `generic.semantic_program`, nên lọc theo `simId` sẽ hoặc lấy hết hoặc
- * không lấy gì — không phân biệt được bài nào với bài nào.
+ * Gợi ý trên Trang chủ — 4 bài tiêu biểu đại diện cho 4 họ hình trong bộ 11 bài THPT nâng cao.
  */
 const STARTER_SAMPLE_IDS = [
-  "thiet-dien-chop",
-  "cau-cat-mat-phang",
-  "tru-thiet-dien-tron",
-  "non-thiet-dien-truc",
+  "chop-thiet-dien-ba-diem",
+  "mat-cau-cat-mat-phang",
+  "lap-phuong-thiet-dien-bat-ky",
+  "hinh-non-cat-song-song-day",
 ];
 
-/** Nhãn phân loại khối hình học hiển thị trên thẻ gợi ý khám phá (Axo V2.7 P6). */
+/** Nhãn phân loại khối hình học hiển thị trên thẻ gợi ý khám phá và Thư viện. */
 export function geometryShapeLabel(sampleId: string): string {
   const canonicalId = _slugRegistry.bySlug.get(sampleId.toLowerCase()) ?? sampleId;
-  if (canonicalId.startsWith("cau-")) return "Mặt cầu";
+  if (
+    canonicalId.startsWith("cau-") ||
+    canonicalId.startsWith("mat-cau-") ||
+    canonicalId === "mat-phang-tiep-xuc-mat-cau"
+  ) {
+    return "Mặt cầu";
+  }
+  if (
+    canonicalId.startsWith("lap-phuong-") ||
+    canonicalId.startsWith("lang-tru-")
+  ) {
+    return "Hình lăng trụ";
+  }
   if (canonicalId.startsWith("tru-")) return "Hình trụ";
-  if (canonicalId.startsWith("non-")) return "Hình nón";
+  if (
+    canonicalId.startsWith("non-") ||
+    canonicalId.startsWith("hinh-non-")
+  ) {
+    return "Hình nón";
+  }
   return "Hình chóp";
 }
 
@@ -307,10 +281,10 @@ export function starterEntries(): CatalogEntry[] {
   return out;
 }
 
-
 export const LIBRARY_CATEGORY_ORDER = [
   "all",
   "Hình chóp",
+  "Hình lăng trụ",
   "Mặt cầu",
   "Hình trụ",
   "Hình nón",
@@ -326,8 +300,7 @@ export function problemTextForSample(sampleId: string): string {
 }
 
 /**
- * Khớp mẫu hình học từ `id`/`slug` hoặc `simulation_id + config` (tất định). KHÔNG khớp theo tiêu đề:
- * hai đề khác nhau có thể trùng tiêu đề, nên tiêu đề không phải bằng chứng là cùng một bài.
+ * Khớp mẫu hình học từ `id`/`slug` hoặc `simulation_id + config` (tất định). KHÔNG khớp theo tiêu đề.
  */
 export function resolveGeometrySampleId(
   target:
@@ -354,9 +327,7 @@ export function resolveGeometrySampleId(
 /**
  * Khôi phục `scene3d` tất định từ `GEOMETRY_SAMPLES` cho các bản ghi lịch sử
  * được lưu trước khi `sanitizeEnvelope` giữ lại `scene3d`, miễn là bản ghi đó
- * khớp chính xác bài mẫu công khai theo `simulation_id` + `config` (cùng chương trình đã biên dịch).
- * Không khớp theo tiêu đề; bản ghi không khớp được trả nguyên trạng (không có `scene3d`) để
- * xưởng báo thiếu dữ liệu thay vì gán cảnh của một bài mẫu trông giống.
+ * khớp chính xác bài mẫu theo `simulation_id` + `config`.
  */
 export function recoverCatalogScene3D(env: SimulationEnvelope): SimulationEnvelope {
   const raw = env as SimulationEnvelope & { scene3d?: unknown };
@@ -374,7 +345,7 @@ export function recoverCatalogScene3D(env: SimulationEnvelope): SimulationEnvelo
   return env;
 }
 
-/** Nhãn loại hình học (`Hình chóp`, `Mặt cầu`, `Hình trụ`, `Hình nón`) cho mục lịch sử hoặc mẫu. */
+/** Nhãn loại hình học cho mục lịch sử hoặc mẫu. */
 export function geometryCategoryForItem(
   target:
     | { id?: string | null; title?: string | null; envelope?: SimulationEnvelope | null }
@@ -387,6 +358,9 @@ export function geometryCategoryForItem(
   }
   const text = `${target?.title ?? ""} ${target?.envelope?.title ?? ""}`.toLowerCase();
   if (text.includes("mặt cầu") || text.includes("khối cầu")) return "Mặt cầu";
+  if (text.includes("lăng trụ") || text.includes("lập phương") || text.includes("hình hộp")) {
+    return "Hình lăng trụ";
+  }
   if (text.includes("hình trụ") || text.includes("khối trụ")) return "Hình trụ";
   if (text.includes("hình nón") || text.includes("khối nón")) return "Hình nón";
   return "Hình chóp";
