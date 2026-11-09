@@ -1,0 +1,138 @@
+{
+  "run_id": "independent-geometry-and-vision-evaluation",
+  "date": "2026-11-09",
+  "branch": "integration/parallel-ingestion-reasoning",
+  "verified_base_sha": "474ba080ec2cd740d39314109f279aacfa871376",
+  "main": "bb046fa22aceff47abe22aa783aa64fc65caee13 (= origin/main; not modified)",
+  "merged_to_main": false,
+  "pushed": false,
+  "execution": "two background subagents in two isolated worktrees (eval/real-world-vision and eval/independent-geometry) branched from VERIFIED_BASE_SHA = 474ba080e, run concurrently and integrated onto integration/parallel-ingestion-reasoning",
+  "workstreams": {
+    "A": {
+      "branch": "eval/real-world-vision",
+      "worktree": ".superpowers/worktrees/real-world-vision",
+      "product_commit": "38bfb0ef33146a7b86590d42dcfd6639e850570a",
+      "head": "e872d025ebb127d21f5e76802b2a47566480ab15",
+      "receipt": "docs/evaluation/geometry/runs/independent-geometry-and-vision-evaluation/workstream_a_vision_receipt.json",
+      "tool": "docs/evaluation/geometry/runs/independent-geometry-and-vision-evaluation/tools/evaluate_vision_workstream_a.py",
+      "verdict": "LOCAL_OCR_DIAGNOSTIC_ONLY",
+      "live_vision_evaluation": "NOT_MEASURED",
+      "real_world_corpus": "REAL_WORLD_CORPUS_NOT_AVAILABLE"
+    },
+    "B": {
+      "branch": "eval/independent-geometry",
+      "worktree": ".superpowers/worktrees/independent-geometry",
+      "product_commit": "c3a8d3f92860346655dfa5f0f9ccb060bd895cd8",
+      "head": "04ec8e418569952a7d79ce9692d79335c3ee2bc2",
+      "receipt": "docs/evaluation/geometry/runs/independent-geometry-and-vision-evaluation/workstream_b_geometry_receipt.json",
+      "tool": "docs/evaluation/geometry/runs/independent-geometry-and-vision-evaluation/tools/evaluate_geometry_workstream_b.py",
+      "verdict": "GEOMETRY_HELDOUT_EVALUATED_NONINDEPENDENT",
+      "independent_h1_validation": "NOT_MEASURED"
+    }
+  },
+  "integration_commits": [
+    {
+      "sha": "5201053e0",
+      "role": "merge --no-ff of eval/real-world-vision (e872d025e) onto 474ba080e"
+    },
+    {
+      "sha": "e6a0bb863",
+      "role": "merge --no-ff of eval/independent-geometry (04ec8e418); zero overlapping files"
+    },
+    {
+      "sha": "62e266f08",
+      "role": "re-freeze EVALUATION_CANDIDATE.json for integrated product commit e6a0bb863"
+    },
+    {
+      "sha": "5f2de7ee1",
+      "role": "bind K-1/R-1/S-2 owner approval templates to measured_system 9dd8e882cefea630"
+    }
+  ],
+  "candidate": {
+    "so_file": 106,
+    "measured_system_tree_hash": "9dd8e882cefea630a9c2721b9d4a41c254a2e55c87ae99d80dbdd56106ced7c8",
+    "product_commit": "e6a0bb8639be44f073a0b24ff22e19bd6a05a308",
+    "t3_commit": "5f2de7ee19f91192014c014275b5638148cf9f02"
+  },
+  "cache_version": {
+    "before": "132",
+    "after": "132",
+    "bumped": false,
+    "reason": "Workstream A only refines crop_holds_all_content / need_full_retry fallback triggers; Workstream B only adds mirror-solution equivalence verification on _dinh_tu_ba_canh_ben when multiple off-base height anchors exist; all previously served single-solid cache entries are unchanged."
+  },
+  "section_viii_fixes": {
+    "crop_holds_all_content_missed_block_guard": {
+      "files": [
+        "backend/app/ingestion/region_detector.py",
+        "backend/app/ingestion/unified_input.py"
+      ],
+      "before_missed_blocks": "4/9 (44.44%: viii_05, viii_06, viii_07, viii_09)",
+      "after_missed_blocks": "0/9 (0.00%: 9/9 recovered)",
+      "corpus_22_vision_calls": "23 -> 22 preserved (c11_chi_co_hinh area_ratio = 0.4320 >= 0.25, 1 call)"
+    },
+    "pyramid_apex_from_3_lateral_edges_mirror_equivalence": {
+      "files": [
+        "backend/app/simulation/geometry_functions/engine.py"
+      ],
+      "single_anchor_invariance": "11/11 goal types 100% identical between +z and -z via R_z Gram isometry",
+      "multi_anchor_invariant_goals": "SERVED when +z and -z give identical goal results (e.g. ask_volume=96, d(P,(SBC))=24/5)",
+      "multi_anchor_sensitive_goals": "REFUSED fail-closed with AMBIGUOUS_FACT when +z and -z both pass kiem() and yield different goal values (e.g. ask_length(S,P): sqrt(74) != sqrt(314))",
+      "multi_anchor_disambiguated": "SERVED with -z when a premise (e.g. SP=sqrt(314)) uniquely selects the -z mirror branch"
+    }
+  },
+  "geometry_evaluation_summary": {
+    "development_matrix_72": {
+      "total": 72,
+      "positive": 62,
+      "negative": 10,
+      "correct_served": 56,
+      "correct_refusal": 9,
+      "correct_clarification": 1,
+      "false_refusal": 0,
+      "wrong_served": 0
+    },
+    "heldout_nonindependent_46": {
+      "total": 46,
+      "groups_covered": 18,
+      "overlap_with_dev_72": 0,
+      "positive_supported": 34,
+      "positive_residual_probes": 4,
+      "negative": 8,
+      "correct_served": 34,
+      "supported_solve_rate": "34/34 (100.0%)",
+      "all_positive_solve_rate": "34/38 (89.47%)",
+      "negative_refusal_clarification_rate": "8/8 (100.0%: 7 CORRECT_REFUSAL + 1 CORRECT_CLARIFICATION)",
+      "false_refusal": 0,
+      "wrong_served": 0,
+      "all_certificates_verified": true,
+      "all_scene3d_continuity_ok": true
+    }
+  },
+  "integration_t3": {
+    "commit": "5f2de7ee1",
+    "worktree": "clean detached (.superpowers/worktrees/t3-common-base-d79565b5)",
+    "verdict": "FULL_PRODUCT_GATE_PASS",
+    "pytest": "14030 passed, 7 skipped, 3 deselected, 15 xfailed, 0 failed (= 14023 prior + 2 Workstream A + 5 Workstream B)",
+    "vitest": "2000/2000 (136 files)",
+    "build": "PASS (99 modules)",
+    "demo": "5/5 (REDUCED_CHAIN 1/1)",
+    "crash_surface": "6/6, 0 thrown",
+    "playwright_browser_e2e": "20/20 cases across 6/6 viewports including 110% zoom, 0 console/page errors",
+    "freeze_verify": "MATCH 9dd8e882cefea630a9c2721b9d4a41c254a2e55c87ae99d80dbdd56106ced7c8",
+    "t3_gate_log_sha256": "e7462f67517c9e6d3d1310552bcd25b51680b4ab54d260540db3287c03169baa",
+    "pytest_default_addopts_log_sha256": "89248fc2686b39a8c75c2bcef204e6b418312ef6cbd823b2112bd56a2961e50e"
+  },
+  "measurement": {
+    "MEASUREMENT_CLASS": "OFFLINE_INDEPENDENT_GEOMETRY_AND_VISION_EVALUATION",
+    "HELD_OUT_CLAIM": "GEOMETRY_HELDOUT_EVALUATED_NONINDEPENDENT (INDEPENDENT_H1_VALIDATION = NOT_MEASURED)",
+    "LIVE_VISION_EVALUATION": "NOT_MEASURED",
+    "REAL_WORLD_CORPUS": "REAL_WORLD_CORPUS_NOT_AVAILABLE",
+    "EVALUATOR_INDEPENDENCE": "NONE (agents and coordinator are the same model family in one session)",
+    "live_provider_calls": 0
+  },
+  "verdicts": {
+    "Vision": "LOCAL_OCR_DIAGNOSTIC_ONLY",
+    "Geometry": "GEOMETRY_HELDOUT_EVALUATED_NONINDEPENDENT",
+    "Integration": "CANDIDATE_READY_FOR_MAIN_REVIEW"
+  }
+}

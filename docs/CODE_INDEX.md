@@ -1,5 +1,13 @@
 # CODE_INDEX.md — Chỉ mục module + BỘ NHỚ KIẾN TRÚC
 
+## Independent Geometry & Real-World Vision Evaluation (run `independent-geometry-and-vision-evaluation`, 2026-11-09)
+
+| Path | Owns | Locked by |
+|---|---|---|
+| `backend/app/ingestion/region_detector.py` · `backend/app/ingestion/unified_input.py` | Section VIII aggressive-crop safety guard: `RegionDetectionResult.crop_holds_all_content` requires `area_ratio >= 0.25`; `unified_input.py` forces `need_full_retry = True` when Vision reports non-empty `missing_regions` on `crop_area_ratio < 0.35` (`4/9 -> 0/9` missed blocks on Section VIII sweep while preserving `23 -> 22` single-image and `3 -> 2` multi-image Vision calls) | `backend/tests/test_image_crop_retry_dedup.py`, `docs/evaluation/geometry/runs/independent-geometry-and-vision-evaluation/workstream_a_vision_receipt.json` |
+| `backend/app/simulation/geometry_functions/engine.py` | Section VIII multi-apex trilateration & mirror-solution equivalence (`+z` vs `-z`): `_Dung._dinh_tu_ba_canh_ben` iterates over all pyramids sharing `self.root.base`, records `self.mirror_apices`, and `dung_tu_loi_goi` (`_flip_apices`) verifies mirror invariance when another off-base height exists (`AMBIGUOUS_FACT` fail-closed when mirror-sensitive goals diverge; selects `-z` when disambiguated by a positive distance to the second apex) | `backend/tests/geometry/test_hybrid_reasoning_generalization.py`, `docs/evaluation/geometry/runs/independent-geometry-and-vision-evaluation/workstream_b_geometry_receipt.json` |
+| `docs/evaluation/geometry/runs/independent-geometry-and-vision-evaluation/tools/evaluate_vision_workstream_a.py` · `docs/evaluation/geometry/runs/independent-geometry-and-vision-evaluation/tools/evaluate_geometry_workstream_b.py` | Workstream A (provenance census, 15 synthetic stress classes `wsa_01`–`wsa_15`, 5 local OCR setups, Section VIII crop sensitivity `viii_01`–`viii_09`) and Workstream B (46-case non-independent held-out benchmark `HB01`–`HB46`, anti-leakage audit vs 72-case dev matrix, `G2/G3/G4/G6/G7` root-cause trace, `OCR_C1`–`OCR_C5` cross-pipeline study, mirror-invariance audit) | `workstream_a_vision_receipt.json`, `workstream_b_geometry_receipt.json`, `INDEPENDENT_GEOMETRY_AND_VISION_EVALUATION_REPORT.md` |
+
 ## Parallel integration (run `parallel-ingestion-reasoning`, 2026-11-09)
 
 | Path | Owns | Locked by |

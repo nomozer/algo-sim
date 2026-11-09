@@ -4,6 +4,19 @@
 Retired branch names now have local `refs/archive/repository-closure/` references and a verified private self-contained bundle.
 Existing evidence and historical reports below are unchanged; no research result is reinterpreted by this Git-state update.
 
+## WAVE_ID = INDEPENDENT_GEOMETRY_AND_VISION_EVALUATION
+
+REPORT = docs/evaluation/geometry/runs/independent-geometry-and-vision-evaluation/INDEPENDENT_GEOMETRY_AND_VISION_EVALUATION_REPORT.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/independent-geometry-and-vision-evaluation/
+START_BASE = 474ba080ec2cd740d39314109f279aacfa871376 (tip of integration/parallel-ingestion-reasoning; product tree identical to 37ec2db57)
+CODE_COMMIT = e6a0bb8639be44f073a0b24ff22e19bd6a05a308 (merge of eval/real-world-vision e872d025e + eval/independent-geometry 04ec8e418; candidate freeze & templates 5f2de7ee19f91192014c014275b5638148cf9f02; 106 measured files 9dd8e882cefea630a9c2721b9d4a41c254a2e55c87ae99d80dbdd56106ced7c8)
+CLASSIFICATION = OFFLINE_VISION_AND_NONINDEPENDENT_HELDOUT_GEOMETRY_EVALUATION (CANDIDATE_READY_FOR_MAIN_REVIEW; LOCAL_OCR_DIAGNOSTIC_ONLY; CURRENT_GEMINI_VISION_PREFERRED; GEOMETRY_HELDOUT_EVALUATED_NONINDEPENDENT; LIVE_VISION_EVALUATION = NOT_MEASURED; REAL_WORLD_CORPUS_NOT_AVAILABLE; INDEPENDENT_H1_VALIDATION = NOT_MEASURED; branch integration/parallel-ingestion-reasoning, not merged to main, not pushed)
+PRODUCT_CHANGE = YES (backend: region_detector.py, unified_input.py, engine.py)
+MODEL_REQUEST_COUNT = 0
+VERIFICATION = INDEPENDENT_GEOMETRY_AND_VISION_EVALUATION_REPORT.md; run.json; workstream_a_vision_receipt.json; workstream_b_geometry_receipt.json; tools/evaluate_vision_workstream_a.py; tools/evaluate_geometry_workstream_b.py; Full T3 on detached worktree t3-common-base-d79565b5 (14,030 pytest passed, 2,000 vitest passed, 20/20 Playwright passed)
+CORRECTS = NONE
+CORRECTED_BY = NONE
+
 ## WAVE_ID = PARALLEL_INGESTION_REASONING_INTEGRATION
 
 REPORT = docs/evaluation/geometry/runs/parallel-ingestion-reasoning/report.md
