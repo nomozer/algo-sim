@@ -1,0 +1,233 @@
+{
+  "schema": "algo-sim-local-parser-integrity-receipt/1",
+  "generated_at": "2026-11-09T13:02:27.194205+00:00",
+  "git": {
+    "branch": "feat/local-first-geometry-understanding",
+    "commit": "f96db02eb11ac80ed48c755155313710edcba588",
+    "tree": "a96642deb9c85aa18d36137b07f6f6b5cdf30a5a"
+  },
+  "parser_version": "local-geometry-parser/1",
+  "audit_dimensions_checked": [
+    "1.2.1_clause_level_vs_intra_sentence_coverage",
+    "1.2.2_goal_solid_notation_consistency",
+    "1.2.3_numeric_and_symbolic_value_boundary_guard",
+    "1.2.4_perpendicularity_attachment_and_foot_uniqueness",
+    "1.2.5_parallelism_and_derived_section_coverage",
+    "1.2.6_dropped_shape_qualifiers_guard",
+    "1.2.7_named_point_binding_completeness",
+    "1.2.8_compound_goal_completeness",
+    "1.2.9_prism_and_frustum_prime_subscript_consistency",
+    "1.2.10_negated_relation_guard",
+    "1.2.11_conditional_hypothesis_guard"
+  ],
+  "defects_discovered_and_fixed": [
+    {
+      "defect_id": "PARSER-DEFECT-01",
+      "title": "Comma-decimal (`3,5`) and OCR-corrupted radical (`2V3`) prefix truncation in `_VAL`",
+      "before": "`_VAL` matched `BC = 3` from `BC = 3,5` and `AA' = 2` from `AA' = 2V3` because it lacked a negative lookahead for trailing decimal commas or alphanumeric suffixes.",
+      "fix": "Added strict negative lookahead `(?![.,]\\d|[A-Za-z0-9_'′²³₁₂₃°~√/])` to `_VAL` in `backend/app/ai/local_geometry_parser.py`."
+    },
+    {
+      "defect_id": "PARSER-DEFECT-02",
+      "title": "Silent solid-ID fallback when volume goal specifies an undeclared/OCR-corrupted solid (`ABC.A'E'C`)",
+      "before": "In `7f` (`m_vol`), when `not_v` (`ABC.A'E'C`) did not match any key in `builder.solids`, `sid` silently fell back to `builder._primary_solid_id` (`s1`).",
+      "fix": "Added explicit check in `7f` requiring `not_v` (when present in the goal clause) to match a declared solid in `builder.solids` or `builder._sphere_by_notation`; otherwise `m_vol` refuses to match."
+    },
+    {
+      "defect_id": "PARSER-DEFECT-03",
+      "title": "Intra-sentence unparsed sub-clauses ignored when another pattern in the same sentence matched",
+      "before": "If one pattern matched in a sentence (e.g. `cho lăng trụ đứng ABC.A'B'C'` and `AB = a/2`), other unparsed `=` assignments (`AA' = 2V3`), unsupported shape qualifiers (`hình thoi`, `tam giác cân`), unbound `Gọi <PT> là ...` points, or second scalar goals after `và` in the same sentence did not mark the clause as partial.",
+      "fix": "Added Stage `7k` Intra-Sentence Integrity & Sub-Clause Coverage Guard in `_parse_clause_into_ast`, checking `=` span coverage, `∥`/`song song`, `∠`/`góc`, unsupported shape/relation/negation/conditional sub-clauses, unbound `Gọi <PT> là` points, and compound scalar goals."
+    }
+  ],
+  "summary": {
+    "total_mutation_probes": 12,
+    "mutation_probes_passed": 12,
+    "all_mutation_probes_passed": true,
+    "silent_fact_drop_count": 0
+  },
+  "mutation_probe_results": [
+    {
+      "probe_id": "P01_rhombus_base_qualifier",
+      "dimension": "1.2.6_dropped_shape_qualifiers",
+      "text": "Cho hình chóp S.ABCD có đáy ABCD là hình thoi cạnh 4, góc BAD = 60°, SA vuông góc với mặt phẳng (ABCD) và SA = 3. Tính thể tích khối chóp S.ABCD.",
+      "expected_status": "LOCAL_PARSE_PARTIAL",
+      "expected_reason": "UNPARSED_FACT_CANDIDATE",
+      "actual_status": "LOCAL_PARSE_PARTIAL",
+      "actual_reason": "UNPARSED_FACT_CANDIDATE",
+      "fallback_reason": "UNPARSED_FACT_CANDIDATE",
+      "unparsed_fact_candidates": [
+        "Cho hình chóp S.ABCD có đáy ABCD là hình thoi cạnh 4, góc BAD = 60°, SA vuông góc với mặt phẳng (ABCD) và SA = 3"
+      ],
+      "unparsed_goal_candidates": [],
+      "passed": true
+    },
+    {
+      "probe_id": "P02_isosceles_triangle_base",
+      "dimension": "1.2.6_dropped_shape_qualifiers",
+      "text": "Cho hình chóp S.ABC có đáy ABC là tam giác cân tại A, AB = 5, BC = 6, SA vuông góc với mặt phẳng (ABC), SA = 4. Tính thể tích khối chóp S.ABC.",
+      "expected_status": "LOCAL_PARSE_PARTIAL",
+      "expected_reason": "UNPARSED_FACT_CANDIDATE",
+      "actual_status": "LOCAL_PARSE_PARTIAL",
+      "actual_reason": "UNPARSED_FACT_CANDIDATE",
+      "fallback_reason": "UNPARSED_FACT_CANDIDATE",
+      "unparsed_fact_candidates": [
+        "Cho hình chóp S.ABC có đáy ABC là tam giác cân tại A, AB = 5, BC = 6, SA vuông góc với mặt phẳng (ABC), SA = 4"
+      ],
+      "unparsed_goal_candidates": [],
+      "passed": true
+    },
+    {
+      "probe_id": "P03_comma_decimal_dimension",
+      "dimension": "1.2.3_silent_numeric_truncation",
+      "text": "Cho hình lăng trụ đứng ABC.A'B'C' có đáy ABC là tam giác vuông tại A, AB = 3,5, AC = 4, AA' = 5. Tính thể tích khối lăng trụ ABC.A'B'C'.",
+      "expected_status": "LOCAL_PARSE_PARTIAL",
+      "expected_reason": "UNPARSED_FACT_CANDIDATE",
+      "actual_status": "LOCAL_PARSE_PARTIAL",
+      "actual_reason": "UNPARSED_FACT_CANDIDATE",
+      "fallback_reason": "UNPARSED_FACT_CANDIDATE",
+      "unparsed_fact_candidates": [
+        "Cho hình lăng trụ đứng ABC.A'B'C' có đáy ABC là tam giác vuông tại A, AB = 3,5, AC = 4, AA' = 5"
+      ],
+      "unparsed_goal_candidates": [],
+      "passed": true
+    },
+    {
+      "probe_id": "P04_ocr_corrupted_radical_2V3",
+      "dimension": "1.2.3_silent_numeric_truncation",
+      "text": "Cho lăng trụ đứng ABC.A'B'C' có đáy ABC là tam giác đều cạnh 2, AA' = 2V3. Tính thể tích khối lăng trụ ABC.A'B'C'.",
+      "expected_status": "LOCAL_PARSE_PARTIAL",
+      "expected_reason": "UNPARSED_FACT_CANDIDATE",
+      "actual_status": "LOCAL_PARSE_PARTIAL",
+      "actual_reason": "UNPARSED_FACT_CANDIDATE",
+      "fallback_reason": "UNPARSED_FACT_CANDIDATE",
+      "unparsed_fact_candidates": [
+        "Cho lăng trụ đứng ABC.A'B'C' có đáy ABC là tam giác đều cạnh 2, AA' = 2V3"
+      ],
+      "unparsed_goal_candidates": [],
+      "passed": true
+    },
+    {
+      "probe_id": "P05_inscribed_circle_center_point",
+      "dimension": "1.2.7_unparsed_named_point",
+      "text": "Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh 3, SA vuông góc với mặt phẳng (ABC), SA = 4. Gọi I là tâm đường tròn nội tiếp tam giác ABC. Tính khoảng cách từ I đến mặt phẳng (SBC).",
+      "expected_status": "LOCAL_PARSE_PARTIAL",
+      "expected_reason": "UNPARSED_FACT_CANDIDATE",
+      "actual_status": "LOCAL_PARSE_PARTIAL",
+      "actual_reason": "UNPARSED_FACT_CANDIDATE",
+      "fallback_reason": "UNPARSED_FACT_CANDIDATE",
+      "unparsed_fact_candidates": [
+        "Gọi I là tâm đường tròn nội tiếp tam giác ABC"
+      ],
+      "unparsed_goal_candidates": [],
+      "passed": true
+    },
+    {
+      "probe_id": "P06_negated_perpendicular_relation",
+      "dimension": "1.2.10_negated_relations",
+      "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 4, SA không vuông góc với mặt phẳng (ABCD), SA = 3. Tính thể tích khối chóp S.ABCD.",
+      "expected_status": "LOCAL_PARSE_PARTIAL",
+      "expected_reason": "UNPARSED_FACT_CANDIDATE",
+      "actual_status": "LOCAL_PARSE_PARTIAL",
+      "actual_reason": "UNPARSED_FACT_CANDIDATE",
+      "fallback_reason": "UNPARSED_FACT_CANDIDATE",
+      "unparsed_fact_candidates": [
+        "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 4, SA không vuông góc với mặt phẳng (ABCD), SA = 3"
+      ],
+      "unparsed_goal_candidates": [],
+      "passed": true
+    },
+    {
+      "probe_id": "P07_conditional_if_then_hypothesis",
+      "dimension": "1.2.11_conditional_hypotheses",
+      "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 4, SA vuông góc với mặt phẳng (ABCD). Nếu góc giữa SC và (ABCD) bằng 45° thì SA = 4√2. Tính thể tích khối chóp S.ABCD.",
+      "expected_status": "LOCAL_PARSE_PARTIAL",
+      "expected_reason": "UNPARSED_FACT_CANDIDATE",
+      "actual_status": "LOCAL_PARSE_PARTIAL",
+      "actual_reason": "UNPARSED_FACT_CANDIDATE",
+      "fallback_reason": "UNPARSED_FACT_CANDIDATE",
+      "unparsed_fact_candidates": [
+        "Nếu góc giữa SC và (ABCD) bằng 45° thì SA = 4√2"
+      ],
+      "unparsed_goal_candidates": [],
+      "passed": true
+    },
+    {
+      "probe_id": "P08_compound_two_scalar_goals_in_one_clause",
+      "dimension": "1.2.8_compound_goals",
+      "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 4, SA vuông góc với mặt phẳng (ABCD), SA = 3. Tính thể tích khối chóp S.ABCD và diện tích mặt cầu ngoại tiếp hình chóp S.ABCD.",
+      "expected_status": "LOCAL_PARSE_PARTIAL",
+      "expected_reason": "UNPARSED_GOAL_CANDIDATE",
+      "actual_status": "LOCAL_PARSE_PARTIAL",
+      "actual_reason": "UNPARSED_GOAL_CANDIDATE",
+      "fallback_reason": "UNPARSED_GOAL_CANDIDATE",
+      "unparsed_fact_candidates": [],
+      "unparsed_goal_candidates": [
+        "Tính thể tích khối chóp S.ABCD và diện tích mặt cầu ngoại tiếp hình chóp S.ABCD"
+      ],
+      "passed": true
+    },
+    {
+      "probe_id": "P09_inline_angle_constraint_in_given_clause",
+      "dimension": "1.2.1_intra_sentence_fact_dropping",
+      "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 4, SA vuông góc với mặt phẳng (ABCD) và SC tạo với đáy góc 60°. Tính thể tích khối chóp S.ABCD.",
+      "expected_status": "LOCAL_PARSE_PARTIAL",
+      "expected_reason": "UNPARSED_FACT_CANDIDATE",
+      "actual_status": "LOCAL_PARSE_PARTIAL",
+      "actual_reason": "UNPARSED_FACT_CANDIDATE",
+      "fallback_reason": "UNPARSED_FACT_CANDIDATE",
+      "unparsed_fact_candidates": [
+        "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 4, SA vuông góc với mặt phẳng (ABCD) và SC tạo với đáy góc 60°"
+      ],
+      "unparsed_goal_candidates": [],
+      "passed": true
+    },
+    {
+      "probe_id": "P10_parallel_line_constraint_in_given_clause",
+      "dimension": "1.2.5_parallelism_attachment",
+      "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 4, SA vuông góc với mặt phẳng (ABCD), SA = 3, đường thẳng d qua S và song song với BD. Tính khoảng cách từ A đến mặt phẳng (SBC).",
+      "expected_status": "LOCAL_PARSE_PARTIAL",
+      "expected_reason": "UNPARSED_FACT_CANDIDATE",
+      "actual_status": "LOCAL_PARSE_PARTIAL",
+      "actual_reason": "UNPARSED_FACT_CANDIDATE",
+      "fallback_reason": "UNPARSED_FACT_CANDIDATE",
+      "unparsed_fact_candidates": [
+        "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 4, SA vuông góc với mặt phẳng (ABCD), SA = 3, đường thẳng d qua S và song song với BD"
+      ],
+      "unparsed_goal_candidates": [],
+      "passed": true
+    },
+    {
+      "probe_id": "P11_perpendicular_side_face_without_foot",
+      "dimension": "1.2.4_perpendicularity_attachment",
+      "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 4, mặt bên (SAB) là tam giác cân và nằm trong mặt phẳng vuông góc với đáy, SA = 3. Tính thể tích khối chóp S.ABCD.",
+      "expected_status": "LOCAL_PARSE_PARTIAL",
+      "expected_reason": "UNPARSED_FACT_CANDIDATE",
+      "actual_status": "LOCAL_PARSE_PARTIAL",
+      "actual_reason": "UNPARSED_FACT_CANDIDATE",
+      "fallback_reason": "UNPARSED_FACT_CANDIDATE",
+      "unparsed_fact_candidates": [
+        "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 4, mặt bên (SAB) là tam giác cân và nằm trong mặt phẳng vuông góc với đáy, SA = 3"
+      ],
+      "unparsed_goal_candidates": [],
+      "passed": true
+    },
+    {
+      "probe_id": "P12_ocr_corrupted_goal_solid_notation",
+      "dimension": "1.2.2_ocr_corrupted_goal_target",
+      "text": "Câu 1. Cho lăng trụ đứng ABC.A'B'C' có AA' = 2V3, AB = a/2 và BC = 3,5. Tính thể tích khối lăng trụ ABC.A'E'C..",
+      "expected_status": "LOCAL_PARSE_PARTIAL",
+      "expected_reason": "UNPARSED_GOAL_CANDIDATE",
+      "actual_status": "LOCAL_PARSE_PARTIAL",
+      "actual_reason": "UNPARSED_GOAL_CANDIDATE",
+      "fallback_reason": "UNPARSED_GOAL_CANDIDATE",
+      "unparsed_fact_candidates": [
+        "Cho lăng trụ đứng ABC.A'B'C' có AA' = 2V3, AB = a/2 và BC = 3,5"
+      ],
+      "unparsed_goal_candidates": [
+        "Tính thể tích khối lăng trụ ABC.A'E'C"
+      ],
+      "passed": true
+    }
+  ]
+}

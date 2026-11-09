@@ -1,0 +1,76 @@
+{
+  "schema": "algo-sim-low-end-performance-receipt/1",
+  "generated_at": "2026-11-09T13:02:38.420033+00:00",
+  "git": {
+    "branch": "feat/local-first-geometry-understanding",
+    "commit": "f96db02eb11ac80ed48c755155313710edcba588",
+    "tree": "a96642deb9c85aa18d36137b07f6f6b5cdf30a5a"
+  },
+  "hardware_disclosure": {
+    "measurement_host": {
+      "platform": "Windows-11-10.0.26100-SP0",
+      "processor": "Intel64 Family 6 Model 141 Stepping 1, GenuineIntel",
+      "python_version": "3.12.10",
+      "logical_cpu_cores": 12,
+      "total_ram_gb": 15.78,
+      "gpu_used_by_backend": false
+    },
+    "low_end_target_profile": {
+      "target_cpu": "2–4 cores CPU-only (no discrete GPU)",
+      "target_ram_gb": "4–8 GB RAM",
+      "target_network": "High-latency / intermittent school or home Wi-Fi",
+      "simulation_note": "Measured on CPU-only single-threaded Python execution without GPU acceleration. Host hardware and low-end target profile are separated explicitly per Section 3.2."
+    }
+  },
+  "metrics": {
+    "cold_start_parse_latency_ms": 12.153,
+    "cold_start_cpu_ms": 15.625,
+    "warm_uncached_parse_p50_ms": 13.286,
+    "warm_uncached_parse_p95_ms": 16.737,
+    "warm_cached_parse_p50_ms": 0.038,
+    "warm_cached_parse_p95_ms": 10.075,
+    "parser_cache_speedup_factor": 353.3,
+    "parser_cache_stats": {
+      "size": 5,
+      "max_size": 256,
+      "hits": 45,
+      "misses": 5
+    },
+    "e2e_local_text_to_scene3d_p50_ms": 22.924,
+    "e2e_local_text_to_scene3d_p95_ms": 33.157,
+    "e2e_cpu_time_p50_ms": 23.438,
+    "geometry_and_scene3d_construction_p50_ms": 20.767,
+    "image_preprocess_and_region_detect_p50_ms": 112.74,
+    "image_preprocess_and_region_detect_p95_ms": 155.69,
+    "model_loading_time_ms": {
+      "local_deterministic_parser": 0.0,
+      "tesseract_cli_spawn": 225.0,
+      "rapidocr_onnx_session_init": 580.0
+    },
+    "memory_and_stability_50_requests": {
+      "rss_before_mb": 96.37,
+      "rss_after_50_requests_mb": 96.93,
+      "rss_delta_mb": 0.57,
+      "tracemalloc_current_kb": 683.72,
+      "tracemalloc_peak_kb": 905.48,
+      "unbounded_memory_growth": false
+    },
+    "browser_scene3d_viewer": {
+      "source_receipt": "docs/evaluation/geometry/runs/axo-final-educational-viewer-readiness/perf/perf-summary.json",
+      "time_to_first_usable_frame_median_ms": 96.2,
+      "time_to_first_usable_frame_range_ms": [
+        65.7,
+        137.3
+      ],
+      "step_transition_p95_median_ms": 56.7,
+      "frame_p95_max_ms": 7.0,
+      "effective_orbit_fps": 60.0,
+      "render_on_demand_rpf_max": 1,
+      "js_heap_range_mb": [
+        29.2,
+        54.3
+      ],
+      "gpu_resource_leak_balance": 0
+    }
+  }
+}

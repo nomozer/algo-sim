@@ -1,5 +1,13 @@
 # CODE_INDEX.md — Chỉ mục module + BỘ NHỚ KIẾN TRÚC
 
+## Correctness Hardening, Local OCR & Low-End Performance Optimization (run `correctness-ocr-performance-optimization`, 2026-11-09)
+
+| Path | Owns | Locked by |
+|---|---|---|
+| `backend/app/ai/local_geometry_parser.py` | Strict `_VAL` numeric token lookahead (preventing decimal comma `3,5a` and OCR-corrupted radical `2V3` truncation), `7f` volume solid-notation check (closing `s02_phay_can_phan_so` `ABC.A'E'C`), Stage `7k` intra-sentence sub-clause coverage guard (`12/12` mutation probes `P01`–`P12` fail-closed), and bounded deep-copy LRU cache (`_PARSER_CACHE`, `MAX_PARSER_CACHE_SIZE = 256`, `clear_local_geometry_parser_cache`, `get_local_geometry_parser_cache_stats`, `353.3x` warm parse speedup `13.286 -> 0.038 ms`) | `backend/tests/geometry/test_correctness_ocr_performance.py`, `docs/evaluation/geometry/runs/correctness-ocr-performance-optimization/local_parser_integrity_receipt.json`, `docs/evaluation/geometry/runs/correctness-ocr-performance-optimization/low_end_performance_receipt.json` |
+| `backend/app/ai/adaptive_input_router.py` | `extract_structured_math_tokens` (12 math symbol categories), 6-criteria `verify_ocr_input_fidelity` (`vertex_and_solid_consistency`, `dimension_and_number_fidelity`, `geometric_relation_syntax`, `goal_sentence_completeness`, `source_span_coverage`, `diagram_dependency_and_cross_engine`), `compare_ocr_and_vision_facts` (`NUMERIC_ASSIGNMENT_CONFLICT`, `PRIME_OR_PLANE_LABEL_CONFLICT`, `SOLID_NOTATION_CONFLICT`), and `ChosenRoute` cases `LOCAL_OCR_VERIFIED_ZERO_AI` (`Case A`), `VISION_THEN_LOCAL_DETERMINISTIC` (`Case B`), `VISION_THEN_AI_FALLBACK` (`Case C`), `LOCAL_AMBIGUOUS_CLARIFICATION` (`Case D`), and `VISION_NEEDS_CONFIRMATION` | `backend/tests/geometry/test_correctness_ocr_performance.py`, `docs/evaluation/geometry/runs/correctness-ocr-performance-optimization/adaptive_vision_fallback_receipt.json` |
+| `docs/evaluation/geometry/runs/correctness-ocr-performance-optimization/tools/run_correctness_ocr_performance_audit.py` | Offline audit runner (`ALLOW_LIVE_AI=0`) generating all 7 Gate A–D receipts (`mathematical_oracle_audit_receipt.json`, `local_parser_integrity_receipt.json`, `image_region_detection_receipt.json`, `local_ocr_pretrained_comparison_receipt.json`, `adaptive_vision_fallback_receipt.json`, `low_end_performance_receipt.json`, `rust_feasibility_receipt.json`) and `run.json` | `docs/evaluation/geometry/runs/correctness-ocr-performance-optimization/ALGOSIM_CORRECTNESS_OCR_PERFORMANCE_REPORT.md` |
+
 ## Local-First Geometry Understanding & Verified AI Fallback (run `local-first-geometry-understanding`, 2026-11-09)
 
 | Path | Owns | Locked by |

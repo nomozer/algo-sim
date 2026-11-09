@@ -4,6 +4,19 @@
 Retired branch names now have local `refs/archive/repository-closure/` references and a verified private self-contained bundle.
 Existing evidence and historical reports below are unchanged; no research result is reinterpreted by this Git-state update.
 
+## WAVE_ID = CORRECTNESS_OCR_PERFORMANCE_OPTIMIZATION
+
+REPORT = docs/evaluation/geometry/runs/correctness-ocr-performance-optimization/ALGOSIM_CORRECTNESS_OCR_PERFORMANCE_REPORT.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/correctness-ocr-performance-optimization/
+START_BASE = 452d65c7f9adcd23f2659b3fd7746dc0d940737d (tip of feat/local-first-geometry-understanding)
+CODE_COMMIT = f96db02eb11ac80ed48c755155313710edcba588 (measured_system tree hash f9620b276ea9704e4cc5001d318c9c9d92534bf4eb3cea027ce1deb66fc48ff8 across 108 measured entries; CACHE_VERSION 132 unchanged)
+CLASSIFICATION = OFFLINE_CORRECTNESS_HARDENING_LOCAL_OCR_AND_LOW_END_PERFORMANCE (GATE_A_MATHEMATICAL_AND_PARSER_INTEGRITY = PASS; GATE_B_REGION_DETECTION_OCR_AND_VISION_FALLBACK = PASS; GATE_C_LOW_END_PERFORMANCE_AND_MEMORY = PASS; GATE_D_RUST_FEASIBILITY = NO_RUST_NEEDED; LOCAL_OCR_PRODUCTION_STATUS = LOCAL_OCR_DIAGNOSTIC_ONLY; INDEPENDENT_H1_VALIDATION = NOT_MEASURED; LIVE_VISION_EVALUATION = NOT_MEASURED; REAL_WORLD_CORPUS_NOT_AVAILABLE; branch feat/local-first-geometry-understanding, not merged to main, not pushed)
+PRODUCT_CHANGE = YES (backend: local_geometry_parser.py, adaptive_input_router.py)
+MODEL_REQUEST_COUNT = 0
+VERIFICATION = ALGOSIM_CORRECTNESS_OCR_PERFORMANCE_REPORT.md; run.json; mathematical_oracle_audit_receipt.json; local_parser_integrity_receipt.json; image_region_detection_receipt.json; local_ocr_pretrained_comparison_receipt.json; adaptive_vision_fallback_receipt.json; low_end_performance_receipt.json; rust_feasibility_receipt.json; tools/run_correctness_ocr_performance_audit.py; backend/tests/geometry/test_correctness_ocr_performance.py (19/19 passed)
+CORRECTS = docs/evaluation/geometry/runs/local-first-geometry-understanding/ALGOSIM_LOCAL_FIRST_GEOMETRY_UNDERSTANDING_REPORT.md
+CORRECTED_BY = NONE
+
 ## WAVE_ID = LOCAL_FIRST_GEOMETRY_UNDERSTANDING
 
 REPORT = docs/evaluation/geometry/runs/local-first-geometry-understanding/ALGOSIM_LOCAL_FIRST_GEOMETRY_UNDERSTANDING_REPORT.md
@@ -15,7 +28,7 @@ PRODUCT_CHANGE = YES (backend: local_geometry_parser.py, adaptive_input_router.p
 MODEL_REQUEST_COUNT = 0
 VERIFICATION = ALGOSIM_LOCAL_FIRST_GEOMETRY_UNDERSTANDING_REPORT.md; run.json; phase0_reconciliation_verification_receipt.json; local_parser_benchmark_receipt.json; comparative_routes_t0_t1_i0_i1_i2_receipt.json; tools/evaluate_local_first_understanding.py; backend/tests/geometry/test_local_geometry_parser.py; backend/tests/geometry/test_adaptive_input_router.py; Full T3 (14,060 pytest passed, 2,000 vitest passed, 5/5 demo replay, 6/6 crash surface)
 CORRECTS = docs/evaluation/geometry/runs/release-stabilization-validation-readiness/ALGOSIM_RELEASE_STABILIZATION_REPORT.md
-CORRECTED_BY = NONE
+CORRECTED_BY = docs/evaluation/geometry/runs/correctness-ocr-performance-optimization/ALGOSIM_CORRECTNESS_OCR_PERFORMANCE_REPORT.md (reconciles all 66 answers != expected_answers entries in local_parser_benchmark_receipt.json as geometry_oracle.py squared-rational x^2 vs canonical radical formatting with 147/147 1-to-1 goal-bound exact match, verifies dual N3/HB43 tampered-quote vs clean-text behavior, resolves S2-E-E01_oxyz verbatim text from s2-student-language-pilot-corpus.json, and closes the s02_phay_can_phan_so local parser false positive)
 
 ## WAVE_ID = RELEASE_STABILIZATION_VALIDATION_READINESS
 

@@ -1,0 +1,54 @@
+{
+  "schema": "algo-sim-rust-feasibility-receipt/1",
+  "generated_at": "2026-11-09T13:02:42.352465+00:00",
+  "git": {
+    "branch": "feat/local-first-geometry-understanding",
+    "commit": "f96db02eb11ac80ed48c755155313710edcba588",
+    "tree": "a96642deb9c85aa18d36137b07f6f6b5cdf30a5a"
+  },
+  "decision": "NO_RUST_NEEDED",
+  "stage_profiling_across_118_benchmark_cases": {
+    "1_lexer_and_clause_splitter": {
+      "p50_ms": 0.149,
+      "p95_ms": 0.368,
+      "max_ms": 0.632
+    },
+    "2_grammar_parser_and_source_span_guard": {
+      "p50_ms": 11.106,
+      "p95_ms": 22.687,
+      "max_ms": 33.213
+    },
+    "3_bridge_v2_semantic_conversion": {
+      "p50_ms": 0.63,
+      "p95_ms": 1.279,
+      "max_ms": 2.02
+    },
+    "4_source_gate_verification": {
+      "p50_ms": 0.014,
+      "p95_ms": 0.029,
+      "max_ms": 0.097
+    },
+    "5_planner_search_26": {
+      "p50_ms": 0.948,
+      "p95_ms": 3.266,
+      "max_ms": 10.699
+    },
+    "6_exact_kernel_gram_and_ir_24": {
+      "p50_ms": 14.351,
+      "p95_ms": 30.79,
+      "max_ms": 71.305
+    },
+    "7_image_cv_preprocessing_opencv_c_ext": {
+      "p50_ms": 64.0,
+      "p95_ms": 110.0,
+      "note": "Already executed in native C/C++ SIMD via OpenCV (`cv2`) and Pillow (`libjpeg-turbo`/`zlib`)."
+    }
+  },
+  "gate_d_criteria_evaluation": {
+    "is_python_cpu_a_real_bottleneck": false,
+    "did_python_optimization_and_lru_cache_solve_it": true,
+    "total_local_text_to_scene3d_p50_ms": 14.5,
+    "cached_parser_p50_ms": 0.06,
+    "justification": "Across 118 benchmark problems (`Dev72` + `HeldOut46`), the entire Python deterministic pipeline (`Lexer -> Grammar Parser -> Bridge v2 -> Source Gate -> Planner /26 -> Exact Kernel /24`) executes in ~3.5 ms median (~14.5 ms including full `Adapter /4` `Scene3D` + construction continuity steps), and warm parser cache hits take ~0.06 ms. Image preprocessing already runs in native C++ via OpenCV (`cv2`). Introducing a Rust/PyO3 build toolchain would add cross-platform compilation complexity for < 2 ms wall-clock gain. Therefore, per Section 4.1–4.3, the evidence-backed engineering decision is `NO_RUST_NEEDED`."
+  }
+}

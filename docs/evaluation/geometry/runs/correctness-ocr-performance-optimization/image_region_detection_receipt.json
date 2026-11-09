@@ -1,0 +1,359 @@
+{
+  "schema": "algo-sim-image-region-detection-receipt/1",
+  "generated_at": "2026-11-09T13:02:28.302971+00:00",
+  "git": {
+    "branch": "feat/local-first-geometry-understanding",
+    "commit": "f96db02eb11ac80ed48c755155313710edcba588",
+    "tree": "a96642deb9c85aa18d36137b07f6f6b5cdf30a5a"
+  },
+  "provenance_disclosure": {
+    "SYNTHETIC_RENDERED_IMAGE_SCENARIOS": 10,
+    "BENCHMARK_CORPUS_IMAGES_AUDITED": 22,
+    "REAL_CAPTURED_IMAGE": 0,
+    "note": "All 10 layout scenarios and 22 OCR benchmark images are programmatic/rendered test images; `REAL_CAPTURED_IMAGE = 0` is reported honestly per Section 2.3 and AGENTS.md §4."
+  },
+  "scenarios": [
+    {
+      "scenario_id": "01_single_cropped_problem",
+      "expected_behavior": "ready_single_region",
+      "is_blank_or_unreadable": false,
+      "skew_angle_deg": 0.0,
+      "deskew_applied": false,
+      "region_status": "ready",
+      "candidate_region_count": 1,
+      "text_block_count": 4,
+      "figure_block_count": 0,
+      "has_associated_figure": false,
+      "completeness_confidence": 0.98,
+      "crop_holds_all_content": false,
+      "used_fallback_full_image": false,
+      "latency_ms": 89.16
+    },
+    {
+      "scenario_id": "02_single_problem_with_3d_diagram",
+      "expected_behavior": "ready_single_with_diagram",
+      "is_blank_or_unreadable": false,
+      "skew_angle_deg": 0.0,
+      "deskew_applied": false,
+      "region_status": "ready",
+      "candidate_region_count": 1,
+      "text_block_count": 5,
+      "figure_block_count": 1,
+      "has_associated_figure": true,
+      "completeness_confidence": 0.98,
+      "crop_holds_all_content": true,
+      "used_fallback_full_image": false,
+      "latency_ms": 114.59
+    },
+    {
+      "scenario_id": "03_full_exam_page_multiple_problems",
+      "expected_behavior": "needs_selection_multi_region",
+      "is_blank_or_unreadable": false,
+      "skew_angle_deg": 0.0,
+      "deskew_applied": false,
+      "region_status": "needs_selection",
+      "candidate_region_count": 3,
+      "text_block_count": 9,
+      "figure_block_count": 0,
+      "has_associated_figure": false,
+      "completeness_confidence": 0.85,
+      "crop_holds_all_content": false,
+      "used_fallback_full_image": true,
+      "latency_ms": 91.39
+    },
+    {
+      "scenario_id": "04_multiple_choice_options_ABCD",
+      "expected_behavior": "ready_single_region",
+      "is_blank_or_unreadable": false,
+      "skew_angle_deg": 0.0,
+      "deskew_applied": false,
+      "region_status": "ready",
+      "candidate_region_count": 1,
+      "text_block_count": 7,
+      "figure_block_count": 0,
+      "has_associated_figure": false,
+      "completeness_confidence": 0.98,
+      "crop_holds_all_content": false,
+      "used_fallback_full_image": false,
+      "latency_ms": 87.62
+    },
+    {
+      "scenario_id": "05_header_footer_page_number_noise",
+      "expected_behavior": "ready_single_region",
+      "is_blank_or_unreadable": false,
+      "skew_angle_deg": 0.0,
+      "deskew_applied": false,
+      "region_status": "ready",
+      "candidate_region_count": 1,
+      "text_block_count": 6,
+      "figure_block_count": 0,
+      "has_associated_figure": false,
+      "completeness_confidence": 0.98,
+      "crop_holds_all_content": false,
+      "used_fallback_full_image": false,
+      "latency_ms": 83.31
+    },
+    {
+      "scenario_id": "06_skewed_rotated_photo",
+      "expected_behavior": "ready_single_region",
+      "is_blank_or_unreadable": false,
+      "skew_angle_deg": 3.6,
+      "deskew_applied": true,
+      "region_status": "ready",
+      "candidate_region_count": 1,
+      "text_block_count": 4,
+      "figure_block_count": 0,
+      "has_associated_figure": false,
+      "completeness_confidence": 0.98,
+      "crop_holds_all_content": false,
+      "used_fallback_full_image": false,
+      "latency_ms": 169.26
+    },
+    {
+      "scenario_id": "07_uneven_shadow_illumination",
+      "expected_behavior": "ready_single_region",
+      "is_blank_or_unreadable": false,
+      "skew_angle_deg": 0.0,
+      "deskew_applied": false,
+      "region_status": "ready",
+      "candidate_region_count": 1,
+      "text_block_count": 4,
+      "figure_block_count": 0,
+      "has_associated_figure": false,
+      "completeness_confidence": 0.98,
+      "crop_holds_all_content": false,
+      "used_fallback_full_image": false,
+      "latency_ms": 98.99
+    },
+    {
+      "scenario_id": "08_diagram_only_no_text",
+      "expected_behavior": "rejected_diagram_only",
+      "is_blank_or_unreadable": false,
+      "skew_angle_deg": 0.0,
+      "deskew_applied": false,
+      "region_status": "rejected_diagram_only",
+      "candidate_region_count": 1,
+      "text_block_count": 0,
+      "figure_block_count": 1,
+      "has_associated_figure": true,
+      "completeness_confidence": 0.98,
+      "crop_holds_all_content": true,
+      "used_fallback_full_image": false,
+      "latency_ms": 96.03
+    },
+    {
+      "scenario_id": "09_blank_or_low_contrast",
+      "expected_behavior": "rejected_blank",
+      "is_blank_or_unreadable": false,
+      "skew_angle_deg": 0.0,
+      "deskew_applied": false,
+      "region_status": "ready",
+      "candidate_region_count": 0,
+      "text_block_count": 0,
+      "figure_block_count": 0,
+      "has_associated_figure": false,
+      "completeness_confidence": 0.5,
+      "crop_holds_all_content": false,
+      "used_fallback_full_image": true,
+      "latency_ms": 40.94
+    },
+    {
+      "scenario_id": "10_multi_image_attachment",
+      "expected_behavior": "ready_multi_image",
+      "is_blank_or_unreadable": false,
+      "skew_angle_deg": 0.0,
+      "deskew_applied": false,
+      "region_status": "ready",
+      "candidate_region_count": 1,
+      "text_block_count": 4,
+      "figure_block_count": 0,
+      "has_associated_figure": false,
+      "completeness_confidence": 0.98,
+      "crop_holds_all_content": false,
+      "used_fallback_full_image": false,
+      "latency_ms": 80.58
+    }
+  ],
+  "benchmark_crop_completeness": {
+    "total_checked": 22,
+    "all_crops_non_empty": true,
+    "items": [
+      {
+        "id": "c01_ro_chop_thiet_dien",
+        "used_crop": true,
+        "is_blank_or_unreadable": false,
+        "prepared_w": 1056,
+        "prepared_h": 293,
+        "Selected_crop_covers_text": true
+      },
+      {
+        "id": "c02_ro_mat_cau",
+        "used_crop": true,
+        "is_blank_or_unreadable": false,
+        "prepared_w": 1056,
+        "prepared_h": 204,
+        "Selected_crop_covers_text": true
+      },
+      {
+        "id": "c03_ro_hinh_tru",
+        "used_crop": true,
+        "is_blank_or_unreadable": false,
+        "prepared_w": 1077,
+        "prepared_h": 204,
+        "Selected_crop_covers_text": true
+      },
+      {
+        "id": "c04_nghieng_hinh_non",
+        "used_crop": true,
+        "is_blank_or_unreadable": false,
+        "prepared_w": 1126,
+        "prepared_h": 275,
+        "Selected_crop_covers_text": true
+      },
+      {
+        "id": "c05_nghieng_cong_thuc_hinh_tru",
+        "used_crop": false,
+        "is_blank_or_unreadable": false,
+        "prepared_w": 1152,
+        "prepared_h": 794,
+        "Selected_crop_covers_text": true
+      },
+      {
+        "id": "c06_toi_mo_elip_non",
+        "used_crop": true,
+        "is_blank_or_unreadable": false,
+        "prepared_w": 1077,
+        "prepared_h": 204,
+        "Selected_crop_covers_text": true
+      },
+      {
+        "id": "c07_mo_chop_ngu_giac",
+        "used_crop": true,
+        "is_blank_or_unreadable": false,
+        "prepared_w": 1063,
+        "prepared_h": 251,
+        "Selected_crop_covers_text": true
+      },
+      {
+        "id": "c08_de_va_hinh_chop",
+        "used_crop": false,
+        "is_blank_or_unreadable": false,
+        "prepared_w": 1120,
+        "prepared_h": 788,
+        "Selected_crop_covers_text": true
+      },
+      {
+        "id": "c09_de_va_hinh_cau",
+        "used_crop": true,
+        "is_blank_or_unreadable": false,
+        "prepared_w": 1056,
+        "prepared_h": 603,
+        "Selected_crop_covers_text": true
+      },
+      {
+        "id": "c10_exif_xoay_gps",
+        "used_crop": true,
+        "is_blank_or_unreadable": false,
+        "prepared_w": 1077,
+        "prepared_h": 204,
+        "Selected_crop_covers_text": true
+      },
+      {
+        "id": "c11_chi_co_hinh",
+        "used_crop": true,
+        "is_blank_or_unreadable": false,
+        "prepared_w": 559,
+        "prepared_h": 457,
+        "Selected_crop_covers_text": true
+      },
+      {
+        "id": "c12_ngoai_nang_luc",
+        "used_crop": true,
+        "is_blank_or_unreadable": false,
+        "prepared_w": 1028,
+        "prepared_h": 204,
+        "Selected_crop_covers_text": true
+      },
+      {
+        "id": "s01_vuong_goc_song_song",
+        "used_crop": true,
+        "is_blank_or_unreadable": false,
+        "prepared_w": 1021,
+        "prepared_h": 167,
+        "Selected_crop_covers_text": true
+      },
+      {
+        "id": "s01_vuong_goc_song_song_degraded",
+        "used_crop": true,
+        "is_blank_or_unreadable": false,
+        "prepared_w": 1021,
+        "prepared_h": 167,
+        "Selected_crop_covers_text": true
+      },
+      {
+        "id": "s02_phay_can_phan_so",
+        "used_crop": true,
+        "is_blank_or_unreadable": false,
+        "prepared_w": 1049,
+        "prepared_h": 167,
+        "Selected_crop_covers_text": true
+      },
+      {
+        "id": "s02_phay_can_phan_so_degraded",
+        "used_crop": true,
+        "is_blank_or_unreadable": false,
+        "prepared_w": 1049,
+        "prepared_h": 167,
+        "Selected_crop_covers_text": true
+      },
+      {
+        "id": "s03_dau_tru_toa_do",
+        "used_crop": true,
+        "is_blank_or_unreadable": false,
+        "prepared_w": 1049,
+        "prepared_h": 167,
+        "Selected_crop_covers_text": true
+      },
+      {
+        "id": "s03_dau_tru_toa_do_degraded",
+        "used_crop": true,
+        "is_blank_or_unreadable": false,
+        "prepared_w": 1049,
+        "prepared_h": 167,
+        "Selected_crop_covers_text": true
+      },
+      {
+        "id": "s04_luy_thua_chi_so",
+        "used_crop": true,
+        "is_blank_or_unreadable": false,
+        "prepared_w": 1049,
+        "prepared_h": 167,
+        "Selected_crop_covers_text": true
+      },
+      {
+        "id": "s04_luy_thua_chi_so_degraded",
+        "used_crop": true,
+        "is_blank_or_unreadable": false,
+        "prepared_w": 1049,
+        "prepared_h": 167,
+        "Selected_crop_covers_text": true
+      },
+      {
+        "id": "s05_dau_tieng_viet",
+        "used_crop": true,
+        "is_blank_or_unreadable": false,
+        "prepared_w": 1077,
+        "prepared_h": 167,
+        "Selected_crop_covers_text": true
+      },
+      {
+        "id": "s05_dau_tieng_viet_degraded",
+        "used_crop": true,
+        "is_blank_or_unreadable": false,
+        "prepared_w": 1077,
+        "prepared_h": 167,
+        "Selected_crop_covers_text": true
+      }
+    ]
+  }
+}
