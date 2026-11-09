@@ -1,9 +1,60 @@
 import type { ReactNode } from "react";
+import * as THREE from "three";
+import { GEOMETRY_SAMPLES } from "../data/geometry-samples";
+import { veKhongGian } from "../simulations/domains/geometry/scene3d-chart";
+import {
+  chonHuongNhin,
+  hopBaoCuaDiem,
+  khungNhinSuPham,
+  khungNhinVua,
+} from "../simulations/domains/geometry/scene3d-camera";
+import {
+  canonicalEdgesOf,
+  classifySolidEdgeVisibility,
+  classifyWorldSegmentVisibility,
+  diemVanhCongBiChe,
+  resolveObliqueCylinderCapBasis,
+  type CurvedSolidVolumeMeta,
+  type WorldSolidOccluder,
+} from "../simulations/domains/geometry/scene3d-edge-visibility";
+import {
+  anchorOfGeometryStep,
+  daGiacMatPhang,
+  diemChoDuong,
+  diemHuuHan,
+  diemNeoNhanMatPhang,
+  geometryStepCount,
+  moRongDaGiacMatPhang,
+  objectsAt,
+  registerExactSceneOrigin,
+  toNumber,
+  toVec3,
+  type Scene3D,
+  type SceneObject,
+  type Vec3,
+} from "../simulations/domains/geometry/scene3d-model";
+import { auxiliaryHiddenAt } from "../simulations/domains/geometry/scene3d-auxiliary";
+import { kyHieu, veTrenKhung } from "../simulations/domains/geometry/scene3d-presentation";
+import {
+  buildPedagogicalConstructionPlan,
+  cauTrucSuPham,
+  classifyCircleSemanticRole,
+  compactPlaneAnchorPoints,
+  computeBoundedStudiedPlanePolygon,
+  inspectAxialCurvedOrthogonality,
+  isAuxiliaryExplanatoryPolygon,
+  planeSolidEdgeIntersections,
+  resolvePlanePerpendicularLineWitness,
+  resolveStepVisualRoles,
+  ungroundedFreePointIdsAt,
+} from "../simulations/domains/geometry/scene3d-semantic-policy";
+import { isSubEntity, laDiemPhuDungMatPhang, withSubEntities } from "../simulations/domains/geometry/scene3d-subentities";
 
 /**
- * Thumbnail SVG chuẩn hóa của Axo — đồng bộ trực tiếp với 11 mô hình Scene3D đã kiểm chứng
- * (đỉnh, nhãn điểm, nét liền/nét đứt, mặt cắt, dấu góc vuông và tư thế nhìn).
- * Dùng chung cho cả Trang chủ (`HomeView`), Thư viện (`LibraryView`) và Lịch sử (`SessionCard`).
+ * Thumbnail SVG chuẩn hóa của Axo — chiếu trực tiếp từ dữ liệu `Scene3D` bước cuối
+ * của `GEOMETRY_SAMPLES` (`withSubEntities` → `buildPedagogicalConstructionPlan` → `veKhongGian`
+ * → `cauTrucSuPham` + `chonHuongNhin` + `classifySolidEdgeVisibility` / `classifyWorldSegmentVisibility` / `diemVanhCongBiChe`).
+ * Dùng chung cho Trang chủ (`HomeView`), Thư viện (`LibraryView`) và Lịch sử (`SessionCard`).
  */
 
 export type PreviewKind = "geometry";
@@ -24,7 +75,7 @@ const GEO_THUMB_PALETTE = {
   cobalt: "#2563EB",
   amber: "#D97706",
   amberFill: "rgba(217, 119, 6, 0.18)",
-  planeFill: "rgba(109, 40, 217, 0.08)",
+  planeFill: "rgba(109, 40, 217, 0.085)",
   planeStroke: "rgba(109, 40, 217, 0.38)",
   planeLabel: "#6D28D9",
 } as const;
@@ -48,17 +99,17 @@ function GeoPt({
 }) {
   const c = color || GEO_THUMB_PALETTE.ink;
   const rad = r || 2.3;
-  const tx = x + (dx !== undefined ? dx : 0);
-  const ty = y + (dy !== undefined ? dy : -5);
+  const tx = Number((x + (dx !== undefined ? dx : 0)).toFixed(1));
+  const ty = Number((y + (dy !== undefined ? dy : -5)).toFixed(1));
   return (
     <>
-      <circle cx={x} cy={y} r={rad} fill={c} />
+      <circle cx={Number(x.toFixed(1))} cy={Number(y.toFixed(1))} r={rad} fill={c} />
       {label ? (
         <text
           x={tx}
           y={ty}
           fontFamily="Plus Jakarta Sans, sans-serif"
-          fontSize="10.5"
+          fontSize="10.2"
           fontWeight="700"
           fill={c}
           paintOrder="stroke"
@@ -66,6 +117,7 @@ function GeoPt({
           strokeWidth="2.4"
           strokeLinejoin="round"
           textAnchor="middle"
+          dominantBaseline="central"
         >
           {label}
         </text>
@@ -93,7 +145,7 @@ function GeoRightAngle({
   size?: number;
   color?: string;
 }) {
-  const s = size || 6.5;
+  const s = size || 6.0;
   const c = color || GEO_THUMB_PALETTE.teal;
   const uLen = Math.hypot(ux, uy) || 1;
   const wLen = Math.hypot(wx, wy) || 1;
@@ -118,318 +170,920 @@ function GeoRightAngle({
   );
 }
 
-const PROBLEM_THUMBNAIL_RENDERERS: Record<string, () => ReactNode> = {
-  // 1. Hình chóp tứ giác S.ABCD (SA ⊥ đáy) với thiết diện tứ giác MNPQ song song đáy
-  "thiet-dien-chop": () => (
-    <>
-      <polygon points="62,13 28,86 112,95 146,75" fill={GEO_THUMB_PALETTE.shellFill} />
-      <line x1="62" y1="13" x2="62" y2="66" stroke={GEO_THUMB_PALETTE.dashed} strokeWidth="1.15" strokeDasharray="3.5,2.5" />
-      <line x1="62" y1="66" x2="28" y2="86" stroke={GEO_THUMB_PALETTE.dashed} strokeWidth="1.15" strokeDasharray="3.5,2.5" />
-      <line x1="62" y1="66" x2="146" y2="75" stroke={GEO_THUMB_PALETTE.dashed} strokeWidth="1.15" strokeDasharray="3.5,2.5" />
-      <polygon points="34,47 84,59 124,45 74,35" fill={GEO_THUMB_PALETTE.planeFill} stroke={GEO_THUMB_PALETTE.planeStroke} strokeWidth="0.95" />
-      <polygon points="62,39.5 45,49.5 87,54 104,44" fill={GEO_THUMB_PALETTE.terracottaFill} />
-      <polyline points="45,49.5 62,39.5 104,44" fill="none" stroke={GEO_THUMB_PALETTE.terracotta} strokeWidth="1.35" strokeDasharray="3.5,2.5" />
-      <polyline points="45,49.5 87,54 104,44" fill="none" stroke={GEO_THUMB_PALETTE.terracotta} strokeWidth="1.85" strokeLinejoin="round" />
-      <polyline points="28,86 112,95 146,75" fill="none" stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.55" strokeLinejoin="round" />
-      <line x1="62" y1="13" x2="28" y2="86" stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.55" />
-      <line x1="62" y1="13" x2="112" y2="95" stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.55" />
-      <line x1="62" y1="13" x2="146" y2="75" stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.55" />
-      <GeoPt x={62} y={13} label="S" dx={0} dy={-4} color={GEO_THUMB_PALETTE.ink} />
-      <GeoPt x={62} y={66} label="A" dx={7} dy={-3} color={GEO_THUMB_PALETTE.dashed} r={2.0} />
-      <GeoPt x={28} y={86} label="B" dx={-8} dy={4} color={GEO_THUMB_PALETTE.ink} />
-      <GeoPt x={112} y={95} label="C" dx={4} dy={10} color={GEO_THUMB_PALETTE.ink} />
-      <GeoPt x={146} y={75} label="D" dx={8} dy={4} color={GEO_THUMB_PALETTE.ink} />
-      <GeoPt x={62} y={39.5} label="M" dx={8} dy={-3} color={GEO_THUMB_PALETTE.terracotta} r={2.3} />
-      <GeoPt x={45} y={49.5} label="N" dx={-9} dy={2} color={GEO_THUMB_PALETTE.terracotta} r={2.4} />
-      <GeoPt x={87} y={54} label="P" dx={3} dy={10} color={GEO_THUMB_PALETTE.terracotta} r={2.4} />
-      <GeoPt x={104} y={44} label="Q" dx={9} dy={-2} color={GEO_THUMB_PALETTE.terracotta} r={2.4} />
-      <text x="129" y="44" fontFamily="Plus Jakarta Sans, sans-serif" fontStyle="italic" fontSize="10" fontWeight="700" fill={GEO_THUMB_PALETTE.planeLabel}>
-        (α)
-      </text>
-    </>
-  ),
+function orthonormalCircleBasis(normal: THREE.Vector3): [THREE.Vector3, THREE.Vector3] {
+  const n = normal.clone().normalize();
+  const ref = Math.abs(n.z) < 0.9 ? new THREE.Vector3(0, 0, 1) : new THREE.Vector3(0, 1, 0);
+  const u1 = new THREE.Vector3().crossVectors(n, ref).normalize();
+  const u2 = new THREE.Vector3().crossVectors(n, u1).normalize();
+  return [u1, u2];
+}
 
-  // 2. Hình chóp tứ giác S.ABCD với mặt chéo (SAC) qua S, A, C
-  "mat-cheo-sac": () => (
-    <>
-      <polygon points="52,14 26,84 112,94 142,72" fill={GEO_THUMB_PALETTE.shellFill} />
-      <line x1="52" y1="62" x2="26" y2="84" stroke={GEO_THUMB_PALETTE.dashed} strokeWidth="1.15" strokeDasharray="3.5,2.5" />
-      <line x1="52" y1="62" x2="142" y2="72" stroke={GEO_THUMB_PALETTE.dashed} strokeWidth="1.15" strokeDasharray="3.5,2.5" />
-      <polygon points="44,10 44,68 122,98 122,38" fill={GEO_THUMB_PALETTE.planeFill} stroke={GEO_THUMB_PALETTE.planeStroke} strokeWidth="0.9" />
-      <polygon points="52,14 52,62 112,94" fill={GEO_THUMB_PALETTE.terracottaFill} />
-      <line x1="52" y1="14" x2="52" y2="62" stroke={GEO_THUMB_PALETTE.terracotta} strokeWidth="1.5" strokeDasharray="3.5,2.5" />
-      <line x1="52" y1="62" x2="112" y2="94" stroke={GEO_THUMB_PALETTE.terracotta} strokeWidth="1.55" strokeDasharray="3.5,2.5" />
-      <line x1="52" y1="14" x2="112" y2="94" stroke={GEO_THUMB_PALETTE.terracotta} strokeWidth="2.0" />
-      <polyline points="26,84 112,94 142,72" fill="none" stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.55" strokeLinejoin="round" />
-      <line x1="52" y1="14" x2="26" y2="84" stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.55" />
-      <line x1="52" y1="14" x2="142" y2="72" stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.55" />
-      <GeoPt x={52} y={14} label="S" dx={-8} dy={0} color={GEO_THUMB_PALETTE.terracotta} r={2.5} />
-      <GeoPt x={52} y={62} label="A" dx={-8} dy={1} color={GEO_THUMB_PALETTE.terracotta} r={2.3} />
-      <GeoPt x={26} y={84} label="B" dx={-8} dy={4} color={GEO_THUMB_PALETTE.ink} />
-      <GeoPt x={112} y={94} label="C" dx={5} dy={9} color={GEO_THUMB_PALETTE.terracotta} r={2.5} />
-      <GeoPt x={142} y={72} label="D" dx={8} dy={4} color={GEO_THUMB_PALETTE.ink} />
-      <text x="115" y="34" fontFamily="Plus Jakarta Sans, sans-serif" fontStyle="italic" fontSize="9.5" fontWeight="700" fill={GEO_THUMB_PALETTE.planeLabel}>
-        (SAC)
-      </text>
-    </>
-  ),
+function isRedundantPolyhedronBasePlane(plane: SceneObject, presentObjects: readonly SceneObject[]): boolean {
+  if (plane.type !== "plane3" || !plane.point || !plane.normal) return false;
+  const p0 = toVec3(plane.point);
+  const nRaw = toVec3(plane.normal);
+  const nLen = Math.hypot(...nRaw);
+  if (nLen <= 1e-9) return false;
+  const nx = nRaw[0] / nLen;
+  const ny = nRaw[1] / nLen;
+  const nz = nRaw[2] / nLen;
 
-  // 3. Hình chóp tứ giác S.ABCD có cạnh bên SA ⊥ (ABCD)
-  "vuong-goc-chop": () => (
-    <>
-      <polygon points="54,14 26,86 114,95 142,73" fill={GEO_THUMB_PALETTE.shellFill} />
-      <polygon points="54,64 26,86 114,95 142,73" fill="rgba(15, 118, 110, 0.09)" />
-      <line x1="54" y1="64" x2="26" y2="86" stroke={GEO_THUMB_PALETTE.dashed} strokeWidth="1.2" strokeDasharray="3.5,2.5" />
-      <line x1="54" y1="64" x2="142" y2="73" stroke={GEO_THUMB_PALETTE.dashed} strokeWidth="1.2" strokeDasharray="3.5,2.5" />
-      <GeoRightAngle vx={54} vy={64} ux={0} uy={-50} wx={-28} wy={22} size={6.5} color={GEO_THUMB_PALETTE.teal} />
-      <GeoRightAngle vx={54} vy={64} ux={0} uy={-50} wx={88} wy={9} size={6.5} color={GEO_THUMB_PALETTE.teal} />
-      <line x1="54" y1="14" x2="54" y2="64" stroke={GEO_THUMB_PALETTE.terracotta} strokeWidth="2.3" strokeDasharray="4,2.5" />
-      <polyline points="26,86 114,95 142,73" fill="none" stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.55" strokeLinejoin="round" />
-      <line x1="54" y1="14" x2="26" y2="86" stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.55" />
-      <line x1="54" y1="14" x2="114" y2="95" stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.55" />
-      <line x1="54" y1="14" x2="142" y2="73" stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.55" />
-      <GeoPt x={54} y={14} label="S" dx={-8} dy={0} color={GEO_THUMB_PALETTE.terracotta} r={2.6} />
-      <GeoPt x={54} y={64} label="A" dx={-8} dy={-2} color={GEO_THUMB_PALETTE.teal} r={2.6} />
-      <GeoPt x={26} y={86} label="B" dx={-8} dy={4} color={GEO_THUMB_PALETTE.ink} />
-      <GeoPt x={114} y={95} label="C" dx={4} dy={9} color={GEO_THUMB_PALETTE.ink} />
-      <GeoPt x={142} y={73} label="D" dx={8} dy={4} color={GEO_THUMB_PALETTE.ink} />
-    </>
-  ),
+  const basePolys = presentObjects.filter(
+    (o) =>
+      !isSubEntity(o.id)
+      && o.type === "polygon3"
+      && (o.surface_role === "BASE_REGION" || o.id.startsWith("day_"))
+      && (o.polygon ?? o.vertices ?? []).length >= 3,
+  );
+  for (const bp of basePolys) {
+    const verts = (bp.polygon ?? bp.vertices ?? []).map(toVec3);
+    const allCoplanar = verts.every(
+      (v) => Math.abs((v[0] - p0[0]) * nx + (v[1] - p0[1]) * ny + (v[2] - p0[2]) * nz) <= 1e-4,
+    );
+    if (allCoplanar) return true;
+  }
+  return false;
+}
 
-  // 4. Hình chóp S.ABCD (SA ⊥ đáy) với mặt phẳng (α) qua B vuông góc với SC tại H (BH ⊥ SC)
-  "mp-vuong-goc-duong": () => (
-    <>
-      <polygon points="74,13 56,77 108,89 126,65" fill={GEO_THUMB_PALETTE.shellFill} />
-      <polygon points="40,81 96,91 142,61 86,53" fill="rgba(109, 40, 217, 0.10)" stroke="#6D28D9" strokeWidth="1.1" />
-      <line x1="74" y1="13" x2="76" y2="54" stroke={GEO_THUMB_PALETTE.teal} strokeWidth="1.35" strokeDasharray="3.5,2.5" />
-      <line x1="76" y1="54" x2="56" y2="77" stroke={GEO_THUMB_PALETTE.dashed} strokeWidth="1.15" strokeDasharray="3.5,2.5" />
-      <line x1="76" y1="54" x2="126" y2="65" stroke={GEO_THUMB_PALETTE.dashed} strokeWidth="1.15" strokeDasharray="3.5,2.5" />
-      <line x1="56" y1="77" x2="126" y2="65" stroke="#6D28D9" strokeWidth="1.15" strokeDasharray="3.5,2.5" />
-      <line x1="56" y1="77" x2="101" y2="75" stroke={GEO_THUMB_PALETTE.teal} strokeWidth="1.95" strokeDasharray="3.5,2.5" />
-      <GeoRightAngle vx={101} vy={75} ux={-27} uy={-62} wx={-45} wy={2} size={6.5} color={GEO_THUMB_PALETTE.teal} />
-      <polyline points="56,77 108,89 126,65" fill="none" stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.55" strokeLinejoin="round" />
-      <line x1="74" y1="13" x2="56" y2="77" stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.55" />
-      <line x1="74" y1="13" x2="126" y2="65" stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.55" />
-      <line x1="74" y1="13" x2="108" y2="89" stroke={GEO_THUMB_PALETTE.teal} strokeWidth="2.1" />
-      <GeoPt x={74} y={13} label="S" dx={-6} dy={-4} color={GEO_THUMB_PALETTE.ink} r={2.5} />
-      <GeoPt x={76} y={54} label="A" dx={7} dy={-3} color={GEO_THUMB_PALETTE.dashed} r={2.1} />
-      <GeoPt x={56} y={77} label="B" dx={-8} dy={6} color={GEO_THUMB_PALETTE.ink} r={2.4} />
-      <GeoPt x={108} y={89} label="C" dx={5} dy={9} color={GEO_THUMB_PALETTE.ink} r={2.4} />
-      <GeoPt x={126} y={65} label="D" dx={8} dy={3} color={GEO_THUMB_PALETTE.ink} r={2.3} />
-      <GeoPt x={101} y={75} label="H" dx={9} dy={1} color={GEO_THUMB_PALETTE.teal} r={2.6} />
-      <text x="136" y="75" fontFamily="Plus Jakarta Sans, sans-serif" fontStyle="italic" fontSize="10" fontWeight="700" fill="#6D28D9">
-        (α)
-      </text>
-    </>
-  ),
+const _thumbnailNodeCache = new Map<string, ReactNode>();
 
-  // 5. Thể tích khối chóp tứ giác đều S.ABCD và đường cao SH ⊥ (ABCD) tại tâm H
-  "the-tich-chop": () => (
-    <>
-      <polygon points="90,13 30,74 70,95 150,81" fill={GEO_THUMB_PALETTE.shellFill} />
-      <polygon points="30,74 70,95 150,81 110,60" fill={GEO_THUMB_PALETTE.amberFill} />
-      <line x1="30" y1="74" x2="110" y2="60" stroke={GEO_THUMB_PALETTE.dashed} strokeWidth="1.15" strokeDasharray="3.5,2.5" />
-      <line x1="110" y1="60" x2="150" y2="81" stroke={GEO_THUMB_PALETTE.dashed} strokeWidth="1.15" strokeDasharray="3.5,2.5" />
-      <line x1="90" y1="13" x2="110" y2="60" stroke={GEO_THUMB_PALETTE.dashed} strokeWidth="1.15" strokeDasharray="3.5,2.5" />
-      <line x1="30" y1="74" x2="150" y2="81" stroke={GEO_THUMB_PALETTE.dashed} strokeWidth="0.95" strokeDasharray="3,2.5" />
-      <line x1="70" y1="95" x2="110" y2="60" stroke={GEO_THUMB_PALETTE.dashed} strokeWidth="0.95" strokeDasharray="3,2.5" />
-      <line x1="90" y1="13" x2="90" y2="77.5" stroke={GEO_THUMB_PALETTE.terracotta} strokeWidth="2.2" strokeDasharray="4,2.5" />
-      <GeoRightAngle vx={90} vy={77.5} ux={0} uy={-64} wx={60} wy={3.5} size={6.5} color={GEO_THUMB_PALETTE.teal} />
-      <polyline points="30,74 70,95 150,81" fill="none" stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.55" strokeLinejoin="round" />
-      <line x1="90" y1="13" x2="30" y2="74" stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.55" />
-      <line x1="90" y1="13" x2="70" y2="95" stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.55" />
-      <line x1="90" y1="13" x2="150" y2="81" stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.55" />
-      <GeoPt x={90} y={13} label="S" dx={0} dy={-4} color={GEO_THUMB_PALETTE.ink} />
-      <GeoPt x={30} y={74} label="A" dx={-8} dy={4} color={GEO_THUMB_PALETTE.ink} />
-      <GeoPt x={70} y={95} label="B" dx={-2} dy={10} color={GEO_THUMB_PALETTE.ink} />
-      <GeoPt x={150} y={81} label="C" dx={8} dy={4} color={GEO_THUMB_PALETTE.ink} />
-      <GeoPt x={110} y={60} label="D" dx={7} dy={-3} color={GEO_THUMB_PALETTE.dashed} r={2.0} />
-      <GeoPt x={90} y={77.5} label="H" dx={-8} dy={-2} color={GEO_THUMB_PALETTE.terracotta} r={2.5} />
-    </>
-  ),
+function buildScene3DThumbnailNode(rawScene: Scene3D): ReactNode {
+  const pedPlan = buildPedagogicalConstructionPlan(withSubEntities(rawScene));
+  const scene = registerExactSceneOrigin(veKhongGian(pedPlan.scene), pedPlan.scene);
+  const lastStep = pedPlan.steps[pedPlan.steps.length - 1];
+  const finalAnchor =
+    lastStep?.anchor ?? anchorOfGeometryStep(scene, Math.max(0, geometryStepCount(scene) - 1));
+  const rawHiddenAux = auxiliaryHiddenAt(scene, finalAnchor, false, null);
+  const ungroundedPts = ungroundedFreePointIdsAt(scene, finalAnchor);
+  const stepVisualRoles = resolveStepVisualRoles(scene, finalAnchor, { auxiliaryShown: false });
+  const byObjId = new Map(scene.objects.map((o) => [o.id, o]));
+  const rawPresentObjects = objectsAt(scene, finalAnchor);
+  const hiddenAux = new Set(
+    [...rawHiddenAux].filter((id) => {
+      const obj = byObjId.get(id);
+      if (!obj) return true;
+      if ((obj.display_group ?? []).includes("sphere_plane_aux")) return false;
+      return true;
+    }),
+  );
+  const presentObjects = rawPresentObjects.filter(
+    (o) =>
+      !isSubEntity(o.id)
+      && veTrenKhung(o)
+      && !ungroundedPts.has(o.id)
+      && (o.type === "plane3" ? !isRedundantPolyhedronBasePlane(o, rawPresentObjects) : !hiddenAux.has(o.id))
+      && (o.type === "plane3" || (stepVisualRoles.get(o.id)?.visible ?? true)),
+  );
+  const nonAuxPlaneObjects = presentObjects.filter(
+    (o) => (o.display_group ?? []).includes("sphere_plane_aux") || !laDiemPhuDungMatPhang(scene, o, byObjId),
+  );
+  const finitePts = diemHuuHan(nonAuxPlaneObjects);
 
-  // 6. Mặt cầu S(I, R) cắt bởi mặt phẳng (α) theo đường tròn giao tuyến C(H, r) với điểm M trên vành
-  "cau-cat-mat-phang": () => (
-    <>
-      <polygon points="22,80 140,88 158,56 40,48" fill={GEO_THUMB_PALETTE.planeFill} stroke={GEO_THUMB_PALETTE.planeStroke} strokeWidth="1" />
-      <circle cx="88" cy="49" r="37" fill={GEO_THUMB_PALETTE.shellFill} stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.6" />
-      <path d="M 51 49 A 37 9.5 0 0 1 125 49" fill="none" stroke={GEO_THUMB_PALETTE.dashed} strokeWidth="1" strokeDasharray="3.5,3" />
-      <path d="M 51 49 A 37 9.5 0 0 0 125 49" fill="none" stroke={GEO_THUMB_PALETTE.dashed} strokeWidth="1" opacity="0.65" />
-      <ellipse cx="88" cy="68" rx="30" ry="8.5" fill={GEO_THUMB_PALETTE.terracottaFill} />
-      <path d="M 58 68 A 30 8.5 0 0 1 118 68" fill="none" stroke={GEO_THUMB_PALETTE.terracotta} strokeWidth="1.35" strokeDasharray="3.5,2.5" />
-      <path d="M 58 68 A 30 8.5 0 0 0 118 68" fill="none" stroke={GEO_THUMB_PALETTE.terracotta} strokeWidth="1.8" />
-      <line x1="88" y1="49" x2="88" y2="68" stroke={GEO_THUMB_PALETTE.teal} strokeWidth="1.8" strokeDasharray="3,2" />
-      <line x1="88" y1="68" x2="118" y2="68" stroke={GEO_THUMB_PALETTE.terracotta} strokeWidth="1.65" strokeDasharray="3,2" />
-      <line x1="88" y1="49" x2="118" y2="68" stroke={GEO_THUMB_PALETTE.cobalt} strokeWidth="1.45" strokeDasharray="3,2" />
-      <GeoRightAngle vx={88} vy={68} ux={0} uy={-19} wx={30} wy={0} size={5.2} color={GEO_THUMB_PALETTE.teal} />
-      <GeoPt x={88} y={49} label="I" dx={-8} dy={2} color={GEO_THUMB_PALETTE.ink} r={2.5} />
-      <GeoPt x={88} y={68} label="H" dx={-8} dy={5} color={GEO_THUMB_PALETTE.teal} r={2.5} />
-      <GeoPt x={118} y={68} label="M" dx={8} dy={4} color={GEO_THUMB_PALETTE.terracotta} r={2.4} />
-      <text x="142" y="84" fontFamily="Plus Jakarta Sans, sans-serif" fontStyle="italic" fontSize="10.5" fontWeight="700" fill="#6D28D9">
-        (α)
-      </text>
-    </>
-  ),
+  const computePlaneSheet = (o: SceneObject): Vec3[] => {
+    if (o.type !== "plane3" || !o.point || !o.normal) return [];
+    if (isRedundantPolyhedronBasePlane(o, presentObjects)) return [];
+    const circleSec = presentObjects.find(
+      (cand) =>
+        cand.type === "circle3"
+        && cand.surface_role !== "BASE_REGION"
+        && (cand.depends ?? []).includes(o.id)
+        && cand.center
+        && cand.radius_sq,
+    );
+    if (circleSec?.center && circleSec.radius_sq) {
+      const c = new THREE.Vector3(...toVec3(circleSec.center));
+      const rSec = Math.sqrt(Math.max(0, toNumber(circleSec.radius_sq))) * 1.28;
+      const nVec = new THREE.Vector3(...toVec3(o.normal));
+      const [u1, u2] = orthonormalCircleBasis(nVec);
+      return [
+        [-1, -1],
+        [1, -1],
+        [1, 1],
+        [-1, 1],
+      ].map(([sx, sy]): Vec3 => {
+        const pt = c.clone().addScaledVector(u1, sx * rSec).addScaledVector(u2, sy * rSec);
+        return [pt.x, pt.y, pt.z];
+      });
+    }
+    const studied = computeBoundedStudiedPlanePolygon(scene, o, presentObjects);
+    if (studied.length >= 3) return studied;
+    const compactAnchors = compactPlaneAnchorPoints(scene, o, presentObjects);
+    const diemChoMp =
+      compactAnchors.length >= 3
+        ? compactAnchors
+        : [
+            ...diemHuuHan(
+              nonAuxPlaneObjects.filter(
+                (x) =>
+                  o.depends.includes(x.id)
+                  || x.type === "solid"
+                  || (x.type === "section" && x.depends.includes(o.id)),
+              ),
+            ),
+            ...planeSolidEdgeIntersections(o, presentObjects),
+          ];
+    const mpPts = diemChoMp.length >= 3 ? diemChoMp : finitePts;
+    const p0 = toVec3(o.point);
+    const nVec = toVec3(o.normal);
+    const daGiac = daGiacMatPhang(p0, nVec, mpPts);
+    return moRongDaGiacMatPhang(p0, nVec, mpPts, daGiac) ?? daGiac ?? [];
+  };
 
-  // 7. Bán kính IA = R và cấu trúc khối cầu S(I, R)
-  "cau-the-tich": () => (
-    <>
-      <circle cx="90" cy="55" r="39" fill={GEO_THUMB_PALETTE.shellFillStrong} stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.65" />
-      <ellipse cx="90" cy="55" rx="39" ry="11.5" fill={GEO_THUMB_PALETTE.amberFill} />
-      <path d="M 51 55 A 39 11.5 0 0 1 129 55" fill="none" stroke={GEO_THUMB_PALETTE.amber} strokeWidth="1.3" strokeDasharray="4,3" />
-      <path d="M 51 55 A 39 11.5 0 0 0 129 55" fill="none" stroke={GEO_THUMB_PALETTE.amber} strokeWidth="1.75" />
-      <path d="M 90 16 A 13 39 0 0 0 90 94" fill="none" stroke={GEO_THUMB_PALETTE.dashed} strokeWidth="1.1" strokeDasharray="3.5,3" />
-      <path d="M 90 16 A 13 39 0 0 1 90 94" fill="none" stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.25" opacity="0.7" />
-      <line x1="90" y1="55" x2="126" y2="40" stroke={GEO_THUMB_PALETTE.terracotta} strokeWidth="2.1" strokeDasharray="4,2.5" />
-      <text x="108" y="42" fontFamily="JetBrains Mono, monospace" fontSize="10.5" fontWeight="700" fill={GEO_THUMB_PALETTE.terracotta} textAnchor="middle">
-        R
-      </text>
-      <GeoPt x={90} y={55} label="I" dx={-8} dy={4} color={GEO_THUMB_PALETTE.ink} r={2.7} />
-      <GeoPt x={126} y={40} label="A" dx={8} dy={-2} color={GEO_THUMB_PALETTE.terracotta} r={2.6} />
-    </>
-  ),
+  const ct = cauTrucSuPham(nonAuxPlaneObjects);
+  const cameraFitPts: Vec3[] = [...ct.diem];
+  for (const o of nonAuxPlaneObjects) {
+    if (o.type === "curved_solid" && o.anchor) {
+      const a = toVec3(o.anchor);
+      const r = Math.sqrt(Math.max(0, toNumber(o.radius_sq ?? "0")));
+      const h = Math.sqrt(Math.max(0, toNumber(o.height_sq ?? "0")));
+      cameraFitPts.push(
+        [a[0] + r, a[1], a[2]],
+        [a[0] - r, a[1], a[2]],
+        [a[0], a[1] + r, a[2]],
+        [a[0], a[1] - r, a[2]],
+      );
+      if (o.curved_kind === "ball") {
+        cameraFitPts.push([a[0], a[1], a[2] + r], [a[0], a[1], a[2] - r]);
+      } else {
+        const top = o.apex_or_top ? toVec3(o.apex_or_top) : [a[0], a[1], a[2] + h];
+        cameraFitPts.push(
+          [top[0], top[1], top[2]],
+          [top[0] + r, top[1], top[2]],
+          [top[0] - r, top[1], top[2]],
+        );
+      }
+    }
+  }
+  const dir = chonHuongNhin(cameraFitPts, ct.canh, ct.mat, ct.tuyChon);
+  const kn =
+    khungNhinSuPham(cameraFitPts, ct.canh, ct.mat, 38, 1, dir, {
+      tiLeDoc: 0.78,
+      tiLeNgang: 0.78,
+    }) ?? khungNhinVua(hopBaoCuaDiem(cameraFitPts.length >= 2 ? cameraFitPts : [[0, 0, 0], [1, 1, 1]]), 38, 1)!;
 
-  // 8. Thiết diện tròn qua trung điểm M vuông góc trục OO′ của hình trụ
-  "tru-thiet-dien-tron": () => (
-    <>
-      <rect x="54" y="22" width="72" height="66" fill={GEO_THUMB_PALETTE.shellFill} />
-      <polygon points="28,65 138,71 154,45 44,39" fill={GEO_THUMB_PALETTE.planeFill} stroke={GEO_THUMB_PALETTE.planeStroke} strokeWidth="0.95" />
-      <ellipse cx="90" cy="22" rx="36" ry="9.5" fill={GEO_THUMB_PALETTE.shellFillStrong} stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.55" />
-      <ellipse cx="90" cy="55" rx="36" ry="9.5" fill={GEO_THUMB_PALETTE.terracottaFill} />
-      <path d="M 54 55 A 36 9.5 0 0 1 126 55" fill="none" stroke={GEO_THUMB_PALETTE.terracotta} strokeWidth="1.35" strokeDasharray="3.5,2.5" />
-      <path d="M 54 55 A 36 9.5 0 0 0 126 55" fill="none" stroke={GEO_THUMB_PALETTE.terracotta} strokeWidth="1.8" />
-      <path d="M 54 88 A 36 9.5 0 0 1 126 88" fill="none" stroke={GEO_THUMB_PALETTE.dashed} strokeWidth="1.15" strokeDasharray="4,3" />
-      <path d="M 54 88 A 36 9.5 0 0 0 126 88" fill="none" stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.55" />
-      <line x1="54" y1="22" x2="54" y2="88" stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.55" />
-      <line x1="126" y1="22" x2="126" y2="88" stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.55" />
-      <line x1="90" y1="22" x2="90" y2="88" stroke={GEO_THUMB_PALETTE.teal} strokeWidth="1.5" strokeDasharray="3.5,2.5" />
-      <GeoRightAngle vx={90} vy={55} ux={0} uy={-20} wx={20} wy={0} size={5.2} color={GEO_THUMB_PALETTE.teal} />
-      <GeoPt x={90} y={22} label="O′" dx={-9} dy={-1} color={GEO_THUMB_PALETTE.ink} r={2.2} />
-      <GeoPt x={90} y={55} label="M" dx={-9} dy={4} color={GEO_THUMB_PALETTE.terracotta} r={2.5} />
-      <GeoPt x={90} y={88} label="O" dx={-8} dy={4} color={GEO_THUMB_PALETTE.ink} r={2.2} />
-      <text x="142" y="66" fontFamily="Plus Jakarta Sans, sans-serif" fontStyle="italic" fontSize="10" fontWeight="700" fill={GEO_THUMB_PALETTE.planeLabel}>
-        (α)
-      </text>
-    </>
-  ),
+  // Use aspect=1 on PerspectiveCamera so projected NDC (v.x, v.y) is 1:1 isotropic when scaled into SVG pixels
+  const cam = new THREE.PerspectiveCamera(38, 1, 0.1, 200);
+  cam.up.set(0, 0, 1);
+  cam.position.set(...kn.viTri);
+  cam.lookAt(...kn.nhinVao);
+  cam.updateMatrixWorld(true);
+  cam.updateProjectionMatrix();
 
-  // 9. Hình trụ có trục OO′ và bán kính đáy OA (OO′ ⊥ OA tại O)
-  "tru-truc-xien": () => (
-    <>
-      <polygon points="38,86 66,24 138,24 110,86" fill={GEO_THUMB_PALETTE.shellFill} />
-      <ellipse cx="102" cy="24" rx="36" ry="9.5" fill={GEO_THUMB_PALETTE.shellFillStrong} stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.55" />
-      <ellipse cx="74" cy="86" rx="36" ry="9.5" fill={GEO_THUMB_PALETTE.amberFill} />
-      <path d="M 38 86 A 36 9.5 0 0 1 110 86" fill="none" stroke={GEO_THUMB_PALETTE.dashed} strokeWidth="1.2" strokeDasharray="4,3" />
-      <path d="M 38 86 A 36 9.5 0 0 0 110 86" fill="none" stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.55" />
-      <line x1="38" y1="86" x2="66" y2="24" stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.55" />
-      <line x1="110" y1="86" x2="138" y2="24" stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.55" />
-      <line x1="74" y1="86" x2="102" y2="24" stroke={GEO_THUMB_PALETTE.teal} strokeWidth="1.75" strokeDasharray="4,2.5" />
-      <line x1="74" y1="86" x2="110" y2="86" stroke={GEO_THUMB_PALETTE.terracotta} strokeWidth="2.1" strokeDasharray="4,2.5" />
-      <GeoRightAngle vx={74} vy={86} ux={14} uy={-31} wx={20} wy={0} size={5.8} color={GEO_THUMB_PALETTE.teal} />
-      <GeoPt x={102} y={24} label="O′" dx={9} dy={1} color={GEO_THUMB_PALETTE.ink} r={2.3} />
-      <GeoPt x={74} y={86} label="O" dx={-9} dy={4} color={GEO_THUMB_PALETTE.ink} r={2.4} />
-      <GeoPt x={110} y={86} label="A" dx={9} dy={4} color={GEO_THUMB_PALETTE.terracotta} r={2.5} />
-    </>
-  ),
+  const camForward = new THREE.Vector3(...kn.nhinVao).sub(cam.position).normalize();
+  const camRight = new THREE.Vector3().crossVectors(camForward, new THREE.Vector3(0, 0, 1)).normalize();
+  const camUp = new THREE.Vector3().crossVectors(camRight, camForward).normalize();
 
-  // 10. Thiết diện qua trục SO của hình nón (Tam giác cân SAB)
-  "non-thiet-dien-truc": () => (
-    <>
-      <polygon points="36,92 144,92 128,10 52,10" fill={GEO_THUMB_PALETTE.planeFill} stroke={GEO_THUMB_PALETTE.planeStroke} strokeWidth="0.9" />
-      <polygon points="90,15 46,85 134,85" fill={GEO_THUMB_PALETTE.terracottaFill} />
-      <path d="M 46 85 A 44 11 0 0 1 134 85" fill="none" stroke={GEO_THUMB_PALETTE.dashed} strokeWidth="1.2" strokeDasharray="4,3" />
-      <path d="M 46 85 A 44 11 0 0 0 134 85" fill="none" stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.6" />
-      <line x1="46" y1="85" x2="134" y2="85" stroke={GEO_THUMB_PALETTE.terracotta} strokeWidth="1.65" strokeDasharray="4,2.5" />
-      <line x1="90" y1="15" x2="46" y2="85" stroke={GEO_THUMB_PALETTE.terracotta} strokeWidth="1.95" />
-      <line x1="90" y1="15" x2="134" y2="85" stroke={GEO_THUMB_PALETTE.terracotta} strokeWidth="1.95" />
-      <line x1="90" y1="15" x2="90" y2="85" stroke={GEO_THUMB_PALETTE.teal} strokeWidth="1.5" strokeDasharray="3.5,2.5" />
-      <GeoRightAngle vx={90} vy={85} ux={0} uy={-20} wx={20} wy={0} size={5.5} color={GEO_THUMB_PALETTE.teal} />
-      <GeoPt x={90} y={15} label="S" dx={0} dy={-4} color={GEO_THUMB_PALETTE.ink} r={2.6} />
-      <GeoPt x={46} y={85} label="A" dx={-8} dy={4} color={GEO_THUMB_PALETTE.terracotta} r={2.4} />
-      <GeoPt x={134} y={85} label="B" dx={8} dy={4} color={GEO_THUMB_PALETTE.terracotta} r={2.4} />
-      <GeoPt x={90} y={85} label="O" dx={-7} dy={7} color={GEO_THUMB_PALETTE.teal} r={2.4} />
-      <text x="132" y="24" fontFamily="Plus Jakarta Sans, sans-serif" fontStyle="italic" fontSize="10" fontWeight="700" fill={GEO_THUMB_PALETTE.planeLabel}>
-        (α)
-      </text>
-    </>
-  ),
+  // Collect all key 3D points to frame within viewBox="0 0 180 110"
+  const framingPts: THREE.Vector3[] = [];
+  for (const p of ct.diem) {
+    framingPts.push(new THREE.Vector3(...p));
+  }
+  for (const o of nonAuxPlaneObjects) {
+    if (o.type === "point3" && o.xyz) {
+      framingPts.push(new THREE.Vector3(...toVec3(o.xyz)));
+    } else if (o.type === "curved_solid" && o.anchor) {
+      const anchor = new THREE.Vector3(...toVec3(o.anchor));
+      const r = Math.sqrt(Math.max(0, toNumber(o.radius_sq ?? "0")));
+      const h = Math.sqrt(Math.max(0, toNumber(o.height_sq ?? "0")));
+      const top = o.apex_or_top
+        ? new THREE.Vector3(...toVec3(o.apex_or_top))
+        : o.curved_kind !== "ball" && h > 0
+          ? new THREE.Vector3(anchor.x, anchor.y, anchor.z + h)
+          : null;
+      if (o.curved_kind === "ball") {
+        framingPts.push(
+          anchor.clone().addScaledVector(camRight, r),
+          anchor.clone().addScaledVector(camRight, -r),
+          anchor.clone().addScaledVector(camUp, r),
+          anchor.clone().addScaledVector(camUp, -r),
+        );
+      } else if (top) {
+        const axis = top.clone().sub(anchor).normalize();
+        const [u1, u2] = orthonormalCircleBasis(axis);
+        for (let k = 0; k < 8; k += 1) {
+          const ang = (k / 8) * Math.PI * 2;
+          const rimOffset = u1
+            .clone()
+            .multiplyScalar(r * Math.cos(ang))
+            .addScaledVector(u2, r * Math.sin(ang));
+          framingPts.push(anchor.clone().add(rimOffset));
+          if (o.curved_kind === "cylinder") {
+            framingPts.push(top.clone().add(rimOffset));
+          }
+        }
+        framingPts.push(top);
+      }
+    } else if (o.type === "plane3") {
+      const sheet = computePlaneSheet(o);
+      for (const sp of sheet) {
+        framingPts.push(new THREE.Vector3(...sp));
+      }
+    }
+  }
 
-  // 11. Đường sinh SA, đường cao SO và bán kính đáy OA trong hình nón
-  "non-duong-sinh": () => (
-    <>
-      <polygon points="86,15 42,85 130,85" fill={GEO_THUMB_PALETTE.shellFill} />
-      <polygon points="86,15 86,85 130,85" fill={GEO_THUMB_PALETTE.tealFill} />
-      <path d="M 42 85 A 44 11 0 0 1 130 85" fill="none" stroke={GEO_THUMB_PALETTE.dashed} strokeWidth="1.2" strokeDasharray="4,3" />
-      <path d="M 42 85 A 44 11 0 0 0 130 85" fill="none" stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.6" />
-      <line x1="86" y1="15" x2="42" y2="85" stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.45" />
-      <line x1="86" y1="15" x2="86" y2="85" stroke={GEO_THUMB_PALETTE.teal} strokeWidth="2.1" strokeDasharray="4,2.5" />
-      <line x1="86" y1="85" x2="130" y2="85" stroke={GEO_THUMB_PALETTE.cobalt} strokeWidth="1.9" strokeDasharray="4,2.5" />
-      <line x1="86" y1="15" x2="130" y2="85" stroke={GEO_THUMB_PALETTE.terracotta} strokeWidth="2.35" />
-      <GeoRightAngle vx={86} vy={85} ux={0} uy={-20} wx={20} wy={0} size={6.2} color={GEO_THUMB_PALETTE.teal} />
-      <GeoPt x={86} y={15} label="S" dx={0} dy={-4} color={GEO_THUMB_PALETTE.ink} r={2.6} />
-      <GeoPt x={86} y={85} label="O" dx={-7} dy={5} color={GEO_THUMB_PALETTE.teal} r={2.5} />
-      <GeoPt x={130} y={85} label="A" dx={8} dy={4} color={GEO_THUMB_PALETTE.terracotta} r={2.6} />
-    </>
-  ),
-};
+  let minNdcX = Infinity;
+  let maxNdcX = -Infinity;
+  let minNdcY = Infinity;
+  let maxNdcY = -Infinity;
+  for (const fp of framingPts) {
+    const v = fp.clone().project(cam);
+    if (!Number.isFinite(v.x) || !Number.isFinite(v.y)) continue;
+    minNdcX = Math.min(minNdcX, v.x);
+    maxNdcX = Math.max(maxNdcX, v.x);
+    minNdcY = Math.min(minNdcY, v.y);
+    maxNdcY = Math.max(maxNdcY, v.y);
+  }
+  if (!Number.isFinite(minNdcX)) {
+    minNdcX = -0.5;
+    maxNdcX = 0.5;
+    minNdcY = -0.5;
+    maxNdcY = 0.5;
+  }
+
+  const spanX = Math.max(1e-4, maxNdcX - minNdcX);
+  const spanY = Math.max(1e-4, maxNdcY - minNdcY);
+  const scale = Math.min(132 / spanX, 74 / spanY);
+  const midX = (minNdcX + maxNdcX) * 0.5;
+  const midY = (minNdcY + maxNdcY) * 0.5;
+
+  const proj = (p: Vec3 | THREE.Vector3): [number, number] => {
+    const v = (p instanceof THREE.Vector3 ? p.clone() : new THREE.Vector3(p[0], p[1], p[2])).project(cam);
+    return [
+      Number((90 + (v.x - midX) * scale).toFixed(1)),
+      Number((57 - (v.y - midY) * scale).toFixed(1)),
+    ];
+  };
+
+  // Build 3D occluders & curved solid volumes for exact visibility classification
+  const presentSolids = presentObjects.filter((o) => o.type === "solid" && o.vertices && o.faces);
+  const solidOccluders: WorldSolidOccluder[] = presentSolids.map((s) => ({ solid: s }));
+  const curvedVolumes: CurvedSolidVolumeMeta[] = [];
+
+  for (const o of presentObjects) {
+    if (o.type !== "curved_solid" || !o.anchor || !o.curved_kind) continue;
+    const anchor = new THREE.Vector3(...toVec3(o.anchor));
+    const r = Math.sqrt(Math.max(0, toNumber(o.radius_sq ?? "0")));
+    const h = Math.sqrt(Math.max(0, toNumber(o.height_sq ?? "0")));
+    if (!(r > 1e-6)) continue;
+    const top = o.apex_or_top
+      ? new THREE.Vector3(...toVec3(o.apex_or_top))
+      : o.curved_kind !== "ball" && h > 0
+        ? new THREE.Vector3(anchor.x, anchor.y, anchor.z + h)
+        : null;
+    const hActual = top ? anchor.distanceTo(top) : h;
+    const baseCapCircle =
+      o.curved_kind === "cylinder" && top
+        ? presentObjects.find((cand) => {
+            if (cand.type !== "circle3" || cand.surface_role !== "BASE_REGION" || !cand.center || !cand.normal)
+              return false;
+            const cc = toVec3(cand.center);
+            return (
+              Math.hypot(cc[0] - anchor.x, cc[1] - anchor.y, cc[2] - anchor.z) <= 1e-4
+              || Math.hypot(cc[0] - top.x, cc[1] - top.y, cc[2] - top.z) <= 1e-4
+            );
+          })
+        : undefined;
+    const obliqueCap =
+      o.curved_kind === "cylinder" && top && baseCapCircle?.normal
+        ? resolveObliqueCylinderCapBasis(anchor, top, new THREE.Vector3(...toVec3(baseCapCircle.normal)))
+        : null;
+    curvedVolumes.push({
+      id: o.id,
+      kind: o.curved_kind as "cylinder" | "cone" | "ball",
+      anchor,
+      top,
+      radius: r,
+      height: hActual,
+      ...(obliqueCap ? { capBasis: [obliqueCap.u1.clone(), obliqueCap.u2.clone()] } : {}),
+    });
+  }
+
+  const elements: ReactNode[] = [];
+  let keySeq = 0;
+  const nextKey = (prefix: string) => `${prefix}-${(keySeq += 1)}`;
+
+  // Helper to sample a 3D circle and split into visible/hidden SVG polylines using exact 3D occlusion
+  const render3DCircleArcs = (
+    center: THREE.Vector3,
+    u1: THREE.Vector3,
+    u2: THREE.Vector3,
+    radius: number,
+    options: {
+      fill?: string;
+      visibleStroke: string;
+      hiddenStroke: string;
+      visibleWidth?: number;
+      hiddenWidth?: number;
+      dashArray?: string;
+    },
+  ) => {
+    const segs = 72;
+    const pts3: THREE.Vector3[] = [];
+    const pts2: [number, number][] = [];
+    for (let i = 0; i <= segs; i += 1) {
+      const t = (i / segs) * Math.PI * 2;
+      const p3 = center
+        .clone()
+        .addScaledVector(u1, radius * Math.cos(t))
+        .addScaledVector(u2, radius * Math.sin(t));
+      pts3.push(p3);
+      pts2.push(proj(p3));
+    }
+    if (options.fill) {
+      elements.push(
+        <polygon
+          key={nextKey("circle-fill")}
+          points={pts2.slice(0, segs).map(([x, y]) => `${x},${y}`).join(" ")}
+          fill={options.fill}
+        />,
+      );
+    }
+    const segStates: boolean[] = [];
+    for (let i = 0; i < segs; i += 1) {
+      const tm = ((i + 0.5) / segs) * Math.PI * 2;
+      const radialDir = u1
+        .clone()
+        .multiplyScalar(Math.cos(tm))
+        .addScaledVector(u2, Math.sin(tm));
+      const mid3 = center.clone().addScaledVector(radialDir, radius * 1.0002);
+      const isHidden = diemVanhCongBiChe(mid3, cam.position, curvedVolumes);
+      segStates.push(isHidden);
+    }
+    let start = 0;
+    for (let i = 1; i <= segs; i += 1) {
+      if (i < segs && segStates[i] === segStates[start]) continue;
+      const hidden = segStates[start];
+      const spanPts = pts2.slice(start, i + 1).map(([x, y]) => `${x},${y}`).join(" ");
+      elements.push(
+        <polyline
+          key={nextKey(hidden ? "arc-hid" : "arc-vis")}
+          points={spanPts}
+          fill="none"
+          stroke={hidden ? options.hiddenStroke : options.visibleStroke}
+          strokeWidth={hidden ? (options.hiddenWidth ?? 1.15) : (options.visibleWidth ?? 1.55)}
+          strokeDasharray={hidden ? (options.dashArray ?? "3.5,2.5") : undefined}
+          strokeLinejoin="round"
+        />,
+      );
+      start = i;
+    }
+  };
+
+  // 1. Active Cutting / Target Planes (`plane3`)
+  const planeSheetsToLabel: { pts2: [number, number][]; defaultPos: [number, number]; text: string }[] = [];
+  for (const o of presentObjects) {
+    if (o.type !== "plane3" || !o.point || !o.normal) continue;
+    const sheet = computePlaneSheet(o);
+    if (sheet.length >= 3) {
+      const pts2 = sheet.map((p) => proj(p));
+      elements.push(
+        <polygon
+          key={nextKey(`plane-${o.id}`)}
+          points={pts2.map(([x, y]) => `${x},${y}`).join(" ")}
+          fill={GEO_THUMB_PALETTE.planeFill}
+          stroke={GEO_THUMB_PALETTE.planeStroke}
+          strokeWidth="0.95"
+          strokeLinejoin="round"
+        />,
+      );
+      const tag = kyHieu(o);
+      if (tag && tag.startsWith("(")) {
+        const neo3 = diemNeoNhanMatPhang(toVec3(o.point), toVec3(o.normal), sheet);
+        const defaultPos: [number, number] = neo3 ? proj(neo3) : pts2[0];
+        planeSheetsToLabel.push({ pts2, defaultPos, text: tag });
+      }
+    }
+  }
+
+  // 2. Polyhedral Solids (`solid`) — shell fill + hidden/visible canonical edges
+  const canonicalEdgeSpans3D: { a: THREE.Vector3; b: THREE.Vector3 }[] = [];
+  for (const o of presentSolids) {
+    const verts = o.vertices!.map(toVec3);
+    for (const f of o.faces ?? []) {
+      if (f.length < 3) continue;
+      const fPts = f.map((idx) => proj(verts[idx])).map(([x, y]) => `${x},${y}`).join(" ");
+      elements.push(
+        <polygon key={nextKey(`solid-face-${o.id}`)} points={fPts} fill={GEO_THUMB_PALETTE.shellFill} />,
+      );
+    }
+    const basePoly = presentObjects.find(
+      (cand) => cand.type === "polygon3" && (cand.surface_role === "BASE_REGION" || cand.id.startsWith("day_")),
+    );
+    if (basePoly && (basePoly.polygon ?? basePoly.vertices)) {
+      const bPts = (basePoly.polygon ?? basePoly.vertices ?? [])
+        .map((v) => proj(toVec3(v)))
+        .map(([x, y]) => `${x},${y}`)
+        .join(" ");
+      elements.push(
+        <polygon key={nextKey(`base-tint-${basePoly.id}`)} points={bPts} fill="rgba(148, 163, 184, 0.08)" />,
+      );
+    }
+    const edges = canonicalEdgesOf(o);
+    for (const e of edges) {
+      canonicalEdgeSpans3D.push({ a: e.a.clone(), b: e.b.clone() });
+    }
+    const audit = classifySolidEdgeVisibility(o, cam.position, { occluders: presentSolids });
+    const edgeById = new Map(edges.map((e) => [e.id, e]));
+    for (const pass of ["HIDDEN", "VISIBLE"] as const) {
+      for (const span of audit.edge_spans) {
+        if (span.visibility !== pass) continue;
+        const edge = edgeById.get(span.edge_id);
+        if (!edge) continue;
+        const p0 = proj(edge.a.clone().lerp(edge.b, span.t0));
+        const p1 = proj(edge.a.clone().lerp(edge.b, span.t1));
+        elements.push(
+          <line
+            key={nextKey(`edge-${span.edge_id}-${pass}`)}
+            x1={p0[0]}
+            y1={p0[1]}
+            x2={p1[0]}
+            y2={p1[1]}
+            stroke={pass === "HIDDEN" ? GEO_THUMB_PALETTE.dashed : GEO_THUMB_PALETTE.ink}
+            strokeWidth={pass === "HIDDEN" ? "1.15" : "1.55"}
+            strokeDasharray={pass === "HIDDEN" ? "3.5,2.5" : undefined}
+            strokeLinecap="round"
+          />,
+        );
+      }
+    }
+  }
+
+  // 3. Curved Solids (`curved_solid`: sphere, cylinder, cone)
+  for (const vol of curvedVolumes) {
+    if (vol.kind === "ball") {
+      const [cx, cy] = proj(vol.anchor);
+      const [rxPt, ryPt] = proj(vol.anchor.clone().addScaledVector(camRight, vol.radius));
+      const rPx = Number(Math.max(12, Math.hypot(rxPt - cx, ryPt - cy)).toFixed(1));
+      elements.push(
+        <circle
+          key={nextKey(`ball-shell-${vol.id}`)}
+          cx={cx}
+          cy={cy}
+          r={rPx}
+          fill={GEO_THUMB_PALETTE.shellFillStrong}
+          stroke={GEO_THUMB_PALETTE.ink}
+          strokeWidth="1.6"
+        />,
+      );
+      const [u1, u2] = orthonormalCircleBasis(new THREE.Vector3(0, 0, 1));
+      render3DCircleArcs(vol.anchor, u1, u2, vol.radius, {
+        visibleStroke: GEO_THUMB_PALETTE.dashed,
+        hiddenStroke: GEO_THUMB_PALETTE.dashed,
+        visibleWidth: 1.15,
+        hiddenWidth: 1.0,
+        dashArray: "3.5,2.8",
+      });
+    } else if (vol.top && vol.height > 1e-6) {
+      const axis = vol.top.clone().sub(vol.anchor).normalize();
+      const [u1, u2] = vol.capBasis ?? orthonormalCircleBasis(axis);
+      const relative = cam.position.clone().sub(vol.anchor);
+      const axial = relative.dot(axis);
+      const radial = relative.clone().addScaledVector(axis, -axial);
+      const distance = radial.length();
+      const cosine =
+        distance > 1e-6 ? (vol.radius * (vol.kind === "cone" ? 1 - axial / vol.height : 1)) / distance : 0;
+
+      if (Math.abs(cosine) < 1) {
+        const radialUnit = radial.clone().divideScalar(distance);
+        const across = new THREE.Vector3().crossVectors(axis, radialUnit).normalize();
+        const sinVal = Math.sqrt(Math.max(0, 1 - cosine * cosine));
+        const uSil0 = radialUnit.clone().multiplyScalar(cosine).addScaledVector(across, sinVal);
+        const uSil1 = radialUnit.clone().multiplyScalar(cosine).addScaledVector(across, -sinVal);
+        const b0 = vol.anchor.clone().addScaledVector(uSil0, vol.radius);
+        const b1 = vol.anchor.clone().addScaledVector(uSil1, vol.radius);
+        const t0 = vol.kind === "cone" ? vol.top.clone() : vol.top.clone().addScaledVector(uSil0, vol.radius);
+        const t1 = vol.kind === "cone" ? vol.top.clone() : vol.top.clone().addScaledVector(uSil1, vol.radius);
+
+        const pb0 = proj(b0);
+        const pb1 = proj(b1);
+        const pt0 = proj(t0);
+        const pt1 = proj(t1);
+        elements.push(
+          <polygon
+            key={nextKey(`curved-shell-${vol.id}`)}
+            points={
+              vol.kind === "cone"
+                ? `${pb0[0]},${pb0[1]} ${pt0[0]},${pt0[1]} ${pb1[0]},${pb1[1]}`
+                : `${pb0[0]},${pb0[1]} ${pt0[0]},${pt0[1]} ${pt1[0]},${pt1[1]} ${pb1[0]},${pb1[1]}`
+            }
+            fill={GEO_THUMB_PALETTE.shellFill}
+          />,
+        );
+        render3DCircleArcs(vol.anchor, u1, u2, vol.radius, {
+          fill: "rgba(148, 163, 184, 0.09)",
+          visibleStroke: GEO_THUMB_PALETTE.ink,
+          hiddenStroke: GEO_THUMB_PALETTE.dashed,
+          visibleWidth: 1.55,
+          hiddenWidth: 1.15,
+        });
+        if (vol.kind === "cylinder") {
+          render3DCircleArcs(vol.top, u1, u2, vol.radius, {
+            fill: GEO_THUMB_PALETTE.shellFillStrong,
+            visibleStroke: GEO_THUMB_PALETTE.ink,
+            hiddenStroke: GEO_THUMB_PALETTE.dashed,
+            visibleWidth: 1.55,
+            hiddenWidth: 1.15,
+          });
+        }
+        elements.push(
+          <line
+            key={nextKey(`sil0-${vol.id}`)}
+            x1={pb0[0]}
+            y1={pb0[1]}
+            x2={pt0[0]}
+            y2={pt0[1]}
+            stroke={GEO_THUMB_PALETTE.ink}
+            strokeWidth="1.55"
+            strokeLinecap="round"
+          />,
+          <line
+            key={nextKey(`sil1-${vol.id}`)}
+            x1={pb1[0]}
+            y1={pb1[1]}
+            x2={pt1[0]}
+            y2={pt1[1]}
+            stroke={GEO_THUMB_PALETTE.ink}
+            strokeWidth="1.55"
+            strokeLinecap="round"
+          />,
+        );
+      }
+    }
+  }
+
+  // 4. Cross-Sections & Active Polygons (`section`, `polygon3`, `circle3`, `ellipse3`)
+  for (const o of presentObjects) {
+    if (o.type === "section" || o.type === "polygon3") {
+      if (o.type === "polygon3" && (o.surface_role === "BASE_REGION" || o.id.startsWith("day_"))) continue;
+      if ((o.display_group ?? []).includes("face") && o.parent) continue;
+      const rawVerts = (o.polygon ?? o.vertices ?? []).map(toVec3);
+      if (rawVerts.length < 3) continue;
+      const isAux = isAuxiliaryExplanatoryPolygon(scene, o);
+      const strokeColor = isAux ? GEO_THUMB_PALETTE.teal : GEO_THUMB_PALETTE.terracotta;
+      const fillColor = isAux ? GEO_THUMB_PALETTE.tealFill : GEO_THUMB_PALETTE.terracottaFill;
+      const pts2 = rawVerts.map((v) => proj(v));
+      elements.push(
+        <polygon
+          key={nextKey(`sec-fill-${o.id}`)}
+          points={pts2.map(([x, y]) => `${x},${y}`).join(" ")}
+          fill={fillColor}
+        />,
+      );
+      for (let i = 0; i < rawVerts.length; i += 1) {
+        const a3 = new THREE.Vector3(...rawVerts[i]);
+        const b3 = new THREE.Vector3(...rawVerts[(i + 1) % rawVerts.length]);
+        canonicalEdgeSpans3D.push({ a: a3.clone(), b: b3.clone() });
+        const vis = classifyWorldSegmentVisibility(a3, b3, cam.position, solidOccluders, {
+          curved_occluders: curvedVolumes,
+        });
+        for (const span of vis.spans) {
+          const p0 = proj(a3.clone().lerp(b3, span.t0));
+          const p1 = proj(a3.clone().lerp(b3, span.t1));
+          const hidden = span.visibility === "HIDDEN";
+          elements.push(
+            <line
+              key={nextKey(`sec-edge-${o.id}-${i}`)}
+              x1={p0[0]}
+              y1={p0[1]}
+              x2={p1[0]}
+              y2={p1[1]}
+              stroke={strokeColor}
+              strokeWidth={hidden ? "1.35" : "1.85"}
+              strokeDasharray={hidden ? "3.5,2.5" : undefined}
+              strokeLinecap="round"
+            />,
+          );
+        }
+      }
+    } else if (o.type === "circle3" && o.center && o.normal && o.radius_sq) {
+      const role = classifyCircleSemanticRole(scene, o);
+      if (role === "REFERENCE_EQUATOR" || role === "REFERENCE_GREAT_CIRCLE" || role === "BOUNDARY_AND_INTERSECTION")
+        continue;
+      const center = new THREE.Vector3(...toVec3(o.center));
+      const normal = new THREE.Vector3(...toVec3(o.normal));
+      const r = Math.sqrt(Math.max(0, toNumber(o.radius_sq)));
+      if (!(r > 1e-6) || normal.lengthSq() <= 1e-12) continue;
+      const [u1, u2] = orthonormalCircleBasis(normal);
+      render3DCircleArcs(center, u1, u2, r, {
+        fill: GEO_THUMB_PALETTE.terracottaFill,
+        visibleStroke: GEO_THUMB_PALETTE.terracotta,
+        hiddenStroke: GEO_THUMB_PALETTE.terracotta,
+        visibleWidth: 1.85,
+        hiddenWidth: 1.35,
+      });
+    }
+  }
+
+  // 5. Segments & Lines (`segment3`, `line3`)
+  const isCoveredByCanonicalEdge = (a: THREE.Vector3, b: THREE.Vector3): boolean =>
+    canonicalEdgeSpans3D.some((e) => {
+      const ab = e.b.clone().sub(e.a);
+      const lenSq = ab.lengthSq();
+      if (lenSq <= 1e-10) return false;
+      const ta = a.clone().sub(e.a).dot(ab) / lenSq;
+      const tb = b.clone().sub(e.a).dot(ab) / lenSq;
+      if (ta < -1e-3 || ta > 1 + 1e-3 || tb < -1e-3 || tb > 1 + 1e-3) return false;
+      const da = e.a.clone().addScaledVector(ab, ta).distanceTo(a);
+      const db = e.a.clone().addScaledVector(ab, tb).distanceTo(b);
+      return da <= 1e-3 && db <= 1e-3;
+    });
+
+  for (const o of presentObjects) {
+    if (o.type === "segment3") {
+      const rawA = o.point_a ?? o.endpoints?.[0];
+      const rawB = o.point_b ?? o.endpoints?.[1];
+      if (!rawA || !rawB) continue;
+      const a3 = new THREE.Vector3(...toVec3(rawA));
+      const b3 = new THREE.Vector3(...toVec3(rawB));
+      const isWitnessOrHeight =
+        Boolean(o.perpendicular_witness || o.annotation?.witness)
+        || (o.formation_roles ?? []).includes("CONSTRUCT_HEIGHT");
+      if (!isWitnessOrHeight && isCoveredByCanonicalEdge(a3, b3)) continue;
+      const vis = classifyWorldSegmentVisibility(a3, b3, cam.position, solidOccluders, {
+        curved_occluders: curvedVolumes,
+      });
+      const strokeColor = isWitnessOrHeight ? GEO_THUMB_PALETTE.teal : GEO_THUMB_PALETTE.terracotta;
+      for (const span of vis.spans) {
+        const p0 = proj(a3.clone().lerp(b3, span.t0));
+        const p1 = proj(a3.clone().lerp(b3, span.t1));
+        const hidden = span.visibility === "HIDDEN";
+        elements.push(
+          <line
+            key={nextKey(`seg-${o.id}`)}
+            x1={p0[0]}
+            y1={p0[1]}
+            x2={p1[0]}
+            y2={p1[1]}
+            stroke={strokeColor}
+            strokeWidth={hidden ? "1.55" : "1.95"}
+            strokeDasharray={hidden ? "3.5,2.5" : undefined}
+            strokeLinecap="round"
+          />,
+        );
+      }
+    } else if (o.type === "line3" && o.point && o.direction) {
+      const p0 = toVec3(o.point);
+      const d = toVec3(o.direction);
+      const dLen = Math.hypot(...d);
+      if (dLen <= 1e-9) continue;
+      const dirUnit: Vec3 = [d[0] / dLen, d[1] / dLen, d[2] / dLen];
+      const linePts = diemChoDuong(presentObjects, o.id);
+      let tMin = -0.6;
+      let tMax = 2.6;
+      if (linePts.length >= 2) {
+        const ts = linePts.map(
+          (q) => (q[0] - p0[0]) * dirUnit[0] + (q[1] - p0[1]) * dirUnit[1] + (q[2] - p0[2]) * dirUnit[2],
+        );
+        const lo = Math.min(...ts);
+        const hi = Math.max(...ts);
+        if (hi - lo > 1e-3) {
+          const pad = Math.max(0.28, (hi - lo) * 0.14);
+          tMin = lo - pad;
+          tMax = hi + pad;
+        }
+      }
+      const a3 = new THREE.Vector3(
+        p0[0] + dirUnit[0] * tMin,
+        p0[1] + dirUnit[1] * tMin,
+        p0[2] + dirUnit[2] * tMin,
+      );
+      const b3 = new THREE.Vector3(
+        p0[0] + dirUnit[0] * tMax,
+        p0[1] + dirUnit[1] * tMax,
+        p0[2] + dirUnit[2] * tMax,
+      );
+      if (o.id === "sd" && isCoveredByCanonicalEdge(new THREE.Vector3(...p0), new THREE.Vector3(...p0).add(new THREE.Vector3(...dirUnit)))) {
+        continue;
+      }
+      const vis = classifyWorldSegmentVisibility(a3, b3, cam.position, solidOccluders, {
+        curved_occluders: curvedVolumes,
+      });
+      const strokeColor = o.id === "truc" ? GEO_THUMB_PALETTE.teal : GEO_THUMB_PALETTE.cobalt;
+      for (const span of vis.spans) {
+        const s0 = proj(a3.clone().lerp(b3, span.t0));
+        const s1 = proj(a3.clone().lerp(b3, span.t1));
+        const hidden = span.visibility === "HIDDEN";
+        elements.push(
+          <line
+            key={nextKey(`line-${o.id}`)}
+            x1={s0[0]}
+            y1={s0[1]}
+            x2={s1[0]}
+            y2={s1[1]}
+            stroke={strokeColor}
+            strokeWidth={hidden ? "1.45" : "1.8"}
+            strokeDasharray={hidden ? "3.5,2.5" : undefined}
+            strokeLinecap="round"
+          />,
+        );
+      }
+    }
+  }
+
+  // 6. Certified Right-Angle Witnesses (`perpendicular_witness` / `resolvePlanePerpendicularLineWitness` / `inspectAxialCurvedOrthogonality`)
+  const drawnRightAngleFeet = new Set<string>();
+  const pushRightAngle3D = (foot: Vec3, uVec: Vec3, vVec: Vec3) => {
+    const fKey = foot.map((c) => c.toFixed(2)).join(",");
+    if (drawnRightAngleFeet.has(fKey)) return;
+    drawnRightAngleFeet.add(fKey);
+    const uLen = Math.hypot(...uVec);
+    const vLen = Math.hypot(...vVec);
+    if (uLen <= 1e-6 || vLen <= 1e-6) return;
+    const [fx, fy] = proj(foot);
+    const [ux, uy] = proj([foot[0] + uVec[0] / uLen, foot[1] + uVec[1] / uLen, foot[2] + uVec[2] / uLen]);
+    const [wx, wy] = proj([foot[0] + vVec[0] / vLen, foot[1] + vVec[1] / vLen, foot[2] + vVec[2] / vLen]);
+    elements.push(
+      <GeoRightAngle
+        key={nextKey("ra")}
+        vx={fx}
+        vy={fy}
+        ux={ux - fx}
+        uy={uy - fy}
+        wx={wx - fx}
+        wy={wy - fy}
+        size={5.8}
+        color={GEO_THUMB_PALETTE.teal}
+      />,
+    );
+  };
+
+  for (const o of presentObjects) {
+    const w = o.perpendicular_witness ?? o.annotation?.witness;
+    if (w?.foot && w.marker) {
+      pushRightAngle3D(toVec3(w.foot), toVec3(w.marker.u), toVec3(w.marker.v));
+    }
+    if (o.type === "plane3") {
+      const mpW = resolvePlanePerpendicularLineWitness(scene, o, presentObjects);
+      if (mpW) {
+        pushRightAngle3D(mpW.foot, mpW.uUnit, mpW.vUnit);
+      }
+    }
+    if (o.type === "curved_solid" && o.anchor && o.apex_or_top) {
+      const ortho = inspectAxialCurvedOrthogonality(scene, o);
+      if (ortho.isRightCertified) {
+        const foot = toVec3(o.anchor);
+        const top = toVec3(o.apex_or_top);
+        const vVec: Vec3 = [top[0] - foot[0], top[1] - foot[1], top[2] - foot[2]];
+        const rimPtObj = presentObjects.find(
+          (p) => p.type === "point3" && p.xyz && (o.depends ?? []).includes(p.id) && p.id !== "O" && p.id !== "S" && p.id !== "O_prime",
+        );
+        if (rimPtObj?.xyz) {
+          const rPt = toVec3(rimPtObj.xyz);
+          const uVec: Vec3 = [rPt[0] - foot[0], rPt[1] - foot[1], rPt[2] - foot[2]];
+          pushRightAngle3D(foot, uVec, vVec);
+        }
+      }
+    }
+  }
+
+  // 7. Named Points (`point3`) & Plane Notation Badges
+  const givenPointCoords = nonAuxPlaneObjects
+    .filter((o) => o.type === "point3" && o.xyz && !isSubEntity(o.id) && o.origin !== "derived")
+    .map((o) => toVec3(o.xyz!));
+
+  const namedPointObjs = nonAuxPlaneObjects.filter((o) => {
+    if (o.type !== "point3" || !o.xyz || isSubEntity(o.id)) return false;
+    const sym = kyHieu(o) ?? "";
+    if (!sym || sym.length > 4) return false;
+    if (o.origin === "derived") {
+      const p = toVec3(o.xyz);
+      const coincidesWithGiven = givenPointCoords.some(
+        (g) => Math.hypot(p[0] - g[0], p[1] - g[1], p[2] - g[2]) <= 1e-4,
+      );
+      if (coincidesWithGiven) return false;
+    }
+    return true;
+  });
+
+  const projectedPoints = namedPointObjs.map((o) => {
+    const p3 = toVec3(o.xyz!);
+    const [x, y] = proj(p3);
+    const sym = kyHieu(o) ?? o.id;
+    const isDerived = o.origin === "derived";
+    return { id: o.id, label: sym, x, y, isDerived };
+  });
+
+  const cxMean =
+    projectedPoints.length > 0
+      ? projectedPoints.reduce((s, p) => s + p.x, 0) / projectedPoints.length
+      : 90;
+  const cyMean =
+    projectedPoints.length > 0
+      ? projectedPoints.reduce((s, p) => s + p.y, 0) / projectedPoints.length
+      : 55;
+
+  const occupiedPositions: [number, number][] = [];
+  for (const pt of projectedPoints) {
+    let vx = pt.x - cxMean;
+    let vy = pt.y - cyMean;
+    const vLen = Math.hypot(vx, vy);
+    if (vLen < 1e-3) {
+      vx = -1;
+      vy = -1;
+    } else {
+      vx /= vLen;
+      vy /= vLen;
+    }
+    const dist = 8.5;
+    const dx = Math.max(8, Math.min(172, pt.x + vx * dist)) - pt.x;
+    const dy = Math.max(9, Math.min(102, pt.y + vy * dist)) - pt.y;
+    occupiedPositions.push([pt.x, pt.y], [pt.x + dx, pt.y + dy]);
+    elements.push(
+      <GeoPt
+        key={nextKey(`pt-${pt.id}`)}
+        x={pt.x}
+        y={pt.y}
+        label={pt.label}
+        dx={dx}
+        dy={dy}
+        color={pt.isDerived ? GEO_THUMB_PALETTE.terracotta : GEO_THUMB_PALETTE.ink}
+        r={pt.isDerived ? 2.4 : 2.3}
+      />,
+    );
+  }
+
+  for (const pl of planeSheetsToLabel) {
+    const pCx = pl.pts2.reduce((s, p) => s + p[0], 0) / pl.pts2.length;
+    const pCy = pl.pts2.reduce((s, p) => s + p[1], 0) / pl.pts2.length;
+    const rawCandidates: [number, number][] = [pl.defaultPos];
+    for (let i = 0; i < pl.pts2.length; i += 1) {
+      const a = pl.pts2[i];
+      const b = pl.pts2[(i + 1) % pl.pts2.length];
+      const mid: [number, number] = [(a[0] + b[0]) * 0.5, (a[1] + b[1]) * 0.5];
+      for (const base of [a, mid]) {
+        const ox = base[0] - pCx;
+        const oy = base[1] - pCy;
+        const oLen = Math.hypot(ox, oy) || 1;
+        rawCandidates.push([base[0] + (ox / oLen) * 6, base[1] + (oy / oLen) * 4]);
+      }
+    }
+    let bestPos: [number, number] = [
+      Math.max(18, Math.min(162, pl.defaultPos[0])),
+      Math.max(13, Math.min(100, pl.defaultPos[1])),
+    ];
+    let bestClearance = -Infinity;
+    for (const [cx, cy] of rawCandidates) {
+      const clampedX = Math.max(18, Math.min(162, cx));
+      const clampedY = Math.max(13, Math.min(100, cy));
+      const minClearance = occupiedPositions.reduce(
+        (minD, [ox, oy]) => Math.min(minD, Math.hypot(clampedX - ox, clampedY - oy)),
+        Infinity,
+      );
+      if (minClearance > bestClearance) {
+        bestClearance = minClearance;
+        bestPos = [Number(clampedX.toFixed(1)), Number(clampedY.toFixed(1))];
+      }
+    }
+    occupiedPositions.push(bestPos);
+    elements.push(
+      <text
+        key={nextKey(`pl-lbl-${pl.text}`)}
+        x={bestPos[0]}
+        y={bestPos[1]}
+        fontFamily="Plus Jakarta Sans, sans-serif"
+        fontStyle="italic"
+        fontSize="9.8"
+        fontWeight="700"
+        fill={GEO_THUMB_PALETTE.planeLabel}
+        paintOrder="stroke"
+        stroke="#f8f6f1"
+        strokeWidth="2.2"
+        strokeLinejoin="round"
+        textAnchor="middle"
+      >
+        {pl.text}
+      </text>,
+    );
+  }
+
+  return <>{elements}</>;
+}
+
+function getCachedSampleThumbnailNode(sampleId: string): ReactNode | null {
+  if (_thumbnailNodeCache.has(sampleId)) {
+    return _thumbnailNodeCache.get(sampleId)!;
+  }
+  const sample = GEOMETRY_SAMPLES.find((s) => s.id === sampleId);
+  const rawScene = (sample?.envelope as { scene3d?: Scene3D } | undefined)?.scene3d;
+  if (!rawScene) return null;
+  const node = buildScene3DThumbnailNode(rawScene);
+  _thumbnailNodeCache.set(sampleId, node);
+  return node;
+}
 
 function renderCategoryFallback(category?: string): ReactNode {
-  if (category === "Mặt cầu") {
-    return (
-      <svg viewBox="0 0 180 110" data-thumb-fallback="true" aria-hidden="true">
-        <polygon points="24,78 142,86 158,56 42,48" fill="#4F46E5" fillOpacity="0.08" stroke="rgba(79,70,229,0.28)" strokeWidth="1" />
-        <circle cx="90" cy="54" r="38" fill="rgba(148,163,184,0.12)" stroke="#1E293B" strokeWidth="1.6" />
-        <ellipse cx="90" cy="54" rx="38" ry="10" fill="none" stroke="#64748B" strokeWidth="1" strokeDasharray="4,3" />
-        <ellipse cx="90" cy="69" rx="31" ry="9" fill="#C85A32" fillOpacity="0.28" stroke="#C85A32" strokeWidth="1.7" />
-        <line x1="90" y1="54" x2="90" y2="69" stroke="#0F766E" strokeWidth="1.6" />
-        <line x1="90" y1="69" x2="121" y2="69" stroke="#C85A32" strokeWidth="1.5" strokeDasharray="3,2" />
-        <circle cx="90" cy="54" r="2.6" fill="#1E293B" />
-        <circle cx="90" cy="69" r="2.6" fill="#C85A32" />
-      </svg>
-    );
-  }
-  if (category === "Hình trụ") {
-    return (
-      <svg viewBox="0 0 180 110" data-thumb-fallback="true" aria-hidden="true">
-        <rect x="52" y="24" width="76" height="62" fill="rgba(148,163,184,0.12)" />
-        <ellipse cx="90" cy="24" rx="38" ry="10" fill="rgba(148,163,184,0.16)" stroke="#1E293B" strokeWidth="1.55" />
-        <ellipse cx="90" cy="56" rx="38" ry="10" fill="#C85A32" fillOpacity="0.26" stroke="#C85A32" strokeWidth="1.65" />
-        <path d="M 52 86 A 38 10 0 0 1 128 86" fill="none" stroke="#64748B" strokeWidth="1.15" strokeDasharray="4,3" />
-        <path d="M 52 86 A 38 10 0 0 0 128 86" fill="none" stroke="#1E293B" strokeWidth="1.55" />
-        <line x1="52" y1="24" x2="52" y2="86" stroke="#1E293B" strokeWidth="1.55" />
-        <line x1="128" y1="24" x2="128" y2="86" stroke="#1E293B" strokeWidth="1.55" />
-        <line x1="90" y1="24" x2="90" y2="86" stroke="#0F766E" strokeWidth="1.4" strokeDasharray="3,3" />
-      </svg>
-    );
-  }
-  if (category === "Hình nón") {
-    return (
-      <svg viewBox="0 0 180 110" data-thumb-fallback="true" aria-hidden="true">
-        <polygon points="90,16 46,84 134,84" fill="#C85A32" fillOpacity="0.24" />
-        <path d="M 46 84 A 44 11 0 0 1 134 84" fill="none" stroke="#64748B" strokeWidth="1.2" strokeDasharray="4,3" />
-        <path d="M 46 84 A 44 11 0 0 0 134 84" fill="none" stroke="#1E293B" strokeWidth="1.6" />
-        <line x1="90" y1="16" x2="46" y2="84" stroke="#1E293B" strokeWidth="1.65" />
-        <line x1="90" y1="16" x2="134" y2="84" stroke="#1E293B" strokeWidth="1.65" />
-        <line x1="90" y1="16" x2="90" y2="84" stroke="#0F766E" strokeWidth="1.5" strokeDasharray="3,2" />
-        <line x1="46" y1="84" x2="134" y2="84" stroke="#C85A32" strokeWidth="1.5" strokeDasharray="4,3" />
-        <circle cx="90" cy="16" r="2.8" fill="#1E293B" />
-        <circle cx="90" cy="84" r="2.6" fill="#0F766E" />
-      </svg>
-    );
-  }
+  const fallbackId =
+    category === "Mặt cầu"
+      ? "cau-cat-mat-phang"
+      : category === "Hình trụ"
+        ? "tru-thiet-dien-tron"
+        : category === "Hình nón"
+          ? "non-thiet-dien-truc"
+          : "thiet-dien-chop";
+  const node = getCachedSampleThumbnailNode(fallbackId);
   return (
     <svg viewBox="0 0 180 110" data-thumb-fallback="true" aria-hidden="true">
-      <polygon points="90,14 34,76 76,96 146,80" fill="rgba(100,116,139,0.10)" />
-      <line x1="34" y1="76" x2="112" y2="60" stroke="#64748B" strokeWidth="1.2" strokeDasharray="4,3" />
-      <line x1="112" y1="60" x2="146" y2="80" stroke="#64748B" strokeWidth="1.2" strokeDasharray="4,3" />
-      <line x1="90" y1="14" x2="112" y2="60" stroke="#64748B" strokeWidth="1.2" strokeDasharray="4,3" />
-      <polygon points="54,54 82,66 125,57 104,42" fill="#C85A32" fillOpacity="0.28" stroke="#C85A32" strokeWidth="1.6" />
-      <line x1="90" y1="14" x2="88" y2="75" stroke="#0F766E" strokeWidth="1.4" strokeDasharray="3,2" />
-      <polyline points="34,76 76,96 146,80" fill="none" stroke="#1E293B" strokeWidth="1.6" />
-      <line x1="90" y1="14" x2="34" y2="76" stroke="#1E293B" strokeWidth="1.6" />
-      <line x1="90" y1="14" x2="76" y2="96" stroke="#1E293B" strokeWidth="1.6" />
-      <line x1="90" y1="14" x2="146" y2="80" stroke="#1E293B" strokeWidth="1.6" />
-      <circle cx="90" cy="14" r="2.8" fill="#1E293B" />
+      {node}
     </svg>
   );
 }
@@ -437,22 +1091,39 @@ function renderCategoryFallback(category?: string): ReactNode {
 export function SamplePreview({
   sampleId,
   category,
+  scene3d,
 }: {
   kind?: PreviewKind;
   sampleId?: string | null;
   category?: string;
+  scene3d?: Scene3D | null;
 }) {
-  if (sampleId && PROBLEM_THUMBNAIL_RENDERERS[sampleId]) {
+  if (scene3d) {
     return (
       <svg
         viewBox="0 0 180 110"
-        data-thumb-id={sampleId}
+        data-thumb-id={sampleId ?? "custom-scene3d"}
         data-thumb-fallback="false"
         aria-hidden="true"
       >
-        {PROBLEM_THUMBNAIL_RENDERERS[sampleId]()}
+        {buildScene3DThumbnailNode(scene3d)}
       </svg>
     );
+  }
+  if (sampleId) {
+    const node = getCachedSampleThumbnailNode(sampleId);
+    if (node) {
+      return (
+        <svg
+          viewBox="0 0 180 110"
+          data-thumb-id={sampleId}
+          data-thumb-fallback="false"
+          aria-hidden="true"
+        >
+          {node}
+        </svg>
+      );
+    }
   }
   return renderCategoryFallback(category);
 }

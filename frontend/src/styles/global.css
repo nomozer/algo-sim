@@ -16256,11 +16256,21 @@ body:has(.app-root.la-tap-trung) {
 }
 
 .nav-bar .axo-logo-btn,
-.ws-axo-header .axo-logo-btn,
+.ws-axo-header .axo-logo-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 24px;
+  height: 24px;
+  padding: 0;
+  border-radius: 0;
+}
+
 .auth-top-bar .auth-brand-link {
   display: inline-flex;
   align-items: center;
-  gap: 7.5px;
+  gap: 7px;
   min-height: 28px;
   height: 28px;
   padding: 3px 6px 3px 3px;
@@ -16270,9 +16280,8 @@ body:has(.app-root.la-tap-trung) {
 .nav-bar .axo-logo-svg,
 .ws-axo-header .axo-logo-svg,
 .auth-top-bar .axo-logo-svg {
-  height: var(--axo-logo-size);
-  width: auto;
-  aspect-ratio: 516 / 434;
+  width: 22px;
+  height: 22px;
   flex: 0 0 auto;
   display: block;
 }
@@ -16281,9 +16290,9 @@ body:has(.app-root.la-tap-trung) {
 .ws-axo-header .nav-wordmark-text,
 .ws-axo-header .axo-brand-name,
 .auth-top-bar .auth-brand-link span {
-  font-size: var(--axo-wordmark-size);
+  font-size: 15px;
   font-weight: 700;
-  letter-spacing: -0.025em;
+  letter-spacing: -0.02em;
   line-height: 1;
 }
 
@@ -17553,10 +17562,10 @@ html::-webkit-scrollbar {
 
 /* 2. Adaptive Header on Scroll (CLS = 0: outer sticky height stays constant) */
 .nav-bar {
-  --axo-nav-h: 50px;
-  height: var(--axo-nav-h);
-  min-height: var(--axo-nav-h);
-  padding: 0 clamp(14px, 2vw, 24px);
+  --axo-nav-h: var(--axo-header-h);
+  height: var(--axo-header-h);
+  min-height: var(--axo-header-h);
+  padding: 0 var(--axo-header-px);
   background: var(--canvas-soft);
   border-bottom: 1px solid transparent;
   box-shadow: none;
@@ -17564,8 +17573,7 @@ html::-webkit-scrollbar {
   -webkit-backdrop-filter: none;
   transition:
     background-color 0.18s ease,
-    border-color 0.18s ease,
-    box-shadow 0.18s ease;
+    border-color 0.18s ease;
 }
 
 .app-main:has(> .app-layout) > .nav-bar {
@@ -17574,12 +17582,12 @@ html::-webkit-scrollbar {
 }
 
 .app-single:has(> .page-container) {
-  min-height: calc(100vh - 50px);
+  min-height: calc(100vh - var(--axo-header-h));
 }
 
 .nav-bar .nav-n1-capsule {
-  background: rgba(255, 255, 255, 0.56);
-  border-color: rgba(24, 24, 24, 0.08);
+  background: rgba(255, 255, 255, 0.62);
+  border-color: var(--hairline);
   transition:
     background-color 0.18s ease,
     border-color 0.18s ease;
@@ -17591,15 +17599,15 @@ html::-webkit-scrollbar {
 }
 
 .nav-bar.is-scrolled {
-  background: rgba(255, 255, 255, 0.86);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-bottom-color: rgba(24, 24, 24, 0.075);
-  box-shadow: var(--shadow-soft);
+  background: rgba(248, 246, 241, 0.94);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-bottom-color: var(--hairline);
+  box-shadow: none;
 }
 
 .nav-bar.is-scrolled .nav-n1-capsule {
-  background: var(--canvas-soft);
+  background: rgba(255, 255, 255, 0.88);
   border-color: var(--hairline);
 }
 

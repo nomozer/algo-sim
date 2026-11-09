@@ -283,15 +283,27 @@ describe("Scene3D final-frame shared visual quality upgrades", () => {
     expect(dashedWhenOff).toHaveLength(0);
   });
 
-  it("orients tru-truc-xien camera from the upper-cap side (u · dir in [0.25, 0.56]) and keeps both lateral generators SA, SB of non-thiet-dien-truc visible at the canonical camera", () => {
+  it("proves tru-truc-xien mathematical invariants (R = sqrt(5), OO' = 3, OA perp OO') and non-thiet-dien-truc true 3D occlusion across canonical and orbited camera angles", () => {
     const obliqueScene = sampleScene("tru-truc-xien");
     const ctCyl = cauTrucSuPham(obliqueScene.objects);
     const cyl = obliqueScene.objects.find((o) => o.type === "curved_solid")!;
-    const u = new THREE.Vector3(
-      Number(cyl.apex_or_top![0]) - Number(cyl.anchor![0]),
-      Number(cyl.apex_or_top![1]) - Number(cyl.anchor![1]),
-      Number(cyl.apex_or_top![2]) - Number(cyl.anchor![2]),
-    ).normalize();
+    const ptO = obliqueScene.objects.find((o) => o.type === "point3" && o.id === "O")!;
+    const ptOPrime = obliqueScene.objects.find((o) => o.type === "point3" && o.id === "O_prime")!;
+    const ptA = obliqueScene.objects.find((o) => o.type === "point3" && o.id === "A")!;
+    const vO = new THREE.Vector3(...ptO.xyz!.map(Number));
+    const vOPrime = new THREE.Vector3(...ptOPrime.xyz!.map(Number));
+    const vA = new THREE.Vector3(...ptA.xyz!.map(Number));
+    const vecOOPrime = vOPrime.clone().sub(vO);
+    const vecOA = vA.clone().sub(vO);
+
+    // Exact invariants: |OA|^2 = 5 (R = sqrt(5)), |OO'|^2 = 9 (OO' = 3), OA . OO' = 0
+    expect(vecOA.lengthSq()).toBe(5);
+    expect(Number(cyl.radius_sq)).toBe(5);
+    expect(vecOOPrime.lengthSq()).toBe(9);
+    expect(Number(cyl.height_sq)).toBe(9);
+    expect(vecOA.dot(vecOOPrime)).toBe(0);
+
+    const u = vecOOPrime.clone().normalize();
     const dirCyl = new THREE.Vector3(...chonHuongNhin(ctCyl.diem, ctCyl.canh, ctCyl.mat, ctCyl.tuyChon)).normalize();
     expect(u.dot(dirCyl)).toBeGreaterThanOrEqual(0.25);
     expect(u.dot(dirCyl)).toBeLessThanOrEqual(0.56);
@@ -304,20 +316,42 @@ describe("Scene3D final-frame shared visual quality upgrades", () => {
       const built = buildObject3D(obj, false);
       if (built) root.add(built);
     }
-    const camCone = makeCamera(
+
+    const collectSectionBorders = () => {
+      const visible: THREE.Line[] = [];
+      const hidden: THREE.Line[] = [];
+      root.traverse((node) => {
+        if (node.name.startsWith("section_border:")) {
+          if (node.userData?.hidden === true) hidden.push(node as THREE.Line);
+          else if (node.userData?.hidden === false) visible.push(node as THREE.Line);
+        }
+      });
+      return { visible, hidden };
+    };
+
+    // 1. Canonical oblique camera (azimuth ~60 deg): A=(3,0,0) is on the front arc so SA is VISIBLE;
+    // B=(-3,0,0) is on the back arc behind the cone so SB is HIDDEN (dashed) and AB is HIDDEN (dashed).
+    const camCanonical = makeCamera(
       [dirCone.x * 12, dirCone.y * 12, 1.5 + dirCone.z * 12],
       [0, 0, 1.5],
     );
-    updateCanonicalEdgeVisibility(root, camCone, "1440x900@1");
-    const visibleBorders: THREE.Object3D[] = [];
-    const hiddenBorders: THREE.Object3D[] = [];
-    root.traverse((node) => {
-      if (node.name.startsWith("section_border:")) {
-        if (node.userData?.hidden === true) hiddenBorders.push(node);
-        else if (node.userData?.hidden === false) visibleBorders.push(node);
-      }
-    });
-    expect(visibleBorders).toHaveLength(2);
-    expect(hiddenBorders).toHaveLength(1);
+    updateCanonicalEdgeVisibility(root, camCanonical, "1440x900@1");
+    const canonicalBorders = collectSectionBorders();
+    expect(canonicalBorders.visible).toHaveLength(1);
+    expect(canonicalBorders.hidden).toHaveLength(2);
+
+    // 2. Orbited camera to the opposite side (-x, +y): B=(-3,0,0) is in front so SB becomes VISIBLE, SA becomes HIDDEN.
+    const camOrbitedLeft = makeCamera([-5.5, 9.5, 6.4], [0, 0, 1.5]);
+    updateCanonicalEdgeVisibility(root, camOrbitedLeft, "1440x900@1");
+    const orbitedLeftBorders = collectSectionBorders();
+    expect(orbitedLeftBorders.visible).toHaveLength(1);
+    expect(orbitedLeftBorders.hidden).toHaveLength(2);
+
+    // 3. Elevated front camera above the cone apex (z = 7 > h = 4): both SA and SB are VISIBLE, base diameter AB is HIDDEN.
+    const camElevatedFront = makeCamera([0, 10, 7], [0, 0, 1.5]);
+    updateCanonicalEdgeVisibility(root, camElevatedFront, "1440x900@1");
+    const elevatedBorders = collectSectionBorders();
+    expect(elevatedBorders.visible).toHaveLength(2);
+    expect(elevatedBorders.hidden).toHaveLength(1);
   });
 });

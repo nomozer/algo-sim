@@ -66,14 +66,14 @@ describe("Axo V2.7 Phase B — Header Logo, Homepage, Library & History (P3–P8
     }
 
     const expectedLabelsBySample: Record<string, string[]> = {
-      "thiet-dien-chop": ["S", "A", "B", "C", "D", "M", "N", "P", "Q"],
-      "mat-cheo-sac": ["S", "A", "B", "C", "D"],
-      "vuong-goc-chop": ["S", "A", "B", "C", "D"],
-      "mp-vuong-goc-duong": ["S", "A", "B", "C", "D", "H"],
-      "the-tich-chop": ["S", "A", "B", "C", "D", "H"],
-      "cau-cat-mat-phang": ["I", "H", "M"],
+      "thiet-dien-chop": ["S", "A", "B", "C", "D", "M", "N", "P", "Q", "(MNP)"],
+      "mat-cheo-sac": ["S", "A", "B", "C", "D", "(SAC)"],
+      "vuong-goc-chop": ["S", "A", "B", "C", "D", "(SAB)"],
+      "mp-vuong-goc-duong": ["S", "A", "B", "C", "D", "H", "(α)"],
+      "the-tich-chop": ["S", "A", "B", "C", "D"],
+      "cau-cat-mat-phang": ["I", "H", "M", "(P)"],
       "cau-the-tich": ["I", "A"],
-      "tru-thiet-dien-tron": ["O", "O′", "M"],
+      "tru-thiet-dien-tron": ["O", "O′", "M", "(α)"],
       "tru-truc-xien": ["O", "O′", "A"],
       "non-thiet-dien-truc": ["S", "O", "A", "B"],
       "non-duong-sinh": ["S", "O", "A"],
@@ -84,6 +84,7 @@ describe("Axo V2.7 Phase B — Header Logo, Homepage, Library & History (P3–P8
         expect(svgHtml, `thumbnail ${sampleId} thiếu nhãn ${lbl}`).toContain(`>${lbl}<`);
       }
     }
+    expect(renderToString(<SamplePreview sampleId="the-tich-chop" />)).not.toContain(">H<");
     if (false) {
     }
   });
