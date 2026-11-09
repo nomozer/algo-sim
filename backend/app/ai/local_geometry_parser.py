@@ -1422,6 +1422,54 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
         )
         mapped_fact = True
 
+    # 5g. Line-plane intersection point: "(Gọi )?I là giao điểm của AC' và mặt phẳng (A'BD)"
+    for m_ilp in re.finditer(
+        rf"(?P<full>(?:Gọi\s+)?(?<![\w'])(?P<pt>{_PT})\s+là\s+giao\s+điểm(?:\s+của)?\s+(?:đường\s+thẳng\s+|cạnh\s+|đường\s+chéo\s+)?(?P<line>{_PTS2})\s+(?:và|với)\s+(?:mặt\s+phẳng\s+|mp\s*)?\((?P<plane>{_PTS3_6})\))(?![\w'])",
+        ctext_norm,
+        re.IGNORECASE | re.UNICODE,
+    ):
+        pt_i = m_ilp.group("pt")
+        if not pt_i[0].isupper():
+            continue
+        q_ilp = _clean_quote(raw, ca + m_ilp.start("full"), ca + m_ilp.end("full"))
+        builder.premises.append(
+            {
+                "kind": "intersect_line_plane",
+                "args": {
+                    "point": pt_i,
+                    "line": _split_pts(m_ilp.group("line")),
+                    "plane": _split_pts(m_ilp.group("plane")),
+                },
+                "quote": q_ilp,
+                "solid_id": builder._primary_solid_id,
+            }
+        )
+        mapped_fact = True
+
+    # 5h. Line-line intersection point: "(Gọi )?O là giao điểm của AC và BD"
+    for m_ill in re.finditer(
+        rf"(?P<full>(?:Gọi\s+)?(?<![\w'])(?P<pt>{_PT})\s+là\s+giao\s+điểm(?:\s+của)?(?:\s+hai\s+(?:đường\s+thẳng|đường\s+chéo|cạnh))?\s+(?P<l1>{_PTS2})\s+(?:và|với)\s+(?P<l2>{_PTS2}))(?![\w'(])",
+        ctext_norm,
+        re.IGNORECASE | re.UNICODE,
+    ):
+        pt_o = m_ill.group("pt")
+        if not pt_o[0].isupper():
+            continue
+        q_ill = _clean_quote(raw, ca + m_ill.start("full"), ca + m_ill.end("full"))
+        builder.premises.append(
+            {
+                "kind": "intersect_line_line",
+                "args": {
+                    "point": pt_o,
+                    "line1": _split_pts(m_ill.group("l1")),
+                    "line2": _split_pts(m_ill.group("l2")),
+                },
+                "quote": q_ill,
+                "solid_id": builder._primary_solid_id,
+            }
+        )
+        mapped_fact = True
+
     # ── 6. Cutting Planes & Sections (`derived_sections`) ────────────────────────────────────────────────────────
     # 6a. Ambiguous constrained plane ("vuông góc với một mặt bên")
     m_sec_ambig = re.search(

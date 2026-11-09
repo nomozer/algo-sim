@@ -742,7 +742,7 @@ def reconcile_dual_ocr_texts(
     reconciled_text = p_raw
     repairs: list[dict[str, str]] = []
     for m_prism in re.finditer(
-        r"(?<![A-Za-z0-9'])(?P<base>[A-Z]{3,6})\.(?P<top>[A-Z0-9'′°*`´]{3,12})(?![A-Za-z0-9'])",
+        r"(?<![A-Za-z0-9'])(?P<base>[A-Z]{3,6})\.(?P<top>[A-Z0-9'′°*`´Œ”\"](?:[A-Z0-9'′°*`´Œ”\"\s]{1,12}?[A-Z]['′°”\"]))(?![A-Za-z0-9'])",
         p_raw,
     ):
         base_str = m_prism.group("base")

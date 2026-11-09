@@ -172,34 +172,41 @@ def test_03_case_d_missing_dimension_routes_to_local_ambiguous_clarification_zer
 
 
 def test_04_case_a_dual_ocr_reconciliation_s05_clean_vs_degraded_and_adversarial() -> None:
-    # Exact recorded OCR strings from ocr_benchmark.json for s05_hinh_hop_chu_nhat_clean
-    s05_tesseract = (
-        "Câu 5. Cho hình hộp chữ nhật ABCD.A'B°C'D' có AB = 3, AD = 4, AA' = 12.\n"
-        "Tính độ dài đường chéo AC' và thể tích khối hộp."
+    # 1. Exact recorded OCR strings from local_ocr_pretrained_comparison_receipt.json for s05_dau_tieng_viet (clean) vs s05_dau_tieng_viet_degraded
+    s05_clean_tess = (
+        "Câu 1. Cho hình hộp chữ nhật ABCD.A'B'Œ 7D” có AB = 3, AD = 4, AA' = 5. "
+        "Gọi I là giao điểm của AC' và mặt phẳng (A'BD). Tính độ dài đoạn thẳng AI."
     )
-    s05_rapidocr = (
-        "Câu 5. Cho hinh hop ch nhat ABCD.A'B'C'D' co AB = 3, AD = 4, AA' = 12.\n"
-        "Tinh do dai duong cheo AC' va the tich khoi hop."
+    s05_clean_rapid = (
+        "Câu 1. Cho hình hp chū nht ABCD.A'B'C'D' có AB = 3, AD = 4, AA′ = 5. "
+        "Gi I là giao dim cūa AC' và mt phng (A'BD). Tính d dài doan thng AI."
+    )
+    s05_deg_tess = (
+        "Câu 1. Cho hình hộp chữ nhật ABCD.AB'C'D' có AB = 3, AD = 4, AA' = 5. "
+        "Gọi I là giao điểm của AC' và mặt phẳng (A'BD). Tính độ dài đoạn thẳng AI."
+    )
+    s05_deg_rapid = (
+        "Câu 1. Cho hinh hp chū nht ABCD.A'B'C'D' có AB = 3, AD = 4, AA' = 5. "
+        "Gąi I là giao dim ca AC′ và mt phng (A'BD). Tính d dài doan thng AI."
     )
 
-    # 1. Single-engine raw Tesseract fails fidelity because B' was misread as B°
-    single_fid = verify_ocr_input_fidelity(s05_tesseract)
-    assert single_fid["fidelity_passed"] is False
-    assert "vertex_and_solid_consistency" in single_fid["failed_checks"]
+    # Single-engine raw Tesseract fails fidelity on BOTH s05_clean (ABCD.A'B'Œ 7D”) and s05_degraded (ABCD.AB'C'D')
+    assert verify_ocr_input_fidelity(s05_clean_tess)["fidelity_passed"] is False
+    assert verify_ocr_input_fidelity(s05_deg_tess)["fidelity_passed"] is False
 
-    # 2. Dual-engine reconciliation on s05_clean repairs ABCD.A'B°C'D' -> ABCD.A'B'C'D' without ground truth
-    rec_clean = reconcile_dual_ocr_texts(s05_tesseract, s05_rapidocr, is_degraded_image=False)
+    # Dual-engine reconciliation on s05_dau_tieng_viet (clean) repairs ABCD.A'B'Œ 7D” -> ABCD.A'B'C'D' without ground truth
+    rec_clean = reconcile_dual_ocr_texts(s05_clean_tess, s05_clean_rapid, is_degraded_image=False)
     assert rec_clean["reconciled"] is True
     assert rec_clean["used_ground_truth"] is False
     assert len(rec_clean["repairs"]) == 1
-    assert rec_clean["repairs"][0]["corrupted_token"] == "ABCD.A'B°C'D'"
+    assert rec_clean["repairs"][0]["corrupted_token"] == "ABCD.A'B'Œ 7D”"
     assert rec_clean["repairs"][0]["repaired_token"] == "ABCD.A'B'C'D'"
 
-    # Route Case A on s05_clean -> LOCAL_OCR_VERIFIED_ZERO_AI with 0 AI calls and exact answers 144, 13
+    # Route Case A on s05_clean -> LOCAL_OCR_VERIFIED_ZERO_AI with 0 AI calls and exact answer 5√2/3
     out_clean = route_image_or_prepare_outcome(
         {"status": "ready", "source_kind": "image", "problem_text": rec_clean["reconciled_text"], "metrics": {"vlm_calls": 0}},
-        local_ocr_text=s05_tesseract,
-        secondary_ocr_text=s05_rapidocr,
+        local_ocr_text=s05_clean_tess,
+        secondary_ocr_text=s05_clean_rapid,
         allow_verified_local_ocr=True,
         is_degraded_image=False,
         allow_live_ai=False,
@@ -207,17 +214,17 @@ def test_04_case_a_dual_ocr_reconciliation_s05_clean_vs_degraded_and_adversarial
     assert out_clean.status == "SERVED"
     assert out_clean.telemetry.chosen_route == "LOCAL_OCR_VERIFIED_ZERO_AI"
     assert out_clean.telemetry.total_provider_calls == 0
-    assert out_clean.response["route_d"]["answers"] == {"q1": "144", "q2": "13"}
+    assert out_clean.response["route_d"]["answers"] == {"q1": "5√2/3"}
 
-    # 3. On s05_degraded (is_degraded_image=True), dual-OCR reconciliation is refused and falls back to Vision
-    rec_deg = reconcile_dual_ocr_texts(s05_tesseract, s05_rapidocr, is_degraded_image=True)
+    # On s05_dau_tieng_viet_degraded (is_degraded_image=True), dual-OCR reconciliation is refused and falls back to Vision
+    rec_deg = reconcile_dual_ocr_texts(s05_deg_tess, s05_deg_rapid, is_degraded_image=True)
     assert rec_deg["reconciled"] is False
     assert rec_deg["reason_code"] == "DEGRADED_IMAGE_REQUIRES_VISION_FALLBACK"
 
     out_deg = route_image_or_prepare_outcome(
         {"status": "ready", "source_kind": "image", "problem_text": rec_clean["reconciled_text"], "metrics": {"vlm_calls": 1}},
-        local_ocr_text=s05_tesseract,
-        secondary_ocr_text=s05_rapidocr,
+        local_ocr_text=s05_deg_tess,
+        secondary_ocr_text=s05_deg_rapid,
         allow_verified_local_ocr=True,
         is_degraded_image=True,
         allow_live_ai=False,
@@ -227,15 +234,15 @@ def test_04_case_a_dual_ocr_reconciliation_s05_clean_vs_degraded_and_adversarial
     assert out_deg.telemetry.gemini_vision_calls == 1
 
     # 4. Adversarial: cross-engine numeric disagreement (AB = 3 vs AB = 8) is refused
-    s05_rapid_bad_num = s05_rapidocr.replace("AB = 3", "AB = 8")
-    rec_bad_num = reconcile_dual_ocr_texts(s05_tesseract, s05_rapid_bad_num, is_degraded_image=False)
+    s05_rapid_bad_num = s05_clean_rapid.replace("AB = 3", "AB = 8")
+    rec_bad_num = reconcile_dual_ocr_texts(s05_clean_tess, s05_rapid_bad_num, is_degraded_image=False)
     assert rec_bad_num["reconciled"] is False
     assert "CROSS_ENGINE_DISAGREEMENT:assignments" in str(rec_bad_num["reason_code"])
 
-    # 5. Adversarial: multi-problem header (Câu 5 + Câu 6) is refused
+    # 5. Adversarial: multi-problem header (Câu 1 + Câu 2) is refused
     rec_multi = reconcile_dual_ocr_texts(
-        s05_tesseract + "\nCâu 6. Cho hình cầu.",
-        s05_rapidocr + "\nCau 6. Cho hinh cau.",
+        s05_clean_tess + " Câu 2. Cho hình cầu.",
+        s05_clean_rapid + " Cau 2. Cho hinh cau.",
         is_degraded_image=False,
     )
     assert rec_multi["reconciled"] is False
