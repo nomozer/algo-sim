@@ -4,6 +4,45 @@
 Retired branch names now have local `refs/archive/repository-closure/` references and a verified private self-contained bundle.
 Existing evidence and historical reports below are unchanged; no research result is reinterpreted by this Git-state update.
 
+## WAVE_ID = PARALLEL_INGESTION_REASONING_INTEGRATION
+
+REPORT = docs/evaluation/geometry/runs/parallel-ingestion-reasoning/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/parallel-ingestion-reasoning/
+START_BASE = d79565b52ec19a7b1a75be28c09bb43cc0f6d146 (tip of feat/algosim-local-first-image-ingestion; clean detached Full T3 FULL_PRODUCT_GATE_PASS; main = origin/main bb046fa22)
+CODE_COMMIT = d2d89376a (merge of feat/adaptive-local-ocr-fallback 25a098602 + feat/hybrid-reasoning-generalization 756697dc7, comment-only follow-up; measured_system 0e815f39c8d02203d73ce332faa7f167c8344ef925f6adc547bbe37bae472a7c, 106 entries; CACHE_VERSION 132 unchanged)
+CLASSIFICATION = OFFLINE_PARALLEL_WORKSTREAM_INTEGRATION (branch integration/parallel-ingestion-reasoning, not merged, not pushed): A = LOCAL_OCR_DIAGNOSTIC_ONLY, B = HYBRID_REASONING_IMPROVEMENT_VERIFIED on a 72-case development corpus (not held-out), integration verdict and Full T3 in run.json; INDEPENDENT_H1_VALIDATION = NOT_MEASURED.
+PRODUCT_CHANGE = YES (inherited from A and B; integration adds a comment-only edit)
+MODEL_REQUEST_COUNT = 0
+VERIFICATION = report.md; run.json; receipt-correction.md; tools/reconcile_receipts.py; results/receipt_reconciliation.json
+CORRECTS = docs/evaluation/geometry/runs/algosim-local-first-image-ingestion/LOCAL_FIRST_IMAGE_INGESTION_REPORT.md
+CORRECTED_BY = NONE
+
+## WAVE_ID = HYBRID_REASONING_GENERALIZATION
+
+REPORT = docs/evaluation/geometry/runs/hybrid-reasoning-generalization/HYBRID_REASONING_GENERALIZATION_REPORT.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-reasoning-generalization/
+START_BASE = d79565b52ec19a7b1a75be28c09bb43cc0f6d146
+CODE_COMMIT = 5e273f130 (engine.py `_tam_giac` perpendicular_lines right angle + `_dinh_tu_ba_canh_ben` trilateration; registry.py `_kiem_result_binding` foot-certificate quotes; candidate a9993e28…, re-frozen from a clean tree at dd551ffec)
+CLASSIFICATION = OFFLINE_DEVELOPMENT_MATRIX (HELD_OUT_CLAIM = NONE, EVALUATOR_INDEPENDENCE = NONE): 72 cases, exact served 47 -> 56, false refusals 6 -> 0, wrong served 0 -> 0; G2/G3/G4/G6/G7 open as strict xfails; historical delta layers for NLU D08, v3-matrix dev02 and LOCKED-split h16 (not used for authoring; no LOCKED claim).
+PRODUCT_CHANGE = YES (backend: engine.py, registry.py)
+MODEL_REQUEST_COUNT = 0
+VERIFICATION = HYBRID_REASONING_GENERALIZATION_REPORT.md; run.json; results/; tools/reasoning_matrix.py; backend/tests/geometry/test_hybrid_reasoning_generalization.py
+CORRECTS = NONE
+CORRECTED_BY = NONE
+
+## WAVE_ID = ADAPTIVE_LOCAL_OCR_FALLBACK
+
+REPORT = docs/evaluation/geometry/runs/adaptive-local-ocr-fallback/ADAPTIVE_LOCAL_OCR_REPORT.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/adaptive-local-ocr-fallback/
+START_BASE = d79565b52ec19a7b1a75be28c09bb43cc0f6d146
+CODE_COMMIT = ebf712360 (region_detector.py `crop_holds_all_content` + unified_input.py retry rule; candidate 79e18b6e…)
+CLASSIFICATION = OFFLINE_OCR_BENCHMARK_AND_GATE_DIAGNOSTIC (synthetic rendered images only, REAL_PHOTO_CORPUS = NOT_ESTABLISHED; calibration in-sample): Tesseract vie keeps diacritics but silently misreads math symbols, RapidOCR reads symbols but lacks Vietnamese letters; no single-engine safe gate; no OCR engine ships; mock Vision calls 23 -> 22 on 22 images; LOCAL_OCR_DIAGNOSTIC_ONLY.
+PRODUCT_CHANGE = YES (backend: region_detector.py, unified_input.py)
+MODEL_REQUEST_COUNT = 0
+VERIFICATION = ADAPTIVE_LOCAL_OCR_REPORT.md; run.json; ocr_benchmark.json; vision_calls_before_after.json; tools/; backend/tests/test_image_crop_retry_dedup.py
+CORRECTS = NONE
+CORRECTED_BY = NONE
+
 ## WAVE_ID = ALGOSIM_LOCAL_FIRST_IMAGE_INGESTION
 
 REPORT = docs/evaluation/geometry/runs/algosim-local-first-image-ingestion/LOCAL_FIRST_IMAGE_INGESTION_REPORT.md
@@ -15,7 +54,7 @@ PRODUCT_CHANGE = YES (backend: engine.py, region_detector.py, unified_input.py, 
 MODEL_REQUEST_COUNT = 0
 VERIFICATION = LOCAL_FIRST_IMAGE_INGESTION_REPORT.md; run.json; before_metrics.json; after_metrics.json; tools/measure_image_ingestion.py; backend/tests/test_local_first_image_ingestion_e2e.py; frontend/src/components/photo-problem-panel.test.tsx
 CORRECTS = NONE
-CORRECTED_BY = NONE
+CORRECTED_BY = docs/evaluation/geometry/runs/parallel-ingestion-reasoning/receipt-correction.md (§1.2 describes the removed `_kc2_do_dai` guard as a stricter one; 9 cells of §4.2 differ from the JSON receipts; Full T3 not run by that report)
 
 ## WAVE_ID = HYBRID_GOAL_DRIVEN_PLANNER
 

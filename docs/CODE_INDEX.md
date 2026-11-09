@@ -1,5 +1,11 @@
 # CODE_INDEX.md — Chỉ mục module + BỘ NHỚ KIẾN TRÚC
 
+## Parallel integration (run `parallel-ingestion-reasoning`, 2026-11-09)
+
+| Path | Owns | Locked by |
+|---|---|---|
+| `docs/evaluation/geometry/runs/parallel-ingestion-reasoning/tools/reconcile_receipts.py` | Compares every cell of the §4.2 table of `LOCAL_FIRST_IMAGE_INGESTION_REPORT.md` with `before_metrics.json`/`after_metrics.json` (the receipts are the source of truth) and writes the mismatch list | receipt `results/receipt_reconciliation.json` in the run directory |
+
 ## Adaptive Local OCR & Vision Fallback (run `adaptive-local-ocr-fallback`, 2026-11-09)
 
 | Path | Owns | Locked by |
@@ -19,7 +25,7 @@
 
 | Path | Owns | Locked by |
 |---|---|---|
-| `backend/app/simulation/geometry_functions/engine.py` · `backend/tests/geometry/test_goal_driven_planner_generalization.py` | Stabilizes the previous candidate (`PREVIOUS_CANDIDATE_FIXED_AND_VERIFIED`): enforces `DEGENERATE_POINTS` refusal on all 0-length measured segments (`if d2 == 0:`) in `_Dung._kc2_do_dai` and aligns `test_family_e9_degenerate_coincident_points_on_distance_goal` + `test_section_ix_test5_metamorphic_renaming_and_scaling` (`115/115` passed across `test_goal_driven_planner_generalization.py` and `test_hybrid_goal_decomposition.py`) | `backend/tests/geometry/test_goal_driven_planner_generalization.py` |
+| `backend/app/simulation/geometry_functions/engine.py` · `backend/tests/geometry/test_goal_driven_planner_generalization.py` | Removes the zero-length guard from `_Dung._kc2_do_dai`: the length verifier is a point-to-point distance, so coincident endpoints serve `"0"`; goals that need a line through them (angles, ⊥ plane, midpoint/division) still refuse `DEGENERATE_LINE`/`DEGENERATE_POINTS`. `test_family_e9_projection_coinciding_with_source_point_degenerate_segment_refused` locks both halves; `test_section_ix_test5_metamorphic_renaming_and_scaling` checks `S.ABCD → T.MNPQ` and scale `k = 3`. (Corrected 2026-11-09: the run report described the opposite — `runs/parallel-ingestion-reasoning/receipt-correction.md`.) | `backend/tests/geometry/test_goal_driven_planner_generalization.py` |
 | `backend/app/ingestion/region_detector.py` · `backend/app/ingestion/unified_input.py` · `backend/app/ingestion/document_reader.py` · `frontend/src/components/ProblemInput.tsx` | Local-first intelligent image ingestion & provider load reduction: adds `has_shadow`/`enhanced_shadow` (`ImageQualityReport`), `(80x60)` HSV local background shadow detection + C-level `ImageChops` illumination normalization (`assess_and_enhance_image`), `p1`/`p99` low-light dynamic range check, shadowed neutral paper preservation in `detect_page_boundary` (`class_05_shadowed` recall `0.4233 -> 1.0000`), single-pass `_segment_layout_blocks` + lazy `_get_page_work_norm()` + `predecoded`/`prenormalized_image` reuse (`median_preprocess_ms` `-38.4%`, `median_prepare_ms` `-34.9%`, `median_e2e_ms` `-34.6%`), user-edited standalone problem preservation in `merge_supplemental_text`, and automatic `#home-problem-input` sync + zero-VLM re-submit on user edits in `ProblemInput.tsx` (`extractedBatchRef`, `attachmentBatchSignature`) | `backend/tests/test_local_first_image_ingestion_e2e.py`, `frontend/src/components/photo-problem-panel.test.tsx` |
 | `docs/evaluation/geometry/runs/algosim-local-first-image-ingestion/tools/measure_image_ingestion.py` · `docs/evaluation/geometry/runs/algosim-local-first-image-ingestion/before_metrics.json` · `docs/evaluation/geometry/runs/algosim-local-first-image-ingestion/after_metrics.json` · `docs/evaluation/geometry/runs/algosim-local-first-image-ingestion/LOCAL_FIRST_IMAGE_INGESTION_REPORT.md` | Quantitative before/after evaluation across all `11` image classes (`10/11 -> 11/11` PASS) and `8` Gemini load scenarios (`7/8 -> 8/8` PASS, `0` live Gemini calls) | `backend/tests/test_local_first_image_ingestion_e2e.py` |
 
