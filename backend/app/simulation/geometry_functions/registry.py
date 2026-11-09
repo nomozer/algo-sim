@@ -2010,6 +2010,12 @@ def _kiem_result_binding(phu, calls, de, nhan, don_vi_de: set[str] = frozenset()
             if isinstance(e, dict):
                 chain_quotes.setdefault(e.get('call'), set()).update(
                     chuan_hoa(q) for q in d.get('quotes') or () if isinstance(q, str))
+    # … and from a `distance(point,line)` decomposition that names it as its foot (one goal's foot reused by another
+    # goal's chain); that certificate is itself validated below / in `_kiem_phu`, so a forged one is still refused.
+    for d in phu:
+        if d.get('rule') == 'distance(point,line)':
+            chain_quotes.setdefault(d.get('construct'), set()).update(
+                chuan_hoa(q) for q in d.get('quotes') or () if isinstance(q, str))
     for c in calls:
         if getattr(c.args,'line_ref',None) and c.id not in registered:
             raise TuChoi('RESULT_BINDING_UNVERIFIED', 'line_ref chỉ qua chứng chỉ của Planner', (c.id,))

@@ -647,28 +647,42 @@ class _Dung:
         return None
 
     def _tam_giac(self, vong: tuple[str, ...]):
-        """Ba cạnh² từ độ dài + góc vuông (Pythagore khi biết hai trong ba). Gram từ định lý cos (hữu tỉ)."""
+        """Ba cạnh² từ độ dài + góc vuông (Pythagore khi biết hai trong ba). Gram từ định lý cos (hữu tỉ). Góc vuông là
+        `right_angle`, hay hai đoạn `perpendicular_lines` CHUNG một đầu mút V (VX ⊥ VY); V ngoài đáy (tứ diện OABC có OA, OB,
+        OC đôi một vuông góc) cho cạnh đáy XY² = VX² + VY² — tam giác VXY vuông tại V, không cần V đã đặt."""
         canh = {frozenset(p): None for p in ((vong[0], vong[1]), (vong[0], vong[2]), (vong[1], vong[2]))}
         dung: set[str] = set()
         for e in canh:
             if l := sorted(self.do_dai(*sorted(e))):
                 canh[e] = l[0][0]
                 dung |= set(l[0][1])
-        for c in self.of("right_angle"):
-            V, (X, Y) = c.args.vertex, c.args.rays
+        goc = [(c.args.vertex, *c.args.rays, c.id) for c in self.of("right_angle")]
+        goc += [(V, *sorted(set(c.args.line1) ^ set(c.args.line2)), c.id) for c in self.of("perpendicular_lines")
+                if len(set(c.args.line1) | set(c.args.line2)) == 3 for V in set(c.args.line1) & set(c.args.line2)]
+        for V, X, Y, cid in goc:
+            hy = frozenset((X, Y))
+            if V not in vong and hy in canh:
+                la, lb = sorted(self.do_dai(V, X)), sorted(self.do_dai(V, Y))
+                if la and lb and canh[hy] is None:
+                    canh[hy] = la[0][0] + lb[0][0]
+                    dung |= {cid, *la[0][1], *lb[0][1]}
+                elif la and lb and canh[hy] != la[0][0] + lb[0][0]:
+                    raise TuChoi("INCONSISTENT_FACTS", f"{X}{Y}² ≠ {V}{X}² + {V}{Y}² dù {V}{X} ⊥ {V}{Y}",
+                                 (cid, *la[0][1], *lb[0][1]))
+                continue
             if {V, X, Y} != set(vong):
                 continue
-            l1, l2, hy = frozenset((V, X)), frozenset((V, Y)), frozenset((X, Y))
+            l1, l2 = frozenset((V, X)), frozenset((V, Y))
             if canh[hy] is None and canh[l1] is not None and canh[l2] is not None:
                 canh[hy] = canh[l1] + canh[l2]
-                dung.add(c.id)
+                dung.add(cid)
             elif canh[hy] is not None and (canh[l1] is None) != (canh[l2] is None):
                 biet = l1 if canh[l1] is not None else l2
                 con = canh[hy] - canh[biet]
                 if con <= 0:
-                    raise TuChoi("INCONSISTENT_FACTS", "cạnh huyền không dài hơn cạnh góc vuông", (c.id,))
+                    raise TuChoi("INCONSISTENT_FACTS", "cạnh huyền không dài hơn cạnh góc vuông", (cid,))
                 canh[l2 if biet == l1 else l1] = con
-                dung.add(c.id)
+                dung.add(cid)
         if any(v is None for v in canh.values()):
             raise TuChoi("MISSING_DIMENSION", "đáy tam giác chưa xác định đủ ba cạnh")
         d01, d02, d12 = (canh[frozenset((vong[0], vong[1]))], canh[frozenset((vong[0], vong[2]))],
@@ -952,6 +966,34 @@ class _Dung:
                 self.trace[-1]["relation_verified"] = True
                 self.dung.add(c.id)
                 return True
+        return self._dinh_tu_ba_canh_ben()
+
+    def _dinh_tu_ba_canh_ben(self) -> bool:
+        """LAST rule: the apex of the root pyramid, when nothing else placed it, from its distances to three non-collinear
+        placed base points. Foot F (chart): g(F − P0, Pi − P0) = (|Pi − P0|² + d0² − di²)/2, i = 1, 2 — linear, exact in ℚ;
+        h² = d0² − |F − P0|² ≤ 0 ⇒ INCONSISTENT_FACTS. Every other lateral length stays a fact the figure is checked against."""
+        k = getattr(self, "root", None)                   # curved-only figures have no root polyhedron
+        if k is None or k.kind != "pyramid" or not k.apex or k.apex in self.pts or not all(b in self.pts for b in k.base):
+            return False
+        biet = [(b, l[0]) for b in k.base if (l := sorted(self.do_dai(k.apex, b)))]
+        for (p0, (r0, i0)), (p1, (r1, i1)), (p2, (r2, i2)) in combinations(biet, 3):
+            u, v = self._vec(p0, p1), self._vec(p0, p2)
+            gu, gv, guv = self.g(u, u), self.g(v, v), self.g(u, v)
+            det = gu * gv - guv * guv
+            if det == 0:
+                continue                                   # collinear: try another triple
+            b1, b2 = (gu + r0 - r1) / 2, (gv + r0 - r2) / 2
+            s, t = (b1 * gv - b2 * guv) / det, (b2 * gu - b1 * guv) / det     # F − P0 = s·u + t·v
+            f = tuple(s * u[i] + t * v[i] for i in range(3))
+            h2 = r0 - self.g(f, f)
+            ids = {*i0, *i1, *i2}
+            if h2 <= 0:
+                raise TuChoi("INCONSISTENT_FACTS", f"{k.apex}: ba cạnh bên không dựng được đỉnh ngoài mặt đáy",
+                             tuple(sorted(ids)))
+            o = self.pts[p0]
+            self._dat_ngoai_day(k.apex, (o[0] + f[0], o[1] + f[1]), h2, f"apex_from_lateral_edges_{p0}{p1}{p2}",
+                                {k.call} | ids)
+            return True
         return False
 
     def _rang_buoc_vuong(self):

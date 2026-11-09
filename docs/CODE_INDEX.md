@@ -7,6 +7,14 @@
 | `backend/app/ingestion/region_detector.py` · `backend/app/ingestion/unified_input.py` | `RegionDetectionResult.crop_holds_all_content` (crop contains every layout block, incl. noise, and no desk trim) gates the crop → full-image Vision retry: `missing_regions` / `MISSING_PROBLEM_TEXT` on a complete crop no longer spends a second call; `IMAGE_NOT_READABLE` keeps its one retry. No local OCR engine ships in product code. | `backend/tests/test_image_crop_retry_dedup.py`, `backend/tests/test_unified_input_20_cases.py` (C19 desk-photo retry) |
 | `docs/evaluation/geometry/runs/adaptive-local-ocr-fallback/tools/benchmark_local_ocr.py` · `docs/evaluation/geometry/runs/adaptive-local-ocr-fallback/tools/measure_vision_calls.py` | Offline OCR benchmark (Tesseract `vie` best/fast via tesserocr, RapidOCR PP-OCRv6/v5 in a scratch venv; parent in backend venv scores vs `ground_truth_text` and evaluates the candidate local-only gate) and mock-provider Vision call counts before/after on the same image set | receipts `ocr_benchmark.json`, `vision_calls_before_after.json` in the run directory |
 
+## Hybrid Reasoning & Generalization (run `hybrid-reasoning-generalization`, 2026-11-09)
+
+| Path | Owns | Locked by |
+|---|---|---|
+| `backend/app/simulation/geometry_functions/engine.py` | `_Dung._tam_giac`: a triangle-base side by Pythagoras over a right angle stated outside the base, or as two `perpendicular_lines` segments sharing an endpoint (VX ⊥ VY ⇒ XY² = VX² + VY²; stated XY that disagrees ⇒ `INCONSISTENT_FACTS`). `_Dung._dinh_tu_ba_canh_ben`: LAST layout rule — the root pyramid apex from its lengths to three non-collinear placed base points (exact trilateration in the Gram chart; h² ≤ 0 ⇒ `INCONSISTENT_FACTS`) | `backend/tests/geometry/test_hybrid_reasoning_generalization.py` |
+| `backend/app/simulation/geometry_functions/registry.py` | `_kiem_result_binding`: a planner-written fresh call's goal quotes also come from the `distance(point,line)` certificate naming it as `construct` (one goal-only foot reused by another goal's `effect-chain`) | `backend/tests/geometry/test_hybrid_reasoning_generalization.py` |
+| `docs/evaluation/geometry/runs/hybrid-reasoning-generalization/tools/reasoning_matrix.py` | Development matrix (72 gold TypedFactNext /2 cases through `run_hybrid_offline`, oracle values from `custodian/geometry_oracle.py`), outcome classification, planner/kernel/route timing; `--label`, `--render`, `BENCHMARK_BACKEND_ROOT` for A/B on an exported base `backend/app` | `backend/tests/geometry/test_hybrid_reasoning_generalization.py` (imports its cases) |
+
 ## Hybrid Stabilization & Local-First Intelligent Image Ingestion (run `algosim-local-first-image-ingestion`, 2026-11-09)
 
 | Path | Owns | Locked by |

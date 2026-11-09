@@ -1,0 +1,3157 @@
+{
+ "schema": "hybrid-reasoning-matrix/1",
+ "measurement_class": "OFFLINE_DEVELOPMENT_MATRIX",
+ "held_out_claim": "NONE",
+ "evaluator_independence": "NONE",
+ "live_calls": 0,
+ "git_head": "dd551ffec79d847c41fabffa178621981ace359f",
+ "measured_backend": "worktree backend/app (git_head + working tree)",
+ "case_count": 72,
+ "outcome_counts": {
+  "CORRECT_CLARIFICATION": 1,
+  "CORRECT_REFUSAL": 9,
+  "EXACT_SERVED": 56,
+  "NO_PLAN_DESPITE_PRIMITIVES": 5,
+  "SEARCH_BUDGET_EXCEEDED": 1
+ },
+ "out_of_scope_not_run": [
+  {
+   "class": "plane operand given by a described point",
+   "why": "GOAL_OPERAND_SHAPES['plane'] is refs3 of labels; a described ref may stand only in point slots (typed_fact_next.DESCRIBED_GOAL_KEYS) — contract change, not a planner gap"
+  },
+  {
+   "class": "proof goals (Chứng minh ...)",
+   "why": "MathGoalSpec.kind ∈ {volume_ratio, residual_volume, measurement}; no prove goal in /2"
+  },
+  {
+   "class": "dragging / dynamic loci",
+   "why": "ARCHITECTURE_MAP invariant #31 (frame k ⇔ trace[k]); interaction is select+scrub"
+  },
+  {
+   "class": "nesting deeper than MAX_DESCRIBED_DEPTH = 2",
+   "why": "contract bound (typed_fact_next.MAX_DESCRIBED_DEPTH)"
+  }
+ ],
+ "performance": {
+  "planner_cpu_ms": {
+   "p50": 0.846,
+   "p95": 2.57,
+   "max": 3.446,
+   "n": 67
+  },
+  "kernel_cpu_ms": {
+   "p50": 11.914,
+   "p95": 24.714,
+   "max": 181.937,
+   "n": 66
+  },
+  "route_cold_ms": {
+   "p50": 105.134,
+   "p95": 203.319,
+   "max": 259.863,
+   "n": 72
+  },
+  "route_warm_ms": {
+   "p50": 19.869,
+   "p95": 36.007,
+   "max": 51.912,
+   "n": 72
+  },
+  "peak_memory_kib_max": 897.69,
+  "explored_states_max": 48,
+  "candidate_evaluations_max": 39,
+  "pruned_nodes_max": 15,
+  "search_depth_max": 4,
+  "reused_intermediates_total": 15,
+  "search_exhausted_cases": 1,
+  "note": "cold = first run_hybrid_offline in this process for that case (module caches already warm after the first case); warm = median of 3 repeats. Planner/kernel CPU measured outside the route."
+ },
+ "cases": [
+  {
+   "id": "PP1",
+   "family": "point-plane distance",
+   "level_expected": null,
+   "outcome": "EXACT_SERVED",
+   "status": "SERVED",
+   "reason_code": null,
+   "answers": {
+    "q1": "√2"
+   },
+   "expected": {
+    "q1": [
+     "len",
+     "2"
+    ]
+   },
+   "oracle": "P2 frame; oracle d²(A,(SBC))",
+   "primitives": [],
+   "classification": "SOURCE_EXPLICIT_SEQUENCE",
+   "explored_states": 0,
+   "candidate_evaluations": 0,
+   "pruned_nodes": 0,
+   "search_depth": 0,
+   "reused_intermediates": 0,
+   "plan_cost": 0,
+   "selected_plan": [
+    "pyramid",
+    "regular_polygon",
+    "perpendicular_line_plane",
+    "segment_length",
+    "ask_distance_point_plane"
+   ],
+   "search_generated_steps": 0,
+   "scene_issues": [],
+   "planner_cpu_ms": 1.743,
+   "kernel_cpu_ms": 181.937,
+   "route_cold_ms": 99.874,
+   "route_warm_ms": 23.002,
+   "peak_memory_kib": 366.69
+  },
+  {
+   "id": "PP2",
+   "family": "point-plane distance",
+   "level_expected": null,
+   "outcome": "EXACT_SERVED",
+   "status": "SERVED",
+   "reason_code": null,
+   "answers": {
+    "q1": "√2/2"
+   },
+   "expected": {
+    "q1": [
+     "len",
+     "1/2"
+    ]
+   },
+   "oracle": "P2; M = mid(SD)",
+   "primitives": [],
+   "classification": "SOURCE_EXPLICIT_SEQUENCE",
+   "explored_states": 0,
+   "candidate_evaluations": 0,
+   "pruned_nodes": 0,
+   "search_depth": 0,
+   "reused_intermediates": 0,
+   "plan_cost": 0,
+   "selected_plan": [
+    "pyramid",
+    "regular_polygon",
+    "perpendicular_line_plane",
+    "segment_length",
+    "midpoint",
+    "ask_distance_point_plane"
+   ],
+   "search_generated_steps": 0,
+   "scene_issues": [],
+   "planner_cpu_ms": 0.567,
+   "kernel_cpu_ms": 16.669,
+   "route_cold_ms": 133.51,
+   "route_warm_ms": 19.82,
+   "peak_memory_kib": 349.89
+  },
+  {
+   "id": "PP3",
+   "family": "point-plane distance (described centroid)",
+   "level_expected": "DESCRIPTOR_COMPOSITION",
+   "outcome": "EXACT_SERVED",
+   "status": "SERVED",
+   "reason_code": null,
+   "answers": {
+    "q1": "2/3"
+   },
+   "expected": {
+    "q1": [
+     "len",
+     "4/9"
+    ]
+   },
+   "oracle": "P2; G = centroid(SCD)",
+   "primitives": [
+    "centroid",
+    "ask_distance_point_plane"
+   ],
+   "classification": "SOURCE_EXPLICIT_SEQUENCE",
+   "explored_states": 7,
+   "candidate_evaluations": 3,
+   "pruned_nodes": 0,
+   "search_depth": 2,
+   "reused_intermediates": 0,
+   "plan_cost": 1,
+   "selected_plan": [
+    "pyramid",
+    "regular_polygon",
+    "perpendicular_line_plane",
+    "segment_length",
+    "centroid",
+    "ask_distance_point_plane"
+   ],
+   "search_generated_steps": 0,
+   "scene_issues": [],
+   "planner_cpu_ms": 1.191,
+   "kernel_cpu_ms": 10.798,
+   "route_cold_ms": 102.787,
+   "route_warm_ms": 23.044,
+   "peak_memory_kib": 372.19
+  },
+  {
+   "id": "PP4",
+   "family": "point-plane distance (described intersection)",
+   "level_expected": "DESCRIPTOR_COMPOSITION",
+   "outcome": "EXACT_SERVED",
+   "status": "SERVED",
+   "reason_code": null,
+   "answers": {
+    "q1": "√2/2"
+   },
+   "expected": {
+    "q1": [
+     "len",
+     "1/2"
+    ]
+   },
+   "oracle": "P2; O = AC∩BD = (1,1,0)",
+   "primitives": [
+    "intersect_line_line",
+    "ask_distance_point_plane"
+   ],
+   "classification": "SOURCE_EXPLICIT_SEQUENCE",
+   "explored_states": 6,
+   "candidate_evaluations": 3,
+   "pruned_nodes": 0,
+   "search_depth": 2,
+   "reused_intermediates": 0,
+   "plan_cost": 1,
+   "selected_plan": [
+    "pyramid",
+    "regular_polygon",
+    "perpendicular_line_plane",
+    "segment_length",
+    "intersect_line_line",
+    "ask_distance_point_plane"
+   ],
+   "search_generated_steps": 0,
+   "scene_issues": [],
+   "planner_cpu_ms": 1.02,
+   "kernel_cpu_ms": 17.682,
+   "route_cold_ms": 119.833,
+   "route_warm_ms": 23.618,
+   "peak_memory_kib": 371.5
+  },
+  {
+   "id": "PP5",
+   "family": "point-plane distance (nested described)",
+   "level_expected": "DESCRIPTOR_COMPOSITION",
+   "outcome": "EXACT_SERVED",
+   "status": "SERVED",
+   "reason_code": null,
+   "answers": {
+    "q1": "1"
+   },
+   "expected": {
+    "q1": [
+     "len",
+     "1"
+    ]
+   },
+   "oracle": "P2; h = proj_(ABCD)(mid SC)",
+   "primitives": [
+    "midpoint",
+    "orthogonal_projection",
+    "ask_distance_point_plane"
+   ],
+   "classification": "DISCOVERED_FUNCTION_COMPOSITION",
+   "explored_states": 8,
+   "candidate_evaluations": 4,
+   "pruned_nodes": 0,
+   "search_depth": 3,
+   "reused_intermediates": 0,
+   "plan_cost": 2,
+   "selected_plan": [
+    "pyramid",
+    "regular_polygon",
+    "perpendicular_line_plane",
+    "segment_length",
+    "midpoint",
+    "orthogonal_projection",
+    "ask_distance_point_plane"
+   ],
+   "search_generated_steps": 1,
+   "scene_issues": [],
+   "planner_cpu_ms": 1.212,
+   "kernel_cpu_ms": 14.929,
+   "route_cold_ms": 121.675,
+   "route_warm_ms": 23.967,
+   "peak_memory_kib": 410.55
+  },
+  {
+   "id": "PP6",
+   "family": "point-plane distance (point on plane)",
+   "level_expected": null,
+   "outcome": "EXACT_SERVED",
+   "status": "SERVED",
+   "reason_code": null,
+   "answers": {
+    "q1": "√2"
+   },
+   "expected": {
+    "q1": [
+     "len",
+     "2"
+    ]
+   },
+   "oracle": "P2; B ∉ (SCD) (control)",
+   "primitives": [],
+   "classification": "SOURCE_EXPLICIT_SEQUENCE",
+   "explored_states": 0,
+   "candidate_evaluations": 0,
+   "pruned_nodes": 0,
+   "search_depth": 0,
+   "reused_intermediates": 0,
+   "plan_cost": 0,
+   "selected_plan": [
+    "pyramid",
+    "regular_polygon",
+    "perpendicular_line_plane",
+    "segment_length",
+    "ask_distance_point_plane"
+   ],
+   "search_generated_steps": 0,
+   "scene_issues": [],
+   "planner_cpu_ms": 0.329,
+   "kernel_cpu_ms": 10.822,
+   "route_cold_ms": 97.76,
+   "route_warm_ms": 18.678,
+   "peak_memory_kib": 299.81
+  },
+  {
+   "id": "PL1",
+   "family": "point-line distance",
+   "level_expected": "REGISTERED_DECOMPOSITION",
+   "outcome": "EXACT_SERVED",
+   "status": "SERVED",
+   "reason_code": null,
+   "answers": {
+    "q1": "2√6/3"
+   },
+   "expected": {
+    "q1": [
+     "len",
+     "8/3"
+    ]
+   },
+   "oracle": "P2",
+   "primitives": [
+    "orthogonal_projection_line",
+    "ask_length"
+   ],
+   "classification": "REGISTERED_DECOMPOSITION",
+   "explored_states": 5,
+   "candidate_evaluations": 2,
+   "pruned_nodes": 0,
+   "search_depth": 2,
+   "reused_intermediates": 0,
+   "plan_cost": 1,
+   "selected_plan": [
+    "pyramid",
+    "regular_polygon",
+    "perpendicular_line_plane",
+    "segment_length",
+    "orthogonal_projection_line",
+    "ask_length"
+   ],
+   "search_generated_steps": 0,
+   "scene_issues": [],
+   "planner_cpu_ms": 0.857,
+   "kernel_cpu_ms": 12.075,
+   "route_cold_ms": 107.065,
+   "route_warm_ms": 19.853,
+   "peak_memory_kib": 338.19
+  },
+  {
+   "id": "PL2",
+   "family": "point-line distance",
+   "level_expected": "REGISTERED_DECOMPOSITION",
+   "outcome": "EXACT_SERVED",
+   "status": "SERVED",
+   "reason_code": null,
+   "answers": {
+    "q1": "√6"
+   },
+   "expected": {
+    "q1": [
+     "len",
+     "6"
+    ]
+   },
+   "oracle": "P2",
+   "primitives": [
+    "orthogonal_projection_line",
+    "ask_length"
+   ],
+   "classification": "REGISTERED_DECOMPOSITION",
+   "explored_states": 5,
+   "candidate_evaluations": 2,
+   "pruned_nodes": 0,
+   "search_depth": 2,
+   "reused_intermediates": 0,
+   "plan_cost": 1,
+   "selected_plan": [
+    "pyramid",
+    "regular_polygon",
+    "perpendicular_line_plane",
+    "segment_length",
+    "orthogonal_projection_line",
+    "ask_length"
+   ],
+   "search_generated_steps": 0,
+   "scene_issues": [],
+   "planner_cpu_ms": 0.759,
+   "kernel_cpu_ms": 12.061,
+   "route_cold_ms": 107.161,
+   "route_warm_ms": 20.032,
+   "peak_memory_kib": 312.25
+  },
+  {
+   "id": "PL3",
+   "family": "point-line distance (described point)",
+   "level_expected": "DESCRIPTOR_COMPOSITION",
+   "outcome": "EXACT_SERVED",
+   "status": "SERVED",
+   "reason_code": null,
+   "answers": {
+    "q1": "1"
+   },
+   "expected": {
+    "q1": [
+     "len",
+     "1"
+    ]
+   },
+   "oracle": "P2",
+   "primitives": [
+    "midpoint",
+    "orthogonal_projection_line",
+    "ask_length"
+   ],
+   "classification": "REGISTERED_DECOMPOSITION",
+   "explored_states": 6,
+   "candidate_evaluations": 3,
+   "pruned_nodes": 0,
+   "search_depth": 2,
+   "reused_intermediates": 1,
+   "plan_cost": 2,
+   "selected_plan": [
+    "pyramid",
+    "regular_polygon",
+    "perpendicular_line_plane",
+    "segment_length",
+    "midpoint",
+    "orthogonal_projection_line",
+    "ask_length"
+   ],
+   "search_generated_steps": 0,
+   "scene_issues": [],
+   "planner_cpu_ms": 1.035,
+   "kernel_cpu_ms": 12.909,
+   "route_cold_ms": 121.975,
+   "route_warm_ms": 21.796,
+   "peak_memory_kib": 356.78
+  },
+  {
+   "id": "PL4",
+   "family": "point-line distance (described intersection)",
+   "level_expected": "DESCRIPTOR_COMPOSITION",
+   "outcome": "EXACT_SERVED",
+   "status": "SERVED",
+   "reason_code": null,
+   "answers": {
+    "q1": "√6/3"
+   },
+   "expected": {
+    "q1": [
+     "len",
+     "2/3"
+    ]
+   },
+   "oracle": "P2; O = (1,1,0)",
+   "primitives": [
+    "intersect_line_line",
+    "orthogonal_projection_line",
+    "ask_length"
+   ],
+   "classification": "REGISTERED_DECOMPOSITION",
+   "explored_states": 6,
+   "candidate_evaluations": 3,
+   "pruned_nodes": 0,
+   "search_depth": 2,
+   "reused_intermediates": 1,
+   "plan_cost": 2,
+   "selected_plan": [
+    "pyramid",
+    "regular_polygon",
+    "perpendicular_line_plane",
+    "segment_length",
+    "intersect_line_line",
+    "orthogonal_projection_line",
+    "ask_length"
+   ],
+   "search_generated_steps": 0,
+   "scene_issues": [],
+   "planner_cpu_ms": 1.066,
+   "kernel_cpu_ms": 15.129,
+   "route_cold_ms": 133.15,
+   "route_warm_ms": 28.862,
+   "peak_memory_kib": 449.85
+  },
+  {
+   "id": "PL5",
+   "family": "point-line distance (line through described point)",
+   "level_expected": "DESCRIPTOR_COMPOSITION",
+   "outcome": "NO_PLAN_DESPITE_PRIMITIVES",
+   "status": "REFUSED",
+   "reason_code": "BRIDGE_UNSUPPORTED_DESCRIBED_POINT",
+   "answers": {},
+   "expected": {
+    "q1": [
+     "len",
+     "8/3"
+    ]
+   },
+   "oracle": "P2",
+   "primitives": [
+    "midpoint",
+    "orthogonal_projection_line",
+    "ask_length"
+   ],
+   "classification": "UNKNOWN",
+   "explored_states": "UNKNOWN",
+   "candidate_evaluations": "UNKNOWN",
+   "pruned_nodes": "UNKNOWN",
+   "search_depth": "UNKNOWN",
+   "reused_intermediates": "UNKNOWN",
+   "plan_cost": "UNKNOWN",
+   "selected_plan": [],
+   "search_generated_steps": "UNKNOWN",
+   "scene_issues": [],
+   "planner_cpu_ms": "NOT_MEASURED",
+   "kernel_cpu_ms": "NOT_MEASURED",
+   "route_cold_ms": 6.937,
+   "route_warm_ms": 1.753,
+   "peak_memory_kib": 27.55
+  },
+  {
+   "id": "PL6",
+   "family": "point-line distance (point on line, degenerate)",
+   "level_expected": "REGISTERED_DECOMPOSITION",
+   "outcome": "EXACT_SERVED",
+   "status": "SERVED",
+   "reason_code": null,
+   "answers": {
+    "q1": "0"
+   },
+   "expected": {
+    "q1": [
+     "len",
+     "0"
+    ]
+   },
+   "oracle": "P2; M ∈ AB ⇒ 0 (degenerate edge)",
+   "primitives": [
+    "orthogonal_projection_line",
+    "ask_length"
+   ],
+   "classification": "REGISTERED_DECOMPOSITION",
+   "explored_states": 5,
+   "candidate_evaluations": 2,
+   "pruned_nodes": 0,
+   "search_depth": 2,
+   "reused_intermediates": 0,
+   "plan_cost": 1,
+   "selected_plan": [
+    "pyramid",
+    "regular_polygon",
+    "perpendicular_line_plane",
+    "segment_length",
+    "midpoint",
+    "orthogonal_projection_line",
+    "ask_length"
+   ],
+   "search_generated_steps": 0,
+   "scene_issues": [],
+   "planner_cpu_ms": 0.833,
+   "kernel_cpu_ms": 13.603,
+   "route_cold_ms": 121.347,
+   "route_warm_ms": 26.1,
+   "peak_memory_kib": 374.59
+  },
+  {
+   "id": "PL7",
+   "family": "point-line distance (intersection line result)",
+   "level_expected": "REGISTERED_DECOMPOSITION",
+   "outcome": "EXACT_SERVED",
+   "status": "SERVED",
+   "reason_code": null,
+   "answers": {
+    "q1": "3"
+   },
+   "expected": {
+    "q1": [
+     "len",
+     "9"
+    ]
+   },
+   "oracle": "P3; foot = A (SA ⊥ AC)",
+   "primitives": [
+    "orthogonal_projection_line",
+    "ask_length"
+   ],
+   "classification": "REGISTERED_DECOMPOSITION",
+   "explored_states": 5,
+   "candidate_evaluations": 2,
+   "pruned_nodes": 0,
+   "search_depth": 2,
+   "reused_intermediates": 0,
+   "plan_cost": 1,
+   "selected_plan": [
+    "pyramid",
+    "regular_polygon",
+    "perpendicular_line_plane",
+    "segment_length",
+    "orthogonal_projection_line",
+    "ask_length"
+   ],
+   "search_generated_steps": 0,
+   "scene_issues": [],
+   "planner_cpu_ms": 0.933,
+   "kernel_cpu_ms": 13.292,
+   "route_cold_ms": 108.875,
+   "route_warm_ms": 20.34,
+   "peak_memory_kib": 319.03
+  },
+  {
+   "id": "PR1",
+   "family": "prism point-plane",
+   "level_expected": null,
+   "outcome": "EXACT_SERVED",
+   "status": "SERVED",
+   "reason_code": null,
+   "answers": {
+    "q1": "12√61/61"
+   },
+   "expected": {
+    "q1": [
+     "len",
+     "144/61"
+    ]
+   },
+   "oracle": "R frame",
+   "primitives": [],
+   "classification": "SOURCE_EXPLICIT_SEQUENCE",
+   "explored_states": 0,
+   "candidate_evaluations": 0,
+   "pruned_nodes": 0,
+   "search_depth": 0,
+   "reused_intermediates": 0,
+   "plan_cost": 0,
+   "selected_plan": [
+    "prism",
+    "right_angle",
+    "segment_length",
+    "segment_length",
+    "segment_length",
+    "ask_distance_point_plane"
+   ],
+   "search_generated_steps": 0,
+   "scene_issues": [],
+   "planner_cpu_ms": 0.354,
+   "kernel_cpu_ms": 11.158,
+   "route_cold_ms": 99.712,
+   "route_warm_ms": 18.121,
+   "peak_memory_kib": 331.62
+  },
+  {
+   "id": "PR2",
+   "family": "prism point-line",
+   "level_expected": "REGISTERED_DECOMPOSITION",
+   "outcome": "EXACT_SERVED",
+   "status": "SERVED",
+   "reason_code": null,
+   "answers": {
+    "q1": "2√61/5"
+   },
+   "expected": {
+    "q1": [
+     "len",
+     "244/25"
+    ]
+   },
+   "oracle": "R",
+   "primitives": [
+    "orthogonal_projection_line",
+    "ask_length"
+   ],
+   "classification": "REGISTERED_DECOMPOSITION",
+   "explored_states": 5,
+   "candidate_evaluations": 2,
+   "pruned_nodes": 0,
+   "search_depth": 2,
+   "reused_intermediates": 0,
+   "plan_cost": 1,
+   "selected_plan": [
+    "prism",
+    "right_angle",
+    "segment_length",
+    "segment_length",
+    "segment_length",
+    "orthogonal_projection_line",
+    "ask_length"
+   ],
+   "search_generated_steps": 0,
+   "scene_issues": [],
+   "planner_cpu_ms": 0.812,
+   "kernel_cpu_ms": 11.468,
+   "route_cold_ms": 108.771,
+   "route_warm_ms": 22.555,
+   "peak_memory_kib": 374.57
+  },
+  {
+   "id": "PR3",
+   "family": "prism angle line-plane",
+   "level_expected": null,
+   "outcome": "EXACT_SERVED",
+   "status": "SERVED",
+   "reason_code": null,
+   "answers": {
+    "q1": "9/13"
+   },
+   "expected": {
+    "q1": [
+     "cos2",
+     "9/13"
+    ]
+   },
+   "oracle": "R",
+   "primitives": [],
+   "classification": "SOURCE_EXPLICIT_SEQUENCE",
+   "explored_states": 0,
+   "candidate_evaluations": 0,
+   "pruned_nodes": 0,
+   "search_depth": 0,
+   "reused_intermediates": 0,
+   "plan_cost": 0,
+   "selected_plan": [
+    "prism",
+    "right_angle",
+    "segment_length",
+    "segment_length",
+    "segment_length",
+    "ask_angle_line_plane"
+   ],
+   "search_generated_steps": 0,
+   "scene_issues": [],
+   "planner_cpu_ms": 0.395,
+   "kernel_cpu_ms": 12.733,
+   "route_cold_ms": 104.697,
+   "route_warm_ms": 20.134,
+   "peak_memory_kib": 352.62
+  },
+  {
+   "id": "PR4",
+   "family": "prism angle plane-plane",
+   "level_expected": null,
+   "outcome": "EXACT_SERVED",
+   "status": "SERVED",
+   "reason_code": null,
+   "answers": {
+    "q1": "36/61"
+   },
+   "expected": {
+    "q1": [
+     "cos2",
+     "36/61"
+    ]
+   },
+   "oracle": "R",
+   "primitives": [],
+   "classification": "SOURCE_EXPLICIT_SEQUENCE",
+   "explored_states": 0,
+   "candidate_evaluations": 0,
+   "pruned_nodes": 0,
+   "search_depth": 0,
+   "reused_intermediates": 0,
+   "plan_cost": 0,
+   "selected_plan": [
+    "prism",
+    "right_angle",
+    "segment_length",
+    "segment_length",
+    "segment_length",
+    "ask_angle_plane_plane"
+   ],
+   "search_generated_steps": 0,
+   "scene_issues": [],
+   "planner_cpu_ms": 0.334,
+   "kernel_cpu_ms": 10.613,
+   "route_cold_ms": 98.768,
+   "route_warm_ms": 18.855,
+   "peak_memory_kib": 353.61
+  },
+  {
+   "id": "PR5",
+   "family": "prism skew lines distance",
+   "level_expected": null,
+   "outcome": "EXACT_SERVED",
+   "status": "SERVED",
+   "reason_code": null,
+   "answers": {
+    "q1": "12/5"
+   },
+   "expected": {
+    "q1": [
+     "len",
+     "144/25"
+    ]
+   },
+   "oracle": "R",
+   "primitives": [],
+   "classification": "SOURCE_EXPLICIT_SEQUENCE",
+   "explored_states": 0,
+   "candidate_evaluations": 0,
+   "pruned_nodes": 0,
+   "search_depth": 0,
+   "reused_intermediates": 0,
+   "plan_cost": 0,
+   "selected_plan": [
+    "prism",
+    "right_angle",
+    "segment_length",
+    "segment_length",
+    "segment_length",
+    "ask_distance_lines"
+   ],
+   "search_generated_steps": 0,
+   "scene_issues": [],
+   "planner_cpu_ms": 0.312,
+   "kernel_cpu_ms": 12.891,
+   "route_cold_ms": 112.015,
+   "route_warm_ms": 20.708,
+   "peak_memory_kib": 353.59
+  },
+  {
+   "id": "PR6",
+   "family": "prism point-plane (described point)",
+   "level_expected": "DESCRIPTOR_COMPOSITION",
+   "outcome": "EXACT_SERVED",
+   "status": "SERVED",
+   "reason_code": null,
+   "answers": {
+    "q1": "12√61/61"
+   },
+   "expected": {
+    "q1": [
+     "len",
+     "144/61"
+    ]
+   },
+   "oracle": "R",
+   "primitives": [
+    "midpoint",
+    "ask_distance_point_plane"
+   ],
+   "classification": "SOURCE_EXPLICIT_SEQUENCE",
+   "explored_states": 6,
+   "candidate_evaluations": 3,
+   "pruned_nodes": 0,
+   "search_depth": 2,
+   "reused_intermediates": 0,
+   "plan_cost": 1,
+   "selected_plan": [
+    "prism",
+    "right_angle",
+    "segment_length",
+    "segment_length",
+    "segment_length",
+    "midpoint",
+    "ask_distance_point_plane"
+   ],
+   "search_generated_steps": 0,
+   "scene_issues": [],
+   "planner_cpu_ms": 0.984,
+   "kernel_cpu_ms": 12.48,
+   "route_cold_ms": 105.572,
+   "route_warm_ms": 19.885,
+   "peak_memory_kib": 400.04
+  },
+  {
+   "id": "PR7",
+   "family": "prism circumcenter of right base",
+   "level_expected": "GOAL_DRIVEN_DISCOVERY",
+   "outcome": "EXACT_SERVED",
+   "status": "SERVED",
+   "reason_code": null,
+   "answers": {
+    "q1": "√41/2"
+   },
+   "expected": {
+    "q1": [
+     "len",
+     "41/4"
+    ]
+   },
+   "oracle": "R; circumcenter of a right triangle = midpoint of hypotenuse BC",
+   "primitives": [
+    "orthogonal_projection_line",
+    "intersect_line_line",
+    "ask_length"
+   ],
+   "classification": "REGISTERED_DECOMPOSITION",
+   "explored_states": 24,
+   "candidate_evaluations": 20,
+   "pruned_nodes": 9,
+   "search_depth": 4,
+   "reused_intermediates": 0,
+   "plan_cost": 7,
+   "selected_plan": [
+    "prism",
+    "right_angle",
+    "segment_length",
+    "segment_length",
+    "segment_length",
+    "midpoint",
+    "orthogonal_projection_line",
+    "translate_point",
+    "midpoint",
+    "orthogonal_projection_line",
+    "translate_point",
+    "intersect_line_line",
+    "ask_length"
+   ],
+   "search_generated_steps": 0,
+   "scene_issues": [],
+   "planner_cpu_ms": 2.408,
+   "kernel_cpu_ms": 13.4,
+   "route_cold_ms": 154.795,
+   "route_warm_ms": 27.713,
+   "peak_memory_kib": 796.91
+  },
+  {
+   "id": "PR8",
+   "family": "prism orthocenter of right base (coincides with A)",
+   "level_expected": "GOAL_DRIVEN_DISCOVERY",
+   "outcome": "EXACT_SERVED",
+   "status": "SERVED",
+   "reason_code": null,
+   "answers": {
+    "q1": "2"
+   },
+   "expected": {
+    "q1": [
+     "len",
+     "4"
+    ]
+   },
+   "oracle": "R; orthocenter of a triangle right at A is A",
+   "primitives": [
+    "orthogonal_projection_line",
+    "intersect_line_line",
+    "ask_length"
+   ],
+   "classification": "REGISTERED_DECOMPOSITION",
+   "explored_states": 24,
+   "candidate_evaluations": 17,
+   "pruned_nodes": 6,
+   "search_depth": 4,
+   "reused_intermediates": 0,
+   "plan_cost": 3,
+   "selected_plan": [
+    "prism",
+    "right_angle",
+    "segment_length",
+    "segment_length",
+    "segment_length",
+    "orthogonal_projection_line",
+    "orthogonal_projection_line",
+    "intersect_line_line",
+    "ask_length"
+   ],
+   "search_generated_steps": 0,
+   "scene_issues": [],
+   "planner_cpu_ms": 1.539,
+   "kernel_cpu_ms": 11.279,
+   "route_cold_ms": 126.649,
+   "route_warm_ms": 23.01,
+   "peak_memory_kib": 555.59
+  },
+  {
+   "id": "AN1",
+   "family": "angle line-plane",
+   "level_expected": null,
+   "outcome": "EXACT_SERVED",
+   "status": "SERVED",
+   "reason_code": null,
+   "answers": {
+    "q1": "2/3"
+   },
+   "expected": {
+    "q1": [
+     "cos2",
+     "2/3"
+    ]
+   },
+   "oracle": "P2",
+   "primitives": [],
+   "classification": "SOURCE_EXPLICIT_SEQUENCE",
+   "explored_states": 0,
+   "candidate_evaluations": 0,
+   "pruned_nodes": 0,
+   "search_depth": 0,
+   "reused_intermediates": 0,
+   "plan_cost": 0,
+   "selected_plan": [
+    "pyramid",
+    "regular_polygon",
+    "perpendicular_line_plane",
+    "segment_length",
+    "ask_angle_line_plane"
+   ],
+   "search_generated_steps": 0,
+   "scene_issues": [],
+   "planner_cpu_ms": 0.359,
+   "kernel_cpu_ms": 11.269,
+   "route_cold_ms": 97.59,
+   "route_warm_ms": 18.085,
+   "peak_memory_kib": 328.42
+  },
+  {
+   "id": "AN2",
+   "family": "angle plane-plane",
+   "level_expected": null,
+   "outcome": "EXACT_SERVED",
+   "status": "SERVED",
+   "reason_code": null,
+   "answers": {
+    "q1": "1/2"
+   },
+   "expected": {
+    "q1": [
+     "cos2",
+     "1/2"
+    ]
+   },
+   "oracle": "P2",
+   "primitives": [],
+   "classification": "SOURCE_EXPLICIT_SEQUENCE",
+   "explored_states": 0,
+   "candidate_evaluations": 0,
+   "pruned_nodes": 0,
+   "search_depth": 0,
+   "reused_intermediates": 0,
+   "plan_cost": 0,
+   "selected_plan": [
+    "pyramid",
+    "regular_polygon",
+    "perpendicular_line_plane",
+    "segment_length",
+    "ask_angle_plane_plane"
+   ],
+   "search_generated_steps": 0,
+   "scene_issues": [],
+   "planner_cpu_ms": 0.303,
+   "kernel_cpu_ms": 10.557,
+   "route_cold_ms": 93.84,
+   "route_warm_ms": 19.378,
+   "peak_memory_kib": 322.95
+  },
+  {
+   "id": "AN3",
+   "family": "angle line-line",
+   "level_expected": null,
+   "outcome": "EXACT_SERVED",
+   "status": "SERVED",
+   "reason_code": null,
+   "answers": {
+    "q1": "1/2"
+   },
+   "expected": {
+    "q1": [
+     "cos2",
+     "1/2"
+    ]
+   },
+   "oracle": "P2",
+   "primitives": [],
+   "classification": "SOURCE_EXPLICIT_SEQUENCE",
+   "explored_states": 0,
+   "candidate_evaluations": 0,
+   "pruned_nodes": 0,
+   "search_depth": 0,
+   "reused_intermediates": 0,
+   "plan_cost": 0,
+   "selected_plan": [
+    "pyramid",
+    "regular_polygon",
+    "perpendicular_line_plane",
+    "segment_length",
+    "ask_angle_lines"
+   ],
+   "search_generated_steps": 0,
+   "scene_issues": [],
+   "planner_cpu_ms": 0.341,
+   "kernel_cpu_ms": 13.767,
+   "route_cold_ms": 111.809,
+   "route_warm_ms": 19.501,
+   "peak_memory_kib": 324.92
+  },
+  {
+   "id": "AN4",
+   "family": "angle line-plane (described point)",
+   "level_expected": "DESCRIPTOR_COMPOSITION",
+   "outcome": "EXACT_SERVED",
+   "status": "SERVED",
+   "reason_code": null,
+   "answers": {
+    "q1": "5/9"
+   },
+   "expected": {
+    "q1": [
+     "cos2",
+     "5/9"
+    ]
+   },
+   "oracle": "P2",
+   "primitives": [
+    "midpoint",
+    "ask_angle_line_plane"
+   ],
+   "classification": "SOURCE_EXPLICIT_SEQUENCE",
+   "explored_states": 6,
+   "candidate_evaluations": 2,
+   "pruned_nodes": 0,
+   "search_depth": 2,
+   "reused_intermediates": 0,
+   "plan_cost": 1,
+   "selected_plan": [
+    "pyramid",
+    "regular_polygon",
+    "perpendicular_line_plane",
+    "segment_length",
+    "midpoint",
+    "ask_angle_line_plane"
+   ],
+   "search_generated_steps": 0,
+   "scene_issues": [],
+   "planner_cpu_ms": 0.917,
+   "kernel_cpu_ms": 10.889,
+   "route_cold_ms": 97.188,
+   "route_warm_ms": 18.818,
+   "peak_memory_kib": 360.64
+  },
+  {
+   "id": "AN5",
+   "family": "angle line-plane (lateral face)",
+   "level_expected": null,
+   "outcome": "EXACT_SERVED",
+   "status": "SERVED",
+   "reason_code": null,
+   "answers": {
+    "q1": "2/3"
+   },
+   "expected": {
+    "q1": [
+     "cos2",
+     "2/3"
+    ]
+   },
+   "oracle": "P2",
+   "primitives": [],
+   "classification": "SOURCE_EXPLICIT_SEQUENCE",
+   "explored_states": 0,
+   "candidate_evaluations": 0,
+   "pruned_nodes": 0,
+   "search_depth": 0,
+   "reused_intermediates": 0,
+   "plan_cost": 0,
+   "selected_plan": [
+    "pyramid",
+    "regular_polygon",
+    "perpendicular_line_plane",
+    "segment_length",
+    "ask_angle_line_plane"
+   ],
+   "search_generated_steps": 0,
+   "scene_issues": [],
+   "planner_cpu_ms": 0.288,
+   "kernel_cpu_ms": 11.22,
+   "route_cold_ms": 97.363,
+   "route_warm_ms": 18.265,
+   "peak_memory_kib": 325.7
+  },
+  {
+   "id": "AN6",
+   "family": "angle line-line (described centroid)",
+   "level_expected": "DESCRIPTOR_COMPOSITION",
+   "outcome": "EXACT_SERVED",
+   "status": "SERVED",
+   "reason_code": null,
+   "answers": {
+    "q1": "1/6"
+   },
+   "expected": {
+    "q1": [
+     "cos2",
+     "1/6"
+    ]
+   },
+   "oracle": "P2",
+   "primitives": [
+    "centroid",
+    "ask_angle_lines"
+   ],
+   "classification": "SOURCE_EXPLICIT_SEQUENCE",
+   "explored_states": 7,
+   "candidate_evaluations": 2,
+   "pruned_nodes": 0,
+   "search_depth": 2,
+   "reused_intermediates": 0,
+   "plan_cost": 1,
+   "selected_plan": [
+    "pyramid",
+    "regular_polygon",
+    "perpendicular_line_plane",
+    "segment_length",
+    "centroid",
+    "ask_angle_lines"
+   ],
+   "search_generated_steps": 0,
+   "scene_issues": [],
+   "planner_cpu_ms": 0.846,
+   "kernel_cpu_ms": 10.623,
+   "route_cold_ms": 113.594,
+   "route_warm_ms": 21.5,
+   "peak_memory_kib": 407.57
+  },
+  {
+   "id": "AN7",
+   "family": "angle line-plane (described point, slanted plane)",
+   "level_expected": "DESCRIPTOR_COMPOSITION",
+   "outcome": "EXACT_SERVED",
+   "status": "SERVED",
+   "reason_code": null,
+   "answers": {
+    "q1": "3/5"
+   },
+   "expected": {
+    "q1": [
+     "cos2",
+     "3/5"
+    ]
+   },
+   "oracle": "P2",
+   "primitives": [
+    "midpoint",
+    "ask_angle_line_plane"
+   ],
+   "classification": "SOURCE_EXPLICIT_SEQUENCE",
+   "explored_states": 6,
+   "candidate_evaluations": 2,
+   "pruned_nodes": 0,
+   "search_depth": 2,
+   "reused_intermediates": 0,
+   "plan_cost": 1,
+   "selected_plan": [
+    "pyramid",
+    "regular_polygon",
+    "perpendicular_line_plane",
+    "segment_length",
+    "midpoint",
+    "ask_angle_line_plane"
+   ],
+   "search_generated_steps": 0,
+   "scene_issues": [],
+   "planner_cpu_ms": 0.92,
+   "kernel_cpu_ms": 10.829,
+   "route_cold_ms": 97.509,
+   "route_warm_ms": 18.995,
+   "peak_memory_kib": 363.79
+  },
+  {
+   "id": "PE1",
+   "family": "perpendicular (angle 90°)",
+   "level_expected": null,
+   "outcome": "EXACT_SERVED",
+   "status": "SERVED",
+   "reason_code": null,
+   "answers": {
+    "q1": "0"
+   },
+   "expected": {
+    "q1": [
+     "cos2",
+     "0"
+    ]
+   },
+   "oracle": "P2; BC ⊥ (SAB) ⇒ cos² = 0",
+   "primitives": [],
+   "classification": "SOURCE_EXPLICIT_SEQUENCE",
+   "explored_states": 0,
+   "candidate_evaluations": 0,
+   "pruned_nodes": 0,
+   "search_depth": 0,
+   "reused_intermediates": 0,
+   "plan_cost": 0,
+   "selected_plan": [
+    "pyramid",
+    "regular_polygon",
+    "perpendicular_line_plane",
+    "segment_length",
+    "ask_angle_lines"
+   ],
+   "search_generated_steps": 0,
+   "scene_issues": [],
+   "planner_cpu_ms": 0.292,
+   "kernel_cpu_ms": 11.768,
+   "route_cold_ms": 103.612,
+   "route_warm_ms": 18.961,
+   "peak_memory_kib": 317.67
+  },
+  {
+   "id": "PE2",
+   "family": "perpendicular (tetrahedron pairwise ⊥)",
+   "level_expected": null,
+   "outcome": "EXACT_SERVED",
+   "status": "SERVED",
+   "reason_code": null,
+   "answers": {
+    "q1": "6/7"
+   },
+   "expected": {
+    "q1": [
+     "len",
+     "36/49"
+    ]
+   },
+   "oracle": "T frame; 1/d² = 1 + 1/4 + 1/9",
+   "primitives": [],
+   "classification": "SOURCE_EXPLICIT_SEQUENCE",
+   "explored_states": 0,
+   "candidate_evaluations": 0,
+   "pruned_nodes": 0,
+   "search_depth": 0,
+   "reused_intermediates": 0,
+   "plan_cost": 0,
+   "selected_plan": [
+    "pyramid",
+    "perpendicular_lines",
+    "perpendicular_lines",
+    "perpendicular_lines",
+    "segment_length",
+    "segment_length",
+    "segment_length",
+    "ask_distance_point_plane"
+   ],
+   "search_generated_steps": 0,
+   "scene_issues": [],
+   "planner_cpu_ms": 0.324,
+   "kernel_cpu_ms": 9.154,
+   "route_cold_ms": 77.482,
+   "route_warm_ms": 14.644,
+   "peak_memory_kib": 214.86
+  },
+  {
+   "id": "PE3",
+   "family": "perpendicular (tetrahedron angle)",
+   "level_expected": null,
+   "outcome": "EXACT_SERVED",
+   "status": "SERVED",
+   "reason_code": null,
+   "answers": {
+    "q1": "36/49"
+   },
+   "expected": {
+    "q1": [
+     "cos2",
+     "36/49"
+    ]
+   },
+   "oracle": "T",
+   "primitives": [],
+   "classification": "SOURCE_EXPLICIT_SEQUENCE",
+   "explored_states": 0,
+   "candidate_evaluations": 0,
+   "pruned_nodes": 0,
+   "search_depth": 0,
+   "reused_intermediates": 0,
+   "plan_cost": 0,
+   "selected_plan": [
+    "pyramid",
+    "perpendicular_lines",
+    "perpendicular_lines",
+    "perpendicular_lines",
+    "segment_length",
+    "segment_length",
+    "segment_length",
+    "ask_angle_plane_plane"
+   ],
+   "search_generated_steps": 0,
+   "scene_issues": [],
+   "planner_cpu_ms": 0.44,
+   "kernel_cpu_ms": 11.046,
+   "route_cold_ms": 88.511,
+   "route_warm_ms": 14.693,
+   "peak_memory_kib": 254.4
+  },
+  {
+   "id": "PE4",
+   "family": "perpendicular (tetrahedron point-line)",
+   "level_expected": "REGISTERED_DECOMPOSITION",
+   "outcome": "EXACT_SERVED",
+   "status": "SERVED",
+   "reason_code": null,
+   "answers": {
+    "q1": "6√13/13"
+   },
+   "expected": {
+    "q1": [
+     "len",
+     "36/13"
+    ]
+   },
+   "oracle": "T",
+   "primitives": [
+    "orthogonal_projection_line",
+    "ask_length"
+   ],
+   "classification": "REGISTERED_DECOMPOSITION",
+   "explored_states": 5,
+   "candidate_evaluations": 2,
+   "pruned_nodes": 0,
+   "search_depth": 2,
+   "reused_intermediates": 0,
+   "plan_cost": 1,
+   "selected_plan": [
+    "pyramid",
+    "perpendicular_lines",
+    "perpendicular_lines",
+    "perpendicular_lines",
+    "segment_length",
+    "segment_length",
+    "segment_length",
+    "orthogonal_projection_line",
+    "ask_length"
+   ],
+   "search_generated_steps": 0,
+   "scene_issues": [],
+   "planner_cpu_ms": 0.795,
+   "kernel_cpu_ms": 10.394,
+   "route_cold_ms": 92.258,
+   "route_warm_ms": 16.507,
+   "peak_memory_kib": 268.06
+  },
+  {
+   "id": "PE5",
+   "family": "perpendicular (tetrahedron, apex A over right base OBC)",
+   "level_expected": null,
+   "outcome": "EXACT_SERVED",
+   "status": "SERVED",
+   "reason_code": null,
+   "answers": {
+    "q1": "6/7"
+   },
+   "expected": {
+    "q1": [
+     "len",
+     "36/49"
+    ]
+   },
+   "oracle": "T; same solid, other apex reading",
+   "primitives": [],
+   "classification": "SOURCE_EXPLICIT_SEQUENCE",
+   "explored_states": 0,
+   "candidate_evaluations": 0,
+   "pruned_nodes": 0,
+   "search_depth": 0,
+   "reused_intermediates": 0,
+   "plan_cost": 0,
+   "selected_plan": [
+    "pyramid",
+    "segment_length",
+    "segment_length",
+    "perpendicular_lines",
+    "perpendicular_lines",
+    "perpendicular_lines",
+    "segment_length",
+    "ask_distance_point_plane"
+   ],
+   "search_generated_steps": 0,
+   "scene_issues": [],
+   "planner_cpu_ms": 0.331,
+   "kernel_cpu_ms": 9.536,
+   "route_cold_ms": 77.135,
+   "route_warm_ms": 15.024,
+   "peak_memory_kib": 228.15
+  },
+  {
+   "id": "PE6",
+   "family": "perpendicular (tetrahedron volume)",
+   "level_expected": null,
+   "outcome": "EXACT_SERVED",
+   "status": "SERVED",
+   "reason_code": null,
+   "answers": {
+    "q1": "1"
+   },
+   "expected": {
+    "q1": [
+     "vol",
+     "1"
+    ]
+   },
+   "oracle": "T; oracle interior-point decomposition (V = OA·OB·OC/6 = 1), compared as V²",
+   "primitives": [],
+   "classification": "SOURCE_EXPLICIT_SEQUENCE",
+   "explored_states": 0,
+   "candidate_evaluations": 0,
+   "pruned_nodes": 0,
+   "search_depth": 0,
+   "reused_intermediates": 0,
+   "plan_cost": 0,
+   "selected_plan": [
+    "pyramid",
+    "perpendicular_lines",
+    "perpendicular_lines",
+    "perpendicular_lines",
+    "segment_length",
+    "segment_length",
+    "segment_length",
+    "ask_volume"
+   ],
+   "search_generated_steps": 0,
+   "scene_issues": [],
+   "planner_cpu_ms": 0.339,
+   "kernel_cpu_ms": 9.938,
+   "route_cold_ms": 81.019,
+   "route_warm_ms": 15.76,
+   "peak_memory_kib": 184.22
+  },
+  {
+   "id": "PY1",
+   "family": "pyramid apex fixed by three lateral edges",
+   "level_expected": null,
+   "outcome": "EXACT_SERVED",
+   "status": "SERVED",
+   "reason_code": null,
+   "answers": {
+    "q1": "12/5"
+   },
+   "expected": {
+    "q1": [
+     "len",
+     "144/25"
+    ]
+   },
+   "oracle": "Y frame (asserted SA² = SB² = SC² = 169/4)",
+   "primitives": [],
+   "classification": "SOURCE_EXPLICIT_SEQUENCE",
+   "explored_states": 0,
+   "candidate_evaluations": 0,
+   "pruned_nodes": 0,
+   "search_depth": 0,
+   "reused_intermediates": 0,
+   "plan_cost": 0,
+   "selected_plan": [
+    "pyramid",
+    "right_angle",
+    "segment_length",
+    "segment_length",
+    "segment_length",
+    "segment_length",
+    "segment_length",
+    "ask_distance_point_plane"
+   ],
+   "search_generated_steps": 0,
+   "scene_issues": [],
+   "planner_cpu_ms": 0.677,
+   "kernel_cpu_ms": 14.376,
+   "route_cold_ms": 96.929,
+   "route_warm_ms": 18.615,
+   "peak_memory_kib": 272.83
+  },
+  {
+   "id": "PY2",
+   "family": "pyramid apex fixed by three lateral edges (height)",
+   "level_expected": null,
+   "outcome": "EXACT_SERVED",
+   "status": "SERVED",
+   "reason_code": null,
+   "answers": {
+    "q1": "6"
+   },
+   "expected": {
+    "q1": [
+     "len",
+     "36"
+    ]
+   },
+   "oracle": "Y frame; h = 6",
+   "primitives": [],
+   "classification": "SOURCE_EXPLICIT_SEQUENCE",
+   "explored_states": 0,
+   "candidate_evaluations": 0,
+   "pruned_nodes": 0,
+   "search_depth": 0,
+   "reused_intermediates": 0,
+   "plan_cost": 0,
+   "selected_plan": [
+    "pyramid",
+    "right_angle",
+    "segment_length",
+    "segment_length",
+    "segment_length",
+    "segment_length",
+    "segment_length",
+    "ask_distance_point_plane"
+   ],
+   "search_generated_steps": 0,
+   "scene_issues": [],
+   "planner_cpu_ms": 0.381,
+   "kernel_cpu_ms": 10.789,
+   "route_cold_ms": 97.622,
+   "route_warm_ms": 18.485,
+   "peak_memory_kib": 258.94
+  },
+  {
+   "id": "PA1",
+   "family": "parallel line-plane distance",
+   "level_expected": null,
+   "outcome": "EXACT_SERVED",
+   "status": "SERVED",
+   "reason_code": null,
+   "answers": {
+    "q1": "√2"
+   },
+   "expected": {
+    "q1": [
+     "len",
+     "2"
+    ]
+   },
+   "oracle": "P2; AD ∥ (SBC)",
+   "primitives": [],
+   "classification": "SOURCE_EXPLICIT_SEQUENCE",
+   "explored_states": 0,
+   "candidate_evaluations": 0,
+   "pruned_nodes": 0,
+   "search_depth": 0,
+   "reused_intermediates": 0,
+   "plan_cost": 0,
+   "selected_plan": [
+    "pyramid",
+    "regular_polygon",
+    "perpendicular_line_plane",
+    "segment_length",
+    "ask_distance_line_plane"
+   ],
+   "search_generated_steps": 0,
+   "scene_issues": [],
+   "planner_cpu_ms": 0.351,
+   "kernel_cpu_ms": 12.82,
+   "route_cold_ms": 108.352,
+   "route_warm_ms": 21.478,
+   "peak_memory_kib": 304.29
+  },
+  {
+   "id": "PA2",
+   "family": "parallel skew lines (AB ∥ (SCD))",
+   "level_expected": null,
+   "outcome": "EXACT_SERVED",
+   "status": "SERVED",
+   "reason_code": null,
+   "answers": {
+    "q1": "√2"
+   },
+   "expected": {
+    "q1": [
+     "len",
+     "2"
+    ]
+   },
+   "oracle": "P2",
+   "primitives": [],
+   "classification": "SOURCE_EXPLICIT_SEQUENCE",
+   "explored_states": 0,
+   "candidate_evaluations": 0,
+   "pruned_nodes": 0,
+   "search_depth": 0,
+   "reused_intermediates": 0,
+   "plan_cost": 0,
+   "selected_plan": [
+    "pyramid",
+    "regular_polygon",
+    "perpendicular_line_plane",
+    "segment_length",
+    "ask_distance_lines"
+   ],
+   "search_generated_steps": 0,
+   "scene_issues": [],
+   "planner_cpu_ms": 0.428,
+   "kernel_cpu_ms": 15.272,
+   "route_cold_ms": 111.266,
+   "route_warm_ms": 20.899,
+   "peak_memory_kib": 306.52
+  },
+  {
+   "id": "PA3",
+   "family": "parallel line-plane (line through described point)",
+   "level_expected": "DESCRIPTOR_COMPOSITION",
+   "outcome": "NO_PLAN_DESPITE_PRIMITIVES",
+   "status": "REFUSED",
+   "reason_code": "BRIDGE_UNSUPPORTED_DESCRIBED_POINT",
+   "answers": {},
+   "expected": {
+    "q1": [
+     "len",
+     "1"
+    ]
+   },
+   "oracle": "P2; MN ∥ BC ⊂ (ABCD)",
+   "primitives": [
+    "midpoint",
+    "ask_distance_line_plane"
+   ],
+   "classification": "UNKNOWN",
+   "explored_states": "UNKNOWN",
+   "candidate_evaluations": "UNKNOWN",
+   "pruned_nodes": "UNKNOWN",
+   "search_depth": "UNKNOWN",
+   "reused_intermediates": "UNKNOWN",
+   "plan_cost": "UNKNOWN",
+   "selected_plan": [],
+   "search_generated_steps": "UNKNOWN",
+   "scene_issues": [],
+   "planner_cpu_ms": "NOT_MEASURED",
+   "kernel_cpu_ms": "NOT_MEASURED",
+   "route_cold_ms": 7.951,
+   "route_warm_ms": 2.393,
+   "peak_memory_kib": 29.73
+  },
+  {
+   "id": "SE1",
+   "family": "section ∥ base",
+   "level_expected": null,
+   "outcome": "EXACT_SERVED",
+   "status": "SERVED",
+   "reason_code": null,
+   "answers": {
+    "q1": "1"
+   },
+   "expected": {
+    "q1": [
+     "area",
+     "1"
+    ]
+   },
+   "oracle": "P2; square of side 1 at z = 1",
+   "primitives": [
+    "plane_through_point_parallel",
+    "ask_section_area"
+   ],
+   "classification": "REGISTERED_DECOMPOSITION",
+   "explored_states": 0,
+   "candidate_evaluations": 0,
+   "pruned_nodes": 0,
+   "search_depth": 0,
+   "reused_intermediates": 0,
+   "plan_cost": 2,
+   "selected_plan": [
+    "pyramid",
+    "regular_polygon",
+    "perpendicular_line_plane",
+    "segment_length",
+    "midpoint",
+    "translate_point",
+    "translate_point",
+    "section",
+    "ask_section_area"
+   ],
+   "search_generated_steps": 0,
+   "scene_issues": [],
+   "planner_cpu_ms": 1.033,
+   "kernel_cpu_ms": 25.314,
+   "route_cold_ms": 210.951,
+   "route_warm_ms": 37.888,
+   "peak_memory_kib": 637.59
+  },
+  {
+   "id": "SE2",
+   "family": "section ⊥ line through vertex",
+   "level_expected": null,
+   "outcome": "EXACT_SERVED",
+   "status": "SERVED",
+   "reason_code": null,
+   "answers": {
+    "q1": "2√3/3"
+   },
+   "expected": {
+    "q1": [
+     "area",
+     "4/3"
+    ]
+   },
+   "oracle": "P2; plane x+y−z=0, vertices A,(1,0,1),(2/3,2/3,4/3),(0,1,1) verified by oracle.verify_section",
+   "primitives": [
+    "plane_through_point_perpendicular",
+    "ask_section_area"
+   ],
+   "classification": "REGISTERED_DECOMPOSITION",
+   "explored_states": 0,
+   "candidate_evaluations": 0,
+   "pruned_nodes": 0,
+   "search_depth": 0,
+   "reused_intermediates": 0,
+   "plan_cost": 4,
+   "selected_plan": [
+    "pyramid",
+    "regular_polygon",
+    "perpendicular_line_plane",
+    "segment_length",
+    "orthogonal_projection_line",
+    "orthogonal_projection_line",
+    "translate_point",
+    "translate_point",
+    "section",
+    "ask_section_area"
+   ],
+   "search_generated_steps": 0,
+   "scene_issues": [],
+   "planner_cpu_ms": 1.14,
+   "kernel_cpu_ms": 23.501,
+   "route_cold_ms": 199.051,
+   "route_warm_ms": 37.707,
+   "peak_memory_kib": 755.63
+  },
+  {
+   "id": "SE3",
+   "family": "section by three midpoints (constrained)",
+   "level_expected": null,
+   "outcome": "NO_PLAN_DESPITE_PRIMITIVES",
+   "status": "REFUSED",
+   "reason_code": "SOURCE_OBJECT_MISMATCH",
+   "answers": {},
+   "expected": {
+    "q1": [
+     "area",
+     "1"
+    ]
+   },
+   "oracle": "P2; MNP ∥ base at z = 1, square of side 1",
+   "primitives": [
+    "plane_through_points",
+    "ask_section_area"
+   ],
+   "classification": "UNKNOWN",
+   "explored_states": "UNKNOWN",
+   "candidate_evaluations": "UNKNOWN",
+   "pruned_nodes": "UNKNOWN",
+   "search_depth": "UNKNOWN",
+   "reused_intermediates": "UNKNOWN",
+   "plan_cost": "UNKNOWN",
+   "selected_plan": [],
+   "search_generated_steps": "UNKNOWN",
+   "scene_issues": [],
+   "planner_cpu_ms": 0.453,
+   "kernel_cpu_ms": 2.125,
+   "route_cold_ms": 22.937,
+   "route_warm_ms": 6.018,
+   "peak_memory_kib": 88.7
+  },
+  {
+   "id": "SE4",
+   "family": "section constrained ⊥ plane (A3 regression)",
+   "level_expected": "GOAL_DRIVEN_DISCOVERY",
+   "outcome": "EXACT_SERVED",
+   "status": "SERVED",
+   "reason_code": null,
+   "answers": {
+    "q1": "7√2/8"
+   },
+   "expected": {
+    "q1": [
+     "area",
+     "49/32"
+    ]
+   },
+   "oracle": "P2; (P): x − z = 1 (contains MN and the normal (1,0,1) of (SBC)); cuts SB at (3/2,0,1/2), SC at (3/2,3/2,1/2): trapezoid MPQN, area 7√2/8",
+   "primitives": [
+    "orthogonal_projection",
+    "plane_through_points",
+    "ask_section_area"
+   ],
+   "classification": "REGISTERED_DECOMPOSITION",
+   "explored_states": 0,
+   "candidate_evaluations": 0,
+   "pruned_nodes": 3,
+   "search_depth": 0,
+   "reused_intermediates": 0,
+   "plan_cost": 2,
+   "selected_plan": [
+    "pyramid",
+    "regular_polygon",
+    "perpendicular_line_plane",
+    "segment_length",
+    "midpoint",
+    "midpoint",
+    "orthogonal_projection",
+    "translate_point",
+    "section",
+    "ask_section_area"
+   ],
+   "search_generated_steps": 0,
+   "scene_issues": [],
+   "planner_cpu_ms": 0.86,
+   "kernel_cpu_ms": 32.509,
+   "route_cold_ms": 259.863,
+   "route_warm_ms": 51.912,
+   "peak_memory_kib": 760.07
+  },
+  {
+   "id": "RE1",
+   "family": "orthocenter (B1 regression)",
+   "level_expected": "GOAL_DRIVEN_DISCOVERY",
+   "outcome": "EXACT_SERVED",
+   "status": "SERVED",
+   "reason_code": null,
+   "answers": {
+    "q1": "2"
+   },
+   "expected": {
+    "q1": [
+     "len",
+     "4"
+    ]
+   },
+   "oracle": "P2; SBC right at B ⇒ orthocenter = B",
+   "primitives": [
+    "orthogonal_projection_line",
+    "intersect_line_line",
+    "ask_length"
+   ],
+   "classification": "REGISTERED_DECOMPOSITION",
+   "explored_states": 24,
+   "candidate_evaluations": 17,
+   "pruned_nodes": 6,
+   "search_depth": 4,
+   "reused_intermediates": 0,
+   "plan_cost": 3,
+   "selected_plan": [
+    "pyramid",
+    "regular_polygon",
+    "perpendicular_line_plane",
+    "segment_length",
+    "orthogonal_projection_line",
+    "orthogonal_projection_line",
+    "intersect_line_line",
+    "ask_length"
+   ],
+   "search_generated_steps": 0,
+   "scene_issues": [],
+   "planner_cpu_ms": 1.576,
+   "kernel_cpu_ms": 11.25,
+   "route_cold_ms": 118.848,
+   "route_warm_ms": 23.088,
+   "peak_memory_kib": 500.16
+  },
+  {
+   "id": "RE2",
+   "family": "circumcenter (B2 regression)",
+   "level_expected": "GOAL_DRIVEN_DISCOVERY",
+   "outcome": "EXACT_SERVED",
+   "status": "SERVED",
+   "reason_code": null,
+   "answers": {
+    "q1": "√3"
+   },
+   "expected": {
+    "q1": [
+     "len",
+     "3"
+    ]
+   },
+   "oracle": "P2; SBC right at B ⇒ circumcenter = mid(SC)",
+   "primitives": [
+    "orthogonal_projection_line",
+    "intersect_line_line",
+    "ask_length"
+   ],
+   "classification": "REGISTERED_DECOMPOSITION",
+   "explored_states": 24,
+   "candidate_evaluations": 20,
+   "pruned_nodes": 9,
+   "search_depth": 4,
+   "reused_intermediates": 0,
+   "plan_cost": 7,
+   "selected_plan": [
+    "pyramid",
+    "regular_polygon",
+    "perpendicular_line_plane",
+    "segment_length",
+    "midpoint",
+    "orthogonal_projection_line",
+    "translate_point",
+    "midpoint",
+    "orthogonal_projection_line",
+    "translate_point",
+    "intersect_line_line",
+    "ask_length"
+   ],
+   "search_generated_steps": 0,
+   "scene_issues": [],
+   "planner_cpu_ms": 2.747,
+   "kernel_cpu_ms": 14.082,
+   "route_cold_ms": 177.366,
+   "route_warm_ms": 32.19,
+   "peak_memory_kib": 731.38
+  },
+  {
+   "id": "RE3",
+   "family": "orthocenter of tetrahedron face ABC",
+   "level_expected": "GOAL_DRIVEN_DISCOVERY",
+   "outcome": "EXACT_SERVED",
+   "status": "SERVED",
+   "reason_code": null,
+   "answers": {
+    "q1": "6/7"
+   },
+   "expected": {
+    "q1": [
+     "len",
+     "36/49"
+    ]
+   },
+   "oracle": "T; for pairwise ⊥ OA,OB,OC the orthocenter of ABC is the foot of O on (ABC)",
+   "primitives": [
+    "orthogonal_projection_line",
+    "intersect_line_line",
+    "ask_length"
+   ],
+   "classification": "REGISTERED_DECOMPOSITION",
+   "explored_states": 24,
+   "candidate_evaluations": 17,
+   "pruned_nodes": 6,
+   "search_depth": 4,
+   "reused_intermediates": 0,
+   "plan_cost": 3,
+   "selected_plan": [
+    "pyramid",
+    "perpendicular_lines",
+    "perpendicular_lines",
+    "perpendicular_lines",
+    "segment_length",
+    "segment_length",
+    "segment_length",
+    "orthogonal_projection_line",
+    "orthogonal_projection_line",
+    "intersect_line_line",
+    "ask_length"
+   ],
+   "search_generated_steps": 0,
+   "scene_issues": [],
+   "planner_cpu_ms": 1.752,
+   "kernel_cpu_ms": 10.7,
+   "route_cold_ms": 111.645,
+   "route_warm_ms": 19.823,
+   "peak_memory_kib": 436.04
+  },
+  {
+   "id": "RE4",
+   "family": "projection onto line (described) to plane",
+   "level_expected": "DESCRIPTOR_COMPOSITION",
+   "outcome": "EXACT_SERVED",
+   "status": "SERVED",
+   "reason_code": null,
+   "answers": {
+    "q1": "√2/2"
+   },
+   "expected": {
+    "q1": [
+     "len",
+     "1/2"
+    ]
+   },
+   "oracle": "P2; h = (1,0,1)",
+   "primitives": [
+    "orthogonal_projection_line",
+    "ask_distance_point_plane"
+   ],
+   "classification": "SOURCE_EXPLICIT_SEQUENCE",
+   "explored_states": 6,
+   "candidate_evaluations": 3,
+   "pruned_nodes": 0,
+   "search_depth": 2,
+   "reused_intermediates": 0,
+   "plan_cost": 1,
+   "selected_plan": [
+    "pyramid",
+    "regular_polygon",
+    "perpendicular_line_plane",
+    "segment_length",
+    "orthogonal_projection_line",
+    "ask_distance_point_plane"
+   ],
+   "search_generated_steps": 0,
+   "scene_issues": [],
+   "planner_cpu_ms": 0.896,
+   "kernel_cpu_ms": 13.275,
+   "route_cold_ms": 115.331,
+   "route_warm_ms": 21.425,
+   "peak_memory_kib": 364.18
+  },
+  {
+   "id": "RE5",
+   "family": "orthocenter to plane",
+   "level_expected": "GOAL_DRIVEN_DISCOVERY",
+   "outcome": "EXACT_SERVED",
+   "status": "SERVED",
+   "reason_code": null,
+   "answers": {
+    "q1": "2"
+   },
+   "expected": {
+    "q1": [
+     "len",
+     "4"
+    ]
+   },
+   "oracle": "P2; orthocenter(SBC) = B",
+   "primitives": [
+    "orthogonal_projection_line",
+    "intersect_line_line",
+    "ask_distance_point_plane"
+   ],
+   "classification": "REGISTERED_DECOMPOSITION",
+   "explored_states": 25,
+   "candidate_evaluations": 18,
+   "pruned_nodes": 6,
+   "search_depth": 4,
+   "reused_intermediates": 0,
+   "plan_cost": 3,
+   "selected_plan": [
+    "pyramid",
+    "regular_polygon",
+    "perpendicular_line_plane",
+    "segment_length",
+    "orthogonal_projection_line",
+    "orthogonal_projection_line",
+    "intersect_line_line",
+    "ask_distance_point_plane"
+   ],
+   "search_generated_steps": 0,
+   "scene_issues": [],
+   "planner_cpu_ms": 1.629,
+   "kernel_cpu_ms": 14.416,
+   "route_cold_ms": 123.515,
+   "route_warm_ms": 22.857,
+   "peak_memory_kib": 536.74
+  },
+  {
+   "id": "RE6",
+   "family": "circumcenter to line (definition + foot)",
+   "level_expected": "GOAL_DRIVEN_DISCOVERY",
+   "outcome": "EXACT_SERVED",
+   "status": "SERVED",
+   "reason_code": null,
+   "answers": {
+    "q1": "√2"
+   },
+   "expected": {
+    "q1": [
+     "len",
+     "2"
+    ]
+   },
+   "oracle": "P2; circumcenter(SBC) = mid(SC) = (1,1,1)",
+   "primitives": [
+    "orthogonal_projection_line",
+    "intersect_line_line",
+    "ask_length"
+   ],
+   "classification": "REGISTERED_DECOMPOSITION",
+   "explored_states": 25,
+   "candidate_evaluations": 21,
+   "pruned_nodes": 9,
+   "search_depth": 4,
+   "reused_intermediates": 7,
+   "plan_cost": 8,
+   "selected_plan": [
+    "pyramid",
+    "regular_polygon",
+    "perpendicular_line_plane",
+    "segment_length",
+    "midpoint",
+    "orthogonal_projection_line",
+    "translate_point",
+    "midpoint",
+    "orthogonal_projection_line",
+    "translate_point",
+    "intersect_line_line",
+    "orthogonal_projection_line",
+    "ask_length"
+   ],
+   "search_generated_steps": 0,
+   "scene_issues": [],
+   "planner_cpu_ms": 2.57,
+   "kernel_cpu_ms": 18.744,
+   "route_cold_ms": 184.481,
+   "route_warm_ms": 34.352,
+   "peak_memory_kib": 816.15
+  },
+  {
+   "id": "RE7",
+   "family": "circumcenter of an equilateral face",
+   "level_expected": "GOAL_DRIVEN_DISCOVERY",
+   "outcome": "EXACT_SERVED",
+   "status": "SERVED",
+   "reason_code": null,
+   "answers": {
+    "q1": "2√3/3"
+   },
+   "expected": {
+    "q1": [
+     "len",
+     "4/3"
+    ]
+   },
+   "oracle": "P2; SB = SD = BD = 2√2 ⇒ circumcenter = centroid",
+   "primitives": [
+    "orthogonal_projection_line",
+    "intersect_line_line",
+    "ask_length"
+   ],
+   "classification": "REGISTERED_DECOMPOSITION",
+   "explored_states": 24,
+   "candidate_evaluations": 20,
+   "pruned_nodes": 9,
+   "search_depth": 4,
+   "reused_intermediates": 0,
+   "plan_cost": 7,
+   "selected_plan": [
+    "pyramid",
+    "regular_polygon",
+    "perpendicular_line_plane",
+    "segment_length",
+    "midpoint",
+    "orthogonal_projection_line",
+    "translate_point",
+    "midpoint",
+    "orthogonal_projection_line",
+    "translate_point",
+    "intersect_line_line",
+    "ask_length"
+   ],
+   "search_generated_steps": 0,
+   "scene_issues": [],
+   "planner_cpu_ms": 2.355,
+   "kernel_cpu_ms": 13.353,
+   "route_cold_ms": 153.469,
+   "route_warm_ms": 27.286,
+   "peak_memory_kib": 722.12
+  },
+  {
+   "id": "RE8",
+   "family": "orthocenter of an equilateral face to base",
+   "level_expected": "GOAL_DRIVEN_DISCOVERY",
+   "outcome": "EXACT_SERVED",
+   "status": "SERVED",
+   "reason_code": null,
+   "answers": {
+    "q1": "2/3"
+   },
+   "expected": {
+    "q1": [
+     "len",
+     "4/9"
+    ]
+   },
+   "oracle": "P2; orthocenter = centroid of SBD",
+   "primitives": [
+    "orthogonal_projection_line",
+    "intersect_line_line",
+    "ask_distance_point_plane"
+   ],
+   "classification": "REGISTERED_DECOMPOSITION",
+   "explored_states": 25,
+   "candidate_evaluations": 18,
+   "pruned_nodes": 6,
+   "search_depth": 4,
+   "reused_intermediates": 0,
+   "plan_cost": 3,
+   "selected_plan": [
+    "pyramid",
+    "regular_polygon",
+    "perpendicular_line_plane",
+    "segment_length",
+    "orthogonal_projection_line",
+    "orthogonal_projection_line",
+    "intersect_line_line",
+    "ask_distance_point_plane"
+   ],
+   "search_generated_steps": 0,
+   "scene_issues": [],
+   "planner_cpu_ms": 1.506,
+   "kernel_cpu_ms": 11.162,
+   "route_cold_ms": 121.109,
+   "route_warm_ms": 23.842,
+   "peak_memory_kib": 534.75
+  },
+  {
+   "id": "RE9",
+   "family": "described line–plane intersection",
+   "level_expected": "DESCRIPTOR_COMPOSITION",
+   "outcome": "EXACT_SERVED",
+   "status": "SERVED",
+   "reason_code": null,
+   "answers": {
+    "q1": "1"
+   },
+   "expected": {
+    "q1": [
+     "len",
+     "1"
+    ]
+   },
+   "oracle": "P2; M=(1,0,1), N=(0,1,1), (SAC): x=y ⇒ I=(1/2,1/2,1), d=1 (hand)",
+   "primitives": [
+    "intersect_line_plane",
+    "ask_distance_point_plane"
+   ],
+   "classification": "SOURCE_EXPLICIT_SEQUENCE",
+   "explored_states": 6,
+   "candidate_evaluations": 3,
+   "pruned_nodes": 0,
+   "search_depth": 2,
+   "reused_intermediates": 0,
+   "plan_cost": 1,
+   "selected_plan": [
+    "pyramid",
+    "regular_polygon",
+    "perpendicular_line_plane",
+    "segment_length",
+    "midpoint",
+    "midpoint",
+    "intersect_line_plane",
+    "ask_distance_point_plane"
+   ],
+   "search_generated_steps": 0,
+   "scene_issues": [],
+   "planner_cpu_ms": 1.16,
+   "kernel_cpu_ms": 17.037,
+   "route_cold_ms": 135.954,
+   "route_warm_ms": 25.543,
+   "peak_memory_kib": 491.98
+  },
+  {
+   "id": "MG7",
+   "family": "goal-only foot reused by a described-point goal",
+   "level_expected": "REGISTERED_DECOMPOSITION",
+   "outcome": "EXACT_SERVED",
+   "status": "SERVED",
+   "reason_code": null,
+   "answers": {
+    "q1": "2√6/3",
+    "q2": "2√3/3"
+   },
+   "expected": {
+    "q1": [
+     "len",
+     "8/3"
+    ],
+    "q2": [
+     "len",
+     "4/3"
+    ]
+   },
+   "oracle": "P2; the foot of A on SC is ONE construction for both goals",
+   "primitives": [
+    "orthogonal_projection_line",
+    "ask_length"
+   ],
+   "classification": "REGISTERED_DECOMPOSITION",
+   "explored_states": 10,
+   "candidate_evaluations": 5,
+   "pruned_nodes": 0,
+   "search_depth": 2,
+   "reused_intermediates": 1,
+   "plan_cost": 1,
+   "selected_plan": [
+    "pyramid",
+    "regular_polygon",
+    "perpendicular_line_plane",
+    "segment_length",
+    "orthogonal_projection_line",
+    "ask_length",
+    "ask_length"
+   ],
+   "search_generated_steps": 0,
+   "scene_issues": [],
+   "planner_cpu_ms": 0.985,
+   "kernel_cpu_ms": 17.802,
+   "route_cold_ms": 146.662,
+   "route_warm_ms": 26.811,
+   "peak_memory_kib": 397.14
+  },
+  {
+   "id": "MG8",
+   "family": "orthocenter and circumcenter of one triangle",
+   "level_expected": "GOAL_DRIVEN_DISCOVERY",
+   "outcome": "EXACT_SERVED",
+   "status": "SERVED",
+   "reason_code": null,
+   "answers": {
+    "q1": "2√3/3",
+    "q2": "2"
+   },
+   "expected": {
+    "q1": [
+     "len",
+     "4/3"
+    ],
+    "q2": [
+     "len",
+     "4"
+    ]
+   },
+   "oracle": "P2; both = centroid of the equilateral SBD",
+   "primitives": [
+    "orthogonal_projection_line",
+    "intersect_line_line",
+    "ask_length"
+   ],
+   "classification": "REGISTERED_DECOMPOSITION",
+   "explored_states": 48,
+   "candidate_evaluations": 39,
+   "pruned_nodes": 15,
+   "search_depth": 4,
+   "reused_intermediates": 2,
+   "plan_cost": 8,
+   "selected_plan": [
+    "pyramid",
+    "regular_polygon",
+    "perpendicular_line_plane",
+    "segment_length",
+    "orthogonal_projection_line",
+    "orthogonal_projection_line",
+    "intersect_line_line",
+    "midpoint",
+    "translate_point",
+    "midpoint",
+    "translate_point",
+    "intersect_line_line",
+    "ask_length",
+    "ask_length"
+   ],
+   "search_generated_steps": 0,
+   "scene_issues": [],
+   "planner_cpu_ms": 3.096,
+   "kernel_cpu_ms": 18.445,
+   "route_cold_ms": 210.875,
+   "route_warm_ms": 36.007,
+   "peak_memory_kib": 897.69
+  },
+  {
+   "id": "RE10",
+   "family": "projection of a defined point (nested definition)",
+   "level_expected": "GOAL_DRIVEN_DISCOVERY",
+   "outcome": "NO_PLAN_DESPITE_PRIMITIVES",
+   "status": "REFUSED",
+   "reason_code": "BRIDGE_UNSUPPORTED_DESCRIBED_POINT",
+   "answers": {},
+   "expected": {
+    "q1": [
+     "len",
+     "4/9"
+    ]
+   },
+   "oracle": "P2; orthocenter(SBD) = (2/3,2/3,2/3), its projection (2/3,2/3,0), (SAB): y = 0",
+   "primitives": [
+    "orthogonal_projection_line",
+    "intersect_line_line",
+    "orthogonal_projection",
+    "ask_distance_point_plane"
+   ],
+   "classification": "UNKNOWN",
+   "explored_states": "UNKNOWN",
+   "candidate_evaluations": "UNKNOWN",
+   "pruned_nodes": "UNKNOWN",
+   "search_depth": "UNKNOWN",
+   "reused_intermediates": "UNKNOWN",
+   "plan_cost": "UNKNOWN",
+   "selected_plan": [],
+   "search_generated_steps": "UNKNOWN",
+   "scene_issues": [],
+   "planner_cpu_ms": "NOT_MEASURED",
+   "kernel_cpu_ms": "NOT_MEASURED",
+   "route_cold_ms": 7.293,
+   "route_warm_ms": 1.955,
+   "peak_memory_kib": 33.71
+  },
+  {
+   "id": "MG9",
+   "family": "three property-defined points in one problem",
+   "level_expected": "GOAL_DRIVEN_DISCOVERY",
+   "outcome": "SEARCH_BUDGET_EXCEEDED",
+   "status": "REFUSED",
+   "reason_code": "PLAN_TOO_LARGE",
+   "answers": {},
+   "expected": {
+    "q1": [
+     "len",
+     "4/3"
+    ],
+    "q2": [
+     "len",
+     "3"
+    ],
+    "q3": [
+     "len",
+     "4"
+    ]
+   },
+   "oracle": "P2; SCD right at D ⇒ orthocenter = D; SBC right at B ⇒ circumcenter = mid(SC)",
+   "primitives": [
+    "orthogonal_projection_line",
+    "intersect_line_line",
+    "ask_length"
+   ],
+   "classification": "UNKNOWN",
+   "explored_states": "UNKNOWN",
+   "candidate_evaluations": "UNKNOWN",
+   "pruned_nodes": "UNKNOWN",
+   "search_depth": "UNKNOWN",
+   "reused_intermediates": "UNKNOWN",
+   "plan_cost": "UNKNOWN",
+   "selected_plan": [],
+   "search_generated_steps": "UNKNOWN",
+   "scene_issues": [],
+   "planner_cpu_ms": 3.446,
+   "kernel_cpu_ms": "NOT_MEASURED",
+   "route_cold_ms": 42.647,
+   "route_warm_ms": 6.592,
+   "peak_memory_kib": 150.58
+  },
+  {
+   "id": "MG1",
+   "family": "multi-goal shared described point",
+   "level_expected": "DESCRIPTOR_COMPOSITION",
+   "outcome": "EXACT_SERVED",
+   "status": "SERVED",
+   "reason_code": null,
+   "answers": {
+    "q2": "1",
+    "q1": "√2"
+   },
+   "expected": {
+    "q1": [
+     "len",
+     "2"
+    ],
+    "q2": [
+     "len",
+     "1"
+    ]
+   },
+   "oracle": "P2; h = (1,0,1)",
+   "primitives": [
+    "orthogonal_projection_line",
+    "ask_length",
+    "ask_distance_point_plane"
+   ],
+   "classification": "SOURCE_EXPLICIT_SEQUENCE",
+   "explored_states": 8,
+   "candidate_evaluations": 4,
+   "pruned_nodes": 0,
+   "search_depth": 2,
+   "reused_intermediates": 1,
+   "plan_cost": 1,
+   "selected_plan": [
+    "pyramid",
+    "regular_polygon",
+    "perpendicular_line_plane",
+    "segment_length",
+    "orthogonal_projection_line",
+    "ask_length",
+    "ask_distance_point_plane"
+   ],
+   "search_generated_steps": 0,
+   "scene_issues": [],
+   "planner_cpu_ms": 1.274,
+   "kernel_cpu_ms": 21.634,
+   "route_cold_ms": 152.65,
+   "route_warm_ms": 30.816,
+   "peak_memory_kib": 426.95
+  },
+  {
+   "id": "MG2",
+   "family": "multi-goal three quantities",
+   "level_expected": "REGISTERED_DECOMPOSITION",
+   "outcome": "EXACT_SERVED",
+   "status": "SERVED",
+   "reason_code": null,
+   "answers": {
+    "q2": "2/3",
+    "q3": "√2",
+    "q1": "2√6/3"
+   },
+   "expected": {
+    "q1": [
+     "len",
+     "8/3"
+    ],
+    "q2": [
+     "cos2",
+     "2/3"
+    ],
+    "q3": [
+     "len",
+     "2"
+    ]
+   },
+   "oracle": "P2",
+   "primitives": [
+    "orthogonal_projection_line",
+    "ask_length",
+    "ask_angle_line_plane",
+    "ask_distance_point_plane"
+   ],
+   "classification": "REGISTERED_DECOMPOSITION",
+   "explored_states": 5,
+   "candidate_evaluations": 2,
+   "pruned_nodes": 0,
+   "search_depth": 2,
+   "reused_intermediates": 0,
+   "plan_cost": 1,
+   "selected_plan": [
+    "pyramid",
+    "regular_polygon",
+    "perpendicular_line_plane",
+    "segment_length",
+    "orthogonal_projection_line",
+    "ask_length",
+    "ask_angle_line_plane",
+    "ask_distance_point_plane"
+   ],
+   "search_generated_steps": 0,
+   "scene_issues": [],
+   "planner_cpu_ms": 0.869,
+   "kernel_cpu_ms": 24.714,
+   "route_cold_ms": 203.319,
+   "route_warm_ms": 34.696,
+   "peak_memory_kib": 510.99
+  },
+  {
+   "id": "MG3",
+   "family": "reuse of a source-named foot",
+   "level_expected": "SOURCE_EXPLICIT_SEQUENCE",
+   "outcome": "EXACT_SERVED",
+   "status": "SERVED",
+   "reason_code": null,
+   "answers": {
+    "q2": "1",
+    "q1": "√2"
+   },
+   "expected": {
+    "q1": [
+     "len",
+     "2"
+    ],
+    "q2": [
+     "len",
+     "1"
+    ]
+   },
+   "oracle": "P2; H = (1,0,1); the decomposition foot must reuse H",
+   "primitives": [
+    "orthogonal_projection_line",
+    "ask_length"
+   ],
+   "classification": "REGISTERED_DECOMPOSITION",
+   "explored_states": 5,
+   "candidate_evaluations": 3,
+   "pruned_nodes": 0,
+   "search_depth": 2,
+   "reused_intermediates": 1,
+   "plan_cost": 0,
+   "selected_plan": [
+    "pyramid",
+    "regular_polygon",
+    "perpendicular_line_plane",
+    "segment_length",
+    "orthogonal_projection_line",
+    "ask_length",
+    "ask_distance_point_plane"
+   ],
+   "search_generated_steps": 0,
+   "scene_issues": [],
+   "planner_cpu_ms": 0.785,
+   "kernel_cpu_ms": 18.908,
+   "route_cold_ms": 172.44,
+   "route_warm_ms": 27.8,
+   "peak_memory_kib": 386.89
+  },
+  {
+   "id": "MG4",
+   "family": "multi-goal two described points sharing an inner point",
+   "level_expected": "DESCRIPTOR_COMPOSITION",
+   "outcome": "EXACT_SERVED",
+   "status": "SERVED",
+   "reason_code": null,
+   "answers": {
+    "q1": "1",
+    "q2": "√6"
+   },
+   "expected": {
+    "q1": [
+     "len",
+     "1"
+    ],
+    "q2": [
+     "len",
+     "6"
+    ]
+   },
+   "oracle": "P2; m = (1,1,1), h = (1,1,0)",
+   "primitives": [
+    "midpoint",
+    "orthogonal_projection",
+    "ask_distance_point_plane",
+    "ask_length"
+   ],
+   "classification": "DISCOVERED_FUNCTION_COMPOSITION",
+   "explored_states": 10,
+   "candidate_evaluations": 5,
+   "pruned_nodes": 0,
+   "search_depth": 2,
+   "reused_intermediates": 1,
+   "plan_cost": 2,
+   "selected_plan": [
+    "pyramid",
+    "regular_polygon",
+    "perpendicular_line_plane",
+    "segment_length",
+    "midpoint",
+    "orthogonal_projection",
+    "ask_distance_point_plane",
+    "ask_length"
+   ],
+   "search_generated_steps": 1,
+   "scene_issues": [],
+   "planner_cpu_ms": 1.334,
+   "kernel_cpu_ms": 18.78,
+   "route_cold_ms": 158.032,
+   "route_warm_ms": 29.791,
+   "peak_memory_kib": 489.88
+  },
+  {
+   "id": "MG5",
+   "family": "distance between two described points",
+   "level_expected": "DESCRIPTOR_COMPOSITION",
+   "outcome": "NO_PLAN_DESPITE_PRIMITIVES",
+   "status": "REFUSED",
+   "reason_code": "BRIDGE_UNSUPPORTED_DESCRIBED_POINT",
+   "answers": {},
+   "expected": {
+    "q1": [
+     "len",
+     "5"
+    ]
+   },
+   "oracle": "P2",
+   "primitives": [
+    "midpoint",
+    "ask_length"
+   ],
+   "classification": "UNKNOWN",
+   "explored_states": "UNKNOWN",
+   "candidate_evaluations": "UNKNOWN",
+   "pruned_nodes": "UNKNOWN",
+   "search_depth": "UNKNOWN",
+   "reused_intermediates": "UNKNOWN",
+   "plan_cost": "UNKNOWN",
+   "selected_plan": [],
+   "search_generated_steps": "UNKNOWN",
+   "scene_issues": [],
+   "planner_cpu_ms": "NOT_MEASURED",
+   "kernel_cpu_ms": "NOT_MEASURED",
+   "route_cold_ms": 7.572,
+   "route_warm_ms": 1.771,
+   "peak_memory_kib": 28.85
+  },
+  {
+   "id": "MG6",
+   "family": "triangle area with a described vertex",
+   "level_expected": "DESCRIPTOR_COMPOSITION",
+   "outcome": "EXACT_SERVED",
+   "status": "SERVED",
+   "reason_code": null,
+   "answers": {
+    "q1": "√2"
+   },
+   "expected": {
+    "q1": [
+     "area",
+     "2"
+    ]
+   },
+   "oracle": "P2",
+   "primitives": [
+    "midpoint",
+    "ask_area"
+   ],
+   "classification": "SOURCE_EXPLICIT_SEQUENCE",
+   "explored_states": 6,
+   "candidate_evaluations": 2,
+   "pruned_nodes": 0,
+   "search_depth": 2,
+   "reused_intermediates": 0,
+   "plan_cost": 1,
+   "selected_plan": [
+    "pyramid",
+    "regular_polygon",
+    "perpendicular_line_plane",
+    "segment_length",
+    "midpoint",
+    "ask_area"
+   ],
+   "search_generated_steps": 0,
+   "scene_issues": [],
+   "planner_cpu_ms": 0.836,
+   "kernel_cpu_ms": 10.951,
+   "route_cold_ms": 97.488,
+   "route_warm_ms": 21.672,
+   "peak_memory_kib": 338.36
+  },
+  {
+   "id": "N1",
+   "family": "missing dimension",
+   "level_expected": null,
+   "outcome": "CORRECT_REFUSAL",
+   "status": "REFUSED",
+   "reason_code": "MISSING_DIMENSION",
+   "answers": {},
+   "expected": {
+    "group": "refusal",
+    "codes": [
+     "FACT_INCOMPLETE",
+     "MISSING_DATA",
+     "MISSING_DIMENSION",
+     "UNDERDETERMINED_POINT"
+    ]
+   },
+   "oracle": "SA length not given: no unique answer",
+   "primitives": [],
+   "classification": "UNKNOWN",
+   "explored_states": "UNKNOWN",
+   "candidate_evaluations": "UNKNOWN",
+   "pruned_nodes": "UNKNOWN",
+   "search_depth": "UNKNOWN",
+   "reused_intermediates": "UNKNOWN",
+   "plan_cost": "UNKNOWN",
+   "selected_plan": [],
+   "search_generated_steps": "UNKNOWN",
+   "scene_issues": [],
+   "planner_cpu_ms": 0.277,
+   "kernel_cpu_ms": 6.448,
+   "route_cold_ms": 47.932,
+   "route_warm_ms": 7.888,
+   "peak_memory_kib": 71.26
+  },
+  {
+   "id": "N2",
+   "family": "contradictory dimensions",
+   "level_expected": null,
+   "outcome": "CORRECT_REFUSAL",
+   "status": "REFUSED",
+   "reason_code": "INCONSISTENT_FACTS",
+   "answers": {},
+   "expected": {
+    "group": "refusal",
+    "codes": [
+     "CONTRADICTORY_DATA",
+     "INCONSISTENT_FACTS",
+     "INCONSISTENT_LENGTH"
+    ]
+   },
+   "oracle": "square side 2 vs AB = 3",
+   "primitives": [],
+   "classification": "UNKNOWN",
+   "explored_states": "UNKNOWN",
+   "candidate_evaluations": "UNKNOWN",
+   "pruned_nodes": "UNKNOWN",
+   "search_depth": "UNKNOWN",
+   "reused_intermediates": "UNKNOWN",
+   "plan_cost": "UNKNOWN",
+   "selected_plan": [],
+   "search_generated_steps": "UNKNOWN",
+   "scene_issues": [],
+   "planner_cpu_ms": 0.304,
+   "kernel_cpu_ms": 7.556,
+   "route_cold_ms": 55.363,
+   "route_warm_ms": 9.87,
+   "peak_memory_kib": 86.21
+  },
+  {
+   "id": "N3",
+   "family": "quote not in source",
+   "level_expected": null,
+   "outcome": "CORRECT_REFUSAL",
+   "status": "REFUSED",
+   "reason_code": "QUOTE_NOT_IN_SOURCE",
+   "answers": {},
+   "expected": {
+    "group": "refusal",
+    "codes": [
+     "QUOTE_NOT_IN_SOURCE",
+     "UNGROUNDED_VALUE"
+    ]
+   },
+   "oracle": "fabricated quote",
+   "primitives": [],
+   "classification": "UNKNOWN",
+   "explored_states": "UNKNOWN",
+   "candidate_evaluations": "UNKNOWN",
+   "pruned_nodes": "UNKNOWN",
+   "search_depth": "UNKNOWN",
+   "reused_intermediates": "UNKNOWN",
+   "plan_cost": "UNKNOWN",
+   "selected_plan": [],
+   "search_generated_steps": "UNKNOWN",
+   "scene_issues": [],
+   "planner_cpu_ms": 0.323,
+   "kernel_cpu_ms": 0.929,
+   "route_cold_ms": 0.735,
+   "route_warm_ms": 0.165,
+   "peak_memory_kib": 6.52
+  },
+  {
+   "id": "N4",
+   "family": "ambiguous wording (clarification)",
+   "level_expected": null,
+   "outcome": "CORRECT_CLARIFICATION",
+   "status": "REFUSED",
+   "reason_code": "AMBIGUOUS_FACT",
+   "answers": {},
+   "expected": {
+    "group": "clarification",
+    "codes": [
+     "AMBIGUOUS_FACT"
+    ]
+   },
+   "oracle": "the plane is not named",
+   "primitives": [],
+   "classification": "UNKNOWN",
+   "explored_states": "UNKNOWN",
+   "candidate_evaluations": "UNKNOWN",
+   "pruned_nodes": "UNKNOWN",
+   "search_depth": "UNKNOWN",
+   "reused_intermediates": "UNKNOWN",
+   "plan_cost": "UNKNOWN",
+   "selected_plan": [],
+   "search_generated_steps": "UNKNOWN",
+   "scene_issues": [],
+   "planner_cpu_ms": "NOT_MEASURED",
+   "kernel_cpu_ms": "NOT_MEASURED",
+   "route_cold_ms": 4.634,
+   "route_warm_ms": 1.352,
+   "peak_memory_kib": 20.82
+  },
+  {
+   "id": "N5",
+   "family": "described centroid of a collinear triple",
+   "level_expected": null,
+   "outcome": "CORRECT_REFUSAL",
+   "status": "REFUSED",
+   "reason_code": "COLLINEAR_POINTS",
+   "answers": {},
+   "expected": {
+    "group": "refusal",
+    "codes": [
+     "COLLINEAR_POINTS",
+     "DEGENERATE_POINTS",
+     "DEGENERATE_POLYGON",
+     "DEGENERATE_TRIANGLE"
+    ]
+   },
+   "oracle": "A, M, B collinear: no triangle",
+   "primitives": [],
+   "classification": "UNKNOWN",
+   "explored_states": "UNKNOWN",
+   "candidate_evaluations": "UNKNOWN",
+   "pruned_nodes": "UNKNOWN",
+   "search_depth": "UNKNOWN",
+   "reused_intermediates": "UNKNOWN",
+   "plan_cost": "UNKNOWN",
+   "selected_plan": [],
+   "search_generated_steps": "UNKNOWN",
+   "scene_issues": [],
+   "planner_cpu_ms": 1.004,
+   "kernel_cpu_ms": 7.06,
+   "route_cold_ms": 56.327,
+   "route_warm_ms": 9.988,
+   "peak_memory_kib": 106.46
+  },
+  {
+   "id": "N6",
+   "family": "unknown vertex in description",
+   "level_expected": null,
+   "outcome": "CORRECT_REFUSAL",
+   "status": "REFUSED",
+   "reason_code": "UNDERDETERMINED_POINT",
+   "answers": {},
+   "expected": {
+    "group": "refusal",
+    "codes": "ANY_TYPED"
+   },
+   "oracle": "X is not a vertex",
+   "primitives": [],
+   "classification": "UNKNOWN",
+   "explored_states": "UNKNOWN",
+   "candidate_evaluations": "UNKNOWN",
+   "pruned_nodes": "UNKNOWN",
+   "search_depth": "UNKNOWN",
+   "reused_intermediates": "UNKNOWN",
+   "plan_cost": "UNKNOWN",
+   "selected_plan": [],
+   "search_generated_steps": "UNKNOWN",
+   "scene_issues": [],
+   "planner_cpu_ms": 0.754,
+   "kernel_cpu_ms": 7.123,
+   "route_cold_ms": 57.356,
+   "route_warm_ms": 9.798,
+   "peak_memory_kib": 102.8
+  },
+  {
+   "id": "N7",
+   "family": "orthocenter of a degenerate (collinear) triangle",
+   "level_expected": null,
+   "outcome": "CORRECT_REFUSAL",
+   "status": "REFUSED",
+   "reason_code": "DEGENERATE_POINTS",
+   "answers": {},
+   "expected": {
+    "group": "refusal",
+    "codes": "ANY_TYPED"
+   },
+   "oracle": "A, M, B collinear: orthocenter undefined",
+   "primitives": [],
+   "classification": "UNKNOWN",
+   "explored_states": "UNKNOWN",
+   "candidate_evaluations": "UNKNOWN",
+   "pruned_nodes": "UNKNOWN",
+   "search_depth": "UNKNOWN",
+   "reused_intermediates": "UNKNOWN",
+   "plan_cost": "UNKNOWN",
+   "selected_plan": [],
+   "search_generated_steps": "UNKNOWN",
+   "scene_issues": [],
+   "planner_cpu_ms": 1.551,
+   "kernel_cpu_ms": 6.835,
+   "route_cold_ms": 59.968,
+   "route_warm_ms": 10.854,
+   "peak_memory_kib": 121.41
+  },
+  {
+   "id": "N8",
+   "family": "tetrahedron: stated AB contradicts OA ⊥ OB",
+   "level_expected": null,
+   "outcome": "CORRECT_REFUSAL",
+   "status": "REFUSED",
+   "reason_code": "INCONSISTENT_FACTS",
+   "answers": {},
+   "expected": {
+    "group": "refusal",
+    "codes": [
+     "INCONSISTENT_FACTS"
+    ]
+   },
+   "oracle": "OA² + OB² = 5 ≠ AB² = 9",
+   "primitives": [],
+   "classification": "UNKNOWN",
+   "explored_states": "UNKNOWN",
+   "candidate_evaluations": "UNKNOWN",
+   "pruned_nodes": "UNKNOWN",
+   "search_depth": "UNKNOWN",
+   "reused_intermediates": "UNKNOWN",
+   "plan_cost": "UNKNOWN",
+   "selected_plan": [],
+   "search_generated_steps": "UNKNOWN",
+   "scene_issues": [],
+   "planner_cpu_ms": 0.385,
+   "kernel_cpu_ms": 8.289,
+   "route_cold_ms": 62.987,
+   "route_warm_ms": 9.998,
+   "peak_memory_kib": 79.76
+  },
+  {
+   "id": "N9",
+   "family": "tetrahedron: OC not given",
+   "level_expected": null,
+   "outcome": "CORRECT_REFUSAL",
+   "status": "REFUSED",
+   "reason_code": "MISSING_DIMENSION",
+   "answers": {},
+   "expected": {
+    "group": "refusal",
+    "codes": [
+     "MISSING_DIMENSION",
+     "UNDERDETERMINED_POINT"
+    ]
+   },
+   "oracle": "OC free: no unique solid",
+   "primitives": [],
+   "classification": "UNKNOWN",
+   "explored_states": "UNKNOWN",
+   "candidate_evaluations": "UNKNOWN",
+   "pruned_nodes": "UNKNOWN",
+   "search_depth": "UNKNOWN",
+   "reused_intermediates": "UNKNOWN",
+   "plan_cost": "UNKNOWN",
+   "selected_plan": [],
+   "search_generated_steps": "UNKNOWN",
+   "scene_issues": [],
+   "planner_cpu_ms": 0.281,
+   "kernel_cpu_ms": 6.464,
+   "route_cold_ms": 51.899,
+   "route_warm_ms": 8.778,
+   "peak_memory_kib": 79.84
+  },
+  {
+   "id": "N10",
+   "family": "three lateral edges too short for the base",
+   "level_expected": null,
+   "outcome": "CORRECT_REFUSAL",
+   "status": "REFUSED",
+   "reason_code": "INCONSISTENT_FACTS",
+   "answers": {},
+   "expected": {
+    "group": "refusal",
+    "codes": [
+     "INCONSISTENT_FACTS"
+    ]
+   },
+   "oracle": "circumradius of ABC is 5/2 > SA = 2: no apex",
+   "primitives": [],
+   "classification": "UNKNOWN",
+   "explored_states": "UNKNOWN",
+   "candidate_evaluations": "UNKNOWN",
+   "pruned_nodes": "UNKNOWN",
+   "search_depth": "UNKNOWN",
+   "reused_intermediates": "UNKNOWN",
+   "plan_cost": "UNKNOWN",
+   "selected_plan": [],
+   "search_generated_steps": "UNKNOWN",
+   "scene_issues": [],
+   "planner_cpu_ms": 0.309,
+   "kernel_cpu_ms": 7.277,
+   "route_cold_ms": 56.671,
+   "route_warm_ms": 10.216,
+   "peak_memory_kib": 78.23
+  }
+ ]
+}
