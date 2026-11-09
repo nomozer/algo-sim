@@ -27,12 +27,15 @@
   "baseline_t3": {"commit": "d79565b52", "verdict": "FULL_PRODUCT_GATE_PASS", "pytest": "13994 passed, 7 skipped, 3 deselected, 9 xfailed, 0 failed",
                   "vitest": "2000/2000 (136 files)", "build": "PASS", "demo": "5/5", "crash_surface": "6/6",
                   "freeze_verify": "MATCH 6290986dee3d1336", "log_sha256": "4b5cf07d49f9b0171e07f5bdb9c299c365451297e3c79c572aa6bcddcaf37e3a"},
-  "integration_t3": "NOT_YET_RUN",
+  "integration_t3": {"commit": "37ec2db57", "worktree": "clean detached", "verdict": "FULL_PRODUCT_GATE_PASS",
+                     "pytest": "14023 passed, 7 skipped, 3 deselected, 15 xfailed, 0 failed (= base 13994 + A 6 + B 23; xfail 9 + B 6 strict)",
+                     "vitest": "2000/2000 (136 files)", "build": "PASS", "demo": "5/5", "crash_surface": "6/6, 0 thrown",
+                     "freeze_verify": "MATCH 0e815f39c8d02203", "log_sha256": "90601078298a9668a41348fc04309df355359bba517cffd5aa370aa45380373c"},
   "measurement": {
     "MEASUREMENT_CLASS": "OFFLINE_PARALLEL_WORKSTREAM_INTEGRATION",
     "HELD_OUT_CLAIM": "NONE (INDEPENDENT_H1_VALIDATION = NOT_MEASURED)",
     "EVALUATOR_INDEPENDENCE": "NONE (agents and coordinator are the same model family in one session)",
     "live_provider_calls": 0
   },
-  "verdicts": {"A": "LOCAL_OCR_DIAGNOSTIC_ONLY", "B": "HYBRID_REASONING_IMPROVEMENT_VERIFIED", "integration": "PENDING_INTEGRATION_T3"}
+  "verdicts": {"A": "LOCAL_OCR_DIAGNOSTIC_ONLY", "B": "HYBRID_REASONING_IMPROVEMENT_VERIFIED", "integration": "PARALLEL_CANDIDATES_INTEGRATION_VERIFIED (offline)"}
 }

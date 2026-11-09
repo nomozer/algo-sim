@@ -132,7 +132,14 @@ Coordinator đã soát lại toán của G1a/G1b:
   - B chỉ biến từ chối thành phục vụ hoặc đổi mã từ chối, mà cache chỉ lưu hàng SERVED. 47 hàng đã phục vụ giữ nguyên
     đáp số và telemetry.
   - `test_cache_identity` và `test_current_state_identity` xanh.
-- **Full T3 trên candidate tích hợp:** kết quả ghi ở `run.json` → `integration_t3`.
+- **Full T3 trên candidate tích hợp:** chạy trên worktree detached sạch tại `37ec2db57`, kết quả
+  **`FULL_PRODUCT_GATE_PASS`**.
+  - pytest: 14023 passed / 7 skipped / 3 deselected / 15 xfailed / 0 failed, tức là baseline 13994 + 6 của A + 23 của B.
+    15 xfailed gồm 9 của baseline + 6 strict của B.
+  - vitest 2000/2000; build PASS; demo 5/5; bề mặt sập 6/6 (0 lỗi ném ra ngoài).
+  - freeze `--verify` MATCH (`0e815f39…`).
+  - sha256 của log: `90601078298a9668…` (bản đầy đủ ở `run.json`).
+  - Commit chỉ ghi kết quả này (sau `37ec2db57`) chỉ đổi tài liệu trong thư mục run.
 
 ## 6. Kiểm tra hợp đồng chung
 
