@@ -239,6 +239,23 @@ def _out_of_scope_response(problem_text: str) -> dict[str, Any]:
     }
 
 
+_TRAILING_MC_OPTIONS_RE = re.compile(
+    r"(?P<stem_end>(?:(?<!\w)(?i:bằng|là)|[.?:)])\s*:?)"
+    r"\s+(?<![\w'])A\s*[.)]\s*\S.*?"
+    r"\s+(?<![\w'])B\s*[.)]\s*\S.*?"
+    r"\s+(?<![\w'])C\s*[.)]\s*\S.*?"
+    r"\s+(?<![\w'])D\s*[.)]\s*\S+\s*$",
+    re.DOTALL,
+)
+
+
+def strip_trailing_multiple_choice_options(text: str) -> str:
+    """Strip trailing 4-option multiple-choice answer key lines (`A. ... B. ... C. ... D. ...`) from Vietnamese exam stems."""
+    if not text:
+        return ""
+    return _TRAILING_MC_OPTIONS_RE.sub(r"\g<stem_end>", text).strip()
+
+
 def route_text_input(
     problem_text: str,
     *,
@@ -253,7 +270,7 @@ def route_text_input(
 ) -> AdaptiveRouteOutcome:
     """Route a Vietnamese problem text (`T1` or post-Vision `I1` / user-edited text) local-first into Hybrid `/4`."""
     t_total0 = time.perf_counter()
-    norm_text = normalize_problem_text(problem_text)
+    norm_text = strip_trailing_multiple_choice_options(normalize_problem_text(problem_text))
     local_res = parse_geometry_problem_locally(norm_text)
     local_ms = local_res.parse_latency_ms
     eff_policy = policy if policy is not None else hybrid_offline_policy({"HYBRID_ROUTE_D_PREVIEW": "1"})
@@ -685,8 +702,8 @@ def reconcile_dual_ocr_texts(
             "repairs": [],
             "used_ground_truth": False,
         }
-    p_raw = (primary_vi_ocr_text or "").strip()
-    s_raw = (secondary_math_ocr_text or "").strip()
+    p_raw = strip_trailing_multiple_choice_options((primary_vi_ocr_text or "").strip())
+    s_raw = strip_trailing_multiple_choice_options((secondary_math_ocr_text or "").strip())
     if not p_raw or not s_raw:
         return {
             "reconciled": False,
@@ -792,7 +809,7 @@ def verify_ocr_input_fidelity(
     5. `source_span_coverage`: `parse_geometry_problem_locally` returns `LOCAL_PARSE_COMPLETE` with `0` unparsed clauses and `coverage_ratio >= 0.85`.
     6. `diagram_dependency_and_cross_engine`: Problem does not depend on an external diagram (`như hình vẽ`), is not a degraded image, and if `secondary_ocr_text` is provided, structured math tokens agree 100%.
     """
-    raw = (ocr_text or "").strip()
+    raw = strip_trailing_multiple_choice_options((ocr_text or "").strip())
     norm = normalize_problem_text(raw)
     tokens = extract_structured_math_tokens(raw)
     local_res = parse_geometry_problem_locally(norm) if norm else None
@@ -829,7 +846,10 @@ def verify_ocr_input_fidelity(
         and not has_comma_decimal
         and not has_non_positive_length
         and all(
-            re.match(r"^(?:[1-9]\d*(?:√\d+)?(?:/\d+)?|√\d+(?:/\d+)?|[1-9]?\d*\s*a(?:√\d+)?(?:/\d+)?)$", v)
+            re.match(
+                r"^(?:[1-9]\d*(?:√\d+)?(?:/\d+)?|[1-9]?\d*√\d+a(?:/\d+)?|√\d+a?(?:/\d+)?|[1-9]?\d*\s*a(?:√\d+)?(?:/\d+)?)$",
+                v,
+            )
             for v in tokens["assignments"].values()
         )
     )
@@ -841,10 +861,18 @@ def verify_ocr_input_fidelity(
         and (local_res is not None and local_res.reason_code != "UNPARSED_FACT_CANDIDATE")
     )
 
-    # 4. Goal sentence completeness
+    # 4. Goal sentence completeness (auto-added construct_object from "Cho ..." alone does not count without explicit sim verb)
+    has_explicit_sim_verb = bool(
+        re.search(r"\b(?:vẽ|dựng|mô\s+phỏng|biểu\s+diễn|cho\s+(?:mình|em|tôi)\s+xem)\b", norm, re.IGNORECASE)
+    )
+    has_real_goal = (
+        len(payload.get("math_goals") or []) >= 1
+        or len(payload.get("derived_sections") or []) >= 1
+        or (has_explicit_sim_verb and len(payload.get("simulation_goals") or []) >= 1)
+    )
     c4_goal_complete = bool(
         norm
-        and len(goals_payload) >= 1
+        and has_real_goal
         and len(unparsed_goals) == 0
         and (local_res is not None and local_res.reason_code != "UNPARSED_GOAL_CANDIDATE")
     )

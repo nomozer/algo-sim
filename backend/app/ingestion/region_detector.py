@@ -417,6 +417,32 @@ def detect_page_boundary(rgb: Image.Image) -> tuple[BoundingBox, bool]:
     )
     if trimmed.width < 80 or trimmed.height < 80:
         return full, False
+
+    # Bảo vệ chống cắt nhầm dải giấy xám gắn trên nền đệm trắng (#FFFFFF): trang giữ lại phải chứa >= 85% mực thích nghi.
+    ink_chk, isx, isy = _adaptive_ink_image(rgb, max_side=360)
+    iw, ih = ink_chk.size
+    idata = ink_chk.tobytes()
+    mx = max(1, int(round(iw * 0.025)))
+    my = max(1, int(round(ih * 0.025)))
+    px = max(2, int(round(iw * 0.03)))
+    py = max(2, int(round(ih * 0.03)))
+    tx0 = max(0, int(trimmed.x0 / isx) - px)
+    ty0 = max(0, int(trimmed.y0 / isy) - py)
+    tx1 = min(iw, int(math.ceil(trimmed.x1 / isx)) + px)
+    ty1 = min(ih, int(math.ceil(trimmed.y1 / isy)) + py)
+    tot_ink = 0
+    kept_ink = 0
+    for yy in range(my, ih - my):
+        row_off = yy * iw
+        in_y = ty0 <= yy < ty1
+        for xx in range(mx, iw - mx):
+            if idata[row_off + xx]:
+                tot_ink += 1
+                if in_y and tx0 <= xx < tx1:
+                    kept_ink += 1
+    if tot_ink >= 50 and (kept_ink / float(tot_ink)) < 0.85:
+        return full, False
+
     return trimmed, True
 
 
@@ -888,6 +914,33 @@ def _group_problem_clusters(
 
         cbox, ctexts, cfigs = merged_clusters[best_idx]
         merged_clusters[best_idx] = (cbox.union(fb.bbox), ctexts, cfigs + [fb])
+
+    # Ghép bố cục sandwich 1 bài thi (`[Thân đề trên] -> [Hình vẽ ở giữa] -> [Câu hỏi / Đáp án A.B.C.D bên dưới]`):
+    # Khi hình vẽ nằm kẹp sát giữa hai cụm chữ và cụm dưới chỉ là dòng câu hỏi / phương án ngắn không có hình riêng.
+    if len(merged_clusters) >= 2:
+        bridged: list[tuple[BoundingBox, list[LayoutBlock], list[LayoutBlock]]] = [merged_clusters[0]]
+        max_fig_gap = max(45, int(round(img_h * 0.06)))
+        for cur_box, cur_texts, cur_figs in merged_clusters[1:]:
+            prev_box, prev_texts, prev_figs = bridged[-1]
+            if prev_texts and cur_texts and (not prev_figs or not cur_figs) and (prev_figs or cur_figs):
+                t_y0_prev = min(tb.bbox.y0 for tb in prev_texts)
+                t_y1_prev = max(tb.bbox.y1 for tb in prev_texts)
+                t_y0_cur = min(tb.bbox.y0 for tb in cur_texts)
+                t_y1_cur = max(tb.bbox.y1 for tb in cur_texts)
+                cur_text_h = t_y1_cur - t_y0_cur
+                has_sandwich_fig = cur_text_h <= img_h * 0.24 and any(
+                    fb.bbox.y0 >= t_y0_prev - 8
+                    and fb.bbox.y1 >= t_y1_prev
+                    and fb.bbox.y0 <= t_y0_cur
+                    and (fb.bbox.y0 - t_y1_prev) <= max_fig_gap
+                    and (t_y0_cur - fb.bbox.y1) <= max_fig_gap
+                    for fb in (prev_figs + cur_figs)
+                )
+                if has_sandwich_fig:
+                    bridged[-1] = (prev_box.union(cur_box), prev_texts + cur_texts, prev_figs + cur_figs)
+                    continue
+            bridged.append((cur_box, cur_texts, cur_figs))
+        merged_clusters = bridged
 
     return merged_clusters
 

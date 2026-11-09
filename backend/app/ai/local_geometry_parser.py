@@ -132,7 +132,16 @@ _PTS2 = rf"(?:{_PT}){{2}}"
 _PTS3 = rf"(?:{_PT}){{3}}"
 _PTS4 = rf"(?:{_PT}){{4}}"
 _PTS3_6 = rf"(?:{_PT}){{3,6}}"
-_VAL = r"(?:\d+(?:√\d+)?(?:/\d+)?|√\d+(?:/\d+)?|\d*a(?:√\d+)?(?:/\d+)?|a√\d+(?:/\d+)?)(?![.,]\d|[A-Za-z0-9_'′²³₁₂₃°~√/])"
+_VAL = r"(?:\d+(?:√\d+)?(?:/\d+)?|\d*√\d+a(?:/\d+)?|√\d+(?:/\d+)?|\d*a(?:√\d+)?(?:/\d+)?|a√\d+(?:/\d+)?)(?![.,]\d|[A-Za-z0-9_'′²³₁₂₃°~√/])"
+
+
+def _canon_val(v: str) -> str:
+    """Canonicalize textbook `√3a` / `2√3a` into `ExactNumber` (`a√3` / `2a√3`)."""
+    s = v.strip()
+    m = re.fullmatch(r"(?P<k>\d*)√(?P<r>\d+)a(?P<d>/\d+)?", s)
+    if m:
+        return f"{m.group('k')}a√{m.group('r')}{m.group('d') or ''}"
+    return s
 
 _TOKEN_RE = re.compile(
     rf"(?P<solid>{_PT}\.{_PTS3_6}|{_PTS3_6}\.{_PTS3_6})"
@@ -184,7 +193,15 @@ def split_into_Sentences(text: str) -> list[tuple[int, int, str]]:
     bounds = [0]
     n = len(text)
     for i, ch in enumerate(text):
-        if ch in ";?!\n":
+        if ch in "?!\n":
+            bounds.append(i + 1)
+        elif ch == ";":
+            # Do not split inside uppercase point/segment lists like "Gọi M; N; P lần lượt là trung điểm của SA; SB; SC"
+            if re.search(r"(?<![a-zà-ỹ])(?:[A-Z][0-9']*)+$", text[:i].rstrip()) and re.match(
+                r"^\s*(?:[A-Z][0-9']*)+(?:\s*(?:[,;.]|\b(?i:và|lần\s+lượt)\b)|\s*$)",
+                text[i + 1 :],
+            ):
+                continue
             bounds.append(i + 1)
         elif ch == ".":
             prev_ch = text[i - 1] if i > 0 else ""
@@ -221,7 +238,7 @@ def split_into_clauses(text: str) -> list[ClauseSpan]:
 # ── Stage 4 & 5: Grammar / Rule-Based Semantic Parser -> Typed Semantic AST ──────────────────────────────────────────
 
 _QUESTION_STARTER_RE = re.compile(
-    r"(?:^|\b)(?:tính|tìm|xác\s+định|hỏi|dựng|vẽ|mô\s+phỏng|cho\s+mình\s+xem|chứng\s+minh)\b",
+    r"(?:^|\b)(?:tính|tìm|xác\s+định|hỏi|dựng|vẽ|mô\s+phỏng|cho\s+mình\s+xem|chứng\s+minh|bao\s+nhiêu|mấy)\b|\?|(?<!\w)(?:bằng|là)\s*:?\s*$",
     re.IGNORECASE | re.UNICODE,
 )
 
@@ -435,10 +452,23 @@ class _AstBuilder:
 
 
 def _detect_length_unit(raw_text: str) -> str:
-    # Check if symbolic unit `a` is used in length assignments (e.g. `cạnh a`, `= a`, `= 2a`, `= a√3`)
-    if re.search(r"(?:\bcạnh(?:\s+đáy|\s+bên)?(?:\s+bằng)?\s+|\=\s*)(?:\d*a(?:√\d+)?(?:/\d+)?)\b", raw_text):
+    # Check if symbolic unit `a` is used in length assignments (e.g. `cạnh a`, `= a`, `= 2a`, `= a√3`, `= √3a`)
+    if re.search(
+        r"(?:\bcạnh(?:\s+đáy|\s+bên)?(?:\s+bằng)?\s+|\=\s*)(?:\d*a(?:√\d+)?(?:/\d+)?|\d*√\d+a(?:/\d+)?)\b",
+        raw_text,
+    ):
         return "a"
     return "1"
+
+
+_EXAM_HEADER_PREFIX_RE = re.compile(
+    r"^(?:\s*(?:(?:Câu|Bài(?:\s+tập)?|Ví\s+dụ)\s*(?:\d+|[a-d])\s*[:.)]?|(?:\d+|[a-d])\s*\)|\(\s*\d+(?:[.,]\d+)?\s*điểm\s*\))\s*)+",
+    re.IGNORECASE | re.UNICODE,
+)
+_FIG_REF_SUFFIX_RE = re.compile(
+    r"\s*\(\s*(?:(?:hình\s+)?minh\s+h[ọo]a(?:\s+như)?|tham\s+khảo|như|xem)\s+hình(?:\s+vẽ)?(?:\s+bên(?:\s+dưới|\s+trên)?)?\s*\)\s*$",
+    re.IGNORECASE | re.UNICODE,
+)
 
 
 def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
@@ -446,9 +476,20 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
     ca, cb = clause.start, clause.end
     ctext = raw[ca:cb]
     ctext_norm = ctext.replace("′", "'")
+    m_hdr = _EXAM_HEADER_PREFIX_RE.match(ctext_norm)
+    if m_hdr and ctext_norm[m_hdr.end() :].strip():
+        ca += m_hdr.end()
+        ctext = raw[ca:cb]
+        ctext_norm = ctext.replace("′", "'")
+    m_fig_ref = _FIG_REF_SUFFIX_RE.search(ctext_norm)
+    if m_fig_ref and ctext_norm[: m_fig_ref.start()].strip():
+        cb = ca + m_fig_ref.start()
+        ctext = raw[ca:cb]
+        ctext_norm = ctext.replace("′", "'")
 
     mapped_fact = False
     mapped_goal = False
+    clause_solid_not_span: tuple[int, int] | None = None
     pre_premises_len = len(builder.premises)
     pre_sections_len = len(builder.derived_sections)
     pre_goals_len = len(builder.math_goals)
@@ -647,13 +688,14 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
         builder._primary_notation = n1
         mapped_fact = True
 
-    # 1b. Regular pyramid: "(Cho )?Hình chóp (tứ giác|tam giác|lục giác)? đều S.ABCD có cạnh đáy bằng 6..."
+    # 1b. Regular pyramid: "(Cho )?(Hình|Khối) chóp (tứ giác|tam giác|lục giác)? đều S.ABCD có cạnh đáy bằng 6..."
     m_reg_pyr = re.search(
-        rf"(?P<lead>(?:Cho|Vẽ|Mô\s+phỏng|Cho\s+mình\s+xem)\s+)?(?P<core>hình\s+chóp(?:\s+(?:tứ\s+giác|tam\s+giác|lục\s+giác))?\s+đều\s+(?P<not>{_PT}\.{_PTS3_6}))",
+        rf"(?P<lead>(?:Cho|Vẽ|Mô\s+phỏng|Cho\s+mình\s+xem)\s+)?(?P<core>(?:hình|khối)\s+chóp(?:\s+(?:tứ\s+giác|tam\s+giác|lục\s+giác))?\s+đều\s+(?P<not>{_PT}\.{_PTS3_6}))",
         ctext_norm,
         re.IGNORECASE | re.UNICODE,
     )
     if m_reg_pyr:
+        clause_solid_not_span = (m_reg_pyr.start("not"), m_reg_pyr.end("not"))
         not_str = m_reg_pyr.group("not")
         apex_s, base_s = not_str.split(".", 1)
         base_pts = _split_pts(base_s)
@@ -701,13 +743,32 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
             builder.premises.append(
                 {
                     "kind": "regular_polygon",
-                    "args": {"vertices": base_pts, "side": m_side.group("val")},
+                    "args": {"vertices": base_pts, "side": _canon_val(m_side.group("val"))},
                     "quote": q_side,
                     "solid_id": sid,
                 }
             )
+            m_lat = re.match(
+                rf"\s*(?:,\s*|\s+và\s+|\s+có\s+)cạnh\s+bên\s+(?:bằng\s+|=\s*)?(?P<lat>{_VAL})",
+                ctext_norm[m_reg_pyr.end("core") + m_side.end() :],
+                re.IGNORECASE | re.UNICODE,
+            )
+            if m_lat:
+                q_lat = _clean_quote(
+                    raw,
+                    ca + (m_reg_pyr.start("lead") if m_reg_pyr.group("lead") else m_reg_pyr.start("core")),
+                    ca + m_reg_pyr.end("core") + m_side.end() + m_lat.end(),
+                )
+                builder.premises.append(
+                    {
+                        "kind": "segment_length",
+                        "args": {"segment": [apex_s, base_pts[0]], "value": _canon_val(m_lat.group("lat"))},
+                        "quote": q_lat,
+                        "solid_id": sid,
+                    }
+                )
         m_h = re.search(
-            rf"chiều\s+cao(?:\s+của\s+hình\s+chóp(?:\s+{re.escape(not_str)})?)?\s*(?:bằng\s+|=\s*)(?P<h>{_VAL})",
+            rf"chiều\s+cao(?:\s+của\s+(?:hình|khối)\s+chóp(?:\s+{re.escape(not_str)})?)?\s*(?:bằng\s+|=\s*)(?P<h>{_VAL})",
             ctext_norm,
             re.IGNORECASE | re.UNICODE,
         )
@@ -716,21 +777,22 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
             builder.premises.append(
                 {
                     "kind": "height",
-                    "args": {"solid": sid, "value": m_h.group("h")},
+                    "args": {"solid": sid, "value": _canon_val(m_h.group("h"))},
                     "quote": q_h,
                     "solid_id": sid,
                 }
             )
         mapped_fact = True
 
-    # 1c. Standard pyramid: "(Cho|Vẽ|Mô phỏng|Cho mình xem) hình chóp S.ABCD"
+    # 1c. Standard pyramid: "(Cho|Vẽ|Mô phỏng|Cho mình xem) (hình|khối) chóp S.ABCD"
     if not m_reg_pyr and not m_two_pyr:
         m_pyr = re.search(
-            rf"(?P<lead>(?:Cho\s+mình\s+xem|Mô\s+phỏng|Vẽ|Cho)\s+)?(?P<core>hình\s+ch[oó]p\s+(?P<not>{_PT}\.{_PTS3_6}))",
+            rf"(?P<lead>(?:Cho\s+mình\s+xem|Mô\s+phỏng|Vẽ|Cho)\s+)?(?P<core>(?:hình|khối)\s+ch[oó]p\s+(?P<not>{_PT}\.{_PTS3_6}))",
             ctext_norm,
             re.IGNORECASE | re.UNICODE,
         )
         if m_pyr:
+            clause_solid_not_span = (m_pyr.start("not"), m_pyr.end("not"))
             not_str = m_pyr.group("not")
             _ap, base_s = not_str.split(".", 1)
             base_pts = _split_pts(base_s)
@@ -868,13 +930,14 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
         builder._primary_notation = not_str
         mapped_fact = True
 
-    # 1f. Prism (right, regular, or oblique): "Cho (hình )?lăng trụ (đứng|đều|xiên)? ABC.A'B'C'"
+    # 1f. Prism (right, regular, or oblique): "Cho (hình |khối )?lăng trụ (đứng|đều|xiên)? ABC.A'B'C'"
     m_prism = re.search(
-        rf"(?P<lead>(?:Cho|Vẽ|Mô\s+phỏng)\s+)?(?:hình\s+)?lăng\s+trụ(?:\s+(?P<mod>đứng|đều|tam\s+giác\s+đều|tứ\s+giác\s+đều|xiên))?\s+(?P<not>{_PTS3_6}\.{_PTS3_6})",
+        rf"(?P<lead>(?:Cho|Vẽ|Mô\s+phỏng)\s+)?(?:(?:hình|khối)\s+)?lăng\s+trụ(?:\s+(?P<mod>đứng|đều|tam\s+giác\s+đều|tứ\s+giác\s+đều|xiên))?\s+(?P<not>{_PTS3_6}\.{_PTS3_6})",
         ctext_norm,
         re.IGNORECASE | re.UNICODE,
     )
     if m_prism and not builder.solids:
+        clause_solid_not_span = (m_prism.start("not"), m_prism.end("not"))
         not_str = m_prism.group("not")
         b_str, t_str = not_str.split(".", 1)
         base_pts, top_pts = _split_pts(b_str), _split_pts(t_str)
@@ -1060,11 +1123,23 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
         re.IGNORECASE | re.UNICODE,
     ):
         verts = _split_pts(m_reg_base.group("verts")) if m_reg_base.group("verts") else list(builder._base_vertices)
-        q_rb = _clean_quote(raw, ca + m_reg_base.start("full"), ca + m_reg_base.end("full"))
+        rb_start = m_reg_base.start("full")
+        if (
+            not m_reg_base.group("verts")
+            and clause_solid_not_span is not None
+            and clause_solid_not_span[1] <= rb_start
+            and re.fullmatch(
+                r"\s*(?:[.,]\s*)?(?:có\s+)?(?:chung\s+)?(?:mặt\s+)?",
+                ctext_norm[clause_solid_not_span[1] : rb_start],
+                re.IGNORECASE,
+            )
+        ):
+            rb_start = clause_solid_not_span[0]
+        q_rb = _clean_quote(raw, ca + rb_start, ca + m_reg_base.end("full"))
         side = m_reg_base.group("side")
         args_rb: dict[str, Any] = {"vertices": verts}
         if side is not None:
-            args_rb["side"] = side
+            args_rb["side"] = _canon_val(side)
         else:
             builder.unresolved.append(
                 {
@@ -1087,25 +1162,50 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
         re.IGNORECASE | re.UNICODE,
     ):
         verts = _split_pts(m_rect.group("verts")) if m_rect.group("verts") else list(builder._base_vertices)
-        q_rc = _clean_quote(raw, ca + m_rect.start("full"), ca + m_rect.end("full"))
+        rc_start = m_rect.start("full")
+        if (
+            not m_rect.group("verts")
+            and clause_solid_not_span is not None
+            and clause_solid_not_span[1] <= rc_start
+            and re.fullmatch(
+                r"\s*(?:[.,]\s*)?(?:có\s+)?(?:chung\s+)?(?:mặt\s+)?",
+                ctext_norm[clause_solid_not_span[1] : rc_start],
+                re.IGNORECASE,
+            )
+        ):
+            rc_start = clause_solid_not_span[0]
+        q_rc = _clean_quote(raw, ca + rc_start, ca + m_rect.end("full"))
         builder.premises.append(
             {"kind": "rectangle", "args": {"vertices": verts}, "quote": q_rc, "solid_id": builder._primary_solid_id}
         )
         mapped_fact = True
 
-    # 2c. Right triangle base: "(có )?đáy (ABC )?(là tam giác )?vuông tại A"
+    # 2c. Right (or right-isosceles) triangle base / named triangle:
+    # "(có )?đáy (ABC )?(là tam giác (ABC )?)?vuông (cân )?tại A" or standalone "tam giác ABC vuông (cân )?tại A"
     for m_rt in re.finditer(
-        rf"(?P<full>(?:có\s+)?đáy(?:\s+(?P<verts>{_PTS3}))?\s+(?:là\s+tam\s+giác\s+)?vuông\s+tại\s+(?P<v>{_PT}))(?![\w'])",
+        rf"(?P<full>(?:(?:có\s+)?đáy(?:\s+(?P<verts>{_PTS3}))?\s+(?:là\s+tam\s+giác\s+(?:(?P<verts2>{_PTS3})\s+)?)?|tam\s+giác\s+(?P<verts3>{_PTS3})\s+)vuông(?:\s+(?P<iso>cân))?\s+tại\s+(?P<v>{_PT}))(?![\w'])",
         ctext_norm,
         re.IGNORECASE | re.UNICODE,
     ):
-        verts = _split_pts(m_rt.group("verts")) if m_rt.group("verts") else list(builder._base_vertices)
+        explicit_v = m_rt.group("verts") or m_rt.group("verts2") or m_rt.group("verts3")
+        verts = _split_pts(explicit_v) if explicit_v else list(builder._base_vertices)
         v = m_rt.group("v")
         rays = [p for p in verts if p != v]
         if len(rays) == 2:
-            # Prefer without leading "có " unless needed
             s_off = m_rt.start("full")
-            if ctext_norm[s_off : s_off + 3].lower() == "có " and "là tam giác" in m_rt.group("full").lower():
+            if m_rt.group("verts2"):
+                # "có đáy là tam giác ABC vuông tại B" -> quote "tam giác ABC vuông tại B"
+                m_sub = re.search(rf"tam\s+giác\s+{re.escape(m_rt.group('verts2'))}\b", m_rt.group("full"), re.IGNORECASE)
+                if m_sub:
+                    s_off += m_sub.start()
+            elif not explicit_v and clause_solid_not_span is not None and clause_solid_not_span[1] <= s_off:
+                if re.fullmatch(
+                    r"\s*(?:[.,]\s*)?(?:có\s+)?(?:chung\s+)?(?:mặt\s+)?",
+                    ctext_norm[clause_solid_not_span[1] : s_off],
+                    re.IGNORECASE,
+                ):
+                    s_off = clause_solid_not_span[0]
+            elif ctext_norm[s_off : s_off + 3].lower() == "có " and "là tam giác" in m_rt.group("full").lower():
                 s_off += 3
             q_rt = _clean_quote(raw, ca + s_off, ca + m_rt.end("full"))
             builder.premises.append(
@@ -1116,6 +1216,15 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
                     "solid_id": builder._primary_solid_id,
                 }
             )
+            if m_rt.group("iso"):
+                builder.premises.append(
+                    {
+                        "kind": "equal_length",
+                        "args": {"segment_a": [v, rays[0]], "segment_b": [v, rays[1]]},
+                        "quote": q_rt,
+                        "solid_id": builder._primary_solid_id,
+                    }
+                )
             mapped_fact = True
 
     # ── 3. Perpendicularity & Altitude Premises ──────────────────────────────────────────────────────────────────
@@ -1224,7 +1333,7 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
         re.IGNORECASE | re.UNICODE,
     ):
         q_ch = _clean_quote(raw, ca + m_chain_eq.start("full"), ca + m_chain_eq.end("full"))
-        val = m_chain_eq.group("val")
+        val = _canon_val(m_chain_eq.group("val"))
         for gname in ("s1", "s2", "s3"):
             seg_s = m_chain_eq.group(gname)
             if seg_s:
@@ -1254,7 +1363,7 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
         ):
             continue
         seg_pts = _split_pts(m_seg_len.group("seg"))
-        val = m_seg_len.group("val")
+        val = _canon_val(m_seg_len.group("val"))
         q_sl = _clean_quote(raw, ca + m_seg_len.start("full"), ca + m_seg_len.end("full"))
         sid = builder._primary_solid_id
         for s in builder.solids:
@@ -1270,7 +1379,7 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
     # 5a. Paired or triple midpoints: "Gọi M, N(, P)? lần lượt là trung điểm của SA, SB(, SC)?"
     matched_mp_list = False
     for m_mp_list in re.finditer(
-        rf"(?P<full>Gọi\s+(?P<p1>{_PT})\s*,\s*(?P<p2>{_PT})(?:\s*,\s*(?P<p3>{_PT}))?\s+lần\s+lượt\s+là\s+trung\s+điểm\s+của(?:\s+các\s+cạnh)?\s+(?P<s1>{_PTS2})\s*(?:,\s*|\s+và\s+)(?P<s2>{_PTS2})(?:\s*(?:,\s*|\s+và\s+)(?P<s3>{_PTS2}))?)",
+        rf"(?P<full>Gọi\s+(?P<p1>{_PT})\s*[,;]\s*(?P<p2>{_PT})(?:\s*[,;]\s*(?P<p3>{_PT}))?\s+lần\s+lượt\s+là\s+trung\s+điểm\s+của(?:\s+các\s+cạnh)?\s+(?P<s1>{_PTS2})\s*(?:[,;]\s*|\s+và\s+)(?P<s2>{_PTS2})(?:\s*(?:[,;]\s*|\s+và\s+)(?P<s3>{_PTS2}))?)",
         ctext_norm,
         re.IGNORECASE | re.UNICODE,
     ):
@@ -1356,7 +1465,7 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
     # 5d. Paired projections onto lines: "Gọi H, K lần lượt là hình chiếu vuông góc của A lên SB, SD"
     matched_pr_list = False
     for m_pr_list in re.finditer(
-        rf"(?P<full>Gọi\s+(?P<p1>{_PT})\s*,\s*(?P<p2>{_PT})\s+lần\s+lượt\s+là\s+hình\s+chiếu\s+vuông\s+góc\s+của\s+(?P<src>{_PT})\s+(?:lên|trên)\s+(?P<l1>{_PTS2})\s*(?:,\s*|\s+và\s+)(?P<l2>{_PTS2}))(?![\w'])",
+        rf"(?P<full>Gọi\s+(?P<p1>{_PT})\s*[,;]\s*(?P<p2>{_PT})\s+lần\s+lượt\s+là\s+hình\s+chiếu\s+vuông\s+góc\s+của\s+(?P<src>{_PT})\s+(?:lên|trên)\s+(?P<l1>{_PTS2})\s*(?:[,;]\s*|\s+và\s+)(?P<l2>{_PTS2}))(?![\w'])",
         ctext_norm,
         re.IGNORECASE | re.UNICODE,
     ):
@@ -1933,7 +2042,7 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
 
     for m_vol in (
         re.finditer(
-            rf"(?P<full>(?:tính\s+)?thể\s+tích(?:\s+của)?\s+(?P<kind>(?:khối\s+chóp|hình\s+chóp)(?!\s+cụt)|khối\s+tứ\s+diện|tứ\s+diện|khối\s+lăng\s+trụ|hình\s+lăng\s+trụ|khối\s+lập\s+phương|hình\s+lập\s+phương|(?:khối|hình)\s+hộp(?:\s+chữ\s+nhật)?|khối\s+cầu|mặt\s+cầu|khối\s+trụ|hình\s+trụ|khối\s+nón|hình\s+nón)(?:\s+(?P<not>\({_PT}\)|{_PT}\.{_PTS3_6}|{_PTS3_6}\.{_PTS3_6}|{_PTS4}))?)",
+            rf"(?P<full>(?:tính\s+)?thể\s+tích(?:\s+của)?\s+(?P<kind>(?:khối\s+chóp|hình\s+chóp)(?!\s+cụt)|khối\s+tứ\s+diện|tứ\s+diện|khối\s+lăng\s+trụ|hình\s+lăng\s+trụ|khối\s+lập\s+phương|hình\s+lập\s+phương|(?:khối|hình)\s+hộp(?:\s+chữ\s+nhật)?|khối\s+cầu|mặt\s+cầu|khối\s+trụ|hình\s+trụ|khối\s+nón|hình\s+nón)(?:\s+(?P<not>\({_PT}\)|{_PT}\.{_PTS3_6}|{_PTS3_6}\.{_PTS3_6}|{_PTS4})|\s+(?:đã\s+cho|đó|này))?)",
             ctext_norm,
             re.IGNORECASE | re.UNICODE,
         )
@@ -2253,7 +2362,7 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
 
     # - Angle between line (or line joining A with @desc) and plane or line, or between two planes:
     m_ang = re.search(
-        rf"(?P<full>Tính\s+góc\s+giữa\s+(?:"
+        rf"(?P<full>(?:Tính\s+)?(?:số\s+đo\s+(?:của\s+)?)?góc\s+(?:giữa|tạo\s+bởi|hợp\s+bởi)\s+(?:"
         rf"(?:hai\s+mặt\s+phẳng\s+|mặt\s+phẳng\s+)?\((?P<pl1>{_PTS3_6})\)\s+và\s+(?:mặt\s+phẳng\s+|mp\s*)?\((?P<pl2>{_PTS3_6})\)"
         rf"|đường\s+thẳng\s+(?:nối|đi\s+qua)\s+(?P<la>{_PT})\s+(?:với|và)\s+(?P<lb>.+?)\s+(?:và|với)\s+(?:(?P<is_pl>mặt\s+phẳng\s+|mp\s*)?\((?P<pl3>{_PTS3_6})\)|(?:đường\s+thẳng\s+|cạnh\s+)?(?P<l2_desc>{_PTS2}))"
         rf"|(?:hai\s+đường\s+thẳng\s+|đường\s+thẳng\s+|đt\s+|cạnh\s+)?(?P<l1>{_PTS2})\s+và\s+(?:(?:mặt\s+phẳng\s+|mp\s*)?\((?P<pl4>{_PTS3_6})\)|(?:đường\s+thẳng\s+|cạnh\s+)?(?P<l2>{_PTS2}))"
@@ -2378,6 +2487,27 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
             clause.classification = CLAUSE_UNPARSED_FACT_CANDIDATE
             return
 
+        # 2b) Any `⊥` or `vuông góc` (outside `hình chiếu vuông góc`) must be backed by a perpendicularity premise/section/described_point
+        ctext_no_hcvg = re.sub(r"\bhình\s+chiếu\s+vuông\s+góc\b", " ", ctext_norm, flags=re.IGNORECASE)
+        if "⊥" in ctext_no_hcvg or re.search(r"\bvuông\s+góc\b", ctext_no_hcvg, re.IGNORECASE):
+            has_perp_item = (
+                any(
+                    p["kind"]
+                    in ("perpendicular_line_plane", "perpendicular_lines", "face_perpendicular_base", "right_angle")
+                    for p in clause_premises
+                )
+                or bool(clause_sections)
+                or any(
+                    dp.get("kind") in ("orthogonal_projection", "orthogonal_projection_line")
+                    for dp in builder.described_points
+                )
+            )
+            if not has_perp_item:
+                mapped_fact = False
+                mapped_goal = False
+                clause.classification = CLAUSE_UNPARSED_FACT_CANDIDATE
+                return
+
         # 3) Any `∠` or standalone `góc` (outside `vuông góc` and `góc chiếu`) must belong to an angle goal
         ctext_no_vg = re.sub(r"\b(?:vuông\s+góc|góc\s+chiếu)\b", " ", ctext_norm, flags=re.IGNORECASE)
         if "∠" in ctext_no_vg or (
@@ -2392,7 +2522,7 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
         # 4) Unsupported geometric shape / relation / negation / conditional sub-clause inside the sentence
         if re.search(
             r"\bhình\s+(?:thoi|bình\s+hành|thang)\b"
-            r"|\btam\s+giác\s+cân\b|\bcân\s+tại\b"
+            r"|\btam\s+giác\s+cân\b|(?<!vuông\s)\bcân\s+tại\b"
             r"|\btâm\s+đường\s+tròn\s+nội\s+tiếp\b"
             r"|\b(?:đường\s+phân\s+giác|đường\s+trung\s+tuyến|trọng\s+tuyến)\b"
             r"|\b(?:hợp\s+với|tạo\s+với|nghiêng\s+đều)\b"
@@ -2426,7 +2556,7 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
                 return
 
         # 6) Compound goal completeness: if two scalar goal quantities are joined by `và`, must have >= 2 math_goals
-        _q_kw = r"(?:diện\s+tích|thể\s+tích|khoảng\s+cách|k/c|độ\s+dài|bán\s+kính|góc\s+giữa|tỉ\s+số|chu\s+vi)"
+        _q_kw = r"(?:diện\s+tích|thể\s+tích|khoảng\s+cách|k/c|độ\s+dài|bán\s+kính|góc\s+(?:giữa|tạo\s+bởi|hợp\s+bởi)|tỉ\s+số|chu\s+vi)"
         if mapped_goal and re.search(
             rf"\b{_q_kw}\b.+?\bvà\s+(?:tính\s+)?{_q_kw}\b",
             ctext_norm,
@@ -2444,8 +2574,8 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
     elif mapped_fact:
         clause.classification = CLAUSE_MAPPED_FACT
     else:
-        # Check if benign discourse (e.g., exam label "Câu 1:", "Bài 2:")
-        if re.fullmatch(r"(?:Câu|Bài|Ví\s+dụ)\s*\d+\s*[:.)]?", ctext_norm.strip(), re.IGNORECASE):
+        # Check if benign discourse (e.g., exam label "Câu 1:", "Bài 2:", "(2,5 điểm)")
+        if _EXAM_HEADER_PREFIX_RE.fullmatch(ctext_norm.strip()):
             clause.classification = CLAUSE_BENIGN_DISCOURSE
         elif _QUESTION_STARTER_RE.search(ctext_norm):
             clause.classification = CLAUSE_UNPARSED_GOAL_CANDIDATE
@@ -2465,9 +2595,13 @@ _EXTRACTION_FIDELITY_ERROR_CODES = frozenset(
         "OBJECT_NOT_IN_QUOTE",
         "PLANE_NOT_IN_QUOTE",
         "AMBIGUOUS_VALUE_QUOTE",
+        "UNGROUNDED_VALUE",
+        "SOURCE_OBJECT_MISMATCH",
         "SOURCE_PREMISE_UNREAD",
         "SOURCE_GOAL_UNREAD",
         "NOT_ASKED_IN_SOURCE",
+        "REQUEST_NOT_ANSWERED",
+        "QUESTION_CONTEXT_UNSUPPORTED",
         "QUESTION_LOCAL_GIVEN_UNVERIFIED",
         "AUXILIARY_RULE_MISMATCH",
     }

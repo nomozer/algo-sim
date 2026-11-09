@@ -113,17 +113,17 @@ Seg = Annotated[list[Label], Field(min_length=2, max_length=2)]
 Poly = Annotated[list[Label], Field(min_length=3)]
 
 #: Một số chính xác trong văn bản: hệ số · (a) · √căn / mẫu. Không dính chữ/nhãn hai bên (`A1`, `bằng` không tính).
-_SO = re.compile(r"(?<![\w'])(?P<he>\d+(?:[.,]\d+)?(?:/\d+)?)?(?P<sym>a)?(?:√(?P<can>\d+))?(?:/(?P<mau>\d+))?(?![\w'])")
+_SO = re.compile(r"(?<![\w'])(?P<he>\d+(?:[.,]\d+)?(?:/\d+)?)?(?P<sym>a)?(?:√(?P<can>\d+)(?P<sym2>a)?)?(?:/(?P<mau>\d+))?(?![\w'])")
 
 
 def _doc(m: re.Match) -> tuple[Fraction, bool] | None:
-    if not (m["he"] or m["sym"] or m["can"]):
+    if not (m["he"] or m["sym"] or m["can"]) or (m["sym"] and m["sym2"]):
         return None
     try:
         he = Fraction((m["he"] or "1").replace(",", ".")) / int(m["mau"] or 1)
     except ZeroDivisionError:            # "1/0" matches the grammar but is no number: refuse (doc_so), never crash
         return None
-    return he * he * int(m["can"] or 1), bool(m["sym"])
+    return he * he * int(m["can"] or 1), bool(m["sym"] or m["sym2"])
 
 
 def doc_so(s: str) -> tuple[Fraction, bool]:
@@ -1164,6 +1164,9 @@ def _co_doi_tuong_hinh(c: LoiGoi, de: str = "") -> bool:
                                              q[cuoi:], re.IGNORECASE))):
                         ok = True
                 if len(phan) == 2 and _cung_da_giac(phan[1 if len(phan[0]) == 1 else 0], vertices):
+                    if ((len(phan[0]) == 1 and re.search(r"\bcho\s+(?:(?:một\s+)?(?:hình|khối)\s+)?chóp\s+đều\s*$", q[:dau], re.IGNORECASE))
+                            or (len(phan[0]) == len(phan[1]) and re.search(r"\bcho\s+(?:(?:một\s+)?(?:hình|khối)\s+)?lăng\s+trụ\s+đều\s*$", q[:dau], re.IGNORECASE))):
+                        ok = True
                     m_day = re.match(
                         r"\s*(?:có\s+)?(?:chung\s+)?(?:mặt\s+)?đáy\s+(?:là\s+(?:một\s+)?)?"
                         r"(?P<sh>(?:(?:tam|tứ|ngũ|lục|đa)\s+giác\s+)?đều|hình\s+vuông)\b",
@@ -1233,7 +1236,11 @@ def _co_diem_rieng(quotes: tuple[str, ...], ten: str, mp: list[str] | None) -> b
 _NOI_BANG = re.compile(r"\s*(?:=\s*(?-i:[A-Z][0-9]*'?[A-Z][0-9]*'?)\s*)*"           # chuỗi bằng "SA = SB = 3"
                        r"(?:(?:có\s+)?độ dài(?:\s+(?:=|bằng|là))?|=|bằng|là|dài)\s*", re.IGNORECASE)
 #: Sau số, tới hết mệnh đề: chỉ đơn vị, rồi kết mệnh đề hay "và" — không "lần", "hoặc", "là sai", "khi …".
-_DUOI_BANG = re.compile(r"\s*(?:(?:cm|dm|mm|m|đvđd)(?![\w'])|đơn vị(?:\s+độ dài)?(?!\w)|\((?:cm|dm|mm|m|đvđd|đơn vị[^()]*)\))?"
+_THAM_KHAO_HINH = (
+    r"\(\s*(?:(?:hình\s+)?minh\s+h[ọo]a(?:\s+như)?|tham\s+khảo|như|xem)"
+    r"\s+hình(?:\s+vẽ)?(?:\s+bên(?:\s+dưới|\s+trên)?)?\s*\)"
+)
+_DUOI_BANG = re.compile(rf"\s*(?:(?:cm|dm|mm|m|đvđd)(?![\w'])|đơn vị(?:\s+độ dài)?(?!\w)|\((?:cm|dm|mm|m|đvđd|đơn vị[^()]*)\)|{_THAM_KHAO_HINH})?"
                         r"\s*(?:[.?!](?=\s|$)|[,;:)]|$|và(?!\w))", re.IGNORECASE)
 
 
@@ -1343,7 +1350,7 @@ _C_MAT = re.compile(rf"(?:{_MAT_NHAN}\s+(?:và\s+)?(?:nằm\s+trong\s+mặt\s+ph
                     rf"|{_L1}{_L1}(?:\s*=\s*{_L1}{_L1})+(?![\w'])(?!\s*=))"
                     rf"(?=\s*(?:[,;.]|và\s|$))", re.IGNORECASE)
 _C_DAU = re.compile(r"\s*(?:trong\s+không\s+gian\s*,\s*)?(?:(?:biết(?:\s+rằng)?|th[ỏo]a\s+mãn)\s+)?", re.IGNORECASE)
-_C_HET = re.compile(r"\s*[.;]?\s*")
+_C_HET = re.compile(rf"\s*(?:{_THAM_KHAO_HINH}\s*)?[.;]?\s*", re.IGNORECASE)
 _C_HOI = re.compile(r"(?:hãy\s+)?(?:tính|tìm|xác\s+định|hỏi)(?!\w)", re.IGNORECASE)
 #: A named polygon with its side ("Tam giác ABC đều cạnh 2"): the side belongs to THAT polygon (labelled binding); like any
 #: other-object clause it changes the subject for unlabelled roles of the sentence.
@@ -1433,7 +1440,8 @@ def _doc_yeu_cau_mo_phong(de: str, a: int, b: int, calls: tuple[LoiGoi, ...]) ->
 def _phan_tich_cau(s: str) -> list[tuple[str, re.Match | None]] | None:
     """Clauses of sentence `s` when ALL of it parses, else None. A clause outside the grammar is tolerated only when it
     carries no number; it is recorded as opaque ("mo") and its whole sentence then binds no role (`_lien_ket_cau`)."""
-    p, out = _C_DAU.match(s).end(), []
+    gd = _GIAN_DAN.match(s)
+    p, out = _C_DAU.match(s, gd.end() if gd else 0).end(), []
     while True:
         # the request part of the sentence ("…, SA = 3, tính độ dài SC.") ends its premises; it binds nothing, and a request
         # carrying a number (a local given or a changed value) leaves the sentence unread
@@ -2423,6 +2431,7 @@ _HOI_QUAN_HE = re.compile(r"(?<!\w)(?:phải chăng|có phải|kiểm tra xem|ha
 _DONG_TU_HOI = re.compile(r"(?<!\w)(?:tính|tìm|xác định)(?!\w)|(?<!câu )(?<!\w)hỏi(?!\w)", re.IGNORECASE)
 #: … hoặc "bao nhiêu / mấy / ?" đứng SAU nó.
 _HOI_SAU = re.compile(r"bao\s+nhiêu|(?<!\w)mấy(?!\w)|\?", re.IGNORECASE)
+_HOI_CUOI_DE = re.compile(r"(?:(?<!\w)(?:đã\s+cho|đó|này|trên)\s+)*(?<!\w)(?:bằng|là)\s*:?\s*[.]?\s*$", re.IGNORECASE)
 #: Câu hỏi CÓ/KHÔNG về đối tượng ("V có vượt quá 5 không?") hỏi một quan hệ, không hỏi giá trị — trừ khi có "bao nhiêu / mấy".
 _CO_KHONG = re.compile(r"(?<!\w)(?:phải chăng|có phải|hay không|hay chưa|phải không)(?!\w)|(?<!\w)(?:không|chưa)\s*\?",
                        re.IGNORECASE)
@@ -2430,7 +2439,7 @@ _CO_KHONG = re.compile(r"(?<!\w)(?:phải chăng|có phải|hay không|hay chưa
 #: ("làm tròn đến 2 chữ số") không phải phép gán.
 _GIA_TRI = re.compile(r"(?<!\w)(?:bằng|là|khác|có giá trị)(?!\w)\s*(?:\d|√|π)|[=≠]\s*(?:\d|√|π)", re.IGNORECASE)
 #: Phần giải thích dữ kiện đi kèm câu hỏi ("biết SA = 3", "có SA = 3", "với a = 2") không phải gán cho đối tượng hỏi.
-_DUNG_GAN = re.compile(r"(?<!\w)(?:biết|với|cho|khi|nếu|trong đó|có(?!\s+(?:giá\s+trị|bằng|là|lớn|nhỏ|vượt|khác)))(?!\w)",
+_DUNG_GAN = re.compile(r"(?<!\w)(?:biết|với|(?<!đã )cho|khi|nếu|trong đó|có(?!\s+(?:giá\s+trị|bằng|là|lớn|nhỏ|vượt|khác)))(?!\w)",
                        re.IGNORECASE)
 #: Giữa động từ hỏi và đối tượng (hay ngay sau đối tượng): đối tượng KHÔNG còn là tân ngữ được hỏi — nó là tham chiếu
 #: ("theo", "tỉ số giữa … và …"), điều kiện cực trị ("sao cho … nhỏ nhất"), hay chú thích ("ở đây", "trong đó", "gấp").
@@ -2496,7 +2505,11 @@ def _duoc_hoi(de: str, p: int, het: int) -> bool:
     dong_tu = list(_DONG_TU_HOI.finditer(truoc[moc_du_kien[-1] if moc_du_kien else 0:]))
     # Động từ hỏi chỉ chi phối đối tượng khi giữa chúng không có từ chặn tân ngữ (second re-verification, N2).
     qua_dong_tu = bool(dong_tu) and not _CHAN_TAN_NGU.search(_bo_cum(truoc)[(moc_du_kien[-1] if moc_du_kien else 0) + dong_tu[-1].end():])
-    qua_hoi_sau = bool(_HOI_SAU.search(gan)) and not _CHAN_TAN_NGU.search(gan) and not _CHAN_TAN_NGU.search(_bo_cum(de[ma:p]))
+    qua_hoi_sau = (
+        (bool(_HOI_SAU.search(gan)) or bool(_HOI_CUOI_DE.fullmatch(de[het:].lstrip())))
+        and not _CHAN_TAN_NGU.search(gan)
+        and not _CHAN_TAN_NGU.search(_bo_cum(de[ma:p]))
+    )
 
     return qua_dong_tu or qua_hoi_sau
 
@@ -2706,18 +2719,21 @@ def _kiem_nguon(calls: tuple[LoiGoi, ...], text: str, auxiliary: tuple[dict, ...
                 raise TuChoi("PREDICATE_NOT_IN_QUOTE", f"{c.id}: rectangle thiếu predicate chữ nhật", (c.id,))
             if not _co_doi_tuong_hinh(c):
                 raise TuChoi("OBJECT_NOT_IN_QUOTE", f"{c.id}: cụm chữ nhật không gọi đúng đa giác {c.args.vertices}", (c.id,))
-        for nhom in c.spec.keywords:
-            if not _co_tu(c.quotes, nhom):
-                raise TuChoi("PREDICATE_NOT_IN_QUOTE", f"{c.id}: {c.fn} cần một trong {list(nhom)} trong {c.quote!r}", (c.id,))
+        vuong_can_eq = c.fn == "equal_length" and _vuong_can_hai_canh(c, de)
+        if not vuong_can_eq:
+            for nhom in c.spec.keywords:
+                if not _co_tu(c.quotes, nhom):
+                    raise TuChoi("PREDICATE_NOT_IN_QUOTE", f"{c.id}: {c.fn} cần một trong {list(nhom)} trong {c.quote!r}", (c.id,))
         # A bare "hình hộp" (parallelepiped) may be oblique: rightness needs a cue naming THIS prism (its label right after).
         if c.fn == "prism" and c.args.right and not _khoi_dung(c):
             raise TuChoi("PREDICATE_NOT_IN_QUOTE", f"{c.id}: lăng trụ đứng cần 'đứng'/'đều' trong {c.quote!r}", (c.id,))
         for f in c.spec.plane_fields:
             if not _co_mat(c.quotes, getattr(c.args, f), cho_day=f != "face"):
                 raise TuChoi("PLANE_NOT_IN_QUOTE", f"{c.id}: mặt phẳng {getattr(c.args, f)} không được nhắc trong {c.quote!r}", (c.id,))
-        for f in c.spec.segment_fields:
-            if not _co_doan(c.quotes, getattr(c.args, f)):
-                raise TuChoi("ROLE_NOT_IN_QUOTE", f"{c.id}: đoạn {''.join(getattr(c.args, f))} không được nhắc trong {c.quote!r}", (c.id,))
+        if not vuong_can_eq:
+            for f in c.spec.segment_fields:
+                if not _co_doan(c.quotes, getattr(c.args, f)):
+                    raise TuChoi("ROLE_NOT_IN_QUOTE", f"{c.id}: đoạn {''.join(getattr(c.args, f))} không được nhắc trong {c.quote!r}", (c.id,))
         for f in c.spec.point_fields:
             mp = getattr(c.args, "plane", None)
             if not _co_diem_rieng(c.quotes, getattr(c.args, f), mp):
@@ -2923,8 +2939,12 @@ def _kiem_du_kien_cau_hoi(calls: tuple[LoiGoi, ...], de: str, read_quotes: tuple
     # Derived construction clauses already have their own binding gate. Context applies regardless of request wording.
     questions |= construction_contexts | request_contexts
     first_request = min((a for a, _b in request_contexts), default=min((a for a, _b in construction_contexts), default=len(de)))
-    # A sentence that asks ("?", "bao nhiêu", "mấy") opens the request region even without a request verb.
+    # A sentence that asks ("?", "bao nhiêu", "mấy", or a trailing exam stem "... bằng" / "... là:") opens the request region.
     first_request = min([first_request, *(_bien_cau(de, m.start())[0] for m in _HOI_SAU.finditer(de))])
+    if m_cd := _HOI_CUOI_DE.search(de):
+        cd_sent = _bien_cau(de, m_cd.start())[0]
+        if any(mau.search(de[cd_sent:m_cd.start()]) for mau in _mau_hoi_tat_ca()):
+            first_request = min(first_request, cd_sent)
     questions |= {_bien_cau(de, p) for p in (0, *(m.end() for m in re.finditer(r"[.!?]\s+", de)))
                   if first_request <= p < len(de)}
     # Everything before the first request is premise text: it must be read too (run `source-grounding-completeness`).
@@ -3136,11 +3156,11 @@ def _kiem_du_kien_cau_hoi(calls: tuple[LoiGoi, ...], de: str, read_quotes: tuple
 
 
 #: Premise text a call need not quote: lead-ins and connectors between quoted claims (closed).
-_NOI_TIEN_DE = re.compile(r"[\s,;:.()\-–]*(?:(?:cho|gọi|biết|rằng|có|và|với|trong đó|là|của|hãy|xét|thiết\s+lập|ta|đồng thời|lần lượt"
-                          r"|theo thứ tự|tại|thì|đơn vị|cm|dm|mm|m|đvđd)(?!\w)[\s,;:.()\-–]*)*", re.IGNORECASE)
-#: Exam scaffolding at the start of a premise segment ("Bài 3.", "Câu 2:", "a)", "1)", "Câu a:", "(1 điểm)").
-_GIAN_DAN = re.compile(r"\s*(?:(?:bài tập|bài|câu|ví dụ)\s*(?:\d+|[a-d])\s*[.:)]|(?:\d+|[a-d])\s*\)"
-                       r"|\(\s*\d+(?:[.,]\d+)?\s*điểm\s*\))\s*", re.IGNORECASE)
+_NOI_TIEN_DE = re.compile(rf"[\s,;:.()\-–]*(?:(?:{_THAM_KHAO_HINH}|(?:cho|gọi|biết|rằng|có|và|với|trong đó|là|của|hãy|xét|thiết\s+lập|ta|đồng thời|lần lượt"
+                          r"|theo thứ tự|tại|thì|đơn vị|cm|dm|mm|m|đvđd)(?!\w))[\s,;:.()\-–]*)*", re.IGNORECASE)
+#: Exam scaffolding at the start of a premise segment ("Bài 3.", "Câu 2:", "a)", "1)", "Câu a:", "(1 điểm)", "Câu 32: (2,5 điểm)").
+_GIAN_DAN = re.compile(r"\s*(?:(?:(?:bài tập|bài|câu|ví dụ)\s*(?:\d+|[a-d])\s*[.:)]|(?:\d+|[a-d])\s*\)"
+                       r"|\(\s*\d+(?:[.,]\d+)?\s*điểm\s*\))\s*)+", re.IGNORECASE)
 #: Sentence-initial indefinite article directly before a solid noun ("Một hộp chữ nhật …"); "một" anywhere else (a number,
 #: "một nửa", "một cạnh") stays premise content.
 _MAO_TU_KHOI = re.compile(r"\s*một\s+(?=(?:hình|khối|hộp|lăng\s+trụ|chóp|tứ\s+diện)(?!\w))", re.IGNORECASE)
@@ -3276,7 +3296,7 @@ def _kiem_vung_tien_de(calls: tuple[LoiGoi, ...], de: str, het: int, read_quotes
                 # a quote spanning sentences covers only what its call's own binding grammar reads in it
                 # ("(MAB) cắt hình chóp … theo một thiết diện. Tính diện tích thiết diện đó.")
                 nhip = ([(m.start(), m.end()) for mau in (*_CAT_BOI, _GIAO_TUYEN) for m in mau.finditer(de, *vt)]
-                        if c.fn in ("section", "ask_section_area", "intersection_line") else [])
+                        if c.fn in ("section", "ask_section_area", "intersection_line") else ([(m.start(), m.end()) for m in re.compile(rf"({_DS_DIEM})\s+((?i:lần\s+lượt)\s+)?(?i:là)\s+(?:(?i:các)\s+)?{_CUE_DIEM[c.fn]}\s+(?:(?i:của)\s+)?(?:(?i:các)\s+)?({_DS_NHOM})").finditer(de, *vt)] if c.fn in ("midpoint", "centroid") and not re.search(r"[.!?]\s", de[vt[0]:vt[1]].rstrip()) else []))
             for x, y in nhip:
                 phu[x:min(y, het)] = [True] * max(0, min(y, het) - x)
     for q in read_quotes:
@@ -4165,7 +4185,7 @@ _CUM_HOI = {
         (_cum(rf"(?:số đo\s+(?:của\s+)?)?góc\s+(?:giữa|tạo bởi|hợp bởi)\s+{_doan_cum('l')}\s+(?:và|với)\s+{_mat_cum('m')}"),
          lambda m, a, k: set(_nhan_cum(m["l"])) == set(a.line) and _cung_mat(_mat_cua(m, "m", k), a.plane))],
     "ask_angle_plane_plane": [
-        (_cum(rf"(?:số đo\s+(?:của\s+)?)?góc\s+(?:giữa|tạo bởi|hợp bởi)\s+{_mat_cum('a')}\s+(?:và|với)\s+{_mat_cum('b')}"), _hai_mat)],
+        (_cum(rf"(?:số đo\s+(?:của\s+)?)?góc\s+(?:giữa|tạo bởi|hợp bởi)\s+(?:hai\s+mặt phẳng\s+)?{_mat_cum('a')}\s+(?:và|với)\s+{_mat_cum('b')}"), _hai_mat)],
     # two named lines: each operand exactly two labels (`_doan_cum`), never a plane group — disjoint from the two above
     "ask_angle_lines": [
         (_cum(rf"(?:số đo\s+(?:của\s+)?)?góc\s+(?:giữa|tạo bởi|hợp bởi)\s+(?:hai\s+đường thẳng\s+)?{_doan_cum('a')}"
@@ -4335,8 +4355,8 @@ _PHUONG_PHAP = re.compile(r"\s*(?:dùng|áp dụng|sử dụng)\s+(?:công thứ
 _GIUA_HOP_LE = re.compile(r"[\s,:]*(?:(?:(?:và|cùng|lần lượt|hãy|các)(?!\w)|theo\s+[a-z](?![\w']))[\s,:]*)*", re.IGNORECASE)
 #: Phần còn lại của một câu hỏi sau khi mọi vùng đã đọc được xoá: chỉ dấu câu, từ nối, lời mở đầu câu và đánh mục.
 _DAN_CAU_HOI = re.compile(
-    r"[\s,;:.?!]*(?:(?:\(?(?:[a-z]|\d{1,2})\)|(?:câu|ý|phần)\s+(?:[a-z]|\d{1,2})|hơn nữa|ngoài ra|khi đó|từ đó|sau đó|tiếp theo|tiếp đó"
-    r"|rồi|do đó|vậy|cuối cùng|và|cùng|hãy|em hãy|các|lần lượt)(?!\w)[\s,;:.?!]*)*", re.IGNORECASE)
+    rf"[\s,;:.?!]*(?:(?:{_THAM_KHAO_HINH}|(?:\(?(?:[a-z]|\d{{1,2}})\)|(?:câu|ý|phần)\s+(?:[a-z]|\d{{1,2}})|hơn nữa|ngoài ra|khi đó|từ đó|sau đó|tiếp theo|tiếp đó"
+    r"|rồi|do đó|vậy|cuối cùng|và|cùng|hãy|em hãy|các|lần lượt)(?!\w))[\s,;:.?!]*)*", re.IGNORECASE)
 #: The anaphoric object of a request a validated section / intersection line answers ("Xác định thiết diện đó.").
 _HOI_CHI_DUNG = re.compile(
     r"(?:(?<!\w)(?:xác\s+định|tìm|dựng|vẽ)\s+)?(?<!\w)(?P<n>thiết\s+diện|giao\s+tuyến)\s+"
@@ -4359,9 +4379,9 @@ _SAU_HOP_LE = re.compile(
     # SG-5: the next REQUEST of a list ("… SB và tính độ dài SC", "…, đồng thời tìm …") — its object is another ask
     # phrase, already blanked by `_bo_cum`; any unread object after the verb still fails this closed tail
     r"|(?:đồng\s+thời|hãy|tính|tìm|xác\s+định)(?!\w)"
-    r"|(?:bằng|là)\s*[?:]"                                                     # đề trắc nghiệm "… bằng?"
-    # ngoặc chỉ là LỜI DẶN (làm tròn, đơn vị) — "(sau khi cắt bỏ …)" / "(tính theo đơn vị mới …)" không lọt (review S1)
-    rf"|theo\s+(?:{_DON_VI}(?![\w'])|[a-z](?![\w'])|đơn vị(?:\s+{_LOAI_DON_VI})?\s+{_DON_VI}(?![\w']))|{_GHI_CHU_NGOAC}|{_LAM_TRON}(?![\w'])"
+    r"|(?:bằng|là)\s*(?:[?:]|(?=\s*(?:[.]\s*)?$))"                            # đề trắc nghiệm "… bằng?", "… bằng", "… là:"
+    # ngoặc chỉ là LỜI DẶN (làm tròn, đơn vị) hoặc tham khảo hình bên — "(sau khi cắt bỏ …)" không lọt (review S1)
+    rf"|theo\s+(?:{_DON_VI}(?![\w'])|[a-z](?![\w'])|đơn vị(?:\s+{_LOAI_DON_VI})?\s+{_DON_VI}(?![\w']))|{_GHI_CHU_NGOAC}|{_THAM_KHAO_HINH}|{_LAM_TRON}(?![\w'])"
     r"|(?:đã cho|đó|này|trên)(?!\w)"
     r"|của\s+(?:hình|khối)\s+(?:chóp|lăng trụ|lập phương|hộp|tứ diện)(?:\s+(?-i:[A-Z][0-9]*'?)+(?:\.(?-i:[A-Z][0-9]*'?)+)?)?)*"
     # kết: dấu câu THẬT (sau nó là khoảng trắng / hết đề — "SC.SA" không kết), dữ kiện, việc kế tiếp, lời dặn làm tròn
@@ -5831,14 +5851,14 @@ def mat_cat_dung_nguon(c: LoiGoi, calls: tuple[LoiGoi, ...]) -> bool:
 
 
 _DIEM = r"[A-Z][0-9]*'?"
-_DS_DIEM = rf"(?<![\w']){_DIEM}(?![\w'])(?:\s*(?:,|và)\s*(?<![\w']){_DIEM}(?![\w']))*"
+_DS_DIEM = rf"(?<![\w']){_DIEM}(?![\w'])(?:\s*(?:[,;]|và)\s*(?<![\w']){_DIEM}(?![\w']))*"
 _DOI_TUONG = (r"(?:(?i:cạnh(?:\s+(?:bên|đáy))?|đoạn(?:\s+thẳng)?|tam\s+giác|tứ\s+giác|đa\s+giác"
               r"|hình\s+(?:vuông|chữ\s+nhật|bình\s+hành|thoi)|mặt(?:\s+(?:bên|đáy))?)\s+|Δ\s*)?")
 #: Start of a label group: not glued to a word nor to the "." of a solid symbol (the "ABC" of S.ABC is no subject), except
 #: right after "Δ" (a letter, so `(?<![\w'.])` alone never matches it).
 _DAU_NHAN = r"(?:(?<=Δ)|(?<![\w'.]))"
 _DS_NHOM = (rf"{_DOI_TUONG}{_DAU_NHAN}(?:{_DIEM}){{2,}}(?![\w'])"
-            rf"(?:\s*(?:,|và)\s*{_DOI_TUONG}{_DAU_NHAN}(?:{_DIEM}){{2,}}(?![\w']))*")
+            rf"(?:\s*(?:[,;]|và)\s*{_DOI_TUONG}{_DAU_NHAN}(?:{_DIEM}){{2,}}(?![\w']))*")
 _CUE_DIEM = {"midpoint": r"(?i:trung\s+điểm|điểm\s+chính\s+giữa)", "centroid": r"(?i:trọng\s+tâm)"}
 #: Right angle of a named polygon: `ABC (là tam giác) vuông (cân) tại B`, `ABCD là hình thang vuông tại A và D`,
 #: `góc ABC vuông`; the angle at X has its rays on X's two cyclic neighbours. An unlabelled `(đáy là) tam giác vuông tại B`
@@ -5858,7 +5878,7 @@ _GOC_VUONG = re.compile(rf"(?i:góc)\s+(?<![\w'])((?:{_DIEM}){{3}})(?![\w'])\s+(
 
 #: The only words allowed between a solid symbol and the unlabelled "đáy" it owns: "S.ABC (có) (chung) (mặt) đáy",
 #: or "S.ABC. Đáy" (a closed list: a noun blacklist was open-ended, review rounds 4–5).
-_SAU_KHOI_DEN_DAY = re.compile(r"\s*(?:(?i:có)\s+)?(?:(?i:chung)\s+)?(?:(?i:mặt)\s+)?")
+_SAU_KHOI_DEN_DAY = re.compile(r"\s*(?:[.,]\s*)?(?:(?i:có)\s+)?(?:(?i:chung)\s+)?(?:(?i:mặt)\s+)?")
 
 
 def _chu_cua_day(truoc: str, dau_day: int) -> list[str] | None:
@@ -5870,6 +5890,33 @@ def _chu_cua_day(truoc: str, dau_day: int) -> list[str] | None:
         return None
     p = khoi[-1][1]
     return p[1] if len(p[0]) == 1 else p[0]
+
+
+def _vuong_can_hai_canh(c: LoiGoi, de: str) -> bool:
+    """Bind `equal_length(segment_a, segment_b)` to `vuông cân tại <V>` of a 3-vertex triangle `<ABC>` (or owned `đáy`)."""
+    want = {frozenset(c.args.segment_a), frozenset(c.args.segment_b)}
+    for q in c.quotes:
+        for m in _VUONG_TAI.finditer(q):
+            if "cân" not in m.group().lower():
+                continue
+            verts_tai = re.findall(_DIEM, m[2])
+            if len(verts_tai) != 1:
+                continue
+            v = verts_tai[0]
+            if m[1]:
+                poly = re.findall(_DIEM, m[1])
+            elif (vt := _vi_tri(de, q)) and (day := _DAY_VUONG.search(truoc := de[:vt[0]] + q[:m.start()])):
+                if day[1]:
+                    poly = re.findall(_DIEM, day[1])
+                elif (poly := _chu_cua_day(truoc, day.start())) is None:
+                    continue
+            else:
+                continue
+            if len(poly) == 3 and len(set(poly)) == 3 and v in poly:
+                r1, r2 = [p for p in poly if p != v]
+                if want == {frozenset((v, r1)), frozenset((v, r2))}:
+                    return True
+    return False
 
 
 def _dinh_nghia_diem_dung_nguon(c: LoiGoi, q: str, de: str) -> bool:
@@ -6622,7 +6669,7 @@ def _cau_tien_de_dong_hop_le(s: str, s_start: int, de: str, calls: tuple[LoiGoi,
                 if "cân" in txt:
                     r1, r2 = list(rays)
                     s1, s2 = [v, r1], [v, r2]
-                    eq_call = any(d.fn == "equal_length" and {frozenset(d.args.segment1), frozenset(d.args.segment2)} == {frozenset(s1), frozenset(s2)} for d in calls)
+                    eq_call = any(d.fn == "equal_length" and {frozenset(d.args.segment_a), frozenset(d.args.segment_b)} == {frozenset(s1), frozenset(s2)} for d in calls)
                     eq_val = bool({val for val, _ in _nguon_do_dai_cuc_bo(calls, s1)} & {val for val, _ in _nguon_do_dai_cuc_bo(calls, s2)})
                     if not (eq_call or eq_val):
                         return False
