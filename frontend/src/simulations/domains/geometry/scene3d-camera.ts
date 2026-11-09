@@ -858,3 +858,119 @@ export function khungNhinQuanhTam(
     nhinVao: [tamXoay[0], tamXoay[1], tamXoay[2]],
   };
 }
+
+export interface TuyChonCanDoiTam {
+  tiLeNgang: number;
+  tiLeDoc: number;
+  dichTamNgang?: number;
+  dichTamDoc?: number;
+  bienDichTamToiDa?: { ngang?: number; doc?: number };
+}
+
+export interface KetQuaCanDoiTam {
+  vungAnToanNdc: VungAnToanNdc;
+  lechOngKinhNgang: number;
+  lechOngKinhDoc: number;
+}
+
+/**
+ * Cân đối vùng an toàn NDC và độ lệch tâm quang học (`setViewOffset`) quanh `tamXoay` cố định:
+ * - Giữ nguyên tuyệt đối `controls.target === tamXoay` để xoay Orbit 90°/180°/360° quanh đúng tâm khối.
+ * - Khi hình chiếu bất đối xứng quanh `tamXoay` (vd: đỉnh chóp S hoặc điểm trên mặt tiếp diện cao hơn phần đáy),
+ *   phân bổ dải NDC `2 × tiLeDoc` / `2 × tiLeNgang` theo tỷ lệ nhô hai phía có chặn biên an toàn, đồng thời
+ *   dịch nhẹ tâm quang học ngược dấu để hình vừa cân giữa vùng khả dụng vừa đạt kích thước mục tiêu (~55–65% cao, ≤70% rộng/cao).
+ */
+export function khungAnToanCanDoiTam(
+  diem: readonly Diem3[],
+  tamXoay: Diem3,
+  fovDo: number,
+  tiLeKhung: number,
+  huongChon: Diem3 | undefined,
+  tuyChon: TuyChonCanDoiTam,
+): KetQuaCanDoiTam {
+  const tiLeNgang = Math.max(0.20, Math.min(0.86, Number.isFinite(tuyChon.tiLeNgang) ? tuyChon.tiLeNgang : TI_LE_LAP_KHUNG));
+  const tiLeDoc = Math.max(0.20, Math.min(0.84, Number.isFinite(tuyChon.tiLeDoc) ? tuyChon.tiLeDoc : TI_LE_LAP_KHUNG));
+  const uiNgang = Number.isFinite(tuyChon.dichTamNgang) ? (tuyChon.dichTamNgang as number) : 0;
+  const uiDoc = Number.isFinite(tuyChon.dichTamDoc) ? (tuyChon.dichTamDoc as number) : 0;
+  const fallback = (): KetQuaCanDoiTam => ({
+    vungAnToanNdc: {
+      xMin: -tiLeNgang,
+      xMax: tiLeNgang,
+      yMin: -tiLeDoc,
+      yMax: tiLeDoc,
+    },
+    lechOngKinhNgang: uiNgang,
+    lechOngKinhDoc: uiDoc,
+  });
+
+  const diemHopLe = diem.filter((p) => p.every(Number.isFinite));
+  if (
+    diemHopLe.length === 0 ||
+    !tamXoay.every(Number.isFinite) ||
+    !Number.isFinite(fovDo) || fovDo <= 0 || fovDo >= 180 ||
+    !Number.isFinite(tiLeKhung) || tiLeKhung <= 0
+  ) {
+    return fallback();
+  }
+
+  const d = chuan(
+    huongChon && huongChon.every(Number.isFinite) && Math.hypot(...huongChon) > 1e-9
+      ? huongChon
+      : ([...HUONG] as Diem3),
+  );
+  const knSym = khungNhinQuanhTam(diemHopLe, tamXoay, fovDo, tiLeKhung, d, {
+    xMin: -tiLeNgang,
+    xMax: tiLeNgang,
+    yMin: -tiLeDoc,
+    yMax: tiLeDoc,
+  });
+  if (!knSym) return fallback();
+
+  const kSym = Math.hypot(
+    knSym.viTri[0] - tamXoay[0],
+    knSym.viTri[1] - tamXoay[1],
+    knSym.viTri[2] - tamXoay[2],
+  );
+  const tanDoc = Math.tan((fovDo * Math.PI) / 360);
+  const tanNgang = tanDoc * tiLeKhung;
+  if (!(kSym > 1e-6) || !(tanDoc > 0) || !(tanNgang > 0)) return fallback();
+
+  const phai = chuan(Math.abs(d[2]) > 0.999 ? cheo([0, 1, 0], d) : cheo([0, 0, 1], d));
+  const len = cheo(d, phai);
+
+  let uxMin = 0;
+  let uxMax = 0;
+  let uyMin = 0;
+  let uyMax = 0;
+  for (const p of diemHopLe) {
+    const q = tru(p, tamXoay);
+    const depth = Math.max(0.25, kSym - tich(q, d));
+    const ux = tich(q, phai) / (depth * tanNgang);
+    const uy = tich(q, len) / (depth * tanDoc);
+    if (ux < uxMin) uxMin = ux;
+    if (ux > uxMax) uxMax = ux;
+    if (uy < uyMin) uyMin = uy;
+    if (uy > uyMax) uyMax = uy;
+  }
+
+  const maxAsymX = Math.max(0, Math.min(0.16, tuyChon.bienDichTamToiDa?.ngang ?? 0.08));
+  const maxAsymY = Math.max(0, Math.min(0.18, tuyChon.bienDichTamToiDa?.doc ?? 0.10));
+  const spanX = Math.max(1e-4, uxMax - uxMin);
+  const spanY = Math.max(1e-4, uyMax - uyMin);
+  const rawCx = 0.5 * (uxMax + uxMin) * Math.min(1.5, (2 * tiLeNgang) / spanX);
+  const rawCy = 0.5 * (uyMax + uyMin) * Math.min(1.5, (2 * tiLeDoc) / spanY);
+  const cX = Math.max(-maxAsymX, Math.min(maxAsymX, rawCx));
+  const cY = Math.max(-maxAsymY, Math.min(maxAsymY, rawCy));
+
+  return {
+    vungAnToanNdc: {
+      xMin: Math.max(-0.88, Math.min(-0.18, -tiLeNgang + cX)),
+      xMax: Math.min(0.88, Math.max(0.18, tiLeNgang + cX)),
+      yMin: Math.max(-0.86, Math.min(-0.18, -tiLeDoc + cY)),
+      yMax: Math.min(0.86, Math.max(0.18, tiLeDoc + cY)),
+    },
+    lechOngKinhNgang: uiNgang - cX,
+    lechOngKinhDoc: uiDoc - cY,
+  };
+}
+

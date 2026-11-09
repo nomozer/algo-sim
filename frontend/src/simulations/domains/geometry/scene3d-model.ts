@@ -938,7 +938,8 @@ export function diemHuuHan(objects: SceneObject[]): Vec3[] {
     if (o.render === "surface" || o.render === "line") continue;
     them(o.xyz); them(o.center); them(o.anchor); them(o.apex_or_top);
     them(o.rim_point); them(o.annotation?.witness?.foot); them(o.annotation?.witness?.from_point);
-    them(o.perpendicular_witness?.foot);
+    them(o.annotation?.witness?.second?.foot);
+    them(o.perpendicular_witness?.foot); them(o.perpendicular_witness?.second?.foot);
     for (const v of o.vertices ?? []) them(v);
     for (const v of o.polygon ?? []) them(v);
     // Khối cong: bán kính nở ra theo hai phương ⟂ TRỤC. Chỉ có `rim_point` thì
@@ -972,6 +973,25 @@ export function diemHuuHan(objects: SceneObject[]): Vec3[] {
         for (const u of phuong) {
           ra.push([t[0] + u[0] * r, t[1] + u[1] * r, t[2] + u[2] * r]);
           ra.push([t[0] - u[0] * r, t[1] - u[1] * r, t[2] - u[2] * r]);
+        }
+        // Pairwise 45-degree great-circle boundary points for spheres (exact radius r) prevent 13.4% cos(30°) silhouette underestimation on portrait viewports.
+        if (phuong.length === 3) {
+          const rCap = r / Math.SQRT2;
+          for (let a = 0; a < 3; a += 1) {
+            for (let b = a + 1; b < 3; b += 1) {
+              const ua = phuong[a];
+              const ub = phuong[b];
+              for (const sa of [-1, 1]) {
+                for (const sb of [-1, 1]) {
+                  ra.push([
+                    t[0] + (sa * ua[0] + sb * ub[0]) * rCap,
+                    t[1] + (sa * ua[1] + sb * ub[1]) * rCap,
+                    t[2] + (sa * ua[2] + sb * ub[2]) * rCap,
+                  ]);
+                }
+              }
+            }
+          }
         }
         // Normalized diagonal surface points keep diagonal camera views on the true radius-r surface
         // without inflating the bounding box to r*sqrt(2) or r*sqrt(3).
@@ -1481,6 +1501,32 @@ export function diemChoDuong(objects: SceneObject[], duongId: string): Vec3[] {
       ...(w?.second?.on === duongId && w.second.foot ? [toVec3(w.second.foot)] : []),
     ]);
   return [...diemHuuHan(objects), ...chan];
+}
+
+/** Điểm neo hình học thật để xét thẳng hàng trên đường `duongId` (không gồm đám mây mẫu biên mặt cong `±r` tổng hợp,
+ *  tránh trục thẳng đứng đi qua tâm cầu nhận nhầm hai cực `c ± R·ez` làm mốc căng đoạn lõi xuyên thủng mặt cầu). */
+export function diemNeoDuongThang(objects: SceneObject[], duongId: string): Vec3[] {
+  const ra: Vec3[] = [];
+  const them = (v?: ExactVec3 | null) => { if (v) ra.push(toVec3(v)); };
+  for (const o of objects) {
+    if (o.render === "surface" || o.render === "line") continue;
+    them(o.xyz); them(o.center); them(o.anchor); them(o.apex_or_top);
+    them(o.rim_point); them(o.annotation?.witness?.foot); them(o.annotation?.witness?.from_point);
+    them(o.annotation?.witness?.second?.foot);
+    them(o.perpendicular_witness?.foot); them(o.perpendicular_witness?.second?.foot);
+    if (o.point_a) them(o.point_a);
+    if (o.point_b) them(o.point_b);
+    for (const ep of o.endpoints ?? []) them(ep);
+    for (const v of o.vertices ?? []) them(v);
+    for (const v of o.polygon ?? []) them(v);
+    if (duongId) {
+      for (const w of [o.annotation?.witness, o.perpendicular_witness]) {
+        if (w?.on === duongId && w.foot) them(w.foot);
+        if (w?.second?.on === duongId && w.second.foot) them(w.second.foot);
+      }
+    }
+  }
+  return ra;
 }
 
 /**

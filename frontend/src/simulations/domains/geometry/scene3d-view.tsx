@@ -76,8 +76,8 @@ import {
   veTrenKhung,
 } from "./scene3d-presentation";
 import {
-  type KhungNhin, type LoaiKhoiTamXoay, type TamXoayOnDinh, type VungAnToanNdc,
-  chonHuongNhin, hopBaoCuaDiem, huongLenHienThi, khungNhinQuanhTam,
+  type KhungNhin, type LoaiKhoiTamXoay, type TamXoayOnDinh,
+  chonHuongNhin, hopBaoCuaDiem, huongLenHienThi, khungAnToanCanDoiTam, khungNhinQuanhTam,
   khungNhinSuPham, khungNhinVua, tiLeHinhChieu, tinhTamXoayTuKhoi, khoangGanToiThieu, khoangTuaTheoHuong,
 } from "./scene3d-camera";
 import { MAU_VAI_TRO, PHONG_CACH_SCENE3D, vaiTroKhoi, vaiTroMien, type VaiTroKhoi } from "./scene3d-roles";
@@ -1965,7 +1965,7 @@ export function buildObject3D(
     const p = new THREE.Vector3(...toVec3(o.point));
     const d = new THREE.Vector3(...rawDir).normalize();
     const resolvedSpan = sceneContext
-      ? resolveLineDisplaySpan(sceneContext, o, sceneContext.objects, diemNen)
+      ? resolveLineDisplaySpan(sceneContext, o, visibleStepObjects ?? sceneContext.objects, diemNen)
       : null;
     if (resolvedSpan?.mode === "no_intersection") return null;
     const doan = resolvedSpan ? resolvedSpan.endpoints : doanDuongThang(toVec3(o.point), rawDir, diemNen);
@@ -4084,11 +4084,14 @@ export function tinhViTriNhanDiem(
    *  hướng cũ được cộng tối đa `THUONG_GIU_HUONG` điểm, đủ để hai phía tương đương không đổi qua lại giữa các khung khi
    *  xoay, quá nhỏ để thắng một va chạm thật (phạt tới ~77 điểm khi đè lên nét). */
   huongTruoc?: Map<string, number>,
+  khung?: { w: number; h: number },
+  vungChe?: readonly LabelRect[],
 ): Map<string, { x: number; y: number; duoi: boolean }> {
   const ra = new Map<string, { x: number; y: number; duoi: boolean }>();
   if (diem.length === 0) return ra;
   const cx = diem.reduce((s, p) => s + p.x, 0) / diem.length;
   const cy = diem.reduce((s, p) => s + p.y, 0) / diem.length;
+  const daDatHop: LabelRect[] = [];
 
   const kcDiemDoan = (px: number, py: number, ax: number, ay: number, bx: number, by: number) => {
     const abx = bx - ax, aby = by - ay;
@@ -4179,6 +4182,29 @@ export function tinhViTriNhanDiem(
         }
       }
 
+      for (const hb of daDatHop) {
+        const ox = Math.min(lx + cw + 3, hb.x + hb.w) - Math.max(lx - 3, hb.x);
+        const oy = Math.min(ly + ch + 3, hb.y + hb.h) - Math.max(ly - 3, hb.y);
+        if (ox > 0 && oy > 0) {
+          score -= 95 + ox * oy * 0.25;
+        }
+      }
+
+      if (khung && khung.w > 40 && khung.h > 40) {
+        const padB = 6;
+        if (lx < padB || lx + cw > khung.w - padB || ly < padB || ly + ch > khung.h - padB) {
+          score -= 120;
+        }
+      }
+
+      if (vungChe) {
+        for (const vc of vungChe) {
+          if (lx < vc.x + vc.w + 4 && lx + cw > vc.x - 4 && ly < vc.y + vc.h + 4 && ly + ch > vc.y - 4) {
+            score -= 130;
+          }
+        }
+      }
+
       if (score > bestScore) {
         bestScore = score;
         bestLx = lx;
@@ -4188,6 +4214,7 @@ export function tinhViTriNhanDiem(
     }
 
     huongTruoc?.set(p.id, bestTheta);
+    daDatHop.push({ x: bestLx, y: bestLy, w: cw, h: ch });
     ra.set(p.id, { x: bestLx, y: bestLy, duoi: bestLy > p.y });
   }
   return ra;
@@ -5092,9 +5119,12 @@ export function Scene3DWorkspace({
       }
       cam.updateProjectionMatrix();
     };
+    let baoVeTranKhungKhiDoiCo: (() => void) | null = null;
     const xuLyDoiCoKhung = () => {
       chinhCo();
-      // Tuyệt đối không reset góc nhìn hay mức zoom của người học khi thu gọn/mở Study Dock, đóng/mở panel hoặc resize.
+      // Tuyệt đối không reset góc nhìn hay mức zoom của người học khi thu gọn/mở Study Dock, đóng/mở panel hoặc resize;
+      // chỉ lùi nhẹ theo đúng tia nhìn hiện tại nếu camera đang ở mặc định và khung thu hẹp quá mức gây tràn hình.
+      baoVeTranKhungKhiDoiCo?.();
       veRef.current?.();
       chieuNhan();
     };
@@ -5310,7 +5340,8 @@ export function Scene3DWorkspace({
         const [cw, ch] = co.get(el)!;
         ungVienDiem2d.push({ el, id, x, y, w: cw, h: ch, uuTien: Number(el.dataset.uuTien ?? "1") });
       }
-      const viTriToiUu = tinhViTriNhanDiem(ungVienDiem2d, canh2d, gocVuongPts, huongNhanRef.current);
+      const vungChe = vungCheKhung(renderer.domElement.getBoundingClientRect());
+      const viTriToiUu = tinhViTriNhanDiem(ungVienDiem2d, canh2d, gocVuongPts, huongNhanRef.current, { w, h }, vungChe);
       for (const u of ungVienDiem2d) {
         const dich = viTriToiUu.get(u.id) ?? { x: u.x - (u.w || 18) / 2, y: u.y - 1.4 * (u.h || 18), duoi: false };
         const lech = lamMuotLechNhan(lechNhanRef.current.get(u.id), { dx: dich.x - u.x, dy: dich.y - u.y });
@@ -5414,7 +5445,6 @@ export function Scene3DWorkspace({
           w: el.offsetWidth, h: el.offsetHeight, priority: Number(el.dataset.uuTien ?? "1") });
         theTheoId.set(id, el);
       }
-      const vungChe = vungCheKhung(renderer.domElement.getBoundingClientRect());
       const hopThietDien: LabelRect[] = [];
       const tmpSec = new THREE.Vector3();
       goc.traverse((node) => {
@@ -6005,10 +6035,6 @@ export function Scene3DWorkspace({
 
     const tinhTuyChonKhung = (diem: Vec3[], huong: [number, number, number], w: number, _h: number) => {
       const tiLeCR = tiLeHinhChieu(diem, huong) ?? 1;
-      const dsVat = sceneRef.current.objects;
-      const coMatCat = dsVat.some(
-        (o) => o.type === "plane3" || o.type === "section" || o.type === "circle3" || o.type === "ellipse3",
-      );
       const cRect = container.getBoundingClientRect();
       const panelEl = typeof document !== "undefined" ? document.getElementById("geo3d-bang-phan-tich") : null;
       const pRect = panelEl?.getBoundingClientRect();
@@ -6026,45 +6052,54 @@ export function Scene3DWorkspace({
       const dichTamNgang = coPanelPhai && cRect.width > 0
         ? (safeCenterX - (cRect.left + w / 2)) / Math.max(1, w / 2)
         : 0;
-      let tiLeDoc = 0.67;
-      if (tiLeCR > 1.15) tiLeDoc = 0.64;
-      if (coMatCat) tiLeDoc = Math.min(tiLeDoc, 0.65);
-      if (w < 900) tiLeDoc = Math.min(tiLeDoc, laKhungHep ? 0.66 : 0.60);
-      if (coPanelPhai) tiLeDoc = Math.min(tiLeDoc, 0.62);
+      let tiLeDoc = tiLeCR > 1.20 ? 0.60 : 0.62;
+      if (w < 900) tiLeDoc = Math.min(tiLeDoc, laKhungHep ? 0.62 : 0.60);
+      if (coPanelPhai) tiLeDoc = Math.min(tiLeDoc, 0.58);
       const paEl = typeof document !== "undefined" ? document.getElementById("playback-pa-box") : null;
       const tbEl = typeof document !== "undefined" ? document.getElementById("floating-toolbar-3d") : null;
       const coCapsuleDay = Boolean(
         (paEl && paEl.getBoundingClientRect().height > 0) || (tbEl && tbEl.getBoundingClientRect().height > 0),
       );
       if (coCapsuleDay && cRect.height > 0 && cRect.height < 680 && !laKhungHep) {
-        tiLeDoc = Math.min(tiLeDoc, 0.61);
+        tiLeDoc = Math.min(tiLeDoc, 0.59);
       }
-      let dichTamDoc = coCapsuleDay ? (cRect.height > 0 && cRect.height < 680 ? 0.05 : 0.035) : 0.02;
+      let dichTamDoc = coCapsuleDay ? (cRect.height > 0 && cRect.height < 680 ? 0.045 : 0.03) : 0.015;
       if (coCapsuleDay && cRect.width > 0 && cRect.height > 0) {
-        const centerLeft = cRect.left + cRect.width * (laKhungHep ? 0.16 : 0.32);
-        const centerRight = cRect.right - cRect.width * (laKhungHep ? 0.16 : 0.32);
+        const centerLeft = cRect.left + cRect.width * (laKhungHep ? 0.16 : 0.30);
+        const centerRight = cRect.right - cRect.width * (laKhungHep ? 0.16 : 0.30);
+        let topObstacleBottom = cRect.top;
         let capsuleCenterTop = cRect.bottom;
         for (const el of [paEl, tbEl]) {
           if (!el) continue;
           const r = el.getBoundingClientRect();
           if (r.width <= 0 || r.height <= 0) continue;
-          if (r.right > centerLeft && r.left < centerRight && r.top > cRect.top + cRect.height * 0.42 && r.top < cRect.bottom) {
-            capsuleCenterTop = Math.min(capsuleCenterTop, r.top);
+          if (r.right > centerLeft && r.left < centerRight) {
+            if (r.top > cRect.top + cRect.height * 0.42 && r.top < cRect.bottom) {
+              capsuleCenterTop = Math.min(capsuleCenterTop, r.top);
+            } else if (r.bottom < cRect.top + cRect.height * 0.42 && r.bottom > cRect.top) {
+              topObstacleBottom = Math.max(topObstacleBottom, r.bottom);
+            }
           }
         }
-        if (capsuleCenterTop < cRect.bottom - 8) {
-          const safeTop = cRect.top + (laKhungHep ? 14 : 28);
-          const safeBottom = Math.max(safeTop + (laKhungHep ? 110 : 100), capsuleCenterTop - (laKhungHep ? 14 : 22));
+        if (capsuleCenterTop < cRect.bottom - 8 || topObstacleBottom > cRect.top + 8) {
+          const safeTop = Math.max(
+            cRect.top + (laKhungHep ? 14 : 28),
+            topObstacleBottom > cRect.top + 8 ? topObstacleBottom + (laKhungHep ? 12 : 18) : cRect.top,
+          );
+          const safeBottom = Math.max(
+            safeTop + (laKhungHep ? 96 : 100),
+            capsuleCenterTop < cRect.bottom - 8 ? capsuleCenterTop - (laKhungHep ? 14 : 22) : cRect.bottom - (laKhungHep ? 14 : 24),
+          );
           const availRatio = (safeBottom - safeTop) / cRect.height;
-          tiLeDoc = Math.min(tiLeDoc, Math.max(laKhungHep ? 0.50 : 0.38, availRatio * (laKhungHep ? 0.88 : 0.84)));
+          tiLeDoc = Math.min(tiLeDoc, Math.max(0.36, availRatio * (laKhungHep ? 0.78 : 0.76)));
           const midY = cRect.top + cRect.height / 2;
           const safeMidY = (safeTop + safeBottom) / 2;
-          dichTamDoc = Math.max(dichTamDoc, Math.min(0.32, (midY - safeMidY) / Math.max(1, cRect.height / 2)));
+          dichTamDoc = Math.max(-0.22, Math.min(0.28, (midY - safeMidY) / Math.max(1, cRect.height / 2)));
         }
       }
       const tiLeNgang = coPanelPhai
-        ? Math.min(0.58, safeWidthRatio * 0.78)
-        : Math.min(laKhungHep ? 0.80 : 0.74, safeWidthRatio * (laKhungHep ? 0.88 : 0.82));
+        ? Math.min(0.56, safeWidthRatio * 0.76)
+        : Math.min(laKhungHep ? 0.66 : 0.65, safeWidthRatio * (laKhungHep ? 0.84 : 0.78));
       return {
         tiLeDoc,
         tiLeNgang,
@@ -6086,40 +6121,11 @@ export function Scene3DWorkspace({
       };
       const byIdNguon = new Map(dsTatCa.map((x) => [x.id, x]));
       const infoTam = tinhTamXoayOnDinh(dsNguon, bienDoi);
-      const diemNenNguon = diemHuuHan(dsNguon.filter((x) => !laDiemPhuDungMatPhang(sceneRef.current, x, byIdNguon)));
-      const clampToSolidRadius = (ptWorld: Vec3): Vec3 => {
-        if (!infoTam || !(infoTam.banKinhKhoi > 1e-5)) return ptWorld;
-        const dx = ptWorld[0] - infoTam.tamXoay[0];
-        const dy = ptWorld[1] - infoTam.tamXoay[1];
-        const dz = ptWorld[2] - infoTam.tamXoay[2];
-        const d = Math.hypot(dx, dy, dz);
-        const maxR = infoTam.banKinhKhoi * 1.28;
-        if (d <= maxR || d <= 1e-9) return ptWorld;
-        const k = maxR / d;
-        return [
-          infoTam.tamXoay[0] + dx * k,
-          infoTam.tamXoay[1] + dy * k,
-          infoTam.tamXoay[2] + dz * k,
-        ];
-      };
+      // ponytail: finite geometric objects only — infinite line3/plane3 display spans never bloat camera framing
       const diemCoBan: Vec3[] = [];
       for (const o of dsNguon) {
         if (laDiemPhuDungMatPhang(sceneRef.current, o, byIdNguon)) continue;
         for (const p of diemHuuHan([o])) diemCoBan.push(bienDoi(p, o.id));
-        if (o.type === "line3" && o.point && o.direction) {
-          const span = resolveLineDisplaySpan(sceneRef.current, o, dsNguon, diemNenNguon);
-          if (span?.mode !== "no_intersection") {
-            const endpoints = span
-              ? span.endpoints
-              : doanDuongThang(toVec3(o.point), toVec3(o.direction), diemNenNguon);
-            if (endpoints) {
-              diemCoBan.push(
-                clampToSolidRadius(bienDoi(endpoints[0], o.id)),
-                clampToSolidRadius(bienDoi(endpoints[1], o.id)),
-              );
-            }
-          }
-        }
       }
       const diem = tt.exploded_groups.length > 0
         ? diemVuaKhung(goc, diemCoBan)
@@ -6129,17 +6135,43 @@ export function Scene3DWorkspace({
       return { dsNguon, infoTam, diem };
     };
 
-    const vungAnToanTuTuyChon = (tc: {
-      tiLeDoc: number;
-      tiLeNgang: number;
-      dichTamNgang: number;
-      dichTamDoc: number;
-    }): VungAnToanNdc => ({
-      xMin: Math.max(-0.88, -tc.tiLeNgang),
-      xMax: Math.min(0.88, tc.tiLeNgang),
-      yMin: Math.max(-0.86, -tc.tiLeDoc),
-      yMax: Math.min(0.86, tc.tiLeDoc),
-    });
+    baoVeTranKhungKhiDoiCo = () => {
+      if (userAdjustedCamera) return;
+      const { infoTam, diem } = tinhTamVaDiemCanh();
+      if (!infoTam || diem.length === 0) return;
+      cam.updateMatrixWorld(true);
+      const tmp = new THREE.Vector3();
+      let tranKhung = false;
+      for (const p of diem) {
+        tmp.set(p[0], p[1], p[2]).project(cam);
+        if (tmp.z < 1 && (tmp.x < -0.86 || tmp.x > 0.86 || tmp.y < -0.86 || tmp.y > 0.86)) {
+          tranKhung = true;
+          break;
+        }
+      }
+      if (!tranKhung) return;
+      const ray = cam.position.clone().sub(dieuKhien.target);
+      if (ray.lengthSq() <= 1e-8) return;
+      const huongHienTai: [number, number, number] = [ray.x, ray.y, ray.z];
+      const w0 = container.clientWidth || 640;
+      const h0 = container.clientHeight || 420;
+      const tc = tinhTuyChonKhung(diem, huongHienTai, w0, h0);
+      const canDoi = khungAnToanCanDoiTam(diem, infoTam.tamXoay, cam.fov, w0 / Math.max(1, h0), huongHienTai, tc);
+      lechOngKinhNgang = canDoi.lechOngKinhNgang;
+      lechOngKinhDoc = canDoi.lechOngKinhDoc;
+      chinhCo();
+      const w = renderer.domElement.clientWidth || 1;
+      const h = renderer.domElement.clientHeight || 1;
+      const kn = khungNhinQuanhTam(diem, infoTam.tamXoay, cam.fov, w / h, huongHienTai, canDoi.vungAnToanNdc);
+      if (!kn) return;
+      dangDatKhungTuDong = true;
+      try {
+        datKhungNhin(cam, dieuKhien, kn, { banKinhKhoi: infoTam.banKinhKhoi, tam: infoTam });
+        kcKhungChuan = cam.position.clone().sub(dieuKhien.target).length();
+      } finally {
+        dangDatKhungTuDong = false;
+      }
+    };
 
     const sanKhau = container.closest(".geo3d-san") ?? container.parentElement;
     let trangThaiPanelTruoc = Boolean(
@@ -6172,13 +6204,16 @@ export function Scene3DWorkspace({
       const w0 = container.clientWidth || 640;
       const h0 = container.clientHeight || 420;
       const tc = tinhTuyChonKhung(diem, huong, w0, h0);
-      lechOngKinhNgang = tc.dichTamNgang;
-      lechOngKinhDoc = tc.dichTamDoc;
+      const canDoi = infoTam
+        ? khungAnToanCanDoiTam(diem, infoTam.tamXoay, cam.fov, w0 / Math.max(1, h0), huong, tc)
+        : null;
+      lechOngKinhNgang = canDoi ? canDoi.lechOngKinhNgang : tc.dichTamNgang;
+      lechOngKinhDoc = canDoi ? canDoi.lechOngKinhDoc : tc.dichTamDoc;
       chinhCo();
       const w = renderer.domElement.clientWidth || 1;
       const h = renderer.domElement.clientHeight || 1;
-      const kn = (infoTam
-        ? khungNhinQuanhTam(diem, infoTam.tamXoay, cam.fov, w / h, huong, vungAnToanTuTuyChon(tc))
+      const kn = (infoTam && canDoi
+        ? khungNhinQuanhTam(diem, infoTam.tamXoay, cam.fov, w / h, huong, canDoi.vungAnToanNdc)
         : khungNhinSuPham(diem, [], [], cam.fov, w / h, huong, { ...tc, dichTamDoc: 0 }))
         ?? khungNhinVua(hopBaoCuaDiem(diem), cam.fov, w / h);
       if (!kn) return;

@@ -27,6 +27,7 @@ import {
   derivedSceneParentOf,
   diemChoDuong,
   diemHuuHan,
+  diemNeoDuongThang,
   doanDuongThang,
   duongKinhCanh,
   exactSceneOriginOf,
@@ -3999,6 +4000,44 @@ export function compactPlaneAnchorPoints(
       ? Math.sqrt(Math.max(0, toNumber(conicCut.radius_sq)))
       : Math.sqrt(Math.max(0, R * R - dPlane * dPlane));
     const [e1, e2] = orthonormalBasisOnPlane(u);
+    if (rCut <= 1e-3) {
+      const tolPlane = 1e-3 * Math.max(1, R);
+      const coplanar = diemNeoDuongThang([...visibleObjects], "").filter(
+        (p) => Math.abs((p[0] - p0[0]) * u[0] + (p[1] - p0[1]) * u[1] + (p[2] - p0[2]) * u[2]) <= tolPlane,
+      );
+      let sLo = 0;
+      let sHi = 0;
+      let tLo = 0;
+      let tHi = 0;
+      for (const p of coplanar) {
+        const dx = p[0] - center[0];
+        const dy = p[1] - center[1];
+        const dz = p[2] - center[2];
+        const sc = dx * e1[0] + dy * e1[1] + dz * e1[2];
+        const tc = dx * e2[0] + dy * e2[1] + dz * e2[2];
+        if (sc < sLo) sLo = sc;
+        if (sc > sHi) sHi = sc;
+        if (tc < tLo) tLo = tc;
+        if (tc > tHi) tHi = tc;
+      }
+      const hasOffCenter = Math.hypot(sHi - sLo, tHi - tLo) > 1e-3;
+      const minHalf = hasOffCenter ? R * 0.30 : R * 0.52;
+      const pad = hasOffCenter ? R * 0.12 : 0;
+      const aLo = Math.min(-minHalf, sLo - pad);
+      const aHi = Math.max(minHalf, sHi + pad);
+      const bLo = Math.min(-minHalf, tLo - pad);
+      const bHi = Math.max(minHalf, tHi + pad);
+      return [
+        [aLo, bLo],
+        [aHi, bLo],
+        [aHi, bHi],
+        [aLo, bHi],
+      ].map(([sc, tc]): Vec3 => [
+        center[0] + sc * e1[0] + tc * e2[0],
+        center[1] + sc * e1[1] + tc * e2[1],
+        center[2] + sc * e1[2] + tc * e2[2],
+      ]);
+    }
     const hs = Math.max(rCut * 1.30, R * 1.18);
     const ht = Math.max(rCut * 1.24, R * 1.12);
     return [
@@ -6531,8 +6570,9 @@ export function resolveLineDisplaySpan(
       const cheo = Math.max(duongKinhCanh(ptsForLine), 1);
       const tol = 1e-4 * Math.max(1, cheo);
       const zMin = Math.min(...ptsForLine.map((p) => p[2]));
+      const anchorCandidates = visObjs.length > 0 ? diemNeoDuongThang(visObjs, lineObj.id) : ptsForLine;
       const lineAnchors: Vec3[] = [];
-      for (const p of ptsForLine) {
+      for (const p of (anchorCandidates.length > 0 ? anchorCandidates : ptsForLine)) {
         const ti = (p[0] - p0[0]) * u[0] + (p[1] - p0[1]) * u[1] + (p[2] - p0[2]) * u[2];
         const perp = Math.hypot(p[0] - p0[0] - ti * u[0], p[1] - p0[1] - ti * u[1], p[2] - p0[2] - ti * u[2]);
         if (perp <= tol) lineAnchors.push(p);
