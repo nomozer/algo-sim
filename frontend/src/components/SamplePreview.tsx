@@ -1,9 +1,9 @@
 import type { ReactNode } from "react";
 
 /**
- * Thumbnail SVG chuẩn Axo V2.7 (P4.3) — chuyển nguyên vẹn 11 renderer bài toán
- * (`PROBLEM_THUMBNAIL_RENDERERS`) và 4 renderer phân loại (`getCategoryThumbnailSVG`)
- * từ `axo-unified-ui-v2-7-composer-validation-divider-review.html` (dòng 12404–13699).
+ * Thumbnail SVG chuẩn hóa của Axo — đồng bộ trực tiếp với 11 mô hình Scene3D đã kiểm chứng
+ * (đỉnh, nhãn điểm, nét liền/nét đứt, mặt cắt, dấu góc vuông và tư thế nhìn).
+ * Dùng chung cho cả Trang chủ (`HomeView`), Thư viện (`LibraryView`) và Lịch sử (`SessionCard`).
  */
 
 export type PreviewKind = "geometry";
@@ -24,8 +24,8 @@ const GEO_THUMB_PALETTE = {
   cobalt: "#2563EB",
   amber: "#D97706",
   amberFill: "rgba(217, 119, 6, 0.18)",
-  planeFill: "rgba(109, 40, 217, 0.07)",
-  planeStroke: "rgba(109, 40, 217, 0.36)",
+  planeFill: "rgba(109, 40, 217, 0.08)",
+  planeStroke: "rgba(109, 40, 217, 0.38)",
   planeLabel: "#6D28D9",
 } as const;
 
@@ -58,7 +58,7 @@ function GeoPt({
           x={tx}
           y={ty}
           fontFamily="Plus Jakarta Sans, sans-serif"
-          fontSize="11"
+          fontSize="10.5"
           fontWeight="700"
           fill={c}
           paintOrder="stroke"
@@ -118,179 +118,137 @@ function GeoRightAngle({
   );
 }
 
-function GeoMidTick({
-  x1,
-  y1,
-  x2,
-  y2,
-  color,
-}: {
-  x1: number;
-  y1: number;
-  x2: number;
-  y2: number;
-  color?: string;
-}) {
-  const mx = (x1 + x2) / 2;
-  const my = (y1 + y2) / 2;
-  const dx = x2 - x1;
-  const dy = y2 - y1;
-  const len = Math.hypot(dx, dy) || 1;
-  const nx = (-dy / len) * 3.2;
-  const ny = (dx / len) * 3.2;
-  return (
-    <line
-      x1={(mx - nx).toFixed(1)}
-      y1={(my - ny).toFixed(1)}
-      x2={(mx + nx).toFixed(1)}
-      y2={(my + ny).toFixed(1)}
-      stroke={color || GEO_THUMB_PALETTE.terracotta}
-      strokeWidth="1.35"
-    />
-  );
-}
-
 const PROBLEM_THUMBNAIL_RENDERERS: Record<string, () => ReactNode> = {
-  // 1. Hình chóp tam giác S.ABC với mặt cắt qua 3 trung điểm M, N, P
+  // 1. Hình chóp tứ giác S.ABCD (SA ⊥ đáy) với thiết diện tứ giác MNPQ song song đáy
   "thiet-dien-chop": () => (
     <>
-      <polygon points="88,13 30,80 82,97 148,76" fill={GEO_THUMB_PALETTE.shellFill} />
-      <line x1="30" y1="80" x2="148" y2="76" stroke={GEO_THUMB_PALETTE.dashed} strokeWidth="1.2" strokeDasharray="4,3" />
-      <polygon points="44,50 92,62 136,44 92,35" fill={GEO_THUMB_PALETTE.planeFill} stroke={GEO_THUMB_PALETTE.planeStroke} strokeWidth="0.95" />
-      <polygon points="59,46.5 85,55 118,44.5" fill={GEO_THUMB_PALETTE.terracottaFill} />
-      <line x1="59" y1="46.5" x2="118" y2="44.5" stroke={GEO_THUMB_PALETTE.terracotta} strokeWidth="1.4" strokeDasharray="3.5,2.5" />
-      <polyline points="59,46.5 85,55 118,44.5" fill="none" stroke={GEO_THUMB_PALETTE.terracotta} strokeWidth="1.8" strokeLinejoin="round" />
-      <polyline points="30,80 82,97 148,76" fill="none" stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.55" strokeLinejoin="round" />
-      <line x1="88" y1="13" x2="30" y2="80" stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.55" />
-      <line x1="88" y1="13" x2="82" y2="97" stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.55" />
-      <line x1="88" y1="13" x2="148" y2="76" stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.55" />
-      <GeoMidTick x1={88} y1={13} x2={59} y2={46.5} />
-      <GeoMidTick x1={59} y1={46.5} x2={30} y2={80} />
-      <GeoMidTick x1={88} y1={13} x2={118} y2={44.5} />
-      <GeoMidTick x1={118} y1={44.5} x2={148} y2={76} />
-      <GeoPt x={88} y={13} label="S" dx={0} dy={-4} color={GEO_THUMB_PALETTE.ink} />
-      <GeoPt x={30} y={80} label="A" dx={-8} dy={4} color={GEO_THUMB_PALETTE.ink} />
-      <GeoPt x={82} y={97} label="B" dx={0} dy={10} color={GEO_THUMB_PALETTE.ink} />
-      <GeoPt x={148} y={76} label="C" dx={8} dy={4} color={GEO_THUMB_PALETTE.ink} />
-      <GeoPt x={59} y={46.5} label="M" dx={-9} dy={-2} color={GEO_THUMB_PALETTE.terracotta} r={2.5} />
-      <GeoPt x={85} y={55} label="N" dx={7} dy={9} color={GEO_THUMB_PALETTE.terracotta} r={2.5} />
-      <GeoPt x={118} y={44.5} label="P" dx={9} dy={-2} color={GEO_THUMB_PALETTE.terracotta} r={2.5} />
-    </>
-  ),
-
-  // 2. Hình chóp tứ giác đều S.ABCD với thiết diện tứ giác MNPQ
-  "mat-cheo-sac": () => (
-    <>
-      <polygon points="90,12 28,76 70,96 150,80" fill={GEO_THUMB_PALETTE.shellFill} />
-      <line x1="28" y1="76" x2="110" y2="60" stroke={GEO_THUMB_PALETTE.dashed} strokeWidth="1.15" strokeDasharray="4,3" />
-      <line x1="110" y1="60" x2="150" y2="80" stroke={GEO_THUMB_PALETTE.dashed} strokeWidth="1.15" strokeDasharray="4,3" />
-      <line x1="90" y1="12" x2="110" y2="60" stroke={GEO_THUMB_PALETTE.dashed} strokeWidth="1.15" strokeDasharray="4,3" />
-      <line x1="28" y1="76" x2="150" y2="80" stroke={GEO_THUMB_PALETTE.dashed} strokeWidth="0.95" strokeDasharray="3,3" />
-      <line x1="70" y1="96" x2="110" y2="60" stroke={GEO_THUMB_PALETTE.dashed} strokeWidth="0.95" strokeDasharray="3,3" />
-      <line x1="90" y1="12" x2="90" y2="78" stroke={GEO_THUMB_PALETTE.teal} strokeWidth="1.35" strokeDasharray="3,2.5" />
-      <GeoRightAngle vx={90} vy={78} ux={0} uy={-1} wx={1} wy={0} size={5.5} color={GEO_THUMB_PALETTE.teal} />
-      <polygon points="18,78 72,92 158,52 104,34" fill={GEO_THUMB_PALETTE.planeFill} stroke={GEO_THUMB_PALETTE.planeStroke} strokeWidth="0.9" />
-      <polygon points="52,51 78,66 126,53 102,40" fill={GEO_THUMB_PALETTE.terracottaFill} />
-      <polyline points="52,51 102,40 126,53" fill="none" stroke={GEO_THUMB_PALETTE.terracotta} strokeWidth="1.35" strokeDasharray="3.5,2.5" />
-      <polyline points="52,51 78,66 126,53" fill="none" stroke={GEO_THUMB_PALETTE.terracotta} strokeWidth="1.8" strokeLinejoin="round" />
-      <polyline points="28,76 70,96 150,80" fill="none" stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.55" strokeLinejoin="round" />
-      <line x1="90" y1="12" x2="28" y2="76" stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.55" />
-      <line x1="90" y1="12" x2="70" y2="96" stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.55" />
-      <line x1="90" y1="12" x2="150" y2="80" stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.55" />
-      <GeoPt x={90} y={12} label="S" dx={0} dy={-3.5} color={GEO_THUMB_PALETTE.ink} />
-      <GeoPt x={28} y={76} label="A" dx={-8} dy={4} color={GEO_THUMB_PALETTE.ink} />
-      <GeoPt x={70} y={96} label="B" dx={-2} dy={10} color={GEO_THUMB_PALETTE.ink} />
-      <GeoPt x={150} y={80} label="C" dx={8} dy={4} color={GEO_THUMB_PALETTE.ink} />
-      <GeoPt x={110} y={60} label="D" dx={7} dy={-3} color={GEO_THUMB_PALETTE.dashed} r={2.0} />
-      <GeoPt x={52} y={51} label="M" dx={-9} dy={-2} color={GEO_THUMB_PALETTE.terracotta} r={2.4} />
-      <GeoPt x={78} y={66} label="N" dx={-6} dy={10} color={GEO_THUMB_PALETTE.terracotta} r={2.4} />
-      <GeoPt x={126} y={53} label="P" dx={9} dy={2} color={GEO_THUMB_PALETTE.terracotta} r={2.4} />
-      <GeoPt x={102} y={40} label="Q" dx={7} dy={-4} color={GEO_THUMB_PALETTE.terracotta} r={2.2} />
-    </>
-  ),
-
-  // 3. Hình chóp S.ABC có cạnh bên SA ⊥ (ABC)
-  "vuong-goc-chop": () => (
-    <>
-      <polygon points="44,16 44,78 96,96 148,72" fill={GEO_THUMB_PALETTE.shellFill} />
-      <polygon points="44,78 96,96 148,72" fill="rgba(15, 118, 110, 0.08)" />
-      <line x1="44" y1="78" x2="148" y2="72" stroke={GEO_THUMB_PALETTE.dashed} strokeWidth="1.2" strokeDasharray="4,3" />
-      <line x1="44" y1="78" x2="120" y2="85" stroke={GEO_THUMB_PALETTE.teal} strokeWidth="1.35" strokeDasharray="3.5,2.5" />
-      <line x1="44" y1="16" x2="120" y2="85" stroke={GEO_THUMB_PALETTE.terracotta} strokeWidth="1.65" />
-      <GeoRightAngle vx={120} vy={85} ux={-76} uy={-7} wx={28} wy={-13} size={6} color={GEO_THUMB_PALETTE.terracotta} />
-      <GeoRightAngle vx={44} vy={78} ux={0} uy={-62} wx={52} wy={18} size={7.5} color={GEO_THUMB_PALETTE.teal} />
-      <GeoRightAngle vx={44} vy={78} ux={0} uy={-62} wx={104} wy={-6} size={6.5} color={GEO_THUMB_PALETTE.teal} />
-      <polyline points="44,78 96,96 148,72" fill="none" stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.6" strokeLinejoin="round" />
-      <line x1="44" y1="16" x2="96" y2="96" stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.55" />
-      <line x1="44" y1="16" x2="148" y2="72" stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.55" />
-      <line x1="44" y1="16" x2="44" y2="78" stroke={GEO_THUMB_PALETTE.teal} strokeWidth="2.4" />
-      <GeoPt x={44} y={16} label="S" dx={-9} dy={2} color={GEO_THUMB_PALETTE.teal} r={2.7} />
-      <GeoPt x={44} y={78} label="A" dx={-9} dy={4} color={GEO_THUMB_PALETTE.teal} r={2.7} />
-      <GeoPt x={96} y={96} label="B" dx={0} dy={10} color={GEO_THUMB_PALETTE.ink} />
-      <GeoPt x={148} y={72} label="C" dx={8} dy={4} color={GEO_THUMB_PALETTE.ink} />
-      <GeoPt x={120} y={85} label="M" dx={9} dy={6} color={GEO_THUMB_PALETTE.terracotta} r={2.3} />
-      <text x="19" y="51" fontFamily="JetBrains Mono, monospace" fontSize="11" fontWeight="700" fill={GEO_THUMB_PALETTE.teal}>
-        SA⊥
-      </text>
-    </>
-  ),
-
-  // 4. Mặt phẳng (α) đi qua điểm M và vuông góc với đường thẳng SA cho trước
-  "mp-vuong-goc-duong": () => (
-    <>
-      <polygon points="74,14 28,84 90,96 148,74" fill={GEO_THUMB_PALETTE.shellFill} />
-      <line x1="28" y1="84" x2="148" y2="74" stroke={GEO_THUMB_PALETTE.dashed} strokeWidth="1.15" strokeDasharray="4,3" />
-      <polygon points="24,38 78,24 128,64 74,80" fill="rgba(109, 40, 217, 0.11)" stroke="#6D28D9" strokeWidth="1.2" />
-      <polygon points="51,49 84,65 108,42" fill={GEO_THUMB_PALETTE.terracottaFill} />
-      <line x1="51" y1="49" x2="108" y2="42" stroke={GEO_THUMB_PALETTE.terracotta} strokeWidth="1.35" strokeDasharray="3.5,2.5" />
-      <polyline points="51,49 84,65 108,42" fill="none" stroke={GEO_THUMB_PALETTE.terracotta} strokeWidth="1.75" strokeLinejoin="round" />
-      <GeoRightAngle vx={51} vy={49} ux={23} uy={-35} wx={33} wy={16} size={6.8} color={GEO_THUMB_PALETTE.teal} />
-      <GeoRightAngle vx={51} vy={49} ux={-23} uy={35} wx={57} wy={-7} size={6.2} color={GEO_THUMB_PALETTE.teal} />
-      <polyline points="28,84 90,96 148,74" fill="none" stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.5" />
-      <line x1="74" y1="14" x2="90" y2="96" stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.5" />
-      <line x1="74" y1="14" x2="148" y2="74" stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.5" />
-      <line x1="74" y1="14" x2="28" y2="84" stroke={GEO_THUMB_PALETTE.teal} strokeWidth="2.2" />
-      <GeoPt x={74} y={14} label="S" dx={0} dy={-4} color={GEO_THUMB_PALETTE.teal} r={2.5} />
-      <GeoPt x={28} y={84} label="A" dx={-8} dy={4} color={GEO_THUMB_PALETTE.teal} r={2.5} />
-      <GeoPt x={90} y={96} label="B" dx={0} dy={10} color={GEO_THUMB_PALETTE.ink} />
-      <GeoPt x={148} y={74} label="C" dx={8} dy={4} color={GEO_THUMB_PALETTE.ink} />
-      <GeoPt x={51} y={49} label="M" dx={-10} dy={-2} color={GEO_THUMB_PALETTE.terracotta} r={2.8} />
-      <text x="116" y="62" fontFamily="Plus Jakarta Sans, sans-serif" fontStyle="italic" fontSize="11" fontWeight="700" fill="#6D28D9">
+      <polygon points="62,13 28,86 112,95 146,75" fill={GEO_THUMB_PALETTE.shellFill} />
+      <line x1="62" y1="13" x2="62" y2="66" stroke={GEO_THUMB_PALETTE.dashed} strokeWidth="1.15" strokeDasharray="3.5,2.5" />
+      <line x1="62" y1="66" x2="28" y2="86" stroke={GEO_THUMB_PALETTE.dashed} strokeWidth="1.15" strokeDasharray="3.5,2.5" />
+      <line x1="62" y1="66" x2="146" y2="75" stroke={GEO_THUMB_PALETTE.dashed} strokeWidth="1.15" strokeDasharray="3.5,2.5" />
+      <polygon points="34,47 84,59 124,45 74,35" fill={GEO_THUMB_PALETTE.planeFill} stroke={GEO_THUMB_PALETTE.planeStroke} strokeWidth="0.95" />
+      <polygon points="62,39.5 45,49.5 87,54 104,44" fill={GEO_THUMB_PALETTE.terracottaFill} />
+      <polyline points="45,49.5 62,39.5 104,44" fill="none" stroke={GEO_THUMB_PALETTE.terracotta} strokeWidth="1.35" strokeDasharray="3.5,2.5" />
+      <polyline points="45,49.5 87,54 104,44" fill="none" stroke={GEO_THUMB_PALETTE.terracotta} strokeWidth="1.85" strokeLinejoin="round" />
+      <polyline points="28,86 112,95 146,75" fill="none" stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.55" strokeLinejoin="round" />
+      <line x1="62" y1="13" x2="28" y2="86" stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.55" />
+      <line x1="62" y1="13" x2="112" y2="95" stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.55" />
+      <line x1="62" y1="13" x2="146" y2="75" stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.55" />
+      <GeoPt x={62} y={13} label="S" dx={0} dy={-4} color={GEO_THUMB_PALETTE.ink} />
+      <GeoPt x={62} y={66} label="A" dx={7} dy={-3} color={GEO_THUMB_PALETTE.dashed} r={2.0} />
+      <GeoPt x={28} y={86} label="B" dx={-8} dy={4} color={GEO_THUMB_PALETTE.ink} />
+      <GeoPt x={112} y={95} label="C" dx={4} dy={10} color={GEO_THUMB_PALETTE.ink} />
+      <GeoPt x={146} y={75} label="D" dx={8} dy={4} color={GEO_THUMB_PALETTE.ink} />
+      <GeoPt x={62} y={39.5} label="M" dx={8} dy={-3} color={GEO_THUMB_PALETTE.terracotta} r={2.3} />
+      <GeoPt x={45} y={49.5} label="N" dx={-9} dy={2} color={GEO_THUMB_PALETTE.terracotta} r={2.4} />
+      <GeoPt x={87} y={54} label="P" dx={3} dy={10} color={GEO_THUMB_PALETTE.terracotta} r={2.4} />
+      <GeoPt x={104} y={44} label="Q" dx={9} dy={-2} color={GEO_THUMB_PALETTE.terracotta} r={2.4} />
+      <text x="129" y="44" fontFamily="Plus Jakarta Sans, sans-serif" fontStyle="italic" fontSize="10" fontWeight="700" fill={GEO_THUMB_PALETTE.planeLabel}>
         (α)
       </text>
     </>
   ),
 
-  // 5. Thể tích khối chóp và khoảng cách SH từ đỉnh S đến mặt đáy (ABC)
-  "the-tich-chop": () => (
+  // 2. Hình chóp tứ giác S.ABCD với mặt chéo (SAC) qua S, A, C
+  "mat-cheo-sac": () => (
     <>
-      <polygon points="88,13 28,78 84,97 148,76" fill={GEO_THUMB_PALETTE.shellFill} />
-      <polygon points="28,78 84,97 148,76" fill={GEO_THUMB_PALETTE.amberFill} />
-      <line x1="28" y1="78" x2="148" y2="76" stroke={GEO_THUMB_PALETTE.amber} strokeWidth="1.4" strokeDasharray="4,3" />
-      <line x1="28" y1="78" x2="88" y2="83" stroke={GEO_THUMB_PALETTE.dashed} strokeWidth="1.1" strokeDasharray="3,2.5" />
-      <line x1="88" y1="13" x2="88" y2="83" stroke={GEO_THUMB_PALETTE.teal} strokeWidth="2.3" strokeDasharray="4,2.5" />
-      <GeoRightAngle vx={88} vy={83} ux={0} uy={-70} wx={-60} wy={-5} size={6.8} color={GEO_THUMB_PALETTE.teal} />
-      <GeoRightAngle vx={88} vy={83} ux={0} uy={-70} wx={60} wy={-7} size={6.8} color={GEO_THUMB_PALETTE.teal} />
-      <polyline points="28,78 84,97 148,76" fill="none" stroke={GEO_THUMB_PALETTE.amber} strokeWidth="1.8" strokeLinejoin="round" />
-      <line x1="88" y1="13" x2="28" y2="78" stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.55" />
-      <line x1="88" y1="13" x2="84" y2="97" stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.55" />
-      <line x1="88" y1="13" x2="148" y2="76" stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.55" />
-      <rect x="93" y="40" width="17" height="15" rx="3" fill="rgba(240,253,250,0.92)" stroke="rgba(15,118,110,0.35)" strokeWidth="0.9" />
-      <text x="101.5" y="51" fontFamily="JetBrains Mono, monospace" fontSize="11" fontWeight="700" fill={GEO_THUMB_PALETTE.teal} textAnchor="middle">
-        h
+      <polygon points="52,14 26,84 112,94 142,72" fill={GEO_THUMB_PALETTE.shellFill} />
+      <line x1="52" y1="62" x2="26" y2="84" stroke={GEO_THUMB_PALETTE.dashed} strokeWidth="1.15" strokeDasharray="3.5,2.5" />
+      <line x1="52" y1="62" x2="142" y2="72" stroke={GEO_THUMB_PALETTE.dashed} strokeWidth="1.15" strokeDasharray="3.5,2.5" />
+      <polygon points="44,10 44,68 122,98 122,38" fill={GEO_THUMB_PALETTE.planeFill} stroke={GEO_THUMB_PALETTE.planeStroke} strokeWidth="0.9" />
+      <polygon points="52,14 52,62 112,94" fill={GEO_THUMB_PALETTE.terracottaFill} />
+      <line x1="52" y1="14" x2="52" y2="62" stroke={GEO_THUMB_PALETTE.terracotta} strokeWidth="1.5" strokeDasharray="3.5,2.5" />
+      <line x1="52" y1="62" x2="112" y2="94" stroke={GEO_THUMB_PALETTE.terracotta} strokeWidth="1.55" strokeDasharray="3.5,2.5" />
+      <line x1="52" y1="14" x2="112" y2="94" stroke={GEO_THUMB_PALETTE.terracotta} strokeWidth="2.0" />
+      <polyline points="26,84 112,94 142,72" fill="none" stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.55" strokeLinejoin="round" />
+      <line x1="52" y1="14" x2="26" y2="84" stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.55" />
+      <line x1="52" y1="14" x2="142" y2="72" stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.55" />
+      <GeoPt x={52} y={14} label="S" dx={-8} dy={0} color={GEO_THUMB_PALETTE.terracotta} r={2.5} />
+      <GeoPt x={52} y={62} label="A" dx={-8} dy={1} color={GEO_THUMB_PALETTE.terracotta} r={2.3} />
+      <GeoPt x={26} y={84} label="B" dx={-8} dy={4} color={GEO_THUMB_PALETTE.ink} />
+      <GeoPt x={112} y={94} label="C" dx={5} dy={9} color={GEO_THUMB_PALETTE.terracotta} r={2.5} />
+      <GeoPt x={142} y={72} label="D" dx={8} dy={4} color={GEO_THUMB_PALETTE.ink} />
+      <text x="115" y="34" fontFamily="Plus Jakarta Sans, sans-serif" fontStyle="italic" fontSize="9.5" fontWeight="700" fill={GEO_THUMB_PALETTE.planeLabel}>
+        (SAC)
       </text>
-      <text x="114" y="89" fontFamily="Plus Jakarta Sans, sans-serif" fontStyle="italic" fontSize="11" fontWeight="700" fill="#B45309">
-        Sđáy
-      </text>
-      <GeoPt x={88} y={13} label="S" dx={0} dy={-4} color={GEO_THUMB_PALETTE.ink} />
-      <GeoPt x={28} y={78} label="A" dx={-8} dy={4} color={GEO_THUMB_PALETTE.ink} />
-      <GeoPt x={84} y={97} label="B" dx={-2} dy={10} color={GEO_THUMB_PALETTE.ink} />
-      <GeoPt x={148} y={76} label="C" dx={8} dy={4} color={GEO_THUMB_PALETTE.ink} />
-      <GeoPt x={88} y={83} label="H" dx={-8} dy={-3} color={GEO_THUMB_PALETTE.teal} r={2.5} />
     </>
   ),
 
-  // 6. Mặt cầu S(O, R) cắt bởi mặt phẳng (α) theo đường tròn giao tuyến C(H, r)
+  // 3. Hình chóp tứ giác S.ABCD có cạnh bên SA ⊥ (ABCD)
+  "vuong-goc-chop": () => (
+    <>
+      <polygon points="54,14 26,86 114,95 142,73" fill={GEO_THUMB_PALETTE.shellFill} />
+      <polygon points="54,64 26,86 114,95 142,73" fill="rgba(15, 118, 110, 0.09)" />
+      <line x1="54" y1="64" x2="26" y2="86" stroke={GEO_THUMB_PALETTE.dashed} strokeWidth="1.2" strokeDasharray="3.5,2.5" />
+      <line x1="54" y1="64" x2="142" y2="73" stroke={GEO_THUMB_PALETTE.dashed} strokeWidth="1.2" strokeDasharray="3.5,2.5" />
+      <GeoRightAngle vx={54} vy={64} ux={0} uy={-50} wx={-28} wy={22} size={6.5} color={GEO_THUMB_PALETTE.teal} />
+      <GeoRightAngle vx={54} vy={64} ux={0} uy={-50} wx={88} wy={9} size={6.5} color={GEO_THUMB_PALETTE.teal} />
+      <line x1="54" y1="14" x2="54" y2="64" stroke={GEO_THUMB_PALETTE.terracotta} strokeWidth="2.3" strokeDasharray="4,2.5" />
+      <polyline points="26,86 114,95 142,73" fill="none" stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.55" strokeLinejoin="round" />
+      <line x1="54" y1="14" x2="26" y2="86" stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.55" />
+      <line x1="54" y1="14" x2="114" y2="95" stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.55" />
+      <line x1="54" y1="14" x2="142" y2="73" stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.55" />
+      <GeoPt x={54} y={14} label="S" dx={-8} dy={0} color={GEO_THUMB_PALETTE.terracotta} r={2.6} />
+      <GeoPt x={54} y={64} label="A" dx={-8} dy={-2} color={GEO_THUMB_PALETTE.teal} r={2.6} />
+      <GeoPt x={26} y={86} label="B" dx={-8} dy={4} color={GEO_THUMB_PALETTE.ink} />
+      <GeoPt x={114} y={95} label="C" dx={4} dy={9} color={GEO_THUMB_PALETTE.ink} />
+      <GeoPt x={142} y={73} label="D" dx={8} dy={4} color={GEO_THUMB_PALETTE.ink} />
+    </>
+  ),
+
+  // 4. Hình chóp S.ABCD (SA ⊥ đáy) với mặt phẳng (α) qua B vuông góc với SC tại H (BH ⊥ SC)
+  "mp-vuong-goc-duong": () => (
+    <>
+      <polygon points="74,13 56,77 108,89 126,65" fill={GEO_THUMB_PALETTE.shellFill} />
+      <polygon points="40,81 96,91 142,61 86,53" fill="rgba(109, 40, 217, 0.10)" stroke="#6D28D9" strokeWidth="1.1" />
+      <line x1="74" y1="13" x2="76" y2="54" stroke={GEO_THUMB_PALETTE.teal} strokeWidth="1.35" strokeDasharray="3.5,2.5" />
+      <line x1="76" y1="54" x2="56" y2="77" stroke={GEO_THUMB_PALETTE.dashed} strokeWidth="1.15" strokeDasharray="3.5,2.5" />
+      <line x1="76" y1="54" x2="126" y2="65" stroke={GEO_THUMB_PALETTE.dashed} strokeWidth="1.15" strokeDasharray="3.5,2.5" />
+      <line x1="56" y1="77" x2="126" y2="65" stroke="#6D28D9" strokeWidth="1.15" strokeDasharray="3.5,2.5" />
+      <line x1="56" y1="77" x2="101" y2="75" stroke={GEO_THUMB_PALETTE.teal} strokeWidth="1.95" strokeDasharray="3.5,2.5" />
+      <GeoRightAngle vx={101} vy={75} ux={-27} uy={-62} wx={-45} wy={2} size={6.5} color={GEO_THUMB_PALETTE.teal} />
+      <polyline points="56,77 108,89 126,65" fill="none" stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.55" strokeLinejoin="round" />
+      <line x1="74" y1="13" x2="56" y2="77" stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.55" />
+      <line x1="74" y1="13" x2="126" y2="65" stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.55" />
+      <line x1="74" y1="13" x2="108" y2="89" stroke={GEO_THUMB_PALETTE.teal} strokeWidth="2.1" />
+      <GeoPt x={74} y={13} label="S" dx={-6} dy={-4} color={GEO_THUMB_PALETTE.ink} r={2.5} />
+      <GeoPt x={76} y={54} label="A" dx={7} dy={-3} color={GEO_THUMB_PALETTE.dashed} r={2.1} />
+      <GeoPt x={56} y={77} label="B" dx={-8} dy={6} color={GEO_THUMB_PALETTE.ink} r={2.4} />
+      <GeoPt x={108} y={89} label="C" dx={5} dy={9} color={GEO_THUMB_PALETTE.ink} r={2.4} />
+      <GeoPt x={126} y={65} label="D" dx={8} dy={3} color={GEO_THUMB_PALETTE.ink} r={2.3} />
+      <GeoPt x={101} y={75} label="H" dx={9} dy={1} color={GEO_THUMB_PALETTE.teal} r={2.6} />
+      <text x="136" y="75" fontFamily="Plus Jakarta Sans, sans-serif" fontStyle="italic" fontSize="10" fontWeight="700" fill="#6D28D9">
+        (α)
+      </text>
+    </>
+  ),
+
+  // 5. Thể tích khối chóp tứ giác đều S.ABCD và đường cao SH ⊥ (ABCD) tại tâm H
+  "the-tich-chop": () => (
+    <>
+      <polygon points="90,13 30,74 70,95 150,81" fill={GEO_THUMB_PALETTE.shellFill} />
+      <polygon points="30,74 70,95 150,81 110,60" fill={GEO_THUMB_PALETTE.amberFill} />
+      <line x1="30" y1="74" x2="110" y2="60" stroke={GEO_THUMB_PALETTE.dashed} strokeWidth="1.15" strokeDasharray="3.5,2.5" />
+      <line x1="110" y1="60" x2="150" y2="81" stroke={GEO_THUMB_PALETTE.dashed} strokeWidth="1.15" strokeDasharray="3.5,2.5" />
+      <line x1="90" y1="13" x2="110" y2="60" stroke={GEO_THUMB_PALETTE.dashed} strokeWidth="1.15" strokeDasharray="3.5,2.5" />
+      <line x1="30" y1="74" x2="150" y2="81" stroke={GEO_THUMB_PALETTE.dashed} strokeWidth="0.95" strokeDasharray="3,2.5" />
+      <line x1="70" y1="95" x2="110" y2="60" stroke={GEO_THUMB_PALETTE.dashed} strokeWidth="0.95" strokeDasharray="3,2.5" />
+      <line x1="90" y1="13" x2="90" y2="77.5" stroke={GEO_THUMB_PALETTE.terracotta} strokeWidth="2.2" strokeDasharray="4,2.5" />
+      <GeoRightAngle vx={90} vy={77.5} ux={0} uy={-64} wx={60} wy={3.5} size={6.5} color={GEO_THUMB_PALETTE.teal} />
+      <polyline points="30,74 70,95 150,81" fill="none" stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.55" strokeLinejoin="round" />
+      <line x1="90" y1="13" x2="30" y2="74" stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.55" />
+      <line x1="90" y1="13" x2="70" y2="95" stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.55" />
+      <line x1="90" y1="13" x2="150" y2="81" stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.55" />
+      <GeoPt x={90} y={13} label="S" dx={0} dy={-4} color={GEO_THUMB_PALETTE.ink} />
+      <GeoPt x={30} y={74} label="A" dx={-8} dy={4} color={GEO_THUMB_PALETTE.ink} />
+      <GeoPt x={70} y={95} label="B" dx={-2} dy={10} color={GEO_THUMB_PALETTE.ink} />
+      <GeoPt x={150} y={81} label="C" dx={8} dy={4} color={GEO_THUMB_PALETTE.ink} />
+      <GeoPt x={110} y={60} label="D" dx={7} dy={-3} color={GEO_THUMB_PALETTE.dashed} r={2.0} />
+      <GeoPt x={90} y={77.5} label="H" dx={-8} dy={-2} color={GEO_THUMB_PALETTE.terracotta} r={2.5} />
+    </>
+  ),
+
+  // 6. Mặt cầu S(I, R) cắt bởi mặt phẳng (α) theo đường tròn giao tuyến C(H, r) với điểm M trên vành
   "cau-cat-mat-phang": () => (
     <>
       <polygon points="22,80 140,88 158,56 40,48" fill={GEO_THUMB_PALETTE.planeFill} stroke={GEO_THUMB_PALETTE.planeStroke} strokeWidth="1" />
@@ -300,34 +258,20 @@ const PROBLEM_THUMBNAIL_RENDERERS: Record<string, () => ReactNode> = {
       <ellipse cx="88" cy="68" rx="30" ry="8.5" fill={GEO_THUMB_PALETTE.terracottaFill} />
       <path d="M 58 68 A 30 8.5 0 0 1 118 68" fill="none" stroke={GEO_THUMB_PALETTE.terracotta} strokeWidth="1.35" strokeDasharray="3.5,2.5" />
       <path d="M 58 68 A 30 8.5 0 0 0 118 68" fill="none" stroke={GEO_THUMB_PALETTE.terracotta} strokeWidth="1.8" />
-      <line x1="88" y1="49" x2="88" y2="68" stroke={GEO_THUMB_PALETTE.teal} strokeWidth="1.8" />
-      <line x1="88" y1="68" x2="118" y2="68" stroke={GEO_THUMB_PALETTE.terracotta} strokeWidth="1.6" />
-      <line x1="88" y1="49" x2="118" y2="68" stroke={GEO_THUMB_PALETTE.cobalt} strokeWidth="1.4" strokeDasharray="3,2" />
+      <line x1="88" y1="49" x2="88" y2="68" stroke={GEO_THUMB_PALETTE.teal} strokeWidth="1.8" strokeDasharray="3,2" />
+      <line x1="88" y1="68" x2="118" y2="68" stroke={GEO_THUMB_PALETTE.terracotta} strokeWidth="1.65" strokeDasharray="3,2" />
+      <line x1="88" y1="49" x2="118" y2="68" stroke={GEO_THUMB_PALETTE.cobalt} strokeWidth="1.45" strokeDasharray="3,2" />
       <GeoRightAngle vx={88} vy={68} ux={0} uy={-19} wx={30} wy={0} size={5.2} color={GEO_THUMB_PALETTE.teal} />
-      <GeoPt x={88} y={49} label="O" dx={-8} dy={2} color={GEO_THUMB_PALETTE.ink} r={2.5} />
+      <GeoPt x={88} y={49} label="I" dx={-8} dy={2} color={GEO_THUMB_PALETTE.ink} r={2.5} />
       <GeoPt x={88} y={68} label="H" dx={-8} dy={5} color={GEO_THUMB_PALETTE.teal} r={2.5} />
       <GeoPt x={118} y={68} label="M" dx={8} dy={4} color={GEO_THUMB_PALETTE.terracotta} r={2.4} />
-      <text
-        x="103"
-        y="65.5"
-        fontFamily="JetBrains Mono, monospace"
-        fontSize="11"
-        fontWeight="700"
-        fill={GEO_THUMB_PALETTE.terracotta}
-        paintOrder="stroke"
-        stroke="#f8f6f1"
-        strokeWidth="2.4"
-        strokeLinejoin="round"
-      >
-        r
-      </text>
-      <text x="142" y="84" fontFamily="Plus Jakarta Sans, sans-serif" fontStyle="italic" fontSize="11" fontWeight="700" fill="#6D28D9">
+      <text x="142" y="84" fontFamily="Plus Jakarta Sans, sans-serif" fontStyle="italic" fontSize="10.5" fontWeight="700" fill="#6D28D9">
         (α)
       </text>
     </>
   ),
 
-  // 7. Bán kính và cấu trúc khối cầu S(O, R)
+  // 7. Bán kính IA = R và cấu trúc khối cầu S(I, R)
   "cau-the-tich": () => (
     <>
       <circle cx="90" cy="55" r="39" fill={GEO_THUMB_PALETTE.shellFillStrong} stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.65" />
@@ -336,17 +280,16 @@ const PROBLEM_THUMBNAIL_RENDERERS: Record<string, () => ReactNode> = {
       <path d="M 51 55 A 39 11.5 0 0 0 129 55" fill="none" stroke={GEO_THUMB_PALETTE.amber} strokeWidth="1.75" />
       <path d="M 90 16 A 13 39 0 0 0 90 94" fill="none" stroke={GEO_THUMB_PALETTE.dashed} strokeWidth="1.1" strokeDasharray="3.5,3" />
       <path d="M 90 16 A 13 39 0 0 1 90 94" fill="none" stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.25" opacity="0.7" />
-      <line x1="90" y1="16" x2="90" y2="94" stroke={GEO_THUMB_PALETTE.teal} strokeWidth="1.2" strokeDasharray="3,2.5" />
-      <line x1="90" y1="55" x2="126" y2="40" stroke={GEO_THUMB_PALETTE.terracotta} strokeWidth="2.1" />
-      <text x="108" y="42" fontFamily="JetBrains Mono, monospace" fontSize="11" fontWeight="700" fill={GEO_THUMB_PALETTE.terracotta} textAnchor="middle">
+      <line x1="90" y1="55" x2="126" y2="40" stroke={GEO_THUMB_PALETTE.terracotta} strokeWidth="2.1" strokeDasharray="4,2.5" />
+      <text x="108" y="42" fontFamily="JetBrains Mono, monospace" fontSize="10.5" fontWeight="700" fill={GEO_THUMB_PALETTE.terracotta} textAnchor="middle">
         R
       </text>
-      <GeoPt x={90} y={55} label="O" dx={-8} dy={4} color={GEO_THUMB_PALETTE.ink} r={2.7} />
+      <GeoPt x={90} y={55} label="I" dx={-8} dy={4} color={GEO_THUMB_PALETTE.ink} r={2.7} />
       <GeoPt x={126} y={40} label="A" dx={8} dy={-2} color={GEO_THUMB_PALETTE.terracotta} r={2.6} />
     </>
   ),
 
-  // 8. Thiết diện vuông góc trục OO′ của hình trụ
+  // 8. Thiết diện tròn qua trung điểm M vuông góc trục OO′ của hình trụ
   "tru-thiet-dien-tron": () => (
     <>
       <rect x="54" y="22" width="72" height="66" fill={GEO_THUMB_PALETTE.shellFill} />
@@ -360,42 +303,32 @@ const PROBLEM_THUMBNAIL_RENDERERS: Record<string, () => ReactNode> = {
       <line x1="54" y1="22" x2="54" y2="88" stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.55" />
       <line x1="126" y1="22" x2="126" y2="88" stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.55" />
       <line x1="90" y1="22" x2="90" y2="88" stroke={GEO_THUMB_PALETTE.teal} strokeWidth="1.5" strokeDasharray="3.5,2.5" />
-      <line x1="90" y1="55" x2="126" y2="55" stroke={GEO_THUMB_PALETTE.terracotta} strokeWidth="1.65" />
       <GeoRightAngle vx={90} vy={55} ux={0} uy={-20} wx={20} wy={0} size={5.2} color={GEO_THUMB_PALETTE.teal} />
       <GeoPt x={90} y={22} label="O′" dx={-9} dy={-1} color={GEO_THUMB_PALETTE.ink} r={2.2} />
-      <GeoPt x={90} y={55} label="H" dx={-8} dy={4} color={GEO_THUMB_PALETTE.teal} r={2.5} />
-      <GeoPt x={126} y={55} label="M" dx={9} dy={3} color={GEO_THUMB_PALETTE.terracotta} r={2.4} />
+      <GeoPt x={90} y={55} label="M" dx={-9} dy={4} color={GEO_THUMB_PALETTE.terracotta} r={2.5} />
       <GeoPt x={90} y={88} label="O" dx={-8} dy={4} color={GEO_THUMB_PALETTE.ink} r={2.2} />
+      <text x="142" y="66" fontFamily="Plus Jakarta Sans, sans-serif" fontStyle="italic" fontSize="10" fontWeight="700" fill={GEO_THUMB_PALETTE.planeLabel}>
+        (α)
+      </text>
     </>
   ),
 
-  // 9. Hình trụ và quan hệ giữa đường sinh với hai mặt đáy song song
+  // 9. Hình trụ có trục OO′ và bán kính đáy OA (OO′ ⊥ OA tại O)
   "tru-truc-xien": () => (
     <>
-      <rect x="52" y="22" width="76" height="66" fill={GEO_THUMB_PALETTE.shellFill} />
-      <rect x="90" y="22" width="38" height="66" fill={GEO_THUMB_PALETTE.tealFill} />
-      <ellipse cx="90" cy="22" rx="38" ry="10" fill={GEO_THUMB_PALETTE.amberFill} stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.55" />
-      <ellipse cx="90" cy="88" rx="38" ry="10" fill={GEO_THUMB_PALETTE.amberFill} />
-      <path d="M 52 88 A 38 10 0 0 1 128 88" fill="none" stroke={GEO_THUMB_PALETTE.dashed} strokeWidth="1.2" strokeDasharray="4,3" />
-      <path d="M 52 88 A 38 10 0 0 0 128 88" fill="none" stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.55" />
-      <line x1="52" y1="22" x2="52" y2="88" stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.55" />
-      <line x1="90" y1="22" x2="90" y2="88" stroke={GEO_THUMB_PALETTE.teal} strokeWidth="1.75" strokeDasharray="4,2.5" />
-      <line x1="128" y1="22" x2="128" y2="88" stroke={GEO_THUMB_PALETTE.terracotta} strokeWidth="2.4" />
-      <line x1="90" y1="22" x2="128" y2="22" stroke={GEO_THUMB_PALETTE.teal} strokeWidth="1.6" />
-      <line x1="90" y1="88" x2="128" y2="88" stroke={GEO_THUMB_PALETTE.teal} strokeWidth="1.6" />
-      <GeoRightAngle vx={90} vy={22} ux={0} uy={18} wx={18} wy={0} size={5.5} color={GEO_THUMB_PALETTE.teal} />
-      <GeoRightAngle vx={90} vy={88} ux={0} uy={-18} wx={18} wy={0} size={5.5} color={GEO_THUMB_PALETTE.teal} />
-      <GeoRightAngle vx={128} vy={88} ux={0} uy={-18} wx={-18} wy={0} size={5.5} color={GEO_THUMB_PALETTE.terracotta} />
-      <text x="137" y="58" fontFamily="JetBrains Mono, monospace" fontSize="11" fontWeight="700" fill={GEO_THUMB_PALETTE.terracotta}>
-        l
-      </text>
-      <text x="109" y="84" fontFamily="JetBrains Mono, monospace" fontSize="11" fontWeight="700" fill={GEO_THUMB_PALETTE.teal} textAnchor="middle">
-        R
-      </text>
-      <GeoPt x={90} y={22} label="O′" dx={-9} dy={2} color={GEO_THUMB_PALETTE.ink} r={2.3} />
-      <GeoPt x={128} y={22} label="A′" dx={9} dy={2} color={GEO_THUMB_PALETTE.terracotta} r={2.4} />
-      <GeoPt x={90} y={88} label="O" dx={-8} dy={4} color={GEO_THUMB_PALETTE.ink} r={2.3} />
-      <GeoPt x={128} y={88} label="A" dx={8} dy={4} color={GEO_THUMB_PALETTE.terracotta} r={2.4} />
+      <polygon points="38,86 66,24 138,24 110,86" fill={GEO_THUMB_PALETTE.shellFill} />
+      <ellipse cx="102" cy="24" rx="36" ry="9.5" fill={GEO_THUMB_PALETTE.shellFillStrong} stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.55" />
+      <ellipse cx="74" cy="86" rx="36" ry="9.5" fill={GEO_THUMB_PALETTE.amberFill} />
+      <path d="M 38 86 A 36 9.5 0 0 1 110 86" fill="none" stroke={GEO_THUMB_PALETTE.dashed} strokeWidth="1.2" strokeDasharray="4,3" />
+      <path d="M 38 86 A 36 9.5 0 0 0 110 86" fill="none" stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.55" />
+      <line x1="38" y1="86" x2="66" y2="24" stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.55" />
+      <line x1="110" y1="86" x2="138" y2="24" stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.55" />
+      <line x1="74" y1="86" x2="102" y2="24" stroke={GEO_THUMB_PALETTE.teal} strokeWidth="1.75" strokeDasharray="4,2.5" />
+      <line x1="74" y1="86" x2="110" y2="86" stroke={GEO_THUMB_PALETTE.terracotta} strokeWidth="2.1" strokeDasharray="4,2.5" />
+      <GeoRightAngle vx={74} vy={86} ux={14} uy={-31} wx={20} wy={0} size={5.8} color={GEO_THUMB_PALETTE.teal} />
+      <GeoPt x={102} y={24} label="O′" dx={9} dy={1} color={GEO_THUMB_PALETTE.ink} r={2.3} />
+      <GeoPt x={74} y={86} label="O" dx={-9} dy={4} color={GEO_THUMB_PALETTE.ink} r={2.4} />
+      <GeoPt x={110} y={86} label="A" dx={9} dy={4} color={GEO_THUMB_PALETTE.terracotta} r={2.5} />
     </>
   ),
 
@@ -407,18 +340,21 @@ const PROBLEM_THUMBNAIL_RENDERERS: Record<string, () => ReactNode> = {
       <path d="M 46 85 A 44 11 0 0 1 134 85" fill="none" stroke={GEO_THUMB_PALETTE.dashed} strokeWidth="1.2" strokeDasharray="4,3" />
       <path d="M 46 85 A 44 11 0 0 0 134 85" fill="none" stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.6" />
       <line x1="46" y1="85" x2="134" y2="85" stroke={GEO_THUMB_PALETTE.terracotta} strokeWidth="1.65" strokeDasharray="4,2.5" />
-      <line x1="90" y1="15" x2="46" y2="85" stroke={GEO_THUMB_PALETTE.terracotta} strokeWidth="1.9" />
-      <line x1="90" y1="15" x2="134" y2="85" stroke={GEO_THUMB_PALETTE.terracotta} strokeWidth="1.9" />
+      <line x1="90" y1="15" x2="46" y2="85" stroke={GEO_THUMB_PALETTE.terracotta} strokeWidth="1.95" />
+      <line x1="90" y1="15" x2="134" y2="85" stroke={GEO_THUMB_PALETTE.terracotta} strokeWidth="1.95" />
       <line x1="90" y1="15" x2="90" y2="85" stroke={GEO_THUMB_PALETTE.teal} strokeWidth="1.5" strokeDasharray="3.5,2.5" />
       <GeoRightAngle vx={90} vy={85} ux={0} uy={-20} wx={20} wy={0} size={5.5} color={GEO_THUMB_PALETTE.teal} />
       <GeoPt x={90} y={15} label="S" dx={0} dy={-4} color={GEO_THUMB_PALETTE.ink} r={2.6} />
       <GeoPt x={46} y={85} label="A" dx={-8} dy={4} color={GEO_THUMB_PALETTE.terracotta} r={2.4} />
       <GeoPt x={134} y={85} label="B" dx={8} dy={4} color={GEO_THUMB_PALETTE.terracotta} r={2.4} />
       <GeoPt x={90} y={85} label="O" dx={-7} dy={7} color={GEO_THUMB_PALETTE.teal} r={2.4} />
+      <text x="132" y="24" fontFamily="Plus Jakarta Sans, sans-serif" fontStyle="italic" fontSize="10" fontWeight="700" fill={GEO_THUMB_PALETTE.planeLabel}>
+        (α)
+      </text>
     </>
   ),
 
-  // 11. Đường sinh SA = l, đường cao SO = h và bán kính đáy OA = R trong hình nón
+  // 11. Đường sinh SA, đường cao SO và bán kính đáy OA trong hình nón
   "non-duong-sinh": () => (
     <>
       <polygon points="86,15 42,85 130,85" fill={GEO_THUMB_PALETTE.shellFill} />
@@ -427,18 +363,9 @@ const PROBLEM_THUMBNAIL_RENDERERS: Record<string, () => ReactNode> = {
       <path d="M 42 85 A 44 11 0 0 0 130 85" fill="none" stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.6" />
       <line x1="86" y1="15" x2="42" y2="85" stroke={GEO_THUMB_PALETTE.ink} strokeWidth="1.45" />
       <line x1="86" y1="15" x2="86" y2="85" stroke={GEO_THUMB_PALETTE.teal} strokeWidth="2.1" strokeDasharray="4,2.5" />
-      <line x1="86" y1="85" x2="130" y2="85" stroke={GEO_THUMB_PALETTE.cobalt} strokeWidth="2.0" />
+      <line x1="86" y1="85" x2="130" y2="85" stroke={GEO_THUMB_PALETTE.cobalt} strokeWidth="1.9" strokeDasharray="4,2.5" />
       <line x1="86" y1="15" x2="130" y2="85" stroke={GEO_THUMB_PALETTE.terracotta} strokeWidth="2.35" />
       <GeoRightAngle vx={86} vy={85} ux={0} uy={-20} wx={20} wy={0} size={6.2} color={GEO_THUMB_PALETTE.teal} />
-      <text x="75" y="55" fontFamily="JetBrains Mono, monospace" fontSize="11" fontWeight="700" fill={GEO_THUMB_PALETTE.teal}>
-        h
-      </text>
-      <text x="108" y="81" fontFamily="JetBrains Mono, monospace" fontSize="11" fontWeight="700" fill={GEO_THUMB_PALETTE.cobalt} textAnchor="middle">
-        R
-      </text>
-      <text x="116" y="48" fontFamily="JetBrains Mono, monospace" fontSize="11" fontWeight="700" fill={GEO_THUMB_PALETTE.terracotta}>
-        l
-      </text>
       <GeoPt x={86} y={15} label="S" dx={0} dy={-4} color={GEO_THUMB_PALETTE.ink} r={2.6} />
       <GeoPt x={86} y={85} label="O" dx={-7} dy={5} color={GEO_THUMB_PALETTE.teal} r={2.5} />
       <GeoPt x={130} y={85} label="A" dx={8} dy={4} color={GEO_THUMB_PALETTE.terracotta} r={2.6} />

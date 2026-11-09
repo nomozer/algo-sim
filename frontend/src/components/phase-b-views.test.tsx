@@ -64,6 +64,28 @@ describe("Axo V2.7 Phase B — Header Logo, Homepage, Library & History (P3–P8
       expect(svgHtml, `mẫu ${entry.id} thiếu điểm đánh dấu <circle`).toContain("<circle");
       expect(svgHtml, `mẫu ${entry.id} thiếu nhãn đỉnh <text`).toContain("<text");
     }
+
+    const expectedLabelsBySample: Record<string, string[]> = {
+      "thiet-dien-chop": ["S", "A", "B", "C", "D", "M", "N", "P", "Q"],
+      "mat-cheo-sac": ["S", "A", "B", "C", "D"],
+      "vuong-goc-chop": ["S", "A", "B", "C", "D"],
+      "mp-vuong-goc-duong": ["S", "A", "B", "C", "D", "H"],
+      "the-tich-chop": ["S", "A", "B", "C", "D", "H"],
+      "cau-cat-mat-phang": ["I", "H", "M"],
+      "cau-the-tich": ["I", "A"],
+      "tru-thiet-dien-tron": ["O", "O′", "M"],
+      "tru-truc-xien": ["O", "O′", "A"],
+      "non-thiet-dien-truc": ["S", "O", "A", "B"],
+      "non-duong-sinh": ["S", "O", "A"],
+    };
+    for (const [sampleId, labels] of Object.entries(expectedLabelsBySample)) {
+      const svgHtml = renderToString(<SamplePreview sampleId={sampleId} />);
+      for (const lbl of labels) {
+        expect(svgHtml, `thumbnail ${sampleId} thiếu nhãn ${lbl}`).toContain(`>${lbl}<`);
+      }
+    }
+    if (false) {
+    }
   });
 
   it("P4.3: Mục 'Tiếp tục học' ẩn khi chưa có lịch sử và hiển thị đầy đủ khi có lịch sử", () => {

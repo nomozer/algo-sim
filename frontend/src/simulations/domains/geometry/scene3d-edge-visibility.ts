@@ -349,7 +349,27 @@ export function classifyWorldSegmentVisibility(
 
   const sampleHidden = (t: number): boolean => {
     const point = a.clone().lerp(b, t);
-    if (diemVanhCongBiChe(point, camera, curved)) return true;
+    const activeCurved = curved.filter((vol) => {
+      if (vol.kind !== "cone" || !vol.top || vol.height <= 1e-6 || vol.radius <= 1e-6) return true;
+      const pA = vol.worldToLocal ? a.clone().applyMatrix4(vol.worldToLocal) : a;
+      const pB = vol.worldToLocal ? b.clone().applyMatrix4(vol.worldToLocal) : b;
+      const eye = vol.worldToLocal ? camera.clone().applyMatrix4(vol.worldToLocal) : camera;
+      const tol = Math.max(1e-4, vol.radius * 1e-3);
+      const aIsTop = pA.distanceTo(vol.top) <= tol;
+      const bIsTop = pB.distanceTo(vol.top) <= tol;
+      if (!aIsTop && !bIsTop) return true;
+      const rimPt = aIsTop ? pB : pA;
+      const axis = new THREE.Vector3().subVectors(vol.top, vol.anchor).normalize();
+      const relRim = new THREE.Vector3().subVectors(rimPt, vol.anchor);
+      const zRim = relRim.dot(axis);
+      if (Math.abs(zRim) > tol) return true;
+      const rimPerp = relRim.clone().addScaledVector(axis, -zRim);
+      if (Math.abs(rimPerp.length() - vol.radius) > tol) return true;
+      const relEye = new THREE.Vector3().subVectors(eye, vol.anchor);
+      const eyePerp = relEye.clone().addScaledVector(axis, -relEye.dot(axis));
+      return rimPerp.dot(eyePerp) < -0.45 * vol.radius * eyePerp.length();
+    });
+    if (diemVanhCongBiChe(point, camera, activeCurved)) return true;
     const containingSurfaces = new Set<string>();
     const containingNormals: THREE.Vector3[] = [];
     for (const triangle of triangles) {

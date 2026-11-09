@@ -5510,6 +5510,7 @@ export function Scene3DWorkspace({
               for (let k = 0; k < projCorners.length; k += 1) {
                 const pa = projCorners[k];
                 const pb = projCorners[(k + 1) % projCorners.length];
+                candidates.push({ x: 0.92 * pa.x + 0.08 * cx, y: 0.92 * pa.y + 0.08 * cy });
                 candidates.push({ x: 0.85 * pa.x + 0.15 * cx, y: 0.85 * pa.y + 0.15 * cy });
                 const mx = 0.5 * (pa.x + pb.x);
                 const my = 0.5 * (pa.y + pb.y);
@@ -5534,12 +5535,12 @@ export function Scene3DWorkspace({
                   minClear = Math.min(minClear, Math.hypot(cand.x - hs.anchor.x, cand.y - hs.anchor.y) - 12);
                 }
                 for (const gr of gocVuongRects) {
-                  minClear = Math.min(minClear, Math.hypot(cand.x - (gr.x + gr.w * 0.5), cand.y - (gr.y + gr.h * 0.5)) - 18);
+                  minClear = Math.min(minClear, Math.hypot(cand.x - (gr.x + gr.w * 0.5), cand.y - (gr.y + gr.h * 0.5)) - 28);
                 }
                 for (const prevMp of canDatMp) {
                   minClear = Math.min(minClear, Math.hypot(cand.x - prevMp.ax, cand.y - prevMp.ay) * 0.82 - 18);
                 }
-                const score = minClear - 0.04 * (cand.y - cy);
+                const score = minClear + 0.08 * Math.hypot(cand.x - cx, cand.y - cy);
                 if (score > bestScore) {
                   bestScore = score;
                   bestAnchor = cand;

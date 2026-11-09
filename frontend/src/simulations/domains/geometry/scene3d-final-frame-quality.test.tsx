@@ -10,6 +10,7 @@ import {
   type SceneObject,
 } from "./scene3d-model";
 import { chonHuongNhin } from "./scene3d-camera";
+import { cauTrucSuPham } from "./scene3d-semantic-policy";
 import { dongBoNetDayManHinh } from "./scene3d-edge-visibility";
 import {
   buildObject3D,
@@ -280,5 +281,43 @@ describe("Scene3D final-frame shared visual quality upgrades", () => {
       (c) => c.visible && (c as unknown as { material?: { dashed?: boolean } }).material?.dashed === true,
     );
     expect(dashedWhenOff).toHaveLength(0);
+  });
+
+  it("orients tru-truc-xien camera from the upper-cap side (u · dir in [0.25, 0.56]) and keeps both lateral generators SA, SB of non-thiet-dien-truc visible at the canonical camera", () => {
+    const obliqueScene = sampleScene("tru-truc-xien");
+    const ctCyl = cauTrucSuPham(obliqueScene.objects);
+    const cyl = obliqueScene.objects.find((o) => o.type === "curved_solid")!;
+    const u = new THREE.Vector3(
+      Number(cyl.apex_or_top![0]) - Number(cyl.anchor![0]),
+      Number(cyl.apex_or_top![1]) - Number(cyl.anchor![1]),
+      Number(cyl.apex_or_top![2]) - Number(cyl.anchor![2]),
+    ).normalize();
+    const dirCyl = new THREE.Vector3(...chonHuongNhin(ctCyl.diem, ctCyl.canh, ctCyl.mat, ctCyl.tuyChon)).normalize();
+    expect(u.dot(dirCyl)).toBeGreaterThanOrEqual(0.25);
+    expect(u.dot(dirCyl)).toBeLessThanOrEqual(0.56);
+
+    const coneScene = sampleScene("non-thiet-dien-truc");
+    const ctCone = cauTrucSuPham(coneScene.objects);
+    const dirCone = new THREE.Vector3(...chonHuongNhin(ctCone.diem, ctCone.canh, ctCone.mat, ctCone.tuyChon)).normalize();
+    const root = new THREE.Group();
+    for (const obj of coneScene.objects) {
+      const built = buildObject3D(obj, false);
+      if (built) root.add(built);
+    }
+    const camCone = makeCamera(
+      [dirCone.x * 12, dirCone.y * 12, 1.5 + dirCone.z * 12],
+      [0, 0, 1.5],
+    );
+    updateCanonicalEdgeVisibility(root, camCone, "1440x900@1");
+    const visibleBorders: THREE.Object3D[] = [];
+    const hiddenBorders: THREE.Object3D[] = [];
+    root.traverse((node) => {
+      if (node.name.startsWith("section_border:")) {
+        if (node.userData?.hidden === true) hiddenBorders.push(node);
+        else if (node.userData?.hidden === false) visibleBorders.push(node);
+      }
+    });
+    expect(visibleBorders).toHaveLength(2);
+    expect(hiddenBorders).toHaveLength(1);
   });
 });

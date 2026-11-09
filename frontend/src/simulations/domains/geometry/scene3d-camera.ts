@@ -371,12 +371,14 @@ function diemTachDayTru(
     if (!(h > 1e-6)) continue;
     const doc = tich(truc, d);
     const hChieu = Math.sqrt(Math.max(0, h * h - doc * doc));
-    const u: Diem3 = [truc[0] / h, truc[1] / h, truc[2] / h];
+    const uRaw: Diem3 = [truc[0] / h, truc[1] / h, truc[2] / h];
+    const u: Diem3 = uRaw[2] < 0 ? [-uRaw[0], -uRaw[1], -uRaw[2]] : uRaw;
+    const moTruc = tich(u, d);
     const banTrucNho = Math.max(0, r) * Math.abs(tich(u, d));
-    const moDay0 = Math.abs(tich(u, chuan(tru(camEst, c0))));
-    const moDay1 = Math.abs(tich(u, chuan(tru(camEst, c1))));
-    if (r > 1e-6 && (hChieu < 1.05 * banTrucNho || Math.min(moDay0, moDay1) < 0.22)) hopLe = false;
-    tong += (r > 1e-6 ? Math.min(1, hChieu / (1.35 * r)) : Math.min(1, hChieu / h)) * Math.min(1, Math.min(moDay0, moDay1) / 0.35);
+    const moDay0 = tich(u, chuan(tru(camEst, c0)));
+    const moDay1 = tich(u, chuan(tru(camEst, c1)));
+    if (r > 1e-6 && (moTruc < 0.25 || moTruc > 0.56 || hChieu < 1.75 * banTrucNho || Math.min(moDay0, moDay1) < 0.22)) hopLe = false;
+    tong += (r > 1e-6 ? Math.min(1, hChieu / (1.35 * r)) : Math.min(1, hChieu / h)) * Math.max(0, Math.min(1, Math.min(moDay0, moDay1) / 0.35));
   }
   return { hopLe, thuong: tong / capDayTru.length };
 }
