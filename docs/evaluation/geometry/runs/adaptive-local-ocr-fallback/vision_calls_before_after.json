@@ -1,0 +1,943 @@
+{
+ "schema": "vision-calls-before-after/1",
+ "run_id": "adaptive-local-ocr-fallback",
+ "date": "2026-11-09",
+ "MEASUREMENT_CLASS": "OFFLINE_MOCK_PROVIDER_CALL_COUNT",
+ "real_network_calls": 0,
+ "provider": "MOCK (returns oracle transcription; not Gemini)",
+ "cache_version": "132",
+ "before": {
+  "mode": "before",
+  "items": 22,
+  "pass1_mock_provider_calls": 23,
+  "pass2_mock_provider_calls_same_images": 0,
+  "pass2_cache_hits": 22,
+  "pass1_text_equals_gt": 21,
+  "multi_image_journey": {
+   "attachments": [
+    "att-1",
+    "att-2",
+    "att-3"
+   ],
+   "status": "ready",
+   "mock_provider_calls": 3,
+   "deduplicated_attachment_ids": [
+    "att-2"
+   ],
+   "source_attachment_ids": [
+    "att-1",
+    "att-2",
+    "att-3"
+   ]
+  },
+  "rows": [
+   {
+    "pass": 1,
+    "item_id": "c01_ro_chop_thiet_dien",
+    "status": "ready",
+    "reason_code": null,
+    "mock_provider_calls": 1,
+    "reported_vlm_calls": 1,
+    "vision_cached": false,
+    "text_equals_gt": true
+   },
+   {
+    "pass": 1,
+    "item_id": "c02_ro_mat_cau",
+    "status": "ready",
+    "reason_code": null,
+    "mock_provider_calls": 1,
+    "reported_vlm_calls": 1,
+    "vision_cached": false,
+    "text_equals_gt": true
+   },
+   {
+    "pass": 1,
+    "item_id": "c03_ro_hinh_tru",
+    "status": "ready",
+    "reason_code": null,
+    "mock_provider_calls": 1,
+    "reported_vlm_calls": 1,
+    "vision_cached": false,
+    "text_equals_gt": true
+   },
+   {
+    "pass": 1,
+    "item_id": "c04_nghieng_hinh_non",
+    "status": "ready",
+    "reason_code": null,
+    "mock_provider_calls": 1,
+    "reported_vlm_calls": 1,
+    "vision_cached": false,
+    "text_equals_gt": true
+   },
+   {
+    "pass": 1,
+    "item_id": "c05_nghieng_cong_thuc_hinh_tru",
+    "status": "ready",
+    "reason_code": null,
+    "mock_provider_calls": 1,
+    "reported_vlm_calls": 1,
+    "vision_cached": false,
+    "text_equals_gt": true
+   },
+   {
+    "pass": 1,
+    "item_id": "c06_toi_mo_elip_non",
+    "status": "ready",
+    "reason_code": null,
+    "mock_provider_calls": 1,
+    "reported_vlm_calls": 1,
+    "vision_cached": false,
+    "text_equals_gt": true
+   },
+   {
+    "pass": 1,
+    "item_id": "c07_mo_chop_ngu_giac",
+    "status": "ready",
+    "reason_code": null,
+    "mock_provider_calls": 1,
+    "reported_vlm_calls": 1,
+    "vision_cached": false,
+    "text_equals_gt": true
+   },
+   {
+    "pass": 1,
+    "item_id": "c08_de_va_hinh_chop",
+    "status": "ready",
+    "reason_code": null,
+    "mock_provider_calls": 1,
+    "reported_vlm_calls": 1,
+    "vision_cached": false,
+    "text_equals_gt": true
+   },
+   {
+    "pass": 1,
+    "item_id": "c09_de_va_hinh_cau",
+    "status": "ready",
+    "reason_code": null,
+    "mock_provider_calls": 1,
+    "reported_vlm_calls": 1,
+    "vision_cached": false,
+    "text_equals_gt": true
+   },
+   {
+    "pass": 1,
+    "item_id": "c10_exif_xoay_gps",
+    "status": "ready",
+    "reason_code": null,
+    "mock_provider_calls": 1,
+    "reported_vlm_calls": 1,
+    "vision_cached": false,
+    "text_equals_gt": true
+   },
+   {
+    "pass": 1,
+    "item_id": "c11_chi_co_hinh",
+    "status": "rejected",
+    "reason_code": "MISSING_PROBLEM_TEXT",
+    "mock_provider_calls": 2,
+    "reported_vlm_calls": 2,
+    "vision_cached": false,
+    "text_equals_gt": null
+   },
+   {
+    "pass": 1,
+    "item_id": "c12_ngoai_nang_luc",
+    "status": "ready",
+    "reason_code": null,
+    "mock_provider_calls": 1,
+    "reported_vlm_calls": 1,
+    "vision_cached": false,
+    "text_equals_gt": true
+   },
+   {
+    "pass": 1,
+    "item_id": "s01_vuong_goc_song_song",
+    "status": "ready",
+    "reason_code": null,
+    "mock_provider_calls": 1,
+    "reported_vlm_calls": 1,
+    "vision_cached": false,
+    "text_equals_gt": true
+   },
+   {
+    "pass": 1,
+    "item_id": "s01_vuong_goc_song_song_degraded",
+    "status": "ready",
+    "reason_code": null,
+    "mock_provider_calls": 1,
+    "reported_vlm_calls": 1,
+    "vision_cached": false,
+    "text_equals_gt": true
+   },
+   {
+    "pass": 1,
+    "item_id": "s02_phay_can_phan_so",
+    "status": "ready",
+    "reason_code": null,
+    "mock_provider_calls": 1,
+    "reported_vlm_calls": 1,
+    "vision_cached": false,
+    "text_equals_gt": true
+   },
+   {
+    "pass": 1,
+    "item_id": "s02_phay_can_phan_so_degraded",
+    "status": "ready",
+    "reason_code": null,
+    "mock_provider_calls": 1,
+    "reported_vlm_calls": 1,
+    "vision_cached": false,
+    "text_equals_gt": true
+   },
+   {
+    "pass": 1,
+    "item_id": "s03_dau_tru_toa_do",
+    "status": "rejected",
+    "reason_code": "UNSUPPORTED_PROBLEM",
+    "mock_provider_calls": 1,
+    "reported_vlm_calls": 1,
+    "vision_cached": false,
+    "text_equals_gt": true
+   },
+   {
+    "pass": 1,
+    "item_id": "s03_dau_tru_toa_do_degraded",
+    "status": "rejected",
+    "reason_code": "UNSUPPORTED_PROBLEM",
+    "mock_provider_calls": 1,
+    "reported_vlm_calls": 1,
+    "vision_cached": false,
+    "text_equals_gt": true
+   },
+   {
+    "pass": 1,
+    "item_id": "s04_luy_thua_chi_so",
+    "status": "ready",
+    "reason_code": null,
+    "mock_provider_calls": 1,
+    "reported_vlm_calls": 1,
+    "vision_cached": false,
+    "text_equals_gt": true
+   },
+   {
+    "pass": 1,
+    "item_id": "s04_luy_thua_chi_so_degraded",
+    "status": "ready",
+    "reason_code": null,
+    "mock_provider_calls": 1,
+    "reported_vlm_calls": 1,
+    "vision_cached": false,
+    "text_equals_gt": true
+   },
+   {
+    "pass": 1,
+    "item_id": "s05_dau_tieng_viet",
+    "status": "ready",
+    "reason_code": null,
+    "mock_provider_calls": 1,
+    "reported_vlm_calls": 1,
+    "vision_cached": false,
+    "text_equals_gt": true
+   },
+   {
+    "pass": 1,
+    "item_id": "s05_dau_tieng_viet_degraded",
+    "status": "ready",
+    "reason_code": null,
+    "mock_provider_calls": 1,
+    "reported_vlm_calls": 1,
+    "vision_cached": false,
+    "text_equals_gt": true
+   },
+   {
+    "pass": 2,
+    "item_id": "c01_ro_chop_thiet_dien",
+    "status": "ready",
+    "reason_code": null,
+    "mock_provider_calls": 0,
+    "reported_vlm_calls": 0,
+    "vision_cached": true,
+    "text_equals_gt": true
+   },
+   {
+    "pass": 2,
+    "item_id": "c02_ro_mat_cau",
+    "status": "ready",
+    "reason_code": null,
+    "mock_provider_calls": 0,
+    "reported_vlm_calls": 0,
+    "vision_cached": true,
+    "text_equals_gt": true
+   },
+   {
+    "pass": 2,
+    "item_id": "c03_ro_hinh_tru",
+    "status": "ready",
+    "reason_code": null,
+    "mock_provider_calls": 0,
+    "reported_vlm_calls": 0,
+    "vision_cached": true,
+    "text_equals_gt": true
+   },
+   {
+    "pass": 2,
+    "item_id": "c04_nghieng_hinh_non",
+    "status": "ready",
+    "reason_code": null,
+    "mock_provider_calls": 0,
+    "reported_vlm_calls": 0,
+    "vision_cached": true,
+    "text_equals_gt": true
+   },
+   {
+    "pass": 2,
+    "item_id": "c05_nghieng_cong_thuc_hinh_tru",
+    "status": "ready",
+    "reason_code": null,
+    "mock_provider_calls": 0,
+    "reported_vlm_calls": 0,
+    "vision_cached": true,
+    "text_equals_gt": true
+   },
+   {
+    "pass": 2,
+    "item_id": "c06_toi_mo_elip_non",
+    "status": "ready",
+    "reason_code": null,
+    "mock_provider_calls": 0,
+    "reported_vlm_calls": 0,
+    "vision_cached": true,
+    "text_equals_gt": true
+   },
+   {
+    "pass": 2,
+    "item_id": "c07_mo_chop_ngu_giac",
+    "status": "ready",
+    "reason_code": null,
+    "mock_provider_calls": 0,
+    "reported_vlm_calls": 0,
+    "vision_cached": true,
+    "text_equals_gt": true
+   },
+   {
+    "pass": 2,
+    "item_id": "c08_de_va_hinh_chop",
+    "status": "ready",
+    "reason_code": null,
+    "mock_provider_calls": 0,
+    "reported_vlm_calls": 0,
+    "vision_cached": true,
+    "text_equals_gt": true
+   },
+   {
+    "pass": 2,
+    "item_id": "c09_de_va_hinh_cau",
+    "status": "ready",
+    "reason_code": null,
+    "mock_provider_calls": 0,
+    "reported_vlm_calls": 0,
+    "vision_cached": true,
+    "text_equals_gt": true
+   },
+   {
+    "pass": 2,
+    "item_id": "c10_exif_xoay_gps",
+    "status": "ready",
+    "reason_code": null,
+    "mock_provider_calls": 0,
+    "reported_vlm_calls": 0,
+    "vision_cached": true,
+    "text_equals_gt": true
+   },
+   {
+    "pass": 2,
+    "item_id": "c11_chi_co_hinh",
+    "status": "rejected",
+    "reason_code": "MISSING_PROBLEM_TEXT",
+    "mock_provider_calls": 0,
+    "reported_vlm_calls": 0,
+    "vision_cached": true,
+    "text_equals_gt": null
+   },
+   {
+    "pass": 2,
+    "item_id": "c12_ngoai_nang_luc",
+    "status": "ready",
+    "reason_code": null,
+    "mock_provider_calls": 0,
+    "reported_vlm_calls": 0,
+    "vision_cached": true,
+    "text_equals_gt": true
+   },
+   {
+    "pass": 2,
+    "item_id": "s01_vuong_goc_song_song",
+    "status": "ready",
+    "reason_code": null,
+    "mock_provider_calls": 0,
+    "reported_vlm_calls": 0,
+    "vision_cached": true,
+    "text_equals_gt": true
+   },
+   {
+    "pass": 2,
+    "item_id": "s01_vuong_goc_song_song_degraded",
+    "status": "ready",
+    "reason_code": null,
+    "mock_provider_calls": 0,
+    "reported_vlm_calls": 0,
+    "vision_cached": true,
+    "text_equals_gt": true
+   },
+   {
+    "pass": 2,
+    "item_id": "s02_phay_can_phan_so",
+    "status": "ready",
+    "reason_code": null,
+    "mock_provider_calls": 0,
+    "reported_vlm_calls": 0,
+    "vision_cached": true,
+    "text_equals_gt": true
+   },
+   {
+    "pass": 2,
+    "item_id": "s02_phay_can_phan_so_degraded",
+    "status": "ready",
+    "reason_code": null,
+    "mock_provider_calls": 0,
+    "reported_vlm_calls": 0,
+    "vision_cached": true,
+    "text_equals_gt": true
+   },
+   {
+    "pass": 2,
+    "item_id": "s03_dau_tru_toa_do",
+    "status": "rejected",
+    "reason_code": "UNSUPPORTED_PROBLEM",
+    "mock_provider_calls": 0,
+    "reported_vlm_calls": 0,
+    "vision_cached": true,
+    "text_equals_gt": true
+   },
+   {
+    "pass": 2,
+    "item_id": "s03_dau_tru_toa_do_degraded",
+    "status": "rejected",
+    "reason_code": "UNSUPPORTED_PROBLEM",
+    "mock_provider_calls": 0,
+    "reported_vlm_calls": 0,
+    "vision_cached": true,
+    "text_equals_gt": true
+   },
+   {
+    "pass": 2,
+    "item_id": "s04_luy_thua_chi_so",
+    "status": "ready",
+    "reason_code": null,
+    "mock_provider_calls": 0,
+    "reported_vlm_calls": 0,
+    "vision_cached": true,
+    "text_equals_gt": true
+   },
+   {
+    "pass": 2,
+    "item_id": "s04_luy_thua_chi_so_degraded",
+    "status": "ready",
+    "reason_code": null,
+    "mock_provider_calls": 0,
+    "reported_vlm_calls": 0,
+    "vision_cached": true,
+    "text_equals_gt": true
+   },
+   {
+    "pass": 2,
+    "item_id": "s05_dau_tieng_viet",
+    "status": "ready",
+    "reason_code": null,
+    "mock_provider_calls": 0,
+    "reported_vlm_calls": 0,
+    "vision_cached": true,
+    "text_equals_gt": true
+   },
+   {
+    "pass": 2,
+    "item_id": "s05_dau_tieng_viet_degraded",
+    "status": "ready",
+    "reason_code": null,
+    "mock_provider_calls": 0,
+    "reported_vlm_calls": 0,
+    "vision_cached": true,
+    "text_equals_gt": true
+   }
+  ]
+ },
+ "after": {
+  "mode": "after",
+  "items": 22,
+  "pass1_mock_provider_calls": 22,
+  "pass2_mock_provider_calls_same_images": 0,
+  "pass2_cache_hits": 22,
+  "pass1_text_equals_gt": 21,
+  "multi_image_journey": {
+   "attachments": [
+    "att-1",
+    "att-2",
+    "att-3"
+   ],
+   "status": "ready",
+   "mock_provider_calls": 2,
+   "deduplicated_attachment_ids": [
+    "att-2"
+   ],
+   "source_attachment_ids": [
+    "att-1",
+    "att-2",
+    "att-3"
+   ]
+  },
+  "rows": [
+   {
+    "pass": 1,
+    "item_id": "c01_ro_chop_thiet_dien",
+    "status": "ready",
+    "reason_code": null,
+    "mock_provider_calls": 1,
+    "reported_vlm_calls": 1,
+    "vision_cached": false,
+    "text_equals_gt": true
+   },
+   {
+    "pass": 1,
+    "item_id": "c02_ro_mat_cau",
+    "status": "ready",
+    "reason_code": null,
+    "mock_provider_calls": 1,
+    "reported_vlm_calls": 1,
+    "vision_cached": false,
+    "text_equals_gt": true
+   },
+   {
+    "pass": 1,
+    "item_id": "c03_ro_hinh_tru",
+    "status": "ready",
+    "reason_code": null,
+    "mock_provider_calls": 1,
+    "reported_vlm_calls": 1,
+    "vision_cached": false,
+    "text_equals_gt": true
+   },
+   {
+    "pass": 1,
+    "item_id": "c04_nghieng_hinh_non",
+    "status": "ready",
+    "reason_code": null,
+    "mock_provider_calls": 1,
+    "reported_vlm_calls": 1,
+    "vision_cached": false,
+    "text_equals_gt": true
+   },
+   {
+    "pass": 1,
+    "item_id": "c05_nghieng_cong_thuc_hinh_tru",
+    "status": "ready",
+    "reason_code": null,
+    "mock_provider_calls": 1,
+    "reported_vlm_calls": 1,
+    "vision_cached": false,
+    "text_equals_gt": true
+   },
+   {
+    "pass": 1,
+    "item_id": "c06_toi_mo_elip_non",
+    "status": "ready",
+    "reason_code": null,
+    "mock_provider_calls": 1,
+    "reported_vlm_calls": 1,
+    "vision_cached": false,
+    "text_equals_gt": true
+   },
+   {
+    "pass": 1,
+    "item_id": "c07_mo_chop_ngu_giac",
+    "status": "ready",
+    "reason_code": null,
+    "mock_provider_calls": 1,
+    "reported_vlm_calls": 1,
+    "vision_cached": false,
+    "text_equals_gt": true
+   },
+   {
+    "pass": 1,
+    "item_id": "c08_de_va_hinh_chop",
+    "status": "ready",
+    "reason_code": null,
+    "mock_provider_calls": 1,
+    "reported_vlm_calls": 1,
+    "vision_cached": false,
+    "text_equals_gt": true
+   },
+   {
+    "pass": 1,
+    "item_id": "c09_de_va_hinh_cau",
+    "status": "ready",
+    "reason_code": null,
+    "mock_provider_calls": 1,
+    "reported_vlm_calls": 1,
+    "vision_cached": false,
+    "text_equals_gt": true
+   },
+   {
+    "pass": 1,
+    "item_id": "c10_exif_xoay_gps",
+    "status": "ready",
+    "reason_code": null,
+    "mock_provider_calls": 1,
+    "reported_vlm_calls": 1,
+    "vision_cached": false,
+    "text_equals_gt": true
+   },
+   {
+    "pass": 1,
+    "item_id": "c11_chi_co_hinh",
+    "status": "rejected",
+    "reason_code": "MISSING_PROBLEM_TEXT",
+    "mock_provider_calls": 1,
+    "reported_vlm_calls": 1,
+    "vision_cached": false,
+    "text_equals_gt": null
+   },
+   {
+    "pass": 1,
+    "item_id": "c12_ngoai_nang_luc",
+    "status": "ready",
+    "reason_code": null,
+    "mock_provider_calls": 1,
+    "reported_vlm_calls": 1,
+    "vision_cached": false,
+    "text_equals_gt": true
+   },
+   {
+    "pass": 1,
+    "item_id": "s01_vuong_goc_song_song",
+    "status": "ready",
+    "reason_code": null,
+    "mock_provider_calls": 1,
+    "reported_vlm_calls": 1,
+    "vision_cached": false,
+    "text_equals_gt": true
+   },
+   {
+    "pass": 1,
+    "item_id": "s01_vuong_goc_song_song_degraded",
+    "status": "ready",
+    "reason_code": null,
+    "mock_provider_calls": 1,
+    "reported_vlm_calls": 1,
+    "vision_cached": false,
+    "text_equals_gt": true
+   },
+   {
+    "pass": 1,
+    "item_id": "s02_phay_can_phan_so",
+    "status": "ready",
+    "reason_code": null,
+    "mock_provider_calls": 1,
+    "reported_vlm_calls": 1,
+    "vision_cached": false,
+    "text_equals_gt": true
+   },
+   {
+    "pass": 1,
+    "item_id": "s02_phay_can_phan_so_degraded",
+    "status": "ready",
+    "reason_code": null,
+    "mock_provider_calls": 1,
+    "reported_vlm_calls": 1,
+    "vision_cached": false,
+    "text_equals_gt": true
+   },
+   {
+    "pass": 1,
+    "item_id": "s03_dau_tru_toa_do",
+    "status": "rejected",
+    "reason_code": "UNSUPPORTED_PROBLEM",
+    "mock_provider_calls": 1,
+    "reported_vlm_calls": 1,
+    "vision_cached": false,
+    "text_equals_gt": true
+   },
+   {
+    "pass": 1,
+    "item_id": "s03_dau_tru_toa_do_degraded",
+    "status": "rejected",
+    "reason_code": "UNSUPPORTED_PROBLEM",
+    "mock_provider_calls": 1,
+    "reported_vlm_calls": 1,
+    "vision_cached": false,
+    "text_equals_gt": true
+   },
+   {
+    "pass": 1,
+    "item_id": "s04_luy_thua_chi_so",
+    "status": "ready",
+    "reason_code": null,
+    "mock_provider_calls": 1,
+    "reported_vlm_calls": 1,
+    "vision_cached": false,
+    "text_equals_gt": true
+   },
+   {
+    "pass": 1,
+    "item_id": "s04_luy_thua_chi_so_degraded",
+    "status": "ready",
+    "reason_code": null,
+    "mock_provider_calls": 1,
+    "reported_vlm_calls": 1,
+    "vision_cached": false,
+    "text_equals_gt": true
+   },
+   {
+    "pass": 1,
+    "item_id": "s05_dau_tieng_viet",
+    "status": "ready",
+    "reason_code": null,
+    "mock_provider_calls": 1,
+    "reported_vlm_calls": 1,
+    "vision_cached": false,
+    "text_equals_gt": true
+   },
+   {
+    "pass": 1,
+    "item_id": "s05_dau_tieng_viet_degraded",
+    "status": "ready",
+    "reason_code": null,
+    "mock_provider_calls": 1,
+    "reported_vlm_calls": 1,
+    "vision_cached": false,
+    "text_equals_gt": true
+   },
+   {
+    "pass": 2,
+    "item_id": "c01_ro_chop_thiet_dien",
+    "status": "ready",
+    "reason_code": null,
+    "mock_provider_calls": 0,
+    "reported_vlm_calls": 0,
+    "vision_cached": true,
+    "text_equals_gt": true
+   },
+   {
+    "pass": 2,
+    "item_id": "c02_ro_mat_cau",
+    "status": "ready",
+    "reason_code": null,
+    "mock_provider_calls": 0,
+    "reported_vlm_calls": 0,
+    "vision_cached": true,
+    "text_equals_gt": true
+   },
+   {
+    "pass": 2,
+    "item_id": "c03_ro_hinh_tru",
+    "status": "ready",
+    "reason_code": null,
+    "mock_provider_calls": 0,
+    "reported_vlm_calls": 0,
+    "vision_cached": true,
+    "text_equals_gt": true
+   },
+   {
+    "pass": 2,
+    "item_id": "c04_nghieng_hinh_non",
+    "status": "ready",
+    "reason_code": null,
+    "mock_provider_calls": 0,
+    "reported_vlm_calls": 0,
+    "vision_cached": true,
+    "text_equals_gt": true
+   },
+   {
+    "pass": 2,
+    "item_id": "c05_nghieng_cong_thuc_hinh_tru",
+    "status": "ready",
+    "reason_code": null,
+    "mock_provider_calls": 0,
+    "reported_vlm_calls": 0,
+    "vision_cached": true,
+    "text_equals_gt": true
+   },
+   {
+    "pass": 2,
+    "item_id": "c06_toi_mo_elip_non",
+    "status": "ready",
+    "reason_code": null,
+    "mock_provider_calls": 0,
+    "reported_vlm_calls": 0,
+    "vision_cached": true,
+    "text_equals_gt": true
+   },
+   {
+    "pass": 2,
+    "item_id": "c07_mo_chop_ngu_giac",
+    "status": "ready",
+    "reason_code": null,
+    "mock_provider_calls": 0,
+    "reported_vlm_calls": 0,
+    "vision_cached": true,
+    "text_equals_gt": true
+   },
+   {
+    "pass": 2,
+    "item_id": "c08_de_va_hinh_chop",
+    "status": "ready",
+    "reason_code": null,
+    "mock_provider_calls": 0,
+    "reported_vlm_calls": 0,
+    "vision_cached": true,
+    "text_equals_gt": true
+   },
+   {
+    "pass": 2,
+    "item_id": "c09_de_va_hinh_cau",
+    "status": "ready",
+    "reason_code": null,
+    "mock_provider_calls": 0,
+    "reported_vlm_calls": 0,
+    "vision_cached": true,
+    "text_equals_gt": true
+   },
+   {
+    "pass": 2,
+    "item_id": "c10_exif_xoay_gps",
+    "status": "ready",
+    "reason_code": null,
+    "mock_provider_calls": 0,
+    "reported_vlm_calls": 0,
+    "vision_cached": true,
+    "text_equals_gt": true
+   },
+   {
+    "pass": 2,
+    "item_id": "c11_chi_co_hinh",
+    "status": "rejected",
+    "reason_code": "MISSING_PROBLEM_TEXT",
+    "mock_provider_calls": 0,
+    "reported_vlm_calls": 0,
+    "vision_cached": true,
+    "text_equals_gt": null
+   },
+   {
+    "pass": 2,
+    "item_id": "c12_ngoai_nang_luc",
+    "status": "ready",
+    "reason_code": null,
+    "mock_provider_calls": 0,
+    "reported_vlm_calls": 0,
+    "vision_cached": true,
+    "text_equals_gt": true
+   },
+   {
+    "pass": 2,
+    "item_id": "s01_vuong_goc_song_song",
+    "status": "ready",
+    "reason_code": null,
+    "mock_provider_calls": 0,
+    "reported_vlm_calls": 0,
+    "vision_cached": true,
+    "text_equals_gt": true
+   },
+   {
+    "pass": 2,
+    "item_id": "s01_vuong_goc_song_song_degraded",
+    "status": "ready",
+    "reason_code": null,
+    "mock_provider_calls": 0,
+    "reported_vlm_calls": 0,
+    "vision_cached": true,
+    "text_equals_gt": true
+   },
+   {
+    "pass": 2,
+    "item_id": "s02_phay_can_phan_so",
+    "status": "ready",
+    "reason_code": null,
+    "mock_provider_calls": 0,
+    "reported_vlm_calls": 0,
+    "vision_cached": true,
+    "text_equals_gt": true
+   },
+   {
+    "pass": 2,
+    "item_id": "s02_phay_can_phan_so_degraded",
+    "status": "ready",
+    "reason_code": null,
+    "mock_provider_calls": 0,
+    "reported_vlm_calls": 0,
+    "vision_cached": true,
+    "text_equals_gt": true
+   },
+   {
+    "pass": 2,
+    "item_id": "s03_dau_tru_toa_do",
+    "status": "rejected",
+    "reason_code": "UNSUPPORTED_PROBLEM",
+    "mock_provider_calls": 0,
+    "reported_vlm_calls": 0,
+    "vision_cached": true,
+    "text_equals_gt": true
+   },
+   {
+    "pass": 2,
+    "item_id": "s03_dau_tru_toa_do_degraded",
+    "status": "rejected",
+    "reason_code": "UNSUPPORTED_PROBLEM",
+    "mock_provider_calls": 0,
+    "reported_vlm_calls": 0,
+    "vision_cached": true,
+    "text_equals_gt": true
+   },
+   {
+    "pass": 2,
+    "item_id": "s04_luy_thua_chi_so",
+    "status": "ready",
+    "reason_code": null,
+    "mock_provider_calls": 0,
+    "reported_vlm_calls": 0,
+    "vision_cached": true,
+    "text_equals_gt": true
+   },
+   {
+    "pass": 2,
+    "item_id": "s04_luy_thua_chi_so_degraded",
+    "status": "ready",
+    "reason_code": null,
+    "mock_provider_calls": 0,
+    "reported_vlm_calls": 0,
+    "vision_cached": true,
+    "text_equals_gt": true
+   },
+   {
+    "pass": 2,
+    "item_id": "s05_dau_tieng_viet",
+    "status": "ready",
+    "reason_code": null,
+    "mock_provider_calls": 0,
+    "reported_vlm_calls": 0,
+    "vision_cached": true,
+    "text_equals_gt": true
+   },
+   {
+    "pass": 2,
+    "item_id": "s05_dau_tieng_viet_degraded",
+    "status": "ready",
+    "reason_code": null,
+    "mock_provider_calls": 0,
+    "reported_vlm_calls": 0,
+    "vision_cached": true,
+    "text_equals_gt": true
+   }
+  ]
+ }
+}
