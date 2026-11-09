@@ -1,0 +1,46 @@
+{
+  "run_id": "hybrid-reasoning-generalization",
+  "workstream": "B — Hybrid reasoning & generalization",
+  "date": "2026-11-09",
+  "branch": "feat/hybrid-reasoning-generalization",
+  "base": "d79565b52ec19a7b1a75be28c09bb43cc0f6d146",
+  "merged": false,
+  "pushed": false,
+  "commits": [
+    {"sha": "1db2bdf10ec45b27c216d39bb85bf7f70bc0a65d", "role": "eval: development matrix tool, plan, baseline receipt (before any product change)"},
+    {"sha": "5e273f1302cf16371f91711b3ee0314ec9e74121", "role": "product + tests: engine _tam_giac / _dinh_tu_ba_canh_ben, registry chain quote evidence, gap tests, historical delta layers"},
+    {"sha": "46169914930bba2c62b54d5cc539d266bf8f378a", "role": "chore(eval): re-freeze candidate (working tree had untracked report drafts: cay_lam_viec_sach=false)"},
+    {"sha": "dd551ffec79d847c41fabffa178621981ace359f", "role": "chore(eval): re-freeze candidate from a clean tree (authoritative)"},
+    {"sha": "THIS_COMMIT", "role": "docs(eval): report, run.json, after/A-B receipts, template measured_system sync"}
+  ],
+  "MEASUREMENT_CLASS": "OFFLINE_DEVELOPMENT_MATRIX",
+  "HELD_OUT_CLAIM": "NONE",
+  "EVALUATOR_INDEPENDENCE": "NONE (same agent authored the cases and implemented the fix; oracle is independent code)",
+  "INDEPENDENT_H1_VALIDATION": "NOT_MEASURED",
+  "live_calls": 0,
+  "versions": {
+    "planner": "geometry-fact-planner/26", "registry": "geometry-functions/33", "engine": "geometry-function-engine/24",
+    "typed_fact_next": "typed-fact-next/2", "bridge": "typed-fact-next-bridge/2", "changed": false
+  },
+  "candidate": {
+    "measured_system_tree_hash_before": "6290986dee3d1336a13611f0c0a452f90bfb40ab6d837c46396bcafb2cd5f81d",
+    "measured_system_tree_hash_after": "a9993e28fe3c64a053051f5fbcd87f9079638df4f72128a17d4b0d3c1e2916cb",
+    "so_file": 106,
+    "product_commit_sha": "5e273f1302cf16371f91711b3ee0314ec9e74121",
+    "verify": "MATCH"
+  },
+  "cache_version": {
+    "before": "132", "after": "132", "bumped": false,
+    "reason": "only SERVED rows are cached (main.py _served_route_d / store on SERVED); changes turn previously REFUSED inputs into SERVED or change a refusal code; 47/47 previously served matrix cases identical in answers and telemetry; no prompt/schema/provider/capability surface change"
+  },
+  "matrix": {
+    "cases": 72,
+    "before": {"EXACT_SERVED": 47, "CORRECT_REFUSAL": 7, "CORRECT_CLARIFICATION": 1, "FALSE_REFUSAL": 6, "NO_PLAN_DESPITE_PRIMITIVES": 8, "SEARCH_BUDGET_EXCEEDED": 1, "WRONG_REFUSAL_CLASS": 2, "WRONG_SERVED": 0, "ADAPTER_OR_SCENE3D_ERROR": 0},
+    "after": {"EXACT_SERVED": 56, "CORRECT_REFUSAL": 9, "CORRECT_CLARIFICATION": 1, "FALSE_REFUSAL": 0, "NO_PLAN_DESPITE_PRIMITIVES": 5, "SEARCH_BUDGET_EXCEEDED": 1, "WRONG_REFUSAL_CLASS": 0, "WRONG_SERVED": 0, "ADAPTER_OR_SCENE3D_ERROR": 0},
+    "receipts": ["results/matrix_before.json", "results/matrix_after.json", "results/matrix_ab1_before.json", "results/matrix_ab1_after.json", "results/matrix_ab2_before.json", "results/matrix_ab2_after.json", "results/matrix_tables.md"]
+  },
+  "gaps_fixed": ["G1a", "G1b", "G5"],
+  "gaps_reproduced_not_fixed": {"G2": "bridge contract", "G3": "bridge contract", "G4": "bridge plane naming", "G6": "IR MAX_MEMORY_DECLARATIONS (contract)", "G7": "bridge contract"},
+  "historical_delta_layers": ["results/historical-gold-delta.json", "results/historical-regression-delta.json"],
+  "verdict": "HYBRID_REASONING_IMPROVEMENT_VERIFIED"
+}
