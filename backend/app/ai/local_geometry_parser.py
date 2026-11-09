@@ -23,6 +23,8 @@ Design invariants:
 """
 from __future__ import annotations
 
+from collections import OrderedDict
+import copy
 from dataclasses import dataclass, field
 import re
 import time
@@ -130,7 +132,7 @@ _PTS2 = rf"(?:{_PT}){{2}}"
 _PTS3 = rf"(?:{_PT}){{3}}"
 _PTS4 = rf"(?:{_PT}){{4}}"
 _PTS3_6 = rf"(?:{_PT}){{3,6}}"
-_VAL = r"(?:\d+(?:√\d+)?(?:/\d+)?|√\d+(?:/\d+)?|\d*a(?:√\d+)?(?:/\d+)?|a√\d+(?:/\d+)?)"
+_VAL = r"(?:\d+(?:√\d+)?(?:/\d+)?|√\d+(?:/\d+)?|\d*a(?:√\d+)?(?:/\d+)?|a√\d+(?:/\d+)?)(?![.,]\d|[A-Za-z0-9_'′²³₁₂₃°~√/])"
 
 _TOKEN_RE = re.compile(
     rf"(?P<solid>{_PT}\.{_PTS3_6}|{_PTS3_6}\.{_PTS3_6})"
@@ -447,6 +449,10 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
 
     mapped_fact = False
     mapped_goal = False
+    pre_premises_len = len(builder.premises)
+    pre_sections_len = len(builder.derived_sections)
+    pre_goals_len = len(builder.math_goals)
+    pre_solids_len = len(builder.solids)
 
     # ── 0. Explicit unsupported / out-of-scope or clarification triggers ─────────────────────────────────────────
     # Conditional premise ("Nếu mặt phẳng ... thì ...") -> leave as unparsed or let Source Gate refuse?
@@ -1895,8 +1901,10 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
         elif not_v:
             sid_v = next(
                 (s["solid_id"] for s in builder.solids if s["notation"].replace(".", "") == not_v.replace(".", "")),
-                builder._primary_solid_id,
+                None,
             )
+            if sid_v is None:
+                continue
         else:
             sid_v = builder._primary_solid_id
         # Use full clause quote if multiple goals share the sentence, else exact match quote
@@ -2287,6 +2295,101 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
                 )
                 mapped_goal = True
 
+    # ── 7k. Intra-Sentence Integrity & Sub-Clause Coverage Guard ─────────────────────────────────────────────────
+    if (mapped_fact or mapped_goal) and not builder.unresolved:
+        clause_premises = builder.premises[pre_premises_len:]
+        clause_sections = builder.derived_sections[pre_sections_len:]
+        clause_goals = builder.math_goals[pre_goals_len:]
+        clause_solids = builder.solids[pre_solids_len:]
+
+        # 1) Every `=` in `ctext_norm` must belong to a recognized equality construct
+        if "=" in ctext_norm:
+            eq_spans: list[tuple[int, int]] = []
+            for eq_pat in (
+                rf"chiều\s+cao(?:\s+của\s+hình\s+chóp(?:\s+[A-Z0-9'.]+)?)?\s*=\s*{_VAL}",
+                rf"đường\s+cao\s+{_PTS2}\s*=\s*{_VAL}",
+                rf"(?<![\w'.]){_PTS2}\s*=\s*{_PTS2}(?:\s*=\s*{_PTS2})?\s*=\s*{_VAL}(?![\w'])",
+                rf"(?:Đường\s+sinh\s+)?(?<![\w'.]){_PTS2}\s*=\s*{_VAL}(?![\s]*=)(?![\w'])",
+                rf"(?:sao\s+cho|thỏa\s+mãn)\s+{_PTS2}\s*=\s*\d+\s*/\s*\d+\s*{_PTS2}(?![\w'])",
+            ):
+                for m_eq in re.finditer(eq_pat, ctext_norm, re.IGNORECASE | re.UNICODE):
+                    eq_spans.append((m_eq.start(), m_eq.end()))
+            for eq_idx, ch in enumerate(ctext_norm):
+                if ch == "=" and not any(a <= eq_idx < b for a, b in eq_spans):
+                    mapped_fact = False
+                    mapped_goal = False
+                    clause.classification = CLAUSE_UNPARSED_FACT_CANDIDATE
+                    return
+
+        # 2) Any `∥` or `song song` must belong to a recognized section parallel construct
+        if "∥" in ctext_norm or (
+            re.search(r"\bsong\s+song\b", ctext_norm, re.IGNORECASE) and not clause_sections
+        ):
+            mapped_fact = False
+            mapped_goal = False
+            clause.classification = CLAUSE_UNPARSED_FACT_CANDIDATE
+            return
+
+        # 3) Any `∠` or standalone `góc` (outside `vuông góc` and `góc chiếu`) must belong to an angle goal
+        ctext_no_vg = re.sub(r"\b(?:vuông\s+góc|góc\s+chiếu)\b", " ", ctext_norm, flags=re.IGNORECASE)
+        if "∠" in ctext_no_vg or (
+            re.search(r"\bgóc\b", ctext_no_vg, re.IGNORECASE)
+            and not any(g.get("goal_type") == "angle" for g in clause_goals)
+        ):
+            mapped_fact = False
+            mapped_goal = False
+            clause.classification = CLAUSE_UNPARSED_FACT_CANDIDATE
+            return
+
+        # 4) Unsupported geometric shape / relation / negation / conditional sub-clause inside the sentence
+        if re.search(
+            r"\bhình\s+(?:thoi|bình\s+hành|thang)\b"
+            r"|\btam\s+giác\s+cân\b|\bcân\s+tại\b"
+            r"|\btâm\s+đường\s+tròn\s+nội\s+tiếp\b"
+            r"|\b(?:đường\s+phân\s+giác|đường\s+trung\s+tuyến|trọng\s+tuyến)\b"
+            r"|\b(?:hợp\s+với|tạo\s+với|nghiêng\s+đều)\b"
+            r"|\bkhông\s+(?:vuông\s+góc|song\s+song|cắt|đồng\s+phẳng|thẳng\s+hàng|trùng)\b"
+            r"|\bnếu\b.+\bthì\b"
+            r"|\bmặt\s+bên\b.*\bnằm\s+trong\s+mặt\s+phẳng\s+vuông\s+góc\b",
+            ctext_norm,
+            re.IGNORECASE | re.UNICODE,
+        ):
+            mapped_fact = False
+            mapped_goal = False
+            clause.classification = CLAUSE_UNPARSED_FACT_CANDIDATE
+            return
+
+        # 5) Named point introduction `Gọi <P> là ...` where `<P>` was not bound in premises or solids
+        for m_goi_pt in re.finditer(rf"\bGọi\s+(?P<pt>{_PT})\s+là\b", ctext_norm, re.IGNORECASE | re.UNICODE):
+            pt_name = m_goi_pt.group("pt")
+            if not pt_name[0].isupper():
+                continue
+            bound_in_clause = any(
+                p["args"].get("point") == pt_name or p["args"].get("image") == pt_name
+                for p in clause_premises
+            ) or any(
+                s.get("center") == pt_name or s.get("notation") == pt_name
+                for s in clause_solids
+            )
+            if not bound_in_clause:
+                mapped_fact = False
+                mapped_goal = False
+                clause.classification = CLAUSE_UNPARSED_FACT_CANDIDATE
+                return
+
+        # 6) Compound goal completeness: if two scalar goal quantities are joined by `và`, must have >= 2 math_goals
+        _q_kw = r"(?:diện\s+tích|thể\s+tích|khoảng\s+cách|k/c|độ\s+dài|bán\s+kính|góc\s+giữa|tỉ\s+số|chu\s+vi)"
+        if mapped_goal and re.search(
+            rf"\b{_q_kw}\b.+?\bvà\s+(?:tính\s+)?{_q_kw}\b",
+            ctext_norm,
+            re.IGNORECASE | re.UNICODE,
+        ):
+            if len(clause_goals) < 2:
+                mapped_goal = False
+                mapped_fact = False
+                clause.classification = CLAUSE_UNPARSED_GOAL_CANDIDATE
+                return
+
     # ── 8. Classify Clause Coverage ──────────────────────────────────────────────────────────────────────────────
     if mapped_goal:
         clause.classification = CLAUSE_MAPPED_GOAL
@@ -2322,10 +2425,31 @@ _EXTRACTION_FIDELITY_ERROR_CODES = frozenset(
     }
 )
 
+MAX_PARSER_CACHE_SIZE = 256
+_PARSER_CACHE: OrderedDict[tuple[str, str], LocalParseResult] = OrderedDict()
+_PARSER_CACHE_HITS = 0
+_PARSER_CACHE_MISSES = 0
 
-def parse_geometry_problem_locally(problem_text: str) -> LocalParseResult:
-    """Parse a Vietnamese 3D geometry problem deterministically into `TypedFactNextPayloadV2` (`0` AI calls)."""
-    t0 = time.perf_counter()
+
+def clear_local_geometry_parser_cache() -> None:
+    """Clear the bounded in-memory parser cache and reset telemetry counters."""
+    global _PARSER_CACHE_HITS, _PARSER_CACHE_MISSES
+    _PARSER_CACHE.clear()
+    _PARSER_CACHE_HITS = 0
+    _PARSER_CACHE_MISSES = 0
+
+
+def get_local_geometry_parser_cache_stats() -> dict[str, int]:
+    """Return current bounded in-memory parser cache telemetry."""
+    return {
+        "size": len(_PARSER_CACHE),
+        "max_size": MAX_PARSER_CACHE_SIZE,
+        "hits": _PARSER_CACHE_HITS,
+        "misses": _PARSER_CACHE_MISSES,
+    }
+
+
+def _parse_geometry_problem_locally_uncached(problem_text: str, t0: float) -> LocalParseResult:
     raw = normalize_problem_text(problem_text)
     if not raw or not raw.strip():
         empty_cov = SourceCoverageReport(0, 0, 0, 0, (), (), (), (), False)
@@ -2520,3 +2644,45 @@ def parse_geometry_problem_locally(problem_text: str) -> LocalParseResult:
         fallback_reason=None,
         parse_latency_ms=(time.perf_counter() - t0) * 1000.0,
     )
+
+
+def parse_geometry_problem_locally(problem_text: str, *, use_cache: bool = True) -> LocalParseResult:
+    """Parse a Vietnamese 3D geometry problem deterministically into `TypedFactNextPayloadV2` (`0` AI calls)."""
+    global _PARSER_CACHE_HITS, _PARSER_CACHE_MISSES
+    t0 = time.perf_counter()
+    if not use_cache:
+        return _parse_geometry_problem_locally_uncached(problem_text, t0)
+    cache_key = (LOCAL_GEOMETRY_PARSER_VERSION, problem_text or "")
+    cached = _PARSER_CACHE.get(cache_key)
+    if cached is not None:
+        _PARSER_CACHE_HITS += 1
+        _PARSER_CACHE.move_to_end(cache_key)
+        return LocalParseResult(
+            parser_version=cached.parser_version,
+            status=cached.status,
+            payload=copy.deepcopy(cached.payload) if cached.payload is not None else None,
+            parsed_contract=cached.parsed_contract,
+            ast=dict(cached.ast),
+            source_coverage=cached.source_coverage,
+            reason_code=cached.reason_code,
+            fallback_reason=cached.fallback_reason,
+            parse_latency_ms=(time.perf_counter() - t0) * 1000.0,
+        )
+
+    _PARSER_CACHE_MISSES += 1
+    res = _parse_geometry_problem_locally_uncached(problem_text, t0)
+    if len(cache_key[1]) <= 4096:
+        _PARSER_CACHE[cache_key] = LocalParseResult(
+            parser_version=res.parser_version,
+            status=res.status,
+            payload=copy.deepcopy(res.payload) if res.payload is not None else None,
+            parsed_contract=res.parsed_contract,
+            ast=dict(res.ast),
+            source_coverage=res.source_coverage,
+            reason_code=res.reason_code,
+            fallback_reason=res.fallback_reason,
+            parse_latency_ms=res.parse_latency_ms,
+        )
+        while len(_PARSER_CACHE) > MAX_PARSER_CACHE_SIZE:
+            _PARSER_CACHE.popitem(last=False)
+    return res
