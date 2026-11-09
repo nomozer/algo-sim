@@ -1,0 +1,73 @@
+{
+  "schema": "algosim-low-end-hardware-performance-receipt/1",
+  "generated_at_utc": "2026-11-09T14:20:36.784101+00:00",
+  "product_commit_sha": "87497d79a6537681b91c3f06fffea86a7e593a02",
+  "gate_d_status": "RESOURCE_CONSTRAINED_SIMULATION_ONLY",
+  "hardware_disclosure": {
+    "measured_host_os": "Windows 11 (10.0.26100)",
+    "measured_host_cpu": "Intel64 Family 6 Model 141 Stepping 1, GenuineIntel",
+    "measured_host_logical_cores": 12,
+    "target_low_end_profile": "2-4 CPU cores, 4-8 GB RAM, integrated graphics (Intel UHD / AMD Vega), no discrete GPU",
+    "physical_low_end_laptop_measured": false,
+    "estimated_low_end_cpu_slowdown_factor": "2.0x - 3.0x single-thread latency vs development host"
+  },
+  "latency_benchmarks_ms": {
+    "text_parse_and_solve_uncached_cold_30_runs": {
+      "parse_p50_ms": 9.839,
+      "parse_p95_ms": 16.774,
+      "parse_p99_ms": 17.34,
+      "end_to_end_p50_ms": 34.374,
+      "end_to_end_p95_ms": 48.64,
+      "end_to_end_p99_ms": 54.692,
+      "target_p50_lt_150ms": true,
+      "target_p95_lt_400ms": true
+    },
+    "text_parse_and_solve_cached_warm_50_runs": {
+      "parse_p50_ms": 0.048,
+      "parse_p95_ms": 0.098,
+      "parse_p99_ms": 0.172,
+      "end_to_end_p50_ms": 26.865,
+      "end_to_end_p95_ms": 42.787,
+      "end_to_end_p99_ms": 74.757
+    },
+    "image_cv_preprocess_and_region_detection_15_runs": {
+      "p50_ms": 94.162,
+      "p95_ms": 123.994,
+      "p99_ms": 133.943,
+      "target_p95_lt_300ms": true
+    },
+    "local_ocr_model_loading_ms": {
+      "local_deterministic_parser": 0.0,
+      "tesseract_cli_spawn": 225.0,
+      "rapidocr_onnx_session_init": 580.0
+    }
+  },
+  "memory_and_stability_50_consecutive_requests": {
+    "python_rss_mb_measured": 96.93,
+    "traced_heap_retained_kb": 1168.02,
+    "traced_heap_peak_kb": 1381.33,
+    "target_rss_lt_600mb": true,
+    "unbounded_cache_or_leak_detected": false
+  },
+  "frontend_scene3d_and_webgl_assessment": {
+    "headless_chromium_playwright_verification": "VERIFIED_IN_PREVIOUS_WAVES (`verify_ux_and_scene3d_playwright.py`: 0 console errors, 0 page errors, WebGL canvas rendered)",
+    "browser_scene3d_viewer_recorded": {
+      "source_receipt": "docs/evaluation/geometry/runs/axo-final-educational-viewer-readiness/perf/perf-summary.json",
+      "time_to_first_usable_frame_median_ms": 96.2,
+      "time_to_first_usable_frame_range_ms": [
+        65.7,
+        137.3
+      ],
+      "step_transition_p95_median_ms": 56.7,
+      "frame_p95_max_ms": 7.0,
+      "effective_orbit_fps": 60.0,
+      "render_on_demand_rpf_max": 1,
+      "js_heap_range_mb": [
+        29.2,
+        54.3
+      ],
+      "gpu_resource_leak_balance": 0
+    },
+    "physical_integrated_gpu_fps_measurement": "NOT_MEASURED"
+  }
+}

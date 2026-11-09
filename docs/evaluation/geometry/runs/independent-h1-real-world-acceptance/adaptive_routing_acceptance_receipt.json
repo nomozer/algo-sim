@@ -1,0 +1,85 @@
+{
+  "schema": "algosim-adaptive-routing-acceptance-receipt/1",
+  "generated_at_utc": "2026-11-09T14:20:26.156404+00:00",
+  "product_commit_sha": "87497d79a6537681b91c3f06fffea86a7e593a02",
+  "gate_c_offline_status": "OFFLINE_ROUTING_VERIFIED",
+  "gate_c_live_status": "NOT_MEASURED",
+  "case_d_route_labeling_defect_fixed": true,
+  "all_offline_routing_scenarios_passed": true,
+  "routes": {
+    "Route_A_Text_Local_Deterministic_Zero_AI": {
+      "chosen_route": "LOCAL_DETERMINISTIC_HYBRID",
+      "status": "SERVED",
+      "gemini_vision_calls": 0,
+      "gemini_typed_fact_calls": 0,
+      "total_provider_calls": 0,
+      "answers": {
+        "q1": "16"
+      },
+      "passed": true
+    },
+    "Route_A_Image_Local_OCR_Verified_Zero_AI": {
+      "chosen_route": "LOCAL_OCR_VERIFIED_ZERO_AI",
+      "status": "SERVED",
+      "gemini_vision_calls": 0,
+      "gemini_typed_fact_calls": 0,
+      "total_provider_calls": 0,
+      "answers": {
+        "q2": "13",
+        "q1": "144"
+      },
+      "passed": true
+    },
+    "Route_B_Vision_Then_Local_Deterministic_One_Call": {
+      "chosen_route": "VISION_THEN_LOCAL_DETERMINISTIC",
+      "status": "SERVED",
+      "gemini_vision_calls": 1,
+      "gemini_typed_fact_calls": 0,
+      "total_provider_calls": 1,
+      "answers": {
+        "q1": "16"
+      },
+      "passed": true
+    },
+    "Route_C_Vision_Then_AI_TypedFact_Fallback": {
+      "chosen_route": "VISION_THEN_AI_FALLBACK",
+      "status": "SERVED",
+      "gemini_vision_calls": 1,
+      "gemini_typed_fact_calls": 1,
+      "total_provider_calls": 2,
+      "answers": {
+        "q1": "16"
+      },
+      "passed": true
+    },
+    "Route_D_Missing_Data_Deterministic_Clarification_Zero_AI": {
+      "chosen_route": "LOCAL_AMBIGUOUS_CLARIFICATION",
+      "status": "REFUSED",
+      "refusal_code": "MISSING_DIMENSION",
+      "gemini_vision_calls": 0,
+      "gemini_typed_fact_calls": 0,
+      "total_provider_calls": 0,
+      "passed": true
+    },
+    "Conflict_Guard_OCR_vs_Vision_Needs_Confirmation": {
+      "chosen_route": "VISION_NEEDS_CONFIRMATION",
+      "status": "NEEDS_CONFIRMATION",
+      "conflict_codes": [
+        "NUMERIC_ASSIGNMENT_CONFLICT"
+      ],
+      "total_provider_calls": 1,
+      "passed": true
+    },
+    "User_Edited_Text_Authoritative_Zero_New_Calls": {
+      "chosen_route": "LOCAL_DETERMINISTIC_HYBRID",
+      "status": "SERVED",
+      "gemini_vision_calls": 0,
+      "gemini_typed_fact_calls": 0,
+      "total_provider_calls": 0,
+      "answers": {
+        "q1": "32"
+      },
+      "passed": true
+    }
+  }
+}

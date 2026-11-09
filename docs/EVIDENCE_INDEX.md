@@ -4,6 +4,19 @@
 Retired branch names now have local `refs/archive/repository-closure/` references and a verified private self-contained bundle.
 Existing evidence and historical reports below are unchanged; no research result is reinterpreted by this Git-state update.
 
+## WAVE_ID = INDEPENDENT_H1_REAL_WORLD_ACCEPTANCE
+
+REPORT = docs/evaluation/geometry/runs/independent-h1-real-world-acceptance/ALGOSIM_INDEPENDENT_ACCEPTANCE_REPORT.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/independent-h1-real-world-acceptance/
+START_BASE = 137cfdb147db9b5a6997a5fd6b3e1fa9e7d7b418 (tip of feat/local-first-geometry-understanding)
+CODE_COMMIT = 87497d79a6537681b91c3f06fffea86a7e593a02 (measured_system tree hash ba0261c14a22b205b476d9951e3aa32fea63ef78c74ee1d413d4ac5ad093f759 across 108 measured entries; CACHE_VERSION 132 unchanged)
+CLASSIFICATION = OFFLINE_INDEPENDENT_H1_VISION_OCR_AND_LOW_END_ACCEPTANCE_AUDIT (Gate_A_Independent_H1_Geometry = PENDING_EXTERNAL_CORPUS; Gate_B_Real_World_Image_and_OCR = REAL_WORLD_IMAGE_NOT_MEASURED; Gate_C_Adaptive_AI_Routing = OFFLINE_ROUTING_VERIFIED; Gate_D_Low_End_Performance = RESOURCE_CONSTRAINED_SIMULATION_ONLY; LOCAL_OCR_PRODUCTION_STATUS = LOCAL_OCR_DIAGNOSTIC_ONLY; INDEPENDENT_H1_VALIDATION = NOT_MEASURED; LIVE_VISION_EVALUATION = NOT_MEASURED; REAL_WORLD_CORPUS_NOT_AVAILABLE; branch feat/local-first-geometry-understanding, not merged to main, not pushed)
+PRODUCT_CHANGE = YES (backend: local_geometry_parser.py, adaptive_input_router.py; harness: score_independent_holdout_equivalence.py)
+MODEL_REQUEST_COUNT = 0
+VERIFICATION = ALGOSIM_INDEPENDENT_ACCEPTANCE_REPORT.md; run.json; h1_corpus_provenance_receipt.json; h1_contamination_audit_receipt.json; h1_geometry_evaluation_receipt.json; real_world_image_corpus_manifest.json; region_detection_real_world_receipt.json; ocr_fidelity_real_world_receipt.json; adaptive_routing_acceptance_receipt.json; low_end_hardware_performance_receipt.json; hybrid_capability_prioritization.json; tools/run_independent_acceptance_evaluation.py; backend/tests/geometry/test_independent_h1_real_world_acceptance.py (6/6 passed)
+CORRECTS = docs/evaluation/geometry/runs/correctness-ocr-performance-optimization/ALGOSIM_CORRECTNESS_OCR_PERFORMANCE_REPORT.md
+CORRECTED_BY = NONE
+
 ## WAVE_ID = CORRECTNESS_OCR_PERFORMANCE_OPTIMIZATION
 
 REPORT = docs/evaluation/geometry/runs/correctness-ocr-performance-optimization/ALGOSIM_CORRECTNESS_OCR_PERFORMANCE_REPORT.md
@@ -15,7 +28,7 @@ PRODUCT_CHANGE = YES (backend: local_geometry_parser.py, adaptive_input_router.p
 MODEL_REQUEST_COUNT = 0
 VERIFICATION = ALGOSIM_CORRECTNESS_OCR_PERFORMANCE_REPORT.md; run.json; mathematical_oracle_audit_receipt.json; local_parser_integrity_receipt.json; image_region_detection_receipt.json; local_ocr_pretrained_comparison_receipt.json; adaptive_vision_fallback_receipt.json; low_end_performance_receipt.json; rust_feasibility_receipt.json; tools/run_correctness_ocr_performance_audit.py; backend/tests/geometry/test_correctness_ocr_performance.py (19/19 passed)
 CORRECTS = docs/evaluation/geometry/runs/local-first-geometry-understanding/ALGOSIM_LOCAL_FIRST_GEOMETRY_UNDERSTANDING_REPORT.md
-CORRECTED_BY = NONE
+CORRECTED_BY = docs/evaluation/geometry/runs/independent-h1-real-world-acceptance/ALGOSIM_INDEPENDENT_ACCEPTANCE_REPORT.md (fixes Case D missing-data refusal route labeling from LOCAL_DETERMINISTIC_HYBRID to LOCAL_AMBIGUOUS_CLARIFICATION in adaptive_input_router.py, replaces ground-truth-assisted Case A reconciliation with zero-ground-truth reconcile_dual_ocr_texts + named intersect_line_plane/intersect_line_line parser support for s05_dau_tieng_viet clean while strictly refusing s05_dau_tieng_viet_degraded, and separates uncached vs LRU-cached parse latency on the 12-core development host vs the 2-4 core low-end target profile)
 
 ## WAVE_ID = LOCAL_FIRST_GEOMETRY_UNDERSTANDING
 

@@ -1,0 +1,427 @@
+{
+  "schema": "algosim-h1-geometry-evaluation-receipt/1",
+  "generated_at_utc": "2026-11-09T14:20:25.778402+00:00",
+  "product_commit_sha": "87497d79a6537681b91c3f06fffea86a7e593a02",
+  "independent_h1_validation_status": "NOT_MEASURED",
+  "independent_h1_metrics": {
+    "mathematical_served_correct": "NOT_MEASURED",
+    "semantic_goal_correct": "NOT_MEASURED",
+    "strict_contract_correct": "NOT_MEASURED",
+    "wrong_served": "NOT_MEASURED",
+    "false_refusal": "NOT_MEASURED",
+    "correct_refusal": "NOT_MEASURED"
+  },
+  "unseen_phrasing_and_capability_diagnostic_stress_suite": {
+    "disclaimer": "Explicitly separated from H-1: this 25-case suite is an internal capability & phrasing diagnostic across all 15 groups and 7 negative classes, NOT an external human-authored H-1 evaluation.",
+    "total_cases": 25,
+    "positive_serve_cases": 18,
+    "positive_served_exact_match": 18,
+    "negative_or_guard_cases": 7,
+    "negative_or_guard_refused_correctly": 7,
+    "wrong_served_count": 0,
+    "total_provider_calls": 0,
+    "cases": [
+      {
+        "case_id": "DIAG-G01-RIGHT-PYRAMID-VOL",
+        "group": "1_right_pyramid_sa_perp_base",
+        "expected_behavior": "SERVE",
+        "observed_status": "SERVED",
+        "chosen_route": "LOCAL_DETERMINISTIC_HYBRID",
+        "local_parse_status": "LOCAL_PARSE_COMPLETE",
+        "expected_answers": {
+          "q1": "60"
+        },
+        "observed_answers": {
+          "q1": "60"
+        },
+        "passed": true,
+        "provider_calls": 0,
+        "total_ms": 45.64050000044517
+      },
+      {
+        "case_id": "DIAG-G02-REGULAR-PYRAMID-DIST",
+        "group": "2_regular_pyramid",
+        "expected_behavior": "SERVE",
+        "observed_status": "SERVED",
+        "chosen_route": "LOCAL_DETERMINISTIC_HYBRID",
+        "local_parse_status": "LOCAL_PARSE_COMPLETE",
+        "expected_answers": {
+          "q1": "16"
+        },
+        "observed_answers": {
+          "q1": "16"
+        },
+        "passed": true,
+        "provider_calls": 0,
+        "total_ms": 37.807900000188965
+      },
+      {
+        "case_id": "DIAG-G03-TETRAHEDRON-PAIRWISE-PERP",
+        "group": "3_tetrahedron",
+        "expected_behavior": "SERVE",
+        "observed_status": "SERVED",
+        "chosen_route": "LOCAL_DETERMINISTIC_HYBRID",
+        "local_parse_status": "LOCAL_PARSE_COMPLETE",
+        "expected_answers": {
+          "q1": "6"
+        },
+        "observed_answers": {
+          "q1": "6"
+        },
+        "passed": true,
+        "provider_calls": 0,
+        "total_ms": 31.55049999622861
+      },
+      {
+        "case_id": "DIAG-G04-RIGHT-TRI-PRISM",
+        "group": "4_right_triangular_prism",
+        "expected_behavior": "SERVE",
+        "observed_status": "SERVED",
+        "chosen_route": "LOCAL_DETERMINISTIC_HYBRID",
+        "local_parse_status": "LOCAL_PARSE_COMPLETE",
+        "expected_answers": {
+          "q1": "120"
+        },
+        "observed_answers": {
+          "q1": "120"
+        },
+        "passed": true,
+        "provider_calls": 0,
+        "total_ms": 38.265100003627595
+      },
+      {
+        "case_id": "DIAG-G05-OBLIQUE-PRISM-PROJ",
+        "group": "5_oblique_prism",
+        "expected_behavior": "SERVE",
+        "observed_status": "SERVED",
+        "chosen_route": "LOCAL_DETERMINISTIC_HYBRID",
+        "local_parse_status": "LOCAL_PARSE_COMPLETE",
+        "expected_answers": {
+          "q1": "3√3"
+        },
+        "observed_answers": {
+          "q1": "3√3"
+        },
+        "passed": true,
+        "provider_calls": 0,
+        "total_ms": 58.09690000023693
+      },
+      {
+        "case_id": "DIAG-G06-CUBOID-COMPOUND-S05",
+        "group": "6_rectangular_box_cuboid",
+        "expected_behavior": "SERVE",
+        "observed_status": "SERVED",
+        "chosen_route": "LOCAL_DETERMINISTIC_HYBRID",
+        "local_parse_status": "LOCAL_PARSE_COMPLETE",
+        "expected_answers": {
+          "q1": "144",
+          "q2": "13"
+        },
+        "observed_answers": {
+          "q2": "13",
+          "q1": "144"
+        },
+        "passed": true,
+        "provider_calls": 0,
+        "total_ms": 53.338700003223494
+      },
+      {
+        "case_id": "DIAG-G07-CUBE-DIST-PLANE",
+        "group": "7_cube",
+        "expected_behavior": "SERVE",
+        "observed_status": "SERVED",
+        "chosen_route": "LOCAL_DETERMINISTIC_HYBRID",
+        "local_parse_status": "LOCAL_PARSE_COMPLETE",
+        "expected_answers": {
+          "q1": "2√3/3"
+        },
+        "observed_answers": {
+          "q1": "2√3/3"
+        },
+        "passed": true,
+        "provider_calls": 0,
+        "total_ms": 30.708999998751096
+      },
+      {
+        "case_id": "DIAG-G08-POINT-TO-PLANE-DIST",
+        "group": "8_point_to_plane_distance",
+        "expected_behavior": "SERVE",
+        "observed_status": "SERVED",
+        "chosen_route": "LOCAL_DETERMINISTIC_HYBRID",
+        "local_parse_status": "LOCAL_PARSE_COMPLETE",
+        "expected_answers": {
+          "q1": "2√2"
+        },
+        "observed_answers": {
+          "q1": "2√2"
+        },
+        "passed": true,
+        "provider_calls": 0,
+        "total_ms": 43.87229999701958
+      },
+      {
+        "case_id": "DIAG-G09-SKEW-LINES-DIST",
+        "group": "9_skew_line_distance",
+        "expected_behavior": "SERVE",
+        "observed_status": "SERVED",
+        "chosen_route": "LOCAL_DETERMINISTIC_HYBRID",
+        "local_parse_status": "LOCAL_PARSE_COMPLETE",
+        "expected_answers": {
+          "q1": "2"
+        },
+        "observed_answers": {
+          "q1": "2"
+        },
+        "passed": true,
+        "provider_calls": 0,
+        "total_ms": 40.863599999283906
+      },
+      {
+        "case_id": "DIAG-G10-LINE-PLANE-ANGLE",
+        "group": "10_line_plane_angle",
+        "expected_behavior": "SERVE",
+        "observed_status": "SERVED",
+        "chosen_route": "LOCAL_DETERMINISTIC_HYBRID",
+        "local_parse_status": "LOCAL_PARSE_COMPLETE",
+        "expected_answers": {
+          "q1": "cos²=1/2"
+        },
+        "observed_answers": {
+          "q1": "cos²=1/2"
+        },
+        "passed": true,
+        "provider_calls": 0,
+        "total_ms": 36.136000002443325
+      },
+      {
+        "case_id": "DIAG-G11-DIHEDRAL-PLANE-ANGLE",
+        "group": "11_plane_plane_dihedral_angle",
+        "expected_behavior": "SERVE",
+        "observed_status": "SERVED",
+        "chosen_route": "LOCAL_DETERMINISTIC_HYBRID",
+        "local_parse_status": "LOCAL_PARSE_COMPLETE",
+        "expected_answers": {
+          "q1": "cos²=1/2"
+        },
+        "observed_answers": {
+          "q1": "cos²=1/2"
+        },
+        "passed": true,
+        "provider_calls": 0,
+        "total_ms": 83.31700000417186
+      },
+      {
+        "case_id": "DIAG-G12-SECTION-AREA",
+        "group": "12_plane_section_area",
+        "expected_behavior": "SERVE",
+        "observed_status": "SERVED",
+        "chosen_route": "LOCAL_DETERMINISTIC_HYBRID",
+        "local_parse_status": "LOCAL_PARSE_COMPLETE",
+        "expected_answers": {
+          "q1": "9"
+        },
+        "observed_answers": {
+          "q1": "9"
+        },
+        "passed": true,
+        "provider_calls": 0,
+        "total_ms": 84.10519999597454
+      },
+      {
+        "case_id": "DIAG-G13-POLYHEDRAL-VOLUME-RATIO",
+        "group": "13_polyhedral_volume_and_ratio",
+        "expected_behavior": "SERVE",
+        "observed_status": "SERVED",
+        "chosen_route": "LOCAL_DETERMINISTIC_HYBRID",
+        "local_parse_status": "LOCAL_PARSE_COMPLETE",
+        "expected_answers": {
+          "g_ratio": "1/8"
+        },
+        "observed_answers": {
+          "g_ratio": "1/8"
+        },
+        "passed": true,
+        "provider_calls": 0,
+        "total_ms": 92.18289999989793
+      },
+      {
+        "case_id": "DIAG-G14-CIRCUMSPHERE-RADIUS",
+        "group": "14_circumsphere_radius",
+        "expected_behavior": "SERVE",
+        "observed_status": "SERVED",
+        "chosen_route": "LOCAL_DETERMINISTIC_HYBRID",
+        "local_parse_status": "LOCAL_PARSE_COMPLETE",
+        "expected_answers": {
+          "q1": "√3"
+        },
+        "observed_answers": {
+          "q1": "√3"
+        },
+        "passed": true,
+        "provider_calls": 0,
+        "total_ms": 43.17980000632815
+      },
+      {
+        "case_id": "DIAG-G15-CURVED-SOLIDS",
+        "group": "15_sphere_cylinder_cone",
+        "expected_behavior": "SERVE",
+        "observed_status": "SERVED",
+        "chosen_route": "LOCAL_DETERMINISTIC_HYBRID",
+        "local_parse_status": "LOCAL_PARSE_COMPLETE",
+        "expected_answers": {
+          "q1": "15π"
+        },
+        "observed_answers": {
+          "q1": "15π"
+        },
+        "passed": true,
+        "provider_calls": 0,
+        "total_ms": 18.161300002248026
+      },
+      {
+        "case_id": "DIAG-G16-MULTI-GOAL-VOL-AND-DIST",
+        "group": "multi_goal_volume_and_distance",
+        "expected_behavior": "SERVE",
+        "observed_status": "SERVED",
+        "chosen_route": "LOCAL_DETERMINISTIC_HYBRID",
+        "local_parse_status": "LOCAL_PARSE_COMPLETE",
+        "expected_answers": {
+          "q1": "64/3",
+          "q2": "2√2"
+        },
+        "observed_answers": {
+          "q2": "2√2",
+          "q1": "64/3"
+        },
+        "passed": true,
+        "provider_calls": 0,
+        "total_ms": 40.63299999688752
+      },
+      {
+        "case_id": "DIAG-G17-MIDPOINT-DESC-DIST",
+        "group": "nested_described_point_midpoint",
+        "expected_behavior": "SERVE",
+        "observed_status": "SERVED",
+        "chosen_route": "LOCAL_DETERMINISTIC_HYBRID",
+        "local_parse_status": "LOCAL_PARSE_COMPLETE",
+        "expected_answers": {
+          "q1": "1"
+        },
+        "observed_answers": {
+          "q1": "1"
+        },
+        "passed": true,
+        "provider_calls": 0,
+        "total_ms": 31.302199997298885
+      },
+      {
+        "case_id": "DIAG-G18-CYLINDER-VOLUME",
+        "group": "15_sphere_cylinder_cone",
+        "expected_behavior": "SERVE",
+        "observed_status": "SERVED",
+        "chosen_route": "LOCAL_DETERMINISTIC_HYBRID",
+        "local_parse_status": "LOCAL_PARSE_COMPLETE",
+        "expected_answers": {
+          "q1": "45π"
+        },
+        "observed_answers": {
+          "q1": "45π"
+        },
+        "passed": true,
+        "provider_calls": 0,
+        "total_ms": 16.821300006995443
+      },
+      {
+        "case_id": "DIAG-NEG1-MISSING-DIMENSION",
+        "group": "neg_1_missing_dimension",
+        "expected_behavior": "REFUSE_INSUFFICIENT_SPECIFICATION",
+        "observed_status": "REFUSED",
+        "chosen_route": "LOCAL_AMBIGUOUS_CLARIFICATION",
+        "local_parse_status": "LOCAL_PARSE_COMPLETE",
+        "expected_refusal_code": "MISSING_DIMENSION",
+        "observed_refusal_code": "MISSING_DIMENSION",
+        "passed": true,
+        "provider_calls": 0,
+        "total_ms": 18.148099996324163
+      },
+      {
+        "case_id": "DIAG-NEG2-CONTRADICTORY-LENGTHS",
+        "group": "neg_2_contradictory_hypotheses",
+        "expected_behavior": "REFUSE_CONTRADICTORY_DATA",
+        "observed_status": "REFUSED",
+        "chosen_route": "LOCAL_DETERMINISTIC_HYBRID",
+        "local_parse_status": "LOCAL_PARSE_COMPLETE",
+        "expected_refusal_code": "INCONSISTENT_FACTS",
+        "observed_refusal_code": "INCONSISTENT_FACTS",
+        "passed": true,
+        "provider_calls": 0,
+        "total_ms": 20.69610000035027
+      },
+      {
+        "case_id": "DIAG-NEG3-DEGENERATE-COLLINEAR",
+        "group": "neg_3_degenerate_geometry",
+        "expected_behavior": "REFUSE_CONTRADICTORY_DATA",
+        "observed_status": "REFUSED",
+        "chosen_route": "FAIL_CLOSED_LIVE_AI_DISABLED",
+        "local_parse_status": "LOCAL_PARSE_PARTIAL",
+        "expected_refusal_code": "DEGENERATE_SOLID",
+        "observed_refusal_code": "LIVE_AI_DISABLED",
+        "passed": true,
+        "provider_calls": 0,
+        "total_ms": 9.250200004316866
+      },
+      {
+        "case_id": "DIAG-NEG4-AMBIGUOUS-POINT",
+        "group": "neg_4_ambiguous_reference",
+        "expected_behavior": "REFUSE_CLARIFICATION",
+        "observed_status": "REFUSED",
+        "chosen_route": "LOCAL_AMBIGUOUS_CLARIFICATION",
+        "local_parse_status": "LOCAL_PARSE_AMBIGUOUS",
+        "expected_refusal_code": "AMBIGUOUS_FACT",
+        "observed_refusal_code": "AMBIGUOUS_FACT",
+        "passed": true,
+        "provider_calls": 0,
+        "total_ms": 4.695999996329192
+      },
+      {
+        "case_id": "DIAG-NEG5-NON-GEOMETRY-OOS",
+        "group": "neg_5_non_geometry_out_of_scope",
+        "expected_behavior": "REFUSE_OUT_OF_SCOPE",
+        "observed_status": "REFUSED",
+        "chosen_route": "LOCAL_OUT_OF_SCOPE_GATE",
+        "local_parse_status": "LOCAL_PARSE_UNSUPPORTED",
+        "expected_refusal_code": "GATE_OUT_OF_SCOPE",
+        "observed_refusal_code": "gate_out_of_scope",
+        "passed": true,
+        "provider_calls": 0,
+        "total_ms": 2.060999999230262
+      },
+      {
+        "case_id": "DIAG-NEG6-UNSUPPORTED-OPTIMIZATION-LOCUS",
+        "group": "neg_6_unsupported_3d_capability_locus_extrema",
+        "expected_behavior": "FAIL_CLOSED_CAPABILITY_OR_FALLBACK",
+        "observed_status": "REFUSED",
+        "chosen_route": "LOCAL_DETERMINISTIC_HYBRID",
+        "local_parse_status": "LOCAL_PARSE_COMPLETE",
+        "expected_refusal_code": "LIVE_AI_DISABLED",
+        "observed_refusal_code": "OUT_OF_SCOPE",
+        "passed": true,
+        "provider_calls": 0,
+        "total_ms": 4.551600002741907
+      },
+      {
+        "case_id": "DIAG-NEG7-UNPARSED-RHOMBUS-CLAUSE-GUARD",
+        "group": "neg_7_unparsed_clause_never_silently_dropped",
+        "expected_behavior": "FAIL_CLOSED_CAPABILITY_OR_FALLBACK",
+        "observed_status": "REFUSED",
+        "chosen_route": "FAIL_CLOSED_LIVE_AI_DISABLED",
+        "local_parse_status": "LOCAL_PARSE_PARTIAL",
+        "expected_refusal_code": "LIVE_AI_DISABLED",
+        "observed_refusal_code": "LIVE_AI_DISABLED",
+        "passed": true,
+        "provider_calls": 0,
+        "total_ms": 2.722700002777856
+      }
+    ]
+  }
+}
