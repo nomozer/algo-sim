@@ -23,11 +23,11 @@
   },
   "reconciled_dev_72_summary": {
     "total_cases": 72,
-    "in_scope_positive_total": 72,
-    "in_scope_supported_positive_total": 66,
+    "in_scope_positive_total": 62,
+    "in_scope_supported_positive_total": 56,
     "served_correct": 56,
-    "supported_served_rate_pct": 84.85,
-    "all_in_scope_served_rate_pct": 77.78,
+    "supported_served_rate_pct": 100.0,
+    "all_in_scope_served_rate_pct": 90.32,
     "known_gap_probes_count": 6,
     "known_gap_probes": {
       "PL5": "G2",
@@ -37,9 +37,9 @@
       "MG9": "G6",
       "RE10": "G7"
     },
-    "negative_total": 0,
-    "correct_refusal": 0,
-    "correct_clarification": 0,
+    "negative_total": 10,
+    "correct_refusal": 9,
+    "correct_clarification": 1,
     "false_refusal": 0,
     "wrong_served": 0
   },
@@ -1159,6 +1159,28 @@
       "authoritative_value": "strict body CER 1.09% (lenient 0.74%), strict symbol recall 0.00% (0/49) / lenient 46.94% (23/49), math tokens exact 28.57% (6/21), cold/warm p50 205.8 / 75.9 ms, peak RSS 81.5 MB.",
       "root_cause": "CURRENT_STATE.md / OPEN_ISSUES.md mixed full-text CER and VietOCR/older numbers into the tesseract_vie_fast summary sentence.",
       "action_taken": "Updated docs/{CURRENT_STATE,OPEN_ISSUES}.md to match workstream_a_vision_receipt.json."
+    },
+    {
+      "discrepancy_id": "REC-08",
+      "metric_or_claim": "EVALUATION_CANDIDATE.json file count (so_file = 106 vs 105 unique files) and cross-platform determinism",
+      "value_in_report_or_docs": {
+        "earlier_report_R1_claim": "Incorrectly attributed 106 vs 105 to adapter4_Export.py vs adapter4_export.py case aliasing on Windows NTFS."
+      },
+      "value_in_json_receipt": {
+        "MEASURED_SYSTEM_PATHS_overlap": [
+          "frontend/src/simulations/domains/semantic",
+          "frontend/src/simulations/domains/semantic/semantic_program.schema.json"
+        ],
+        "duplicate_posix_path": "frontend/src/simulations/domains/semantic/semantic_program.schema.json"
+      },
+      "value_from_code_and_per_case": {
+        "duplicate_entry": "frontend/src/simulations/domains/semantic/semantic_program.schema.json",
+        "cross_platform_deterministic": true,
+        "os_case_sensitivity_dependent": false
+      },
+      "authoritative_value": "freeze_evaluation_candidate.py::_measured_system_files() returns N entries with N-1 unique paths because MEASURED_SYSTEM_PATHS lists both directory 'frontend/src/simulations/domains/semantic' and file 'frontend/src/simulations/domains/semantic/semantic_program.schema.json' (exact lowercase POSIX path duplicated twice, 100% deterministic across Windows, Linux, and macOS).",
+      "root_cause": "Explicit file path inside an already-listed directory in MEASURED_SYSTEM_PATHS (not OS case-insensitivity).",
+      "action_taken": "Updated R-1 in ALGOSIM_RELEASE_STABILIZATION_REPORT.md and verified cross-platform determinism."
     }
   ]
 }

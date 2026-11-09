@@ -1,0 +1,45 @@
+{
+  "schema": "algosim-phase0-reconciliation-verification/1",
+  "status": "ALL_PHASE0_CHECKS_VERIFIED",
+  "iii_1_dev72_summary": {
+    "total_cases": 72,
+    "in_scope_positive_total": 62,
+    "in_scope_supported_positive_total": 56,
+    "served_correct": 56,
+    "supported_served_rate_pct": 100.0,
+    "all_in_scope_served_rate_pct": 90.32,
+    "known_gap_probes_count": 6,
+    "known_gap_probes": {
+      "PL5": "G2",
+      "PA3": "G2",
+      "MG5": "G3",
+      "SE3": "G4",
+      "MG9": "G6",
+      "RE10": "G7"
+    },
+    "negative_total": 10,
+    "correct_refusal": 9,
+    "correct_clarification": 1,
+    "false_refusal": 0,
+    "wrong_served": 0
+  },
+  "iii_2_gap_namespace_registry_keys": [
+    "DEV72-G2",
+    "DEV72-G3",
+    "DEV72-G4",
+    "DEV72-G6",
+    "DEV72-G7"
+  ],
+  "iii_3_benchmark_12_fixtures": {
+    "total_fixtures": 12,
+    "readable_non_blank_fixtures": 12,
+    "valid_fixtures_holding_all_content": 8
+  },
+  "iii_4_multi_solution_sign_enumeration": {
+    "engine_version": "geometry-function-engine/24",
+    "three_apices_disambiguated_status": "SERVED",
+    "three_apices_disambiguated_answer": "√74/2",
+    "verified": true
+  },
+  "iii_5_candidate_freeze_crlf_normalized": true
+}

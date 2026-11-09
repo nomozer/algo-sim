@@ -4,6 +4,19 @@
 Retired branch names now have local `refs/archive/repository-closure/` references and a verified private self-contained bundle.
 Existing evidence and historical reports below are unchanged; no research result is reinterpreted by this Git-state update.
 
+## WAVE_ID = LOCAL_FIRST_GEOMETRY_UNDERSTANDING
+
+REPORT = docs/evaluation/geometry/runs/local-first-geometry-understanding/ALGOSIM_LOCAL_FIRST_GEOMETRY_UNDERSTANDING_REPORT.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/local-first-geometry-understanding/
+START_BASE = 4baf4a304cf930b7a38756e2b4b5428f1f89cf2c (tip of feat/release-stabilization-validation-readiness)
+CODE_COMMIT = 63539c2f0eeb574a8fb9c195a43480c05936dfe0 (measured_system tree hash 0493da33470c43ec40939bf21c608f2a425ac7721579ca309e51483231b4777d across 108 measured entries; CACHE_VERSION 132 unchanged)
+CLASSIFICATION = OFFLINE_LOCAL_FIRST_GEOMETRY_UNDERSTANDING_AND_ADAPTIVE_ROUTING (PHASE_0_PREFLIGHT_VERIFIED = YES; LOCAL_GEOMETRY_PARSER_IMPLEMENTED_AND_VERIFIED = YES; ADAPTIVE_INPUT_ROUTER_IMPLEMENTED_AND_VERIFIED = YES; TEXT_ZERO_AI_PATH_VERIFIED = YES; IMAGE_SINGLE_AI_CALL_PATH_VERIFIED = YES; LOCAL_OCR_PRODUCTION_STATUS = LOCAL_OCR_DIAGNOSTIC_ONLY; HYBRID_CAPABILITY_NEXT_PHASE_PLAN = READY; INDEPENDENT_H1_VALIDATION = NOT_MEASURED; LIVE_VISION_EVALUATION = NOT_MEASURED; REAL_WORLD_CORPUS_NOT_AVAILABLE; branch feat/local-first-geometry-understanding, not merged to main, not pushed)
+PRODUCT_CHANGE = YES (backend: local_geometry_parser.py, adaptive_input_router.py, hybrid_offline.py, main.py, unified_input.py, engine.py)
+MODEL_REQUEST_COUNT = 0
+VERIFICATION = ALGOSIM_LOCAL_FIRST_GEOMETRY_UNDERSTANDING_REPORT.md; run.json; phase0_reconciliation_verification_receipt.json; local_parser_benchmark_receipt.json; comparative_routes_t0_t1_i0_i1_i2_receipt.json; tools/evaluate_local_first_understanding.py; backend/tests/geometry/test_local_geometry_parser.py; backend/tests/geometry/test_adaptive_input_router.py; Full T3 (14,060 pytest passed, 2,000 vitest passed, 5/5 demo replay, 6/6 crash surface)
+CORRECTS = docs/evaluation/geometry/runs/release-stabilization-validation-readiness/ALGOSIM_RELEASE_STABILIZATION_REPORT.md
+CORRECTED_BY = NONE
+
 ## WAVE_ID = RELEASE_STABILIZATION_VALIDATION_READINESS
 
 REPORT = docs/evaluation/geometry/runs/release-stabilization-validation-readiness/ALGOSIM_RELEASE_STABILIZATION_REPORT.md
@@ -15,7 +28,7 @@ PRODUCT_CHANGE = YES (backend: engine.py, region_detector.py, unified_input.py; 
 MODEL_REQUEST_COUNT = 0
 VERIFICATION = ALGOSIM_RELEASE_STABILIZATION_REPORT.md; run.json; evidence_reconciliation_receipt.json; correctness_hardening_receipt.json; h1_readiness_receipt.json; real_world_vision_readiness_receipt.json; real_world_vision_corpus_template.json; architecture_gap_decisions_receipt.json; tools/reconcile_and_verify_readiness.py; Full T3 (14,041 pytest passed, 2,000 vitest passed, 5/5 demo replay, 6/6 crash surface)
 CORRECTS = docs/evaluation/geometry/runs/independent-geometry-and-vision-evaluation/INDEPENDENT_GEOMETRY_AND_VISION_EVALUATION_REPORT.md
-CORRECTED_BY = NONE
+CORRECTED_BY = docs/evaluation/geometry/runs/local-first-geometry-understanding/ALGOSIM_LOCAL_FIRST_GEOMETRY_UNDERSTANDING_REPORT.md (reconciles Dev72 summary keys in_scope_supported_positive_total=56 vs in_scope_positive_total=62, disambiguates DEV72-G2..G7 vs W11-G2..G7 namespace, verifies benchmark_12_fixtures_reverification.total_fixtures=12, and generalizes engine.py sign enumeration to trilateration apices without explicit altitude facts)
 
 ## WAVE_ID = INDEPENDENT_GEOMETRY_AND_VISION_EVALUATION
 

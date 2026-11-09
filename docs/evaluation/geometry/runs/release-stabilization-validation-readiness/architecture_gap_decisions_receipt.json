@@ -13,6 +13,73 @@
       "RE10"
     ]
   },
+  "gap_namespace_registry": {
+    "DEV72-G2": {
+      "dev_matrix_72_cases": [
+        "PL5",
+        "PA3"
+      ],
+      "heldout_46_cases": [
+        "HB35"
+      ],
+      "heldout_alias": "HB-G2",
+      "pytest_node_ids": [
+        "backend/tests/geometry/test_hybrid_reasoning_generalization.py::test_bridge_level_gap_reproduction[PL5]",
+        "backend/tests/geometry/test_hybrid_reasoning_generalization.py::test_bridge_level_gap_reproduction[PA3]"
+      ],
+      "superseded_prose_mislabel": "IH-E3"
+    },
+    "DEV72-G3": {
+      "dev_matrix_72_cases": [
+        "MG5"
+      ],
+      "heldout_46_cases": [],
+      "heldout_alias": null,
+      "pytest_node_ids": [
+        "backend/tests/geometry/test_hybrid_reasoning_generalization.py::test_bridge_level_gap_reproduction[MG5]"
+      ],
+      "superseded_prose_mislabel": "IH-E4"
+    },
+    "DEV72-G4": {
+      "dev_matrix_72_cases": [
+        "SE3"
+      ],
+      "heldout_46_cases": [
+        "HB36"
+      ],
+      "heldout_alias": "HB-G4",
+      "pytest_node_ids": [
+        "backend/tests/geometry/test_hybrid_reasoning_generalization.py::test_bridge_level_gap_reproduction[SE3]"
+      ],
+      "superseded_prose_mislabel": "IH-E5"
+    },
+    "DEV72-G6": {
+      "dev_matrix_72_cases": [
+        "MG9"
+      ],
+      "heldout_46_cases": [
+        "HB37"
+      ],
+      "heldout_alias": "HB-G6",
+      "pytest_node_ids": [
+        "backend/tests/geometry/test_hybrid_reasoning_generalization.py::test_g6_three_defined_points_in_one_problem"
+      ],
+      "superseded_prose_mislabel": "IH-E6"
+    },
+    "DEV72-G7": {
+      "dev_matrix_72_cases": [
+        "RE10"
+      ],
+      "heldout_46_cases": [
+        "HB38"
+      ],
+      "heldout_alias": "HB-G7",
+      "pytest_node_ids": [
+        "backend/tests/geometry/test_hybrid_reasoning_generalization.py::test_bridge_level_gap_reproduction[RE10]"
+      ],
+      "superseded_prose_mislabel": "IH-G1 / IH-G2"
+    }
+  },
   "gap_decisions": [
     {
       "gap_id": "G2",

@@ -9,7 +9,7 @@
   },
   "section_iv_mathematical_hardening": {
     "multi_anchor_off_base_sign_enumeration": {
-      "mechanism": "Fixes primary anchor off_base_anchors[0] at +z modulo global reflection R_z and enumerates all 2^(m-1)-1 relative sign combinations for secondary anchors off_base_anchors[1:] (up to MAX_SECONDARY_HEIGHT_ANCHORS = 4, i.e., m <= 5 total independent anchors).",
+      "mechanism": "Places independent off-base apices before off-base intersections, fixes primary anchor off_base_anchors[0] at +z modulo global reflection R_z, dynamically discovers secondary anchors across branches, and verifies goal equivalence (answer_exact, answers, section_certificates) across all 2^(m-1) sign combinations (up to MAX_SECONDARY_HEIGHT_ANCHORS = 4).",
       "two_pyramids_ambiguous_no_inter_apex_distance": {
         "status": "REFUSED",
         "code": "AMBIGUOUS_FACT"
@@ -47,9 +47,168 @@
       "force_needs_confirmation_on_conflicting_equality_assignments": true
     },
     "benchmark_12_fixtures_reverification": {
-      "total_fixtures": 0,
-      "valid_fixtures_holding_all_content": 0,
-      "per_fixture": []
+      "corpus_dir": "docs/evaluation/geometry/photo-problem-to-scene/corpus",
+      "total_fixtures": 12,
+      "readable_non_blank_fixtures": 12,
+      "valid_fixtures_holding_all_content": 8,
+      "per_fixture": [
+        {
+          "case_id": "c01_ro_chop_thiet_dien",
+          "file_name": "c01_ro_chop_thiet_dien.png",
+          "dimensions_px": [
+            1120,
+            480
+          ],
+          "used_crop": true,
+          "area_ratio": 0.5755,
+          "crop_holds_all_content": true,
+          "is_blank_or_unreadable": false,
+          "ambiguous_multi_problem": false
+        },
+        {
+          "case_id": "c02_ro_mat_cau",
+          "file_name": "c02_ro_mat_cau.jpg",
+          "dimensions_px": [
+            1120,
+            480
+          ],
+          "used_crop": true,
+          "area_ratio": 0.4007,
+          "crop_holds_all_content": true,
+          "is_blank_or_unreadable": false,
+          "ambiguous_multi_problem": false
+        },
+        {
+          "case_id": "c03_ro_hinh_tru",
+          "file_name": "c03_ro_hinh_tru.webp",
+          "dimensions_px": [
+            1120,
+            480
+          ],
+          "used_crop": true,
+          "area_ratio": 0.4087,
+          "crop_holds_all_content": true,
+          "is_blank_or_unreadable": false,
+          "ambiguous_multi_problem": false
+        },
+        {
+          "case_id": "c04_nghieng_hinh_non",
+          "file_name": "c04_nghieng_hinh_non.jpg",
+          "dimensions_px": [
+            1140,
+            530
+          ],
+          "used_crop": true,
+          "area_ratio": 0.5125,
+          "crop_holds_all_content": false,
+          "is_blank_or_unreadable": false,
+          "ambiguous_multi_problem": false
+        },
+        {
+          "case_id": "c05_nghieng_cong_thuc_hinh_tru",
+          "file_name": "c05_nghieng_cong_thuc_hinh_tru.jpg",
+          "dimensions_px": [
+            1152,
+            794
+          ],
+          "used_crop": false,
+          "area_ratio": 1.0,
+          "crop_holds_all_content": false,
+          "is_blank_or_unreadable": false,
+          "ambiguous_multi_problem": false
+        },
+        {
+          "case_id": "c06_toi_mo_elip_non",
+          "file_name": "c06_toi_mo_elip_non.jpg",
+          "dimensions_px": [
+            1120,
+            480
+          ],
+          "used_crop": true,
+          "area_ratio": 0.4087,
+          "crop_holds_all_content": true,
+          "is_blank_or_unreadable": false,
+          "ambiguous_multi_problem": false
+        },
+        {
+          "case_id": "c07_mo_chop_ngu_giac",
+          "file_name": "c07_mo_chop_ngu_giac.jpg",
+          "dimensions_px": [
+            1120,
+            480
+          ],
+          "used_crop": true,
+          "area_ratio": 0.4963,
+          "crop_holds_all_content": true,
+          "is_blank_or_unreadable": false,
+          "ambiguous_multi_problem": false
+        },
+        {
+          "case_id": "c08_de_va_hinh_chop",
+          "file_name": "c08_de_va_hinh_chop.png",
+          "dimensions_px": [
+            1120,
+            788
+          ],
+          "used_crop": false,
+          "area_ratio": 1.0,
+          "crop_holds_all_content": false,
+          "is_blank_or_unreadable": false,
+          "ambiguous_multi_problem": false
+        },
+        {
+          "case_id": "c09_de_va_hinh_cau",
+          "file_name": "c09_de_va_hinh_cau.webp",
+          "dimensions_px": [
+            1120,
+            700
+          ],
+          "used_crop": true,
+          "area_ratio": 0.8122,
+          "crop_holds_all_content": true,
+          "is_blank_or_unreadable": false,
+          "ambiguous_multi_problem": false
+        },
+        {
+          "case_id": "c10_exif_xoay_gps",
+          "file_name": "c10_exif_xoay_gps.png",
+          "dimensions_px": [
+            1120,
+            480
+          ],
+          "used_crop": true,
+          "area_ratio": 0.4087,
+          "crop_holds_all_content": true,
+          "is_blank_or_unreadable": false,
+          "ambiguous_multi_problem": false
+        },
+        {
+          "case_id": "c11_chi_co_hinh",
+          "file_name": "c11_chi_co_hinh.png",
+          "dimensions_px": [
+            1120,
+            528
+          ],
+          "used_crop": true,
+          "area_ratio": 0.432,
+          "crop_holds_all_content": true,
+          "is_blank_or_unreadable": false,
+          "ambiguous_multi_problem": false
+        },
+        {
+          "case_id": "c12_ngoai_nang_luc",
+          "file_name": "c12_ngoai_nang_luc.jpg",
+          "dimensions_px": [
+            1120,
+            480
+          ],
+          "used_crop": true,
+          "area_ratio": 0.3901,
+          "crop_holds_all_content": true,
+          "is_blank_or_unreadable": false,
+          "ambiguous_multi_problem": false
+        }
+      ]
     }
   }
 }

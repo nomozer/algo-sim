@@ -410,3 +410,83 @@ def test_section_iv_zero_distance_and_degenerate_geometry_invariants():
     ]
     r_bad = engine.dung_tu_loi_goi(bad_tri_text, {"calls": bad_tri_calls, "named_planes": []}, (), ("Tính thể tích khối chóp S.ABC.",))
     assert r_bad.status == "REFUSED" and r_bad.code == "INCONSISTENT_FACTS"
+
+
+def test_section_iii_4_off_base_intersection_before_trilaterated_third_apex_discovers_all_anchors():
+    """When an off-base line-line intersection (I = PA ∩ ST) depends on apices P, S, T where T is placed by
+    `_dinh_tu_ba_canh_ben`, all three off-base anchors are placed before off-base intersections and the unique
+    sign configuration (S: -z, T: -z) disambiguated by SP = √314, TP = 13 is served."""
+    text = (
+        "Cho hình chóp S.ABC, hình chóp T.ABC và hình chóp P.ABC có đáy ABC vuông tại A, AB = 6, AC = 8. "
+        "Cạnh PA vuông góc với mặt phẳng (ABC), PA = 5. "
+        "Biết SA = 13, SB = 13, SC = 13. "
+        "Biết TA = √74, TB = √74, TC = √74. "
+        "Gọi M là trung điểm của cạnh SP. "
+        "Biết SP = √314, TP = 13. Tính độ dài đoạn thẳng MT."
+    )
+    calls = [
+        {"id": "c1", "fn": "pyramid", "args": {"apex": "S", "base": ["A", "B", "C"]}, "source": {"quotes": ["Cho hình chóp S.ABC"]}},
+        {"id": "c2", "fn": "pyramid", "args": {"apex": "T", "base": ["A", "B", "C"]}, "source": {"quotes": ["hình chóp T.ABC"]}},
+        {"id": "c3", "fn": "pyramid", "args": {"apex": "P", "base": ["A", "B", "C"]}, "source": {"quotes": ["hình chóp P.ABC"]}},
+        {"id": "c4", "fn": "right_angle", "args": {"vertex": "A", "rays": ["B", "C"]}, "source": {"quotes": ["có đáy ABC vuông tại A"]}},
+        {"id": "c5", "fn": "segment_length", "args": {"segment": ["A", "B"], "value": "6"}, "source": {"quotes": ["AB = 6"]}},
+        {"id": "c6", "fn": "segment_length", "args": {"segment": ["A", "C"], "value": "8"}, "source": {"quotes": ["AC = 8"]}},
+        {"id": "c7", "fn": "perpendicular_line_plane", "args": {"line": ["P", "A"], "plane": ["A", "B", "C"]}, "source": {"quotes": ["Cạnh PA vuông góc với mặt phẳng (ABC)"]}},
+        {"id": "c8", "fn": "segment_length", "args": {"segment": ["P", "A"], "value": "5"}, "source": {"quotes": ["PA = 5"]}},
+        {"id": "c9", "fn": "segment_length", "args": {"segment": ["S", "A"], "value": "13"}, "source": {"quotes": ["SA = 13"]}},
+        {"id": "c10", "fn": "segment_length", "args": {"segment": ["S", "B"], "value": "13"}, "source": {"quotes": ["SB = 13"]}},
+        {"id": "c11", "fn": "segment_length", "args": {"segment": ["S", "C"], "value": "13"}, "source": {"quotes": ["SC = 13"]}},
+        {"id": "c12", "fn": "segment_length", "args": {"segment": ["T", "A"], "value": "√74"}, "source": {"quotes": ["TA = √74"]}},
+        {"id": "c13", "fn": "segment_length", "args": {"segment": ["T", "B"], "value": "√74"}, "source": {"quotes": ["TB = √74"]}},
+        {"id": "c14", "fn": "segment_length", "args": {"segment": ["T", "C"], "value": "√74"}, "source": {"quotes": ["TC = √74"]}},
+        {"id": "c15", "fn": "midpoint", "args": {"point": "M", "segment": ["S", "P"]}, "source": {"quotes": ["Gọi M là trung điểm của cạnh SP"]}},
+        {"id": "c16", "fn": "segment_length", "args": {"segment": ["S", "P"], "value": "√314"}, "source": {"quotes": ["SP = √314"]}},
+        {"id": "c17", "fn": "segment_length", "args": {"segment": ["T", "P"], "value": "13"}, "source": {"quotes": ["TP = 13"]}},
+        {"id": "g1", "fn": "ask_length", "args": {"segment": ["M", "T"]}, "source": {"quotes": ["Tính độ dài đoạn thẳng MT."]}},
+    ]
+    r = engine.dung_tu_loi_goi(text, {"calls": calls, "named_planes": []}, (), ("Tính độ dài đoạn thẳng MT.",))
+    assert r.status == "SERVED"
+    assert r.points["S"][2] == Fraction(-12, 5)
+    assert r.points["T"][2] == Fraction(-7, 5)
+    assert r.answers == {"g1": "√74/2"}
+
+
+def test_section_iii_1_3_5_reconciliation_and_cross_platform_candidate_invariants():
+    """Phase 0 verification of Dev 72 positive/negative split (62 + 10 == 72), 12 photo benchmark fixtures,
+    G2-G7 namespace registry, and cross-platform candidate hash duplicate entry."""
+    repo_root = Path(__file__).resolve().parents[3]
+    r_tools = repo_root / "docs/evaluation/geometry/runs/release-stabilization-validation-readiness/tools"
+    if str(r_tools) not in sys.path:
+        sys.path.insert(0, str(r_tools))
+    import reconcile_and_verify_readiness as RVR
+    import freeze_evaluation_candidate as FEC
+
+    rec = RVR.build_evidence_reconciliation()
+    dev72 = rec["reconciled_dev_72_summary"]
+    assert dev72["total_cases"] == 72
+    assert dev72["in_scope_positive_total"] == 62
+    assert dev72["in_scope_supported_positive_total"] == 56
+    assert dev72["served_correct"] == 56
+    assert dev72["negative_total"] == 10
+    assert dev72["correct_refusal"] == 9
+    assert dev72["correct_clarification"] == 1
+    assert dev72["in_scope_positive_total"] + dev72["negative_total"] == dev72["total_cases"]
+
+    hardening = RVR.build_correctness_hardening_receipt()
+    fix12 = hardening["section_v_image_ingestion_hardening"]["benchmark_12_fixtures_reverification"]
+    assert fix12["total_fixtures"] == 12
+    assert len(fix12["per_fixture"]) == 12
+
+    gap_dec = RVR.build_architecture_gap_decisions()
+    ns = gap_dec["gap_namespace_registry"]
+    assert ns["DEV72-G2"]["dev_matrix_72_cases"] == ["PL5", "PA3"]
+    assert ns["DEV72-G3"]["dev_matrix_72_cases"] == ["MG5"]
+    assert ns["DEV72-G4"]["dev_matrix_72_cases"] == ["SE3"]
+    assert ns["DEV72-G6"]["dev_matrix_72_cases"] == ["MG9"]
+    assert ns["DEV72-G7"]["dev_matrix_72_cases"] == ["RE10"]
+
+    files = FEC._measured_system_files()
+    rel_posix = [p.relative_to(FEC.ROOT).as_posix() for p in files]
+    assert len(rel_posix) - len(set(rel_posix)) == 1
+    dups = [p for p in set(rel_posix) if rel_posix.count(p) > 1]
+    assert dups == ["frontend/src/simulations/domains/semantic/semantic_program.schema.json"]

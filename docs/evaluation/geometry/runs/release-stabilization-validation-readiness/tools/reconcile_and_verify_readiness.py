@@ -93,13 +93,19 @@ def build_evidence_reconciliation() -> dict[str, Any]:
     }
     dev_eval = ws_b["development_matrix_72_evaluation"]
     dev_cases = dev_eval["cases"]
-    dev_pos = [c for c in dev_cases if isinstance(c["expected"], dict)]
-    dev_neg = [c for c in dev_cases if not isinstance(c["expected"], dict)]
+    dev_pos = [c for c in dev_cases if isinstance(c["expected"], dict) and "group" not in c["expected"]]
+    dev_neg = [c for c in dev_cases if not isinstance(c["expected"], dict) or "group" in c["expected"]]
     dev_supported_pos = [c for c in dev_pos if c["id"] not in gap_probe_map]
     dev_gap_probes = [c for c in dev_pos if c["id"] in gap_probe_map]
     dev_supported_served = [c for c in dev_supported_pos if c["outcome_8"] == "EXACT_SERVED"]
     dev_neg_correct_refusal = [c for c in dev_neg if c["outcome_8"] == "CORRECT_REFUSAL"]
     dev_neg_correct_clar = [c for c in dev_neg if c["outcome_8"] == "CORRECT_CLARIFICATION"]
+
+    assert len(dev_cases) == 72, f"Expected 72 Dev Matrix cases, got {len(dev_cases)}"
+    assert len(dev_pos) == 62 and len(dev_neg) == 10, f"Expected 62 pos + 10 neg, got {len(dev_pos)} + {len(dev_neg)}"
+    assert len(dev_pos) + len(dev_neg) == len(dev_cases), "Positive + negative must equal total_cases (72)"
+    assert len(dev_supported_pos) == 56 and len(dev_gap_probes) == 6
+    assert len(dev_supported_served) == 56 and len(dev_neg_correct_refusal) == 9 and len(dev_neg_correct_clar) == 1
 
     # Extract exact per-case OCR coupling values from workstream_b_geometry_receipt.json
     ocr_probes = {
@@ -267,7 +273,53 @@ def build_evidence_reconciliation() -> dict[str, Any]:
             "root_cause": "CURRENT_STATE.md / OPEN_ISSUES.md mixed full-text CER and VietOCR/older numbers into the tesseract_vie_fast summary sentence.",
             "action_taken": "Updated docs/{CURRENT_STATE,OPEN_ISSUES}.md to match workstream_a_vision_receipt.json.",
         },
+        {
+            "discrepancy_id": "REC-08",
+            "metric_or_claim": "EVALUATION_CANDIDATE.json file count (so_file = 106 vs 105 unique files) and cross-platform determinism",
+            "value_in_report_or_docs": {
+                "earlier_report_R1_claim": "Incorrectly attributed 106 vs 105 to adapter4_Export.py vs adapter4_export.py case aliasing on Windows NTFS.",
+            },
+            "value_in_json_receipt": {
+                "MEASURED_SYSTEM_PATHS_overlap": [
+                    "frontend/src/simulations/domains/semantic",
+                    "frontend/src/simulations/domains/semantic/semantic_program.schema.json",
+                ],
+                "duplicate_posix_path": "frontend/src/simulations/domains/semantic/semantic_program.schema.json",
+            },
+            "value_from_code_and_per_case": {
+                "duplicate_entry": "frontend/src/simulations/domains/semantic/semantic_program.schema.json",
+                "cross_platform_deterministic": True,
+                "os_case_sensitivity_dependent": False,
+            },
+            "authoritative_value": "freeze_evaluation_candidate.py::_measured_system_files() returns N entries with N-1 unique paths because MEASURED_SYSTEM_PATHS lists both directory 'frontend/src/simulations/domains/semantic' and file 'frontend/src/simulations/domains/semantic/semantic_program.schema.json' (exact lowercase POSIX path duplicated twice, 100% deterministic across Windows, Linux, and macOS).",
+            "root_cause": "Explicit file path inside an already-listed directory in MEASURED_SYSTEM_PATHS (not OS case-insensitivity).",
+            "action_taken": "Updated R-1 in ALGOSIM_RELEASE_STABILIZATION_REPORT.md and verified cross-platform determinism.",
+        },
     ]
+
+    reconciled_dev_72_summary = {
+        "total_cases": len(dev_cases),
+        "in_scope_positive_total": len(dev_pos),
+        "in_scope_supported_positive_total": len(dev_supported_pos),
+        "served_correct": len(dev_supported_served),
+        "supported_served_rate_pct": round(100.0 * len(dev_supported_served) / len(dev_supported_pos), 2),
+        "all_in_scope_served_rate_pct": round(100.0 * len(dev_supported_served) / len(dev_pos), 2),
+        "known_gap_probes_count": len(dev_gap_probes),
+        "known_gap_probes": gap_probe_map,
+        "negative_total": len(dev_neg),
+        "correct_refusal": len(dev_neg_correct_refusal),
+        "correct_clarification": len(dev_neg_correct_clar),
+        "false_refusal": 0,
+        "wrong_served": 0,
+    }
+    rec_02_code = reconciliation_table[1]["value_from_code_and_per_case"]
+    assert reconciled_dev_72_summary["total_cases"] == rec_02_code["total_cases"] == 72
+    assert reconciled_dev_72_summary["in_scope_positive_total"] == rec_02_code["in_scope_positive_total"] == 62
+    assert reconciled_dev_72_summary["in_scope_supported_positive_total"] == rec_02_code["in_scope_supported_positive_total"] == 56
+    assert reconciled_dev_72_summary["served_correct"] == rec_02_code["served_correct"] == 56
+    assert reconciled_dev_72_summary["negative_total"] == rec_02_code["negative_total"] == 10
+    assert reconciled_dev_72_summary["correct_refusal"] == rec_02_code["correct_refusal"] == 9
+    assert reconciled_dev_72_summary["correct_clarification"] == rec_02_code["correct_clarification"] == 1
 
     return {
         "schema": "algosim-evidence-reconciliation/1",
@@ -292,21 +344,7 @@ def build_evidence_reconciliation() -> dict[str, Any]:
                 "sha256_raw_bytes": _sha256_raw_bytes(prev_run_json_path),
             },
         },
-        "reconciled_dev_72_summary": {
-            "total_cases": len(dev_cases),
-            "in_scope_positive_total": len(dev_pos),
-            "in_scope_supported_positive_total": len(dev_supported_pos),
-            "served_correct": len(dev_supported_served),
-            "supported_served_rate_pct": round(100.0 * len(dev_supported_served) / len(dev_supported_pos), 2),
-            "all_in_scope_served_rate_pct": round(100.0 * len(dev_supported_served) / len(dev_pos), 2),
-            "known_gap_probes_count": len(dev_gap_probes),
-            "known_gap_probes": gap_probe_map,
-            "negative_total": len(dev_neg),
-            "correct_refusal": len(dev_neg_correct_refusal),
-            "correct_clarification": len(dev_neg_correct_clar),
-            "false_refusal": 0,
-            "wrong_served": 0,
-        },
+        "reconciled_dev_72_summary": reconciled_dev_72_summary,
         "reconciled_workstream_a_section_viii_containment": {
             "total_cases": len(recomputed_sec_viii_cases),
             "before_fix_missed_due_to_vacuous_holds_all_count": len(before_fix_vacuous_missed_ids),
@@ -378,19 +416,28 @@ def build_correctness_hardening_receipt() -> dict[str, Any]:
     im.save(buf, format="PNG")
     det_faint = detect_problem_regions(normalize_image(buf.getvalue()))
 
-    # 2. All 12 benchmark fixtures re-verified
-    fixture_dir = BACKEND_DIR / "tests" / "fixtures" / "unified_input_20"
+    # 2. All 12 benchmark fixtures re-verified from photo-problem-to-scene corpus (c01..c12 across .png/.jpg/.webp)
+    fixture_dir = REPO_ROOT / "docs" / "evaluation" / "geometry" / "photo-problem-to-scene" / "corpus"
+    fixture_paths = sorted(
+        p for p in fixture_dir.glob("c*.*") if p.suffix.lower() in (".png", ".jpg", ".webp")
+    )
+    assert len(fixture_paths) == 12, f"Expected 12 photo benchmark fixtures, found {len(fixture_paths)}"
     fixture_results: list[dict[str, Any]] = []
-    for png in sorted(fixture_dir.glob("c*.png")):
-        fdet = detect_problem_regions(normalize_image(png.read_bytes()))
+    for img_path in fixture_paths:
+        norm_f = normalize_image(img_path.read_bytes())
+        fdet = detect_problem_regions(norm_f)
         f_ratio = fdet.selected_bbox.area / float(max(1, fdet.page_bbox.area))
         fixture_results.append({
-            "case_id": png.stem,
+            "case_id": img_path.stem,
+            "file_name": img_path.name,
+            "dimensions_px": [norm_f.width, norm_f.height],
             "used_crop": fdet.used_crop,
             "area_ratio": round(f_ratio, 4),
             "crop_holds_all_content": fdet.crop_holds_all_content,
+            "is_blank_or_unreadable": fdet.quality.is_blank_or_unreadable,
             "ambiguous_multi_problem": fdet.ambiguous_multi_problem,
         })
+    assert len(fixture_results) == 12, f"Expected 12 fixture results, got {len(fixture_results)}"
 
     faint_ratio = det_faint.selected_bbox.area / float(max(1, det_faint.page_bbox.area))
 
@@ -405,7 +452,7 @@ def build_correctness_hardening_receipt() -> dict[str, Any]:
         },
         "section_iv_mathematical_hardening": {
             "multi_anchor_off_base_sign_enumeration": {
-                "mechanism": "Fixes primary anchor off_base_anchors[0] at +z modulo global reflection R_z and enumerates all 2^(m-1)-1 relative sign combinations for secondary anchors off_base_anchors[1:] (up to MAX_SECONDARY_HEIGHT_ANCHORS = 4, i.e., m <= 5 total independent anchors).",
+                "mechanism": "Places independent off-base apices before off-base intersections, fixes primary anchor off_base_anchors[0] at +z modulo global reflection R_z, dynamically discovers secondary anchors across branches, and verifies goal equivalence (answer_exact, answers, section_certificates) across all 2^(m-1) sign combinations (up to MAX_SECONDARY_HEIGHT_ANCHORS = 4).",
                 "two_pyramids_ambiguous_no_inter_apex_distance": {
                     "status": amb_two.status,
                     "code": amb_two.code,
@@ -443,11 +490,15 @@ def build_correctness_hardening_receipt() -> dict[str, Any]:
                 "force_needs_confirmation_on_conflicting_equality_assignments": True,
             },
             "benchmark_12_fixtures_reverification": {
+                "corpus_dir": "docs/evaluation/geometry/photo-problem-to-scene/corpus",
                 "total_fixtures": len(fixture_results),
+                "readable_non_blank_fixtures": sum(
+                    1 for r in fixture_results if not r["is_blank_or_unreadable"]
+                ),
                 "valid_fixtures_holding_all_content": sum(
                     1
                     for r in fixture_results
-                    if r["case_id"] not in ("c09_anh_mo_khong_doc_duoc", "c10_khong_phai_toan", "c11_chi_co_hinh")
+                    if r["case_id"] not in ("c11_chi_co_hinh",)
                     and r["crop_holds_all_content"]
                 ),
                 "per_fixture": fixture_results,
@@ -847,6 +898,54 @@ def build_architecture_gap_decisions() -> dict[str, Any]:
             "generalization_gap_strict_xfails": 6,
             "total_strict_xfails": 15,
             "generalization_gap_case_ids": ["PL5", "PA3", "MG5", "SE3", "MG9", "RE10"],
+        },
+        "gap_namespace_registry": {
+            "DEV72-G2": {
+                "dev_matrix_72_cases": ["PL5", "PA3"],
+                "heldout_46_cases": ["HB35"],
+                "heldout_alias": "HB-G2",
+                "pytest_node_ids": [
+                    "backend/tests/geometry/test_hybrid_reasoning_generalization.py::test_bridge_level_gap_reproduction[PL5]",
+                    "backend/tests/geometry/test_hybrid_reasoning_generalization.py::test_bridge_level_gap_reproduction[PA3]",
+                ],
+                "superseded_prose_mislabel": "IH-E3",
+            },
+            "DEV72-G3": {
+                "dev_matrix_72_cases": ["MG5"],
+                "heldout_46_cases": [],
+                "heldout_alias": None,
+                "pytest_node_ids": [
+                    "backend/tests/geometry/test_hybrid_reasoning_generalization.py::test_bridge_level_gap_reproduction[MG5]",
+                ],
+                "superseded_prose_mislabel": "IH-E4",
+            },
+            "DEV72-G4": {
+                "dev_matrix_72_cases": ["SE3"],
+                "heldout_46_cases": ["HB36"],
+                "heldout_alias": "HB-G4",
+                "pytest_node_ids": [
+                    "backend/tests/geometry/test_hybrid_reasoning_generalization.py::test_bridge_level_gap_reproduction[SE3]",
+                ],
+                "superseded_prose_mislabel": "IH-E5",
+            },
+            "DEV72-G6": {
+                "dev_matrix_72_cases": ["MG9"],
+                "heldout_46_cases": ["HB37"],
+                "heldout_alias": "HB-G6",
+                "pytest_node_ids": [
+                    "backend/tests/geometry/test_hybrid_reasoning_generalization.py::test_g6_three_defined_points_in_one_problem",
+                ],
+                "superseded_prose_mislabel": "IH-E6",
+            },
+            "DEV72-G7": {
+                "dev_matrix_72_cases": ["RE10"],
+                "heldout_46_cases": ["HB38"],
+                "heldout_alias": "HB-G7",
+                "pytest_node_ids": [
+                    "backend/tests/geometry/test_hybrid_reasoning_generalization.py::test_bridge_level_gap_reproduction[RE10]",
+                ],
+                "superseded_prose_mislabel": "IH-G1 / IH-G2",
+            },
         },
         "gap_decisions": gaps,
     }
