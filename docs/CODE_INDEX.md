@@ -1,5 +1,13 @@
 # CODE_INDEX.md — Chỉ mục module + BỘ NHỚ KIẾN TRÚC
 
+## Release Stabilization, Evidence Integrity & Independent Validation Readiness (run `release-stabilization-validation-readiness`, 2026-11-09)
+
+| Path | Owns | Locked by |
+|---|---|---|
+| `backend/app/simulation/geometry_functions/engine.py` | Multi-anchor off-base height sign combination enumeration (`_Dung.off_base_anchors`, `MAX_SECONDARY_HEIGHT_ANCHORS = 4`, `_non_empty_anchor_flips` in `dung_tu_loi_goi`): fixes `off_base_anchors[0]` at `+z` modulo global reflection $R_z$ and checks all $2^{m-1}-1$ relative sign combinations for secondary anchors (`AMBIGUOUS_FACT` fail-closed when mirror-sensitive goals diverge; unique consistent combination served when disambiguated by inter-apex distances) | `backend/tests/geometry/test_hybrid_reasoning_generalization.py`, `docs/evaluation/geometry/runs/release-stabilization-validation-readiness/correctness_hardening_receipt.json` |
+| `backend/app/ingestion/region_detector.py` · `backend/app/ingestion/unified_input.py` | `_has_faint_ink_outside_bbox` guard in `crop_holds_all_content` (detecting faint secondary lines outside `chosen.bbox` even when `area_ratio >= 0.35`) and `fallback_disagreement` guard in `unified_input.py` (preserving readable crop text when full-image retry is rejected and forcing `status = "needs_confirmation"` when crop and full-image equality assignments conflict) | `backend/tests/test_image_crop_retry_dedup.py`, `docs/evaluation/geometry/runs/release-stabilization-validation-readiness/correctness_hardening_receipt.json` |
+| `backend/scripts/score_independent_holdout_equivalence.py` · `docs/evaluation/geometry/runs/release-stabilization-validation-readiness/tools/reconcile_and_verify_readiness.py` | 6-layer H-1 anti-contamination scanner (`scan_six_layer_contamination`: `exact_verbatim`, `normalized_text`, `number_stripped_template`, `isomorphic_vertex_renaming`, `scale_factor_transform`, `construction_relation_graph`) and release-stabilization reconciliation, H-1 readiness, real-world vision template/validator, and architecture gap audit | `backend/tests/geometry/test_independent_holdout_equivalence.py`, `docs/evaluation/geometry/runs/release-stabilization-validation-readiness/ALGOSIM_RELEASE_STABILIZATION_REPORT.md` |
+
 ## Independent Geometry & Real-World Vision Evaluation (run `independent-geometry-and-vision-evaluation`, 2026-11-09)
 
 | Path | Owns | Locked by |

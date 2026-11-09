@@ -1,0 +1,55 @@
+{
+  "schema": "algosim-correctness-hardening/1",
+  "allow_live_ai": 0,
+  "versions": {
+    "registry_version": "geometry-functions/33",
+    "planner_version": "geometry-fact-planner/26",
+    "engine_version": "geometry-function-engine/24",
+    "max_secondary_height_anchors": 4
+  },
+  "section_iv_mathematical_hardening": {
+    "multi_anchor_off_base_sign_enumeration": {
+      "mechanism": "Fixes primary anchor off_base_anchors[0] at +z modulo global reflection R_z and enumerates all 2^(m-1)-1 relative sign combinations for secondary anchors off_base_anchors[1:] (up to MAX_SECONDARY_HEIGHT_ANCHORS = 4, i.e., m <= 5 total independent anchors).",
+      "two_pyramids_ambiguous_no_inter_apex_distance": {
+        "status": "REFUSED",
+        "code": "AMBIGUOUS_FACT"
+      },
+      "two_pyramids_disambiguated_same_half_space_ST_5": {
+        "status": "SERVED",
+        "answer": "56",
+        "z_T": "7/12"
+      },
+      "two_pyramids_disambiguated_opposite_half_space_ST_19": {
+        "status": "SERVED",
+        "answer": "56",
+        "z_T": "-7/12"
+      },
+      "two_pyramids_contradictory_ST_10": {
+        "status": "REFUSED",
+        "code": "INCONSISTENT_FACTS"
+      }
+    },
+    "degeneracy_and_zero_distance_invariants": {
+      "coincident_point_distance_sq_is_zero": true,
+      "coincident_line_through_refusal_code": "DEGENERATE_POINTS",
+      "zero_vector_cos_sq_refusal_code": "MEASURE_UNDEFINED"
+    }
+  },
+  "section_v_image_ingestion_hardening": {
+    "faint_ink_outside_large_crop_probe": {
+      "chosen_area_ratio": 0.5495,
+      "area_ratio_above_035": true,
+      "crop_holds_all_content": false,
+      "triggers_full_image_retry": true
+    },
+    "fallback_disagreement_guards": {
+      "preserve_readable_crop_when_full_image_rejected": true,
+      "force_needs_confirmation_on_conflicting_equality_assignments": true
+    },
+    "benchmark_12_fixtures_reverification": {
+      "total_fixtures": 0,
+      "valid_fixtures_holding_all_content": 0,
+      "per_fixture": []
+    }
+  }
+}

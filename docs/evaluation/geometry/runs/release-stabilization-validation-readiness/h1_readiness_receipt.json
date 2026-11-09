@@ -1,0 +1,43 @@
+{
+  "schema": "algosim-h1-readiness/1",
+  "INDEPENDENT_H1_VALIDATION": "NOT_MEASURED",
+  "H1_INFRASTRUCTURE_STATUS": "H1_INFRASTRUCTURE_READY",
+  "h1_authoring_independence": "NOT_ESTABLISHED",
+  "live_provider_calls": 0,
+  "six_layer_anti_contamination": {
+    "layers": [
+      "exact_verbatim",
+      "normalized_text",
+      "number_stripped_template",
+      "isomorphic_vertex_renaming",
+      "scale_factor_transform",
+      "construction_relation_graph"
+    ],
+    "verified_against_corpora": [
+      "72 Dev Matrix cases",
+      "46 Held-Out cases (HB01..HB46)",
+      "K-1 / S-2 / R-1 semantic benchmark corpora",
+      "H1_AUTHORING_HANDOFF.md illustrative examples",
+      "All historical runs in docs/evaluation/geometry/runs/**"
+    ],
+    "probe_verification": {
+      "k1_verbatim_caught_all_6_layers": true,
+      "handoff_verbatim_caught_all_6_layers": true,
+      "clean_synthetic_zero_hits_all_6_layers": true
+    }
+  },
+  "custodian_oracle_verifier": {
+    "module": "docs/evaluation/geometry/custodian/geometry_oracle.py",
+    "smoke_check_pyramid_volume_square_4_h_3": "16",
+    "status": "VERIFIED"
+  },
+  "paired_evaluation_runner": {
+    "runner_script": "backend/scripts/run_paired_route_evaluation.py",
+    "scorer_script": "backend/scripts/score_independent_holdout_equivalence.py",
+    "pre_corpus_integrity_status": "AWAITING_INDEPENDENT_CORPUS",
+    "blocking_conditions": [
+      "INDEPENDENT_AUTHOR_NOT_ASSIGNED_OR_CORPUS_NOT_DELIVERED",
+      "PAIRED_LIVE_CAMPAIGN_BUDGET_NOT_APPROVED_BY_OWNER"
+    ]
+  }
+}

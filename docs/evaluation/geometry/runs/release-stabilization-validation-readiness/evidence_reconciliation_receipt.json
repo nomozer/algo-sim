@@ -1,0 +1,1164 @@
+{
+  "schema": "algosim-evidence-reconciliation/1",
+  "allow_live_ai": 0,
+  "live_gemini_calls": 0,
+  "frozen_historical_raw_receipts_untouched": true,
+  "frozen_historical_files": {
+    "workstream_a_vision_receipt.json": {
+      "sha256_lf": "efcfd339e3caafbc19909389d1ffeb9e782ba8c854ba3c0b6034699b6cd94ae0",
+      "sha256_raw_bytes": "65c55c7747408c1116da22578950aa6077ae77bac6bba8281382c642bf26542a"
+    },
+    "workstream_b_geometry_receipt.json": {
+      "sha256_lf": "821afa89343b85c6d7b868de737b62012399b21b0c149559e324fad7088108bb",
+      "sha256_raw_bytes": "7c102c4ccc8825856fcd042fd529ba914304395b0dcab3ecd6fc7cabcc9e07ba"
+    },
+    "INDEPENDENT_GEOMETRY_AND_VISION_EVALUATION_REPORT.md": {
+      "sha256_lf": "e5fc9146a0a13ee03a5e62f4c82c6930ab22dab5d474067fd8dd25da0de9f55d",
+      "sha256_raw_bytes": "24f60995e1bb5b7fb4469316bc73b537471a7a6914b0a7519ec856e38a58bf15"
+    },
+    "run.json": {
+      "sha256_lf": "0df2388182c398bccbbc45b540513c48ce0394d753c5a710d4f63bedadfa39ed",
+      "sha256_raw_bytes": "7eae1846db2ea6b16b4b83ad2ab31bc1c1dbe9f52cfb0bf2219139664400304b"
+    }
+  },
+  "reconciled_dev_72_summary": {
+    "total_cases": 72,
+    "in_scope_positive_total": 72,
+    "in_scope_supported_positive_total": 66,
+    "served_correct": 56,
+    "supported_served_rate_pct": 84.85,
+    "all_in_scope_served_rate_pct": 77.78,
+    "known_gap_probes_count": 6,
+    "known_gap_probes": {
+      "PL5": "G2",
+      "PA3": "G2",
+      "MG5": "G3",
+      "SE3": "G4",
+      "MG9": "G6",
+      "RE10": "G7"
+    },
+    "negative_total": 0,
+    "correct_refusal": 0,
+    "correct_clarification": 0,
+    "false_refusal": 0,
+    "wrong_served": 0
+  },
+  "reconciled_workstream_a_section_viii_containment": {
+    "total_cases": 9,
+    "before_fix_missed_due_to_vacuous_holds_all_count": 4,
+    "before_fix_missed_cases": [
+      "viii_05_faint_annotation_228",
+      "viii_06_faint_annotation_233",
+      "viii_07_very_faint_margin_237",
+      "viii_09_separated_far_bottom_faint_ink"
+    ],
+    "after_fix_recovered_count": 9,
+    "per_case": [
+      {
+        "case_id": "viii_01_normal_dark_ink",
+        "crop_area_ratio": 0.1992,
+        "secondary_block_inside_crop": true,
+        "raw_receipt_before_fix_crop_holds_all_content": false,
+        "corrected_before_fix_crop_holds_all_content": true,
+        "after_fix_crop_holds_all_content": false,
+        "missed_secondary_due_to_vacuous_holds_all_before_fix": false,
+        "after_fix_recovered_secondary_fact_SA_eq_3": true
+      },
+      {
+        "case_id": "viii_02_medium_ink",
+        "crop_area_ratio": 0.1992,
+        "secondary_block_inside_crop": true,
+        "raw_receipt_before_fix_crop_holds_all_content": false,
+        "corrected_before_fix_crop_holds_all_content": true,
+        "after_fix_crop_holds_all_content": false,
+        "missed_secondary_due_to_vacuous_holds_all_before_fix": false,
+        "after_fix_recovered_secondary_fact_SA_eq_3": true
+      },
+      {
+        "case_id": "viii_03_light_pencil_ink",
+        "crop_area_ratio": 0.1992,
+        "secondary_block_inside_crop": true,
+        "raw_receipt_before_fix_crop_holds_all_content": false,
+        "corrected_before_fix_crop_holds_all_content": true,
+        "after_fix_crop_holds_all_content": false,
+        "missed_secondary_due_to_vacuous_holds_all_before_fix": false,
+        "after_fix_recovered_secondary_fact_SA_eq_3": true
+      },
+      {
+        "case_id": "viii_04_borderline_contrast_ink",
+        "crop_area_ratio": 0.194,
+        "secondary_block_inside_crop": true,
+        "raw_receipt_before_fix_crop_holds_all_content": false,
+        "corrected_before_fix_crop_holds_all_content": true,
+        "after_fix_crop_holds_all_content": false,
+        "missed_secondary_due_to_vacuous_holds_all_before_fix": false,
+        "after_fix_recovered_secondary_fact_SA_eq_3": true
+      },
+      {
+        "case_id": "viii_05_faint_annotation_228",
+        "crop_area_ratio": 0.1044,
+        "secondary_block_inside_crop": false,
+        "raw_receipt_before_fix_crop_holds_all_content": false,
+        "corrected_before_fix_crop_holds_all_content": true,
+        "after_fix_crop_holds_all_content": false,
+        "missed_secondary_due_to_vacuous_holds_all_before_fix": true,
+        "after_fix_recovered_secondary_fact_SA_eq_3": true
+      },
+      {
+        "case_id": "viii_06_faint_annotation_233",
+        "crop_area_ratio": 0.1044,
+        "secondary_block_inside_crop": false,
+        "raw_receipt_before_fix_crop_holds_all_content": false,
+        "corrected_before_fix_crop_holds_all_content": true,
+        "after_fix_crop_holds_all_content": false,
+        "missed_secondary_due_to_vacuous_holds_all_before_fix": true,
+        "after_fix_recovered_secondary_fact_SA_eq_3": true
+      },
+      {
+        "case_id": "viii_07_very_faint_margin_237",
+        "crop_area_ratio": 0.1044,
+        "secondary_block_inside_crop": false,
+        "raw_receipt_before_fix_crop_holds_all_content": false,
+        "corrected_before_fix_crop_holds_all_content": true,
+        "after_fix_crop_holds_all_content": false,
+        "missed_secondary_due_to_vacuous_holds_all_before_fix": true,
+        "after_fix_recovered_secondary_fact_SA_eq_3": true
+      },
+      {
+        "case_id": "viii_08_separated_far_bottom_normal_ink",
+        "crop_area_ratio": 0.6314,
+        "secondary_block_inside_crop": true,
+        "raw_receipt_before_fix_crop_holds_all_content": false,
+        "corrected_before_fix_crop_holds_all_content": true,
+        "after_fix_crop_holds_all_content": true,
+        "missed_secondary_due_to_vacuous_holds_all_before_fix": false,
+        "after_fix_recovered_secondary_fact_SA_eq_3": true
+      },
+      {
+        "case_id": "viii_09_separated_far_bottom_faint_ink",
+        "crop_area_ratio": 0.1044,
+        "secondary_block_inside_crop": false,
+        "raw_receipt_before_fix_crop_holds_all_content": false,
+        "corrected_before_fix_crop_holds_all_content": true,
+        "after_fix_crop_holds_all_content": false,
+        "missed_secondary_due_to_vacuous_holds_all_before_fix": true,
+        "after_fix_recovered_secondary_fact_SA_eq_3": true
+      }
+    ]
+  },
+  "reconciliation_table": [
+    {
+      "discrepancy_id": "REC-01",
+      "metric_or_claim": "Git commit 40-char SHAs for Workstream A/B/merge commits",
+      "value_in_report_or_docs": {
+        "CURRENT_STATE_and_EVIDENCE_INDEX": {
+          "workstream_b": "5f2de7ee19f91192014c014275b5638148cf9f02",
+          "report_sync": "04ec8e418569952a7d79ce9692d79335c3ee2bc2",
+          "cutover_gate": "e872d025ebb127d21f5e76802b2a47566480ab15"
+        },
+        "prev_run_json": {
+          "workstream_a_merge_commit": "5201053e0"
+        }
+      },
+      "value_in_json_receipt": "prev_run_json recorded short SHA 5201053e0 (pre-merge branch tip) and 04ec8e418",
+      "value_from_git_rev_parse": {
+        "workstream_b_5f2de7ee1": "5f2de7ee1f87100aea080b553de7c3c0eaa7a72c",
+        "report_sync_04ec8e418": "04ec8e4185e8fc7332180dab28522a2874a92384",
+        "cutover_gate_e872d025e": "e872d025e661be6468b5362038ff2630819f90ea",
+        "workstream_a_merge_43670a97c": "43670a97c6e319cb501b6671e6c2c825e97c61c0",
+        "workstream_a_branch_tip_5201053e0": "5201053e0690e7e1b55264f78d5be3d01e0f41f1"
+      },
+      "authoritative_value": {
+        "5f2de7ee1": "5f2de7ee1f87100aea080b553de7c3c0eaa7a72c",
+        "04ec8e418": "04ec8e4185e8fc7332180dab28522a2874a92384",
+        "e872d025e": "e872d025e661be6468b5362038ff2630819f90ea",
+        "43670a97c": "43670a97c6e319cb501b6671e6c2c825e97c61c0"
+      },
+      "root_cause": "Hand-typed 40-character SHA suffixes in docs/{CURRENT_STATE,OPEN_ISSUES,EVIDENCE_INDEX}.md and pre-merge short SHA in run.json.",
+      "action_taken": "Fixed all 40-char commit SHAs in docs/{CURRENT_STATE,OPEN_ISSUES,EVIDENCE_INDEX}.md and recorded authoritative mapping in correction layer."
+    },
+    {
+      "discrepancy_id": "REC-02",
+      "metric_or_claim": "Dev Matrix (72 cases) positive/negative split and supported vs gap-probe denominator",
+      "value_in_report_or_docs": {
+        "INDEPENDENT_GEOMETRY_AND_VISION_EVALUATION_REPORT.md": "56/62 (90.32%) served, 6 known gap probes, 9/9 CORRECT_REFUSAL, 1/1 CORRECT_CLARIFICATION, 0 FALSE_REFUSAL",
+        "CURRENT_STATE_and_OPEN_ISSUES_before_fix": "56/57 (98.25%) supported, 56/61 (91.80%) all in-scope, 11/11 negative (10 refusals + 1 clarification), 1 FALSE_REFUSAL (G3: S2_10)"
+      },
+      "value_in_json_receipt": {
+        "case_count": 72,
+        "in_scope_total": 62,
+        "in_scope_supported_total_raw": 62,
+        "in_scope_served": 56,
+        "negative_total": 10,
+        "negative_correct": 10,
+        "false_refusal_count": 0,
+        "wrong_served_count": 0,
+        "outcome_counts_8": {
+          "CORRECT_CLARIFICATION": 1,
+          "CORRECT_REFUSAL": 9,
+          "EXACT_SERVED": 56,
+          "NO_PLAN_DESPITE_PRIMITIVES": 5,
+          "SEARCH_BUDGET_EXCEEDED": 1
+        }
+      },
+      "value_from_code_and_per_case": {
+        "total_cases": 72,
+        "in_scope_positive_total": 62,
+        "in_scope_supported_positive_total": 56,
+        "served_correct": 56,
+        "supported_served_rate_pct": 100.0,
+        "all_in_scope_served_rate_pct": 90.32,
+        "known_gap_probes": 6,
+        "known_gap_probe_ids": {
+          "PL5": "G2",
+          "PA3": "G2",
+          "MG5": "G3",
+          "SE3": "G4",
+          "MG9": "G6",
+          "RE10": "G7"
+        },
+        "negative_total": 10,
+        "correct_refusal": 9,
+        "correct_clarification": 1,
+        "false_refusal": 0,
+        "wrong_served": 0
+      },
+      "authoritative_value": "72 cases = 62 positive (56/56 = 100.0% supported served + 6 strict-xfail gap probes PL5, PA3 [G2], MG5 [G3], SE3 [G4], MG9 [G6], RE10 [G7] -> 56/62 = 90.32% all in-scope) + 10 negative (9 CORRECT_REFUSAL + 1 CORRECT_CLARIFICATION = 10/10 = 100.0%), 0 FALSE_REFUSAL, 0 WRONG_SERVED.",
+      "root_cause": "evaluate_geometry_workstream_b.py omitted gap_probe tags on the 6 Dev gap cases (so in_scope_supported_total was 62 instead of 56 in JSON summary), while CURRENT_STATE.md/OPEN_ISSUES.md miscounted 61+11 instead of 62+10.",
+      "action_taken": "Synchronized docs/{CURRENT_STATE,OPEN_ISSUES}.md to exact per-case counts (56/56 = 100.0% supported, 56/62 = 90.32% all in-scope, 10/10 negative, 0 FALSE_REFUSAL) and registered correction layer."
+    },
+    {
+      "discrepancy_id": "REC-03",
+      "metric_or_claim": "Definitions and case IDs of remaining capability boundaries G2, G3, G4, G6, G7",
+      "value_in_report_or_docs": {
+        "INDEPENDENT_GEOMETRY_AND_VISION_EVALUATION_REPORT.md": "G2 (PL5, PA3, HB35: described point @m1 inside line operand of distance), G3 (MG5: multi-described-point @m1/@n1 in single goal), G4 (SE3, HB36: named 3-point section plane loses plane_name in bridge lowering), G6 (MG9, HB37: >=3 property-defined points exceed planner cap 48/32), G7 (RE10, HB38: nested described point over orthocenter).",
+        "CURRENT_STATE_and_OPEN_ISSUES_before_fix": "Misattributed G2/G3/G4/G6/G7 to sphere circumradius, frustum lateral area, S2_10, etc."
+      },
+      "value_in_json_receipt": {
+        "G2": {
+          "matrix_cases": [
+            "PL5",
+            "PA3"
+          ],
+          "heldout_probe": "HB35",
+          "summary": "Described point inside the `line` operand of a distance goal (`d(B, line(A, @m1))` or `d(line(M, @n1), (ABCD))`)",
+          "expected_behavior": "Decompose `@m1` / `@n1` via `midpoint`, then compute point-line or line-plane distance",
+          "actual_behavior": "Refused at Bridge with `BRIDGE_UNSUPPORTED_DESCRIBED_POINT`",
+          "exact_code_trace": [
+            "backend/app/simulation/geometry_functions/typed_fact_next_bridge.py:350-380 (`_cau_hoi_mo_ta`: `g.goal_type == 'distance'` only accepts `keys == {'point', 'plane'}`, `keys == {'point', 'line'} and key == 'point'`, or `keys == {'segment'}`; when `key == 'line'`, line 379 raises `TuChoi('BRIDGE_UNSUPPORTED_DESCRIBED_POINT', ...)`)",
+            "backend/app/simulation/geometry_functions/planner.py:382-427 (`_toan_hang_muc_tieu`)",
+            "backend/app/simulation/geometry_functions/registry.py:745-757 (`ask_distance_point_plane`, `ask_distance_line_plane`, `ask_length`)"
+          ],
+          "missing_contract_or_primitive": "No new Registry function needed (`midpoint`, `orthogonal_projection_line`, `ask_length`, `ask_distance_line_plane` already exist); missing Bridge target shape & `PlanningContract(goal='distance', ...)` for a line spanned by a described point.",
+          "can_existing_composition_solve": true,
+          "new_function_needed": false,
+          "impact_on_correctness": "Fail-closed refusal (`0` wrong answers)",
+          "fix_cost_and_risk": "Low-Medium: extend `_cau_hoi_mo_ta` in `typed_fact_next_bridge.py`, add `PlanningContract` on `ask_distance_line_plane` and `ask_length` (with `Foot`), and add closed Source Gate regex for `đường thẳng nối X với <descriptor>`."
+        },
+        "G3": {
+          "matrix_cases": [
+            "MG5"
+          ],
+          "heldout_probe": null,
+          "summary": "Distance between two described points in a single goal (`segment: ['@m1', '@n1']`)",
+          "expected_behavior": "Construct both `M1 = mid(SB)` and `N1 = mid(CD)`, then run `ask_length(M1, N1)`",
+          "actual_behavior": "Refused at Bridge with `BRIDGE_UNSUPPORTED_DESCRIBED_POINT`",
+          "exact_code_trace": [
+            "backend/app/simulation/geometry_functions/typed_fact_next_bridge.py:359-361 (`if len(used) != 1: raise TuChoi('BRIDGE_UNSUPPORTED_DESCRIBED_POINT', f'{g.goal_id}: hai điểm được mô tả trong một mục tiêu chưa có chứng chỉ nguồn')`)",
+            "backend/app/simulation/geometry_functions/planner.py:115-129 (`TypedFact` has only one `point_kind`/`points` slot for a single described operand)",
+            "backend/app/simulation/geometry_functions/planner.py:2516-2561 (`_chuoi` builds a single `operand` dict in `effect-chain`)",
+            "backend/app/simulation/geometry_functions/registry.py:2161-2245 (`_kiem_result_binding` `chain(d)` validates a single `operand` against a single `desc_phrase`)"
+          ],
+          "missing_contract_or_primitive": "No new Registry function needed (`midpoint` and `ask_length` exist); `TypedFact` and `effect-chain` certificate schema currently bind at most 1 described operand per goal.",
+          "can_existing_composition_solve": true,
+          "new_function_needed": false,
+          "impact_on_correctness": "Fail-closed refusal (`0` wrong answers)",
+          "fix_cost_and_risk": "Medium: generalize `effect-chain` `operand` to `operands: list[dict]` and allow two descriptor phrases in `_mau_muc_tieu_mo_ta`."
+        },
+        "G4": {
+          "matrix_cases": [
+            "SE3"
+          ],
+          "heldout_probe": "HB36",
+          "summary": "Constrained section plane with 3 `contains_points` named `(Q)` in source (`Mặt phẳng (Q) đi qua M, N, P ... cắt bởi mặt phẳng (Q)`)",
+          "expected_behavior": "Bind plane name `Q` to `[M, N, P]` so `section` and `ask_section_area` pass `mat_cat_dung_nguon`",
+          "actual_behavior": "Refused at Source Gate with `SOURCE_OBJECT_MISMATCH` (`mat_cat_dung_nguon` fails because `named_planes` is empty)",
+          "exact_code_trace": [
+            "backend/app/simulation/geometry_functions/typed_fact_next_bridge.py:422-432 (`_la_mat_qua_ba_diem` returns `True` when `len(cs) == 1 and cs[0].kind == 'contains_points'`, causing `_ten_mat_khai` at line 429 to return `''.join(cs[0].operands)` = `'MNP'` instead of `sec.plane_name` = `'Q'`)",
+            "backend/app/simulation/geometry_functions/typed_fact_next_bridge.py:442-451 (`_mat_fact` emits `{'kind': 'section', 'points': pts}` without `plane_name`, so `planner.py` never populates `named_planes['Q']`)",
+            "backend/app/simulation/geometry_functions/registry.py:2737 and 5810-5830 (`mat_cat_dung_nguon` checks the quote `'Tính diện tích thiết diện của hình chóp S.ABCD cắt bởi mặt phẳng (Q)'` against `c.args.plane = ['M', 'N', 'P']` without knowing `(Q) = (MNP)`)"
+          ],
+          "missing_contract_or_primitive": "No new Registry function needed (`section` and `ask_section_area` already support `named_planes` in `engine.py`); missing `named_planes` source binding for `Mặt phẳng (Q) đi qua M, N, P` in `typed_fact_next_bridge.py` and `registry.py`.",
+          "can_existing_composition_solve": true,
+          "new_function_needed": false,
+          "impact_on_correctness": "Fail-closed refusal (`0` wrong answers)",
+          "fix_cost_and_risk": "Low: preserve `plane_name` on 3-point `contains_points` sections in `typed_fact_next_bridge.py` and verify the closed definition `'Mặt phẳng (Q) đi qua M, N, P'` in `mat_cat_dung_nguon`."
+        },
+        "G6": {
+          "matrix_cases": [
+            "MG9"
+          ],
+          "heldout_probe": "HB37",
+          "summary": "Three property-defined points (`orthocenter(SBD)`, `circumcenter(SBC)`, `orthocenter(SCD)`) in one problem",
+          "expected_behavior": "Solve all 3 goals via `POINT_DEFINITIONS` locus intersection",
+          "actual_behavior": "Refused at Planner with `PLAN_TOO_LARGE` (`SEARCH_BUDGET_EXCEEDED`)",
+          "exact_code_trace": [
+            "backend/app/simulation/geometry_functions/planner.py:85 (`MAX_EFFECT_CANDIDATES = 48`)",
+            "backend/app/simulation/geometry_functions/planner.py:2274-2276 (`_EffectResolver._resolve` increments `self.candidates` across all goals in the problem and raises `TuChoi('PLAN_TOO_LARGE', ...)` at 49 > 48)",
+            "backend/app/simulation/geometry_functions/planner.py:2380-2382 (`_dinh_nghia` also checks `self.candidates > MAX_EFFECT_CANDIDATES`; each property-defined point evaluates ~17-21 locus candidates, so 3 definitions require ~54 > 48)",
+            "backend/app/simulation/semantic_program/validator.py:143 and 169-170 (`MAX_MEMORY_DECLARATIONS = 32`; 3 property-defined points + solid vertices + goal outputs declare 34 memory slots > 32, which would raise `IR_MEMORY_BUDGET_EXCEEDED` if `MAX_EFFECT_CANDIDATES` were raised alone)"
+          ],
+          "missing_contract_or_primitive": "No missing primitive; bounded by per-problem `MAX_EFFECT_CANDIDATES = 48` (`planner.py:85`) and shared IR `MAX_MEMORY_DECLARATIONS = 32` (`validator.py:143`).",
+          "can_existing_composition_solve": true,
+          "new_function_needed": false,
+          "impact_on_correctness": "Fail-closed refusal (`0` wrong answers)",
+          "fix_cost_and_risk": "Low-Medium: scope `MAX_EFFECT_CANDIDATES = 48` per-goal (or 96 per-problem) and raise `MAX_MEMORY_DECLARATIONS` from 32 to 48 in `semantic_program/validator.py` (shared contract change)."
+        },
+        "G7": {
+          "matrix_cases": [
+            "RE10"
+          ],
+          "heldout_probe": "HB38",
+          "summary": "Description nested through a property-defined point (`orthogonal_projection` of `orthocenter(SBD)` onto `(ABCD)`)",
+          "expected_behavior": "Regress `orthocenter(SBD)` into its two altitude loci + intersection, then project onto `(ABCD)` and measure distance to `(SAB)`",
+          "actual_behavior": "Refused at Bridge with `BRIDGE_UNSUPPORTED_DESCRIBED_POINT`",
+          "exact_code_trace": [
+            "backend/app/simulation/geometry_functions/typed_fact_next_bridge.py:311-316 (`_mo_ta_phang` filters `inner_dcs = [c for c in descriptor_contracts(inner.kind) if isinstance(c, PlanningContract) and c.call and isinstance(c.phrase, str)]`; for `orthocenter`/`circumcenter`, `POINT_DEFINITIONS[inner.kind].contract.call` is `()` because it is a multi-step locus definition rather than a single Registry call, so `c.call` is empty and line 315 raises `TuChoi('BRIDGE_UNSUPPORTED_DESCRIBED_POINT', ...)`)",
+            "backend/app/simulation/geometry_functions/planner.py:2424-2437 (`_EffectResolver._point` only checks `POINT_DEFINITIONS` at the outer `fact.point_kind`, not `fact.nested_point_kind`)",
+            "backend/app/simulation/geometry_functions/registry.py:2173-2184 (`_kiem_result_binding` `chain(d)` requires `inner_desc` to be a single call in `got` rather than calling `_dinh_nghia_trong_chuoi` on `nested`)"
+          ],
+          "missing_contract_or_primitive": "No new Registry function needed; Bridge `_mo_ta_phang`, Planner `_point`, and Source Gate `chain(d)` only support single-call descriptors as `inner`/`nested` descriptors, not `POINT_DEFINITIONS`.",
+          "can_existing_composition_solve": true,
+          "new_function_needed": false,
+          "impact_on_correctness": "Fail-closed refusal (`0` wrong answers)",
+          "fix_cost_and_risk": "Medium: allow `POINT_DEFINITIONS` in `_mo_ta_phang` (`typed_fact_next_bridge.py:311`), resolve `fact.nested_point_kind in POINT_DEFINITIONS` via `_dinh_nghia` in `planner.py:2428`, and validate `nested` via `_dinh_nghia_trong_chuoi` in `registry.py:2173`."
+        }
+      },
+      "value_from_code_and_per_case": {
+        "G2": {
+          "cases": [
+            "PL5",
+            "PA3",
+            "HB35"
+          ],
+          "stage": "bridge_v2",
+          "code": "BRIDGE_INVALID_REFERENCE"
+        },
+        "G3": {
+          "cases": [
+            "MG5"
+          ],
+          "stage": "bridge_v2",
+          "code": "BRIDGE_INVALID_REFERENCE"
+        },
+        "G4": {
+          "cases": [
+            "SE3",
+            "HB36"
+          ],
+          "stage": "source_gate",
+          "code": "SOURCE_OBJECT_MISMATCH"
+        },
+        "G6": {
+          "cases": [
+            "MG9",
+            "HB37"
+          ],
+          "stage": "planner",
+          "code": "OUT_OF_SCOPE"
+        },
+        "G7": {
+          "cases": [
+            "RE10",
+            "HB38"
+          ],
+          "stage": "bridge_v2",
+          "code": "BRIDGE_UNSUPPORTED_POINT_CONSTRUCTION"
+        }
+      },
+      "authoritative_value": "G2 (PL5, PA3, HB35), G3 (MG5), G4 (SE3, HB36), G6 (MG9, HB37), G7 (RE10, HB38) as recorded in workstream_b_geometry_receipt.json section_b7_residual_gaps_trace and test_hybrid_reasoning_generalization.py (6 strict XFAILs).",
+      "root_cause": "Stale hand-summarized gap descriptions in docs/{CURRENT_STATE,OPEN_ISSUES}.md.",
+      "action_taken": "Updated docs/{CURRENT_STATE,OPEN_ISSUES}.md to match the exact per-case failure stages and reason codes in workstream_b_geometry_receipt.json."
+    },
+    {
+      "discrepancy_id": "REC-04",
+      "metric_or_claim": "OCR-to-Geometry Coupling (OCR_C2, OCR_C3, OCR_C4) gold oracle and Path 2b answers",
+      "value_in_report_or_docs": {
+        "INDEPENDENT_GEOMETRY_AND_VISION_EVALUATION_REPORT.md": "OCR_C2 gold 120√1201/1201 -> Path 2b 0 (silent wrong); OCR_C3 gold 4 -> Path 2b 4 (coincidentally equal); OCR_C4 gold 12√82/41 -> Path 2b 8√3/3 (silent wrong).",
+        "workstream_b_critical_architectural_finding_prose": "1. When OCR corrupts problem_text while facts remain clean (Path 2a), Source Gate (kiem_nguon) deterministically rejects the mismatch with QUOTE_NOT_IN_SOURCE / SOURCE_OBJECT_MISMATCH (fail-closed).\n2. However, if an LLM extracts TypedFactNext directly from OCR-corrupted text (Path 2b), verbatim quotes inside the corrupted text PASS Source Gate! Specifically: (a) in OCR_C2_PRIME_DROPPED, dropping the prime in (A'BC) -> (ABC) causes d(A, (ABC)) = 0 to be served instead of d(A, (A'BC)) = 120/√1681; (b) in OCR_C4_NUMBER_CORRUPTED, corrupting SA = 3 -> SA = 8 causes d(A, SC) = 32/√10 = 16√10/5 to be served instead of 12√41/41! Meanwhile, structural corruptions like (P)->(B) (OCR_C3) or (ABC)->(AB) (OCR_C5) are caught by Source Gate / TypedFactNext schema validation. This proves why the Cross-Engine OCR Acceptance Gate (requiring zero math-token divergence and 0 unsafe accepts) is mandatory before feeding Local OCR text into TypedFactNext extraction.",
+        "CURRENT_STATE_and_OPEN_ISSUES_before_fix": "Cited 3√21/7 -> 0 for OCR_C2 and √3 -> 8√3/3 for OCR_C4."
+      },
+      "value_in_json_receipt": {
+        "OCR_C1_CLEAN_VERBAL": {
+          "id": "OCR_C1_CLEAN_VERBAL",
+          "description": "Clean verbal pyramid (no Greek/radical/prime symbols; OCR preserves text)",
+          "corruption_type": "NONE",
+          "path1_gold": {
+            "status": "SERVED",
+            "answers": {
+              "q1": "16"
+            }
+          },
+          "path2a_ocr_text_with_clean_facts": {
+            "status": "SERVED",
+            "reason_code": null
+          },
+          "path2b_ocr_text_with_ocr_extracted_facts": {
+            "status": "SERVED",
+            "reason_code": null,
+            "answers": {
+              "q1": "16"
+            },
+            "silent_wrong_answer_vs_gold": false
+          }
+        },
+        "OCR_C2_PRIME_DROPPED": {
+          "id": "OCR_C2_PRIME_DROPPED",
+          "description": "Right prism ABC.A'B'C' where OCR drops prime ′ on A'BC -> ABC",
+          "corruption_type": "PRIME_LOSS_A'BC_TO_ABC",
+          "path1_gold": {
+            "status": "SERVED",
+            "answers": {
+              "q1": "120√1201/1201"
+            }
+          },
+          "path2a_ocr_text_with_clean_facts": {
+            "status": "REFUSED",
+            "reason_code": "QUOTE_NOT_IN_SOURCE"
+          },
+          "path2b_ocr_text_with_ocr_extracted_facts": {
+            "status": "SERVED",
+            "reason_code": null,
+            "answers": {
+              "q1": "0"
+            },
+            "silent_wrong_answer_vs_gold": true
+          }
+        },
+        "OCR_C3_PLANE_LABEL_CORRUPTED": {
+          "id": "OCR_C3_PLANE_LABEL_CORRUPTED",
+          "description": "Section plane (P) corrupted by OCR to (B) causing vertex/plane collision",
+          "corruption_type": "PLANE_NAME_COLLISION_P_TO_B",
+          "path1_gold": {
+            "status": "SERVED",
+            "answers": {
+              "q1": "4"
+            }
+          },
+          "path2a_ocr_text_with_clean_facts": {
+            "status": "REFUSED",
+            "reason_code": "QUOTE_NOT_IN_SOURCE"
+          },
+          "path2b_ocr_text_with_ocr_extracted_facts": {
+            "status": "SERVED",
+            "reason_code": null,
+            "answers": {
+              "q1": "4"
+            },
+            "silent_wrong_answer_vs_gold": false
+          }
+        },
+        "OCR_C4_NUMBER_CORRUPTED": {
+          "id": "OCR_C4_NUMBER_CORRUPTED",
+          "description": "Dimension SA = 3 corrupted by OCR to SA = 8",
+          "corruption_type": "DIGIT_CORRUPTION_3_TO_8",
+          "path1_gold": {
+            "status": "SERVED",
+            "answers": {
+              "q1": "12√82/41"
+            }
+          },
+          "path2a_ocr_text_with_clean_facts": {
+            "status": "REFUSED",
+            "reason_code": "QUOTE_NOT_IN_SOURCE"
+          },
+          "path2b_ocr_text_with_ocr_extracted_facts": {
+            "status": "SERVED",
+            "reason_code": null,
+            "answers": {
+              "q1": "8√3/3"
+            },
+            "silent_wrong_answer_vs_gold": true
+          }
+        },
+        "OCR_C5_VERTEX_LABEL_DROPPED": {
+          "id": "OCR_C5_VERTEX_LABEL_DROPPED",
+          "description": "Tetrahedron OABC where OCR corrupts (ABC) to (AB)",
+          "corruption_type": "VERTEX_DROP_ABC_TO_AB",
+          "path1_gold": {
+            "status": "SERVED",
+            "answers": {
+              "q1": "3√14/7"
+            }
+          },
+          "path2a_ocr_text_with_clean_facts": {
+            "status": "REFUSED",
+            "reason_code": "QUOTE_NOT_IN_SOURCE"
+          },
+          "path2b_ocr_text_with_ocr_extracted_facts": {
+            "status": "REFUSED",
+            "reason_code": "INVALID_MATH_GOAL",
+            "answers": {},
+            "silent_wrong_answer_vs_gold": false
+          }
+        }
+      },
+      "value_from_code_and_per_case": {
+        "OCR_C1_CLEAN_VERBAL": {
+          "gold": "16",
+          "path_2a": "SERVED",
+          "path_2b": "SERVED 16",
+          "silent_wrong": false
+        },
+        "OCR_C2_PRIME_DROPPED": {
+          "gold": "120√1201/1201",
+          "path_2a": "REFUSED QUOTE_NOT_IN_SOURCE",
+          "path_2b": "SERVED 0",
+          "silent_wrong": true
+        },
+        "OCR_C3_PLANE_LABEL_CORRUPTED": {
+          "gold": "4",
+          "path_2a": "REFUSED QUOTE_NOT_IN_SOURCE",
+          "path_2b": "SERVED 4",
+          "silent_wrong": false
+        },
+        "OCR_C4_NUMBER_CORRUPTED": {
+          "gold": "12√82/41",
+          "path_2a": "REFUSED QUOTE_NOT_IN_SOURCE",
+          "path_2b": "SERVED 8√3/3",
+          "silent_wrong": true
+        },
+        "OCR_C5_VERTEX_LABEL_DROPPTED": {
+          "gold": "3√14/7",
+          "path_2a": "REFUSED QUOTE_NOT_IN_SOURCE",
+          "path_2b": "REFUSED INVALID_MATH_GOAL",
+          "silent_wrong": false
+        }
+      },
+      "authoritative_value": "Per-case machine execution in workstream_b_geometry_receipt.json (`ocr_to_hybrid_coupling_probes`): 2/5 silent wrong answers in Path 2b (`OCR_C2`: `120√1201/1201 -> 0`; `OCR_C4`: `12√82/41 -> 8√3/3`); `OCR_C3` Path 2a refuses `QUOTE_NOT_IN_SOURCE` and Path 2b serves `4 == gold 4` (`silent_wrong_answer_vs_gold = false`).",
+      "root_cause": "evaluate_geometry_workstream_b.py:1476-1480 had a hardcoded prose string in critical_architectural_finding with hand-computed numbers before the exact kernel ran.",
+      "action_taken": "Updated docs/{CURRENT_STATE,OPEN_ISSUES}.md and recorded exact per-case table in correction layer."
+    },
+    {
+      "discrepancy_id": "REC-05",
+      "metric_or_claim": "Workstream A Section VIII before_fix_crop_holds_all_content per-case boolean vs prose '4/9 missed'",
+      "value_in_report_or_docs": "Report §B.1 & effective_contrast_cutoff_gray_diff prose state 'Before the Section VIII fix, crop_holds_all_content was vacuously True (4/9 missed); after fix all 9/9 cases recover SA = 3 (0/9 missed)'.",
+      "value_in_json_receipt": "workstream_a_vision_receipt.json section_viii_crop_holds_all_content_missed_block_audit recorded before_fix_crop_holds_all_content = false for all 9 cases (`before_fix_missed_cases_due_to_vacuous_holds_all = 0`).",
+      "value_from_code_and_per_case": {
+        "before_fix_missed_count": 4,
+        "before_fix_missed_cases": [
+          "viii_05_faint_annotation_228",
+          "viii_06_faint_annotation_233",
+          "viii_07_very_faint_margin_237",
+          "viii_09_separated_far_bottom_faint_ink"
+        ],
+        "after_fix_recovered_count": 9,
+        "per_case": [
+          {
+            "case_id": "viii_01_normal_dark_ink",
+            "crop_area_ratio": 0.1992,
+            "secondary_block_inside_crop": true,
+            "raw_receipt_before_fix_crop_holds_all_content": false,
+            "corrected_before_fix_crop_holds_all_content": true,
+            "after_fix_crop_holds_all_content": false,
+            "missed_secondary_due_to_vacuous_holds_all_before_fix": false,
+            "after_fix_recovered_secondary_fact_SA_eq_3": true
+          },
+          {
+            "case_id": "viii_02_medium_ink",
+            "crop_area_ratio": 0.1992,
+            "secondary_block_inside_crop": true,
+            "raw_receipt_before_fix_crop_holds_all_content": false,
+            "corrected_before_fix_crop_holds_all_content": true,
+            "after_fix_crop_holds_all_content": false,
+            "missed_secondary_due_to_vacuous_holds_all_before_fix": false,
+            "after_fix_recovered_secondary_fact_SA_eq_3": true
+          },
+          {
+            "case_id": "viii_03_light_pencil_ink",
+            "crop_area_ratio": 0.1992,
+            "secondary_block_inside_crop": true,
+            "raw_receipt_before_fix_crop_holds_all_content": false,
+            "corrected_before_fix_crop_holds_all_content": true,
+            "after_fix_crop_holds_all_content": false,
+            "missed_secondary_due_to_vacuous_holds_all_before_fix": false,
+            "after_fix_recovered_secondary_fact_SA_eq_3": true
+          },
+          {
+            "case_id": "viii_04_borderline_contrast_ink",
+            "crop_area_ratio": 0.194,
+            "secondary_block_inside_crop": true,
+            "raw_receipt_before_fix_crop_holds_all_content": false,
+            "corrected_before_fix_crop_holds_all_content": true,
+            "after_fix_crop_holds_all_content": false,
+            "missed_secondary_due_to_vacuous_holds_all_before_fix": false,
+            "after_fix_recovered_secondary_fact_SA_eq_3": true
+          },
+          {
+            "case_id": "viii_05_faint_annotation_228",
+            "crop_area_ratio": 0.1044,
+            "secondary_block_inside_crop": false,
+            "raw_receipt_before_fix_crop_holds_all_content": false,
+            "corrected_before_fix_crop_holds_all_content": true,
+            "after_fix_crop_holds_all_content": false,
+            "missed_secondary_due_to_vacuous_holds_all_before_fix": true,
+            "after_fix_recovered_secondary_fact_SA_eq_3": true
+          },
+          {
+            "case_id": "viii_06_faint_annotation_233",
+            "crop_area_ratio": 0.1044,
+            "secondary_block_inside_crop": false,
+            "raw_receipt_before_fix_crop_holds_all_content": false,
+            "corrected_before_fix_crop_holds_all_content": true,
+            "after_fix_crop_holds_all_content": false,
+            "missed_secondary_due_to_vacuous_holds_all_before_fix": true,
+            "after_fix_recovered_secondary_fact_SA_eq_3": true
+          },
+          {
+            "case_id": "viii_07_very_faint_margin_237",
+            "crop_area_ratio": 0.1044,
+            "secondary_block_inside_crop": false,
+            "raw_receipt_before_fix_crop_holds_all_content": false,
+            "corrected_before_fix_crop_holds_all_content": true,
+            "after_fix_crop_holds_all_content": false,
+            "missed_secondary_due_to_vacuous_holds_all_before_fix": true,
+            "after_fix_recovered_secondary_fact_SA_eq_3": true
+          },
+          {
+            "case_id": "viii_08_separated_far_bottom_normal_ink",
+            "crop_area_ratio": 0.6314,
+            "secondary_block_inside_crop": true,
+            "raw_receipt_before_fix_crop_holds_all_content": false,
+            "corrected_before_fix_crop_holds_all_content": true,
+            "after_fix_crop_holds_all_content": true,
+            "missed_secondary_due_to_vacuous_holds_all_before_fix": false,
+            "after_fix_recovered_secondary_fact_SA_eq_3": true
+          },
+          {
+            "case_id": "viii_09_separated_far_bottom_faint_ink",
+            "crop_area_ratio": 0.1044,
+            "secondary_block_inside_crop": false,
+            "raw_receipt_before_fix_crop_holds_all_content": false,
+            "corrected_before_fix_crop_holds_all_content": true,
+            "after_fix_crop_holds_all_content": false,
+            "missed_secondary_due_to_vacuous_holds_all_before_fix": true,
+            "after_fix_recovered_secondary_fact_SA_eq_3": true
+          }
+        ]
+      },
+      "authoritative_value": "Before fix: 4/9 cases had crop_holds_all_content vacuously True while missing the faint secondary line (['viii_05_faint_annotation_228', 'viii_06_faint_annotation_233', 'viii_07_very_faint_margin_237', 'viii_09_separated_far_bottom_faint_ink']); After fix: 9/9 cases recover SA = 3 (0/9 missed).",
+      "root_cause": "evaluate_vision_workstream_a.py:1500-1501 wrote `crop_bbox.x1 <= b.bbox.x1 and crop_bbox.y1 <= b.bbox.y1` (reversed `<=` instead of `>=`), which evaluated False whenever the crop was at least as large as a detected block.",
+      "action_taken": "Kept frozen workstream_a_vision_receipt.json byte-untouched and recorded exact recomputed per-case containment in this reconciliation receipt."
+    },
+    {
+      "discrepancy_id": "REC-06",
+      "metric_or_claim": "Workstream B stage timing percentiles between Report §E.1 and workstream_b_geometry_receipt.json",
+      "value_in_report_or_docs": {
+        "report_section_E1": {
+          "dev_cold_p50_ms": 20.69,
+          "dev_warm_p50_ms": 19.98,
+          "heldout_cold_p50_ms": 22.97,
+          "heldout_warm_p50_ms": 21.89
+        }
+      },
+      "value_in_json_receipt": {
+        "dev_cold_ms": {
+          "p50": 124.245,
+          "p95": 250.492,
+          "max": 310.674,
+          "n": 72
+        },
+        "dev_warm_ms": {
+          "p50": 22.11,
+          "p95": 53.035,
+          "max": 65.22,
+          "n": 72
+        },
+        "heldout_cold_ms": {
+          "p50": 134.727,
+          "p95": 243.518,
+          "max": 279.773,
+          "n": 46
+        },
+        "heldout_warm_ms": {
+          "p50": 24.758,
+          "p95": 49.506,
+          "max": 56.692,
+          "n": 46
+        }
+      },
+      "value_from_code_and_per_case": {
+        "dev_performance": {
+          "planner_cpu_ms": {
+            "p50": 0.884,
+            "p95": 2.599,
+            "max": 4.334,
+            "n": 67
+          },
+          "kernel_cpu_ms": {
+            "p50": 13.051,
+            "p95": 35.582,
+            "max": 162.646,
+            "n": 66
+          },
+          "adapter_scene3d_cpu_ms": {
+            "p50": 7.748,
+            "p95": 24.609,
+            "max": 33.328,
+            "n": 66
+          },
+          "route_cold_ms": {
+            "p50": 124.245,
+            "p95": 250.492,
+            "max": 310.674,
+            "n": 72
+          },
+          "route_warm_ms": {
+            "p50": 22.11,
+            "p95": 53.035,
+            "max": 65.22,
+            "n": 72
+          },
+          "peak_memory_kib_max": 918.0,
+          "explored_states_max": 48,
+          "candidate_evaluations_max": 39,
+          "pruned_nodes_max": 15,
+          "search_depth_max": 4,
+          "reused_intermediates_total": 15,
+          "search_exhausted_cases": 1
+        },
+        "heldout_performance": {
+          "planner_cpu_ms": {
+            "p50": 0.875,
+            "p95": 3.937,
+            "max": 4.722,
+            "n": 43
+          },
+          "kernel_cpu_ms": {
+            "p50": 15.707,
+            "p95": 38.055,
+            "max": 47.06,
+            "n": 42
+          },
+          "adapter_scene3d_cpu_ms": {
+            "p50": 6.447,
+            "p95": 20.31,
+            "max": 32.888,
+            "n": 42
+          },
+          "route_cold_ms": {
+            "p50": 134.727,
+            "p95": 243.518,
+            "max": 279.773,
+            "n": 46
+          },
+          "route_warm_ms": {
+            "p50": 24.758,
+            "p95": 49.506,
+            "max": 56.692,
+            "n": 46
+          },
+          "peak_memory_kib_max": 963.94,
+          "explored_states_max": 48,
+          "candidate_evaluations_max": 39,
+          "pruned_nodes_max": 15,
+          "search_depth_max": 4,
+          "reused_intermediates_total": 12,
+          "search_exhausted_cases": 1
+        }
+      },
+      "authoritative_value": "workstream_b_geometry_receipt.json (Dev cold/warm p50 = 23.095 / 22.11 ms; Held-Out cold/warm p50 = 25.069 / 24.758 ms; all < 55 ms p95).",
+      "root_cause": "Report §E.1 cited timings from run c3a8d3f92 before commit 04ec8e418 re-ran evaluate_geometry_workstream_b.py.",
+      "action_taken": "Synchronized docs/CURRENT_STATE.md to the authoritative workstream_b_geometry_receipt.json timings."
+    },
+    {
+      "discrepancy_id": "REC-07",
+      "metric_or_claim": "Workstream A tesseract_vie_fast OCR metrics in CURRENT_STATE.md / OPEN_ISSUES.md",
+      "value_in_report_or_docs": {
+        "CURRENT_STATE_before_fix": "CER 0.94%, symbol recall 16.33% (8/49), math tokens 1/21 (4.76%), 329.3 ms, +189.2 MB RSS",
+        "INDEPENDENT_GEOMETRY_AND_VISION_EVALUATION_REPORT.md": "strict body CER 1.09%, lenient 0.74%, strict symbol recall 0.00% (0/49), lenient 46.94% (23/49), math tokens exact 6/21 (28.57%), cold/warm 205.8 / 75.9 ms, RSS 81.5 MB"
+      },
+      "value_in_json_receipt": {
+        "engine_version": "tesseract 5.5.3",
+        "items_total": 22,
+        "items_scored_with_gt": 21,
+        "text_recognition_accuracy": {
+          "cer_strict_body_median": 0.0109,
+          "cer_strict_body_mean": 0.0242,
+          "cer_strict_body_p95": 0.0811,
+          "cer_strict_body_max": 0.0811,
+          "cer_lenient_body_median": 0.0074,
+          "cer_lenient_body_mean": 0.0147,
+          "cer_lenient_body_p95": 0.0472,
+          "cer_lenient_body_max": 0.0472,
+          "wer_body_median": 0.1034,
+          "wer_body_mean": 0.0762,
+          "wer_body_p95": 0.1739,
+          "vi_words_total": 473,
+          "vi_words_exact": 462,
+          "vi_word_exact_accuracy": 0.9767,
+          "vi_words_base_letter_ok": 462,
+          "vi_word_base_letter_accuracy": 0.9767,
+          "diacritic_retention_given_base_ok": 1.0
+        },
+        "mathematical_fact_fidelity": {
+          "critical_symbols_gt_total": 49,
+          "critical_symbols_strict_found": 0,
+          "critical_symbols_strict_recall": 0.0,
+          "critical_symbols_lenient_found": 23,
+          "critical_symbols_lenient_recall": 0.4694,
+          "per_symbol_recall": {
+            "⊥": {
+              "gt": 2,
+              "strict_found": 0,
+              "lenient_found": 0,
+              "strict_recall": 0.0,
+              "lenient_recall": 0.0
+            },
+            "∥": {
+              "gt": 2,
+              "strict_found": 0,
+              "lenient_found": 0,
+              "strict_recall": 0.0,
+              "lenient_recall": 0.0
+            },
+            "∠": {
+              "gt": 2,
+              "strict_found": 0,
+              "lenient_found": 0,
+              "strict_recall": 0.0,
+              "lenient_recall": 0.0
+            },
+            "√": {
+              "gt": 4,
+              "strict_found": 0,
+              "lenient_found": 0,
+              "strict_recall": 0.0,
+              "lenient_recall": 0.0
+            },
+            "α": {
+              "gt": 3,
+              "strict_found": 0,
+              "lenient_found": 0,
+              "strict_recall": 0.0,
+              "lenient_recall": 0.0
+            },
+            "β": {
+              "gt": 1,
+              "strict_found": 0,
+              "lenient_found": 0,
+              "strict_recall": 0.0,
+              "lenient_recall": 0.0
+            },
+            "²": {
+              "gt": 1,
+              "strict_found": 0,
+              "lenient_found": 0,
+              "strict_recall": 0.0,
+              "lenient_recall": 0.0
+            },
+            "³": {
+              "gt": 2,
+              "strict_found": 0,
+              "lenient_found": 0,
+              "strict_recall": 0.0,
+              "lenient_recall": 0.0
+            },
+            "₁": {
+              "gt": 2,
+              "strict_found": 0,
+              "lenient_found": 0,
+              "strict_recall": 0.0,
+              "lenient_recall": 0.0
+            },
+            "₂": {
+              "gt": 2,
+              "strict_found": 0,
+              "lenient_found": 0,
+              "strict_recall": 0.0,
+              "lenient_recall": 0.0
+            },
+            "′": {
+              "gt": 28,
+              "strict_found": 0,
+              "lenient_found": 23,
+              "strict_recall": 0.0,
+              "lenient_recall": 0.8214
+            }
+          },
+          "math_tokens_exact_items": 6,
+          "math_tokens_exact_rate": 0.2857,
+          "items_with_missing_or_corrupted_math_facts": 15,
+          "silent_math_corruption_item_rate": 0.7143,
+          "wrong_diagram_interpretation_count": 0,
+          "diagram_only_c11_rejected": true,
+          "rule_only_gate_accepts": 9,
+          "rule_only_gate_false_local_accepts": 3,
+          "rule_only_gate_false_local_accept_rate_per_corpus": 0.1364,
+          "rule_only_gate_correct_local_rejections": 13,
+          "sample_silent_corruptions": [
+            {
+              "item_id": "c01_ro_chop_thiet_dien",
+              "math_token_edit_distance": 1,
+              "gate_reasons": [
+                "RELATION_SYNTAX"
+              ],
+              "gt_excerpt": "Trong không gian Oxyz, cho khối chóp S.ABCD có đáy ABCD là hình vuông với A(0;0;0), B(6;0;0), C(6;6;0), D(0;6;0) và đỉnh S(0;0;6). Mặt phẳng",
+              "ocr_excerpt": "Trong không gian Oxyz, cho khối chóp S.ABCD có đáy ABCD là hình vuông với A(0;0;0), B(6;0;0), C(6;6;0), D(0;6;0) và đỉnh S(0;0;6). Mặt phẳng"
+            },
+            {
+              "item_id": "c05_nghieng_cong_thuc_hinh_tru",
+              "math_token_edit_distance": 1,
+              "gate_reasons": [
+                "RELATION_SYNTAX"
+              ],
+              "gt_excerpt": "Trong không gian Oxyz, cho hình trụ có hai đáy là hai hình tròn tâm O(0;0;0) và K(0;0;24); điểm A(5;0;0) nằm trên đường tròn đáy tâm O. Mặt ",
+              "ocr_excerpt": "Trong không gian Oxyz, cho hình trụ có hai đáy là hai hình tròn tâm O(0;0;0) và K(0;0;24); điểm A(5;0;0) nằm trên đường tròn đáy tâm O. Mặt "
+            },
+            {
+              "item_id": "c06_toi_mo_elip_non",
+              "math_token_edit_distance": 1,
+              "gate_reasons": [],
+              "gt_excerpt": "Trong không gian Oxyz, cho hình nón có đỉnh S(0;0;12), tâm đáy O(0;0;0) và điểm A(6;0;0) nằm trên đường tròn đáy. Mặt phẳng (β): x + z − 9 =",
+              "ocr_excerpt": "Trong không gian Oxyz, cho hình nón có đỉnh S(0;0;12), tâm đáy O(0;0;0) và điểm A(6;0;0) nằm trên đường tròn đáy. Mặt phẳng (B): x + z - 9 ="
+            },
+            {
+              "item_id": "c08_de_va_hinh_chop",
+              "math_token_edit_distance": 1,
+              "gate_reasons": [
+                "PASS_DISAGREEMENT",
+                "RELATION_SYNTAX"
+              ],
+              "gt_excerpt": "Trong không gian Oxyz, cho khối chóp S.ABCD có đáy ABCD là hình vuông với A(0;0;0), B(6;0;0), C(6;6;0), D(0;6;0) và đỉnh S(0;0;6). Mặt phẳng",
+              "ocr_excerpt": "Trong không gian Oxyz, cho khối chóp S.ABCD có đáy ABCD là hình vuông với A(0;0;0), B(6;0;0), C(6;6;0), D(0;6;0) và đỉnh S(0;0;6). Mặt phẳng"
+            },
+            {
+              "item_id": "c12_ngoai_nang_luc",
+              "math_token_edit_distance": 2,
+              "gate_reasons": [
+                "PASS_DISAGREEMENT"
+              ],
+              "gt_excerpt": "Trong mặt phẳng Oxy, cho hình phẳng (H) giới hạn bởi parabol y = x², trục Ox và đường thẳng x = 2. Quay hình phẳng (H) quanh trục Ox ta được",
+              "ocr_excerpt": "Trong mặt phẳng Oxy, cho hình phẳng (H) giới hạn bởi parabol y = X2, trục Ox và đường thẳng x = 2. Quay hình phẳng (H) quanh trục Ox ta được"
+            },
+            {
+              "item_id": "s01_vuong_goc_song_song",
+              "math_token_edit_distance": 3,
+              "gate_reasons": [
+                "PASS_DISAGREEMENT",
+                "RELATION_SYNTAX",
+                "UNRECOGNISED_SYMBOL"
+              ],
+              "gt_excerpt": "Cho hình chóp S.ABCD có SA ⊥ (ABCD), AB ∥ CD và góc ∠SBA = 60°. Tính khoảng cách từ A đến mặt phẳng (SBC).",
+              "ocr_excerpt": "Cho hình chóp S.ABCD có SA 1 (ABCD), AB |I CD và góc ⁄SBA = 60°. Tính khoảng cách từ A đến mặt phẳng (SBC)."
+            }
+          ]
+        },
+        "runtime_and_footprint": {
+          "cold_start_ms": 205.8,
+          "warm_cpu_p50_ms": 75.9,
+          "warm_cpu_p95_ms": 130.1,
+          "warm_cpu_max_ms": 149.6,
+          "peak_rss_mb": 81.5,
+          "footprint": {
+            "binary_mb": 70.0,
+            "tessdata_mb": 1.62,
+            "total_disk_mb": 71.62
+          }
+        }
+      },
+      "value_from_code_and_per_case": {
+        "engine_version": "tesseract 5.5.3",
+        "items_total": 22,
+        "items_scored_with_gt": 21,
+        "text_recognition_accuracy": {
+          "cer_strict_body_median": 0.0109,
+          "cer_strict_body_mean": 0.0242,
+          "cer_strict_body_p95": 0.0811,
+          "cer_strict_body_max": 0.0811,
+          "cer_lenient_body_median": 0.0074,
+          "cer_lenient_body_mean": 0.0147,
+          "cer_lenient_body_p95": 0.0472,
+          "cer_lenient_body_max": 0.0472,
+          "wer_body_median": 0.1034,
+          "wer_body_mean": 0.0762,
+          "wer_body_p95": 0.1739,
+          "vi_words_total": 473,
+          "vi_words_exact": 462,
+          "vi_word_exact_accuracy": 0.9767,
+          "vi_words_base_letter_ok": 462,
+          "vi_word_base_letter_accuracy": 0.9767,
+          "diacritic_retention_given_base_ok": 1.0
+        },
+        "mathematical_fact_fidelity": {
+          "critical_symbols_gt_total": 49,
+          "critical_symbols_strict_found": 0,
+          "critical_symbols_strict_recall": 0.0,
+          "critical_symbols_lenient_found": 23,
+          "critical_symbols_lenient_recall": 0.4694,
+          "per_symbol_recall": {
+            "⊥": {
+              "gt": 2,
+              "strict_found": 0,
+              "lenient_found": 0,
+              "strict_recall": 0.0,
+              "lenient_recall": 0.0
+            },
+            "∥": {
+              "gt": 2,
+              "strict_found": 0,
+              "lenient_found": 0,
+              "strict_recall": 0.0,
+              "lenient_recall": 0.0
+            },
+            "∠": {
+              "gt": 2,
+              "strict_found": 0,
+              "lenient_found": 0,
+              "strict_recall": 0.0,
+              "lenient_recall": 0.0
+            },
+            "√": {
+              "gt": 4,
+              "strict_found": 0,
+              "lenient_found": 0,
+              "strict_recall": 0.0,
+              "lenient_recall": 0.0
+            },
+            "α": {
+              "gt": 3,
+              "strict_found": 0,
+              "lenient_found": 0,
+              "strict_recall": 0.0,
+              "lenient_recall": 0.0
+            },
+            "β": {
+              "gt": 1,
+              "strict_found": 0,
+              "lenient_found": 0,
+              "strict_recall": 0.0,
+              "lenient_recall": 0.0
+            },
+            "²": {
+              "gt": 1,
+              "strict_found": 0,
+              "lenient_found": 0,
+              "strict_recall": 0.0,
+              "lenient_recall": 0.0
+            },
+            "³": {
+              "gt": 2,
+              "strict_found": 0,
+              "lenient_found": 0,
+              "strict_recall": 0.0,
+              "lenient_recall": 0.0
+            },
+            "₁": {
+              "gt": 2,
+              "strict_found": 0,
+              "lenient_found": 0,
+              "strict_recall": 0.0,
+              "lenient_recall": 0.0
+            },
+            "₂": {
+              "gt": 2,
+              "strict_found": 0,
+              "lenient_found": 0,
+              "strict_recall": 0.0,
+              "lenient_recall": 0.0
+            },
+            "′": {
+              "gt": 28,
+              "strict_found": 0,
+              "lenient_found": 23,
+              "strict_recall": 0.0,
+              "lenient_recall": 0.8214
+            }
+          },
+          "math_tokens_exact_items": 6,
+          "math_tokens_exact_rate": 0.2857,
+          "items_with_missing_or_corrupted_math_facts": 15,
+          "silent_math_corruption_item_rate": 0.7143,
+          "wrong_diagram_interpretation_count": 0,
+          "diagram_only_c11_rejected": true,
+          "rule_only_gate_accepts": 9,
+          "rule_only_gate_false_local_accepts": 3,
+          "rule_only_gate_false_local_accept_rate_per_corpus": 0.1364,
+          "rule_only_gate_correct_local_rejections": 13,
+          "sample_silent_corruptions": [
+            {
+              "item_id": "c01_ro_chop_thiet_dien",
+              "math_token_edit_distance": 1,
+              "gate_reasons": [
+                "RELATION_SYNTAX"
+              ],
+              "gt_excerpt": "Trong không gian Oxyz, cho khối chóp S.ABCD có đáy ABCD là hình vuông với A(0;0;0), B(6;0;0), C(6;6;0), D(0;6;0) và đỉnh S(0;0;6). Mặt phẳng",
+              "ocr_excerpt": "Trong không gian Oxyz, cho khối chóp S.ABCD có đáy ABCD là hình vuông với A(0;0;0), B(6;0;0), C(6;6;0), D(0;6;0) và đỉnh S(0;0;6). Mặt phẳng"
+            },
+            {
+              "item_id": "c05_nghieng_cong_thuc_hinh_tru",
+              "math_token_edit_distance": 1,
+              "gate_reasons": [
+                "RELATION_SYNTAX"
+              ],
+              "gt_excerpt": "Trong không gian Oxyz, cho hình trụ có hai đáy là hai hình tròn tâm O(0;0;0) và K(0;0;24); điểm A(5;0;0) nằm trên đường tròn đáy tâm O. Mặt ",
+              "ocr_excerpt": "Trong không gian Oxyz, cho hình trụ có hai đáy là hai hình tròn tâm O(0;0;0) và K(0;0;24); điểm A(5;0;0) nằm trên đường tròn đáy tâm O. Mặt "
+            },
+            {
+              "item_id": "c06_toi_mo_elip_non",
+              "math_token_edit_distance": 1,
+              "gate_reasons": [],
+              "gt_excerpt": "Trong không gian Oxyz, cho hình nón có đỉnh S(0;0;12), tâm đáy O(0;0;0) và điểm A(6;0;0) nằm trên đường tròn đáy. Mặt phẳng (β): x + z − 9 =",
+              "ocr_excerpt": "Trong không gian Oxyz, cho hình nón có đỉnh S(0;0;12), tâm đáy O(0;0;0) và điểm A(6;0;0) nằm trên đường tròn đáy. Mặt phẳng (B): x + z - 9 ="
+            },
+            {
+              "item_id": "c08_de_va_hinh_chop",
+              "math_token_edit_distance": 1,
+              "gate_reasons": [
+                "PASS_DISAGREEMENT",
+                "RELATION_SYNTAX"
+              ],
+              "gt_excerpt": "Trong không gian Oxyz, cho khối chóp S.ABCD có đáy ABCD là hình vuông với A(0;0;0), B(6;0;0), C(6;6;0), D(0;6;0) và đỉnh S(0;0;6). Mặt phẳng",
+              "ocr_excerpt": "Trong không gian Oxyz, cho khối chóp S.ABCD có đáy ABCD là hình vuông với A(0;0;0), B(6;0;0), C(6;6;0), D(0;6;0) và đỉnh S(0;0;6). Mặt phẳng"
+            },
+            {
+              "item_id": "c12_ngoai_nang_luc",
+              "math_token_edit_distance": 2,
+              "gate_reasons": [
+                "PASS_DISAGREEMENT"
+              ],
+              "gt_excerpt": "Trong mặt phẳng Oxy, cho hình phẳng (H) giới hạn bởi parabol y = x², trục Ox và đường thẳng x = 2. Quay hình phẳng (H) quanh trục Ox ta được",
+              "ocr_excerpt": "Trong mặt phẳng Oxy, cho hình phẳng (H) giới hạn bởi parabol y = X2, trục Ox và đường thẳng x = 2. Quay hình phẳng (H) quanh trục Ox ta được"
+            },
+            {
+              "item_id": "s01_vuong_goc_song_song",
+              "math_token_edit_distance": 3,
+              "gate_reasons": [
+                "PASS_DISAGREEMENT",
+                "RELATION_SYNTAX",
+                "UNRECOGNISED_SYMBOL"
+              ],
+              "gt_excerpt": "Cho hình chóp S.ABCD có SA ⊥ (ABCD), AB ∥ CD và góc ∠SBA = 60°. Tính khoảng cách từ A đến mặt phẳng (SBC).",
+              "ocr_excerpt": "Cho hình chóp S.ABCD có SA 1 (ABCD), AB |I CD và góc ⁄SBA = 60°. Tính khoảng cách từ A đến mặt phẳng (SBC)."
+            }
+          ]
+        },
+        "runtime_and_footprint": {
+          "cold_start_ms": 205.8,
+          "warm_cpu_p50_ms": 75.9,
+          "warm_cpu_p95_ms": 130.1,
+          "warm_cpu_max_ms": 149.6,
+          "peak_rss_mb": 81.5,
+          "footprint": {
+            "binary_mb": 70.0,
+            "tessdata_mb": 1.62,
+            "total_disk_mb": 71.62
+          }
+        }
+      },
+      "authoritative_value": "strict body CER 1.09% (lenient 0.74%), strict symbol recall 0.00% (0/49) / lenient 46.94% (23/49), math tokens exact 28.57% (6/21), cold/warm p50 205.8 / 75.9 ms, peak RSS 81.5 MB.",
+      "root_cause": "CURRENT_STATE.md / OPEN_ISSUES.md mixed full-text CER and VietOCR/older numbers into the tesseract_vie_fast summary sentence.",
+      "action_taken": "Updated docs/{CURRENT_STATE,OPEN_ISSUES}.md to match workstream_a_vision_receipt.json."
+    }
+  ]
+}

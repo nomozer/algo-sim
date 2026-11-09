@@ -1,0 +1,163 @@
+{
+  "schema": "algosim-architecture-gap-decisions/1",
+  "strict_xfails_preserved": {
+    "baseline_strict_xfails": 9,
+    "generalization_gap_strict_xfails": 6,
+    "total_strict_xfails": 15,
+    "generalization_gap_case_ids": [
+      "PL5",
+      "PA3",
+      "MG5",
+      "SE3",
+      "MG9",
+      "RE10"
+    ]
+  },
+  "gap_decisions": [
+    {
+      "gap_id": "G2",
+      "title": "Described point (`@m1`) inside `line` operand of `distance` goal",
+      "benchmark_cases": [
+        "PL5",
+        "PA3",
+        "HB35"
+      ],
+      "1_current_refusal_point": {
+        "file": "backend/app/simulation/geometry_functions/typed_fact_next_bridge.py",
+        "function": "_resolve_line_2",
+        "lines": "325-333",
+        "error_code": "BRIDGE_INVALID_REFERENCE"
+      },
+      "2_root_cause_type": "Schema & Bridge lowering limitation (`_resolve_line_2` requires raw vertex tokens in `solid_vertices` and rejects `@point_id` references).",
+      "3_files_and_functions_affected": [
+        "backend/app/simulation/geometry_functions/typed_fact_next_bridge.py (`_resolve_line_2`, `_lower_math_goal`)",
+        "backend/app/simulation/geometry_functions/planner.py (`_loai_muc_tieu` for point-to-line distance with derived line endpoints)"
+      ],
+      "4_estimated_loc_change": 45,
+      "5_regression_risk": "LOW-MEDIUM (touches `_resolve_line_2` used across all line premises and goals).",
+      "6_impact_on_determinism_and_fail_closed": "Preserves determinism if `@point_id` is resolved through `point_map` after `described_points` lowering.",
+      "7_impact_on_latency_and_combinatorial_search": "Negligible (+0.2 ms; no search branching if `@m1` is already a deterministic `trung_diem` / `chia_doan`).",
+      "8_cases_unlocked": [
+        "PL5",
+        "PA3",
+        "HB35"
+      ],
+      "9_decision": "DESIGN_ONLY_DEFERRED",
+      "10_rationale": "Current fail-closed refusal (`BRIDGE_INVALID_REFERENCE`) is 100% deterministic and safe; deferring avoids changing `bridge_v2` contract version during release stabilization."
+    },
+    {
+      "gap_id": "G3",
+      "title": "Multiple described points (`@m1`, `@n1`) referenced simultaneously in a single `distance` goal",
+      "benchmark_cases": [
+        "MG5"
+      ],
+      "1_current_refusal_point": {
+        "file": "backend/app/simulation/geometry_functions/typed_fact_next_bridge.py",
+        "function": "_resolve_segment_or_point_pair",
+        "lines": "305-345",
+        "error_code": "BRIDGE_INVALID_REFERENCE"
+      },
+      "2_root_cause_type": "Bridge operand resolver & Planner goal dependency ordering for multi-point derived segments.",
+      "3_files_and_functions_affected": [
+        "backend/app/simulation/geometry_functions/typed_fact_next_bridge.py (`_lower_math_goal`)",
+        "backend/app/simulation/geometry_functions/planner.py (`lap_ke_hoach` goal prerequisite closure)"
+      ],
+      "4_estimated_loc_change": 40,
+      "5_regression_risk": "LOW-MEDIUM",
+      "6_regression_and_fail_closed_impact": "Safe if both `@m1` and `@n1` are resolved via `point_map` before emitting `khoang_cach_diem_diem`.",
+      "7_impact_on_latency_and_combinatorial_search": "Negligible (+0.1 ms).",
+      "8_cases_unlocked": [
+        "MG5"
+      ],
+      "9_decision": "DESIGN_ONLY_DEFERRED",
+      "10_rationale": "Preserves strict XFAIL contract on `MG5` without altering `typed-fact-next-bridge/2` during release stabilization."
+    },
+    {
+      "gap_id": "G4",
+      "title": "Named 3-point section plane `(Q)` loses `plane_name` when lowered to explicit 3-point plane `(MNP)`",
+      "benchmark_cases": [
+        "SE3",
+        "HB36"
+      ],
+      "1_current_refusal_point": {
+        "file": "backend/app/simulation/geometry_functions/registry.py",
+        "function": "mat_cat_dung_nguon",
+        "lines": "845-875",
+        "error_code": "SOURCE_OBJECT_MISMATCH"
+      },
+      "2_root_cause_type": "Source Gate / Bridge representation gap: `typed_fact_next_bridge.py:422-451` lowers a 3-point `DerivedSectionSpec(plane_name='Q', points=['@m1','@n1','@p1'])` to `(M, N, P)` without carrying the alias `'Q'`, while the goal quote says `thiết diện cắt bởi (Q)`.",
+      "3_files_and_functions_affected": [
+        "backend/app/simulation/geometry_functions/typed_fact_next_bridge.py (`_lower_derived_section`)",
+        "backend/app/simulation/geometry_functions/registry.py (`mat_cat_dung_nguon`)"
+      ],
+      "4_estimated_loc_change": 35,
+      "5_regression_risk": "MEDIUM (touches `mat_cat_dung_nguon` in Source Gate, which guards against hallucinated section planes).",
+      "6_impact_on_determinism_and_fail_closed": "Must verify that `plane_name` `(Q)` is explicitly anchored in the `DerivedSectionSpec.quote` before accepting `(Q) -> (MNP)` in `mat_cat_dung_nguon`.",
+      "7_impact_on_latency_and_combinatorial_search": "Zero runtime impact.",
+      "8_cases_unlocked": [
+        "SE3",
+        "HB36"
+      ],
+      "9_decision": "DESIGN_ONLY_DEFERRED",
+      "10_rationale": "Source Gate (`mat_cat_dung_nguon`) is a critical safety barrier; keeping `SE3` and `HB36` as strict XFAILs avoids weakening `SOURCE_OBJECT_MISMATCH` before H-1."
+    },
+    {
+      "gap_id": "G6",
+      "title": "3+ property-defined points in one problem exceed `MAX_EFFECT_CANDIDATES = 48` / `MAX_MEMORY_DECLARATIONS = 32`",
+      "benchmark_cases": [
+        "MG9",
+        "HB37"
+      ],
+      "1_current_refusal_point": {
+        "file": "backend/app/simulation/geometry_functions/planner.py",
+        "function": "_ung_vien_hieu_ung_dong",
+        "lines": "69-70, 560-640",
+        "error_code": "OUT_OF_SCOPE"
+      },
+      "2_root_cause_type": "Deliberate bounded-search ceiling in Planner `/26` (`MAX_EFFECT_CANDIDATES = 48`, `MAX_MEMORY_DECLARATIONS = 32`).",
+      "3_files_and_functions_affected": [
+        "backend/app/simulation/geometry_functions/planner.py (`MAX_EFFECT_CANDIDATES`, `MAX_MEMORY_DECLARATIONS`, goal-cone pruning)"
+      ],
+      "4_estimated_loc_change": 60,
+      "5_regression_risk": "MEDIUM (raising caps without relevance pruning increases worst-case planner latency).",
+      "6_impact_on_determinism_and_fail_closed": "Goal-cone relevance filtering must remain strictly deterministic.",
+      "7_impact_on_latency_and_combinatorial_search": "Directly affects worst-case search branching if caps are raised naively.",
+      "8_cases_unlocked": [
+        "MG9",
+        "HB37"
+      ],
+      "9_decision": "DESIGN_ONLY_DEFERRED",
+      "10_rationale": "Current bounded caps guarantee p95 planner latency < 7 ms across all 118 Dev + Held-Out cases and fail closed with `OUT_OF_SCOPE`."
+    },
+    {
+      "gap_id": "G7",
+      "title": "Nested described point defined over an `orthocenter` (`truc_tam`) point",
+      "benchmark_cases": [
+        "RE10",
+        "HB38"
+      ],
+      "1_current_refusal_point": {
+        "file": "backend/app/simulation/geometry_functions/typed_fact_next_bridge.py",
+        "function": "_lower_described_point",
+        "lines": "350-418",
+        "error_code": "BRIDGE_UNSUPPORTED_POINT_CONSTRUCTION"
+      },
+      "2_root_cause_type": "Bridge + Registry capability boundary (`orthocenter` is not yet a first-class lowered construction primitive in `typed_fact_next_bridge.py` + `registry.py`).",
+      "3_files_and_functions_affected": [
+        "backend/app/simulation/geometry_functions/typed_fact_next_bridge.py (`_lower_described_point`)",
+        "backend/app/simulation/geometry_functions/registry.py (new `truc_tam_tam_giac` function)",
+        "backend/app/simulation/geometry_functions/engine.py (`_Dung.truc_tam`)"
+      ],
+      "4_estimated_loc_change": 95,
+      "5_regression_risk": "MEDIUM (adds a new Registry function and Engine constructor).",
+      "6_impact_on_determinism_and_fail_closed": "Requires non-collinearity check (`COLLINEAR_POINTS`) on the triangle vertices.",
+      "7_impact_on_latency_and_combinatorial_search": "Adds 1 point-producing function to Registry candidate pool.",
+      "8_cases_unlocked": [
+        "RE10",
+        "HB38"
+      ],
+      "9_decision": "DESIGN_ONLY_DEFERRED",
+      "10_rationale": "Adding a new Registry function would bump `geometry-functions/33` -> `/34`; deferring preserves frozen Registry `/33` and Planner `/26` identity for H-1."
+    }
+  ]
+}

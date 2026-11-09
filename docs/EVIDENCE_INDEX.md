@@ -4,18 +4,31 @@
 Retired branch names now have local `refs/archive/repository-closure/` references and a verified private self-contained bundle.
 Existing evidence and historical reports below are unchanged; no research result is reinterpreted by this Git-state update.
 
+## WAVE_ID = RELEASE_STABILIZATION_VALIDATION_READINESS
+
+REPORT = docs/evaluation/geometry/runs/release-stabilization-validation-readiness/ALGOSIM_RELEASE_STABILIZATION_REPORT.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/release-stabilization-validation-readiness/
+START_BASE = 32f14b8fc4231b6a57ada34966c019e99ff148c0 (tip of integration/parallel-ingestion-reasoning)
+CODE_COMMIT = b8a9e57b4fb13b2ecdba188fbea6f2a76d57caba (measured_system tree hash c09b67d538d7d450dc03d8ccaacbb00676241aa4f342d8dbca07bedae974be01 across 106 measured entries; CACHE_VERSION 132 unchanged)
+CLASSIFICATION = OFFLINE_RELEASE_STABILIZATION_AND_VALIDATION_READINESS (CANDIDATE_READY_FOR_MAIN_REVIEW; EVIDENCE_RECONCILED_AND_VERIFIED; MATHEMATICAL_CORRECTNESS_HARDENED; IMAGE_INGESTION_CORRECTNESS_VERIFIED; H1_INFRASTRUCTURE_READY; INDEPENDENT_H1_VALIDATION = NOT_MEASURED; LOCAL_OCR_DIAGNOSTIC_ONLY; REAL_WORLD_CORPUS_NOT_AVAILABLE; LIVE_VISION_EVALUATION = NOT_MEASURED; branch feat/release-stabilization-validation-readiness, not merged to main, not pushed)
+PRODUCT_CHANGE = YES (backend: engine.py, region_detector.py, unified_input.py; harness: score_independent_holdout_equivalence.py)
+MODEL_REQUEST_COUNT = 0
+VERIFICATION = ALGOSIM_RELEASE_STABILIZATION_REPORT.md; run.json; evidence_reconciliation_receipt.json; correctness_hardening_receipt.json; h1_readiness_receipt.json; real_world_vision_readiness_receipt.json; real_world_vision_corpus_template.json; architecture_gap_decisions_receipt.json; tools/reconcile_and_verify_readiness.py; Full T3 (14,041 pytest passed, 2,000 vitest passed, 5/5 demo replay, 6/6 crash surface)
+CORRECTS = docs/evaluation/geometry/runs/independent-geometry-and-vision-evaluation/INDEPENDENT_GEOMETRY_AND_VISION_EVALUATION_REPORT.md
+CORRECTED_BY = NONE
+
 ## WAVE_ID = INDEPENDENT_GEOMETRY_AND_VISION_EVALUATION
 
 REPORT = docs/evaluation/geometry/runs/independent-geometry-and-vision-evaluation/INDEPENDENT_GEOMETRY_AND_VISION_EVALUATION_REPORT.md
 ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/independent-geometry-and-vision-evaluation/
 START_BASE = 474ba080ec2cd740d39314109f279aacfa871376 (tip of integration/parallel-ingestion-reasoning; product tree identical to 37ec2db57)
-CODE_COMMIT = e6a0bb8639be44f073a0b24ff22e19bd6a05a308 (merge of eval/real-world-vision e872d025e + eval/independent-geometry 04ec8e418; candidate freeze & templates 5f2de7ee19f91192014c014275b5638148cf9f02; 106 measured files 9dd8e882cefea630a9c2721b9d4a41c254a2e55c87ae99d80dbdd56106ced7c8)
+CODE_COMMIT = e6a0bb8639be44f073a0b24ff22e19bd6a05a308 (merge of eval/real-world-vision e872d025e661be6468b5362038ff2630819f90ea at 43670a97c6e319cb501b6671e6c2c825e97c61c0 + eval/independent-geometry 04ec8e4185e8fc7332180dab28522a2874a92384; candidate freeze & templates 5f2de7ee1f87100aea080b553de7c3c0eaa7a72c; 106 measured files 9dd8e882cefea630a9c2721b9d4a41c254a2e55c87ae99d80dbdd56106ced7c8)
 CLASSIFICATION = OFFLINE_VISION_AND_NONINDEPENDENT_HELDOUT_GEOMETRY_EVALUATION (CANDIDATE_READY_FOR_MAIN_REVIEW; LOCAL_OCR_DIAGNOSTIC_ONLY; CURRENT_GEMINI_VISION_PREFERRED; GEOMETRY_HELDOUT_EVALUATED_NONINDEPENDENT; LIVE_VISION_EVALUATION = NOT_MEASURED; REAL_WORLD_CORPUS_NOT_AVAILABLE; INDEPENDENT_H1_VALIDATION = NOT_MEASURED; branch integration/parallel-ingestion-reasoning, not merged to main, not pushed)
 PRODUCT_CHANGE = YES (backend: region_detector.py, unified_input.py, engine.py)
 MODEL_REQUEST_COUNT = 0
 VERIFICATION = INDEPENDENT_GEOMETRY_AND_VISION_EVALUATION_REPORT.md; run.json; workstream_a_vision_receipt.json; workstream_b_geometry_receipt.json; tools/evaluate_vision_workstream_a.py; tools/evaluate_geometry_workstream_b.py; Full T3 on detached worktree t3-common-base-d79565b5 (14,030 pytest passed, 2,000 vitest passed, 20/20 Playwright passed)
 CORRECTS = NONE
-CORRECTED_BY = NONE
+CORRECTED_BY = docs/evaluation/geometry/runs/release-stabilization-validation-readiness/ALGOSIM_RELEASE_STABILIZATION_REPORT.md (reconciles 40-char commit SHAs, Dev Matrix 56/56 supported vs 56/62 all-in-scope denominator, OCR_C2/C3/C4 exact values in critical_architectural_finding prose, Workstream A Section VIII before_fix_crop_holds_all_content inequality, and stage latency percentiles)
 
 ## WAVE_ID = PARALLEL_INGESTION_REASONING_INTEGRATION
 

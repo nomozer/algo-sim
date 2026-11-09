@@ -1,0 +1,58 @@
+{
+  "schema": "algosim-real-world-vision-readiness/1",
+  "LOCAL_OCR_STATUS": "LOCAL_OCR_DIAGNOSTIC_ONLY",
+  "REAL_WORLD_CORPUS_STATUS": "REAL_WORLD_CORPUS_NOT_AVAILABLE",
+  "LIVE_VISION_EVALUATION": "NOT_MEASURED",
+  "allow_live_ai": 0,
+  "live_gemini_vision_calls": 0,
+  "local_ocr_diagnostic_summary": {
+    "tesseract_vie_fast": {
+      "strict_body_cer_pct": 1.09,
+      "lenient_body_cer_pct": 0.74,
+      "strict_math_symbol_recall_pct": 0.0,
+      "lenient_math_symbol_recall_pct": 46.94,
+      "math_tokens_exact_match": "6/21 (28.57%)",
+      "cold_warm_p50_ms": [
+        205.8,
+        75.9
+      ],
+      "peak_rss_mb": 81.5,
+      "production_role": "DIAGNOSTIC_AND_LAYOUT_GATING_ONLY_NEVER_SOLE_MATH_EXTRACTOR"
+    },
+    "vietocr_vgg_seq2seq": {
+      "strict_body_cer_pct": 29.74,
+      "strict_math_symbol_recall_pct": 2.04,
+      "production_role": "NOT_SUITABLE_FOR_MULTI_LINE_MATH_CROPS"
+    }
+  },
+  "real_world_corpus_specification": {
+    "template_file": "docs/evaluation/geometry/runs/release-stabilization-validation-readiness/real_world_vision_corpus_template.json",
+    "required_categories_count": 7,
+    "required_categories": [
+      "printed_exam_sheet",
+      "textbook_workbook_page",
+      "student_phone_photo_angled_shadow",
+      "crease_fold_perspective_distortion",
+      "mixed_diagram_and_text",
+      "multi_problem_page",
+      "negative_non_math_blurry_diagram_only"
+    ],
+    "math_symbol_inventory": [
+      "√",
+      "π",
+      "°",
+      "⊥",
+      "∥",
+      "∠",
+      "△",
+      "∈",
+      "⊂",
+      "∩",
+      "'",
+      "subscripts_A1_B1",
+      "fractions_p_over_q"
+    ],
+    "validator_verified_on_valid_template": true,
+    "validator_rejects_synthetic_pil_renders": true
+  }
+}
