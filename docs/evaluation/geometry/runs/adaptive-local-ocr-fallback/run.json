@@ -1,0 +1,74 @@
+{
+  "run_id": "adaptive-local-ocr-fallback",
+  "date": "2026-11-09",
+  "workstream": "A — adaptive local OCR & Gemini Vision fallback",
+  "branch": "feat/adaptive-local-ocr-fallback",
+  "base": "d79565b52ec19a7b1a75be28c09bb43cc0f6d146",
+  "merged": false,
+  "pushed": false,
+  "commits": [
+    {
+      "sha": "ebf712360",
+      "role": "product + test: RegionDetectionResult.crop_holds_all_content gates the crop -> full-image Vision retry; backend/tests/test_image_crop_retry_dedup.py"
+    },
+    {
+      "sha": "9fcc48fe9",
+      "role": "chore(eval): re-freeze evaluation candidate for ebf712360 (clean tree)"
+    },
+    {
+      "sha": "BRANCH_HEAD",
+      "role": "docs(eval): this run directory, CODE_INDEX entry, owner-approval template measured_system sync (the commit containing this file)"
+    }
+  ],
+  "candidate": {
+    "product_commit_sha": "ebf712360d6ee3cd58fd328e945ec9bce2263886",
+    "measured_system_tree_hash_before": "6290986dee3d1336a13611f0c0a452f90bfb40ab6d837c46396bcafb2cd5f81d",
+    "measured_system_tree_hash_after": "79e18b6eb0fb1dea85acc06a5db9a5f4a6b55e89643cc4814b0612325a555104",
+    "so_file": 106,
+    "verify": "MATCH",
+    "templates_synced": [
+      "docs/evaluation/geometry/runs/hybrid-master-backend-replacement/k1-owner-approval.template.json",
+      "docs/evaluation/geometry/runs/hybrid-master-backend-replacement/r1-owner-approval.template.json",
+      "docs/evaluation/geometry/runs/hybrid-master-backend-replacement/s2-owner-approval.template.json"
+    ],
+    "not_synced_by_this_run": "docs/CURRENT_STATE.md and docs/EVIDENCE_INDEX.md still name 6290986d… (coordinator-owned)"
+  },
+  "cache_version": {
+    "before": "132",
+    "after": "132",
+    "bumped": false,
+    "reason": "no prompt, schema, extraction surface, cache key or routing policy change; ingestion is outside semantic_environment_fingerprint; only the number of Vision calls for a complete crop changes"
+  },
+  "measurement": {
+    "MEASUREMENT_CLASS": "OFFLINE_LOCAL_OCR_ON_SYNTHETIC_RENDERED_IMAGES + OFFLINE_MOCK_PROVIDER_CALL_COUNT",
+    "HELD_OUT_CLAIM": "NONE",
+    "EVALUATOR_INDEPENDENCE": "NONE (same agent built the stress set, gate, scorer and report)",
+    "CORPUS_KIND": "SYNTHETIC_RENDERED",
+    "REAL_PHOTO_CORPUS": "NOT_ESTABLISHED",
+    "calibration_set": "photo-problem-to-scene/CORPUS.json (12) + run-local symbol stress (10); thresholds in-sample",
+    "vision_baseline_accuracy": "NOT_MEASURED (mock provider only)",
+    "receipts": [
+      "ocr_benchmark.json",
+      "vision_calls_before_after.json"
+    ],
+    "tools": [
+      "tools/benchmark_local_ocr.py",
+      "tools/measure_vision_calls.py",
+      "tools/render_tables.py"
+    ]
+  },
+  "live": {
+    "live_calls": 0,
+    "real_network_provider_calls": 0,
+    "ALLOW_LIVE_AI": "0 for every pytest/script run; measure_vision_calls.py patches _require_vision_key and mocks _goi_provider (kill switch stays on)"
+  },
+  "tests": {
+    "backend_full_pytest_after_freeze": "14000 passed, 7 skipped, 3 deselected, 9 xfailed, 0 failed (428 s)",
+    "backend_full_pytest_before_freeze": "15 failed = 14 candidate/template drift (expected before re-freeze) + 1 portability (OS font path in new test, fixed)",
+    "new_tests": "backend/tests/test_image_crop_retry_dedup.py: 6 passed (RED first; fault injection: ignore flag -> 2 fail, never retry -> 1 fail)",
+    "targeted_ingestion": "146 passed (test_image_crop_retry_dedup, test_local_first_image_ingestion_e2e, test_image_extraction, test_unified_input_20_cases, test_multi_image_prepare, test_image_normalization, test_image_extract_api, test_vision_diagram_only_provenance_guard, test_ingest) before the 6th new test",
+    "frontend": "NOT_RUN — frontend not touched (vitest/build not required)",
+    "docs_information_architecture": "tests/geometry/test_docs_information_architecture.py + test_docs_test_telemetry.py: 64 passed"
+  },
+  "verdict": "LOCAL_OCR_DIAGNOSTIC_ONLY"
+}

@@ -353,13 +353,21 @@ async def _process_normalized_visual_page(
     vlm_bytes += len(region_res.prepared_image.data)
 
     # Nếu vùng crop tự động bị VLM báo mất vùng (`missing_regions`) hoặc không đọc được, thử lại đúng 1 lần trên ảnh đầy đủ (§13, §14).
+    # Crop đã chứa trọn mọi khối nội dung ⇒ ảnh đầy đủ không có gì mới cho `missing_regions` /
+    # `MISSING_PROBLEM_TEXT`; chỉ `IMAGE_NOT_READABLE` (điểm ảnh khác) còn đáng một lượt đọc lại.
     need_full_retry = (
         used_crop
         and not used_fallback
         and region_res.prepared_image.sha256 != region_res.full_image.sha256
         and (
-            bool(ext_res.extraction.missing_regions)
-            or ext_res.assessment.rejection_code in ("IMAGE_NOT_READABLE", "MISSING_PROBLEM_TEXT")
+            ext_res.assessment.rejection_code == "IMAGE_NOT_READABLE"
+            or (
+                not region_res.crop_holds_all_content
+                and (
+                    bool(ext_res.extraction.missing_regions)
+                    or ext_res.assessment.rejection_code == "MISSING_PROBLEM_TEXT"
+                )
+            )
         )
     )
     if need_full_retry:

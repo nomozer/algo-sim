@@ -1,5 +1,12 @@
 # CODE_INDEX.md — Chỉ mục module + BỘ NHỚ KIẾN TRÚC
 
+## Adaptive Local OCR & Vision Fallback (run `adaptive-local-ocr-fallback`, 2026-11-09)
+
+| Path | Owns | Locked by |
+|---|---|---|
+| `backend/app/ingestion/region_detector.py` · `backend/app/ingestion/unified_input.py` | `RegionDetectionResult.crop_holds_all_content` (crop contains every layout block, incl. noise, and no desk trim) gates the crop → full-image Vision retry: `missing_regions` / `MISSING_PROBLEM_TEXT` on a complete crop no longer spends a second call; `IMAGE_NOT_READABLE` keeps its one retry. No local OCR engine ships in product code. | `backend/tests/test_image_crop_retry_dedup.py`, `backend/tests/test_unified_input_20_cases.py` (C19 desk-photo retry) |
+| `docs/evaluation/geometry/runs/adaptive-local-ocr-fallback/tools/benchmark_local_ocr.py` · `docs/evaluation/geometry/runs/adaptive-local-ocr-fallback/tools/measure_vision_calls.py` | Offline OCR benchmark (Tesseract `vie` best/fast via tesserocr, RapidOCR PP-OCRv6/v5 in a scratch venv; parent in backend venv scores vs `ground_truth_text` and evaluates the candidate local-only gate) and mock-provider Vision call counts before/after on the same image set | receipts `ocr_benchmark.json`, `vision_calls_before_after.json` in the run directory |
+
 ## Hybrid Stabilization & Local-First Intelligent Image Ingestion (run `algosim-local-first-image-ingestion`, 2026-11-09)
 
 | Path | Owns | Locked by |

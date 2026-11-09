@@ -129,6 +129,8 @@ class RegionDetectionResult:
     has_associated_figure: bool
     completeness_confidence: float
     ambiguous_multi_problem: bool
+    #: Crop chứa TRỌN mọi khối không-nhiễu của trang ⇒ ảnh đầy đủ chỉ thêm lề trống, đọc lại vô ích.
+    crop_holds_all_content: bool = False
 
 
 def _encode_rgb_to_normalized(
@@ -1102,4 +1104,11 @@ def detect_problem_regions(
         has_associated_figure=chosen.has_figure,
         completeness_confidence=chosen.completeness_confidence,
         ambiguous_multi_problem=False,
+        # Đã cắt nền bàn ⇒ phần ngoài trang chưa được phân khối: không khẳng định được. Khối "nhiễu" (dòng sát
+        # mép, số trang) cũng phải nằm trong crop — một dòng cuối bị xếp nhầm là nhiễu mép vẫn được đọc lại.
+        crop_holds_all_content=not desk_trimmed and all(
+            chosen.bbox.x0 <= b.bbox.x0 and chosen.bbox.y0 <= b.bbox.y0
+            and b.bbox.x1 <= chosen.bbox.x1 and b.bbox.y1 <= chosen.bbox.y1
+            for b in blocks
+        ),
     )
