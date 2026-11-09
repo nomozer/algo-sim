@@ -421,10 +421,13 @@ def _key(c: LoiGoi) -> tuple:
 
 
 class _Dung:
-    def __init__(self, calls: tuple[LoiGoi, ...], text: str, ky_hieu: str | None = None) -> None:
+    def __init__(self, calls: tuple[LoiGoi, ...], text: str, ky_hieu: str | None = None,
+                 _flip_apices: frozenset[str] = frozenset()) -> None:
         self.calls = tuple(sorted(calls, key=_key))
         self.text = text
         self.ky_hieu = ky_hieu
+        self._flip_apices = _flip_apices
+        self.mirror_apices: set[str] = set()
         self.centroids: dict[str, tuple[str, ...]] = {}
         self.text_labels = nhan_cua_de(text)
         self.pts: dict[str, V3] = {}
@@ -733,6 +736,8 @@ class _Dung:
             z = Fraction(1)
         elif (z := _sqrt_q(h2 / self.h2)) is None:
             raise TuChoi("UNSUPPORTED_MULTIPLE_HEIGHTS", "hai độ cao độc lập có tỉ số vô tỉ — chưa dựng chính xác được")
+        if ten in self._flip_apices:
+            z = -z
         f = self.pts[chan] if isinstance(chan, str) else chan
         self.dung |= calls
         self._dat(ten, (f[0], f[1], z), luat, calls)
@@ -969,31 +974,37 @@ class _Dung:
         return self._dinh_tu_ba_canh_ben()
 
     def _dinh_tu_ba_canh_ben(self) -> bool:
-        """LAST rule: the apex of the root pyramid, when nothing else placed it, from its distances to three non-collinear
-        placed base points. Foot F (chart): g(F − P0, Pi − P0) = (|Pi − P0|² + d0² − di²)/2, i = 1, 2 — linear, exact in ℚ;
-        h² = d0² − |F − P0|² ≤ 0 ⇒ INCONSISTENT_FACTS. Every other lateral length stays a fact the figure is checked against."""
-        k = getattr(self, "root", None)                   # curved-only figures have no root polyhedron
-        if k is None or k.kind != "pyramid" or not k.apex or k.apex in self.pts or not all(b in self.pts for b in k.base):
+        """LAST rule: the apex of a pyramid on the root base, when nothing else placed it, from its distances to three
+        non-collinear placed base points. Foot F (chart): g(F − P0, Pi − P0) = (|Pi − P0|² + d0² − di²)/2, i = 1, 2 —
+        linear, exact in ℚ; h² = d0² − |F − P0|² ≤ 0 ⇒ INCONSISTENT_FACTS. Every other lateral length stays a fact the
+        figure is checked against."""
+        root = getattr(self, "root", None)                # curved-only figures have no root polyhedron
+        if root is None:
             return False
-        biet = [(b, l[0]) for b in k.base if (l := sorted(self.do_dai(k.apex, b)))]
-        for (p0, (r0, i0)), (p1, (r1, i1)), (p2, (r2, i2)) in combinations(biet, 3):
-            u, v = self._vec(p0, p1), self._vec(p0, p2)
-            gu, gv, guv = self.g(u, u), self.g(v, v), self.g(u, v)
-            det = gu * gv - guv * guv
-            if det == 0:
-                continue                                   # collinear: try another triple
-            b1, b2 = (gu + r0 - r1) / 2, (gv + r0 - r2) / 2
-            s, t = (b1 * gv - b2 * guv) / det, (b2 * gu - b1 * guv) / det     # F − P0 = s·u + t·v
-            f = tuple(s * u[i] + t * v[i] for i in range(3))
-            h2 = r0 - self.g(f, f)
-            ids = {*i0, *i1, *i2}
-            if h2 <= 0:
-                raise TuChoi("INCONSISTENT_FACTS", f"{k.apex}: ba cạnh bên không dựng được đỉnh ngoài mặt đáy",
-                             tuple(sorted(ids)))
-            o = self.pts[p0]
-            self._dat_ngoai_day(k.apex, (o[0] + f[0], o[1] + f[1]), h2, f"apex_from_lateral_edges_{p0}{p1}{p2}",
-                                {k.call} | ids)
-            return True
+        for k in sorted(self.khoi.values(), key=lambda k: k.name):
+            if (k.kind != "pyramid" or not k.apex or k.apex in self.pts
+                    or frozenset(k.base) != frozenset(root.base) or not all(b in self.pts for b in k.base)):
+                continue
+            biet = [(b, l[0]) for b in k.base if (l := sorted(self.do_dai(k.apex, b)))]
+            for (p0, (r0, i0)), (p1, (r1, i1)), (p2, (r2, i2)) in combinations(biet, 3):
+                u, v = self._vec(p0, p1), self._vec(p0, p2)
+                gu, gv, guv = self.g(u, u), self.g(v, v), self.g(u, v)
+                det = gu * gv - guv * guv
+                if det == 0:
+                    continue                               # collinear: try another triple
+                b1, b2 = (gu + r0 - r1) / 2, (gv + r0 - r2) / 2
+                s, t = (b1 * gv - b2 * guv) / det, (b2 * gu - b1 * guv) / det     # F − P0 = s·u + t·v
+                f = tuple(s * u[i] + t * v[i] for i in range(3))
+                h2 = r0 - self.g(f, f)
+                ids = {*i0, *i1, *i2}
+                if h2 <= 0:
+                    raise TuChoi("INCONSISTENT_FACTS", f"{k.apex}: ba cạnh bên không dựng được đỉnh ngoài mặt đáy",
+                                 tuple(sorted(ids)))
+                o = self.pts[p0]
+                self.mirror_apices.add(k.apex)
+                self._dat_ngoai_day(k.apex, (o[0] + f[0], o[1] + f[1]), h2, f"apex_from_lateral_edges_{p0}{p1}{p2}",
+                                    {k.call} | ids)
+                return True
         return False
 
     def _rang_buoc_vuong(self):
@@ -4211,7 +4222,8 @@ def _dung_cong_ghep(calls: tuple[LoiGoi, ...], problem_text: str) -> KetQuaTuyen
 
 
 def dung_tu_loi_goi(problem_text: str, plan: Any, auxiliary: tuple[dict, ...] = (),
-                    read_quotes: tuple[str, ...] = ()) -> KetQuaTuyen:
+                    read_quotes: tuple[str, ...] = (), *,
+                    _flip_apices: frozenset[str] = frozenset()) -> KetQuaTuyen:
     """Dựng + kiểm + thực thi từ lời gọi hàm. Trả `KetQuaTuyen` CHƯA có cảnh (`scene3d=None`) nhưng có `spec` và
     `exec_result` — bày cảnh là việc của tầng trên (`app/ai/function_route.py`), cùng hướng phụ thuộc với
     `ai/pipeline._dung_scene3d`: không module nào trong `app/simulation` nhập `scene3d`/`simulation_state`."""
@@ -4236,7 +4248,7 @@ def dung_tu_loi_goi(problem_text: str, plan: Any, auxiliary: tuple[dict, ...] = 
         if any(c.args.circumscribes is None and c.args.inscribed_in is None for c in cong_calls):
             raise TuChoi("CURVED_RELATION_UNSUPPORTED", "chưa hỗ trợ trộn khối tròn xoay độc lập với khối đa diện", tuple(c.id for c in cong_calls))
         ky_hieu = _don_vi(calls)
-        dung = _Dung(calls, problem_text, ky_hieu)
+        dung = _Dung(calls, problem_text, ky_hieu, _flip_apices=_flip_apices)
         if ky_hieu:
             dung.trace.append({"step": "choose_unit", "object": ky_hieu, "rule": "symbolic_length_unit",
                                "calls": sorted(c.id for c in calls for f in c.spec.value_fields if getattr(c.args, f)),
@@ -4534,6 +4546,18 @@ def dung_tu_loi_goi(problem_text: str, plan: Any, auxiliary: tuple[dict, ...] = 
                 "khoi_" + ir_name(c.args.original_solid.replace(".", "_")),
                 *("khoi_" + ir_name(s.replace(".", "_")) for s in c.args.subtracted_solids),
             }
+        if not _flip_apices and dung.mirror_apices:
+            res_neg = dung_tu_loi_goi(
+                problem_text, plan, auxiliary, read_quotes, _flip_apices=frozenset(dung.mirror_apices)
+            )
+            if res_neg.status == "SERVED":
+                for c in dung.calls:
+                    if c.id in chinh_xac and chinh_xac[c.id]["coef"] != (res_neg.answer_exact or {}).get(c.id, {}).get("coef"):
+                        raise TuChoi(
+                            "AMBIGUOUS_FACT",
+                            f"{sorted(dung.mirror_apices)[0]}: hai nghiệm đối xứng qua mặt phẳng đáy cho kết quả mục tiêu khác nhau",
+                            (c.id,),
+                        )
         _gan_dieu_kien_vet(dung.trace, kernel_checked=True, checked_points=frozenset(dung.pts))
         return KetQuaTuyen("SERVED", answers=tra, trace=dung.trace, program=program, points=dict(dung.pts),
                            metric=G.as_json(), kernel_check=True, spec=spec, exec_result=ket, chart_metric=G,
@@ -4544,5 +4568,11 @@ def dung_tu_loi_goi(problem_text: str, plan: Any, auxiliary: tuple[dict, ...] = 
                            calls=[{"id": c.id, "fn": c.fn, "args": c.args.model_dump(), "quotes": list(c.quotes)}
                                   for c in calls])
     except TuChoi as e:
+        if not _flip_apices and e.code == "INCONSISTENT_FACTS" and dung is not None and dung.mirror_apices:
+            res_neg = dung_tu_loi_goi(
+                problem_text, plan, auxiliary, read_quotes, _flip_apices=frozenset(dung.mirror_apices)
+            )
+            if res_neg.status == "SERVED":
+                return res_neg
         vet = _gan_dieu_kien_vet(dung.trace, kernel_checked=False) if dung else []
         return KetQuaTuyen("REFUSED", e.code, e.reason, e.calls, trace=vet, details=e.data)

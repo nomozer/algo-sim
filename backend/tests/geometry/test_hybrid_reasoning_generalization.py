@@ -188,3 +188,70 @@ def test_bridge_level_gaps_fail_closed_with_a_typed_refusal(cid):
     route, env, _a = _run(c["text"], c["payload"])
     assert route["status"] == "REFUSED"
     assert env["reason_code"] in {"BRIDGE_UNSUPPORTED_DESCRIBED_POINT", "SOURCE_OBJECT_MISMATCH"}
+# ── Section VIII: _dinh_tu_ba_canh_ben mirror-solution equivalence across base plane ────────────────────────────────
+
+def _run_two_anchor_mirror_case(extra_calls, extra_text=""):
+    base_text = (
+        "Cho hình chóp S.ABC và hình chóp P.ABC có đáy ABC vuông tại A, AB = 6, AC = 8. "
+        "Cạnh PA vuông góc với mặt phẳng (ABC), PA = 5. "
+        "Biết SA = 13, SB = 13, SC = 13. "
+    )
+    t = base_text + extra_text
+    calls = [
+        {"id": "c1", "fn": "pyramid", "args": {"apex": "S", "base": ["A", "B", "C"]}, "source": {"quotes": ["Cho hình chóp S.ABC"]}},
+        {"id": "c2", "fn": "pyramid", "args": {"apex": "P", "base": ["A", "B", "C"]}, "source": {"quotes": ["hình chóp P.ABC"]}},
+        {"id": "c3", "fn": "right_angle", "args": {"vertex": "A", "rays": ["B", "C"]}, "source": {"quotes": ["có đáy ABC vuông tại A"]}},
+        {"id": "c4", "fn": "segment_length", "args": {"segment": ["A", "B"], "value": "6"}, "source": {"quotes": ["AB = 6"]}},
+        {"id": "c5", "fn": "segment_length", "args": {"segment": ["A", "C"], "value": "8"}, "source": {"quotes": ["AC = 8"]}},
+        {"id": "c6", "fn": "perpendicular_line_plane", "args": {"line": ["P", "A"], "plane": ["A", "B", "C"]}, "source": {"quotes": ["Cạnh PA vuông góc với mặt phẳng (ABC)"]}},
+        {"id": "c7", "fn": "segment_length", "args": {"segment": ["P", "A"], "value": "5"}, "source": {"quotes": ["PA = 5"]}},
+        {"id": "c8", "fn": "segment_length", "args": {"segment": ["S", "A"], "value": "13"}, "source": {"quotes": ["SA = 13"]}},
+        {"id": "c9", "fn": "segment_length", "args": {"segment": ["S", "B"], "value": "13"}, "source": {"quotes": ["SB = 13"]}},
+        {"id": "c10", "fn": "segment_length", "args": {"segment": ["S", "C"], "value": "13"}, "source": {"quotes": ["SC = 13"]}},
+    ] + extra_calls
+    ask_quotes = tuple(q for c in extra_calls if c["fn"].startswith("ask_") for q in c["source"]["quotes"])
+    return engine.dung_tu_loi_goi(t, {"calls": calls, "named_planes": []}, (), ask_quotes)
+
+
+def test_section_viii_single_pyramid_mirror_solutions_are_equivalent():
+    """Case 1: Single pyramid S.ABC from 3 lateral edges has R_z-equivariant +z and -z solutions; all goals match."""
+    for cid in ("PY1", "PY2"):
+        _assert_oracle(cid)
+
+
+def test_section_viii_two_off_base_anchors_with_mirror_invariant_goals_is_served():
+    """Case 2: Two off-base anchors (PA ⊥ (ABC), PA = 5 and SA = SB = SC = 13) where asked goals (volume of S.ABC
+    and distance from P to vertical plane (SBC)) are identical on both +z and -z mirror branches -> SERVED."""
+    r = _run_two_anchor_mirror_case([
+        {"id": "g1", "fn": "ask_volume", "args": {"solid": "S.ABC"}, "source": {"quotes": ["Tính thể tích khối chóp S.ABC."]}},
+        {"id": "g2", "fn": "ask_distance_point_plane", "args": {"point": "P", "plane": ["S", "B", "C"]}, "source": {"quotes": ["Tính khoảng cách từ P đến mặt phẳng (SBC)."]}},
+    ], "Tính thể tích khối chóp S.ABC. Tính khoảng cách từ P đến mặt phẳng (SBC).")
+    assert r.status == "SERVED"
+    assert r.answers == {"g1": "96", "g2": "24/5"}
+
+
+@pytest.mark.parametrize("goal_call,goal_text", [
+    ({"id": "g1", "fn": "ask_length", "args": {"segment": ["S", "P"]}, "source": {"quotes": ["Tính độ dài đoạn thẳng SP."]}},
+     "Tính độ dài đoạn thẳng SP."),
+    ({"id": "g1", "fn": "ask_angle_line_plane", "args": {"line": ["S", "P"], "plane": ["A", "B", "C"]},
+      "source": {"quotes": ["Tính góc giữa đường thẳng SP và mặt phẳng (ABC)."]}},
+     "Tính góc giữa đường thẳng SP và mặt phẳng (ABC)."),
+])
+def test_section_viii_two_off_base_anchors_with_mirror_sensitive_goal_refuses_ambiguous_fact(goal_call, goal_text):
+    """Case 3: Two off-base anchors with unspecified relative half-space and a mirror-sensitive goal (|SP| = √74 vs √314,
+    or cos²(SP, (ABC)) = 25/74 vs 25/314) must fail closed with AMBIGUOUS_FACT."""
+    r = _run_two_anchor_mirror_case([goal_call], goal_text)
+    assert r.status == "REFUSED" and r.code == "AMBIGUOUS_FACT"
+
+
+def test_section_viii_two_off_base_anchors_disambiguated_by_minus_z_distance_is_served():
+    """Case 4: When segment_length(S, P) = √314 disambiguates the opposite-side (-z) mirror solution, the engine
+    selects the unique valid -z branch and serves cos²(SP, (ABC)) = 25/314."""
+    r = _run_two_anchor_mirror_case([
+        {"id": "c11", "fn": "segment_length", "args": {"segment": ["S", "P"], "value": "√314"}, "source": {"quotes": ["SP = √314"]}},
+        {"id": "g1", "fn": "ask_angle_line_plane", "args": {"line": ["S", "P"], "plane": ["A", "B", "C"]},
+         "source": {"quotes": ["Tính góc giữa đường thẳng SP và mặt phẳng (ABC)."]}},
+    ], "Biết SP = √314. Tính góc giữa đường thẳng SP và mặt phẳng (ABC).")
+    assert r.status == "SERVED"
+    assert r.answers == {"g1": "cos²=25/314"}
+    assert r.points["S"][2] == Fraction(-12, 5)
