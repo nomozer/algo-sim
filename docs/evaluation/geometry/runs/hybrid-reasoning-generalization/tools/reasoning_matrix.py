@@ -19,6 +19,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import re
 import statistics
 import subprocess
@@ -30,7 +31,9 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[6]
 RUN = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(ROOT / "backend"))
+#: A/B timing on the same corpus and machine state: point at an exported copy of the base `backend/app` (git archive).
+BACKEND = Path(os.environ.get("BENCHMARK_BACKEND_ROOT", str(ROOT / "backend")))
+sys.path.insert(0, str(BACKEND))
 sys.path.insert(0, str(ROOT / "docs" / "evaluation" / "geometry" / "custodian"))
 
 import geometry_oracle as O  # noqa: E402  (independent: imports only `fractions`)
@@ -786,6 +789,7 @@ def run_matrix() -> dict:
         "measurement_class": "OFFLINE_DEVELOPMENT_MATRIX", "held_out_claim": "NONE", "evaluator_independence": "NONE",
         "live_calls": 0,
         "git_head": subprocess.run(["git", "-C", str(ROOT), "rev-parse", "HEAD"], capture_output=True, text=True).stdout.strip(),
+        "measured_backend": os.environ.get("BENCHMARK_LABEL", "worktree backend/app (git_head + working tree)"),
         "case_count": len(rows), "outcome_counts": dict(sorted(counts.items())),
         "out_of_scope_not_run": OUT_OF_SCOPE,
         "performance": {
@@ -807,12 +811,11 @@ def run_matrix() -> dict:
 
 def render() -> str:
     out = []
-    for label in ("before", "after"):
-        p = RUN / "results" / f"matrix_{label}.json"
-        if not p.exists():
-            continue
+    for p in sorted((RUN / "results").glob("matrix_*.json")):
+        label = p.stem[len("matrix_"):]
         d = json.loads(p.read_text(encoding="utf-8"))
-        out.append(f"## Matrix `{label}` (HEAD `{d['git_head'][:12]}`, {d['case_count']} cases)\n")
+        out.append(f"## Matrix `{label}` (HEAD `{d['git_head'][:12]}`, measured: {d.get('measured_backend', 'worktree')}, "
+                   f"{d['case_count']} cases)\n")
         out.append("| outcome | count |\n|---|---:|")
         out += [f"| `{k}` | {v} |" for k, v in d["outcome_counts"].items()]
         out.append("\n| case | family | outcome | status / code | answers | classification | states | cands | pruned | depth | reuse |")
