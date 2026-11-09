@@ -513,6 +513,140 @@ def scan_six_layer_contamination(
     return results
 
 
+def _layer7_intermediate_construction_sequence(text: str) -> str:
+    """Layer 7: Canonical intermediate construction sequence (`solids -> premises -> described_points -> derived_sections -> goals`
+    with vertex-canonicalized kind sequence), detecting problems that share an identical intermediate construction chain
+    even when surface wording and clause order are rewritten."""
+    try:
+        from app.ai.local_geometry_parser import parse_geometry_problem_locally
+
+        res = parse_geometry_problem_locally(text)
+        if res.payload is not None:
+            p = res.payload
+            steps: list[str] = []
+            for s in p.get("solids") or ():
+                steps.append(f"solid:{s.get('solid_type')}")
+            for pr in p.get("premises") or ():
+                steps.append(f"prem:{pr.get('kind')}")
+            for dp in p.get("described_points") or ():
+                steps.append(f"desc:{dp.get('kind')}")
+            for ds in p.get("derived_sections") or ():
+                steps.append(f"sec:{len(ds.get('plane_points') or ())}")
+            for mg in p.get("math_goals") or ():
+                steps.append(f"goal:{mg.get('goal_type')}")
+            if steps:
+                return " -> ".join(steps)
+    except Exception:
+        pass
+    return f"SKEL_SEQ:{_layer6_construction_relation_graph(text)}"
+
+
+_SOLUTION_LEAK_RE = re.compile(
+    r"(?:\bđáp\s+số\b|\blời\s+giải\b|\bta\s+có\s+V\s*=|\bsuy\s+ra\s+V\s*=|\bkết\s+quả\s+là\b)",
+    flags=re.IGNORECASE | re.UNICODE,
+)
+
+
+def _layer8_solution_or_expected_answer_leakage(text: str, oracle: Any = None) -> str:
+    """Layer 8: Detect leaked solution steps or expected answers embedded inside `problem_text` or matching a known
+    `(structural_skeleton, oracle)` pair."""
+    has_leak = bool(_SOLUTION_LEAK_RE.search(text or ""))
+    oracle_str = json.dumps(oracle, sort_keys=True, ensure_ascii=False) if oracle else ""
+    return f"LEAK={has_leak}|SKEL={_structural_skeleton(text)}|ORACLE={oracle_str}"
+
+
+H1_REQUIRED_13_FIELDS = (
+    "case_id",
+    "problem_text",
+    "source_type",
+    "author_or_source",
+    "author_date",
+    "solid_family",
+    "question_types",
+    "auxiliary_chain_depth",
+    "expected_behavior",
+    "independent_oracle",
+    "independent_derivation",
+    "contamination_check",
+    "freeze_sha256",
+)
+
+
+def validate_h1_case_13_fields(case: dict[str, Any]) -> dict[str, Any]:
+    """Validate that an H-1 case record satisfies all 13 mandatory provenance & oracle fields (Section IV.1.2)."""
+    missing = [f for f in H1_REQUIRED_13_FIELDS if f not in case or case.get(f) in (None, "", [], {})]
+    source_type = str(case.get("source_type") or "")
+    author = str(case.get("author_or_source") or "")
+    ai_authored = bool(
+        re.search(r"\b(?:agent|antigravity|claude|gemini|gpt|copilot|llm|synthetic)\b", author, re.IGNORECASE)
+        or source_type not in ("HUMAN_AUTHORED", "CURATED_EXAM")
+    )
+    has_inline_leak = bool(_SOLUTION_LEAK_RE.search(str(case.get("problem_text") or "")))
+    valid = (not missing) and (not ai_authored) and (not has_inline_leak)
+    return {
+        "case_id": case.get("case_id") or case.get("id"),
+        "valid_h1_case": valid,
+        "missing_fields": missing,
+        "ai_or_synthetic_rejected": ai_authored,
+        "inline_solution_leak_detected": has_inline_leak,
+    }
+
+
+def scan_eight_layer_contamination(
+    cases: list[dict[str, Any]],
+    repo_root: Path,
+    *,
+    exclude: Path | None = None,
+) -> dict[str, dict[str, list[str]]]:
+    """Run 8-layer anti-contamination checking (Section IV.1.3) against all problem texts in the repository."""
+    six = scan_six_layer_contamination(
+        [{"id": c.get("case_id") or c["id"], "problem_text": c["problem_text"]} for c in cases],
+        repo_root,
+        exclude=exclude,
+    )
+    results: dict[str, dict[str, list[str]]] = {
+        **six,
+        "intermediate_construction_sequence": {},
+        "solution_or_expected_answer_leakage": {},
+    }
+    l7_sigs = {(c.get("case_id") or c["id"]): _layer7_intermediate_construction_sequence(c["problem_text"]) for c in cases}
+    l8_sigs = {(c.get("case_id") or c["id"]): _layer8_solution_or_expected_answer_leakage(c["problem_text"]) for c in cases}
+    for c in cases:
+        cid = c.get("case_id") or c["id"]
+        if _SOLUTION_LEAK_RE.search(c.get("problem_text") or ""):
+            results["solution_or_expected_answer_leakage"].setdefault(cid, []).append("SELF_INLINE_SOLUTION_LEAK")
+
+    for path in repo_root.rglob("*"):
+        if (
+            not path.is_file()
+            or path.suffix not in P._TEXT_SUFFIXES
+            or P._SKIP_DIRS & set(path.relative_to(repo_root).parts)
+            or (exclude is not None and path.resolve() == exclude.resolve())
+        ):
+            continue
+        try:
+            raw = path.read_text(encoding="utf-8")
+        except (UnicodeDecodeError, OSError):
+            continue
+        rel = path.relative_to(repo_root).as_posix()
+        for m in _PROBLEM_TEXT_JSON_RE.finditer(raw):
+            try:
+                ref_text = json.loads(f'"{m.group(1)}"')
+            except ValueError:
+                continue
+            if not isinstance(ref_text, str) or len(ref_text.strip()) < 25:
+                continue
+            ref_l7 = _layer7_intermediate_construction_sequence(ref_text)
+            ref_l8 = _layer8_solution_or_expected_answer_leakage(ref_text)
+            for cid, sig7 in l7_sigs.items():
+                if sig7 == ref_l7 and rel not in results["intermediate_construction_sequence"].get(cid, ()):
+                    results["intermediate_construction_sequence"].setdefault(cid, []).append(rel)
+            for cid, sig8 in l8_sigs.items():
+                if sig8 == ref_l8 and rel not in results["solution_or_expected_answer_leakage"].get(cid, ()):
+                    results["solution_or_expected_answer_leakage"].setdefault(cid, []).append(rel)
+    return results
+
+
 def _structural_skeleton(text: str) -> str:
     """Mask vertex/solid/plane ASCII labels and numeric/radical literals so renaming `S.ABCD -> P.MNPQ` and `4 -> 6`
     produces the exact same structural template skeleton."""

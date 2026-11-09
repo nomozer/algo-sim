@@ -806,7 +806,7 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
 
     # 1e. Cube: "Cho hình lập phương ABCD.A'B'C'D' (có cạnh bằng 2)?"
     m_cube = re.search(
-        rf"(?P<lead>(?:Cho|Vẽ|Mô\s+phỏng)\s+)?hình\s+lập\s+phương\s+(?P<not>{_PTS4}\.{_PTS4})(?P<tail>\s+có\s+cạnh\s+(?:bằng\s+)?(?P<val>{_VAL}))?",
+        rf"(?P<lead>(?:Cho|Vẽ|Mô\s+phỏng)\s+)?hình\s+lập\s+phương\s+(?P<not>{_PTS4}\.{_PTS4})(?P<tail>\s+(?:có\s+)?cạnh\s+(?:bằng\s+)?(?P<val>{_VAL}))?",
         ctext_norm,
         re.IGNORECASE | re.UNICODE,
     )
@@ -1119,9 +1119,9 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
             mapped_fact = True
 
     # ── 3. Perpendicularity & Altitude Premises ──────────────────────────────────────────────────────────────────
-    # 3a. Pairwise perpendicular edges from apex: "OA, OB, OC đôi một vuông góc"
+    # 3a. Pairwise perpendicular edges from apex: "OA, OB, OC đôi một vuông góc (với nhau)?"
     for m_pair_perp in re.finditer(
-        rf"(?P<full>(?P<e1>{_PTS2})\s*,\s*(?P<e2>{_PTS2})\s*,\s*(?P<e3>{_PTS2})\s+đôi\s+một\s+vuông\s+góc)",
+        rf"(?P<full>(?P<e1>{_PTS2})\s*,\s*(?P<e2>{_PTS2})\s*,\s*(?P<e3>{_PTS2})\s+đôi\s+một\s+vuông\s+góc(?:\s+với\s+nhau)?)",
         ctext_norm,
         re.IGNORECASE | re.UNICODE,
     ):
@@ -1885,7 +1885,7 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
 
     for m_vol in (
         re.finditer(
-            rf"(?P<full>(?:tính\s+)?thể\s+tích(?:\s+của)?\s+(?P<kind>(?:khối\s+chóp|hình\s+chóp)(?!\s+cụt)|khối\s+tứ\s+diện|tứ\s+diện|khối\s+lăng\s+trụ|hình\s+lăng\s+trụ|khối\s+lập\s+phương|hình\s+lập\s+phương|khối\s+hộp\s+chữ\s+nhật|khối\s+cầu|mặt\s+cầu|khối\s+trụ|hình\s+trụ|khối\s+nón|hình\s+nón)(?:\s+(?P<not>\({_PT}\)|{_PT}\.{_PTS3_6}|{_PTS3_6}\.{_PTS3_6}|{_PTS4}))?)",
+            rf"(?P<full>(?:tính\s+)?thể\s+tích(?:\s+của)?\s+(?P<kind>(?:khối\s+chóp|hình\s+chóp)(?!\s+cụt)|khối\s+tứ\s+diện|tứ\s+diện|khối\s+lăng\s+trụ|hình\s+lăng\s+trụ|khối\s+lập\s+phương|hình\s+lập\s+phương|(?:khối|hình)\s+hộp(?:\s+chữ\s+nhật)?|khối\s+cầu|mặt\s+cầu|khối\s+trụ|hình\s+trụ|khối\s+nón|hình\s+nón)(?:\s+(?P<not>\({_PT}\)|{_PT}\.{_PTS3_6}|{_PTS3_6}\.{_PTS3_6}|{_PTS4}))?)",
             ctext_norm,
             re.IGNORECASE | re.UNICODE,
         )
@@ -2019,7 +2019,7 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
             mapped_goal = True
 
     for m_len_seg in re.finditer(
-        rf"(?P<full>(?:tính\s+)?độ\s+dài(?:\s+đoạn\s+thẳng)?\s+(?P<seg>{_PTS2}))(?![\w'])",
+        rf"(?P<full>(?:tính\s+)?độ\s+dài(?:\s+(?:đoạn\s+thẳng|đường\s+chéo|cạnh))?\s+(?P<seg>{_PTS2}))(?![\w'])",
         ctext_norm,
         re.IGNORECASE | re.UNICODE,
     ):

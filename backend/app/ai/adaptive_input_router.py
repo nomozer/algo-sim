@@ -316,12 +316,41 @@ def route_text_input(
         hyb_ms = (time.perf_counter() - t_hyb0) * 1000.0
         total_ms = (time.perf_counter() - t_total0) * 1000.0 + previous_vision_ms
 
+        route_d_raw = hyb_out.response.get("route_d") or {}
+        refusal_raw = route_d_raw.get("refusal") or {}
+        env_raw = hyb_out.response.get("envelope") or {}
+        ref_code = str(
+            refusal_raw.get("code")
+            or refusal_raw.get("reason_code")
+            or env_raw.get("reason_code")
+            or ""
+        )
+        fail_cat = str(
+            refusal_raw.get("failure_category")
+            or env_raw.get("failure_category")
+            or ""
+        )
+        is_clarification_or_missing = (
+            local_res.status == LOCAL_PARSE_AMBIGUOUS
+            or fail_cat == "insufficient_specification"
+            or ref_code
+            in {
+                "MISSING_DIMENSION",
+                "UNDERDETERMINED_POINT",
+                "PLANE_NOT_UNIQUE",
+                "FOOT_NOT_DETERMINED",
+                "AMBIGUOUS_FACT",
+                "AMBIGUOUS_REFERENCE",
+                "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+                "FACT_INCOMPLETE",
+            }
+        )
         chosen_route: ChosenRoute = (
             "VISION_THEN_LOCAL_DETERMINISTIC"
             if previous_vision_calls > 0
             else (
                 "LOCAL_AMBIGUOUS_CLARIFICATION"
-                if local_res.status == LOCAL_PARSE_AMBIGUOUS
+                if is_clarification_or_missing
                 else "LOCAL_DETERMINISTIC_HYBRID"
             )
         )
@@ -563,7 +592,7 @@ _MATH_TOKEN_GATE_RE = re.compile(
 )
 
 _OCR_CORRUPTION_ARTIFACT_RE = re.compile(
-    r"(?:Œ|”|“|\b\d+[Vv]\d+\b|\b[0O][Oo]\b|\b1[lI]\b|\.\.\.+|[A-Z]{3,4}\.[A-Z]'[A-Z]'[A-Z](?!'[A-Z]?)\b)"
+    r"(?:Œ|”|“|\b\d+[Vv]\d+\b|\b[0O][Oo]\b|\b1[lI]\b|\.\.\.+|[A-Z]{3,4}\.[A-Z]'[A-Z]'[A-Z](?!'[A-Z]?)\b|[A-Z][0-9']*°[A-Z0-9']*)"
 )
 _DIAGRAM_DEPENDENCY_RE = re.compile(
     r"(?:hình\s+vẽ\s+bên|như\s+hình\s+vẽ|trong\s+hình\s+vẽ|ở\s+hình\s+bên)",
@@ -589,7 +618,7 @@ def extract_structured_math_tokens(text: str) -> dict[str, Any]:
     radicals = sorted(set(re.findall(r"(?:[0-9a-zA-Z]+)?√\d+(?:/\d+)?", norm)))
     assignments: dict[str, str] = {}
     for m_asg in re.finditer(
-        r"\b([A-Za-z0-9_'′₁₂₃]+(?:\s*=\s*[A-Za-z0-9_'′₁₂₃]+)*)\s*=\s*([^\s,.;:]+)",
+        r"\b([A-Za-z0-9_'′₁₂₃]+(?:\s*=\s*[A-Za-z0-9_'′₁₂₃]+)*)\s*=\s*(-?[^\s,.;:]+)",
         norm,
     ):
         lhs_chain = [p.strip().replace("′", "'") for p in m_asg.group(1).split("=") if p.strip()]
@@ -629,21 +658,139 @@ def extract_structured_math_tokens(text: str) -> dict[str, Any]:
     }
 
 
+def reconcile_dual_ocr_texts(
+    primary_vi_ocr_text: str,
+    secondary_math_ocr_text: str | None,
+    *,
+    is_degraded_image: bool = False,
+) -> dict[str, Any]:
+    """Deterministically reconcile `primary_vi_ocr_text` (e.g. Tesseract `vie+eng` with full Vietnamese diacritics)
+    and `secondary_math_ocr_text` (e.g. RapidOCR PP-OCRv6 with exact ASCII/prime math tokens) without any ground truth.
+
+    Safety Rules (Zero-AI Gate):
+    1. Never uses ground truth or problem IDs (`used_ground_truth = False`).
+    2. Immediately refuses if `is_degraded_image=True` or `secondary_math_ocr_text` is missing/empty.
+    3. Requires exact line-count and problem-header (`Câu N` / `Bài N`) alignment and at most 1 problem header.
+    4. Requires 100% agreement between both engines on all numeric assignments (`=`), planes, radicals, fractions,
+       angles, decimals, negatives, and subscript labels.
+    5. Repairs a syntactically broken prism/box token `<BASE>.<CORRUPTED_TOP>` in `primary_vi_ocr_text` (such as
+       `ABCD.A'B°C'D'`) ONLY when `secondary_math_ocr_text` contains the exact canonical `<BASE>.<PRIMED_BASE>` token
+       (`ABCD.A'B'C'D'`) matching `<BASE>`.
+    """
+    if is_degraded_image:
+        return {
+            "reconciled": False,
+            "reconciled_text": None,
+            "reason_code": "DEGRADED_IMAGE_REQUIRES_VISION_FALLBACK",
+            "repairs": [],
+            "used_ground_truth": False,
+        }
+    p_raw = (primary_vi_ocr_text or "").strip()
+    s_raw = (secondary_math_ocr_text or "").strip()
+    if not p_raw or not s_raw:
+        return {
+            "reconciled": False,
+            "reconciled_text": None,
+            "reason_code": "MISSING_SECONDARY_OCR",
+            "repairs": [],
+            "used_ground_truth": False,
+        }
+
+    p_lines = [ln.strip() for ln in p_raw.splitlines() if ln.strip()]
+    s_lines = [ln.strip() for ln in s_raw.splitlines() if ln.strip()]
+    if len(p_lines) != len(s_lines):
+        return {
+            "reconciled": False,
+            "reconciled_text": None,
+            "reason_code": "LINE_COUNT_MISMATCH",
+            "repairs": [],
+            "used_ground_truth": False,
+        }
+
+    p_headers = re.findall(r"\b(?:Câu|Cau|Bài|Bai)\s*(\d+)\b", p_raw, flags=re.IGNORECASE)
+    s_headers = re.findall(r"\b(?:Câu|Cau|Bài|Bai)\s*(\d+)\b", s_raw, flags=re.IGNORECASE)
+    if len(p_headers) > 1 or len(s_headers) > 1 or p_headers != s_headers:
+        return {
+            "reconciled": False,
+            "reconciled_text": None,
+            "reason_code": "PROBLEM_HEADER_MISMATCH_OR_MULTI_PROBLEM",
+            "repairs": [],
+            "used_ground_truth": False,
+        }
+
+    p_tok = extract_structured_math_tokens(p_raw)
+    s_tok = extract_structured_math_tokens(s_raw)
+    for key in (
+        "assignments",
+        "planes",
+        "radicals",
+        "angles_degrees",
+        "fractions",
+        "decimals",
+        "negatives",
+        "subscript_labels",
+    ):
+        if p_tok[key] != s_tok[key]:
+            return {
+                "reconciled": False,
+                "reconciled_text": None,
+                "reason_code": f"CROSS_ENGINE_DISAGREEMENT:{key}",
+                "repairs": [],
+                "used_ground_truth": False,
+            }
+
+    reconciled_text = p_raw
+    repairs: list[dict[str, str]] = []
+    for m_prism in re.finditer(
+        r"(?<![A-Za-z0-9'])(?P<base>[A-Z]{3,6})\.(?P<top>[A-Z0-9'′°*`´]{3,12})(?![A-Za-z0-9'])",
+        p_raw,
+    ):
+        base_str = m_prism.group("base")
+        top_str = m_prism.group("top")
+        expected_top = "".join(f"{ch}'" for ch in base_str)
+        expected_solid = f"{base_str}.{expected_top}"
+        full_tok = m_prism.group(0)
+        if full_tok.replace("′", "'") != expected_solid and expected_solid in s_tok["solids"]:
+            reconciled_text = reconciled_text.replace(full_tok, expected_solid, 1)
+            repairs.append(
+                {
+                    "corrupted_token": full_tok,
+                    "repaired_token": expected_solid,
+                    "evidence": "secondary_ocr_exact_solid_match",
+                }
+            )
+
+    fid = verify_ocr_input_fidelity(
+        reconciled_text,
+        secondary_ocr_text=s_raw,
+        is_degraded_image=is_degraded_image,
+    )
+    return {
+        "reconciled": bool(fid["fidelity_passed"]),
+        "reconciled_text": reconciled_text if fid["fidelity_passed"] else None,
+        "reason_code": None if fid["fidelity_passed"] else fid["reason_code"],
+        "repairs": repairs,
+        "used_ground_truth": False,
+        "fidelity_report": fid,
+    }
+
+
 def verify_ocr_input_fidelity(
     ocr_text: str,
     *,
     secondary_ocr_text: str | None = None,
     has_diagram: bool = False,
+    is_degraded_image: bool = False,
 ) -> dict[str, Any]:
     """Evaluate the 6-criteria Input Fidelity Gate (`Phase 2.6`) before trusting Local OCR without Gemini Vision.
 
     Criteria:
     1. `vertex_and_solid_consistency`: Declared solid notation is well-formed and all referenced vertices/planes are consistent; no OCR corruption artifacts (`Œ`, `2V3`, broken prism notation).
-    2. `dimension_and_number_fidelity`: Every `=` assignment has a valid exact numeric/symbolic value and no truncated decimals or corrupted radicals.
+    2. `dimension_and_number_fidelity`: Every `=` assignment has a valid exact positive numeric/symbolic value and no truncated decimals, negatives, or corrupted radicals.
     3. `geometric_relation_syntax`: All perpendicular/parallel/midpoint/projection relations parse cleanly without unparsed fact candidates.
     4. `goal_sentence_completeness`: At least one complete goal is parsed and bound to a valid target without unparsed goal candidates.
     5. `source_span_coverage`: `parse_geometry_problem_locally` returns `LOCAL_PARSE_COMPLETE` with `0` unparsed clauses and `coverage_ratio >= 0.85`.
-    6. `diagram_dependency_and_cross_engine`: Problem does not depend on an external diagram (`như hình vẽ`), and if `secondary_ocr_text` is provided, structured math tokens agree 100%.
+    6. `diagram_dependency_and_cross_engine`: Problem does not depend on an external diagram (`như hình vẽ`), is not a degraded image, and if `secondary_ocr_text` is provided, structured math tokens agree 100%.
     """
     raw = (ocr_text or "").strip()
     norm = normalize_problem_text(raw)
@@ -671,14 +818,18 @@ def verify_ocr_input_fidelity(
     )
 
     # 2. Dimension & number fidelity
-    # Check that raw text has no corrupted numbers (`2V3`) or comma-decimal truncation
+    # Check that raw text has no corrupted numbers (`2V3`), comma-decimal truncation, negative lengths, or zero lengths
     has_comma_decimal = bool(re.search(r"\b\d+,\d+\b", raw))
+    has_non_positive_length = bool(tokens["negatives"]) or any(
+        v in ("0", "0.0", "-0") or v.startswith("-") for v in tokens["assignments"].values()
+    )
     c2_dimension_fidelity = bool(
         norm
         and not has_ocr_artifacts
         and not has_comma_decimal
+        and not has_non_positive_length
         and all(
-            re.match(r"^(?:\d+(?:√\d+)?(?:/\d+)?|√\d+(?:/\d+)?|\d*\s*a(?:√\d+)?(?:/\d+)?)$", v)
+            re.match(r"^(?:[1-9]\d*(?:√\d+)?(?:/\d+)?|√\d+(?:/\d+)?|[1-9]?\d*\s*a(?:√\d+)?(?:/\d+)?)$", v)
             for v in tokens["assignments"].values()
         )
     )
@@ -706,19 +857,31 @@ def verify_ocr_input_fidelity(
         and cov.coverage_complete
     )
 
-    # 6. Diagram dependency & optional cross-engine agreement
+    # 6. Diagram dependency & optional cross-engine agreement across all math-critical token categories
     has_diag_phrase = bool(_DIAGRAM_DEPENDENCY_RE.search(raw))
     cross_agree = True
     if secondary_ocr_text is not None:
         sec_tokens = extract_structured_math_tokens(secondary_ocr_text)
+        # Note: secondary OCR (e.g. PP-OCRv6 without Vietnamese diacritics) may spell "vuong goc" instead of "vuông góc";
+        # compare symbolic relations (`⊥`, `∥`) and all notation/numeric categories strictly.
+        p_sym_rel = [r for r in tokens["relations"] if r in ("⊥", "∥")]
+        s_sym_rel = [r for r in sec_tokens["relations"] if r in ("⊥", "∥")]
         cross_agree = bool(
             tokens["solids"] == sec_tokens["solids"]
             and tokens["primed_labels"] == sec_tokens["primed_labels"]
+            and tokens["subscript_labels"] == sec_tokens["subscript_labels"]
             and tokens["assignments"] == sec_tokens["assignments"]
             and tokens["planes"] == sec_tokens["planes"]
             and tokens["radicals"] == sec_tokens["radicals"]
+            and tokens["angles_degrees"] == sec_tokens["angles_degrees"]
+            and tokens["fractions"] == sec_tokens["fractions"]
+            and tokens["decimals"] == sec_tokens["decimals"]
+            and tokens["negatives"] == sec_tokens["negatives"]
+            and p_sym_rel == s_sym_rel
         )
-    c6_diagram_and_engine = bool(not has_diag_phrase and not has_diagram and cross_agree)
+    c6_diagram_and_engine = bool(
+        not has_diag_phrase and not has_diagram and not is_degraded_image and cross_agree
+    )
 
     checks = {
         "vertex_and_solid_consistency": c1_vertex_solid,
@@ -736,7 +899,17 @@ def verify_ocr_input_fidelity(
         "checks": checks,
         "failed_checks": failed_checks,
         "local_parse_status": local_res.status if local_res else "EMPTY",
-        "reason_code": None if fidelity_passed else (local_res.reason_code if local_res and local_res.reason_code else "OCR_FIDELITY_GATE_FAILED"),
+        "reason_code": None
+        if fidelity_passed
+        else (
+            "DEGRADED_IMAGE_REQUIRES_VISION_FALLBACK"
+            if is_degraded_image
+            else (
+                local_res.reason_code
+                if local_res and local_res.reason_code
+                else "OCR_FIDELITY_GATE_FAILED"
+            )
+        ),
         "structured_tokens": tokens,
     }
 
@@ -744,10 +917,13 @@ def verify_ocr_input_fidelity(
 def compare_ocr_and_vision_facts(ocr_text: str, vision_text: str) -> dict[str, Any]:
     """Compare structured math facts between Local OCR and Gemini Vision (`Phase 2.7`).
 
-    Detects critical discrepancies where silent selection could produce a wrong mathematical result:
+    Detects critical discrepancies across all 13 math symbol classes where silent selection could produce a wrong result:
     - `NUMERIC_ASSIGNMENT_CONFLICT`: Same segment/variable assigned different values (e.g. `SA=3` vs `SA=8` or `SA=5`).
-    - `PRIME_OR_PLANE_LABEL_CONFLICT`: Plane or primed vertex notation differs (e.g. `(ABC)` vs `(A'BC)`).
-    - `SOLID_NOTATION_CONFLICT`: Declared solid differs (e.g. `ABC.A'B'C'` vs `ABC.ABC`).
+    - `PRIME_OR_PLANE_LABEL_CONFLICT`: Plane or primed vertex notation differs (e.g. `(ABC)` vs `(A'BC)` or `AC` vs `AC'`).
+    - `SOLID_NOTATION_CONFLICT`: Declared solid differs (e.g. `ABC.A'B'C'` vs `ABC.ABC` or `S.ABC` vs `S.ABCD`).
+    - `RELATION_SYMBOL_CONFLICT`: Geometric relation differs (`⊥` vs `∥` or `vuông góc` vs `song song`).
+    - `RADICAL_OR_FRACTION_CONFLICT`: Radical (`√2` vs `√3`) or fraction (`1/2` vs `1/3`) differs.
+    - `ANGLE_OR_SIGN_CONFLICT`: Angle degree (`60°` vs `30°`), negative sign, or subscript (`d_1` vs `d_2`) differs.
     """
     ocr_tok = extract_structured_math_tokens(ocr_text or "")
     vis_tok = extract_structured_math_tokens(vision_text or "")
@@ -770,14 +946,14 @@ def compare_ocr_and_vision_facts(ocr_text: str, vision_text: str) -> dict[str, A
             if "NUMERIC_ASSIGNMENT_CONFLICT" not in conflict_codes:
                 conflict_codes.append("NUMERIC_ASSIGNMENT_CONFLICT")
 
-    # 2. Plane / prime label conflict (e.g. `(ABC)` in OCR vs `(A'BC)` in Vision where strip-prime matches)
+    # 2. Plane / prime label conflict (e.g. `(ABC)` in OCR vs `(A'BC)` in Vision, or `AC` vs `AC'`)
     ocr_planes = set(ocr_tok["planes"])
     vis_planes = set(vis_tok["planes"])
     if ocr_planes and vis_planes and ocr_planes != vis_planes:
         for vp in sorted(vis_planes - ocr_planes):
             vp_unprimed = vp.replace("'", "")
             for op in sorted(ocr_planes - vis_planes):
-                if op.replace("'", "") == vp_unprimed:
+                if op.replace("'", "") == vp_unprimed or op != vp:
                     conflicts.append(
                         {
                             "code": "PRIME_OR_PLANE_LABEL_CONFLICT",
@@ -787,6 +963,16 @@ def compare_ocr_and_vision_facts(ocr_text: str, vision_text: str) -> dict[str, A
                     )
                     if "PRIME_OR_PLANE_LABEL_CONFLICT" not in conflict_codes:
                         conflict_codes.append("PRIME_OR_PLANE_LABEL_CONFLICT")
+    if ocr_tok["primed_labels"] != vis_tok["primed_labels"] and (ocr_tok["primed_labels"] or vis_tok["primed_labels"]):
+        conflicts.append(
+            {
+                "code": "PRIME_OR_PLANE_LABEL_CONFLICT",
+                "ocr_primed_labels": ocr_tok["primed_labels"],
+                "vision_primed_labels": vis_tok["primed_labels"],
+            }
+        )
+        if "PRIME_OR_PLANE_LABEL_CONFLICT" not in conflict_codes:
+            conflict_codes.append("PRIME_OR_PLANE_LABEL_CONFLICT")
 
     # 3. Solid notation conflict
     if ocr_tok["solids"] and vis_tok["solids"] and ocr_tok["solids"] != vis_tok["solids"]:
@@ -799,6 +985,64 @@ def compare_ocr_and_vision_facts(ocr_text: str, vision_text: str) -> dict[str, A
         )
         if "SOLID_NOTATION_CONFLICT" not in conflict_codes:
             conflict_codes.append("SOLID_NOTATION_CONFLICT")
+
+    # 4. Relation conflict (`⊥` / `vuông góc` vs `∥` / `song song`)
+    def _norm_rels(rels: Sequence[str]) -> set[str]:
+        out: set[str] = set()
+        for r in rels:
+            if r in ("⊥", "vuông góc"):
+                out.add("PERP")
+            elif r in ("∥", "song song"):
+                out.add("PARALLEL")
+        return out
+
+    if _norm_rels(ocr_tok["relations"]) != _norm_rels(vis_tok["relations"]):
+        conflicts.append(
+            {
+                "code": "RELATION_SYMBOL_CONFLICT",
+                "ocr_relations": ocr_tok["relations"],
+                "vision_relations": vis_tok["relations"],
+            }
+        )
+        if "RELATION_SYMBOL_CONFLICT" not in conflict_codes:
+            conflict_codes.append("RELATION_SYMBOL_CONFLICT")
+
+    # 5. Radical or fraction conflict
+    if ocr_tok["radicals"] != vis_tok["radicals"] or ocr_tok["fractions"] != vis_tok["fractions"]:
+        conflicts.append(
+            {
+                "code": "RADICAL_OR_FRACTION_CONFLICT",
+                "ocr_radicals": ocr_tok["radicals"],
+                "vision_radicals": vis_tok["radicals"],
+                "ocr_fractions": ocr_tok["fractions"],
+                "vision_fractions": vis_tok["fractions"],
+            }
+        )
+        if "RADICAL_OR_FRACTION_CONFLICT" not in conflict_codes:
+            conflict_codes.append("RADICAL_OR_FRACTION_CONFLICT")
+
+    # 6. Angle, subscript, decimal, or sign conflict
+    if (
+        ocr_tok["angles_degrees"] != vis_tok["angles_degrees"]
+        or ocr_tok["subscript_labels"] != vis_tok["subscript_labels"]
+        or ocr_tok["decimals"] != vis_tok["decimals"]
+        or ocr_tok["negatives"] != vis_tok["negatives"]
+    ):
+        conflicts.append(
+            {
+                "code": "ANGLE_OR_SIGN_CONFLICT",
+                "ocr_angles": ocr_tok["angles_degrees"],
+                "vision_angles": vis_tok["angles_degrees"],
+                "ocr_subscripts": ocr_tok["subscript_labels"],
+                "vision_subscripts": vis_tok["subscript_labels"],
+                "ocr_decimals": ocr_tok["decimals"],
+                "vision_decimals": vis_tok["decimals"],
+                "ocr_negatives": ocr_tok["negatives"],
+                "vision_negatives": vis_tok["negatives"],
+            }
+        )
+        if "ANGLE_OR_SIGN_CONFLICT" not in conflict_codes:
+            conflict_codes.append("ANGLE_OR_SIGN_CONFLICT")
 
     has_conflict = len(conflicts) > 0
     return {
@@ -823,12 +1067,14 @@ def route_image_or_prepare_outcome(
     secondary_ocr_text: str | None = None,
     allow_verified_local_ocr: bool = False,
     has_diagram: bool = False,
+    is_degraded_image: bool = False,
     user_confirmed_conflict: bool = False,
 ) -> AdaptiveRouteOutcome:
     """Route the output of `prepare_unified_input` (Image / Scanned PDF / PDF Text / DOCX) into `Route T1` (`I1`/`I2` flow).
 
     Supports all 4 Adaptive Vision Fallback cases (`Phase 2.6–2.7`):
-    - **Case A (`LOCAL_OCR_VERIFIED_ZERO_AI`)**: When `local_ocr_text` passes `verify_ocr_input_fidelity` and
+    - **Case A (`LOCAL_OCR_VERIFIED_ZERO_AI`)**: When `local_ocr_text` (or dual-engine reconciled OCR text when
+      `secondary_ocr_text` is provided and `not is_degraded_image`) passes `verify_ocr_input_fidelity` and
       `allow_verified_local_ocr=True`, routes directly through `Deterministic Geometry Parser -> Hybrid /4` (`0` AI calls).
     - **Case B (`VISION_THEN_LOCAL_DETERMINISTIC`)**: Local OCR fails fidelity gate -> `1` Vision call ->
       `Deterministic Geometry Parser` (`LOCAL_PARSE_COMPLETE`) -> `Hybrid /4` (`1` AI call total).
@@ -854,15 +1100,31 @@ def route_image_or_prepare_outcome(
 
     # Case A: Check if Local OCR passes the 6-criteria Input Fidelity Gate (`0` Vision calls)
     fidelity_report: dict[str, Any] | None = None
+    effective_ocr_text = local_ocr_text
     if local_ocr_text is not None:
         fidelity_report = verify_ocr_input_fidelity(
             local_ocr_text,
             secondary_ocr_text=secondary_ocr_text,
             has_diagram=has_diagram,
+            is_degraded_image=is_degraded_image,
         )
-        if allow_verified_local_ocr and fidelity_report["fidelity_passed"]:
-            outcome_a = route_text_input(
+        if not fidelity_report["fidelity_passed"] and secondary_ocr_text is not None and not is_degraded_image:
+            reconcile_res = reconcile_dual_ocr_texts(
                 local_ocr_text,
+                secondary_ocr_text,
+                is_degraded_image=is_degraded_image,
+            )
+            if reconcile_res["reconciled"] and reconcile_res["reconciled_text"]:
+                effective_ocr_text = reconcile_res["reconciled_text"]
+                fidelity_report = dict(reconcile_res["fidelity_report"])
+                fidelity_report["dual_ocr_reconciliation"] = {
+                    "reconciled": True,
+                    "repairs": reconcile_res["repairs"],
+                    "used_ground_truth": False,
+                }
+        if allow_verified_local_ocr and fidelity_report["fidelity_passed"] and effective_ocr_text is not None:
+            outcome_a = route_text_input(
+                effective_ocr_text,
                 fallback_extractor=fallback_typed_fact_extractor,
                 allow_live_ai=allow_live_ai,
                 input_kind=input_kind,
