@@ -26,7 +26,7 @@ from typing import Any
 
 os.environ["ALLOW_LIVE_AI"] = "0"
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[5]
 BACKEND = ROOT / "backend"
 CUSTODIAN = ROOT / "docs" / "evaluation" / "geometry" / "custodian"
 DEV_MATRIX_DIR = ROOT / "docs" / "evaluation" / "geometry" / "runs" / "hybrid-reasoning-generalization" / "tools"
