@@ -1,0 +1,2853 @@
+{
+  "schema": "algosim.workstream_a.vision_evaluation_receipt/1",
+  "workstream": "Workstream A — Real-World Vision & Local-First Ingestion Evaluation",
+  "branch": "eval/real-world-vision",
+  "verified_base_sha": "474ba080ec2cd740d39314109f279aacfa871376",
+  "allow_live_ai": 0,
+  "live_gemini_api_requests": 0,
+  "LIVE_VISION_EVALUATION": "NOT_MEASURED",
+  "REAL_CAPTURED_IMAGE_COUNT": 0,
+  "SCANNED_DOCUMENT_COUNT": 0,
+  "section_a2_codebase_inventory": {
+    "path_mapping_note": "In the repository at VERIFIED_BASE_SHA=474ba080ec2cd740d39314109f279aacfa871376, the ingestion modules live under `backend/app/ingestion/` (rather than `backend/app/input_processing/`), and HTTP endpoints `/api/image/extract` and `/api/input/prepare` are registered in `backend/app/main.py` with `CACHE_VERSION = '132'`.",
+    "modules": [
+      {
+        "file": "backend/app/ingestion/region_detector.py",
+        "total_lines": 1115,
+        "components": [
+          {
+            "symbol": "RegionDetectionResult",
+            "lines": "L81-L115",
+            "behavior": "Dataclass holding `cropped_image`, `used_crop`, `crop_bbox`, `crop_holds_all_content` (L97), `page_boundary`, `skew_angle_deg`, `deskew_applied`, `illumination`, `is_blank_or_unreadable`, `blocks`, `problem_clusters`, `candidate_regions`, `ambiguous_multi_problem`."
+          },
+          {
+            "symbol": "assess_and_enhance_image",
+            "lines": "L191-L279",
+            "behavior": "Computes luma percentiles (p1, p5, p95, p99) and mean edge energy on 240px thumbnail; flags `is_blank_or_unreadable` when `(p95-p5)<12 and (p99-p1)<18 and edge_energy<1.8` (L214-218); detects uneven illumination/shadow via 80x60 HSV V-channel grid (`v_p90>=170, v_p10<=145, diff>=52`, L229-231) and applies local box-blur division compensation (`gain=(232/local_bg)^0.78`, L245-260) or gamma 0.82 boost (L261-266)."
+          },
+          {
+            "symbol": "detect_page_boundary",
+            "lines": "L282-L420",
+            "behavior": "Detects paper sheet against darker or colored desk background in HSV on 320px thumbnail; preserves shadowed paper corners (`shadow_paper_s`, `shadow_paper_v`, L344-350); extracts largest connected component and crops when area ratio in [0.16, 0.90] and >=2 margins >=3%."
+          },
+          {
+            "symbol": "_adaptive_ink_image",
+            "lines": "L423-L437",
+            "behavior": "Downscales grayscale to `max_side=640`, computes `local_bg = BoxBlur(radius=14)`, and binarizes `diff = local_bg - work >= 20` (L435). Any faint stroke with local contrast < 20 gray levels is zeroed out."
+          },
+          {
+            "symbol": "estimate_and_correct_skew",
+            "lines": "L491-L540",
+            "behavior": "Coarse-to-fine horizontal projection profile variance search (`-16..+16 deg` step 2.0, then `+-1.6 deg` step 0.4); applies bicubic deskew when `abs(best_angle) >= 1.2`, `best_var >= var_zero * 1.18`, and `_count_text_bands >= 3`."
+          },
+          {
+            "symbol": "_segment_layout_blocks",
+            "lines": "L543-L700",
+            "behavior": "Segments ink grid cells (`ink_sum >= 3`, L613) with 1-cell horizontal bridging; classifies `noise` (specks, book spine, page border, lone page number) vs `figure` vs `text`; attaches peripheral vertex/angle labels (`w<=9%, h<=6%`, proximity `<=4.5%`) to nearby `figure` blocks (L667-699)."
+          },
+          {
+            "symbol": "_group_problem_clusters",
+            "lines": "L741-L848",
+            "behavior": "Merges text blocks within `line_gap_thresh = max(14, round(img_h * 0.058))`, strips running headers/footers (L785-800), splits distinct multi-problem clusters when `v_gap >= max(18, round(img_h * 0.065))` and both blocks have `width >= 0.24*w, height >= 0.032*h`, and associates figure blocks with overlapping/adjacent clusters."
+          },
+          {
+            "symbol": "detect_problem_regions & crop_holds_all_content",
+            "lines": "L851-L1115 (crop_holds_all_content at L1110-L1114)",
+            "behavior": "Runs full CV pipeline; skips crop when `ink_coverage < 0.96 or completeness_confidence < 0.78 or area_ratio > 0.85` (L1066-1087); computes `crop_holds_all_content = not desk_trimmed and all(chosen.bbox contains b.bbox for b in blocks)` (L1110-1114)."
+          }
+        ]
+      },
+      {
+        "file": "backend/app/ingestion/unified_input.py",
+        "total_lines": 1749,
+        "components": [
+          {
+            "symbol": "_process_normalized_visual_page",
+            "lines": "L250-L520",
+            "behavior": "Runs `detect_problem_regions`; rejects blank/unreadable images locally with 0 VLM calls (`IMAGE_NOT_READABLE`, L298-313); returns `needs_selection` (`MULTIPLE_PROBLEMS_DETECTED`) with 0 VLM calls when `ambiguous_multi_problem` (L316-339); calls `extract_problem_from_image` on crop/page; decides `need_full_retry` at L358-372 (`not region_res.crop_holds_all_content` for `missing_regions` and `MISSING_PROBLEM_TEXT`, unconditional for `IMAGE_NOT_READABLE`); pairs diagram-only image with standalone user text (L420-434)."
+          },
+          {
+            "symbol": "merge_overlapping_problem_segments & _order_same_problem_units",
+            "lines": "L890-L1071",
+            "behavior": "Deduplicates overlapping sentences across multi-photo captures of the same problem and reorders out-of-order hypothesis/question segments (`_order_same_problem_units`, L1044-1071)."
+          },
+          {
+            "symbol": "_build_diagram_text_link",
+            "lines": "L1095-L1160",
+            "behavior": "Extracts uppercase geometric labels (`S, A', B', M_1`, etc.) from problem text and links diagram attachments without fabricating diagram-only facts."
+          },
+          {
+            "symbol": "prepare_unified_input & SHA-256 deduplication",
+            "lines": "L1200-L1749 (SHA-256 dedup at L1337-L1342)",
+            "behavior": "Unified orchestrator for single/multi-image, PDF, DOCX, and composer text. Deduplicates identical normalized visual attachments by `anh.sha256` before calling Vision (L1337-1342) and merges or separates multi-image units."
+          }
+        ]
+      },
+      {
+        "file": "backend/app/ingestion/document_reader.py",
+        "total_lines": 1018,
+        "components": [
+          {
+            "symbol": "detect_input_kind",
+            "lines": "L176-L242",
+            "behavior": "Sniffs magic bytes (`%PDF-`, PK ZIP `word/document.xml`, PNG/JPEG/WEBP) independent of declared MIME."
+          },
+          {
+            "symbol": "read_docx_deterministic",
+            "lines": "L470-L695",
+            "behavior": "Parses `word/document.xml` + Office Math (`m:oMath`, `m:f`, `m:rad`, `m:sSup`, `m:sSub`) deterministically with 0 AI calls; detects embedded images (`w:drawing`, `v:imagedata`)."
+          },
+          {
+            "symbol": "read_pdf_deterministic",
+            "lines": "L760-L1018",
+            "behavior": "Extracts text layer via `pypdf` with 0 AI calls when clean; falls back to `pypdfium2` page rendering into the visual pipeline for scanned/image PDFs (`MAX_PDF_PAGES = 5`, `MAX_VISUAL_FALLBACK_PAGES = 3`)."
+          }
+        ]
+      },
+      {
+        "file": "backend/app/ingestion/image_extraction.py",
+        "total_lines": 635,
+        "components": [
+          {
+            "symbol": "VISION_SCHEMA_VERSION & PhotoProblemExtraction",
+            "lines": "L58, L234-L355",
+            "behavior": "`VISION_SCHEMA_VERSION = 'photo-problem-extraction/1'`; strict Pydantic contract (`extra='forbid'`) plus Gemini transport schema (`VISION_TRANSPORT_SCHEMA`, L293)."
+          },
+          {
+            "symbol": "assess_extraction & apply_diagram_only_provenance_guard",
+            "lines": "L360-L391, L502-L539",
+            "behavior": "Deterministic acceptance/rejection/confirmation gate (`CONFIDENCE_NEEDS_CONFIRMATION_BELOW = 0.85`); `apply_diagram_only_provenance_guard` clears `problem_text` when `has_problem_text=False` and `has_figure=True` so diagram-only images never invent problem text."
+          },
+          {
+            "symbol": "EXTRACTION_CACHE & extract_problem_from_image",
+            "lines": "L447-L450, L542-L635",
+            "behavior": "Process-local LRU cache (`_CACHE_MAX = 64`) keyed by `(anh.sha256, VISION_PROMPT_SHA256, cache_version)` plus in-flight `_dang_cho` future deduplication."
+          }
+        ]
+      },
+      {
+        "file": "backend/app/ingestion/image.py & backend/app/main.py",
+        "total_lines": 1773,
+        "components": [
+          {
+            "symbol": "decode_image_base64 & normalize_image",
+            "lines": "image.py:L75-L242",
+            "behavior": "Enforces `MAX_IMAGE_BYTES = 10 MiB`, `MIN_SIDE_PX = 64`, `MAX_SIDE_PX = 2048`, `MAX_TOTAL_PIXELS = 25,000,000`, applies `ImageOps.exif_transpose` + clockwise user rotation, strips EXIF/GPS metadata, re-encodes and hashes."
+          },
+          {
+            "symbol": "CACHE_VERSION, /api/image/extract, /api/input/prepare",
+            "lines": "main.py:L902, L1385-L1511",
+            "behavior": "`CACHE_VERSION = '132'`; `/api/image/extract` (L1385-1430) and `/api/input/prepare` (L1433-1511) enforce guest trial check `_cong_luot_thu` and `ALLOW_LIVE_AI=0` emergency stop (`503 LIVE_AI_DISABLED`)."
+          }
+        ]
+      },
+      {
+        "file": "frontend/src/components/ProblemInput.tsx",
+        "total_lines": 1592,
+        "components": [
+          {
+            "symbol": "Attachment queue & silent staging",
+            "lines": "L569-L614",
+            "behavior": "Staging up to `MAX_IMAGE_ATTACHMENTS = 5` photos or 1 PDF/DOCX (`themMotTep`, `themDanhSachTep`) silently in the composer with 0 background API calls until the learner clicks 'Dựng hình'."
+          },
+          {
+            "symbol": "Submit flow, user-edit preservation, candidate selection & confirmation gates",
+            "lines": "L925-L1180",
+            "behavior": "Calls `/api/input/prepare` once on submit; if `status === 'ready'` immediately chains `/api/analyze`; if `needs_selection` renders inline candidate cards; if `needs_confirmation` populates textarea so user edits are preserved and submitted directly to `/api/analyze` without re-running VLM on the image."
+          }
+        ]
+      }
+    ]
+  },
+  "section_a3_corpus_provenance_audit": {
+    "REAL_CAPTURED_IMAGE": {
+      "count": 0,
+      "status": "REAL_WORLD_CORPUS_NOT_AVAILABLE",
+      "note": "Zero real camera photographs exist in the repository. All `photo-problem-to-scene/corpus/c01..c12` images were generated deterministically via `backend/scripts/build_photo_problem_corpus.py` (Pillow)."
+    },
+    "SCANNED_DOCUMENT": {
+      "count": 0,
+      "status": "REAL_WORLD_CORPUS_NOT_AVAILABLE",
+      "note": "Zero physical flatbed/mobile document scans exist in the repository; PDF scan fallback tests render synthetic pages via pypdfium2/Pillow."
+    },
+    "SYNTHETIC_IMAGE": {
+      "total_cataloged_benchmark_images": 66,
+      "collections": {
+        "photo_problem_to_scene_corpus": {
+          "count": 12,
+          "path": "docs/evaluation/geometry/photo-problem-to-scene/corpus/",
+          "generator": "backend/scripts/build_photo_problem_corpus.py",
+          "item_ids": [
+            "c01_ro_chop_thiet_dien",
+            "c02_ro_mat_cau",
+            "c03_ro_hinh_tru",
+            "c04_nghieng_hinh_non",
+            "c05_nghieng_cong_thuc_hinh_tru",
+            "c06_toi_mo_elip_non",
+            "c07_mo_chop_ngu_giac",
+            "c08_de_va_hinh_chop",
+            "c09_de_va_hinh_cau",
+            "c10_exif_xoay_gps",
+            "c11_chi_co_hinh",
+            "c12_ngoai_nang_luc"
+          ]
+        },
+        "image_capture_crop_extraction_fixtures": {
+          "count": 3,
+          "path": "docs/evaluation/geometry/runs/image-capture-crop-extraction/fixtures/",
+          "files": [
+            "exif6-xoay.jpg",
+            "landscape-de-va-hinh.png",
+            "portrait-de-va-hinh.jpg"
+          ]
+        },
+        "adaptive_local_ocr_symbol_stress": {
+          "count": 10,
+          "path": "docs/evaluation/geometry/runs/adaptive-local-ocr-fallback/tools/benchmark_local_ocr.py",
+          "item_ids": [
+            "s01_vuong_goc_song_song",
+            "s01_vuong_goc_song_song_degraded",
+            "s02_phay_can_phan_so",
+            "s02_phay_can_phan_so_degraded",
+            "s03_dau_tru_toa_do",
+            "s03_dau_tru_toa_do_degraded",
+            "s04_luy_thua_chi_so",
+            "s04_luy_thua_chi_so_degraded",
+            "s05_dau_tieng_viet",
+            "s05_dau_tieng_viet_degraded"
+          ]
+        },
+        "local_first_image_ingestion_11_classes": {
+          "count": 11,
+          "path": "docs/evaluation/geometry/runs/algosim-local-first-image-ingestion/tools/measure_image_ingestion.py",
+          "class_ids": [
+            "class_01_clear_straight",
+            "class_02_skewed",
+            "class_03_rotated_exif",
+            "class_04_low_light",
+            "class_05_shadowed",
+            "class_06_multi_text_regions",
+            "class_07_text_and_diagram",
+            "class_08_multi_problem_page",
+            "class_09_diagram_only",
+            "class_10_out_of_scope",
+            "class_11_corrupt_or_unreadable"
+          ]
+        },
+        "unified_input_20_cases_visual_subset": {
+          "count": 15,
+          "total_cases_including_pdf_docx": 20,
+          "path": "backend/scripts/evaluate_unified_input_corpus.py"
+        },
+        "workstream_a_15_classes": {
+          "count": 15,
+          "class_ids": [
+            "wsa_01_clear_straight",
+            "wsa_02_tilted_skewed",
+            "wsa_03_rotated_90_180_270",
+            "wsa_04_low_light",
+            "wsa_05_uneven_shadow",
+            "wsa_06_multi_text_regions",
+            "wsa_07_multi_problem_page",
+            "wsa_08_text_and_diagram",
+            "wsa_09_fractions_and_radicals",
+            "wsa_10_angles_distances_perp",
+            "wsa_11_greek_letters_planes",
+            "wsa_12_complex_vertex_plane_names",
+            "wsa_13_labeled_diagram",
+            "wsa_14_blurry_or_unreadable",
+            "wsa_15_out_of_scope"
+          ]
+        }
+      }
+    },
+    "MOCK_PROVIDER_FIXTURE": {
+      "total_fixture_bundles": 4,
+      "bundles": {
+        "photo_problem_to_scene_mock_vision_and_stage_b": {
+          "path": "docs/evaluation/geometry/photo-problem-to-scene/CORPUS.json",
+          "mock_vision_items": 12,
+          "stage_b_analyze_replay_items": 7
+        },
+        "adaptive_local_ocr_recorded_outputs": {
+          "path": "docs/evaluation/geometry/runs/adaptive-local-ocr-fallback/ocr_benchmark.json",
+          "engines": 5,
+          "items_per_engine": 22,
+          "total_engine_item_records": 110
+        },
+        "vision_calls_before_after_mock_trace": {
+          "path": "docs/evaluation/geometry/runs/adaptive-local-ocr-fallback/vision_calls_before_after.json",
+          "single_image_items": 22,
+          "multi_image_journeys": 1
+        },
+        "local_first_image_ingestion_mock_scenarios": {
+          "path": "docs/evaluation/geometry/runs/algosim-local-first-image-ingestion/after_metrics.json",
+          "classes": 11,
+          "scenarios": 7
+        }
+      }
+    }
+  },
+  "section_a4_ground_truth_manifest_15_classes": {
+    "manifest_schema": "algosim.vision.ground_truth_manifest/1",
+    "summary": {
+      "total_classes": 15,
+      "schema_valid_count": 15,
+      "cv_ms_median": 89.38,
+      "cv_ms_p95": 168.44,
+      "prepare_ms_median": 107.37,
+      "pipeline_results": [
+        {
+          "id": "wsa_01_clear_straight",
+          "class_slug": "clear_straight_print",
+          "cv_ms": 71.23,
+          "prepare_ms": 106.39,
+          "used_crop": true,
+          "crop_holds_all_content": false,
+          "desk_trimmed": false,
+          "skew_angle_deg": 0.0,
+          "deskew_applied": false,
+          "low_light_detected": false,
+          "shadow_detected": false,
+          "enhancement_applied": false,
+          "is_blank_or_unreadable": false,
+          "layout_blocks_count": 1,
+          "problem_clusters_count": 1,
+          "ambiguous_multi_problem": false,
+          "prepare_status": "ready",
+          "prepare_reason_code": null,
+          "selected_candidate_prepare_status": null,
+          "mock_vlm_calls": 1
+        },
+        {
+          "id": "wsa_02_tilted_skewed",
+          "class_slug": "tilted_skewed_perspective",
+          "cv_ms": 283.81,
+          "prepare_ms": 327.13,
+          "used_crop": true,
+          "crop_holds_all_content": false,
+          "desk_trimmed": true,
+          "skew_angle_deg": 6.4,
+          "deskew_applied": true,
+          "low_light_detected": false,
+          "shadow_detected": false,
+          "enhancement_applied": false,
+          "is_blank_or_unreadable": false,
+          "layout_blocks_count": 6,
+          "problem_clusters_count": 1,
+          "ambiguous_multi_problem": false,
+          "prepare_status": "ready",
+          "prepare_reason_code": null,
+          "selected_candidate_prepare_status": null,
+          "mock_vlm_calls": 1
+        },
+        {
+          "id": "wsa_03_rotated_90_180_270",
+          "class_slug": "rotated_90_180_270_exif",
+          "cv_ms": 100.4,
+          "prepare_ms": 117.73,
+          "used_crop": true,
+          "crop_holds_all_content": false,
+          "desk_trimmed": false,
+          "skew_angle_deg": 0.0,
+          "deskew_applied": false,
+          "low_light_detected": false,
+          "shadow_detected": false,
+          "enhancement_applied": false,
+          "is_blank_or_unreadable": false,
+          "layout_blocks_count": 1,
+          "problem_clusters_count": 1,
+          "ambiguous_multi_problem": false,
+          "prepare_status": "ready",
+          "prepare_reason_code": null,
+          "selected_candidate_prepare_status": null,
+          "mock_vlm_calls": 1
+        },
+        {
+          "id": "wsa_04_low_light",
+          "class_slug": "low_light_capture",
+          "cv_ms": 103.56,
+          "prepare_ms": 152.43,
+          "used_crop": true,
+          "crop_holds_all_content": false,
+          "desk_trimmed": false,
+          "skew_angle_deg": 0.0,
+          "deskew_applied": false,
+          "low_light_detected": true,
+          "shadow_detected": false,
+          "enhancement_applied": true,
+          "is_blank_or_unreadable": false,
+          "layout_blocks_count": 2,
+          "problem_clusters_count": 1,
+          "ambiguous_multi_problem": false,
+          "prepare_status": "ready",
+          "prepare_reason_code": null,
+          "selected_candidate_prepare_status": null,
+          "mock_vlm_calls": 1
+        },
+        {
+          "id": "wsa_05_uneven_shadow",
+          "class_slug": "uneven_illumination_shadow",
+          "cv_ms": 168.44,
+          "prepare_ms": 183.92,
+          "used_crop": false,
+          "crop_holds_all_content": false,
+          "desk_trimmed": false,
+          "skew_angle_deg": 0.0,
+          "deskew_applied": false,
+          "low_light_detected": true,
+          "shadow_detected": true,
+          "enhancement_applied": true,
+          "is_blank_or_unreadable": false,
+          "layout_blocks_count": 2,
+          "problem_clusters_count": 1,
+          "ambiguous_multi_problem": false,
+          "prepare_status": "ready",
+          "prepare_reason_code": null,
+          "selected_candidate_prepare_status": null,
+          "mock_vlm_calls": 1
+        },
+        {
+          "id": "wsa_06_multi_text_regions",
+          "class_slug": "multi_text_regions_header_footer",
+          "cv_ms": 131.73,
+          "prepare_ms": 116.56,
+          "used_crop": true,
+          "crop_holds_all_content": false,
+          "desk_trimmed": false,
+          "skew_angle_deg": 0.0,
+          "deskew_applied": false,
+          "low_light_detected": false,
+          "shadow_detected": false,
+          "enhancement_applied": false,
+          "is_blank_or_unreadable": false,
+          "layout_blocks_count": 5,
+          "problem_clusters_count": 1,
+          "ambiguous_multi_problem": false,
+          "prepare_status": "ready",
+          "prepare_reason_code": null,
+          "selected_candidate_prepare_status": null,
+          "mock_vlm_calls": 1
+        },
+        {
+          "id": "wsa_07_multi_problem_page",
+          "class_slug": "multi_problem_single_page",
+          "cv_ms": 73.71,
+          "prepare_ms": 227.78,
+          "used_crop": false,
+          "crop_holds_all_content": false,
+          "desk_trimmed": false,
+          "skew_angle_deg": 0.0,
+          "deskew_applied": false,
+          "low_light_detected": false,
+          "shadow_detected": false,
+          "enhancement_applied": false,
+          "is_blank_or_unreadable": false,
+          "layout_blocks_count": 5,
+          "problem_clusters_count": 2,
+          "ambiguous_multi_problem": true,
+          "prepare_status": "needs_selection",
+          "prepare_reason_code": "MULTIPLE_PROBLEMS_DETECTED",
+          "selected_candidate_prepare_status": "ready",
+          "mock_vlm_calls": 1
+        },
+        {
+          "id": "wsa_08_text_and_diagram",
+          "class_slug": "text_and_diagram_combined",
+          "cv_ms": 115.5,
+          "prepare_ms": 107.37,
+          "used_crop": true,
+          "crop_holds_all_content": true,
+          "desk_trimmed": false,
+          "skew_angle_deg": 0.0,
+          "deskew_applied": false,
+          "low_light_detected": false,
+          "shadow_detected": false,
+          "enhancement_applied": false,
+          "is_blank_or_unreadable": false,
+          "layout_blocks_count": 4,
+          "problem_clusters_count": 1,
+          "ambiguous_multi_problem": false,
+          "prepare_status": "ready",
+          "prepare_reason_code": null,
+          "selected_candidate_prepare_status": null,
+          "mock_vlm_calls": 1
+        },
+        {
+          "id": "wsa_09_fractions_and_radicals",
+          "class_slug": "math_fractions_and_radicals",
+          "cv_ms": 83.01,
+          "prepare_ms": 88.34,
+          "used_crop": true,
+          "crop_holds_all_content": false,
+          "desk_trimmed": false,
+          "skew_angle_deg": 0.0,
+          "deskew_applied": false,
+          "low_light_detected": false,
+          "shadow_detected": false,
+          "enhancement_applied": false,
+          "is_blank_or_unreadable": false,
+          "layout_blocks_count": 2,
+          "problem_clusters_count": 1,
+          "ambiguous_multi_problem": false,
+          "prepare_status": "ready",
+          "prepare_reason_code": null,
+          "selected_candidate_prepare_status": null,
+          "mock_vlm_calls": 1
+        },
+        {
+          "id": "wsa_10_angles_distances_perp",
+          "class_slug": "angles_distances_perpendicularity",
+          "cv_ms": 78.02,
+          "prepare_ms": 88.35,
+          "used_crop": true,
+          "crop_holds_all_content": false,
+          "desk_trimmed": false,
+          "skew_angle_deg": 0.0,
+          "deskew_applied": false,
+          "low_light_detected": false,
+          "shadow_detected": false,
+          "enhancement_applied": false,
+          "is_blank_or_unreadable": false,
+          "layout_blocks_count": 3,
+          "problem_clusters_count": 1,
+          "ambiguous_multi_problem": false,
+          "prepare_status": "ready",
+          "prepare_reason_code": null,
+          "selected_candidate_prepare_status": null,
+          "mock_vlm_calls": 1
+        },
+        {
+          "id": "wsa_11_greek_letters_planes",
+          "class_slug": "greek_letters_alpha_beta",
+          "cv_ms": 117.61,
+          "prepare_ms": 105.56,
+          "used_crop": true,
+          "crop_holds_all_content": false,
+          "desk_trimmed": false,
+          "skew_angle_deg": 0.0,
+          "deskew_applied": false,
+          "low_light_detected": false,
+          "shadow_detected": false,
+          "enhancement_applied": false,
+          "is_blank_or_unreadable": false,
+          "layout_blocks_count": 2,
+          "problem_clusters_count": 1,
+          "ambiguous_multi_problem": false,
+          "prepare_status": "ready",
+          "prepare_reason_code": null,
+          "selected_candidate_prepare_status": null,
+          "mock_vlm_calls": 1
+        },
+        {
+          "id": "wsa_12_complex_vertex_plane_names",
+          "class_slug": "complex_vertex_and_plane_names",
+          "cv_ms": 89.38,
+          "prepare_ms": 90.66,
+          "used_crop": true,
+          "crop_holds_all_content": false,
+          "desk_trimmed": false,
+          "skew_angle_deg": 0.0,
+          "deskew_applied": false,
+          "low_light_detected": false,
+          "shadow_detected": false,
+          "enhancement_applied": false,
+          "is_blank_or_unreadable": false,
+          "layout_blocks_count": 2,
+          "problem_clusters_count": 1,
+          "ambiguous_multi_problem": false,
+          "prepare_status": "ready",
+          "prepare_reason_code": null,
+          "selected_candidate_prepare_status": null,
+          "mock_vlm_calls": 1
+        },
+        {
+          "id": "wsa_13_labeled_diagram",
+          "class_slug": "labeled_diagram_with_vertex_symbols",
+          "cv_ms": 56.72,
+          "prepare_ms": 73.84,
+          "used_crop": true,
+          "crop_holds_all_content": true,
+          "desk_trimmed": false,
+          "skew_angle_deg": 0.0,
+          "deskew_applied": false,
+          "low_light_detected": false,
+          "shadow_detected": false,
+          "enhancement_applied": false,
+          "is_blank_or_unreadable": false,
+          "layout_blocks_count": 1,
+          "problem_clusters_count": 1,
+          "ambiguous_multi_problem": false,
+          "prepare_status": "rejected",
+          "prepare_reason_code": "MISSING_PROBLEM_TEXT",
+          "selected_candidate_prepare_status": null,
+          "mock_vlm_calls": 1
+        },
+        {
+          "id": "wsa_14_blurry_or_unreadable",
+          "class_slug": "blurry_low_contrast_unreadable",
+          "cv_ms": 12.2,
+          "prepare_ms": 29.84,
+          "used_crop": false,
+          "crop_holds_all_content": false,
+          "desk_trimmed": false,
+          "skew_angle_deg": 0.0,
+          "deskew_applied": false,
+          "low_light_detected": false,
+          "shadow_detected": false,
+          "enhancement_applied": false,
+          "is_blank_or_unreadable": true,
+          "layout_blocks_count": 0,
+          "problem_clusters_count": 0,
+          "ambiguous_multi_problem": false,
+          "prepare_status": "rejected",
+          "prepare_reason_code": "IMAGE_NOT_READABLE",
+          "selected_candidate_prepare_status": null,
+          "mock_vlm_calls": 0
+        },
+        {
+          "id": "wsa_15_out_of_scope",
+          "class_slug": "out_of_scope_calculus_trig",
+          "cv_ms": 83.85,
+          "prepare_ms": 108.17,
+          "used_crop": true,
+          "crop_holds_all_content": false,
+          "desk_trimmed": false,
+          "skew_angle_deg": 0.0,
+          "deskew_applied": false,
+          "low_light_detected": false,
+          "shadow_detected": false,
+          "enhancement_applied": false,
+          "is_blank_or_unreadable": false,
+          "layout_blocks_count": 2,
+          "problem_clusters_count": 1,
+          "ambiguous_multi_problem": false,
+          "prepare_status": "rejected",
+          "prepare_reason_code": "UNSUPPORTED_PROBLEM",
+          "selected_candidate_prepare_status": null,
+          "mock_vlm_calls": 1
+        }
+      ]
+    },
+    "items": [
+      {
+        "id": "wsa_01_clear_straight",
+        "class_index": 1,
+        "class_slug": "clear_straight_print",
+        "class_description": "Ảnh chụp thẳng, rõ nét, đủ ánh sáng",
+        "source_license": "AlgoSim internal deterministic synthetic generator (Pillow + DejaVuSans, CC0/MIT internal test asset)",
+        "image_type": "SYNTHETIC_IMAGE",
+        "sha256": "cee8ea2aad0798a64ee90445febb30f58af52598aeb1ec174ff14e540c63d10b",
+        "dimensions_px": {
+          "width": 1200,
+          "height": 900
+        },
+        "canonical_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, cạnh bên SA vuông góc với mặt phẳng đáy và SA = 3. Tính thể tích khối chóp S.ABCD.",
+        "critical_math_symbols": [
+          "="
+        ],
+        "geometric_facts": [
+          {
+            "kind": "solid",
+            "value": "pyramid S.ABCD"
+          },
+          {
+            "kind": "base",
+            "value": "square ABCD, side = 2"
+          },
+          {
+            "kind": "perpendicular",
+            "value": "SA ⊥ (ABCD)"
+          },
+          {
+            "kind": "length",
+            "value": "SA = 3"
+          },
+          {
+            "kind": "goal",
+            "value": "volume(S.ABCD)"
+          }
+        ],
+        "content_regions": [
+          {
+            "role": "problem_body",
+            "bbox_norm": [
+              0.075,
+              0.15,
+              0.91,
+              0.32
+            ]
+          }
+        ],
+        "has_diagram": false,
+        "diagram_only_critical_facts": false,
+        "algosim_scope_status": "IN_SCOPE_SERVED",
+        "independent_oracle_answer": {
+          "value": "4",
+          "formula": "(1/3) * 2^2 * 3 = 4"
+        }
+      },
+      {
+        "id": "wsa_02_tilted_skewed",
+        "class_index": 2,
+        "class_slug": "tilted_skewed_perspective",
+        "class_description": "Ảnh nghiêng 6.5° trên nền mặt bàn tối",
+        "source_license": "AlgoSim internal deterministic synthetic generator (Pillow + DejaVuSans, CC0/MIT internal test asset)",
+        "image_type": "SYNTHETIC_IMAGE",
+        "sha256": "934177e8cb19a0fe30c969aa2429fdb602f73884b0f1cd6ebdcbe7cad2783c06",
+        "dimensions_px": {
+          "width": 1440,
+          "height": 1120
+        },
+        "canonical_text": "Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng 2 và chiều cao SO = 3. Tính thể tích khối chóp S.ABCD.",
+        "critical_math_symbols": [
+          "="
+        ],
+        "geometric_facts": [
+          {
+            "kind": "solid",
+            "value": "regular_quad_pyramid S.ABCD"
+          },
+          {
+            "kind": "length",
+            "value": "AB = 2"
+          },
+          {
+            "kind": "altitude",
+            "value": "SO = 3"
+          },
+          {
+            "kind": "goal",
+            "value": "volume(S.ABCD)"
+          }
+        ],
+        "content_regions": [
+          {
+            "role": "desk_and_skewed_page",
+            "bbox_norm": [
+              0.08,
+              0.12,
+              0.92,
+              0.88
+            ]
+          }
+        ],
+        "has_diagram": false,
+        "diagram_only_critical_facts": false,
+        "algosim_scope_status": "IN_SCOPE_SERVED",
+        "independent_oracle_answer": {
+          "value": "4",
+          "formula": "(1/3) * 2^2 * 3 = 4"
+        }
+      },
+      {
+        "id": "wsa_03_rotated_90_180_270",
+        "class_index": 3,
+        "class_slug": "rotated_90_180_270_exif",
+        "class_description": "Ảnh xoay 90° kèm cờ EXIF Orientation=6",
+        "source_license": "AlgoSim internal deterministic synthetic generator (Pillow + DejaVuSans, CC0/MIT internal test asset)",
+        "image_type": "SYNTHETIC_IMAGE",
+        "sha256": "f7959a7ab52d341710d60fad7565ea1c51616e2ba35ec7ab47493f6b5a502d9f",
+        "dimensions_px": {
+          "width": 1200,
+          "height": 900
+        },
+        "canonical_text": "Cho hình chóp S.ABCD có đáy ABCD là hình chữ nhật với AB = 2, AD = 3, cạnh bên SA vuông góc với đáy và SA = 4. Tính thể tích khối chóp S.ABCD.",
+        "critical_math_symbols": [
+          "="
+        ],
+        "geometric_facts": [
+          {
+            "kind": "solid",
+            "value": "pyramid S.ABCD"
+          },
+          {
+            "kind": "base",
+            "value": "rectangle ABCD, AB = 2, AD = 3"
+          },
+          {
+            "kind": "perpendicular",
+            "value": "SA ⊥ (ABCD)"
+          },
+          {
+            "kind": "length",
+            "value": "SA = 4"
+          },
+          {
+            "kind": "goal",
+            "value": "volume(S.ABCD)"
+          }
+        ],
+        "content_regions": [
+          {
+            "role": "rotated_problem_body",
+            "bbox_norm": [
+              0.08,
+              0.16,
+              0.9,
+              0.36
+            ]
+          }
+        ],
+        "has_diagram": false,
+        "diagram_only_critical_facts": false,
+        "algosim_scope_status": "IN_SCOPE_SERVED",
+        "independent_oracle_answer": {
+          "value": "8",
+          "formula": "(1/3) * (2 * 3) * 4 = 8"
+        }
+      },
+      {
+        "id": "wsa_04_low_light",
+        "class_index": 4,
+        "class_slug": "low_light_capture",
+        "class_description": "Ảnh thiếu sáng (luma p95 < 130, kích hoạt gamma boost 0.82)",
+        "source_license": "AlgoSim internal deterministic synthetic generator (Pillow + DejaVuSans, CC0/MIT internal test asset)",
+        "image_type": "SYNTHETIC_IMAGE",
+        "sha256": "a8a673f477addb962d22008be0de4e6823e8577955399291fcab141ffd513ba9",
+        "dimensions_px": {
+          "width": 1200,
+          "height": 900
+        },
+        "canonical_text": "Cho hình lăng trụ đứng ABC.A'B'C' có đáy ABC là tam giác vuông tại A, AB = 3, AC = 4 và cạnh bên AA' = 5. Tính thể tích khối lăng trụ ABC.A'B'C'.",
+        "critical_math_symbols": [
+          "′",
+          "="
+        ],
+        "geometric_facts": [
+          {
+            "kind": "solid",
+            "value": "right_prism ABC.A'B'C'"
+          },
+          {
+            "kind": "base",
+            "value": "right_triangle ABC at A, AB = 3, AC = 4"
+          },
+          {
+            "kind": "length",
+            "value": "AA' = 5"
+          },
+          {
+            "kind": "goal",
+            "value": "volume(ABC.A'B'C')"
+          }
+        ],
+        "content_regions": [
+          {
+            "role": "low_light_body",
+            "bbox_norm": [
+              0.075,
+              0.17,
+              0.91,
+              0.36
+            ]
+          }
+        ],
+        "has_diagram": false,
+        "diagram_only_critical_facts": false,
+        "algosim_scope_status": "IN_SCOPE_SERVED",
+        "independent_oracle_answer": {
+          "value": "30",
+          "formula": "(1/2 * 3 * 4) * 5 = 30"
+        }
+      },
+      {
+        "id": "wsa_05_uneven_shadow",
+        "class_index": 5,
+        "class_slug": "uneven_illumination_shadow",
+        "class_description": "Ảnh có bóng đổ chéo không đều (kích hoạt bù sáng cục bộ HSV)",
+        "source_license": "AlgoSim internal deterministic synthetic generator (Pillow + DejaVuSans, CC0/MIT internal test asset)",
+        "image_type": "SYNTHETIC_IMAGE",
+        "sha256": "829f7fcbad81be72ef0051c2d7049b5ee45ea80cd58a415f72fcbe833214915c",
+        "dimensions_px": {
+          "width": 1200,
+          "height": 900
+        },
+        "canonical_text": "Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh 2, cạnh bên SA vuông góc với mặt phẳng đáy và SA = 3. Tính thể tích khối chóp S.ABC.",
+        "critical_math_symbols": [
+          "="
+        ],
+        "geometric_facts": [
+          {
+            "kind": "solid",
+            "value": "pyramid S.ABC"
+          },
+          {
+            "kind": "base",
+            "value": "equilateral_triangle ABC, side = 2"
+          },
+          {
+            "kind": "perpendicular",
+            "value": "SA ⊥ (ABC)"
+          },
+          {
+            "kind": "length",
+            "value": "SA = 3"
+          },
+          {
+            "kind": "goal",
+            "value": "volume(S.ABC)"
+          }
+        ],
+        "content_regions": [
+          {
+            "role": "shadowed_body",
+            "bbox_norm": [
+              0.075,
+              0.17,
+              0.91,
+              0.35
+            ]
+          }
+        ],
+        "has_diagram": false,
+        "diagram_only_critical_facts": false,
+        "algosim_scope_status": "IN_SCOPE_SERVED",
+        "independent_oracle_answer": {
+          "value": "sqrt(3)",
+          "formula": "(1/3) * (sqrt(3)/4 * 2^2) * 3 = sqrt(3)"
+        }
+      },
+      {
+        "id": "wsa_06_multi_text_regions",
+        "class_index": 6,
+        "class_slug": "multi_text_regions_header_footer",
+        "class_description": "Ảnh có nhiều vùng chữ (tiêu đề đầu trang, thân đề, dòng yêu cầu tách dòng, số trang cuối)",
+        "source_license": "AlgoSim internal deterministic synthetic generator (Pillow + DejaVuSans, CC0/MIT internal test asset)",
+        "image_type": "SYNTHETIC_IMAGE",
+        "sha256": "147358e29c19759511e6b1a576dd3964035cf084aa5b22df621e526fa1758152",
+        "dimensions_px": {
+          "width": 1200,
+          "height": 900
+        },
+        "canonical_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, cạnh bên SA vuông góc với mặt phẳng đáy và SA = 3. Tính thể tích khối chóp S.ABCD.",
+        "critical_math_symbols": [
+          "="
+        ],
+        "geometric_facts": [
+          {
+            "kind": "solid",
+            "value": "pyramid S.ABCD"
+          },
+          {
+            "kind": "base",
+            "value": "square ABCD, side = 2"
+          },
+          {
+            "kind": "perpendicular",
+            "value": "SA ⊥ (ABCD)"
+          },
+          {
+            "kind": "length",
+            "value": "SA = 3"
+          },
+          {
+            "kind": "goal",
+            "value": "volume(S.ABCD)"
+          }
+        ],
+        "content_regions": [
+          {
+            "role": "running_header_ignored",
+            "bbox_norm": [
+              0.075,
+              0.038,
+              0.65,
+              0.065
+            ]
+          },
+          {
+            "role": "problem_hypothesis",
+            "bbox_norm": [
+              0.075,
+              0.16,
+              0.91,
+              0.25
+            ]
+          },
+          {
+            "role": "problem_goal",
+            "bbox_norm": [
+              0.075,
+              0.28,
+              0.55,
+              0.33
+            ]
+          },
+          {
+            "role": "page_number_ignored",
+            "bbox_norm": [
+              0.45,
+              0.93,
+              0.55,
+              0.96
+            ]
+          }
+        ],
+        "has_diagram": false,
+        "diagram_only_critical_facts": false,
+        "algosim_scope_status": "IN_SCOPE_SERVED",
+        "independent_oracle_answer": {
+          "value": "4",
+          "formula": "(1/3) * 2^2 * 3 = 4"
+        }
+      },
+      {
+        "id": "wsa_07_multi_problem_page",
+        "class_index": 7,
+        "class_slug": "multi_problem_single_page",
+        "class_description": "Ảnh có 2 bài toán độc lập trên cùng một trang (kích hoạt needs_selection 0 VLM calls, sau đó giải Bài 1)",
+        "source_license": "AlgoSim internal deterministic synthetic generator (Pillow + DejaVuSans, CC0/MIT internal test asset)",
+        "image_type": "SYNTHETIC_IMAGE",
+        "sha256": "d15f9963f4df6a2039bf76fca0d898c6fc635ec9cfe54b2400d634aaeabe25c9",
+        "dimensions_px": {
+          "width": 1200,
+          "height": 900
+        },
+        "canonical_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, cạnh bên SA vuông góc với mặt phẳng đáy và SA = 3. Tính thể tích khối chóp S.ABCD.",
+        "critical_math_symbols": [
+          "′",
+          "="
+        ],
+        "geometric_facts": [
+          {
+            "kind": "multi_problem_candidates",
+            "value": "2 distinct problem clusters"
+          },
+          {
+            "kind": "selected_candidate_1",
+            "value": "pyramid S.ABCD, side = 2, SA = 3, volume = 4"
+          }
+        ],
+        "content_regions": [
+          {
+            "role": "candidate_1",
+            "bbox_norm": [
+              0.075,
+              0.12,
+              0.91,
+              0.28
+            ]
+          },
+          {
+            "role": "candidate_2",
+            "bbox_norm": [
+              0.075,
+              0.52,
+              0.91,
+              0.66
+            ]
+          }
+        ],
+        "has_diagram": false,
+        "diagram_only_critical_facts": false,
+        "algosim_scope_status": "NEEDS_SELECTION_THEN_SERVED",
+        "independent_oracle_answer": {
+          "value": "4",
+          "formula": "(1/3) * 2^2 * 3 = 4 (for selected candidate_1)"
+        }
+      },
+      {
+        "id": "wsa_08_text_and_diagram",
+        "class_index": 8,
+        "class_slug": "text_and_diagram_combined",
+        "class_description": "Ảnh có cả lời đề và hình vẽ không gian 3D đi kèm (gộp vào 1 vùng crop duy nhất)",
+        "source_license": "AlgoSim internal deterministic synthetic generator (Pillow + DejaVuSans, CC0/MIT internal test asset)",
+        "image_type": "SYNTHETIC_IMAGE",
+        "sha256": "fd70399d55e1eeb415a729faa18a45fe1564ffa86fd8e3a03f7609ce046b2f6d",
+        "dimensions_px": {
+          "width": 1200,
+          "height": 900
+        },
+        "canonical_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, cạnh bên SA vuông góc với mặt phẳng đáy và SA = 3. Tính thể tích khối chóp S.ABCD.",
+        "critical_math_symbols": [
+          "="
+        ],
+        "geometric_facts": [
+          {
+            "kind": "solid",
+            "value": "pyramid S.ABCD"
+          },
+          {
+            "kind": "base",
+            "value": "square ABCD, side = 2"
+          },
+          {
+            "kind": "perpendicular",
+            "value": "SA ⊥ (ABCD)"
+          },
+          {
+            "kind": "length",
+            "value": "SA = 3"
+          },
+          {
+            "kind": "goal",
+            "value": "volume(S.ABCD)"
+          }
+        ],
+        "content_regions": [
+          {
+            "role": "problem_text",
+            "bbox_norm": [
+              0.066,
+              0.12,
+              0.63,
+              0.36
+            ]
+          },
+          {
+            "role": "wireframe_diagram",
+            "bbox_norm": [
+              0.658,
+              0.105,
+              0.94,
+              0.466
+            ]
+          }
+        ],
+        "has_diagram": true,
+        "diagram_only_critical_facts": false,
+        "algosim_scope_status": "IN_SCOPE_SERVED",
+        "independent_oracle_answer": {
+          "value": "4",
+          "formula": "(1/3) * 2^2 * 3 = 4"
+        }
+      },
+      {
+        "id": "wsa_09_fractions_and_radicals",
+        "class_index": 9,
+        "class_slug": "math_fractions_and_radicals",
+        "class_description": "Đề toán chứa căn thức (√2) và phân số (3/2)",
+        "source_license": "AlgoSim internal deterministic synthetic generator (Pillow + DejaVuSans, CC0/MIT internal test asset)",
+        "image_type": "SYNTHETIC_IMAGE",
+        "sha256": "309fd103bde7ebabc0eefe2d0d80e95321777efeaa4283259fd2478f9bbbdb8e",
+        "dimensions_px": {
+          "width": 1200,
+          "height": 900
+        },
+        "canonical_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh √2, cạnh bên SA ⊥ (ABCD) và SA = 3/2. Tính thể tích khối chóp S.ABCD.",
+        "critical_math_symbols": [
+          "√",
+          "⊥",
+          "="
+        ],
+        "geometric_facts": [
+          {
+            "kind": "solid",
+            "value": "pyramid S.ABCD"
+          },
+          {
+            "kind": "base",
+            "value": "square ABCD, side = √2"
+          },
+          {
+            "kind": "perpendicular",
+            "value": "SA ⊥ (ABCD)"
+          },
+          {
+            "kind": "length",
+            "value": "SA = 3/2"
+          },
+          {
+            "kind": "goal",
+            "value": "volume(S.ABCD)"
+          }
+        ],
+        "content_regions": [
+          {
+            "role": "problem_body",
+            "bbox_norm": [
+              0.075,
+              0.16,
+              0.91,
+              0.32
+            ]
+          }
+        ],
+        "has_diagram": false,
+        "diagram_only_critical_facts": false,
+        "algosim_scope_status": "IN_SCOPE_SERVED",
+        "independent_oracle_answer": {
+          "value": "1",
+          "formula": "(1/3) * (sqrt(2))^2 * (3/2) = 1"
+        }
+      },
+      {
+        "id": "wsa_10_angles_distances_perp",
+        "class_index": 10,
+        "class_slug": "angles_distances_perpendicularity",
+        "class_description": "Đề toán chứa ký hiệu vuông góc (⊥), song song (∥), góc (∠, °) và khoảng cách điểm–mặt",
+        "source_license": "AlgoSim internal deterministic synthetic generator (Pillow + DejaVuSans, CC0/MIT internal test asset)",
+        "image_type": "SYNTHETIC_IMAGE",
+        "sha256": "e70d8c2b816c6acc3af961c871c43695bad83abfb7ed066ce3efec0828acc48d",
+        "dimensions_px": {
+          "width": 1200,
+          "height": 900
+        },
+        "canonical_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA ⊥ (ABCD) và SA = 2. Gọi M, N lần lượt là trung điểm của AB và CD (MN ∥ BC), biết ∠SBA = 45°. Tính khoảng cách từ điểm A đến mặt phẳng (SBD).",
+        "critical_math_symbols": [
+          "⊥",
+          "∥",
+          "∠",
+          "="
+        ],
+        "geometric_facts": [
+          {
+            "kind": "solid",
+            "value": "pyramid S.ABCD, square base side = 2"
+          },
+          {
+            "kind": "perpendicular",
+            "value": "SA ⊥ (ABCD), SA = 2"
+          },
+          {
+            "kind": "parallel",
+            "value": "MN ∥ BC"
+          },
+          {
+            "kind": "angle",
+            "value": "∠SBA = 45°"
+          },
+          {
+            "kind": "goal",
+            "value": "distance(A, (SBD))"
+          }
+        ],
+        "content_regions": [
+          {
+            "role": "problem_body",
+            "bbox_norm": [
+              0.075,
+              0.16,
+              0.91,
+              0.38
+            ]
+          }
+        ],
+        "has_diagram": false,
+        "diagram_only_critical_facts": false,
+        "algosim_scope_status": "IN_SCOPE_SERVED",
+        "independent_oracle_answer": {
+          "value": "2*sqrt(3)/3",
+          "formula": "1/d^2 = 1/SA^2 + 1/AB^2 + 1/AD^2 = 1/4 + 1/4 + 1/4 = 3/4 => d = 2/sqrt(3) = 2*sqrt(3)/3"
+        }
+      },
+      {
+        "id": "wsa_11_greek_letters_planes",
+        "class_index": 11,
+        "class_slug": "greek_letters_alpha_beta",
+        "class_description": "Đề toán chứa ký hiệu mặt phẳng Hy Lạp (α), (β)",
+        "source_license": "AlgoSim internal deterministic synthetic generator (Pillow + DejaVuSans, CC0/MIT internal test asset)",
+        "image_type": "SYNTHETIC_IMAGE",
+        "sha256": "5503e506174b8a8ba13355c1d149aefb23632c035f17bfc1b7ada4888990f821",
+        "dimensions_px": {
+          "width": 1200,
+          "height": 900
+        },
+        "canonical_text": "Trong không gian Oxyz, cho hình chóp S.ABCD có đáy ABCD là hình vuông với A(0;0;0), B(6;0;0), C(6;6;0), D(0;6;0) và đỉnh S(0;0;6). Mặt phẳng (α): z = 3 song song với mặt phẳng (β): z = 0 cắt khối chóp theo thiết diện (T). Tính diện tích thiết diện (T).",
+        "critical_math_symbols": [
+          "α",
+          "β",
+          "="
+        ],
+        "geometric_facts": [
+          {
+            "kind": "solid",
+            "value": "pyramid S.ABCD in Oxyz"
+          },
+          {
+            "kind": "plane_alpha",
+            "value": "(α): z = 3"
+          },
+          {
+            "kind": "plane_beta",
+            "value": "(β): z = 0"
+          },
+          {
+            "kind": "goal",
+            "value": "area(section (T))"
+          }
+        ],
+        "content_regions": [
+          {
+            "role": "problem_body",
+            "bbox_norm": [
+              0.075,
+              0.15,
+              0.91,
+              0.38
+            ]
+          }
+        ],
+        "has_diagram": false,
+        "diagram_only_critical_facts": false,
+        "algosim_scope_status": "IN_SCOPE_SERVED",
+        "independent_oracle_answer": {
+          "value": "9",
+          "formula": "Cross section at z = 3 (half height) has side 6*(1/2) = 3 => area = 9"
+        }
+      },
+      {
+        "id": "wsa_12_complex_vertex_plane_names",
+        "class_index": 12,
+        "class_slug": "complex_vertex_and_plane_names",
+        "class_description": "Đề toán có tên đỉnh/mặt phức tạp (ABCD.A′B′C′D′, M₁, M₂, A₁B₁)",
+        "source_license": "AlgoSim internal deterministic synthetic generator (Pillow + DejaVuSans, CC0/MIT internal test asset)",
+        "image_type": "SYNTHETIC_IMAGE",
+        "sha256": "dafa750b2c188d9d99094568888dfba51702114618be787e79de3afb7dbf57e3",
+        "dimensions_px": {
+          "width": 1200,
+          "height": 900
+        },
+        "canonical_text": "Cho hình hộp chữ nhật ABCD.A′B′C′D′ có AB = 2, AD = 3, AA′ = 4 (ký hiệu đỉnh phụ M₁, M₂ trên cạnh A₁B₁). Tính thể tích khối hộp chữ nhật ABCD.A′B′C′D′.",
+        "critical_math_symbols": [
+          "′",
+          "₁",
+          "₂",
+          "="
+        ],
+        "geometric_facts": [
+          {
+            "kind": "solid",
+            "value": "cuboid ABCD.A'B'C'D'"
+          },
+          {
+            "kind": "dimensions",
+            "value": "AB = 2, AD = 3, AA' = 4"
+          },
+          {
+            "kind": "goal",
+            "value": "volume(ABCD.A'B'C'D')"
+          }
+        ],
+        "content_regions": [
+          {
+            "role": "problem_body",
+            "bbox_norm": [
+              0.075,
+              0.16,
+              0.91,
+              0.34
+            ]
+          }
+        ],
+        "has_diagram": false,
+        "diagram_only_critical_facts": false,
+        "algosim_scope_status": "IN_SCOPE_SERVED",
+        "independent_oracle_answer": {
+          "value": "24",
+          "formula": "2 * 3 * 4 = 24"
+        }
+      },
+      {
+        "id": "wsa_13_labeled_diagram",
+        "class_index": 13,
+        "class_slug": "labeled_diagram_with_vertex_symbols",
+        "class_description": "Ảnh chỉ có hình vẽ gắn nhãn đỉnh S, A′, B′, C′, D′, (α) (kiểm tra chặn tự bịa đề MISSING_PROBLEM_TEXT và ghép user_text)",
+        "source_license": "AlgoSim internal deterministic synthetic generator (Pillow + DejaVuSans, CC0/MIT internal test asset)",
+        "image_type": "SYNTHETIC_IMAGE",
+        "sha256": "3b0099b9b1ae02ca3c9486afd99765d9c5b9e10fdf685aa8a1389a293c3c4e28",
+        "dimensions_px": {
+          "width": 1200,
+          "height": 900
+        },
+        "canonical_text": "",
+        "critical_math_symbols": [
+          "′",
+          "α"
+        ],
+        "geometric_facts": [
+          {
+            "kind": "diagram_labels",
+            "value": "S, A′, B′, C′, D′, (α)"
+          },
+          {
+            "kind": "provenance_guard",
+            "value": "apply_diagram_only_provenance_guard clears hallucinated text when has_problem_text=False"
+          }
+        ],
+        "content_regions": [
+          {
+            "role": "labeled_diagram_only",
+            "bbox_norm": [
+              0.28,
+              0.17,
+              0.72,
+              0.8
+            ]
+          }
+        ],
+        "has_diagram": true,
+        "diagram_only_critical_facts": true,
+        "algosim_scope_status": "REJECTED_DIAGRAM_ONLY",
+        "independent_oracle_answer": {
+          "value": "REJECTED:MISSING_PROBLEM_TEXT",
+          "formula": "Fail-closed when image contains only diagram without problem statement"
+        }
+      },
+      {
+        "id": "wsa_14_blurry_or_unreadable",
+        "class_index": 14,
+        "class_slug": "blurry_low_contrast_unreadable",
+        "class_description": "Ảnh quá mờ / độ tương phản cực thấp không đọc được (chặn tại Local CV Gate với 0 VLM calls)",
+        "source_license": "AlgoSim internal deterministic synthetic generator (Pillow + DejaVuSans, CC0/MIT internal test asset)",
+        "image_type": "SYNTHETIC_IMAGE",
+        "sha256": "737290efa5f054b10bbe166164903fc07da95cabd65a6bb690caf14c1b0a8de3",
+        "dimensions_px": {
+          "width": 1200,
+          "height": 900
+        },
+        "canonical_text": "",
+        "critical_math_symbols": [],
+        "geometric_facts": [],
+        "content_regions": [],
+        "has_diagram": false,
+        "diagram_only_critical_facts": false,
+        "algosim_scope_status": "REJECTED_UNREADABLE",
+        "independent_oracle_answer": {
+          "value": "REJECTED:IMAGE_NOT_READABLE",
+          "formula": "Local CV gate rejects when (p95-p5)<12 and (p99-p1)<18 and edge_energy<1.8 (0 VLM calls)"
+        }
+      },
+      {
+        "id": "wsa_15_out_of_scope",
+        "class_index": 15,
+        "class_slug": "out_of_scope_calculus_trig",
+        "class_description": "Ảnh bài toán ngoài phạm vi (Giải tích / tích phân / khảo sát hàm số)",
+        "source_license": "AlgoSim internal deterministic synthetic generator (Pillow + DejaVuSans, CC0/MIT internal test asset)",
+        "image_type": "SYNTHETIC_IMAGE",
+        "sha256": "12235a4dbf9e6c603d117699a705ceca40f46e0d37cd901d0572c9354dbed066",
+        "dimensions_px": {
+          "width": 1200,
+          "height": 900
+        },
+        "canonical_text": "Tính tích phân I = ∫ từ 0 đến π/2 của hàm số y = sin(x) + x² dx và tìm cực trị của hàm số y = x³ - 3x + 1.",
+        "critical_math_symbols": [
+          "²",
+          "³",
+          "="
+        ],
+        "geometric_facts": [
+          {
+            "kind": "domain",
+            "value": "calculus_out_of_scope"
+          }
+        ],
+        "content_regions": [
+          {
+            "role": "out_of_scope_body",
+            "bbox_norm": [
+              0.075,
+              0.17,
+              0.91,
+              0.3
+            ]
+          }
+        ],
+        "has_diagram": false,
+        "diagram_only_critical_facts": false,
+        "algosim_scope_status": "OUT_OF_SCOPE_UNSUPPORTED",
+        "independent_oracle_answer": {
+          "value": "REJECTED:UNSUPPORTED_PROBLEM",
+          "formula": "Domain gate rejects non-solid-geometry problem before Route D planner"
+        }
+      }
+    ]
+  },
+  "section_a5_and_a7_ocr_accuracy_vs_math_fact_fidelity": {
+    "benchmark_source": "docs/evaluation/geometry/runs/adaptive-local-ocr-fallback/ocr_benchmark.json",
+    "total_items": 22,
+    "scored_items_with_gt": 21,
+    "diagram_only_rejection_items": 1,
+    "engines": {
+      "tesseract_vie_best": {
+        "engine_version": "tesseract 5.5.3",
+        "items_total": 22,
+        "items_scored_with_gt": 21,
+        "text_recognition_accuracy": {
+          "cer_strict_body_median": 0.0351,
+          "cer_strict_body_mean": 0.0314,
+          "cer_strict_body_p95": 0.0721,
+          "cer_strict_body_max": 0.0721,
+          "cer_lenient_body_median": 0.0105,
+          "cer_lenient_body_mean": 0.0163,
+          "cer_lenient_body_p95": 0.0377,
+          "cer_lenient_body_max": 0.0472,
+          "wer_body_median": 0.12,
+          "wer_body_mean": 0.1132,
+          "wer_body_p95": 0.2222,
+          "vi_words_total": 473,
+          "vi_words_exact": 459,
+          "vi_word_exact_accuracy": 0.9704,
+          "vi_words_base_letter_ok": 462,
+          "vi_word_base_letter_accuracy": 0.9767,
+          "diacritic_retention_given_base_ok": 0.9935
+        },
+        "mathematical_fact_fidelity": {
+          "critical_symbols_gt_total": 49,
+          "critical_symbols_strict_found": 0,
+          "critical_symbols_strict_recall": 0.0,
+          "critical_symbols_lenient_found": 23,
+          "critical_symbols_lenient_recall": 0.4694,
+          "per_symbol_recall": {
+            "⊥": {
+              "gt": 2,
+              "strict_found": 0,
+              "lenient_found": 0,
+              "strict_recall": 0.0,
+              "lenient_recall": 0.0
+            },
+            "∥": {
+              "gt": 2,
+              "strict_found": 0,
+              "lenient_found": 0,
+              "strict_recall": 0.0,
+              "lenient_recall": 0.0
+            },
+            "∠": {
+              "gt": 2,
+              "strict_found": 0,
+              "lenient_found": 0,
+              "strict_recall": 0.0,
+              "lenient_recall": 0.0
+            },
+            "√": {
+              "gt": 4,
+              "strict_found": 0,
+              "lenient_found": 0,
+              "strict_recall": 0.0,
+              "lenient_recall": 0.0
+            },
+            "α": {
+              "gt": 3,
+              "strict_found": 0,
+              "lenient_found": 0,
+              "strict_recall": 0.0,
+              "lenient_recall": 0.0
+            },
+            "β": {
+              "gt": 1,
+              "strict_found": 0,
+              "lenient_found": 0,
+              "strict_recall": 0.0,
+              "lenient_recall": 0.0
+            },
+            "²": {
+              "gt": 1,
+              "strict_found": 0,
+              "lenient_found": 0,
+              "strict_recall": 0.0,
+              "lenient_recall": 0.0
+            },
+            "³": {
+              "gt": 2,
+              "strict_found": 0,
+              "lenient_found": 0,
+              "strict_recall": 0.0,
+              "lenient_recall": 0.0
+            },
+            "₁": {
+              "gt": 2,
+              "strict_found": 0,
+              "lenient_found": 0,
+              "strict_recall": 0.0,
+              "lenient_recall": 0.0
+            },
+            "₂": {
+              "gt": 2,
+              "strict_found": 0,
+              "lenient_found": 0,
+              "strict_recall": 0.0,
+              "lenient_recall": 0.0
+            },
+            "′": {
+              "gt": 28,
+              "strict_found": 0,
+              "lenient_found": 23,
+              "strict_recall": 0.0,
+              "lenient_recall": 0.8214
+            }
+          },
+          "math_tokens_exact_items": 2,
+          "math_tokens_exact_rate": 0.0952,
+          "items_with_missing_or_corrupted_math_facts": 19,
+          "silent_math_corruption_item_rate": 0.9048,
+          "wrong_diagram_interpretation_count": 0,
+          "diagram_only_c11_rejected": true,
+          "rule_only_gate_accepts": 0,
+          "rule_only_gate_false_local_accepts": 0,
+          "rule_only_gate_false_local_accept_rate_per_corpus": 0.0,
+          "rule_only_gate_correct_local_rejections": 22,
+          "sample_silent_corruptions": [
+            {
+              "item_id": "c01_ro_chop_thiet_dien",
+              "math_token_edit_distance": 1,
+              "gate_reasons": [
+                "RELATION_SYNTAX"
+              ],
+              "gt_excerpt": "Trong không gian Oxyz, cho khối chóp S.ABCD có đáy ABCD là hình vuông với A(0;0;0), B(6;0;0), C(6;6;0), D(0;6;0) và đỉnh S(0;0;6). Mặt phẳng",
+              "ocr_excerpt": "Trong không gian Oxyz, cho khối chóp S.ABCD có đáy ABCD là hình vuông với A(0;0;0), B(6;0;0), C(6;6;0), D(0;6;0) và đỉnh S(0;0;6). Mặt phẳng"
+            },
+            {
+              "item_id": "c02_ro_mat_cau",
+              "math_token_edit_distance": 2,
+              "gate_reasons": [
+                "PASS_DISAGREEMENT",
+                "RELATION_SYNTAX"
+              ],
+              "gt_excerpt": "Trong không gian Oxyz, cho mặt cầu (S) có tâm I(0;0;0) và đi qua điểm A(15;0;0). Mặt phẳng (P): z = 9 cắt mặt cầu (S) theo một đường tròn (C",
+              "ocr_excerpt": "Trong không gian Oxyz, cho mặt cầu (S) có tâm I(0:0:0) và đi qua điểm A(15;0;0). Mặt phẳng (P): z = 9 cắt mặt cầu (S) theo một đường tròn (C"
+            },
+            {
+              "item_id": "c03_ro_hinh_tru",
+              "math_token_edit_distance": 1,
+              "gate_reasons": [
+                "PASS_DISAGREEMENT",
+                "RELATION_SYNTAX"
+              ],
+              "gt_excerpt": "Trong không gian Oxyz, cho hình trụ có hai đáy là hai hình tròn tâm O(0;0;0) và K(0;0;10); điểm A(6;0;0) nằm trên đường tròn đáy tâm O. Tính",
+              "ocr_excerpt": "Trong không gian Oxyz, cho hình trụ có hai đáy là hai hình tròn tâm O(0;0;0) và K(0:0;10); điểm A(6;:0;0) nằm trên đường tròn đáy tâm O. Tín"
+            },
+            {
+              "item_id": "c04_nghieng_hinh_non",
+              "math_token_edit_distance": 4,
+              "gate_reasons": [
+                "PASS_DISAGREEMENT",
+                "RELATION_SYNTAX"
+              ],
+              "gt_excerpt": "Trong không gian Oxyz, cho hình nón có đỉnh S(0;0;12), tâm đáy O(0;0;0) và điểm A(5;0;0) nằm trên đường tròn đáy. Tính thể tích khối nón và ",
+              "ocr_excerpt": "Trong không gian Oxyz, cho hình nón có đỉnh S (0:0:12), tâm đáy O(0:0:0) và điểm A(5;0; 0) nằm trên đường tròn đáy. Tính thể tích khối nón v"
+            },
+            {
+              "item_id": "c05_nghieng_cong_thuc_hinh_tru",
+              "math_token_edit_distance": 1,
+              "gate_reasons": [
+                "PASS_DISAGREEMENT",
+                "RELATION_SYNTAX"
+              ],
+              "gt_excerpt": "Trong không gian Oxyz, cho hình trụ có hai đáy là hai hình tròn tâm O(0;0;0) và K(0;0;24); điểm A(5;0;0) nằm trên đường tròn đáy tâm O. Mặt ",
+              "ocr_excerpt": "Trong không gian Oxyz, cho hình trụ có hai đáy là hai hình tròn tâm O(0;0;0) và K(0;0;24); điểm A(5;0;0) nằm trên đường tròn đáy tâm O. Mặt "
+            },
+            {
+              "item_id": "c06_toi_mo_elip_non",
+              "math_token_edit_distance": 4,
+              "gate_reasons": [
+                "PASS_DISAGREEMENT",
+                "RELATION_SYNTAX"
+              ],
+              "gt_excerpt": "Trong không gian Oxyz, cho hình nón có đỉnh S(0;0;12), tâm đáy O(0;0;0) và điểm A(6;0;0) nằm trên đường tròn đáy. Mặt phẳng (β): x + z − 9 =",
+              "ocr_excerpt": "Trong không gian Oxyz, cho hình nón có đỉnh S(0:0;12), tâm đáy O(0;0;0) và điểm A(6:0:0) nằm trên đường tròn đáy. Mặt phẳng (8):x+z-9=0 cắt "
+            }
+          ]
+        },
+        "runtime_and_footprint": {
+          "cold_start_ms": 423.8,
+          "warm_cpu_p50_ms": 170.6,
+          "warm_cpu_p95_ms": 277.7,
+          "warm_cpu_max_ms": 325.0,
+          "peak_rss_mb": 101.4,
+          "footprint": {
+            "binary_mb": 70.0,
+            "tessdata_mb": 10.61,
+            "total_disk_mb": 80.61
+          }
+        }
+      },
+      "tesseract_vie_fast": {
+        "engine_version": "tesseract 5.5.3",
+        "items_total": 22,
+        "items_scored_with_gt": 21,
+        "text_recognition_accuracy": {
+          "cer_strict_body_median": 0.0109,
+          "cer_strict_body_mean": 0.0242,
+          "cer_strict_body_p95": 0.0811,
+          "cer_strict_body_max": 0.0811,
+          "cer_lenient_body_median": 0.0074,
+          "cer_lenient_body_mean": 0.0147,
+          "cer_lenient_body_p95": 0.0472,
+          "cer_lenient_body_max": 0.0472,
+          "wer_body_median": 0.1034,
+          "wer_body_mean": 0.0762,
+          "wer_body_p95": 0.1739,
+          "vi_words_total": 473,
+          "vi_words_exact": 462,
+          "vi_word_exact_accuracy": 0.9767,
+          "vi_words_base_letter_ok": 462,
+          "vi_word_base_letter_accuracy": 0.9767,
+          "diacritic_retention_given_base_ok": 1.0
+        },
+        "mathematical_fact_fidelity": {
+          "critical_symbols_gt_total": 49,
+          "critical_symbols_strict_found": 0,
+          "critical_symbols_strict_recall": 0.0,
+          "critical_symbols_lenient_found": 23,
+          "critical_symbols_lenient_recall": 0.4694,
+          "per_symbol_recall": {
+            "⊥": {
+              "gt": 2,
+              "strict_found": 0,
+              "lenient_found": 0,
+              "strict_recall": 0.0,
+              "lenient_recall": 0.0
+            },
+            "∥": {
+              "gt": 2,
+              "strict_found": 0,
+              "lenient_found": 0,
+              "strict_recall": 0.0,
+              "lenient_recall": 0.0
+            },
+            "∠": {
+              "gt": 2,
+              "strict_found": 0,
+              "lenient_found": 0,
+              "strict_recall": 0.0,
+              "lenient_recall": 0.0
+            },
+            "√": {
+              "gt": 4,
+              "strict_found": 0,
+              "lenient_found": 0,
+              "strict_recall": 0.0,
+              "lenient_recall": 0.0
+            },
+            "α": {
+              "gt": 3,
+              "strict_found": 0,
+              "lenient_found": 0,
+              "strict_recall": 0.0,
+              "lenient_recall": 0.0
+            },
+            "β": {
+              "gt": 1,
+              "strict_found": 0,
+              "lenient_found": 0,
+              "strict_recall": 0.0,
+              "lenient_recall": 0.0
+            },
+            "²": {
+              "gt": 1,
+              "strict_found": 0,
+              "lenient_found": 0,
+              "strict_recall": 0.0,
+              "lenient_recall": 0.0
+            },
+            "³": {
+              "gt": 2,
+              "strict_found": 0,
+              "lenient_found": 0,
+              "strict_recall": 0.0,
+              "lenient_recall": 0.0
+            },
+            "₁": {
+              "gt": 2,
+              "strict_found": 0,
+              "lenient_found": 0,
+              "strict_recall": 0.0,
+              "lenient_recall": 0.0
+            },
+            "₂": {
+              "gt": 2,
+              "strict_found": 0,
+              "lenient_found": 0,
+              "strict_recall": 0.0,
+              "lenient_recall": 0.0
+            },
+            "′": {
+              "gt": 28,
+              "strict_found": 0,
+              "lenient_found": 23,
+              "strict_recall": 0.0,
+              "lenient_recall": 0.8214
+            }
+          },
+          "math_tokens_exact_items": 6,
+          "math_tokens_exact_rate": 0.2857,
+          "items_with_missing_or_corrupted_math_facts": 15,
+          "silent_math_corruption_item_rate": 0.7143,
+          "wrong_diagram_interpretation_count": 0,
+          "diagram_only_c11_rejected": true,
+          "rule_only_gate_accepts": 9,
+          "rule_only_gate_false_local_accepts": 3,
+          "rule_only_gate_false_local_accept_rate_per_corpus": 0.1364,
+          "rule_only_gate_correct_local_rejections": 13,
+          "sample_silent_corruptions": [
+            {
+              "item_id": "c01_ro_chop_thiet_dien",
+              "math_token_edit_distance": 1,
+              "gate_reasons": [
+                "RELATION_SYNTAX"
+              ],
+              "gt_excerpt": "Trong không gian Oxyz, cho khối chóp S.ABCD có đáy ABCD là hình vuông với A(0;0;0), B(6;0;0), C(6;6;0), D(0;6;0) và đỉnh S(0;0;6). Mặt phẳng",
+              "ocr_excerpt": "Trong không gian Oxyz, cho khối chóp S.ABCD có đáy ABCD là hình vuông với A(0;0;0), B(6;0;0), C(6;6;0), D(0;6;0) và đỉnh S(0;0;6). Mặt phẳng"
+            },
+            {
+              "item_id": "c05_nghieng_cong_thuc_hinh_tru",
+              "math_token_edit_distance": 1,
+              "gate_reasons": [
+                "RELATION_SYNTAX"
+              ],
+              "gt_excerpt": "Trong không gian Oxyz, cho hình trụ có hai đáy là hai hình tròn tâm O(0;0;0) và K(0;0;24); điểm A(5;0;0) nằm trên đường tròn đáy tâm O. Mặt ",
+              "ocr_excerpt": "Trong không gian Oxyz, cho hình trụ có hai đáy là hai hình tròn tâm O(0;0;0) và K(0;0;24); điểm A(5;0;0) nằm trên đường tròn đáy tâm O. Mặt "
+            },
+            {
+              "item_id": "c06_toi_mo_elip_non",
+              "math_token_edit_distance": 1,
+              "gate_reasons": [],
+              "gt_excerpt": "Trong không gian Oxyz, cho hình nón có đỉnh S(0;0;12), tâm đáy O(0;0;0) và điểm A(6;0;0) nằm trên đường tròn đáy. Mặt phẳng (β): x + z − 9 =",
+              "ocr_excerpt": "Trong không gian Oxyz, cho hình nón có đỉnh S(0;0;12), tâm đáy O(0;0;0) và điểm A(6;0;0) nằm trên đường tròn đáy. Mặt phẳng (B): x + z - 9 ="
+            },
+            {
+              "item_id": "c08_de_va_hinh_chop",
+              "math_token_edit_distance": 1,
+              "gate_reasons": [
+                "PASS_DISAGREEMENT",
+                "RELATION_SYNTAX"
+              ],
+              "gt_excerpt": "Trong không gian Oxyz, cho khối chóp S.ABCD có đáy ABCD là hình vuông với A(0;0;0), B(6;0;0), C(6;6;0), D(0;6;0) và đỉnh S(0;0;6). Mặt phẳng",
+              "ocr_excerpt": "Trong không gian Oxyz, cho khối chóp S.ABCD có đáy ABCD là hình vuông với A(0;0;0), B(6;0;0), C(6;6;0), D(0;6;0) và đỉnh S(0;0;6). Mặt phẳng"
+            },
+            {
+              "item_id": "c12_ngoai_nang_luc",
+              "math_token_edit_distance": 2,
+              "gate_reasons": [
+                "PASS_DISAGREEMENT"
+              ],
+              "gt_excerpt": "Trong mặt phẳng Oxy, cho hình phẳng (H) giới hạn bởi parabol y = x², trục Ox và đường thẳng x = 2. Quay hình phẳng (H) quanh trục Ox ta được",
+              "ocr_excerpt": "Trong mặt phẳng Oxy, cho hình phẳng (H) giới hạn bởi parabol y = X2, trục Ox và đường thẳng x = 2. Quay hình phẳng (H) quanh trục Ox ta được"
+            },
+            {
+              "item_id": "s01_vuong_goc_song_song",
+              "math_token_edit_distance": 3,
+              "gate_reasons": [
+                "PASS_DISAGREEMENT",
+                "RELATION_SYNTAX",
+                "UNRECOGNISED_SYMBOL"
+              ],
+              "gt_excerpt": "Cho hình chóp S.ABCD có SA ⊥ (ABCD), AB ∥ CD và góc ∠SBA = 60°. Tính khoảng cách từ A đến mặt phẳng (SBC).",
+              "ocr_excerpt": "Cho hình chóp S.ABCD có SA 1 (ABCD), AB |I CD và góc ⁄SBA = 60°. Tính khoảng cách từ A đến mặt phẳng (SBC)."
+            }
+          ]
+        },
+        "runtime_and_footprint": {
+          "cold_start_ms": 205.8,
+          "warm_cpu_p50_ms": 75.9,
+          "warm_cpu_p95_ms": 130.1,
+          "warm_cpu_max_ms": 149.6,
+          "peak_rss_mb": 81.5,
+          "footprint": {
+            "binary_mb": 70.0,
+            "tessdata_mb": 1.62,
+            "total_disk_mb": 71.62
+          }
+        }
+      },
+      "rapidocr_ppocrv6_small": {
+        "engine_version": "rapidocr UNKNOWN",
+        "items_total": 22,
+        "items_scored_with_gt": 21,
+        "text_recognition_accuracy": {
+          "cer_strict_body_median": 0.0678,
+          "cer_strict_body_mean": 0.0679,
+          "cer_strict_body_p95": 0.1103,
+          "cer_strict_body_max": 0.1172,
+          "cer_lenient_body_median": 0.0648,
+          "cer_lenient_body_mean": 0.0646,
+          "cer_lenient_body_p95": 0.0842,
+          "cer_lenient_body_max": 0.0876,
+          "wer_body_median": 0.3043,
+          "wer_body_mean": 0.3024,
+          "wer_body_p95": 0.4242,
+          "vi_words_total": 473,
+          "vi_words_exact": 251,
+          "vi_word_exact_accuracy": 0.5307,
+          "vi_words_base_letter_ok": 279,
+          "vi_word_base_letter_accuracy": 0.5899,
+          "diacritic_retention_given_base_ok": 0.8996
+        },
+        "mathematical_fact_fidelity": {
+          "critical_symbols_gt_total": 49,
+          "critical_symbols_strict_found": 30,
+          "critical_symbols_strict_recall": 0.6122,
+          "critical_symbols_lenient_found": 49,
+          "critical_symbols_lenient_recall": 1.0,
+          "per_symbol_recall": {
+            "⊥": {
+              "gt": 2,
+              "strict_found": 2,
+              "lenient_found": 2,
+              "strict_recall": 1.0,
+              "lenient_recall": 1.0
+            },
+            "∥": {
+              "gt": 2,
+              "strict_found": 2,
+              "lenient_found": 2,
+              "strict_recall": 1.0,
+              "lenient_recall": 1.0
+            },
+            "∠": {
+              "gt": 2,
+              "strict_found": 2,
+              "lenient_found": 2,
+              "strict_recall": 1.0,
+              "lenient_recall": 1.0
+            },
+            "√": {
+              "gt": 4,
+              "strict_found": 4,
+              "lenient_found": 4,
+              "strict_recall": 1.0,
+              "lenient_recall": 1.0
+            },
+            "α": {
+              "gt": 3,
+              "strict_found": 3,
+              "lenient_found": 3,
+              "strict_recall": 1.0,
+              "lenient_recall": 1.0
+            },
+            "β": {
+              "gt": 1,
+              "strict_found": 1,
+              "lenient_found": 1,
+              "strict_recall": 1.0,
+              "lenient_recall": 1.0
+            },
+            "²": {
+              "gt": 1,
+              "strict_found": 1,
+              "lenient_found": 1,
+              "strict_recall": 1.0,
+              "lenient_recall": 1.0
+            },
+            "³": {
+              "gt": 2,
+              "strict_found": 2,
+              "lenient_found": 2,
+              "strict_recall": 1.0,
+              "lenient_recall": 1.0
+            },
+            "₁": {
+              "gt": 2,
+              "strict_found": 2,
+              "lenient_found": 2,
+              "strict_recall": 1.0,
+              "lenient_recall": 1.0
+            },
+            "₂": {
+              "gt": 2,
+              "strict_found": 2,
+              "lenient_found": 2,
+              "strict_recall": 1.0,
+              "lenient_recall": 1.0
+            },
+            "′": {
+              "gt": 28,
+              "strict_found": 9,
+              "lenient_found": 28,
+              "strict_recall": 0.3214,
+              "lenient_recall": 1.0
+            }
+          },
+          "math_tokens_exact_items": 19,
+          "math_tokens_exact_rate": 0.9048,
+          "items_with_missing_or_corrupted_math_facts": 2,
+          "silent_math_corruption_item_rate": 0.0952,
+          "wrong_diagram_interpretation_count": 0,
+          "diagram_only_c11_rejected": true,
+          "rule_only_gate_accepts": 0,
+          "rule_only_gate_false_local_accepts": 0,
+          "rule_only_gate_false_local_accept_rate_per_corpus": 0.0,
+          "rule_only_gate_correct_local_rejections": 22,
+          "sample_silent_corruptions": [
+            {
+              "item_id": "c02_ro_mat_cau",
+              "math_token_edit_distance": 1,
+              "gate_reasons": [
+                "DOMAIN_NOT_GEOMETRY",
+                "VIETNAMESE_ORTHOGRAPHY"
+              ],
+              "gt_excerpt": "Trong không gian Oxyz, cho mặt cầu (S) có tâm I(0;0;0) và đi qua điểm A(15;0;0). Mặt phẳng (P): z = 9 cắt mặt cầu (S) theo một đường tròn (C",
+              "ocr_excerpt": "Trong không gian Oxyz, cho mt cu (S) có tâm l(0;0;0) và đi qua đim A(15;0;0). Mt phng (P): z = 9 ct mt cλu (S) theo mt đưng tròn (C). Tính t"
+            },
+            {
+              "item_id": "c09_de_va_hinh_cau",
+              "math_token_edit_distance": 1,
+              "gate_reasons": [
+                "DOMAIN_NOT_GEOMETRY",
+                "VIETNAMESE_ORTHOGRAPHY"
+              ],
+              "gt_excerpt": "Trong không gian Oxyz, cho mặt cầu (S) có tâm I(0;0;0) và đi qua điểm A(15;0;0). Mặt phẳng (P): z = 9 cắt mặt cầu (S) theo một đường tròn (C",
+              "ocr_excerpt": "Trong không gian Oxyz, cho mt cu (S) có tâm l(0;0;0) và đi qua đim A(15;0;0). Mt phng (P): z = 9 ct mt cu (S) theo mt đưròng tròn (C). Tính "
+            }
+          ]
+        },
+        "runtime_and_footprint": {
+          "cold_start_ms": 2098.0,
+          "warm_cpu_p50_ms": 1193.7,
+          "warm_cpu_p95_ms": 1292.6,
+          "warm_cpu_max_ms": 1362.8,
+          "peak_rss_mb": 755.0,
+          "footprint": {
+            "wheel_and_onnx_mb": 95.0,
+            "models_mb": 15.72,
+            "total_disk_mb": 110.72
+          }
+        }
+      },
+      "rapidocr_ppocrv6_medium": {
+        "engine_version": "rapidocr UNKNOWN",
+        "items_total": 22,
+        "items_scored_with_gt": 21,
+        "text_recognition_accuracy": {
+          "cer_strict_body_median": 0.0712,
+          "cer_strict_body_mean": 0.112,
+          "cer_strict_body_p95": 0.3402,
+          "cer_strict_body_max": 0.6018,
+          "cer_lenient_body_median": 0.0737,
+          "cer_lenient_body_mean": 0.1041,
+          "cer_lenient_body_p95": 0.3436,
+          "cer_lenient_body_max": 0.5926,
+          "wer_body_median": 0.3103,
+          "wer_body_mean": 0.3504,
+          "wer_body_p95": 0.4545,
+          "vi_words_total": 473,
+          "vi_words_exact": 235,
+          "vi_word_exact_accuracy": 0.4968,
+          "vi_words_base_letter_ok": 252,
+          "vi_word_base_letter_accuracy": 0.5328,
+          "diacritic_retention_given_base_ok": 0.9325
+        },
+        "mathematical_fact_fidelity": {
+          "critical_symbols_gt_total": 49,
+          "critical_symbols_strict_found": 17,
+          "critical_symbols_strict_recall": 0.3469,
+          "critical_symbols_lenient_found": 41,
+          "critical_symbols_lenient_recall": 0.8367,
+          "per_symbol_recall": {
+            "⊥": {
+              "gt": 2,
+              "strict_found": 1,
+              "lenient_found": 1,
+              "strict_recall": 0.5,
+              "lenient_recall": 0.5
+            },
+            "∥": {
+              "gt": 2,
+              "strict_found": 1,
+              "lenient_found": 1,
+              "strict_recall": 0.5,
+              "lenient_recall": 0.5
+            },
+            "∠": {
+              "gt": 2,
+              "strict_found": 1,
+              "lenient_found": 1,
+              "strict_recall": 0.5,
+              "lenient_recall": 0.5
+            },
+            "√": {
+              "gt": 4,
+              "strict_found": 4,
+              "lenient_found": 4,
+              "strict_recall": 1.0,
+              "lenient_recall": 1.0
+            },
+            "α": {
+              "gt": 3,
+              "strict_found": 0,
+              "lenient_found": 0,
+              "strict_recall": 0.0,
+              "lenient_recall": 0.0
+            },
+            "β": {
+              "gt": 1,
+              "strict_found": 1,
+              "lenient_found": 1,
+              "strict_recall": 1.0,
+              "lenient_recall": 1.0
+            },
+            "²": {
+              "gt": 1,
+              "strict_found": 1,
+              "lenient_found": 1,
+              "strict_recall": 1.0,
+              "lenient_recall": 1.0
+            },
+            "³": {
+              "gt": 2,
+              "strict_found": 2,
+              "lenient_found": 2,
+              "strict_recall": 1.0,
+              "lenient_recall": 1.0
+            },
+            "₁": {
+              "gt": 2,
+              "strict_found": 0,
+              "lenient_found": 0,
+              "strict_recall": 0.0,
+              "lenient_recall": 0.0
+            },
+            "₂": {
+              "gt": 2,
+              "strict_found": 2,
+              "lenient_found": 2,
+              "strict_recall": 1.0,
+              "lenient_recall": 1.0
+            },
+            "′": {
+              "gt": 28,
+              "strict_found": 4,
+              "lenient_found": 28,
+              "strict_recall": 0.1429,
+              "lenient_recall": 1.0
+            }
+          },
+          "math_tokens_exact_items": 14,
+          "math_tokens_exact_rate": 0.6667,
+          "items_with_missing_or_corrupted_math_facts": 7,
+          "silent_math_corruption_item_rate": 0.3333,
+          "wrong_diagram_interpretation_count": 0,
+          "diagram_only_c11_rejected": true,
+          "rule_only_gate_accepts": 0,
+          "rule_only_gate_false_local_accepts": 0,
+          "rule_only_gate_false_local_accept_rate_per_corpus": 0.0,
+          "rule_only_gate_correct_local_rejections": 22,
+          "sample_silent_corruptions": [
+            {
+              "item_id": "c01_ro_chop_thiet_dien",
+              "math_token_edit_distance": 1,
+              "gate_reasons": [
+                "DOMAIN_NOT_GEOMETRY",
+                "RELATION_SYNTAX",
+                "VIETNAMESE_ORTHOGRAPHY"
+              ],
+              "gt_excerpt": "Trong không gian Oxyz, cho khối chóp S.ABCD có đáy ABCD là hình vuông với A(0;0;0), B(6;0;0), C(6;6;0), D(0;6;0) và đỉnh S(0;0;6). Mặt phẳng",
+              "ocr_excerpt": "Trong không gian Oxyz, cho khi chóp S.ABCD có đáy ABCD là hình vuông vói A(0;0;0), B(6;0;0), C(6;6;0), D(0;6;0) và đinh S(0;0;6). Mt phng (a"
+            },
+            {
+              "item_id": "c05_nghieng_cong_thuc_hinh_tru",
+              "math_token_edit_distance": 22,
+              "gate_reasons": [
+                "DIAGRAM_UNEXPLAINED",
+                "DOMAIN_NOT_GEOMETRY",
+                "RELATION_SYNTAX",
+                "VIETNAMESE_ORTHOGRAPHY"
+              ],
+              "gt_excerpt": "Trong không gian Oxyz, cho hình trụ có hai đáy là hai hình tròn tâm O(0;0;0) và K(0;0;24); điểm A(5;0;0) nằm trên đường tròn đáy tâm O. Mặt ",
+              "ocr_excerpt": "Trong không gian Oxyz, cho hình tr có hai đáy là hai hình tròn tâm phng (a): 2x - z + 12 = 0 ct hình tr theo mt đưng elip (E). Tính din tích"
+            },
+            {
+              "item_id": "c08_de_va_hinh_chop",
+              "math_token_edit_distance": 1,
+              "gate_reasons": [
+                "DOMAIN_NOT_GEOMETRY",
+                "RELATION_SYNTAX",
+                "VIETNAMESE_ORTHOGRAPHY"
+              ],
+              "gt_excerpt": "Trong không gian Oxyz, cho khối chóp S.ABCD có đáy ABCD là hình vuông với A(0;0;0), B(6;0;0), C(6;6;0), D(0;6;0) và đỉnh S(0;0;6). Mặt phẳng",
+              "ocr_excerpt": "Trong không gian Oxyz, cho khi chóp S.ABCD có đáy ABCD là hình vuông vi A(0;0;0), B(6;0;0), C(6;6;0), D(0;6;0) và đnh S(0;0;6). Mt phng (a):"
+            },
+            {
+              "item_id": "s01_vuong_goc_song_song",
+              "math_token_edit_distance": 25,
+              "gate_reasons": [
+                "DOMAIN_NOT_GEOMETRY",
+                "VIETNAMESE_ORTHOGRAPHY"
+              ],
+              "gt_excerpt": "Cho hình chóp S.ABCD có SA ⊥ (ABCD), AB ∥ CD và góc ∠SBA = 60°. Tính khoảng cách từ A đến mặt phẳng (SBC).",
+              "ocr_excerpt": "o        A    In khong cách t A đn mt phng (SBC)."
+            },
+            {
+              "item_id": "s03_dau_tru_toa_do",
+              "math_token_edit_distance": 2,
+              "gate_reasons": [
+                "DOMAIN_NOT_GEOMETRY",
+                "UNRECOGNISED_SYMBOL",
+                "VIETNAMESE_ORTHOGRAPHY"
+              ],
+              "gt_excerpt": "Trong không gian Oxyz, cho mặt phẳng (P): x − 2y + z − 1 = 0 và điểm A(1; −2; 3). Tính khoảng cách từ A đến (P).",
+              "ocr_excerpt": "Trong không gian Oxyz, cho mt phng (P): x – 2y + z – 1 = 0 và đim A(1; -2; 3). Tính khong cách tù A đn (P)."
+            },
+            {
+              "item_id": "s04_luy_thua_chi_so",
+              "math_token_edit_distance": 2,
+              "gate_reasons": [
+                "DOMAIN_NOT_GEOMETRY",
+                "VIETNAMESE_ORTHOGRAPHY"
+              ],
+              "gt_excerpt": "Cho tứ diện ABCD có AB = a√2, AC = 2a và thể tích V = a³/6. Gọi M₁, M₂ lần lượt là trung điểm của BC và CD.",
+              "ocr_excerpt": "Cho t din ABCD có AB = a√2, AC = 2a và th tích V = a³/6. Gi M1, M₂ ln lut là trung đim ca BC và CD."
+            }
+          ]
+        },
+        "runtime_and_footprint": {
+          "cold_start_ms": 10500.5,
+          "warm_cpu_p50_ms": 10425.7,
+          "warm_cpu_p95_ms": 11616.4,
+          "warm_cpu_max_ms": 11891.5,
+          "peak_rss_mb": 1389.8,
+          "footprint": {
+            "wheel_and_onnx_mb": 95.0,
+            "models_mb": 125.19,
+            "total_disk_mb": 220.19
+          }
+        }
+      },
+      "rapidocr_ppocrv5_latin": {
+        "engine_version": "rapidocr UNKNOWN",
+        "items_total": 22,
+        "items_scored_with_gt": 21,
+        "text_recognition_accuracy": {
+          "cer_strict_body_median": 0.0931,
+          "cer_strict_body_mean": 0.0988,
+          "cer_strict_body_p95": 0.1379,
+          "cer_strict_body_max": 0.1448,
+          "cer_lenient_body_median": 0.0944,
+          "cer_lenient_body_mean": 0.0951,
+          "cer_lenient_body_p95": 0.1226,
+          "cer_lenient_body_max": 0.1289,
+          "wer_body_median": 0.3721,
+          "wer_body_mean": 0.361,
+          "wer_body_p95": 0.4545,
+          "vi_words_total": 473,
+          "vi_words_exact": 207,
+          "vi_word_exact_accuracy": 0.4376,
+          "vi_words_base_letter_ok": 360,
+          "vi_word_base_letter_accuracy": 0.7611,
+          "diacritic_retention_given_base_ok": 0.575
+        },
+        "mathematical_fact_fidelity": {
+          "critical_symbols_gt_total": 49,
+          "critical_symbols_strict_found": 14,
+          "critical_symbols_strict_recall": 0.2857,
+          "critical_symbols_lenient_found": 37,
+          "critical_symbols_lenient_recall": 0.7551,
+          "per_symbol_recall": {
+            "⊥": {
+              "gt": 2,
+              "strict_found": 0,
+              "lenient_found": 0,
+              "strict_recall": 0.0,
+              "lenient_recall": 0.0
+            },
+            "∥": {
+              "gt": 2,
+              "strict_found": 0,
+              "lenient_found": 0,
+              "strict_recall": 0.0,
+              "lenient_recall": 0.0
+            },
+            "∠": {
+              "gt": 2,
+              "strict_found": 0,
+              "lenient_found": 0,
+              "strict_recall": 0.0,
+              "lenient_recall": 0.0
+            },
+            "√": {
+              "gt": 4,
+              "strict_found": 4,
+              "lenient_found": 4,
+              "strict_recall": 1.0,
+              "lenient_recall": 1.0
+            },
+            "α": {
+              "gt": 3,
+              "strict_found": 3,
+              "lenient_found": 3,
+              "strict_recall": 1.0,
+              "lenient_recall": 1.0
+            },
+            "β": {
+              "gt": 1,
+              "strict_found": 1,
+              "lenient_found": 1,
+              "strict_recall": 1.0,
+              "lenient_recall": 1.0
+            },
+            "²": {
+              "gt": 1,
+              "strict_found": 1,
+              "lenient_found": 1,
+              "strict_recall": 1.0,
+              "lenient_recall": 1.0
+            },
+            "³": {
+              "gt": 2,
+              "strict_found": 1,
+              "lenient_found": 1,
+              "strict_recall": 0.5,
+              "lenient_recall": 0.5
+            },
+            "₁": {
+              "gt": 2,
+              "strict_found": 0,
+              "lenient_found": 0,
+              "strict_recall": 0.0,
+              "lenient_recall": 0.0
+            },
+            "₂": {
+              "gt": 2,
+              "strict_found": 0,
+              "lenient_found": 0,
+              "strict_recall": 0.0,
+              "lenient_recall": 0.0
+            },
+            "′": {
+              "gt": 28,
+              "strict_found": 4,
+              "lenient_found": 27,
+              "strict_recall": 0.1429,
+              "lenient_recall": 0.9643
+            }
+          },
+          "math_tokens_exact_items": 16,
+          "math_tokens_exact_rate": 0.7619,
+          "items_with_missing_or_corrupted_math_facts": 5,
+          "silent_math_corruption_item_rate": 0.2381,
+          "wrong_diagram_interpretation_count": 0,
+          "diagram_only_c11_rejected": true,
+          "rule_only_gate_accepts": 0,
+          "rule_only_gate_false_local_accepts": 0,
+          "rule_only_gate_false_local_accept_rate_per_corpus": 0.0,
+          "rule_only_gate_correct_local_rejections": 22,
+          "sample_silent_corruptions": [
+            {
+              "item_id": "s01_vuong_goc_song_song",
+              "math_token_edit_distance": 3,
+              "gate_reasons": [
+                "DOMAIN_NOT_GEOMETRY",
+                "RELATION_SYNTAX",
+                "VIETNAMESE_ORTHOGRAPHY"
+              ],
+              "gt_excerpt": "Cho hình chóp S.ABCD có SA ⊥ (ABCD), AB ∥ CD và góc ∠SBA = 60°. Tính khoảng cách từ A đến mặt phẳng (SBC).",
+              "ocr_excerpt": "Cho hinh chóp S.ABCD có SA 1 (ABCD), AB | CD và góc SBA = 60°. Tính khoång cách tù A děn mt phng (SBC)."
+            },
+            {
+              "item_id": "s01_vuong_goc_song_song_degraded",
+              "math_token_edit_distance": 3,
+              "gate_reasons": [
+                "DOMAIN_NOT_GEOMETRY",
+                "RELATION_SYNTAX",
+                "VIETNAMESE_ORTHOGRAPHY"
+              ],
+              "gt_excerpt": "Cho hình chóp S.ABCD có SA ⊥ (ABCD), AB ∥ CD và góc ∠SBA = 60°. Tính khoảng cách từ A đến mặt phẳng (SBC).",
+              "ocr_excerpt": "Cho hinh chóp S.ABCD có SA 1 (ABCD), AB  CD và góc ZSBA = 60°. Tính khoång cách tù A dën mt phng (SBC)."
+            },
+            {
+              "item_id": "s02_phay_can_phan_so_degraded",
+              "math_token_edit_distance": 1,
+              "gate_reasons": [
+                "DOMAIN_NOT_GEOMETRY",
+                "UNRECOGNISED_SYMBOL",
+                "VERTEX_INCONSISTENT",
+                "VIETNAMESE_ORTHOGRAPHY"
+              ],
+              "gt_excerpt": "Cho lăng trụ đứng ABC.A′B′C′ có AA′ = 2√3, AB = a/2 và BC = 3,5. Tính thể tích khối lăng trụ ABC.A′B′C′.",
+              "ocr_excerpt": "Cho lng tru dúng ABC.A'B'C′ có AA′ = 2√3, AB = a/2 và BC = 3,5. Tính th tích khōi lng tru ABC.A'B’C'."
+            },
+            {
+              "item_id": "s04_luy_thua_chi_so",
+              "math_token_edit_distance": 4,
+              "gate_reasons": [
+                "DOMAIN_NOT_GEOMETRY",
+                "VIETNAMESE_ORTHOGRAPHY"
+              ],
+              "gt_excerpt": "Cho tứ diện ABCD có AB = a√2, AC = 2a và thể tích V = a³/6. Gọi M₁, M₂ lần lượt là trung điểm của BC và CD.",
+              "ocr_excerpt": "Cho tú din ABCD có AB = a√2, AC = 2a và th tích V = a3/6. Goi M1, Mz lån luçt là trung diêm cúa BC và CD."
+            },
+            {
+              "item_id": "s04_luy_thua_chi_so_degraded",
+              "math_token_edit_distance": 2,
+              "gate_reasons": [
+                "DOMAIN_NOT_GEOMETRY",
+                "VIETNAMESE_ORTHOGRAPHY"
+              ],
+              "gt_excerpt": "Cho tứ diện ABCD có AB = a√2, AC = 2a và thể tích V = a³/6. Gọi M₁, M₂ lần lượt là trung điểm của BC và CD.",
+              "ocr_excerpt": "Cho tú din ABCD có AB = a√2, AC = 2a và thê tích V = a³/6. Gi M, Mz lån luçt là trung diêm cúa BC và CD."
+            }
+          ]
+        },
+        "runtime_and_footprint": {
+          "cold_start_ms": 2542.0,
+          "warm_cpu_p50_ms": 1384.95,
+          "warm_cpu_p95_ms": 1556.1,
+          "warm_cpu_max_ms": 1685.1,
+          "peak_rss_mb": 741.5,
+          "footprint": {
+            "wheel_and_onnx_mb": 95.0,
+            "models_mb": 14.37,
+            "total_disk_mb": 109.37
+          }
+        }
+      }
+    },
+    "cross_engine_gate_variants": {
+      "tesseract_vie_best+rapidocr_ppocrv6_small": {
+        "selected": {
+          "t_conf": 95,
+          "t_uncovered": 0.0,
+          "accepted": 0,
+          "unsafe": 0
+        },
+        "accepted_ids": [],
+        "rule_only_accepts": 0,
+        "rule_only_unsafe": 0
+      },
+      "tesseract_vie_best+rapidocr_ppocrv6_medium": {
+        "selected": {
+          "t_conf": 95,
+          "t_uncovered": 0.0,
+          "accepted": 0,
+          "unsafe": 0
+        },
+        "accepted_ids": [],
+        "rule_only_accepts": 0,
+        "rule_only_unsafe": 0
+      },
+      "tesseract_vie_best+rapidocr_ppocrv5_latin": {
+        "selected": {
+          "t_conf": 95,
+          "t_uncovered": 0.0,
+          "accepted": 0,
+          "unsafe": 0
+        },
+        "accepted_ids": [],
+        "rule_only_accepts": 0,
+        "rule_only_unsafe": 0
+      },
+      "tesseract_vie_fast+rapidocr_ppocrv6_small": {
+        "selected": {
+          "t_conf": 90,
+          "t_uncovered": 0.0,
+          "accepted": 3,
+          "unsafe": 0
+        },
+        "accepted_ids": [
+          "c03_ro_hinh_tru",
+          "c07_mo_chop_ngu_giac",
+          "c10_exif_xoay_gps"
+        ],
+        "rule_only_accepts": 4,
+        "rule_only_unsafe": 0
+      },
+      "tesseract_vie_fast+rapidocr_ppocrv6_medium": {
+        "selected": {
+          "t_conf": 90,
+          "t_uncovered": 0.25,
+          "accepted": 5,
+          "unsafe": 0
+        },
+        "accepted_ids": [
+          "c02_ro_mat_cau",
+          "c03_ro_hinh_tru",
+          "c07_mo_chop_ngu_giac",
+          "c09_de_va_hinh_cau",
+          "c10_exif_xoay_gps"
+        ],
+        "rule_only_accepts": 6,
+        "rule_only_unsafe": 0
+      },
+      "tesseract_vie_fast+rapidocr_ppocrv5_latin": {
+        "selected": {
+          "t_conf": 90,
+          "t_uncovered": 0.25,
+          "accepted": 5,
+          "unsafe": 0
+        },
+        "accepted_ids": [
+          "c02_ro_mat_cau",
+          "c03_ro_hinh_tru",
+          "c07_mo_chop_ngu_giac",
+          "c09_de_va_hinh_cau",
+          "c10_exif_xoay_gps"
+        ],
+        "rule_only_accepts": 6,
+        "rule_only_unsafe": 0
+      }
+    },
+    "policy_comparison": [
+      {
+        "policy_id": "P1_ALWAYS_VISION_AFTER_CV_PREPROCESS",
+        "description": "Shipped Product Policy (`LOCAL_OCR_DIAGNOSTIC_ONLY` + CV region/crop/dedup + `crop_holds_all_content` + Gemini Vision)",
+        "local_ocr_dependencies_mb": 0.0,
+        "local_cv_preprocess_p50_ms": 23.0,
+        "local_cv_preprocess_p95_ms": 115.6,
+        "local_cv_peak_ram_mb": 5.38,
+        "false_local_ocr_accept_rate": 0.0,
+        "vision_calls_22_item_corpus_before_crop_fix": 23,
+        "vision_calls_22_item_corpus_after_crop_fix": 22,
+        "vision_calls_multi_image_journey_before_crop_fix": 3,
+        "vision_calls_multi_image_journey_after_crop_fix": 2,
+        "verdict": "SHIPPED_IN_PRODUCT"
+      },
+      {
+        "policy_id": "P2_SINGLE_ENGINE_TESSERACT_VIE_FAST",
+        "description": "Single-engine local OCR (`tesseract 5.5.3 vie_fast`) with rule-only confidence/lexicon gate",
+        "local_ocr_dependencies_mb": 71.62,
+        "warm_cpu_p50_ms": 75.9,
+        "warm_cpu_p95_ms": 130.1,
+        "peak_rss_mb": 81.5,
+        "accepted_items_of_22": 9,
+        "false_local_ocr_accepts_of_22": 3,
+        "false_local_ocr_accept_rate_among_accepted": 0.3333,
+        "critical_symbol_recall": 0.0,
+        "verdict": "REJECTED_UNSAFE_SILENT_SYMBOL_CORRUPTION"
+      },
+      {
+        "policy_id": "P3_SINGLE_ENGINE_RAPIDOCR_PPOCRV6_SMALL",
+        "description": "Single-engine local OCR (`RapidOCR PP-OCRv6 small`) with rule-only gate",
+        "local_ocr_dependencies_mb": 110.72,
+        "warm_cpu_p50_ms": 1193.7,
+        "warm_cpu_p95_ms": 1292.6,
+        "peak_rss_mb": 755.0,
+        "accepted_items_of_22": 0,
+        "false_local_ocr_accepts_of_22": 0,
+        "vi_word_exact_accuracy": 0.5307,
+        "critical_symbol_lenient_recall": 1.0,
+        "verdict": "REJECTED_MISSING_40_VIETNAMESE_PRECOMPOSED_VOWELS"
+      },
+      {
+        "policy_id": "P4_CANDIDATE_A2_CROSS_ENGINE_GATE",
+        "description": "Two-engine cross-validation (`tesseract_vie_fast` text + `rapidocr_ppocrv6_small` symbol voting, `t_conf=90, t_uncovered=0.0`)",
+        "local_ocr_dependencies_mb": 182.34,
+        "warm_cpu_p50_ms": 1269.6,
+        "peak_rss_mb": 755.0,
+        "accepted_items_of_22": 3,
+        "accepted_ids": [
+          "c03_ro_hinh_tru",
+          "c07_mo_chop_ngu_giac",
+          "c10_exif_xoay_gps"
+        ],
+        "false_local_ocr_accepts_calibration_22": 0,
+        "medium_variant_accepted_of_22": 5,
+        "verdict": "DIAGNOSTIC_ONLY_NOT_SHIPPED_HIGH_RAM_AND_NO_HELD_OUT_PROOF"
+      }
+    ]
+  },
+  "section_viii_crop_holds_all_content_missed_block_audit": {
+    "root_cause_location": {
+      "adaptive_ink_threshold": "backend/app/ingestion/region_detector.py:L423-L437 (`diff = local_bg - work >= 20` on `max_side=640`)",
+      "block_ink_cell_filter": "backend/app/ingestion/region_detector.py:L613 (`ink_sum < 3`)",
+      "vacuous_all_quantifier": "backend/app/ingestion/region_detector.py:L1110-L1122 (`crop_holds_all_content` now requires `not desk_trimmed and area_ratio >= 0.25 and all(chosen.bbox contains b.bbox for b in blocks)`)",
+      "retry_suppression_gate": "backend/app/ingestion/unified_input.py:L358-L378 (`need_full_retry` retries `missing_regions` when `not region_res.crop_holds_all_content or crop_area_ratio < 0.35`)"
+    },
+    "quantitative_findings": {
+      "total_test_cases": 9,
+      "before_fix_recovered_cases": 5,
+      "before_fix_missed_cases_due_to_vacuous_holds_all": 0,
+      "after_fix_recovered_cases": 9,
+      "after_fix_missed_cases_due_to_vacuous_holds_all": 0,
+      "cases_where_secondary_block_captured_or_retried": 9,
+      "cases_where_secondary_block_missed_by_crop": 4,
+      "cases_where_crop_holds_all_content_was_true_despite_missed_block": 0,
+      "c11_chi_co_hinh_preservation": {
+        "crop_area_ratio": 0.432,
+        "crop_holds_all_content": true,
+        "vision_calls_22_item_corpus": 22
+      },
+      "effective_contrast_cutoff_gray_diff": "When secondary text stroke luminance is >= 228 on 248 paper (nominal contrast <= 20 gray levels, reduced below 20 after 640px downscale + BoxBlur(14)), `_adaptive_ink_image` zeroes the strokes out, so `len(blocks) == 1` and `crop_area_ratio == 0.1044` (89.56% of page cut away). Before the Section VIII fix, `crop_holds_all_content` was vacuously `True` (4/9 missed); after requiring `area_ratio >= 0.25` and `crop_area_ratio < 0.35` retry on `missing_regions`, `crop_holds_all_content` is `False` and all 9/9 cases recover `SA = 3` (0/9 missed).",
+      "far_bottom_normal_ink_finding": "In `viii_08_separated_far_bottom_normal_ink` (normal dark ink at y=1180), `_segment_layout_blocks` detects 2 blocks (`len(blocks) == 2`), and merges them (`crop_area_ratio = 0.6314`), so normal-contrast separated blocks are captured in 1 VLM call.",
+      "safety_impact": "Fail-closed preserved (0 wrong geometry answers served) AND full-page retry recovered 9/9 cases (up from 5/9) while keeping `c11_chi_co_hinh` at 1 VLM call (`area_ratio = 0.432 >= 0.25`)."
+    },
+    "cases": [
+      {
+        "case_id": "viii_01_normal_dark_ink",
+        "secondary_stroke_gray_on_248_paper": 30,
+        "nominal_contrast_diff": 218,
+        "secondary_y_px": 360,
+        "desk_trimmed": false,
+        "detected_blocks_count": 2,
+        "problem_clusters_count": 1,
+        "used_crop": true,
+        "crop_bbox": [
+          49,
+          76,
+          1061,
+          454
+        ],
+        "crop_area_ratio": 0.1992,
+        "before_fix_crop_holds_all_content": false,
+        "before_fix_recovered_secondary_fact_SA_eq_3": true,
+        "crop_holds_all_content": false,
+        "secondary_block_inside_crop": true,
+        "vlm_calls_executed": 1,
+        "used_fallback_full_image": false,
+        "prepare_status": "ready",
+        "prepare_reason_code": null,
+        "recovered_secondary_fact_SA_eq_3": true,
+        "silent_wrong_geometry_served": false
+      },
+      {
+        "case_id": "viii_02_medium_ink",
+        "secondary_stroke_gray_on_248_paper": 120,
+        "nominal_contrast_diff": 128,
+        "secondary_y_px": 360,
+        "desk_trimmed": false,
+        "detected_blocks_count": 2,
+        "problem_clusters_count": 1,
+        "used_crop": true,
+        "crop_bbox": [
+          49,
+          76,
+          1061,
+          454
+        ],
+        "crop_area_ratio": 0.1992,
+        "before_fix_crop_holds_all_content": false,
+        "before_fix_recovered_secondary_fact_SA_eq_3": true,
+        "crop_holds_all_content": false,
+        "secondary_block_inside_crop": true,
+        "vlm_calls_executed": 1,
+        "used_fallback_full_image": false,
+        "prepare_status": "ready",
+        "prepare_reason_code": null,
+        "recovered_secondary_fact_SA_eq_3": true,
+        "silent_wrong_geometry_served": false
+      },
+      {
+        "case_id": "viii_03_light_pencil_ink",
+        "secondary_stroke_gray_on_248_paper": 185,
+        "nominal_contrast_diff": 63,
+        "secondary_y_px": 360,
+        "desk_trimmed": false,
+        "detected_blocks_count": 2,
+        "problem_clusters_count": 1,
+        "used_crop": true,
+        "crop_bbox": [
+          49,
+          76,
+          1061,
+          454
+        ],
+        "crop_area_ratio": 0.1992,
+        "before_fix_crop_holds_all_content": false,
+        "before_fix_recovered_secondary_fact_SA_eq_3": true,
+        "crop_holds_all_content": false,
+        "secondary_block_inside_crop": true,
+        "vlm_calls_executed": 1,
+        "used_fallback_full_image": false,
+        "prepare_status": "ready",
+        "prepare_reason_code": null,
+        "recovered_secondary_fact_SA_eq_3": true,
+        "silent_wrong_geometry_served": false
+      },
+      {
+        "case_id": "viii_04_borderline_contrast_ink",
+        "secondary_stroke_gray_on_248_paper": 215,
+        "nominal_contrast_diff": 33,
+        "secondary_y_px": 360,
+        "desk_trimmed": false,
+        "detected_blocks_count": 7,
+        "problem_clusters_count": 1,
+        "used_crop": true,
+        "crop_bbox": [
+          49,
+          76,
+          1061,
+          444
+        ],
+        "crop_area_ratio": 0.194,
+        "before_fix_crop_holds_all_content": false,
+        "before_fix_recovered_secondary_fact_SA_eq_3": true,
+        "crop_holds_all_content": false,
+        "secondary_block_inside_crop": true,
+        "vlm_calls_executed": 1,
+        "used_fallback_full_image": false,
+        "prepare_status": "ready",
+        "prepare_reason_code": null,
+        "recovered_secondary_fact_SA_eq_3": true,
+        "silent_wrong_geometry_served": false
+      },
+      {
+        "case_id": "viii_05_faint_annotation_228",
+        "secondary_stroke_gray_on_248_paper": 228,
+        "nominal_contrast_diff": 20,
+        "secondary_y_px": 360,
+        "desk_trimmed": false,
+        "detected_blocks_count": 1,
+        "problem_clusters_count": 1,
+        "used_crop": true,
+        "crop_bbox": [
+          49,
+          76,
+          1061,
+          274
+        ],
+        "crop_area_ratio": 0.1044,
+        "before_fix_crop_holds_all_content": false,
+        "before_fix_recovered_secondary_fact_SA_eq_3": false,
+        "crop_holds_all_content": false,
+        "secondary_block_inside_crop": false,
+        "vlm_calls_executed": 2,
+        "used_fallback_full_image": true,
+        "prepare_status": "ready",
+        "prepare_reason_code": null,
+        "recovered_secondary_fact_SA_eq_3": true,
+        "silent_wrong_geometry_served": false
+      },
+      {
+        "case_id": "viii_06_faint_annotation_233",
+        "secondary_stroke_gray_on_248_paper": 233,
+        "nominal_contrast_diff": 15,
+        "secondary_y_px": 360,
+        "desk_trimmed": false,
+        "detected_blocks_count": 1,
+        "problem_clusters_count": 1,
+        "used_crop": true,
+        "crop_bbox": [
+          49,
+          76,
+          1061,
+          274
+        ],
+        "crop_area_ratio": 0.1044,
+        "before_fix_crop_holds_all_content": false,
+        "before_fix_recovered_secondary_fact_SA_eq_3": false,
+        "crop_holds_all_content": false,
+        "secondary_block_inside_crop": false,
+        "vlm_calls_executed": 2,
+        "used_fallback_full_image": true,
+        "prepare_status": "ready",
+        "prepare_reason_code": null,
+        "recovered_secondary_fact_SA_eq_3": true,
+        "silent_wrong_geometry_served": false
+      },
+      {
+        "case_id": "viii_07_very_faint_margin_237",
+        "secondary_stroke_gray_on_248_paper": 237,
+        "nominal_contrast_diff": 11,
+        "secondary_y_px": 360,
+        "desk_trimmed": false,
+        "detected_blocks_count": 1,
+        "problem_clusters_count": 1,
+        "used_crop": true,
+        "crop_bbox": [
+          49,
+          76,
+          1061,
+          274
+        ],
+        "crop_area_ratio": 0.1044,
+        "before_fix_crop_holds_all_content": false,
+        "before_fix_recovered_secondary_fact_SA_eq_3": false,
+        "crop_holds_all_content": false,
+        "secondary_block_inside_crop": false,
+        "vlm_calls_executed": 2,
+        "used_fallback_full_image": true,
+        "prepare_status": "ready",
+        "prepare_reason_code": null,
+        "recovered_secondary_fact_SA_eq_3": true,
+        "silent_wrong_geometry_served": false
+      },
+      {
+        "case_id": "viii_08_separated_far_bottom_normal_ink",
+        "secondary_stroke_gray_on_248_paper": 30,
+        "nominal_contrast_diff": 218,
+        "secondary_y_px": 1180,
+        "desk_trimmed": false,
+        "detected_blocks_count": 2,
+        "problem_clusters_count": 1,
+        "used_crop": true,
+        "crop_bbox": [
+          49,
+          76,
+          1061,
+          1274
+        ],
+        "crop_area_ratio": 0.6314,
+        "before_fix_crop_holds_all_content": false,
+        "before_fix_recovered_secondary_fact_SA_eq_3": true,
+        "crop_holds_all_content": true,
+        "secondary_block_inside_crop": true,
+        "vlm_calls_executed": 1,
+        "used_fallback_full_image": false,
+        "prepare_status": "ready",
+        "prepare_reason_code": null,
+        "recovered_secondary_fact_SA_eq_3": true,
+        "silent_wrong_geometry_served": false
+      },
+      {
+        "case_id": "viii_09_separated_far_bottom_faint_ink",
+        "secondary_stroke_gray_on_248_paper": 233,
+        "nominal_contrast_diff": 15,
+        "secondary_y_px": 1180,
+        "desk_trimmed": false,
+        "detected_blocks_count": 1,
+        "problem_clusters_count": 1,
+        "used_crop": true,
+        "crop_bbox": [
+          49,
+          76,
+          1061,
+          274
+        ],
+        "crop_area_ratio": 0.1044,
+        "before_fix_crop_holds_all_content": false,
+        "before_fix_recovered_secondary_fact_SA_eq_3": false,
+        "crop_holds_all_content": false,
+        "secondary_block_inside_crop": false,
+        "vlm_calls_executed": 2,
+        "used_fallback_full_image": true,
+        "prepare_status": "ready",
+        "prepare_reason_code": null,
+        "recovered_secondary_fact_SA_eq_3": true,
+        "silent_wrong_geometry_served": false
+      }
+    ]
+  },
+  "section_a6_live_vision_readiness": {
+    "LIVE_VISION_EVALUATION": "NOT_MEASURED",
+    "ALLOW_LIVE_AI_ENV": "0",
+    "live_gemini_network_calls": 0,
+    "kill_switch_verified_on_prepare_unified_input": true,
+    "kill_switch_exception": "LiveVisionDisabledError",
+    "readiness_note": "Dry-run harness and `ALLOW_LIVE_AI=0` kill-switch verified (`LiveVisionDisabledError` -> HTTP 503 `LIVE_AI_DISABLED`, `Cache-Control: no-store`, 0 network calls). Live Gemini Vision accuracy on real camera photographs remains `NOT_MEASURED`."
+  },
+  "section_a8_verification_gates": {
+    "backend_pytest": {
+      "command": "pytest backend/tests/test_unified_input_20_cases.py backend/tests/test_image_extraction.py backend/tests/test_image_extract_api.py backend/tests/test_image_normalization.py backend/tests/test_multi_image_prepare.py backend/tests/test_image_crop_retry_dedup.py backend/tests/test_local_first_image_ingestion_e2e.py backend/tests/test_vision_diagram_only_provenance_guard.py backend/tests/test_vision_transport_schema.py backend/tests/geometry/test_closed_input_contract.py -q",
+      "allow_live_ai": 0,
+      "passed": 524,
+      "failed": 0,
+      "duration_s": 17.5,
+      "status": "PASS"
+    },
+    "frontend_vitest": {
+      "command": "npm run test:wave",
+      "test_files_passed": 136,
+      "tests_passed": 2000,
+      "tests_failed": 0,
+      "duration_s": 46.82,
+      "status": "PASS"
+    },
+    "frontend_typecheck": {
+      "command": "npx tsc --noEmit",
+      "errors": 0,
+      "status": "PASS"
+    },
+    "frontend_vite_build": {
+      "command": "npm run build",
+      "modules_transformed": 99,
+      "duration_s": 3.49,
+      "status": "PASS"
+    },
+    "browser_playwright_verification": {
+      "camera_photo_fan_stack_check": {
+        "script": "docs/evaluation/geometry/runs/axo-camera-photo-fan-stack/tools/verify-camera-photo-fan-stack.mjs",
+        "verdict": "CAMERA_PHOTO_FAN_STACK_ALL_10_RISKS_20_CASES_6_VIEWPORTS_PASSED",
+        "cases_passed": 20,
+        "viewports_passed": 6,
+        "console_and_page_errors": 0,
+        "external_network_requests": 0,
+        "status": "PASS"
+      },
+      "legacy_photo_problem_browser_check_selector_drift": {
+        "script": "frontend/scripts/photo-problem-browser-check.mjs",
+        "finding": "Line 493 queries `document.querySelector('#btn-photo-library').getBoundingClientRect()` inside `#photo-camera-dialog`, which throws `TypeError: Cannot read properties of null` because the `axo-camera-photo-fan-stack` wave replaced the camera dialog's left `#btn-photo-library` button with the in-camera photo fan stack / tray trigger (`#composer-photo-fan-stack`), moving file upload exclusively to `#menu-item-image-file` in the composer `+` menu."
+      }
+    }
+  }
+}

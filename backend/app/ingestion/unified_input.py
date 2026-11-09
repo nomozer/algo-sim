@@ -354,7 +354,11 @@ async def _process_normalized_visual_page(
 
     # Nếu vùng crop tự động bị VLM báo mất vùng (`missing_regions`) hoặc không đọc được, thử lại đúng 1 lần trên ảnh đầy đủ (§13, §14).
     # Crop đã chứa trọn mọi khối nội dung ⇒ ảnh đầy đủ không có gì mới cho `missing_regions` /
-    # `MISSING_PROBLEM_TEXT`; chỉ `IMAGE_NOT_READABLE` (điểm ảnh khác) còn đáng một lượt đọc lại.
+    # `MISSING_PROBLEM_TEXT`; chỉ `IMAGE_NOT_READABLE` (điểm ảnh khác) hoặc trường hợp VLM báo `missing_regions`
+    # trên một vùng cắt hẹp (`crop_area_ratio < 0.35`) còn đáng một lượt đọc lại toàn trang.
+    crop_area_ratio = region_res.selected_bbox.area / float(
+        max(1, region_res.full_image.width * region_res.full_image.height)
+    )
     need_full_retry = (
         used_crop
         and not used_fallback
@@ -362,11 +366,12 @@ async def _process_normalized_visual_page(
         and (
             ext_res.assessment.rejection_code == "IMAGE_NOT_READABLE"
             or (
-                not region_res.crop_holds_all_content
-                and (
-                    bool(ext_res.extraction.missing_regions)
-                    or ext_res.assessment.rejection_code == "MISSING_PROBLEM_TEXT"
-                )
+                bool(ext_res.extraction.missing_regions)
+                and (not region_res.crop_holds_all_content or crop_area_ratio < 0.35)
+            )
+            or (
+                ext_res.assessment.rejection_code == "MISSING_PROBLEM_TEXT"
+                and not region_res.crop_holds_all_content
             )
         )
     )
