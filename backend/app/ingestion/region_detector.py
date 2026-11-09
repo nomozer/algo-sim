@@ -1107,9 +1107,15 @@ def detect_problem_regions(
         ambiguous_multi_problem=False,
         # Đã cắt nền bàn ⇒ phần ngoài trang chưa được phân khối: không khẳng định được. Khối "nhiễu" (dòng sát
         # mép, số trang) cũng phải nằm trong crop — một dòng cuối bị xếp nhầm là nhiễu mép vẫn được đọc lại.
-        crop_holds_all_content=not desk_trimmed and all(
-            chosen.bbox.x0 <= b.bbox.x0 and chosen.bbox.y0 <= b.bbox.y0
-            and b.bbox.x1 <= chosen.bbox.x1 and b.bbox.y1 <= chosen.bbox.y1
-            for b in blocks
+        # Đồng thời yêu cầu diện tích crop >= 25% trang (`area_ratio >= 0.25`) để tránh trường hợp bộ tách khối
+        # bỏ sót dòng chữ mờ/mảnh ở phần còn lại của trang làm `all(...)` đúng tầm thường trên một vùng cắt quá nhỏ.
+        crop_holds_all_content=(
+            not desk_trimmed
+            and area_ratio >= 0.25
+            and all(
+                chosen.bbox.x0 <= b.bbox.x0 and chosen.bbox.y0 <= b.bbox.y0
+                and b.bbox.x1 <= chosen.bbox.x1 and b.bbox.y1 <= chosen.bbox.y1
+                for b in blocks
+            )
         ),
     )

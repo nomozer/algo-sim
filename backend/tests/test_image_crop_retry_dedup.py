@@ -134,3 +134,62 @@ def test_multi_image_duplicate_and_diagram_only_spend_one_call_each_distinct_ima
     assert out.provenance["deduplicated_attachment_ids"] == ["a2"]
     assert out.provenance["source_attachment_ids"] == ["a1", "a2", "d1"]
     assert out.problem_text.startswith(PROBLEM)
+
+def test_faint_secondary_block_missed_by_layout_detector_triggers_full_image_retry() -> None:
+    """When a faint secondary line (contrast < 20 gray levels after 640px downscale) is missed by
+    `_segment_layout_blocks`, a tiny crop (`area_ratio < 0.25`) must NOT vacuously claim `crop_holds_all_content`,
+    and `prepare_unified_input` must retry the full page to recover the missed mathematical fact."""
+    from PIL import Image, ImageDraw, ImageFont
+    import io
+
+    primary_line = "Cau 1. Cho hinh chop S.ABCD co day ABCD la hinh vuong canh 2, SA vuong goc voi mat phang day."
+    faint_line = "Biet SA = 3. Tinh the tich khoi chop S.ABCD."
+    img = Image.new("RGB", (1200, 1600), (248, 248, 248))
+    d = ImageDraw.Draw(img)
+    d.text((100, 140), primary_line[:52], font=ImageFont.load_default(size=26), fill=(20, 20, 24))
+    d.text((100, 180), primary_line[52:], font=ImageFont.load_default(size=26), fill=(20, 20, 24))
+    # Faint secondary annotation (gray=233 on 248 background => contrast 15 < 20 adaptive threshold)
+    d.text((100, 360), faint_line, font=ImageFont.load_default(size=22), fill=(233, 233, 233))
+    buf = io.BytesIO()
+    img.save(buf, format="PNG")
+    raw = buf.getvalue()
+
+    reg = detect_problem_regions(normalize_image(raw))
+    assert reg.used_crop and not reg.desk_trimmed
+    assert all(b.bbox.y1 < 300 for b in reg.blocks) and reg.selected_bbox.y1 < 320
+    assert reg.crop_holds_all_content is False
+
+    def reply(img_norm: NormalizedImage, n: int) -> ImageProblemExtraction:
+        if n == 1:
+            return _x(primary_line, has_diagram=False, missing=["Dong gia thiet SA = 3 va cau hoi o phia duoi bi cat"])
+        return _x(PROBLEM, has_diagram=False)
+
+    out, calls = _run(raw, reply)
+    assert len(calls) == 2 and calls[0] == reg.prepared_image.sha256 and calls[1] == reg.full_image.sha256
+    assert out.metrics["vlm_calls"] == 2
+    assert out.provenance["used_fallback_full_image"] is True
+    assert out.status == "ready"
+    assert "SA = 3" in out.problem_text
+
+
+def test_missing_regions_on_tight_crop_retries_even_if_holds_all_forced_true() -> None:
+    """Defense-in-depth in `unified_input`: if Vision reports non-empty `missing_regions` on a tight crop
+    (`crop_area_ratio < 0.35`), full-image retry fires even if `crop_holds_all_content` were True."""
+    from app.ingestion.region_detector import BoundingBox
+
+    raw = (CORPUS / "c01_ro_chop_thiet_dien.png").read_bytes()
+    base_reg = detect_problem_regions(normalize_image(raw))
+    tight_box = BoundingBox(x0=20, y0=40, x1=420, y1=180)  # area = 400*140 = 56,000 / 537,600 = 0.1042 < 0.35
+    reg = replace(base_reg, selected_bbox=tight_box, crop_holds_all_content=True)
+
+    def reply(img_norm: NormalizedImage, n: int) -> ImageProblemExtraction:
+        if n == 1:
+            return _x("Cho hinh chop S.ABCD co day la hinh vuong canh 2.", has_diagram=False, missing=["Thieu phan cuoi"])
+        return _x(PROBLEM, has_diagram=False)
+
+    out, calls = _run(raw, reply, region=reg)
+    assert len(calls) == 2 and out.metrics["vlm_calls"] == 2
+    assert out.provenance["used_fallback_full_image"] is True
+    assert out.status == "ready"
+    assert "SA = 3" in out.problem_text
+
