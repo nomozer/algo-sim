@@ -449,3 +449,82 @@ def test_c28_paired_comparison_markdown_table():
     assert "| Case | H-1 Oracle | LLM_ONLY | HYBRID | Comparison |" in md
     assert "| `H1-S01` |" in md and "HYBRID_ONLY_CORRECT" in md
     assert "| `H1-R01` |" in md and "BOTH_REFUSED" in md
+
+def test_six_layer_anti_contamination_catches_all_six_probe_types(tmp_path):
+    """Verify all 6 anti-contamination layers (verbatim, normalized, number-stripped,
+    isomorphic vertex renaming, scale-factor transform, and construction-relation graph)
+    against synthetic probes derived from a repository problem."""
+    fake_repo = tmp_path / "repo6"
+    fake_repo.mkdir(parents=True)
+    ref_problem = (
+        "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 4, SA vuông góc với (ABCD), SA = 3. "
+        "Gọi M là trung điểm SB. Tính thể tích khối chóp S.ABCD."
+    )
+    (fake_repo / "corpus.json").write_text(
+        json.dumps({"cases": [{"id": "DEV-01", "problem_text": ref_problem}]}, ensure_ascii=False),
+        encoding="utf-8",
+    )
+
+    probes = [
+        # 1. Exact verbatim match
+        {"id": "P-L1", "problem_text": ref_problem},
+        # 2. Normalized text match (different punctuation/spacing/casing)
+        {
+            "id": "P-L2",
+            "problem_text": (
+                "cho hình chóp S.ABCD  có đáy ABCD là hình vuông cạnh 4 ; SA vuông góc với [ABCD] , SA = 3 ! "
+                "gọi M là trung điểm SB . tính thể tích khối chóp S.ABCD ."
+            ),
+        },
+        # 3. Number-stripped template match (same vertices, non-proportional numbers 4,3 -> 7,5)
+        {
+            "id": "P-L3",
+            "problem_text": (
+                "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 7, SA vuông góc với (ABCD), SA = 5. "
+                "Gọi M là trung điểm SB. Tính thể tích khối chóp S.ABCD."
+            ),
+        },
+        # 4. Isomorphic vertex renaming (S.ABCD -> K.MNPQ, M -> H, same numbers 4, 3)
+        {
+            "id": "P-L4",
+            "problem_text": (
+                "Cho hình chóp K.MNPQ có đáy MNPQ là hình vuông cạnh 4, KM vuông góc với (MNPQ), KM = 3. "
+                "Gọi H là trung điểm KN. Tính thể tích khối chóp K.MNPQ."
+            ),
+        },
+        # 5. Scale factor transform (vertices renamed AND numbers scaled x3: 4,3 -> 12,9)
+        {
+            "id": "P-L5",
+            "problem_text": (
+                "Cho hình chóp K.MNPQ có đáy MNPQ là hình vuông cạnh 12, KM vuông góc với (MNPQ), KM = 9. "
+                "Gọi H là trung điểm KN. Tính thể tích khối chóp K.MNPQ."
+            ),
+        },
+        # 6. Construction-relation graph isomorphism (clause order permuted + vertices renamed + numbers changed)
+        {
+            "id": "P-L6",
+            "problem_text": (
+                "Cho hình chóp K.MNPQ có KM = 11, KM vuông góc với (MNPQ), đáy MNPQ là hình vuông cạnh 7. "
+                "Gọi H là trung điểm KN. Tính thể tích khối chóp K.MNPQ."
+            ),
+        },
+        # Clean genuinely distinct problem
+        {
+            "id": "P-CLEAN",
+            "problem_text": (
+                "Cho hình lăng trụ đứng ABC.A'B'C' có đáy ABC là tam giác cân tại A, AB = 5, BC = 6, "
+                "cạnh bên AA' = 8. Tính khoảng cách từ trọng tâm G của tam giác ABC đến mặt phẳng (A'BC)."
+            ),
+        },
+    ]
+
+    hits = S.scan_six_layer_contamination(probes, fake_repo)
+    assert "P-L1" in hits["exact_verbatim"]
+    assert "P-L2" in hits["normalized_text"] and "P-L2" not in hits["exact_verbatim"]
+    assert "P-L3" in hits["number_stripped_template"] and "P-L3" not in hits["normalized_text"]
+    assert "P-L4" in hits["isomorphic_vertex_renaming"] and "P-L4" not in hits["number_stripped_template"]
+    assert "P-L5" in hits["scale_factor_transform"] and "P-L5" not in hits["isomorphic_vertex_renaming"]
+    assert "P-L6" in hits["construction_relation_graph"] and "P-L6" not in hits["scale_factor_transform"]
+    for layer_hits in hits.values():
+        assert "P-CLEAN" not in layer_hits
+

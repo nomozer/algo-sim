@@ -428,6 +428,7 @@ class _Dung:
         self.ky_hieu = ky_hieu
         self._flip_apices = _flip_apices
         self.mirror_apices: set[str] = set()
+        self.off_base_anchors: list[str] = []
         self.centroids: dict[str, tuple[str, ...]] = {}
         self.text_labels = nhan_cua_de(text)
         self.pts: dict[str, V3] = {}
@@ -740,6 +741,14 @@ class _Dung:
             z = -z
         f = self.pts[chan] if isinstance(chan, str) else chan
         self.dung |= calls
+        if ten not in self.off_base_anchors:
+            self.off_base_anchors.append(ten)
+            if len(self.off_base_anchors) > 1 + MAX_SECONDARY_HEIGHT_ANCHORS:
+                raise TuChoi(
+                    "AMBIGUOUS_FACT",
+                    f"hình có {len(self.off_base_anchors)} điểm neo độ cao độc lập vượt trần tổ hợp dấu an toàn (2^{MAX_SECONDARY_HEIGHT_ANCHORS} = 16)",
+                    tuple(sorted(calls)),
+                )
         self._dat(ten, (f[0], f[1], z), luat, calls)
 
     def giai_phu_thuoc(self) -> None:
@@ -4221,9 +4230,32 @@ def _dung_cong_ghep(calls: tuple[LoiGoi, ...], problem_text: str) -> KetQuaTuyen
     )
 
 
+MAX_SECONDARY_HEIGHT_ANCHORS = 4
+_MIRROR_RETRY_CODES = frozenset({
+    "INCONSISTENT_FACTS",
+    "PARALLEL_NO_INTERSECTION",
+    "SKEW_NO_INTERSECTION",
+    "SECTION_EMPTY",
+    "PLANE_DOES_NOT_CUT",
+    "DEGENERATE_SOLID",
+    "DEGENERATE_POINTS",
+    "COLLINEAR_POINTS",
+    "NON_COPLANAR_POINTS",
+})
+
+
+def _non_empty_anchor_flips(secondary_anchors: tuple[str, ...]) -> list[frozenset[str]]:
+    return [
+        frozenset(comb)
+        for r in range(1, len(secondary_anchors) + 1)
+        for comb in combinations(secondary_anchors, r)
+    ]
+
+
 def dung_tu_loi_goi(problem_text: str, plan: Any, auxiliary: tuple[dict, ...] = (),
                     read_quotes: tuple[str, ...] = (), *,
-                    _flip_apices: frozenset[str] = frozenset()) -> KetQuaTuyen:
+                    _flip_apices: frozenset[str] = frozenset(),
+                    _exploring_mirrors: bool = False) -> KetQuaTuyen:
     """Dựng + kiểm + thực thi từ lời gọi hàm. Trả `KetQuaTuyen` CHƯA có cảnh (`scene3d=None`) nhưng có `spec` và
     `exec_result` — bày cảnh là việc của tầng trên (`app/ai/function_route.py`), cùng hướng phụ thuộc với
     `ai/pipeline._dung_scene3d`: không module nào trong `app/simulation` nhập `scene3d`/`simulation_state`."""
@@ -4546,18 +4578,27 @@ def dung_tu_loi_goi(problem_text: str, plan: Any, auxiliary: tuple[dict, ...] = 
                 "khoi_" + ir_name(c.args.original_solid.replace(".", "_")),
                 *("khoi_" + ir_name(s.replace(".", "_")) for s in c.args.subtracted_solids),
             }
-        if not _flip_apices and dung.mirror_apices:
-            res_neg = dung_tu_loi_goi(
-                problem_text, plan, auxiliary, read_quotes, _flip_apices=frozenset(dung.mirror_apices)
-            )
-            if res_neg.status == "SERVED":
-                for c in dung.calls:
-                    if c.id in chinh_xac and chinh_xac[c.id]["coef"] != (res_neg.answer_exact or {}).get(c.id, {}).get("coef"):
-                        raise TuChoi(
-                            "AMBIGUOUS_FACT",
-                            f"{sorted(dung.mirror_apices)[0]}: hai nghiệm đối xứng qua mặt phẳng đáy cho kết quả mục tiêu khác nhau",
-                            (c.id,),
-                        )
+        if not _exploring_mirrors and len(dung.off_base_anchors) >= 2:
+            secondary_anchors = tuple(dung.off_base_anchors[1:])
+            if len(secondary_anchors) > MAX_SECONDARY_HEIGHT_ANCHORS:
+                raise TuChoi(
+                    "AMBIGUOUS_FACT",
+                    f"hình có {len(dung.off_base_anchors)} điểm neo độ cao độc lập vượt trần tổ hợp dấu an toàn (2^{MAX_SECONDARY_HEIGHT_ANCHORS} = 16)",
+                    (),
+                )
+            for flip_set in _non_empty_anchor_flips(secondary_anchors):
+                res_neg = dung_tu_loi_goi(
+                    problem_text, plan, auxiliary, read_quotes,
+                    _flip_apices=flip_set, _exploring_mirrors=True,
+                )
+                if res_neg.status == "SERVED":
+                    for c in dung.calls:
+                        if c.id in chinh_xac and chinh_xac[c.id]["coef"] != (res_neg.answer_exact or {}).get(c.id, {}).get("coef"):
+                            raise TuChoi(
+                                "AMBIGUOUS_FACT",
+                                f"{sorted(flip_set)[0]}: hai nghiệm đối xứng qua mặt phẳng đáy cho kết quả mục tiêu khác nhau",
+                                (c.id,),
+                            )
         _gan_dieu_kien_vet(dung.trace, kernel_checked=True, checked_points=frozenset(dung.pts))
         return KetQuaTuyen("SERVED", answers=tra, trace=dung.trace, program=program, points=dict(dung.pts),
                            metric=G.as_json(), kernel_check=True, spec=spec, exec_result=ket, chart_metric=G,
@@ -4568,11 +4609,42 @@ def dung_tu_loi_goi(problem_text: str, plan: Any, auxiliary: tuple[dict, ...] = 
                            calls=[{"id": c.id, "fn": c.fn, "args": c.args.model_dump(), "quotes": list(c.quotes)}
                                   for c in calls])
     except TuChoi as e:
-        if not _flip_apices and e.code == "INCONSISTENT_FACTS" and dung is not None and dung.mirror_apices:
-            res_neg = dung_tu_loi_goi(
-                problem_text, plan, auxiliary, read_quotes, _flip_apices=frozenset(dung.mirror_apices)
-            )
-            if res_neg.status == "SERVED":
-                return res_neg
+        if not _exploring_mirrors and dung is not None and len(dung.off_base_anchors) >= 2 and e.code in _MIRROR_RETRY_CODES:
+            secondary_anchors = tuple(dung.off_base_anchors[1:])
+            if len(secondary_anchors) > MAX_SECONDARY_HEIGHT_ANCHORS:
+                vet = _gan_dieu_kien_vet(dung.trace, kernel_checked=False)
+                return KetQuaTuyen(
+                    "REFUSED",
+                    "AMBIGUOUS_FACT",
+                    f"hình có {len(dung.off_base_anchors)} điểm neo độ cao độc lập vượt trần tổ hợp dấu an toàn (2^{MAX_SECONDARY_HEIGHT_ANCHORS} = 16)",
+                    (),
+                    trace=vet,
+                )
+            valid_results: list[tuple[frozenset[str], KetQuaTuyen]] = []
+            for flip_set in _non_empty_anchor_flips(secondary_anchors):
+                res_neg = dung_tu_loi_goi(
+                    problem_text, plan, auxiliary, read_quotes,
+                    _flip_apices=flip_set, _exploring_mirrors=True,
+                )
+                if res_neg.status == "SERVED":
+                    valid_results.append((flip_set, res_neg))
+            if len(valid_results) == 1:
+                return valid_results[0][1]
+            if len(valid_results) >= 2:
+                _, res0 = valid_results[0]
+                exact0 = res0.answer_exact or {}
+                for flip_k, res_k in valid_results[1:]:
+                    exact_k = res_k.answer_exact or {}
+                    for gid, v0 in exact0.items():
+                        if v0.get("coef") != (exact_k.get(gid) or {}).get("coef"):
+                            vet = _gan_dieu_kien_vet(dung.trace, kernel_checked=False)
+                            return KetQuaTuyen(
+                                "REFUSED",
+                                "AMBIGUOUS_FACT",
+                                f"{sorted(flip_k)[0]}: nhiều cấu hình đối xứng qua mặt phẳng đáy thỏa dữ kiện nhưng cho kết quả mục tiêu khác nhau",
+                                (gid,),
+                                trace=vet,
+                            )
+                return res0
         vet = _gan_dieu_kien_vet(dung.trace, kernel_checked=False) if dung else []
         return KetQuaTuyen("REFUSED", e.code, e.reason, e.calls, trace=vet, details=e.data)

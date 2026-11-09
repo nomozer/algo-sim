@@ -349,11 +349,168 @@ def compute_oracle_sha256(cases: list[dict[str, Any]]) -> str:
     return P.compute_oracle_sha256(cases)
 
 
-_PROBLEM_TEXT_JSON_RE = re.compile(r'"problem_text"\s*:\s*"((?:\\.|[^"\\])*)"')
+_PROBLEM_TEXT_JSON_RE = re.compile(r'"(?:problem_text|text)"\s*:\s*"((?:\\.|[^"\\])*)"')
 _SOLID_TOKEN_RE = re.compile(r"^[A-Z][A-Z0-9']*\.[A-Z][A-Z0-9']*$")
 _POLY_TOKEN_RE = re.compile(r"^[A-Z][A-Z0-9']+$")
 _PT_TOKEN_RE = re.compile(r"^[A-Z]'?$")
-_NUM_TOKEN_RE = re.compile(r"^(?:\d+(?:/\d+)?|[0-9/√π°^+-]*\d[0-9/√π°^+-]*|√\d+|π)$")
+_NUM_TOKEN_RE = re.compile(r"^(?:\d+(?:/\d+)?|[0-9/\u221a\u03c0\u00b0^+-]*\d[0-9/\u221a\u03c0\u00b0^+-]*|\u221a\d+|\u03c0)$")
+_VERTEX_ATOM_RE = re.compile(r"[A-Z][0-9']*|\.")
+_CLAUSE_HEADER_RE = re.compile(
+    r"^(cho\s+(?:h\u00ecnh|kh\u1ed1i)\s+(?:ch\u00f3p(?:\s+c\u1ee5t)?|l\u0103ng\s+tr\u1ee5|h\u1ed9p|l\u1eadp\s+ph\u01b0\u01a1ng|t\u1ee9\s+di\u1ec7n|\u0111a\s+di\u1ec7n)(?:\s+\u0111\u1ec1u|\s+\u0111\u1ee9ng|\s+vu\u00f4ng)?\s+(?:<SOLID>|<PT>\s+<POLY>|<POLY>\s+<POLY>|<POLY>))\s+c\u00f3\s+",
+    flags=re.IGNORECASE,
+)
+
+
+def _layer1_exact_verbatim(text: str) -> str:
+    import unicodedata
+    return unicodedata.normalize("NFC", text).strip()
+
+
+def _layer2_normalized_text(text: str) -> str:
+    import unicodedata
+    cleaned = unicodedata.normalize("NFC", text).lower()
+    cleaned = re.sub(r"[.,;:!?()\[\]\"\u201c\u201d]", " ", cleaned)
+    return " ".join(cleaned.split())
+
+
+def _layer3_number_stripped_template(text: str) -> str:
+    import unicodedata
+    cleaned = unicodedata.normalize("NFC", text)
+    cleaned = re.sub(r"[.,;:!?()\[\]\"\u201c\u201d]", " ", cleaned)
+    tokens: list[str] = []
+    for tok in cleaned.split():
+        if _NUM_TOKEN_RE.fullmatch(tok):
+            tokens.append("<NUM>")
+        elif _SOLID_TOKEN_RE.fullmatch(tok) or _POLY_TOKEN_RE.fullmatch(tok) or _PT_TOKEN_RE.fullmatch(tok):
+            tokens.append(tok)
+        else:
+            tokens.append(tok.lower())
+    return " ".join(tokens)
+
+
+def _canonicalize_vertices_tokens(text: str, *, scale_numbers: bool = False) -> list[str]:
+    from fractions import Fraction
+    import unicodedata
+    from app.simulation.geometry.radical import display, divided_by_rational, parse_exact, sign
+
+    cleaned = unicodedata.normalize("NFC", text)
+    cleaned = re.sub(r"[.,;:!?()\[\]\"\u201c\u201d]", " ", cleaned)
+    raw_tokens = cleaned.split()
+    vmap: dict[str, str] = {}
+    base_he: Fraction | None = None
+    if scale_numbers:
+        for tok in raw_tokens:
+            if _NUM_TOKEN_RE.fullmatch(tok) and not tok.endswith("\u00b0"):
+                val = parse_exact(tok)
+                if val is not None and sign(val) > 0:
+                    base_he = val if isinstance(val, Fraction) else val.he
+                    break
+
+    out: list[str] = []
+    for tok in raw_tokens:
+        if _SOLID_TOKEN_RE.fullmatch(tok) or _POLY_TOKEN_RE.fullmatch(tok) or _PT_TOKEN_RE.fullmatch(tok):
+            atoms = _VERTEX_ATOM_RE.findall(tok)
+            mapped = []
+            for a in atoms:
+                if a == ".":
+                    mapped.append(".")
+                else:
+                    if a not in vmap:
+                        vmap[a] = f"V{len(vmap)}"
+                    mapped.append(vmap[a])
+            out.append("".join(mapped))
+        elif _NUM_TOKEN_RE.fullmatch(tok):
+            if scale_numbers and not tok.endswith("\u00b0") and base_he is not None:
+                val = parse_exact(tok)
+                if val is not None and sign(val) > 0:
+                    ratio = divided_by_rational(val, base_he)
+                    out.append(f"<SCALE:{display(ratio)}>")
+                    continue
+            out.append(tok)
+        else:
+            out.append(tok.lower())
+    return out
+
+
+def _layer4_isomorphic_vertex_renaming(text: str) -> str:
+    return " ".join(_canonicalize_vertices_tokens(text, scale_numbers=False))
+
+
+def _layer5_scale_factor_transform(text: str) -> str:
+    return " ".join(_canonicalize_vertices_tokens(text, scale_numbers=True))
+
+
+def _layer6_construction_relation_graph(text: str) -> str:
+    import unicodedata
+    cleaned = unicodedata.normalize("NFC", text)
+    raw_clauses = re.split(
+        r"\.(?![A-Z0-9'])|[,;:]|\b(?:v\u00e0|bi\u1ebft|trong \u0111\u00f3)\b",
+        cleaned,
+        flags=re.IGNORECASE,
+    )
+    norm_clauses: list[str] = []
+    for cl in raw_clauses:
+        skel = _structural_skeleton(cl)
+        if not skel:
+            continue
+        m = _CLAUSE_HEADER_RE.match(skel)
+        if m:
+            norm_clauses.append(m.group(1))
+            rest = skel[m.end():].strip()
+            if rest:
+                norm_clauses.append(rest)
+        else:
+            norm_clauses.append(skel)
+    return " || ".join(sorted(norm_clauses))
+
+
+def scan_six_layer_contamination(
+    cases: list[dict[str, Any]],
+    repo_root: Path,
+    *,
+    exclude: Path | None = None,
+) -> dict[str, dict[str, list[str]]]:
+    """Run 6-layer anti-contamination checking against all problem texts in the repository
+    (including the 72 Dev Matrix cases, 46 Held-Out cases, K-1/S-2/R-1, and historical runs)."""
+    layer_fns = {
+        "exact_verbatim": _layer1_exact_verbatim,
+        "normalized_text": _layer2_normalized_text,
+        "number_stripped_template": _layer3_number_stripped_template,
+        "isomorphic_vertex_renaming": _layer4_isomorphic_vertex_renaming,
+        "scale_factor_transform": _layer5_scale_factor_transform,
+        "construction_relation_graph": _layer6_construction_relation_graph,
+    }
+    case_sigs = {
+        layer: {c["id"]: fn(c["problem_text"]) for c in cases}
+        for layer, fn in layer_fns.items()
+    }
+    results: dict[str, dict[str, list[str]]] = {layer: {} for layer in layer_fns}
+    for path in repo_root.rglob("*"):
+        if (
+            not path.is_file()
+            or path.suffix not in P._TEXT_SUFFIXES
+            or P._SKIP_DIRS & set(path.relative_to(repo_root).parts)
+            or (exclude is not None and path.resolve() == exclude.resolve())
+        ):
+            continue
+        try:
+            raw = path.read_text(encoding="utf-8")
+        except (UnicodeDecodeError, OSError):
+            continue
+        rel = path.relative_to(repo_root).as_posix()
+        for m in _PROBLEM_TEXT_JSON_RE.finditer(raw):
+            try:
+                ref_text = json.loads(f'"{m.group(1)}"')
+            except ValueError:
+                continue
+            if not isinstance(ref_text, str) or len(ref_text.strip()) < 25:
+                continue
+            for layer, fn in layer_fns.items():
+                ref_sig = fn(ref_text)
+                for cid, c_sig in case_sigs[layer].items():
+                    if c_sig == ref_sig and rel not in results[layer].get(cid, ()):
+                        results[layer].setdefault(cid, []).append(rel)
+    return results
 
 
 def _structural_skeleton(text: str) -> str:
@@ -698,6 +855,7 @@ def build_h1_corpus_integrity_receipt(
         raise P.LiveRefused(f"H-1 corpus contains exact overlap with repository files: {exact_hits}")
 
     template_clones = _scan_structural_template_clones(cases, repo_root, exclude=corpus_path)
+    six_layer_hits = scan_six_layer_contamination(cases, repo_root, exclude=corpus_path)
     indep, missing_indep = _verify_authoring_independence(corpus)
     stratum_cov = _verify_stratum_coverage(cases)
     sem_check = _verify_semantic_annotations(cases)
@@ -760,6 +918,7 @@ def build_h1_corpus_integrity_receipt(
             "exact_overlap_cases": exact_hits,
             "near_overlap_cases": near_hits,
             "structural_template_clones": template_clones,
+            "six_layer_contamination": six_layer_hits,
         },
         "worst_case_request_usd_at_paid_flash_rates": round(worst_req_usd, 6),
         "proposed_campaign_limits": {

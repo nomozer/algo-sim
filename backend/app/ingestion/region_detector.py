@@ -738,6 +738,50 @@ def _expand_to_clear_ink_border(
     return cur
 
 
+def _has_faint_ink_outside_bbox(
+    rgb: Image.Image,
+    bbox: BoundingBox,
+    *,
+    max_side: int = 640,
+    faint_contrast_thresh: int = 6,
+    min_faint_pixels: int = 8,
+) -> bool:
+    """Kiểm tra có nét chữ/ký hiệu mờ (`diff >= 6`, dưới ngưỡng nhị phân 20) nằm ngoài `bbox` hay không."""
+    w, h = rgb.size
+    if w <= 0 or h <= 0:
+        return False
+    work = ImageOps.grayscale(rgb)
+    if max(w, h) > max_side:
+        scale = max_side / float(max(w, h))
+        work = work.resize(
+            (max(16, int(round(w * scale))), max(16, int(round(h * scale)))),
+            Image.Resampling.BILINEAR,
+        )
+    iw, ih = work.size
+    sx, sy = w / float(iw), h / float(ih)
+    blur_radius = max(8, min(22, max(iw, ih) // 32))
+    diff = ImageChops.subtract(work.filter(ImageFilter.BoxBlur(blur_radius)), work)
+    bx0 = max(0, int(math.floor(bbox.x0 / sx)))
+    by0 = max(0, int(math.floor(bbox.y0 / sy)))
+    bx1 = min(iw, int(math.ceil(bbox.x1 / sx)))
+    by1 = min(ih, int(math.ceil(bbox.y1 / sy)))
+    margin_x = max(2, int(round(iw * 0.025)))
+    margin_y = max(2, int(round(ih * 0.025)))
+    diff_bytes = diff.tobytes()
+    faint_count = 0
+    for y in range(margin_y, ih - margin_y):
+        row_off = y * iw
+        in_y = by0 <= y < by1
+        for x in range(margin_x, iw - margin_x):
+            if in_y and bx0 <= x < bx1:
+                continue
+            if diff_bytes[row_off + x] >= faint_contrast_thresh:
+                faint_count += 1
+                if faint_count >= min_faint_pixels:
+                    return True
+    return False
+
+
 def _group_problem_clusters(
     blocks: list[LayoutBlock],
     img_w: int,
@@ -1117,5 +1161,6 @@ def detect_problem_regions(
                 and b.bbox.x1 <= chosen.bbox.x1 and b.bbox.y1 <= chosen.bbox.y1
                 for b in blocks
             )
+            and not _has_faint_ink_outside_bbox(working_rgb, chosen.bbox)
         ),
     )

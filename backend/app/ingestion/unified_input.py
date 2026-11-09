@@ -375,15 +375,37 @@ async def _process_normalized_visual_page(
             )
         )
     )
+    fallback_disagreement = False
     if need_full_retry:
-        ext_res = await extract_problem_from_image(
+        crop_ext_res = ext_res
+        full_ext_res = await extract_problem_from_image(
             region_res.full_image, vkey, cache_version=cache_version
         )
-        if not ext_res.cached:
+        if not full_ext_res.cached:
             vlm_calls += 1
         vlm_bytes += len(region_res.full_image.data)
         used_fallback = True
         used_crop = region_res.desk_trimmed
+        if crop_ext_res.assessment.status != "rejected" and full_ext_res.assessment.status == "rejected":
+            fallback_disagreement = True
+            prov_common["fallback_disagreement"] = True
+            prov_common["fallback_rejection_code"] = full_ext_res.assessment.rejection_code
+        else:
+            if crop_ext_res.assessment.status != "rejected" and full_ext_res.assessment.status != "rejected":
+                eq_pat = r"\b([A-Za-z][A-Za-z0-9\x27\u2032\u2033]{0,5})\s*=\s*([^\s,.;:]+)"
+                crop_eqs = {
+                    m.group(1): m.group(2)
+                    for m in re.finditer(eq_pat, crop_ext_res.assessment.problem_text)
+                }
+                full_eqs = {
+                    m.group(1): m.group(2)
+                    for m in re.finditer(eq_pat, full_ext_res.assessment.problem_text)
+                }
+                if any(k in full_eqs and full_eqs[k] != v for k, v in crop_eqs.items()):
+                    fallback_disagreement = True
+                    prov_common["fallback_disagreement"] = True
+                    prov_common["crop_problem_text"] = crop_ext_res.assessment.problem_text
+            ext_res = full_ext_res
 
     prov_common["used_crop"] = used_crop
     prov_common["used_fallback_full_image"] = used_fallback
@@ -495,8 +517,10 @@ async def _process_normalized_visual_page(
     )
 
     # 6. Nếu có ký hiệu không chắc chắn hoặc cờ cần người học xác nhận (§16, §17), chỉ hiện khung xác nhận gọn cho văn bản đó.
-    if assessment.requires_confirmation:
+    if assessment.requires_confirmation or fallback_disagreement:
         flags = [FLAG_MESSAGES[f] for f in assessment.review_flags if f in FLAG_MESSAGES]
+        if fallback_disagreement and not flags:
+            flags = ["Kết quả đọc vùng cắt và toàn trang có điểm khác nhau — em kiểm tra nhanh trước khi dựng."]
         return UnifiedPrepareOutcome(
             status="needs_confirmation",
             source_kind=source_kind,

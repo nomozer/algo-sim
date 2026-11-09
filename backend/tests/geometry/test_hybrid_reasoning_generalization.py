@@ -255,3 +255,158 @@ def test_section_viii_two_off_base_anchors_disambiguated_by_minus_z_distance_is_
     assert r.status == "SERVED"
     assert r.answers == {"g1": "cos²=25/314"}
     assert r.points["S"][2] == Fraction(-12, 5)
+
+
+def _run_two_trilaterated_pyramids_case(extra_calls, extra_text=""):
+    base_text = (
+        "Cho hình chóp S.ABC và hình chóp T.ABC có đáy ABC vuông tại A, AB = 6, AC = 8. "
+        "Biết SA = 13, SB = 13, SC = 13. "
+        "Biết TA = √74, TB = √74, TC = √74. "
+    )
+    t = base_text + extra_text
+    calls = [
+        {"id": "c1", "fn": "pyramid", "args": {"apex": "S", "base": ["A", "B", "C"]}, "source": {"quotes": ["Cho hình chóp S.ABC"]}},
+        {"id": "c2", "fn": "pyramid", "args": {"apex": "T", "base": ["A", "B", "C"]}, "source": {"quotes": ["hình chóp T.ABC"]}},
+        {"id": "c3", "fn": "right_angle", "args": {"vertex": "A", "rays": ["B", "C"]}, "source": {"quotes": ["có đáy ABC vuông tại A"]}},
+        {"id": "c4", "fn": "segment_length", "args": {"segment": ["A", "B"], "value": "6"}, "source": {"quotes": ["AB = 6"]}},
+        {"id": "c5", "fn": "segment_length", "args": {"segment": ["A", "C"], "value": "8"}, "source": {"quotes": ["AC = 8"]}},
+        {"id": "c6", "fn": "segment_length", "args": {"segment": ["S", "A"], "value": "13"}, "source": {"quotes": ["SA = 13"]}},
+        {"id": "c7", "fn": "segment_length", "args": {"segment": ["S", "B"], "value": "13"}, "source": {"quotes": ["SB = 13"]}},
+        {"id": "c8", "fn": "segment_length", "args": {"segment": ["S", "C"], "value": "13"}, "source": {"quotes": ["SC = 13"]}},
+        {"id": "c9", "fn": "segment_length", "args": {"segment": ["T", "A"], "value": "√74"}, "source": {"quotes": ["TA = √74"]}},
+        {"id": "c10", "fn": "segment_length", "args": {"segment": ["T", "B"], "value": "√74"}, "source": {"quotes": ["TB = √74"]}},
+        {"id": "c11", "fn": "segment_length", "args": {"segment": ["T", "C"], "value": "√74"}, "source": {"quotes": ["TC = √74"]}},
+    ] + extra_calls
+    ask_quotes = tuple(q for c in extra_calls if c["fn"].startswith("ask_") for q in c["source"]["quotes"])
+    return engine.dung_tu_loi_goi(t, {"calls": calls, "named_planes": []}, (), ask_quotes)
+
+
+def test_section_iv_two_trilaterated_pyramids_ambiguous_inter_apex_distance_refuses():
+    r = _run_two_trilaterated_pyramids_case([
+        {"id": "g1", "fn": "ask_length", "args": {"segment": ["S", "T"]}, "source": {"quotes": ["Tính độ dài đoạn thẳng ST."]}},
+    ], "Tính độ dài đoạn thẳng ST.")
+    assert r.status == "REFUSED" and r.code == "AMBIGUOUS_FACT"
+
+
+@pytest.mark.parametrize("st_val,expected_z_t", [("5", Fraction(7, 12)), ("19", Fraction(-7, 12))])
+def test_section_iv_two_trilaterated_pyramids_disambiguated_by_inter_apex_distance_serves(st_val, expected_z_t):
+    r = _run_two_trilaterated_pyramids_case([
+        {"id": "c12", "fn": "segment_length", "args": {"segment": ["S", "T"], "value": st_val}, "source": {"quotes": [f"ST = {st_val}"]}},
+        {"id": "g1", "fn": "ask_volume", "args": {"solid": "T.ABC"}, "source": {"quotes": ["Tính thể tích khối chóp T.ABC."]}},
+    ], f"Biết ST = {st_val}. Tính thể tích khối chóp T.ABC.")
+    assert r.status == "SERVED"
+    assert r.answers == {"g1": "56"}
+    assert r.points["T"][2] == expected_z_t
+
+
+def test_section_iv_two_trilaterated_pyramids_contradictory_inter_apex_distance_refuses():
+    r = _run_two_trilaterated_pyramids_case([
+        {"id": "c12", "fn": "segment_length", "args": {"segment": ["S", "T"], "value": "10"}, "source": {"quotes": ["ST = 10"]}},
+        {"id": "g1", "fn": "ask_volume", "args": {"solid": "T.ABC"}, "source": {"quotes": ["Tính thể tích khối chóp T.ABC."]}},
+    ], "Biết ST = 10. Tính thể tích khối chóp T.ABC.")
+    assert r.status == "REFUSED" and r.code == "INCONSISTENT_FACTS"
+
+
+def test_section_iv_three_off_base_anchors_partial_vs_full_disambiguation():
+    base_text = (
+        "Cho hình chóp S.ABC, hình chóp T.ABC và hình chóp P.ABC có đáy ABC vuông tại A, AB = 6, AC = 8. "
+        "Cạnh PA vuông góc với mặt phẳng (ABC), PA = 5. "
+        "Biết SA = 13, SB = 13, SC = 13. "
+        "Biết TA = √74, TB = √74, TC = √74. "
+    )
+    base_calls = [
+        {"id": "c1", "fn": "pyramid", "args": {"apex": "S", "base": ["A", "B", "C"]}, "source": {"quotes": ["Cho hình chóp S.ABC"]}},
+        {"id": "c2", "fn": "pyramid", "args": {"apex": "T", "base": ["A", "B", "C"]}, "source": {"quotes": ["hình chóp T.ABC"]}},
+        {"id": "c3", "fn": "pyramid", "args": {"apex": "P", "base": ["A", "B", "C"]}, "source": {"quotes": ["hình chóp P.ABC"]}},
+        {"id": "c4", "fn": "right_angle", "args": {"vertex": "A", "rays": ["B", "C"]}, "source": {"quotes": ["có đáy ABC vuông tại A"]}},
+        {"id": "c5", "fn": "segment_length", "args": {"segment": ["A", "B"], "value": "6"}, "source": {"quotes": ["AB = 6"]}},
+        {"id": "c6", "fn": "segment_length", "args": {"segment": ["A", "C"], "value": "8"}, "source": {"quotes": ["AC = 8"]}},
+        {"id": "c7", "fn": "perpendicular_line_plane", "args": {"line": ["P", "A"], "plane": ["A", "B", "C"]}, "source": {"quotes": ["Cạnh PA vuông góc với mặt phẳng (ABC)"]}},
+        {"id": "c8", "fn": "segment_length", "args": {"segment": ["P", "A"], "value": "5"}, "source": {"quotes": ["PA = 5"]}},
+        {"id": "c9", "fn": "segment_length", "args": {"segment": ["S", "A"], "value": "13"}, "source": {"quotes": ["SA = 13"]}},
+        {"id": "c10", "fn": "segment_length", "args": {"segment": ["S", "B"], "value": "13"}, "source": {"quotes": ["SB = 13"]}},
+        {"id": "c11", "fn": "segment_length", "args": {"segment": ["S", "C"], "value": "13"}, "source": {"quotes": ["SC = 13"]}},
+        {"id": "c12", "fn": "segment_length", "args": {"segment": ["T", "A"], "value": "√74"}, "source": {"quotes": ["TA = √74"]}},
+        {"id": "c13", "fn": "segment_length", "args": {"segment": ["T", "B"], "value": "√74"}, "source": {"quotes": ["TB = √74"]}},
+        {"id": "c14", "fn": "segment_length", "args": {"segment": ["T", "C"], "value": "√74"}, "source": {"quotes": ["TC = √74"]}},
+        {"id": "c15", "fn": "segment_length", "args": {"segment": ["S", "P"], "value": "√314"}, "source": {"quotes": ["SP = √314"]}},
+    ]
+    ask_q = "Tính độ dài đoạn thẳng ST."
+    ask_call = {"id": "g1", "fn": "ask_length", "args": {"segment": ["S", "T"]}, "source": {"quotes": [ask_q]}}
+    r_partial = engine.dung_tu_loi_goi(
+        base_text + "Biết SP = √314. " + ask_q,
+        {"calls": base_calls + [ask_call], "named_planes": []},
+        (),
+        (ask_q,),
+    )
+    assert r_partial.status == "REFUSED" and r_partial.code == "AMBIGUOUS_FACT"
+
+    r_full = engine.dung_tu_loi_goi(
+        base_text + "Biết SP = √314, TP = 13. " + ask_q,
+        {"calls": base_calls + [
+            {"id": "c16", "fn": "segment_length", "args": {"segment": ["T", "P"], "value": "13"}, "source": {"quotes": ["TP = 13"]}},
+            ask_call,
+        ], "named_planes": []},
+        (),
+        (ask_q,),
+    )
+    assert r_full.status == "SERVED"
+    assert r_full.answers == {"g1": "5"}
+    assert r_full.points["S"][2] == Fraction(-12, 5)
+    assert r_full.points["T"][2] == Fraction(-7, 5)
+
+
+def test_section_iv_exceeding_max_secondary_height_anchors_refuses_ambiguous_fact():
+    apices = ["S", "T", "U", "V", "W", "X"]
+    parts = ["Cho hình chóp S.ABC, hình chóp T.ABC, hình chóp U.ABC, hình chóp V.ABC, hình chóp W.ABC, hình chóp X.ABC có đáy ABC vuông tại A, AB = 6, AC = 8."]
+    calls = [
+        {"id": "b1", "fn": "right_angle", "args": {"vertex": "A", "rays": ["B", "C"]}, "source": {"quotes": ["có đáy ABC vuông tại A"]}},
+        {"id": "b2", "fn": "segment_length", "args": {"segment": ["A", "B"], "value": "6"}, "source": {"quotes": ["AB = 6"]}},
+        {"id": "b3", "fn": "segment_length", "args": {"segment": ["A", "C"], "value": "8"}, "source": {"quotes": ["AC = 8"]}},
+    ]
+    for idx, ap in enumerate(apices, 1):
+        q_pyr = f"Cho hình chóp {ap}.ABC" if idx == 1 else f"hình chóp {ap}.ABC"
+        q_perp = f"Cạnh {ap}A vuông góc với mặt phẳng (ABC)."
+        q_len = f"{ap}A = {idx}."
+        parts.extend([q_perp, q_len])
+        calls.extend([
+            {"id": f"p{idx}", "fn": "pyramid", "args": {"apex": ap, "base": ["A", "B", "C"]}, "source": {"quotes": [q_pyr]}},
+            {"id": f"v{idx}", "fn": "perpendicular_line_plane", "args": {"line": [ap, "A"], "plane": ["A", "B", "C"]}, "source": {"quotes": [q_perp]}},
+            {"id": f"l{idx}", "fn": "segment_length", "args": {"segment": [ap, "A"], "value": str(idx)}, "source": {"quotes": [q_len]}},
+        ])
+    q_ask = "Tính thể tích khối chóp S.ABC."
+    parts.append(q_ask)
+    calls.append({"id": "g1", "fn": "ask_volume", "args": {"solid": "S.ABC"}, "source": {"quotes": [q_ask]}})
+    r = engine.dung_tu_loi_goi(" ".join(parts), {"calls": calls, "named_planes": []}, (), (q_ask,))
+    assert r.status == "REFUSED" and r.code == "AMBIGUOUS_FACT"
+
+
+def test_section_iv_zero_distance_and_degenerate_geometry_invariants():
+    from app.simulation.geometry import measure as M
+    from app.simulation.geometry.exact import GeometryError, Line3, Vec3
+
+    p = Vec3(Fraction(1), Fraction(2), Fraction(3))
+    z = Vec3(Fraction(0), Fraction(0), Fraction(0))
+    assert M.distance_sq(p, p) == 0
+    with pytest.raises(GeometryError) as exc_line:
+        Line3.through(p, p)
+    assert exc_line.value.code == "DEGENERATE_POINTS"
+    with pytest.raises(GeometryError) as exc_ang:
+        M.cos_sq_between_vectors(z, p)
+    assert exc_ang.value.code == "MEASURE_UNDEFINED"
+
+    bad_tri_text = (
+        "Cho hình chóp S.ABC có đáy ABC với AB = 3, AC = 4, BC = 8. "
+        "Cạnh SA vuông góc với mặt phẳng (ABC), SA = 5. Tính thể tích khối chóp S.ABC."
+    )
+    bad_tri_calls = [
+        {"id": "c1", "fn": "pyramid", "args": {"apex": "S", "base": ["A", "B", "C"]}, "source": {"quotes": ["Cho hình chóp S.ABC"]}},
+        {"id": "c2", "fn": "segment_length", "args": {"segment": ["A", "B"], "value": "3"}, "source": {"quotes": ["AB = 3"]}},
+        {"id": "c3", "fn": "segment_length", "args": {"segment": ["A", "C"], "value": "4"}, "source": {"quotes": ["AC = 4"]}},
+        {"id": "c4", "fn": "segment_length", "args": {"segment": ["B", "C"], "value": "8"}, "source": {"quotes": ["BC = 8"]}},
+        {"id": "c5", "fn": "perpendicular_line_plane", "args": {"line": ["S", "A"], "plane": ["A", "B", "C"]}, "source": {"quotes": ["Cạnh SA vuông góc với mặt phẳng (ABC)"]}},
+        {"id": "c6", "fn": "segment_length", "args": {"segment": ["S", "A"], "value": "5"}, "source": {"quotes": ["SA = 5"]}},
+        {"id": "g1", "fn": "ask_volume", "args": {"solid": "S.ABC"}, "source": {"quotes": ["Tính thể tích khối chóp S.ABC."]}},
+    ]
+    r_bad = engine.dung_tu_loi_goi(bad_tri_text, {"calls": bad_tri_calls, "named_planes": []}, (), ("Tính thể tích khối chóp S.ABC.",))
+    assert r_bad.status == "REFUSED" and r_bad.code == "INCONSISTENT_FACTS"
