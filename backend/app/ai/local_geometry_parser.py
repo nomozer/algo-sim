@@ -1823,7 +1823,7 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
                 "target": {"section_id": sec_id},
                 "quote": q_sa,
             }
-            if builder._primary_solid_type != "cone":
+            if builder._primary_solid_type in ("pyramid", "tetrahedron", "prism", "box", "cube"):
                 goal_entry["solid_id"] = builder._primary_solid_id
             builder.math_goals.append(goal_entry)
         mapped_goal = True

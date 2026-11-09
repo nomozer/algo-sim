@@ -793,26 +793,29 @@ class _Dung:
                                    'dependencies':list(dict.fromkeys(c.args.plane1+c.args.plane2)),
                                    'provenance':'DERIVED','relation_verified':verified})
                 return True
-        for c in self.of("intersect_line_line", "orthogonal_projection_line", "translate_point"):
+        for c in self.of("intersect_line_line", "intersect_line_plane", "orthogonal_projection_line", "orthogonal_projection",
+                         "translate_point"):
             a = c.args
             p = a.point if c.fn.startswith("intersect") else a.image
-            if c.fn == "translate_point" and a.point == a.image:
+            if c.fn in ("orthogonal_projection", "translate_point") and a.point == a.image:
                 raise TuChoi("PRECONDITION_FAILED", f"{c.id}: ảnh trùng tên điểm đầu vào", (c.id,))
-            deps = self._construction_dependencies(c)
-            if (p not in self.pts and all(v in self.pts and self.trong_day(v) for v in deps)
-                    and not getattr(a, "line_ref", None)):
+            if (p not in self.pts and all(v in self.pts for v in self._construction_dependencies(c))
+                    and (not getattr(a,'line_ref',None) or a.line_ref in self.lines)):
                 xyz = self._construct(c)
                 self.constructions[p] = c
                 self._dat(p, xyz, c.fn, {c.id}, "DERIVED")
-                self.trace[-1].update(producer=c.fn, dependencies=list(deps),
+                self.trace[-1].update(producer=c.fn, dependencies=list(self._construction_dependencies(c)),
                                       relation_verified=self._construction_relation(c))
+                if getattr(a,'line_ref',None):
+                    self.trace[-1]['dependencies'].append(f'gt_{a.line_ref}')
+                    self.trace[-1]['result_binding'] = a.line_ref
                 if not self.trace[-1]["relation_verified"]:
                     raise TuChoi("ENGINE_SELF_CHECK_FAILED", f"{c.id}: quan hệ dựng không được thỏa", (c.id,))
                 self.dung.add(c.id)
                 return True
         for c in self.of("divide_segment"):
             p, (a, b), t = c.args.point, c.args.segment, Fraction(c.args.ratio)
-            if p not in self.pts and a in self.pts and b in self.pts and self.trong_day(a) and self.trong_day(b):
+            if p not in self.pts and a in self.pts and b in self.pts:
                 if self.pts[a] == self.pts[b]:
                     raise TuChoi("DEGENERATE_POINTS", f"{c.id}: đoạn {a}{b} suy biến ({a} trùng {b})", (c.id,))
                 self.divisions[p] = (a, b, t)
@@ -823,29 +826,13 @@ class _Dung:
                 return True
         for c in self.of("midpoint"):
             p, (a, b) = c.args.point, c.args.segment
-            if p not in self.pts and a in self.pts and b in self.pts and self.trong_day(a) and self.trong_day(b):
+            if p not in self.pts and a in self.pts and b in self.pts:
                 if self.pts[a] == self.pts[b]:
                     raise TuChoi("DEGENERATE_POINTS", f"{c.id}: đoạn {a}{b} suy biến ({a} trùng {b})", (c.id,))
                 self.midpoints[p] = (a, b)
                 self._dat(p, tuple((self.pts[a][i] + self.pts[b][i]) / 2 for i in range(3)), "midpoint", {c.id},
                           "DERIVED")
                 self.trace[-1]["dependencies"] = [a, b]
-                self.dung.add(c.id)
-                return True
-        for c in self.of("centroid"):
-            p, da = c.args.point, c.args.polygon
-            if len(da) != 3:
-                raise TuChoi("UNSUPPORTED_CENTROID", f"{c.id}: bản này dựng trọng tâm TAM GIÁC", (c.id,))
-            if p not in self.pts and all(v in self.pts and self.trong_day(v) for v in da):
-                pa, pb, pc = (self.pts[v] for v in da)
-                if Vec3(pb[0] - pa[0], pb[1] - pa[1], pb[2] - pa[2]).cross(
-                    Vec3(pc[0] - pa[0], pc[1] - pa[1], pc[2] - pa[2])
-                ).is_zero():
-                    raise TuChoi("COLLINEAR_POINTS", f"{c.id}: ba điểm {da} thẳng hàng — không tạo thành tam giác", (c.id,))
-                self.centroids[p] = tuple(da)
-                self._dat(p, tuple(sum(self.pts[v][i] for v in da) / 3 for i in range(3)), "centroid_of_triangle", {c.id},
-                          "DERIVED")
-                self.trace[-1]["dependencies"] = list(da)
                 self.dung.add(c.id)
                 return True
         for k in sorted(self.khoi.values(), key=lambda k: k.name):
@@ -864,6 +851,22 @@ class _Dung:
                     self.trace[-1]["dependencies"] = list(k.base)
                 h2, cs = self._chieu_cao(k.apex, self.tam, [k.name])
                 self._dat_ngoai_day(k.apex, self.tam, h2, "apex_over_center", {k.call, reg[0].id} | cs)
+                return True
+        for c in self.of("centroid"):
+            p, da = c.args.point, c.args.polygon
+            if len(da) != 3:
+                raise TuChoi("UNSUPPORTED_CENTROID", f"{c.id}: bản này dựng trọng tâm TAM GIÁC", (c.id,))
+            if p not in self.pts and all(v in self.pts for v in da):
+                pa, pb, pc = (self.pts[v] for v in da)
+                if Vec3(pb[0] - pa[0], pb[1] - pa[1], pb[2] - pa[2]).cross(
+                    Vec3(pc[0] - pa[0], pc[1] - pa[1], pc[2] - pa[2])
+                ).is_zero():
+                    raise TuChoi("COLLINEAR_POINTS", f"{c.id}: ba điểm {da} thẳng hàng — không tạo thành tam giác", (c.id,))
+                self.centroids[p] = tuple(da)
+                self._dat(p, tuple(sum(self.pts[v][i] for v in da) / 3 for i in range(3)), "centroid_of_triangle", {c.id},
+                          "DERIVED")
+                self.trace[-1]["dependencies"] = list(da)
+                self.dung.add(c.id)
                 return True
         for c, (a, b), mp, luat, chan_khai in self._rang_buoc_vuong():
             if c.fn == "orthogonal_projection" and (c.args.point in self.pts or c.args.image not in self.pts):
@@ -928,66 +931,6 @@ class _Dung:
                 self._dat(t, tuple(self.pts[b][i] + v[i] for i in range(3)), f"prism_lateral_vector_{b0}{t0}", {k.call},
                           "DERIVED")
                 return True
-        if self._dinh_tu_ba_canh_ben():
-            return True
-        for c in self.of("intersect_line_line", "intersect_line_plane", "orthogonal_projection_line", "orthogonal_projection",
-                         "translate_point"):
-            a = c.args
-            p = a.point if c.fn.startswith("intersect") else a.image
-            if c.fn in ("orthogonal_projection", "translate_point") and a.point == a.image:
-                raise TuChoi("PRECONDITION_FAILED", f"{c.id}: ảnh trùng tên điểm đầu vào", (c.id,))
-            if (p not in self.pts and all(v in self.pts for v in self._construction_dependencies(c))
-                    and (not getattr(a,'line_ref',None) or a.line_ref in self.lines)):
-                xyz = self._construct(c)
-                self.constructions[p] = c
-                self._dat(p, xyz, c.fn, {c.id}, "DERIVED")
-                self.trace[-1].update(producer=c.fn, dependencies=list(self._construction_dependencies(c)),
-                                      relation_verified=self._construction_relation(c))
-                if getattr(a,'line_ref',None):
-                    self.trace[-1]['dependencies'].append(f'gt_{a.line_ref}')
-                    self.trace[-1]['result_binding'] = a.line_ref
-                if not self.trace[-1]["relation_verified"]:
-                    raise TuChoi("ENGINE_SELF_CHECK_FAILED", f"{c.id}: quan hệ dựng không được thỏa", (c.id,))
-                self.dung.add(c.id)
-                return True
-        for c in self.of("divide_segment"):
-            p, (a, b), t = c.args.point, c.args.segment, Fraction(c.args.ratio)
-            if p not in self.pts and a in self.pts and b in self.pts:
-                if self.pts[a] == self.pts[b]:
-                    raise TuChoi("DEGENERATE_POINTS", f"{c.id}: đoạn {a}{b} suy biến ({a} trùng {b})", (c.id,))
-                self.divisions[p] = (a, b, t)
-                self._dat(p, tuple((1 - t) * self.pts[a][i] + t * self.pts[b][i] for i in range(3)), f"divide_segment_t={t}",
-                          {c.id}, "DERIVED")
-                self.trace[-1]["dependencies"] = [a, b]
-                self.dung.add(c.id)
-                return True
-        for c in self.of("midpoint"):
-            p, (a, b) = c.args.point, c.args.segment
-            if p not in self.pts and a in self.pts and b in self.pts:
-                if self.pts[a] == self.pts[b]:
-                    raise TuChoi("DEGENERATE_POINTS", f"{c.id}: đoạn {a}{b} suy biến ({a} trùng {b})", (c.id,))
-                self.midpoints[p] = (a, b)
-                self._dat(p, tuple((self.pts[a][i] + self.pts[b][i]) / 2 for i in range(3)), "midpoint", {c.id},
-                          "DERIVED")
-                self.trace[-1]["dependencies"] = [a, b]
-                self.dung.add(c.id)
-                return True
-        for c in self.of("centroid"):
-            p, da = c.args.point, c.args.polygon
-            if len(da) != 3:
-                raise TuChoi("UNSUPPORTED_CENTROID", f"{c.id}: bản này dựng trọng tâm TAM GIÁC", (c.id,))
-            if p not in self.pts and all(v in self.pts for v in da):
-                pa, pb, pc = (self.pts[v] for v in da)
-                if Vec3(pb[0] - pa[0], pb[1] - pa[1], pb[2] - pa[2]).cross(
-                    Vec3(pc[0] - pa[0], pc[1] - pa[1], pc[2] - pa[2])
-                ).is_zero():
-                    raise TuChoi("COLLINEAR_POINTS", f"{c.id}: ba điểm {da} thẳng hàng — không tạo thành tam giác", (c.id,))
-                self.centroids[p] = tuple(da)
-                self._dat(p, tuple(sum(self.pts[v][i] for v in da) / 3 for i in range(3)), "centroid_of_triangle", {c.id},
-                          "DERIVED")
-                self.trace[-1]["dependencies"] = list(da)
-                self.dung.add(c.id)
-                return True
         for c in self.of("curved_solid"):
             a = c.args
             if a.center and a.center not in self.pts and a.circumscribes in self.khoi:
@@ -1037,7 +980,7 @@ class _Dung:
                 self.trace[-1]["relation_verified"] = True
                 self.dung.add(c.id)
                 return True
-        return False
+        return self._dinh_tu_ba_canh_ben()
 
     def _dinh_tu_ba_canh_ben(self) -> bool:
         """LAST rule: the apex of a pyramid on the root base, when nothing else placed it, from its distances to three
