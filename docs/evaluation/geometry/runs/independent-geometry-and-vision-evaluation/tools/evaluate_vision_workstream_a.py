@@ -37,7 +37,7 @@ from unittest.mock import patch
 
 os.environ["ALLOW_LIVE_AI"] = "0"
 
-ROOT = pathlib.Path(__file__).resolve().parents[1]
+ROOT = pathlib.Path(__file__).resolve().parents[5]
 BACKEND_DIR = ROOT / "backend"
 if str(BACKEND_DIR) not in sys.path:
     sys.path.insert(0, str(BACKEND_DIR))
