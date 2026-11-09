@@ -386,4 +386,116 @@ describe("Axo V2.7 Slice 2 — 18 Component & Integration Cases (P11.2 & P11.3)"
     expect(html).toContain('tabindex="0"');
     expect(html).toContain('rows="3"');
   });
+
+  it("20. Menu đính kèm #plus-popover-menu đạt chuẩn tỷ lệ Axo (rộng 200–220px, padding ngang 12–14px, gap 10–12px, icon 16–18px, vùng chạm cảm ứng >= 44px, không trùng quy tắc .btn-plus-trigger)", () => {
+    const css = readFileSync(
+      new URL("../styles/global.css", import.meta.url),
+      "utf-8",
+    );
+
+    const popoverMatch = css.match(/\.plus-popover-menu\s*\{([^}]*)\}/s);
+    expect(popoverMatch).not.toBeNull();
+    const popoverBlock = popoverMatch![1];
+    expect(popoverBlock).not.toContain("max-content");
+    expect(popoverBlock).not.toContain("152px");
+
+    const widthMatch = popoverBlock.match(/(?:^|\s|;)width:\s*(\d+)px/);
+    expect(widthMatch).not.toBeNull();
+    const menuWidth = Number(widthMatch![1]);
+    expect(menuWidth).toBeGreaterThanOrEqual(200);
+    expect(menuWidth).toBeLessThanOrEqual(220);
+    expect(popoverBlock).toMatch(/border:\s*1px\s+solid\s+var\(--hairline\)/);
+    expect(popoverBlock).toMatch(/max-width:\s*calc\(100vw\s*-\s*32px\)/);
+
+    const itemMatch = css.match(/\.plus-menu-item\s*\{([^}]*)\}/s);
+    expect(itemMatch).not.toBeNull();
+    const itemBlock = itemMatch![1];
+    const padMatch = itemBlock.match(/padding:\s*([\d.]+)px\s+([\d.]+)px/);
+    expect(padMatch).not.toBeNull();
+    const padX = Number(padMatch![2]);
+    expect(padX).toBeGreaterThanOrEqual(12);
+    expect(padX).toBeLessThanOrEqual(14);
+
+    const gapMatch = itemBlock.match(/gap:\s*([\d.]+)px/);
+    expect(gapMatch).not.toBeNull();
+    const gapPx = Number(gapMatch![1]);
+    expect(gapPx).toBeGreaterThanOrEqual(10);
+    expect(gapPx).toBeLessThanOrEqual(12);
+
+    const svgMatch = css.match(/\.plus-menu-item\s+svg\s*\{([^}]*)\}/s);
+    expect(svgMatch).not.toBeNull();
+    const svgW = Number(svgMatch![1].match(/width:\s*([\d.]+)px/)?.[1] ?? 0);
+    const svgH = Number(svgMatch![1].match(/height:\s*([\d.]+)px/)?.[1] ?? 0);
+    expect(svgW).toBeGreaterThanOrEqual(16);
+    expect(svgW).toBeLessThanOrEqual(18);
+    expect(svgH).toBe(svgW);
+
+    const coarseMatch = css.match(
+      /@media\s*\(pointer:\s*coarse\)\s*\{[\s\S]*?\.plus-menu-item\s*\{([^}]*)\}/,
+    );
+    expect(coarseMatch).not.toBeNull();
+    const minHitH = Number(
+      coarseMatch![1].match(/min-height:\s*([\d.]+)px/)?.[1] ?? 0,
+    );
+    expect(minHitH).toBeGreaterThanOrEqual(44);
+
+    // Không còn quy tắc ghi đè .btn-plus-trigger { width: 36px ... } tách rời phía dưới
+    const triggerBlocks = [...css.matchAll(/(?:^|\r?\n)\.btn-plus-trigger\s*\{/g)];
+    expect(triggerBlocks).toHaveLength(1);
+
+    const mobileHtml = renderToString(
+      <ProblemInput
+        initialPlusMenuOpen
+        deviceSignals={{
+          userAgent:
+            "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.4 Safari/605.1.15",
+          platform: "MacIntel",
+          maxTouchPoints: 5,
+        }}
+      />,
+    );
+    const menuOnly = mobileHtml.slice(mobileHtml.indexOf('id="plus-popover-menu"'));
+    expect(menuOnly).toContain('width="17" height="17"');
+    expect(menuOnly).toContain('id="menu-item-upload-file"');
+    expect(menuOnly).toContain('id="menu-item-camera"');
+  });
+
+  it("21. Menu đính kèm hỗ trợ điều hướng bàn phím (ArrowDown/ArrowUp/Home/End/Escape hoàn trả focus) và bảo toàn văn bản + trạng thái nút Dựng hình", () => {
+    const src = readFileSync(
+      new URL("./ProblemInput.tsx", import.meta.url),
+      "utf-8",
+    );
+    expect(src).toContain("plusTriggerRef");
+    expect(src).toContain("plusPopoverRef");
+    expect(src).toContain("ArrowDown");
+    expect(src).toContain("ArrowUp");
+
+    setAppStateForSSR({ problemText: "Cho hình chóp S.ABCD có SA vuông góc đáy." });
+    const closedWithText = renderToString(<ProblemInput initialPlusMenuOpen={false} />);
+    const openWithText = renderToString(<ProblemInput initialPlusMenuOpen />);
+    expect(openWithText).toContain("Cho hình chóp S.ABCD có SA vuông góc đáy.");
+    expect(closedWithText).not.toMatch(
+      /<button[^>]*class="btn-composer-submit"[^>]*disabled=""/,
+    );
+    expect(openWithText).not.toMatch(
+      /<button[^>]*class="btn-composer-submit"[^>]*disabled=""/,
+    );
+
+    // Laptop Windows màn hình cảm ứng vẫn chỉ hiển thị 1 mục Tải tệp từ thiết bị
+    const touchLaptopHtml = renderToString(
+      <ProblemInput
+        initialPlusMenuOpen
+        deviceSignals={{
+          userAgent:
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+          platform: "Win32",
+          userAgentDataPlatform: "Windows",
+          userAgentDataMobile: false,
+          maxTouchPoints: 10,
+        }}
+      />,
+    );
+    expect(touchLaptopHtml).toContain('id="menu-item-upload-file"');
+    expect(touchLaptopHtml).not.toContain('id="menu-item-camera"');
+  });
 });

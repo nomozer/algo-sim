@@ -560,6 +560,8 @@ export function ProblemInput({
   const replaceTargetIdRef = useRef<string | null>(null);
   const textRef = useRef<HTMLTextAreaElement>(null);
   const plusMenuAnchorRef = useRef<HTMLDivElement>(null);
+  const plusTriggerRef = useRef<HTMLButtonElement>(null);
+  const plusPopoverRef = useRef<HTMLDivElement>(null);
   const filesRowRef = useRef<HTMLDivElement>(null);
   const attachmentsRef = useRef<ComposerAttachmentItem[]>([]);
   const submittingRef = useRef(false);
@@ -665,7 +667,14 @@ export function ProblemInput({
         } else if (allFilesModalOpen) {
           setAllFilesModalOpen(false);
         } else if (plusMenuOpen) {
+          e.preventDefault();
+          const activeEl = document.activeElement;
+          const focusWasInsidePopover =
+            activeEl !== null && Boolean(plusPopoverRef.current?.contains(activeEl));
           setPlusMenuOpen(false);
+          if (focusWasInsidePopover) {
+            plusTriggerRef.current?.focus();
+          }
         }
       }
     }
@@ -1104,10 +1113,35 @@ export function ProblemInput({
           <div className="composer-left-tools composer-tools">
             <div className="plus-menu-anchor" ref={plusMenuAnchorRef}>
               <button
+                ref={plusTriggerRef}
                 type="button"
                 id="btn-composer-plus"
                 className={`btn-plus-trigger${plusMenuOpen ? " is-open" : ""}`}
-                onClick={() => setPlusMenuOpen((v) => !v)}
+                onClick={(e) => {
+                  const next = !plusMenuOpen;
+                  setPlusMenuOpen(next);
+                  if (next && e.detail === 0) {
+                    requestAnimationFrame(() => {
+                      plusPopoverRef.current
+                        ?.querySelector<HTMLButtonElement>(".plus-menu-item:not(:disabled)")
+                        ?.focus();
+                    });
+                  }
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+                    e.preventDefault();
+                    const focusLast = e.key === "ArrowUp";
+                    if (!plusMenuOpen) setPlusMenuOpen(true);
+                    requestAnimationFrame(() => {
+                      const items = plusPopoverRef.current?.querySelectorAll<HTMLButtonElement>(
+                        ".plus-menu-item:not(:disabled)",
+                      );
+                      if (!items || items.length === 0) return;
+                      items[focusLast ? items.length - 1 : 0].focus();
+                    });
+                  }
+                }}
                 disabled={analyzing}
                 title={
                   showCameraEntry
@@ -1122,10 +1156,44 @@ export function ProblemInput({
               </button>
 
               <div
+                ref={plusPopoverRef}
                 id="plus-popover-menu"
                 className={`plus-popover-menu${plusMenuOpen ? " open" : ""}`}
                 role="menu"
                 aria-label="Tùy chọn đính kèm đề bài"
+                onKeyDown={(e) => {
+                  if (
+                    e.key !== "ArrowDown" &&
+                    e.key !== "ArrowUp" &&
+                    e.key !== "Home" &&
+                    e.key !== "End"
+                  ) {
+                    return;
+                  }
+                  const items = Array.from(
+                    plusPopoverRef.current?.querySelectorAll<HTMLButtonElement>(
+                      ".plus-menu-item:not(:disabled)",
+                    ) ?? [],
+                  );
+                  if (items.length === 0) return;
+                  e.preventDefault();
+                  if (e.key === "Home") {
+                    items[0].focus();
+                    return;
+                  }
+                  if (e.key === "End") {
+                    items[items.length - 1].focus();
+                    return;
+                  }
+                  const cur = items.indexOf(document.activeElement as HTMLButtonElement);
+                  const next =
+                    e.key === "ArrowDown"
+                      ? (cur + 1) % items.length
+                      : cur <= 0
+                        ? items.length - 1
+                        : cur - 1;
+                  items[next].focus();
+                }}
               >
                 <button
                   type="button"
@@ -1138,7 +1206,7 @@ export function ProblemInput({
                     fileInputRef.current?.click();
                   }}
                 >
-                  <IconUpload size={16} />
+                  <IconUpload size={17} />
                   <span>Tải tệp từ thiết bị</span>
                 </button>
                 {showCameraEntry && (
@@ -1153,7 +1221,7 @@ export function ProblemInput({
                       setPhotoDialogOpen(true);
                     }}
                   >
-                    <IconCamera size={16} />
+                    <IconCamera size={17} />
                     <span>Chụp ảnh đề bài</span>
                   </button>
                 )}
