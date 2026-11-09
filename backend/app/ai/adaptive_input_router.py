@@ -592,7 +592,7 @@ _MATH_TOKEN_GATE_RE = re.compile(
 )
 
 _OCR_CORRUPTION_ARTIFACT_RE = re.compile(
-    r"(?:Œ|”|“|\b\d+[Vv]\d+\b|\b[0O][Oo]\b|\b1[lI]\b|\.\.\.+|[A-Z]{3,4}\.[A-Z]'[A-Z]'[A-Z](?!'[A-Z]?)\b|[A-Z][0-9']*°[A-Z0-9']*)"
+    r"(?:Œ|”|“|\b\d+[Vv]\d+\b|\b[0O][Oo]\b|\b1[lI]\b|\.\.\.+|[A-Z]{3,4}\.[A-Z]'[A-Z]'[A-Z](?!'[A-Z]?)\b|[A-Z]{3,6}\.(?=[A-Z0-9']*')(?:[A-Z]'?)*[A-Z]{2}[A-Z0-9']*|[A-Z][0-9']*°[A-Z0-9']*)"
 )
 _DIAGRAM_DEPENDENCY_RE = re.compile(
     r"(?:hình\s+vẽ\s+bên|như\s+hình\s+vẽ|trong\s+hình\s+vẽ|ở\s+hình\s+bên)",
@@ -742,7 +742,7 @@ def reconcile_dual_ocr_texts(
     reconciled_text = p_raw
     repairs: list[dict[str, str]] = []
     for m_prism in re.finditer(
-        r"(?<![A-Za-z0-9'])(?P<base>[A-Z]{3,6})\.(?P<top>[A-Z0-9'′°*`´Œ”\"](?:[A-Z0-9'′°*`´Œ”\"\s]{1,12}?[A-Z]['′°”\"]))(?![A-Za-z0-9'])",
+        r"(?<![A-Za-z0-9'])(?P<base>[A-Z]{3,6})\.(?P<top>[A-Z0-9'′°*`´Œ”\"](?:[A-Z0-9'′°*`´Œ”\"]|\s(?=[0-9A-Z'′°Œ”\"])){1,12}[A-Z]['′°”\"])(?![A-Za-z0-9'′°*`´Œ”\"])",
         p_raw,
     ):
         base_str = m_prism.group("base")
