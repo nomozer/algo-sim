@@ -130,14 +130,19 @@ describe("Axo V2.7 Phase B — Header Logo, Homepage, Library & History (P3–P8
     expect(activeEnv?.scene3d).toBeDefined();
   });
 
-  it("P5: Trang Thư viện (#view-library) hiển thị đúng 11 bài mẫu, bộ đếm, ô tìm kiếm, lọc theo từ khóa và menu danh mục", () => {
+  it("P5: Trang Thư viện (#view-library) hiển thị đúng 11 bài mẫu, bộ đếm riêng gọn gàng, ô tìm kiếm, lọc theo từ khóa và menu danh mục", () => {
     const libHtml = renderToString(<LibraryView />);
     expect(libHtml).toContain('id="view-library"');
     expect(libHtml).toContain("Thư viện mô phỏng");
+    expect(libHtml).toContain('id="library-filter-meta-row"');
     expect(libHtml).toContain('id="library-count-readout"');
-    expect(libHtml).toContain("Hiển thị 11 / 11 bài mô phỏng");
+    expect(libHtml).toContain("11 bài mô phỏng phù hợp");
     expect(libHtml).toContain('id="library-search-input"');
+    expect(libHtml).toContain('placeholder="Tìm bài mô phỏng..."');
     expect(libHtml).toContain('id="btn-library-category-dropdown"');
+    expect(libHtml).toContain('<strong id="library-category-selected-label">Tất cả</strong>');
+    expect(libHtml).not.toContain("Loại hình học:");
+    expect(libHtml).not.toContain('id="btn-library-filter-clear"');
     expect(libHtml).toContain('id="library-category-menu"');
     expect(libHtml).toContain("Tất cả");
     expect(libHtml).toContain("Hình chóp");
@@ -148,18 +153,27 @@ describe("Axo V2.7 Phase B — Header Logo, Homepage, Library & History (P3–P8
     expect(libHtml).toContain("bước dựng 3D");
     expect(libHtml).toContain("Mở mô phỏng →");
 
-    // Kiểm tra lọc theo danh mục Hình chóp (5 bài)
+    // Kiểm tra lọc theo danh mục Hình chóp (5 bài) + nút bỏ lọc nhanh
     const filteredCatHtml = renderToString(<LibraryView initialCategory="Hình chóp" />);
-    expect(filteredCatHtml).toContain("Hiển thị 5 / 11 bài mô phỏng");
+    expect(filteredCatHtml).toContain('<strong id="library-category-selected-label">Hình chóp</strong>');
+    expect(filteredCatHtml).toContain("5 bài mô phỏng phù hợp");
+    expect(filteredCatHtml).toContain('id="btn-library-filter-clear"');
     expect((filteredCatHtml.match(/class="lib-card"/g) ?? []).length).toBe(5);
+
+    // Kiểm tra kết hợp tìm kiếm + lọc nhóm hình
+    const combinedHtml = renderToString(
+      <LibraryView initialCategory="Hình chóp" initialSearch="thiết diện" />,
+    );
+    expect(combinedHtml).toContain("2 bài mô phỏng phù hợp");
+    expect((combinedHtml.match(/class="lib-card"/g) ?? []).length).toBe(2);
 
     // Kiểm tra tìm kiếm từ khóa "mặt cầu"
     const searchedHtml = renderToString(<LibraryView initialSearch="mặt cầu" />);
-    expect(searchedHtml).toContain("Hiển thị 2 / 11 bài mô phỏng");
+    expect(searchedHtml).toContain("2 bài mô phỏng phù hợp");
 
     // Kiểm tra trạng thái trống khi từ khóa không khớp
     const emptySearchHtml = renderToString(<LibraryView initialSearch="xyz-khong-ton-tai" />);
-    expect(emptySearchHtml).toContain("Hiển thị 0 / 11 bài mô phỏng");
+    expect(emptySearchHtml).toContain("0 bài mô phỏng phù hợp");
     expect(emptySearchHtml).toContain("Không tìm thấy bài mô phỏng nào khớp từ khóa");
   });
 

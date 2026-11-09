@@ -5,6 +5,7 @@ import {
   renderFamilyThumbnailContent,
   resolveGeometryIllustration,
   type GeometryTemplateId,
+  type IllustrationSpec,
 } from "./geometry2d";
 
 /**
@@ -24,6 +25,7 @@ export interface SamplePreviewProps {
   category?: string;
   scene3d?: Scene3D | null;
   templateId?: GeometryTemplateId | null;
+  spec?: IllustrationSpec | null;
   forceGeneric?: boolean;
 }
 
@@ -32,6 +34,7 @@ export function SamplePreview({
   category,
   scene3d,
   templateId,
+  spec,
   forceGeneric,
 }: SamplePreviewProps) {
   const resolved = resolveGeometryIllustration({
@@ -39,6 +42,7 @@ export function SamplePreview({
     category,
     scene3d,
     templateId,
+    spec,
     forceGeneric,
   });
 

@@ -39,11 +39,46 @@ export type GeometryIllustrationMode =
   | "family-icon"
   | "fallback-neutral";
 
+export type ShapeKind =
+  | "pyramid"
+  | "prism"
+  | "sphere"
+  | "cylinder"
+  | "cone";
+
+export type GeometryRelation =
+  | "none"
+  | "plane_section"
+  | "inscribed"
+  | "circumscribed"
+  | "perpendicular_line_plane"
+  | "altitude_to_base"
+  | "axial_section"
+  | (string & {});
+
+export type IllustrationEmphasis =
+  | "section"
+  | "volume"
+  | "altitude"
+  | "radius"
+  | "slant_height"
+  | "perpendicular"
+  | "composite";
+
+export interface IllustrationSpec {
+  primaryShape: ShapeKind;
+  secondaryShapes?: ShapeKind[];
+  relation?: GeometryRelation;
+  emphasis?: IllustrationEmphasis;
+  variant?: string;
+}
+
 export interface GeometryIllustrationInput {
   sampleId?: string | null;
   category?: string | null;
   scene3d?: Scene3D | null;
   templateId?: GeometryTemplateId | null;
+  spec?: IllustrationSpec | null;
   /**
    * Cho phép buộc chế độ `"generic"` (không hiển thị nhãn điểm/mặt phẳng cụ thể)
    * ngay cả khi có `sampleId` hoặc `templateId`.
@@ -55,6 +90,7 @@ export interface ResolvedGeometryIllustration {
   mode: GeometryIllustrationMode;
   family: GeometryFamilyId;
   templateId: GeometryTemplateId | null;
+  spec?: IllustrationSpec | null;
   fallback: boolean;
   canonicalSampleId: string | null;
   labels?: VerifiedTemplateLabels;
@@ -207,44 +243,100 @@ function presentSceneObjects(rawScene: Scene3D): SceneObject[] {
   }
 }
 
+function shapeKindToFamily(kind: ShapeKind | string | undefined): GeometryFamilyId {
+  switch (kind) {
+    case "pyramid":
+    case "prism":
+      return "pyramid";
+    case "sphere":
+      return "sphere";
+    case "cylinder":
+      return "cylinder";
+    case "cone":
+      return "cone";
+    default:
+      return "neutral";
+  }
+}
+
 /**
  * Xác định Họ hình học (Tier A) từ cấu trúc đối tượng `Scene3D`.
  */
 export function detectFamilyFromScene3D(rawScene: Scene3D): GeometryFamilyId {
   const objs = presentSceneObjects(rawScene);
-  const curved = objs.find((o) => o.type === "curved_solid" && o.curved_kind);
-  if (curved) {
-    if (curved.curved_kind === "ball") return "sphere";
-    if (curved.curved_kind === "cylinder") return "cylinder";
-    if (curved.curved_kind === "cone") return "cone";
-  }
   const hasPolyhedron = objs.some(
     (o) =>
       o.type === "solid" ||
       (o.type === "polygon3" && (o.surface_role === "BASE_REGION" || o.id.startsWith("day_"))),
   );
+  const hasBall = objs.some(
+    (o) => o.type === "curved_solid" && o.curved_kind === "ball",
+  );
+  const hasCone = objs.some(
+    (o) => o.type === "curved_solid" && o.curved_kind === "cone",
+  );
+  const hasCylinder = objs.some(
+    (o) => o.type === "curved_solid" && o.curved_kind === "cylinder",
+  );
+
+  // Ưu tiên hình chính trong các tổ hợp đa khối
+  if (hasPolyhedron && hasBall) return "pyramid";
+  if (hasCone && hasCylinder) return "cone";
+
+  if (hasBall) return "sphere";
+  if (hasCylinder) return "cylinder";
+  if (hasCone) return "cone";
   if (hasPolyhedron) return "pyramid";
   return "neutral";
 }
 
 /**
- * Phân tích cấu trúc `Scene3D` (loại khối, mặt phẳng cắt/mục tiêu, thiết diện, đường vuông góc,
- * quan hệ phụ thuộc `depends`) để chọn `GeometryTemplateId` phù hợp mà không phụ thuộc đơn thuần vào từ khóa.
+ * Suy dẫn `IllustrationSpec` có cấu trúc từ `Scene3D` (hỗ trợ cả hình đơn và hình tổ hợp),
+ * hoàn toàn không phụ thuộc vào thứ tự bài mẫu hay phỏng đoán từ khóa tiêu đề.
  */
-export function resolveTemplateIdFromScene3D(rawScene: Scene3D): {
-  family: GeometryFamilyId;
-  templateId: GeometryTemplateId | null;
-  reason: string;
-} {
+export function deriveIllustrationSpecFromScene3D(
+  rawScene: Scene3D,
+): IllustrationSpec | null {
   const objs = presentSceneObjects(rawScene);
   const byId = new Map(objs.map((o) => [o.id, o]));
   const family = detectFamilyFromScene3D(rawScene);
 
   if (family === "neutral") {
+    return null;
+  }
+
+  const hasPolyhedron = objs.some(
+    (o) =>
+      o.type === "solid" ||
+      (o.type === "polygon3" && (o.surface_role === "BASE_REGION" || o.id.startsWith("day_"))),
+  );
+  const hasBall = objs.some(
+    (o) => o.type === "curved_solid" && o.curved_kind === "ball",
+  );
+  const hasCone = objs.some(
+    (o) => o.type === "curved_solid" && o.curved_kind === "cone",
+  );
+  const hasCylinder = objs.some(
+    (o) => o.type === "curved_solid" && o.curved_kind === "cylinder",
+  );
+
+  // Tổ hợp đa khối: Hình chóp nội tiếp mặt cầu
+  if (hasPolyhedron && hasBall) {
     return {
-      family: "neutral",
-      templateId: null,
-      reason: "no_recognized_solid_in_scene3d",
+      primaryShape: "pyramid",
+      secondaryShapes: ["sphere"],
+      relation: "circumscribed",
+      emphasis: "composite",
+    };
+  }
+
+  // Tổ hợp đa khối: Hình nón nội tiếp hình trụ
+  if (hasCone && hasCylinder) {
+    return {
+      primaryShape: "cone",
+      secondaryShapes: ["cylinder"],
+      relation: "inscribed",
+      emphasis: "composite",
     };
   }
 
@@ -253,7 +345,6 @@ export function resolveTemplateIdFromScene3D(rawScene: Scene3D): {
   );
 
   if (family === "pyramid") {
-    // 1. Thiết diện cắt các cạnh bên (quad/polygon section >= 4 đỉnh hoặc cắt bởi mặt phẳng song song đáy)
     const sectionPolys = objs.filter(
       (o) =>
         o.type === "section" ||
@@ -267,46 +358,46 @@ export function resolveTemplateIdFromScene3D(rawScene: Scene3D): {
     );
     if (quadSection) {
       return {
-        family: "pyramid",
-        templateId: "pyramid.section",
-        reason: `scene3d_polygon_section:${quadSection.id}`,
+        primaryShape: "pyramid",
+        relation: "plane_section",
+        emphasis: "section",
+        variant: `parallel:${quadSection.id}`,
       };
     }
 
-    // 2. Thiết diện chéo qua đỉnh và đường chéo đáy (tam giác thiết diện 3 đỉnh kèm mặt phẳng chéo)
     const triSection = sectionPolys.find(
       (s) => (s.polygon ?? s.vertices ?? []).length === 3,
     );
     if (triSection) {
       return {
-        family: "pyramid",
-        templateId: "pyramid.diagonal-section",
-        reason: `scene3d_diagonal_triangle_section:${triSection.id}`,
+        primaryShape: "pyramid",
+        relation: "plane_section",
+        emphasis: "section",
+        variant: `diagonal:${triSection.id}`,
       };
     }
 
-    // 3. Mặt phẳng qua một điểm vuông góc với đường thẳng (mặt phẳng phụ thuộc vào `line3` hoặc có chân vuông góc H trên cạnh bên)
     const planePerpToLine = activePlanes.find((pl) =>
       (pl.depends ?? []).some((depId) => byId.get(depId)?.type === "line3"),
     );
     if (planePerpToLine) {
       return {
-        family: "pyramid",
-        templateId: "pyramid.altitude-distance",
-        reason: `scene3d_plane_perp_to_line:${planePerpToLine.id}`,
+        primaryShape: "pyramid",
+        relation: "perpendicular_line_plane",
+        emphasis: "altitude",
+        variant: `plane-perp-line:${planePerpToLine.id}`,
       };
     }
 
-    // 4. Đường thẳng vuông góc với mặt phẳng bên (có mặt phẳng mục tiêu như (SAB) và đường thẳng/đoạn thẳng mục tiêu)
     if (activePlanes.length > 0) {
       return {
-        family: "pyramid",
-        templateId: "pyramid.perpendicular",
-        reason: `scene3d_line_perp_to_lateral_plane:${activePlanes[0].id}`,
+        primaryShape: "pyramid",
+        relation: "perpendicular_line_plane",
+        emphasis: "perpendicular",
+        variant: `line-perp-plane:${activePlanes[0].id}`,
       };
     }
 
-    // 5. Thể tích khối chóp & đường cao từ đỉnh xuống mặt đáy
     const hasHeightOrBase = objs.some(
       (o) =>
         (o.type === "segment3" &&
@@ -317,16 +408,15 @@ export function resolveTemplateIdFromScene3D(rawScene: Scene3D): {
     );
     if (hasHeightOrBase) {
       return {
-        family: "pyramid",
-        templateId: "pyramid.volume-height",
-        reason: "scene3d_pyramid_volume_or_altitude",
+        primaryShape: "pyramid",
+        relation: "altitude_to_base",
+        emphasis: "volume",
       };
     }
 
     return {
-      family: "pyramid",
-      templateId: null,
-      reason: "pyramid_without_recognized_problem_archetype",
+      primaryShape: "pyramid",
+      relation: "unverified_archetype",
     };
   }
 
@@ -340,15 +430,15 @@ export function resolveTemplateIdFromScene3D(rawScene: Scene3D): {
     );
     if (activePlanes.length > 0 || hasSectionCircle) {
       return {
-        family: "sphere",
-        templateId: "sphere.plane-section",
-        reason: "scene3d_sphere_plane_intersection",
+        primaryShape: "sphere",
+        relation: "plane_section",
+        emphasis: "section",
       };
     }
     return {
-      family: "sphere",
-      templateId: "sphere.basic-radius",
-      reason: "scene3d_sphere_radius_and_volume",
+      primaryShape: "sphere",
+      relation: "none",
+      emphasis: "radius",
     };
   }
 
@@ -358,9 +448,9 @@ export function resolveTemplateIdFromScene3D(rawScene: Scene3D): {
     );
     if (activePlanes.length > 0 || hasSectionCircle) {
       return {
-        family: "cylinder",
-        templateId: "cylinder.perpendicular-section",
-        reason: "scene3d_cylinder_perpendicular_section",
+        primaryShape: "cylinder",
+        relation: "plane_section",
+        emphasis: "section",
       };
     }
     const cyl = objs.find(
@@ -372,44 +462,277 @@ export function resolveTemplateIdFromScene3D(rawScene: Scene3D): {
       const horizontalOffset = Math.hypot(t[0] - a[0], t[1] - a[1]);
       if (horizontalOffset > 1e-4) {
         return {
-          family: "cylinder",
-          templateId: "cylinder.oblique-axis",
-          reason: "scene3d_cylinder_oblique_axis",
+          primaryShape: "cylinder",
+          relation: "none",
+          emphasis: "altitude",
+          variant: "oblique",
         };
       }
     }
     return {
-      family: "cylinder",
-      templateId: "cylinder.right-basic",
-      reason: "scene3d_cylinder_right_basic",
+      primaryShape: "cylinder",
+      relation: "none",
+      emphasis: "radius",
+      variant: "right",
     };
   }
 
-  if (family === "cone") {
-    const hasAxialTriangle = objs.some(
-      (o) =>
-        (o.type === "polygon3" || o.type === "section") &&
-        o.surface_role !== "BASE_REGION" &&
-        (o.polygon ?? o.vertices ?? []).length === 3,
-    );
-    if (hasAxialTriangle || activePlanes.length > 0) {
+  // family === "cone"
+  const hasAxialTriangle = objs.some(
+    (o) =>
+      (o.type === "polygon3" || o.type === "section") &&
+      o.surface_role !== "BASE_REGION" &&
+      (o.polygon ?? o.vertices ?? []).length === 3,
+  );
+  if (hasAxialTriangle || activePlanes.length > 0) {
+    return {
+      primaryShape: "cone",
+      relation: "axial_section",
+      emphasis: "section",
+    };
+  }
+  return {
+    primaryShape: "cone",
+    relation: "none",
+    emphasis: "slant_height",
+  };
+}
+
+/**
+ * Chọn `GeometryTemplateId` từ `IllustrationSpec` (§4.4):
+ * - Nếu là hình tổ hợp hoặc quan hệ đã hỗ trợ → trả về `templateId` tương ứng.
+ * - Nếu có hình tổ hợp hoặc quan hệ nhưng chưa xác minh / chưa hỗ trợ → fallback an toàn về hình chính (`templateId: null`, `fallback: true`).
+ * - Nếu không xác định được hình chính → fallback về icon trung tính (`family: "neutral"`).
+ */
+export function resolveTemplateFromIllustrationSpec(spec: IllustrationSpec): {
+  family: GeometryFamilyId;
+  templateId: GeometryTemplateId | null;
+  fallback: boolean;
+  reason: string;
+} {
+  const family = shapeKindToFamily(spec.primaryShape);
+  if (family === "neutral") {
+    return {
+      family: "neutral",
+      templateId: null,
+      fallback: true,
+      reason: "spec_unknown_primary_shape",
+    };
+  }
+
+  const secondaries = (spec.secondaryShapes ?? []).filter(Boolean);
+  const rel = spec.relation ?? "none";
+  const variant = spec.variant ?? "";
+
+  // 1. Hình tổ hợp đa khối (primaryShape + secondaryShapes)
+  if (secondaries.length > 0) {
+    if (
+      secondaries.length === 1 &&
+      (spec.primaryShape === "pyramid" || spec.primaryShape === "prism") &&
+      secondaries[0] === "sphere" &&
+      (rel === "circumscribed" || rel === "inscribed" || rel === "none")
+    ) {
+      return {
+        family: "pyramid",
+        templateId: "pyramid.circumscribed-sphere",
+        fallback: false,
+        reason: "spec_composite:pyramid_circumscribed_sphere",
+      };
+    }
+
+    if (
+      secondaries.length === 1 &&
+      ((spec.primaryShape === "cone" && secondaries[0] === "cylinder") ||
+        (spec.primaryShape === "cylinder" && secondaries[0] === "cone")) &&
+      (rel === "inscribed" || rel === "circumscribed" || rel === "none")
+    ) {
       return {
         family: "cone",
-        templateId: "cone.axial-section",
-        reason: "scene3d_cone_axial_section",
+        templateId: "cone.inscribed-cylinder",
+        fallback: false,
+        reason: "spec_composite:cone_inscribed_cylinder",
+      };
+    }
+
+    // Hình tổ hợp chưa xác minh được quan hệ → fallback về hình minh họa trung tính của hình chính
+    return {
+      family,
+      templateId: null,
+      fallback: true,
+      reason: `spec_unverified_composite_fallback:${family}`,
+    };
+  }
+
+  // 2. Hình đơn hoặc hình chính kèm mặt phẳng / đường vuông góc / thiết diện
+  if (family === "pyramid") {
+    if (rel === "circumscribed") {
+      return {
+        family: "pyramid",
+        templateId: "pyramid.circumscribed-sphere",
+        fallback: false,
+        reason: "spec_pyramid_circumscribed_sphere",
+      };
+    }
+    if (rel === "plane_section") {
+      const isDiag = variant.startsWith("diagonal");
+      const suffix = variant.includes(":") ? `:${variant.split(":")[1]}` : "";
+      return {
+        family: "pyramid",
+        templateId: isDiag ? "pyramid.diagonal-section" : "pyramid.section",
+        fallback: false,
+        reason: isDiag
+          ? `scene3d_diagonal_triangle_section${suffix}`
+          : `scene3d_polygon_section${suffix}`,
+      };
+    }
+    if (rel === "perpendicular_line_plane") {
+      const isPlanePerpLine =
+        variant.startsWith("plane-perp-line") || spec.emphasis === "altitude";
+      const suffix = variant.includes(":") ? `:${variant.split(":")[1]}` : "";
+      return {
+        family: "pyramid",
+        templateId: isPlanePerpLine ? "pyramid.altitude-distance" : "pyramid.perpendicular",
+        fallback: false,
+        reason: isPlanePerpLine
+          ? `scene3d_plane_perp_to_line${suffix}`
+          : `scene3d_line_perp_to_lateral_plane${suffix}`,
+      };
+    }
+    if (rel === "altitude_to_base" || rel === "none") {
+      return {
+        family: "pyramid",
+        templateId: "pyramid.volume-height",
+        fallback: false,
+        reason: "scene3d_pyramid_volume_or_altitude",
       };
     }
     return {
-      family: "cone",
-      templateId: "cone.slant-generator",
-      reason: "scene3d_cone_slant_generator",
+      family: "pyramid",
+      templateId: null,
+      fallback: true,
+      reason: "pyramid_without_recognized_problem_archetype",
     };
   }
 
+  if (family === "sphere") {
+    if (rel === "plane_section") {
+      return {
+        family: "sphere",
+        templateId: "sphere.plane-section",
+        fallback: false,
+        reason: "scene3d_sphere_plane_intersection",
+      };
+    }
+    if (rel === "none" || rel === "altitude_to_base") {
+      return {
+        family: "sphere",
+        templateId: "sphere.basic-radius",
+        fallback: false,
+        reason: "scene3d_sphere_radius_and_volume",
+      };
+    }
+    return {
+      family: "sphere",
+      templateId: null,
+      fallback: true,
+      reason: "sphere_unverified_relation_fallback",
+    };
+  }
+
+  if (family === "cylinder") {
+    if (rel === "plane_section") {
+      return {
+        family: "cylinder",
+        templateId: "cylinder.perpendicular-section",
+        fallback: false,
+        reason: "scene3d_cylinder_perpendicular_section",
+      };
+    }
+    if (rel === "inscribed") {
+      return {
+        family: "cone",
+        templateId: "cone.inscribed-cylinder",
+        fallback: false,
+        reason: "spec_composite:cone_inscribed_cylinder",
+      };
+    }
+    if (rel === "none" || rel === "altitude_to_base") {
+      const isOblique = variant === "oblique" || spec.emphasis === "altitude";
+      return {
+        family: "cylinder",
+        templateId: isOblique ? "cylinder.oblique-axis" : "cylinder.right-basic",
+        fallback: false,
+        reason: isOblique
+          ? "scene3d_cylinder_oblique_axis"
+          : "scene3d_cylinder_right_basic",
+      };
+    }
+    return {
+      family: "cylinder",
+      templateId: null,
+      fallback: true,
+      reason: "cylinder_unverified_relation_fallback",
+    };
+  }
+
+  // family === "cone"
+  if (rel === "inscribed") {
+    return {
+      family: "cone",
+      templateId: "cone.inscribed-cylinder",
+      fallback: false,
+      reason: "spec_composite:cone_inscribed_cylinder",
+    };
+  }
+  if (rel === "axial_section" || rel === "plane_section") {
+    return {
+      family: "cone",
+      templateId: "cone.axial-section",
+      fallback: false,
+      reason: "scene3d_cone_axial_section",
+    };
+  }
+  if (rel === "none" || rel === "altitude_to_base") {
+    return {
+      family: "cone",
+      templateId: "cone.slant-generator",
+      fallback: false,
+      reason: "scene3d_cone_slant_generator",
+    };
+  }
   return {
-    family: "neutral",
+    family: "cone",
     templateId: null,
-    reason: "unhandled_family",
+    fallback: true,
+    reason: "cone_unverified_relation_fallback",
+  };
+}
+
+/**
+ * Phân tích cấu trúc `Scene3D` (loại khối, mặt phẳng cắt/mục tiêu, thiết diện, đường vuông góc,
+ * quan hệ phụ thuộc `depends`) để chọn `GeometryTemplateId` phù hợp mà không phụ thuộc đơn thuần vào từ khóa.
+ */
+export function resolveTemplateIdFromScene3D(rawScene: Scene3D): {
+  family: GeometryFamilyId;
+  templateId: GeometryTemplateId | null;
+  spec: IllustrationSpec | null;
+  reason: string;
+} {
+  const spec = deriveIllustrationSpecFromScene3D(rawScene);
+  if (!spec) {
+    return {
+      family: "neutral",
+      templateId: null,
+      spec: null,
+      reason: "no_recognized_solid_in_scene3d",
+    };
+  }
+  const resolved = resolveTemplateFromIllustrationSpec(spec);
+  return {
+    family: resolved.family,
+    templateId: resolved.templateId,
+    spec,
+    reason: resolved.reason,
   };
 }
 
@@ -519,11 +842,23 @@ export function extractVerifiedLabelsFromScene3D(
       footLabel = pointLabel(derivedPt);
     }
 
+    let centerLabel: string | undefined;
+    if (templateId === "pyramid.circumscribed-sphere") {
+      const ball = objs.find(
+        (o) => o.type === "curved_solid" && o.curved_kind === "ball" && o.anchor,
+      );
+      const centerPt = ball?.anchor
+        ? findPointNear3D(pointObjs, toVec3(ball.anchor))
+        : undefined;
+      centerLabel = pointLabel(centerPt);
+    }
+
     return {
       apex: apexLabel,
       base: baseLabels.length > 0 ? baseLabels : undefined,
       section: sectionLabels.length > 0 ? sectionLabels : undefined,
       foot: footLabel,
+      center: centerLabel,
       plane: activePlaneLabel,
     };
   }
@@ -641,7 +976,58 @@ export function resolveGeometryIllustration(
   const effectiveScene = input.scene3d ?? catalogScene ?? null;
   const catalogCategory = canonicalId ? geometryShapeLabel(canonicalId) : undefined;
 
-  // 1. Nếu truyền trực tiếp `templateId` hợp lệ
+  // 1a. Nếu truyền trực tiếp `spec` (`IllustrationSpec`)
+  if (input.spec) {
+    const fromSpec = resolveTemplateFromIllustrationSpec(input.spec);
+    if (fromSpec.templateId) {
+      if (effectiveScene && !input.forceGeneric) {
+        return {
+          mode: "verified",
+          family: fromSpec.family,
+          templateId: fromSpec.templateId,
+          spec: input.spec,
+          fallback: false,
+          canonicalSampleId: canonicalId,
+          labels: extractVerifiedLabelsFromScene3D(effectiveScene, fromSpec.templateId),
+          reason: `spec_verified:${fromSpec.reason}`,
+        };
+      }
+      return {
+        mode: "generic",
+        family: fromSpec.family,
+        templateId: fromSpec.templateId,
+        spec: input.spec,
+        fallback: false,
+        canonicalSampleId: canonicalId,
+        labels: undefined,
+        reason: `spec_generic:${fromSpec.reason}`,
+      };
+    }
+    if (fromSpec.family !== "neutral") {
+      return {
+        mode: "family-icon",
+        family: fromSpec.family,
+        templateId: null,
+        spec: input.spec,
+        fallback: true,
+        canonicalSampleId: canonicalId,
+        labels: undefined,
+        reason: fromSpec.reason,
+      };
+    }
+    return {
+      mode: "fallback-neutral",
+      family: "neutral",
+      templateId: null,
+      spec: input.spec,
+      fallback: true,
+      canonicalSampleId: null,
+      labels: undefined,
+      reason: fromSpec.reason,
+    };
+  }
+
+  // 1b. Nếu truyền trực tiếp `templateId` hợp lệ
   if (input.templateId && input.templateId in GEOMETRY_TEMPLATES) {
     const spec = GEOMETRY_TEMPLATES[input.templateId];
     if (effectiveScene && !input.forceGeneric) {
@@ -675,6 +1061,7 @@ export function resolveGeometryIllustration(
           mode: "generic",
           family: resolved.family,
           templateId: resolved.templateId,
+          spec: resolved.spec,
           fallback: false,
           canonicalSampleId: canonicalId,
           labels: undefined,
@@ -685,6 +1072,7 @@ export function resolveGeometryIllustration(
         mode: "verified",
         family: resolved.family,
         templateId: resolved.templateId,
+        spec: resolved.spec,
         fallback: false,
         canonicalSampleId: canonicalId,
         labels: extractVerifiedLabelsFromScene3D(effectiveScene, resolved.templateId),
@@ -702,6 +1090,7 @@ export function resolveGeometryIllustration(
         mode: "family-icon",
         family: fallbackFamily,
         templateId: null,
+        spec: resolved.spec,
         fallback: true,
         canonicalSampleId: canonicalId,
         labels: undefined,

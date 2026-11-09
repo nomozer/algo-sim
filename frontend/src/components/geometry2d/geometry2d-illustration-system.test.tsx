@@ -8,19 +8,29 @@ import { LibraryView } from "../LibraryView";
 import { SamplePreview } from "../SamplePreview";
 import { stepCountOfEnvelope } from "../SessionCard";
 import {
+  Cone2D,
+  Cylinder2D,
   GEOMETRY_FAMILY_ICONS,
   GEOMETRY_TEMPLATES,
   GeometryFamilyIcon,
+  PerpendicularMarker2D,
+  Plane2D,
+  Pyramid2D,
   SAMPLE_ILLUSTRATION_MAPPING,
+  Section2D,
+  Segment2D,
+  Sphere2D,
+  deriveIllustrationSpecFromScene3D,
   detectFamilyFromScene3D,
   normalizeGeometryFamily,
   resolveGeometryIllustration,
+  resolveTemplateFromIllustrationSpec,
   verifyCatalogIllustrationConsistency,
   type GeometryFamilyId,
   type GeometryTemplateId,
 } from "./index";
 
-describe("Axo 2D Geometry Illustration System (Tier A Family Icons + Tier B Reusable Templates + Safe Fallback)", () => {
+describe("Axo 2D Geometry Illustration System (Tier A Family Icons + Tier B Composable Templates + Safe Fallback)", () => {
   it("1. Family Icon Registry (Tier A): đủ 4 họ hình học + neutral, chuẩn viewBox 24x24 và không chứa chữ/nhãn điểm", () => {
     const families: GeometryFamilyId[] = [
       "pyramid",
@@ -45,7 +55,26 @@ describe("Axo 2D Geometry Illustration System (Tier A Family Icons + Tier B Reus
     expect(normalizeGeometryFamily(null)).toBe("neutral");
   });
 
-  it("2. Template Registry (Tier B): đủ 12 template dạng bài tái sử dụng và bảo toàn bất biến hình học phẳng", () => {
+  it("2. Composable 2D Components & Template Registry (Tier B): đủ 8 component thành phần và 14 template tổ hợp/cơ bản", () => {
+    const compSvg = renderToString(
+      <svg viewBox="0 0 180 110">
+        <Pyramid2D />
+        <Sphere2D center={[90, 55]} radius={34} />
+        <Cylinder2D bottomCenter={[90, 82]} topCenter={[90, 26]} rx={34} ry={10} />
+        <Cone2D apex={[90, 18]} baseCenter={[90, 82]} rx={40} ry={12} />
+        <Plane2D points={[[40, 40], [140, 40], [130, 80], [30, 80]]} label="(P)" showLabel={true} />
+        <Section2D points={[[50, 50], [120, 50], [110, 75], [45, 75]]} />
+        <Segment2D from={[60, 20]} to={[60, 80]} role="target" />
+        <PerpendicularMarker2D at={[60, 80]} alongA={[60, 20]} alongB={[100, 80]} />
+      </svg>,
+    );
+    expect(compSvg).toContain('data-geo2d-comp="pyramid"');
+    expect(compSvg).toContain('data-geo2d-comp="sphere"');
+    expect(compSvg).toContain('data-geo2d-comp="cylinder"');
+    expect(compSvg).toContain('data-geo2d-comp="cone"');
+    expect(compSvg).toContain('data-geo2d-comp="plane"');
+    expect(compSvg).toContain('data-geo2d-comp="section-polygon"');
+
     const templateIds = Object.keys(GEOMETRY_TEMPLATES) as GeometryTemplateId[];
     expect(templateIds).toEqual([
       "pyramid.section",
@@ -53,6 +82,7 @@ describe("Axo 2D Geometry Illustration System (Tier A Family Icons + Tier B Reus
       "pyramid.perpendicular",
       "pyramid.altitude-distance",
       "pyramid.volume-height",
+      "pyramid.circumscribed-sphere",
       "sphere.plane-section",
       "sphere.basic-radius",
       "cylinder.perpendicular-section",
@@ -60,6 +90,7 @@ describe("Axo 2D Geometry Illustration System (Tier A Family Icons + Tier B Reus
       "cylinder.right-basic",
       "cone.axial-section",
       "cone.slant-generator",
+      "cone.inscribed-cylinder",
     ]);
 
     for (const id of templateIds) {
@@ -77,6 +108,19 @@ describe("Axo 2D Geometry Illustration System (Tier A Family Icons + Tier B Reus
       expect(genericSvg).toContain('data-thumb-fallback="false"');
       expect(genericSvg, `template ${id} ở chế độ generic không được chứa nhãn <text>`).not.toContain("<text");
     }
+
+    // Kiểm tra 2 template đa khối (hình chóp nội tiếp mặt cầu & hình nón nội tiếp hình trụ) dùng chung các component 2D
+    const pyrSphereSvg = renderToString(
+      <SamplePreview templateId="pyramid.circumscribed-sphere" forceGeneric={true} />,
+    );
+    expect(pyrSphereSvg).toContain('data-geo2d-comp="sphere"');
+    expect(pyrSphereSvg).toContain('data-geo2d-comp="pyramid"');
+
+    const coneCylSvg = renderToString(
+      <SamplePreview templateId="cone.inscribed-cylinder" forceGeneric={true} />,
+    );
+    expect(coneCylSvg).toContain('data-geo2d-comp="cylinder"');
+    expect(coneCylSvg).toContain('data-geo2d-comp="cone"');
 
     // Kiểm tra bất biến hình học của trục nghiêng cylinder.oblique-axis: OO' · OA = 0
     const O = [72, 75] as const;
@@ -245,5 +289,113 @@ describe("Axo 2D Geometry Illustration System (Tier A Family Icons + Tier B Reus
     expect(libHtml).toContain('data-family-icon="sphere"');
     expect(libHtml).toContain('data-family-icon="cylinder"');
     expect(libHtml).toContain('data-family-icon="cone"');
+  });
+
+  it("7. IllustrationSpec & Hình tổ hợp (§4.4): hỗ trợ đa khối, fallback an toàn khi quan hệ chưa xác minh và không phụ thuộc thứ tự bài", () => {
+    // 7a. Hình chóp nội tiếp mặt cầu qua IllustrationSpec
+    const pyrSphereSpec = resolveTemplateFromIllustrationSpec({
+      primaryShape: "pyramid",
+      secondaryShapes: ["sphere"],
+      relation: "circumscribed",
+      emphasis: "composite",
+    });
+    expect(pyrSphereSpec.templateId).toBe("pyramid.circumscribed-sphere");
+    expect(pyrSphereSpec.fallback).toBe(false);
+
+    // 7b. Hình nón nội tiếp hình trụ qua IllustrationSpec
+    const coneCylSpec = resolveTemplateFromIllustrationSpec({
+      primaryShape: "cone",
+      secondaryShapes: ["cylinder"],
+      relation: "inscribed",
+      emphasis: "composite",
+    });
+    expect(coneCylSpec.templateId).toBe("cone.inscribed-cylinder");
+    expect(coneCylSpec.fallback).toBe(false);
+
+    // 7c. Khi có hình tổ hợp nhưng chưa xác minh được quan hệ -> fallback về hình minh họa trung tính của hình chính
+    const unknownComposite = resolveGeometryIllustration({
+      spec: {
+        primaryShape: "sphere",
+        secondaryShapes: ["cylinder", "cone"],
+        relation: "skew_tangent_unverified",
+      },
+    });
+    expect(unknownComposite.mode).toBe("family-icon");
+    expect(unknownComposite.family).toBe("sphere");
+    expect(unknownComposite.templateId).toBeNull();
+    expect(unknownComposite.fallback).toBe(true);
+
+    // 7d. Khi không xác định được hình chính -> fallback về icon hình học trung tính
+    const unknownPrimary = resolveGeometryIllustration({
+      spec: {
+        primaryShape: "unknown_shape" as never,
+      },
+    });
+    expect(unknownPrimary.mode).toBe("fallback-neutral");
+    expect(unknownPrimary.family).toBe("neutral");
+    expect(unknownPrimary.fallback).toBe(true);
+
+    // 7e. Suy dẫn trực tiếp từ Scene3D đa khối (chóp + cầu & nón + trụ)
+    const compositePyramidSphereScene: Scene3D = {
+      free_objects: ["chop_sabcd", "mat_cau_ngoai_tiep"],
+      objects: [
+        {
+          id: "chop_sabcd",
+          type: "solid",
+          render: "mesh",
+          origin: "free",
+          producer: "test",
+          label: "Khối chóp",
+          depends: [],
+          vertices: [
+            ["0", "0", "0"],
+            ["2", "0", "0"],
+            ["2", "2", "0"],
+            ["0", "2", "0"],
+            ["1", "1", "3"],
+          ],
+          faces: [
+            [0, 1, 2, 3],
+            [0, 1, 4],
+            [1, 2, 4],
+            [2, 3, 4],
+            [3, 0, 4],
+          ],
+        },
+        {
+          id: "mat_cau_ngoai_tiep",
+          type: "curved_solid",
+          curved_kind: "ball",
+          render: "mesh",
+          origin: "derived",
+          producer: "test",
+          label: "Mặt cầu ngoại tiếp",
+          depends: ["chop_sabcd"],
+          anchor: ["1", "1", "1"],
+        },
+      ],
+      events: [],
+    };
+    const derivedCompSpec = deriveIllustrationSpecFromScene3D(compositePyramidSphereScene);
+    expect(derivedCompSpec?.primaryShape).toBe("pyramid");
+    expect(derivedCompSpec?.secondaryShapes).toEqual(["sphere"]);
+    expect(derivedCompSpec?.relation).toBe("circumscribed");
+
+    const resolvedComp = resolveGeometryIllustration({
+      scene3d: compositePyramidSphereScene,
+    });
+    expect(resolvedComp.templateId).toBe("pyramid.circumscribed-sphere");
+    expect(resolvedComp.fallback).toBe(false);
+
+    // 7f. Đảo ngược thứ tự hoặc chỉ lấy tập con của danh sách bài mẫu không làm sai kết quả chọn hình minh họa
+    const reversedCatalog = [...publicCatalog()].reverse();
+    for (const item of reversedCatalog) {
+      const expected = SAMPLE_ILLUSTRATION_MAPPING[item.id];
+      const res = resolveGeometryIllustration({
+        scene3d: (item.envelope as { scene3d?: Scene3D }).scene3d,
+      });
+      expect(res.templateId).toBe(expected.templateId);
+      expect(res.family).toBe(expected.family);
+    }
   });
 });

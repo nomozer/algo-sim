@@ -1,4 +1,7 @@
 export {
+  Cone2D,
+  Cylinder2D,
+  DEFAULT_PYRAMID_FRAME,
   GEO2D_TOKENS,
   Geo2DEdge,
   Geo2DEllipseRim,
@@ -7,8 +10,15 @@ export {
   Geo2DPolygon,
   Geo2DRightAngle,
   Geometry2DFrame,
+  PerpendicularMarker2D,
+  Plane2D,
+  Pyramid2D,
+  Section2D,
+  Segment2D,
+  Sphere2D,
   type EdgeVisualRole,
   type Point2D,
+  type Section2DProps,
 } from "./primitives";
 
 export {
@@ -30,12 +40,18 @@ export {
 
 export {
   SAMPLE_ILLUSTRATION_MAPPING,
+  deriveIllustrationSpecFromScene3D,
   detectFamilyFromScene3D,
   extractVerifiedLabelsFromScene3D,
   resolveGeometryIllustration,
+  resolveTemplateFromIllustrationSpec,
   resolveTemplateIdFromScene3D,
   verifyCatalogIllustrationConsistency,
   type GeometryIllustrationInput,
   type GeometryIllustrationMode,
+  type GeometryRelation,
+  type IllustrationEmphasis,
+  type IllustrationSpec,
   type ResolvedGeometryIllustration,
+  type ShapeKind,
 } from "./resolver";

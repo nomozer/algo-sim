@@ -111,7 +111,6 @@ export function LibraryView({
   });
 
   const activeCatName = activeCat === "all" ? "Tất cả" : activeCat;
-  const activeCatCount = countForCategory(activeCat);
 
   const openSample = (entry: CatalogEntry) => {
     loadEnvelope(entry.envelope, entry.id);
@@ -122,9 +121,6 @@ export function LibraryView({
       <div className="page-head-block">
         <div className="page-head-row">
           <h1 className="page-main-title">Thư viện mô phỏng</h1>
-          <span className="page-sub-desc" id="library-count-readout">
-            {`Hiển thị ${filtered.length} / ${entries.length} bài mô phỏng`}
-          </span>
         </div>
         <p className="page-sub-desc">
           Khám phá các bài toán hình học không gian qua mô hình 3D tương tác và từng bước dựng hình.
@@ -148,7 +144,7 @@ export function LibraryView({
             type="search"
             id="library-search-input"
             className="lib-search-input"
-            placeholder="Tìm theo tên bài, hình chóp, mặt cầu, hình trụ, hình nón, thiết diện..."
+            placeholder="Tìm bài mô phỏng..."
             aria-label="Tìm kiếm bài mô phỏng"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
@@ -188,17 +184,10 @@ export function LibraryView({
                 />
               ) : (
                 <svg viewBox="0 0 24 24" aria-hidden="true">
-                  <polygon points="12 2 2 7 12 12 22 7 12 2" />
-                  <polyline points="2 17 12 22 22 17" />
-                  <polyline points="2 12 12 17 22 12" />
+                  <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" />
                 </svg>
               )}
-              <span>
-                <span className="btn-lib-cat-prefix">Loại hình học:</span>{" "}
-                <strong id="library-category-selected-label">
-                  {`${activeCatName} (${activeCatCount})`}
-                </strong>
-              </span>
+              <strong id="library-category-selected-label">{activeCatName}</strong>
             </span>
             <svg
               className="btn-lib-cat-caret lib-cat-caret"
@@ -265,6 +254,24 @@ export function LibraryView({
             })}
           </div>
         </div>
+      </div>
+
+      <div className="lib-filter-meta-row" id="library-filter-meta-row">
+        <span className="lib-filter-count page-sub-desc" id="library-count-readout">
+          {`${filtered.length} bài mô phỏng phù hợp`}
+        </span>
+        {activeCat !== "all" ? (
+          <button
+            type="button"
+            className="btn-lib-filter-clear"
+            id="btn-library-filter-clear"
+            aria-label={`Bỏ lọc ${activeCatName}`}
+            onClick={() => setActiveCat("all")}
+          >
+            <span>{`Bỏ lọc: ${activeCatName}`}</span>
+            <span aria-hidden="true">×</span>
+          </button>
+        ) : null}
       </div>
 
       <div className="lib-cards-grid" id="library-cards-grid">

@@ -10,6 +10,8 @@ export const GEO2D_TOKENS = {
   hiddenEdge: "#64748B",
   shellFill: "rgba(148, 163, 184, 0.10)",
   baseFill: "rgba(148, 163, 184, 0.16)",
+  secondaryShellFill: "rgba(98, 174, 240, 0.08)",
+  secondaryStroke: "#334155",
   sectionStroke: "#C85A32",
   sectionFill: "rgba(200, 90, 50, 0.24)",
   planeStroke: "rgba(109, 40, 217, 0.44)",
@@ -27,6 +29,8 @@ export type Point2D = readonly [number, number];
 export type EdgeVisualRole =
   | "solid"
   | "hidden"
+  | "secondary-solid"
+  | "secondary-hidden"
   | "section"
   | "section-hidden"
   | "altitude"
@@ -40,6 +44,12 @@ const EDGE_ROLE_STYLE: Record<
 > = {
   solid: { stroke: GEO2D_TOKENS.ink, strokeWidth: 1.55 },
   hidden: { stroke: GEO2D_TOKENS.hiddenEdge, strokeWidth: 1.15, strokeDasharray: "3.6,2.5" },
+  "secondary-solid": { stroke: GEO2D_TOKENS.secondaryStroke, strokeWidth: 1.35 },
+  "secondary-hidden": {
+    stroke: GEO2D_TOKENS.hiddenEdge,
+    strokeWidth: 1.05,
+    strokeDasharray: "3.2,2.4",
+  },
   section: { stroke: GEO2D_TOKENS.sectionStroke, strokeWidth: 1.9 },
   "section-hidden": {
     stroke: GEO2D_TOKENS.sectionStroke,
@@ -289,6 +299,412 @@ export function Geo2DPlaneBadge({
     >
       {label}
     </text>
+  );
+}
+
+/* ============================================================================
+ * CÁC THÀNH PHẦN SVG 2D TÁI SỬ DỤNG & TỔ HỢP (§4.A2):
+ * - Segment2D
+ * - PerpendicularMarker2D
+ * - Plane2D
+ * - Section2D
+ * - Pyramid2D
+ * - Sphere2D
+ * - Cylinder2D
+ * - Cone2D
+ * ============================================================================ */
+
+/**
+ * Đoạn thẳng 2D tái sử dụng (nét liền, nét đứt, đường cao, cạnh thiết diện, đường mục tiêu).
+ */
+export function Segment2D({
+  from,
+  to,
+  role = "solid",
+}: {
+  from: Point2D;
+  to: Point2D;
+  role?: EdgeVisualRole;
+}) {
+  return <Geo2DEdge from={from} to={to} role={role} />;
+}
+
+/**
+ * Ký hiệu góc vuông 2D theo hai hướng tia trong phép chiếu song song.
+ */
+export function PerpendicularMarker2D({
+  at,
+  alongA,
+  alongB,
+  size = 6.0,
+  color = GEO2D_TOKENS.altitudeStroke,
+}: {
+  at: Point2D;
+  alongA: Point2D;
+  alongB: Point2D;
+  size?: number;
+  color?: string;
+}) {
+  return (
+    <Geo2DRightAngle
+      at={at}
+      alongA={alongA}
+      alongB={alongB}
+      size={size}
+      color={color}
+    />
+  );
+}
+
+/**
+ * Mặt phẳng 2D (tấm hình bình hành/đa giác bán trong suốt kèm nhãn mặt phẳng tùy chọn).
+ */
+export function Plane2D({
+  points,
+  fill = GEO2D_TOKENS.planeFill,
+  stroke = GEO2D_TOKENS.planeStroke,
+  strokeWidth = 0.95,
+  label,
+  labelAt,
+  showLabel = false,
+}: {
+  points: readonly Point2D[];
+  fill?: string;
+  stroke?: string;
+  strokeWidth?: number;
+  label?: string;
+  labelAt?: Point2D;
+  showLabel?: boolean;
+}) {
+  return (
+    <g data-geo2d-comp="plane">
+      <Geo2DPolygon
+        points={points}
+        fill={fill}
+        stroke={stroke}
+        strokeWidth={strokeWidth}
+      />
+      {labelAt ? (
+        <Geo2DPlaneBadge at={labelAt} label={label} showLabel={showLabel} />
+      ) : null}
+    </g>
+  );
+}
+
+export type Section2DProps =
+  | {
+      kind?: "polygon";
+      points: readonly Point2D[];
+      /**
+       * Mảng boolean tương ứng với từng cạnh `points[i] -> points[(i+1)%n]`:
+       * `true` = cạnh khuất (`section-hidden`), `false` = cạnh nhìn thấy (`section`).
+       */
+      hiddenEdges?: readonly boolean[];
+      fill?: string;
+    }
+  | {
+      kind: "ellipse";
+      center: Point2D;
+      rx: number;
+      ry: number;
+      rotationDeg?: number;
+      fill?: string;
+      fullVisible?: boolean;
+    };
+
+/**
+ * Thiết diện 2D (đa giác thiết diện hoặc đường tròn/elip giao tuyến).
+ */
+export function Section2D(props: Section2DProps) {
+  if (props.kind === "ellipse") {
+    return (
+      <g data-geo2d-comp="section-ellipse">
+        <Geo2DEllipseRim
+          center={props.center}
+          rx={props.rx}
+          ry={props.ry}
+          rotationDeg={props.rotationDeg}
+          fill={props.fill ?? GEO2D_TOKENS.sectionFill}
+          frontRole="section"
+          backRole="section-hidden"
+          fullVisible={props.fullVisible}
+        />
+      </g>
+    );
+  }
+
+  const { points, hiddenEdges, fill = GEO2D_TOKENS.sectionFill } = props;
+  return (
+    <g data-geo2d-comp="section-polygon">
+      <Geo2DPolygon points={points} fill={fill} />
+      {points.map((pt, idx) => {
+        const next = points[(idx + 1) % points.length]!;
+        const isHidden = hiddenEdges?.[idx] ?? false;
+        return (
+          <Segment2D
+            key={idx}
+            from={pt}
+            to={next}
+            role={isHidden ? "section-hidden" : "section"}
+          />
+        );
+      })}
+    </g>
+  );
+}
+
+export const DEFAULT_PYRAMID_FRAME = {
+  S: [66, 14] as Point2D,
+  A: [66, 66] as Point2D,
+  B: [36, 88] as Point2D,
+  C: [106, 94] as Point2D,
+  D: [136, 72] as Point2D,
+} as const;
+
+/**
+ * Thành phần Hình chóp 2D (`Pyramid2D`) có thể tái sử dụng độc lập hoặc kết hợp với
+ * mặt phẳng cắt (`Plane2D`), thiết diện (`Section2D`), đường vuông góc (`Segment2D`) hoặc mặt cầu (`Sphere2D`).
+ */
+export function Pyramid2D({
+  apex = DEFAULT_PYRAMID_FRAME.S,
+  base = [
+    DEFAULT_PYRAMID_FRAME.A,
+    DEFAULT_PYRAMID_FRAME.B,
+    DEFAULT_PYRAMID_FRAME.C,
+    DEFAULT_PYRAMID_FRAME.D,
+  ],
+  emphasizeBase = false,
+  altitudeRole = "altitude-hidden",
+  rightAngleAtA = true,
+  altitudeFoot,
+}: {
+  apex?: Point2D;
+  base?: readonly [Point2D, Point2D, Point2D, Point2D];
+  emphasizeBase?: boolean;
+  altitudeRole?: EdgeVisualRole | "none";
+  rightAngleAtA?: boolean;
+  /**
+   * Nếu truyền `altitudeFoot` (ví dụ tâm đáy O của chóp đều/chóp nội tiếp mặt cầu),
+   * cạnh `SA` sẽ được vẽ như cạnh bên khuất thông thường và đường cao hạ từ `apex` xuống `altitudeFoot`.
+   */
+  altitudeFoot?: Point2D;
+}) {
+  const [A, B, C, D] = base;
+  const S = apex;
+  const hasSeparateAltitudeFoot = Boolean(altitudeFoot);
+  const saRole: EdgeVisualRole = hasSeparateAltitudeFoot
+    ? "hidden"
+    : altitudeRole === "none"
+      ? "hidden"
+      : altitudeRole;
+
+  return (
+    <g data-geo2d-comp="pyramid">
+      <Geo2DPolygon
+        points={[A, B, C, D]}
+        fill={emphasizeBase ? GEO2D_TOKENS.baseFill : GEO2D_TOKENS.shellFill}
+      />
+      <Geo2DPolygon points={[S, B, C]} fill={GEO2D_TOKENS.shellFill} />
+      <Geo2DPolygon points={[S, C, D]} fill={GEO2D_TOKENS.shellFill} />
+
+      {/* Cạnh đáy khuất phía sau: AB, AD */}
+      <Segment2D from={A} to={B} role="hidden" />
+      <Segment2D from={A} to={D} role="hidden" />
+      <Segment2D from={S} to={A} role={saRole} />
+
+      {/* Nếu có tâm đáy riêng (altitudeFoot), vẽ đường cao từ S xuống altitudeFoot */}
+      {altitudeFoot && altitudeRole !== "none" ? (
+        <Segment2D from={S} to={altitudeFoot} role={altitudeRole} />
+      ) : null}
+
+      {/* Ký hiệu góc vuông tại chân đường cao A */}
+      {rightAngleAtA && !hasSeparateAltitudeFoot ? (
+        <>
+          <PerpendicularMarker2D at={A} alongA={S} alongB={B} size={5.8} />
+          <PerpendicularMarker2D at={A} alongA={S} alongB={D} size={5.8} />
+        </>
+      ) : null}
+
+      {/* Các cạnh nhìn thấy phía trước: BC, CD, SB, SC, SD */}
+      <Segment2D from={B} to={C} role="solid" />
+      <Segment2D from={C} to={D} role="solid" />
+      <Segment2D from={S} to={B} role="solid" />
+      <Segment2D from={S} to={C} role="solid" />
+      <Segment2D from={S} to={D} role="solid" />
+    </g>
+  );
+}
+
+/**
+ * Thành phần Mặt cầu 2D (`Sphere2D`) có thể dùng đơn lẻ hoặc kết hợp với mặt phẳng cắt / hình chóp nội tiếp.
+ */
+export function Sphere2D({
+  center = [90, 55],
+  radius = 38,
+  equatorRy = 11.2,
+  equatorMode = "front-solid",
+  fill = GEO2D_TOKENS.shellFill,
+  stroke = GEO2D_TOKENS.ink,
+  strokeWidth = 1.6,
+}: {
+  center?: Point2D;
+  radius?: number;
+  equatorRy?: number;
+  equatorMode?: "front-solid" | "all-hidden" | "none";
+  fill?: string;
+  stroke?: string;
+  strokeWidth?: number;
+}) {
+  return (
+    <g data-geo2d-comp="sphere">
+      <circle
+        cx={center[0]}
+        cy={center[1]}
+        r={radius}
+        fill={fill}
+        stroke={stroke}
+        strokeWidth={strokeWidth}
+      />
+      {equatorMode !== "none" ? (
+        <Geo2DEllipseRim
+          center={center}
+          rx={radius}
+          ry={equatorRy}
+          fill={equatorMode === "front-solid" ? "rgba(148, 163, 184, 0.07)" : "none"}
+          frontRole={equatorMode === "front-solid" ? "solid" : "hidden"}
+          backRole="hidden"
+        />
+      ) : null}
+    </g>
+  );
+}
+
+/**
+ * Thành phần Hình trụ 2D (`Cylinder2D`) hỗ trợ trụ đứng, trụ xiên, trụ cắt bởi mặt phẳng,
+ * hoặc làm khối ngoại tiếp cho hình nón (`Cone2D`).
+ */
+export function Cylinder2D({
+  topCenter = [92, 22],
+  bottomCenter = [92, 86],
+  rx = 33,
+  ry = 9.2,
+  showAxis = true,
+  axisRole = "altitude-hidden",
+  emphasizeBases = true,
+  variant = "primary",
+}: {
+  topCenter?: Point2D;
+  bottomCenter?: Point2D;
+  rx?: number;
+  ry?: number;
+  showAxis?: boolean;
+  axisRole?: EdgeVisualRole;
+  emphasizeBases?: boolean;
+  variant?: "primary" | "secondary";
+}) {
+  const frontEdgeRole: EdgeVisualRole =
+    variant === "secondary" ? "secondary-solid" : "solid";
+  const backEdgeRole: EdgeVisualRole =
+    variant === "secondary" ? "secondary-hidden" : "hidden";
+  const bodyFill =
+    variant === "secondary" ? GEO2D_TOKENS.secondaryShellFill : GEO2D_TOKENS.shellFill;
+  const baseFill = emphasizeBases
+    ? variant === "secondary"
+      ? "rgba(98, 174, 240, 0.11)"
+      : GEO2D_TOKENS.baseFill
+    : "none";
+
+  return (
+    <g data-geo2d-comp="cylinder">
+      <Geo2DPolygon
+        points={[
+          [topCenter[0] - rx, topCenter[1]],
+          [bottomCenter[0] - rx, bottomCenter[1]],
+          [bottomCenter[0] + rx, bottomCenter[1]],
+          [topCenter[0] + rx, topCenter[1]],
+        ]}
+        fill={bodyFill}
+      />
+      {/* Đáy dưới */}
+      <Geo2DEllipseRim
+        center={bottomCenter}
+        rx={rx}
+        ry={ry}
+        fill={baseFill}
+        frontRole={frontEdgeRole}
+        backRole={backEdgeRole}
+      />
+      {/* Đáy trên */}
+      <Geo2DEllipseRim
+        center={topCenter}
+        rx={rx}
+        ry={ry}
+        fill={baseFill}
+        frontRole={frontEdgeRole}
+        backRole={frontEdgeRole}
+        fullVisible
+      />
+      {/* Hai đường sinh biên */}
+      <Segment2D
+        from={[topCenter[0] - rx, topCenter[1]]}
+        to={[bottomCenter[0] - rx, bottomCenter[1]]}
+        role={frontEdgeRole}
+      />
+      <Segment2D
+        from={[topCenter[0] + rx, topCenter[1]]}
+        to={[bottomCenter[0] + rx, bottomCenter[1]]}
+        role={frontEdgeRole}
+      />
+      {/* Trục OO' */}
+      {showAxis ? (
+        <Segment2D from={topCenter} to={bottomCenter} role={axisRole} />
+      ) : null}
+    </g>
+  );
+}
+
+/**
+ * Thành phần Hình nón 2D (`Cone2D`) có thể dùng đơn lẻ, kết hợp mặt phẳng cắt qua trục,
+ * hoặc đặt nội tiếp bên trong `Cylinder2D`.
+ */
+export function Cone2D({
+  apex = [90, 16],
+  baseCenter = [90, 86],
+  rx = 38,
+  ry = 9.5,
+  showAxis = true,
+  axisRole = "altitude-hidden",
+  emphasizeBase = true,
+  showBaseRim = true,
+}: {
+  apex?: Point2D;
+  baseCenter?: Point2D;
+  rx?: number;
+  ry?: number;
+  showAxis?: boolean;
+  axisRole?: EdgeVisualRole;
+  emphasizeBase?: boolean;
+  showBaseRim?: boolean;
+}) {
+  const leftRim: Point2D = [baseCenter[0] - rx, baseCenter[1]];
+  const rightRim: Point2D = [baseCenter[0] + rx, baseCenter[1]];
+  return (
+    <g data-geo2d-comp="cone">
+      <Geo2DPolygon points={[apex, leftRim, rightRim]} fill={GEO2D_TOKENS.shellFill} />
+      {showBaseRim ? (
+        <Geo2DEllipseRim
+          center={baseCenter}
+          rx={rx}
+          ry={ry}
+          fill={emphasizeBase ? GEO2D_TOKENS.baseFill : "none"}
+          frontRole="solid"
+          backRole="hidden"
+        />
+      ) : null}
+      {showAxis ? <Segment2D from={apex} to={baseCenter} role={axisRole} /> : null}
+      <Segment2D from={apex} to={leftRim} role="solid" />
+      <Segment2D from={apex} to={rightRim} role="solid" />
+    </g>
   );
 }
 

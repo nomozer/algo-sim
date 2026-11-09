@@ -1,13 +1,19 @@
 import type { ReactNode } from "react";
 import type { GeometryFamilyId } from "./family-icons";
 import {
+  Cone2D,
+  Cylinder2D,
+  DEFAULT_PYRAMID_FRAME,
   GEO2D_TOKENS,
-  Geo2DEdge,
   Geo2DEllipseRim,
-  Geo2DPlaneBadge,
   Geo2DPoint,
   Geo2DPolygon,
-  Geo2DRightAngle,
+  PerpendicularMarker2D,
+  Plane2D,
+  Pyramid2D,
+  Section2D,
+  Segment2D,
+  Sphere2D,
   type Point2D,
 } from "./primitives";
 
@@ -17,13 +23,15 @@ export type GeometryTemplateId =
   | "pyramid.perpendicular"
   | "pyramid.altitude-distance"
   | "pyramid.volume-height"
+  | "pyramid.circumscribed-sphere"
   | "sphere.plane-section"
   | "sphere.basic-radius"
   | "cylinder.perpendicular-section"
   | "cylinder.oblique-axis"
   | "cylinder.right-basic"
   | "cone.axial-section"
-  | "cone.slant-generator";
+  | "cone.slant-generator"
+  | "cone.inscribed-cylinder";
 
 export interface VerifiedTemplateLabels {
   apex?: string;
@@ -40,7 +48,7 @@ export interface VerifiedTemplateLabels {
 export interface TemplateRenderOptions {
   /**
    * `"verified"`: Chỉ hiển thị các nhãn điểm / mặt phẳng đã được xác minh từ dữ liệu hình học thật (`Scene3D`).
-   * `"generic"`: Minh họa khái quát cho dạng bài — tuyệt đối không gán nhãn điểm/mặt phẳng tùy tiện (§6).
+   * `"generic"`: Minh họa khái quát cho dạng bài — tuyệt đối không gán nhãn điểm/mặt phẳng tùy tiện (§4.A1, §4.A4).
    */
   mode: "verified" | "generic";
   labels?: VerifiedTemplateLabels;
@@ -49,72 +57,13 @@ export interface TemplateRenderOptions {
 export interface GeometryTemplateDefinition {
   id: GeometryTemplateId;
   family: Exclude<GeometryFamilyId, "neutral">;
+  secondaryFamilies?: readonly Exclude<GeometryFamilyId, "neutral">[];
   titleVi: string;
   invariants: readonly string[];
   render: (options: TemplateRenderOptions) => ReactNode;
 }
 
-/**
- * Hệ tọa độ trục đo (cabinet/axonometric) chuẩn SGK cho hình chóp tứ giác S.ABCD có SA ⊥ (ABCD):
- * - A = (66, 66) (đỉnh đáy phía trong bên trái, chân đường cao SA)
- * - B = (36, 88) (đỉnh đáy phía trước bên trái, AB = (-30, 22))
- * - D = (136, 72) (đỉnh đáy phía trong bên phải, AD = (70, 6))
- * - C = B + AD = (106, 94) (đỉnh đáy phía trước bên phải)
- * - S = (66, 14) (đỉnh chóp thẳng đứng phía trên A, SA = 52px)
- *
- * Bảo toàn chính xác phép chiếu song song (affine):
- * - ABCD là hình bình hành mở rộng (rộng 100px, sâu 28px), 4 cạnh bên SB, SA, SC, SD tách góc rõ ràng.
- */
-const PYRAMID_FRAME = {
-  S: [66, 14] as Point2D,
-  A: [66, 66] as Point2D,
-  B: [36, 88] as Point2D,
-  C: [106, 94] as Point2D,
-  D: [136, 72] as Point2D,
-} as const;
-
-function renderPyramidShell({
-  emphasizeBase = false,
-  altitudeRole = "altitude-hidden",
-  rightAngleAtA = true,
-}: {
-  emphasizeBase?: boolean;
-  altitudeRole?: "hidden" | "altitude-hidden" | "section-hidden";
-  rightAngleAtA?: boolean;
-} = {}) {
-  const { S, A, B, C, D } = PYRAMID_FRAME;
-  return (
-    <>
-      {/* Tô nền mặt đáy và mặt bên */}
-      <Geo2DPolygon
-        points={[A, B, C, D]}
-        fill={emphasizeBase ? GEO2D_TOKENS.baseFill : GEO2D_TOKENS.shellFill}
-      />
-      <Geo2DPolygon points={[S, B, C]} fill={GEO2D_TOKENS.shellFill} />
-      <Geo2DPolygon points={[S, C, D]} fill={GEO2D_TOKENS.shellFill} />
-
-      {/* Các cạnh khuất: AB, AD và đường cao SA */}
-      <Geo2DEdge from={A} to={B} role="hidden" />
-      <Geo2DEdge from={A} to={D} role="hidden" />
-      <Geo2DEdge from={S} to={A} role={altitudeRole} />
-
-      {/* Ký hiệu góc vuông tại chân đường cao A */}
-      {rightAngleAtA ? (
-        <>
-          <Geo2DRightAngle at={A} alongA={S} alongB={B} size={5.8} />
-          <Geo2DRightAngle at={A} alongA={S} alongB={D} size={5.8} />
-        </>
-      ) : null}
-
-      {/* Các cạnh nhìn thấy: BC, CD, SB, SC, SD */}
-      <Geo2DEdge from={B} to={C} role="solid" />
-      <Geo2DEdge from={C} to={D} role="solid" />
-      <Geo2DEdge from={S} to={B} role="solid" />
-      <Geo2DEdge from={S} to={C} role="solid" />
-      <Geo2DEdge from={S} to={D} role="solid" />
-    </>
-  );
-}
+const PYRAMID_FRAME = DEFAULT_PYRAMID_FRAME;
 
 function renderPyramidBaseAndApexPoints(options: TemplateRenderOptions) {
   const show = options.mode === "verified";
@@ -141,16 +90,14 @@ export const GEOMETRY_TEMPLATES: Readonly<Record<GeometryTemplateId, GeometryTem
       invariants: [
         "M, N, P, Q là trung điểm chính xác của SA, SB, SC, SD trong phép chiếu affine (MN ∥ PQ ∥ AB, MQ ∥ NP ∥ AD)",
         "Hai cạnh thiết diện phía sau MN, MQ nét đứt; hai cạnh thiết diện phía trước NP, PQ nét liền",
-        "Nhãn mặt phẳng nằm ở diềm ngoài, không che lấp miền thiết diện MNPQ",
+        "Tổ hợp từ Plane2D + Pyramid2D + Section2D",
       ],
       render: (options) => {
         const { S, A, B, C, D } = PYRAMID_FRAME;
-        // Trung điểm chính xác trên 4 cạnh bên SA, SB, SC, SD
         const M: Point2D = [(S[0] + A[0]) * 0.5, (S[1] + A[1]) * 0.5]; // (66, 40)
         const N: Point2D = [(S[0] + B[0]) * 0.5, (S[1] + B[1]) * 0.5]; // (51, 51)
         const P: Point2D = [(S[0] + C[0]) * 0.5, (S[1] + C[1]) * 0.5]; // (86, 54)
         const Q: Point2D = [(S[0] + D[0]) * 0.5, (S[1] + D[1]) * 0.5]; // (101, 43)
-        // Diềm mặt phẳng cắt mở rộng nhẹ quanh thiết diện MNPQ
         const planeSheet: readonly Point2D[] = [
           [63, 35],
           [38, 53],
@@ -161,20 +108,18 @@ export const GEOMETRY_TEMPLATES: Readonly<Record<GeometryTemplateId, GeometryTem
         const sec = options.labels?.section ?? [];
         return (
           <>
-            <Geo2DPolygon
+            <Plane2D
               points={planeSheet}
-              fill={GEO2D_TOKENS.planeFill}
-              stroke={GEO2D_TOKENS.planeStroke}
-              strokeWidth={0.95}
+              label={options.labels?.plane}
+              labelAt={[140, 44]}
+              showLabel={show && Boolean(options.labels?.plane)}
             />
-            {renderPyramidShell({ rightAngleAtA: true })}
-            {/* Miền thiết diện MNPQ nổi bật */}
-            <Geo2DPolygon points={[M, N, P, Q]} fill={GEO2D_TOKENS.sectionFill} />
-            <Geo2DEdge from={M} to={N} role="section-hidden" />
-            <Geo2DEdge from={M} to={Q} role="section-hidden" />
-            <Geo2DEdge from={N} to={P} role="section" />
-            <Geo2DEdge from={P} to={Q} role="section" />
-
+            <Pyramid2D rightAngleAtA />
+            <Section2D
+              kind="polygon"
+              points={[M, N, P, Q]}
+              hiddenEdges={[true, false, false, true]}
+            />
             {renderPyramidBaseAndApexPoints(options)}
             <Geo2DPoint
               at={M}
@@ -208,11 +153,6 @@ export const GEOMETRY_TEMPLATES: Readonly<Record<GeometryTemplateId, GeometryTem
               variant="derived"
               showLabel={show && Boolean(sec[3])}
             />
-            <Geo2DPlaneBadge
-              at={[140, 44]}
-              label={options.labels?.plane}
-              showLabel={show && Boolean(options.labels?.plane)}
-            />
           </>
         );
       },
@@ -225,6 +165,7 @@ export const GEOMETRY_TEMPLATES: Readonly<Record<GeometryTemplateId, GeometryTem
       invariants: [
         "Mặt phẳng chéo đi qua đỉnh S và đường chéo đáy AC",
         "Đường chéo đáy AC và đường cao SA nét đứt; cạnh bên SC nét liền; tam giác SAC vuông tại A",
+        "Tổ hợp từ Plane2D + Pyramid2D + Section2D + PerpendicularMarker2D",
       ],
       render: (options) => {
         const { S, A, C } = PYRAMID_FRAME;
@@ -237,24 +178,20 @@ export const GEOMETRY_TEMPLATES: Readonly<Record<GeometryTemplateId, GeometryTem
         const show = options.mode === "verified";
         return (
           <>
-            <Geo2DPolygon
+            <Plane2D
               points={planeSheet}
-              fill={GEO2D_TOKENS.planeFill}
-              stroke={GEO2D_TOKENS.planeStroke}
-              strokeWidth={0.95}
-            />
-            {renderPyramidShell({ altitudeRole: "section-hidden", rightAngleAtA: false })}
-            <Geo2DPolygon points={[S, A, C]} fill={GEO2D_TOKENS.sectionFill} />
-            <Geo2DEdge from={A} to={C} role="section-hidden" />
-            <Geo2DEdge from={S} to={A} role="section-hidden" />
-            <Geo2DEdge from={S} to={C} role="section" />
-            <Geo2DRightAngle at={A} alongA={S} alongB={C} size={6.2} />
-            {renderPyramidBaseAndApexPoints(options)}
-            <Geo2DPlaneBadge
-              at={[130, 38]}
               label={options.labels?.plane}
+              labelAt={[130, 38]}
               showLabel={show && Boolean(options.labels?.plane)}
             />
+            <Pyramid2D altitudeRole="section-hidden" rightAngleAtA={false} />
+            <Section2D
+              kind="polygon"
+              points={[S, A, C]}
+              hiddenEdges={[true, true, false]}
+            />
+            <PerpendicularMarker2D at={A} alongA={S} alongB={C} size={6.2} />
+            {renderPyramidBaseAndApexPoints(options)}
           </>
         );
       },
@@ -267,6 +204,7 @@ export const GEOMETRY_TEMPLATES: Readonly<Record<GeometryTemplateId, GeometryTem
       invariants: [
         "SA ⊥ (ABCD) tại A và AB ⊥ BC tại B ⇒ BC ⊥ (SAB) tại B",
         "Mặt bên (SAB) được đánh dấu làm mặt phẳng mục tiêu, cạnh BC nổi bật kèm ký hiệu góc vuông tại A và B",
+        "Tổ hợp từ Plane2D + Pyramid2D + Segment2D + PerpendicularMarker2D",
       ],
       render: (options) => {
         const { S, A, B, C } = PYRAMID_FRAME;
@@ -280,17 +218,17 @@ export const GEOMETRY_TEMPLATES: Readonly<Record<GeometryTemplateId, GeometryTem
         const show = options.mode === "verified";
         return (
           <>
-            <Geo2DPolygon
+            <Plane2D
               points={sabPlaneSheet}
-              fill={GEO2D_TOKENS.planeFill}
-              stroke={GEO2D_TOKENS.planeStroke}
               strokeWidth={1.05}
+              label={options.labels?.plane}
+              labelAt={[30, 42]}
+              showLabel={show && Boolean(options.labels?.plane)}
             />
             <Geo2DPolygon points={[S, A, B]} fill="rgba(109, 40, 217, 0.14)" />
-            {renderPyramidShell({ rightAngleAtA: true })}
-            {/* Đường thẳng mục tiêu BC vuông góc với (SAB) tại B */}
-            <Geo2DEdge from={bcStart} to={bcEnd} role="target" />
-            <Geo2DRightAngle
+            <Pyramid2D rightAngleAtA />
+            <Segment2D from={bcStart} to={bcEnd} role="target" />
+            <PerpendicularMarker2D
               at={B}
               alongA={A}
               alongB={C}
@@ -298,11 +236,6 @@ export const GEOMETRY_TEMPLATES: Readonly<Record<GeometryTemplateId, GeometryTem
               color={GEO2D_TOKENS.targetStroke}
             />
             {renderPyramidBaseAndApexPoints(options)}
-            <Geo2DPlaneBadge
-              at={[30, 42]}
-              label={options.labels?.plane}
-              showLabel={show && Boolean(options.labels?.plane)}
-            />
           </>
         );
       },
@@ -315,10 +248,10 @@ export const GEOMETRY_TEMPLATES: Readonly<Record<GeometryTemplateId, GeometryTem
       invariants: [
         "Điểm H nằm chính xác trên cạnh bên SC (t = 0.575 trên đoạn SC)",
         "Đoạn BH ⊥ SC tại H kèm ký hiệu góc vuông và tấm mặt phẳng (α) đi qua B, H vuông góc với SC",
+        "Tổ hợp từ Plane2D + Pyramid2D + Segment2D + PerpendicularMarker2D",
       ],
       render: (options) => {
         const { S, B, C } = PYRAMID_FRAME;
-        // H nằm chính xác trên đoạn SC: H = (1 - t)*S + t*C với t = 0.575 => (89, 60)
         const H: Point2D = [89, 60];
         const alphaPlaneSheet: readonly Point2D[] = [
           [32, 90],
@@ -329,16 +262,17 @@ export const GEOMETRY_TEMPLATES: Readonly<Record<GeometryTemplateId, GeometryTem
         const show = options.mode === "verified";
         return (
           <>
-            <Geo2DPolygon
+            <Plane2D
               points={alphaPlaneSheet}
-              fill={GEO2D_TOKENS.planeFill}
-              stroke={GEO2D_TOKENS.planeStroke}
               strokeWidth={1.0}
+              label={options.labels?.plane}
+              labelAt={[28, 52]}
+              showLabel={show && Boolean(options.labels?.plane)}
             />
-            {renderPyramidShell({ rightAngleAtA: true })}
-            <Geo2DEdge from={S} to={C} role="target" />
-            <Geo2DEdge from={B} to={H} role="altitude" />
-            <Geo2DRightAngle at={H} alongA={B} alongB={S} size={6.2} />
+            <Pyramid2D rightAngleAtA />
+            <Segment2D from={S} to={C} role="target" />
+            <Segment2D from={B} to={H} role="altitude" />
+            <PerpendicularMarker2D at={H} alongA={B} alongB={S} size={6.2} />
             {renderPyramidBaseAndApexPoints(options)}
             <Geo2DPoint
               at={H}
@@ -348,11 +282,6 @@ export const GEOMETRY_TEMPLATES: Readonly<Record<GeometryTemplateId, GeometryTem
               variant="derived"
               showLabel={show && Boolean(options.labels?.foot)}
             />
-            <Geo2DPlaneBadge
-              at={[28, 52]}
-              label={options.labels?.plane}
-              showLabel={show && Boolean(options.labels?.plane)}
-            />
           </>
         );
       },
@@ -361,16 +290,106 @@ export const GEOMETRY_TEMPLATES: Readonly<Record<GeometryTemplateId, GeometryTem
     "pyramid.volume-height": {
       id: "pyramid.volume-height",
       family: "pyramid",
-      titleVi: "Thể tích khối chóp và khoảng cách từ đỉnh đến đáy",
+      titleVi: "Hình chóp đơn & chiều cao khối chóp",
       invariants: [
         "Đường cao SA ⊥ (ABCD) tại A với ký hiệu góc vuông chuẩn xác tại A",
         "Mặt đáy ABCD được tô nhấn làm miền đáy tính diện tích, không sinh điểm H trùng A",
+        "Tổ hợp trực tiếp từ Pyramid2D",
       ],
       render: (options) => {
         return (
           <>
-            {renderPyramidShell({ emphasizeBase: true, rightAngleAtA: true })}
+            <Pyramid2D emphasizeBase rightAngleAtA />
             {renderPyramidBaseAndApexPoints(options)}
+          </>
+        );
+      },
+    },
+
+    "pyramid.circumscribed-sphere": {
+      id: "pyramid.circumscribed-sphere",
+      family: "pyramid",
+      secondaryFamilies: ["sphere"],
+      titleVi: "Hình chóp nội tiếp mặt cầu",
+      invariants: [
+        "Mặt cầu tâm I(90, 56) bán kính R = 40 ngoại tiếp hình chóp S.ABCD",
+        "Đỉnh S(90, 16) nằm chính xác trên cực bắc mặt cầu; 4 đỉnh đáy A, B, C, D nằm chính xác trên đường tròn giao tuyến đáy tâm O(90, 72) bán kính r = 36.6",
+        "Đường cao SO đi qua tâm cầu I và vuông góc với đáy tại O",
+        "Tổ hợp từ Sphere2D + Pyramid2D + Segment2D + PerpendicularMarker2D",
+      ],
+      render: (options) => {
+        const I: Point2D = [90, 56];
+        const O: Point2D = [90, 72];
+        const S: Point2D = [90, 16];
+        // r_base = sqrt(40^2 - 16^2) = 36.66; 4 đỉnh trên elip đáy (O, rx=36.6, ry=9.5) tại ±35°, ±145°
+        const A: Point2D = [60.0, 66.6];
+        const B: Point2D = [60.0, 77.4];
+        const C: Point2D = [120.0, 77.4];
+        const D: Point2D = [120.0, 66.6];
+        const show = options.mode === "verified";
+        const base = options.labels?.base ?? [];
+        return (
+          <>
+            {/* Mặt cầu ngoại tiếp */}
+            <Sphere2D
+              center={I}
+              radius={40}
+              equatorRy={10.2}
+              equatorMode="all-hidden"
+              fill={GEO2D_TOKENS.secondaryShellFill}
+              stroke={GEO2D_TOKENS.secondaryStroke}
+              strokeWidth={1.4}
+            />
+            {/* Đường tròn ngoại tiếp đa giác đáy ABCD trên mặt cầu */}
+            <Geo2DEllipseRim
+              center={O}
+              rx={36.6}
+              ry={9.5}
+              fill="none"
+              frontRole="secondary-hidden"
+              backRole="secondary-hidden"
+            />
+            {/* Hình chóp S.ABCD nội tiếp */}
+            <Pyramid2D
+              apex={S}
+              base={[A, B, C, D]}
+              emphasizeBase
+              altitudeFoot={O}
+              altitudeRole="altitude-hidden"
+              rightAngleAtA={false}
+            />
+            {/* Đường chéo đáy AC qua O và bán kính cầu IS, IC */}
+            <Segment2D from={A} to={C} role="hidden" />
+            <Segment2D from={I} to={C} role="section-hidden" />
+            <PerpendicularMarker2D at={O} alongA={S} alongB={C} size={5.4} />
+
+            <Geo2DPoint
+              at={S}
+              label={options.labels?.apex}
+              dx={0}
+              dy={-7}
+              showLabel={show && Boolean(options.labels?.apex)}
+            />
+            <Geo2DPoint
+              at={I}
+              label={options.labels?.center}
+              dx={-9}
+              dy={-2}
+              variant="derived"
+              showLabel={show && Boolean(options.labels?.center)}
+            />
+            <Geo2DPoint
+              at={O}
+              label={options.labels?.foot}
+              dx={-8}
+              dy={7}
+              variant="altitude"
+              showLabel={show && Boolean(options.labels?.foot)}
+            />
+            <Geo2DPoint at={A} label={base[0]} dx={-9} dy={-4} showLabel={show && Boolean(base[0])} />
+            <Geo2DPoint at={B} label={base[1]} dx={-9} dy={5} showLabel={show && Boolean(base[1])} />
+            <Geo2DPoint at={C} label={base[2]} dx={9} dy={5} showLabel={show && Boolean(base[2])} />
+            <Geo2DPoint at={D} label={base[3]} dx={9} dy={-4} showLabel={show && Boolean(base[3])} />
           </>
         );
       },
@@ -383,11 +402,11 @@ export const GEOMETRY_TEMPLATES: Readonly<Record<GeometryTemplateId, GeometryTem
       invariants: [
         "Mặt cầu tâm I(96, 58) bán kính R = 38; mặt phẳng (P) cắt mặt cầu theo đường tròn tâm H(96, 35)",
         "Tam giác IHM vuông tại H với IH ⊥ HM và M(65.8, 35) nằm đồng thời trên vành cầu và đường tròn giao tuyến",
+        "Tổ hợp từ Plane2D + Sphere2D + Section2D(ellipse) + Segment2D + PerpendicularMarker2D",
       ],
       render: (options) => {
         const I: Point2D = [96, 58];
         const H: Point2D = [96, 35];
-        // r_sec = sqrt(38^2 - 23^2) = sqrt(915) ≈ 30.2 => M = (96 - 30.2, 35) = (65.8, 35)
         const M: Point2D = [65.8, 35];
         const planeSheet: readonly Point2D[] = [
           [34, 43],
@@ -398,44 +417,18 @@ export const GEOMETRY_TEMPLATES: Readonly<Record<GeometryTemplateId, GeometryTem
         const show = options.mode === "verified";
         return (
           <>
-            {/* Tấm mặt phẳng cắt (P) */}
-            <Geo2DPolygon
+            <Plane2D
               points={planeSheet}
-              fill={GEO2D_TOKENS.planeFill}
-              stroke={GEO2D_TOKENS.planeStroke}
-              strokeWidth={0.95}
+              label={options.labels?.plane}
+              labelAt={[24, 35]}
+              showLabel={show && Boolean(options.labels?.plane)}
             />
-            {/* Khối cầu tâm I */}
-            <circle
-              cx={I[0]}
-              cy={I[1]}
-              r={38}
-              fill={GEO2D_TOKENS.shellFill}
-              stroke={GEO2D_TOKENS.ink}
-              strokeWidth={1.6}
-            />
-            {/* Đường tròn lớn xích đạo tham chiếu */}
-            <Geo2DEllipseRim
-              center={I}
-              rx={38}
-              ry={10.5}
-              frontRole="hidden"
-              backRole="hidden"
-            />
-            {/* Đường tròn giao tuyến tâm H, bán kính r = HM */}
-            <Geo2DEllipseRim
-              center={H}
-              rx={30.2}
-              ry={8.2}
-              fill={GEO2D_TOKENS.sectionFill}
-              frontRole="section"
-              backRole="section-hidden"
-            />
-            {/* Tam giác vuông IHM: IH ⊥ HM tại H */}
-            <Geo2DEdge from={I} to={H} role="altitude-hidden" />
-            <Geo2DEdge from={H} to={M} role="section-hidden" />
-            <Geo2DEdge from={I} to={M} role="section-hidden" />
-            <Geo2DRightAngle at={H} alongA={I} alongB={M} size={5.8} />
+            <Sphere2D center={I} radius={38} equatorRy={10.5} equatorMode="all-hidden" />
+            <Section2D kind="ellipse" center={H} rx={30.2} ry={8.2} />
+            <Segment2D from={I} to={H} role="altitude-hidden" />
+            <Segment2D from={H} to={M} role="section-hidden" />
+            <Segment2D from={I} to={M} role="section-hidden" />
+            <PerpendicularMarker2D at={H} alongA={I} alongB={M} size={5.8} />
 
             <Geo2DPoint
               at={I}
@@ -460,11 +453,6 @@ export const GEOMETRY_TEMPLATES: Readonly<Record<GeometryTemplateId, GeometryTem
               variant="derived"
               showLabel={show && Boolean(options.labels?.rimPoint)}
             />
-            <Geo2DPlaneBadge
-              at={[24, 35]}
-              label={options.labels?.plane}
-              showLabel={show && Boolean(options.labels?.plane)}
-            />
           </>
         );
       },
@@ -473,9 +461,10 @@ export const GEOMETRY_TEMPLATES: Readonly<Record<GeometryTemplateId, GeometryTem
     "sphere.basic-radius": {
       id: "sphere.basic-radius",
       family: "sphere",
-      titleVi: "Bán kính, diện tích và thể tích khối cầu",
+      titleVi: "Hình cầu đơn — tâm và bán kính",
       invariants: [
         "Mặt cầu tâm I(90, 55), bán kính IA nối từ tâm I đến điểm A(128, 55) nằm trên đường tròn lớn",
+        "Tổ hợp từ Sphere2D + Segment2D",
       ],
       render: (options) => {
         const I: Point2D = [90, 55];
@@ -483,23 +472,8 @@ export const GEOMETRY_TEMPLATES: Readonly<Record<GeometryTemplateId, GeometryTem
         const show = options.mode === "verified";
         return (
           <>
-            <circle
-              cx={I[0]}
-              cy={I[1]}
-              r={38}
-              fill={GEO2D_TOKENS.shellFill}
-              stroke={GEO2D_TOKENS.ink}
-              strokeWidth={1.6}
-            />
-            <Geo2DEllipseRim
-              center={I}
-              rx={38}
-              ry={11.5}
-              fill="rgba(148, 163, 184, 0.08)"
-              frontRole="solid"
-              backRole="hidden"
-            />
-            <Geo2DEdge from={I} to={A} role="section-hidden" />
+            <Sphere2D center={I} radius={38} equatorRy={11.5} equatorMode="front-solid" />
+            <Segment2D from={I} to={A} role="section-hidden" />
             <Geo2DPoint
               at={I}
               label={options.labels?.center}
@@ -527,6 +501,7 @@ export const GEOMETRY_TEMPLATES: Readonly<Record<GeometryTemplateId, GeometryTem
       invariants: [
         "Hình trụ đứng có trục OO′, M là trung điểm OO′",
         "Mặt phẳng (α) qua M vuông góc OO′ cắt hình trụ theo đường tròn (M, R) bằng hai đáy",
+        "Tổ hợp từ Plane2D + Cylinder2D + Section2D(ellipse) + PerpendicularMarker2D",
       ],
       render: (options) => {
         const OPrime: Point2D = [96, 22];
@@ -543,54 +518,15 @@ export const GEOMETRY_TEMPLATES: Readonly<Record<GeometryTemplateId, GeometryTem
         const show = options.mode === "verified";
         return (
           <>
-            <Geo2DPolygon
+            <Plane2D
               points={planeSheet}
-              fill={GEO2D_TOKENS.planeFill}
-              stroke={GEO2D_TOKENS.planeStroke}
-              strokeWidth={0.95}
+              label={options.labels?.plane}
+              labelAt={[24, 55]}
+              showLabel={show && Boolean(options.labels?.plane)}
             />
-            <Geo2DPolygon
-              points={[
-                [OPrime[0] - rx, OPrime[1]],
-                [O[0] - rx, O[1]],
-                [O[0] + rx, O[1]],
-                [OPrime[0] + rx, OPrime[1]],
-              ]}
-              fill={GEO2D_TOKENS.shellFill}
-            />
-            {/* Đáy dưới (O) */}
-            <Geo2DEllipseRim
-              center={O}
-              rx={rx}
-              ry={ry}
-              fill={GEO2D_TOKENS.baseFill}
-              frontRole="solid"
-              backRole="hidden"
-            />
-            {/* Thiết diện tròn tại M */}
-            <Geo2DEllipseRim
-              center={M}
-              rx={rx}
-              ry={ry}
-              fill={GEO2D_TOKENS.sectionFill}
-              frontRole="section"
-              backRole="section-hidden"
-            />
-            {/* Đáy trên (O') */}
-            <Geo2DEllipseRim
-              center={OPrime}
-              rx={rx}
-              ry={ry}
-              fill={GEO2D_TOKENS.baseFill}
-              frontRole="solid"
-              backRole="solid"
-              fullVisible
-            />
-            {/* Hai đường sinh biên & trục OO' */}
-            <Geo2DEdge from={[OPrime[0] - rx, OPrime[1]]} to={[O[0] - rx, O[1]]} role="solid" />
-            <Geo2DEdge from={[OPrime[0] + rx, OPrime[1]]} to={[O[0] + rx, O[1]]} role="solid" />
-            <Geo2DEdge from={OPrime} to={O} role="altitude-hidden" />
-            <Geo2DRightAngle at={M} alongA={OPrime} alongB={[M[0] + rx, M[1]]} size={5.8} />
+            <Cylinder2D topCenter={OPrime} bottomCenter={O} rx={rx} ry={ry} showAxis />
+            <Section2D kind="ellipse" center={M} rx={rx} ry={ry} />
+            <PerpendicularMarker2D at={M} alongA={OPrime} alongB={[M[0] + rx, M[1]]} size={5.8} />
 
             <Geo2DPoint
               at={OPrime}
@@ -614,11 +550,6 @@ export const GEOMETRY_TEMPLATES: Readonly<Record<GeometryTemplateId, GeometryTem
               dy={-1}
               showLabel={show && Boolean(options.labels?.center)}
             />
-            <Geo2DPlaneBadge
-              at={[24, 55]}
-              label={options.labels?.plane}
-              showLabel={show && Boolean(options.labels?.plane)}
-            />
           </>
         );
       },
@@ -635,7 +566,6 @@ export const GEOMETRY_TEMPLATES: Readonly<Record<GeometryTemplateId, GeometryTem
       render: (options) => {
         const O: Point2D = [72, 75];
         const OPrime: Point2D = [108, 27];
-        // Phương vuông góc với OO' = (36, -48) là n = (0.8, 0.6), bán kính r = 26 => offset = (20.8, 15.6)
         const A: Point2D = [92.8, 90.6];
         const BBot: Point2D = [51.2, 59.4];
         const ATop: Point2D = [128.8, 42.6];
@@ -663,13 +593,11 @@ export const GEOMETRY_TEMPLATES: Readonly<Record<GeometryTemplateId, GeometryTem
               backRole="solid"
               fullVisible
             />
-            {/* Hai đường sinh biên song song với OO' */}
-            <Geo2DEdge from={BBot} to={BTop} role="solid" />
-            <Geo2DEdge from={A} to={ATop} role="solid" />
-            {/* Trục OO' và bán kính đáy OA ⊥ OO' */}
-            <Geo2DEdge from={O} to={OPrime} role="altitude-hidden" />
-            <Geo2DEdge from={O} to={A} role="section-hidden" />
-            <Geo2DRightAngle at={O} alongA={OPrime} alongB={A} size={5.8} />
+            <Segment2D from={BBot} to={BTop} role="solid" />
+            <Segment2D from={A} to={ATop} role="solid" />
+            <Segment2D from={O} to={OPrime} role="altitude-hidden" />
+            <Segment2D from={O} to={A} role="section-hidden" />
+            <PerpendicularMarker2D at={O} alongA={OPrime} alongB={A} size={5.8} />
 
             <Geo2DPoint
               at={O}
@@ -701,9 +629,10 @@ export const GEOMETRY_TEMPLATES: Readonly<Record<GeometryTemplateId, GeometryTem
     "cylinder.right-basic": {
       id: "cylinder.right-basic",
       family: "cylinder",
-      titleVi: "Hình trụ đứng cơ bản",
+      titleVi: "Hình trụ đơn — trục và bán kính đáy",
       invariants: [
         "Hình trụ đứng tâm O, O′, trục OO′ ⊥ OA tại O",
+        "Tổ hợp từ Cylinder2D + Segment2D + PerpendicularMarker2D",
       ],
       render: (options) => {
         const OPrime: Point2D = [90, 22];
@@ -714,37 +643,9 @@ export const GEOMETRY_TEMPLATES: Readonly<Record<GeometryTemplateId, GeometryTem
         const show = options.mode === "verified";
         return (
           <>
-            <Geo2DPolygon
-              points={[
-                [OPrime[0] - rx, OPrime[1]],
-                [O[0] - rx, O[1]],
-                [O[0] + rx, O[1]],
-                [OPrime[0] + rx, OPrime[1]],
-              ]}
-              fill={GEO2D_TOKENS.shellFill}
-            />
-            <Geo2DEllipseRim
-              center={O}
-              rx={rx}
-              ry={ry}
-              fill={GEO2D_TOKENS.baseFill}
-              frontRole="solid"
-              backRole="hidden"
-            />
-            <Geo2DEllipseRim
-              center={OPrime}
-              rx={rx}
-              ry={ry}
-              fill={GEO2D_TOKENS.baseFill}
-              frontRole="solid"
-              backRole="solid"
-              fullVisible
-            />
-            <Geo2DEdge from={[OPrime[0] - rx, OPrime[1]]} to={[O[0] - rx, O[1]]} role="solid" />
-            <Geo2DEdge from={[OPrime[0] + rx, OPrime[1]]} to={[O[0] + rx, O[1]]} role="solid" />
-            <Geo2DEdge from={OPrime} to={O} role="altitude-hidden" />
-            <Geo2DEdge from={O} to={A} role="section-hidden" />
-            <Geo2DRightAngle at={O} alongA={OPrime} alongB={A} size={5.8} />
+            <Cylinder2D topCenter={OPrime} bottomCenter={O} rx={rx} ry={ry} showAxis />
+            <Segment2D from={O} to={A} role="section-hidden" />
+            <PerpendicularMarker2D at={O} alongA={OPrime} alongB={A} size={5.8} />
 
             <Geo2DPoint
               at={OPrime}
@@ -780,6 +681,7 @@ export const GEOMETRY_TEMPLATES: Readonly<Record<GeometryTemplateId, GeometryTem
       invariants: [
         "Hình nón đỉnh S(90, 15), tâm đáy O(90, 85), đường kính đáy AB đi qua O",
         "Thiết diện qua trục là tam giác cân SAB với SO ⊥ AB tại O",
+        "Tổ hợp từ Cone2D + Section2D(polygon) + PerpendicularMarker2D",
       ],
       render: (options) => {
         const S: Point2D = [90, 15];
@@ -791,21 +693,14 @@ export const GEOMETRY_TEMPLATES: Readonly<Record<GeometryTemplateId, GeometryTem
         const show = options.mode === "verified";
         return (
           <>
-            <Geo2DEllipseRim
-              center={O}
-              rx={rx}
-              ry={ry}
-              fill={GEO2D_TOKENS.baseFill}
-              frontRole="solid"
-              backRole="hidden"
+            <Cone2D apex={S} baseCenter={O} rx={rx} ry={ry} showAxis />
+            <Section2D
+              kind="polygon"
+              points={[S, A, B]}
+              hiddenEdges={[false, true, false]}
             />
-            {/* Tam giác thiết diện qua trục SAB */}
-            <Geo2DPolygon points={[S, A, B]} fill={GEO2D_TOKENS.sectionFill} />
-            <Geo2DEdge from={A} to={B} role="section-hidden" />
-            <Geo2DEdge from={S} to={O} role="altitude-hidden" />
-            <Geo2DEdge from={S} to={A} role="section" />
-            <Geo2DEdge from={S} to={B} role="section" />
-            <Geo2DRightAngle at={O} alongA={S} alongB={A} size={5.8} />
+            <Segment2D from={S} to={O} role="altitude-hidden" />
+            <PerpendicularMarker2D at={O} alongA={S} alongB={A} size={5.8} />
 
             <Geo2DPoint
               at={S}
@@ -845,10 +740,11 @@ export const GEOMETRY_TEMPLATES: Readonly<Record<GeometryTemplateId, GeometryTem
     "cone.slant-generator": {
       id: "cone.slant-generator",
       family: "cone",
-      titleVi: "Đường sinh, chiều cao và bán kính đáy hình nón",
+      titleVi: "Hình nón đơn — đường sinh, chiều cao và bán kính đáy",
       invariants: [
         "Hình nón đỉnh S(90, 15), tâm đáy O(90, 85), điểm A trên đường tròn đáy",
         "Tam giác vuông SOA vuông tại O (SO ⊥ OA), cạnh huyền là đường sinh SA",
+        "Tổ hợp từ Cone2D + Segment2D + PerpendicularMarker2D",
       ],
       render: (options) => {
         const S: Point2D = [90, 15];
@@ -856,26 +752,15 @@ export const GEOMETRY_TEMPLATES: Readonly<Record<GeometryTemplateId, GeometryTem
         const rx = 42;
         const ry = 11.5;
         const A: Point2D = [O[0] - rx, O[1]];
-        const B: Point2D = [O[0] + rx, O[1]];
         const show = options.mode === "verified";
         return (
           <>
-            <Geo2DPolygon points={[S, A, B]} fill={GEO2D_TOKENS.shellFill} />
-            <Geo2DEllipseRim
-              center={O}
-              rx={rx}
-              ry={ry}
-              fill={GEO2D_TOKENS.baseFill}
-              frontRole="solid"
-              backRole="hidden"
-            />
-            {/* Tam giác vuông đặc trưng SOA */}
+            <Cone2D apex={S} baseCenter={O} rx={rx} ry={ry} showAxis />
             <Geo2DPolygon points={[S, O, A]} fill={GEO2D_TOKENS.altitudeFill} />
-            <Geo2DEdge from={S} to={B} role="solid" />
-            <Geo2DEdge from={S} to={O} role="altitude-hidden" />
-            <Geo2DEdge from={O} to={A} role="section-hidden" />
-            <Geo2DEdge from={S} to={A} role="section" />
-            <Geo2DRightAngle at={O} alongA={S} alongB={A} size={5.8} />
+            <Segment2D from={S} to={O} role="altitude-hidden" />
+            <Segment2D from={O} to={A} role="section-hidden" />
+            <Segment2D from={S} to={A} role="section" />
+            <PerpendicularMarker2D at={O} alongA={S} alongB={A} size={5.8} />
 
             <Geo2DPoint
               at={S}
@@ -898,6 +783,87 @@ export const GEOMETRY_TEMPLATES: Readonly<Record<GeometryTemplateId, GeometryTem
               dy={2}
               variant="derived"
               showLabel={show && Boolean(options.labels?.rimPoint)}
+            />
+          </>
+        );
+      },
+    },
+
+    "cone.inscribed-cylinder": {
+      id: "cone.inscribed-cylinder",
+      family: "cone",
+      secondaryFamilies: ["cylinder"],
+      titleVi: "Hình nón nội tiếp hình trụ",
+      invariants: [
+        "Hình trụ đứng tâm hai đáy O(90, 86), O′(90, 22) bán kính R = 34",
+        "Hình nón có đỉnh S trùng tâm đáy trên O′(90, 22) và chung đường tròn đáy dưới (O, R) với hình trụ",
+        "Trục SO ⊥ OA tại O; hai đường sinh SA, SB nối từ tâm đáy trên xuống vành đáy dưới",
+        "Tổ hợp từ Cylinder2D + Cone2D + Segment2D + PerpendicularMarker2D",
+      ],
+      render: (options) => {
+        const S: Point2D = [90, 22];
+        const O: Point2D = [90, 86];
+        const rx = 34;
+        const ry = 9.5;
+        const A: Point2D = [O[0] - rx, O[1]];
+        const B: Point2D = [O[0] + rx, O[1]];
+        const show = options.mode === "verified";
+        return (
+          <>
+            {/* Hình trụ ngoại tiếp */}
+            <Cylinder2D
+              topCenter={S}
+              bottomCenter={O}
+              rx={rx}
+              ry={ry}
+              showAxis={false}
+              emphasizeBases={false}
+              variant="secondary"
+            />
+            {/* Hình nón nội tiếp chung đáy dưới và có đỉnh tại tâm đáy trên */}
+            <Cone2D
+              apex={S}
+              baseCenter={O}
+              rx={rx}
+              ry={ry}
+              showAxis
+              emphasizeBase
+            />
+            <Geo2DPolygon points={[S, A, B]} fill={GEO2D_TOKENS.sectionFill} />
+            <Segment2D from={S} to={A} role="section" />
+            <Segment2D from={S} to={B} role="section" />
+            <Segment2D from={O} to={B} role="section-hidden" />
+            <PerpendicularMarker2D at={O} alongA={S} alongB={B} size={5.8} />
+
+            <Geo2DPoint
+              at={S}
+              label={options.labels?.apex ?? options.labels?.topCenter}
+              dx={0}
+              dy={-8}
+              showLabel={show && Boolean(options.labels?.apex ?? options.labels?.topCenter)}
+            />
+            <Geo2DPoint
+              at={O}
+              label={options.labels?.center}
+              dx={-8}
+              dy={6}
+              showLabel={show && Boolean(options.labels?.center)}
+            />
+            <Geo2DPoint
+              at={A}
+              label={options.labels?.rimPoint}
+              dx={-10}
+              dy={2}
+              variant="derived"
+              showLabel={show && Boolean(options.labels?.rimPoint)}
+            />
+            <Geo2DPoint
+              at={B}
+              label={options.labels?.secondRimPoint}
+              dx={10}
+              dy={2}
+              variant="derived"
+              showLabel={show && Boolean(options.labels?.secondRimPoint)}
             />
           </>
         );
