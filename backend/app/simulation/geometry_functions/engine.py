@@ -793,29 +793,26 @@ class _Dung:
                                    'dependencies':list(dict.fromkeys(c.args.plane1+c.args.plane2)),
                                    'provenance':'DERIVED','relation_verified':verified})
                 return True
-        for c in self.of("intersect_line_line", "intersect_line_plane", "orthogonal_projection_line", "orthogonal_projection",
-                         "translate_point"):
+        for c in self.of("intersect_line_line", "orthogonal_projection_line", "translate_point"):
             a = c.args
             p = a.point if c.fn.startswith("intersect") else a.image
-            if c.fn in ("orthogonal_projection", "translate_point") and a.point == a.image:
+            if c.fn == "translate_point" and a.point == a.image:
                 raise TuChoi("PRECONDITION_FAILED", f"{c.id}: ảnh trùng tên điểm đầu vào", (c.id,))
-            if (p not in self.pts and all(v in self.pts for v in self._construction_dependencies(c))
-                    and (not getattr(a,'line_ref',None) or a.line_ref in self.lines)):
+            deps = self._construction_dependencies(c)
+            if (p not in self.pts and all(v in self.pts and self.trong_day(v) for v in deps)
+                    and not getattr(a, "line_ref", None)):
                 xyz = self._construct(c)
                 self.constructions[p] = c
                 self._dat(p, xyz, c.fn, {c.id}, "DERIVED")
-                self.trace[-1].update(producer=c.fn, dependencies=list(self._construction_dependencies(c)),
+                self.trace[-1].update(producer=c.fn, dependencies=list(deps),
                                       relation_verified=self._construction_relation(c))
-                if getattr(a,'line_ref',None):
-                    self.trace[-1]['dependencies'].append(f'gt_{a.line_ref}')
-                    self.trace[-1]['result_binding'] = a.line_ref
                 if not self.trace[-1]["relation_verified"]:
                     raise TuChoi("ENGINE_SELF_CHECK_FAILED", f"{c.id}: quan hệ dựng không được thỏa", (c.id,))
                 self.dung.add(c.id)
                 return True
         for c in self.of("divide_segment"):
             p, (a, b), t = c.args.point, c.args.segment, Fraction(c.args.ratio)
-            if p not in self.pts and a in self.pts and b in self.pts:
+            if p not in self.pts and a in self.pts and b in self.pts and self.trong_day(a) and self.trong_day(b):
                 if self.pts[a] == self.pts[b]:
                     raise TuChoi("DEGENERATE_POINTS", f"{c.id}: đoạn {a}{b} suy biến ({a} trùng {b})", (c.id,))
                 self.divisions[p] = (a, b, t)
@@ -826,13 +823,29 @@ class _Dung:
                 return True
         for c in self.of("midpoint"):
             p, (a, b) = c.args.point, c.args.segment
-            if p not in self.pts and a in self.pts and b in self.pts:
+            if p not in self.pts and a in self.pts and b in self.pts and self.trong_day(a) and self.trong_day(b):
                 if self.pts[a] == self.pts[b]:
                     raise TuChoi("DEGENERATE_POINTS", f"{c.id}: đoạn {a}{b} suy biến ({a} trùng {b})", (c.id,))
                 self.midpoints[p] = (a, b)
                 self._dat(p, tuple((self.pts[a][i] + self.pts[b][i]) / 2 for i in range(3)), "midpoint", {c.id},
                           "DERIVED")
                 self.trace[-1]["dependencies"] = [a, b]
+                self.dung.add(c.id)
+                return True
+        for c in self.of("centroid"):
+            p, da = c.args.point, c.args.polygon
+            if len(da) != 3:
+                raise TuChoi("UNSUPPORTED_CENTROID", f"{c.id}: bản này dựng trọng tâm TAM GIÁC", (c.id,))
+            if p not in self.pts and all(v in self.pts and self.trong_day(v) for v in da):
+                pa, pb, pc = (self.pts[v] for v in da)
+                if Vec3(pb[0] - pa[0], pb[1] - pa[1], pb[2] - pa[2]).cross(
+                    Vec3(pc[0] - pa[0], pc[1] - pa[1], pc[2] - pa[2])
+                ).is_zero():
+                    raise TuChoi("COLLINEAR_POINTS", f"{c.id}: ba điểm {da} thẳng hàng — không tạo thành tam giác", (c.id,))
+                self.centroids[p] = tuple(da)
+                self._dat(p, tuple(sum(self.pts[v][i] for v in da) / 3 for i in range(3)), "centroid_of_triangle", {c.id},
+                          "DERIVED")
+                self.trace[-1]["dependencies"] = list(da)
                 self.dung.add(c.id)
                 return True
         for k in sorted(self.khoi.values(), key=lambda k: k.name):
@@ -851,22 +864,6 @@ class _Dung:
                     self.trace[-1]["dependencies"] = list(k.base)
                 h2, cs = self._chieu_cao(k.apex, self.tam, [k.name])
                 self._dat_ngoai_day(k.apex, self.tam, h2, "apex_over_center", {k.call, reg[0].id} | cs)
-                return True
-        for c in self.of("centroid"):
-            p, da = c.args.point, c.args.polygon
-            if len(da) != 3:
-                raise TuChoi("UNSUPPORTED_CENTROID", f"{c.id}: bản này dựng trọng tâm TAM GIÁC", (c.id,))
-            if p not in self.pts and all(v in self.pts for v in da):
-                pa, pb, pc = (self.pts[v] for v in da)
-                if Vec3(pb[0] - pa[0], pb[1] - pa[1], pb[2] - pa[2]).cross(
-                    Vec3(pc[0] - pa[0], pc[1] - pa[1], pc[2] - pa[2])
-                ).is_zero():
-                    raise TuChoi("COLLINEAR_POINTS", f"{c.id}: ba điểm {da} thẳng hàng — không tạo thành tam giác", (c.id,))
-                self.centroids[p] = tuple(da)
-                self._dat(p, tuple(sum(self.pts[v][i] for v in da) / 3 for i in range(3)), "centroid_of_triangle", {c.id},
-                          "DERIVED")
-                self.trace[-1]["dependencies"] = list(da)
-                self.dung.add(c.id)
                 return True
         for c, (a, b), mp, luat, chan_khai in self._rang_buoc_vuong():
             if c.fn == "orthogonal_projection" and (c.args.point in self.pts or c.args.image not in self.pts):
@@ -931,6 +928,66 @@ class _Dung:
                 self._dat(t, tuple(self.pts[b][i] + v[i] for i in range(3)), f"prism_lateral_vector_{b0}{t0}", {k.call},
                           "DERIVED")
                 return True
+        if self._dinh_tu_ba_canh_ben():
+            return True
+        for c in self.of("intersect_line_line", "intersect_line_plane", "orthogonal_projection_line", "orthogonal_projection",
+                         "translate_point"):
+            a = c.args
+            p = a.point if c.fn.startswith("intersect") else a.image
+            if c.fn in ("orthogonal_projection", "translate_point") and a.point == a.image:
+                raise TuChoi("PRECONDITION_FAILED", f"{c.id}: ảnh trùng tên điểm đầu vào", (c.id,))
+            if (p not in self.pts and all(v in self.pts for v in self._construction_dependencies(c))
+                    and (not getattr(a,'line_ref',None) or a.line_ref in self.lines)):
+                xyz = self._construct(c)
+                self.constructions[p] = c
+                self._dat(p, xyz, c.fn, {c.id}, "DERIVED")
+                self.trace[-1].update(producer=c.fn, dependencies=list(self._construction_dependencies(c)),
+                                      relation_verified=self._construction_relation(c))
+                if getattr(a,'line_ref',None):
+                    self.trace[-1]['dependencies'].append(f'gt_{a.line_ref}')
+                    self.trace[-1]['result_binding'] = a.line_ref
+                if not self.trace[-1]["relation_verified"]:
+                    raise TuChoi("ENGINE_SELF_CHECK_FAILED", f"{c.id}: quan hệ dựng không được thỏa", (c.id,))
+                self.dung.add(c.id)
+                return True
+        for c in self.of("divide_segment"):
+            p, (a, b), t = c.args.point, c.args.segment, Fraction(c.args.ratio)
+            if p not in self.pts and a in self.pts and b in self.pts:
+                if self.pts[a] == self.pts[b]:
+                    raise TuChoi("DEGENERATE_POINTS", f"{c.id}: đoạn {a}{b} suy biến ({a} trùng {b})", (c.id,))
+                self.divisions[p] = (a, b, t)
+                self._dat(p, tuple((1 - t) * self.pts[a][i] + t * self.pts[b][i] for i in range(3)), f"divide_segment_t={t}",
+                          {c.id}, "DERIVED")
+                self.trace[-1]["dependencies"] = [a, b]
+                self.dung.add(c.id)
+                return True
+        for c in self.of("midpoint"):
+            p, (a, b) = c.args.point, c.args.segment
+            if p not in self.pts and a in self.pts and b in self.pts:
+                if self.pts[a] == self.pts[b]:
+                    raise TuChoi("DEGENERATE_POINTS", f"{c.id}: đoạn {a}{b} suy biến ({a} trùng {b})", (c.id,))
+                self.midpoints[p] = (a, b)
+                self._dat(p, tuple((self.pts[a][i] + self.pts[b][i]) / 2 for i in range(3)), "midpoint", {c.id},
+                          "DERIVED")
+                self.trace[-1]["dependencies"] = [a, b]
+                self.dung.add(c.id)
+                return True
+        for c in self.of("centroid"):
+            p, da = c.args.point, c.args.polygon
+            if len(da) != 3:
+                raise TuChoi("UNSUPPORTED_CENTROID", f"{c.id}: bản này dựng trọng tâm TAM GIÁC", (c.id,))
+            if p not in self.pts and all(v in self.pts for v in da):
+                pa, pb, pc = (self.pts[v] for v in da)
+                if Vec3(pb[0] - pa[0], pb[1] - pa[1], pb[2] - pa[2]).cross(
+                    Vec3(pc[0] - pa[0], pc[1] - pa[1], pc[2] - pa[2])
+                ).is_zero():
+                    raise TuChoi("COLLINEAR_POINTS", f"{c.id}: ba điểm {da} thẳng hàng — không tạo thành tam giác", (c.id,))
+                self.centroids[p] = tuple(da)
+                self._dat(p, tuple(sum(self.pts[v][i] for v in da) / 3 for i in range(3)), "centroid_of_triangle", {c.id},
+                          "DERIVED")
+                self.trace[-1]["dependencies"] = list(da)
+                self.dung.add(c.id)
+                return True
         for c in self.of("curved_solid"):
             a = c.args
             if a.center and a.center not in self.pts and a.circumscribes in self.khoi:
@@ -980,7 +1037,7 @@ class _Dung:
                 self.trace[-1]["relation_verified"] = True
                 self.dung.add(c.id)
                 return True
-        return self._dinh_tu_ba_canh_ben()
+        return False
 
     def _dinh_tu_ba_canh_ben(self) -> bool:
         """LAST rule: the apex of a pyramid on the root base, when nothing else placed it, from its distances to three
@@ -4252,13 +4309,55 @@ def _non_empty_anchor_flips(secondary_anchors: tuple[str, ...]) -> list[frozense
     ]
 
 
-def dung_tu_loi_goi(problem_text: str, plan: Any, auxiliary: tuple[dict, ...] = (),
-                    read_quotes: tuple[str, ...] = (), *,
-                    _flip_apices: frozenset[str] = frozenset(),
-                    _exploring_mirrors: bool = False) -> KetQuaTuyen:
-    """Dựng + kiểm + thực thi từ lời gọi hàm. Trả `KetQuaTuyen` CHƯA có cảnh (`scene3d=None`) nhưng có `spec` và
-    `exec_result` — bày cảnh là việc của tầng trên (`app/ai/function_route.py`), cùng hướng phụ thuộc với
-    `ai/pipeline._dung_scene3d`: không module nào trong `app/simulation` nhập `scene3d`/`simulation_state`."""
+def _goal_signature(res: KetQuaTuyen) -> dict[str, Any]:
+    exact_sig = {
+        gid: {
+            "coef": (v or {}).get("coef"),
+            "dim": (v or {}).get("dim"),
+            "unit": (v or {}).get("unit"),
+        }
+        for gid, v in sorted((res.answer_exact or {}).items())
+    }
+    ans_sig = dict(sorted((res.answers or {}).items()))
+    sec_sig = [
+        {
+            "solid": sc.get("solid"),
+            "plane_label": sc.get("plane_label"),
+            "boundary": list(sc.get("boundary") or ()),
+            "vertex_count": len(sc.get("vertices") or ()),
+            "area_squared": (sc.get("closure_certificate") or {}).get("area_squared"),
+        }
+        for sc in (res.section_certificates or ())
+    ]
+    return {
+        "answer_exact": exact_sig,
+        "answers": ans_sig,
+        "sections": sec_sig,
+    }
+
+
+def _first_differing_goal_calls(res_a: KetQuaTuyen, res_b: KetQuaTuyen) -> tuple[str, ...]:
+    exact_a = res_a.answer_exact or {}
+    exact_b = res_b.answer_exact or {}
+    for gid in sorted(set(exact_a) | set(exact_b)):
+        if (exact_a.get(gid) or {}).get("coef") != (exact_b.get(gid) or {}).get("coef"):
+            return (gid,)
+    ans_a = res_a.answers or {}
+    ans_b = res_b.answers or {}
+    for gid in sorted(set(ans_a) | set(ans_b)):
+        if ans_a.get(gid) != ans_b.get(gid):
+            return (gid,)
+    return ()
+
+
+def _dung_mot_nhanh(
+    problem_text: str,
+    plan: Any,
+    auxiliary: tuple[dict, ...] = (),
+    read_quotes: tuple[str, ...] = (),
+    *,
+    _flip_apices: frozenset[str] = frozenset(),
+) -> tuple[KetQuaTuyen, tuple[str, ...], list[dict]]:
     from app.simulation.semantic_program.formation import hoan_thien_dung_hinh
     from app.simulation.semantic_program.interpreter import SemanticProgramInterpreter
     from app.simulation.semantic_program.validator import validate_semantic_program
@@ -4275,8 +4374,8 @@ def dung_tu_loi_goi(problem_text: str, plan: Any, auxiliary: tuple[dict, ...] = 
         if cong_calls and not poly_calls:
             unanchored = [c for c in cong_calls if c.args.circumscribes is None and c.args.inscribed_in is None]
             if len(cong_calls) == 1 and len(unanchored) == 1:
-                return _dung_cong(calls, problem_text)
-            return _dung_cong_ghep(calls, problem_text)
+                return _dung_cong(calls, problem_text), (), []
+            return _dung_cong_ghep(calls, problem_text), (), []
         if any(c.args.circumscribes is None and c.args.inscribed_in is None for c in cong_calls):
             raise TuChoi("CURVED_RELATION_UNSUPPORTED", "chưa hỗ trợ trộn khối tròn xoay độc lập với khối đa diện", tuple(c.id for c in cong_calls))
         ky_hieu = _don_vi(calls)
@@ -4330,9 +4429,6 @@ def dung_tu_loi_goi(problem_text: str, plan: Any, auxiliary: tuple[dict, ...] = 
         if (len(spec.memory_declarations) > MAX_MEMORY_DECLARATIONS
                 and (any(d.get("rule") == DINH_CAT_CANH for d in auxiliary) or bool(dung.of("curved_solid"))
                      or any(d.get("rule") == "effect-chain" and d.get("definition") for d in auxiliary))):   # C18
-            # Section-vertex plans only (run `typedfactnext-planner-bridge`; every other plan keeps main's behaviour): when
-            # the teaching expansion ALONE exceeds the IR budget, build the verified program unexpanded — the Adapter /3
-            # policy — and say so in the trace. Geometry, checks and answers are those of the verified program.
             dung.trace.append({"step": "formation_budget", "rule": "pedagogical_expansion_skipped",
                                "declarations": len(spec.memory_declarations), "limit": MAX_MEMORY_DECLARATIONS})
             spec = vr.spec
@@ -4346,9 +4442,6 @@ def dung_tu_loi_goi(problem_text: str, plan: Any, auxiliary: tuple[dict, ...] = 
             raise TuChoi("ENGINE_EXECUTION_FAILED", f"{type(e).__name__}: {e}") from None
         fm = ket.final_memory
         for c in dung.of("ask_distance_lines"):
-            # B3 gap (review I-2): the question CALLS the two lines skew ("chéo nhau"). Coplanar lines (they meet or are
-            # parallel — triple product 0, exact and frame-independent) contradict the problem: refuse, never serve the
-            # distance of a configuration the problem says it is not.
             d1, d2 = fm.get(f"dt1_{c.id}"), fm.get(f"dt2_{c.id}")
             noi_cheo = any(re.search(r"chéo\s+nhau", unicodedata.normalize("NFC", q[a:b]).lower())
                            for q in c.quotes for a, b in _cum_hoi(c, q, 0, len(q), calls))
@@ -4578,73 +4671,93 @@ def dung_tu_loi_goi(problem_text: str, plan: Any, auxiliary: tuple[dict, ...] = 
                 "khoi_" + ir_name(c.args.original_solid.replace(".", "_")),
                 *("khoi_" + ir_name(s.replace(".", "_")) for s in c.args.subtracted_solids),
             }
-        if not _exploring_mirrors and len(dung.off_base_anchors) >= 2:
-            secondary_anchors = tuple(dung.off_base_anchors[1:])
-            if len(secondary_anchors) > MAX_SECONDARY_HEIGHT_ANCHORS:
-                raise TuChoi(
-                    "AMBIGUOUS_FACT",
-                    f"hình có {len(dung.off_base_anchors)} điểm neo độ cao độc lập vượt trần tổ hợp dấu an toàn (2^{MAX_SECONDARY_HEIGHT_ANCHORS} = 16)",
-                    (),
-                )
-            for flip_set in _non_empty_anchor_flips(secondary_anchors):
-                res_neg = dung_tu_loi_goi(
-                    problem_text, plan, auxiliary, read_quotes,
-                    _flip_apices=flip_set, _exploring_mirrors=True,
-                )
-                if res_neg.status == "SERVED":
-                    for c in dung.calls:
-                        if c.id in chinh_xac and chinh_xac[c.id]["coef"] != (res_neg.answer_exact or {}).get(c.id, {}).get("coef"):
-                            raise TuChoi(
-                                "AMBIGUOUS_FACT",
-                                f"{sorted(flip_set)[0]}: hai nghiệm đối xứng qua mặt phẳng đáy cho kết quả mục tiêu khác nhau",
-                                (c.id,),
-                            )
         _gan_dieu_kien_vet(dung.trace, kernel_checked=True, checked_points=frozenset(dung.pts))
-        return KetQuaTuyen("SERVED", answers=tra, trace=dung.trace, program=program, points=dict(dung.pts),
-                           metric=G.as_json(), kernel_check=True, spec=spec, exec_result=ket, chart_metric=G,
-                           targets=tuple(sorted(muc_tieu)),
-                           section_certificates=tuple(dung.section_certificates),
-                           relation_certificates=tuple(dung.relation_certificates),
-                           answer_exact=chinh_xac, length_unit=ky_hieu, checker=_kiem_tren_hinh(dung), declared_topology=to_po,
-                           calls=[{"id": c.id, "fn": c.fn, "args": c.args.model_dump(), "quotes": list(c.quotes)}
-                                  for c in calls])
+        res = KetQuaTuyen("SERVED", answers=tra, trace=dung.trace, program=program, points=dict(dung.pts),
+                          metric=G.as_json(), kernel_check=True, spec=spec, exec_result=ket, chart_metric=G,
+                          targets=tuple(sorted(muc_tieu)),
+                          section_certificates=tuple(dung.section_certificates),
+                          relation_certificates=tuple(dung.relation_certificates),
+                          answer_exact=chinh_xac, length_unit=ky_hieu, checker=_kiem_tren_hinh(dung), declared_topology=to_po,
+                          calls=[{"id": c.id, "fn": c.fn, "args": c.args.model_dump(), "quotes": list(c.quotes)}
+                                 for c in calls])
+        return res, tuple(dung.off_base_anchors), dung.trace
     except TuChoi as e:
-        if not _exploring_mirrors and dung is not None and len(dung.off_base_anchors) >= 2 and e.code in _MIRROR_RETRY_CODES:
-            secondary_anchors = tuple(dung.off_base_anchors[1:])
-            if len(secondary_anchors) > MAX_SECONDARY_HEIGHT_ANCHORS:
-                vet = _gan_dieu_kien_vet(dung.trace, kernel_checked=False)
-                return KetQuaTuyen(
-                    "REFUSED",
-                    "AMBIGUOUS_FACT",
-                    f"hình có {len(dung.off_base_anchors)} điểm neo độ cao độc lập vượt trần tổ hợp dấu an toàn (2^{MAX_SECONDARY_HEIGHT_ANCHORS} = 16)",
-                    (),
-                    trace=vet,
-                )
-            valid_results: list[tuple[frozenset[str], KetQuaTuyen]] = []
-            for flip_set in _non_empty_anchor_flips(secondary_anchors):
-                res_neg = dung_tu_loi_goi(
-                    problem_text, plan, auxiliary, read_quotes,
-                    _flip_apices=flip_set, _exploring_mirrors=True,
-                )
-                if res_neg.status == "SERVED":
-                    valid_results.append((flip_set, res_neg))
-            if len(valid_results) == 1:
-                return valid_results[0][1]
-            if len(valid_results) >= 2:
-                _, res0 = valid_results[0]
-                exact0 = res0.answer_exact or {}
-                for flip_k, res_k in valid_results[1:]:
-                    exact_k = res_k.answer_exact or {}
-                    for gid, v0 in exact0.items():
-                        if v0.get("coef") != (exact_k.get(gid) or {}).get("coef"):
-                            vet = _gan_dieu_kien_vet(dung.trace, kernel_checked=False)
-                            return KetQuaTuyen(
-                                "REFUSED",
-                                "AMBIGUOUS_FACT",
-                                f"{sorted(flip_k)[0]}: nhiều cấu hình đối xứng qua mặt phẳng đáy thỏa dữ kiện nhưng cho kết quả mục tiêu khác nhau",
-                                (gid,),
-                                trace=vet,
-                            )
-                return res0
         vet = _gan_dieu_kien_vet(dung.trace, kernel_checked=False) if dung else []
-        return KetQuaTuyen("REFUSED", e.code, e.reason, e.calls, trace=vet, details=e.data)
+        anchors = tuple(dung.off_base_anchors) if dung else ()
+        return KetQuaTuyen("REFUSED", e.code, e.reason, e.calls, trace=vet, details=e.data), anchors, vet
+
+
+def dung_tu_loi_goi(problem_text: str, plan: Any, auxiliary: tuple[dict, ...] = (),
+                    read_quotes: tuple[str, ...] = (), *,
+                    _flip_apices: frozenset[str] = frozenset(),
+                    _exploring_mirrors: bool = False) -> KetQuaTuyen:
+    """Dựng + kiểm + thực thi từ lời gọi hàm. Trả `KetQuaTuyen` CHƯA có cảnh (`scene3d=None`) nhưng có `spec` và
+    `exec_result` — bày cảnh là việc của tầng trên (`app/ai/function_route.py`), cùng hướng phụ thuộc với
+    `ai/pipeline._dung_scene3d`: không module nào trong `app/simulation` nhập `scene3d`/`simulation_state`."""
+    res0, anchors0, trace0 = _dung_mot_nhanh(
+        problem_text, plan, auxiliary, read_quotes, _flip_apices=_flip_apices
+    )
+    if _exploring_mirrors or len(anchors0) < 2:
+        return res0
+    if res0.status != "SERVED" and res0.code not in _MIRROR_RETRY_CODES:
+        return res0
+
+    discovered_anchors: list[str] = list(anchors0)
+    if len(discovered_anchors) - 1 > MAX_SECONDARY_HEIGHT_ANCHORS:
+        vet = _gan_dieu_kien_vet(list(trace0), kernel_checked=False)
+        return KetQuaTuyen(
+            "REFUSED",
+            "AMBIGUOUS_FACT",
+            f"hình có {len(discovered_anchors)} điểm neo độ cao độc lập vượt trần tổ hợp dấu an toàn (2^{MAX_SECONDARY_HEIGHT_ANCHORS} = 16)",
+            (),
+            trace=vet,
+        )
+
+    evaluated_flips: set[frozenset[str]] = {frozenset()}
+    valid_results: list[tuple[frozenset[str], KetQuaTuyen]] = (
+        [(frozenset(), res0)] if res0.status == "SERVED" else []
+    )
+
+    while True:
+        secondary_anchors = tuple(discovered_anchors[1:])
+        pending = [f for f in _non_empty_anchor_flips(secondary_anchors) if f not in evaluated_flips]
+        if not pending:
+            break
+        for flip_set in pending:
+            evaluated_flips.add(flip_set)
+            res_k, anchors_k, _ = _dung_mot_nhanh(
+                problem_text, plan, auxiliary, read_quotes, _flip_apices=flip_set
+            )
+            for a in anchors_k:
+                if a not in discovered_anchors:
+                    discovered_anchors.append(a)
+                    if len(discovered_anchors) - 1 > MAX_SECONDARY_HEIGHT_ANCHORS:
+                        vet = _gan_dieu_kien_vet(list(trace0), kernel_checked=False)
+                        return KetQuaTuyen(
+                            "REFUSED",
+                            "AMBIGUOUS_FACT",
+                            f"hình có {len(discovered_anchors)} điểm neo độ cao độc lập vượt trần tổ hợp dấu an toàn (2^{MAX_SECONDARY_HEIGHT_ANCHORS} = 16)",
+                            (),
+                            trace=vet,
+                        )
+            if res_k.status == "SERVED":
+                valid_results.append((flip_set, res_k))
+
+    if not valid_results:
+        return res0
+
+    flip_base, res_base = valid_results[0]
+    sig_base = _goal_signature(res_base)
+    for flip_k, res_k in valid_results[1:]:
+        if _goal_signature(res_k) != sig_base:
+            diff_calls = _first_differing_goal_calls(res_base, res_k)
+            diff_anchors = sorted(flip_k ^ flip_base) or sorted(discovered_anchors[1:])
+            vet = _gan_dieu_kien_vet(list(trace0), kernel_checked=False)
+            return KetQuaTuyen(
+                "REFUSED",
+                "AMBIGUOUS_FACT",
+                f"{diff_anchors[0]}: nhiều cấu hình đối xứng qua mặt phẳng đáy thỏa dữ kiện nhưng cho kết quả mục tiêu khác nhau",
+                diff_calls,
+                trace=vet,
+            )
+    return res_base

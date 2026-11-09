@@ -441,19 +441,87 @@ def prepare_live_hybrid(problem_text: str, *, model: str | None = None) -> LiveH
     return LiveHybridRun(problem_text, resolved_model, ext_fp, policy, key)
 
 
+@dataclass(frozen=True)
+class LocalFirstHybridRun:
+    """Selectable Local-First Hybrid `/4` run (`HYBRID_ROUTE_MODE=local-first` or `HYBRID_LOCAL_FIRST=1`)."""
+    problem_text: str
+    model: str
+    extraction_surface: str
+    policy: RoutePolicy
+    cache_key: str
+
+    def run(
+        self,
+        api_key: str | None = None,
+        *,
+        allow_live_ai: bool = True,
+        per_attempt_timeout_s: float = 60.0,
+        deadline_seconds: float | None = None,
+    ) -> HybridOfflineResult:
+        from app.ai.adaptive_input_router import route_text_input
+
+        eff_per = _finite_pos(per_attempt_timeout_s, 60.0)
+        eff_deadline = _finite_pos(deadline_seconds, eff_per * 3.0)
+        fallback_ext: Extractor | None = None
+        if allow_live_ai and api_key:
+            transport = _live_provider_transport(
+                api_key, model=self.model, timeout_seconds=eff_per, deadline_seconds=eff_deadline
+            )
+            fallback_ext = TransportExtractor(transport)
+        outcome = route_text_input(
+            self.problem_text,
+            fallback_extractor=fallback_ext,
+            allow_live_ai=allow_live_ai and bool(api_key),
+            input_kind='text',
+            model=self.model,
+            policy=self.policy,
+            timeout_seconds=eff_deadline,
+        )
+        return HybridOfflineResult(outcome.response, outcome.receipt)
+
+
+def prepare_local_first_hybrid(problem_text: str, *, model: str | None = None) -> LocalFirstHybridRun:
+    from app.ai.adaptive_input_router import ADAPTIVE_INPUT_ROUTER_VERSION
+    from app.ai.local_geometry_parser import LOCAL_GEOMETRY_PARSER_VERSION
+
+    resolved_model = (model or '').strip() or 'gemini-2.5-flash'
+    policy = hybrid_offline_policy({'HYBRID_ROUTE_D_PREVIEW': '1'})
+    ext_fp = _tfn_extraction.typed_fact_next_surface_fingerprint()
+    identity = {
+        'route': 'HYBRID_V4_LOCAL_FIRST',
+        'router_version': ADAPTIVE_INPUT_ROUTER_VERSION,
+        'parser_version': LOCAL_GEOMETRY_PARSER_VERSION,
+        'model': resolved_model,
+        'extraction_surface': ext_fp,
+        'surface': dict(policy.preview_surface),
+        'response_contract': policy.response_contract,
+        'source': problem_text,
+    }
+    key = sha256(json.dumps(identity, sort_keys=True, ensure_ascii=False).encode('utf-8')).hexdigest()
+    return LocalFirstHybridRun(problem_text, resolved_model, ext_fp, policy, key)
+
+
 def hybrid_route_identity(mode: str, env: Mapping[str, str]) -> dict[str, Any]:
     """Diagnostics snapshot for `/api/diagnostics/runtime` (never exposes secrets)."""
+    from app.ai.adaptive_input_router import ADAPTIVE_INPUT_ROUTER_VERSION
+    from app.ai.local_geometry_parser import LOCAL_GEOMETRY_PARSER_VERSION
+
     surface = _surface()
-    valid = mode in ('staging-replay', 'live')
+    valid = mode in ('staging-replay', 'live', 'local-first')
     extraction_mode = (
         'REPLAY_STAGING_SIMULATED' if mode == 'staging-replay'
-        else ('LIVE_GEMINI_STRUCTURED' if mode == 'live' else 'INVALID_HYBRID_ROUTE_MODE')
+        else (
+            'LOCAL_FIRST_DETERMINISTIC_WITH_AI_FALLBACK' if mode == 'local-first'
+            else ('LIVE_GEMINI_STRUCTURED' if mode == 'live' else 'INVALID_HYBRID_ROUTE_MODE')
+        )
     )
     return {
         'mode': mode,
         'enabled': valid,
         'simulated': mode == 'staging-replay',
         'extraction_mode': extraction_mode,
+        'local_parser_version': LOCAL_GEOMETRY_PARSER_VERSION,
+        'adaptive_router_version': ADAPTIVE_INPUT_ROUTER_VERSION,
         'registry_version': surface['registry_version'],
         'planner_version': surface['planner_version'],
         'engine_version': surface['engine_version'],

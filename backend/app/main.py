@@ -904,7 +904,7 @@ CACHE_VERSION = "132"
 #: Hai chế độ hợp lệ của kiến trúc chính thức Hybrid `/4` do máy chủ sở hữu:
 #: - `live` (mặc định): trích xuất có cấu trúc qua Gemini (`typed-fact-next/2`) khi cấu hình `GEMINI_API_KEY`.
 #: - `staging-replay`: chạy đường `/4` với kho trích xuất đã ghi (`HYBRID_REPLAY_CORPUS`), đánh dấu mô phỏng tường minh.
-HYBRID_ROUTE_MODES = ("live", "staging-replay")
+HYBRID_ROUTE_MODES = ("live", "staging-replay", "local-first")
 
 
 def hybrid_route_mode() -> str:
@@ -1221,15 +1221,20 @@ async def _analyze_hybrid_route(text: str, mode: str, api_key: str | None, algos
     from app.ai.hybrid_offline import (
         HYBRID_INFRASTRUCTURE_CODES,
         prepare_live_hybrid,
+        prepare_local_first_hybrid,
         prepare_staging_replay,
         resolve_hybrid_gemini_model,
     )
 
+    use_local_first = mode == "local-first" or os.getenv("HYBRID_LOCAL_FIRST") == "1"
     if mode == "staging-replay":
         corpus_path = os.getenv("HYBRID_REPLAY_CORPUS", "")
         plan = await run_in_threadpool(prepare_staging_replay, text, corpus_path)
         if plan is None:
             return _hybrid_infra_error("STAGING_CORPUS_UNAVAILABLE")
+    elif use_local_first:
+        model_name = resolve_hybrid_gemini_model()
+        plan = await run_in_threadpool(prepare_local_first_hybrid, text, model=model_name)
     else:
         model_name = resolve_hybrid_gemini_model()
         plan = await run_in_threadpool(prepare_live_hybrid, text, model=model_name)
@@ -1248,7 +1253,7 @@ async def _analyze_hybrid_route(text: str, mode: str, api_key: str | None, algos
                 state = "hit"
 
     if response is None:
-        if mode == "live" and not api_key:
+        if mode == "live" and not use_local_first and not api_key:
             return _hybrid_infra_error("MISSING_API_KEY")
 
         ngoai = _ngoai_pham_vi(text)
@@ -1270,9 +1275,20 @@ async def _analyze_hybrid_route(text: str, mode: str, api_key: str | None, algos
 
             per_attempt = _finite_pos_env("HYBRID_LIVE_TIMEOUT_SECONDS", 60.0)
             deadline = _finite_pos_env("HYBRID_LIVE_DEADLINE_SECONDS", per_attempt * 3.0)
-            result = await run_in_threadpool(
-                lambda: plan.run(api_key or "", per_attempt_timeout_s=per_attempt, deadline_seconds=deadline)
-            )
+            if use_local_first:
+                allow_live = os.getenv("ALLOW_LIVE_AI") != "0"
+                result = await run_in_threadpool(
+                    lambda: plan.run(
+                        api_key,
+                        allow_live_ai=allow_live,
+                        per_attempt_timeout_s=per_attempt,
+                        deadline_seconds=deadline,
+                    )
+                )
+            else:
+                result = await run_in_threadpool(
+                    lambda: plan.run(api_key or "", per_attempt_timeout_s=per_attempt, deadline_seconds=deadline)
+                )
         code = str(result.receipt.get("code") or "")
         fkind = result.receipt.get("failure_kind")
         obs = DiagnosticObserver(text) if bat_telemetry() else None

@@ -238,6 +238,23 @@ def _finalize_text_problem(
             metrics=metrics,
         )
 
+    from app.ai.adaptive_input_router import ADAPTIVE_INPUT_ROUTER_VERSION
+    from app.ai.local_geometry_parser import parse_geometry_problem_locally
+
+    local_parse = parse_geometry_problem_locally(merged)
+    prov["local_geometry_parse"] = {
+        "parser_version": local_parse.parser_version,
+        "router_version": ADAPTIVE_INPUT_ROUTER_VERSION,
+        "local_parse_status": local_parse.status,
+        "local_parse_ready_for_zero_ai_hybrid": local_parse.status
+        in ("LOCAL_PARSE_COMPLETE", "LOCAL_PARSE_AMBIGUOUS"),
+        "local_parse_ms": round(local_parse.parse_latency_ms, 3),
+        "expected_downstream_typed_fact_ai_calls": (
+            0 if local_parse.status in ("LOCAL_PARSE_COMPLETE", "LOCAL_PARSE_AMBIGUOUS") else 1
+        ),
+    }
+    metrics["local_parse_ms"] = round(local_parse.parse_latency_ms, 3)
+
     return UnifiedPrepareOutcome(
         status="ready",
         source_kind=source_kind,
@@ -537,6 +554,22 @@ async def _process_normalized_visual_page(
             },
         )
 
+    from app.ai.adaptive_input_router import ADAPTIVE_INPUT_ROUTER_VERSION
+    from app.ai.local_geometry_parser import parse_geometry_problem_locally
+
+    local_parse = parse_geometry_problem_locally(target_text)
+    prov_common["local_geometry_parse"] = {
+        "parser_version": local_parse.parser_version,
+        "router_version": ADAPTIVE_INPUT_ROUTER_VERSION,
+        "local_parse_status": local_parse.status,
+        "local_parse_ready_for_zero_ai_hybrid": local_parse.status
+        in ("LOCAL_PARSE_COMPLETE", "LOCAL_PARSE_AMBIGUOUS"),
+        "local_parse_ms": round(local_parse.parse_latency_ms, 3),
+        "expected_downstream_typed_fact_ai_calls": (
+            0 if local_parse.status in ("LOCAL_PARSE_COMPLETE", "LOCAL_PARSE_AMBIGUOUS") else 1
+        ),
+    }
+
     return UnifiedPrepareOutcome(
         status="ready",
         source_kind=source_kind,
@@ -544,6 +577,7 @@ async def _process_normalized_visual_page(
         provenance=prov_common,
         metrics={
             **metrics_now,
+            "local_parse_ms": round(local_parse.parse_latency_ms, 3),
             "processing_ms": round((time.perf_counter() - t0) * 1000.0, 2),
         },
     )
