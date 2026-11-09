@@ -11,6 +11,7 @@ import type { Domain } from "../simulations/types";
 import { useAppStore } from "../state/store";
 import { SamplePreview } from "./SamplePreview";
 import { stepCountOfEnvelope } from "./SessionCard";
+import { GeometryFamilyIcon, normalizeGeometryFamily } from "./geometry2d";
 
 /**
  * Thư viện mô phỏng Axo V2.7 (Phase B — Full UI Replacement, P5).
@@ -179,11 +180,19 @@ export function LibraryView({
             onClick={() => setMenuOpen((v) => !v)}
           >
             <span className="btn-lib-cat-left lib-cat-btn-label" id="library-category-btn-label">
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                <polygon points="12 2 2 7 12 12 22 7 12 2" />
-                <polyline points="2 17 12 22 22 17" />
-                <polyline points="2 12 12 17 22 12" />
-              </svg>
+              {activeCat !== "all" ? (
+                <GeometryFamilyIcon
+                  family={normalizeGeometryFamily(activeCat)}
+                  size={16}
+                  className="btn-lib-cat-family-icon"
+                />
+              ) : (
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <polygon points="12 2 2 7 12 12 22 7 12 2" />
+                  <polyline points="2 17 12 22 22 17" />
+                  <polyline points="2 12 12 17 22 12" />
+                </svg>
+              )}
               <span>
                 <span className="btn-lib-cat-prefix">Loại hình học:</span>{" "}
                 <strong id="library-category-selected-label">
@@ -241,6 +250,13 @@ export function LibraryView({
                         <polyline points="3 8.5 6.5 12 13 4.5" />
                       </svg>
                     </span>
+                    {cat !== "all" ? (
+                      <GeometryFamilyIcon
+                        family={normalizeGeometryFamily(cat)}
+                        size={15}
+                        className="lib-cat-menu-family-icon"
+                      />
+                    ) : null}
                     <span>{label}</span>
                   </span>
                   <span className="lib-cat-menu-count">{count}</span>

@@ -1,9 +1,12 @@
 # GEOMETRY VISUAL SPECIFICATION — AXO 11 SIMULATION SAMPLES
 
-> **Tài liệu đặc tả hình học & quy tắc đồng bộ trực quan (Scene3D ↔ Thumbnail ↔ Các bước dựng)**
+> **Tài liệu đặc tả hình học & quy tắc đồng bộ trực quan (Scene3D ↔ 2D Illustration System ↔ Các bước dựng)**
 > - **Worktree:** `D:/Documents/projects/axo-geometry-library` (`feat/axo-geometry-library-verification`)
 > - **Nguồn dữ liệu gốc có thẩm quyền (Single Source of Truth):** `backend/scripts/build_geometry_samples.py` → `frontend/src/data/geometry-samples.json` → `withSubEntities` → `buildPedagogicalConstructionPlan` → `veKhongGian`.
-> - **Cơ chế đồng bộ Thumbnail (`SamplePreview.tsx`):** Không duy trì các hình vẽ tay độc lập. `SamplePreview.tsx` đọc trực tiếp `Scene3D` của từng bài từ `GEOMETRY_SAMPLES`, làm giàu qua `withSubEntities` + `buildPedagogicalConstructionPlan`, chọn hướng nhìn chuẩn qua `cauTrucSuPham` + `chonHuongNhin`, phân loại nét liền/nét đứt bằng `classifySolidEdgeVisibility` / `classifyWorldSegmentVisibility` / `diemVanhCongBiChe` và chiếu trực tiếp sang `viewBox="0 0 180 110"`.
+> - **Hệ thống hình minh họa 2D hai tầng (`frontend/src/components/geometry2d/` & `SamplePreview.tsx`):**
+>   1. **Tier A — Geometry Family Icons (`family-icons.tsx`):** Bộ 4 icon vector `24×24` tối giản cho 4 họ hình học (`pyramid` / `Hình chóp`, `sphere` / `Mặt cầu`, `cylinder` / `Hình trụ`, `cone` / `Hình nón`) + 1 icon đa diện trung tính (`neutral`), không chữ và không ký hiệu điểm.
+>   2. **Tier B — Geometry Problem Illustration Templates (`templates.tsx` & `primitives.tsx`):** Bộ 12 template hình học phẳng 2D sư phạm theo chuẩn SGK THPT (`pyramid.section`, `pyramid.diagonal-section`, `pyramid.perpendicular`, `pyramid.altitude-distance`, `pyramid.volume-height`, `sphere.plane-section`, `sphere.basic-radius`, `cylinder.perpendicular-section`, `cylinder.oblique-axis`, `cylinder.right-basic`, `cone.axial-section`, `cone.slant-generator`).
+>   3. **Template Resolver & Safe Fallback (`resolver.ts`):** Tự động phân tích cấu trúc `Scene3D` (`solid`, `curved_solid`, `plane3`, `section`, `polygon3`, `circle3`, `line3`, `segment3`, `point3`) để chọn đúng template dạng bài và chỉ gắn nhãn điểm/mặt phẳng đã xác minh (`mode="verified"`). Khi chỉ biết dạng bài mà chưa có `Scene3D`, hiển thị template không nhãn (`mode="generic"`). Khi chưa rõ dạng bài nhưng biết họ hình học, fallback về icon họ hình (`mode="family-icon"`). Khi thiếu cả hai, fallback về khối trung tính (`mode="fallback-neutral"`).
 
 ---
 

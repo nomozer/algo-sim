@@ -7883,6 +7883,17 @@ html {
   gap: 7px;
 }
 
+.btn-lib-cat-family-icon,
+.lib-cat-menu-family-icon {
+  flex-shrink: 0;
+  color: var(--ink-secondary);
+}
+
+.lib-cat-menu-item.active .lib-cat-menu-family-icon,
+.lib-cat-menu-item.is-active .lib-cat-menu-family-icon {
+  color: var(--primary-active);
+}
+
 .lib-cat-menu-check {
   width: 14px;
   height: 14px;

@@ -1,5 +1,11 @@
 # CODE_INDEX.md — Chỉ mục module + BỘ NHỚ KIẾN TRÚC
 
+## Axo Reusable 2D Geometry Illustration System & Library Visual Refinement (2026-11-09)
+
+| Path | Owns | Locked by |
+|---|---|---|
+| `frontend/src/components/geometry2d/primitives.tsx` · `frontend/src/components/geometry2d/family-icons.tsx` · `frontend/src/components/geometry2d/templates.tsx` · `frontend/src/components/geometry2d/resolver.ts` · `frontend/src/components/geometry2d/index.ts` · `frontend/src/components/SamplePreview.tsx` · `frontend/src/components/LibraryView.tsx` · `frontend/src/components/SessionCard.tsx` · `GEOMETRY_VISUAL_SPEC.md` | Two-tier Reusable 2D Geometry Illustration System (`Axo Geometry 2D System`): Tier A `24×24` Geometry Family Icons (`pyramid`, `sphere`, `cylinder`, `cone`, `neutral`, `GeometryFamilyIcon`, `normalizeGeometryFamily`, `renderFamilyThumbnailContent`), Tier B 12 reusable 2D Problem Illustration Templates (`pyramid.section`, `pyramid.diagonal-section`, `pyramid.perpendicular`, `pyramid.altitude-distance`, `pyramid.volume-height`, `sphere.plane-section`, `sphere.basic-radius`, `cylinder.perpendicular-section`, `cylinder.oblique-axis`, `cylinder.right-basic`, `cone.axial-section`, `cone.slant-generator`) built from shared `Geo2D*` primitives (`GEO2D_TOKENS`), and 4-level structured `Scene3D` resolver (`resolveGeometryIllustration`: `verified` → `generic` → `family-icon` → `fallback-neutral` with `data-thumb-fallback="true"`, zero unverified `<text>` labels in generic/fallback modes) | `frontend/src/components/geometry2d/geometry2d-illustration-system.test.tsx`, `frontend/src/components/phase-b-views.test.tsx`, `frontend/src/code-index-sync.test.ts` |
+
 ## Axo Camera-First & Photo Fan Stack + Multi-Image Unified Input (2026-11-08)
 
 | Path | Owns | Locked by |
