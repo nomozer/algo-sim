@@ -16,7 +16,8 @@
           "verdict": "HYBRID_REASONING_IMPROVEMENT_VERIFIED"}
   },
   "integration_commits": [
-    {"sha": "60bba4624", "role": "merge --no-ff of A then B onto d79565b52"},
+    {"sha": "6889a31f8", "role": "merge --no-ff of A (25a098602) onto d79565b52"},
+    {"sha": "60bba4624", "role": "merge --no-ff of B (756697dc7)"},
     {"sha": "d2d89376a", "role": "comment-only fix in region_detector.py (crop_holds_all_content covers noise blocks)"},
     {"sha": "452210a9c", "role": "candidate re-freeze + K-1/R-1/S-2 template measured_system sync"}
   ],

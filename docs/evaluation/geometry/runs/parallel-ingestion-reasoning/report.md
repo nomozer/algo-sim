@@ -121,7 +121,7 @@ Coordinator đã soát lại toán của G1a/G1b:
 ## 5. Candidate tích hợp
 
 - **Chuỗi commit:**
-  - `60bba4624` là merge `--no-ff` của A (`25a098602`) rồi B (`756697dc7`) trên `d79565b52`.
+  - Hai merge `--no-ff` trên `d79565b52`: `6889a31f8` gộp A (`25a098602`), rồi `60bba4624` gộp B (`756697dc7`).
   - `d2d89376a` sửa chú thích của A: `crop_holds_all_content` tính cả khối nhiễu. Chỉ đổi chú thích, không đổi logic.
   - `452210a9c` đóng băng lại candidate: 106 file, tree hash `0e815f39c8d02203d73ce332faa7f167c8344ef925f6adc547bbe37bae472a7c`,
     `--verify` MATCH. Hash `measured_system` trong ba template K-1/R-1/S-2 được đồng bộ theo; `owner_decision` không đổi.
