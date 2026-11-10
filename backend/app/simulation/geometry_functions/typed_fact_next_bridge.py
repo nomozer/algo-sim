@@ -809,6 +809,23 @@ def _bridge(p: TypedFactNextPayload, section_fact, version: str, v2: bool) -> di
                 f["value"] = str(a["side"])
         elif k in ("rectangle", "base_is_rectangle"):
             f = {"kind": "polygon_shape", "points": _refs(a["vertices"]), "shape": "rectangle"}
+        elif k == "parallelogram":
+            f = {"kind": "polygon_shape", "points": _refs(a["vertices"]), "shape": "parallelogram"}
+        elif k == "rhombus":
+            f = {
+                "kind": "polygon_shape",
+                "points": _refs(a["vertices"]),
+                "shape": "rhombus",
+                **({"value": str(a["side"])} if a.get("side") is not None else {}),
+            }
+        elif k in ("trapezoid", "isosceles_trapezoid"):
+            f = {
+                "kind": "polygon_shape",
+                "points": _refs(a["vertices"]),
+                "shape": k,
+                "points_a": _refs(a["base_a"]),
+                "points_b": _refs(a["base_b"]),
+            }
         elif k in ("right_angle", "base_is_right_triangle"):
             at = _ref(a["right_at"] if "vertices" in a else a["vertex"])
             f = {"kind": "right_angle", "at": at,

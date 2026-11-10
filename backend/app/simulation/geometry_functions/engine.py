@@ -564,7 +564,7 @@ class _Dung:
             if a in self.pts and b in self.pts and (self.h2 is not None or self.pts[a][2] == self.pts[b][2]):
                 ra.append((self.d2(a, b), chuoi))
         if _suy:
-            for c in self.of("regular_polygon"):
+            for c in self.of("regular_polygon", "rhombus"):
                 v, n = c.args.vertices, len(c.args.vertices)
                 canh = [frozenset((v[i], v[(i + 1) % n])) for i in range(n)]
                 if frozenset((x, y)) not in canh:
@@ -574,6 +574,13 @@ class _Dung:
                 for e in canh:
                     if e != frozenset((x, y)):
                         ra += [(d, (c.id, *ids)) for d, ids in self.do_dai(*sorted(e), _suy=False)]
+            for c in self.of("parallelogram"):
+                v = c.args.vertices
+                for e1, e2 in ((frozenset((v[0], v[1])), frozenset((v[2], v[3]))), (frozenset((v[1], v[2])), frozenset((v[3], v[0])))):
+                    if frozenset((x, y)) == e1:
+                        ra += [(d, (c.id, *ids)) for d, ids in self.do_dai(*sorted(e2), _suy=False)]
+                    elif frozenset((x, y)) == e2:
+                        ra += [(d, (c.id, *ids)) for d, ids in self.do_dai(*sorted(e1), _suy=False)]
             ra += self._suy_do_dai_day_tu_goc(x, y)
         if len({d for d, _ in ra}) > 1:
             raise TuChoi("INCONSISTENT_FACTS", f"đoạn {x}{y} nhận hai độ dài khác nhau từ các dữ kiện",
@@ -686,6 +693,9 @@ class _Dung:
         dat = frozenset(self.root.base)
         reg = [c for c in self.of("regular_polygon") if frozenset(c.args.vertices) == dat]
         rect = [c for c in self.of("rectangle") if frozenset(c.args.vertices) == dat]
+        rhom = [c for c in self.of("rhombus") if frozenset(c.args.vertices) == dat]
+        para = [c for c in self.of("parallelogram") if frozenset(c.args.vertices) == dat]
+        iso_trap = [c for c in self.of("isosceles_trapezoid") if frozenset(c.args.vertices) == dat]
         if reg:
             c = reg[0]
             vong = tuple(c.args.vertices)
@@ -717,6 +727,15 @@ class _Dung:
                 raise TuChoi("MISSING_DIMENSION", "hình chữ nhật đáy thiếu một cạnh", (c.id,))
             khung = ((Z, Z), (Fraction(1), Z), (Fraction(1), Fraction(1)), (Z, Fraction(1)))
             G2, dung, luat = ((a[0][0], Z), (Z, b[0][0])), {c.id, *a[0][1], *b[0][1]}, "rectangle_chart"
+        elif rhom or para:
+            c = (rhom or para)[0]
+            vong = tuple(c.args.vertices)
+            khung, G2, dung = self._hinh_binh_hanh_thoi(c, vong)
+            luat = "rhombus_chart" if c.fn == "rhombus" else "parallelogram_chart"
+        elif iso_trap:
+            c = iso_trap[0]
+            vong, khung, G2, dung = self._hinh_thang_can(c, tuple(c.args.vertices))
+            luat = "isosceles_trapezoid_chart"
         elif len(dat) == 3:
             vong = self.root.base
             khung, G2, dung = self._tam_giac(vong)
@@ -738,37 +757,205 @@ class _Dung:
         for v, (x, y) in zip(vong, khung):
             self._dat(v, (x, y, Z), luat, dung)
 
+    def _hinh_binh_hanh_thoi(self, c: LoiGoi, vong: tuple[str, ...]):
+        """Exact rational Gram chart for `parallelogram` and `rhombus` on cyclic vertices `vong = (v0, v1, v2, v3)`.
+        Never assumes a 60° angle on a bare rhombus: requires either a vertex angle or a diagonal (or both diagonals)."""
+        dung: set[str] = {c.id}
+        d_ac = sorted(self.do_dai(vong[0], vong[2]))
+        d_bd = sorted(self.do_dai(vong[1], vong[3]))
+        a2: Fraction | None = None
+        b2: Fraction | None = None
+        m_val: Fraction | None = None
+        if c.fn == "rhombus":
+            if c.args.side is not None:
+                a2 = b2 = binh_phuong(c.args.side)
+            else:
+                edges = sorted((d, ids) for i in range(4) for d, ids in self.do_dai(vong[i], vong[(i + 1) % 4]))
+                if edges:
+                    a2 = b2 = edges[0][0]
+                    dung |= set(edges[0][1])
+                elif d_ac and d_bd:
+                    a2 = b2 = (d_ac[0][0] + d_bd[0][0]) / 4
+                    m_val = (d_ac[0][0] - d_bd[0][0]) / 4
+                    dung |= set(d_ac[0][1]) | set(d_bd[0][1])
+            if a2 is None or b2 is None:
+                raise TuChoi("MISSING_DIMENSION", "hình thoi đáy chưa có độ dài cạnh hoặc hai đường chéo", (c.id,))
+        else:
+            ca = sorted(self.do_dai(vong[0], vong[1]) + self.do_dai(vong[2], vong[3]))
+            cb = sorted(self.do_dai(vong[1], vong[2]) + self.do_dai(vong[3], vong[0]))
+            if not ca or not cb:
+                raise TuChoi("MISSING_DIMENSION", "hình bình hành đáy thiếu độ dài hai cạnh kề", (c.id,))
+            a2, b2 = ca[0][0], cb[0][0]
+            dung |= set(ca[0][1]) | set(cb[0][1])
+
+        if m_val is None:
+            if d_ac:
+                m_val = (d_ac[0][0] - a2 - b2) / 2
+                dung |= set(d_ac[0][1])
+            elif d_bd:
+                m_val = (a2 + b2 - d_bd[0][0]) / 2
+                dung |= set(d_bd[0][1])
+            else:
+                for cr in self.of("right_angle"):
+                    if cr.args.vertex in vong:
+                        k = vong.index(cr.args.vertex)
+                        if frozenset(cr.args.rays) == frozenset((vong[(k - 1) % 4], vong[(k + 1) % 4])):
+                            m_val = Z
+                            dung.add(cr.id)
+                            break
+                if m_val is None:
+                    for ca_v in self.of("vertex_angle"):
+                        if ca_v.args.vertex not in vong:
+                            continue
+                        k = vong.index(ca_v.args.vertex)
+                        if frozenset(ca_v.args.rays) != frozenset((vong[(k - 1) % 4], vong[(k + 1) % 4])):
+                            continue
+                        _sin2, cos2, cos_sign = self._goc_tham_so(
+                            ca_v.args.value, ca_v.args.unit, allow_obtuse=True, calls=(ca_v.id,)
+                        )
+                        if cos_sign is None:
+                            raise TuChoi("AMBIGUOUS_FACT", "góc đỉnh hình bình hành/hình thoi từ sin chưa phân biệt nhọn hay tù", (ca_v.id,))
+                        if cos2 == 0:
+                            m_val = Z
+                        else:
+                            m_abs = _sqrt_q(a2 * b2 * cos2)
+                            if m_abs is None:
+                                raise TuChoi(
+                                    "EXACT_DOMAIN_EXCEEDED",
+                                    "tích vô hướng hai cạnh kề chứa căn lồng ngoài miền Gram hữu tỉ ℚ",
+                                    (c.id, ca_v.id),
+                                )
+                            ip = m_abs if cos_sign > 0 else -m_abs
+                            m_val = ip if k in (0, 2) else -ip
+                        dung.add(ca_v.id)
+                        break
+        if m_val is None:
+            raise TuChoi(
+                "MISSING_DIMENSION",
+                "hình thoi / hình bình hành đáy thiếu góc ở đỉnh hoặc đường chéo để xác định hình duy nhất",
+                (c.id,),
+            )
+        khung = ((Z, Z), (Fraction(1), Z), (Fraction(1), Fraction(1)), (Z, Fraction(1)))
+        return khung, ((a2, m_val), (m_val, b2)), dung
+
+    def _hinh_thang_can(self, c: LoiGoi, vong: tuple[str, ...]):
+        """Exact rational orthogonal chart for `isosceles_trapezoid` with parallel bases `c.args.base_a`, `c.args.base_b`."""
+        dung: set[str] = {c.id}
+        ba, bb = frozenset(c.args.base_a), frozenset(c.args.base_b)
+        if {ba, bb} == {frozenset((vong[0], vong[1])), frozenset((vong[3], vong[2]))}:
+            v0, v1, v2, v3 = vong[0], vong[1], vong[2], vong[3]
+        elif {ba, bb} == {frozenset((vong[1], vong[2])), frozenset((vong[0], vong[3]))}:
+            v0, v1, v2, v3 = vong[1], vong[2], vong[3], vong[0]
+        else:
+            raise TuChoi("INCONSISTENT_FACTS", "hai đáy hình thang cân không phải hai cạnh đối diện", (c.id,))
+        b1_c = sorted(self.do_dai(v0, v1))
+        b2_c = sorted(self.do_dai(v3, v2))
+        if not b1_c or not b2_c:
+            raise TuChoi("MISSING_DIMENSION", "hình thang cân thiếu độ dài hai đáy song song", (c.id,))
+        a2, b2 = b1_c[0][0], b2_c[0][0]
+        dung |= set(b1_c[0][1]) | set(b2_c[0][1])
+        r = _sqrt_q(b2 / a2)
+        if r is None:
+            raise TuChoi("UNSUPPORTED_IRRATIONAL_LAYOUT", "tỉ số hai đáy hình thang cân vô tỉ — ngoài miền toạ độ hữu tỉ ℚ", (c.id,))
+        delta = (Fraction(1) - r) / 2
+        sigma = (Fraction(1) + r) / 2
+        ht2: Fraction | None = None
+        leg_c = sorted(self.do_dai(v0, v3) + self.do_dai(v1, v2))
+        diag_c = sorted(self.do_dai(v0, v2) + self.do_dai(v1, v3))
+        if leg_c:
+            ht2 = leg_c[0][0] - delta * delta * a2
+            dung |= set(leg_c[0][1])
+        elif diag_c:
+            ht2 = diag_c[0][0] - sigma * sigma * a2
+            dung |= set(diag_c[0][1])
+        else:
+            for cp in self.of("perpendicular_lines"):
+                if {frozenset(cp.args.line1), frozenset(cp.args.line2)} == {frozenset((v0, v2)), frozenset((v1, v3))}:
+                    ht2 = sigma * sigma * a2
+                    dung.add(cp.id)
+                    break
+            if ht2 is None:
+                ordered = (v0, v1, v2, v3)
+                for ca_v in self.of("vertex_angle"):
+                    if ca_v.args.vertex not in ordered:
+                        continue
+                    k = ordered.index(ca_v.args.vertex)
+                    if frozenset(ca_v.args.rays) != frozenset((ordered[(k - 1) % 4], ordered[(k + 1) % 4])):
+                        continue
+                    sin2, cos2, cos_sign = self._goc_tham_so(
+                        ca_v.args.value, ca_v.args.unit, allow_obtuse=True, calls=(ca_v.id,)
+                    )
+                    if cos_sign is None:
+                        raise TuChoi("AMBIGUOUS_FACT", "góc ở đáy hình thang cân từ sin chưa phân biệt nhọn hay tù", (ca_v.id,))
+                    exp_sign = (1 if delta > 0 else (-1 if delta < 0 else 0)) * (1 if ca_v.args.vertex in (v0, v1) else -1)
+                    if cos_sign != exp_sign or cos2 == 0:
+                        raise TuChoi("INCONSISTENT_FACTS", "góc ở đáy hình thang cân mâu thuẫn với thứ tự đáy lớn / đáy nhỏ", (c.id, ca_v.id))
+                    ht2 = delta * delta * a2 * sin2 / cos2
+                    dung.add(ca_v.id)
+                    break
+        if ht2 is None:
+            raise TuChoi("MISSING_DIMENSION", "hình thang cân thiếu cạnh bên, đường chéo hoặc góc ở đáy", (c.id,))
+        if ht2 <= 0:
+            raise TuChoi("INCONSISTENT_FACTS", "cạnh bên / đường chéo hình thang cân không đủ dài để tạo hình phẳng", tuple(sorted(dung)))
+        coords = {v0: (Z, Z), v1: (Fraction(1), Z), v2: (sigma, Fraction(1)), v3: (delta, Fraction(1))}
+        return vong, tuple(coords[v] for v in vong), ((a2, Z), (Z, ht2)), dung
+
     def _chuoi_goc_vuong(self, vong: tuple[str, ...]):
         """Quadrilateral base with right angles at two CONSECUTIVE vertices Vi, Vj (right trapezoid), each angle between the
-        polygon's own two sides there. Both legs ViVp, VjVn are ⊥ ViVj, hence parallel, and on the SAME side of ViVj (any
-        other side makes ABCD self-intersecting). Chart: Vi origin, e1 = ViVj, e2 = ViVp, G2 = diag(|ViVj|², |ViVp|²),
-        Vn = Vj + (|VjVn| / |ViVp|)·e2 — exact only when that ratio is rational. Missing length ⇒ MISSING_DIMENSION; the
-        fourth side, if given, is checked later like every fact. None when no such pair exists (not this shape)."""
+        polygon's own two sides there (or a declared `trapezoid` with parallel bases ViVp // VjVn and a right angle at Vi or Vj).
+        Also derives perpendicular leg |ViVj|² from oblique leg |VpVn|² when both parallel bases are known."""
         if len(vong) != 4:
             return None
-        goc = {(c.args.vertex, frozenset(c.args.rays)): c.id for c in self.of("right_angle")}   # several per vertex allowed
+        goc = {(c.args.vertex, frozenset(c.args.rays)): c.id for c in self.of("right_angle")}
+        for cv in self.of("vertex_angle"):
+            _s2, c2, _cs = self._goc_tham_so(cv.args.value, cv.args.unit, allow_obtuse=True, calls=(cv.id,))
+            if c2 == 0:
+                goc.setdefault((cv.args.vertex, frozenset(cv.args.rays)), cv.id)
+        traps = [
+            c for c in self.of("trapezoid") if frozenset(c.args.vertices) == frozenset(vong)
+        ]
         for i in range(4):
             vi, vj, vp, vn = vong[i], vong[(i + 1) % 4], vong[(i - 1) % 4], vong[(i + 2) % 4]
             gi, gj = goc.get((vi, frozenset((vp, vj)))), goc.get((vj, frozenset((vi, vn))))
-            if not (gi and gj):
+            trap_match = next(
+                (
+                    ct.id
+                    for ct in traps
+                    if {frozenset(ct.args.base_a), frozenset(ct.args.base_b)} == {frozenset((vi, vp)), frozenset((vj, vn))}
+                ),
+                None,
+            )
+            if not ((gi and gj) or (trap_match and (gi or gj))):
                 continue
+            call_ids = tuple(x for x in (gi, gj, trap_match) if x)
             ab, ad, bc = self.do_dai(vi, vj), self.do_dai(vi, vp), self.do_dai(vj, vn)
-            if thieu := [s for s, l in ((vi + vj, ab), (vi + vp, ad), (vj + vn, bc)) if not l]:
-                raise TuChoi("MISSING_DIMENSION", f"đáy có góc vuông tại {vi}, {vj} nhưng chưa biết {thieu}", (gi, gj))
+            if not ad or not bc:
+                thieu = [s for s, l in ((vi + vj, ab), (vi + vp, ad), (vj + vn, bc)) if not l]
+                raise TuChoi("MISSING_DIMENSION", f"đáy hình thang vuông tại {vi}, {vj} chưa biết {thieu}", call_ids)
             r = _sqrt_q(sorted(bc)[0][0] / sorted(ad)[0][0])
             if r is None:
                 raise TuChoi("UNSUPPORTED_IRRATIONAL_LAYOUT", f"{vj}{vn} : {vi}{vp} vô tỉ — chưa dựng đáy chính xác trong ℚ",
-                             (gi, gj))
+                             call_ids)
+            if not ab:
+                if cd := self.do_dai(vp, vn):
+                    ab_val = sorted(cd)[0][0] - (Fraction(1) - r) ** 2 * sorted(ad)[0][0]
+                    if ab_val <= 0:
+                        raise TuChoi(
+                            "INCONSISTENT_FACTS",
+                            f"cạnh bên xiên {vp}{vn} không dài hơn hiệu hai đáy song song",
+                            (*call_ids, *sorted(cd)[0][1], *sorted(ad)[0][1], *sorted(bc)[0][1]),
+                        )
+                    ab = [(ab_val, (*sorted(cd)[0][1], *sorted(ad)[0][1], *sorted(bc)[0][1]))]
+                else:
+                    raise TuChoi("MISSING_DIMENSION", f"đáy hình thang vuông tại {vi}, {vj} chưa biết {[vi + vj]}", call_ids)
             o = Fraction(1)
             dat = {vi: (Z, Z), vj: (o, Z), vp: (Z, o), vn: (o, r)}
-            dung = {gi, gj, *sorted(ab)[0][1], *sorted(ad)[0][1], *sorted(bc)[0][1]}
+            dung = {*call_ids, *sorted(ab)[0][1], *sorted(ad)[0][1], *sorted(bc)[0][1]}
             return vong, tuple(dat[v] for v in vong), ((sorted(ab)[0][0], Z), (Z, sorted(ad)[0][0])), dung
         return None
 
     def _tam_giac(self, vong: tuple[str, ...]):
-        """Ba cạnh² từ độ dài + góc vuông (Pythagore khi biết hai trong ba). Gram từ định lý cos (hữu tỉ). Góc vuông là
-        `right_angle`, hay hai đoạn `perpendicular_lines` CHUNG một đầu mút V (VX ⊥ VY); V ngoài đáy (tứ diện OABC có OA, OB,
-        OC đôi một vuông góc) cho cạnh đáy XY² = VX² + VY² — tam giác VXY vuông tại V, không cần V đã đặt."""
+        """Ba cạnh² từ độ dài + góc vuông (Pythagore) + đường cao tam giác cân + định lý cos SAS (hữu tỉ trong ℚ)."""
         canh = {frozenset(p): None for p in ((vong[0], vong[1]), (vong[0], vong[2]), (vong[1], vong[2]))}
         dung: set[str] = set()
         for e in canh:
@@ -802,6 +989,56 @@ class _Dung:
                     raise TuChoi("INCONSISTENT_FACTS", "cạnh huyền không dài hơn cạnh góc vuông", (cid,))
                 canh[l2 if biet == l1 else l1] = con
                 dung.add(cid)
+        # Isosceles triangle altitude propagation (`orthogonal_projection_line` / `midpoint` foot H on opposite side XY)
+        for V in vong:
+            X, Y = [p for p in vong if p != V]
+            e_vx, e_vy, e_xy = frozenset((V, X)), frozenset((V, Y)), frozenset((X, Y))
+            eq_chain = next((ids for s, ids in self._lop_bang(e_vx) if s == e_vy), None)
+            if eq_chain is None:
+                continue
+            for cp in self.of("orthogonal_projection_line"):
+                if cp.args.point == V and cp.args.line and frozenset(cp.args.line) == e_xy:
+                    vh = sorted(self.do_dai(V, cp.args.image))
+                    if not vh:
+                        continue
+                    ht2 = vh[0][0]
+                    if canh[e_xy] is not None and canh[e_vx] is None and canh[e_vy] is None:
+                        canh[e_vx] = canh[e_vy] = ht2 + canh[e_xy] / 4
+                        dung |= {cp.id, *eq_chain, *vh[0][1]}
+                    elif canh[e_xy] is None and (canh[e_vx] is not None or canh[e_vy] is not None):
+                        leg2 = canh[e_vx] if canh[e_vx] is not None else canh[e_vy]
+                        rem = leg2 - ht2
+                        if rem <= 0:
+                            raise TuChoi("INCONSISTENT_FACTS", "đường cao tam giác cân không ngắn hơn cạnh bên", (cp.id, *vh[0][1]))
+                        canh[e_xy] = 4 * rem
+                        dung |= {cp.id, *eq_chain, *vh[0][1]}
+        # SAS Law of Cosines (`vertex_angle` between two known sides of `vong`)
+        for cv in self.of("vertex_angle"):
+            V = cv.args.vertex
+            if {V, *cv.args.rays} != set(vong):
+                continue
+            X, Y = cv.args.rays
+            e1, e2, e_opp = frozenset((V, X)), frozenset((V, Y)), frozenset((X, Y))
+            if canh[e1] is not None and canh[e2] is not None and canh[e_opp] is None:
+                _sin2, cos2, cos_sign = self._goc_tham_so(cv.args.value, cv.args.unit, allow_obtuse=True, calls=(cv.id,))
+                if cos_sign is None:
+                    raise TuChoi("AMBIGUOUS_FACT", "góc đỉnh tam giác từ sin chưa phân biệt nhọn hay tù", (cv.id,))
+                if cos2 == 0:
+                    prod = Z
+                else:
+                    m_abs = _sqrt_q(canh[e1] * canh[e2] * cos2)
+                    if m_abs is None:
+                        raise TuChoi(
+                            "EXACT_DOMAIN_EXCEEDED",
+                            "định lý cos cho cạnh thứ ba chứa căn lồng ngoài miền Gram hữu tỉ ℚ",
+                            (cv.id,),
+                        )
+                    prod = m_abs if cos_sign > 0 else -m_abs
+                opp_val = canh[e1] + canh[e2] - 2 * prod
+                if opp_val <= 0:
+                    raise TuChoi("INCONSISTENT_FACTS", "cạnh thứ ba từ định lý cos không dương", (cv.id,))
+                canh[e_opp] = opp_val
+                dung.add(cv.id)
         if any(v is None for v in canh.values()):
             raise TuChoi("MISSING_DIMENSION", "đáy tam giác chưa xác định đủ ba cạnh")
         d01, d02, d12 = (canh[frozenset((vong[0], vong[1]))], canh[frozenset((vong[0], vong[2]))],
@@ -2562,6 +2799,31 @@ class _Dung:
             return canh is not None and (a.side is None or canh == binh_phuong(a.side))
         if c.fn == "rectangle":
             return self._la_hinh_chu_nhat(a.vertices)
+        if c.fn == "parallelogram":
+            return self._la_hinh_binh_hanh(a.vertices)
+        if c.fn == "rhombus":
+            u, w = self._vec(a.vertices[0], a.vertices[1]), self._vec(a.vertices[0], a.vertices[3])
+            return (
+                self._la_hinh_binh_hanh(a.vertices)
+                and self.g(u, u) == self.g(w, w)
+                and (a.side is None or self.g(u, u) == binh_phuong(a.side))
+            )
+        if c.fn in ("trapezoid", "isosceles_trapezoid"):
+            v = a.vertices
+            ba, bb = frozenset(a.base_a), frozenset(a.base_b)
+            if {ba, bb} == {frozenset((v[0], v[1])), frozenset((v[3], v[2]))}:
+                b1, b2, u_tri = self._vec(v[0], v[1]), self._vec(v[3], v[2]), self._vec(v[0], v[2])
+            elif {ba, bb} == {frozenset((v[1], v[2])), frozenset((v[0], v[3]))}:
+                b1, b2, u_tri = self._vec(v[1], v[2]), self._vec(v[0], v[3]), self._vec(v[1], v[3])
+            else:
+                return False
+            trap_ok = (
+                self._kc2_mat(v[3], v[:3]) == 0
+                and self.g(b1, b1) * self.g(u_tri, u_tri) - self.g(b1, u_tri) ** 2 > 0
+                and Vec3(*b1).cross(Vec3(*b2)).is_zero()
+                and self.g(b1, b2) > 0
+            )
+            return trap_ok and (c.fn == "trapezoid" or self.d2(v[0], v[2]) == self.d2(v[1], v[3]))
         if c.fn == "right_angle":
             u, w = self._vec(a.vertex, a.rays[0]), self._vec(a.vertex, a.rays[1])
             return self.g(u, u) > 0 and self.g(w, w) > 0 and self.g(u, w) == 0

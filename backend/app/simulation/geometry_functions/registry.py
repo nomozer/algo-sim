@@ -163,6 +163,44 @@ class RectangleArgs(_Args):
     vertices: Annotated[list[Label], Field(min_length=4, max_length=4)] = Field(..., description="bốn đỉnh theo vòng")
 
 
+class ParallelogramArgs(_Args):
+    vertices: Annotated[list[Label], Field(min_length=4, max_length=4)] = Field(..., description="bốn đỉnh theo vòng")
+
+    @model_validator(mode="after")
+    def _distinct_quad(self) -> ParallelogramArgs:
+        if len(set(self.vertices)) != 4:
+            raise ValueError("parallelogram: cần bốn đỉnh phân biệt")
+        return self
+
+
+class RhombusArgs(_Args):
+    vertices: Annotated[list[Label], Field(min_length=4, max_length=4)] = Field(..., description="bốn đỉnh theo vòng")
+    side: ExactNumber | None = Field(None, description="cạnh hình thoi, nếu đề nêu")
+
+    @model_validator(mode="after")
+    def _distinct_quad(self) -> RhombusArgs:
+        if len(set(self.vertices)) != 4:
+            raise ValueError("rhombus: cần bốn đỉnh phân biệt")
+        return self
+
+
+class TrapezoidArgs(_Args):
+    vertices: Annotated[list[Label], Field(min_length=4, max_length=4)] = Field(..., description="bốn đỉnh theo vòng")
+    base_a: Seg = Field(..., description="cạnh đáy thứ nhất")
+    base_b: Seg = Field(..., description="cạnh đáy thứ hai song song với cạnh đáy thứ nhất")
+
+    @model_validator(mode="after")
+    def _opposite_bases(self) -> TrapezoidArgs:
+        v = self.vertices
+        if len(set(v)) != 4 or len(set(self.base_a)) != 2 or len(set(self.base_b)) != 2:
+            raise ValueError("trapezoid: cần bốn đỉnh phân biệt và hai cạnh đáy hợp lệ")
+        opp1 = {frozenset((v[0], v[1])), frozenset((v[2], v[3]))}
+        opp2 = {frozenset((v[1], v[2])), frozenset((v[3], v[0]))}
+        if {frozenset(self.base_a), frozenset(self.base_b)} not in (opp1, opp2):
+            raise ValueError("trapezoid: hai đáy phải là hai cạnh đối diện của tứ giác")
+        return self
+
+
 class RightAngleArgs(_Args):
     vertex: Label = Field(..., description="đỉnh góc vuông")
     rays: Seg = Field(..., description="hai điểm trên hai cạnh góc vuông")
@@ -895,6 +933,19 @@ REGISTRY: dict[str, FunctionSpec] = {s.name: s for s in (
     _F("vertex_angle", VertexAngleArgs, "fact",
        "Góc có hướng trong (0°, 180°) tại một đỉnh đa giác / tam giác do đề cho.",
        (("góc", "∠", "^"),), provider_offered=False),
+    # Reusable base-geometry primitives (`unified-angle-geometry-verified-image-to-3d`): planner-only, Route A surface unchanged.
+    _F("parallelogram", ParallelogramArgs, "fact",
+       "Hình bình hành với bốn đỉnh theo vòng.",
+       (("hình bình hành",),), provider_offered=False),
+    _F("rhombus", RhombusArgs, "fact",
+       "Hình thoi với bốn đỉnh theo vòng; cạnh nếu đề nêu (không bao giờ tự giả định góc 60°).",
+       (("hình thoi",),), ("side",), provider_offered=False),
+    _F("trapezoid", TrapezoidArgs, "fact",
+       "Hình thang với bốn đỉnh theo vòng và cặp cạnh đáy song song đã nêu.",
+       (("hình thang",),), segment_fields=("base_a", "base_b"), provider_offered=False),
+    _F("isosceles_trapezoid", TrapezoidArgs, "fact",
+       "Hình thang cân với bốn đỉnh theo vòng và cặp cạnh đáy song song đã nêu.",
+       (("hình thang cân",),), segment_fields=("base_a", "base_b"), provider_offered=False),
     _F("unsupported", UnsupportedArgs, "escape", "Mệnh đề không ánh xạ được vào thư viện — engine sẽ từ chối trung thực."),
     # Goal-directed slice (run `goal-directed-section-planning`): the plane through M parallel to (Q) is the plane through M
     # and two translates of M along directions of (Q) — the IR's own expression (`PlanePerpendicularToLineExpr` note).
@@ -1253,22 +1304,29 @@ def _co_doi_tuong_hinh(c: LoiGoi, de: str = "") -> bool:
                 if len(bases) == 1 and _cung_da_giac(list(next(iter(bases))), vertices):
                     ok = True
         return ok
-    if c.fn != "rectangle":
+    _QUAD_PRED_RX = {
+        "rectangle": r"hình\s+chữ\s+nhật",
+        "parallelogram": r"hình\s+bình\s+hành",
+        "rhombus": r"hình\s+thoi",
+        "trapezoid": r"hình\s+thang(?!\s+cân\b)",
+        "isosceles_trapezoid": r"hình\s+thang\s+cân",
+    }
+    if c.fn not in _QUAD_PRED_RX:
         return True
+    pred_rx = _QUAD_PRED_RX[c.fn]
     for q in c.quotes:
-        if _mat_cua_khoi_sau_cum(q, _HOP_CHU_NHAT, vertices):
+        if c.fn == "rectangle" and _mat_cua_khoi_sau_cum(q, _HOP_CHU_NHAT, vertices):
             return True
         for dau, cuoi, phan in _tu_nhan(q):
             if len(phan) == 2 and _cung_da_giac(phan[1 if len(phan[0]) == 1 else 0], vertices):
-                if re.match(r"\s*(?:có\s+)?(?:chung\s+)?(?:mặt\s+)?đáy\s+(?:là\s+(?:một\s+)?)?hình\s+chữ\s+nhật(?!\w)",
+                if re.match(rf"\s*(?:có\s+)?(?:chung\s+)?(?:mặt\s+)?đáy\s+(?:là\s+(?:một\s+)?)?{pred_rx}(?!\w)",
                             q[cuoi:], re.IGNORECASE):
                     return True
             if not any(_cung_da_giac(p, vertices) for p in phan):
                 continue
-            # `ABCD là hình chữ nhật` / `hình chữ nhật ABCD`; giới hạn tại đúng token nhãn, không nhìn cả quote.
-            if re.match(r"\s+(?:là\s+)?hình\s+chữ\s+nhật(?!\w)", q[cuoi:], re.IGNORECASE):
+            if re.match(rf"\s+(?:là\s+(?:một\s+)?)?{pred_rx}(?!\w)", q[cuoi:], re.IGNORECASE):
                 return True
-            if re.search(r"(?<!\w)hình\s+chữ\s+nhật\s*$", q[:dau], re.IGNORECASE):
+            if re.search(rf"(?<!\w){pred_rx}\s*$", q[:dau], re.IGNORECASE):
                 return True
     return False
 
@@ -1319,8 +1377,15 @@ def _gia_tri_la_phep_bang(de: str, vts: list[tuple[int, int]], seg: list[str]) -
             if not _la_doan(phan, seg):
                 continue
             so = next((m for m in _SO.finditer(de, dau + b, cuoi) if _doc(m) is not None), None)
-            if so and _NOI_BANG.fullmatch(de[dau + b:so.start()]) and _DUOI_BANG.match(de[so.end():]):
+            if not so or not _DUOI_BANG.match(de[so.end():]):
+                continue
+            mid = de[dau + b:so.start()]
+            if _NOI_BANG.fullmatch(mid):
                 return True
+            if re.search(r"(?<!\w)(?:đường|chiều)\s+cao\s*$", de[:dau + a], re.IGNORECASE):
+                m_tri = re.match(r"\s+của\s+(?:tam\s+giác|[Δ∆△])\s*(?-i:[A-Z][0-9]*'?){3}(?![\w'])", mid, re.IGNORECASE)
+                if m_tri and _NOI_BANG.fullmatch(mid[m_tri.end():]):
+                    return True
     return False
 
 
@@ -1784,7 +1849,7 @@ def _canh_cua(v) -> set[frozenset]:
 def _lien_ket_khop(c: LoiGoi, bd: tuple, calls: tuple[LoiGoi, ...]) -> bool:
     """A parsed binding fills THIS call's value slot: the height of its own solid; a side of its own regular polygon; an
     unnamed segment by its structural role only where every segment of that role is equal."""
-    deu = {frozenset(d.args.vertices) for d in calls if d.fn == "regular_polygon"}
+    deu = {frozenset(d.args.vertices) for d in calls if d.fn in ("regular_polygon", "rhombus")}
     if bd[0] == "vai":
         _t, vai, k, moi = bd
         if k is None:
@@ -1792,7 +1857,7 @@ def _lien_ket_khop(c: LoiGoi, bd: tuple, calls: tuple[LoiGoi, ...]) -> bool:
         base = frozenset(k.args.base)
         if c.fn == "height":
             return vai in ("chiều cao", "đường cao") and _nhan_khoi(k) == set(re.findall(r"[A-Z][0-9]*'?", c.args.solid))
-        if c.fn == "regular_polygon":
+        if c.fn in ("regular_polygon", "rhombus"):
             return frozenset(c.args.vertices) == base and (vai == "cạnh đáy" or vai == "cạnh" and moi)
         if c.fn == "segment_length":
             s = frozenset(c.args.segment)
@@ -1804,11 +1869,11 @@ def _lien_ket_khop(c: LoiGoi, bd: tuple, calls: tuple[LoiGoi, ...]) -> bool:
         return False
     if bd[0] == "side":
         poly = bd[1]
-        if c.fn == "regular_polygon":
+        if c.fn in ("regular_polygon", "rhombus"):
             return frozenset(c.args.vertices) == poly
         if c.fn == "segment_length":
             return poly in deu and any(frozenset(c.args.segment) in _canh_cua(d.args.vertices) for d in calls
-                                       if d.fn == "regular_polygon" and frozenset(d.args.vertices) == poly)
+                                       if d.fn in ("regular_polygon", "rhombus") and frozenset(d.args.vertices) == poly)
     return False
 
 
@@ -2800,8 +2865,11 @@ def _kiem_nguon(calls: tuple[LoiGoi, ...], text: str, auxiliary: tuple[dict, ...
                 raise TuChoi("PREDICATE_NOT_IN_QUOTE", f"{c.id}: rectangle thiếu predicate chữ nhật", (c.id,))
             if not _co_doi_tuong_hinh(c):
                 raise TuChoi("OBJECT_NOT_IN_QUOTE", f"{c.id}: cụm chữ nhật không gọi đúng đa giác {c.args.vertices}", (c.id,))
+        if c.fn in ("parallelogram", "rhombus", "trapezoid", "isosceles_trapezoid") and not _co_doi_tuong_hinh(c, de):
+            raise TuChoi("OBJECT_NOT_IN_QUOTE", f"{c.id}: cụm {c.fn} không gọi đúng đa giác {c.args.vertices}", (c.id,))
         vuong_can_eq = c.fn == "equal_length" and _vuong_can_hai_canh(c, de)
-        if not vuong_can_eq:
+        tri_alt_proj = c.fn == "orthogonal_projection_line" and any(_duong_cao_tam_giac_khop(c, q) for q in c.quotes)
+        if not vuong_can_eq and not tri_alt_proj:
             for nhom in c.spec.keywords:
                 if not _co_tu(c.quotes, nhom):
                     raise TuChoi("PREDICATE_NOT_IN_QUOTE", f"{c.id}: {c.fn} cần một trong {list(nhom)} trong {c.quote!r}", (c.id,))
@@ -2811,7 +2879,7 @@ def _kiem_nguon(calls: tuple[LoiGoi, ...], text: str, auxiliary: tuple[dict, ...
         for f in c.spec.plane_fields:
             if not _co_mat(c.quotes, getattr(c.args, f), cho_day=f != "face"):
                 raise TuChoi("PLANE_NOT_IN_QUOTE", f"{c.id}: mặt phẳng {getattr(c.args, f)} không được nhắc trong {c.quote!r}", (c.id,))
-        if not vuong_can_eq:
+        if not vuong_can_eq and not tri_alt_proj:
             for f in c.spec.segment_fields:
                 if not _co_doan(c.quotes, getattr(c.args, f)):
                     raise TuChoi("ROLE_NOT_IN_QUOTE", f"{c.id}: đoạn {''.join(getattr(c.args, f))} không được nhắc trong {c.quote!r}", (c.id,))
@@ -2821,7 +2889,7 @@ def _kiem_nguon(calls: tuple[LoiGoi, ...], text: str, auxiliary: tuple[dict, ...
                 raise TuChoi("ROLE_NOT_IN_QUOTE", f"{c.id}: điểm {getattr(c.args, f)} ({f}) không được nhắc trong {c.quote!r}", (c.id,))
         if c.fn in ("intersect_line_line", "intersect_line_plane", "orthogonal_projection_line", "midpoint", "centroid",
                     "right_angle", "divide_segment"):
-            if not construction_source_bound(c, de):
+            if not tri_alt_proj and not construction_source_bound(c, de):
                 raise TuChoi("SOURCE_OBJECT_MISMATCH", f"{c.id}: vai trò điểm và toán hạng dựng không khớp nguồn", (c.id,))
         if c.fn in ("curved_section", "curved_subsolid") and (ma := _phan_cong_dung_nguon(c, calls, de)):
             raise TuChoi(ma, f"{c.id}: {c.quote!r} không nêu đúng {'thiết diện' if c.fn == 'curved_section' else 'khối nón nhỏ'} "
@@ -2851,7 +2919,7 @@ def _kiem_nguon(calls: tuple[LoiGoi, ...], text: str, auxiliary: tuple[dict, ...
             seg = getattr(c.args, "segment", None)
             # A role slot — a height, a regular polygon's side, a segment the quote does not name (SG-1/SG-3, reviewed
             # twice) — takes its value ONLY from a sentence that parses in the closed clause grammar about its own solid.
-            if c.fn in ("height", "regular_polygon") or seg and not _co_doan(c.quotes, seg):
+            if c.fn in ("height", "regular_polygon", "rhombus") or seg and not _co_doan(c.quotes, seg):
                 own = _so_theo_vai_tro(c, calls, de)
                 if len(own) != 1 and len([x for q in c.quotes for x in so_trong(q)]) > 1:
                     raise TuChoi("AMBIGUOUS_VALUE_QUOTE", f"{c.id}: quote nhiều số mà không số nào gắn duy nhất với vai trò "
@@ -3450,6 +3518,14 @@ def _kiem_vung_tien_de(calls: tuple[LoiGoi, ...], de: str, het: int, read_quotes
         for m_day in re.finditer(r"(?<!\w)(?:mặt\s+)?đáy(?=\s+là\b)", de[a0:b], re.IGNORECASE):
             if (verts := _chu_cua_day(de, a0 + m_day.start())) is not None and set(verts) <= dung and _vai_tro_doi_tuong_khop("đáy", verts, calls):
                 ten |= set(range(a0 + m_day.start(), a0 + m_day.end()))
+        for m_day_k in re.finditer(
+            r"(?<!\w)(?:mặt\s+)?đáy(?:\s+(?P<dv>(?-i:[A-Z][0-9]*'?){3,})(?![\w']))?\s+là\s+(?:một\s+)?(?:tam|tứ|ngũ|lục)\s+giác(?![\w'])(?!\s+(?:đều|vuông|cân|nhọn|tù|nội\s+tiếp|ngoại\s+tiếp))",
+            de[a0:b],
+            re.IGNORECASE,
+        ):
+            dv = re.findall(r"[A-Z][0-9]*'?", m_day_k["dv"]) if m_day_k["dv"] else _chu_cua_day(de, a0 + m_day_k.start())
+            if dv and set(dv) <= dung and _vai_tro_doi_tuong_khop("đáy", list(dv), calls):
+                ten |= set(range(a0 + m_day_k.start(), a0 + m_day_k.end()))
         con = "".join(" " if phu[i] or doc[i] or i in ten else de[i] for i in range(a0, b))
         if not _NOI_TIEN_DE.fullmatch(con):
             raise TuChoi("SOURCE_PREMISE_UNREAD", f"tiền đề {de[a0:b].strip()!r} chưa được lời gọi nào đọc — có thể đổi "
@@ -3470,7 +3546,7 @@ def _nguon_do_dai_cuc_bo(calls: tuple[LoiGoi, ...], segment: list[str]) -> list[
     for c in calls:
         if c.fn == "segment_length" and set(c.args.segment) == set(segment):
             values.append((doc_so(c.args.value), c.id))
-        if c.fn == "regular_polygon" and c.args.side is not None:
+        if c.fn in ("regular_polygon", "rhombus") and c.args.side is not None:
             vertices = c.args.vertices
             if any(set(segment) == {v, vertices[(i + 1) % len(vertices)]} for i, v in enumerate(vertices)):
                 values.append((doc_so(c.args.side), c.id))
@@ -5982,13 +6058,40 @@ def _chu_cua_day(truoc: str, dau_day: int) -> list[str] | None:
     return p[1] if len(p[0]) == 1 else p[0]
 
 
+_CAN_TAI = re.compile(
+    rf"(?:{_DAU_NHAN}\(?((?:{_DIEM}){{3,}})\)?(?![\w'.])\s+(?:(?i:là)\s+(?:(?i:một)\s+)?)?(?:{_HINH_VUONG_TAI}\s+)?)?"
+    rf"(?i:(?:vuông\s+)?cân\s+(?:tại|ở))\s+(?:(?i:đỉnh)\s+)?({_DIEM})(?![\w'])"
+)
+_DUONG_CAO_TAM_GIAC = re.compile(
+    rf"(?<!\w)(?i:(?:đường|chiều)\s+cao)\s+(?P<seg>(?:{_DIEM}){{2}})(?![\w'])\s+(?i:của\s+(?:tam\s+giác|[Δ∆△]))\s*(?P<tri>(?:{_DIEM}){{3}})(?![\w'])"
+)
+
+
+def _duong_cao_tam_giac_khop(c: LoiGoi, q: str) -> bool:
+    """Bind `orthogonal_projection_line(point=V, line=[X, Y], image=H)` to `đường cao VH của tam giác VXY`."""
+    if c.fn != "orthogonal_projection_line" or not getattr(c.args, "line", None):
+        return False
+    for m in _DUONG_CAO_TAM_GIAC.finditer(q):
+        seg = re.findall(_DIEM, m["seg"])
+        tri = re.findall(_DIEM, m["tri"])
+        if len(set(seg)) != 2 or len(set(tri)) != 3:
+            continue
+        if (
+            c.args.point in seg
+            and c.args.image in seg
+            and c.args.point in tri
+            and c.args.image not in tri
+            and set(c.args.line) == set(tri) - {c.args.point}
+        ):
+            return True
+    return False
+
+
 def _vuong_can_hai_canh(c: LoiGoi, de: str) -> bool:
-    """Bind `equal_length(segment_a, segment_b)` to `vuông cân tại <V>` of a 3-vertex triangle `<ABC>` (or owned `đáy`)."""
+    """Bind `equal_length(segment_a, segment_b)` to `(vuông )?cân tại <V>` of a 3-vertex triangle `<ABC>` (or owned `đáy`)."""
     want = {frozenset(c.args.segment_a), frozenset(c.args.segment_b)}
     for q in c.quotes:
-        for m in _VUONG_TAI.finditer(q):
-            if "cân" not in m.group().lower():
-                continue
+        for m in _CAN_TAI.finditer(q):
             verts_tai = re.findall(_DIEM, m[2])
             if len(verts_tai) != 1:
                 continue
@@ -6817,6 +6920,32 @@ def _cau_tien_de_dong_hop_le(s: str, s_start: int, de: str, calls: tuple[LoiGoi,
             if "hình chữ nhật" in txt:
                 if m["ds"] is not None or not any(d.fn == "rectangle" and _cung_da_giac(list(d.args.vertices), verts) for d in calls):
                     return False
+            elif "hình bình hành" in txt:
+                if m["ds"] is not None or not any(d.fn == "parallelogram" and _cung_da_giac(list(d.args.vertices), verts) for d in calls):
+                    return False
+            elif "hình thoi" in txt:
+                matches = [d for d in calls if d.fn == "rhombus" and _cung_da_giac(list(d.args.vertices), verts)]
+                if not matches:
+                    return False
+                if m["ds"] is not None:
+                    want = _doc_nhom(m["ds"])
+                    if want is None:
+                        return False
+                    if any(d.args.side is not None for d in matches) and not any(d.args.side is not None and doc_so(d.args.side) == want for d in matches):
+                        raise TuChoi("UNGROUNDED_VALUE", f"{matches[0].id}: cạnh {matches[0].args.side} không phải số đo nguồn nêu cho hình thoi", (matches[0].id,))
+                    if not any(d.args.side is not None and doc_so(d.args.side) == want for d in matches) and not any(
+                            v == want for seg in _canh_cua(verts) for v, _cid in _nguon_do_dai_cuc_bo(calls, list(seg))):
+                        return False
+            elif "hình thang cân" in txt:
+                if m["ds"] is not None or not any(d.fn == "isosceles_trapezoid" and _cung_da_giac(list(d.args.vertices), verts) for d in calls):
+                    return False
+            elif "hình thang" in txt:
+                if m["ds"] is not None:
+                    return False
+                has_trap = any(d.fn == "trapezoid" and _cung_da_giac(list(d.args.vertices), verts) for d in calls)
+                has_ra = sum(1 for d in calls if d.fn == "right_angle" and d.args.vertex in verts) >= 2
+                if not (has_trap or has_ra):
+                    return False
             elif "hình vuông" in txt or "đều" in txt:
                 matches = [d for d in calls if d.fn == "regular_polygon" and _cung_da_giac(list(d.args.vertices), verts)]
                 if not matches:
@@ -6830,13 +6959,13 @@ def _cau_tien_de_dong_hop_le(s: str, s_start: int, de: str, calls: tuple[LoiGoi,
                     if not any(d.args.side is not None and doc_so(d.args.side) == want for d in matches) and not any(
                             v == want for seg in _canh_cua(verts) for v, _cid in _nguon_do_dai_cuc_bo(calls, list(seg))):
                         return False
-            elif "vuông" in txt and "hình thang" not in txt:
+            elif ("vuông" in txt or "cân" in txt) and "hình thang" not in txt:
                 m_tai = re.search(rf"(?:tại|ở)\s+(?P<v>{_L1})(?![\w'])", m.group(), re.IGNORECASE)
                 if m["ds"] is not None or not m_tai or len(verts) != 3 or m_tai["v"] not in verts:
                     return False
                 v = m_tai["v"]
                 rays = set(verts) - {v}
-                if not any(d.fn == "right_angle" and d.args.vertex == v and set(d.args.rays) == rays for d in calls):
+                if "vuông" in txt and not any(d.fn == "right_angle" and d.args.vertex == v and set(d.args.rays) == rays for d in calls):
                     return False
                 if "cân" in txt:
                     r1, r2 = list(rays)

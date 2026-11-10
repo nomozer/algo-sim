@@ -381,6 +381,10 @@ _ARGS_LOI = {
     "dihedral_angle": {"point_a": "ref", "edge": "refs2=", "point_b": "ref", "value": "value", "unit": "id?"},
     "line_line_angle": {"line1": "refs2=", "line2": "refs2=", "value": "value", "unit": "id?"},
     "vertex_angle": {"vertex": "ref", "rays": "refs2=", "value": "value", "unit": "id?"},
+    "parallelogram": {"vertices": "refs4="},
+    "rhombus": {"vertices": "refs4=", "side": "value?"},
+    "trapezoid": {"vertices": "refs4=", "base_a": "refs2=", "base_b": "refs2="},
+    "isosceles_trapezoid": {"vertices": "refs4=", "base_a": "refs2=", "base_b": "refs2="},
 }
 for _alias, _goc in (("base_is_square", "regular_polygon"), ("base_is_equilateral_triangle", "regular_polygon"),
                      ("base_is_regular_polygon", "regular_polygon"), ("base_is_rectangle", "rectangle"),

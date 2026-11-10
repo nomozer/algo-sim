@@ -192,7 +192,8 @@ def test_khai_bao_ham_gemini_dung_tap_con_openapi():
         "curved_section", "curved_subsolid", "ask_curved_section_area", "ask_curved_section_radius",
         "ask_curved_volume_ratio", "ask_curved_residual_volume",
         # unified-angle-geometry-verified-image-to-3d: planner-only, route A provider surface unchanged
-        "line_plane_angle", "plane_plane_angle", "dihedral_angle", "line_line_angle", "vertex_angle"}
+        "line_plane_angle", "plane_plane_angle", "dihedral_angle", "line_line_angle", "vertex_angle",
+        "parallelogram", "rhombus", "trapezoid", "isosceles_trapezoid"}
     txt = json.dumps(decl)
     for cam in ('"$ref"', '"$defs"', '"anyOf"', '"title"', '"additionalProperties"', '"xyz"', '"coord'):
         assert cam not in txt, cam

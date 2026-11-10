@@ -1232,6 +1232,184 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
                 )
             mapped_fact = True
 
+    # 2d. Unnamed vertex angle ambiguity ("có một góc bằng 60°") -> explicit clarification
+    m_ambig_vang = re.search(
+        rf"(?P<full>có\s+một\s+góc\s*(?:bằng|là|=)\s*(?P<aval>\d+(?:/\d+)?)\s*(?:°|độ\b))",
+        ctext_norm,
+        re.IGNORECASE | re.UNICODE,
+    )
+    if m_ambig_vang:
+        q_av = _clean_quote(raw, ca + m_ambig_vang.start("full"), ca + m_ambig_vang.end("full"))
+        builder.unresolved.append(
+            {
+                "unresolved_id": f"u{len(builder.unresolved) + 1}",
+                "kind": "ambiguous",
+                "quote": q_av,
+                "missing_roles": ["source_point"],
+                "candidate_relations": ["angle"],
+            }
+        )
+        clause.classification = CLAUSE_MAPPED_FACT
+        return
+
+    # 2e. FAMILY-1 Right trapezoid: "đáy (ABCD )?là hình thang vuông tại A và B"
+    for m_rtrap in re.finditer(
+        rf"(?P<full>đáy(?:\s+(?P<verts>{_PTS4}))?\s+là\s+hình\s+thang\s+vuông\s+(?:tại|ở)\s+(?P<v1>{_PT})\s*(?:và|,\s*)\s*(?P<v2>{_PT}))(?![\w'])",
+        ctext_norm,
+        re.IGNORECASE | re.UNICODE,
+    ):
+        verts = _split_pts(m_rtrap.group("verts")) if m_rtrap.group("verts") else list(builder._base_vertices)
+        v1, v2 = m_rtrap.group("v1"), m_rtrap.group("v2")
+        if len(verts) == 4 and v1 in verts and v2 in verts and v1 != v2:
+            rt_start = m_rtrap.start("full")
+            if (
+                not m_rtrap.group("verts")
+                and clause_solid_not_span is not None
+                and clause_solid_not_span[1] <= rt_start
+                and re.fullmatch(
+                    r"\s*(?:[.,]\s*)?(?:có\s+)?(?:chung\s+)?(?:mặt\s+)?",
+                    ctext_norm[clause_solid_not_span[1] : rt_start],
+                    re.IGNORECASE,
+                )
+            ):
+                rt_start = clause_solid_not_span[0]
+            q_rtrap = _clean_quote(raw, ca + rt_start, ca + m_rtrap.end("full"))
+            for vx in (v1, v2):
+                idx_v = verts.index(vx)
+                rays_v = [verts[(idx_v - 1) % 4], verts[(idx_v + 1) % 4]]
+                builder.premises.append(
+                    {
+                        "kind": "right_angle",
+                        "args": {"vertex": vx, "rays": rays_v},
+                        "quote": q_rtrap,
+                        "solid_id": builder._primary_solid_id,
+                    }
+                )
+            mapped_fact = True
+
+    # 2f. FAMILY-1 Isosceles trapezoid & general parallel-base trapezoid
+    for m_trap in re.finditer(
+        rf"(?P<full>đáy(?:\s+(?P<verts>{_PTS4}))?\s+là\s+hình\s+thang(?:\s+(?P<iso>cân))?\s+(?:(?:với|có)\s+hai\s+đáy(?:\s+là)?\s+(?P<ba1>{_PTS2})\s*(?:và|,\s*)\s*(?P<bb1>{_PTS2})|(?:có\s+)?(?P<ba2>{_PTS2})\s*(?:song\s+song(?:\s+với)?|//|∥)\s*(?P<bb2>{_PTS2})))(?![\w'])",
+        ctext_norm,
+        re.IGNORECASE | re.UNICODE,
+    ):
+        verts = _split_pts(m_trap.group("verts")) if m_trap.group("verts") else list(builder._base_vertices)
+        ba = _split_pts(m_trap.group("ba1") or m_trap.group("ba2"))
+        bb = _split_pts(m_trap.group("bb1") or m_trap.group("bb2"))
+        if len(verts) == 4 and len(ba) == 2 and len(bb) == 2:
+            tr_start = m_trap.start("full")
+            if (
+                not m_trap.group("verts")
+                and clause_solid_not_span is not None
+                and clause_solid_not_span[1] <= tr_start
+                and re.fullmatch(
+                    r"\s*(?:[.,]\s*)?(?:có\s+)?(?:chung\s+)?(?:mặt\s+)?",
+                    ctext_norm[clause_solid_not_span[1] : tr_start],
+                    re.IGNORECASE,
+                )
+            ):
+                tr_start = clause_solid_not_span[0]
+            q_trap = _clean_quote(raw, ca + tr_start, ca + m_trap.end("full"))
+            builder.premises.append(
+                {
+                    "kind": "isosceles_trapezoid" if m_trap.group("iso") else "trapezoid",
+                    "args": {"vertices": verts, "base_a": ba, "base_b": bb},
+                    "quote": q_trap,
+                    "solid_id": builder._primary_solid_id,
+                }
+            )
+            mapped_fact = True
+
+    # 2g. FAMILY-1 Isosceles triangle ("đáy (ABC )?là tam giác cân tại A" / "tam giác ABC cân tại A")
+    for m_iso_tri in re.finditer(
+        rf"(?P<full>(?:(?:có\s+)?đáy(?:\s+(?P<verts>{_PTS3}))?\s+(?:là\s+tam\s+giác\s+(?:(?P<verts2>{_PTS3})\s+)?)?|tam\s+giác\s+(?P<verts3>{_PTS3})\s+)(?<!vuông\s)cân\s+(?:tại|ở)\s+(?P<v>{_PT}))(?![\w'])",
+        ctext_norm,
+        re.IGNORECASE | re.UNICODE,
+    ):
+        explicit_v = m_iso_tri.group("verts") or m_iso_tri.group("verts2") or m_iso_tri.group("verts3")
+        verts = _split_pts(explicit_v) if explicit_v else list(builder._base_vertices)
+        v = m_iso_tri.group("v")
+        rays = [p for p in verts if p != v]
+        if len(rays) == 2:
+            s_off = m_iso_tri.start("full")
+            if m_iso_tri.group("verts2"):
+                m_sub = re.search(rf"tam\s+giác\s+{re.escape(m_iso_tri.group('verts2'))}\b", m_iso_tri.group("full"), re.IGNORECASE)
+                if m_sub:
+                    s_off += m_sub.start()
+            elif not explicit_v and clause_solid_not_span is not None and clause_solid_not_span[1] <= s_off:
+                if re.fullmatch(
+                    r"\s*(?:[.,]\s*)?(?:có\s+)?(?:chung\s+)?(?:mặt\s+)?",
+                    ctext_norm[clause_solid_not_span[1] : s_off],
+                    re.IGNORECASE,
+                ):
+                    s_off = clause_solid_not_span[0]
+            elif ctext_norm[s_off : s_off + 3].lower() == "có " and "là tam giác" in m_iso_tri.group("full").lower():
+                s_off += 3
+            q_iso = _clean_quote(raw, ca + s_off, ca + m_iso_tri.end("full"))
+            builder.premises.append(
+                {
+                    "kind": "equal_length",
+                    "args": {"segment_a": [v, rays[0]], "segment_b": [v, rays[1]]},
+                    "quote": q_iso,
+                    "solid_id": builder._primary_solid_id,
+                }
+            )
+            mapped_fact = True
+
+    # 2h. FAMILY-2 Rhombus & Parallelogram ("đáy (ABCD )?là hình thoi( cạnh a)?" / "đáy (ABCD )?là hình bình hành")
+    for m_rhom in re.finditer(
+        rf"(?P<full>đáy(?:\s+(?P<verts>{_PTS4}))?\s+là\s+hình\s+thoi(?:\s+cạnh\s+(?:bằng\s+)?(?P<side>{_VAL}))?)",
+        ctext_norm,
+        re.IGNORECASE | re.UNICODE,
+    ):
+        verts = _split_pts(m_rhom.group("verts")) if m_rhom.group("verts") else list(builder._base_vertices)
+        if len(verts) == 4:
+            rh_start = m_rhom.start("full")
+            if (
+                not m_rhom.group("verts")
+                and clause_solid_not_span is not None
+                and clause_solid_not_span[1] <= rh_start
+                and re.fullmatch(
+                    r"\s*(?:[.,]\s*)?(?:có\s+)?(?:chung\s+)?(?:mặt\s+)?",
+                    ctext_norm[clause_solid_not_span[1] : rh_start],
+                    re.IGNORECASE,
+                )
+            ):
+                rh_start = clause_solid_not_span[0]
+            q_rh = _clean_quote(raw, ca + rh_start, ca + m_rhom.end("full"))
+            args_rh: dict[str, Any] = {"vertices": verts}
+            if m_rhom.group("side") is not None:
+                args_rh["side"] = _canon_val(m_rhom.group("side"))
+            builder.premises.append(
+                {"kind": "rhombus", "args": args_rh, "quote": q_rh, "solid_id": builder._primary_solid_id}
+            )
+            mapped_fact = True
+
+    for m_para in re.finditer(
+        rf"(?P<full>đáy(?:\s+(?P<verts>{_PTS4}))?\s+là\s+hình\s+bình\s+hành)",
+        ctext_norm,
+        re.IGNORECASE | re.UNICODE,
+    ):
+        verts = _split_pts(m_para.group("verts")) if m_para.group("verts") else list(builder._base_vertices)
+        if len(verts) == 4:
+            pa_start = m_para.start("full")
+            if (
+                not m_para.group("verts")
+                and clause_solid_not_span is not None
+                and clause_solid_not_span[1] <= pa_start
+                and re.fullmatch(
+                    r"\s*(?:[.,]\s*)?(?:có\s+)?(?:chung\s+)?(?:mặt\s+)?",
+                    ctext_norm[clause_solid_not_span[1] : pa_start],
+                    re.IGNORECASE,
+                )
+            ):
+                pa_start = clause_solid_not_span[0]
+            q_pa = _clean_quote(raw, ca + pa_start, ca + m_para.end("full"))
+            builder.premises.append(
+                {"kind": "parallelogram", "args": {"vertices": verts}, "quote": q_pa, "solid_id": builder._primary_solid_id}
+            )
+            mapped_fact = True
+
     # ── 3. Perpendicularity & Altitude Premises ──────────────────────────────────────────────────────────────────
     # 3a. Pairwise perpendicular edges from apex: "OA, OB, OC đôi một vuông góc (với nhau)?"
     for m_pair_perp in re.finditer(
@@ -1303,6 +1481,41 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
             }
         )
         mapped_fact = True
+
+    # 3d-0. FAMILY-1 Triangle altitude: "(đường cao|chiều cao) AH của tam giác ABC (bằng|=) 4a"
+    for m_tri_alt in re.finditer(
+        rf"(?P<full>(?:đường|chiều)\s+cao\s+(?P<seg>{_PTS2})\s+của\s+(?:tam\s+giác|[Δ∆△])\s*(?P<tri>{_PTS3})\s*(?:=|bằng|là)\s*(?P<val>{_VAL}))(?![\w'])",
+        ctext_norm,
+        re.IGNORECASE | re.UNICODE,
+    ):
+        seg_pts = _split_pts(m_tri_alt.group("seg"))
+        tri_pts = _split_pts(m_tri_alt.group("tri"))
+        if len(set(seg_pts)) == 2 and len(set(tri_pts)) == 3:
+            if seg_pts[0] in tri_pts and seg_pts[1] not in tri_pts:
+                v_pt, h_pt = seg_pts[0], seg_pts[1]
+            elif seg_pts[1] in tri_pts and seg_pts[0] not in tri_pts:
+                v_pt, h_pt = seg_pts[1], seg_pts[0]
+            else:
+                continue
+            opp_line = [p for p in tri_pts if p != v_pt]
+            q_ta = _clean_quote(raw, ca + m_tri_alt.start("full"), ca + m_tri_alt.end("full"))
+            builder.premises.append(
+                {
+                    "kind": "orthogonal_projection_line",
+                    "args": {"point": v_pt, "line": opp_line, "image": h_pt},
+                    "quote": q_ta,
+                    "solid_id": builder._primary_solid_id,
+                }
+            )
+            builder.premises.append(
+                {
+                    "kind": "segment_length",
+                    "args": {"segment": [v_pt, h_pt], "value": _canon_val(m_tri_alt.group("val"))},
+                    "quote": q_ta,
+                    "solid_id": builder._primary_solid_id,
+                }
+            )
+            mapped_fact = True
 
     # 3d. Altitude shorthand: "đường cao SA = 2"
     for m_alt in re.finditer(
@@ -2667,6 +2880,7 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
             eq_spans: list[tuple[int, int]] = list(angle_spans)
             for eq_pat in (
                 rf"chiều\s+cao(?:\s+của\s+hình\s+chóp(?:\s+[A-Z0-9'.]+)?)?\s*=\s*{_VAL}",
+                rf"(?:đường|chiều)\s+cao\s+{_PTS2}\s+của\s+(?:tam\s+giác|[Δ∆△])\s*{_PTS3}\s*=\s*{_VAL}",
                 rf"đường\s+cao\s+{_PTS2}\s*=\s*{_VAL}",
                 rf"(?<![\w'.]){_PTS2}\s*=\s*{_PTS2}(?:\s*=\s*{_PTS2})?\s*=\s*{_VAL}(?![\w'])",
                 rf"(?:Đường\s+sinh\s+)?(?<![\w'.]){_PTS2}\s*=\s*{_VAL}(?![\s]*=)(?![\w'])",
@@ -2681,9 +2895,12 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
                     clause.classification = CLAUSE_UNPARSED_FACT_CANDIDATE
                     return
 
-        # 2) Any `∥` or `song song` must belong to a recognized section parallel construct
-        if "∥" in ctext_norm or (
-            re.search(r"\bsong\s+song\b", ctext_norm, re.IGNORECASE) and not clause_sections
+        # 2) Any `∥` or `song song` must belong to a recognized section or trapezoid parallel construct
+        has_trap_parallel = any(p["kind"] in ("trapezoid", "isosceles_trapezoid") for p in clause_premises)
+        if ("∥" in ctext_norm and not has_trap_parallel) or (
+            re.search(r"\bsong\s+song\b", ctext_norm, re.IGNORECASE)
+            and not clause_sections
+            and not has_trap_parallel
         ):
             mapped_fact = False
             mapped_goal = False
@@ -2725,10 +2942,21 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
                 return
 
         # 4) Unsupported geometric shape / relation / negation / conditional sub-clause inside the sentence
-        if re.search(
-            r"\bhình\s+(?:thoi|bình\s+hành|thang)\b"
-            r"|\btam\s+giác\s+cân\b|(?<!vuông\s)\bcân\s+tại\b"
-            r"|\btâm\s+đường\s+tròn\s+nội\s+tiếp\b"
+        prem_kinds = {p["kind"] for p in clause_premises}
+        unbacked_base_shape = (
+            (bool(re.search(r"\bhình\s+thoi\b", ctext_norm, re.IGNORECASE)) and "rhombus" not in prem_kinds)
+            or (bool(re.search(r"\bhình\s+bình\s+hành\b", ctext_norm, re.IGNORECASE)) and "parallelogram" not in prem_kinds)
+            or (
+                bool(re.search(r"\bhình\s+thang\b", ctext_norm, re.IGNORECASE))
+                and not (prem_kinds & {"trapezoid", "isosceles_trapezoid", "right_angle"})
+            )
+            or (
+                bool(re.search(r"\btam\s+giác\s+cân\b|(?<!vuông\s)\bcân\s+(?:tại|ở)\b", ctext_norm, re.IGNORECASE))
+                and "equal_length" not in prem_kinds
+            )
+        )
+        if unbacked_base_shape or re.search(
+            r"\btâm\s+đường\s+tròn\s+nội\s+tiếp\b"
             r"|\b(?:đường\s+phân\s+giác|đường\s+trung\s+tuyến|trọng\s+tuyến)\b"
             r"|\bnghiêng\s+đều\b"
             r"|\bkhông\s+(?:vuông\s+góc|song\s+song|cắt|đồng\s+phẳng|thẳng\s+hàng|trùng)\b"

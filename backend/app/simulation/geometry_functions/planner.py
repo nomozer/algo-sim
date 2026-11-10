@@ -121,7 +121,33 @@ class TypedFact(BaseModel):
     regular: bool | None = Field(None, description="đề nói khối ĐỀU")
     right: bool | None = Field(None, description="đề nói lăng trụ ĐỨNG")
     points: list[Label] | None = Field(None, description="đỉnh đa giác / đoạn / mặt phẳng tuỳ loại")
-    shape: Literal["equilateral_triangle", "square", "regular_hexagon", "regular_polygon", "rectangle", "triangle"] | None = None
+    shape: Annotated[
+        Literal[
+            "equilateral_triangle",
+            "square",
+            "regular_hexagon",
+            "regular_polygon",
+            "rectangle",
+            "triangle",
+            "parallelogram",
+            "rhombus",
+            "trapezoid",
+            "isosceles_trapezoid",
+        ],
+        WithJsonSchema(
+            {
+                "enum": [
+                    "equilateral_triangle",
+                    "square",
+                    "regular_hexagon",
+                    "regular_polygon",
+                    "rectangle",
+                    "triangle",
+                ],
+                "type": "string",
+            }
+        ),
+    ] | None = None
     at: Label | None = Field(None, description="đỉnh góc vuông · ảnh hình chiếu")
     point: Label | None = None
     # The planner also accepts `divide_segment` (Wave 2B); the provider schema stays the frozen `flat` surface (owner
@@ -277,6 +303,8 @@ def doc_du_kien(raw: Any) -> list[TypedFact]:
         raise TuChoi("SCHEMA_INVALID", "id dữ kiện trùng")
     for f in facts:
         required = _CAN[f.kind]
+        if f.kind == "polygon_shape" and f.shape in ("trapezoid", "isosceles_trapezoid"):
+            required = ("points", "shape", "points_a", "points_b")
         if f.kind == "question" and f.point_kind is not None and f.plane_relation is None:
             _doc_toan_hang_mo_ta(f)
         if f.line_ref is not None:
@@ -998,7 +1026,19 @@ def _sap_xep_phu_thuoc_loi_goi(k: KeHoach) -> None:
         elif cid in apex_foot_calls:
             tier_of[cid] = 2
         elif (
-            fn in ("regular_polygon", "rectangle", "right_angle", "vertex_angle", "segment_length", "equal_length")
+            fn
+            in (
+                "regular_polygon",
+                "rectangle",
+                "parallelogram",
+                "rhombus",
+                "trapezoid",
+                "isosceles_trapezoid",
+                "right_angle",
+                "vertex_angle",
+                "segment_length",
+                "equal_length",
+            )
             and pts
             and pts <= base_vertices
             and not direct_deps[cid]
@@ -1010,6 +1050,10 @@ def _sap_xep_phu_thuoc_loi_goi(k: KeHoach) -> None:
             in (
                 "regular_polygon",
                 "rectangle",
+                "parallelogram",
+                "rhombus",
+                "trapezoid",
+                "isosceles_trapezoid",
                 "right_angle",
                 "vertex_angle",
                 "perpendicular_line_plane",
@@ -1109,6 +1153,24 @@ def _anh_xa(f: TypedFact, k: KeHoach, ten: dict, deu: dict, khoi_cua, phat) -> d
             return c
         if f.shape == "rectangle":
             return phat(f.id, "rectangle", {"vertices": f.points}, q, "polygon_shape(rectangle)→rectangle")
+        if f.shape == "parallelogram":
+            return phat(f.id, "parallelogram", {"vertices": f.points}, q, "polygon_shape(parallelogram)→parallelogram")
+        if f.shape == "rhombus":
+            return phat(
+                f.id,
+                "rhombus",
+                {"vertices": f.points, **({"side": f.value} if f.value else {})},
+                q,
+                "polygon_shape(rhombus)→rhombus",
+            )
+        if f.shape in ("trapezoid", "isosceles_trapezoid"):
+            return phat(
+                f.id,
+                f.shape,
+                {"vertices": f.points, "base_a": f.points_a, "base_b": f.points_b},
+                q,
+                f"polygon_shape({f.shape})→{f.shape}",
+            )
         return None                                                    # "tam giác ABC": chỉ đặt tên, không ràng buộc
     if f.kind == "right_angle":
         return phat(f.id, "right_angle", {"vertex": f.at, "rays": f.points}, q, "right_angle")
