@@ -274,6 +274,8 @@ describe("Axo 2D Geometry Illustration System (Tier A Family Icons + Tier B Comp
   });
 
   it("6. Bảo toàn số bước dựng 3D và tích hợp đồng bộ trên Trang chủ & Thư viện", () => {
+    // Cập nhật số bước sư phạm thực tế sau khi sửa thứ tự DAG của mat-cau-cat-mat-phang (dựng mặt cầu tâm I trước mặt phẳng (P) và hình chiếu H: 6 -> 7 bước)
+    // và chop-mat-cau-ngoai-tiep (giữ tường minh giao tuyến của (α),(β) và mặt phẳng trung trực (γ) trước giao điểm tâm I: 15 -> 17 bước).
     const expectedSteps: Record<string, number> = {
       "chop-thiet-dien-ba-diem": 12,
       "lap-phuong-thiet-dien-bat-ky": 12,
@@ -281,11 +283,11 @@ describe("Axo 2D Geometry Illustration System (Tier A Family Icons + Tier B Comp
       "goc-nhi-dien-hai-mat-phang": 9,
       "khoang-cach-hai-duong-cheo-nhau": 10,
       "lang-tru-tam-giac-thiet-dien": 11,
-      "mat-cau-cat-mat-phang": 6,
+      "mat-cau-cat-mat-phang": 7,
       "oxyz-giao-diem-duong-mat": 7,
       "mat-phang-tiep-xuc-mat-cau": 6,
       "hinh-non-cat-song-song-day": 12,
-      "chop-mat-cau-ngoai-tiep": 15,
+      "chop-mat-cau-ngoai-tiep": 17,
     };
 
     for (const entry of publicCatalog()) {

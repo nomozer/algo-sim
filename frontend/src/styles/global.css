@@ -7211,7 +7211,18 @@ html {
   outline-offset: 2px;
 }
 
-@keyframes plusPopoverEnter {
+@keyframes plusPopoverEnterDown {
+  from {
+    opacity: 0;
+    transform: translateY(-4px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes plusPopoverEnterUp {
   from {
     opacity: 0;
     transform: translateY(4px) scale(0.98);
@@ -7222,23 +7233,24 @@ html {
   }
 }
 
-/* Menu `+` mở LÊN TRÊN nút `+` với kích thước vừa khít nội dung (width: max-content),
-   không gán chiều rộng cứng tùy tiện theo viewport và không che vùng "Gợi ý khám phá". */
+/* Menu `+` định vị theo không gian thực tế của viewport:
+   mặc định mở XUỐNG DƯỚI nút `+`, chỉ tự lật lên trên khi thiếu chỗ phía dưới,
+   không gây layout shift và không bị cắt bởi overflow của phần tử cha. */
 .plus-popover-menu {
   position: absolute;
-  bottom: calc(100% + 8px);
-  top: auto;
+  top: calc(100% + 8px);
+  bottom: auto;
   left: 0;
   box-sizing: border-box;
   width: max-content;
-  min-width: 0;
-  max-width: calc(100vw - 32px);
+  min-width: 196px;
+  max-width: min(260px, calc(100vw - 24px));
   background: var(--surface);
   border: 1px solid var(--hairline);
   border-radius: var(--rounded-lg);
   box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.03), var(--shadow-elevated);
-  padding: 5px;
-  z-index: 65;
+  padding: 4px;
+  z-index: 35;
   display: none;
   flex-direction: column;
   gap: 2px;
@@ -7246,8 +7258,13 @@ html {
 
 .plus-popover-menu.open {
   display: flex;
+  transform-origin: top left;
+  animation: plusPopoverEnterDown 0.13s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.plus-popover-menu.open[data-placement="top"] {
   transform-origin: bottom left;
-  animation: plusPopoverEnter 0.14s cubic-bezier(0.16, 1, 0.3, 1);
+  animation-name: plusPopoverEnterUp;
 }
 
 .plus-menu-item {
@@ -7255,18 +7272,18 @@ html {
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  gap: 10px;
+  gap: 11px;
   width: 100%;
-  min-height: 36px;
-  padding: 8px 13px;
+  min-height: 41px;
+  padding: 9px 13px;
   border-radius: var(--rounded-md);
   border: none;
   background: transparent;
   color: var(--ink-secondary);
   font-family: inherit;
-  font-size: 13.5px;
+  font-size: 14px;
   font-weight: 500;
-  line-height: 1.35;
+  line-height: 20px;
   white-space: nowrap;
   cursor: pointer;
   text-align: left;
@@ -7289,19 +7306,20 @@ html {
 
   .plus-popover-menu {
     width: max-content;
-    gap: 3px;
+    min-width: 204px;
+    gap: 2px;
   }
 
   .plus-menu-item {
     min-height: 44px;
-    padding: 10px 14px;
+    padding: 10px 13px;
     font-size: 14px;
   }
 }
 
 .plus-menu-item svg {
-  width: 17px;
-  height: 17px;
+  width: 18px;
+  height: 18px;
   stroke: var(--ink-muted);
   stroke-width: 1.9;
   fill: none;

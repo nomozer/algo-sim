@@ -438,9 +438,12 @@ function findCurvedRadiusSegmentEndpoints(
     const dependsOnSolid = (exCand.depends ?? cand.depends ?? []).includes(cs.id);
     const isActiveSphereTriangleHypotenuse =
       isVisibleNow && (cand.display_group ?? []).includes("sphere_plane_aux");
+    const isAuthoritativeRadius =
+      cand.authoritative !== false && !cand.id.endsWith("__radius");
     const score =
       (isVisibleNow ? 16 : 0)
       + (isActiveSphereTriangleHypotenuse ? 3 : 0)
+      + (isAuthoritativeRadius ? 3 : 0)
       + (!hasPerpWitness ? 4 : 0)
       + (dependsOnSolid ? 2 : 0)
       + (matchedCenter.isBottom ? 1 : 0);

@@ -10,11 +10,13 @@ import { veKhongGian } from "./scene3d-chart";
 import { AxoWorkspaceV62 } from "../../../components/SimulationWorkspace";
 import {
   buildPedagogicalConstructionPlan,
+  buildPedagogicalStepNarration,
   classifySceneObjectSemantics,
   isExplicitOxyzCoordinateScene,
   resolveCertifiedRightAngleMarkers,
   resolveVerifiedAngleArcs,
 } from "./scene3d-semantic-policy";
+import { geometryShapeLabel } from "../../../data/offline-catalog";
 
 type AdvancedSampleEntry = {
   id: string;
@@ -514,5 +516,61 @@ describe("Scene3D Standardization — Semantic Colors, Oxyz, Symbols, Steps & 7 
     }) as unknown as Scene3D;
     expect(resolveCertifiedRightAngleMarkers(case7UnverifiedScene, case7UnverifiedScene.objects)).toHaveLength(0);
     expect(resolveVerifiedAngleArcs(case7UnverifiedScene, case7UnverifiedScene.objects)).toHaveLength(0);
+  });
+
+  it("H (§C1–C5): Sửa triệt để thứ tự phụ thuộc sư phạm, mô tả hình chiếu điểm Q lên SC, giải thích 'Được suy ra' và nhãn danh mục Oxyz", () => {
+    // C-1: mat-cau-cat-mat-phang dựng mặt cầu tâm I trước mặt phẳng (P) và trước khi hạ hình chiếu H của I lên (P)
+    const sphereCutPlan = buildPedagogicalConstructionPlan(
+      veKhongGian(sampleById("mat-cau-cat-mat-phang").envelope.scene3d),
+    );
+    const sphereStepIdx = sphereCutPlan.steps.findIndex((s) => s.targetIds.includes("cau"));
+    const planePStepIdx = sphereCutPlan.steps.findIndex((s) => s.targetIds.includes("mp_P"));
+    const footHStepIdx = sphereCutPlan.steps.findIndex((s) => s.targetIds.includes("H"));
+    expect(sphereStepIdx).toBe(0);
+    expect(sphereStepIdx).toBeLessThan(planePStepIdx);
+    expect(planePStepIdx).toBeLessThan(footHStepIdx);
+
+    // C-2: chop-mat-cau-ngoai-tiep giới thiệu giao tuyến của (α),(β) và mặt phẳng trung trực (γ) trước giao điểm tâm I
+    const circumPlan = buildPedagogicalConstructionPlan(
+      veKhongGian(sampleById("chop-mat-cau-ngoai-tiep").envelope.scene3d),
+    );
+    const axisIdx = circumPlan.steps.findIndex((s) => s.targetIds.includes("truc_day"));
+    const gammaIdx = circumPlan.steps.findIndex((s) => s.targetIds.includes("mp_tt_SA"));
+    const centerIIdx = circumPlan.steps.findIndex((s) => s.targetIds.includes("I"));
+    expect(axisIdx).toBeGreaterThan(-1);
+    expect(gammaIdx).toBeGreaterThan(-1);
+    expect(axisIdx).toBeLessThan(centerIIdx);
+    expect(gammaIdx).toBeLessThan(centerIIdx);
+
+    // C-3: khoang-cach-hai-duong-cheo-nhau mô tả đúng 'Hạ hình chiếu vuông góc P của Q lên SC' (không ghi nhầm 'của BD lên SC')
+    const skewPlan = buildPedagogicalConstructionPlan(
+      veKhongGian(sampleById("khoang-cach-hai-duong-cheo-nhau").envelope.scene3d),
+    );
+    const footPStep = skewPlan.steps.find((s) => s.targetIds.includes("P"));
+    expect(footPStep?.title).toBe("Hạ hình chiếu vuông góc P của Q lên SC");
+    expect(footPStep?.title).not.toContain("của BD lên SC");
+
+    // C-4: Mọi bước 'Được suy ra' trọng tâm (đoạn vuông góc chung, giao tuyến đường tròn, mặt cầu ngoại tiếp, giao điểm đường-mặt) đều có detailedEvidence cho nút 'Xem giải thích'
+    for (const id of [
+      "khoang-cach-hai-duong-cheo-nhau",
+      "mat-cau-cat-mat-phang",
+      "hinh-non-cat-song-song-day",
+      "chop-mat-cau-ngoai-tiep",
+      "oxyz-giao-diem-duong-mat",
+    ]) {
+      const plan = buildPedagogicalConstructionPlan(
+        veKhongGian(sampleById(id).envelope.scene3d),
+      );
+      const lastDerived = [...plan.steps].reverse().find((s) => s.epistemicCategory === "derived");
+      expect(lastDerived, `${id} should have a derived step`).toBeDefined();
+      const nar = buildPedagogicalStepNarration(plan.scene, lastDerived!);
+      expect(
+        nar.detailedEvidence.length,
+        `${id} step '${lastDerived!.title}' should provide detailedEvidence`,
+      ).toBeGreaterThan(0);
+    }
+
+    // C-5: Bài oxyz-giao-diem-duong-mat mang nhãn danh mục 'Tọa độ Oxyz' (không gắn nhầm 'Hình chóp')
+    expect(geometryShapeLabel("oxyz-giao-diem-duong-mat")).toBe("Tọa độ Oxyz");
   });
 });

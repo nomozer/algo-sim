@@ -248,6 +248,9 @@ const STARTER_SAMPLE_IDS = [
 /** Nhãn phân loại khối hình học hiển thị trên thẻ gợi ý khám phá và Thư viện. */
 export function geometryShapeLabel(sampleId: string): string {
   const canonicalId = _slugRegistry.bySlug.get(sampleId.toLowerCase()) ?? sampleId;
+  if (canonicalId.startsWith("oxyz-")) {
+    return "Tọa độ Oxyz";
+  }
   if (
     canonicalId.startsWith("cau-") ||
     canonicalId.startsWith("mat-cau-") ||
@@ -288,6 +291,7 @@ export const LIBRARY_CATEGORY_ORDER = [
   "Mặt cầu",
   "Hình trụ",
   "Hình nón",
+  "Tọa độ Oxyz",
 ] as const;
 
 export type LibraryCategory = (typeof LIBRARY_CATEGORY_ORDER)[number];
@@ -363,5 +367,8 @@ export function geometryCategoryForItem(
   }
   if (text.includes("hình trụ") || text.includes("khối trụ")) return "Hình trụ";
   if (text.includes("hình nón") || text.includes("khối nón")) return "Hình nón";
+  if (text.includes("oxyz") && !text.includes("hình chóp") && !text.includes("tứ diện")) {
+    return "Tọa độ Oxyz";
+  }
   return "Hình chóp";
 }

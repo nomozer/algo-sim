@@ -10232,7 +10232,13 @@ function buildPedagogicalNarrationForRange(
           : undefined;
       const effectivePtWitness = primaryObj.perpendicular_witness ?? inferredFootSegWitness;
       if (effectivePtWitness?.on && effectivePtWitness?.from) {
-        const fromObj = byId.get(effectivePtWitness.from);
+        const rawFromObj = byId.get(effectivePtWitness.from);
+        const fromObj =
+          rawFromObj && rawFromObj.type !== "point3"
+            ? (effectivePtWitness.second?.foot_id ? byId.get(effectivePtWitness.second.foot_id) : undefined)
+              ?? (primaryObj.depends ?? []).map((id) => byId.get(id)).find((d) => d?.type === "point3")
+              ?? rawFromObj
+            : rawFromObj;
         const onObj = byId.get(effectivePtWitness.on);
         if (fromObj && onObj) {
           const onName =
@@ -15012,6 +15018,19 @@ export function buildPedagogicalConstructionPlan(
       if (!cRole || !isPrimaryCurvedSolid(workScene, cRole.host)) return null;
       const host = cRole.host;
       if (cRole.kind === "radius") {
+        const synthRad = byId.get(`${host.id}__radius`);
+        if (
+          host.curved_kind === "ball"
+          && synthRad
+          && o.id !== synthRad.id
+          && (() => {
+            const sEps = new Set(synthRad.endpoint_ids ?? []);
+            const oEps = o.endpoint_ids ?? [];
+            return !(oEps.length === 2 && sEps.size === 2 && oEps.every((e) => sEps.has(e)));
+          })()
+        ) {
+          return null;
+        }
         const endpointRefs = [...new Set([...(o.endpoint_ids ?? []), ...(o.depends ?? [])])];
         const dependsOnCutOrProjection =
           Boolean(o.perpendicular_witness)
@@ -15447,6 +15466,18 @@ export function buildPedagogicalConstructionPlan(
         const o = byId.get(id);
         if (o && foundationRoleForCurved(o)) return false;
         if (o && (o.display_group ?? []).includes("sphere_plane_aux")) return false;
+        if (
+          o
+          && ((o.type === "plane3" && Boolean(o.notation?.trim())) || isIntersectionLineOrSegment(o, workScene))
+          && workScene.objects.some(
+            (cand) =>
+              cand.type === "point3"
+              && Boolean(cand.notation?.trim())
+              && (cand.depends ?? []).includes(id),
+          )
+        ) {
+          return false;
+        }
         if (o && o.type === "point3" && Boolean(o.perpendicular_witness) && Boolean(o.notation?.trim())) return false;
         return phu.get(id)?.loai === "dung";
       });
@@ -20684,7 +20715,9 @@ export function buildPedagogicalStepNarration(
   step: Pick<
     PedagogicalStepItem,
     "index" | "startAnchor" | "anchor" | "label" | "title" | "subtitle" | "targetIds" | "prerequisiteIds"
-  >,
+  > & {
+    epistemicCategory?: PedagogicalStepItem["epistemicCategory"];
+  },
 ): PedagogicalStepNarration {
   const exactOrigin = exactSceneOriginOf(scene);
   const byId = new Map(exactOrigin.objects.map((o) => [o.id, o]));
@@ -21275,6 +21308,139 @@ export function buildPedagogicalStepNarration(
         conn === "để" || conn === "nhằm"
           ? `Nhằm ${body}`
           : `${mConnSplit[2]!.charAt(0).toUpperCase()}${mConnSplit[2]!.slice(1)} ${body}`;
+    }
+  }
+
+  if (step.epistemicCategory === "derived") {
+    const pushSafeEvidence = (cand: string) => {
+      const trimmed = cand.trim();
+      if (trimmed && learnerTextIsSafe(scene, trimmed)) {
+        extraEvidenceCandidates.push(trimmed);
+      }
+    };
+    for (const tid of step.targetIds) {
+      const exTarget = byId.get(tid);
+      const scTarget = scene.objects.find((x) => x.id === tid) ?? exTarget;
+      if (!exTarget || !scTarget) continue;
+      if (
+        exTarget.type === "segment3"
+        && exTarget.perpendicular_witness?.on
+        && exTarget.perpendicular_witness.second?.on
+      ) {
+        const w = exTarget.perpendicular_witness;
+        const segSym = shortSym(exTarget);
+        const l1 = shortSym(byId.get(w.on));
+        const f1 = w.foot_id && presentIdsAtAnchor.has(w.foot_id) ? shortSym(byId.get(w.foot_id)) : "";
+        const l2 = shortSym(byId.get(w.second!.on));
+        const f2 =
+          w.second!.foot_id && presentIdsAtAnchor.has(w.second!.foot_id)
+            ? shortSym(byId.get(w.second!.foot_id))
+            : "";
+        if (segSym && l1 && l2) {
+          pushSafeEvidence(
+            `Đoạn ${segSym} đồng thời vuông góc với ${l1}${f1 ? ` tại ${f1}` : ""} và vuông góc với ${l2}${f2 ? ` tại ${f2}` : ""} (tích vô hướng bằng 0), nên là đoạn vuông góc chung duy nhất biểu diễn khoảng cách giữa hai đường thẳng chéo nhau.`,
+          );
+        }
+      } else if (
+        exTarget.type === "segment3"
+        && exTarget.perpendicular_witness?.on
+        && !exTarget.perpendicular_witness.second
+      ) {
+        const w = exTarget.perpendicular_witness;
+        const segSym = shortSym(exTarget);
+        const onObj = byId.get(w.on);
+        const onName =
+          onObj?.type === "plane3" ? formatPlaneDisplayNotation(onObj, scene) : shortSym(onObj);
+        const fSym = w.foot_id && presentIdsAtAnchor.has(w.foot_id) ? shortSym(byId.get(w.foot_id)) : "";
+        if (segSym && onName) {
+          pushSafeEvidence(
+            `Vì đoạn ${segSym} vuông góc với ${onName}${fSym ? ` tại hình chiếu vuông góc ${fSym}` : ""}, khoảng cách hình học đến ${onName} được xác định trực tiếp bởi độ dài đoạn ${segSym}.`,
+          );
+        }
+      } else if (
+        (exTarget.type === "circle3" || exTarget.type === "ellipse3")
+        && vaiTroMien(scTarget) === "section"
+      ) {
+        const cPt = exTarget.center
+          ? exactOrigin.objects.find(
+              (p) =>
+                !isSubEntity(p.id)
+                && presentIdsAtAnchor.has(p.id)
+                && p.type === "point3"
+                && p.xyz
+                && vIsZero(vSub(parseFracVec3(p.xyz), parseFracVec3(exTarget.center!))),
+            )
+          : undefined;
+        const cSym = shortSym(cPt);
+        if (hostCurvedSolids.some((cs) => cs.curved_kind === "ball")) {
+          pushSafeEvidence(
+            `Mọi điểm chung của mặt cầu và mặt phẳng cắt đều cách hình chiếu vuông góc${cSym ? ` ${cSym}` : ""} của tâm một khoảng không đổi theo định lý Pythagore, nên giao tuyến là đường tròn${cSym ? ` tâm ${cSym}` : ""}.`,
+          );
+        } else if (hostCurvedSolids.some((cs) => cs.curved_kind === "cone")) {
+          pushSafeEvidence(
+            `Mặt phẳng cắt song song với mặt đáy hình nón nên cắt các đường sinh theo cùng tỉ số đồng dạng, tạo thành thiết diện là đường tròn${cSym ? ` tâm ${cSym} thuộc trục hình nón` : ""}.`,
+          );
+        } else {
+          pushSafeEvidence(
+            `Tập hợp các điểm chung của mặt phẳng cắt với mặt tròn xoay cách đều tâm thiết diện${cSym ? ` ${cSym}` : ""}, tạo thành giao tuyến khép kín.`,
+          );
+        }
+      } else if (
+        exTarget.type === "curved_solid"
+        && exTarget.curved_kind === "ball"
+        && classifySphereSemanticRole(exactOrigin, exTarget) === "CIRCUMSCRIBED_SPHERE"
+      ) {
+        const cPt = exTarget.anchor
+          ? exactOrigin.objects.find(
+              (p) =>
+                !isSubEntity(p.id)
+                && presentIdsAtAnchor.has(p.id)
+                && p.type === "point3"
+                && p.xyz
+                && vIsZero(vSub(parseFracVec3(p.xyz), parseFracVec3(exTarget.anchor!))),
+            )
+          : undefined;
+        const cSym = shortSym(cPt);
+        pushSafeEvidence(
+          `Vì tâm${cSym ? ` ${cSym}` : ""} thuộc giao của các mặt phẳng trung trực nên cách đều toàn bộ các đỉnh của khối đa diện; mặt cầu tâm${cSym ? ` ${cSym}` : ""} đi qua các đỉnh là mặt cầu ngoại tiếp duy nhất.`,
+        );
+      } else if (exTarget.type === "point3") {
+        const pSym = shortSym(exTarget);
+        const interRel = findLinePlaneIntersectionMidpoint(exactOrigin, exTarget);
+        const diagRel = !interRel ? findPolygonDiagonalIntersectionRelation(exactOrigin, exTarget) : null;
+        const hasBisectorDeps = (exTarget.depends ?? []).some((d) => {
+          const dep = byId.get(d);
+          return dep?.type === "plane3" && /trung trực/iu.test(`${dep.label ?? ""} ${dep.role ?? ""}`);
+        });
+        if (hasBisectorDeps && pSym) {
+          pushSafeEvidence(
+            `Điểm ${pSym} đồng thời thuộc giao tuyến các mặt phẳng trung trực của cạnh đáy và mặt phẳng trung trực của cạnh bên, nên cách đều tất cả các đỉnh của khối.`,
+          );
+        } else if (interRel && pSym) {
+          pushSafeEvidence(
+            `Điểm ${pSym} đồng thời thuộc đường thẳng ${interRel.lineSym} và mặt phẳng ${interRel.planeSym}; vì đường thẳng cắt mặt phẳng nên giao điểm ${pSym} được xác định duy nhất.`,
+          );
+        } else if (diagRel && pSym) {
+          pushSafeEvidence(
+            `Hai đường chéo ${diagRel.d1Sym} và ${diagRel.d2Sym} đồng phẳng trong ${diagRel.polySym} và không song song nên cắt nhau tại điểm duy nhất ${pSym}.`,
+          );
+        } else if (pSym) {
+          pushSafeEvidence(
+            `Điểm ${pSym} được suy ra duy nhất từ điều kiện đồng thời thuộc hai đối tượng hình học cắt nhau trên hình dựng.`,
+          );
+        }
+      } else if (
+        isIntersectionLineOrSegment(scTarget, scene)
+        && !/song song|∥/u.test(conciseRationale)
+      ) {
+        pushSafeEvidence(
+          `Hai mặt phẳng không song song và có điểm chung nên cắt nhau theo một giao tuyến thẳng duy nhất đi qua mọi điểm chung của hai mặt phẳng.`,
+        );
+      } else if (exTarget.type === "angle") {
+        pushSafeEvidence(
+          `Hai tia tạo góc lần lượt nằm trong hai nửa mặt phẳng và cùng vuông góc với giao tuyến tại một điểm, nên góc phẳng này biểu diễn đúng góc nhị diện cần xét.`,
+        );
+      }
     }
   }
 

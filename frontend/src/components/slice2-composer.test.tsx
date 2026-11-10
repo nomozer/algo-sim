@@ -3,7 +3,7 @@ import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { renderToString } from "react-dom/server";
 import App from "../App";
 import { HomeView } from "./HomeView";
-import { ProblemInput } from "./ProblemInput";
+import { ProblemInput, computePlusPopoverPosition } from "./ProblemInput";
 import { ToastContainer, useToastStore } from "./TopNav";
 import { starterEntries } from "../data/offline-catalog";
 import {
@@ -79,13 +79,14 @@ describe("Axo V2.7 Slice 2 — 18 Component & Integration Cases (P11.2 & P11.3)"
     expect(html).toContain("composer-submit-arrow");
   });
 
-  it("2. Composer không có đường kẻ ngang phía trên hàng công cụ dưới cùng (.composer-footer border-top: none) và menu + mở lên trên để không đè Gợi ý khám phá", () => {
+  // Cập nhật theo phê duyệt §A2: mặc định mở XUỐNG DƯỚI nút `+` (`top: calc(100% + 8px)` khi SSR, `position: fixed` theo viewport khi mở trên trình duyệt), chỉ tự lật lên trên khi thiếu không gian phía dưới.
+  it("2. Composer không có đường kẻ ngang phía trên hàng công cụ dưới cùng (.composer-footer border-top: none) và menu + mặc định mở xuống dưới nút +", () => {
     const css = readFileSync(
       new URL("../styles/global.css", import.meta.url),
       "utf-8",
     );
     expect(css).toMatch(/\.composer-footer\s*\{[^}]*border-top:\s*none/s);
-    expect(css).toMatch(/\.plus-popover-menu\s*\{[^}]*bottom:\s*calc\(100%\s*\+\s*8px\)/s);
+    expect(css).toMatch(/\.plus-popover-menu\s*\{[^}]*top:\s*calc\(100%\s*\+\s*8px\)/s);
   });
 
   it("3. Nút Dựng hình → ở trạng thái disabled ban đầu khi chưa có chữ và chưa có tệp", () => {
@@ -397,7 +398,7 @@ describe("Axo V2.7 Slice 2 — 18 Component & Integration Cases (P11.2 & P11.3)"
     expect(popoverMatch).not.toBeNull();
     const popoverBlock = popoverMatch![1];
     expect(popoverBlock).toMatch(/width:\s*max-content/);
-    expect(popoverBlock).toMatch(/bottom:\s*calc\(100%\s*\+\s*8px\)/);
+    expect(popoverBlock).toMatch(/top:\s*calc\(100%\s*\+\s*8px\)/);
     expect(popoverBlock).not.toMatch(/(?:^|\s|;)width:\s*\d+px/);
     expect(popoverBlock).not.toContain("152px");
 
@@ -407,7 +408,7 @@ describe("Axo V2.7 Slice 2 — 18 Component & Integration Cases (P11.2 & P11.3)"
 
 
     expect(popoverBlock).toMatch(/border:\s*1px\s+solid\s+var\(--hairline\)/);
-    expect(popoverBlock).toMatch(/max-width:\s*calc\(100vw\s*-\s*32px\)/);
+    expect(popoverBlock).toMatch(/max-width:\s*min\(260px,\s*calc\(100vw\s*-\s*24px\)\)/);
 
     const itemMatch = css.match(/\.plus-menu-item\s*\{([^}]*)\}/s);
     expect(itemMatch).not.toBeNull();
@@ -457,9 +458,54 @@ describe("Axo V2.7 Slice 2 — 18 Component & Integration Cases (P11.2 & P11.3)"
       />,
     );
     const menuOnly = mobileHtml.slice(mobileHtml.indexOf('id="plus-popover-menu"'));
-    expect(menuOnly).toContain('width="17" height="17"');
+    expect(menuOnly).toContain('width="18" height="18"');
     expect(menuOnly).toContain('id="menu-item-upload-file"');
     expect(menuOnly).toContain('id="menu-item-camera"');
+  });
+
+  it("22. computePlusPopoverPosition định vị dựa trên không gian thực tế của viewport: mặc định mở xuống dưới, tự lật lên trên khi sát đáy, chống tràn ngang và chuẩn hóa CSS zoom", () => {
+    const down = computePlusPopoverPosition({
+      triggerRect: { top: 300, bottom: 336, left: 351, right: 387, width: 36, height: 36 },
+      menuWidth: 198,
+      menuHeight: 51,
+      viewportWidth: 1440,
+      viewportHeight: 900,
+    });
+    expect(down.placement).toBe("bottom");
+    expect(down.top).toBe(344);
+    expect(down.left).toBe(351);
+
+    const up = computePlusPopoverPosition({
+      triggerRect: { top: 430, bottom: 466, left: 33, right: 69, width: 36, height: 36 },
+      menuWidth: 204,
+      menuHeight: 100,
+      viewportWidth: 390,
+      viewportHeight: 500,
+    });
+    expect(up.placement).toBe("top");
+    expect(up.top).toBe(322);
+    expect(up.left).toBe(33);
+
+    const clampedRight = computePlusPopoverPosition({
+      triggerRect: { top: 200, bottom: 236, left: 260, right: 296, width: 36, height: 36 },
+      menuWidth: 204,
+      menuHeight: 100,
+      viewportWidth: 390,
+      viewportHeight: 844,
+    });
+    expect(clampedRight.left).toBe(390 - 204 - 12);
+
+    const zoomed = computePlusPopoverPosition({
+      triggerRect: { top: 323.4, bottom: 363, left: 314.6, right: 354.2, width: 39.6, height: 39.6 },
+      menuWidth: 217.8,
+      menuHeight: 56.1,
+      viewportWidth: 1440,
+      viewportHeight: 900,
+      cssZoom: 1.1,
+    });
+    expect(zoomed.placement).toBe("bottom");
+    expect(zoomed.left).toBeCloseTo(314.6 / 1.1, 1);
+    expect(zoomed.top).toBeCloseTo((363 + 8) / 1.1, 1);
   });
 
   it("21. Menu đính kèm hỗ trợ điều hướng bàn phím (ArrowDown/ArrowUp/Home/End/Escape hoàn trả focus) và bảo toàn văn bản + trạng thái nút Dựng hình", () => {

@@ -44,19 +44,19 @@ Khi nhiều thực thể hình học cùng nằm trên một cạnh/đường, h
 
 ### 0.4. Danh mục 11 bài THPT nâng cao công khai hiện hành (`PUBLIC_GEOMETRY_SAMPLES`)
 
-| # | Mã bài (`id`) | Dạng toán & quan hệ trọng tâm | Hệ trục `Oxyz` mặc định | Template 2D (`resolver.ts`) |
-|---|---|---|---|---|
-| 1 | `chop-thiet-dien-ba-diem` | Thiết diện hình chóp cắt bởi mặt phẳng `(MNP)` qua 3 trung điểm | Tắt | `pyramid.section` |
-| 2 | `lap-phuong-thiet-dien-bat-ky` | Thiết diện lục giác đều của hình lập phương cắt bởi `(MNP)` | Tắt | `cube.plane-section` |
-| 3 | `khoang-cach-diem-mat-phang-nghieng` | Hình chiếu `H` và khoảng cách `d(A, (SBC))` từ chân đường cao đến mặt bên nghiêng | Tắt | `pyramid.point-to-plane-distance` |
-| 4 | `goc-nhi-dien-hai-mat-phang` | Góc phẳng nhị diện `∠SHA` giữa mặt bên `(SBC)` và đáy `(ABC)` | Tắt | `pyramid.dihedral-angle` |
-| 5 | `khoang-cach-hai-duong-cheo-nhau` | Đoạn vuông góc chung `PQ` và khoảng cách giữa hai đường chéo nhau `SC, BD` | Tắt | `pyramid.skew-lines-distance` |
-| 6 | `lang-tru-tam-giac-thiet-dien` | Thiết diện ngũ giác của lăng trụ đứng tam giác cắt bởi `(NPQ)` | Tắt | `prism.plane-section` |
-| 7 | `mat-cau-cat-mat-phang` | Mặt phẳng `(P)` cắt mặt cầu `(S)` trong `Oxyz` theo đường tròn tâm `H` | **Bật** | `sphere.plane-section` |
-| 8 | `oxyz-giao-diem-duong-mat` | Giao điểm `M = d ∩ (P)`, hình chiếu `H` của `E` lên `(P)` và độ dài `OM` trong `Oxyz` | **Bật** | `oxyz.line-plane-intersection` |
-| 9 | `mat-phang-tiep-xuc-mat-cau` | Mặt phẳng tiếp diện `(P)` tiếp xúc mặt cầu `(S)` tại tiếp điểm `A` trong `Oxyz` | **Bật** | `sphere.tangent-plane` |
-| 10 | `hinh-non-cat-song-song-day` | Mặt phẳng song song đáy cắt hình nón theo đường tròn thiết diện | Tắt | `cone.parallel-section` |
-| 11 | `chop-mat-cau-ngoai-tiep` | Tâm `I` (giao các mặt phẳng trung trực) và mặt cầu ngoại tiếp hình chóp `S.ABCD` | Tắt | `pyramid.circumscribed-sphere` |
+| # | Mã bài (`id`) | Nhóm Thư viện | Bước dựng (`stepCount`) | Dạng toán & quan hệ trọng tâm | Hệ trục `Oxyz` mặc định | Template 2D (`resolver.ts`) |
+|---|---|---|---|---|---|---|
+| 1 | `chop-thiet-dien-ba-diem` | Hình chóp | `12` | Thiết diện hình chóp cắt bởi mặt phẳng `(MNP)` qua 3 trung điểm | Tắt | `pyramid.section` |
+| 2 | `lap-phuong-thiet-dien-bat-ky` | Hình lăng trụ | `12` | Thiết diện lục giác đều của hình lập phương cắt bởi `(MNP)` | Tắt | `cube.plane-section` |
+| 3 | `khoang-cach-diem-mat-phang-nghieng` | Hình chóp | `7` | Hình chiếu `H` và khoảng cách `d(A, (SBC))` từ chân đường cao đến mặt bên nghiêng | Tắt | `pyramid.point-to-plane-distance` |
+| 4 | `goc-nhi-dien-hai-mat-phang` | Hình chóp | `9` | Góc phẳng nhị diện `∠SHA` giữa mặt bên `(SBC)` và đáy `(ABC)` | Tắt | `pyramid.dihedral-angle` |
+| 5 | `khoang-cach-hai-duong-cheo-nhau` | Hình chóp | `10` | Đoạn vuông góc chung `PQ` và khoảng cách giữa hai đường chéo nhau `SC, BD` | Tắt | `pyramid.skew-lines-distance` |
+| 6 | `lang-tru-tam-giac-thiet-dien` | Hình lăng trụ | `11` | Thiết diện ngũ giác của lăng trụ đứng tam giác cắt bởi `(NPQ)` | Tắt | `prism.plane-section` |
+| 7 | `mat-cau-cat-mat-phang` | Mặt cầu | `7` | Mặt phẳng `(P)` cắt mặt cầu `(S)` trong `Oxyz` theo đường tròn tâm `H` | **Bật** | `sphere.plane-section` |
+| 8 | `oxyz-giao-diem-duong-mat` | Tọa độ Oxyz | `7` | Giao điểm `M = d ∩ (P)`, hình chiếu `H` của `E` lên `(P)` và độ dài `OM` trong `Oxyz` | **Bật** | `oxyz.line-plane-intersection` |
+| 9 | `mat-phang-tiep-xuc-mat-cau` | Mặt cầu | `6` | Mặt phẳng tiếp diện `(P)` tiếp xúc mặt cầu `(S)` tại tiếp điểm `A` trong `Oxyz` | **Bật** | `sphere.tangent-plane` |
+| 10 | `hinh-non-cat-song-song-day` | Hình nón | `12` | Mặt phẳng song song đáy cắt hình nón theo đường tròn thiết diện | Tắt | `cone.parallel-section` |
+| 11 | `chop-mat-cau-ngoai-tiep` | Hình chóp | `17` | Tâm `I` (giao các mặt phẳng trung trực) và mặt cầu ngoại tiếp hình chóp `S.ABCD` | Tắt | `pyramid.circumscribed-sphere` |
 
 ---
 

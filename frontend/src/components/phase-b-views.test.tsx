@@ -153,12 +153,16 @@ describe("Axo V2.7 Phase B — Header Logo, Homepage, Library & History (P3–P8
     expect(libHtml).toContain("bước dựng 3D");
     expect(libHtml).toContain("Mở mô phỏng →");
 
-    // Kiểm tra lọc theo danh mục Hình chóp (5 bài) + nút bỏ lọc nhanh
+    // Kiểm tra lọc theo danh mục Hình chóp (5 bài — bài oxyz-giao-diem-duong-mat thuộc danh mục Tọa độ Oxyz, không phải Hình chóp) + nút bỏ lọc nhanh
     const filteredCatHtml = renderToString(<LibraryView initialCategory="Hình chóp" />);
     expect(filteredCatHtml).toContain('<strong id="library-category-selected-label">Hình chóp</strong>');
-    expect(filteredCatHtml).toContain("6 bài mô phỏng phù hợp");
+    expect(filteredCatHtml).toContain("5 bài mô phỏng phù hợp");
     expect(filteredCatHtml).toContain('id="btn-library-filter-clear"');
-    expect((filteredCatHtml.match(/class="lib-card"/g) ?? []).length).toBe(6);
+    expect((filteredCatHtml.match(/class="lib-card"/g) ?? []).length).toBe(5);
+
+    const oxyzCatHtml = renderToString(<LibraryView initialCategory="Tọa độ Oxyz" />);
+    expect(oxyzCatHtml).toContain('<strong id="library-category-selected-label">Tọa độ Oxyz</strong>');
+    expect(oxyzCatHtml).toContain("1 bài mô phỏng phù hợp");
 
     // Kiểm tra kết hợp tìm kiếm + lọc nhóm hình
     const combinedHtml = renderToString(

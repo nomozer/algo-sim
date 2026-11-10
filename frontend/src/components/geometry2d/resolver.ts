@@ -155,7 +155,7 @@ export const SAMPLE_ILLUSTRATION_MAPPING: Readonly<
   "oxyz-giao-diem-duong-mat": {
     family: "pyramid",
     templateId: "oxyz.line-plane-intersection",
-    categoryVi: "Hình chóp",
+    categoryVi: "Tọa độ Oxyz",
   },
   "mat-phang-tiep-xuc-mat-cau": {
     family: "sphere",

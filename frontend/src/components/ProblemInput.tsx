@@ -1,4 +1,4 @@
-import { useEffect, useReducer, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useReducer, useRef, useState } from "react";
 import { useAppStore } from "../state/store";
 import { displayBrand } from "../branding";
 import { useAuthStore } from "../state/auth";
@@ -305,6 +305,55 @@ export interface RunComposerSubmitOptions {
   onAssistRequired?: (response: UnifiedInputPrepareResponse) => void;
 }
 
+const useIsomorphicLayoutEffect = typeof window !== "undefined" ? useLayoutEffect : useEffect;
+
+export interface PlusPopoverPosition {
+  left: number;
+  top: number;
+  placement: "bottom" | "top";
+}
+
+export function computePlusPopoverPosition(params: {
+  triggerRect: { top: number; bottom: number; left: number; right: number; width: number; height: number };
+  menuWidth: number;
+  menuHeight: number;
+  viewportWidth: number;
+  viewportHeight: number;
+  cssZoom?: number;
+  gapPx?: number;
+  marginPx?: number;
+}): PlusPopoverPosition {
+  const gap = params.gapPx ?? 8;
+  const margin = params.marginPx ?? 12;
+  const zoom = params.cssZoom && Number.isFinite(params.cssZoom) && params.cssZoom > 0 ? params.cssZoom : 1;
+  const vw = Math.max(margin * 2 + 40, params.viewportWidth);
+  const vh = Math.max(margin * 2 + 40, params.viewportHeight);
+  const mw = Math.max(1, params.menuWidth);
+  const mh = Math.max(1, params.menuHeight);
+
+  const spaceBelow = vh - params.triggerRect.bottom - margin;
+  const spaceAbove = params.triggerRect.top - margin;
+
+  let placement: "bottom" | "top" = "bottom";
+  let rawTop = params.triggerRect.bottom + gap;
+
+  if (spaceBelow < mh + gap && spaceAbove > spaceBelow) {
+    placement = "top";
+    rawTop = Math.max(margin, params.triggerRect.top - mh - gap);
+  } else if (rawTop + mh > vh - margin) {
+    rawTop = Math.max(margin, vh - mh - margin);
+  }
+
+  const maxLeft = Math.max(margin, vw - mw - margin);
+  const rawLeft = Math.max(margin, Math.min(maxLeft, params.triggerRect.left));
+
+  return {
+    left: Math.round((rawLeft / zoom) * 10) / 10,
+    top: Math.round((rawTop / zoom) * 10) / 10,
+    placement,
+  };
+}
+
 /** Huỷ chủ động lượt đang trích xuất / dựng hình: giữ nguyên nội dung gõ tay và tệp đính kèm. */
 export function cancelComposerSubmit(
   lockRef: { current: boolean },
@@ -542,6 +591,8 @@ export function ProblemInput({
     initialAttachments,
   );
   const [plusMenuOpen, setPlusMenuOpen] = useState(initialPlusMenuOpen);
+  const [plusPopoverPos, setPlusPopoverPos] = useState<PlusPopoverPosition | null>(null);
+  const composerBoxRef = useRef<HTMLDivElement>(null);
   const [allFilesModalOpen, setAllFilesModalOpen] = useState(
     initialAllFilesModalOpen,
   );
@@ -643,6 +694,79 @@ export function ProblemInput({
       setPreviewModalFileId(null);
     }
   }, [attachments, allFilesModalOpen, previewModalFileId]);
+
+  // Định vị menu `+` dựa trên không gian thực tế của viewport (mặc định mở xuống dưới, tự lật lên khi thiếu chỗ).
+  useIsomorphicLayoutEffect(() => {
+    if (!plusMenuOpen) {
+      setPlusPopoverPos(null);
+      return;
+    }
+
+    const syncPopoverPosition = () => {
+      const triggerEl = plusTriggerRef.current;
+      const popoverEl = plusPopoverRef.current;
+      if (!triggerEl || !popoverEl || typeof window === "undefined") return;
+
+      const triggerRect = triggerEl.getBoundingClientRect();
+      const vv = window.visualViewport;
+      const cssZoom =
+        parseFloat(window.getComputedStyle(document.documentElement).zoom || "1") || 1;
+      const viewportWidth = vv ? vv.width * (cssZoom !== 1 ? cssZoom : 1) : window.innerWidth;
+      const viewportHeight = vv ? vv.height * (cssZoom !== 1 ? cssZoom : 1) : window.innerHeight;
+
+      const navEl = document.querySelector(".nav-bar");
+      const minVisibleTop = navEl ? Math.max(0, navEl.getBoundingClientRect().bottom) : 0;
+      if (triggerRect.bottom <= minVisibleTop || triggerRect.top >= viewportHeight) {
+        setPlusMenuOpen(false);
+        return;
+      }
+
+      const popRect = popoverEl.getBoundingClientRect();
+      const menuWidth = popRect.width > 0 ? popRect.width : popoverEl.offsetWidth * cssZoom || 200;
+      const menuHeight = popRect.height > 0 ? popRect.height : popoverEl.offsetHeight * cssZoom || 48;
+
+      const next = computePlusPopoverPosition({
+        triggerRect,
+        menuWidth,
+        menuHeight,
+        viewportWidth,
+        viewportHeight,
+        cssZoom,
+      });
+
+      setPlusPopoverPos((prev) =>
+        prev &&
+        prev.placement === next.placement &&
+        Math.abs(prev.left - next.left) < 0.2 &&
+        Math.abs(prev.top - next.top) < 0.2
+          ? prev
+          : next,
+      );
+    };
+
+    syncPopoverPosition();
+
+    window.addEventListener("resize", syncPopoverPosition);
+    window.addEventListener("scroll", syncPopoverPosition, { passive: true, capture: true });
+    const vv = window.visualViewport;
+    vv?.addEventListener("resize", syncPopoverPosition);
+    vv?.addEventListener("scroll", syncPopoverPosition);
+
+    let ro: ResizeObserver | null = null;
+    if (typeof ResizeObserver !== "undefined") {
+      ro = new ResizeObserver(syncPopoverPosition);
+      if (composerBoxRef.current) ro.observe(composerBoxRef.current);
+      if (plusPopoverRef.current) ro.observe(plusPopoverRef.current);
+    }
+
+    return () => {
+      window.removeEventListener("resize", syncPopoverPosition);
+      window.removeEventListener("scroll", syncPopoverPosition, true);
+      vv?.removeEventListener("resize", syncPopoverPosition);
+      vv?.removeEventListener("scroll", syncPopoverPosition);
+      ro?.disconnect();
+    };
+  }, [plusMenuOpen, showCameraEntry]);
 
   // Đóng menu `+`, modal Tất cả tệp hoặc modal xem trước tệp khi bấm ra ngoài hoặc nhấn Escape.
   useEffect(() => {
@@ -942,6 +1066,7 @@ export function ProblemInput({
   return (
     <div className="composer-hero">
       <div
+        ref={composerBoxRef}
         className={`composer-card composer-box${analyzing ? " is-busy" : ""}`}
         id="home-composer-box"
       >
@@ -1159,6 +1284,18 @@ export function ProblemInput({
                 ref={plusPopoverRef}
                 id="plus-popover-menu"
                 className={`plus-popover-menu${plusMenuOpen ? " open" : ""}`}
+                data-placement={plusPopoverPos?.placement ?? "bottom"}
+                style={
+                  plusMenuOpen && plusPopoverPos
+                    ? {
+                        position: "fixed",
+                        left: `${plusPopoverPos.left}px`,
+                        top: `${plusPopoverPos.top}px`,
+                        bottom: "auto",
+                        right: "auto",
+                      }
+                    : undefined
+                }
                 role="menu"
                 aria-label="Tùy chọn đính kèm đề bài"
                 onKeyDown={(e) => {
@@ -1206,7 +1343,7 @@ export function ProblemInput({
                     fileInputRef.current?.click();
                   }}
                 >
-                  <IconUpload size={17} />
+                  <IconUpload size={18} />
                   <span>Tải tệp từ thiết bị</span>
                 </button>
                 {showCameraEntry && (
@@ -1221,7 +1358,7 @@ export function ProblemInput({
                       setPhotoDialogOpen(true);
                     }}
                   >
-                    <IconCamera size={17} />
+                    <IconCamera size={18} />
                     <span>Chụp ảnh đề bài</span>
                   </button>
                 )}
