@@ -1159,6 +1159,8 @@ class _Dung:
             self.h2 = self._free_h2_sample
             self._deferred_h2 = False
             self.free_height_for |= set(self.off_base_anchors) or {"<deferred>"}
+            while self._mot_buoc():
+                pass
         can = set()
         for k in self.khoi.values():
             can |= set(k.base) | set(k.top) | ({k.apex} if k.apex else set())
@@ -5080,64 +5082,91 @@ _HOI_BAT_BIEN_CHIEU_CAO = frozenset({
 _MAU_H2_BAT_BIEN = tuple(Fraction(k) for k in (1, 2, 3, 5, 7))
 
 
-def _thu_chieu_cao_bat_bien(problem_text: str, plan: Any, auxiliary: tuple[dict, ...],
-                            read_quotes: tuple[str, ...]) -> KetQuaTuyen | None:
-    """`MISSING_DIMENSION` because ONE height is unstated, yet every asked quantity may not depend on it (the distance
-    from C to (ABB'A') in a right prism, from B to (SAC) when SA ⊥ (ABCD)). The engine's chart keeps every vertex at a
-    fixed coordinate and carries the height only in the metric G = G₂ ⊕ (h²), so each allowed goal's squared value
-    is N(h²)/D(h²) with degrees ≤ 3 (Gram determinants of ≤ 3 vertex differences). Equality at five distinct h²
-    therefore PROVES invariance. Any other shape (constructed operands, volumes/areas, a second height anchor, a fact
-    that fails at some height) ⇒ None: the original refusal stands. The served scene is ILLUSTRATIVE, labelled so."""
+def _thu_chieu_cao_bat_bien(
+    problem_text: str,
+    plan: Any,
+    auxiliary: tuple[dict, ...],
+    read_quotes: tuple[str, ...],
+    *,
+    _audit_sink: dict[str, Any] | None = None,
+) -> KetQuaTuyen | None:
+    """Formal symbolic height-invariance certification (`height-invariance-certificate/2`).
+
+    When `MISSING_DIMENSION` arises solely because a single orthogonal height `h` (`t = h² ∈ (0, +∞)`) is unstated,
+    builds one illustrative layout at `t₀ = 1` and verifies all 8 algebraic proof obligations (`PO-1` .. `PO-8`)
+    symbolically over `ℚ[t]` (`P(t) - c·Q(t) ≡ 0`, bounded degree ≤ 2, strictly positive denominator on `(0, +∞)`,
+    `t`-independent point/section coordinates, and all premises holding over all `t > 0`), plus standalone certificate
+    self-verification. Never relies on finite-sample coincidence without symbolic proof.
+    """
+    from app.simulation.geometry_functions.height_invariance import (
+        WITNESS_SAMPLES_H2,
+        certify_height_invariance_symbolic,
+        verify_height_invariance_certificate,
+    )
+
     try:
         calls = doc_ke_hoach(plan)
     except TuChoi:
         return None
     hoi = [c for c in calls if c.fn.startswith("ask_")]
-    if not hoi or any(c.fn not in _HOI_BAT_BIEN_CHIEU_CAO for c in hoi):
+    if not hoi:
         return None
-    dinh: set[str] = set()
-    for c in calls:
-        if c.fn in ("pyramid", "regular_pyramid", "prism"):
-            a = c.args
-            dinh |= set(getattr(a, "base", ()) or ()) | set(getattr(a, "top", ()) or ())
-            if getattr(a, "apex", None):
-                dinh.add(a.apex)
-    if not dinh or any(not _labels(c) <= dinh for c in hoi):
+
+    holder: list[_Dung] = []
+    res, anchors, _ = _dung_mot_nhanh(
+        problem_text, plan, auxiliary, read_quotes, _free_h2_sample=Fraction(1), _out_dung=holder
+    )
+    free = (res.details or {}).get("free_height_for") if res.status == "SERVED" else None
+    if not free or len(anchors) != 1 or not holder:
+        if _audit_sink is not None:
+            _audit_sink.update(
+                certified=False,
+                failed_obligation="po_single_free_height_orthogonal_chart".upper(),
+                detail="Không dựng được cấu hình một tham số chiều cao trực giao duy nhất.",
+            )
         return None
-    ket: list[KetQuaTuyen] = []
-    tham_so: set[str] = set()
-    for s in _MAU_H2_BAT_BIEN:
-        r, anchors, _ = _dung_mot_nhanh(problem_text, plan, auxiliary, read_quotes, _free_h2_sample=s)
-        free = (r.details or {}).get("free_height_for") if r.status == "SERVED" else None
-        if not free or len(anchors) > 1:
-            return None
-        tham_so |= set(free)
-        ket.append(r)
-    sig = _goal_signature(ket[0])
-    if any(_goal_signature(r) != sig for r in ket[1:]):
+
+    ok, cert, fail_po, fail_detail = certify_height_invariance_symbolic(holder[0], res)
+    if not ok or cert is None:
+        if _audit_sink is not None:
+            _audit_sink.update(certified=False, failed_obligation=fail_po, detail=fail_detail)
         return None
-    res = ket[0]
+
+    verdict = verify_height_invariance_certificate(cert)
+    if verdict.get("verified") is not True:
+        if _audit_sink is not None:
+            _audit_sink.update(
+                certified=False,
+                failed_obligation=verdict.get("failed_obligation"),
+                detail="Bộ kiểm định chứng chỉ độc lập từ chối chứng chỉ bất biến.",
+            )
+        return None
+
+    tham_so = cert["chart_summary"]["free_for"]
     res.details = {
         "scene_configuration": {
             "unique": False,
             "kind": "HEIGHT_INVARIANT_ILLUSTRATIVE",
             "free_parameter": "height",
-            "free_for": sorted(tham_so),
-            "illustrative_h2": str(_MAU_H2_BAT_BIEN[0]),
-            "invariance_certificate": {
-                "method": "rational_function_identity_in_h2",
-                "max_degree": 3,
-                "samples_h2": [str(x) for x in _MAU_H2_BAT_BIEN],
-                "goal_values": {gid: v.get("coef") for gid, v in sorted((res.answer_exact or {}).items())},
-                "goal_fns": sorted({c.fn for c in hoi}),
-            },
+            "free_for": tham_so,
+            "illustrative_h2": "1",
+            "invariance_certificate": cert,
         }
     }
-    res.trace = [*res.trace, {"step": "certify_height_invariance", "rule": "rational_function_identity_in_h2",
-                              "object": sorted(tham_so), "samples_h2": [str(x) for x in _MAU_H2_BAT_BIEN],
-                              "provenance": "DERIVED",
-                              "note": "đề không cho chiều cao; mọi đại lượng được hỏi không phụ thuộc chiều cao "
-                                      "(đồng nhất thức hàm hữu tỉ bậc ≤ 3 theo h², kiểm tại 5 giá trị) — hình chỉ minh họa"}]
+    res.trace = [
+        *res.trace,
+        {
+            "step": "certify_height_invariance",
+            "rule": "rational_function_identity_in_h2",
+            "object": tham_so,
+            "samples_h2": [str(x) for x in WITNESS_SAMPLES_H2],
+            "provenance": "DERIVED",
+            "note": (
+                "đề không cho chiều cao; đã chứng minh ký hiệu P(t) - c·Q(t) ≡ 0 trên toàn miền t = h² ∈ (0, +∞) "
+                "cho mọi đại lượng được hỏi và mọi bước dựng — hình chỉ minh họa"
+            ),
+        },
+    ]
     return res
 
 
@@ -5149,6 +5178,7 @@ def _dung_mot_nhanh(
     *,
     _flip_apices: frozenset[str] = frozenset(),
     _free_h2_sample: Fraction | None = None,
+    _out_dung: list[_Dung] | None = None,
 ) -> tuple[KetQuaTuyen, tuple[str, ...], list[dict]]:
     from app.simulation.semantic_program.formation import hoan_thien_dung_hinh
     from app.simulation.semantic_program.interpreter import SemanticProgramInterpreter
@@ -5474,6 +5504,8 @@ def _dung_mot_nhanh(
                                  for c in calls])
         if dung.free_height_for:
             res.details = {"free_height_for": sorted(dung.free_height_for), "free_h2_sample": str(_free_h2_sample)}
+        if _out_dung is not None:
+            _out_dung.append(dung)
         return res, tuple(dung.off_base_anchors), dung.trace
     except TuChoi as e:
         vet = _gan_dieu_kien_vet(dung.trace, kernel_checked=False) if dung else []
@@ -5493,9 +5525,12 @@ def dung_tu_loi_goi(problem_text: str, plan: Any, auxiliary: tuple[dict, ...] = 
     )
     if (res0.status == "REFUSED" and res0.code == "MISSING_DIMENSION" and not _exploring_mirrors
             and not _flip_apices):
-        inv = _thu_chieu_cao_bat_bien(problem_text, plan, auxiliary, read_quotes)
+        audit_sink: dict[str, Any] = {}
+        inv = _thu_chieu_cao_bat_bien(problem_text, plan, auxiliary, read_quotes, _audit_sink=audit_sink)
         if inv is not None:
             return inv
+        if audit_sink:
+            res0.details = {**(res0.details or {}), "height_invariance_audit": audit_sink}
     if _exploring_mirrors or len(anchors0) < 2:
         return res0
     if res0.status != "SERVED" and res0.code not in _MIRROR_RETRY_CODES:
