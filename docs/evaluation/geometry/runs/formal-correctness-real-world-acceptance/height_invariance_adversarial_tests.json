@@ -1,0 +1,108 @@
+{
+  "schema": "algosim-height-invariance-adversarial-tests/1",
+  "generated_at_utc": "2026-11-10T10:07:03.229848+00:00",
+  "product_commit": "d20d7fdcdd6c5759f74ff737f331c2e548923eba",
+  "head_commit": "d20d7fdcdd6c5759f74ff737f331c2e548923eba",
+  "measured_system_tree_hash": "fb4f4992da8764930954a44f24e121ddca6cf1f3a270039773f6dbbf8b1b5c05",
+  "measured_system_file_count": 110,
+  "code_version": {
+    "typed_fact_next": "typed-fact-next/2",
+    "bridge": "typed-fact-next-bridge/2",
+    "planner": "geometry-fact-planner/26",
+    "registry": "geometry-functions/33",
+    "engine": "geometry-function-engine/24",
+    "adapter": "hybrid-simulation-adapter/4",
+    "envelope": "hybrid-route-d-simulation/4",
+    "local_parser": "local-geometry-parser/1",
+    "adaptive_router": "adaptive-input-router/1",
+    "cache_version": "132"
+  },
+  "input_or_case_hash": "9a5f019a31f6ec2b3d1067122fff6750d99b48f1c4068c34405c4e75405b2b8c",
+  "oracle": "Every height-dependent, multi-anchor, metric-projection-dependent, or tampered certificate case must fail closed.",
+  "test_command": "pytest backend/tests/geometry/test_height_invariance_formal_certification.py -q",
+  "test_environment": {
+    "os": "Windows-11-10.0.26100-SP0",
+    "python": "3.12.10",
+    "cpu_logical_cores": 12,
+    "allow_live_ai": 0,
+    "live_gemini_calls": 0,
+    "benchmark_tier": "HOST_BENCHMARK_OFFLINE"
+  },
+  "expected_behavior": "0 false certifications across all height-dependent goals, constructed-point dependent goals, and certificate-tampering attacks.",
+  "actual_behavior": "adversarial negatives refused=8/8; pytest suite 31/31 PASS",
+  "verdict": "PASS",
+  "run_id": "formal-correctness-real-world-acceptance",
+  "wave_id": "FORMAL_CORRECTNESS_REAL_WORLD_ACCEPTANCE",
+  "baseline_head_commit": "cc166865e4d4f1116014d9f1a68d9d050bf0dc9a",
+  "baseline_product_commit": "7994da7a64c8dc288c4de972df2d8d1db65e0c20",
+  "case_ids": [
+    "neg_dependent_distance_A_to_SBC",
+    "neg_volume_without_height",
+    "neg_lateral_length_SC",
+    "neg_mixed_invariant_and_dependent",
+    "neg_angle_SC_ABCD",
+    "neg_base_dimension_missing",
+    "neg_midpoint_to_slanted_plane_SAD",
+    "neg_non_unique_foot_oblique"
+  ],
+  "measurement_status": "MEASURED_OFFLINE",
+  "oracle_provenance": "31 formal & adversarial unit tests in test_height_invariance_formal_certification.py",
+  "evidence_classification": "VERIFIED FACT",
+  "adversarial_negative_cases": {
+    "neg_dependent_distance_A_to_SBC": {
+      "status": "REFUSED",
+      "reason_code": "MISSING_DIMENSION",
+      "scene_configuration": null,
+      "pass": true
+    },
+    "neg_volume_without_height": {
+      "status": "REFUSED",
+      "reason_code": "MISSING_DIMENSION",
+      "scene_configuration": null,
+      "pass": true
+    },
+    "neg_lateral_length_SC": {
+      "status": "REFUSED",
+      "reason_code": "MISSING_DIMENSION",
+      "scene_configuration": null,
+      "pass": true
+    },
+    "neg_mixed_invariant_and_dependent": {
+      "status": "REFUSED",
+      "reason_code": "MISSING_DIMENSION",
+      "scene_configuration": null,
+      "pass": true
+    },
+    "neg_angle_SC_ABCD": {
+      "status": "REFUSED",
+      "reason_code": "MISSING_DIMENSION",
+      "scene_configuration": null,
+      "pass": true
+    },
+    "neg_base_dimension_missing": {
+      "status": "REFUSED",
+      "reason_code": "MISSING_DIMENSION",
+      "scene_configuration": null,
+      "pass": true
+    },
+    "neg_midpoint_to_slanted_plane_SAD": {
+      "status": "REFUSED",
+      "reason_code": "MISSING_DIMENSION",
+      "scene_configuration": null,
+      "pass": true
+    },
+    "neg_non_unique_foot_oblique": {
+      "status": "REFUSED",
+      "reason_code": "UNDERDETERMINED_POINT",
+      "scene_configuration": null,
+      "pass": true
+    }
+  },
+  "tamper_resistance_verified": [
+    "Tampered sample count (< 5 or duplicate heights) rejected by verify_height_invariance_certificate",
+    "Tampered degree bound (sample_count <= max_polynomial_degree) rejected",
+    "Tampered obligation flag (any O1..O8 verified != True) rejected",
+    "Tampered goal value mismatch across samples rejected",
+    "3D metric projection (altitude_foot onto slanted line/plane) rejected by O2 DAG inspection"
+  ]
+}

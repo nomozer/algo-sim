@@ -1,0 +1,887 @@
+{
+  "browser": "157.0.8103.50",
+  "provider_calls": 0,
+  "results": [
+    {
+      "id": "ext02_height_invariant",
+      "viewport": "1440x900@1",
+      "expected": "SERVED",
+      "serverStatus": "SERVED",
+      "httpStatus": 200,
+      "elapsedMs": 2109,
+      "view": "workspace",
+      "active": true,
+      "analysisError": null,
+      "unsupported": false,
+      "hasCanvas": true,
+      "note": "Đề không cho chiều cao nên hình dưới đây chỉ là một hình minh họa: đáp số đã được kiểm là không phụ thuộc chiều cao, nhưng độ cao vẽ trên hình không phải dữ kiện của đề.",
+      "allAnswerSymbolics": [
+        "6"
+      ],
+      "firstAnswerSymbolic": "6",
+      "firstAnswerExactSymbolic": null,
+      "answerCount": 1,
+      "bodyHasRawTraceback": false,
+      "bodyHasRawReasonCode": false,
+      "bodyHasPhotoCopy": false,
+      "bodyHasAnalyzeAiCopy": false,
+      "orbit": {
+        "fps": 140.6,
+        "canvasStable": true,
+        "heapMB": 20.56
+      },
+      "api": [
+        {
+          "path": "/api/analyze",
+          "status": 200
+        }
+      ],
+      "consoleErrors": [],
+      "pageErrors": [],
+      "pass": true
+    },
+    {
+      "id": "ext03_1_height_invariant",
+      "viewport": "1440x900@1",
+      "expected": "SERVED",
+      "serverStatus": "SERVED",
+      "httpStatus": 200,
+      "elapsedMs": 2047,
+      "view": "workspace",
+      "active": true,
+      "analysisError": null,
+      "unsupported": false,
+      "hasCanvas": true,
+      "note": "Đề không cho chiều cao nên hình dưới đây chỉ là một hình minh họa: đáp số đã được kiểm là không phụ thuộc chiều cao, nhưng độ cao vẽ trên hình không phải dữ kiện của đề.",
+      "allAnswerSymbolics": [
+        "a√2/2"
+      ],
+      "firstAnswerSymbolic": "a√2/2",
+      "firstAnswerExactSymbolic": null,
+      "answerCount": 1,
+      "bodyHasRawTraceback": false,
+      "bodyHasRawReasonCode": false,
+      "bodyHasPhotoCopy": false,
+      "bodyHasAnalyzeAiCopy": false,
+      "orbit": {
+        "fps": 141.5,
+        "canvasStable": true,
+        "heapMB": 19.22
+      },
+      "api": [
+        {
+          "path": "/api/analyze",
+          "status": 200
+        }
+      ],
+      "consoleErrors": [],
+      "pageErrors": [],
+      "pass": true
+    },
+    {
+      "id": "ext04_affine_length_ratio",
+      "viewport": "1440x900@1",
+      "expected": "SERVED",
+      "serverStatus": "SERVED",
+      "httpStatus": 200,
+      "elapsedMs": 2062,
+      "view": "workspace",
+      "active": true,
+      "analysisError": null,
+      "unsupported": false,
+      "hasCanvas": true,
+      "note": "Đề không cho chiều cao nên hình dưới đây chỉ là một hình minh họa: đáp số đã được kiểm là không phụ thuộc chiều cao, nhưng độ cao vẽ trên hình không phải dữ kiện của đề.",
+      "allAnswerSymbolics": [
+        "1/2"
+      ],
+      "firstAnswerSymbolic": "1/2",
+      "firstAnswerExactSymbolic": null,
+      "answerCount": 1,
+      "bodyHasRawTraceback": false,
+      "bodyHasRawReasonCode": false,
+      "bodyHasPhotoCopy": false,
+      "bodyHasAnalyzeAiCopy": false,
+      "orbit": {
+        "fps": 137.9,
+        "canvasStable": true,
+        "heapMB": 19.7
+      },
+      "api": [
+        {
+          "path": "/api/analyze",
+          "status": 200
+        }
+      ],
+      "consoleErrors": [],
+      "pageErrors": [],
+      "pass": true
+    },
+    {
+      "id": "ext05_section_area_ratio",
+      "viewport": "1440x900@1",
+      "expected": "SERVED",
+      "serverStatus": "SERVED",
+      "httpStatus": 200,
+      "elapsedMs": 2000,
+      "view": "workspace",
+      "active": true,
+      "analysisError": null,
+      "unsupported": false,
+      "hasCanvas": true,
+      "note": "Đề không cho chiều cao nên hình dưới đây chỉ là một hình minh họa: đáp số đã được kiểm là không phụ thuộc chiều cao, nhưng độ cao vẽ trên hình không phải dữ kiện của đề.",
+      "allAnswerSymbolics": [
+        "6/5"
+      ],
+      "firstAnswerSymbolic": "6/5",
+      "firstAnswerExactSymbolic": null,
+      "answerCount": 1,
+      "bodyHasRawTraceback": false,
+      "bodyHasRawReasonCode": false,
+      "bodyHasPhotoCopy": false,
+      "bodyHasAnalyzeAiCopy": false,
+      "orbit": {
+        "fps": 143.7,
+        "canvasStable": true,
+        "heapMB": 17.26
+      },
+      "api": [
+        {
+          "path": "/api/analyze",
+          "status": 200
+        }
+      ],
+      "consoleErrors": [],
+      "pageErrors": [],
+      "pass": true
+    },
+    {
+      "id": "ext06_inverse_angle_compound",
+      "viewport": "1440x900@1",
+      "expected": "SERVED",
+      "serverStatus": "SERVED",
+      "httpStatus": 200,
+      "elapsedMs": 2035,
+      "view": "workspace",
+      "active": true,
+      "analysisError": null,
+      "unsupported": false,
+      "hasCanvas": true,
+      "note": null,
+      "allAnswerSymbolics": [
+        "a√15/5",
+        "a³√15/4"
+      ],
+      "firstAnswerSymbolic": "a√15/5",
+      "firstAnswerExactSymbolic": null,
+      "answerCount": 2,
+      "bodyHasRawTraceback": false,
+      "bodyHasRawReasonCode": false,
+      "bodyHasPhotoCopy": false,
+      "bodyHasAnalyzeAiCopy": false,
+      "orbit": {
+        "fps": 132.4,
+        "canvasStable": true,
+        "heapMB": 22.09
+      },
+      "api": [
+        {
+          "path": "/api/analyze",
+          "status": 200
+        }
+      ],
+      "consoleErrors": [],
+      "pageErrors": [],
+      "pass": true
+    },
+    {
+      "id": "ext07_rounded_and_exact",
+      "viewport": "1440x900@1",
+      "expected": "SERVED",
+      "serverStatus": "SERVED",
+      "httpStatus": 200,
+      "elapsedMs": 2180,
+      "view": "workspace",
+      "active": true,
+      "analysisError": null,
+      "unsupported": false,
+      "hasCanvas": true,
+      "note": "Đề không cho chiều cao nên hình dưới đây chỉ là một hình minh họa: đáp số đã được kiểm là không phụ thuộc chiều cao, nhưng độ cao vẽ trên hình không phải dữ kiện của đề.",
+      "allAnswerSymbolics": [
+        "4,7"
+      ],
+      "firstAnswerSymbolic": "4,7",
+      "firstAnswerExactSymbolic": "15√93/31",
+      "answerCount": 1,
+      "bodyHasRawTraceback": false,
+      "bodyHasRawReasonCode": false,
+      "bodyHasPhotoCopy": false,
+      "bodyHasAnalyzeAiCopy": false,
+      "orbit": {
+        "fps": 140.3,
+        "canvasStable": true,
+        "heapMB": 18.28
+      },
+      "api": [
+        {
+          "path": "/api/analyze",
+          "status": 200
+        }
+      ],
+      "consoleErrors": [],
+      "pageErrors": [],
+      "pass": true
+    },
+    {
+      "id": "ext11_degree_and_exact",
+      "viewport": "1440x900@1",
+      "expected": "SERVED",
+      "serverStatus": "SERVED",
+      "httpStatus": 200,
+      "elapsedMs": 2095,
+      "view": "workspace",
+      "active": true,
+      "analysisError": null,
+      "unsupported": false,
+      "hasCanvas": true,
+      "note": null,
+      "allAnswerSymbolics": [
+        "30°"
+      ],
+      "firstAnswerSymbolic": "30°",
+      "firstAnswerExactSymbolic": "cos²=3/4",
+      "answerCount": 1,
+      "bodyHasRawTraceback": false,
+      "bodyHasRawReasonCode": false,
+      "bodyHasPhotoCopy": false,
+      "bodyHasAnalyzeAiCopy": false,
+      "orbit": {
+        "fps": 122.5,
+        "canvasStable": true,
+        "heapMB": 17.6
+      },
+      "api": [
+        {
+          "path": "/api/analyze",
+          "status": 200
+        }
+      ],
+      "consoleErrors": [],
+      "pageErrors": [],
+      "pass": true
+    },
+    {
+      "id": "ext12_face_area_premise",
+      "viewport": "1440x900@1",
+      "expected": "SERVED",
+      "serverStatus": "SERVED",
+      "httpStatus": 200,
+      "elapsedMs": 2055,
+      "view": "workspace",
+      "active": true,
+      "analysisError": null,
+      "unsupported": false,
+      "hasCanvas": true,
+      "note": null,
+      "allAnswerSymbolics": [
+        "2√3"
+      ],
+      "firstAnswerSymbolic": "2√3",
+      "firstAnswerExactSymbolic": null,
+      "answerCount": 1,
+      "bodyHasRawTraceback": false,
+      "bodyHasRawReasonCode": false,
+      "bodyHasPhotoCopy": false,
+      "bodyHasAnalyzeAiCopy": false,
+      "orbit": {
+        "fps": 137.7,
+        "canvasStable": true,
+        "heapMB": 19.6
+      },
+      "api": [
+        {
+          "path": "/api/analyze",
+          "status": 200
+        }
+      ],
+      "consoleErrors": [],
+      "pageErrors": [],
+      "pass": true
+    },
+    {
+      "id": "refused_missing_dimension",
+      "viewport": "1440x900@1",
+      "expected": "REFUSED",
+      "serverStatus": "REFUSED",
+      "httpStatus": 200,
+      "elapsedMs": 1623,
+      "view": "home",
+      "active": false,
+      "analysisError": null,
+      "unsupported": true,
+      "hasCanvas": false,
+      "note": null,
+      "allAnswerSymbolics": [],
+      "firstAnswerSymbolic": null,
+      "firstAnswerExactSymbolic": null,
+      "answerCount": 0,
+      "bodyHasRawTraceback": false,
+      "bodyHasRawReasonCode": false,
+      "bodyHasPhotoCopy": false,
+      "bodyHasAnalyzeAiCopy": false,
+      "orbit": null,
+      "api": [
+        {
+          "path": "/api/analyze",
+          "status": 200
+        }
+      ],
+      "consoleErrors": [],
+      "pageErrors": [],
+      "pass": true
+    },
+    {
+      "id": "refused_non_unique_foot",
+      "viewport": "1440x900@1",
+      "expected": "REFUSED",
+      "serverStatus": "REFUSED",
+      "httpStatus": 200,
+      "elapsedMs": 1173,
+      "view": "home",
+      "active": false,
+      "analysisError": null,
+      "unsupported": true,
+      "hasCanvas": false,
+      "note": null,
+      "allAnswerSymbolics": [],
+      "firstAnswerSymbolic": null,
+      "firstAnswerExactSymbolic": null,
+      "answerCount": 0,
+      "bodyHasRawTraceback": false,
+      "bodyHasRawReasonCode": false,
+      "bodyHasPhotoCopy": false,
+      "bodyHasAnalyzeAiCopy": false,
+      "orbit": null,
+      "api": [
+        {
+          "path": "/api/analyze",
+          "status": 200
+        }
+      ],
+      "consoleErrors": [],
+      "pageErrors": [],
+      "pass": true
+    },
+    {
+      "id": "refused_out_of_scope_vector",
+      "viewport": "1440x900@1",
+      "expected": "REFUSED",
+      "serverStatus": null,
+      "httpStatus": 503,
+      "elapsedMs": 1170,
+      "view": "home",
+      "active": false,
+      "analysisError": "Đề này cần bước phân tích bằng AI, nhưng bước đó đang tạm tắt trên máy chủ. Hệ chỉ tự giải được các dạng đề quen thuộc khi không có AI — em thử diễn đạt lại theo cách trong sách giáo khoa, hoặc quay lại sau.",
+      "unsupported": false,
+      "hasCanvas": false,
+      "note": null,
+      "allAnswerSymbolics": [],
+      "firstAnswerSymbolic": null,
+      "firstAnswerExactSymbolic": null,
+      "answerCount": 0,
+      "bodyHasRawTraceback": false,
+      "bodyHasRawReasonCode": false,
+      "bodyHasPhotoCopy": false,
+      "bodyHasAnalyzeAiCopy": true,
+      "orbit": null,
+      "api": [
+        {
+          "path": "/api/analyze",
+          "status": 503
+        }
+      ],
+      "consoleErrors": [
+        "Failed to load resource: the server responded with a status of 503 (Service Unavailable)"
+      ],
+      "pageErrors": [],
+      "pass": true
+    },
+    {
+      "id": "ext02_height_invariant",
+      "viewport": "1440x900@1.1",
+      "expected": "SERVED",
+      "serverStatus": "SERVED",
+      "httpStatus": 200,
+      "elapsedMs": 2074,
+      "view": "workspace",
+      "active": true,
+      "analysisError": null,
+      "unsupported": false,
+      "hasCanvas": true,
+      "note": "Đề không cho chiều cao nên hình dưới đây chỉ là một hình minh họa: đáp số đã được kiểm là không phụ thuộc chiều cao, nhưng độ cao vẽ trên hình không phải dữ kiện của đề.",
+      "allAnswerSymbolics": [
+        "6"
+      ],
+      "firstAnswerSymbolic": "6",
+      "firstAnswerExactSymbolic": null,
+      "answerCount": 1,
+      "bodyHasRawTraceback": false,
+      "bodyHasRawReasonCode": false,
+      "bodyHasPhotoCopy": false,
+      "bodyHasAnalyzeAiCopy": false,
+      "orbit": {
+        "fps": 135.9,
+        "canvasStable": true,
+        "heapMB": 18.17
+      },
+      "api": [
+        {
+          "path": "/api/analyze",
+          "status": 200
+        }
+      ],
+      "consoleErrors": [],
+      "pageErrors": [],
+      "pass": true
+    },
+    {
+      "id": "ext03_1_height_invariant",
+      "viewport": "1440x900@1.1",
+      "expected": "SERVED",
+      "serverStatus": "SERVED",
+      "httpStatus": 200,
+      "elapsedMs": 2015,
+      "view": "workspace",
+      "active": true,
+      "analysisError": null,
+      "unsupported": false,
+      "hasCanvas": true,
+      "note": "Đề không cho chiều cao nên hình dưới đây chỉ là một hình minh họa: đáp số đã được kiểm là không phụ thuộc chiều cao, nhưng độ cao vẽ trên hình không phải dữ kiện của đề.",
+      "allAnswerSymbolics": [
+        "a√2/2"
+      ],
+      "firstAnswerSymbolic": "a√2/2",
+      "firstAnswerExactSymbolic": null,
+      "answerCount": 1,
+      "bodyHasRawTraceback": false,
+      "bodyHasRawReasonCode": false,
+      "bodyHasPhotoCopy": false,
+      "bodyHasAnalyzeAiCopy": false,
+      "orbit": {
+        "fps": 143.9,
+        "canvasStable": true,
+        "heapMB": 19.14
+      },
+      "api": [
+        {
+          "path": "/api/analyze",
+          "status": 200
+        }
+      ],
+      "consoleErrors": [],
+      "pageErrors": [],
+      "pass": true
+    },
+    {
+      "id": "ext04_affine_length_ratio",
+      "viewport": "1440x900@1.1",
+      "expected": "SERVED",
+      "serverStatus": "SERVED",
+      "httpStatus": 200,
+      "elapsedMs": 1987,
+      "view": "workspace",
+      "active": true,
+      "analysisError": null,
+      "unsupported": false,
+      "hasCanvas": true,
+      "note": "Đề không cho chiều cao nên hình dưới đây chỉ là một hình minh họa: đáp số đã được kiểm là không phụ thuộc chiều cao, nhưng độ cao vẽ trên hình không phải dữ kiện của đề.",
+      "allAnswerSymbolics": [
+        "1/2"
+      ],
+      "firstAnswerSymbolic": "1/2",
+      "firstAnswerExactSymbolic": null,
+      "answerCount": 1,
+      "bodyHasRawTraceback": false,
+      "bodyHasRawReasonCode": false,
+      "bodyHasPhotoCopy": false,
+      "bodyHasAnalyzeAiCopy": false,
+      "orbit": {
+        "fps": 142.9,
+        "canvasStable": true,
+        "heapMB": 21.42
+      },
+      "api": [
+        {
+          "path": "/api/analyze",
+          "status": 200
+        }
+      ],
+      "consoleErrors": [],
+      "pageErrors": [],
+      "pass": true
+    },
+    {
+      "id": "ext05_section_area_ratio",
+      "viewport": "1440x900@1.1",
+      "expected": "SERVED",
+      "serverStatus": "SERVED",
+      "httpStatus": 200,
+      "elapsedMs": 1980,
+      "view": "workspace",
+      "active": true,
+      "analysisError": null,
+      "unsupported": false,
+      "hasCanvas": true,
+      "note": "Đề không cho chiều cao nên hình dưới đây chỉ là một hình minh họa: đáp số đã được kiểm là không phụ thuộc chiều cao, nhưng độ cao vẽ trên hình không phải dữ kiện của đề.",
+      "allAnswerSymbolics": [
+        "6/5"
+      ],
+      "firstAnswerSymbolic": "6/5",
+      "firstAnswerExactSymbolic": null,
+      "answerCount": 1,
+      "bodyHasRawTraceback": false,
+      "bodyHasRawReasonCode": false,
+      "bodyHasPhotoCopy": false,
+      "bodyHasAnalyzeAiCopy": false,
+      "orbit": {
+        "fps": 144.7,
+        "canvasStable": true,
+        "heapMB": 19.78
+      },
+      "api": [
+        {
+          "path": "/api/analyze",
+          "status": 200
+        }
+      ],
+      "consoleErrors": [],
+      "pageErrors": [],
+      "pass": true
+    },
+    {
+      "id": "ext06_inverse_angle_compound",
+      "viewport": "1440x900@1.1",
+      "expected": "SERVED",
+      "serverStatus": "SERVED",
+      "httpStatus": 200,
+      "elapsedMs": 2019,
+      "view": "workspace",
+      "active": true,
+      "analysisError": null,
+      "unsupported": false,
+      "hasCanvas": true,
+      "note": null,
+      "allAnswerSymbolics": [
+        "a√15/5",
+        "a³√15/4"
+      ],
+      "firstAnswerSymbolic": "a√15/5",
+      "firstAnswerExactSymbolic": null,
+      "answerCount": 2,
+      "bodyHasRawTraceback": false,
+      "bodyHasRawReasonCode": false,
+      "bodyHasPhotoCopy": false,
+      "bodyHasAnalyzeAiCopy": false,
+      "orbit": {
+        "fps": 143.4,
+        "canvasStable": true,
+        "heapMB": 23.32
+      },
+      "api": [
+        {
+          "path": "/api/analyze",
+          "status": 200
+        }
+      ],
+      "consoleErrors": [],
+      "pageErrors": [],
+      "pass": true
+    },
+    {
+      "id": "ext07_rounded_and_exact",
+      "viewport": "1440x900@1.1",
+      "expected": "SERVED",
+      "serverStatus": "SERVED",
+      "httpStatus": 200,
+      "elapsedMs": 1976,
+      "view": "workspace",
+      "active": true,
+      "analysisError": null,
+      "unsupported": false,
+      "hasCanvas": true,
+      "note": "Đề không cho chiều cao nên hình dưới đây chỉ là một hình minh họa: đáp số đã được kiểm là không phụ thuộc chiều cao, nhưng độ cao vẽ trên hình không phải dữ kiện của đề.",
+      "allAnswerSymbolics": [
+        "4,7"
+      ],
+      "firstAnswerSymbolic": "4,7",
+      "firstAnswerExactSymbolic": "15√93/31",
+      "answerCount": 1,
+      "bodyHasRawTraceback": false,
+      "bodyHasRawReasonCode": false,
+      "bodyHasPhotoCopy": false,
+      "bodyHasAnalyzeAiCopy": false,
+      "orbit": {
+        "fps": 143.3,
+        "canvasStable": true,
+        "heapMB": 17.37
+      },
+      "api": [
+        {
+          "path": "/api/analyze",
+          "status": 200
+        }
+      ],
+      "consoleErrors": [],
+      "pageErrors": [],
+      "pass": true
+    },
+    {
+      "id": "ext11_degree_and_exact",
+      "viewport": "1440x900@1.1",
+      "expected": "SERVED",
+      "serverStatus": "SERVED",
+      "httpStatus": 200,
+      "elapsedMs": 1968,
+      "view": "workspace",
+      "active": true,
+      "analysisError": null,
+      "unsupported": false,
+      "hasCanvas": true,
+      "note": null,
+      "allAnswerSymbolics": [
+        "30°"
+      ],
+      "firstAnswerSymbolic": "30°",
+      "firstAnswerExactSymbolic": "cos²=3/4",
+      "answerCount": 1,
+      "bodyHasRawTraceback": false,
+      "bodyHasRawReasonCode": false,
+      "bodyHasPhotoCopy": false,
+      "bodyHasAnalyzeAiCopy": false,
+      "orbit": {
+        "fps": 141.8,
+        "canvasStable": true,
+        "heapMB": 16.51
+      },
+      "api": [
+        {
+          "path": "/api/analyze",
+          "status": 200
+        }
+      ],
+      "consoleErrors": [],
+      "pageErrors": [],
+      "pass": true
+    },
+    {
+      "id": "ext12_face_area_premise",
+      "viewport": "1440x900@1.1",
+      "expected": "SERVED",
+      "serverStatus": "SERVED",
+      "httpStatus": 200,
+      "elapsedMs": 1935,
+      "view": "workspace",
+      "active": true,
+      "analysisError": null,
+      "unsupported": false,
+      "hasCanvas": true,
+      "note": null,
+      "allAnswerSymbolics": [
+        "2√3"
+      ],
+      "firstAnswerSymbolic": "2√3",
+      "firstAnswerExactSymbolic": null,
+      "answerCount": 1,
+      "bodyHasRawTraceback": false,
+      "bodyHasRawReasonCode": false,
+      "bodyHasPhotoCopy": false,
+      "bodyHasAnalyzeAiCopy": false,
+      "orbit": {
+        "fps": 145.1,
+        "canvasStable": true,
+        "heapMB": 17.19
+      },
+      "api": [
+        {
+          "path": "/api/analyze",
+          "status": 200
+        }
+      ],
+      "consoleErrors": [],
+      "pageErrors": [],
+      "pass": true
+    },
+    {
+      "id": "refused_missing_dimension",
+      "viewport": "1440x900@1.1",
+      "expected": "REFUSED",
+      "serverStatus": "REFUSED",
+      "httpStatus": 200,
+      "elapsedMs": 1158,
+      "view": "home",
+      "active": false,
+      "analysisError": null,
+      "unsupported": true,
+      "hasCanvas": false,
+      "note": null,
+      "allAnswerSymbolics": [],
+      "firstAnswerSymbolic": null,
+      "firstAnswerExactSymbolic": null,
+      "answerCount": 0,
+      "bodyHasRawTraceback": false,
+      "bodyHasRawReasonCode": false,
+      "bodyHasPhotoCopy": false,
+      "bodyHasAnalyzeAiCopy": false,
+      "orbit": null,
+      "api": [
+        {
+          "path": "/api/analyze",
+          "status": 200
+        }
+      ],
+      "consoleErrors": [],
+      "pageErrors": [],
+      "pass": true
+    },
+    {
+      "id": "refused_non_unique_foot",
+      "viewport": "1440x900@1.1",
+      "expected": "REFUSED",
+      "serverStatus": "REFUSED",
+      "httpStatus": 200,
+      "elapsedMs": 1154,
+      "view": "home",
+      "active": false,
+      "analysisError": null,
+      "unsupported": true,
+      "hasCanvas": false,
+      "note": null,
+      "allAnswerSymbolics": [],
+      "firstAnswerSymbolic": null,
+      "firstAnswerExactSymbolic": null,
+      "answerCount": 0,
+      "bodyHasRawTraceback": false,
+      "bodyHasRawReasonCode": false,
+      "bodyHasPhotoCopy": false,
+      "bodyHasAnalyzeAiCopy": false,
+      "orbit": null,
+      "api": [
+        {
+          "path": "/api/analyze",
+          "status": 200
+        }
+      ],
+      "consoleErrors": [],
+      "pageErrors": [],
+      "pass": true
+    },
+    {
+      "id": "refused_out_of_scope_vector",
+      "viewport": "1440x900@1.1",
+      "expected": "REFUSED",
+      "serverStatus": null,
+      "httpStatus": 503,
+      "elapsedMs": 1132,
+      "view": "home",
+      "active": false,
+      "analysisError": "Đề này cần bước phân tích bằng AI, nhưng bước đó đang tạm tắt trên máy chủ. Hệ chỉ tự giải được các dạng đề quen thuộc khi không có AI — em thử diễn đạt lại theo cách trong sách giáo khoa, hoặc quay lại sau.",
+      "unsupported": false,
+      "hasCanvas": false,
+      "note": null,
+      "allAnswerSymbolics": [],
+      "firstAnswerSymbolic": null,
+      "firstAnswerExactSymbolic": null,
+      "answerCount": 0,
+      "bodyHasRawTraceback": false,
+      "bodyHasRawReasonCode": false,
+      "bodyHasPhotoCopy": false,
+      "bodyHasAnalyzeAiCopy": true,
+      "orbit": null,
+      "api": [
+        {
+          "path": "/api/analyze",
+          "status": 503
+        }
+      ],
+      "consoleErrors": [
+        "Failed to load resource: the server responded with a status of 503 (Service Unavailable)"
+      ],
+      "pageErrors": [],
+      "pass": true
+    }
+  ],
+  "imageCase": {
+    "fileInputFound": true,
+    "afterUploadWithAiOff": {
+      "active": false,
+      "hasCanvas": false,
+      "bodyHasRawTraceback": false
+    },
+    "afterUserEditResolve": {
+      "active": true,
+      "hasCanvas": true,
+      "firstAnswerSymbolic": "2√3"
+    },
+    "api": [
+      {
+        "path": "/api/health",
+        "status": 200
+      },
+      {
+        "path": "/api/auth/me",
+        "status": 200
+      },
+      {
+        "path": "/api/health",
+        "status": 200
+      },
+      {
+        "path": "/api/input/prepare",
+        "status": 200
+      },
+      {
+        "path": "/api/health",
+        "status": 200
+      },
+      {
+        "path": "/api/auth/me",
+        "status": 200
+      },
+      {
+        "path": "/api/health",
+        "status": 200
+      },
+      {
+        "path": "/api/health",
+        "status": 200
+      },
+      {
+        "path": "/api/analyze",
+        "status": 200
+      },
+      {
+        "path": "/api/health",
+        "status": 200
+      },
+      {
+        "path": "/api/auth/me",
+        "status": 200
+      },
+      {
+        "path": "/api/health",
+        "status": 200
+      },
+      {
+        "path": "/api/analyze",
+        "status": 200
+      }
+    ],
+    "consoleErrors": [],
+    "pageErrors": [],
+    "pass": true
+  },
+  "summary": {
+    "pass": 22,
+    "total": 22,
+    "imagePass": true
+  }
+}

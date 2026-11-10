@@ -1,0 +1,54 @@
+{
+  "schema": "algosim-typed-facts-bridge-closure/1",
+  "generated_at_utc": "2026-11-10T10:07:03.715814+00:00",
+  "product_commit": "d20d7fdcdd6c5759f74ff737f331c2e548923eba",
+  "head_commit": "d20d7fdcdd6c5759f74ff737f331c2e548923eba",
+  "measured_system_tree_hash": "fb4f4992da8764930954a44f24e121ddca6cf1f3a270039773f6dbbf8b1b5c05",
+  "measured_system_file_count": 110,
+  "code_version": {
+    "typed_fact_next": "typed-fact-next/2",
+    "bridge": "typed-fact-next-bridge/2",
+    "planner": "geometry-fact-planner/26",
+    "registry": "geometry-functions/33",
+    "engine": "geometry-function-engine/24",
+    "adapter": "hybrid-simulation-adapter/4",
+    "envelope": "hybrid-route-d-simulation/4",
+    "local_parser": "local-geometry-parser/1",
+    "adaptive_router": "adaptive-input-router/1",
+    "cache_version": "132"
+  },
+  "input_or_case_hash": "f487e671aaed1a6aa5bba0293f42166f40171cc23cd441d5331fa2efb0256339",
+  "oracle": "face_area bridges to TypedFact(kind='polygon_area'); length_ratio and area_ratio goals bridge to ask_length_ratio and ask_area_ratio; frozen Gemini declaration SHA 5ceb0f99... and TypedFact schema SHA aa9d93ee... remain unchanged.",
+  "test_command": "pytest backend/tests/geometry/test_ai_function_route.py backend/tests/geometry/test_reusable_ratio_and_inverse_angle_geometry.py -q",
+  "test_environment": {
+    "os": "Windows-11-10.0.26100-SP0",
+    "python": "3.12.10",
+    "cpu_logical_cores": 12,
+    "allow_live_ai": 0,
+    "live_gemini_calls": 0,
+    "benchmark_tier": "HOST_BENCHMARK_OFFLINE"
+  },
+  "expected_behavior": "TypedFactNext /2 and bridge_v2 cleanly support face_area, length_ratio, and area_ratio while preserving frozen provider schema hashes.",
+  "actual_behavior": "ext12=SERVED(2√3); schema hashes preserved",
+  "verdict": "PASS",
+  "run_id": "formal-correctness-real-world-acceptance",
+  "wave_id": "FORMAL_CORRECTNESS_REAL_WORLD_ACCEPTANCE",
+  "baseline_head_commit": "cc166865e4d4f1116014d9f1a68d9d050bf0dc9a",
+  "baseline_product_commit": "7994da7a64c8dc288c4de972df2d8d1db65e0c20",
+  "case_ids": [
+    "ext_prt_04_hd_q_8436784#1",
+    "ext_prt_05_hd_q_7451806#1",
+    "ext_prt_12_vmmu_page_r11#1"
+  ],
+  "measurement_status": "MEASURED_OFFLINE",
+  "oracle_provenance": "TypedFactNext /2 + bridge_v2 + Registry /33 + Gemini declaration schema pin check",
+  "evidence_classification": "VERIFIED FACT",
+  "bridged_fact_kinds": [
+    "face_area -> polygon_area",
+    "plane_parallel_two_lines"
+  ],
+  "bridged_goal_types": [
+    "length_ratio -> ask_length_ratio",
+    "area_ratio -> ask_area_ratio"
+  ]
+}

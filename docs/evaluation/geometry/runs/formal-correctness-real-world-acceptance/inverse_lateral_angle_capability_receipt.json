@@ -1,0 +1,99 @@
+{
+  "schema": "algosim-inverse-lateral-angle-capability-receipt/1",
+  "generated_at_utc": "2026-11-10T10:07:04.549732+00:00",
+  "product_commit": "d20d7fdcdd6c5759f74ff737f331c2e548923eba",
+  "head_commit": "d20d7fdcdd6c5759f74ff737f331c2e548923eba",
+  "measured_system_tree_hash": "fb4f4992da8764930954a44f24e121ddca6cf1f3a270039773f6dbbf8b1b5c05",
+  "measured_system_file_count": 110,
+  "code_version": {
+    "typed_fact_next": "typed-fact-next/2",
+    "bridge": "typed-fact-next-bridge/2",
+    "planner": "geometry-fact-planner/26",
+    "registry": "geometry-functions/33",
+    "engine": "geometry-function-engine/24",
+    "adapter": "hybrid-simulation-adapter/4",
+    "envelope": "hybrid-route-d-simulation/4",
+    "local_parser": "local-geometry-parser/1",
+    "adaptive_router": "adaptive-input-router/1",
+    "cache_version": "132"
+  },
+  "input_or_case_hash": "a3c81c349f9282c992238a913d4d91dcd5f9ad3dd3f7f0958b349e02f248349b",
+  "oracle": "V = a³√15/4 and d(AM, NP) = a√15/5",
+  "test_command": "pytest backend/tests/geometry/test_reusable_ratio_and_inverse_angle_geometry.py -k inverse -q",
+  "test_environment": {
+    "os": "Windows-11-10.0.26100-SP0",
+    "python": "3.12.10",
+    "cpu_logical_cores": 12,
+    "allow_live_ai": 0,
+    "live_gemini_calls": 0,
+    "benchmark_tier": "HOST_BENCHMARK_OFFLINE"
+  },
+  "expected_behavior": "Exact Kernel deduces isosceles base altitude from line-plane angle between lateral diagonal and vertical lateral face, and serves compound multi-goals.",
+  "actual_behavior": "ext06=SERVED({'q2': 'a√15/5', 'q1': 'a³√15/4'}), single=SERVED(a³√15/4)",
+  "verdict": "PASS",
+  "run_id": "formal-correctness-real-world-acceptance",
+  "wave_id": "FORMAL_CORRECTNESS_REAL_WORLD_ACCEPTANCE",
+  "baseline_head_commit": "cc166865e4d4f1116014d9f1a68d9d050bf0dc9a",
+  "baseline_product_commit": "7994da7a64c8dc288c4de972df2d8d1db65e0c20",
+  "case_ids": [
+    "ext_prt_06_hd_q_1084979#1",
+    "inverse_lateral_angle_single_volume_goal"
+  ],
+  "measurement_status": "MEASURED_OFFLINE",
+  "oracle_provenance": "Exact orthogonal projection H' of top vertex C' onto vertical lateral face (ABB'A'): C'H' = BH'·tan(60°) => base altitude h = a√15/2 => CA=CB=2a",
+  "evidence_classification": "VERIFIED FACT",
+  "mathematical_condition": "Given right prism ABC.A'B'C' with isosceles base at C (CA = CB), known base side AB = w and lateral height AA' = H: the projection of C' onto the vertical face (ABB'A') is the midpoint H' of A'B' because C'H' ⊥ A'B' and C'H' ⊥ AA'. Hence ∠((BC'), (ABB'A')) = ∠C'BH' = θ, with BH'² = w²/4 + H² and C'H'² = BH'² tan²θ = (w²/4 + H²) tan²θ. Then CA² = CB² = w²/4 + C'H'² = w²/4 + (w²/4 + H²) tan²θ, uniquely determining the base triangle.",
+  "ext06_result": {
+    "status": "SERVED",
+    "reason_code": null,
+    "fallback_reason": null,
+    "answer": {
+      "q2": "a√15/5",
+      "q1": "a³√15/4"
+    },
+    "answers": {
+      "q2": "a√15/5",
+      "q1": "a³√15/4"
+    },
+    "answer_exact": {
+      "q2": {
+        "coef": "√15/5",
+        "dim": 1,
+        "unit": "a"
+      },
+      "q1": {
+        "coef": "√15/4",
+        "dim": 3,
+        "unit": "a"
+      }
+    },
+    "output_policy": null,
+    "scene_configuration": null,
+    "scene3d_continuity_errors": [],
+    "chosen_route": "LOCAL_DETERMINISTIC_HYBRID",
+    "provider_calls": 0,
+    "elapsed_ms": 100.722
+  },
+  "single_goal_result": {
+    "status": "SERVED",
+    "reason_code": null,
+    "fallback_reason": null,
+    "answer": "a³√15/4",
+    "answers": {
+      "q1": "a³√15/4"
+    },
+    "answer_exact": {
+      "q1": {
+        "coef": "√15/4",
+        "dim": 3,
+        "unit": "a"
+      }
+    },
+    "output_policy": null,
+    "scene_configuration": null,
+    "scene3d_continuity_errors": [],
+    "chosen_route": "LOCAL_DETERMINISTIC_HYBRID",
+    "provider_calls": 0,
+    "elapsed_ms": 43.194
+  }
+}

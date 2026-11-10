@@ -1,0 +1,453 @@
+{
+  "schema": "algosim-external17-before-after/2",
+  "generated_at_utc": "2026-11-10T10:07:05.696993+00:00",
+  "product_commit": "d20d7fdcdd6c5759f74ff737f331c2e548923eba",
+  "head_commit": "d20d7fdcdd6c5759f74ff737f331c2e548923eba",
+  "measured_system_tree_hash": "fb4f4992da8764930954a44f24e121ddca6cf1f3a270039773f6dbbf8b1b5c05",
+  "measured_system_file_count": 110,
+  "code_version": {
+    "typed_fact_next": "typed-fact-next/2",
+    "bridge": "typed-fact-next-bridge/2",
+    "planner": "geometry-fact-planner/26",
+    "registry": "geometry-functions/33",
+    "engine": "geometry-function-engine/24",
+    "adapter": "hybrid-simulation-adapter/4",
+    "envelope": "hybrid-route-d-simulation/4",
+    "local_parser": "local-geometry-parser/1",
+    "adaptive_router": "adaptive-input-router/1",
+    "cache_version": "132"
+  },
+  "input_or_case_hash": "7bf2d1f8d79cb90f2cfd981cb5bb8a404593a44c551fac35aaa5e79986be0bc6",
+  "oracle": "Comparison across Wave 1 (4/17) -> Wave 2 (6/17) -> Wave 3 this run (12/17) with 0 regressions and 0 wrong-served",
+  "test_command": "pytest backend/tests/geometry/test_verified_image_to_3d_pipeline.py -q",
+  "test_environment": {
+    "os": "Windows-11-10.0.26100-SP0",
+    "python": "3.12.10",
+    "cpu_logical_cores": 12,
+    "allow_live_ai": 0,
+    "live_gemini_calls": 0,
+    "benchmark_tier": "HOST_BENCHMARK_OFFLINE"
+  },
+  "expected_behavior": "Solve all 12/12 in-scope polyhedral External17 statements (up from 6/17) while keeping all 5/5 out-of-scope/diagram-dependent statements fail-closed.",
+  "actual_behavior": "served 4/17 -> 6/17 -> 12/17 (12/12 in-scope polyhedral); wrong_served=0; regressed=[]",
+  "verdict": "PASS",
+  "run_id": "formal-correctness-real-world-acceptance",
+  "wave_id": "FORMAL_CORRECTNESS_REAL_WORLD_ACCEPTANCE",
+  "baseline_head_commit": "cc166865e4d4f1116014d9f1a68d9d050bf0dc9a",
+  "baseline_product_commit": "7994da7a64c8dc288c4de972df2d8d1db65e0c20",
+  "case_ids": [
+    "ext_prt_01_hd_q_5259753#1",
+    "ext_prt_02_hd_q_7922924#1",
+    "ext_prt_03_hd_q_7907931#1",
+    "ext_prt_03_hd_q_7907931#2",
+    "ext_prt_04_hd_q_8436784#1",
+    "ext_prt_05_hd_q_7451806#1",
+    "ext_prt_06_hd_q_1084979#1",
+    "ext_prt_07_hd_q_7958052#1",
+    "ext_prt_08_hd_q_7509702#1",
+    "ext_prt_09_vmmu_page_r4#1",
+    "ext_prt_10_vmmu_page_r7#1",
+    "ext_prt_11_vmmu_page_r10#1",
+    "ext_prt_12_vmmu_page_r11#1",
+    "ext_prt_13_vmmu_page_r25#1",
+    "ext_prt_14_vmmu_page_r26#1",
+    "ext_prt_15_vmmu_page_r28#1",
+    "ext_hw_b1_01_hd_a_6043187#1"
+  ],
+  "measurement_status": "MEASURED_OFFLINE (ORACLE_TEXT_DOWNSTREAM_REPLAY on non-blind diagnostic corpus)",
+  "oracle_provenance": "Frozen prior receipts (unified-angle-geometry-verified-image-to-3d & real-world-end-to-end-reliability) + hand oracle + printed MC keys",
+  "evidence_classification": "VERIFIED FACT",
+  "corpus_role": "DEVELOPMENT_DIAGNOSTIC (inspected during gap analysis; not blind, not H-1)",
+  "progression": {
+    "unified_angle_geometry_run": "4/17 solved (2 false MISSING_DIMENSION, 11 LIVE_AI_DISABLED)",
+    "real_world_reliability_run": "6/17 solved (0 MISSING_DIMENSION, 11 LIVE_AI_DISABLED)",
+    "formal_correctness_this_run": "12/17 solved (12/12 in-scope polyhedral solved locally with 0 AI; 5/5 out-of-scope/diagram-only fail-closed)"
+  },
+  "metrics_with_denominators": {
+    "correct_solve_rate": {
+      "external17_all": "12/17 (70.6%)",
+      "in_scope_polyhedral_subset": "12/12 (100.0%)"
+    },
+    "served_answer_accuracy": "12/12 (100.0%)",
+    "wrong_served_rate": {
+      "over_served": "0/12",
+      "over_all_17": "0/17"
+    },
+    "correct_refusal_rate": {
+      "out_of_scope_or_diagram_only": "5/5 (ext08 vector sum, ext10 cone sector, ext13 horizontal cylinder, ext14 spheres in cylinder, ext15 diagram-only heights)",
+      "all_unserved_fail_closed_offline": "5/5"
+    },
+    "false_refusal_rate": {
+      "false_missing_dimension": "0/17",
+      "unserved_in_scope_polyhedral_with_live_ai_disabled": "0/12 (reduced from 6/12 to 0/12)"
+    },
+    "image_to_solution_success": {
+      "zero_ai_from_raw_pixels": "0/16",
+      "recorded_vision_replay": "1/16 (ext_hw_b1_01 -> a³√3)",
+      "oracle_text_downstream_replay": "12/17 statements (11/16 complete-problem images)",
+      "live_vision": "NOT_MEASURED"
+    }
+  },
+  "per_case": [
+    {
+      "case_id": "ext_prt_01_hd_q_5259753#1",
+      "wave1_before": {
+        "status": "SERVED",
+        "answer": "a³√3/3",
+        "reason_code": null
+      },
+      "wave2_before_this_run": {
+        "status": "SERVED",
+        "answer": "a³√3/3",
+        "reason_code": null,
+        "illustrative_scene": false
+      },
+      "after_this_run": {
+        "status": "SERVED",
+        "answer": "a³√3/3",
+        "reason_code": null,
+        "illustrative_scene": false
+      },
+      "change_in_this_run": "UNCHANGED"
+    },
+    {
+      "case_id": "ext_prt_02_hd_q_7922924#1",
+      "wave1_before": {
+        "status": "REFUSED",
+        "answer": null,
+        "reason_code": "MISSING_DIMENSION"
+      },
+      "wave2_before_this_run": {
+        "status": "SERVED",
+        "answer": "6",
+        "reason_code": null,
+        "illustrative_scene": true
+      },
+      "after_this_run": {
+        "status": "SERVED",
+        "answer": "6",
+        "reason_code": null,
+        "illustrative_scene": true
+      },
+      "change_in_this_run": "UNCHANGED"
+    },
+    {
+      "case_id": "ext_prt_03_hd_q_7907931#1",
+      "wave1_before": {
+        "status": "REFUSED",
+        "answer": null,
+        "reason_code": "MISSING_DIMENSION"
+      },
+      "wave2_before_this_run": {
+        "status": "SERVED",
+        "answer": "a√2/2",
+        "reason_code": null,
+        "illustrative_scene": true
+      },
+      "after_this_run": {
+        "status": "SERVED",
+        "answer": "a√2/2",
+        "reason_code": null,
+        "illustrative_scene": true
+      },
+      "change_in_this_run": "UNCHANGED"
+    },
+    {
+      "case_id": "ext_prt_03_hd_q_7907931#2",
+      "wave1_before": {
+        "status": "SERVED",
+        "answer": "a³/4",
+        "reason_code": null
+      },
+      "wave2_before_this_run": {
+        "status": "SERVED",
+        "answer": "a³/4",
+        "reason_code": null,
+        "illustrative_scene": false
+      },
+      "after_this_run": {
+        "status": "SERVED",
+        "answer": "a³/4",
+        "reason_code": null,
+        "illustrative_scene": false
+      },
+      "change_in_this_run": "UNCHANGED"
+    },
+    {
+      "case_id": "ext_prt_04_hd_q_8436784#1",
+      "wave1_before": {
+        "status": "REFUSED",
+        "answer": null,
+        "reason_code": "LIVE_AI_DISABLED"
+      },
+      "wave2_before_this_run": {
+        "status": "REFUSED",
+        "answer": null,
+        "reason_code": "LIVE_AI_DISABLED",
+        "illustrative_scene": false
+      },
+      "after_this_run": {
+        "status": "SERVED",
+        "answer": "1/2",
+        "reason_code": null,
+        "illustrative_scene": true
+      },
+      "change_in_this_run": "NEWLY_SOLVED"
+    },
+    {
+      "case_id": "ext_prt_05_hd_q_7451806#1",
+      "wave1_before": {
+        "status": "REFUSED",
+        "answer": null,
+        "reason_code": "LIVE_AI_DISABLED"
+      },
+      "wave2_before_this_run": {
+        "status": "REFUSED",
+        "answer": null,
+        "reason_code": "LIVE_AI_DISABLED",
+        "illustrative_scene": false
+      },
+      "after_this_run": {
+        "status": "SERVED",
+        "answer": "6/5",
+        "reason_code": null,
+        "illustrative_scene": true
+      },
+      "change_in_this_run": "NEWLY_SOLVED"
+    },
+    {
+      "case_id": "ext_prt_06_hd_q_1084979#1",
+      "wave1_before": {
+        "status": "REFUSED",
+        "answer": null,
+        "reason_code": "LIVE_AI_DISABLED"
+      },
+      "wave2_before_this_run": {
+        "status": "REFUSED",
+        "answer": null,
+        "reason_code": "LIVE_AI_DISABLED",
+        "illustrative_scene": false
+      },
+      "after_this_run": {
+        "status": "SERVED",
+        "answer": {
+          "q2": "a√15/5",
+          "q1": "a³√15/4"
+        },
+        "reason_code": null,
+        "illustrative_scene": false
+      },
+      "change_in_this_run": "NEWLY_SOLVED"
+    },
+    {
+      "case_id": "ext_prt_07_hd_q_7958052#1",
+      "wave1_before": {
+        "status": "REFUSED",
+        "answer": null,
+        "reason_code": "LIVE_AI_DISABLED"
+      },
+      "wave2_before_this_run": {
+        "status": "REFUSED",
+        "answer": null,
+        "reason_code": "LIVE_AI_DISABLED",
+        "illustrative_scene": false
+      },
+      "after_this_run": {
+        "status": "SERVED",
+        "answer": "4,7",
+        "reason_code": null,
+        "illustrative_scene": true
+      },
+      "change_in_this_run": "NEWLY_SOLVED"
+    },
+    {
+      "case_id": "ext_prt_08_hd_q_7509702#1",
+      "wave1_before": {
+        "status": "REFUSED",
+        "answer": null,
+        "reason_code": "LIVE_AI_DISABLED"
+      },
+      "wave2_before_this_run": {
+        "status": "REFUSED",
+        "answer": null,
+        "reason_code": "LIVE_AI_DISABLED",
+        "illustrative_scene": false
+      },
+      "after_this_run": {
+        "status": "REFUSED",
+        "answer": null,
+        "reason_code": "LIVE_AI_DISABLED",
+        "illustrative_scene": false
+      },
+      "change_in_this_run": "UNCHANGED"
+    },
+    {
+      "case_id": "ext_prt_09_vmmu_page_r4#1",
+      "wave1_before": {
+        "status": "SERVED",
+        "answer": "2",
+        "reason_code": null
+      },
+      "wave2_before_this_run": {
+        "status": "SERVED",
+        "answer": "2",
+        "reason_code": null,
+        "illustrative_scene": false
+      },
+      "after_this_run": {
+        "status": "SERVED",
+        "answer": "2",
+        "reason_code": null,
+        "illustrative_scene": false
+      },
+      "change_in_this_run": "UNCHANGED"
+    },
+    {
+      "case_id": "ext_prt_10_vmmu_page_r7#1",
+      "wave1_before": {
+        "status": "REFUSED",
+        "answer": null,
+        "reason_code": "LIVE_AI_DISABLED"
+      },
+      "wave2_before_this_run": {
+        "status": "REFUSED",
+        "answer": null,
+        "reason_code": "LIVE_AI_DISABLED",
+        "illustrative_scene": false
+      },
+      "after_this_run": {
+        "status": "REFUSED",
+        "answer": null,
+        "reason_code": "LIVE_AI_DISABLED",
+        "illustrative_scene": false
+      },
+      "change_in_this_run": "UNCHANGED"
+    },
+    {
+      "case_id": "ext_prt_11_vmmu_page_r10#1",
+      "wave1_before": {
+        "status": "REFUSED",
+        "answer": null,
+        "reason_code": "LIVE_AI_DISABLED"
+      },
+      "wave2_before_this_run": {
+        "status": "REFUSED",
+        "answer": null,
+        "reason_code": "LIVE_AI_DISABLED",
+        "illustrative_scene": false
+      },
+      "after_this_run": {
+        "status": "SERVED",
+        "answer": "30°",
+        "reason_code": null,
+        "illustrative_scene": false
+      },
+      "change_in_this_run": "NEWLY_SOLVED"
+    },
+    {
+      "case_id": "ext_prt_12_vmmu_page_r11#1",
+      "wave1_before": {
+        "status": "REFUSED",
+        "answer": null,
+        "reason_code": "LIVE_AI_DISABLED"
+      },
+      "wave2_before_this_run": {
+        "status": "REFUSED",
+        "answer": null,
+        "reason_code": "LIVE_AI_DISABLED",
+        "illustrative_scene": false
+      },
+      "after_this_run": {
+        "status": "SERVED",
+        "answer": "2√3",
+        "reason_code": null,
+        "illustrative_scene": false
+      },
+      "change_in_this_run": "NEWLY_SOLVED"
+    },
+    {
+      "case_id": "ext_prt_13_vmmu_page_r25#1",
+      "wave1_before": {
+        "status": "REFUSED",
+        "answer": null,
+        "reason_code": "LIVE_AI_DISABLED"
+      },
+      "wave2_before_this_run": {
+        "status": "REFUSED",
+        "answer": null,
+        "reason_code": "LIVE_AI_DISABLED",
+        "illustrative_scene": false
+      },
+      "after_this_run": {
+        "status": "REFUSED",
+        "answer": null,
+        "reason_code": "LIVE_AI_DISABLED",
+        "illustrative_scene": false
+      },
+      "change_in_this_run": "UNCHANGED"
+    },
+    {
+      "case_id": "ext_prt_14_vmmu_page_r26#1",
+      "wave1_before": {
+        "status": "REFUSED",
+        "answer": null,
+        "reason_code": "LIVE_AI_DISABLED"
+      },
+      "wave2_before_this_run": {
+        "status": "REFUSED",
+        "answer": null,
+        "reason_code": "LIVE_AI_DISABLED",
+        "illustrative_scene": false
+      },
+      "after_this_run": {
+        "status": "REFUSED",
+        "answer": null,
+        "reason_code": "LIVE_AI_DISABLED",
+        "illustrative_scene": false
+      },
+      "change_in_this_run": "UNCHANGED"
+    },
+    {
+      "case_id": "ext_prt_15_vmmu_page_r28#1",
+      "wave1_before": {
+        "status": "REFUSED",
+        "answer": null,
+        "reason_code": "LIVE_AI_DISABLED"
+      },
+      "wave2_before_this_run": {
+        "status": "REFUSED",
+        "answer": null,
+        "reason_code": "LIVE_AI_DISABLED",
+        "illustrative_scene": false
+      },
+      "after_this_run": {
+        "status": "REFUSED",
+        "answer": null,
+        "reason_code": "LIVE_AI_DISABLED",
+        "illustrative_scene": false
+      },
+      "change_in_this_run": "UNCHANGED"
+    },
+    {
+      "case_id": "ext_hw_b1_01_hd_a_6043187#1",
+      "wave1_before": {
+        "status": "SERVED",
+        "answer": "a³√3",
+        "reason_code": null
+      },
+      "wave2_before_this_run": {
+        "status": "SERVED",
+        "answer": "a³√3",
+        "reason_code": null,
+        "illustrative_scene": false
+      },
+      "after_this_run": {
+        "status": "SERVED",
+        "answer": "a³√3",
+        "reason_code": null,
+        "illustrative_scene": false
+      },
+      "change_in_this_run": "UNCHANGED"
+    }
+  ]
+}

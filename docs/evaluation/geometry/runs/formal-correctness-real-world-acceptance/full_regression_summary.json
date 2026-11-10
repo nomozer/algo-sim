@@ -1,0 +1,109 @@
+{
+  "schema": "algosim-full-regression-summary/2",
+  "generated_at_utc": "2026-11-10T10:21:09.076943+00:00",
+  "product_commit": "d20d7fdcdd6c5759f74ff737f331c2e548923eba",
+  "head_commit": "d20d7fdcdd6c5759f74ff737f331c2e548923eba",
+  "measured_system_tree_hash": "fb4f4992da8764930954a44f24e121ddca6cf1f3a270039773f6dbbf8b1b5c05",
+  "measured_system_file_count": 110,
+  "code_version": {
+    "typed_fact_next": "typed-fact-next/2",
+    "bridge": "typed-fact-next-bridge/2",
+    "planner": "geometry-fact-planner/26",
+    "registry": "geometry-functions/33",
+    "engine": "geometry-function-engine/24",
+    "adapter": "hybrid-simulation-adapter/4",
+    "envelope": "hybrid-route-d-simulation/4",
+    "local_parser": "local-geometry-parser/1",
+    "adaptive_router": "adaptive-input-router/1",
+    "cache_version": "132"
+  },
+  "input_or_case_hash": "cacf1e518eeb0485396963a8320b7db529aaefeb72ea5b2a81f0f1e1c6cd1b37",
+  "oracle": "0 unexpected failures across all backend, frontend, browser, and governance suites",
+  "test_command": "see suites[*].command",
+  "test_environment": {
+    "os": "Windows-11-10.0.26100-SP0",
+    "python": "3.12.10",
+    "cpu_logical_cores": 12,
+    "allow_live_ai": 0,
+    "live_gemini_calls": 0,
+    "benchmark_tier": "HOST_BENCHMARK_OFFLINE"
+  },
+  "expected_behavior": "All targeted and full regression suites pass with 0 unexpected failures.",
+  "actual_behavior": "{}",
+  "verdict": "PASS",
+  "run_id": "formal-correctness-real-world-acceptance",
+  "wave_id": "FORMAL_CORRECTNESS_REAL_WORLD_ACCEPTANCE",
+  "baseline_head_commit": "cc166865e4d4f1116014d9f1a68d9d050bf0dc9a",
+  "baseline_product_commit": "7994da7a64c8dc288c4de972df2d8d1db65e0c20",
+  "case_ids": [
+    "NONE"
+  ],
+  "measurement_status": "MEASURED_OFFLINE",
+  "oracle_provenance": "Exit codes and pass counts of pytest, vitest, tsc, vite build, Playwright Chrome E2E, demo replay, crash audit, docs IA audit, publication safety, and freeze --verify",
+  "evidence_classification": "VERIFIED FACT",
+  "targeted_new_suites": {
+    "verdict": "PASS",
+    "total_new_backend_tests": 76,
+    "test_reusable_ratio_and_inverse_angle_geometry": "18/18 passed",
+    "test_height_invariance_formal_certification": "31/31 passed",
+    "test_semantic_and_output_policy_closure": "27/27 passed"
+  },
+  "docs_information_architecture_audit": {
+    "script": "backend/scripts/audit_docs_information_architecture.py",
+    "verdict": "PASS"
+  },
+  "frontend_vitest": {
+    "tests_failed": 0,
+    "tests_passed": 2011,
+    "test_files_passed": 138,
+    "verdict": "PASS",
+    "vite_build": "PASS",
+    "tsc_errors": 0,
+    "command": "npm run test:wave && npx tsc -b && npx vite build"
+  },
+  "demo_replay": {
+    "reduced_chain_passed": "1/1",
+    "demo_cases_passed": "5/5",
+    "script": "backend/scripts/replay_demo_cases.py",
+    "verdict": "PASS"
+  },
+  "publication_safety": {
+    "new_findings": 0,
+    "script": "backend/scripts/check_publication_safety.py",
+    "verdict": "PASS"
+  },
+  "candidate_freeze": {
+    "product_commit_sha": "d20d7fdcdd6c5759f74ff737f331c2e548923eba",
+    "measured_files": 110,
+    "script": "backend/scripts/freeze_evaluation_candidate.py --verify",
+    "verdict": "MATCH",
+    "tree_hash": "fb4f4992da8764930954a44f24e121ddca6cf1f3a270039773f6dbbf8b1b5c05"
+  },
+  "backend_pytest": {
+    "failed": 0,
+    "xfailed": 15,
+    "deselected": 4,
+    "passed": 14229,
+    "skipped": 9,
+    "verdict": "PASS",
+    "command": "pytest -c backend/pytest.ini backend/tests -q"
+  },
+  "crash_surface_audit": {
+    "uncaught_500": 0,
+    "boundaries_passed": "6/6",
+    "script": "backend/scripts/audit_demo_crash_surface.py",
+    "verdict": "PASS"
+  },
+  "browser_playwright_e2e": {
+    "page_errors": 0,
+    "viewports": [
+      "1440x900@1.0 (100%)",
+      "1440x900@1.1 (110%)"
+    ],
+    "script": "docs/evaluation/geometry/runs/formal-correctness-real-world-acceptance/tools/e2e_browser_acceptance.mjs",
+    "scenarios_total": 22,
+    "image_upload_edit_resubmit_pass": true,
+    "verdict": "PASS",
+    "scenarios_passed": 22
+  }
+}

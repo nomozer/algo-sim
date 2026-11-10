@@ -1,0 +1,68 @@
+{
+  "schema": "algosim-baseline-candidate-integrity/1",
+  "generated_at_utc": "2026-11-10T10:07:01.625701+00:00",
+  "product_commit": "d20d7fdcdd6c5759f74ff737f331c2e548923eba",
+  "head_commit": "d20d7fdcdd6c5759f74ff737f331c2e548923eba",
+  "measured_system_tree_hash": "fb4f4992da8764930954a44f24e121ddca6cf1f3a270039773f6dbbf8b1b5c05",
+  "measured_system_file_count": 110,
+  "code_version": {
+    "typed_fact_next": "typed-fact-next/2",
+    "bridge": "typed-fact-next-bridge/2",
+    "planner": "geometry-fact-planner/26",
+    "registry": "geometry-functions/33",
+    "engine": "geometry-function-engine/24",
+    "adapter": "hybrid-simulation-adapter/4",
+    "envelope": "hybrid-route-d-simulation/4",
+    "local_parser": "local-geometry-parser/1",
+    "adaptive_router": "adaptive-input-router/1",
+    "cache_version": "132"
+  },
+  "input_or_case_hash": "f286d2a5cae0978a6fb76b671339ca28b0a324586773eaab61066f53d03379c5",
+  "oracle": "custodian/geometry_oracle.py + C26 section closure & Source Gate + SHA-256 external cache manifest",
+  "test_command": "pytest backend/tests/geometry/test_hybrid_reasoning_generalization.py backend/tests/geometry/test_local_geometry_parser.py -q",
+  "test_environment": {
+    "os": "Windows-11-10.0.26100-SP0",
+    "python": "3.12.10",
+    "cpu_logical_cores": 12,
+    "allow_live_ai": 0,
+    "live_gemini_calls": 0,
+    "benchmark_tier": "HOST_BENCHMARK_OFFLINE"
+  },
+  "expected_behavior": "Dev72 56/56 supported + 10/10 negative + 6/6 strict XFAIL gaps; C26 70 rows & 7/7 section contracts intact; 38/38 external cached images verified with 0 in Git.",
+  "actual_behavior": "Dev72 pos=56/56, neg=10/10, gaps=6/6; C26=70, sec7=7/7; external_cache=38/38 (in_git=0).",
+  "verdict": "PASS",
+  "dev72": {
+    "total_cases": 72,
+    "supported_positive_served_exact": 56,
+    "negative_refused_correctly": 10,
+    "open_gap_probes_fail_closed": 6,
+    "wrong_served": 0
+  },
+  "c26_live_replay": {
+    "total_rows": 70,
+    "construct_plane_section_contracts_verified": 7
+  },
+  "external_image_cache": {
+    "expected_distinct_images": 38,
+    "verified_sha256_on_disk": 38,
+    "tracked_in_git": 0
+  },
+  "strict_xfail_inventory": {
+    "decorator_sites": 7,
+    "runtime_pytest_xfailed_items": 15
+  },
+  "run_id": "formal-correctness-real-world-acceptance",
+  "wave_id": "FORMAL_CORRECTNESS_REAL_WORLD_ACCEPTANCE",
+  "case_ids": [
+    "Dev72 (72)",
+    "C26 (70)",
+    "Section7 (7)",
+    "ExternalCache (38)"
+  ],
+  "measurement_status": "MEASURED_OFFLINE",
+  "oracle_provenance": "custodian/geometry_oracle.py + C26 section coplanarity/convexity oracle + SHA-256 cache manifest",
+  "evidence_classification": "VERIFIED FACT",
+  "baseline_head_commit": "cc166865e4d4f1116014d9f1a68d9d050bf0dc9a",
+  "baseline_product_commit": "7994da7a64c8dc288c4de972df2d8d1db65e0c20",
+  "baseline_freeze_verify": "MATCH (verified before edits on clean tree)"
+}

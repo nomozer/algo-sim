@@ -1,0 +1,252 @@
+{
+  "schema": "algosim-image-pipeline-reliability/1",
+  "generated_at_utc": "2026-11-10T10:07:07.295758+00:00",
+  "product_commit": "d20d7fdcdd6c5759f74ff737f331c2e548923eba",
+  "head_commit": "d20d7fdcdd6c5759f74ff737f331c2e548923eba",
+  "measured_system_tree_hash": "fb4f4992da8764930954a44f24e121ddca6cf1f3a270039773f6dbbf8b1b5c05",
+  "measured_system_file_count": 110,
+  "code_version": {
+    "typed_fact_next": "typed-fact-next/2",
+    "bridge": "typed-fact-next-bridge/2",
+    "planner": "geometry-fact-planner/26",
+    "registry": "geometry-functions/33",
+    "engine": "geometry-function-engine/24",
+    "adapter": "hybrid-simulation-adapter/4",
+    "envelope": "hybrid-route-d-simulation/4",
+    "local_parser": "local-geometry-parser/1",
+    "adaptive_router": "adaptive-input-router/1",
+    "cache_version": "132"
+  },
+  "input_or_case_hash": "596968b46ce717b4eb916be7c78101e25c01ac521d9dd0f5931c3b5372b2d9be",
+  "oracle": "0 corrupted OCR text reaches the Kernel; 38/38 noisy recorded OCR outputs rejected safely; user-edited transcription invalidates stale cache and re-solves cleanly.",
+  "test_command": "pytest backend/tests/geometry/test_verified_image_to_3d_pipeline.py -q",
+  "test_environment": {
+    "os": "Windows-11-10.0.26100-SP0",
+    "python": "3.12.10",
+    "cpu_logical_cores": 12,
+    "allow_live_ai": 0,
+    "live_gemini_calls": 0,
+    "benchmark_tier": "HOST_BENCHMARK_OFFLINE"
+  },
+  "expected_behavior": "Strict separation between Mode 1 (raw image + local OCR), Mode 2 (recorded Vision replay), Mode 3 (user-edited transcription), and Mode 4 (oracle text downstream replay).",
+  "actual_behavior": "Mode 1 local_ocr_zero_ai_served=0/38, safely_rejected=38/38; Mode 2 recorded_vision_replay_served=1/16; Mode 3 edited_text_resolve=PASS (0 stale cache); Mode 4 oracle_text_downstream_served=12/17 (wrong=0)",
+  "verdict": "PASS",
+  "run_id": "formal-correctness-real-world-acceptance",
+  "wave_id": "FORMAL_CORRECTNESS_REAL_WORLD_ACCEPTANCE",
+  "baseline_head_commit": "cc166865e4d4f1116014d9f1a68d9d050bf0dc9a",
+  "baseline_product_commit": "7994da7a64c8dc288c4de972df2d8d1db65e0c20",
+  "case_ids": [
+    "ext_prt_01_hd_q_5259753",
+    "ext_prt_02_hd_q_7922924",
+    "ext_prt_03_hd_q_7907931",
+    "ext_prt_04_hd_q_8436784",
+    "ext_prt_05_hd_q_7451806",
+    "ext_prt_06_hd_q_1084979",
+    "ext_prt_07_hd_q_7958052",
+    "ext_prt_08_hd_q_7509702",
+    "ext_prt_09_vmmu_page_r4",
+    "ext_prt_10_vmmu_page_r7",
+    "ext_prt_11_vmmu_page_r10",
+    "ext_prt_12_vmmu_page_r11",
+    "ext_prt_13_vmmu_page_r25",
+    "ext_prt_14_vmmu_page_r26",
+    "ext_prt_15_vmmu_page_r28",
+    "ext_hw_b1_01_hd_a_6043187",
+    "ext_hw_b2_01_hd_a_8349383",
+    "ext_hw_b2_02_hd_a_7509702_2",
+    "ext_hw_b2_03_hd_a_7594768_2",
+    "ext_hw_b2_04_hd_a_7594768_1",
+    "ext_hw_b2_05_hd_a_1084979_1",
+    "ext_hw_b2_06_hd_a_1084979_2",
+    "ext_hw_b2_07_hd_a_1084979_3",
+    "ext_hw_b2_08_hd_a_171471_1",
+    "ext_hw_b2_09_hd_a_10810_3",
+    "ext_hw_b3_01_uit_hwdb_r0",
+    "ext_hw_b3_02_uit_hwdb_r3",
+    "ext_hw_b3_03_uit_hwdb_r5",
+    "ext_hw_b3_04_uit_hwdb_r10",
+    "ext_hw_b3_05_uit_hwdb_r11",
+    "ext_hw_b3_06_uit_hwdb_r12",
+    "ext_diag_01_vmmu_crop_r4",
+    "ext_diag_02_vmmu_crop_r7",
+    "ext_diag_03_vmmu_crop_r10",
+    "ext_diag_04_vmmu_crop_r11",
+    "ext_diag_05_vmmu_crop_r25",
+    "ext_diag_06_vmmu_crop_r26",
+    "ext_diag_07_vmmu_crop_r28"
+  ],
+  "measurement_status": "RECORDED_REPLAY_VERIFIED + ORACLE_TEXT_DOWNSTREAM_REPLAY; LIVE_VISION_NOT_MEASURED",
+  "oracle_provenance": "SHA-256 manifest of 38 cached external images + 6-criteria Input Fidelity Gate + Dual-OCR Reconciliation Gate + AdaptiveInputRouter contract",
+  "evidence_classification": "VERIFIED FACT",
+  "four_modes_summary": {
+    "mode_1_raw_image_local_ocr_only": {
+      "complete_problem_images_served": "0/16",
+      "all_38_images_noisy_ocr_rejected_by_fidelity_gate": "38/38",
+      "wrong_served": 0
+    },
+    "mode_2_raw_image_recorded_vision_replay": {
+      "served": "1/16 (ext_hw_b1_01_hd_a_6043187 -> a³√3)",
+      "live_vision_status": "LIVE_VISION_NOT_MEASURED (ALLOW_LIVE_AI=0)"
+    },
+    "mode_3_user_edited_transcription": {
+      "cache_invalidation_verified": true,
+      "browser_e2e_verified": true,
+      "detail": "Editing transcription after 503 LIVE_AI_DISABLED image upload recomputes computeInputCacheSeed and renders 3D scene cleanly."
+    },
+    "mode_4_oracle_text_downstream_replay": {
+      "served_statements": "12/17 (12/12 in-scope polyhedral)",
+      "wrong_served": 0
+    }
+  },
+  "ocr_fidelity_probes": [
+    {
+      "probe_id": "radical_V_digit",
+      "blocked_single_and_shared_dual_ocr": true,
+      "failed_checks": [
+        "vertex_and_solid_consistency",
+        "dimension_and_number_fidelity",
+        "geometric_relation_syntax",
+        "goal_sentence_completeness",
+        "source_span_coverage"
+      ],
+      "dual_reason_code": "UNPARSED_FACT_CANDIDATE"
+    },
+    {
+      "probe_id": "radical_aV7",
+      "blocked_single_and_shared_dual_ocr": true,
+      "failed_checks": [
+        "vertex_and_solid_consistency",
+        "dimension_and_number_fidelity",
+        "geometric_relation_syntax",
+        "goal_sentence_completeness",
+        "source_span_coverage"
+      ],
+      "dual_reason_code": "UNPARSED_FACT_CANDIDATE"
+    },
+    {
+      "probe_id": "vertex_comma_S_ABCD",
+      "blocked_single_and_shared_dual_ocr": true,
+      "failed_checks": [
+        "vertex_and_solid_consistency",
+        "dimension_and_number_fidelity",
+        "goal_sentence_completeness",
+        "source_span_coverage"
+      ],
+      "dual_reason_code": "EMPTY_SOLIDS"
+    },
+    {
+      "probe_id": "angle_degree_600",
+      "blocked_single_and_shared_dual_ocr": true,
+      "failed_checks": [
+        "dimension_and_number_fidelity"
+      ],
+      "dual_reason_code": "OCR_FIDELITY_GATE_FAILED"
+    },
+    {
+      "probe_id": "stacked_fraction_bar",
+      "blocked_single_and_shared_dual_ocr": true,
+      "failed_checks": [
+        "vertex_and_solid_consistency",
+        "dimension_and_number_fidelity",
+        "geometric_relation_syntax",
+        "goal_sentence_completeness",
+        "source_span_coverage"
+      ],
+      "dual_reason_code": "UNPARSED_FACT_CANDIDATE"
+    },
+    {
+      "probe_id": "italic_digit_in_polygon",
+      "blocked_single_and_shared_dual_ocr": true,
+      "failed_checks": [
+        "vertex_and_solid_consistency",
+        "dimension_and_number_fidelity",
+        "goal_sentence_completeness",
+        "source_span_coverage"
+      ],
+      "dual_reason_code": "SOURCE_OBJECT_MISMATCH"
+    },
+    {
+      "probe_id": "leading_digits_48C",
+      "blocked_single_and_shared_dual_ocr": true,
+      "failed_checks": [
+        "vertex_and_solid_consistency",
+        "dimension_and_number_fidelity",
+        "geometric_relation_syntax",
+        "goal_sentence_completeness",
+        "source_span_coverage"
+      ],
+      "dual_reason_code": "EMPTY_SOLIDS"
+    },
+    {
+      "probe_id": "diagram_phrase_nhu_hinh_ben",
+      "blocked_single_and_shared_dual_ocr": true,
+      "failed_checks": [
+        "diagram_dependency_and_cross_engine"
+      ],
+      "dual_reason_code": "OCR_FIDELITY_GATE_FAILED"
+    },
+    {
+      "probe_id": "diagram_phrase_ghi_tren_hinh",
+      "blocked_single_and_shared_dual_ocr": true,
+      "failed_checks": [
+        "vertex_and_solid_consistency",
+        "goal_sentence_completeness",
+        "source_span_coverage",
+        "diagram_dependency_and_cross_engine"
+      ],
+      "dual_reason_code": "UNGROUNDED_VALUE"
+    },
+    {
+      "probe_id": "mixed_text_and_diagram_flag",
+      "blocked_single_and_shared_dual_ocr": true,
+      "failed_checks": [
+        "diagram_dependency_and_cross_engine"
+      ],
+      "dual_reason_code": "DIAGRAM_CONTEXT_REQUIRES_VISION_FALLBACK"
+    },
+    {
+      "probe_id": "handwritten_modality_flag",
+      "blocked_single_and_shared_dual_ocr": true,
+      "failed_checks": [
+        "diagram_dependency_and_cross_engine"
+      ],
+      "dual_reason_code": "HANDWRITTEN_IMAGE_REQUIRES_VISION_FALLBACK"
+    }
+  ],
+  "routing_verification": {
+    "text_direct": {
+      "status": "SERVED",
+      "route": "LOCAL_DETERMINISTIC_HYBRID",
+      "provider_calls": 0
+    },
+    "printed_verified_local_ocr": {
+      "status": "SERVED",
+      "route": "LOCAL_OCR_VERIFIED_ZERO_AI",
+      "provider_calls": 0
+    },
+    "handwritten_recorded_vision_fallback": {
+      "status": "SERVED",
+      "route": "VISION_THEN_LOCAL_DETERMINISTIC",
+      "vision_calls": 1,
+      "typed_fact_calls": 0,
+      "answers": {
+        "q1": "a³√3"
+      }
+    },
+    "ocr_vs_vision_conflict_guard": {
+      "status": "NEEDS_CONFIRMATION",
+      "route": "VISION_NEEDS_CONFIRMATION",
+      "conflict_codes": [
+        "NUMERIC_ASSIGNMENT_CONFLICT"
+      ]
+    },
+    "user_edited_confirmation": {
+      "status": "SERVED",
+      "provider_calls": 0
+    },
+    "diagram_only_rejection": {
+      "status": "REJECTED",
+      "route": "LOCAL_CV_REJECTED_OR_SELECTION"
+    }
+  }
+}
