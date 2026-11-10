@@ -11098,6 +11098,25 @@ body:has(.app-root.la-tap-trung) {
   line-height: 1.5;
 }
 
+/* Hình không duy nhất (đáp số bất biến đã kiểm): nhãn minh họa luôn hiện trên sân khấu, không che canvas. */
+.stage-illustrative-note {
+  position: absolute;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 4;
+  max-width: min(560px, calc(100% - 32px));
+  margin: 0;
+  padding: 8px 12px;
+  font-size: 12.6px;
+  line-height: 1.45;
+  color: var(--ink-secondary);
+  background: var(--canvas-soft);
+  border: 1px dashed var(--hairline);
+  border-radius: 10px;
+  pointer-events: none;
+}
+
 /* Honest Scene3D unavailable state inside Axo V2.7 Workspace (P5.1 / P5.2) */
 .workspace-scene3d-unavailable {
   flex: 1 1 auto;

@@ -41,6 +41,7 @@ import {
 import { PhotoProblemPanel } from "./PhotoProblemPanel";
 import { AxoScrollbar } from "./AxoScrollbar";
 import {
+  analyzeErrorMessage,
   canConfirmAssistText,
   initialUnifiedAssistState,
   photoReadErrorMessage,
@@ -366,6 +367,8 @@ export async function runComposerSubmit({
         : [];
 
   const batchSig = attachmentBatchSignature(targetAttachments);
+  // Which request failed decides the learner message: a photo read (`/api/input/prepare`) or the text analysis.
+  let stage: "prepare" | "analyze" = "prepare";
 
   try {
     let finalProblemText = "";
@@ -456,6 +459,7 @@ export async function runComposerSubmit({
       }
     }
 
+    stage = "analyze";
     const result = await analyzeFn(
       { type: "text", content: finalProblemText },
       ctl?.signal,
@@ -496,7 +500,7 @@ export async function runComposerSubmit({
     }
     const contract = err instanceof AxoClientError ? err.toContract() : null;
     const rawMsg = err instanceof Error ? err.message : String(err);
-    const safeMsg = photoReadErrorMessage(err) ?? rawMsg;
+    const safeMsg = (stage === "analyze" ? analyzeErrorMessage(err) : photoReadErrorMessage(err)) ?? rawMsg;
     store.setClientFailure(contract);
     store.setAnalysisError(safeMsg);
 

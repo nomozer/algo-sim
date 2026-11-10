@@ -107,6 +107,35 @@ export interface HybridPreviewView {
    *  (`scene3d-model.ts`, `scene3d-semantic-policy.ts`); chỉ phần tử `verified: true` hoặc có trích dẫn mới qua. */
   source_provenance?: HybridSourceProvenanceEntry[];
   relation_certificates?: HybridRelationCertificateEntry[];
+  /** Có khi đề KHÔNG xác định duy nhất hình (đáp số đã kiểm bất biến): cảnh chỉ là minh họa, phải nói rõ với học sinh. */
+  scene_configuration?: HybridSceneConfiguration;
+}
+
+/** `route_d.scene_configuration` — hình không duy nhất; chỉ một loại đã có chứng chỉ bất biến ở backend. */
+export interface HybridSceneConfiguration {
+  unique: false;
+  kind: "HEIGHT_INVARIANT_ILLUSTRATIVE";
+  free_parameter: string;
+  free_for: string[];
+}
+
+const LOAI_CAU_HINH_MINH_HOA = new Set(["HEIGHT_INVARIANT_ILLUSTRATIVE"]);
+
+/** `null` = hợp lệ (hoặc vắng). Hình không duy nhất mà thiếu nhãn rõ ràng ⇒ từ chối view, không hiển thị như hình duy nhất. */
+function kiemSceneConfiguration(raw: unknown): string | null {
+  if (raw === undefined) return null;
+  if (!laDoiTuong(raw) || raw.unique !== false || typeof raw.kind !== "string" || !LOAI_CAU_HINH_MINH_HOA.has(raw.kind)
+    || typeof raw.free_parameter !== "string" || !Array.isArray(raw.free_for)
+    || raw.free_for.some((x) => typeof x !== "string")) return "scene_configuration sai dạng";
+  return null;
+}
+
+/** Câu cho học sinh khi hình chỉ là minh họa (đáp số không phụ thuộc phần đề bỏ ngỏ), hoặc `null` khi hình duy nhất. */
+export function cauCauHinhMinhHoa(view: HybridPreviewView | null | undefined): string | null {
+  const c = view?.scene_configuration;
+  if (!c || c.unique !== false) return null;
+  return "Đề không cho chiều cao nên hình dưới đây chỉ là một hình minh họa: đáp số đã được kiểm là không phụ thuộc "
+    + "chiều cao, nhưng độ cao vẽ trên hình không phải dữ kiện của đề.";
 }
 
 export interface HybridSectionView {
@@ -707,6 +736,8 @@ export function dungHybridView(routeD: unknown, scene: Scene3D): { view: HybridP
     if (error) return { reason: error };
     const provError = kiemProvenanceAdapter4(routeD);
     if (provError) return { reason: provError };
+    const cfgError = kiemSceneConfiguration(routeD.scene_configuration);
+    if (cfgError) return { reason: cfgError };
   } else if (!laDoiTuong(id) || id.adapter_version !== HYBRID_PREVIEW_ADAPTER) return { reason: "adapter_version không được hỗ trợ" };
 
   // §4 — length_unit của route_d phải đúng là length_unit của cảnh (một nguồn).
@@ -771,7 +802,9 @@ export function dungHybridView(routeD: unknown, scene: Scene3D): { view: HybridP
     ...(v4 && routeD.source_provenance !== undefined
       ? { source_provenance: structuredClone(routeD.source_provenance) as HybridSourceProvenanceEntry[] } : {}),
     ...(v4 && routeD.relation_certificates !== undefined
-      ? { relation_certificates: structuredClone(routeD.relation_certificates) as HybridRelationCertificateEntry[] } : {}) } };
+      ? { relation_certificates: structuredClone(routeD.relation_certificates) as HybridRelationCertificateEntry[] } : {}),
+    ...(v4 && routeD.scene_configuration !== undefined
+      ? { scene_configuration: structuredClone(routeD.scene_configuration) as HybridSceneConfiguration } : {}) } };
 }
 
 /**
@@ -827,6 +860,8 @@ export function kiemHybridView(view: unknown, scene: Scene3D | undefined): strin
     if (error) return error;
     const provError = kiemProvenanceAdapter4(view);
     if (provError) return provError;
+    const cfgError = kiemSceneConfiguration(view.scene_configuration);
+    if (cfgError) return cfgError;
   }
   if (!Array.isArray(view.answers) || !Array.isArray(view.observations)) return "hybrid_preview sai dạng";
   const daCo = new Set<string>();

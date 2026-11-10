@@ -307,7 +307,10 @@ def test_real_external_exam_transcriptions_solve_zero_ai_exact(
 
 def test_real_external_missing_prism_height_refused_zero_ai_missing_dimension():
     """Verbatim `hd_q_7922924_c16` omits prism height `AA'`. Local Parser achieves `LOCAL_PARSE_COMPLETE`
-    with `0` AI calls, and Exact Kernel truthfully refuses `MISSING_DIMENSION` rather than fabricating `AA'`."""
+    with `0` AI calls. CORRECTED by run `real-world-end-to-end-reliability`: the asked distance does NOT depend on
+    `AA'` (CB ⊥ AB and CB ⊥ BB' ⇒ d(C, (ABB'A')) = CB = AB), so the former `MISSING_DIMENSION` was a false refusal.
+    The Exact Kernel now proves height invariance and serves with an ILLUSTRATIVE scene (`unique = False`); it still
+    never fabricates `AA'` as a given (test name kept for history)."""
     problem_text = (
         "Câu 16. Cho hình lăng trụ đứng ABC.A'B'C' có đáy ABC là tam giác vuông cân tại B "
         "và AB = 4 (tham khảo hình bên). Khoảng cách từ C đến mặt phẳng (ABB'A') bằng"
@@ -316,8 +319,9 @@ def test_real_external_missing_prism_height_refused_zero_ai_missing_dimension():
     assert parsed.status == LOCAL_PARSE_COMPLETE
     out = route_text_input(problem_text, allow_live_ai=False)
     assert out.telemetry.total_provider_calls == 0
-    assert out.status == "REFUSED"
-    assert (out.response.get("envelope") or {}).get("reason_code") == "MISSING_DIMENSION"
+    assert out.status == "SERVED"
+    assert list(out.response["route_d"]["answers"].values()) == ["4"]
+    assert out.response["route_d"]["scene_configuration"]["unique"] is False
 
     # Also verify exact `hd_q_7922924` Câu 10 wording with `, có đáy` and newline-separated MC options after `(ABB'A')`
     verbatim_hd_q_7922924 = (
@@ -327,8 +331,9 @@ def test_real_external_missing_prism_height_refused_zero_ai_missing_dimension():
     out_hd = route_text_input(verbatim_hd_q_7922924, allow_live_ai=False)
     assert out_hd.telemetry.total_provider_calls == 0
     assert out_hd.telemetry.local_parse_status == LOCAL_PARSE_COMPLETE
-    assert out_hd.status == "REFUSED"
-    assert (out_hd.response.get("envelope") or {}).get("reason_code") == "MISSING_DIMENSION"
+    assert out_hd.status == "SERVED"                      # published key D. 6
+    assert list(out_hd.response["route_d"]["answers"].values()) == ["6"]
+    assert out_hd.response["route_d"]["scene_configuration"]["unique"] is False
 
 
 @pytest.mark.parametrize(

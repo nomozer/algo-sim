@@ -124,6 +124,7 @@ import {
   saveLearnerRecoverySnapshot,
 } from "../state/learner-recovery-snapshot";
 import {
+  cauCauHinhMinhHoa,
   cauQuanSat,
   hybridTaiBuoc,
   hybridViewCua,
@@ -1445,6 +1446,11 @@ export function AxoWorkspaceV62({
             id="safe-zone-rect"
             aria-hidden="true"
           />
+          {cauCauHinhMinhHoa(hybrid) && (
+            <p className="stage-illustrative-note" id="stage-illustrative-note" role="note" data-scene-unique="false">
+              {cauCauHinhMinhHoa(hybrid)}
+            </p>
+          )}
 
           {/* ── REAL SCENE3D RENDERER (Three.js / WebGL) ──────────────────── */}
           <div

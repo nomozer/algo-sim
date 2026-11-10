@@ -311,14 +311,16 @@ def test_vietocr_hw_stays_unloaded_by_default_and_external_corpus_oracle_downstr
                     missing_dim_ids.append(key)
 
     # Gate 1 + Gate 2 promoted `ext_prt_01_hd_q_5259753#1` ("a³√3/3") and `ext_hw_b1_01_hd_a_6043187#1` ("a³√3")
-    # alongside `ext_prt_03_hd_q_7907931#2` ("a³/4") and `ext_prt_09_vmmu_page_r4#1` ("2") -> 4/17 solved, 0 wrong-served!
+    # alongside `ext_prt_03_hd_q_7907931#2` ("a³/4") and `ext_prt_09_vmmu_page_r4#1` ("2").
+    # Run `real-world-end-to-end-reliability` showed the two former `MISSING_DIMENSION` refusals were FALSE refusals:
+    # d(C, (ABB'A')) = CB = AB = 6 (published key D. 6) and d(B, (SAC)) = BO = a√2/2 do not depend on the unstated height.
+    # They are now served with a height-invariance certificate and an illustrative scene -> 6/17 solved, 0 wrong-served.
     assert served_ids == {
         "ext_prt_01_hd_q_5259753#1": "a³√3/3",
+        "ext_prt_02_hd_q_7922924#1": "6",
+        "ext_prt_03_hd_q_7907931#1": "a√2/2",
         "ext_prt_03_hd_q_7907931#2": "a³/4",
         "ext_prt_09_vmmu_page_r4#1": "2",
         "ext_hw_b1_01_hd_a_6043187#1": "a³√3",
     }
-    assert sorted(missing_dim_ids) == [
-        "ext_prt_02_hd_q_7922924#1",
-        "ext_prt_03_hd_q_7907931#1",
-    ]
+    assert sorted(missing_dim_ids) == []

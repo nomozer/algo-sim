@@ -139,6 +139,26 @@ export function photoReadErrorMessage(err: unknown): string | null {
   return err instanceof Error && err.message ? err.message : "Chưa xử lý được tệp đính kèm. Em thử lại nhé.";
 }
 
+/**
+ * Lời báo khi `/api/analyze` (đề ĐÃ là văn bản) lỗi hạ tầng. Run `real-world-end-to-end-reliability`: lỗi này từng
+ * dùng chung lời của luồng ảnh ("trích xuất ảnh … Em gõ đề vào ô nhập") dù người học vừa gõ đề — sai ngữ cảnh.
+ * `null` = huỷ chủ động. Không lộ mã/biến kỹ thuật.
+ */
+export function analyzeErrorMessage(err: unknown): string | null {
+  if ((err as { name?: string } | null)?.name === "AbortError") return null;
+  if (err instanceof AxoClientError) {
+    if (err.reasonCode === "LIVE_AI_DISABLED") {
+      return "Đề này cần bước phân tích bằng AI, nhưng bước đó đang tạm tắt trên máy chủ. Hệ chỉ tự giải được các dạng "
+        + "đề quen thuộc khi không có AI — em thử diễn đạt lại theo cách trong sách giáo khoa, hoặc quay lại sau.";
+    }
+    if (err.reasonCode === "MISSING_API_KEY" || (err.status === 503 && !err.reasonCode)) {
+      return "Máy chủ chưa sẵn sàng phân tích đề này lúc này. Em thử lại sau ít phút nhé.";
+    }
+    return err.message;
+  }
+  return err instanceof Error && err.message ? err.message : "Chưa phân tích được đề. Em thử lại nhé.";
+}
+
 export function clientFileProblem(file: PhotoFileInfo): string | null {
   if (file.size === 0) return "Tệp đính kèm đang rỗng (0 B).";
   if (file.size > PHOTO_MAX_BYTES) {

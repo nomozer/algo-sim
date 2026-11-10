@@ -26,6 +26,7 @@ from __future__ import annotations
 from collections import OrderedDict
 import copy
 from dataclasses import dataclass, field
+from fractions import Fraction
 import re
 import time
 from typing import Any
@@ -1845,6 +1846,40 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
         )
         mapped_fact = True
 
+    # 5b-3. Internal division by a part-to-part ratio: "(Gọi )?E (là điểm )?thuộc (cạnh )?SC sao cho SE = 3EC"
+    # The two parts must be [end, point] and [point, other end] of the stated segment; t = AP/AB = k/(k + 1).
+    for m_dv2 in re.finditer(
+        rf"(?P<full>(?:Gọi\s+|Điểm\s+)?(?<![\w'])(?P<pt>{_PT})\s+(?:là\s+(?:một\s+)?điểm\s+)?(?:thuộc|nằm\s+trên)\s+(?:cạnh\s+|đoạn(?:\s+thẳng)?\s+)?(?P<seg>{_PTS2})\s+(?:sao\s+cho|thỏa\s+mãn)\s+(?P<p1>{_PTS2})\s*=\s*(?P<k>\d+(?:\s*/\s*\d+)?)\s*(?P<p2>{_PTS2}))(?![\w'/])",
+        ctext_norm,
+        re.IGNORECASE | re.UNICODE,
+    ):
+        pt_v = m_dv2.group("pt")
+        seg_v = _split_pts(m_dv2.group("seg"))
+        p1_v, p2_v = _split_pts(m_dv2.group("p1")), _split_pts(m_dv2.group("p2"))
+        if not pt_v[0].isupper() or len(seg_v) != 2 or len(p1_v) != 2 or len(p2_v) != 2 or pt_v in seg_v:
+            continue
+        a_end = next((x for x in p1_v if x != pt_v), None)
+        b_end = next((x for x in p2_v if x != pt_v), None)
+        if pt_v not in p1_v or pt_v not in p2_v or {a_end, b_end} != set(seg_v):
+            continue
+        try:
+            k_v = Fraction(re.sub(r"\s+", "", m_dv2.group("k")))
+        except (ValueError, ZeroDivisionError):
+            continue
+        if k_v <= 0:
+            continue
+        t_v = k_v / (k_v + 1)
+        q_dv2 = _clean_quote(raw, ca + m_dv2.start("full"), ca + m_dv2.end("full"))
+        builder.premises.append(
+            {
+                "kind": "point_divides_segment",
+                "args": {"point": pt_v, "segment": [a_end, b_end], "ratio": f"{t_v.numerator}/{t_v.denominator}"},
+                "quote": q_dv2,
+                "solid_id": builder._primary_solid_id,
+            }
+        )
+        mapped_fact = True
+
     # 5c. Centroid: "(Gọi )?G là trọng tâm (của )?tam giác SBC"
     for m_cen in re.finditer(
         rf"(?P<full>(?:Gọi\s+)?(?<![\w'])(?P<pt>{_PT})\s+là\s+trọng\s+tâm(?:\s+của)?\s+tam\s+giác\s+(?P<poly>{_PTS3}))(?![\w'])",
@@ -2887,6 +2922,13 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
                 rf"(?:sao\s+cho|thỏa\s+mãn)\s+{_PTS2}\s*=\s*\d+\s*/\s*\d+\s*{_PTS2}(?![\w'])",
             ):
                 for m_eq in re.finditer(eq_pat, ctext_norm, re.IGNORECASE | re.UNICODE):
+                    eq_spans.append((m_eq.start(), m_eq.end()))
+            # Part-to-part ratio ("SE = 3EC") counts only when 5b-3 actually built its `point_divides_segment`.
+            if any(p["kind"] == "point_divides_segment" for p in clause_premises):
+                for m_eq in re.finditer(
+                    rf"(?:sao\s+cho|thỏa\s+mãn)\s+{_PTS2}\s*=\s*\d+(?:\s*/\s*\d+)?\s*{_PTS2}(?![\w'/])",
+                    ctext_norm, re.IGNORECASE | re.UNICODE,
+                ):
                     eq_spans.append((m_eq.start(), m_eq.end()))
             for eq_idx, ch in enumerate(ctext_norm):
                 if ch == "=" and not any(a <= eq_idx < b for a, b in eq_spans):

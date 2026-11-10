@@ -214,6 +214,7 @@ _NOT_REFUSAL = {
     'SCHEMA_TRANSLATION', 'BOUNDED_RULE_COMPOSITION', 'GENERALIZED_PRIMITIVE_COMPOSITION',
     'SOURCE_EXPLICIT_SEQUENCE', 'REGISTERED_DECOMPOSITION', 'DISCOVERED_FUNCTION_COMPOSITION', 'SEARCH_EXHAUSTED', 'MISSING_PRIMITIVE',
     'SOURCE_GROUNDING_PROOF', 'GEOMETRIC_RELATION_PROOF', 'KERNEL_EXECUTION_PROOF', 'RESULT_CERTIFICATE',
+    'HEIGHT_INVARIANT_ILLUSTRATIVE',  # served scene_configuration.kind, not a refusal
 }
 _ROUTE_D_SOURCES = ('app/simulation/geometry_functions/registry.py', 'app/simulation/geometry_functions/planner.py',
                     'app/simulation/geometry_functions/engine.py', 'app/simulation/geometry_functions/__init__.py',

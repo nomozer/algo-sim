@@ -422,11 +422,15 @@ def _key(c: LoiGoi) -> tuple:
 
 class _Dung:
     def __init__(self, calls: tuple[LoiGoi, ...], text: str, ky_hieu: str | None = None,
-                 _flip_apices: frozenset[str] = frozenset()) -> None:
+                 _flip_apices: frozenset[str] = frozenset(),
+                 _free_h2_sample: Fraction | None = None) -> None:
         self.calls = tuple(sorted(calls, key=_key))
         self.text = text
         self.ky_hieu = ky_hieu
         self._flip_apices = _flip_apices
+        #: Height-invariance probe (`dung_tu_loi_goi`): a placeholder h² used ONLY where the source fixes no height.
+        self._free_h2_sample = _free_h2_sample
+        self.free_height_for: set[str] = set()
         self.mirror_apices: set[str] = set()
         self.off_base_anchors: list[str] = []
         self.centroids: dict[str, tuple[str, ...]] = {}
@@ -1112,6 +1116,9 @@ class _Dung:
                         return proj2 * sin2 / cos2, {c_ang.id}
         if self._co_the_hoan_h2():
             return None, set()
+        if self._free_h2_sample is not None:
+            self.free_height_for.add(dinh)
+            return self._free_h2_sample, set()
         raise TuChoi("MISSING_DIMENSION", f"chưa có dữ kiện cho chiều cao của {dinh}")
 
     def _dat_ngoai_day(self, ten: str, chan: str | tuple, h2: Fraction | None, luat: str, calls: set[str]) -> None:
@@ -1146,7 +1153,12 @@ class _Dung:
             if not self._mot_buoc():
                 break
         if self._deferred_h2:
-            raise TuChoi("MISSING_DIMENSION", "chưa có dữ kiện xác định chiều cao", tuple(sorted(self._deferred_h2_calls)))
+            if self._free_h2_sample is None or self.h2 is not None:
+                raise TuChoi("MISSING_DIMENSION", "chưa có dữ kiện xác định chiều cao", tuple(sorted(self._deferred_h2_calls)))
+            # No stated constraint fixed the deferred height: probe it as a free parameter (`dung_tu_loi_goi`).
+            self.h2 = self._free_h2_sample
+            self._deferred_h2 = False
+            self.free_height_for |= set(self.off_base_anchors) or {"<deferred>"}
         can = set()
         for k in self.khoi.values():
             can |= set(k.base) | set(k.top) | ({k.apex} if k.apex else set())
@@ -1764,6 +1776,9 @@ class _Dung:
                 return l[0][0], set(l[0][1])
         if self._co_the_hoan_h2():
             return None, set()
+        if self._free_h2_sample is not None:
+            self.free_height_for.add(k.name)
+            return self._free_h2_sample, set()
         raise TuChoi("MISSING_DIMENSION", f"lăng trụ {k.name} chưa có chiều cao hay cạnh bên", (k.call,))
 
     # ── kiểm lại MỌI dữ kiện trên bố cục ────────────────────────────────────
@@ -5055,6 +5070,77 @@ def _first_differing_goal_calls(res_a: KetQuaTuyen, res_b: KetQuaTuyen) -> tuple
     return ()
 
 
+#: Goals whose squared value is a ratio of Gram determinants of ≤ 3 vertex-difference vectors (degree ≤ 3 in h²).
+_HOI_BAT_BIEN_CHIEU_CAO = frozenset({
+    "ask_length", "ask_distance_point_plane", "ask_distance_lines",
+    "ask_distance_line_plane", "ask_distance_planes", "ask_angle_lines", "ask_angle_line_plane",
+})
+#: Distinct placeholder h² samples. A goal value g(s) = N(s)/D(s) with deg N, deg D ≤ 3 that is equal at ≥ 4 distinct
+#: s is constant (N − g·D has degree ≤ 3 and ≥ 4 roots ⇒ ≡ 0); five samples keep a margin.
+_MAU_H2_BAT_BIEN = tuple(Fraction(k) for k in (1, 2, 3, 5, 7))
+
+
+def _thu_chieu_cao_bat_bien(problem_text: str, plan: Any, auxiliary: tuple[dict, ...],
+                            read_quotes: tuple[str, ...]) -> KetQuaTuyen | None:
+    """`MISSING_DIMENSION` because ONE height is unstated, yet every asked quantity may not depend on it (the distance
+    from C to (ABB'A') in a right prism, from B to (SAC) when SA ⊥ (ABCD)). The engine's chart keeps every vertex at a
+    fixed coordinate and carries the height only in the metric G = G₂ ⊕ (h²), so each allowed goal's squared value
+    is N(h²)/D(h²) with degrees ≤ 3 (Gram determinants of ≤ 3 vertex differences). Equality at five distinct h²
+    therefore PROVES invariance. Any other shape (constructed operands, volumes/areas, a second height anchor, a fact
+    that fails at some height) ⇒ None: the original refusal stands. The served scene is ILLUSTRATIVE, labelled so."""
+    try:
+        calls = doc_ke_hoach(plan)
+    except TuChoi:
+        return None
+    hoi = [c for c in calls if c.fn.startswith("ask_")]
+    if not hoi or any(c.fn not in _HOI_BAT_BIEN_CHIEU_CAO for c in hoi):
+        return None
+    dinh: set[str] = set()
+    for c in calls:
+        if c.fn in ("pyramid", "regular_pyramid", "prism"):
+            a = c.args
+            dinh |= set(getattr(a, "base", ()) or ()) | set(getattr(a, "top", ()) or ())
+            if getattr(a, "apex", None):
+                dinh.add(a.apex)
+    if not dinh or any(not _labels(c) <= dinh for c in hoi):
+        return None
+    ket: list[KetQuaTuyen] = []
+    tham_so: set[str] = set()
+    for s in _MAU_H2_BAT_BIEN:
+        r, anchors, _ = _dung_mot_nhanh(problem_text, plan, auxiliary, read_quotes, _free_h2_sample=s)
+        free = (r.details or {}).get("free_height_for") if r.status == "SERVED" else None
+        if not free or len(anchors) > 1:
+            return None
+        tham_so |= set(free)
+        ket.append(r)
+    sig = _goal_signature(ket[0])
+    if any(_goal_signature(r) != sig for r in ket[1:]):
+        return None
+    res = ket[0]
+    res.details = {
+        "scene_configuration": {
+            "unique": False,
+            "kind": "HEIGHT_INVARIANT_ILLUSTRATIVE",
+            "free_parameter": "height",
+            "free_for": sorted(tham_so),
+            "illustrative_h2": str(_MAU_H2_BAT_BIEN[0]),
+            "invariance_certificate": {
+                "method": "rational_function_identity_in_h2",
+                "max_degree": 3,
+                "samples_h2": [str(x) for x in _MAU_H2_BAT_BIEN],
+                "goal_values": {gid: v.get("coef") for gid, v in sorted((res.answer_exact or {}).items())},
+                "goal_fns": sorted({c.fn for c in hoi}),
+            },
+        }
+    }
+    res.trace = [*res.trace, {"step": "certify_height_invariance", "rule": "rational_function_identity_in_h2",
+                              "object": sorted(tham_so), "samples_h2": [str(x) for x in _MAU_H2_BAT_BIEN],
+                              "provenance": "DERIVED",
+                              "note": "đề không cho chiều cao; mọi đại lượng được hỏi không phụ thuộc chiều cao "
+                                      "(đồng nhất thức hàm hữu tỉ bậc ≤ 3 theo h², kiểm tại 5 giá trị) — hình chỉ minh họa"}]
+    return res
+
+
 def _dung_mot_nhanh(
     problem_text: str,
     plan: Any,
@@ -5062,6 +5148,7 @@ def _dung_mot_nhanh(
     read_quotes: tuple[str, ...] = (),
     *,
     _flip_apices: frozenset[str] = frozenset(),
+    _free_h2_sample: Fraction | None = None,
 ) -> tuple[KetQuaTuyen, tuple[str, ...], list[dict]]:
     from app.simulation.semantic_program.formation import hoan_thien_dung_hinh
     from app.simulation.semantic_program.interpreter import SemanticProgramInterpreter
@@ -5084,7 +5171,7 @@ def _dung_mot_nhanh(
         if any(c.args.circumscribes is None and c.args.inscribed_in is None for c in cong_calls):
             raise TuChoi("CURVED_RELATION_UNSUPPORTED", "chưa hỗ trợ trộn khối tròn xoay độc lập với khối đa diện", tuple(c.id for c in cong_calls))
         ky_hieu = _don_vi(calls)
-        dung = _Dung(calls, problem_text, ky_hieu, _flip_apices=_flip_apices)
+        dung = _Dung(calls, problem_text, ky_hieu, _flip_apices=_flip_apices, _free_h2_sample=_free_h2_sample)
         if ky_hieu:
             dung.trace.append({"step": "choose_unit", "object": ky_hieu, "rule": "symbolic_length_unit",
                                "calls": sorted(c.id for c in calls for f in c.spec.value_fields if getattr(c.args, f)),
@@ -5385,6 +5472,8 @@ def _dung_mot_nhanh(
                           answer_exact=chinh_xac, length_unit=ky_hieu, checker=_kiem_tren_hinh(dung), declared_topology=to_po,
                           calls=[{"id": c.id, "fn": c.fn, "args": c.args.model_dump(), "quotes": list(c.quotes)}
                                  for c in calls])
+        if dung.free_height_for:
+            res.details = {"free_height_for": sorted(dung.free_height_for), "free_h2_sample": str(_free_h2_sample)}
         return res, tuple(dung.off_base_anchors), dung.trace
     except TuChoi as e:
         vet = _gan_dieu_kien_vet(dung.trace, kernel_checked=False) if dung else []
@@ -5402,6 +5491,11 @@ def dung_tu_loi_goi(problem_text: str, plan: Any, auxiliary: tuple[dict, ...] = 
     res0, anchors0, trace0 = _dung_mot_nhanh(
         problem_text, plan, auxiliary, read_quotes, _flip_apices=_flip_apices
     )
+    if (res0.status == "REFUSED" and res0.code == "MISSING_DIMENSION" and not _exploring_mirrors
+            and not _flip_apices):
+        inv = _thu_chieu_cao_bat_bien(problem_text, plan, auxiliary, read_quotes)
+        if inv is not None:
+            return inv
     if _exploring_mirrors or len(anchors0) < 2:
         return res0
     if res0.status != "SERVED" and res0.code not in _MIRROR_RETRY_CODES:

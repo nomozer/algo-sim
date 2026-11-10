@@ -104,6 +104,9 @@ def _phong_bi(r: KetQuaTuyen) -> dict[str, Any]:
         "length_unit": r.length_unit,
         "planner": {k: (r.planner or {}).get(k) for k in ("version", "bridge")},
         "construction_trace": deepcopy(r.trace) if served else [],
+        # Present only when the figure is NOT fixed by the source (a height-invariant answer): the scene is illustrative.
+        **({"scene_configuration": deepcopy(cfg)}
+           if served and (cfg := (r.details or {}).get("scene_configuration")) else {}),
     }
 
 
