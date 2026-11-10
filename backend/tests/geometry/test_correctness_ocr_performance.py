@@ -137,17 +137,39 @@ def test_04_source_gate_tampering_rejected_while_clean_text_solves() -> None:
     assert rd_tampered["refusal"]["code"] in {"QUOTE_NOT_IN_SOURCE", "UNGROUNDED_VALUE"}
 
 
-# 5. Parser completeness & single-condition mutation
+# 5. Parser completeness & single-condition mutation (+ promoted Gate 2 base families)
+@pytest.mark.parametrize(
+    ("promoted_text", "expected_answer"),
+    [
+        (
+            "Cho hình chóp S.ABCD có đáy ABCD là hình thoi cạnh 4, góc BAD = 60°, SA vuông góc với mặt phẳng (ABCD) và SA = 3. Tính thể tích khối chóp S.ABCD.",
+            "8√3",
+        ),
+        (
+            "Cho hình chóp S.ABC có đáy ABC là tam giác cân tại A, AB = 5, BC = 6, SA vuông góc với mặt phẳng (ABC), SA = 4. Tính thể tích khối chóp S.ABC.",
+            "16",
+        ),
+    ],
+)
+def test_05a_formerly_unsupported_rhombus_and_isosceles_bases_now_solve_exact(
+    promoted_text: str, expected_answer: str
+) -> None:
+    out = route_text_input(promoted_text, allow_live_ai=False)
+    assert out.status == "SERVED"
+    assert out.telemetry.total_provider_calls == 0
+    assert (out.response.get("route_d") or {}).get("answers") == {"q1": expected_answer}
+
+
 @pytest.mark.parametrize(
     ("mutated_text", "expected_reason"),
     [
         (
-            "Cho hình chóp S.ABCD có đáy ABCD là hình thoi cạnh 4, góc BAD = 60°, SA vuông góc với mặt phẳng (ABCD) và SA = 3. Tính thể tích khối chóp S.ABCD.",
-            "UNPARSED_FACT_CANDIDATE",
+            "Cho hình chóp S.ABCDE có đáy ABCDE là ngũ giác đều cạnh 4, SA vuông góc với mặt phẳng (ABCDE) và SA = 3. Tính thể tích khối chóp S.ABCDE.",
+            "SOURCE_PREMISE_UNREAD",
         ),
         (
-            "Cho hình chóp S.ABC có đáy ABC là tam giác cân tại A, AB = 5, BC = 6, SA vuông góc với mặt phẳng (ABC), SA = 4. Tính thể tích khối chóp S.ABC.",
-            "UNPARSED_FACT_CANDIDATE",
+            "Cho hình chóp S.ABCD có đáy ABCD là tứ giác nội tiếp đường tròn bán kính 5, SA vuông góc với mặt phẳng (ABCD), SA = 4. Tính thể tích khối chóp S.ABCD.",
+            "SOURCE_PREMISE_UNREAD",
         ),
         (
             "Cho hình lăng trụ đứng ABC.A'B'C' có đáy ABC là tam giác vuông tại A, AB = 3,5, AC = 4, AA' = 5. Tính thể tích khối lăng trụ ABC.A'B'C'.",

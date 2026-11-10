@@ -609,10 +609,19 @@ _MATH_TOKEN_GATE_RE = re.compile(
 )
 
 _OCR_CORRUPTION_ARTIFACT_RE = re.compile(
-    r"(?:Œ|”|“|\b\d+[Vv]\d+\b|\b[0O][Oo]\b|\b1[lI]\b|\.\.\.+|[A-Z]{3,4}\.[A-Z]'[A-Z]'[A-Z](?!'[A-Z]?)\b|[A-Z]{3,6}\.(?=[A-Z0-9']*')(?:[A-Z]'?)*[A-Z]{2}[A-Z0-9']*|[A-Z][0-9']*°[A-Z0-9']*)"
+    r"(?:Œ|”|“|(?:(?:\b[0-9a-z]+[Vv]\d+\b)|(?:=\s*[Vv]\d+\b))"
+    r"|\b[0O][Oo]\b|\b1[lI]\b|\.\.\.+"
+    r"|\b[A-Z],[A-Z]{3,6}\b|\b[A-Z]{3,6}-[A-Z]{3,6}\b"
+    r"|\b\d{2,}[A-Z]{1,5}\b|\b\d+[A-Z]{2,5}\b"
+    r"|\b[A-Z]\.[A-Z]*[08][A-Z]+\b|\([A-Z]*[08][A-Z]+\)"
+    r"|\b\d+(?:/\d+){2,}\b|\n\s*[-─—–]{2,}\s*\n"
+    r"|[A-Z]{3,4}\.[A-Z]'[A-Z]'[A-Z](?!'[A-Z]?)\b"
+    r"|[A-Z]{3,6}\.(?=[A-Z0-9']*')(?:[A-Z]'?)*[A-Z]{2}[A-Z0-9']*"
+    r"|[A-Z][0-9']*°[A-Z0-9']*)"
 )
 _DIAGRAM_DEPENDENCY_RE = re.compile(
-    r"(?:hình\s+vẽ\s+bên|như\s+hình\s+vẽ|trong\s+hình\s+vẽ|ở\s+hình\s+bên)",
+    r"(?:hình\s+vẽ\s+bên|như\s+hình\s+(?:vẽ|bên)|trong\s+hình\s+vẽ|ở\s+hình\s+bên"
+    r"|tham\s+khảo\s+hình(?:\s+vẽ|\s+bên)?|xem\s+hình(?:\s+vẽ|\s+bên)?|ghi\s+trên\s+hình)",
     re.IGNORECASE,
 )
 
@@ -679,14 +688,16 @@ def reconcile_dual_ocr_texts(
     primary_vi_ocr_text: str,
     secondary_math_ocr_text: str | None,
     *,
+    has_diagram: bool = False,
     is_degraded_image: bool = False,
+    is_handwritten: bool = False,
 ) -> dict[str, Any]:
     """Deterministically reconcile `primary_vi_ocr_text` (e.g. Tesseract `vie+eng` with full Vietnamese diacritics)
     and `secondary_math_ocr_text` (e.g. RapidOCR PP-OCRv6 with exact ASCII/prime math tokens) without any ground truth.
 
     Safety Rules (Zero-AI Gate):
     1. Never uses ground truth or problem IDs (`used_ground_truth = False`).
-    2. Immediately refuses if `is_degraded_image=True` or `secondary_math_ocr_text` is missing/empty.
+    2. Immediately refuses if `is_degraded_image=True`, `has_diagram=True`, `is_handwritten=True`, or `secondary_math_ocr_text` is missing/empty.
     3. Requires exact line-count and problem-header (`Câu N` / `Bài N`) alignment and at most 1 problem header.
     4. Requires 100% agreement between both engines on all numeric assignments (`=`), planes, radicals, fractions,
        angles, decimals, negatives, and subscript labels.
@@ -694,11 +705,20 @@ def reconcile_dual_ocr_texts(
        `ABCD.A'B°C'D'`) ONLY when `secondary_math_ocr_text` contains the exact canonical `<BASE>.<PRIMED_BASE>` token
        (`ABCD.A'B'C'D'`) matching `<BASE>`.
     """
-    if is_degraded_image:
+    if is_degraded_image or is_handwritten or has_diagram:
+        reason = (
+            "DEGRADED_IMAGE_REQUIRES_VISION_FALLBACK"
+            if is_degraded_image
+            else (
+                "HANDWRITTEN_IMAGE_REQUIRES_VISION_FALLBACK"
+                if is_handwritten
+                else "DIAGRAM_CONTEXT_REQUIRES_VISION_FALLBACK"
+            )
+        )
         return {
             "reconciled": False,
             "reconciled_text": None,
-            "reason_code": "DEGRADED_IMAGE_REQUIRES_VISION_FALLBACK",
+            "reason_code": reason,
             "repairs": [],
             "used_ground_truth": False,
         }
@@ -780,7 +800,9 @@ def reconcile_dual_ocr_texts(
     fid = verify_ocr_input_fidelity(
         reconciled_text,
         secondary_ocr_text=s_raw,
+        has_diagram=has_diagram,
         is_degraded_image=is_degraded_image,
+        is_handwritten=is_handwritten,
     )
     return {
         "reconciled": bool(fid["fidelity_passed"]),
@@ -798,6 +820,7 @@ def verify_ocr_input_fidelity(
     secondary_ocr_text: str | None = None,
     has_diagram: bool = False,
     is_degraded_image: bool = False,
+    is_handwritten: bool = False,
 ) -> dict[str, Any]:
     """Evaluate the 6-criteria Input Fidelity Gate (`Phase 2.6`) before trusting Local OCR without Gemini Vision.
 
@@ -840,11 +863,18 @@ def verify_ocr_input_fidelity(
     has_non_positive_length = bool(tokens["negatives"]) or any(
         v in ("0", "0.0", "-0") or v.startswith("-") for v in tokens["assignments"].values()
     )
+    valid_angle_degrees = all(
+        0 < int(m_deg.group(1)) < 180
+        for ang in tokens["angles_degrees"]
+        for m_deg in [re.match(r"^(\d+)\s*°$", ang)]
+        if m_deg
+    )
     c2_dimension_fidelity = bool(
         norm
         and not has_ocr_artifacts
         and not has_comma_decimal
         and not has_non_positive_length
+        and valid_angle_degrees
         and all(
             re.match(
                 r"^(?:[1-9]\d*(?:√\d+)?(?:/\d+)?|[1-9]?\d*√\d+a(?:/\d+)?|√\d+a?(?:/\d+)?|[1-9]?\d*\s*a(?:√\d+)?(?:/\d+)?)$",
@@ -908,7 +938,11 @@ def verify_ocr_input_fidelity(
             and p_sym_rel == s_sym_rel
         )
     c6_diagram_and_engine = bool(
-        not has_diag_phrase and not has_diagram and not is_degraded_image and cross_agree
+        not has_diag_phrase
+        and not has_diagram
+        and not is_degraded_image
+        and not is_handwritten
+        and cross_agree
     )
 
     checks = {
@@ -933,9 +967,13 @@ def verify_ocr_input_fidelity(
             "DEGRADED_IMAGE_REQUIRES_VISION_FALLBACK"
             if is_degraded_image
             else (
-                local_res.reason_code
-                if local_res and local_res.reason_code
-                else "OCR_FIDELITY_GATE_FAILED"
+                "HANDWRITTEN_IMAGE_REQUIRES_VISION_FALLBACK"
+                if is_handwritten
+                else (
+                    local_res.reason_code
+                    if local_res and local_res.reason_code
+                    else "OCR_FIDELITY_GATE_FAILED"
+                )
             )
         ),
         "structured_tokens": tokens,
@@ -1096,6 +1134,7 @@ def route_image_or_prepare_outcome(
     allow_verified_local_ocr: bool = False,
     has_diagram: bool = False,
     is_degraded_image: bool = False,
+    is_handwritten: bool = False,
     user_confirmed_conflict: bool = False,
 ) -> AdaptiveRouteOutcome:
     """Route the output of `prepare_unified_input` (Image / Scanned PDF / PDF Text / DOCX) into `Route T1` (`I1`/`I2` flow).
@@ -1126,6 +1165,15 @@ def route_image_or_prepare_outcome(
         else ("pdf_scan" if source_kind == "pdf" else ("docx" if source_kind == "docx" else "image"))
     )
 
+    eff_has_diagram = bool(
+        has_diagram
+        or prepare_outcome_dict.get("has_figure")
+        or any(
+            isinstance(c, dict) and c.get("has_figure")
+            for c in (prepare_outcome_dict.get("candidates") or ())
+        )
+    )
+
     # Case A: Check if Local OCR passes the 6-criteria Input Fidelity Gate (`0` Vision calls)
     fidelity_report: dict[str, Any] | None = None
     effective_ocr_text = local_ocr_text
@@ -1133,14 +1181,23 @@ def route_image_or_prepare_outcome(
         fidelity_report = verify_ocr_input_fidelity(
             local_ocr_text,
             secondary_ocr_text=secondary_ocr_text,
-            has_diagram=has_diagram,
+            has_diagram=eff_has_diagram,
             is_degraded_image=is_degraded_image,
+            is_handwritten=is_handwritten,
         )
-        if not fidelity_report["fidelity_passed"] and secondary_ocr_text is not None and not is_degraded_image:
+        if (
+            not fidelity_report["fidelity_passed"]
+            and secondary_ocr_text is not None
+            and not is_degraded_image
+            and not eff_has_diagram
+            and not is_handwritten
+        ):
             reconcile_res = reconcile_dual_ocr_texts(
                 local_ocr_text,
                 secondary_ocr_text,
+                has_diagram=eff_has_diagram,
                 is_degraded_image=is_degraded_image,
+                is_handwritten=is_handwritten,
             )
             if reconcile_res["reconciled"] and reconcile_res["reconciled_text"]:
                 effective_ocr_text = reconcile_res["reconciled_text"]
@@ -1245,7 +1302,9 @@ def route_image_or_prepare_outcome(
         # Note: if local OCR failed fidelity due to obvious OCR corruption artifacts (`2V3`, `Œ`), Vision is authoritative;
         # if local OCR had clean syntax on a competing numeric value (`SA=3` vs `SA=8`) or plane (`(ABC)` vs `(A'BC)`),
         # require user confirmation!
-        ocr_has_corrupt_artifact = bool(_OCR_CORRUPTION_ARTIFACT_RE.search(local_ocr_text))
+        ocr_has_corrupt_artifact = bool(
+            is_handwritten or _OCR_CORRUPTION_ARTIFACT_RE.search(local_ocr_text)
+        )
         if conflict_report["has_conflict"] and not ocr_has_corrupt_artifact:
             tel_c = AdaptiveRouteTelemetry(
                 router_version=ADAPTIVE_INPUT_ROUTER_VERSION,
@@ -1308,6 +1367,9 @@ def evaluate_local_ocr_gate(
     secondary_ocr_text: str | None = None,
     *,
     reference_math_tokens: Sequence[str] | None = None,
+    has_diagram: bool = False,
+    is_degraded_image: bool = False,
+    is_handwritten: bool = False,
 ) -> dict[str, Any]:
     """Evaluate the `I2` Local OCR acceptance gate (`LOCAL_OCR_DIAGNOSTIC_ONLY` by default).
 
@@ -1331,6 +1393,9 @@ def evaluate_local_ocr_gate(
     fidelity = verify_ocr_input_fidelity(
         primary_ocr_text,
         secondary_ocr_text=secondary_ocr_text,
+        has_diagram=has_diagram,
+        is_degraded_image=is_degraded_image,
+        is_handwritten=is_handwritten,
     )
     parse_complete = bool(fidelity["fidelity_passed"])
 

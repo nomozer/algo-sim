@@ -1376,16 +1376,13 @@ def _gia_tri_la_phep_bang(de: str, vts: list[tuple[int, int]], seg: list[str]) -
         for a, b, phan in _tu_nhan(de[dau:cuoi]):
             if not _la_doan(phan, seg):
                 continue
-            so = next((m for m in _SO.finditer(de, dau + b, cuoi) if _doc(m) is not None), None)
-            if not so or not _DUOI_BANG.match(de[so.end():]):
-                continue
-            mid = de[dau + b:so.start()]
-            if _NOI_BANG.fullmatch(mid):
-                return True
             if re.search(r"(?<!\w)(?:đường|chiều)\s+cao\s*$", de[:dau + a], re.IGNORECASE):
-                m_tri = re.match(r"\s+của\s+(?:tam\s+giác|[Δ∆△])\s*(?-i:[A-Z][0-9]*'?){3}(?![\w'])", mid, re.IGNORECASE)
-                if m_tri and _NOI_BANG.fullmatch(mid[m_tri.end():]):
-                    return True
+                m_tri = re.match(r"\s+của\s+(?:tam\s+giác|[Δ∆△])\s*(?-i:[A-Z][0-9]*'?){3}(?![\w'])", de[dau + b:cuoi], re.IGNORECASE)
+                if m_tri:
+                    b += m_tri.end()
+            so = next((m for m in _SO.finditer(de, dau + b, cuoi) if _doc(m) is not None), None)
+            if so and _NOI_BANG.fullmatch(de[dau + b:so.start()]) and _DUOI_BANG.match(de[so.end():]):
+                return True
     return False
 
 
