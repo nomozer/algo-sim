@@ -89,9 +89,20 @@ MAX_RESULT_FEET = 16
 #: Point kinds the frozen `flat` provider surface offers (485d3834…). The planner accepts more (`TypedFact.point_kind`).
 FLAT_POINT_KINDS = ("midpoint", "centroid", "intersect_line_line", "intersect_line_plane")
 FLAT_QUANTITIES = ("volume", "area", "length", "distance", "angle")
+FLAT_FACT_KINDS = ("solid", "polygon_shape", "right_angle", "length", "equal_lengths", "perpendicular", "altitude",
+                   "projection", "point_def", "section", "intersection_line", "question", "unsupported")
 
-FactKind = Literal["solid", "polygon_shape", "right_angle", "length", "equal_lengths", "perpendicular", "altitude",
-                   "projection", "point_def", "section", "intersection_line", "question", "unsupported"]
+FactKind = Annotated[
+    Literal[
+        *FLAT_FACT_KINDS,
+        "line_plane_angle",
+        "plane_plane_angle",
+        "dihedral_angle",
+        "line_line_angle",
+        "vertex_angle",
+    ],
+    WithJsonSchema({"enum": list(FLAT_FACT_KINDS), "type": "string"}),
+]
 
 
 class TypedFact(BaseModel):
@@ -157,11 +168,13 @@ class TypedFact(BaseModel):
     curved_part: SkipJsonSchema[dict[str, Any] | None] = None
     # Internal only (Phase 1 dynamic composition): nested unnamed described point operand tree written by the `/2` bridge.
     point_tree: SkipJsonSchema[dict[str, Any] | None] = None
+    # Internal only (`unified-angle-geometry-verified-image-to-3d`): optional angle unit ("deg" | "sin" | "cos" | "tan" | "cot").
+    angle_unit: SkipJsonSchema[Literal["deg", "sin", "cos", "tan", "cot"] | None] = None
 
 
 #: TypedFact fields only the deterministic bridge writes; a provider response carrying one is refused.
 INTERNAL_FACT_FIELDS = ("cut_edges", "cut_points", "plane_ref", "solid_refs", "derive_cuts", "boundary_edges", "curved",
-                        "curved_part", "plane_constraints", "point_tree")
+                        "curved_part", "plane_constraints", "point_tree", "angle_unit")
 
 
 @dataclass
@@ -246,6 +259,9 @@ _CAN = {"solid": ("solid", "solid_type"), "polygon_shape": ("points", "shape"), 
         "length": ("value", "measure"), "equal_lengths": ("points_a", "points_b"), "perpendicular": ("points_a", "points_b"),
         "altitude": ("points",), "projection": ("point", "points", "at"), "point_def": ("point", "point_kind", "points"),
         "section": ("solid", "points"), "intersection_line": ("points_a", "points_b"),
+        "line_plane_angle": ("points_a", "points_b", "value"), "plane_plane_angle": ("points_a", "points_b", "value"),
+        "dihedral_angle": ("point", "points", "at", "value"), "line_line_angle": ("points_a", "points_b", "value"),
+        "vertex_angle": ("at", "points", "value"),
         "question": ("quantity",), "unsupported": ("reason",)}
 _DA_GIAC_DEU = {"equilateral_triangle": 3, "square": 4, "regular_hexagon": 6, "regular_polygon": None}
 
@@ -674,7 +690,7 @@ def lap_ke_hoach(raw: Any, problem_text: str = "") -> KeHoach:
                 c['fn'] + json.dumps(c['args'],sort_keys=True,ensure_ascii=False))
         if khoa not in gon:
             gon[khoa] = c
-        elif c["fn"] not in ("segment_length", "height"):
+        elif c["fn"] not in ("segment_length", "height", "line_plane_angle", "plane_plane_angle", "dihedral_angle", "line_line_angle", "vertex_angle"):
             gon[khoa]["source"]["quotes"] = list(dict.fromkeys(gon[khoa]["source"]["quotes"] + c["source"]["quotes"]))
     k.calls = list(gon.values())
     for c in k.calls:
@@ -746,7 +762,7 @@ def lap_ke_hoach(raw: Any, problem_text: str = "") -> KeHoach:
 _NON_POINT_ARG_KEYS = frozenset({
     "line_ref", "solid", "numerator_solid", "denominator_solid",
     "original_solid", "subtracted_solids", "value", "side", "reason", "right",
-    "circumscribes", "inscribed_in", "kind", "radius", "height",
+    "circumscribes", "inscribed_in", "kind", "radius", "height", "unit", "ratio",
 })
 
 
@@ -982,7 +998,7 @@ def _sap_xep_phu_thuoc_loi_goi(k: KeHoach) -> None:
         elif cid in apex_foot_calls:
             tier_of[cid] = 2
         elif (
-            fn in ("regular_polygon", "rectangle", "right_angle", "segment_length", "equal_length")
+            fn in ("regular_polygon", "rectangle", "right_angle", "vertex_angle", "segment_length", "equal_length")
             and pts
             and pts <= base_vertices
             and not direct_deps[cid]
@@ -995,6 +1011,7 @@ def _sap_xep_phu_thuoc_loi_goi(k: KeHoach) -> None:
                 "regular_polygon",
                 "rectangle",
                 "right_angle",
+                "vertex_angle",
                 "perpendicular_line_plane",
                 "altitude",
                 "orthogonal_projection",
@@ -1005,6 +1022,10 @@ def _sap_xep_phu_thuoc_loi_goi(k: KeHoach) -> None:
                 "equal_length",
                 "parallel_lines",
                 "parallel_planes",
+                "line_plane_angle",
+                "plane_plane_angle",
+                "dihedral_angle",
+                "line_line_angle",
             )
             and pts <= (solid_vertices | apex_foot_points)
             and not direct_deps[cid]
@@ -1161,6 +1182,36 @@ def _anh_xa(f: TypedFact, k: KeHoach, ten: dict, deu: dict, khoi_cua, phat) -> d
         return phat(f.id, "section", {"solid": khoi_cua(f.solid, f).ten, "plane": f.points}, q, "section(solid, plane)")
     if f.kind == "intersection_line":
         return phat(f.id, "intersection_line", {"plane1": f.points_a, "plane2": f.points_b}, q, "intersection_line(plane, plane)")
+    if f.kind == "line_plane_angle":
+        return phat(
+            f.id, "line_plane_angle",
+            {"line": f.points_a, "plane": f.points_b, "value": f.value, **({"unit": f.angle_unit} if f.angle_unit else {})},
+            q, "line_plane_angle",
+        )
+    if f.kind == "plane_plane_angle":
+        return phat(
+            f.id, "plane_plane_angle",
+            {"plane1": f.points_a, "plane2": f.points_b, "value": f.value, **({"unit": f.angle_unit} if f.angle_unit else {})},
+            q, "plane_plane_angle",
+        )
+    if f.kind == "dihedral_angle":
+        return phat(
+            f.id, "dihedral_angle",
+            {"point_a": f.point, "edge": f.points, "point_b": f.at, "value": f.value, **({"unit": f.angle_unit} if f.angle_unit else {})},
+            q, "dihedral_angle",
+        )
+    if f.kind == "line_line_angle":
+        return phat(
+            f.id, "line_line_angle",
+            {"line1": f.points_a, "line2": f.points_b, "value": f.value, **({"unit": f.angle_unit} if f.angle_unit else {})},
+            q, "line_line_angle",
+        )
+    if f.kind == "vertex_angle":
+        return phat(
+            f.id, "vertex_angle",
+            {"vertex": f.at, "rays": f.points, "value": f.value, **({"unit": f.angle_unit} if f.angle_unit else {})},
+            q, "vertex_angle",
+        )
     if f.kind == "question":
         return _cau_hoi(f, q, k, khoi_cua, phat)
     raise TuChoi("UNSUPPORTED_CAPABILITY", f"{f.id}: loại dữ kiện {f.kind} chưa có luật", (f.id,))

@@ -490,6 +490,7 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
     mapped_fact = False
     mapped_goal = False
     clause_solid_not_span: tuple[int, int] | None = None
+    angle_spans: list[tuple[int, int]] = []
     pre_premises_len = len(builder.premises)
     pre_sections_len = len(builder.derived_sections)
     pre_goals_len = len(builder.math_goals)
@@ -686,6 +687,10 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
         builder._primary_solid_id = "s1"
         builder._primary_solid_type = "pyramid"
         builder._primary_notation = n1
+        if not builder.simulation_goals:
+            builder.simulation_goals.append(
+                {"goal_id": "sg1", "kind": "construct_object", "target_solid_id": "s1", "quote": q_full}
+            )
         mapped_fact = True
 
     # 1b. Regular pyramid: "(Cho )?(Hình|Khối) chóp (tứ giác|tam giác|lục giác)? đều S.ABCD có cạnh đáy bằng 6..."
@@ -1325,6 +1330,190 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
             }
         )
         mapped_fact = True
+
+    # 3e. Exact Angle Premises (`line_plane_angle`, `plane_plane_angle`, `dihedral_angle`, `line_line_angle`, `vertex_angle`)
+    m_ambig_dihedral = re.search(
+        rf"(?P<full>(?:Biết(?:\s+rằng)?\s+)?(?:số\s+đo\s+)?góc\s+nhị\s+diện\s+(?:theo\s+)?cạnh\s+(?P<edge>{_PTS2})\s*(?:bằng|là|=)\s*(?P<aval>\d+(?:/\d+)?)\s*(?:°|độ\b))",
+        ctext_norm,
+        re.IGNORECASE | re.UNICODE,
+    )
+    if m_ambig_dihedral:
+        q_ad = _clean_quote(raw, ca + m_ambig_dihedral.start("full"), ca + m_ambig_dihedral.end("full"))
+        builder.unresolved.append(
+            {
+                "unresolved_id": f"u{len(builder.unresolved) + 1}",
+                "kind": "ambiguous",
+                "quote": q_ad,
+                "missing_roles": ["target_line_or_plane"],
+                "candidate_relations": ["angle"],
+            }
+        )
+        clause.classification = CLAUSE_MAPPED_FACT
+        return
+
+    for m_dih in re.finditer(
+        rf"(?P<full>(?:Biết(?:\s+rằng)?\s+)?(?:số\s+đo\s+)?góc\s+nhị\s+diện\s+\[\s*(?P<pa>{_PT})\s*,\s*(?P<edge>{_PTS2})\s*,\s*(?P<pb>{_PT})\s*\]\s*(?:bằng|là|=)\s*(?P<aval>\d+(?:/\d+)?)\s*(?:°|độ\b))",
+        ctext_norm,
+        re.IGNORECASE | re.UNICODE,
+    ):
+        q_dih = _clean_quote(raw, ca + m_dih.start("full"), ca + m_dih.end("full"))
+        builder.premises.append(
+            {
+                "kind": "dihedral_angle",
+                "args": {
+                    "point_a": m_dih.group("pa"),
+                    "edge": _split_pts(m_dih.group("edge")),
+                    "point_b": m_dih.group("pb"),
+                    "value": m_dih.group("aval"),
+                    "unit": "deg",
+                },
+                "quote": q_dih,
+                "solid_id": builder._primary_solid_id,
+            }
+        )
+        angle_spans.append((m_dih.start("full"), m_dih.end("full")))
+        mapped_fact = True
+
+    matched_plural_lpa = False
+    for m_pl_lpa in re.finditer(
+        rf"(?P<full>(?:Biết(?:\s+rằng)?\s+)?các\s+cạnh\s+bên(?:\s+(?P<elist>{_PTS2}(?:\s*(?:,\s*|\s+và\s+){_PTS2})+))?\s+cùng\s+(?:tạo|hợp)\s+với\s+(?:(?:mặt\s+phẳng\s+|mp\s*)?\((?P<pl>{_PTS3_6})\)|(?:mặt\s+phẳng\s+đáy|mặt\s+đáy|đáy)(?:\s*\((?P<pld>{_PTS3_6})\))?)\s+(?:một\s+)?góc(?:\s+(?:bằng|là|=))?\s*(?P<aval>\d+(?:/\d+)?)\s*(?:°|độ\b))",
+        ctext_norm,
+        re.IGNORECASE | re.UNICODE,
+    ):
+        pl_s = m_pl_lpa.group("pl") or m_pl_lpa.group("pld")
+        plane_pts = _split_pts(pl_s) if pl_s else list(builder._base_vertices)
+        edges_pts: list[list[str]] = []
+        if m_pl_lpa.group("elist"):
+            edges_pts = [_split_pts(tok) for tok in re.findall(_PTS2, m_pl_lpa.group("elist"))]
+        elif builder._primary_solid_type == "pyramid" and builder._primary_notation and "." in builder._primary_notation:
+            ap = builder._primary_notation.split(".", 1)[0]
+            edges_pts = [[ap, bv] for bv in builder._base_vertices]
+        if len(plane_pts) >= 3 and edges_pts:
+            q_plpa = _clean_quote(raw, ca + m_pl_lpa.start("full"), ca + m_pl_lpa.end("full"))
+            for ed in edges_pts:
+                builder.premises.append(
+                    {
+                        "kind": "line_plane_angle",
+                        "args": {"line": ed, "plane": plane_pts, "value": m_pl_lpa.group("aval"), "unit": "deg"},
+                        "quote": q_plpa,
+                        "solid_id": builder._primary_solid_id,
+                    }
+                )
+            angle_spans.append((m_pl_lpa.start("full"), m_pl_lpa.end("full")))
+            mapped_fact = True
+            matched_plural_lpa = True
+
+    if not matched_plural_lpa:
+        for lpa_pat in (
+            rf"(?P<full>(?:Biết(?:\s+rằng)?\s+)?(?:số\s+đo\s+)?góc\s+(?:giữa|tạo\s+bởi|hợp\s+bởi)\s+(?:đường\s+thẳng\s+|cạnh\s+bên\s+|cạnh\s+|đoạn(?:\s+thẳng)?\s+)?(?P<ln>{_PTS2})\s+(?:và|với)\s+(?:(?:mặt\s+phẳng\s+|mặt\s+bên\s+|mp\s*)?\((?P<pl>{_PTS3_6})\)|(?:mặt\s+phẳng\s+đáy|mặt\s+đáy|đáy)(?:\s*\((?P<pld>{_PTS3_6})\))?)\s*(?:bằng|là|=)\s*(?P<aval>\d+(?:/\d+)?)\s*(?:°|độ\b))",
+            rf"(?P<full>(?:Biết(?:\s+rằng)?\s+)?(?:đường\s+thẳng\s+|cạnh\s+bên\s+|cạnh\s+|đoạn(?:\s+thẳng)?\s+)?(?<![\w'.(])(?P<ln>{_PTS2})\s+(?:tạo|hợp)\s+với\s+(?:(?:mặt\s+phẳng\s+|mặt\s+bên\s+|mp\s*)?\((?P<pl>{_PTS3_6})\)|(?:mặt\s+phẳng\s+đáy|mặt\s+đáy|đáy)(?:\s*\((?P<pld>{_PTS3_6})\))?)\s+(?:một\s+)?góc(?:\s+(?:bằng|là|=))?\s*(?P<aval>\d+(?:/\d+)?)\s*(?:°|độ\b))",
+        ):
+            for m_lpa in re.finditer(lpa_pat, ctext_norm, re.IGNORECASE | re.UNICODE):
+                if any(a <= m_lpa.start("full") < b for a, b in angle_spans):
+                    continue
+                pl_s = m_lpa.group("pl") or m_lpa.group("pld")
+                plane_pts = _split_pts(pl_s) if pl_s else list(builder._base_vertices)
+                line_pts = _split_pts(m_lpa.group("ln"))
+                if len(line_pts) == 2 and len(plane_pts) >= 3:
+                    sid_lpa = builder._primary_solid_id
+                    for s_cand in builder.solids:
+                        if s_cand["solid_type"] == "pyramid" and s_cand["notation"].split(".", 1)[0] in line_pts:
+                            sid_lpa = s_cand["solid_id"]
+                            break
+                    q_lpa = _clean_quote(raw, ca + m_lpa.start("full"), ca + m_lpa.end("full"))
+                    builder.premises.append(
+                        {
+                            "kind": "line_plane_angle",
+                            "args": {
+                                "line": line_pts,
+                                "plane": plane_pts,
+                                "value": m_lpa.group("aval"),
+                                "unit": "deg",
+                            },
+                            "quote": q_lpa,
+                            "solid_id": sid_lpa,
+                        }
+                    )
+                    angle_spans.append((m_lpa.start("full"), m_lpa.end("full")))
+                    mapped_fact = True
+
+    for ppa_pat in (
+        rf"(?P<full>(?:Biết(?:\s+rằng)?\s+)?(?:số\s+đo\s+)?góc\s+(?:giữa|tạo\s+bởi|hợp\s+bởi)\s+(?:hai\s+mặt\s+phẳng\s+|mặt\s+phẳng\s+|mặt\s+bên\s+|mp\s*)?\((?P<p1>{_PTS3_6})\)\s+(?:và|với)\s+(?:(?:mặt\s+phẳng\s+|mặt\s+bên\s+|mp\s*)?\((?P<p2>{_PTS3_6})\)|(?:mặt\s+phẳng\s+đáy|mặt\s+đáy|đáy)(?:\s*\((?P<p2d>{_PTS3_6})\))?)\s*(?:bằng|là|=)\s*(?P<aval>\d+(?:/\d+)?)\s*(?:°|độ\b))",
+        rf"(?P<full>(?:Biết(?:\s+rằng)?\s+)?(?:mặt\s+bên\s+|mặt\s+phẳng\s+|mp\s*)?\((?P<p1>{_PTS3_6})\)\s+(?:tạo|hợp)\s+với\s+(?:(?:mặt\s+phẳng\s+|mặt\s+bên\s+|mp\s*)?\((?P<p2>{_PTS3_6})\)|(?:mặt\s+phẳng\s+đáy|mặt\s+đáy|đáy)(?:\s*\((?P<p2d>{_PTS3_6})\))?)\s+(?:một\s+)?góc(?:\s+(?:bằng|là|=))?\s*(?P<aval>\d+(?:/\d+)?)\s*(?:°|độ\b))",
+    ):
+        for m_ppa in re.finditer(ppa_pat, ctext_norm, re.IGNORECASE | re.UNICODE):
+            if any(a <= m_ppa.start("full") < b for a, b in angle_spans):
+                continue
+            p1_pts = _split_pts(m_ppa.group("p1"))
+            p2_s = m_ppa.group("p2") or m_ppa.group("p2d")
+            p2_pts = _split_pts(p2_s) if p2_s else list(builder._base_vertices)
+            if len(p1_pts) >= 3 and len(p2_pts) >= 3:
+                q_ppa = _clean_quote(raw, ca + m_ppa.start("full"), ca + m_ppa.end("full"))
+                builder.premises.append(
+                    {
+                        "kind": "plane_plane_angle",
+                        "args": {
+                            "plane1": p1_pts,
+                            "plane2": p2_pts,
+                            "value": m_ppa.group("aval"),
+                            "unit": "deg",
+                        },
+                        "quote": q_ppa,
+                        "solid_id": builder._primary_solid_id,
+                    }
+                )
+                angle_spans.append((m_ppa.start("full"), m_ppa.end("full")))
+                mapped_fact = True
+
+    for lla_pat in (
+        rf"(?P<full>(?:Biết(?:\s+rằng)?\s+)?(?:số\s+đo\s+)?góc\s+(?:giữa|tạo\s+bởi|hợp\s+bởi)\s+(?:hai\s+đường\s+thẳng\s+|đường\s+thẳng\s+|cạnh\s+)?(?P<l1>{_PTS2})\s+(?:và|với)\s+(?:đường\s+thẳng\s+|cạnh\s+)?(?P<l2>{_PTS2})\s*(?:bằng|là|=)\s*(?P<aval>\d+(?:/\d+)?)\s*(?:°|độ\b))",
+        rf"(?P<full>(?:Biết(?:\s+rằng)?\s+)?(?:đường\s+thẳng\s+|cạnh\s+)?(?<![\w'.(])(?P<l1>{_PTS2})\s+(?:tạo|hợp)\s+với\s+(?:đường\s+thẳng\s+|cạnh\s+)?(?P<l2>{_PTS2})(?![\w')])\s+(?:một\s+)?góc(?:\s+(?:bằng|là|=))?\s*(?P<aval>\d+(?:/\d+)?)\s*(?:°|độ\b))",
+    ):
+        for m_lla in re.finditer(lla_pat, ctext_norm, re.IGNORECASE | re.UNICODE):
+            if any(a <= m_lla.start("full") < b for a, b in angle_spans):
+                continue
+            q_lla = _clean_quote(raw, ca + m_lla.start("full"), ca + m_lla.end("full"))
+            builder.premises.append(
+                {
+                    "kind": "line_line_angle",
+                    "args": {
+                        "line1": _split_pts(m_lla.group("l1")),
+                        "line2": _split_pts(m_lla.group("l2")),
+                        "value": m_lla.group("aval"),
+                        "unit": "deg",
+                    },
+                    "quote": q_lla,
+                    "solid_id": builder._primary_solid_id,
+                }
+            )
+            angle_spans.append((m_lla.start("full"), m_lla.end("full")))
+            mapped_fact = True
+
+    for m_vang in re.finditer(
+        rf"(?P<full>(?:góc\s+|[∠^]\s*)(?P<p3>{_PTS3})(?![\w'])\s*(?:bằng|là|=)\s*(?P<aval>\d+(?:/\d+)?)\s*(?:°|độ\b))",
+        ctext_norm,
+        re.IGNORECASE | re.UNICODE,
+    ):
+        if any(a <= m_vang.start("full") < b for a, b in angle_spans):
+            continue
+        pts3 = _split_pts(m_vang.group("p3"))
+        if len(pts3) == 3 and len(set(pts3)) == 3:
+            q_vang = _clean_quote(raw, ca + m_vang.start("full"), ca + m_vang.end("full"))
+            builder.premises.append(
+                {
+                    "kind": "vertex_angle",
+                    "args": {
+                        "vertex": pts3[1],
+                        "rays": [pts3[0], pts3[2]],
+                        "value": m_vang.group("aval"),
+                        "unit": "deg",
+                    },
+                    "quote": q_vang,
+                    "solid_id": builder._primary_solid_id,
+                }
+            )
+            angle_spans.append((m_vang.start("full"), m_vang.end("full")))
+            mapped_fact = True
 
     # ── 4. Segment Length Assignments (single and chained `SA = SB = SC = 13/2`) ────────────────────────────────
     for m_chain_eq in re.finditer(
@@ -2189,16 +2378,25 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
             if m_sim_lead
             else (_clean_quote(raw, ca, cb) if has_other_goal_in_clause else _clean_quote(raw, ca + m_len_seg.start("full"), ca + m_len_seg.end("full")))
         )
-        builder.math_goals.append(
-            {
-                "goal_id": f"q{len(builder.math_goals) + 1}",
-                "kind": "measurement",
-                "goal_type": "distance",
-                "target": {"segment": seg_pts},
-                "solid_id": builder._primary_solid_id,
-                "quote": q_ls,
-            }
-        )
+        goal_seg_entry: dict[str, Any] = {
+            "goal_id": f"q{len(builder.math_goals) + 1}",
+            "kind": "measurement",
+            "goal_type": "distance",
+            "target": {"segment": seg_pts},
+            "quote": q_ls,
+        }
+        poly_s = [s for s in builder.solids if s["solid_type"] in ("pyramid", "prism")]
+        if len(poly_s) <= 1:
+            goal_seg_entry["solid_id"] = builder._primary_solid_id
+        else:
+            matching_sids = [
+                s["solid_id"]
+                for s in poly_s
+                if set(seg_pts) <= set(_split_pts(s["notation"].replace(".", "")))
+            ]
+            if len(matching_sids) == 1:
+                goal_seg_entry["solid_id"] = matching_sids[0]
+        builder.math_goals.append(goal_seg_entry)
         mapped_goal = True
 
     # 7i. Distance goals:
@@ -2370,7 +2568,12 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
         ctext_norm,
         re.IGNORECASE | re.UNICODE,
     )
-    if m_ang:
+    if (
+        m_ang
+        and not any(a <= m_ang.start("full") < b for a, b in angle_spans)
+        and not re.match(rf"\s*(?:bằng|là|=)\s*\d+(?:/\d+)?\s*(?:°|độ\b)", ctext_norm[m_ang.end("full") :], re.IGNORECASE)
+    ):
+        angle_spans.append((m_ang.start("full"), m_ang.end("full")))
         q_ang = _clean_quote(raw, ca + m_ang.start("full"), ca + m_ang.end("full"))
         if m_ang.group("pl1") and m_ang.group("pl2"):
             builder.math_goals.append(
@@ -2461,7 +2664,7 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
 
         # 1) Every `=` in `ctext_norm` must belong to a recognized equality construct
         if "=" in ctext_norm:
-            eq_spans: list[tuple[int, int]] = []
+            eq_spans: list[tuple[int, int]] = list(angle_spans)
             for eq_pat in (
                 rf"chiều\s+cao(?:\s+của\s+hình\s+chóp(?:\s+[A-Z0-9'.]+)?)?\s*=\s*{_VAL}",
                 rf"đường\s+cao\s+{_PTS2}\s*=\s*{_VAL}",
@@ -2508,16 +2711,18 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
                 clause.classification = CLAUSE_UNPARSED_FACT_CANDIDATE
                 return
 
-        # 3) Any `∠` or standalone `góc` (outside `vuông góc` and `góc chiếu`) must belong to an angle goal
-        ctext_no_vg = re.sub(r"\b(?:vuông\s+góc|góc\s+chiếu)\b", " ", ctext_norm, flags=re.IGNORECASE)
-        if "∠" in ctext_no_vg or (
-            re.search(r"\bgóc\b", ctext_no_vg, re.IGNORECASE)
-            and not any(g.get("goal_type") == "angle" for g in clause_goals)
-        ):
-            mapped_fact = False
-            mapped_goal = False
-            clause.classification = CLAUSE_UNPARSED_FACT_CANDIDATE
-            return
+        # 3) Every `∠`, standalone `góc` (outside `vuông góc` / `góc chiếu`), or `hợp với` / `tạo với` must lie inside a parsed `angle_spans`
+        for m_ang_tok in re.finditer(r"∠|\bgóc\b|\b(?:hợp|tạo)\s+với\b", ctext_norm, re.IGNORECASE | re.UNICODE):
+            s_tok = m_ang_tok.start()
+            if ctext_norm[max(0, s_tok - 6) : m_ang_tok.end()].lower().endswith("vuông góc"):
+                continue
+            if ctext_norm[s_tok : s_tok + 10].lower().startswith("góc chiếu"):
+                continue
+            if not any(a <= s_tok < b for a, b in angle_spans):
+                mapped_fact = False
+                mapped_goal = False
+                clause.classification = CLAUSE_UNPARSED_FACT_CANDIDATE
+                return
 
         # 4) Unsupported geometric shape / relation / negation / conditional sub-clause inside the sentence
         if re.search(
@@ -2525,7 +2730,7 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
             r"|\btam\s+giác\s+cân\b|(?<!vuông\s)\bcân\s+tại\b"
             r"|\btâm\s+đường\s+tròn\s+nội\s+tiếp\b"
             r"|\b(?:đường\s+phân\s+giác|đường\s+trung\s+tuyến|trọng\s+tuyến)\b"
-            r"|\b(?:hợp\s+với|tạo\s+với|nghiêng\s+đều)\b"
+            r"|\bnghiêng\s+đều\b"
             r"|\bkhông\s+(?:vuông\s+góc|song\s+song|cắt|đồng\s+phẳng|thẳng\s+hàng|trùng)\b"
             r"|\bnếu\b.+\bthì\b"
             r"|\bmặt\s+bên\b.*\bnằm\s+trong\s+mặt\s+phẳng\s+vuông\s+góc\b",

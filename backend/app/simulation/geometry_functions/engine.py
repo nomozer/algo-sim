@@ -434,6 +434,9 @@ class _Dung:
         self.pts: dict[str, V3] = {}
         self.G2: tuple | None = None
         self.h2: Fraction | None = None
+        self._deferred_h2: bool = False
+        self._deferred_h2_calls: set[str] = set()
+        self.dihedral_certificates: list[dict[str, Any]] = []
         self.trace: list[dict[str, Any]] = []
         self.dung: set[str] = set()             # id lời gọi engine ĐÃ DÙNG để dựng bố cục
         self.ten_mat_hoi: dict[tuple[str, str], list[str]] = {}   # `chon_ba_mat`
@@ -558,7 +561,7 @@ class _Dung:
             ra += [(binh_phuong(c.args.value), (c.id, *chuoi)) for c in self.of("segment_length")
                    if frozenset(c.args.segment) == s]
             a, b = sorted(s)
-            if a in self.pts and b in self.pts:
+            if a in self.pts and b in self.pts and (self.h2 is not None or self.pts[a][2] == self.pts[b][2]):
                 ra.append((self.d2(a, b), chuoi))
         if _suy:
             for c in self.of("regular_polygon"):
@@ -571,10 +574,112 @@ class _Dung:
                 for e in canh:
                     if e != frozenset((x, y)):
                         ra += [(d, (c.id, *ids)) for d, ids in self.do_dai(*sorted(e), _suy=False)]
+            ra += self._suy_do_dai_day_tu_goc(x, y)
         if len({d for d, _ in ra}) > 1:
             raise TuChoi("INCONSISTENT_FACTS", f"đoạn {x}{y} nhận hai độ dài khác nhau từ các dữ kiện",
                          tuple(sorted({i for _, ids in ra for i in ids})))
         return ra
+
+    def _goc_tham_so(
+        self, value: str, unit: str = "deg", *, allow_obtuse: bool = False, calls: tuple[str, ...] = ()
+    ) -> tuple[Fraction, Fraction, int | None]:
+        """Exact rational `(sin²α, cos²α, cos_sign)` for supported angles/trig ratios; refuses non-rational or out-of-domain."""
+        val2, has_a = doc_so(value)
+        if has_a:
+            raise TuChoi("UNGROUNDED_VALUE", f"số đo góc {value!r} không được mang đơn vị độ dài a", calls)
+        if unit == "deg":
+            deg = _sqrt_q(val2)
+            if deg is None:
+                raise TuChoi("EXACT_DOMAIN_EXCEEDED", f"góc {value}° không thuộc tập lượng giác hữu tỉ chính xác", calls)
+            if deg <= 0:
+                raise TuChoi("NON_POSITIVE_LENGTH", f"số đo góc {deg}° phải dương", calls)
+            if deg >= 180 or (deg > 90 and not allow_obtuse):
+                raise TuChoi("INCONSISTENT_FACTS", f"số đo góc {deg}° nằm ngoài miền hợp lệ của loại góc này", calls)
+            table: dict[Fraction, tuple[Fraction, Fraction, int]] = {
+                Fraction(30): (Fraction(1, 4), Fraction(3, 4), 1),
+                Fraction(45): (Fraction(1, 2), Fraction(1, 2), 1),
+                Fraction(60): (Fraction(3, 4), Fraction(1, 4), 1),
+                Fraction(90): (Fraction(1, 1), Fraction(0, 1), 0),
+                Fraction(120): (Fraction(3, 4), Fraction(1, 4), -1),
+                Fraction(135): (Fraction(1, 2), Fraction(1, 2), -1),
+                Fraction(150): (Fraction(1, 4), Fraction(3, 4), -1),
+            }
+            if deg not in table:
+                raise TuChoi("EXACT_DOMAIN_EXCEEDED", f"góc {value}° ngoài tập lượng giác hữu tỉ chính xác", calls)
+            return table[deg]
+        if unit == "sin":
+            if val2 > 1:
+                raise TuChoi("INCONSISTENT_FACTS", f"sin = {value} vượt quá 1", calls)
+            c2 = Fraction(1) - val2
+            return val2, c2, (0 if c2 == 0 else (None if allow_obtuse else 1))
+        if unit == "cos":
+            if val2 > 1:
+                raise TuChoi("INCONSISTENT_FACTS", f"cos = {value} vượt quá 1", calls)
+            return Fraction(1) - val2, val2, (0 if val2 == 0 else 1)
+        if unit == "tan":
+            return val2 / (1 + val2), Fraction(1) / (1 + val2), 1
+        if unit == "cot":
+            return Fraction(1) / (1 + val2), val2 / (1 + val2), 1
+        raise TuChoi("SCHEMA_INVALID", f"đơn vị góc {unit!r} không được hỗ trợ", calls)
+
+    def _suy_do_dai_day_tu_goc(self, x: str, y: str) -> list[tuple[Fraction, tuple[str, ...]]]:
+        """Deduce exact base segment² `|xy|²` before base placement when a vertical height/edge + `line_plane_angle` fix it."""
+        root = getattr(self, "root", None)
+        if root is None or x == y or not ({x, y} <= frozenset(root.base)):
+            return []
+        base_set = frozenset(root.base)
+        out: list[tuple[Fraction, tuple[str, ...]]] = []
+        # 1) Off-base perpendicular anchor (pyramid altitude / perpendicular_line_plane / orthogonal_projection)
+        for c_p, (pa, pb), mp, _luat, chan_khai in self._rang_buoc_vuong():
+            if not (set(mp) <= base_set):
+                continue
+            if chan_khai is not None:
+                foot, apex = chan_khai, (pa if pb == chan_khai else pb)
+            elif pa in base_set and pb not in base_set:
+                foot, apex = pa, pb
+            elif pb in base_set and pa not in base_set:
+                foot, apex = pb, pa
+            else:
+                continue
+            if foot not in (x, y):
+                continue
+            other = y if foot == x else x
+            solids_s = [k.name for k in self.khoi.values() if k.apex == apex and frozenset(k.base) == base_set]
+            h2_cands = list(self.do_dai(apex, foot, _suy=False)) + [
+                (binh_phuong(ch.args.value), (ch.id,)) for ch in self.of("height") if ch.args.solid in solids_s
+            ]
+            slant_cands = self.do_dai(apex, other, _suy=False)
+            for c_ang in self.of("line_plane_angle"):
+                if frozenset(c_ang.args.line) == frozenset((apex, other)) and frozenset(c_ang.args.plane) <= base_set:
+                    sin2, cos2, _ = self._goc_tham_so(c_ang.args.value, c_ang.args.unit, allow_obtuse=False, calls=(c_ang.id,))
+                    if 0 < sin2 < 1:
+                        for h2_v, h_ids in h2_cands:
+                            out.append((h2_v * cos2 / sin2, (c_p.id, c_ang.id, *h_ids)))
+                        for sl2_v, sl_ids in slant_cands:
+                            out.append((sl2_v * cos2, (c_p.id, c_ang.id, *sl_ids)))
+        # 2) Right prism on root base (`top[i]` projects orthogonally to `base[i]`)
+        for k in self.khoi.values():
+            if k.kind != "prism" or not k.right or frozenset(k.base) != base_set:
+                continue
+            h2_prism: list[tuple[Fraction, tuple[str, ...]]] = [
+                (binh_phuong(ch.args.value), (ch.id,)) for ch in self.of("height") if ch.args.solid == k.name
+            ]
+            for b_v, t_v in zip(k.base, k.top):
+                h2_prism += self.do_dai(b_v, t_v, _suy=False)
+            for b_i, t_i in zip(k.base, k.top):
+                if b_i not in (x, y):
+                    continue
+                other = y if b_i == x else x
+                slant_cands = self.do_dai(other, t_i, _suy=False)
+                for c_ang in self.of("line_plane_angle"):
+                    if frozenset(c_ang.args.line) == frozenset((other, t_i)) and frozenset(c_ang.args.plane) <= base_set:
+                        sin2, cos2, _ = self._goc_tham_so(c_ang.args.value, c_ang.args.unit, allow_obtuse=False, calls=(c_ang.id,))
+                        if 0 < sin2 < 1:
+                            for h2_v, h_ids in h2_prism:
+                                out.append((h2_v * cos2 / sin2, (k.call, c_ang.id, *h_ids)))
+                            for sl2_v, sl_ids in slant_cands:
+                                out.append((sl2_v * cos2, (k.call, c_ang.id, *sl_ids)))
+        return out
 
     # ── đáy ─────────────────────────────────────────────────────────────────
     def bo_cuc_day(self) -> None:
@@ -598,6 +703,16 @@ class _Dung:
             vong = tuple(c.args.vertices)
             a = self.do_dai(vong[0], vong[1]) or self.do_dai(vong[2], vong[3])
             b = self.do_dai(vong[1], vong[2]) or self.do_dai(vong[3], vong[0])
+            diag = self.do_dai(vong[0], vong[2]) or self.do_dai(vong[1], vong[3])
+            if (not a or not b) and diag and (a or b):
+                known = a or b
+                rem = diag[0][0] - known[0][0]
+                if rem <= 0:
+                    raise TuChoi("INCONSISTENT_FACTS", "đường chéo hình chữ nhật không dài hơn cạnh", (c.id, *diag[0][1], *known[0][1]))
+                if not a:
+                    a = [(rem, (*diag[0][1], *known[0][1]))]
+                else:
+                    b = [(rem, (*diag[0][1], *known[0][1]))]
             if not a or not b:
                 raise TuChoi("MISSING_DIMENSION", "hình chữ nhật đáy thiếu một cạnh", (c.id,))
             khung = ((Z, Z), (Fraction(1), Z), (Fraction(1), Fraction(1)), (Z, Fraction(1)))
@@ -713,9 +828,28 @@ class _Dung:
     def trong_day(self, ten: str) -> bool:
         return ten in self.pts and self.pts[ten][2] == 0
 
-    def _chieu_cao(self, dinh: str, chan: str, khoi_ten: list[str]) -> tuple[Fraction, set[str]]:
+    def _co_the_hoan_h2(self) -> bool:
+        return (
+            self.h2 is None
+            and not self._deferred_h2
+            and not self.off_base_anchors
+            and bool(
+                self.of(
+                    "line_plane_angle",
+                    "plane_plane_angle",
+                    "dihedral_angle",
+                    "line_line_angle",
+                    "perpendicular_lines",
+                    "right_angle",
+                    "segment_length",
+                )
+            )
+        )
+
+    def _chieu_cao(self, dinh: str, chan: str, khoi_ten: list[str]) -> tuple[Fraction | None, set[str]]:
         """h² của đỉnh `dinh` có chân `chan` trong đáy — (a) độ dài đoạn đỉnh–chân, (b) chiều cao khối, (c) độ dài
-        đỉnh tới một điểm khác trong đáy (Pythagore trong G). Thiếu cả ba ⇒ MISSING_DIMENSION."""
+        đỉnh tới một điểm khác trong đáy (Pythagore trong G), (d) góc đường `dinh-x` với mặt đáy, hoặc hoãn giải đa thức
+        h² nếu đề cho ràng buộc góc/chéo phụ thuộc đỉnh. Thiếu tất cả ⇒ MISSING_DIMENSION."""
         if l := sorted(self.do_dai(dinh, chan)):
             return l[0][0], set(l[0][1])
         if h := sorted((binh_phuong(c.args.value), c.id) for c in self.of("height") if c.args.solid in khoi_ten):
@@ -728,11 +862,28 @@ class _Dung:
                     raise TuChoi("INCONSISTENT_FACTS", f"{dinh}{x} không dài hơn khoảng cách từ chân {chan} tới {x}",
                                  tuple(l[0][1]))
                 return h2, set(l[0][1])
+        f_xy = self.pts[chan] if isinstance(chan, str) else chan
+        base_set = frozenset(self.root.base)
+        for c_ang in self.of("line_plane_angle"):
+            if dinh in c_ang.args.line and frozenset(c_ang.args.plane) <= base_set:
+                other = c_ang.args.line[1] if c_ang.args.line[0] == dinh else c_ang.args.line[0]
+                if self.trong_day(other):
+                    u_proj = (self.pts[other][0] - f_xy[0], self.pts[other][1] - f_xy[1], Z)
+                    proj2 = self.g(u_proj, u_proj)
+                    sin2, cos2, _ = self._goc_tham_so(c_ang.args.value, c_ang.args.unit, allow_obtuse=False, calls=(c_ang.id,))
+                    if proj2 > 0 and 0 < sin2 < 1:
+                        return proj2 * sin2 / cos2, {c_ang.id}
+        if self._co_the_hoan_h2():
+            return None, set()
         raise TuChoi("MISSING_DIMENSION", f"chưa có dữ kiện cho chiều cao của {dinh}")
 
-    def _dat_ngoai_day(self, ten: str, chan: str | tuple, h2: Fraction, luat: str, calls: set[str]) -> None:
+    def _dat_ngoai_day(self, ten: str, chan: str | tuple, h2: Fraction | None, luat: str, calls: set[str]) -> None:
         """Đặt `ten` trên đường vuông góc đáy tại chân (`chan` = tên điểm đáy, hoặc toạ độ khung (x, y) dẫn xuất)."""
-        if self.h2 is None:
+        if h2 is None:
+            self._deferred_h2 = True
+            self._deferred_h2_calls |= set(calls)
+            z = Fraction(1)
+        elif self.h2 is None:
             self.h2 = h2
             z = Fraction(1)
         elif (z := _sqrt_q(h2 / self.h2)) is None:
@@ -757,6 +908,8 @@ class _Dung:
         while True:
             if not self._mot_buoc():
                 break
+        if self._deferred_h2:
+            raise TuChoi("MISSING_DIMENSION", "chưa có dữ kiện xác định chiều cao", tuple(sorted(self._deferred_h2_calls)))
         can = set()
         for k in self.khoi.values():
             can |= set(k.base) | set(k.top) | ({k.apex} if k.apex else set())
@@ -771,30 +924,52 @@ class _Dung:
             elif c.spec.kind in ("fact", "ask", "construct") and c.fn != "height":
                 can |= {x for x in _labels(c)}
         if thieu := sorted(can - set(self.pts)):
+            base_set = frozenset(self.root.base) if getattr(self, "root", None) else frozenset()
+            height_known_no_foot = any(
+                p in thieu
+                and any(
+                    frozenset(ca.args.line) == frozenset((p, b))
+                    and frozenset(ca.args.plane) <= base_set
+                    and bool(self.do_dai(p, b, _suy=False))
+                    for ca in self.of("line_plane_angle")
+                    for b in base_set
+                )
+                for p in thieu
+            )
+            extra = (
+                {"points": thieu, "height_uniquely_determined": True, "foot_determined": False, "scene3d_unique": False}
+                if height_known_no_foot
+                else {"points": thieu}
+            )
             raise TuChoi("UNDERDETERMINED_POINT",
                          f"không lời gọi nào xác định vị trí của {thieu} (thiếu quan hệ vuông góc / trung điểm / khối đều)",
-                         data={"points": thieu})
+                         data=extra)
 
     def _mot_buoc(self) -> bool:
-        for c in self.of('intersection_line'):
-            if c.id in self.line_refs and c.id not in self.lines and set(c.args.plane1+c.args.plane2) <= self.pts.keys():
-                try:
-                    with _metric.using(self.metric()):
-                        planes = (self._plane(c.args.plane1),self._plane(c.args.plane2))
-                        line = K.intersect_plane_plane(*planes)
-                        verified = all(p.signed_eval(line.point)==0 and p.normal.dot(line.direction)==0 for p in planes)
-                        if not verified:
-                            raise TuChoi('ENGINE_SELF_CHECK_FAILED','giao tuyến không thuộc hai mặt',(c.id,))
-                        self.lines[c.id]=line
-                except GeometryError as e:
-                    raise TuChoi(e.code,str(e),(c.id,)) from None
-                sources = sorted(cid for cid,canonical in self.line_aliases.items() if canonical==c.id) or [c.id]
-                self.trace.append({'step':'resolve_line','object':f'gt_{c.id}','producer':c.fn,'calls':sources,
-                                   'dependencies':list(dict.fromkeys(c.args.plane1+c.args.plane2)),
-                                   'provenance':'DERIVED','relation_verified':verified})
-                return True
+        if self._deferred_h2 and self._thu_giai_h2():
+            return True
+        if not self._deferred_h2:
+            for c in self.of('intersection_line'):
+                if c.id in self.line_refs and c.id not in self.lines and set(c.args.plane1+c.args.plane2) <= self.pts.keys():
+                    try:
+                        with _metric.using(self.metric()):
+                            planes = (self._plane(c.args.plane1),self._plane(c.args.plane2))
+                            line = K.intersect_plane_plane(*planes)
+                            verified = all(p.signed_eval(line.point)==0 and p.normal.dot(line.direction)==0 for p in planes)
+                            if not verified:
+                                raise TuChoi('ENGINE_SELF_CHECK_FAILED','giao tuyến không thuộc hai mặt',(c.id,))
+                            self.lines[c.id]=line
+                    except GeometryError as e:
+                        raise TuChoi(e.code,str(e),(c.id,)) from None
+                    sources = sorted(cid for cid,canonical in self.line_aliases.items() if canonical==c.id) or [c.id]
+                    self.trace.append({'step':'resolve_line','object':f'gt_{c.id}','producer':c.fn,'calls':sources,
+                                       'dependencies':list(dict.fromkeys(c.args.plane1+c.args.plane2)),
+                                       'provenance':'DERIVED','relation_verified':verified})
+                    return True
         for c in self.of("intersect_line_line", "intersect_line_plane", "orthogonal_projection_line", "orthogonal_projection",
                          "translate_point"):
+            if self._deferred_h2 and c.fn in ("orthogonal_projection_line", "orthogonal_projection"):
+                continue
             a = c.args
             p = a.point if c.fn.startswith("intersect") else a.image
             if c.fn in ("orthogonal_projection", "translate_point") and a.point == a.image:
@@ -931,6 +1106,8 @@ class _Dung:
                 self._dat(t, tuple(self.pts[b][i] + v[i] for i in range(3)), f"prism_lateral_vector_{b0}{t0}", {k.call},
                           "DERIVED")
                 return True
+        if self._deferred_h2:
+            return False
         for c in self.of("curved_solid"):
             a = c.args
             if a.center and a.center not in self.pts and a.circumscribes in self.khoi:
@@ -980,7 +1157,251 @@ class _Dung:
                 self.trace[-1]["relation_verified"] = True
                 self.dung.add(c.id)
                 return True
-        return self._dinh_tu_ba_canh_ben()
+        return self._dinh_tu_ba_canh_ben() or self._dinh_tu_goc_canh_ben_bang_nhau()
+
+    def _dinh_tu_goc_canh_ben_bang_nhau(self) -> bool:
+        """Apex of a pyramid on the root base when >= 3 non-collinear placed base vertices have equal `line_plane_angle`
+        with the base: foot F is uniquely the circumcenter of (P0, P1, P2) in Q², and h² = R²·tan²α ∈ Q."""
+        root = getattr(self, "root", None)
+        if root is None:
+            return False
+        base_set = frozenset(root.base)
+        for k in sorted(self.khoi.values(), key=lambda k: k.name):
+            if (
+                k.kind != "pyramid"
+                or not k.apex
+                or k.apex in self.pts
+                or frozenset(k.base) != base_set
+                or not all(b in self.pts for b in k.base)
+            ):
+                continue
+            by_sin2: dict[Fraction, list[tuple[str, str]]] = {}
+            for c in self.of("line_plane_angle"):
+                if frozenset(c.args.plane) <= base_set and k.apex in c.args.line:
+                    other = c.args.line[1] if c.args.line[0] == k.apex else c.args.line[0]
+                    if self.trong_day(other):
+                        sin2, cos2, _ = self._goc_tham_so(c.args.value, c.args.unit, allow_obtuse=False, calls=(c.id,))
+                        if 0 < sin2 < 1:
+                            by_sin2.setdefault(sin2, []).append((other, c.id))
+            for sin2, items in sorted(by_sin2.items()):
+                cos2 = Fraction(1) - sin2
+                dedup: dict[str, str] = {}
+                for pt_b, cid in items:
+                    dedup.setdefault(pt_b, cid)
+                if len(dedup) < 3:
+                    continue
+                for (p0, i0), (p1, i1), (p2, i2) in combinations(sorted(dedup.items()), 3):
+                    u, v = self._vec(p0, p1), self._vec(p0, p2)
+                    gu, gv, guv = self.g(u, u), self.g(v, v), self.g(u, v)
+                    det = gu * gv - guv * guv
+                    if det == 0:
+                        continue
+                    b1, b2 = gu / 2, gv / 2
+                    s, t = (b1 * gv - b2 * guv) / det, (b2 * gu - b1 * guv) / det
+                    f = tuple(s * u[i] + t * v[i] for i in range(3))
+                    r2 = self.g(f, f)
+                    h2 = r2 * sin2 / cos2
+                    ids = {i0, i1, i2}
+                    if h2 <= 0:
+                        raise TuChoi("INCONSISTENT_FACTS", f"{k.apex}: ba góc cạnh bên không dựng được đỉnh ngoài mặt đáy", tuple(sorted(ids)))
+                    o = self.pts[p0]
+                    self.mirror_apices.add(k.apex)
+                    self._dat_ngoai_day(
+                        k.apex,
+                        (o[0] + f[0], o[1] + f[1]),
+                        h2,
+                        f"apex_from_equal_lateral_angles_circumcenter_{p0}{p1}{p2}",
+                        {k.call} | ids,
+                    )
+                    return True
+        return False
+
+    def _thu_giai_h2(self) -> bool:
+        """Solve exact rational polynomial equation in `H = h² > 0` from the first fully-placed constraint fixing `h²`."""
+        G2 = self.G2
+        assert G2 is not None
+        det_g2 = G2[0][0] * G2[1][1] - G2[0][1] * G2[1][0]
+
+        def g_poly(u: V3, v: V3) -> tuple[Fraction, Fraction]:
+            g0 = u[0] * (G2[0][0] * v[0] + G2[0][1] * v[1]) + u[1] * (G2[1][0] * v[0] + G2[1][1] * v[1])
+            return g0, u[2] * v[2]
+
+        def ev_lin(p: tuple[Fraction, Fraction], H: Fraction) -> Fraction:
+            return p[0] + p[1] * H
+
+        def mul_lin(p: tuple[Fraction, Fraction], q: tuple[Fraction, Fraction]) -> tuple[Fraction, Fraction, Fraction]:
+            return p[0] * q[0], p[0] * q[1] + p[1] * q[0], p[1] * q[1]
+
+        def lin_det(
+            a1: tuple[Fraction, Fraction],
+            b1: tuple[Fraction, Fraction],
+            a2: tuple[Fraction, Fraction],
+            b2: tuple[Fraction, Fraction],
+        ) -> tuple[Fraction, Fraction]:
+            m1, m2 = mul_lin(a1, b1), mul_lin(a2, b2)
+            assert m1[2] == m2[2]
+            return m1[0] - m2[0], m1[1] - m2[1]
+
+        def det3(u: V3, v: V3, w: V3) -> Fraction:
+            return (
+                u[0] * (v[1] * w[2] - v[2] * w[1])
+                - u[1] * (v[0] * w[2] - v[2] * w[0])
+                + u[2] * (v[0] * w[1] - v[1] * w[0])
+            )
+
+        for c in self.calls:
+            a = c.args
+            poly: tuple[Fraction, Fraction, Fraction] | None = None
+            ok_root = lambda H: True  # noqa: E731
+            if c.fn == "segment_length" and all(p in self.pts for p in a.segment):
+                w = self._vec(*a.segment)
+                if w[2] != 0:
+                    gw = g_poly(w, w)
+                    poly = (gw[0] - binh_phuong(a.value), gw[1], Z)
+            elif c.fn == "height" and a.solid in self.khoi:
+                k = self.khoi[a.solid]
+                dinh = k.apex if k.kind == "pyramid" else (k.top[0] if k.top else None)
+                if dinh and dinh in self.pts and all(b in self.pts for b in k.base[:3]):
+                    mp = k.base[:3]
+                    u, v, w = self._vec(mp[0], mp[1]), self._vec(mp[0], mp[2]), self._vec(mp[0], dinh)
+                    duv = lin_det(g_poly(u, u), g_poly(v, v), g_poly(u, v), g_poly(u, v))
+                    d3_c = (det3(u, v, w) ** 2) * det_g2
+                    val2 = binh_phuong(a.value)
+                    poly = (-val2 * duv[0], d3_c - val2 * duv[1], Z)
+            elif c.fn in ("perpendicular_lines", "right_angle"):
+                pts_needed = (a.line1 + a.line2) if c.fn == "perpendicular_lines" else [a.vertex, *a.rays]
+                if all(p in self.pts for p in pts_needed):
+                    u, v = (
+                        (self._vec(*a.line1), self._vec(*a.line2))
+                        if c.fn == "perpendicular_lines"
+                        else (self._vec(a.vertex, a.rays[0]), self._vec(a.vertex, a.rays[1]))
+                    )
+                    guv, guu, gvv = g_poly(u, v), g_poly(u, u), g_poly(v, v)
+                    if guv[1] != 0:
+                        poly = (guv[0], guv[1], Z)
+                        ok_root = lambda H, guu=guu, gvv=gvv: ev_lin(guu, H) > 0 and ev_lin(gvv, H) > 0  # noqa: E731
+            elif c.fn == "line_line_angle" and all(p in self.pts for p in (*a.line1, *a.line2)):
+                sin2, cos2, _ = self._goc_tham_so(a.value, a.unit, allow_obtuse=False, calls=(c.id,))
+                u, v = self._vec(*a.line1), self._vec(*a.line2)
+                guu, gvv, guv = g_poly(u, u), g_poly(v, v), g_poly(u, v)
+                if guu == (Z, Z) or gvv == (Z, Z):
+                    raise TuChoi("DEGENERATE_LINE", f"{c.id}: đường thẳng suy biến", (c.id,))
+                lhs, rhs = mul_lin(guv, guv), mul_lin(guu, gvv)
+                poly = (lhs[0] - cos2 * rhs[0], lhs[1] - cos2 * rhs[1], lhs[2] - cos2 * rhs[2])
+                ok_root = lambda H, guu=guu, gvv=gvv: ev_lin(guu, H) > 0 and ev_lin(gvv, H) > 0  # noqa: E731
+            elif c.fn == "line_plane_angle" and all(p in self.pts for p in (*a.line, *a.plane)):
+                sin2, _cos2, _ = self._goc_tham_so(a.value, a.unit, allow_obtuse=False, calls=(c.id,))
+                mp = self._ba_diem(a.plane)
+                u, v, w = self._vec(mp[0], mp[1]), self._vec(mp[0], mp[2]), self._vec(*a.line)
+                gww = g_poly(w, w)
+                if gww == (Z, Z):
+                    raise TuChoi("DEGENERATE_LINE", f"{c.id}: đường thẳng suy biến", (c.id,))
+                duv = lin_det(g_poly(u, u), g_poly(v, v), g_poly(u, v), g_poly(u, v))
+                if duv == (Z, Z):
+                    raise TuChoi("COLLINEAR_POINTS", f"{c.id}: ba điểm mặt phẳng thẳng hàng", (c.id,))
+                d3_c = (det3(u, v, w) ** 2) * det_g2
+                prod = mul_lin(gww, duv)
+                poly = (sin2 * prod[0], sin2 * prod[1] - d3_c, sin2 * prod[2])
+                ok_root = lambda H, gww=gww, duv=duv: ev_lin(gww, H) > 0 and ev_lin(duv, H) > 0  # noqa: E731
+            elif c.fn == "dihedral_angle" and all(p in self.pts for p in (a.point_a, *a.edge, a.point_b)):
+                _sin2, cos2, cos_sign = self._goc_tham_so(a.value, a.unit, allow_obtuse=True, calls=(c.id,))
+                X, Y = a.edge
+                e, uP, uQ = self._vec(X, Y), self._vec(X, a.point_a), self._vec(X, a.point_b)
+                if e == (Z, Z, Z):
+                    raise TuChoi("DEGENERATE_LINE", f"{c.id}: cạnh giao tuyến suy biến", (c.id,))
+                if Vec3(*e).cross(Vec3(*uP)).is_zero() or Vec3(*e).cross(Vec3(*uQ)).is_zero():
+                    raise TuChoi("COLLINEAR_POINTS", f"{c.id}: điểm định hướng góc nhị diện thuộc giao tuyến", (c.id,))
+                gee, guP, guQ = g_poly(e, e), g_poly(uP, uP), g_poly(uQ, uQ)
+                geP, geQ, gPQ = g_poly(uP, e), g_poly(uQ, e), g_poly(uP, uQ)
+                DP = lin_det(gee, guP, geP, geP)
+                DQ = lin_det(gee, guQ, geQ, geQ)
+                NPQ = lin_det(gee, gPQ, geP, geQ)
+                lhs, rhs = mul_lin(NPQ, NPQ), mul_lin(DP, DQ)
+                poly = (lhs[0] - cos2 * rhs[0], lhs[1] - cos2 * rhs[1], lhs[2] - cos2 * rhs[2])
+
+                def _dihedral_ok(
+                    H: Fraction,
+                    DP=DP,
+                    DQ=DQ,
+                    NPQ=NPQ,
+                    cos_sign=cos_sign,
+                ) -> bool:
+                    if not (ev_lin(DP, H) > 0 and ev_lin(DQ, H) > 0):
+                        return False
+                    nv = ev_lin(NPQ, H)
+                    if cos_sign == 1:
+                        return nv > 0
+                    if cos_sign == -1:
+                        return nv < 0
+                    if cos_sign == 0:
+                        return nv == 0
+                    return True
+
+                ok_root = _dihedral_ok
+            elif c.fn == "plane_plane_angle" and all(p in self.pts for p in (*a.plane1, *a.plane2)):
+                _sin2, cos2, _ = self._goc_tham_so(a.value, a.unit, allow_obtuse=False, calls=(c.id,))
+                p1, p2 = self._ba_diem(a.plane1), self._ba_diem(a.plane2)
+                u1a, u1b = self._vec(p1[0], p1[1]), self._vec(p1[0], p1[2])
+                u2a, u2b = self._vec(p2[0], p2[1]), self._vec(p2[0], p2[2])
+                n1 = Vec3(*u1a).cross(Vec3(*u1b))
+                n2 = Vec3(*u2a).cross(Vec3(*u2b))
+                if n1.is_zero() or n2.is_zero():
+                    raise TuChoi("COLLINEAR_POINTS", f"{c.id}: mặt phẳng suy biến", (c.id,))
+                ev = n1.cross(n2)
+                if ev.is_zero():
+                    raise TuChoi("INCONSISTENT_FACTS", f"{c.id}: hai mặt phẳng song song hoặc trùng nhau không tạo góc > 0°", (c.id,))
+                e = (ev.x, ev.y, ev.z)
+                u1 = u1a if not Vec3(*u1a).cross(ev).is_zero() else u1b
+                u2 = u2a if not Vec3(*u2a).cross(ev).is_zero() else u2b
+                gee, gu1, gu2 = g_poly(e, e), g_poly(u1, u1), g_poly(u2, u2)
+                ge1, ge2, g12 = g_poly(u1, e), g_poly(u2, e), g_poly(u1, u2)
+                D1 = lin_det(gee, gu1, ge1, ge1)
+                D2 = lin_det(gee, gu2, ge2, ge2)
+                N12 = lin_det(gee, g12, ge1, ge2)
+                lhs, rhs = mul_lin(N12, N12), mul_lin(D1, D2)
+                poly = (lhs[0] - cos2 * rhs[0], lhs[1] - cos2 * rhs[1], lhs[2] - cos2 * rhs[2])
+                ok_root = lambda H, D1=D1, D2=D2: ev_lin(D1, H) > 0 and ev_lin(D2, H) > 0  # noqa: E731
+
+            if poly is None or poly == (Z, Z, Z):
+                continue
+            c0, c1, c2 = poly
+            if c2 == 0:
+                if c1 == 0:
+                    raise TuChoi("INCONSISTENT_FACTS", f"{c.id}: ràng buộc góc/độ dài mâu thuẫn trên cấu hình đã dựng", (c.id,))
+                r = -c0 / c1
+                if r <= 0 or not ok_root(r):
+                    raise TuChoi("INCONSISTENT_FACTS", f"{c.id}: không có chiều cao dương thỏa giả thiết {c.quote!r}", (c.id,))
+                roots = [r]
+            else:
+                if c2 < 0:
+                    c0, c1, c2 = -c0, -c1, -c2
+                disc = c1 * c1 - 4 * c2 * c0
+                if disc < 0:
+                    raise TuChoi("INCONSISTENT_FACTS", f"{c.id}: phương trình chiều cao vô nghiệm thực cho {c.quote!r}", (c.id,))
+                s_disc = _sqrt_q(disc)
+                if s_disc is None:
+                    has_pos_real = c0 < 0 or (c0 >= 0 and c1 < 0)
+                    if not has_pos_real:
+                        raise TuChoi("INCONSISTENT_FACTS", f"{c.id}: không có chiều cao thực dương cho {c.quote!r}", (c.id,))
+                    raise TuChoi("EXACT_DOMAIN_EXCEEDED", f"{c.id}: chiều cao dẫn xuất từ góc không biểu diễn được trong ℚ", (c.id,))
+                roots = sorted({r for r in ((-c1 - s_disc) / (2 * c2), (-c1 + s_disc) / (2 * c2)) if r > 0 and ok_root(r)})
+                if not roots:
+                    raise TuChoi("INCONSISTENT_FACTS", f"{c.id}: không có chiều cao dương thỏa giả thiết (kể cả hướng nửa mặt phẳng) {c.quote!r}", (c.id,))
+                if len(roots) > 1:
+                    raise TuChoi("AMBIGUOUS_FACT", f"{c.id}: giả thiết góc cho hai cấu hình chiều cao khác nhau đều thỏa mãn", (c.id,))
+            self.h2 = roots[0]
+            self._deferred_h2 = False
+            self.dung.add(c.id)
+            self.trace.append({
+                "step": "resolve_height_scale",
+                "object": "h2",
+                "rule": f"exact_rational_polynomial_from_{c.fn}",
+                "calls": sorted({c.id, *self._deferred_h2_calls}),
+                "provenance": "DERIVED",
+                "h2": str(self.h2),
+            })
+            return True
+        return False
 
     def _dinh_tu_ba_canh_ben(self) -> bool:
         """LAST rule: the apex of a pyramid on the root base, when nothing else placed it, from its distances to three
@@ -1075,6 +1496,16 @@ class _Dung:
                 continue
             la, lb = sorted(self.do_dai(s, A)), sorted(self.do_dai(s, B))
             if not la or not lb:
+                eq_ab = [
+                    ids for seg_eq, ids in self._lop_bang(frozenset((s, A))) if seg_eq == frozenset((s, B))
+                ] + [
+                    (rc.id,) for rc in self.of("regular_polygon") if frozenset(rc.args.vertices) == frozenset((s, A, B))
+                ]
+                if eq_ab and self._co_the_hoan_h2():
+                    t = Fraction(1, 2)
+                    chan = tuple(self.pts[A][i] + t * (self.pts[B][i] - self.pts[A][i]) for i in range(2))
+                    self._dat_ngoai_day(s, chan, None, f"face_perpendicular_base_isosceles_foot_on_{A}{B}", {c.id, *eq_ab[0]})
+                    return True
                 raise TuChoi("MISSING_DIMENSION", f"{c.id}: mặt ({s}{A}{B}) ⊥ đáy nhưng chưa biết {s}{A} và {s}{B}", (c.id,))
             ab2 = self.d2(A, B)
             t = (la[0][0] - lb[0][0] + ab2) / (2 * ab2)
@@ -1088,12 +1519,14 @@ class _Dung:
             return True
         return False
 
-    def _chieu_cao_lang_tru(self, k: _Khoi) -> tuple[Fraction, set[str]]:
+    def _chieu_cao_lang_tru(self, k: _Khoi) -> tuple[Fraction | None, set[str]]:
         if h := sorted((binh_phuong(c.args.value), c.id) for c in self.of("height") if c.args.solid == k.name):
             return h[0][0], {h[0][1]}
         for b, t in sorted(zip(k.base, k.top)):
             if l := sorted(self.do_dai(b, t)):
                 return l[0][0], set(l[0][1])
+        if self._co_the_hoan_h2():
+            return None, set()
         raise TuChoi("MISSING_DIMENSION", f"lăng trụ {k.name} chưa có chiều cao hay cạnh bên", (k.call,))
 
     # ── kiểm lại MỌI dữ kiện trên bố cục ────────────────────────────────────
@@ -2198,6 +2631,73 @@ class _Dung:
                 d = next(iter(vec))
                 ok = ok and all(self.g(d, self._vec(a.base[0], x)) == 0 for x in a.base[1:])
             return ok
+        if c.fn == "line_plane_angle":
+            _sin2, cos2, _ = self._goc_tham_so(a.value, a.unit, allow_obtuse=False, calls=(c.id,))
+            mp = self._ba_diem(a.plane)
+            return self._goc_duong_mat_cos2(tuple(a.line), tuple(mp)) == cos2
+        if c.fn == "line_line_angle":
+            _sin2, cos2, _ = self._goc_tham_so(a.value, a.unit, allow_obtuse=False, calls=(c.id,))
+            return self._goc_hai_duong_cos2(tuple(a.line1), tuple(a.line2)) == cos2
+        if c.fn == "vertex_angle":
+            _sin2, cos2, cos_sign = self._goc_tham_so(a.value, a.unit, allow_obtuse=True, calls=(c.id,))
+            u, w = self._vec(a.vertex, a.rays[0]), self._vec(a.vertex, a.rays[1])
+            uu, ww, uw = self.g(u, u), self.g(w, w), self.g(u, w)
+            sign_actual = 1 if uw > 0 else (-1 if uw < 0 else 0)
+            return uu > 0 and ww > 0 and uw * uw == cos2 * uu * ww and (cos_sign is None or sign_actual == cos_sign)
+        if c.fn == "dihedral_angle":
+            _sin2, cos2, cos_sign = self._goc_tham_so(a.value, a.unit, allow_obtuse=True, calls=(c.id,))
+            X, Y = a.edge
+            e, uP, uQ = self._vec(X, Y), self._vec(X, a.point_a), self._vec(X, a.point_b)
+            ee = self.g(e, e)
+            if ee == 0 or Vec3(*e).cross(Vec3(*uP)).is_zero() or Vec3(*e).cross(Vec3(*uQ)).is_zero():
+                return False
+            rP = tuple(ee * uP[i] - self.g(uP, e) * e[i] for i in range(3))
+            rQ = tuple(ee * uQ[i] - self.g(uQ, e) * e[i] for i in range(3))
+            assert self.g(rP, e) == 0 and self.g(rQ, e) == 0
+            nPP, nQQ, nPQ = self.g(rP, rP), self.g(rQ, rQ), self.g(rP, rQ)
+            if nPP <= 0 or nQQ <= 0:
+                return False
+            sign_actual = 1 if nPQ > 0 else (-1 if nPQ < 0 else 0)
+            ok = nPQ * nPQ == cos2 * nPP * nQQ and (cos_sign is None or sign_actual == cos_sign)
+            if ok:
+                self.dihedral_certificates.append({
+                    "call_id": c.id,
+                    "point_a": a.point_a,
+                    "edge": list(a.edge),
+                    "point_b": a.point_b,
+                    "ray_a_chart": [str(x) for x in rP],
+                    "ray_b_chart": [str(x) for x in rQ],
+                    "orthogonal_to_edge_verified": True,
+                    "half_plane_sign": sign_actual,
+                    "cos_squared": str(cos2),
+                })
+            return ok
+        if c.fn == "plane_plane_angle":
+            _sin2, cos2, _ = self._goc_tham_so(a.value, a.unit, allow_obtuse=False, calls=(c.id,))
+            p1, p2 = self._ba_diem(a.plane1), self._ba_diem(a.plane2)
+            u1a, u1b = self._vec(p1[0], p1[1]), self._vec(p1[0], p1[2])
+            u2a, u2b = self._vec(p2[0], p2[1]), self._vec(p2[0], p2[2])
+            n1 = Vec3(*u1a).cross(Vec3(*u1b))
+            n2 = Vec3(*u2a).cross(Vec3(*u2b))
+            if n1.is_zero() or n2.is_zero():
+                return False
+            ev = n1.cross(n2)
+            if ev.is_zero():
+                return cos2 == Fraction(1)
+            e = (ev.x, ev.y, ev.z)
+            ee = self.g(e, e)
+            u1 = u1a if not Vec3(*u1a).cross(ev).is_zero() else u1b
+            u2 = u2a if not Vec3(*u2a).cross(ev).is_zero() else u2b
+            r1 = tuple(ee * u1[i] - self.g(u1, e) * e[i] for i in range(3))
+            r2 = tuple(ee * u2[i] - self.g(u2, e) * e[i] for i in range(3))
+            assert self.g(r1, e) == 0 and self.g(r2, e) == 0
+            d1, d2, d12 = self.g(r1, r1), self.g(r2, r2), self.g(r1, r2)
+            M = self.metric()
+            v1, v2 = M.vector(n1), M.vector(n2)
+            cov_ok = (v1.dot(n2) ** 2) * (d1 * d2) == (d12 ** 2) * v1.dot(n1) * v2.dot(n2)
+            if not cov_ok:
+                raise TuChoi("ENGINE_SELF_CHECK_FAILED", f"{c.id}: góc hai mặt theo tia vuông góc giao tuyến lệch công thức pháp tuyến", (c.id,))
+            return d1 > 0 and d2 > 0 and d12 * d12 == cos2 * d1 * d2
         return True                                             # ask_* / unsupported: không phải dữ kiện
 
     # ── IR ──────────────────────────────────────────────────────────────────

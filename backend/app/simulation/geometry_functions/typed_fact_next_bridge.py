@@ -855,6 +855,22 @@ def _bridge(p: TypedFactNextPayload, section_fact, version: str, v2: bool) -> di
         elif k == "intersect_line_plane":
             f = {"kind": "point_def", "point_kind": "intersect_line_plane", "point": _ref(a["point"]),
                  "points_a": _refs(a["line"]), "points_b": _refs(a["plane"])}
+        elif k == "line_plane_angle":
+            f = {"kind": "line_plane_angle", "points_a": _refs(a["line"]), "points_b": _refs(a["plane"]),
+                 "value": str(a["value"]), **({"angle_unit": str(a["unit"])} if a.get("unit") else {})}
+        elif k == "plane_plane_angle":
+            f = {"kind": "plane_plane_angle", "points_a": _refs(a["plane1"]), "points_b": _refs(a["plane2"]),
+                 "value": str(a["value"]), **({"angle_unit": str(a["unit"])} if a.get("unit") else {})}
+        elif k == "dihedral_angle":
+            f = {"kind": "dihedral_angle", "point": _ref(a["point_a"]), "points": _refs(a["edge"]),
+                 "at": _ref(a["point_b"]), "value": str(a["value"]),
+                 **({"angle_unit": str(a["unit"])} if a.get("unit") else {})}
+        elif k == "line_line_angle":
+            f = {"kind": "line_line_angle", "points_a": _refs(a["line1"]), "points_b": _refs(a["line2"]),
+                 "value": str(a["value"]), **({"angle_unit": str(a["unit"])} if a.get("unit") else {})}
+        elif k == "vertex_angle":
+            f = {"kind": "vertex_angle", "at": _ref(a["vertex"]), "points": _refs(a["rays"]),
+                 "value": str(a["value"]), **({"angle_unit": str(a["unit"])} if a.get("unit") else {})}
         else:
             raise TuChoi("BRIDGE_UNSUPPORTED_PREMISE", f"{fid}: giả thiết {k!r} chưa có ánh xạ sang TypedFact", (fid,))
         facts.append({"id": _alloc_fact_id(fid, "prem"), "role": "premise", "quotes": q, **f})

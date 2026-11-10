@@ -272,6 +272,57 @@ class HeightArgs(_Args):
     value: ExactNumber
 
 
+AngleUnit = Literal["deg", "sin", "cos", "tan", "cot"]
+
+
+class LinePlaneAngleArgs(_Args):
+    line: Seg
+    plane: Poly
+    value: ExactNumber
+    unit: AngleUnit = "deg"
+
+
+class PlanePlaneAngleArgs(_Args):
+    plane1: Poly
+    plane2: Poly
+    value: ExactNumber
+    unit: AngleUnit = "deg"
+
+
+class DihedralAngleArgs(_Args):
+    point_a: Label
+    edge: Seg
+    point_b: Label
+    value: ExactNumber
+    unit: AngleUnit = "deg"
+
+    @model_validator(mode="after")
+    def _distinct_half_planes(self) -> DihedralAngleArgs:
+        if len(set(self.edge)) != 2 or self.point_a in self.edge or self.point_b in self.edge:
+            raise ValueError("dihedral_angle: cần cạnh giao tuyến gồm 2 điểm phân biệt và hai điểm định hướng ngoài cạnh")
+        return self
+
+
+class LineLineAngleArgs(_Args):
+    line1: Seg
+    line2: Seg
+    value: ExactNumber
+    unit: AngleUnit = "deg"
+
+
+class VertexAngleArgs(_Args):
+    vertex: Label
+    rays: Seg
+    value: ExactNumber
+    unit: AngleUnit = "deg"
+
+    @model_validator(mode="after")
+    def _distinct_rays(self) -> VertexAngleArgs:
+        if len(set(self.rays)) != 2 or self.vertex in self.rays:
+            raise ValueError("vertex_angle: cần hai tia phân biệt khác đỉnh")
+        return self
+
+
 #: A curved solid's notation as the source writes it: "O.O'" (two base centres), "S.O" (apex.centre) or "O" (sphere centre).
 #: The ONE grammar of a curved notation the planner can express (the bridge refuses any other as a capability gap).
 CURVED_NAME_PATTERN = r"^(?:\([A-Z][0-9]*'?\)|[A-Z][0-9]*'?(?:\.[A-Z][0-9]*'?)?)$"
@@ -828,6 +879,22 @@ REGISTRY: dict[str, FunctionSpec] = {s.name: s for s in (
        (("tỉ số", "tỷ số"), ("thể tích",)), provider_offered=False),
     _F("ask_curved_residual_volume", AskCurvedPairArgs, "ask", "Đề hỏi thể tích phần còn lại (khối nón cụt).",
        (("thể tích",),), provider_offered=False),
+    # Exact angle-premise family (`unified-angle-geometry-verified-image-to-3d`): planner-only, Route A provider surface unchanged.
+    _F("line_plane_angle", LinePlaneAngleArgs, "fact",
+       "Góc giữa đường thẳng và mặt phẳng trong [0°, 90°] do đề cho.",
+       (("góc", "tạo với", "hợp với"),), plane_fields=("plane",), provider_offered=False),
+    _F("plane_plane_angle", PlanePlaneAngleArgs, "fact",
+       "Góc giữa hai mặt phẳng không định hướng trong [0°, 90°] do đề cho.",
+       (("góc", "tạo với", "hợp với"),), plane_fields=("plane1", "plane2"), provider_offered=False),
+    _F("dihedral_angle", DihedralAngleArgs, "fact",
+       "Góc nhị diện [P, cạnh, Q] có chọn hai nửa mặt phẳng trong (0°, 180°) do đề cho.",
+       (("nhị diện",),), segment_fields=("edge",), provider_offered=False),
+    _F("line_line_angle", LineLineAngleArgs, "fact",
+       "Góc giữa hai đường thẳng trong [0°, 90°] do đề cho.",
+       (("góc", "tạo với", "hợp với"),), segment_fields=("line1", "line2"), provider_offered=False),
+    _F("vertex_angle", VertexAngleArgs, "fact",
+       "Góc có hướng trong (0°, 180°) tại một đỉnh đa giác / tam giác do đề cho.",
+       (("góc", "∠", "^"),), provider_offered=False),
     _F("unsupported", UnsupportedArgs, "escape", "Mệnh đề không ánh xạ được vào thư viện — engine sẽ từ chối trung thực."),
     # Goal-directed slice (run `goal-directed-section-planning`): the plane through M parallel to (Q) is the plane through M
     # and two translates of M along directions of (Q) — the IR's own expression (`PlanePerpendicularToLineExpr` note).
@@ -1021,7 +1088,7 @@ _CURVED_SOLID_ARG_FNS = frozenset({
 def nhan_cua_loi_goi(c: LoiGoi) -> set[str]:
     ra: set[str] = set()
     for key, v in c.args.model_dump().items():
-        if key in ("line_ref", "section", "derived", "first", "second"):   # opaque object IDs, never point labels
+        if key in ("line_ref", "section", "derived", "first", "second", "unit", "value"):   # opaque IDs / scalars, never point labels
             continue
         if key == "solid" and c.fn in _CURVED_SOLID_ARG_FNS:
             continue
@@ -1336,6 +1403,20 @@ _C_DOAN = re.compile(rf"(?:(?:có|với)\s+)?(?:(?:các\s+)?kích\s+thước\s+)
 _C_VUONG = re.compile(rf"(?:(?:có|với|biết)\s+)?(?:(?:cạnh\s+bên|cạnh|đường\s+thẳng)\s+)?{_L1}{_L1}\s*(?:vuông\s+góc(?:\s+với)?|vuông|⊥)\s*"
                       rf"(?:mặt\s+phẳng\s+|mp\s*)?(?:\({_NHAN}\)|{_L1}{_L1}\s+và\s+{_L1}{_L1}(?![\w'])(?!\s*(?:=|bằng))|{_NHAN}(?![\w'])"
                       rf"|(?:mặt\s+(?:phẳng\s+)?)?đáy(?!\w))", re.IGNORECASE)
+_GOC_MP_DICH = rf"(?:mặt\s+phẳng\s+|mặt\s+|mp\s*)?(?:\({_NHAN}\)|{_NHAN}(?![\w'])|(?:mặt\s+(?:phẳng\s+)?)?đáy(?:\s*\(?{_NHAN}\)?)?(?!\w))"
+_C_GOC = re.compile(
+    rf"(?:(?:có|với|biết(?:\s+rằng)?)\s+)?(?:"
+    rf"(?:số\s+đo\s+)?góc\s+nhị\s+diện\s+\[\s*{_L1}\s*,\s*{_L1}{_L1}\s*,\s*{_L1}\s*\]\s*(?:=|bằng|là)\s*{_so_nhom('gd')}\s*(?:°|độ(?!\w))"
+    rf"|(?:số\s+đo\s+)?góc\s+(?:giữa|tạo\s+bởi|hợp\s+bởi)\s+(?:hai\s+(?:đường\s+thẳng|mặt\s+phẳng)\s+)?"
+    rf"(?:(?:đường\s+thẳng|cạnh\s+bên|cạnh|đoạn(?:\s+thẳng)?|mặt\s+phẳng|mặt\s+bên|mp)\s*)?\(?{_NHAN}\)?\s+(?:và|với)\s+"
+    rf"(?:{_GOC_MP_DICH}|(?:đường\s+thẳng|cạnh|đoạn(?:\s+thẳng)?)\s+{_L1}{_L1}|{_L1}{_L1}(?![\w']))\s*(?:=|bằng|là)\s*{_so_nhom('gg')}\s*(?:°|độ(?!\w))"
+    rf"|(?:(?:các\s+)?cạnh\s+bên(?:\s+{_L1}{_L1}(?:\s*,\s*{_L1}{_L1})*)?|(?:đường\s+thẳng|cạnh\s+bên|cạnh|đoạn(?:\s+thẳng)?)\s+{_L1}{_L1}|{_L1}{_L1}"
+    rf"|(?:mặt\s+bên|mặt\s+phẳng|mp)\s*\(?{_L1}{_L1}{_NHAN}\)?|\({_L1}{_L1}{_NHAN}\))\s+(?:cùng\s+)?(?:tạo|hợp)\s+với\s+"
+    rf"(?:{_GOC_MP_DICH}|(?:đường\s+thẳng|cạnh)\s+{_L1}{_L1}|{_L1}{_L1}(?![\w']))\s+(?:một\s+)?góc(?:\s+(?:bằng|là|=))?\s*{_so_nhom('gt')}\s*(?:°|độ(?!\w))"
+    rf"|(?:(?:góc(?:\s+ở\s+đỉnh)?|[∠^])\s*{_L1}(?:{_L1}{_L1})?(?![\w']))\s*(?:=|bằng|là)\s*{_so_nhom('gv')}\s*(?:°|độ(?!\w))"
+    rf")",
+    re.IGNORECASE,
+)
 #: "cạnh CD" (a named edge) continues its clause; only a role "cạnh" ("… cạnh 2", "… cạnh bên") opens a new one
 _C_NOI = re.compile(rf"\s*[,;]\s*(?:và\s+)?|\s+và\s+|\s+(?=biết\s|th[ỏo]a\s+mãn\s|với\s+(?:(?:mặt|tứ\s+giác|tam\s+giác)\s+)?đáy(?!\w)|có\s|với\s+(?:(?:(?:các|mọi|mỗi)\s+)?(?:cạnh|chiều\s+cao|đường\s+cao|độ\s+dài|đoạn(?:\s+thẳng)?|đường\s+chéo|kích\s+thước)(?!\w)|{_L1}{_L1}(?![\w']))"
                     rf"|(?:(?:các|mọi|mỗi)\s+)?cạnh\s+(?!{_L1}{_L1}(?![\w'])))", re.IGNORECASE)
@@ -1448,7 +1529,7 @@ def _phan_tich_cau(s: str) -> list[tuple[str, re.Match | None]] | None:
         if q := _C_HOI.match(s, p):
             return out if not any(_doc(x) is not None for x in _SO.finditer(s, q.end())) else None
         for kind, rx in (("khoi", _C_KHOI), ("day", _C_DAY), ("dagiac", _C_DAGIAC), ("dcao", _C_DCAO), ("diem", _C_DIEM),
-                         ("chieu", _C_CHIEU), ("mat", _C_MAT), ("vuong", _C_VUONG), ("doan", _C_DOAN), ("vai", _C_VAI)):
+                         ("chieu", _C_CHIEU), ("mat", _C_MAT), ("vuong", _C_VUONG), ("goc", _C_GOC), ("doan", _C_DOAN), ("vai", _C_VAI)):
             if m := rx.match(s, p):
                 out.append((kind, m))
                 p = m.end()
@@ -2748,8 +2829,10 @@ def _kiem_nguon(calls: tuple[LoiGoi, ...], text: str, auxiliary: tuple[dict, ...
         if c.fn == "curved_solid" and (ma := _khoi_cong_dung_nguon(c, calls)):
             raise TuChoi(ma, f"{c.id}: {c.quote!r} không nêu đúng khối tròn xoay này (vai trò điểm, ký hiệu, hay bán kính / "
                          "chiều cao của chính mệnh đề vai trò)", (c.id,))
-        if c.fn == "sphere_tangent_plane" and (ma := _tiep_xuc_mat_dung_nguon(c, calls)):
+        if c.fn in ("sphere_tangent_plane",) and (ma := _tiep_xuc_mat_dung_nguon(c, calls)):
             raise TuChoi(ma, f"{c.id}: {c.quote!r} không nêu đúng quan hệ tiếp xúc mặt cầu - mặt phẳng", (c.id,))
+        if c.fn in ("line_plane_angle", "plane_plane_angle", "dihedral_angle", "line_line_angle", "vertex_angle"):
+            _kiem_goc_dung_nguon(c, de, calls)
         if c.fn in ("section", "ask_section_area", "intersection_line") and not mat_cat_dung_nguon(c, calls):
             raise TuChoi("SOURCE_OBJECT_MISMATCH", f"{c.id}: mặt phẳng / khối của {c.fn} không phải cái mà {c.quote!r} gọi tên",
                          (c.id,))
@@ -2988,8 +3071,13 @@ def _kiem_du_kien_cau_hoi(calls: tuple[LoiGoi, ...], de: str, read_quotes: tuple
         phep_dung_spans += [(a, b) for a, b in buoc if start <= a and b <= end and not _hoi_dung_cum(de, a, b)]
         # a curved section / derived cone quote is read WHOLE by its closed grammar (the gate refused it otherwise), so its
         # words — "tính từ đỉnh S" included, which is no request — are read (registry /25)
-        phep_dung_spans += [vt for c in calls if c.fn in ("curved_section", "curved_subsolid") for q in c.quotes
-                            if (vt := _vi_tri(de, q)) is not None and start <= vt[0] and vt[1] <= end]
+        phep_dung_spans += [
+            vt
+            for c in calls
+            if c.fn in ("curved_section", "curved_subsolid", "line_plane_angle", "plane_plane_angle", "dihedral_angle", "line_line_angle", "vertex_angle")
+            for q in c.quotes
+            if (vt := _vi_tri(de, q)) is not None and start <= vt[0] and vt[1] <= end
+        ]
         phep_dung_spans += [vt for c in calls if (
                                 (c.fn == "curved_solid" and (c.args.circumscribes is not None or c.args.inscribed_in is not None))
                                 or c.fn == "sphere_tangent_plane"
@@ -3261,6 +3349,8 @@ def _kiem_vung_tien_de(calls: tuple[LoiGoi, ...], de: str, het: int, read_quotes
     rang: list[tuple[int, int, tuple, tuple[int, str]]] = []  # range, value, owning call field
     for ci, c in enumerate(calls):
         gt = [(f, doc_so(v)) for f in c.spec.value_fields if (v := getattr(c.args, f, None))]
+        if c.fn in ("line_plane_angle", "plane_plane_angle", "dihedral_angle", "line_line_angle", "vertex_angle"):
+            gt = [("value", doc_so(c.args.value))]
         if c.fn == "curved_solid":       # its dimensions are role-bound (`_kich_thuoc_cong_dung_nguon`), so they back numbers too
             gt = [(f, doc_so(v)) for f in _VAI_CONG if (v := getattr(c.args, f, None))]
         if c.fn == "curved_section":       # the closed section grammar reads its distance / ratio AS WRITTEN (OM/OS = 1/4)
@@ -6609,6 +6699,88 @@ def _doc_nhom(s: str | None) -> tuple[Fraction, bool] | None:
     return _doc(m) if m else None
 
 
+_DIHEDRAL_BRACKET_RE = re.compile(
+    rf"\[\s*(?P<pa>{_P1})\s*,\s*(?P<edge>{_P1}{_P1})\s*,\s*(?P<pb>{_P1})\s*\]"
+)
+
+
+def _kiem_goc_dung_nguon(c: LoiGoi, de: str, calls: tuple[LoiGoi, ...]) -> None:
+    """Source Gate grounding for exact angle premises: verifies operands, half-plane bracket (when dihedral), and exact value."""
+    a = c.args
+    bases = [frozenset(k.args.base) for k in calls if k.fn in _KHOI_FN]
+    if c.fn == "line_plane_angle":
+        has_line = _co_doan(c.quotes, a.line) or (
+            any(re.search(r"các\s+cạnh\s+bên", q, re.IGNORECASE) for q in c.quotes)
+            and any(
+                (k.fn in ("pyramid", "regular_pyramid") and k.args.apex in a.line and set(a.line) - {k.args.apex} <= set(k.args.base))
+                or (k.fn == "prism" and any({b, t} == set(a.line) for b, t in zip(k.args.base, k.args.top)))
+                for k in calls
+            )
+        )
+        if not has_line:
+            raise TuChoi("ROLE_NOT_IN_QUOTE", f"{c.id}: đường thẳng {''.join(a.line)} không khớp nguồn {c.quote!r}", (c.id,))
+        if not _co_mat(c.quotes, a.plane, cho_day=False):
+            if not (any("đáy" in q.lower() for q in c.quotes) and frozenset(a.plane) in bases):
+                raise TuChoi("PLANE_NOT_IN_QUOTE", f"{c.id}: mặt phẳng {a.plane} không khớp nguồn {c.quote!r}", (c.id,))
+    elif c.fn == "plane_plane_angle":
+        p1_exp = _co_mat(c.quotes, a.plane1, cho_day=False)
+        p2_exp = _co_mat(c.quotes, a.plane2, cho_day=False)
+        has_day = any("đáy" in q.lower() for q in c.quotes)
+        ok_planes = (
+            (p1_exp and p2_exp)
+            or (p1_exp and has_day and frozenset(a.plane2) in bases)
+            or (p2_exp and has_day and frozenset(a.plane1) in bases)
+        )
+        if not ok_planes:
+            raise TuChoi("PLANE_NOT_IN_QUOTE", f"{c.id}: hai mặt phẳng {a.plane1}, {a.plane2} không khớp nguồn {c.quote!r}", (c.id,))
+    elif c.fn == "dihedral_angle":
+        matched_bracket = False
+        for q in c.quotes:
+            for mb in _DIHEDRAL_BRACKET_RE.finditer(chuan_hoa(q)):
+                edge_pts = re.findall(_P1, mb.group("edge"))
+                if {mb.group("pa"), mb.group("pb")} == {a.point_a, a.point_b} and set(edge_pts) == set(a.edge):
+                    matched_bracket = True
+                    break
+        if not matched_bracket:
+            raise TuChoi(
+                "SOURCE_OBJECT_MISMATCH",
+                f"{c.id}: góc nhị diện [{a.point_a}, {''.join(a.edge)}, {a.point_b}] không có ký hiệu hai nửa mặt phẳng trong {c.quote!r}",
+                (c.id,),
+            )
+    elif c.fn == "vertex_angle":
+        r0, r1 = a.rays
+        tri1, tri2 = f"{r0}{a.vertex}{r1}", f"{r1}{a.vertex}{r0}"
+        has_ang = any(
+            any(phan == [[r0, a.vertex, r1]] or phan == [[r1, a.vertex, r0]] or phan == [[a.vertex]] for _x, _y, phan in _tu_nhan(q))
+            or tri1 in chuan_hoa(q)
+            or tri2 in chuan_hoa(q)
+            for q in c.quotes
+        )
+        if not has_ang:
+            raise TuChoi("ROLE_NOT_IN_QUOTE", f"{c.id}: góc tại đỉnh {a.vertex} không được nhắc trong {c.quote!r}", (c.id,))
+
+    want = doc_so(a.value)
+    if want[1]:
+        raise TuChoi("UNGROUNDED_VALUE", f"{c.id}: số đo góc / tỉ số lượng giác {a.value!r} không được mang đơn vị độ dài a", (c.id,))
+    if a.unit == "deg":
+        deg_vals = [
+            v
+            for q in c.quotes
+            for md in re.finditer(rf"(?P<v>{_SO.pattern})\s*(?:°|độ(?!\w))", chuan_hoa(q), re.IGNORECASE)
+            if (v := _doc_nhom(md.group("v"))) is not None
+        ]
+        if not deg_vals or want not in deg_vals:
+            raise TuChoi("UNGROUNDED_VALUE", f"{c.id}: giá trị góc {a.value}° không khớp số đo nguồn trong {c.quote!r}", (c.id,))
+        if len(set(deg_vals)) > 1:
+            raise TuChoi("AMBIGUOUS_VALUE_QUOTE", f"{c.id}: quote chứa nhiều số đo góc khác nhau trong {c.quote!r}", (c.id,))
+    else:
+        if not any(re.search(rf"(?<!\w){re.escape(a.unit)}(?!\w)", q, re.IGNORECASE) for q in c.quotes):
+            raise TuChoi("PREDICATE_NOT_IN_QUOTE", f"{c.id}: hàm lượng giác {a.unit!r} không có trong {c.quote!r}", (c.id,))
+        so_vals = [(x, s) for q in c.quotes for _vt, x, s in so_trong(q)]
+        if want not in so_vals:
+            raise TuChoi("UNGROUNDED_VALUE", f"{c.id}: giá trị {a.unit}={a.value} không khớp số đo nguồn trong {c.quote!r}", (c.id,))
+
+
 def _cau_tien_de_dong_hop_le(s: str, s_start: int, de: str, calls: tuple[LoiGoi, ...], allow_single: bool = False) -> bool:
     """Verify that a compound premise span `s` parses completely in SG-3 (`_phan_tich_cau`) with zero opaque clauses
     and every clause is backed 1-to-1 by a validated call in `calls`."""
@@ -6763,6 +6935,19 @@ def _cau_tien_de_dong_hop_le(s: str, s_start: int, de: str, calls: tuple[LoiGoi,
                     or (d.fn == "orthogonal_projection" and {d.args.point, d.args.image} == set(seg) and set(d.args.plane) <= set(khoi.args.base))
                     for d in calls):
                 return False
+        elif kind == "goc":
+            g_str = m["gd"] or m["gg"] or m["gt"] or m["gv"]
+            want = _doc_nhom(g_str)
+            if want is None:
+                return False
+            angle_calls = [
+                d for d in calls
+                if d.fn in ("line_plane_angle", "plane_plane_angle", "dihedral_angle", "line_line_angle", "vertex_angle")
+            ]
+            if not angle_calls:
+                return False
+            if not any(doc_so(d.args.value) == want for d in angle_calls):
+                raise TuChoi("UNGROUNDED_VALUE", f"{angle_calls[0].id}: số đo góc không khớp mệnh đề nguồn", (angle_calls[0].id,))
         else:
             return False
     return True

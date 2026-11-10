@@ -1,0 +1,136 @@
+{
+  "schema": "SCHEMA_CENSUS_EXTENSION/1",
+  "run": "unified-angle-geometry-verified-image-to-3d",
+  "extends": "docs/evaluation/geometry/runs/hybrid-master-backend-replacement/schema-census-extension.json",
+  "rule": "Additive only: classifies premise fields added in unified-angle-geometry-verified-image-to-3d without modifying frozen historical census snapshots.",
+  "fields": {
+    "PremiseSpec.args[line_plane_angle].line": {
+      "category": "VERTEX_REF",
+      "owner": "premise solid_id",
+      "rules": ["S5", "S7", "S8"],
+      "entry_points": "adapter4, planner route v2, bridge v2",
+      "positive_test": "test_angle_and_base_premise_scope_controls_serve",
+      "negative_test": "test_angle_and_base_premise_scope_violations_refuse"
+    },
+    "PremiseSpec.args[line_plane_angle].plane": {
+      "category": "VERTEX_REF",
+      "owner": "premise solid_id",
+      "rules": ["S5", "S7", "S8"],
+      "entry_points": "adapter4, planner route v2, bridge v2",
+      "positive_test": "test_angle_and_base_premise_scope_controls_serve",
+      "negative_test": "test_angle_and_base_premise_scope_violations_refuse"
+    },
+    "PremiseSpec.args[line_plane_angle].value": {
+      "category": "METADATA",
+      "note": "exact angle / trig value"
+    },
+    "PremiseSpec.args[line_plane_angle].unit": {
+      "category": "METADATA",
+      "note": "angle unit (deg | sin | cos | tan | cot)"
+    },
+    "PremiseSpec.args[plane_plane_angle].plane1": {
+      "category": "VERTEX_REF",
+      "owner": "premise solid_id",
+      "rules": ["S5", "S7", "S8"],
+      "entry_points": "adapter4, planner route v2, bridge v2",
+      "positive_test": "test_angle_and_base_premise_scope_controls_serve",
+      "negative_test": "test_angle_and_base_premise_scope_violations_refuse"
+    },
+    "PremiseSpec.args[plane_plane_angle].plane2": {
+      "category": "VERTEX_REF",
+      "owner": "premise solid_id",
+      "rules": ["S5", "S7", "S8"],
+      "entry_points": "adapter4, planner route v2, bridge v2",
+      "positive_test": "test_angle_and_base_premise_scope_controls_serve",
+      "negative_test": "test_angle_and_base_premise_scope_violations_refuse"
+    },
+    "PremiseSpec.args[plane_plane_angle].value": {
+      "category": "METADATA",
+      "note": "exact angle / trig value"
+    },
+    "PremiseSpec.args[plane_plane_angle].unit": {
+      "category": "METADATA",
+      "note": "angle unit (deg | sin | cos | tan | cot)"
+    },
+    "PremiseSpec.args[dihedral_angle].point_a": {
+      "category": "VERTEX_REF",
+      "owner": "premise solid_id",
+      "rules": ["S5", "S7", "S8"],
+      "entry_points": "adapter4, planner route v2, bridge v2",
+      "positive_test": "test_angle_and_base_premise_scope_controls_serve",
+      "negative_test": "test_angle_and_base_premise_scope_violations_refuse"
+    },
+    "PremiseSpec.args[dihedral_angle].edge": {
+      "category": "VERTEX_REF",
+      "owner": "premise solid_id",
+      "rules": ["S5", "S7", "S8"],
+      "entry_points": "adapter4, planner route v2, bridge v2",
+      "positive_test": "test_angle_and_base_premise_scope_controls_serve",
+      "negative_test": "test_angle_and_base_premise_scope_violations_refuse"
+    },
+    "PremiseSpec.args[dihedral_angle].point_b": {
+      "category": "VERTEX_REF",
+      "owner": "premise solid_id",
+      "rules": ["S5", "S7", "S8"],
+      "entry_points": "adapter4, planner route v2, bridge v2",
+      "positive_test": "test_angle_and_base_premise_scope_controls_serve",
+      "negative_test": "test_angle_and_base_premise_scope_violations_refuse"
+    },
+    "PremiseSpec.args[dihedral_angle].value": {
+      "category": "METADATA",
+      "note": "exact angle / trig value"
+    },
+    "PremiseSpec.args[dihedral_angle].unit": {
+      "category": "METADATA",
+      "note": "angle unit (deg | sin | cos | tan | cot)"
+    },
+    "PremiseSpec.args[line_line_angle].line1": {
+      "category": "VERTEX_REF",
+      "owner": "premise solid_id",
+      "rules": ["S5", "S7", "S8"],
+      "entry_points": "adapter4, planner route v2, bridge v2",
+      "positive_test": "test_angle_and_base_premise_scope_controls_serve",
+      "negative_test": "test_angle_and_base_premise_scope_violations_refuse"
+    },
+    "PremiseSpec.args[line_line_angle].line2": {
+      "category": "VERTEX_REF",
+      "owner": "premise solid_id",
+      "rules": ["S5", "S7", "S8"],
+      "entry_points": "adapter4, planner route v2, bridge v2",
+      "positive_test": "test_angle_and_base_premise_scope_controls_serve",
+      "negative_test": "test_angle_and_base_premise_scope_violations_refuse"
+    },
+    "PremiseSpec.args[line_line_angle].value": {
+      "category": "METADATA",
+      "note": "exact angle / trig value"
+    },
+    "PremiseSpec.args[line_line_angle].unit": {
+      "category": "METADATA",
+      "note": "angle unit (deg | sin | cos | tan | cot)"
+    },
+    "PremiseSpec.args[vertex_angle].vertex": {
+      "category": "VERTEX_REF",
+      "owner": "premise solid_id",
+      "rules": ["S5", "S7", "S8"],
+      "entry_points": "adapter4, planner route v2, bridge v2",
+      "positive_test": "test_angle_and_base_premise_scope_controls_serve",
+      "negative_test": "test_angle_and_base_premise_scope_violations_refuse"
+    },
+    "PremiseSpec.args[vertex_angle].rays": {
+      "category": "VERTEX_REF",
+      "owner": "premise solid_id",
+      "rules": ["S5", "S7", "S8"],
+      "entry_points": "adapter4, planner route v2, bridge v2",
+      "positive_test": "test_angle_and_base_premise_scope_controls_serve",
+      "negative_test": "test_angle_and_base_premise_scope_violations_refuse"
+    },
+    "PremiseSpec.args[vertex_angle].value": {
+      "category": "METADATA",
+      "note": "exact angle / trig value"
+    },
+    "PremiseSpec.args[vertex_angle].unit": {
+      "category": "METADATA",
+      "note": "angle unit (deg | sin | cos | tan | cot)"
+    }
+  }
+}

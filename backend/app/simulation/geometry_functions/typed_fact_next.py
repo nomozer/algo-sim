@@ -376,6 +376,11 @@ _ARGS_LOI = {
     "orthogonal_projection_line": {"point": "ref", "image": "ref", "line": "refs2="},
     "intersect_line_line": {"point": "ref", "line1": "refs2=", "line2": "refs2="},
     "intersect_line_plane": {"point": "ref", "line": "refs2=", "plane": "refs3"},
+    "line_plane_angle": {"line": "refs2=", "plane": "refs3", "value": "value", "unit": "id?"},
+    "plane_plane_angle": {"plane1": "refs3", "plane2": "refs3", "value": "value", "unit": "id?"},
+    "dihedral_angle": {"point_a": "ref", "edge": "refs2=", "point_b": "ref", "value": "value", "unit": "id?"},
+    "line_line_angle": {"line1": "refs2=", "line2": "refs2=", "value": "value", "unit": "id?"},
+    "vertex_angle": {"vertex": "ref", "rays": "refs2=", "value": "value", "unit": "id?"},
 }
 for _alias, _goc in (("base_is_square", "regular_polygon"), ("base_is_equilateral_triangle", "regular_polygon"),
                      ("base_is_regular_polygon", "regular_polygon"), ("base_is_rectangle", "rectangle"),

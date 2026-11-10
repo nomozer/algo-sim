@@ -332,6 +332,32 @@ def test_real_external_missing_prism_height_refused_zero_ai_missing_dimension():
 
 
 @pytest.mark.parametrize(
+    ("case_id", "problem_text", "expected_answer"),
+    [
+        (
+            "ext_vmmu_r4_c14_angle_premise_solved",
+            "Cho hình chóp S.ABCD có đáy là hình vuông cạnh a√3, SA vuông góc với mặt phẳng đáy và SB tạo với đáy một góc 60°. Tính thể tích khối chóp S.ABCD.",
+            "3a³",
+        ),
+        (
+            "ext_hd_a_6043187_hw_line_plane_angle_premise_solved",
+            "Cho hình lăng trụ đứng ABC.A'B'C' có đáy ABC là tam giác vuông tại B, AB = a, AA' = a√3, góc giữa đường thẳng BC' với mặt phẳng đáy bằng 60°. Tính thể tích khối lăng trụ ABC.A'B'C'.",
+            "a³√3/2",
+        ),
+    ],
+)
+def test_real_external_angle_premise_problems_solved_zero_ai(
+    case_id: str, problem_text: str, expected_answer: str
+):
+    out = route_text_input(problem_text, allow_live_ai=False)
+    assert out.status == "SERVED", (case_id, out.status, out.response)
+    assert out.telemetry.total_provider_calls == 0
+    assert out.telemetry.local_parse_status == LOCAL_PARSE_COMPLETE
+    assert list(out.response["route_d"]["answers"].values()) == [expected_answer]
+    assert (out.response.get("envelope") or {}).get("scene3d") is not None
+
+
+@pytest.mark.parametrize(
     "case_id,problem_text",
     [
         (
@@ -343,12 +369,8 @@ def test_real_external_missing_prism_height_refused_zero_ai_missing_dimension():
             "Câu 33: Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh a, SA ⊥ (ABC), SA = a. Gọi M, N, P lần lượt là trung điểm của BC, CA, AB. Thể tích của khối chóp S.MNP bằng?",
         ),
         (
-            "ext_vmmu_r4_c14_angle_premise_gap",
-            "Cho hình chóp S.ABCD có đáy là hình vuông cạnh a√3, SA vuông góc với mặt phẳng đáy và SB tạo với đáy một góc 60°. Tính thể tích khối chóp S.ABCD.",
-        ),
-        (
-            "ext_hd_a_6043187_hw_line_plane_angle_premise_gap",
-            "Cho hình lăng trụ đứng ABC.A'B'C' có đáy ABC là tam giác vuông tại B, AB = a, AA' = a√3, góc giữa đường thẳng BC' với mặt phẳng đáy bằng 60°. Tính thể tích khối lăng trụ ABC.A'B'C'.",
+            "ext_unparsed_oblique_slope_idiom_guard",
+            "Cho hình chóp S.ABCD có đáy là hình vuông cạnh a, các mặt bên nghiêng đều trên mặt đáy một góc 60°. Tính thể tích khối chóp S.ABCD.",
         ),
     ],
 )

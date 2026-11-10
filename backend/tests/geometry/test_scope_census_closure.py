@@ -31,6 +31,9 @@ INVENTORY = json.loads((RUN / 'closed-input-contract/schema-census-v3.json').rea
 _EXT = json.loads((RUNS / 'hybrid-master-backend-replacement/schema-census-extension.json').read_text(encoding='utf-8'))['fields']
 assert not set(_EXT) & set(INVENTORY['fields'])
 INVENTORY = {**INVENTORY, 'fields': {**INVENTORY['fields'], **_EXT}}
+_EXT_UAG = json.loads((RUNS / 'unified-angle-geometry-verified-image-to-3d/schema-census-extension.json').read_text(encoding='utf-8'))['fields']
+assert not set(_EXT_UAG) & set(INVENTORY['fields'])
+INVENTORY = {**INVENTORY, 'fields': {**INVENTORY['fields'], **_EXT_UAG}}
 SUP = json.loads((RUN / 'inputs/recovery-supplementary.json').read_text(encoding='utf-8'))['control']
 A3DEV = {c['case_id']: c for c in json.loads((RUNS / 'typedfact-next-adapter3-simulation/corpus-dev.json').read_text(encoding='utf-8'))['cases']}
 SIM = {c['case_id']: c for c in json.loads((RUNS / 'simulation-coverage-visual-validation/corpus-dev.json').read_text(encoding='utf-8'))['cases']}
@@ -726,3 +729,28 @@ def test_constraint_plane_scope_violations_refuse():
     p['solids'].append(other); p['problem_text'] += ' Cho hình chóp T.ABCD.'
     p['derived_sections'][0]['constraints'][1]['operands'] = ['zz::T', 'B', 'C']
     assert outcome(run_typed_fact_next_v2_route(p)) == ('REFUSED', 'SOURCE_OBJECT_MISMATCH')          # S5
+
+
+def _angle_scope_payload():
+    from app.ai.local_geometry_parser import parse_geometry_problem_locally
+    txt = (
+        'Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 6, SA ⊥ (ABCD) '
+        'và SB tạo với mặt phẳng (ABCD) một góc 60°. Tính thể tích khối chóp S.ABCD.'
+    )
+    return parse_geometry_problem_locally(txt).payload
+
+
+def test_angle_and_base_premise_scope_controls_serve():
+    p = _angle_scope_payload()
+    r = run_typed_fact_next_v2_route(p)
+    assert r.status == 'SERVED' and r.kernel_check is True
+
+
+def test_angle_and_base_premise_scope_violations_refuse():
+    p = _angle_scope_payload()
+    p['solids'].append({'solid_id': 'zz', 'solid_type': 'pyramid', 'notation': 'T.ABCD', 'quote': 'Cho hình chóp T.ABCD'})
+    p['problem_text'] += ' Cho hình chóp T.ABCD.'
+    for prem in p['premises']:
+        if prem['kind'] == 'line_plane_angle':
+            prem['args']['line'] = ['zz::T', 'B']
+    assert outcome(run_typed_fact_next_v2_route(p)) == ('REFUSED', 'SOURCE_OBJECT_MISMATCH')          # S5/S7
