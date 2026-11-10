@@ -1,0 +1,732 @@
+{
+  "schema": "algosim-external-image-pipeline-receipt/1",
+  "generated_at_utc": "2026-11-10T03:58:21.725552+00:00",
+  "product_commit": "c61a3589782bde35b69e8376d8ebf136314e47f3",
+  "head_commit": "c61a3589782bde35b69e8376d8ebf136314e47f3",
+  "measured_system_tree_hash": "69bb83ba51b834f68c106bc4d3948dc02ca35af05eca0d8f50c0e0e4cf047cb4",
+  "measured_system_file_count": 108,
+  "code_version": {
+    "typed_fact_next": "typed-fact-next/2",
+    "bridge": "typed-fact-next-bridge/2",
+    "planner": "geometry-fact-planner/26",
+    "registry": "geometry-functions/33",
+    "engine": "geometry-function-engine/24",
+    "adapter": "hybrid-simulation-adapter/4",
+    "envelope": "hybrid-route-d-simulation/4",
+    "local_parser": "local-geometry-parser/1",
+    "adaptive_router": "adaptive-input-router/1",
+    "cache_version": "132"
+  },
+  "input_or_case_hash": "596968b46ce717b4eb916be7c78101e25c01ac521d9dd0f5931c3b5372b2d9be",
+  "oracle": "38 cached external images + strict 6-criteria Input Fidelity Gate + ORACLE_TEXT_DOWNSTREAM_REPLAY exact answers",
+  "test_command": "pytest backend/tests/geometry/test_verified_image_to_3d_pipeline.py backend/tests/geometry/test_real_world_printed_handwriting.py -v",
+  "test_environment": {
+    "os": "Windows-11-10.0.26100-SP0",
+    "python": "3.12.10",
+    "cpu_logical_cores": 12,
+    "allow_live_ai": 0,
+    "live_gemini_calls": 0,
+    "benchmark_tier": "HOST_BENCHMARK_OFFLINE"
+  },
+  "expected_behavior": "0 corrupted OCR inputs reach Kernel; 0 wrong-served; ORACLE_TEXT_DOWNSTREAM_REPLAY strictly separated from raw OCR accuracy.",
+  "actual_behavior": "local_ocr_served_correctly=0/38, ocr_rejected_safely=38/38, oracle_text_downstream_solved=4/17 (+2 MISSING_DIMENSION), wrong_served=0.",
+  "verdict": "PASS",
+  "verification_classification": {
+    "routing_and_fidelity": "OFFLINE_ROUTING_VERIFIED",
+    "recorded_ocr_and_vision_payloads": "RECORDED_REPLAY_VERIFIED",
+    "verbatim_statement_solving": "ORACLE_TEXT_DOWNSTREAM_REPLAY",
+    "live_gemini_vision": "LIVE_VISION_NOT_MEASURED"
+  },
+  "summary_counts": {
+    "total_external_images": 38,
+    "complete_problem_images": 16,
+    "complete_problem_statements": 17,
+    "local_ocr_served_correctly": 0,
+    "ocr_rejected_safely": 38,
+    "vision_required_complete_images": 16,
+    "non_complete_diagram_or_solution_rejected_or_confirmation": 22,
+    "oracle_text_downstream_replay_solved": 4,
+    "oracle_text_downstream_missing_dimension_clarification": 2,
+    "oracle_text_downstream_unsupported_fail_closed": 11,
+    "wrong_served": 0
+  },
+  "per_image_fidelity": [
+    {
+      "image_id": "ext_prt_01_hd_q_5259753",
+      "modality": "PRINTED",
+      "has_complete_problem": true,
+      "has_diagram": false,
+      "fidelity_passed": false,
+      "dual_reconciled": false,
+      "failed_checks": [
+        "vertex_and_solid_consistency",
+        "dimension_and_number_fidelity",
+        "geometric_relation_syntax",
+        "goal_sentence_completeness",
+        "source_span_coverage"
+      ]
+    },
+    {
+      "image_id": "ext_prt_02_hd_q_7922924",
+      "modality": "PRINTED",
+      "has_complete_problem": true,
+      "has_diagram": false,
+      "fidelity_passed": false,
+      "dual_reconciled": false,
+      "failed_checks": [
+        "vertex_and_solid_consistency",
+        "dimension_and_number_fidelity",
+        "geometric_relation_syntax",
+        "goal_sentence_completeness",
+        "source_span_coverage"
+      ]
+    },
+    {
+      "image_id": "ext_prt_03_hd_q_7907931",
+      "modality": "PRINTED",
+      "has_complete_problem": true,
+      "has_diagram": false,
+      "fidelity_passed": false,
+      "dual_reconciled": false,
+      "failed_checks": [
+        "vertex_and_solid_consistency",
+        "dimension_and_number_fidelity",
+        "geometric_relation_syntax",
+        "goal_sentence_completeness",
+        "source_span_coverage"
+      ]
+    },
+    {
+      "image_id": "ext_prt_04_hd_q_8436784",
+      "modality": "PRINTED",
+      "has_complete_problem": true,
+      "has_diagram": false,
+      "fidelity_passed": false,
+      "dual_reconciled": false,
+      "failed_checks": [
+        "vertex_and_solid_consistency",
+        "dimension_and_number_fidelity",
+        "geometric_relation_syntax",
+        "goal_sentence_completeness",
+        "source_span_coverage"
+      ]
+    },
+    {
+      "image_id": "ext_prt_05_hd_q_7451806",
+      "modality": "PRINTED",
+      "has_complete_problem": true,
+      "has_diagram": false,
+      "fidelity_passed": false,
+      "dual_reconciled": false,
+      "failed_checks": [
+        "vertex_and_solid_consistency",
+        "dimension_and_number_fidelity",
+        "geometric_relation_syntax",
+        "goal_sentence_completeness",
+        "source_span_coverage"
+      ]
+    },
+    {
+      "image_id": "ext_prt_06_hd_q_1084979",
+      "modality": "PRINTED",
+      "has_complete_problem": true,
+      "has_diagram": false,
+      "fidelity_passed": false,
+      "dual_reconciled": false,
+      "failed_checks": [
+        "vertex_and_solid_consistency",
+        "dimension_and_number_fidelity",
+        "geometric_relation_syntax",
+        "goal_sentence_completeness",
+        "source_span_coverage"
+      ]
+    },
+    {
+      "image_id": "ext_prt_07_hd_q_7958052",
+      "modality": "PRINTED",
+      "has_complete_problem": true,
+      "has_diagram": false,
+      "fidelity_passed": false,
+      "dual_reconciled": false,
+      "failed_checks": [
+        "vertex_and_solid_consistency",
+        "dimension_and_number_fidelity",
+        "geometric_relation_syntax",
+        "goal_sentence_completeness",
+        "source_span_coverage"
+      ]
+    },
+    {
+      "image_id": "ext_prt_08_hd_q_7509702",
+      "modality": "PRINTED",
+      "has_complete_problem": true,
+      "has_diagram": false,
+      "fidelity_passed": false,
+      "dual_reconciled": false,
+      "failed_checks": [
+        "vertex_and_solid_consistency",
+        "dimension_and_number_fidelity",
+        "geometric_relation_syntax",
+        "goal_sentence_completeness",
+        "source_span_coverage"
+      ]
+    },
+    {
+      "image_id": "ext_prt_09_vmmu_page_r4",
+      "modality": "PRINTED",
+      "has_complete_problem": true,
+      "has_diagram": false,
+      "fidelity_passed": false,
+      "dual_reconciled": false,
+      "failed_checks": [
+        "vertex_and_solid_consistency",
+        "dimension_and_number_fidelity",
+        "geometric_relation_syntax",
+        "goal_sentence_completeness",
+        "source_span_coverage"
+      ]
+    },
+    {
+      "image_id": "ext_prt_10_vmmu_page_r7",
+      "modality": "PRINTED",
+      "has_complete_problem": true,
+      "has_diagram": false,
+      "fidelity_passed": false,
+      "dual_reconciled": false,
+      "failed_checks": [
+        "vertex_and_solid_consistency",
+        "dimension_and_number_fidelity",
+        "geometric_relation_syntax",
+        "goal_sentence_completeness",
+        "source_span_coverage"
+      ]
+    },
+    {
+      "image_id": "ext_prt_11_vmmu_page_r10",
+      "modality": "PRINTED",
+      "has_complete_problem": true,
+      "has_diagram": false,
+      "fidelity_passed": false,
+      "dual_reconciled": false,
+      "failed_checks": [
+        "vertex_and_solid_consistency",
+        "dimension_and_number_fidelity",
+        "geometric_relation_syntax",
+        "goal_sentence_completeness",
+        "source_span_coverage"
+      ]
+    },
+    {
+      "image_id": "ext_prt_12_vmmu_page_r11",
+      "modality": "PRINTED",
+      "has_complete_problem": true,
+      "has_diagram": false,
+      "fidelity_passed": false,
+      "dual_reconciled": false,
+      "failed_checks": [
+        "vertex_and_solid_consistency",
+        "dimension_and_number_fidelity",
+        "geometric_relation_syntax",
+        "goal_sentence_completeness",
+        "source_span_coverage"
+      ]
+    },
+    {
+      "image_id": "ext_prt_13_vmmu_page_r25",
+      "modality": "PRINTED",
+      "has_complete_problem": true,
+      "has_diagram": false,
+      "fidelity_passed": false,
+      "dual_reconciled": false,
+      "failed_checks": [
+        "vertex_and_solid_consistency",
+        "dimension_and_number_fidelity",
+        "geometric_relation_syntax",
+        "goal_sentence_completeness",
+        "source_span_coverage"
+      ]
+    },
+    {
+      "image_id": "ext_prt_14_vmmu_page_r26",
+      "modality": "PRINTED",
+      "has_complete_problem": true,
+      "has_diagram": false,
+      "fidelity_passed": false,
+      "dual_reconciled": false,
+      "failed_checks": [
+        "vertex_and_solid_consistency",
+        "dimension_and_number_fidelity",
+        "geometric_relation_syntax",
+        "goal_sentence_completeness",
+        "source_span_coverage"
+      ]
+    },
+    {
+      "image_id": "ext_prt_15_vmmu_page_r28",
+      "modality": "PRINTED",
+      "has_complete_problem": true,
+      "has_diagram": false,
+      "fidelity_passed": false,
+      "dual_reconciled": false,
+      "failed_checks": [
+        "vertex_and_solid_consistency",
+        "dimension_and_number_fidelity",
+        "geometric_relation_syntax",
+        "goal_sentence_completeness",
+        "source_span_coverage"
+      ]
+    },
+    {
+      "image_id": "ext_hw_b1_01_hd_a_6043187",
+      "modality": "HANDWRITTEN",
+      "has_complete_problem": true,
+      "has_diagram": false,
+      "fidelity_passed": false,
+      "dual_reconciled": false,
+      "failed_checks": [
+        "vertex_and_solid_consistency",
+        "dimension_and_number_fidelity",
+        "geometric_relation_syntax",
+        "goal_sentence_completeness",
+        "source_span_coverage",
+        "diagram_dependency_and_cross_engine"
+      ]
+    },
+    {
+      "image_id": "ext_hw_b2_01_hd_a_8349383",
+      "modality": "HANDWRITTEN",
+      "has_complete_problem": false,
+      "has_diagram": false,
+      "fidelity_passed": false,
+      "dual_reconciled": false,
+      "failed_checks": [
+        "vertex_and_solid_consistency",
+        "dimension_and_number_fidelity",
+        "geometric_relation_syntax",
+        "goal_sentence_completeness",
+        "source_span_coverage",
+        "diagram_dependency_and_cross_engine"
+      ]
+    },
+    {
+      "image_id": "ext_hw_b2_02_hd_a_7509702_2",
+      "modality": "HANDWRITTEN",
+      "has_complete_problem": false,
+      "has_diagram": false,
+      "fidelity_passed": false,
+      "dual_reconciled": false,
+      "failed_checks": [
+        "vertex_and_solid_consistency",
+        "dimension_and_number_fidelity",
+        "geometric_relation_syntax",
+        "goal_sentence_completeness",
+        "source_span_coverage",
+        "diagram_dependency_and_cross_engine"
+      ]
+    },
+    {
+      "image_id": "ext_hw_b2_03_hd_a_7594768_2",
+      "modality": "HANDWRITTEN",
+      "has_complete_problem": false,
+      "has_diagram": false,
+      "fidelity_passed": false,
+      "dual_reconciled": false,
+      "failed_checks": [
+        "vertex_and_solid_consistency",
+        "dimension_and_number_fidelity",
+        "geometric_relation_syntax",
+        "goal_sentence_completeness",
+        "source_span_coverage",
+        "diagram_dependency_and_cross_engine"
+      ]
+    },
+    {
+      "image_id": "ext_hw_b2_04_hd_a_7594768_1",
+      "modality": "HANDWRITTEN",
+      "has_complete_problem": false,
+      "has_diagram": false,
+      "fidelity_passed": false,
+      "dual_reconciled": false,
+      "failed_checks": [
+        "vertex_and_solid_consistency",
+        "dimension_and_number_fidelity",
+        "geometric_relation_syntax",
+        "goal_sentence_completeness",
+        "source_span_coverage",
+        "diagram_dependency_and_cross_engine"
+      ]
+    },
+    {
+      "image_id": "ext_hw_b2_05_hd_a_1084979_1",
+      "modality": "HANDWRITTEN",
+      "has_complete_problem": false,
+      "has_diagram": false,
+      "fidelity_passed": false,
+      "dual_reconciled": false,
+      "failed_checks": [
+        "vertex_and_solid_consistency",
+        "dimension_and_number_fidelity",
+        "geometric_relation_syntax",
+        "goal_sentence_completeness",
+        "source_span_coverage",
+        "diagram_dependency_and_cross_engine"
+      ]
+    },
+    {
+      "image_id": "ext_hw_b2_06_hd_a_1084979_2",
+      "modality": "HANDWRITTEN",
+      "has_complete_problem": false,
+      "has_diagram": false,
+      "fidelity_passed": false,
+      "dual_reconciled": false,
+      "failed_checks": [
+        "vertex_and_solid_consistency",
+        "dimension_and_number_fidelity",
+        "geometric_relation_syntax",
+        "goal_sentence_completeness",
+        "source_span_coverage",
+        "diagram_dependency_and_cross_engine"
+      ]
+    },
+    {
+      "image_id": "ext_hw_b2_07_hd_a_1084979_3",
+      "modality": "HANDWRITTEN",
+      "has_complete_problem": false,
+      "has_diagram": false,
+      "fidelity_passed": false,
+      "dual_reconciled": false,
+      "failed_checks": [
+        "vertex_and_solid_consistency",
+        "dimension_and_number_fidelity",
+        "geometric_relation_syntax",
+        "goal_sentence_completeness",
+        "source_span_coverage",
+        "diagram_dependency_and_cross_engine"
+      ]
+    },
+    {
+      "image_id": "ext_hw_b2_08_hd_a_171471_1",
+      "modality": "HANDWRITTEN",
+      "has_complete_problem": false,
+      "has_diagram": false,
+      "fidelity_passed": false,
+      "dual_reconciled": false,
+      "failed_checks": [
+        "vertex_and_solid_consistency",
+        "dimension_and_number_fidelity",
+        "geometric_relation_syntax",
+        "goal_sentence_completeness",
+        "source_span_coverage",
+        "diagram_dependency_and_cross_engine"
+      ]
+    },
+    {
+      "image_id": "ext_hw_b2_09_hd_a_10810_3",
+      "modality": "HANDWRITTEN",
+      "has_complete_problem": false,
+      "has_diagram": false,
+      "fidelity_passed": false,
+      "dual_reconciled": false,
+      "failed_checks": [
+        "vertex_and_solid_consistency",
+        "dimension_and_number_fidelity",
+        "geometric_relation_syntax",
+        "goal_sentence_completeness",
+        "source_span_coverage",
+        "diagram_dependency_and_cross_engine"
+      ]
+    },
+    {
+      "image_id": "ext_hw_b3_01_uit_hwdb_r0",
+      "modality": "HANDWRITTEN",
+      "has_complete_problem": false,
+      "has_diagram": false,
+      "fidelity_passed": false,
+      "dual_reconciled": false,
+      "failed_checks": [
+        "vertex_and_solid_consistency",
+        "dimension_and_number_fidelity",
+        "geometric_relation_syntax",
+        "goal_sentence_completeness",
+        "source_span_coverage",
+        "diagram_dependency_and_cross_engine"
+      ]
+    },
+    {
+      "image_id": "ext_hw_b3_02_uit_hwdb_r3",
+      "modality": "HANDWRITTEN",
+      "has_complete_problem": false,
+      "has_diagram": false,
+      "fidelity_passed": false,
+      "dual_reconciled": false,
+      "failed_checks": [
+        "vertex_and_solid_consistency",
+        "dimension_and_number_fidelity",
+        "geometric_relation_syntax",
+        "goal_sentence_completeness",
+        "source_span_coverage",
+        "diagram_dependency_and_cross_engine"
+      ]
+    },
+    {
+      "image_id": "ext_hw_b3_03_uit_hwdb_r5",
+      "modality": "HANDWRITTEN",
+      "has_complete_problem": false,
+      "has_diagram": false,
+      "fidelity_passed": false,
+      "dual_reconciled": false,
+      "failed_checks": [
+        "vertex_and_solid_consistency",
+        "dimension_and_number_fidelity",
+        "geometric_relation_syntax",
+        "goal_sentence_completeness",
+        "source_span_coverage",
+        "diagram_dependency_and_cross_engine"
+      ]
+    },
+    {
+      "image_id": "ext_hw_b3_04_uit_hwdb_r10",
+      "modality": "HANDWRITTEN",
+      "has_complete_problem": false,
+      "has_diagram": false,
+      "fidelity_passed": false,
+      "dual_reconciled": false,
+      "failed_checks": [
+        "vertex_and_solid_consistency",
+        "dimension_and_number_fidelity",
+        "geometric_relation_syntax",
+        "goal_sentence_completeness",
+        "source_span_coverage",
+        "diagram_dependency_and_cross_engine"
+      ]
+    },
+    {
+      "image_id": "ext_hw_b3_05_uit_hwdb_r11",
+      "modality": "HANDWRITTEN",
+      "has_complete_problem": false,
+      "has_diagram": false,
+      "fidelity_passed": false,
+      "dual_reconciled": false,
+      "failed_checks": [
+        "vertex_and_solid_consistency",
+        "dimension_and_number_fidelity",
+        "geometric_relation_syntax",
+        "goal_sentence_completeness",
+        "source_span_coverage",
+        "diagram_dependency_and_cross_engine"
+      ]
+    },
+    {
+      "image_id": "ext_hw_b3_06_uit_hwdb_r12",
+      "modality": "HANDWRITTEN",
+      "has_complete_problem": false,
+      "has_diagram": false,
+      "fidelity_passed": false,
+      "dual_reconciled": false,
+      "failed_checks": [
+        "vertex_and_solid_consistency",
+        "dimension_and_number_fidelity",
+        "geometric_relation_syntax",
+        "goal_sentence_completeness",
+        "source_span_coverage",
+        "diagram_dependency_and_cross_engine"
+      ]
+    },
+    {
+      "image_id": "ext_diag_01_vmmu_crop_r4",
+      "modality": "PRINTED_DIAGRAM_ONLY",
+      "has_complete_problem": false,
+      "has_diagram": false,
+      "fidelity_passed": false,
+      "dual_reconciled": false,
+      "failed_checks": [
+        "vertex_and_solid_consistency",
+        "dimension_and_number_fidelity",
+        "geometric_relation_syntax",
+        "goal_sentence_completeness",
+        "source_span_coverage"
+      ]
+    },
+    {
+      "image_id": "ext_diag_02_vmmu_crop_r7",
+      "modality": "PRINTED_DIAGRAM_ONLY",
+      "has_complete_problem": false,
+      "has_diagram": false,
+      "fidelity_passed": false,
+      "dual_reconciled": false,
+      "failed_checks": [
+        "vertex_and_solid_consistency",
+        "dimension_and_number_fidelity",
+        "geometric_relation_syntax",
+        "goal_sentence_completeness",
+        "source_span_coverage"
+      ]
+    },
+    {
+      "image_id": "ext_diag_03_vmmu_crop_r10",
+      "modality": "PRINTED_DIAGRAM_ONLY",
+      "has_complete_problem": false,
+      "has_diagram": false,
+      "fidelity_passed": false,
+      "dual_reconciled": false,
+      "failed_checks": [
+        "vertex_and_solid_consistency",
+        "dimension_and_number_fidelity",
+        "geometric_relation_syntax",
+        "goal_sentence_completeness",
+        "source_span_coverage"
+      ]
+    },
+    {
+      "image_id": "ext_diag_04_vmmu_crop_r11",
+      "modality": "PRINTED_DIAGRAM_ONLY",
+      "has_complete_problem": false,
+      "has_diagram": false,
+      "fidelity_passed": false,
+      "dual_reconciled": false,
+      "failed_checks": [
+        "vertex_and_solid_consistency",
+        "dimension_and_number_fidelity",
+        "geometric_relation_syntax",
+        "goal_sentence_completeness",
+        "source_span_coverage"
+      ]
+    },
+    {
+      "image_id": "ext_diag_05_vmmu_crop_r25",
+      "modality": "PRINTED_DIAGRAM_ONLY",
+      "has_complete_problem": false,
+      "has_diagram": false,
+      "fidelity_passed": false,
+      "dual_reconciled": false,
+      "failed_checks": [
+        "vertex_and_solid_consistency",
+        "dimension_and_number_fidelity",
+        "geometric_relation_syntax",
+        "goal_sentence_completeness",
+        "source_span_coverage"
+      ]
+    },
+    {
+      "image_id": "ext_diag_06_vmmu_crop_r26",
+      "modality": "PRINTED_DIAGRAM_ONLY",
+      "has_complete_problem": false,
+      "has_diagram": false,
+      "fidelity_passed": false,
+      "dual_reconciled": false,
+      "failed_checks": [
+        "vertex_and_solid_consistency",
+        "dimension_and_number_fidelity",
+        "geometric_relation_syntax",
+        "goal_sentence_completeness",
+        "source_span_coverage"
+      ]
+    },
+    {
+      "image_id": "ext_diag_07_vmmu_crop_r28",
+      "modality": "PRINTED_DIAGRAM_ONLY",
+      "has_complete_problem": false,
+      "has_diagram": false,
+      "fidelity_passed": false,
+      "dual_reconciled": false,
+      "failed_checks": [
+        "vertex_and_solid_consistency",
+        "dimension_and_number_fidelity",
+        "geometric_relation_syntax",
+        "goal_sentence_completeness",
+        "source_span_coverage"
+      ]
+    }
+  ],
+  "oracle_text_downstream_replay": [
+    {
+      "statement_id": "ext_prt_01_hd_q_5259753#1",
+      "status": "SERVED",
+      "answer": "a³√3/3",
+      "scene3d_valid": true
+    },
+    {
+      "statement_id": "ext_prt_02_hd_q_7922924#1",
+      "status": "REFUSED",
+      "reason_code": "MISSING_DIMENSION"
+    },
+    {
+      "statement_id": "ext_prt_03_hd_q_7907931#1",
+      "status": "REFUSED",
+      "reason_code": "MISSING_DIMENSION"
+    },
+    {
+      "statement_id": "ext_prt_03_hd_q_7907931#2",
+      "status": "SERVED",
+      "answer": "a³/4",
+      "scene3d_valid": true
+    },
+    {
+      "statement_id": "ext_prt_04_hd_q_8436784#1",
+      "status": "REFUSED",
+      "reason_code": "LIVE_AI_DISABLED"
+    },
+    {
+      "statement_id": "ext_prt_05_hd_q_7451806#1",
+      "status": "REFUSED",
+      "reason_code": "LIVE_AI_DISABLED"
+    },
+    {
+      "statement_id": "ext_prt_06_hd_q_1084979#1",
+      "status": "REFUSED",
+      "reason_code": "LIVE_AI_DISABLED"
+    },
+    {
+      "statement_id": "ext_prt_07_hd_q_7958052#1",
+      "status": "REFUSED",
+      "reason_code": "LIVE_AI_DISABLED"
+    },
+    {
+      "statement_id": "ext_prt_08_hd_q_7509702#1",
+      "status": "REFUSED",
+      "reason_code": "LIVE_AI_DISABLED"
+    },
+    {
+      "statement_id": "ext_prt_09_vmmu_page_r4#1",
+      "status": "SERVED",
+      "answer": "2",
+      "scene3d_valid": true
+    },
+    {
+      "statement_id": "ext_prt_10_vmmu_page_r7#1",
+      "status": "REFUSED",
+      "reason_code": "LIVE_AI_DISABLED"
+    },
+    {
+      "statement_id": "ext_prt_11_vmmu_page_r10#1",
+      "status": "REFUSED",
+      "reason_code": "LIVE_AI_DISABLED"
+    },
+    {
+      "statement_id": "ext_prt_12_vmmu_page_r11#1",
+      "status": "REFUSED",
+      "reason_code": "LIVE_AI_DISABLED"
+    },
+    {
+      "statement_id": "ext_prt_13_vmmu_page_r25#1",
+      "status": "REFUSED",
+      "reason_code": "LIVE_AI_DISABLED"
+    },
+    {
+      "statement_id": "ext_prt_14_vmmu_page_r26#1",
+      "status": "REFUSED",
+      "reason_code": "LIVE_AI_DISABLED"
+    },
+    {
+      "statement_id": "ext_prt_15_vmmu_page_r28#1",
+      "status": "REFUSED",
+      "reason_code": "LIVE_AI_DISABLED"
+    },
+    {
+      "statement_id": "ext_hw_b1_01_hd_a_6043187#1",
+      "status": "SERVED",
+      "answer": "a³√3",
+      "scene3d_valid": true
+    }
+  ]
+}

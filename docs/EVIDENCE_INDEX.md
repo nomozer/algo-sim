@@ -4,6 +4,19 @@
 Retired branch names now have local `refs/archive/repository-closure/` references and a verified private self-contained bundle.
 Existing evidence and historical reports below are unchanged; no research result is reinterpreted by this Git-state update.
 
+## WAVE_ID = UNIFIED_ANGLE_GEOMETRY_VERIFIED_IMAGE_TO_3D
+
+REPORT = docs/evaluation/geometry/runs/unified-angle-geometry-verified-image-to-3d/ALGOSIM_UNIFIED_GEOMETRY_IMAGE_TO_3D_REPORT.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/unified-angle-geometry-verified-image-to-3d/
+START_BASE = 8eb1cfab7cc515e8b1aca1564fc3913b2775e0a2 (tip of feat/local-first-geometry-understanding)
+CODE_COMMIT = c61a3589782bde35b69e8376d8ebf136314e47f3 (measured_system tree hash 69bb83ba51b834f68c106bc4d3948dc02ca35af05eca0d8f50c0e0e4cf047cb4 across 108 measured entries; CACHE_VERSION 132 unchanged)
+CLASSIFICATION = OFFLINE_UNIFIED_ANGLE_BASE_GEOMETRY_EXPANSION_AND_VERIFIED_IMAGE_TO_3D (Gate_A_Baseline_Preservation = PASS; Gate_B_Angle_Premise_Capability = PASS; Gate_C_Base_Geometry_Expansion = PASS; Gate_D_Image_Pipeline = PASS; Gate_E_Mathematical_and_Scene3D_Correctness = PASS; Gate_F_Resource_Efficiency = PASS_HOST_AND_CONSTRAINED_MEASURED; Gate_G_Independent_Evaluation = NOT_MEASURED; Gate_H_Candidate_Freeze = PASS; LOCAL_OCR_PRODUCTION_STATUS = LOCAL_OCR_DIAGNOSTIC_ONLY; OFFLINE_ROUTING_VERIFIED; RECORDED_REPLAY_VERIFIED; ORACLE_TEXT_DOWNSTREAM_REPLAY; LIVE_VISION_NOT_MEASURED; EXTERNAL_SOURCE_AVAILABLE; INDEPENDENT_GROUND_TRUTH_PENDING; INDEPENDENT_H1_VALIDATION = NOT_MEASURED; branch feat/local-first-geometry-understanding, not merged to main, not pushed)
+PRODUCT_CHANGE = YES (backend: typed_fact_next.py, typed_fact_next_bridge.py, planner.py, registry.py, engine.py, local_geometry_parser.py, adaptive_input_router.py)
+MODEL_REQUEST_COUNT = 0
+VERIFICATION = ALGOSIM_UNIFIED_GEOMETRY_IMAGE_TO_3D_REPORT.md; run.json; baseline_integrity_receipt.json; angle_premise_capability_receipt.json; dihedral_angle_correctness_receipt.json; base_geometry_family1_receipt.json; base_geometry_family2_receipt.json; planner_composition_verification.json; exact_kernel_independent_oracle.json; scene3d_geometry_parity_receipt.json; external_image_pipeline_receipt.json; ocr_fidelity_regression_receipt.json; adaptive_vision_fallback_receipt.json; independent_corpus_readiness.json; generalization_evaluation_receipt.json; low_end_performance_impact.json; full_regression_summary.json; schema-census-extension.json; tools/evaluate_unified_geometry_image_to_3d.py; backend/tests/geometry/test_angle_premise_and_dihedral_geometry.py (18/18 passed); backend/tests/geometry/test_reusable_base_geometry_families.py (7/7 passed); backend/tests/geometry/test_verified_image_to_3d_pipeline.py (3/3 passed); Full regression (14,138 pytest passed, 2,000 vitest passed, 9/9 + 5/5 Chrome E2E, 5/5 demo replay, 6/6 crash surface)
+CORRECTS = NONE
+CORRECTED_BY = NONE
+
 ## WAVE_ID = REAL_WORLD_PRINTED_HANDWRITING_ACQUISITION
 
 REPORT = docs/evaluation/geometry/runs/real-world-printed-handwriting-acquisition/ALGOSIM_REAL_WORLD_PRINTED_HANDWRITING_REPORT.md

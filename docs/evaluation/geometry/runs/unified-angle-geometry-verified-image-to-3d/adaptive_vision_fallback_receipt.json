@@ -1,0 +1,75 @@
+{
+  "schema": "algosim-adaptive-vision-fallback-receipt/1",
+  "generated_at_utc": "2026-11-10T03:58:22.093906+00:00",
+  "product_commit": "c61a3589782bde35b69e8376d8ebf136314e47f3",
+  "head_commit": "c61a3589782bde35b69e8376d8ebf136314e47f3",
+  "measured_system_tree_hash": "69bb83ba51b834f68c106bc4d3948dc02ca35af05eca0d8f50c0e0e4cf047cb4",
+  "measured_system_file_count": 108,
+  "code_version": {
+    "typed_fact_next": "typed-fact-next/2",
+    "bridge": "typed-fact-next-bridge/2",
+    "planner": "geometry-fact-planner/26",
+    "registry": "geometry-functions/33",
+    "engine": "geometry-function-engine/24",
+    "adapter": "hybrid-simulation-adapter/4",
+    "envelope": "hybrid-route-d-simulation/4",
+    "local_parser": "local-geometry-parser/1",
+    "adaptive_router": "adaptive-input-router/1",
+    "cache_version": "132"
+  },
+  "input_or_case_hash": "05f68cccefba5ce8e81f4756b7cdd44e955e04f806db4e9c1c430c41d0452688",
+  "oracle": "Adaptive Input Router route/call-count/answer contracts across Text, Printed, Handwritten, Mixed-Diagram, Conflict, and Diagram-Only inputs",
+  "test_command": "pytest backend/tests/geometry/test_verified_image_to_3d_pipeline.py backend/tests/geometry/test_adaptive_input_router.py -v",
+  "test_environment": {
+    "os": "Windows-11-10.0.26100-SP0",
+    "python": "3.12.10",
+    "cpu_logical_cores": 12,
+    "allow_live_ai": 0,
+    "live_gemini_calls": 0,
+    "benchmark_tier": "HOST_BENCHMARK_OFFLINE"
+  },
+  "expected_behavior": "All 4 input modalities route deterministically with minimal provider calls, conflict confirmation on competing math facts, and 0 live Gemini calls.",
+  "actual_behavior": "text=LOCAL_DETERMINISTIC_HYBRID, printed_zero_ai=LOCAL_OCR_VERIFIED_ZERO_AI, hw_recorded_vision=VISION_THEN_LOCAL_DETERMINISTIC (['a³√3']), conflict=NEEDS_CONFIRMATION, edited_calls=0, diagram_only=REJECTED.",
+  "verdict": "PASS",
+  "verification_labels": [
+    "OFFLINE_ROUTING_VERIFIED",
+    "RECORDED_REPLAY_VERIFIED",
+    "LIVE_VISION_NOT_MEASURED"
+  ],
+  "routes": {
+    "text_direct": {
+      "status": "SERVED",
+      "route": "LOCAL_DETERMINISTIC_HYBRID",
+      "provider_calls": 0
+    },
+    "printed_verified_local_ocr": {
+      "status": "SERVED",
+      "route": "LOCAL_OCR_VERIFIED_ZERO_AI",
+      "provider_calls": 0
+    },
+    "handwritten_recorded_vision_fallback": {
+      "status": "SERVED",
+      "route": "VISION_THEN_LOCAL_DETERMINISTIC",
+      "vision_calls": 1,
+      "typed_fact_calls": 0,
+      "answers": {
+        "q1": "a³√3"
+      }
+    },
+    "ocr_vs_vision_conflict_guard": {
+      "status": "NEEDS_CONFIRMATION",
+      "route": "VISION_NEEDS_CONFIRMATION",
+      "conflict_codes": [
+        "NUMERIC_ASSIGNMENT_CONFLICT"
+      ]
+    },
+    "user_edited_confirmation": {
+      "status": "SERVED",
+      "provider_calls": 0
+    },
+    "diagram_only_rejection": {
+      "status": "REJECTED",
+      "route": "LOCAL_CV_REJECTED_OR_SELECTION"
+    }
+  }
+}

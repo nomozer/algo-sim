@@ -1,0 +1,71 @@
+{
+  "schema": "algosim-full-regression-summary/1",
+  "generated_at_utc": "2026-11-10T04:00:01.941393+00:00",
+  "product_commit": "c61a3589782bde35b69e8376d8ebf136314e47f3",
+  "head_commit": "c61a3589782bde35b69e8376d8ebf136314e47f3",
+  "measured_system_tree_hash": "69bb83ba51b834f68c106bc4d3948dc02ca35af05eca0d8f50c0e0e4cf047cb4",
+  "measured_system_file_count": 108,
+  "code_version": {
+    "typed_fact_next": "typed-fact-next/2",
+    "bridge": "typed-fact-next-bridge/2",
+    "planner": "geometry-fact-planner/26",
+    "registry": "geometry-functions/33",
+    "engine": "geometry-function-engine/24",
+    "adapter": "hybrid-simulation-adapter/4",
+    "envelope": "hybrid-route-d-simulation/4",
+    "local_parser": "local-geometry-parser/1",
+    "adaptive_router": "adaptive-input-router/1",
+    "cache_version": "132"
+  },
+  "input_or_case_hash": "6eadc01f044693dfae8a5f0c995332c8ba91ff2049d47af28acf31f454b312ae",
+  "oracle": "Full backend pytest + frontend Vitest/tsc/Vite build + Playwright Chrome E2E + demo replay + crash surface + docs IA + publication safety + candidate freeze",
+  "test_command": "pytest backend -m 'not live_provider and not external_evidence' -q && npm run test:wave",
+  "test_environment": {
+    "os": "Windows-11-10.0.26100-SP0",
+    "python": "3.12.10",
+    "cpu_logical_cores": 12,
+    "allow_live_ai": 0,
+    "live_gemini_calls": 0,
+    "benchmark_tier": "HOST_BENCHMARK_OFFLINE"
+  },
+  "expected_behavior": "0 test failures across backend and frontend, all 15 strict XFAILs preserved, 2 promoted test_05 base-shape cases verified exact, 5/5 demo replay, 6/6 crash surface, docs IA PASS, publication safety PASS, candidate freeze MATCH.",
+  "actual_behavior": "{\"all_passed\": true, \"backend_pytest_full\": {\"command\": \"pytest backend -m \\\"not live_provider and not external_evidence\\\" -q\", \"passed\": 14138, \"skipped\": 9, \"deselected\": 1, \"xfailed_strict\": 15, \"failed\": 0, \"promoted_cases\": [\"test_correctness_ocr_performance.py::test_05a[rhombus BAD=60° -> 8√3]\", \"test_correctness_ocr_performance.py::test_05a[isosceles triangle at A -> 16]\"]}, \"focused_new_suites\": {\"test_angle_premise_and_dihedral_geometry.py\": \"18 passed\", \"test_reusable_base_geometry_families.py\": \"7 passed (26 sub-scenarios)\", \"test_verified_image_to_3d_pipeline.py\": \"3 passed\", \"test_correctness_ocr_performance.py\": \"21 passed\"}, \"frontend_vitest_tsc_build\": {\"command\": \"npm run test:wave\", \"test_files_passed\": 136, \"tests_passed\": 2000, \"tsc_errors\": 0, \"vite_production_build\": \"PASS\"}, \"browser_e2e_and_scene3d\": {\"axo_branding_browser_check\": \"9/9 PASS (0 failed requests, 0 console errors)\", \"scene3d_chromium_benchmark\": \"5/5 PASS (0 console errors)\"}, \"demo_replay\": \"5/5 PASS (+1/1 reduced chain)\", \"crash_surface_audit\": \"6/6 PASS (0 unhandled exceptions)\", \"docs_information_architecture\": \"PASS\", \"publication_safety_range\": \"PASS\", \"candidate_freeze_verify\": \"MATCH\"}",
+  "verdict": "PASS",
+  "suites": {
+    "all_passed": true,
+    "backend_pytest_full": {
+      "command": "pytest backend -m \"not live_provider and not external_evidence\" -q",
+      "passed": 14138,
+      "skipped": 9,
+      "deselected": 1,
+      "xfailed_strict": 15,
+      "failed": 0,
+      "promoted_cases": [
+        "test_correctness_ocr_performance.py::test_05a[rhombus BAD=60° -> 8√3]",
+        "test_correctness_ocr_performance.py::test_05a[isosceles triangle at A -> 16]"
+      ]
+    },
+    "focused_new_suites": {
+      "test_angle_premise_and_dihedral_geometry.py": "18 passed",
+      "test_reusable_base_geometry_families.py": "7 passed (26 sub-scenarios)",
+      "test_verified_image_to_3d_pipeline.py": "3 passed",
+      "test_correctness_ocr_performance.py": "21 passed"
+    },
+    "frontend_vitest_tsc_build": {
+      "command": "npm run test:wave",
+      "test_files_passed": 136,
+      "tests_passed": 2000,
+      "tsc_errors": 0,
+      "vite_production_build": "PASS"
+    },
+    "browser_e2e_and_scene3d": {
+      "axo_branding_browser_check": "9/9 PASS (0 failed requests, 0 console errors)",
+      "scene3d_chromium_benchmark": "5/5 PASS (0 console errors)"
+    },
+    "demo_replay": "5/5 PASS (+1/1 reduced chain)",
+    "crash_surface_audit": "6/6 PASS (0 unhandled exceptions)",
+    "docs_information_architecture": "PASS",
+    "publication_safety_range": "PASS",
+    "candidate_freeze_verify": "MATCH"
+  }
+}

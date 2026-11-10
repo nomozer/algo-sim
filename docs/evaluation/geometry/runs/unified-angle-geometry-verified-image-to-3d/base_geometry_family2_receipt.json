@@ -1,0 +1,132 @@
+{
+  "schema": "algosim-base-geometry-family2-receipt/1",
+  "generated_at_utc": "2026-11-10T03:58:20.972227+00:00",
+  "product_commit": "c61a3589782bde35b69e8376d8ebf136314e47f3",
+  "head_commit": "c61a3589782bde35b69e8376d8ebf136314e47f3",
+  "measured_system_tree_hash": "69bb83ba51b834f68c106bc4d3948dc02ca35af05eca0d8f50c0e0e4cf047cb4",
+  "measured_system_file_count": 108,
+  "code_version": {
+    "typed_fact_next": "typed-fact-next/2",
+    "bridge": "typed-fact-next-bridge/2",
+    "planner": "geometry-fact-planner/26",
+    "registry": "geometry-functions/33",
+    "engine": "geometry-function-engine/24",
+    "adapter": "hybrid-simulation-adapter/4",
+    "envelope": "hybrid-route-d-simulation/4",
+    "local_parser": "local-geometry-parser/1",
+    "adaptive_router": "adaptive-input-router/1",
+    "cache_version": "132"
+  },
+  "input_or_case_hash": "68b615800c49182882875557d4ff14a04cd8ca6a292d719281c8616f6e4dbb1d",
+  "oracle": "Exact rational Gram chart for rhombus (side+angle or two diagonals), parallelogram, and SAS triangle; strict refusal on bare rhombus without angle/diagonal",
+  "test_command": "pytest backend/tests/geometry/test_reusable_base_geometry_families.py -k family2 -v",
+  "test_environment": {
+    "os": "Windows-11-10.0.26100-SP0",
+    "python": "3.12.10",
+    "cpu_logical_cores": 12,
+    "allow_live_ai": 0,
+    "live_gemini_calls": 0,
+    "benchmark_tier": "HOST_BENCHMARK_OFFLINE"
+  },
+  "expected_behavior": "FAMILY-2 configurations solve exact in rational Gram Q; bare rhombus NEVER assumes 60° (refuses MISSING_DIMENSION); unnamed vertex angle refuses AMBIGUOUS_FACT.",
+  "actual_behavior": "pos=4/4, neg=4/4.",
+  "verdict": "PASS",
+  "distinct_from_dev72_g3": "DEV72-G3 covers dual-described-point goals in bridge_v2 (MG5); CURRICULUM-FAMILY-2 covers rhombus (60°/120°/diagonals), parallelogram, and SAS triangles.",
+  "bare_rhombus_60_assumption_check": "VERIFIED_NEVER_ASSUMED (FAM2-NEG-BARE-RHOMBUS-NO-60-ASSUMPTION -> MISSING_DIMENSION)",
+  "positive_cases": [
+    {
+      "case_id": "FAM2-RHOM-60-COMPOSED",
+      "status": "SERVED",
+      "answers": [
+        "a³/2"
+      ],
+      "expected_answers": [
+        "a³/2"
+      ],
+      "oracle_exact_match": true,
+      "scene3d_12_checks_passed": true
+    },
+    {
+      "case_id": "FAM2-RHOM-DIAGS",
+      "status": "SERVED",
+      "answers": [
+        "2a³√3"
+      ],
+      "expected_answers": [
+        "2a³√3"
+      ],
+      "oracle_exact_match": true,
+      "scene3d_12_checks_passed": true
+    },
+    {
+      "case_id": "FAM2-PARALLELOGRAM-60",
+      "status": "SERVED",
+      "answers": [
+        "3a³"
+      ],
+      "expected_answers": [
+        "3a³"
+      ],
+      "oracle_exact_match": true,
+      "scene3d_12_checks_passed": true
+    },
+    {
+      "case_id": "FAM2-TRI-SAS-120",
+      "status": "SERVED",
+      "answers": [
+        "a³/2"
+      ],
+      "expected_answers": [
+        "a³/2"
+      ],
+      "oracle_exact_match": true,
+      "scene3d_12_checks_passed": true
+    }
+  ],
+  "negative_cases": [
+    {
+      "case_id": "FAM2-NEG-BARE-RHOMBUS-NO-60-ASSUMPTION",
+      "case_sha256": "187f8db2f5a9602675fb3fdf3897046e3ea9e80fed680217d6edb30dba8192e0",
+      "status": "REFUSED",
+      "reason_code": "MISSING_DIMENSION",
+      "allowed_codes": [
+        "MISSING_DIMENSION"
+      ],
+      "arbitrary_scene3d_emitted": false,
+      "passed": true
+    },
+    {
+      "case_id": "FAM2-NEG-UNNAMED-RHOMBUS-ANGLE",
+      "case_sha256": "944202e22d19615172fa5b918cf4a076de7df8f8f992ba3386477e78f423253e",
+      "status": "REFUSED",
+      "reason_code": "AMBIGUOUS_FACT",
+      "allowed_codes": [
+        "AMBIGUOUS_FACT"
+      ],
+      "arbitrary_scene3d_emitted": false,
+      "passed": true
+    },
+    {
+      "case_id": "FAM2-NEG-RHOMBUS-IMPOSSIBLE-DIAG",
+      "case_sha256": "2fb12b2f805949656ab9b0d965f0feca30201f09da6304ae47ce4c3b01310120",
+      "status": "REFUSED",
+      "reason_code": "INCONSISTENT_FACTS",
+      "allowed_codes": [
+        "INCONSISTENT_FACTS"
+      ],
+      "arbitrary_scene3d_emitted": false,
+      "passed": true
+    },
+    {
+      "case_id": "FAM2-NEG-SAS-IRRATIONAL-GRAM",
+      "case_sha256": "9e81f4b06ec43c02972e701fa9936487ead4f484c700e7a0152a5e0f1fbd12de",
+      "status": "REFUSED",
+      "reason_code": "EXACT_DOMAIN_EXCEEDED",
+      "allowed_codes": [
+        "EXACT_DOMAIN_EXCEEDED"
+      ],
+      "arbitrary_scene3d_emitted": false,
+      "passed": true
+    }
+  ]
+}
