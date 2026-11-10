@@ -1,0 +1,156 @@
+{
+  "schema": "algosim-ocr-fidelity-regression-receipt/1",
+  "generated_at_utc": "2026-11-10T04:50:30.614554+00:00",
+  "product_commit": "7994da7a64c8dc288c4de972df2d8d1db65e0c20",
+  "head_commit": "7994da7a64c8dc288c4de972df2d8d1db65e0c20",
+  "measured_system_tree_hash": "3754cbd18f58ddfb913fb61efd3dd078b0767770cff935a975cc8c258a1859fa",
+  "measured_system_file_count": 108,
+  "code_version": {
+    "typed_fact_next": "typed-fact-next/2",
+    "bridge": "typed-fact-next-bridge/2",
+    "planner": "geometry-fact-planner/26",
+    "registry": "geometry-functions/33",
+    "engine": "geometry-function-engine/24",
+    "adapter": "hybrid-simulation-adapter/4",
+    "envelope": "hybrid-route-d-simulation/4",
+    "local_parser": "local-geometry-parser/1",
+    "adaptive_router": "adaptive-input-router/1",
+    "cache_version": "132"
+  },
+  "input_or_case_hash": "8e8cf78e2ad5e87477c57bdd10a7fab05f668471da171c5777f0588bd33c5ae5",
+  "oracle": "6-criteria Input Fidelity Gate + zero-ground-truth Dual-OCR Reconciliation Gate",
+  "test_command": "pytest backend/tests/geometry/test_verified_image_to_3d_pipeline.py -k dual_ocr -v",
+  "test_environment": {
+    "os": "Windows-11-10.0.26100-SP0",
+    "python": "3.12.10",
+    "cpu_logical_cores": 12,
+    "allow_live_ai": 0,
+    "live_gemini_calls": 0,
+    "benchmark_tier": "HOST_BENCHMARK_OFFLINE"
+  },
+  "expected_behavior": "100% of single-OCR and shared dual-OCR symbol/diagram/handwritten corruptions fail closed; clean self-contained printed control passes.",
+  "actual_behavior": "blocked=11/11, clean_control_passed=True.",
+  "verdict": "PASS",
+  "vietocr_hw_production_status": "LOCAL_OCR_DIAGNOSTIC_ONLY",
+  "vietocr_hw_loaded_in_default_process": false,
+  "clean_printed_control_passed": true,
+  "corruption_probes": [
+    {
+      "probe_id": "radical_V_digit",
+      "blocked_single_and_shared_dual_ocr": true,
+      "failed_checks": [
+        "vertex_and_solid_consistency",
+        "dimension_and_number_fidelity",
+        "geometric_relation_syntax",
+        "goal_sentence_completeness",
+        "source_span_coverage"
+      ],
+      "dual_reason_code": "UNPARSED_FACT_CANDIDATE"
+    },
+    {
+      "probe_id": "radical_aV7",
+      "blocked_single_and_shared_dual_ocr": true,
+      "failed_checks": [
+        "vertex_and_solid_consistency",
+        "dimension_and_number_fidelity",
+        "geometric_relation_syntax",
+        "goal_sentence_completeness",
+        "source_span_coverage"
+      ],
+      "dual_reason_code": "UNPARSED_FACT_CANDIDATE"
+    },
+    {
+      "probe_id": "vertex_comma_S_ABCD",
+      "blocked_single_and_shared_dual_ocr": true,
+      "failed_checks": [
+        "vertex_and_solid_consistency",
+        "dimension_and_number_fidelity",
+        "goal_sentence_completeness",
+        "source_span_coverage"
+      ],
+      "dual_reason_code": "EMPTY_SOLIDS"
+    },
+    {
+      "probe_id": "angle_degree_600",
+      "blocked_single_and_shared_dual_ocr": true,
+      "failed_checks": [
+        "dimension_and_number_fidelity"
+      ],
+      "dual_reason_code": "OCR_FIDELITY_GATE_FAILED"
+    },
+    {
+      "probe_id": "stacked_fraction_bar",
+      "blocked_single_and_shared_dual_ocr": true,
+      "failed_checks": [
+        "vertex_and_solid_consistency",
+        "dimension_and_number_fidelity",
+        "geometric_relation_syntax",
+        "goal_sentence_completeness",
+        "source_span_coverage"
+      ],
+      "dual_reason_code": "UNPARSED_FACT_CANDIDATE"
+    },
+    {
+      "probe_id": "italic_digit_in_polygon",
+      "blocked_single_and_shared_dual_ocr": true,
+      "failed_checks": [
+        "vertex_and_solid_consistency",
+        "dimension_and_number_fidelity",
+        "goal_sentence_completeness",
+        "source_span_coverage"
+      ],
+      "dual_reason_code": "SOURCE_OBJECT_MISMATCH"
+    },
+    {
+      "probe_id": "leading_digits_48C",
+      "blocked_single_and_shared_dual_ocr": true,
+      "failed_checks": [
+        "vertex_and_solid_consistency",
+        "dimension_and_number_fidelity",
+        "geometric_relation_syntax",
+        "goal_sentence_completeness",
+        "source_span_coverage"
+      ],
+      "dual_reason_code": "EMPTY_SOLIDS"
+    },
+    {
+      "probe_id": "diagram_phrase_nhu_hinh_ben",
+      "blocked_single_and_shared_dual_ocr": true,
+      "failed_checks": [
+        "diagram_dependency_and_cross_engine"
+      ],
+      "dual_reason_code": "OCR_FIDELITY_GATE_FAILED"
+    },
+    {
+      "probe_id": "diagram_phrase_ghi_tren_hinh",
+      "blocked_single_and_shared_dual_ocr": true,
+      "failed_checks": [
+        "vertex_and_solid_consistency",
+        "goal_sentence_completeness",
+        "source_span_coverage",
+        "diagram_dependency_and_cross_engine"
+      ],
+      "dual_reason_code": "UNGROUNDED_VALUE"
+    },
+    {
+      "probe_id": "mixed_text_and_diagram_flag",
+      "blocked_single_and_shared_dual_ocr": true,
+      "failed_checks": [
+        "diagram_dependency_and_cross_engine"
+      ],
+      "dual_reason_code": "DIAGRAM_CONTEXT_REQUIRES_VISION_FALLBACK"
+    },
+    {
+      "probe_id": "handwritten_modality_flag",
+      "blocked_single_and_shared_dual_ocr": true,
+      "failed_checks": [
+        "diagram_dependency_and_cross_engine"
+      ],
+      "dual_reason_code": "HANDWRITTEN_IMAGE_REQUIRES_VISION_FALLBACK"
+    }
+  ],
+  "run_id": "real-world-end-to-end-reliability",
+  "wave_id": "REAL_WORLD_END_TO_END_RELIABILITY",
+  "measurement_status": "MEASURED_OFFLINE",
+  "source": "re-executed previous-run probe builder on this product commit (read-only import)"
+}

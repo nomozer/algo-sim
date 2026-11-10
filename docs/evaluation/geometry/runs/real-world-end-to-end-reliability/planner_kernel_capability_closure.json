@@ -1,0 +1,339 @@
+{
+  "schema": "algosim-planner-kernel-capability-closure/1",
+  "generated_at_utc": "2026-11-10T04:50:29.534163+00:00",
+  "product_commit": "7994da7a64c8dc288c4de972df2d8d1db65e0c20",
+  "head_commit": "7994da7a64c8dc288c4de972df2d8d1db65e0c20",
+  "measured_system_tree_hash": "3754cbd18f58ddfb913fb61efd3dd078b0767770cff935a975cc8c258a1859fa",
+  "measured_system_file_count": 108,
+  "code_version": {
+    "typed_fact_next": "typed-fact-next/2",
+    "bridge": "typed-fact-next-bridge/2",
+    "planner": "geometry-fact-planner/26",
+    "registry": "geometry-functions/33",
+    "engine": "geometry-function-engine/24",
+    "adapter": "hybrid-simulation-adapter/4",
+    "envelope": "hybrid-route-d-simulation/4",
+    "local_parser": "local-geometry-parser/1",
+    "adaptive_router": "adaptive-input-router/1",
+    "cache_version": "132"
+  },
+  "input_or_case_hash": "aa7f6ac2228c97810fe027acb4527e28fcd9cdf2861e035b56436319c0bcec2e",
+  "oracle": "Rational-function identity in h² (metric G = G₂ ⊕ (h²), goal² = Gram-determinant ratio of degree ≤ 3) + hand oracle on positives",
+  "test_command": "pytest backend/tests/geometry/test_real_world_end_to_end_reliability.py -q",
+  "test_environment": {
+    "os": "Windows-11-10.0.26100-SP0",
+    "python": "3.12.10",
+    "cpu_logical_cores": 12,
+    "allow_live_ai": 0,
+    "live_gemini_calls": 0,
+    "benchmark_tier": "HOST_BENCHMARK_OFFLINE"
+  },
+  "expected_behavior": "Height-invariant goals with unstated height are served exactly with a labelled non-unique illustrative scene; every height-dependent, constructed-operand or mixed goal still refuses MISSING_DIMENSION.",
+  "actual_behavior": "probes passed 11/11",
+  "verdict": "PASS",
+  "run_id": "real-world-end-to-end-reliability",
+  "wave_id": "REAL_WORLD_END_TO_END_RELIABILITY",
+  "baseline_head_commit": "8d0fde3378c9b087bdbbc4c66e1a40aad3b532cc",
+  "baseline_product_commit": "c61a3589782bde35b69e8376d8ebf136314e47f3",
+  "measurement_status": "MEASURED_OFFLINE",
+  "capability": "certify_height_invariance (engine geometry-function-engine/24, no new registry primitive)",
+  "proof_sketch": "Let t = h². Solid-vertex affine coordinates do not depend on t; the metric is G = G₂ ⊕ (t), so every inner product u·v = u₂ᵀG₂v₂ + t·u_z·v_z is affine in t, and every Gram matrix has the form A + t·zzᵀ, whose determinant is affine in t (matrix determinant lemma). Hence each whitelisted goal² is P(t)/Q(t) with deg P, deg Q ≤ 2 (lengths: deg 1; point–plane / line–line / line–plane / plane–plane distances: ratio of Gram determinants, deg ≤ 1 each; cos² of angles: (u·v)² / ((u·u)(v·v)), deg ≤ 2 each), and Q(t) > 0 for t > 0 (non-degenerate solid). If the goal takes the same value c at 5 distinct t, then P − cQ (degree ≤ 2, certificate bound ≤ 3) has 5 roots, so P ≡ cQ and the goal equals c for every height.",
+  "proof_caveat": "Relies on (i) goal operands being solid vertices (coordinates independent of t) — enforced by guard; (ii) the same combinatorial frame at every sample (same free anchor, no mirror/flip) — enforced; (iii) exact Fraction/Radical evaluation (no floating point). Certificate field max_degree=3 is a conservative bound; 5 samples exceed it.",
+  "guards": [
+    "all asks in whitelist",
+    "all goal labels are solid vertices",
+    "all 5 samples SERVED with ≤1 free anchor",
+    "identical goal signature",
+    "not on mirror/flip exploration path",
+    "only after MISSING_DIMENSION"
+  ],
+  "scene_contract": "route_d.scene_configuration {unique:false, kind:HEIGHT_INVARIANT_ILLUSTRATIVE, invariance_certificate}; frontend shows #stage-illustrative-note",
+  "probes": {
+    "pos_ext03_verbatim": {
+      "expected": {
+        "status": "SERVED",
+        "answer": "a√2/2",
+        "illustrative": true
+      },
+      "actual": {
+        "status": "SERVED",
+        "reason_code": null,
+        "fallback_reason": null,
+        "answer": "a√2/2",
+        "scene_configuration": {
+          "unique": false,
+          "kind": "HEIGHT_INVARIANT_ILLUSTRATIVE",
+          "free_parameter": "height",
+          "free_for": [
+            "S"
+          ],
+          "illustrative_h2": "1",
+          "invariance_certificate": {
+            "method": "rational_function_identity_in_h2",
+            "max_degree": 3,
+            "samples_h2": [
+              "1",
+              "2",
+              "3",
+              "5",
+              "7"
+            ],
+            "goal_values": {
+              "q1": "√2/2"
+            },
+            "goal_fns": [
+              "ask_distance_point_plane"
+            ]
+          }
+        },
+        "scene3d_continuity_errors": [],
+        "chosen_route": "LOCAL_DETERMINISTIC_HYBRID",
+        "provider_calls": 0,
+        "elapsed_ms": 102.957
+      },
+      "pass": true
+    },
+    "pos_prism_line_line": {
+      "expected": {
+        "status": "SERVED",
+        "answer": "a√3",
+        "illustrative": true
+      },
+      "actual": {
+        "status": "SERVED",
+        "reason_code": null,
+        "fallback_reason": null,
+        "answer": "a√3",
+        "scene_configuration": {
+          "unique": false,
+          "kind": "HEIGHT_INVARIANT_ILLUSTRATIVE",
+          "free_parameter": "height",
+          "free_for": [
+            "ABC.A'B'C'"
+          ],
+          "illustrative_h2": "1",
+          "invariance_certificate": {
+            "method": "rational_function_identity_in_h2",
+            "max_degree": 3,
+            "samples_h2": [
+              "1",
+              "2",
+              "3",
+              "5",
+              "7"
+            ],
+            "goal_values": {
+              "q1": "√3"
+            },
+            "goal_fns": [
+              "ask_distance_lines"
+            ]
+          }
+        },
+        "scene3d_continuity_errors": [],
+        "chosen_route": "LOCAL_DETERMINISTIC_HYBRID",
+        "provider_calls": 0,
+        "elapsed_ms": 113.329
+      },
+      "pass": true
+    },
+    "pos_renamed_KMNPQ": {
+      "expected": {
+        "status": "SERVED",
+        "answer": "2√2",
+        "illustrative": true
+      },
+      "actual": {
+        "status": "SERVED",
+        "reason_code": null,
+        "fallback_reason": null,
+        "answer": "2√2",
+        "scene_configuration": {
+          "unique": false,
+          "kind": "HEIGHT_INVARIANT_ILLUSTRATIVE",
+          "free_parameter": "height",
+          "free_for": [
+            "K"
+          ],
+          "illustrative_h2": "1",
+          "invariance_certificate": {
+            "method": "rational_function_identity_in_h2",
+            "max_degree": 3,
+            "samples_h2": [
+              "1",
+              "2",
+              "3",
+              "5",
+              "7"
+            ],
+            "goal_values": {
+              "q1": "2√2"
+            },
+            "goal_fns": [
+              "ask_distance_point_plane"
+            ]
+          }
+        },
+        "scene3d_continuity_errors": [],
+        "chosen_route": "LOCAL_DETERMINISTIC_HYBRID",
+        "provider_calls": 0,
+        "elapsed_ms": 96.036
+      },
+      "pass": true
+    },
+    "neg_dependent_distance": {
+      "expected": {
+        "status": "REFUSED",
+        "answer": null,
+        "illustrative": false
+      },
+      "actual": {
+        "status": "REFUSED",
+        "reason_code": "MISSING_DIMENSION",
+        "fallback_reason": null,
+        "answer": null,
+        "scene_configuration": null,
+        "scene3d_continuity_errors": null,
+        "chosen_route": "LOCAL_AMBIGUOUS_CLARIFICATION",
+        "provider_calls": 0,
+        "elapsed_ms": 93.778
+      },
+      "pass": true
+    },
+    "neg_volume": {
+      "expected": {
+        "status": "REFUSED",
+        "answer": null,
+        "illustrative": false
+      },
+      "actual": {
+        "status": "REFUSED",
+        "reason_code": "MISSING_DIMENSION",
+        "fallback_reason": null,
+        "answer": null,
+        "scene_configuration": null,
+        "scene3d_continuity_errors": null,
+        "chosen_route": "LOCAL_AMBIGUOUS_CLARIFICATION",
+        "provider_calls": 0,
+        "elapsed_ms": 24.657
+      },
+      "pass": true
+    },
+    "neg_length": {
+      "expected": {
+        "status": "REFUSED",
+        "answer": null,
+        "illustrative": false
+      },
+      "actual": {
+        "status": "REFUSED",
+        "reason_code": "MISSING_DIMENSION",
+        "fallback_reason": null,
+        "answer": null,
+        "scene_configuration": null,
+        "scene3d_continuity_errors": null,
+        "chosen_route": "LOCAL_AMBIGUOUS_CLARIFICATION",
+        "provider_calls": 0,
+        "elapsed_ms": 104.769
+      },
+      "pass": true
+    },
+    "neg_mixed_goals": {
+      "expected": {
+        "status": "REFUSED",
+        "answer": null,
+        "illustrative": false
+      },
+      "actual": {
+        "status": "REFUSED",
+        "reason_code": "MISSING_DIMENSION",
+        "fallback_reason": null,
+        "answer": null,
+        "scene_configuration": null,
+        "scene3d_continuity_errors": null,
+        "chosen_route": "LOCAL_AMBIGUOUS_CLARIFICATION",
+        "provider_calls": 0,
+        "elapsed_ms": 201.715
+      },
+      "pass": true
+    },
+    "neg_angle_dependent": {
+      "expected": {
+        "status": "REFUSED",
+        "answer": null,
+        "illustrative": false
+      },
+      "actual": {
+        "status": "REFUSED",
+        "reason_code": "MISSING_DIMENSION",
+        "fallback_reason": null,
+        "answer": null,
+        "scene_configuration": null,
+        "scene3d_continuity_errors": null,
+        "chosen_route": "LOCAL_AMBIGUOUS_CLARIFICATION",
+        "provider_calls": 0,
+        "elapsed_ms": 127.333
+      },
+      "pass": true
+    },
+    "neg_base_dimension_missing": {
+      "expected": {
+        "status": "REFUSED",
+        "answer": null,
+        "illustrative": false
+      },
+      "actual": {
+        "status": "REFUSED",
+        "reason_code": "MISSING_DIMENSION",
+        "fallback_reason": null,
+        "answer": null,
+        "scene_configuration": null,
+        "scene3d_continuity_errors": null,
+        "chosen_route": "LOCAL_AMBIGUOUS_CLARIFICATION",
+        "provider_calls": 0,
+        "elapsed_ms": 42.673
+      },
+      "pass": true
+    },
+    "neg_constructed_operand": {
+      "expected": {
+        "status": "REFUSED",
+        "answer": null,
+        "illustrative": false
+      },
+      "actual": {
+        "status": "REFUSED",
+        "reason_code": "MISSING_DIMENSION",
+        "fallback_reason": null,
+        "answer": null,
+        "scene_configuration": null,
+        "scene3d_continuity_errors": null,
+        "chosen_route": "LOCAL_AMBIGUOUS_CLARIFICATION",
+        "provider_calls": 0,
+        "elapsed_ms": 34.066
+      },
+      "pass": true
+    },
+    "ctrl_stated_height": {
+      "expected": {
+        "status": "SERVED",
+        "answer": "6",
+        "illustrative": false
+      },
+      "actual": {
+        "status": "SERVED",
+        "reason_code": null,
+        "fallback_reason": null,
+        "answer": "6",
+        "scene_configuration": null,
+        "scene3d_continuity_errors": [],
+        "chosen_route": "LOCAL_DETERMINISTIC_HYBRID",
+        "provider_calls": 0,
+        "elapsed_ms": 48.332
+      },
+      "pass": true
+    }
+  },
+  "new_registry_primitives": 0,
+  "per_problem_handlers": 0
+}

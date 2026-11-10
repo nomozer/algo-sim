@@ -1,0 +1,305 @@
+{
+  "schema": "algosim-external17-before-after/1",
+  "generated_at_utc": "2026-11-10T04:50:31.240685+00:00",
+  "product_commit": "7994da7a64c8dc288c4de972df2d8d1db65e0c20",
+  "head_commit": "7994da7a64c8dc288c4de972df2d8d1db65e0c20",
+  "measured_system_tree_hash": "3754cbd18f58ddfb913fb61efd3dd078b0767770cff935a975cc8c258a1859fa",
+  "measured_system_file_count": 108,
+  "code_version": {
+    "typed_fact_next": "typed-fact-next/2",
+    "bridge": "typed-fact-next-bridge/2",
+    "planner": "geometry-fact-planner/26",
+    "registry": "geometry-functions/33",
+    "engine": "geometry-function-engine/24",
+    "adapter": "hybrid-simulation-adapter/4",
+    "envelope": "hybrid-route-d-simulation/4",
+    "local_parser": "local-geometry-parser/1",
+    "adaptive_router": "adaptive-input-router/1",
+    "cache_version": "132"
+  },
+  "input_or_case_hash": "7bf2d1f8d79cb90f2cfd981cb5bb8a404593a44c551fac35aaa5e79986be0bc6",
+  "oracle": "Frozen previous-run receipt (unified-angle-geometry-verified-image-to-3d/external_image_pipeline_receipt.json) vs this run + hand oracle",
+  "test_command": "python docs/evaluation/geometry/runs/real-world-end-to-end-reliability/tools/evaluate_real_world_reliability.py",
+  "test_environment": {
+    "os": "Windows-11-10.0.26100-SP0",
+    "python": "3.12.10",
+    "cpu_logical_cores": 12,
+    "allow_live_ai": 0,
+    "live_gemini_calls": 0,
+    "benchmark_tier": "HOST_BENCHMARK_OFFLINE"
+  },
+  "expected_behavior": "No regression; newly solved cases match the oracle; false MISSING_DIMENSION refusals removed.",
+  "actual_behavior": "served 4/17 → 6/17; MISSING_DIMENSION 2 → 0; wrong_served → 0; regressed=[]",
+  "verdict": "PASS",
+  "run_id": "real-world-end-to-end-reliability",
+  "wave_id": "REAL_WORLD_END_TO_END_RELIABILITY",
+  "baseline_head_commit": "8d0fde3378c9b087bdbbc4c66e1a40aad3b532cc",
+  "baseline_product_commit": "c61a3589782bde35b69e8376d8ebf136314e47f3",
+  "measurement_status": "MEASURED_OFFLINE",
+  "corpus_role": "DEVELOPMENT_DIAGNOSTIC (inspected during gap analysis; not blind, not H-1)",
+  "metrics_with_denominators": {
+    "correct_solve_rate_external17_diagnostic": "6/17",
+    "served_accuracy": "6/6",
+    "wrong_served": "0/6",
+    "local_only_zero_ai_solved": "6/17",
+    "provider_dependency_or_out_of_scope": "11/17"
+  },
+  "correction_of_previous_run": "The 2 MISSING_DIMENSION refusals (ext02, ext03#1) recorded as correct clarifications in the previous run were FALSE refusals: the asked quantities are height-invariant (CORRECTED_BY this run).",
+  "per_case": [
+    {
+      "case_id": "ext_prt_01_hd_q_5259753#1",
+      "before": {
+        "status": "SERVED",
+        "answer": "a³√3/3",
+        "reason_code": null
+      },
+      "after": {
+        "status": "SERVED",
+        "answer": "a³√3/3",
+        "reason_code": null,
+        "illustrative_scene": false
+      },
+      "change": "UNCHANGED"
+    },
+    {
+      "case_id": "ext_prt_02_hd_q_7922924#1",
+      "before": {
+        "status": "REFUSED",
+        "answer": null,
+        "reason_code": "MISSING_DIMENSION"
+      },
+      "after": {
+        "status": "SERVED",
+        "answer": "6",
+        "reason_code": null,
+        "illustrative_scene": true
+      },
+      "change": "NEWLY_SOLVED"
+    },
+    {
+      "case_id": "ext_prt_03_hd_q_7907931#1",
+      "before": {
+        "status": "REFUSED",
+        "answer": null,
+        "reason_code": "MISSING_DIMENSION"
+      },
+      "after": {
+        "status": "SERVED",
+        "answer": "a√2/2",
+        "reason_code": null,
+        "illustrative_scene": true
+      },
+      "change": "NEWLY_SOLVED"
+    },
+    {
+      "case_id": "ext_prt_03_hd_q_7907931#2",
+      "before": {
+        "status": "SERVED",
+        "answer": "a³/4",
+        "reason_code": null
+      },
+      "after": {
+        "status": "SERVED",
+        "answer": "a³/4",
+        "reason_code": null,
+        "illustrative_scene": false
+      },
+      "change": "UNCHANGED"
+    },
+    {
+      "case_id": "ext_prt_04_hd_q_8436784#1",
+      "before": {
+        "status": "REFUSED",
+        "answer": null,
+        "reason_code": "LIVE_AI_DISABLED"
+      },
+      "after": {
+        "status": "REFUSED",
+        "answer": null,
+        "reason_code": "LIVE_AI_DISABLED",
+        "illustrative_scene": false
+      },
+      "change": "UNCHANGED"
+    },
+    {
+      "case_id": "ext_prt_05_hd_q_7451806#1",
+      "before": {
+        "status": "REFUSED",
+        "answer": null,
+        "reason_code": "LIVE_AI_DISABLED"
+      },
+      "after": {
+        "status": "REFUSED",
+        "answer": null,
+        "reason_code": "LIVE_AI_DISABLED",
+        "illustrative_scene": false
+      },
+      "change": "UNCHANGED"
+    },
+    {
+      "case_id": "ext_prt_06_hd_q_1084979#1",
+      "before": {
+        "status": "REFUSED",
+        "answer": null,
+        "reason_code": "LIVE_AI_DISABLED"
+      },
+      "after": {
+        "status": "REFUSED",
+        "answer": null,
+        "reason_code": "LIVE_AI_DISABLED",
+        "illustrative_scene": false
+      },
+      "change": "UNCHANGED"
+    },
+    {
+      "case_id": "ext_prt_07_hd_q_7958052#1",
+      "before": {
+        "status": "REFUSED",
+        "answer": null,
+        "reason_code": "LIVE_AI_DISABLED"
+      },
+      "after": {
+        "status": "REFUSED",
+        "answer": null,
+        "reason_code": "LIVE_AI_DISABLED",
+        "illustrative_scene": false
+      },
+      "change": "UNCHANGED"
+    },
+    {
+      "case_id": "ext_prt_08_hd_q_7509702#1",
+      "before": {
+        "status": "REFUSED",
+        "answer": null,
+        "reason_code": "LIVE_AI_DISABLED"
+      },
+      "after": {
+        "status": "REFUSED",
+        "answer": null,
+        "reason_code": "LIVE_AI_DISABLED",
+        "illustrative_scene": false
+      },
+      "change": "UNCHANGED"
+    },
+    {
+      "case_id": "ext_prt_09_vmmu_page_r4#1",
+      "before": {
+        "status": "SERVED",
+        "answer": "2",
+        "reason_code": null
+      },
+      "after": {
+        "status": "SERVED",
+        "answer": "2",
+        "reason_code": null,
+        "illustrative_scene": false
+      },
+      "change": "UNCHANGED"
+    },
+    {
+      "case_id": "ext_prt_10_vmmu_page_r7#1",
+      "before": {
+        "status": "REFUSED",
+        "answer": null,
+        "reason_code": "LIVE_AI_DISABLED"
+      },
+      "after": {
+        "status": "REFUSED",
+        "answer": null,
+        "reason_code": "LIVE_AI_DISABLED",
+        "illustrative_scene": false
+      },
+      "change": "UNCHANGED"
+    },
+    {
+      "case_id": "ext_prt_11_vmmu_page_r10#1",
+      "before": {
+        "status": "REFUSED",
+        "answer": null,
+        "reason_code": "LIVE_AI_DISABLED"
+      },
+      "after": {
+        "status": "REFUSED",
+        "answer": null,
+        "reason_code": "LIVE_AI_DISABLED",
+        "illustrative_scene": false
+      },
+      "change": "UNCHANGED"
+    },
+    {
+      "case_id": "ext_prt_12_vmmu_page_r11#1",
+      "before": {
+        "status": "REFUSED",
+        "answer": null,
+        "reason_code": "LIVE_AI_DISABLED"
+      },
+      "after": {
+        "status": "REFUSED",
+        "answer": null,
+        "reason_code": "LIVE_AI_DISABLED",
+        "illustrative_scene": false
+      },
+      "change": "UNCHANGED"
+    },
+    {
+      "case_id": "ext_prt_13_vmmu_page_r25#1",
+      "before": {
+        "status": "REFUSED",
+        "answer": null,
+        "reason_code": "LIVE_AI_DISABLED"
+      },
+      "after": {
+        "status": "REFUSED",
+        "answer": null,
+        "reason_code": "LIVE_AI_DISABLED",
+        "illustrative_scene": false
+      },
+      "change": "UNCHANGED"
+    },
+    {
+      "case_id": "ext_prt_14_vmmu_page_r26#1",
+      "before": {
+        "status": "REFUSED",
+        "answer": null,
+        "reason_code": "LIVE_AI_DISABLED"
+      },
+      "after": {
+        "status": "REFUSED",
+        "answer": null,
+        "reason_code": "LIVE_AI_DISABLED",
+        "illustrative_scene": false
+      },
+      "change": "UNCHANGED"
+    },
+    {
+      "case_id": "ext_prt_15_vmmu_page_r28#1",
+      "before": {
+        "status": "REFUSED",
+        "answer": null,
+        "reason_code": "LIVE_AI_DISABLED"
+      },
+      "after": {
+        "status": "REFUSED",
+        "answer": null,
+        "reason_code": "LIVE_AI_DISABLED",
+        "illustrative_scene": false
+      },
+      "change": "UNCHANGED"
+    },
+    {
+      "case_id": "ext_hw_b1_01_hd_a_6043187#1",
+      "before": {
+        "status": "SERVED",
+        "answer": "a³√3",
+        "reason_code": null
+      },
+      "after": {
+        "status": "SERVED",
+        "answer": "a³√3",
+        "reason_code": null,
+        "illustrative_scene": false
+      },
+      "change": "UNCHANGED"
+    }
+  ]
+}

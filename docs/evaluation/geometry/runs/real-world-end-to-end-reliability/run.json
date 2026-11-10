@@ -1,0 +1,92 @@
+{
+  "schema": "algosim-run-manifest/1",
+  "run_id": "real-world-end-to-end-reliability",
+  "wave_id": "REAL_WORLD_END_TO_END_RELIABILITY",
+  "task": "ALGOSIM — REAL-WORLD END-TO-END RELIABILITY & HYBRID GAP CLOSURE",
+  "branch": "feat/local-first-geometry-understanding",
+  "baseline_head_commit": "8d0fde3378c9b087bdbbc4c66e1a40aad3b532cc",
+  "baseline_product_commit": "c61a3589782bde35b69e8376d8ebf136314e47f3",
+  "product_commit": "7994da7a64c8dc288c4de972df2d8d1db65e0c20",
+  "head_commit_at_generation": "7994da7a64c8dc288c4de972df2d8d1db65e0c20",
+  "measured_system_tree_hash": "3754cbd18f58ddfb913fb61efd3dd078b0767770cff935a975cc8c258a1859fa",
+  "generated_at_utc": "2026-11-10T04:50:47.953303+00:00",
+  "live_gemini_calls": 0,
+  "allow_live_ai": 0,
+  "corrects": [
+    "unified-angle-geometry-verified-image-to-3d (ext02/ext03#1 MISSING_DIMENSION were false refusals)"
+  ],
+  "independent_h1_validation": "NOT_MEASURED",
+  "receipts": {
+    "baseline_verification_receipt.json": {
+      "sha256": "9a09e1686cd769225da99a95bb8b04b9b1e0e379d220ef180b2b8d1643443b76",
+      "verdict": "PASS"
+    },
+    "external17_before_after_comparison.json": {
+      "sha256": "40a23d44cbf9d3fd1a8276d0f36067083a1eb042e07610661ce7709fca8af5fe",
+      "verdict": "PASS"
+    },
+    "external17_case_diagnostics.json": {
+      "sha256": "dabf40b3b4ba49e29380285e3afb7de7eb0bb22a9aa2d51d5e9f26af925f3d1e",
+      "verdict": "PASS"
+    },
+    "full_regression_summary.json": {
+      "sha256": "15a27555e4efbdffb29c86bacbc476c2abb73c0e60b9a6ad976d6c718ad1e955",
+      "verdict": "NOT_MEASURED"
+    },
+    "image_ingestion_end_to_end_receipt.json": {
+      "sha256": "1ba480a7452d9c13348a44463a93f31a51155e7f3c612004b5090114d63c7413",
+      "verdict": "PASS"
+    },
+    "independent_h1_readiness.json": {
+      "sha256": "15920a0f514307ce5df5a03506b33d7eccb441db88871a38777479405c8a0bfc",
+      "verdict": "NOT_MEASURED"
+    },
+    "live_ai_disabled_root_cause_analysis.json": {
+      "sha256": "65b26d5ef47095edeb5280bcac802093a30349dbaa9b2e9987a6319a2606da95",
+      "verdict": "PASS"
+    },
+    "low_end_performance_receipt.json": {
+      "sha256": "4ac5ed6d740c873c0ca1895ab62fc6b9bd8b41df7a0a69704b83fed78c9d7550",
+      "verdict": "PASS_HOST_AND_CONSTRAINED_MEASURED"
+    },
+    "mathematical_oracle_verification.json": {
+      "sha256": "45bff2fb61310c86d2b8bfb22890e3440489743cef6ae7fba2a1d9ec7c65ebbc",
+      "verdict": "PASS"
+    },
+    "ocr_fidelity_safety_receipt.json": {
+      "sha256": "1489a093ea76c0833c2f584caffca2792de785167f7c306361fa954d448f1a25",
+      "verdict": "PASS"
+    },
+    "parser_semantic_gap_closure.json": {
+      "sha256": "d5e32d39f2ca635eb1ba36c20fcc09f3a78e85cae2d179c2ff91115df27cd03f",
+      "verdict": "PASS"
+    },
+    "planner_kernel_capability_closure.json": {
+      "sha256": "914ab76ea3d7e4e3e645b4b53ea7a75564bdea0aa39a3f4f04345c2506cb3755",
+      "verdict": "PASS"
+    },
+    "scene3d_browser_acceptance.json": {
+      "sha256": "10adaa28eeda0a3eefb601dcca5c24fab060bb576599960db80f52d1b2f17d87",
+      "verdict": "PASS"
+    },
+    "typed_facts_bridge_gap_closure.json": {
+      "sha256": "9639855be8f8e3de50998245fdcc5a74f55dccb7355a14ef3d4f1c65e31b6947",
+      "verdict": "DOCUMENTED_NOT_FIXED"
+    },
+    "vision_fallback_offline_receipt.json": {
+      "sha256": "b055e785357b0745224d7c4c530291d4aadd477fb4a3cdde8d9087a27480ed07",
+      "verdict": "PASS"
+    },
+    "vision_live_readiness.json": {
+      "sha256": "beb2cd172eff132019c839e50cc7223ed75ef6878d95cc5980ecce441e7e330b",
+      "verdict": "BLOCKED_PENDING_OWNER_APPROVAL"
+    }
+  },
+  "tools": [
+    "tools/evaluate_real_world_reliability.py",
+    "tools/e2e_browser_acceptance.mjs"
+  ],
+  "raw_artifacts": [
+    "scene3d_browser_e2e_raw.json"
+  ]
+}

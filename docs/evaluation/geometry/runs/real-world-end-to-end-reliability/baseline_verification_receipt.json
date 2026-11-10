@@ -1,0 +1,60 @@
+{
+  "schema": "algosim-baseline-integrity-receipt/1",
+  "generated_at_utc": "2026-11-10T04:50:27.332267+00:00",
+  "product_commit": "7994da7a64c8dc288c4de972df2d8d1db65e0c20",
+  "head_commit": "7994da7a64c8dc288c4de972df2d8d1db65e0c20",
+  "measured_system_tree_hash": "3754cbd18f58ddfb913fb61efd3dd078b0767770cff935a975cc8c258a1859fa",
+  "measured_system_file_count": 108,
+  "code_version": {
+    "typed_fact_next": "typed-fact-next/2",
+    "bridge": "typed-fact-next-bridge/2",
+    "planner": "geometry-fact-planner/26",
+    "registry": "geometry-functions/33",
+    "engine": "geometry-function-engine/24",
+    "adapter": "hybrid-simulation-adapter/4",
+    "envelope": "hybrid-route-d-simulation/4",
+    "local_parser": "local-geometry-parser/1",
+    "adaptive_router": "adaptive-input-router/1",
+    "cache_version": "132"
+  },
+  "input_or_case_hash": "f286d2a5cae0978a6fb76b671339ca28b0a324586773eaab61066f53d03379c5",
+  "oracle": "custodian/geometry_oracle.py + C26 section closure & Source Gate + SHA-256 external cache manifest",
+  "test_command": "pytest backend/tests/geometry/test_hybrid_reasoning_generalization.py backend/tests/geometry/test_local_geometry_parser.py -q",
+  "test_environment": {
+    "os": "Windows-11-10.0.26100-SP0",
+    "python": "3.12.10",
+    "cpu_logical_cores": 12,
+    "allow_live_ai": 0,
+    "live_gemini_calls": 0,
+    "benchmark_tier": "HOST_BENCHMARK_OFFLINE"
+  },
+  "expected_behavior": "Dev72 56/56 supported + 10/10 negative + 6/6 strict XFAIL gaps; C26 70 rows & 7/7 section contracts intact; 38/38 external cached images verified with 0 in Git.",
+  "actual_behavior": "Dev72 pos=56/56, neg=10/10, gaps=6/6; C26=70, sec7=7/7; external_cache=38/38 (in_git=0).",
+  "verdict": "PASS",
+  "dev72": {
+    "total_cases": 72,
+    "supported_positive_served_exact": 56,
+    "negative_refused_correctly": 10,
+    "open_gap_probes_fail_closed": 6,
+    "wrong_served": 0
+  },
+  "c26_live_replay": {
+    "total_rows": 70,
+    "construct_plane_section_contracts_verified": 7
+  },
+  "external_image_cache": {
+    "expected_distinct_images": 38,
+    "verified_sha256_on_disk": 38,
+    "tracked_in_git": 0
+  },
+  "strict_xfail_inventory": {
+    "decorator_sites": 7,
+    "runtime_pytest_xfailed_items": 15
+  },
+  "run_id": "real-world-end-to-end-reliability",
+  "wave_id": "REAL_WORLD_END_TO_END_RELIABILITY",
+  "measurement_status": "MEASURED_OFFLINE",
+  "baseline_head_commit": "8d0fde3378c9b087bdbbc4c66e1a40aad3b532cc",
+  "baseline_product_commit": "c61a3589782bde35b69e8376d8ebf136314e47f3",
+  "baseline_freeze_verify": "MATCH (verified before edits on clean tree)"
+}

@@ -1,0 +1,323 @@
+{
+  "schema": "algosim-live-ai-disabled-root-cause/1",
+  "generated_at_utc": "2026-11-10T04:50:28.368721+00:00",
+  "product_commit": "7994da7a64c8dc288c4de972df2d8d1db65e0c20",
+  "head_commit": "7994da7a64c8dc288c4de972df2d8d1db65e0c20",
+  "measured_system_tree_hash": "3754cbd18f58ddfb913fb61efd3dd078b0767770cff935a975cc8c258a1859fa",
+  "measured_system_file_count": 108,
+  "code_version": {
+    "typed_fact_next": "typed-fact-next/2",
+    "bridge": "typed-fact-next-bridge/2",
+    "planner": "geometry-fact-planner/26",
+    "registry": "geometry-functions/33",
+    "engine": "geometry-function-engine/24",
+    "adapter": "hybrid-simulation-adapter/4",
+    "envelope": "hybrid-route-d-simulation/4",
+    "local_parser": "local-geometry-parser/1",
+    "adaptive_router": "adaptive-input-router/1",
+    "cache_version": "132"
+  },
+  "input_or_case_hash": "26af2de0fc8f8ccc8c7733e9ab723831def5ab0dd791566aaf01ae99aa8ad81e",
+  "oracle": "Per-layer trace (local parser coverage → Source Gate → Planner → Kernel) + canonical paraphrase replays + hand oracle",
+  "test_command": "python docs/evaluation/geometry/runs/real-world-end-to-end-reliability/tools/evaluate_real_world_reliability.py",
+  "test_environment": {
+    "os": "Windows-11-10.0.26100-SP0",
+    "python": "3.12.10",
+    "cpu_logical_cores": 12,
+    "allow_live_ai": 0,
+    "live_gemini_calls": 0,
+    "benchmark_tier": "HOST_BENCHMARK_OFFLINE"
+  },
+  "expected_behavior": "Every LIVE_AI_DISABLED case gets a proximate and a root layer backed by replay evidence; no case is 'missing data' unless the source truly lacks it.",
+  "actual_behavior": "LIVE_AI_DISABLED=11; root tally={'PLANNER_KERNEL': 3, 'OUTPUT_POLICY': 2, 'OUT_OF_SCOPE': 5, 'TYPED_FACTS_BRIDGE': 1}; proximate tally={'LOCAL_PARSER': 9, 'SOURCE_GATE_IN_LOCAL_VERIFICATION': 2}; canonical replays served as expected=True.",
+  "verdict": "PASS",
+  "run_id": "real-world-end-to-end-reliability",
+  "wave_id": "REAL_WORLD_END_TO_END_RELIABILITY",
+  "baseline_head_commit": "8d0fde3378c9b087bdbbc4c66e1a40aad3b532cc",
+  "baseline_product_commit": "c61a3589782bde35b69e8376d8ebf136314e47f3",
+  "measurement_status": "MEASURED_OFFLINE",
+  "classification_legend": {
+    "A": "parser grammar/wording",
+    "C": "missing premise primitive",
+    "D": "source gate premise unread",
+    "F": "planner/kernel capability",
+    "G": "out of library scope",
+    "I": "image/diagram-dependent",
+    "OUTPUT_POLICY": "answer form (rounding/degrees) not provided"
+  },
+  "cases": [
+    {
+      "case_id": "ext_prt_04_hd_q_8436784#1",
+      "class": "A→F",
+      "proximate": "LOCAL_PARSER",
+      "root": "PLANNER_KERNEL",
+      "detail": "AD = 2BC (relation without metric), plane through I parallel to two lines, ratio goal KC/KB; the library has no length-ratio goal and no affine-only (metric-free) solve path",
+      "parse_reason": "UNPARSED_GOAL_CANDIDATE",
+      "oracle": "1/2"
+    },
+    {
+      "case_id": "ext_prt_05_hd_q_7451806#1",
+      "class": "A→F/C",
+      "proximate": "LOCAL_PARSER",
+      "root": "PLANNER_KERNEL",
+      "detail": "part-to-part ratio point (FIXED this run); remaining: 'Mặt phẳng (SAD) và đường thẳng ME cắt nhau tại I' word order, named areas S1/S2 and area-ratio goal on a parallelogram without metric",
+      "parse_reason": "UNPARSED_GOAL_CANDIDATE",
+      "oracle": "ORACLE_NOT_DERIVED_IN_RUN"
+    },
+    {
+      "case_id": "ext_prt_06_hd_q_1084979#1",
+      "class": "A→F",
+      "proximate": "LOCAL_PARSER",
+      "root": "PLANNER_KERNEL",
+      "detail": "compound goal 'thể tích … và khoảng cách …'; base apex height must be deduced backward from an angle with a lateral plane (no inverse-angle primitive). Known-base paraphrase served (line–line distance capability exists)",
+      "parse_reason": "UNPARSED_GOAL_CANDIDATE",
+      "oracle": "V = a³√15/4; d(AM,NP) ORACLE_NOT_DERIVED_IN_RUN"
+    },
+    {
+      "case_id": "ext_prt_07_hd_q_7958052#1",
+      "class": "A→OUTPUT_POLICY",
+      "proximate": "LOCAL_PARSER",
+      "root": "OUTPUT_POLICY",
+      "detail": "'Â = 60°' notation and noun-phrase goal unread; canonical paraphrase served 15√93/31; original asks rounding to one decimal (no rounding output policy); height is free and the goal is height-invariant",
+      "parse_reason": "UNPARSED_FACT_CANDIDATE",
+      "oracle": "15√93/31 ≈ 4,7"
+    },
+    {
+      "case_id": "ext_prt_08_hd_q_7509702#1",
+      "class": "G",
+      "proximate": "LOCAL_PARSER",
+      "root": "OUT_OF_SCOPE",
+      "detail": "vector-sum goal (no vector-valued answers in Route D)",
+      "parse_reason": "UNPARSED_GOAL_CANDIDATE",
+      "oracle": "4·SO⃗ (vector)"
+    },
+    {
+      "case_id": "ext_prt_10_vmmu_page_r7#1",
+      "class": "G+I",
+      "proximate": "LOCAL_PARSER",
+      "root": "OUT_OF_SCOPE",
+      "detail": "cone formed from a sheet sector; diagram-dependent",
+      "parse_reason": "EMPTY_SOLIDS",
+      "oracle": "ORACLE_NOT_DERIVED_IN_RUN"
+    },
+    {
+      "case_id": "ext_prt_11_vmmu_page_r10#1",
+      "class": "D→OUTPUT_POLICY",
+      "proximate": "SOURCE_GATE_IN_LOCAL_VERIFICATION",
+      "root": "OUTPUT_POLICY",
+      "detail": "'chiều cao bằng a' on a regular triangular prism unread (SOURCE_PREMISE_UNREAD); with it, 'số đo góc' asks degrees (QUESTION_CONTEXT_UNSUPPORTED — degree output only for exact special angles not provided)",
+      "parse_reason": "QUESTION_CONTEXT_UNSUPPORTED",
+      "oracle": "30°"
+    },
+    {
+      "case_id": "ext_prt_12_vmmu_page_r11#1",
+      "class": "A/D→C",
+      "proximate": "SOURCE_GATE_IN_LOCAL_VERIFICATION",
+      "root": "TYPED_FACTS_BRIDGE",
+      "detail": "no area-premise primitive (area of square face = 12 ⇒ side); noun '… bằng' goal; side-given paraphrase served 2√3",
+      "parse_reason": "NOT_ASKED_IN_SOURCE",
+      "oracle": "2√3"
+    },
+    {
+      "case_id": "ext_prt_13_vmmu_page_r25#1",
+      "class": "G/I",
+      "proximate": "LOCAL_PARSER",
+      "root": "OUT_OF_SCOPE",
+      "detail": "real-world curved solid with rounding",
+      "parse_reason": "EMPTY_SOLIDS",
+      "oracle": "ORACLE_NOT_DERIVED_IN_RUN"
+    },
+    {
+      "case_id": "ext_prt_14_vmmu_page_r26#1",
+      "class": "G/I",
+      "proximate": "LOCAL_PARSER",
+      "root": "OUT_OF_SCOPE",
+      "detail": "spheres in cylinder",
+      "parse_reason": "EMPTY_SOLIDS",
+      "oracle": "ORACLE_NOT_DERIVED_IN_RUN"
+    },
+    {
+      "case_id": "ext_prt_15_vmmu_page_r28#1",
+      "class": "I+G",
+      "proximate": "LOCAL_PARSER",
+      "root": "OUT_OF_SCOPE",
+      "detail": "dimensions only on the diagram (NOT_RECOVERABLE from text) and curved solid",
+      "parse_reason": "EMPTY_SOLIDS",
+      "oracle": "NOT_RECOVERABLE_FROM_TEXT"
+    }
+  ],
+  "tally_root": {
+    "PLANNER_KERNEL": 3,
+    "OUTPUT_POLICY": 2,
+    "OUT_OF_SCOPE": 5,
+    "TYPED_FACTS_BRIDGE": 1
+  },
+  "tally_proximate": {
+    "LOCAL_PARSER": 9,
+    "SOURCE_GATE_IN_LOCAL_VERIFICATION": 2
+  },
+  "parser_sole_root_cause": 0,
+  "true_missing_data": 0,
+  "canonical_replays": {
+    "02_withheight": {
+      "for_case": "ext_prt_02",
+      "text_sha256": "2fc45d616d28b5a2cb05aa1a28521e1a1c56fb914ddd9a5a24ce456118f87ecf",
+      "status": "SERVED",
+      "reason_code": null,
+      "fallback_reason": null,
+      "answer": "6",
+      "scene_configuration": null,
+      "scene3d_continuity_errors": [],
+      "chosen_route": "LOCAL_DETERMINISTIC_HYBRID",
+      "provider_calls": 0,
+      "elapsed_ms": 33.467
+    },
+    "03a_withheight": {
+      "for_case": "ext_prt_03#1",
+      "text_sha256": "9e3705af1e1b7ea850c5c63fb3120ccc0bcecf6f894bb8b8d9f91c8c0e9dbc2c",
+      "status": "SERVED",
+      "reason_code": null,
+      "fallback_reason": null,
+      "answer": "a√2/2",
+      "scene_configuration": null,
+      "scene3d_continuity_errors": [],
+      "chosen_route": "LOCAL_DETERMINISTIC_HYBRID",
+      "provider_calls": 0,
+      "elapsed_ms": 30.729
+    },
+    "05_divide": {
+      "for_case": "ext_prt_05",
+      "text_sha256": "f200813f9374a1a341c0567bfcc4ea28673b895347df6cddac95a2ebbe3b3d2d",
+      "status": "SERVED",
+      "reason_code": null,
+      "fallback_reason": null,
+      "answer": "√11/2",
+      "scene_configuration": null,
+      "scene3d_continuity_errors": [],
+      "chosen_route": "LOCAL_DETERMINISTIC_HYBRID",
+      "provider_calls": 0,
+      "elapsed_ms": 38.985
+    },
+    "06_vol": {
+      "for_case": "ext_prt_06",
+      "text_sha256": "20b872885d2c37eb6c51547a3ea690f8f8f8a8f3ee73ff2d815d5a4985502490",
+      "status": "REFUSED",
+      "reason_code": "MISSING_DIMENSION",
+      "fallback_reason": null,
+      "answer": null,
+      "scene_configuration": null,
+      "scene3d_continuity_errors": null,
+      "chosen_route": "LOCAL_AMBIGUOUS_CLARIFICATION",
+      "provider_calls": 0,
+      "elapsed_ms": 25.43
+    },
+    "06_knownbase": {
+      "for_case": "ext_prt_06",
+      "text_sha256": "0ab6e185805ef7ce9ed5a528e2e893ce17991ae430dd1f5d8d8d0c2ae7ac2454",
+      "status": "SERVED",
+      "reason_code": null,
+      "fallback_reason": null,
+      "answer": "a√15/5",
+      "scene_configuration": null,
+      "scene3d_continuity_errors": [],
+      "chosen_route": "LOCAL_DETERMINISTIC_HYBRID",
+      "provider_calls": 0,
+      "elapsed_ms": 74.138
+    },
+    "07_canon": {
+      "for_case": "ext_prt_07",
+      "text_sha256": "2067dceecdd42dee0f079be2a775131960c78443b9ac5158926aee3acd57834d",
+      "status": "SERVED",
+      "reason_code": null,
+      "fallback_reason": null,
+      "answer": "15√93/31",
+      "scene_configuration": null,
+      "scene3d_continuity_errors": [],
+      "chosen_route": "LOCAL_DETERMINISTIC_HYBRID",
+      "provider_calls": 0,
+      "elapsed_ms": 41.596
+    },
+    "07_hat": {
+      "for_case": "ext_prt_07",
+      "text_sha256": "91db82ad726d136f2bd1537e84c3f0af160de55e87ce1a4f9746041a25d63ed2",
+      "status": "REFUSED",
+      "reason_code": "LIVE_AI_DISABLED",
+      "fallback_reason": "UNPARSED_FACT_CANDIDATE",
+      "answer": null,
+      "scene_configuration": null,
+      "scene3d_continuity_errors": null,
+      "chosen_route": "FAIL_CLOSED_LIVE_AI_DISABLED",
+      "provider_calls": 0,
+      "elapsed_ms": 3.369
+    },
+    "07_noun": {
+      "for_case": "ext_prt_07",
+      "text_sha256": "893abb5595fc3da0c694f9c13c9893acc6f0dcd3a8ba5bcb3b43a2152bcdf844",
+      "status": "REFUSED",
+      "reason_code": "LIVE_AI_DISABLED",
+      "fallback_reason": "SOURCE_GATE_MISMATCH:SOURCE_PREMISE_UNREAD:tiền đề \"Khoảng cách giữa hai đường thẳng AA' và BC.\" chưa được lời gọi nào đọc — có thể đổi hình; không dùng mô hình cũ",
+      "answer": null,
+      "scene_configuration": null,
+      "scene3d_continuity_errors": null,
+      "chosen_route": "FAIL_CLOSED_LIVE_AI_DISABLED",
+      "provider_calls": 0,
+      "elapsed_ms": 5.521
+    },
+    "11_cos": {
+      "for_case": "ext_prt_11",
+      "text_sha256": "7431c124dbc81ff99180b35d9f0f458d2bc93534a3b51682025e87416a084926",
+      "status": "REFUSED",
+      "reason_code": "LIVE_AI_DISABLED",
+      "fallback_reason": "SOURCE_GATE_MISMATCH:SOURCE_PREMISE_UNREAD:tiền đề \"Cho khối lăng trụ tam giác đều ABC.A'B'C' có cạnh đáy bằng 2a, chiều cao bằng a.\" chưa được lời gọi nào đọc — có thể đổi hình; không dùng mô hình cũ",
+      "answer": null,
+      "scene_configuration": null,
+      "scene3d_continuity_errors": null,
+      "chosen_route": "FAIL_CLOSED_LIVE_AI_DISABLED",
+      "provider_calls": 0,
+      "elapsed_ms": 7.853
+    },
+    "12_side": {
+      "for_case": "ext_prt_12",
+      "text_sha256": "b07cf8cf8a72b061fec8b999e95da7df9ed9ea30eb65c965d40a47916ec0a157",
+      "status": "SERVED",
+      "reason_code": null,
+      "fallback_reason": null,
+      "answer": "2√3",
+      "scene_configuration": null,
+      "scene3d_continuity_errors": [],
+      "chosen_route": "LOCAL_DETERMINISTIC_HYBRID",
+      "provider_calls": 0,
+      "elapsed_ms": 35.816
+    },
+    "12_area": {
+      "for_case": "ext_prt_12",
+      "text_sha256": "66b8062674cff5d0fa17477a62139a3aa866f7a3edbecb472691ef43b6a9f19a",
+      "status": "REFUSED",
+      "reason_code": "LIVE_AI_DISABLED",
+      "fallback_reason": "SOURCE_GATE_MISMATCH:SOURCE_PREMISE_UNREAD:tiền đề \"Cho hình lăng trụ đứng ABC.A'B'C' có đáy ABC là tam giác vuông cân tại B và diện tích của hình vuông ABB'A' bằng 12.\" chưa được lời gọi nào đọc — có thể đổi hình; không dùng mô hình cũ",
+      "answer": null,
+      "scene_configuration": null,
+      "scene3d_continuity_errors": null,
+      "chosen_route": "FAIL_CLOSED_LIVE_AI_DISABLED",
+      "provider_calls": 0,
+      "elapsed_ms": 8.93
+    },
+    "08_vec_metric": {
+      "for_case": "ext_prt_08",
+      "text_sha256": "69cebf581f8a54b2df4d46050974f92795780e5c25308b18f95fbaeb130a967e",
+      "status": "REFUSED",
+      "reason_code": "LIVE_AI_DISABLED",
+      "fallback_reason": "SOURCE_GATE_MISMATCH:UNGROUNDED_VALUE:p1: 'S.ABCD có đáy là hình vuông cạnh 2' không gắn 2 với vai trò của ô này trong một câu đọc trọn",
+      "answer": null,
+      "scene_configuration": null,
+      "scene3d_continuity_errors": null,
+      "chosen_route": "FAIL_CLOSED_LIVE_AI_DISABLED",
+      "provider_calls": 0,
+      "elapsed_ms": 5.024
+    }
+  },
+  "honesty_notes": [
+    "Proximate parser refusals are frequent (local parser is the first gate) but the parser is the SOLE root of none of the 11.",
+    "Replays are development paraphrases written by the agent; they prove downstream capability, not end-user wording coverage."
+  ]
+}

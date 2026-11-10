@@ -1,0 +1,76 @@
+{
+  "schema": "algosim-scene3d-browser-acceptance/1",
+  "generated_at_utc": "2026-11-10T04:50:31.143753+00:00",
+  "product_commit": "7994da7a64c8dc288c4de972df2d8d1db65e0c20",
+  "head_commit": "7994da7a64c8dc288c4de972df2d8d1db65e0c20",
+  "measured_system_tree_hash": "3754cbd18f58ddfb913fb61efd3dd078b0767770cff935a975cc8c258a1859fa",
+  "measured_system_file_count": 108,
+  "code_version": {
+    "typed_fact_next": "typed-fact-next/2",
+    "bridge": "typed-fact-next-bridge/2",
+    "planner": "geometry-fact-planner/26",
+    "registry": "geometry-functions/33",
+    "engine": "geometry-function-engine/24",
+    "adapter": "hybrid-simulation-adapter/4",
+    "envelope": "hybrid-route-d-simulation/4",
+    "local_parser": "local-geometry-parser/1",
+    "adaptive_router": "adaptive-input-router/1",
+    "cache_version": "132"
+  },
+  "input_or_case_hash": "cb291f9a2fa7f06657f4300b5252d6d07bfad55a212c675b8b38ec08a9b78bd8",
+  "oracle": "validate_construction_continuity + real headless Chrome against production build proxied to a live local backend",
+  "test_command": "node docs/evaluation/geometry/runs/real-world-end-to-end-reliability/tools/e2e_browser_acceptance.mjs <dist> <port> <out.json> <image>",
+  "test_environment": {
+    "os": "Windows-11-10.0.26100-SP0",
+    "python": "3.12.10",
+    "cpu_logical_cores": 12,
+    "allow_live_ai": 0,
+    "live_gemini_calls": 0,
+    "benchmark_tier": "HOST_BENCHMARK_OFFLINE"
+  },
+  "expected_behavior": "Served → canvas + no note (unique) or canvas + illustrative note (invariant); refused → no scene, no raw codes/tracebacks, analysis-specific copy on 503; image upload with AI off → no scene.",
+  "actual_behavior": "continuity_ok=True on 6 served; browser={'pass': 12, 'total': 12, 'imagePass': True}; fps=100.4–145.2; heapMB≤18.53",
+  "verdict": "PASS",
+  "run_id": "real-world-end-to-end-reliability",
+  "wave_id": "REAL_WORLD_END_TO_END_RELIABILITY",
+  "baseline_head_commit": "8d0fde3378c9b087bdbbc4c66e1a40aad3b532cc",
+  "baseline_product_commit": "c61a3589782bde35b69e8376d8ebf136314e47f3",
+  "measurement_status": "MEASURED_HOST_HEADLESS_CHROME",
+  "scene3d_continuity": {
+    "ext_prt_01_hd_q_5259753#1": {
+      "continuity_errors": [],
+      "illustrative": false
+    },
+    "ext_prt_02_hd_q_7922924#1": {
+      "continuity_errors": [],
+      "illustrative": true
+    },
+    "ext_prt_03_hd_q_7907931#1": {
+      "continuity_errors": [],
+      "illustrative": true
+    },
+    "ext_prt_03_hd_q_7907931#2": {
+      "continuity_errors": [],
+      "illustrative": false
+    },
+    "ext_prt_09_vmmu_page_r4#1": {
+      "continuity_errors": [],
+      "illustrative": false
+    },
+    "ext_hw_b1_01_hd_a_6043187#1": {
+      "continuity_errors": [],
+      "illustrative": false
+    }
+  },
+  "browser_raw_file": "scene3d_browser_e2e_raw.json",
+  "browser_summary": {
+    "pass": 12,
+    "total": 12,
+    "imagePass": true
+  },
+  "ux_defect_found_and_fixed": "Text analysis 503 LIVE_AI_DISABLED previously displayed the photo-extraction message; fixed via analyzeErrorMessage (ProblemInput stage tracking); harness asserts no photo copy.",
+  "limitations": [
+    "headless Chrome on host GPU; not a physical low-end device",
+    "1440x900 at zoom 1.0/1.1 only"
+  ]
+}

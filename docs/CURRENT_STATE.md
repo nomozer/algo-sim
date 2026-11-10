@@ -2,6 +2,15 @@
 
 CANONICAL_NEXT_ACTION = POST_NLU_BASELINE_RESEARCH_PRIORITY_DECISION
 
+## Real-world end-to-end reliability & Hybrid gap closure — 2026-11-10
+
+**GATE_A_ROOT_CAUSE_INTEGRITY = PASS · GATE_B_HYBRID_CORRECTNESS = PASS · GATE_C_IMAGE_TO_GEOMETRY = PASS_OFFLINE (LIVE_VISION_NOT_MEASURED) · GATE_D_SCENE3D_UX = PASS_HOST_BROWSER · GATE_E_EXTERNAL_COVERAGE = PASS (development/diagnostic corpus) · GATE_F_PERFORMANCE = PASS_HOST_AND_CONSTRAINED_MEASURED (PHYSICAL_LOW_END_NOT_MEASURED) · GATE_G_INDEPENDENT_EVALUATION = NOT_MEASURED · INDEPENDENT_H1_VALIDATION = NOT_MEASURED** (offline, `ALLOW_LIVE_AI=0`, `0` live Gemini calls; branch `feat/local-first-geometry-understanding`, not merged, not pushed):
+1. **Exact Kernel height-invariance certification (`engine.py`, `adapter4_route.py`):** unstated pyramid/prism heights no longer cause false `MISSING_DIMENSION` refusals when every asked quantity is a vertex-only metric goal provably independent of h (Gram determinants affine in h²; 5 exact samples); served scenes are labelled non-unique (`scene_configuration`, frontend `#stage-illustrative-note`). Height-dependent, constructed-operand and mixed goals still refuse. `0` new registry primitives, `0` per-problem handlers.
+2. **Parser:** part-to-part ratio points (`SE = 3EC`) map to the existing `point_divides_segment`.
+3. **External17 (ORACLE_TEXT_DOWNSTREAM_REPLAY, diagnostic):** `4/17 → 6/17` correct served, `MISSING_DIMENSION 2 → 0` (both were false refusals — corrects the previous run), `0` wrong-served; the 11 `LIVE_AI_DISABLED` are root-caused (Planner/Kernel 3, output policy 2, Typed/Bridge 1, out-of-scope/image 5; parser sole root 0). Real images: local OCR `0/16` (fidelity gate rejects `38/38` recorded OCR), Vision required `16/16`, live Vision NOT_MEASURED.
+4. **UX:** real browser E2E found and fixed a text-analysis 503 showing photo-extraction copy; `12/12` browser cases + image upload pass.
+Report: [`evaluation/geometry/runs/real-world-end-to-end-reliability/ALGOSIM_REAL_WORLD_END_TO_END_RELIABILITY_REPORT.md`](evaluation/geometry/runs/real-world-end-to-end-reliability/ALGOSIM_REAL_WORLD_END_TO_END_RELIABILITY_REPORT.md).
+
 ## Unified geometry capability expansion & verified image-to-3D — 2026-11-10
 
 **GATE_A_BASELINE_PRESERVATION = PASS · GATE_B_ANGLE_PREMISE_CAPABILITY = PASS · GATE_C_BASE_GEOMETRY_EXPANSION = PASS · GATE_D_IMAGE_PIPELINE = PASS · GATE_E_MATHEMATICAL_AND_SCENE3D_CORRECTNESS = PASS · GATE_F_RESOURCE_EFFICIENCY = PASS_HOST_AND_CONSTRAINED_MEASURED · GATE_G_INDEPENDENT_EVALUATION = NOT_MEASURED · GATE_H_CANDIDATE_FREEZE = PASS · LOCAL_OCR_PRODUCTION_STATUS = LOCAL_OCR_DIAGNOSTIC_ONLY · OFFLINE_ROUTING_VERIFIED · RECORDED_REPLAY_VERIFIED · ORACLE_TEXT_DOWNSTREAM_REPLAY · LIVE_VISION_NOT_MEASURED · EXTERNAL_SOURCE_AVAILABLE · INDEPENDENT_GROUND_TRUTH_PENDING · INDEPENDENT_H1_VALIDATION = NOT_MEASURED** (offline, `ALLOW_LIVE_AI=0`, `0` live Gemini calls) on branch `feat/local-first-geometry-understanding` (product commit `c61a3589782bde35b69e8376d8ebf136314e47f3`, `108` measured files `69bb83ba51b834f68c106bc4d3948dc02ca35af05eca0d8f50c0e0e4cf047cb4`, `CACHE_VERSION = 132`):

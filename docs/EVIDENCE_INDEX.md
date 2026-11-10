@@ -4,6 +4,19 @@
 Retired branch names now have local `refs/archive/repository-closure/` references and a verified private self-contained bundle.
 Existing evidence and historical reports below are unchanged; no research result is reinterpreted by this Git-state update.
 
+## WAVE_ID = REAL_WORLD_END_TO_END_RELIABILITY
+
+REPORT = docs/evaluation/geometry/runs/real-world-end-to-end-reliability/ALGOSIM_REAL_WORLD_END_TO_END_RELIABILITY_REPORT.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/real-world-end-to-end-reliability/
+START_BASE = 8d0fde3378c9b087bdbbc4c66e1a40aad3b532cc (tip of feat/local-first-geometry-understanding; product c61a3589782bde35b69e8376d8ebf136314e47f3)
+CODE_COMMIT = see run.json product_commit and docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json (CACHE_VERSION 132 unchanged)
+CLASSIFICATION = OFFLINE_REAL_WORLD_END_TO_END_RELIABILITY_AND_HYBRID_GAP_CLOSURE (Gate_A_Root_Cause_Integrity = PASS; Gate_B_Hybrid_Correctness = PASS; Gate_C_Image_to_Geometry = PASS_OFFLINE; Gate_D_Scene3D_UX = PASS_HOST_BROWSER; Gate_E_External_Coverage = PASS_DIAGNOSTIC_CORPUS; Gate_F_Performance = PASS_HOST_AND_CONSTRAINED_MEASURED; Gate_G_Independent_Evaluation = NOT_MEASURED; ORACLE_TEXT_DOWNSTREAM_REPLAY; RECORDED_REPLAY_VERIFIED; OFFLINE_ROUTING_VERIFIED; LIVE_VISION_NOT_MEASURED; PHYSICAL_LOW_END_NOT_MEASURED; INDEPENDENT_H1_VALIDATION = NOT_MEASURED; branch feat/local-first-geometry-understanding, not merged to main, not pushed)
+PRODUCT_CHANGE = YES (backend: engine.py, adapter4_route.py, local_geometry_parser.py; frontend: hybrid-preview-adapter.ts, SimulationWorkspace.tsx, photo-problem-flow.ts, ProblemInput.tsx, global.css)
+MODEL_REQUEST_COUNT = 0
+VERIFICATION = ALGOSIM_REAL_WORLD_END_TO_END_RELIABILITY_REPORT.md; run.json; baseline_verification_receipt.json; external17_case_diagnostics.json; live_ai_disabled_root_cause_analysis.json; parser_semantic_gap_closure.json; typed_facts_bridge_gap_closure.json; planner_kernel_capability_closure.json; mathematical_oracle_verification.json; image_ingestion_end_to_end_receipt.json; ocr_fidelity_safety_receipt.json; vision_fallback_offline_receipt.json; vision_live_readiness.json; scene3d_browser_acceptance.json; scene3d_browser_e2e_raw.json; external17_before_after_comparison.json; independent_h1_readiness.json; low_end_performance_receipt.json; full_regression_summary.json; tools/evaluate_real_world_reliability.py; tools/e2e_browser_acceptance.mjs; backend/tests/geometry/test_real_world_end_to_end_reliability.py
+CORRECTS = docs/evaluation/geometry/runs/unified-angle-geometry-verified-image-to-3d/ALGOSIM_UNIFIED_GEOMETRY_IMAGE_TO_3D_REPORT.md (ext_prt_02#1 and ext_prt_03#1 MISSING_DIMENSION were false refusals: the asked quantities are height-invariant)
+CORRECTED_BY = NONE
+
 ## WAVE_ID = UNIFIED_ANGLE_GEOMETRY_VERIFIED_IMAGE_TO_3D
 
 REPORT = docs/evaluation/geometry/runs/unified-angle-geometry-verified-image-to-3d/ALGOSIM_UNIFIED_GEOMETRY_IMAGE_TO_3D_REPORT.md
@@ -15,7 +28,7 @@ PRODUCT_CHANGE = YES (backend: typed_fact_next.py, typed_fact_next_bridge.py, pl
 MODEL_REQUEST_COUNT = 0
 VERIFICATION = ALGOSIM_UNIFIED_GEOMETRY_IMAGE_TO_3D_REPORT.md; run.json; baseline_integrity_receipt.json; angle_premise_capability_receipt.json; dihedral_angle_correctness_receipt.json; base_geometry_family1_receipt.json; base_geometry_family2_receipt.json; planner_composition_verification.json; exact_kernel_independent_oracle.json; scene3d_geometry_parity_receipt.json; external_image_pipeline_receipt.json; ocr_fidelity_regression_receipt.json; adaptive_vision_fallback_receipt.json; independent_corpus_readiness.json; generalization_evaluation_receipt.json; low_end_performance_impact.json; full_regression_summary.json; schema-census-extension.json; tools/evaluate_unified_geometry_image_to_3d.py; backend/tests/geometry/test_angle_premise_and_dihedral_geometry.py (18/18 passed); backend/tests/geometry/test_reusable_base_geometry_families.py (7/7 passed); backend/tests/geometry/test_verified_image_to_3d_pipeline.py (3/3 passed); Full regression (14,138 pytest passed, 2,000 vitest passed, 9/9 + 5/5 Chrome E2E, 5/5 demo replay, 6/6 crash surface)
 CORRECTS = NONE
-CORRECTED_BY = NONE
+CORRECTED_BY = docs/evaluation/geometry/runs/real-world-end-to-end-reliability/ALGOSIM_REAL_WORLD_END_TO_END_RELIABILITY_REPORT.md (the 2/17 MISSING_DIMENSION outcomes on ext_prt_02#1 and ext_prt_03#1 were false refusals — height-invariant goals now served 6 and a√2/2 with a labelled illustrative scene)
 
 ## WAVE_ID = REAL_WORLD_PRINTED_HANDWRITING_ACQUISITION
 

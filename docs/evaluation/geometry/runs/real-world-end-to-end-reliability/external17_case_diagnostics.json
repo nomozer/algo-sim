@@ -1,0 +1,852 @@
+{
+  "schema": "algosim-external17-case-diagnostics/1",
+  "generated_at_utc": "2026-11-10T04:50:27.953506+00:00",
+  "product_commit": "7994da7a64c8dc288c4de972df2d8d1db65e0c20",
+  "head_commit": "7994da7a64c8dc288c4de972df2d8d1db65e0c20",
+  "measured_system_tree_hash": "3754cbd18f58ddfb913fb61efd3dd078b0767770cff935a975cc8c258a1859fa",
+  "measured_system_file_count": 108,
+  "code_version": {
+    "typed_fact_next": "typed-fact-next/2",
+    "bridge": "typed-fact-next-bridge/2",
+    "planner": "geometry-fact-planner/26",
+    "registry": "geometry-functions/33",
+    "engine": "geometry-function-engine/24",
+    "adapter": "hybrid-simulation-adapter/4",
+    "envelope": "hybrid-route-d-simulation/4",
+    "local_parser": "local-geometry-parser/1",
+    "adaptive_router": "adaptive-input-router/1",
+    "cache_version": "132"
+  },
+  "input_or_case_hash": "7bf2d1f8d79cb90f2cfd981cb5bb8a404593a44c551fac35aaa5e79986be0bc6",
+  "oracle": "Hand oracle (ORACLE dict in tool) + printed MC keys",
+  "test_command": "python docs/evaluation/geometry/runs/real-world-end-to-end-reliability/tools/evaluate_real_world_reliability.py",
+  "test_environment": {
+    "os": "Windows-11-10.0.26100-SP0",
+    "python": "3.12.10",
+    "cpu_logical_cores": 12,
+    "allow_live_ai": 0,
+    "live_gemini_calls": 0,
+    "benchmark_tier": "HOST_BENCHMARK_OFFLINE"
+  },
+  "expected_behavior": "Per-case layer trace for all 17 statements; 0 wrong-served.",
+  "actual_behavior": "{\"statements\": 17, \"served\": 6, \"correct_served\": 6, \"wrong_served\": 0, \"missing_dimension_refusals\": 0, \"live_ai_disabled\": 11, \"served_ids\": [\"ext_prt_01_hd_q_5259753#1\", \"ext_prt_02_hd_q_7922924#1\", \"ext_prt_03_hd_q_7907931#1\", \"ext_prt_03_hd_q_7907931#2\", \"ext_prt_09_vmmu_page_r4#1\", \"ext_hw_b1_01_hd_a_6043187#1\"]}",
+  "verdict": "PASS",
+  "run_id": "real-world-end-to-end-reliability",
+  "wave_id": "REAL_WORLD_END_TO_END_RELIABILITY",
+  "baseline_head_commit": "8d0fde3378c9b087bdbbc4c66e1a40aad3b532cc",
+  "baseline_product_commit": "c61a3589782bde35b69e8376d8ebf136314e47f3",
+  "measurement_status": "ORACLE_TEXT_DOWNSTREAM_REPLAY (MEASURED_OFFLINE)",
+  "summary": {
+    "statements": 17,
+    "served": 6,
+    "correct_served": 6,
+    "wrong_served": 0,
+    "missing_dimension_refusals": 0,
+    "live_ai_disabled": 11,
+    "served_ids": [
+      "ext_prt_01_hd_q_5259753#1",
+      "ext_prt_02_hd_q_7922924#1",
+      "ext_prt_03_hd_q_7907931#1",
+      "ext_prt_03_hd_q_7907931#2",
+      "ext_prt_09_vmmu_page_r4#1",
+      "ext_hw_b1_01_hd_a_6043187#1"
+    ]
+  },
+  "cases": [
+    {
+      "case_id": "ext_prt_01_hd_q_5259753#1",
+      "source_url": "https://hoidap247.com/cau-hoi/5259753",
+      "original_file_sha256": "80e0da6de3a76dd066eb6677a5c87162f05fc52c5d0220b6c0b8389bca3db7fc",
+      "modality": "PRINTED",
+      "has_geometry_diagram": false,
+      "text_sha256": "f7fa906249b34de0b15d11e9995145647c2b538a47b1b193df4da3c035c92821",
+      "input_mode": "ORACLE_TEXT_DOWNSTREAM_REPLAY (verbatim ground-truth transcription)",
+      "local_parse": {
+        "status": "LOCAL_PARSE_COMPLETE",
+        "reason_code": null,
+        "unmapped_clauses": []
+      },
+      "typed_facts_bridge": "PASSED",
+      "route": {
+        "status": "SERVED",
+        "reason_code": null,
+        "fallback_reason": null,
+        "answer": "a³√3/3",
+        "scene_configuration": null,
+        "scene3d_continuity_errors": [],
+        "chosen_route": "LOCAL_DETERMINISTIC_HYBRID",
+        "provider_calls": 0,
+        "elapsed_ms": 36.147
+      },
+      "oracle": {
+        "answer": "a³√3/3",
+        "derivation": "SA = AB·tan60° = a√3; V = (1/3)·a²·a√3 = a³√3/3"
+      },
+      "verdict": "CORRECT_SERVED",
+      "root_cause": {
+        "class": "NONE_SERVED"
+      },
+      "gemini_calls": 0,
+      "live_vision": "LIVE_VISION_NOT_MEASURED"
+    },
+    {
+      "case_id": "ext_prt_02_hd_q_7922924#1",
+      "source_url": "https://hoidap247.com/cau-hoi/7922924",
+      "original_file_sha256": "0f405f8ae6efa2f33b5e0b9aa629af27dd7f48dbc5dbf5fd8f41621a9eac0bd4",
+      "modality": "PRINTED",
+      "has_geometry_diagram": true,
+      "text_sha256": "1d09aafbbe86fd3b02fc59be44faf8aa21c927505c6c3a5b43e239a38533ff73",
+      "input_mode": "ORACLE_TEXT_DOWNSTREAM_REPLAY (verbatim ground-truth transcription)",
+      "local_parse": {
+        "status": "LOCAL_PARSE_PARTIAL",
+        "reason_code": "NOT_ASKED_IN_SOURCE",
+        "unmapped_clauses": []
+      },
+      "typed_facts_bridge": "PASSED",
+      "route": {
+        "status": "SERVED",
+        "reason_code": null,
+        "fallback_reason": null,
+        "answer": "6",
+        "scene_configuration": {
+          "unique": false,
+          "kind": "HEIGHT_INVARIANT_ILLUSTRATIVE",
+          "free_parameter": "height",
+          "free_for": [
+            "A'"
+          ],
+          "illustrative_h2": "1",
+          "invariance_certificate": {
+            "method": "rational_function_identity_in_h2",
+            "max_degree": 3,
+            "samples_h2": [
+              "1",
+              "2",
+              "3",
+              "5",
+              "7"
+            ],
+            "goal_values": {
+              "q1": "6"
+            },
+            "goal_fns": [
+              "ask_distance_point_plane"
+            ]
+          }
+        },
+        "scene3d_continuity_errors": [],
+        "chosen_route": "LOCAL_DETERMINISTIC_HYBRID",
+        "provider_calls": 0,
+        "elapsed_ms": 83.129
+      },
+      "oracle": {
+        "answer": "6",
+        "derivation": "BC ⊥ AB (vuông cân tại B) và BC ⊥ BB' ⇒ BC ⊥ (ABB'A'); d = CB = AB = 6, độc lập chiều cao lăng trụ; đáp án in trong đề: D. 6"
+      },
+      "verdict": "CORRECT_SERVED",
+      "root_cause": {
+        "class": "NONE_SERVED"
+      },
+      "gemini_calls": 0,
+      "live_vision": "LIVE_VISION_NOT_MEASURED"
+    },
+    {
+      "case_id": "ext_prt_03_hd_q_7907931#1",
+      "source_url": "https://hoidap247.com/cau-hoi/7907931",
+      "original_file_sha256": "7d4fce5c2f698aa45322a907d94f1f7bcbf85b89825722d4286660ca4f89cb19",
+      "modality": "PRINTED",
+      "has_geometry_diagram": false,
+      "text_sha256": "88718043dce9933adfa02d4041c851172028d066ef60c5d16f7b85ed8cf1a6cd",
+      "input_mode": "ORACLE_TEXT_DOWNSTREAM_REPLAY (verbatim ground-truth transcription)",
+      "local_parse": {
+        "status": "LOCAL_PARSE_COMPLETE",
+        "reason_code": null,
+        "unmapped_clauses": []
+      },
+      "typed_facts_bridge": "PASSED",
+      "route": {
+        "status": "SERVED",
+        "reason_code": null,
+        "fallback_reason": null,
+        "answer": "a√2/2",
+        "scene_configuration": {
+          "unique": false,
+          "kind": "HEIGHT_INVARIANT_ILLUSTRATIVE",
+          "free_parameter": "height",
+          "free_for": [
+            "S"
+          ],
+          "illustrative_h2": "1",
+          "invariance_certificate": {
+            "method": "rational_function_identity_in_h2",
+            "max_degree": 3,
+            "samples_h2": [
+              "1",
+              "2",
+              "3",
+              "5",
+              "7"
+            ],
+            "goal_values": {
+              "q1": "√2/2"
+            },
+            "goal_fns": [
+              "ask_distance_point_plane"
+            ]
+          }
+        },
+        "scene3d_continuity_errors": [],
+        "chosen_route": "LOCAL_DETERMINISTIC_HYBRID",
+        "provider_calls": 0,
+        "elapsed_ms": 84.249
+      },
+      "oracle": {
+        "answer": "a√2/2",
+        "derivation": "O = tâm hình vuông; BO ⊥ AC, BO ⊥ SA ⇒ BO ⊥ (SAC); d = BO = a√2/2, độc lập SA"
+      },
+      "verdict": "CORRECT_SERVED",
+      "root_cause": {
+        "class": "NONE_SERVED"
+      },
+      "gemini_calls": 0,
+      "live_vision": "LIVE_VISION_NOT_MEASURED"
+    },
+    {
+      "case_id": "ext_prt_03_hd_q_7907931#2",
+      "source_url": "https://hoidap247.com/cau-hoi/7907931",
+      "original_file_sha256": "7d4fce5c2f698aa45322a907d94f1f7bcbf85b89825722d4286660ca4f89cb19",
+      "modality": "PRINTED",
+      "has_geometry_diagram": false,
+      "text_sha256": "bd26076d660659babb719fbb7b9c292cd486c74934447ccc70d54ccebdbc0f28",
+      "input_mode": "ORACLE_TEXT_DOWNSTREAM_REPLAY (verbatim ground-truth transcription)",
+      "local_parse": {
+        "status": "LOCAL_PARSE_COMPLETE",
+        "reason_code": null,
+        "unmapped_clauses": []
+      },
+      "typed_facts_bridge": "PASSED",
+      "route": {
+        "status": "SERVED",
+        "reason_code": null,
+        "fallback_reason": null,
+        "answer": "a³/4",
+        "scene_configuration": null,
+        "scene3d_continuity_errors": [],
+        "chosen_route": "LOCAL_DETERMINISTIC_HYBRID",
+        "provider_calls": 0,
+        "elapsed_ms": 38.048
+      },
+      "oracle": {
+        "answer": "a³/4",
+        "derivation": "S_ABC = a²√3/4; V = (1/3)·(a²√3/4)·a√3 = a³/4"
+      },
+      "verdict": "CORRECT_SERVED",
+      "root_cause": {
+        "class": "NONE_SERVED"
+      },
+      "gemini_calls": 0,
+      "live_vision": "LIVE_VISION_NOT_MEASURED"
+    },
+    {
+      "case_id": "ext_prt_04_hd_q_8436784#1",
+      "source_url": "https://hoidap247.com/cau-hoi/8436784",
+      "original_file_sha256": "ef5aeba88614b8780d102f8f6c810c694a3adf77872369b9e2b122f2ff02592a",
+      "modality": "PRINTED",
+      "has_geometry_diagram": false,
+      "text_sha256": "ce8dc967c4ab25e1e35550a2bc117c141664a8d082e618ab5e28479e46f8c469",
+      "input_mode": "ORACLE_TEXT_DOWNSTREAM_REPLAY (verbatim ground-truth transcription)",
+      "local_parse": {
+        "status": "LOCAL_PARSE_PARTIAL",
+        "reason_code": "UNPARSED_GOAL_CANDIDATE",
+        "unmapped_clauses": [
+          {
+            "classification": "UNPARSED_FACT_CANDIDATE",
+            "text": "Cho hình chóp S.ABCD có đáy ABCD là hình thang với AD song song BC và AD = 2BC"
+          },
+          {
+            "classification": "UNPARSED_FACT_CANDIDATE",
+            "text": "Mặt phẳng (P) qua I và song song với hai đường thẳng SA, SC"
+          },
+          {
+            "classification": "UNPARSED_FACT_CANDIDATE",
+            "text": "Gọi K là giao điểm của BC với (P)"
+          },
+          {
+            "classification": "UNPARSED_GOAL_CANDIDATE",
+            "text": "Khi đó tính tỉ số KC/KB"
+          }
+        ]
+      },
+      "typed_facts_bridge": "UNKNOWN",
+      "route": {
+        "status": "REFUSED",
+        "reason_code": "LIVE_AI_DISABLED",
+        "fallback_reason": "UNPARSED_GOAL_CANDIDATE",
+        "answer": null,
+        "scene_configuration": null,
+        "scene3d_continuity_errors": null,
+        "chosen_route": "FAIL_CLOSED_LIVE_AI_DISABLED",
+        "provider_calls": 0,
+        "elapsed_ms": 3.385
+      },
+      "oracle": {
+        "answer": null,
+        "oracle_value": "1/2",
+        "derivation": "(P) ∥ (SAC) ⇒ (P)∩(ABCD) ∥ AC qua I; affine: K = B + 2·BC⃗ ⇒ KC/KB = 1/2"
+      },
+      "verdict": "FAIL_CLOSED_NOT_SOLVED",
+      "root_cause": {
+        "class": "A→F",
+        "proximate": "LOCAL_PARSER",
+        "root": "PLANNER_KERNEL",
+        "detail": "AD = 2BC (relation without metric), plane through I parallel to two lines, ratio goal KC/KB; the library has no length-ratio goal and no affine-only (metric-free) solve path"
+      },
+      "gemini_calls": 0,
+      "live_vision": "LIVE_VISION_NOT_MEASURED"
+    },
+    {
+      "case_id": "ext_prt_05_hd_q_7451806#1",
+      "source_url": "https://hoidap247.com/cau-hoi/7451806",
+      "original_file_sha256": "0a2ee11bff0ffd665eb616457b909695dcbf1f0f14e5f40ac8819941f54da162",
+      "modality": "PRINTED",
+      "has_geometry_diagram": false,
+      "text_sha256": "36bb3422f47bcb4bd1f01f1ad561c3c11ca79c516947d979f32ac88f51e29122",
+      "input_mode": "ORACLE_TEXT_DOWNSTREAM_REPLAY (verbatim ground-truth transcription)",
+      "local_parse": {
+        "status": "LOCAL_PARSE_PARTIAL",
+        "reason_code": "UNPARSED_GOAL_CANDIDATE",
+        "unmapped_clauses": [
+          {
+            "classification": "UNPARSED_FACT_CANDIDATE",
+            "text": "Mặt phẳng (SAD) và đường thẳng ME cắt nhau tại I"
+          },
+          {
+            "classification": "UNPARSED_FACT_CANDIDATE",
+            "text": "Gọi S1; S2 lần lượt là diện tích tam giác SMI và tứ giác BCEM"
+          },
+          {
+            "classification": "UNPARSED_GOAL_CANDIDATE",
+            "text": "Tính S1/S2"
+          }
+        ]
+      },
+      "typed_facts_bridge": "UNKNOWN",
+      "route": {
+        "status": "REFUSED",
+        "reason_code": "LIVE_AI_DISABLED",
+        "fallback_reason": "UNPARSED_GOAL_CANDIDATE",
+        "answer": null,
+        "scene_configuration": null,
+        "scene3d_continuity_errors": null,
+        "chosen_route": "FAIL_CLOSED_LIVE_AI_DISABLED",
+        "provider_calls": 0,
+        "elapsed_ms": 3.681
+      },
+      "oracle": {
+        "answer": null,
+        "oracle_value": "ORACLE_NOT_DERIVED_IN_RUN",
+        "derivation": "not derived (case refused; area-ratio goal outside library)"
+      },
+      "verdict": "FAIL_CLOSED_NOT_SOLVED",
+      "root_cause": {
+        "class": "A→F/C",
+        "proximate": "LOCAL_PARSER",
+        "root": "PLANNER_KERNEL",
+        "detail": "part-to-part ratio point (FIXED this run); remaining: 'Mặt phẳng (SAD) và đường thẳng ME cắt nhau tại I' word order, named areas S1/S2 and area-ratio goal on a parallelogram without metric"
+      },
+      "gemini_calls": 0,
+      "live_vision": "LIVE_VISION_NOT_MEASURED"
+    },
+    {
+      "case_id": "ext_prt_06_hd_q_1084979#1",
+      "source_url": "https://hoidap247.com/cau-hoi/1084979",
+      "original_file_sha256": "d404d846526925de750598309423bb973ee02c07d50b504fca3e53b0859b6c6e",
+      "modality": "PRINTED",
+      "has_geometry_diagram": false,
+      "text_sha256": "dbd4a03028e10ca6becc88763d5dcd85f4d3193419603bbc474f4e2d496815f2",
+      "input_mode": "ORACLE_TEXT_DOWNSTREAM_REPLAY (verbatim ground-truth transcription)",
+      "local_parse": {
+        "status": "LOCAL_PARSE_PARTIAL",
+        "reason_code": "UNPARSED_GOAL_CANDIDATE",
+        "unmapped_clauses": [
+          {
+            "classification": "UNPARSED_GOAL_CANDIDATE",
+            "text": "Tính thể tích khối lăng trụ ABC.A'B'C' và khoảng cách giữa hai đường thẳng AM và NP theo a"
+          }
+        ]
+      },
+      "typed_facts_bridge": "UNKNOWN",
+      "route": {
+        "status": "REFUSED",
+        "reason_code": "LIVE_AI_DISABLED",
+        "fallback_reason": "UNPARSED_GOAL_CANDIDATE",
+        "answer": null,
+        "scene_configuration": null,
+        "scene3d_continuity_errors": null,
+        "chosen_route": "FAIL_CLOSED_LIVE_AI_DISABLED",
+        "provider_calls": 0,
+        "elapsed_ms": 3.749
+      },
+      "oracle": {
+        "answer": null,
+        "oracle_value": "V = a³√15/4; d(AM,NP) ORACLE_NOT_DERIVED_IN_RUN",
+        "derivation": "H trung điểm AB ⇒ CH ⊥ (ABB'A'); tan60° = C'H'/BH', BH' = a√5/2 ⇒ CH = a√15/2; V = (1/2)·a·(a√15/2)·a"
+      },
+      "verdict": "FAIL_CLOSED_NOT_SOLVED",
+      "root_cause": {
+        "class": "A→F",
+        "proximate": "LOCAL_PARSER",
+        "root": "PLANNER_KERNEL",
+        "detail": "compound goal 'thể tích … và khoảng cách …'; base apex height must be deduced backward from an angle with a lateral plane (no inverse-angle primitive). Known-base paraphrase served (line–line distance capability exists)"
+      },
+      "gemini_calls": 0,
+      "live_vision": "LIVE_VISION_NOT_MEASURED"
+    },
+    {
+      "case_id": "ext_prt_07_hd_q_7958052#1",
+      "source_url": "https://hoidap247.com/cau-hoi/7958052",
+      "original_file_sha256": "de55e23b0be5986792fac8858ae8a0f84b3d248fc3935c7f3ed1b05aa3e8de8d",
+      "modality": "PRINTED",
+      "has_geometry_diagram": false,
+      "text_sha256": "b46588c46c43429f5e4bf5e880a3968d73c06e5bef8d40a4cd0d7e8b69c6df1b",
+      "input_mode": "ORACLE_TEXT_DOWNSTREAM_REPLAY (verbatim ground-truth transcription)",
+      "local_parse": {
+        "status": "LOCAL_PARSE_PARTIAL",
+        "reason_code": "UNPARSED_FACT_CANDIDATE",
+        "unmapped_clauses": [
+          {
+            "classification": "UNPARSED_FACT_CANDIDATE",
+            "text": "Cho hình lăng trụ đứng ABC.A'B'C' có AB = 5, AC = 6, Â = 60°"
+          }
+        ]
+      },
+      "typed_facts_bridge": "UNKNOWN",
+      "route": {
+        "status": "REFUSED",
+        "reason_code": "LIVE_AI_DISABLED",
+        "fallback_reason": "UNPARSED_FACT_CANDIDATE",
+        "answer": null,
+        "scene_configuration": null,
+        "scene3d_continuity_errors": null,
+        "chosen_route": "FAIL_CLOSED_LIVE_AI_DISABLED",
+        "provider_calls": 0,
+        "elapsed_ms": 3.565
+      },
+      "oracle": {
+        "answer": null,
+        "oracle_value": "15√93/31 ≈ 4,7",
+        "derivation": "d(AA',BC) = d(A,BC) trong ΔABC: BC² = 25+36−30 = 31, S = 15√3/2 ⇒ h = 15√3/√31 = 15√93/31 ≈ 4,665"
+      },
+      "verdict": "FAIL_CLOSED_NOT_SOLVED",
+      "root_cause": {
+        "class": "A→OUTPUT_POLICY",
+        "proximate": "LOCAL_PARSER",
+        "root": "OUTPUT_POLICY",
+        "detail": "'Â = 60°' notation and noun-phrase goal unread; canonical paraphrase served 15√93/31; original asks rounding to one decimal (no rounding output policy); height is free and the goal is height-invariant"
+      },
+      "gemini_calls": 0,
+      "live_vision": "LIVE_VISION_NOT_MEASURED"
+    },
+    {
+      "case_id": "ext_prt_08_hd_q_7509702#1",
+      "source_url": "https://hoidap247.com/cau-hoi/7509702",
+      "original_file_sha256": "831ba2d6e66dcba036aaf2356365a163f3d66c750a0508dc8613a29ade3980e7",
+      "modality": "PRINTED",
+      "has_geometry_diagram": true,
+      "text_sha256": "7374858f3843fe61e94b5f4dbd92120ad89e27a658eb902632b677b2f071b6d2",
+      "input_mode": "ORACLE_TEXT_DOWNSTREAM_REPLAY (verbatim ground-truth transcription)",
+      "local_parse": {
+        "status": "LOCAL_PARSE_PARTIAL",
+        "reason_code": "UNPARSED_GOAL_CANDIDATE",
+        "unmapped_clauses": [
+          {
+            "classification": "UNPARSED_GOAL_CANDIDATE",
+            "text": "Tính tổng vectơ SA + SB + SC + SD"
+          }
+        ]
+      },
+      "typed_facts_bridge": "UNKNOWN",
+      "route": {
+        "status": "REFUSED",
+        "reason_code": "LIVE_AI_DISABLED",
+        "fallback_reason": "UNPARSED_GOAL_CANDIDATE",
+        "answer": null,
+        "scene_configuration": null,
+        "scene3d_continuity_errors": null,
+        "chosen_route": "FAIL_CLOSED_LIVE_AI_DISABLED",
+        "provider_calls": 0,
+        "elapsed_ms": 2.427
+      },
+      "oracle": {
+        "answer": null,
+        "oracle_value": "4·SO⃗ (vector)",
+        "derivation": "SA⃗+SC⃗ = 2SO⃗, SB⃗+SD⃗ = 2SO⃗ (O trung điểm hai đường chéo)"
+      },
+      "verdict": "FAIL_CLOSED_NOT_SOLVED",
+      "root_cause": {
+        "class": "G",
+        "proximate": "LOCAL_PARSER",
+        "root": "OUT_OF_SCOPE",
+        "detail": "vector-sum goal (no vector-valued answers in Route D)"
+      },
+      "gemini_calls": 0,
+      "live_vision": "LIVE_VISION_NOT_MEASURED"
+    },
+    {
+      "case_id": "ext_prt_09_vmmu_page_r4#1",
+      "source_url": "https://huggingface.co/datasets/anvo25/vmmu",
+      "original_file_sha256": "3aa6480bd6b49b4dba9c3cc050440f44f156f30a3e856a47917951682c19f087",
+      "modality": "PRINTED",
+      "has_geometry_diagram": true,
+      "text_sha256": "e85299c6f7665005570defd19d25568fba6dcfd8d06f78c2289a5432573fc465",
+      "input_mode": "ORACLE_TEXT_DOWNSTREAM_REPLAY (verbatim ground-truth transcription)",
+      "local_parse": {
+        "status": "LOCAL_PARSE_PARTIAL",
+        "reason_code": "NOT_ASKED_IN_SOURCE",
+        "unmapped_clauses": []
+      },
+      "typed_facts_bridge": "PASSED",
+      "route": {
+        "status": "SERVED",
+        "reason_code": null,
+        "fallback_reason": null,
+        "answer": "2",
+        "scene_configuration": null,
+        "scene3d_continuity_errors": [],
+        "chosen_route": "LOCAL_DETERMINISTIC_HYBRID",
+        "provider_calls": 0,
+        "elapsed_ms": 32.727
+      },
+      "oracle": {
+        "answer": "2",
+        "derivation": "S_ABC = (1/2)·2·2 = 2; V = (1/3)·2·3 = 2; đáp án in: B. 2"
+      },
+      "verdict": "CORRECT_SERVED",
+      "root_cause": {
+        "class": "NONE_SERVED"
+      },
+      "gemini_calls": 0,
+      "live_vision": "LIVE_VISION_NOT_MEASURED"
+    },
+    {
+      "case_id": "ext_prt_10_vmmu_page_r7#1",
+      "source_url": "https://huggingface.co/datasets/anvo25/vmmu",
+      "original_file_sha256": "b0b63d84736ceef8f8ea977237ad2877a10de438f498e6514a4b621d9956c6d7",
+      "modality": "PRINTED",
+      "has_geometry_diagram": true,
+      "text_sha256": "860326c0bd03d3b972c70c13139d613ac3c12ba78abb387502a2fff1cfbd4b7e",
+      "input_mode": "ORACLE_TEXT_DOWNSTREAM_REPLAY (verbatim ground-truth transcription)",
+      "local_parse": {
+        "status": "LOCAL_PARSE_PARTIAL",
+        "reason_code": "EMPTY_SOLIDS",
+        "unmapped_clauses": [
+          {
+            "classification": "UNPARSED_FACT_CANDIDATE",
+            "text": "Điểm H là chân đường cao kẻ từ đỉnh A của tam giác ABC"
+          },
+          {
+            "classification": "UNPARSED_FACT_CANDIDATE",
+            "text": "Người ta dùng compa có tâm là A, bán kính AH vạch một cung tròn MN"
+          },
+          {
+            "classification": "UNPARSED_FACT_CANDIDATE",
+            "text": "Lấy phần hình quạt gò thành hình nón không có mặt đáy với đỉnh là A, cung MN thành đường tròn đáy của hình nón (như hình vẽ)"
+          },
+          {
+            "classification": "UNPARSED_GOAL_CANDIDATE",
+            "text": "Tính thể tích khối nón trên"
+          }
+        ]
+      },
+      "typed_facts_bridge": "UNKNOWN",
+      "route": {
+        "status": "REFUSED",
+        "reason_code": "LIVE_AI_DISABLED",
+        "fallback_reason": "SCHEMA_VALIDATION_FAILED:EMPTY_SOLIDS:EMPTY_SOLIDS: TypedFactNextPayload requires at least one declared solid.",
+        "answer": null,
+        "scene_configuration": null,
+        "scene3d_continuity_errors": null,
+        "chosen_route": "FAIL_CLOSED_LIVE_AI_DISABLED",
+        "provider_calls": 0,
+        "elapsed_ms": 4.963
+      },
+      "oracle": {
+        "answer": null,
+        "oracle_value": "ORACLE_NOT_DERIVED_IN_RUN",
+        "derivation": "curved solid from sector — out of scope"
+      },
+      "verdict": "FAIL_CLOSED_NOT_SOLVED",
+      "root_cause": {
+        "class": "G+I",
+        "proximate": "LOCAL_PARSER",
+        "root": "OUT_OF_SCOPE",
+        "detail": "cone formed from a sheet sector; diagram-dependent"
+      },
+      "gemini_calls": 0,
+      "live_vision": "LIVE_VISION_NOT_MEASURED"
+    },
+    {
+      "case_id": "ext_prt_11_vmmu_page_r10#1",
+      "source_url": "https://huggingface.co/datasets/anvo25/vmmu",
+      "original_file_sha256": "9bc0a563daabf465c75377efa01b99ee5e2a34b891b60d6f95f3c049dd4f570c",
+      "modality": "PRINTED",
+      "has_geometry_diagram": true,
+      "text_sha256": "f71126a275562a16df44cf6f01ed710ec4da1d05dc12189f497b8e5a51f9c846",
+      "input_mode": "ORACLE_TEXT_DOWNSTREAM_REPLAY (verbatim ground-truth transcription)",
+      "local_parse": {
+        "status": "LOCAL_PARSE_PARTIAL",
+        "reason_code": "QUESTION_CONTEXT_UNSUPPORTED",
+        "unmapped_clauses": []
+      },
+      "typed_facts_bridge": "UNKNOWN",
+      "route": {
+        "status": "REFUSED",
+        "reason_code": "LIVE_AI_DISABLED",
+        "fallback_reason": "SOURCE_GATE_MISMATCH:QUESTION_CONTEXT_UNSUPPORTED:q1: đơn vị yêu cầu trong câu hỏi không khớp chính sách đơn vị của dữ kiện hoặc loại đại lượng",
+        "answer": null,
+        "scene_configuration": null,
+        "scene3d_continuity_errors": null,
+        "chosen_route": "FAIL_CLOSED_LIVE_AI_DISABLED",
+        "provider_calls": 0,
+        "elapsed_ms": 5.225
+      },
+      "oracle": {
+        "answer": null,
+        "oracle_value": "30°",
+        "derivation": "góc((AB'C'),(A'B'C')): A'M = a√3 (M trung điểm B'C'), AA' = a ⇒ tan = 1/√3 ⇒ 30°; đáp án in: C"
+      },
+      "verdict": "FAIL_CLOSED_NOT_SOLVED",
+      "root_cause": {
+        "class": "D→OUTPUT_POLICY",
+        "proximate": "SOURCE_GATE_IN_LOCAL_VERIFICATION",
+        "root": "OUTPUT_POLICY",
+        "detail": "'chiều cao bằng a' on a regular triangular prism unread (SOURCE_PREMISE_UNREAD); with it, 'số đo góc' asks degrees (QUESTION_CONTEXT_UNSUPPORTED — degree output only for exact special angles not provided)"
+      },
+      "gemini_calls": 0,
+      "live_vision": "LIVE_VISION_NOT_MEASURED"
+    },
+    {
+      "case_id": "ext_prt_12_vmmu_page_r11#1",
+      "source_url": "https://huggingface.co/datasets/anvo25/vmmu",
+      "original_file_sha256": "1946978c4b991a48bea6dc26f449e7c5626c838a21a40a167b2cc1db365d289a",
+      "modality": "PRINTED",
+      "has_geometry_diagram": true,
+      "text_sha256": "ea5db0e2ad16bed81a6a79a27e6b13891d34ef73a1be4200156b3a1778d644f1",
+      "input_mode": "ORACLE_TEXT_DOWNSTREAM_REPLAY (verbatim ground-truth transcription)",
+      "local_parse": {
+        "status": "LOCAL_PARSE_PARTIAL",
+        "reason_code": "NOT_ASKED_IN_SOURCE",
+        "unmapped_clauses": []
+      },
+      "typed_facts_bridge": "UNKNOWN",
+      "route": {
+        "status": "REFUSED",
+        "reason_code": "LIVE_AI_DISABLED",
+        "fallback_reason": "SOURCE_GATE_MISMATCH:SOURCE_PREMISE_UNREAD:tiền đề \"Cho hình lăng trụ đứng ABC.A'B'C' có đáy ABC là tam giác vuông cân tại B và diện tích của hình vuông ABB'A' bằng 12(cm²).\" chưa được lời gọi nào đọc — có thể đổi hình; không dùng mô hình cũ",
+        "answer": null,
+        "scene_configuration": null,
+        "scene3d_continuity_errors": null,
+        "chosen_route": "FAIL_CLOSED_LIVE_AI_DISABLED",
+        "provider_calls": 0,
+        "elapsed_ms": 8.822
+      },
+      "oracle": {
+        "answer": null,
+        "oracle_value": "2√3",
+        "derivation": "AB² = 12 ⇒ AB = 2√3; CB ⊥ (ABB'A') ⇒ d = CB = AB = 2√3; đáp án in: B"
+      },
+      "verdict": "FAIL_CLOSED_NOT_SOLVED",
+      "root_cause": {
+        "class": "A/D→C",
+        "proximate": "SOURCE_GATE_IN_LOCAL_VERIFICATION",
+        "root": "TYPED_FACTS_BRIDGE",
+        "detail": "no area-premise primitive (area of square face = 12 ⇒ side); noun '… bằng' goal; side-given paraphrase served 2√3"
+      },
+      "gemini_calls": 0,
+      "live_vision": "LIVE_VISION_NOT_MEASURED"
+    },
+    {
+      "case_id": "ext_prt_13_vmmu_page_r25#1",
+      "source_url": "https://huggingface.co/datasets/anvo25/vmmu",
+      "original_file_sha256": "61d45dd943c50029e757fb8dc75e25df7bd0754fca8eb469ab48cab45b03c30f",
+      "modality": "PRINTED",
+      "has_geometry_diagram": true,
+      "text_sha256": "c4c68877ac3ba8b083c9b5114fe4a856a2f80f0c2f36944e930f7ffa5c6972d7",
+      "input_mode": "ORACLE_TEXT_DOWNSTREAM_REPLAY (verbatim ground-truth transcription)",
+      "local_parse": {
+        "status": "LOCAL_PARSE_UNSUPPORTED",
+        "reason_code": "EMPTY_SOLIDS",
+        "unmapped_clauses": [
+          {
+            "classification": "UNPARSED_FACT_CANDIDATE",
+            "text": "Một téc nước hình trụ, đang chứa nước được đặt nằm ngang, có chiều dài 3m và đường kính đáy 1m"
+          },
+          {
+            "classification": "UNPARSED_GOAL_CANDIDATE",
+            "text": "Tính thể tích của nước trong téc (kết quả làm tròn đến hàng phần nghìn)"
+          }
+        ]
+      },
+      "typed_facts_bridge": "UNKNOWN",
+      "route": {
+        "status": "REFUSED",
+        "reason_code": "LIVE_AI_DISABLED",
+        "fallback_reason": "SCHEMA_VALIDATION_FAILED:EMPTY_SOLIDS:EMPTY_SOLIDS: TypedFactNextPayload requires at least one declared solid.",
+        "answer": null,
+        "scene_configuration": null,
+        "scene3d_continuity_errors": null,
+        "chosen_route": "FAIL_CLOSED_LIVE_AI_DISABLED",
+        "provider_calls": 0,
+        "elapsed_ms": 3.234
+      },
+      "oracle": {
+        "answer": null,
+        "oracle_value": "ORACLE_NOT_DERIVED_IN_RUN",
+        "derivation": "real-world cylinder segment volume (rounding) — out of scope"
+      },
+      "verdict": "FAIL_CLOSED_NOT_SOLVED",
+      "root_cause": {
+        "class": "G/I",
+        "proximate": "LOCAL_PARSER",
+        "root": "OUT_OF_SCOPE",
+        "detail": "real-world curved solid with rounding"
+      },
+      "gemini_calls": 0,
+      "live_vision": "LIVE_VISION_NOT_MEASURED"
+    },
+    {
+      "case_id": "ext_prt_14_vmmu_page_r26#1",
+      "source_url": "https://huggingface.co/datasets/anvo25/vmmu",
+      "original_file_sha256": "8534c7278cf5f88c39f604a7148444cb972a578554588e4a89b7fa38651d62fc",
+      "modality": "PRINTED",
+      "has_geometry_diagram": true,
+      "text_sha256": "da5cc594df3ee9d8f0a63b0aa54f1d6f7de26ffa2dc6958f4565052f83f4623a",
+      "input_mode": "ORACLE_TEXT_DOWNSTREAM_REPLAY (verbatim ground-truth transcription)",
+      "local_parse": {
+        "status": "LOCAL_PARSE_UNSUPPORTED",
+        "reason_code": "EMPTY_SOLIDS",
+        "unmapped_clauses": [
+          {
+            "classification": "UNPARSED_FACT_CANDIDATE",
+            "text": "Người ta xếp hai quả cầu có cùng bán kính r vào một chiếc hộp hình trụ sao cho các quả cầu đều tiếp xúc với hai đáy, đồng thời hai quả cầu tiếp xúc với nhau và mỗi quả cầu đều tiếp xúc với đường sinh của hình trụ (tham khảo hình vẽ)"
+          },
+          {
+            "classification": "UNPARSED_GOAL_CANDIDATE",
+            "text": "Biết thể tích khối trụ là 120 cm³, thể tích của mỗi khối cầu bằng"
+          }
+        ]
+      },
+      "typed_facts_bridge": "UNKNOWN",
+      "route": {
+        "status": "REFUSED",
+        "reason_code": "LIVE_AI_DISABLED",
+        "fallback_reason": "SCHEMA_VALIDATION_FAILED:EMPTY_SOLIDS:EMPTY_SOLIDS: TypedFactNextPayload requires at least one declared solid.",
+        "answer": null,
+        "scene_configuration": null,
+        "scene3d_continuity_errors": null,
+        "chosen_route": "FAIL_CLOSED_LIVE_AI_DISABLED",
+        "provider_calls": 0,
+        "elapsed_ms": 4.044
+      },
+      "oracle": {
+        "answer": null,
+        "oracle_value": "ORACLE_NOT_DERIVED_IN_RUN",
+        "derivation": "spheres in cylinder — out of scope"
+      },
+      "verdict": "FAIL_CLOSED_NOT_SOLVED",
+      "root_cause": {
+        "class": "G/I",
+        "proximate": "LOCAL_PARSER",
+        "root": "OUT_OF_SCOPE",
+        "detail": "spheres in cylinder"
+      },
+      "gemini_calls": 0,
+      "live_vision": "LIVE_VISION_NOT_MEASURED"
+    },
+    {
+      "case_id": "ext_prt_15_vmmu_page_r28#1",
+      "source_url": "https://huggingface.co/datasets/anvo25/vmmu",
+      "original_file_sha256": "e5c53c5cd6a78d62ed4fad4fca375a941ad400f246358ad23f7a7ea1e05a74c3",
+      "modality": "PRINTED",
+      "has_geometry_diagram": true,
+      "text_sha256": "39f45673f4488ee2ac4995be1dfe23713e4a54b0e1443466382fa7b44fb6f9b8",
+      "input_mode": "ORACLE_TEXT_DOWNSTREAM_REPLAY (verbatim ground-truth transcription)",
+      "local_parse": {
+        "status": "LOCAL_PARSE_UNSUPPORTED",
+        "reason_code": "EMPTY_SOLIDS",
+        "unmapped_clauses": [
+          {
+            "classification": "UNPARSED_FACT_CANDIDATE",
+            "text": "Chiều cao đo được ghi trên hình, chu vi đáy là 20√3π cm"
+          },
+          {
+            "classification": "UNPARSED_GOAL_CANDIDATE",
+            "text": "Thể tích của cột bằng:"
+          }
+        ]
+      },
+      "typed_facts_bridge": "UNKNOWN",
+      "route": {
+        "status": "REFUSED",
+        "reason_code": "LIVE_AI_DISABLED",
+        "fallback_reason": "SCHEMA_VALIDATION_FAILED:EMPTY_SOLIDS:EMPTY_SOLIDS: TypedFactNextPayload requires at least one declared solid.",
+        "answer": null,
+        "scene_configuration": null,
+        "scene3d_continuity_errors": null,
+        "chosen_route": "FAIL_CLOSED_LIVE_AI_DISABLED",
+        "provider_calls": 0,
+        "elapsed_ms": 2.636
+      },
+      "oracle": {
+        "answer": null,
+        "oracle_value": "NOT_RECOVERABLE_FROM_TEXT",
+        "derivation": "heights only on diagram"
+      },
+      "verdict": "FAIL_CLOSED_NOT_SOLVED",
+      "root_cause": {
+        "class": "I+G",
+        "proximate": "LOCAL_PARSER",
+        "root": "OUT_OF_SCOPE",
+        "detail": "dimensions only on the diagram (NOT_RECOVERABLE from text) and curved solid"
+      },
+      "gemini_calls": 0,
+      "live_vision": "LIVE_VISION_NOT_MEASURED"
+    },
+    {
+      "case_id": "ext_hw_b1_01_hd_a_6043187#1",
+      "source_url": "https://hoidap247.com/cau-hoi/6043187",
+      "original_file_sha256": "6fe6f40735a6b30b5bc1c548fb0627d07325c0a5b1e9aeaf7297180ce5b71a7b",
+      "modality": "HANDWRITTEN",
+      "has_geometry_diagram": true,
+      "text_sha256": "422ee83c515affb2bb1c0063f62eee5d1b668d19e4bf15eee0c28579ef9b527f",
+      "input_mode": "ORACLE_TEXT_DOWNSTREAM_REPLAY (verbatim ground-truth transcription)",
+      "local_parse": {
+        "status": "LOCAL_PARSE_COMPLETE",
+        "reason_code": null,
+        "unmapped_clauses": []
+      },
+      "typed_facts_bridge": "PASSED",
+      "route": {
+        "status": "SERVED",
+        "reason_code": null,
+        "fallback_reason": null,
+        "answer": "a³√3",
+        "scene_configuration": null,
+        "scene3d_continuity_errors": [],
+        "chosen_route": "LOCAL_DETERMINISTIC_HYBRID",
+        "provider_calls": 0,
+        "elapsed_ms": 35.776
+      },
+      "oracle": {
+        "answer": "a³√3",
+        "derivation": "BC = a√2, S = a²√2/2; CC' = BC·tan60° = a√6; V = a²√2/2·a√6 = a³√3"
+      },
+      "verdict": "CORRECT_SERVED",
+      "root_cause": {
+        "class": "NONE_SERVED"
+      },
+      "gemini_calls": 0,
+      "live_vision": "LIVE_VISION_NOT_MEASURED"
+    }
+  ]
+}

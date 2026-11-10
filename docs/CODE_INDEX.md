@@ -1,5 +1,14 @@
 # CODE_INDEX.md — Chỉ mục module + BỘ NHỚ KIẾN TRÚC
 
+## Real-World End-to-End Reliability & Hybrid Gap Closure (run `real-world-end-to-end-reliability`, 2026-11-10)
+
+| Path | Owns | Locked by |
+|---|---|---|
+| `backend/app/simulation/geometry_functions/engine.py` · `backend/app/ai/adapter4_route.py` | Height-invariance certification (`_thu_chieu_cao_bat_bien`, `_HOI_BAT_BIEN_CHIEU_CAO`, `_MAU_H2_BAT_BIEN`): after `MISSING_DIMENSION` on an unstated pyramid/prism height, whitelisted vertex-only metric goals are re-solved at 5 exact h² samples; identical answers ⇒ served with `route_d.scene_configuration {unique:false, kind:HEIGHT_INVARIANT_ILLUSTRATIVE, invariance_certificate}`, otherwise refusal stands | `backend/tests/geometry/test_real_world_end_to_end_reliability.py`, `backend/tests/geometry/test_verified_image_to_3d_pipeline.py`, `backend/tests/test_hybrid_preview_contract.py` |
+| `backend/app/ai/local_geometry_parser.py` | Stage 5b-3 part-to-part ratio point (`E thuộc cạnh SC sao cho SE = 3EC` → `point_divides_segment` k/(k+1)) with guarded Stage 7k `=` span | `backend/tests/geometry/test_real_world_end_to_end_reliability.py` |
+| `frontend/src/simulations/domains/geometry/hybrid-preview-adapter.ts` · `frontend/src/components/SimulationWorkspace.tsx` · `frontend/src/components/photo-problem-flow.ts` · `frontend/src/components/ProblemInput.tsx` | `HybridSceneConfiguration` validation + `cauCauHinhMinhHoa` learner note (`#stage-illustrative-note`); `analyzeErrorMessage` for analyze-stage failures (no photo copy on text 503) | `frontend/src/components/illustrative-scene-label.test.tsx`, `frontend/src/components/analyze-error-message.test.ts` |
+| `docs/evaluation/geometry/runs/real-world-end-to-end-reliability/tools/evaluate_real_world_reliability.py` · `docs/evaluation/geometry/runs/real-world-end-to-end-reliability/tools/e2e_browser_acceptance.mjs` | Offline 17-receipt generator (External17 diagnostics, root causes with canonical replays, oracle, before/after 4/17 → 6/17) and real headless-Chrome E2E against the production build proxied to a local backend | `docs/evaluation/geometry/runs/real-world-end-to-end-reliability/ALGOSIM_REAL_WORLD_END_TO_END_RELIABILITY_REPORT.md` |
+
 ## Unified Geometry Capability Expansion & Verified Image-to-3D (run `unified-angle-geometry-verified-image-to-3d`, 2026-11-10)
 
 | Path | Owns | Locked by |
