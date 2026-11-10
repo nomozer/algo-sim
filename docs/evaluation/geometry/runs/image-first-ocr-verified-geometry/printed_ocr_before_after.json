@@ -1,0 +1,1351 @@
+{
+ "schema": "algosim-printed-ocr-before-after/1",
+ "run_id": "image-first-ocr-verified-geometry",
+ "generated_at_utc": "2026-11-10T13:43:14.258830+00:00",
+ "head_commit": "bdc07a8557277d9780bee8689567990854ad4521",
+ "product_commit": "bdc07a8557277d9780bee8689567990854ad4521",
+ "working_tree_dirty": false,
+ "measured_system_tree_hash": "6851b71826793fffbb922e0b7706e1c2a32bb2203d615c8eb0414e82b0d2c947",
+ "measured_system_file_count": 115,
+ "test_environment": {
+  "os": "Windows-11-10.0.26100-SP0",
+  "python": "3.12.10",
+  "cpu_logical_cores": 12,
+  "allow_live_ai": 0,
+  "live_gemini_calls": 0,
+  "local_ocr_python": "ocr-venv (rapidocr 3.10.0, onnxruntime 1.31.1, tesserocr 2.12.0 / tesseract 5.5.3)",
+  "tessdata": "tessdata_fast vie + eng",
+  "benchmark_tier": "HOST_BENCHMARK_OFFLINE"
+ },
+ "model_versions": {
+  "local_ocr_route": "local-ocr-route/1",
+  "reconcile": "layout-aware-ocr-reconcile/1",
+  "readers": [
+   "tesseract-vie (tessdata_fast)",
+   "rapidocr PP-OCRv6 det/rec small",
+   "rapidocr latin PP-OCRv5 rec mobile (re-read)",
+   "tesseract-eng single-line ×3 (re-read)"
+  ],
+  "vision": "NOT_CALLED (ALLOW_LIVE_AI=0)"
+ },
+ "epistemic_classification": "VERIFIED FACT",
+ "printed_corpus_size": 15,
+ "cer_summary": {
+  "before_tesseract_mean": 0.1612,
+  "before_tesseract_median": 0.1208,
+  "before_rapidocr_mean": 0.1376,
+  "before_rapidocr_median": 0.1381,
+  "after_reconciled_mean": 0.0666,
+  "after_reconciled_median": 0.0333
+ },
+ "wer_summary": {
+  "before_tesseract_mean": 0.3312,
+  "before_tesseract_median": 0.3523,
+  "before_rapidocr_mean": 0.5298,
+  "before_rapidocr_median": 0.5075,
+  "after_reconciled_mean": 0.1998,
+  "after_reconciled_median": 0.2
+ },
+ "category_micro_prf": {
+  "prime_labels": {
+   "before_tesseract": {
+    "tp": 15,
+    "hyp": 15,
+    "ref": 55,
+    "precision": 1.0,
+    "recall": 0.2727
+   },
+   "before_rapidocr": {
+    "tp": 48,
+    "hyp": 56,
+    "ref": 55,
+    "precision": 0.8571,
+    "recall": 0.8727
+   },
+   "after_reconciled": {
+    "tp": 43,
+    "hyp": 43,
+    "ref": 55,
+    "precision": 1.0,
+    "recall": 0.7818
+   }
+  },
+  "radicals": {
+   "before_tesseract": {
+    "tp": 0,
+    "hyp": 0,
+    "ref": 14,
+    "precision": 0.0,
+    "recall": 0.0
+   },
+   "before_rapidocr": {
+    "tp": 13,
+    "hyp": 13,
+    "ref": 14,
+    "precision": 1.0,
+    "recall": 0.9286
+   },
+   "after_reconciled": {
+    "tp": 13,
+    "hyp": 13,
+    "ref": 14,
+    "precision": 1.0,
+    "recall": 0.9286
+   }
+  },
+  "fractions": {
+   "before_tesseract": {
+    "tp": 0,
+    "hyp": 3,
+    "ref": 10,
+    "precision": 0.0,
+    "recall": 0.0
+   },
+   "before_rapidocr": {
+    "tp": 0,
+    "hyp": 0,
+    "ref": 10,
+    "precision": 0.0,
+    "recall": 0.0
+   },
+   "after_reconciled": {
+    "tp": 7,
+    "hyp": 7,
+    "ref": 10,
+    "precision": 1.0,
+    "recall": 0.7
+   }
+  },
+  "angle_degrees": {
+   "before_tesseract": {
+    "tp": 2,
+    "hyp": 2,
+    "ref": 7,
+    "precision": 1.0,
+    "recall": 0.2857
+   },
+   "before_rapidocr": {
+    "tp": 5,
+    "hyp": 5,
+    "ref": 7,
+    "precision": 1.0,
+    "recall": 0.7143
+   },
+   "after_reconciled": {
+    "tp": 6,
+    "hyp": 6,
+    "ref": 7,
+    "precision": 1.0,
+    "recall": 0.8571
+   }
+  },
+  "point_labels": {
+   "before_tesseract": {
+    "tp": 198,
+    "hyp": 239,
+    "ref": 323,
+    "precision": 0.8285,
+    "recall": 0.613
+   },
+   "before_rapidocr": {
+    "tp": 287,
+    "hyp": 310,
+    "ref": 323,
+    "precision": 0.9258,
+    "recall": 0.8885
+   },
+   "after_reconciled": {
+    "tp": 297,
+    "hyp": 298,
+    "ref": 323,
+    "precision": 0.9966,
+    "recall": 0.9195
+   }
+  },
+  "relation_symbols": {
+   "before_tesseract": {
+    "tp": 0,
+    "hyp": 0,
+    "ref": 2,
+    "precision": 0.0,
+    "recall": 0.0
+   },
+   "before_rapidocr": {
+    "tp": 2,
+    "hyp": 2,
+    "ref": 2,
+    "precision": 1.0,
+    "recall": 1.0
+   },
+   "after_reconciled": {
+    "tp": 2,
+    "hyp": 2,
+    "ref": 2,
+    "precision": 1.0,
+    "recall": 1.0
+   }
+  },
+  "vietnamese_diacritic_words": {
+   "before_tesseract": {
+    "tp": 494,
+    "hyp": 575,
+    "ref": 557,
+    "precision": 0.8591,
+    "recall": 0.8869
+   },
+   "before_rapidocr": {
+    "tp": 240,
+    "hyp": 322,
+    "ref": 557,
+    "precision": 0.7453,
+    "recall": 0.4309
+   },
+   "after_reconciled": {
+    "tp": 518,
+    "hyp": 544,
+    "ref": 557,
+    "precision": 0.9522,
+    "recall": 0.93
+   }
+  }
+ },
+ "end_to_end_outcomes_strictly_separated": {
+  "supported_printed_problem_instances": 11,
+  "outcome_a_local_auto_solved": "1/11 (ext_prt_01_hd_q_5259753 -> {'q1': 'a³√3/3', 'q2': 'a√21/21'}, 0 AI calls, 0 edits)",
+  "outcome_b_vision_assisted_solved": "NOT_MEASURED (ALLOW_LIVE_AI=0, 0 live Gemini calls)",
+  "outcome_c_user_corrected_simulated_solved": "10/10 remaining supported printed instances (total 11/11 = 100.0% across A + C, 0 wrong-served)"
+ },
+ "per_printed_image": [
+  {
+   "image_id": "ext_prt_01_hd_q_5259753",
+   "cer": {
+    "tesseract": 0.0529,
+    "rapidocr": 0.0705,
+    "reconciled_draft": 0.0
+   },
+   "wer": {
+    "tesseract": 0.0962,
+    "rapidocr": 0.3077,
+    "reconciled_draft": 0.0
+   },
+   "math_tokens": {
+    "tesseract": {
+     "tp": 13,
+     "hyp": 14,
+     "ref": 14,
+     "precision": 0.9286,
+     "recall": 0.9286
+    },
+    "rapidocr": {
+     "tp": 14,
+     "hyp": 14,
+     "ref": 14,
+     "precision": 1.0,
+     "recall": 1.0
+    },
+    "reconciled_draft": {
+     "tp": 14,
+     "hyp": 14,
+     "ref": 14,
+     "precision": 1.0,
+     "recall": 1.0
+    }
+   },
+   "exact_statement_match": true,
+   "outcomes": [
+    {
+     "case_key": "ext_prt_01_hd_q_5259753",
+     "selection": "single",
+     "prepare_status": "ready",
+     "input_route": "LOCAL_OCR_VERIFIED",
+     "local_auto": {
+      "status": "SERVED",
+      "route": "LOCAL_DETERMINISTIC_HYBRID",
+      "local_parse_status": "LOCAL_PARSE_COMPLETE",
+      "answers": {
+       "q2": "a√21/21",
+       "q1": "a³√3/3"
+      },
+      "reason_code": null,
+      "scene3d_objects": 16,
+      "scene3d_continuity_violations": 0,
+      "solve_ms": 63.35,
+      "grade": "SERVED_CORRECT",
+      "corrections": 0,
+      "ai_calls": 0
+     }
+    }
+   ]
+  },
+  {
+   "image_id": "ext_prt_02_hd_q_7922924",
+   "cer": {
+    "tesseract": 0.2108,
+    "rapidocr": 0.1687,
+    "reconciled_draft": 0.0241
+   },
+   "wer": {
+    "tesseract": 0.359,
+    "rapidocr": 0.5897,
+    "reconciled_draft": 0.2051
+   },
+   "math_tokens": {
+    "tesseract": {
+     "tp": 7,
+     "hyp": 15,
+     "ref": 20,
+     "precision": 0.4667,
+     "recall": 0.35
+    },
+    "rapidocr": {
+     "tp": 12,
+     "hyp": 23,
+     "ref": 20,
+     "precision": 0.5217,
+     "recall": 0.6
+    },
+    "reconciled_draft": {
+     "tp": 12,
+     "hyp": 16,
+     "ref": 20,
+     "precision": 0.75,
+     "recall": 0.6
+    }
+   },
+   "exact_statement_match": false,
+   "outcomes": [
+    {
+     "case_key": "ext_prt_02_hd_q_7922924",
+     "selection": "single",
+     "prepare_status": "needs_confirmation",
+     "input_route": "LOCAL_OCR_NEEDS_CONFIRMATION",
+     "user_corrected_simulated": {
+      "status": "SERVED",
+      "route": "LOCAL_DETERMINISTIC_HYBRID",
+      "local_parse_status": "LOCAL_PARSE_COMPLETE",
+      "answers": {
+       "q1": "6"
+      },
+      "reason_code": null,
+      "scene3d_objects": 14,
+      "scene3d_continuity_violations": 0,
+      "solve_ms": 58.43,
+      "grade": "SERVED_CORRECT",
+      "edits": [],
+      "confirms": 2,
+      "diagram_confirms": 0,
+      "actions": 2,
+      "chars_typed": 0,
+      "full_retype_chars": 166,
+      "final_text": "Câu 10: Cho hình lăng trụ đứng ABC.A'B'C', có đáy là tam giác vuông cân tại B và AB = 6. Tính khoảng cách từ điểm C đến mặt phẳng (ABB'A')\nA.3. B.6√2. C.3√2. D.6."
+     }
+    }
+   ]
+  },
+  {
+   "image_id": "ext_prt_03_hd_q_7907931",
+   "cer": {
+    "tesseract": 0.3547,
+    "rapidocr": 0.1713,
+    "reconciled_draft": 0.0734
+   },
+   "wer": {
+    "tesseract": 0.5867,
+    "rapidocr": 0.5867,
+    "reconciled_draft": 0.24
+   },
+   "math_tokens": {
+    "tesseract": {
+     "tp": 12,
+     "hyp": 30,
+     "ref": 42,
+     "precision": 0.4,
+     "recall": 0.2857
+    },
+    "rapidocr": {
+     "tp": 37,
+     "hyp": 39,
+     "ref": 42,
+     "precision": 0.9487,
+     "recall": 0.881
+    },
+    "reconciled_draft": {
+     "tp": 38,
+     "hyp": 38,
+     "ref": 42,
+     "precision": 1.0,
+     "recall": 0.9048
+    }
+   },
+   "exact_statement_match": false,
+   "outcomes": [
+    {
+     "case_key": "ext_prt_03_hd_q_7907931#1",
+     "selection": "text-p1-1",
+     "prepare_status": "needs_confirmation",
+     "input_route": "LOCAL_OCR_NEEDS_CONFIRMATION",
+     "user_corrected_simulated": {
+      "status": "SERVED",
+      "route": "LOCAL_DETERMINISTIC_HYBRID",
+      "local_parse_status": "LOCAL_PARSE_COMPLETE",
+      "answers": {
+       "q1": "a√2/2"
+      },
+      "reason_code": null,
+      "scene3d_objects": 13,
+      "scene3d_continuity_violations": 0,
+      "solve_ms": 40.91,
+      "grade": "SERVED_CORRECT",
+      "edits": [
+       {
+        "span_id": "sp17",
+        "from": "⊥(ABCD).",
+        "to": "⊥ (ABCD).",
+        "chosen_from_alternatives": false
+       }
+      ],
+      "confirms": 2,
+      "diagram_confirms": 0,
+      "actions": 3,
+      "chars_typed": 9,
+      "full_retype_chars": 115,
+      "final_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a , SA ⊥ (ABCD). Tính khoảng cách từ điểm B đến mp(SAC). A. 2 B. a√2/2 3 a√2"
+     }
+    },
+    {
+     "case_key": "ext_prt_03_hd_q_7907931#2",
+     "selection": "text-p1-2",
+     "prepare_status": "needs_confirmation",
+     "input_route": "LOCAL_OCR_NEEDS_CONFIRMATION",
+     "user_corrected_simulated": {
+      "status": "SERVED",
+      "route": "LOCAL_DETERMINISTIC_HYBRID",
+      "local_parse_status": "LOCAL_PARSE_COMPLETE",
+      "answers": {
+       "q1": "a³/4"
+      },
+      "reason_code": null,
+      "scene3d_objects": 13,
+      "scene3d_continuity_violations": 0,
+      "solve_ms": 73.04,
+      "grade": "SERVED_CORRECT",
+      "edits": [
+       {
+        "span_id": "sp60",
+        "from": "N;P",
+        "to": "N; P",
+        "chosen_from_alternatives": false
+       },
+       {
+        "span_id": "sp56",
+        "from": "SA=",
+        "to": "SA =",
+        "chosen_from_alternatives": false
+       },
+       {
+        "span_id": "sp54",
+        "from": "⊥(ABC)",
+        "to": "⊥ (ABC)",
+        "chosen_from_alternatives": false
+       }
+      ],
+      "confirms": 4,
+      "diagram_confirms": 0,
+      "actions": 7,
+      "chars_typed": 15,
+      "full_retype_chars": 173,
+      "final_text": "Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh a. Biết SA ⊥ (ABC) và SA = a√3. Gọi M; N; P lần lượt là trung điểm của SA;SB; SC. Tính thể tích khối chóp S.ABC."
+     }
+    }
+   ]
+  },
+  {
+   "image_id": "ext_prt_04_hd_q_8436784",
+   "cer": {
+    "tesseract": 0.0263,
+    "rapidocr": 0.0789,
+    "reconciled_draft": 0.0075
+   },
+   "wer": {
+    "tesseract": 0.0625,
+    "rapidocr": 0.3438,
+    "reconciled_draft": 0.0469
+   },
+   "math_tokens": {
+    "tesseract": {
+     "tp": 26,
+     "hyp": 27,
+     "ref": 28,
+     "precision": 0.963,
+     "recall": 0.9286
+    },
+    "rapidocr": {
+     "tp": 28,
+     "hyp": 28,
+     "ref": 28,
+     "precision": 1.0,
+     "recall": 1.0
+    },
+    "reconciled_draft": {
+     "tp": 28,
+     "hyp": 28,
+     "ref": 28,
+     "precision": 1.0,
+     "recall": 1.0
+    }
+   },
+   "exact_statement_match": false,
+   "outcomes": [
+    {
+     "case_key": "ext_prt_04_hd_q_8436784",
+     "selection": "single",
+     "prepare_status": "needs_confirmation",
+     "input_route": "LOCAL_OCR_NEEDS_CONFIRMATION",
+     "user_corrected_simulated": {
+      "status": "SERVED",
+      "route": "LOCAL_DETERMINISTIC_HYBRID",
+      "local_parse_status": "LOCAL_PARSE_COMPLETE",
+      "answers": {
+       "q1": "1/2"
+      },
+      "reason_code": null,
+      "scene3d_objects": 24,
+      "scene3d_continuity_violations": 0,
+      "solve_ms": 88.17,
+      "grade": "SERVED_CORRECT",
+      "edits": [],
+      "confirms": 1,
+      "diagram_confirms": 0,
+      "actions": 1,
+      "chars_typed": 0,
+      "full_retype_chars": 266,
+      "final_text": "Câu 6. Cho hình chóp S.ABCD có đáy ABCD là hình thang với AD song song BC và AD = 2BC. Gọi I là trung điểm cạnh AD.\na) Chứng minh BI// (SCD).\nb) Mặt phẳng (P) qua I và song song với hai đường thẳng SA, SC. Gọi K là giao điểm của BC với (P). Khi đó tính tỉ số KC/KB"
+     }
+    }
+   ]
+  },
+  {
+   "image_id": "ext_prt_05_hd_q_7451806",
+   "cer": {
+    "tesseract": 0.1176,
+    "rapidocr": 0.11,
+    "reconciled_draft": 0.0153
+   },
+   "wer": {
+    "tesseract": 0.3523,
+    "rapidocr": 0.5,
+    "reconciled_draft": 0.1023
+   },
+   "math_tokens": {
+    "tesseract": {
+     "tp": 14,
+     "hyp": 30,
+     "ref": 33,
+     "precision": 0.4667,
+     "recall": 0.4242
+    },
+    "rapidocr": {
+     "tp": 32,
+     "hyp": 33,
+     "ref": 33,
+     "precision": 0.9697,
+     "recall": 0.9697
+    },
+    "reconciled_draft": {
+     "tp": 32,
+     "hyp": 33,
+     "ref": 33,
+     "precision": 0.9697,
+     "recall": 0.9697
+    }
+   },
+   "exact_statement_match": false,
+   "outcomes": [
+    {
+     "case_key": "ext_prt_05_hd_q_7451806",
+     "selection": "single",
+     "prepare_status": "needs_confirmation",
+     "input_route": "LOCAL_OCR_NEEDS_CONFIRMATION",
+     "user_corrected_simulated": {
+      "status": "SERVED",
+      "route": "LOCAL_DETERMINISTIC_HYBRID",
+      "local_parse_status": "LOCAL_PARSE_COMPLETE",
+      "answers": {
+       "q1": "6/5"
+      },
+      "reason_code": null,
+      "scene3d_objects": 21,
+      "scene3d_continuity_violations": 0,
+      "solve_ms": 63.17,
+      "grade": "SERVED_CORRECT",
+      "edits": [
+       {
+        "span_id": "sp73",
+        "from": "S;S2",
+        "to": "S1; S2",
+        "chosen_from_alternatives": false
+       }
+      ],
+      "confirms": 9,
+      "diagram_confirms": 0,
+      "actions": 10,
+      "chars_typed": 6,
+      "full_retype_chars": 391,
+      "final_text": "Câu 24:(2,5 điểm) Cho hình chóp S.ABCD có đáy ABCD là hình bình hành tâm O. M là trung điểm của SB.\na) Chứng minh rằng đường thẳng SD song song với mặt phẳng (MAC).\nb) Tìm giao tuyến của hai mặt phẳng (SAB) và (MCD).\nc) Gọi E là điểm thuộc cạnh SC sao cho SE = 3EC . Mặt phẳng (SAD) và đường thẳng ME cắt nhau tại I. Gọi S1; S2 lần lượt là diện tích tam giác SMI và tứ giác BCEM . Tính S1/S2"
+     }
+    }
+   ]
+  },
+  {
+   "image_id": "ext_prt_06_hd_q_1084979",
+   "cer": {
+    "tesseract": 0.0638,
+    "rapidocr": 0.1074,
+    "reconciled_draft": 0.0067
+   },
+   "wer": {
+    "tesseract": 0.209,
+    "rapidocr": 0.5075,
+    "reconciled_draft": 0.0448
+   },
+   "math_tokens": {
+    "tesseract": {
+     "tp": 11,
+     "hyp": 30,
+     "ref": 21,
+     "precision": 0.3667,
+     "recall": 0.5238
+    },
+    "rapidocr": {
+     "tp": 19,
+     "hyp": 22,
+     "ref": 21,
+     "precision": 0.8636,
+     "recall": 0.9048
+    },
+    "reconciled_draft": {
+     "tp": 20,
+     "hyp": 21,
+     "ref": 21,
+     "precision": 0.9524,
+     "recall": 0.9524
+    }
+   },
+   "exact_statement_match": false,
+   "outcomes": [
+    {
+     "case_key": "ext_prt_06_hd_q_1084979",
+     "selection": "single",
+     "prepare_status": "needs_confirmation",
+     "input_route": "LOCAL_OCR_NEEDS_CONFIRMATION",
+     "user_corrected_simulated": {
+      "status": "SERVED",
+      "route": "LOCAL_DETERMINISTIC_HYBRID",
+      "local_parse_status": "LOCAL_PARSE_COMPLETE",
+      "answers": {
+       "q2": "a√15/5",
+       "q1": "a³√15/4"
+      },
+      "reason_code": null,
+      "scene3d_objects": 19,
+      "scene3d_continuity_violations": 0,
+      "solve_ms": 80.56,
+      "grade": "SERVED_CORRECT",
+      "edits": [
+       {
+        "span_id": "sp45",
+        "from": "CC",
+        "to": "CC'",
+        "chosen_from_alternatives": true
+       },
+       {
+        "span_id": "sp18",
+        "from": "AA'=",
+        "to": "AA' =",
+        "chosen_from_alternatives": false
+       }
+      ],
+      "confirms": 3,
+      "diagram_confirms": 0,
+      "actions": 5,
+      "chars_typed": 5,
+      "full_retype_chars": 298,
+      "final_text": "Cho hình lăng trụ đứng ABC.A'B'C' có đáy ABC là tam giác cân tại C, AB = AA' = a. Góc tạo bởi đường thẳng BC' với mặt phẳng (ABB'A') bằng 60°. Gọi M, N, P lần lượt là trung điểm của các cạnh BB', CC' và BC. Tính thể tích khối lăng trụ ABC.A'B'C' và khoảng cách giữa hai đường thẳng AM và NP theo a."
+     }
+    }
+   ]
+  },
+  {
+   "image_id": "ext_prt_07_hd_q_7958052",
+   "cer": {
+    "tesseract": 0.1208,
+    "rapidocr": 0.1409,
+    "reconciled_draft": 0.0738
+   },
+   "wer": {
+    "tesseract": 0.4286,
+    "rapidocr": 0.5429,
+    "reconciled_draft": 0.2
+   },
+   "math_tokens": {
+    "tesseract": {
+     "tp": 10,
+     "hyp": 15,
+     "ref": 12,
+     "precision": 0.6667,
+     "recall": 0.8333
+    },
+    "rapidocr": {
+     "tp": 11,
+     "hyp": 15,
+     "ref": 12,
+     "precision": 0.7333,
+     "recall": 0.9167
+    },
+    "reconciled_draft": {
+     "tp": 12,
+     "hyp": 14,
+     "ref": 12,
+     "precision": 0.8571,
+     "recall": 1.0
+    }
+   },
+   "exact_statement_match": false,
+   "outcomes": [
+    {
+     "case_key": "ext_prt_07_hd_q_7958052",
+     "selection": "single",
+     "prepare_status": "needs_confirmation",
+     "input_route": "LOCAL_OCR_NEEDS_CONFIRMATION",
+     "user_corrected_simulated": {
+      "status": "SERVED",
+      "route": "LOCAL_DETERMINISTIC_HYBRID",
+      "local_parse_status": "LOCAL_PARSE_COMPLETE",
+      "answers": {
+       "q1": "4,7"
+      },
+      "reason_code": null,
+      "scene3d_objects": 15,
+      "scene3d_continuity_violations": 0,
+      "solve_ms": 55.16,
+      "grade": "SERVED_CORRECT",
+      "edits": [
+       {
+        "span_id": "sp39",
+        "from": "417.",
+        "to": "",
+        "chosen_from_alternatives": false
+       },
+       {
+        "span_id": "sp17",
+        "from": "A",
+        "to": "Â",
+        "chosen_from_alternatives": false
+       },
+       {
+        "span_id": "sp6",
+        "from": "t",
+        "to": "",
+        "chosen_from_alternatives": false
+       }
+      ],
+      "confirms": 5,
+      "diagram_confirms": 0,
+      "actions": 8,
+      "chars_typed": 1,
+      "full_retype_chars": 149,
+      "final_text": "Câu 1. Cho hình lăng trụ đứng ABC.A'B'C' có AB = 5, AC = 6, Â = 60° . Khoảng cách giữa hai đường thẳng AA' và BC( làm tròn kết quả đến hàng phần mười)"
+     }
+    }
+   ]
+  },
+  {
+   "image_id": "ext_prt_08_hd_q_7509702",
+   "cer": {
+    "tesseract": 0.4467,
+    "rapidocr": 0.2509,
+    "reconciled_draft": 0.4845
+   },
+   "wer": {
+    "tesseract": 0.8774,
+    "rapidocr": 0.8387,
+    "reconciled_draft": 0.8129
+   },
+   "math_tokens": {
+    "tesseract": {
+     "tp": 45,
+     "hyp": 80,
+     "ref": 105,
+     "precision": 0.5625,
+     "recall": 0.4286
+    },
+    "rapidocr": {
+     "tp": 56,
+     "hyp": 78,
+     "ref": 105,
+     "precision": 0.7179,
+     "recall": 0.5333
+    },
+    "reconciled_draft": {
+     "tp": 45,
+     "hyp": 65,
+     "ref": 105,
+     "precision": 0.6923,
+     "recall": 0.4286
+    }
+   },
+   "exact_statement_match": false,
+   "outcomes": [
+    {
+     "case_key": "ext_prt_08_hd_q_7509702",
+     "selection": "single",
+     "prepare_status": "needs_confirmation",
+     "input_route": "LOCAL_OCR_NEEDS_CONFIRMATION",
+     "user_corrected_simulated": {
+      "status": "REFUSED",
+      "route": "FAIL_CLOSED_LIVE_AI_DISABLED",
+      "local_parse_status": "LOCAL_PARSE_PARTIAL",
+      "answers": null,
+      "reason_code": "LIVE_AI_DISABLED",
+      "scene3d_objects": 0,
+      "scene3d_continuity_violations": null,
+      "solve_ms": 4.23,
+      "grade": "REFUSED_OR_NOT_SERVED",
+      "edits": [
+       {
+        "span_id": "sp47",
+        "from": "ñn",
+        "to": "lần",
+        "chosen_from_alternatives": false
+       },
+       {
+        "span_id": "sp46",
+        "from": "M,N",
+        "to": "M, N",
+        "chosen_from_alternatives": false
+       },
+       {
+        "span_id": "sp45",
+        "from": "Ggi",
+        "to": "Gọi",
+        "chosen_from_alternatives": false
+       },
+       {
+        "span_id": "sp41",
+        "from": "11.Cho",
+        "to": "11. Cho",
+        "chosen_from_alternatives": false
+       },
+       {
+        "span_id": "sp35",
+        "from": "SA+SB+SC+SD.",
+        "to": "SA + SB + SC + SD.",
+        "chosen_from_alternatives": false
+       },
+       {
+        "span_id": "sp33",
+        "from": "0, Tỉnh",
+        "to": "O. Tính",
+        "chosen_from_alternatives": false
+       }
+      ],
+      "confirms": 4,
+      "diagram_confirms": 1,
+      "actions": 11,
+      "chars_typed": 42,
+      "full_retype_chars": 582,
+      "final_text": "Của 8. Cho hình chóp S.ABC. Mệnh đồ nào sáu đây đúng?\nA.AB+A'D'=AC. B.AB+A'D'=BD.C.AB+A'D'=AC.D.AB+A'D'=CA. A.SA-AB=SB. B.SA-SB=AB. C.SA-SB=BA. D.SA-SB=SC. Của 10.Cho hình chóp S.ABCD có đáy là hình bình hành tâm O. Tính từng SA + SB + SC + SD.\nA.250 B,450 C.350 D.0 Của 11. Cho tỉ diện ABCD. Gọi M, N lần là là trung điểm a AD và BC. Tổng AB+DC bằng\nA.2AA' A.0 B.0 B.2AD C.2.AC. C.2NM D.2C'A' D.2MN"
+     }
+    }
+   ]
+  },
+  {
+   "image_id": "ext_prt_09_vmmu_page_r4",
+   "cer": {
+    "tesseract": 0.35,
+    "rapidocr": 0.1111,
+    "reconciled_draft": 0.0333
+   },
+   "wer": {
+    "tesseract": 0.4565,
+    "rapidocr": 0.4565,
+    "reconciled_draft": 0.2174
+   },
+   "math_tokens": {
+    "tesseract": {
+     "tp": 11,
+     "hyp": 17,
+     "ref": 19,
+     "precision": 0.6471,
+     "recall": 0.5789
+    },
+    "rapidocr": {
+     "tp": 13,
+     "hyp": 18,
+     "ref": 19,
+     "precision": 0.7222,
+     "recall": 0.6842
+    },
+    "reconciled_draft": {
+     "tp": 11,
+     "hyp": 15,
+     "ref": 19,
+     "precision": 0.7333,
+     "recall": 0.5789
+    }
+   },
+   "exact_statement_match": false,
+   "outcomes": [
+    {
+     "case_key": "ext_prt_09_vmmu_page_r4",
+     "selection": "single",
+     "prepare_status": "needs_confirmation",
+     "input_route": "LOCAL_OCR_NEEDS_CONFIRMATION",
+     "user_corrected_simulated": {
+      "status": "SERVED",
+      "route": "LOCAL_DETERMINISTIC_HYBRID",
+      "local_parse_status": "LOCAL_PARSE_COMPLETE",
+      "answers": {
+       "q1": "2"
+      },
+      "reason_code": null,
+      "scene3d_objects": 10,
+      "scene3d_continuity_violations": 0,
+      "solve_ms": 32.47,
+      "grade": "SERVED_CORRECT",
+      "edits": [],
+      "confirms": 2,
+      "diagram_confirms": 1,
+      "actions": 3,
+      "chars_typed": 0,
+      "full_retype_chars": 180,
+      "final_text": "Câu 14. Cho khối chóp S.ABC có đáy là tam giác vuông cân tại A, AB = 2 , SA vuông góc với đáy và SA = 3 (tham khảo hình bên). Thể tích khối chóp đã cho bằng\nA.12. B.2 . C.6. D.4."
+     }
+    }
+   ]
+  },
+  {
+   "image_id": "ext_prt_10_vmmu_page_r7",
+   "cer": {
+    "tesseract": 0.172,
+    "rapidocr": 0.145,
+    "reconciled_draft": 0.0319
+   },
+   "wer": {
+    "tesseract": 0.3617,
+    "rapidocr": 0.4894,
+    "reconciled_draft": 0.1383
+   },
+   "math_tokens": {
+    "tesseract": {
+     "tp": 18,
+     "hyp": 37,
+     "ref": 36,
+     "precision": 0.4865,
+     "recall": 0.5
+    },
+    "rapidocr": {
+     "tp": 35,
+     "hyp": 38,
+     "ref": 36,
+     "precision": 0.9211,
+     "recall": 0.9722
+    },
+    "reconciled_draft": {
+     "tp": 35,
+     "hyp": 36,
+     "ref": 36,
+     "precision": 0.9722,
+     "recall": 0.9722
+    }
+   },
+   "exact_statement_match": false,
+   "outcomes": [
+    {
+     "case_key": "ext_prt_10_vmmu_page_r7",
+     "selection": "single",
+     "prepare_status": "needs_confirmation",
+     "input_route": "LOCAL_OCR_NEEDS_CONFIRMATION",
+     "user_corrected_simulated": {
+      "status": "REFUSED",
+      "route": "FAIL_CLOSED_LIVE_AI_DISABLED",
+      "local_parse_status": "LOCAL_PARSE_PARTIAL",
+      "answers": null,
+      "reason_code": "LIVE_AI_DISABLED",
+      "scene3d_objects": 0,
+      "scene3d_continuity_violations": null,
+      "solve_ms": 8.47,
+      "grade": "REFUSED_OR_NOT_SERVED",
+      "edits": [
+       {
+        "span_id": "sp82",
+        "from": "(0#",
+        "to": "(như",
+        "chosen_from_alternatives": false
+       }
+      ],
+      "confirms": 8,
+      "diagram_confirms": 0,
+      "actions": 9,
+      "chars_typed": 4,
+      "full_retype_chars": 407,
+      "final_text": "Câu 49: Một tam tồn hình tam giác ABC có độ dài cạnh AB = 3; AC = 2; BC = √19 . Điểm H là chân đường cao kẻ từ đỉnh A của tam giác ABC . Người ta dùng compa có tâm là A , bán kính AH vạch một cung tròn MN . Lấy phần hình quạt gõ thành hình nón không có mặt đáy với đỉnh là A, cung MN thành đường tròn đáy của hình nón (như hình vẽ). Tính thể tích khối nón trên. 2π√114/361 B. 2π√3/19 C. π√57/361 D. 2π√19/361"
+     }
+    }
+   ]
+  },
+  {
+   "image_id": "ext_prt_11_vmmu_page_r10",
+   "cer": {
+    "tesseract": 0.0674,
+    "rapidocr": 0.1573,
+    "reconciled_draft": 0.0337
+   },
+   "wer": {
+    "tesseract": 0.2308,
+    "rapidocr": 0.6667,
+    "reconciled_draft": 0.2564
+   },
+   "math_tokens": {
+    "tesseract": {
+     "tp": 12,
+     "hyp": 17,
+     "ref": 17,
+     "precision": 0.7059,
+     "recall": 0.7059
+    },
+    "rapidocr": {
+     "tp": 11,
+     "hyp": 18,
+     "ref": 17,
+     "precision": 0.6111,
+     "recall": 0.6471
+    },
+    "reconciled_draft": {
+     "tp": 12,
+     "hyp": 15,
+     "ref": 17,
+     "precision": 0.8,
+     "recall": 0.7059
+    }
+   },
+   "exact_statement_match": false,
+   "outcomes": [
+    {
+     "case_key": "ext_prt_11_vmmu_page_r10",
+     "selection": "single",
+     "prepare_status": "needs_confirmation",
+     "input_route": "LOCAL_OCR_NEEDS_CONFIRMATION",
+     "user_corrected_simulated": {
+      "status": "SERVED",
+      "route": "LOCAL_DETERMINISTIC_HYBRID",
+      "local_parse_status": "LOCAL_PARSE_COMPLETE",
+      "answers": {
+       "q1": "30°"
+      },
+      "reason_code": null,
+      "scene3d_objects": 15,
+      "scene3d_continuity_violations": 0,
+      "solve_ms": 41.11,
+      "grade": "SERVED_CORRECT",
+      "edits": [],
+      "confirms": 1,
+      "diagram_confirms": 0,
+      "actions": 1,
+      "chars_typed": 0,
+      "full_retype_chars": 178,
+      "final_text": "Câu 30: Cho khối lăng trụ tam giác đều ABC.A'B'C' có cạnh đáy bằng 2a , chiều cao bằng a . Tính số đo góc tạo bởi hai mặt phẳng (AB'C') và (ABC) ?\nA.45°. B. 600. C. 30°. D.26°33'."
+     }
+    }
+   ]
+  },
+  {
+   "image_id": "ext_prt_12_vmmu_page_r11",
+   "cer": {
+    "tesseract": 0.1619,
+    "rapidocr": 0.1381,
+    "reconciled_draft": 0.0048
+   },
+   "wer": {
+    "tesseract": 0.25,
+    "rapidocr": 0.4545,
+    "reconciled_draft": 0.0227
+   },
+   "math_tokens": {
+    "tesseract": {
+     "tp": 14,
+     "hyp": 24,
+     "ref": 21,
+     "precision": 0.5833,
+     "recall": 0.6667
+    },
+    "rapidocr": {
+     "tp": 21,
+     "hyp": 28,
+     "ref": 21,
+     "precision": 0.75,
+     "recall": 1.0
+    },
+    "reconciled_draft": {
+     "tp": 21,
+     "hyp": 22,
+     "ref": 21,
+     "precision": 0.9545,
+     "recall": 1.0
+    }
+   },
+   "exact_statement_match": false,
+   "outcomes": [
+    {
+     "case_key": "ext_prt_12_vmmu_page_r11",
+     "selection": "single",
+     "prepare_status": "needs_confirmation",
+     "input_route": "LOCAL_OCR_NEEDS_CONFIRMATION",
+     "user_corrected_simulated": {
+      "status": "SERVED",
+      "route": "LOCAL_DETERMINISTIC_HYBRID",
+      "local_parse_status": "LOCAL_PARSE_COMPLETE",
+      "answers": {
+       "q1": "2√3"
+      },
+      "reason_code": null,
+      "scene3d_objects": 14,
+      "scene3d_continuity_violations": 0,
+      "solve_ms": 41.16,
+      "grade": "SERVED_CORRECT",
+      "edits": [
+       {
+        "span_id": "sp27",
+        "from": "12(cm2).",
+        "to": "12(cm²).",
+        "chosen_from_alternatives": false
+       }
+      ],
+      "confirms": 1,
+      "diagram_confirms": 0,
+      "actions": 2,
+      "chars_typed": 8,
+      "full_retype_chars": 210,
+      "final_text": "Câu 39: Cho hình lăng trụ đứng ABC.A'B'C' có đáy ABC là tam giác vuông cân tại B và diện tích của hình vuông ABB'A' bằng 12(cm²). Khoảng cách từ C đến mặt phẳng (ABB'A') bằng\nA. 6. B. 2√3(cm). C. 2. D. 3√2(cm)."
+     }
+    }
+   ]
+  },
+  {
+   "image_id": "ext_prt_13_vmmu_page_r25",
+   "cer": {
+    "tesseract": 0.0918,
+    "rapidocr": 0.1475,
+    "reconciled_draft": 0.0492
+   },
+   "wer": {
+    "tesseract": 0.197,
+    "rapidocr": 0.6212,
+    "reconciled_draft": 0.2424
+   },
+   "math_tokens": {
+    "tesseract": {
+     "tp": 14,
+     "hyp": 18,
+     "ref": 16,
+     "precision": 0.7778,
+     "recall": 0.875
+    },
+    "rapidocr": {
+     "tp": 14,
+     "hyp": 20,
+     "ref": 16,
+     "precision": 0.7,
+     "recall": 0.875
+    },
+    "reconciled_draft": {
+     "tp": 14,
+     "hyp": 19,
+     "ref": 16,
+     "precision": 0.7368,
+     "recall": 0.875
+    }
+   },
+   "exact_statement_match": false,
+   "outcomes": [
+    {
+     "case_key": "ext_prt_13_vmmu_page_r25",
+     "selection": "single",
+     "prepare_status": "needs_confirmation",
+     "input_route": "LOCAL_OCR_NEEDS_CONFIRMATION",
+     "user_corrected_simulated": {
+      "status": "REFUSED",
+      "route": "FAIL_CLOSED_LIVE_AI_DISABLED",
+      "local_parse_status": "LOCAL_PARSE_UNSUPPORTED",
+      "answers": null,
+      "reason_code": "LIVE_AI_DISABLED",
+      "scene3d_objects": 0,
+      "scene3d_continuity_violations": null,
+      "solve_ms": 6.25,
+      "grade": "REFUSED_OR_NOT_SERVED",
+      "edits": [
+       {
+        "span_id": "sp39",
+        "from": "7",
+        "to": "",
+        "chosen_from_alternatives": false
+       }
+      ],
+      "confirms": 2,
+      "diagram_confirms": 1,
+      "actions": 4,
+      "chars_typed": 0,
+      "full_retype_chars": 305,
+      "final_text": "Câu 48. Một téc nước hình trụ, đang chứa nước được đặt nằm ngang, có chiều dài 3 m và đường kính đáy 1m . Hiển tại mặt nước trong téc cách phía trên đỉnh của téc 0,25 (xem hình vẽ). Tính thể tích của nước trong téc (kết quả làm tròn đến hàng phần nghìn)? 3m\nA. 1,768 m'`. B. 1,896 m3 . C. 1,895m³. D.1,167m³."
+     }
+    }
+   ]
+  },
+  {
+   "image_id": "ext_prt_14_vmmu_page_r26",
+   "cer": {
+    "tesseract": 0.0259,
+    "rapidocr": 0.1354,
+    "reconciled_draft": 0.0548
+   },
+   "wer": {
+    "tesseract": 0.1084,
+    "rapidocr": 0.5904,
+    "reconciled_draft": 0.1928
+   },
+   "math_tokens": {
+    "tesseract": {
+     "tp": 12,
+     "hyp": 12,
+     "ref": 13,
+     "precision": 1.0,
+     "recall": 0.9231
+    },
+    "rapidocr": {
+     "tp": 5,
+     "hyp": 9,
+     "ref": 13,
+     "precision": 0.5556,
+     "recall": 0.3846
+    },
+    "reconciled_draft": {
+     "tp": 5,
+     "hyp": 9,
+     "ref": 13,
+     "precision": 0.5556,
+     "recall": 0.3846
+    }
+   },
+   "exact_statement_match": false,
+   "outcomes": [
+    {
+     "case_key": "ext_prt_14_vmmu_page_r26",
+     "selection": "single",
+     "prepare_status": "needs_confirmation",
+     "input_route": "LOCAL_OCR_NEEDS_CONFIRMATION",
+     "user_corrected_simulated": {
+      "status": "REFUSED",
+      "route": "FAIL_CLOSED_LIVE_AI_DISABLED",
+      "local_parse_status": "LOCAL_PARSE_UNSUPPORTED",
+      "answers": null,
+      "reason_code": "LIVE_AI_DISABLED",
+      "scene3d_objects": 0,
+      "scene3d_continuity_violations": null,
+      "solve_ms": 4.51,
+      "grade": "REFUSED_OR_NOT_SERVED",
+      "edits": [
+       {
+        "span_id": "sp24",
+        "from": "cậu",
+        "to": "cầu",
+        "chosen_from_alternatives": false
+       }
+      ],
+      "confirms": 0,
+      "diagram_confirms": 1,
+      "actions": 2,
+      "chars_typed": 3,
+      "full_retype_chars": 347,
+      "final_text": "Câu 40. Ngũ ta xấp hai quả cầu có cùng bán kính r vào một chiếc hộp hình trụ sao cho các quả cầu đều tiếp xúc với hai đáy, đồng thời hai quả cầu tiếp xúc với nhau và mỗi quả cầu đều tiếp xúc với đường sinh của hình trụ (tham khảo hình vẽ). Biết thể tích khối trụ là 120 cụm, thể tích của mỗi khối cầu bằng\nA.10 cụm B.20 cụm C.30 cụm D.40 cụm"
+     }
+    }
+   ]
+  },
+  {
+   "image_id": "ext_prt_15_vmmu_page_r28",
+   "cer": {
+    "tesseract": 0.1561,
+    "rapidocr": 0.1308,
+    "reconciled_draft": 0.1055
+   },
+   "wer": {
+    "tesseract": 0.3922,
+    "rapidocr": 0.451,
+    "reconciled_draft": 0.2745
+   },
+   "math_tokens": {
+    "tesseract": {
+     "tp": 13,
+     "hyp": 17,
+     "ref": 15,
+     "precision": 0.7647,
+     "recall": 0.8667
+    },
+    "rapidocr": {
+     "tp": 15,
+     "hyp": 17,
+     "ref": 15,
+     "precision": 0.8824,
+     "recall": 1.0
+    },
+    "reconciled_draft": {
+     "tp": 15,
+     "hyp": 17,
+     "ref": 15,
+     "precision": 0.8824,
+     "recall": 1.0
+    }
+   },
+   "exact_statement_match": false,
+   "outcomes": [
+    {
+     "case_key": "ext_prt_15_vmmu_page_r28",
+     "selection": "single",
+     "prepare_status": "needs_confirmation",
+     "input_route": "LOCAL_OCR_NEEDS_CONFIRMATION",
+     "user_corrected_simulated": {
+      "status": "REFUSED",
+      "route": "FAIL_CLOSED_LIVE_AI_DISABLED",
+      "local_parse_status": "LOCAL_PARSE_UNSUPPORTED",
+      "answers": null,
+      "reason_code": "LIVE_AI_DISABLED",
+      "scene3d_objects": 0,
+      "scene3d_continuity_violations": null,
+      "solve_ms": 4.85,
+      "grade": "REFUSED_OR_NOT_SERVED",
+      "edits": [
+       {
+        "span_id": "sp41",
+        "from": "40cm",
+        "to": "",
+        "chosen_from_alternatives": false
+       },
+       {
+        "span_id": "sp33",
+        "from": "20√3p",
+        "to": "20√3π",
+        "chosen_from_alternatives": false
+       }
+      ],
+      "confirms": 0,
+      "diagram_confirms": 1,
+      "actions": 3,
+      "chars_typed": 5,
+      "full_retype_chars": 237,
+      "final_text": "Câu 35: Một cái cắt có hình dạng như hình bên (gồm một khối nón và một khối trụ ghép lại). Chiều cao đo được ghi trên hình, chu vi đáy là 20√3π cụm. Thể tích của cắt bằng: 10cm \nA. 13000p (cụm). B. 5000p (cụm). C. 15000p(cm³). D. 52000p (cụm)."
+     }
+    }
+   ]
+  }
+ ]
+}

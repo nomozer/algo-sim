@@ -1,0 +1,57 @@
+{
+ "schema": "algosim-vision-fallback-offline-receipt/1",
+ "run_id": "image-first-ocr-verified-geometry",
+ "generated_at_utc": "2026-11-10T13:43:15.128918+00:00",
+ "head_commit": "bdc07a8557277d9780bee8689567990854ad4521",
+ "product_commit": "bdc07a8557277d9780bee8689567990854ad4521",
+ "working_tree_dirty": false,
+ "measured_system_tree_hash": "6851b71826793fffbb922e0b7706e1c2a32bb2203d615c8eb0414e82b0d2c947",
+ "measured_system_file_count": 115,
+ "test_environment": {
+  "os": "Windows-11-10.0.26100-SP0",
+  "python": "3.12.10",
+  "cpu_logical_cores": 12,
+  "allow_live_ai": 0,
+  "live_gemini_calls": 0,
+  "local_ocr_python": "ocr-venv (rapidocr 3.10.0, onnxruntime 1.31.1, tesserocr 2.12.0 / tesseract 5.5.3)",
+  "tessdata": "tessdata_fast vie + eng",
+  "benchmark_tier": "HOST_BENCHMARK_OFFLINE"
+ },
+ "model_versions": {
+  "local_ocr_route": "local-ocr-route/1",
+  "reconcile": "layout-aware-ocr-reconcile/1",
+  "readers": [
+   "tesseract-vie (tessdata_fast)",
+   "rapidocr PP-OCRv6 det/rec small",
+   "rapidocr latin PP-OCRv5 rec mobile (re-read)",
+   "tesseract-eng single-line ×3 (re-read)"
+  ],
+  "vision": "NOT_CALLED (ALLOW_LIVE_AI=0)"
+ },
+ "epistemic_classification": "VERIFIED FACT",
+ "offline_policy": {
+  "allow_live_ai": 0,
+  "live_vision_calls_executed": 0,
+  "vision_replay_success_rate_on_external16": "NOT_MEASURED (no pre-recorded live Gemini Vision responses exist for External16 images; fabricated Vision responses are prohibited)",
+  "local_ocr_first_short_circuit_in_unified_input": "In `unified_input.py`, `run_local_ocr_route` executes BEFORE `extract_problem_from_image`. When `rec['extraction_verified']` is True (`status='ready'`), `unified_input.py` returns immediately with `vlm_calls = 0`. When `not rec['low_quality']` (`uncertain_ratio <= 0.35`), `unified_input.py` returns `status='needs_confirmation'` with span-level `review_items` (`vlm_calls = 0`). Only when `rec['low_quality']` is True (e.g. cursive handwriting `uncertain_ratio = 0.5882 > 0.35`) or local OCR is unavailable does it invoke `extract_problem_from_image` (which fails closed with `VisionUnavailable` when `ALLOW_LIVE_AI=0`)."
+ },
+ "deterministic_cross_check_verification": {
+  "ocr_vs_vision_conflict_detected": {
+   "has_conflict": false,
+   "conflicts": []
+  },
+  "ocr_vs_vision_agreement_verified": {
+   "has_conflict": false,
+   "conflicts": []
+  },
+  "simulated_vision_ready_to_local_parser_route": {
+   "status": "SERVED",
+   "chosen_route": "VISION_THEN_LOCAL_DETERMINISTIC",
+   "gemini_vision_calls": 1,
+   "gemini_typed_fact_calls": 0,
+   "answers": {
+    "q1": "6"
+   }
+  }
+ }
+}

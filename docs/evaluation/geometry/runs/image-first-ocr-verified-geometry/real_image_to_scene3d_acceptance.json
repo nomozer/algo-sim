@@ -1,0 +1,410 @@
+{
+ "schema": "algosim-real-image-to-scene3d-acceptance/1",
+ "run_id": "image-first-ocr-verified-geometry",
+ "generated_at_utc": "2026-11-10T13:43:15.981652+00:00",
+ "head_commit": "bdc07a8557277d9780bee8689567990854ad4521",
+ "product_commit": "bdc07a8557277d9780bee8689567990854ad4521",
+ "working_tree_dirty": false,
+ "measured_system_tree_hash": "6851b71826793fffbb922e0b7706e1c2a32bb2203d615c8eb0414e82b0d2c947",
+ "measured_system_file_count": 115,
+ "test_environment": {
+  "os": "Windows-11-10.0.26100-SP0",
+  "python": "3.12.10",
+  "cpu_logical_cores": 12,
+  "allow_live_ai": 0,
+  "live_gemini_calls": 0,
+  "local_ocr_python": "ocr-venv (rapidocr 3.10.0, onnxruntime 1.31.1, tesserocr 2.12.0 / tesseract 5.5.3)",
+  "tessdata": "tessdata_fast vie + eng",
+  "benchmark_tier": "HOST_BENCHMARK_OFFLINE"
+ },
+ "model_versions": {
+  "local_ocr_route": "local-ocr-route/1",
+  "reconcile": "layout-aware-ocr-reconcile/1",
+  "readers": [
+   "tesseract-vie (tessdata_fast)",
+   "rapidocr PP-OCRv6 det/rec small",
+   "rapidocr latin PP-OCRv5 rec mobile (re-read)",
+   "tesseract-eng single-line ×3 (re-read)"
+  ],
+  "vision": "NOT_CALLED (ALLOW_LIVE_AI=0)"
+ },
+ "epistemic_classification": "VERIFIED FACT",
+ "strictly_separated_metrics": {
+  "total_external16_problem_instances": 17,
+  "in_scope_supported_printed_instances": 11,
+  "out_of_scope_or_diagram_only_or_handwritten_instances": 6,
+  "A_LOCAL_IMAGE_AUTO_SOLVE_RATE": {
+   "solved_count": 1,
+   "in_scope_printed_denominator": 11,
+   "all_external16_denominator": 17,
+   "rate_of_in_scope_printed": 0.0909,
+   "rate_of_all_external16": 0.0588,
+   "cases": [
+    "ext_prt_01_hd_q_5259753"
+   ]
+  },
+  "B_VISION_ASSISTED_SOLVE_RATE": {
+   "VISION_REPLAY_SUCCESS_RATE": "NOT_MEASURED",
+   "LIVE_VISION_SUCCESS_RATE": "NOT_MEASURED",
+   "live_gemini_calls": 0
+  },
+  "C_USER_CORRECTED_SIMULATED_SOLVE_RATE": {
+   "solved_count": 10,
+   "remaining_in_scope_printed_denominator": 10,
+   "rate_of_remaining_in_scope_printed": 1.0,
+   "combined_a_plus_c_in_scope_printed": "11/11 (100.0%)",
+   "combined_a_plus_c_all_external16": "11/17 (64.7%)"
+  },
+  "wrong_served_count": 0,
+  "scene3d_continuity_violations_across_all_served": 0
+ },
+ "per_problem_instance": [
+  {
+   "case_key": "ext_prt_01_hd_q_5259753",
+   "image_id": "ext_prt_01_hd_q_5259753",
+   "printed_or_handwritten": "PRINTED",
+   "prepare_status": "ready",
+   "outcome_category": "A_LOCAL_AUTO",
+   "status": "SERVED",
+   "grade": "SERVED_CORRECT",
+   "answers": {
+    "q2": "a√21/21",
+    "q1": "a³√3/3"
+   },
+   "oracle_expected": {
+    "answers": {
+     "q1": "a³√3/3",
+     "q2": "a√21/21"
+    },
+    "provenance": "formal-run ORACLE (q1) + run hand derivation (q2)"
+   },
+   "reason_code": null,
+   "scene3d_objects": 16,
+   "scene3d_continuity_violations": 0,
+   "solve_ms": 63.35
+  },
+  {
+   "case_key": "ext_prt_02_hd_q_7922924",
+   "image_id": "ext_prt_02_hd_q_7922924",
+   "printed_or_handwritten": "PRINTED",
+   "prepare_status": "needs_confirmation",
+   "outcome_category": "C_USER_CORRECTED_SIMULATED",
+   "status": "SERVED",
+   "grade": "SERVED_CORRECT",
+   "answers": {
+    "q1": "6"
+   },
+   "oracle_expected": {
+    "answers": null,
+    "expected": "REFUSE_MISSING_DIMENSION_OR_HEIGHT_INVARIANT",
+    "served_ok": {
+     "q1": "6"
+    }
+   },
+   "reason_code": null,
+   "scene3d_objects": 14,
+   "scene3d_continuity_violations": 0,
+   "solve_ms": 58.43
+  },
+  {
+   "case_key": "ext_prt_03_hd_q_7907931#1",
+   "image_id": "ext_prt_03_hd_q_7907931",
+   "printed_or_handwritten": "PRINTED",
+   "prepare_status": "needs_confirmation",
+   "outcome_category": "C_USER_CORRECTED_SIMULATED",
+   "status": "SERVED",
+   "grade": "SERVED_CORRECT",
+   "answers": {
+    "q1": "a√2/2"
+   },
+   "oracle_expected": {
+    "answers": {
+     "q1": "a√2/2"
+    }
+   },
+   "reason_code": null,
+   "scene3d_objects": 13,
+   "scene3d_continuity_violations": 0,
+   "solve_ms": 40.91
+  },
+  {
+   "case_key": "ext_prt_03_hd_q_7907931#2",
+   "image_id": "ext_prt_03_hd_q_7907931",
+   "printed_or_handwritten": "PRINTED",
+   "prepare_status": "needs_confirmation",
+   "outcome_category": "C_USER_CORRECTED_SIMULATED",
+   "status": "SERVED",
+   "grade": "SERVED_CORRECT",
+   "answers": {
+    "q1": "a³/4"
+   },
+   "oracle_expected": {
+    "answers": {
+     "q1": "a³/4"
+    }
+   },
+   "reason_code": null,
+   "scene3d_objects": 13,
+   "scene3d_continuity_violations": 0,
+   "solve_ms": 73.04
+  },
+  {
+   "case_key": "ext_prt_04_hd_q_8436784",
+   "image_id": "ext_prt_04_hd_q_8436784",
+   "printed_or_handwritten": "PRINTED",
+   "prepare_status": "needs_confirmation",
+   "outcome_category": "C_USER_CORRECTED_SIMULATED",
+   "status": "SERVED",
+   "grade": "SERVED_CORRECT",
+   "answers": {
+    "q1": "1/2"
+   },
+   "oracle_expected": {
+    "answers": {
+     "q1": "1/2"
+    }
+   },
+   "reason_code": null,
+   "scene3d_objects": 24,
+   "scene3d_continuity_violations": 0,
+   "solve_ms": 88.17
+  },
+  {
+   "case_key": "ext_prt_05_hd_q_7451806",
+   "image_id": "ext_prt_05_hd_q_7451806",
+   "printed_or_handwritten": "PRINTED",
+   "prepare_status": "needs_confirmation",
+   "outcome_category": "C_USER_CORRECTED_SIMULATED",
+   "status": "SERVED",
+   "grade": "SERVED_CORRECT",
+   "answers": {
+    "q1": "6/5"
+   },
+   "oracle_expected": {
+    "answers": {
+     "q1": "6/5"
+    }
+   },
+   "reason_code": null,
+   "scene3d_objects": 21,
+   "scene3d_continuity_violations": 0,
+   "solve_ms": 63.17
+  },
+  {
+   "case_key": "ext_prt_06_hd_q_1084979",
+   "image_id": "ext_prt_06_hd_q_1084979",
+   "printed_or_handwritten": "PRINTED",
+   "prepare_status": "needs_confirmation",
+   "outcome_category": "C_USER_CORRECTED_SIMULATED",
+   "status": "SERVED",
+   "grade": "SERVED_CORRECT",
+   "answers": {
+    "q2": "a√15/5",
+    "q1": "a³√15/4"
+   },
+   "oracle_expected": {
+    "answers": {
+     "q1": "a³√15/4",
+     "q2": "a√15/5"
+    }
+   },
+   "reason_code": null,
+   "scene3d_objects": 19,
+   "scene3d_continuity_violations": 0,
+   "solve_ms": 80.56
+  },
+  {
+   "case_key": "ext_prt_07_hd_q_7958052",
+   "image_id": "ext_prt_07_hd_q_7958052",
+   "printed_or_handwritten": "PRINTED",
+   "prepare_status": "needs_confirmation",
+   "outcome_category": "C_USER_CORRECTED_SIMULATED",
+   "status": "SERVED",
+   "grade": "SERVED_CORRECT",
+   "answers": {
+    "q1": "4,7"
+   },
+   "oracle_expected": {
+    "answers": {
+     "q1": "4,7"
+    }
+   },
+   "reason_code": null,
+   "scene3d_objects": 15,
+   "scene3d_continuity_violations": 0,
+   "solve_ms": 55.16
+  },
+  {
+   "case_key": "ext_prt_08_hd_q_7509702",
+   "image_id": "ext_prt_08_hd_q_7509702",
+   "printed_or_handwritten": "PRINTED",
+   "prepare_status": "needs_confirmation",
+   "outcome_category": "C_USER_CORRECTED_SIMULATED",
+   "status": "REFUSED",
+   "grade": "REFUSED_OR_NOT_SERVED",
+   "answers": null,
+   "oracle_expected": {
+    "answers": null,
+    "expected": "OUT_OF_SCOPE_VECTOR_MULTI_PROBLEM"
+   },
+   "reason_code": "LIVE_AI_DISABLED",
+   "scene3d_objects": 0,
+   "scene3d_continuity_violations": null,
+   "solve_ms": 4.23
+  },
+  {
+   "case_key": "ext_prt_09_vmmu_page_r4",
+   "image_id": "ext_prt_09_vmmu_page_r4",
+   "printed_or_handwritten": "PRINTED",
+   "prepare_status": "needs_confirmation",
+   "outcome_category": "C_USER_CORRECTED_SIMULATED",
+   "status": "SERVED",
+   "grade": "SERVED_CORRECT",
+   "answers": {
+    "q1": "2"
+   },
+   "oracle_expected": {
+    "answers": {
+     "q1": "2"
+    }
+   },
+   "reason_code": null,
+   "scene3d_objects": 10,
+   "scene3d_continuity_violations": 0,
+   "solve_ms": 32.47
+  },
+  {
+   "case_key": "ext_prt_10_vmmu_page_r7",
+   "image_id": "ext_prt_10_vmmu_page_r7",
+   "printed_or_handwritten": "PRINTED",
+   "prepare_status": "needs_confirmation",
+   "outcome_category": "C_USER_CORRECTED_SIMULATED",
+   "status": "REFUSED",
+   "grade": "REFUSED_OR_NOT_SERVED",
+   "answers": null,
+   "oracle_expected": {
+    "answers": null,
+    "expected": "OUT_OF_SCOPE_CURVED"
+   },
+   "reason_code": "LIVE_AI_DISABLED",
+   "scene3d_objects": 0,
+   "scene3d_continuity_violations": null,
+   "solve_ms": 8.47
+  },
+  {
+   "case_key": "ext_prt_11_vmmu_page_r10",
+   "image_id": "ext_prt_11_vmmu_page_r10",
+   "printed_or_handwritten": "PRINTED",
+   "prepare_status": "needs_confirmation",
+   "outcome_category": "C_USER_CORRECTED_SIMULATED",
+   "status": "SERVED",
+   "grade": "SERVED_CORRECT",
+   "answers": {
+    "q1": "30°"
+   },
+   "oracle_expected": {
+    "answers": {
+     "q1": "30°"
+    }
+   },
+   "reason_code": null,
+   "scene3d_objects": 15,
+   "scene3d_continuity_violations": 0,
+   "solve_ms": 41.11
+  },
+  {
+   "case_key": "ext_prt_12_vmmu_page_r11",
+   "image_id": "ext_prt_12_vmmu_page_r11",
+   "printed_or_handwritten": "PRINTED",
+   "prepare_status": "needs_confirmation",
+   "outcome_category": "C_USER_CORRECTED_SIMULATED",
+   "status": "SERVED",
+   "grade": "SERVED_CORRECT",
+   "answers": {
+    "q1": "2√3"
+   },
+   "oracle_expected": {
+    "answers": {
+     "q1": "2√3"
+    }
+   },
+   "reason_code": null,
+   "scene3d_objects": 14,
+   "scene3d_continuity_violations": 0,
+   "solve_ms": 41.16
+  },
+  {
+   "case_key": "ext_prt_13_vmmu_page_r25",
+   "image_id": "ext_prt_13_vmmu_page_r25",
+   "printed_or_handwritten": "PRINTED",
+   "prepare_status": "needs_confirmation",
+   "outcome_category": "C_USER_CORRECTED_SIMULATED",
+   "status": "REFUSED",
+   "grade": "REFUSED_OR_NOT_SERVED",
+   "answers": null,
+   "oracle_expected": {
+    "answers": null,
+    "expected": "OUT_OF_SCOPE_CURVED"
+   },
+   "reason_code": "LIVE_AI_DISABLED",
+   "scene3d_objects": 0,
+   "scene3d_continuity_violations": null,
+   "solve_ms": 6.25
+  },
+  {
+   "case_key": "ext_prt_14_vmmu_page_r26",
+   "image_id": "ext_prt_14_vmmu_page_r26",
+   "printed_or_handwritten": "PRINTED",
+   "prepare_status": "needs_confirmation",
+   "outcome_category": "C_USER_CORRECTED_SIMULATED",
+   "status": "REFUSED",
+   "grade": "REFUSED_OR_NOT_SERVED",
+   "answers": null,
+   "oracle_expected": {
+    "answers": null,
+    "expected": "OUT_OF_SCOPE_CURVED"
+   },
+   "reason_code": "LIVE_AI_DISABLED",
+   "scene3d_objects": 0,
+   "scene3d_continuity_violations": null,
+   "solve_ms": 4.51
+  },
+  {
+   "case_key": "ext_prt_15_vmmu_page_r28",
+   "image_id": "ext_prt_15_vmmu_page_r28",
+   "printed_or_handwritten": "PRINTED",
+   "prepare_status": "needs_confirmation",
+   "outcome_category": "C_USER_CORRECTED_SIMULATED",
+   "status": "REFUSED",
+   "grade": "REFUSED_OR_NOT_SERVED",
+   "answers": null,
+   "oracle_expected": {
+    "answers": null,
+    "expected": "DIAGRAM_ONLY_FACTS"
+   },
+   "reason_code": "LIVE_AI_DISABLED",
+   "scene3d_objects": 0,
+   "scene3d_continuity_violations": null,
+   "solve_ms": 4.85
+  },
+  {
+   "case_key": "ext_hw_b1_01_hd_a_6043187",
+   "image_id": "ext_hw_b1_01_hd_a_6043187",
+   "printed_or_handwritten": "HANDWRITTEN",
+   "prepare_status": "needs_confirmation",
+   "outcome_category": "C_USER_CORRECTED_SIMULATED",
+   "status": "REFUSED",
+   "grade": "REFUSED_OR_NOT_SERVED",
+   "answers": null,
+   "oracle_expected": {
+    "answers": {
+     "q1": "a³√3"
+    }
+   },
+   "reason_code": "LIVE_AI_DISABLED",
+   "scene3d_objects": 0,
+   "scene3d_continuity_violations": null,
+   "solve_ms": 5.38
+  }
+ ]
+}

@@ -1,0 +1,60 @@
+{
+ "schema": "algosim-baseline-candidate-integrity/1",
+ "run_id": "image-first-ocr-verified-geometry",
+ "generated_at_utc": "2026-11-10T13:43:12.969025+00:00",
+ "head_commit": "bdc07a8557277d9780bee8689567990854ad4521",
+ "product_commit": "bdc07a8557277d9780bee8689567990854ad4521",
+ "working_tree_dirty": false,
+ "measured_system_tree_hash": "6851b71826793fffbb922e0b7706e1c2a32bb2203d615c8eb0414e82b0d2c947",
+ "measured_system_file_count": 115,
+ "test_environment": {
+  "os": "Windows-11-10.0.26100-SP0",
+  "python": "3.12.10",
+  "cpu_logical_cores": 12,
+  "allow_live_ai": 0,
+  "live_gemini_calls": 0,
+  "local_ocr_python": "ocr-venv (rapidocr 3.10.0, onnxruntime 1.31.1, tesserocr 2.12.0 / tesseract 5.5.3)",
+  "tessdata": "tessdata_fast vie + eng",
+  "benchmark_tier": "HOST_BENCHMARK_OFFLINE"
+ },
+ "model_versions": {
+  "local_ocr_route": "local-ocr-route/1",
+  "reconcile": "layout-aware-ocr-reconcile/1",
+  "readers": [
+   "tesseract-vie (tessdata_fast)",
+   "rapidocr PP-OCRv6 det/rec small",
+   "rapidocr latin PP-OCRv5 rec mobile (re-read)",
+   "tesseract-eng single-line ×3 (re-read)"
+  ],
+  "vision": "NOT_CALLED (ALLOW_LIVE_AI=0)"
+ },
+ "epistemic_classification": "VERIFIED FACT",
+ "baseline_verification": {
+  "worktree_path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\local-first-geometry-understanding",
+  "branch": "feat/local-first-geometry-understanding",
+  "baseline_head_commit_at_task_start": "10d4899fdfd539de62217124e1ce5fb3fe54c3ce",
+  "baseline_product_commit_at_task_start": "d20d7fdcdd6c5759f74ff737f331c2e548923eba",
+  "baseline_measured_tree_hash_at_task_start": "fb4f4992da8764930954a44f24e121ddca6cf1f3a270039773f6dbbf8b1b5c05",
+  "current_head_commit": "bdc07a8557277d9780bee8689567990854ad4521",
+  "current_product_commit": "bdc07a8557277d9780bee8689567990854ad4521",
+  "current_measured_system_tree_hash": "6851b71826793fffbb922e0b7706e1c2a32bb2203d615c8eb0414e82b0d2c947",
+  "current_measured_system_file_count": 115,
+  "cache_version": "132",
+  "route_d_cache_policy": "132:route-d",
+  "registry_version": "geometry-functions/33",
+  "planner_version": "geometry-fact-planner/26",
+  "engine_version": "geometry-function-engine/24",
+  "local_parser_version": "local-geometry-parser/1",
+  "adaptive_router_version": "adaptive-input-router/1",
+  "local_ocr_route_version": "local-ocr-route/1",
+  "kernel_and_registry_untouched": true
+ },
+ "prior_evidence_reconciliation": {
+  "external38_total_images": 38,
+  "external16_complete_problem_images": 16,
+  "external17_problem_instances_across_16_images": 17,
+  "prior_local_image_auto_solve_rate": "0/16 (0.0%)",
+  "prior_oracle_text_downstream_replay_served": "12/17 (70.6%)",
+  "distinction_verified": "Prior 12/17 solved count in `formal-correctness-real-world-acceptance` was measured on `ORACLE_TEXT_DOWNSTREAM_REPLAY` (verbatim ground-truth text), whereas raw image local OCR solved 0/16 (`LOCAL_IMAGE_AUTO_SOLVE_RATE = 0.0%`). This run keeps Outcome A (`LOCAL_AUTO`), Outcome B (`VISION_ASSISTED`), and Outcome C (`USER_CORRECTED_SIMULATED`) strictly separated."
+ }
+}

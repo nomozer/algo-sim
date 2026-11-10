@@ -1,0 +1,94 @@
+{
+ "schema": "algosim-evaluation-run-manifest/1",
+ "run_id": "image-first-ocr-verified-geometry",
+ "generated_at_utc": "2026-11-10T13:43:17.073204+00:00",
+ "head_commit": "bdc07a8557277d9780bee8689567990854ad4521",
+ "product_commit": "bdc07a8557277d9780bee8689567990854ad4521",
+ "working_tree_dirty": false,
+ "measured_system_tree_hash": "6851b71826793fffbb922e0b7706e1c2a32bb2203d615c8eb0414e82b0d2c947",
+ "measured_system_file_count": 115,
+ "test_environment": {
+  "os": "Windows-11-10.0.26100-SP0",
+  "python": "3.12.10",
+  "cpu_logical_cores": 12,
+  "allow_live_ai": 0,
+  "live_gemini_calls": 0,
+  "local_ocr_python": "ocr-venv (rapidocr 3.10.0, onnxruntime 1.31.1, tesserocr 2.12.0 / tesseract 5.5.3)",
+  "tessdata": "tessdata_fast vie + eng",
+  "benchmark_tier": "HOST_BENCHMARK_OFFLINE"
+ },
+ "model_versions": {
+  "local_ocr_route": "local-ocr-route/1",
+  "reconcile": "layout-aware-ocr-reconcile/1",
+  "readers": [
+   "tesseract-vie (tessdata_fast)",
+   "rapidocr PP-OCRv6 det/rec small",
+   "rapidocr latin PP-OCRv5 rec mobile (re-read)",
+   "tesseract-eng single-line ×3 (re-read)"
+  ],
+  "vision": "NOT_CALLED (ALLOW_LIVE_AI=0)"
+ },
+ "task_slug": "image-first-ocr-verified-geometry",
+ "branch": "feat/local-first-geometry-understanding",
+ "status": "COMPLETE",
+ "report_file": "ALGOSIM_IMAGE_FIRST_OCR_VERIFIED_GEOMETRY_REPORT.md",
+ "deliverables": {
+  "baseline_candidate_integrity.json": {
+   "sha256": "8ac1b173c8913cbc98d47b93186311ceb812fddcb75e56edde75c9c157c2942d"
+  },
+  "diagram_dependency_audit.json": {
+   "sha256": "938a7b719fc28576647a489d9253745e9d24dc71a6421f39de7789fbfd2c76a3"
+  },
+  "dual_ocr_reconciliation_receipt.json": {
+   "sha256": "74c4bf6101d4bae8350af6f8173694fc3ce0ce4e49e0e0dc9d80d03cad37f6e8"
+  },
+  "external16_image_diagnostics.json": {
+   "sha256": "65b37b1fdf6ac5b8fec1e29e6b1defc0ab2dd857bebdf2ff68abeab6823462d0"
+  },
+  "fidelity_false_rejection_analysis.json": {
+   "sha256": "deb5d5084b8707882ee48e2f1f12066a947aeecf92ec985afda3415a8dd4c875"
+  },
+  "frontend_browser_e2e.json": {
+   "sha256": "0ed34f440c61f1aa72d44becf8f7d0fd830e86b1959a0fd0b9e55c49ff756b7a"
+  },
+  "full_regression_summary.json": {
+   "sha256": "b4059d4066bfbf765758e48d8f8ad5bbbb7d914783deaf0c19ee77dddd564767"
+  },
+  "handwritten_ocr_diagnostic.json": {
+   "sha256": "2511743957b05575c9f8c4f4c1d6c86fed3958725dab7f810eb5fa0ccd51bf3a"
+  },
+  "math_layout_recognition_receipt.json": {
+   "sha256": "753eef764ab24599cd759b69c810fdfd50af35cabd120d2d0272e458c486a6ba"
+  },
+  "new_external_image_evaluation.json": {
+   "sha256": "ac82e26d2a6b5b6cf9a87356c4ce63b33704112df1792af98512e077f3c2bbcb"
+  },
+  "ocr_failure_root_causes.json": {
+   "sha256": "c3ba7940edd7354fa9c72f8e796f5ab5e69c704b5c76bb46f22b219e951592bf"
+  },
+  "ocr_resource_performance.json": {
+   "sha256": "9bd16f24fc5e01a761d43d186f9650fcdc67f7fed085a1670ea0985d6238a872"
+  },
+  "printed_ocr_before_after.json": {
+   "sha256": "e8442d858f6754a47f2264fee274beccc27907ad6cb9fa54ae3c5b51e14c85c3"
+  },
+  "real_image_to_scene3d_acceptance.json": {
+   "sha256": "7da933be3c6738305bd2243e3833abdf79ca5f575ea885a6fb641ecf9e410aff"
+  },
+  "region_aware_ocr_receipt.json": {
+   "sha256": "2a00e53aabdf8cced86142a92a569dbe4ded4e68cca8a8f2fec802cecc6701e2"
+  },
+  "student_confirmation_flow_receipt.json": {
+   "sha256": "1afd76a4a455484b5fe59783fc66f8c91609d936343ac849bfcebf9e47e68e4b"
+  },
+  "user_correction_cache_invalidation.json": {
+   "sha256": "83f491167e68ab110a02dfc208a2d8278977da27e5964b307538d93b7e553d49"
+  },
+  "vision_fallback_offline_receipt.json": {
+   "sha256": "d4cf581dc25ed5f5f72e208decf30a75670bd90013de1e235e3f295c578c0559"
+  },
+  "vision_live_readiness.json": {
+   "sha256": "32bb416c974a5130f059dd2adabd67f3b8bb2dd8416d381c98f4374c5767a2f1"
+  }
+ }
+}

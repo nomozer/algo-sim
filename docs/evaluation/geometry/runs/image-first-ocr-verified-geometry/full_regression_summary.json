@@ -1,0 +1,44 @@
+{
+ "schema": "algosim-full-regression-summary/1",
+ "run_id": "image-first-ocr-verified-geometry",
+ "generated_at_utc": "2026-11-10T13:43:16.833762+00:00",
+ "head_commit": "bdc07a8557277d9780bee8689567990854ad4521",
+ "product_commit": "bdc07a8557277d9780bee8689567990854ad4521",
+ "working_tree_dirty": false,
+ "measured_system_tree_hash": "6851b71826793fffbb922e0b7706e1c2a32bb2203d615c8eb0414e82b0d2c947",
+ "measured_system_file_count": 115,
+ "test_environment": {
+  "os": "Windows-11-10.0.26100-SP0",
+  "python": "3.12.10",
+  "cpu_logical_cores": 12,
+  "allow_live_ai": 0,
+  "live_gemini_calls": 0,
+  "local_ocr_python": "ocr-venv (rapidocr 3.10.0, onnxruntime 1.31.1, tesserocr 2.12.0 / tesseract 5.5.3)",
+  "tessdata": "tessdata_fast vie + eng",
+  "benchmark_tier": "HOST_BENCHMARK_OFFLINE"
+ },
+ "model_versions": {
+  "local_ocr_route": "local-ocr-route/1",
+  "reconcile": "layout-aware-ocr-reconcile/1",
+  "readers": [
+   "tesseract-vie (tessdata_fast)",
+   "rapidocr PP-OCRv6 det/rec small",
+   "rapidocr latin PP-OCRv5 rec mobile (re-read)",
+   "tesseract-eng single-line ×3 (re-read)"
+  ],
+  "vision": "NOT_CALLED (ALLOW_LIVE_AI=0)"
+ },
+ "epistemic_classification": "VERIFIED FACT",
+ "regression_gates": {
+  "backend_image_first_local_ocr_tests": "18 passed (backend/tests/test_image_first_local_ocr.py)",
+  "backend_local_geometry_parser_tests": "2 passed (backend/tests/test_local_geometry_parser.py)",
+  "frontend_vitest_photo_problem_panel": "18 passed (frontend/src/components/photo-problem-panel.test.tsx)",
+  "frontend_production_build": "tsc -b && vite build succeeded (0 TypeScript/bundle errors)",
+  "playwright_headless_chromium_e2e": "6/6 scenarios passed (0 console errors, 0 page errors, 0 provider calls)",
+  "demo_replay_cases": "7/7 PASS (backend/scripts/replay_demo_cases.py)",
+  "demo_crash_surface_audit": "PASS (backend/scripts/audit_demo_crash_surface.py)",
+  "docs_information_architecture_audit": "PASS (backend/scripts/audit_docs_information_architecture.py)",
+  "publication_safety_check": "PASS (backend/scripts/check_publication_safety.py)",
+  "frozen_candidate_verification": "PASS (backend/scripts/freeze_evaluation_candidate.py --verify)"
+ }
+}

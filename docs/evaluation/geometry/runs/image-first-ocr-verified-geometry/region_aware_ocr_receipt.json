@@ -1,0 +1,916 @@
+{
+ "schema": "algosim-region-aware-ocr-receipt/1",
+ "run_id": "image-first-ocr-verified-geometry",
+ "generated_at_utc": "2026-11-10T13:43:13.544087+00:00",
+ "head_commit": "bdc07a8557277d9780bee8689567990854ad4521",
+ "product_commit": "bdc07a8557277d9780bee8689567990854ad4521",
+ "working_tree_dirty": false,
+ "measured_system_tree_hash": "6851b71826793fffbb922e0b7706e1c2a32bb2203d615c8eb0414e82b0d2c947",
+ "measured_system_file_count": 115,
+ "test_environment": {
+  "os": "Windows-11-10.0.26100-SP0",
+  "python": "3.12.10",
+  "cpu_logical_cores": 12,
+  "allow_live_ai": 0,
+  "live_gemini_calls": 0,
+  "local_ocr_python": "ocr-venv (rapidocr 3.10.0, onnxruntime 1.31.1, tesserocr 2.12.0 / tesseract 5.5.3)",
+  "tessdata": "tessdata_fast vie + eng",
+  "benchmark_tier": "HOST_BENCHMARK_OFFLINE"
+ },
+ "model_versions": {
+  "local_ocr_route": "local-ocr-route/1",
+  "reconcile": "layout-aware-ocr-reconcile/1",
+  "readers": [
+   "tesseract-vie (tessdata_fast)",
+   "rapidocr PP-OCRv6 det/rec small",
+   "rapidocr latin PP-OCRv5 rec mobile (re-read)",
+   "tesseract-eng single-line ×3 (re-read)"
+  ],
+  "vision": "NOT_CALLED (ALLOW_LIVE_AI=0)"
+ },
+ "epistemic_classification": "VERIFIED FACT",
+ "summary": {
+  "external16_images": 16,
+  "multi_problem_images_detected": 2,
+  "multi_problem_header_cross_check_active": true,
+  "associated_figure_detected_count": 9,
+  "figure_tokens_excluded_from_prose_lines": true,
+  "premise_truncation_count": 0
+ },
+ "per_image": [
+  {
+   "image_id": "ext_prt_01_hd_q_5259753",
+   "image_resolution": [
+    1024,
+    180
+   ],
+   "region_detection": {
+    "selected_bbox_original": [
+     0,
+     0,
+     1024,
+     180
+    ],
+    "used_crop": false,
+    "prepared_size": [
+     1024,
+     180
+    ],
+    "figure_bboxes_prepared": [],
+    "has_associated_figure": false,
+    "ambiguous_multi_problem": false,
+    "candidate_regions": 1,
+    "desk_trimmed": false,
+    "deskew_applied": false
+   },
+   "diagram_tokens_separated": [],
+   "diagram_classification": "NO_DIAGRAM"
+  },
+  {
+   "image_id": "ext_prt_02_hd_q_7922924",
+   "image_resolution": [
+    1024,
+    290
+   ],
+   "region_detection": {
+    "selected_bbox_original": [
+     0,
+     0,
+     1024,
+     290
+    ],
+    "used_crop": false,
+    "prepared_size": [
+     1024,
+     290
+    ],
+    "figure_bboxes_prepared": [
+     [
+      428,
+      72,
+      666,
+      250
+     ]
+    ],
+    "has_associated_figure": true,
+    "ambiguous_multi_problem": false,
+    "candidate_regions": 1,
+    "desk_trimmed": false,
+    "deskew_applied": false
+   },
+   "diagram_tokens_separated": [
+    {
+     "text": "A'",
+     "bbox": [
+      427,
+      77,
+      450,
+      96
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "C'",
+     "bbox": [
+      640,
+      76,
+      664,
+      101
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "B'",
+     "bbox": [
+      525,
+      118,
+      551,
+      139
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "C",
+     "bbox": [
+      641,
+      185,
+      659,
+      203
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "B",
+     "bbox": [
+      516,
+      231,
+      534,
+      249
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    }
+   ],
+   "diagram_classification": "DIAGRAM_LABELS_ONLY_CONSISTENT"
+  },
+  {
+   "image_id": "ext_prt_03_hd_q_7907931",
+   "image_resolution": [
+    1024,
+    178
+   ],
+   "region_detection": {
+    "selected_bbox_original": [
+     0,
+     0,
+     1024,
+     178
+    ],
+    "used_crop": false,
+    "prepared_size": [
+     1024,
+     178
+    ],
+    "figure_bboxes_prepared": [],
+    "has_associated_figure": false,
+    "ambiguous_multi_problem": false,
+    "candidate_regions": 1,
+    "desk_trimmed": false,
+    "deskew_applied": false
+   },
+   "diagram_tokens_separated": [],
+   "diagram_classification": "NO_DIAGRAM"
+  },
+  {
+   "image_id": "ext_prt_04_hd_q_8436784",
+   "image_resolution": [
+    1024,
+    169
+   ],
+   "region_detection": {
+    "selected_bbox_original": [
+     0,
+     0,
+     1024,
+     169
+    ],
+    "used_crop": false,
+    "prepared_size": [
+     1024,
+     169
+    ],
+    "figure_bboxes_prepared": [],
+    "has_associated_figure": false,
+    "ambiguous_multi_problem": false,
+    "candidate_regions": 1,
+    "desk_trimmed": false,
+    "deskew_applied": false
+   },
+   "diagram_tokens_separated": [],
+   "diagram_classification": "NO_DIAGRAM"
+  },
+  {
+   "image_id": "ext_prt_05_hd_q_7451806",
+   "image_resolution": [
+    1024,
+    198
+   ],
+   "region_detection": {
+    "selected_bbox_original": [
+     0,
+     0,
+     1024,
+     198
+    ],
+    "used_crop": false,
+    "prepared_size": [
+     1024,
+     198
+    ],
+    "figure_bboxes_prepared": [],
+    "has_associated_figure": false,
+    "ambiguous_multi_problem": false,
+    "candidate_regions": 1,
+    "desk_trimmed": false,
+    "deskew_applied": false
+   },
+   "diagram_tokens_separated": [],
+   "diagram_classification": "NO_DIAGRAM"
+  },
+  {
+   "image_id": "ext_prt_06_hd_q_1084979",
+   "image_resolution": [
+    3072,
+    855
+   ],
+   "region_detection": {
+    "selected_bbox_original": [
+     0,
+     9,
+     3072,
+     496
+    ],
+    "used_crop": true,
+    "prepared_size": [
+     3072,
+     487
+    ],
+    "figure_bboxes_prepared": [],
+    "has_associated_figure": false,
+    "ambiguous_multi_problem": false,
+    "candidate_regions": 1,
+    "desk_trimmed": false,
+    "deskew_applied": false
+   },
+   "diagram_tokens_separated": [],
+   "diagram_classification": "NO_DIAGRAM"
+  },
+  {
+   "image_id": "ext_prt_07_hd_q_7958052",
+   "image_resolution": [
+    1024,
+    71
+   ],
+   "region_detection": {
+    "selected_bbox_original": [
+     0,
+     0,
+     1024,
+     71
+    ],
+    "used_crop": false,
+    "prepared_size": [
+     1024,
+     71
+    ],
+    "figure_bboxes_prepared": [],
+    "has_associated_figure": false,
+    "ambiguous_multi_problem": false,
+    "candidate_regions": 1,
+    "desk_trimmed": false,
+    "deskew_applied": false
+   },
+   "diagram_tokens_separated": [],
+   "diagram_classification": "NO_DIAGRAM"
+  },
+  {
+   "image_id": "ext_prt_08_hd_q_7509702",
+   "image_resolution": [
+    1024,
+    1280
+   ],
+   "region_detection": {
+    "selected_bbox_original": [
+     0,
+     0,
+     1024,
+     1280
+    ],
+    "used_crop": false,
+    "prepared_size": [
+     1060,
+     1310
+    ],
+    "figure_bboxes_prepared": [
+     [
+      147,
+      73,
+      706,
+      549
+     ],
+     [
+      116,
+      802,
+      897,
+      1220
+     ]
+    ],
+    "has_associated_figure": true,
+    "ambiguous_multi_problem": true,
+    "candidate_regions": 2,
+    "desk_trimmed": false,
+    "deskew_applied": true
+   },
+   "diagram_tokens_separated": [
+    {
+     "text": "Cu 9. Cho hi  D.AD.n đ nào sa đy đúng?",
+     "bbox": [
+      138,
+      132,
+      708,
+      187
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "»Cu 12.Cho hinh hp ABCD.A'B'C'D'. Tinh tng AB+AD+A'C.",
+     "bbox": [
+      108,
+      869,
+      685,
+      924
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    }
+   ],
+   "diagram_classification": "DIAGRAM_HAS_MEASUREMENTS"
+  },
+  {
+   "image_id": "ext_prt_09_vmmu_page_r4",
+   "image_resolution": [
+    2484,
+    1604
+   ],
+   "region_detection": {
+    "selected_bbox_original": [
+     0,
+     0,
+     2484,
+     1604
+    ],
+    "used_crop": false,
+    "prepared_size": [
+     2484,
+     1604
+    ],
+    "figure_bboxes_prepared": [
+     [
+      310,
+      675,
+      1211,
+      1445
+     ]
+    ],
+    "has_associated_figure": true,
+    "ambiguous_multi_problem": true,
+    "candidate_regions": 2,
+    "desk_trimmed": false,
+    "deskew_applied": false
+   },
+   "diagram_tokens_separated": [
+    {
+     "text": "S",
+     "bbox": [
+      507,
+      677,
+      563,
+      749
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "C",
+     "bbox": [
+      1140,
+      1234,
+      1210,
+      1312
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "B",
+     "bbox": [
+      306,
+      1374,
+      378,
+      1447
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    }
+   ],
+   "diagram_classification": "DIAGRAM_REFERENCED_BY_TEXT"
+  },
+  {
+   "image_id": "ext_prt_10_vmmu_page_r7",
+   "image_resolution": [
+    2481,
+    1030
+   ],
+   "region_detection": {
+    "selected_bbox_original": [
+     0,
+     0,
+     2481,
+     1030
+    ],
+    "used_crop": false,
+    "prepared_size": [
+     2481,
+     1030
+    ],
+    "figure_bboxes_prepared": [
+     [
+      868,
+      278,
+      1613,
+      860
+     ]
+    ],
+    "has_associated_figure": true,
+    "ambiguous_multi_problem": false,
+    "candidate_regions": 1,
+    "desk_trimmed": false,
+    "deskew_applied": false
+   },
+   "diagram_tokens_separated": [
+    {
+     "text": "B",
+     "bbox": [
+      864,
+      786,
+      910,
+      835
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "C",
+     "bbox": [
+      1569,
+      796,
+      1608,
+      836
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "H",
+     "bbox": [
+      1308,
+      813,
+      1359,
+      860
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    }
+   ],
+   "diagram_classification": "DIAGRAM_LABELS_ONLY_CONSISTENT"
+  },
+  {
+   "image_id": "ext_prt_11_vmmu_page_r10",
+   "image_resolution": [
+    2481,
+    1022
+   ],
+   "region_detection": {
+    "selected_bbox_original": [
+     0,
+     0,
+     2481,
+     1022
+    ],
+    "used_crop": false,
+    "prepared_size": [
+     2481,
+     1022
+    ],
+    "figure_bboxes_prepared": [
+     [
+      883,
+      209,
+      1613,
+      999
+     ]
+    ],
+    "has_associated_figure": true,
+    "ambiguous_multi_problem": false,
+    "candidate_regions": 1,
+    "desk_trimmed": false,
+    "deskew_applied": false
+   },
+   "diagram_tokens_separated": [
+    {
+     "text": "A'",
+     "bbox": [
+      877,
+      198,
+      936,
+      244
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "B'",
+     "bbox": [
+      1159,
+      379,
+      1217,
+      423
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "C",
+     "bbox": [
+      1543,
+      743,
+      1579,
+      776
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "B",
+     "bbox": [
+      1095,
+      873,
+      1140,
+      916
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    }
+   ],
+   "diagram_classification": "DIAGRAM_LABELS_ONLY_CONSISTENT"
+  },
+  {
+   "image_id": "ext_prt_12_vmmu_page_r11",
+   "image_resolution": [
+    2481,
+    891
+   ],
+   "region_detection": {
+    "selected_bbox_original": [
+     0,
+     0,
+     2481,
+     891
+    ],
+    "used_crop": false,
+    "prepared_size": [
+     2481,
+     891
+    ],
+    "figure_bboxes_prepared": [
+     [
+      1038,
+      185,
+      1458,
+      709
+     ]
+    ],
+    "has_associated_figure": true,
+    "ambiguous_multi_problem": false,
+    "candidate_regions": 1,
+    "desk_trimmed": false,
+    "deskew_applied": false
+   },
+   "diagram_tokens_separated": [
+    {
+     "text": "A'",
+     "bbox": [
+      1032,
+      180,
+      1090,
+      234
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "C'",
+     "bbox": [
+      1400,
+      175,
+      1455,
+      227
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "B'",
+     "bbox": [
+      1190,
+      336,
+      1248,
+      388
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "A",
+     "bbox": [
+      1036,
+      534,
+      1072,
+      575
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "C",
+     "bbox": [
+      1414,
+      542,
+      1455,
+      587
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "B",
+     "bbox": [
+      1194,
+      658,
+      1240,
+      708
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    }
+   ],
+   "diagram_classification": "DIAGRAM_LABELS_ONLY_CONSISTENT"
+  },
+  {
+   "image_id": "ext_prt_13_vmmu_page_r25",
+   "image_resolution": [
+    2547,
+    644
+   ],
+   "region_detection": {
+    "selected_bbox_original": [
+     216,
+     0,
+     2379,
+     644
+    ],
+    "used_crop": true,
+    "prepared_size": [
+     2163,
+     644
+    ],
+    "figure_bboxes_prepared": [
+     [
+      1280,
+      190,
+      1615,
+      489
+     ]
+    ],
+    "has_associated_figure": true,
+    "ambiguous_multi_problem": false,
+    "candidate_regions": 1,
+    "desk_trimmed": false,
+    "deskew_applied": false
+   },
+   "diagram_tokens_separated": [
+    {
+     "text": "0,25m",
+     "bbox": [
+      1346,
+      200,
+      1491,
+      255
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    },
+    {
+     "text": "1m",
+     "bbox": [
+      1547,
+      311,
+      1620,
+      366
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": true
+    }
+   ],
+   "diagram_classification": "DIAGRAM_REFERENCED_BY_TEXT"
+  },
+  {
+   "image_id": "ext_prt_14_vmmu_page_r26",
+   "image_resolution": [
+    2550,
+    931
+   ],
+   "region_detection": {
+    "selected_bbox_original": [
+     0,
+     0,
+     2550,
+     931
+    ],
+    "used_crop": false,
+    "prepared_size": [
+     2550,
+     931
+    ],
+    "figure_bboxes_prepared": [
+     [
+      1067,
+      298,
+      1722,
+      788
+     ],
+     [
+      350,
+      310,
+      510,
+      454
+     ],
+     [
+      462,
+      405,
+      734,
+      669
+     ],
+     [
+      318,
+      584,
+      415,
+      705
+     ]
+    ],
+    "has_associated_figure": true,
+    "ambiguous_multi_problem": false,
+    "candidate_regions": 1,
+    "desk_trimmed": false,
+    "deskew_applied": false
+   },
+   "diagram_tokens_separated": [],
+   "diagram_classification": "DIAGRAM_REFERENCED_BY_TEXT"
+  },
+  {
+   "image_id": "ext_prt_15_vmmu_page_r28",
+   "image_resolution": [
+    2481,
+    606
+   ],
+   "region_detection": {
+    "selected_bbox_original": [
+     0,
+     0,
+     2481,
+     606
+    ],
+    "used_crop": false,
+    "prepared_size": [
+     2481,
+     606
+    ],
+    "figure_bboxes_prepared": [],
+    "has_associated_figure": false,
+    "ambiguous_multi_problem": false,
+    "candidate_regions": 1,
+    "desk_trimmed": false,
+    "deskew_applied": false
+   },
+   "diagram_tokens_separated": [],
+   "diagram_classification": "DIAGRAM_REFERENCED_BY_TEXT"
+  },
+  {
+   "image_id": "ext_hw_b1_01_hd_a_6043187",
+   "image_resolution": [
+    1024,
+    954
+   ],
+   "region_detection": {
+    "selected_bbox_original": [
+     0,
+     0,
+     1024,
+     954
+    ],
+    "used_crop": false,
+    "prepared_size": [
+     1024,
+     954
+    ],
+    "figure_bboxes_prepared": [
+     [
+      0,
+      0,
+      1024,
+      922
+     ],
+     [
+      0,
+      187,
+      212,
+      289
+     ],
+     [
+      0,
+      792,
+      378,
+      913
+     ]
+    ],
+    "has_associated_figure": true,
+    "ambiguous_multi_problem": false,
+    "candidate_regions": 1,
+    "desk_trimmed": false,
+    "deskew_applied": false
+   },
+   "diagram_tokens_separated": [
+    {
+     "text": "A",
+     "bbox": [
+      74,
+      297,
+      122,
+      340
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": false
+    },
+    {
+     "text": "A'",
+     "bbox": [
+      77,
+      447,
+      127,
+      498
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": false
+    },
+    {
+     "text": "B′",
+     "bbox": [
+      199,
+      512,
+      248,
+      562
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": false
+    },
+    {
+     "text": "B'C'",
+     "bbox": [
+      496,
+      645,
+      565,
+      704
+     ],
+     "reader": "rapidocr",
+     "in_figure_block": false
+    }
+   ],
+   "diagram_classification": "DIAGRAM_LABELS_ONLY_CONSISTENT"
+  }
+ ]
+}

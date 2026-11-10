@@ -1,0 +1,1692 @@
+{
+ "schema": "algosim-math-layout-recognition-receipt/1",
+ "run_id": "image-first-ocr-verified-geometry",
+ "generated_at_utc": "2026-11-10T13:43:13.712600+00:00",
+ "head_commit": "bdc07a8557277d9780bee8689567990854ad4521",
+ "product_commit": "bdc07a8557277d9780bee8689567990854ad4521",
+ "working_tree_dirty": false,
+ "measured_system_tree_hash": "6851b71826793fffbb922e0b7706e1c2a32bb2203d615c8eb0414e82b0d2c947",
+ "measured_system_file_count": 115,
+ "test_environment": {
+  "os": "Windows-11-10.0.26100-SP0",
+  "python": "3.12.10",
+  "cpu_logical_cores": 12,
+  "allow_live_ai": 0,
+  "live_gemini_calls": 0,
+  "local_ocr_python": "ocr-venv (rapidocr 3.10.0, onnxruntime 1.31.1, tesserocr 2.12.0 / tesseract 5.5.3)",
+  "tessdata": "tessdata_fast vie + eng",
+  "benchmark_tier": "HOST_BENCHMARK_OFFLINE"
+ },
+ "model_versions": {
+  "local_ocr_route": "local-ocr-route/1",
+  "reconcile": "layout-aware-ocr-reconcile/1",
+  "readers": [
+   "tesseract-vie (tessdata_fast)",
+   "rapidocr PP-OCRv6 det/rec small",
+   "rapidocr latin PP-OCRv5 rec mobile (re-read)",
+   "tesseract-eng single-line ×3 (re-read)"
+  ],
+  "vision": "NOT_CALLED (ALLOW_LIVE_AI=0)"
+ },
+ "epistemic_classification": "VERIFIED FACT",
+ "capabilities_implemented": {
+  "horizontal_math_fragment_merge": "Merges split tokens (`S.` + `ABCD` -> `S.ABCD`, `60` + `°` -> `60°`, `A` + `'` -> `A'`, `a` + `√3` -> `a√3`) when horizontal gap <= 14px.",
+  "vertical_stacked_fraction_detection": "Detects vertically stacked numerators/denominators (`FRACTION_STRUCTURE_SUSPECTED`) and flags stem fractions for confirmation while isolating MC choice bands.",
+  "choice_band_row_grouping": "Groups 2x2 / 1x4 multiple-choice option fragments (`A. ... B. ... C. ... D. ...`) into canonical choice rows so `_TRAILING_MC_OPTIONS_RE` strips them cleanly without swallowing stem text.",
+  "adaptive_binarization_retry": "Retries Tesseract `vie` on 2x upscaled Otsu-thresholded grayscale when primary pass returns 0 lines (`ext02`, `ext11`, `ext12`).",
+  "targeted_crop_adjudication": "Crops disputed math slots and re-reads with `rapidocr_latin_rec` (`en_PP-OCRv5_mobile_rec`) + `tesseract_eng_line` (`PSM 7` at thresholds `None, 170, 135`)."
+ },
+ "per_image_layout": [
+  {
+   "image_id": "ext_prt_01_hd_q_5259753",
+   "layout_flags": [],
+   "adjudication": {
+    "requested": 1,
+    "readers": [
+     "rapidocr_latin_rec",
+     "tesseract_eng_line"
+    ],
+    "ok": true,
+    "ms": null,
+    "resolved": 1
+   },
+   "math_token_prf_before_tesseract": {
+    "tp": 13,
+    "hyp": 14,
+    "ref": 14,
+    "precision": 0.9286,
+    "recall": 0.9286
+   },
+   "math_token_prf_before_rapidocr": {
+    "tp": 14,
+    "hyp": 14,
+    "ref": 14,
+    "precision": 1.0,
+    "recall": 1.0
+   },
+   "math_token_prf_after_reconciled": {
+    "tp": 14,
+    "hyp": 14,
+    "ref": 14,
+    "precision": 1.0,
+    "recall": 1.0
+   },
+   "categories_reconciled": {
+    "prime_labels": {
+     "tp": 0,
+     "hyp": 0,
+     "ref": 0,
+     "precision": 0.0,
+     "recall": 0.0
+    },
+    "radicals": {
+     "tp": 0,
+     "hyp": 0,
+     "ref": 0,
+     "precision": 0.0,
+     "recall": 0.0
+    },
+    "fractions": {
+     "tp": 0,
+     "hyp": 0,
+     "ref": 0,
+     "precision": 0.0,
+     "recall": 0.0
+    },
+    "angle_degrees": {
+     "tp": 1,
+     "hyp": 1,
+     "ref": 1,
+     "precision": 1.0,
+     "recall": 1.0
+    },
+    "point_labels": {
+     "tp": 13,
+     "hyp": 13,
+     "ref": 13,
+     "precision": 1.0,
+     "recall": 1.0
+    },
+    "relation_symbols": {
+     "tp": 0,
+     "hyp": 0,
+     "ref": 0,
+     "precision": 0.0,
+     "recall": 0.0
+    },
+    "vietnamese_diacritic_words": {
+     "tp": 37,
+     "hyp": 37,
+     "ref": 37,
+     "precision": 1.0,
+     "recall": 1.0
+    }
+   }
+  },
+  {
+   "image_id": "ext_prt_02_hd_q_7922924",
+   "layout_flags": [],
+   "adjudication": {
+    "requested": 8,
+    "readers": [
+     "rapidocr_latin_rec",
+     "tesseract_eng_line"
+    ],
+    "ok": true,
+    "ms": null,
+    "resolved": 4
+   },
+   "math_token_prf_before_tesseract": {
+    "tp": 7,
+    "hyp": 15,
+    "ref": 20,
+    "precision": 0.4667,
+    "recall": 0.35
+   },
+   "math_token_prf_before_rapidocr": {
+    "tp": 12,
+    "hyp": 23,
+    "ref": 20,
+    "precision": 0.5217,
+    "recall": 0.6
+   },
+   "math_token_prf_after_reconciled": {
+    "tp": 12,
+    "hyp": 16,
+    "ref": 20,
+    "precision": 0.75,
+    "recall": 0.6
+   },
+   "categories_reconciled": {
+    "prime_labels": {
+     "tp": 5,
+     "hyp": 5,
+     "ref": 5,
+     "precision": 1.0,
+     "recall": 1.0
+    },
+    "radicals": {
+     "tp": 2,
+     "hyp": 2,
+     "ref": 2,
+     "precision": 1.0,
+     "recall": 1.0
+    },
+    "fractions": {
+     "tp": 0,
+     "hyp": 0,
+     "ref": 0,
+     "precision": 0.0,
+     "recall": 0.0
+    },
+    "angle_degrees": {
+     "tp": 0,
+     "hyp": 0,
+     "ref": 0,
+     "precision": 0.0,
+     "recall": 0.0
+    },
+    "point_labels": {
+     "tp": 15,
+     "hyp": 15,
+     "ref": 15,
+     "precision": 1.0,
+     "recall": 1.0
+    },
+    "relation_symbols": {
+     "tp": 0,
+     "hyp": 0,
+     "ref": 0,
+     "precision": 0.0,
+     "recall": 0.0
+    },
+    "vietnamese_diacritic_words": {
+     "tp": 21,
+     "hyp": 21,
+     "ref": 21,
+     "precision": 1.0,
+     "recall": 1.0
+    }
+   }
+  },
+  {
+   "image_id": "ext_prt_03_hd_q_7907931",
+   "layout_flags": [
+    {
+     "flag": "FRACTION_STRUCTURE_SUSPECTED",
+     "lines": [
+      "a√2",
+      "2"
+     ],
+     "bbox": [
+      253,
+      48,
+      292,
+      93
+     ],
+     "in_choice_region": true,
+     "line_index": [
+      1,
+      6
+     ]
+    },
+    {
+     "flag": "SUBLINE_OVERLAP_SUSPECTED",
+     "lines": [
+      "a√2",
+      "2"
+     ],
+     "bbox": [
+      104,
+      48,
+      585,
+      92
+     ],
+     "in_choice_region": true,
+     "line_index": [
+      2,
+      5
+     ]
+    },
+    {
+     "flag": "SUBLINE_OVERLAP_SUSPECTED",
+     "lines": [
+      "A.",
+      "2"
+     ],
+     "bbox": [
+      82,
+      65,
+      117,
+      92
+     ],
+     "in_choice_region": true,
+     "line_index": [
+      3,
+      5
+     ]
+    },
+    {
+     "flag": "SUBLINE_OVERLAP_SUSPECTED",
+     "lines": [
+      "A.",
+      "3"
+     ],
+     "bbox": [
+      82,
+      65,
+      427,
+      92
+     ],
+     "in_choice_region": true,
+     "line_index": [
+      3,
+      7
+     ]
+    },
+    {
+     "flag": "SUBLINE_OVERLAP_SUSPECTED",
+     "lines": [
+      "B.",
+      "2"
+     ],
+     "bbox": [
+      104,
+      63,
+      256,
+      92
+     ],
+     "in_choice_region": true,
+     "line_index": [
+      4,
+      5
+     ]
+    },
+    {
+     "flag": "SUBLINE_OVERLAP_SUSPECTED",
+     "lines": [
+      "B.",
+      "3"
+     ],
+     "bbox": [
+      238,
+      63,
+      427,
+      92
+     ],
+     "in_choice_region": true,
+     "line_index": [
+      4,
+      7
+     ]
+    }
+   ],
+   "adjudication": {
+    "requested": 25,
+    "readers": [
+     "rapidocr_latin_rec",
+     "tesseract_eng_line"
+    ],
+    "ok": true,
+    "ms": null,
+    "resolved": 13
+   },
+   "math_token_prf_before_tesseract": {
+    "tp": 12,
+    "hyp": 30,
+    "ref": 42,
+    "precision": 0.4,
+    "recall": 0.2857
+   },
+   "math_token_prf_before_rapidocr": {
+    "tp": 37,
+    "hyp": 39,
+    "ref": 42,
+    "precision": 0.9487,
+    "recall": 0.881
+   },
+   "math_token_prf_after_reconciled": {
+    "tp": 38,
+    "hyp": 38,
+    "ref": 42,
+    "precision": 1.0,
+    "recall": 0.9048
+   },
+   "categories_reconciled": {
+    "prime_labels": {
+     "tp": 0,
+     "hyp": 0,
+     "ref": 0,
+     "precision": 0.0,
+     "recall": 0.0
+    },
+    "radicals": {
+     "tp": 3,
+     "hyp": 3,
+     "ref": 4,
+     "precision": 1.0,
+     "recall": 0.75
+    },
+    "fractions": {
+     "tp": 1,
+     "hyp": 1,
+     "ref": 4,
+     "precision": 1.0,
+     "recall": 0.25
+    },
+    "angle_degrees": {
+     "tp": 0,
+     "hyp": 0,
+     "ref": 0,
+     "precision": 0.0,
+     "recall": 0.0
+    },
+    "point_labels": {
+     "tp": 28,
+     "hyp": 28,
+     "ref": 30,
+     "precision": 1.0,
+     "recall": 0.9333
+    },
+    "relation_symbols": {
+     "tp": 2,
+     "hyp": 2,
+     "ref": 2,
+     "precision": 1.0,
+     "recall": 1.0
+    },
+    "vietnamese_diacritic_words": {
+     "tp": 37,
+     "hyp": 37,
+     "ref": 37,
+     "precision": 1.0,
+     "recall": 1.0
+    }
+   }
+  },
+  {
+   "image_id": "ext_prt_04_hd_q_8436784",
+   "layout_flags": [
+    {
+     "flag": "FRACTION_STRUCTURE_SUSPECTED",
+     "lines": [
+      "KC",
+      "KB"
+     ],
+     "bbox": [
+      206,
+      116,
+      243,
+      168
+     ],
+     "in_choice_region": false,
+     "line_index": [
+      5,
+      6
+     ]
+    }
+   ],
+   "adjudication": {
+    "requested": 1,
+    "readers": [
+     "rapidocr_latin_rec",
+     "tesseract_eng_line"
+    ],
+    "ok": true,
+    "ms": null,
+    "resolved": 1
+   },
+   "math_token_prf_before_tesseract": {
+    "tp": 26,
+    "hyp": 27,
+    "ref": 28,
+    "precision": 0.963,
+    "recall": 0.9286
+   },
+   "math_token_prf_before_rapidocr": {
+    "tp": 28,
+    "hyp": 28,
+    "ref": 28,
+    "precision": 1.0,
+    "recall": 1.0
+   },
+   "math_token_prf_after_reconciled": {
+    "tp": 28,
+    "hyp": 28,
+    "ref": 28,
+    "precision": 1.0,
+    "recall": 1.0
+   },
+   "categories_reconciled": {
+    "prime_labels": {
+     "tp": 0,
+     "hyp": 0,
+     "ref": 0,
+     "precision": 0.0,
+     "recall": 0.0
+    },
+    "radicals": {
+     "tp": 0,
+     "hyp": 0,
+     "ref": 0,
+     "precision": 0.0,
+     "recall": 0.0
+    },
+    "fractions": {
+     "tp": 1,
+     "hyp": 1,
+     "ref": 1,
+     "precision": 1.0,
+     "recall": 1.0
+    },
+    "angle_degrees": {
+     "tp": 0,
+     "hyp": 0,
+     "ref": 0,
+     "precision": 0.0,
+     "recall": 0.0
+    },
+    "point_labels": {
+     "tp": 24,
+     "hyp": 24,
+     "ref": 24,
+     "precision": 1.0,
+     "recall": 1.0
+    },
+    "relation_symbols": {
+     "tp": 0,
+     "hyp": 0,
+     "ref": 0,
+     "precision": 0.0,
+     "recall": 0.0
+    },
+    "vietnamese_diacritic_words": {
+     "tp": 29,
+     "hyp": 29,
+     "ref": 29,
+     "precision": 1.0,
+     "recall": 1.0
+    }
+   }
+  },
+  {
+   "image_id": "ext_prt_05_hd_q_7451806",
+   "layout_flags": [
+    {
+     "flag": "FRACTION_STRUCTURE_SUSPECTED",
+     "lines": [
+      "S1",
+      "S2"
+     ],
+     "bbox": [
+      902,
+      145,
+      935,
+      197
+     ],
+     "in_choice_region": false,
+     "line_index": [
+      6,
+      7
+     ]
+    }
+   ],
+   "adjudication": {
+    "requested": 19,
+    "readers": [
+     "rapidocr_latin_rec",
+     "tesseract_eng_line"
+    ],
+    "ok": true,
+    "ms": null,
+    "resolved": 10
+   },
+   "math_token_prf_before_tesseract": {
+    "tp": 14,
+    "hyp": 30,
+    "ref": 33,
+    "precision": 0.4667,
+    "recall": 0.4242
+   },
+   "math_token_prf_before_rapidocr": {
+    "tp": 32,
+    "hyp": 33,
+    "ref": 33,
+    "precision": 0.9697,
+    "recall": 0.9697
+   },
+   "math_token_prf_after_reconciled": {
+    "tp": 32,
+    "hyp": 33,
+    "ref": 33,
+    "precision": 0.9697,
+    "recall": 0.9697
+   },
+   "categories_reconciled": {
+    "prime_labels": {
+     "tp": 0,
+     "hyp": 0,
+     "ref": 0,
+     "precision": 0.0,
+     "recall": 0.0
+    },
+    "radicals": {
+     "tp": 0,
+     "hyp": 0,
+     "ref": 0,
+     "precision": 0.0,
+     "recall": 0.0
+    },
+    "fractions": {
+     "tp": 1,
+     "hyp": 1,
+     "ref": 1,
+     "precision": 1.0,
+     "recall": 1.0
+    },
+    "angle_degrees": {
+     "tp": 0,
+     "hyp": 0,
+     "ref": 0,
+     "precision": 0.0,
+     "recall": 0.0
+    },
+    "point_labels": {
+     "tp": 29,
+     "hyp": 29,
+     "ref": 29,
+     "precision": 1.0,
+     "recall": 1.0
+    },
+    "relation_symbols": {
+     "tp": 0,
+     "hyp": 0,
+     "ref": 0,
+     "precision": 0.0,
+     "recall": 0.0
+    },
+    "vietnamese_diacritic_words": {
+     "tp": 50,
+     "hyp": 50,
+     "ref": 50,
+     "precision": 1.0,
+     "recall": 1.0
+    }
+   }
+  },
+  {
+   "image_id": "ext_prt_06_hd_q_1084979",
+   "layout_flags": [],
+   "adjudication": {
+    "requested": 11,
+    "readers": [
+     "rapidocr_latin_rec",
+     "tesseract_eng_line"
+    ],
+    "ok": true,
+    "ms": null,
+    "resolved": 6
+   },
+   "math_token_prf_before_tesseract": {
+    "tp": 11,
+    "hyp": 30,
+    "ref": 21,
+    "precision": 0.3667,
+    "recall": 0.5238
+   },
+   "math_token_prf_before_rapidocr": {
+    "tp": 19,
+    "hyp": 22,
+    "ref": 21,
+    "precision": 0.8636,
+    "recall": 0.9048
+   },
+   "math_token_prf_after_reconciled": {
+    "tp": 20,
+    "hyp": 21,
+    "ref": 21,
+    "precision": 0.9524,
+    "recall": 0.9524
+   },
+   "categories_reconciled": {
+    "prime_labels": {
+     "tp": 11,
+     "hyp": 11,
+     "ref": 12,
+     "precision": 1.0,
+     "recall": 0.9167
+    },
+    "radicals": {
+     "tp": 0,
+     "hyp": 0,
+     "ref": 0,
+     "precision": 0.0,
+     "recall": 0.0
+    },
+    "fractions": {
+     "tp": 0,
+     "hyp": 0,
+     "ref": 0,
+     "precision": 0.0,
+     "recall": 0.0
+    },
+    "angle_degrees": {
+     "tp": 1,
+     "hyp": 1,
+     "ref": 1,
+     "precision": 1.0,
+     "recall": 1.0
+    },
+    "point_labels": {
+     "tp": 26,
+     "hyp": 26,
+     "ref": 26,
+     "precision": 1.0,
+     "recall": 1.0
+    },
+    "relation_symbols": {
+     "tp": 0,
+     "hyp": 0,
+     "ref": 0,
+     "precision": 0.0,
+     "recall": 0.0
+    },
+    "vietnamese_diacritic_words": {
+     "tp": 41,
+     "hyp": 41,
+     "ref": 41,
+     "precision": 1.0,
+     "recall": 1.0
+    }
+   }
+  },
+  {
+   "image_id": "ext_prt_07_hd_q_7958052",
+   "layout_flags": [],
+   "adjudication": {
+    "requested": 10,
+    "readers": [
+     "rapidocr_latin_rec",
+     "tesseract_eng_line"
+    ],
+    "ok": true,
+    "ms": null,
+    "resolved": 3
+   },
+   "math_token_prf_before_tesseract": {
+    "tp": 10,
+    "hyp": 15,
+    "ref": 12,
+    "precision": 0.6667,
+    "recall": 0.8333
+   },
+   "math_token_prf_before_rapidocr": {
+    "tp": 11,
+    "hyp": 15,
+    "ref": 12,
+    "precision": 0.7333,
+    "recall": 0.9167
+   },
+   "math_token_prf_after_reconciled": {
+    "tp": 12,
+    "hyp": 14,
+    "ref": 12,
+    "precision": 0.8571,
+    "recall": 1.0
+   },
+   "categories_reconciled": {
+    "prime_labels": {
+     "tp": 4,
+     "hyp": 4,
+     "ref": 4,
+     "precision": 1.0,
+     "recall": 1.0
+    },
+    "radicals": {
+     "tp": 0,
+     "hyp": 0,
+     "ref": 0,
+     "precision": 0.0,
+     "recall": 0.0
+    },
+    "fractions": {
+     "tp": 0,
+     "hyp": 0,
+     "ref": 0,
+     "precision": 0.0,
+     "recall": 0.0
+    },
+    "angle_degrees": {
+     "tp": 1,
+     "hyp": 1,
+     "ref": 1,
+     "precision": 1.0,
+     "recall": 1.0
+    },
+    "point_labels": {
+     "tp": 9,
+     "hyp": 10,
+     "ref": 9,
+     "precision": 0.9,
+     "recall": 1.0
+    },
+    "relation_symbols": {
+     "tp": 0,
+     "hyp": 0,
+     "ref": 0,
+     "precision": 0.0,
+     "recall": 0.0
+    },
+    "vietnamese_diacritic_words": {
+     "tp": 20,
+     "hyp": 20,
+     "ref": 21,
+     "precision": 1.0,
+     "recall": 0.9524
+    }
+   }
+  },
+  {
+   "image_id": "ext_prt_08_hd_q_7509702",
+   "layout_flags": [],
+   "adjudication": {
+    "requested": 30,
+    "readers": [
+     "rapidocr_latin_rec",
+     "tesseract_eng_line"
+    ],
+    "ok": true,
+    "ms": null,
+    "resolved": 6
+   },
+   "math_token_prf_before_tesseract": {
+    "tp": 45,
+    "hyp": 80,
+    "ref": 105,
+    "precision": 0.5625,
+    "recall": 0.4286
+   },
+   "math_token_prf_before_rapidocr": {
+    "tp": 56,
+    "hyp": 78,
+    "ref": 105,
+    "precision": 0.7179,
+    "recall": 0.5333
+   },
+   "math_token_prf_after_reconciled": {
+    "tp": 45,
+    "hyp": 65,
+    "ref": 105,
+    "precision": 0.6923,
+    "recall": 0.4286
+   },
+   "categories_reconciled": {
+    "prime_labels": {
+     "tp": 11,
+     "hyp": 11,
+     "ref": 22,
+     "precision": 1.0,
+     "recall": 0.5
+    },
+    "radicals": {
+     "tp": 0,
+     "hyp": 0,
+     "ref": 0,
+     "precision": 0.0,
+     "recall": 0.0
+    },
+    "fractions": {
+     "tp": 0,
+     "hyp": 0,
+     "ref": 0,
+     "precision": 0.0,
+     "recall": 0.0
+    },
+    "angle_degrees": {
+     "tp": 0,
+     "hyp": 0,
+     "ref": 0,
+     "precision": 0.0,
+     "recall": 0.0
+    },
+    "point_labels": {
+     "tp": 76,
+     "hyp": 76,
+     "ref": 99,
+     "precision": 1.0,
+     "recall": 0.7677
+    },
+    "relation_symbols": {
+     "tp": 0,
+     "hyp": 0,
+     "ref": 0,
+     "precision": 0.0,
+     "recall": 0.0
+    },
+    "vietnamese_diacritic_words": {
+     "tp": 22,
+     "hyp": 31,
+     "ref": 45,
+     "precision": 0.7097,
+     "recall": 0.4889
+    }
+   }
+  },
+  {
+   "image_id": "ext_prt_09_vmmu_page_r4",
+   "layout_flags": [],
+   "adjudication": {
+    "requested": 9,
+    "readers": [
+     "rapidocr_latin_rec",
+     "tesseract_eng_line"
+    ],
+    "ok": true,
+    "ms": null,
+    "resolved": 7
+   },
+   "math_token_prf_before_tesseract": {
+    "tp": 11,
+    "hyp": 17,
+    "ref": 19,
+    "precision": 0.6471,
+    "recall": 0.5789
+   },
+   "math_token_prf_before_rapidocr": {
+    "tp": 13,
+    "hyp": 18,
+    "ref": 19,
+    "precision": 0.7222,
+    "recall": 0.6842
+   },
+   "math_token_prf_after_reconciled": {
+    "tp": 11,
+    "hyp": 15,
+    "ref": 19,
+    "precision": 0.7333,
+    "recall": 0.5789
+   },
+   "categories_reconciled": {
+    "prime_labels": {
+     "tp": 0,
+     "hyp": 0,
+     "ref": 0,
+     "precision": 0.0,
+     "recall": 0.0
+    },
+    "radicals": {
+     "tp": 0,
+     "hyp": 0,
+     "ref": 0,
+     "precision": 0.0,
+     "recall": 0.0
+    },
+    "fractions": {
+     "tp": 0,
+     "hyp": 0,
+     "ref": 0,
+     "precision": 0.0,
+     "recall": 0.0
+    },
+    "angle_degrees": {
+     "tp": 0,
+     "hyp": 0,
+     "ref": 0,
+     "precision": 0.0,
+     "recall": 0.0
+    },
+    "point_labels": {
+     "tp": 11,
+     "hyp": 11,
+     "ref": 11,
+     "precision": 1.0,
+     "recall": 1.0
+    },
+    "relation_symbols": {
+     "tp": 0,
+     "hyp": 0,
+     "ref": 0,
+     "precision": 0.0,
+     "recall": 0.0
+    },
+    "vietnamese_diacritic_words": {
+     "tp": 24,
+     "hyp": 24,
+     "ref": 24,
+     "precision": 1.0,
+     "recall": 1.0
+    }
+   }
+  },
+  {
+   "image_id": "ext_prt_10_vmmu_page_r7",
+   "layout_flags": [
+    {
+     "flag": "FRACTION_STRUCTURE_SUSPECTED",
+     "lines": [
+      "2π√114",
+      "361"
+     ],
+     "bbox": [
+      276,
+      893,
+      458,
+      1022
+     ],
+     "in_choice_region": true,
+     "line_index": [
+      4,
+      11
+     ]
+    },
+    {
+     "flag": "FRACTION_STRUCTURE_SUSPECTED",
+     "lines": [
+      "2π√3",
+      "19"
+     ],
+     "bbox": [
+      762,
+      882,
+      905,
+      1023
+     ],
+     "in_choice_region": true,
+     "line_index": [
+      5,
+      12
+     ]
+    },
+    {
+     "flag": "FRACTION_STRUCTURE_SUSPECTED",
+     "lines": [
+      "π√57",
+      "361"
+     ],
+     "bbox": [
+      1311,
+      886,
+      1451,
+      1022
+     ],
+     "in_choice_region": true,
+     "line_index": [
+      6,
+      13
+     ]
+    },
+    {
+     "flag": "FRACTION_STRUCTURE_SUSPECTED",
+     "lines": [
+      "2π√19",
+      "361"
+     ],
+     "bbox": [
+      1859,
+      888,
+      2018,
+      1022
+     ],
+     "in_choice_region": true,
+     "line_index": [
+      7,
+      14
+     ]
+    }
+   ],
+   "adjudication": {
+    "requested": 20,
+    "readers": [
+     "rapidocr_latin_rec",
+     "tesseract_eng_line"
+    ],
+    "ok": true,
+    "ms": null,
+    "resolved": 12
+   },
+   "math_token_prf_before_tesseract": {
+    "tp": 18,
+    "hyp": 37,
+    "ref": 36,
+    "precision": 0.4865,
+    "recall": 0.5
+   },
+   "math_token_prf_before_rapidocr": {
+    "tp": 35,
+    "hyp": 38,
+    "ref": 36,
+    "precision": 0.9211,
+    "recall": 0.9722
+   },
+   "math_token_prf_after_reconciled": {
+    "tp": 35,
+    "hyp": 36,
+    "ref": 36,
+    "precision": 0.9722,
+    "recall": 0.9722
+   },
+   "categories_reconciled": {
+    "prime_labels": {
+     "tp": 0,
+     "hyp": 0,
+     "ref": 0,
+     "precision": 0.0,
+     "recall": 0.0
+    },
+    "radicals": {
+     "tp": 5,
+     "hyp": 5,
+     "ref": 5,
+     "precision": 1.0,
+     "recall": 1.0
+    },
+    "fractions": {
+     "tp": 4,
+     "hyp": 4,
+     "ref": 4,
+     "precision": 1.0,
+     "recall": 1.0
+    },
+    "angle_degrees": {
+     "tp": 0,
+     "hyp": 0,
+     "ref": 0,
+     "precision": 0.0,
+     "recall": 0.0
+    },
+    "point_labels": {
+     "tp": 19,
+     "hyp": 19,
+     "ref": 20,
+     "precision": 1.0,
+     "recall": 0.95
+    },
+    "relation_symbols": {
+     "tp": 0,
+     "hyp": 0,
+     "ref": 0,
+     "precision": 0.0,
+     "recall": 0.0
+    },
+    "vietnamese_diacritic_words": {
+     "tp": 60,
+     "hyp": 62,
+     "ref": 64,
+     "precision": 0.9677,
+     "recall": 0.9375
+    }
+   }
+  },
+  {
+   "image_id": "ext_prt_11_vmmu_page_r10",
+   "layout_flags": [],
+   "adjudication": {
+    "requested": 8,
+    "readers": [
+     "rapidocr_latin_rec",
+     "tesseract_eng_line"
+    ],
+    "ok": true,
+    "ms": null,
+    "resolved": 4
+   },
+   "math_token_prf_before_tesseract": {
+    "tp": 12,
+    "hyp": 17,
+    "ref": 17,
+    "precision": 0.7059,
+    "recall": 0.7059
+   },
+   "math_token_prf_before_rapidocr": {
+    "tp": 11,
+    "hyp": 18,
+    "ref": 17,
+    "precision": 0.6111,
+    "recall": 0.6471
+   },
+   "math_token_prf_after_reconciled": {
+    "tp": 12,
+    "hyp": 15,
+    "ref": 17,
+    "precision": 0.8,
+    "recall": 0.7059
+   },
+   "categories_reconciled": {
+    "prime_labels": {
+     "tp": 5,
+     "hyp": 5,
+     "ref": 5,
+     "precision": 1.0,
+     "recall": 1.0
+    },
+    "radicals": {
+     "tp": 0,
+     "hyp": 0,
+     "ref": 0,
+     "precision": 0.0,
+     "recall": 0.0
+    },
+    "fractions": {
+     "tp": 0,
+     "hyp": 0,
+     "ref": 0,
+     "precision": 0.0,
+     "recall": 0.0
+    },
+    "angle_degrees": {
+     "tp": 3,
+     "hyp": 3,
+     "ref": 4,
+     "precision": 1.0,
+     "recall": 0.75
+    },
+    "point_labels": {
+     "tp": 13,
+     "hyp": 13,
+     "ref": 13,
+     "precision": 1.0,
+     "recall": 1.0
+    },
+    "relation_symbols": {
+     "tp": 0,
+     "hyp": 0,
+     "ref": 0,
+     "precision": 0.0,
+     "recall": 0.0
+    },
+    "vietnamese_diacritic_words": {
+     "tp": 21,
+     "hyp": 21,
+     "ref": 21,
+     "precision": 1.0,
+     "recall": 1.0
+    }
+   }
+  },
+  {
+   "image_id": "ext_prt_12_vmmu_page_r11",
+   "layout_flags": [],
+   "adjudication": {
+    "requested": 8,
+    "readers": [
+     "rapidocr_latin_rec",
+     "tesseract_eng_line"
+    ],
+    "ok": true,
+    "ms": null,
+    "resolved": 4
+   },
+   "math_token_prf_before_tesseract": {
+    "tp": 14,
+    "hyp": 24,
+    "ref": 21,
+    "precision": 0.5833,
+    "recall": 0.6667
+   },
+   "math_token_prf_before_rapidocr": {
+    "tp": 21,
+    "hyp": 28,
+    "ref": 21,
+    "precision": 0.75,
+    "recall": 1.0
+   },
+   "math_token_prf_after_reconciled": {
+    "tp": 21,
+    "hyp": 22,
+    "ref": 21,
+    "precision": 0.9545,
+    "recall": 1.0
+   },
+   "categories_reconciled": {
+    "prime_labels": {
+     "tp": 7,
+     "hyp": 7,
+     "ref": 7,
+     "precision": 1.0,
+     "recall": 1.0
+    },
+    "radicals": {
+     "tp": 2,
+     "hyp": 2,
+     "ref": 2,
+     "precision": 1.0,
+     "recall": 1.0
+    },
+    "fractions": {
+     "tp": 0,
+     "hyp": 0,
+     "ref": 0,
+     "precision": 0.0,
+     "recall": 0.0
+    },
+    "angle_degrees": {
+     "tp": 0,
+     "hyp": 0,
+     "ref": 0,
+     "precision": 0.0,
+     "recall": 0.0
+    },
+    "point_labels": {
+     "tp": 16,
+     "hyp": 16,
+     "ref": 16,
+     "precision": 1.0,
+     "recall": 1.0
+    },
+    "relation_symbols": {
+     "tp": 0,
+     "hyp": 0,
+     "ref": 0,
+     "precision": 0.0,
+     "recall": 0.0
+    },
+    "vietnamese_diacritic_words": {
+     "tp": 26,
+     "hyp": 26,
+     "ref": 26,
+     "precision": 1.0,
+     "recall": 1.0
+    }
+   }
+  },
+  {
+   "image_id": "ext_prt_13_vmmu_page_r25",
+   "layout_flags": [],
+   "adjudication": {
+    "requested": 7,
+    "readers": [
+     "rapidocr_latin_rec",
+     "tesseract_eng_line"
+    ],
+    "ok": true,
+    "ms": null,
+    "resolved": 2
+   },
+   "math_token_prf_before_tesseract": {
+    "tp": 14,
+    "hyp": 18,
+    "ref": 16,
+    "precision": 0.7778,
+    "recall": 0.875
+   },
+   "math_token_prf_before_rapidocr": {
+    "tp": 14,
+    "hyp": 20,
+    "ref": 16,
+    "precision": 0.7,
+    "recall": 0.875
+   },
+   "math_token_prf_after_reconciled": {
+    "tp": 14,
+    "hyp": 19,
+    "ref": 16,
+    "precision": 0.7368,
+    "recall": 0.875
+   },
+   "categories_reconciled": {
+    "prime_labels": {
+     "tp": 0,
+     "hyp": 0,
+     "ref": 0,
+     "precision": 0.0,
+     "recall": 0.0
+    },
+    "radicals": {
+     "tp": 0,
+     "hyp": 0,
+     "ref": 0,
+     "precision": 0.0,
+     "recall": 0.0
+    },
+    "fractions": {
+     "tp": 0,
+     "hyp": 0,
+     "ref": 0,
+     "precision": 0.0,
+     "recall": 0.0
+    },
+    "angle_degrees": {
+     "tp": 0,
+     "hyp": 0,
+     "ref": 0,
+     "precision": 0.0,
+     "recall": 0.0
+    },
+    "point_labels": {
+     "tp": 7,
+     "hyp": 7,
+     "ref": 7,
+     "precision": 1.0,
+     "recall": 1.0
+    },
+    "relation_symbols": {
+     "tp": 0,
+     "hyp": 0,
+     "ref": 0,
+     "precision": 0.0,
+     "recall": 0.0
+    },
+    "vietnamese_diacritic_words": {
+     "tp": 45,
+     "hyp": 46,
+     "ref": 46,
+     "precision": 0.9783,
+     "recall": 0.9783
+    }
+   }
+  },
+  {
+   "image_id": "ext_prt_14_vmmu_page_r26",
+   "layout_flags": [],
+   "adjudication": {
+    "requested": 1,
+    "readers": [
+     "rapidocr_latin_rec",
+     "tesseract_eng_line"
+    ],
+    "ok": true,
+    "ms": null,
+    "resolved": 1
+   },
+   "math_token_prf_before_tesseract": {
+    "tp": 12,
+    "hyp": 12,
+    "ref": 13,
+    "precision": 1.0,
+    "recall": 0.9231
+   },
+   "math_token_prf_before_rapidocr": {
+    "tp": 5,
+    "hyp": 9,
+    "ref": 13,
+    "precision": 0.5556,
+    "recall": 0.3846
+   },
+   "math_token_prf_after_reconciled": {
+    "tp": 5,
+    "hyp": 9,
+    "ref": 13,
+    "precision": 0.5556,
+    "recall": 0.3846
+   },
+   "categories_reconciled": {
+    "prime_labels": {
+     "tp": 0,
+     "hyp": 0,
+     "ref": 0,
+     "precision": 0.0,
+     "recall": 0.0
+    },
+    "radicals": {
+     "tp": 0,
+     "hyp": 0,
+     "ref": 0,
+     "precision": 0.0,
+     "recall": 0.0
+    },
+    "fractions": {
+     "tp": 0,
+     "hyp": 0,
+     "ref": 0,
+     "precision": 0.0,
+     "recall": 0.0
+    },
+    "angle_degrees": {
+     "tp": 0,
+     "hyp": 0,
+     "ref": 0,
+     "precision": 0.0,
+     "recall": 0.0
+    },
+    "point_labels": {
+     "tp": 5,
+     "hyp": 5,
+     "ref": 5,
+     "precision": 1.0,
+     "recall": 1.0
+    },
+    "relation_symbols": {
+     "tp": 0,
+     "hyp": 0,
+     "ref": 0,
+     "precision": 0.0,
+     "recall": 0.0
+    },
+    "vietnamese_diacritic_words": {
+     "tp": 55,
+     "hyp": 63,
+     "ref": 58,
+     "precision": 0.873,
+     "recall": 0.9483
+    }
+   }
+  },
+  {
+   "image_id": "ext_prt_15_vmmu_page_r28",
+   "layout_flags": [],
+   "adjudication": {
+    "requested": 5,
+    "readers": [
+     "rapidocr_latin_rec",
+     "tesseract_eng_line"
+    ],
+    "ok": true,
+    "ms": null,
+    "resolved": 2
+   },
+   "math_token_prf_before_tesseract": {
+    "tp": 13,
+    "hyp": 17,
+    "ref": 15,
+    "precision": 0.7647,
+    "recall": 0.8667
+   },
+   "math_token_prf_before_rapidocr": {
+    "tp": 15,
+    "hyp": 17,
+    "ref": 15,
+    "precision": 0.8824,
+    "recall": 1.0
+   },
+   "math_token_prf_after_reconciled": {
+    "tp": 15,
+    "hyp": 17,
+    "ref": 15,
+    "precision": 0.8824,
+    "recall": 1.0
+   },
+   "categories_reconciled": {
+    "prime_labels": {
+     "tp": 0,
+     "hyp": 0,
+     "ref": 0,
+     "precision": 0.0,
+     "recall": 0.0
+    },
+    "radicals": {
+     "tp": 1,
+     "hyp": 1,
+     "ref": 1,
+     "precision": 1.0,
+     "recall": 1.0
+    },
+    "fractions": {
+     "tp": 0,
+     "hyp": 0,
+     "ref": 0,
+     "precision": 0.0,
+     "recall": 0.0
+    },
+    "angle_degrees": {
+     "tp": 0,
+     "hyp": 0,
+     "ref": 0,
+     "precision": 0.0,
+     "recall": 0.0
+    },
+    "point_labels": {
+     "tp": 6,
+     "hyp": 6,
+     "ref": 6,
+     "precision": 1.0,
+     "recall": 1.0
+    },
+    "relation_symbols": {
+     "tp": 0,
+     "hyp": 0,
+     "ref": 0,
+     "precision": 0.0,
+     "recall": 0.0
+    },
+    "vietnamese_diacritic_words": {
+     "tp": 30,
+     "hyp": 36,
+     "ref": 37,
+     "precision": 0.8333,
+     "recall": 0.8108
+    }
+   }
+  },
+  {
+   "image_id": "ext_hw_b1_01_hd_a_6043187",
+   "layout_flags": [
+    {
+     "flag": "FRACTION_STRUCTURE_SUSPECTED",
+     "lines": [
+      "2",
+      "=12.4。"
+     ],
+     "bbox": [
+      330,
+      746,
+      557,
+      910
+     ],
+     "in_choice_region": false,
+     "line_index": [
+      14,
+      18
+     ]
+    },
+    {
+     "flag": "FRACTION_STRUCTURE_SUSPECTED",
+     "lines": [
+      "2",
+      "av6.2a=3"
+     ],
+     "bbox": [
+      734,
+      728,
+      1008,
+      855
+     ],
+     "in_choice_region": false,
+     "line_index": [
+      16,
+      17
+     ]
+    },
+    {
+     "flag": "FRACTION_STRUCTURE_SUSPECTED",
+     "lines": [
+      "av6.2a=3",
+      "2"
+     ],
+     "bbox": [
+      734,
+      779,
+      1008,
+      877
+     ],
+     "in_choice_region": false,
+     "line_index": [
+      17,
+      20
+     ]
+    }
+   ],
+   "adjudication": {
+    "requested": 73,
+    "readers": [
+     "rapidocr_latin_rec",
+     "tesseract_eng_line"
+    ],
+    "ok": true,
+    "ms": null,
+    "resolved": 8
+   },
+   "math_token_prf_before_tesseract": {
+    "tp": 2,
+    "hyp": 32,
+    "ref": 10,
+    "precision": 0.0625,
+    "recall": 0.2
+   },
+   "math_token_prf_before_rapidocr": {
+    "tp": 9,
+    "hyp": 57,
+    "ref": 10,
+    "precision": 0.1579,
+    "recall": 0.9
+   },
+   "math_token_prf_after_reconciled": {
+    "tp": 8,
+    "hyp": 54,
+    "ref": 10,
+    "precision": 0.1481,
+    "recall": 0.8
+   },
+   "categories_reconciled": {
+    "prime_labels": {
+     "tp": 4,
+     "hyp": 15,
+     "ref": 4,
+     "precision": 0.2667,
+     "recall": 1.0
+    },
+    "radicals": {
+     "tp": 0,
+     "hyp": 1,
+     "ref": 1,
+     "precision": 0.0,
+     "recall": 0.0
+    },
+    "fractions": {
+     "tp": 0,
+     "hyp": 1,
+     "ref": 0,
+     "precision": 0.0,
+     "recall": 0.0
+    },
+    "angle_degrees": {
+     "tp": 1,
+     "hyp": 2,
+     "ref": 1,
+     "precision": 0.5,
+     "recall": 1.0
+    },
+    "point_labels": {
+     "tp": 10,
+     "hyp": 32,
+     "ref": 10,
+     "precision": 0.3125,
+     "recall": 1.0
+    },
+    "relation_symbols": {
+     "tp": 0,
+     "hyp": 2,
+     "ref": 0,
+     "precision": 0.0,
+     "recall": 0.0
+    },
+    "vietnamese_diacritic_words": {
+     "tp": 13,
+     "hyp": 23,
+     "ref": 25,
+     "precision": 0.5652,
+     "recall": 0.52
+    }
+   }
+  }
+ ]
+}

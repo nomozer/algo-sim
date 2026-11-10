@@ -1,0 +1,3147 @@
+{
+ "schema": "algosim-handwritten-ocr-diagnostic/1",
+ "run_id": "image-first-ocr-verified-geometry",
+ "generated_at_utc": "2026-11-10T13:43:14.446180+00:00",
+ "head_commit": "bdc07a8557277d9780bee8689567990854ad4521",
+ "product_commit": "bdc07a8557277d9780bee8689567990854ad4521",
+ "working_tree_dirty": false,
+ "measured_system_tree_hash": "6851b71826793fffbb922e0b7706e1c2a32bb2203d615c8eb0414e82b0d2c947",
+ "measured_system_file_count": 115,
+ "test_environment": {
+  "os": "Windows-11-10.0.26100-SP0",
+  "python": "3.12.10",
+  "cpu_logical_cores": 12,
+  "allow_live_ai": 0,
+  "live_gemini_calls": 0,
+  "local_ocr_python": "ocr-venv (rapidocr 3.10.0, onnxruntime 1.31.1, tesserocr 2.12.0 / tesseract 5.5.3)",
+  "tessdata": "tessdata_fast vie + eng",
+  "benchmark_tier": "HOST_BENCHMARK_OFFLINE"
+ },
+ "model_versions": {
+  "local_ocr_route": "local-ocr-route/1",
+  "reconcile": "layout-aware-ocr-reconcile/1",
+  "readers": [
+   "tesseract-vie (tessdata_fast)",
+   "rapidocr PP-OCRv6 det/rec small",
+   "rapidocr latin PP-OCRv5 rec mobile (re-read)",
+   "tesseract-eng single-line ×3 (re-read)"
+  ],
+  "vision": "NOT_CALLED (ALLOW_LIVE_AI=0)"
+ },
+ "epistemic_classification": "VERIFIED FACT",
+ "handwritten_scope_decision": {
+  "classification": "HANDWRITING_REQUIRES_VISION_OR_CONFIRMATION",
+  "single_word_vietocr_pretrained_finding": "Prior evaluation (`real-world-printed-handwriting-acquisition`) proved that pretrained `VietOCR` (`vgg_transformer`) is a single-line crop recognizer that collapses on multi-line notebook pages (`CER = 0.9619` on full-page handwriting and `CER = 0.2581` on `UIT_HWDB_line` cursive lines).",
+  "dual_ocr_reconciler_on_handwritten_problem": {
+   "image_id": "ext_hw_b1_01_hd_a_6043187",
+   "tesseract_cer": 1.152,
+   "rapidocr_cer": 1.655,
+   "reconciled_cer": 1.9942,
+   "blocking_uncertain_spans": 102,
+   "low_quality_flagged": true,
+   "auto_solve_blocked": true,
+   "wrong_served": false
+  },
+  "why_simulated_span_edit_does_not_solve_ext_hw_b1_01": "On `ext_hw_b1_01_hd_a_6043187` (`CER = 0.6143`), cursive notebook lines are broken into 23 uncertain spans plus corrupted intermediate words; character-aligned span substitution without re-transcribing the cursive page leaves residual cursive OCR noise (`LOCAL_PARSE_PARTIAL` -> `LIVE_AI_DISABLED`), confirming that full-page cursive handwriting requires Vision fallback or full text editing rather than local OCR."
+ },
+ "handwritten_case_detail": {
+  "image_id": "ext_hw_b1_01_hd_a_6043187",
+  "filename": "hd_a_6043187.jpg",
+  "source_url": "https://hoidap247.com/cau-hoi/6043187",
+  "original_image_url": "https://cdn.hoidap247.com/picture/answer/20230712/large_1689129293212.jpg",
+  "license_status": "LICENSE_UNVERIFIED",
+  "sha256_original": "6fe6f40735a6b30b5bc1c548fb0627d07325c0a5b1e9aeaf7297180ce5b71a7b",
+  "sha256_catalog": "6fe6f40735a6b30b5bc1c548fb0627d07325c0a5b1e9aeaf7297180ce5b71a7b",
+  "printed_or_handwritten": "HANDWRITTEN",
+  "has_geometry_diagram_catalog": true,
+  "diagram_embedded_facts_catalog": [
+   "Hand-drawn 3D prism ABC.A'B'C' with right-angle mark at B and 60° arc at C', plus full handwritten derivation V = a³√3 below"
+  ],
+  "ground_truth_status": "GROUND_TRUTH_UNVERIFIED",
+  "data_partition": "ocr_evaluation",
+  "image_resolution": [
+   1024,
+   954
+  ],
+  "region_detection": {
+   "selected_bbox_original": [
+    0,
+    0,
+    1024,
+    954
+   ],
+   "used_crop": false,
+   "prepared_size": [
+    1024,
+    954
+   ],
+   "figure_bboxes_prepared": [
+    [
+     0,
+     0,
+     1024,
+     922
+    ],
+    [
+     0,
+     187,
+     212,
+     289
+    ],
+    [
+     0,
+     792,
+     378,
+     913
+    ]
+   ],
+   "has_associated_figure": true,
+   "ambiguous_multi_problem": false,
+   "candidate_regions": 1,
+   "desk_trimmed": false,
+   "deskew_applied": false
+  },
+  "ocr": {
+   "engines": {
+    "tesseract": {
+     "engine_version": "tesseract 5.5.3",
+     "model": "tessdata_fast",
+     "ms": 359.87,
+     "error": null,
+     "preprocess": null,
+     "lines": [
+      {
+       "text": "na _ Ga Sun tin \"Bụ đảng - _W-MŒ _8Ð- Sóc 20C lệ dam",
+       "bbox": [
+        15,
+        48,
+        972,
+        143
+       ],
+       "raw_confidence": 24.83,
+       "words": 14
+      },
+      {
+       "text": "đ)a£ XIöMQ - đi Ð,— =ðbc2 | sAL<—-alZ „2",
+       "bbox": [
+        18,
+        125,
+        830,
+        198
+       ],
+       "raw_confidence": 6.56,
+       "words": 9
+      },
+      {
+       "text": "duöa, -lbảng — BÉ. si mai. . _ấá0”",
+       "bbox": [
+        14,
+        162,
+        840,
+        252
+       ],
+       "raw_confidence": 36.59,
+       "words": 8
+      },
+      {
+       "text": "_hị. + \"qua KHổI. lâm 3 )ïẽ =",
+       "bbox": [
+        28,
+        239,
+        1011,
+        302
+       ],
+       "raw_confidence": 33.87,
+       "words": 8
+      },
+      {
+       "text": "_® TTa cca. BÉ” 114) => Lực ¿ nẾt ta",
+       "bbox": [
+        304,
+        258,
+        991,
+        345
+       ],
+       "raw_confidence": 22.52,
+       "words": 10
+      },
+      {
+       "text": "_—ijuh chiữu cua ÿC Í dờnŒBÉO, BSSI: =",
+       "bbox": [
+        326,
+        334,
+        932,
+        400
+       ],
+       "raw_confidence": 6.05,
+       "words": 8
+      },
+      {
+       "text": "3| (4ˆ Z2) — =L( tˆ =",
+       "bbox": [
+        387,
+        376,
+        868,
+        445
+       ],
+       "raw_confidence": 13.68,
+       "words": 7
+      }
+     ]
+    },
+    "rapidocr": {
+     "engine_version": "rapidocr UNKNOWN",
+     "model": "PP-OCRv6_det_small+PP-OCRv6_rec_small(default)",
+     "ms": 2218.51,
+     "error": null,
+     "preprocess": null,
+     "lines": [
+      {
+       "text": "Cho hinh läng tru dtuing ABC A'BC co day ABC tam",
+       "bbox": [
+        57,
+        47,
+        976,
+        138
+       ],
+       "raw_confidence": 87.3,
+       "words": 11
+      },
+      {
+       "text": "giai vuong tai 13",
+       "bbox": [
+        11,
+        121,
+        324,
+        184
+       ],
+       "raw_confidence": 95.67,
+       "words": 4
+      },
+      {
+       "text": "AB=a；AC=a√s, gocgia",
+       "bbox": [
+        368,
+        106,
+        957,
+        190
+       ],
+       "raw_confidence": 78.5,
+       "words": 18
+      },
+      {
+       "text": "duing thang BC y8i mat phing tay = 60° Tinh",
+       "bbox": [
+        7,
+        165,
+        954,
+        243
+       ],
+       "raw_confidence": 84.41,
+       "words": 10
+      },
+      {
+       "text": "thi tich cug khoi lang try",
+       "bbox": [
+        41,
+        225,
+        541,
+        294
+       ],
+       "raw_confidence": 85.29,
+       "words": 6
+      },
+      {
+       "text": "a√3·TacBB⊥(ABC'）⇒)BB⊥BCraBC",
+       "bbox": [
+        184,
+        260,
+        1001,
+        347
+       ],
+       "raw_confidence": 69.62,
+       "words": 27
+      },
+      {
+       "text": "A",
+       "bbox": [
+        74,
+        297,
+        122,
+        340
+       ],
+       "raw_confidence": 99.7,
+       "words": 1
+      },
+      {
+       "text": "thinh chiêu cua BC'lên (A'BC')",
+       "bbox": [
+        331,
+        324,
+        774,
+        393
+       ],
+       "raw_confidence": 77.37,
+       "words": 5
+      },
+      {
+       "text": "⇒)（BC'；(A'B'C')=(BC';B'C')=BC'B'=60°",
+       "bbox": [
+        362,
+        365,
+        1015,
+        450
+       ],
+       "raw_confidence": 72.29,
+       "words": 36
+      },
+      {
+       "text": "A'",
+       "bbox": [
+        77,
+        447,
+        127,
+        498
+       ],
+       "raw_confidence": 87.44,
+       "words": 1
+      },
+      {
+       "text": "Xét tam giac vuong ABC",
+       "bbox": [
+        360,
+        432,
+        760,
+        498
+       ],
+       "raw_confidence": 88.19,
+       "words": 5
+      },
+      {
+       "text": "BC=√（a√3）2-a2=a√∑=Bc′",
+       "bbox": [
+        406,
+        467,
+        942,
+        555
+       ],
+       "raw_confidence": 76.0,
+       "words": 21
+      },
+      {
+       "text": "B′",
+       "bbox": [
+        199,
+        512,
+        248,
+        562
+       ],
+       "raw_confidence": 78.24,
+       "words": 1
+      },
+      {
+       "text": "@Lan huynh",
+       "bbox": [
+        73,
+        560,
+        255,
+        629
+       ],
+       "raw_confidence": 95.05,
+       "words": 2
+      },
+      {
+       "text": "Tan 60°=BrB′",
+       "bbox": [
+        355,
+        592,
+        580,
+        662
+       ],
+       "raw_confidence": 69.76,
+       "words": 2
+      },
+      {
+       "text": "B'C'",
+       "bbox": [
+        496,
+        645,
+        565,
+        704
+       ],
+       "raw_confidence": 84.63,
+       "words": 1
+      },
+      {
+       "text": "a√2",
+       "bbox": [
+        776,
+        636,
+        849,
+        689
+       ],
+       "raw_confidence": 96.44,
+       "words": 1
+      },
+      {
+       "text": "#AB.BC：1.a.a√2=2a",
+       "bbox": [
+        480,
+        670,
+        1000,
+        767
+       ],
+       "raw_confidence": 77.45,
+       "words": 17
+      },
+      {
+       "text": "2",
+       "bbox": [
+        903,
+        728,
+        946,
+        766
+       ],
+       "raw_confidence": 99.93,
+       "words": 1
+      },
+      {
+       "text": "2",
+       "bbox": [
+        484,
+        746,
+        520,
+        780
+       ],
+       "raw_confidence": 72.47,
+       "words": 1
+      },
+      {
+       "text": "2",
+       "bbox": [
+        685,
+        741,
+        712,
+        769
+       ],
+       "raw_confidence": 94.75,
+       "words": 1
+      },
+      {
+       "text": "av6.2a=3",
+       "bbox": [
+        734,
+        779,
+        1008,
+        855
+       ],
+       "raw_confidence": 84.12,
+       "words": 2
+      },
+      {
+       "text": "=12.4。",
+       "bbox": [
+        330,
+        806,
+        557,
+        910
+       ],
+       "raw_confidence": 61.33,
+       "words": 6
+      },
+      {
+       "text": "AABC",
+       "bbox": [
+        641,
+        831,
+        715,
+        871
+       ],
+       "raw_confidence": 84.69,
+       "words": 1
+      },
+      {
+       "text": "2",
+       "bbox": [
+        832,
+        841,
+        867,
+        877
+       ],
+       "raw_confidence": 99.91,
+       "words": 1
+      }
+     ]
+    }
+   },
+   "confidence_note": "raw engine confidence, NOT calibrated probability (OCR_CONFIDENCE_UNCALIBRATED)"
+  },
+  "before_gate": {
+   "gate": "reconcile_dual_ocr_texts + verify_ocr_input_fidelity (adaptive-input-router/1, unchanged)",
+   "accepted": false,
+   "reason_code": "HANDWRITTEN_IMAGE_REQUIRES_VISION_FALLBACK",
+   "failed_checks": null
+  },
+  "after_reconcile": {
+   "draft_text": "Cho hình lăng trụ đảng - ABCA'BC _8Ð- đáy ABC dam giải vuông tại 13 AB = a | AC = a √ s , g ở c g ai a duing thang BC y8i mặt . tay = 60° Tính thi tích \"qua — khối lăng 3 )ïẽ a √ 3 _® T a c BB ⊥ ( ABC' ） ⇒ ) BB ⊥ BC r a BC _—ijuh chiữu cua BC'lên (A'BC') ⇒ ) （ BC' ； ( A'B'C' ) = (là BC' ; B'C' ) = BC'B' = 60 ° Xét tam giác vuông ABC BC = √ （ a √ 3 ） 2 - a 2 = a √ ∑ = B c ′ lần huynh Tan 60°=BrB′ a√2 # AB . BC ： 1 . a . a √ 2 = 2 a 2 2/av6.2a=3 2/=12.4。 AABC 2",
+   "extraction_verified": false,
+   "blocking_reasons": [
+    "UNCERTAIN_SPANS",
+    "LAYOUT_STRUCTURE_SUSPECTED"
+   ],
+   "uncertain_spans": [
+    {
+     "span_id": "sp5",
+     "text": "đảng -",
+     "kind": "prose",
+     "reason": "MULTIWORD_SLOT_MISMATCH",
+     "alternatives": [
+      "đảng -",
+      "dtuing"
+     ],
+     "readings": {
+      "rapidocr": "dtuing",
+      "tesseract": "đảng -"
+     },
+     "bbox": [
+      407,
+      56,
+      501,
+      131
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp6",
+     "text": "ABCA'BC",
+     "kind": "math",
+     "reason": "PRIME_DISAGREEMENT",
+     "alternatives": [
+      "ABCA'BC",
+      "_W-MŒ",
+      "AeC.t'Bc"
+     ],
+     "readings": {
+      "rapidocr": "ABCA'BC",
+      "tesseract": "_W-MŒ",
+      "rapidocr_latin_rec": "AeC.t'Bc"
+     },
+     "bbox": [
+      517,
+      53,
+      648,
+      128
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp7",
+     "text": "_8Ð-",
+     "kind": "prose",
+     "reason": "AMBIGUOUS_DIACRITIC_RESTORATION",
+     "alternatives": [
+      "_8Ð-",
+      "co"
+     ],
+     "readings": {
+      "rapidocr": "co",
+      "tesseract": "_8Ð-"
+     },
+     "bbox": [
+      664,
+      52,
+      709,
+      126
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp9",
+     "text": "ABC",
+     "kind": "math",
+     "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+     "alternatives": [
+      "ABC",
+      "20C"
+     ],
+     "readings": {
+      "rapidocr": "ABC",
+      "tesseract": "20C",
+      "rapidocr_latin_rec": "ABC"
+     },
+     "bbox": [
+      798,
+      49,
+      855,
+      123
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp11",
+     "text": "dam",
+     "kind": "prose",
+     "reason": "AMBIGUOUS_DIACRITIC_RESTORATION",
+     "alternatives": [
+      "dam",
+      "tam"
+     ],
+     "readings": {
+      "rapidocr": "tam",
+      "tesseract": "dam"
+     },
+     "bbox": [
+      908,
+      47,
+      965,
+      121
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp15",
+     "text": "13",
+     "kind": "math",
+     "reason": "MATH_TOKEN_DISAGREEMENT",
+     "alternatives": [
+      "13",
+      "Ð,—",
+      "\\$",
+      "hy"
+     ],
+     "readings": {
+      "rapidocr": "13",
+      "tesseract": "Ð,—",
+      "rapidocr_latin_rec": "\\$",
+      "tesseract_eng_line": "hy"
+     },
+     "bbox": [
+      277,
+      121,
+      314,
+      181
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp16",
+     "text": "AB",
+     "kind": "math",
+     "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+     "alternatives": [
+      "AB"
+     ],
+     "readings": {
+      "rapidocr": "AB",
+      "rapidocr_latin_rec": "AB"
+     },
+     "bbox": [
+      394,
+      119,
+      448,
+      189
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp17",
+     "text": "=",
+     "kind": "math",
+     "reason": "SINGLE_READER_MATH_TOKEN",
+     "alternatives": [
+      "="
+     ],
+     "readings": {
+      "rapidocr": "="
+     },
+     "bbox": [
+      452,
+      118,
+      480,
+      187
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp19",
+     "text": "|",
+     "kind": "prose",
+     "reason": "AMBIGUOUS_DIACRITIC_RESTORATION",
+     "alternatives": [
+      "|",
+      "；"
+     ],
+     "readings": {
+      "rapidocr": "；",
+      "tesseract": "|"
+     },
+     "bbox": [
+      522,
+      116,
+      552,
+      186
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp20",
+     "text": "AC",
+     "kind": "math",
+     "reason": "MATH_TOKEN_DISAGREEMENT",
+     "alternatives": [
+      "AC",
+      "AL",
+      "Se"
+     ],
+     "readings": {
+      "rapidocr": "AC",
+      "rapidocr_latin_rec": "AL",
+      "tesseract_eng_line": "Se"
+     },
+     "bbox": [
+      592,
+      113,
+      645,
+      184
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp21",
+     "text": "=",
+     "kind": "math",
+     "reason": "SINGLE_READER_MATH_TOKEN",
+     "alternatives": [
+      "="
+     ],
+     "readings": {
+      "rapidocr": "="
+     },
+     "bbox": [
+      650,
+      113,
+      680,
+      182
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp23",
+     "text": "√",
+     "kind": "math",
+     "reason": "RADICAL_DISAGREEMENT",
+     "alternatives": [
+      "√",
+      "V\\$"
+     ],
+     "readings": {
+      "rapidocr": "√",
+      "rapidocr_latin_rec": "V\\$"
+     },
+     "bbox": [
+      722,
+      111,
+      747,
+      180
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp24",
+     "text": "s",
+     "kind": "prose",
+     "reason": "AMBIGUOUS_DIACRITIC_RESTORATION",
+     "alternatives": [
+      "s"
+     ],
+     "readings": {
+      "rapidocr": "s"
+     },
+     "bbox": [
+      745,
+      110,
+      773,
+      180
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp26",
+     "text": "g",
+     "kind": "prose",
+     "reason": "AMBIGUOUS_DIACRITIC_RESTORATION",
+     "alternatives": [
+      "g"
+     ],
+     "readings": {
+      "rapidocr": "g"
+     },
+     "bbox": [
+      815,
+      108,
+      840,
+      178
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp28",
+     "text": "c",
+     "kind": "math",
+     "reason": "MATH_TOKEN_DISAGREEMENT",
+     "alternatives": [
+      "c",
+      "é",
+      "a)"
+     ],
+     "readings": {
+      "rapidocr": "c",
+      "rapidocr_latin_rec": "é",
+      "tesseract_eng_line": "a)"
+     },
+     "bbox": [
+      856,
+      108,
+      878,
+      177
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp29",
+     "text": "g",
+     "kind": "prose",
+     "reason": "AMBIGUOUS_DIACRITIC_RESTORATION",
+     "alternatives": [
+      "g"
+     ],
+     "readings": {
+      "rapidocr": "g"
+     },
+     "bbox": [
+      882,
+      107,
+      904,
+      176
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp31",
+     "text": "a",
+     "kind": "math",
+     "reason": "MATH_TOKEN_DISAGREEMENT",
+     "alternatives": [
+      "a",
+      "a$",
+      "=="
+     ],
+     "readings": {
+      "rapidocr": "a",
+      "rapidocr_latin_rec": "a$",
+      "tesseract_eng_line": "= ="
+     },
+     "bbox": [
+      941,
+      105,
+      957,
+      175
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp32",
+     "text": "duing",
+     "kind": "prose",
+     "reason": "NOT_IN_LEXICON",
+     "alternatives": [
+      "duing"
+     ],
+     "readings": {
+      "rapidocr": "duing"
+     },
+     "bbox": [
+      13,
+      172,
+      128,
+      242
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp34",
+     "text": "BC",
+     "kind": "math",
+     "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+     "alternatives": [
+      "BC",
+      "BÉ"
+     ],
+     "readings": {
+      "rapidocr": "BC",
+      "tesseract": "BÉ.",
+      "rapidocr_latin_rec": "Bc"
+     },
+     "bbox": [
+      281,
+      170,
+      326,
+      240
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp35",
+     "text": "y8i",
+     "kind": "math",
+     "reason": "MATH_TOKEN_DISAGREEMENT",
+     "alternatives": [
+      "y8i",
+      "si",
+      "yoi"
+     ],
+     "readings": {
+      "rapidocr": "y8i",
+      "tesseract": "si",
+      "rapidocr_latin_rec": "yoi"
+     },
+     "bbox": [
+      363,
+      170,
+      419,
+      239
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp37",
+     "text": ".",
+     "kind": "prose",
+     "reason": "NOT_IN_LEXICON",
+     "alternatives": [
+      ".",
+      "phing"
+     ],
+     "readings": {
+      "rapidocr": "phing",
+      "tesseract": "."
+     },
+     "bbox": [
+      536,
+      168,
+      638,
+      237
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp38",
+     "text": "tay",
+     "kind": "prose",
+     "reason": "NOT_IN_LEXICON",
+     "alternatives": [
+      "tay"
+     ],
+     "readings": {
+      "rapidocr": "tay"
+     },
+     "bbox": [
+      662,
+      167,
+      718,
+      236
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp40",
+     "text": "60°",
+     "kind": "math",
+     "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+     "alternatives": [
+      "60°",
+      "_ấá0”"
+     ],
+     "readings": {
+      "rapidocr": "60°",
+      "tesseract": "_ấá0”",
+      "rapidocr_latin_rec": "60°"
+     },
+     "bbox": [
+      788,
+      165,
+      855,
+      234
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp42",
+     "text": "thi",
+     "kind": "prose",
+     "reason": "AMBIGUOUS_DIACRITIC_RESTORATION",
+     "alternatives": [
+      "thi"
+     ],
+     "readings": {
+      "rapidocr": "thi"
+     },
+     "bbox": [
+      56,
+      233,
+      116,
+      293
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp44",
+     "text": "\"qua —",
+     "kind": "prose",
+     "reason": "MULTIWORD_SLOT_MISMATCH",
+     "alternatives": [
+      "\"qua —",
+      "cug"
+     ],
+     "readings": {
+      "rapidocr": "cug",
+      "tesseract": "\"qua —"
+     },
+     "bbox": [
+      235,
+      229,
+      295,
+      290
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp47",
+     "text": "3 )ïẽ",
+     "kind": "prose",
+     "reason": "MULTIWORD_SLOT_MISMATCH",
+     "alternatives": [
+      "3 )ïẽ",
+      "try"
+     ],
+     "readings": {
+      "rapidocr": "try",
+      "tesseract": "3 )ïẽ"
+     },
+     "bbox": [
+      483,
+      225,
+      541,
+      285
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp48",
+     "text": "a",
+     "kind": "math",
+     "reason": "MATH_TOKEN_DISAGREEMENT",
+     "alternatives": [
+      "a",
+      "aj$",
+      "E"
+     ],
+     "readings": {
+      "rapidocr": "a",
+      "rapidocr_latin_rec": "aj$",
+      "tesseract_eng_line": "E"
+     },
+     "bbox": [
+      198,
+      283,
+      222,
+      346
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp49",
+     "text": "√",
+     "kind": "math",
+     "reason": "RADICAL_DISAGREEMENT",
+     "alternatives": [
+      "√",
+      "$",
+      "5"
+     ],
+     "readings": {
+      "rapidocr": "√",
+      "rapidocr_latin_rec": "$",
+      "tesseract_eng_line": "5"
+     },
+     "bbox": [
+      219,
+      283,
+      237,
+      345
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp50",
+     "text": "3",
+     "kind": "math",
+     "reason": "MATH_TOKEN_DISAGREEMENT",
+     "alternatives": [
+      "3",
+      "zB"
+     ],
+     "readings": {
+      "rapidocr": "3",
+      "tesseract_eng_line": "zB"
+     },
+     "bbox": [
+      234,
+      282,
+      253,
+      345
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp51",
+     "text": "_®",
+     "kind": "prose",
+     "reason": "AMBIGUOUS_DIACRITIC_RESTORATION",
+     "alternatives": [
+      "_®",
+      "·"
+     ],
+     "readings": {
+      "rapidocr": "·",
+      "tesseract": "_®"
+     },
+     "bbox": [
+      322,
+      280,
+      346,
+      342
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp53",
+     "text": "a",
+     "kind": "math",
+     "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+     "alternatives": [
+      "a",
+      "Ta"
+     ],
+     "readings": {
+      "rapidocr": "a",
+      "tesseract": "Ta",
+      "rapidocr_latin_rec": "a"
+     },
+     "bbox": [
+      385,
+      278,
+      409,
+      340
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp54",
+     "text": "c",
+     "kind": "math",
+     "reason": "MATH_TOKEN_DISAGREEMENT",
+     "alternatives": [
+      "c",
+      "cca",
+      "co",
+      "le"
+     ],
+     "readings": {
+      "rapidocr": "c",
+      "tesseract": "cca.",
+      "rapidocr_latin_rec": "co",
+      "tesseract_eng_line": "le"
+     },
+     "bbox": [
+      415,
+      277,
+      440,
+      339
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp55",
+     "text": "BB",
+     "kind": "math",
+     "reason": "MATH_TOKEN_DISAGREEMENT",
+     "alternatives": [
+      "BB'",
+      "BB",
+      "BÉ”",
+      "BB$"
+     ],
+     "readings": {
+      "rapidocr": "BB",
+      "tesseract": "BÉ”",
+      "rapidocr_latin_rec": "BB$"
+     },
+     "bbox": [
+      467,
+      274,
+      512,
+      338
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp56",
+     "text": "⊥",
+     "kind": "math",
+     "reason": "RELATION_SYMBOL_DISAGREEMENT",
+     "alternatives": [
+      "⊥",
+      "L"
+     ],
+     "readings": {
+      "rapidocr": "⊥",
+      "rapidocr_latin_rec": "L"
+     },
+     "bbox": [
+      529,
+      273,
+      553,
+      336
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp57",
+     "text": "(",
+     "kind": "prose",
+     "reason": "EMPTY",
+     "alternatives": [
+      "("
+     ],
+     "readings": {
+      "rapidocr": "("
+     },
+     "bbox": [
+      551,
+      273,
+      574,
+      335
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp58",
+     "text": "ABC'",
+     "kind": "math",
+     "reason": "PRIME_DISAGREEMENT",
+     "alternatives": [
+      "ABC'",
+      "A(sC)"
+     ],
+     "readings": {
+      "rapidocr": "ABC'",
+      "rapidocr_latin_rec": "A(sC)"
+     },
+     "bbox": [
+      572,
+      270,
+      652,
+      335
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp59",
+     "text": "）",
+     "kind": "prose",
+     "reason": "AMBIGUOUS_DIACRITIC_RESTORATION",
+     "alternatives": [
+      "）"
+     ],
+     "readings": {
+      "rapidocr": "）"
+     },
+     "bbox": [
+      650,
+      270,
+      668,
+      332
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp60",
+     "text": "⇒",
+     "kind": "prose",
+     "reason": "AMBIGUOUS_DIACRITIC_RESTORATION",
+     "alternatives": [
+      "⇒"
+     ],
+     "readings": {
+      "rapidocr": "⇒"
+     },
+     "bbox": [
+      695,
+      268,
+      714,
+      331
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp61",
+     "text": ")",
+     "kind": "prose",
+     "reason": "EMPTY",
+     "alternatives": [
+      ")"
+     ],
+     "readings": {
+      "rapidocr": ")"
+     },
+     "bbox": [
+      712,
+      268,
+      730,
+      330
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp62",
+     "text": "BB",
+     "kind": "math",
+     "reason": "MATH_TOKEN_DISAGREEMENT",
+     "alternatives": [
+      "BB'",
+      "BB",
+      "bBb"
+     ],
+     "readings": {
+      "rapidocr": "BB",
+      "rapidocr_latin_rec": "bBb"
+     },
+     "bbox": [
+      737,
+      266,
+      782,
+      330
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp63",
+     "text": "⊥",
+     "kind": "math",
+     "reason": "RELATION_SYMBOL_DISAGREEMENT",
+     "alternatives": [
+      "⊥",
+      "1",
+      "de"
+     ],
+     "readings": {
+      "rapidocr": "⊥",
+      "rapidocr_latin_rec": "1",
+      "tesseract_eng_line": "de"
+     },
+     "bbox": [
+      789,
+      265,
+      813,
+      328
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp64",
+     "text": "BC",
+     "kind": "math",
+     "reason": "MATH_TOKEN_DISAGREEMENT",
+     "alternatives": [
+      "BC",
+      "¿",
+      "be",
+      "aa"
+     ],
+     "readings": {
+      "rapidocr": "BC",
+      "tesseract": "¿",
+      "rapidocr_latin_rec": "be!",
+      "tesseract_eng_line": "aa"
+     },
+     "bbox": [
+      820,
+      264,
+      866,
+      327
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp65",
+     "text": "r",
+     "kind": "math",
+     "reason": "MATH_TOKEN_DISAGREEMENT",
+     "alternatives": [
+      "r",
+      "Yra"
+     ],
+     "readings": {
+      "rapidocr": "r",
+      "rapidocr_latin_rec": "Yra"
+     },
+     "bbox": [
+      882,
+      263,
+      901,
+      325
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp66",
+     "text": "a",
+     "kind": "math",
+     "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+     "alternatives": [
+      "a",
+      "if"
+     ],
+     "readings": {
+      "rapidocr": "a",
+      "rapidocr_latin_rec": "a",
+      "tesseract_eng_line": "if"
+     },
+     "bbox": [
+      899,
+      262,
+      916,
+      325
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp67",
+     "text": "BC",
+     "kind": "math",
+     "reason": "MATH_TOKEN_DISAGREEMENT",
+     "alternatives": [
+      "BC",
+      "6c",
+      "be"
+     ],
+     "readings": {
+      "rapidocr": "BC",
+      "rapidocr_latin_rec": "6c",
+      "tesseract_eng_line": "be"
+     },
+     "bbox": [
+      914,
+      261,
+      959,
+      324
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp69",
+     "text": "_—ijuh",
+     "kind": "prose",
+     "reason": "NOT_IN_LEXICON",
+     "alternatives": [
+      "_—ijuh",
+      "thinh"
+     ],
+     "readings": {
+      "rapidocr": "thinh",
+      "tesseract": "_—ijuh"
+     },
+     "bbox": [
+      356,
+      334,
+      430,
+      392
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp70",
+     "text": "chiữu",
+     "kind": "prose",
+     "reason": "AMBIGUOUS_DIACRITIC_RESTORATION",
+     "alternatives": [
+      "chiữu",
+      "chiêu"
+     ],
+     "readings": {
+      "rapidocr": "chiêu",
+      "tesseract": "chiữu"
+     },
+     "bbox": [
+      440,
+      331,
+      514,
+      389
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp72",
+     "text": "BC'lên",
+     "kind": "math",
+     "reason": "PRIME_DISAGREEMENT",
+     "alternatives": [
+      "BC'lên",
+      "ÿCÍ",
+      "BClin"
+     ],
+     "readings": {
+      "rapidocr": "BC'lên",
+      "tesseract": "ÿC Í",
+      "rapidocr_latin_rec": "BC lin"
+     },
+     "bbox": [
+      591,
+      326,
+      675,
+      385
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp73",
+     "text": "(A'BC')",
+     "kind": "math",
+     "reason": "PRIME_DISAGREEMENT",
+     "alternatives": [
+      "(A'BC')",
+      "(tc$"
+     ],
+     "readings": {
+      "rapidocr": "(A'BC')",
+      "rapidocr_latin_rec": "(tc $"
+     },
+     "bbox": [
+      676,
+      324,
+      774,
+      382
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp74",
+     "text": "⇒",
+     "kind": "prose",
+     "reason": "AMBIGUOUS_DIACRITIC_RESTORATION",
+     "alternatives": [
+      "⇒"
+     ],
+     "readings": {
+      "rapidocr": "⇒"
+     },
+     "bbox": [
+      381,
+      385,
+      395,
+      449
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp75",
+     "text": ")",
+     "kind": "prose",
+     "reason": "EMPTY",
+     "alternatives": [
+      ")"
+     ],
+     "readings": {
+      "rapidocr": ")"
+     },
+     "bbox": [
+      393,
+      385,
+      407,
+      448
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp76",
+     "text": "（",
+     "kind": "prose",
+     "reason": "AMBIGUOUS_DIACRITIC_RESTORATION",
+     "alternatives": [
+      "（"
+     ],
+     "readings": {
+      "rapidocr": "（"
+     },
+     "bbox": [
+      434,
+      384,
+      447,
+      447
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp77",
+     "text": "BC'",
+     "kind": "math",
+     "reason": "PRIME_DISAGREEMENT",
+     "alternatives": [
+      "BC'",
+      "(s"
+     ],
+     "readings": {
+      "rapidocr": "BC'",
+      "rapidocr_latin_rec": "(s"
+     },
+     "bbox": [
+      445,
+      382,
+      492,
+      447
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp78",
+     "text": "；",
+     "kind": "prose",
+     "reason": "AMBIGUOUS_DIACRITIC_RESTORATION",
+     "alternatives": [
+      "；"
+     ],
+     "readings": {
+      "rapidocr": "；"
+     },
+     "bbox": [
+      497,
+      381,
+      513,
+      445
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp79",
+     "text": "(",
+     "kind": "prose",
+     "reason": "EMPTY",
+     "alternatives": [
+      "("
+     ],
+     "readings": {
+      "rapidocr": "("
+     },
+     "bbox": [
+      518,
+      381,
+      532,
+      444
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp80",
+     "text": "A'B'C'",
+     "kind": "math",
+     "reason": "PRIME_DISAGREEMENT",
+     "alternatives": [
+      "A'B'C'",
+      "ABC"
+     ],
+     "readings": {
+      "rapidocr": "A'B'C'",
+      "rapidocr_latin_rec": "ABC"
+     },
+     "bbox": [
+      530,
+      379,
+      595,
+      444
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp85",
+     "text": "BC'",
+     "kind": "math",
+     "reason": "PRIME_DISAGREEMENT",
+     "alternatives": [
+      "BC'",
+      "tˆ",
+      "ec"
+     ],
+     "readings": {
+      "rapidocr": "BC'",
+      "tesseract": "tˆ",
+      "rapidocr_latin_rec": "ec"
+     },
+     "bbox": [
+      708,
+      373,
+      753,
+      438
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp87",
+     "text": "B'C'",
+     "kind": "math",
+     "reason": "PRIME_DISAGREEMENT",
+     "alternatives": [
+      "B'C'",
+      "B'c",
+      "Ww)"
+     ],
+     "readings": {
+      "rapidocr": "B'C'",
+      "rapidocr_latin_rec": "B'c",
+      "tesseract_eng_line": "Ww)"
+     },
+     "bbox": [
+      771,
+      371,
+      816,
+      436
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp88",
+     "text": ")",
+     "kind": "prose",
+     "reason": "EMPTY",
+     "alternatives": [
+      ")"
+     ],
+     "readings": {
+      "rapidocr": ")"
+     },
+     "bbox": [
+      814,
+      371,
+      829,
+      434
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp89",
+     "text": "=",
+     "kind": "math",
+     "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+     "alternatives": [
+      "=",
+      "Ls"
+     ],
+     "readings": {
+      "rapidocr": "=",
+      "rapidocr_latin_rec": "=",
+      "tesseract_eng_line": "Ls"
+     },
+     "bbox": [
+      834,
+      370,
+      850,
+      434
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp90",
+     "text": "BC'B'",
+     "kind": "math",
+     "reason": "PRIME_DISAGREEMENT",
+     "alternatives": [
+      "BC'B'",
+      "ec"
+     ],
+     "readings": {
+      "rapidocr": "BC'B'",
+      "rapidocr_latin_rec": "ec"
+     },
+     "bbox": [
+      866,
+      367,
+      934,
+      432
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp92",
+     "text": "60",
+     "kind": "math",
+     "reason": "DEGREE_SYMBOL_DISAGREEMENT",
+     "alternatives": [
+      "60",
+      "60°",
+      "“"
+     ],
+     "readings": {
+      "rapidocr": "60",
+      "rapidocr_latin_rec": "60°",
+      "tesseract_eng_line": "“"
+     },
+     "bbox": [
+      961,
+      365,
+      998,
+      429
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp93",
+     "text": "°",
+     "kind": "math",
+     "reason": "DEGREE_SYMBOL_DISAGREEMENT",
+     "alternatives": [
+      "°",
+      "x"
+     ],
+     "readings": {
+      "rapidocr": "°",
+      "rapidocr_latin_rec": ":",
+      "tesseract_eng_line": "x"
+     },
+     "bbox": [
+      1003,
+      365,
+      1015,
+      428
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp98",
+     "text": "ABC",
+     "kind": "math",
+     "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+     "alternatives": [
+      "ABC"
+     ],
+     "readings": {
+      "rapidocr": "ABC",
+      "rapidocr_latin_rec": "ABC."
+     },
+     "bbox": [
+      692,
+      432,
+      760,
+      493
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp99",
+     "text": "BC",
+     "kind": "math",
+     "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+     "alternatives": [
+      "BC"
+     ],
+     "readings": {
+      "rapidocr": "BC",
+      "rapidocr_latin_rec": "BC"
+     },
+     "bbox": [
+      408,
+      491,
+      454,
+      555
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp101",
+     "text": "√",
+     "kind": "math",
+     "reason": "RADICAL_DISAGREEMENT",
+     "alternatives": [
+      "√",
+      "1$"
+     ],
+     "readings": {
+      "rapidocr": "√",
+      "rapidocr_latin_rec": "1$"
+     },
+     "bbox": [
+      490,
+      488,
+      516,
+      551
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp102",
+     "text": "（",
+     "kind": "prose",
+     "reason": "AMBIGUOUS_DIACRITIC_RESTORATION",
+     "alternatives": [
+      "（"
+     ],
+     "readings": {
+      "rapidocr": "（"
+     },
+     "bbox": [
+      513,
+      487,
+      537,
+      550
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp103",
+     "text": "a",
+     "kind": "math",
+     "reason": "MATH_TOKEN_DISAGREEMENT",
+     "alternatives": [
+      "a",
+      "(av"
+     ],
+     "readings": {
+      "rapidocr": "a",
+      "rapidocr_latin_rec": "(av"
+     },
+     "bbox": [
+      534,
+      486,
+      553,
+      549
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp104",
+     "text": "√",
+     "kind": "math",
+     "reason": "RADICAL_DISAGREEMENT",
+     "alternatives": [
+      "√",
+      "\\$",
+      "5"
+     ],
+     "readings": {
+      "rapidocr": "√",
+      "rapidocr_latin_rec": "\\$",
+      "tesseract_eng_line": "5"
+     },
+     "bbox": [
+      550,
+      485,
+      568,
+      548
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp105",
+     "text": "3",
+     "kind": "math",
+     "reason": "MATH_TOKEN_DISAGREEMENT",
+     "alternatives": [
+      "3",
+      "3)",
+      "5)"
+     ],
+     "readings": {
+      "rapidocr": "3",
+      "rapidocr_latin_rec": "3)",
+      "tesseract_eng_line": "5)"
+     },
+     "bbox": [
+      565,
+      485,
+      584,
+      548
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp106",
+     "text": "）",
+     "kind": "prose",
+     "reason": "AMBIGUOUS_DIACRITIC_RESTORATION",
+     "alternatives": [
+      "）"
+     ],
+     "readings": {
+      "rapidocr": "）"
+     },
+     "bbox": [
+      581,
+      484,
+      595,
+      547
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp107",
+     "text": "2",
+     "kind": "math",
+     "reason": "MATH_TOKEN_DISAGREEMENT",
+     "alternatives": [
+      "2",
+      "$",
+      "="
+     ],
+     "readings": {
+      "rapidocr": "2",
+      "rapidocr_latin_rec": "$",
+      "tesseract_eng_line": "="
+     },
+     "bbox": [
+      592,
+      483,
+      612,
+      546
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp108",
+     "text": "-",
+     "kind": "prose",
+     "reason": "AMBIGUOUS_DIACRITIC_RESTORATION",
+     "alternatives": [
+      "-"
+     ],
+     "readings": {
+      "rapidocr": "-"
+     },
+     "bbox": [
+      625,
+      481,
+      653,
+      545
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp109",
+     "text": "a",
+     "kind": "math",
+     "reason": "MATH_TOKEN_DISAGREEMENT",
+     "alternatives": [
+      "a",
+      "a$"
+     ],
+     "readings": {
+      "rapidocr": "a",
+      "rapidocr_latin_rec": "a$"
+     },
+     "bbox": [
+      657,
+      480,
+      683,
+      543
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp110",
+     "text": "2",
+     "kind": "math",
+     "reason": "MATH_TOKEN_DISAGREEMENT",
+     "alternatives": [
+      "2",
+      "$"
+     ],
+     "readings": {
+      "rapidocr": "2",
+      "rapidocr_latin_rec": "$"
+     },
+     "bbox": [
+      680,
+      478,
+      705,
+      542
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp111",
+     "text": "=",
+     "kind": "math",
+     "reason": "MATH_TOKEN_DISAGREEMENT",
+     "alternatives": [
+      "=",
+      "$"
+     ],
+     "readings": {
+      "rapidocr": "=",
+      "rapidocr_latin_rec": "$"
+     },
+     "bbox": [
+      709,
+      477,
+      738,
+      541
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp112",
+     "text": "a",
+     "kind": "math",
+     "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+     "alternatives": [
+      "a",
+      "z="
+     ],
+     "readings": {
+      "rapidocr": "a",
+      "rapidocr_latin_rec": "a",
+      "tesseract_eng_line": "z="
+     },
+     "bbox": [
+      752,
+      475,
+      777,
+      539
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp113",
+     "text": "√",
+     "kind": "math",
+     "reason": "RADICAL_DISAGREEMENT",
+     "alternatives": [
+      "√",
+      "$\\$"
+     ],
+     "readings": {
+      "rapidocr": "√",
+      "rapidocr_latin_rec": "$\\$"
+     },
+     "bbox": [
+      774,
+      474,
+      798,
+      538
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp114",
+     "text": "∑",
+     "kind": "prose",
+     "reason": "AMBIGUOUS_DIACRITIC_RESTORATION",
+     "alternatives": [
+      "∑"
+     ],
+     "readings": {
+      "rapidocr": "∑"
+     },
+     "bbox": [
+      795,
+      473,
+      821,
+      536
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp115",
+     "text": "=",
+     "kind": "math",
+     "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+     "alternatives": [
+      "=",
+      "72"
+     ],
+     "readings": {
+      "rapidocr": "=",
+      "rapidocr_latin_rec": "=",
+      "tesseract_eng_line": "7 2"
+     },
+     "bbox": [
+      846,
+      470,
+      874,
+      534
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp116",
+     "text": "B",
+     "kind": "math",
+     "reason": "PRIME_DISAGREEMENT",
+     "alternatives": [
+      "B",
+      "3'c",
+      "iz"
+     ],
+     "readings": {
+      "rapidocr": "B",
+      "rapidocr_latin_rec": "3'c",
+      "tesseract_eng_line": "iz"
+     },
+     "bbox": [
+      889,
+      468,
+      914,
+      532
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp117",
+     "text": "c",
+     "kind": "math",
+     "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+     "alternatives": [
+      "c"
+     ],
+     "readings": {
+      "rapidocr": "c",
+      "rapidocr_latin_rec": "c",
+      "tesseract_eng_line": "!"
+     },
+     "bbox": [
+      911,
+      467,
+      930,
+      531
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp118",
+     "text": "′",
+     "kind": "math",
+     "reason": "PRIME_DISAGREEMENT",
+     "alternatives": [
+      "'",
+      "y"
+     ],
+     "readings": {
+      "rapidocr": "′",
+      "tesseract_eng_line": "y"
+     },
+     "bbox": [
+      927,
+      467,
+      942,
+      530
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp120",
+     "text": "huynh",
+     "kind": "prose",
+     "reason": "NOT_IN_LEXICON",
+     "alternatives": [
+      "huynh"
+     ],
+     "readings": {
+      "rapidocr": "huynh"
+     },
+     "bbox": [
+      163,
+      560,
+      254,
+      625
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp121",
+     "text": "Tan",
+     "kind": "prose",
+     "reason": "AMBIGUOUS_DIACRITIC_RESTORATION",
+     "alternatives": [
+      "Tan"
+     ],
+     "readings": {
+      "rapidocr": "Tan"
+     },
+     "bbox": [
+      380,
+      600,
+      428,
+      660
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp122",
+     "text": "60°=BrB′",
+     "kind": "math",
+     "reason": "DEGREE_SYMBOL_DISAGREEMENT",
+     "alternatives": [
+      "60°=BrB'",
+      "$60=B$",
+      "issi"
+     ],
+     "readings": {
+      "rapidocr": "60°=BrB′",
+      "rapidocr_latin_rec": "$60=B$",
+      "tesseract_eng_line": "iss i"
+     },
+     "bbox": [
+      429,
+      592,
+      573,
+      658
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp123",
+     "text": "a√2",
+     "kind": "math",
+     "reason": "RADICAL_DISAGREEMENT",
+     "alternatives": [
+      "a√2",
+      "av2",
+      "Wiz"
+     ],
+     "readings": {
+      "rapidocr": "a√2",
+      "rapidocr_latin_rec": "av2",
+      "tesseract_eng_line": "Wiz"
+     },
+     "bbox": [
+      788,
+      636,
+      840,
+      688
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp124",
+     "text": "#",
+     "kind": "prose",
+     "reason": "AMBIGUOUS_DIACRITIC_RESTORATION",
+     "alternatives": [
+      "#"
+     ],
+     "readings": {
+      "rapidocr": "#"
+     },
+     "bbox": [
+      495,
+      695,
+      526,
+      766
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp125",
+     "text": "AB",
+     "kind": "math",
+     "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+     "alternatives": [
+      "AB"
+     ],
+     "readings": {
+      "rapidocr": "AB",
+      "rapidocr_latin_rec": "Ab"
+     },
+     "bbox": [
+      530,
+      692,
+      576,
+      764
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp127",
+     "text": "BC",
+     "kind": "math",
+     "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+     "alternatives": [
+      "BC"
+     ],
+     "readings": {
+      "rapidocr": "BC",
+      "rapidocr_latin_rec": "BC"
+     },
+     "bbox": [
+      590,
+      689,
+      640,
+      761
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp128",
+     "text": "：",
+     "kind": "prose",
+     "reason": "AMBIGUOUS_DIACRITIC_RESTORATION",
+     "alternatives": [
+      "："
+     ],
+     "readings": {
+      "rapidocr": "："
+     },
+     "bbox": [
+      636,
+      688,
+      665,
+      758
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp129",
+     "text": "1",
+     "kind": "math",
+     "reason": "MATH_TOKEN_DISAGREEMENT",
+     "alternatives": [
+      "1",
+      "$"
+     ],
+     "readings": {
+      "rapidocr": "1",
+      "rapidocr_latin_rec": "$"
+     },
+     "bbox": [
+      681,
+      685,
+      710,
+      756
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp131",
+     "text": "a",
+     "kind": "math",
+     "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+     "alternatives": [
+      "a"
+     ],
+     "readings": {
+      "rapidocr": "a",
+      "rapidocr_latin_rec": "a."
+     },
+     "bbox": [
+      729,
+      683,
+      756,
+      753
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp133",
+     "text": "a",
+     "kind": "math",
+     "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+     "alternatives": [
+      "a",
+      "al"
+     ],
+     "readings": {
+      "rapidocr": "a",
+      "rapidocr_latin_rec": "a",
+      "tesseract_eng_line": "al"
+     },
+     "bbox": [
+      770,
+      681,
+      791,
+      751
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp134",
+     "text": "√",
+     "kind": "math",
+     "reason": "RADICAL_DISAGREEMENT",
+     "alternatives": [
+      "√",
+      "\\2$"
+     ],
+     "readings": {
+      "rapidocr": "√",
+      "rapidocr_latin_rec": "\\2$"
+     },
+     "bbox": [
+      787,
+      680,
+      815,
+      750
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp135",
+     "text": "2",
+     "kind": "math",
+     "reason": "MATH_TOKEN_DISAGREEMENT",
+     "alternatives": [
+      "2",
+      "2$",
+      "="
+     ],
+     "readings": {
+      "rapidocr": "2",
+      "rapidocr_latin_rec": "2$",
+      "tesseract_eng_line": "="
+     },
+     "bbox": [
+      811,
+      678,
+      840,
+      749
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp137",
+     "text": "2",
+     "kind": "math",
+     "reason": "SINGLE_READER_MATH_TOKEN",
+     "alternatives": [
+      "2"
+     ],
+     "readings": {
+      "rapidocr": "2"
+     },
+     "bbox": [
+      914,
+      672,
+      945,
+      743
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp139",
+     "text": "2/=12.4。",
+     "kind": "structure",
+     "reason": "FRACTION_STRUCTURE_LOSS",
+     "alternatives": [
+      "2/=12.4。",
+      "2 =12.4。"
+     ],
+     "readings": {
+      "rapidocr": "2 | =12.4。"
+     },
+     "bbox": [
+      330,
+      746,
+      557,
+      910
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp141",
+     "text": "2/av6.2a=3",
+     "kind": "structure",
+     "reason": "FRACTION_STRUCTURE_LOSS",
+     "alternatives": [
+      "2/av6.2a=3",
+      "2 av6.2a=3"
+     ],
+     "readings": {
+      "rapidocr": "2 | av6.2a=3"
+     },
+     "bbox": [
+      734,
+      728,
+      1008,
+      855
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp142",
+     "text": "AABC",
+     "kind": "math",
+     "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+     "alternatives": [
+      "AABC"
+     ],
+     "readings": {
+      "rapidocr": "AABC",
+      "rapidocr_latin_rec": "AABC"
+     },
+     "bbox": [
+      649,
+      831,
+      712,
+      871
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp143",
+     "text": "2",
+     "kind": "math",
+     "reason": "MATH_TOKEN_DISAGREEMENT",
+     "alternatives": [
+      "2",
+      "2$",
+      "ay"
+     ],
+     "readings": {
+      "rapidocr": "2",
+      "rapidocr_latin_rec": "2$",
+      "tesseract_eng_line": "ay"
+     },
+     "bbox": [
+      835,
+      841,
+      867,
+      877
+     ],
+     "blocking": true
+    },
+    {
+     "span_id": "sp144",
+     "text": "",
+     "kind": "structure",
+     "reason": "FRACTION_STRUCTURE_LOSS",
+     "alternatives": [],
+     "readings": {
+      "rapidocr": "2"
+     },
+     "bbox": [
+      832,
+      841,
+      867,
+      877
+     ],
+     "blocking": true
+    }
+   ],
+   "blocking_uncertain_count": 102,
+   "layout_flags": [
+    {
+     "flag": "FRACTION_STRUCTURE_SUSPECTED",
+     "lines": [
+      "2",
+      "=12.4。"
+     ],
+     "bbox": [
+      330,
+      746,
+      557,
+      910
+     ],
+     "in_choice_region": false,
+     "line_index": [
+      14,
+      18
+     ]
+    },
+    {
+     "flag": "FRACTION_STRUCTURE_SUSPECTED",
+     "lines": [
+      "2",
+      "av6.2a=3"
+     ],
+     "bbox": [
+      734,
+      728,
+      1008,
+      855
+     ],
+     "in_choice_region": false,
+     "line_index": [
+      16,
+      17
+     ]
+    },
+    {
+     "flag": "FRACTION_STRUCTURE_SUSPECTED",
+     "lines": [
+      "av6.2a=3",
+      "2"
+     ],
+     "bbox": [
+      734,
+      779,
+      1008,
+      877
+     ],
+     "in_choice_region": false,
+     "line_index": [
+      17,
+      20
+     ]
+    }
+   ],
+   "diagram": {
+    "figure_bboxes": [
+     [
+      0,
+      187,
+      212,
+      289
+     ],
+     [
+      0,
+      792,
+      378,
+      913
+     ]
+    ],
+    "tokens": [
+     {
+      "text": "A",
+      "bbox": [
+       74,
+       297,
+       122,
+       340
+      ],
+      "reader": "rapidocr",
+      "in_figure_block": false
+     },
+     {
+      "text": "A'",
+      "bbox": [
+       77,
+       447,
+       127,
+       498
+      ],
+      "reader": "rapidocr",
+      "in_figure_block": false
+     },
+     {
+      "text": "B′",
+      "bbox": [
+       199,
+       512,
+       248,
+       562
+      ],
+      "reader": "rapidocr",
+      "in_figure_block": false
+     },
+     {
+      "text": "B'C'",
+      "bbox": [
+       496,
+       645,
+       565,
+       704
+      ],
+      "reader": "rapidocr",
+      "in_figure_block": false
+     }
+    ],
+    "classification": "DIAGRAM_LABELS_ONLY_CONSISTENT",
+    "blocking": false
+   },
+   "adjudication": {
+    "requested": 73,
+    "readers": [
+     "rapidocr_latin_rec",
+     "tesseract_eng_line"
+    ],
+    "ok": true,
+    "ms": null,
+    "resolved": 8
+   },
+   "low_quality": null,
+   "timing": {
+    "replay": true
+   }
+  },
+  "scoring": {
+   "cer": {
+    "tesseract": 1.152,
+    "rapidocr": 1.655,
+    "reconciled_draft": 1.9942
+   },
+   "wer": {
+    "tesseract": 1.5366,
+    "rapidocr": 1.4634,
+    "reconciled_draft": 3.0244
+   },
+   "math_tokens": {
+    "tesseract": {
+     "tp": 2,
+     "hyp": 32,
+     "ref": 10,
+     "precision": 0.0625,
+     "recall": 0.2
+    },
+    "rapidocr": {
+     "tp": 9,
+     "hyp": 57,
+     "ref": 10,
+     "precision": 0.1579,
+     "recall": 0.9
+    },
+    "reconciled_draft": {
+     "tp": 8,
+     "hyp": 54,
+     "ref": 10,
+     "precision": 0.1481,
+     "recall": 0.8
+    }
+   },
+   "categories_reconciled": {
+    "prime_labels": {
+     "tp": 4,
+     "hyp": 15,
+     "ref": 4,
+     "precision": 0.2667,
+     "recall": 1.0
+    },
+    "radicals": {
+     "tp": 0,
+     "hyp": 1,
+     "ref": 1,
+     "precision": 0.0,
+     "recall": 0.0
+    },
+    "fractions": {
+     "tp": 0,
+     "hyp": 1,
+     "ref": 0,
+     "precision": 0.0,
+     "recall": 0.0
+    },
+    "angle_degrees": {
+     "tp": 1,
+     "hyp": 2,
+     "ref": 1,
+     "precision": 0.5,
+     "recall": 1.0
+    },
+    "point_labels": {
+     "tp": 10,
+     "hyp": 32,
+     "ref": 10,
+     "precision": 0.3125,
+     "recall": 1.0
+    },
+    "relation_symbols": {
+     "tp": 0,
+     "hyp": 2,
+     "ref": 0,
+     "precision": 0.0,
+     "recall": 0.0
+    },
+    "vietnamese_diacritic_words": {
+     "tp": 13,
+     "hyp": 23,
+     "ref": 25,
+     "precision": 0.5652,
+     "recall": 0.52
+    }
+   },
+   "categories_tesseract": {
+    "prime_labels": {
+     "tp": 0,
+     "hyp": 0,
+     "ref": 4,
+     "precision": 0.0,
+     "recall": 0.0
+    },
+    "radicals": {
+     "tp": 0,
+     "hyp": 0,
+     "ref": 1,
+     "precision": 0.0,
+     "recall": 0.0
+    },
+    "fractions": {
+     "tp": 0,
+     "hyp": 0,
+     "ref": 0,
+     "precision": 0.0,
+     "recall": 0.0
+    },
+    "angle_degrees": {
+     "tp": 0,
+     "hyp": 0,
+     "ref": 1,
+     "precision": 0.0,
+     "recall": 0.0
+    },
+    "point_labels": {
+     "tp": 5,
+     "hyp": 19,
+     "ref": 10,
+     "precision": 0.2632,
+     "recall": 0.5
+    },
+    "relation_symbols": {
+     "tp": 0,
+     "hyp": 0,
+     "ref": 0,
+     "precision": 0.0,
+     "recall": 0.0
+    },
+    "vietnamese_diacritic_words": {
+     "tp": 0,
+     "hyp": 28,
+     "ref": 25,
+     "precision": 0.0,
+     "recall": 0.0
+    }
+   },
+   "categories_rapidocr": {
+    "prime_labels": {
+     "tp": 4,
+     "hyp": 19,
+     "ref": 4,
+     "precision": 0.2105,
+     "recall": 1.0
+    },
+    "radicals": {
+     "tp": 1,
+     "hyp": 4,
+     "ref": 1,
+     "precision": 0.25,
+     "recall": 1.0
+    },
+    "fractions": {
+     "tp": 0,
+     "hyp": 0,
+     "ref": 0,
+     "precision": 0.0,
+     "recall": 0.0
+    },
+    "angle_degrees": {
+     "tp": 1,
+     "hyp": 3,
+     "ref": 1,
+     "precision": 0.3333,
+     "recall": 1.0
+    },
+    "point_labels": {
+     "tp": 9,
+     "hyp": 33,
+     "ref": 10,
+     "precision": 0.2727,
+     "recall": 0.9
+    },
+    "relation_symbols": {
+     "tp": 0,
+     "hyp": 2,
+     "ref": 0,
+     "precision": 0.0,
+     "recall": 0.0
+    },
+    "vietnamese_diacritic_words": {
+     "tp": 0,
+     "hyp": 4,
+     "ref": 25,
+     "precision": 0.0,
+     "recall": 0.0
+    }
+   },
+   "verified_math_span_count": 10,
+   "verified_math_spans_not_in_ground_truth": [
+    "2"
+   ],
+   "exact_statement_match": false
+  },
+  "user_facing": {
+   "status": "needs_confirmation",
+   "reason_code": "LOCAL_OCR_LOW_QUALITY",
+   "learner_message": "Ảnh khó đọc (chữ viết tay, mờ hoặc nghiêng) — máy chỉ đọc được bản nháp. Em kiểm tra kỹ, sửa trực tiếp trong ô bên dưới hoặc chụp lại rõ hơn.",
+   "input_route": "LOCAL_OCR_NEEDS_CONFIRMATION",
+   "vlm_calls": 0,
+   "review_items": 24,
+   "candidates": 0,
+   "prepare_ms": 471.09
+  },
+  "timing_ms": {
+   "decode": 15.44,
+   "region_detection": 114.35,
+   "local_ocr_route": 170.51
+  },
+  "outcomes": [
+   {
+    "case_key": "ext_hw_b1_01_hd_a_6043187",
+    "selection": "single",
+    "prepare_status": "needs_confirmation",
+    "input_route": "LOCAL_OCR_NEEDS_CONFIRMATION",
+    "user_corrected_simulated": {
+     "status": "REFUSED",
+     "route": "FAIL_CLOSED_LIVE_AI_DISABLED",
+     "local_parse_status": "LOCAL_PARSE_PARTIAL",
+     "answers": null,
+     "reason_code": "LIVE_AI_DISABLED",
+     "scene3d_objects": 0,
+     "scene3d_continuity_violations": null,
+     "solve_ms": 5.38,
+     "grade": "REFUSED_OR_NOT_SERVED",
+     "edits": [
+      {
+       "span_id": "sp42",
+       "from": "thi",
+       "to": "",
+       "chosen_from_alternatives": false
+      },
+      {
+       "span_id": "sp40",
+       "from": "60°",
+       "to": "",
+       "chosen_from_alternatives": false
+      },
+      {
+       "span_id": "sp38",
+       "from": "tay",
+       "to": "",
+       "chosen_from_alternatives": false
+      },
+      {
+       "span_id": "sp37",
+       "from": ".",
+       "to": "",
+       "chosen_from_alternatives": false
+      },
+      {
+       "span_id": "sp35",
+       "from": "y8i",
+       "to": "",
+       "chosen_from_alternatives": false
+      },
+      {
+       "span_id": "sp34",
+       "from": "BC",
+       "to": "",
+       "chosen_from_alternatives": false
+      },
+      {
+       "span_id": "sp32",
+       "from": "duing",
+       "to": "",
+       "chosen_from_alternatives": false
+      },
+      {
+       "span_id": "sp31",
+       "from": "a",
+       "to": "",
+       "chosen_from_alternatives": false
+      },
+      {
+       "span_id": "sp29",
+       "from": "g",
+       "to": "",
+       "chosen_from_alternatives": false
+      },
+      {
+       "span_id": "sp28",
+       "from": "c",
+       "to": "",
+       "chosen_from_alternatives": false
+      },
+      {
+       "span_id": "sp26",
+       "from": "g",
+       "to": "",
+       "chosen_from_alternatives": false
+      },
+      {
+       "span_id": "sp24",
+       "from": "s",
+       "to": "",
+       "chosen_from_alternatives": false
+      },
+      {
+       "span_id": "sp23",
+       "from": "√",
+       "to": "",
+       "chosen_from_alternatives": false
+      },
+      {
+       "span_id": "sp21",
+       "from": "=",
+       "to": "",
+       "chosen_from_alternatives": false
+      },
+      {
+       "span_id": "sp20",
+       "from": "AC",
+       "to": "",
+       "chosen_from_alternatives": false
+      },
+      {
+       "span_id": "sp19",
+       "from": "|",
+       "to": "",
+       "chosen_from_alternatives": false
+      },
+      {
+       "span_id": "sp17",
+       "from": "=",
+       "to": "",
+       "chosen_from_alternatives": false
+      },
+      {
+       "span_id": "sp16",
+       "from": "AB",
+       "to": "",
+       "chosen_from_alternatives": false
+      },
+      {
+       "span_id": "sp15",
+       "from": "13",
+       "to": "",
+       "chosen_from_alternatives": false
+      },
+      {
+       "span_id": "sp11",
+       "from": "dam",
+       "to": "",
+       "chosen_from_alternatives": false
+      },
+      {
+       "span_id": "sp7",
+       "from": "_8Ð-",
+       "to": "có",
+       "chosen_from_alternatives": false
+      },
+      {
+       "span_id": "sp6",
+       "from": "ABCA'BC",
+       "to": "ABC.A'B'C'",
+       "chosen_from_alternatives": false
+      },
+      {
+       "span_id": "sp5",
+       "from": "đảng -",
+       "to": "đứng",
+       "chosen_from_alternatives": false
+      }
+     ],
+     "confirms": 1,
+     "diagram_confirms": 0,
+     "actions": 24,
+     "chars_typed": 16,
+     "full_retype_chars": 171,
+     "final_text": "Cho hình lăng trụ đứng ABC.A'B'C' có đáy ABC giải vuông tại a a , ở ai thang mặt = Tính tích \"qua — khối lăng 3 )ïẽ a √ 3 _® T a c BB ⊥ ( ABC' ） ⇒ ) BB ⊥ BC r a BC _—ijuh chiữu cua BC'lên (A'BC') ⇒ ) （ BC' ； ( A'B'C' ) = (là BC' ; B'C' ) = BC'B' = 60 ° Xét tam giác vuông ABC BC = √ （ a √ 3 ） 2 - a 2 = a √ ∑ = B c ′ lần huynh Tan 60°=BrB′ a√2 # AB . BC ： 1 . a . a √ 2 = 2 a 2 2/av6.2a=3 2/=12.4。 AABC 2"
+    }
+   }
+  ]
+ }
+}

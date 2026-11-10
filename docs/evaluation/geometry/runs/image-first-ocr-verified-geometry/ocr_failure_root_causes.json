@@ -1,0 +1,339 @@
+{
+ "schema": "algosim-ocr-failure-root-causes/1",
+ "run_id": "image-first-ocr-verified-geometry",
+ "generated_at_utc": "2026-11-10T13:43:13.357233+00:00",
+ "head_commit": "bdc07a8557277d9780bee8689567990854ad4521",
+ "product_commit": "bdc07a8557277d9780bee8689567990854ad4521",
+ "working_tree_dirty": false,
+ "measured_system_tree_hash": "6851b71826793fffbb922e0b7706e1c2a32bb2203d615c8eb0414e82b0d2c947",
+ "measured_system_file_count": 115,
+ "test_environment": {
+  "os": "Windows-11-10.0.26100-SP0",
+  "python": "3.12.10",
+  "cpu_logical_cores": 12,
+  "allow_live_ai": 0,
+  "live_gemini_calls": 0,
+  "local_ocr_python": "ocr-venv (rapidocr 3.10.0, onnxruntime 1.31.1, tesserocr 2.12.0 / tesseract 5.5.3)",
+  "tessdata": "tessdata_fast vie + eng",
+  "benchmark_tier": "HOST_BENCHMARK_OFFLINE"
+ },
+ "model_versions": {
+  "local_ocr_route": "local-ocr-route/1",
+  "reconcile": "layout-aware-ocr-reconcile/1",
+  "readers": [
+   "tesseract-vie (tessdata_fast)",
+   "rapidocr PP-OCRv6 det/rec small",
+   "rapidocr latin PP-OCRv5 rec mobile (re-read)",
+   "tesseract-eng single-line ×3 (re-read)"
+  ],
+  "vision": "NOT_CALLED (ALLOW_LIVE_AI=0)"
+ },
+ "epistemic_classification": "VERIFIED FACT",
+ "root_cause_categories": {
+  "RC1_TESSERACT_MATH_SYMBOL_CORRUPTION": {
+   "description": "Tesseract `vie` drops primes (`A'B'C'`), misreads `√`, `⊥`, `°` (`60”`, `cm?`), or drops whole low-contrast image crops (`0` lines on `ext02`, `ext11`, `ext12` without binarization).",
+   "affected_external16_images": [
+    "ext_prt_01_hd_q_5259753",
+    "ext_prt_02_hd_q_7922924",
+    "ext_prt_03_hd_q_7907931",
+    "ext_prt_06_hd_q_1084979",
+    "ext_prt_07_hd_q_7958052",
+    "ext_prt_11_vmmu_page_r10",
+    "ext_prt_12_vmmu_page_r11"
+   ],
+   "remediation_implemented": "Automatic adaptive binarization retry in `local_ocr_worker.py` (`0 -> 2..4` lines on `ext02`, `ext11`, `ext12`), RapidOCR PP-OCRv6 primary line backbone, and targeted crop re-reading (`rapidocr_latin_rec` + `tesseract_eng_line`)."
+  },
+  "RC2_RAPIDOCR_VIETNAMESE_DIACRITIC_LOSS": {
+   "description": "RapidOCR PP-OCRv6 (`en_PP-OCRv5_mobile_rec` character dictionary) strips or mangles Vietnamese tone/vowel diacritics (`cnh`, `vói`, `mt`, `đim`, `khong`, `lăng tr`).",
+   "affected_external16_images": [
+    "ext_prt_01_hd_q_5259753",
+    "ext_prt_02_hd_q_7922924",
+    "ext_prt_03_hd_q_7907931",
+    "ext_prt_04_hd_q_8436784",
+    "ext_prt_05_hd_q_7451806",
+    "ext_prt_06_hd_q_1084979",
+    "ext_prt_07_hd_q_7958052",
+    "ext_prt_08_hd_q_7509702",
+    "ext_prt_09_vmmu_page_r4",
+    "ext_prt_10_vmmu_page_r7",
+    "ext_prt_11_vmmu_page_r10",
+    "ext_prt_12_vmmu_page_r11",
+    "ext_prt_13_vmmu_page_r25",
+    "ext_prt_14_vmmu_page_r26",
+    "ext_prt_15_vmmu_page_r28"
+   ],
+   "remediation_implemented": "Slot-level alignment with `tesseract-vie` + grammar-derived Vietnamese lexicon (`ocr_lexicon.py`: 533 unigrams, 2,662 bigrams) restoring Vietnamese diacritics when consonant skeletons match (`CER` median `0.0705 -> 0.0149`)."
+  },
+  "RC3_TWO_DIMENSIONAL_MATH_LAYOUT_FLATTENING": {
+   "description": "Vertical fractions (`15√93 / 31` in `ext07`, MC fractions in `ext06`, `ext13`, `ext14`) and inline equations split across sub-boxes or choice columns.",
+   "affected_external16_images": [
+    "ext_prt_06_hd_q_1084979",
+    "ext_prt_07_hd_q_7958052",
+    "ext_prt_13_vmmu_page_r25",
+    "ext_prt_14_vmmu_page_r26"
+   ],
+   "remediation_implemented": "2D vertical-stack fraction detector (`FRACTION_STRUCTURE_SUSPECTED` / `SUBLINE_OVERLAP_SUSPECTED`) and `choice_bands` row grouping in `ocr_reconcile.py` (`Layout-Aware Reconciler`)."
+  },
+  "RC4_EMBEDDED_3D_DIAGRAM_LABEL_BLEED_AND_DEPENDENCY": {
+   "description": "12/15 printed External16 images contain an embedded 3D figure whose vertex labels (`S, A, B, C, A', H`) bleed into full-page OCR lines or trigger blanket rejection (`c6_no_diagram_premise_gap`).",
+   "affected_external16_images": [
+    "ext_prt_02_hd_q_7922924",
+    "ext_prt_08_hd_q_7509702",
+    "ext_prt_09_vmmu_page_r4",
+    "ext_prt_10_vmmu_page_r7",
+    "ext_prt_11_vmmu_page_r10",
+    "ext_prt_12_vmmu_page_r11",
+    "ext_prt_13_vmmu_page_r25",
+    "ext_prt_14_vmmu_page_r26",
+    "ext_prt_15_vmmu_page_r28",
+    "ext_hw_b1_01_hd_a_6043187"
+   ],
+   "remediation_implemented": "Region-aware `figure_bboxes` separation in `ocr_reconcile.py`: figure tokens are routed to `diagram.tokens` (never concatenated into prose sentences) and classified into 5 explicit diagram states (`NO_DIAGRAM`, `DIAGRAM_LABELS_ONLY_CONSISTENT`, `DIAGRAM_LABELS_UNMATCHED`, `DIAGRAM_HAS_MEASUREMENTS`, `DIAGRAM_REFERENCED_BY_TEXT`, `DIAGRAM_PRESENT_UNREAD`)."
+  },
+  "RC5_DOCUMENT_LEVEL_BINARY_FIDELITY_REJECTION": {
+   "description": "Prior `reconcile_dual_ocr_texts` required 100% document-wide token equality and zero figures, rejecting 16/16 External16 images even when 97%+ of tokens were verified.",
+   "affected_external16_images": [
+    "ext_prt_01_hd_q_5259753",
+    "ext_prt_02_hd_q_7922924",
+    "ext_prt_03_hd_q_7907931",
+    "ext_prt_04_hd_q_8436784",
+    "ext_prt_05_hd_q_7451806",
+    "ext_prt_06_hd_q_1084979",
+    "ext_prt_07_hd_q_7958052",
+    "ext_prt_08_hd_q_7509702",
+    "ext_prt_09_vmmu_page_r4",
+    "ext_prt_10_vmmu_page_r7",
+    "ext_prt_11_vmmu_page_r10",
+    "ext_prt_12_vmmu_page_r11",
+    "ext_prt_13_vmmu_page_r25",
+    "ext_prt_14_vmmu_page_r26",
+    "ext_prt_15_vmmu_page_r28",
+    "ext_hw_b1_01_hd_a_6043187"
+   ],
+   "remediation_implemented": "Span-level verification (`Span(status='verified'|'uncertain')`) + targeted student confirmation UI (`#photo-span-review`) showing only the `1..4` disputed spans with cropped image previews and 1-click alternatives."
+  },
+  "RC6_HANDWRITTEN_CURSIVE_LINE_DETECTION_FAILURE": {
+   "description": "Single-word cursive handwritten recognizers (`VietOCR`) fail on multi-line notebook pages (`ext_hw_b1_01`), and `PP-OCRv6` + `tesseract-vie` have `CER = 0.6143` on cursive slanted Vietnamese handwriting.",
+   "affected_external16_images": [
+    "ext_hw_b1_01_hd_a_6043187"
+   ],
+   "remediation_implemented": "Explicit `low_quality` / high `uncertain_ratio` (`0.5882 > 0.35`) detection blocking unverified auto-solve and routing to Vision fallback (when live AI is enabled) or full confirmation."
+  }
+ },
+ "per_image_root_causes": [
+  {
+   "image_id": "ext_prt_01_hd_q_5259753",
+   "printed_or_handwritten": "PRINTED",
+   "before_gate_accepted": false,
+   "before_gate_reason": "CROSS_ENGINE_DISAGREEMENT:angles_degrees",
+   "tesseract_cer": 0.0529,
+   "rapidocr_cer": 0.0705,
+   "reconciled_cer": 0.0,
+   "blocking_reasons_after": [],
+   "blocking_uncertain_spans_after": 0
+  },
+  {
+   "image_id": "ext_prt_02_hd_q_7922924",
+   "printed_or_handwritten": "PRINTED",
+   "before_gate_accepted": false,
+   "before_gate_reason": "DIAGRAM_CONTEXT_REQUIRES_VISION_FALLBACK",
+   "tesseract_cer": 0.2108,
+   "rapidocr_cer": 0.1687,
+   "reconciled_cer": 0.0241,
+   "blocking_reasons_after": [
+    "UNCERTAIN_SPANS"
+   ],
+   "blocking_uncertain_spans_after": 2
+  },
+  {
+   "image_id": "ext_prt_03_hd_q_7907931",
+   "printed_or_handwritten": "PRINTED",
+   "before_gate_accepted": false,
+   "before_gate_reason": "LINE_COUNT_MISMATCH",
+   "tesseract_cer": 0.3547,
+   "rapidocr_cer": 0.1713,
+   "reconciled_cer": 0.0734,
+   "blocking_reasons_after": [
+    "UNCERTAIN_SPANS"
+   ],
+   "blocking_uncertain_spans_after": 12
+  },
+  {
+   "image_id": "ext_prt_04_hd_q_8436784",
+   "printed_or_handwritten": "PRINTED",
+   "before_gate_accepted": false,
+   "before_gate_reason": "LINE_COUNT_MISMATCH",
+   "tesseract_cer": 0.0263,
+   "rapidocr_cer": 0.0789,
+   "reconciled_cer": 0.0075,
+   "blocking_reasons_after": [
+    "UNCERTAIN_SPANS",
+    "LAYOUT_STRUCTURE_SUSPECTED"
+   ],
+   "blocking_uncertain_spans_after": 1
+  },
+  {
+   "image_id": "ext_prt_05_hd_q_7451806",
+   "printed_or_handwritten": "PRINTED",
+   "before_gate_accepted": false,
+   "before_gate_reason": "LINE_COUNT_MISMATCH",
+   "tesseract_cer": 0.1176,
+   "rapidocr_cer": 0.11,
+   "reconciled_cer": 0.0153,
+   "blocking_reasons_after": [
+    "UNCERTAIN_SPANS",
+    "LAYOUT_STRUCTURE_SUSPECTED"
+   ],
+   "blocking_uncertain_spans_after": 10
+  },
+  {
+   "image_id": "ext_prt_06_hd_q_1084979",
+   "printed_or_handwritten": "PRINTED",
+   "before_gate_accepted": false,
+   "before_gate_reason": "CROSS_ENGINE_DISAGREEMENT:assignments",
+   "tesseract_cer": 0.0638,
+   "rapidocr_cer": 0.1074,
+   "reconciled_cer": 0.0067,
+   "blocking_reasons_after": [
+    "UNCERTAIN_SPANS"
+   ],
+   "blocking_uncertain_spans_after": 5
+  },
+  {
+   "image_id": "ext_prt_07_hd_q_7958052",
+   "printed_or_handwritten": "PRINTED",
+   "before_gate_accepted": false,
+   "before_gate_reason": "LINE_COUNT_MISMATCH",
+   "tesseract_cer": 0.1208,
+   "rapidocr_cer": 0.1409,
+   "reconciled_cer": 0.0738,
+   "blocking_reasons_after": [
+    "UNCERTAIN_SPANS"
+   ],
+   "blocking_uncertain_spans_after": 8
+  },
+  {
+   "image_id": "ext_prt_08_hd_q_7509702",
+   "printed_or_handwritten": "PRINTED",
+   "before_gate_accepted": false,
+   "before_gate_reason": "DIAGRAM_CONTEXT_REQUIRES_VISION_FALLBACK",
+   "tesseract_cer": 0.4467,
+   "rapidocr_cer": 0.2509,
+   "reconciled_cer": 0.4845,
+   "blocking_reasons_after": [
+    "UNCERTAIN_SPANS",
+    "DIAGRAM_FACTS_UNVERIFIED"
+   ],
+   "blocking_uncertain_spans_after": 10
+  },
+  {
+   "image_id": "ext_prt_09_vmmu_page_r4",
+   "printed_or_handwritten": "PRINTED",
+   "before_gate_accepted": false,
+   "before_gate_reason": "DIAGRAM_CONTEXT_REQUIRES_VISION_FALLBACK",
+   "tesseract_cer": 0.35,
+   "rapidocr_cer": 0.1111,
+   "reconciled_cer": 0.0333,
+   "blocking_reasons_after": [
+    "UNCERTAIN_SPANS",
+    "DIAGRAM_FACTS_UNVERIFIED"
+   ],
+   "blocking_uncertain_spans_after": 2
+  },
+  {
+   "image_id": "ext_prt_10_vmmu_page_r7",
+   "printed_or_handwritten": "PRINTED",
+   "before_gate_accepted": false,
+   "before_gate_reason": "DIAGRAM_CONTEXT_REQUIRES_VISION_FALLBACK",
+   "tesseract_cer": 0.172,
+   "rapidocr_cer": 0.145,
+   "reconciled_cer": 0.0319,
+   "blocking_reasons_after": [
+    "UNCERTAIN_SPANS"
+   ],
+   "blocking_uncertain_spans_after": 9
+  },
+  {
+   "image_id": "ext_prt_11_vmmu_page_r10",
+   "printed_or_handwritten": "PRINTED",
+   "before_gate_accepted": false,
+   "before_gate_reason": "DIAGRAM_CONTEXT_REQUIRES_VISION_FALLBACK",
+   "tesseract_cer": 0.0674,
+   "rapidocr_cer": 0.1573,
+   "reconciled_cer": 0.0337,
+   "blocking_reasons_after": [
+    "UNCERTAIN_SPANS"
+   ],
+   "blocking_uncertain_spans_after": 1
+  },
+  {
+   "image_id": "ext_prt_12_vmmu_page_r11",
+   "printed_or_handwritten": "PRINTED",
+   "before_gate_accepted": false,
+   "before_gate_reason": "DIAGRAM_CONTEXT_REQUIRES_VISION_FALLBACK",
+   "tesseract_cer": 0.1619,
+   "rapidocr_cer": 0.1381,
+   "reconciled_cer": 0.0048,
+   "blocking_reasons_after": [
+    "UNCERTAIN_SPANS"
+   ],
+   "blocking_uncertain_spans_after": 2
+  },
+  {
+   "image_id": "ext_prt_13_vmmu_page_r25",
+   "printed_or_handwritten": "PRINTED",
+   "before_gate_accepted": false,
+   "before_gate_reason": "DIAGRAM_CONTEXT_REQUIRES_VISION_FALLBACK",
+   "tesseract_cer": 0.0918,
+   "rapidocr_cer": 0.1475,
+   "reconciled_cer": 0.0492,
+   "blocking_reasons_after": [
+    "UNCERTAIN_SPANS",
+    "DIAGRAM_FACTS_UNVERIFIED"
+   ],
+   "blocking_uncertain_spans_after": 3
+  },
+  {
+   "image_id": "ext_prt_14_vmmu_page_r26",
+   "printed_or_handwritten": "PRINTED",
+   "before_gate_accepted": false,
+   "before_gate_reason": "DIAGRAM_CONTEXT_REQUIRES_VISION_FALLBACK",
+   "tesseract_cer": 0.0259,
+   "rapidocr_cer": 0.1354,
+   "reconciled_cer": 0.0548,
+   "blocking_reasons_after": [
+    "UNCERTAIN_SPANS",
+    "DIAGRAM_FACTS_UNVERIFIED"
+   ],
+   "blocking_uncertain_spans_after": 1
+  },
+  {
+   "image_id": "ext_prt_15_vmmu_page_r28",
+   "printed_or_handwritten": "PRINTED",
+   "before_gate_accepted": false,
+   "before_gate_reason": "LINE_COUNT_MISMATCH",
+   "tesseract_cer": 0.1561,
+   "rapidocr_cer": 0.1308,
+   "reconciled_cer": 0.1055,
+   "blocking_reasons_after": [
+    "UNCERTAIN_SPANS",
+    "DIAGRAM_FACTS_UNVERIFIED"
+   ],
+   "blocking_uncertain_spans_after": 2
+  },
+  {
+   "image_id": "ext_hw_b1_01_hd_a_6043187",
+   "printed_or_handwritten": "HANDWRITTEN",
+   "before_gate_accepted": false,
+   "before_gate_reason": "HANDWRITTEN_IMAGE_REQUIRES_VISION_FALLBACK",
+   "tesseract_cer": 1.152,
+   "rapidocr_cer": 1.655,
+   "reconciled_cer": 1.9942,
+   "blocking_reasons_after": [
+    "UNCERTAIN_SPANS",
+    "LAYOUT_STRUCTURE_SUSPECTED"
+   ],
+   "blocking_uncertain_spans_after": 102
+  }
+ ]
+}

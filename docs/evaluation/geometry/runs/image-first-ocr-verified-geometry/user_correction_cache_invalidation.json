@@ -1,0 +1,51 @@
+{
+ "schema": "algosim-user-correction-cache-invalidation/1",
+ "run_id": "image-first-ocr-verified-geometry",
+ "generated_at_utc": "2026-11-10T13:43:15.822184+00:00",
+ "head_commit": "bdc07a8557277d9780bee8689567990854ad4521",
+ "product_commit": "bdc07a8557277d9780bee8689567990854ad4521",
+ "working_tree_dirty": false,
+ "measured_system_tree_hash": "6851b71826793fffbb922e0b7706e1c2a32bb2203d615c8eb0414e82b0d2c947",
+ "measured_system_file_count": 115,
+ "test_environment": {
+  "os": "Windows-11-10.0.26100-SP0",
+  "python": "3.12.10",
+  "cpu_logical_cores": 12,
+  "allow_live_ai": 0,
+  "live_gemini_calls": 0,
+  "local_ocr_python": "ocr-venv (rapidocr 3.10.0, onnxruntime 1.31.1, tesserocr 2.12.0 / tesseract 5.5.3)",
+  "tessdata": "tessdata_fast vie + eng",
+  "benchmark_tier": "HOST_BENCHMARK_OFFLINE"
+ },
+ "model_versions": {
+  "local_ocr_route": "local-ocr-route/1",
+  "reconcile": "layout-aware-ocr-reconcile/1",
+  "readers": [
+   "tesseract-vie (tessdata_fast)",
+   "rapidocr PP-OCRv6 det/rec small",
+   "rapidocr latin PP-OCRv5 rec mobile (re-read)",
+   "tesseract-eng single-line ×3 (re-read)"
+  ],
+  "vision": "NOT_CALLED (ALLOW_LIVE_AI=0)"
+ },
+ "epistemic_classification": "VERIFIED FACT",
+ "invalidation_verification": {
+  "text_before_edit": "Câu 4: Cho hình chóp S.ABCD có đáy là hình vuông cạnh a, SA vuông góc với mặt đáy và SB tạo với đáy một góc 60°, G là trọng tâm tam giác SBC.\na. Tính thể tích khối chóp S.ABCD.\nb. Tính khoảng cách từ điểm G đến mặt phẳng (SBD).",
+  "text_after_edit": "Câu 4: Cho hình chóp S.ABCD có đáy là hình vuông cạnh a, SA vuông góc với mặt đáy và SB tạo với đáy một góc 45°, G là trọng tâm tam giác SBC.\na. Tính thể tích khối chóp S.ABCD.\nb. Tính khoảng cách từ điểm G đến mặt phẳng (SBD).",
+  "cache_key_before_edit": "12d8e32ccd72c1204784b8f6c21809b6cd1e29b5d8b198365df2beb44013faa9",
+  "cache_key_after_edit": "262fd1c16434260528851a6b32f9b9cff27bd929dca3e998c786e9a7d668bcbf",
+  "cache_keys_distinct": true,
+  "answers_before_edit": {
+   "q2": "a√21/21",
+   "q1": "a³√3/3"
+  },
+  "answers_after_edit": {
+   "q2": "a√3/9",
+   "q1": "a³/3"
+  },
+  "answers_updated_correctly": true,
+  "vision_re_called_on_text_edit": false,
+  "ocr_cached_by_image_sha256": true,
+  "browser_e2e_verified": true
+ }
+}

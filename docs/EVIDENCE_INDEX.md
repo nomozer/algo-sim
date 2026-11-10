@@ -4,6 +4,19 @@
 Retired branch names now have local `refs/archive/repository-closure/` references and a verified private self-contained bundle.
 Existing evidence and historical reports below are unchanged; no research result is reinterpreted by this Git-state update.
 
+## WAVE_ID = IMAGE_FIRST_OCR_VERIFIED_GEOMETRY
+
+REPORT = docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/ALGOSIM_IMAGE_FIRST_OCR_VERIFIED_GEOMETRY_REPORT.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/
+START_BASE = 10d4899fdfd539de62217124e1ce5fb3fe54c3ce (tip of feat/local-first-geometry-understanding; product d20d7fdcdd6c5759f74ff737f331c2e548923eba)
+CODE_COMMIT = bdc07a8557277d9780bee8689567990854ad4521 (measured_system tree hash 6851b71826793fffbb922e0b7706e1c2a32bb2203d615c8eb0414e82b0d2c947 across 115 measured entries; CACHE_VERSION 132 unchanged; registry.py geometry-functions/33 and engine.py geometry-function-engine/24 untouched)
+CLASSIFICATION = OFFLINE_IMAGE_FIRST_OCR_SPAN_VERIFICATION_STUDENT_CONFIRMATION_AND_VERIFIED_IMAGE_TO_3D (Gate_A_Baseline_and_Root_Cause_Integrity = PASS; Gate_B_Region_and_Layout_Aware_OCR = PASS; Gate_C_Dual_OCR_Reconciliation_and_Fidelity = PASS; Gate_D_Handwritten_OCR_Honest_Boundary = PASS_WITH_HONEST_LIMITS; Gate_E_Student_Confirmation_and_Cache_Safety = PASS; Gate_F_Real_Image_to_Scene3D_Acceptance = PASS; Gate_G_Unseen_External_Image_Evaluation = PASS_WITH_HONEST_LIMITS; Gate_H_Resource_Performance_and_Candidate_Freeze = PASS_HOST_MEASURED; LOCAL_OCR_PRODUCTION_STATUS = LOCAL_OCR_SPAN_VERIFIED_WITH_STUDENT_CONFIRMATION; HANDWRITING_REQUIRES_VISION_OR_CONFIRMATION; LIVE_VISION_SUCCESS_RATE = NOT_MEASURED; PHYSICAL_LOW_END_NOT_MEASURED; INDEPENDENT_H1_VALIDATION = NOT_MEASURED; branch feat/local-first-geometry-understanding, not merged to main, not pushed)
+PRODUCT_CHANGE = YES (backend: local_ocr_worker.py, local_ocr.py, ocr_lexicon.py, ocr_reconcile.py, local_ocr_route.py, region_detector.py, unified_input.py, local_geometry_parser.py; frontend: PhotoProblemPanel.tsx, ProblemInput.tsx, photo-problem-flow.ts, client.ts, global.css)
+MODEL_REQUEST_COUNT = 0
+VERIFICATION = ALGOSIM_IMAGE_FIRST_OCR_VERIFIED_GEOMETRY_REPORT.md; run.json; baseline_candidate_integrity.json; external16_image_diagnostics.json; ocr_failure_root_causes.json; region_aware_ocr_receipt.json; math_layout_recognition_receipt.json; dual_ocr_reconciliation_receipt.json; fidelity_false_rejection_analysis.json; printed_ocr_before_after.json; handwritten_ocr_diagnostic.json; diagram_dependency_audit.json; vision_fallback_offline_receipt.json; vision_live_readiness.json; student_confirmation_flow_receipt.json; user_correction_cache_invalidation.json; real_image_to_scene3d_acceptance.json; new_external_image_evaluation.json; ocr_resource_performance.json; frontend_browser_e2e.json; full_regression_summary.json; tools/evaluate_image_first_ocr.py; tools/generate_all_receipts.py; tools/new_external_catalog.py; tools/e2e_browser_image_first.mjs; backend/tests/test_image_first_local_ocr.py (18/18 passed); frontend/src/components/photo-span-review.test.tsx (4/4 passed); Playwright headless Chromium E2E (6/6 passed at 100% & 110% zoom, 0 console/page errors); replay_demo_cases.py (5/5 + 1/1 PASS); audit_demo_crash_surface.py (6/6 PASS); audit_docs_information_architecture.py PASS; check_publication_safety.py PASS; freeze_evaluation_candidate.py --verify MATCH
+CORRECTS = NONE
+CORRECTED_BY = NONE
+
 ## WAVE_ID = FORMAL_CORRECTNESS_REAL_WORLD_ACCEPTANCE
 
 REPORT = docs/evaluation/geometry/runs/formal-correctness-real-world-acceptance/ALGOSIM_FORMAL_CORRECTNESS_REAL_WORLD_ACCEPTANCE_REPORT.md
