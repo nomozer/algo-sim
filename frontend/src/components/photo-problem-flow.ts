@@ -34,13 +34,51 @@ export interface UnifiedAssistState {
   uncertainTokens: PhotoUncertainToken[];
   missingRegions: string[];
   confirmed: boolean;
+  /** OCR local: văn bản máy đọc gốc; các chỗ chưa chắc được sửa TẠI CHỖ qua spanValues. */
+  baseText: string;
+  spanValues: Record<string, string>;
+  spanReviewed: Record<string, boolean>;
+  /** Học sinh đã sửa thẳng cả ô văn bản ⇒ vị trí các chỗ đánh dấu không còn đúng, dùng văn bản tự do. */
+  freeEdit: boolean;
 }
 
 export type UnifiedAssistAction =
   | { type: "reset" }
   | { type: "from-prepare"; response: UnifiedInputPrepareResponse }
   | { type: "edit-draft"; text: string }
-  | { type: "toggle-confirm"; value: boolean };
+  | { type: "toggle-confirm"; value: boolean }
+  | { type: "edit-span"; spanId: string; value: string }
+  | { type: "confirm-span"; spanId: string };
+
+/** Chỗ cần kiểm tra có vị trí trong văn bản (sửa tại chỗ được). */
+export function spanTokens(tokens: PhotoUncertainToken[]): PhotoUncertainToken[] {
+  return tokens.filter(
+    (t) => Boolean(t.span_id) && typeof t.span_start === "number" && typeof t.span_end === "number" && t.span_start >= 0,
+  );
+}
+
+/** Mục cần học sinh tự xác nhận (gồm cả "hình vẽ không có thêm dữ kiện"). */
+export function reviewTokens(tokens: PhotoUncertainToken[]): PhotoUncertainToken[] {
+  return tokens.filter((t) => Boolean(t.span_id) && (t.kind === "diagram" || (t.span_start ?? -1) >= 0));
+}
+
+/** Ghép văn bản: thay từng khoảng [span_start, span_end) bằng giá trị học sinh xác nhận (từ cuối về đầu). */
+export function applySpanValues(base: string, tokens: PhotoUncertainToken[], values: Record<string, string>): string {
+  let out = base;
+  const sorted = [...spanTokens(tokens)].sort((a, b) => (b.span_start ?? 0) - (a.span_start ?? 0));
+  for (const t of sorted) {
+    const v = values[t.span_id as string];
+    if (typeof v !== "string") continue;
+    out = out.slice(0, t.span_start) + v + out.slice(t.span_end);
+  }
+  return out;
+}
+
+/** Số chỗ học sinh thực sự đổi so với bản máy đọc (đo "số thao tác sửa"). */
+export function assistCorrectionCount(state: UnifiedAssistState): number {
+  return spanTokens(state.uncertainTokens).filter((t) => (state.spanValues[t.span_id as string] ?? t.token) !== t.token)
+    .length;
+}
 
 export const initialUnifiedAssistState: UnifiedAssistState = {
   phase: "idle",
@@ -52,6 +90,10 @@ export const initialUnifiedAssistState: UnifiedAssistState = {
   uncertainTokens: [],
   missingRegions: [],
   confirmed: false,
+  baseText: "",
+  spanValues: {},
+  spanReviewed: {},
+  freeEdit: false,
 };
 
 export function unifiedAssistReducer(
@@ -76,6 +118,10 @@ export function unifiedAssistReducer(
           uncertainTokens: [],
           missingRegions: [],
           confirmed: false,
+          baseText: "",
+          spanValues: {},
+          spanReviewed: {},
+          freeEdit: false,
         };
       }
       if (r.status === "needs_confirmation") {
@@ -91,13 +137,30 @@ export function unifiedAssistReducer(
           uncertainTokens: r.uncertain_tokens,
           missingRegions: r.missing_regions,
           confirmed: false,
+          baseText: r.problem_text,
+          spanValues: Object.fromEntries(spanTokens(r.uncertain_tokens).map((t) => [t.span_id as string, t.token])),
+          spanReviewed: {},
+          freeEdit: false,
         };
       }
       return initialUnifiedAssistState;
     }
     case "edit-draft":
       if (state.phase !== "needs_confirmation") return state;
-      return { ...state, draftText: action.text };
+      return { ...state, draftText: action.text, freeEdit: true };
+    case "edit-span": {
+      if (state.phase !== "needs_confirmation" || state.freeEdit) return state;
+      const spanValues = { ...state.spanValues, [action.spanId]: action.value };
+      return {
+        ...state,
+        spanValues,
+        spanReviewed: { ...state.spanReviewed, [action.spanId]: true },
+        draftText: applySpanValues(state.baseText, state.uncertainTokens, spanValues),
+      };
+    }
+    case "confirm-span":
+      if (state.phase !== "needs_confirmation") return state;
+      return { ...state, spanReviewed: { ...state.spanReviewed, [action.spanId]: true } };
     case "toggle-confirm":
       if (state.phase !== "needs_confirmation") return state;
       return { ...state, confirmed: action.value };
@@ -110,6 +173,12 @@ export function assistBlocker(state: UnifiedAssistState): string | null {
   }
   if (state.draftText.trim().length < MIN_PROBLEM_CHARS) {
     return "Nội dung đề còn quá ngắn — em bổ sung đầy đủ giả thiết và câu hỏi.";
+  }
+  if (!state.freeEdit) {
+    const left = reviewTokens(state.uncertainTokens).filter((t) => !state.spanReviewed[t.span_id as string]).length;
+    if (left > 0) {
+      return `Còn ${left} chỗ được đánh dấu — em bấm “Đúng rồi” hoặc sửa từng chỗ.`;
+    }
   }
   if (!state.confirmed) {
     return "Em kiểm tra lại ký hiệu rồi đánh dấu xác nhận để dựng hình.";

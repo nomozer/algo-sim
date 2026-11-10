@@ -183,11 +183,35 @@ _TRAILING_MC_OPTIONS_RE = re.compile(
     re.DOTALL,
 )
 
+_TRAILING_PARTIAL_MC_RE = re.compile(
+    r"(?P<stem_end>(?:(?<!\w)(?i:bằng|là)|[.?:)])\s*:?)"
+    r"\s+(?<![\w'])[A-D]\s*[.)]\s*(?:\d|(?i:[a-z0-9²³√π/]+\b))[^\n]*\s*$"
+)
+
+_COMPUTABLE_LATER_SUBQ_RE = re.compile(
+    r"(?m)^\s*[b-d][.)]\s+.*?\b(?i:tính|khoảng\s+cách|thể\s+tích|diện\s+tích|tỉ\s+số)\b"
+)
+
+_PURE_PROOF_OR_INTERSECTION_SUBQ_LINE_RE = re.compile(
+    r"(?m)^[ \t]*[a-c][.)]\s+(?!(?:[^\n]*\b(?i:gọi|biết|sao\s+cho|giả\s+sử|lấy|cho)\b|[^\n]*=))"
+    r"(?i:chứng\s+m[iì]nh\b|tìm\s+giao\s+tuyến\s+của\s+hai\s+mặt\s+phẳng\b)[^\n.?!]*[.?!]?[ \t]*\n?"
+)
+
 
 def normalize_problem_text(problem_text: str) -> str:
     """Unicode NFC normalization preserving character alignment for standard Vietnamese text, stripping trailing MC options."""
     s = unicodedata.normalize("NFC", problem_text or "").replace("\u2032", "'")
-    return _TRAILING_MC_OPTIONS_RE.sub(r"\g<stem_end>", s).strip() if _TRAILING_MC_OPTIONS_RE.search(s) else s
+    s = re.sub(r"(?m)^(\s*(?:Câu|Bài)\s+\d+)\s*\((?:VD|VDC|TH|NB)\)\s*:?\s*", r"\1: ", s, flags=re.IGNORECASE)
+    s = re.sub(r"[Δ∆△]\s*(?=[A-Z]{3}\b)", "tam giác ", s)
+    s = re.sub(r"(?m)^(\s*[a-d])\.(?=\s+[A-ZĐÀ-Ỹ])", r"\1)", s)
+    s = re.sub(r"\b([A-Z][0-9']*)\.([A-Z][0-9']*)(?=\s+(?i:là|thuộc|nằm)\b)", r"\1. \2", s)
+    if _COMPUTABLE_LATER_SUBQ_RE.search(s):
+        s = _PURE_PROOF_OR_INTERSECTION_SUBQ_LINE_RE.sub("", s)
+    if _TRAILING_MC_OPTIONS_RE.search(s):
+        return _TRAILING_MC_OPTIONS_RE.sub(r"\g<stem_end>", s).strip()
+    if _TRAILING_PARTIAL_MC_RE.search(s):
+        return _TRAILING_PARTIAL_MC_RE.sub(r"\g<stem_end>", s).strip()
+    return s
 
 
 def tokenize_problem_text(text: str) -> list[GeoToken]:
@@ -231,6 +255,14 @@ def split_into_Sentences(text: str) -> list[tuple[int, int, str]]:
             a += 1
         while b > a and (text[b - 1].isspace() or text[b - 1] in ".;?!"):
             b -= 1
+        # Nhãn câu hỏi con ở đầu dòng ("a. Tính …", "b) Chứng minh …") là cấu trúc trình bày, không phải mệnh đề.
+        at_line_start = a == 0 or text[:a].rstrip(" \t").endswith("\n")
+        if at_line_start and a < b:
+            if re.fullmatch(r"[a-d]", text[a:b]) and re.match(r"\.\s+[A-ZĐÀ-Ỹ]", text[b:]):
+                continue
+            m_sub = re.match(r"[a-d]\)\s+(?=[A-ZĐÀ-Ỹ])", text[a:b])
+            if m_sub:
+                a += m_sub.end()
         if a < b:
             out.append((a, b, text[a:b]))
     return out
@@ -912,8 +944,11 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
             q_cube = _clean_quote(raw, ca + m_cube.start(), ca + m_cube.end("not"))
             builder.solids.append({"solid_id": sid, "solid_type": "prism", "notation": not_str, "quote": q_cube})
             builder.simulation_goals.append({"goal_id": "sg1", "kind": "construct_object", "target_solid_id": sid, "quote": q_cube})
-            builder.premises.append(
-                {"kind": "right_prism", "args": {"base": base_pts, "top": top_pts}, "quote": q_cube, "solid_id": sid}
+            builder.premises.extend(
+                [
+                    {"kind": "right_prism", "args": {"base": base_pts, "top": top_pts}, "quote": q_cube, "solid_id": sid},
+                    {"kind": "regular_polygon", "args": {"vertices": base_pts}, "quote": q_cube, "solid_id": sid},
+                ]
             )
         builder._primary_solid_id = sid
         builder._primary_solid_type = "prism"
@@ -1208,6 +1243,23 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
             {"kind": "regular_polygon", "args": args_rb, "quote": q_rb, "solid_id": builder._primary_solid_id}
         )
         mapped_fact = True
+
+    for m_reg_tri in re.finditer(
+        rf"(?P<full>tam\s+giác\s+(?P<verts>{_PTS3})\s+(?:là\s+tam\s+giác\s+)?đều(?:\s+cạnh\s+(?:bằng\s+)?(?P<side>{_VAL}))?)",
+        ctext_norm,
+        re.IGNORECASE | re.UNICODE,
+    ):
+        verts_tri = _split_pts(m_reg_tri.group("verts"))
+        if builder._base_vertices and set(verts_tri) == set(builder._base_vertices):
+            q_rt = _clean_quote(raw, ca + m_reg_tri.start("full"), ca + m_reg_tri.end("full"))
+            if not any(p.get("kind") == "regular_polygon" and set(p["args"].get("vertices") or ()) == set(verts_tri) for p in builder.premises):
+                args_rt: dict[str, Any] = {"vertices": list(builder._base_vertices)}
+                if m_reg_tri.group("side") is not None:
+                    args_rt["side"] = _canon_val(m_reg_tri.group("side"))
+                builder.premises.append(
+                    {"kind": "regular_polygon", "args": args_rt, "quote": q_rt, "solid_id": builder._primary_solid_id}
+                )
+                mapped_fact = True
 
     # 2b. Rectangle base: "đáy (ABCD )?là hình chữ nhật"
     for m_rect in re.finditer(
@@ -1912,7 +1964,7 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
     # 5a. Paired or triple midpoints: "Gọi M, N(, P)? lần lượt là trung điểm của SA, SB(, SC)?"
     matched_mp_list = False
     for m_mp_list in re.finditer(
-        rf"(?P<full>Gọi\s+(?P<p1>{_PT})\s*[,;]\s*(?P<p2>{_PT})(?:\s*[,;]\s*(?P<p3>{_PT}))?\s+lần\s+lượt\s+là\s+trung\s+điểm\s+của(?:\s+các\s+cạnh)?\s+(?P<s1>{_PTS2})\s*(?:[,;]\s*|\s+và\s+)(?P<s2>{_PTS2})(?:\s*(?:[,;]\s*|\s+và\s+)(?P<s3>{_PTS2}))?)",
+        rf"(?P<full>Gọi\s+(?P<p1>{_PT})\s*(?:[,;]\s*|\s+và\s+)(?P<p2>{_PT})(?:\s*(?:[,;]\s*|\s+và\s+)(?P<p3>{_PT}))?\s+lần\s+lượt\s+là\s+trung\s+điểm\s+của(?:\s+các\s+cạnh)?\s+(?P<s1>{_PTS2})\s*(?:[,;]\s*|\s+và\s+)(?P<s2>{_PTS2})(?:\s*(?:[,;]\s*|\s+và\s+)(?P<s3>{_PTS2}))?)",
         ctext_norm,
         re.IGNORECASE | re.UNICODE,
     ):

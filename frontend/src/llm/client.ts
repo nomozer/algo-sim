@@ -289,6 +289,14 @@ export interface PhotoUncertainToken {
   alternatives: string[];
   location: string;
   reason: string;
+  /* OCR local (run `image-first-ocr-verified-geometry`): vị trí ký tự trong `problem_text`, ảnh cắt nguồn. */
+  kind?: "math" | "prose" | "structure" | "choice" | "diagram" | string;
+  span_id?: string;
+  span_start?: number;
+  span_end?: number;
+  crop_data_url?: string | null;
+  source?: "local_ocr" | string;
+  reason_code?: string | null;
 }
 
 export interface PhotoExtraction {

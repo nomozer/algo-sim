@@ -264,6 +264,131 @@ def _finalize_text_problem(
     )
 
 
+def _local_ocr_outcome(
+    rec: dict[str, Any],
+    region_res: RegionDetectionResult,
+    directive: UserComposerDirective,
+    *,
+    source_kind: Literal["image", "pdf", "docx"],
+    page_number: int | None,
+    selected_candidate_id: str | None,
+    prov_common: dict[str, Any],
+    raw_input_bytes: int,
+    uncropped_bytes: int,
+    t0: float,
+    vision_allowed: bool,
+) -> UnifiedPrepareOutcome:
+    """Kết quả tuyến OCR local: `ready` (đã xác minh, 0 AI) hoặc `needs_confirmation` (học sinh xác nhận từng chỗ)."""
+    from app.ingestion.local_ocr_route import review_items
+
+    full_text = rec.get("solve_text") or ""
+    metrics = {
+        "vlm_calls": 0,
+        "used_vlm": False,
+        "used_local_ocr": True,
+        "raw_input_bytes": raw_input_bytes,
+        "vlm_payload_bytes": 0,
+        "uncropped_baseline_bytes": uncropped_bytes,
+        "local_ocr_ms": (rec.get("timing") or {}).get("total_ms"),
+    }
+
+    def _done(**kw: Any) -> UnifiedPrepareOutcome:
+        metrics["processing_ms"] = round((time.perf_counter() - t0) * 1000.0, 2)
+        return UnifiedPrepareOutcome(source_kind=source_kind, provenance=prov_common, metrics=metrics, **kw)
+
+    if len(full_text.strip()) < 10:
+        return _done(
+            status="rejected",
+            learner_message=REJECTION_MESSAGES["IMAGE_NOT_READABLE"],
+            reason_code="IMAGE_NOT_READABLE",
+        )
+
+    # Nhiều bài trong cùng văn bản đọc được ⇒ học sinh chọn bài (OCR được cache theo ảnh, chọn lại không đọc lại).
+    split = split_text_into_problems(full_text, page_number=page_number, has_figure=prov_common.get("has_associated_figure", False))
+    chosen_text = full_text
+    if len(split) >= 2:
+        chosen, pool, ambig_msg = select_text_candidate(split, directive, selected_candidate_id)
+        if chosen is None:
+            return _done(
+                status="needs_selection",
+                learner_message=ambig_msg,
+                reason_code="MULTIPLE_PROBLEMS_DETECTED",
+                candidates=_text_candidates_to_items(pool, parent_bbox=prov_common.get("selected_bbox")),
+            )
+        chosen_text = chosen.problem_text
+    base_offset = full_text.find(chosen_text)
+    if base_offset < 0:
+        base_offset = full_text.replace("\n", " ").find(chosen_text.replace("\n", " "))
+    target_text = merge_supplemental_text(chosen_text, directive)
+    offsets_valid = base_offset >= 0 and len(target_text) == len(chosen_text)
+    prov_common["input_route"] = "LOCAL_OCR_VERIFIED" if rec.get("extraction_verified") else "LOCAL_OCR_NEEDS_CONFIRMATION"
+    prov_common["input_text_provenance"] = (
+        "LOCAL_OCR_CROSS_FAMILY_VERIFIED" if rec.get("extraction_verified") else "LOCAL_OCR_DRAFT_PENDING_STUDENT_CONFIRMATION"
+    )
+
+    if rec.get("extraction_verified"):
+        if detect_domain(target_text) != DOMAIN_HINH_HOC:
+            return _done(
+                status="rejected",
+                problem_text=target_text,
+                learner_message=REJECTION_MESSAGES["UNSUPPORTED_PROBLEM"],
+                reason_code="UNSUPPORTED_PROBLEM",
+            )
+        from app.ai.adaptive_input_router import ADAPTIVE_INPUT_ROUTER_VERSION
+        from app.ai.local_geometry_parser import parse_geometry_problem_locally
+
+        local_parse = parse_geometry_problem_locally(target_text)
+        prov_common["local_geometry_parse"] = {
+            "parser_version": local_parse.parser_version,
+            "router_version": ADAPTIVE_INPUT_ROUTER_VERSION,
+            "local_parse_status": local_parse.status,
+            "local_parse_ready_for_zero_ai_hybrid": local_parse.status in ("LOCAL_PARSE_COMPLETE", "LOCAL_PARSE_AMBIGUOUS"),
+            "local_parse_ms": round(local_parse.parse_latency_ms, 3),
+        }
+        metrics["local_parse_ms"] = round(local_parse.parse_latency_ms, 3)
+        return _done(status="ready", problem_text=target_text)
+
+    items = review_items(
+        rec,
+        region_res.prepared_image.data,
+        base_offset=base_offset if offsets_valid else 0,
+        text_len=len(target_text) if offsets_valid else None,
+    )
+    if not offsets_valid:
+        for it in items:
+            it["span_start"] = it["span_end"] = -1
+    n_spans = sum(1 for it in items if it.get("kind") != "diagram")
+    has_diagram_item = any(it.get("kind") == "diagram" for it in items)
+    if rec.get("low_quality"):
+        msg = (
+            "Ảnh khó đọc (chữ viết tay, mờ hoặc nghiêng) — máy chỉ đọc được bản nháp. Em kiểm tra kỹ, sửa trực tiếp "
+            "trong ô bên dưới hoặc chụp lại rõ hơn."
+        )
+        reason = "LOCAL_OCR_LOW_QUALITY"
+    elif n_spans:
+        msg = (
+            f"Máy đã đọc đề từ ảnh; còn {n_spans} chỗ chưa chắc chắn được đánh dấu. Em xem ảnh cắt từng chỗ, sửa nếu "
+            "cần rồi bấm Xác nhận — không cần gõ lại cả đề."
+        )
+        reason = "LOCAL_OCR_REVIEW_REQUIRED"
+    elif has_diagram_item:
+        msg = "Máy đã đọc đề từ ảnh. Đề có hình vẽ — em xác nhận hình không có thêm dữ kiện rồi bấm Xác nhận."
+        reason = "DIAGRAM_FACT_REVIEW_REQUIRED"
+    else:
+        msg = "Máy đã đọc đề từ ảnh — em kiểm tra nhanh rồi bấm Xác nhận."
+        reason = "LOCAL_OCR_REVIEW_REQUIRED"
+    if not vision_allowed:
+        prov_common["vision_fallback"] = "NOT_AVAILABLE_LIVE_AI_DISABLED_OR_NO_KEY"
+    return _done(
+        status="needs_confirmation",
+        problem_text=target_text,
+        learner_message=msg,
+        reason_code=reason,
+        flag_messages=(msg,),
+        uncertain_tokens=tuple(items),
+    )
+
+
 async def _process_normalized_visual_page(
     norm_img: NormalizedImage,
     directive: UserComposerDirective,
@@ -330,7 +455,17 @@ async def _process_normalized_visual_page(
         )
 
     # 2. Có nhiều vùng bài toán tách biệt rõ và chưa có chỉ dẫn chọn bài -> chạm chọn 1 bước, 0 lượt gọi VLM!
+    #    OCR local (nếu có) kiểm chứng bằng văn bản: cả trang chỉ có ≤ 1 tiêu đề "Câu/Bài N" ⇒ một bài bị bố cục
+    #    (hình vẽ chen giữa lời đề và câu hỏi) tách nhầm thành hai vùng — giữ nguyên trang, không bắt chọn.
+    split_overruled = False
     if region_res.ambiguous_multi_problem and len(region_res.candidates) >= 2 and not selected_candidate_id:
+        from app.ingestion.local_ocr_route import count_problem_headers_on_page
+
+        n_headers = count_problem_headers_on_page(region_res.full_image.data)
+        if n_headers is not None and n_headers <= 1:
+            split_overruled = True
+            prov_common["region_split_overruled_by_ocr_headers"] = n_headers
+    if region_res.ambiguous_multi_problem and len(region_res.candidates) >= 2 and not selected_candidate_id and not split_overruled:
         msg = (
             f"Không tìm thấy vùng Bài {directive.target_problem_number} trong ảnh. Em chạm chọn vùng bài muốn dựng nhé."
             if directive.target_problem_number is not None
@@ -355,7 +490,36 @@ async def _process_normalized_visual_page(
             },
         )
 
-    # 3. Gọi VLM trên ảnh vùng đề đã chuẩn bị (có fallback tự động 1 lần về ảnh gốc nếu vùng crop bị thiếu).
+    # 3. OCR local (Route A / D) trước Vision khi đã cấu hình: token toán chỉ được dùng khi hai họ engine
+    #    độc lập cùng đọc ra; còn lại học sinh xác nhận từng chỗ. Vision vẫn là đường đọc chính nếu được phép
+    #    và OCR local chưa xác minh được đề.
+    from app.ingestion.local_ocr_route import run_local_ocr_route
+
+    vision_allowed = os.getenv("ALLOW_LIVE_AI") != "0" and bool(api_key)
+    local_rec = run_local_ocr_route(region_res.prepared_image.data, region_res.prepared_figure_bboxes())
+    if local_rec is not None:
+        if local_rec.get("ok"):
+            from app.ingestion.local_ocr_route import summarize_for_provenance
+
+            prov_common["local_ocr"] = summarize_for_provenance(local_rec)
+            if local_rec.get("extraction_verified") or not vision_allowed:
+                return _local_ocr_outcome(
+                    local_rec,
+                    region_res,
+                    directive,
+                    source_kind=source_kind,
+                    page_number=page_number,
+                    selected_candidate_id=selected_candidate_id,
+                    prov_common=prov_common,
+                    raw_input_bytes=raw_input_bytes,
+                    uncropped_bytes=uncropped_bytes,
+                    t0=t0,
+                    vision_allowed=vision_allowed,
+                )
+        else:
+            prov_common["local_ocr"] = {"ok": False, "reason": local_rec.get("reason")}
+
+    # 3b. Gọi VLM trên ảnh vùng đề đã chuẩn bị (có fallback tự động 1 lần về ảnh gốc nếu vùng crop bị thiếu).
     vkey = _require_vision_key(api_key)
     vlm_calls = 0
     vlm_bytes = 0
@@ -1700,6 +1864,9 @@ async def prepare_unified_input(
             if f not in combined_flags:
                 combined_flags.append(f)
         for ut in u.uncertain_tokens:
+            # Vị trí ký tự của OCR local chỉ đúng trong văn bản của chính tệp đó; ghép nhiều tệp ⇒ bỏ vị trí.
+            if len(ordered_text_units) > 1 and "span_start" in ut:
+                ut = {**ut, "span_start": -1, "span_end": -1}
             combined_uncertain.append(ut)
         for mr in u.missing_regions:
             if mr not in combined_missing:

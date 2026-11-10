@@ -2296,6 +2296,88 @@ html {
   margin-top: 3px;
 }
 
+/* Xác nhận từng chỗ OCR local chưa chắc (run image-first-ocr-verified-geometry) */
+.photo-span-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-xs);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.photo-span-item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px var(--sp-xs);
+  padding: 6px var(--sp-xs);
+  border: 1px solid var(--hairline);
+  border-left: 3px solid var(--accent-orange);
+  border-radius: var(--rounded-xs);
+  background: var(--canvas);
+  min-width: 0;
+}
+
+.photo-span-item[data-reviewed="true"] {
+  border-left-color: var(--primary);
+}
+
+.photo-span-crop {
+  display: block;
+  max-width: 100%;
+  max-height: 72px;
+  border: 1px solid var(--hairline);
+  border-radius: var(--rounded-xs);
+  background: #fff;
+}
+
+.photo-span-reason {
+  flex: 1 1 100%;
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--ink-secondary);
+}
+
+.photo-span-input {
+  box-sizing: border-box;
+  min-width: 7em;
+  max-width: 100%;
+  padding: 4px 6px;
+  border: 1px solid var(--hairline);
+  border-radius: var(--rounded-xs);
+  background: var(--canvas);
+  color: var(--ink);
+  font: inherit;
+  font-size: 15px;
+}
+
+.photo-span-input:focus-visible,
+.photo-span-alt:focus-visible,
+.photo-span-ok:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 1px;
+}
+
+.photo-span-alt,
+.photo-span-ok {
+  padding: 3px 8px;
+  border: 1px solid var(--hairline);
+  border-radius: var(--rounded-sm);
+  background: var(--canvas-soft);
+  color: var(--ink);
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.photo-span-ok[aria-pressed="true"] {
+  border-color: var(--primary);
+  color: var(--primary);
+  font-weight: 600;
+}
+
 .starter-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));

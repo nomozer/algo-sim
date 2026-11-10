@@ -1266,6 +1266,8 @@ export function ProblemInput({
         onToggleConfirm={(value) => dispatchAssist({ type: "toggle-confirm", value })}
         onSubmitConfirmed={onSubmitConfirmedAssist}
         onDismiss={() => dispatchAssist({ type: "reset" })}
+        onEditSpan={(spanId, value) => dispatchAssist({ type: "edit-span", spanId, value })}
+        onConfirmSpan={(spanId) => dispatchAssist({ type: "confirm-span", spanId })}
       />
 
       {(() => {

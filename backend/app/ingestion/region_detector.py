@@ -132,6 +132,22 @@ class RegionDetectionResult:
     #: Crop chứa TRỌN mọi khối bố cục của trang (kể cả khối nhiễu) và trang chưa bị cắt nền bàn ⇒ ảnh đầy đủ chỉ
     #: thêm lề trống, đọc lại vô ích.
     crop_holds_all_content: bool = False
+    #: Gốc toạ độ của `prepared_image` trong ảnh làm việc (nơi `blocks` được đo), để OCR local
+    #: đặt hộp bao chữ/hình vào cùng hệ toạ độ. `(0, 0)` khi `prepared_image` là cả trang làm việc.
+    prepared_origin: tuple[int, int] = (0, 0)
+    #: Kích thước vùng nguồn (trong ảnh làm việc) trước khi mã hoá `prepared_image` (có thể bị thu nhỏ).
+    prepared_source_size: tuple[int, int] | None = None
+
+    def prepared_figure_bboxes(self) -> tuple[tuple[int, int, int, int], ...]:
+        ox, oy = self.prepared_origin
+        sw, sh = self.prepared_source_size or (self.prepared_image.width, self.prepared_image.height)
+        kx = self.prepared_image.width / float(max(1, sw))
+        ky = self.prepared_image.height / float(max(1, sh))
+        return tuple(
+            (int((b.bbox.x0 - ox) * kx), int((b.bbox.y0 - oy) * ky), int((b.bbox.x1 - ox) * kx), int((b.bbox.y1 - oy) * ky))
+            for b in self.blocks
+            if b.kind == "figure"
+        )
 
 
 def _encode_rgb_to_normalized(
@@ -1143,6 +1159,7 @@ def detect_problem_regions(
             has_associated_figure=any_fig,
             completeness_confidence=0.85,
             ambiguous_multi_problem=ambiguous,
+            prepared_source_size=(work_w, work_h),
         )
 
     # Bảo toàn dữ kiện toán học (§13): nếu chỉ có 1 bài mà diện tích crop tiết kiệm < 15%
@@ -1181,6 +1198,7 @@ def detect_problem_regions(
             has_associated_figure=chosen.has_figure,
             completeness_confidence=round(ink_coverage, 3),
             ambiguous_multi_problem=False,
+            prepared_source_size=(work_w, work_h),
         )
 
     cropped_rgb = working_rgb.crop((chosen.bbox.x0, chosen.bbox.y0, chosen.bbox.x1, chosen.bbox.y1))
@@ -1202,6 +1220,8 @@ def detect_problem_regions(
         has_associated_figure=chosen.has_figure,
         completeness_confidence=chosen.completeness_confidence,
         ambiguous_multi_problem=False,
+        prepared_origin=(chosen.bbox.x0, chosen.bbox.y0),
+        prepared_source_size=(chosen.bbox.x1 - chosen.bbox.x0, chosen.bbox.y1 - chosen.bbox.y0),
         # Đã cắt nền bàn ⇒ phần ngoài trang chưa được phân khối: không khẳng định được. Khối "nhiễu" (dòng sát
         # mép, số trang) cũng phải nằm trong crop — một dòng cuối bị xếp nhầm là nhiễu mép vẫn được đọc lại.
         # Đồng thời yêu cầu diện tích crop >= 25% trang (`area_ratio >= 0.25`) để tránh trường hợp bộ tách khối
