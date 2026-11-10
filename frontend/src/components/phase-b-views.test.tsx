@@ -42,16 +42,17 @@ describe("Axo V2.7 Phase B — Header Logo, Homepage, Library & History (P3–P8
     syncStoreForSSR();
   });
 
-  it("P3 & Phase C.1 P1: Logo Axo (#btn-brand-home) có đúng SVG 22x22, chữ Axo 15px, padding 0 và không đổi nền/scale khi hover hoặc active", () => {
+  it("P3 & Phase C.1 P1: Logo Axo (#btn-brand-home) có đúng SVG 26x26 trên Header chính, chữ Axo, padding 0 và không đổi nền/scale khi hover hoặc active", () => {
     const html = renderToString(<App />);
     expect(html).toContain('id="btn-brand-home"');
-    expect(html).toContain('class="axo-logo-svg" width="22" height="22"');
+    expect(html).toContain('class="axo-logo-svg" width="26" height="26"');
     expect(html).toContain('<span class="nav-wordmark-text">Axo</span>');
 
     const css = readFileSync(new URL("../styles/global.css", import.meta.url), "utf8");
     expect(css).toMatch(/\.axo-logo-btn\s*\{[^}]*gap:\s*7px;[^}]*padding:\s*0;[^}]*border-radius:\s*0;[^}]*font-size:\s*15px;[^}]*background:\s*transparent;/s);
     expect(css).toMatch(/\.axo-logo-btn:hover,\s*\.axo-logo-btn:active\s*\{[^}]*background:\s*transparent;[^}]*transform:\s*none;/s);
     expect(css).toMatch(/\.axo-logo-svg\s*\{[^}]*width:\s*22px;[^}]*height:\s*22px;/s);
+    expect(css).toMatch(/\.nav-bar\s+\.axo-logo-svg\s*\{[^}]*width:\s*var\(--axo-logo-size\);[^}]*height:\s*var\(--axo-logo-size\);/s);
   });
 
   it("P4.1 & P4.2: Toàn bộ 11 mẫu hình học trong publicCatalog() render hình minh họa SVG đầy đủ chi tiết", () => {
@@ -651,7 +652,9 @@ describe("Axo V2.7 Phase B — Header Logo, Homepage, Library & History (P3–P8
     // Phase C.3 & Stage B Unified Sizing CSS contracts (Import Wizard 4-step bar, Header 3-col grid & --axo-header-h token, Homepage --axo-home-max-w & --axo-hero-title-size tokens, Composer 76px 3-line baseline, Playback P-A Compact vs Expanded)
     const css = readFileSync(new URL("../styles/global.css", import.meta.url), "utf8");
     expect(css).toMatch(/\.nav-bar\s*\{[^}]*display:\s*grid;[^}]*grid-template-columns:\s*minmax\(0,\s*1fr\)\s+auto\s+minmax\(0,\s*1fr\);/s);
-    expect(css).toContain("--axo-header-h: 46px;");
+    expect(css).toContain("--axo-header-h: 62px;");
+    expect(css).toContain("--axo-header-max-w: 1280px;");
+    expect(css).toContain("--axo-ws-header-h: 50px;");
     expect(css).toContain("--axo-home-max-w: 820px;");
     expect(css).toContain("--axo-hero-title-size: 30px;");
     expect(css).toMatch(/\.composer-textarea\s*\{[^}]*min-height:\s*76px;[^}]*height:\s*76px;[^}]*max-height:\s*220px;/s);

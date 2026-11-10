@@ -8997,14 +8997,12 @@ html {
 
 @media (max-width: 480px) {
   .nav-bar {
-    padding: 0 8px;
-    gap: 5px;
+    gap: 6px;
   }
 
   .axo-logo-btn {
     gap: 6px;
     padding: 0;
-    font-size: 15px;
     background: transparent;
   }
 
@@ -9014,31 +9012,12 @@ html {
     transform: none;
   }
 
-  .axo-logo-svg {
-    width: 22px;
-    height: 22px;
-  }
-
-  .nav-n1-capsule {
-    padding: 2px;
-    gap: 2px;
-  }
-
-  .nav-n1-item {
-    padding: 6px 9px;
-  }
-
   .topnav-label {
     display: none;
   }
 
   .btn-auth-ghost {
     display: none;
-  }
-
-  .btn-auth-primary {
-    padding: 4px 9px;
-    font-size: 11.4px;
   }
 
   .notif-wrap {
@@ -16374,14 +16353,32 @@ body:has(.app-root.la-tap-trung) {
 
 :root {
   --axo-hairline-strong: #d5d2cc;
-  --axo-header-h: 46px;
-  --axo-header-px: 14px;
-  --axo-logo-size: 17.5px;
-  --axo-wordmark-size: 15px;
-  --axo-nav-font: 12.5px;
-  --axo-nav-item-h: 26px;
-  --axo-nav-item-px: 12px;
-  --axo-header-btn-font: 12px;
+  /* ── Main Header Tokens (Homepage, Library, History — §4.1) ── */
+  --axo-header-h: 62px;
+  --axo-header-max-w: 1280px;
+  --axo-header-px: 28px;
+  --axo-logo-size: 26px;
+  --axo-wordmark-size: 17.5px;
+  --axo-brand-gap: 8.5px;
+  --axo-nav-capsule-h: 40px;
+  --axo-nav-item-h: 32px;
+  --axo-nav-item-px: 14px;
+  --axo-nav-font: 14px;
+  --axo-nav-icon-size: 15px;
+  --axo-header-btn-h: 36px;
+  --axo-header-btn-font: 14px;
+
+  /* ── Compact Scene3D Workspace Header Tokens (.ws-axo-header — §4.2) ── */
+  --axo-ws-header-h: 50px;
+  --axo-ws-header-px: 20px;
+  --axo-ws-logo-size: 23px;
+  --axo-ws-wordmark-size: 16px;
+  --axo-ws-nav-capsule-h: 36px;
+  --axo-ws-nav-item-h: 30px;
+  --axo-ws-nav-item-px: 12px;
+  --axo-ws-nav-font: 13.2px;
+  --axo-ws-btn-h: 32px;
+
   --axo-hit-h: 36px;
   --axo-hit-sm-h: 32px;
 
@@ -16399,27 +16396,46 @@ body:has(.app-root.la-tap-trung) {
 }
 
 /* ── 1. Global Header, Brand Hit Area, Navigation Capsule & Workspace Header ── */
-.nav-bar,
+.nav-bar {
+  height: var(--axo-header-h);
+  min-height: var(--axo-header-h);
+  padding-block: 0;
+  padding-inline: max(
+    var(--axo-header-px),
+    calc((100% - var(--axo-header-max-w)) / 2 + var(--axo-header-px))
+  );
+}
+
 .axo-header.ws-axo-header,
 .auth-top-bar,
 .admin-topbar {
-  height: var(--axo-header-h);
-  min-height: var(--axo-header-h);
-  padding: 0 var(--axo-header-px);
+  height: var(--axo-ws-header-h);
+  min-height: var(--axo-ws-header-h);
+  padding: 0 var(--axo-ws-header-px);
 }
 
 .app-single:has(> .page-container) {
   min-height: calc(100vh - var(--axo-header-h));
 }
 
-.nav-bar .axo-logo-btn,
+.nav-bar .axo-logo-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--axo-brand-gap);
+  min-height: 36px;
+  height: 36px;
+  padding: 0;
+  border-radius: 0;
+}
+
 .ws-axo-header .axo-logo-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 7px;
-  min-height: 24px;
-  height: 24px;
+  gap: 7.5px;
+  min-height: 32px;
+  height: 32px;
   padding: 0;
   border-radius: 0;
 }
@@ -16427,27 +16443,39 @@ body:has(.app-root.la-tap-trung) {
 .auth-top-bar .auth-brand-link {
   display: inline-flex;
   align-items: center;
-  gap: 7px;
-  min-height: 28px;
-  height: 28px;
+  gap: 7.5px;
+  min-height: 32px;
+  height: 32px;
   padding: 3px 6px 3px 3px;
   border-radius: var(--rounded-md);
 }
 
-.nav-bar .axo-logo-svg,
-.ws-axo-header .axo-logo-svg,
-.auth-top-bar .axo-logo-svg {
-  width: 22px;
-  height: 22px;
+.nav-bar .axo-logo-svg {
+  width: var(--axo-logo-size);
+  height: var(--axo-logo-size);
   flex: 0 0 auto;
   display: block;
 }
 
-.nav-bar .nav-wordmark-text,
+.ws-axo-header .axo-logo-svg,
+.auth-top-bar .axo-logo-svg {
+  width: var(--axo-ws-logo-size);
+  height: var(--axo-ws-logo-size);
+  flex: 0 0 auto;
+  display: block;
+}
+
+.nav-bar .nav-wordmark-text {
+  font-size: var(--axo-wordmark-size);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
 .ws-axo-header .nav-wordmark-text,
 .ws-axo-header .axo-brand-name,
 .auth-top-bar .auth-brand-link span {
-  font-size: 15px;
+  font-size: var(--axo-ws-wordmark-size);
   font-weight: 700;
   letter-spacing: -0.02em;
   line-height: 1;
@@ -16455,7 +16483,7 @@ body:has(.app-root.la-tap-trung) {
 
 .ws-axo-header .header-div {
   width: 1px;
-  height: 16px;
+  height: 18px;
   background: var(--hairline);
   flex-shrink: 0;
 }
@@ -16463,8 +16491,8 @@ body:has(.app-root.la-tap-trung) {
 .ws-axo-header .prob-title-top {
   flex: 0 1 auto;
   min-width: 0;
-  max-width: 330px;
-  font-size: 13px;
+  max-width: min(34vw, 380px);
+  font-size: 13.2px;
   font-weight: 500;
   color: var(--ink-secondary);
   white-space: nowrap;
@@ -16474,40 +16502,65 @@ body:has(.app-root.la-tap-trung) {
   cursor: default;
 }
 
-.nav-n1-capsule,
+.nav-bar .nav-n1-capsule {
+  padding: 4px;
+  gap: 3px;
+  min-height: var(--axo-nav-capsule-h);
+  height: var(--axo-nav-capsule-h);
+}
+
+.ws-axo-header .nav-n1-capsule,
 .axo-nav-capsule {
   padding: 3px;
   gap: 2px;
-  min-height: 34px;
-  height: 34px;
+  min-height: var(--axo-ws-nav-capsule-h);
+  height: var(--axo-ws-nav-capsule-h);
 }
 
-.nav-n1-item,
-.axo-nav-item {
+.nav-bar .nav-n1-item {
   font-size: var(--axo-nav-font);
   min-height: var(--axo-nav-item-h);
   height: var(--axo-nav-item-h);
   padding: 0 var(--axo-nav-item-px);
+  gap: 6.5px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ws-axo-header .nav-n1-item,
+.axo-nav-item {
+  font-size: var(--axo-ws-nav-font);
+  min-height: var(--axo-ws-nav-item-h);
+  height: var(--axo-ws-nav-item-h);
+  padding: 0 var(--axo-ws-nav-item-px);
   gap: 6px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
 }
 
-.nav-n1-item svg,
+.nav-bar .nav-n1-item svg {
+  width: var(--axo-nav-icon-size);
+  height: var(--axo-nav-icon-size);
+}
+
+.ws-axo-header .nav-n1-item svg,
 .axo-nav-item svg {
   width: 14px;
   height: 14px;
 }
 
-.nav-bar .btn-auth-ghost,
-.ws-axo-header .btn-auth-ghost,
-.auth-top-bar .btn-auth-ghost {
+.nav-bar .header-auth-group {
+  gap: 8px;
+}
+
+.nav-bar .btn-auth-ghost {
   font-size: var(--axo-header-btn-font);
-  min-height: 27px;
-  height: 27px;
-  padding: 0 10px;
-  border-radius: 7px;
+  min-height: var(--axo-header-btn-h);
+  height: var(--axo-header-btn-h);
+  padding: 0 14px;
+  border-radius: 9px;
   font-weight: 500;
   line-height: 1;
   display: inline-flex;
@@ -16515,14 +16568,40 @@ body:has(.app-root.la-tap-trung) {
   justify-content: center;
 }
 
-.nav-bar .btn-auth-primary,
+.nav-bar .btn-auth-primary {
+  font-size: var(--axo-header-btn-font);
+  min-height: var(--axo-header-btn-h);
+  height: var(--axo-header-btn-h);
+  padding: 0 16px;
+  border-radius: 9px;
+  font-weight: 600;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ws-axo-header .btn-auth-ghost,
+.auth-top-bar .btn-auth-ghost {
+  font-size: 13px;
+  min-height: var(--axo-ws-btn-h);
+  height: var(--axo-ws-btn-h);
+  padding: 0 11px;
+  border-radius: 8px;
+  font-weight: 500;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .ws-axo-header .btn-auth-primary,
 .auth-top-bar .btn-auth-primary {
-  font-size: var(--axo-header-btn-font);
-  min-height: 27px;
-  height: 27px;
-  padding: 0 11px;
-  border-radius: 7px;
+  font-size: 13px;
+  min-height: var(--axo-ws-btn-h);
+  height: var(--axo-ws-btn-h);
+  padding: 0 12px;
+  border-radius: 8px;
   font-weight: 600;
   line-height: 1;
   display: inline-flex;
@@ -16531,13 +16610,13 @@ body:has(.app-root.la-tap-trung) {
 }
 
 .btn-change-prob {
-  font-size: 12px;
-  min-height: 27px;
-  height: 27px;
-  padding: 0 10px;
-  border-radius: 7px;
+  font-size: 13px;
+  min-height: var(--axo-ws-btn-h);
+  height: var(--axo-ws-btn-h);
+  padding: 0 12px;
+  border-radius: 8px;
   font-weight: 500;
-  gap: 5px;
+  gap: 6px;
   line-height: 1;
   display: inline-flex;
   align-items: center;
@@ -16545,15 +16624,15 @@ body:has(.app-root.la-tap-trung) {
 }
 
 .btn-change-prob svg {
-  width: 13px;
-  height: 13px;
+  width: 13.5px;
+  height: 13.5px;
   stroke-width: 1.8;
   flex-shrink: 0;
 }
 
 .notif-trigger-btn {
-  width: 32px;
-  height: 32px;
+  width: 34px;
+  height: 34px;
 }
 
 .user-profile-btn {
@@ -16571,6 +16650,14 @@ body:has(.app-root.la-tap-trung) {
   align-items: center;
   gap: 7px;
   flex-shrink: 0;
+}
+
+.nav-bar .user-profile-btn {
+  min-height: var(--axo-header-btn-h);
+  height: var(--axo-header-btn-h);
+  padding: 4px 11px 4px 6px;
+  font-size: 13.4px;
+  gap: 7.5px;
 }
 
 .user-profile-btn:hover,
@@ -17215,8 +17302,8 @@ body:has(.app-root.la-tap-trung) {
 
 @media (max-width: 1080px) {
   :root {
-    --axo-header-h: 46px;
-    --axo-header-px: 14px;
+    --axo-header-h: 60px;
+    --axo-header-px: 24px;
     --axo-home-max-w: 800px;
     --axo-hero-title-size: 28px;
     --axo-starter-thumb-h: 92px;
@@ -17232,14 +17319,27 @@ body:has(.app-root.la-tap-trung) {
 
 @media (max-width: 860px) {
   :root {
-    --axo-header-h: 46px;
-    --axo-header-px: 12px;
-    --axo-logo-size: 17px;
-    --axo-wordmark-size: 14.5px;
-    --axo-nav-font: 12px;
-    --axo-nav-item-h: 25px;
-    --axo-nav-item-px: 9px;
-    --axo-header-btn-font: 11.8px;
+    --axo-header-h: 56px;
+    --axo-header-px: 24px;
+    --axo-logo-size: 24px;
+    --axo-wordmark-size: 16.5px;
+    --axo-brand-gap: 8px;
+    --axo-nav-capsule-h: 36px;
+    --axo-nav-item-h: 30px;
+    --axo-nav-item-px: 12px;
+    --axo-nav-font: 13.5px;
+    --axo-nav-icon-size: 14px;
+    --axo-header-btn-h: 34px;
+    --axo-header-btn-font: 13.5px;
+
+    --axo-ws-header-h: 48px;
+    --axo-ws-header-px: 16px;
+    --axo-ws-nav-capsule-h: 34px;
+    --axo-ws-nav-item-h: 28px;
+    --axo-ws-nav-item-px: 10px;
+    --axo-ws-nav-font: 12.8px;
+    --axo-ws-btn-h: 30px;
+
     --axo-hit-h: 34px;
     --axo-hero-title-size: 25px;
     --axo-page-title-size: 22px;
@@ -17248,7 +17348,7 @@ body:has(.app-root.la-tap-trung) {
   }
 
   .axo-header.ws-axo-header {
-    padding: 0 12px;
+    padding: 0 var(--axo-ws-header-px);
     gap: 12px;
   }
 
@@ -17261,34 +17361,11 @@ body:has(.app-root.la-tap-trung) {
   }
 
   .ws-axo-header .btn-change-prob {
-    padding: 0 9px;
-    font-size: 11.5px;
-    min-height: 26px;
-    height: 26px;
-    gap: 4px;
-  }
-
-  .nav-n1-capsule,
-  .axo-nav-capsule {
-    min-height: 31px;
-    height: 31px;
-    padding: 2px;
-    gap: 2px;
-  }
-
-  .nav-n1-item,
-  .axo-nav-item {
-    min-height: 25px;
-    height: 25px;
-    padding: 0 9px;
-    font-size: 12px;
+    padding: 0 10px;
+    font-size: 12.5px;
+    min-height: var(--axo-ws-btn-h);
+    height: var(--axo-ws-btn-h);
     gap: 5px;
-  }
-
-  .nav-n1-item svg,
-  .axo-nav-item svg {
-    width: 13px;
-    height: 13px;
   }
 
   .study-dock {
@@ -17360,14 +17437,16 @@ body:has(.app-root.la-tap-trung) {
 
 @media (max-width: 680px) {
   :root {
-    --axo-header-h: 48px;
-    --axo-header-px: 12px;
-    --axo-logo-size: 17.5px;
-    --axo-wordmark-size: 15px;
-    --axo-nav-font: 12.4px;
-    --axo-nav-item-h: 28px;
+    --axo-header-h: 54px;
+    --axo-header-px: 16px;
+    --axo-logo-size: 23px;
+    --axo-wordmark-size: 16px;
+    --axo-nav-capsule-h: 35px;
+    --axo-nav-item-h: 29px;
     --axo-nav-item-px: 10px;
-    --axo-header-btn-font: 12px;
+    --axo-nav-font: 13px;
+    --axo-header-btn-h: 34px;
+    --axo-header-btn-font: 13px;
     --axo-hit-h: 36px;
     --axo-hero-title-size: 24px;
     --axo-page-title-size: 21px;
@@ -17379,23 +17458,16 @@ body:has(.app-root.la-tap-trung) {
     width: 100% !important;
   }
 
-  .nav-n1-capsule,
-  .axo-nav-capsule {
-    min-height: 34px;
-    height: 34px;
-  }
-
   .nav-bar .btn-auth-ghost,
   .ws-axo-header .btn-auth-ghost,
   .auth-top-bar .btn-auth-ghost {
     display: none;
   }
 
-  .nav-bar .btn-auth-primary,
-  .ws-axo-header .btn-auth-primary {
-    min-height: 30px;
-    height: 30px;
-    padding: 0 11px;
+  .nav-bar .btn-auth-primary {
+    min-height: var(--axo-header-btn-h);
+    height: var(--axo-header-btn-h);
+    padding: 0 13px;
   }
 
   .page-container.home-container,
@@ -17410,12 +17482,33 @@ body:has(.app-root.la-tap-trung) {
   }
 }
 
+@media (max-width: 560px) {
+  :root {
+    --axo-header-h: 52px;
+    --axo-header-px: 16px;
+    --axo-nav-capsule-h: 34px;
+    --axo-nav-item-h: 28px;
+    --axo-nav-item-px: 10px;
+  }
+
+  .nav-bar .topnav-label {
+    display: none;
+  }
+
+  .nav-bar .nav-n1-item {
+    min-width: 36px;
+    padding: 0 10px;
+  }
+}
+
 @media (max-width: 480px) {
   :root {
-    --axo-header-h: 48px;
-    --axo-header-px: 10px;
-    --axo-logo-size: 17.5px;
-    --axo-wordmark-size: 15px;
+    --axo-header-h: 52px;
+    --axo-header-px: 16px;
+    --axo-logo-size: 23px;
+    --axo-wordmark-size: 16px;
+    --axo-ws-header-h: 48px;
+    --axo-ws-header-px: 12px;
     --axo-hit-h: 36px;
     --axo-hero-title-size: 22px;
     --axo-page-title-size: 20px;
@@ -17424,7 +17517,7 @@ body:has(.app-root.la-tap-trung) {
   }
 
   .axo-header.ws-axo-header {
-    padding: 0 8px;
+    padding: 0 var(--axo-ws-header-px);
     gap: 6px;
   }
 
@@ -17432,14 +17525,14 @@ body:has(.app-root.la-tap-trung) {
     width: 100% !important;
   }
 
-  .nav-n1-capsule,
+  .ws-axo-header .nav-n1-capsule,
   .axo-nav-capsule {
     min-height: 32px;
     height: 32px;
     padding: 2px;
   }
 
-  .nav-n1-item,
+  .ws-axo-header .nav-n1-item,
   .axo-nav-item {
     min-height: 28px;
     height: 28px;
@@ -17453,18 +17546,24 @@ body:has(.app-root.la-tap-trung) {
     display: none;
   }
 
-  .nav-bar .btn-auth-primary,
+  .nav-bar .btn-auth-primary {
+    font-size: 13px;
+    min-height: 34px;
+    height: 34px;
+    padding: 0 13px;
+  }
+
   .ws-axo-header .btn-auth-primary {
-    font-size: 12px;
-    min-height: 29px;
-    height: 29px;
-    padding: 0 10px;
+    font-size: 12.5px;
+    min-height: 30px;
+    height: 30px;
+    padding: 0 11px;
   }
 
   .ws-axo-header .btn-change-prob {
-    padding: 0 8px;
-    min-height: 29px;
-    height: 29px;
+    padding: 0 9px;
+    min-height: 30px;
+    height: 30px;
   }
 
   .playback-pa-capsule {
@@ -17502,7 +17601,7 @@ body:has(.app-root.la-tap-trung) {
 
 @media (max-width: 340px) {
   :root {
-    --axo-header-px: 8px;
+    --axo-header-px: 10px;
   }
 
   .nav-n1-item,
@@ -17739,7 +17838,11 @@ html::-webkit-scrollbar {
   --axo-nav-h: var(--axo-header-h);
   height: var(--axo-header-h);
   min-height: var(--axo-header-h);
-  padding: 0 var(--axo-header-px);
+  padding-block: 0;
+  padding-inline: max(
+    var(--axo-header-px),
+    calc((100% - var(--axo-header-max-w)) / 2 + var(--axo-header-px))
+  );
   background: var(--canvas-soft);
   border-bottom: 1px solid transparent;
   box-shadow: none;
@@ -17760,7 +17863,7 @@ html::-webkit-scrollbar {
 }
 
 .nav-bar .nav-n1-capsule {
-  background: rgba(255, 255, 255, 0.62);
+  background: rgba(255, 255, 255, 0.72);
   border-color: var(--hairline);
   transition:
     background-color 0.18s ease,
@@ -17781,7 +17884,7 @@ html::-webkit-scrollbar {
 }
 
 .nav-bar.is-scrolled .nav-n1-capsule {
-  background: rgba(255, 255, 255, 0.88);
+  background: rgba(255, 255, 255, 0.9);
   border-color: var(--hairline);
 }
 
@@ -17795,37 +17898,27 @@ html::-webkit-scrollbar {
 /* 3. Balanced Header → Hero ("Em muốn dựng hình nào?") vertical breathing room */
 .page-container.home-container,
 .home-page-container {
-  padding: clamp(72px, 9.2vh, 92px) 24px 52px;
+  padding: clamp(56px, 7.6vh, 76px) 24px 52px;
   gap: 54px;
 }
 
 @media (max-width: 1080px) {
   .page-container.home-container,
   .home-page-container {
-    padding: 54px 18px 42px;
+    padding: 48px 18px 42px;
     gap: 26px;
   }
 }
 
 @media (max-width: 860px) {
-  .nav-bar {
-    --axo-nav-h: 48px;
-    padding: 0 16px;
-  }
-
   .page-container.home-container,
   .home-page-container {
-    padding: 44px 16px 36px;
+    padding: 40px 16px 36px;
     gap: 22px;
   }
 }
 
 @media (max-width: 480px) {
-  .nav-bar {
-    --axo-nav-h: 48px;
-    padding: 0 16px;
-  }
-
   .page-container:not(.home-container) {
     padding: 20px 16px 28px;
     gap: 16px;
@@ -17833,7 +17926,7 @@ html::-webkit-scrollbar {
 
   .page-container.home-container,
   .home-page-container {
-    padding: 32px 16px 28px;
+    padding: 28px 16px 28px;
     gap: 20px;
   }
 }

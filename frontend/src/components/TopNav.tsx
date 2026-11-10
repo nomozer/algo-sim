@@ -374,9 +374,9 @@ interface Item {
  * Nhất quán choทั้ง khách (Guest), học sinh (Student) và giáo viên (Teacher).
  */
 const AXO_V27_NAV_ITEMS: Item[] = [
-  { view: "home", label: "Trang chủ", icon: <IconHome size={14} /> },
-  { view: "library", label: "Thư viện", icon: <IconLibrary size={14} /> },
-  { view: "history", label: "Lịch sử", icon: <IconHistory size={14} /> },
+  { view: "home", label: "Trang chủ", icon: <IconHome size={15} /> },
+  { view: "library", label: "Thư viện", icon: <IconLibrary size={15} /> },
+  { view: "history", label: "Lịch sử", icon: <IconHistory size={15} /> },
 ];
 
 /** W05 — tên trang đích của nút quay lại trong xưởng 3D. Khoá `AppView` vào, tiếng Việt ra. */
@@ -422,7 +422,7 @@ export function TopNav() {
           title="Về trang chủ Axo"
           aria-label="Về trang chủ Axo"
         >
-          <IconAxoLogo size={22} />
+          <IconAxoLogo size={26} />
           <span className="nav-wordmark-text">Axo</span>
         </button>
       </div>
