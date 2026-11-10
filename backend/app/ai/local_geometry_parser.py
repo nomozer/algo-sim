@@ -174,9 +174,20 @@ def _find_verbatim_span(raw_text: str, start_hint: int, end_hint: int) -> str:
 
 # ── Stage 1 & 2: Normalization and Tokenization ──────────────────────────────────────────────────────────────────────
 
+_TRAILING_MC_OPTIONS_RE = re.compile(
+    r"(?P<stem_end>(?:(?<!\w)(?i:bằng|là)|[.?:)])\s*:?)"
+    r"\s+(?<![\w'])A\s*[.)]\s*\S.*?"
+    r"\s+(?<![\w'])B\s*[.)]\s*\S.*?"
+    r"\s+(?<![\w'])C\s*[.)]\s*\S.*?"
+    r"\s+(?<![\w'])D\s*[.)]\s*\S+\s*$",
+    re.DOTALL,
+)
+
+
 def normalize_problem_text(problem_text: str) -> str:
-    """Unicode NFC normalization preserving character alignment for standard Vietnamese text."""
-    return unicodedata.normalize("NFC", problem_text or "").replace("\u2032", "'")
+    """Unicode NFC normalization preserving character alignment for standard Vietnamese text, stripping trailing MC options."""
+    s = unicodedata.normalize("NFC", problem_text or "").replace("\u2032", "'")
+    return _TRAILING_MC_OPTIONS_RE.sub(r"\g<stem_end>", s).strip() if _TRAILING_MC_OPTIONS_RE.search(s) else s
 
 
 def tokenize_problem_text(text: str) -> list[GeoToken]:
@@ -338,6 +349,7 @@ class _AstBuilder:
         self._last_section_id: str | None = None
         self._sphere_by_notation: dict[str, str] = {}
         self._sphere_center_map: dict[str, str] = {}
+        self._area_symbol_map: dict[str, list[str]] = {}
 
     def _alloc_desc_id(self, kind: str) -> str:
         prefix = {
@@ -453,9 +465,9 @@ class _AstBuilder:
 
 
 def _detect_length_unit(raw_text: str) -> str:
-    # Check if symbolic unit `a` is used in length assignments (e.g. `cạnh a`, `= a`, `= 2a`, `= a√3`, `= √3a`)
+    # Check if symbolic unit `a` is used in length assignments (e.g. `cạnh a`, `= a`, `= 2a`, `= a√3`, `= √3a`, `chiều cao bằng a`)
     if re.search(
-        r"(?:\bcạnh(?:\s+đáy|\s+bên)?(?:\s+bằng)?\s+|\=\s*)(?:\d*a(?:√\d+)?(?:/\d+)?|\d*√\d+a(?:/\d+)?)\b",
+        r"(?:\bcạnh(?:\s+đáy|\s+bên)?(?:\s+bằng)?\s+|\b(?:chiều|đường)\s+cao(?:\s+bằng)?\s+|\=\s*)(?:\d*a(?:√\d+)?(?:/\d+)?|\d*√\d+a(?:/\d+)?)\b",
         raw_text,
     ):
         return "a"
@@ -938,7 +950,7 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
 
     # 1f. Prism (right, regular, or oblique): "Cho (hình |khối )?lăng trụ (đứng|đều|xiên)? ABC.A'B'C'"
     m_prism = re.search(
-        rf"(?P<lead>(?:Cho|Vẽ|Mô\s+phỏng)\s+)?(?:(?:hình|khối)\s+)?lăng\s+trụ(?:\s+(?P<mod>đứng|đều|tam\s+giác\s+đều|tứ\s+giác\s+đều|xiên))?\s+(?P<not>{_PTS3_6}\.{_PTS3_6})",
+        rf"(?P<lead>(?:Cho|Vẽ|Mô\s+phỏng)\s+)?(?:(?:hình|khối)\s+)?lăng\s+trụ(?:\s+(?P<mod>đứng|đều|tam\s+giác\s+đều|tứ\s+giác\s+đều|lục\s+giác\s+đều|xiên))?\s+(?P<not>{_PTS3_6}\.{_PTS3_6})",
         ctext_norm,
         re.IGNORECASE | re.UNICODE,
     )
@@ -958,6 +970,42 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
         if "đứng" in mod or "đều" in mod:
             builder.premises.append(
                 {"kind": "right_prism", "args": {"base": base_pts, "top": top_pts}, "quote": q_prism, "solid_id": sid}
+            )
+        if "đều" in mod:
+            m_pside = re.search(
+                rf"(?:có\s+)?cạnh(?:\s+đáy)?\s+(?:bằng\s+|=\s*)?(?P<val>{_VAL})",
+                ctext_norm[m_prism.end() :],
+                re.IGNORECASE | re.UNICODE,
+            )
+            if m_pside:
+                q_pside = _clean_quote(raw, ca + m_prism.start(), ca + m_prism.end() + m_pside.end())
+                builder.premises.append(
+                    {
+                        "kind": "regular_polygon",
+                        "args": {"vertices": base_pts, "side": _canon_val(m_pside.group("val"))},
+                        "quote": q_pside,
+                        "solid_id": sid,
+                    }
+                )
+            else:
+                builder.premises.append(
+                    {"kind": "regular_polygon", "args": {"vertices": base_pts}, "quote": q_prism, "solid_id": sid}
+                )
+        m_ph = re.search(
+            rf"(?:chiều|đường)\s+cao(?:\s+của\s+(?:hình|khối)\s+lăng\s+trụ(?:\s+{re.escape(not_str)})?)?\s*(?:bằng\s+|là\s+|=\s*)(?P<h>{_VAL})",
+            ctext_norm,
+            re.IGNORECASE | re.UNICODE,
+        )
+        if m_ph:
+            end_ph = max(m_ph.end(), (m_prism.end() + m_pside.end()) if ("đều" in mod and m_pside) else m_ph.end())
+            q_ph = _clean_quote(raw, ca + m_prism.start(), ca + end_ph)
+            builder.premises.append(
+                {
+                    "kind": "height",
+                    "args": {"solid": sid, "value": _canon_val(m_ph.group("h"))},
+                    "quote": q_ph,
+                    "solid_id": sid,
+                }
             )
         builder._primary_solid_id = sid
         builder._primary_solid_type = "prism"
@@ -1204,14 +1252,14 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
                 m_sub = re.search(rf"tam\s+giác\s+{re.escape(m_rt.group('verts2'))}\b", m_rt.group("full"), re.IGNORECASE)
                 if m_sub:
                     s_off += m_sub.start()
-            elif not explicit_v and clause_solid_not_span is not None and clause_solid_not_span[1] <= s_off:
+            elif clause_solid_not_span is not None and clause_solid_not_span[1] <= s_off:
                 if re.fullmatch(
                     r"\s*(?:[.,]\s*)?(?:có\s+)?(?:chung\s+)?(?:mặt\s+)?",
                     ctext_norm[clause_solid_not_span[1] : s_off],
                     re.IGNORECASE,
                 ):
                     s_off = clause_solid_not_span[0]
-            elif ctext_norm[s_off : s_off + 3].lower() == "có " and "là tam giác" in m_rt.group("full").lower():
+            elif ctext_norm[s_off : s_off + 3].lower() == "có ":
                 s_off += 3
             q_rt = _clean_quote(raw, ca + s_off, ca + m_rt.end("full"))
             builder.premises.append(
@@ -1290,7 +1338,7 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
 
     # 2f. FAMILY-1 Isosceles trapezoid & general parallel-base trapezoid
     for m_trap in re.finditer(
-        rf"(?P<full>đáy(?:\s+(?P<verts>{_PTS4}))?\s+là\s+hình\s+thang(?:\s+(?P<iso>cân))?\s+(?:(?:với|có)\s+hai\s+đáy(?:\s+là)?\s+(?P<ba1>{_PTS2})\s*(?:và|,\s*)\s*(?P<bb1>{_PTS2})|(?:có\s+)?(?P<ba2>{_PTS2})\s*(?:song\s+song(?:\s+với)?|//|∥)\s*(?P<bb2>{_PTS2})))(?![\w'])",
+        rf"(?P<full>đáy(?:\s+(?P<verts>{_PTS4}))?\s+là\s+hình\s+thang(?:\s+(?P<iso>cân))?\s+(?:(?:với|có)\s+hai\s+đáy(?:\s+là)?\s+(?P<ba1>{_PTS2})\s*(?:và|,\s*)\s*(?P<bb1>{_PTS2})|(?:(?:với|có)\s+)?(?P<ba2>{_PTS2})\s*(?:song\s+song(?:\s+với)?|//|∥)\s*(?P<bb2>{_PTS2})))(?![\w'])",
         ctext_norm,
         re.IGNORECASE | re.UNICODE,
     ):
@@ -1387,7 +1435,7 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
             mapped_fact = True
 
     for m_para in re.finditer(
-        rf"(?P<full>đáy(?:\s+(?P<verts>{_PTS4}))?\s+là\s+hình\s+bình\s+hành)",
+        rf"(?P<full>đáy(?:\s+(?P<verts>{_PTS4}))?\s+là\s+hình\s+bình\s+hành(?:\s+(?:có\s+)?tâm\s+(?:là\s+)?(?P<ctr>{_PT}))?)(?![\w'])",
         ctext_norm,
         re.IGNORECASE | re.UNICODE,
     ):
@@ -1408,6 +1456,34 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
             q_pa = _clean_quote(raw, ca + pa_start, ca + m_para.end("full"))
             builder.premises.append(
                 {"kind": "parallelogram", "args": {"vertices": verts}, "quote": q_pa, "solid_id": builder._primary_solid_id}
+            )
+            mapped_fact = True
+
+    # 2i. Named polygon / face area premise: "diện tích của hình vuông ABB'A' bằng 12(cm²)" or "hình vuông ABB'A' có diện tích bằng 12"
+    for m_parea in re.finditer(
+        rf"(?P<full>diện\s+tích(?:\s+của)?\s+(?:(?P<shape>hình\s+vuông|hình\s+chữ\s+nhật|tam\s+giác\s+đều|tam\s+giác|tứ\s+giác|mặt\s+bên|mặt\s+đáy|đáy)\s+)?(?P<poly>{_PTS3_6})\s*(?:bằng|là|=)\s*(?P<val>{_VAL})(?:\s*\(\s*(?:cm|dm|mm|m)(?:2|\^2|²)\s*\)|\s*(?:cm|dm|mm|m)(?:2|\^2|²))?"
+        rf"|(?P<shape2>hình\s+vuông|hình\s+chữ\s+nhật|tam\s+giác\s+đều|tam\s+giác|tứ\s+giác|mặt\s+bên|mặt\s+đáy)\s+(?P<poly2>{_PTS3_6})\s+có\s+diện\s+tích(?:\s+(?:bằng|là|=))?\s*(?P<val2>{_VAL})(?:\s*\(\s*(?:cm|dm|mm|m)(?:2|\^2|²)\s*\)|\s*(?:cm|dm|mm|m)(?:2|\^2|²))?)",
+        ctext_norm,
+        re.IGNORECASE | re.UNICODE,
+    ):
+        poly_pts = _split_pts(m_parea.group("poly") or m_parea.group("poly2"))
+        if len(poly_pts) >= 3:
+            sh_raw = re.sub(r"\s+", " ", ((m_parea.group("shape") or m_parea.group("shape2")) or "").strip().lower())
+            sh_code = {
+                "hình vuông": "square",
+                "hình chữ nhật": "rectangle",
+                "tam giác đều": "equilateral_triangle",
+                "tam giác": "triangle",
+            }.get(sh_raw, "polygon")
+            val_pa = m_parea.group("val") or m_parea.group("val2")
+            q_parea = _clean_quote(raw, ca + m_parea.start("full"), ca + m_parea.end("full"))
+            builder.premises.append(
+                {
+                    "kind": "face_area",
+                    "args": {"polygon": poly_pts, "value": _canon_val(val_pa), "shape": sh_code},
+                    "quote": q_parea,
+                    "solid_id": builder._primary_solid_id,
+                }
             )
             mapped_fact = True
 
@@ -1729,7 +1805,61 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
             angle_spans.append((m_vang.start("full"), m_vang.end("full")))
             mapped_fact = True
 
+    # Single-letter hat vertex angle on a triangle base: `Â = 60°`, `Â = 60°`, `\hat{A} = 60°`, `góc A = 60°`
+    for m_vhat in re.finditer(
+        rf"(?P<full>(?:\\hat\s*\{{\s*(?P<vh1>{_PT})\s*\}}|(?<![\w'.])(?P<vh2>(?:[\u00C2\u00CA\u00D4][0-9]*'?|{_PT}(?:\u0302|\s*\^)))|góc\s+(?P<vh3>{_PT}))(?![\w'])\s*(?:bằng|là|=)\s*(?P<aval>\d+(?:/\d+)?)\s*(?:°|độ\b))",
+        ctext_norm,
+        re.IGNORECASE | re.UNICODE,
+    ):
+        if any(a <= m_vhat.start("full") < b for a, b in angle_spans):
+            continue
+        raw_vh = m_vhat.group("vh1") or m_vhat.group("vh2") or m_vhat.group("vh3") or ""
+        v_clean = unicodedata.normalize("NFD", raw_vh).replace("\u0302", "").replace("^", "").strip().upper()
+        if len(builder._base_vertices) == 3 and v_clean in builder._base_vertices:
+            rays = [p for p in builder._base_vertices if p != v_clean]
+            q_vhat = _clean_quote(raw, ca + m_vhat.start("full"), ca + m_vhat.end("full"))
+            builder.premises.append(
+                {
+                    "kind": "vertex_angle",
+                    "args": {
+                        "vertex": v_clean,
+                        "rays": rays,
+                        "value": m_vhat.group("aval"),
+                        "unit": "deg",
+                    },
+                    "quote": q_vhat,
+                    "solid_id": builder._primary_solid_id,
+                }
+            )
+            angle_spans.append((m_vhat.start("full"), m_vhat.end("full")))
+            mapped_fact = True
+
     # ── 4. Segment Length Assignments (single and chained `SA = SB = SC = 13/2`) ────────────────────────────────
+    # 4a-0. Segment length ratio (`AD = 2BC`) outside `sao cho` / `thỏa mãn`
+    for m_srat in re.finditer(
+        rf"(?P<full>(?:(?:độ\s+dài|cạnh|đoạn(?:\s+thẳng)?)\s+)?(?<![\w'.])(?P<s1>{_PTS2})\s*=\s*(?P<rat>\d+(?:\s*/\s*\d+)?)\s*(?P<s2>{_PTS2}))(?![\w'])",
+        ctext_norm,
+        re.IGNORECASE | re.UNICODE,
+    ):
+        pref_sr = ctext_norm[: m_srat.start("full")].rstrip()
+        if re.search(r"(?:sao\s+cho|thỏa\s+mãn)$", pref_sr, re.IGNORECASE):
+            continue
+        s1_pts, s2_pts = _split_pts(m_srat.group("s1")), _split_pts(m_srat.group("s2"))
+        if len(s1_pts) == 2 and len(s2_pts) == 2 and set(s1_pts) != set(s2_pts):
+            q_sr = _clean_quote(raw, ca + m_srat.start("full"), ca + m_srat.end("full"))
+            builder.premises.append(
+                {
+                    "kind": "segment_ratio",
+                    "args": {
+                        "segment_a": s1_pts,
+                        "segment_b": s2_pts,
+                        "ratio": re.sub(r"\s+", "", m_srat.group("rat")),
+                    },
+                    "quote": q_sr,
+                    "solid_id": builder._primary_solid_id,
+                }
+            )
+            mapped_fact = True
     for m_chain_eq in re.finditer(
         rf"(?P<full>(?<![\w'.])(?P<s1>{_PTS2})\s*=\s*(?P<s2>{_PTS2})(?:\s*=\s*(?P<s3>{_PTS2}))?\s*=\s*(?P<val>{_VAL}))(?![\w'])",
         ctext_norm,
@@ -1968,14 +2098,18 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
         )
         mapped_fact = True
 
-    # 5g. Line-plane intersection point: "(Gọi )?I là giao điểm của AC' và mặt phẳng (A'BD)"
+    # 5g. Line-plane intersection point: "(Gọi )?I là giao điểm của AC' và mặt phẳng (A'BD)" or "Mặt phẳng (SAD) và đường thẳng ME cắt nhau tại I"
     for m_ilp in re.finditer(
-        rf"(?P<full>(?:Gọi\s+)?(?<![\w'])(?P<pt>{_PT})\s+là\s+giao\s+điểm(?:\s+của)?\s+(?:đường\s+thẳng\s+|cạnh\s+|đường\s+chéo\s+)?(?P<line>{_PTS2})\s+(?:và|với)\s+(?:mặt\s+phẳng\s+|mp\s*)?\((?P<plane>{_PTS3_6})\))(?![\w'])",
+        rf"(?P<full>(?:Gọi\s+)?(?<![\w'])(?P<pt>{_PT})\s+là\s+giao\s+điểm(?:\s+của)?\s+(?:đường\s+thẳng\s+|cạnh\s+|đường\s+chéo\s+)?(?P<line>{_PTS2})\s+(?:và|với)\s+(?:mặt\s+phẳng\s+|mp\s*)?\((?P<plane>{_PTS3_6})\)"
+        rf"|(?:(?:mặt\s+phẳng\s+|mp\s*)?\((?P<pl2>{_PTS3_6})\)\s+(?:và|với)\s+(?:đường\s+thẳng\s+|cạnh\s+)?(?P<ln2>{_PTS2})\s+cắt\s+nhau"
+        rf"|(?:đường\s+thẳng\s+|cạnh\s+)?(?P<ln3>{_PTS2})\s+(?:(?:và|với)\s+(?:mặt\s+phẳng\s+|mp\s*)?\((?P<pl3>{_PTS3_6})\)\s+cắt\s+nhau|cắt\s+(?:mặt\s+phẳng\s+|mp\s*)?\((?P<pl4>{_PTS3_6})\)))\s+(?:tại|ở)\s+(?:(?:điểm|giao\s+điểm)\s+)?(?P<pt2>{_PT}))(?![\w'])",
         ctext_norm,
         re.IGNORECASE | re.UNICODE,
     ):
-        pt_i = m_ilp.group("pt")
-        if not pt_i[0].isupper():
+        pt_i = m_ilp.group("pt") or m_ilp.group("pt2")
+        ln_i = m_ilp.group("line") or m_ilp.group("ln2") or m_ilp.group("ln3")
+        pl_i = m_ilp.group("plane") or m_ilp.group("pl2") or m_ilp.group("pl3") or m_ilp.group("pl4")
+        if not pt_i or not pt_i[0].isupper() or not ln_i or not pl_i:
             continue
         q_ilp = _clean_quote(raw, ca + m_ilp.start("full"), ca + m_ilp.end("full"))
         builder.premises.append(
@@ -1983,13 +2117,24 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
                 "kind": "intersect_line_plane",
                 "args": {
                     "point": pt_i,
-                    "line": _split_pts(m_ilp.group("line")),
-                    "plane": _split_pts(m_ilp.group("plane")),
+                    "line": _split_pts(ln_i),
+                    "plane": _split_pts(pl_i),
                 },
                 "quote": q_ilp,
                 "solid_id": builder._primary_solid_id,
             }
         )
+        mapped_fact = True
+
+    # 5g-2. Area symbol definition (`Gọi S1; S2 lần lượt là diện tích tam giác SMI và tứ giác BCEM`)
+    m_area_sym = re.search(
+        rf"(?P<full>(?:Gọi|Kí\s+hiệu|Đặt)\s+(?P<s1>S\d+)\s*[,;]\s*(?P<s2>S\d+)\s+lần\s+lượt\s+là\s+diện\s+tích(?:\s+của)?\s+(?:(?:tam\s+giác|tứ\s+giác|đa\s+giác|hình\s+\w+)\s+)?(?P<p1>{_PTS3_6})\s+và\s+(?:diện\s+tích(?:\s+của)?\s+)?(?:(?:tam\s+giác|tứ\s+giác|đa\s+giác|hình\s+\w+)\s+)?(?P<p2>{_PTS3_6}))(?![\w'])",
+        ctext_norm,
+        re.IGNORECASE | re.UNICODE,
+    )
+    if m_area_sym:
+        builder._area_symbol_map[m_area_sym.group("s1").upper()] = _split_pts(m_area_sym.group("p1"))
+        builder._area_symbol_map[m_area_sym.group("s2").upper()] = _split_pts(m_area_sym.group("p2"))
         mapped_fact = True
 
     # 5h. Line-line intersection point: "(Gọi )?O là giao điểm của AC và BD"
@@ -2179,7 +2324,7 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
                 builder._last_section_id = sec_id
                 mapped_fact = True
 
-    # Follow-up cut clause after `;`: e.g. "(α) cắt SA, SB, SC, SD lần lượt tại M, N, P, Q"
+    # Follow-up cut clause after `;` or in next sentence: e.g. "(α) cắt SA, SB, SC, SD lần lượt tại M, N, P, Q" or "Gọi K là giao điểm của BC với (P)"
     m_followup_cuts = re.match(
         rf"^\s*(?:Mặt\s+phẳng\s+)?\((?P<pname>{_PT}|[α-ω]'?)\)\s+cắt\s+(?P<edges>{_PTS2}(?:\s*(?:,\s*|\s+và\s+){_PTS2})*)(?:\s+(?:lần\s+lượt\s+)?tại\s+(?P<pts>{_PT}(?:\s*(?:,\s*|\s+và\s+){_PT})*))?\s*$",
         ctext_norm,
@@ -2202,6 +2347,59 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
             )
         mapped_fact = True
 
+    # 6c-2. Plane through point parallel to two lines (`plane_kind="through_point_parallel_lines"`):
+    # "Mặt phẳng (P) qua I và song song với hai đường thẳng SA, SC"
+    m_sec_two_lines = re.search(
+        rf"(?:(?:Gọi\s+\((?P<p1>{_PT}|[α-ω]'?)\)\s+là\s+mặt\s+phẳng|Mặt\s+phẳng\s+\((?P<p2>{_PT}|[α-ω]'?)\))\s+(?:đi\s+qua|qua|chứa)\s+(?P<thru>{_PT})|Qua\s+(?P<thru2>{_PT})\s+(?:kẻ|dựng)\s+mặt\s+phẳng\s+\((?P<p3>{_PT}|[α-ω]'?)\))(?:\s*,\s*(?:và\s+)?|\s+và\s+|\s+)song\s+song\s+với\s+(?:hai\s+đường\s+thẳng\s+|hai\s+cạnh\s+|đường\s+thẳng\s+|cạnh\s+)?(?P<l1>{_PTS2})\s*(?:,\s*|\s+và\s+)\s*(?:đường\s+thẳng\s+|cạnh\s+)?(?P<l2>{_PTS2})(?![\w'])",
+        ctext_norm,
+        re.IGNORECASE | re.UNICODE,
+    )
+    if m_sec_two_lines:
+        pname = m_sec_two_lines.group("p1") or m_sec_two_lines.group("p2") or m_sec_two_lines.group("p3")
+        thru_pt = (m_sec_two_lines.group("thru") or m_sec_two_lines.group("thru2")).strip()
+        q_stl = _clean_quote(raw, ca + m_sec_two_lines.start(), ca + m_sec_two_lines.end())
+        sec_id = "sec"
+        builder.derived_sections.append(
+            {
+                "section_id": sec_id,
+                "plane_name": pname,
+                "target_solid_id": builder._primary_solid_id,
+                "plane_kind": "through_point_parallel_two_lines",
+                "through_point": thru_pt,
+                "parallel_line_a": _split_pts(m_sec_two_lines.group("l1")),
+                "parallel_line_b": _split_pts(m_sec_two_lines.group("l2")),
+                "stated_intersections": [],
+                "quote": q_stl,
+                "_start_offset": ca + m_sec_two_lines.start(),
+            }
+        )
+        builder._section_by_plane_name[pname] = sec_id
+        builder._last_section_id = sec_id
+        mapped_fact = True
+
+    # Follow-up intersection of an edge with a named derived plane: "Gọi K là giao điểm của BC với (P)" or "... của (P) và BC"
+    m_named_plane_cut = re.search(
+        rf"(?P<full>(?:(?:Gọi|Cho|Lấy)\s+)?(?<![\w'])(?P<pt>{_PT})\s+là\s+giao\s+điểm(?:\s+của)?\s+(?:(?:(?:đường\s+thẳng|cạnh|đoạn(?:\s+thẳng)?)\s+)?(?P<edge>{_PTS2})\s+(?:và|với)\s+(?:mặt\s+phẳng\s+|mp\s*)?\((?P<pname>{_PT}|[α-ω]'?)\)|(?:mặt\s+phẳng\s+|mp\s*)?\((?P<pname2>{_PT}|[α-ω]'?)\)\s+(?:và|với)\s+(?:(?:đường\s+thẳng|cạnh|đoạn(?:\s+thẳng)?)\s+)?(?P<edge2>{_PTS2})))(?![\w'])",
+        ctext_norm,
+        re.IGNORECASE | re.UNICODE,
+    )
+    if m_named_plane_cut and builder.derived_sections:
+        pname_c = m_named_plane_cut.group("pname") or m_named_plane_cut.group("pname2")
+        edge_c = m_named_plane_cut.group("edge") or m_named_plane_cut.group("edge2")
+        sec_match = next((s for s in reversed(builder.derived_sections) if s.get("plane_name") == pname_c), None)
+        if sec_match is not None:
+            start_off = sec_match.get("_start_offset", ca)
+            sec_match["quote"] = _clean_quote(raw, start_off, ca + m_named_plane_cut.end("full"))
+            q_npc = _clean_quote(raw, ca + m_named_plane_cut.start("full"), ca + m_named_plane_cut.end("full"))
+            sec_match["stated_intersections"].append(
+                {
+                    "edge": _split_pts(edge_c),
+                    "point": m_named_plane_cut.group("pt"),
+                    "quote": q_npc,
+                }
+            )
+            mapped_fact = True
+
     # 6d. Constrained plane (`plane_kind="constrained"`):
     # - "Mặt phẳng (Q) đi qua M, N, P"
     # - "Mặt phẳng (P) đi qua A, B(, C)? và vuông góc với (SCD)"
@@ -2211,7 +2409,7 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
         ctext_norm,
         re.IGNORECASE | re.UNICODE,
     )
-    if m_sec_con and not m_sec_par_or_perp:
+    if m_sec_con and not m_sec_par_or_perp and not m_sec_two_lines:
         pname = m_sec_con.group("p1") or m_sec_con.group("p2")
         pts_list = _split_pts(m_sec_con.group("pts"))
         constraints: list[dict[str, Any]] = [{"kind": "contains_points", "operands": pts_list}]
@@ -2501,11 +2699,12 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
                 continue
         else:
             sid_v = builder._primary_solid_id
-        # Use full clause quote if multiple goals share the sentence, else exact match quote
+        # Use full clause quote if multiple goals share the sentence or if noun-phrase question (no leading 'tính'), else exact match quote
         is_multi_in_clause = bool(re.search(r"\bvà\b|,.*tính", ctext_norm, re.IGNORECASE)) and not bool(m_sim_lead)
+        is_noun_phrase = not m_vol.group("full").lower().startswith("tính")
         q_v = (
             _clean_quote(raw, ca, cb)
-            if is_multi_in_clause
+            if (is_multi_in_clause or is_noun_phrase)
             else _clean_quote(raw, ca + m_vol.start("full"), ca + m_vol.end("full"))
         )
         builder.math_goals.append(
@@ -2711,16 +2910,21 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
                     mapped_goal = True
 
     # - Distance between two lines or line and plane:
-    # "Tính khoảng cách giữa hai đường thẳng AB và SC"
-    # "Tính khoảng cách giữa đường thẳng AD và mặt phẳng (SBC)"
-    # "Tính khoảng cách giữa đường thẳng nối M với trung điểm của SC và mặt phẳng (ABCD)"
+    # "(Tính )?khoảng cách giữa hai đường thẳng AB và SC"
+    # "(Tính )?khoảng cách giữa đường thẳng AD và mặt phẳng (SBC)"
+    # "(Tính )?khoảng cách giữa đường thẳng nối M với trung điểm của SC và mặt phẳng (ABCD)"
     m_dist_between = re.search(
-        rf"(?P<full>Tính\s+khoảng\s+cách\s+giữa\s+(?:hai\s+đường\s+thẳng\s+(?P<l1>{_PTS2})\s+và\s+(?P<l2>{_PTS2})|đường\s+thẳng\s+nối\s+(?P<la>{_PT})\s+với\s+(?P<lb>.+?)\s+và\s+(?:mặt\s+phẳng\s+|mp\s*)?\((?P<pl1>{_PTS3_6})\)|(?:đường\s+thẳng\s+)?(?P<ln>{_PTS2})\s+và\s+(?:mặt\s+phẳng\s+|mp\s*)?\((?P<pl2>{_PTS3_6})\)))",
+        rf"(?P<full>(?:Tính\s+)?khoảng\s+cách\s+giữa\s+(?:hai\s+đường\s+thẳng\s+(?P<l1>{_PTS2})\s+và\s+(?P<l2>{_PTS2})|đường\s+thẳng\s+nối\s+(?P<la>{_PT})\s+với\s+(?P<lb>.+?)\s+và\s+(?:mặt\s+phẳng\s+|mp\s*)?\((?P<pl1>{_PTS3_6})\)|(?:đường\s+thẳng\s+)?(?P<ln>{_PTS2})\s+và\s+(?:mặt\s+phẳng\s+|mp\s*)?\((?P<pl2>{_PTS3_6})\)))",
         ctext_norm,
         re.IGNORECASE | re.UNICODE,
     )
     if m_dist_between:
-        q_db = _clean_quote(raw, ca + m_dist_between.start("full"), ca + m_dist_between.end("full"))
+        is_multi_db = bool(re.search(r"\bvà\b|,.*tính", ctext_norm[: m_dist_between.start("full")], re.IGNORECASE)) and not bool(m_sim_lead)
+        q_db = (
+            _clean_quote(raw, ca, cb)
+            if (is_multi_db or not m_dist_between.group("full").lower().startswith("tính"))
+            else _clean_quote(raw, ca + m_dist_between.start("full"), ca + m_dist_between.end("full"))
+        )
         if m_dist_between.group("l1") and m_dist_between.group("l2"):
             builder.math_goals.append(
                 {
@@ -2767,6 +2971,59 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
                     },
                     "solid_id": builder._primary_solid_id,
                     "quote": q_db,
+                }
+            )
+            mapped_goal = True
+
+    # 7i-2. Affine Length Ratio & Polygon Area Ratio goals (`ext04`, `ext05`):
+    # - "(Khi đó )?(tính|tìm) tỉ số KC/KB"
+    m_len_ratio = re.search(
+        rf"(?P<full>(?:Khi\s+đó\s+|Từ\s+đó\s+)?(?:(?:tính|tìm|xác\s+định)\s+)?(?:tỉ|tỷ)\s+số(?:\s+độ\s+dài)?\s+(?P<n>{_PTS2})\s*/\s*(?P<d>{_PTS2}))(?![\w'])",
+        ctext_norm,
+        re.IGNORECASE | re.UNICODE,
+    )
+    if m_len_ratio:
+        q_lr = _clean_quote(raw, ca + m_len_ratio.start("full"), ca + m_len_ratio.end("full"))
+        builder.math_goals.append(
+            {
+                "goal_id": f"q{len(builder.math_goals) + 1}",
+                "kind": "length_ratio",
+                "numerator_segment": _split_pts(m_len_ratio.group("n")),
+                "denominator_segment": _split_pts(m_len_ratio.group("d")),
+                "solid_id": builder._primary_solid_id,
+                "quote": q_lr,
+            }
+        )
+        mapped_goal = True
+
+    # - "(Tính )?S1/S2" or "Tính tỉ số diện tích tam giác SMI và tứ giác BCEM"
+    m_area_ratio = re.search(
+        rf"(?P<full>(?:Khi\s+đó\s+|Từ\s+đó\s+)?(?:(?:tính|tìm|xác\s+định)\s+)(?:(?:(?P<tiso>(?:tỉ|tỷ)\s+số(?:\s+diện\s+tích)?)\s+)?(?P<sn>S\d+)\s*/\s*(?P<sd>S\d+)|(?:(?:tỉ|tỷ)\s+số(?:\s+diện\s+tích)?(?:\s+(?:của|giữa))?\s+)?S\s*(?:_|\()?\s*(?P<n1>{_PTS3_6})\s*\)?\s*/\s*S\s*(?:_|\()?\s*(?P<d1>{_PTS3_6})\s*\)?|(?:tỉ|tỷ)\s+số\s+diện\s+tích(?:\s+(?:của|giữa))?\s+(?:(?:tam\s+giác|tứ\s+giác|đa\s+giác|hình\s+\w+)\s+)?(?P<n2>{_PTS3_6})\s+(?:và|với|trên|so\s+với)\s+(?:diện\s+tích(?:\s+của)?\s+)?(?:(?:tam\s+giác|tứ\s+giác|đa\s+giác|hình\s+\w+)\s+)?(?P<d2>{_PTS3_6})))(?![\w'])",
+        ctext_norm,
+        re.IGNORECASE | re.UNICODE,
+    )
+    if m_area_ratio:
+        poly_n: list[str] | None = None
+        poly_d: list[str] | None = None
+        if m_area_ratio.group("sn") and m_area_ratio.group("sd"):
+            poly_n = builder._area_symbol_map.get(m_area_ratio.group("sn").upper())
+            poly_d = builder._area_symbol_map.get(m_area_ratio.group("sd").upper())
+        elif m_area_ratio.group("n1") and m_area_ratio.group("d1"):
+            poly_n = _split_pts(m_area_ratio.group("n1"))
+            poly_d = _split_pts(m_area_ratio.group("d1"))
+        elif m_area_ratio.group("n2") and m_area_ratio.group("d2"):
+            poly_n = _split_pts(m_area_ratio.group("n2"))
+            poly_d = _split_pts(m_area_ratio.group("d2"))
+        if poly_n and poly_d:
+            q_ar = _clean_quote(raw, ca + m_area_ratio.start("full"), ca + m_area_ratio.end("full"))
+            builder.math_goals.append(
+                {
+                    "goal_id": f"q{len(builder.math_goals) + 1}",
+                    "kind": "area_ratio",
+                    "numerator_polygon": poly_n,
+                    "denominator_polygon": poly_d,
+                    "solid_id": builder._primary_solid_id,
+                    "quote": q_ar,
                 }
             )
             mapped_goal = True
@@ -2823,6 +3080,11 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
     ):
         angle_spans.append((m_ang.start("full"), m_ang.end("full")))
         q_ang = _clean_quote(raw, ca + m_ang.start("full"), ca + m_ang.end("full"))
+        req_deg = bool(
+            re.search(r"\bsố\s+đo\b", m_ang.group("full"), re.IGNORECASE)
+            or re.search(r"\b(?:theo|bằng)\s+độ\b|\(\s*(?:đơn\s+vị(?:\s+góc)?\s*:?\s*)?độ\s*\)", ctext_norm[m_ang.end("full") :], re.IGNORECASE)
+        )
+        ang_extra: dict[str, Any] = {"requested_unit": "deg"} if req_deg else {}
         if m_ang.group("pl1") and m_ang.group("pl2"):
             builder.math_goals.append(
                 {
@@ -2835,6 +3097,7 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
                     },
                     "solid_id": builder._primary_solid_id,
                     "quote": q_ang,
+                    **ang_extra,
                 }
             )
             mapped_goal = True
@@ -2853,6 +3116,7 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
                             },
                             "solid_id": builder._primary_solid_id,
                             "quote": q_ang,
+                            **ang_extra,
                         }
                     )
                     mapped_goal = True
@@ -2868,6 +3132,7 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
                             },
                             "solid_id": builder._primary_solid_id,
                             "quote": q_ang,
+                            **ang_extra,
                         }
                     )
                     mapped_goal = True
@@ -2884,6 +3149,7 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
                         },
                         "solid_id": builder._primary_solid_id,
                         "quote": q_ang,
+                        **ang_extra,
                     }
                 )
                 mapped_goal = True
@@ -2899,9 +3165,21 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
                         },
                         "solid_id": builder._primary_solid_id,
                         "quote": q_ang,
+                        **ang_extra,
                     }
                 )
                 mapped_goal = True
+
+    # Attach rounding policy to goals emitted in this clause when the clause states a closed rounding directive
+    if mapped_goal and len(builder.math_goals) > pre_goals_len:
+        from ..simulation.geometry_functions.output_policy import parse_rounding_spec_from_text
+
+        rd_spec = parse_rounding_spec_from_text(ctext_norm)
+        if rd_spec is not None:
+            q_full_cl = _clean_quote(raw, ca, cb)
+            for g_item in builder.math_goals[pre_goals_len:]:
+                g_item["rounding"] = rd_spec
+                g_item["quote"] = q_full_cl
 
     # ── 7k. Intra-Sentence Integrity & Sub-Clause Coverage Guard ─────────────────────────────────────────────────
     if (mapped_fact or mapped_goal) and not builder.unresolved:
@@ -2914,11 +3192,13 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
         if "=" in ctext_norm:
             eq_spans: list[tuple[int, int]] = list(angle_spans)
             for eq_pat in (
-                rf"chiều\s+cao(?:\s+của\s+hình\s+chóp(?:\s+[A-Z0-9'.]+)?)?\s*=\s*{_VAL}",
+                rf"(?:chiều|đường)\s+cao(?:\s+của\s+(?:hình|khối)\s+(?:chóp|lăng\s+trụ)(?:\s+[A-Z0-9'.]+)?)?\s*=\s*{_VAL}",
                 rf"(?:đường|chiều)\s+cao\s+{_PTS2}\s+của\s+(?:tam\s+giác|[Δ∆△])\s*{_PTS3}\s*=\s*{_VAL}",
                 rf"đường\s+cao\s+{_PTS2}\s*=\s*{_VAL}",
                 rf"(?<![\w'.]){_PTS2}\s*=\s*{_PTS2}(?:\s*=\s*{_PTS2})?\s*=\s*{_VAL}(?![\w'])",
                 rf"(?:Đường\s+sinh\s+)?(?<![\w'.]){_PTS2}\s*=\s*{_VAL}(?![\s]*=)(?![\w'])",
+                rf"(?:(?:độ\s+dài|cạnh|đoạn(?:\s+thẳng)?)\s+)?(?<![\w'.]){_PTS2}\s*=\s*\d+(?:\s*/\s*\d+)?\s*{_PTS2}(?![\w'])",
+                rf"diện\s+tích(?:\s+của)?\s+(?:(?:hình\s+vuông|hình\s+chữ\s+nhật|tam\s+giác\s+đều|tam\s+giác|tứ\s+giác|mặt\s+bên|mặt\s+đáy|đáy)\s+)?{_PTS3_6}\s*=\s*{_VAL}",
                 rf"(?:sao\s+cho|thỏa\s+mãn)\s+{_PTS2}\s*=\s*\d+\s*/\s*\d+\s*{_PTS2}(?![\w'])",
             ):
                 for m_eq in re.finditer(eq_pat, ctext_norm, re.IGNORECASE | re.UNICODE):
@@ -3017,12 +3297,20 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
             pt_name = m_goi_pt.group("pt")
             if not pt_name[0].isupper():
                 continue
-            bound_in_clause = any(
-                p["args"].get("point") == pt_name or p["args"].get("image") == pt_name
-                for p in clause_premises
-            ) or any(
-                s.get("center") == pt_name or s.get("notation") == pt_name
-                for s in clause_solids
+            bound_in_clause = (
+                any(
+                    p["args"].get("point") == pt_name or p["args"].get("image") == pt_name
+                    for p in clause_premises
+                )
+                or any(
+                    s.get("center") == pt_name or s.get("notation") == pt_name
+                    for s in clause_solids
+                )
+                or any(
+                    st.get("point") == pt_name
+                    for sec_d in builder.derived_sections
+                    for st in (sec_d.get("stated_intersections") or ())
+                )
             )
             if not bound_in_clause:
                 mapped_fact = False
@@ -3275,7 +3563,11 @@ def _parse_geometry_problem_locally_uncached(problem_text: str, t0: float) -> Lo
             q for g in (*plan.goals, *plan.negated) if g.get("call") for q in g["call"]["source"]["quotes"]
         )
         calls_t = registry.doc_ke_hoach({"calls": plan.calls})
-        registry.kiem_nguon(calls_t, raw, tuple(plan.auxiliary), doc_quotes)
+        tok_pol = registry._CHINH_SACH_XUAT.set(bridged["bridge"].get("output_policies"))
+        try:
+            registry.kiem_nguon(calls_t, raw, tuple(plan.auxiliary), doc_quotes)
+        finally:
+            registry._CHINH_SACH_XUAT.reset(tok_pol)
     except TuChoi as exc:
         if exc.code in _EXTRACTION_FIDELITY_ERROR_CODES:
             return LocalParseResult(

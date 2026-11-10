@@ -100,6 +100,8 @@ FactKind = Annotated[
         "dihedral_angle",
         "line_line_angle",
         "vertex_angle",
+        "polygon_area",
+        "segment_ratio",
     ],
     WithJsonSchema({"enum": list(FLAT_FACT_KINDS), "type": "string"}),
 ]
@@ -162,7 +164,7 @@ class TypedFact(BaseModel):
     points_b: list[Label] | None = Field(None, description="toán hạng 2")
     line_ref: str | None = Field(None, min_length=1, description="ID dữ kiện intersection_line có nguồn, cho distance/projection; không phải nhãn điểm hay chương trình")
     # the provider's flat quantities, plus the bridge-only ones (ratio / residual; curved lateral area and radius, /19)
-    quantity: Annotated[Literal[*FLAT_QUANTITIES, "volume_ratio", "residual_volume", "lateral_area", "radius"],
+    quantity: Annotated[Literal[*FLAT_QUANTITIES, "volume_ratio", "residual_volume", "lateral_area", "radius", "length_ratio", "area_ratio"],
                         WithJsonSchema({"enum": list(FLAT_QUANTITIES), "type": "string"})] | None = None
     plane_relation: Literal["parallel", "perpendicular", "parallel_two_lines"] | None = Field(
         None, description="thiết diện / diện tích thiết diện với mặt cắt cho bằng QUAN HỆ: mặt qua `point`, song song "
@@ -288,6 +290,7 @@ _CAN = {"solid": ("solid", "solid_type"), "polygon_shape": ("points", "shape"), 
         "line_plane_angle": ("points_a", "points_b", "value"), "plane_plane_angle": ("points_a", "points_b", "value"),
         "dihedral_angle": ("point", "points", "at", "value"), "line_line_angle": ("points_a", "points_b", "value"),
         "vertex_angle": ("at", "points", "value"),
+        "polygon_area": ("points", "value"), "segment_ratio": ("points_a", "points_b", "value"),
         "question": ("quantity",), "unsupported": ("reason",)}
 _DA_GIAC_DEU = {"equilateral_triangle": 3, "square": 4, "regular_hexagon": 6, "regular_polygon": None}
 
@@ -718,7 +721,7 @@ def lap_ke_hoach(raw: Any, problem_text: str = "") -> KeHoach:
                 c['fn'] + json.dumps(c['args'],sort_keys=True,ensure_ascii=False))
         if khoa not in gon:
             gon[khoa] = c
-        elif c["fn"] not in ("segment_length", "height", "line_plane_angle", "plane_plane_angle", "dihedral_angle", "line_line_angle", "vertex_angle"):
+        elif c["fn"] not in ("segment_length", "height", "line_plane_angle", "plane_plane_angle", "dihedral_angle", "line_line_angle", "vertex_angle", "polygon_area", "segment_ratio"):
             gon[khoa]["source"]["quotes"] = list(dict.fromkeys(gon[khoa]["source"]["quotes"] + c["source"]["quotes"]))
     k.calls = list(gon.values())
     for c in k.calls:
@@ -790,7 +793,7 @@ def lap_ke_hoach(raw: Any, problem_text: str = "") -> KeHoach:
 _NON_POINT_ARG_KEYS = frozenset({
     "line_ref", "solid", "numerator_solid", "denominator_solid",
     "original_solid", "subtracted_solids", "value", "side", "reason", "right",
-    "circumscribes", "inscribed_in", "kind", "radius", "height", "unit", "ratio",
+    "circumscribes", "inscribed_in", "kind", "radius", "height", "unit", "ratio", "shape",
 })
 
 
@@ -1038,6 +1041,8 @@ def _sap_xep_phu_thuoc_loi_goi(k: KeHoach) -> None:
                 "vertex_angle",
                 "segment_length",
                 "equal_length",
+                "polygon_area",
+                "segment_ratio",
             )
             and pts
             and pts <= base_vertices
@@ -1064,6 +1069,8 @@ def _sap_xep_phu_thuoc_loi_goi(k: KeHoach) -> None:
                 "height",
                 "segment_length",
                 "equal_length",
+                "polygon_area",
+                "segment_ratio",
                 "parallel_lines",
                 "parallel_planes",
                 "line_plane_angle",
@@ -1273,6 +1280,18 @@ def _anh_xa(f: TypedFact, k: KeHoach, ten: dict, deu: dict, khoi_cua, phat) -> d
             f.id, "vertex_angle",
             {"vertex": f.at, "rays": f.points, "value": f.value, **({"unit": f.angle_unit} if f.angle_unit else {})},
             q, "vertex_angle",
+        )
+    if f.kind == "polygon_area":
+        return phat(
+            f.id, "polygon_area",
+            {"polygon": f.points, "value": f.value, **({"shape": f.shape} if f.shape in ("square", "equilateral_triangle", "rectangle") else {})},
+            q, "polygon_area",
+        )
+    if f.kind == "segment_ratio":
+        return phat(
+            f.id, "segment_ratio",
+            {"segment_a": f.points_a, "segment_b": f.points_b, "ratio": f.value},
+            q, "segment_ratio",
         )
     if f.kind == "question":
         return _cau_hoi(f, q, k, khoi_cua, phat)
@@ -1509,6 +1528,20 @@ def _cau_hoi(f: TypedFact, q: list[str], k: KeHoach, khoi_cua, phat) -> dict:
         kh_v = khoi_cua(f.solid, f)
         k.volume_asks[f.id] = kh_v.ten
         return phat(f.id, "ask_volume", {"solid": kh_v.ten}, q, "question(volume)")
+    if n == "length_ratio":
+        if f.role == "prove":
+            raise TuChoi("GOAL_CLAUSE_NOT_PREMISE", f"{f.id}: tỉ số độ dài là điều phải chứng minh, chưa hỗ trợ", (f.id,))
+        if f.negated:
+            raise TuChoi("NEGATED_CLAUSE", f"{f.id}: câu hỏi tỉ số độ dài bị phủ định", (f.id,))
+        return phat(f.id, "ask_length_ratio", {"numerator_segment": f.points_a, "denominator_segment": f.points_b}, q,
+                    "question(length_ratio)")
+    if n == "area_ratio":
+        if f.role == "prove":
+            raise TuChoi("GOAL_CLAUSE_NOT_PREMISE", f"{f.id}: tỉ số diện tích là điều phải chứng minh, chưa hỗ trợ", (f.id,))
+        if f.negated:
+            raise TuChoi("NEGATED_CLAUSE", f"{f.id}: câu hỏi tỉ số diện tích bị phủ định", (f.id,))
+        return phat(f.id, "ask_area_ratio", {"numerator_polygon": f.points_a, "denominator_polygon": f.points_b}, q,
+                    "question(area_ratio)")
     if n == "area":
         return phat(f.id, "ask_area", {"polygon": f.points}, q, "question(area)")
     if n == "length" or (n == "distance" and _toan_hang(f.points_a) == _toan_hang(f.points_b) == "point"):
@@ -2105,22 +2138,33 @@ def _dinh_cat_canh(f: TypedFact, k: KeHoach, phat, kh: _Khoi) -> dict:
     if d.get("cut") not in (None, {"edges": [list(e) for e in stated], "points": names}):
         raise TuChoi("AMBIGUOUS_FACT", f"{f.id}: hai cách nêu cạnh bị cắt cho cùng một mặt", (f.id,))
     d["cut"] = {"edges": [list(e) for e in stated], "points": names}
-    canh = _canh_ben(kh)
-    if lac := [e for e in stated if frozenset(e) not in {frozenset(x) for x in canh}]:
+    r = k.resolver
+    # D6 scope: a vertex is derived only where a closed boundary is REQUIRED — a derived solid stands on this section, or
+    # the author's declared boundary passes through that edge (to be verified, not trusted).
+    khep = bool(f.derive_cuts) and any(x.plane_ref == f.id for x in r.facts.values())
+    bien = {frozenset(x) for x in f.boundary_edges or ()} if f.derive_cuts else set()
+    canh_ben = _canh_ben(kh)
+    canh_day = (
+        [(kh.day[i], kh.day[(i + 1) % len(kh.day)]) for i in range(len(kh.day))]
+        + ([(kh.tren[i], kh.tren[(i + 1) % len(kh.tren)]) for i in range(len(kh.tren))] if kh.loai == "prism" else [])
+    )
+    tap_hop_le = {frozenset(x) for x in canh_ben} | ({frozenset(x) for x in canh_day} if (not khep and not bien) else set())
+    if lac := [e for e in stated if frozenset(e) not in tap_hop_le]:
         raise TuChoi("UNSUPPORTED_CAPABILITY", f"{f.id}: {[''.join(e) for e in lac]} không phải cạnh bên của {kh.ten}", (f.id,))
+    canh = list(canh_ben) + [
+        e for e in canh_day
+        if frozenset(e) in {frozenset(s) for s in stated} and frozenset(e) not in {frozenset(x) for x in canh_ben}
+    ]
     plane, p = [d["point"], *d["labels"]], d["point"]
     ten = dict(zip(map(frozenset, stated), names))
     cert = {"rule": DINH_CAT_CANH, "goal": f.id, "plane_goal": d["goal"], "point": p, "plane": plane, "solid": kh.ten,
             "stated_edges": [list(e) for e in stated], "stated_points": names, "vertices": [], "constructs": [],
             "labels": [], "quotes": list(d["quotes"]), "provenance": "DERIVED", "binding": "AUXILIARY"}
-    r = k.resolver
-    # D6 scope: a vertex is derived only where a closed boundary is REQUIRED — a derived solid stands on this section, or
-    # the author's declared boundary passes through that edge (to be verified, not trusted).
-    khep = bool(f.derive_cuts) and any(x.plane_ref == f.id for x in r.facts.values())
+    if any(frozenset(e) not in {frozenset(x) for x in canh_ben} for e in stated):
+        cert["base_edge_intersection"] = True
     if not stated and not khep and f.boundary_edges is None:
         return
-    bien = {frozenset(x) for x in f.boundary_edges or ()} if f.derive_cuts else set()
-    if f.derive_cuts:
+    if f.derive_cuts and not cert.get("base_edge_intersection"):
         cert["derive"] = True
     if f.boundary_edges is not None:
         cert["declared_boundary"] = [list(x) for x in f.boundary_edges]

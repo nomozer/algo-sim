@@ -164,7 +164,9 @@ def test_registry_dong_va_khai_bao_ham_khong_co_toa_do():
         "ask_curved_volume_ratio", "ask_curved_residual_volume",
         # unified-angle-geometry-verified-image-to-3d: planner-only, route A provider surface unchanged
         "line_plane_angle", "plane_plane_angle", "dihedral_angle", "line_line_angle", "vertex_angle",
-        "parallelogram", "rhombus", "trapezoid", "isosceles_trapezoid"}
+        "parallelogram", "rhombus", "trapezoid", "isosceles_trapezoid",
+        # formal-correctness-real-world-acceptance: planner-only, route A provider surface unchanged
+        "polygon_area", "segment_ratio", "ask_length_ratio", "ask_area_ratio"}
     txt = json.dumps(decl, ensure_ascii=False).lower()
     for cam in ("xyz", "coord", "toạ độ", "tọa độ", "\"x\"", "position"):
         assert cam not in txt, cam

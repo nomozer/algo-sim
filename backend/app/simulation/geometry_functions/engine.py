@@ -431,6 +431,9 @@ class _Dung:
         #: Height-invariance probe (`dung_tu_loi_goi`): a placeholder h² used ONLY where the source fixes no height.
         self._free_h2_sample = _free_h2_sample
         self.free_height_for: set[str] = set()
+        self.free_affine_for: set[str] = set()
+        self.length_ratio_certificates: dict[str, tuple[Fraction, Fraction, Fraction]] = {}
+        self.area_ratio_certificates: dict[str, tuple[Fraction, Fraction, Fraction]] = {}
         self.mirror_apices: set[str] = set()
         self.off_base_anchors: list[str] = []
         self.centroids: dict[str, tuple[str, ...]] = {}
@@ -564,10 +567,87 @@ class _Dung:
         for s, chuoi in self._lop_bang(frozenset((x, y))):
             ra += [(binh_phuong(c.args.value), (c.id, *chuoi)) for c in self.of("segment_length")
                    if frozenset(c.args.segment) == s]
+            for c in self.of("polygon_area"):
+                vp = tuple(c.args.polygon)
+                np = len(vp)
+                canh_p = [frozenset((vp[i], vp[(i + 1) % np])) for i in range(np)]
+                if s not in canh_p:
+                    continue
+                if c.args.shape == "square" or (
+                    np == 4
+                    and any(
+                        cr.fn == "regular_polygon" and frozenset(cr.args.vertices) == frozenset(vp)
+                        for cr in self.calls
+                    )
+                ):
+                    s2_sq = _sqrt_q(binh_phuong(c.args.value))
+                    if s2_sq is None or s2_sq <= 0:
+                        raise TuChoi(
+                            "EXACT_DOMAIN_EXCEEDED",
+                            f"diện tích hình vuông {c.args.value!r} không cho cạnh² hữu tỉ dương",
+                            (c.id,),
+                        )
+                    ra.append((s2_sq, (c.id, *chuoi)))
+                elif c.args.shape == "equilateral_triangle" or (
+                    np == 3
+                    and any(
+                        cr.fn == "regular_polygon" and frozenset(cr.args.vertices) == frozenset(vp)
+                        for cr in self.calls
+                    )
+                ):
+                    s2_eq = _sqrt_q(Fraction(16, 3) * binh_phuong(c.args.value))
+                    if s2_eq is None or s2_eq <= 0:
+                        raise TuChoi(
+                            "EXACT_DOMAIN_EXCEEDED",
+                            f"diện tích tam giác đều {c.args.value!r} không cho cạnh² hữu tỉ dương",
+                            (c.id,),
+                        )
+                    ra.append((s2_eq, (c.id, *chuoi)))
+                elif _suy and np == 4 and (
+                    c.args.shape == "rectangle"
+                    or any(
+                        cr.fn == "rectangle" and frozenset(cr.args.vertices) == frozenset(vp)
+                        for cr in self.calls
+                    )
+                    or any(
+                        cp.fn == "prism"
+                        and cp.args.right
+                        and frozenset(vp)
+                        in [
+                            frozenset(
+                                (
+                                    cp.args.base[i],
+                                    cp.args.base[(i + 1) % len(cp.args.base)],
+                                    cp.args.top[(i + 1) % len(cp.args.base)],
+                                    cp.args.top[i],
+                                )
+                            )
+                            for i in range(len(cp.args.base))
+                        ]
+                        for cp in self.of("prism")
+                    )
+                ):
+                    e1_p = (frozenset((vp[0], vp[1])), frozenset((vp[2], vp[3])))
+                    e2_p = (frozenset((vp[1], vp[2])), frozenset((vp[3], vp[0])))
+                    if s in e1_p:
+                        adj = self.do_dai(*sorted(e2_p[0]), _suy=False) or self.do_dai(*sorted(e2_p[1]), _suy=False)
+                        if adj:
+                            ra.append((binh_phuong(c.args.value) / adj[0][0], (c.id, *adj[0][1], *chuoi)))
+                    elif s in e2_p:
+                        adj = self.do_dai(*sorted(e1_p[0]), _suy=False) or self.do_dai(*sorted(e1_p[1]), _suy=False)
+                        if adj:
+                            ra.append((binh_phuong(c.args.value) / adj[0][0], (c.id, *adj[0][1], *chuoi)))
             a, b = sorted(s)
             if a in self.pts and b in self.pts and (self.h2 is not None or self.pts[a][2] == self.pts[b][2]):
                 ra.append((self.d2(a, b), chuoi))
         if _suy:
+            for c in self.of("segment_ratio"):
+                r2 = binh_phuong(c.args.ratio)
+                sa, sb = frozenset(c.args.segment_a), frozenset(c.args.segment_b)
+                if frozenset((x, y)) == sa:
+                    ra += [(r2 * d, (c.id, *ids)) for d, ids in self.do_dai(*c.args.segment_b, _suy=False)]
+                elif frozenset((x, y)) == sb:
+                    ra += [(d / r2, (c.id, *ids)) for d, ids in self.do_dai(*c.args.segment_a, _suy=False)]
             for c in self.of("regular_polygon", "rhombus"):
                 v, n = c.args.vertices, len(c.args.vertices)
                 canh = [frozenset((v[i], v[(i + 1) % n])) for i in range(n)]
@@ -747,6 +827,9 @@ class _Dung:
         elif (chuoi := self._chuoi_goc_vuong(self.root.base)) is not None:
             vong, khung, G2, dung = chuoi
             luat = "right_angle_chain_chart"
+        elif (aff_trap := self._hinh_thang_affine(self.root.base)) is not None:
+            vong, khung, G2, dung = aff_trap
+            luat = "trapezoid_affine_chart"
         elif not any(self.do_dai(x, y) for x in dat for y in dat if x < y):
             # D02 (tenth continuation): no source gives ANY length between base vertices, so no layout rule could fix the
             # base whatever its shape — missing data, not an unsupported shape ("Vẽ hình chóp S.ABCD.")
@@ -760,6 +843,29 @@ class _Dung:
         self.G2, self.dung = G2, self.dung | dung
         for v, (x, y) in zip(vong, khung):
             self._dat(v, (x, y, Z), luat, dung)
+
+    def _co_the_dung_affine_minh_hoa(self) -> bool:
+        asks = [c for c in self.calls if c.fn in BAC_DAI_LUONG]
+        return (
+            self._free_h2_sample is not None
+            and bool(asks)
+            and all(c.fn in ("ask_length_ratio", "ask_area_ratio", "ask_volume_ratio") for c in asks)
+            and not self.of(
+                "right_angle",
+                "vertex_angle",
+                "perpendicular_lines",
+                "perpendicular_line_plane",
+                "altitude",
+                "orthogonal_projection",
+                "orthogonal_projection_line",
+                "face_perpendicular_base",
+                "line_line_angle",
+                "line_plane_angle",
+                "plane_plane_angle",
+                "dihedral_angle",
+                "regular_pyramid",
+            )
+        )
 
     def _hinh_binh_hanh_thoi(self, c: LoiGoi, vong: tuple[str, ...]):
         """Exact rational Gram chart for `parallelogram` and `rhombus` on cyclic vertices `vong = (v0, v1, v2, v3)`.
@@ -783,11 +889,19 @@ class _Dung:
                     m_val = (d_ac[0][0] - d_bd[0][0]) / 4
                     dung |= set(d_ac[0][1]) | set(d_bd[0][1])
             if a2 is None or b2 is None:
+                if self._co_the_dung_affine_minh_hoa():
+                    self.free_affine_for.add(self.root.name)
+                    khung = ((Z, Z), (Fraction(1), Z), (Fraction(1), Fraction(1)), (Z, Fraction(1)))
+                    return khung, ((Fraction(1), Z), (Z, Fraction(1))), dung
                 raise TuChoi("MISSING_DIMENSION", "hình thoi đáy chưa có độ dài cạnh hoặc hai đường chéo", (c.id,))
         else:
             ca = sorted(self.do_dai(vong[0], vong[1]) + self.do_dai(vong[2], vong[3]))
             cb = sorted(self.do_dai(vong[1], vong[2]) + self.do_dai(vong[3], vong[0]))
             if not ca or not cb:
+                if self._co_the_dung_affine_minh_hoa():
+                    self.free_affine_for.add(self.root.name)
+                    khung = ((Z, Z), (Fraction(1), Z), (Fraction(1), Fraction(1)), (Z, Fraction(1)))
+                    return khung, ((Fraction(1), Z), (Z, Fraction(1))), dung
                 raise TuChoi("MISSING_DIMENSION", "hình bình hành đáy thiếu độ dài hai cạnh kề", (c.id,))
             a2, b2 = ca[0][0], cb[0][0]
             dung |= set(ca[0][1]) | set(cb[0][1])
@@ -834,13 +948,56 @@ class _Dung:
                         dung.add(ca_v.id)
                         break
         if m_val is None:
-            raise TuChoi(
-                "MISSING_DIMENSION",
-                "hình thoi / hình bình hành đáy thiếu góc ở đỉnh hoặc đường chéo để xác định hình duy nhất",
-                (c.id,),
-            )
+            if self._co_the_dung_affine_minh_hoa():
+                self.free_affine_for.add(self.root.name)
+                m_val = Z
+            else:
+                raise TuChoi(
+                    "MISSING_DIMENSION",
+                    "hình thoi / hình bình hành đáy thiếu góc ở đỉnh hoặc đường chéo để xác định hình duy nhất",
+                    (c.id,),
+                )
         khung = ((Z, Z), (Fraction(1), Z), (Fraction(1), Fraction(1)), (Z, Fraction(1)))
         return khung, ((a2, m_val), (m_val, b2)), dung
+
+    def _hinh_thang_affine(self, vong: tuple[str, ...]):
+        """Affine chart for a `trapezoid` when only parallel base ratio is fixed and all goals are affine ratios."""
+        if len(vong) != 4 or not self._co_the_dung_affine_minh_hoa():
+            return None
+        traps = [c for c in self.of("trapezoid") if frozenset(c.args.vertices) == frozenset(vong)]
+        if not traps:
+            return None
+        ct = traps[0]
+        ba, bb = frozenset(ct.args.base_a), frozenset(ct.args.base_b)
+        for i in range(4):
+            vi, vj, vp, vn = vong[i], vong[(i + 1) % 4], vong[(i - 1) % 4], vong[(i + 2) % 4]
+            if {frozenset((vi, vp)), frozenset((vj, vn))} != {ba, bb}:
+                continue
+            ad = self.do_dai(vi, vp)
+            bc = self.do_dai(vj, vn)
+            dung: set[str] = {ct.id}
+            r: Fraction | None = None
+            ad_sq = Fraction(1)
+            if ad and bc:
+                ad_sq = sorted(ad)[0][0]
+                r = _sqrt_q(sorted(bc)[0][0] / ad_sq)
+                dung |= set(sorted(ad)[0][1]) | set(sorted(bc)[0][1])
+            else:
+                for sr in self.of("segment_ratio"):
+                    sa, sb = frozenset(sr.args.segment_a), frozenset(sr.args.segment_b)
+                    if {sa, sb} == {frozenset((vi, vp)), frozenset((vj, vn))}:
+                        r_sr = _sqrt_q(binh_phuong(sr.args.ratio))
+                        if r_sr is not None and r_sr > 0:
+                            r = r_sr if sa == frozenset((vj, vn)) else (Fraction(1) / r_sr)
+                            dung.add(sr.id)
+                            break
+            if r is None or r <= 0:
+                raise TuChoi("MISSING_DIMENSION", "hình thang đáy thiếu tỉ số độ dài hai đáy song song", (ct.id,))
+            self.free_affine_for.add(self.root.name)
+            o = Fraction(1)
+            dat = {vi: (Z, Z), vj: (o, Z), vp: (Z, o), vn: (o, r)}
+            return vong, tuple(dat[v] for v in vong), ((o, Z), (Z, ad_sq)), dung
+        return None
 
     def _hinh_thang_can(self, c: LoiGoi, vong: tuple[str, ...]):
         """Exact rational orthogonal chart for `isosceles_trapezoid` with parallel bases `c.args.base_a`, `c.args.base_b`."""
@@ -1043,6 +1200,67 @@ class _Dung:
                     raise TuChoi("INCONSISTENT_FACTS", "cạnh thứ ba từ định lý cos không dương", (cv.id,))
                 canh[e_opp] = opp_val
                 dung.add(cv.id)
+        # Inverse base-side deduction from right-prism lateral-face `line_plane_angle` (`sin²α = h_base² / |W_end V_end|²`)
+        if (
+            any(v is None for v in canh.values())
+            and getattr(self, "root", None) is not None
+            and self.root.kind == "prism"
+            and any(cp.fn == "prism" and cp.args.right for cp in self.of("prism") if frozenset(cp.args.base) == frozenset(vong))
+        ):
+            hp_cands: list[tuple[Fraction, tuple[str, ...]]] = [
+                (binh_phuong(ch.args.value), (ch.id,)) for ch in self.of("height") if ch.args.solid == self.root.name
+            ]
+            for b_v, t_v in zip(self.root.base, self.root.top):
+                hp_cands += self.do_dai(b_v, t_v)
+            if hp_cands:
+                h_p2, h_ids = sorted(hp_cands)[0]
+                b_to_t = dict(zip(self.root.base, self.root.top))
+                t_to_b = dict(zip(self.root.top, self.root.base))
+                for cla in self.of("line_plane_angle"):
+                    for V in vong:
+                        X, Y = [p for p in vong if p != V]
+                        e_vx, e_vy, e_xy = frozenset((V, X)), frozenset((V, Y)), frozenset((X, Y))
+                        lat_face = {X, Y, b_to_t[X], b_to_t[Y]}
+                        v_col = {V, b_to_t[V]}
+                        if not (
+                            frozenset(cla.args.plane) <= lat_face
+                            and len(frozenset(cla.args.plane)) >= 3
+                            and len(set(cla.args.line) & v_col) == 1
+                            and len(set(cla.args.line) & lat_face) == 1
+                        ):
+                            continue
+                        v_end = next(p for p in cla.args.line if p in v_col)
+                        w_end = next(p for p in cla.args.line if p in lat_face)
+                        dz = Z if ((v_end in self.root.base) == (w_end in self.root.base)) else Fraction(1)
+                        sin2, cos2, _ = self._goc_tham_so(cla.args.value, cla.args.unit, allow_obtuse=False, calls=(cla.id,))
+                        if not (0 < sin2 < 1 and cos2 > 0):
+                            continue
+                        if canh[e_xy] is not None and canh[e_vx] is None and canh[e_vy] is None:
+                            eq_chain = next((ids for s, ids in self._lop_bang(e_vx) if s == e_vy), None)
+                            if eq_chain is not None:
+                                leg2 = (canh[e_xy] / 4 + sin2 * dz * h_p2) / cos2
+                                if leg2 <= canh[e_xy] / 4:
+                                    raise TuChoi("INCONSISTENT_FACTS", "góc đường–mặt bên mâu thuẫn với cạnh đáy tam giác cân", (cla.id,))
+                                canh[e_vx] = canh[e_vy] = leg2
+                                dung |= {cla.id, *eq_chain, *h_ids}
+                                break
+                            for r_v, r_x, r_y, r_cid in goc:
+                                if {r_v, r_x, r_y} == set(vong) and r_v in (X, Y):
+                                    X_perp, Y_other = (X, Y) if r_v == X else (Y, X)
+                                    e_perp = frozenset((V, X_perp))
+                                    e_hyp = frozenset((V, Y_other))
+                                    u_base = w_end if w_end in self.root.base else t_to_b[w_end]
+                                    perp2 = (
+                                        (sin2 * dz * h_p2 / cos2)
+                                        if u_base == X_perp
+                                        else (sin2 * (canh[e_xy] + dz * h_p2) / cos2)
+                                    )
+                                    if perp2 <= 0:
+                                        raise TuChoi("INCONSISTENT_FACTS", "cạnh góc vuông suy từ góc mặt bên không dương", (cla.id, r_cid))
+                                    canh[e_perp] = perp2
+                                    canh[e_hyp] = perp2 + canh[e_xy]
+                                    dung |= {cla.id, r_cid, *h_ids}
+                                    break
         if any(v is None for v in canh.values()):
             raise TuChoi("MISSING_DIMENSION", "đáy tam giác chưa xác định đủ ba cạnh")
         d01, d02, d12 = (canh[frozenset((vong[0], vong[1]))], canh[frozenset((vong[0], vong[2]))],
@@ -1408,7 +1626,33 @@ class _Dung:
                 self.trace[-1]["relation_verified"] = True
                 self.dung.add(c.id)
                 return True
-        return self._dinh_tu_ba_canh_ben() or self._dinh_tu_goc_canh_ben_bang_nhau()
+        return self._dinh_tu_ba_canh_ben() or self._dinh_tu_goc_canh_ben_bang_nhau() or self._dinh_affine_minh_hoa()
+
+    def _dinh_affine_minh_hoa(self) -> bool:
+        """Illustrative pyramid apex placement when all goals are affine ratios (`ask_length_ratio`, `ask_area_ratio`, `ask_volume_ratio`)."""
+        root = getattr(self, "root", None)
+        if root is None or not self._co_the_dung_affine_minh_hoa():
+            return False
+        base_set = frozenset(root.base)
+        for k in sorted(self.khoi.values(), key=lambda k: k.name):
+            if (
+                k.kind == "pyramid"
+                and k.apex
+                and k.apex not in self.pts
+                and frozenset(k.base) == base_set
+                and all(b in self.pts for b in k.base)
+            ):
+                self.free_height_for.add(k.name)
+                self.free_affine_for.add(k.name)
+                self._dat_ngoai_day(
+                    k.apex,
+                    k.base[0],
+                    self._free_h2_sample,
+                    f"affine_illustrative_apex_over_{k.base[0]}",
+                    {k.call},
+                )
+                return True
+        return False
 
     def _dinh_tu_goc_canh_ben_bang_nhau(self) -> bool:
         """Apex of a pyramid on the root base when >= 3 non-collinear placed base vertices have equal `line_plane_angle`
@@ -1986,6 +2230,63 @@ class _Dung:
                 })
             for c in self.of("ask_residual_volume"):
                 self._kiem_phan_con_lai(c)
+        for c in self.of("ask_length_ratio"):
+            u = self._vec(*c.args.numerator_segment)
+            v = self._vec(*c.args.denominator_segment)
+            d2_num, d2_den = self.g(u, u), self.g(v, v)
+            if d2_num <= 0 or d2_den <= 0:
+                raise TuChoi("NON_POSITIVE_LENGTH", f"{c.id}: đoạn thẳng trong tỉ số độ dài suy biến", (c.id,))
+            if self.free_affine_for and not Vec3(*u).cross(Vec3(*v)).is_zero():
+                raise TuChoi("MISSING_DIMENSION", f"{c.id}: tỉ số hai đoạn không cùng phương phụ thuộc độ dài và góc chưa cho", (c.id,))
+            ratio = _sqrt_q(d2_num / d2_den)
+            if ratio is None or ratio <= 0:
+                raise TuChoi("EXACT_DOMAIN_EXCEEDED", f"{c.id}: tỉ số độ dài không hữu tỉ dương", (c.id,))
+            self.length_ratio_certificates[c.id] = (d2_num, d2_den, ratio)
+            self.trace.append({
+                "step": "certify_length_ratio",
+                "object": c.id,
+                "rule": "exact_gram_length_ratio_certificate",
+                "calls": [c.id],
+                "provenance": "DERIVED",
+                "numerator_segment": list(c.args.numerator_segment),
+                "denominator_segment": list(c.args.denominator_segment),
+                "numerator_length_squared": str(d2_num),
+                "denominator_length_squared": str(d2_den),
+                "collinear_vectors": Vec3(*u).cross(Vec3(*v)).is_zero(),
+                "ratio": str(ratio),
+            })
+        for c in self.of("ask_area_ratio"):
+            try:
+                with _metric.using(self.metric()):
+                    self._plane(c.args.numerator_polygon)
+                    self._plane(c.args.denominator_polygon)
+            except GeometryError as e:
+                raise TuChoi(e.code, str(e), (c.id,)) from None
+            poly_num = [Vec3(*self.pts[p]) for p in c.args.numerator_polygon]
+            poly_den = [Vec3(*self.pts[p]) for p in c.args.denominator_polygon]
+            s2_num = self._dt2_da_giac(poly_num, (c.id,))
+            s2_den = self._dt2_da_giac(poly_den, (c.id,))
+            c1_num = (poly_num[1] - poly_num[0]).cross(poly_num[2] - poly_num[0])
+            c1_den = (poly_den[1] - poly_den[0]).cross(poly_den[2] - poly_den[0])
+            if self.free_affine_for and not c1_num.cross(c1_den).is_zero():
+                raise TuChoi("MISSING_DIMENSION", f"{c.id}: tỉ số diện tích hai đa giác không nằm trên mặt phẳng song song phụ thuộc góc và cạnh chưa cho", (c.id,))
+            ratio = _sqrt_q(s2_num / s2_den)
+            if ratio is None or ratio <= 0:
+                raise TuChoi("EXACT_DOMAIN_EXCEEDED", f"{c.id}: tỉ số diện tích không hữu tỉ dương", (c.id,))
+            self.area_ratio_certificates[c.id] = (s2_num, s2_den, ratio)
+            self.trace.append({
+                "step": "certify_area_ratio",
+                "object": c.id,
+                "rule": "exact_gram_area_ratio_certificate",
+                "calls": [c.id],
+                "provenance": "DERIVED",
+                "numerator_polygon": list(c.args.numerator_polygon),
+                "denominator_polygon": list(c.args.denominator_polygon),
+                "numerator_area_squared": str(s2_num),
+                "denominator_area_squared": str(s2_den),
+                "parallel_carrier_planes": c1_num.cross(c1_den).is_zero(),
+                "ratio": str(ratio),
+            })
         for c in self.of("curved_solid"):
             from app.simulation.geometry import curved as CV
 
@@ -2872,6 +3173,14 @@ class _Dung:
             return self.pts[x] != self.pts[y] and all(self.pts[a.point][i] == (1 - t) * self.pts[x][i] + t * self.pts[y][i] for i in range(3))
         if c.fn == "equal_length":
             return self.d2(*a.segment_a) == self.d2(*a.segment_b)
+        if c.fn == "segment_ratio":
+            return self.d2(*a.segment_a) == binh_phuong(a.ratio) * self.d2(*a.segment_b)
+        if c.fn == "polygon_area":
+            try:
+                self._plane(a.polygon)
+            except GeometryError:
+                return False
+            return self._dt2_da_giac([Vec3(*self.pts[p]) for p in a.polygon], (c.id,)) == binh_phuong(a.value)
         if c.fn == "perpendicular_lines":
             u, w = self._vec(*a.line1), self._vec(*a.line2)
             return self.g(u, u) > 0 and self.g(w, w) > 0 and self.g(u, w) == 0
@@ -3313,6 +3622,40 @@ class _Dung:
                 lenh.append(P.construct_polygon(dg, tuple(map(ir_name, a.polygon))))
                 khai.append(P.memory_declaration(dg, "polygon3"))
                 lenh.append(P.measure_quantity(kq, "area", dg))
+            elif c.fn == "ask_length_ratio":
+                l_num, l_den = f"l_tu_{c.id}", f"l_mau_{c.id}"
+                lenh.append({**P.measure_quantity(l_num, "distance", ir_name(a.numerator_segment[0]), ir_name(a.numerator_segment[1])), "label": f"Độ dài {''.join(a.numerator_segment)}"})
+                lenh.append({**P.measure_quantity(l_den, "distance", ir_name(a.denominator_segment[0]), ir_name(a.denominator_segment[1])), "label": f"Độ dài {''.join(a.denominator_segment)}"})
+                khai += [P.memory_declaration(l_num, P.KIEU_DAI_LUONG), P.memory_declaration(l_den, P.KIEU_DAI_LUONG)]
+                _d2n, _d2d, ratio = self.length_ratio_certificates[c.id]
+                p_num, q_den = ratio.numerator, ratio.denominator
+                cross = {
+                    "kind": "arith",
+                    "op": "-",
+                    "left": {"kind": "arith", "op": "*", "left": {"kind": "literal", "value": q_den}, "right": {"kind": "var", "name": l_num}},
+                    "right": {"kind": "arith", "op": "*", "left": {"kind": "literal", "value": p_num}, "right": {"kind": "var", "name": l_den}},
+                }
+                expr = {"kind": "arith", "op": "+", "left": cross, "right": {"kind": "literal", "value": str(ratio)}}
+                lenh.append({"kind": "assign", "target_var": kq, "expr": expr, "label": f"Tỉ số độ dài {''.join(a.numerator_segment)} / {''.join(a.denominator_segment)}"})
+            elif c.fn == "ask_area_ratio":
+                dg_num, dg_den = f"dg_tu_{c.id}", f"dg_mau_{c.id}"
+                dt_num, dt_den = f"dt_tu_{c.id}", f"dt_mau_{c.id}"
+                lenh.append(P.construct_polygon(dg_num, tuple(map(ir_name, a.numerator_polygon))))
+                lenh.append(P.construct_polygon(dg_den, tuple(map(ir_name, a.denominator_polygon))))
+                khai += [P.memory_declaration(dg_num, "polygon3"), P.memory_declaration(dg_den, "polygon3")]
+                lenh.append({**P.measure_quantity(dt_num, "area", dg_num), "label": f"Diện tích {''.join(a.numerator_polygon)}"})
+                lenh.append({**P.measure_quantity(dt_den, "area", dg_den), "label": f"Diện tích {''.join(a.denominator_polygon)}"})
+                khai += [P.memory_declaration(dt_num, P.KIEU_DAI_LUONG), P.memory_declaration(dt_den, P.KIEU_DAI_LUONG)]
+                _s2n, _s2d, ratio = self.area_ratio_certificates[c.id]
+                p_num, q_den = ratio.numerator, ratio.denominator
+                cross = {
+                    "kind": "arith",
+                    "op": "-",
+                    "left": {"kind": "arith", "op": "*", "left": {"kind": "literal", "value": q_den}, "right": {"kind": "var", "name": dt_num}},
+                    "right": {"kind": "arith", "op": "*", "left": {"kind": "literal", "value": p_num}, "right": {"kind": "var", "name": dt_den}},
+                }
+                expr = {"kind": "arith", "op": "+", "left": cross, "right": {"kind": "literal", "value": str(ratio)}}
+                lenh.append({"kind": "assign", "target_var": kq, "expr": expr, "label": f"Tỉ số diện tích S({''.join(a.numerator_polygon)}) / S({''.join(a.denominator_polygon)})"})
             else:
                 raise TuChoi("CURVED_RELATION_UNSUPPORTED", f"{c.id}: đại lượng {c.fn} chưa được chứng nhận trên hình ghép", (c.id,))
             khai.append(P.memory_declaration(kq, P.KIEU_DAI_LUONG))
@@ -3373,7 +3716,17 @@ class _Dung:
         if k is None:
             raise TuChoi("UNKNOWN_SOLID", "đỉnh thiết diện: khối bị cắt không có trên hình", ids)
         # lateral edges ORIENTED from the apex (pyramid) or the base vertex (prism): t is measured from that end
-        canh = {frozenset(e): e for e in ([(k.apex, b) for b in k.base] if k.apex else list(zip(k.base, k.top)))}
+        canh_ben = {frozenset(e): e for e in ([(k.apex, b) for b in k.base] if k.apex else list(zip(k.base, k.top)))}
+        canh_day = {
+            frozenset(e): e
+            for e in (
+                [(k.base[i], k.base[(i + 1) % len(k.base)]) for i in range(len(k.base))]
+                + ([(k.top[i], k.top[(i + 1) % len(k.top)]) for i in range(len(k.top))] if not k.apex else [])
+            )
+        }
+        canh = dict(canh_ben)
+        if d.get("base_edge_intersection"):
+            canh = {**canh_day, **canh_ben}
         with _metric.using(self.metric()):
             mat = self._plane(d["plane"])
             for v in d["vertices"]:
@@ -3391,8 +3744,9 @@ class _Dung:
                 t = ((px.x, px.y, px.z)[i] - (pu.x, pu.y, pu.z)[i]) / (huong.x, huong.y, huong.z)[i]
                 # a pyramid's lateral edge starts at the apex: the cut may meet the base vertex, never the apex; a prism's
                 # lateral edge has no apex, either endpoint may be met
-                if not (0 < t <= 1 if k.apex else 0 <= t <= 1):
-                    raise TuChoi("SECTION_VERTEX_OFF_EDGE", f"mặt cắt gặp đường {u}{w} ngoài cạnh (t = {t})", ids)
+                if not (d.get("base_edge_intersection") and frozenset(v["edge"]) not in canh_ben):
+                    if not (0 < t <= 1 if k.apex else 0 <= t <= 1):
+                        raise TuChoi("SECTION_VERTEX_OFF_EDGE", f"mặt cắt gặp đường {u}{w} ngoài cạnh (t = {t})", ids)
                 self.trace.append({"step": "certify_section_vertex", "object": x, "edge": [u, w], "t": str(t),
                                    "choice": v["choice"], "rule": d["rule"], "relation_verified": True,
                                    "provenance": "DERIVED", "binding": "AUXILIARY"})
@@ -3412,7 +3766,7 @@ class _Dung:
         if d.get("derived"):
             vong = list(d["derived"]["base"])
             self.chung_chi_khep_kin(k.name, d["plane"], vong, ids)
-        if vong is None and d.get("derive"):
+        if vong is None and d.get("derive") and not d.get("base_edge_intersection"):
             self.chung_chi_phu_dinh(k.name, d["plane"], [v["label"] for v in d["vertices"]], ids)
         if vong is not None:
             d["closure"] = {"boundary": vong, "verified": True,
@@ -3989,6 +4343,7 @@ _KIEM_DICH = {
 BAC_DAI_LUONG = {"ask_volume": 3, "ask_length": 1, "ask_distance_point_plane": 1, "ask_angle_line_plane": 0,
                  "ask_area": 2, "ask_angle_plane_plane": 0, "ask_distance_lines": 1, "ask_section_area": 2,
                  "ask_angle_lines": 0, "ask_volume_ratio": 0, "ask_residual_volume": 3,
+                 "ask_length_ratio": 0, "ask_area_ratio": 0,
                  "ask_distance_line_plane": 1, "ask_distance_planes": 1,
                  "ask_curved_volume": 3, "ask_lateral_area": 2, "ask_surface_area": 2, "ask_radius": 1,
                  "ask_curved_section_area": 2, "ask_curved_section_radius": 1, "ask_curved_volume_ratio": 0,
@@ -4141,9 +4496,12 @@ def _don_vi(calls: tuple[LoiGoi, ...]) -> str | None:
     """Độ dài ký hiệu: TẤT CẢ độ dài đề cho cùng theo a (đồng bậc 1) ⇒ "a"; tất cả là số ⇒ None; trộn ⇒ từ chối — hình
     khi ấy KHÔNG đồng dạng khi a đổi, nên không có một bố cục chung nào đúng cho mọi a (không gán a một giá trị)."""
     loai = {doc_so(getattr(c.args, f))[1] for c in calls for f in c.spec.value_fields if getattr(c.args, f) is not None}
+    for c in calls:
+        if c.fn == "polygon_area":
+            loai.add(doc_so(c.args.value)[1])
     if len(loai) > 1:
         raise TuChoi("NON_HOMOGENEOUS_LENGTHS", "đề trộn độ dài theo a với độ dài là số — chưa dựng được một hình chung cho mọi a",
-                     tuple(sorted(c.id for c in calls for f in c.spec.value_fields if getattr(c.args, f) is not None)))
+                     tuple(sorted(c.id for c in calls if any(getattr(c.args, f) is not None for f in c.spec.value_fields) or c.fn == "polygon_area")))
     return "a" if loai == {True} else None
 
 
@@ -5288,6 +5646,22 @@ def _dung_mot_nhanh(
                            for idx, sub_s in enumerate(c.args.subtracted_solids, 1))
                     or _binh_phuong(fm.get(hoi[c.id])) != dung.residual_certificates.get(c.id)):
                 raise TuChoi("ENGINE_SELF_CHECK_FAILED", "thể tích phần còn lại thực thi khác chứng chỉ Gram độc lập", (c.id,))
+        for c in dung.of("ask_length_ratio"):
+            d2_num, d2_den, ratio = dung.length_ratio_certificates[c.id]
+            if (
+                _binh_phuong(fm.get(f"l_tu_{c.id}")) != d2_num
+                or _binh_phuong(fm.get(f"l_mau_{c.id}")) != d2_den
+                or fm.get(hoi[c.id]) != ratio
+            ):
+                raise TuChoi("ENGINE_SELF_CHECK_FAILED", "tỉ số độ dài thực thi khác chứng chỉ Gram độc lập", (c.id,))
+        for c in dung.of("ask_area_ratio"):
+            s2_num, s2_den, ratio = dung.area_ratio_certificates[c.id]
+            if (
+                _binh_phuong(fm.get(f"dt_tu_{c.id}")) != s2_num
+                or _binh_phuong(fm.get(f"dt_mau_{c.id}")) != s2_den
+                or fm.get(hoi[c.id]) != ratio
+            ):
+                raise TuChoi("ENGINE_SELF_CHECK_FAILED", "tỉ số diện tích thực thi khác chứng chỉ Gram độc lập", (c.id,))
         kernel_ok = all((lambda v: v is not None and (v.x, v.y, v.z) == dung.pts[t])(fm.get(ir_name(t)))
                         for t in dung.pts)
         kernel_ok = kernel_ok and all(isinstance(fm.get(f'gt_{ref}'),Line3)
@@ -5493,6 +5867,10 @@ def _dung_mot_nhanh(
                 "khoi_" + ir_name(c.args.original_solid.replace(".", "_")),
                 *("khoi_" + ir_name(s.replace(".", "_")) for s in c.args.subtracted_solids),
             }
+        for c in dung.of("ask_length_ratio"):
+            muc_tieu |= {f"l_tu_{c.id}", f"l_mau_{c.id}", f"doan_tu_{c.id}", f"doan_mau_{c.id}"}
+        for c in dung.of("ask_area_ratio"):
+            muc_tieu |= {f"dt_tu_{c.id}", f"dt_mau_{c.id}", f"dg_tu_{c.id}", f"dg_mau_{c.id}"}
         _gan_dieu_kien_vet(dung.trace, kernel_checked=True, checked_points=frozenset(dung.pts))
         res = KetQuaTuyen("SERVED", answers=tra, trace=dung.trace, program=program, points=dict(dung.pts),
                           metric=G.as_json(), kernel_check=True, spec=spec, exec_result=ket, chart_metric=G,
@@ -5523,8 +5901,22 @@ def dung_tu_loi_goi(problem_text: str, plan: Any, auxiliary: tuple[dict, ...] = 
     res0, anchors0, trace0 = _dung_mot_nhanh(
         problem_text, plan, auxiliary, read_quotes, _flip_apices=_flip_apices
     )
-    if (res0.status == "REFUSED" and res0.code == "MISSING_DIMENSION" and not _exploring_mirrors
-            and not _flip_apices):
+    if (
+        res0.status == "REFUSED"
+        and (
+            res0.code == "MISSING_DIMENSION"
+            or (
+                res0.code == "UNDERDETERMINED_POINT"
+                and any(
+                    (c.get("fn") if isinstance(c, dict) else getattr(c, "fn", None))
+                    in ("ask_length_ratio", "ask_area_ratio", "ask_volume_ratio")
+                    for c in (plan.get("calls") or () if isinstance(plan, dict) else ())
+                )
+            )
+        )
+        and not _exploring_mirrors
+        and not _flip_apices
+    ):
         audit_sink: dict[str, Any] = {}
         inv = _thu_chieu_cao_bat_bien(problem_text, plan, auxiliary, read_quotes, _audit_sink=audit_sink)
         if inv is not None:

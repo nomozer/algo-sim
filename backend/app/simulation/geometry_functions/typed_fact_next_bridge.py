@@ -652,6 +652,18 @@ def _phan_cong(p: TypedFactNextPayload, solids: dict[str, Any]) -> list[dict[str
     return out
 
 
+def _output_policies_from_payload(p: TypedFactNextPayload) -> dict[str, dict[str, Any]]:
+    return {
+        g.goal_id: {
+            **({"requested_unit": g.requested_unit} if getattr(g, "requested_unit", None) else {}),
+            **({"rounding": dict(g.rounding)} if getattr(g, "rounding", None) else {}),
+            "quote": g.quote,
+        }
+        for g in p.math_goals
+        if getattr(g, "requested_unit", None) or getattr(g, "rounding", None)
+    }
+
+
 def _ket_cau_noi(p: TypedFactNextPayload, facts: list[dict[str, Any]], version: str, scoped: Any) -> dict[str, Any]:
     khong = [g.goal_id for g in p.simulation_goals if g.kind in _NO_NEW_FACT_GOALS]
     return {"facts": facts, "bridge": {"version": version, "goals_without_new_facts": khong,
@@ -659,6 +671,7 @@ def _ket_cau_noi(p: TypedFactNextPayload, facts: list[dict[str, Any]], version: 
                                        "validated_premise_scopes": scoped,
                                        "declared_length_unit": p.length_unit,
                                        "declared_plane_names": {s.section_id: _ten_mat_khai(s) for s in p.derived_sections},
+                                       "output_policies": _output_policies_from_payload(p),
                                        "problem_text": p.problem_text}}
 
 
@@ -888,6 +901,12 @@ def _bridge(p: TypedFactNextPayload, section_fact, version: str, v2: bool) -> di
         elif k == "vertex_angle":
             f = {"kind": "vertex_angle", "at": _ref(a["vertex"]), "points": _refs(a["rays"]),
                  "value": str(a["value"]), **({"angle_unit": str(a["unit"])} if a.get("unit") else {})}
+        elif k == "face_area":
+            f = {"kind": "polygon_area", "points": _refs(a["polygon"]), "value": str(a["value"]),
+                 **({"shape": str(a["shape"])} if a.get("shape") and a.get("shape") != "polygon" else {})}
+        elif k == "segment_ratio":
+            f = {"kind": "segment_ratio", "points_a": _refs(a["segment_a"]), "points_b": _refs(a["segment_b"]),
+                 "value": str(a["ratio"])}
         else:
             raise TuChoi("BRIDGE_UNSUPPORTED_PREMISE", f"{fid}: giả thiết {k!r} chưa có ánh xạ sang TypedFact", (fid,))
         facts.append({"id": _alloc_fact_id(fid, "prem"), "role": "premise", "quotes": q, **f})
@@ -966,6 +985,12 @@ def _bridge(p: TypedFactNextPayload, section_fact, version: str, v2: bool) -> di
         elif g.kind == "residual_volume":
             facts.append({**q, "quantity": "residual_volume",
                           "solid_refs": [solid_fact(g.parent_solid_id, g.goal_id), solid_fact(g.cut_solid_id, g.goal_id)]})
+        elif v2 and g.kind == "length_ratio":
+            facts.append({**q, "quantity": "length_ratio",
+                          "points_a": _refs(g.numerator_segment), "points_b": _refs(g.denominator_segment)})
+        elif v2 and g.kind == "area_ratio":
+            facts.append({**q, "quantity": "area_ratio",
+                          "points_a": _refs(g.numerator_polygon), "points_b": _refs(g.denominator_polygon)})
         elif (is_poly_sphere_composite or is_axial_sphere_composite) and g.kind == "measurement" and measurement_scope(p, g) in curved:
             if set(g.target) <= {"solid", "solid_id"} and g.goal_type in ("volume", "area", "lateral_area", "radius"):
                 msid = measurement_scope(p, g)
@@ -1014,4 +1039,5 @@ def _bridge(p: TypedFactNextPayload, section_fact, version: str, v2: bool) -> di
                                        "validated_premise_scopes": scoped,
                                        "declared_length_unit": p.length_unit,
                                        "declared_plane_names": {s.section_id: _ten_mat_khai(s) for s in p.derived_sections},
+                                       "output_policies": _output_policies_from_payload(p),
                                        "problem_text": p.problem_text}}

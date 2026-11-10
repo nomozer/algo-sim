@@ -34,6 +34,9 @@ INVENTORY = {**INVENTORY, 'fields': {**INVENTORY['fields'], **_EXT}}
 _EXT_UAG = json.loads((RUNS / 'unified-angle-geometry-verified-image-to-3d/schema-census-extension.json').read_text(encoding='utf-8'))['fields']
 assert not set(_EXT_UAG) & set(INVENTORY['fields'])
 INVENTORY = {**INVENTORY, 'fields': {**INVENTORY['fields'], **_EXT_UAG}}
+_EXT_FCRWA = json.loads((RUNS / 'formal-correctness-real-world-acceptance/schema-census-extension.json').read_text(encoding='utf-8'))['fields']
+assert not set(_EXT_FCRWA) & set(INVENTORY['fields'])
+INVENTORY = {**INVENTORY, 'fields': {**INVENTORY['fields'], **_EXT_FCRWA}}
 SUP = json.loads((RUN / 'inputs/recovery-supplementary.json').read_text(encoding='utf-8'))['control']
 A3DEV = {c['case_id']: c for c in json.loads((RUNS / 'typedfact-next-adapter3-simulation/corpus-dev.json').read_text(encoding='utf-8'))['cases']}
 SIM = {c['case_id']: c for c in json.loads((RUNS / 'simulation-coverage-visual-validation/corpus-dev.json').read_text(encoding='utf-8'))['cases']}

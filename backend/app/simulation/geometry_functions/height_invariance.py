@@ -190,6 +190,7 @@ def _allowed_anchor_rule(rule: str) -> bool:
             "regular_pyramid_foot_at_base_center",
             "face_perpendicular_base_isosceles_foot_on_",
             "right_prism_translate",
+            "affine_illustrative_apex_over_",
         )
     )
 
@@ -207,6 +208,7 @@ _SUPPORTED_PREMISE_FNS = frozenset(
         "isosceles_trapezoid",
         "segment_length",
         "equal_length",
+        "segment_ratio",
         "right_angle",
         "perpendicular_lines",
         "perpendicular_line_plane",
@@ -242,6 +244,9 @@ _SUPPORTED_GOAL_FNS = frozenset(
         "ask_angle_line_plane",
         "ask_angle_plane_plane",
         "ask_area",
+        "ask_length_ratio",
+        "ask_area_ratio",
+        "ask_volume_ratio",
     }
 )
 
@@ -373,9 +378,43 @@ def certify_height_invariance_symbolic(
                         "PO_AFFINE_COORDINATES_T_INDEPENDENT",
                         f"Hình chiếu {pt_name} trên mặt phẳng có toạ độ phụ thuộc h².",
                     )
-        # Non-solid-vertex constructed points must sit in the fixed base plane z == 0 so their physical
-        # Euclidean position in Scene3D does not move vertically when height h varies.
-        if pt_name not in solid_vertices and xyz[2] != Z:
+        # Non-solid-vertex constructed points must sit in the fixed base plane z == 0 for Euclidean metric goals
+        # so their physical Euclidean position in Scene3D does not move vertically when height h varies;
+        # for purely affine ratio goals (`ask_length_ratio`, `ask_area_ratio`, `ask_volume_ratio`),
+        # affine points (`midpoint`, `divide_segment`, `centroid`, `translate_point`, `intersect_line_*`) have
+        # constant barycentric/affine chart coordinates over all t > 0.
+        all_affine_ratio_goals = (
+            len(dung.khoi) == 1
+            and all(
+                c.fn in ("ask_length_ratio", "ask_area_ratio")
+                for c in dung.calls
+                if c.fn.startswith("ask_")
+            )
+        )
+        pt_rule = str((place_steps.get(pt_name) or {}).get("rule") or "")
+        is_affine_point = (
+            all_affine_ratio_goals
+            and (
+                (
+                    pt_name in dung.constructions
+                    and dung.constructions[pt_name].fn
+                    in ("midpoint", "divide_segment", "centroid", "translate_point", "intersect_line_line", "intersect_line_plane")
+                )
+                or pt_rule.startswith(
+                    (
+                        "midpoint",
+                        "divide_segment",
+                        "centroid",
+                        "translate_point",
+                        "intersect_line_line",
+                        "intersect_line_plane",
+                        "section_edge_cut",
+                        "intersection_of_base_diagonals",
+                    )
+                )
+            )
+        )
+        if pt_name not in solid_vertices and xyz[2] != Z and not is_affine_point:
             return (
                 False,
                 None,
@@ -471,6 +510,17 @@ def certify_height_invariance_symbolic(
                     None,
                     "PO_VALID_DOMAIN_ALL_POSITIVE_T",
                     f"Đẳng thức độ dài {c.id} không nghiệm đúng trên toàn miền h² > 0.",
+                )
+        elif c.fn == "segment_ratio":
+            ua, ub = dung._vec(*a.segment_a), dung._vec(*a.segment_b)
+            r2 = binh_phuong(a.ratio)
+            g_ub = _g_lin(g2, ub, ub)
+            if _g_lin(g2, ua, ua) != (r2 * g_ub[0], r2 * g_ub[1]):
+                return (
+                    False,
+                    None,
+                    "PO_VALID_DOMAIN_ALL_POSITIVE_T",
+                    f"Tỉ số độ dài {c.id} không nghiệm đúng trên toàn miền h² > 0.",
                 )
         elif c.fn in ("perpendicular_lines", "right_angle"):
             u, w = (
@@ -773,6 +823,75 @@ def certify_height_invariance_symbolic(
                 q_poly = poly_mul(d1, d2)
                 den_factors = (d1, d2)
             value_kind = "cos_squared"
+
+        elif c.fn == "ask_length_ratio":
+            u, v = dung._vec(*a.numerator_segment), dung._vec(*a.denominator_segment)
+            if getattr(dung, "free_affine_for", None) and not Vec3(*u).cross(Vec3(*v)).is_zero():
+                return (
+                    False,
+                    None,
+                    "PO_EXACT_POLYNOMIAL_IDENTITY",
+                    f"Tỉ số độ dài {c.id} phụ thuộc hệ trục khi hai đoạn không cùng phương.",
+                )
+            guu, gvv = _g_lin(g2, u, u), _g_lin(g2, v, v)
+            p_poly = poly_trim(guu)
+            q_poly = poly_trim(gvv)
+            den_factors = (gvv,)
+            value_kind = "squared_quantity"
+
+        elif c.fn == "ask_area_ratio":
+            def _poly_area_terms(poly_labels: list[str]) -> tuple[Vec3 | None, Fraction, LinPoly, str | None]:
+                if len(poly_labels) < 3:
+                    return None, Z, (Z, Z), f"Đa giác {c.id} thiếu đỉnh."
+                p0 = Vec3(*dung.pts[poly_labels[0]])
+                c1 = (Vec3(*dung.pts[poly_labels[1]]) - p0).cross(Vec3(*dung.pts[poly_labels[2]]) - p0)
+                c1_sq = c1.dot(c1)
+                if c1_sq == Z:
+                    return None, Z, (Z, Z), f"Đa giác {c.id} suy biến."
+                tot = Z
+                for idx_k in range(1, len(poly_labels) - 1):
+                    uk = Vec3(*dung.pts[poly_labels[idx_k]]) - p0
+                    vk = Vec3(*dung.pts[poly_labels[idx_k + 1]]) - p0
+                    ck = uk.cross(vk)
+                    if ck.is_zero() or not ck.cross(c1).is_zero():
+                        return None, Z, (Z, Z), f"Đa giác {c.id} không phẳng lồi."
+                    lam = ck.dot(c1) / c1_sq
+                    if lam <= Z:
+                        return None, Z, (Z, Z), f"Đa giác {c.id} tự cắt hoặc lõm."
+                    tot += lam
+                u1, v1 = dung._vec(poly_labels[0], poly_labels[1]), dung._vec(poly_labels[0], poly_labels[2])
+                duv_poly = _lin_det(_g_lin(g2, u1, u1), _g_lin(g2, v1, v1), _g_lin(g2, u1, v1), _g_lin(g2, u1, v1))
+                return c1, tot, duv_poly, None
+
+            c1_num, tot_num, duv_num, err_num = _poly_area_terms(list(a.numerator_polygon))
+            c1_den, tot_den, duv_den, err_den = _poly_area_terms(list(a.denominator_polygon))
+            if err_num or err_den or c1_num is None or c1_den is None:
+                return False, None, "PO_VALID_DOMAIN_ALL_POSITIVE_T", err_num or err_den or f"Đa giác {c.id} không hợp lệ."
+            if getattr(dung, "free_affine_for", None) and not c1_num.cross(c1_den).is_zero():
+                return (
+                    False,
+                    None,
+                    "PO_EXACT_POLYNOMIAL_IDENTITY",
+                    f"Tỉ số diện tích {c.id} phụ thuộc hệ trục khi hai đa giác không nằm trên mặt phẳng song song.",
+                )
+            p_poly = poly_scale(duv_num, (tot_num * tot_num) / Fraction(4))
+            q_poly = poly_scale(duv_den, (tot_den * tot_den) / Fraction(4))
+            den_fac: LinPoly = (
+                q_poly[0] if len(q_poly) >= 1 else Z,
+                q_poly[1] if len(q_poly) >= 2 else Z,
+            )
+            den_factors = (den_fac,)
+            value_kind = "squared_quantity"
+
+        elif c.fn == "ask_volume_ratio":
+            v2_num = dung.volume_certificates.get(a.numerator_solid)
+            v2_den = dung.volume_certificates.get(a.denominator_solid)
+            if v2_num is None or v2_den is None or v2_den <= Z:
+                return False, None, "PO_DENOMINATOR_POSITIVE_ON_DOMAIN", f"Thể tích ở {c.id} suy biến."
+            p_poly = poly_trim((Z, v2_num))
+            q_poly = poly_trim((Z, v2_den))
+            den_factors = ((Z, v2_den),)
+            value_kind = "squared_quantity"
 
         else:  # ask_area
             poly_labels = list(a.polygon)

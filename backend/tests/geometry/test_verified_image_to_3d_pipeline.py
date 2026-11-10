@@ -320,7 +320,13 @@ def test_vietocr_hw_stays_unloaded_by_default_and_external_corpus_oracle_downstr
         "ext_prt_02_hd_q_7922924#1": "6",
         "ext_prt_03_hd_q_7907931#1": "a√2/2",
         "ext_prt_03_hd_q_7907931#2": "a³/4",
+        "ext_prt_04_hd_q_8436784#1": "1/2",
+        "ext_prt_05_hd_q_7451806#1": "6/5",
+        "ext_prt_06_hd_q_1084979#1": "a√15/5",
+        "ext_prt_07_hd_q_7958052#1": "4,7",
         "ext_prt_09_vmmu_page_r4#1": "2",
+        "ext_prt_11_vmmu_page_r10#1": "30°",
+        "ext_prt_12_vmmu_page_r11#1": "2√3",
         "ext_hw_b1_01_hd_a_6043187#1": "a³√3",
     }
     assert sorted(missing_dim_ids) == []

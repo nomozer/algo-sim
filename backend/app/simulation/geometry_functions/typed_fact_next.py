@@ -183,7 +183,13 @@ KIND_ALLOWED_FIELDS_V2 = {
         'circumscribes': ['kind', 'quote', 'relation_id', 'solid_a', 'solid_b'],
         'inscribed_in': ['kind', 'quote', 'relation_id', 'solid_a', 'solid_b'],
         'tangent_to': ['contact_ref', 'entity_b', 'kind', 'quote', 'relation_id', 'solid_a', 'solid_b'],
-    }
+    },
+    'math_goal_v2': {
+        **KIND_ALLOWED_FIELDS['math_goal'],
+        'measurement': ['goal_id', 'goal_type', 'kind', 'quote', 'requested_unit', 'rounding', 'solid_id', 'target'],
+        'length_ratio': ['denominator_segment', 'goal_id', 'kind', 'numerator_segment', 'quote', 'rounding', 'solid_id'],
+        'area_ratio': ['denominator_polygon', 'goal_id', 'kind', 'numerator_polygon', 'quote', 'rounding', 'solid_id'],
+    },
 }
 GOAL_OPERAND_SHAPES = {'point': 'ref',
  'segment': 'refs2=',
@@ -210,6 +216,7 @@ GOAL_TARGET_ALTERNATIVES = {'distance': [['segment'],
  'area': [['polygon'], ['section_id'], ['solid']]}
 
 _KIND_GROUPS = {"MathGoalSpec": ("math_goal", "INVALID_MATH_GOAL"),
+                "MathGoalSpecV2": ("math_goal_v2", "INVALID_MATH_GOAL"),
                 "SimulationGoalSpec": ("simulation_goal", "INVALID_SIMULATION_GOAL"),
                 "GeometricRelationSpec": ("relation", "INVALID_RELATION_SPEC"),
                 "GeometricRelationSpecV2": ("relation_v2", "INVALID_RELATION_SPEC")}
@@ -253,7 +260,7 @@ class ClosedNextModel(BaseModel):
     @classmethod
     def _closed_kind_fields(cls, value):
         policy = _KIND_GROUPS.get(cls.__name__)  # S4: one per-kind field applicability authority
-        table = KIND_ALLOWED_FIELDS_V2 if policy and policy[0] == "relation_v2" else KIND_ALLOWED_FIELDS
+        table = KIND_ALLOWED_FIELDS_V2 if policy and policy[0].endswith("_v2") else KIND_ALLOWED_FIELDS
         if policy and isinstance(value, dict) and value.get("kind") in table[policy[0]]:
             unexpected = set(value) - set(table[policy[0]][value["kind"]])
             if unexpected:
@@ -385,6 +392,8 @@ _ARGS_LOI = {
     "rhombus": {"vertices": "refs4=", "side": "value?"},
     "trapezoid": {"vertices": "refs4=", "base_a": "refs2=", "base_b": "refs2="},
     "isosceles_trapezoid": {"vertices": "refs4=", "base_a": "refs2=", "base_b": "refs2="},
+    "face_area": {"polygon": "refs3", "value": "value", "shape": "id?"},
+    "segment_ratio": {"segment_a": "refs2=", "segment_b": "refs2=", "ratio": "value"},
 }
 for _alias, _goc in (("base_is_square", "regular_polygon"), ("base_is_equilateral_triangle", "regular_polygon"),
                      ("base_is_regular_polygon", "regular_polygon"), ("base_is_rectangle", "rectangle"),
@@ -863,6 +872,61 @@ class MathGoalSpec(ClosedNextModel):
         return self
 
 
+class MathGoalSpecV2(MathGoalSpec):
+    """`typed-fact-next/2` mathematical goal supporting output policies (`requested_unit`, `rounding`) and affine/area ratios."""
+
+    kind: Literal["volume_ratio", "residual_volume", "measurement", "length_ratio", "area_ratio"]
+    numerator_segment: tuple[NonEmptyText, NonEmptyText] | None = None
+    denominator_segment: tuple[NonEmptyText, NonEmptyText] | None = None
+    numerator_polygon: tuple[NonEmptyText, ...] | None = None
+    denominator_polygon: tuple[NonEmptyText, ...] | None = None
+    requested_unit: Literal["deg"] | None = None
+    rounding: dict[str, Any] | None = None
+
+    @model_validator(mode="after")
+    def _validate_v2_math_goal(self) -> "MathGoalSpecV2":
+        if self.kind == "length_ratio":
+            if not self.numerator_segment or not self.denominator_segment:
+                raise TypedFactNextValidationError(
+                    "INVALID_MATH_GOAL",
+                    f"Math goal {self.goal_id!r} ('length_ratio') requires 'numerator_segment' and 'denominator_segment'.",
+                )
+            for seg_key, seg in (("numerator_segment", self.numerator_segment), ("denominator_segment", self.denominator_segment)):
+                if not _hinh_dung(seg, "refs2=") or len(set(seg)) != 2:
+                    raise TypedFactNextValidationError("INVALID_MATH_GOAL", f"{self.goal_id}: malformed {seg_key!r}")
+        elif self.kind == "area_ratio":
+            if not self.numerator_polygon or not self.denominator_polygon:
+                raise TypedFactNextValidationError(
+                    "INVALID_MATH_GOAL",
+                    f"Math goal {self.goal_id!r} ('area_ratio') requires 'numerator_polygon' and 'denominator_polygon'.",
+                )
+            for poly_key, poly in (("numerator_polygon", self.numerator_polygon), ("denominator_polygon", self.denominator_polygon)):
+                if not _hinh_dung(poly, "refs3") or len(set(poly)) != len(poly):
+                    raise TypedFactNextValidationError("INVALID_MATH_GOAL", f"{self.goal_id}: malformed {poly_key!r}")
+        if self.requested_unit is not None and (self.kind != "measurement" or self.goal_type != "angle"):
+            raise TypedFactNextValidationError(
+                "INVALID_MATH_GOAL",
+                f"Math goal {self.goal_id!r}: 'requested_unit' is only applicable to angle measurement goals.",
+            )
+        if self.rounding is not None:
+            mode = self.rounding.get("mode") if isinstance(self.rounding, dict) else None
+            dec = self.rounding.get("decimals") if isinstance(self.rounding, dict) else None
+            sep = self.rounding.get("decimal_separator", ",") if isinstance(self.rounding, dict) else None
+            if (
+                mode != "ROUND_HALF_UP"
+                or not isinstance(dec, int)
+                or isinstance(dec, bool)
+                or not (0 <= dec <= 6)
+                or sep not in (",", ".")
+                or not (set(self.rounding) <= {"mode", "decimals", "decimal_separator"})
+            ):
+                raise TypedFactNextValidationError(
+                    "INVALID_MATH_GOAL",
+                    f"Math goal {self.goal_id!r}: invalid 'rounding' specification {self.rounding!r}.",
+                )
+        return self
+
+
 class DerivedObjectIdentity(ClosedNextModel):
     """Deterministic identity record for an automatically derived geometric object."""
 
@@ -1134,6 +1198,15 @@ def _described_consumer_scopes(p: "TypedFactNextPayload") -> dict[str, set[str |
 
 def _validate_goal_identities(p: "TypedFactNextPayload") -> None:
     for goal in p.math_goals:
+        if goal.kind in ("length_ratio", "area_ratio"):
+            scope = goal.solid_id
+            for key in ("numerator_segment", "denominator_segment", "numerator_polygon", "denominator_polygon"):
+                refs = getattr(goal, key, None)
+                if refs:
+                    identities = [ref.strip() if is_described_ref(ref) else canonical_vertex_ref(p, ref, scope) for ref in refs]
+                    if len(set(identities)) != len(identities):
+                        raise TypedFactNextValidationError("INVALID_MATH_GOAL", f"{goal.goal_id}: repeated identity in {key!r}")
+            continue
         if goal.kind != "measurement":
             continue
         scope = measurement_scope(p, goal)
@@ -1214,6 +1287,15 @@ def scope_records(p: "TypedFactNextPayload") -> list[tuple[str, str, str | None,
         refs = [x for x in (g.apex_ref, *g.target_refs) if x and x not in ids]
         recs.append(("simulation_goal", g.goal_id, scope, refs, False))
     for mg in p.math_goals:
+        if mg.kind in ("length_ratio", "area_ratio"):
+            refs = [
+                x
+                for key in ("numerator_segment", "denominator_segment", "numerator_polygon", "denominator_polygon")
+                for x in (getattr(mg, key, None) or ())
+                if not is_described_ref(x)
+            ]
+            recs.append(("math_goal", mg.goal_id, mg.solid_id, refs, False))
+            continue
         if mg.kind != "measurement":
             continue
         t = mg.target
@@ -1367,6 +1449,9 @@ def _validate_declared_solid_scope(p: "TypedFactNextPayload", known: set[str]) -
         if mg.kind in ("volume_ratio", "residual_volume"):
             if mg.kind == "residual_volume" and mg.cut_solid_id in parents:              # S3: a derived cut's ancestry
                 one_solid(mg.goal_id, mg.parent_solid_id, parents[mg.cut_solid_id])
+            continue
+        if mg.kind in ("length_ratio", "area_ratio"):
+            declared(mg.solid_id, mg.goal_id)                                            # S1
             continue
         t = mg.target
         for key in GOAL_OPERAND_KEYS:                                                    # S11
@@ -1522,6 +1607,7 @@ class TypedFactNextPayloadV2(TypedFactNextPayload):
     _VERSION: ClassVar[str] = TYPED_FACT_NEXT_V2_SCHEMA_VERSION
     derived_sections: tuple[DerivedPlaneSectionSpecV2, ...] = ()
     relations: tuple[GeometricRelationSpecV2, ...] = ()
+    math_goals: tuple[MathGoalSpecV2, ...] = ()
     unresolved: tuple[UnresolvedSpec, ...] = ()
     described_points: tuple[DescribedPointSpec, ...] = ()
 
