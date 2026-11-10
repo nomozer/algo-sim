@@ -408,6 +408,9 @@ describe("Axo V2.7 Slice 2 — 18 Component & Integration Cases (P11.2 & P11.3)"
 
 
     expect(popoverBlock).toMatch(/border:\s*1px\s+solid\s+var\(--hairline\)/);
+    expect(popoverBlock).toMatch(/border-radius:\s*13px/);
+    expect(popoverBlock).toMatch(/padding:\s*5px/);
+    expect(popoverBlock).toMatch(/min-width:\s*198px/);
     expect(popoverBlock).toMatch(/max-width:\s*min\(260px,\s*calc\(100vw\s*-\s*24px\)\)/);
 
     const itemMatch = css.match(/\.plus-menu-item\s*\{([^}]*)\}/s);
@@ -506,6 +509,17 @@ describe("Axo V2.7 Slice 2 — 18 Component & Integration Cases (P11.2 & P11.3)"
     expect(zoomed.placement).toBe("bottom");
     expect(zoomed.left).toBeCloseTo(314.6 / 1.1, 1);
     expect(zoomed.top).toBeCloseTo((363 + 8) / 1.1, 1);
+
+    const bothSidesTight = computePlusPopoverPosition({
+      triggerRect: { top: 45, bottom: 81, left: 24, right: 60, width: 36, height: 36 },
+      menuWidth: 208,
+      menuHeight: 102,
+      viewportWidth: 390,
+      viewportHeight: 110,
+    });
+    expect(bothSidesTight.maxHeight).toBe(110 - 24);
+    expect(bothSidesTight.top).toBeGreaterThanOrEqual(12);
+    expect(bothSidesTight.top + (bothSidesTight.maxHeight ?? 0)).toBeLessThanOrEqual(110 - 12);
   });
 
   it("21. Menu đính kèm hỗ trợ điều hướng bàn phím (ArrowDown/ArrowUp/Home/End/Escape hoàn trả focus) và bảo toàn văn bản + trạng thái nút Dựng hình", () => {
@@ -515,6 +529,7 @@ describe("Axo V2.7 Slice 2 — 18 Component & Integration Cases (P11.2 & P11.3)"
     );
     expect(src).toContain("plusTriggerRef");
     expect(src).toContain("plusPopoverRef");
+    expect(src).toContain("plusPopoverPosRef");
     expect(src).toContain("ArrowDown");
     expect(src).toContain("ArrowUp");
 

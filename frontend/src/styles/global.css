@@ -7159,7 +7159,7 @@ html {
   cursor: pointer;
   flex: 0 0 auto;
   padding: 0;
-  transition: background-color 0.12s ease, color 0.12s ease, border-color 0.12s ease, transform 0.16s ease;
+  transition: background-color 0.12s ease, color 0.12s ease, border-color 0.12s ease;
 }
 
 .btn-plus-trigger svg {
@@ -7168,7 +7168,8 @@ html {
   stroke: currentColor;
   stroke-width: 2;
   fill: none;
-  transition: transform 0.16s ease;
+  will-change: transform;
+  transition: transform 0.14s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .btn-plus-trigger:hover:not(:disabled) {
@@ -7243,13 +7244,16 @@ html {
   left: 0;
   box-sizing: border-box;
   width: max-content;
-  min-width: 196px;
+  min-width: 198px;
   max-width: min(260px, calc(100vw - 24px));
+  max-height: calc(100vh - 24px);
+  overflow-x: hidden;
+  overflow-y: auto;
   background: var(--surface);
   border: 1px solid var(--hairline);
-  border-radius: var(--rounded-lg);
+  border-radius: 13px;
   box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.03), var(--shadow-elevated);
-  padding: 4px;
+  padding: 5px;
   z-index: 35;
   display: none;
   flex-direction: column;
@@ -7259,7 +7263,8 @@ html {
 .plus-popover-menu.open {
   display: flex;
   transform-origin: top left;
-  animation: plusPopoverEnterDown 0.13s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity;
+  animation: plusPopoverEnterDown 0.11s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .plus-popover-menu.open[data-placement="top"] {
@@ -7276,7 +7281,7 @@ html {
   width: 100%;
   min-height: 41px;
   padding: 9px 13px;
-  border-radius: var(--rounded-md);
+  border-radius: 9px;
   border: none;
   background: transparent;
   color: var(--ink-secondary);
@@ -7287,7 +7292,7 @@ html {
   white-space: nowrap;
   cursor: pointer;
   text-align: left;
-  transition: background-color 0.12s ease, color 0.12s ease;
+  transition: background-color 0.1s ease, color 0.1s ease;
 }
 
 .plus-menu-item span {
@@ -7306,7 +7311,7 @@ html {
 
   .plus-popover-menu {
     width: max-content;
-    min-width: 204px;
+    min-width: 208px;
     gap: 2px;
   }
 

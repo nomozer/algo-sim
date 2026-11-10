@@ -311,6 +311,7 @@ export interface PlusPopoverPosition {
   left: number;
   top: number;
   placement: "bottom" | "top";
+  maxHeight?: number;
 }
 
 export function computePlusPopoverPosition(params: {
@@ -329,7 +330,8 @@ export function computePlusPopoverPosition(params: {
   const vw = Math.max(margin * 2 + 40, params.viewportWidth);
   const vh = Math.max(margin * 2 + 40, params.viewportHeight);
   const mw = Math.max(1, params.menuWidth);
-  const mh = Math.max(1, params.menuHeight);
+  const maxAvailableHeight = Math.max(44, vh - margin * 2);
+  const mh = Math.min(Math.max(1, params.menuHeight), maxAvailableHeight);
 
   const spaceBelow = vh - params.triggerRect.bottom - margin;
   const spaceAbove = params.triggerRect.top - margin;
@@ -346,11 +348,16 @@ export function computePlusPopoverPosition(params: {
 
   const maxLeft = Math.max(margin, vw - mw - margin);
   const rawLeft = Math.max(margin, Math.min(maxLeft, params.triggerRect.left));
+  const maxHeight =
+    params.menuHeight > maxAvailableHeight
+      ? Math.round((maxAvailableHeight / zoom) * 10) / 10
+      : undefined;
 
   return {
     left: Math.round((rawLeft / zoom) * 10) / 10,
     top: Math.round((rawTop / zoom) * 10) / 10,
     placement,
+    ...(maxHeight !== undefined ? { maxHeight } : {}),
   };
 }
 
@@ -592,6 +599,8 @@ export function ProblemInput({
   );
   const [plusMenuOpen, setPlusMenuOpen] = useState(initialPlusMenuOpen);
   const [plusPopoverPos, setPlusPopoverPos] = useState<PlusPopoverPosition | null>(null);
+  const plusPopoverPosRef = useRef<PlusPopoverPosition | null>(null);
+  const plusPopoverSizeRef = useRef<{ width: number; height: number } | null>(null);
   const composerBoxRef = useRef<HTMLDivElement>(null);
   const [allFilesModalOpen, setAllFilesModalOpen] = useState(
     initialAllFilesModalOpen,
@@ -695,53 +704,84 @@ export function ProblemInput({
     }
   }, [attachments, allFilesModalOpen, previewModalFileId]);
 
-  // Định vị menu `+` dựa trên không gian thực tế của viewport (mặc định mở xuống dưới, tự lật lên khi thiếu chỗ).
-  useIsomorphicLayoutEffect(() => {
-    if (!plusMenuOpen) {
-      setPlusPopoverPos(null);
+  function readCurrentPlusPopoverPos(): {
+    pos: PlusPopoverPosition;
+    outOfView: boolean;
+  } | null {
+    const triggerEl = plusTriggerRef.current;
+    if (!triggerEl || typeof window === "undefined") return null;
+
+    const triggerRect = triggerEl.getBoundingClientRect();
+    const inlineZoom = document.documentElement.style.zoom;
+    const cssZoom = inlineZoom ? parseFloat(inlineZoom) || 1 : 1;
+    const vv = window.visualViewport;
+    const viewportWidth = vv ? vv.width * (cssZoom !== 1 ? cssZoom : 1) : window.innerWidth;
+    const viewportHeight = vv ? vv.height * (cssZoom !== 1 ? cssZoom : 1) : window.innerHeight;
+
+    let minVisibleTop = 0;
+    if (triggerRect.top < 80) {
+      const navEl = document.querySelector(".nav-bar");
+      minVisibleTop = navEl ? Math.max(0, navEl.getBoundingClientRect().bottom) : 0;
+    }
+    const outOfView = triggerRect.bottom <= minVisibleTop || triggerRect.top >= viewportHeight;
+
+    const popoverEl = plusPopoverRef.current;
+    const rawOffsetW = popoverEl ? popoverEl.offsetWidth : 0;
+    const rawOffsetH = popoverEl ? popoverEl.offsetHeight : 0;
+    if (rawOffsetW > 0 && rawOffsetH > 0) {
+      plusPopoverSizeRef.current = { width: rawOffsetW, height: rawOffsetH };
+    }
+    const baseW =
+      plusPopoverSizeRef.current?.width ?? (showCameraEntry ? 208 : 198);
+    const baseH =
+      plusPopoverSizeRef.current?.height ?? (showCameraEntry ? 102 : 53);
+
+    const pos = computePlusPopoverPosition({
+      triggerRect,
+      menuWidth: baseW * cssZoom,
+      menuHeight: baseH * cssZoom,
+      viewportWidth,
+      viewportHeight,
+      cssZoom,
+    });
+    return { pos, outOfView };
+  }
+
+  function applyPlusPopoverPosIfChanged(next: PlusPopoverPosition) {
+    const prev = plusPopoverPosRef.current;
+    if (
+      prev &&
+      prev.placement === next.placement &&
+      prev.maxHeight === next.maxHeight &&
+      Math.abs(prev.left - next.left) < 0.5 &&
+      Math.abs(prev.top - next.top) < 0.5
+    ) {
       return;
     }
+    plusPopoverPosRef.current = next;
+    setPlusPopoverPos(next);
+  }
+
+  // Định vị sẵn vị trí nút `+` sau khi mount để lần mở đầu tiên đạt tốc độ tức thì (1 DOM mutation) giống hệt các lần mở tiếp theo.
+  useEffect(() => {
+    const measured = readCurrentPlusPopoverPos();
+    if (measured && !measured.outOfView) {
+      applyPlusPopoverPosIfChanged(measured.pos);
+    }
+  }, [showCameraEntry]);
+
+  // Định vị menu `+` dựa trên không gian thực tế của viewport (mặc định mở xuống dưới, tự lật lên khi thiếu chỗ).
+  useIsomorphicLayoutEffect(() => {
+    if (!plusMenuOpen) return;
 
     const syncPopoverPosition = () => {
-      const triggerEl = plusTriggerRef.current;
-      const popoverEl = plusPopoverRef.current;
-      if (!triggerEl || !popoverEl || typeof window === "undefined") return;
-
-      const triggerRect = triggerEl.getBoundingClientRect();
-      const vv = window.visualViewport;
-      const cssZoom =
-        parseFloat(window.getComputedStyle(document.documentElement).zoom || "1") || 1;
-      const viewportWidth = vv ? vv.width * (cssZoom !== 1 ? cssZoom : 1) : window.innerWidth;
-      const viewportHeight = vv ? vv.height * (cssZoom !== 1 ? cssZoom : 1) : window.innerHeight;
-
-      const navEl = document.querySelector(".nav-bar");
-      const minVisibleTop = navEl ? Math.max(0, navEl.getBoundingClientRect().bottom) : 0;
-      if (triggerRect.bottom <= minVisibleTop || triggerRect.top >= viewportHeight) {
+      const measured = readCurrentPlusPopoverPos();
+      if (!measured) return;
+      if (measured.outOfView) {
         setPlusMenuOpen(false);
         return;
       }
-
-      const popRect = popoverEl.getBoundingClientRect();
-      const menuWidth = popRect.width > 0 ? popRect.width : popoverEl.offsetWidth * cssZoom || 200;
-      const menuHeight = popRect.height > 0 ? popRect.height : popoverEl.offsetHeight * cssZoom || 48;
-
-      const next = computePlusPopoverPosition({
-        triggerRect,
-        menuWidth,
-        menuHeight,
-        viewportWidth,
-        viewportHeight,
-        cssZoom,
-      });
-
-      setPlusPopoverPos((prev) =>
-        prev &&
-        prev.placement === next.placement &&
-        Math.abs(prev.left - next.left) < 0.2 &&
-        Math.abs(prev.top - next.top) < 0.2
-          ? prev
-          : next,
-      );
+      applyPlusPopoverPosIfChanged(measured.pos);
     };
 
     syncPopoverPosition();
@@ -752,19 +792,11 @@ export function ProblemInput({
     vv?.addEventListener("resize", syncPopoverPosition);
     vv?.addEventListener("scroll", syncPopoverPosition);
 
-    let ro: ResizeObserver | null = null;
-    if (typeof ResizeObserver !== "undefined") {
-      ro = new ResizeObserver(syncPopoverPosition);
-      if (composerBoxRef.current) ro.observe(composerBoxRef.current);
-      if (plusPopoverRef.current) ro.observe(plusPopoverRef.current);
-    }
-
     return () => {
       window.removeEventListener("resize", syncPopoverPosition);
       window.removeEventListener("scroll", syncPopoverPosition, true);
       vv?.removeEventListener("resize", syncPopoverPosition);
       vv?.removeEventListener("scroll", syncPopoverPosition);
-      ro?.disconnect();
     };
   }, [plusMenuOpen, showCameraEntry]);
 
@@ -1244,6 +1276,12 @@ export function ProblemInput({
                 className={`btn-plus-trigger${plusMenuOpen ? " is-open" : ""}`}
                 onClick={(e) => {
                   const next = !plusMenuOpen;
+                  if (next) {
+                    const measured = readCurrentPlusPopoverPos();
+                    if (measured && !measured.outOfView) {
+                      applyPlusPopoverPosIfChanged(measured.pos);
+                    }
+                  }
                   setPlusMenuOpen(next);
                   if (next && e.detail === 0) {
                     requestAnimationFrame(() => {
@@ -1257,7 +1295,13 @@ export function ProblemInput({
                   if (e.key === "ArrowDown" || e.key === "ArrowUp") {
                     e.preventDefault();
                     const focusLast = e.key === "ArrowUp";
-                    if (!plusMenuOpen) setPlusMenuOpen(true);
+                    if (!plusMenuOpen) {
+                      const measured = readCurrentPlusPopoverPos();
+                      if (measured && !measured.outOfView) {
+                        applyPlusPopoverPosIfChanged(measured.pos);
+                      }
+                      setPlusMenuOpen(true);
+                    }
                     requestAnimationFrame(() => {
                       const items = plusPopoverRef.current?.querySelectorAll<HTMLButtonElement>(
                         ".plus-menu-item:not(:disabled)",
@@ -1286,13 +1330,16 @@ export function ProblemInput({
                 className={`plus-popover-menu${plusMenuOpen ? " open" : ""}`}
                 data-placement={plusPopoverPos?.placement ?? "bottom"}
                 style={
-                  plusMenuOpen && plusPopoverPos
+                  plusPopoverPos
                     ? {
                         position: "fixed",
                         left: `${plusPopoverPos.left}px`,
                         top: `${plusPopoverPos.top}px`,
                         bottom: "auto",
                         right: "auto",
+                        ...(plusPopoverPos.maxHeight
+                          ? { maxHeight: `${plusPopoverPos.maxHeight}px` }
+                          : {}),
                       }
                     : undefined
                 }
