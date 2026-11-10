@@ -54,6 +54,8 @@ export interface PhongCachScene3D {
     | "free"
     | "derived"
     | "line"
+    | "studiedLine"
+    | "angleArc"
     | "surface"
     | "secondarySurface"
     | "planeOutline"
@@ -149,6 +151,8 @@ export const PHONG_CACH_SCENE3D = {
     free: MAU_VAI_TRO.diem_de_cho,
     derived: 0xc85a32,
     line: 0x0f766e,
+    studiedLine: 0x2563eb,
+    angleArc: 0x2563eb,
     surface: 0x6d28d9,
     secondarySurface: 0x8b3dff,
     planeOutline: 0x6d28d9,

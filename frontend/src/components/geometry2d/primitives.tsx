@@ -19,7 +19,8 @@ export const GEO2D_TOKENS = {
   planeLabel: "#6D28D9",
   altitudeStroke: "#0F766E",
   altitudeFill: "rgba(15, 118, 110, 0.14)",
-  targetStroke: "#0075DE",
+  targetStroke: "#2563EB",
+  angleArcFill: "rgba(37, 99, 235, 0.16)",
   haloStroke: "#F6F5F4",
   fontFamily: "var(--font-family, 'Inter', system-ui, sans-serif)",
 } as const;
@@ -36,6 +37,7 @@ export type EdgeVisualRole =
   | "altitude"
   | "altitude-hidden"
   | "target"
+  | "target-hidden"
   | "plane-border";
 
 const EDGE_ROLE_STYLE: Record<
@@ -63,6 +65,11 @@ const EDGE_ROLE_STYLE: Record<
     strokeDasharray: "3.6,2.5",
   },
   target: { stroke: GEO2D_TOKENS.targetStroke, strokeWidth: 2.0 },
+  "target-hidden": {
+    stroke: GEO2D_TOKENS.targetStroke,
+    strokeWidth: 1.45,
+    strokeDasharray: "3.6,2.5",
+  },
   "plane-border": { stroke: GEO2D_TOKENS.planeStroke, strokeWidth: 1.0 },
 };
 

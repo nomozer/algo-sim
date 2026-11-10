@@ -79,13 +79,13 @@ describe("Axo V2.7 Slice 2 — 18 Component & Integration Cases (P11.2 & P11.3)"
     expect(html).toContain("composer-submit-arrow");
   });
 
-  it("2. Composer không có đường kẻ ngang phía trên hàng công cụ dưới cùng (.composer-footer border-top: none) và menu + mở xuống dưới", () => {
+  it("2. Composer không có đường kẻ ngang phía trên hàng công cụ dưới cùng (.composer-footer border-top: none) và menu + mở lên trên để không đè Gợi ý khám phá", () => {
     const css = readFileSync(
       new URL("../styles/global.css", import.meta.url),
       "utf-8",
     );
     expect(css).toMatch(/\.composer-footer\s*\{[^}]*border-top:\s*none/s);
-    expect(css).toMatch(/\.plus-popover-menu\s*\{[^}]*top:\s*calc\(100%\s*\+\s*6px\)/s);
+    expect(css).toMatch(/\.plus-popover-menu\s*\{[^}]*bottom:\s*calc\(100%\s*\+\s*8px\)/s);
   });
 
   it("3. Nút Dựng hình → ở trạng thái disabled ban đầu khi chưa có chữ và chưa có tệp", () => {
@@ -387,7 +387,7 @@ describe("Axo V2.7 Slice 2 — 18 Component & Integration Cases (P11.2 & P11.3)"
     expect(html).toContain('rows="3"');
   });
 
-  it("20. Menu đính kèm #plus-popover-menu đạt chuẩn tỷ lệ Axo (rộng 200–220px, padding ngang 12–14px, gap 10–12px, icon 16–18px, vùng chạm cảm ứng >= 44px, không trùng quy tắc .btn-plus-trigger)", () => {
+  it("20. Menu đính kèm #plus-popover-menu vừa khít nội dung (width: max-content, mở lên trên không đè Gợi ý khám phá, padding ngang cân đối 12–14px, gap 10–12px, icon 16–18px, vùng chạm cảm ứng >= 44px)", () => {
     const css = readFileSync(
       new URL("../styles/global.css", import.meta.url),
       "utf-8",
@@ -396,14 +396,16 @@ describe("Axo V2.7 Slice 2 — 18 Component & Integration Cases (P11.2 & P11.3)"
     const popoverMatch = css.match(/\.plus-popover-menu\s*\{([^}]*)\}/s);
     expect(popoverMatch).not.toBeNull();
     const popoverBlock = popoverMatch![1];
-    expect(popoverBlock).not.toContain("max-content");
+    expect(popoverBlock).toMatch(/width:\s*max-content/);
+    expect(popoverBlock).toMatch(/bottom:\s*calc\(100%\s*\+\s*8px\)/);
+    expect(popoverBlock).not.toMatch(/(?:^|\s|;)width:\s*\d+px/);
     expect(popoverBlock).not.toContain("152px");
 
-    const widthMatch = popoverBlock.match(/(?:^|\s|;)width:\s*(\d+)px/);
-    expect(widthMatch).not.toBeNull();
-    const menuWidth = Number(widthMatch![1]);
-    expect(menuWidth).toBeGreaterThanOrEqual(200);
-    expect(menuWidth).toBeLessThanOrEqual(220);
+
+
+
+
+
     expect(popoverBlock).toMatch(/border:\s*1px\s+solid\s+var\(--hairline\)/);
     expect(popoverBlock).toMatch(/max-width:\s*calc\(100vw\s*-\s*32px\)/);
 

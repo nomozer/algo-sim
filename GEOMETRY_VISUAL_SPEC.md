@@ -1,16 +1,66 @@
-# GEOMETRY VISUAL SPECIFICATION — AXO 11 SIMULATION SAMPLES
+# GEOMETRY VISUAL SPECIFICATION — AXO SEMANTIC GEOMETRY, OXYZ & 11 THPT SAMPLES
 
 > **Tài liệu đặc tả hình học & quy tắc đồng bộ trực quan (Scene3D ↔ 2D Illustration System ↔ Các bước dựng)**
 > - **Worktree:** `D:/Documents/projects/axo-geometry-library` (`feat/axo-geometry-library-verification`)
-> - **Nguồn dữ liệu gốc có thẩm quyền (Single Source of Truth):** `backend/scripts/build_geometry_samples.py` → `frontend/src/data/geometry-samples.json` → `withSubEntities` → `buildPedagogicalConstructionPlan` → `veKhongGian`.
+> - **Nguồn dữ liệu gốc có thẩm quyền (Single Source of Truth):**
+>   - **11 bài THPT nâng cao công khai (`PUBLIC_GEOMETRY_SAMPLES`):** `backend/scripts/build_advanced_geometry_samples.py` → `frontend/src/data/advanced-geometry-samples.json`.
+>   - **11 fixture hồi quy lịch sử (`LEGACY_GEOMETRY_SAMPLES`):** `backend/scripts/build_geometry_samples.py` → `frontend/src/data/geometry-samples.json`.
+>   - **Chuỗi trình bày tất định:** `Scene3D` → `withSubEntities` → `buildPedagogicalConstructionPlan` → `veKhongGian` → `Scene3DWorkspace`.
 > - **Hệ thống hình minh họa 2D hai tầng (`frontend/src/components/geometry2d/` & `SamplePreview.tsx`):**
->   1. **Tier A — Geometry Family Icons (`family-icons.tsx`):** Bộ 4 icon vector `24×24` tối giản cho 4 họ hình học (`pyramid` / `Hình chóp`, `sphere` / `Mặt cầu`, `cylinder` / `Hình trụ`, `cone` / `Hình nón`) + 1 icon đa diện trung tính (`neutral`), không chữ và không ký hiệu điểm.
->   2. **Tier B — Geometry Problem Illustration Templates (`templates.tsx` & `primitives.tsx`):** Bộ 12 template hình học phẳng 2D sư phạm theo chuẩn SGK THPT (`pyramid.section`, `pyramid.diagonal-section`, `pyramid.perpendicular`, `pyramid.altitude-distance`, `pyramid.volume-height`, `sphere.plane-section`, `sphere.basic-radius`, `cylinder.perpendicular-section`, `cylinder.oblique-axis`, `cylinder.right-basic`, `cone.axial-section`, `cone.slant-generator`).
->   3. **Template Resolver & Safe Fallback (`resolver.ts`):** Tự động phân tích cấu trúc `Scene3D` (`solid`, `curved_solid`, `plane3`, `section`, `polygon3`, `circle3`, `line3`, `segment3`, `point3`) để chọn đúng template dạng bài và chỉ gắn nhãn điểm/mặt phẳng đã xác minh (`mode="verified"`). Khi chỉ biết dạng bài mà chưa có `Scene3D`, hiển thị template không nhãn (`mode="generic"`). Khi chưa rõ dạng bài nhưng biết họ hình học, fallback về icon họ hình (`mode="family-icon"`). Khi thiếu cả hai, fallback về khối trung tính (`mode="fallback-neutral"`).
+>   1. **Tier A — Geometry Family Icons (`family-icons.tsx`):** Bộ 4 icon vector `24×24` tối giản (`pyramid`, `sphere`, `cylinder`, `cone`) + 1 icon đa diện trung tính (`neutral`).
+>   2. **Tier B — Composable 2D Templates (`templates.tsx` & `primitives.tsx`):** Bộ 19 template hình học phẳng 2D sư phạm theo chuẩn SGK THPT, đồng bộ bảng màu ngữ nghĩa với `Scene3D`.
+>   3. **Template Resolver & Safe Fallback (`resolver.ts`):** Tự động đối chiếu cấu trúc `Scene3D` để chọn đúng template dạng bài và chỉ gắn nhãn đã xác minh (`mode="verified"`), fallback an toàn sang `"generic"` / `"family-icon"` / `"fallback-neutral"`.
 
 ---
 
-## 1. Bảng tổng hợp 11 bài mô phỏng trong Thư viện (`publicCatalog()`)
+## 0. Chuẩn hóa màu ngữ nghĩa, ký hiệu toán học, hệ trục Oxyz & thứ tự ưu tiên đa vai trò
+
+### 0.1. Bảng màu & ký hiệu ngữ nghĩa dùng chung (`PHONG_CACH_SCENE3D`, `GEO2D_TOKENS`, `DESIGN.md`, `tokens.css`, `matphang.html`)
+
+| Vai trò toán học | Mã màu chuẩn | Kiểu nét / độ đục | Quy tắc kiểm chứng & hiển thị |
+|---|---|---|---|
+| **Đường cao, đoạn vuông góc chung, quan hệ vuông góc đã chứng nhận** | Teal `#0F766E` | Nét liền `2.1px` (thấy) / nét đứt (khuất); ô vuông `⊥` `16–22px` | Chỉ kích hoạt khi có `CONSTRUCT_HEIGHT`, `perpendicular_witness` hợp lệ hoặc chứng cứ tích vô hướng bằng `0` trong `chart_metric` (fail-closed khi `UNVERIFIED`). |
+| **Đường thẳng không gian, cặp đường chéo nhau, đoạn mục tiêu không vuông góc & cung góc đang xét** | Cobalt `#2563EB` | Nét liền `2.2px` + phần kéo dài nét đứt mảnh; quạt góc 3D độ đục `0.16` + cung tròn `2.1px` | Áp dụng cho đường thẳng khảo sát (`d`, `Δ`, hai đường chéo nhau `SC, BD`), đoạn khoảng cách mục tiêu không vuông góc (`OM`), và cung góc 3D đã xác minh (đường–đường, đường–mặt, mặt–mặt, góc phẳng nhị diện). |
+| **Thiết diện mục tiêu & giao tuyến cắt khối** | Terracotta `#C85A32` | Viền `2.8px`, miền tô độ đục `0.26` | Chỉ dùng cho thiết diện / giao tuyến thực sự cắt khối đa diện hoặc khối tròn xoay (không dùng cho vết mặt phẳng chắn trục Oxyz). |
+| **Mặt phẳng hình học & vết mặt phẳng tọa độ** | Violet `#6D28D9` | Viền `1.6px`, miền tô độ đục `0.06–0.08` | Dùng thống nhất cho `plane3` và đa giác chắn trục tọa độ (vd `ABC` của `(P)` trong không gian `Oxyz`). |
+| **Đường tròn / mặt cầu nội tiếp & ngoại tiếp** | Nội tiếp: Amber `#D97706` · Đường tròn ngoại tiếp: Cobalt `#2563EB` · Mặt cầu ngoại tiếp: Teal `#0F766E` | Vành hai lượt thấy/khuất theo camera | Giữ tách biệt `#D97706` (nội tiếp) và `#2563EB` (ngoại tiếp) theo đúng mã vẽ 3D của `matphang.html:1798,1810` để hai đường tròn đồng tâm trên cùng mặt đáy không trùng màu. |
+| **Cạnh khối cấu trúc & đường phụ trợ** | Trung tính `#1E293B` (thấy) / `#64748B` (khuất & phụ trợ) | Cạnh thấy `2.2px`, cạnh khuất nét đứt `1.5px`, đường phụ `1.65px` | Các cạnh bên lăng trụ đứng / hình hộp (`CONSTRUCT_LATERAL_BOUNDARY` không gắn `CONSTRUCT_HEIGHT`) giữ màu cấu trúc `#1E293B` kèm một dấu `⊥` đại diện tại đáy. |
+
+### 0.2. Chính sách ưu tiên hiển thị một nét duy nhất (Single-Stroke Multi-Role Priority)
+
+Khi nhiều thực thể hình học cùng nằm trên một cạnh/đường, hệ thống chuyển màu ngữ nghĩa lên chủ sở hữu duy nhất theo thứ tự ưu tiên giảm dần và nhường phần trùng (`doanNhuongCanh`, `yieldColinear`, `yieldStart`), tuyệt đối không tô đè nhiều lớp gây nhòe nét:
+
+1. **Hạng 4 (cao nhất):** Cạnh thiết diện mục tiêu / giao tuyến cắt khối (`#C85A32`).
+2. **Hạng 3:** Đường cao / đoạn vuông góc chứng nhận khoảng cách (`#0F766E`, vd `SA ⊥ (ABCD)` hoặc đoạn vuông góc chung `PQ`).
+3. **Hạng 2:** Đường thẳng không gian / đoạn mục tiêu đang xét (`#2563EB`, vd cạnh `SC` đóng vai trò một trong hai đường chéo nhau).
+4. **Hạng 1:** Cạnh biên cấu trúc thông thường của khối (`#1E293B`).
+5. **Hạng 0:** Tia dương hệ trục tọa độ `Ox, Oy, Oz` (`#475569` — tự động nhường đoạn `[0, h]` từ gốc `O` khi có đường cao hoặc đoạn thẳng chính nằm trùng trên trục).
+
+### 0.3. Chính sách hệ trục tọa độ `Oxyz` (`isExplicitOxyzCoordinateScene` & `dungTrucOxyzSuPham`)
+
+- **Tự động nhận diện theo ngữ cảnh toán học:** Chỉ tự bật `showAxes = true` cho bài toán tọa độ `Oxyz` tường minh (`coordinate_frame`, gốc `O(0;0;0)`, đối tượng hoặc đề bài nêu hệ tọa độ `Oxyz` / tọa độ bộ ba `(x; y; z)`); tự động tắt (`false`) cho các bài hình học tổng hợp thuần túy.
+- **Biểu diễn 3D chuẩn mực:** Đầy đủ 3 trục `Ox, Oy, Oz` gắn trong không gian thế giới 3D (xoay cùng mô hình, không cố định 2D HUD), gồm phần âm nét đứt `#64748B`, phần dương nét liền `#475569`, mũi tên nón chỉ chiều dương, ký hiệu `x, y, z` tách rời đầu mũi tên và nhãn gốc `O` (tự nhường khi cảnh đã có điểm `O` tường minh).
+- **Bảo toàn Camera Framing:** Nhóm `truc_oxyz_su_pham` gắn `userData.voHan = true` để thuật toán căn khung camera luôn tính trên tập đối tượng hình học hữu hạn của bài toán, không đẩy camera lùi xa.
+
+### 0.4. Danh mục 11 bài THPT nâng cao công khai hiện hành (`PUBLIC_GEOMETRY_SAMPLES`)
+
+| # | Mã bài (`id`) | Dạng toán & quan hệ trọng tâm | Hệ trục `Oxyz` mặc định | Template 2D (`resolver.ts`) |
+|---|---|---|---|---|
+| 1 | `chop-thiet-dien-ba-diem` | Thiết diện hình chóp cắt bởi mặt phẳng `(MNP)` qua 3 trung điểm | Tắt | `pyramid.section` |
+| 2 | `lap-phuong-thiet-dien-bat-ky` | Thiết diện lục giác đều của hình lập phương cắt bởi `(MNP)` | Tắt | `cube.plane-section` |
+| 3 | `khoang-cach-diem-mat-phang-nghieng` | Hình chiếu `H` và khoảng cách `d(A, (SBC))` từ chân đường cao đến mặt bên nghiêng | Tắt | `pyramid.point-to-plane-distance` |
+| 4 | `goc-nhi-dien-hai-mat-phang` | Góc phẳng nhị diện `∠SHA` giữa mặt bên `(SBC)` và đáy `(ABC)` | Tắt | `pyramid.dihedral-angle` |
+| 5 | `khoang-cach-hai-duong-cheo-nhau` | Đoạn vuông góc chung `PQ` và khoảng cách giữa hai đường chéo nhau `SC, BD` | Tắt | `pyramid.skew-lines-distance` |
+| 6 | `lang-tru-tam-giac-thiet-dien` | Thiết diện ngũ giác của lăng trụ đứng tam giác cắt bởi `(NPQ)` | Tắt | `prism.plane-section` |
+| 7 | `mat-cau-cat-mat-phang` | Mặt phẳng `(P)` cắt mặt cầu `(S)` trong `Oxyz` theo đường tròn tâm `H` | **Bật** | `sphere.plane-section` |
+| 8 | `oxyz-giao-diem-duong-mat` | Giao điểm `M = d ∩ (P)`, hình chiếu `H` của `E` lên `(P)` và độ dài `OM` trong `Oxyz` | **Bật** | `oxyz.line-plane-intersection` |
+| 9 | `mat-phang-tiep-xuc-mat-cau` | Mặt phẳng tiếp diện `(P)` tiếp xúc mặt cầu `(S)` tại tiếp điểm `A` trong `Oxyz` | **Bật** | `sphere.tangent-plane` |
+| 10 | `hinh-non-cat-song-song-day` | Mặt phẳng song song đáy cắt hình nón theo đường tròn thiết diện | Tắt | `cone.parallel-section` |
+| 11 | `chop-mat-cau-ngoai-tiep` | Tâm `I` (giao các mặt phẳng trung trực) và mặt cầu ngoại tiếp hình chóp `S.ABCD` | Tắt | `pyramid.circumscribed-sphere` |
+
+---
+
+## 1. Phụ lục bảo toàn: Bảng tổng hợp 11 fixture hồi quy lịch sử (`LEGACY_GEOMETRY_SAMPLES`)
 
 > **Giải trình số bước dựng (§3.A2 — Mâu thuẫn 2):**
 > - **Số sự kiện gốc (`scene3d.events.length`):** số sự kiện `CREATE` mức thấp do Kernel phát ra trong `geometry-samples.json`.

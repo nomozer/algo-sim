@@ -67,6 +67,7 @@ import {
   type Scene3D,
 } from "../simulations/domains/geometry/scene3d-model";
 import {
+  attachProblemContextToScene,
   buildPedagogicalConstructionPlan,
   buildStepEntityGroups,
   buildVerifiedObjectTooltip,
@@ -312,6 +313,7 @@ export function AxoWorkspaceV62({
     }
     try {
       attachHybridViewToScene(sceneKhung, hybrid);
+      attachProblemContextToScene(sceneKhung, { title: tieuDe, statement: de });
 
       const mv = verifySceneMathematicalConsistency(sceneKhung);
       const plan = buildPedagogicalConstructionPlan(withSubEntities(sceneKhung));
@@ -335,7 +337,7 @@ export function AxoWorkspaceV62({
         semanticContract: getSemanticConstructionContract(EMPTY_SAFE_SCENE),
       };
     }
-  }, [sceneKhung, hybrid, unavailableOverride]);
+  }, [sceneKhung, hybrid, unavailableOverride, tieuDe, de]);
 
   const invalidSceneReason = preparedSceneResult.integrityError;
   const mathVerification = preparedSceneResult.mathVerification;
@@ -481,7 +483,9 @@ export function AxoWorkspaceV62({
   const [showVertexLabels, setShowVertexLabels] = useState(() => initialRecoveredSnapshot?.display.showVertexLabels ?? true);
   const [showPlane, setShowPlane] = useState(() => initialRecoveredSnapshot?.display.showPlane ?? true);
   const [showSection, setShowSection] = useState(() => initialRecoveredSnapshot?.display.showSection ?? true);
-  const [showAxes, setShowAxes] = useState(() => initialRecoveredSnapshot?.display.showAxes ?? false);
+  const [showAxes, setShowAxes] = useState(
+    () => initialRecoveredSnapshot?.display.showAxes ?? isExplicitOxyzCoordinateScene(day),
+  );
   const [showDimensionLabels, setShowDimensionLabels] = useState(() => initialRecoveredSnapshot?.display.showDimensionLabels ?? true);
   const [showRightAngles, setShowRightAngles] = useState(() => initialRecoveredSnapshot?.display.showRightAngles ?? true);
   const [showDashedHidden, setShowDashedHidden] = useState(() => initialRecoveredSnapshot?.display.showDashedHidden ?? true);
@@ -561,7 +565,7 @@ export function AxoWorkspaceV62({
     setShowVertexLabels(snap?.display.showVertexLabels ?? true);
     setShowPlane(snap?.display.showPlane ?? true);
     setShowSection(snap?.display.showSection ?? true);
-    setShowAxes(snap?.display.showAxes ?? false);
+    setShowAxes(snap?.display.showAxes ?? isExplicitOxyzCoordinateScene(day));
     setShowDimensionLabels(snap?.display.showDimensionLabels ?? true);
     setShowRightAngles(snap?.display.showRightAngles ?? true);
     setShowDashedHidden(snap?.display.showDashedHidden ?? true);
@@ -1091,7 +1095,7 @@ export function AxoWorkspaceV62({
     setShowRightAngles(true);
     setShowDashedHidden(true);
     setHinhPhu(false);
-    setShowAxes(false);
+    setShowAxes(isExplicitOxyzCoordinateScene(day));
     setLuoi(true);
     setXem(DEFAULT_ANNOTATION_VIEW);
   };

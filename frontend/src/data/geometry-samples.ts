@@ -22,6 +22,7 @@
  * dựng hình/thiết diện · quan hệ song song–vuông góc · khoảng cách/thể tích/góc
  * · giao điểm đường–mặt trong Oxyz · mặt cầu cắt/tiếp xúc/ngoại tiếp · khối tròn xoay.
  */
+import { attachProblemContextToScene } from "../simulations/domains/geometry/scene3d-semantic-policy";
 import type { SimulationEnvelope } from "../simulations/types";
 import advancedRaw from "./advanced-geometry-samples.json";
 import legacyRaw from "./geometry-samples.json";
@@ -52,6 +53,16 @@ export const GEOMETRY_SAMPLES: GeometrySample[] = [
   ...PUBLIC_GEOMETRY_SAMPLES,
   ...LEGACY_GEOMETRY_SAMPLES,
 ];
+
+for (const sample of GEOMETRY_SAMPLES) {
+  const sc = (sample.envelope as unknown as { scene3d?: unknown })?.scene3d;
+  if (sc && typeof sc === "object") {
+    attachProblemContextToScene(sc as never, {
+      title: sample.envelope.title,
+      statement: sample.problemText || sample.envelope.description,
+    });
+  }
+}
 
 /** Bài mẫu theo id, hoặc `undefined`. Không ném — id lạ đến từ URL cũ. */
 export function geometrySampleById(id: string): GeometrySample | undefined {

@@ -1053,13 +1053,30 @@ export const GEOMETRY_TEMPLATES: Readonly<Record<GeometryTemplateId, GeometryTem
         const B: Point2D = [92, 94];
         const C: Point2D = [140, 62];
         const H: Point2D = [(B[0] + C[0]) * 0.5, (B[1] + C[1]) * 0.5];
+        const uHA: Point2D = [A[0] - H[0], A[1] - H[1]];
+        const uHS: Point2D = [S[0] - H[0], S[1] - H[1]];
+        const lenHA = Math.hypot(uHA[0], uHA[1]) || 1;
+        const lenHS = Math.hypot(uHS[0], uHS[1]) || 1;
+        const arcR = 13;
+        const pArcA: Point2D = [H[0] + (uHA[0] / lenHA) * arcR, H[1] + (uHA[1] / lenHA) * arcR];
+        const pArcS: Point2D = [H[0] + (uHS[0] / lenHS) * arcR, H[1] + (uHS[1] / lenHS) * arcR];
         const show = options.mode === "verified";
         const base = options.labels?.base ?? [];
         return (
           <>
             <Geo2DPolygon points={[A, B, C]} fill={GEO2D_TOKENS.baseFill} />
             <Geo2DPolygon points={[S, B, C]} fill={GEO2D_TOKENS.shellFill} />
-            <Section2D kind="polygon" points={[S, A, H]} hiddenEdges={[true, true, false]} />
+            <Geo2DPolygon points={[S, A, H]} fill={GEO2D_TOKENS.altitudeFill} />
+            <path
+              d={`M ${H[0].toFixed(1)} ${H[1].toFixed(1)} L ${pArcA[0].toFixed(1)} ${pArcA[1].toFixed(1)} A ${arcR} ${arcR} 0 0 1 ${pArcS[0].toFixed(1)} ${pArcS[1].toFixed(1)} Z`}
+              fill={GEO2D_TOKENS.angleArcFill}
+            />
+            <path
+              d={`M ${pArcA[0].toFixed(1)} ${pArcA[1].toFixed(1)} A ${arcR} ${arcR} 0 0 1 ${pArcS[0].toFixed(1)} ${pArcS[1].toFixed(1)}`}
+              fill="none"
+              stroke={GEO2D_TOKENS.targetStroke}
+              strokeWidth={1.6}
+            />
             <Segment2D from={A} to={C} role="hidden" />
             <Segment2D from={S} to={A} role="altitude-hidden" />
             <Segment2D from={A} to={B} role="solid" />
@@ -1067,7 +1084,7 @@ export const GEOMETRY_TEMPLATES: Readonly<Record<GeometryTemplateId, GeometryTem
             <Segment2D from={S} to={C} role="solid" />
             <Segment2D from={B} to={C} role="target" />
             <Segment2D from={A} to={H} role="altitude-hidden" />
-            <Segment2D from={S} to={H} role="section" />
+            <Segment2D from={S} to={H} role="altitude" />
             <PerpendicularMarker2D at={A} alongA={S} alongB={H} size={5.8} />
             <PerpendicularMarker2D at={H} alongA={A} alongB={B} size={5.8} />
             <PerpendicularMarker2D at={H} alongA={S} alongB={C} size={5.8} />
@@ -1138,8 +1155,11 @@ export const GEOMETRY_TEMPLATES: Readonly<Record<GeometryTemplateId, GeometryTem
       render: (options) => {
         const O: Point2D = [56, 72];
         const A: Point2D = [32, 92];
-        const B: Point2D = [136, 84];
-        const C: Point2D = [56, 16];
+        const B: Point2D = [134, 83];
+        const C: Point2D = [56, 20];
+        const OxTip: Point2D = [18, 103.5];
+        const OyTip: Point2D = [154, 85.8];
+        const OzTip: Point2D = [56, 7];
         const D: Point2D = [44, 86];
         const E: Point2D = [126, 22];
         const M: Point2D = [D[0] + (E[0] - D[0]) * 0.48, D[1] + (E[1] - D[1]) * 0.48];
@@ -1157,13 +1177,26 @@ export const GEOMETRY_TEMPLATES: Readonly<Record<GeometryTemplateId, GeometryTem
             <Segment2D from={O} to={A} role="hidden" />
             <Segment2D from={O} to={B} role="hidden" />
             <Segment2D from={O} to={C} role="hidden" />
-            <Segment2D from={A} to={B} role="solid" />
-            <Segment2D from={B} to={C} role="solid" />
-            <Segment2D from={C} to={A} role="solid" />
-            <Segment2D from={D} to={M} role="section-hidden" />
+            <Segment2D from={A} to={OxTip} role="secondary-solid" />
+            <Segment2D from={B} to={OyTip} role="secondary-solid" />
+            <Segment2D from={C} to={OzTip} role="secondary-solid" />
+            <polygon points="18,103.5 24.4,101.4 21.8,97.8" fill={GEO2D_TOKENS.secondaryStroke} />
+            <polygon points="154,85.8 147.8,82.8 147.2,87.2" fill={GEO2D_TOKENS.secondaryStroke} />
+            <polygon points="56,7 53.8,13.2 58.2,13.2" fill={GEO2D_TOKENS.secondaryStroke} />
+            {show ? (
+              <>
+                <text x="11" y="106" fontSize="9.5" fontStyle="italic" fontWeight="600" fill={GEO2D_TOKENS.secondaryStroke}>x</text>
+                <text x="157" y="88" fontSize="9.5" fontStyle="italic" fontWeight="600" fill={GEO2D_TOKENS.secondaryStroke}>y</text>
+                <text x="61" y="11" fontSize="9.5" fontStyle="italic" fontWeight="600" fill={GEO2D_TOKENS.secondaryStroke}>z</text>
+              </>
+            ) : null}
+            <Segment2D from={A} to={B} role="plane-border" />
+            <Segment2D from={B} to={C} role="plane-border" />
+            <Segment2D from={C} to={A} role="plane-border" />
+            <Segment2D from={D} to={M} role="target-hidden" />
             <Segment2D from={M} to={E} role="target" />
-            <Segment2D from={E} to={H} role="altitude-hidden" />
-            <Segment2D from={H} to={M} role="section" />
+            <Segment2D from={E} to={H} role="altitude" />
+            <Segment2D from={H} to={M} role="hidden" />
             <PerpendicularMarker2D at={H} alongA={E} alongB={M} size={5.8} />
             <Geo2DPoint at={O} label={options.labels?.center} dx={-8} dy={-4} showLabel={show && Boolean(options.labels?.center)} />
             <Geo2DPoint at={A} label={base[0]} dx={-9} dy={4} showLabel={show && Boolean(base[0])} />

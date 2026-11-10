@@ -276,16 +276,16 @@ describe("Axo 2D Geometry Illustration System (Tier A Family Icons + Tier B Comp
   it("6. Bảo toàn số bước dựng 3D và tích hợp đồng bộ trên Trang chủ & Thư viện", () => {
     const expectedSteps: Record<string, number> = {
       "chop-thiet-dien-ba-diem": 12,
-      "lap-phuong-thiet-dien-bat-ky": 13,
-      "khoang-cach-diem-mat-phang-nghieng": 10,
-      "goc-nhi-dien-hai-mat-phang": 12,
-      "khoang-cach-hai-duong-cheo-nhau": 13,
+      "lap-phuong-thiet-dien-bat-ky": 12,
+      "khoang-cach-diem-mat-phang-nghieng": 7,
+      "goc-nhi-dien-hai-mat-phang": 9,
+      "khoang-cach-hai-duong-cheo-nhau": 10,
       "lang-tru-tam-giac-thiet-dien": 11,
-      "mat-cau-cat-mat-phang": 10,
-      "oxyz-giao-diem-duong-mat": 10,
-      "mat-phang-tiep-xuc-mat-cau": 8,
-      "hinh-non-cat-song-song-day": 13,
-      "chop-mat-cau-ngoai-tiep": 17,
+      "mat-cau-cat-mat-phang": 6,
+      "oxyz-giao-diem-duong-mat": 7,
+      "mat-phang-tiep-xuc-mat-cau": 6,
+      "hinh-non-cat-song-song-day": 12,
+      "chop-mat-cau-ngoai-tiep": 15,
     };
 
     for (const entry of publicCatalog()) {

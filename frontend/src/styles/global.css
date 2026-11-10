@@ -7214,7 +7214,7 @@ html {
 @keyframes plusPopoverEnter {
   from {
     opacity: 0;
-    transform: translateY(-4px) scale(0.98);
+    transform: translateY(4px) scale(0.98);
   }
   to {
     opacity: 1;
@@ -7222,22 +7222,22 @@ html {
   }
 }
 
-/* P5.3 — Menu `+` mở XUỐNG DƯỚI (top: calc(100% + 6px); bottom: auto),
-   tuyệt đối không bao giờ đè lên tiêu đề "Em muốn dựng hình nào?". */
+/* Menu `+` mở LÊN TRÊN nút `+` với kích thước vừa khít nội dung (width: max-content),
+   không gán chiều rộng cứng tùy tiện theo viewport và không che vùng "Gợi ý khám phá". */
 .plus-popover-menu {
   position: absolute;
-  top: calc(100% + 6px);
-  bottom: auto;
+  bottom: calc(100% + 8px);
+  top: auto;
   left: 0;
   box-sizing: border-box;
-  width: 216px;
-  min-width: 204px;
+  width: max-content;
+  min-width: 0;
   max-width: calc(100vw - 32px);
   background: var(--surface);
   border: 1px solid var(--hairline);
   border-radius: var(--rounded-lg);
   box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.03), var(--shadow-elevated);
-  padding: 6px;
+  padding: 5px;
   z-index: 65;
   display: none;
   flex-direction: column;
@@ -7246,7 +7246,7 @@ html {
 
 .plus-popover-menu.open {
   display: flex;
-  transform-origin: top left;
+  transform-origin: bottom left;
   animation: plusPopoverEnter 0.14s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -7255,10 +7255,10 @@ html {
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  gap: 11px;
+  gap: 10px;
   width: 100%;
-  min-height: 38px;
-  padding: 9px 12px;
+  min-height: 36px;
+  padding: 8px 13px;
   border-radius: var(--rounded-md);
   border: none;
   background: transparent;
@@ -7274,7 +7274,7 @@ html {
 }
 
 .plus-menu-item span {
-  flex: 1 1 auto;
+  flex: 0 1 auto;
   min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -7288,13 +7288,13 @@ html {
   }
 
   .plus-popover-menu {
-    width: 220px;
+    width: max-content;
     gap: 3px;
   }
 
   .plus-menu-item {
     min-height: 44px;
-    padding: 10px 13px;
+    padding: 10px 14px;
     font-size: 14px;
   }
 }
