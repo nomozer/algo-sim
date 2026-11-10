@@ -366,8 +366,8 @@ def test_real_external_angle_premise_problems_solved_zero_ai(
     "case_id,problem_text",
     [
         (
-            "ext_vmmu_r10_c30_degree_measure_wording_refused_by_source_gate",
-            "Câu 30. Cho khối lăng trụ đứng ABC.A'B'C' có đáy là tam giác đều cạnh a, AA' = √3a (minh họa như hình vẽ bên). Tính số đo góc tạo bởi hai mặt phẳng (A'BC) và (ABC).",
+            "ext_unparsed_incenter_distance_clause",
+            "Câu 30. Cho khối lăng trụ đứng ABC.A'B'C' có đáy là tam giác đều cạnh a, AA' = √3a, tâm đường tròn nội tiếp đáy cách A' một khoảng 2a. Tính thể tích khối lăng trụ.",
         ),
         (
             "ext_hd_q_7907931_c33_unparsed_declarative_subpyramid_goal",

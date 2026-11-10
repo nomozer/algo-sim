@@ -692,7 +692,15 @@ def run_typed_fact_next_planner_route(raw: Any) -> KetQuaTuyen:
 def chay_sau_cau_noi(b: dict[str, Any]) -> KetQuaTuyen:
     """The ONE route after a TypedFactNext bridge (`/1` and `/2`, run `hybrid-contract-v2`): planner → Source Gate →
     engine → Scene3D (`run_fact_route`), then the declared length unit and plane names checked against the gated output."""
-    r = run_fact_route(b["bridge"]["problem_text"], {"facts": b["facts"]})
+    from app.simulation.geometry_functions.output_policy import apply_output_policies_to_result
+    from app.simulation.geometry_functions.registry import _CHINH_SACH_XUAT
+
+    out_pols = b["bridge"].get("output_policies")
+    tok = _CHINH_SACH_XUAT.set(out_pols)
+    try:
+        r = run_fact_route(b["bridge"]["problem_text"], {"facts": b["facts"]})
+    finally:
+        _CHINH_SACH_XUAT.reset(tok)
     r.planner = {**(r.planner or {}), "bridge": {k: v for k, v in b["bridge"].items() if k != "problem_text"}}
     unit = b["bridge"]["declared_length_unit"]
     if r.status == "SERVED" and unit is not None and unit != (r.length_unit or "1"):
@@ -708,6 +716,7 @@ def chay_sau_cau_noi(b: dict[str, Any]) -> KetQuaTuyen:
             if plane.get("display_label") != f"({name})":
                 return KetQuaTuyen("REFUSED", "SOURCE_OBJECT_MISMATCH", "tên mặt đã khai không khớp mặt được Source Gate xác minh",
                                    planner=r.planner)
+        r = apply_output_policies_to_result(r, out_pols)
     return r
 
 

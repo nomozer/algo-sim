@@ -72,7 +72,7 @@ def _phong_bi(r: KetQuaTuyen) -> dict[str, Any]:
     sections = []
     seen = set()
     for d in (r.planner or {}).get("auxiliary") or [] if served else []:
-        if d.get("rule") != DINH_CAT_CANH:
+        if d.get("rule") != DINH_CAT_CANH or d.get("base_edge_intersection"):
             continue
         seen.add(d["goal"])
         sections.append({
@@ -224,10 +224,16 @@ def build_adapter4_response(result: KetQuaTuyen, problem_text: str) -> dict[str,
             symbolic = (f"cos²={coefficient}" if asks[key].startswith("ask_angle_")
                         else _hien_thi_ky_hieu(value, degree, result.length_unit)
                         if result.length_unit and degree else coefficient)
+            out_pol = answer.get("output_policy") if isinstance(answer.get("output_policy"), dict) else None
+            expected_display = symbolic
+            if out_pol is not None:
+                if out_pol.get("exact_answer") != symbolic:
+                    raise PreviewInvalid("PREVIEW_LENGTH_UNIT_INVALID")
+                expected_display = out_pol.get("rounded_display") or symbolic
             if (type(dim) is not int or dim < 0 or not isinstance(result.answers[key], str)
                     or not result.answers[key].strip()
                     or dim != (degree if result.length_unit else 0)
-                    or answer.get("coef") != coefficient or result.answers[key] != symbolic
+                    or answer.get("coef") != coefficient or result.answers[key] != expected_display
                     or answer.get("unit") != (result.length_unit if dim else None)):
                 raise PreviewInvalid("PREVIEW_LENGTH_UNIT_INVALID")
             quantity = objects.get(f"kq_{key}", {})
@@ -312,7 +318,7 @@ def _validate_sections(sections: list[dict], objects: dict[str, dict], result: K
     dinh_cat_by_id = {
         d.get("goal"): d
         for d in ((result.planner or {}).get("auxiliary") or () if result is not None else ())
-        if d.get("rule") == DINH_CAT_CANH
+        if d.get("rule") == DINH_CAT_CANH and not d.get("base_edge_intersection")
     }
     ids = set()
     for section in sections:
