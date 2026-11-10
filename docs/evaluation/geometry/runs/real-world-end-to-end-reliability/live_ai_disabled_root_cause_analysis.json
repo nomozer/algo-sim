@@ -1,8 +1,8 @@
 {
   "schema": "algosim-live-ai-disabled-root-cause/1",
-  "generated_at_utc": "2026-11-10T04:50:28.368721+00:00",
+  "generated_at_utc": "2026-11-10T05:19:27.637673+00:00",
   "product_commit": "7994da7a64c8dc288c4de972df2d8d1db65e0c20",
-  "head_commit": "7994da7a64c8dc288c4de972df2d8d1db65e0c20",
+  "head_commit": "e838ab50d06d3ac0d5b02a98b9e3083ea0bfd5e6",
   "measured_system_tree_hash": "3754cbd18f58ddfb913fb61efd3dd078b0767770cff935a975cc8c258a1859fa",
   "measured_system_file_count": 108,
   "code_version": {
@@ -17,8 +17,8 @@
     "adaptive_router": "adaptive-input-router/1",
     "cache_version": "132"
   },
-  "input_or_case_hash": "26af2de0fc8f8ccc8c7733e9ab723831def5ab0dd791566aaf01ae99aa8ad81e",
-  "oracle": "Per-layer trace (local parser coverage → Source Gate → Planner → Kernel) + canonical paraphrase replays + hand oracle",
+  "input_or_case_hash": "27b79427f25a0c8e785c8212416cc5dc406d12566543acb9bbf1386c3b2af82c",
+  "oracle": "Per-layer trace (local parser coverage → Source Gate → Planner → Kernel) + Replay 2 TypedFactNext/2 + canonical paraphrase replays + hand oracle",
   "test_command": "python docs/evaluation/geometry/runs/real-world-end-to-end-reliability/tools/evaluate_real_world_reliability.py",
   "test_environment": {
     "os": "Windows-11-10.0.26100-SP0",
@@ -28,120 +28,207 @@
     "live_gemini_calls": 0,
     "benchmark_tier": "HOST_BENCHMARK_OFFLINE"
   },
-  "expected_behavior": "Every LIVE_AI_DISABLED case gets a proximate and a root layer backed by replay evidence; no case is 'missing data' unless the source truly lacks it.",
-  "actual_behavior": "LIVE_AI_DISABLED=11; root tally={'PLANNER_KERNEL': 3, 'OUTPUT_POLICY': 2, 'OUT_OF_SCOPE': 5, 'TYPED_FACTS_BRIDGE': 1}; proximate tally={'LOCAL_PARSER': 9, 'SOURCE_GATE_IN_LOCAL_VERIFICATION': 2}; canonical replays served as expected=True.",
+  "expected_behavior": "Every LIVE_AI_DISABLED case gets a proximate and a root layer backed by Replay 1/2/3 evidence; no case is 'missing data' unless the source truly lacks it.",
+  "actual_behavior": "LIVE_AI_DISABLED=11; root tally={'PLANNER_KERNEL': 3, 'OUTPUT_POLICY': 2, 'OUT_OF_SCOPE': 5, 'TYPED_FACTS_BRIDGE': 1}; proximate tally={'LOCAL_PARSER': 9, 'SOURCE_GATE_IN_LOCAL_VERIFICATION': 2}; replay_verifications_ok=True.",
   "verdict": "PASS",
   "run_id": "real-world-end-to-end-reliability",
   "wave_id": "REAL_WORLD_END_TO_END_RELIABILITY",
   "baseline_head_commit": "8d0fde3378c9b087bdbbc4c66e1a40aad3b532cc",
   "baseline_product_commit": "c61a3589782bde35b69e8376d8ebf136314e47f3",
-  "measurement_status": "MEASURED_OFFLINE",
+  "case_ids": [
+    "ext_prt_04_hd_q_8436784#1",
+    "ext_prt_05_hd_q_7451806#1",
+    "ext_prt_06_hd_q_1084979#1",
+    "ext_prt_07_hd_q_7958052#1",
+    "ext_prt_08_hd_q_7509702#1",
+    "ext_prt_10_vmmu_page_r7#1",
+    "ext_prt_11_vmmu_page_r10#1",
+    "ext_prt_12_vmmu_page_r11#1",
+    "ext_prt_13_vmmu_page_r25#1",
+    "ext_prt_14_vmmu_page_r26#1",
+    "ext_prt_15_vmmu_page_r28#1"
+  ],
+  "measurement_status": "MEASURED_OFFLINE (Replay 1 local text + Replay 2 validated TypedFactNext/2 + Replay 3 image ingestion)",
+  "oracle_provenance": "Direct execution of parse_geometry_problem_locally, run_typed_fact_next_v2_route, and route_text_input + self-derived hand oracle (printed MC keys on ext11, ext12)",
   "classification_legend": {
-    "A": "parser grammar/wording",
-    "C": "missing premise primitive",
-    "D": "source gate premise unread",
-    "F": "planner/kernel capability",
-    "G": "out of library scope",
-    "I": "image/diagram-dependent",
-    "OUTPUT_POLICY": "answer form (rounding/degrees) not provided"
+    "A": "Linguistic coverage (local parser)",
+    "B": "Semantic extraction",
+    "C": "Typed Fact / Bridge gap",
+    "D": "Source Gate / provenance",
+    "E": "Planner capability gap",
+    "F": "Registry / Exact Kernel gap",
+    "G": "Unsupported domain",
+    "H": "Insufficient specification",
+    "I": "Image-specific dependency",
+    "J": "Execution policy blocker (ALLOW_LIVE_AI=0)",
+    "OUTPUT_POLICY": "Answer form (rounding/degrees) outside exact-radical/cosine output policy"
   },
   "cases": [
     {
       "case_id": "ext_prt_04_hd_q_8436784#1",
       "class": "A→F",
+      "categories": [
+        "A",
+        "F",
+        "J"
+      ],
       "proximate": "LOCAL_PARSER",
       "root": "PLANNER_KERNEL",
       "detail": "AD = 2BC (relation without metric), plane through I parallel to two lines, ratio goal KC/KB; the library has no length-ratio goal and no affine-only (metric-free) solve path",
+      "proposed_fix": "DEFERRED_CAPABILITY (requires affine/homogeneous ratio goal & parallel-plane-to-two-lines primitive)",
       "parse_reason": "UNPARSED_GOAL_CANDIDATE",
       "oracle": "1/2"
     },
     {
       "case_id": "ext_prt_05_hd_q_7451806#1",
       "class": "A→F/C",
+      "categories": [
+        "A",
+        "C",
+        "F",
+        "J"
+      ],
       "proximate": "LOCAL_PARSER",
       "root": "PLANNER_KERNEL",
       "detail": "part-to-part ratio point (FIXED this run); remaining: 'Mặt phẳng (SAD) và đường thẳng ME cắt nhau tại I' word order, named areas S1/S2 and area-ratio goal on a parallelogram without metric",
+      "proposed_fix": "PARTIALLY_CLOSED_IN_RUN (SE=3EC ratio parsed); remaining area-ratio goal S1/S2 deferred",
       "parse_reason": "UNPARSED_GOAL_CANDIDATE",
       "oracle": "ORACLE_NOT_DERIVED_IN_RUN"
     },
     {
       "case_id": "ext_prt_06_hd_q_1084979#1",
       "class": "A→F",
+      "categories": [
+        "A",
+        "F",
+        "J"
+      ],
       "proximate": "LOCAL_PARSER",
       "root": "PLANNER_KERNEL",
-      "detail": "compound goal 'thể tích … và khoảng cách …'; base apex height must be deduced backward from an angle with a lateral plane (no inverse-angle primitive). Known-base paraphrase served (line–line distance capability exists)",
+      "detail": "compound goal 'thể tích … và khoảng cách …'; Replay 2 verbatim TypedFactNext/2 passes Source Gate + Planner and refuses MISSING_DIMENSION at Exact Kernel because base apex height must be deduced backward from line_plane_angle(BC', (ABB'A'))=60°. Known-base paraphrase served a√15/5",
+      "proposed_fix": "DEFERRED_CAPABILITY (inverse base-height deduction from lateral-plane angle + compound heterogeneous goals)",
       "parse_reason": "UNPARSED_GOAL_CANDIDATE",
       "oracle": "V = a³√15/4; d(AM,NP) ORACLE_NOT_DERIVED_IN_RUN"
     },
     {
       "case_id": "ext_prt_07_hd_q_7958052#1",
-      "class": "A→OUTPUT_POLICY",
+      "class": "A→D→OUTPUT_POLICY",
+      "categories": [
+        "A",
+        "D",
+        "F",
+        "J"
+      ],
       "proximate": "LOCAL_PARSER",
       "root": "OUTPUT_POLICY",
-      "detail": "'Â = 60°' notation and noun-phrase goal unread; canonical paraphrase served 15√93/31; original asks rounding to one decimal (no rounding output policy); height is free and the goal is height-invariant",
+      "detail": "Replay 2 verbatim TypedFactNext/2 hits Source Gate PREDICATE_NOT_IN_QUOTE on 'Â = 60°' and noun-phrase goal; canonical exact paraphrase without height NOW SERVES 15√93/31 via height-invariance; original asks decimal rounding ('làm tròn kết quả đến hàng phần mười') outside exact-only output contract",
+      "proposed_fix": "HEIGHT_INVARIANCE_READY (exact 15√93/31 served on canonical wording); remaining: Unicode 'Â', noun goal, and explicit rounding output policy",
       "parse_reason": "UNPARSED_FACT_CANDIDATE",
       "oracle": "15√93/31 ≈ 4,7"
     },
     {
       "case_id": "ext_prt_08_hd_q_7509702#1",
       "class": "G",
+      "categories": [
+        "G",
+        "J"
+      ],
       "proximate": "LOCAL_PARSER",
       "root": "OUT_OF_SCOPE",
       "detail": "vector-sum goal (no vector-valued answers in Route D)",
+      "proposed_fix": "KEEP_FAIL_CLOSED_OUT_OF_SCOPE (vector algebra outside polyhedral metric scope)",
       "parse_reason": "UNPARSED_GOAL_CANDIDATE",
       "oracle": "4·SO⃗ (vector)"
     },
     {
       "case_id": "ext_prt_10_vmmu_page_r7#1",
       "class": "G+I",
+      "categories": [
+        "G",
+        "I",
+        "J"
+      ],
       "proximate": "LOCAL_PARSER",
       "root": "OUT_OF_SCOPE",
-      "detail": "cone formed from a sheet sector; diagram-dependent",
+      "detail": "cone formed by rolling a sheet sector; diagram-dependent",
+      "proposed_fix": "KEEP_FAIL_CLOSED_OUT_OF_SCOPE (curved solid development + diagram dependency)",
       "parse_reason": "EMPTY_SOLIDS",
       "oracle": "ORACLE_NOT_DERIVED_IN_RUN"
     },
     {
       "case_id": "ext_prt_11_vmmu_page_r10#1",
       "class": "D→OUTPUT_POLICY",
+      "categories": [
+        "D",
+        "F",
+        "J"
+      ],
       "proximate": "SOURCE_GATE_IN_LOCAL_VERIFICATION",
       "root": "OUTPUT_POLICY",
-      "detail": "'chiều cao bằng a' on a regular triangular prism unread (SOURCE_PREMISE_UNREAD); with it, 'số đo góc' asks degrees (QUESTION_CONTEXT_UNSUPPORTED — degree output only for exact special angles not provided)",
+      "detail": "Replay 2 verbatim TypedFactNext/2 refuses UNGROUNDED_VALUE on 'chiều cao bằng a' for khối lăng trụ tam giác đều; even with explicit AA'=a, 'Tính số đo góc' asks degrees (30°) which triggers QUESTION_CONTEXT_UNSUPPORTED under exact-cosine output policy",
+      "proposed_fix": "DEFERRED_POLICY_AND_GROUNDING (ground 'chiều cao bằng' on regular prism + exact special-angle degree output policy)",
       "parse_reason": "QUESTION_CONTEXT_UNSUPPORTED",
       "oracle": "30°"
     },
     {
       "case_id": "ext_prt_12_vmmu_page_r11#1",
       "class": "A/D→C",
+      "categories": [
+        "A",
+        "C",
+        "D",
+        "J"
+      ],
       "proximate": "SOURCE_GATE_IN_LOCAL_VERIFICATION",
       "root": "TYPED_FACTS_BRIDGE",
-      "detail": "no area-premise primitive (area of square face = 12 ⇒ side); noun '… bằng' goal; side-given paraphrase served 2√3",
+      "detail": "Replay 2 verbatim TypedFactNext/2 hits NOT_ASKED_IN_SOURCE on MC stem ending '… bằng' and TypedFactNext/2 has no face-area premise primitive ('diện tích của hình vuông ABB'A' bằng 12(cm²)'); side-given paraphrase served 2√3",
+      "proposed_fix": "DEFERRED_CONTRACT_EXTENSION (add face_area premise to TypedFactNext/2 + bridge + Source Gate + MC stem '… bằng' goal cue)",
       "parse_reason": "NOT_ASKED_IN_SOURCE",
       "oracle": "2√3"
     },
     {
       "case_id": "ext_prt_13_vmmu_page_r25#1",
       "class": "G/I",
+      "categories": [
+        "G",
+        "I",
+        "J"
+      ],
       "proximate": "LOCAL_PARSER",
       "root": "OUT_OF_SCOPE",
-      "detail": "real-world curved solid with rounding",
+      "detail": "real-world horizontal cylinder water segment volume with rounding and diagram reference",
+      "proposed_fix": "KEEP_FAIL_CLOSED_OUT_OF_SCOPE (curved solid + diagram + rounding)",
       "parse_reason": "EMPTY_SOLIDS",
       "oracle": "ORACLE_NOT_DERIVED_IN_RUN"
     },
     {
       "case_id": "ext_prt_14_vmmu_page_r26#1",
       "class": "G/I",
+      "categories": [
+        "G",
+        "I",
+        "J"
+      ],
       "proximate": "LOCAL_PARSER",
       "root": "OUT_OF_SCOPE",
-      "detail": "spheres in cylinder",
+      "detail": "two tangent spheres packed inside a cylinder",
+      "proposed_fix": "KEEP_FAIL_CLOSED_OUT_OF_SCOPE (multi-sphere curved packing)",
       "parse_reason": "EMPTY_SOLIDS",
       "oracle": "ORACLE_NOT_DERIVED_IN_RUN"
     },
     {
       "case_id": "ext_prt_15_vmmu_page_r28#1",
       "class": "I+G",
+      "categories": [
+        "G",
+        "H",
+        "I",
+        "J"
+      ],
       "proximate": "LOCAL_PARSER",
       "root": "OUT_OF_SCOPE",
-      "detail": "dimensions only on the diagram (NOT_RECOVERABLE from text) and curved solid",
+      "detail": "heights exist only on the diagram ('Chiều cao đo được ghi trên hình' — NOT_RECOVERABLE from text) plus composite cone+cylinder",
+      "proposed_fix": "KEEP_FAIL_CLOSED_DIAGRAM_DEPENDENT (must refuse or request diagram values; never guess)",
       "parse_reason": "EMPTY_SOLIDS",
       "oracle": "NOT_RECOVERABLE_FROM_TEXT"
     }
@@ -157,7 +244,39 @@
     "SOURCE_GATE_IN_LOCAL_VERIFICATION": 2
   },
   "parser_sole_root_cause": 0,
-  "true_missing_data": 0,
+  "true_missing_data_in_text_corpus": 0,
+  "diagram_only_missing_from_text": 1,
+  "replay_1_local_text_summary": {
+    "total": 17,
+    "served": 6,
+    "live_ai_disabled": 11
+  },
+  "replay_2_validated_typed_facts_verbatim": {
+    "ext_prt_06_verbatim_v2": {
+      "status": "REFUSED",
+      "code": "MISSING_DIMENSION",
+      "reason": "đáy tam giác chưa xác định đủ ba cạnh",
+      "answers": {}
+    },
+    "ext_prt_07_verbatim_v2": {
+      "status": "REFUSED",
+      "code": "PREDICATE_NOT_IN_QUOTE",
+      "reason": "p4: vertex_angle cần một trong ['góc', '∠', '^'] trong 'Â = 60°'",
+      "answers": {}
+    },
+    "ext_prt_11_verbatim_v2": {
+      "status": "REFUSED",
+      "code": "UNGROUNDED_VALUE",
+      "reason": "p3: 'chiều cao bằng a' không gắn a với vai trò của ô này trong một câu đọc trọn",
+      "answers": {}
+    },
+    "ext_prt_12_verbatim_v2": {
+      "status": "REFUSED",
+      "code": "NOT_ASKED_IN_SOURCE",
+      "reason": "q1: \"Khoảng cách từ C đến mặt phẳng (ABB'A') bằng\" không hỏi đối tượng này nguyên vẹn (không có từ hỏi gắn với nó, đã gán giá trị, hay bị bổ nghĩa / đặt điều kiện) — không trả lời điều đề không hỏi",
+      "answers": {}
+    }
+  },
   "canonical_replays": {
     "02_withheight": {
       "for_case": "ext_prt_02",
@@ -170,7 +289,7 @@
       "scene3d_continuity_errors": [],
       "chosen_route": "LOCAL_DETERMINISTIC_HYBRID",
       "provider_calls": 0,
-      "elapsed_ms": 33.467
+      "elapsed_ms": 33.735
     },
     "03a_withheight": {
       "for_case": "ext_prt_03#1",
@@ -183,7 +302,7 @@
       "scene3d_continuity_errors": [],
       "chosen_route": "LOCAL_DETERMINISTIC_HYBRID",
       "provider_calls": 0,
-      "elapsed_ms": 30.729
+      "elapsed_ms": 30.512
     },
     "05_divide": {
       "for_case": "ext_prt_05",
@@ -196,7 +315,7 @@
       "scene3d_continuity_errors": [],
       "chosen_route": "LOCAL_DETERMINISTIC_HYBRID",
       "provider_calls": 0,
-      "elapsed_ms": 38.985
+      "elapsed_ms": 36.597
     },
     "06_vol": {
       "for_case": "ext_prt_06",
@@ -209,7 +328,7 @@
       "scene3d_continuity_errors": null,
       "chosen_route": "LOCAL_AMBIGUOUS_CLARIFICATION",
       "provider_calls": 0,
-      "elapsed_ms": 25.43
+      "elapsed_ms": 23.077
     },
     "06_knownbase": {
       "for_case": "ext_prt_06",
@@ -222,7 +341,7 @@
       "scene3d_continuity_errors": [],
       "chosen_route": "LOCAL_DETERMINISTIC_HYBRID",
       "provider_calls": 0,
-      "elapsed_ms": 74.138
+      "elapsed_ms": 47.999
     },
     "07_canon": {
       "for_case": "ext_prt_07",
@@ -235,7 +354,45 @@
       "scene3d_continuity_errors": [],
       "chosen_route": "LOCAL_DETERMINISTIC_HYBRID",
       "provider_calls": 0,
-      "elapsed_ms": 41.596
+      "elapsed_ms": 38.257
+    },
+    "07_canon_no_height": {
+      "for_case": "ext_prt_07",
+      "text_sha256": "10e3dc9b47d2af55a730e9e207252e5c2d37017841188b40d72b6d55a5911991",
+      "status": "SERVED",
+      "reason_code": null,
+      "fallback_reason": null,
+      "answer": "15√93/31",
+      "scene_configuration": {
+        "unique": false,
+        "kind": "HEIGHT_INVARIANT_ILLUSTRATIVE",
+        "free_parameter": "height",
+        "free_for": [
+          "A'"
+        ],
+        "illustrative_h2": "1",
+        "invariance_certificate": {
+          "method": "rational_function_identity_in_h2",
+          "max_degree": 3,
+          "samples_h2": [
+            "1",
+            "2",
+            "3",
+            "5",
+            "7"
+          ],
+          "goal_values": {
+            "q1": "15√93/31"
+          },
+          "goal_fns": [
+            "ask_distance_lines"
+          ]
+        }
+      },
+      "scene3d_continuity_errors": [],
+      "chosen_route": "LOCAL_DETERMINISTIC_HYBRID",
+      "provider_calls": 0,
+      "elapsed_ms": 119.47
     },
     "07_hat": {
       "for_case": "ext_prt_07",
@@ -248,7 +405,7 @@
       "scene3d_continuity_errors": null,
       "chosen_route": "FAIL_CLOSED_LIVE_AI_DISABLED",
       "provider_calls": 0,
-      "elapsed_ms": 3.369
+      "elapsed_ms": 3.248
     },
     "07_noun": {
       "for_case": "ext_prt_07",
@@ -261,7 +418,7 @@
       "scene3d_continuity_errors": null,
       "chosen_route": "FAIL_CLOSED_LIVE_AI_DISABLED",
       "provider_calls": 0,
-      "elapsed_ms": 5.521
+      "elapsed_ms": 6.185
     },
     "11_cos": {
       "for_case": "ext_prt_11",
@@ -274,7 +431,7 @@
       "scene3d_continuity_errors": null,
       "chosen_route": "FAIL_CLOSED_LIVE_AI_DISABLED",
       "provider_calls": 0,
-      "elapsed_ms": 7.853
+      "elapsed_ms": 8.623
     },
     "12_side": {
       "for_case": "ext_prt_12",
@@ -287,7 +444,7 @@
       "scene3d_continuity_errors": [],
       "chosen_route": "LOCAL_DETERMINISTIC_HYBRID",
       "provider_calls": 0,
-      "elapsed_ms": 35.816
+      "elapsed_ms": 33.881
     },
     "12_area": {
       "for_case": "ext_prt_12",
@@ -300,7 +457,7 @@
       "scene3d_continuity_errors": null,
       "chosen_route": "FAIL_CLOSED_LIVE_AI_DISABLED",
       "provider_calls": 0,
-      "elapsed_ms": 8.93
+      "elapsed_ms": 8.687
     },
     "08_vec_metric": {
       "for_case": "ext_prt_08",
@@ -313,11 +470,18 @@
       "scene3d_continuity_errors": null,
       "chosen_route": "FAIL_CLOSED_LIVE_AI_DISABLED",
       "provider_calls": 0,
-      "elapsed_ms": 5.024
+      "elapsed_ms": 4.346
     }
+  },
+  "replay_3_image_ingestion_summary": {
+    "complete_problem_images": 16,
+    "local_ocr_zero_ai_served": 0,
+    "raw_ocr_rejected_by_fidelity_gate": "38/38",
+    "recorded_vision_replay_served": "1/16 (ext_hw_b1_01_hd_a_6043187 -> a³√3)",
+    "live_vision": "LIVE_VISION_NOT_MEASURED"
   },
   "honesty_notes": [
     "Proximate parser refusals are frequent (local parser is the first gate) but the parser is the SOLE root of none of the 11.",
-    "Replays are development paraphrases written by the agent; they prove downstream capability, not end-user wording coverage."
+    "Replay 2 runs genuine TypedFactNext/2 payloads anchored to the verbatim External17 texts through bridge_v2 -> Source Gate -> Planner -> Exact Kernel, plus canonical paraphrases isolating downstream capability."
   ]
 }

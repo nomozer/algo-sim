@@ -1,8 +1,8 @@
 {
   "schema": "algosim-ocr-fidelity-regression-receipt/1",
-  "generated_at_utc": "2026-11-10T04:50:30.614554+00:00",
+  "generated_at_utc": "2026-11-10T05:19:29.665835+00:00",
   "product_commit": "7994da7a64c8dc288c4de972df2d8d1db65e0c20",
-  "head_commit": "7994da7a64c8dc288c4de972df2d8d1db65e0c20",
+  "head_commit": "e838ab50d06d3ac0d5b02a98b9e3083ea0bfd5e6",
   "measured_system_tree_hash": "3754cbd18f58ddfb913fb61efd3dd078b0767770cff935a975cc8c258a1859fa",
   "measured_system_file_count": 108,
   "code_version": {
@@ -151,6 +151,21 @@
   ],
   "run_id": "real-world-end-to-end-reliability",
   "wave_id": "REAL_WORLD_END_TO_END_RELIABILITY",
+  "case_ids": [
+    "radical_V_digit",
+    "radical_aV7",
+    "vertex_comma_S_ABCD",
+    "angle_degree_600",
+    "stacked_fraction_bar",
+    "italic_digit_in_polygon",
+    "leading_digits_48C",
+    "diagram_phrase_nhu_hinh_ben",
+    "diagram_phrase_ghi_tren_hinh",
+    "mixed_text_and_diagram_flag",
+    "handwritten_modality_flag",
+    "clean_printed_control"
+  ],
   "measurement_status": "MEASURED_OFFLINE",
+  "oracle_provenance": "Deterministic 6-criteria Input Fidelity Gate + Dual-OCR Reconciliation Gate corruption probes",
   "source": "re-executed previous-run probe builder on this product commit (read-only import)"
 }

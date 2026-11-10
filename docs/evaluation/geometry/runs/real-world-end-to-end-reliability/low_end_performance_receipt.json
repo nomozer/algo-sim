@@ -1,8 +1,8 @@
 {
   "schema": "algosim-low-end-performance-impact/1",
-  "generated_at_utc": "2026-11-10T04:50:44.454933+00:00",
+  "generated_at_utc": "2026-11-10T05:23:30.794629+00:00",
   "product_commit": "7994da7a64c8dc288c4de972df2d8d1db65e0c20",
-  "head_commit": "7994da7a64c8dc288c4de972df2d8d1db65e0c20",
+  "head_commit": "e838ab50d06d3ac0d5b02a98b9e3083ea0bfd5e6",
   "measured_system_tree_hash": "3754cbd18f58ddfb913fb61efd3dd078b0767770cff935a975cc8c258a1859fa",
   "measured_system_file_count": 108,
   "code_version": {
@@ -29,54 +29,54 @@
     "benchmark_tier": "HOST_BENCHMARK_OFFLINE"
   },
   "expected_behavior": "CPU-only, 0 MB VietOCR-HW bloat on text/printed routes, bounded LRU cache (<=256), no unbounded memory growth across 50 requests, NO_RUST_NEEDED.",
-  "actual_behavior": "cold_parse_p50=10.905ms, cached_parse_p50=0.049ms, kernel_p50=13.029ms, e2e_p50=24.336ms, rss=107.7->107.68MB.",
+  "actual_behavior": "cold_parse_p50=20.865ms, cached_parse_p50=0.067ms, kernel_p50=25.801ms, e2e_p50=44.808ms, rss=114.13->114.14MB.",
   "verdict": "PASS_HOST_AND_CONSTRAINED_MEASURED",
   "benchmark_tiers": {
     "host_benchmark": {
       "status": "MEASURED",
       "local_parser_cold_ms": {
-        "p50": 10.905,
-        "p95": 18.997
+        "p50": 20.865,
+        "p95": 36.584
       },
       "local_parser_cached_ms": {
-        "p50": 0.049,
-        "p95": 0.067
+        "p50": 0.067,
+        "p95": 0.103
       },
       "planner_ms": {
-        "p50": 0.424,
-        "p95": 0.59
+        "p50": 0.613,
+        "p95": 1.105
       },
       "registry_source_gate_ms": {
-        "p50": 8.317,
-        "p95": 15.088
+        "p50": 16.086,
+        "p95": 30.203
       },
       "exact_kernel_ms": {
-        "overall_p50": 13.029,
-        "overall_p95": 21.531,
-        "baseline_square_pyramid_p50": 11.377,
-        "new_angle_premise_p50": 21.275,
-        "new_family1_right_trapezoid_p50": 13.446,
-        "new_family2_rhombus_60_p50": 12.48
+        "overall_p50": 25.801,
+        "overall_p95": 45.622,
+        "baseline_square_pyramid_p50": 25.402,
+        "new_angle_premise_p50": 41.386,
+        "new_family1_right_trapezoid_p50": 23.242,
+        "new_family2_rhombus_60_p50": 24.206
       },
       "region_detection_external_photo_ms": {
-        "p50": 23.953,
-        "p95": 36.423
+        "p50": 46.725,
+        "p95": 94.823
       },
       "ocr_fidelity_gate_ms": {
-        "p50": 0.412,
-        "p95": 11.659
+        "p50": 0.755,
+        "p95": 16.451
       },
       "adaptive_router_e2e_cached_ms": {
-        "p50": 24.336,
-        "p95": 33.063
+        "p50": 44.808,
+        "p95": 64.634
       }
     },
     "resource_constrained_single_thread_benchmark": {
       "status": "MEASURED_SINGLE_THREAD_ENV",
       "note": "Measured with OMP_NUM_THREADS=1, MKL_NUM_THREADS=1, OPENBLAS_NUM_THREADS=1 on 12-thread host CPU; NOT claimed equivalent to a physical 2-core legacy laptop.",
       "e2e_text_to_scene3d_ms": {
-        "p50_ms": 67.101,
-        "p95_ms": 404.402
+        "p50_ms": 30.834,
+        "p95_ms": 282.817
       }
     },
     "physical_low_end_hardware_benchmark": {
@@ -85,10 +85,10 @@
     }
   },
   "memory_and_model_hygiene": {
-    "rss_before_50_requests_mb": 107.7,
-    "rss_after_50_requests_mb": 107.68,
-    "rss_delta_50_requests_mb": -0.02,
-    "tracemalloc_peak_kb": 801.12,
+    "rss_before_50_requests_mb": 114.13,
+    "rss_after_50_requests_mb": 114.14,
+    "rss_delta_50_requests_mb": 0.01,
+    "tracemalloc_peak_kb": 822.15,
     "parser_lru_cache_stats": {
       "size": 4,
       "max_size": 256,
@@ -103,31 +103,42 @@
   },
   "rust_evaluation": {
     "decision": "NO_RUST_NEEDED",
-    "rationale": "Planner p50=0.424 ms, Source Gate p50=8.317 ms, Exact Kernel p50=13.029 ms, and cached E2E text->Scene3D p50=24.336 ms all execute well under 50 ms on CPU in pure Python Fraction/Radical arithmetic with zero bottleneck justifying FFI/Rust complexity."
+    "rationale": "Planner p50=0.613 ms, Source Gate p50=16.086 ms, Exact Kernel p50=25.801 ms, and cached E2E text->Scene3D p50=44.808 ms all execute well under 50 ms on CPU in pure Python Fraction/Radical arithmetic with zero bottleneck justifying FFI/Rust complexity."
   },
   "run_id": "real-world-end-to-end-reliability",
   "wave_id": "REAL_WORLD_END_TO_END_RELIABILITY",
+  "case_ids": [
+    "baseline_square_pyramid",
+    "new_angle_premise",
+    "new_family1_right_trapezoid",
+    "new_family2_rhombus_60",
+    "height_invariant_served",
+    "stated_height_served",
+    "dependent_refused_after_probe",
+    "volume_refused_no_probe"
+  ],
+  "oracle_provenance": "time.perf_counter + tracemalloc + Win32 GetProcessMemoryInfo RSS + OMP_NUM_THREADS=1 subprocess",
   "height_invariance_overhead": {
     "cold_parser_each_request": true,
     "latency": {
       "height_invariant_served": {
-        "p50_ms": 115.793,
-        "p95_ms": 136.089,
+        "p50_ms": 93.718,
+        "p95_ms": 176.983,
         "n": 10
       },
       "stated_height_served": {
-        "p50_ms": 41.062,
-        "p95_ms": 54.511,
+        "p50_ms": 34.596,
+        "p95_ms": 98.237,
         "n": 10
       },
       "dependent_refused_after_probe": {
-        "p50_ms": 105.267,
-        "p95_ms": 169.165,
+        "p50_ms": 85.587,
+        "p95_ms": 125.022,
         "n": 10
       },
       "volume_refused_no_probe": {
-        "p50_ms": 23.321,
-        "p95_ms": 28.829,
+        "p50_ms": 24.108,
+        "p95_ms": 32.835,
         "n": 10
       }
     },

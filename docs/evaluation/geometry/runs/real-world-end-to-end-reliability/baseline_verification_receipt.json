@@ -1,8 +1,8 @@
 {
   "schema": "algosim-baseline-integrity-receipt/1",
-  "generated_at_utc": "2026-11-10T04:50:27.332267+00:00",
+  "generated_at_utc": "2026-11-10T05:19:26.462924+00:00",
   "product_commit": "7994da7a64c8dc288c4de972df2d8d1db65e0c20",
-  "head_commit": "7994da7a64c8dc288c4de972df2d8d1db65e0c20",
+  "head_commit": "e838ab50d06d3ac0d5b02a98b9e3083ea0bfd5e6",
   "measured_system_tree_hash": "3754cbd18f58ddfb913fb61efd3dd078b0767770cff935a975cc8c258a1859fa",
   "measured_system_file_count": 108,
   "code_version": {
@@ -53,7 +53,14 @@
   },
   "run_id": "real-world-end-to-end-reliability",
   "wave_id": "REAL_WORLD_END_TO_END_RELIABILITY",
+  "case_ids": [
+    "Dev72 (72)",
+    "C26 (70)",
+    "Section7 (7)",
+    "ExternalCache (38)"
+  ],
   "measurement_status": "MEASURED_OFFLINE",
+  "oracle_provenance": "custodian/geometry_oracle.py + C26 section coplanarity/convexity oracle + SHA-256 cache manifest",
   "baseline_head_commit": "8d0fde3378c9b087bdbbc4c66e1a40aad3b532cc",
   "baseline_product_commit": "c61a3589782bde35b69e8376d8ebf136314e47f3",
   "baseline_freeze_verify": "MATCH (verified before edits on clean tree)"

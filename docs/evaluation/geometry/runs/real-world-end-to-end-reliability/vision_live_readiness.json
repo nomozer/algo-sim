@@ -1,8 +1,8 @@
 {
   "schema": "algosim-vision-live-readiness/1",
-  "generated_at_utc": "2026-11-10T04:50:31.037585+00:00",
+  "generated_at_utc": "2026-11-10T05:19:30.293940+00:00",
   "product_commit": "7994da7a64c8dc288c4de972df2d8d1db65e0c20",
-  "head_commit": "7994da7a64c8dc288c4de972df2d8d1db65e0c20",
+  "head_commit": "e838ab50d06d3ac0d5b02a98b9e3083ea0bfd5e6",
   "measured_system_tree_hash": "3754cbd18f58ddfb913fb61efd3dd078b0767770cff935a975cc8c258a1859fa",
   "measured_system_file_count": 108,
   "code_version": {
@@ -35,13 +35,35 @@
   "wave_id": "REAL_WORLD_END_TO_END_RELIABILITY",
   "baseline_head_commit": "8d0fde3378c9b087bdbbc4c66e1a40aad3b532cc",
   "baseline_product_commit": "c61a3589782bde35b69e8376d8ebf136314e47f3",
+  "case_ids": [
+    "ext_prt_01_hd_q_5259753",
+    "ext_prt_02_hd_q_7922924",
+    "ext_prt_03_hd_q_7907931",
+    "ext_prt_04_hd_q_8436784",
+    "ext_prt_05_hd_q_7451806",
+    "ext_prt_06_hd_q_1084979",
+    "ext_prt_07_hd_q_7958052",
+    "ext_prt_08_hd_q_7509702",
+    "ext_prt_09_vmmu_page_r4",
+    "ext_prt_10_vmmu_page_r7",
+    "ext_prt_11_vmmu_page_r10",
+    "ext_prt_12_vmmu_page_r11",
+    "ext_prt_13_vmmu_page_r25",
+    "ext_prt_14_vmmu_page_r26",
+    "ext_prt_15_vmmu_page_r28",
+    "ext_hw_b1_01_hd_a_6043187"
+  ],
   "measurement_status": "LIVE_VISION_NOT_MEASURED",
+  "oracle_provenance": "Verbatim ground-truth transcriptions in corpus_catalog.py + ORACLE_SELF_DERIVED / printed MC keys",
   "images": [
     {
       "image_id": "ext_prt_01_hd_q_5259753",
       "sha256": "80e0da6de3a76dd066eb6677a5c87162f05fc52c5d0220b6c0b8389bca3db7fc",
       "modality": "PRINTED",
       "ground_truth_text_sha256": "6c2eceb9aef5c3fa92a6ad3d4c6ed099e95069df29f59344fdeb80284eae96e4",
+      "oracle_expected": [
+        "a³√3/3"
+      ],
       "cached": true
     },
     {
@@ -49,6 +71,9 @@
       "sha256": "0f405f8ae6efa2f33b5e0b9aa629af27dd7f48dbc5dbf5fd8f41621a9eac0bd4",
       "modality": "PRINTED",
       "ground_truth_text_sha256": "60e8050f0c104b16bf8f213ab0e9993b1208af9f18044e8a5592b2b26b730202",
+      "oracle_expected": [
+        "6"
+      ],
       "cached": true
     },
     {
@@ -56,6 +81,10 @@
       "sha256": "7d4fce5c2f698aa45322a907d94f1f7bcbf85b89825722d4286660ca4f89cb19",
       "modality": "PRINTED",
       "ground_truth_text_sha256": "c9a96aa975fa13df9f963c383d325a78aa839bfa0fe33d41fce9375d2233c502",
+      "oracle_expected": [
+        "a√2/2",
+        "a³/4"
+      ],
       "cached": true
     },
     {
@@ -63,6 +92,9 @@
       "sha256": "ef5aeba88614b8780d102f8f6c810c694a3adf77872369b9e2b122f2ff02592a",
       "modality": "PRINTED",
       "ground_truth_text_sha256": "b63dd2d916332a4e38907aa9dd696a6e761ab438b9784587760c427b6aafbd3a",
+      "oracle_expected": [
+        "1/2"
+      ],
       "cached": true
     },
     {
@@ -70,6 +102,9 @@
       "sha256": "0a2ee11bff0ffd665eb616457b909695dcbf1f0f14e5f40ac8819941f54da162",
       "modality": "PRINTED",
       "ground_truth_text_sha256": "bbcc36489598e7291e280385d5b84c674bd883bfdbbc83b5ba44add57b4caf9c",
+      "oracle_expected": [
+        "ORACLE_NOT_DERIVED_IN_RUN"
+      ],
       "cached": true
     },
     {
@@ -77,6 +112,9 @@
       "sha256": "d404d846526925de750598309423bb973ee02c07d50b504fca3e53b0859b6c6e",
       "modality": "PRINTED",
       "ground_truth_text_sha256": "0c8ab0b52ed4c44812fc54ac3d6fac91bf6d1a579561a9098ad41b953b63c5db",
+      "oracle_expected": [
+        "V = a³√15/4; d(AM,NP) ORACLE_NOT_DERIVED_IN_RUN"
+      ],
       "cached": true
     },
     {
@@ -84,6 +122,9 @@
       "sha256": "de55e23b0be5986792fac8858ae8a0f84b3d248fc3935c7f3ed1b05aa3e8de8d",
       "modality": "PRINTED",
       "ground_truth_text_sha256": "38436df18bb822a1c88f1dcc6a23a983a84733d3587bce14508081dd02b4a4b0",
+      "oracle_expected": [
+        "15√93/31 ≈ 4,7"
+      ],
       "cached": true
     },
     {
@@ -91,6 +132,9 @@
       "sha256": "831ba2d6e66dcba036aaf2356365a163f3d66c750a0508dc8613a29ade3980e7",
       "modality": "PRINTED",
       "ground_truth_text_sha256": "b95a7155647e65a3f00722bc28adb0d295aba190b379f0bb128344af2e14ecfa",
+      "oracle_expected": [
+        "4·SO⃗ (vector)"
+      ],
       "cached": true
     },
     {
@@ -98,6 +142,9 @@
       "sha256": "3aa6480bd6b49b4dba9c3cc050440f44f156f30a3e856a47917951682c19f087",
       "modality": "PRINTED",
       "ground_truth_text_sha256": "3ea85463317df18deddf1b872f9aefde4bea48e054ca6f5451dfecd7cb3861b2",
+      "oracle_expected": [
+        "2"
+      ],
       "cached": true
     },
     {
@@ -105,6 +152,9 @@
       "sha256": "b0b63d84736ceef8f8ea977237ad2877a10de438f498e6514a4b621d9956c6d7",
       "modality": "PRINTED",
       "ground_truth_text_sha256": "6c6f1dfa119fd6a76b5f521d86ea242aae31da2a120a0ad4a66e59abe51e32d9",
+      "oracle_expected": [
+        "ORACLE_NOT_DERIVED_IN_RUN"
+      ],
       "cached": true
     },
     {
@@ -112,6 +162,9 @@
       "sha256": "9bc0a563daabf465c75377efa01b99ee5e2a34b891b60d6f95f3c049dd4f570c",
       "modality": "PRINTED",
       "ground_truth_text_sha256": "04f0b9be54a7cec3c034a9e1109ae65d18d1410469e7861aae865d0511dcfbda",
+      "oracle_expected": [
+        "30°"
+      ],
       "cached": true
     },
     {
@@ -119,6 +172,9 @@
       "sha256": "1946978c4b991a48bea6dc26f449e7c5626c838a21a40a167b2cc1db365d289a",
       "modality": "PRINTED",
       "ground_truth_text_sha256": "bfd81a33cb7d9ed8d40d10690555ca4093f3ba83b51901e40329123768ea1713",
+      "oracle_expected": [
+        "2√3"
+      ],
       "cached": true
     },
     {
@@ -126,6 +182,9 @@
       "sha256": "61d45dd943c50029e757fb8dc75e25df7bd0754fca8eb469ab48cab45b03c30f",
       "modality": "PRINTED",
       "ground_truth_text_sha256": "38a05547eeee069dd46a7b805dae2fffad8323566a4e125121518b37b6d20228",
+      "oracle_expected": [
+        "ORACLE_NOT_DERIVED_IN_RUN"
+      ],
       "cached": true
     },
     {
@@ -133,6 +192,9 @@
       "sha256": "8534c7278cf5f88c39f604a7148444cb972a578554588e4a89b7fa38651d62fc",
       "modality": "PRINTED",
       "ground_truth_text_sha256": "ba5e3f8f4e4a5a286b28bed1afb9f11c7123562cde1566062119f3e2485cbc07",
+      "oracle_expected": [
+        "ORACLE_NOT_DERIVED_IN_RUN"
+      ],
       "cached": true
     },
     {
@@ -140,6 +202,9 @@
       "sha256": "e5c53c5cd6a78d62ed4fad4fca375a941ad400f246358ad23f7a7ea1e05a74c3",
       "modality": "PRINTED",
       "ground_truth_text_sha256": "03e18df937c3d61bf3ebbf5215d244762b1be246344381327b5ea1290c8b00ea",
+      "oracle_expected": [
+        "NOT_RECOVERABLE_FROM_TEXT"
+      ],
       "cached": true
     },
     {
@@ -147,14 +212,20 @@
       "sha256": "6fe6f40735a6b30b5bc1c548fb0627d07325c0a5b1e9aeaf7297180ce5b71a7b",
       "modality": "HANDWRITTEN",
       "ground_truth_text_sha256": "cb3ff60431712fae6dc9cd0dc751d958182d4342da53c247d5fef1052e18259a",
+      "oracle_expected": [
+        "a³√3"
+      ],
       "cached": true
     }
   ],
   "preregistered_protocol": {
+    "entrypoint": "backend/app/ingestion/unified_input.py::prepare_unified_input -> AdaptiveInputRouter",
     "requests_max": 32,
     "retries_per_image": 1,
     "timeout_s": 30,
+    "rate_limit_rpm": 10,
     "budget_usd_max": "OWNER_TO_SET",
+    "redaction_policy": "never log GEMINI_API_KEY, Authorization headers, or raw unredacted provider stacktraces",
     "stop_rules": [
       "stop on first INFRASTRUCTURE_FAILURE burst ≥3",
       "stop if wrong_served > 0",
@@ -164,7 +235,8 @@
       "character error rate vs ground truth",
       "math-symbol fidelity",
       "downstream correct-solve vs oracle",
-      "wrong-served"
+      "wrong-served",
+      "token/cost telemetry"
     ],
     "approval_file": "owner must create an approval record manually; automation never writes APPROVED_BY_USER"
   }

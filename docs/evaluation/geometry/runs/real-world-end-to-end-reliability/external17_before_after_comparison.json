@@ -1,8 +1,8 @@
 {
   "schema": "algosim-external17-before-after/1",
-  "generated_at_utc": "2026-11-10T04:50:31.240685+00:00",
+  "generated_at_utc": "2026-11-10T05:19:30.647706+00:00",
   "product_commit": "7994da7a64c8dc288c4de972df2d8d1db65e0c20",
-  "head_commit": "7994da7a64c8dc288c4de972df2d8d1db65e0c20",
+  "head_commit": "e838ab50d06d3ac0d5b02a98b9e3083ea0bfd5e6",
   "measured_system_tree_hash": "3754cbd18f58ddfb913fb61efd3dd078b0767770cff935a975cc8c258a1859fa",
   "measured_system_file_count": 108,
   "code_version": {
@@ -35,14 +35,60 @@
   "wave_id": "REAL_WORLD_END_TO_END_RELIABILITY",
   "baseline_head_commit": "8d0fde3378c9b087bdbbc4c66e1a40aad3b532cc",
   "baseline_product_commit": "c61a3589782bde35b69e8376d8ebf136314e47f3",
-  "measurement_status": "MEASURED_OFFLINE",
+  "case_ids": [
+    "ext_prt_01_hd_q_5259753#1",
+    "ext_prt_02_hd_q_7922924#1",
+    "ext_prt_03_hd_q_7907931#1",
+    "ext_prt_03_hd_q_7907931#2",
+    "ext_prt_04_hd_q_8436784#1",
+    "ext_prt_05_hd_q_7451806#1",
+    "ext_prt_06_hd_q_1084979#1",
+    "ext_prt_07_hd_q_7958052#1",
+    "ext_prt_08_hd_q_7509702#1",
+    "ext_prt_09_vmmu_page_r4#1",
+    "ext_prt_10_vmmu_page_r7#1",
+    "ext_prt_11_vmmu_page_r10#1",
+    "ext_prt_12_vmmu_page_r11#1",
+    "ext_prt_13_vmmu_page_r25#1",
+    "ext_prt_14_vmmu_page_r26#1",
+    "ext_prt_15_vmmu_page_r28#1",
+    "ext_hw_b1_01_hd_a_6043187#1"
+  ],
+  "measurement_status": "MEASURED_OFFLINE (ORACLE_TEXT_DOWNSTREAM_REPLAY on non-blind diagnostic corpus)",
+  "oracle_provenance": "Frozen previous-run receipt (unified-angle-geometry-verified-image-to-3d/external_image_pipeline_receipt.json) + ORACLE_SELF_DERIVED + printed MC keys",
   "corpus_role": "DEVELOPMENT_DIAGNOSTIC (inspected during gap analysis; not blind, not H-1)",
   "metrics_with_denominators": {
-    "correct_solve_rate_external17_diagnostic": "6/17",
-    "served_accuracy": "6/6",
-    "wrong_served": "0/6",
-    "local_only_zero_ai_solved": "6/17",
-    "provider_dependency_or_out_of_scope": "11/17"
+    "correct_solve_rate": {
+      "external17_all": "6/17",
+      "in_scope_polyhedral_subset": "6/12"
+    },
+    "served_answer_accuracy": "6/6",
+    "wrong_served_rate": {
+      "over_served": "0/6",
+      "over_all_17": "0/17"
+    },
+    "correct_refusal_rate": {
+      "out_of_scope_or_diagram_only": "5/5",
+      "all_unserved_fail_closed_offline": "11/11"
+    },
+    "false_refusal_rate": {
+      "false_missing_dimension_before": "2/17",
+      "false_missing_dimension_after": "0/17",
+      "unserved_in_scope_polyhedral_with_live_ai_disabled": "6/12"
+    },
+    "image_to_solution_success": {
+      "zero_ai_from_raw_pixels": "0/16",
+      "recorded_vision_replay": "1/16 (ext_hw_b1_01)",
+      "live_vision": "NOT_MEASURED"
+    },
+    "local_only_solve_rate": {
+      "verbatim_text": "6/17",
+      "raw_external_images": "0/16"
+    },
+    "provider_dependency_rate": {
+      "raw_external_images_needing_vision": "16/16",
+      "verbatim_text_needing_fallback_or_out_of_scope": "11/17 (5 out-of-scope even with AI, 6 in-scope polyhedral)"
+    }
   },
   "correction_of_previous_run": "The 2 MISSING_DIMENSION refusals (ext02, ext03#1) recorded as correct clarifications in the previous run were FALSE refusals: the asked quantities are height-invariant (CORRECTED_BY this run).",
   "per_case": [

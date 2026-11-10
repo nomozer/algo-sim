@@ -1,8 +1,8 @@
 {
   "schema": "algosim-mathematical-oracle-verification/1",
-  "generated_at_utc": "2026-11-10T04:50:29.991858+00:00",
+  "generated_at_utc": "2026-11-10T05:19:28.931936+00:00",
   "product_commit": "7994da7a64c8dc288c4de972df2d8d1db65e0c20",
-  "head_commit": "7994da7a64c8dc288c4de972df2d8d1db65e0c20",
+  "head_commit": "e838ab50d06d3ac0d5b02a98b9e3083ea0bfd5e6",
   "measured_system_tree_hash": "3754cbd18f58ddfb913fb61efd3dd078b0767770cff935a975cc8c258a1859fa",
   "measured_system_file_count": 108,
   "code_version": {
@@ -35,6 +35,14 @@
   "wave_id": "REAL_WORLD_END_TO_END_RELIABILITY",
   "baseline_head_commit": "8d0fde3378c9b087bdbbc4c66e1a40aad3b532cc",
   "baseline_product_commit": "c61a3589782bde35b69e8376d8ebf136314e47f3",
+  "case_ids": [
+    "ext_prt_01_hd_q_5259753#1",
+    "ext_prt_02_hd_q_7922924#1",
+    "ext_prt_03_hd_q_7907931#1",
+    "ext_prt_03_hd_q_7907931#2",
+    "ext_prt_09_vmmu_page_r4#1",
+    "ext_hw_b1_01_hd_a_6043187#1"
+  ],
   "measurement_status": "MEASURED_OFFLINE",
   "oracle_provenance": "Derivations written by the implementing agent (not an independent human reviewer) — ORACLE_SELF_DERIVED; MC keys printed in the source for ext02 (D.6), ext09 (B.2).",
   "served_checks": [

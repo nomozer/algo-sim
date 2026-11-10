@@ -1,8 +1,8 @@
 {
   "schema": "algosim-parser-semantic-gap-closure/1",
-  "generated_at_utc": "2026-11-10T04:50:29.676159+00:00",
+  "generated_at_utc": "2026-11-10T05:19:28.648098+00:00",
   "product_commit": "7994da7a64c8dc288c4de972df2d8d1db65e0c20",
-  "head_commit": "7994da7a64c8dc288c4de972df2d8d1db65e0c20",
+  "head_commit": "e838ab50d06d3ac0d5b02a98b9e3083ea0bfd5e6",
   "measured_system_tree_hash": "3754cbd18f58ddfb913fb61efd3dd078b0767770cff935a975cc8c258a1859fa",
   "measured_system_file_count": 108,
   "code_version": {
@@ -35,7 +35,12 @@
   "wave_id": "REAL_WORLD_END_TO_END_RELIABILITY",
   "baseline_head_commit": "8d0fde3378c9b087bdbbc4c66e1a40aad3b532cc",
   "baseline_product_commit": "c61a3589782bde35b69e8376d8ebf136314e47f3",
+  "case_ids": [
+    "ratio_SE_3EC_length",
+    "ratio_bad_parts_fail_closed"
+  ],
   "measurement_status": "MEASURED_OFFLINE",
+  "oracle_provenance": "Independent coordinate hand derivation: S(0,0,2), B(2,0,0), C(2,2,0) ⇒ M(1,0,1), E=(3/2,3/2,1/2) ⇒ ME=√11/2",
   "changes": [
     "local_geometry_parser stage 5b-3 part-to-part ratio → point_divides_segment; Stage 7k '=' guard accepts the span only when that premise was built"
   ],
@@ -54,7 +59,7 @@
         "scene3d_continuity_errors": [],
         "chosen_route": "LOCAL_DETERMINISTIC_HYBRID",
         "provider_calls": 0,
-        "elapsed_ms": 50.997
+        "elapsed_ms": 38.068
       },
       "pass": true
     },
@@ -72,7 +77,7 @@
         "scene3d_continuity_errors": null,
         "chosen_route": "FAIL_CLOSED_LIVE_AI_DISABLED",
         "provider_calls": 0,
-        "elapsed_ms": 4.365
+        "elapsed_ms": 3.51
       },
       "pass": true
     }
@@ -83,5 +88,5 @@
     "compound 'Tính A và B' with heterogeneous goals (ext06)",
     "'Mặt phẳng (P) và đường thẳng d cắt nhau tại I' word order (ext05)"
   ],
-  "reason_not_fixed": "Each fix alone serves 0 additional External17 cases (root causes lie in Kernel/output policy); deferred to avoid unverified grammar growth."
+  "reason_not_fixed": "Each fix alone serves 0 additional External17 cases (root causes lie in Source Gate / Kernel / output policy); deferred to avoid unverified grammar growth."
 }

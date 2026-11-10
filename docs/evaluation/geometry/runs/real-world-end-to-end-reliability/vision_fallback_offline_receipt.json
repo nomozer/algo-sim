@@ -1,8 +1,8 @@
 {
   "schema": "algosim-adaptive-vision-fallback-receipt/1",
-  "generated_at_utc": "2026-11-10T04:50:30.827888+00:00",
+  "generated_at_utc": "2026-11-10T05:19:29.986029+00:00",
   "product_commit": "7994da7a64c8dc288c4de972df2d8d1db65e0c20",
-  "head_commit": "7994da7a64c8dc288c4de972df2d8d1db65e0c20",
+  "head_commit": "e838ab50d06d3ac0d5b02a98b9e3083ea0bfd5e6",
   "measured_system_tree_hash": "3754cbd18f58ddfb913fb61efd3dd078b0767770cff935a975cc8c258a1859fa",
   "measured_system_file_count": 108,
   "code_version": {
@@ -74,6 +74,15 @@
   },
   "run_id": "real-world-end-to-end-reliability",
   "wave_id": "REAL_WORLD_END_TO_END_RELIABILITY",
-  "measurement_status": "OFFLINE_ROUTING_VERIFIED + RECORDED_REPLAY_VERIFIED; LIVE_VISION_NOT_MEASURED",
+  "case_ids": [
+    "text_direct",
+    "printed_verified_local_ocr",
+    "handwritten_recorded_vision_fallback",
+    "ocr_vs_vision_conflict_guard",
+    "user_edited_confirmation",
+    "diagram_only_rejection"
+  ],
+  "measurement_status": "MOCK_ROUTING_VERIFIED + RECORDED_VISION_REPLAY_VERIFIED; LIVE_VISION_NOT_MEASURED",
+  "oracle_provenance": "Adaptive Input Router contract across Route A/B/C/D, conflict confirmation, edited re-solve (0 stale cache), and diagram-only rejection",
   "source": "re-executed previous-run routing builder on this product commit (read-only import)"
 }
