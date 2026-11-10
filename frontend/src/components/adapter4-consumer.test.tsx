@@ -4,6 +4,7 @@ import { describe, expect, it } from "vitest";
 import { registerAllSimulations } from "../simulations";
 import { useAppStore } from "../state/store";
 import { docPhanHoiHybrid, hybridViewCua, kiemHybridView } from "../simulations/domains/geometry/hybrid-preview-adapter";
+import { phanTichToanHocCuaCanh } from "../simulations/domains/geometry/scene3d-model";
 
 const rows = JSON.parse(readFileSync(resolve(__dirname, "../../../docs/evaluation/geometry/runs/hybrid-disabled-integration/results/adapter4-consumer-after-review/adapter4-frontend-fixtures.json"), "utf8")).fixtures;
 const response = (row = rows[0]) => structuredClone({ ...row, schema_version: row.route_d.schema_version });
@@ -148,5 +149,34 @@ describe("Adapter /4 offline consumer", () => {
     raw.route_d.refusal = { code: "SOURCE_OBJECT_MISMATCH" };
     raw.envelope.status = "unsupported";
     expect(docPhanHoiHybrid(raw).ok).toBe(false);
+  });
+
+  it("preserves exact_symbolic alongside rounded/degree symbolic answers from output_policy", () => {
+    const raw = response();
+    const firstKey = Object.keys(raw.route_d.answers)[0];
+    const origExact = raw.route_d.answers[firstKey];
+    raw.route_d.answers[firstKey] = "4,7";
+    raw.route_d.output_policy = {
+      [firstKey]: {
+        schema: "output-policy-entry/1",
+        exact_symbolic: origExact,
+        display_symbolic: "4,7",
+        rounded_display: "4,7",
+        rounding_digits: 1,
+        decimal_separator: "comma",
+      },
+    };
+    const result = docPhanHoiHybrid(raw);
+    expect(result.ok).toBe(true);
+    if (!result.ok) return;
+    const view = hybridViewCua(result.envelope)!;
+    const ans = view.answers.find((a) => a.quantity_id === `kq_${firstKey}`)!;
+    expect(ans.symbolic).toBe("4,7");
+    expect(ans.exact_symbolic).toBe(origExact);
+    expect(kiemHybridView(view, raw.envelope.scene3d)).toBeNull();
+    const analysis = phanTichToanHocCuaCanh(raw.envelope.scene3d, view);
+    const req = analysis.requestedResults.find((r) => r.id === `kq_${firstKey}`)!;
+    expect(req.valueDisplay).toBe("4,7");
+    expect(req.exactValueDisplay).toBe(origExact);
   });
 });

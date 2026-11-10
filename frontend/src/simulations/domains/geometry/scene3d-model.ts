@@ -2085,6 +2085,7 @@ export interface MucPhanTichToan {
   label: string;
   notation: string | null;
   valueDisplay: string | null;
+  exactValueDisplay?: string | null;
   formula: string | null;
   basisLabels: string[];
   entityId: string | null;
@@ -2138,7 +2139,7 @@ export function phanLoaiVat(
 export function phanTichToanHocCuaCanh(
   scene: Scene3D,
   hybrid?: {
-    answers?: readonly { quantity_id: string; symbolic: string; dim: number; unit: string | null }[];
+    answers?: readonly { quantity_id: string; symbolic: string; exact_symbolic?: string; dim: number; unit: string | null }[];
     observations?: readonly { check_id: string; group: "goal" | "negated"; relation: string; evidence_state: string }[];
   } | null,
   routeD?: RouteDSimulationSummary | null,
@@ -2156,6 +2157,11 @@ export function phanTichToanHocCuaCanh(
 
   const hybridAnsById = new Map(
     (hybrid?.answers ?? []).map((a) => [a.quantity_id, a.symbolic]),
+  );
+  const hybridExactById = new Map(
+    (hybrid?.answers ?? [])
+      .filter((a) => typeof a.exact_symbolic === "string" && a.exact_symbolic.trim().length > 0)
+      .map((a) => [a.quantity_id, a.exact_symbolic!.trim()]),
   );
   const routeGoalByKernelVar = new Map<string, RouteDMathGoalView>();
   for (const g of routeD?.math_goals ?? []) {
@@ -2284,12 +2290,15 @@ export function phanTichToanHocCuaCanh(
     daGomKq.add(o.id);
     const isUnder = prov === "UNDERDETERMINED";
     const cf = isUnder ? null : coherentFormula(scene, o);
+    const valDisp = isUnder ? "Chưa đủ dữ kiện xác định duy nhất" : hienGiaTri(o);
+    const exactDisp = !isUnder ? (hybridExactById.get(o.id) ?? null) : null;
     requestedResults.push({
       id: o.id,
       category: "REQUESTED_RESULT",
       label: o.label,
       notation: o.notation ?? null,
-      valueDisplay: isUnder ? "Chưa đủ dữ kiện xác định duy nhất" : hienGiaTri(o),
+      valueDisplay: valDisp,
+      ...(exactDisp && exactDisp !== valDisp ? { exactValueDisplay: exactDisp } : {}),
       formula: cf && cf.references.length > 0 ? cf.text : null,
       basisLabels: numericalBasis(scene, o).map(tenNgan),
       entityId: o.id,

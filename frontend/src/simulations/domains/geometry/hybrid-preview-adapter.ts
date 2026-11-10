@@ -34,8 +34,10 @@ export interface HybridAnswerView {
   quantity_id: string;
   /** Exact coefficient checked against the scene at transport; retained for history revalidation. */
   coefficient?: string;
-  /** Đáp số dạng chữ của backend, vd `a³√3/3`. */
+  /** Đáp số dạng chữ của backend, vd `a³√3/3` (hoặc bản đã qua `output_policy` như `4,7`, `30°`). */
   symbolic: string;
+  /** Biểu thức chính xác gốc từ `route_d.output_policy[id].exact_symbolic` khi `symbolic` là bản làm tròn hoặc quy đổi độ. */
+  exact_symbolic?: string;
   /** Bậc theo đơn vị ký hiệu (0 ⇒ không thứ nguyên / đề dùng số). */
   dim: number;
   unit: string | null;
@@ -749,6 +751,7 @@ export function dungHybridView(routeD: unknown, scene: Scene3D): { view: HybridP
   const answers: HybridAnswerView[] = [];
   const ans = routeD.answers ?? {};
   const exact = routeD.answer_exact ?? {};
+  const outPolicy = laDoiTuong(routeD.output_policy) ? routeD.output_policy : null;
   if (!laDoiTuong(ans) || !laDoiTuong(exact)) return { reason: "answers/answer_exact sai dạng" };
   if (v4 && JSON.stringify(Object.keys(ans).sort()) !== JSON.stringify(Object.keys(exact).sort())) return { reason: "answers/answer_exact lệch" };
   for (const [k, sym] of Object.entries(ans)) {
@@ -765,7 +768,24 @@ export function dungHybridView(routeD: unknown, scene: Scene3D): { view: HybridP
     const giaTri = giaTriCanh(scene, qid);
     // Hình dựng ở a = 1 ⇒ giá trị trên cảnh = hệ số. Lệch ⇒ đáp số không thuộc cảnh này.
     if (giaTri == null || giaTri !== gon(ex.coef)) return { reason: `đáp số ${k} không khớp đại lượng ${qid} của cảnh` };
-    answers.push({ quantity_id: qid, coefficient: giaTri, symbolic: sym, dim, unit });
+    const pol =
+      (laDoiTuong(ex.output_policy) ? ex.output_policy : null)
+      ?? (outPolicy && laDoiTuong(outPolicy[k]) ? outPolicy[k] : null);
+    const rawExactSym =
+      pol && typeof pol.exact_answer === "string" && pol.exact_answer.trim()
+        ? pol.exact_answer.trim()
+        : pol && typeof pol.exact_symbolic === "string" && pol.exact_symbolic.trim()
+          ? pol.exact_symbolic.trim()
+          : undefined;
+    const exactSym = rawExactSym && rawExactSym !== sym.trim() ? rawExactSym : undefined;
+    answers.push({
+      quantity_id: qid,
+      coefficient: giaTri,
+      symbolic: sym,
+      ...(exactSym ? { exact_symbolic: exactSym } : {}),
+      dim,
+      unit,
+    });
   }
 
   const planner = routeD.planner;
@@ -877,6 +897,9 @@ export function kiemHybridView(view: unknown, scene: Scene3D | undefined): strin
     if (a.coefficient !== undefined && (typeof a.coefficient !== "string"
       || gon(a.coefficient) !== giaTriCanh(scene, String(a.quantity_id)))) {
       return "hệ số đáp số không khớp đại lượng của cảnh";
+    }
+    if (a.exact_symbolic !== undefined && (typeof a.exact_symbolic !== "string" || !a.exact_symbolic.trim())) {
+      return "exact_symbolic của đáp số sai dạng";
     }
   }
   const buocCuoi = Math.max(0, ...scene.events.map((e) => e.step_index));
