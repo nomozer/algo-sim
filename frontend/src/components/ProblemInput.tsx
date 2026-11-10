@@ -324,7 +324,7 @@ export function computePlusPopoverPosition(params: {
   gapPx?: number;
   marginPx?: number;
 }): PlusPopoverPosition {
-  const gap = params.gapPx ?? 8;
+  const gap = params.gapPx ?? 6;
   const margin = params.marginPx ?? 12;
   const zoom = params.cssZoom && Number.isFinite(params.cssZoom) && params.cssZoom > 0 ? params.cssZoom : 1;
   const vw = Math.max(margin * 2 + 40, params.viewportWidth);
@@ -732,9 +732,9 @@ export function ProblemInput({
       plusPopoverSizeRef.current = { width: rawOffsetW, height: rawOffsetH };
     }
     const baseW =
-      plusPopoverSizeRef.current?.width ?? (showCameraEntry ? 208 : 198);
+      plusPopoverSizeRef.current?.width ?? (showCameraEntry ? 194 : 188);
     const baseH =
-      plusPopoverSizeRef.current?.height ?? (showCameraEntry ? 102 : 53);
+      plusPopoverSizeRef.current?.height ?? (showCameraEntry ? 98 : 48);
 
     const pos = computePlusPopoverPosition({
       triggerRect,
@@ -1095,8 +1095,15 @@ export function ProblemInput({
       </span>
     ) : null;
 
+  const isPlusOpenBottom =
+    plusMenuOpen && (plusPopoverPos?.placement ?? "bottom") === "bottom";
+
   return (
-    <div className="composer-hero">
+    <div
+      className={`composer-hero${isPlusOpenBottom ? " has-open-plus-bottom" : ""}${
+        showCameraEntry ? " has-camera-item" : ""
+      }`}
+    >
       <div
         ref={composerBoxRef}
         className={`composer-card composer-box${analyzing ? " is-busy" : ""}`}
@@ -1390,7 +1397,7 @@ export function ProblemInput({
                     fileInputRef.current?.click();
                   }}
                 >
-                  <IconUpload size={18} />
+                  <IconUpload size={17} />
                   <span>Tải tệp từ thiết bị</span>
                 </button>
                 {showCameraEntry && (
@@ -1405,7 +1412,7 @@ export function ProblemInput({
                       setPhotoDialogOpen(true);
                     }}
                   >
-                    <IconCamera size={18} />
+                    <IconCamera size={17} />
                     <span>Chụp ảnh đề bài</span>
                   </button>
                 )}

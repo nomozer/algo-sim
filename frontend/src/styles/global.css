@@ -7239,21 +7239,21 @@ html {
    không gây layout shift và không bị cắt bởi overflow của phần tử cha. */
 .plus-popover-menu {
   position: absolute;
-  top: calc(100% + 8px);
+  top: calc(100% + 6px);
   bottom: auto;
   left: 0;
   box-sizing: border-box;
   width: max-content;
-  min-width: 198px;
-  max-width: min(260px, calc(100vw - 24px));
+  min-width: 188px;
+  max-width: min(240px, calc(100vw - 24px));
   max-height: calc(100vh - 24px);
   overflow-x: hidden;
   overflow-y: auto;
   background: var(--surface);
   border: 1px solid var(--hairline);
-  border-radius: 13px;
+  border-radius: 11px;
   box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.03), var(--shadow-elevated);
-  padding: 5px;
+  padding: 3px;
   z-index: 35;
   display: none;
   flex-direction: column;
@@ -7277,16 +7277,16 @@ html {
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  gap: 11px;
+  gap: 10px;
   width: 100%;
-  min-height: 41px;
-  padding: 9px 13px;
-  border-radius: 9px;
+  min-height: 40px;
+  padding: 8px 11px;
+  border-radius: 8px;
   border: none;
   background: transparent;
   color: var(--ink-secondary);
   font-family: inherit;
-  font-size: 14px;
+  font-size: 13.5px;
   font-weight: 500;
   line-height: 20px;
   white-space: nowrap;
@@ -7311,20 +7311,20 @@ html {
 
   .plus-popover-menu {
     width: max-content;
-    min-width: 208px;
+    min-width: 194px;
     gap: 2px;
   }
 
   .plus-menu-item {
     min-height: 44px;
-    padding: 10px 13px;
-    font-size: 14px;
+    padding: 10px 11px;
+    font-size: 13.5px;
   }
 }
 
 .plus-menu-item svg {
-  width: 18px;
-  height: 18px;
+  width: 17px;
+  height: 17px;
   stroke: var(--ink-muted);
   stroke-width: 1.9;
   fill: none;
@@ -16656,7 +16656,29 @@ body:has(.app-root.la-tap-trung) {
 .home-page-container {
   max-width: var(--axo-home-max-w);
   padding: 56px 24px 48px;
-  gap: 28px;
+  gap: 54px;
+}
+
+.composer-hero.has-open-plus-bottom.has-camera-item {
+  margin-bottom: 84px;
+}
+
+@media (max-width: 1080px) {
+  .composer-hero.has-open-plus-bottom:not(.has-camera-item) {
+    margin-bottom: 30px;
+  }
+}
+
+@media (max-width: 860px) {
+  .composer-hero.has-open-plus-bottom:not(.has-camera-item) {
+    margin-bottom: 34px;
+  }
+}
+
+@media (max-width: 480px) {
+  .composer-hero.has-open-plus-bottom.has-camera-item {
+    margin-bottom: 86px;
+  }
 }
 
 .home-hero,
@@ -17774,7 +17796,7 @@ html::-webkit-scrollbar {
 .page-container.home-container,
 .home-page-container {
   padding: clamp(72px, 9.2vh, 92px) 24px 52px;
-  gap: 30px;
+  gap: 54px;
 }
 
 @media (max-width: 1080px) {

@@ -86,7 +86,7 @@ describe("Axo V2.7 Slice 2 — 18 Component & Integration Cases (P11.2 & P11.3)"
       "utf-8",
     );
     expect(css).toMatch(/\.composer-footer\s*\{[^}]*border-top:\s*none/s);
-    expect(css).toMatch(/\.plus-popover-menu\s*\{[^}]*top:\s*calc\(100%\s*\+\s*8px\)/s);
+    expect(css).toMatch(/\.plus-popover-menu\s*\{[^}]*top:\s*calc\(100%\s*\+\s*6px\)/s);
   });
 
   it("3. Nút Dựng hình → ở trạng thái disabled ban đầu khi chưa có chữ và chưa có tệp", () => {
@@ -398,20 +398,15 @@ describe("Axo V2.7 Slice 2 — 18 Component & Integration Cases (P11.2 & P11.3)"
     expect(popoverMatch).not.toBeNull();
     const popoverBlock = popoverMatch![1];
     expect(popoverBlock).toMatch(/width:\s*max-content/);
-    expect(popoverBlock).toMatch(/top:\s*calc\(100%\s*\+\s*8px\)/);
+    expect(popoverBlock).toMatch(/top:\s*calc\(100%\s*\+\s*6px\)/);
     expect(popoverBlock).not.toMatch(/(?:^|\s|;)width:\s*\d+px/);
     expect(popoverBlock).not.toContain("152px");
 
-
-
-
-
-
     expect(popoverBlock).toMatch(/border:\s*1px\s+solid\s+var\(--hairline\)/);
-    expect(popoverBlock).toMatch(/border-radius:\s*13px/);
-    expect(popoverBlock).toMatch(/padding:\s*5px/);
-    expect(popoverBlock).toMatch(/min-width:\s*198px/);
-    expect(popoverBlock).toMatch(/max-width:\s*min\(260px,\s*calc\(100vw\s*-\s*24px\)\)/);
+    expect(popoverBlock).toMatch(/border-radius:\s*11px/);
+    expect(popoverBlock).toMatch(/padding:\s*3px/);
+    expect(popoverBlock).toMatch(/min-width:\s*188px/);
+    expect(popoverBlock).toMatch(/max-width:\s*min\(240px,\s*calc\(100vw\s*-\s*24px\)\)/);
 
     const itemMatch = css.match(/\.plus-menu-item\s*\{([^}]*)\}/s);
     expect(itemMatch).not.toBeNull();
@@ -419,8 +414,8 @@ describe("Axo V2.7 Slice 2 — 18 Component & Integration Cases (P11.2 & P11.3)"
     const padMatch = itemBlock.match(/padding:\s*([\d.]+)px\s+([\d.]+)px/);
     expect(padMatch).not.toBeNull();
     const padX = Number(padMatch![2]);
-    expect(padX).toBeGreaterThanOrEqual(12);
-    expect(padX).toBeLessThanOrEqual(14);
+    expect(padX).toBeGreaterThanOrEqual(10);
+    expect(padX).toBeLessThanOrEqual(12);
 
     const gapMatch = itemBlock.match(/gap:\s*([\d.]+)px/);
     expect(gapMatch).not.toBeNull();
@@ -449,6 +444,10 @@ describe("Axo V2.7 Slice 2 — 18 Component & Integration Cases (P11.2 & P11.3)"
     const triggerBlocks = [...css.matchAll(/(?:^|\r?\n)\.btn-plus-trigger\s*\{/g)];
     expect(triggerBlocks).toHaveLength(1);
 
+    const desktopOpenHtml = renderToString(<ProblemInput initialPlusMenuOpen />);
+    expect(desktopOpenHtml).toContain("has-open-plus-bottom");
+    expect(desktopOpenHtml).not.toContain("has-camera-item");
+
     const mobileHtml = renderToString(
       <ProblemInput
         initialPlusMenuOpen
@@ -460,8 +459,10 @@ describe("Axo V2.7 Slice 2 — 18 Component & Integration Cases (P11.2 & P11.3)"
         }}
       />,
     );
+    expect(mobileHtml).toContain("has-open-plus-bottom");
+    expect(mobileHtml).toContain("has-camera-item");
     const menuOnly = mobileHtml.slice(mobileHtml.indexOf('id="plus-popover-menu"'));
-    expect(menuOnly).toContain('width="18" height="18"');
+    expect(menuOnly).toContain('width="17" height="17"');
     expect(menuOnly).toContain('id="menu-item-upload-file"');
     expect(menuOnly).toContain('id="menu-item-camera"');
   });
@@ -469,46 +470,46 @@ describe("Axo V2.7 Slice 2 — 18 Component & Integration Cases (P11.2 & P11.3)"
   it("22. computePlusPopoverPosition định vị dựa trên không gian thực tế của viewport: mặc định mở xuống dưới, tự lật lên trên khi sát đáy, chống tràn ngang và chuẩn hóa CSS zoom", () => {
     const down = computePlusPopoverPosition({
       triggerRect: { top: 300, bottom: 336, left: 351, right: 387, width: 36, height: 36 },
-      menuWidth: 198,
-      menuHeight: 51,
+      menuWidth: 188,
+      menuHeight: 48,
       viewportWidth: 1440,
       viewportHeight: 900,
     });
     expect(down.placement).toBe("bottom");
-    expect(down.top).toBe(344);
+    expect(down.top).toBe(342);
     expect(down.left).toBe(351);
 
     const up = computePlusPopoverPosition({
       triggerRect: { top: 430, bottom: 466, left: 33, right: 69, width: 36, height: 36 },
-      menuWidth: 204,
-      menuHeight: 100,
+      menuWidth: 194,
+      menuHeight: 98,
       viewportWidth: 390,
       viewportHeight: 500,
     });
     expect(up.placement).toBe("top");
-    expect(up.top).toBe(322);
+    expect(up.top).toBe(326);
     expect(up.left).toBe(33);
 
     const clampedRight = computePlusPopoverPosition({
       triggerRect: { top: 200, bottom: 236, left: 260, right: 296, width: 36, height: 36 },
-      menuWidth: 204,
-      menuHeight: 100,
+      menuWidth: 194,
+      menuHeight: 98,
       viewportWidth: 390,
       viewportHeight: 844,
     });
-    expect(clampedRight.left).toBe(390 - 204 - 12);
+    expect(clampedRight.left).toBe(390 - 194 - 12);
 
     const zoomed = computePlusPopoverPosition({
       triggerRect: { top: 323.4, bottom: 363, left: 314.6, right: 354.2, width: 39.6, height: 39.6 },
-      menuWidth: 217.8,
-      menuHeight: 56.1,
+      menuWidth: 206.8,
+      menuHeight: 52.8,
       viewportWidth: 1440,
       viewportHeight: 900,
       cssZoom: 1.1,
     });
     expect(zoomed.placement).toBe("bottom");
     expect(zoomed.left).toBeCloseTo(314.6 / 1.1, 1);
-    expect(zoomed.top).toBeCloseTo((363 + 8) / 1.1, 1);
+    expect(zoomed.top).toBeCloseTo((363 + 6) / 1.1, 1);
 
     const bothSidesTight = computePlusPopoverPosition({
       triggerRect: { top: 45, bottom: 81, left: 24, right: 60, width: 36, height: 36 },
