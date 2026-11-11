@@ -48,6 +48,7 @@ from app.ai.local_geometry_parser import (
     LocalParseResult,
     normalize_problem_text,
     parse_geometry_problem_locally,
+    tokenize_problem_text,
 )
 from app.ai.route_policy import RoutePolicy
 from app.ai.typed_fact_next_extraction import (
@@ -1011,6 +1012,28 @@ def compare_ocr_and_vision_facts(ocr_text: str, vision_text: str) -> dict[str, A
             )
             if "NUMERIC_ASSIGNMENT_CONFLICT" not in conflict_codes:
                 conflict_codes.append("NUMERIC_ASSIGNMENT_CONFLICT")
+
+    # Worded dimensions ("cạnh 2a") have no '=' assignment; preserve their values too.
+    def worded_dimensions(text: str) -> list[tuple[str, str]]:
+        normalized = re.sub(r"(?<=\d)\s+(?=a(?:\b|√))", "", normalize_problem_text(text or ""))
+        dimensions = []
+        for token in tokenize_problem_text(normalized):
+            if token.kind != "value":
+                continue
+            prefix = re.search(
+                r"(?P<target>cạnh(?:\s+(?:đáy|bên))?|chiều\s+(?:cao|dài|rộng)|đường\s+(?:cao|chéo|kính)|bán\s+kính)"
+                r"(?:\s+(?:là|bằng)|\s*=)?\s*$", normalized[:token.start], re.IGNORECASE,
+            )
+            if prefix:
+                dimensions.append((" ".join(prefix.group("target").lower().split()), token.text))
+        return sorted(dimensions)
+
+    ocr_values = worded_dimensions(ocr_text)
+    vis_values = worded_dimensions(vision_text)
+    if ocr_values != vis_values:
+        conflicts.append({"code": "NUMERIC_ASSIGNMENT_CONFLICT", "ocr_values": ocr_values, "vision_values": vis_values})
+        if "NUMERIC_ASSIGNMENT_CONFLICT" not in conflict_codes:
+            conflict_codes.append("NUMERIC_ASSIGNMENT_CONFLICT")
 
     # 2. Plane / prime label conflict (e.g. `(ABC)` in OCR vs `(A'BC)` in Vision, or `AC` vs `AC'`)
     ocr_planes = set(ocr_tok["planes"])

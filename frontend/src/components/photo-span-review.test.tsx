@@ -59,6 +59,30 @@ function prepare(): UnifiedInputPrepareResponse {
 }
 
 describe("OCR local: xác nhận từng chỗ chưa chắc", () => {
+  it("sửa nhiều span theo vị trí Unicode của Python, kể cả ký hiệu toán ngoài BMP", () => {
+    const base = "Đề 𝑎: SA = a√3, A'B = 2/3.";
+    const tokens = [
+      { token: "a√3", alternatives: [], location: "", reason: "", span_id: "radical", span_start: 11, span_end: 14 },
+      { token: "2/3", alternatives: [], location: "", reason: "", span_id: "fraction", span_start: 22, span_end: 25 },
+    ];
+    expect(applySpanValues(base, tokens, { radical: "2a√2", fraction: "√3/2" }))
+      .toBe("Đề 𝑎: SA = 2a√2, A'B = √3/2.");
+    expect(applySpanValues(base, tokens, { radical: "a√3", fraction: "2/3" })).toBe(base);
+  });
+
+  it.each(["edit-span", "edit-draft"] as const)("%s yêu cầu xác nhận lại nội dung đã đổi", (type) => {
+    let s = unifiedAssistReducer(initialUnifiedAssistState, { type: "from-prepare", response: prepare() });
+    s = unifiedAssistReducer(s, { type: "confirm-span", spanId: "sp7" });
+    s = unifiedAssistReducer(s, { type: "confirm-span", spanId: "diagram" });
+    s = unifiedAssistReducer(s, { type: "toggle-confirm", value: true });
+    expect(canConfirmAssistText(s)).toBe(true);
+    s = unifiedAssistReducer(s, type === "edit-span"
+      ? { type, spanId: "sp7", value: "a√2" }
+      : { type, text: TEXT.replace("a√3", "a√2") });
+    expect(canConfirmAssistText(s)).toBe(false);
+    expect(s.confirmed).toBe(false);
+  });
+
   it("sửa một ký hiệu thay đúng khoảng ký tự, phần còn lại của đề giữ nguyên", () => {
     let s = unifiedAssistReducer(initialUnifiedAssistState, { type: "from-prepare", response: prepare() });
     expect(s.draftText).toBe(TEXT);

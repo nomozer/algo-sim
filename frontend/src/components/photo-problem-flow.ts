@@ -64,14 +64,15 @@ export function reviewTokens(tokens: PhotoUncertainToken[]): PhotoUncertainToken
 
 /** Ghép văn bản: thay từng khoảng [span_start, span_end) bằng giá trị học sinh xác nhận (từ cuối về đầu). */
 export function applySpanValues(base: string, tokens: PhotoUncertainToken[], values: Record<string, string>): string {
-  let out = base;
+  // Backend offsets count Unicode code points; JS string slices count UTF-16 units.
+  const out = Array.from(base);
   const sorted = [...spanTokens(tokens)].sort((a, b) => (b.span_start ?? 0) - (a.span_start ?? 0));
   for (const t of sorted) {
     const v = values[t.span_id as string];
     if (typeof v !== "string") continue;
-    out = out.slice(0, t.span_start) + v + out.slice(t.span_end);
+    out.splice(t.span_start as number, (t.span_end as number) - (t.span_start as number), ...Array.from(v));
   }
-  return out;
+  return out.join("");
 }
 
 /** Số chỗ học sinh thực sự đổi so với bản máy đọc (đo "số thao tác sửa"). */
@@ -147,12 +148,13 @@ export function unifiedAssistReducer(
     }
     case "edit-draft":
       if (state.phase !== "needs_confirmation") return state;
-      return { ...state, draftText: action.text, freeEdit: true };
+      return { ...state, draftText: action.text, freeEdit: true, confirmed: false };
     case "edit-span": {
       if (state.phase !== "needs_confirmation" || state.freeEdit) return state;
       const spanValues = { ...state.spanValues, [action.spanId]: action.value };
       return {
         ...state,
+        confirmed: false,
         spanValues,
         spanReviewed: { ...state.spanReviewed, [action.spanId]: true },
         draftText: applySpanValues(state.baseText, state.uncertainTokens, spanValues),

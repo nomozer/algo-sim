@@ -13,6 +13,7 @@ giữ byte ảnh), nên học sinh sửa văn bản không làm OCR chạy lại
 from __future__ import annotations
 
 import base64
+import atexit
 import hashlib
 import json
 import os
@@ -55,12 +56,15 @@ class _Worker:
     def __init__(self, python: str) -> None:
         self.python = python
         self.proc: subprocess.Popen[str] | None = None
-        self.out: "queue.Queue[str]" = queue.Queue()
+        self.out: "queue.Queue[str | None]" = queue.Queue()
         self.started_at: float | None = None
 
-    def _reader(self, stream) -> None:  # pragma: no cover - thread
-        for line in stream:
-            self.out.put(line)
+    def _reader(self, stream, output) -> None:  # pragma: no cover - thread
+        try:
+            for line in stream:
+                output.put(line)
+        finally:
+            output.put(None)
 
     def ensure(self) -> None:
         if self.proc is not None and self.proc.poll() is None:
@@ -78,7 +82,7 @@ class _Worker:
             creationflags=flags,
         )
         self.out = queue.Queue()
-        threading.Thread(target=self._reader, args=(self.proc.stdout,), daemon=True).start()
+        threading.Thread(target=self._reader, args=(self.proc.stdout, self.out), daemon=True).start()
         self.started_at = time.perf_counter()
 
     def request(self, payload: dict[str, Any], timeout_s: float) -> dict[str, Any]:
@@ -91,14 +95,25 @@ class _Worker:
         except queue.Empty:
             self.kill()
             raise TimeoutError("LOCAL_OCR_TIMEOUT") from None
-        return json.loads(line)
+        if line is None:
+            self.kill()
+            raise OSError("LOCAL_OCR_WORKER_EXITED")
+        response = json.loads(line)
+        if not isinstance(response, dict):
+            raise ValueError("LOCAL_OCR_RESPONSE_INVALID")
+        return response
 
     def kill(self) -> None:
         if self.proc is not None:
             try:
                 self.proc.kill()
+                self.proc.wait(timeout=5)
             except OSError:
                 pass
+            finally:
+                for stream in (self.proc.stdin, self.proc.stdout):
+                    if stream is not None:
+                        stream.close()
         self.proc = None
 
     def pid(self) -> int | None:
@@ -114,6 +129,9 @@ def shutdown_local_ocr() -> None:
         if _WORKER is not None:
             _WORKER.kill()
         _WORKER = None
+
+
+atexit.register(shutdown_local_ocr)
 
 
 def clear_local_ocr_cache() -> None:
@@ -139,6 +157,8 @@ def reread_local_ocr_regions(image_bytes: bytes, boxes: list[list[int]]) -> dict
             _CACHE.move_to_end(key)
             return {**hit, "cached": True}
         if _WORKER is None or _WORKER.python != cfg["python"]:
+            if _WORKER is not None:
+                _WORKER.kill()
             _WORKER = _Worker(cfg["python"])
         t0 = time.perf_counter()
         try:

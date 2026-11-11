@@ -11,6 +11,39 @@ import pytest
 
 from app.ingestion import local_ocr_route as LR
 from app.ingestion.ocr_reconcile import has_shared_corruption, norm_math, reconcile_local_ocr
+from app.ai.adaptive_input_router import compare_ocr_and_vision_facts
+
+
+@pytest.mark.parametrize("phrase,left,right", [("cạnh", "2a", "a"), ("chiều cao bằng", "3a", "2a")])
+def test_vision_comparison_detects_worded_dimension_conflict(phrase, left, right):
+    before = f"Cho hình chóp S.ABCD có đáy là hình vuông {phrase} {left}, SA = a√3. Tính thể tích khối chóp."
+    after = before.replace(f"{phrase} {left}", f"{phrase} {right}")
+    comparison = compare_ocr_and_vision_facts(before, after)
+    assert comparison["has_conflict"] is True
+    assert comparison["requires_user_confirmation"] is True
+    assert "NUMERIC_ASSIGNMENT_CONFLICT" in comparison["conflict_codes"]
+
+
+def test_vision_comparison_allows_reordered_equivalent_measurements():
+    comparison = compare_ocr_and_vision_facts(
+        "Cho hình chóp S.ABCD có cạnh đáy 2a và chiều cao 3a. Tính thể tích khối chóp.",
+        "Cho hình chóp S.ABCD có chiều cao 3a và cạnh đáy 2a. Tính thể tích khối chóp.",
+    )
+    assert comparison["has_conflict"] is False
+
+
+def test_vision_comparison_ignores_omitted_exam_header_number():
+    text = "Cho hình chóp S.ABCD có cạnh đáy 2a và chiều cao 3a. Tính thể tích khối chóp."
+    assert compare_ocr_and_vision_facts("Câu 1: " + text, text)["has_conflict"] is False
+    assert compare_ocr_and_vision_facts(text, text.replace("2a", "2 a"))["has_conflict"] is False
+
+
+def test_vision_comparison_retains_binding_between_worded_dimension_and_value():
+    comparison = compare_ocr_and_vision_facts(
+        "Cho hình chóp S.ABCD có cạnh đáy 2a và chiều cao 3a. Tính thể tích khối chóp.",
+        "Cho hình chóp S.ABCD có cạnh đáy 3a và chiều cao 2a. Tính thể tích khối chóp.",
+    )
+    assert comparison["requires_user_confirmation"] is True
 
 
 def _line(words: list[str], y: int, *, x0: int = 10, h: int = 30, cw: int = 14, conf: float = 95.0, gaps=None):

@@ -1455,7 +1455,10 @@ async def input_prepare(
     Tài liệu có text layer sạch (PDF text / DOCX + công thức OMML) được đọc tất định với 0 lượt gọi AI;
     chỉ ảnh hoặc trang scan mới đi qua phát hiện vùng CV nhẹ rồi gọi VLM khi cần.
     """
-    chan = _cong_luot_thu(algosim_session)
+    from starlette.concurrency import run_in_threadpool
+
+    # SQLite may wait for another response's transaction cleanup on this event loop.
+    chan = await run_in_threadpool(_cong_luot_thu, algosim_session)
     if chan is not None:
         return chan
 
