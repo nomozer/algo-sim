@@ -173,7 +173,7 @@ export function PhotoProblemPanel({
                     disabled={busy}
                     onClick={() => onConfirmSpan?.(id)}
                   >
-                    {reviewed ? "✓ Đã xem" : isDiagram ? "Hình không có thêm dữ kiện" : "Đúng rồi"}
+                    {reviewed ? "Đã xem" : isDiagram ? "Hình không có thêm dữ kiện" : "Đúng rồi"}
                   </button>
                 </li>
               );
