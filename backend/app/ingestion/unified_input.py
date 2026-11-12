@@ -411,7 +411,12 @@ async def _process_normalized_visual_page(
         elif selected_candidate_id.startswith("region-"):
             region_sel_id = selected_candidate_id
 
-    region_res: RegionDetectionResult = detect_problem_regions(
+    # OCR and region detection are seconds of blocking work: off the event loop, so other requests (and their SQLite
+    # transactions) keep being served while one image is read (run `local-semantic-source-gate-reliability`).
+    from starlette.concurrency import run_in_threadpool
+
+    region_res: RegionDetectionResult = await run_in_threadpool(
+        detect_problem_regions,
         norm_img,
         target_problem_index=directive.target_problem_index,
         selected_region_id=region_sel_id,
@@ -461,7 +466,7 @@ async def _process_normalized_visual_page(
     if region_res.ambiguous_multi_problem and len(region_res.candidates) >= 2 and not selected_candidate_id:
         from app.ingestion.local_ocr_route import count_problem_headers_on_page
 
-        n_headers = count_problem_headers_on_page(region_res.full_image.data)
+        n_headers = await run_in_threadpool(count_problem_headers_on_page, region_res.full_image.data)
         if n_headers is not None and n_headers <= 1:
             split_overruled = True
             prov_common["region_split_overruled_by_ocr_headers"] = n_headers
@@ -496,7 +501,7 @@ async def _process_normalized_visual_page(
     from app.ingestion.local_ocr_route import run_local_ocr_route
 
     vision_allowed = os.getenv("ALLOW_LIVE_AI") != "0" and bool(api_key)
-    local_rec = run_local_ocr_route(region_res.prepared_image.data, region_res.prepared_figure_bboxes())
+    local_rec = await run_in_threadpool(run_local_ocr_route, region_res.prepared_image.data, region_res.prepared_figure_bboxes())
     if local_rec is not None:
         if local_rec.get("ok"):
             from app.ingestion.local_ocr_route import summarize_for_provenance
