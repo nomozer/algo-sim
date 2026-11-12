@@ -1,0 +1,258 @@
+{
+  "run_id": "real-image-ocr-vision-comparative-acceptance",
+  "head": "70b22cc7167d8e2372d606547c3e398b199fb101",
+  "measured_system": [
+    "a068b6f6586c1b120bd8350dbe706f5681ab71fd7da57502c34f940140268921",
+    115
+  ],
+  "allow_live_ai": 0,
+  "ground_truth_authority": "AGENT_TRANSCRIBED_UNVERIFIED",
+  "independent_h1": "NOT_MEASURED",
+  "server": {
+    "hybrid_route_mode": "local-first",
+    "server_allow_live_ai": false,
+    "cache_version": "132"
+  },
+  "partition": "development",
+  "cases": [
+    {
+      "case_id": "new_vmmu_full_r327",
+      "partition": "development",
+      "sha256": "344fd436dc34a57db4a311179f3f2c2c5fc8fce5d6faa299084912f404134f12",
+      "prepare": {
+        "http_status": 200,
+        "elapsed_ms": 2715.566299999864
+      },
+      "prepare_status": "needs_confirmation",
+      "reason_code": "DIAGRAM_FACT_REVIEW_REQUIRED",
+      "ocr_text": "câu hình nào dưới đây không phải hình đa: diện\nC.",
+      "provenance": {
+        "source_mime": "image/jpeg",
+        "selected_page": null,
+        "desk_trimmed": false,
+        "deskew_applied": false,
+        "skew_angle_deg": 0.0,
+        "enhanced_low_light": false,
+        "is_low_light": false,
+        "used_crop": false,
+        "used_fallback_full_image": true,
+        "has_associated_figure": true,
+        "completeness_confidence": 1.0,
+        "selected_bbox": [
+          0.0,
+          0.0,
+          1.0,
+          1.0
+        ],
+        "candidate_region_count": 1,
+        "local_ocr": {
+          "route_version": "local-ocr-route/1",
+          "reconcile_version": "layout-aware-ocr-reconcile/1",
+          "extraction_verified": false,
+          "blocking_reasons": [
+            "DIAGRAM_FACTS_UNVERIFIED"
+          ],
+          "uncertain_blocking_count": 0,
+          "uncertain_ratio": 0.0,
+          "low_quality": false,
+          "diagram_classification": "DIAGRAM_LABELS_UNMATCHED",
+          "layout_flags": [],
+          "min_agreeing_families": 2,
+          "readers": {
+            "tesseract": {
+              "engine_version": "tesseract 5.5.3",
+              "model": "tessdata_fast",
+              "ms": 76.04,
+              "error": null
+            },
+            "rapidocr": {
+              "engine_version": "rapidocr UNKNOWN",
+              "model": "PP-OCRv6_det_small+PP-OCRv6_rec_small(default)",
+              "ms": 2514.57,
+              "error": null
+            }
+          },
+          "adjudication": {
+            "requested": 1,
+            "readers": [
+              "rapidocr_latin_rec",
+              "tesseract_eng_line"
+            ],
+            "ok": true,
+            "ms": 32.52,
+            "resolved": 1
+          },
+          "timing": {
+            "ocr_ms": 2596.04,
+            "ocr_cached": false,
+            "cold_worker": false,
+            "reconcile_and_reread_ms": 46.05,
+            "reread_ms": 32.52,
+            "total_ms": 2642.09
+          },
+          "used_ground_truth": false
+        },
+        "input_route": "LOCAL_OCR_NEEDS_CONFIRMATION",
+        "input_text_provenance": "LOCAL_OCR_DRAFT_PENDING_STUDENT_CONFIRMATION",
+        "vision_fallback": "NOT_AVAILABLE_LIVE_AI_DISABLED_OR_NO_KEY",
+        "source_attachment_ids": [
+          "att-1"
+        ]
+      },
+      "metrics": {
+        "vlm_calls": 0,
+        "used_vlm": false,
+        "used_local_ocr": true,
+        "raw_input_bytes": 61614,
+        "vlm_payload_bytes": 0,
+        "uncropped_baseline_bytes": 81493,
+        "local_ocr_ms": 2642.09,
+        "processing_ms": 2695.79
+      },
+      "oracle_status": "UNVERIFIED_AGENT_REFERENCE",
+      "outcomes": [
+        {
+          "category": "USER_CORRECTED_SIMULATED",
+          "edited_spans": [],
+          "confirmations": 0,
+          "actions": 1,
+          "final_text": "câu hình nào dưới đây không phải hình đa: diện\nC.",
+          "kernel": {
+            "http_status": 200,
+            "status": "unsupported",
+            "answers": null,
+            "reason_code": null,
+            "failure_category": "out_of_scope",
+            "scene3d_objects": 0,
+            "continuity_violations": null,
+            "oracle_status": "UNGRADED_UNLESS_SEPARATELY_ADJUDICATED"
+          }
+        }
+      ]
+    },
+    {
+      "case_id": "new_vmmu_full_r450",
+      "partition": "development",
+      "sha256": "aaffc472730c76dbd18b2d63d5f0432e96048ffe3e7a2ab4edd08eb88c7d81c2",
+      "prepare": {
+        "http_status": 200,
+        "elapsed_ms": 2609.247299999879
+      },
+      "prepare_status": "needs_confirmation",
+      "reason_code": "LOCAL_OCR_REVIEW_REQUIRED",
+      "ocr_text": "Câu 32. Người ta ghép 5 khối lập phương cạnh a để được khối hộp chữ thập (tham khảo hình bên dưới). Tính diện tích toàn phần s,„ của khối chủ thập đó.\nA. Sp=30a2. B. 5, =12a2. C. S = 20a2. D. Stp =22a2.",
+      "provenance": {
+        "source_mime": "image/jpeg",
+        "selected_page": null,
+        "desk_trimmed": false,
+        "deskew_applied": false,
+        "skew_angle_deg": 0.0,
+        "enhanced_low_light": false,
+        "is_low_light": false,
+        "used_crop": false,
+        "used_fallback_full_image": true,
+        "has_associated_figure": true,
+        "completeness_confidence": 1.0,
+        "selected_bbox": [
+          0.0,
+          0.0,
+          1.0,
+          1.0
+        ],
+        "candidate_region_count": 1,
+        "local_ocr": {
+          "route_version": "local-ocr-route/1",
+          "reconcile_version": "layout-aware-ocr-reconcile/1",
+          "extraction_verified": false,
+          "blocking_reasons": [
+            "UNCERTAIN_SPANS",
+            "DIAGRAM_FACTS_UNVERIFIED"
+          ],
+          "uncertain_blocking_count": 1,
+          "uncertain_ratio": 0.0222,
+          "low_quality": false,
+          "diagram_classification": "DIAGRAM_REFERENCED_BY_TEXT",
+          "layout_flags": [],
+          "min_agreeing_families": 2,
+          "readers": {
+            "tesseract": {
+              "engine_version": "tesseract 5.5.3",
+              "model": "tessdata_fast",
+              "ms": 220.72,
+              "error": null
+            },
+            "rapidocr": {
+              "engine_version": "rapidocr UNKNOWN",
+              "model": "PP-OCRv6_det_small+PP-OCRv6_rec_small(default)",
+              "ms": 1996.66,
+              "error": null
+            }
+          },
+          "adjudication": {
+            "requested": 10,
+            "readers": [
+              "rapidocr_latin_rec",
+              "tesseract_eng_line"
+            ],
+            "ok": true,
+            "ms": 192.67,
+            "resolved": 1
+          },
+          "timing": {
+            "ocr_ms": 2229.23,
+            "ocr_cached": false,
+            "cold_worker": false,
+            "reconcile_and_reread_ms": 256.24,
+            "reread_ms": 192.67,
+            "total_ms": 2485.47
+          },
+          "used_ground_truth": false
+        },
+        "input_route": "LOCAL_OCR_NEEDS_CONFIRMATION",
+        "input_text_provenance": "LOCAL_OCR_DRAFT_PENDING_STUDENT_CONFIRMATION",
+        "vision_fallback": "NOT_AVAILABLE_LIVE_AI_DISABLED_OR_NO_KEY",
+        "source_attachment_ids": [
+          "att-1"
+        ]
+      },
+      "metrics": {
+        "vlm_calls": 0,
+        "used_vlm": false,
+        "used_local_ocr": true,
+        "raw_input_bytes": 103143,
+        "vlm_payload_bytes": 0,
+        "uncropped_baseline_bytes": 134470,
+        "local_ocr_ms": 2485.47,
+        "processing_ms": 2586.88
+      },
+      "oracle_status": "UNVERIFIED_AGENT_REFERENCE",
+      "outcomes": [
+        {
+          "category": "USER_CORRECTED_SIMULATED",
+          "edited_spans": [
+            {
+              "span_id": "sp28",
+              "from": "s,„",
+              "to": "Sₜₚ",
+              "chosen_from_alternatives": false
+            }
+          ],
+          "confirmations": 0,
+          "actions": 2,
+          "final_text": "Câu 32. Người ta ghép 5 khối lập phương cạnh a để được khối hộp chữ thập (tham khảo hình bên dưới). Tính diện tích toàn phần Sₜₚ của khối chủ thập đó.\nA. Sp=30a2. B. 5, =12a2. C. S = 20a2. D. Stp =22a2.",
+          "kernel": {
+            "http_status": 503,
+            "status": null,
+            "answers": null,
+            "reason_code": "LIVE_AI_DISABLED",
+            "failure_category": null,
+            "scene3d_objects": 0,
+            "continuity_violations": null,
+            "oracle_status": "UNGRADED_UNLESS_SEPARATELY_ADJUDICATED"
+          }
+        }
+      ]
+    }
+  ],
+  "user_correction": "SCRIPTED_NOT_REAL_STUDENT: span edits are chosen from the agent-transcribed reference"
+}

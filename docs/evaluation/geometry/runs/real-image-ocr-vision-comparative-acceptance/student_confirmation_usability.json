@@ -10,12 +10,14 @@
   "real_completion_time_seconds": null,
   "real_error_rate": null,
   "real_task_success_rate": null,
-  "automated_confirmation_status": "PENDING_PARENT_EVIDENCE_REVIEW",
+  "automated_confirmation_status": "AUTOMATED_E2E_VERIFIED_NOT_HUMAN_STUDY",
   "automated_evidence_paths": [
-    "frontend_browser_confirmation_audit.json",
-    "frontend_browser_existing_scenarios.json"
+    "frontend_browser_final_existing.json",
+    "frontend_browser_final_confirmation.json"
   ],
   "automation_is_human_usability_evidence": false,
   "prior_correction_simulation": "USER_CORRECTED_SIMULATED uses catalog ground truth to choose span edits; no observed student study.",
-  "remaining_measurement": "Observe consented students reading original images, reviewing uncertainty spans and confirming or correcting; separate semantic correctness from completion time and effort."
+  "remaining_measurement": "Observe consented students reading original images, reviewing uncertainty spans and confirming or correcting; separate semantic correctness from completion time and effort.",
+  "automated_scenarios_passed": 10,
+  "automated_scenarios_total": 10
 }

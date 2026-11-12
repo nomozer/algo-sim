@@ -23,6 +23,7 @@ import unicodedata
 RUN = Path(__file__).resolve().parents[1]
 ROOT = RUN.parents[4]
 BASE_URL = os.environ.get("ALGOSIM_EVALUATION_URL", "http://127.0.0.1:8767")
+OUTPUT_TAG = ""
 os.environ["ALLOW_LIVE_AI"] = "0"
 os.environ.setdefault("LOCAL_OCR_PYTHON", str(ROOT / ".superpowers/ocr-venv/Scripts/python.exe"))
 os.environ.setdefault("LOCAL_OCR_TESSDATA", str(ROOT / ".superpowers/tessdata_fast"))
@@ -43,6 +44,8 @@ spec.loader.exec_module(previous)
 
 
 def write(name, data):
+    if OUTPUT_TAG:
+        name = name.removesuffix(".json") + "_" + OUTPUT_TAG + ".json"
     (RUN / name).write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
 
@@ -291,7 +294,12 @@ def benchmark(repeats):
                        "http_200": flat.count(200), "http_5xx": sum(status >= 500 for status in flat),
                        "wall_ms_all_200_rounds": summary([r["wall_ms"] for r in rounds if set(r["statuses"]) == {200}]),
                        "database": "SQLite file (development default); PostgreSQL NOT_MEASURED",
-                       "failure_cause": "UNDETERMINED: requires sanitized server exception diagnosis"}
+                       # Sanitized exception metadata captured by measured_app for every unhandled error of this server process.
+                       "server_exception_events": client.get("/__evaluation/failures").json()["events"]}
+        locked = sum(bool(e.get("database_locked")) for e in concurrency["server_exception_events"])
+        concurrency["failure_cause"] = ("NO_FAILURE_OBSERVED" if not concurrency["http_5xx"] else
+                                        "SQLITE_DATABASE_LOCKED" if locked >= concurrency["http_5xx"] else
+                                        "UNDETERMINED: fewer captured lock events than HTTP 5xx responses")
 
         # External crash of the launcher: no orphan interpreter, next request recovers with a new worker.
         crashed = client.post("/__evaluation/crash_worker").json()
@@ -617,7 +625,9 @@ if __name__ == "__main__":
     parser.add_argument("--mode", choices=["local", "api", "benchmark", "coldprocess", "stages", "prior", "failures", "summarize"], required=True)
     parser.add_argument("--partition", default="development")
     parser.add_argument("--repeats", type=int, default=10)
+    parser.add_argument("--tag", choices=["final"], default="")
     args = parser.parse_args()
+    OUTPUT_TAG = args.tag
     if args.mode == "benchmark":
         benchmark(args.repeats)
     elif args.mode == "coldprocess":

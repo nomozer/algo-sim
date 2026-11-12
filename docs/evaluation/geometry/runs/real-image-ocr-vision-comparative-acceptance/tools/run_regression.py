@@ -91,17 +91,19 @@ def main():
     parser.add_argument("--phase", choices=("baseline", "final"), required=True)
     parser.add_argument("--python", default=sys.executable)
     parser.add_argument("--only", nargs="+")
+    parser.add_argument("--receipt-name", choices=["full_regression_backend_final.json"])
     args = parser.parse_args()
     temp_root = ROOT / ".superpowers/offline-logs" / RUN.name / args.phase
     temp_root.mkdir(parents=True, exist_ok=True)
     env = {**os.environ, "ALLOW_LIVE_AI": "0", "GEMINI_API_KEY": "", "PYTHONUTF8": "1",
            "TEMP": str(temp_root), "TMP": str(temp_root),
-           "PYTEST_ADDOPTS": '-p no:cacheprovider --basetemp="' + (temp_root / ("pytest-" + str(os.getpid()))).as_posix() + '"',
+           "PYTEST_ADDOPTS": '-p no:cacheprovider --basetemp="' + (ROOT / ".superpowers" / ("pytest-" + str(os.getpid()))).as_posix() + '"',
            # conftest installs the parent guard, and adds sitecustomize only for children.
            "PYTHONPATH": str(ROOT / "backend"),
            "GIT_CONFIG_GLOBAL": os.devnull, "GIT_CONFIG_NOSYSTEM": "1",
-           "GIT_CONFIG_COUNT": "2", "GIT_CONFIG_KEY_0": "core.excludesFile", "GIT_CONFIG_VALUE_0": os.devnull,
-           "GIT_CONFIG_KEY_1": "safe.directory", "GIT_CONFIG_VALUE_1": str(ROOT)}
+           "GIT_CONFIG_COUNT": "3", "GIT_CONFIG_KEY_0": "core.excludesFile", "GIT_CONFIG_VALUE_0": os.devnull,
+           "GIT_CONFIG_KEY_1": "safe.directory", "GIT_CONFIG_VALUE_1": str(ROOT),
+           "GIT_CONFIG_KEY_2": "core.longpaths", "GIT_CONFIG_VALUE_2": "true"}
     gates = [
         ("backend_pytest", [args.python, "-m", "pytest", "-c", "backend/pytest.ini", "backend/tests", "-q"], ROOT),
         ("frontend_test_wave", ["npm.cmd", "run", "test:wave"], ROOT / "frontend"),
@@ -115,7 +117,8 @@ def main():
     if args.only:
         assert set(args.only) <= {gate[0] for gate in gates}, "unknown gate"
         gates = [gate for gate in gates if gate[0] in args.only]
-    target = RUN / ("full_regression_baseline.json" if args.phase == "baseline" else "full_regression_summary.json")
+    target = RUN / (args.receipt_name or ("full_regression_baseline.json" if args.phase == "baseline" else "full_regression_summary.json"))
+    expected_gate_count = len(gates) if args.receipt_name else 8
     previous = json.loads(target.read_text(encoding="utf-8")) if target.exists() else None
     interrupted = previous and previous.get("verdict", "").startswith("INTERRUPTED_")
     if previous and not args.only and not interrupted:
@@ -134,7 +137,7 @@ def main():
         receipt.update({"started_at_utc": now(), "start_snapshot": snapshot(), "suites": []})
     receipt["environment"]["TEMP_TMP"] = str(temp_root)
     receipt["environment"]["PYTEST_ADDOPTS"] = env["PYTEST_ADDOPTS"]
-    receipt["environment"]["git_config_isolation"] = "Command-scoped: global/system config disabled; core.excludesFile=null; safe.directory=specified worktree only. No persistent Git config change."
+    receipt["environment"]["git_config_isolation"] = "Command-scoped: global/system config disabled; core.excludesFile=null; safe.directory=specified worktree only; core.longpaths=true. No persistent Git config change."
     receipt["environment"]["network_guard"] = "Parent guard installed by backend/conftest.py; conftest injects sitecustomize for children. No premature child guard on parent PYTHONPATH."
     logs = RUN / "logs"
     logs.mkdir(exist_ok=True)
@@ -174,7 +177,7 @@ def main():
         receipt["source_unchanged_across_run"] = (receipt["start_snapshot"]["working_product_source_sha256"]
             == receipt["end_snapshot"]["working_product_source_sha256"])
         receipt["ended_at_utc"] = now()
-        receipt["verdict"] = "PASS" if (len(receipt["suites"]) == 8 and receipt["source_unchanged_across_run"]
+        receipt["verdict"] = "PASS" if (len(receipt["suites"]) == expected_gate_count and receipt["source_unchanged_across_run"]
             and all(item["verdict"] == "PASS" for item in receipt["suites"])) else "INCOMPLETE_OR_FAIL"
         target.write_text(json.dumps(receipt, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
         print(json.dumps({"name": name, "exit_code": process.returncode, "verdict": entry["verdict"], "raw_local_log": str(raw_path),

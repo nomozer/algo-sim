@@ -1,6 +1,6 @@
 {
   "run_id": "real-image-ocr-vision-comparative-acceptance",
-  "head": "7b170021451a86c56a2eebadcdd0f0f088fcc229",
+  "head": "70b22cc7167d8e2372d606547c3e398b199fb101",
   "measured_system": [
     "a068b6f6586c1b120bd8350dbe706f5681ab71fd7da57502c34f940140268921",
     115
@@ -39,5 +39,14 @@
     200
   ],
   "causal_improvement_claim": false,
-  "final_load_acceptance": "LIMITED:10/10 on bounded follow-up; longer concurrent-load reliability remains unproved"
+  "first_hand_log_observation": "NOT_RECOVERABLE_AS_ARTIFACT: the session that ran the precursor benchmark read the server traceback of one HTTP500 (sqlite3 'database is locked' on UPDATE auth_sessions inside the prepare session guard) and an ad-hoc repeat with new guest sessions failed 4/30. That log was overwritten by later server restarts and no receipt was written, so it is recorded here as testimony, not evidence.",
+  "final_candidate_concurrent_uploads": {
+    "requests": 20,
+    "http_200": 20,
+    "http_5xx": 0,
+    "server_exception_events": [],
+    "failure_cause": "NO_FAILURE_OBSERVED"
+  },
+  "final_candidate_head": "70b22cc7167d8e2372d606547c3e398b199fb101",
+  "final_load_acceptance": "LIMITED: sealed candidate 20/20 with 0 captured server exceptions (two simultaneous new-session uploads, 10 rounds, SQLite). Sustained or wider concurrent load and PostgreSQL remain NOT_MEASURED"
 }

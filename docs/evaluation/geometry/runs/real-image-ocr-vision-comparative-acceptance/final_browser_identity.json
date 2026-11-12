@@ -1,0 +1,66 @@
+{
+  "checked_at_utc": "2026-11-12T11:11:33.649230+00:00",
+  "head": "70b22cc7167d8e2372d606547c3e398b199fb101",
+  "backend_port": 8769,
+  "backend_pid": 15092,
+  "ALLOW_LIVE_AI": 0,
+  "production_frontend_assets": [
+    {
+      "path": "assets\\geometry-samples-Bl0M828a.js",
+      "sha256": "9b53bbda88a9e63250d8e7e0d90fd003a548ceb059d321055fdf8e2dad16f3a5"
+    },
+    {
+      "path": "assets\\index-B2N_s5L-.css",
+      "sha256": "1fe8aacfc63baf7b6d7c43d3daa9b6f1bc969032c63a9f6c1f2d8cdd8d392831"
+    },
+    {
+      "path": "assets\\index-CHhZw02e.js",
+      "sha256": "ea5765327328aba02c33e04268e6b58e3f26bcd284df227781a7b90cfc751bc0"
+    },
+    {
+      "path": "assets\\vendor-three-DZzGZQF_.js",
+      "sha256": "5a2f173f7f76f3694db78d1c796b61e4f0e549c72398858abb8c0d2d847a868e"
+    },
+    {
+      "path": "favicon.svg",
+      "sha256": "b205bfc10b9f68f1150b5ba1c9624f09482afeddb559aacbc983f38d1a508b95"
+    },
+    {
+      "path": "index.html",
+      "sha256": "84382df16ca8d9aa53468789cb3cab7fe60663364f158d8c25f64f3ab3123720"
+    }
+  ],
+  "ocr_descendants_before_shutdown": [
+    13692,
+    17472,
+    7136
+  ],
+  "shutdown_poll_observations": [
+    {
+      "ms": 7.395500000029642,
+      "alive_python_descendants": [
+        7136
+      ]
+    },
+    {
+      "ms": 114.70320000000811,
+      "alive_python_descendants": []
+    }
+  ],
+  "current_resources_after_shutdown": {
+    "time": 668.7513402,
+    "fastapi": {
+      "rss_mib": 142.6953125,
+      "process_lifetime_peak_rss_mib": 165.53515625
+    },
+    "launcher_pid": null,
+    "descendants": [],
+    "descendant_rss_mib": 0,
+    "combined_rss_mib": 142.6953125
+  },
+  "browser_results": [
+    "frontend_browser_final_existing.json",
+    "frontend_browser_final_confirmation.json"
+  ],
+  "immediate_pid_disappearance_is_not_required": "Pipes/process reaping can briefly outlive the launcher; bounded follow-up checks the real interpreter."
+}

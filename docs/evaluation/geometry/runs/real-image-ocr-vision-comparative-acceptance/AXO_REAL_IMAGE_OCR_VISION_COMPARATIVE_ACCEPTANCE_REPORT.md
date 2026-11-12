@@ -1,8 +1,10 @@
 # AXO — Real-image OCR/Vision comparative acceptance
 
-Status: **OFFLINE_EVALUATION_WITH_LIMITS; REGRESSION=INCOMPLETE_OR_FAIL; LIVE/HUMAN/H1 NOT_MEASURED; ARCHITECTURE DECISION_PENDING_LIVE_EVIDENCE**. No merge, push or deploy.
+Status: **OFFLINE_EVALUATION_WITH_LIMITS; REGRESSION=BLOCKED_GATES_REMAIN; LIVE/HUMAN/H1 NOT_MEASURED; ARCHITECTURE DECISION_PENDING_LIVE_EVIDENCE**. No merge, push or deploy.
 
 Product checkpoints:2969e9e76 and7b1700214; baseline6bb22fa3b. Planner/26, Registry/33, Engine/24, height-invariance-certificate/2, output-policy/1 and cache132 unchanged. Candidate measured hash recorded in run.json; full working-source fingerprint in regression receipts additionally covers UI files outside the115-file freeze surface.
+
+Actual offline API measurements use HYBRID_ROUTE_MODE=local-first, HYBRID_LOCAL_FIRST=1, ALLOW_LIVE_AI=0 and an empty provider key. The official live Hybrid default and deployment configuration are unchanged. A503 LIVE_AI_DISABLED is an infrastructure refusal, not evidence of mathematical out-of-scope classification.
 
 This run corrects [the original report](../image-first-ocr-verified-geometry/ALGOSIM_IMAGE_FIRST_OCR_VERIFIED_GEOMETRY_REPORT.md), preserving historical bytes. See [metric reconciliation](prior_metric_reconciliation.json), [baseline audit](baseline_integrity.json) and [review](review.md).
 
@@ -12,7 +14,7 @@ This run corrects [the original report](../image-first-ocr-verified-geometry/ALG
 |---:|---|---|---|
 |1|Baseline OCR|VERIFIED FACT|Actual rerun16 images/17 variants:1/11 local auto in supported printed instances;10/10 further simulated corrections served correctly;6 other variants unserved. Keep the arms separate.|
 |2|CER discrepancy|VERIFIED FACT|Five polyhedral cases median0.1135; all12 median0.1040. All source per-case scores reproduce receipts; report0.0110 is an unreproducible reporting error, not a new normalization result.|
-|3|Full regression|BLOCKED|INCOMPLETE_OR_FAIL; exact commands/counts/exclusions below and in full_regression_summary.json.|
+|3|Full regression|VERIFIED FACT|Product tests=PASS; backend 14259 passed, 7 skipped, 3 deselected, 15 xfailed, 1 warning in 554.92s (0:09:14). Overall gates=BLOCKED_GATES_REMAIN; whole-HEAD publication remains blocked by97 unchanged baseline pending entries. Exact commands/exclusions below.|
 |4|New images found|VERIFIED FACT|31 fresh downloads;5 relevant selected. Three older acquired-but-unevaluated geometry images added with exposure disclosed.26 irrelevant algebra images excluded; source stopped at429.|
 |5|Eligible new corpus|VERIFIED FACT|8 relevant technical images:2 development/6 frozen external evaluation. This falls short of20–30; only1 evaluation item is a named-polyhedron distance problem in solver scope.|
 |6|Verified ground truth|NOT_MEASURED|0 HUMAN_VERIFIED;8 AGENT_TRANSCRIBED_UNVERIFIED references. No independent scorer or sealed H-1.|
@@ -34,33 +36,39 @@ This run corrects [the original report](../image-first-ocr-verified-geometry/ALG
 |22|Stale cache|VERIFIED FACT|Browser text-edit scenario changes answers and Scene3D without re-preparing image; further span/free edits clear old confirmation. Other cache states are covered only as explicitly tested.|
 |23|Correct image-to-result|VERIFIED FACT|Prior development11 outcomes:1 LOCAL_AUTO,10 USER_CORRECTED_SIMULATED. New corpus0 served. Never combine local, simulated, live or real-user categories into one accuracy.|
 |24|Scene3D|VERIFIED FACT|Actual browser6/6 existing scenarios and4/4 confirmation checks; supported prior scenes render and continuity checked. No new corpus scene served; no blanket geometric fidelity claim.|
-|25|Combined RSS|VERIFIED FACT|Measured precursor4ab43853 warm miss combined sampled-peak p50=746.1MiB,p95=882.0MiB,n=10. Includes Windows venv launcher, actual interpreter and descendants, not just4MiB launcher. Shared working sets may double count pages.|
-|26|Cold/warm latency|VERIFIED FACT|Precursor HTTP prepare-only p50/p95: cold-model4596/7916ms(n10);warm miss2532/3012ms(n10);cache161/321ms(n10). Cold FastAPI process profile n5 separate. Do not add stages or call prepare latency upload-to-Scene3D.|
-|27|Physical low-end|NOT_MEASURED|12 logical CPU/16GB shared host; PHYSICAL_LOW_END_NOT_MEASURED. Host CPU busy around80% during precursor benchmark; not an isolated hardware claim.|
+|25|Combined RSS|VERIFIED FACT|Measured precursor4ab43853 warm miss combined sampled-peak p50=746.1MiB,p95=882.0MiB,n=10. Includes Windows venv launcher, actual interpreter and descendants, not just4MiB launcher. Shared working sets may double count pages. Sealed candidate 70b22cc71 re-measured: combined p50=751.1MiB,p95=875.3MiB; OCR process tree alone p50=618.5MiB,p95=742.8MiB (n=10).|
+|26|Cold/warm latency|VERIFIED FACT|Precursor HTTP prepare-only p50/p95: cold-model4596/7916ms(n10);warm miss2532/3012ms(n10);cache161/321ms(n10). Sealed candidate 70b22cc71 re-measured (n10 each): cold-model7151/16707ms;warm miss3711/5687ms;cache240/398ms. Fresh FastAPI process (n5): start-to-health3034/6153ms, first image6440/9019ms, next image3572/18858ms, repeat371/777ms. The two runs differ in host load (whole-machine CPU busy80% vs89%, OCR itself included), so the difference is NOT a measured regression or improvement. Do not add stages or call prepare latency upload-to-Scene3D.|
+|27|Physical low-end|NOT_MEASURED|12 logical CPU/16GB shared host; PHYSICAL_LOW_END_NOT_MEASURED. Host CPU busy80% (precursor) and89% (sealed candidate) during the benchmarks, the OCR engines' own threads included; available RAM1916MiB at start. Not an isolated hardware claim.|
 |28|Independent H-1|NOT_MEASURED|H1_NOT_MEASURED. Frozen external split is developer-collected and agent-transcribed; old12 VMMU images are exposed development/regression material.|
 |29|Architecture choice|INFERENCE|Provisional local-first+targeted confirmation; DECISION_PENDING_LIVE_EVIDENCE. No empirical basis to rank Vision-first or adaptive live quality/cost.|
 |30|Rust/training|INFERENCE|No new evidence requiring Rust, GPU or training. Engine inference dominates CPU; retain existing stack pending representative licensed data and approved comparison.|
-|31|Pilot readiness|BLOCKED|Not ready for unrestricted student pilot: new corpus has0 solves, no human usability/live comparison/H1, and historical concurrency500 remains only partly diagnosed. Supervised technical evaluation with declared limits is feasible.|
+|31|Pilot readiness|BLOCKED|Not ready for unrestricted student pilot: new corpus has0 solves, no human usability/live comparison/H1, and concurrency is checked only for two simultaneous uploads on SQLite (20/20 on the sealed candidate). Supervised technical evaluation with declared limits is feasible.|
 |32|Remaining limits|VERIFIED FACT|Small nonrepresentative corpus, unverified transcriptions, recognition/segmentation errors, unresolved geometry capability gaps, no live Vision/human/H1/physical-low-end evidence, and limited concurrent-load follow-up.|
 
 ## Regression and acceptance boundaries
 
-- `backend_pytest`: **FAIL**; 6 failed, 14231 passed, 7 skipped, 3 deselected, 15 xfailed, 1 warning, 22 errors in 826.08s (0:13:46)
-- `frontend_test_wave`: **FAIL**; ['Test Files  1 failed | 138 passed (139)', 'Tests  8 failed | 2010 passed (2018)', 'Duration  45.20s (transform 4.32s, setup 1.30s, import 24.16s, tests 42.37s, environment 10ms)']
+- `backend_pytest`: **PASS**; 14259 passed, 7 skipped, 3 deselected, 15 xfailed, 1 warning in 554.92s (0:09:14)
+- `frontend_test_wave`: **PASS**; ['Test Files  139 passed (139)', 'Tests  2018 passed (2018)', 'Duration  48.13s (transform 4.56s, setup 1.35s, import 25.14s, tests 45.38s, environment 12ms)', '✓ built in 3.91s']
 - `demo_replay`: **PASS**;
 - `crash_audit`: **PASS**;
+- `publication_head`: **FAIL**; ['SUMMARY scanned=30789 messages=0 violations=97 pending_exception=97 verdict=BLOCKED']
 - `docs_ia`: **PASS**;
-- `publication_head`: **FAIL**; []
-- `publication_range`: **FAIL**; []
-- `freeze_verify`: **FAIL**; ['CANDIDATE LỆCH so với bản đã đóng băng: product_commit_sha']
+- `publication_range`: **PASS**; ['SUMMARY scanned=83 messages=4 violations=0 pending_exception=0 verdict=PASS']
+- `freeze_verify`: **PASS**; ['Candidate khớp bản đã đóng băng (mã sản phẩm: 115 file, a068b6f6586c1b12…).']
 
 Postgres and external-evidence markers remain explicitly opt-in/excluded by canonical pytest.ini. Earlier interrupted runs and the pre-existing UI glyph failure are retained in regression history; none supply final PASS counts. Canonical full-gate.mjs alone owns FULL_PRODUCT_GATE_PASS; this report does not invent that label.
+
+Publication range passes with no new finding. Whole-HEAD publication reports97 pending exceptions; every reported path/blob matches the baseline. No exception or human approval was changed. See publication_safety_baseline_comparison.json. Product test success must not be read as permission to publish the repository.
 
 ## Resource and failure correction
 
 Original precursor measured5/20 concurrent HTTP500. The claim that their precise cause was SQLite lacked exception evidence. A controlled real-SQLite regression demonstrates an event-loop/session-lock mechanism and now passes after offloading the guard; fresh actual HTTP follow-ups before and after each returned10/10. This does **not** prove elimination of the original stochastic failure or production-load reliability. [Correction receipt](resource_measurement_correction.json).
 
-Precursor resource/latency files identify4ab43853 explicitly; final patches affect confirmation, comparison and session waiting rather than OCR inference. They are not relabelled as a final-candidate performance run. Original long-form stage timings and cold-process measurements remain separate. A historical idle-RSS delta0MiB is not active OCR memory.
+Sealed candidate 70b22cc71: the same benchmark workload returned 20/20 HTTP200 with 0 captured server exceptions ([profile](ocr_worker_resource_profile_final.json)). The precursor run had no exception capture, so this is an observation on the candidate, not a controlled before/after experiment.
+
+Precursor resource/latency files identify4ab43853 explicitly; final patches affect confirmation, comparison and session waiting rather than OCR inference. They are not relabelled as a final-candidate performance run; the sealed candidate has its own `*_final.json` latency, resource and cold-process receipts, and its API acceptance re-run reproduces the prepare and solve statuses of all eight new-corpus images. Original long-form stage timings and cold-process measurements remain separate. A historical idle-RSS delta0MiB is not active OCR memory.
+
+The shared OCR result cache has operation-dependent bounds: normal OCR inserts trim to16 entries, while reread inserts trim to64. The previous statement of a fixed32-entry cache does not match current code. Cache occupancy and descendant RSS are recorded separately.
 
 ## Corpus, provenance and contamination
 

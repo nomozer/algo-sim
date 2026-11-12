@@ -8,12 +8,13 @@ import { createHash } from 'node:crypto';
 const dist = resolve(process.argv[2]);
 const out = resolve(process.argv[3]);
 const cache = resolve(process.argv[4]);
+const backendPort = Number(process.argv[5] ?? 8767);
 const captures = resolve('.superpowers/offline-logs/comparative-browser');
 mkdirSync(captures, { recursive: true });
 const server = createServer((req, res) => {
   const path = new URL(req.url, 'http://localhost').pathname;
   if (path.startsWith('/api/')) {
-    const proxy = request({ host: '127.0.0.1', port: 8767, path: req.url, method: req.method, headers: req.headers }, upstream => {
+    const proxy = request({ host: '127.0.0.1', port: backendPort, path: req.url, method: req.method, headers: req.headers }, upstream => {
       res.writeHead(upstream.statusCode, upstream.headers); upstream.pipe(res);
     });
     proxy.on('error', () => { res.writeHead(502); res.end(); });

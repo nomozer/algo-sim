@@ -1,0 +1,743 @@
+{
+  "run_id": "real-image-ocr-vision-comparative-acceptance",
+  "head": "70b22cc7167d8e2372d606547c3e398b199fb101",
+  "measured_system": [
+    "a068b6f6586c1b120bd8350dbe706f5681ab71fd7da57502c34f940140268921",
+    115
+  ],
+  "allow_live_ai": 0,
+  "ground_truth_authority": "AGENT_TRANSCRIBED_UNVERIFIED",
+  "independent_h1": "NOT_MEASURED",
+  "server": {
+    "hybrid_route_mode": "local-first",
+    "server_allow_live_ai": false,
+    "cache_version": "132"
+  },
+  "partition": "frozen_external_evaluation",
+  "cases": [
+    {
+      "case_id": "new_vmmu_full_r310",
+      "partition": "frozen_external_evaluation",
+      "sha256": "63aa9316869bec827dcedc50f71548c9a42fd1765af0dc70de165f62255652c2",
+      "prepare": {
+        "http_status": 200,
+        "elapsed_ms": 1781.5693000002284
+      },
+      "prepare_status": "needs_confirmation",
+      "reason_code": "DIAGRAM_FACT_REVIEW_REQUIRED",
+      "ocr_text": "Câu 9: Khối bất diện đều (như hình vẽ bên dưới) thuộc loại nào?\nA. {3;5}. B. {5;3}. C. {3;4}. D. {4;3}.",
+      "provenance": {
+        "source_mime": "image/jpeg",
+        "selected_page": null,
+        "desk_trimmed": false,
+        "deskew_applied": false,
+        "skew_angle_deg": 0.0,
+        "enhanced_low_light": false,
+        "is_low_light": false,
+        "used_crop": true,
+        "used_fallback_full_image": false,
+        "has_associated_figure": true,
+        "completeness_confidence": 0.98,
+        "selected_bbox": [
+          0.0659,
+          0.0,
+          0.7682,
+          0.9881
+        ],
+        "candidate_region_count": 1,
+        "local_ocr": {
+          "route_version": "local-ocr-route/1",
+          "reconcile_version": "layout-aware-ocr-reconcile/1",
+          "extraction_verified": false,
+          "blocking_reasons": [
+            "DIAGRAM_FACTS_UNVERIFIED"
+          ],
+          "uncertain_blocking_count": 0,
+          "uncertain_ratio": 0.0,
+          "low_quality": false,
+          "diagram_classification": "DIAGRAM_REFERENCED_BY_TEXT",
+          "layout_flags": [],
+          "min_agreeing_families": 2,
+          "readers": {
+            "tesseract": {
+              "engine_version": "tesseract 5.5.3",
+              "model": "tessdata_fast",
+              "ms": 119.32,
+              "error": null
+            },
+            "rapidocr": {
+              "engine_version": "rapidocr UNKNOWN",
+              "model": "PP-OCRv6_det_small+PP-OCRv6_rec_small(default)",
+              "ms": 1400.88,
+              "error": null
+            }
+          },
+          "adjudication": {
+            "requested": 4,
+            "readers": [
+              "rapidocr_latin_rec",
+              "tesseract_eng_line"
+            ],
+            "ok": true,
+            "ms": 93.87,
+            "resolved": 0
+          },
+          "timing": {
+            "ocr_ms": 1527.85,
+            "ocr_cached": false,
+            "cold_worker": false,
+            "reconcile_and_reread_ms": 130.17,
+            "reread_ms": 93.87,
+            "total_ms": 1658.02
+          },
+          "used_ground_truth": false
+        },
+        "input_route": "LOCAL_OCR_NEEDS_CONFIRMATION",
+        "input_text_provenance": "LOCAL_OCR_DRAFT_PENDING_STUDENT_CONFIRMATION",
+        "vision_fallback": "NOT_AVAILABLE_LIVE_AI_DISABLED_OR_NO_KEY",
+        "source_attachment_ids": [
+          "att-1"
+        ]
+      },
+      "metrics": {
+        "vlm_calls": 0,
+        "used_vlm": false,
+        "used_local_ocr": true,
+        "raw_input_bytes": 72311,
+        "vlm_payload_bytes": 0,
+        "uncropped_baseline_bytes": 91755,
+        "local_ocr_ms": 1658.02,
+        "processing_ms": 1762.53
+      },
+      "oracle_status": "UNVERIFIED_AGENT_REFERENCE",
+      "outcomes": [
+        {
+          "category": "USER_CORRECTED_SIMULATED",
+          "edited_spans": [],
+          "confirmations": 0,
+          "actions": 1,
+          "final_text": "Câu 9: Khối bất diện đều (như hình vẽ bên dưới) thuộc loại nào?\nA. {3;5}. B. {5;3}. C. {3;4}. D. {4;3}.",
+          "kernel": {
+            "http_status": 200,
+            "status": "unsupported",
+            "answers": null,
+            "reason_code": null,
+            "failure_category": "out_of_scope",
+            "scene3d_objects": 0,
+            "continuity_violations": null,
+            "oracle_status": "UNGRADED_UNLESS_SEPARATELY_ADJUDICATED"
+          }
+        }
+      ]
+    },
+    {
+      "case_id": "new_vmmu_full_r322",
+      "partition": "frozen_external_evaluation",
+      "sha256": "16725640fa06918470dfc1597c225fd514174bc23ad60f4c67d5c2e350f2eab5",
+      "prepare": {
+        "http_status": 200,
+        "elapsed_ms": 2441.154000000097
+      },
+      "prepare_status": "needs_confirmation",
+      "reason_code": "LOCAL_OCR_REVIEW_REQUIRED",
+      "ocr_text": "câu yêu một hình hộp chữ nhật chiều cao c đáy hộp hình chữ nhật chiều cm và chiều dài là 80 cm. Trong khối hộp có chứa nước, mục nước so với đáy hợp có chiều cao là 40 cm. Hỏi khi đặt vào khối hộp một khối trụ có chiều cao bằng chiều cao khối hộp và bán kính đáy là 20 cm theo phương thẳng đứng thì chiều cao của mục nước so với đáy là bao nhiêu?\nA.58,32 cm. B.48,32 cm. C.78,32 cụm. D.68,32 cm.",
+      "provenance": {
+        "source_mime": "image/jpeg",
+        "selected_page": null,
+        "desk_trimmed": false,
+        "deskew_applied": false,
+        "skew_angle_deg": 0.0,
+        "enhanced_low_light": false,
+        "is_low_light": false,
+        "used_crop": false,
+        "used_fallback_full_image": true,
+        "has_associated_figure": true,
+        "completeness_confidence": 0.85,
+        "selected_bbox": [
+          0.0,
+          0.0,
+          1.0,
+          1.0
+        ],
+        "candidate_region_count": 2,
+        "region_split_overruled_by_ocr_headers": 0,
+        "local_ocr": {
+          "route_version": "local-ocr-route/1",
+          "reconcile_version": "layout-aware-ocr-reconcile/1",
+          "extraction_verified": false,
+          "blocking_reasons": [
+            "UNCERTAIN_SPANS",
+            "DIAGRAM_FACTS_UNVERIFIED"
+          ],
+          "uncertain_blocking_count": 2,
+          "uncertain_ratio": 0.0225,
+          "low_quality": false,
+          "diagram_classification": "DIAGRAM_PRESENT_UNREAD",
+          "layout_flags": [],
+          "min_agreeing_families": 2,
+          "readers": {
+            "tesseract": {
+              "engine_version": "tesseract 5.5.3",
+              "model": "tessdata_fast",
+              "ms": 380.43,
+              "error": null
+            },
+            "rapidocr": {
+              "engine_version": "rapidocr UNKNOWN",
+              "model": "PP-OCRv6_det_small+PP-OCRv6_rec_small(default)",
+              "ms": 1713.04,
+              "error": null
+            }
+          },
+          "adjudication": {
+            "requested": 2,
+            "readers": [
+              "rapidocr_latin_rec",
+              "tesseract_eng_line"
+            ],
+            "ok": true,
+            "ms": 56.13,
+            "resolved": 0
+          },
+          "timing": {
+            "ocr_ms": 0.3,
+            "ocr_cached": true,
+            "cold_worker": false,
+            "reconcile_and_reread_ms": 157.86,
+            "reread_ms": 56.13,
+            "total_ms": 158.15
+          },
+          "used_ground_truth": false
+        },
+        "input_route": "LOCAL_OCR_NEEDS_CONFIRMATION",
+        "input_text_provenance": "LOCAL_OCR_DRAFT_PENDING_STUDENT_CONFIRMATION",
+        "vision_fallback": "NOT_AVAILABLE_LIVE_AI_DISABLED_OR_NO_KEY",
+        "source_attachment_ids": [
+          "att-1"
+        ]
+      },
+      "metrics": {
+        "vlm_calls": 0,
+        "used_vlm": false,
+        "used_local_ocr": true,
+        "raw_input_bytes": 192104,
+        "vlm_payload_bytes": 0,
+        "uncropped_baseline_bytes": 253454,
+        "local_ocr_ms": 158.15,
+        "processing_ms": 2419.71
+      },
+      "oracle_status": "UNVERIFIED_AGENT_REFERENCE",
+      "outcomes": [
+        {
+          "category": "USER_CORRECTED_SIMULATED",
+          "edited_spans": [
+            {
+              "span_id": "sp14",
+              "from": "c",
+              "to": "cm,",
+              "chosen_from_alternatives": false
+            }
+          ],
+          "confirmations": 1,
+          "actions": 3,
+          "final_text": "câu yêu một hình hộp chữ nhật chiều cao cm, đáy hộp hình chữ nhật chiều cm và chiều dài là 80 cm. Trong khối hộp có chứa nước, mục nước so với đáy hợp có chiều cao là 40 cm. Hỏi khi đặt vào khối hộp một khối trụ có chiều cao bằng chiều cao khối hộp và bán kính đáy là 20 cm theo phương thẳng đứng thì chiều cao của mục nước so với đáy là bao nhiêu?\nA.58,32 cm. B.48,32 cm. C.78,32 cụm. D.68,32 cm.",
+          "kernel": {
+            "http_status": 503,
+            "status": null,
+            "answers": null,
+            "reason_code": "LIVE_AI_DISABLED",
+            "failure_category": null,
+            "scene3d_objects": 0,
+            "continuity_violations": null,
+            "oracle_status": "UNGRADED_UNLESS_SEPARATELY_ADJUDICATED"
+          }
+        }
+      ]
+    },
+    {
+      "case_id": "new_vmmu_full_r440",
+      "partition": "frozen_external_evaluation",
+      "sha256": "dead289501c7ea98a8e37805b6ffe63b32501b4e8248f8fa7600d60b218333bb",
+      "prepare": {
+        "http_status": 200,
+        "elapsed_ms": 2184.671100000287
+      },
+      "prepare_status": "needs_confirmation",
+      "reason_code": "LOCAL_OCR_REVIEW_REQUIRED",
+      "ocr_text": "2\nCâu 44. Phần không gian bên trong của chai nước ngọt có hình dạng như hình bên. Biết bán kính đáy bằng R = 5 cụm , bán kính có r = 2cm, AB = 3 cm, BC = 6 cm, CD = 16 cụm. Thể tích phần không gian bên trong của\nA. 495π(cm³). B.462π(cm³). C. 490π(cm³). D. 412π(cm3).",
+      "provenance": {
+        "source_mime": "image/png",
+        "selected_page": null,
+        "desk_trimmed": false,
+        "deskew_applied": false,
+        "skew_angle_deg": 0.0,
+        "enhanced_low_light": false,
+        "is_low_light": false,
+        "used_crop": false,
+        "used_fallback_full_image": true,
+        "has_associated_figure": true,
+        "completeness_confidence": 0.85,
+        "selected_bbox": [
+          0.0,
+          0.0,
+          1.0,
+          1.0
+        ],
+        "candidate_region_count": 2,
+        "region_split_overruled_by_ocr_headers": 1,
+        "local_ocr": {
+          "route_version": "local-ocr-route/1",
+          "reconcile_version": "layout-aware-ocr-reconcile/1",
+          "extraction_verified": false,
+          "blocking_reasons": [
+            "UNCERTAIN_SPANS",
+            "DIAGRAM_FACTS_UNVERIFIED"
+          ],
+          "uncertain_blocking_count": 3,
+          "uncertain_ratio": 0.0508,
+          "low_quality": false,
+          "diagram_classification": "DIAGRAM_REFERENCED_BY_TEXT",
+          "layout_flags": [],
+          "min_agreeing_families": 2,
+          "readers": {
+            "tesseract": {
+              "engine_version": "tesseract 5.5.3",
+              "model": "tessdata_fast",
+              "ms": 132.7,
+              "error": null
+            },
+            "rapidocr": {
+              "engine_version": "rapidocr UNKNOWN",
+              "model": "PP-OCRv6_det_small+PP-OCRv6_rec_small(default)",
+              "ms": 1726.12,
+              "error": null
+            }
+          },
+          "adjudication": {
+            "requested": 9,
+            "readers": [
+              "rapidocr_latin_rec",
+              "tesseract_eng_line"
+            ],
+            "ok": true,
+            "ms": 185.82,
+            "resolved": 3
+          },
+          "timing": {
+            "ocr_ms": 0.19,
+            "ocr_cached": true,
+            "cold_worker": false,
+            "reconcile_and_reread_ms": 237.18,
+            "reread_ms": 185.82,
+            "total_ms": 237.37
+          },
+          "used_ground_truth": false
+        },
+        "input_route": "LOCAL_OCR_NEEDS_CONFIRMATION",
+        "input_text_provenance": "LOCAL_OCR_DRAFT_PENDING_STUDENT_CONFIRMATION",
+        "vision_fallback": "NOT_AVAILABLE_LIVE_AI_DISABLED_OR_NO_KEY",
+        "source_attachment_ids": [
+          "att-1"
+        ]
+      },
+      "metrics": {
+        "vlm_calls": 0,
+        "used_vlm": false,
+        "used_local_ocr": true,
+        "raw_input_bytes": 146417,
+        "vlm_payload_bytes": 0,
+        "uncropped_baseline_bytes": 66246,
+        "local_ocr_ms": 237.37,
+        "processing_ms": 2165.52
+      },
+      "oracle_status": "UNVERIFIED_AGENT_REFERENCE",
+      "outcomes": [
+        {
+          "category": "USER_CORRECTED_SIMULATED",
+          "edited_spans": [],
+          "confirmations": 2,
+          "actions": 3,
+          "final_text": "2\nCâu 44. Phần không gian bên trong của chai nước ngọt có hình dạng như hình bên. Biết bán kính đáy bằng R = 5 cụm , bán kính có r = 2cm, AB = 3 cm, BC = 6 cm, CD = 16 cụm. Thể tích phần không gian bên trong của\nA. 495π(cm³). B.462π(cm³). C. 490π(cm³). D. 412π(cm3).",
+          "kernel": {
+            "http_status": 200,
+            "status": "unsupported",
+            "answers": null,
+            "reason_code": null,
+            "failure_category": "out_of_scope",
+            "scene3d_objects": 0,
+            "continuity_violations": null,
+            "oracle_status": "UNGRADED_UNLESS_SEPARATELY_ADJUDICATED"
+          }
+        }
+      ]
+    },
+    {
+      "case_id": "new_vmmu_full_r445",
+      "partition": "frozen_external_evaluation",
+      "sha256": "4651138501a038065cfd0e031ac00ad323f155e3dfcc6b2ad5beb02ea3010a4d",
+      "prepare": {
+        "http_status": 200,
+        "elapsed_ms": 2649.4189000000006
+      },
+      "prepare_status": "needs_confirmation",
+      "reason_code": "LOCAL_OCR_REVIEW_REQUIRED",
+      "ocr_text": "Câu 39: Một công ty xây nhà xuống dạng hình hộp chữ nhật có diện tích mặt sàn là 1458m² và chiều cao có định. Hỗ xây các bức tường xung quanh và bên rỗng để ngắn nhà xuống thành ba phỏng hình chữ nhật có kích thước như nhau (không kẻ trần nhà). Vậy cần phải xy các phỏng theo kích thước bao nhiêu để tiết kiểm chi phí nhất (bỏ qua độ đáy các bức tường)?\nA.18m×27m. B. 16m×24m. C.12m×40,5m. 1n (x + 3) D.9m ×54m.",
+      "provenance": {
+        "source_mime": "image/jpeg",
+        "selected_page": null,
+        "desk_trimmed": false,
+        "deskew_applied": false,
+        "skew_angle_deg": 0.0,
+        "enhanced_low_light": false,
+        "is_low_light": false,
+        "used_crop": false,
+        "used_fallback_full_image": true,
+        "has_associated_figure": true,
+        "completeness_confidence": 0.85,
+        "selected_bbox": [
+          0.0,
+          0.0,
+          1.0,
+          1.0
+        ],
+        "candidate_region_count": 2,
+        "region_split_overruled_by_ocr_headers": 1,
+        "local_ocr": {
+          "route_version": "local-ocr-route/1",
+          "reconcile_version": "layout-aware-ocr-reconcile/1",
+          "extraction_verified": false,
+          "blocking_reasons": [
+            "UNCERTAIN_SPANS",
+            "DIAGRAM_FACTS_UNVERIFIED"
+          ],
+          "uncertain_blocking_count": 4,
+          "uncertain_ratio": 0.0455,
+          "low_quality": false,
+          "diagram_classification": "DIAGRAM_PRESENT_UNREAD",
+          "layout_flags": [],
+          "min_agreeing_families": 2,
+          "readers": {
+            "tesseract": {
+              "engine_version": "tesseract 5.5.3",
+              "model": "tessdata_fast",
+              "ms": 344.79,
+              "error": null
+            },
+            "rapidocr": {
+              "engine_version": "rapidocr UNKNOWN",
+              "model": "PP-OCRv6_det_small+PP-OCRv6_rec_small(default)",
+              "ms": 1708.66,
+              "error": null
+            }
+          },
+          "adjudication": {
+            "requested": 10,
+            "readers": [
+              "rapidocr_latin_rec",
+              "tesseract_eng_line"
+            ],
+            "ok": true,
+            "ms": 246.26,
+            "resolved": 1
+          },
+          "timing": {
+            "ocr_ms": 0.29,
+            "ocr_cached": true,
+            "cold_worker": false,
+            "reconcile_and_reread_ms": 413.0,
+            "reread_ms": 246.26,
+            "total_ms": 413.29
+          },
+          "used_ground_truth": false
+        },
+        "input_route": "LOCAL_OCR_NEEDS_CONFIRMATION",
+        "input_text_provenance": "LOCAL_OCR_DRAFT_PENDING_STUDENT_CONFIRMATION",
+        "vision_fallback": "NOT_AVAILABLE_LIVE_AI_DISABLED_OR_NO_KEY",
+        "source_attachment_ids": [
+          "att-1"
+        ]
+      },
+      "metrics": {
+        "vlm_calls": 0,
+        "used_vlm": false,
+        "used_local_ocr": true,
+        "raw_input_bytes": 151481,
+        "vlm_payload_bytes": 0,
+        "uncropped_baseline_bytes": 200470,
+        "local_ocr_ms": 413.29,
+        "processing_ms": 2628.44
+      },
+      "oracle_status": "UNVERIFIED_AGENT_REFERENCE",
+      "outcomes": [
+        {
+          "category": "USER_CORRECTED_SIMULATED",
+          "edited_spans": [],
+          "confirmations": 4,
+          "actions": 5,
+          "final_text": "Câu 39: Một công ty xây nhà xuống dạng hình hộp chữ nhật có diện tích mặt sàn là 1458m² và chiều cao có định. Hỗ xây các bức tường xung quanh và bên rỗng để ngắn nhà xuống thành ba phỏng hình chữ nhật có kích thước như nhau (không kẻ trần nhà). Vậy cần phải xy các phỏng theo kích thước bao nhiêu để tiết kiểm chi phí nhất (bỏ qua độ đáy các bức tường)?\nA.18m×27m. B. 16m×24m. C.12m×40,5m. 1n (x + 3) D.9m ×54m.",
+          "kernel": {
+            "http_status": 503,
+            "status": null,
+            "answers": null,
+            "reason_code": "LIVE_AI_DISABLED",
+            "failure_category": null,
+            "scene3d_objects": 0,
+            "continuity_violations": null,
+            "oracle_status": "UNGRADED_UNLESS_SEPARATELY_ADJUDICATED"
+          }
+        }
+      ]
+    },
+    {
+      "case_id": "new_vmmu_full_r446",
+      "partition": "frozen_external_evaluation",
+      "sha256": "ee5d1a359cc66add7dabcef0555209d4b8bf5cb4093a6ba089df1fa9a1c4cf2f",
+      "prepare": {
+        "http_status": 200,
+        "elapsed_ms": 2484.9214000000757
+      },
+      "prepare_status": "needs_confirmation",
+      "reason_code": "LOCAL_OCR_REVIEW_REQUIRED",
+      "ocr_text": "Câu 21. Cho hình chóp S.ABC có SA ⊥(ABC), SA = 2 . Tam giác ABC vuông cân tại A, BC = 2√2. Gọi M là trung điểm của AB (tham khảo hình vẽ). Khoảng cách từ M đến mặt phẳng (SBC) bằng\nA.2√3.",
+      "provenance": {
+        "source_mime": "image/jpeg",
+        "selected_page": null,
+        "desk_trimmed": false,
+        "deskew_applied": false,
+        "skew_angle_deg": 0.0,
+        "enhanced_low_light": false,
+        "is_low_light": false,
+        "used_crop": false,
+        "used_fallback_full_image": true,
+        "has_associated_figure": true,
+        "completeness_confidence": 0.85,
+        "selected_bbox": [
+          0.0,
+          0.0,
+          1.0,
+          1.0
+        ],
+        "candidate_region_count": 2,
+        "region_split_overruled_by_ocr_headers": 1,
+        "local_ocr": {
+          "route_version": "local-ocr-route/1",
+          "reconcile_version": "layout-aware-ocr-reconcile/1",
+          "extraction_verified": false,
+          "blocking_reasons": [
+            "UNCERTAIN_SPANS",
+            "DIAGRAM_FACTS_UNVERIFIED"
+          ],
+          "uncertain_blocking_count": 5,
+          "uncertain_ratio": 0.1163,
+          "low_quality": false,
+          "diagram_classification": "DIAGRAM_REFERENCED_BY_TEXT",
+          "layout_flags": [],
+          "min_agreeing_families": 2,
+          "readers": {
+            "tesseract": {
+              "engine_version": "tesseract 5.5.3",
+              "model": "tessdata_fast",
+              "ms": 226.18,
+              "error": null
+            },
+            "rapidocr": {
+              "engine_version": "rapidocr UNKNOWN",
+              "model": "PP-OCRv6_det_small+PP-OCRv6_rec_small(default)",
+              "ms": 1718.65,
+              "error": null
+            }
+          },
+          "adjudication": {
+            "requested": 14,
+            "readers": [
+              "rapidocr_latin_rec",
+              "tesseract_eng_line"
+            ],
+            "ok": true,
+            "ms": 299.66,
+            "resolved": 8
+          },
+          "timing": {
+            "ocr_ms": 0.21,
+            "ocr_cached": true,
+            "cold_worker": false,
+            "reconcile_and_reread_ms": 338.68,
+            "reread_ms": 299.66,
+            "total_ms": 338.89
+          },
+          "used_ground_truth": false
+        },
+        "input_route": "LOCAL_OCR_NEEDS_CONFIRMATION",
+        "input_text_provenance": "LOCAL_OCR_DRAFT_PENDING_STUDENT_CONFIRMATION",
+        "vision_fallback": "NOT_AVAILABLE_LIVE_AI_DISABLED_OR_NO_KEY",
+        "source_attachment_ids": [
+          "att-1"
+        ]
+      },
+      "metrics": {
+        "vlm_calls": 0,
+        "used_vlm": false,
+        "used_local_ocr": true,
+        "raw_input_bytes": 112720,
+        "vlm_payload_bytes": 0,
+        "uncropped_baseline_bytes": 143226,
+        "local_ocr_ms": 338.89,
+        "processing_ms": 2466.17
+      },
+      "oracle_status": "UNVERIFIED_AGENT_REFERENCE",
+      "outcomes": [
+        {
+          "category": "USER_CORRECTED_SIMULATED",
+          "edited_spans": [
+            {
+              "span_id": "sp9",
+              "from": "⊥(ABC),",
+              "to": "⊥ (ABC),",
+              "chosen_from_alternatives": false
+            }
+          ],
+          "confirmations": 4,
+          "actions": 6,
+          "final_text": "Câu 21. Cho hình chóp S.ABC có SA ⊥ (ABC), SA = 2 . Tam giác ABC vuông cân tại A, BC = 2√2. Gọi M là trung điểm của AB (tham khảo hình vẽ). Khoảng cách từ M đến mặt phẳng (SBC) bằng\nA.2√3.",
+          "kernel": {
+            "http_status": 200,
+            "status": "REFUSED",
+            "answers": null,
+            "reason_code": "MISSING_DIMENSION",
+            "failure_category": null,
+            "scene3d_objects": 0,
+            "continuity_violations": null,
+            "oracle_status": "UNGRADED_UNLESS_SEPARATELY_ADJUDICATED"
+          }
+        }
+      ]
+    },
+    {
+      "case_id": "new_vmmu_full_r448",
+      "partition": "frozen_external_evaluation",
+      "sha256": "f6942e50615792a7d71b158e04675c8b91905ddf4e04370a48ffff033e8fad6d",
+      "prepare": {
+        "http_status": 200,
+        "elapsed_ms": 2037.0795000003454
+      },
+      "prepare_status": "needs_confirmation",
+      "reason_code": "LOCAL_OCR_REVIEW_REQUIRED",
+      "ocr_text": "Câu 44. Một xe bốn cho nước có bốn nước gồm hai nửa hình cầu đường kính 18 dm và một hình trụ có chiêu cao 36 dm (như hình vẽ). Thể tích của bốn đã cho bằng\nA.9216πdm³. C. 3888πdm³. D. 16π/243 điểm. 5/6 - Mã đề 101",
+      "provenance": {
+        "source_mime": "image/jpeg",
+        "selected_page": null,
+        "desk_trimmed": false,
+        "deskew_applied": false,
+        "skew_angle_deg": 0.0,
+        "enhanced_low_light": false,
+        "is_low_light": false,
+        "used_crop": true,
+        "used_fallback_full_image": false,
+        "has_associated_figure": true,
+        "completeness_confidence": 0.98,
+        "selected_bbox": [
+          0.0537,
+          0.0,
+          0.8925,
+          0.749
+        ],
+        "candidate_region_count": 1,
+        "local_ocr": {
+          "route_version": "local-ocr-route/1",
+          "reconcile_version": "layout-aware-ocr-reconcile/1",
+          "extraction_verified": false,
+          "blocking_reasons": [
+            "UNCERTAIN_SPANS",
+            "DIAGRAM_FACTS_UNVERIFIED",
+            "UNALIGNED_SECOND_READER_TEXT"
+          ],
+          "uncertain_blocking_count": 1,
+          "uncertain_ratio": 0.0204,
+          "low_quality": false,
+          "diagram_classification": "DIAGRAM_REFERENCED_BY_TEXT",
+          "layout_flags": [
+            "FRACTION_STRUCTURE_SUSPECTED"
+          ],
+          "min_agreeing_families": 2,
+          "readers": {
+            "tesseract": {
+              "engine_version": "tesseract 5.5.3",
+              "model": "tessdata_fast",
+              "ms": 197.73,
+              "error": null
+            },
+            "rapidocr": {
+              "engine_version": "rapidocr UNKNOWN",
+              "model": "PP-OCRv6_det_small+PP-OCRv6_rec_small(default)",
+              "ms": 1449.4,
+              "error": null
+            }
+          },
+          "adjudication": {
+            "requested": 5,
+            "readers": [
+              "rapidocr_latin_rec",
+              "tesseract_eng_line"
+            ],
+            "ok": true,
+            "ms": 111.54,
+            "resolved": 2
+          },
+          "timing": {
+            "ocr_ms": 1657.28,
+            "ocr_cached": false,
+            "cold_worker": false,
+            "reconcile_and_reread_ms": 189.29,
+            "reread_ms": 111.54,
+            "total_ms": 1846.56
+          },
+          "used_ground_truth": false
+        },
+        "input_route": "LOCAL_OCR_NEEDS_CONFIRMATION",
+        "input_text_provenance": "LOCAL_OCR_DRAFT_PENDING_STUDENT_CONFIRMATION",
+        "vision_fallback": "NOT_AVAILABLE_LIVE_AI_DISABLED_OR_NO_KEY",
+        "source_attachment_ids": [
+          "att-1"
+        ]
+      },
+      "metrics": {
+        "vlm_calls": 0,
+        "used_vlm": false,
+        "used_local_ocr": true,
+        "raw_input_bytes": 131828,
+        "vlm_payload_bytes": 0,
+        "uncropped_baseline_bytes": 171138,
+        "local_ocr_ms": 1846.56,
+        "processing_ms": 2015.57
+      },
+      "oracle_status": "UNVERIFIED_AGENT_REFERENCE",
+      "outcomes": [
+        {
+          "category": "USER_CORRECTED_SIMULATED",
+          "edited_spans": [
+            {
+              "span_id": "sp25",
+              "from": "chiêu",
+              "to": "chiều",
+              "chosen_from_alternatives": false
+            }
+          ],
+          "confirmations": 0,
+          "actions": 2,
+          "final_text": "Câu 44. Một xe bốn cho nước có bốn nước gồm hai nửa hình cầu đường kính 18 dm và một hình trụ có chiều cao 36 dm (như hình vẽ). Thể tích của bốn đã cho bằng\nA.9216πdm³. C. 3888πdm³. D. 16π/243 điểm. 5/6 - Mã đề 101",
+          "kernel": {
+            "http_status": 503,
+            "status": null,
+            "answers": null,
+            "reason_code": "LIVE_AI_DISABLED",
+            "failure_category": null,
+            "scene3d_objects": 0,
+            "continuity_violations": null,
+            "oracle_status": "UNGRADED_UNLESS_SEPARATELY_ADJUDICATED"
+          }
+        }
+      ]
+    }
+  ],
+  "user_correction": "SCRIPTED_NOT_REAL_STUDENT: span edits are chosen from the agent-transcribed reference"
+}

@@ -60,10 +60,19 @@ def main():
     new = summary["new_corpus"]
     evaluation = new["frozen_external_evaluation"]
     dev = new["development"]
-    browser = load("frontend_browser_existing_scenarios.json")
-    extra_browser = load("frontend_browser_confirmation_audit.json")
+    browser_name = "frontend_browser_final_existing.json" if (RUN / "frontend_browser_final_existing.json").exists() else "frontend_browser_existing_scenarios.json"
+    confirmation_name = "frontend_browser_final_confirmation.json" if (RUN / "frontend_browser_final_confirmation.json").exists() else "frontend_browser_confirmation_audit.json"
+    browser = load(browser_name)
+    extra_browser = load(confirmation_name)
     latency = load("cold_warm_latency_benchmark.json")
     resources = load("ocr_worker_resource_profile.json")
+    # Re-measurements taken on the sealed candidate (evaluate_acceptance.py --tag final). The untagged precursor
+    # receipts keep their own identity; nothing is relabelled.
+    final_latency, final_resources, final_cold = (load(name) for name in (
+        "cold_warm_latency_benchmark_final.json", "ocr_worker_resource_profile_final.json", "cold_process_benchmark_final.json"))
+    assert final_latency["head"] == final_resources["head"] == final_cold["head"]
+    final_head = final_latency["head"][:9]
+    final_api = [case for partition in ("development", "frozen_external_evaluation") for case in load(f"api_acceptance_{partition}_final.json")["cases"]]
     new_cases = [case for partition in ("development", "frozen_external_evaluation") for case in load(f"local_ocr_{partition}.json")["cases"]]
     api_cases = [case for partition in ("development", "frozen_external_evaluation") for case in load(f"api_acceptance_{partition}.json")["cases"]]
 
@@ -89,6 +98,9 @@ def main():
             false_acceptance_before_after="Not a population estimate; mock dimension conflicts missed3/3 before,0/3 after (adaptive_hybrid_comparison.json)",
             geometry_expansion=False, wrong_served_new="No automatic result on eight images; all corrected attempts unserved")
 
+    final_conc = final_resources["concurrent_uploads"]
+    kernel_of = lambda cases: {c["case_id"]: [(o["category"], (o.get("kernel") or {}).get("status"), (o.get("kernel") or {}).get("reason_code")) for o in c["outcomes"]] for c in cases}
+    api_final_matches = kernel_of(final_api) == kernel_of(api_cases) and [c["prepare_status"] for c in final_api] == [c["prepare_status"] for c in api_cases]
     before = load("concurrent_upload_diagnosis_before.json")
     after = load("concurrent_upload_diagnosis_after.json")
     derived("resource_measurement_correction.json", corrects="ocr_worker_resource_profile.json::concurrent_uploads.failure_cause",
@@ -98,11 +110,22 @@ def main():
             exact_cause_of_original_5xx="UNKNOWN: current bounded HTTP reproduction did not reproduce the original failures",
             subsequent_before_fix_http_statuses=[r["http_status"] for row in before["rounds"] for r in row["requests"]],
             subsequent_after_fix_http_statuses=[r["http_status"] for row in after["rounds"] for r in row["requests"]],
-            causal_improvement_claim=False, final_load_acceptance="LIMITED:10/10 on bounded follow-up; longer concurrent-load reliability remains unproved")
+            causal_improvement_claim=False,
+            first_hand_log_observation="NOT_RECOVERABLE_AS_ARTIFACT: the session that ran the precursor benchmark read the server traceback of one HTTP500 (sqlite3 'database is locked' on UPDATE auth_sessions inside the prepare session guard) and an ad-hoc repeat with new guest sessions failed 4/30. That log was overwritten by later server restarts and no receipt was written, so it is recorded here as testimony, not evidence.",
+            final_candidate_concurrent_uploads={k: final_conc[k] for k in ("requests", "http_200", "http_5xx", "server_exception_events", "failure_cause")},
+            final_candidate_head=final_latency["head"],
+            final_load_acceptance=f"LIMITED: sealed candidate {final_conc['http_200']}/{final_conc['requests']} with {len(final_conc['server_exception_events'])} captured server exceptions (two simultaneous new-session uploads, {final_latency['repeats_per_mode']} rounds, SQLite). Sustained or wider concurrent load and PostgreSQL remain NOT_MEASURED")
     derived("frontend_browser_e2e.json", existing_scenarios=browser["summary"], confirmation_audit={"passed": extra_browser["passed"], "total": extra_browser["total"]},
-            source_receipts=["frontend_browser_existing_scenarios.json", "frontend_browser_confirmation_audit.json"],
+            source_receipts=[browser_name, confirmation_name],
             browser_zoom="Old harness used deviceScaleFactor (DPR), added harness uses CSS zoom1/1.1; browser chrome zoom itself NOT_MEASURED",
             real_student_usability="NOT_MEASURED", screenshots="Ignored local only because source-image crops have redistribution limitations")
+    student = load("student_confirmation_usability.json")
+    student.update(automated_confirmation_status="AUTOMATED_E2E_VERIFIED_NOT_HUMAN_STUDY",
+                   automated_evidence_paths=[browser_name, confirmation_name],
+                   automated_scenarios_passed=browser["summary"]["passed_scenarios"] + extra_browser["passed"],
+                   automated_scenarios_total=browser["summary"]["total_scenarios"] + extra_browser["total"],
+                   automation_is_human_usability_evidence=False)
+    E.write("student_confirmation_usability.json", student)
     derived("user_correction_e2e.json", prior_corpus=prior, new_cases=api_cases,
             categories_separate=True, real_user_corrections="NOT_MEASURED", participant_count=0,
             edits_are="Script chooses only flagged spans from agent reference; unflagged errors remain. It does not replace the entire statement.",
@@ -127,11 +150,17 @@ def main():
     cer = evaluation["recognition_against_unverified_reference"]["reconciled_draft"]["cer_median"]
     cold, warm, hit = (latency["summary"][k] for k in ("cold_model_cache_miss", "warm_model_cache_miss", "cache_hit"))
     peak = resources["summary_peak_by_mode"]["warm_model_cache_miss"]["combined_process_tree_peak_rss_mib"]
+    f_cold, f_warm, f_hit = (final_latency["summary"][k] for k in ("cold_model_cache_miss", "warm_model_cache_miss", "cache_hit"))
+    f_peak = final_resources["summary_peak_by_mode"]["warm_model_cache_miss"]
+    f_proc = final_cold["summary"]
+    f_busy, p_busy = (doc["host"]["whole_machine_cpu_busy_fraction_during_benchmark"] for doc in (final_latency, latency))
+    ms = lambda node: f"{node['p50']:.0f}/{node['p95_nearest_rank']:.0f}ms"
     reg_lines = [(s["name"], s.get("verdict"), s.get("summary", s.get("summary_lines", ""))) for s in regression.get("suites", [])]
+    backend_suite = next((s for s in regression.get("suites", []) if s["name"] == "backend_pytest"), {})
     rows = [
         (1,"Baseline OCR", "VERIFIED FACT", "Actual rerun16 images/17 variants:1/11 local auto in supported printed instances;10/10 further simulated corrections served correctly;6 other variants unserved. Keep the arms separate."),
         (2,"CER discrepancy", "VERIFIED FACT", "Five polyhedral cases median0.1135; all12 median0.1040. All source per-case scores reproduce receipts; report0.0110 is an unreproducible reporting error, not a new normalization result."),
-        (3,"Full regression", "VERIFIED FACT" if regression.get("verdict")=="PASS" else "BLOCKED", str(regression.get("verdict"))+"; exact commands/counts/exclusions below and in full_regression_summary.json."),
+        (3,"Full regression", "VERIFIED FACT" if regression.get("product_test_status")=="PASS" else "BLOCKED", f"Product tests={regression.get('product_test_status','PENDING')}; backend {backend_suite.get('summary','PENDING')}. Overall gates={regression.get('verdict')}; whole-HEAD publication remains blocked by97 unchanged baseline pending entries. Exact commands/exclusions below."),
         (4,"New images found", "VERIFIED FACT", "31 fresh downloads;5 relevant selected. Three older acquired-but-unevaluated geometry images added with exposure disclosed.26 irrelevant algebra images excluded; source stopped at429."),
         (5,"Eligible new corpus", "VERIFIED FACT", "8 relevant technical images:2 development/6 frozen external evaluation. This falls short of20–30; only1 evaluation item is a named-polyhedron distance problem in solver scope."),
         (6,"Verified ground truth", "NOT_MEASURED", "0 HUMAN_VERIFIED;8 AGENT_TRANSCRIBED_UNVERIFIED references. No independent scorer or sealed H-1."),
@@ -153,26 +182,30 @@ def main():
         (22,"Stale cache", "VERIFIED FACT", "Browser text-edit scenario changes answers and Scene3D without re-preparing image; further span/free edits clear old confirmation. Other cache states are covered only as explicitly tested."),
         (23,"Correct image-to-result", "VERIFIED FACT", "Prior development11 outcomes:1 LOCAL_AUTO,10 USER_CORRECTED_SIMULATED. New corpus0 served. Never combine local, simulated, live or real-user categories into one accuracy."),
         (24,"Scene3D", "VERIFIED FACT", "Actual browser6/6 existing scenarios and4/4 confirmation checks; supported prior scenes render and continuity checked. No new corpus scene served; no blanket geometric fidelity claim."),
-        (25,"Combined RSS", "VERIFIED FACT", f"Measured precursor4ab43853 warm miss combined sampled-peak p50={peak['p50']:.1f}MiB,p95={peak['p95_nearest_rank']:.1f}MiB,n=10. Includes Windows venv launcher, actual interpreter and descendants, not just4MiB launcher. Shared working sets may double count pages."),
-        (26,"Cold/warm latency", "VERIFIED FACT", f"Precursor HTTP prepare-only p50/p95: cold-model{cold['p50']:.0f}/{cold['p95_nearest_rank']:.0f}ms(n10);warm miss{warm['p50']:.0f}/{warm['p95_nearest_rank']:.0f}ms(n10);cache{hit['p50']:.0f}/{hit['p95_nearest_rank']:.0f}ms(n10). Cold FastAPI process profile n5 separate. Do not add stages or call prepare latency upload-to-Scene3D."),
-        (27,"Physical low-end", "NOT_MEASURED", "12 logical CPU/16GB shared host; PHYSICAL_LOW_END_NOT_MEASURED. Host CPU busy around80% during precursor benchmark; not an isolated hardware claim."),
+        (25,"Combined RSS", "VERIFIED FACT", f"Measured precursor4ab43853 warm miss combined sampled-peak p50={peak['p50']:.1f}MiB,p95={peak['p95_nearest_rank']:.1f}MiB,n=10. Includes Windows venv launcher, actual interpreter and descendants, not just4MiB launcher. Shared working sets may double count pages. Sealed candidate {final_head} re-measured: combined p50={f_peak['combined_process_tree_peak_rss_mib']['p50']:.1f}MiB,p95={f_peak['combined_process_tree_peak_rss_mib']['p95_nearest_rank']:.1f}MiB; OCR process tree alone p50={f_peak['ocr_process_tree_peak_rss_mib']['p50']:.1f}MiB,p95={f_peak['ocr_process_tree_peak_rss_mib']['p95_nearest_rank']:.1f}MiB (n=10)."),
+        (26,"Cold/warm latency", "VERIFIED FACT", f"Precursor HTTP prepare-only p50/p95: cold-model{cold['p50']:.0f}/{cold['p95_nearest_rank']:.0f}ms(n10);warm miss{warm['p50']:.0f}/{warm['p95_nearest_rank']:.0f}ms(n10);cache{hit['p50']:.0f}/{hit['p95_nearest_rank']:.0f}ms(n10). Sealed candidate {final_head} re-measured (n10 each): cold-model{ms(f_cold)};warm miss{ms(f_warm)};cache{ms(f_hit)}. Fresh FastAPI process (n5): start-to-health{ms(f_proc['process_start_to_health_ready_ms'])}, first image{ms(f_proc['first_request_cold_process_cold_model'])}, next image{ms(f_proc['second_request_other_image_warm_model'])}, repeat{ms(f_proc['third_request_repeat_first_image_cache_hit'])}. The two runs differ in host load (whole-machine CPU busy{p_busy:.0%} vs{f_busy:.0%}, OCR itself included), so the difference is NOT a measured regression or improvement. Do not add stages or call prepare latency upload-to-Scene3D."),
+        (27,"Physical low-end", "NOT_MEASURED", f"12 logical CPU/16GB shared host; PHYSICAL_LOW_END_NOT_MEASURED. Host CPU busy{p_busy:.0%} (precursor) and{f_busy:.0%} (sealed candidate) during the benchmarks, the OCR engines' own threads included; available RAM{final_latency['host']['available_physical_mib_at_start']:.0f}MiB at start. Not an isolated hardware claim."),
         (28,"Independent H-1", "NOT_MEASURED", "H1_NOT_MEASURED. Frozen external split is developer-collected and agent-transcribed; old12 VMMU images are exposed development/regression material."),
         (29,"Architecture choice", "INFERENCE", "Provisional local-first+targeted confirmation; DECISION_PENDING_LIVE_EVIDENCE. No empirical basis to rank Vision-first or adaptive live quality/cost."),
         (30,"Rust/training", "INFERENCE", "No new evidence requiring Rust, GPU or training. Engine inference dominates CPU; retain existing stack pending representative licensed data and approved comparison."),
-        (31,"Pilot readiness", "BLOCKED", "Not ready for unrestricted student pilot: new corpus has0 solves, no human usability/live comparison/H1, and historical concurrency500 remains only partly diagnosed. Supervised technical evaluation with declared limits is feasible."),
+        (31,"Pilot readiness", "BLOCKED", f"Not ready for unrestricted student pilot: new corpus has0 solves, no human usability/live comparison/H1, and concurrency is checked only for two simultaneous uploads on SQLite ({final_conc['http_200']}/{final_conc['requests']} on the sealed candidate). Supervised technical evaluation with declared limits is feasible."),
         (32,"Remaining limits", "VERIFIED FACT", "Small nonrepresentative corpus, unverified transcriptions, recognition/segmentation errors, unresolved geometry capability gaps, no live Vision/human/H1/physical-low-end evidence, and limited concurrent-load follow-up."),
     ]
     text = "# AXO — Real-image OCR/Vision comparative acceptance\n\n"
     text += f"Status: **OFFLINE_EVALUATION_WITH_LIMITS; REGRESSION={regression.get('verdict')}; LIVE/HUMAN/H1 NOT_MEASURED; ARCHITECTURE DECISION_PENDING_LIVE_EVIDENCE**. No merge, push or deploy.\n\n"
     text += "Product checkpoints:2969e9e76 and7b1700214; baseline6bb22fa3b. Planner/26, Registry/33, Engine/24, height-invariance-certificate/2, output-policy/1 and cache132 unchanged. Candidate measured hash recorded in run.json; full working-source fingerprint in regression receipts additionally covers UI files outside the115-file freeze surface.\n\n"
+    text += "Actual offline API measurements use HYBRID_ROUTE_MODE=local-first, HYBRID_LOCAL_FIRST=1, ALLOW_LIVE_AI=0 and an empty provider key. The official live Hybrid default and deployment configuration are unchanged. A503 LIVE_AI_DISABLED is an infrastructure refusal, not evidence of mathematical out-of-scope classification.\n\n"
     text += "This run corrects [the original report](../image-first-ocr-verified-geometry/ALGOSIM_IMAGE_FIRST_OCR_VERIFIED_GEOMETRY_REPORT.md), preserving historical bytes. See [metric reconciliation](prior_metric_reconciliation.json), [baseline audit](baseline_integrity.json) and [review](review.md).\n\n"
     text += "## Owner questions\n\n|#|Question|Classification|Finding|\n|---:|---|---|---|\n"
     text += "\n".join(f"|{number}|{question}|{classification}|{answer}|" for number,question,classification,answer in rows) + "\n\n"
     text += "## Regression and acceptance boundaries\n\n"
     text += "\n".join(f"- `{name}`: **{verdict}**; {details}".rstrip() for name, verdict, details in reg_lines) + "\n\n"
     text += "Postgres and external-evidence markers remain explicitly opt-in/excluded by canonical pytest.ini. Earlier interrupted runs and the pre-existing UI glyph failure are retained in regression history; none supply final PASS counts. Canonical full-gate.mjs alone owns FULL_PRODUCT_GATE_PASS; this report does not invent that label.\n\n"
+    text += "Publication range passes with no new finding. Whole-HEAD publication reports97 pending exceptions; every reported path/blob matches the baseline. No exception or human approval was changed. See publication_safety_baseline_comparison.json. Product test success must not be read as permission to publish the repository.\n\n"
     text += "## Resource and failure correction\n\nOriginal precursor measured5/20 concurrent HTTP500. The claim that their precise cause was SQLite lacked exception evidence. A controlled real-SQLite regression demonstrates an event-loop/session-lock mechanism and now passes after offloading the guard; fresh actual HTTP follow-ups before and after each returned10/10. This does **not** prove elimination of the original stochastic failure or production-load reliability. [Correction receipt](resource_measurement_correction.json).\n\n"
-    text += "Precursor resource/latency files identify4ab43853 explicitly; final patches affect confirmation, comparison and session waiting rather than OCR inference. They are not relabelled as a final-candidate performance run. Original long-form stage timings and cold-process measurements remain separate. A historical idle-RSS delta0MiB is not active OCR memory.\n\n"
+    text += f"Sealed candidate {final_head}: the same benchmark workload returned {final_conc['http_200']}/{final_conc['requests']} HTTP200 with {len(final_conc['server_exception_events'])} captured server exceptions ([profile](ocr_worker_resource_profile_final.json)). The precursor run had no exception capture, so this is an observation on the candidate, not a controlled before/after experiment.\n\n"
+    text += f"Precursor resource/latency files identify4ab43853 explicitly; final patches affect confirmation, comparison and session waiting rather than OCR inference. They are not relabelled as a final-candidate performance run; the sealed candidate has its own `*_final.json` latency, resource and cold-process receipts, and its API acceptance re-run {'reproduces' if api_final_matches else 'DIFFERS FROM'} the prepare and solve statuses of all eight new-corpus images. Original long-form stage timings and cold-process measurements remain separate. A historical idle-RSS delta0MiB is not active OCR memory.\n\n"
+    text += "The shared OCR result cache has operation-dependent bounds: normal OCR inserts trim to16 entries, while reread inserts trim to64. The previous statement of a fixed32-entry cache does not match current code. Cache occupancy and descendant RSS are recorded separately.\n\n"
     text += "## Corpus, provenance and contamination\n\n[Manifest](new_image_corpus_manifest.json), [references](ground_truth_provenance.json), [split audit](dataset_split_and_contamination_audit.json). Source: [VMMU dataset](https://huggingface.co/datasets/anvo25/vmmu) declares MIT; upstream exam redistribution rights are not independently established, so image binaries and browser screenshots containing crops remain ignored locally. Reference text is agent transcribed, not OCR output; exact image hashes and retrieval records are in the manifest. No evaluation image drove a recognition heuristic or geometry expansion. Existing12 VMMU cases cannot be independent H1 after parser tuning in the old run.\n\n"
     text += "## Post-flight\n\nReused modules: existing OCR worker/client, lexer, reconciler, fidelity gate, region detector, parser, Hybrid adapter, continuity checker, browser harness and canonical audits. Created product modules:none. Added focused regression tests and run-scoped measurement tools only. Duplicate check: CODE_INDEX and callers inspected; no parallel solver/OCR implementation. No changed expected answers or deleted tests.\n"
     (RUN / REPORT).write_text(text, encoding="utf-8")

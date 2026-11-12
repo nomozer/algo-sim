@@ -1,0 +1,205 @@
+{
+  "browser": "157.0.8103.78",
+  "category": "AUTOMATED_BROWSER_HEURISTIC_NOT_HUMAN_STUDY",
+  "rows": [
+    {
+      "width": 1440,
+      "height": 900,
+      "cssZoom": 1,
+      "zoomKind": "CSS_ZOOM_REFLOW_NOT_BROWSER_CHROME_ZOOM",
+      "category": "USER_CORRECTED_SIMULATED",
+      "prepareStatus": "needs_confirmation",
+      "crops": [
+        {
+          "loaded": true,
+          "source": true
+        },
+        {
+          "loaded": true,
+          "source": true
+        }
+      ],
+      "keyboardConfirmation": true,
+      "confirmationInvalidatedAfterEdit": true,
+      "overflow": {
+        "innerWidth": 1440,
+        "scrollWidth": 1440
+      },
+      "apiStatus": "SERVED",
+      "answers": [
+        "2√3"
+      ],
+      "canvas": true,
+      "uploadToFirstUsableSceneMs": 1153.9879,
+      "screenshotSha256": "f1522b72e068d55cb780c9889c6d97978de736e1e4f3355e969c41105fae0ae6",
+      "screenshotStorage": "IGNORED_LOCAL_ONLY_SOURCE_IMAGE_LICENSE_LIMITATION",
+      "errors": [],
+      "calls": [
+        {
+          "path": "/api/health",
+          "status": 200
+        },
+        {
+          "path": "/api/auth/me",
+          "status": 200
+        },
+        {
+          "path": "/api/health",
+          "status": 200
+        },
+        {
+          "path": "/api/input/prepare",
+          "status": 200
+        },
+        {
+          "path": "/api/health",
+          "status": 200
+        },
+        {
+          "path": "/api/health",
+          "status": 200
+        },
+        {
+          "path": "/api/analyze",
+          "status": 200
+        }
+      ],
+      "pass": true
+    },
+    {
+      "width": 1440,
+      "height": 900,
+      "cssZoom": 1.1,
+      "zoomKind": "CSS_ZOOM_REFLOW_NOT_BROWSER_CHROME_ZOOM",
+      "category": "USER_CORRECTED_SIMULATED",
+      "prepareStatus": "needs_confirmation",
+      "crops": [
+        {
+          "loaded": true,
+          "source": true
+        },
+        {
+          "loaded": true,
+          "source": true
+        }
+      ],
+      "keyboardConfirmation": true,
+      "confirmationInvalidatedAfterEdit": true,
+      "overflow": {
+        "innerWidth": 1440,
+        "scrollWidth": 1440
+      },
+      "apiStatus": "SERVED",
+      "answers": [
+        "2√3"
+      ],
+      "canvas": true,
+      "uploadToFirstUsableSceneMs": 1022.7867000000006,
+      "screenshotSha256": "a17afd40e978a8f0a7461b6629e3053178c9b37034ad80f0a3c5bdc45a24fce4",
+      "screenshotStorage": "IGNORED_LOCAL_ONLY_SOURCE_IMAGE_LICENSE_LIMITATION",
+      "errors": [],
+      "calls": [
+        {
+          "path": "/api/health",
+          "status": 200
+        },
+        {
+          "path": "/api/auth/me",
+          "status": 200
+        },
+        {
+          "path": "/api/health",
+          "status": 200
+        },
+        {
+          "path": "/api/input/prepare",
+          "status": 200
+        },
+        {
+          "path": "/api/health",
+          "status": 200
+        },
+        {
+          "path": "/api/health",
+          "status": 200
+        },
+        {
+          "path": "/api/analyze",
+          "status": 200
+        }
+      ],
+      "pass": true
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "cssZoom": 1,
+      "zoomKind": "CSS_ZOOM_REFLOW_NOT_BROWSER_CHROME_ZOOM",
+      "category": "USER_CORRECTED_SIMULATED",
+      "prepareStatus": "needs_confirmation",
+      "crops": [
+        {
+          "loaded": true,
+          "source": true
+        },
+        {
+          "loaded": true,
+          "source": true
+        }
+      ],
+      "keyboardConfirmation": true,
+      "confirmationInvalidatedAfterEdit": true,
+      "overflow": {
+        "innerWidth": 390,
+        "scrollWidth": 390
+      },
+      "apiStatus": "SERVED",
+      "answers": [
+        "2√3"
+      ],
+      "canvas": true,
+      "uploadToFirstUsableSceneMs": 859.7548999999999,
+      "screenshotSha256": "9e60c195ac1413f5009aae2e3a7d9b0b526f914cdf37594ac0b03775d752d588",
+      "screenshotStorage": "IGNORED_LOCAL_ONLY_SOURCE_IMAGE_LICENSE_LIMITATION",
+      "errors": [],
+      "calls": [
+        {
+          "path": "/api/health",
+          "status": 200
+        },
+        {
+          "path": "/api/auth/me",
+          "status": 200
+        },
+        {
+          "path": "/api/health",
+          "status": 200
+        },
+        {
+          "path": "/api/input/prepare",
+          "status": 200
+        },
+        {
+          "path": "/api/health",
+          "status": 200
+        },
+        {
+          "path": "/api/health",
+          "status": 200
+        },
+        {
+          "path": "/api/analyze",
+          "status": 200
+        }
+      ],
+      "pass": true
+    },
+    {
+      "id": "cancel_confirmation",
+      "analyzeCalls": 0,
+      "pass": true
+    }
+  ],
+  "passed": 4,
+  "total": 4
+}
