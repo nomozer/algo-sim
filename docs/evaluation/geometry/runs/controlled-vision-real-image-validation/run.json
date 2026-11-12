@@ -1,9 +1,9 @@
 {
   "schema": "algosim-controlled-vision-run/1",
   "run_id": "controlled-vision-real-image-validation",
-  "updated_at_utc": "2026-11-12T17:23:15.185711+00:00",
+  "updated_at_utc": "2026-11-12T17:24:16.263456+00:00",
   "start_head": "44807b13bffe608153bc58e453a3bc9c37703485",
-  "head_at_manifest_write": "5019a72fa0eb296002a24adb6e6dcd86d82a2c5d",
+  "head_at_manifest_write": "66b251166fc2c36062f08e54b8880224e35b453d",
   "product_commit": "c53be83db71089b47b59b2ec7155b8e8552e1752",
   "candidate_freeze_commit": "835786746c1252fa162e9bc967b651d97252e720",
   "measured_system": "cd9b9f518805d30522ee7c488dd834d3b05ea08d3e78d86c82da13c735a8a58a",
@@ -71,7 +71,7 @@
       "bytes_lf": 20281
     },
     "cold_warm_cache_latency.json": {
-      "sha256_lf": "18e4ed14523c07bc51c485480ce5409ed239e0251525f4e7f447120f30ff1e85",
+      "sha256_lf": "7e10bd7bf0b7d9479262c7958d05def79977c81789ad9e8d3c92421d57ac644d",
       "bytes_lf": 5902
     },
     "cold_warm_latency_benchmark.json": {
@@ -79,7 +79,7 @@
       "bytes_lf": 56003
     },
     "combined_process_memory.json": {
-      "sha256_lf": "b5424a5418c330823ddc1e0188a28ae19e06ec043e83dadf0a24084840378ff9",
+      "sha256_lf": "d2ad0bad83339486c11c6d29b079d7556930b5807c86f838dffdb0584cf80952",
       "bytes_lf": 3562
     },
     "concurrent_upload_reliability.json": {
@@ -91,12 +91,12 @@
       "bytes_lf": 4448
     },
     "critical_mathematical_fact_evaluation.json": {
-      "sha256_lf": "9fd8ff5e426a605e28dfea55b55b7d57452b86ec9cbcd669452b805ad1306f6f",
+      "sha256_lf": "8e87f9cdf3a11947cbe4d676a8357ba8833c255a6249957646cdf5a8b59f141f",
       "bytes_lf": 4092
     },
     "full_regression_summary.json": {
-      "sha256_lf": "d22e04bd7b1d7068e40141bad2d21b1bfce8cf7340bac3a71a518798b5b6149e",
-      "bytes_lf": 26726
+      "sha256_lf": "2f9f7c1d4f412a2e28b3bdfdd41347cd0cc986a0f04619c52490e25074f0d58c",
+      "bytes_lf": 34262
     },
     "geometry_capability_gap_backlog.json": {
       "sha256_lf": "efdf43a23cb7590a72d1241645c88700c06f559c318a60981a391a78297e6e6f",
@@ -123,7 +123,7 @@
       "bytes_lf": 7890
     },
     "local_ocr_baseline.json": {
-      "sha256_lf": "098a4fdc75282fd5269592390d0bf9cb8faccb18eaa8660d860da684fe5b2b81",
+      "sha256_lf": "b0cbd48433408037b763fe065aaf6dd1662860be676dd7dae4c5e5a6732c2d5b",
       "bytes_lf": 16888
     },
     "local_ocr_development.json": {
@@ -155,12 +155,12 @@
       "bytes_lf": 2086
     },
     "logs/final-docs_ia.json": {
-      "sha256_lf": "b7afbefac20a6228e4a681aa519c736686b7604afd5c339024eca36cfa44b074",
-      "bytes_lf": 2107
+      "sha256_lf": "5f9ca9d35d8ec5737ca0f9b385c22a512cea0b68cd32e78c487040856f8a75aa",
+      "bytes_lf": 4408
     },
     "logs/final-freeze_verify.json": {
-      "sha256_lf": "07765127883fbbef0bd88d9833a3571a5e3e72ad19a5f9143ac454da05078d61",
-      "bytes_lf": 2129
+      "sha256_lf": "1eb84515d618422d82a6334db1333713b53b98418bc063440c4c5ba86febc184",
+      "bytes_lf": 4447
     },
     "logs/final-frontend_test_wave.json": {
       "sha256_lf": "833ba027310f1f73b750569d116ed89672e2fff289393c29bf536ce94ce4e310",
@@ -171,8 +171,8 @@
       "bytes_lf": 2119
     },
     "logs/final-publication_range.json": {
-      "sha256_lf": "4159dbcb9e75ad1021d6d6747f069a2ff358b5ca40893f724e176205680debb1",
-      "bytes_lf": 2210
+      "sha256_lf": "1bc02a4d13bab7b9fdef30f6810bc5db8fa98c91d5521e94447f16c96f99c518",
+      "bytes_lf": 4614
     },
     "logs/prior-k1-owner-approval.template.json": {
       "sha256_lf": "8cdbf7a7dbf1f9c18289c9f42b79ee5374ae852d74a6dbfcc2963e5305f30583",
@@ -191,7 +191,7 @@
       "bytes_lf": 94299
     },
     "ocr_bottleneck_profile.json": {
-      "sha256_lf": "5250b7b43e04e595182e5790bc5ac6752c8219c461ee92847d68e50bf0b188d2",
+      "sha256_lf": "4cf88a84a1f845f48ad009b2456c207e5a6c42f3d413266087fd9b0d43bfdb00",
       "bytes_lf": 3468
     },
     "ocr_stage_profile.json": {
@@ -215,11 +215,11 @@
       "bytes_lf": 4746
     },
     "real_image_to_scene3d_results.json": {
-      "sha256_lf": "dd56b7cec5f2fdcdd900bdd2503cf2fa9bdaf3d0786fad9c019c73c67adfe3a0",
+      "sha256_lf": "a6f623ff88623eb48a508fc4ed7a1ff86887807127ba4d8daec08a527d41a53d",
       "bytes_lf": 50665
     },
     "student_confirmation_browser_audit.json": {
-      "sha256_lf": "cf8a8d726a78f8e106c33f79b2e63d511ad96b28b0bddae1064baf581f2be2a4",
+      "sha256_lf": "dcd07f3733b8dc4cfa742a97e52814a3adc9a68c48d19d4f4ee9b654af1bbb7b",
       "bytes_lf": 1121
     },
     "tools/acquire_corpus.py": {

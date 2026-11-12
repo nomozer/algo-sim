@@ -1,7 +1,7 @@
 {
   "run_id": "controlled-vision-real-image-validation",
   "classification": "DERIVED_FROM_REFERENCED_MEASUREMENTS_NOT_A_NEW_MEASUREMENT",
-  "generated_at_utc": "2026-11-12T17:23:15.097668+00:00",
+  "generated_at_utc": "2026-11-12T17:24:15.997451+00:00",
   "source": "ocr_stage_profile.json",
   "measurement_class": "DIAGNOSTIC_STAGE_TIMING_NOT_API_LATENCY",
   "warm_stage_p50_ms_ranked": [

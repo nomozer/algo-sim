@@ -1,7 +1,7 @@
 {
   "run_id": "controlled-vision-real-image-validation",
   "classification": "DERIVED_FROM_REFERENCED_MEASUREMENTS_NOT_A_NEW_MEASUREMENT",
-  "generated_at_utc": "2026-11-12T17:23:15.090277+00:00",
+  "generated_at_utc": "2026-11-12T17:24:15.979728+00:00",
   "rule": "a fact is recovered when one accepted form occurs in the OCR text after whitespace removal and prime/degree unification; references are AGENT_TRANSCRIBED_UNVERIFIED",
   "evaluation": {
     "recovered": 124,

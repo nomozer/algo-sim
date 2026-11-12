@@ -1,7 +1,7 @@
 {
   "run_id": "controlled-vision-real-image-validation",
   "classification": "DERIVED_FROM_REFERENCED_MEASUREMENTS_NOT_A_NEW_MEASUREMENT",
-  "generated_at_utc": "2026-11-12T17:23:15.090277+00:00",
+  "generated_at_utc": "2026-11-12T17:24:15.981740+00:00",
   "route": "POST /api/input/prepare -> local OCR -> scripted span confirmation -> POST /api/analyze (HYBRID_ROUTE_MODE=local-first, ALLOW_LIVE_AI=0)",
   "categories": {
     "A_LOCAL_AUTO": 0,

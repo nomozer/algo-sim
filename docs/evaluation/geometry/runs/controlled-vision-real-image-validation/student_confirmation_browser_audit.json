@@ -1,7 +1,7 @@
 {
   "run_id": "controlled-vision-real-image-validation",
   "classification": "DERIVED_FROM_REFERENCED_MEASUREMENTS_NOT_A_NEW_MEASUREMENT",
-  "generated_at_utc": "2026-11-12T17:23:15.093664+00:00",
+  "generated_at_utc": "2026-11-12T17:24:15.986267+00:00",
   "receipts": [
     "browser_in_scope_audit.json",
     "browser_confirmation_audit.json",

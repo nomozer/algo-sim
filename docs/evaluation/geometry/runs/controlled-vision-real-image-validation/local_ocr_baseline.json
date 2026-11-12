@@ -1,7 +1,7 @@
 {
   "run_id": "controlled-vision-real-image-validation",
   "classification": "DERIVED_FROM_REFERENCED_MEASUREMENTS_NOT_A_NEW_MEASUREMENT",
-  "generated_at_utc": "2026-11-12T17:23:15.086951+00:00",
+  "generated_at_utc": "2026-11-12T17:24:15.976743+00:00",
   "sources": [
     "local_ocr_*_baseline.json (before c53be83db)",
     "local_ocr_*.json (after)",

@@ -1,7 +1,7 @@
 {
   "run_id": "controlled-vision-real-image-validation",
   "classification": "DERIVED_FROM_REFERENCED_MEASUREMENTS_NOT_A_NEW_MEASUREMENT",
-  "generated_at_utc": "2026-11-12T17:23:15.096669+00:00",
+  "generated_at_utc": "2026-11-12T17:24:15.994943+00:00",
   "sources": [
     "cold_warm_latency_benchmark.json",
     "cold_process_benchmark.json",

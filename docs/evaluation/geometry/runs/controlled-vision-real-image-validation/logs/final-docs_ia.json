@@ -7,9 +7,9 @@
     "--json"
   ],
   "cwd": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\local-first-geometry-understanding",
-  "started_at_utc": "2026-11-12T16:46:29.815814+00:00",
+  "started_at_utc": "2026-11-12T17:23:52.389776+00:00",
   "start_snapshot": {
-    "head_commit": "a78b1e087fc1b9a53ed92418d4d1a1b2b9d107d3",
+    "head_commit": "66b251166fc2c36062f08e54b8880224e35b453d",
     "product_paths_sha256": "a584032391e705d21962569e81d189e287d9e59775e4d1620672ef3dae18743e",
     "product_path_count": 332,
     "hash_policy": "tracked backend/app + frontend/src, LF normalized; includes tests",
@@ -17,14 +17,14 @@
     "working_product_source_count": 192,
     "working_source_policy": "all working backend/app + frontend/src including untracked; skip pycache and freeze TEST_ONLY_GLOBS"
   },
-  "ended_at_utc": "2026-11-12T16:46:30.710248+00:00",
-  "duration_seconds": 0.594,
+  "ended_at_utc": "2026-11-12T17:23:54.243288+00:00",
+  "duration_seconds": 1.141,
   "exit_code": 0,
-  "raw_output_sha256": "cd904eed0c0dd2ba0b6c30af8e88b6e286d7f0c83e3c6c443fd4ead3e8827466",
+  "raw_output_sha256": "bb326162bdf870094e6b02bcd4e02b303953116d8d914f91e7b154250252070e",
   "raw_output_bytes": 10666,
   "raw_output_retention": "ignored local .superpowers only; never staged",
   "end_snapshot": {
-    "head_commit": "a78b1e087fc1b9a53ed92418d4d1a1b2b9d107d3",
+    "head_commit": "66b251166fc2c36062f08e54b8880224e35b453d",
     "product_paths_sha256": "a584032391e705d21962569e81d189e287d9e59775e4d1620672ef3dae18743e",
     "product_path_count": 332,
     "hash_policy": "tracked backend/app + frontend/src, LF normalized; includes tests",
@@ -37,5 +37,48 @@
   "stale_code_index_paths": 0,
   "secret_leaks": 0,
   "source_unchanged_during_command": true,
-  "verdict": "PASS"
+  "verdict": "PASS",
+  "previous_attempts": [
+    {
+      "name": "docs_ia",
+      "command": "D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe backend/scripts/audit_docs_information_architecture.py --json",
+      "argv": [
+        "D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe",
+        "backend/scripts/audit_docs_information_architecture.py",
+        "--json"
+      ],
+      "cwd": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\local-first-geometry-understanding",
+      "started_at_utc": "2026-11-12T16:46:29.815814+00:00",
+      "start_snapshot": {
+        "head_commit": "a78b1e087fc1b9a53ed92418d4d1a1b2b9d107d3",
+        "product_paths_sha256": "a584032391e705d21962569e81d189e287d9e59775e4d1620672ef3dae18743e",
+        "product_path_count": 332,
+        "hash_policy": "tracked backend/app + frontend/src, LF normalized; includes tests",
+        "working_product_source_sha256": "7ece97b00a4d95a509a6804ded921536ef1fd57003b3039f8e6fa0113d095670",
+        "working_product_source_count": 192,
+        "working_source_policy": "all working backend/app + frontend/src including untracked; skip pycache and freeze TEST_ONLY_GLOBS"
+      },
+      "ended_at_utc": "2026-11-12T16:46:30.710248+00:00",
+      "duration_seconds": 0.594,
+      "exit_code": 0,
+      "raw_output_sha256": "cd904eed0c0dd2ba0b6c30af8e88b6e286d7f0c83e3c6c443fd4ead3e8827466",
+      "raw_output_bytes": 10666,
+      "raw_output_retention": "ignored local .superpowers only; never staged",
+      "end_snapshot": {
+        "head_commit": "a78b1e087fc1b9a53ed92418d4d1a1b2b9d107d3",
+        "product_paths_sha256": "a584032391e705d21962569e81d189e287d9e59775e4d1620672ef3dae18743e",
+        "product_path_count": 332,
+        "hash_policy": "tracked backend/app + frontend/src, LF normalized; includes tests",
+        "working_product_source_sha256": "7ece97b00a4d95a509a6804ded921536ef1fd57003b3039f8e6fa0113d095670",
+        "working_product_source_count": 192,
+        "working_source_policy": "all working backend/app + frontend/src including untracked; skip pycache and freeze TEST_ONLY_GLOBS"
+      },
+      "status": "PASS",
+      "broken_links": 0,
+      "stale_code_index_paths": 0,
+      "secret_leaks": 0,
+      "source_unchanged_during_command": true,
+      "verdict": "PASS"
+    }
+  ]
 }
