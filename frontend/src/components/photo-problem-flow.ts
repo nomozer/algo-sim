@@ -40,6 +40,37 @@ export interface UnifiedAssistState {
   spanReviewed: Record<string, boolean>;
   /** Học sinh đã sửa thẳng cả ô văn bản ⇒ vị trí các chỗ đánh dấu không còn đúng, dùng văn bản tự do. */
   freeEdit: boolean;
+  /** Chỗ sửa đã được nối với chữ kế tiếp: bản gốc của chỗ ấy, các chỗ bị gộp vào và giá trị trước khi nối (để tách lại). */
+  spanExtensions?: Record<string, { token: PhotoUncertainToken; value: string; absorbed: PhotoUncertainToken[]; absorbedValues: Record<string, string> }>;
+  /** Thứ tự ban đầu của các chỗ đánh dấu (tách lại trả chúng về đúng vị trí trong danh sách). */
+  tokenOrder?: Record<string, number>;
+}
+
+/** Từ kế tiếp có thể nối vào chỗ `spanId`: khoảng cách 1–3 dấu cách, từ ấy không phải chữ văn xuôi, không sang câu mới,
+ *  và mọi chỗ đánh dấu nằm trong nó đều nằm TRỌN trong nó. Vị trí tính theo code point (khớp vị trí của backend). */
+export function extendSpanTarget(
+  state: UnifiedAssistState,
+  spanId: string,
+): { end: number; gapStart: number; wordStart: number; absorbed: PhotoUncertainToken[] } | null {
+  if (state.phase !== "needs_confirmation" || state.freeEdit) return null;
+  const tokens = spanTokens(state.uncertainTokens);
+  const t = tokens.find((x) => x.span_id === spanId);
+  if (!t) return null;
+  const chars = Array.from(state.baseText);
+  const gapStart = t.span_end as number;
+  let wordStart = gapStart;
+  while (wordStart < chars.length && (chars[wordStart] === " " || chars[wordStart] === "\t")) wordStart += 1;
+  let end = wordStart;
+  while (end < chars.length && !/\s/u.test(chars[end])) end += 1;
+  const gap = wordStart - gapStart;
+  const word = chars.slice(wordStart, end).join("");
+  if (gap < 1 || gap > 3 || end === wordStart || end - wordStart > 24) return null;
+  if (/\p{Ll}{2}/u.test(word)) return null;                                      // a prose word, not part of an expression
+  const own = chars.slice(t.span_start as number, gapStart).join("");
+  if (/[.?!]$/u.test(own) && /^\p{Lu}\p{Ll}/u.test(word)) return null;            // a new sentence starts there
+  const absorbed = tokens.filter((x) => x.span_id !== spanId && (x.span_start as number) < end && (x.span_end as number) > gapStart);
+  if (absorbed.some((x) => (x.span_start as number) < wordStart || (x.span_end as number) > end)) return null;
+  return { end, gapStart, wordStart, absorbed };
 }
 
 export type UnifiedAssistAction =
@@ -48,7 +79,9 @@ export type UnifiedAssistAction =
   | { type: "edit-draft"; text: string }
   | { type: "toggle-confirm"; value: boolean }
   | { type: "edit-span"; spanId: string; value: string }
-  | { type: "confirm-span"; spanId: string };
+  | { type: "confirm-span"; spanId: string }
+  | { type: "extend-span"; spanId: string }
+  | { type: "restore-span"; spanId: string };
 
 /** Chỗ cần kiểm tra có vị trí trong văn bản (sửa tại chỗ được). */
 export function spanTokens(tokens: PhotoUncertainToken[]): PhotoUncertainToken[] {
@@ -142,6 +175,8 @@ export function unifiedAssistReducer(
           spanValues: Object.fromEntries(spanTokens(r.uncertain_tokens).map((t) => [t.span_id as string, t.token])),
           spanReviewed: {},
           freeEdit: false,
+          spanExtensions: {},
+          tokenOrder: Object.fromEntries(r.uncertain_tokens.map((t, i) => [t.span_id ?? `#${i}`, i])),
         };
       }
       return initialUnifiedAssistState;
@@ -163,6 +198,57 @@ export function unifiedAssistReducer(
     case "confirm-span":
       if (state.phase !== "needs_confirmation") return state;
       return { ...state, spanReviewed: { ...state.spanReviewed, [action.spanId]: true } };
+    case "extend-span": {
+      const target = extendSpanTarget(state, action.spanId);
+      if (!target) return state;
+      const t = spanTokens(state.uncertainTokens).find((x) => x.span_id === action.spanId) as PhotoUncertainToken;
+      const chars = Array.from(state.baseText);
+      // The appended word keeps whatever the student already typed into chỗ it absorbs.
+      const word = applySpanValues(
+        chars.slice(target.wordStart, target.end).join(""),
+        target.absorbed.map((x) => ({ ...x, span_start: (x.span_start as number) - target.wordStart, span_end: (x.span_end as number) - target.wordStart })),
+        state.spanValues,
+      );
+      const value = `${state.spanValues[action.spanId] ?? t.token}${chars.slice(target.gapStart, target.wordStart).join("")}${word}`;
+      const extended: PhotoUncertainToken = { ...t, span_end: target.end, token: chars.slice(t.span_start as number, target.end).join("") };
+      const gone = new Set(target.absorbed.map((x) => x.span_id as string));
+      const prev = state.spanExtensions?.[action.spanId];
+      const spanValues = Object.fromEntries(Object.entries(state.spanValues).filter(([k]) => !gone.has(k)));
+      spanValues[action.spanId] = value;
+      const spanReviewed = Object.fromEntries(Object.entries(state.spanReviewed).filter(([k]) => !gone.has(k)));
+      spanReviewed[action.spanId] = false;
+      const uncertainTokens = state.uncertainTokens.filter((x) => !gone.has(x.span_id as string)).map((x) => (x.span_id === action.spanId ? extended : x));
+      return {
+        ...state,
+        confirmed: false,
+        uncertainTokens,
+        spanValues,
+        spanReviewed,
+        spanExtensions: {
+          ...state.spanExtensions,
+          [action.spanId]: prev
+            ? { ...prev, absorbed: [...prev.absorbed, ...target.absorbed],
+                absorbedValues: { ...prev.absorbedValues, ...Object.fromEntries(target.absorbed.map((x) => [x.span_id as string, state.spanValues[x.span_id as string] ?? x.token])) } }
+            : { token: t, value: state.spanValues[action.spanId] ?? t.token, absorbed: target.absorbed,
+                absorbedValues: Object.fromEntries(target.absorbed.map((x) => [x.span_id as string, state.spanValues[x.span_id as string] ?? x.token])) },
+        },
+        draftText: applySpanValues(state.baseText, uncertainTokens, spanValues),
+      };
+    }
+    case "restore-span": {
+      const ext = state.spanExtensions?.[action.spanId];
+      if (state.phase !== "needs_confirmation" || state.freeEdit || !ext) return state;
+      const order = state.tokenOrder ?? {};
+      const uncertainTokens = [...state.uncertainTokens.map((x) => (x.span_id === action.spanId ? ext.token : x)), ...ext.absorbed]
+        .sort((a, b) => (order[a.span_id as string] ?? 0) - (order[b.span_id as string] ?? 0));
+      const spanValues = { ...state.spanValues, [action.spanId]: ext.value, ...ext.absorbedValues };
+      const spanReviewed = { ...state.spanReviewed, [action.spanId]: false };
+      for (const x of ext.absorbed) spanReviewed[x.span_id as string] = false;
+      const spanExtensions = { ...state.spanExtensions };
+      delete spanExtensions[action.spanId];
+      return { ...state, confirmed: false, uncertainTokens, spanValues, spanReviewed, spanExtensions,
+               draftText: applySpanValues(state.baseText, uncertainTokens, spanValues) };
+    }
     case "toggle-confirm":
       if (state.phase !== "needs_confirmation") return state;
       return { ...state, confirmed: action.value };

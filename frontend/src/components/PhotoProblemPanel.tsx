@@ -3,6 +3,7 @@ import {
   assistBlocker,
   canConfirmAssistText,
   describeUncertainToken,
+  extendSpanTarget,
   reviewTokens,
   type UnifiedAssistState,
 } from "./photo-problem-flow";
@@ -25,6 +26,9 @@ export interface PhotoProblemPanelProps {
   /** OCR local: sửa / xác nhận TẠI CHỖ một chỗ chưa chắc (không phải gõ lại cả đề). */
   onEditSpan?(spanId: string, value: string): void;
   onConfirmSpan?(spanId: string): void;
+  /** OCR tách một biểu thức thành nhiều mảnh: nối chỗ sửa với chữ kế tiếp, hoặc tách lại như máy đọc. */
+  onExtendSpan?(spanId: string): void;
+  onRestoreSpan?(spanId: string): void;
 }
 
 export function PhotoProblemPanel({
@@ -37,6 +41,8 @@ export function PhotoProblemPanel({
   onDismiss,
   onEditSpan,
   onConfirmSpan,
+  onExtendSpan,
+  onRestoreSpan,
 }: PhotoProblemPanelProps) {
   if (state.phase === "idle") return null;
 
@@ -165,6 +171,27 @@ export function PhotoProblemPanel({
                         {alt}
                       </button>
                     ))}
+                  {!isDiagram && state.spanExtensions?.[id] ? (
+                    <button
+                      type="button"
+                      className="photo-span-alt"
+                      data-span-restore={id}
+                      disabled={busy}
+                      onClick={() => onRestoreSpan?.(id)}
+                    >
+                      Tách lại như máy đọc
+                    </button>
+                  ) : !isDiagram && extendSpanTarget(state, id) ? (
+                    <button
+                      type="button"
+                      className="photo-span-alt"
+                      data-span-extend={id}
+                      disabled={busy}
+                      onClick={() => onExtendSpan?.(id)}
+                    >
+                      Nối với chữ kế tiếp
+                    </button>
+                  ) : null}
                   <button
                     type="button"
                     className="photo-span-ok"

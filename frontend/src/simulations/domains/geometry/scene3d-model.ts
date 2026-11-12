@@ -2079,6 +2079,25 @@ export interface RouteDSimulationSummary {
   }[] | null;
 }
 
+/**
+ * cos²φ hữu tỉ → số đo độ của góc KHÔNG định hướng giữa đường/mặt (φ ∈ [0°, 90°], cos φ ≥ 0 ⇒ không có nhánh thứ hai).
+ * Chỉ năm giá trị có số đo độ hữu tỉ (định lý Niven; cùng bảng `output-policy/1`). Ngoài bảng ⇒ `null`:
+ * không arccos, không làm tròn. Không dùng cho góc nhị diện (0°, 180°), vốn không phải mục tiêu `ask_angle_*`.
+ */
+export const COS2_DO_DAC_BIET: Readonly<Record<string, string>> = {
+  "0/1": "90°", "1/4": "60°", "1/2": "45°", "3/4": "30°", "1/1": "0°",
+};
+
+export function soDoGocDacBiet(cos2: string): string | null {
+  const m = /^\s*(\d+)(?:\s*\/\s*(\d+))?\s*$/u.exec(cos2 ?? "");
+  if (!m) return null;
+  const p = BigInt(m[1]);
+  const q = BigInt(m[2] ?? "1");
+  if (q === 0n) return null;
+  const g = gcdBigIntModel(p, q) || 1n;
+  return COS2_DO_DAC_BIET[`${p / g}/${q / g}`] ?? null;
+}
+
 export interface MucPhanTichToan {
   id: string;
   category: LoaiThongTin;
@@ -2292,13 +2311,17 @@ export function phanTichToanHocCuaCanh(
     const cf = isUnder ? null : coherentFormula(scene, o);
     const valDisp = isUnder ? "Chưa đủ dữ kiện xác định duy nhất" : hienGiaTri(o);
     const exactDisp = !isUnder ? (hybridExactById.get(o.id) ?? null) : null;
+    // The kernel answers an angle goal with its exact cos² (`cos²(ℓ, (P))`). Such goals are angles between lines /
+    // a line and a plane / two planes, which lie in [0°, 90°], so cos ≥ 0 and cos² fixes the angle: the student sees
+    // the degree when cos² is one of the five rational ones, with cos² kept as the exact certificate.
+    const doGoc = !isUnder && /^cos²\(/u.test(o.notation ?? "") ? soDoGocDacBiet(valDisp) : null;
     requestedResults.push({
       id: o.id,
       category: "REQUESTED_RESULT",
-      label: o.label,
-      notation: o.notation ?? null,
-      valueDisplay: valDisp,
-      ...(exactDisp && exactDisp !== valDisp ? { exactValueDisplay: exactDisp } : {}),
+      label: doGoc ? o.label.replace(/^Côsin\s+bình\s+phương\s+của\s+góc/u, "Góc") : o.label,
+      notation: doGoc ? (o.notation ?? "").replace(/^cos²/u, "") : (o.notation ?? null),
+      valueDisplay: doGoc ?? valDisp,
+      ...(doGoc ? { exactValueDisplay: `cos² = ${valDisp}` } : exactDisp && exactDisp !== valDisp ? { exactValueDisplay: exactDisp } : {}),
       formula: cf && cf.references.length > 0 ? cf.text : null,
       basisLabels: numericalBasis(scene, o).map(tenNgan),
       entityId: o.id,

@@ -1268,6 +1268,8 @@ export function ProblemInput({
         onDismiss={() => dispatchAssist({ type: "reset" })}
         onEditSpan={(spanId, value) => dispatchAssist({ type: "edit-span", spanId, value })}
         onConfirmSpan={(spanId) => dispatchAssist({ type: "confirm-span", spanId })}
+        onExtendSpan={(spanId) => dispatchAssist({ type: "extend-span", spanId })}
+        onRestoreSpan={(spanId) => dispatchAssist({ type: "restore-span", spanId })}
       />
 
       {(() => {

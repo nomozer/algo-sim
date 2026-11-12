@@ -21,6 +21,7 @@ import {
   cauTrucGocNhin,
   certifiedCuttingPlaneDistanceGivens,
   clampStep,
+  COS2_DO_DAC_BIET,
   classifyQuantityProvenance,
   classifySceneEntityProvenance,
   dayVaDinhChop,
@@ -8423,14 +8424,7 @@ function formatCosSquaredConclusion(valRaw: string | undefined): { exactDegree: 
   try {
     const f = parseExactFrac(v);
     const key = `${f[0].toString()}/${f[1].toString()}`;
-    const degMap: Record<string, string> = {
-      "0/1": "90°",
-      "1/4": "60°",
-      "1/2": "45°",
-      "3/4": "30°",
-      "1/1": "0°",
-    };
-    return { exactDegree: degMap[key] ?? null, cosSqText: fmtFrac(f) };
+    return { exactDegree: COS2_DO_DAC_BIET[key] ?? null, cosSqText: fmtFrac(f) };
   } catch {
     return { exactDegree: null, cosSqText: v };
   }

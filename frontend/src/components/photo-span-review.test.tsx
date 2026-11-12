@@ -136,3 +136,84 @@ describe("OCR local: xác nhận từng chỗ chưa chắc", () => {
     expect(html).not.toContain("LIVE_AI_DISABLED");
   });
 });
+
+/* Run `local-semantic-source-gate-reliability`: OCR tách một biểu thức thành nhiều mảnh ("4BCD-" + "A'B'C'D'"),
+   khoảng trắng ở giữa không thuộc chỗ nào ⇒ sửa từng chỗ không ghép lại được. Học sinh nối chỗ sửa với chữ kế tiếp. */
+describe("OCR local: nối chỗ sửa với chữ kế tiếp", () => {
+  const SPLIT = "Cho hình hộp chữ nhật 4BCD- A'B'C'D' có AB = a, BC = 2a. Đề 𝑎: tính BD.";
+  const p0 = Array.from(SPLIT).indexOf("4");
+  const pAB = Array.from(SPLIT).join("").indexOf("AB = a");
+  const cps = (s: string, sub: string) => Array.from(s.slice(0, s.indexOf(sub))).length;
+  function prep(): UnifiedInputPrepareResponse {
+    const base = prepare();
+    return {
+      ...base,
+      problem_text: SPLIT,
+      uncertain_tokens: [
+        { token: "4BCD-", alternatives: ["ABCD."], location: "dòng 1", reason: "Tên khối đọc chưa chắc", kind: "math",
+          span_id: "spA", span_start: cps(SPLIT, "4BCD-"), span_end: cps(SPLIT, "4BCD-") + 5, source: "local_ocr" },
+        { token: "BD", alternatives: [], location: "dòng 1", reason: "Nhãn đọc chưa chắc", kind: "math",
+          span_id: "spZ", span_start: cps(SPLIT, "BD."), span_end: cps(SPLIT, "BD.") + 2, source: "local_ocr" },
+      ],
+    };
+  }
+  void p0; void pAB;
+
+  it("nối với chữ kế tiếp rồi sửa cả cụm: không còn khoảng trắng thừa, chỗ phía sau không lệch vị trí", () => {
+    let s = unifiedAssistReducer(initialUnifiedAssistState, { type: "from-prepare", response: prep() });
+    s = unifiedAssistReducer(s, { type: "extend-span", spanId: "spA" });
+    expect(s.spanValues.spA).toBe("4BCD- A'B'C'D'");
+    expect(s.spanReviewed.spA).toBeFalsy();
+    s = unifiedAssistReducer(s, { type: "edit-span", spanId: "spA", value: "ABCD.A'B'C'D'" });
+    s = unifiedAssistReducer(s, { type: "edit-span", spanId: "spZ", value: "AC" });
+    expect(s.draftText).toBe("Cho hình hộp chữ nhật ABCD.A'B'C'D' có AB = a, BC = 2a. Đề 𝑎: tính AC.");
+  });
+
+  it("tách lại khôi phục đúng chỗ cũ và giá trị cũ; nối/tách đều huỷ xác nhận", () => {
+    let s = unifiedAssistReducer(initialUnifiedAssistState, { type: "from-prepare", response: prep() });
+    s = unifiedAssistReducer(s, { type: "confirm-span", spanId: "spA" });
+    s = unifiedAssistReducer(s, { type: "confirm-span", spanId: "spZ" });
+    s = unifiedAssistReducer(s, { type: "toggle-confirm", value: true });
+    expect(canConfirmAssistText(s)).toBe(true);
+    s = unifiedAssistReducer(s, { type: "extend-span", spanId: "spA" });
+    expect(s.confirmed).toBe(false);
+    expect(canConfirmAssistText(s)).toBe(false);
+    s = unifiedAssistReducer(s, { type: "restore-span", spanId: "spA" });
+    expect(s.spanValues.spA).toBe("4BCD-");
+    expect(s.draftText).toBe(SPLIT);
+    expect(s.confirmed).toBe(false);
+  });
+
+  it("không nối qua ranh giới câu hay chữ cách xa; chỗ kế tiếp được đánh dấu thì gộp luôn vào cụm", () => {
+    const end = "Tính BD. Cho AB.";
+    const r = { ...prep(), problem_text: end, uncertain_tokens: [
+      { token: "BD.", alternatives: [], location: "", reason: "", kind: "math", span_id: "x", span_start: 5, span_end: 8, source: "local_ocr" },
+    ] };
+    let s = unifiedAssistReducer(initialUnifiedAssistState, { type: "from-prepare", response: r });
+    expect(unifiedAssistReducer(s, { type: "extend-span", spanId: "x" })).toBe(s);
+    const two = { ...prep(), problem_text: "ab 4BCD- A'B'C'D' cd", uncertain_tokens: [
+      { token: "4BCD-", alternatives: [], location: "", reason: "", kind: "math", span_id: "a", span_start: 3, span_end: 8, source: "local_ocr" },
+      { token: "A'B'C'D'", alternatives: [], location: "", reason: "", kind: "math", span_id: "b", span_start: 9, span_end: 17, source: "local_ocr" },
+    ] };
+    s = unifiedAssistReducer(initialUnifiedAssistState, { type: "from-prepare", response: two });
+    s = unifiedAssistReducer(s, { type: "extend-span", spanId: "a" });
+    expect(s.uncertainTokens.map((t) => t.span_id)).toEqual(["a"]);
+    expect(s.spanValues.a).toBe("4BCD- A'B'C'D'");
+    s = unifiedAssistReducer(s, { type: "edit-span", spanId: "a", value: "ABCD.A'B'C'D'" });
+    expect(s.draftText).toBe("ab ABCD.A'B'C'D' cd");
+    s = unifiedAssistReducer(s, { type: "restore-span", spanId: "a" });
+    expect(s.uncertainTokens.map((t) => t.span_id)).toEqual(["a", "b"]);
+  });
+
+  it("bảng xác nhận có nút nối và nút tách lại, không lộ mã kỹ thuật", () => {
+    let s = unifiedAssistReducer(initialUnifiedAssistState, { type: "from-prepare", response: prep() });
+    const before = renderToString(<PhotoProblemPanel state={s} busy={false} onEditDraft={() => {}} onToggleConfirm={() => {}}
+      onSubmitConfirmed={() => {}} onDismiss={() => {}} onSelectCandidate={() => {}} onExtendSpan={() => {}} onRestoreSpan={() => {}} />);
+    expect(before).toContain("data-span-extend=\"spA\"");
+    s = unifiedAssistReducer(s, { type: "extend-span", spanId: "spA" });
+    const after = renderToString(<PhotoProblemPanel state={s} busy={false} onEditDraft={() => {}} onToggleConfirm={() => {}}
+      onSubmitConfirmed={() => {}} onDismiss={() => {}} onSelectCandidate={() => {}} onExtendSpan={() => {}} onRestoreSpan={() => {}} />);
+    expect(after).toContain("data-span-restore=\"spA\"");
+    expect(after).not.toContain("extend-span");
+  });
+});
