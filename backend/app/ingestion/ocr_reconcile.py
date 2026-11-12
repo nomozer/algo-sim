@@ -224,6 +224,25 @@ def _merge_math_fragments(words: list[Word]) -> list[Word]:
     return out
 
 
+def _slot_text(slot: dict[str, list[Word]]) -> str:
+    """Bản đọc chính của một ô (RapidOCR, nếu không có thì Tesseract)."""
+    return " ".join(w.text for w in sorted(slot["R"] or slot["T"], key=lambda w: w.bbox[0]))
+
+
+def _trim_neighbour_bleed(reading: str, prev_text: str, next_text: str) -> str:
+    """Ảnh cắt có đệm để đọc lại một ô có thể dính glyph của ô kề (`SA` đọc thành `SA =` khi `=` đứng sát).
+
+    Chỉ bỏ một từ đầu/cuối TÁCH BẰNG KHOẢNG TRẮNG và trùng đúng bản đọc chính của ô kề phía đó; nếu không, giữ nguyên.
+    Một token dính liền (`SA=`) không phải bằng chứng glyph hàng xóm nên không bị cắt.
+    """
+    parts = reading.split()
+    if len(parts) >= 2 and next_text and norm_math(parts[-1]) == norm_math(next_text) and parts[-1].strip():
+        parts.pop()
+    if len(parts) >= 2 and prev_text and norm_math(parts[0]) == norm_math(prev_text) and parts[0].strip():
+        parts.pop(0)
+    return " ".join(parts)
+
+
 def _restore_prose(r_txt: str, t_txt: str, prev_word: str, next_word: str) -> tuple[str | None, str]:
     """Khôi phục một từ văn xuôi từ R (giữ phụ âm/chữ Latin) + T (giữ dấu). Trả (từ, bằng_chứng) hoặc (None, lý do)."""
     r_core = r_txt.lower().strip(_PUNCT_EDGE + "()")
@@ -571,7 +590,11 @@ def reconcile_local_ocr(
                 readings["tesseract"] = t_txt
             for reader, val in (adjudications.get(key) or {}).items():
                 if val and str(val).strip():
-                    readings[reader] = str(val).strip()
+                    readings[reader] = _trim_neighbour_bleed(
+                        str(val).strip(),
+                        _slot_text(slots[si - 1]) if si > 0 else "",
+                        _slot_text(slots[si + 1]) if si + 1 < len(slots) else "",
+                    )
 
             def emit(text, status, kind, reason=None, alts=None, evidence=""):
                 line_spans.append(Span(span_id, text, status, kind, box, reason, list(alts or []), readings, evidence or key, line_id=line_id))

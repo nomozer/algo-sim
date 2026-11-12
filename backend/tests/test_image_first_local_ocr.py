@@ -118,6 +118,40 @@ def test_same_family_agreement_is_not_enough_under_two_family_policy():
     assert bad and bad[0]["reason"] == "SAME_FAMILY_AGREEMENT_ONLY"
 
 
+def _reread_bleed(r, t, label, crop_reading):
+    """Reconcile with a reread whose padded crop of `label` also caught the next glyph (`crop_reading`)."""
+    raw = _raw(r, t)
+    first = reconcile_local_ocr(raw, min_agreeing_families=2)
+    slot = next(d["slot_key"] for d in first["disputed_math_slots"] if d["readings"].get("rapidocr") == label)
+    adj = {slot: {"rapidocr_latin_rec": crop_reading, "tesseract_eng_line": crop_reading}}
+    return reconcile_local_ocr(raw, adjudications=adj, min_agreeing_families=2)
+
+
+def test_reread_crop_bleeding_into_next_token_does_not_duplicate_it():
+    # Tesseract garbles the label; both rereads of the padded label crop also read the "=" next to it.
+    r = [_line(["cạnh", "a√3,", "SA", "=", "a", "và"], 10)]
+    t = [_line(["cạnh", "a√3,", "S4", "=", "a", "và"], 10)]
+    rec = _reread_bleed(r, t, "SA", "SA =")
+    assert "SA = a" in rec["draft_text"], rec["draft_text"]
+    assert rec["draft_text"].count("=") == 1
+    assert not any(s["status"] == "verified" and s["text"] == "SA=" for s in rec["spans"])
+
+
+def test_reread_crop_bleeding_from_previous_token_is_trimmed():
+    r = [_line(["góc", "(", "SBC", ")", "bằng", "60°."], 10)]
+    t = [_line(["góc", "(", "5BC", ")", "bằng", "60°."], 10)]
+    rec = _reread_bleed(r, t, "SBC", "( SBC")
+    assert rec["draft_text"].count("(") == 1, rec["draft_text"]
+
+
+def test_reread_reading_without_whitespace_is_not_trimmed():
+    # "SA=" read as ONE token is not evidence of a neighbouring glyph; the slot must not silently become "SA".
+    r = [_line(["cạnh", "a√3,", "SA", "=", "a", "và"], 10)]
+    t = [_line(["cạnh", "a√3,", "S4", "=", "a", "và"], 10)]
+    rec = _reread_bleed(r, t, "SA", "SA=")
+    assert rec["draft_text"].count("=") == 2 or any(s["text"].startswith("SA") and s["status"] == "uncertain" for s in rec["spans"])
+
+
 def test_shared_corruption_agreement_still_uncertain():
     assert has_shared_corruption("aV3") and has_shared_corruption("S,ABCD") and has_shared_corruption("600°")
     assert not has_shared_corruption("2BC") and not has_shared_corruption("A1B1C1")
