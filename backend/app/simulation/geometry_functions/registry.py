@@ -1464,7 +1464,10 @@ _THAM_KHAO_HINH = (
     r"\s+hình(?:\s+vẽ)?(?:\s+bên(?:\s+dưới|\s+trên)?)?\s*\)"
 )
 _DUOI_BANG = re.compile(rf"\s*(?:(?:cm|dm|mm|m|đvđd)(?![\w'])|đơn vị(?:\s+độ dài)?(?!\w)|\((?:cm|dm|mm|m|đvđd|đơn vị[^()]*)\)|{_THAM_KHAO_HINH})?"
-                        r"\s*(?:[.?!](?=\s|$)|[,;:)]|$|và(?!\w))", re.IGNORECASE)
+                        # A clause that opens right after the value also closes it, even when the source omits the comma or
+                        # full stop: "biết …" (a new given) or a capitalised word starting a new sentence ("… = 2 Khoảng cách
+                        # …"). Case-sensitive, so a point label ("2 BC", a multiple) never counts as a sentence start.
+                        r"\s*(?:[.?!](?=\s|$)|[,;:)]|$|và(?!\w)|biết(?!\w)|(?-i:(?<=\s)[A-ZĐ][a-zđà-ỹ]))", re.IGNORECASE)
 
 
 def _gia_tri_la_phep_bang(de: str, vts: list[tuple[int, int]], seg: list[str]) -> bool:

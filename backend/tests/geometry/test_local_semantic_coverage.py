@@ -151,3 +151,39 @@ def test_unparsed_clause_reports_the_guard_that_held_it():
     assert notes and notes[0].startswith("UNBACKED_EQUALS@")
     # a fully mapped clause carries no notes key at all
     assert all("notes" not in c for c in r.source_coverage.clauses if c["classification"].startswith("MAPPED"))
+
+
+# ── "vuông (cân) ở X" ≡ "vuông (cân) tại X" ─────────────────────────────────────────────────────────────────────────
+@pytest.mark.parametrize("at,answer", [("vuông cân ở B, AB = a", "a³/6"), ("vuông ở B, AB = a, BC = 2a", "a³/3"),
+                                       ("vuông cân tại B, AB = a", "a³/6")])
+def test_right_triangle_vertex_with_o_or_tai(at, answer):
+    status, answers, reason = _solve(f"Cho hình chóp S.ABC có đáy ABC là tam giác {at}, SA vuông góc với mặt đáy (ABC), "
+                                     "SA = a. Tính thể tích khối chóp S.ABC.")
+    assert status == "SERVED", reason
+    assert list(answers.values()) == [answer]
+
+
+# ── A value is closed by a clause opening right after it, even without punctuation ─────────────────────────────────────
+def test_value_closed_by_bien_and_by_a_new_capitalised_sentence():
+    # BC ⊥ (ABB'A') ⇒ the plane angle is ∠A'BA = 60° ⇒ AA' = a√3, V = (a²/2)·a√3
+    status, answers, reason = _solve(
+        "Cho lăng trụ đứng ABC.A'B'C' có đáy ABC là tam giác vuông cân tại B với BC = a biết mặt phẳng (A'BC) hợp với "
+        "đáy (ABC) một góc 60°. Tính thể tích lăng trụ ABC.A'B'C'.")
+    assert status == "SERVED", reason
+    assert list(answers.values()) == ["a³√3/2"]
+    status, answers, reason = _solve("Cho hình hộp chữ nhật ABCD.A'B'C'D' có cạnh AA' = 1, AB = 2, AD = 3 Tính khoảng cách "
+                                     "từ điểm A' đến mặt phẳng (ABCD).")
+    assert status == "SERVED", reason
+    assert list(answers.values()) == ["1"]
+
+
+@pytest.mark.parametrize("text,code", [
+    # a capital letter followed by another capital is a label: "2 BC" is a multiple, never "AB = 2"
+    ("Cho hình hộp chữ nhật ABCD.A'B'C'D' có cạnh AA' = 1, AB = 2 BC. Tính thể tích khối hộp chữ nhật ABCD.A'B'C'D'.",
+     "MISSING_DIMENSION"),
+    ("Cho hình hộp chữ nhật ABCD.A'B'C'D' có AA' = 1, AB = 2 hoặc AB = 3, AD = 1. Tính thể tích khối hộp chữ nhật "
+     "ABCD.A'B'C'D'.", "NEGATED_CLAUSE"),
+])
+def test_value_boundary_does_not_accept_multiples_or_disjunctions(text, code):
+    status, _answers, reason = _solve(text)
+    assert status == "REFUSED" and reason == code

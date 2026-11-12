@@ -1309,7 +1309,7 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
     # 2c. Right (or right-isosceles) triangle base / named triangle:
     # "(có )?đáy (ABC )?(là tam giác (ABC )?)?vuông (cân )?tại A" or standalone "tam giác ABC vuông (cân )?tại A"
     for m_rt in re.finditer(
-        rf"(?P<full>(?:(?:có\s+)?đáy(?:\s+(?P<verts>{_PTS3}))?\s+(?:là\s+tam\s+giác\s+(?:(?P<verts2>{_PTS3})\s+)?)?|tam\s+giác\s+(?P<verts3>{_PTS3})\s+)vuông(?:\s+(?P<iso>cân))?\s+tại\s+(?P<v>{_PT}))(?![\w'])",
+        rf"(?P<full>(?:(?:có\s+)?đáy(?:\s+(?P<verts>{_PTS3}))?\s+(?:là\s+tam\s+giác\s+(?:(?P<verts2>{_PTS3})\s+)?)?|tam\s+giác\s+(?P<verts3>{_PTS3})\s+)vuông(?:\s+(?P<iso>cân))?\s+(?:tại|ở)\s+(?P<v>{_PT}))(?![\w'])",
         ctext_norm,
         re.IGNORECASE | re.UNICODE,
     ):
