@@ -2696,7 +2696,9 @@ _DONG_TU_HOI = re.compile(r"(?<!\w)(?:tính|tìm|xác định)(?!\w)|(?<!câu )(
 #: … hoặc "bao nhiêu / mấy / ?" đứng SAU nó.
 _HOI_SAU = re.compile(r"bao\s+nhiêu|(?<!\w)mấy(?!\w)|\?", re.IGNORECASE)
 _HOI_CUOI_DE = re.compile(
-    r"(?:(?:(?<!\w)(?:đã\s+cho|đó|này|trên)\s+)*(?<!\w)(?:bằng|là)\s*:?\s*"
+    # "… theo a bằng" (multiple choice, in terms of the length parameter) asks exactly like "… bằng"; `_SAU_HOP_LE`
+    # already reads "theo a" as a closed tail. One single-letter parameter only; a value after "bằng" still fails.
+    r"(?:(?:(?<!\w)(?:đã\s+cho|đó|này|trên)\s+)*(?:(?<!\w)theo\s+[a-z](?![\w'])\s+)?(?<!\w)(?:bằng|là)\s*:?\s*"
     r"|\(\s*(?:kết\s+quả\s+)?làm\s+tròn(?:\s+kết\s+quả)?(?:\s+(?:đến|tới)\s+[^()]*)?\)\s*)"
     r"[.]?\s*$",
     re.IGNORECASE,

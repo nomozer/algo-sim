@@ -155,6 +155,39 @@ _TOKEN_RE = re.compile(
 )
 
 
+_DIM_ATTR = r"(?P<item>(?:độ\s+dài\s+(?:của\s+)?)?(?P<attr>cạnh\s+đáy|cạnh\s+bên)\s*(?:(?:đều\s+)?(?:bằng|là)\s*|=\s*)?(?P<val>{val}))"
+_DIM_FIRST_RE = re.compile(rf"(?<![\w'])(?:(?:có|với)\s+)?{_DIM_ATTR.format(val=_VAL)}", re.IGNORECASE | re.UNICODE)
+_DIM_NEXT_RE = re.compile(rf"\s*(?:,\s*|\s+và\s+|\s+có\s+)(?:có\s+)?{_DIM_ATTR.format(val=_VAL)}", re.IGNORECASE | re.UNICODE)
+
+
+def _solid_dimension_items(text: str, start: int) -> list[tuple[str, str, int, int]]:
+    """Edge dimensions listed after a regular solid's notation, in any order: `(độ dài) cạnh đáy|cạnh bên (bằng|=|là) VAL`.
+
+    The first item may appear anywhere after `start`; later items must follow it directly, joined by `,`, `và` or `có`.
+    Stops at the first gap, at a repeated attribute, or at anything else, so an unread remainder still reaches the
+    clause guards and the Source Gate instead of being skipped. Returns (`base`|`lateral`, raw value, attribute start,
+    end offset); callers quote the first item from the solid name and later items from their own attribute, so two
+    equal values ("cạnh bên bằng a và cạnh đáy bằng a") each sit in exactly one quote.
+    """
+    m = _DIM_FIRST_RE.search(text, start)
+    items: list[tuple[str, str, int, int]] = []
+    seen: set[str] = set()
+    while m:
+        attr = "lateral" if "bên" in m.group("attr").lower() else "base"
+        if attr in seen:
+            break
+        seen.add(attr)
+        items.append((attr, m.group("val"), m.start("item"), m.end()))
+        m = _DIM_NEXT_RE.match(text, m.end())
+    return items
+
+
+_BARE_SEGMENT_EQUALITY_RE = re.compile(
+    rf"(?P<full>(?<![\w'.=])(?P<s1>{_PTS2})\s*=\s*(?P<s2>{_PTS2})(?:\s*=\s*(?P<s3>{_PTS2}))?)(?![\w'])(?!\s*=)",
+    re.UNICODE,
+)
+
+
 def _split_pts(s: str) -> list[str]:
     return re.findall(_PT, s.replace("′", "'"))
 
@@ -779,44 +812,15 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
                 "solid_id": sid,
             }
         )
-        m_side = re.search(
-            rf"có\s+cạnh\s+đáy\s+(?:bằng\s+)?(?P<val>{_VAL})",
-            ctext_norm[m_reg_pyr.end("core") :],
-            re.IGNORECASE | re.UNICODE,
-        )
-        if m_side:
-            q_side = _clean_quote(
-                raw,
-                ca + (m_reg_pyr.start("lead") if m_reg_pyr.group("lead") else m_reg_pyr.start("core")),
-                ca + m_reg_pyr.end("core") + m_side.end(),
-            )
+        q_from = ca + (m_reg_pyr.start("lead") if m_reg_pyr.group("lead") else m_reg_pyr.start("core"))
+        for i_dim, (attr, val, a_start, end) in enumerate(_solid_dimension_items(ctext_norm, m_reg_pyr.end("core"))):
+            # All lateral edges of a regular pyramid are congruent, so "cạnh bên" binds the apex to the first base vertex.
+            q_dim = _clean_quote(raw, q_from if i_dim == 0 else ca + a_start, ca + end)
             builder.premises.append(
-                {
-                    "kind": "regular_polygon",
-                    "args": {"vertices": base_pts, "side": _canon_val(m_side.group("val"))},
-                    "quote": q_side,
-                    "solid_id": sid,
-                }
+                {"kind": "regular_polygon", "args": {"vertices": base_pts, "side": _canon_val(val)}, "quote": q_dim, "solid_id": sid}
+                if attr == "base" else
+                {"kind": "segment_length", "args": {"segment": [apex_s, base_pts[0]], "value": _canon_val(val)}, "quote": q_dim, "solid_id": sid}
             )
-            m_lat = re.match(
-                rf"\s*(?:,\s*|\s+và\s+|\s+có\s+)cạnh\s+bên\s+(?:bằng\s+|=\s*)?(?P<lat>{_VAL})",
-                ctext_norm[m_reg_pyr.end("core") + m_side.end() :],
-                re.IGNORECASE | re.UNICODE,
-            )
-            if m_lat:
-                q_lat = _clean_quote(
-                    raw,
-                    ca + (m_reg_pyr.start("lead") if m_reg_pyr.group("lead") else m_reg_pyr.start("core")),
-                    ca + m_reg_pyr.end("core") + m_side.end() + m_lat.end(),
-                )
-                builder.premises.append(
-                    {
-                        "kind": "segment_length",
-                        "args": {"segment": [apex_s, base_pts[0]], "value": _canon_val(m_lat.group("lat"))},
-                        "quote": q_lat,
-                        "solid_id": sid,
-                    }
-                )
         m_h = re.search(
             rf"chiều\s+cao(?:\s+của\s+(?:hình|khối)\s+chóp(?:\s+{re.escape(not_str)})?)?\s*(?:bằng\s+|=\s*)(?P<h>{_VAL})",
             ctext_norm,
@@ -1006,13 +1010,29 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
             builder.premises.append(
                 {"kind": "right_prism", "args": {"base": base_pts, "top": top_pts}, "quote": q_prism, "solid_id": sid}
             )
+        dims = _solid_dimension_items(ctext_norm, m_prism.end()) if ("đứng" in mod or "đều" in mod) else []
+        # A right (or regular) prism's lateral edges are its height: "cạnh bên bằng h" binds the first lateral edge.
+        dim_quote = lambda i, a_start, end: _clean_quote(raw, ca + (m_prism.start() if i == 0 else a_start), ca + end)  # noqa: E731
+        for i_dim, (attr, val, a_start, end) in enumerate(dims):
+            if attr == "lateral":
+                builder.premises.append(
+                    {"kind": "segment_length", "args": {"segment": [base_pts[0], top_pts[0]], "value": _canon_val(val)},
+                     "quote": dim_quote(i_dim, a_start, end), "solid_id": sid}
+                )
+        # The base side's quote always starts at the prism name: only that span says "đều" for the base polygon.
+        base_dim = next(((val, dim_quote(0, a_start, end)) for attr, val, a_start, end in dims if attr == "base"), None)
         if "đều" in mod:
-            m_pside = re.search(
+            m_pside = None if base_dim else re.search(
                 rf"(?:có\s+)?cạnh(?:\s+đáy)?\s+(?:bằng\s+|=\s*)?(?P<val>{_VAL})",
                 ctext_norm[m_prism.end() :],
                 re.IGNORECASE | re.UNICODE,
             )
-            if m_pside:
+            if base_dim:
+                builder.premises.append(
+                    {"kind": "regular_polygon", "args": {"vertices": base_pts, "side": _canon_val(base_dim[0])},
+                     "quote": base_dim[1], "solid_id": sid}
+                )
+            elif m_pside:
                 q_pside = _clean_quote(raw, ca + m_prism.start(), ca + m_prism.end() + m_pside.end())
                 builder.premises.append(
                     {
@@ -1932,6 +1952,21 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
                 )
         mapped_fact = True
 
+    # Bare segment equality (`SA = AB`, `AB = AC = AD`): congruent segments, no value. A value at the end is the chain
+    # rule above; a coefficient (`AD = 2BC`) is a ratio; anything else stays unread for the guards below.
+    for m_bare_eq in _BARE_SEGMENT_EQUALITY_RE.finditer(ctext_norm):
+        segs = [_split_pts(m_bare_eq.group(g)) for g in ("s1", "s2", "s3") if m_bare_eq.group(g)]
+        # Degenerate (`AA`) or repeated (`AB = BA`) segments are not a congruence statement: leave them to the guards.
+        if any(len(set(sg)) != 2 for sg in segs) or len({frozenset(sg) for sg in segs}) != len(segs):
+            continue
+        q_be = _clean_quote(raw, ca + m_bare_eq.start("full"), ca + m_bare_eq.end("full"))
+        for sa_pts, sb_pts in zip(segs, segs[1:]):
+            builder.premises.append(
+                {"kind": "equal_length", "args": {"segment_a": sa_pts, "segment_b": sb_pts},
+                 "quote": q_be, "solid_id": builder._primary_solid_id}
+            )
+        mapped_fact = True
+
     # Single segment lengths (`AB = 3`, `Đường sinh SA = 3`), skipping those already inside a chain or `đường cao SA = 2`
     for m_seg_len in re.finditer(
         rf"(?P<full>(?:Đường\s+sinh\s+)?(?<![\w'.])(?P<seg>{_PTS2})\s*=\s*(?P<val>{_VAL}))(?![\s]*=)(?![\w'])",
@@ -2729,7 +2764,7 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
 
     for m_vol in (
         re.finditer(
-            rf"(?P<full>(?:tính\s+)?thể\s+tích(?:\s+của)?\s+(?P<kind>(?:khối\s+chóp|hình\s+chóp)(?!\s+cụt)|khối\s+tứ\s+diện|tứ\s+diện|khối\s+lăng\s+trụ|hình\s+lăng\s+trụ|khối\s+lập\s+phương|hình\s+lập\s+phương|(?:khối|hình)\s+hộp(?:\s+chữ\s+nhật)?|khối\s+cầu|mặt\s+cầu|khối\s+trụ|hình\s+trụ|khối\s+nón|hình\s+nón)(?:\s+(?P<not>\({_PT}\)|{_PT}\.{_PTS3_6}|{_PTS3_6}\.{_PTS3_6}|{_PTS4})|\s+(?:đã\s+cho|đó|này))?)",
+            rf"(?P<full>(?:tính\s+)?thể\s+tích(?:\s+V)?(?:\s+của)?\s+(?P<kind>(?:khối\s+chóp|hình\s+chóp)(?!\s+cụt)|khối\s+tứ\s+diện|tứ\s+diện|khối\s+lăng\s+trụ|hình\s+lăng\s+trụ|lăng\s+trụ|khối\s+lập\s+phương|hình\s+lập\s+phương|(?:khối|hình)\s+hộp(?:\s+chữ\s+nhật)?|khối\s+cầu|mặt\s+cầu|khối\s+trụ|hình\s+trụ|khối\s+nón|hình\s+nón)(?:\s+(?P<not>\({_PT}\)|{_PT}\.{_PTS3_6}|{_PTS3_6}\.{_PTS3_6}|{_PTS4})|\s+(?:đã\s+cho|đó|này))?)",
             ctext_norm,
             re.IGNORECASE | re.UNICODE,
         )
@@ -3255,6 +3290,10 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
             ):
                 for m_eq in re.finditer(eq_pat, ctext_norm, re.IGNORECASE | re.UNICODE):
                     eq_spans.append((m_eq.start(), m_eq.end()))
+            # Bare segment equalities count only when the rule above actually built their `equal_length` premises.
+            if any(p["kind"] == "equal_length" for p in clause_premises):
+                for m_eq in _BARE_SEGMENT_EQUALITY_RE.finditer(ctext_norm):
+                    eq_spans.append((m_eq.start("full"), m_eq.end("full")))
             # Part-to-part ratio ("SE = 3EC") counts only when 5b-3 actually built its `point_divides_segment`.
             if any(p["kind"] == "point_divides_segment" for p in clause_premises):
                 for m_eq in re.finditer(
@@ -3266,6 +3305,7 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
                 if ch == "=" and not any(a <= eq_idx < b for a, b in eq_spans):
                     mapped_fact = False
                     mapped_goal = False
+                    clause.notes.append(f"UNBACKED_EQUALS@{eq_idx}:{ctext_norm[max(0, eq_idx - 12):eq_idx + 12].strip()}")
                     clause.classification = CLAUSE_UNPARSED_FACT_CANDIDATE
                     return
 
@@ -3278,6 +3318,7 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
         ):
             mapped_fact = False
             mapped_goal = False
+            clause.notes.append("UNBACKED_PARALLEL")
             clause.classification = CLAUSE_UNPARSED_FACT_CANDIDATE
             return
 
@@ -3299,6 +3340,7 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
             if not has_perp_item:
                 mapped_fact = False
                 mapped_goal = False
+                clause.notes.append("UNBACKED_PERPENDICULAR")
                 clause.classification = CLAUSE_UNPARSED_FACT_CANDIDATE
                 return
 
@@ -3312,6 +3354,7 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
             if not any(a <= s_tok < b for a, b in angle_spans):
                 mapped_fact = False
                 mapped_goal = False
+                clause.notes.append(f"UNBACKED_ANGLE@{s_tok}:{ctext_norm[s_tok:s_tok + 24].strip()}")
                 clause.classification = CLAUSE_UNPARSED_FACT_CANDIDATE
                 return
 
@@ -3341,6 +3384,7 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
         ):
             mapped_fact = False
             mapped_goal = False
+            clause.notes.append("UNSUPPORTED_SHAPE_RELATION_OR_CONDITION" if not unbacked_base_shape else "UNBACKED_BASE_SHAPE")
             clause.classification = CLAUSE_UNPARSED_FACT_CANDIDATE
             return
 
@@ -3367,6 +3411,7 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
             if not bound_in_clause:
                 mapped_fact = False
                 mapped_goal = False
+                clause.notes.append(f"UNBOUND_NAMED_POINT:{pt_name}")
                 clause.classification = CLAUSE_UNPARSED_FACT_CANDIDATE
                 return
 
@@ -3380,6 +3425,7 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
             if len(clause_goals) < 2:
                 mapped_goal = False
                 mapped_fact = False
+                clause.notes.append("INCOMPLETE_COMPOUND_GOAL")
                 clause.classification = CLAUSE_UNPARSED_GOAL_CANDIDATE
                 return
 
@@ -3393,8 +3439,10 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
         if _EXAM_HEADER_PREFIX_RE.fullmatch(ctext_norm.strip()):
             clause.classification = CLAUSE_BENIGN_DISCOURSE
         elif _QUESTION_STARTER_RE.search(ctext_norm):
+            clause.notes.append("NO_GOAL_RULE_MATCHED")
             clause.classification = CLAUSE_UNPARSED_GOAL_CANDIDATE
         elif _FACT_INDICATOR_RE.search(ctext_norm):
+            clause.notes.append("NO_FACT_RULE_MATCHED")
             clause.classification = CLAUSE_UNPARSED_FACT_CANDIDATE
         else:
             clause.classification = CLAUSE_BENIGN_DISCOURSE
@@ -3493,7 +3541,8 @@ def _parse_geometry_problem_locally_uncached(problem_text: str, t0: float) -> Lo
         unparsed_goal_candidates=unparsed_goals,
         unresolved_references=unresolved_refs,
         clauses=tuple(
-            {"index": c.index, "start": c.start, "end": c.end, "text": c.text, "classification": c.classification}
+            {"index": c.index, "start": c.start, "end": c.end, "text": c.text, "classification": c.classification,
+             **({"notes": list(c.notes)} if c.notes else {})}
             for c in clauses
         ),
         coverage_complete=coverage_ok,
