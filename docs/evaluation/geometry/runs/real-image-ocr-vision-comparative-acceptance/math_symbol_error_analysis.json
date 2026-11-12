@@ -1,0 +1,338 @@
+{
+  "run_id": "real-image-ocr-vision-comparative-acceptance",
+  "head": "7b170021451a86c56a2eebadcdd0f0f088fcc229",
+  "measured_system": [
+    "a068b6f6586c1b120bd8350dbe706f5681ab71fd7da57502c34f940140268921",
+    115
+  ],
+  "allow_live_ai": 0,
+  "ground_truth_authority": "AGENT_TRANSCRIBED_UNVERIFIED",
+  "independent_h1": "NOT_MEASURED",
+  "classification": "DERIVED_FROM_REFERENCED_MEASUREMENTS_NOT_A_NEW_MEASUREMENT",
+  "source": "local_ocr_* and corpus manifest",
+  "cases": [
+    {
+      "case_id": "new_vmmu_full_r327",
+      "partition": "development",
+      "scores": {
+        "cer": 0.2969,
+        "wer": 0.5625,
+        "vietnamese_word_accuracy": 0.4375,
+        "reference_characters": 64,
+        "character_edits": 19,
+        "math_token_exact_sequence": false,
+        "math_token_matches": 1,
+        "math_token_precision": 1.0,
+        "math_token_recall": 0.14285714285714285,
+        "math_token_reference_count": 7,
+        "math_token_prediction_count": 1,
+        "full_statement_exact_fidelity": false
+      },
+      "critical_fact_substring_proxy": [
+        {
+          "reference": "không phải là hình đa diện",
+          "found_exactly": false
+        }
+      ],
+      "blocking_reasons": [
+        "DIAGRAM_FACTS_UNVERIFIED"
+      ]
+    },
+    {
+      "case_id": "new_vmmu_full_r450",
+      "partition": "development",
+      "scores": {
+        "cer": 0.1,
+        "wer": 0.2653,
+        "vietnamese_word_accuracy": 0.7347,
+        "reference_characters": 210,
+        "character_edits": 21,
+        "math_token_exact_sequence": false,
+        "math_token_matches": 16,
+        "math_token_precision": 0.7619047619047619,
+        "math_token_recall": 0.8888888888888888,
+        "math_token_reference_count": 18,
+        "math_token_prediction_count": 21,
+        "full_statement_exact_fidelity": false
+      },
+      "critical_fact_substring_proxy": [
+        {
+          "reference": "5 khối lập phương cạnh a",
+          "found_exactly": true
+        },
+        {
+          "reference": "diện tích toàn phần",
+          "found_exactly": true
+        },
+        {
+          "reference": "22a²",
+          "found_exactly": false
+        }
+      ],
+      "blocking_reasons": [
+        "UNCERTAIN_SPANS",
+        "DIAGRAM_FACTS_UNVERIFIED"
+      ]
+    },
+    {
+      "case_id": "new_vmmu_full_r310",
+      "partition": "frozen_external_evaluation",
+      "scores": {
+        "cer": 0.0097,
+        "wer": 0.0455,
+        "vietnamese_word_accuracy": 0.9545,
+        "reference_characters": 103,
+        "character_edits": 1,
+        "math_token_exact_sequence": true,
+        "math_token_matches": 15,
+        "math_token_precision": 1.0,
+        "math_token_recall": 1.0,
+        "math_token_reference_count": 15,
+        "math_token_prediction_count": 15,
+        "full_statement_exact_fidelity": false
+      },
+      "critical_fact_substring_proxy": [
+        {
+          "reference": "Khối bát diện đều",
+          "found_exactly": false
+        },
+        {
+          "reference": "{3;4}",
+          "found_exactly": true
+        }
+      ],
+      "blocking_reasons": [
+        "DIAGRAM_FACTS_UNVERIFIED"
+      ]
+    },
+    {
+      "case_id": "new_vmmu_full_r322",
+      "partition": "frozen_external_evaluation",
+      "scores": {
+        "cer": 0.0962,
+        "wer": 0.2376,
+        "vietnamese_word_accuracy": 0.7624,
+        "reference_characters": 426,
+        "character_edits": 41,
+        "math_token_exact_sequence": false,
+        "math_token_matches": 5,
+        "math_token_precision": 0.38461538461538464,
+        "math_token_recall": 0.2777777777777778,
+        "math_token_reference_count": 18,
+        "math_token_prediction_count": 13,
+        "full_statement_exact_fidelity": false
+      },
+      "critical_fact_substring_proxy": [
+        {
+          "reference": "90 cm",
+          "found_exactly": false
+        },
+        {
+          "reference": "50 cm",
+          "found_exactly": false
+        },
+        {
+          "reference": "80 cm",
+          "found_exactly": true
+        },
+        {
+          "reference": "40 cm",
+          "found_exactly": true
+        },
+        {
+          "reference": "20 cm",
+          "found_exactly": true
+        },
+        {
+          "reference": "khối trụ",
+          "found_exactly": true
+        }
+      ],
+      "blocking_reasons": [
+        "UNCERTAIN_SPANS",
+        "DIAGRAM_FACTS_UNVERIFIED"
+      ]
+    },
+    {
+      "case_id": "new_vmmu_full_r440",
+      "partition": "frozen_external_evaluation",
+      "scores": {
+        "cer": 0.1368,
+        "wer": 0.3846,
+        "vietnamese_word_accuracy": 0.6154,
+        "reference_characters": 285,
+        "character_edits": 39,
+        "math_token_exact_sequence": false,
+        "math_token_matches": 20,
+        "math_token_precision": 0.8695652173913043,
+        "math_token_recall": 0.9090909090909091,
+        "math_token_reference_count": 22,
+        "math_token_prediction_count": 23,
+        "full_statement_exact_fidelity": false
+      },
+      "critical_fact_substring_proxy": [
+        {
+          "reference": "R = 5cm",
+          "found_exactly": false
+        },
+        {
+          "reference": "r = 2cm",
+          "found_exactly": true
+        },
+        {
+          "reference": "AB = 3cm",
+          "found_exactly": true
+        },
+        {
+          "reference": "BC = 6cm",
+          "found_exactly": true
+        },
+        {
+          "reference": "CD = 16cm",
+          "found_exactly": false
+        }
+      ],
+      "blocking_reasons": [
+        "UNCERTAIN_SPANS",
+        "DIAGRAM_FACTS_UNVERIFIED"
+      ]
+    },
+    {
+      "case_id": "new_vmmu_full_r445",
+      "partition": "frozen_external_evaluation",
+      "scores": {
+        "cer": 0.0898,
+        "wer": 0.2872,
+        "vietnamese_word_accuracy": 0.7128,
+        "reference_characters": 412,
+        "character_edits": 37,
+        "math_token_exact_sequence": false,
+        "math_token_matches": 12,
+        "math_token_precision": 0.7058823529411765,
+        "math_token_recall": 0.6666666666666666,
+        "math_token_reference_count": 18,
+        "math_token_prediction_count": 17,
+        "full_statement_exact_fidelity": false
+      },
+      "critical_fact_substring_proxy": [
+        {
+          "reference": "1458m²",
+          "found_exactly": true
+        },
+        {
+          "reference": "chiều cao cố định",
+          "found_exactly": false
+        },
+        {
+          "reference": "ba phòng hình chữ nhật",
+          "found_exactly": false
+        },
+        {
+          "reference": "kích thước như nhau",
+          "found_exactly": true
+        }
+      ],
+      "blocking_reasons": [
+        "UNCERTAIN_SPANS",
+        "DIAGRAM_FACTS_UNVERIFIED"
+      ]
+    },
+    {
+      "case_id": "new_vmmu_full_r446",
+      "partition": "frozen_external_evaluation",
+      "scores": {
+        "cer": 0.1435,
+        "wer": 0.2353,
+        "vietnamese_word_accuracy": 0.7647,
+        "reference_characters": 216,
+        "character_edits": 31,
+        "math_token_exact_sequence": false,
+        "math_token_matches": 22,
+        "math_token_precision": 0.9565217391304348,
+        "math_token_recall": 0.6470588235294118,
+        "math_token_reference_count": 34,
+        "math_token_prediction_count": 23,
+        "full_statement_exact_fidelity": false
+      },
+      "critical_fact_substring_proxy": [
+        {
+          "reference": "S.ABC",
+          "found_exactly": true
+        },
+        {
+          "reference": "SA ⊥ (ABC)",
+          "found_exactly": true
+        },
+        {
+          "reference": "SA = 2",
+          "found_exactly": true
+        },
+        {
+          "reference": "vuông cân tại A",
+          "found_exactly": true
+        },
+        {
+          "reference": "BC = 2√2",
+          "found_exactly": true
+        },
+        {
+          "reference": "M là trung điểm của AB",
+          "found_exactly": true
+        },
+        {
+          "reference": "mặt phẳng (SBC)",
+          "found_exactly": true
+        }
+      ],
+      "blocking_reasons": [
+        "UNCERTAIN_SPANS",
+        "DIAGRAM_FACTS_UNVERIFIED"
+      ]
+    },
+    {
+      "case_id": "new_vmmu_full_r448",
+      "partition": "frozen_external_evaluation",
+      "scores": {
+        "cer": 0.1898,
+        "wer": 0.34,
+        "vietnamese_word_accuracy": 0.66,
+        "reference_characters": 216,
+        "character_edits": 41,
+        "math_token_exact_sequence": false,
+        "math_token_matches": 11,
+        "math_token_precision": 0.6875,
+        "math_token_recall": 0.6875,
+        "math_token_reference_count": 16,
+        "math_token_prediction_count": 16,
+        "full_statement_exact_fidelity": false
+      },
+      "critical_fact_substring_proxy": [
+        {
+          "reference": "hai nửa hình cầu",
+          "found_exactly": true
+        },
+        {
+          "reference": "đường kính 18 dm",
+          "found_exactly": true
+        },
+        {
+          "reference": "hình trụ",
+          "found_exactly": true
+        },
+        {
+          "reference": "chiều cao 36 dm",
+          "found_exactly": false
+        }
+      ],
+      "blocking_reasons": [
+        "UNCERTAIN_SPANS",
+        "DIAGRAM_FACTS_UNVERIFIED",
+        "UNALIGNED_SECOND_READER_TEXT"
+      ]
+    }
+  ],
+  "exclusions": [
+    "Choice {3;4} in r310 and 22a² in r450 are answers, not premises; do not treat those manifest strings as critical input facts.",
+    "Token precision/recall includes MC choices and does not establish mathematical fact precision/recall."
+  ]
+}

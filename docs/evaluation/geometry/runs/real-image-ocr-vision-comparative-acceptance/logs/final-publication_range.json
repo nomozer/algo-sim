@@ -1,0 +1,39 @@
+{
+  "name": "publication_range",
+  "command": "D:\\Documents\\projects\\algo-sim\\backend\\.venv\\Scripts\\python.exe backend/scripts/check_publication_safety.py --range 6bb22fa3bb183ad28cdf1395c99e5eb375fac97c..HEAD",
+  "argv": [
+    "D:\\Documents\\projects\\algo-sim\\backend\\.venv\\Scripts\\python.exe",
+    "backend/scripts/check_publication_safety.py",
+    "--range",
+    "6bb22fa3bb183ad28cdf1395c99e5eb375fac97c..HEAD"
+  ],
+  "cwd": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\local-first-geometry-understanding",
+  "started_at_utc": "2026-11-12T11:05:46.327514+00:00",
+  "start_snapshot": {
+    "head_commit": "7b170021451a86c56a2eebadcdd0f0f088fcc229",
+    "product_paths_sha256": "d70ad2dc7a2857c6d31c71ff21501149694d61af8278c2593f0176e8db3c0162",
+    "product_path_count": 332,
+    "hash_policy": "tracked backend/app + frontend/src, LF normalized; includes tests",
+    "working_product_source_sha256": "12ee8ae8c0609699e991e12ba2ff748ee3f08a436ec3e4e907a5218278bea75b",
+    "working_product_source_count": 192,
+    "working_source_policy": "all working backend/app + frontend/src including untracked; skip pycache and freeze TEST_ONLY_GLOBS"
+  },
+  "ended_at_utc": "2026-11-12T11:05:46.733980+00:00",
+  "duration_seconds": 0.125,
+  "exit_code": 2,
+  "raw_output_sha256": "e94b0d5b39b5ae8aeb3823dc180435dcbfaa5c3fa6604cfa376c20a3be22cc10",
+  "raw_output_bytes": 148,
+  "raw_output_retention": "ignored local .superpowers only; never staged",
+  "end_snapshot": {
+    "head_commit": "7b170021451a86c56a2eebadcdd0f0f088fcc229",
+    "product_paths_sha256": "d70ad2dc7a2857c6d31c71ff21501149694d61af8278c2593f0176e8db3c0162",
+    "product_path_count": 332,
+    "hash_policy": "tracked backend/app + frontend/src, LF normalized; includes tests",
+    "working_product_source_sha256": "12ee8ae8c0609699e991e12ba2ff748ee3f08a436ec3e4e907a5218278bea75b",
+    "working_product_source_count": 192,
+    "working_source_policy": "all working backend/app + frontend/src including untracked; skip pycache and freeze TEST_ONLY_GLOBS"
+  },
+  "summary_lines": [],
+  "source_unchanged_during_command": true,
+  "verdict": "FAIL"
+}

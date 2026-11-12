@@ -1,0 +1,28 @@
+{
+  "schema": "algosim-vision-live-authorization-status/1",
+  "run_id": "real-image-ocr-vision-comparative-acceptance",
+  "generated_at_utc": "2026-11-11T02:42:05.685379+00:00",
+  "allow_live_ai": 0,
+  "provider_calls": 0,
+  "independent_h1_validation": "NOT_MEASURED",
+  "status": "NOT_AUTHORIZED",
+  "owner_authorization_record": null,
+  "reason": "Current task authorizes offline audit and engineering only; no separate owner instruction permits paid provider calls.",
+  "allow_live_ai_changed": false,
+  "authorization_requirements": [
+    "explicit user instruction reference",
+    "provider and exact model",
+    "hash-bound corpus and image data",
+    "maximum provider requests including retries",
+    "maximum USD cost with enforceable pre-request reservation",
+    "mandatory stop conditions and failure handling"
+  ],
+  "future_preflight_tool": "tools/vision_comparison.py",
+  "future_executor_status": "NOT_CONNECTED (request budget primitive exists; enforced dollar accounting not established)",
+  "reusable_components": [
+    "backend/app/ingestion/image_extraction.py::extract_problem_from_image",
+    "backend/app/ai/gemini.py::ApiBudget",
+    "backend/app/ai/gemini.py::set_budget"
+  ],
+  "historical_templates_are_current_authorization": false
+}

@@ -1,0 +1,34 @@
+{
+  "schema": "algosim-regression-first-failure-probe/1",
+  "command": "python -m pytest -c backend/pytest.ini backend/tests -q -x --tb=short",
+  "exit_code": 1,
+  "counts": {
+    "failed": 1,
+    "passed": 2006,
+    "deselected": 3
+  },
+  "duration_seconds": 149.19,
+  "failure_node_ids": [
+    "backend/tests/geometry/test_docs_information_architecture.py::test_inv_20_candidate_and_cache_verify_only"
+  ],
+  "classification": "CANDIDATE_FREEZE_HASH_MISMATCH",
+  "raw_output_sha256": "214b5fcf75b1f9cf0578fa6485cafaea33e2e68d11b1dfc341e09eec9c36b28f",
+  "raw_output_bytes": 3735,
+  "raw_output_retention": "ignored local .superpowers only; never staged",
+  "snapshot_after_probe": {
+    "head_commit": "6bb22fa3bb183ad28cdf1395c99e5eb375fac97c",
+    "product_paths_sha256": "346eea1dfa961d6c8d18510efa118474ddd149d9fc65146d7a60c6026ba705fa",
+    "product_path_count": 332,
+    "hash_policy": "tracked backend/app + frontend/src, LF normalized; includes tests",
+    "working_product_source_sha256": "77d0190abe3664b99a7012b7c7521cb5c353a3b80a2b311ac96a8e6381193378",
+    "working_product_source_count": 192,
+    "working_source_policy": "all working backend/app + frontend/src including untracked; skip pycache and freeze TEST_ONLY_GLOBS"
+  },
+  "source_unchanged_during_probe": "NOT_MEASURED",
+  "provider_calls": "NOT_CALLED_BY_RUNNER",
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "GEMINI_API_KEY": "EMPTY",
+    "network_guard": "existing offline_child sitecustomize + pytest conftest guards"
+  }
+}

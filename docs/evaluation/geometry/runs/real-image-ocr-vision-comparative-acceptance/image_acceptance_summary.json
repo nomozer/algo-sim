@@ -1,0 +1,229 @@
+{
+  "run_id": "real-image-ocr-vision-comparative-acceptance",
+  "head": "7b170021451a86c56a2eebadcdd0f0f088fcc229",
+  "measured_system": [
+    "a068b6f6586c1b120bd8350dbe706f5681ab71fd7da57502c34f940140268921",
+    115
+  ],
+  "allow_live_ai": 0,
+  "ground_truth_authority": "AGENT_TRANSCRIBED_UNVERIFIED",
+  "independent_h1": "NOT_MEASURED",
+  "generated_from": [
+    "local_ocr_*.json",
+    "api_acceptance_*.json",
+    "prior_corpus_actual_rerun.json"
+  ],
+  "new_corpus": {
+    "development": {
+      "images": 2,
+      "recognition_against_unverified_reference": {
+        "reconciled_draft": {
+          "cer_median": 0.19845000000000002,
+          "cer_min": 0.1,
+          "cer_max": 0.2969,
+          "wer_median": 0.4139,
+          "cer_micro": 0.145985401459854
+        },
+        "tesseract_vie_alone": {
+          "cer_median": 0.2152,
+          "wer_median": 0.3393
+        },
+        "rapidocr_alone": {
+          "cer_median": 0.46785,
+          "wer_median": 0.70155
+        },
+        "engine_alone_note": "engine reading order without layout reconciliation; diagram labels and footers count as insertions"
+      },
+      "math_tokens_reconciled_draft": {
+        "micro_precision": 0.7727272727272727,
+        "micro_recall": 0.68,
+        "images_with_exact_token_sequence": 0,
+        "images_with_exact_full_statement": 0
+      },
+      "critical_fact_exact_substring_proxy": {
+        "found": 2,
+        "total": 4
+      },
+      "acceptance_gate": {
+        "extraction_verified_images": 0,
+        "false_acceptance_verified_but_math_tokens_differ": [],
+        "rejected_although_math_tokens_exact": [],
+        "blocking_reason_counts": {
+          "DIAGRAM_FACTS_UNVERIFIED": 2,
+          "UNCERTAIN_SPANS": 1
+        }
+      },
+      "diagram_dependency": {
+        "DIAGRAM_LABELS_UNMATCHED": 1,
+        "DIAGRAM_REFERENCED_BY_TEXT": 1
+      },
+      "prepare_status_counts": {
+        "needs_confirmation": 2
+      },
+      "solve_outcomes": {
+        "local_auto_served": 0,
+        "served_after_simulated_confirmation": 0,
+        "served_answers_graded_wrong": 0,
+        "kernel_result_counts": {
+          "unsupported": 1,
+          "LIVE_AI_DISABLED": 1
+        },
+        "per_case": [
+          {
+            "case_id": "new_vmmu_full_r327",
+            "category": "USER_CORRECTED_SIMULATED",
+            "kernel_status": "unsupported",
+            "reason_code": null,
+            "simulated_edits": 0
+          },
+          {
+            "case_id": "new_vmmu_full_r450",
+            "category": "USER_CORRECTED_SIMULATED",
+            "kernel_status": null,
+            "reason_code": "LIVE_AI_DISABLED",
+            "simulated_edits": 1
+          }
+        ]
+      },
+      "server": {
+        "hybrid_route_mode": "local-first",
+        "server_allow_live_ai": false,
+        "cache_version": "132"
+      }
+    },
+    "frozen_external_evaluation": {
+      "images": 6,
+      "recognition_against_unverified_reference": {
+        "reconciled_draft": {
+          "cer_median": 0.11649999999999999,
+          "cer_min": 0.0097,
+          "cer_max": 0.1898,
+          "wer_median": 0.2624,
+          "cer_micro": 0.11459589867310012
+        },
+        "tesseract_vie_alone": {
+          "cer_median": 0.09590000000000001,
+          "wer_median": 0.26749999999999996
+        },
+        "rapidocr_alone": {
+          "cer_median": 0.1688,
+          "wer_median": 0.5611999999999999
+        },
+        "engine_alone_note": "engine reading order without layout reconciliation; diagram labels and footers count as insertions"
+      },
+      "math_tokens_reconciled_draft": {
+        "micro_precision": 0.794392523364486,
+        "micro_recall": 0.6910569105691057,
+        "images_with_exact_token_sequence": 1,
+        "images_with_exact_full_statement": 0
+      },
+      "critical_fact_exact_substring_proxy": {
+        "found": 20,
+        "total": 28
+      },
+      "acceptance_gate": {
+        "extraction_verified_images": 0,
+        "false_acceptance_verified_but_math_tokens_differ": [],
+        "rejected_although_math_tokens_exact": [
+          {
+            "case_id": "new_vmmu_full_r310",
+            "blocking_reasons": [
+              "DIAGRAM_FACTS_UNVERIFIED"
+            ]
+          }
+        ],
+        "blocking_reason_counts": {
+          "DIAGRAM_FACTS_UNVERIFIED": 6,
+          "UNCERTAIN_SPANS": 5,
+          "UNALIGNED_SECOND_READER_TEXT": 1
+        }
+      },
+      "diagram_dependency": {
+        "DIAGRAM_REFERENCED_BY_TEXT": 4,
+        "DIAGRAM_PRESENT_UNREAD": 2
+      },
+      "prepare_status_counts": {
+        "needs_confirmation": 6
+      },
+      "solve_outcomes": {
+        "local_auto_served": 0,
+        "served_after_simulated_confirmation": 0,
+        "served_answers_graded_wrong": 0,
+        "kernel_result_counts": {
+          "unsupported": 2,
+          "LIVE_AI_DISABLED": 3,
+          "REFUSED": 1
+        },
+        "per_case": [
+          {
+            "case_id": "new_vmmu_full_r310",
+            "category": "USER_CORRECTED_SIMULATED",
+            "kernel_status": "unsupported",
+            "reason_code": null,
+            "simulated_edits": 0
+          },
+          {
+            "case_id": "new_vmmu_full_r322",
+            "category": "USER_CORRECTED_SIMULATED",
+            "kernel_status": null,
+            "reason_code": "LIVE_AI_DISABLED",
+            "simulated_edits": 1
+          },
+          {
+            "case_id": "new_vmmu_full_r440",
+            "category": "USER_CORRECTED_SIMULATED",
+            "kernel_status": "unsupported",
+            "reason_code": null,
+            "simulated_edits": 0
+          },
+          {
+            "case_id": "new_vmmu_full_r445",
+            "category": "USER_CORRECTED_SIMULATED",
+            "kernel_status": null,
+            "reason_code": "LIVE_AI_DISABLED",
+            "simulated_edits": 0
+          },
+          {
+            "case_id": "new_vmmu_full_r446",
+            "category": "USER_CORRECTED_SIMULATED",
+            "kernel_status": "REFUSED",
+            "reason_code": "MISSING_DIMENSION",
+            "simulated_edits": 1
+          },
+          {
+            "case_id": "new_vmmu_full_r448",
+            "category": "USER_CORRECTED_SIMULATED",
+            "kernel_status": null,
+            "reason_code": "LIVE_AI_DISABLED",
+            "simulated_edits": 1
+          }
+        ]
+      },
+      "server": {
+        "hybrid_route_mode": "local-first",
+        "server_allow_live_ai": false,
+        "cache_version": "132"
+      }
+    }
+  },
+  "prior_corpus_actual_rerun": {
+    "images": 16,
+    "problem_variants": 17,
+    "local_auto_served_correct": 1,
+    "served_correct_after_simulated_confirmation": 10,
+    "not_served": 6,
+    "served_wrong": [],
+    "needs_confirmation_variants": 16,
+    "grade_counts": {
+      "SERVED_CORRECT": 11,
+      "REFUSED_OR_NOT_SERVED": 6
+    },
+    "measurement_failures": [],
+    "exposure": "EXPOSED_DEVELOPMENT: these images drove the OCR/reconciliation design of the previous run"
+  },
+  "claims_not_supported": [
+    "blind generalisation rate (6 evaluation images, 1 inside the solver's named-polyhedron scope)",
+    "human-verified transcription accuracy (references are agent transcriptions)",
+    "student correction effort (edits are scripted from the reference)"
+  ]
+}

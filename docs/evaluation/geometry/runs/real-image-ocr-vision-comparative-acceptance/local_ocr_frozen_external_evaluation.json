@@ -1,0 +1,1417 @@
+{
+  "run_id": "real-image-ocr-vision-comparative-acceptance",
+  "head": "7b170021451a86c56a2eebadcdd0f0f088fcc229",
+  "measured_system": [
+    "a068b6f6586c1b120bd8350dbe706f5681ab71fd7da57502c34f940140268921",
+    115
+  ],
+  "allow_live_ai": 0,
+  "ground_truth_authority": "AGENT_TRANSCRIBED_UNVERIFIED",
+  "independent_h1": "NOT_MEASURED",
+  "partition": "frozen_external_evaluation",
+  "cases": [
+    {
+      "case_id": "new_vmmu_full_r310",
+      "partition": "frozen_external_evaluation",
+      "sha256": "63aa9316869bec827dcedc50f71548c9a42fd1765af0dc70de165f62255652c2",
+      "ocr_text": "Câu 9: Khối bất diện đều (như hình vẽ bên dưới) thuộc loại nào?\nA. {3;5}. B. {5;3}. C. {3;4}. D. {4;3}.",
+      "extraction_verified": false,
+      "blocking_reasons": [
+        "DIAGRAM_FACTS_UNVERIFIED"
+      ],
+      "diagram": {
+        "figure_bboxes": [],
+        "tokens": [],
+        "classification": "DIAGRAM_REFERENCED_BY_TEXT",
+        "blocking": true
+      },
+      "review_spans": [
+        {
+          "text": "{3;5}.",
+          "start": 67,
+          "end": 73,
+          "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+          "kind": "choice",
+          "status": "uncertain",
+          "blocking": false,
+          "alternatives": [
+            "{3;5}",
+            "43:5)",
+            "1335}"
+          ]
+        },
+        {
+          "text": "{5;3}.",
+          "start": 77,
+          "end": 83,
+          "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+          "kind": "choice",
+          "status": "uncertain",
+          "blocking": false,
+          "alternatives": [
+            "{5;3}",
+            "{5:3}",
+            "1533}"
+          ]
+        },
+        {
+          "text": "{3;4}.",
+          "start": 87,
+          "end": 93,
+          "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+          "kind": "choice",
+          "status": "uncertain",
+          "blocking": false,
+          "alternatives": [
+            "{3;4}",
+            "{3;4)",
+            "1354}"
+          ]
+        },
+        {
+          "text": "{4;3}.",
+          "start": 97,
+          "end": 103,
+          "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+          "kind": "choice",
+          "status": "uncertain",
+          "blocking": false,
+          "alternatives": [
+            "{4;3}",
+            "{43}",
+            "1453}"
+          ]
+        }
+      ],
+      "elapsed_ms": 3863.873700000113,
+      "timing": {
+        "ocr_ms": 3394.45,
+        "ocr_cached": false,
+        "cold_worker": true,
+        "reconcile_and_reread_ms": 330.29,
+        "reread_ms": 289.39,
+        "total_ms": 3724.74
+      },
+      "low_quality": false,
+      "classification": "PRINTED",
+      "reference_scope": "TARGET_QUESTION_PROSE_AND_CHOICES_EXCLUDING_DIAGRAM_LABELS_PAGE_FOOTERS_AND_ADJACENT_CROPPED_FRAGMENTS",
+      "scores_against_unverified_reference": {
+        "cer": 0.0097,
+        "wer": 0.0455,
+        "vietnamese_word_accuracy": 0.9545,
+        "reference_characters": 103,
+        "character_edits": 1,
+        "math_token_exact_sequence": true,
+        "math_token_matches": 15,
+        "math_token_precision": 1.0,
+        "math_token_recall": 1.0,
+        "math_token_reference_count": 15,
+        "math_token_prediction_count": 15,
+        "full_statement_exact_fidelity": false
+      },
+      "engine_scores_against_unverified_reference": {
+        "tesseract": {
+          "cer": 0.0971,
+          "wer": 0.2273,
+          "vietnamese_word_accuracy": 0.7727,
+          "reference_characters": 103,
+          "character_edits": 10,
+          "math_token_exact_sequence": false,
+          "math_token_matches": 12,
+          "math_token_precision": 0.8571428571428571,
+          "math_token_recall": 0.8,
+          "math_token_reference_count": 15,
+          "math_token_prediction_count": 14,
+          "full_statement_exact_fidelity": false
+        },
+        "rapidocr": {
+          "cer": 0.068,
+          "wer": 0.3182,
+          "vietnamese_word_accuracy": 0.6818,
+          "reference_characters": 103,
+          "character_edits": 7,
+          "math_token_exact_sequence": true,
+          "math_token_matches": 15,
+          "math_token_precision": 1.0,
+          "math_token_recall": 1.0,
+          "math_token_reference_count": 15,
+          "math_token_prediction_count": 15,
+          "full_statement_exact_fidelity": false
+        }
+      },
+      "critical_fact_recovery_proxy": [
+        {
+          "reference": "Khối bát diện đều",
+          "found_exactly": false
+        },
+        {
+          "reference": "{3;4}",
+          "found_exactly": true
+        }
+      ]
+    },
+    {
+      "case_id": "new_vmmu_full_r322",
+      "partition": "frozen_external_evaluation",
+      "sha256": "16725640fa06918470dfc1597c225fd514174bc23ad60f4c67d5c2e350f2eab5",
+      "ocr_text": "câu yêu một hình hộp chữ nhật chiều cao c đáy hộp hình chữ nhật chiều cm và chiều dài là 80 cm. Trong khối hộp có chứa nước, mục nước so với đáy hợp có chiều cao là 40 cm. Hỏi khi đặt vào khối hộp một khối trụ có chiều cao bằng chiều cao khối hộp và bán kính đáy là 20 cm theo phương thẳng đứng thì chiều cao của mục nước so với đáy là bao nhiêu?\nA.58,32 cm. B.48,32 cm. C.78,32 cụm. D.68,32 cm.",
+      "extraction_verified": false,
+      "blocking_reasons": [
+        "UNCERTAIN_SPANS",
+        "DIAGRAM_FACTS_UNVERIFIED"
+      ],
+      "diagram": {
+        "figure_bboxes": [
+          [
+            728,
+            360,
+            1241,
+            873
+          ],
+          [
+            1302,
+            360,
+            1830,
+            873
+          ]
+        ],
+        "tokens": [],
+        "classification": "DIAGRAM_PRESENT_UNREAD",
+        "blocking": true
+      },
+      "review_spans": [
+        {
+          "text": "c",
+          "start": 40,
+          "end": 41,
+          "reason": "MATH_TOKEN_DISAGREEMENT",
+          "kind": "math",
+          "status": "uncertain",
+          "blocking": true,
+          "alternatives": [
+            "c",
+            "0",
+            "()"
+          ]
+        },
+        {
+          "text": "cm",
+          "start": 70,
+          "end": 72,
+          "reason": "AMBIGUOUS_DIACRITIC_RESTORATION",
+          "kind": "prose",
+          "status": "uncertain",
+          "blocking": true,
+          "alternatives": [
+            "cm",
+            "n"
+          ]
+        },
+        {
+          "text": "C.78,32",
+          "start": 371,
+          "end": 378,
+          "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+          "kind": "choice",
+          "status": "uncertain",
+          "blocking": false,
+          "alternatives": [
+            "C.78,32",
+            "R",
+            "C.15.32"
+          ]
+        }
+      ],
+      "elapsed_ms": 2483.06269999739,
+      "timing": {
+        "ocr_ms": 2155.65,
+        "ocr_cached": false,
+        "cold_worker": false,
+        "reconcile_and_reread_ms": 165.66,
+        "reread_ms": 56.74,
+        "total_ms": 2321.32
+      },
+      "low_quality": false,
+      "classification": "PRINTED",
+      "reference_scope": "TARGET_QUESTION_PROSE_AND_CHOICES_EXCLUDING_DIAGRAM_LABELS_PAGE_FOOTERS_AND_ADJACENT_CROPPED_FRAGMENTS",
+      "scores_against_unverified_reference": {
+        "cer": 0.0962,
+        "wer": 0.2376,
+        "vietnamese_word_accuracy": 0.7624,
+        "reference_characters": 426,
+        "character_edits": 41,
+        "math_token_exact_sequence": false,
+        "math_token_matches": 5,
+        "math_token_precision": 0.38461538461538464,
+        "math_token_recall": 0.2777777777777778,
+        "math_token_reference_count": 18,
+        "math_token_prediction_count": 13,
+        "full_statement_exact_fidelity": false
+      },
+      "engine_scores_against_unverified_reference": {
+        "tesseract": {
+          "cer": 0.0305,
+          "wer": 0.0495,
+          "vietnamese_word_accuracy": 0.9505,
+          "reference_characters": 426,
+          "character_edits": 13,
+          "math_token_exact_sequence": false,
+          "math_token_matches": 16,
+          "math_token_precision": 0.9411764705882353,
+          "math_token_recall": 0.8888888888888888,
+          "math_token_reference_count": 18,
+          "math_token_prediction_count": 17,
+          "full_statement_exact_fidelity": false
+        },
+        "rapidocr": {
+          "cer": 0.2934,
+          "wer": 0.604,
+          "vietnamese_word_accuracy": 0.396,
+          "reference_characters": 426,
+          "character_edits": 125,
+          "math_token_exact_sequence": false,
+          "math_token_matches": 5,
+          "math_token_precision": 0.38461538461538464,
+          "math_token_recall": 0.2777777777777778,
+          "math_token_reference_count": 18,
+          "math_token_prediction_count": 13,
+          "full_statement_exact_fidelity": false
+        }
+      },
+      "critical_fact_recovery_proxy": [
+        {
+          "reference": "90 cm",
+          "found_exactly": false
+        },
+        {
+          "reference": "50 cm",
+          "found_exactly": false
+        },
+        {
+          "reference": "80 cm",
+          "found_exactly": true
+        },
+        {
+          "reference": "40 cm",
+          "found_exactly": true
+        },
+        {
+          "reference": "20 cm",
+          "found_exactly": true
+        },
+        {
+          "reference": "khối trụ",
+          "found_exactly": true
+        }
+      ]
+    },
+    {
+      "case_id": "new_vmmu_full_r440",
+      "partition": "frozen_external_evaluation",
+      "sha256": "dead289501c7ea98a8e37805b6ffe63b32501b4e8248f8fa7600d60b218333bb",
+      "ocr_text": "2\nCâu 44. Phần không gian bên trong của chai nước ngọt có hình dạng như hình bên. Biết bán kính đáy bằng R = 5 cụm , bán kính có r = 2cm, AB = 3 cm, BC = 6 cm, CD = 16 cụm. Thể tích phần không gian bên trong của\nA. 495π(cm³). B.462π(cm³). C. 490π(cm³). D. 412π(cm3).",
+      "extraction_verified": false,
+      "blocking_reasons": [
+        "UNCERTAIN_SPANS",
+        "DIAGRAM_FACTS_UNVERIFIED"
+      ],
+      "diagram": {
+        "figure_bboxes": [
+          [
+            469,
+            83,
+            916,
+            221
+          ],
+          [
+            175,
+            220,
+            231,
+            293
+          ],
+          [
+            159,
+            292,
+            494,
+            370
+          ]
+        ],
+        "tokens": [
+          {
+            "text": "Di",
+            "bbox": [
+              494,
+              120,
+              521,
+              144
+            ],
+            "reader": "rapidocr",
+            "in_figure_block": true
+          },
+          {
+            "text": "Ri",
+            "bbox": [
+              493,
+              161,
+              522,
+              183
+            ],
+            "reader": "rapidocr",
+            "in_figure_block": true
+          },
+          {
+            "text": "chai nuc ngot đó bàng",
+            "bbox": [
+              249,
+              297,
+              492,
+              330
+            ],
+            "reader": "rapidocr",
+            "in_figure_block": true
+          }
+        ],
+        "classification": "DIAGRAM_REFERENCED_BY_TEXT",
+        "blocking": true
+      },
+      "review_spans": [
+        {
+          "text": "2",
+          "start": 0,
+          "end": 1,
+          "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+          "kind": "math",
+          "status": "uncertain",
+          "blocking": true,
+          "alternatives": [
+            "2",
+            "=",
+            "a"
+          ]
+        },
+        {
+          "text": "16",
+          "start": 165,
+          "end": 167,
+          "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+          "kind": "math",
+          "status": "uncertain",
+          "blocking": true,
+          "alternatives": [
+            "16",
+            "16¢"
+          ]
+        },
+        {
+          "text": "phần không",
+          "start": 182,
+          "end": 192,
+          "reason": "MULTIWORD_SLOT_MISMATCH",
+          "kind": "prose",
+          "status": "uncertain",
+          "blocking": true,
+          "alternatives": [
+            "phần không",
+            "phnkhông"
+          ]
+        },
+        {
+          "text": "495π(cm³).",
+          "start": 215,
+          "end": 225,
+          "reason": "PRIME_DISAGREEMENT",
+          "kind": "choice",
+          "status": "uncertain",
+          "blocking": false,
+          "alternatives": [
+            "495π(cm³)",
+            "495π(cm³3)",
+            "4957(cm')"
+          ]
+        },
+        {
+          "text": "B.462π(cm³).",
+          "start": 226,
+          "end": 238,
+          "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+          "kind": "choice",
+          "status": "uncertain",
+          "blocking": false,
+          "alternatives": [
+            "B.462π(cm³)",
+            "B.462Zz(cm')",
+            "B.4622(cm')"
+          ]
+        },
+        {
+          "text": "490π(cm³).",
+          "start": 242,
+          "end": 252,
+          "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+          "kind": "choice",
+          "status": "uncertain",
+          "blocking": false,
+          "alternatives": [
+            "490π(cm³)",
+            "490z(cm')",
+            "4907(cm')"
+          ]
+        },
+        {
+          "text": "412π(cm3).",
+          "start": 256,
+          "end": 266,
+          "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+          "kind": "choice",
+          "status": "uncertain",
+          "blocking": false,
+          "alternatives": [
+            "412π(cm³)",
+            "412z(cm')",
+            "4127(cm*)"
+          ]
+        }
+      ],
+      "elapsed_ms": 2146.7766999994637,
+      "timing": {
+        "ocr_ms": 1867.36,
+        "ocr_cached": false,
+        "cold_worker": false,
+        "reconcile_and_reread_ms": 223.21,
+        "reread_ms": 175.88,
+        "total_ms": 2090.57
+      },
+      "low_quality": false,
+      "classification": "PRINTED",
+      "reference_scope": "TARGET_QUESTION_PROSE_AND_CHOICES_EXCLUDING_DIAGRAM_LABELS_PAGE_FOOTERS_AND_ADJACENT_CROPPED_FRAGMENTS",
+      "scores_against_unverified_reference": {
+        "cer": 0.1368,
+        "wer": 0.3846,
+        "vietnamese_word_accuracy": 0.6154,
+        "reference_characters": 285,
+        "character_edits": 39,
+        "math_token_exact_sequence": false,
+        "math_token_matches": 20,
+        "math_token_precision": 0.8695652173913043,
+        "math_token_recall": 0.9090909090909091,
+        "math_token_reference_count": 22,
+        "math_token_prediction_count": 23,
+        "full_statement_exact_fidelity": false
+      },
+      "engine_scores_against_unverified_reference": {
+        "tesseract": {
+          "cer": 0.0947,
+          "wer": 0.3077,
+          "vietnamese_word_accuracy": 0.6923,
+          "reference_characters": 285,
+          "character_edits": 27,
+          "math_token_exact_sequence": false,
+          "math_token_matches": 19,
+          "math_token_precision": 0.8260869565217391,
+          "math_token_recall": 0.8636363636363636,
+          "math_token_reference_count": 22,
+          "math_token_prediction_count": 23,
+          "full_statement_exact_fidelity": false
+        },
+        "rapidocr": {
+          "cer": 0.1228,
+          "wer": 0.5538,
+          "vietnamese_word_accuracy": 0.4462,
+          "reference_characters": 285,
+          "character_edits": 35,
+          "math_token_exact_sequence": false,
+          "math_token_matches": 20,
+          "math_token_precision": 0.8,
+          "math_token_recall": 0.9090909090909091,
+          "math_token_reference_count": 22,
+          "math_token_prediction_count": 25,
+          "full_statement_exact_fidelity": false
+        }
+      },
+      "critical_fact_recovery_proxy": [
+        {
+          "reference": "R = 5cm",
+          "found_exactly": false
+        },
+        {
+          "reference": "r = 2cm",
+          "found_exactly": true
+        },
+        {
+          "reference": "AB = 3cm",
+          "found_exactly": true
+        },
+        {
+          "reference": "BC = 6cm",
+          "found_exactly": true
+        },
+        {
+          "reference": "CD = 16cm",
+          "found_exactly": false
+        }
+      ]
+    },
+    {
+      "case_id": "new_vmmu_full_r445",
+      "partition": "frozen_external_evaluation",
+      "sha256": "4651138501a038065cfd0e031ac00ad323f155e3dfcc6b2ad5beb02ea3010a4d",
+      "ocr_text": "Câu 39: Một công ty xây nhà xuống dạng hình hộp chữ nhật có diện tích mặt sàn là 1458m² và chiều cao có định. Hỗ xây các bức tường xung quanh và bên rỗng để ngắn nhà xuống thành ba phỏng hình chữ nhật có kích thước như nhau (không kẻ trần nhà). Vậy cần phải xy các phỏng theo kích thước bao nhiêu để tiết kiểm chi phí nhất (bỏ qua độ đáy các bức tường)?\nA.18m×27m. B. 16m×24m. C.12m×40,5m. 1n (x + 3) D.9m ×54m.",
+      "extraction_verified": false,
+      "blocking_reasons": [
+        "UNCERTAIN_SPANS",
+        "DIAGRAM_FACTS_UNVERIFIED"
+      ],
+      "diagram": {
+        "figure_bboxes": [
+          [
+            1020,
+            286,
+            1562,
+            597
+          ]
+        ],
+        "tokens": [],
+        "classification": "DIAGRAM_PRESENT_UNREAD",
+        "blocking": true
+      },
+      "review_spans": [
+        {
+          "text": "1458m²",
+          "start": 81,
+          "end": 87,
+          "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+          "kind": "math",
+          "status": "uncertain",
+          "blocking": true,
+          "alternatives": [
+            "1458m²",
+            "1458m”",
+            "1458m°"
+          ]
+        },
+        {
+          "text": "bức",
+          "start": 121,
+          "end": 124,
+          "reason": "AMBIGUOUS_DIACRITIC_RESTORATION",
+          "kind": "prose",
+          "status": "uncertain",
+          "blocking": true,
+          "alternatives": [
+            "bức",
+            "bc"
+          ]
+        },
+        {
+          "text": "trần",
+          "start": 234,
+          "end": 238,
+          "reason": "AMBIGUOUS_DIACRITIC_RESTORATION",
+          "kind": "prose",
+          "status": "uncertain",
+          "blocking": true,
+          "alternatives": [
+            "trần",
+            "trn"
+          ]
+        },
+        {
+          "text": "bức",
+          "start": 342,
+          "end": 345,
+          "reason": "AMBIGUOUS_DIACRITIC_RESTORATION",
+          "kind": "prose",
+          "status": "uncertain",
+          "blocking": true,
+          "alternatives": [
+            "bức",
+            "bc"
+          ]
+        },
+        {
+          "text": "A.18m×27m.",
+          "start": 354,
+          "end": 364,
+          "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+          "kind": "choice",
+          "status": "uncertain",
+          "blocking": false,
+          "alternatives": [
+            "A.18m×27m",
+            "A.1Iãämx27m",
+            "A.18mx27m"
+          ]
+        },
+        {
+          "text": "16m×24m.",
+          "start": 368,
+          "end": 376,
+          "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+          "kind": "choice",
+          "status": "uncertain",
+          "blocking": false,
+          "alternatives": [
+            "16m×24m",
+            "lómx24m",
+            "l6mx24m"
+          ]
+        },
+        {
+          "text": "C.12m×40,5m.",
+          "start": 377,
+          "end": 389,
+          "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+          "kind": "choice",
+          "status": "uncertain",
+          "blocking": false,
+          "alternatives": [
+            "C.12m×40,5m",
+            "Œ.I2mx40,5m",
+            "C.12m~x40,5m"
+          ]
+        },
+        {
+          "text": "×54m.",
+          "start": 406,
+          "end": 411,
+          "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+          "kind": "choice",
+          "status": "uncertain",
+          "blocking": false,
+          "alternatives": [
+            "×54m",
+            "x54m"
+          ]
+        },
+        {
+          "text": "1n",
+          "start": 390,
+          "end": 392,
+          "reason": "MATH_TOKEN_DISAGREEMENT",
+          "kind": "choice",
+          "status": "uncertain",
+          "blocking": false,
+          "alternatives": [
+            "1n",
+            "ln",
+            "lex"
+          ]
+        },
+        {
+          "text": "(x",
+          "start": 393,
+          "end": 395,
+          "reason": "MATH_TOKEN_DISAGREEMENT",
+          "kind": "choice",
+          "status": "uncertain",
+          "blocking": false,
+          "alternatives": [
+            "(x",
+            "(cid::x",
+            "if"
+          ]
+        },
+        {
+          "text": "+",
+          "start": 396,
+          "end": 397,
+          "reason": "MATH_TOKEN_DISAGREEMENT",
+          "kind": "choice",
+          "status": "uncertain",
+          "blocking": false,
+          "alternatives": [
+            "+",
+            "c",
+            "|"
+          ]
+        },
+        {
+          "text": "3)",
+          "start": 398,
+          "end": 400,
+          "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+          "kind": "choice",
+          "status": "uncertain",
+          "blocking": false,
+          "alternatives": [
+            "3)",
+            ">\\"
+          ]
+        }
+      ],
+      "elapsed_ms": 2931.5245999969193,
+      "timing": {
+        "ocr_ms": 2357.94,
+        "ocr_cached": false,
+        "cold_worker": false,
+        "reconcile_and_reread_ms": 459.63,
+        "reread_ms": 263.24,
+        "total_ms": 2817.57
+      },
+      "low_quality": false,
+      "classification": "PRINTED",
+      "reference_scope": "TARGET_QUESTION_PROSE_AND_CHOICES_EXCLUDING_DIAGRAM_LABELS_PAGE_FOOTERS_AND_ADJACENT_CROPPED_FRAGMENTS",
+      "scores_against_unverified_reference": {
+        "cer": 0.0898,
+        "wer": 0.2872,
+        "vietnamese_word_accuracy": 0.7128,
+        "reference_characters": 412,
+        "character_edits": 37,
+        "math_token_exact_sequence": false,
+        "math_token_matches": 12,
+        "math_token_precision": 0.7058823529411765,
+        "math_token_recall": 0.6666666666666666,
+        "math_token_reference_count": 18,
+        "math_token_prediction_count": 17,
+        "full_statement_exact_fidelity": false
+      },
+      "engine_scores_against_unverified_reference": {
+        "tesseract": {
+          "cer": 0.0777,
+          "wer": 0.1596,
+          "vietnamese_word_accuracy": 0.8404,
+          "reference_characters": 412,
+          "character_edits": 32,
+          "math_token_exact_sequence": false,
+          "math_token_matches": 14,
+          "math_token_precision": 0.7777777777777778,
+          "math_token_recall": 0.7777777777777778,
+          "math_token_reference_count": 18,
+          "math_token_prediction_count": 18,
+          "full_statement_exact_fidelity": false
+        },
+        "rapidocr": {
+          "cer": 0.1432,
+          "wer": 0.5532,
+          "vietnamese_word_accuracy": 0.4468,
+          "reference_characters": 412,
+          "character_edits": 59,
+          "math_token_exact_sequence": false,
+          "math_token_matches": 12,
+          "math_token_precision": 0.7058823529411765,
+          "math_token_recall": 0.6666666666666666,
+          "math_token_reference_count": 18,
+          "math_token_prediction_count": 17,
+          "full_statement_exact_fidelity": false
+        }
+      },
+      "critical_fact_recovery_proxy": [
+        {
+          "reference": "1458m²",
+          "found_exactly": true
+        },
+        {
+          "reference": "chiều cao cố định",
+          "found_exactly": false
+        },
+        {
+          "reference": "ba phòng hình chữ nhật",
+          "found_exactly": false
+        },
+        {
+          "reference": "kích thước như nhau",
+          "found_exactly": true
+        }
+      ]
+    },
+    {
+      "case_id": "new_vmmu_full_r446",
+      "partition": "frozen_external_evaluation",
+      "sha256": "ee5d1a359cc66add7dabcef0555209d4b8bf5cb4093a6ba089df1fa9a1c4cf2f",
+      "ocr_text": "Câu 21. Cho hình chóp S.ABC có SA ⊥(ABC), SA = 2 . Tam giác ABC vuông cân tại A, BC = 2√2. Gọi M là trung điểm của AB (tham khảo hình vẽ). Khoảng cách từ M đến mặt phẳng (SBC) bằng\nA.2√3.",
+      "extraction_verified": false,
+      "blocking_reasons": [
+        "UNCERTAIN_SPANS",
+        "DIAGRAM_FACTS_UNVERIFIED"
+      ],
+      "diagram": {
+        "figure_bboxes": [
+          [
+            945,
+            209,
+            1598,
+            722
+          ],
+          [
+            759,
+            837,
+            946,
+            966
+          ],
+          [
+            1271,
+            837,
+            1443,
+            966
+          ],
+          [
+            1798,
+            837,
+            1970,
+            966
+          ]
+        ],
+        "tokens": [
+          {
+            "text": "S",
+            "bbox": [
+              1075,
+              212,
+              1107,
+              249
+            ],
+            "reader": "rapidocr",
+            "in_figure_block": true
+          },
+          {
+            "text": "C",
+            "bbox": [
+              1564,
+              544,
+              1599,
+              580
+            ],
+            "reader": "rapidocr",
+            "in_figure_block": true
+          },
+          {
+            "text": "M",
+            "bbox": [
+              1025,
+              604,
+              1075,
+              648
+            ],
+            "reader": "rapidocr",
+            "in_figure_block": true
+          },
+          {
+            "text": "B",
+            "bbox": [
+              939,
+              658,
+              976,
+              700
+            ],
+            "reader": "rapidocr",
+            "in_figure_block": true
+          },
+          {
+            "text": "2√3",
+            "bbox": [
+              814,
+              822,
+              929,
+              907
+            ],
+            "reader": "rapidocr",
+            "in_figure_block": true
+          },
+          {
+            "text": "√3",
+            "bbox": [
+              1340,
+              823,
+              1426,
+              907
+            ],
+            "reader": "rapidocr",
+            "in_figure_block": true
+          },
+          {
+            "text": "√3",
+            "bbox": [
+              1864,
+              826,
+              1945,
+              905
+            ],
+            "reader": "rapidocr",
+            "in_figure_block": true
+          },
+          {
+            "text": "B.",
+            "bbox": [
+              750,
+              871,
+              815,
+              929
+            ],
+            "reader": "rapidocr",
+            "in_figure_block": true
+          },
+          {
+            "text": "C.",
+            "bbox": [
+              1275,
+              872,
+              1335,
+              927
+            ],
+            "reader": "rapidocr",
+            "in_figure_block": true
+          },
+          {
+            "text": "D.",
+            "bbox": [
+              1794,
+              875,
+              1855,
+              927
+            ],
+            "reader": "rapidocr",
+            "in_figure_block": true
+          },
+          {
+            "text": "3",
+            "bbox": [
+              851,
+              913,
+              892,
+              965
+            ],
+            "reader": "rapidocr",
+            "in_figure_block": true
+          },
+          {
+            "text": "3",
+            "bbox": [
+              1361,
+              913,
+              1404,
+              965
+            ],
+            "reader": "rapidocr",
+            "in_figure_block": true
+          },
+          {
+            "text": "2",
+            "bbox": [
+              1882,
+              913,
+              1928,
+              967
+            ],
+            "reader": "rapidocr",
+            "in_figure_block": true
+          }
+        ],
+        "classification": "DIAGRAM_REFERENCED_BY_TEXT",
+        "blocking": true
+      },
+      "review_spans": [
+        {
+          "text": "⊥(ABC),",
+          "start": 34,
+          "end": 41,
+          "reason": "RELATION_SYMBOL_DISAGREEMENT",
+          "kind": "math",
+          "status": "uncertain",
+          "blocking": true,
+          "alternatives": [
+            "⊥(ABC)",
+            "(48C)",
+            "L(ABC)",
+            "1(ABC),|"
+          ]
+        },
+        {
+          "text": "=",
+          "start": 45,
+          "end": 46,
+          "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+          "kind": "math",
+          "status": "uncertain",
+          "blocking": true,
+          "alternatives": [
+            "=",
+            "—"
+          ]
+        },
+        {
+          "text": "2",
+          "start": 47,
+          "end": 48,
+          "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+          "kind": "math",
+          "status": "uncertain",
+          "blocking": true,
+          "alternatives": [
+            "2",
+            "Ds"
+          ]
+        },
+        {
+          "text": "2√2.",
+          "start": 86,
+          "end": 90,
+          "reason": "RADICAL_DISAGREEMENT",
+          "kind": "math",
+          "status": "uncertain",
+          "blocking": true,
+          "alternatives": [
+            "2√2",
+            "242",
+            "2\\√2",
+            "2/2"
+          ]
+        },
+        {
+          "text": "(SBC)",
+          "start": 170,
+          "end": 175,
+          "reason": "MATH_TOKEN_DISAGREEMENT",
+          "kind": "math",
+          "status": "uncertain",
+          "blocking": true,
+          "alternatives": [
+            "(SBC)",
+            "(S#C)",
+            "(SsBC)",
+            "(SBC)|"
+          ]
+        },
+        {
+          "text": "A.2√3.",
+          "start": 181,
+          "end": 187,
+          "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+          "kind": "choice",
+          "status": "uncertain",
+          "blocking": false,
+          "alternatives": [
+            "A.2√3",
+            "A.243",
+            "A.23"
+          ]
+        }
+      ],
+      "elapsed_ms": 2968.618899998546,
+      "timing": {
+        "ocr_ms": 2351.1,
+        "ocr_cached": false,
+        "cold_worker": false,
+        "reconcile_and_reread_ms": 492.49,
+        "reread_ms": 439.64,
+        "total_ms": 2843.59
+      },
+      "low_quality": false,
+      "classification": "PRINTED",
+      "reference_scope": "TARGET_QUESTION_PROSE_AND_CHOICES_EXCLUDING_DIAGRAM_LABELS_PAGE_FOOTERS_AND_ADJACENT_CROPPED_FRAGMENTS",
+      "scores_against_unverified_reference": {
+        "cer": 0.1435,
+        "wer": 0.2353,
+        "vietnamese_word_accuracy": 0.7647,
+        "reference_characters": 216,
+        "character_edits": 31,
+        "math_token_exact_sequence": false,
+        "math_token_matches": 22,
+        "math_token_precision": 0.9565217391304348,
+        "math_token_recall": 0.6470588235294118,
+        "math_token_reference_count": 34,
+        "math_token_prediction_count": 23,
+        "full_statement_exact_fidelity": false
+      },
+      "engine_scores_against_unverified_reference": {
+        "tesseract": {
+          "cer": 0.213,
+          "wer": 0.4118,
+          "vietnamese_word_accuracy": 0.5882,
+          "reference_characters": 216,
+          "character_edits": 46,
+          "math_token_exact_sequence": false,
+          "math_token_matches": 13,
+          "math_token_precision": 0.5,
+          "math_token_recall": 0.38235294117647056,
+          "math_token_reference_count": 34,
+          "math_token_prediction_count": 26,
+          "full_statement_exact_fidelity": false
+        },
+        "rapidocr": {
+          "cer": 0.1944,
+          "wer": 0.5686,
+          "vietnamese_word_accuracy": 0.4314,
+          "reference_characters": 216,
+          "character_edits": 42,
+          "math_token_exact_sequence": false,
+          "math_token_matches": 32,
+          "math_token_precision": 0.8648648648648649,
+          "math_token_recall": 0.9411764705882353,
+          "math_token_reference_count": 34,
+          "math_token_prediction_count": 37,
+          "full_statement_exact_fidelity": false
+        }
+      },
+      "critical_fact_recovery_proxy": [
+        {
+          "reference": "S.ABC",
+          "found_exactly": true
+        },
+        {
+          "reference": "SA ⊥ (ABC)",
+          "found_exactly": true
+        },
+        {
+          "reference": "SA = 2",
+          "found_exactly": true
+        },
+        {
+          "reference": "vuông cân tại A",
+          "found_exactly": true
+        },
+        {
+          "reference": "BC = 2√2",
+          "found_exactly": true
+        },
+        {
+          "reference": "M là trung điểm của AB",
+          "found_exactly": true
+        },
+        {
+          "reference": "mặt phẳng (SBC)",
+          "found_exactly": true
+        }
+      ]
+    },
+    {
+      "case_id": "new_vmmu_full_r448",
+      "partition": "frozen_external_evaluation",
+      "sha256": "f6942e50615792a7d71b158e04675c8b91905ddf4e04370a48ffff033e8fad6d",
+      "ocr_text": "Câu 44. Một xe bốn cho nước có bốn nước gồm hai nửa hình cầu đường kính 18 dm và một hình trụ có chiêu cao 36 dm (như hình vẽ). Thể tích của bốn đã cho bằng\nA.9216πdm³. C. 3888πdm³. D. 16π/243 điểm. 5/6 - Mã đề 101",
+      "extraction_verified": false,
+      "blocking_reasons": [
+        "UNCERTAIN_SPANS",
+        "DIAGRAM_FACTS_UNVERIFIED",
+        "UNALIGNED_SECOND_READER_TEXT"
+      ],
+      "diagram": {
+        "figure_bboxes": [
+          [
+            516,
+            179,
+            1123,
+            491
+          ],
+          [
+            612,
+            513,
+            883,
+            610
+          ]
+        ],
+        "tokens": [
+          {
+            "text": "18dm",
+            "bbox": [
+              767,
+              266,
+              853,
+              306
+            ],
+            "reader": "rapidocr",
+            "in_figure_block": true
+          },
+          {
+            "text": "36dm",
+            "bbox": [
+              774,
+              448,
+              863,
+              488
+            ],
+            "reader": "rapidocr",
+            "in_figure_block": true
+          },
+          {
+            "text": "1024π",
+            "bbox": [
+              669,
+              504,
+              797,
+              559
+            ],
+            "reader": "rapidocr",
+            "in_figure_block": true
+          },
+          {
+            "text": "B.",
+            "bbox": [
+              605,
+              532,
+              665,
+              585
+            ],
+            "reader": "rapidocr",
+            "in_figure_block": true
+          },
+          {
+            "text": "-dm³.",
+            "bbox": [
+              784,
+              523,
+              885,
+              587
+            ],
+            "reader": "rapidocr",
+            "in_figure_block": true
+          },
+          {
+            "text": "9",
+            "bbox": [
+              716,
+              571,
+              750,
+              613
+            ],
+            "reader": "rapidocr",
+            "in_figure_block": true
+          }
+        ],
+        "classification": "DIAGRAM_REFERENCED_BY_TEXT",
+        "blocking": true
+      },
+      "review_spans": [
+        {
+          "text": "chiêu",
+          "start": 97,
+          "end": 102,
+          "reason": "AMBIGUOUS_DIACRITIC_RESTORATION",
+          "kind": "prose",
+          "status": "uncertain",
+          "blocking": true,
+          "alternatives": [
+            "chiêu",
+            "chiu"
+          ]
+        },
+        {
+          "text": "16π/243",
+          "start": 185,
+          "end": 192,
+          "reason": "FRACTION_STRUCTURE_LOSS",
+          "kind": "choice",
+          "status": "uncertain",
+          "blocking": false,
+          "alternatives": [
+            "16π/243",
+            "16π 243"
+          ]
+        },
+        {
+          "text": "A.9216πdm³.",
+          "start": 157,
+          "end": 168,
+          "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+          "kind": "choice",
+          "status": "uncertain",
+          "blocking": false,
+          "alternatives": [
+            "A.9216πdm³",
+            "A.9216zdm'",
+            "A.92167dm'"
+          ]
+        },
+        {
+          "text": "C.",
+          "start": 169,
+          "end": 171,
+          "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+          "kind": "choice",
+          "status": "uncertain",
+          "blocking": false,
+          "alternatives": [
+            "C",
+            "Cs"
+          ]
+        },
+        {
+          "text": "3888πdm³.",
+          "start": 172,
+          "end": 181,
+          "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+          "kind": "choice",
+          "status": "uncertain",
+          "blocking": false,
+          "alternatives": [
+            "3888πdm³",
+            "38887dm'"
+          ]
+        }
+      ],
+      "elapsed_ms": 2880.2644000024884,
+      "timing": {
+        "ocr_ms": 2389.54,
+        "ocr_cached": false,
+        "cold_worker": false,
+        "reconcile_and_reread_ms": 279.78,
+        "reread_ms": 163.33,
+        "total_ms": 2669.32
+      },
+      "low_quality": false,
+      "classification": "PRINTED",
+      "reference_scope": "TARGET_QUESTION_PROSE_AND_CHOICES_EXCLUDING_DIAGRAM_LABELS_PAGE_FOOTERS_AND_ADJACENT_CROPPED_FRAGMENTS",
+      "scores_against_unverified_reference": {
+        "cer": 0.1898,
+        "wer": 0.34,
+        "vietnamese_word_accuracy": 0.66,
+        "reference_characters": 216,
+        "character_edits": 41,
+        "math_token_exact_sequence": false,
+        "math_token_matches": 11,
+        "math_token_precision": 0.6875,
+        "math_token_recall": 0.6875,
+        "math_token_reference_count": 16,
+        "math_token_prediction_count": 16,
+        "full_statement_exact_fidelity": false
+      },
+      "engine_scores_against_unverified_reference": {
+        "tesseract": {
+          "cer": 0.2593,
+          "wer": 0.38,
+          "vietnamese_word_accuracy": 0.62,
+          "reference_characters": 216,
+          "character_edits": 56,
+          "math_token_exact_sequence": false,
+          "math_token_matches": 8,
+          "math_token_precision": 0.6153846153846154,
+          "math_token_recall": 0.5,
+          "math_token_reference_count": 16,
+          "math_token_prediction_count": 13,
+          "full_statement_exact_fidelity": false
+        },
+        "rapidocr": {
+          "cer": 0.3056,
+          "wer": 0.62,
+          "vietnamese_word_accuracy": 0.38,
+          "reference_characters": 216,
+          "character_edits": 66,
+          "math_token_exact_sequence": false,
+          "math_token_matches": 14,
+          "math_token_precision": 0.6666666666666666,
+          "math_token_recall": 0.875,
+          "math_token_reference_count": 16,
+          "math_token_prediction_count": 21,
+          "full_statement_exact_fidelity": false
+        }
+      },
+      "critical_fact_recovery_proxy": [
+        {
+          "reference": "hai nửa hình cầu",
+          "found_exactly": true
+        },
+        {
+          "reference": "đường kính 18 dm",
+          "found_exactly": true
+        },
+        {
+          "reference": "hình trụ",
+          "found_exactly": true
+        },
+        {
+          "reference": "chiều cao 36 dm",
+          "found_exactly": false
+        }
+      ]
+    }
+  ]
+}

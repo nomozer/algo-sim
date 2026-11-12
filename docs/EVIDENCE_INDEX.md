@@ -1,5 +1,20 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = REAL_IMAGE_OCR_VISION_COMPARATIVE_ACCEPTANCE
+
+RUN_ID = real-image-ocr-vision-comparative-acceptance
+REPORT = docs/evaluation/geometry/runs/real-image-ocr-vision-comparative-acceptance/AXO_REAL_IMAGE_OCR_VISION_COMPARATIVE_ACCEPTANCE_REPORT.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/real-image-ocr-vision-comparative-acceptance/
+START_BASE = 6bb22fa3bb183ad28cdf1395c99e5eb375fac97c
+CODE_COMMIT = 2969e9e76; 7b1700214
+CLASSIFICATION = OFFLINE_IMAGE_INPUT_EVALUATION_WITH_LIMITS; DECISION_PENDING_LIVE_EVIDENCE; current regression and candidate state are in this run's receipts, never inherited
+PRODUCT_CHANGE = YES (worker lifecycle, worded dimension comparison, Unicode spans, confirmation invalidation, asynchronous session guard, reviewed label; no geometry expansion)
+MODEL_REQUEST_COUNT = 0
+VERIFICATION = baseline_integrity.json; prior_metric_reconciliation.json; full_regression_summary.json; new_image_corpus_manifest.json; local_ocr_evaluation.json; real_image_to_scene3d_acceptance.json; frontend_browser_e2e.json; resource_measurement_correction.json; run.json
+CORRECTS = image-first-ocr-verified-geometry report CER0.0110 (recomputed0.1135 on five polyhedral cases,0.1040 on all12); misleading independent_holdout labels after exposure; unsupported full-regression and zero-corruption claims; active-RAM interpretation. Original29 artifacts unchanged.
+CORRECTED_BY = NONE
+LIMITATIONS = 8 relevant images (2 development/6 frozen external), unverified agent references; new-corpus0 served; live Vision NOT_AUTHORIZED; real students/H1/physical-low-end NOT_MEASURED. Precursor concurrent5/20 HTTP500 retained, precise cause UNKNOWN; controlled SQLite mechanism fixed, bounded follow-up10/10 does not prove production-load reliability.
+
 **Git state / recovery update, 2026-11-07:** see [CURRENT_STATE — repository closure](CURRENT_STATE.md#repository-closure--2026-11-07).
 Retired branch names now have local `refs/archive/repository-closure/` references and a verified private self-contained bundle.
 Existing evidence and historical reports below are unchanged; no research result is reinterpreted by this Git-state update.
@@ -15,7 +30,7 @@ PRODUCT_CHANGE = YES (backend: local_ocr_worker.py, local_ocr.py, ocr_lexicon.py
 MODEL_REQUEST_COUNT = 0
 VERIFICATION = ALGOSIM_IMAGE_FIRST_OCR_VERIFIED_GEOMETRY_REPORT.md; run.json; baseline_candidate_integrity.json; external16_image_diagnostics.json; ocr_failure_root_causes.json; region_aware_ocr_receipt.json; math_layout_recognition_receipt.json; dual_ocr_reconciliation_receipt.json; fidelity_false_rejection_analysis.json; printed_ocr_before_after.json; handwritten_ocr_diagnostic.json; diagram_dependency_audit.json; vision_fallback_offline_receipt.json; vision_live_readiness.json; student_confirmation_flow_receipt.json; user_correction_cache_invalidation.json; real_image_to_scene3d_acceptance.json; new_external_image_evaluation.json; ocr_resource_performance.json; frontend_browser_e2e.json; full_regression_summary.json; tools/evaluate_image_first_ocr.py; tools/generate_all_receipts.py; tools/new_external_catalog.py; tools/e2e_browser_image_first.mjs; backend/tests/test_image_first_local_ocr.py (18/18 passed); frontend/src/components/photo-span-review.test.tsx (4/4 passed); Playwright headless Chromium E2E (6/6 passed at 100% & 110% zoom, 0 console/page errors); replay_demo_cases.py (5/5 + 1/1 PASS); audit_demo_crash_surface.py (6/6 PASS); audit_docs_information_architecture.py PASS; check_publication_safety.py PASS; freeze_evaluation_candidate.py --verify MATCH
 CORRECTS = NONE
-CORRECTED_BY = NONE
+CORRECTED_BY = real-image-ocr-vision-comparative-acceptance (prior_metric_reconciliation.json; original report and receipts preserved)
 
 ## WAVE_ID = FORMAL_CORRECTNESS_REAL_WORLD_ACCEPTANCE
 

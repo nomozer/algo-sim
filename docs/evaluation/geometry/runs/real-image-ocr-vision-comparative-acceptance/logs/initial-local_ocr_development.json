@@ -1,0 +1,381 @@
+{
+  "run_id": "real-image-ocr-vision-comparative-acceptance",
+  "head": "6bb22fa3bb183ad28cdf1395c99e5eb375fac97c",
+  "measured_system": [
+    "4ab43853edc030beda13ef017d4b6c51cf24127a0a41dd9149e640f4cffdbce3",
+    115
+  ],
+  "allow_live_ai": 0,
+  "ground_truth_authority": "AGENT_TRANSCRIBED_UNVERIFIED",
+  "independent_h1": "NOT_MEASURED",
+  "partition": "development",
+  "cases": [
+    {
+      "case_id": "new_vmmu_full_r327",
+      "partition": "development",
+      "sha256": "344fd436dc34a57db4a311179f3f2c2c5fc8fce5d6faa299084912f404134f12",
+      "ocr_text": "câu hình nào dưới đây không phải hình đa: diện\nC.",
+      "extraction_verified": false,
+      "blocking_reasons": [
+        "DIAGRAM_FACTS_UNVERIFIED"
+      ],
+      "diagram": {
+        "figure_bboxes": [
+          [
+            1442,
+            116,
+            1691,
+            361
+          ],
+          [
+            1907,
+            116,
+            2249,
+            361
+          ],
+          [
+            821,
+            128,
+            1148,
+            373
+          ],
+          [
+            279,
+            139,
+            528,
+            338
+          ]
+        ],
+        "tokens": [
+          {
+            "text": "A.",
+            "bbox": [
+              271,
+              280,
+              342,
+              338
+            ],
+            "reader": "rapidocr",
+            "in_figure_block": true
+          },
+          {
+            "text": "B.",
+            "bbox": [
+              811,
+              319,
+              880,
+              380
+            ],
+            "reader": "rapidocr",
+            "in_figure_block": true
+          },
+          {
+            "text": "D.",
+            "bbox": [
+              1898,
+              308,
+              1969,
+              369
+            ],
+            "reader": "rapidocr",
+            "in_figure_block": true
+          }
+        ],
+        "classification": "DIAGRAM_LABELS_UNMATCHED",
+        "blocking": true
+      },
+      "review_spans": [],
+      "elapsed_ms": 6922.5640000004205,
+      "timing": {
+        "ocr_ms": 6365.06,
+        "ocr_cached": false,
+        "cold_worker": true,
+        "reconcile_and_reread_ms": 372.66,
+        "reread_ms": 353.23,
+        "total_ms": 6737.72
+      },
+      "low_quality": false,
+      "classification": "PRINTED",
+      "reference_scope": "TARGET_QUESTION_PROSE_AND_CHOICES_EXCLUDING_DIAGRAM_LABELS_PAGE_FOOTERS_AND_ADJACENT_CROPPED_FRAGMENTS",
+      "scores_against_unverified_reference": {
+        "cer": 0.2969,
+        "wer": 0.5625,
+        "vietnamese_word_accuracy": 0.4375,
+        "reference_characters": 64,
+        "character_edits": 19,
+        "math_token_exact_sequence": false,
+        "math_token_matches": 1,
+        "math_token_precision": 1.0,
+        "math_token_recall": 0.14285714285714285,
+        "math_token_reference_count": 7,
+        "math_token_prediction_count": 1,
+        "full_statement_exact_fidelity": false
+      },
+      "engine_scores_against_unverified_reference": {
+        "tesseract": {
+          "cer": 0.1875,
+          "wer": 0.25,
+          "vietnamese_word_accuracy": 0.75,
+          "reference_characters": 64,
+          "character_edits": 12,
+          "math_token_exact_sequence": false,
+          "math_token_matches": 3,
+          "math_token_precision": 1.0,
+          "math_token_recall": 0.42857142857142855,
+          "math_token_reference_count": 7,
+          "math_token_prediction_count": 3,
+          "full_statement_exact_fidelity": false
+        },
+        "rapidocr": {
+          "cer": 0.75,
+          "wer": 0.75,
+          "vietnamese_word_accuracy": 0.25,
+          "reference_characters": 64,
+          "character_edits": 48,
+          "math_token_exact_sequence": false,
+          "math_token_matches": 4,
+          "math_token_precision": 1.0,
+          "math_token_recall": 0.5714285714285714,
+          "math_token_reference_count": 7,
+          "math_token_prediction_count": 4,
+          "full_statement_exact_fidelity": false
+        }
+      },
+      "critical_fact_recovery_proxy": [
+        {
+          "reference": "không phải là hình đa diện",
+          "found_exactly": false
+        }
+      ]
+    },
+    {
+      "case_id": "new_vmmu_full_r450",
+      "partition": "development",
+      "sha256": "aaffc472730c76dbd18b2d63d5f0432e96048ffe3e7a2ab4edd08eb88c7d81c2",
+      "ocr_text": "Câu 32. Người ta ghép 5 khối lập phương cạnh a để được khối hộp chữ thập (tham khảo hình bên dưới). Tính diện tích toàn phần s,„ của khối chủ thập đó.\nA. Sp=30a2. B. 5, =12a2. C. S = 20a2. D. Stp =22a2.",
+      "extraction_verified": false,
+      "blocking_reasons": [
+        "UNCERTAIN_SPANS",
+        "DIAGRAM_FACTS_UNVERIFIED"
+      ],
+      "diagram": {
+        "figure_bboxes": [
+          [
+            908,
+            166,
+            1722,
+            585
+          ]
+        ],
+        "tokens": [],
+        "classification": "DIAGRAM_REFERENCED_BY_TEXT",
+        "blocking": true
+      },
+      "review_spans": [
+        {
+          "text": "s,„",
+          "start": 125,
+          "end": 128,
+          "reason": "NOT_IN_LEXICON",
+          "kind": "prose",
+          "status": "uncertain",
+          "blocking": true,
+          "alternatives": [
+            "s,„",
+            "sStp"
+          ]
+        },
+        {
+          "text": "Sp=30a2.",
+          "start": 154,
+          "end": 162,
+          "reason": "PRIME_DISAGREEMENT",
+          "kind": "choice",
+          "status": "uncertain",
+          "blocking": false,
+          "alternatives": [
+            "Sp=30a2",
+            "S„=302”",
+            "Sµ=30a2",
+            "J.=30a'"
+          ]
+        },
+        {
+          "text": "5,",
+          "start": 166,
+          "end": 168,
+          "reason": "NOT_IN_LEXICON",
+          "kind": "choice",
+          "status": "uncertain",
+          "blocking": false,
+          "alternatives": [
+            "5,",
+            "Sp"
+          ]
+        },
+        {
+          "text": "=12a2.",
+          "start": 169,
+          "end": 175,
+          "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+          "kind": "choice",
+          "status": "uncertain",
+          "blocking": false,
+          "alternatives": [
+            "=12a2",
+            "=122",
+            "—12a'"
+          ]
+        },
+        {
+          "text": "C.",
+          "start": 176,
+          "end": 178,
+          "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+          "kind": "choice",
+          "status": "uncertain",
+          "blocking": false,
+          "alternatives": [
+            "C",
+            "a"
+          ]
+        },
+        {
+          "text": "S",
+          "start": 179,
+          "end": 180,
+          "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+          "kind": "choice",
+          "status": "uncertain",
+          "blocking": false,
+          "alternatives": [
+            "S",
+            "Sy"
+          ]
+        },
+        {
+          "text": "=",
+          "start": 181,
+          "end": 182,
+          "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+          "kind": "choice",
+          "status": "uncertain",
+          "blocking": false,
+          "alternatives": [
+            "=",
+            "—"
+          ]
+        },
+        {
+          "text": "20a2.",
+          "start": 183,
+          "end": 188,
+          "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+          "kind": "choice",
+          "status": "uncertain",
+          "blocking": false,
+          "alternatives": [
+            "20a2",
+            "20a'"
+          ]
+        },
+        {
+          "text": "Stp",
+          "start": 192,
+          "end": 195,
+          "reason": "NOT_IN_LEXICON",
+          "kind": "choice",
+          "status": "uncertain",
+          "blocking": false,
+          "alternatives": [
+            "Stp"
+          ]
+        },
+        {
+          "text": "=22a2.",
+          "start": 196,
+          "end": 202,
+          "reason": "PRIME_DISAGREEMENT",
+          "kind": "choice",
+          "status": "uncertain",
+          "blocking": false,
+          "alternatives": [
+            "=22a2",
+            "=222",
+            "—22a'"
+          ]
+        }
+      ],
+      "elapsed_ms": 3615.7603000028757,
+      "timing": {
+        "ocr_ms": 3057.85,
+        "ocr_cached": false,
+        "cold_worker": false,
+        "reconcile_and_reread_ms": 439.49,
+        "reread_ms": 338.18,
+        "total_ms": 3497.34
+      },
+      "low_quality": false,
+      "classification": "PRINTED",
+      "reference_scope": "TARGET_QUESTION_PROSE_AND_CHOICES_EXCLUDING_DIAGRAM_LABELS_PAGE_FOOTERS_AND_ADJACENT_CROPPED_FRAGMENTS",
+      "scores_against_unverified_reference": {
+        "cer": 0.1,
+        "wer": 0.2653,
+        "vietnamese_word_accuracy": 0.7347,
+        "reference_characters": 210,
+        "character_edits": 21,
+        "math_token_exact_sequence": false,
+        "math_token_matches": 16,
+        "math_token_precision": 0.7619047619047619,
+        "math_token_recall": 0.8888888888888888,
+        "math_token_reference_count": 18,
+        "math_token_prediction_count": 21,
+        "full_statement_exact_fidelity": false
+      },
+      "engine_scores_against_unverified_reference": {
+        "tesseract": {
+          "cer": 0.2429,
+          "wer": 0.4286,
+          "vietnamese_word_accuracy": 0.5714,
+          "reference_characters": 210,
+          "character_edits": 51,
+          "math_token_exact_sequence": false,
+          "math_token_matches": 8,
+          "math_token_precision": 0.36363636363636365,
+          "math_token_recall": 0.4444444444444444,
+          "math_token_reference_count": 18,
+          "math_token_prediction_count": 22,
+          "full_statement_exact_fidelity": false
+        },
+        "rapidocr": {
+          "cer": 0.1857,
+          "wer": 0.6531,
+          "vietnamese_word_accuracy": 0.3469,
+          "reference_characters": 210,
+          "character_edits": 39,
+          "math_token_exact_sequence": false,
+          "math_token_matches": 18,
+          "math_token_precision": 0.8181818181818182,
+          "math_token_recall": 1.0,
+          "math_token_reference_count": 18,
+          "math_token_prediction_count": 22,
+          "full_statement_exact_fidelity": false
+        }
+      },
+      "critical_fact_recovery_proxy": [
+        {
+          "reference": "5 khối lập phương cạnh a",
+          "found_exactly": true
+        },
+        {
+          "reference": "diện tích toàn phần",
+          "found_exactly": true
+        },
+        {
+          "reference": "22a²",
+          "found_exactly": false
+        }
+      ]
+    }
+  ]
+}

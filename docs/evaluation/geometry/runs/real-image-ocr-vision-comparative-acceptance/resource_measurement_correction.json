@@ -1,0 +1,43 @@
+{
+  "run_id": "real-image-ocr-vision-comparative-acceptance",
+  "head": "7b170021451a86c56a2eebadcdd0f0f088fcc229",
+  "measured_system": [
+    "a068b6f6586c1b120bd8350dbe706f5681ab71fd7da57502c34f940140268921",
+    115
+  ],
+  "allow_live_ai": 0,
+  "ground_truth_authority": "AGENT_TRANSCRIBED_UNVERIFIED",
+  "independent_h1": "NOT_MEASURED",
+  "classification": "DERIVED_FROM_REFERENCED_MEASUREMENTS_NOT_A_NEW_MEASUREMENT",
+  "corrects": "ocr_worker_resource_profile.json::concurrent_uploads.failure_cause",
+  "original_observation": "5/20 HTTP500 on the measured precursor4ab43853; this observation is retained",
+  "original_causal_attribution": "UNSUPPORTED: original failure_surface.json has no SQLite exception event",
+  "source_mechanism": "Controlled SQLite-lock regression test failed with sqlite3.OperationalError when the synchronous session guard blocked event-loop cleanup; moved guard to existing run_in_threadpool; test passes",
+  "exact_cause_of_original_5xx": "UNKNOWN: current bounded HTTP reproduction did not reproduce the original failures",
+  "subsequent_before_fix_http_statuses": [
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200
+  ],
+  "subsequent_after_fix_http_statuses": [
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200
+  ],
+  "causal_improvement_claim": false,
+  "final_load_acceptance": "LIMITED:10/10 on bounded follow-up; longer concurrent-load reliability remains unproved"
+}

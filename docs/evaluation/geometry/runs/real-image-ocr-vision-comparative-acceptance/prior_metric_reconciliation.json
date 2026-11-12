@@ -1,0 +1,1164 @@
+{
+  "schema": "algosim-prior-metric-reconciliation/1",
+  "run_id": "real-image-ocr-vision-comparative-acceptance",
+  "prior_run_id": "image-first-ocr-verified-geometry",
+  "baseline_commit": "6bb22fa3bb183ad28cdf1395c99e5eb375fac97c",
+  "classification": "OFFLINE_PRIOR_EVIDENCE_RECOMPUTATION_CORRECTION_LAYER",
+  "allow_live_ai": 0,
+  "provider_calls": 0,
+  "independent_h1_validation": "NOT_MEASURED",
+  "formula": {
+    "source": "tools/evaluate_image_first_ocr.py::_cer",
+    "normalization": "re.sub(r'\\s+', ' ', text).strip() independently on prediction and reference",
+    "distance": "Unicode codepoint Levenshtein; insertion/deletion/substitution cost 1; no transposition",
+    "denominator": "len(normalized ground_truth_text), including answer choices",
+    "case_rounding": "Python round(distance / denominator, 4)",
+    "summary": "round(statistics.median(per-case rounded CER), 4)",
+    "empty_reference_historical_behavior": "returns 0.0 even for nonempty hypothesis; no empty references in these 12 cases",
+    "no_other_normalization": [
+      "no case folding",
+      "no accent removal",
+      "no Unicode normalization",
+      "no prime folding",
+      "no answer-choice stripping"
+    ],
+    "original_function_extracted_with_ast_without_importing_evaluator": true,
+    "independent_distance_self_checks_passed": 8,
+    "additional_normalization_self_checks_passed": 4
+  },
+  "filter": {
+    "all_12": "all cases from prior new_external_image_evaluation.json, joined by image_id to NEW_EXTERNAL_ITEMS",
+    "polyhedral_5": "the first five cases as used by prior generate_all_receipts.py (new_ext_01 through new_ext_05)",
+    "polyhedral_image_ids": [
+      "new_ext_01_vmmu_full_r313",
+      "new_ext_02_vmmu_full_r351",
+      "new_ext_03_vmmu_full_r387",
+      "new_ext_04_vmmu_full_r403",
+      "new_ext_05_vmmu_full_r411"
+    ]
+  },
+  "recomputed_summary": {
+    "total_cases": 12,
+    "polyhedral_cases": 5,
+    "reconciled_cer_median_all_12": 0.104,
+    "reconciled_cer_median_polyhedral_5": 0.1135,
+    "receipt_summary": {
+      "source_dataset": "https://huggingface.co/datasets/anvo25/vmmu",
+      "license": "MIT",
+      "total_unseen_images": 12,
+      "polyhedral_3d_geometry_images": 5,
+      "curved_3d_solid_images": 3,
+      "planar_or_calculus_out_of_scope_images": 4,
+      "reconciled_cer_median_all_12": 0.104,
+      "reconciled_cer_median_polyhedral_5": 0.1135,
+      "wrong_served_count": 0,
+      "served_correct_polyhedral": [
+        "new_ext_01_vmmu_full_r313 ({'q1': '2a√57/19'}, 1 span edit AABC' -> ΔABC, 11 Scene3D objects, 0 continuity violations)"
+      ],
+      "geometry_capability_gap_or_missing_dimension_polyhedral": [
+        "new_ext_02_vmmu_full_r351 (PRIME_DISAGREEMENT caught AD -> A'D with alternative chip 'A\\'D'; LOCAL_PARSE_COMPLETE; Kernel refuses MISSING_DIMENSION because cube side length is omitted)",
+        "new_ext_03_vmmu_full_r387 (0 text edits on stem; GEOMETRY_CAPABILITY_GAP: 'có tất cả các cạnh bằng a' on right prism not accepted by registry.py regular_polygon)",
+        "new_ext_04_vmmu_full_r403 (0 text edits on stem; GEOMETRY_CAPABILITY_GAP: 'có tất cả các cạnh đều bằng a' on pyramid not accepted by registry.py regular_polygon)",
+        "new_ext_05_vmmu_full_r411 (0 text edits on stem; LOCAL_PARSE_COMPLETE; GEOMETRY_CAPABILITY_GAP: engine.py does not deduce legs of isosceles right triangle from hypotenuse AC = 2a)"
+      ],
+      "out_of_scope_correctly_refused_count": 7
+    },
+    "all_36_reader_case_cer_values_match_receipt": true,
+    "report_claimed_polyhedral_median": 0.011,
+    "report_claim_reproduced": false,
+    "resolution": "Use 0.1135 for the original evaluator's full-text 5-case median. Report values have no reconstructible derivation in committed evidence; do not reinterpret as a stem-only score."
+  },
+  "cases": [
+    {
+      "image_id": "new_ext_01_vmmu_full_r313",
+      "source_case_json_pointer": "/cases/0",
+      "ground_truth_source": "tools/new_external_catalog.py:NEW_EXTERNAL_ITEMS[0].ground_truth_text",
+      "ground_truth_status": "GROUND_TRUTH_UNVERIFIED",
+      "normalized_reference_sha256": "1910a7e10d3160a8c773b742a2953563541cf05a63f25debe46c0efbe2791c3d",
+      "normalized_reference_characters": 225,
+      "image_sha256_receipt": "18c0f3184ce216a897f0265b63be9e338bf0ec5b754b156fc9b80328cebbeaef",
+      "image_sha256_matches_catalog": true,
+      "identical_image_hash_in_external16_catalog": false,
+      "original_image_byte_revalidation": "NOT_MEASURED (this audit reads committed evidence only)",
+      "partition_claimed": "independent_holdout",
+      "partition_for_followup": "PRIOR_EXPOSED_DEVELOPMENT_REGRESSION",
+      "included_in_polyhedral_5": true,
+      "readers": {
+        "tesseract": {
+          "normalized_hypothesis_sha256": "935572a954d1f5caf9518ffa37a14baab26533a45a266bd863d7fc5d5aa6fb47",
+          "normalized_hypothesis_characters": 186,
+          "edit_distance": 63,
+          "cer_exact_ratio": "63/225",
+          "cer_unrounded": 0.28,
+          "cer_rounded_4dp": 0.28,
+          "receipt_cer": 0.28,
+          "matches_receipt": true
+        },
+        "rapidocr": {
+          "normalized_hypothesis_sha256": "9e2579b8e2b8c601c64eee8fa1f3362ac10bda42202d2c47c33cdec3d031ab3a",
+          "normalized_hypothesis_characters": 212,
+          "edit_distance": 54,
+          "cer_exact_ratio": "54/225",
+          "cer_unrounded": 0.24,
+          "cer_rounded_4dp": 0.24,
+          "receipt_cer": 0.24,
+          "matches_receipt": true
+        },
+        "reconciled_draft": {
+          "normalized_hypothesis_sha256": "e6b8dd3b9ca0984edd97d6b6145229cf331ad4978a7bbc905c09a83ae9ee8ece",
+          "normalized_hypothesis_characters": 199,
+          "edit_distance": 38,
+          "cer_exact_ratio": "38/225",
+          "cer_unrounded": 0.1688888888888889,
+          "cer_rounded_4dp": 0.1689,
+          "receipt_cer": 0.1689,
+          "matches_receipt": true
+        }
+      },
+      "report_table_cer": 0.0049
+    },
+    {
+      "image_id": "new_ext_02_vmmu_full_r351",
+      "source_case_json_pointer": "/cases/1",
+      "ground_truth_source": "tools/new_external_catalog.py:NEW_EXTERNAL_ITEMS[1].ground_truth_text",
+      "ground_truth_status": "GROUND_TRUTH_UNVERIFIED",
+      "normalized_reference_sha256": "dd161aed409ac9843eadda66bdd45fab3e0105256b294dcd591fe27e1ceae418",
+      "normalized_reference_characters": 141,
+      "image_sha256_receipt": "4ba88cdcc4b32c57bad80b721cd4b993ae7ae498bad13bfb330eaf7d6f52508a",
+      "image_sha256_matches_catalog": true,
+      "identical_image_hash_in_external16_catalog": false,
+      "original_image_byte_revalidation": "NOT_MEASURED (this audit reads committed evidence only)",
+      "partition_claimed": "independent_holdout",
+      "partition_for_followup": "PRIOR_EXPOSED_DEVELOPMENT_REGRESSION",
+      "included_in_polyhedral_5": true,
+      "readers": {
+        "tesseract": {
+          "normalized_hypothesis_sha256": "2d202d23fd93df3ee3f88029f29793aa6b8711fcab1935330f9447782f1996ac",
+          "normalized_hypothesis_characters": 137,
+          "edit_distance": 14,
+          "cer_exact_ratio": "14/141",
+          "cer_unrounded": 0.09929078014184398,
+          "cer_rounded_4dp": 0.0993,
+          "receipt_cer": 0.0993,
+          "matches_receipt": true
+        },
+        "rapidocr": {
+          "normalized_hypothesis_sha256": "66bb3e78f198211bbf43fa7db01eb5d5d0698ba01bd25c72d31470ecf2ae29b9",
+          "normalized_hypothesis_characters": 134,
+          "edit_distance": 14,
+          "cer_exact_ratio": "14/141",
+          "cer_unrounded": 0.09929078014184398,
+          "cer_rounded_4dp": 0.0993,
+          "receipt_cer": 0.0993,
+          "matches_receipt": true
+        },
+        "reconciled_draft": {
+          "normalized_hypothesis_sha256": "30749f54de3c6bfa4437bab2f06fc7600330312873ab40b7d93b495e2ef3ff25",
+          "normalized_hypothesis_characters": 132,
+          "edit_distance": 16,
+          "cer_exact_ratio": "16/141",
+          "cer_unrounded": 0.11347517730496454,
+          "cer_rounded_4dp": 0.1135,
+          "receipt_cer": 0.1135,
+          "matches_receipt": true
+        }
+      },
+      "report_table_cer": 0.0258
+    },
+    {
+      "image_id": "new_ext_03_vmmu_full_r387",
+      "source_case_json_pointer": "/cases/2",
+      "ground_truth_source": "tools/new_external_catalog.py:NEW_EXTERNAL_ITEMS[2].ground_truth_text",
+      "ground_truth_status": "GROUND_TRUTH_UNVERIFIED",
+      "normalized_reference_sha256": "8b7b75965377c486e789e61791eed84218b19255f92c618a1f3aed07bb03fe53",
+      "normalized_reference_characters": 204,
+      "image_sha256_receipt": "4404f15670d101e7eceaab75f2980340b747cdc93a64a75757d88f308abce934",
+      "image_sha256_matches_catalog": true,
+      "identical_image_hash_in_external16_catalog": false,
+      "original_image_byte_revalidation": "NOT_MEASURED (this audit reads committed evidence only)",
+      "partition_claimed": "independent_holdout",
+      "partition_for_followup": "PRIOR_EXPOSED_DEVELOPMENT_REGRESSION",
+      "included_in_polyhedral_5": true,
+      "readers": {
+        "tesseract": {
+          "normalized_hypothesis_sha256": "8fa5b16e869cbb49bdb1729a75dadda62535e38639718b14bd30c4f3e4c503d8",
+          "normalized_hypothesis_characters": 220,
+          "edit_distance": 57,
+          "cer_exact_ratio": "57/204",
+          "cer_unrounded": 0.27941176470588236,
+          "cer_rounded_4dp": 0.2794,
+          "receipt_cer": 0.2794,
+          "matches_receipt": true
+        },
+        "rapidocr": {
+          "normalized_hypothesis_sha256": "e6b81f26dd36369bc8703840ff3aa3778cd8b918ec486ad7848a261ea2cfd897",
+          "normalized_hypothesis_characters": 192,
+          "edit_distance": 44,
+          "cer_exact_ratio": "44/204",
+          "cer_unrounded": 0.21568627450980393,
+          "cer_rounded_4dp": 0.2157,
+          "receipt_cer": 0.2157,
+          "matches_receipt": true
+        },
+        "reconciled_draft": {
+          "normalized_hypothesis_sha256": "4ba9f893cf62359cef9107baa7720dfcf1a464a5ed003eb569ad4ad5b1db2b58",
+          "normalized_hypothesis_characters": 173,
+          "edit_distance": 33,
+          "cer_exact_ratio": "33/204",
+          "cer_unrounded": 0.16176470588235295,
+          "cer_rounded_4dp": 0.1618,
+          "receipt_cer": 0.1618,
+          "matches_receipt": true
+        }
+      },
+      "report_table_cer": 0.011
+    },
+    {
+      "image_id": "new_ext_04_vmmu_full_r403",
+      "source_case_json_pointer": "/cases/3",
+      "ground_truth_source": "tools/new_external_catalog.py:NEW_EXTERNAL_ITEMS[3].ground_truth_text",
+      "ground_truth_status": "GROUND_TRUTH_UNVERIFIED",
+      "normalized_reference_sha256": "90e02dd21aeaae54543a4a2116f748c8c889ea3ceca2b777a10eae0666942e53",
+      "normalized_reference_characters": 217,
+      "image_sha256_receipt": "ad2a92857d6d81e40c602b58b874d4ecf017af8773c12f7440503764826570f4",
+      "image_sha256_matches_catalog": true,
+      "identical_image_hash_in_external16_catalog": false,
+      "original_image_byte_revalidation": "NOT_MEASURED (this audit reads committed evidence only)",
+      "partition_claimed": "independent_holdout",
+      "partition_for_followup": "PRIOR_EXPOSED_DEVELOPMENT_REGRESSION",
+      "included_in_polyhedral_5": true,
+      "readers": {
+        "tesseract": {
+          "normalized_hypothesis_sha256": "882c1c99141f62f0af6e1bc54c883fc0e72d8e638ea6b372bb1359c0d2cefbfc",
+          "normalized_hypothesis_characters": 227,
+          "edit_distance": 23,
+          "cer_exact_ratio": "23/217",
+          "cer_unrounded": 0.10599078341013825,
+          "cer_rounded_4dp": 0.106,
+          "receipt_cer": 0.106,
+          "matches_receipt": true
+        },
+        "rapidocr": {
+          "normalized_hypothesis_sha256": "95d00abb8db0c3cd8443a87ae04aa1954c236dd8273bf628e9c67f6f8268dba6",
+          "normalized_hypothesis_characters": 217,
+          "edit_distance": 38,
+          "cer_exact_ratio": "38/217",
+          "cer_unrounded": 0.17511520737327188,
+          "cer_rounded_4dp": 0.1751,
+          "receipt_cer": 0.1751,
+          "matches_receipt": true
+        },
+        "reconciled_draft": {
+          "normalized_hypothesis_sha256": "809812e0907aa90ac482e7f7f12a58697e0348f82641f480b4d897d40fc92135",
+          "normalized_hypothesis_characters": 220,
+          "edit_distance": 8,
+          "cer_exact_ratio": "8/217",
+          "cer_unrounded": 0.03686635944700461,
+          "cer_rounded_4dp": 0.0369,
+          "receipt_cer": 0.0369,
+          "matches_receipt": true
+        }
+      },
+      "report_table_cer": 0.0056
+    },
+    {
+      "image_id": "new_ext_05_vmmu_full_r411",
+      "source_case_json_pointer": "/cases/4",
+      "ground_truth_source": "tools/new_external_catalog.py:NEW_EXTERNAL_ITEMS[4].ground_truth_text",
+      "ground_truth_status": "GROUND_TRUTH_UNVERIFIED",
+      "normalized_reference_sha256": "dc930d4992bf896c62741a8d13d173cceb7df0f42743efd7a472e3e746ae877a",
+      "normalized_reference_characters": 223,
+      "image_sha256_receipt": "6751cfe07bfaaf1236258df5b7d8c6700901efb0750961b1fc45817af4e48bb7",
+      "image_sha256_matches_catalog": true,
+      "identical_image_hash_in_external16_catalog": false,
+      "original_image_byte_revalidation": "NOT_MEASURED (this audit reads committed evidence only)",
+      "partition_claimed": "independent_holdout",
+      "partition_for_followup": "PRIOR_EXPOSED_DEVELOPMENT_REGRESSION",
+      "included_in_polyhedral_5": true,
+      "readers": {
+        "tesseract": {
+          "normalized_hypothesis_sha256": "194e5cb8b4c8857f19d7e3e3fc2ae50553ce6c44918da04a51abeff248a91ee0",
+          "normalized_hypothesis_characters": 222,
+          "edit_distance": 21,
+          "cer_exact_ratio": "21/223",
+          "cer_unrounded": 0.09417040358744394,
+          "cer_rounded_4dp": 0.0942,
+          "receipt_cer": 0.0942,
+          "matches_receipt": true
+        },
+        "rapidocr": {
+          "normalized_hypothesis_sha256": "1c863bd4afe96df2cad9c2dd5f9a0f8c3450e10da6976feaa53aea7b29953124",
+          "normalized_hypothesis_characters": 220,
+          "edit_distance": 22,
+          "cer_exact_ratio": "22/223",
+          "cer_unrounded": 0.09865470852017937,
+          "cer_rounded_4dp": 0.0987,
+          "receipt_cer": 0.0987,
+          "matches_receipt": true
+        },
+        "reconciled_draft": {
+          "normalized_hypothesis_sha256": "70694029d6c3574f98d04fa54156a3e48b5d9ecc2bc145c9dabd3c5bd8d8b673",
+          "normalized_hypothesis_characters": 221,
+          "edit_distance": 4,
+          "cer_exact_ratio": "4/223",
+          "cer_unrounded": 0.017937219730941704,
+          "cer_rounded_4dp": 0.0179,
+          "receipt_cer": 0.0179,
+          "matches_receipt": true
+        }
+      },
+      "report_table_cer": 0.0148
+    },
+    {
+      "image_id": "new_ext_06_vmmu_full_r395",
+      "source_case_json_pointer": "/cases/5",
+      "ground_truth_source": "tools/new_external_catalog.py:NEW_EXTERNAL_ITEMS[5].ground_truth_text",
+      "ground_truth_status": "GROUND_TRUTH_UNVERIFIED",
+      "normalized_reference_sha256": "9c83c44039750f1f55a9ed080068eebe4bb2b73f696975414537cbb35b0bc3c3",
+      "normalized_reference_characters": 319,
+      "image_sha256_receipt": "b338bf8dd719bb5026a7732b35f1e8282e3510498da77a13d4a314394b895df8",
+      "image_sha256_matches_catalog": true,
+      "identical_image_hash_in_external16_catalog": false,
+      "original_image_byte_revalidation": "NOT_MEASURED (this audit reads committed evidence only)",
+      "partition_claimed": "independent_holdout",
+      "partition_for_followup": "PRIOR_EXPOSED_DEVELOPMENT_REGRESSION",
+      "included_in_polyhedral_5": false,
+      "readers": {
+        "tesseract": {
+          "normalized_hypothesis_sha256": "81ad7dc2680e653d140a2e7e888c214820d6c3a8d0d11045de0b538a04620a9a",
+          "normalized_hypothesis_characters": 329,
+          "edit_distance": 53,
+          "cer_exact_ratio": "53/319",
+          "cer_unrounded": 0.16614420062695925,
+          "cer_rounded_4dp": 0.1661,
+          "receipt_cer": 0.1661,
+          "matches_receipt": true
+        },
+        "rapidocr": {
+          "normalized_hypothesis_sha256": "3b0deca3b5572d56518cdb4e96f3ff6646770943aae7f4df302db4482501e6d1",
+          "normalized_hypothesis_characters": 282,
+          "edit_distance": 63,
+          "cer_exact_ratio": "63/319",
+          "cer_unrounded": 0.1974921630094044,
+          "cer_rounded_4dp": 0.1975,
+          "receipt_cer": 0.1975,
+          "matches_receipt": true
+        },
+        "reconciled_draft": {
+          "normalized_hypothesis_sha256": "066252acc0dd04da43c11ade39afa03c454d5867a6ec06cb1266f7736268f5f2",
+          "normalized_hypothesis_characters": 305,
+          "edit_distance": 33,
+          "cer_exact_ratio": "33/319",
+          "cer_unrounded": 0.10344827586206896,
+          "cer_rounded_4dp": 0.1034,
+          "receipt_cer": 0.1034,
+          "matches_receipt": true
+        }
+      },
+      "report_table_cer": null
+    },
+    {
+      "image_id": "new_ext_07_vmmu_full_r412",
+      "source_case_json_pointer": "/cases/6",
+      "ground_truth_source": "tools/new_external_catalog.py:NEW_EXTERNAL_ITEMS[6].ground_truth_text",
+      "ground_truth_status": "GROUND_TRUTH_UNVERIFIED",
+      "normalized_reference_sha256": "d29f6e9bd84367a1175b4f2d514f43c2b0ad3c1246355c52aef0b3ce0ec4f777",
+      "normalized_reference_characters": 481,
+      "image_sha256_receipt": "f219bdbecc55bb1b85eed270205ed69275dfa1e01a70473b713db1a3a080fc06",
+      "image_sha256_matches_catalog": true,
+      "identical_image_hash_in_external16_catalog": false,
+      "original_image_byte_revalidation": "NOT_MEASURED (this audit reads committed evidence only)",
+      "partition_claimed": "independent_holdout",
+      "partition_for_followup": "PRIOR_EXPOSED_DEVELOPMENT_REGRESSION",
+      "included_in_polyhedral_5": false,
+      "readers": {
+        "tesseract": {
+          "normalized_hypothesis_sha256": "54ea61345905ecb17ae884bc62e7baf2db8686095360afebbc7b1aa2ce5e0810",
+          "normalized_hypothesis_characters": 477,
+          "edit_distance": 21,
+          "cer_exact_ratio": "21/481",
+          "cer_unrounded": 0.04365904365904366,
+          "cer_rounded_4dp": 0.0437,
+          "receipt_cer": 0.0437,
+          "matches_receipt": true
+        },
+        "rapidocr": {
+          "normalized_hypothesis_sha256": "ae739e649571bc5fa4b3da631c8f88743b78ac13724b91376a40d6194d447c6e",
+          "normalized_hypothesis_characters": 427,
+          "edit_distance": 76,
+          "cer_exact_ratio": "76/481",
+          "cer_unrounded": 0.158004158004158,
+          "cer_rounded_4dp": 0.158,
+          "receipt_cer": 0.158,
+          "matches_receipt": true
+        },
+        "reconciled_draft": {
+          "normalized_hypothesis_sha256": "f3eca5fd884e86e5cf5185305307a851bfcdacdea6d6909a60bedb6bceb0e1d0",
+          "normalized_hypothesis_characters": 453,
+          "edit_distance": 47,
+          "cer_exact_ratio": "47/481",
+          "cer_unrounded": 0.09771309771309772,
+          "cer_rounded_4dp": 0.0977,
+          "receipt_cer": 0.0977,
+          "matches_receipt": true
+        }
+      },
+      "report_table_cer": null
+    },
+    {
+      "image_id": "new_ext_08_vmmu_full_r424",
+      "source_case_json_pointer": "/cases/7",
+      "ground_truth_source": "tools/new_external_catalog.py:NEW_EXTERNAL_ITEMS[7].ground_truth_text",
+      "ground_truth_status": "GROUND_TRUTH_UNVERIFIED",
+      "normalized_reference_sha256": "e6ea5b2385bb517c01d70dcee685f4b8b106bda3ead25b9c6e35a585bb1cdee5",
+      "normalized_reference_characters": 332,
+      "image_sha256_receipt": "a2bbfb46bee67f003d8a01532438497d46ba6e3d3f982f5d3bec5744dff3f031",
+      "image_sha256_matches_catalog": true,
+      "identical_image_hash_in_external16_catalog": false,
+      "original_image_byte_revalidation": "NOT_MEASURED (this audit reads committed evidence only)",
+      "partition_claimed": "independent_holdout",
+      "partition_for_followup": "PRIOR_EXPOSED_DEVELOPMENT_REGRESSION",
+      "included_in_polyhedral_5": false,
+      "readers": {
+        "tesseract": {
+          "normalized_hypothesis_sha256": "f396ae0c2421820dba9ad445f2e9ea4fc76c9c69ad7e7cf8d524fd4be3d5cdb3",
+          "normalized_hypothesis_characters": 276,
+          "edit_distance": 70,
+          "cer_exact_ratio": "70/332",
+          "cer_unrounded": 0.21084337349397592,
+          "cer_rounded_4dp": 0.2108,
+          "receipt_cer": 0.2108,
+          "matches_receipt": true
+        },
+        "rapidocr": {
+          "normalized_hypothesis_sha256": "d58772e0fc4fd7f27f90e5d87903d6aa8c4b4aef73e1bef340f6d2fdf3d45a44",
+          "normalized_hypothesis_characters": 304,
+          "edit_distance": 74,
+          "cer_exact_ratio": "74/332",
+          "cer_unrounded": 0.22289156626506024,
+          "cer_rounded_4dp": 0.2229,
+          "receipt_cer": 0.2229,
+          "matches_receipt": true
+        },
+        "reconciled_draft": {
+          "normalized_hypothesis_sha256": "40b96a3ca91bce74db17385c6a2ecc65dc13886687d8d45745d301790ab9bd08",
+          "normalized_hypothesis_characters": 300,
+          "edit_distance": 44,
+          "cer_exact_ratio": "44/332",
+          "cer_unrounded": 0.13253012048192772,
+          "cer_rounded_4dp": 0.1325,
+          "receipt_cer": 0.1325,
+          "matches_receipt": true
+        }
+      },
+      "report_table_cer": null
+    },
+    {
+      "image_id": "new_ext_09_vmmu_ocr_r18",
+      "source_case_json_pointer": "/cases/8",
+      "ground_truth_source": "tools/new_external_catalog.py:NEW_EXTERNAL_ITEMS[8].ground_truth_text",
+      "ground_truth_status": "AUTHOR_PROVIDED_VMMU_DESCRIPTION",
+      "normalized_reference_sha256": "0236bc629d88a31258a5ee68489e64e4f28af13f5893fdb2d52d1b0458642a33",
+      "normalized_reference_characters": 373,
+      "image_sha256_receipt": "4ddb5f32a950fab6715ae2281ae58ab03729be3fbff39353be1d6c2f9589d230",
+      "image_sha256_matches_catalog": true,
+      "identical_image_hash_in_external16_catalog": false,
+      "original_image_byte_revalidation": "NOT_MEASURED (this audit reads committed evidence only)",
+      "partition_claimed": "independent_holdout",
+      "partition_for_followup": "PRIOR_EXPOSED_DEVELOPMENT_REGRESSION",
+      "included_in_polyhedral_5": false,
+      "readers": {
+        "tesseract": {
+          "normalized_hypothesis_sha256": "adb368eb21c94a420eec9c60d2a8794466b567279b8db8fe82d47e0809aafc76",
+          "normalized_hypothesis_characters": 387,
+          "edit_distance": 24,
+          "cer_exact_ratio": "24/373",
+          "cer_unrounded": 0.064343163538874,
+          "cer_rounded_4dp": 0.0643,
+          "receipt_cer": 0.0643,
+          "matches_receipt": true
+        },
+        "rapidocr": {
+          "normalized_hypothesis_sha256": "e5095f13adc660d3560dd27941cb1e74bb3141a6aaaf859e583b99cbba628b87",
+          "normalized_hypothesis_characters": 361,
+          "edit_distance": 56,
+          "cer_exact_ratio": "56/373",
+          "cer_unrounded": 0.15013404825737264,
+          "cer_rounded_4dp": 0.1501,
+          "receipt_cer": 0.1501,
+          "matches_receipt": true
+        },
+        "reconciled_draft": {
+          "normalized_hypothesis_sha256": "1a6d955c864dd7d99a6949dae0665068e9006628fb4e464c9bfda93811ff7654",
+          "normalized_hypothesis_characters": 387,
+          "edit_distance": 39,
+          "cer_exact_ratio": "39/373",
+          "cer_unrounded": 0.10455764075067024,
+          "cer_rounded_4dp": 0.1046,
+          "receipt_cer": 0.1046,
+          "matches_receipt": true
+        }
+      },
+      "report_table_cer": null
+    },
+    {
+      "image_id": "new_ext_10_vmmu_ocr_r21",
+      "source_case_json_pointer": "/cases/9",
+      "ground_truth_source": "tools/new_external_catalog.py:NEW_EXTERNAL_ITEMS[9].ground_truth_text",
+      "ground_truth_status": "AUTHOR_PROVIDED_VMMU_DESCRIPTION",
+      "normalized_reference_sha256": "c7ad682d5ae02f21fe027b01000d058c8930b33e18b231fedba2ab90ae80aa28",
+      "normalized_reference_characters": 303,
+      "image_sha256_receipt": "61b1c0d49e77a25b3276198a9f7d8aad2f08a6b9b30e887f0e368f5095b6129a",
+      "image_sha256_matches_catalog": true,
+      "identical_image_hash_in_external16_catalog": false,
+      "original_image_byte_revalidation": "NOT_MEASURED (this audit reads committed evidence only)",
+      "partition_claimed": "independent_holdout",
+      "partition_for_followup": "PRIOR_EXPOSED_DEVELOPMENT_REGRESSION",
+      "included_in_polyhedral_5": false,
+      "readers": {
+        "tesseract": {
+          "normalized_hypothesis_sha256": "ba7877cce1bbe30e655d129340b203fb12badfb07e9ed6873fabd547772f18b6",
+          "normalized_hypothesis_characters": 314,
+          "edit_distance": 12,
+          "cer_exact_ratio": "12/303",
+          "cer_unrounded": 0.039603960396039604,
+          "cer_rounded_4dp": 0.0396,
+          "receipt_cer": 0.0396,
+          "matches_receipt": true
+        },
+        "rapidocr": {
+          "normalized_hypothesis_sha256": "9d7f762bdfb9be1153a91dd112c420c6e62a808188b6bb74c9ef309e1b1abd57",
+          "normalized_hypothesis_characters": 279,
+          "edit_distance": 37,
+          "cer_exact_ratio": "37/303",
+          "cer_unrounded": 0.12211221122112212,
+          "cer_rounded_4dp": 0.1221,
+          "receipt_cer": 0.1221,
+          "matches_receipt": true
+        },
+        "reconciled_draft": {
+          "normalized_hypothesis_sha256": "b00f42b430dd871d60224b0f7a3898279c6ade796ee786192b72ebbccef4d224",
+          "normalized_hypothesis_characters": 298,
+          "edit_distance": 12,
+          "cer_exact_ratio": "12/303",
+          "cer_unrounded": 0.039603960396039604,
+          "cer_rounded_4dp": 0.0396,
+          "receipt_cer": 0.0396,
+          "matches_receipt": true
+        }
+      },
+      "report_table_cer": null
+    },
+    {
+      "image_id": "new_ext_11_vmmu_ocr_r31",
+      "source_case_json_pointer": "/cases/10",
+      "ground_truth_source": "tools/new_external_catalog.py:NEW_EXTERNAL_ITEMS[10].ground_truth_text",
+      "ground_truth_status": "AUTHOR_PROVIDED_VMMU_DESCRIPTION",
+      "normalized_reference_sha256": "2a38a7aff32f1c80d8535e48a3e87232f38ed75b80a992494d918744b551967f",
+      "normalized_reference_characters": 244,
+      "image_sha256_receipt": "67f9e1ea363296d006ce9c82e3210cabb42654f6aaeeec07e784526f04dae73b",
+      "image_sha256_matches_catalog": true,
+      "identical_image_hash_in_external16_catalog": false,
+      "original_image_byte_revalidation": "NOT_MEASURED (this audit reads committed evidence only)",
+      "partition_claimed": "independent_holdout",
+      "partition_for_followup": "PRIOR_EXPOSED_DEVELOPMENT_REGRESSION",
+      "included_in_polyhedral_5": false,
+      "readers": {
+        "tesseract": {
+          "normalized_hypothesis_sha256": "d1228311bf57ad411455858d199f236e30867ecae57302a8a6d299bc44001de4",
+          "normalized_hypothesis_characters": 227,
+          "edit_distance": 34,
+          "cer_exact_ratio": "34/244",
+          "cer_unrounded": 0.13934426229508196,
+          "cer_rounded_4dp": 0.1393,
+          "receipt_cer": 0.1393,
+          "matches_receipt": true
+        },
+        "rapidocr": {
+          "normalized_hypothesis_sha256": "3ac34d57533c37083f80131b99c1016d50edfaa4cd2e4dc5ccdb21323f5b9a0f",
+          "normalized_hypothesis_characters": 234,
+          "edit_distance": 55,
+          "cer_exact_ratio": "55/244",
+          "cer_unrounded": 0.22540983606557377,
+          "cer_rounded_4dp": 0.2254,
+          "receipt_cer": 0.2254,
+          "matches_receipt": true
+        },
+        "reconciled_draft": {
+          "normalized_hypothesis_sha256": "35ec82d5894a1231c97306915c4a154e4cd0ae7b2e1cee32ecbd8acda81c51b3",
+          "normalized_hypothesis_characters": 213,
+          "edit_distance": 41,
+          "cer_exact_ratio": "41/244",
+          "cer_unrounded": 0.1680327868852459,
+          "cer_rounded_4dp": 0.168,
+          "receipt_cer": 0.168,
+          "matches_receipt": true
+        }
+      },
+      "report_table_cer": null
+    },
+    {
+      "image_id": "new_ext_12_vmmu_ocr_r3",
+      "source_case_json_pointer": "/cases/11",
+      "ground_truth_source": "tools/new_external_catalog.py:NEW_EXTERNAL_ITEMS[11].ground_truth_text",
+      "ground_truth_status": "AUTHOR_PROVIDED_VMMU_DESCRIPTION",
+      "normalized_reference_sha256": "f5d9e078f15f9ad12ff52898e76c005408a6749138db8323c16656d8043014f9",
+      "normalized_reference_characters": 156,
+      "image_sha256_receipt": "242fa4d95e261e7e320dc48ebfee622d6b60e8c0f43e4c9552ad40a8191901ec",
+      "image_sha256_matches_catalog": true,
+      "identical_image_hash_in_external16_catalog": false,
+      "original_image_byte_revalidation": "NOT_MEASURED (this audit reads committed evidence only)",
+      "partition_claimed": "independent_holdout",
+      "partition_for_followup": "PRIOR_EXPOSED_DEVELOPMENT_REGRESSION",
+      "included_in_polyhedral_5": false,
+      "readers": {
+        "tesseract": {
+          "normalized_hypothesis_sha256": "56e64209dfb33cb6a7a697851175307c3445c4e55640a966d3778bf125796aaf",
+          "normalized_hypothesis_characters": 141,
+          "edit_distance": 20,
+          "cer_exact_ratio": "20/156",
+          "cer_unrounded": 0.1282051282051282,
+          "cer_rounded_4dp": 0.1282,
+          "receipt_cer": 0.1282,
+          "matches_receipt": true
+        },
+        "rapidocr": {
+          "normalized_hypothesis_sha256": "e9d2d4a9b69c50abff575effaabf888ef6343f5cec7cac25ace91bddec68efe9",
+          "normalized_hypothesis_characters": 191,
+          "edit_distance": 52,
+          "cer_exact_ratio": "52/156",
+          "cer_unrounded": 0.3333333333333333,
+          "cer_rounded_4dp": 0.3333,
+          "receipt_cer": 0.3333,
+          "matches_receipt": true
+        },
+        "reconciled_draft": {
+          "normalized_hypothesis_sha256": "dd2f3abb6b5e13beec444a8b8f729bbac8aa4ceb19c855ccd41198026732b6c6",
+          "normalized_hypothesis_characters": 156,
+          "edit_distance": 4,
+          "cer_exact_ratio": "4/156",
+          "cer_unrounded": 0.02564102564102564,
+          "cer_rounded_4dp": 0.0256,
+          "receipt_cer": 0.0256,
+          "matches_receipt": true
+        }
+      },
+      "report_table_cer": null
+    }
+  ],
+  "receipt_audit": {
+    "json_receipts_parsed": [
+      "baseline_candidate_integrity.json",
+      "diagram_dependency_audit.json",
+      "dual_ocr_reconciliation_receipt.json",
+      "external16_image_diagnostics.json",
+      "fidelity_false_rejection_analysis.json",
+      "frontend_browser_e2e.json",
+      "full_regression_summary.json",
+      "handwritten_ocr_diagnostic.json",
+      "local_ocr_raw_outputs.json",
+      "math_layout_recognition_receipt.json",
+      "new_external_image_evaluation.json",
+      "new_external_local_ocr_raw_outputs.json",
+      "ocr_failure_root_causes.json",
+      "ocr_resource_performance.json",
+      "printed_ocr_before_after.json",
+      "real_image_to_scene3d_acceptance.json",
+      "region_aware_ocr_receipt.json",
+      "run.json",
+      "student_confirmation_flow_receipt.json",
+      "user_correction_cache_invalidation.json",
+      "vision_fallback_offline_receipt.json",
+      "vision_live_readiness.json"
+    ],
+    "external16_printed_recomputation": {
+      "all_48_reader_case_values_match_receipt": true,
+      "printed_case_count": 15,
+      "cer_by_reader": {
+        "tesseract": {
+          "mean": 0.1612,
+          "median": 0.1208
+        },
+        "rapidocr": {
+          "mean": 0.1376,
+          "median": 0.1381
+        },
+        "reconciled_draft": {
+          "mean": 0.0666,
+          "median": 0.0333
+        }
+      }
+    },
+    "real_vs_simulated": {
+      "real_local_ocr": "Prior raw reader outputs and image-to-prepare receipts exist; this audit recomputes scores, does not rerun OCR.",
+      "external16_metrics": {
+        "total_external16_problem_instances": 17,
+        "in_scope_supported_printed_instances": 11,
+        "out_of_scope_or_diagram_only_or_handwritten_instances": 6,
+        "A_LOCAL_IMAGE_AUTO_SOLVE_RATE": {
+          "solved_count": 1,
+          "in_scope_printed_denominator": 11,
+          "all_external16_denominator": 17,
+          "rate_of_in_scope_printed": 0.0909,
+          "rate_of_all_external16": 0.0588,
+          "cases": [
+            "ext_prt_01_hd_q_5259753"
+          ]
+        },
+        "B_VISION_ASSISTED_SOLVE_RATE": {
+          "VISION_REPLAY_SUCCESS_RATE": "NOT_MEASURED",
+          "LIVE_VISION_SUCCESS_RATE": "NOT_MEASURED",
+          "live_gemini_calls": 0
+        },
+        "C_USER_CORRECTED_SIMULATED_SOLVE_RATE": {
+          "solved_count": 10,
+          "remaining_in_scope_printed_denominator": 10,
+          "rate_of_remaining_in_scope_printed": 1.0,
+          "combined_a_plus_c_in_scope_printed": "11/11 (100.0%)",
+          "combined_a_plus_c_all_external16": "11/17 (64.7%)"
+        },
+        "wrong_served_count": 0,
+        "scene3d_continuity_violations_across_all_served": 0
+      },
+      "new_external_outcome_counts": {
+        "C_USER_CORRECTED_SIMULATED": 12
+      },
+      "new_external_served_categories": [
+        "C_USER_CORRECTED_SIMULATED"
+      ],
+      "user_correction_source": "Evaluator simulates targeted edits and confirmations using catalog ground truth; no observed student study.",
+      "vision_live": "NOT_MEASURED; 0 live calls",
+      "vision_replay": "NOT_MEASURED; no recorded external-image provider responses",
+      "vision_simulated_route": {
+        "status": "SERVED",
+        "chosen_route": "VISION_THEN_LOCAL_DETERMINISTIC",
+        "gemini_vision_calls": 1,
+        "gemini_typed_fact_calls": 0,
+        "answers": {
+          "q1": "6"
+        }
+      },
+      "vision_simulated_call_count_meaning": "gemini_vision_calls=1 was supplied as metrics.vlm_calls in a synthetic ready fixture, not a provider receipt",
+      "vision_conflict_probe": {
+        "has_conflict": false,
+        "conflicts": []
+      },
+      "vision_conflict_probe_discrepancy": "Named conflict-detected probe compares side 2a versus a but records has_conflict=false; cannot support conflict-detection success.",
+      "browser_e2e": "6 automated Chromium scenarios with real uploads/backend; scripted corrections are not observed student confirmations."
+    },
+    "partition": {
+      "claimed": "independent_holdout for 12 new images",
+      "same_agent_ground_truth": "First eight GROUND_TRUTH_UNVERIFIED; last four AUTHOR_PROVIDED_VMMU_DESCRIPTION",
+      "case_ids_and_image_hashes_new_vs_external16": "Checked exact image hashes; see per-case overlap flags. Different hashes do not establish conceptual independence.",
+      "exposure": "Report Q23 documents parser changes for new_ext_02 and OCR wording encountered in this evaluation; Q29 explicitly denies independent H1 status.",
+      "followup_classification": "All prior images and transcripts are exposed development/regression material; no sealed independent holdout remains in these receipts.",
+      "runtime_ground_truth_injection": "No direct catalog/ground_truth_text imports found in product code by scoped search; lexicon builder reads parser/registry strings plus curated general syllables. This does not establish blind evaluation."
+    },
+    "hash_integrity": {
+      "declared_deliverables": 19,
+      "all_declared_hashes_match_git_blob": true,
+      "working_tree_line_ending_caveat": "Manifest hashes are LF serialization hashes and match committed git blobs. CRLF checkout bytes differ; record both without modifying historical files.",
+      "unmanifested_artifacts": [
+        "docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/ALGOSIM_IMAGE_FIRST_OCR_VERIFIED_GEOMETRY_REPORT.md",
+        "docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/local_ocr_raw_outputs.json",
+        "docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/new_external_local_ocr_raw_outputs.json",
+        "docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/run.json",
+        "docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/tools/build_ocr_lexicon.py",
+        "docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/tools/e2e_browser_image_first.mjs",
+        "docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/tools/evaluate_image_first_ocr.py",
+        "docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/tools/fetch_new_vmmu.py",
+        "docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/tools/generate_all_receipts.py",
+        "docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/tools/new_external_catalog.py"
+      ]
+    },
+    "regression_scope": {
+      "receipt_claims": {
+        "backend_image_first_local_ocr_tests": "18 passed (backend/tests/test_image_first_local_ocr.py)",
+        "backend_local_geometry_parser_tests": "2 passed (backend/tests/test_local_geometry_parser.py)",
+        "frontend_vitest_photo_problem_panel": "18 passed (frontend/src/components/photo-problem-panel.test.tsx)",
+        "frontend_production_build": "tsc -b && vite build succeeded (0 TypeScript/bundle errors)",
+        "playwright_headless_chromium_e2e": "6/6 scenarios passed (0 console errors, 0 page errors, 0 provider calls)",
+        "demo_replay_cases": "7/7 PASS (backend/scripts/replay_demo_cases.py)",
+        "demo_crash_surface_audit": "PASS (backend/scripts/audit_demo_crash_surface.py)",
+        "docs_information_architecture_audit": "PASS (backend/scripts/audit_docs_information_architecture.py)",
+        "publication_safety_check": "PASS (backend/scripts/check_publication_safety.py)",
+        "frozen_candidate_verification": "PASS (backend/scripts/freeze_evaluation_candidate.py --verify)"
+      },
+      "report_additional_claims": {
+        "backend": "169/169",
+        "frontend": "108/108",
+        "demo": "5/5 + 1/1"
+      },
+      "discrepancies": [
+        "Receipt only lists 18+2 backend tests and 18 frontend tests, not report's 169 and 108.",
+        "Receipt parser test path backend/tests/test_local_geometry_parser.py is absent; actual path backend/tests/geometry/test_local_geometry_parser.py.",
+        "Receipt demo count 7/7 differs from report's 5/5 + 1/1.",
+        "No command logs/full-suite machine receipt in this prior run establish a clean detached Full T3 execution."
+      ],
+      "status": "TARGETED_REGRESSION_CLAIMED; FULL_SUITE_NOT_ESTABLISHED_BY_PRIOR_RECEIPTS",
+      "new_tests_executed_by_this_audit": "Only deterministic formula/distance self-checks; no product regression rerun"
+    },
+    "span_grounding_discrepancy": {
+      "receipt": {
+        "total_verified_math_spans": 141,
+        "verified_math_spans_not_in_ground_truth": 2,
+        "silent_corruption_rate": 0.0
+      },
+      "diagnostic_flagged_spans": [
+        {
+          "image_id": "ext_prt_15_vmmu_page_r28",
+          "values": [
+            "10cm"
+          ]
+        },
+        {
+          "image_id": "ext_hw_b1_01_hd_a_6043187",
+          "values": [
+            "2"
+          ]
+        }
+      ],
+      "flagged_span_quotient": "2/141 = 0.014184397163120567",
+      "interpretation": "The generator hardcodes rate 0.0 despite two diagnostic flags; fidelity receipt instead claims 0/152. Flags require human adjudication (e.g. diagram text may be omitted from reference), so neither zero corruption nor a measured true corruption rate follows from these fields."
+    },
+    "other_report_discrepancies": [
+      "Report's new_ext_02 table says one edit; receipt records two (AD to A'D and solid separator).",
+      "Report maps curved refusals to CURVED_WORDING_UNSUPPORTED; actual outcomes new_ext_06..08 reason_code is LIVE_AI_DISABLED, an infrastructure reason. This supports non-service, not verified mathematical scope classification.",
+      "Report labels zero targeted edits as zero OCR errors on cases 03..05; full-text CER remains nonzero and no-edit count alone does not establish semantic text perfection.",
+      "Resource report region-detection p50=102.72 ms differs from resource receipt p50=73.62 ms; use receipt value with its scope rather than merge these figures."
+    ]
+  },
+  "source_artifacts": [
+    {
+      "path": "docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/ALGOSIM_IMAGE_FIRST_OCR_VERIFIED_GEOMETRY_REPORT.md",
+      "bytes_working_tree": 60852,
+      "sha256_working_tree_bytes": "6be750f841c9a2af570659cc5ff181562cf217bddfd3bf912a0ff70e3326b233",
+      "sha256_lf_normalized": "6be750f841c9a2af570659cc5ff181562cf217bddfd3bf912a0ff70e3326b233",
+      "sha256_baseline_git_blob": "6be750f841c9a2af570659cc5ff181562cf217bddfd3bf912a0ff70e3326b233",
+      "manifest_declared_sha256": null,
+      "manifest_matches_baseline_git_blob": null,
+      "manifest_matches_lf_normalized": null,
+      "working_tree_text_matches_baseline": true
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/baseline_candidate_integrity.json",
+      "bytes_working_tree": 3136,
+      "sha256_working_tree_bytes": "4bc543f20ef793652bfdd4f5f9133a97c549092a28873dffdef98cce98b31b90",
+      "sha256_lf_normalized": "8ac1b173c8913cbc98d47b93186311ceb812fddcb75e56edde75c9c157c2942d",
+      "sha256_baseline_git_blob": "8ac1b173c8913cbc98d47b93186311ceb812fddcb75e56edde75c9c157c2942d",
+      "manifest_declared_sha256": "8ac1b173c8913cbc98d47b93186311ceb812fddcb75e56edde75c9c157c2942d",
+      "manifest_matches_baseline_git_blob": true,
+      "manifest_matches_lf_normalized": true,
+      "working_tree_text_matches_baseline": true
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/diagram_dependency_audit.json",
+      "bytes_working_tree": 35126,
+      "sha256_working_tree_bytes": "bf2db93b1c88fdc61613a9b4e871af5f78106e80f60130671aaafec87d5c126e",
+      "sha256_lf_normalized": "938a7b719fc28576647a489d9253745e9d24dc71a6421f39de7789fbfd2c76a3",
+      "sha256_baseline_git_blob": "938a7b719fc28576647a489d9253745e9d24dc71a6421f39de7789fbfd2c76a3",
+      "manifest_declared_sha256": "938a7b719fc28576647a489d9253745e9d24dc71a6421f39de7789fbfd2c76a3",
+      "manifest_matches_baseline_git_blob": true,
+      "manifest_matches_lf_normalized": true,
+      "working_tree_text_matches_baseline": true
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/dual_ocr_reconciliation_receipt.json",
+      "bytes_working_tree": 94885,
+      "sha256_working_tree_bytes": "64578015d6c6dc794813462fb1448b1cdffb2e85aa43654ff5453a21b2b9b994",
+      "sha256_lf_normalized": "74c4bf6101d4bae8350af6f8173694fc3ce0ce4e49e0e0dc9d80d03cad37f6e8",
+      "sha256_baseline_git_blob": "74c4bf6101d4bae8350af6f8173694fc3ce0ce4e49e0e0dc9d80d03cad37f6e8",
+      "manifest_declared_sha256": "74c4bf6101d4bae8350af6f8173694fc3ce0ce4e49e0e0dc9d80d03cad37f6e8",
+      "manifest_matches_baseline_git_blob": true,
+      "manifest_matches_lf_normalized": true,
+      "working_tree_text_matches_baseline": true
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/external16_image_diagnostics.json",
+      "bytes_working_tree": 301624,
+      "sha256_working_tree_bytes": "a08e46264f97a44bd80d1ef0347fb8e73c5be27212faac9718a844f4af1cee49",
+      "sha256_lf_normalized": "65b37b1fdf6ac5b8fec1e29e6b1defc0ab2dd857bebdf2ff68abeab6823462d0",
+      "sha256_baseline_git_blob": "65b37b1fdf6ac5b8fec1e29e6b1defc0ab2dd857bebdf2ff68abeab6823462d0",
+      "manifest_declared_sha256": "65b37b1fdf6ac5b8fec1e29e6b1defc0ab2dd857bebdf2ff68abeab6823462d0",
+      "manifest_matches_baseline_git_blob": true,
+      "manifest_matches_lf_normalized": true,
+      "working_tree_text_matches_baseline": true
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/fidelity_false_rejection_analysis.json",
+      "bytes_working_tree": 10276,
+      "sha256_working_tree_bytes": "dae460173b89e8a60f23794d2b41a06eb23b5c99730780942a90a9cc57493c8d",
+      "sha256_lf_normalized": "deb5d5084b8707882ee48e2f1f12066a947aeecf92ec985afda3415a8dd4c875",
+      "sha256_baseline_git_blob": "deb5d5084b8707882ee48e2f1f12066a947aeecf92ec985afda3415a8dd4c875",
+      "manifest_declared_sha256": "deb5d5084b8707882ee48e2f1f12066a947aeecf92ec985afda3415a8dd4c875",
+      "manifest_matches_baseline_git_blob": true,
+      "manifest_matches_lf_normalized": true,
+      "working_tree_text_matches_baseline": true
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/frontend_browser_e2e.json",
+      "bytes_working_tree": 10192,
+      "sha256_working_tree_bytes": "a66e9a2a11a26deaaab48d79e05cffa6c22172f21f7bfa60ab1e56aacce7e3f2",
+      "sha256_lf_normalized": "0ed34f440c61f1aa72d44becf8f7d0fd830e86b1959a0fd0b9e55c49ff756b7a",
+      "sha256_baseline_git_blob": "0ed34f440c61f1aa72d44becf8f7d0fd830e86b1959a0fd0b9e55c49ff756b7a",
+      "manifest_declared_sha256": "0ed34f440c61f1aa72d44becf8f7d0fd830e86b1959a0fd0b9e55c49ff756b7a",
+      "manifest_matches_baseline_git_blob": true,
+      "manifest_matches_lf_normalized": true,
+      "working_tree_text_matches_baseline": true
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/full_regression_summary.json",
+      "bytes_working_tree": 2227,
+      "sha256_working_tree_bytes": "b3a8e49a485b39b55ae64a85e1b4df324f0803f14dfca5709394e2bdda0c5536",
+      "sha256_lf_normalized": "b4059d4066bfbf765758e48d8f8ad5bbbb7d914783deaf0c19ee77dddd564767",
+      "sha256_baseline_git_blob": "b4059d4066bfbf765758e48d8f8ad5bbbb7d914783deaf0c19ee77dddd564767",
+      "manifest_declared_sha256": "b4059d4066bfbf765758e48d8f8ad5bbbb7d914783deaf0c19ee77dddd564767",
+      "manifest_matches_baseline_git_blob": true,
+      "manifest_matches_lf_normalized": true,
+      "working_tree_text_matches_baseline": true
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/handwritten_ocr_diagnostic.json",
+      "bytes_working_tree": 60123,
+      "sha256_working_tree_bytes": "c33282afeeec2e64d1754cab3d4733908c4992d62b1ccefc0c90a609905c355a",
+      "sha256_lf_normalized": "2511743957b05575c9f8c4f4c1d6c86fed3958725dab7f810eb5fa0ccd51bf3a",
+      "sha256_baseline_git_blob": "2511743957b05575c9f8c4f4c1d6c86fed3958725dab7f810eb5fa0ccd51bf3a",
+      "manifest_declared_sha256": "2511743957b05575c9f8c4f4c1d6c86fed3958725dab7f810eb5fa0ccd51bf3a",
+      "manifest_matches_baseline_git_blob": true,
+      "manifest_matches_lf_normalized": true,
+      "working_tree_text_matches_baseline": true
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/local_ocr_raw_outputs.json",
+      "bytes_working_tree": 189633,
+      "sha256_working_tree_bytes": "a0b0cd0bded88a13efc4fe1f50f9b7a7e4d87002e2d9a78633f89405b415d842",
+      "sha256_lf_normalized": "e2e94f7823b933e1baa664045c7fcf6ff5cdff30036d5542def8b22c7159fb51",
+      "sha256_baseline_git_blob": "e2e94f7823b933e1baa664045c7fcf6ff5cdff30036d5542def8b22c7159fb51",
+      "manifest_declared_sha256": null,
+      "manifest_matches_baseline_git_blob": null,
+      "manifest_matches_lf_normalized": null,
+      "working_tree_text_matches_baseline": true
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/math_layout_recognition_receipt.json",
+      "bytes_working_tree": 31845,
+      "sha256_working_tree_bytes": "e78a61eb8b8f20fc1503affa44511e40cbbb7edb7af48a9ec381f0f9e83ba7e8",
+      "sha256_lf_normalized": "753eef764ab24599cd759b69c810fdfd50af35cabd120d2d0272e458c486a6ba",
+      "sha256_baseline_git_blob": "753eef764ab24599cd759b69c810fdfd50af35cabd120d2d0272e458c486a6ba",
+      "manifest_declared_sha256": "753eef764ab24599cd759b69c810fdfd50af35cabd120d2d0272e458c486a6ba",
+      "manifest_matches_baseline_git_blob": true,
+      "manifest_matches_lf_normalized": true,
+      "working_tree_text_matches_baseline": true
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/new_external_image_evaluation.json",
+      "bytes_working_tree": 214582,
+      "sha256_working_tree_bytes": "e7b32e1a488524469daeedc58e4ae1c5ad0b0ff77f384af948a925ffa9999137",
+      "sha256_lf_normalized": "ac82e26d2a6b5b6cf9a87356c4ce63b33704112df1792af98512e077f3c2bbcb",
+      "sha256_baseline_git_blob": "ac82e26d2a6b5b6cf9a87356c4ce63b33704112df1792af98512e077f3c2bbcb",
+      "manifest_declared_sha256": "ac82e26d2a6b5b6cf9a87356c4ce63b33704112df1792af98512e077f3c2bbcb",
+      "manifest_matches_baseline_git_blob": true,
+      "manifest_matches_lf_normalized": true,
+      "working_tree_text_matches_baseline": true
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/new_external_local_ocr_raw_outputs.json",
+      "bytes_working_tree": 133664,
+      "sha256_working_tree_bytes": "a8b476d267d9746e00228b5b9d55a55942031851cb5a57949a39206327392e5a",
+      "sha256_lf_normalized": "ccbfedbe74f91856616a17ee7ac67297cd6703effef71c8028ec3b07e739685d",
+      "sha256_baseline_git_blob": "ccbfedbe74f91856616a17ee7ac67297cd6703effef71c8028ec3b07e739685d",
+      "manifest_declared_sha256": null,
+      "manifest_matches_baseline_git_blob": null,
+      "manifest_matches_lf_normalized": null,
+      "working_tree_text_matches_baseline": true
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/ocr_failure_root_causes.json",
+      "bytes_working_tree": 12779,
+      "sha256_working_tree_bytes": "9b72fc5a9272c87f109abf9d94a907cf53ca24c7e56f697f2eacb362b00ca5e3",
+      "sha256_lf_normalized": "c3ba7940edd7354fa9c72f8e796f5ab5e69c704b5c76bb46f22b219e951592bf",
+      "sha256_baseline_git_blob": "c3ba7940edd7354fa9c72f8e796f5ab5e69c704b5c76bb46f22b219e951592bf",
+      "manifest_declared_sha256": "c3ba7940edd7354fa9c72f8e796f5ab5e69c704b5c76bb46f22b219e951592bf",
+      "manifest_matches_baseline_git_blob": true,
+      "manifest_matches_lf_normalized": true,
+      "working_tree_text_matches_baseline": true
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/ocr_resource_performance.json",
+      "bytes_working_tree": 1890,
+      "sha256_working_tree_bytes": "5f9607e863527430849df99ba7fa1bdf916e77fa0e3641c640aea5091b7327d0",
+      "sha256_lf_normalized": "9bd16f24fc5e01a761d43d186f9650fcdc67f7fed085a1670ea0985d6238a872",
+      "sha256_baseline_git_blob": "9bd16f24fc5e01a761d43d186f9650fcdc67f7fed085a1670ea0985d6238a872",
+      "manifest_declared_sha256": "9bd16f24fc5e01a761d43d186f9650fcdc67f7fed085a1670ea0985d6238a872",
+      "manifest_matches_baseline_git_blob": true,
+      "manifest_matches_lf_normalized": true,
+      "working_tree_text_matches_baseline": true
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/printed_ocr_before_after.json",
+      "bytes_working_tree": 35768,
+      "sha256_working_tree_bytes": "ca69572db7a400a27cd1693e61265fb2ebcc5e434cf050ac0402a43d654c7b60",
+      "sha256_lf_normalized": "e8442d858f6754a47f2264fee274beccc27907ad6cb9fa54ae3c5b51e14c85c3",
+      "sha256_baseline_git_blob": "e8442d858f6754a47f2264fee274beccc27907ad6cb9fa54ae3c5b51e14c85c3",
+      "manifest_declared_sha256": "e8442d858f6754a47f2264fee274beccc27907ad6cb9fa54ae3c5b51e14c85c3",
+      "manifest_matches_baseline_git_blob": true,
+      "manifest_matches_lf_normalized": true,
+      "working_tree_text_matches_baseline": true
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/real_image_to_scene3d_acceptance.json",
+      "bytes_working_tree": 11545,
+      "sha256_working_tree_bytes": "f837e2ef8cebdefa11988bf93db22092ee0503154f29f89e698697d00b58f9e9",
+      "sha256_lf_normalized": "7da933be3c6738305bd2243e3833abdf79ca5f575ea885a6fb641ecf9e410aff",
+      "sha256_baseline_git_blob": "7da933be3c6738305bd2243e3833abdf79ca5f575ea885a6fb641ecf9e410aff",
+      "manifest_declared_sha256": "7da933be3c6738305bd2243e3833abdf79ca5f575ea885a6fb641ecf9e410aff",
+      "manifest_matches_baseline_git_blob": true,
+      "manifest_matches_lf_normalized": true,
+      "working_tree_text_matches_baseline": true
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/region_aware_ocr_receipt.json",
+      "bytes_working_tree": 16851,
+      "sha256_working_tree_bytes": "4565a65585214c40cea0681ab28e538e98bd34885d0d4f8fcb68ad7e540cc8a2",
+      "sha256_lf_normalized": "2a00e53aabdf8cced86142a92a569dbe4ded4e68cca8a8f2fec802cecc6701e2",
+      "sha256_baseline_git_blob": "2a00e53aabdf8cced86142a92a569dbe4ded4e68cca8a8f2fec802cecc6701e2",
+      "manifest_declared_sha256": "2a00e53aabdf8cced86142a92a569dbe4ded4e68cca8a8f2fec802cecc6701e2",
+      "manifest_matches_baseline_git_blob": true,
+      "manifest_matches_lf_normalized": true,
+      "working_tree_text_matches_baseline": true
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/run.json",
+      "bytes_working_tree": 3842,
+      "sha256_working_tree_bytes": "388cdd5de8900964dc5e8e9384507a3e9d946c04fa1b6de29da4dac8b7b799f8",
+      "sha256_lf_normalized": "8d3b2591fc4c026a4b65f9af3f00b9cfd464a45cad0f81fdd093ec3012f2b849",
+      "sha256_baseline_git_blob": "8d3b2591fc4c026a4b65f9af3f00b9cfd464a45cad0f81fdd093ec3012f2b849",
+      "manifest_declared_sha256": null,
+      "manifest_matches_baseline_git_blob": null,
+      "manifest_matches_lf_normalized": null,
+      "working_tree_text_matches_baseline": true
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/student_confirmation_flow_receipt.json",
+      "bytes_working_tree": 14334,
+      "sha256_working_tree_bytes": "ad0485ffa93f16c41f1ce6e7913552fee8f1f27b7816626757ac172ca3b3dc5c",
+      "sha256_lf_normalized": "1afd76a4a455484b5fe59783fc66f8c91609d936343ac849bfcebf9e47e68e4b",
+      "sha256_baseline_git_blob": "1afd76a4a455484b5fe59783fc66f8c91609d936343ac849bfcebf9e47e68e4b",
+      "manifest_declared_sha256": "1afd76a4a455484b5fe59783fc66f8c91609d936343ac849bfcebf9e47e68e4b",
+      "manifest_matches_baseline_git_blob": true,
+      "manifest_matches_lf_normalized": true,
+      "working_tree_text_matches_baseline": true
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/tools/build_ocr_lexicon.py",
+      "bytes_working_tree": 3966,
+      "sha256_working_tree_bytes": "373784db43dd7f9110c282bcfe52c2f000457d82e97d367e28621144053586e1",
+      "sha256_lf_normalized": "373784db43dd7f9110c282bcfe52c2f000457d82e97d367e28621144053586e1",
+      "sha256_baseline_git_blob": "373784db43dd7f9110c282bcfe52c2f000457d82e97d367e28621144053586e1",
+      "manifest_declared_sha256": null,
+      "manifest_matches_baseline_git_blob": null,
+      "manifest_matches_lf_normalized": null,
+      "working_tree_text_matches_baseline": true
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/tools/e2e_browser_image_first.mjs",
+      "bytes_working_tree": 22481,
+      "sha256_working_tree_bytes": "9b71590e09bc97410e10899e91132d49fde0907e9eac32c7176c10391be28cc3",
+      "sha256_lf_normalized": "9b71590e09bc97410e10899e91132d49fde0907e9eac32c7176c10391be28cc3",
+      "sha256_baseline_git_blob": "9b71590e09bc97410e10899e91132d49fde0907e9eac32c7176c10391be28cc3",
+      "manifest_declared_sha256": null,
+      "manifest_matches_baseline_git_blob": null,
+      "manifest_matches_lf_normalized": null,
+      "working_tree_text_matches_baseline": true
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/tools/evaluate_image_first_ocr.py",
+      "bytes_working_tree": 27509,
+      "sha256_working_tree_bytes": "8fc1702db02d05ebf7f6c2bdcefda4d15a77541d4e61a62a0fc73a01ec3de878",
+      "sha256_lf_normalized": "8fc1702db02d05ebf7f6c2bdcefda4d15a77541d4e61a62a0fc73a01ec3de878",
+      "sha256_baseline_git_blob": "8fc1702db02d05ebf7f6c2bdcefda4d15a77541d4e61a62a0fc73a01ec3de878",
+      "manifest_declared_sha256": null,
+      "manifest_matches_baseline_git_blob": null,
+      "manifest_matches_lf_normalized": null,
+      "working_tree_text_matches_baseline": true
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/tools/fetch_new_vmmu.py",
+      "bytes_working_tree": 3399,
+      "sha256_working_tree_bytes": "489041bbe395656a48c74f6fc8a5da6e16b4f24c7c44b76de7243bb8d1159d10",
+      "sha256_lf_normalized": "489041bbe395656a48c74f6fc8a5da6e16b4f24c7c44b76de7243bb8d1159d10",
+      "sha256_baseline_git_blob": "489041bbe395656a48c74f6fc8a5da6e16b4f24c7c44b76de7243bb8d1159d10",
+      "manifest_declared_sha256": null,
+      "manifest_matches_baseline_git_blob": null,
+      "manifest_matches_lf_normalized": null,
+      "working_tree_text_matches_baseline": true
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/tools/generate_all_receipts.py",
+      "bytes_working_tree": 56452,
+      "sha256_working_tree_bytes": "c40dd9539ab287537dbcc1ba907137a359118fa9f79de6ba8838acb92e161e08",
+      "sha256_lf_normalized": "c40dd9539ab287537dbcc1ba907137a359118fa9f79de6ba8838acb92e161e08",
+      "sha256_baseline_git_blob": "c40dd9539ab287537dbcc1ba907137a359118fa9f79de6ba8838acb92e161e08",
+      "manifest_declared_sha256": null,
+      "manifest_matches_baseline_git_blob": null,
+      "manifest_matches_lf_normalized": null,
+      "working_tree_text_matches_baseline": true
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/tools/new_external_catalog.py",
+      "bytes_working_tree": 15615,
+      "sha256_working_tree_bytes": "9343928fea50e4eebb511bfa6e340a5a0ac821e28fcf835019eec6e9d9fe40e8",
+      "sha256_lf_normalized": "9343928fea50e4eebb511bfa6e340a5a0ac821e28fcf835019eec6e9d9fe40e8",
+      "sha256_baseline_git_blob": "9343928fea50e4eebb511bfa6e340a5a0ac821e28fcf835019eec6e9d9fe40e8",
+      "manifest_declared_sha256": null,
+      "manifest_matches_baseline_git_blob": null,
+      "manifest_matches_lf_normalized": null,
+      "working_tree_text_matches_baseline": true
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/user_correction_cache_invalidation.json",
+      "bytes_working_tree": 2426,
+      "sha256_working_tree_bytes": "f860656db9804860ff4498c69388f17263d04916485bcd290f065710495ee7b3",
+      "sha256_lf_normalized": "83f491167e68ab110a02dfc208a2d8278977da27e5964b307538d93b7e553d49",
+      "sha256_baseline_git_blob": "83f491167e68ab110a02dfc208a2d8278977da27e5964b307538d93b7e553d49",
+      "manifest_declared_sha256": "83f491167e68ab110a02dfc208a2d8278977da27e5964b307538d93b7e553d49",
+      "manifest_matches_baseline_git_blob": true,
+      "manifest_matches_lf_normalized": true,
+      "working_tree_text_matches_baseline": true
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/vision_fallback_offline_receipt.json",
+      "bytes_working_tree": 2654,
+      "sha256_working_tree_bytes": "0addf12d251419374115ffd23964518d7ac84b98469f0a8a7f46538edb15238d",
+      "sha256_lf_normalized": "d4cf581dc25ed5f5f72e208decf30a75670bd90013de1e235e3f295c578c0559",
+      "sha256_baseline_git_blob": "d4cf581dc25ed5f5f72e208decf30a75670bd90013de1e235e3f295c578c0559",
+      "manifest_declared_sha256": "d4cf581dc25ed5f5f72e208decf30a75670bd90013de1e235e3f295c578c0559",
+      "manifest_matches_baseline_git_blob": true,
+      "manifest_matches_lf_normalized": true,
+      "working_tree_text_matches_baseline": true
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/vision_live_readiness.json",
+      "bytes_working_tree": 1973,
+      "sha256_working_tree_bytes": "38be4fd5510b20e7bf56698c28921f5af849068584b833c77678f9b1a18db8e4",
+      "sha256_lf_normalized": "32bb416c974a5130f059dd2adabd67f3b8bb2dd8416d381c98f4374c5767a2f1",
+      "sha256_baseline_git_blob": "32bb416c974a5130f059dd2adabd67f3b8bb2dd8416d381c98f4374c5767a2f1",
+      "manifest_declared_sha256": "32bb416c974a5130f059dd2adabd67f3b8bb2dd8416d381c98f4374c5767a2f1",
+      "manifest_matches_baseline_git_blob": true,
+      "manifest_matches_lf_normalized": true,
+      "working_tree_text_matches_baseline": true
+    }
+  ],
+  "additional_source": {
+    "path": "docs/evaluation/geometry/runs/real-world-printed-handwriting-acquisition/tools/corpus_catalog.py",
+    "sha256_working_tree_bytes": "160b2017aa5d3bd7f32f6a9ae9134f995cb85c4f0df34bcee316795a753b3050"
+  },
+  "generator": {
+    "path": "docs/evaluation/geometry/runs/real-image-ocr-vision-comparative-acceptance/tools/reconcile_prior_metrics.py",
+    "sha256_bytes": "6c0bb423c955752d165505e7279e7d28106e3960832b4edfb577b1627ac99a7c"
+  },
+  "historical_report": {
+    "path": "docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/ALGOSIM_IMAGE_FIRST_OCR_VERIFIED_GEOMETRY_REPORT.md",
+    "unchanged": true
+  }
+}

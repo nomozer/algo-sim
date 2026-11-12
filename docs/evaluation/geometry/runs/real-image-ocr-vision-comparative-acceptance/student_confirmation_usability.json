@@ -1,0 +1,21 @@
+{
+  "schema": "algosim-student-confirmation-usability/1",
+  "run_id": "real-image-ocr-vision-comparative-acceptance",
+  "generated_at_utc": "2026-11-11T02:42:05.685379+00:00",
+  "allow_live_ai": 0,
+  "provider_calls": 0,
+  "independent_h1_validation": "NOT_MEASURED",
+  "real_student_status": "NOT_MEASURED",
+  "real_student_count": null,
+  "real_completion_time_seconds": null,
+  "real_error_rate": null,
+  "real_task_success_rate": null,
+  "automated_confirmation_status": "PENDING_PARENT_EVIDENCE_REVIEW",
+  "automated_evidence_paths": [
+    "frontend_browser_confirmation_audit.json",
+    "frontend_browser_existing_scenarios.json"
+  ],
+  "automation_is_human_usability_evidence": false,
+  "prior_correction_simulation": "USER_CORRECTED_SIMULATED uses catalog ground truth to choose span edits; no observed student study.",
+  "remaining_measurement": "Observe consented students reading original images, reviewing uncertainty spans and confirming or correcting; separate semantic correctness from completion time and effort."
+}

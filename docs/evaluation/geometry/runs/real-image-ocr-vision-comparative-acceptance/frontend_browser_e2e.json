@@ -1,0 +1,29 @@
+{
+  "run_id": "real-image-ocr-vision-comparative-acceptance",
+  "head": "7b170021451a86c56a2eebadcdd0f0f088fcc229",
+  "measured_system": [
+    "a068b6f6586c1b120bd8350dbe706f5681ab71fd7da57502c34f940140268921",
+    115
+  ],
+  "allow_live_ai": 0,
+  "ground_truth_authority": "AGENT_TRANSCRIBED_UNVERIFIED",
+  "independent_h1": "NOT_MEASURED",
+  "classification": "DERIVED_FROM_REFERENCED_MEASUREMENTS_NOT_A_NEW_MEASUREMENT",
+  "existing_scenarios": {
+    "total_scenarios": 6,
+    "passed_scenarios": 6,
+    "all_passed": true,
+    "provider_calls": 0
+  },
+  "confirmation_audit": {
+    "passed": 4,
+    "total": 4
+  },
+  "source_receipts": [
+    "frontend_browser_existing_scenarios.json",
+    "frontend_browser_confirmation_audit.json"
+  ],
+  "browser_zoom": "Old harness used deviceScaleFactor (DPR), added harness uses CSS zoom1/1.1; browser chrome zoom itself NOT_MEASURED",
+  "real_student_usability": "NOT_MEASURED",
+  "screenshots": "Ignored local only because source-image crops have redistribution limitations"
+}

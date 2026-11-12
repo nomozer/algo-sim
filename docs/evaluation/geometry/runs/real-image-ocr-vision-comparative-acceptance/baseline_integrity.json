@@ -1,0 +1,1361 @@
+{
+  "schema": "algosim-baseline-integrity/1",
+  "run_id": "real-image-ocr-vision-comparative-acceptance",
+  "generated_at_utc": "2026-11-11T02:42:05.685379+00:00",
+  "allow_live_ai": 0,
+  "provider_calls": 0,
+  "independent_h1_validation": "NOT_MEASURED",
+  "classification": "BASELINE_GIT_RECONSTRUCTED_CURRENT_WORKTREE_RECORDED_SEPARATELY",
+  "head_at_audit": "6bb22fa3bb183ad28cdf1395c99e5eb375fac97c",
+  "baseline_commit": "6bb22fa3bb183ad28cdf1395c99e5eb375fac97c",
+  "product_commit": "bdc07a8557277d9780bee8689567990854ad4521",
+  "product_is_ancestor_of_baseline": true,
+  "product_commit_computed_using_original_rule": "bdc07a8557277d9780bee8689567990854ad4521",
+  "baseline_candidate": {
+    "path": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+    "sha256_git_blob": "598ea62f45995b24f99d94e15d38798311e4914f8c98e9ea571f522f87399635",
+    "declared_product_commit": "bdc07a8557277d9780bee8689567990854ad4521",
+    "declared_commit": "bdc07a8557277d9780bee8689567990854ad4521",
+    "declared_clean_flag": false,
+    "declared_file_count": 115,
+    "declared_tree_hash": "6851b71826793fffbb922e0b7706e1c2a32bb2203d615c8eb0414e82b0d2c947",
+    "computed_from_baseline_git_blob_count": 115,
+    "computed_from_baseline_git_tree_hash": "6851b71826793fffbb922e0b7706e1c2a32bb2203d615c8eb0414e82b0d2c947",
+    "matches": true
+  },
+  "hashing_algorithm": {
+    "source": "backend/scripts/freeze_evaluation_candidate.py at 6bb22fa3bb183ad28cdf1395c99e5eb375fac97c",
+    "source_sha256": "bf659ce95a1049b170a32418b25e445990e8badc8c97a7abda68b0f367d9ea59",
+    "measured_paths": [
+      "backend/app",
+      "frontend/src/simulations/domains/semantic",
+      "frontend/src/simulations/domains/semantic/semantic_program.schema.json"
+    ],
+    "formula": "SHA256(concat(sorted measured path UTF8 + NUL + SHA256(file bytes with CRLF converted to LF).digest()))",
+    "baseline_source": "git show baseline:path; original measured scopes and exclusions, no checkout changes",
+    "current_source": "original measured_system_hash functions extracted with AST; current files on disk",
+    "frontend_scope_caveat": "Measured hash includes semantic frontend domain only; other frontend changes are additionally enumerated and require final product identity freeze."
+  },
+  "current_tree_at_audit": {
+    "file_count": 115,
+    "tree_hash": "b79cd3bc0703b59cd5caeabbfaf17d833de791b827eda87cd7cba864adad7ce0",
+    "matches_historical_candidate": false,
+    "status": "PENDING_FINAL_FREEZE_AFTER_PARENT_FIXES",
+    "tracked_product_and_test_changed_paths": [
+      "backend/app/ingestion/local_ocr.py",
+      "frontend/src/components/photo-problem-flow.ts",
+      "frontend/src/components/photo-span-review.test.tsx"
+    ],
+    "git_status_porcelain": [
+      " M backend/app/ingestion/local_ocr.py",
+      " M frontend/src/components/photo-problem-flow.ts",
+      " M frontend/src/components/photo-span-review.test.tsx",
+      "?? Documentsprojectsalgo-sim.superpowersworktreeslocal-first-geometry-understanding.superpowersoffline-logsreal-image-ocr-vision-comparative-acceptancefinalpytest-9064/test_yeu_cau_san_pham_khong_ba0/replay.json",
+      "?? backend/tests/test_local_ocr_worker_lifecycle.py",
+      "?? docs/evaluation/geometry/runs/real-image-ocr-vision-comparative-acceptance/failure_surface.json",
+      "?? docs/evaluation/geometry/runs/real-image-ocr-vision-comparative-acceptance/frontend_browser_confirmation_audit.json",
+      "?? docs/evaluation/geometry/runs/real-image-ocr-vision-comparative-acceptance/frontend_browser_existing_scenarios.json",
+      "?? docs/evaluation/geometry/runs/real-image-ocr-vision-comparative-acceptance/full_regression_baseline.json",
+      "?? docs/evaluation/geometry/runs/real-image-ocr-vision-comparative-acceptance/full_regression_summary.json",
+      "?? docs/evaluation/geometry/runs/real-image-ocr-vision-comparative-acceptance/plan.md",
+      "?? docs/evaluation/geometry/runs/real-image-ocr-vision-comparative-acceptance/prior_corpus_actual_rerun.json",
+      "?? docs/evaluation/geometry/runs/real-image-ocr-vision-comparative-acceptance/prior_metric_reconciliation.json",
+      "?? docs/evaluation/geometry/runs/real-image-ocr-vision-comparative-acceptance/tools/acquire_new_corpus.py",
+      "?? docs/evaluation/geometry/runs/real-image-ocr-vision-comparative-acceptance/tools/browser_confirmation_audit.mjs",
+      "?? docs/evaluation/geometry/runs/real-image-ocr-vision-comparative-acceptance/tools/evaluate_acceptance.py",
+      "?? docs/evaluation/geometry/runs/real-image-ocr-vision-comparative-acceptance/tools/measured_app.py",
+      "?? docs/evaluation/geometry/runs/real-image-ocr-vision-comparative-acceptance/tools/reconcile_prior_metrics.py",
+      "?? docs/evaluation/geometry/runs/real-image-ocr-vision-comparative-acceptance/tools/run_regression.py",
+      "?? docs/evaluation/geometry/runs/real-image-ocr-vision-comparative-acceptance/tools/vision_comparison.py"
+    ],
+    "note": "This current-tree observation is a timestamped snapshot during authorized parent edits, not an immutable final candidate."
+  },
+  "measured_files": [
+    {
+      "path": "backend/app/__init__.py",
+      "baseline_git_object_id": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256_baseline_raw_git_blob": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sha256_baseline_lf": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sha256_current_disk_bytes": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sha256_current_lf": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/accounts/__init__.py",
+      "baseline_git_object_id": "77211bc9b70c5fc2f49fb94b0a7f9bfabf7261d1",
+      "sha256_baseline_raw_git_blob": "1ef2e85075e675adff53bddae98b8bde27b93ea11ecb2766e5b5a55b8f9120d5",
+      "sha256_baseline_lf": "1ef2e85075e675adff53bddae98b8bde27b93ea11ecb2766e5b5a55b8f9120d5",
+      "sha256_current_disk_bytes": "e38eb216f522dc058545ebcc144bc13acab26e6df4ff9ae0b0535b6623eea077",
+      "sha256_current_lf": "1ef2e85075e675adff53bddae98b8bde27b93ea11ecb2766e5b5a55b8f9120d5",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/accounts/classroom_router.py",
+      "baseline_git_object_id": "7a3c368bdf9410d5372917471e04bc4c030bad35",
+      "sha256_baseline_raw_git_blob": "0573411e4415a70cee9c94211f65d72184feae48b85e87974ab181a71ef0f5dc",
+      "sha256_baseline_lf": "0573411e4415a70cee9c94211f65d72184feae48b85e87974ab181a71ef0f5dc",
+      "sha256_current_disk_bytes": "3b2d6e9b156c0bfaa5e9eba62c9a3009e867f053dbaa315612661218b7546a5c",
+      "sha256_current_lf": "0573411e4415a70cee9c94211f65d72184feae48b85e87974ab181a71ef0f5dc",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/accounts/passwords.py",
+      "baseline_git_object_id": "bf55330bec681ac9aaaabe5e7b944ab4ecce989a",
+      "sha256_baseline_raw_git_blob": "bb0bbf52c9aade99dded20204a4a1ff041ff66963eb268bcf774ab8ce5067b4f",
+      "sha256_baseline_lf": "bb0bbf52c9aade99dded20204a4a1ff041ff66963eb268bcf774ab8ce5067b4f",
+      "sha256_current_disk_bytes": "e7924db628cac5ad4c710e650cab5f358d4b36e680050d5cc2650cc255618389",
+      "sha256_current_lf": "bb0bbf52c9aade99dded20204a4a1ff041ff66963eb268bcf774ab8ce5067b4f",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/accounts/policy.py",
+      "baseline_git_object_id": "ec89fe363114cf83dc06916661aeba162d148323",
+      "sha256_baseline_raw_git_blob": "03177ba471af89d3422f90567a28ccf1f71fe9786f1cd73a168c4df7d7cbc688",
+      "sha256_baseline_lf": "03177ba471af89d3422f90567a28ccf1f71fe9786f1cd73a168c4df7d7cbc688",
+      "sha256_current_disk_bytes": "a1fa93f7b4db3138f8f3f6adfb60230357d7951b71b69deba807bdb6c4cd3b4d",
+      "sha256_current_lf": "03177ba471af89d3422f90567a28ccf1f71fe9786f1cd73a168c4df7d7cbc688",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/accounts/router.py",
+      "baseline_git_object_id": "1d62d2d773c47cb372fe023c01be9a31f9bcbf0a",
+      "sha256_baseline_raw_git_blob": "dc16ed89230e2eb540313303e1c2e676d92679096c7e31d7baae437f0652ce98",
+      "sha256_baseline_lf": "dc16ed89230e2eb540313303e1c2e676d92679096c7e31d7baae437f0652ce98",
+      "sha256_current_disk_bytes": "3967e86d3217390858521281f0f4526aabb86dd495f43b2418e376d5347cc320",
+      "sha256_current_lf": "dc16ed89230e2eb540313303e1c2e676d92679096c7e31d7baae437f0652ce98",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/accounts/service.py",
+      "baseline_git_object_id": "1c94bc67f8769a3c3c6b02718d7fbc56a9465212",
+      "sha256_baseline_raw_git_blob": "174da2326cdd05a4a7c89a90e8c303797fcf31d692dd513637bb529ad1f11f99",
+      "sha256_baseline_lf": "174da2326cdd05a4a7c89a90e8c303797fcf31d692dd513637bb529ad1f11f99",
+      "sha256_current_disk_bytes": "c8ec0f8639c5984bc8778104d5c59bd099767b4a8be200293caf1ec8265256eb",
+      "sha256_current_lf": "174da2326cdd05a4a7c89a90e8c303797fcf31d692dd513637bb529ad1f11f99",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/accounts/session_router.py",
+      "baseline_git_object_id": "b53db911db859f0cf7005a0e445af54b6042ad4b",
+      "sha256_baseline_raw_git_blob": "38f4e7a33dbb154c754879518c086557c3fb8a8ee9ad0fb550a50434c555eb28",
+      "sha256_baseline_lf": "38f4e7a33dbb154c754879518c086557c3fb8a8ee9ad0fb550a50434c555eb28",
+      "sha256_current_disk_bytes": "3dae0a89d0ea12d8ad37dd9b18d8f69158d7470a673701e1c790553e3de6299c",
+      "sha256_current_lf": "38f4e7a33dbb154c754879518c086557c3fb8a8ee9ad0fb550a50434c555eb28",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/ai/__init__.py",
+      "baseline_git_object_id": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256_baseline_raw_git_blob": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sha256_baseline_lf": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sha256_current_disk_bytes": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sha256_current_lf": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/ai/adapter4_route.py",
+      "baseline_git_object_id": "3ef98dd15d7bcb44dbefa896af0718294480b9b9",
+      "sha256_baseline_raw_git_blob": "a0139aa581c68fed90f55e4cdec39e980f32f1081049d34957455d68a02aa868",
+      "sha256_baseline_lf": "a0139aa581c68fed90f55e4cdec39e980f32f1081049d34957455d68a02aa868",
+      "sha256_current_disk_bytes": "5d62446e87247a6565259287b8c4e3f76e7882aba90777438693d61e8a5c22b7",
+      "sha256_current_lf": "a0139aa581c68fed90f55e4cdec39e980f32f1081049d34957455d68a02aa868",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/ai/adaptive_input_router.py",
+      "baseline_git_object_id": "1245e5386e8a6d23ed19ba6fbb3bb60617af724e",
+      "sha256_baseline_raw_git_blob": "5a70979fe7239dbdc7bb90b3945958b619867589beb8510b939acf6f022874f4",
+      "sha256_baseline_lf": "5a70979fe7239dbdc7bb90b3945958b619867589beb8510b939acf6f022874f4",
+      "sha256_current_disk_bytes": "5a70979fe7239dbdc7bb90b3945958b619867589beb8510b939acf6f022874f4",
+      "sha256_current_lf": "5a70979fe7239dbdc7bb90b3945958b619867589beb8510b939acf6f022874f4",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/ai/fact_extraction.py",
+      "baseline_git_object_id": "4328bf107df6fddb7660c7de7c6236e03303756c",
+      "sha256_baseline_raw_git_blob": "0dc08308d858613e45cebcb8cc1f922acb73eb276455e450e0eb6f0b32f597f3",
+      "sha256_baseline_lf": "0dc08308d858613e45cebcb8cc1f922acb73eb276455e450e0eb6f0b32f597f3",
+      "sha256_current_disk_bytes": "7445d8d8c8a49588395eb5385b2b6e557d76dbe3ceb841003b5658c3a228f03a",
+      "sha256_current_lf": "0dc08308d858613e45cebcb8cc1f922acb73eb276455e450e0eb6f0b32f597f3",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/ai/function_calling.py",
+      "baseline_git_object_id": "be21c3b5db7c820d4c68f9f04797a197970edf29",
+      "sha256_baseline_raw_git_blob": "afe74ea90b76d45354c3015c114742b4f6b33144c787c89085009a08032fb598",
+      "sha256_baseline_lf": "afe74ea90b76d45354c3015c114742b4f6b33144c787c89085009a08032fb598",
+      "sha256_current_disk_bytes": "6591d128a292a9f35561ec36e8e5d3904a9f9ac031c05faebeacaaa67e296b87",
+      "sha256_current_lf": "afe74ea90b76d45354c3015c114742b4f6b33144c787c89085009a08032fb598",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/ai/function_route.py",
+      "baseline_git_object_id": "ba84dd6d9115f7532b09482104e66de5232ea2b6",
+      "sha256_baseline_raw_git_blob": "c7154d749e815c3abeb7f3d43d0349c51a0757adca61478e9aba5604b0633c00",
+      "sha256_baseline_lf": "c7154d749e815c3abeb7f3d43d0349c51a0757adca61478e9aba5604b0633c00",
+      "sha256_current_disk_bytes": "ef21a782bdd0345f1944e93cfca933164e7a9a6304de69f3d6d3ea091ce68d12",
+      "sha256_current_lf": "c7154d749e815c3abeb7f3d43d0349c51a0757adca61478e9aba5604b0633c00",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/ai/gemini.py",
+      "baseline_git_object_id": "7853562ae7652f8d79a9af96291ee6d36ff8bb77",
+      "sha256_baseline_raw_git_blob": "4ad1b152e6e19b3c16df5f06447e1ede2d3e6ef7af310ba0480ebefac13f2945",
+      "sha256_baseline_lf": "4ad1b152e6e19b3c16df5f06447e1ede2d3e6ef7af310ba0480ebefac13f2945",
+      "sha256_current_disk_bytes": "7b072472e4a08a60496535e168ec4d0c5951c78b8b602dae12022a096805463c",
+      "sha256_current_lf": "4ad1b152e6e19b3c16df5f06447e1ede2d3e6ef7af310ba0480ebefac13f2945",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/ai/hybrid_offline.py",
+      "baseline_git_object_id": "acc7a059c3ef81c1e957aa084abf5eb5390a1a6c",
+      "sha256_baseline_raw_git_blob": "af35aec2d10cf44542d6256a4bdd08b6649513fba0371d342253dcb00a812548",
+      "sha256_baseline_lf": "af35aec2d10cf44542d6256a4bdd08b6649513fba0371d342253dcb00a812548",
+      "sha256_current_disk_bytes": "e60709cb4b8d589bd6e21282e7d187cb0685894e733b23b7764ddcc995203031",
+      "sha256_current_lf": "af35aec2d10cf44542d6256a4bdd08b6649513fba0371d342253dcb00a812548",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/ai/hybrid_preview.py",
+      "baseline_git_object_id": "9ee7ab01cdcdbaa1652cda897a28061ded3a7e0e",
+      "sha256_baseline_raw_git_blob": "33ebd29b292185d853cd03ca69b1575a3bf30a245c520e848a6da5047f1cff28",
+      "sha256_baseline_lf": "33ebd29b292185d853cd03ca69b1575a3bf30a245c520e848a6da5047f1cff28",
+      "sha256_current_disk_bytes": "8dbc8fca892b47a602fa3361c6bd72342f38f79daab72a0321c3db045d918a99",
+      "sha256_current_lf": "33ebd29b292185d853cd03ca69b1575a3bf30a245c520e848a6da5047f1cff28",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/ai/local_geometry_parser.py",
+      "baseline_git_object_id": "3dea9d1efcfeba4c177caa5a7a5c5fc0ec85a9e9",
+      "sha256_baseline_raw_git_blob": "65a99a800f093bb6ef997a076720d0c176bbd234b336273c74566f49d05e214e",
+      "sha256_baseline_lf": "65a99a800f093bb6ef997a076720d0c176bbd234b336273c74566f49d05e214e",
+      "sha256_current_disk_bytes": "463d010f0fa1cd79f6668ceeb16ba3378444295aa2a5f6ce5bd1abbe05668d84",
+      "sha256_current_lf": "65a99a800f093bb6ef997a076720d0c176bbd234b336273c74566f49d05e214e",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/ai/route_policy.py",
+      "baseline_git_object_id": "c238e645cdbe052dfed8a79dce41d2efbac99575",
+      "sha256_baseline_raw_git_blob": "4cb43bb9294f5c12f6fe04f5ec536f8182b780f2f84eb3f743465f8516096443",
+      "sha256_baseline_lf": "4cb43bb9294f5c12f6fe04f5ec536f8182b780f2f84eb3f743465f8516096443",
+      "sha256_current_disk_bytes": "7134ed9bc22948fe01017f2840bf87c964e61097c256a383b47844e171fc49d2",
+      "sha256_current_lf": "4cb43bb9294f5c12f6fe04f5ec536f8182b780f2f84eb3f743465f8516096443",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/ai/route_trace.py",
+      "baseline_git_object_id": "71ea7004b742b9f593f6180062f461eb18a974fa",
+      "sha256_baseline_raw_git_blob": "8f9f4585b0f325494bc8d39b00caa2c896cfcf0e61cda8a3fb68cc71a35702c2",
+      "sha256_baseline_lf": "8f9f4585b0f325494bc8d39b00caa2c896cfcf0e61cda8a3fb68cc71a35702c2",
+      "sha256_current_disk_bytes": "6a45060bd202c4ea0ce2e7629886fe3bb172c71fc51ed786aea4da57328b5d6d",
+      "sha256_current_lf": "8f9f4585b0f325494bc8d39b00caa2c896cfcf0e61cda8a3fb68cc71a35702c2",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/ai/skills/transcribe.md",
+      "baseline_git_object_id": "dc8029dee11ebc57d78fa3f90c2f8f06f85f3565",
+      "sha256_baseline_raw_git_blob": "b499dc7a29fec4a387074b89ccbce393970fdef69348641cff2d60ba850570d6",
+      "sha256_baseline_lf": "b499dc7a29fec4a387074b89ccbce393970fdef69348641cff2d60ba850570d6",
+      "sha256_current_disk_bytes": "8576a1a70c8619f714bfd64085269a24578d28f555d10eb3a35b299f3508658e",
+      "sha256_current_lf": "b499dc7a29fec4a387074b89ccbce393970fdef69348641cff2d60ba850570d6",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/ai/telemetry.py",
+      "baseline_git_object_id": "742f5940b2bd7f2f449f5bb0a6ee25051847688d",
+      "sha256_baseline_raw_git_blob": "6929b2f7e182a6a9e29b9e54cd8e4dfb8625a517955caa95f705399a33ef3997",
+      "sha256_baseline_lf": "6929b2f7e182a6a9e29b9e54cd8e4dfb8625a517955caa95f705399a33ef3997",
+      "sha256_current_disk_bytes": "d40d30115d3b48256cfa0a6d3bd8ff6808e6ee147a2fa3e365ef86c35a3ba4e5",
+      "sha256_current_lf": "6929b2f7e182a6a9e29b9e54cd8e4dfb8625a517955caa95f705399a33ef3997",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/ai/typed_fact_next_extraction.py",
+      "baseline_git_object_id": "b033d498dd7c5ccd7c61af46a5be07be51cb0e93",
+      "sha256_baseline_raw_git_blob": "d0c37a10b7d62bad1cf08e4062ccaae9a79643055c750e19715c43a9044047f8",
+      "sha256_baseline_lf": "d0c37a10b7d62bad1cf08e4062ccaae9a79643055c750e19715c43a9044047f8",
+      "sha256_current_disk_bytes": "ceecfd5d2d7ef410eaa6837ea9f3af53bbe80644a47cbe4b55c17ebcacdc852a",
+      "sha256_current_lf": "d0c37a10b7d62bad1cf08e4062ccaae9a79643055c750e19715c43a9044047f8",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/idempotency.py",
+      "baseline_git_object_id": "1e5a4192828c7e528e66d4f83210dc8fb2702a07",
+      "sha256_baseline_raw_git_blob": "3aa9085fc25dcefc2197a5551f71354882daf628187103dfedeb4dddb2884557",
+      "sha256_baseline_lf": "3aa9085fc25dcefc2197a5551f71354882daf628187103dfedeb4dddb2884557",
+      "sha256_current_disk_bytes": "9afebc9c23e812492a7d4f9b956e92b50f36f71616343408b6dadb43fd893c7e",
+      "sha256_current_lf": "3aa9085fc25dcefc2197a5551f71354882daf628187103dfedeb4dddb2884557",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/ingestion/__init__.py",
+      "baseline_git_object_id": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256_baseline_raw_git_blob": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sha256_baseline_lf": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sha256_current_disk_bytes": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sha256_current_lf": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/ingestion/document_reader.py",
+      "baseline_git_object_id": "4e7dc7d955f4a9c4cb4071cedc5e1514f1ac71a7",
+      "sha256_baseline_raw_git_blob": "b47b9a822fa542bb5b3a170261fd3f91d6b50515ac9f170cfa472951ef92ac93",
+      "sha256_baseline_lf": "b47b9a822fa542bb5b3a170261fd3f91d6b50515ac9f170cfa472951ef92ac93",
+      "sha256_current_disk_bytes": "6c18a446fc9b5f02d9cdcb483a046c2f675b3a0dbbeef141c4da3290d05622eb",
+      "sha256_current_lf": "b47b9a822fa542bb5b3a170261fd3f91d6b50515ac9f170cfa472951ef92ac93",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/ingestion/image.py",
+      "baseline_git_object_id": "00bb8c88531716d4c5637e76ead8dc25f2974329",
+      "sha256_baseline_raw_git_blob": "7ccbb4e81bd158767919e092dee08ec9e99460e5b34fa1b4d646aef5db683c54",
+      "sha256_baseline_lf": "7ccbb4e81bd158767919e092dee08ec9e99460e5b34fa1b4d646aef5db683c54",
+      "sha256_current_disk_bytes": "6cff8bbad3f1737b076cb78831adaec79b1692d080ae3f37f0c11c5912223614",
+      "sha256_current_lf": "7ccbb4e81bd158767919e092dee08ec9e99460e5b34fa1b4d646aef5db683c54",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/ingestion/image_extraction.py",
+      "baseline_git_object_id": "a947e60d11fc9990388f5b4767ad4235db633700",
+      "sha256_baseline_raw_git_blob": "15706915554acb7827ec8ea8b91d5418f81834f011f2fabbe4eb30a7ac55710d",
+      "sha256_baseline_lf": "15706915554acb7827ec8ea8b91d5418f81834f011f2fabbe4eb30a7ac55710d",
+      "sha256_current_disk_bytes": "07369c5b6879631dd226bb79051833e9024a9bd09783247d47f920f97ab811ae",
+      "sha256_current_lf": "15706915554acb7827ec8ea8b91d5418f81834f011f2fabbe4eb30a7ac55710d",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/ingestion/input.py",
+      "baseline_git_object_id": "6fb4d5890612b23e59b073bd6b25dc7e5fef78dc",
+      "sha256_baseline_raw_git_blob": "83ec145e4426a4f59716acc329e1803c41e69c7705a6a225f25712fb77fdf074",
+      "sha256_baseline_lf": "83ec145e4426a4f59716acc329e1803c41e69c7705a6a225f25712fb77fdf074",
+      "sha256_current_disk_bytes": "6e13803331b805f5d5108fad5b737a8d06a3240943cc38529e0c3a04863c9c61",
+      "sha256_current_lf": "83ec145e4426a4f59716acc329e1803c41e69c7705a6a225f25712fb77fdf074",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/ingestion/local_ocr.py",
+      "baseline_git_object_id": "8e49fcba51c163107c86fadc2fc8665328f5a21d",
+      "sha256_baseline_raw_git_blob": "dda0ad03f77efe770a988f5d5a08dc67d345204155a37ba46be7ae429c5dd696",
+      "sha256_baseline_lf": "dda0ad03f77efe770a988f5d5a08dc67d345204155a37ba46be7ae429c5dd696",
+      "sha256_current_disk_bytes": "ee2bcd661794545fcee28fa2d49ae14ff56aff543a9831c3ce74a50d626081fc",
+      "sha256_current_lf": "ee2bcd661794545fcee28fa2d49ae14ff56aff543a9831c3ce74a50d626081fc",
+      "current_lf_matches_baseline": false
+    },
+    {
+      "path": "backend/app/ingestion/local_ocr_route.py",
+      "baseline_git_object_id": "cd43d026b1857be67bdc1107618d245b9bccfd1b",
+      "sha256_baseline_raw_git_blob": "955785ab77a80f1d582f279e3b51c4f13cb0d436476f16cc83d2d8180225e4d5",
+      "sha256_baseline_lf": "955785ab77a80f1d582f279e3b51c4f13cb0d436476f16cc83d2d8180225e4d5",
+      "sha256_current_disk_bytes": "955785ab77a80f1d582f279e3b51c4f13cb0d436476f16cc83d2d8180225e4d5",
+      "sha256_current_lf": "955785ab77a80f1d582f279e3b51c4f13cb0d436476f16cc83d2d8180225e4d5",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/ingestion/local_ocr_worker.py",
+      "baseline_git_object_id": "db20fd1fbb4893394403e6710c3a8af671bc8a33",
+      "sha256_baseline_raw_git_blob": "dba64aaf485fa53d41115ef59f7e4618e1b5219b7178380cd8ff2995756750fc",
+      "sha256_baseline_lf": "dba64aaf485fa53d41115ef59f7e4618e1b5219b7178380cd8ff2995756750fc",
+      "sha256_current_disk_bytes": "dba64aaf485fa53d41115ef59f7e4618e1b5219b7178380cd8ff2995756750fc",
+      "sha256_current_lf": "dba64aaf485fa53d41115ef59f7e4618e1b5219b7178380cd8ff2995756750fc",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/ingestion/ocr_lexicon.py",
+      "baseline_git_object_id": "a26f39bba65a45cdd83c27c284cbd06f6721bea3",
+      "sha256_baseline_raw_git_blob": "412c700664608f0c38e3e3e09989ced6b5a5a80d28f96ee7bc6d45329411ede0",
+      "sha256_baseline_lf": "412c700664608f0c38e3e3e09989ced6b5a5a80d28f96ee7bc6d45329411ede0",
+      "sha256_current_disk_bytes": "55e46e426177c5720b1ee72950900076c410f0a503ac5dc029b927ca6937ac5f",
+      "sha256_current_lf": "412c700664608f0c38e3e3e09989ced6b5a5a80d28f96ee7bc6d45329411ede0",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/ingestion/ocr_reconcile.py",
+      "baseline_git_object_id": "67119a4f7c4420a2142044f1327338a05e3b2544",
+      "sha256_baseline_raw_git_blob": "b7d7463ac84abf1d10a50e34cf8f5ab9e2d7aa3ec4c419204feb46f4f2d2893e",
+      "sha256_baseline_lf": "b7d7463ac84abf1d10a50e34cf8f5ab9e2d7aa3ec4c419204feb46f4f2d2893e",
+      "sha256_current_disk_bytes": "b7d7463ac84abf1d10a50e34cf8f5ab9e2d7aa3ec4c419204feb46f4f2d2893e",
+      "sha256_current_lf": "b7d7463ac84abf1d10a50e34cf8f5ab9e2d7aa3ec4c419204feb46f4f2d2893e",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/ingestion/region_detector.py",
+      "baseline_git_object_id": "4464e1adc5c0553abee166992d3598622a3a750b",
+      "sha256_baseline_raw_git_blob": "4ceea47bb98d39541af787b35eb2c9d365ec07c6231e5decdde954042a4fccf0",
+      "sha256_baseline_lf": "4ceea47bb98d39541af787b35eb2c9d365ec07c6231e5decdde954042a4fccf0",
+      "sha256_current_disk_bytes": "1add8825ebc25bafb01ffeed750459cd54d75b3537b01bf8d06e8206dcf15fcf",
+      "sha256_current_lf": "4ceea47bb98d39541af787b35eb2c9d365ec07c6231e5decdde954042a4fccf0",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/ingestion/unified_input.py",
+      "baseline_git_object_id": "7ae8868765110c112a555cb5b15f801cd9e6300d",
+      "sha256_baseline_raw_git_blob": "b3c2f8b5752e923db2cfae89aa95b2749b15d8af6a4fe38fd39c9f387a31169b",
+      "sha256_baseline_lf": "b3c2f8b5752e923db2cfae89aa95b2749b15d8af6a4fe38fd39c9f387a31169b",
+      "sha256_current_disk_bytes": "409a671edf82c546dfe95b81c8aa0a016aad5ab42f7ed4fd1ef59818d2be07ad",
+      "sha256_current_lf": "b3c2f8b5752e923db2cfae89aa95b2749b15d8af6a4fe38fd39c9f387a31169b",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/learner_messages.py",
+      "baseline_git_object_id": "9ffa260385b8acb3c3c2bbb9618be65ded7fa5f5",
+      "sha256_baseline_raw_git_blob": "0ec1b140b60b52f2b4dbb2da54ec3193bf0311580ec01d963acb273ef6711638",
+      "sha256_baseline_lf": "0ec1b140b60b52f2b4dbb2da54ec3193bf0311580ec01d963acb273ef6711638",
+      "sha256_current_disk_bytes": "bac346f1eccbfdfc084366d9796507b21fd7fc9bae3470ea0f1742ef8b912b8d",
+      "sha256_current_lf": "0ec1b140b60b52f2b4dbb2da54ec3193bf0311580ec01d963acb273ef6711638",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/main.py",
+      "baseline_git_object_id": "e1c8da0debd07d0c6cf6f710acf7e77cb80086bf",
+      "sha256_baseline_raw_git_blob": "0420f084b8356f491edc9afebcdbdde0f77c4d12c16cc01c096453bf8d34b68a",
+      "sha256_baseline_lf": "0420f084b8356f491edc9afebcdbdde0f77c4d12c16cc01c096453bf8d34b68a",
+      "sha256_current_disk_bytes": "2989ca385eb775669fe30b1055fe3b053199120e79a902c496b786b5c9cffb75",
+      "sha256_current_lf": "0420f084b8356f491edc9afebcdbdde0f77c4d12c16cc01c096453bf8d34b68a",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/persistence/__init__.py",
+      "baseline_git_object_id": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256_baseline_raw_git_blob": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sha256_baseline_lf": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sha256_current_disk_bytes": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sha256_current_lf": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/persistence/classroom_models.py",
+      "baseline_git_object_id": "dcd858a4af4a5faf2046b2a62562675a67b55000",
+      "sha256_baseline_raw_git_blob": "8f95bf44eec97a12971f8d6f9f9e4e2594e8e3d1ca4be0589899aabdb3650596",
+      "sha256_baseline_lf": "8f95bf44eec97a12971f8d6f9f9e4e2594e8e3d1ca4be0589899aabdb3650596",
+      "sha256_current_disk_bytes": "496ee0b32ef6dac5e488602be4128fe2ef74c25556df3b1277569e571a8e314f",
+      "sha256_current_lf": "8f95bf44eec97a12971f8d6f9f9e4e2594e8e3d1ca4be0589899aabdb3650596",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/persistence/db.py",
+      "baseline_git_object_id": "5b74557ce6533d668ab997bef94e929d1942b199",
+      "sha256_baseline_raw_git_blob": "b9340ec5eb67798ebdd2a12e35af16a1d2ef299cc68aafee045b530a4cc97832",
+      "sha256_baseline_lf": "b9340ec5eb67798ebdd2a12e35af16a1d2ef299cc68aafee045b530a4cc97832",
+      "sha256_current_disk_bytes": "e86631bbb0c2aaa95a33fb9195949cca5487835b2260e834b3241ef48c06f793",
+      "sha256_current_lf": "b9340ec5eb67798ebdd2a12e35af16a1d2ef299cc68aafee045b530a4cc97832",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/runtime_identity.py",
+      "baseline_git_object_id": "4594a46a7c25732995637efd50eef79e2bc6b123",
+      "sha256_baseline_raw_git_blob": "083e2638a4e13968b75e28c82d4b11168547f4f4b49f2cadca6a4779d4349383",
+      "sha256_baseline_lf": "083e2638a4e13968b75e28c82d4b11168547f4f4b49f2cadca6a4779d4349383",
+      "sha256_current_disk_bytes": "8e4ad1adb53109743657aa49a47238a2d00470b1432f179126816fc0d77154f0",
+      "sha256_current_lf": "083e2638a4e13968b75e28c82d4b11168547f4f4b49f2cadca6a4779d4349383",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/simulation/__init__.py",
+      "baseline_git_object_id": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256_baseline_raw_git_blob": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sha256_baseline_lf": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sha256_current_disk_bytes": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sha256_current_lf": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/simulation/error_codes.py",
+      "baseline_git_object_id": "bcbf9e925dcd74b5022362ebb0dbbdc1af85843c",
+      "sha256_baseline_raw_git_blob": "534c89120008238389e2e2c205604fef8f97c16d45faa9e3a70ae5186f48a1e6",
+      "sha256_baseline_lf": "534c89120008238389e2e2c205604fef8f97c16d45faa9e3a70ae5186f48a1e6",
+      "sha256_current_disk_bytes": "2c01ef858286a94d139205ddf0f4038edd04fd72c6e453dede9a1a38f0c58e6d",
+      "sha256_current_lf": "534c89120008238389e2e2c205604fef8f97c16d45faa9e3a70ae5186f48a1e6",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/simulation/geometry/__init__.py",
+      "baseline_git_object_id": "4227040ccbd4f1811d3259189905f6554b2ea2e1",
+      "sha256_baseline_raw_git_blob": "757422e100286d52c56a2154f1fcf3bc4ed94cede531162a08c12a7838022f17",
+      "sha256_baseline_lf": "757422e100286d52c56a2154f1fcf3bc4ed94cede531162a08c12a7838022f17",
+      "sha256_current_disk_bytes": "8de4193ad54cbab27cfbf78da966d4b3d3170d2e4c74b9e2374db0df459a6a9f",
+      "sha256_current_lf": "757422e100286d52c56a2154f1fcf3bc4ed94cede531162a08c12a7838022f17",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/simulation/geometry/curved.py",
+      "baseline_git_object_id": "b1b67b09521c39969850f94828e57cc453cd16d4",
+      "sha256_baseline_raw_git_blob": "85a55e19bad6157db1db76c33717134654f39a9de1fa4821478a1b76199b2e2f",
+      "sha256_baseline_lf": "85a55e19bad6157db1db76c33717134654f39a9de1fa4821478a1b76199b2e2f",
+      "sha256_current_disk_bytes": "45e0da4a5085dbe07e1470eba66a74e158eb940e9ab63f953d5066ba7540b626",
+      "sha256_current_lf": "85a55e19bad6157db1db76c33717134654f39a9de1fa4821478a1b76199b2e2f",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/simulation/geometry/exact.py",
+      "baseline_git_object_id": "3c3d879449b4dc040b9c85bcf31ffce193fccb8a",
+      "sha256_baseline_raw_git_blob": "56eac7da493368e3a673be8bd24320a6f5940525b3b2f7020ab5d0660e3f4c1c",
+      "sha256_baseline_lf": "56eac7da493368e3a673be8bd24320a6f5940525b3b2f7020ab5d0660e3f4c1c",
+      "sha256_current_disk_bytes": "a0b90fc2f0e20856ef5fdf6f4aac254106f352a55604ed8d5d620545c25172ff",
+      "sha256_current_lf": "56eac7da493368e3a673be8bd24320a6f5940525b3b2f7020ab5d0660e3f4c1c",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/simulation/geometry/kernel.py",
+      "baseline_git_object_id": "27447a545cf8e012dcfd175c1dc34133199af2f7",
+      "sha256_baseline_raw_git_blob": "75ce8ce6329adb50eb57f60065da6c5494887cd2b275f5d9f89fd21081006226",
+      "sha256_baseline_lf": "75ce8ce6329adb50eb57f60065da6c5494887cd2b275f5d9f89fd21081006226",
+      "sha256_current_disk_bytes": "16bca7c8a22048e8c172ffa0ae2ce5d3534b75df099f15e549e7663aa1af51fd",
+      "sha256_current_lf": "75ce8ce6329adb50eb57f60065da6c5494887cd2b275f5d9f89fd21081006226",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/simulation/geometry/measure.py",
+      "baseline_git_object_id": "41b49df4be95def0b2cf9c2127016cb3124af7e4",
+      "sha256_baseline_raw_git_blob": "7ddb906ab3f344d070e0c7f09c9d85219e8a8b9d9069b8282e7297030436ad6d",
+      "sha256_baseline_lf": "7ddb906ab3f344d070e0c7f09c9d85219e8a8b9d9069b8282e7297030436ad6d",
+      "sha256_current_disk_bytes": "28eba42bb78b1daf22130f2a24dd7101d907d371da01953ffd9312b1aa91a1ed",
+      "sha256_current_lf": "7ddb906ab3f344d070e0c7f09c9d85219e8a8b9d9069b8282e7297030436ad6d",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/simulation/geometry/metric.py",
+      "baseline_git_object_id": "5d884daa79b1606914934fd881a9c6ad5a57192a",
+      "sha256_baseline_raw_git_blob": "1c5fa90a930d92a6fbf9eafae386f1531a42c55983e2c3f53a00389ab8c014e1",
+      "sha256_baseline_lf": "1c5fa90a930d92a6fbf9eafae386f1531a42c55983e2c3f53a00389ab8c014e1",
+      "sha256_current_disk_bytes": "d292c2e7aed05708ec70319eec65f57ae23fa035bbdc7ec5bbd43dc4def107ca",
+      "sha256_current_lf": "1c5fa90a930d92a6fbf9eafae386f1531a42c55983e2c3f53a00389ab8c014e1",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/simulation/geometry/predicates.py",
+      "baseline_git_object_id": "fdfcc983e0babffe019001c5059b5f86090da9c7",
+      "sha256_baseline_raw_git_blob": "0528182d15b17ddcba085f8386be78eabfeb7ff7277f70e564635075e7a0631a",
+      "sha256_baseline_lf": "0528182d15b17ddcba085f8386be78eabfeb7ff7277f70e564635075e7a0631a",
+      "sha256_current_disk_bytes": "52cab6406bf71d28118d5945babbe8e5337e364df8affa5a994c0f14d19b2b18",
+      "sha256_current_lf": "0528182d15b17ddcba085f8386be78eabfeb7ff7277f70e564635075e7a0631a",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/simulation/geometry/radical.py",
+      "baseline_git_object_id": "42f9141209b29d1440e05b22ff2e221bfbc4326f",
+      "sha256_baseline_raw_git_blob": "cbd34e4d888fb91bde15cf92c36eebca5762a59896c56d3528390b1f01228062",
+      "sha256_baseline_lf": "cbd34e4d888fb91bde15cf92c36eebca5762a59896c56d3528390b1f01228062",
+      "sha256_current_disk_bytes": "6ad198ee5e352fde8cdbd4728cbcc98071d69eb24abe128b06b16067497a039e",
+      "sha256_current_lf": "cbd34e4d888fb91bde15cf92c36eebca5762a59896c56d3528390b1f01228062",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/simulation/geometry/section.py",
+      "baseline_git_object_id": "b3fd6297d4aa6ca01dfd28745fd9b44954c5bb16",
+      "sha256_baseline_raw_git_blob": "520a8ea68ac8ad2a9c58765e4057798c2bec75a2a9259671e819c1b209add198",
+      "sha256_baseline_lf": "520a8ea68ac8ad2a9c58765e4057798c2bec75a2a9259671e819c1b209add198",
+      "sha256_current_disk_bytes": "53bcb6821ffd52cabf5763a437083998753704ab65c2597540579fbeb766ec1d",
+      "sha256_current_lf": "520a8ea68ac8ad2a9c58765e4057798c2bec75a2a9259671e819c1b209add198",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/simulation/geometry_functions/__init__.py",
+      "baseline_git_object_id": "dc6b34ffa9fe5b43d32d36a136c26bcbec2d3efd",
+      "sha256_baseline_raw_git_blob": "560251846fab5e00c65da74064cd3070c107a4e4fbe400b568859756ab79c720",
+      "sha256_baseline_lf": "560251846fab5e00c65da74064cd3070c107a4e4fbe400b568859756ab79c720",
+      "sha256_current_disk_bytes": "104b4cddd4f7d3da5d1ac393f094ce7119a3b314a85beb01ea5260fac70e56e5",
+      "sha256_current_lf": "560251846fab5e00c65da74064cd3070c107a4e4fbe400b568859756ab79c720",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/simulation/geometry_functions/certificates.py",
+      "baseline_git_object_id": "97a00f4922d6f3355636509d8bf23cc2930f8f23",
+      "sha256_baseline_raw_git_blob": "cc70852b89a7e9e35383d9d5e4e971f47ed09a095a4d51c414cbb2aee49ae248",
+      "sha256_baseline_lf": "cc70852b89a7e9e35383d9d5e4e971f47ed09a095a4d51c414cbb2aee49ae248",
+      "sha256_current_disk_bytes": "981d828aaedbd678e0847b56ea84bd7be69dc5da3962fa891e4fb1b59cf8f3ab",
+      "sha256_current_lf": "cc70852b89a7e9e35383d9d5e4e971f47ed09a095a4d51c414cbb2aee49ae248",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/simulation/geometry_functions/construction_continuity.py",
+      "baseline_git_object_id": "125394a04c3510b271353dd8d9edf0b0e403e11e",
+      "sha256_baseline_raw_git_blob": "f56925a80ef38515a3d8f66fc13e140d0907aa3807840d29e93ee326dfe1c9a4",
+      "sha256_baseline_lf": "f56925a80ef38515a3d8f66fc13e140d0907aa3807840d29e93ee326dfe1c9a4",
+      "sha256_current_disk_bytes": "0fc2f873fb4693fe05ea4162ae75c510175e1e64daa15a0518c5fa1d01bfbd66",
+      "sha256_current_lf": "f56925a80ef38515a3d8f66fc13e140d0907aa3807840d29e93ee326dfe1c9a4",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/simulation/geometry_functions/engine.py",
+      "baseline_git_object_id": "d7997b8870b95e51501c9f75930530bd209682a7",
+      "sha256_baseline_raw_git_blob": "d0d9669ec5bdce2168799a3a9c8e9ff9fd12231ce6b157dce0480ad965b00396",
+      "sha256_baseline_lf": "d0d9669ec5bdce2168799a3a9c8e9ff9fd12231ce6b157dce0480ad965b00396",
+      "sha256_current_disk_bytes": "96826f287f9a96e9ec64cedeb8a9b4c7b3e701ca5117875d1565398d7745866d",
+      "sha256_current_lf": "d0d9669ec5bdce2168799a3a9c8e9ff9fd12231ce6b157dce0480ad965b00396",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/simulation/geometry_functions/height_invariance.py",
+      "baseline_git_object_id": "e94f3e09441198011ae764af016bf774b0fa8f14",
+      "sha256_baseline_raw_git_blob": "5ce2de2946b8c0293c0ea1d9f7e1e00e9812e9bb20313a4f65a8f15d8c85152d",
+      "sha256_baseline_lf": "5ce2de2946b8c0293c0ea1d9f7e1e00e9812e9bb20313a4f65a8f15d8c85152d",
+      "sha256_current_disk_bytes": "5ce2de2946b8c0293c0ea1d9f7e1e00e9812e9bb20313a4f65a8f15d8c85152d",
+      "sha256_current_lf": "5ce2de2946b8c0293c0ea1d9f7e1e00e9812e9bb20313a4f65a8f15d8c85152d",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/simulation/geometry_functions/output_policy.py",
+      "baseline_git_object_id": "107b9c961714a4b057d7f536cde6c0366edea713",
+      "sha256_baseline_raw_git_blob": "0918eda55a935c4081b54e9e3031517d8336ee1a9cfed19c094111de1a9966b8",
+      "sha256_baseline_lf": "0918eda55a935c4081b54e9e3031517d8336ee1a9cfed19c094111de1a9966b8",
+      "sha256_current_disk_bytes": "0918eda55a935c4081b54e9e3031517d8336ee1a9cfed19c094111de1a9966b8",
+      "sha256_current_lf": "0918eda55a935c4081b54e9e3031517d8336ee1a9cfed19c094111de1a9966b8",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/simulation/geometry_functions/planner.py",
+      "baseline_git_object_id": "05204206338efa5ad7e551cce3e6b6cddb8ada58",
+      "sha256_baseline_raw_git_blob": "1f9dfc5d0a1aa202319d3d77c78fac2d2067cca56161babc5199e62f9cc50c49",
+      "sha256_baseline_lf": "1f9dfc5d0a1aa202319d3d77c78fac2d2067cca56161babc5199e62f9cc50c49",
+      "sha256_current_disk_bytes": "de104f18f93d8cbce140cece86ffcee591d7811a768ee1db1a07974c85930dd1",
+      "sha256_current_lf": "1f9dfc5d0a1aa202319d3d77c78fac2d2067cca56161babc5199e62f9cc50c49",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/simulation/geometry_functions/registry.py",
+      "baseline_git_object_id": "8d0de2f38827ac92fccdd63e96086fed61e69fae",
+      "sha256_baseline_raw_git_blob": "d226b7cb091e60623a92d1be43c61440cfdb51414febcec14553609fe21501d3",
+      "sha256_baseline_lf": "d226b7cb091e60623a92d1be43c61440cfdb51414febcec14553609fe21501d3",
+      "sha256_current_disk_bytes": "8851df8c14a6b5eecc292e24de462a83b2772d9a461444ad9155d5ae2e93f519",
+      "sha256_current_lf": "d226b7cb091e60623a92d1be43c61440cfdb51414febcec14553609fe21501d3",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/simulation/geometry_functions/typed_fact_next.py",
+      "baseline_git_object_id": "61e1af7bc7fcb30d7e1951e1ab2106139341efe5",
+      "sha256_baseline_raw_git_blob": "108a102920c7c996369e8cbe4943bd4f5f10b37d8e2e1b9fb807a3314906c0ea",
+      "sha256_baseline_lf": "108a102920c7c996369e8cbe4943bd4f5f10b37d8e2e1b9fb807a3314906c0ea",
+      "sha256_current_disk_bytes": "c9361195f9c40e2cd67b97f5a8eb33c2efa5c4e4fc15f436c2ef18267222c689",
+      "sha256_current_lf": "108a102920c7c996369e8cbe4943bd4f5f10b37d8e2e1b9fb807a3314906c0ea",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/simulation/geometry_functions/typed_fact_next_bridge.py",
+      "baseline_git_object_id": "481c35b925231ec8f7291d147c4a3c42460c2d7a",
+      "sha256_baseline_raw_git_blob": "411b6ca1cd1256056ed4a9e357095f7afc334aa7b396fc07ac3fd49a7ec73377",
+      "sha256_baseline_lf": "411b6ca1cd1256056ed4a9e357095f7afc334aa7b396fc07ac3fd49a7ec73377",
+      "sha256_current_disk_bytes": "65e0f0a5af4e265b60054c88433a6f6c1ce42fdc5df67f7b722b7335676f4497",
+      "sha256_current_lf": "411b6ca1cd1256056ed4a9e357095f7afc334aa7b396fc07ac3fd49a7ec73377",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/simulation/product_capability.py",
+      "baseline_git_object_id": "6063a508e5bfb559e10cb01380cf3735e73ff268",
+      "sha256_baseline_raw_git_blob": "ab16b0ffede98c3998b3444d402a81dadadca297140e998bf023b6d729fa85ca",
+      "sha256_baseline_lf": "ab16b0ffede98c3998b3444d402a81dadadca297140e998bf023b6d729fa85ca",
+      "sha256_current_disk_bytes": "1eadce838c19c86df99f9016cc56659b4991ca2fd90425d04f3c2cbbd3208fe1",
+      "sha256_current_lf": "ab16b0ffede98c3998b3444d402a81dadadca297140e998bf023b6d729fa85ca",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/simulation/semantic_program/__init__.py",
+      "baseline_git_object_id": "1904d2358d3cdcc9e48f820af62bbf5e08f6bffc",
+      "sha256_baseline_raw_git_blob": "84c6c931268e02828574424f596b712ea19f59b1319ddd9edf192e76904bc384",
+      "sha256_baseline_lf": "84c6c931268e02828574424f596b712ea19f59b1319ddd9edf192e76904bc384",
+      "sha256_current_disk_bytes": "dc1ee67961e313c2ebce8e9966d0168b6259c9d608627c65c6db1ea883579866",
+      "sha256_current_lf": "84c6c931268e02828574424f596b712ea19f59b1319ddd9edf192e76904bc384",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/simulation/semantic_program/analyze_contract.py",
+      "baseline_git_object_id": "cc02f2042f47da602e33c4aaed056c6ac43b041e",
+      "sha256_baseline_raw_git_blob": "c72ded4fd397e1879e300c7ce6fe7ed370f565bc782a07ec4b189728772f0b68",
+      "sha256_baseline_lf": "c72ded4fd397e1879e300c7ce6fe7ed370f565bc782a07ec4b189728772f0b68",
+      "sha256_current_disk_bytes": "c4dda5dbe082d5e385606fa74d6f90554ebf8194dfd7941df2593236d9b2b952",
+      "sha256_current_lf": "c72ded4fd397e1879e300c7ce6fe7ed370f565bc782a07ec4b189728772f0b68",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/simulation/semantic_program/assumption_gate.py",
+      "baseline_git_object_id": "833ed3967fb878f8390c9035ebc3027d05a571b7",
+      "sha256_baseline_raw_git_blob": "7a8a2dc28c56da169c3097933fa9a4700eb5e6c2149ee006120639b4b4da3f72",
+      "sha256_baseline_lf": "7a8a2dc28c56da169c3097933fa9a4700eb5e6c2149ee006120639b4b4da3f72",
+      "sha256_current_disk_bytes": "86a6601bf2fbac7aedd03ef7b5ba66a4a084ed85e74857ceb09aeebdd9797255",
+      "sha256_current_lf": "7a8a2dc28c56da169c3097933fa9a4700eb5e6c2149ee006120639b4b4da3f72",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/simulation/semantic_program/coercion_stats.py",
+      "baseline_git_object_id": "707b12fa40520ec467ae86d75ed213ea28dcc7c4",
+      "sha256_baseline_raw_git_blob": "ec7197165841e5a96dd523f5e234df8bc126f090e0570a4e17ee0a2e0e422f6b",
+      "sha256_baseline_lf": "ec7197165841e5a96dd523f5e234df8bc126f090e0570a4e17ee0a2e0e422f6b",
+      "sha256_current_disk_bytes": "a2262b0decc39d9b6de9fd77d3d6aaba1190d00012361119e8fb0538f291e29b",
+      "sha256_current_lf": "ec7197165841e5a96dd523f5e234df8bc126f090e0570a4e17ee0a2e0e422f6b",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/simulation/semantic_program/construction_binding.py",
+      "baseline_git_object_id": "df2eac3274e268e42399d3d5f6a825177bd2bc36",
+      "sha256_baseline_raw_git_blob": "182b60d2a9cd9b7f9732773d8c0863215a4ea3c70783190eb7b91f0a5777db5b",
+      "sha256_baseline_lf": "182b60d2a9cd9b7f9732773d8c0863215a4ea3c70783190eb7b91f0a5777db5b",
+      "sha256_current_disk_bytes": "e439c16df78017eefea85a36986f2ddc213c849ca204255523e76dda15756b20",
+      "sha256_current_lf": "182b60d2a9cd9b7f9732773d8c0863215a4ea3c70783190eb7b91f0a5777db5b",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/simulation/semantic_program/contract.py",
+      "baseline_git_object_id": "0bf6d48110b03ed305c8cb76dab85358470953b9",
+      "sha256_baseline_raw_git_blob": "9a809bfef4dd082d5e9093121e179abc40d12160296031be8ac65c5e9579cf7b",
+      "sha256_baseline_lf": "9a809bfef4dd082d5e9093121e179abc40d12160296031be8ac65c5e9579cf7b",
+      "sha256_current_disk_bytes": "92aedec9612bd7f05b8dbed1996b2aa46abe1fce1dd8fe51773b59f1d259cab4",
+      "sha256_current_lf": "9a809bfef4dd082d5e9093121e179abc40d12160296031be8ac65c5e9579cf7b",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/simulation/semantic_program/coverage_gate.py",
+      "baseline_git_object_id": "eed7ea18f6bfeb987445ef94f79f5b6399979067",
+      "sha256_baseline_raw_git_blob": "d7a4dce4e3114da51478fcbd4bd1b44079c3fc7a20c46aa64fd65e0c66185576",
+      "sha256_baseline_lf": "d7a4dce4e3114da51478fcbd4bd1b44079c3fc7a20c46aa64fd65e0c66185576",
+      "sha256_current_disk_bytes": "8cf6783472bda08c6862c5cb6a53fb316854278c8729a8280826c262dfeb096d",
+      "sha256_current_lf": "d7a4dce4e3114da51478fcbd4bd1b44079c3fc7a20c46aa64fd65e0c66185576",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/simulation/semantic_program/display_names.py",
+      "baseline_git_object_id": "1c25e32c7b043870e52dbdfb70ae0ae71265f992",
+      "sha256_baseline_raw_git_blob": "09067f8834dc4a3b7d91bedf3f2d54cf0c330405f81ee901d97012b5c0875d13",
+      "sha256_baseline_lf": "09067f8834dc4a3b7d91bedf3f2d54cf0c330405f81ee901d97012b5c0875d13",
+      "sha256_current_disk_bytes": "9e90ce8a8b2660d9e48a264d311d653e68293d39d7d5e0eba2c0cad9f18d495c",
+      "sha256_current_lf": "09067f8834dc4a3b7d91bedf3f2d54cf0c330405f81ee901d97012b5c0875d13",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/simulation/semantic_program/domain_profile.py",
+      "baseline_git_object_id": "1d624e7801f9e2cbf98528c52be1983af5a5585f",
+      "sha256_baseline_raw_git_blob": "f77cf2f357f68951fb9910fc8e80e4db37ee08a6edef91959abc20c28c38fda1",
+      "sha256_baseline_lf": "f77cf2f357f68951fb9910fc8e80e4db37ee08a6edef91959abc20c28c38fda1",
+      "sha256_current_disk_bytes": "e5de2d7085ff22a76d646ae2c8f70b615982be12d39d1ae7b1e480718e3e42d1",
+      "sha256_current_lf": "f77cf2f357f68951fb9910fc8e80e4db37ee08a6edef91959abc20c28c38fda1",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/simulation/semantic_program/formation.py",
+      "baseline_git_object_id": "f80aaa5c9295702922279af1073e7473946aa89a",
+      "sha256_baseline_raw_git_blob": "9ea41de40ca34357f1722e2187b34a834364d44b980b65a0f119a858cbe8a28e",
+      "sha256_baseline_lf": "9ea41de40ca34357f1722e2187b34a834364d44b980b65a0f119a858cbe8a28e",
+      "sha256_current_disk_bytes": "015aef5d1805759583f9f62a634977732c619bba95b97a0446136914b5cf5a58",
+      "sha256_current_lf": "9ea41de40ca34357f1722e2187b34a834364d44b980b65a0f119a858cbe8a28e",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/simulation/semantic_program/geometry_exec.py",
+      "baseline_git_object_id": "253e3846449cd57bae0ca0b8a9711899f66623fe",
+      "sha256_baseline_raw_git_blob": "ca03dc1cd7823ab37a8e125dc6fe9b6f19331c39f5cf8e68a1f0bc28ab170de0",
+      "sha256_baseline_lf": "ca03dc1cd7823ab37a8e125dc6fe9b6f19331c39f5cf8e68a1f0bc28ab170de0",
+      "sha256_current_disk_bytes": "f454cd0f482a96e432083ba8a28345963e032bbed9e9b58d8f79cc09c05974b6",
+      "sha256_current_lf": "ca03dc1cd7823ab37a8e125dc6fe9b6f19331c39f5cf8e68a1f0bc28ab170de0",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/simulation/semantic_program/geometry_obligations.py",
+      "baseline_git_object_id": "117fdce30231b24b95aab623ce5c82f78b01a94d",
+      "sha256_baseline_raw_git_blob": "c42c86b33f4a4e69e7a4ddc7132e27c419b5c9985790cb9dbe4aa06c0e8bc100",
+      "sha256_baseline_lf": "c42c86b33f4a4e69e7a4ddc7132e27c419b5c9985790cb9dbe4aa06c0e8bc100",
+      "sha256_current_disk_bytes": "b4ff9957853a363aa92d26009c2d21cc2a192d04c1ef5ae69e3e5863443c5383",
+      "sha256_current_lf": "c42c86b33f4a4e69e7a4ddc7132e27c419b5c9985790cb9dbe4aa06c0e8bc100",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/simulation/semantic_program/grammar_card.py",
+      "baseline_git_object_id": "fa3b26b8bd3e0b3f9ec18e6092fb7328d2f26983",
+      "sha256_baseline_raw_git_blob": "8916fdd803dfdfcf079ba61c6870e606c850e23d46b427f07dcf16018959c67d",
+      "sha256_baseline_lf": "8916fdd803dfdfcf079ba61c6870e606c850e23d46b427f07dcf16018959c67d",
+      "sha256_current_disk_bytes": "9d1c8342ac58c79e8424c3dd363b1192f8897804c06ff493f48e7e2dcc372188",
+      "sha256_current_lf": "8916fdd803dfdfcf079ba61c6870e606c850e23d46b427f07dcf16018959c67d",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/simulation/semantic_program/grounding_gate.py",
+      "baseline_git_object_id": "785d3326b82bcd6f5e5d1b9d07a589fedc9afac8",
+      "sha256_baseline_raw_git_blob": "a98279eb6addd475c26cce359727144703e0d875b443fe03d25f67236ef6baac",
+      "sha256_baseline_lf": "a98279eb6addd475c26cce359727144703e0d875b443fe03d25f67236ef6baac",
+      "sha256_current_disk_bytes": "91153fd9f20f3917f99ef854d3a6aec4ec67c358a50729863115200e5bb4c797",
+      "sha256_current_lf": "a98279eb6addd475c26cce359727144703e0d875b443fe03d25f67236ef6baac",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/simulation/semantic_program/hoisting.py",
+      "baseline_git_object_id": "3a49456cc9caf4acc758bcf6c023d6d5d23d172c",
+      "sha256_baseline_raw_git_blob": "cbd1af8632cf7fdda54514fe652dc379449c19f5d828a011a561569cc0953278",
+      "sha256_baseline_lf": "cbd1af8632cf7fdda54514fe652dc379449c19f5d828a011a561569cc0953278",
+      "sha256_current_disk_bytes": "c5579c7e2f94f3af6aa0dfa4016da6ef6a6ea210512e851c6a213790cb5c622d",
+      "sha256_current_lf": "cbd1af8632cf7fdda54514fe652dc379449c19f5d828a011a561569cc0953278",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/simulation/semantic_program/interpreter.py",
+      "baseline_git_object_id": "a8438024c75cd50af8585f353fd696dc8c123690",
+      "sha256_baseline_raw_git_blob": "ac04ed8cc557a6a2ff37a0d5927389a0336469dfce04ad0d0555e62a73ba045b",
+      "sha256_baseline_lf": "ac04ed8cc557a6a2ff37a0d5927389a0336469dfce04ad0d0555e62a73ba045b",
+      "sha256_current_disk_bytes": "0b337962c6fd261f2ca7282516a7a9a473747ad39d1c50bee81872d72dc3e80e",
+      "sha256_current_lf": "ac04ed8cc557a6a2ff37a0d5927389a0336469dfce04ad0d0555e62a73ba045b",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/simulation/semantic_program/ir_builders.py",
+      "baseline_git_object_id": "4bc8c6b13df0e0f0e34013f06f1fd5e5f3e557cf",
+      "sha256_baseline_raw_git_blob": "d4ddec14504166577380011d3bf6e68f4a1aa2154ab262d5e3d2090bf85f3e72",
+      "sha256_baseline_lf": "d4ddec14504166577380011d3bf6e68f4a1aa2154ab262d5e3d2090bf85f3e72",
+      "sha256_current_disk_bytes": "b54aedb71b43b1b16951818e4cbf488dd83998cb5ecd1b3129a9a7cd8f6e676e",
+      "sha256_current_lf": "d4ddec14504166577380011d3bf6e68f4a1aa2154ab262d5e3d2090bf85f3e72",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/simulation/semantic_program/ir_static_check.py",
+      "baseline_git_object_id": "209a0145f90afb41bebc000311f29140de0f7599",
+      "sha256_baseline_raw_git_blob": "589abf4f9bf5abeb9f2501aa916d221d2d75466754af5d3c2d3b40650c9f12a2",
+      "sha256_baseline_lf": "589abf4f9bf5abeb9f2501aa916d221d2d75466754af5d3c2d3b40650c9f12a2",
+      "sha256_current_disk_bytes": "5f408f070a986b70ccad3d606877a5428743c1621564dcb508d43dcbae5fc75a",
+      "sha256_current_lf": "589abf4f9bf5abeb9f2501aa916d221d2d75466754af5d3c2d3b40650c9f12a2",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/simulation/semantic_program/learner_surface.py",
+      "baseline_git_object_id": "6d281eef55f3fadb1bbf5e1786f95b3efd95cc9e",
+      "sha256_baseline_raw_git_blob": "0c0435a30b89a7e59702394d96766f1b98e55ae3b622a6fbaaf49224e3411ddb",
+      "sha256_baseline_lf": "0c0435a30b89a7e59702394d96766f1b98e55ae3b622a6fbaaf49224e3411ddb",
+      "sha256_current_disk_bytes": "0cd5be14ed8f9e3cfe68253201e96036f1795a28f368efe480a5d51fcf2d2ff5",
+      "sha256_current_lf": "0c0435a30b89a7e59702394d96766f1b98e55ae3b622a6fbaaf49224e3411ddb",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/simulation/semantic_program/literal_extractor.py",
+      "baseline_git_object_id": "bb2c5fa1e851ec10974a7a40d2d5bafb54057c51",
+      "sha256_baseline_raw_git_blob": "0167e0477a1f7c7057e7c144d98b882b882dac103b5877e46be7124435f242f2",
+      "sha256_baseline_lf": "0167e0477a1f7c7057e7c144d98b882b882dac103b5877e46be7124435f242f2",
+      "sha256_current_disk_bytes": "24d9ee9653084e6e2e5f2abad4f0166e63fb58f493a054e07085d8ca8e3b9418",
+      "sha256_current_lf": "0167e0477a1f7c7057e7c144d98b882b882dac103b5877e46be7124435f242f2",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/simulation/semantic_program/measure_contract.py",
+      "baseline_git_object_id": "ddb3873169f3ae5dd4ca217a304a9812615ca0ed",
+      "sha256_baseline_raw_git_blob": "4f06521335329dc52f84e68dd9dda86da80efbad46606f316f353daabb3c1de6",
+      "sha256_baseline_lf": "4f06521335329dc52f84e68dd9dda86da80efbad46606f316f353daabb3c1de6",
+      "sha256_current_disk_bytes": "d5b54a06427e85e8b3a9423cf570e41a3134be84b2441f2a5e4796d94276b76f",
+      "sha256_current_lf": "4f06521335329dc52f84e68dd9dda86da80efbad46606f316f353daabb3c1de6",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/simulation/semantic_program/obligations.py",
+      "baseline_git_object_id": "19c2b87fccc22dce27226529707073d47c9c6acb",
+      "sha256_baseline_raw_git_blob": "c92086a2b9fc3840c2896c8c1d7ec6140078706d86639d446db59766559b81be",
+      "sha256_baseline_lf": "c92086a2b9fc3840c2896c8c1d7ec6140078706d86639d446db59766559b81be",
+      "sha256_current_disk_bytes": "1d395b12b7aa05d9703b5d6694df80badacc9ec5a90d8c2b117ccac9eb4011c8",
+      "sha256_current_lf": "c92086a2b9fc3840c2896c8c1d7ec6140078706d86639d446db59766559b81be",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/simulation/semantic_program/pacer.py",
+      "baseline_git_object_id": "43dab9104e6ac70fb8e45a2d5bb93d0fb6ac5faa",
+      "sha256_baseline_raw_git_blob": "f0ab933120755cc03ec7251e3721225afb462cb472b27a0067cb44065567395c",
+      "sha256_baseline_lf": "f0ab933120755cc03ec7251e3721225afb462cb472b27a0067cb44065567395c",
+      "sha256_current_disk_bytes": "cf9fe685b32a086ff91212a4b314e5426fdd84327f511cbec0f4b8a020e11ba8",
+      "sha256_current_lf": "f0ab933120755cc03ec7251e3721225afb462cb472b27a0067cb44065567395c",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/simulation/semantic_program/pipeline_adapter.py",
+      "baseline_git_object_id": "470dfd6062e3f6703a8db4bc38a9dca07c611d49",
+      "sha256_baseline_raw_git_blob": "057978234ad07f7d6d6f3d57324fd9367b45262618cf91e2e155784b7c523d22",
+      "sha256_baseline_lf": "057978234ad07f7d6d6f3d57324fd9367b45262618cf91e2e155784b7c523d22",
+      "sha256_current_disk_bytes": "96477448837490265ee0bf2cefe0b9571adbbbcfd5c6e64a70f150790022cf87",
+      "sha256_current_lf": "057978234ad07f7d6d6f3d57324fd9367b45262618cf91e2e155784b7c523d22",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/simulation/semantic_program/plane_equation.py",
+      "baseline_git_object_id": "12b22223145728385574368b380620c3306c7e9c",
+      "sha256_baseline_raw_git_blob": "405f9dcb2c85e363bea67fd0a0e6e17fa8c172cbd13870efcad2b17d53fe556d",
+      "sha256_baseline_lf": "405f9dcb2c85e363bea67fd0a0e6e17fa8c172cbd13870efcad2b17d53fe556d",
+      "sha256_current_disk_bytes": "1651922b6204360c3f6a3e384f525878382c7a3f95d9eb4806aadde1ec1b75d8",
+      "sha256_current_lf": "405f9dcb2c85e363bea67fd0a0e6e17fa8c172cbd13870efcad2b17d53fe556d",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/simulation/semantic_program/point_coordinate.py",
+      "baseline_git_object_id": "a1d6123a8d24ab8c3440af428921b3655350ea8d",
+      "sha256_baseline_raw_git_blob": "134209681f43cc081d74480cb7edab885164742831cf53bc3e983b3ca3807e7e",
+      "sha256_baseline_lf": "134209681f43cc081d74480cb7edab885164742831cf53bc3e983b3ca3807e7e",
+      "sha256_current_disk_bytes": "9d54871055ee3e5b58272723e38e3489be654abf491595ae7dc6350dc7025bd8",
+      "sha256_current_lf": "134209681f43cc081d74480cb7edab885164742831cf53bc3e983b3ca3807e7e",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/simulation/semantic_program/postconditions.py",
+      "baseline_git_object_id": "e73fa10abcae22808411ff41cdb7a87de7e8f9dd",
+      "sha256_baseline_raw_git_blob": "8e7c3060ee1e3acfafb828d8302eb3f02faaa76e50914e744027db643b2b3fb5",
+      "sha256_baseline_lf": "8e7c3060ee1e3acfafb828d8302eb3f02faaa76e50914e744027db643b2b3fb5",
+      "sha256_current_disk_bytes": "af3d311bf55d451348e87aef30ca2d5fddb5bcf3111e9485a52ed8244c935c84",
+      "sha256_current_lf": "8e7c3060ee1e3acfafb828d8302eb3f02faaa76e50914e744027db643b2b3fb5",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/simulation/semantic_program/purpose_analysis.py",
+      "baseline_git_object_id": "a7fe0d49efad4cb090418a60987623423c38ee7e",
+      "sha256_baseline_raw_git_blob": "d8cdb85799fd817a87747023613f79fe16e524a751d126211793eecf696fe2e4",
+      "sha256_baseline_lf": "d8cdb85799fd817a87747023613f79fe16e524a751d126211793eecf696fe2e4",
+      "sha256_current_disk_bytes": "3638dc11d8b8b204c77684a7c3d0aae38632a77e81d5e234da7440050ad17823",
+      "sha256_current_lf": "d8cdb85799fd817a87747023613f79fe16e524a751d126211793eecf696fe2e4",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/simulation/semantic_program/quantity_annotations.py",
+      "baseline_git_object_id": "cd13552a6482290777823a3699168d9921020c65",
+      "sha256_baseline_raw_git_blob": "7b18716a273a858478726b5a58a16be229a76eafc72da62c50ea41d719c428fd",
+      "sha256_baseline_lf": "7b18716a273a858478726b5a58a16be229a76eafc72da62c50ea41d719c428fd",
+      "sha256_current_disk_bytes": "513da4987ac99bf39171dce5776f4e5075c178e97517954799dc46d249d838c6",
+      "sha256_current_lf": "7b18716a273a858478726b5a58a16be229a76eafc72da62c50ea41d719c428fd",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/simulation/semantic_program/refusal_cause.py",
+      "baseline_git_object_id": "4e6a59019921754be86cb4dd58e272ece1f1e027",
+      "sha256_baseline_raw_git_blob": "7154b8ba8db65e912a03fa57c2f9caa2983160a3b1232a6f9a77e7e0d132ba94",
+      "sha256_baseline_lf": "7154b8ba8db65e912a03fa57c2f9caa2983160a3b1232a6f9a77e7e0d132ba94",
+      "sha256_current_disk_bytes": "4bc446b63eb35311bda3974f5acf33b74b825245c8e5e0ac6022123f22a044d4",
+      "sha256_current_lf": "7154b8ba8db65e912a03fa57c2f9caa2983160a3b1232a6f9a77e7e0d132ba94",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/simulation/semantic_program/request_contract.py",
+      "baseline_git_object_id": "2d2b5895083e1de700ab1847b788da074f35ef21",
+      "sha256_baseline_raw_git_blob": "fe1f2a1eeef94b68042590f420c0537ad1b5fe925a1c474b913a31c3a09db4ef",
+      "sha256_baseline_lf": "fe1f2a1eeef94b68042590f420c0537ad1b5fe925a1c474b913a31c3a09db4ef",
+      "sha256_current_disk_bytes": "802874d8f267dd9035ab24193654f14983a7761ca7016ea35207e72882df2bbf",
+      "sha256_current_lf": "fe1f2a1eeef94b68042590f420c0537ad1b5fe925a1c474b913a31c3a09db4ef",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/simulation/semantic_program/route.py",
+      "baseline_git_object_id": "71150eca108f8125d068a9c85a3e07706cdccb0c",
+      "sha256_baseline_raw_git_blob": "0f740469cc810e8ef2a5c87c745656d50adfd6e281c14d8853436618512c7f8d",
+      "sha256_baseline_lf": "0f740469cc810e8ef2a5c87c745656d50adfd6e281c14d8853436618512c7f8d",
+      "sha256_current_disk_bytes": "9afc9aed98e232efcd8d9acc22621aaf27fceb090418a09d649c155e1087f9ad",
+      "sha256_current_lf": "0f740469cc810e8ef2a5c87c745656d50adfd6e281c14d8853436618512c7f8d",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/simulation/semantic_program/scale_normalization.py",
+      "baseline_git_object_id": "55d9ecff648c5e09f122001afa3ebd010a913f83",
+      "sha256_baseline_raw_git_blob": "47d176e5be9755bc4d80d7a4325118529648049d140db8da48e56d22755f1d1d",
+      "sha256_baseline_lf": "47d176e5be9755bc4d80d7a4325118529648049d140db8da48e56d22755f1d1d",
+      "sha256_current_disk_bytes": "6c3215c871d3fa5ce46629487a2af692a1ab49a01677be721323bfcc009c3c87",
+      "sha256_current_lf": "47d176e5be9755bc4d80d7a4325118529648049d140db8da48e56d22755f1d1d",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/simulation/semantic_program/scene3d.py",
+      "baseline_git_object_id": "a0368bdc19a0ef2124b4d5ff936bb529987ee9e6",
+      "sha256_baseline_raw_git_blob": "7e05c4064c71524eee2570ac6b8d4030c21e78c58e4e8c20e0b358b45ba7019f",
+      "sha256_baseline_lf": "7e05c4064c71524eee2570ac6b8d4030c21e78c58e4e8c20e0b358b45ba7019f",
+      "sha256_current_disk_bytes": "27c4bc1d6d3485d48d1d5d111b44f407ac29f477bd5211907353fc56bad5ac24",
+      "sha256_current_lf": "7e05c4064c71524eee2570ac6b8d4030c21e78c58e4e8c20e0b358b45ba7019f",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/simulation/semantic_program/section_provenance.py",
+      "baseline_git_object_id": "fcbf416ee5b6d5263b5818d14f8d37f07d41cac9",
+      "sha256_baseline_raw_git_blob": "1b0eeb81c485ef310ba82a4e7874c5749b5e837092f75dd4d7dd73ed4cf91da8",
+      "sha256_baseline_lf": "1b0eeb81c485ef310ba82a4e7874c5749b5e837092f75dd4d7dd73ed4cf91da8",
+      "sha256_current_disk_bytes": "22e38f6aa3c72ed91032526860445a0ff95f90b2cf5555c8160c3251a31f4bf4",
+      "sha256_current_lf": "1b0eeb81c485ef310ba82a4e7874c5749b5e837092f75dd4d7dd73ed4cf91da8",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/simulation/semantic_program/segment_relation.py",
+      "baseline_git_object_id": "7c0eca539cf51fdf87a2eaddd0385d90aacf2189",
+      "sha256_baseline_raw_git_blob": "b805004157e8f05c86600976d9ab3f805f2d6ee293a6e582ffccfeb08b704d8b",
+      "sha256_baseline_lf": "b805004157e8f05c86600976d9ab3f805f2d6ee293a6e582ffccfeb08b704d8b",
+      "sha256_current_disk_bytes": "6064bd026187e8278ca48d55121eec032440b105b43035d158f614f2fcfa8bb0",
+      "sha256_current_lf": "b805004157e8f05c86600976d9ab3f805f2d6ee293a6e582ffccfeb08b704d8b",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/simulation/semantic_program/shape_constraint.py",
+      "baseline_git_object_id": "8d8c2b06ca9794c57d8bba577f5fb5a51e8012eb",
+      "sha256_baseline_raw_git_blob": "1a0811b2110e49c433ebde9691735c0eb3daab1fb7cfed67528e389d1487bb3a",
+      "sha256_baseline_lf": "1a0811b2110e49c433ebde9691735c0eb3daab1fb7cfed67528e389d1487bb3a",
+      "sha256_current_disk_bytes": "04b82f8ad4cc7035136bba64067a7d74496f360a5bd1b957ad6fc51c1d931df9",
+      "sha256_current_lf": "1a0811b2110e49c433ebde9691735c0eb3daab1fb7cfed67528e389d1487bb3a",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/simulation/semantic_program/simulation_state.py",
+      "baseline_git_object_id": "efde2eed5c2174dfa0340b03625d6d745cb243bd",
+      "sha256_baseline_raw_git_blob": "8049d5cc1bd524d18466a640a4f2ddf012944e88088e481e92a6e67c55af9b4e",
+      "sha256_baseline_lf": "8049d5cc1bd524d18466a640a4f2ddf012944e88088e481e92a6e67c55af9b4e",
+      "sha256_current_disk_bytes": "da1a7adcbf5ed7af872da362bc7ed295d87ac2c9ca371011892e6904c6212890",
+      "sha256_current_lf": "8049d5cc1bd524d18466a640a4f2ddf012944e88088e481e92a6e67c55af9b4e",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/simulation/semantic_program/solid_faces.py",
+      "baseline_git_object_id": "86c18ce20abc7243885455d2a003b56f4da84639",
+      "sha256_baseline_raw_git_blob": "214b0a8af68be8d7985a99aacb29ae59b42d1fb58ddf78bbe562fcc6cfff9994",
+      "sha256_baseline_lf": "214b0a8af68be8d7985a99aacb29ae59b42d1fb58ddf78bbe562fcc6cfff9994",
+      "sha256_current_disk_bytes": "21f9f1d628b17e3aae2b89a7fb9a7ea7674fee103631df784b41ea3fe6ec0057",
+      "sha256_current_lf": "214b0a8af68be8d7985a99aacb29ae59b42d1fb58ddf78bbe562fcc6cfff9994",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/simulation/semantic_program/source_entities.py",
+      "baseline_git_object_id": "21f8150ffd073337c3d27d4d233b950949dec96c",
+      "sha256_baseline_raw_git_blob": "af5208bbb43a6ec6953713ff3bd328a4b42882aa235d0e0f16435d65ee92b907",
+      "sha256_baseline_lf": "af5208bbb43a6ec6953713ff3bd328a4b42882aa235d0e0f16435d65ee92b907",
+      "sha256_current_disk_bytes": "be28729a2c7f009a1997b3992f1fbc2f6437804fa48f74000f370fedb34fd638",
+      "sha256_current_lf": "af5208bbb43a6ec6953713ff3bd328a4b42882aa235d0e0f16435d65ee92b907",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/simulation/semantic_program/structured_relations.py",
+      "baseline_git_object_id": "f2a7afbf00ae53b8ad254d7f4d0003873a9c25f0",
+      "sha256_baseline_raw_git_blob": "7afc1696abde8e2d68df37dff71e9c246589119796a62345316ab8eaab013adc",
+      "sha256_baseline_lf": "7afc1696abde8e2d68df37dff71e9c246589119796a62345316ab8eaab013adc",
+      "sha256_current_disk_bytes": "102cbf6208d0167e0d4e9b9db12eb0bc02907ee4a16a51158716e13e109eeab4",
+      "sha256_current_lf": "7afc1696abde8e2d68df37dff71e9c246589119796a62345316ab8eaab013adc",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/simulation/semantic_program/transport.py",
+      "baseline_git_object_id": "3e8c9f90dc27336c5aa139096b893b56517ca9aa",
+      "sha256_baseline_raw_git_blob": "4e7f0898ff06247541570476f0634383b269248482f1cffc835437d092cfeab6",
+      "sha256_baseline_lf": "4e7f0898ff06247541570476f0634383b269248482f1cffc835437d092cfeab6",
+      "sha256_current_disk_bytes": "b9d0e401cf494c539976cd6cd4b63e737e1e9e0028e153c0604edaeee76ebb60",
+      "sha256_current_lf": "4e7f0898ff06247541570476f0634383b269248482f1cffc835437d092cfeab6",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/simulation/semantic_program/validator.py",
+      "baseline_git_object_id": "7656ff206c93e657bd6e8390f0f311076c4ffd81",
+      "sha256_baseline_raw_git_blob": "06285e1f35fbaaad4b072a2a209fe79216ca6a6998791c4646029d589e6f0850",
+      "sha256_baseline_lf": "06285e1f35fbaaad4b072a2a209fe79216ca6a6998791c4646029d589e6f0850",
+      "sha256_current_disk_bytes": "45fcb0d8c5faa172d227cdd6ee4bc565f56fd69ea5cd605e01678d71ca4cafd7",
+      "sha256_current_lf": "06285e1f35fbaaad4b072a2a209fe79216ca6a6998791c4646029d589e6f0850",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/simulation/semantic_program/visual_adapter.py",
+      "baseline_git_object_id": "346aa4cd65dfda51b987ee016d9ff760d7568f4d",
+      "sha256_baseline_raw_git_blob": "5e83bff0f1fe465f0ffcb786f2bee46e22a3a61fbb132979923ea55978087b4b",
+      "sha256_baseline_lf": "5e83bff0f1fe465f0ffcb786f2bee46e22a3a61fbb132979923ea55978087b4b",
+      "sha256_current_disk_bytes": "73a1a2ab1f46e710a60ac5293501e89462fbb9917aebd9f7ad93674d24a65387",
+      "sha256_current_lf": "5e83bff0f1fe465f0ffcb786f2bee46e22a3a61fbb132979923ea55978087b4b",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "backend/app/simulation/semantic_program/visual_obligations.py",
+      "baseline_git_object_id": "9e2dc02cc75a627b987eaedb15130e0d27b902ba",
+      "sha256_baseline_raw_git_blob": "181262f3334fbf82b1d0aae06cf98755ae3c39c9f537d363db61351e3c7e8a36",
+      "sha256_baseline_lf": "181262f3334fbf82b1d0aae06cf98755ae3c39c9f537d363db61351e3c7e8a36",
+      "sha256_current_disk_bytes": "ad653f95ad25bab2ee94efa6b9859aff76f0292339968e377d26182e03866bfe",
+      "sha256_current_lf": "181262f3334fbf82b1d0aae06cf98755ae3c39c9f537d363db61351e3c7e8a36",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "frontend/src/simulations/domains/semantic/index.ts",
+      "baseline_git_object_id": "af228688b7719739b39f3086884023139a264cee",
+      "sha256_baseline_raw_git_blob": "ba9b87a29b027dcf71d4f9ddc63dcd96eac59ac5d6f0c7cb7d455231d1907ebc",
+      "sha256_baseline_lf": "ba9b87a29b027dcf71d4f9ddc63dcd96eac59ac5d6f0c7cb7d455231d1907ebc",
+      "sha256_current_disk_bytes": "e0eb89aa680dc1454046049e22534c8ac2cb72aa1fe851d07cd5be3484bcac0b",
+      "sha256_current_lf": "ba9b87a29b027dcf71d4f9ddc63dcd96eac59ac5d6f0c7cb7d455231d1907ebc",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "frontend/src/simulations/domains/semantic/model.ts",
+      "baseline_git_object_id": "78f53ed7ed07a3f5d58ef0c351468ef7a8260e62",
+      "sha256_baseline_raw_git_blob": "b430304ee052079e34fdf32784c8c85308b51deb2fd53d3f57978e3f0e210d56",
+      "sha256_baseline_lf": "b430304ee052079e34fdf32784c8c85308b51deb2fd53d3f57978e3f0e210d56",
+      "sha256_current_disk_bytes": "018980cb6f33b676178ab778382e5bcdc8fb08998e634cd9615f0718d9187f68",
+      "sha256_current_lf": "b430304ee052079e34fdf32784c8c85308b51deb2fd53d3f57978e3f0e210d56",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "frontend/src/simulations/domains/semantic/semantic.test.ts",
+      "baseline_git_object_id": "7f35e69cfaf9aac0957472ef3e462f16793f0a34",
+      "sha256_baseline_raw_git_blob": "4c6e859d3f8ae24d0d5832442e269b7ec88df0770d41c365588f54839a078094",
+      "sha256_baseline_lf": "4c6e859d3f8ae24d0d5832442e269b7ec88df0770d41c365588f54839a078094",
+      "sha256_current_disk_bytes": "fd61db001ca55ecdf197b482ae8de15b5cf58dabdd52d4c1d1a4c0b89a7dad8c",
+      "sha256_current_lf": "4c6e859d3f8ae24d0d5832442e269b7ec88df0770d41c365588f54839a078094",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "frontend/src/simulations/domains/semantic/semantic_program.schema.json",
+      "baseline_git_object_id": "21a071cbc26c0293e9a1f22876a44b6de2673a60",
+      "sha256_baseline_raw_git_blob": "667758005778bf217d663939424ee9c4b0c8f5ca70c65d5111b25ccdb0a0e1a4",
+      "sha256_baseline_lf": "667758005778bf217d663939424ee9c4b0c8f5ca70c65d5111b25ccdb0a0e1a4",
+      "sha256_current_disk_bytes": "d852b47c08b7ac0e2a41155366ac1ff88e7d08875cb1cfe718326c543b2951e7",
+      "sha256_current_lf": "667758005778bf217d663939424ee9c4b0c8f5ca70c65d5111b25ccdb0a0e1a4",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "frontend/src/simulations/domains/semantic/semantic_program.schema.json",
+      "baseline_git_object_id": "21a071cbc26c0293e9a1f22876a44b6de2673a60",
+      "sha256_baseline_raw_git_blob": "667758005778bf217d663939424ee9c4b0c8f5ca70c65d5111b25ccdb0a0e1a4",
+      "sha256_baseline_lf": "667758005778bf217d663939424ee9c4b0c8f5ca70c65d5111b25ccdb0a0e1a4",
+      "sha256_current_disk_bytes": "d852b47c08b7ac0e2a41155366ac1ff88e7d08875cb1cfe718326c543b2951e7",
+      "sha256_current_lf": "667758005778bf217d663939424ee9c4b0c8f5ca70c65d5111b25ccdb0a0e1a4",
+      "current_lf_matches_baseline": true
+    },
+    {
+      "path": "frontend/src/simulations/domains/semantic/ui.tsx",
+      "baseline_git_object_id": "70f8142c91f57b8345132f205eec842dbc07c82c",
+      "sha256_baseline_raw_git_blob": "0b659ab16f9ed740535778e2cbd4bfdc7d89bd13d55076637b69eafaaf7dbdd1",
+      "sha256_baseline_lf": "0b659ab16f9ed740535778e2cbd4bfdc7d89bd13d55076637b69eafaaf7dbdd1",
+      "sha256_current_disk_bytes": "b4897fafdfdc27e589a7183aa05aa400f2c21a8fda5d7b90504b99e7e92f6545",
+      "sha256_current_lf": "0b659ab16f9ed740535778e2cbd4bfdc7d89bd13d55076637b69eafaaf7dbdd1",
+      "current_lf_matches_baseline": true
+    }
+  ],
+  "historical_artifacts": {
+    "count": 29,
+    "all_unchanged_lf": true,
+    "files": [
+      {
+        "path": "docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/ALGOSIM_IMAGE_FIRST_OCR_VERIFIED_GEOMETRY_REPORT.md",
+        "baseline_git_object_id": "07e2f028c57fea69af475b4f14946fa6851966ba",
+        "sha256_baseline_git_blob": "6be750f841c9a2af570659cc5ff181562cf217bddfd3bf912a0ff70e3326b233",
+        "sha256_working_tree_bytes": "6be750f841c9a2af570659cc5ff181562cf217bddfd3bf912a0ff70e3326b233",
+        "sha256_working_tree_lf": "6be750f841c9a2af570659cc5ff181562cf217bddfd3bf912a0ff70e3326b233",
+        "unchanged_lf": true
+      },
+      {
+        "path": "docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/baseline_candidate_integrity.json",
+        "baseline_git_object_id": "2ed872e71d4289d4b072c0f590c0b24672c03579",
+        "sha256_baseline_git_blob": "8ac1b173c8913cbc98d47b93186311ceb812fddcb75e56edde75c9c157c2942d",
+        "sha256_working_tree_bytes": "4bc543f20ef793652bfdd4f5f9133a97c549092a28873dffdef98cce98b31b90",
+        "sha256_working_tree_lf": "8ac1b173c8913cbc98d47b93186311ceb812fddcb75e56edde75c9c157c2942d",
+        "unchanged_lf": true
+      },
+      {
+        "path": "docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/diagram_dependency_audit.json",
+        "baseline_git_object_id": "5d470b30a56214bca471f9ff85b9c2a4767bd153",
+        "sha256_baseline_git_blob": "938a7b719fc28576647a489d9253745e9d24dc71a6421f39de7789fbfd2c76a3",
+        "sha256_working_tree_bytes": "bf2db93b1c88fdc61613a9b4e871af5f78106e80f60130671aaafec87d5c126e",
+        "sha256_working_tree_lf": "938a7b719fc28576647a489d9253745e9d24dc71a6421f39de7789fbfd2c76a3",
+        "unchanged_lf": true
+      },
+      {
+        "path": "docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/dual_ocr_reconciliation_receipt.json",
+        "baseline_git_object_id": "188c68c3a54aa70c75c9f092ed34daa74befefaa",
+        "sha256_baseline_git_blob": "74c4bf6101d4bae8350af6f8173694fc3ce0ce4e49e0e0dc9d80d03cad37f6e8",
+        "sha256_working_tree_bytes": "64578015d6c6dc794813462fb1448b1cdffb2e85aa43654ff5453a21b2b9b994",
+        "sha256_working_tree_lf": "74c4bf6101d4bae8350af6f8173694fc3ce0ce4e49e0e0dc9d80d03cad37f6e8",
+        "unchanged_lf": true
+      },
+      {
+        "path": "docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/external16_image_diagnostics.json",
+        "baseline_git_object_id": "e67d030f9c0fe5f24a41d3b220999da03e2e020d",
+        "sha256_baseline_git_blob": "65b37b1fdf6ac5b8fec1e29e6b1defc0ab2dd857bebdf2ff68abeab6823462d0",
+        "sha256_working_tree_bytes": "a08e46264f97a44bd80d1ef0347fb8e73c5be27212faac9718a844f4af1cee49",
+        "sha256_working_tree_lf": "65b37b1fdf6ac5b8fec1e29e6b1defc0ab2dd857bebdf2ff68abeab6823462d0",
+        "unchanged_lf": true
+      },
+      {
+        "path": "docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/fidelity_false_rejection_analysis.json",
+        "baseline_git_object_id": "a6df92c0cc493e96f58e7683db75f8e8928d6a7b",
+        "sha256_baseline_git_blob": "deb5d5084b8707882ee48e2f1f12066a947aeecf92ec985afda3415a8dd4c875",
+        "sha256_working_tree_bytes": "dae460173b89e8a60f23794d2b41a06eb23b5c99730780942a90a9cc57493c8d",
+        "sha256_working_tree_lf": "deb5d5084b8707882ee48e2f1f12066a947aeecf92ec985afda3415a8dd4c875",
+        "unchanged_lf": true
+      },
+      {
+        "path": "docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/frontend_browser_e2e.json",
+        "baseline_git_object_id": "02b27bfe37cb2165c64b700decdd02148d9cbfcd",
+        "sha256_baseline_git_blob": "0ed34f440c61f1aa72d44becf8f7d0fd830e86b1959a0fd0b9e55c49ff756b7a",
+        "sha256_working_tree_bytes": "a66e9a2a11a26deaaab48d79e05cffa6c22172f21f7bfa60ab1e56aacce7e3f2",
+        "sha256_working_tree_lf": "0ed34f440c61f1aa72d44becf8f7d0fd830e86b1959a0fd0b9e55c49ff756b7a",
+        "unchanged_lf": true
+      },
+      {
+        "path": "docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/full_regression_summary.json",
+        "baseline_git_object_id": "ead1ea305c2ad5904e5acf59358c629586356f9b",
+        "sha256_baseline_git_blob": "b4059d4066bfbf765758e48d8f8ad5bbbb7d914783deaf0c19ee77dddd564767",
+        "sha256_working_tree_bytes": "b3a8e49a485b39b55ae64a85e1b4df324f0803f14dfca5709394e2bdda0c5536",
+        "sha256_working_tree_lf": "b4059d4066bfbf765758e48d8f8ad5bbbb7d914783deaf0c19ee77dddd564767",
+        "unchanged_lf": true
+      },
+      {
+        "path": "docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/handwritten_ocr_diagnostic.json",
+        "baseline_git_object_id": "ea0baff7d53815f64550004764adb17f8154a1df",
+        "sha256_baseline_git_blob": "2511743957b05575c9f8c4f4c1d6c86fed3958725dab7f810eb5fa0ccd51bf3a",
+        "sha256_working_tree_bytes": "c33282afeeec2e64d1754cab3d4733908c4992d62b1ccefc0c90a609905c355a",
+        "sha256_working_tree_lf": "2511743957b05575c9f8c4f4c1d6c86fed3958725dab7f810eb5fa0ccd51bf3a",
+        "unchanged_lf": true
+      },
+      {
+        "path": "docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/local_ocr_raw_outputs.json",
+        "baseline_git_object_id": "4022a8eeee99b7dc965b3c0c92e3097560dc99d2",
+        "sha256_baseline_git_blob": "e2e94f7823b933e1baa664045c7fcf6ff5cdff30036d5542def8b22c7159fb51",
+        "sha256_working_tree_bytes": "a0b0cd0bded88a13efc4fe1f50f9b7a7e4d87002e2d9a78633f89405b415d842",
+        "sha256_working_tree_lf": "e2e94f7823b933e1baa664045c7fcf6ff5cdff30036d5542def8b22c7159fb51",
+        "unchanged_lf": true
+      },
+      {
+        "path": "docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/math_layout_recognition_receipt.json",
+        "baseline_git_object_id": "692efdfe7acf2aec3cbe4af5ad08e435268c5838",
+        "sha256_baseline_git_blob": "753eef764ab24599cd759b69c810fdfd50af35cabd120d2d0272e458c486a6ba",
+        "sha256_working_tree_bytes": "e78a61eb8b8f20fc1503affa44511e40cbbb7edb7af48a9ec381f0f9e83ba7e8",
+        "sha256_working_tree_lf": "753eef764ab24599cd759b69c810fdfd50af35cabd120d2d0272e458c486a6ba",
+        "unchanged_lf": true
+      },
+      {
+        "path": "docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/new_external_image_evaluation.json",
+        "baseline_git_object_id": "ae8f7b1706314b1d31f76c49b3909096b2ed6e69",
+        "sha256_baseline_git_blob": "ac82e26d2a6b5b6cf9a87356c4ce63b33704112df1792af98512e077f3c2bbcb",
+        "sha256_working_tree_bytes": "e7b32e1a488524469daeedc58e4ae1c5ad0b0ff77f384af948a925ffa9999137",
+        "sha256_working_tree_lf": "ac82e26d2a6b5b6cf9a87356c4ce63b33704112df1792af98512e077f3c2bbcb",
+        "unchanged_lf": true
+      },
+      {
+        "path": "docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/new_external_local_ocr_raw_outputs.json",
+        "baseline_git_object_id": "c5da354e2eec4826e34b09bddfb666564098c458",
+        "sha256_baseline_git_blob": "ccbfedbe74f91856616a17ee7ac67297cd6703effef71c8028ec3b07e739685d",
+        "sha256_working_tree_bytes": "a8b476d267d9746e00228b5b9d55a55942031851cb5a57949a39206327392e5a",
+        "sha256_working_tree_lf": "ccbfedbe74f91856616a17ee7ac67297cd6703effef71c8028ec3b07e739685d",
+        "unchanged_lf": true
+      },
+      {
+        "path": "docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/ocr_failure_root_causes.json",
+        "baseline_git_object_id": "9149666c2544d9ae90d364d68982b555f7dceeb4",
+        "sha256_baseline_git_blob": "c3ba7940edd7354fa9c72f8e796f5ab5e69c704b5c76bb46f22b219e951592bf",
+        "sha256_working_tree_bytes": "9b72fc5a9272c87f109abf9d94a907cf53ca24c7e56f697f2eacb362b00ca5e3",
+        "sha256_working_tree_lf": "c3ba7940edd7354fa9c72f8e796f5ab5e69c704b5c76bb46f22b219e951592bf",
+        "unchanged_lf": true
+      },
+      {
+        "path": "docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/ocr_resource_performance.json",
+        "baseline_git_object_id": "3c9b9ba7071b9fe4b303a0273ee48442540b2acc",
+        "sha256_baseline_git_blob": "9bd16f24fc5e01a761d43d186f9650fcdc67f7fed085a1670ea0985d6238a872",
+        "sha256_working_tree_bytes": "5f9607e863527430849df99ba7fa1bdf916e77fa0e3641c640aea5091b7327d0",
+        "sha256_working_tree_lf": "9bd16f24fc5e01a761d43d186f9650fcdc67f7fed085a1670ea0985d6238a872",
+        "unchanged_lf": true
+      },
+      {
+        "path": "docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/printed_ocr_before_after.json",
+        "baseline_git_object_id": "43d3eee2dbb58d85b9bcb14ec1b5d1d37a317270",
+        "sha256_baseline_git_blob": "e8442d858f6754a47f2264fee274beccc27907ad6cb9fa54ae3c5b51e14c85c3",
+        "sha256_working_tree_bytes": "ca69572db7a400a27cd1693e61265fb2ebcc5e434cf050ac0402a43d654c7b60",
+        "sha256_working_tree_lf": "e8442d858f6754a47f2264fee274beccc27907ad6cb9fa54ae3c5b51e14c85c3",
+        "unchanged_lf": true
+      },
+      {
+        "path": "docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/real_image_to_scene3d_acceptance.json",
+        "baseline_git_object_id": "b0ef8fec5e697afa9ac824907a54b5a240738b5c",
+        "sha256_baseline_git_blob": "7da933be3c6738305bd2243e3833abdf79ca5f575ea885a6fb641ecf9e410aff",
+        "sha256_working_tree_bytes": "f837e2ef8cebdefa11988bf93db22092ee0503154f29f89e698697d00b58f9e9",
+        "sha256_working_tree_lf": "7da933be3c6738305bd2243e3833abdf79ca5f575ea885a6fb641ecf9e410aff",
+        "unchanged_lf": true
+      },
+      {
+        "path": "docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/region_aware_ocr_receipt.json",
+        "baseline_git_object_id": "4c1771276a8963dc7c1116d418801e749f82a922",
+        "sha256_baseline_git_blob": "2a00e53aabdf8cced86142a92a569dbe4ded4e68cca8a8f2fec802cecc6701e2",
+        "sha256_working_tree_bytes": "4565a65585214c40cea0681ab28e538e98bd34885d0d4f8fcb68ad7e540cc8a2",
+        "sha256_working_tree_lf": "2a00e53aabdf8cced86142a92a569dbe4ded4e68cca8a8f2fec802cecc6701e2",
+        "unchanged_lf": true
+      },
+      {
+        "path": "docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/run.json",
+        "baseline_git_object_id": "e9cc274af96a394b1706304a8361564a073b31dc",
+        "sha256_baseline_git_blob": "8d3b2591fc4c026a4b65f9af3f00b9cfd464a45cad0f81fdd093ec3012f2b849",
+        "sha256_working_tree_bytes": "388cdd5de8900964dc5e8e9384507a3e9d946c04fa1b6de29da4dac8b7b799f8",
+        "sha256_working_tree_lf": "8d3b2591fc4c026a4b65f9af3f00b9cfd464a45cad0f81fdd093ec3012f2b849",
+        "unchanged_lf": true
+      },
+      {
+        "path": "docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/student_confirmation_flow_receipt.json",
+        "baseline_git_object_id": "d6096830db6f89c3bdadde88bb8e5b41945a864b",
+        "sha256_baseline_git_blob": "1afd76a4a455484b5fe59783fc66f8c91609d936343ac849bfcebf9e47e68e4b",
+        "sha256_working_tree_bytes": "ad0485ffa93f16c41f1ce6e7913552fee8f1f27b7816626757ac172ca3b3dc5c",
+        "sha256_working_tree_lf": "1afd76a4a455484b5fe59783fc66f8c91609d936343ac849bfcebf9e47e68e4b",
+        "unchanged_lf": true
+      },
+      {
+        "path": "docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/tools/build_ocr_lexicon.py",
+        "baseline_git_object_id": "6da3acc2af78e2bbe977fe388fe9a07cbf085cd9",
+        "sha256_baseline_git_blob": "373784db43dd7f9110c282bcfe52c2f000457d82e97d367e28621144053586e1",
+        "sha256_working_tree_bytes": "373784db43dd7f9110c282bcfe52c2f000457d82e97d367e28621144053586e1",
+        "sha256_working_tree_lf": "373784db43dd7f9110c282bcfe52c2f000457d82e97d367e28621144053586e1",
+        "unchanged_lf": true
+      },
+      {
+        "path": "docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/tools/e2e_browser_image_first.mjs",
+        "baseline_git_object_id": "78b03e81b44887d856b10a3bddc2d746cf3d3533",
+        "sha256_baseline_git_blob": "9b71590e09bc97410e10899e91132d49fde0907e9eac32c7176c10391be28cc3",
+        "sha256_working_tree_bytes": "9b71590e09bc97410e10899e91132d49fde0907e9eac32c7176c10391be28cc3",
+        "sha256_working_tree_lf": "9b71590e09bc97410e10899e91132d49fde0907e9eac32c7176c10391be28cc3",
+        "unchanged_lf": true
+      },
+      {
+        "path": "docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/tools/evaluate_image_first_ocr.py",
+        "baseline_git_object_id": "e6c06241e4dc5bd2f0c945198ce134c4c8cf1faf",
+        "sha256_baseline_git_blob": "8fc1702db02d05ebf7f6c2bdcefda4d15a77541d4e61a62a0fc73a01ec3de878",
+        "sha256_working_tree_bytes": "8fc1702db02d05ebf7f6c2bdcefda4d15a77541d4e61a62a0fc73a01ec3de878",
+        "sha256_working_tree_lf": "8fc1702db02d05ebf7f6c2bdcefda4d15a77541d4e61a62a0fc73a01ec3de878",
+        "unchanged_lf": true
+      },
+      {
+        "path": "docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/tools/fetch_new_vmmu.py",
+        "baseline_git_object_id": "b7c948bdb08077e3ec0557e5e0024436ac5793f9",
+        "sha256_baseline_git_blob": "489041bbe395656a48c74f6fc8a5da6e16b4f24c7c44b76de7243bb8d1159d10",
+        "sha256_working_tree_bytes": "489041bbe395656a48c74f6fc8a5da6e16b4f24c7c44b76de7243bb8d1159d10",
+        "sha256_working_tree_lf": "489041bbe395656a48c74f6fc8a5da6e16b4f24c7c44b76de7243bb8d1159d10",
+        "unchanged_lf": true
+      },
+      {
+        "path": "docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/tools/generate_all_receipts.py",
+        "baseline_git_object_id": "c063d22506a067ed85e66639decf3b9851676476",
+        "sha256_baseline_git_blob": "c40dd9539ab287537dbcc1ba907137a359118fa9f79de6ba8838acb92e161e08",
+        "sha256_working_tree_bytes": "c40dd9539ab287537dbcc1ba907137a359118fa9f79de6ba8838acb92e161e08",
+        "sha256_working_tree_lf": "c40dd9539ab287537dbcc1ba907137a359118fa9f79de6ba8838acb92e161e08",
+        "unchanged_lf": true
+      },
+      {
+        "path": "docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/tools/new_external_catalog.py",
+        "baseline_git_object_id": "4ba032428fbc8df40635ff2d684f3a2532eae5ac",
+        "sha256_baseline_git_blob": "9343928fea50e4eebb511bfa6e340a5a0ac821e28fcf835019eec6e9d9fe40e8",
+        "sha256_working_tree_bytes": "9343928fea50e4eebb511bfa6e340a5a0ac821e28fcf835019eec6e9d9fe40e8",
+        "sha256_working_tree_lf": "9343928fea50e4eebb511bfa6e340a5a0ac821e28fcf835019eec6e9d9fe40e8",
+        "unchanged_lf": true
+      },
+      {
+        "path": "docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/user_correction_cache_invalidation.json",
+        "baseline_git_object_id": "5c6f596b13e4b249b08533588f191c1637f393fd",
+        "sha256_baseline_git_blob": "83f491167e68ab110a02dfc208a2d8278977da27e5964b307538d93b7e553d49",
+        "sha256_working_tree_bytes": "f860656db9804860ff4498c69388f17263d04916485bcd290f065710495ee7b3",
+        "sha256_working_tree_lf": "83f491167e68ab110a02dfc208a2d8278977da27e5964b307538d93b7e553d49",
+        "unchanged_lf": true
+      },
+      {
+        "path": "docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/vision_fallback_offline_receipt.json",
+        "baseline_git_object_id": "6a55729054500752ac0824767c749bba5fdcc683",
+        "sha256_baseline_git_blob": "d4cf581dc25ed5f5f72e208decf30a75670bd90013de1e235e3f295c578c0559",
+        "sha256_working_tree_bytes": "0addf12d251419374115ffd23964518d7ac84b98469f0a8a7f46538edb15238d",
+        "sha256_working_tree_lf": "d4cf581dc25ed5f5f72e208decf30a75670bd90013de1e235e3f295c578c0559",
+        "unchanged_lf": true
+      },
+      {
+        "path": "docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/vision_live_readiness.json",
+        "baseline_git_object_id": "0f8e7a7dedcc6088237e1b5f64c19ebdbae95b1b",
+        "sha256_baseline_git_blob": "32bb416c974a5130f059dd2adabd67f3b8bb2dd8416d381c98f4374c5767a2f1",
+        "sha256_working_tree_bytes": "38be4fd5510b20e7bf56698c28921f5af849068584b833c77678f9b1a18db8e4",
+        "sha256_working_tree_lf": "32bb416c974a5130f059dd2adabd67f3b8bb2dd8416d381c98f4374c5767a2f1",
+        "unchanged_lf": true
+      }
+    ],
+    "git_tree_changes_under_historical_run": [],
+    "raw_byte_semantics": "Raw baseline Git blob SHA256 recorded separately; CRLF checkout bytes differ from LF Git blobs without textual changes."
+  },
+  "root_unrelated_untracked": {
+    "path": "D:\\Documents\\projects\\algo-sim\\ocr_reconcile.py",
+    "size_bytes": 0,
+    "sha256_bytes": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "status_porcelain": [
+      "?? ocr_reconcile.py"
+    ],
+    "still_present_and_same_bytes_before_and_after_this_audit": true,
+    "initial_session_baseline": "Plan execution ledger records ?? ocr_reconcile.py; no earlier byte hash is available, so this proves preservation over this audit interval only.",
+    "read_only_git_override": "Command-scoped safe.directory used; no Git config change."
+  }
+}

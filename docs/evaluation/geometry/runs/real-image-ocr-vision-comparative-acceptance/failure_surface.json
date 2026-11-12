@@ -1,0 +1,31 @@
+{
+  "run_id": "real-image-ocr-vision-comparative-acceptance",
+  "head": "6bb22fa3bb183ad28cdf1395c99e5eb375fac97c",
+  "measured_system": [
+    "b79cd3bc0703b59cd5caeabbfaf17d833de791b827eda87cd7cba864adad7ce0",
+    115
+  ],
+  "allow_live_ai": 0,
+  "ground_truth_authority": "AGENT_TRANSCRIBED_UNVERIFIED",
+  "independent_h1": "NOT_MEASURED",
+  "actual_http_cases": [
+    {
+      "case_id": "invalid_image",
+      "status": 400,
+      "reason_code": "UNSUPPORTED_FILE_TYPE",
+      "controlled": true,
+      "traceback_leaked": false
+    },
+    {
+      "case_id": "oversized_image",
+      "status": 400,
+      "reason_code": "ATTACHMENT_TOO_LARGE",
+      "controlled": true,
+      "traceback_leaked": false
+    }
+  ],
+  "worker_crash_timeout_and_invalid_protocol": "backend/tests/test_local_ocr_worker_lifecycle.py (real subprocess tests)",
+  "provider_timeout": "OFFLINE_MOCK_REGRESSION_ONLY_NOT_LIVE",
+  "unauthorized_provider_calls": "ALLOW_LIVE_AI=0; server key empty; tests use socket guard",
+  "mid_inference_user_cancellation": "NOT_MEASURED"
+}

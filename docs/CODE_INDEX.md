@@ -1,5 +1,15 @@
 # CODE_INDEX.md — Chỉ mục module + BỘ NHỚ KIẾN TRÚC
 
+## Real-image OCR comparative acceptance (2026-11-11)
+
+| Path | Owns | Locked by |
+|---|---|---|
+| `backend/app/ingestion/local_ocr.py` | EOF-aware JSON-lines worker transport, object-response validation, process reaping/pipe closure, interpreter exit cleanup | `backend/tests/test_local_ocr_worker_lifecycle.py` |
+| `backend/app/ai/adaptive_input_router.py` | Worded-dimension descriptor/value comparison using the existing lexer; ignores exam headers and coefficient whitespace, retains side/height binding | `backend/tests/test_image_first_local_ocr.py` |
+| `backend/app/main.py` | `input_prepare` waits for the synchronous session gate in the existing thread pool so SQLite transaction cleanup can run on the event loop | `backend/tests/test_input_prepare_concurrency.py` |
+| `frontend/src/components/photo-problem-flow.ts` · `frontend/src/components/PhotoProblemPanel.tsx` | Python Unicode-codepoint spans applied correctly in JS; further edits clear confirmation; plain reviewed label | `frontend/src/components/photo-span-review.test.tsx` · `frontend/src/components/ui-hygiene.test.ts` |
+| `docs/evaluation/geometry/runs/real-image-ocr-vision-comparative-acceptance/tools/` | Run-scoped acquisition, metric reconciliation, OCR/API/browser evaluation, complete process-tree RSS, cold/warm/stage measurements and authorization preflight. No second product OCR/solver implementation. | Run report, `run.json`, `review.md`, canonical regression receipts |
+
 ## Image-First OCR & Verified Image-to-3D (run `image-first-ocr-verified-geometry`, 2026-11-10)
 
 | Path | Owns | Locked by |

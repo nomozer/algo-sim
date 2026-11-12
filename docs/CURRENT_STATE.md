@@ -1,5 +1,7 @@
 # CURRENT_STATE.md — Trạng thái hiện tại
 
+**Comparative image-input correction, 2026-11-11 (branch `feat/local-first-geometry-understanding`, product `2969e9e76` + `7b1700214`):** [Current report](evaluation/geometry/runs/real-image-ocr-vision-comparative-acceptance/AXO_REAL_IMAGE_OCR_VISION_COMPARATIVE_ACCEPTANCE_REPORT.md) and [correction](evaluation/geometry/runs/real-image-ocr-vision-comparative-acceptance/prior_metric_reconciliation.json) take precedence over older image-input summaries below. Five-polyhedral CER is **0.1135**, not0.0110. Actual prior16-image rerun retains1 automatic and10 simulated-corrected supported solves separately. New corpus8 images (2 development/6 external; unverified agent transcriptions) has0 automatic solves and0 served after simulated correction; it is not independent H1. Active OCR memory includes the entire Windows interpreter process tree; idle FastAPI delta0MiB is not active-system RAM. Provisional local-first+confirmation; `DECISION_PENDING_LIVE_EVIDENCE`, `LIVE_VISION_NOT_MEASURED`, `REAL_STUDENT_USABILITY=NOT_MEASURED`, `PHYSICAL_LOW_END_NOT_MEASURED`. Candidate/regression identity is recorded in the new run; no merge/push/deploy. Planner/26, Registry/33, Engine/24 and cache132 unchanged.
+
 CANONICAL_NEXT_ACTION = POST_NLU_BASELINE_RESEARCH_PRIORITY_DECISION
 
 ## Image-first OCR & verified image-to-3D — 2026-11-10
