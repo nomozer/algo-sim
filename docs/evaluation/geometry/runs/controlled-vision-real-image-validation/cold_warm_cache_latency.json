@@ -1,0 +1,192 @@
+{
+  "run_id": "controlled-vision-real-image-validation",
+  "classification": "DERIVED_FROM_REFERENCED_MEASUREMENTS_NOT_A_NEW_MEASUREMENT",
+  "generated_at_utc": "2026-11-12T17:23:15.096669+00:00",
+  "sources": [
+    "cold_warm_latency_benchmark.json",
+    "cold_process_benchmark.json",
+    "browser_in_scope_audit.json"
+  ],
+  "product_commit": "c53be83db71089b47b59b2ec7155b8e8552e1752",
+  "images": [
+    "hd_q_5259753.jpg",
+    "vmmu_page_r11_Math_0303_test_059_question_39_page_4_key_B_vqa.png"
+  ],
+  "server_states": {
+    "cold_model_cache_miss": "FastAPI process already serving; OCR worker stopped before the request (interpreter start + engine import + model load inside the request); all caches cleared",
+    "warm_model_cache_miss": "FastAPI process and OCR worker with loaded models alive; OCR and parser caches cleared",
+    "cache_hit": "same image bytes repeated; OCR result cache and parser cache populated; normalisation, region detection and reconciliation still execute"
+  },
+  "prepare_http_ms": {
+    "cold_model_cache_miss": {
+      "n": 10,
+      "p50": 4292.614100000719,
+      "p95_nearest_rank": 5159.076800002367
+    },
+    "warm_model_cache_miss": {
+      "n": 10,
+      "p50": 1977.9500500007998,
+      "p95_nearest_rank": 2603.264499997749
+    },
+    "cache_hit": {
+      "n": 10,
+      "p50": 136.2220500013791,
+      "p95_nearest_rank": 186.04839999898104
+    }
+  },
+  "harness_sampler_ab": {
+    "cold_model_cache_miss": {
+      "sampler_paused": {
+        "n": 10,
+        "p50": 4292.614100000719,
+        "p95_nearest_rank": 5159.076800002367
+      },
+      "sampler_running": {
+        "n": 10,
+        "p50": 4506.688550001854,
+        "p95_nearest_rank": 4820.862999997189
+      }
+    },
+    "warm_model_cache_miss": {
+      "sampler_paused": {
+        "n": 10,
+        "p50": 1977.9500500007998,
+        "p95_nearest_rank": 2603.264499997749
+      },
+      "sampler_running": {
+        "n": 10,
+        "p50": 2059.9881499983894,
+        "p95_nearest_rank": 2209.9406000015733
+      }
+    },
+    "cache_hit": {
+      "sampler_paused": {
+        "n": 10,
+        "p50": 136.2220500013791,
+        "p95_nearest_rank": 186.04839999898104
+      },
+      "sampler_running": {
+        "n": 10,
+        "p50": 129.37779999992927,
+        "p95_nearest_rank": 189.06350000179373
+      }
+    }
+  },
+  "fresh_fastapi_process_ms": {
+    "process_start_to_health_ready_ms": {
+      "n": 5,
+      "p50": 2373.274899997341,
+      "p95_nearest_rank": 2841.243200000463
+    },
+    "first_request_cold_process_cold_model": {
+      "n": 5,
+      "p50": 5261.527400001796,
+      "p95_nearest_rank": 5363.862700000027
+    },
+    "second_request_other_image_warm_model": {
+      "n": 5,
+      "p50": 2436.5782999993826,
+      "p95_nearest_rank": 2968.6127999993914
+    },
+    "third_request_repeat_first_image_cache_hit": {
+      "n": 5,
+      "p50": 97.69159999996191,
+      "p95_nearest_rank": 188.32660000043688
+    }
+  },
+  "upload_to_first_usable_scene_ms": {
+    "rows": [
+      {
+        "case_id": "vmmu_r476",
+        "viewport": "1440x900",
+        "uploadToReviewMs": 662,
+        "uploadToFirstUsableSceneMs": 2190
+      },
+      {
+        "case_id": "vmmu_r476",
+        "viewport": "390x844",
+        "uploadToReviewMs": 882,
+        "uploadToFirstUsableSceneMs": 1445
+      },
+      {
+        "case_id": "vmmu_r273",
+        "viewport": "1440x900",
+        "uploadToReviewMs": 3515,
+        "uploadToFirstUsableSceneMs": 4314
+      },
+      {
+        "case_id": "vmmu_r273",
+        "viewport": "390x844",
+        "uploadToReviewMs": 388,
+        "uploadToFirstUsableSceneMs": 929
+      },
+      {
+        "case_id": "vmmu_r492",
+        "viewport": "1440x900",
+        "uploadToReviewMs": 582,
+        "uploadToFirstUsableSceneMs": 1087
+      },
+      {
+        "case_id": "vmmu_r492",
+        "viewport": "390x844",
+        "uploadToReviewMs": 506,
+        "uploadToFirstUsableSceneMs": 997
+      }
+    ],
+    "caveat": "browser runs followed API runs of the same images, so most include an OCR cache hit; scripted confirmation has no reading time"
+  },
+  "comparison_with_previous_candidate": {
+    "previous": {
+      "head": "70b22cc7167d8e2372d606547c3e398b199fb101",
+      "summary": {
+        "cold_model_cache_miss": {
+          "n": 10,
+          "p50": 7150.510899999972,
+          "p95_nearest_rank": 16707.455599999776
+        },
+        "warm_model_cache_miss": {
+          "n": 10,
+          "p50": 3710.5658999998923,
+          "p95_nearest_rank": 5686.889699999938
+        },
+        "cache_hit": {
+          "n": 10,
+          "p50": 239.68910000007781,
+          "p95_nearest_rank": 398.25550000023213
+        }
+      },
+      "host_cpu_busy": 0.8891350250046305
+    },
+    "this": {
+      "summary": {
+        "cold_model_cache_miss": {
+          "n": 10,
+          "p50": 4292.614100000719,
+          "p95_nearest_rank": 5159.076800002367
+        },
+        "warm_model_cache_miss": {
+          "n": 10,
+          "p50": 1977.9500500007998,
+          "p95_nearest_rank": 2603.264499997749
+        },
+        "cache_hit": {
+          "n": 10,
+          "p50": 136.2220500013791,
+          "p95_nearest_rank": 186.04839999898104
+        }
+      },
+      "host_cpu_busy": 0.7660709284859595
+    },
+    "interpretation": "Same harness, images and server states. The product change is a string operation in reconciliation; differences track host load and are not attributed to code."
+  },
+  "host": {
+    "cpu_model": "11th Gen Intel(R) Core(TM) i5-11400H @ 2.70GHz",
+    "physical_cores": "6",
+    "logical_cpus": 12,
+    "total_ram_mib": 16163,
+    "os": "Windows-11-10.0.26100-SP0",
+    "process_count": 309,
+    "physical_low_end": "PHYSICAL_LOW_END_NOT_MEASURED (no 2-4 core / 4 GB machine available)"
+  },
+  "do_not_sum": "Stage figures (ocr_bottleneck_profile.json) are separate measurements and are not added into these end-to-end numbers."
+}

@@ -1,0 +1,40 @@
+{
+  "run_id": "controlled-vision-real-image-validation",
+  "classification": "DERIVED_FROM_REFERENCED_MEASUREMENTS_NOT_A_NEW_MEASUREMENT",
+  "generated_at_utc": "2026-11-12T17:23:15.093664+00:00",
+  "receipts": [
+    "browser_in_scope_audit.json",
+    "browser_confirmation_audit.json",
+    "browser_existing_scenarios.json"
+  ],
+  "in_scope_corpus": {
+    "passed": 6,
+    "total": 6
+  },
+  "confirmation_audit": {
+    "passed": 4,
+    "total": 4
+  },
+  "existing_scenarios": {
+    "total_scenarios": 6,
+    "passed_scenarios": 6,
+    "all_passed": true,
+    "provider_calls": 0
+  },
+  "covered": [
+    "upload",
+    "multi-problem selection (existing scenarios)",
+    "span review with crops",
+    "keyboard confirmation",
+    "edit invalidates confirmation",
+    "cancel prevents analyze",
+    "desktop 1440x900, CSS zoom 1.1, mobile 390x844",
+    "Scene3D canvas after build",
+    "Unicode code-point offsets (unit tests)"
+  ],
+  "not_covered_in_browser": [
+    "worker timeout and provider-unavailable screens (backend/unit tests only)",
+    "real student reading time"
+  ],
+  "is_human_usability_evidence": false
+}

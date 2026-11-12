@@ -1,0 +1,622 @@
+{
+  "run_id": "controlled-vision-real-image-validation",
+  "head": "5019a72fa0eb296002a24adb6e6dcd86d82a2c5d",
+  "measured_system": [
+    "cd9b9f518805d30522ee7c488dd834d3b05ea08d3e78d86c82da13c735a8a58a",
+    115
+  ],
+  "allow_live_ai": 0,
+  "ground_truth_authority": "AGENT_TRANSCRIBED_UNVERIFIED",
+  "independent_h1": "NOT_MEASURED",
+  "units": "ms",
+  "repeats": 5,
+  "images": [
+    "hd_q_5259753.jpg",
+    "vmmu_page_r11_Math_0303_test_059_question_39_page_4_key_B_vqa.png"
+  ],
+  "rows": [
+    {
+      "sample": 0,
+      "process_start_to_health_ready_ms": 2841.243200000463,
+      "requests": [
+        {
+          "mode": "first_request_cold_process_cold_model",
+          "sample": 0,
+          "elapsed_ms": 5261.527400001796,
+          "http_status": 200,
+          "prepare_status": "ready",
+          "metrics": {
+            "vlm_calls": 0,
+            "used_vlm": false,
+            "used_local_ocr": true,
+            "raw_input_bytes": 18008,
+            "vlm_payload_bytes": 0,
+            "uncropped_baseline_bytes": 24919,
+            "local_ocr_ms": 4739.65,
+            "local_parse_ms": 323.905,
+            "processing_ms": 5126.5
+          },
+          "server_ocr_route_timing": {
+            "ocr_ms": 4354.29,
+            "ocr_cached": false,
+            "cold_worker": true,
+            "reconcile_and_reread_ms": 385.36,
+            "reread_ms": 313.97,
+            "total_ms": 4739.65
+          },
+          "http_minus_server_processing_ms": 135.0274000017962,
+          "image": "hd_q_5259753.jpg"
+        },
+        {
+          "mode": "second_request_other_image_warm_model",
+          "sample": 0,
+          "elapsed_ms": 2436.5782999993826,
+          "http_status": 200,
+          "prepare_status": "needs_confirmation",
+          "metrics": {
+            "vlm_calls": 0,
+            "used_vlm": false,
+            "used_local_ocr": true,
+            "raw_input_bytes": 103189,
+            "vlm_payload_bytes": 0,
+            "uncropped_baseline_bytes": 130894,
+            "local_ocr_ms": 2281.33,
+            "processing_ms": 2423.63
+          },
+          "server_ocr_route_timing": {
+            "ocr_ms": 1983.25,
+            "ocr_cached": false,
+            "cold_worker": false,
+            "reconcile_and_reread_ms": 298.07,
+            "reread_ms": 248.56,
+            "total_ms": 2281.33
+          },
+          "http_minus_server_processing_ms": 12.94829999938247,
+          "image": "vmmu_page_r11_Math_0303_test_059_question_39_page_4_key_B_vqa.png"
+        },
+        {
+          "mode": "third_request_repeat_first_image_cache_hit",
+          "sample": 0,
+          "elapsed_ms": 83.33910000146716,
+          "http_status": 200,
+          "prepare_status": "ready",
+          "metrics": {
+            "vlm_calls": 0,
+            "used_vlm": false,
+            "used_local_ocr": true,
+            "raw_input_bytes": 18008,
+            "vlm_payload_bytes": 0,
+            "uncropped_baseline_bytes": 24919,
+            "local_ocr_ms": 45.3,
+            "local_parse_ms": 0.078,
+            "processing_ms": 73.61
+          },
+          "server_ocr_route_timing": {
+            "ocr_ms": 0.11,
+            "ocr_cached": true,
+            "cold_worker": true,
+            "reconcile_and_reread_ms": 45.19,
+            "reread_ms": 313.97,
+            "total_ms": 45.3
+          },
+          "http_minus_server_processing_ms": 9.72910000146716,
+          "image": "hd_q_5259753.jpg"
+        }
+      ],
+      "resources_whole_lifetime": {
+        "sample_count": 206,
+        "fastapi_peak_rss_mib": 147.94140625,
+        "ocr_process_tree_peak_rss_mib": 502.890625,
+        "combined_process_tree_peak_rss_mib": 628.0625,
+        "descendant_processes": [
+          {
+            "pid": 3812,
+            "parent_pid": 19768,
+            "exe": "python.exe",
+            "peak_rss_mib": 491.51171875
+          },
+          {
+            "pid": 8524,
+            "parent_pid": 19768,
+            "exe": "conhost.exe",
+            "peak_rss_mib": 7.23828125
+          },
+          {
+            "pid": 19768,
+            "parent_pid": 22516,
+            "exe": "python.exe",
+            "peak_rss_mib": 4.140625
+          }
+        ]
+      }
+    },
+    {
+      "sample": 1,
+      "process_start_to_health_ready_ms": 2350.065300001006,
+      "requests": [
+        {
+          "mode": "first_request_cold_process_cold_model",
+          "sample": 1,
+          "elapsed_ms": 4762.619499997527,
+          "http_status": 200,
+          "prepare_status": "needs_confirmation",
+          "metrics": {
+            "vlm_calls": 0,
+            "used_vlm": false,
+            "used_local_ocr": true,
+            "raw_input_bytes": 103189,
+            "vlm_payload_bytes": 0,
+            "uncropped_baseline_bytes": 130894,
+            "local_ocr_ms": 4386.61,
+            "processing_ms": 4561.37
+          },
+          "server_ocr_route_timing": {
+            "ocr_ms": 3830.84,
+            "ocr_cached": false,
+            "cold_worker": true,
+            "reconcile_and_reread_ms": 555.77,
+            "reread_ms": 483.11,
+            "total_ms": 4386.61
+          },
+          "http_minus_server_processing_ms": 201.24949999752698,
+          "image": "vmmu_page_r11_Math_0303_test_059_question_39_page_4_key_B_vqa.png"
+        },
+        {
+          "mode": "second_request_other_image_warm_model",
+          "sample": 1,
+          "elapsed_ms": 2968.6127999993914,
+          "http_status": 200,
+          "prepare_status": "ready",
+          "metrics": {
+            "vlm_calls": 0,
+            "used_vlm": false,
+            "used_local_ocr": true,
+            "raw_input_bytes": 18008,
+            "vlm_payload_bytes": 0,
+            "uncropped_baseline_bytes": 24919,
+            "local_ocr_ms": 2557.4,
+            "local_parse_ms": 371.715,
+            "processing_ms": 2958.15
+          },
+          "server_ocr_route_timing": {
+            "ocr_ms": 2461.78,
+            "ocr_cached": false,
+            "cold_worker": false,
+            "reconcile_and_reread_ms": 95.61,
+            "reread_ms": 23.98,
+            "total_ms": 2557.4
+          },
+          "http_minus_server_processing_ms": 10.462799999391336,
+          "image": "hd_q_5259753.jpg"
+        },
+        {
+          "mode": "third_request_repeat_first_image_cache_hit",
+          "sample": 1,
+          "elapsed_ms": 188.32660000043688,
+          "http_status": 200,
+          "prepare_status": "needs_confirmation",
+          "metrics": {
+            "vlm_calls": 0,
+            "used_vlm": false,
+            "used_local_ocr": true,
+            "raw_input_bytes": 103189,
+            "vlm_payload_bytes": 0,
+            "uncropped_baseline_bytes": 130894,
+            "local_ocr_ms": 37.53,
+            "processing_ms": 175.49
+          },
+          "server_ocr_route_timing": {
+            "ocr_ms": 0.17,
+            "ocr_cached": true,
+            "cold_worker": true,
+            "reconcile_and_reread_ms": 37.35,
+            "reread_ms": 483.11,
+            "total_ms": 37.53
+          },
+          "http_minus_server_processing_ms": 12.836600000436874,
+          "image": "vmmu_page_r11_Math_0303_test_059_question_39_page_4_key_B_vqa.png"
+        }
+      ],
+      "resources_whole_lifetime": {
+        "sample_count": 191,
+        "fastapi_peak_rss_mib": 147.46875,
+        "ocr_process_tree_peak_rss_mib": 555.921875,
+        "combined_process_tree_peak_rss_mib": 683.65234375,
+        "descendant_processes": [
+          {
+            "pid": 14544,
+            "parent_pid": 8428,
+            "exe": "python.exe",
+            "peak_rss_mib": 544.5546875
+          },
+          {
+            "pid": 19932,
+            "parent_pid": 8428,
+            "exe": "conhost.exe",
+            "peak_rss_mib": 7.234375
+          },
+          {
+            "pid": 8428,
+            "parent_pid": 12876,
+            "exe": "python.exe",
+            "peak_rss_mib": 4.1328125
+          }
+        ]
+      }
+    },
+    {
+      "sample": 2,
+      "process_start_to_health_ready_ms": 2300.742600000376,
+      "requests": [
+        {
+          "mode": "first_request_cold_process_cold_model",
+          "sample": 2,
+          "elapsed_ms": 5363.862700000027,
+          "http_status": 200,
+          "prepare_status": "ready",
+          "metrics": {
+            "vlm_calls": 0,
+            "used_vlm": false,
+            "used_local_ocr": true,
+            "raw_input_bytes": 18008,
+            "vlm_payload_bytes": 0,
+            "uncropped_baseline_bytes": 24919,
+            "local_ocr_ms": 4816.56,
+            "local_parse_ms": 321.551,
+            "processing_ms": 5201.06
+          },
+          "server_ocr_route_timing": {
+            "ocr_ms": 4511.92,
+            "ocr_cached": false,
+            "cold_worker": true,
+            "reconcile_and_reread_ms": 304.64,
+            "reread_ms": 239.67,
+            "total_ms": 4816.56
+          },
+          "http_minus_server_processing_ms": 162.80270000002656,
+          "image": "hd_q_5259753.jpg"
+        },
+        {
+          "mode": "second_request_other_image_warm_model",
+          "sample": 2,
+          "elapsed_ms": 2349.9455000019225,
+          "http_status": 200,
+          "prepare_status": "needs_confirmation",
+          "metrics": {
+            "vlm_calls": 0,
+            "used_vlm": false,
+            "used_local_ocr": true,
+            "raw_input_bytes": 103189,
+            "vlm_payload_bytes": 0,
+            "uncropped_baseline_bytes": 130894,
+            "local_ocr_ms": 2198.33,
+            "processing_ms": 2338.13
+          },
+          "server_ocr_route_timing": {
+            "ocr_ms": 1912.36,
+            "ocr_cached": false,
+            "cold_worker": false,
+            "reconcile_and_reread_ms": 285.96,
+            "reread_ms": 232.2,
+            "total_ms": 2198.33
+          },
+          "http_minus_server_processing_ms": 11.815500001922373,
+          "image": "vmmu_page_r11_Math_0303_test_059_question_39_page_4_key_B_vqa.png"
+        },
+        {
+          "mode": "third_request_repeat_first_image_cache_hit",
+          "sample": 2,
+          "elapsed_ms": 81.1303999980737,
+          "http_status": 200,
+          "prepare_status": "ready",
+          "metrics": {
+            "vlm_calls": 0,
+            "used_vlm": false,
+            "used_local_ocr": true,
+            "raw_input_bytes": 18008,
+            "vlm_payload_bytes": 0,
+            "uncropped_baseline_bytes": 24919,
+            "local_ocr_ms": 44.59,
+            "local_parse_ms": 0.074,
+            "processing_ms": 71.83
+          },
+          "server_ocr_route_timing": {
+            "ocr_ms": 0.11,
+            "ocr_cached": true,
+            "cold_worker": true,
+            "reconcile_and_reread_ms": 44.48,
+            "reread_ms": 239.67,
+            "total_ms": 44.59
+          },
+          "http_minus_server_processing_ms": 9.3003999980737,
+          "image": "hd_q_5259753.jpg"
+        }
+      ],
+      "resources_whole_lifetime": {
+        "sample_count": 192,
+        "fastapi_peak_rss_mib": 147.38671875,
+        "ocr_process_tree_peak_rss_mib": 469.171875,
+        "combined_process_tree_peak_rss_mib": 594.19140625,
+        "descendant_processes": [
+          {
+            "pid": 22068,
+            "parent_pid": 15444,
+            "exe": "python.exe",
+            "peak_rss_mib": 457.78515625
+          },
+          {
+            "pid": 2288,
+            "parent_pid": 15444,
+            "exe": "conhost.exe",
+            "peak_rss_mib": 7.25390625
+          },
+          {
+            "pid": 15444,
+            "parent_pid": 16280,
+            "exe": "python.exe",
+            "peak_rss_mib": 4.1328125
+          }
+        ]
+      }
+    },
+    {
+      "sample": 3,
+      "process_start_to_health_ready_ms": 2373.274899997341,
+      "requests": [
+        {
+          "mode": "first_request_cold_process_cold_model",
+          "sample": 3,
+          "elapsed_ms": 4880.55600000007,
+          "http_status": 200,
+          "prepare_status": "needs_confirmation",
+          "metrics": {
+            "vlm_calls": 0,
+            "used_vlm": false,
+            "used_local_ocr": true,
+            "raw_input_bytes": 103189,
+            "vlm_payload_bytes": 0,
+            "uncropped_baseline_bytes": 130894,
+            "local_ocr_ms": 4541.18,
+            "processing_ms": 4719.16
+          },
+          "server_ocr_route_timing": {
+            "ocr_ms": 4013.3,
+            "ocr_cached": false,
+            "cold_worker": true,
+            "reconcile_and_reread_ms": 527.88,
+            "reread_ms": 470.75,
+            "total_ms": 4541.18
+          },
+          "http_minus_server_processing_ms": 161.39600000006976,
+          "image": "vmmu_page_r11_Math_0303_test_059_question_39_page_4_key_B_vqa.png"
+        },
+        {
+          "mode": "second_request_other_image_warm_model",
+          "sample": 3,
+          "elapsed_ms": 2824.979400000302,
+          "http_status": 200,
+          "prepare_status": "ready",
+          "metrics": {
+            "vlm_calls": 0,
+            "used_vlm": false,
+            "used_local_ocr": true,
+            "raw_input_bytes": 18008,
+            "vlm_payload_bytes": 0,
+            "uncropped_baseline_bytes": 24919,
+            "local_ocr_ms": 2450.93,
+            "local_parse_ms": 333.487,
+            "processing_ms": 2812.79
+          },
+          "server_ocr_route_timing": {
+            "ocr_ms": 2369.46,
+            "ocr_cached": false,
+            "cold_worker": false,
+            "reconcile_and_reread_ms": 81.47,
+            "reread_ms": 22.63,
+            "total_ms": 2450.93
+          },
+          "http_minus_server_processing_ms": 12.189400000302157,
+          "image": "hd_q_5259753.jpg"
+        },
+        {
+          "mode": "third_request_repeat_first_image_cache_hit",
+          "sample": 3,
+          "elapsed_ms": 186.8568999998388,
+          "http_status": 200,
+          "prepare_status": "needs_confirmation",
+          "metrics": {
+            "vlm_calls": 0,
+            "used_vlm": false,
+            "used_local_ocr": true,
+            "raw_input_bytes": 103189,
+            "vlm_payload_bytes": 0,
+            "uncropped_baseline_bytes": 130894,
+            "local_ocr_ms": 38.62,
+            "processing_ms": 174.22
+          },
+          "server_ocr_route_timing": {
+            "ocr_ms": 0.18,
+            "ocr_cached": true,
+            "cold_worker": true,
+            "reconcile_and_reread_ms": 38.44,
+            "reread_ms": 470.75,
+            "total_ms": 38.62
+          },
+          "http_minus_server_processing_ms": 12.63689999983879,
+          "image": "vmmu_page_r11_Math_0303_test_059_question_39_page_4_key_B_vqa.png"
+        }
+      ],
+      "resources_whole_lifetime": {
+        "sample_count": 193,
+        "fastapi_peak_rss_mib": 142.76953125,
+        "ocr_process_tree_peak_rss_mib": 530.8828125,
+        "combined_process_tree_peak_rss_mib": 658.80859375,
+        "descendant_processes": [
+          {
+            "pid": 12356,
+            "parent_pid": 21652,
+            "exe": "python.exe",
+            "peak_rss_mib": 519.5078125
+          },
+          {
+            "pid": 10768,
+            "parent_pid": 21652,
+            "exe": "conhost.exe",
+            "peak_rss_mib": 7.23828125
+          },
+          {
+            "pid": 21652,
+            "parent_pid": 22348,
+            "exe": "python.exe",
+            "peak_rss_mib": 4.13671875
+          }
+        ]
+      }
+    },
+    {
+      "sample": 4,
+      "process_start_to_health_ready_ms": 2818.9447000004293,
+      "requests": [
+        {
+          "mode": "first_request_cold_process_cold_model",
+          "sample": 4,
+          "elapsed_ms": 5267.340300000797,
+          "http_status": 200,
+          "prepare_status": "ready",
+          "metrics": {
+            "vlm_calls": 0,
+            "used_vlm": false,
+            "used_local_ocr": true,
+            "raw_input_bytes": 18008,
+            "vlm_payload_bytes": 0,
+            "uncropped_baseline_bytes": 24919,
+            "local_ocr_ms": 4747.98,
+            "local_parse_ms": 300.852,
+            "processing_ms": 5120.19
+          },
+          "server_ocr_route_timing": {
+            "ocr_ms": 4423.23,
+            "ocr_cached": false,
+            "cold_worker": true,
+            "reconcile_and_reread_ms": 324.75,
+            "reread_ms": 244.34,
+            "total_ms": 4747.98
+          },
+          "http_minus_server_processing_ms": 147.15030000079696,
+          "image": "hd_q_5259753.jpg"
+        },
+        {
+          "mode": "second_request_other_image_warm_model",
+          "sample": 4,
+          "elapsed_ms": 2271.6322999986005,
+          "http_status": 200,
+          "prepare_status": "needs_confirmation",
+          "metrics": {
+            "vlm_calls": 0,
+            "used_vlm": false,
+            "used_local_ocr": true,
+            "raw_input_bytes": 103189,
+            "vlm_payload_bytes": 0,
+            "uncropped_baseline_bytes": 130894,
+            "local_ocr_ms": 2126.94,
+            "processing_ms": 2260.43
+          },
+          "server_ocr_route_timing": {
+            "ocr_ms": 1831.05,
+            "ocr_cached": false,
+            "cold_worker": false,
+            "reconcile_and_reread_ms": 295.89,
+            "reread_ms": 251.3,
+            "total_ms": 2126.94
+          },
+          "http_minus_server_processing_ms": 11.202299998600665,
+          "image": "vmmu_page_r11_Math_0303_test_059_question_39_page_4_key_B_vqa.png"
+        },
+        {
+          "mode": "third_request_repeat_first_image_cache_hit",
+          "sample": 4,
+          "elapsed_ms": 97.69159999996191,
+          "http_status": 200,
+          "prepare_status": "ready",
+          "metrics": {
+            "vlm_calls": 0,
+            "used_vlm": false,
+            "used_local_ocr": true,
+            "raw_input_bytes": 18008,
+            "vlm_payload_bytes": 0,
+            "uncropped_baseline_bytes": 24919,
+            "local_ocr_ms": 53.2,
+            "local_parse_ms": 0.143,
+            "processing_ms": 86.03
+          },
+          "server_ocr_route_timing": {
+            "ocr_ms": 0.15,
+            "ocr_cached": true,
+            "cold_worker": true,
+            "reconcile_and_reread_ms": 53.05,
+            "reread_ms": 244.34,
+            "total_ms": 53.2
+          },
+          "http_minus_server_processing_ms": 11.661599999961908,
+          "image": "hd_q_5259753.jpg"
+        }
+      ],
+      "resources_whole_lifetime": {
+        "sample_count": 199,
+        "fastapi_peak_rss_mib": 144.0078125,
+        "ocr_process_tree_peak_rss_mib": 491.98828125,
+        "combined_process_tree_peak_rss_mib": 617.08984375,
+        "descendant_processes": [
+          {
+            "pid": 1368,
+            "parent_pid": 3892,
+            "exe": "python.exe",
+            "peak_rss_mib": 480.625
+          },
+          {
+            "pid": 21252,
+            "parent_pid": 3892,
+            "exe": "conhost.exe",
+            "peak_rss_mib": 7.23046875
+          },
+          {
+            "pid": 3892,
+            "parent_pid": 20380,
+            "exe": "python.exe",
+            "peak_rss_mib": 4.1328125
+          }
+        ]
+      }
+    }
+  ],
+  "summary": {
+    "process_start_to_health_ready_ms": {
+      "n": 5,
+      "p50": 2373.274899997341,
+      "p95_nearest_rank": 2841.243200000463
+    },
+    "first_request_cold_process_cold_model": {
+      "n": 5,
+      "p50": 5261.527400001796,
+      "p95_nearest_rank": 5363.862700000027
+    },
+    "second_request_other_image_warm_model": {
+      "n": 5,
+      "p50": 2436.5782999993826,
+      "p95_nearest_rank": 2968.6127999993914
+    },
+    "third_request_repeat_first_image_cache_hit": {
+      "n": 5,
+      "p50": 97.69159999996191,
+      "p95_nearest_rank": 188.32660000043688
+    }
+  },
+  "summary_combined_process_tree_peak_rss_mib": {
+    "n": 5,
+    "p50": 628.0625,
+    "p95_nearest_rank": 683.65234375
+  },
+  "timing_boundary": "process_start_to_health_ready: Popen of uvicorn until GET /api/health answers 200 (interpreter start, app import, DB init). Requests: HTTP POST /api/input/prepare to complete JSON on an already open connection.",
+  "os_file_cache": "NOT_CONTROLLED: model and DLL files stay in the Windows file cache between samples; a first run after reboot is NOT_MEASURED",
+  "launch": "measured_app wrapper (25 ms process-tree sampler thread) via uvicorn, single worker, no reload"
+}

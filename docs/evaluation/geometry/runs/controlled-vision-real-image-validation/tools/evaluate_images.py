@@ -223,6 +223,46 @@ def api(partition: str) -> None:
         print(item["case_id"], row["prepare_status"], row["route"], kernel.get("status"), kernel.get("reason_code"), row["grade"]["verdict"], flush=True)
 
 
+LAYER = {  # which owner a refusal on the agent transcription belongs to; none of these is an OCR failure
+    "UNPARSED_GOAL_CANDIDATE": "LOCAL_PARSER_COVERAGE", "UNPARSED_FACT_CANDIDATE": "LOCAL_PARSER_COVERAGE",
+    "EMPTY_SOLIDS": "LOCAL_PARSER_COVERAGE", "NOT_ASKED_IN_SOURCE": "SOURCE_GATE", "UNGROUNDED_VALUE": "SOURCE_GATE",
+    "SOURCE_PREMISE_UNREAD": "SOURCE_GATE", "EXACT_DOMAIN_EXCEEDED": "GEOMETRY_KERNEL", "AMBIGUOUS_FACT": "CLARIFICATION_POLICY"}
+
+
+def backlog() -> None:
+    """Case-level specification of every verified-text refusal, by owning layer. Writes no product change."""
+    from app.ai.local_geometry_parser import parse_geometry_problem_locally
+    diag = {c["case_id"]: c for c in json.loads((RUN / "transcription_solver_diagnostic.json").read_text(encoding="utf-8"))["cases"]}
+    rows = []
+    for item in manifest():
+        case = diag[item["case_id"]]
+        if case["solver_scope"] == "IN_SCOPE_SOLVABLE_WITH_VERIFIED_TEXT":
+            continue
+        parsed = parse_geometry_problem_locally(item["statement"])
+        kernel = case["variants"]["statement"]["kernel"]
+        code = kernel.get("reason_code") if kernel.get("status") in ("REFUSED", "unsupported") else parsed.reason_code
+        coverage = parsed.source_coverage
+        rows.append({"case_id": item["case_id"], "partition": item["partition"], "tags": item["tags"], "solver_scope": case["solver_scope"],
+                     "local_parse_status": parsed.status, "reason_code": code,
+                     "owning_layer": "OUT_OF_SCOPE_DOMAIN" if case["solver_scope"] == "OUT_OF_SCOPE" else LAYER.get(code, "UNCLASSIFIED"),
+                     "api_result_on_transcription": f"{kernel.get('http_status')} {kernel.get('status')} {kernel.get('reason_code')}",
+                     "unparsed_fact_candidates": list(getattr(coverage, "unparsed_fact_candidates", ()) or ()),
+                     "unparsed_goal_candidates": list(getattr(coverage, "unparsed_goal_candidates", ()) or ()),
+                     "fallback_reason": (parsed.fallback_reason or "")[:300],
+                     "expected_answer_from_dataset_key": item["expected_answer"],
+                     "evaluation_split_item": item["partition"] == "frozen_external_evaluation"})
+    E.write("geometry_capability_gap_backlog.json", {**E.header(),
+        "purpose": "Specification for later parser / Source Gate / kernel work. No geometry was expanded in this run.",
+        "input": "agent transcription (statement only, choices excluded), local-first route, ALLOW_LIVE_AI=0",
+        "meaning_of_503": "With ALLOW_LIVE_AI=1 the local-first route would hand an incomplete local parse to the live extractor. These cases are therefore NOT measured as unsolvable by the product; they are unsolvable WITHOUT any AI call.",
+        "counts_by_layer": dict(Counter(r["owning_layer"] for r in rows)),
+        "carried_over": [{"case_id": "new_vmmu_full_r446", "run": "real-image-ocr-vision-comparative-acceptance", "owning_layer": "GEOMETRY_KERNEL",
+                          "reason_code": "MISSING_DIMENSION", "gap": "legs of a right isosceles triangle from its hypotenuse"}],
+        "tuning_rule": "Items marked evaluation_split_item=true must move to development before any fix uses them.",
+        "cases": rows})
+    print(json.dumps(dict(Counter(r["owning_layer"] for r in rows))))
+
+
 def summarize() -> None:
     load = lambda name: json.loads((RUN / name).read_text(encoding="utf-8"))
     scope = {c["case_id"]: c["solver_scope"] for c in load("transcription_solver_diagnostic.json")["cases"]}
@@ -284,7 +324,7 @@ if __name__ == "__main__":
     assert same_value("cos²=3/4", "30°") is True and same_value("cos²=3/4", "60°") is False and same_value("cos²=1/4", "1/2") is None
     assert same_value("a√6/3", "a√6/6") is False and same_value("1/2", "30°") is False and numeric("0,5 dm³", 1.0) == 0.5
     parser = argparse.ArgumentParser()
-    parser.add_argument("mode", choices=["transcription", "local", "api", "summarize"])
+    parser.add_argument("mode", choices=["transcription", "local", "api", "summarize", "backlog"])
     parser.add_argument("--partition", default="development")
     args = parser.parse_args()
-    {"transcription": transcription, "summarize": summarize}.get(args.mode, lambda: {"local": local, "api": api}[args.mode](args.partition))()
+    {"transcription": transcription, "summarize": summarize, "backlog": backlog}.get(args.mode, lambda: {"local": local, "api": api}[args.mode](args.partition))()

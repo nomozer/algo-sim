@@ -1,0 +1,89 @@
+{
+  "run_id": "controlled-vision-real-image-validation",
+  "classification": "DERIVED_FROM_REFERENCED_MEASUREMENTS_NOT_A_NEW_MEASUREMENT",
+  "generated_at_utc": "2026-11-12T17:23:15.097668+00:00",
+  "source": "ocr_stage_profile.json",
+  "measurement_class": "DIAGNOSTIC_STAGE_TIMING_NOT_API_LATENCY",
+  "warm_stage_p50_ms_ranked": [
+    [
+      "ocr_round_trip_ms",
+      1692.938950001917
+    ],
+    [
+      "reconcile_including_reread_ms",
+      176.41500000172528
+    ],
+    [
+      "reconcile_excluding_reread_ms",
+      52.44470000252477
+    ],
+    [
+      "region_detection_ms",
+      50.33519999960845
+    ],
+    [
+      "input_fidelity_gate_ms",
+      19.586699998399126
+    ],
+    [
+      "normalize_decode_ms",
+      18.535850000262144
+    ],
+    [
+      "local_parse_ms",
+      16.398200003095553
+    ],
+    [
+      "ocr_round_trip_minus_inference_ms",
+      6.8227500000491546
+    ]
+  ],
+  "cold_worker_stage_p50_ms": {
+    "normalize_decode_ms": 27.312700000038603,
+    "region_detection_ms": 54.7627999985707,
+    "ocr_round_trip_ms": 3951.6518999989785,
+    "ocr_round_trip_minus_inference_ms": 1251.7240000013046,
+    "reconcile_including_reread_ms": 402.3995000006835,
+    "reconcile_excluding_reread_ms": 55.862000002889545,
+    "input_fidelity_gate_ms": 21.244200001092395,
+    "local_parse_ms": 16.96454999910202
+  },
+  "engine_p50_ms": {
+    "tesseract_warm_inference_ms": 183.54000000000002,
+    "rapidocr_warm_inference_ms": 1545.475,
+    "rapidocr_import_ms": 1006.2511999985873,
+    "rapidocr_lazy_model_load_estimate_ms": 788.0899999999999,
+    "tesseract_init_ms": 28.290250000281958,
+    "interpreter_start_and_exit_ms": 246.83755000114616
+  },
+  "finding": "RapidOCR inference dominates warm OCR (~1.5 s of ~1.7 s); a cold worker adds ~1.0 s rapidocr import and ~0.8 s lazy model load. Reread adds 0.1-0.4 s; reconciliation, fidelity and parsing are each under 0.1 s.",
+  "cache_policy": {
+    "observed": [
+      {
+        "distinct_images_before_repeat": 8,
+        "ocr_cache_entries_after": 16,
+        "first_ms": 3271.532599999773,
+        "repeat_ms": 631.4980999995896,
+        "repeat_ocr_cached": true,
+        "repeat_reread_ms": 359.51,
+        "policy": "single OrderedDict: normal OCR inserts trim to 16 entries, reread inserts trim to 64; reread entries therefore count against the 16 OCR slots"
+      },
+      {
+        "distinct_images_before_repeat": 20,
+        "ocr_cache_entries_after": 17,
+        "first_ms": 4444.684699999925,
+        "repeat_ms": 3473.7269999968703,
+        "repeat_ocr_cached": false,
+        "repeat_reread_ms": 389.2,
+        "policy": "single OrderedDict: normal OCR inserts trim to 16 entries, reread inserts trim to 64; reread entries therefore count against the 16 OCR slots"
+      }
+    ],
+    "finding": "Normal OCR and reread results share one 16/64-trimmed OrderedDict, so rereads consume OCR slots: after 8 images the first image's OCR is still cached but its reread is not; after 20 images neither is."
+  },
+  "optimisations_implemented": [],
+  "optimisations_considered": {
+    "pre-warm the OCR worker at startup": "would remove ~1.8-2.3 s from the first upload at the cost of ~400-600 MiB idle RSS: an Owner trade-off, not implemented",
+    "separate reread cache budget": "small latency gain on repeats; not implemented without a before/after on a repeat-heavy workload",
+    "drop an engine or the reread": "rejected: both feed cross-family verification of critical facts"
+  }
+}

@@ -1,0 +1,819 @@
+{
+  "run_id": "controlled-vision-real-image-validation",
+  "head": "5019a72fa0eb296002a24adb6e6dcd86d82a2c5d",
+  "measured_system": [
+    "cd9b9f518805d30522ee7c488dd834d3b05ea08d3e78d86c82da13c735a8a58a",
+    115
+  ],
+  "allow_live_ai": 0,
+  "ground_truth_authority": "AGENT_TRANSCRIBED_UNVERIFIED",
+  "independent_h1": "NOT_MEASURED",
+  "units": "ms",
+  "repeats": 5,
+  "images": [
+    "hd_q_5259753.jpg",
+    "vmmu_page_r11_Math_0303_test_059_question_39_page_4_key_B_vqa.png"
+  ],
+  "measurement_class": "DIAGNOSTIC_STAGE_TIMING_NOT_API_LATENCY",
+  "worker_interpreter_profile": {
+    "rows": [
+      {
+        "image": "hd_q_5259753.jpg",
+        "sample": 0,
+        "stdlib_and_worker_module_import_ms": 5.378600002586609,
+        "pillow_import_ms": 34.33230000155163,
+        "pillow_decode_ms": 91.31130000241683,
+        "tesserocr_import_ms": 19.271999997727107,
+        "tesseract_init_ms": 49.09090000001015,
+        "tesseract_first_inference_ms": 175.23,
+        "tesseract_warm_inference_ms": 120.03,
+        "rapidocr_import_ms": 978.9798999991035,
+        "rapidocr_constructor_ms": 14.268599999923026,
+        "onnxruntime_loaded_after_constructor": false,
+        "rapidocr_first_call_ms": 2743.8,
+        "rapidocr_warm_inference_ms": 2091.81,
+        "rapidocr_lazy_model_load_estimate_ms": 651.9900000000002,
+        "in_interpreter_total_ms": 6324.763500000699,
+        "process_wall_ms": 6607.97200000161,
+        "interpreter_start_and_exit_ms": 283.20850000091013
+      },
+      {
+        "image": "hd_q_5259753.jpg",
+        "sample": 1,
+        "stdlib_and_worker_module_import_ms": 3.0647000021417625,
+        "pillow_import_ms": 24.39040000172099,
+        "pillow_decode_ms": 44.54310000073747,
+        "tesserocr_import_ms": 11.888699998962693,
+        "tesseract_init_ms": 26.618399999279063,
+        "tesseract_first_inference_ms": 107.96,
+        "tesseract_warm_inference_ms": 108.88,
+        "rapidocr_import_ms": 976.625299997977,
+        "rapidocr_constructor_ms": 14.697999999043532,
+        "onnxruntime_loaded_after_constructor": false,
+        "rapidocr_first_call_ms": 2704.31,
+        "rapidocr_warm_inference_ms": 1758.83,
+        "rapidocr_lazy_model_load_estimate_ms": 945.48,
+        "in_interpreter_total_ms": 5783.071100002417,
+        "process_wall_ms": 5979.150299997855,
+        "interpreter_start_and_exit_ms": 196.0791999954381
+      },
+      {
+        "image": "hd_q_5259753.jpg",
+        "sample": 2,
+        "stdlib_and_worker_module_import_ms": 2.0002000019303523,
+        "pillow_import_ms": 25.696099997730926,
+        "pillow_decode_ms": 48.98279999906663,
+        "tesserocr_import_ms": 14.750399997865316,
+        "tesseract_init_ms": 29.458599998179125,
+        "tesseract_first_inference_ms": 109.99,
+        "tesseract_warm_inference_ms": 134.71,
+        "rapidocr_import_ms": 1049.502300000313,
+        "rapidocr_constructor_ms": 16.17880000048899,
+        "onnxruntime_loaded_after_constructor": false,
+        "rapidocr_first_call_ms": 2621.66,
+        "rapidocr_warm_inference_ms": 1853.14,
+        "rapidocr_lazy_model_load_estimate_ms": 768.5199999999998,
+        "in_interpreter_total_ms": 5907.302100000379,
+        "process_wall_ms": 6078.436100000545,
+        "interpreter_start_and_exit_ms": 171.13400000016554
+      },
+      {
+        "image": "hd_q_5259753.jpg",
+        "sample": 3,
+        "stdlib_and_worker_module_import_ms": 3.372699997271411,
+        "pillow_import_ms": 29.017799999564886,
+        "pillow_decode_ms": 52.78399999951944,
+        "tesserocr_import_ms": 12.604999999894062,
+        "tesseract_init_ms": 28.016700001899153,
+        "tesseract_first_inference_ms": 111.33,
+        "tesseract_warm_inference_ms": 112.89,
+        "rapidocr_import_ms": 1142.8890999995929,
+        "rapidocr_constructor_ms": 13.45959999889601,
+        "onnxruntime_loaded_after_constructor": false,
+        "rapidocr_first_call_ms": 2792.53,
+        "rapidocr_warm_inference_ms": 1865.19,
+        "rapidocr_lazy_model_load_estimate_ms": 927.3400000000001,
+        "in_interpreter_total_ms": 6164.529999998194,
+        "process_wall_ms": 6412.036099998659,
+        "interpreter_start_and_exit_ms": 247.50610000046436
+      },
+      {
+        "image": "hd_q_5259753.jpg",
+        "sample": 4,
+        "stdlib_and_worker_module_import_ms": 3.8945999986026436,
+        "pillow_import_ms": 29.095400001097005,
+        "pillow_decode_ms": 65.05019999895012,
+        "tesserocr_import_ms": 15.518000000156462,
+        "tesseract_init_ms": 28.899400000227615,
+        "tesseract_first_inference_ms": 117.66,
+        "tesseract_warm_inference_ms": 117.99,
+        "rapidocr_import_ms": 1085.8268999982101,
+        "rapidocr_constructor_ms": 13.376900002185721,
+        "onnxruntime_loaded_after_constructor": false,
+        "rapidocr_first_call_ms": 2777.84,
+        "rapidocr_warm_inference_ms": 1823.62,
+        "rapidocr_lazy_model_load_estimate_ms": 954.2200000000003,
+        "in_interpreter_total_ms": 6079.197099999874,
+        "process_wall_ms": 6341.72000000035,
+        "interpreter_start_and_exit_ms": 262.5229000004765
+      },
+      {
+        "image": "vmmu_page_r11_Math_0303_test_059_question_39_page_4_key_B_vqa.png",
+        "sample": 0,
+        "stdlib_and_worker_module_import_ms": 4.39130000086152,
+        "pillow_import_ms": 34.76040000168723,
+        "pillow_decode_ms": 74.44899999973131,
+        "tesserocr_import_ms": 14.75909999862779,
+        "tesseract_init_ms": 28.563799998664763,
+        "tesseract_first_inference_ms": 262.7,
+        "tesseract_warm_inference_ms": 249.28,
+        "rapidocr_import_ms": 991.0629999976663,
+        "rapidocr_constructor_ms": 13.844900000549387,
+        "onnxruntime_loaded_after_constructor": false,
+        "rapidocr_first_call_ms": 1919.97,
+        "rapidocr_warm_inference_ms": 1292.09,
+        "rapidocr_lazy_model_load_estimate_ms": 627.8800000000001,
+        "in_interpreter_total_ms": 4887.618400000065,
+        "process_wall_ms": 5164.901199997985,
+        "interpreter_start_and_exit_ms": 277.28279999791994
+      },
+      {
+        "image": "vmmu_page_r11_Math_0303_test_059_question_39_page_4_key_B_vqa.png",
+        "sample": 1,
+        "stdlib_and_worker_module_import_ms": 2.7074999998148996,
+        "pillow_import_ms": 27.08640000128071,
+        "pillow_decode_ms": 55.27369999981602,
+        "tesserocr_import_ms": 11.892200000147568,
+        "tesseract_init_ms": 26.38180000212742,
+        "tesseract_first_inference_ms": 239.69,
+        "tesseract_warm_inference_ms": 232.37,
+        "rapidocr_import_ms": 1125.5170000004,
+        "rapidocr_constructor_ms": 13.685300000361167,
+        "onnxruntime_loaded_after_constructor": false,
+        "rapidocr_first_call_ms": 1941.69,
+        "rapidocr_warm_inference_ms": 1251.64,
+        "rapidocr_lazy_model_load_estimate_ms": 690.05,
+        "in_interpreter_total_ms": 4929.202899998927,
+        "process_wall_ms": 5175.371900000755,
+        "interpreter_start_and_exit_ms": 246.16900000182795
+      },
+      {
+        "image": "vmmu_page_r11_Math_0303_test_059_question_39_page_4_key_B_vqa.png",
+        "sample": 2,
+        "stdlib_and_worker_module_import_ms": 2.1398999997472856,
+        "pillow_import_ms": 33.00419999868609,
+        "pillow_decode_ms": 64.40719999955036,
+        "tesserocr_import_ms": 14.401600001292536,
+        "tesseract_init_ms": 30.530200001521735,
+        "tesseract_first_inference_ms": 252.66,
+        "tesseract_warm_inference_ms": 234.03,
+        "rapidocr_import_ms": 955.4059999973106,
+        "rapidocr_constructor_ms": 15.77030000044033,
+        "onnxruntime_loaded_after_constructor": false,
+        "rapidocr_first_call_ms": 2007.19,
+        "rapidocr_warm_inference_ms": 1162.95,
+        "rapidocr_lazy_model_load_estimate_ms": 844.24,
+        "in_interpreter_total_ms": 4774.2292000002635,
+        "process_wall_ms": 5018.625200002134,
+        "interpreter_start_and_exit_ms": 244.39600000187056
+      },
+      {
+        "image": "vmmu_page_r11_Math_0303_test_059_question_39_page_4_key_B_vqa.png",
+        "sample": 3,
+        "stdlib_and_worker_module_import_ms": 2.394899998762412,
+        "pillow_import_ms": 35.482900002534734,
+        "pillow_decode_ms": 62.791600001219194,
+        "tesserocr_import_ms": 14.389800002390984,
+        "tesseract_init_ms": 26.04780000183382,
+        "tesseract_first_inference_ms": 242.27,
+        "tesseract_warm_inference_ms": 281.91,
+        "rapidocr_import_ms": 954.9986000019999,
+        "rapidocr_constructor_ms": 13.110200001392514,
+        "onnxruntime_loaded_after_constructor": false,
+        "rapidocr_first_call_ms": 1926.68,
+        "rapidocr_warm_inference_ms": 1332.12,
+        "rapidocr_lazy_model_load_estimate_ms": 594.5600000000002,
+        "in_interpreter_total_ms": 4893.740299998171,
+        "process_wall_ms": 5100.768099997367,
+        "interpreter_start_and_exit_ms": 207.02779999919585
+      },
+      {
+        "image": "vmmu_page_r11_Math_0303_test_059_question_39_page_4_key_B_vqa.png",
+        "sample": 4,
+        "stdlib_and_worker_module_import_ms": 1.9778999994741753,
+        "pillow_import_ms": 26.08440000039991,
+        "pillow_decode_ms": 53.512899998167995,
+        "tesserocr_import_ms": 11.169299999892246,
+        "tesseract_init_ms": 25.523899999825517,
+        "tesseract_first_inference_ms": 233.63,
+        "tesseract_warm_inference_ms": 235.65,
+        "rapidocr_import_ms": 1021.4393999995082,
+        "rapidocr_constructor_ms": 13.36040000023786,
+        "onnxruntime_loaded_after_constructor": false,
+        "rapidocr_first_call_ms": 1960.98,
+        "rapidocr_warm_inference_ms": 1153.32,
+        "rapidocr_lazy_model_load_estimate_ms": 807.6600000000001,
+        "in_interpreter_total_ms": 4737.900300002366,
+        "process_wall_ms": 4985.962099999597,
+        "interpreter_start_and_exit_ms": 248.061799997231
+      }
+    ],
+    "summary": {
+      "stdlib_and_worker_module_import_ms": {
+        "n": 10,
+        "p50": 2.886100000978331,
+        "p95_nearest_rank": 5.378600002586609
+      },
+      "pillow_import_ms": {
+        "n": 10,
+        "p50": 29.056600000330945,
+        "p95_nearest_rank": 35.482900002534734
+      },
+      "pillow_decode_ms": {
+        "n": 10,
+        "p50": 59.032650000517606,
+        "p95_nearest_rank": 91.31130000241683
+      },
+      "tesserocr_import_ms": {
+        "n": 10,
+        "p50": 14.39570000184176,
+        "p95_nearest_rank": 19.271999997727107
+      },
+      "tesseract_init_ms": {
+        "n": 10,
+        "p50": 28.290250000281958,
+        "p95_nearest_rank": 49.09090000001015
+      },
+      "tesseract_first_inference_ms": {
+        "n": 10,
+        "p50": 204.43,
+        "p95_nearest_rank": 262.7
+      },
+      "tesseract_warm_inference_ms": {
+        "n": 10,
+        "p50": 183.54000000000002,
+        "p95_nearest_rank": 281.91
+      },
+      "rapidocr_import_ms": {
+        "n": 10,
+        "p50": 1006.2511999985873,
+        "p95_nearest_rank": 1142.8890999995929
+      },
+      "rapidocr_constructor_ms": {
+        "n": 10,
+        "p50": 13.765100000455277,
+        "p95_nearest_rank": 16.17880000048899
+      },
+      "onnxruntime_loaded_after_constructor": {
+        "n": 10,
+        "p50": 0.0,
+        "p95_nearest_rank": false
+      },
+      "rapidocr_first_call_ms": {
+        "n": 10,
+        "p50": 2314.425,
+        "p95_nearest_rank": 2792.53
+      },
+      "rapidocr_warm_inference_ms": {
+        "n": 10,
+        "p50": 1545.475,
+        "p95_nearest_rank": 2091.81
+      },
+      "rapidocr_lazy_model_load_estimate_ms": {
+        "n": 10,
+        "p50": 788.0899999999999,
+        "p95_nearest_rank": 954.2200000000003
+      },
+      "in_interpreter_total_ms": {
+        "n": 10,
+        "p50": 5356.137000000672,
+        "p95_nearest_rank": 6324.763500000699
+      },
+      "process_wall_ms": {
+        "n": 10,
+        "p50": 5577.261099999305,
+        "p95_nearest_rank": 6607.97200000161
+      },
+      "interpreter_start_and_exit_ms": {
+        "n": 10,
+        "p50": 246.83755000114616,
+        "p95_nearest_rank": 283.20850000091013
+      }
+    },
+    "boundary": "one fresh OCR interpreter per sample running the product worker functions; imports and model construction timed individually; reread engines (Latin rec, eng line) are not loaded here",
+    "rapidocr_lazy_load": "The RapidOCR constructor does not create ONNX sessions; onnxruntime import and model load happen inside the first call. first_call - warm_inference is therefore an ESTIMATE of model load, not a direct timing; the worker's own per-engine ms on a cold worker includes it."
+  },
+  "pipeline_stage_profile": {
+    "rows": [
+      {
+        "image": "hd_q_5259753.jpg",
+        "sample": 0,
+        "worker_state": "cold_worker",
+        "normalize_decode_ms": 15.21599999978207,
+        "region_detection_ms": 23.986100000911392,
+        "ocr_round_trip_ms": 4036.4264999989246,
+        "engine_inference_ms": {
+          "tesseract": 113.95,
+          "rapidocr": 2660.86
+        },
+        "ocr_round_trip_minus_inference_ms": 1261.6164999989246,
+        "reconcile_including_reread_ms": 282.14829999706126,
+        "reread_round_trips_ms": [
+          223.76620000068215
+        ],
+        "reconcile_excluding_reread_ms": 58.38209999637911,
+        "input_fidelity_gate_ms": 302.8849000002083,
+        "local_parse_ms": 19.153799999912735,
+        "extraction_verified": true
+      },
+      {
+        "image": "hd_q_5259753.jpg",
+        "sample": 0,
+        "worker_state": "warm_worker",
+        "normalize_decode_ms": 3.067199999350123,
+        "region_detection_ms": 25.3073999992921,
+        "ocr_round_trip_ms": 1886.191500001587,
+        "engine_inference_ms": {
+          "tesseract": 109.86,
+          "rapidocr": 1773.9
+        },
+        "ocr_round_trip_minus_inference_ms": 2.4315000015869828,
+        "reconcile_including_reread_ms": 81.61310000286903,
+        "reread_round_trips_ms": [
+          24.796199999400415
+        ],
+        "reconcile_excluding_reread_ms": 56.81690000346862,
+        "input_fidelity_gate_ms": 27.334099999279715,
+        "local_parse_ms": 22.776599998906022,
+        "extraction_verified": true
+      },
+      {
+        "image": "hd_q_5259753.jpg",
+        "sample": 1,
+        "worker_state": "cold_worker",
+        "normalize_decode_ms": 3.3160999992105644,
+        "region_detection_ms": 27.598300002864562,
+        "ocr_round_trip_ms": 4101.32750000048,
+        "engine_inference_ms": {
+          "tesseract": 117.7,
+          "rapidocr": 2729.26
+        },
+        "ocr_round_trip_minus_inference_ms": 1254.3675000004796,
+        "reconcile_including_reread_ms": 293.44709999713814,
+        "reread_round_trips_ms": [
+          233.51349999938975
+        ],
+        "reconcile_excluding_reread_ms": 59.93359999774839,
+        "input_fidelity_gate_ms": 32.47719999853871,
+        "local_parse_ms": 22.07509999789181,
+        "extraction_verified": true
+      },
+      {
+        "image": "hd_q_5259753.jpg",
+        "sample": 1,
+        "worker_state": "warm_worker",
+        "normalize_decode_ms": 2.532500002416782,
+        "region_detection_ms": 26.66970000063884,
+        "ocr_round_trip_ms": 1897.6144999978715,
+        "engine_inference_ms": {
+          "tesseract": 114.07,
+          "rapidocr": 1780.79
+        },
+        "ocr_round_trip_minus_inference_ms": 2.7544999978715623,
+        "reconcile_including_reread_ms": 90.77279999837629,
+        "reread_round_trips_ms": [
+          26.373499997134786
+        ],
+        "reconcile_excluding_reread_ms": 64.3993000012415,
+        "input_fidelity_gate_ms": 29.964199999085395,
+        "local_parse_ms": 20.005600003059953,
+        "extraction_verified": true
+      },
+      {
+        "image": "hd_q_5259753.jpg",
+        "sample": 2,
+        "worker_state": "cold_worker",
+        "normalize_decode_ms": 3.256399999372661,
+        "region_detection_ms": 31.132799998886185,
+        "ocr_round_trip_ms": 3956.3649999981862,
+        "engine_inference_ms": {
+          "tesseract": 110.28,
+          "rapidocr": 2631.28
+        },
+        "ocr_round_trip_minus_inference_ms": 1214.8049999981858,
+        "reconcile_including_reread_ms": 260.3885000025912,
+        "reread_round_trips_ms": [
+          204.18169999902602
+        ],
+        "reconcile_excluding_reread_ms": 56.20680000356515,
+        "input_fidelity_gate_ms": 29.753499999060296,
+        "local_parse_ms": 19.690299999638228,
+        "extraction_verified": true
+      },
+      {
+        "image": "hd_q_5259753.jpg",
+        "sample": 2,
+        "worker_state": "warm_worker",
+        "normalize_decode_ms": 2.4534000003768597,
+        "region_detection_ms": 23.212000000057742,
+        "ocr_round_trip_ms": 1913.3758999996644,
+        "engine_inference_ms": {
+          "tesseract": 112.11,
+          "rapidocr": 1798.85
+        },
+        "ocr_round_trip_minus_inference_ms": 2.415899999664589,
+        "reconcile_including_reread_ms": 83.96899999934249,
+        "reread_round_trips_ms": [
+          22.797300000092946
+        ],
+        "reconcile_excluding_reread_ms": 61.17169999924954,
+        "input_fidelity_gate_ms": 27.967599999101367,
+        "local_parse_ms": 20.728499999677297,
+        "extraction_verified": true
+      },
+      {
+        "image": "hd_q_5259753.jpg",
+        "sample": 3,
+        "worker_state": "cold_worker",
+        "normalize_decode_ms": 3.578299998480361,
+        "region_detection_ms": 29.625399998622015,
+        "ocr_round_trip_ms": 4155.512399996951,
+        "engine_inference_ms": {
+          "tesseract": 117.09,
+          "rapidocr": 2720.36
+        },
+        "ocr_round_trip_minus_inference_ms": 1318.0623999969507,
+        "reconcile_including_reread_ms": 355.2696000006108,
+        "reread_round_trips_ms": [
+          289.3569000007119
+        ],
+        "reconcile_excluding_reread_ms": 65.9126999998989,
+        "input_fidelity_gate_ms": 26.68690000064089,
+        "local_parse_ms": 22.287499999947613,
+        "extraction_verified": true
+      },
+      {
+        "image": "hd_q_5259753.jpg",
+        "sample": 3,
+        "worker_state": "warm_worker",
+        "normalize_decode_ms": 2.724600002693478,
+        "region_detection_ms": 25.011699999595294,
+        "ocr_round_trip_ms": 1954.8245000005409,
+        "engine_inference_ms": {
+          "tesseract": 119.18,
+          "rapidocr": 1833.32
+        },
+        "ocr_round_trip_minus_inference_ms": 2.3245000005408656,
+        "reconcile_including_reread_ms": 98.36750000249594,
+        "reread_round_trips_ms": [
+          27.784200003225124
+        ],
+        "reconcile_excluding_reread_ms": 70.58329999927082,
+        "input_fidelity_gate_ms": 33.94309999930556,
+        "local_parse_ms": 29.433699997753138,
+        "extraction_verified": true
+      },
+      {
+        "image": "hd_q_5259753.jpg",
+        "sample": 4,
+        "worker_state": "cold_worker",
+        "normalize_decode_ms": 4.014999998616986,
+        "region_detection_ms": 25.90280000003986,
+        "ocr_round_trip_ms": 4021.4381999976467,
+        "engine_inference_ms": {
+          "tesseract": 108.29,
+          "rapidocr": 2736.72
+        },
+        "ocr_round_trip_minus_inference_ms": 1176.428199997647,
+        "reconcile_including_reread_ms": 253.5959000015282,
+        "reread_round_trips_ms": [
+          198.07869999931427
+        ],
+        "reconcile_excluding_reread_ms": 55.51720000221394,
+        "input_fidelity_gate_ms": 24.692499999218853,
+        "local_parse_ms": 22.202699998160824,
+        "extraction_verified": true
+      },
+      {
+        "image": "hd_q_5259753.jpg",
+        "sample": 4,
+        "worker_state": "warm_worker",
+        "normalize_decode_ms": 2.3875999977462925,
+        "region_detection_ms": 23.772000000462867,
+        "ocr_round_trip_ms": 1922.780299999431,
+        "engine_inference_ms": {
+          "tesseract": 108.84,
+          "rapidocr": 1811.52
+        },
+        "ocr_round_trip_minus_inference_ms": 2.4202999994311085,
+        "reconcile_including_reread_ms": 82.40940000177943,
+        "reread_round_trips_ms": [
+          20.922200001223246
+        ],
+        "reconcile_excluding_reread_ms": 61.487200000556186,
+        "input_fidelity_gate_ms": 46.87460000059218,
+        "local_parse_ms": 33.23459999955958,
+        "extraction_verified": true
+      },
+      {
+        "image": "vmmu_page_r11_Math_0303_test_059_question_39_page_4_key_B_vqa.png",
+        "sample": 0,
+        "worker_state": "cold_worker",
+        "normalize_decode_ms": 40.130599998519756,
+        "region_detection_ms": 95.42100000180653,
+        "ocr_round_trip_ms": 3946.9387999997707,
+        "engine_inference_ms": {
+          "tesseract": 248.49,
+          "rapidocr": 2461.94
+        },
+        "ocr_round_trip_minus_inference_ms": 1236.5087999997704,
+        "reconcile_including_reread_ms": 782.3879000025045,
+        "reread_round_trips_ms": [
+          719.9752999986231
+        ],
+        "reconcile_excluding_reread_ms": 62.41260000388138,
+        "input_fidelity_gate_ms": 17.795900002965936,
+        "local_parse_ms": 14.775299998291302,
+        "extraction_verified": false
+      },
+      {
+        "image": "vmmu_page_r11_Math_0303_test_059_question_39_page_4_key_B_vqa.png",
+        "sample": 0,
+        "worker_state": "warm_worker",
+        "normalize_decode_ms": 44.526699999551056,
+        "region_detection_ms": 156.6363000019919,
+        "ocr_round_trip_ms": 1499.686400002247,
+        "engine_inference_ms": {
+          "tesseract": 258.6,
+          "rapidocr": 1218.84
+        },
+        "ocr_round_trip_minus_inference_ms": 22.2464000022469,
+        "reconcile_including_reread_ms": 254.4625000009546,
+        "reread_round_trips_ms": [
+          213.10340000127326
+        ],
+        "reconcile_excluding_reread_ms": 41.35909999968135,
+        "input_fidelity_gate_ms": 10.382500000559958,
+        "local_parse_ms": 12.790800003131153,
+        "extraction_verified": false
+      },
+      {
+        "image": "vmmu_page_r11_Math_0303_test_059_question_39_page_4_key_B_vqa.png",
+        "sample": 1,
+        "worker_state": "cold_worker",
+        "normalize_decode_ms": 39.81080000085058,
+        "region_detection_ms": 118.52160000125878,
+        "ocr_round_trip_ms": 3490.6668000003265,
+        "engine_inference_ms": {
+          "tesseract": 249.04,
+          "rapidocr": 2032.77
+        },
+        "ocr_round_trip_minus_inference_ms": 1208.8568000003265,
+        "reconcile_including_reread_ms": 449.52940000075614,
+        "reread_round_trips_ms": [
+          408.3989000027941
+        ],
+        "reconcile_excluding_reread_ms": 41.13049999796203,
+        "input_fidelity_gate_ms": 10.332099998777267,
+        "local_parse_ms": 11.448699999164091,
+        "extraction_verified": false
+      },
+      {
+        "image": "vmmu_page_r11_Math_0303_test_059_question_39_page_4_key_B_vqa.png",
+        "sample": 1,
+        "worker_state": "warm_worker",
+        "normalize_decode_ms": 34.004500001174165,
+        "region_detection_ms": 74.00069999857806,
+        "ocr_round_trip_ms": 1355.3410000022268,
+        "engine_inference_ms": {
+          "tesseract": 242.44,
+          "rapidocr": 1102.01
+        },
+        "ocr_round_trip_minus_inference_ms": 10.891000002226747,
+        "reconcile_including_reread_ms": 258.42779999948107,
+        "reread_round_trips_ms": [
+          213.6659999996482
+        ],
+        "reconcile_excluding_reread_ms": 44.761799999832874,
+        "input_fidelity_gate_ms": 11.839299997518538,
+        "local_parse_ms": 11.321099998895079,
+        "extraction_verified": false
+      },
+      {
+        "image": "vmmu_page_r11_Math_0303_test_059_question_39_page_4_key_B_vqa.png",
+        "sample": 2,
+        "worker_state": "cold_worker",
+        "normalize_decode_ms": 39.409400000295136,
+        "region_detection_ms": 78.39279999825521,
+        "ocr_round_trip_ms": 3493.7305000021297,
+        "engine_inference_ms": {
+          "tesseract": 335.25,
+          "rapidocr": 1909.4
+        },
+        "ocr_round_trip_minus_inference_ms": 1249.0805000021296,
+        "reconcile_including_reread_ms": 546.4915000011388,
+        "reread_round_trips_ms": [
+          499.66309999945224
+        ],
+        "reconcile_excluding_reread_ms": 46.82840000168653,
+        "input_fidelity_gate_ms": 10.357699997257441,
+        "local_parse_ms": 10.158599998248974,
+        "extraction_verified": false
+      },
+      {
+        "image": "vmmu_page_r11_Math_0303_test_059_question_39_page_4_key_B_vqa.png",
+        "sample": 2,
+        "worker_state": "warm_worker",
+        "normalize_decode_ms": 34.0466000016022,
+        "region_detection_ms": 78.46280000012484,
+        "ocr_round_trip_ms": 1403.389099999913,
+        "engine_inference_ms": {
+          "tesseract": 246.07,
+          "rapidocr": 1144.74
+        },
+        "ocr_round_trip_minus_inference_ms": 12.579099999913069,
+        "reconcile_including_reread_ms": 277.40950000224984,
+        "reread_round_trips_ms": [
+          234.9815999987186
+        ],
+        "reconcile_excluding_reread_ms": 42.42790000353125,
+        "input_fidelity_gate_ms": 9.51849999910337,
+        "local_parse_ms": 11.486700001114514,
+        "extraction_verified": false
+      },
+      {
+        "image": "vmmu_page_r11_Math_0303_test_059_question_39_page_4_key_B_vqa.png",
+        "sample": 3,
+        "worker_state": "cold_worker",
+        "normalize_decode_ms": 40.55819999848609,
+        "region_detection_ms": 78.53900000191061,
+        "ocr_round_trip_ms": 3508.8639999994484,
+        "engine_inference_ms": {
+          "tesseract": 249.65,
+          "rapidocr": 1975.32
+        },
+        "ocr_round_trip_minus_inference_ms": 1283.8939999994486,
+        "reconcile_including_reread_ms": 579.7499000000244,
+        "reread_round_trips_ms": [
+          529.0623000000778
+        ],
+        "reconcile_excluding_reread_ms": 50.68759999994654,
+        "input_fidelity_gate_ms": 11.176100000739098,
+        "local_parse_ms": 12.167299999418901,
+        "extraction_verified": false
+      },
+      {
+        "image": "vmmu_page_r11_Math_0303_test_059_question_39_page_4_key_B_vqa.png",
+        "sample": 3,
+        "worker_state": "warm_worker",
+        "normalize_decode_ms": 37.58729999753996,
+        "region_detection_ms": 78.65020000099321,
+        "ocr_round_trip_ms": 1326.2097000006179,
+        "engine_inference_ms": {
+          "tesseract": 249.18,
+          "rapidocr": 1064.16
+        },
+        "ocr_round_trip_minus_inference_ms": 12.86970000061774,
+        "reconcile_including_reread_ms": 317.546800000855,
+        "reread_round_trips_ms": [
+          269.4742999992741
+        ],
+        "reconcile_excluding_reread_ms": 48.07250000158092,
+        "input_fidelity_gate_ms": 10.549400001764297,
+        "local_parse_ms": 12.375300000712741,
+        "extraction_verified": false
+      },
+      {
+        "image": "vmmu_page_r11_Math_0303_test_059_question_39_page_4_key_B_vqa.png",
+        "sample": 4,
+        "worker_state": "cold_worker",
+        "normalize_decode_ms": 42.992899998353096,
+        "region_detection_ms": 85.0468999997247,
+        "ocr_round_trip_ms": 3473.1434999994235,
+        "engine_inference_ms": {
+          "tesseract": 248.48,
+          "rapidocr": 1955.35
+        },
+        "ocr_round_trip_minus_inference_ms": 1269.3134999994236,
+        "reconcile_including_reread_ms": 496.02930000037304,
+        "reread_round_trips_ms": [
+          449.7577999973146
+        ],
+        "reconcile_excluding_reread_ms": 46.27150000305846,
+        "input_fidelity_gate_ms": 10.8780000009574,
+        "local_parse_ms": 9.95630000033998,
+        "extraction_verified": false
+      },
+      {
+        "image": "vmmu_page_r11_Math_0303_test_059_question_39_page_4_key_B_vqa.png",
+        "sample": 4,
+        "worker_state": "warm_worker",
+        "normalize_decode_ms": 36.57070000190288,
+        "region_detection_ms": 79.33139999659033,
+        "ocr_round_trip_ms": 1435.603699999774,
+        "engine_inference_ms": {
+          "tesseract": 269.21,
+          "rapidocr": 1155.08
+        },
+        "ocr_round_trip_minus_inference_ms": 11.313699999774144,
+        "reconcile_including_reread_ms": 294.2356999992626,
+        "reread_round_trips_ms": [
+          246.2171999977727
+        ],
+        "reconcile_excluding_reread_ms": 48.01850000148988,
+        "input_fidelity_gate_ms": 10.747600001195678,
+        "local_parse_ms": 9.998099998483667,
+        "extraction_verified": false
+      }
+    ],
+    "summary": {
+      "cold_worker": {
+        "normalize_decode_ms": {
+          "n": 10,
+          "p50": 27.312700000038603,
+          "p95_nearest_rank": 42.992899998353096
+        },
+        "region_detection_ms": {
+          "n": 10,
+          "p50": 54.7627999985707,
+          "p95_nearest_rank": 118.52160000125878
+        },
+        "ocr_round_trip_ms": {
+          "n": 10,
+          "p50": 3951.6518999989785,
+          "p95_nearest_rank": 4155.512399996951
+        },
+        "ocr_round_trip_minus_inference_ms": {
+          "n": 10,
+          "p50": 1251.7240000013046,
+          "p95_nearest_rank": 1318.0623999969507
+        },
+        "reconcile_including_reread_ms": {
+          "n": 10,
+          "p50": 402.3995000006835,
+          "p95_nearest_rank": 782.3879000025045
+        },
+        "reconcile_excluding_reread_ms": {
+          "n": 10,
+          "p50": 55.862000002889545,
+          "p95_nearest_rank": 65.9126999998989
+        },
+        "input_fidelity_gate_ms": {
+          "n": 10,
+          "p50": 21.244200001092395,
+          "p95_nearest_rank": 302.8849000002083
+        },
+        "local_parse_ms": {
+          "n": 10,
+          "p50": 16.96454999910202,
+          "p95_nearest_rank": 22.287499999947613
+        }
+      },
+      "warm_worker": {
+        "normalize_decode_ms": {
+          "n": 10,
+          "p50": 18.535850000262144,
+          "p95_nearest_rank": 44.526699999551056
+        },
+        "region_detection_ms": {
+          "n": 10,
+          "p50": 50.33519999960845,
+          "p95_nearest_rank": 156.6363000019919
+        },
+        "ocr_round_trip_ms": {
+          "n": 10,
+          "p50": 1692.938950001917,
+          "p95_nearest_rank": 1954.8245000005409
+        },
+        "ocr_round_trip_minus_inference_ms": {
+          "n": 10,
+          "p50": 6.8227500000491546,
+          "p95_nearest_rank": 22.2464000022469
+        },
+        "reconcile_including_reread_ms": {
+          "n": 10,
+          "p50": 176.41500000172528,
+          "p95_nearest_rank": 317.546800000855
+        },
+        "reconcile_excluding_reread_ms": {
+          "n": 10,
+          "p50": 52.44470000252477,
+          "p95_nearest_rank": 70.58329999927082
+        },
+        "input_fidelity_gate_ms": {
+          "n": 10,
+          "p50": 19.586699998399126,
+          "p95_nearest_rank": 46.87460000059218
+        },
+        "local_parse_ms": {
+          "n": 10,
+          "p50": 16.398200003095553,
+          "p95_nearest_rank": 33.23459999955958
+        }
+      }
+    },
+    "boundary": "product functions called in this harness process with the real sidecar; cold_worker restarts the sidecar before the OCR call"
+  },
+  "input_fidelity_gate_note": "verify_ocr_input_fidelity is timed as a pure function on the OCR draft. The image prepare path decides with cross-family reconciliation (extraction_verified); this gate belongs to the adaptive router path.",
+  "do_not_sum": "Stage numbers come from separate processes and runs; their sum is not an end-to-end API measurement."
+}

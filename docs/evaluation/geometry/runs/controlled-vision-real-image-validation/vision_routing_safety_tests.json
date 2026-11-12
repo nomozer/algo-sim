@@ -1,0 +1,103 @@
+{
+  "run_id": "controlled-vision-real-image-validation",
+  "generated_at_utc": "2026-11-12T17:20:26.341136+00:00",
+  "classification": "OFFLINE_ROUTING_TESTS_NOT_VISION_QUALITY",
+  "command": "python -m pytest tests/geometry/test_adaptive_input_router.py tests/geometry/test_correctness_ocr_performance.py tests/geometry/test_verified_image_to_3d_pipeline.py tests/test_image_first_local_ocr.py tests/geometry/test_independent_h1_real_world_acceptance.py -k \"vision or Vision or live or LIVE or adaptive or fidelity or conflict or reread or fallback or route\"",
+  "exit_code": 0,
+  "outcomes": {
+    "passed": 21
+  },
+  "provider_calls": 0,
+  "what_these_prove": [
+    "Vision is not called when ALLOW_LIVE_AI=0 or no key (fail-closed 503, not a silent fallback)",
+    "OCR/Vision fact conflicts (numbers, dimension binding, primes, planes) force student confirmation",
+    "verified local OCR routes with 0 AI calls; fidelity-gate failures do not auto-accept"
+  ],
+  "what_they_do_not_prove": "how well a real Vision model reads these images (LIVE_VISION_NOT_MEASURED)",
+  "tests": [
+    {
+      "test": "tests.geometry.test_adaptive_input_router::test_t1_text_route_zero_ai_calls_for_complete_and_ambiguous_and_out_of_scope",
+      "outcome": "passed"
+    },
+    {
+      "test": "tests.geometry.test_adaptive_input_router::test_t1_partial_parse_fails_closed_when_live_ai_disabled_and_falls_back_when_enabled",
+      "outcome": "passed"
+    },
+    {
+      "test": "tests.geometry.test_adaptive_input_router::test_i1_image_prepare_outcome_and_user_edited_resubmission_provider_call_counts",
+      "outcome": "passed"
+    },
+    {
+      "test": "tests.geometry.test_adaptive_input_router::test_i2_local_ocr_gate_remains_diagnostic_only_and_detects_symbol_mismatch",
+      "outcome": "passed"
+    },
+    {
+      "test": "tests.geometry.test_adaptive_input_router::test_api_analyze_local_first_mode_serves_scene3d_with_zero_ai_calls",
+      "outcome": "passed"
+    },
+    {
+      "test": "tests.geometry.test_correctness_ocr_performance::test_10_user_edited_text_is_authoritative_with_zero_vision_recalls",
+      "outcome": "passed"
+    },
+    {
+      "test": "tests.geometry.test_correctness_ocr_performance::test_12_adaptive_image_fallback_cases_a_b_c_d_and_conflict",
+      "outcome": "passed"
+    },
+    {
+      "test": "tests.geometry.test_verified_image_to_3d_pipeline::test_four_distinct_input_routes_and_recorded_vision_fallback_to_scene3d",
+      "outcome": "passed"
+    },
+    {
+      "test": "tests.test_image_first_local_ocr::test_vision_comparison_detects_worded_dimension_conflict[c\\u1ea1nh-2a-a]",
+      "outcome": "passed"
+    },
+    {
+      "test": "tests.test_image_first_local_ocr::test_vision_comparison_detects_worded_dimension_conflict[chi\\u1ec1u cao b\\u1eb1ng-3a-2a]",
+      "outcome": "passed"
+    },
+    {
+      "test": "tests.test_image_first_local_ocr::test_vision_comparison_allows_reordered_equivalent_measurements",
+      "outcome": "passed"
+    },
+    {
+      "test": "tests.test_image_first_local_ocr::test_vision_comparison_ignores_omitted_exam_header_number",
+      "outcome": "passed"
+    },
+    {
+      "test": "tests.test_image_first_local_ocr::test_vision_comparison_retains_binding_between_worded_dimension_and_value",
+      "outcome": "passed"
+    },
+    {
+      "test": "tests.test_image_first_local_ocr::test_reread_crop_bleeding_into_next_token_does_not_duplicate_it",
+      "outcome": "passed"
+    },
+    {
+      "test": "tests.test_image_first_local_ocr::test_reread_crop_bleeding_from_previous_token_is_trimmed",
+      "outcome": "passed"
+    },
+    {
+      "test": "tests.test_image_first_local_ocr::test_reread_reading_without_whitespace_is_not_trimmed",
+      "outcome": "passed"
+    },
+    {
+      "test": "tests.test_image_first_local_ocr::test_prepare_routes_local_ocr_without_any_ai[True]",
+      "outcome": "passed"
+    },
+    {
+      "test": "tests.test_image_first_local_ocr::test_prepare_routes_local_ocr_without_any_ai[False]",
+      "outcome": "passed"
+    },
+    {
+      "test": "tests.test_image_first_local_ocr::test_prepare_without_local_ocr_keeps_previous_live_ai_disabled_contract",
+      "outcome": "passed"
+    },
+    {
+      "test": "tests.geometry.test_independent_h1_real_world_acceptance::test_03_case_d_missing_dimension_routes_to_local_ambiguous_clarification_zero_ai",
+      "outcome": "passed"
+    },
+    {
+      "test": "tests.geometry.test_independent_h1_real_world_acceptance::test_05_all_13_math_symbol_error_classes_caught_by_fidelity_and_conflict_gates",
+      "outcome": "passed"
+    }
+  ]
+}

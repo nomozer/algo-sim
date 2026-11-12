@@ -1,0 +1,91 @@
+{
+  "name": "frontend_test_wave",
+  "command": "npm.cmd run test:wave",
+  "argv": [
+    "npm.cmd",
+    "run",
+    "test:wave"
+  ],
+  "cwd": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\local-first-geometry-understanding\\frontend",
+  "started_at_utc": "2026-11-12T17:01:20.520973+00:00",
+  "start_snapshot": {
+    "head_commit": "5019a72fa0eb296002a24adb6e6dcd86d82a2c5d",
+    "product_paths_sha256": "a584032391e705d21962569e81d189e287d9e59775e4d1620672ef3dae18743e",
+    "product_path_count": 332,
+    "hash_policy": "tracked backend/app + frontend/src, LF normalized; includes tests",
+    "working_product_source_sha256": "7ece97b00a4d95a509a6804ded921536ef1fd57003b3039f8e6fa0113d095670",
+    "working_product_source_count": 192,
+    "working_source_policy": "all working backend/app + frontend/src including untracked; skip pycache and freeze TEST_ONLY_GLOBS"
+  },
+  "ended_at_utc": "2026-11-12T17:02:36.861748+00:00",
+  "duration_seconds": 76.062,
+  "exit_code": 0,
+  "raw_output_sha256": "7c00811b24f1e1cf6dfef04d5d1d43deccc09f8ecab62377ef89138510f5eaba",
+  "raw_output_bytes": 11507,
+  "raw_output_retention": "ignored local .superpowers only; never staged",
+  "end_snapshot": {
+    "head_commit": "5019a72fa0eb296002a24adb6e6dcd86d82a2c5d",
+    "product_paths_sha256": "a584032391e705d21962569e81d189e287d9e59775e4d1620672ef3dae18743e",
+    "product_path_count": 332,
+    "hash_policy": "tracked backend/app + frontend/src, LF normalized; includes tests",
+    "working_product_source_sha256": "7ece97b00a4d95a509a6804ded921536ef1fd57003b3039f8e6fa0113d095670",
+    "working_product_source_count": 192,
+    "working_source_policy": "all working backend/app + frontend/src including untracked; skip pycache and freeze TEST_ONLY_GLOBS"
+  },
+  "summary_lines": [
+    "Test Files  139 passed (139)",
+    "Tests  2018 passed (2018)",
+    "Duration  66.23s (transform 5.88s, setup 1.86s, import 33.90s, tests 59.43s, environment 16ms)",
+    "✓ built in 4.91s"
+  ],
+  "failure_node_ids": [],
+  "typescript_errors": 0,
+  "source_unchanged_during_command": true,
+  "verdict": "PASS",
+  "previous_attempts": [
+    {
+      "name": "frontend_test_wave",
+      "command": "npm.cmd run test:wave",
+      "argv": [
+        "npm.cmd",
+        "run",
+        "test:wave"
+      ],
+      "cwd": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\local-first-geometry-understanding\\frontend",
+      "started_at_utc": "2026-11-12T16:45:05.261746+00:00",
+      "start_snapshot": {
+        "head_commit": "a78b1e087fc1b9a53ed92418d4d1a1b2b9d107d3",
+        "product_paths_sha256": "a584032391e705d21962569e81d189e287d9e59775e4d1620672ef3dae18743e",
+        "product_path_count": 332,
+        "hash_policy": "tracked backend/app + frontend/src, LF normalized; includes tests",
+        "working_product_source_sha256": "7ece97b00a4d95a509a6804ded921536ef1fd57003b3039f8e6fa0113d095670",
+        "working_product_source_count": 192,
+        "working_source_policy": "all working backend/app + frontend/src including untracked; skip pycache and freeze TEST_ONLY_GLOBS"
+      },
+      "ended_at_utc": "2026-11-12T16:46:25.651868+00:00",
+      "duration_seconds": 80.078,
+      "exit_code": 1,
+      "raw_output_sha256": "3280146ae6ecf13c9e069bbf00fc35d64014ae4f76fca11c167ee6dcb8a31655",
+      "raw_output_bytes": 11398,
+      "raw_output_retention": "ignored local .superpowers only; never staged",
+      "end_snapshot": {
+        "head_commit": "a78b1e087fc1b9a53ed92418d4d1a1b2b9d107d3",
+        "product_paths_sha256": "a584032391e705d21962569e81d189e287d9e59775e4d1620672ef3dae18743e",
+        "product_path_count": 332,
+        "hash_policy": "tracked backend/app + frontend/src, LF normalized; includes tests",
+        "working_product_source_sha256": "7ece97b00a4d95a509a6804ded921536ef1fd57003b3039f8e6fa0113d095670",
+        "working_product_source_count": 192,
+        "working_source_policy": "all working backend/app + frontend/src including untracked; skip pycache and freeze TEST_ONLY_GLOBS"
+      },
+      "summary_lines": [
+        "Test Files  139 passed (139)",
+        "Tests  2018 passed (2018)",
+        "Duration  69.37s (transform 7.20s, setup 2.09s, import 37.45s, tests 59.85s, environment 17ms)"
+      ],
+      "failure_node_ids": [],
+      "typescript_errors": 0,
+      "source_unchanged_during_command": true,
+      "verdict": "FAIL"
+    }
+  ]
+}

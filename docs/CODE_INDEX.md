@@ -1,5 +1,12 @@
 # CODE_INDEX.md — Chỉ mục module + BỘ NHỚ KIẾN TRÚC
 
+## Controlled-vision real-image validation (2026-11-12)
+
+| Path | Owns | Locked by |
+|---|---|---|
+| `backend/app/ingestion/ocr_reconcile.py` (`_trim_neighbour_bleed`, `_slot_text`) | Reread readings of a disputed slot drop one whitespace-separated leading/trailing word equal to the adjacent slot's primary reading (padded crop caught the neighbour glyph); glued tokens are never trimmed | `backend/tests/test_image_first_local_ocr.py` (`test_reread_crop_bleeding_*`, `test_reread_reading_without_whitespace_is_not_trimmed`) |
+| `docs/evaluation/geometry/runs/controlled-vision-real-image-validation/tools/` | Run-scoped corpus acquisition/freeze, agent transcriptions, publication-finding classification, verified-text solver diagnostic, OCR/API/browser evaluation, performance ladder and Vision authorisation status. Reuses the previous run's harness and runner; no second OCR, Vision or solver implementation. | Run report, `run.json`, canonical regression receipts |
+
 ## Real-image OCR comparative acceptance (2026-11-11)
 
 | Path | Owns | Locked by |

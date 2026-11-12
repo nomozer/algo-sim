@@ -1,0 +1,41 @@
+{
+  "name": "publication_range",
+  "command": "D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe backend/scripts/check_publication_safety.py --range 44807b13bffe608153bc58e453a3bc9c37703485..HEAD",
+  "argv": [
+    "D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe",
+    "backend/scripts/check_publication_safety.py",
+    "--range",
+    "44807b13bffe608153bc58e453a3bc9c37703485..HEAD"
+  ],
+  "cwd": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\local-first-geometry-understanding",
+  "started_at_utc": "2026-11-12T16:50:34.241059+00:00",
+  "start_snapshot": {
+    "head_commit": "a78b1e087fc1b9a53ed92418d4d1a1b2b9d107d3",
+    "product_paths_sha256": "a584032391e705d21962569e81d189e287d9e59775e4d1620672ef3dae18743e",
+    "product_path_count": 332,
+    "hash_policy": "tracked backend/app + frontend/src, LF normalized; includes tests",
+    "working_product_source_sha256": "7ece97b00a4d95a509a6804ded921536ef1fd57003b3039f8e6fa0113d095670",
+    "working_product_source_count": 192,
+    "working_source_policy": "all working backend/app + frontend/src including untracked; skip pycache and freeze TEST_ONLY_GLOBS"
+  },
+  "ended_at_utc": "2026-11-12T16:50:35.230323+00:00",
+  "duration_seconds": 0.719,
+  "exit_code": 0,
+  "raw_output_sha256": "71645950407e8d28d43e79964bbe192a4048b19413a9065511ad568b0e9a3cd9",
+  "raw_output_bytes": 77,
+  "raw_output_retention": "ignored local .superpowers only; never staged",
+  "end_snapshot": {
+    "head_commit": "a78b1e087fc1b9a53ed92418d4d1a1b2b9d107d3",
+    "product_paths_sha256": "a584032391e705d21962569e81d189e287d9e59775e4d1620672ef3dae18743e",
+    "product_path_count": 332,
+    "hash_policy": "tracked backend/app + frontend/src, LF normalized; includes tests",
+    "working_product_source_sha256": "7ece97b00a4d95a509a6804ded921536ef1fd57003b3039f8e6fa0113d095670",
+    "working_product_source_count": 192,
+    "working_source_policy": "all working backend/app + frontend/src including untracked; skip pycache and freeze TEST_ONLY_GLOBS"
+  },
+  "summary_lines": [
+    "SUMMARY scanned=24 messages=3 violations=0 pending_exception=0 verdict=PASS"
+  ],
+  "source_unchanged_during_command": true,
+  "verdict": "PASS"
+}

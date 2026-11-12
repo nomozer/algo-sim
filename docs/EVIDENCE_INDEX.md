@@ -1,5 +1,20 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = CONTROLLED_VISION_REAL_IMAGE_VALIDATION
+
+RUN_ID = controlled-vision-real-image-validation
+REPORT = docs/evaluation/geometry/runs/controlled-vision-real-image-validation/AXO_CONTROLLED_VISION_REAL_IMAGE_VALIDATION_REPORT.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/controlled-vision-real-image-validation/
+START_BASE = 44807b13bffe608153bc58e453a3bc9c37703485
+CODE_COMMIT = c53be83db (reread neighbour-bleed fix); candidate freeze a78b1e087
+CLASSIFICATION = OFFLINE_IN_SCOPE_IMAGE_EVALUATION_WITH_LIMITS; LIVE_VISION_NOT_MEASURED; ARCHITECTURE_DECISION_PENDING_LIVE_EVIDENCE; PUBLICATION_HEAD BLOCKED_PENDING_OWNER_REVIEW
+PRODUCT_CHANGE = YES (ocr_reconcile reread trimming only; no geometry, parser, Source Gate or contract change)
+MODEL_REQUEST_COUNT = 0
+VERIFICATION = run.json; full_regression_summary.json; publication_pending_classification.json; new_in_scope_image_manifest.json; transcription_solver_diagnostic.json; local_ocr_baseline.json; critical_mathematical_fact_evaluation.json; real_image_to_scene3d_results.json; concurrent_upload_reliability.json; browser_in_scope_audit.json
+CORRECTS = NONE (prior run receipts unchanged; pending owner-approval templates re-bound to the new measured system, PENDING kept)
+CORRECTED_BY = NONE
+LIMITATIONS = 25 rendered crops from one dataset, agent references, Tesseract-keyword selection bias; scripted confirmation only; no Vision, students, H-1, low-end hardware or PostgreSQL.
+
 ## WAVE_ID = REAL_IMAGE_OCR_VISION_COMPARATIVE_ACCEPTANCE
 
 RUN_ID = real-image-ocr-vision-comparative-acceptance

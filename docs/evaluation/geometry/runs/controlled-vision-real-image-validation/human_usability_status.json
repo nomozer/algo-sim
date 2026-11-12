@@ -1,0 +1,12 @@
+{
+  "run_id": "controlled-vision-real-image-validation",
+  "REAL_STUDENT_USABILITY": "NOT_MEASURED",
+  "participants": 0,
+  "reason": "No consented participants were available to this run; the agent did not role-play students.",
+  "automated_substitute": "student_confirmation_browser_audit.json (software behaviour only)",
+  "proposed_protocol": [
+    "3-5 consented students, no personal data beyond anonymous ID",
+    "task: upload one in-scope image, confirm or correct flagged spans, reach the 3D scene",
+    "measure completion, time to confirm, edits, misclicks, assistance requests, understanding of messages"
+  ]
+}
