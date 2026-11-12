@@ -1,0 +1,395 @@
+{
+  "run_id": "controlled-vision-real-image-validation",
+  "head": "44807b13bffe608153bc58e453a3bc9c37703485",
+  "measured_system": [
+    "a068b6f6586c1b120bd8350dbe706f5681ab71fd7da57502c34f940140268921",
+    115
+  ],
+  "allow_live_ai": 0,
+  "ground_truth_authority": "AGENT_TRANSCRIBED_UNVERIFIED",
+  "independent_h1": "NOT_MEASURED",
+  "generated_from": [
+    "transcription_solver_diagnostic.json",
+    "local_ocr_*.json",
+    "api_acceptance_*.json"
+  ],
+  "partitions": {
+    "development": {
+      "images": 6,
+      "solver_scope_counts": {
+        "UNKNOWN_PENDING_ADJUDICATION": 4,
+        "OUT_OF_SCOPE": 1,
+        "IN_SCOPE_SOLVABLE_WITH_VERIFIED_TEXT": 1
+      },
+      "recognition": {
+        "cer_median": 0.0973,
+        "wer_median": 0.23365,
+        "cer_micro": 0.07726980038634901,
+        "exact_full_statement_images": 0,
+        "exact_math_token_sequence_images": 0,
+        "single_engine_cer_median": {
+          "tesseract": 0.1765,
+          "rapidocr": 0.1784
+        }
+      },
+      "critical_facts": {
+        "recovered": 35,
+        "total": 40,
+        "by_kind": {
+          "angle": {
+            "recovered": 1,
+            "total": 2
+          },
+          "goal": {
+            "recovered": 11,
+            "total": 11
+          },
+          "length": {
+            "recovered": 7,
+            "total": 9
+          },
+          "relation": {
+            "recovered": 9,
+            "total": 10
+          },
+          "solid": {
+            "recovered": 7,
+            "total": 8
+          }
+        },
+        "images_with_all_facts": 3,
+        "single_engine_recovered": {
+          "tesseract": 12,
+          "rapidocr": 21
+        },
+        "missing": [
+          {
+            "case_id": "vmmu_r284",
+            "kind": "solid",
+            "reference": "S.ABCD"
+          },
+          {
+            "case_id": "vmmu_r284",
+            "kind": "length",
+            "reference": "hình vuông cạnh a"
+          },
+          {
+            "case_id": "vmmu_r284",
+            "kind": "relation",
+            "reference": "SAB là tam giác đều"
+          },
+          {
+            "case_id": "vmmu_r476",
+            "kind": "length",
+            "reference": "SA=a"
+          },
+          {
+            "case_id": "vmmu_r488",
+            "kind": "angle",
+            "reference": "bằng 60°"
+          }
+        ]
+      },
+      "routing": {
+        "local_accepted_verified": 0,
+        "false_acceptance_verified_but_fact_missing": [],
+        "rejected_although_all_facts_recovered": [
+          {
+            "case_id": "vmmu_r270",
+            "blocking_reasons": [
+              "UNCERTAIN_SPANS",
+              "DIAGRAM_FACTS_UNVERIFIED"
+            ]
+          },
+          {
+            "case_id": "vmmu_r461",
+            "blocking_reasons": [
+              "UNCERTAIN_SPANS",
+              "DIAGRAM_FACTS_UNVERIFIED"
+            ]
+          },
+          {
+            "case_id": "vmmu_r513",
+            "blocking_reasons": [
+              "UNCERTAIN_SPANS",
+              "DIAGRAM_FACTS_UNVERIFIED"
+            ]
+          }
+        ],
+        "blocking_reason_counts": {
+          "UNCERTAIN_SPANS": 6,
+          "DIAGRAM_FACTS_UNVERIFIED": 6
+        },
+        "prepare_status_counts": {
+          "needs_confirmation": 6
+        },
+        "provider_calls": 0
+      },
+      "image_to_result": {
+        "route_counts": {
+          "C2_USER_CORRECTED_SIMULATED": 6
+        },
+        "A_LOCAL_AUTO": {},
+        "C2_USER_CORRECTED_SIMULATED": {
+          "NOT_SERVED": 6
+        },
+        "B_VISION_LIVE": "NOT_MEASURED",
+        "C_USER_CORRECTED_REAL": "NOT_MEASURED",
+        "wrong_served_against_dataset_key": [],
+        "needs_adjudication": [],
+        "among_verified_text_solvable": {
+          "images": 1,
+          "A_LOCAL_AUTO_correct": 0,
+          "C2_SIMULATED_correct": 0,
+          "not_served": [
+            "vmmu_r476"
+          ]
+        },
+        "scene3d_served_with_objects": 0,
+        "scene3d_continuity_violations": 0,
+        "image_to_result_ms_median": 4337.6091000004635
+      }
+    },
+    "frozen_external_evaluation": {
+      "images": 19,
+      "solver_scope_counts": {
+        "IN_SCOPE_SOLVABLE_WITH_VERIFIED_TEXT": 3,
+        "UNKNOWN_PENDING_ADJUDICATION": 13,
+        "IN_SCOPE_GEOMETRY_CAPABILITY_GAP": 2,
+        "OUT_OF_SCOPE": 1
+      },
+      "recognition": {
+        "cer_median": 0.096,
+        "wer_median": 0.2093,
+        "cer_micro": 0.10503802281368821,
+        "exact_full_statement_images": 0,
+        "exact_math_token_sequence_images": 0,
+        "single_engine_cer_median": {
+          "tesseract": 0.1687,
+          "rapidocr": 0.1616
+        }
+      },
+      "critical_facts": {
+        "recovered": 124,
+        "total": 136,
+        "by_kind": {
+          "angle": {
+            "recovered": 7,
+            "total": 7
+          },
+          "goal": {
+            "recovered": 32,
+            "total": 37
+          },
+          "length": {
+            "recovered": 33,
+            "total": 35
+          },
+          "relation": {
+            "recovered": 27,
+            "total": 29
+          },
+          "solid": {
+            "recovered": 25,
+            "total": 28
+          }
+        },
+        "images_with_all_facts": 12,
+        "single_engine_recovered": {
+          "tesseract": 46,
+          "rapidocr": 67
+        },
+        "missing": [
+          {
+            "case_id": "vmmu_r247",
+            "kind": "solid",
+            "reference": "ABCD.A'B'C'D'"
+          },
+          {
+            "case_id": "vmmu_r254",
+            "kind": "solid",
+            "reference": "ABC.A'B'C'"
+          },
+          {
+            "case_id": "vmmu_r254",
+            "kind": "length",
+            "reference": "AA'=2√13a"
+          },
+          {
+            "case_id": "vmmu_r254",
+            "kind": "goal",
+            "reference": "A'ABC"
+          },
+          {
+            "case_id": "vmmu_r256",
+            "kind": "relation",
+            "reference": "(SAB)⊥(ABCD)"
+          },
+          {
+            "case_id": "vmmu_r256",
+            "kind": "goal",
+            "reference": "khoảng cách từ A"
+          },
+          {
+            "case_id": "vmmu_r256",
+            "kind": "goal",
+            "reference": "(SBC)"
+          },
+          {
+            "case_id": "vmmu_r375",
+            "kind": "goal",
+            "reference": "Khoảng cách từ S"
+          },
+          {
+            "case_id": "vmmu_r460",
+            "kind": "relation",
+            "reference": "vuông cân ở B"
+          },
+          {
+            "case_id": "vmmu_r498",
+            "kind": "solid",
+            "reference": "ABCD.A'B'C'D'"
+          },
+          {
+            "case_id": "vmmu_r498",
+            "kind": "goal",
+            "reference": "(ABC')"
+          },
+          {
+            "case_id": "vmmu_r537",
+            "kind": "length",
+            "reference": "diện tích đáy bằng a²"
+          }
+        ]
+      },
+      "routing": {
+        "local_accepted_verified": 0,
+        "false_acceptance_verified_but_fact_missing": [],
+        "rejected_although_all_facts_recovered": [
+          {
+            "case_id": "vmmu_r258",
+            "blocking_reasons": [
+              "UNCERTAIN_SPANS",
+              "DIAGRAM_FACTS_UNVERIFIED"
+            ]
+          },
+          {
+            "case_id": "vmmu_r266",
+            "blocking_reasons": [
+              "UNCERTAIN_SPANS"
+            ]
+          },
+          {
+            "case_id": "vmmu_r273",
+            "blocking_reasons": [
+              "UNCERTAIN_SPANS",
+              "DIAGRAM_FACTS_UNVERIFIED"
+            ]
+          },
+          {
+            "case_id": "vmmu_r277",
+            "blocking_reasons": [
+              "UNCERTAIN_SPANS"
+            ]
+          },
+          {
+            "case_id": "vmmu_r295",
+            "blocking_reasons": [
+              "UNCERTAIN_SPANS",
+              "DIAGRAM_FACTS_UNVERIFIED"
+            ]
+          },
+          {
+            "case_id": "vmmu_r298",
+            "blocking_reasons": [
+              "UNCERTAIN_SPANS",
+              "DIAGRAM_FACTS_UNVERIFIED"
+            ]
+          },
+          {
+            "case_id": "vmmu_r463",
+            "blocking_reasons": [
+              "UNCERTAIN_SPANS"
+            ]
+          },
+          {
+            "case_id": "vmmu_r475",
+            "blocking_reasons": [
+              "UNCERTAIN_SPANS",
+              "DIAGRAM_FACTS_UNVERIFIED"
+            ]
+          },
+          {
+            "case_id": "vmmu_r491",
+            "blocking_reasons": [
+              "UNCERTAIN_SPANS",
+              "DIAGRAM_FACTS_UNVERIFIED"
+            ]
+          },
+          {
+            "case_id": "vmmu_r492",
+            "blocking_reasons": [
+              "UNCERTAIN_SPANS",
+              "DIAGRAM_FACTS_UNVERIFIED"
+            ]
+          },
+          {
+            "case_id": "vmmu_r520",
+            "blocking_reasons": [
+              "UNCERTAIN_SPANS",
+              "DIAGRAM_FACTS_UNVERIFIED"
+            ]
+          },
+          {
+            "case_id": "vmmu_r538",
+            "blocking_reasons": [
+              "UNCERTAIN_SPANS",
+              "LAYOUT_STRUCTURE_SUSPECTED",
+              "DIAGRAM_FACTS_UNVERIFIED"
+            ]
+          }
+        ],
+        "blocking_reason_counts": {
+          "UNCERTAIN_SPANS": 17,
+          "DIAGRAM_FACTS_UNVERIFIED": 16,
+          "LAYOUT_STRUCTURE_SUSPECTED": 3
+        },
+        "prepare_status_counts": {
+          "needs_confirmation": 19
+        },
+        "provider_calls": 0
+      },
+      "image_to_result": {
+        "route_counts": {
+          "C2_USER_CORRECTED_SIMULATED": 19
+        },
+        "A_LOCAL_AUTO": {},
+        "C2_USER_CORRECTED_SIMULATED": {
+          "NOT_SERVED": 17,
+          "SERVED_MATCHES_DATASET_KEY": 2
+        },
+        "B_VISION_LIVE": "NOT_MEASURED",
+        "C_USER_CORRECTED_REAL": "NOT_MEASURED",
+        "wrong_served_against_dataset_key": [],
+        "needs_adjudication": [],
+        "among_verified_text_solvable": {
+          "images": 3,
+          "A_LOCAL_AUTO_correct": 0,
+          "C2_SIMULATED_correct": 2,
+          "not_served": [
+            "vmmu_r247"
+          ]
+        },
+        "scene3d_served_with_objects": 2,
+        "scene3d_continuity_violations": 0,
+        "image_to_result_ms_median": 4339.416699999674
+      }
+    }
+  },
+  "claims_not_supported": [
+    "population accuracy (one dataset, 25 rendered multiple-choice crops)",
+    "blind generalisation (the evaluating agent transcribed the images)",
+    "human correction effort (edits are scripted)",
+    "any Vision result (no provider call)"
+  ]
+}

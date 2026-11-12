@@ -1,0 +1,2279 @@
+{
+  "run_id": "controlled-vision-real-image-validation",
+  "head": "44807b13bffe608153bc58e453a3bc9c37703485",
+  "measured_system": [
+    "a068b6f6586c1b120bd8350dbe706f5681ab71fd7da57502c34f940140268921",
+    115
+  ],
+  "allow_live_ai": 0,
+  "ground_truth_authority": "AGENT_TRANSCRIBED_UNVERIFIED",
+  "independent_h1": "NOT_MEASURED",
+  "server": {
+    "hybrid_route_mode": "local-first",
+    "server_allow_live_ai": false,
+    "cache_version": "132"
+  },
+  "partition": "frozen_external_evaluation",
+  "user_correction": "SCRIPTED_NOT_REAL_STUDENT: only flagged spans are edited, using the agent transcription; unflagged OCR errors stay",
+  "grading": "served answer compared numerically with the dataset key choice; non-comparable answers stay ungraded",
+  "cases": [
+    {
+      "case_id": "vmmu_r247",
+      "partition": "frozen_external_evaluation",
+      "sha256": "78c4b4962e286c248fa2b6b8819b8dc53fc215b7aa6bac2f765dee4dcebe5629",
+      "prepare_http_status": 200,
+      "prepare_ms": 4854.363899999953,
+      "prepare_status": "needs_confirmation",
+      "prepare_reason_code": "LOCAL_OCR_REVIEW_REQUIRED",
+      "input_route": "LOCAL_OCR_NEEDS_CONFIRMATION",
+      "provider_calls": 0,
+      "ocr_text": "Câu 34. Cho hình hộp chữ nhật 4BCD- A'B'C'D' có AB = a,BC = 2a và AA' = 3a (tham khảo hình bên). Khoảng cách giữa hai đường thẳng BD và A'C' bằng\nA. a. B. √2a. C.2a. D. 3a",
+      "uncertain_tokens": 7,
+      "critical_facts_in_prepared_text": [
+        {
+          "kind": "solid",
+          "reference": "ABCD.A'B'C'D'",
+          "recovered": false
+        },
+        {
+          "kind": "length",
+          "reference": "AB=a",
+          "recovered": true
+        },
+        {
+          "kind": "length",
+          "reference": "BC=2a",
+          "recovered": true
+        },
+        {
+          "kind": "length",
+          "reference": "AA'=3a",
+          "recovered": true
+        },
+        {
+          "kind": "goal",
+          "reference": "Khoảng cách giữa hai đường thẳng",
+          "recovered": true
+        },
+        {
+          "kind": "goal",
+          "reference": "BD",
+          "recovered": true
+        },
+        {
+          "kind": "goal",
+          "reference": "A'C'",
+          "recovered": true
+        }
+      ],
+      "route": "C2_USER_CORRECTED_SIMULATED",
+      "kernel": {
+        "http_status": 503,
+        "status": null,
+        "answers": null,
+        "reason_code": "LIVE_AI_DISABLED",
+        "failure_category": null,
+        "scene3d_objects": 0,
+        "continuity_violations": null,
+        "oracle_status": "UNGRADED_UNLESS_SEPARATELY_ADJUDICATED"
+      },
+      "grade": {
+        "verdict": "NOT_SERVED"
+      },
+      "final_text": "Câu 34. Cho hình hộp chữ nhật ABCD. A'B'C'D' có AB = a, BC = 2a và AA' = 3a (tham khảo hình bên). Khoảng cách giữa hai đường thẳng BD và A'C' bằng\nA. a. B. √2a. C.2a. D. 3a",
+      "scripted_edits": [
+        {
+          "span_id": "sp13",
+          "from": "a,BC",
+          "to": "a, BC",
+          "chosen_from_alternatives": false
+        },
+        {
+          "span_id": "sp8",
+          "from": "4BCD-",
+          "to": "ABCD.",
+          "chosen_from_alternatives": false
+        }
+      ],
+      "scripted_confirms": 4,
+      "scripted_actions": 7,
+      "critical_facts_after_scripted_correction": [
+        {
+          "kind": "solid",
+          "reference": "ABCD.A'B'C'D'",
+          "recovered": true
+        },
+        {
+          "kind": "length",
+          "reference": "AB=a",
+          "recovered": true
+        },
+        {
+          "kind": "length",
+          "reference": "BC=2a",
+          "recovered": true
+        },
+        {
+          "kind": "length",
+          "reference": "AA'=3a",
+          "recovered": true
+        },
+        {
+          "kind": "goal",
+          "reference": "Khoảng cách giữa hai đường thẳng",
+          "recovered": true
+        },
+        {
+          "kind": "goal",
+          "reference": "BD",
+          "recovered": true
+        },
+        {
+          "kind": "goal",
+          "reference": "A'C'",
+          "recovered": true
+        }
+      ],
+      "image_to_result_ms": 5402.051000000029,
+      "scene3d": {
+        "objects": 0,
+        "continuity_violations": null
+      }
+    },
+    {
+      "case_id": "vmmu_r254",
+      "partition": "frozen_external_evaluation",
+      "sha256": "856efe3f31a1f628739b7e59dd4883eceef016f414fbec0d6563b8f384da6e15",
+      "prepare_http_status": 200,
+      "prepare_ms": 3478.8867999996,
+      "prepare_status": "needs_confirmation",
+      "prepare_reason_code": "LOCAL_OCR_REVIEW_REQUIRED",
+      "input_route": "LOCAL_OCR_NEEDS_CONFIRMATION",
+      "provider_calls": 0,
+      "ocr_text": "Câu 45: Cho hình lăng trụ ABC.A##€©# có AA= 2√13a , tam giác ABC vuông tại C và ABC = 30°, góc giữa cạnh bên CC' và mặt đáy (ABC) bằng 60°. Hình chiếu vuông góc của B' lên mặt phẳng (ABC) trùng với trọng tâm của tam giác ABC . Thể tích của khối tứ diện\nC. D. 27√13a3/2 8",
+      "uncertain_tokens": 9,
+      "critical_facts_in_prepared_text": [
+        {
+          "kind": "solid",
+          "reference": "ABC.A'B'C'",
+          "recovered": false
+        },
+        {
+          "kind": "length",
+          "reference": "AA'=2√13a",
+          "recovered": false
+        },
+        {
+          "kind": "relation",
+          "reference": "vuông tại C",
+          "recovered": true
+        },
+        {
+          "kind": "angle",
+          "reference": "ABC=30°",
+          "recovered": true
+        },
+        {
+          "kind": "relation",
+          "reference": "CC'",
+          "recovered": true
+        },
+        {
+          "kind": "angle",
+          "reference": "bằng 60°",
+          "recovered": true
+        },
+        {
+          "kind": "relation",
+          "reference": "Hình chiếu vuông góc của B'",
+          "recovered": true
+        },
+        {
+          "kind": "relation",
+          "reference": "trọng tâm",
+          "recovered": true
+        },
+        {
+          "kind": "goal",
+          "reference": "A'ABC",
+          "recovered": false
+        },
+        {
+          "kind": "goal",
+          "reference": "Thể tích",
+          "recovered": true
+        }
+      ],
+      "route": "C2_USER_CORRECTED_SIMULATED",
+      "kernel": {
+        "http_status": 503,
+        "status": null,
+        "answers": null,
+        "reason_code": "LIVE_AI_DISABLED",
+        "failure_category": null,
+        "scene3d_objects": 0,
+        "continuity_violations": null,
+        "oracle_status": "UNGRADED_UNLESS_SEPARATELY_ADJUDICATED"
+      },
+      "grade": {
+        "verdict": "NOT_SERVED"
+      },
+      "final_text": "Câu 45: Cho hình lăng trụ ABC.A'B'C' có AA' = 2√13a , tam giác ABC vuông tại C và ABC = 30°, góc giữa cạnh bên CC' và mặt đáy (ABC) bằng 60°. Hình chiếu vuông góc của B' lên mặt phẳng (ABC) trùng với trọng tâm của tam giác ABC . Thể tích của khối tứ diện\nC. 99√13a³/8. D. 27√13a³/2. 27√13a³/2",
+      "scripted_edits": [
+        {
+          "span_id": "sp64",
+          "from": "8",
+          "to": "",
+          "chosen_from_alternatives": false
+        },
+        {
+          "span_id": "sp58",
+          "from": "27√13a3/2",
+          "to": "27√13a³/2",
+          "chosen_from_alternatives": false
+        },
+        {
+          "span_id": "sp60",
+          "from": "C. D. 27√13a3/2",
+          "to": "C. 99√13a³/8. D. 27√13a³/2",
+          "chosen_from_alternatives": false
+        },
+        {
+          "span_id": "sp62",
+          "from": "C. D. 27√13a3/2",
+          "to": "C. 99√13a³/8. D. 27√13a³/2",
+          "chosen_from_alternatives": false
+        },
+        {
+          "span_id": "sp9",
+          "from": "AA=",
+          "to": "AA' =",
+          "chosen_from_alternatives": false
+        },
+        {
+          "span_id": "sp7",
+          "from": "ABC.A##€©#",
+          "to": "ABC.A'B'C'",
+          "chosen_from_alternatives": false
+        }
+      ],
+      "scripted_confirms": 2,
+      "scripted_actions": 9,
+      "critical_facts_after_scripted_correction": [
+        {
+          "kind": "solid",
+          "reference": "ABC.A'B'C'",
+          "recovered": true
+        },
+        {
+          "kind": "length",
+          "reference": "AA'=2√13a",
+          "recovered": true
+        },
+        {
+          "kind": "relation",
+          "reference": "vuông tại C",
+          "recovered": true
+        },
+        {
+          "kind": "angle",
+          "reference": "ABC=30°",
+          "recovered": true
+        },
+        {
+          "kind": "relation",
+          "reference": "CC'",
+          "recovered": true
+        },
+        {
+          "kind": "angle",
+          "reference": "bằng 60°",
+          "recovered": true
+        },
+        {
+          "kind": "relation",
+          "reference": "Hình chiếu vuông góc của B'",
+          "recovered": true
+        },
+        {
+          "kind": "relation",
+          "reference": "trọng tâm",
+          "recovered": true
+        },
+        {
+          "kind": "goal",
+          "reference": "A'ABC",
+          "recovered": false
+        },
+        {
+          "kind": "goal",
+          "reference": "Thể tích",
+          "recovered": true
+        }
+      ],
+      "image_to_result_ms": 4082.1768999994674,
+      "scene3d": {
+        "objects": 0,
+        "continuity_violations": null
+      }
+    },
+    {
+      "case_id": "vmmu_r256",
+      "partition": "frozen_external_evaluation",
+      "sha256": "4ae1fd776fe4ff16f290eddd3e4a7699b943dec7b1cfa0235a401d113864ba07",
+      "prepare_http_status": 200,
+      "prepare_ms": 4457.336600000417,
+      "prepare_status": "needs_confirmation",
+      "prepare_reason_code": "LOCAL_OCR_REVIEW_REQUIRED",
+      "input_route": "LOCAL_OCR_NEEDS_CONFIRMATION",
+      "provider_calls": 0,
+      "ocr_text": "Câu 38: Cho hình chóp S.ABCD có đáy ABCD là hình thoi cạnh bằng a , BAD = 120° . Mặt bên SAB là tam giác đều và (SAB) 1(ABCD) (tham khảo hình vẽ). Trang 4/7 - Mã đề 001\nC. D. √3a/4 5 7 2",
+      "uncertain_tokens": 6,
+      "critical_facts_in_prepared_text": [
+        {
+          "kind": "solid",
+          "reference": "S.ABCD",
+          "recovered": true
+        },
+        {
+          "kind": "relation",
+          "reference": "hình thoi",
+          "recovered": true
+        },
+        {
+          "kind": "length",
+          "reference": "cạnh bằng a",
+          "recovered": true
+        },
+        {
+          "kind": "angle",
+          "reference": "BAD=120°",
+          "recovered": true
+        },
+        {
+          "kind": "relation",
+          "reference": "SAB là tam giác đều",
+          "recovered": true
+        },
+        {
+          "kind": "relation",
+          "reference": "(SAB)⊥(ABCD)",
+          "recovered": false
+        },
+        {
+          "kind": "goal",
+          "reference": "khoảng cách từ A",
+          "recovered": false
+        },
+        {
+          "kind": "goal",
+          "reference": "(SBC)",
+          "recovered": false
+        }
+      ],
+      "route": "C2_USER_CORRECTED_SIMULATED",
+      "kernel": {
+        "http_status": 503,
+        "status": null,
+        "answers": null,
+        "reason_code": "LIVE_AI_DISABLED",
+        "failure_category": null,
+        "scene3d_objects": 0,
+        "continuity_violations": null,
+        "oracle_status": "UNGRADED_UNLESS_SEPARATELY_ADJUDICATED"
+      },
+      "grade": {
+        "verdict": "NOT_SERVED"
+      },
+      "final_text": "Câu 38: Cho hình chóp S.ABCD có đáy ABCD là hình thoi cạnh bằng a , BAD = 120° . Mặt bên SAB là tam giác đều và (SAB) 1(ABCD) (tham khảo hình vẽ). Trang 4/7 - Mã đề 001\nC. D. √3a/4 5 2",
+      "scripted_edits": [
+        {
+          "span_id": "sp45",
+          "from": "7",
+          "to": "",
+          "chosen_from_alternatives": false
+        }
+      ],
+      "scripted_confirms": 4,
+      "scripted_actions": 6,
+      "critical_facts_after_scripted_correction": [
+        {
+          "kind": "solid",
+          "reference": "S.ABCD",
+          "recovered": true
+        },
+        {
+          "kind": "relation",
+          "reference": "hình thoi",
+          "recovered": true
+        },
+        {
+          "kind": "length",
+          "reference": "cạnh bằng a",
+          "recovered": true
+        },
+        {
+          "kind": "angle",
+          "reference": "BAD=120°",
+          "recovered": true
+        },
+        {
+          "kind": "relation",
+          "reference": "SAB là tam giác đều",
+          "recovered": true
+        },
+        {
+          "kind": "relation",
+          "reference": "(SAB)⊥(ABCD)",
+          "recovered": false
+        },
+        {
+          "kind": "goal",
+          "reference": "khoảng cách từ A",
+          "recovered": false
+        },
+        {
+          "kind": "goal",
+          "reference": "(SBC)",
+          "recovered": false
+        }
+      ],
+      "image_to_result_ms": 5137.773099999322,
+      "scene3d": {
+        "objects": 0,
+        "continuity_violations": null
+      }
+    },
+    {
+      "case_id": "vmmu_r258",
+      "partition": "frozen_external_evaluation",
+      "sha256": "5d01fa15116c70e493c30230068dbee2f3d3375cd6a36bbc4ac673e0b820ac3e",
+      "prepare_http_status": 200,
+      "prepare_ms": 2730.00409999986,
+      "prepare_status": "needs_confirmation",
+      "prepare_reason_code": "LOCAL_OCR_REVIEW_REQUIRED",
+      "input_route": "LOCAL_OCR_NEEDS_CONFIRMATION",
+      "provider_calls": 0,
+      "ocr_text": "Câu 30. Cho hình chóp S.ABC có đáy là tam giác vuông cân tại A , SA vuông góc với đáy và SA = AB (tham khảo hình vẽ). Tang của góc giữa hai mặt phẳng (SBC) và (SBA) bằng\nC.2. D.V2.",
+      "uncertain_tokens": 4,
+      "critical_facts_in_prepared_text": [
+        {
+          "kind": "solid",
+          "reference": "S.ABC",
+          "recovered": true
+        },
+        {
+          "kind": "relation",
+          "reference": "vuông cân tại A",
+          "recovered": true
+        },
+        {
+          "kind": "relation",
+          "reference": "SA vuông góc với đáy",
+          "recovered": true
+        },
+        {
+          "kind": "length",
+          "reference": "SA=AB",
+          "recovered": true
+        },
+        {
+          "kind": "goal",
+          "reference": "Tang",
+          "recovered": true
+        },
+        {
+          "kind": "goal",
+          "reference": "(SBC)",
+          "recovered": true
+        },
+        {
+          "kind": "goal",
+          "reference": "(SBA)",
+          "recovered": true
+        }
+      ],
+      "route": "C2_USER_CORRECTED_SIMULATED",
+      "kernel": {
+        "http_status": 503,
+        "status": null,
+        "answers": null,
+        "reason_code": "LIVE_AI_DISABLED",
+        "failure_category": null,
+        "scene3d_objects": 0,
+        "continuity_violations": null,
+        "oracle_status": "UNGRADED_UNLESS_SEPARATELY_ADJUDICATED"
+      },
+      "grade": {
+        "verdict": "NOT_SERVED"
+      },
+      "final_text": "Câu 30. Cho hình chóp S.ABC có đáy là tam giác vuông cân tại A , SA vuông góc với đáy và SA = AB (tham khảo hình vẽ). Tang của góc giữa hai mặt phẳng (SBC) và (SBA) bằng\nC.2. D. √2.",
+      "scripted_edits": [
+        {
+          "span_id": "sp42",
+          "from": "D.V2.",
+          "to": "D. √2.",
+          "chosen_from_alternatives": false
+        }
+      ],
+      "scripted_confirms": 2,
+      "scripted_actions": 4,
+      "critical_facts_after_scripted_correction": [
+        {
+          "kind": "solid",
+          "reference": "S.ABC",
+          "recovered": true
+        },
+        {
+          "kind": "relation",
+          "reference": "vuông cân tại A",
+          "recovered": true
+        },
+        {
+          "kind": "relation",
+          "reference": "SA vuông góc với đáy",
+          "recovered": true
+        },
+        {
+          "kind": "length",
+          "reference": "SA=AB",
+          "recovered": true
+        },
+        {
+          "kind": "goal",
+          "reference": "Tang",
+          "recovered": true
+        },
+        {
+          "kind": "goal",
+          "reference": "(SBC)",
+          "recovered": true
+        },
+        {
+          "kind": "goal",
+          "reference": "(SBA)",
+          "recovered": true
+        }
+      ],
+      "image_to_result_ms": 3680.3319999999076,
+      "scene3d": {
+        "objects": 0,
+        "continuity_violations": null
+      }
+    },
+    {
+      "case_id": "vmmu_r266",
+      "partition": "frozen_external_evaluation",
+      "sha256": "5f2587de4d78c078002379f4405721556d604dff87fde093745ee312486f433e",
+      "prepare_http_status": 200,
+      "prepare_ms": 2613.051300000734,
+      "prepare_status": "needs_confirmation",
+      "prepare_reason_code": "LOCAL_OCR_REVIEW_REQUIRED",
+      "input_route": "LOCAL_OCR_NEEDS_CONFIRMATION",
+      "provider_calls": 0,
+      "ocr_text": "Câu 12. Cho khối chóp S.ABC có SA vuông góc với đáy, SA = 3, AB = 3 , CB = 4 và ABC = 30º . Thể tích khối chóp đã cho bằng\nA. 9. B.1. C.6. D.3.",
+      "uncertain_tokens": 3,
+      "critical_facts_in_prepared_text": [
+        {
+          "kind": "solid",
+          "reference": "S.ABC",
+          "recovered": true
+        },
+        {
+          "kind": "relation",
+          "reference": "SA vuông góc với đáy",
+          "recovered": true
+        },
+        {
+          "kind": "length",
+          "reference": "SA=3",
+          "recovered": true
+        },
+        {
+          "kind": "length",
+          "reference": "AB=3",
+          "recovered": true
+        },
+        {
+          "kind": "length",
+          "reference": "CB=4",
+          "recovered": true
+        },
+        {
+          "kind": "angle",
+          "reference": "ABC=30°",
+          "recovered": true
+        },
+        {
+          "kind": "goal",
+          "reference": "Thể tích",
+          "recovered": true
+        }
+      ],
+      "route": "C2_USER_CORRECTED_SIMULATED",
+      "kernel": {
+        "http_status": 503,
+        "status": null,
+        "answers": null,
+        "reason_code": "LIVE_AI_DISABLED",
+        "failure_category": null,
+        "scene3d_objects": 0,
+        "continuity_violations": null,
+        "oracle_status": "UNGRADED_UNLESS_SEPARATELY_ADJUDICATED"
+      },
+      "grade": {
+        "verdict": "NOT_SERVED"
+      },
+      "final_text": "Câu 12. Cho khối chóp S.ABC có SA vuông góc với đáy, SA = 3, AB = 3 , CB = 4 và ABC = 30º . Thể tích khối chóp đã cho bằng\nA. 9. B.1. C.6. D.3.",
+      "scripted_edits": [],
+      "scripted_confirms": 3,
+      "scripted_actions": 3,
+      "critical_facts_after_scripted_correction": [
+        {
+          "kind": "solid",
+          "reference": "S.ABC",
+          "recovered": true
+        },
+        {
+          "kind": "relation",
+          "reference": "SA vuông góc với đáy",
+          "recovered": true
+        },
+        {
+          "kind": "length",
+          "reference": "SA=3",
+          "recovered": true
+        },
+        {
+          "kind": "length",
+          "reference": "AB=3",
+          "recovered": true
+        },
+        {
+          "kind": "length",
+          "reference": "CB=4",
+          "recovered": true
+        },
+        {
+          "kind": "angle",
+          "reference": "ABC=30°",
+          "recovered": true
+        },
+        {
+          "kind": "goal",
+          "reference": "Thể tích",
+          "recovered": true
+        }
+      ],
+      "image_to_result_ms": 3247.8123999999298,
+      "scene3d": {
+        "objects": 0,
+        "continuity_violations": null
+      }
+    },
+    {
+      "case_id": "vmmu_r273",
+      "partition": "frozen_external_evaluation",
+      "sha256": "47b627e0cd812f8703e551876c79f042896b750bdb58acb6b8a6af1ac07ba4df",
+      "prepare_http_status": 200,
+      "prepare_ms": 2686.0760999998092,
+      "prepare_status": "needs_confirmation",
+      "prepare_reason_code": "LOCAL_OCR_REVIEW_REQUIRED",
+      "input_route": "LOCAL_OCR_NEEDS_CONFIRMATION",
+      "provider_calls": 0,
+      "ocr_text": "Câu 14: Cho khối chóp S.ABC có đáy là tam giác vuông tại B. Biết BC = a√3, AB = a , SA vuông góc với đáy, SA = 2a√3. Thể tích khối chóp S.ABC bằng\nA.a3√3. 3 C.3a³. D. a3.",
+      "uncertain_tokens": 3,
+      "critical_facts_in_prepared_text": [
+        {
+          "kind": "solid",
+          "reference": "S.ABC",
+          "recovered": true
+        },
+        {
+          "kind": "relation",
+          "reference": "vuông tại B",
+          "recovered": true
+        },
+        {
+          "kind": "length",
+          "reference": "BC=a√3",
+          "recovered": true
+        },
+        {
+          "kind": "length",
+          "reference": "AB=a",
+          "recovered": true
+        },
+        {
+          "kind": "relation",
+          "reference": "SA vuông góc với đáy",
+          "recovered": true
+        },
+        {
+          "kind": "length",
+          "reference": "SA=2a√3",
+          "recovered": true
+        },
+        {
+          "kind": "goal",
+          "reference": "Thể tích",
+          "recovered": true
+        }
+      ],
+      "route": "C2_USER_CORRECTED_SIMULATED",
+      "kernel": {
+        "http_status": 200,
+        "status": "SERVED",
+        "answers": {
+          "q1": "a³"
+        },
+        "reason_code": null,
+        "failure_category": null,
+        "scene3d_objects": 10,
+        "continuity_violations": 0,
+        "oracle_status": "UNGRADED_UNLESS_SEPARATELY_ADJUDICATED"
+      },
+      "grade": {
+        "verdict": "SERVED_MATCHES_DATASET_KEY",
+        "expected": "a³",
+        "dataset_answer_key": "D",
+        "served": {
+          "q1": "a³"
+        },
+        "matches_a_wrong_choice": []
+      },
+      "final_text": "Câu 14: Cho khối chóp S.ABC có đáy là tam giác vuông tại B. Biết BC = a√3, AB = a , SA vuông góc với đáy, SA = 2a√3. Thể tích khối chóp S.ABC bằng\nA.a3√3. 3 C.3a³. D. a3.",
+      "scripted_edits": [],
+      "scripted_confirms": 2,
+      "scripted_actions": 3,
+      "critical_facts_after_scripted_correction": [
+        {
+          "kind": "solid",
+          "reference": "S.ABC",
+          "recovered": true
+        },
+        {
+          "kind": "relation",
+          "reference": "vuông tại B",
+          "recovered": true
+        },
+        {
+          "kind": "length",
+          "reference": "BC=a√3",
+          "recovered": true
+        },
+        {
+          "kind": "length",
+          "reference": "AB=a",
+          "recovered": true
+        },
+        {
+          "kind": "relation",
+          "reference": "SA vuông góc với đáy",
+          "recovered": true
+        },
+        {
+          "kind": "length",
+          "reference": "SA=2a√3",
+          "recovered": true
+        },
+        {
+          "kind": "goal",
+          "reference": "Thể tích",
+          "recovered": true
+        }
+      ],
+      "image_to_result_ms": 3341.273899999578,
+      "scene3d": {
+        "objects": 10,
+        "continuity_violations": 0
+      }
+    },
+    {
+      "case_id": "vmmu_r277",
+      "partition": "frozen_external_evaluation",
+      "sha256": "ac19cfdf164dccdb077a643049d51939a39c9ac88cdadf0e9970fbd2b3227990",
+      "prepare_http_status": 200,
+      "prepare_ms": 3472.495600000002,
+      "prepare_status": "needs_confirmation",
+      "prepare_reason_code": "LOCAL_OCR_REVIEW_REQUIRED",
+      "input_route": "LOCAL_OCR_NEEDS_CONFIRMATION",
+      "provider_calls": 0,
+      "ocr_text": "Câu 44. Cho tứ diện OABC vuông tại O có OA = 2a, OB = 3a, OC = 4a . Gọi M, N, P lần lượt là điểm đối xứng với điểm O qua trung điểm ba cạnh AB, BC, CA của tam giác ABC. Thể tích của tứ diện OMNP bằng\nA. 16a³. B. 4a³. C. 8a3. D.12a³/3",
+      "uncertain_tokens": 5,
+      "critical_facts_in_prepared_text": [
+        {
+          "kind": "solid",
+          "reference": "OABC",
+          "recovered": true
+        },
+        {
+          "kind": "relation",
+          "reference": "vuông tại O",
+          "recovered": true
+        },
+        {
+          "kind": "length",
+          "reference": "OA=2a",
+          "recovered": true
+        },
+        {
+          "kind": "length",
+          "reference": "OB=3a",
+          "recovered": true
+        },
+        {
+          "kind": "length",
+          "reference": "OC=4a",
+          "recovered": true
+        },
+        {
+          "kind": "relation",
+          "reference": "đối xứng",
+          "recovered": true
+        },
+        {
+          "kind": "relation",
+          "reference": "trung điểm",
+          "recovered": true
+        },
+        {
+          "kind": "goal",
+          "reference": "OMNP",
+          "recovered": true
+        },
+        {
+          "kind": "goal",
+          "reference": "Thể tích",
+          "recovered": true
+        }
+      ],
+      "route": "C2_USER_CORRECTED_SIMULATED",
+      "kernel": {
+        "http_status": 503,
+        "status": null,
+        "answers": null,
+        "reason_code": "LIVE_AI_DISABLED",
+        "failure_category": null,
+        "scene3d_objects": 0,
+        "continuity_violations": null,
+        "oracle_status": "UNGRADED_UNLESS_SEPARATELY_ADJUDICATED"
+      },
+      "grade": {
+        "verdict": "NOT_SERVED"
+      },
+      "final_text": "Câu 44. Cho tứ diện OABC vuông tại O có OA = 2a, OB = 3a, OC = 4a . Gọi M, N, P lần lượt là điểm đối xứng với điểm O qua trung điểm ba cạnh AB, BC, CA của tam giác ABC. Thể tích của tứ diện OMNP bằng\nA. 16a³. B. 4a³. C. 8a3. D.12a³/3",
+      "scripted_edits": [],
+      "scripted_confirms": 5,
+      "scripted_actions": 5,
+      "critical_facts_after_scripted_correction": [
+        {
+          "kind": "solid",
+          "reference": "OABC",
+          "recovered": true
+        },
+        {
+          "kind": "relation",
+          "reference": "vuông tại O",
+          "recovered": true
+        },
+        {
+          "kind": "length",
+          "reference": "OA=2a",
+          "recovered": true
+        },
+        {
+          "kind": "length",
+          "reference": "OB=3a",
+          "recovered": true
+        },
+        {
+          "kind": "length",
+          "reference": "OC=4a",
+          "recovered": true
+        },
+        {
+          "kind": "relation",
+          "reference": "đối xứng",
+          "recovered": true
+        },
+        {
+          "kind": "relation",
+          "reference": "trung điểm",
+          "recovered": true
+        },
+        {
+          "kind": "goal",
+          "reference": "OMNP",
+          "recovered": true
+        },
+        {
+          "kind": "goal",
+          "reference": "Thể tích",
+          "recovered": true
+        }
+      ],
+      "image_to_result_ms": 4072.8651999997965,
+      "scene3d": {
+        "objects": 0,
+        "continuity_violations": null
+      }
+    },
+    {
+      "case_id": "vmmu_r295",
+      "partition": "frozen_external_evaluation",
+      "sha256": "6c769ab54f378a7a56756a09b65608a7c355bc48f7819e96dbf87beacf298a5e",
+      "prepare_http_status": 200,
+      "prepare_ms": 2777.344600000106,
+      "prepare_status": "needs_confirmation",
+      "prepare_reason_code": "LOCAL_OCR_REVIEW_REQUIRED",
+      "input_route": "LOCAL_OCR_NEEDS_CONFIRMATION",
+      "provider_calls": 0,
+      "ocr_text": "Câu 35. Cho hình hộp chữ nhật ABCD.A'B'C'D'có đáy là hình vuông, AB = 1, AA' = √6( tham khảo hình vẽ). Góc giữa đường thẳng CA'và mặt phẳng (ABCD) bằng\nA.30° B. 45° C. 60° D. 90°",
+      "uncertain_tokens": 4,
+      "critical_facts_in_prepared_text": [
+        {
+          "kind": "solid",
+          "reference": "ABCD.A'B'C'D'",
+          "recovered": true
+        },
+        {
+          "kind": "relation",
+          "reference": "đáy là hình vuông",
+          "recovered": true
+        },
+        {
+          "kind": "length",
+          "reference": "AB=1",
+          "recovered": true
+        },
+        {
+          "kind": "length",
+          "reference": "AA'=√6",
+          "recovered": true
+        },
+        {
+          "kind": "goal",
+          "reference": "Góc giữa đường thẳng",
+          "recovered": true
+        },
+        {
+          "kind": "goal",
+          "reference": "CA'",
+          "recovered": true
+        },
+        {
+          "kind": "goal",
+          "reference": "(ABCD)",
+          "recovered": true
+        }
+      ],
+      "route": "C2_USER_CORRECTED_SIMULATED",
+      "kernel": {
+        "http_status": 200,
+        "status": "REFUSED",
+        "answers": null,
+        "reason_code": "AMBIGUOUS_FACT",
+        "failure_category": null,
+        "scene3d_objects": 0,
+        "continuity_violations": null,
+        "oracle_status": "UNGRADED_UNLESS_SEPARATELY_ADJUDICATED"
+      },
+      "grade": {
+        "verdict": "NOT_SERVED"
+      },
+      "final_text": "Câu 35. Cho hình hộp chữ nhật ABCD.A'B'C'D' có đáy là hình vuông, AB = 1, AA' = √6 ( tham khảo hình vẽ). Góc giữa đường thẳng CA' và mặt phẳng (ABCD) bằng\nA.30° B. 45° C. 60° D. 90°",
+      "scripted_edits": [
+        {
+          "span_id": "sp27",
+          "from": "CA'và",
+          "to": "CA' và",
+          "chosen_from_alternatives": false
+        },
+        {
+          "span_id": "sp18",
+          "from": "√6(",
+          "to": "√6 (",
+          "chosen_from_alternatives": false
+        },
+        {
+          "span_id": "sp8",
+          "from": "ABCD.A'B'C'D'có",
+          "to": "ABCD.A'B'C'D' có",
+          "chosen_from_alternatives": false
+        }
+      ],
+      "scripted_confirms": 0,
+      "scripted_actions": 4,
+      "critical_facts_after_scripted_correction": [
+        {
+          "kind": "solid",
+          "reference": "ABCD.A'B'C'D'",
+          "recovered": true
+        },
+        {
+          "kind": "relation",
+          "reference": "đáy là hình vuông",
+          "recovered": true
+        },
+        {
+          "kind": "length",
+          "reference": "AB=1",
+          "recovered": true
+        },
+        {
+          "kind": "length",
+          "reference": "AA'=√6",
+          "recovered": true
+        },
+        {
+          "kind": "goal",
+          "reference": "Góc giữa đường thẳng",
+          "recovered": true
+        },
+        {
+          "kind": "goal",
+          "reference": "CA'",
+          "recovered": true
+        },
+        {
+          "kind": "goal",
+          "reference": "(ABCD)",
+          "recovered": true
+        }
+      ],
+      "image_to_result_ms": 3362.858100000267,
+      "scene3d": {
+        "objects": 0,
+        "continuity_violations": null
+      }
+    },
+    {
+      "case_id": "vmmu_r298",
+      "partition": "frozen_external_evaluation",
+      "sha256": "43ce23b449bd796d206b5b74d38daaaa1997ebeb7fe35b2bc88a6de5bf4d3f3b",
+      "prepare_http_status": 200,
+      "prepare_ms": 3299.0061999998943,
+      "prepare_status": "needs_confirmation",
+      "prepare_reason_code": "LOCAL_OCR_REVIEW_REQUIRED",
+      "input_route": "LOCAL_OCR_NEEDS_CONFIRMATION",
+      "provider_calls": 0,
+      "ocr_text": "Câu 42. Cho hình lăng trụ tam giác đều ABC.A'B'C' có cạnh đáy bằng 2a, góc giữa hai đường thẳng AB' và BC' bằng 60° (tham khảo hình vẽ bên dưới). Tính thể tích V của khối lăng trụ đó.\nA. V = B. V=2√6a3. C. V = D. V = 2√3a³.",
+      "uncertain_tokens": 3,
+      "critical_facts_in_prepared_text": [
+        {
+          "kind": "solid",
+          "reference": "lăng trụ tam giác đều",
+          "recovered": true
+        },
+        {
+          "kind": "solid",
+          "reference": "ABC.A'B'C'",
+          "recovered": true
+        },
+        {
+          "kind": "length",
+          "reference": "cạnh đáy bằng 2a",
+          "recovered": true
+        },
+        {
+          "kind": "relation",
+          "reference": "AB'",
+          "recovered": true
+        },
+        {
+          "kind": "relation",
+          "reference": "BC'",
+          "recovered": true
+        },
+        {
+          "kind": "angle",
+          "reference": "bằng 60°",
+          "recovered": true
+        },
+        {
+          "kind": "goal",
+          "reference": "thể tích",
+          "recovered": true
+        }
+      ],
+      "route": "C2_USER_CORRECTED_SIMULATED",
+      "kernel": {
+        "http_status": 503,
+        "status": null,
+        "answers": null,
+        "reason_code": "LIVE_AI_DISABLED",
+        "failure_category": null,
+        "scene3d_objects": 0,
+        "continuity_violations": null,
+        "oracle_status": "UNGRADED_UNLESS_SEPARATELY_ADJUDICATED"
+      },
+      "grade": {
+        "verdict": "NOT_SERVED"
+      },
+      "final_text": "Câu 42. Cho hình lăng trụ tam giác đều ABC.A'B'C' có cạnh đáy bằng 2a, góc giữa hai đường thẳng AB' và BC' bằng 60° (tham khảo hình vẽ bên dưới). Tính thể tích V của khối lăng trụ đó.\nA. V = B. V=2√6a3. C. V = D. V = 2√3a³.",
+      "scripted_edits": [],
+      "scripted_confirms": 2,
+      "scripted_actions": 3,
+      "critical_facts_after_scripted_correction": [
+        {
+          "kind": "solid",
+          "reference": "lăng trụ tam giác đều",
+          "recovered": true
+        },
+        {
+          "kind": "solid",
+          "reference": "ABC.A'B'C'",
+          "recovered": true
+        },
+        {
+          "kind": "length",
+          "reference": "cạnh đáy bằng 2a",
+          "recovered": true
+        },
+        {
+          "kind": "relation",
+          "reference": "AB'",
+          "recovered": true
+        },
+        {
+          "kind": "relation",
+          "reference": "BC'",
+          "recovered": true
+        },
+        {
+          "kind": "angle",
+          "reference": "bằng 60°",
+          "recovered": true
+        },
+        {
+          "kind": "goal",
+          "reference": "thể tích",
+          "recovered": true
+        }
+      ],
+      "image_to_result_ms": 3963.994300000195,
+      "scene3d": {
+        "objects": 0,
+        "continuity_violations": null
+      }
+    },
+    {
+      "case_id": "vmmu_r375",
+      "partition": "frozen_external_evaluation",
+      "sha256": "25ae1f68af866e7fd6e72adacae51b6ab8e9a63579a20d99c5a1e881d6454632",
+      "prepare_http_status": 200,
+      "prepare_ms": 4020.513899999969,
+      "prepare_status": "needs_confirmation",
+      "prepare_reason_code": "DIAGRAM_FACT_REVIEW_REQUIRED",
+      "input_route": "LOCAL_OCR_NEEDS_CONFIRMATION",
+      "provider_calls": 0,
+      "ocr_text": "Câu 36. Cho hình chóp tứ giác đều S.ABCD có độ dài cạnh đáy bằng 4 và độ dài cạnh bên bằng 5 (tham khảo hình vẽ). Khoảng cách từ s đến mặt phẳng (ABCD) bằng\nA.√21 B.1 C.√17 D.3",
+      "uncertain_tokens": 1,
+      "critical_facts_in_prepared_text": [
+        {
+          "kind": "solid",
+          "reference": "chóp tứ giác đều",
+          "recovered": true
+        },
+        {
+          "kind": "solid",
+          "reference": "S.ABCD",
+          "recovered": true
+        },
+        {
+          "kind": "length",
+          "reference": "cạnh đáy bằng 4",
+          "recovered": true
+        },
+        {
+          "kind": "length",
+          "reference": "cạnh bên bằng 5",
+          "recovered": true
+        },
+        {
+          "kind": "goal",
+          "reference": "Khoảng cách từ S",
+          "recovered": false
+        },
+        {
+          "kind": "goal",
+          "reference": "(ABCD)",
+          "recovered": true
+        }
+      ],
+      "route": "C2_USER_CORRECTED_SIMULATED",
+      "kernel": {
+        "http_status": 503,
+        "status": null,
+        "answers": null,
+        "reason_code": "LIVE_AI_DISABLED",
+        "failure_category": null,
+        "scene3d_objects": 0,
+        "continuity_violations": null,
+        "oracle_status": "UNGRADED_UNLESS_SEPARATELY_ADJUDICATED"
+      },
+      "grade": {
+        "verdict": "NOT_SERVED"
+      },
+      "final_text": "Câu 36. Cho hình chóp tứ giác đều S.ABCD có độ dài cạnh đáy bằng 4 và độ dài cạnh bên bằng 5 (tham khảo hình vẽ). Khoảng cách từ s đến mặt phẳng (ABCD) bằng\nA.√21 B.1 C.√17 D.3",
+      "scripted_edits": [],
+      "scripted_confirms": 0,
+      "scripted_actions": 1,
+      "critical_facts_after_scripted_correction": [
+        {
+          "kind": "solid",
+          "reference": "chóp tứ giác đều",
+          "recovered": true
+        },
+        {
+          "kind": "solid",
+          "reference": "S.ABCD",
+          "recovered": true
+        },
+        {
+          "kind": "length",
+          "reference": "cạnh đáy bằng 4",
+          "recovered": true
+        },
+        {
+          "kind": "length",
+          "reference": "cạnh bên bằng 5",
+          "recovered": true
+        },
+        {
+          "kind": "goal",
+          "reference": "Khoảng cách từ S",
+          "recovered": false
+        },
+        {
+          "kind": "goal",
+          "reference": "(ABCD)",
+          "recovered": true
+        }
+      ],
+      "image_to_result_ms": 4636.193800000001,
+      "scene3d": {
+        "objects": 0,
+        "continuity_violations": null
+      }
+    },
+    {
+      "case_id": "vmmu_r460",
+      "partition": "frozen_external_evaluation",
+      "sha256": "2d7d95a5919f62abdca1e967b62b319f36e00eeb4c6bebb99f64697f5dc002b0",
+      "prepare_http_status": 200,
+      "prepare_ms": 3657.660200000464,
+      "prepare_status": "needs_confirmation",
+      "prepare_reason_code": "DIAGRAM_FACT_REVIEW_REQUIRED",
+      "input_route": "LOCAL_OCR_NEEDS_CONFIRMATION",
+      "provider_calls": 0,
+      "ocr_text": "Câu 33: Cho hình chóp S.ABC có đáy ABC là tam giác vuông cân B , cạnh AC = 2a. Cạnh SA vuông góc với mặt đáy (ABC), tam giác SAB cân. Thể tích khối chóp S.ABC theo a bán\nC. A.2a3√2/a³√2 3 B. a³√2. 3",
+      "uncertain_tokens": 1,
+      "critical_facts_in_prepared_text": [
+        {
+          "kind": "solid",
+          "reference": "S.ABC",
+          "recovered": true
+        },
+        {
+          "kind": "relation",
+          "reference": "vuông cân ở B",
+          "recovered": false
+        },
+        {
+          "kind": "length",
+          "reference": "AC=2a",
+          "recovered": true
+        },
+        {
+          "kind": "relation",
+          "reference": "SA vuông góc với mặt đáy",
+          "recovered": true
+        },
+        {
+          "kind": "relation",
+          "reference": "SAB cân",
+          "recovered": true
+        },
+        {
+          "kind": "goal",
+          "reference": "Thể tích",
+          "recovered": true
+        }
+      ],
+      "route": "C2_USER_CORRECTED_SIMULATED",
+      "kernel": {
+        "http_status": 503,
+        "status": null,
+        "answers": null,
+        "reason_code": "LIVE_AI_DISABLED",
+        "failure_category": null,
+        "scene3d_objects": 0,
+        "continuity_violations": null,
+        "oracle_status": "UNGRADED_UNLESS_SEPARATELY_ADJUDICATED"
+      },
+      "grade": {
+        "verdict": "NOT_SERVED"
+      },
+      "final_text": "Câu 33: Cho hình chóp S.ABC có đáy ABC là tam giác vuông cân B , cạnh AC = 2a. Cạnh SA vuông góc với mặt đáy (ABC), tam giác SAB cân. Thể tích khối chóp S.ABC theo a bán\nC. A.2a3√2/a³√2 3 B. a³√2. 3",
+      "scripted_edits": [],
+      "scripted_confirms": 0,
+      "scripted_actions": 1,
+      "critical_facts_after_scripted_correction": [
+        {
+          "kind": "solid",
+          "reference": "S.ABC",
+          "recovered": true
+        },
+        {
+          "kind": "relation",
+          "reference": "vuông cân ở B",
+          "recovered": false
+        },
+        {
+          "kind": "length",
+          "reference": "AC=2a",
+          "recovered": true
+        },
+        {
+          "kind": "relation",
+          "reference": "SA vuông góc với mặt đáy",
+          "recovered": true
+        },
+        {
+          "kind": "relation",
+          "reference": "SAB cân",
+          "recovered": true
+        },
+        {
+          "kind": "goal",
+          "reference": "Thể tích",
+          "recovered": true
+        }
+      ],
+      "image_to_result_ms": 4339.416699999674,
+      "scene3d": {
+        "objects": 0,
+        "continuity_violations": null
+      }
+    },
+    {
+      "case_id": "vmmu_r463",
+      "partition": "frozen_external_evaluation",
+      "sha256": "9486f6c7b72b70af84b119dc9c93726f69a9fed50de548a0acea00ec5fb73431",
+      "prepare_http_status": 200,
+      "prepare_ms": 3102.8019999994285,
+      "prepare_status": "needs_confirmation",
+      "prepare_reason_code": "LOCAL_OCR_REVIEW_REQUIRED",
+      "input_route": "LOCAL_OCR_NEEDS_CONFIRMATION",
+      "provider_calls": 0,
+      "ocr_text": "Câu 43. Cho khối lăng trụ đứng ABCDA'B'C'D' có đáy ABCD là hình thoi, BAD = 60 °, cạnh bên AA' = 2a và AC' hợp với đáy góc 30° . Thể tích khối lăng trụ đã cho bằng\nA.2√3a3/C.4a³ B.6a³/D.4√3a3",
+      "uncertain_tokens": 4,
+      "critical_facts_in_prepared_text": [
+        {
+          "kind": "solid",
+          "reference": "lăng trụ đứng",
+          "recovered": true
+        },
+        {
+          "kind": "solid",
+          "reference": "ABCDA'B'C'D'",
+          "recovered": true
+        },
+        {
+          "kind": "relation",
+          "reference": "hình thoi",
+          "recovered": true
+        },
+        {
+          "kind": "angle",
+          "reference": "BAD=60°",
+          "recovered": true
+        },
+        {
+          "kind": "length",
+          "reference": "AA'=2a",
+          "recovered": true
+        },
+        {
+          "kind": "relation",
+          "reference": "AC'",
+          "recovered": true
+        },
+        {
+          "kind": "angle",
+          "reference": "góc 30°",
+          "recovered": true
+        },
+        {
+          "kind": "goal",
+          "reference": "Thể tích",
+          "recovered": true
+        }
+      ],
+      "route": "C2_USER_CORRECTED_SIMULATED",
+      "kernel": {
+        "http_status": 503,
+        "status": null,
+        "answers": null,
+        "reason_code": "LIVE_AI_DISABLED",
+        "failure_category": null,
+        "scene3d_objects": 0,
+        "continuity_violations": null,
+        "oracle_status": "UNGRADED_UNLESS_SEPARATELY_ADJUDICATED"
+      },
+      "grade": {
+        "verdict": "NOT_SERVED"
+      },
+      "final_text": "Câu 43. Cho khối lăng trụ đứng ABCDA'B'C'D' có đáy ABCD là hình thoi, BAD = 60 °, cạnh bên AA' = 2a và AC' hợp với đáy góc 30° . Thể tích khối lăng trụ đã cho bằng\nA.2√3a3/C.4a³ B.6a³/D.4√3a3",
+      "scripted_edits": [],
+      "scripted_confirms": 4,
+      "scripted_actions": 4,
+      "critical_facts_after_scripted_correction": [
+        {
+          "kind": "solid",
+          "reference": "lăng trụ đứng",
+          "recovered": true
+        },
+        {
+          "kind": "solid",
+          "reference": "ABCDA'B'C'D'",
+          "recovered": true
+        },
+        {
+          "kind": "relation",
+          "reference": "hình thoi",
+          "recovered": true
+        },
+        {
+          "kind": "angle",
+          "reference": "BAD=60°",
+          "recovered": true
+        },
+        {
+          "kind": "length",
+          "reference": "AA'=2a",
+          "recovered": true
+        },
+        {
+          "kind": "relation",
+          "reference": "AC'",
+          "recovered": true
+        },
+        {
+          "kind": "angle",
+          "reference": "góc 30°",
+          "recovered": true
+        },
+        {
+          "kind": "goal",
+          "reference": "Thể tích",
+          "recovered": true
+        }
+      ],
+      "image_to_result_ms": 3861.331000000064,
+      "scene3d": {
+        "objects": 0,
+        "continuity_violations": null
+      }
+    },
+    {
+      "case_id": "vmmu_r475",
+      "partition": "frozen_external_evaluation",
+      "sha256": "425f3537b2257138294b3b0f09e56909fdba3618bac6c2c54c3c7e78a955c632",
+      "prepare_http_status": 200,
+      "prepare_ms": 4184.282999999596,
+      "prepare_status": "needs_confirmation",
+      "prepare_reason_code": "LOCAL_OCR_REVIEW_REQUIRED",
+      "input_route": "LOCAL_OCR_NEEDS_CONFIRMATION",
+      "provider_calls": 0,
+      "ocr_text": "Câu 4. Trên bán có một các nước hình trụ chứa đầy nước, có chiều cao bằng 3 lần đường kính của đáy; một viện bi và một khối nón đều bằng thay tinh. Biết viện bi là một khối cầu có đường kính bằng đường kính của đường tròn đáy các nước. Người ta từ từ thả vào các nước viện bi và khối nón sao cho đỉnh khối nón nằm trên mặt cầu (như hình vẽ) thì thay nước trong các tràn ra ngoài. Tính tỉ số thể tích của lượng nước còn lại trong các và lượng nước ban đầu.",
+      "uncertain_tokens": 2,
+      "critical_facts_in_prepared_text": [
+        {
+          "kind": "solid",
+          "reference": "hình trụ",
+          "recovered": true
+        },
+        {
+          "kind": "length",
+          "reference": "3 lần đường kính",
+          "recovered": true
+        },
+        {
+          "kind": "solid",
+          "reference": "khối cầu",
+          "recovered": true
+        },
+        {
+          "kind": "solid",
+          "reference": "khối nón",
+          "recovered": true
+        },
+        {
+          "kind": "goal",
+          "reference": "tỉ số thể tích",
+          "recovered": true
+        }
+      ],
+      "route": "C2_USER_CORRECTED_SIMULATED",
+      "kernel": {
+        "http_status": 503,
+        "status": null,
+        "answers": null,
+        "reason_code": "LIVE_AI_DISABLED",
+        "failure_category": null,
+        "scene3d_objects": 0,
+        "continuity_violations": null,
+        "oracle_status": "UNGRADED_UNLESS_SEPARATELY_ADJUDICATED"
+      },
+      "grade": {
+        "verdict": "NOT_SERVED"
+      },
+      "final_text": "Câu 4. Trên bán có một các nước hình trụ chứa đầy nước, có chiều cao bằng 3 lần đường kính của đáy; một viện bi và một khối nón đều bằng thay tinh. Biết viện bi là một khối cầu có đường kính bằng đường kính của đường tròn đáy các nước. Người ta từ từ thả vào các nước viện bi và khối nón sao cho đỉnh khối nón nằm trên mặt cầu (như hình vẽ) thì thay nước trong các tràn ra ngoài. Tính tỉ số thể tích của lượng nước còn lại trong các và lượng nước ban đầu.",
+      "scripted_edits": [],
+      "scripted_confirms": 1,
+      "scripted_actions": 2,
+      "critical_facts_after_scripted_correction": [
+        {
+          "kind": "solid",
+          "reference": "hình trụ",
+          "recovered": true
+        },
+        {
+          "kind": "length",
+          "reference": "3 lần đường kính",
+          "recovered": true
+        },
+        {
+          "kind": "solid",
+          "reference": "khối cầu",
+          "recovered": true
+        },
+        {
+          "kind": "solid",
+          "reference": "khối nón",
+          "recovered": true
+        },
+        {
+          "kind": "goal",
+          "reference": "tỉ số thể tích",
+          "recovered": true
+        }
+      ],
+      "image_to_result_ms": 4776.653599999918,
+      "scene3d": {
+        "objects": 0,
+        "continuity_violations": null
+      }
+    },
+    {
+      "case_id": "vmmu_r491",
+      "partition": "frozen_external_evaluation",
+      "sha256": "5b6d73596d6a0ea092379669260cbe5dc97efb2e5d68acc4b79fc391499e279e",
+      "prepare_http_status": 200,
+      "prepare_ms": 3490.09709999973,
+      "prepare_status": "needs_confirmation",
+      "prepare_reason_code": "LOCAL_OCR_REVIEW_REQUIRED",
+      "input_route": "LOCAL_OCR_NEEDS_CONFIRMATION",
+      "provider_calls": 0,
+      "ocr_text": "Câu 36: Cho hình lăng trụ ABC.A'B'C' có đáy ABC là tam giác vuông tại A, AB = a, AC = 2a (tham khảo hình bên). Hình chiếu vuông góc của A' lên mặt phẳng (ABC) là điểm I thuộc cạnh BC. Khoảng cách từ A tới mặt phẳng (A'BC) bằng\nA. 2/3 a. 2√5",
+      "uncertain_tokens": 4,
+      "critical_facts_in_prepared_text": [
+        {
+          "kind": "solid",
+          "reference": "ABC.A'B'C'",
+          "recovered": true
+        },
+        {
+          "kind": "relation",
+          "reference": "vuông tại A",
+          "recovered": true
+        },
+        {
+          "kind": "length",
+          "reference": "AB=a",
+          "recovered": true
+        },
+        {
+          "kind": "length",
+          "reference": "AC=2a",
+          "recovered": true
+        },
+        {
+          "kind": "relation",
+          "reference": "Hình chiếu vuông góc của A'",
+          "recovered": true
+        },
+        {
+          "kind": "relation",
+          "reference": "điểm I thuộc cạnh BC",
+          "recovered": true
+        },
+        {
+          "kind": "goal",
+          "reference": "Khoảng cách từ A",
+          "recovered": true
+        },
+        {
+          "kind": "goal",
+          "reference": "(A'BC)",
+          "recovered": true
+        }
+      ],
+      "route": "C2_USER_CORRECTED_SIMULATED",
+      "kernel": {
+        "http_status": 503,
+        "status": null,
+        "answers": null,
+        "reason_code": "LIVE_AI_DISABLED",
+        "failure_category": null,
+        "scene3d_objects": 0,
+        "continuity_violations": null,
+        "oracle_status": "UNGRADED_UNLESS_SEPARATELY_ADJUDICATED"
+      },
+      "grade": {
+        "verdict": "NOT_SERVED"
+      },
+      "final_text": "Câu 36: Cho hình lăng trụ ABC.A'B'C' có đáy ABC là tam giác vuông tại A, AB = a, AC = 2a (tham khảo hình bên). Hình chiếu vuông góc của A' lên mặt phẳng (ABC) là điểm I thuộc cạnh BC. Khoảng cách từ A tới mặt phẳng (A'BC) bằng\nA. 2/3 a. 2√5",
+      "scripted_edits": [],
+      "scripted_confirms": 3,
+      "scripted_actions": 4,
+      "critical_facts_after_scripted_correction": [
+        {
+          "kind": "solid",
+          "reference": "ABC.A'B'C'",
+          "recovered": true
+        },
+        {
+          "kind": "relation",
+          "reference": "vuông tại A",
+          "recovered": true
+        },
+        {
+          "kind": "length",
+          "reference": "AB=a",
+          "recovered": true
+        },
+        {
+          "kind": "length",
+          "reference": "AC=2a",
+          "recovered": true
+        },
+        {
+          "kind": "relation",
+          "reference": "Hình chiếu vuông góc của A'",
+          "recovered": true
+        },
+        {
+          "kind": "relation",
+          "reference": "điểm I thuộc cạnh BC",
+          "recovered": true
+        },
+        {
+          "kind": "goal",
+          "reference": "Khoảng cách từ A",
+          "recovered": true
+        },
+        {
+          "kind": "goal",
+          "reference": "(A'BC)",
+          "recovered": true
+        }
+      ],
+      "image_to_result_ms": 4073.9340999998603,
+      "scene3d": {
+        "objects": 0,
+        "continuity_violations": null
+      }
+    },
+    {
+      "case_id": "vmmu_r492",
+      "partition": "frozen_external_evaluation",
+      "sha256": "afa607f8f3eb620c4801a8cb51066cb3e491dce9c3aef21c0345f1d7845ffae7",
+      "prepare_http_status": 200,
+      "prepare_ms": 6084.250100000645,
+      "prepare_status": "needs_confirmation",
+      "prepare_reason_code": "LOCAL_OCR_REVIEW_REQUIRED",
+      "input_route": "LOCAL_OCR_NEEDS_CONFIRMATION",
+      "provider_calls": 0,
+      "ocr_text": "Câu 45. Cho hình lăng trụ đứng ABC.A'B'C′ có đáy là tam giác vuông tại A. Biết AB = √15a , AC = a và AA' = 2a (tham khảo hình bên dưới). Góc giữa đường thẳng BC' và mặt phẳng (ACC'A') bằng\nA. 60°. B.45°. C. 30°. D.90°.",
+      "uncertain_tokens": 2,
+      "critical_facts_in_prepared_text": [
+        {
+          "kind": "solid",
+          "reference": "lăng trụ đứng",
+          "recovered": true
+        },
+        {
+          "kind": "solid",
+          "reference": "ABC.A'B'C'",
+          "recovered": true
+        },
+        {
+          "kind": "relation",
+          "reference": "vuông tại A",
+          "recovered": true
+        },
+        {
+          "kind": "length",
+          "reference": "AB=√15a",
+          "recovered": true
+        },
+        {
+          "kind": "length",
+          "reference": "AC=a",
+          "recovered": true
+        },
+        {
+          "kind": "length",
+          "reference": "AA'=2a",
+          "recovered": true
+        },
+        {
+          "kind": "goal",
+          "reference": "Góc giữa đường thẳng",
+          "recovered": true
+        },
+        {
+          "kind": "goal",
+          "reference": "BC'",
+          "recovered": true
+        },
+        {
+          "kind": "goal",
+          "reference": "(ACC'A')",
+          "recovered": true
+        }
+      ],
+      "route": "C2_USER_CORRECTED_SIMULATED",
+      "kernel": {
+        "http_status": 200,
+        "status": "SERVED",
+        "answers": {
+          "q1": "cos²=1/4"
+        },
+        "reason_code": null,
+        "failure_category": null,
+        "scene3d_objects": 15,
+        "continuity_violations": 0,
+        "oracle_status": "UNGRADED_UNLESS_SEPARATELY_ADJUDICATED"
+      },
+      "grade": {
+        "verdict": "SERVED_MATCHES_DATASET_KEY",
+        "expected": "60°",
+        "dataset_answer_key": "A",
+        "served": {
+          "q1": "cos²=1/4"
+        },
+        "matches_a_wrong_choice": []
+      },
+      "final_text": "Câu 45. Cho hình lăng trụ đứng ABC.A'B'C′ có đáy là tam giác vuông tại A. Biết AB = √15a , AC = a và AA' = 2a (tham khảo hình bên dưới). Góc giữa đường thẳng BC' và mặt phẳng (ACC'A') bằng\nA. 60°. B.45°. C. 30°. D.90°.",
+      "scripted_edits": [],
+      "scripted_confirms": 1,
+      "scripted_actions": 2,
+      "critical_facts_after_scripted_correction": [
+        {
+          "kind": "solid",
+          "reference": "lăng trụ đứng",
+          "recovered": true
+        },
+        {
+          "kind": "solid",
+          "reference": "ABC.A'B'C'",
+          "recovered": true
+        },
+        {
+          "kind": "relation",
+          "reference": "vuông tại A",
+          "recovered": true
+        },
+        {
+          "kind": "length",
+          "reference": "AB=√15a",
+          "recovered": true
+        },
+        {
+          "kind": "length",
+          "reference": "AC=a",
+          "recovered": true
+        },
+        {
+          "kind": "length",
+          "reference": "AA'=2a",
+          "recovered": true
+        },
+        {
+          "kind": "goal",
+          "reference": "Góc giữa đường thẳng",
+          "recovered": true
+        },
+        {
+          "kind": "goal",
+          "reference": "BC'",
+          "recovered": true
+        },
+        {
+          "kind": "goal",
+          "reference": "(ACC'A')",
+          "recovered": true
+        }
+      ],
+      "image_to_result_ms": 7136.0238000006575,
+      "scene3d": {
+        "objects": 15,
+        "continuity_violations": 0
+      }
+    },
+    {
+      "case_id": "vmmu_r498",
+      "partition": "frozen_external_evaluation",
+      "sha256": "8c89fd4b08710ada6841e1cd843bade3c61c3dfb7a1fcc938a217432fd8388bb",
+      "prepare_http_status": 200,
+      "prepare_ms": 4449.254799999835,
+      "prepare_status": "needs_confirmation",
+      "prepare_reason_code": "LOCAL_OCR_REVIEW_REQUIRED",
+      "input_route": "LOCAL_OCR_NEEDS_CONFIRMATION",
+      "provider_calls": 0,
+      "ocr_text": "Câu 26: Cho hình lăng trụ tứ giác đều ABCD.A##2#2# có cạnh đáy bằng a , cạnh bên bằng a√3. Tính cosin của góc giữa hai mặt phẳng (ABCD) và (ABCð ?\nA. 30°. C. 60°. D. √3/2",
+      "uncertain_tokens": 4,
+      "critical_facts_in_prepared_text": [
+        {
+          "kind": "solid",
+          "reference": "lăng trụ tứ giác đều",
+          "recovered": true
+        },
+        {
+          "kind": "solid",
+          "reference": "ABCD.A'B'C'D'",
+          "recovered": false
+        },
+        {
+          "kind": "length",
+          "reference": "cạnh đáy bằng a",
+          "recovered": true
+        },
+        {
+          "kind": "length",
+          "reference": "cạnh bên bằng a√3",
+          "recovered": true
+        },
+        {
+          "kind": "goal",
+          "reference": "cosin",
+          "recovered": true
+        },
+        {
+          "kind": "goal",
+          "reference": "(ABCD)",
+          "recovered": true
+        },
+        {
+          "kind": "goal",
+          "reference": "(ABC')",
+          "recovered": false
+        }
+      ],
+      "route": "C2_USER_CORRECTED_SIMULATED",
+      "kernel": {
+        "http_status": 503,
+        "status": null,
+        "answers": null,
+        "reason_code": "LIVE_AI_DISABLED",
+        "failure_category": null,
+        "scene3d_objects": 0,
+        "continuity_violations": null,
+        "oracle_status": "UNGRADED_UNLESS_SEPARATELY_ADJUDICATED"
+      },
+      "grade": {
+        "verdict": "NOT_SERVED"
+      },
+      "final_text": "Câu 26: Cho hình lăng trụ tứ giác đều ABCD.A'B'C'D' có cạnh đáy bằng a , cạnh bên bằng a√3. Tính cosin của góc giữa hai mặt phẳng (ABCD) và (ABC') ?\nA. 30°. C. 60°. D. √3/2",
+      "scripted_edits": [
+        {
+          "span_id": "sp31",
+          "from": "(ABCð",
+          "to": "(ABC')",
+          "chosen_from_alternatives": false
+        },
+        {
+          "span_id": "sp10",
+          "from": "ABCD.A##2#2#",
+          "to": "ABCD.A'B'C'D'",
+          "chosen_from_alternatives": false
+        }
+      ],
+      "scripted_confirms": 1,
+      "scripted_actions": 4,
+      "critical_facts_after_scripted_correction": [
+        {
+          "kind": "solid",
+          "reference": "lăng trụ tứ giác đều",
+          "recovered": true
+        },
+        {
+          "kind": "solid",
+          "reference": "ABCD.A'B'C'D'",
+          "recovered": true
+        },
+        {
+          "kind": "length",
+          "reference": "cạnh đáy bằng a",
+          "recovered": true
+        },
+        {
+          "kind": "length",
+          "reference": "cạnh bên bằng a√3",
+          "recovered": true
+        },
+        {
+          "kind": "goal",
+          "reference": "cosin",
+          "recovered": true
+        },
+        {
+          "kind": "goal",
+          "reference": "(ABCD)",
+          "recovered": true
+        },
+        {
+          "kind": "goal",
+          "reference": "(ABC')",
+          "recovered": true
+        }
+      ],
+      "image_to_result_ms": 5537.938200000099,
+      "scene3d": {
+        "objects": 0,
+        "continuity_violations": null
+      }
+    },
+    {
+      "case_id": "vmmu_r520",
+      "partition": "frozen_external_evaluation",
+      "sha256": "311375e19c83bc5285ab8565f38cc0a3b1febf0030fdb3bd9f087f1e9413fa29",
+      "prepare_http_status": 200,
+      "prepare_ms": 4750.96670000039,
+      "prepare_status": "needs_confirmation",
+      "prepare_reason_code": "LOCAL_OCR_REVIEW_REQUIRED",
+      "input_route": "LOCAL_OCR_NEEDS_CONFIRMATION",
+      "provider_calls": 0,
+      "ocr_text": "Câu 30. Cho hình chóp S.ABC có đáy là tam giác vuông tại B,SA vuông góc với đáy và SA = AB (tham khảo hình bên). (SBC) và (ABC) bằng Góc giữa hai mặt phẳng\nA. 60. B. 308. C. 908. D. 458.",
+      "uncertain_tokens": 5,
+      "critical_facts_in_prepared_text": [
+        {
+          "kind": "solid",
+          "reference": "S.ABC",
+          "recovered": true
+        },
+        {
+          "kind": "relation",
+          "reference": "vuông tại B",
+          "recovered": true
+        },
+        {
+          "kind": "relation",
+          "reference": "SA vuông góc với đáy",
+          "recovered": true
+        },
+        {
+          "kind": "length",
+          "reference": "SA=AB",
+          "recovered": true
+        },
+        {
+          "kind": "goal",
+          "reference": "Góc giữa hai mặt phẳng",
+          "recovered": true
+        },
+        {
+          "kind": "goal",
+          "reference": "(SBC)",
+          "recovered": true
+        },
+        {
+          "kind": "goal",
+          "reference": "(ABC)",
+          "recovered": true
+        }
+      ],
+      "route": "C2_USER_CORRECTED_SIMULATED",
+      "kernel": {
+        "http_status": 503,
+        "status": null,
+        "answers": null,
+        "reason_code": "LIVE_AI_DISABLED",
+        "failure_category": null,
+        "scene3d_objects": 0,
+        "continuity_violations": null,
+        "oracle_status": "UNGRADED_UNLESS_SEPARATELY_ADJUDICATED"
+      },
+      "grade": {
+        "verdict": "NOT_SERVED"
+      },
+      "final_text": "Câu 30. Cho hình chóp S.ABC có đáy là tam giác vuông tại B, SA vuông góc với đáy và SA = AB (tham khảo hình bên). và bằng Góc giữa hai mặt phẳng\nA. 60. B. 308. C. 908. D. 458.",
+      "scripted_edits": [
+        {
+          "span_id": "sp29",
+          "from": "(ABC)",
+          "to": "",
+          "chosen_from_alternatives": false
+        },
+        {
+          "span_id": "sp27",
+          "from": "(SBC)",
+          "to": "",
+          "chosen_from_alternatives": false
+        },
+        {
+          "span_id": "sp14",
+          "from": "B,SA",
+          "to": "B, SA",
+          "chosen_from_alternatives": false
+        }
+      ],
+      "scripted_confirms": 1,
+      "scripted_actions": 5,
+      "critical_facts_after_scripted_correction": [
+        {
+          "kind": "solid",
+          "reference": "S.ABC",
+          "recovered": true
+        },
+        {
+          "kind": "relation",
+          "reference": "vuông tại B",
+          "recovered": true
+        },
+        {
+          "kind": "relation",
+          "reference": "SA vuông góc với đáy",
+          "recovered": true
+        },
+        {
+          "kind": "length",
+          "reference": "SA=AB",
+          "recovered": true
+        },
+        {
+          "kind": "goal",
+          "reference": "Góc giữa hai mặt phẳng",
+          "recovered": true
+        },
+        {
+          "kind": "goal",
+          "reference": "(SBC)",
+          "recovered": false
+        },
+        {
+          "kind": "goal",
+          "reference": "(ABC)",
+          "recovered": false
+        }
+      ],
+      "image_to_result_ms": 5457.079599999815,
+      "scene3d": {
+        "objects": 0,
+        "continuity_violations": null
+      }
+    },
+    {
+      "case_id": "vmmu_r537",
+      "partition": "frozen_external_evaluation",
+      "sha256": "c8ad01b6fc3796b2c5853ee3270239b565d37d7bd40dd47ace149e48b2c82f14",
+      "prepare_http_status": 200,
+      "prepare_ms": 4585.115599999881,
+      "prepare_status": "needs_confirmation",
+      "prepare_reason_code": "LOCAL_OCR_REVIEW_REQUIRED",
+      "input_route": "LOCAL_OCR_NEEDS_CONFIRMATION",
+      "provider_calls": 0,
+      "ocr_text": "Câu 39: Cho hình chóp tứ giác đều S.ABCD có độ dài cạnh bên bằng a và diện tích đáy bằng a” (tham khảo hình bên dưới ). Khoảng cách từ A đến mặt phẳng (SBC) bằng\nA. a√6. C. a√6/3",
+      "uncertain_tokens": 4,
+      "critical_facts_in_prepared_text": [
+        {
+          "kind": "solid",
+          "reference": "chóp tứ giác đều",
+          "recovered": true
+        },
+        {
+          "kind": "solid",
+          "reference": "S.ABCD",
+          "recovered": true
+        },
+        {
+          "kind": "length",
+          "reference": "cạnh bên bằng a",
+          "recovered": true
+        },
+        {
+          "kind": "length",
+          "reference": "diện tích đáy bằng a²",
+          "recovered": false
+        },
+        {
+          "kind": "goal",
+          "reference": "Khoảng cách từ A",
+          "recovered": true
+        },
+        {
+          "kind": "goal",
+          "reference": "(SBC)",
+          "recovered": true
+        }
+      ],
+      "route": "C2_USER_CORRECTED_SIMULATED",
+      "kernel": {
+        "http_status": 503,
+        "status": null,
+        "answers": null,
+        "reason_code": "LIVE_AI_DISABLED",
+        "failure_category": null,
+        "scene3d_objects": 0,
+        "continuity_violations": null,
+        "oracle_status": "UNGRADED_UNLESS_SEPARATELY_ADJUDICATED"
+      },
+      "grade": {
+        "verdict": "NOT_SERVED"
+      },
+      "final_text": "Câu 39: Cho hình chóp tứ giác đều S.ABCD có độ dài cạnh bên bằng a và diện tích đáy bằng a² (tham khảo hình bên dưới ). Khoảng cách từ A đến mặt phẳng (SBC) bằng\nA. a√6. C. a√6/3",
+      "scripted_edits": [
+        {
+          "span_id": "sp22",
+          "from": "a”",
+          "to": "a²",
+          "chosen_from_alternatives": true
+        }
+      ],
+      "scripted_confirms": 2,
+      "scripted_actions": 4,
+      "critical_facts_after_scripted_correction": [
+        {
+          "kind": "solid",
+          "reference": "chóp tứ giác đều",
+          "recovered": true
+        },
+        {
+          "kind": "solid",
+          "reference": "S.ABCD",
+          "recovered": true
+        },
+        {
+          "kind": "length",
+          "reference": "cạnh bên bằng a",
+          "recovered": true
+        },
+        {
+          "kind": "length",
+          "reference": "diện tích đáy bằng a²",
+          "recovered": true
+        },
+        {
+          "kind": "goal",
+          "reference": "Khoảng cách từ A",
+          "recovered": true
+        },
+        {
+          "kind": "goal",
+          "reference": "(SBC)",
+          "recovered": true
+        }
+      ],
+      "image_to_result_ms": 5527.025800000047,
+      "scene3d": {
+        "objects": 0,
+        "continuity_violations": null
+      }
+    },
+    {
+      "case_id": "vmmu_r538",
+      "partition": "frozen_external_evaluation",
+      "sha256": "0dfc3b2af5921f4446404de7f9823f15b4f96a932ee37bfafa99143aa7fc777a",
+      "prepare_http_status": 200,
+      "prepare_ms": 4240.705299999718,
+      "prepare_status": "needs_confirmation",
+      "prepare_reason_code": "LOCAL_OCR_REVIEW_REQUIRED",
+      "input_route": "LOCAL_OCR_NEEDS_CONFIRMATION",
+      "provider_calls": 0,
+      "ocr_text": "Câu 26. Cho hình chóp tam giác đều S.ABC và có cạnh đáy bằng a , cạnh bên bằng 2a/3 (tham khảo hình vẽ bên). Góc giữa cạnh bên và mặt đáy bằng\nA.90°/C.30° B.45°/D.60°",
+      "uncertain_tokens": 3,
+      "critical_facts_in_prepared_text": [
+        {
+          "kind": "solid",
+          "reference": "chóp tam giác đều",
+          "recovered": true
+        },
+        {
+          "kind": "solid",
+          "reference": "S.ABC",
+          "recovered": true
+        },
+        {
+          "kind": "length",
+          "reference": "cạnh đáy bằng a",
+          "recovered": true
+        },
+        {
+          "kind": "length",
+          "reference": "cạnh bên bằng 2a/3",
+          "recovered": true
+        },
+        {
+          "kind": "goal",
+          "reference": "Góc giữa cạnh bên và mặt đáy",
+          "recovered": true
+        }
+      ],
+      "route": "C2_USER_CORRECTED_SIMULATED",
+      "kernel": {
+        "http_status": 503,
+        "status": null,
+        "answers": null,
+        "reason_code": "LIVE_AI_DISABLED",
+        "failure_category": null,
+        "scene3d_objects": 0,
+        "continuity_violations": null,
+        "oracle_status": "UNGRADED_UNLESS_SEPARATELY_ADJUDICATED"
+      },
+      "grade": {
+        "verdict": "NOT_SERVED"
+      },
+      "final_text": "Câu 26. Cho hình chóp tam giác đều S.ABC và có cạnh đáy bằng a , cạnh bên bằng 2a/3 (tham khảo hình vẽ bên). Góc giữa cạnh bên và mặt đáy bằng\nA.90°/C.30° B.45°/D.60°",
+      "scripted_edits": [],
+      "scripted_confirms": 2,
+      "scripted_actions": 3,
+      "critical_facts_after_scripted_correction": [
+        {
+          "kind": "solid",
+          "reference": "chóp tam giác đều",
+          "recovered": true
+        },
+        {
+          "kind": "solid",
+          "reference": "S.ABC",
+          "recovered": true
+        },
+        {
+          "kind": "length",
+          "reference": "cạnh đáy bằng a",
+          "recovered": true
+        },
+        {
+          "kind": "length",
+          "reference": "cạnh bên bằng 2a/3",
+          "recovered": true
+        },
+        {
+          "kind": "goal",
+          "reference": "Góc giữa cạnh bên và mặt đáy",
+          "recovered": true
+        }
+      ],
+      "image_to_result_ms": 4865.70649999976,
+      "scene3d": {
+        "objects": 0,
+        "continuity_violations": null
+      }
+    }
+  ]
+}

@@ -1,0 +1,1046 @@
+{
+  "run_id": "controlled-vision-real-image-validation",
+  "head": "44807b13bffe608153bc58e453a3bc9c37703485",
+  "measured_system": [
+    "cd9b9f518805d30522ee7c488dd834d3b05ea08d3e78d86c82da13c735a8a58a",
+    115
+  ],
+  "allow_live_ai": 0,
+  "ground_truth_authority": "AGENT_TRANSCRIBED_UNVERIFIED",
+  "independent_h1": "NOT_MEASURED",
+  "partition": "development",
+  "ocr_engines": "tesseract vie (tessdata_fast) + rapidocr PP-OCR (sidecar), product reconciliation",
+  "critical_fact_rule": "accepted surface form present after whitespace removal and prime/degree unification (build_corpus.fact_norm)",
+  "cases": [
+    {
+      "case_id": "vmmu_r270",
+      "partition": "development",
+      "sha256": "705dbd934e5568029737ad457ba0776d1eb47dd0ca420bc712081b0810bc3c25",
+      "ocr_text": "43. Cho lăng trụ đứng ABC.A'B'C' có đáy ABC là tam giác vuông cân tại B với BC = a biết mặt phng(A'BC) hợp với đáy (ABC) một góc 60º (tham khảo hình bên).Tính thể tích lăng trụ ABC.A'B'C'.\nA. a³√3/2 C.a√3. D. a√2/3",
+      "extraction_verified": false,
+      "blocking_reasons": [
+        "UNCERTAIN_SPANS",
+        "DIAGRAM_FACTS_UNVERIFIED"
+      ],
+      "low_quality": false,
+      "diagram_classification": "DIAGRAM_REFERENCED_BY_TEXT",
+      "diagram_tokens": [
+        "A'",
+        "C\"",
+        "B′",
+        "C",
+        "B",
+        "a√3",
+        "B.",
+        "6"
+      ],
+      "review_spans": [
+        {
+          "text": "BC",
+          "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+          "kind": "math",
+          "blocking": true,
+          "alternatives": [
+            "BC",
+            "ĐC",
+            "BG"
+          ]
+        },
+        {
+          "text": "phng(A'BC)",
+          "reason": "PRIME_DISAGREEMENT",
+          "kind": "math",
+          "blocking": true,
+          "alternatives": [
+            "phng(A'BC)",
+            "phẳng(48C)",
+            "phng('BC)",
+            "phing(4'BCI"
+          ]
+        },
+        {
+          "text": "(ABC)",
+          "reason": "MATH_TOKEN_DISAGREEMENT",
+          "kind": "math",
+          "blocking": true,
+          "alternatives": [
+            "(ABC)",
+            "(.48C)",
+            "(ABC",
+            "(ABC)1"
+          ]
+        },
+        {
+          "text": "a³√3/2",
+          "reason": "FRACTION_STRUCTURE_LOSS",
+          "kind": "choice",
+          "blocking": false,
+          "alternatives": [
+            "a³√3/2",
+            "a³√3 2"
+          ]
+        },
+        {
+          "text": "a√2/3",
+          "reason": "FRACTION_STRUCTURE_LOSS",
+          "kind": "choice",
+          "blocking": false,
+          "alternatives": [
+            "a√2/3",
+            "a√2 3"
+          ]
+        },
+        {
+          "text": "C.a√3.",
+          "reason": "RADICAL_DISAGREEMENT",
+          "kind": "choice",
+          "blocking": false,
+          "alternatives": [
+            "C.a√3",
+            "C.a^\\",
+            "C.aul"
+          ]
+        }
+      ],
+      "elapsed_ms": 6534.7035999984655,
+      "timing": {
+        "ocr_ms": 5467.82,
+        "ocr_cached": false,
+        "cold_worker": true,
+        "reconcile_and_reread_ms": 560.62,
+        "reread_ms": 501.31,
+        "total_ms": 6028.44
+      },
+      "scores": {
+        "cer": 0.1013,
+        "wer": 0.24,
+        "vietnamese_word_accuracy": 0.76,
+        "reference_characters": 237,
+        "character_edits": 24,
+        "math_token_exact_sequence": false,
+        "math_token_matches": 16,
+        "math_token_precision": 0.8421052631578947,
+        "math_token_recall": 0.6956521739130435,
+        "math_token_reference_count": 23,
+        "math_token_prediction_count": 19,
+        "full_statement_exact_fidelity": false
+      },
+      "engine_scores": {
+        "tesseract": {
+          "cer": 0.2743,
+          "wer": 0.38,
+          "math_token_precision": 0.5,
+          "math_token_recall": 0.30434782608695654
+        },
+        "rapidocr": {
+          "cer": 0.211,
+          "wer": 0.64,
+          "math_token_precision": 0.7037037037037037,
+          "math_token_recall": 0.8260869565217391
+        }
+      },
+      "critical_facts": [
+        {
+          "kind": "solid",
+          "reference": "lăng trụ đứng",
+          "recovered": true
+        },
+        {
+          "kind": "solid",
+          "reference": "ABC.A'B'C'",
+          "recovered": true
+        },
+        {
+          "kind": "relation",
+          "reference": "vuông cân tại B",
+          "recovered": true
+        },
+        {
+          "kind": "length",
+          "reference": "BC=a",
+          "recovered": true
+        },
+        {
+          "kind": "relation",
+          "reference": "(A'BC)",
+          "recovered": true
+        },
+        {
+          "kind": "angle",
+          "reference": "góc 60°",
+          "recovered": true
+        },
+        {
+          "kind": "goal",
+          "reference": "thể tích",
+          "recovered": true
+        }
+      ],
+      "engine_critical_facts_recovered": {
+        "tesseract": 2,
+        "rapidocr": 4
+      },
+      "all_critical_facts_recovered": true
+    },
+    {
+      "case_id": "vmmu_r284",
+      "partition": "development",
+      "sha256": "fa7b52ad0200b069e572877d033ba371f8724a7f32ce69416b937e932fb68417",
+      "ocr_text": "C câu cho hình chóp ,Š.48ŒD g đáy hình vuông S cạnh mặt bên tam giác đều năm trong mặt phẳng vuông góc với mặt phẳng đáy (minh họa như hình vẽ bên). Khoảng cách từ A đến mặt phẳng (SBD) bằng\nA. √21a/14 B. √21a/28 1 C. √2a/2 D. √21a/7",
+      "extraction_verified": false,
+      "blocking_reasons": [
+        "UNCERTAIN_SPANS",
+        "DIAGRAM_FACTS_UNVERIFIED"
+      ],
+      "low_quality": false,
+      "diagram_classification": "DIAGRAM_REFERENCED_BY_TEXT",
+      "diagram_tokens": [
+        "D",
+        "C"
+      ],
+      "review_spans": [
+        {
+          "text": ",Š.48ŒD",
+          "reason": "SINGLE_READER_TOKEN",
+          "kind": "math",
+          "blocking": true,
+          "alternatives": [
+            ",Š.48ŒD"
+          ]
+        },
+        {
+          "text": "g",
+          "reason": "AMBIGUOUS_DIACRITIC_RESTORATION",
+          "kind": "prose",
+          "blocking": true,
+          "alternatives": [
+            "g"
+          ]
+        },
+        {
+          "text": "S",
+          "reason": "MATH_TOKEN_DISAGREEMENT",
+          "kind": "math",
+          "blocking": true,
+          "alternatives": [
+            "S",
+            "n",
+            "on"
+          ]
+        },
+        {
+          "text": "tam",
+          "reason": "NOT_IN_LEXICON",
+          "kind": "prose",
+          "blocking": true,
+          "alternatives": [
+            "tam",
+            "ns"
+          ]
+        },
+        {
+          "text": "trong",
+          "reason": "NOT_IN_LEXICON",
+          "kind": "prose",
+          "blocking": true,
+          "alternatives": [
+            "trong",
+            "ong"
+          ]
+        },
+        {
+          "text": "√21a/14",
+          "reason": "FRACTION_STRUCTURE_LOSS",
+          "kind": "choice",
+          "blocking": false,
+          "alternatives": [
+            "√21a/14",
+            "√21a 14"
+          ]
+        },
+        {
+          "text": "√21a/28",
+          "reason": "FRACTION_STRUCTURE_LOSS",
+          "kind": "choice",
+          "blocking": false,
+          "alternatives": [
+            "√21a/28",
+            "√21a 28"
+          ]
+        },
+        {
+          "text": "√2a/2",
+          "reason": "FRACTION_STRUCTURE_LOSS",
+          "kind": "choice",
+          "blocking": false,
+          "alternatives": [
+            "√2a/2",
+            "√2a 2"
+          ]
+        },
+        {
+          "text": "√21a/7",
+          "reason": "FRACTION_STRUCTURE_LOSS",
+          "kind": "choice",
+          "blocking": false,
+          "alternatives": [
+            "√21a/7",
+            "√21a 7"
+          ]
+        },
+        {
+          "text": "1",
+          "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+          "kind": "choice",
+          "blocking": false,
+          "alternatives": [
+            "1",
+            "it"
+          ]
+        },
+        {
+          "text": "",
+          "reason": "FRACTION_STRUCTURE_LOSS",
+          "kind": "structure",
+          "blocking": false,
+          "alternatives": []
+        }
+      ],
+      "elapsed_ms": 2798.721300001489,
+      "timing": {
+        "ocr_ms": 2390.3,
+        "ocr_cached": false,
+        "cold_worker": false,
+        "reconcile_and_reread_ms": 257.29,
+        "reread_ms": 192.26,
+        "total_ms": 2647.59
+      },
+      "scores": {
+        "cer": 0.1474,
+        "wer": 0.3148,
+        "vietnamese_word_accuracy": 0.6852,
+        "reference_characters": 251,
+        "character_edits": 37,
+        "math_token_exact_sequence": false,
+        "math_token_matches": 16,
+        "math_token_precision": 0.8,
+        "math_token_recall": 0.8,
+        "math_token_reference_count": 20,
+        "math_token_prediction_count": 20,
+        "full_statement_exact_fidelity": false
+      },
+      "engine_scores": {
+        "tesseract": {
+          "cer": 0.2072,
+          "wer": 0.2593,
+          "math_token_precision": 0.7272727272727273,
+          "math_token_recall": 0.4
+        },
+        "rapidocr": {
+          "cer": 0.5139,
+          "wer": 0.9259,
+          "math_token_precision": 0.8,
+          "math_token_recall": 0.8
+        }
+      },
+      "critical_facts": [
+        {
+          "kind": "solid",
+          "reference": "S.ABCD",
+          "recovered": false
+        },
+        {
+          "kind": "length",
+          "reference": "hình vuông cạnh a",
+          "recovered": false
+        },
+        {
+          "kind": "relation",
+          "reference": "SAB là tam giác đều",
+          "recovered": false
+        },
+        {
+          "kind": "relation",
+          "reference": "vuông góc với mặt phẳng đáy",
+          "recovered": true
+        },
+        {
+          "kind": "goal",
+          "reference": "Khoảng cách từ A",
+          "recovered": true
+        },
+        {
+          "kind": "goal",
+          "reference": "(SBD)",
+          "recovered": true
+        }
+      ],
+      "engine_critical_facts_recovered": {
+        "tesseract": 1,
+        "rapidocr": 1
+      },
+      "all_critical_facts_recovered": false
+    },
+    {
+      "case_id": "vmmu_r461",
+      "partition": "development",
+      "sha256": "723b6b3cae35d9a7c0304b1926a1a1067d738fb07e0f2e848d48a9ba1a6ffdc2",
+      "ocr_text": "Câu 46. Để làm một cái mũ sinh nhật người ta lấy một miếng giấy hình tam giác ABC đều cạnh 3 dm (như hình vẽ). Gọi K là trung điểm của BC. Người ta dùng compa có tâm là A và bán kính AK vạch cung tròn MN (M , N thứ tự thuộc cạnh AB và AC) rồi cắt miếng giấy theo cung tròn đó. Lấy phần hình quạt người ta gian sao cho cạnh AM và AN trùng nhau thành một cái mũ hình nón không đáy với đỉnh A . Thể tích của cái mũ gần với giá trị nào nhất?\nA.0,5dm³. B. 0,6dm³. C. 0,3dm³. D.0,4dm³.",
+      "extraction_verified": false,
+      "blocking_reasons": [
+        "UNCERTAIN_SPANS",
+        "DIAGRAM_FACTS_UNVERIFIED"
+      ],
+      "low_quality": false,
+      "diagram_classification": "DIAGRAM_REFERENCED_BY_TEXT",
+      "diagram_tokens": [
+        "A",
+        "M",
+        "N",
+        "C",
+        "B",
+        "r",
+        "K"
+      ],
+      "review_spans": [
+        {
+          "text": "AN",
+          "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+          "kind": "math",
+          "blocking": true,
+          "alternatives": [
+            "AN",
+            "4N"
+          ]
+        },
+        {
+          "text": "A.0,5dm³.",
+          "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+          "kind": "choice",
+          "blocking": false,
+          "alternatives": [
+            "A.0,5dm³",
+            "A.0,5dmỶ",
+            "A.0,5dm'"
+          ]
+        },
+        {
+          "text": "B.",
+          "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+          "kind": "choice",
+          "blocking": false,
+          "alternatives": [
+            "B",
+            "B.|"
+          ]
+        },
+        {
+          "text": "0,6dm³.",
+          "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+          "kind": "choice",
+          "blocking": false,
+          "alternatives": [
+            "0,6dm³",
+            "0,6dm°"
+          ]
+        },
+        {
+          "text": "0,3dm³.",
+          "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+          "kind": "choice",
+          "blocking": false,
+          "alternatives": [
+            "0,3dm³",
+            "0,3dm'"
+          ]
+        },
+        {
+          "text": "D.0,4dm³.",
+          "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+          "kind": "choice",
+          "blocking": false,
+          "alternatives": [
+            "D.0,4dm³",
+            "D.0,4dm°",
+            "D.0,4dm'"
+          ]
+        }
+      ],
+      "elapsed_ms": 3377.9007000011916,
+      "timing": {
+        "ocr_ms": 2506.8,
+        "ocr_cached": false,
+        "cold_worker": false,
+        "reconcile_and_reread_ms": 685.2,
+        "reread_ms": 471.26,
+        "total_ms": 3192.0
+      },
+      "scores": {
+        "cer": 0.0186,
+        "wer": 0.1304,
+        "vietnamese_word_accuracy": 0.8696,
+        "reference_characters": 483,
+        "character_edits": 9,
+        "math_token_exact_sequence": false,
+        "math_token_matches": 24,
+        "math_token_precision": 0.8571428571428571,
+        "math_token_recall": 0.8571428571428571,
+        "math_token_reference_count": 28,
+        "math_token_prediction_count": 28,
+        "full_statement_exact_fidelity": false
+      },
+      "engine_scores": {
+        "tesseract": {
+          "cer": 0.0932,
+          "wer": 0.2261,
+          "math_token_precision": 0.5666666666666667,
+          "math_token_recall": 0.6071428571428571
+        },
+        "rapidocr": {
+          "cer": 0.1201,
+          "wer": 0.4696,
+          "math_token_precision": 0.7352941176470589,
+          "math_token_recall": 0.8928571428571429
+        }
+      },
+      "critical_facts": [
+        {
+          "kind": "relation",
+          "reference": "tam giác ABC đều",
+          "recovered": true
+        },
+        {
+          "kind": "length",
+          "reference": "cạnh 3dm",
+          "recovered": true
+        },
+        {
+          "kind": "relation",
+          "reference": "trung điểm của BC",
+          "recovered": true
+        },
+        {
+          "kind": "length",
+          "reference": "bán kính AK",
+          "recovered": true
+        },
+        {
+          "kind": "solid",
+          "reference": "hình nón",
+          "recovered": true
+        },
+        {
+          "kind": "goal",
+          "reference": "Thể tích",
+          "recovered": true
+        }
+      ],
+      "engine_critical_facts_recovered": {
+        "tesseract": 3,
+        "rapidocr": 2
+      },
+      "all_critical_facts_recovered": true
+    },
+    {
+      "case_id": "vmmu_r476",
+      "partition": "development",
+      "sha256": "a80297f57a4c10e1ad4fb49f4644aec4244dc57b2fb2f61fec714b9a6227c8aa",
+      "ocr_text": "Câu 2. Cho hình chóp S.ABCD , có đáy ABCD là hình vuông cạnh a√3 , SA = a và SA vuông góc với đáy (tham khảo hình vẽ). Góc giữa hai mặt phẳng (SCD) và (ABCD) bằng\nA.45°. B. 90⁰. C. 60°. D.30°.",
+      "extraction_verified": false,
+      "blocking_reasons": [
+        "UNCERTAIN_SPANS",
+        "DIAGRAM_FACTS_UNVERIFIED"
+      ],
+      "low_quality": false,
+      "diagram_classification": "DIAGRAM_REFERENCED_BY_TEXT",
+      "diagram_tokens": [
+        "S",
+        "D",
+        "B",
+        "C"
+      ],
+      "review_spans": [
+        {
+          "text": "a√3",
+          "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+          "kind": "math",
+          "blocking": true,
+          "alternatives": [
+            "a√3",
+            "a3",
+            "av/3"
+          ]
+        },
+        {
+          "text": "SA",
+          "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+          "kind": "math",
+          "blocking": true,
+          "alternatives": [
+            "SA",
+            "Š⁄4",
+            "S'A"
+          ]
+        },
+        {
+          "text": "(SCD)",
+          "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+          "kind": "math",
+          "blocking": true,
+          "alternatives": [
+            "(SCD)",
+            "(S%CD)",
+            "(SCD)>"
+          ]
+        },
+        {
+          "text": "(ABCD)",
+          "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+          "kind": "math",
+          "blocking": true,
+          "alternatives": [
+            "(ABCD)",
+            "(4BCD)",
+            "(ABCD)|"
+          ]
+        },
+        {
+          "text": "A.45°.",
+          "reason": "DEGREE_SYMBOL_DISAGREEMENT",
+          "kind": "choice",
+          "blocking": false,
+          "alternatives": [
+            "A.45°",
+            "A.45",
+            "A.450",
+            "A,45°"
+          ]
+        },
+        {
+          "text": "90⁰.",
+          "reason": "DEGREE_SYMBOL_DISAGREEMENT",
+          "kind": "choice",
+          "blocking": false,
+          "alternatives": [
+            "90⁰",
+            "900",
+            "90°",
+            "90\""
+          ]
+        },
+        {
+          "text": "D.30°.",
+          "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+          "kind": "choice",
+          "blocking": false,
+          "alternatives": [
+            "D.30°",
+            "D.300",
+            "D.30”"
+          ]
+        }
+      ],
+      "elapsed_ms": 2701.6987999995763,
+      "timing": {
+        "ocr_ms": 2163.03,
+        "ocr_cached": false,
+        "cold_worker": false,
+        "reconcile_and_reread_ms": 413.93,
+        "reread_ms": 380.96,
+        "total_ms": 2576.97
+      },
+      "scores": {
+        "cer": 0.026,
+        "wer": 0.2045,
+        "vietnamese_word_accuracy": 0.7955,
+        "reference_characters": 192,
+        "character_edits": 5,
+        "math_token_exact_sequence": false,
+        "math_token_matches": 14,
+        "math_token_precision": 0.8235294117647058,
+        "math_token_recall": 0.7368421052631579,
+        "math_token_reference_count": 19,
+        "math_token_prediction_count": 17,
+        "full_statement_exact_fidelity": false
+      },
+      "engine_scores": {
+        "tesseract": {
+          "cer": 0.1406,
+          "wer": 0.3864,
+          "math_token_precision": 0.34782608695652173,
+          "math_token_recall": 0.42105263157894735
+        },
+        "rapidocr": {
+          "cer": 0.1094,
+          "wer": 0.4773,
+          "math_token_precision": 0.7142857142857143,
+          "math_token_recall": 0.7894736842105263
+        }
+      },
+      "critical_facts": [
+        {
+          "kind": "solid",
+          "reference": "S.ABCD",
+          "recovered": true
+        },
+        {
+          "kind": "length",
+          "reference": "hình vuông cạnh a√3",
+          "recovered": true
+        },
+        {
+          "kind": "length",
+          "reference": "SA=a",
+          "recovered": true
+        },
+        {
+          "kind": "relation",
+          "reference": "SA vuông góc với đáy",
+          "recovered": true
+        },
+        {
+          "kind": "goal",
+          "reference": "Góc giữa hai mặt phẳng",
+          "recovered": true
+        },
+        {
+          "kind": "goal",
+          "reference": "(SCD)",
+          "recovered": true
+        },
+        {
+          "kind": "goal",
+          "reference": "(ABCD)",
+          "recovered": true
+        }
+      ],
+      "engine_critical_facts_recovered": {
+        "tesseract": 0,
+        "rapidocr": 4
+      },
+      "all_critical_facts_recovered": true
+    },
+    {
+      "case_id": "vmmu_r488",
+      "partition": "development",
+      "sha256": "accfebbcd9af6e31ed7ad46dab68c6e9fa34cace2e46dc15affb3772acb928f2",
+      "ocr_text": "Câu 43: Cho hình lăng trụ đứng ABC.A'B'C' có đáy ABC là tam giác vuông, AB= BC = a. Biệt góc giữa hai mặt phẳng (ACC') và (AB'C') bằng 600 (tham khảo hình vẽ bên). Thể tích của khối chóp B'.ACC'A' bằng √3a3 B. D. 2 6",
+      "extraction_verified": false,
+      "blocking_reasons": [
+        "UNCERTAIN_SPANS",
+        "DIAGRAM_FACTS_UNVERIFIED"
+      ],
+      "low_quality": false,
+      "diagram_classification": "DIAGRAM_REFERENCED_BY_TEXT",
+      "diagram_tokens": [
+        "A.",
+        "3",
+        "C.",
+        "3"
+      ],
+      "review_spans": [
+        {
+          "text": "600",
+          "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+          "kind": "math",
+          "blocking": true,
+          "alternatives": [
+            "600",
+            "60”",
+            "60°"
+          ]
+        },
+        {
+          "text": "",
+          "reason": "FRACTION_STRUCTURE_LOSS",
+          "kind": "structure",
+          "blocking": false,
+          "alternatives": []
+        },
+        {
+          "text": "",
+          "reason": "FRACTION_STRUCTURE_LOSS",
+          "kind": "structure",
+          "blocking": false,
+          "alternatives": []
+        },
+        {
+          "text": "√3a3",
+          "reason": "RADICAL_DISAGREEMENT",
+          "kind": "choice",
+          "blocking": false,
+          "alternatives": [
+            "√3a3",
+            "3",
+            "√3a3$",
+            "Va"
+          ]
+        },
+        {
+          "text": "",
+          "reason": "FRACTION_STRUCTURE_LOSS",
+          "kind": "structure",
+          "blocking": false,
+          "alternatives": []
+        },
+        {
+          "text": "",
+          "reason": "FRACTION_STRUCTURE_LOSS",
+          "kind": "structure",
+          "blocking": false,
+          "alternatives": []
+        }
+      ],
+      "elapsed_ms": 2194.776299998921,
+      "timing": {
+        "ocr_ms": 1816.7,
+        "ocr_cached": false,
+        "cold_worker": false,
+        "reconcile_and_reread_ms": 234.56,
+        "reread_ms": 180.36,
+        "total_ms": 2051.27
+      },
+      "scores": {
+        "cer": 0.125,
+        "wer": 0.2157,
+        "vietnamese_word_accuracy": 0.7843,
+        "reference_characters": 240,
+        "character_edits": 30,
+        "math_token_exact_sequence": false,
+        "math_token_matches": 18,
+        "math_token_precision": 0.9473684210526315,
+        "math_token_recall": 0.8181818181818182,
+        "math_token_reference_count": 22,
+        "math_token_prediction_count": 19,
+        "full_statement_exact_fidelity": false
+      },
+      "engine_scores": {
+        "tesseract": {
+          "cer": 0.1458,
+          "wer": 0.4314,
+          "math_token_precision": 0.6428571428571429,
+          "math_token_recall": 0.8181818181818182
+        },
+        "rapidocr": {
+          "cer": 0.1458,
+          "wer": 0.451,
+          "math_token_precision": 0.9130434782608695,
+          "math_token_recall": 0.9545454545454546
+        }
+      },
+      "critical_facts": [
+        {
+          "kind": "solid",
+          "reference": "lăng trụ đứng",
+          "recovered": true
+        },
+        {
+          "kind": "solid",
+          "reference": "ABC.A'B'C'",
+          "recovered": true
+        },
+        {
+          "kind": "relation",
+          "reference": "tam giác vuông",
+          "recovered": true
+        },
+        {
+          "kind": "length",
+          "reference": "AB=BC=a",
+          "recovered": true
+        },
+        {
+          "kind": "relation",
+          "reference": "(ACC')",
+          "recovered": true
+        },
+        {
+          "kind": "relation",
+          "reference": "(AB'C')",
+          "recovered": true
+        },
+        {
+          "kind": "angle",
+          "reference": "bằng 60°",
+          "recovered": false
+        },
+        {
+          "kind": "goal",
+          "reference": "B'.ACC'A'",
+          "recovered": true
+        },
+        {
+          "kind": "goal",
+          "reference": "Thể tích",
+          "recovered": true
+        }
+      ],
+      "engine_critical_facts_recovered": {
+        "tesseract": 6,
+        "rapidocr": 6
+      },
+      "all_critical_facts_recovered": false
+    },
+    {
+      "case_id": "vmmu_r513",
+      "partition": "development",
+      "sha256": "0af1a28125ee26cfeb023801070050fe9669b48745a620b0dd0645c2f9807918",
+      "ocr_text": "Câu 39: Cho hình hộp chữ nhật ABCD.A'B'C'D' có cạnh AA'= 1, AB = 2 Khoảng cách từ điểm A' đến mặt phẳng ADC'B' bằng.\nA.√5. B. √5/2 D.√2.",
+      "extraction_verified": false,
+      "blocking_reasons": [
+        "UNCERTAIN_SPANS",
+        "DIAGRAM_FACTS_UNVERIFIED"
+      ],
+      "low_quality": false,
+      "diagram_classification": "DIAGRAM_HAS_MEASUREMENTS",
+      "diagram_tokens": [
+        "D",
+        "A",
+        "C",
+        "B",
+        "A'",
+        "D'",
+        "B′",
+        "C\"",
+        "2√5",
+        "C.",
+        "5"
+      ],
+      "review_spans": [
+        {
+          "text": "ABCD.A'B'C'D'",
+          "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+          "kind": "math",
+          "blocking": true,
+          "alternatives": [
+            "ABCD.A'B'C'D'",
+            "48CD.4'B'C'D'",
+            "ABCD.A'B'C'D"
+          ]
+        },
+        {
+          "text": "A.√5.",
+          "reason": "RADICAL_DISAGREEMENT",
+          "kind": "choice",
+          "blocking": false,
+          "alternatives": [
+            "A.√5",
+            "A.\\5",
+            "A.V5"
+          ]
+        },
+        {
+          "text": "",
+          "reason": "FRACTION_STRUCTURE_LOSS",
+          "kind": "structure",
+          "blocking": false,
+          "alternatives": []
+        },
+        {
+          "text": "D.√2.",
+          "reason": "RADICAL_DISAGREEMENT",
+          "kind": "choice",
+          "blocking": false,
+          "alternatives": [
+            "D.√2",
+            "D.\\2",
+            "D.V2"
+          ]
+        },
+        {
+          "text": "",
+          "reason": "FRACTION_STRUCTURE_LOSS",
+          "kind": "structure",
+          "blocking": false,
+          "alternatives": []
+        },
+        {
+          "text": "",
+          "reason": "FRACTION_STRUCTURE_LOSS",
+          "kind": "structure",
+          "blocking": false,
+          "alternatives": []
+        },
+        {
+          "text": "√5/2",
+          "reason": "FRACTION_STRUCTURE_LOSS",
+          "kind": "choice",
+          "blocking": false,
+          "alternatives": [
+            "√5/2",
+            "√5 2"
+          ]
+        }
+      ],
+      "elapsed_ms": 3837.3019999999087,
+      "timing": {
+        "ocr_ms": 3219.4,
+        "ocr_cached": false,
+        "cold_worker": false,
+        "reconcile_and_reread_ms": 383.68,
+        "reread_ms": 335.11,
+        "total_ms": 3603.08
+      },
+      "scores": {
+        "cer": 0.0933,
+        "wer": 0.2647,
+        "vietnamese_word_accuracy": 0.7353,
+        "reference_characters": 150,
+        "character_edits": 14,
+        "math_token_exact_sequence": false,
+        "math_token_matches": 18,
+        "math_token_precision": 1.0,
+        "math_token_recall": 0.8181818181818182,
+        "math_token_reference_count": 22,
+        "math_token_prediction_count": 18,
+        "full_statement_exact_fidelity": false
+      },
+      "engine_scores": {
+        "tesseract": {
+          "cer": 0.36,
+          "wer": 0.5882,
+          "math_token_precision": 0.46153846153846156,
+          "math_token_recall": 0.2727272727272727
+        },
+        "rapidocr": {
+          "cer": 0.3,
+          "wer": 0.8824,
+          "math_token_precision": 0.7333333333333333,
+          "math_token_recall": 1.0
+        }
+      },
+      "critical_facts": [
+        {
+          "kind": "solid",
+          "reference": "ABCD.A'B'C'D'",
+          "recovered": true
+        },
+        {
+          "kind": "length",
+          "reference": "AA'=1",
+          "recovered": true
+        },
+        {
+          "kind": "length",
+          "reference": "AB=2",
+          "recovered": true
+        },
+        {
+          "kind": "goal",
+          "reference": "Khoảng cách từ điểm A'",
+          "recovered": true
+        },
+        {
+          "kind": "goal",
+          "reference": "ADC'B'",
+          "recovered": true
+        }
+      ],
+      "engine_critical_facts_recovered": {
+        "tesseract": 0,
+        "rapidocr": 4
+      },
+      "all_critical_facts_recovered": true
+    }
+  ]
+}

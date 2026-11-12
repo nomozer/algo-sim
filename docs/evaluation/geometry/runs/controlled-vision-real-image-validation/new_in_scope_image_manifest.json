@@ -1,0 +1,2491 @@
+{
+  "schema": "algosim-in-scope-real-image-corpus/1",
+  "run_id": "controlled-vision-real-image-validation",
+  "frozen_at_utc": "2026-11-12T12:24:30.173862+00:00",
+  "status": "FROZEN_BEFORE_OCR_EVALUATION",
+  "ground_truth_authority": "AGENT_TRANSCRIBED_UNVERIFIED",
+  "independent_h1": "NOT_MEASURED",
+  "requested_candidates": [
+    15,
+    25
+  ],
+  "actual_items": 25,
+  "polyhedron_items": 23,
+  "split_rule": "development iff int(sha256(dataset_id), 16) % 4 == 0, else frozen_external_evaluation; depends on the dataset id only",
+  "split_counts": {
+    "frozen_external_evaluation": 19,
+    "development": 6
+  },
+  "coverage": {
+    "cuboid": 3,
+    "distance_line_line": 1,
+    "oblique_prism": 2,
+    "volume": 9,
+    "pyramid": 8,
+    "distance_point_plane": 6,
+    "dihedral": 4,
+    "right_prism": 4,
+    "inverse_from_angle": 4,
+    "tetrahedron": 1,
+    "point_reflection": 1,
+    "angle_line_plane": 3,
+    "regular_prism": 2,
+    "regular_pyramid": 3,
+    "hypotenuse_given": 1,
+    "cone": 1,
+    "applied": 2,
+    "cylinder_sphere_cone": 1
+  },
+  "coverage_gaps": [
+    "NO_HANDWRITTEN_IMAGES",
+    "NO_CAMERA_PHOTOGRAPHS_OF_PAPER (rendered page crops only)",
+    "NO_MULTI_PROBLEM_IMAGES",
+    "NO_CROSS_SECTION_PROBLEM",
+    "ALL_ITEMS_MULTIPLE_CHOICE_FROM_ONE_DATASET"
+  ],
+  "items": [
+    {
+      "case_id": "vmmu_r247",
+      "row_idx": 247,
+      "dataset": "anvo25/vmmu",
+      "dataset_split": "full_vqa",
+      "dataset_id": "Math_0455_test_259_question_34_page_4_key_D_vqa.png",
+      "cache_path": ".superpowers/external_image_cache/controlled-vision-vmmu/r247_Math_0455_test_259_question_34_page_4_key_D_vqa.png",
+      "sha256": "78c4b4962e286c248fa2b6b8819b8dc53fc215b7aa6bac2f765dee4dcebe5629",
+      "file_size_bytes": 376883,
+      "image_width": 2550,
+      "image_height": 1983,
+      "source_url": "https://huggingface.co/datasets/anvo25/vmmu",
+      "api_row_url": "https://datasets-server.huggingface.co/rows?dataset=anvo25/vmmu&config=default&split=full_vqa&offset=247&length=1",
+      "license_status": "MIT_DECLARED_BY_DATASET_PUBLISHER",
+      "underlying_exam_rights_independently_verified": false,
+      "image_committed_to_git": false,
+      "contains_personal_data": false,
+      "partition": "frozen_external_evaluation",
+      "split_hash_sha256_of_dataset_id": "a177507223f00351c529ca43f3a2044733966c80e02e29ffa54e885f09a16795",
+      "printed_or_handwritten": "PRINTED",
+      "capture": "RENDERED_EXAM_PAGE_CROP_NOT_A_PHOTOGRAPH",
+      "ground_truth_text": "Câu 34. Cho hình hộp chữ nhật ABCD.A'B'C'D' có AB = a, BC = 2a và AA' = 3a (tham khảo hình bên). Khoảng cách giữa hai đường thẳng BD và A'C' bằng\nA. a. B. √2a. C. 2a. D. 3a.",
+      "statement": "Câu 34. Cho hình hộp chữ nhật ABCD.A'B'C'D' có AB = a, BC = 2a và AA' = 3a (tham khảo hình bên). Khoảng cách giữa hai đường thẳng BD và A'C' bằng",
+      "choices": {
+        "A": "a",
+        "B": "√2a",
+        "C": "2a",
+        "D": "3a"
+      },
+      "ground_truth_status": "AGENT_TRANSCRIBED_UNVERIFIED",
+      "critical_facts": [
+        {
+          "kind": "solid",
+          "accepted_forms": [
+            "ABCD.A'B'C'D'",
+            "ABCD·A'B'C'D'"
+          ]
+        },
+        {
+          "kind": "length",
+          "accepted_forms": [
+            "AB=a"
+          ]
+        },
+        {
+          "kind": "length",
+          "accepted_forms": [
+            "BC=2a"
+          ]
+        },
+        {
+          "kind": "length",
+          "accepted_forms": [
+            "AA'=3a"
+          ]
+        },
+        {
+          "kind": "goal",
+          "accepted_forms": [
+            "Khoảng cách giữa hai đường thẳng"
+          ]
+        },
+        {
+          "kind": "goal",
+          "accepted_forms": [
+            "BD"
+          ]
+        },
+        {
+          "kind": "goal",
+          "accepted_forms": [
+            "A'C'"
+          ]
+        }
+      ],
+      "diagram_description": "Labelled cuboid, no measurements.",
+      "diagram_embedded_facts": [],
+      "diagram_dependency_by_agent_reading": "REFERENCE_FIGURE_ONLY_ALL_PREMISES_IN_TEXT",
+      "source_notes": [
+        "small print",
+        "centred dot in ABCD·A'B'C'D'",
+        "watermark"
+      ],
+      "tags": [
+        "cuboid",
+        "distance_line_line"
+      ],
+      "dataset_answer_key": "D",
+      "expected_answer": "3a",
+      "oracle": {
+        "provenance": "DATASET_ANSWER_KEY",
+        "independent_of_axo_output": true,
+        "independent_of_agent": true,
+        "agent_hand_derivation_letter": "D",
+        "agent_derivation_agrees_with_key": true,
+        "status": "DATASET_KEY_NOT_INDEPENDENTLY_ADJUDICATED"
+      },
+      "solver_scope": "UNKNOWN_PENDING_ADJUDICATION",
+      "solver_scope_basis": "set by the verified-text diagnostic in transcription_solver_diagnostic.json, never by keywords"
+    },
+    {
+      "case_id": "vmmu_r254",
+      "row_idx": 254,
+      "dataset": "anvo25/vmmu",
+      "dataset_split": "full_vqa",
+      "dataset_id": "Math_0401_test_080_question_45_page_6_key_B_vqa.png",
+      "cache_path": ".superpowers/external_image_cache/controlled-vision-vmmu/r254_Math_0401_test_080_question_45_page_6_key_B_vqa.png",
+      "sha256": "856efe3f31a1f628739b7e59dd4883eceef016f414fbec0d6563b8f384da6e15",
+      "file_size_bytes": 176833,
+      "image_width": 2481,
+      "image_height": 1111,
+      "source_url": "https://huggingface.co/datasets/anvo25/vmmu",
+      "api_row_url": "https://datasets-server.huggingface.co/rows?dataset=anvo25/vmmu&config=default&split=full_vqa&offset=254&length=1",
+      "license_status": "MIT_DECLARED_BY_DATASET_PUBLISHER",
+      "underlying_exam_rights_independently_verified": false,
+      "image_committed_to_git": false,
+      "contains_personal_data": false,
+      "partition": "frozen_external_evaluation",
+      "split_hash_sha256_of_dataset_id": "9e56cac3d5db849c511448b19202510769558a1d798a182ff0456ab341216c69",
+      "printed_or_handwritten": "PRINTED",
+      "capture": "RENDERED_EXAM_PAGE_CROP_NOT_A_PHOTOGRAPH",
+      "ground_truth_text": "Câu 45: Cho hình lăng trụ ABC.A'B'C' có AA' = 2√13a, tam giác ABC vuông tại C và ∠ABC = 30°, góc giữa cạnh bên CC' và mặt đáy (ABC) bằng 60°. Hình chiếu vuông góc của B' lên mặt phẳng (ABC) trùng với trọng tâm của tam giác ABC. Thể tích của khối tứ diện A'ABC theo a bằng\nA. 33√39a³/4. B. 9√13a³/2. C. 99√13a³/8. D. 27√13a³/2.",
+      "statement": "Câu 45: Cho hình lăng trụ ABC.A'B'C' có AA' = 2√13a, tam giác ABC vuông tại C và ∠ABC = 30°, góc giữa cạnh bên CC' và mặt đáy (ABC) bằng 60°. Hình chiếu vuông góc của B' lên mặt phẳng (ABC) trùng với trọng tâm của tam giác ABC. Thể tích của khối tứ diện A'ABC theo a bằng",
+      "choices": {
+        "A": "33√39a³/4",
+        "B": "9√13a³/2",
+        "C": "99√13a³/8",
+        "D": "27√13a³/2"
+      },
+      "ground_truth_status": "AGENT_TRANSCRIBED_UNVERIFIED",
+      "critical_facts": [
+        {
+          "kind": "solid",
+          "accepted_forms": [
+            "ABC.A'B'C'"
+          ]
+        },
+        {
+          "kind": "length",
+          "accepted_forms": [
+            "AA'=2√13a"
+          ]
+        },
+        {
+          "kind": "relation",
+          "accepted_forms": [
+            "vuông tại C"
+          ]
+        },
+        {
+          "kind": "angle",
+          "accepted_forms": [
+            "ABC=30°"
+          ]
+        },
+        {
+          "kind": "relation",
+          "accepted_forms": [
+            "CC'"
+          ]
+        },
+        {
+          "kind": "angle",
+          "accepted_forms": [
+            "bằng 60°"
+          ]
+        },
+        {
+          "kind": "relation",
+          "accepted_forms": [
+            "Hình chiếu vuông góc của B'"
+          ]
+        },
+        {
+          "kind": "relation",
+          "accepted_forms": [
+            "trọng tâm"
+          ]
+        },
+        {
+          "kind": "goal",
+          "accepted_forms": [
+            "A'ABC"
+          ]
+        },
+        {
+          "kind": "goal",
+          "accepted_forms": [
+            "Thể tích"
+          ]
+        }
+      ],
+      "diagram_description": "Oblique triangular prism with G and M marked.",
+      "diagram_embedded_facts": [],
+      "diagram_dependency_by_agent_reading": "REFERENCE_FIGURE_ONLY_ALL_PREMISES_IN_TEXT",
+      "source_notes": [
+        "SOURCE_GLYPH_CORRUPTION: several primes are printed as a cent sign and the angle hat as a grave accent",
+        "watermark over text"
+      ],
+      "tags": [
+        "oblique_prism",
+        "volume"
+      ],
+      "dataset_answer_key": "B",
+      "expected_answer": "9√13a³/2",
+      "oracle": {
+        "provenance": "DATASET_ANSWER_KEY",
+        "independent_of_axo_output": true,
+        "independent_of_agent": true,
+        "agent_hand_derivation_letter": null,
+        "agent_derivation_agrees_with_key": null,
+        "status": "DATASET_KEY_NOT_INDEPENDENTLY_ADJUDICATED"
+      },
+      "solver_scope": "UNKNOWN_PENDING_ADJUDICATION",
+      "solver_scope_basis": "set by the verified-text diagnostic in transcription_solver_diagnostic.json, never by keywords"
+    },
+    {
+      "case_id": "vmmu_r256",
+      "row_idx": 256,
+      "dataset": "anvo25/vmmu",
+      "dataset_split": "full_vqa",
+      "dataset_id": "Math_0219_test_041_question_38_page_4_key_A_vqa.png",
+      "cache_path": ".superpowers/external_image_cache/controlled-vision-vmmu/r256_Math_0219_test_041_question_38_page_4_key_A_vqa.png",
+      "sha256": "4ae1fd776fe4ff16f290eddd3e4a7699b943dec7b1cfa0235a401d113864ba07",
+      "file_size_bytes": 153551,
+      "image_width": 2481,
+      "image_height": 1678,
+      "source_url": "https://huggingface.co/datasets/anvo25/vmmu",
+      "api_row_url": "https://datasets-server.huggingface.co/rows?dataset=anvo25/vmmu&config=default&split=full_vqa&offset=256&length=1",
+      "license_status": "MIT_DECLARED_BY_DATASET_PUBLISHER",
+      "underlying_exam_rights_independently_verified": false,
+      "image_committed_to_git": false,
+      "contains_personal_data": false,
+      "partition": "frozen_external_evaluation",
+      "split_hash_sha256_of_dataset_id": "7bb6d25acb3bc5b299a89e4175bef4611195d3728014d20618333697bfda90fe",
+      "printed_or_handwritten": "PRINTED",
+      "capture": "RENDERED_EXAM_PAGE_CROP_NOT_A_PHOTOGRAPH",
+      "ground_truth_text": "Câu 38: Cho hình chóp S.ABCD có đáy ABCD là hình thoi cạnh bằng a, ∠BAD = 120°. Mặt bên SAB là tam giác đều và (SAB) ⊥ (ABCD) (tham khảo hình vẽ). Tính khoảng cách từ A đên (SBC)\nA. a√15/5. B. a√7/7. C. a/2. D. √3a/4.",
+      "statement": "Câu 38: Cho hình chóp S.ABCD có đáy ABCD là hình thoi cạnh bằng a, ∠BAD = 120°. Mặt bên SAB là tam giác đều và (SAB) ⊥ (ABCD) (tham khảo hình vẽ). Tính khoảng cách từ A đên (SBC)",
+      "choices": {
+        "A": "a√15/5",
+        "B": "a√7/7",
+        "C": "a/2",
+        "D": "√3a/4"
+      },
+      "ground_truth_status": "AGENT_TRANSCRIBED_UNVERIFIED",
+      "critical_facts": [
+        {
+          "kind": "solid",
+          "accepted_forms": [
+            "S.ABCD"
+          ]
+        },
+        {
+          "kind": "relation",
+          "accepted_forms": [
+            "hình thoi"
+          ]
+        },
+        {
+          "kind": "length",
+          "accepted_forms": [
+            "cạnh bằng a"
+          ]
+        },
+        {
+          "kind": "angle",
+          "accepted_forms": [
+            "BAD=120°"
+          ]
+        },
+        {
+          "kind": "relation",
+          "accepted_forms": [
+            "SAB là tam giác đều"
+          ]
+        },
+        {
+          "kind": "relation",
+          "accepted_forms": [
+            "(SAB)⊥(ABCD)"
+          ]
+        },
+        {
+          "kind": "goal",
+          "accepted_forms": [
+            "khoảng cách từ A"
+          ]
+        },
+        {
+          "kind": "goal",
+          "accepted_forms": [
+            "(SBC)"
+          ]
+        }
+      ],
+      "diagram_description": "Pyramid with H on AB.",
+      "diagram_embedded_facts": [],
+      "diagram_dependency_by_agent_reading": "REFERENCE_FIGURE_ONLY_ALL_PREMISES_IN_TEXT",
+      "source_notes": [
+        "small print",
+        "source typo 'đên'",
+        "page footer inside the image"
+      ],
+      "tags": [
+        "pyramid",
+        "distance_point_plane"
+      ],
+      "dataset_answer_key": "A",
+      "expected_answer": "a√15/5",
+      "oracle": {
+        "provenance": "DATASET_ANSWER_KEY",
+        "independent_of_axo_output": true,
+        "independent_of_agent": true,
+        "agent_hand_derivation_letter": "A",
+        "agent_derivation_agrees_with_key": true,
+        "status": "DATASET_KEY_NOT_INDEPENDENTLY_ADJUDICATED"
+      },
+      "solver_scope": "UNKNOWN_PENDING_ADJUDICATION",
+      "solver_scope_basis": "set by the verified-text diagnostic in transcription_solver_diagnostic.json, never by keywords"
+    },
+    {
+      "case_id": "vmmu_r258",
+      "row_idx": 258,
+      "dataset": "anvo25/vmmu",
+      "dataset_split": "full_vqa",
+      "dataset_id": "Math_0064_test_010_question_30_page_4_key_D_vqa.png",
+      "cache_path": ".superpowers/external_image_cache/controlled-vision-vmmu/r258_Math_0064_test_010_question_30_page_4_key_D_vqa.png",
+      "sha256": "5d01fa15116c70e493c30230068dbee2f3d3375cd6a36bbc4ac673e0b820ac3e",
+      "file_size_bytes": 99281,
+      "image_width": 2481,
+      "image_height": 869,
+      "source_url": "https://huggingface.co/datasets/anvo25/vmmu",
+      "api_row_url": "https://datasets-server.huggingface.co/rows?dataset=anvo25/vmmu&config=default&split=full_vqa&offset=258&length=1",
+      "license_status": "MIT_DECLARED_BY_DATASET_PUBLISHER",
+      "underlying_exam_rights_independently_verified": false,
+      "image_committed_to_git": false,
+      "contains_personal_data": false,
+      "partition": "frozen_external_evaluation",
+      "split_hash_sha256_of_dataset_id": "240f79f392b391fed2665630b2cca6ff7286945aab9f8290b14fe9a01cc2cc6e",
+      "printed_or_handwritten": "PRINTED",
+      "capture": "RENDERED_EXAM_PAGE_CROP_NOT_A_PHOTOGRAPH",
+      "ground_truth_text": "Câu 30. Cho hình chóp S.ABC có đáy là tam giác vuông cân tại A, SA vuông góc với đáy và SA = AB (tham khảo hình vẽ). Tang của góc giữa hai mặt phẳng (SBC) và (SBA) bằng\nA. √2/2. B. 1/2. C. 2. D. √2.",
+      "statement": "Câu 30. Cho hình chóp S.ABC có đáy là tam giác vuông cân tại A, SA vuông góc với đáy và SA = AB (tham khảo hình vẽ). Tang của góc giữa hai mặt phẳng (SBC) và (SBA) bằng",
+      "choices": {
+        "A": "√2/2",
+        "B": "1/2",
+        "C": "2",
+        "D": "√2"
+      },
+      "ground_truth_status": "AGENT_TRANSCRIBED_UNVERIFIED",
+      "critical_facts": [
+        {
+          "kind": "solid",
+          "accepted_forms": [
+            "S.ABC"
+          ]
+        },
+        {
+          "kind": "relation",
+          "accepted_forms": [
+            "vuông cân tại A"
+          ]
+        },
+        {
+          "kind": "relation",
+          "accepted_forms": [
+            "SA vuông góc với đáy"
+          ]
+        },
+        {
+          "kind": "length",
+          "accepted_forms": [
+            "SA=AB"
+          ]
+        },
+        {
+          "kind": "goal",
+          "accepted_forms": [
+            "Tang"
+          ]
+        },
+        {
+          "kind": "goal",
+          "accepted_forms": [
+            "(SBC)"
+          ]
+        },
+        {
+          "kind": "goal",
+          "accepted_forms": [
+            "(SBA)"
+          ]
+        }
+      ],
+      "diagram_description": "Labelled pyramid.",
+      "diagram_embedded_facts": [],
+      "diagram_dependency_by_agent_reading": "REFERENCE_FIGURE_ONLY_ALL_PREMISES_IN_TEXT",
+      "source_notes": [],
+      "tags": [
+        "pyramid",
+        "dihedral"
+      ],
+      "dataset_answer_key": "D",
+      "expected_answer": "√2",
+      "oracle": {
+        "provenance": "DATASET_ANSWER_KEY",
+        "independent_of_axo_output": true,
+        "independent_of_agent": true,
+        "agent_hand_derivation_letter": "D",
+        "agent_derivation_agrees_with_key": true,
+        "status": "DATASET_KEY_NOT_INDEPENDENTLY_ADJUDICATED"
+      },
+      "solver_scope": "UNKNOWN_PENDING_ADJUDICATION",
+      "solver_scope_basis": "set by the verified-text diagnostic in transcription_solver_diagnostic.json, never by keywords"
+    },
+    {
+      "case_id": "vmmu_r266",
+      "row_idx": 266,
+      "dataset": "anvo25/vmmu",
+      "dataset_split": "full_vqa",
+      "dataset_id": "Math_0059_test_010_question_12_page_2_key_D_vqa.png",
+      "cache_path": ".superpowers/external_image_cache/controlled-vision-vmmu/r266_Math_0059_test_010_question_12_page_2_key_D_vqa.png",
+      "sha256": "5f2587de4d78c078002379f4405721556d604dff87fde093745ee312486f433e",
+      "file_size_bytes": 76416,
+      "image_width": 2481,
+      "image_height": 726,
+      "source_url": "https://huggingface.co/datasets/anvo25/vmmu",
+      "api_row_url": "https://datasets-server.huggingface.co/rows?dataset=anvo25/vmmu&config=default&split=full_vqa&offset=266&length=1",
+      "license_status": "MIT_DECLARED_BY_DATASET_PUBLISHER",
+      "underlying_exam_rights_independently_verified": false,
+      "image_committed_to_git": false,
+      "contains_personal_data": false,
+      "partition": "frozen_external_evaluation",
+      "split_hash_sha256_of_dataset_id": "62f4a83347d46bff3d81bd44f5dea42d71d486a654fe3c44faf64879ab4b016a",
+      "printed_or_handwritten": "PRINTED",
+      "capture": "RENDERED_EXAM_PAGE_CROP_NOT_A_PHOTOGRAPH",
+      "ground_truth_text": "Câu 12. Cho khối chóp S.ABC có SA vuông góc với đáy, SA = 3, AB = 3, CB = 4 và ∠ABC = 30°. Thể tích khối chóp đã cho bằng\nA. 9. B. 1. C. 6. D. 3.",
+      "statement": "Câu 12. Cho khối chóp S.ABC có SA vuông góc với đáy, SA = 3, AB = 3, CB = 4 và ∠ABC = 30°. Thể tích khối chóp đã cho bằng",
+      "choices": {
+        "A": "9",
+        "B": "1",
+        "C": "6",
+        "D": "3"
+      },
+      "ground_truth_status": "AGENT_TRANSCRIBED_UNVERIFIED",
+      "critical_facts": [
+        {
+          "kind": "solid",
+          "accepted_forms": [
+            "S.ABC"
+          ]
+        },
+        {
+          "kind": "relation",
+          "accepted_forms": [
+            "SA vuông góc với đáy"
+          ]
+        },
+        {
+          "kind": "length",
+          "accepted_forms": [
+            "SA=3"
+          ]
+        },
+        {
+          "kind": "length",
+          "accepted_forms": [
+            "AB=3"
+          ]
+        },
+        {
+          "kind": "length",
+          "accepted_forms": [
+            "CB=4"
+          ]
+        },
+        {
+          "kind": "angle",
+          "accepted_forms": [
+            "ABC=30°"
+          ]
+        },
+        {
+          "kind": "goal",
+          "accepted_forms": [
+            "Thể tích"
+          ]
+        }
+      ],
+      "diagram_description": "Labelled pyramid.",
+      "diagram_embedded_facts": [],
+      "diagram_dependency_by_agent_reading": "REFERENCE_FIGURE_ONLY_ALL_PREMISES_IN_TEXT",
+      "source_notes": [
+        "degree printed as superscript zero",
+        "angle written with a wide hat"
+      ],
+      "tags": [
+        "pyramid",
+        "volume"
+      ],
+      "dataset_answer_key": "D",
+      "expected_answer": "3",
+      "oracle": {
+        "provenance": "DATASET_ANSWER_KEY",
+        "independent_of_axo_output": true,
+        "independent_of_agent": true,
+        "agent_hand_derivation_letter": "D",
+        "agent_derivation_agrees_with_key": true,
+        "status": "DATASET_KEY_NOT_INDEPENDENTLY_ADJUDICATED"
+      },
+      "solver_scope": "UNKNOWN_PENDING_ADJUDICATION",
+      "solver_scope_basis": "set by the verified-text diagnostic in transcription_solver_diagnostic.json, never by keywords"
+    },
+    {
+      "case_id": "vmmu_r270",
+      "row_idx": 270,
+      "dataset": "anvo25/vmmu",
+      "dataset_split": "full_vqa",
+      "dataset_id": "Math_0128_test_022_question_43_page_6_key_A_vqa.png",
+      "cache_path": ".superpowers/external_image_cache/controlled-vision-vmmu/r270_Math_0128_test_022_question_43_page_6_key_A_vqa.png",
+      "sha256": "705dbd934e5568029737ad457ba0776d1eb47dd0ca420bc712081b0810bc3c25",
+      "file_size_bytes": 132650,
+      "image_width": 2540,
+      "image_height": 2110,
+      "source_url": "https://huggingface.co/datasets/anvo25/vmmu",
+      "api_row_url": "https://datasets-server.huggingface.co/rows?dataset=anvo25/vmmu&config=default&split=full_vqa&offset=270&length=1",
+      "license_status": "MIT_DECLARED_BY_DATASET_PUBLISHER",
+      "underlying_exam_rights_independently_verified": false,
+      "image_committed_to_git": false,
+      "contains_personal_data": false,
+      "partition": "development",
+      "split_hash_sha256_of_dataset_id": "664093060eace8285311931f0f966ca8df4c3db914cea631e5f0989dbff02330",
+      "printed_or_handwritten": "PRINTED",
+      "capture": "RENDERED_EXAM_PAGE_CROP_NOT_A_PHOTOGRAPH",
+      "ground_truth_text": "Câu 43. Cho lăng trụ đứng ABC.A'B'C' có đáy ABC là tam giác vuông cân tại B với BC = a biết mặt phẳng (A'BC) hợp với đáy (ABC) một góc 60° (tham khảo hình bên). Tính thể tích lăng trụ ABC.A'B'C'.\nA. a³√3/2. B. a³√3/6. C. a³√3. D. a³√2/3.",
+      "statement": "Câu 43. Cho lăng trụ đứng ABC.A'B'C' có đáy ABC là tam giác vuông cân tại B với BC = a biết mặt phẳng (A'BC) hợp với đáy (ABC) một góc 60° (tham khảo hình bên). Tính thể tích lăng trụ ABC.A'B'C'.",
+      "choices": {
+        "A": "a³√3/2",
+        "B": "a³√3/6",
+        "C": "a³√3",
+        "D": "a³√2/3"
+      },
+      "ground_truth_status": "AGENT_TRANSCRIBED_UNVERIFIED",
+      "critical_facts": [
+        {
+          "kind": "solid",
+          "accepted_forms": [
+            "lăng trụ đứng"
+          ]
+        },
+        {
+          "kind": "solid",
+          "accepted_forms": [
+            "ABC.A'B'C'"
+          ]
+        },
+        {
+          "kind": "relation",
+          "accepted_forms": [
+            "vuông cân tại B"
+          ]
+        },
+        {
+          "kind": "length",
+          "accepted_forms": [
+            "BC=a"
+          ]
+        },
+        {
+          "kind": "relation",
+          "accepted_forms": [
+            "(A'BC)"
+          ]
+        },
+        {
+          "kind": "angle",
+          "accepted_forms": [
+            "góc 60°"
+          ]
+        },
+        {
+          "kind": "goal",
+          "accepted_forms": [
+            "thể tích"
+          ]
+        }
+      ],
+      "diagram_description": "Small labelled prism.",
+      "diagram_embedded_facts": [],
+      "diagram_dependency_by_agent_reading": "REFERENCE_FIGURE_ONLY_ALL_PREMISES_IN_TEXT",
+      "source_notes": [
+        "small print",
+        "degree printed as superscript zero"
+      ],
+      "tags": [
+        "right_prism",
+        "volume",
+        "inverse_from_angle"
+      ],
+      "dataset_answer_key": "A",
+      "expected_answer": "a³√3/2",
+      "oracle": {
+        "provenance": "DATASET_ANSWER_KEY",
+        "independent_of_axo_output": true,
+        "independent_of_agent": true,
+        "agent_hand_derivation_letter": "A",
+        "agent_derivation_agrees_with_key": true,
+        "status": "DATASET_KEY_NOT_INDEPENDENTLY_ADJUDICATED"
+      },
+      "solver_scope": "UNKNOWN_PENDING_ADJUDICATION",
+      "solver_scope_basis": "set by the verified-text diagnostic in transcription_solver_diagnostic.json, never by keywords"
+    },
+    {
+      "case_id": "vmmu_r273",
+      "row_idx": 273,
+      "dataset": "anvo25/vmmu",
+      "dataset_split": "full_vqa",
+      "dataset_id": "Math_0025_test_005_question_14_page_2_key_D_vqa.png",
+      "cache_path": ".superpowers/external_image_cache/controlled-vision-vmmu/r273_Math_0025_test_005_question_14_page_2_key_D_vqa.png",
+      "sha256": "47b627e0cd812f8703e551876c79f042896b750bdb58acb6b8a6af1ac07ba4df",
+      "file_size_bytes": 82784,
+      "image_width": 2481,
+      "image_height": 703,
+      "source_url": "https://huggingface.co/datasets/anvo25/vmmu",
+      "api_row_url": "https://datasets-server.huggingface.co/rows?dataset=anvo25/vmmu&config=default&split=full_vqa&offset=273&length=1",
+      "license_status": "MIT_DECLARED_BY_DATASET_PUBLISHER",
+      "underlying_exam_rights_independently_verified": false,
+      "image_committed_to_git": false,
+      "contains_personal_data": false,
+      "partition": "frozen_external_evaluation",
+      "split_hash_sha256_of_dataset_id": "ea556fda3f93c58d47b6a2872d76200e47f9d7bcdf61e582550054aa0bda4def",
+      "printed_or_handwritten": "PRINTED",
+      "capture": "RENDERED_EXAM_PAGE_CROP_NOT_A_PHOTOGRAPH",
+      "ground_truth_text": "Câu 14: Cho khối chóp S.ABC có đáy là tam giác vuông tại B. Biết BC = a√3, AB = a, SA vuông góc với đáy, SA = 2a√3. Thể tích khối chóp S.ABC bằng\nA. a³√3. B. a³√3/3. C. 3a³. D. a³.",
+      "statement": "Câu 14: Cho khối chóp S.ABC có đáy là tam giác vuông tại B. Biết BC = a√3, AB = a, SA vuông góc với đáy, SA = 2a√3. Thể tích khối chóp S.ABC bằng",
+      "choices": {
+        "A": "a³√3",
+        "B": "a³√3/3",
+        "C": "3a³",
+        "D": "a³"
+      },
+      "ground_truth_status": "AGENT_TRANSCRIBED_UNVERIFIED",
+      "critical_facts": [
+        {
+          "kind": "solid",
+          "accepted_forms": [
+            "S.ABC"
+          ]
+        },
+        {
+          "kind": "relation",
+          "accepted_forms": [
+            "vuông tại B"
+          ]
+        },
+        {
+          "kind": "length",
+          "accepted_forms": [
+            "BC=a√3"
+          ]
+        },
+        {
+          "kind": "length",
+          "accepted_forms": [
+            "AB=a"
+          ]
+        },
+        {
+          "kind": "relation",
+          "accepted_forms": [
+            "SA vuông góc với đáy"
+          ]
+        },
+        {
+          "kind": "length",
+          "accepted_forms": [
+            "SA=2a√3"
+          ]
+        },
+        {
+          "kind": "goal",
+          "accepted_forms": [
+            "Thể tích"
+          ]
+        }
+      ],
+      "diagram_description": "Labelled pyramid.",
+      "diagram_embedded_facts": [],
+      "diagram_dependency_by_agent_reading": "REFERENCE_FIGURE_ONLY_ALL_PREMISES_IN_TEXT",
+      "source_notes": [],
+      "tags": [
+        "pyramid",
+        "volume"
+      ],
+      "dataset_answer_key": "D",
+      "expected_answer": "a³",
+      "oracle": {
+        "provenance": "DATASET_ANSWER_KEY",
+        "independent_of_axo_output": true,
+        "independent_of_agent": true,
+        "agent_hand_derivation_letter": "D",
+        "agent_derivation_agrees_with_key": true,
+        "status": "DATASET_KEY_NOT_INDEPENDENTLY_ADJUDICATED"
+      },
+      "solver_scope": "UNKNOWN_PENDING_ADJUDICATION",
+      "solver_scope_basis": "set by the verified-text diagnostic in transcription_solver_diagnostic.json, never by keywords"
+    },
+    {
+      "case_id": "vmmu_r277",
+      "row_idx": 277,
+      "dataset": "anvo25/vmmu",
+      "dataset_split": "full_vqa",
+      "dataset_id": "Math_0066_test_010_question_44_page_6_key_C_vqa.png",
+      "cache_path": ".superpowers/external_image_cache/controlled-vision-vmmu/r277_Math_0066_test_010_question_44_page_6_key_C_vqa.png",
+      "sha256": "ac19cfdf164dccdb077a643049d51939a39c9ac88cdadf0e9970fbd2b3227990",
+      "file_size_bytes": 125197,
+      "image_width": 2481,
+      "image_height": 1105,
+      "source_url": "https://huggingface.co/datasets/anvo25/vmmu",
+      "api_row_url": "https://datasets-server.huggingface.co/rows?dataset=anvo25/vmmu&config=default&split=full_vqa&offset=277&length=1",
+      "license_status": "MIT_DECLARED_BY_DATASET_PUBLISHER",
+      "underlying_exam_rights_independently_verified": false,
+      "image_committed_to_git": false,
+      "contains_personal_data": false,
+      "partition": "frozen_external_evaluation",
+      "split_hash_sha256_of_dataset_id": "fe256a9805dbc5819fc1b50a8a767caccd5946c88941cf31f63221ce1f009923",
+      "printed_or_handwritten": "PRINTED",
+      "capture": "RENDERED_EXAM_PAGE_CROP_NOT_A_PHOTOGRAPH",
+      "ground_truth_text": "Câu 44. Cho tứ diện OABC vuông tại O có OA = 2a, OB = 3a, OC = 4a. Gọi M, N, P lần lượt là điểm đối xứng với điểm O qua trung điểm ba cạnh AB, BC, CA của tam giác ABC. Thể tích của tứ diện OMNP bằng\nA. 16a³. B. 4a³. C. 8a³. D. 12a³.",
+      "statement": "Câu 44. Cho tứ diện OABC vuông tại O có OA = 2a, OB = 3a, OC = 4a. Gọi M, N, P lần lượt là điểm đối xứng với điểm O qua trung điểm ba cạnh AB, BC, CA của tam giác ABC. Thể tích của tứ diện OMNP bằng",
+      "choices": {
+        "A": "16a³",
+        "B": "4a³",
+        "C": "8a³",
+        "D": "12a³"
+      },
+      "ground_truth_status": "AGENT_TRANSCRIBED_UNVERIFIED",
+      "critical_facts": [
+        {
+          "kind": "solid",
+          "accepted_forms": [
+            "OABC"
+          ]
+        },
+        {
+          "kind": "relation",
+          "accepted_forms": [
+            "vuông tại O"
+          ]
+        },
+        {
+          "kind": "length",
+          "accepted_forms": [
+            "OA=2a"
+          ]
+        },
+        {
+          "kind": "length",
+          "accepted_forms": [
+            "OB=3a"
+          ]
+        },
+        {
+          "kind": "length",
+          "accepted_forms": [
+            "OC=4a"
+          ]
+        },
+        {
+          "kind": "relation",
+          "accepted_forms": [
+            "đối xứng"
+          ]
+        },
+        {
+          "kind": "relation",
+          "accepted_forms": [
+            "trung điểm"
+          ]
+        },
+        {
+          "kind": "goal",
+          "accepted_forms": [
+            "OMNP"
+          ]
+        },
+        {
+          "kind": "goal",
+          "accepted_forms": [
+            "Thể tích"
+          ]
+        }
+      ],
+      "diagram_description": "Tetrahedron with reflected points M, N, P and midpoints D, E, F.",
+      "diagram_embedded_facts": [],
+      "diagram_dependency_by_agent_reading": "REFERENCE_FIGURE_ONLY_ALL_PREMISES_IN_TEXT",
+      "source_notes": [],
+      "tags": [
+        "tetrahedron",
+        "volume",
+        "point_reflection"
+      ],
+      "dataset_answer_key": "C",
+      "expected_answer": "8a³",
+      "oracle": {
+        "provenance": "DATASET_ANSWER_KEY",
+        "independent_of_axo_output": true,
+        "independent_of_agent": true,
+        "agent_hand_derivation_letter": null,
+        "agent_derivation_agrees_with_key": null,
+        "status": "DATASET_KEY_NOT_INDEPENDENTLY_ADJUDICATED"
+      },
+      "solver_scope": "UNKNOWN_PENDING_ADJUDICATION",
+      "solver_scope_basis": "set by the verified-text diagnostic in transcription_solver_diagnostic.json, never by keywords"
+    },
+    {
+      "case_id": "vmmu_r284",
+      "row_idx": 284,
+      "dataset": "anvo25/vmmu",
+      "dataset_split": "full_vqa",
+      "dataset_id": "Math_0152_test_026_question_36_page_4_key_D_vqa.png",
+      "cache_path": ".superpowers/external_image_cache/controlled-vision-vmmu/r284_Math_0152_test_026_question_36_page_4_key_D_vqa.png",
+      "sha256": "fa7b52ad0200b069e572877d033ba371f8724a7f32ce69416b937e932fb68417",
+      "file_size_bytes": 218392,
+      "image_width": 2481,
+      "image_height": 1022,
+      "source_url": "https://huggingface.co/datasets/anvo25/vmmu",
+      "api_row_url": "https://datasets-server.huggingface.co/rows?dataset=anvo25/vmmu&config=default&split=full_vqa&offset=284&length=1",
+      "license_status": "MIT_DECLARED_BY_DATASET_PUBLISHER",
+      "underlying_exam_rights_independently_verified": false,
+      "image_committed_to_git": false,
+      "contains_personal_data": false,
+      "partition": "development",
+      "split_hash_sha256_of_dataset_id": "664fc30d3b3b286e3bdf7e89f29b539ab40e5cb1a1ffeec0aed465e973a7f5c4",
+      "printed_or_handwritten": "PRINTED",
+      "capture": "RENDERED_EXAM_PAGE_CROP_NOT_A_PHOTOGRAPH",
+      "ground_truth_text": "Câu 36. Cho hình chóp S.ABCD có đáy là hình vuông cạnh a, mặt bên SAB là tam giác đều và nằm trong mặt phẳng vuông góc với mặt phẳng đáy (minh họa như hình vẽ bên). Khoảng cách từ A đến mặt phẳng (SBD) bằng\nA. √21a/14. B. √21a/28. C. √2a/2. D. √21a/7.",
+      "statement": "Câu 36. Cho hình chóp S.ABCD có đáy là hình vuông cạnh a, mặt bên SAB là tam giác đều và nằm trong mặt phẳng vuông góc với mặt phẳng đáy (minh họa như hình vẽ bên). Khoảng cách từ A đến mặt phẳng (SBD) bằng",
+      "choices": {
+        "A": "√21a/14",
+        "B": "√21a/28",
+        "C": "√2a/2",
+        "D": "√21a/7"
+      },
+      "ground_truth_status": "AGENT_TRANSCRIBED_UNVERIFIED",
+      "critical_facts": [
+        {
+          "kind": "solid",
+          "accepted_forms": [
+            "S.ABCD"
+          ]
+        },
+        {
+          "kind": "length",
+          "accepted_forms": [
+            "hình vuông cạnh a"
+          ]
+        },
+        {
+          "kind": "relation",
+          "accepted_forms": [
+            "SAB là tam giác đều"
+          ]
+        },
+        {
+          "kind": "relation",
+          "accepted_forms": [
+            "vuông góc với mặt phẳng đáy"
+          ]
+        },
+        {
+          "kind": "goal",
+          "accepted_forms": [
+            "Khoảng cách từ A"
+          ]
+        },
+        {
+          "kind": "goal",
+          "accepted_forms": [
+            "(SBD)"
+          ]
+        }
+      ],
+      "diagram_description": "Labelled pyramid.",
+      "diagram_embedded_facts": [],
+      "diagram_dependency_by_agent_reading": "REFERENCE_FIGURE_ONLY_ALL_PREMISES_IN_TEXT",
+      "source_notes": [
+        "watermark over the first two text lines"
+      ],
+      "tags": [
+        "pyramid",
+        "distance_point_plane"
+      ],
+      "dataset_answer_key": "D",
+      "expected_answer": "√21a/7",
+      "oracle": {
+        "provenance": "DATASET_ANSWER_KEY",
+        "independent_of_axo_output": true,
+        "independent_of_agent": true,
+        "agent_hand_derivation_letter": "D",
+        "agent_derivation_agrees_with_key": true,
+        "status": "DATASET_KEY_NOT_INDEPENDENTLY_ADJUDICATED"
+      },
+      "solver_scope": "UNKNOWN_PENDING_ADJUDICATION",
+      "solver_scope_basis": "set by the verified-text diagnostic in transcription_solver_diagnostic.json, never by keywords"
+    },
+    {
+      "case_id": "vmmu_r295",
+      "row_idx": 295,
+      "dataset": "anvo25/vmmu",
+      "dataset_split": "full_vqa",
+      "dataset_id": "Math_0125_test_022_question_35_page_5_key_C_vqa.png",
+      "cache_path": ".superpowers/external_image_cache/controlled-vision-vmmu/r295_Math_0125_test_022_question_35_page_5_key_C_vqa.png",
+      "sha256": "6c769ab54f378a7a56756a09b65608a7c355bc48f7819e96dbf87beacf298a5e",
+      "file_size_bytes": 154832,
+      "image_width": 2550,
+      "image_height": 733,
+      "source_url": "https://huggingface.co/datasets/anvo25/vmmu",
+      "api_row_url": "https://datasets-server.huggingface.co/rows?dataset=anvo25/vmmu&config=default&split=full_vqa&offset=295&length=1",
+      "license_status": "MIT_DECLARED_BY_DATASET_PUBLISHER",
+      "underlying_exam_rights_independently_verified": false,
+      "image_committed_to_git": false,
+      "contains_personal_data": false,
+      "partition": "frozen_external_evaluation",
+      "split_hash_sha256_of_dataset_id": "a5ef2f368c3ec62d91f7d3b2e15f9fd7935c46adc0459d4dfeae814aaac68dc9",
+      "printed_or_handwritten": "PRINTED",
+      "capture": "RENDERED_EXAM_PAGE_CROP_NOT_A_PHOTOGRAPH",
+      "ground_truth_text": "Câu 35. Cho hình hộp chữ nhật ABCD.A'B'C'D' có đáy là hình vuông, AB = 1, AA' = √6 (tham khảo hình vẽ). Góc giữa đường thẳng CA' và mặt phẳng (ABCD) bằng\nA. 30°. B. 45°. C. 60°. D. 90°.",
+      "statement": "Câu 35. Cho hình hộp chữ nhật ABCD.A'B'C'D' có đáy là hình vuông, AB = 1, AA' = √6 (tham khảo hình vẽ). Góc giữa đường thẳng CA' và mặt phẳng (ABCD) bằng",
+      "choices": {
+        "A": "30°",
+        "B": "45°",
+        "C": "60°",
+        "D": "90°"
+      },
+      "ground_truth_status": "AGENT_TRANSCRIBED_UNVERIFIED",
+      "critical_facts": [
+        {
+          "kind": "solid",
+          "accepted_forms": [
+            "ABCD.A'B'C'D'"
+          ]
+        },
+        {
+          "kind": "relation",
+          "accepted_forms": [
+            "đáy là hình vuông"
+          ]
+        },
+        {
+          "kind": "length",
+          "accepted_forms": [
+            "AB=1"
+          ]
+        },
+        {
+          "kind": "length",
+          "accepted_forms": [
+            "AA'=√6"
+          ]
+        },
+        {
+          "kind": "goal",
+          "accepted_forms": [
+            "Góc giữa đường thẳng"
+          ]
+        },
+        {
+          "kind": "goal",
+          "accepted_forms": [
+            "CA'"
+          ]
+        },
+        {
+          "kind": "goal",
+          "accepted_forms": [
+            "(ABCD)"
+          ]
+        }
+      ],
+      "diagram_description": "Labelled cuboid with diagonal.",
+      "diagram_embedded_facts": [],
+      "diagram_dependency_by_agent_reading": "REFERENCE_FIGURE_ONLY_ALL_PREMISES_IN_TEXT",
+      "source_notes": [],
+      "tags": [
+        "cuboid",
+        "angle_line_plane"
+      ],
+      "dataset_answer_key": "C",
+      "expected_answer": "60°",
+      "oracle": {
+        "provenance": "DATASET_ANSWER_KEY",
+        "independent_of_axo_output": true,
+        "independent_of_agent": true,
+        "agent_hand_derivation_letter": "C",
+        "agent_derivation_agrees_with_key": true,
+        "status": "DATASET_KEY_NOT_INDEPENDENTLY_ADJUDICATED"
+      },
+      "solver_scope": "UNKNOWN_PENDING_ADJUDICATION",
+      "solver_scope_basis": "set by the verified-text diagnostic in transcription_solver_diagnostic.json, never by keywords"
+    },
+    {
+      "case_id": "vmmu_r298",
+      "row_idx": 298,
+      "dataset": "anvo25/vmmu",
+      "dataset_split": "full_vqa",
+      "dataset_id": "Math_0315_test_062_question_42_page_5_key_B_vqa.png",
+      "cache_path": ".superpowers/external_image_cache/controlled-vision-vmmu/r298_Math_0315_test_062_question_42_page_5_key_B_vqa.png",
+      "sha256": "43ce23b449bd796d206b5b74d38daaaa1997ebeb7fe35b2bc88a6de5bf4d3f3b",
+      "file_size_bytes": 169041,
+      "image_width": 2479,
+      "image_height": 868,
+      "source_url": "https://huggingface.co/datasets/anvo25/vmmu",
+      "api_row_url": "https://datasets-server.huggingface.co/rows?dataset=anvo25/vmmu&config=default&split=full_vqa&offset=298&length=1",
+      "license_status": "MIT_DECLARED_BY_DATASET_PUBLISHER",
+      "underlying_exam_rights_independently_verified": false,
+      "image_committed_to_git": false,
+      "contains_personal_data": false,
+      "partition": "frozen_external_evaluation",
+      "split_hash_sha256_of_dataset_id": "855dc044af777e8b0253b5b9acd88e87ee33f9e4c142db0bbba2ced46a0b6cfd",
+      "printed_or_handwritten": "PRINTED",
+      "capture": "RENDERED_EXAM_PAGE_CROP_NOT_A_PHOTOGRAPH",
+      "ground_truth_text": "Câu 42. Cho hình lăng trụ tam giác đều ABC.A'B'C' có cạnh đáy bằng 2a, góc giữa hai đường thẳng AB' và BC' bằng 60° (tham khảo hình vẽ bên dưới). Tính thể tích V của khối lăng trụ đó.\nA. V = 2√6a³/3. B. V = 2√6a³. C. V = 2√3a³/3. D. V = 2√3a³.",
+      "statement": "Câu 42. Cho hình lăng trụ tam giác đều ABC.A'B'C' có cạnh đáy bằng 2a, góc giữa hai đường thẳng AB' và BC' bằng 60° (tham khảo hình vẽ bên dưới). Tính thể tích V của khối lăng trụ đó.",
+      "choices": {
+        "A": "V = 2√6a³/3",
+        "B": "V = 2√6a³",
+        "C": "V = 2√3a³/3",
+        "D": "V = 2√3a³"
+      },
+      "ground_truth_status": "AGENT_TRANSCRIBED_UNVERIFIED",
+      "critical_facts": [
+        {
+          "kind": "solid",
+          "accepted_forms": [
+            "lăng trụ tam giác đều"
+          ]
+        },
+        {
+          "kind": "solid",
+          "accepted_forms": [
+            "ABC.A'B'C'"
+          ]
+        },
+        {
+          "kind": "length",
+          "accepted_forms": [
+            "cạnh đáy bằng 2a"
+          ]
+        },
+        {
+          "kind": "relation",
+          "accepted_forms": [
+            "AB'"
+          ]
+        },
+        {
+          "kind": "relation",
+          "accepted_forms": [
+            "BC'"
+          ]
+        },
+        {
+          "kind": "angle",
+          "accepted_forms": [
+            "bằng 60°"
+          ]
+        },
+        {
+          "kind": "goal",
+          "accepted_forms": [
+            "thể tích"
+          ]
+        }
+      ],
+      "diagram_description": "Labelled prism.",
+      "diagram_embedded_facts": [],
+      "diagram_dependency_by_agent_reading": "REFERENCE_FIGURE_ONLY_ALL_PREMISES_IN_TEXT",
+      "source_notes": [
+        "degree printed as superscript zero"
+      ],
+      "tags": [
+        "regular_prism",
+        "volume",
+        "inverse_from_angle"
+      ],
+      "dataset_answer_key": "B",
+      "expected_answer": "V = 2√6a³",
+      "oracle": {
+        "provenance": "DATASET_ANSWER_KEY",
+        "independent_of_axo_output": true,
+        "independent_of_agent": true,
+        "agent_hand_derivation_letter": null,
+        "agent_derivation_agrees_with_key": null,
+        "status": "DATASET_KEY_NOT_INDEPENDENTLY_ADJUDICATED"
+      },
+      "solver_scope": "UNKNOWN_PENDING_ADJUDICATION",
+      "solver_scope_basis": "set by the verified-text diagnostic in transcription_solver_diagnostic.json, never by keywords"
+    },
+    {
+      "case_id": "vmmu_r375",
+      "row_idx": 375,
+      "dataset": "anvo25/vmmu",
+      "dataset_split": "full_vqa",
+      "dataset_id": "Math_0126_test_022_question_36_page_5_key_C_vqa.png",
+      "cache_path": ".superpowers/external_image_cache/controlled-vision-vmmu/r375_Math_0126_test_022_question_36_page_5_key_C_vqa.png",
+      "sha256": "25ae1f68af866e7fd6e72adacae51b6ab8e9a63579a20d99c5a1e881d6454632",
+      "file_size_bytes": 298295,
+      "image_width": 2542,
+      "image_height": 667,
+      "source_url": "https://huggingface.co/datasets/anvo25/vmmu",
+      "api_row_url": "https://datasets-server.huggingface.co/rows?dataset=anvo25/vmmu&config=default&split=full_vqa&offset=375&length=1",
+      "license_status": "MIT_DECLARED_BY_DATASET_PUBLISHER",
+      "underlying_exam_rights_independently_verified": false,
+      "image_committed_to_git": false,
+      "contains_personal_data": false,
+      "partition": "frozen_external_evaluation",
+      "split_hash_sha256_of_dataset_id": "aea4238283796182e0dd7a2870f6705a73e89337ca2fa30d113a163247a3d8f5",
+      "printed_or_handwritten": "PRINTED",
+      "capture": "RENDERED_EXAM_PAGE_CROP_NOT_A_PHOTOGRAPH",
+      "ground_truth_text": "Câu 36. Cho hình chóp tứ giác đều S.ABCD có độ dài cạnh đáy bằng 4 và độ dài cạnh bên bằng 5 (tham khảo hình vẽ). Khoảng cách từ S đến mặt phẳng (ABCD) bằng\nA. √21. B. 1. C. √17. D. 3.",
+      "statement": "Câu 36. Cho hình chóp tứ giác đều S.ABCD có độ dài cạnh đáy bằng 4 và độ dài cạnh bên bằng 5 (tham khảo hình vẽ). Khoảng cách từ S đến mặt phẳng (ABCD) bằng",
+      "choices": {
+        "A": "√21",
+        "B": "1",
+        "C": "√17",
+        "D": "3"
+      },
+      "ground_truth_status": "AGENT_TRANSCRIBED_UNVERIFIED",
+      "critical_facts": [
+        {
+          "kind": "solid",
+          "accepted_forms": [
+            "chóp tứ giác đều"
+          ]
+        },
+        {
+          "kind": "solid",
+          "accepted_forms": [
+            "S.ABCD"
+          ]
+        },
+        {
+          "kind": "length",
+          "accepted_forms": [
+            "cạnh đáy bằng 4"
+          ]
+        },
+        {
+          "kind": "length",
+          "accepted_forms": [
+            "cạnh bên bằng 5"
+          ]
+        },
+        {
+          "kind": "goal",
+          "accepted_forms": [
+            "Khoảng cách từ S"
+          ]
+        },
+        {
+          "kind": "goal",
+          "accepted_forms": [
+            "(ABCD)"
+          ]
+        }
+      ],
+      "diagram_description": "Labelled pyramid.",
+      "diagram_embedded_facts": [],
+      "diagram_dependency_by_agent_reading": "REFERENCE_FIGURE_ONLY_ALL_PREMISES_IN_TEXT",
+      "source_notes": [
+        "watermark behind the figure"
+      ],
+      "tags": [
+        "regular_pyramid",
+        "distance_point_plane"
+      ],
+      "dataset_answer_key": "C",
+      "expected_answer": "√17",
+      "oracle": {
+        "provenance": "DATASET_ANSWER_KEY",
+        "independent_of_axo_output": true,
+        "independent_of_agent": true,
+        "agent_hand_derivation_letter": "C",
+        "agent_derivation_agrees_with_key": true,
+        "status": "DATASET_KEY_NOT_INDEPENDENTLY_ADJUDICATED"
+      },
+      "solver_scope": "UNKNOWN_PENDING_ADJUDICATION",
+      "solver_scope_basis": "set by the verified-text diagnostic in transcription_solver_diagnostic.json, never by keywords"
+    },
+    {
+      "case_id": "vmmu_r460",
+      "row_idx": 460,
+      "dataset": "anvo25/vmmu",
+      "dataset_split": "full_vqa",
+      "dataset_id": "Math_0242_test_045_question_33_page_5_key_C_vqa.png",
+      "cache_path": ".superpowers/external_image_cache/controlled-vision-vmmu/r460_Math_0242_test_045_question_33_page_5_key_C_vqa.png",
+      "sha256": "2d7d95a5919f62abdca1e967b62b319f36e00eeb4c6bebb99f64697f5dc002b0",
+      "file_size_bytes": 91432,
+      "image_width": 2550,
+      "image_height": 552,
+      "source_url": "https://huggingface.co/datasets/anvo25/vmmu",
+      "api_row_url": "https://datasets-server.huggingface.co/rows?dataset=anvo25/vmmu&config=default&split=full_vqa&offset=460&length=1",
+      "license_status": "MIT_DECLARED_BY_DATASET_PUBLISHER",
+      "underlying_exam_rights_independently_verified": false,
+      "image_committed_to_git": false,
+      "contains_personal_data": false,
+      "partition": "frozen_external_evaluation",
+      "split_hash_sha256_of_dataset_id": "c2a3a25af0c7620921b46391ccf0fa3c2da1f3b4eb3b7593f04594abc14a012b",
+      "printed_or_handwritten": "PRINTED",
+      "capture": "RENDERED_EXAM_PAGE_CROP_NOT_A_PHOTOGRAPH",
+      "ground_truth_text": "Câu 33: Cho hình chóp S.ABC có đáy ABC là tam giác vuông cân ở B, cạnh AC = 2a. Cạnh SA vuông góc với mặt đáy (ABC), tam giác SAB cân. Thể tích khối chóp S.ABC theo a bằng\nA. 2a³√2. B. a³√2. C. a³√2/3. D. 2a³√2/3.",
+      "statement": "Câu 33: Cho hình chóp S.ABC có đáy ABC là tam giác vuông cân ở B, cạnh AC = 2a. Cạnh SA vuông góc với mặt đáy (ABC), tam giác SAB cân. Thể tích khối chóp S.ABC theo a bằng",
+      "choices": {
+        "A": "2a³√2",
+        "B": "a³√2",
+        "C": "a³√2/3",
+        "D": "2a³√2/3"
+      },
+      "ground_truth_status": "AGENT_TRANSCRIBED_UNVERIFIED",
+      "critical_facts": [
+        {
+          "kind": "solid",
+          "accepted_forms": [
+            "S.ABC"
+          ]
+        },
+        {
+          "kind": "relation",
+          "accepted_forms": [
+            "vuông cân ở B"
+          ]
+        },
+        {
+          "kind": "length",
+          "accepted_forms": [
+            "AC=2a"
+          ]
+        },
+        {
+          "kind": "relation",
+          "accepted_forms": [
+            "SA vuông góc với mặt đáy"
+          ]
+        },
+        {
+          "kind": "relation",
+          "accepted_forms": [
+            "SAB cân"
+          ]
+        },
+        {
+          "kind": "goal",
+          "accepted_forms": [
+            "Thể tích"
+          ]
+        }
+      ],
+      "diagram_description": "Labelled pyramid beside the choices.",
+      "diagram_embedded_facts": [],
+      "diagram_dependency_by_agent_reading": "REFERENCE_FIGURE_ONLY_ALL_PREMISES_IN_TEXT",
+      "source_notes": [
+        "last word clipped at the image edge"
+      ],
+      "tags": [
+        "pyramid",
+        "volume",
+        "hypotenuse_given"
+      ],
+      "dataset_answer_key": "C",
+      "expected_answer": "a³√2/3",
+      "oracle": {
+        "provenance": "DATASET_ANSWER_KEY",
+        "independent_of_axo_output": true,
+        "independent_of_agent": true,
+        "agent_hand_derivation_letter": "C",
+        "agent_derivation_agrees_with_key": true,
+        "status": "DATASET_KEY_NOT_INDEPENDENTLY_ADJUDICATED"
+      },
+      "solver_scope": "UNKNOWN_PENDING_ADJUDICATION",
+      "solver_scope_basis": "set by the verified-text diagnostic in transcription_solver_diagnostic.json, never by keywords"
+    },
+    {
+      "case_id": "vmmu_r461",
+      "row_idx": 461,
+      "dataset": "anvo25/vmmu",
+      "dataset_split": "full_vqa",
+      "dataset_id": "Math_0153_test_026_question_46_page_5_key_A_vqa.png",
+      "cache_path": ".superpowers/external_image_cache/controlled-vision-vmmu/r461_Math_0153_test_026_question_46_page_5_key_A_vqa.png",
+      "sha256": "723b6b3cae35d9a7c0304b1926a1a1067d738fb07e0f2e848d48a9ba1a6ffdc2",
+      "file_size_bytes": 193210,
+      "image_width": 2473,
+      "image_height": 979,
+      "source_url": "https://huggingface.co/datasets/anvo25/vmmu",
+      "api_row_url": "https://datasets-server.huggingface.co/rows?dataset=anvo25/vmmu&config=default&split=full_vqa&offset=461&length=1",
+      "license_status": "MIT_DECLARED_BY_DATASET_PUBLISHER",
+      "underlying_exam_rights_independently_verified": false,
+      "image_committed_to_git": false,
+      "contains_personal_data": false,
+      "partition": "development",
+      "split_hash_sha256_of_dataset_id": "1d373d7797a3527dfa954ddb8b0497c5a5d5d339cb4c4bcb1214d61598f48b40",
+      "printed_or_handwritten": "PRINTED",
+      "capture": "RENDERED_EXAM_PAGE_CROP_NOT_A_PHOTOGRAPH",
+      "ground_truth_text": "Câu 46. Để làm một cái mũ sinh nhật người ta lấy một miếng giấy hình tam giác ABC đều cạnh 3 dm (như hình vẽ). Gọi K là trung điểm của BC. Người ta dùng compa có tâm là A và bán kính AK vạch cung tròn MN (M, N thứ tự thuộc cạnh AB và AC) rồi cắt miếng giấy theo cung tròn đó. Lấy phần hình quạt người ta gián sao cho cạnh AM và AN trùng nhau thành một cái mũ hình nón không đáy với đỉnh A. Thể tích của cái mũ gần với giá trị nào nhất?\nA. 0,5 dm³. B. 0,6 dm³. C. 0,3 dm³. D. 0,4 dm³.",
+      "statement": "Câu 46. Để làm một cái mũ sinh nhật người ta lấy một miếng giấy hình tam giác ABC đều cạnh 3 dm (như hình vẽ). Gọi K là trung điểm của BC. Người ta dùng compa có tâm là A và bán kính AK vạch cung tròn MN (M, N thứ tự thuộc cạnh AB và AC) rồi cắt miếng giấy theo cung tròn đó. Lấy phần hình quạt người ta gián sao cho cạnh AM và AN trùng nhau thành một cái mũ hình nón không đáy với đỉnh A. Thể tích của cái mũ gần với giá trị nào nhất?",
+      "choices": {
+        "A": "0,5 dm³",
+        "B": "0,6 dm³",
+        "C": "0,3 dm³",
+        "D": "0,4 dm³"
+      },
+      "ground_truth_status": "AGENT_TRANSCRIBED_UNVERIFIED",
+      "critical_facts": [
+        {
+          "kind": "relation",
+          "accepted_forms": [
+            "tam giác ABC đều"
+          ]
+        },
+        {
+          "kind": "length",
+          "accepted_forms": [
+            "cạnh 3dm"
+          ]
+        },
+        {
+          "kind": "relation",
+          "accepted_forms": [
+            "trung điểm của BC"
+          ]
+        },
+        {
+          "kind": "length",
+          "accepted_forms": [
+            "bán kính AK"
+          ]
+        },
+        {
+          "kind": "solid",
+          "accepted_forms": [
+            "hình nón"
+          ]
+        },
+        {
+          "kind": "goal",
+          "accepted_forms": [
+            "Thể tích"
+          ]
+        }
+      ],
+      "diagram_description": "Triangle with arc MN and a cone.",
+      "diagram_embedded_facts": [],
+      "diagram_dependency_by_agent_reading": "REFERENCE_FIGURE_ONLY_ALL_PREMISES_IN_TEXT",
+      "source_notes": [
+        "source typo 'gián'"
+      ],
+      "tags": [
+        "cone",
+        "applied"
+      ],
+      "dataset_answer_key": "A",
+      "expected_answer": "0,5 dm³",
+      "oracle": {
+        "provenance": "DATASET_ANSWER_KEY",
+        "independent_of_axo_output": true,
+        "independent_of_agent": true,
+        "agent_hand_derivation_letter": null,
+        "agent_derivation_agrees_with_key": null,
+        "status": "DATASET_KEY_NOT_INDEPENDENTLY_ADJUDICATED"
+      },
+      "solver_scope": "OUT_OF_SCOPE",
+      "solver_scope_basis": "cone built from a paper sector"
+    },
+    {
+      "case_id": "vmmu_r463",
+      "row_idx": 463,
+      "dataset": "anvo25/vmmu",
+      "dataset_split": "full_vqa",
+      "dataset_id": "Math_0073_test_012_question_43_page_4_key_D_vqa.png",
+      "cache_path": ".superpowers/external_image_cache/controlled-vision-vmmu/r463_Math_0073_test_012_question_43_page_4_key_D_vqa.png",
+      "sha256": "9486f6c7b72b70af84b119dc9c93726f69a9fed50de548a0acea00ec5fb73431",
+      "file_size_bytes": 154986,
+      "image_width": 2481,
+      "image_height": 705,
+      "source_url": "https://huggingface.co/datasets/anvo25/vmmu",
+      "api_row_url": "https://datasets-server.huggingface.co/rows?dataset=anvo25/vmmu&config=default&split=full_vqa&offset=463&length=1",
+      "license_status": "MIT_DECLARED_BY_DATASET_PUBLISHER",
+      "underlying_exam_rights_independently_verified": false,
+      "image_committed_to_git": false,
+      "contains_personal_data": false,
+      "partition": "frozen_external_evaluation",
+      "split_hash_sha256_of_dataset_id": "8be7300432717cabcd47a32ab017c363166e9dd248b08904d3893ffb98e9e0f3",
+      "printed_or_handwritten": "PRINTED",
+      "capture": "RENDERED_EXAM_PAGE_CROP_NOT_A_PHOTOGRAPH",
+      "ground_truth_text": "Câu 43. Cho khối lăng trụ đứng ABCDA'B'C'D' có đáy ABCD là hình thoi, ∠BAD = 60°, cạnh bên AA' = 2a và AC' hợp với đáy góc 30°. Thể tích khối lăng trụ đã cho bằng\nA. 2√3a³. B. 6a³. C. 4a³. D. 4√3a³.",
+      "statement": "Câu 43. Cho khối lăng trụ đứng ABCDA'B'C'D' có đáy ABCD là hình thoi, ∠BAD = 60°, cạnh bên AA' = 2a và AC' hợp với đáy góc 30°. Thể tích khối lăng trụ đã cho bằng",
+      "choices": {
+        "A": "2√3a³",
+        "B": "6a³",
+        "C": "4a³",
+        "D": "4√3a³"
+      },
+      "ground_truth_status": "AGENT_TRANSCRIBED_UNVERIFIED",
+      "critical_facts": [
+        {
+          "kind": "solid",
+          "accepted_forms": [
+            "lăng trụ đứng"
+          ]
+        },
+        {
+          "kind": "solid",
+          "accepted_forms": [
+            "ABCDA'B'C'D'",
+            "ABCD.A'B'C'D'"
+          ]
+        },
+        {
+          "kind": "relation",
+          "accepted_forms": [
+            "hình thoi"
+          ]
+        },
+        {
+          "kind": "angle",
+          "accepted_forms": [
+            "BAD=60°"
+          ]
+        },
+        {
+          "kind": "length",
+          "accepted_forms": [
+            "AA'=2a"
+          ]
+        },
+        {
+          "kind": "relation",
+          "accepted_forms": [
+            "AC'"
+          ]
+        },
+        {
+          "kind": "angle",
+          "accepted_forms": [
+            "góc 30°"
+          ]
+        },
+        {
+          "kind": "goal",
+          "accepted_forms": [
+            "Thể tích"
+          ]
+        }
+      ],
+      "diagram_description": "Prism drawn with ABCD on top.",
+      "diagram_embedded_facts": [],
+      "diagram_dependency_by_agent_reading": "REFERENCE_FIGURE_ONLY_ALL_PREMISES_IN_TEXT",
+      "source_notes": [
+        "solid named without the separating dot",
+        "degree printed as superscript zero"
+      ],
+      "tags": [
+        "right_prism",
+        "volume",
+        "inverse_from_angle"
+      ],
+      "dataset_answer_key": "D",
+      "expected_answer": "4√3a³",
+      "oracle": {
+        "provenance": "DATASET_ANSWER_KEY",
+        "independent_of_axo_output": true,
+        "independent_of_agent": true,
+        "agent_hand_derivation_letter": "D",
+        "agent_derivation_agrees_with_key": true,
+        "status": "DATASET_KEY_NOT_INDEPENDENTLY_ADJUDICATED"
+      },
+      "solver_scope": "UNKNOWN_PENDING_ADJUDICATION",
+      "solver_scope_basis": "set by the verified-text diagnostic in transcription_solver_diagnostic.json, never by keywords"
+    },
+    {
+      "case_id": "vmmu_r475",
+      "row_idx": 475,
+      "dataset": "anvo25/vmmu",
+      "dataset_split": "full_vqa",
+      "dataset_id": "Math_0231_test_044_question_44_page_6_key_B_vqa.png",
+      "cache_path": ".superpowers/external_image_cache/controlled-vision-vmmu/r475_Math_0231_test_044_question_44_page_6_key_B_vqa.png",
+      "sha256": "425f3537b2257138294b3b0f09e56909fdba3618bac6c2c54c3c7e78a955c632",
+      "file_size_bytes": 174935,
+      "image_width": 2550,
+      "image_height": 638,
+      "source_url": "https://huggingface.co/datasets/anvo25/vmmu",
+      "api_row_url": "https://datasets-server.huggingface.co/rows?dataset=anvo25/vmmu&config=default&split=full_vqa&offset=475&length=1",
+      "license_status": "MIT_DECLARED_BY_DATASET_PUBLISHER",
+      "underlying_exam_rights_independently_verified": false,
+      "image_committed_to_git": false,
+      "contains_personal_data": false,
+      "partition": "frozen_external_evaluation",
+      "split_hash_sha256_of_dataset_id": "7173cf9952bb206528f0dcb4f5068d94496d37b5b236e1b243c9c25528d17a8f",
+      "printed_or_handwritten": "PRINTED",
+      "capture": "RENDERED_EXAM_PAGE_CROP_NOT_A_PHOTOGRAPH",
+      "ground_truth_text": "Câu 44. Trên bàn có một cốc nước hình trụ chứa đầy nước, có chiều cao bằng 3 lần đường kính của đáy; một viên bi và một khối nón đều bằng thủy tinh. Biết viên bi là một khối cầu có đường kính bằng đường kính của đương tròn đáy cốc nước. Người ta từ từ thả vào cốc nước viên bi và khối nón sao cho đỉnh khối nón nằm trên mặt cầu (như hình vẽ) thì thấy nước trong cốc tràn ra ngoài. Tính tỉ số thể tích của lượng nước còn lại trong cốc và lượng nước ban đầu.\nA. 4/9. B. 5/9. C. 2/3. D. 1/2.",
+      "statement": "Câu 44. Trên bàn có một cốc nước hình trụ chứa đầy nước, có chiều cao bằng 3 lần đường kính của đáy; một viên bi và một khối nón đều bằng thủy tinh. Biết viên bi là một khối cầu có đường kính bằng đường kính của đương tròn đáy cốc nước. Người ta từ từ thả vào cốc nước viên bi và khối nón sao cho đỉnh khối nón nằm trên mặt cầu (như hình vẽ) thì thấy nước trong cốc tràn ra ngoài. Tính tỉ số thể tích của lượng nước còn lại trong cốc và lượng nước ban đầu.",
+      "choices": {
+        "A": "4/9",
+        "B": "5/9",
+        "C": "2/3",
+        "D": "1/2"
+      },
+      "ground_truth_status": "AGENT_TRANSCRIBED_UNVERIFIED",
+      "critical_facts": [
+        {
+          "kind": "solid",
+          "accepted_forms": [
+            "hình trụ"
+          ]
+        },
+        {
+          "kind": "length",
+          "accepted_forms": [
+            "3 lần đường kính"
+          ]
+        },
+        {
+          "kind": "solid",
+          "accepted_forms": [
+            "khối cầu"
+          ]
+        },
+        {
+          "kind": "solid",
+          "accepted_forms": [
+            "khối nón"
+          ]
+        },
+        {
+          "kind": "goal",
+          "accepted_forms": [
+            "tỉ số thể tích"
+          ]
+        }
+      ],
+      "diagram_description": "Cylinder containing a sphere and a cone.",
+      "diagram_embedded_facts": [],
+      "diagram_dependency_by_agent_reading": "REFERENCE_FIGURE_ONLY_ALL_PREMISES_IN_TEXT",
+      "source_notes": [
+        "source typo 'đương tròn'"
+      ],
+      "tags": [
+        "cylinder_sphere_cone",
+        "applied"
+      ],
+      "dataset_answer_key": "B",
+      "expected_answer": "5/9",
+      "oracle": {
+        "provenance": "DATASET_ANSWER_KEY",
+        "independent_of_axo_output": true,
+        "independent_of_agent": true,
+        "agent_hand_derivation_letter": null,
+        "agent_derivation_agrees_with_key": null,
+        "status": "DATASET_KEY_NOT_INDEPENDENTLY_ADJUDICATED"
+      },
+      "solver_scope": "OUT_OF_SCOPE",
+      "solver_scope_basis": "cylinder, sphere and cone displacement"
+    },
+    {
+      "case_id": "vmmu_r476",
+      "row_idx": 476,
+      "dataset": "anvo25/vmmu",
+      "dataset_split": "full_vqa",
+      "dataset_id": "Math_0095_test_017_question_2_page_1_key_D_vqa.png",
+      "cache_path": ".superpowers/external_image_cache/controlled-vision-vmmu/r476_Math_0095_test_017_question_2_page_1_key_D_vqa.png",
+      "sha256": "a80297f57a4c10e1ad4fb49f4644aec4244dc57b2fb2f61fec714b9a6227c8aa",
+      "file_size_bytes": 103892,
+      "image_width": 2481,
+      "image_height": 918,
+      "source_url": "https://huggingface.co/datasets/anvo25/vmmu",
+      "api_row_url": "https://datasets-server.huggingface.co/rows?dataset=anvo25/vmmu&config=default&split=full_vqa&offset=476&length=1",
+      "license_status": "MIT_DECLARED_BY_DATASET_PUBLISHER",
+      "underlying_exam_rights_independently_verified": false,
+      "image_committed_to_git": false,
+      "contains_personal_data": false,
+      "partition": "development",
+      "split_hash_sha256_of_dataset_id": "eadd72b393a9ead829b550f792a37dcbb41a14698cf0d80fe0fe8e8ece2a2290",
+      "printed_or_handwritten": "PRINTED",
+      "capture": "RENDERED_EXAM_PAGE_CROP_NOT_A_PHOTOGRAPH",
+      "ground_truth_text": "Câu 2. Cho hình chóp S.ABCD, có đáy ABCD là hình vuông cạnh a√3, SA = a và SA vuông góc với đáy (tham khảo hình vẽ). Góc giữa hai mặt phẳng (SCD) và (ABCD) bằng\nA. 45°. B. 90°. C. 60°. D. 30°.",
+      "statement": "Câu 2. Cho hình chóp S.ABCD, có đáy ABCD là hình vuông cạnh a√3, SA = a và SA vuông góc với đáy (tham khảo hình vẽ). Góc giữa hai mặt phẳng (SCD) và (ABCD) bằng",
+      "choices": {
+        "A": "45°",
+        "B": "90°",
+        "C": "60°",
+        "D": "30°"
+      },
+      "ground_truth_status": "AGENT_TRANSCRIBED_UNVERIFIED",
+      "critical_facts": [
+        {
+          "kind": "solid",
+          "accepted_forms": [
+            "S.ABCD"
+          ]
+        },
+        {
+          "kind": "length",
+          "accepted_forms": [
+            "hình vuông cạnh a√3"
+          ]
+        },
+        {
+          "kind": "length",
+          "accepted_forms": [
+            "SA=a"
+          ]
+        },
+        {
+          "kind": "relation",
+          "accepted_forms": [
+            "SA vuông góc với đáy"
+          ]
+        },
+        {
+          "kind": "goal",
+          "accepted_forms": [
+            "Góc giữa hai mặt phẳng"
+          ]
+        },
+        {
+          "kind": "goal",
+          "accepted_forms": [
+            "(SCD)"
+          ]
+        },
+        {
+          "kind": "goal",
+          "accepted_forms": [
+            "(ABCD)"
+          ]
+        }
+      ],
+      "diagram_description": "Labelled pyramid.",
+      "diagram_embedded_facts": [],
+      "diagram_dependency_by_agent_reading": "REFERENCE_FIGURE_ONLY_ALL_PREMISES_IN_TEXT",
+      "source_notes": [
+        "degrees in the choices printed as superscript zero"
+      ],
+      "tags": [
+        "pyramid",
+        "dihedral"
+      ],
+      "dataset_answer_key": "D",
+      "expected_answer": "30°",
+      "oracle": {
+        "provenance": "DATASET_ANSWER_KEY",
+        "independent_of_axo_output": true,
+        "independent_of_agent": true,
+        "agent_hand_derivation_letter": "D",
+        "agent_derivation_agrees_with_key": true,
+        "status": "DATASET_KEY_NOT_INDEPENDENTLY_ADJUDICATED"
+      },
+      "solver_scope": "UNKNOWN_PENDING_ADJUDICATION",
+      "solver_scope_basis": "set by the verified-text diagnostic in transcription_solver_diagnostic.json, never by keywords"
+    },
+    {
+      "case_id": "vmmu_r488",
+      "row_idx": 488,
+      "dataset": "anvo25/vmmu",
+      "dataset_split": "full_vqa",
+      "dataset_id": "Math_0392_test_079_question_43_page_5_key_A_vqa.png",
+      "cache_path": ".superpowers/external_image_cache/controlled-vision-vmmu/r488_Math_0392_test_079_question_43_page_5_key_A_vqa.png",
+      "sha256": "accfebbcd9af6e31ed7ad46dab68c6e9fa34cace2e46dc15affb3772acb928f2",
+      "file_size_bytes": 109173,
+      "image_width": 2481,
+      "image_height": 722,
+      "source_url": "https://huggingface.co/datasets/anvo25/vmmu",
+      "api_row_url": "https://datasets-server.huggingface.co/rows?dataset=anvo25/vmmu&config=default&split=full_vqa&offset=488&length=1",
+      "license_status": "MIT_DECLARED_BY_DATASET_PUBLISHER",
+      "underlying_exam_rights_independently_verified": false,
+      "image_committed_to_git": false,
+      "contains_personal_data": false,
+      "partition": "development",
+      "split_hash_sha256_of_dataset_id": "ec77c5feb97986c5fe7b99586d08118577d26d965ded6896bf225914093a3ee8",
+      "printed_or_handwritten": "PRINTED",
+      "capture": "RENDERED_EXAM_PAGE_CROP_NOT_A_PHOTOGRAPH",
+      "ground_truth_text": "Câu 43: Cho hình lăng trụ đứng ABC.A'B'C' có đáy ABC là tam giác vuông, AB = BC = a. Biết góc giữa hai mặt phẳng (ACC') và (AB'C') bằng 60° (tham khảo hình vẽ bên). Thể tích của khối chóp B'.ACC'A' bằng\nA. a³/3. B. a³/2. C. √3a³/3. D. a³/6.",
+      "statement": "Câu 43: Cho hình lăng trụ đứng ABC.A'B'C' có đáy ABC là tam giác vuông, AB = BC = a. Biết góc giữa hai mặt phẳng (ACC') và (AB'C') bằng 60° (tham khảo hình vẽ bên). Thể tích của khối chóp B'.ACC'A' bằng",
+      "choices": {
+        "A": "a³/3",
+        "B": "a³/2",
+        "C": "√3a³/3",
+        "D": "a³/6"
+      },
+      "ground_truth_status": "AGENT_TRANSCRIBED_UNVERIFIED",
+      "critical_facts": [
+        {
+          "kind": "solid",
+          "accepted_forms": [
+            "lăng trụ đứng"
+          ]
+        },
+        {
+          "kind": "solid",
+          "accepted_forms": [
+            "ABC.A'B'C'"
+          ]
+        },
+        {
+          "kind": "relation",
+          "accepted_forms": [
+            "tam giác vuông"
+          ]
+        },
+        {
+          "kind": "length",
+          "accepted_forms": [
+            "AB=BC=a"
+          ]
+        },
+        {
+          "kind": "relation",
+          "accepted_forms": [
+            "(ACC')"
+          ]
+        },
+        {
+          "kind": "relation",
+          "accepted_forms": [
+            "(AB'C')"
+          ]
+        },
+        {
+          "kind": "angle",
+          "accepted_forms": [
+            "bằng 60°"
+          ]
+        },
+        {
+          "kind": "goal",
+          "accepted_forms": [
+            "B'.ACC'A'"
+          ]
+        },
+        {
+          "kind": "goal",
+          "accepted_forms": [
+            "Thể tích"
+          ]
+        }
+      ],
+      "diagram_description": "Prism beside the text.",
+      "diagram_embedded_facts": [],
+      "diagram_dependency_by_agent_reading": "REFERENCE_FIGURE_ONLY_ALL_PREMISES_IN_TEXT",
+      "source_notes": [
+        "degree printed as superscript zero",
+        "two-column layout: text left, figure right"
+      ],
+      "tags": [
+        "right_prism",
+        "volume",
+        "inverse_from_angle"
+      ],
+      "dataset_answer_key": "A",
+      "expected_answer": "a³/3",
+      "oracle": {
+        "provenance": "DATASET_ANSWER_KEY",
+        "independent_of_axo_output": true,
+        "independent_of_agent": true,
+        "agent_hand_derivation_letter": null,
+        "agent_derivation_agrees_with_key": null,
+        "status": "DATASET_KEY_NOT_INDEPENDENTLY_ADJUDICATED"
+      },
+      "solver_scope": "UNKNOWN_PENDING_ADJUDICATION",
+      "solver_scope_basis": "set by the verified-text diagnostic in transcription_solver_diagnostic.json, never by keywords"
+    },
+    {
+      "case_id": "vmmu_r491",
+      "row_idx": 491,
+      "dataset": "anvo25/vmmu",
+      "dataset_split": "full_vqa",
+      "dataset_id": "Math_0081_test_014_question_36_page_4_key_D_vqa.png",
+      "cache_path": ".superpowers/external_image_cache/controlled-vision-vmmu/r491_Math_0081_test_014_question_36_page_4_key_D_vqa.png",
+      "sha256": "5b6d73596d6a0ea092379669260cbe5dc97efb2e5d68acc4b79fc391499e279e",
+      "file_size_bytes": 161109,
+      "image_width": 2467,
+      "image_height": 647,
+      "source_url": "https://huggingface.co/datasets/anvo25/vmmu",
+      "api_row_url": "https://datasets-server.huggingface.co/rows?dataset=anvo25/vmmu&config=default&split=full_vqa&offset=491&length=1",
+      "license_status": "MIT_DECLARED_BY_DATASET_PUBLISHER",
+      "underlying_exam_rights_independently_verified": false,
+      "image_committed_to_git": false,
+      "contains_personal_data": false,
+      "partition": "frozen_external_evaluation",
+      "split_hash_sha256_of_dataset_id": "723b8961edfa25439ce4c24063ac4dd4494bf14fc4f77238e8358c5a5d4d1c11",
+      "printed_or_handwritten": "PRINTED",
+      "capture": "RENDERED_EXAM_PAGE_CROP_NOT_A_PHOTOGRAPH",
+      "ground_truth_text": "Câu 36: Cho hình lăng trụ ABC.A'B'C' có đáy ABC là tam giác vuông tại A, AB = a, AC = 2a (tham khảo hình bên). Hình chiếu vuông góc của A' lên mặt phẳng (ABC) là điểm I thuộc cạnh BC. Khoảng cách từ A tới mặt phẳng (A'BC) bằng\nA. 2/3 a. B. √3/2 a. C. 1/3 a. D. 2√5/5 a.",
+      "statement": "Câu 36: Cho hình lăng trụ ABC.A'B'C' có đáy ABC là tam giác vuông tại A, AB = a, AC = 2a (tham khảo hình bên). Hình chiếu vuông góc của A' lên mặt phẳng (ABC) là điểm I thuộc cạnh BC. Khoảng cách từ A tới mặt phẳng (A'BC) bằng",
+      "choices": {
+        "A": "2/3 a",
+        "B": "√3/2 a",
+        "C": "1/3 a",
+        "D": "2√5/5 a"
+      },
+      "ground_truth_status": "AGENT_TRANSCRIBED_UNVERIFIED",
+      "critical_facts": [
+        {
+          "kind": "solid",
+          "accepted_forms": [
+            "ABC.A'B'C'"
+          ]
+        },
+        {
+          "kind": "relation",
+          "accepted_forms": [
+            "vuông tại A"
+          ]
+        },
+        {
+          "kind": "length",
+          "accepted_forms": [
+            "AB=a"
+          ]
+        },
+        {
+          "kind": "length",
+          "accepted_forms": [
+            "AC=2a"
+          ]
+        },
+        {
+          "kind": "relation",
+          "accepted_forms": [
+            "Hình chiếu vuông góc của A'"
+          ]
+        },
+        {
+          "kind": "relation",
+          "accepted_forms": [
+            "điểm I thuộc cạnh BC"
+          ]
+        },
+        {
+          "kind": "goal",
+          "accepted_forms": [
+            "Khoảng cách từ A"
+          ]
+        },
+        {
+          "kind": "goal",
+          "accepted_forms": [
+            "(A'BC)"
+          ]
+        }
+      ],
+      "diagram_description": "Oblique prism; edge labels 2a and a repeat the text.",
+      "diagram_embedded_facts": [],
+      "diagram_dependency_by_agent_reading": "REFERENCE_FIGURE_ONLY_ALL_PREMISES_IN_TEXT",
+      "source_notes": [
+        "two-column layout: text left, figure right",
+        "diagram carries the numeric labels 2a and a"
+      ],
+      "tags": [
+        "oblique_prism",
+        "distance_point_plane"
+      ],
+      "dataset_answer_key": "D",
+      "expected_answer": "2√5/5 a",
+      "oracle": {
+        "provenance": "DATASET_ANSWER_KEY",
+        "independent_of_axo_output": true,
+        "independent_of_agent": true,
+        "agent_hand_derivation_letter": "D",
+        "agent_derivation_agrees_with_key": true,
+        "status": "DATASET_KEY_NOT_INDEPENDENTLY_ADJUDICATED"
+      },
+      "solver_scope": "UNKNOWN_PENDING_ADJUDICATION",
+      "solver_scope_basis": "set by the verified-text diagnostic in transcription_solver_diagnostic.json, never by keywords"
+    },
+    {
+      "case_id": "vmmu_r492",
+      "row_idx": 492,
+      "dataset": "anvo25/vmmu",
+      "dataset_split": "full_vqa",
+      "dataset_id": "Math_0162_test_027_question_45_page_5_key_A_vqa.png",
+      "cache_path": ".superpowers/external_image_cache/controlled-vision-vmmu/r492_Math_0162_test_027_question_45_page_5_key_A_vqa.png",
+      "sha256": "afa607f8f3eb620c4801a8cb51066cb3e491dce9c3aef21c0345f1d7845ffae7",
+      "file_size_bytes": 130873,
+      "image_width": 2481,
+      "image_height": 1605,
+      "source_url": "https://huggingface.co/datasets/anvo25/vmmu",
+      "api_row_url": "https://datasets-server.huggingface.co/rows?dataset=anvo25/vmmu&config=default&split=full_vqa&offset=492&length=1",
+      "license_status": "MIT_DECLARED_BY_DATASET_PUBLISHER",
+      "underlying_exam_rights_independently_verified": false,
+      "image_committed_to_git": false,
+      "contains_personal_data": false,
+      "partition": "frozen_external_evaluation",
+      "split_hash_sha256_of_dataset_id": "f4d6764f1fef3d0ab09d20c5000d66c68a275d7d5d7fa131d41d1896d9bf8506",
+      "printed_or_handwritten": "PRINTED",
+      "capture": "RENDERED_EXAM_PAGE_CROP_NOT_A_PHOTOGRAPH",
+      "ground_truth_text": "Câu 45. Cho hình lăng trụ đứng ABC.A'B'C' có đáy là tam giác vuông tại A. Biết AB = √15a, AC = a và AA' = 2a (tham khảo hình bên dưới). Góc giữa đường thẳng BC' và mặt phẳng (ACC'A') bằng\nA. 60°. B. 45°. C. 30°. D. 90°.",
+      "statement": "Câu 45. Cho hình lăng trụ đứng ABC.A'B'C' có đáy là tam giác vuông tại A. Biết AB = √15a, AC = a và AA' = 2a (tham khảo hình bên dưới). Góc giữa đường thẳng BC' và mặt phẳng (ACC'A') bằng",
+      "choices": {
+        "A": "60°",
+        "B": "45°",
+        "C": "30°",
+        "D": "90°"
+      },
+      "ground_truth_status": "AGENT_TRANSCRIBED_UNVERIFIED",
+      "critical_facts": [
+        {
+          "kind": "solid",
+          "accepted_forms": [
+            "lăng trụ đứng"
+          ]
+        },
+        {
+          "kind": "solid",
+          "accepted_forms": [
+            "ABC.A'B'C'"
+          ]
+        },
+        {
+          "kind": "relation",
+          "accepted_forms": [
+            "vuông tại A"
+          ]
+        },
+        {
+          "kind": "length",
+          "accepted_forms": [
+            "AB=√15a"
+          ]
+        },
+        {
+          "kind": "length",
+          "accepted_forms": [
+            "AC=a"
+          ]
+        },
+        {
+          "kind": "length",
+          "accepted_forms": [
+            "AA'=2a"
+          ]
+        },
+        {
+          "kind": "goal",
+          "accepted_forms": [
+            "Góc giữa đường thẳng"
+          ]
+        },
+        {
+          "kind": "goal",
+          "accepted_forms": [
+            "BC'"
+          ]
+        },
+        {
+          "kind": "goal",
+          "accepted_forms": [
+            "(ACC'A')"
+          ]
+        }
+      ],
+      "diagram_description": "Small labelled prism.",
+      "diagram_embedded_facts": [],
+      "diagram_dependency_by_agent_reading": "REFERENCE_FIGURE_ONLY_ALL_PREMISES_IN_TEXT",
+      "source_notes": [
+        "small print"
+      ],
+      "tags": [
+        "right_prism",
+        "angle_line_plane"
+      ],
+      "dataset_answer_key": "A",
+      "expected_answer": "60°",
+      "oracle": {
+        "provenance": "DATASET_ANSWER_KEY",
+        "independent_of_axo_output": true,
+        "independent_of_agent": true,
+        "agent_hand_derivation_letter": "A",
+        "agent_derivation_agrees_with_key": true,
+        "status": "DATASET_KEY_NOT_INDEPENDENTLY_ADJUDICATED"
+      },
+      "solver_scope": "UNKNOWN_PENDING_ADJUDICATION",
+      "solver_scope_basis": "set by the verified-text diagnostic in transcription_solver_diagnostic.json, never by keywords"
+    },
+    {
+      "case_id": "vmmu_r498",
+      "row_idx": 498,
+      "dataset": "anvo25/vmmu",
+      "dataset_split": "full_vqa",
+      "dataset_id": "Math_0398_test_080_question_26_page_4_key_B_vqa.png",
+      "cache_path": ".superpowers/external_image_cache/controlled-vision-vmmu/r498_Math_0398_test_080_question_26_page_4_key_B_vqa.png",
+      "sha256": "8c89fd4b08710ada6841e1cd843bade3c61c3dfb7a1fcc938a217432fd8388bb",
+      "file_size_bytes": 106593,
+      "image_width": 2481,
+      "image_height": 837,
+      "source_url": "https://huggingface.co/datasets/anvo25/vmmu",
+      "api_row_url": "https://datasets-server.huggingface.co/rows?dataset=anvo25/vmmu&config=default&split=full_vqa&offset=498&length=1",
+      "license_status": "MIT_DECLARED_BY_DATASET_PUBLISHER",
+      "underlying_exam_rights_independently_verified": false,
+      "image_committed_to_git": false,
+      "contains_personal_data": false,
+      "partition": "frozen_external_evaluation",
+      "split_hash_sha256_of_dataset_id": "e6e8cb29b622b608bfa6d3c440c87079c887555d974f8b9f116758960e19a7a1",
+      "printed_or_handwritten": "PRINTED",
+      "capture": "RENDERED_EXAM_PAGE_CROP_NOT_A_PHOTOGRAPH",
+      "ground_truth_text": "Câu 26: Cho hình lăng trụ tứ giác đều ABCD.A'B'C'D' có cạnh đáy bằng a, cạnh bên bằng a√3. Tính cosin của góc giữa hai mặt phẳng (ABCD) và (ABC')?\nA. 30°. B. 1/2. C. 60°. D. √3/2.",
+      "statement": "Câu 26: Cho hình lăng trụ tứ giác đều ABCD.A'B'C'D' có cạnh đáy bằng a, cạnh bên bằng a√3. Tính cosin của góc giữa hai mặt phẳng (ABCD) và (ABC')?",
+      "choices": {
+        "A": "30°",
+        "B": "1/2",
+        "C": "60°",
+        "D": "√3/2"
+      },
+      "ground_truth_status": "AGENT_TRANSCRIBED_UNVERIFIED",
+      "critical_facts": [
+        {
+          "kind": "solid",
+          "accepted_forms": [
+            "lăng trụ tứ giác đều"
+          ]
+        },
+        {
+          "kind": "solid",
+          "accepted_forms": [
+            "ABCD.A'B'C'D'"
+          ]
+        },
+        {
+          "kind": "length",
+          "accepted_forms": [
+            "cạnh đáy bằng a"
+          ]
+        },
+        {
+          "kind": "length",
+          "accepted_forms": [
+            "cạnh bên bằng a√3"
+          ]
+        },
+        {
+          "kind": "goal",
+          "accepted_forms": [
+            "cosin"
+          ]
+        },
+        {
+          "kind": "goal",
+          "accepted_forms": [
+            "(ABCD)"
+          ]
+        },
+        {
+          "kind": "goal",
+          "accepted_forms": [
+            "(ABC')"
+          ]
+        }
+      ],
+      "diagram_description": "Labelled prism with shaded triangle.",
+      "diagram_embedded_facts": [],
+      "diagram_dependency_by_agent_reading": "REFERENCE_FIGURE_ONLY_ALL_PREMISES_IN_TEXT",
+      "source_notes": [
+        "SOURCE_GLYPH_CORRUPTION: primes in the solid name and in (ABC') are printed as a cent sign"
+      ],
+      "tags": [
+        "regular_prism",
+        "dihedral"
+      ],
+      "dataset_answer_key": "B",
+      "expected_answer": "1/2",
+      "oracle": {
+        "provenance": "DATASET_ANSWER_KEY",
+        "independent_of_axo_output": true,
+        "independent_of_agent": true,
+        "agent_hand_derivation_letter": "B",
+        "agent_derivation_agrees_with_key": true,
+        "status": "DATASET_KEY_NOT_INDEPENDENTLY_ADJUDICATED"
+      },
+      "solver_scope": "UNKNOWN_PENDING_ADJUDICATION",
+      "solver_scope_basis": "set by the verified-text diagnostic in transcription_solver_diagnostic.json, never by keywords"
+    },
+    {
+      "case_id": "vmmu_r513",
+      "row_idx": 513,
+      "dataset": "anvo25/vmmu",
+      "dataset_split": "full_vqa",
+      "dataset_id": "Math_0258_test_047_question_39_page_4_key_C_vqa.png",
+      "cache_path": ".superpowers/external_image_cache/controlled-vision-vmmu/r513_Math_0258_test_047_question_39_page_4_key_C_vqa.png",
+      "sha256": "0af1a28125ee26cfeb023801070050fe9669b48745a620b0dd0645c2f9807918",
+      "file_size_bytes": 121364,
+      "image_width": 2481,
+      "image_height": 1769,
+      "source_url": "https://huggingface.co/datasets/anvo25/vmmu",
+      "api_row_url": "https://datasets-server.huggingface.co/rows?dataset=anvo25/vmmu&config=default&split=full_vqa&offset=513&length=1",
+      "license_status": "MIT_DECLARED_BY_DATASET_PUBLISHER",
+      "underlying_exam_rights_independently_verified": false,
+      "image_committed_to_git": false,
+      "contains_personal_data": false,
+      "partition": "development",
+      "split_hash_sha256_of_dataset_id": "61bdb7a0ca16fa9c11ca257ee3e8cc76dc3736325e21b2f252a51f759d9c0368",
+      "printed_or_handwritten": "PRINTED",
+      "capture": "RENDERED_EXAM_PAGE_CROP_NOT_A_PHOTOGRAPH",
+      "ground_truth_text": "Câu 39: Cho hình hộp chữ nhật ABCD.A'B'C'D' có cạnh AA' = 1, AB = 2 Khoảng cách từ điểm A' đến mặt phẳng ADC'B' bằng.\nA. √5. B. √5/2. C. 2√5/5. D. √2.",
+      "statement": "Câu 39: Cho hình hộp chữ nhật ABCD.A'B'C'D' có cạnh AA' = 1, AB = 2 Khoảng cách từ điểm A' đến mặt phẳng ADC'B' bằng.",
+      "choices": {
+        "A": "√5",
+        "B": "√5/2",
+        "C": "2√5/5",
+        "D": "√2"
+      },
+      "ground_truth_status": "AGENT_TRANSCRIBED_UNVERIFIED",
+      "critical_facts": [
+        {
+          "kind": "solid",
+          "accepted_forms": [
+            "ABCD.A'B'C'D'"
+          ]
+        },
+        {
+          "kind": "length",
+          "accepted_forms": [
+            "AA'=1"
+          ]
+        },
+        {
+          "kind": "length",
+          "accepted_forms": [
+            "AB=2"
+          ]
+        },
+        {
+          "kind": "goal",
+          "accepted_forms": [
+            "Khoảng cách từ điểm A'"
+          ]
+        },
+        {
+          "kind": "goal",
+          "accepted_forms": [
+            "ADC'B'"
+          ]
+        }
+      ],
+      "diagram_description": "Small labelled cuboid.",
+      "diagram_embedded_facts": [],
+      "diagram_dependency_by_agent_reading": "REFERENCE_FIGURE_ONLY_ALL_PREMISES_IN_TEXT",
+      "source_notes": [
+        "small print",
+        "plane named without parentheses",
+        "sentence break missing after AB = 2"
+      ],
+      "tags": [
+        "cuboid",
+        "distance_point_plane"
+      ],
+      "dataset_answer_key": "C",
+      "expected_answer": "2√5/5",
+      "oracle": {
+        "provenance": "DATASET_ANSWER_KEY",
+        "independent_of_axo_output": true,
+        "independent_of_agent": true,
+        "agent_hand_derivation_letter": "C",
+        "agent_derivation_agrees_with_key": true,
+        "status": "DATASET_KEY_NOT_INDEPENDENTLY_ADJUDICATED"
+      },
+      "solver_scope": "UNKNOWN_PENDING_ADJUDICATION",
+      "solver_scope_basis": "set by the verified-text diagnostic in transcription_solver_diagnostic.json, never by keywords"
+    },
+    {
+      "case_id": "vmmu_r520",
+      "row_idx": 520,
+      "dataset": "anvo25/vmmu",
+      "dataset_split": "full_vqa",
+      "dataset_id": "Math_0449_test_258_question_30_page_5_key_D_vqa.png",
+      "cache_path": ".superpowers/external_image_cache/controlled-vision-vmmu/r520_Math_0449_test_258_question_30_page_5_key_D_vqa.png",
+      "sha256": "311375e19c83bc5285ab8565f38cc0a3b1febf0030fdb3bd9f087f1e9413fa29",
+      "file_size_bytes": 126612,
+      "image_width": 2484,
+      "image_height": 1390,
+      "source_url": "https://huggingface.co/datasets/anvo25/vmmu",
+      "api_row_url": "https://datasets-server.huggingface.co/rows?dataset=anvo25/vmmu&config=default&split=full_vqa&offset=520&length=1",
+      "license_status": "MIT_DECLARED_BY_DATASET_PUBLISHER",
+      "underlying_exam_rights_independently_verified": false,
+      "image_committed_to_git": false,
+      "contains_personal_data": false,
+      "partition": "frozen_external_evaluation",
+      "split_hash_sha256_of_dataset_id": "5dee3dcfa7c1b08eab2af6b31c804d6327c99d9043be82064839085de887ac71",
+      "printed_or_handwritten": "PRINTED",
+      "capture": "RENDERED_EXAM_PAGE_CROP_NOT_A_PHOTOGRAPH",
+      "ground_truth_text": "Câu 30. Cho hình chóp S.ABC có đáy là tam giác vuông tại B, SA vuông góc với đáy và SA = AB (tham khảo hình bên). Góc giữa hai mặt phẳng (SBC) và (ABC) bằng\nA. 60°. B. 30°. C. 90°. D. 45°.",
+      "statement": "Câu 30. Cho hình chóp S.ABC có đáy là tam giác vuông tại B, SA vuông góc với đáy và SA = AB (tham khảo hình bên). Góc giữa hai mặt phẳng (SBC) và (ABC) bằng",
+      "choices": {
+        "A": "60°",
+        "B": "30°",
+        "C": "90°",
+        "D": "45°"
+      },
+      "ground_truth_status": "AGENT_TRANSCRIBED_UNVERIFIED",
+      "critical_facts": [
+        {
+          "kind": "solid",
+          "accepted_forms": [
+            "S.ABC"
+          ]
+        },
+        {
+          "kind": "relation",
+          "accepted_forms": [
+            "vuông tại B"
+          ]
+        },
+        {
+          "kind": "relation",
+          "accepted_forms": [
+            "SA vuông góc với đáy"
+          ]
+        },
+        {
+          "kind": "length",
+          "accepted_forms": [
+            "SA=AB"
+          ]
+        },
+        {
+          "kind": "goal",
+          "accepted_forms": [
+            "Góc giữa hai mặt phẳng"
+          ]
+        },
+        {
+          "kind": "goal",
+          "accepted_forms": [
+            "(SBC)"
+          ]
+        },
+        {
+          "kind": "goal",
+          "accepted_forms": [
+            "(ABC)"
+          ]
+        }
+      ],
+      "diagram_description": "Large labelled pyramid.",
+      "diagram_embedded_facts": [],
+      "diagram_dependency_by_agent_reading": "REFERENCE_FIGURE_ONLY_ALL_PREMISES_IN_TEXT",
+      "source_notes": [
+        "small print with raised inline formulas",
+        "SOURCE_GLYPH_CORRUPTION: degree signs in the choices are printed as a box"
+      ],
+      "tags": [
+        "pyramid",
+        "dihedral"
+      ],
+      "dataset_answer_key": "D",
+      "expected_answer": "45°",
+      "oracle": {
+        "provenance": "DATASET_ANSWER_KEY",
+        "independent_of_axo_output": true,
+        "independent_of_agent": true,
+        "agent_hand_derivation_letter": "D",
+        "agent_derivation_agrees_with_key": true,
+        "status": "DATASET_KEY_NOT_INDEPENDENTLY_ADJUDICATED"
+      },
+      "solver_scope": "UNKNOWN_PENDING_ADJUDICATION",
+      "solver_scope_basis": "set by the verified-text diagnostic in transcription_solver_diagnostic.json, never by keywords"
+    },
+    {
+      "case_id": "vmmu_r537",
+      "row_idx": 537,
+      "dataset": "anvo25/vmmu",
+      "dataset_split": "full_vqa",
+      "dataset_id": "Math_0264_test_048_question_39_page_4_key_C_vqa.png",
+      "cache_path": ".superpowers/external_image_cache/controlled-vision-vmmu/r537_Math_0264_test_048_question_39_page_4_key_C_vqa.png",
+      "sha256": "c8ad01b6fc3796b2c5853ee3270239b565d37d7bd40dd47ace149e48b2c82f14",
+      "file_size_bytes": 102885,
+      "image_width": 2481,
+      "image_height": 901,
+      "source_url": "https://huggingface.co/datasets/anvo25/vmmu",
+      "api_row_url": "https://datasets-server.huggingface.co/rows?dataset=anvo25/vmmu&config=default&split=full_vqa&offset=537&length=1",
+      "license_status": "MIT_DECLARED_BY_DATASET_PUBLISHER",
+      "underlying_exam_rights_independently_verified": false,
+      "image_committed_to_git": false,
+      "contains_personal_data": false,
+      "partition": "frozen_external_evaluation",
+      "split_hash_sha256_of_dataset_id": "35e11d99f147650f2a034c132d1c4707544f83637c56c302c6df175b06c597e2",
+      "printed_or_handwritten": "PRINTED",
+      "capture": "RENDERED_EXAM_PAGE_CROP_NOT_A_PHOTOGRAPH",
+      "ground_truth_text": "Câu 39: Cho hình chóp tứ giác đều S.ABCD có độ dài cạnh bên bằng a và diện tích đáy bằng a² (tham khảo hình bên dưới). Khoảng cách từ A đến mặt phẳng (SBC) bằng\nA. a√6. B. a√6/2. C. a√6/3. D. a√6/6.",
+      "statement": "Câu 39: Cho hình chóp tứ giác đều S.ABCD có độ dài cạnh bên bằng a và diện tích đáy bằng a² (tham khảo hình bên dưới). Khoảng cách từ A đến mặt phẳng (SBC) bằng",
+      "choices": {
+        "A": "a√6",
+        "B": "a√6/2",
+        "C": "a√6/3",
+        "D": "a√6/6"
+      },
+      "ground_truth_status": "AGENT_TRANSCRIBED_UNVERIFIED",
+      "critical_facts": [
+        {
+          "kind": "solid",
+          "accepted_forms": [
+            "chóp tứ giác đều"
+          ]
+        },
+        {
+          "kind": "solid",
+          "accepted_forms": [
+            "S.ABCD"
+          ]
+        },
+        {
+          "kind": "length",
+          "accepted_forms": [
+            "cạnh bên bằng a"
+          ]
+        },
+        {
+          "kind": "length",
+          "accepted_forms": [
+            "diện tích đáy bằng a²"
+          ]
+        },
+        {
+          "kind": "goal",
+          "accepted_forms": [
+            "Khoảng cách từ A"
+          ]
+        },
+        {
+          "kind": "goal",
+          "accepted_forms": [
+            "(SBC)"
+          ]
+        }
+      ],
+      "diagram_description": "Labelled pyramid.",
+      "diagram_embedded_facts": [],
+      "diagram_dependency_by_agent_reading": "REFERENCE_FIGURE_ONLY_ALL_PREMISES_IN_TEXT",
+      "source_notes": [],
+      "tags": [
+        "regular_pyramid",
+        "distance_point_plane"
+      ],
+      "dataset_answer_key": "C",
+      "expected_answer": "a√6/3",
+      "oracle": {
+        "provenance": "DATASET_ANSWER_KEY",
+        "independent_of_axo_output": true,
+        "independent_of_agent": true,
+        "agent_hand_derivation_letter": "C",
+        "agent_derivation_agrees_with_key": true,
+        "status": "DATASET_KEY_NOT_INDEPENDENTLY_ADJUDICATED"
+      },
+      "solver_scope": "UNKNOWN_PENDING_ADJUDICATION",
+      "solver_scope_basis": "set by the verified-text diagnostic in transcription_solver_diagnostic.json, never by keywords"
+    },
+    {
+      "case_id": "vmmu_r538",
+      "row_idx": 538,
+      "dataset": "anvo25/vmmu",
+      "dataset_split": "full_vqa",
+      "dataset_id": "Math_0380_test_076_question_26_page_3_key_C_vqa.png",
+      "cache_path": ".superpowers/external_image_cache/controlled-vision-vmmu/r538_Math_0380_test_076_question_26_page_3_key_C_vqa.png",
+      "sha256": "0dfc3b2af5921f4446404de7f9823f15b4f96a932ee37bfafa99143aa7fc777a",
+      "file_size_bytes": 128534,
+      "image_width": 2481,
+      "image_height": 593,
+      "source_url": "https://huggingface.co/datasets/anvo25/vmmu",
+      "api_row_url": "https://datasets-server.huggingface.co/rows?dataset=anvo25/vmmu&config=default&split=full_vqa&offset=538&length=1",
+      "license_status": "MIT_DECLARED_BY_DATASET_PUBLISHER",
+      "underlying_exam_rights_independently_verified": false,
+      "image_committed_to_git": false,
+      "contains_personal_data": false,
+      "partition": "frozen_external_evaluation",
+      "split_hash_sha256_of_dataset_id": "7f14cdfb93ae6f0a9277174140845c1757332a5609ef7d21172d194abd7c1927",
+      "printed_or_handwritten": "PRINTED",
+      "capture": "RENDERED_EXAM_PAGE_CROP_NOT_A_PHOTOGRAPH",
+      "ground_truth_text": "Câu 26. Cho hình chóp tam giác đều S.ABC và có cạnh đáy bằng a, cạnh bên bằng 2a/3 (tham khảo hình vẽ bên). Góc giữa cạnh bên và mặt đáy bằng\nA. 90°. B. 45°. C. 30°. D. 60°.",
+      "statement": "Câu 26. Cho hình chóp tam giác đều S.ABC và có cạnh đáy bằng a, cạnh bên bằng 2a/3 (tham khảo hình vẽ bên). Góc giữa cạnh bên và mặt đáy bằng",
+      "choices": {
+        "A": "90°",
+        "B": "45°",
+        "C": "30°",
+        "D": "60°"
+      },
+      "ground_truth_status": "AGENT_TRANSCRIBED_UNVERIFIED",
+      "critical_facts": [
+        {
+          "kind": "solid",
+          "accepted_forms": [
+            "chóp tam giác đều"
+          ]
+        },
+        {
+          "kind": "solid",
+          "accepted_forms": [
+            "S.ABC"
+          ]
+        },
+        {
+          "kind": "length",
+          "accepted_forms": [
+            "cạnh đáy bằng a"
+          ]
+        },
+        {
+          "kind": "length",
+          "accepted_forms": [
+            "cạnh bên bằng 2a/3"
+          ]
+        },
+        {
+          "kind": "goal",
+          "accepted_forms": [
+            "Góc giữa cạnh bên và mặt đáy"
+          ]
+        }
+      ],
+      "diagram_description": "Labelled pyramid beside the text.",
+      "diagram_embedded_facts": [],
+      "diagram_dependency_by_agent_reading": "REFERENCE_FIGURE_ONLY_ALL_PREMISES_IN_TEXT",
+      "source_notes": [
+        "stacked fraction 2a over 3",
+        "two-column layout: text left, figure right"
+      ],
+      "tags": [
+        "regular_pyramid",
+        "angle_line_plane"
+      ],
+      "dataset_answer_key": "C",
+      "expected_answer": "30°",
+      "oracle": {
+        "provenance": "DATASET_ANSWER_KEY",
+        "independent_of_axo_output": true,
+        "independent_of_agent": true,
+        "agent_hand_derivation_letter": "C",
+        "agent_derivation_agrees_with_key": true,
+        "status": "DATASET_KEY_NOT_INDEPENDENTLY_ADJUDICATED"
+      },
+      "solver_scope": "UNKNOWN_PENDING_ADJUDICATION",
+      "solver_scope_basis": "set by the verified-text diagnostic in transcription_solver_diagnostic.json, never by keywords"
+    }
+  ]
+}
