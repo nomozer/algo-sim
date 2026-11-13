@@ -616,6 +616,9 @@ export interface SceneFormation {
 export interface AngleConstruction {
   schema: "angle-construction/1";
   relation: "line_plane" | "line_line" | "line_line_skew" | "plane_plane";
+  /** Miền của góc đề hỏi: mọi góc được hỗ trợ là góc KHÔNG định hướng trong [0°, 90°]; hai tia không bao giờ mở góc tù
+   *  (cos² không phân biệt 60° với 120°). Vắng ⇒ phép dựng từ trước khi có chứng chỉ dấu: không vẽ (fail-closed). */
+  angle_domain?: "[0°, 90°]";
   vertex: ExactVec3;
   vertex_id?: string;
   arms: [{ to: ExactVec3; to_id?: string }, { to: ExactVec3; to_id?: string }];

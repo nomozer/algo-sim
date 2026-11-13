@@ -27,7 +27,7 @@ const dapSo = (s: Scene3D) => {
 };
 
 describe("phép dựng góc — hiện theo timeline", () => {
-  it.each(["line_plane", "dihedral", "skew", "tetra"] as Ca[])("%s: ẩn trước bước kết luận, hiện từ bước đó", (k) => {
+  it.each(["line_plane", "dihedral", "planes_60_not_120", "skew", "tetra"] as Ca[])("%s: ẩn trước bước kết luận, hiện từ bước đó", (k) => {
     const s = canh(k);
     const t = buocKetLuan(s);
     expect(angleConstructionsAt(s, t - 1, tatCa(s))).toEqual([]);
@@ -87,6 +87,26 @@ describe("phép dựng góc — bất biến ở toạ độ thế giới", () =
 describe("phép dựng góc — fail-closed", () => {
   const goc = () => structuredClone(canh("line_plane").objects.find((o) => o.angle_construction)!.angle_construction!);
 
+  it("(SBC)/(SCD): cos² = 1/4 cho cả 60° lẫn 120° — hai tia vẽ ra mở góc 60°, không phải nhị diện 120°", () => {
+    const s = canh("planes_60_not_120");
+    const g = angleConstructionsAt(s, buocKetLuan(s), tatCa(s))[0];
+    const a = tru(g.arms[0], g.vertex), b = tru(g.arms[1], g.vertex);
+    expect(vh(a, b) / (dai(a) * dai(b))).toBeCloseTo(0.5, 9);
+  });
+
+  it("tia thứ hai bị đảo thành tia đối (góc bù, cùng cos²) ⇒ không vẽ", () => {
+    const g = structuredClone(canh("planes_60_not_120").objects.find((o) => o.angle_construction)!.angle_construction!);
+    const v = toVec3(g.vertex), t = toVec3(g.arms[1].to);
+    g.arms[1] = { to: v.map((x, i) => `${Math.round((2 * x - t[i]) * 1e9)}/1000000000`) as typeof g.vertex };
+    expect(angleConstructionShape("q", g)).toBeNull();
+  });
+
+  it("thiếu khai báo miền góc (phép dựng trước chứng chỉ dấu) ⇒ không vẽ", () => {
+    const g = goc();
+    delete g.angle_domain;
+    expect(angleConstructionShape("q", g)).toBeNull();
+  });
+
   it("đoạn tới chân không vuông góc với mặt ⇒ không vẽ", () => {
     const g = goc();
     g.perpendicular!.v = ["1", "0", "1"];
@@ -134,7 +154,7 @@ describe("phép dựng góc — trình bày", () => {
   it("phép dựng không mang giá trị số của đáp số", () => {
     const s = canh("line_plane");
     const g = s.objects.find((o) => o.angle_construction)!.angle_construction!;
-    expect(Object.keys(g).sort()).toEqual(["arms", "checks", "perpendicular", "relation", "schema", "vertex", "vertex_id"]);
+    expect(Object.keys(g).sort()).toEqual(["angle_domain", "arms", "checks", "perpendicular", "relation", "schema", "vertex", "vertex_id"]);
     expect(JSON.stringify(g)).not.toContain(String(s.objects.find((o) => o.angle_construction)!.value));
   });
 });

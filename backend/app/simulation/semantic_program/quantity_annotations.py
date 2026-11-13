@@ -127,6 +127,32 @@ def _cos2(u: Vec3, w: Vec3) -> Fraction:
     return _m.dot(u, w) ** 2 / (_m.norm_sq(u) * _m.norm_sq(w))
 
 
+#: Miền của MỌI góc đề hỏi được hỗ trợ (`ask_angle_lines / _line_plane / _plane_plane`): góc KHÔNG định hướng trong
+#: [0°, 90°] (`measure.degrees`, quy ước SGK). Nhị diện có hướng (0°, 180°) chỉ là DỮ KIỆN (`dihedral_angle`), không bao
+#: giờ là câu hỏi. cos² không phân biệt 60° với 120° (cùng 1/4): phép dựng phải vẽ đúng góc nhọn/vuông, không vẽ góc bù.
+GOC_MIEN = "[0°, 90°]"
+
+
+def _khong_tu(o: Vec3, p1: Vec3, ten2: str | None, p2: Vec3,
+              co_ten: list[tuple[str, Vec3]]) -> tuple[str | None, Vec3]:
+    """Hai tia O→p1, O→p2 mở thành góc TÙ ⇒ thay tia thứ hai bằng tia ĐỐI của nó (vẫn trên cùng đường / cùng mặt
+    phẳng, cùng gốc), ưu tiên một điểm có tên nằm trên tia đối. Góc giữa hai đường / hai mặt là góc không tù."""
+    if _m.dot(p1 - o, p2 - o) >= 0:
+        return ten2, p2
+    d = o - p2
+    co = next(((n, x) for n, x in co_ten if x != o and (x - o).cross(d).is_zero() and _m.dot(x - o, d) > 0), None)
+    return co if co else (None, o + d)
+
+
+def _goc_dung(o: Vec3, a: Vec3, b: Vec3, c2: Fraction) -> str | None:
+    """Chứng chỉ của góc vẽ ra: cos CÓ DẤU ≥ 0 (không vẽ góc bù) VÀ cos² bằng đúng giá trị kernel đo."""
+    if _m.dot(a - o, b - o) < 0:
+        return "the drawn rays open the obtuse supplement of the asked angle"
+    if _cos2(a - o, b - o) != c2:
+        return "the constructed angle does not reproduce the measured cos²"
+    return None
+
+
 def _tren_duong(p: Vec3, d: Line3) -> bool:
     return (p - d.point).cross(d.direction).is_zero()
 
@@ -180,13 +206,14 @@ def _goc_duong_mat(d: Line3, mp: Plane3, ten_mp: str, c2: Fraction, co_ten: list
         return "the projection of the line is a point (right angle belongs to _goc_vuong)"
     if mp.signed_eval(h) != 0 or any(_m.dot(p - h, w) != 0 for w in _phuong_trong_mat(mp)):
         return "the projection foot is not an orthogonal foot in the frame metric"
-    if _cos2(p - o, h - o) != c2:
-        return "the constructed angle does not reproduce the measured cos²"
-    return {"schema": ANGLE_CONSTRUCTION_SCHEMA, "relation": "line_plane",
+    if (loi := _goc_dung(o, p, h, c2)) is not None:
+        return loi
+    return {"schema": ANGLE_CONSTRUCTION_SCHEMA, "relation": "line_plane", "angle_domain": GOC_MIEN,
             "vertex": _xau(o), **({"vertex_id": n} if (n := _ten_cua(o, co_ten)) else {}),
             "arms": [_dau(p, ten_p), _dau(h, _ten_cua(h, co_ten))],
             "perpendicular": {"from": _xau(p), "foot": _xau(h), "on": ten_mp, "u": _xau(o - h), "v": _xau(p - h)},
-            "checks": ["vertex_on_line_and_plane", "foot_on_plane", "leg_orthogonal_to_plane", "cos_sq_matches_measure"]}
+            "checks": ["vertex_on_line_and_plane", "foot_on_plane", "leg_orthogonal_to_plane", "drawn_angle_not_obtuse",
+                       "cos_sq_matches_measure"]}
 
 
 def _goc_hai_duong(d1: Line3, d2: Line3, ten_d2: str, c2: Fraction, co_ten: list[tuple[str, Vec3]]) -> dict[str, Any] | str:
@@ -198,11 +225,13 @@ def _goc_hai_duong(d1: Line3, d2: Line3, ten_d2: str, c2: Fraction, co_ten: list
         o = None
     if o is not None:
         (t1, p1), (t2, p2) = _diem_tren(d1, o, co_ten), _diem_tren(d2, o, co_ten)
-        if _cos2(p1 - o, p2 - o) != c2:
-            return "the constructed angle does not reproduce the measured cos²"
-        return {"schema": ANGLE_CONSTRUCTION_SCHEMA, "relation": "line_line",
+        t2, p2 = _khong_tu(o, p1, t2, p2, co_ten)
+        if not _tren_duong(p2, d2) or (loi := _goc_dung(o, p1, p2, c2)) is not None:
+            return loi or "the second ray left its line"
+        return {"schema": ANGLE_CONSTRUCTION_SCHEMA, "relation": "line_line", "angle_domain": GOC_MIEN,
                 "vertex": _xau(o), **({"vertex_id": n} if (n := _ten_cua(o, co_ten)) else {}),
-                "arms": [_dau(p1, t1), _dau(p2, t2)], "checks": ["vertex_on_both_lines", "cos_sq_matches_measure"]}
+                "arms": [_dau(p1, t1), _dau(p2, t2)],
+                "checks": ["vertex_on_both_lines", "drawn_angle_not_obtuse", "cos_sq_matches_measure"]}
     # Chéo nhau: góc là góc giữa d1 và một đường song song với d2 qua một điểm A của d1 (đường phụ, không phải dữ
     # kiện). Ưu tiên cách sách giáo khoa: một ĐOẠN CÓ TÊN AY ∥ d2 với A trên d1 (A′D ∥ B′C); không có ⇒ A + phương d2.
     cap = next(((n, x, m, y) for n, x in co_ten if _tren_duong(x, d1)
@@ -213,13 +242,16 @@ def _goc_hai_duong(d1: Line3, d2: Line3, ten_d2: str, c2: Fraction, co_ten: list
         ten_a, a = _diem_tren(d1, None, co_ten)
         ten_q, q = None, a + d2.direction
     t1, p1 = _diem_tren(d1, a, co_ten)
-    if not (q - a).cross(d2.direction).is_zero() or _cos2(p1 - a, q - a) != c2:
-        return "the constructed angle does not reproduce the measured cos²"
-    return {"schema": ANGLE_CONSTRUCTION_SCHEMA, "relation": "line_line_skew",
+    ten_q, q = _khong_tu(a, p1, ten_q, q, co_ten)
+    if not (q - a).cross(d2.direction).is_zero():
+        return "the helper is not parallel to the second line"
+    if (loi := _goc_dung(a, p1, q, c2)) is not None:
+        return loi
+    return {"schema": ANGLE_CONSTRUCTION_SCHEMA, "relation": "line_line_skew", "angle_domain": GOC_MIEN,
             "vertex": _xau(a), **({"vertex_id": ten_a} if ten_a else {}),
             "arms": [_dau(p1, t1), _dau(q, ten_q)],
             "parallel": {"through": _xau(a), "to": _xau(q), "of": ten_d2},
-            "checks": ["helper_parallel_to_second_line", "cos_sq_matches_measure"]}
+            "checks": ["helper_parallel_to_second_line", "drawn_angle_not_obtuse", "cos_sq_matches_measure"]}
 
 
 def _goc_hai_mat(m1: Plane3, m2: Plane3, c2: Fraction, co_ten: list[tuple[str, Vec3]]) -> dict[str, Any] | str:
@@ -231,20 +263,22 @@ def _goc_hai_mat(m1: Plane3, m2: Plane3, c2: Fraction, co_ten: list[tuple[str, V
     m = K.project_point_onto_line(x1[1], e)
     w = x2[1] - m
     a2 = w - e.direction.scale(_m.dot(w, e.direction) / _m.norm_sq(e.direction))
-    a1, q = x1[1] - m, m + a2
+    a1 = x1[1] - m
+    ten_q, q = _khong_tu(m, x1[1], _ten_cua(m + a2, co_ten), m + a2, co_ten)
+    a2 = q - m
     if (a2.is_zero() or _m.dot(a1, e.direction) != 0 or _m.dot(a2, e.direction) != 0
             or m1.signed_eval(m) != 0 or m2.signed_eval(m) != 0 or m2.signed_eval(q) != 0):
         return "the plane-angle rays are not perpendicular to the common line inside their planes"
-    if _cos2(a1, a2) != c2:
-        return "the constructed angle does not reproduce the measured cos²"
+    if (loi := _goc_dung(m, x1[1], q, c2)) is not None:
+        return loi
     ten_e = next((n for n, p in co_ten if p != m and _tren_duong(p, e)), None)
     huong = (dict(co_ten)[ten_e] - m) if ten_e else e.direction
-    return {"schema": ANGLE_CONSTRUCTION_SCHEMA, "relation": "plane_plane",
+    return {"schema": ANGLE_CONSTRUCTION_SCHEMA, "relation": "plane_plane", "angle_domain": GOC_MIEN,
             "vertex": _xau(m), **({"vertex_id": n} if (n := _ten_cua(m, co_ten)) else {}),
-            "arms": [_dau(x1[1], x1[0]), _dau(q, _ten_cua(q, co_ten))],
+            "arms": [_dau(x1[1], x1[0]), _dau(q, ten_q)],
             "edge": {"direction": _xau(huong), **({"toward_id": ten_e} if ten_e else {})},
             "checks": ["vertex_on_common_line", "rays_in_their_planes", "rays_orthogonal_to_common_line",
-                       "cos_sq_matches_measure"]}
+                       "drawn_angle_not_obtuse", "cos_sq_matches_measure"]}
 
 
 def _gan_chung_chi_vuong_goc_doan(objects: list[dict[str, Any]], mem: dict[str, Any]) -> None:

@@ -49,6 +49,8 @@ export function angleConstructionShape(id: string, g: AngleConstruction): AngleC
   const o = toVec3(g.vertex);
   const a = toVec3(g.arms[0].to), b = toVec3(g.arms[1].to);
   if (![o, a, b].every(huuHan) || doDai(tru(a, o)) === 0 || doDai(tru(b, o)) === 0) return null;
+  // Góc đề hỏi là góc không tù: hai tia mở góc tù là góc BÙ (cùng cos²) — không vẽ. Thiếu khai báo miền ⇒ không vẽ.
+  if (g.angle_domain !== "[0°, 90°]" || tich(tru(a, o), tru(b, o)) < -SAI_SO_DUNG_GOC * doDai(tru(a, o)) * doDai(tru(b, o))) return null;
   const ra: AngleConstructionShown = { id, relation: g.relation, vertex: o, arms: [a, b], rightAngles: [] };
   if (g.relation === "line_plane") {
     const p = g.perpendicular;
