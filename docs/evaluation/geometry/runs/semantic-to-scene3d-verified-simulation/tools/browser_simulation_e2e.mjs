@@ -172,10 +172,10 @@ try {
   const page = await ctx.newPage();
   await page.goto(ORIGIN, { waitUntil: 'networkidle' });
   // A guest has ONE trial simulation (product policy). The switch loop signs up a synthetic account in the measured
-  // app's own throwaway SQLite file (no real person, `example.invalid`), then reloads into a signed-in session.
+  // app's own throwaway SQLite file (no real person, `example.invalid`, a random password generated per run), then reloads.
   const signup = await page.evaluate(async () => (await fetch('/api/auth/register', { method: 'POST', credentials: 'include',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ email: `e2e-${Date.now()}@example.invalid`, displayName: 'E2E', password: 'e2e-cleanup-Pass-1' }) })).status);
+    body: JSON.stringify({ email: `e2e-${Date.now()}@example.invalid`, displayName: 'E2E', password: crypto.randomUUID() }) })).status);
   await page.reload({ waitUntil: 'networkidle' });
   cleanup.synthetic_signup_status = signup;
   const heap = async () => { await page.evaluate(() => window.gc && window.gc()); await frames(page, 4);

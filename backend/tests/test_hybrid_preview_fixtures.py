@@ -35,7 +35,10 @@ ROOT = Path(__file__).resolve().parents[2]
 #: Superseded by run `hybrid-backend-reliability` (product 05cf4db1): `served-intersection-SAB-SCD` narrates its
 #: intersection line as "Dựng đường thẳng cần dùng." instead of the kernel repr `Line3(point=Vec3(…))` (2 narrations of
 #: `envelope.config`); every other fixture differs only by producer identity. The continuity bundle stays unchanged.
-FIXTURES = ROOT / 'docs/evaluation/geometry/runs/hybrid-backend-reliability/fixtures-adapter-2-narration'
+#: Superseded by run `semantic-to-scene3d-verified-simulation` (CACHE_VERSION 133): `served-H03_…` and `served-H12_…` carry
+#: `angle_construction` on their angle quantity (the construction of the studied angle); every other fixture differs only
+#: by producer identity. Earlier bundles stay unchanged.
+FIXTURES = ROOT / 'docs/evaluation/geometry/runs/semantic-to-scene3d-verified-simulation/fixtures-angle-construction'
 #: The superseded bundle — the one that predates the route D version bump the identity-restore test is about.
 OLD_FIXTURES = ROOT / 'docs/evaluation/geometry/runs/hybrid-preview-contract-hardening/fixtures-adapter-2'
 SCRIPT = ROOT / 'backend/scripts/export_hybrid_preview_fixtures.py'
