@@ -13,6 +13,8 @@ import { ErrorBoundary, ErrorFallback } from "./components/ErrorBoundary";
 import { HistoryView } from "./components/HistoryView";
 import { HomeView } from "./components/HomeView";
 import { IconPanel } from "./components/icons";
+import { LandingView } from "./components/LandingView";
+import { LeftSidebar } from "./components/LeftSidebar";
 import { LibraryView } from "./components/LibraryView";
 import { SimulationControls } from "./components/SimulationControls";
 import { SimulationWorkspace } from "./components/SimulationWorkspace";
@@ -69,6 +71,9 @@ export default function App() {
   const view = useAppStore((s) => s.view);
   const setView = useAppStore((s) => s.setView);
   const active = useAppStore((s) => s.active);
+  const workspaceTabs = useAppStore((s) => s.workspaceTabs);
+  const activeTabId = useAppStore((s) => s.activeTabId);
+  const navHistoryMode = useAppStore((s) => s.navHistoryMode);
   const unsupported = useAppStore((s) => s.unsupported);
   const activeSampleId = useAppStore((s) => s.activeSampleId);
   const activeHistoryId = useAppStore((s) => s.activeHistoryId);
@@ -80,13 +85,55 @@ export default function App() {
   const rightOpen = useAppStore((s) => s.rightOpen);
   const toggleRight = useAppStore((s) => s.toggleRight);
   const goHome = useAppStore((s) => s.goHome);
-  const assignment = useAppStore((s) => s.activeAssignment);
+  const guestEnteredApp = useAppStore((s) => s.guestEnteredApp);
+  const leftRailMobileOpen = useAppStore((s) => s.leftRailMobileOpen);
 
   const user = useAuthStore((s) => s.user);
+  const authResolved = useAuthStore((s) => s.resolved);
   const refresh = useAuthStore((s) => s.refresh);
   const isPopStateSyncRef = useRef(false);
   const hasHydratedLocationRef = useRef(false);
   const [crashedResetKey, setCrashedResetKey] = useState<string | null>(null);
+  const [guestHeaderMenuOpen, setGuestHeaderMenuOpen] = useState(false);
+  const guestHeaderRef = useRef<HTMLDivElement | null>(null);
+  void HistoryView;
+
+  useEffect(() => {
+    setGuestHeaderMenuOpen(false);
+  }, [user, view]);
+
+  useEffect(() => {
+    if (!guestHeaderMenuOpen || typeof window === "undefined") return;
+    const onPointerDown = (e: MouseEvent) => {
+      if (guestHeaderRef.current && !guestHeaderRef.current.contains(e.target as Node)) {
+        setGuestHeaderMenuOpen(false);
+      }
+    };
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setGuestHeaderMenuOpen(false);
+      }
+    };
+    window.addEventListener("mousedown", onPointerDown);
+    window.addEventListener("keydown", onKeyDown);
+    return () => {
+      window.removeEventListener("mousedown", onPointerDown);
+      window.removeEventListener("keydown", onKeyDown);
+    };
+  }, [guestHeaderMenuOpen]);
+
+  useEffect(() => {
+    if (typeof window === "undefined" || !authResolved) return;
+    try {
+      if (user) {
+        window.sessionStorage.setItem("axo_auth_session_hint", "1");
+      } else {
+        window.sessionStorage.removeItem("axo_auth_session_hint");
+      }
+    } catch {
+      /* bỏ qua nếu trình duyệt chặn sessionStorage */
+    }
+  }, [authResolved, user]);
 
   /* Hỏi máy chủ MỘT LẦN lúc mở app: phiên nằm ở cookie httpOnly nên JS không
      tự đọc được, và đây là cách duy nhất biết mình đang là ai. Đồng thời đồng bộ
@@ -159,25 +206,68 @@ export default function App() {
     if (view === "not_found" || routeFailure !== null) return;
     if (view === "reset" && new URLSearchParams(window.location.search).has("reset_token")) return;
     if (view === "admin" && window.location.hash === "#admin") return;
-    const targetPath = canonicalPathForView(view, activeSampleId ?? activeHistoryId);
+    const isDraftActive =
+      view === "workspace" &&
+      activeTabId === "tab-draft-new" &&
+      workspaceTabs.some((t) => t.id === "tab-draft-new");
     const currentPath =
       window.location.pathname.length > 1 && window.location.pathname.endsWith("/")
         ? window.location.pathname.replace(/\/+$/, "")
         : window.location.pathname || "/";
+    const targetPath = isDraftActive
+      ? "/workspace"
+      : view === "home" && (guestEnteredApp || currentPath === "/app")
+        ? "/app"
+        : canonicalPathForView(view, activeSampleId ?? activeHistoryId);
     if (currentPath === targetPath) return;
+    const historyState = {
+      axoView: view,
+      tabId: activeTabId,
+      sampleId: isDraftActive ? null : activeSampleId,
+      historyId: isDraftActive ? null : activeHistoryId,
+    };
     try {
-      window.history.pushState({ axoView: view, sampleId: activeSampleId, historyId: activeHistoryId }, "", targetPath);
+      if (navHistoryMode === "replace" && typeof window.history?.replaceState === "function") {
+        window.history.replaceState(historyState, "", targetPath);
+      } else {
+        window.history.pushState(historyState, "", targetPath);
+      }
     } catch {
       /* bỏ qua nếu môi trường kiểm thử chặn pushState */
     }
-  }, [view, activeSampleId, activeHistoryId, routeFailure]);
+  }, [view, activeTabId, workspaceTabs, activeSampleId, activeHistoryId, routeFailure, navHistoryMode]);
 
-  const inWorkspace = view === "workspace" && (active !== null || unsupported !== null) && routeFailure === null;
+  const inWorkspace =
+    view === "workspace" &&
+    (active !== null || unsupported !== null || workspaceTabs.length > 0) &&
+    routeFailure === null;
+  const isDraftWorkspaceTab =
+    inWorkspace && activeTabId === "tab-draft-new" && workspaceTabs.some((t) => t.id === "tab-draft-new");
   const isAuthPage =
     view === "login" || view === "register" || view === "forgot" || view === "reset";
   const isAdminPage = view === "admin";
-  const isStandaloneShell = isAuthPage || isAdminPage;
-  const mainResetKey = `${view}|${activeHistoryId ?? activeSampleId ?? ""}|${active?.envelope?.simulation_id ?? ""}|${active?.envelope?.title ?? ""}`;
+  const browserPathname =
+    typeof window !== "undefined" ? window.location.pathname || "/" : "";
+  const isExplicitAppPath =
+    browserPathname === "/app" || browserPathname === "/home";
+  const hasSessionHint =
+    typeof window !== "undefined" &&
+    (() => {
+      try {
+        return window.sessionStorage.getItem("axo_auth_session_hint") === "1";
+      } catch {
+        return false;
+      }
+    })();
+  const isGuestLandingOnHome =
+    view === "home" &&
+    !user &&
+    !guestEnteredApp &&
+    !isExplicitAppPath &&
+    (authResolved || (typeof window !== "undefined" && browserPathname === "/" && !hasSessionHint));
+  const isLandingPage = view === "landing" || isGuestLandingOnHome;
+  const isStandaloneShell = isAuthPage || isAdminPage || isLandingPage;
+  const mainResetKey = `${view}|${activeTabId ?? ""}|${activeHistoryId ?? activeSampleId ?? ""}|${active?.envelope?.simulation_id ?? ""}|${active?.envelope?.title ?? ""}`;
   const activeCrashedResetKey = reconcileCrashedResetKey(crashedResetKey, mainResetKey);
   useEffect(() => {
     if (crashedResetKey !== null && crashedResetKey !== mainResetKey) {
@@ -196,12 +286,12 @@ export default function App() {
       })()
     : null;
   const isGeometryDomainWorkspace = Boolean(
-    inWorkspace && active?.envelope?.domain === "geometry",
+    inWorkspace && (active?.envelope?.domain === "geometry" || isDraftWorkspaceTab),
   );
   const canvasFirst =
     inWorkspace && hopLeScene3D(safeScene3d)
       ? !mainBoundaryCrashed
-      : isGeometryDomainWorkspace && !mainBoundaryCrashed;
+      : (isGeometryDomainWorkspace || (inWorkspace && isDraftWorkspaceTab)) && !mainBoundaryCrashed;
   const adaptiveStateRef = useRef<AdaptiveHeaderState | undefined>(undefined);
 
   useEffect(() => {
@@ -273,7 +363,8 @@ export default function App() {
     )
     : isAuthPage ? <AuthPageView mode={view} />
     : isAdminPage ? <AdminWorkspaceView />
-    : view === "history" ? <HistoryView />
+    : isLandingPage ? <LandingView />
+    : view === "history" ? <HomeView />
     : view === "library" ? <LibraryView />
     : view === "account" && user ? (
       <section className="page-stack" aria-label="Cài đặt tài khoản">
@@ -305,43 +396,84 @@ export default function App() {
 
   return (
     <div
-      className={`app-root${user ? " is-authed" : ""}${canvasFirst ? " la-tap-trung" : ""}${isAuthPage ? " is-auth-page" : ""}${isAdminPage ? " is-page-admin" : ""}`}
+      className={`app-root${user ? " is-authed" : ""}${!isStandaloneShell ? " has-left-sidebar" : ""}${leftRailMobileOpen ? " is-mobile-sidebar-open" : ""}${canvasFirst ? " la-tap-trung" : ""}${isAuthPage ? " is-auth-page" : ""}${isAdminPage ? " is-page-admin" : ""}${isLandingPage ? " is-page-landing" : ""}`}
     >
+      {!isStandaloneShell && <LeftSidebar />}
       <div className="app-main">
         {/* W05 · CHẾ ĐỘ TẬP TRUNG: cảnh 3D lấp trang — thanh trên toàn cục (đăng nhập/đăng ký, điều hướng, «Giải
             thích» vốn không tác dụng với cảnh 3D) KHÔNG dựng. Khi ErrorBoundary bắt lỗi render, `canvasFirst`
             tắt ngay để khôi phục thanh điều hướng trên cùng bên ngoài vùng hỏng. */}
-        {!canvasFirst && (
+        {!canvasFirst && !isLandingPage && (
         <header className="nav-bar">
           <TopNav />
 
           <nav className="nav-links axo-header-right" aria-label="Tác vụ người dùng">
-            {!user ? (
-              <div className="header-auth-group" id="header-guest-actions">
+            {!user && (!hasSessionHint || authResolved) ? (
+              <div
+                ref={guestHeaderRef}
+                className="header-auth-group header-guest-account-wrap"
+                id="header-guest-actions"
+              >
                 <button
                   type="button"
-                  id="btn-open-login"
-                  className="nav-link btn-auth-ghost"
-                  onClick={() => setView("login")}
+                  id="btn-header-guest-account"
+                  className={`header-guest-account-btn${guestHeaderMenuOpen ? " is-open" : ""}`}
+                  onClick={() => setGuestHeaderMenuOpen((v) => !v)}
+                  aria-label="Tài khoản — Đăng nhập hoặc Đăng ký"
+                  title="Tài khoản — Đăng nhập hoặc Đăng ký"
+                  aria-haspopup="menu"
+                  aria-expanded={guestHeaderMenuOpen}
+                  aria-controls="header-guest-popover"
                 >
-                  Đăng nhập
+                  <svg
+                    viewBox="0 0 20 20"
+                    width="18"
+                    height="18"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.75"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden="true"
+                  >
+                    <circle cx="10" cy="6.8" r="3.1" />
+                    <path d="M4.3 16.5c1.1-2.8 3.1-4.1 5.7-4.1s4.6 1.3 5.7 4.1" />
+                  </svg>
                 </button>
-                <button
-                  type="button"
-                  id="btn-open-signup"
-                  className="btn-primary nav-cta btn-auth-primary"
-                  onClick={() => setView("register")}
+                <div
+                  id="header-guest-popover"
+                  className={`header-guest-popover${guestHeaderMenuOpen ? " open" : ""}`}
+                  role="menu"
+                  aria-label="Tài khoản khách"
                 >
-                  Đăng ký
-                </button>
+                  <button
+                    type="button"
+                    id="btn-open-login"
+                    role="menuitem"
+                    className="header-guest-menu-item nav-link btn-auth-ghost"
+                    onClick={() => {
+                      setGuestHeaderMenuOpen(false);
+                      setView("login");
+                    }}
+                  >
+                    Đăng nhập
+                  </button>
+                  <button
+                    type="button"
+                    id="btn-open-signup"
+                    role="menuitem"
+                    className="header-guest-menu-item btn-primary nav-cta btn-auth-primary"
+                    onClick={() => {
+                      setGuestHeaderMenuOpen(false);
+                      setView("register");
+                    }}
+                  >
+                    Đăng ký
+                  </button>
+                </div>
               </div>
             ) : inWorkspace && active !== null && active.envelope.domain !== "geometry" && !mainBoundaryCrashed && (
               <>
-                {assignment && (
-                  <span className="nav-assignment" title={assignment.instruction}>
-                    Bài: <strong>{assignment.title}</strong>
-                  </span>
-                )}
                 <button className="btn-utility" onClick={goHome}
                   title="Phân tích một đề khác (bài đang xem được lưu vào Lịch sử)">
                   + Mô phỏng mới

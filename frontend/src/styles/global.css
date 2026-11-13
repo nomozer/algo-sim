@@ -9688,8 +9688,8 @@ body:has(.app-root.la-tap-trung) {
 }
 
 .ws-tab-icon svg {
-  width: 13.5px;
-  height: 13.5px;
+  width: var(--axo-icon-sm-glyph);
+  height: var(--axo-icon-sm-glyph);
   display: block;
 }
 
@@ -19435,7 +19435,7 @@ html::-webkit-scrollbar {
 .sb-top {
   height: 48px;
   min-height: 48px;
-  padding: 0 10px;
+  padding: 0 8px 0 10px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -19446,8 +19446,8 @@ html::-webkit-scrollbar {
 .sb-brand {
   display: inline-flex;
   align-items: center;
-  gap: 9px;
-  padding: 5px 8px;
+  gap: 7px;
+  padding: 5px 8px 5px 10px;
   border-radius: 7px;
   border: none;
   background: transparent;
@@ -19461,9 +19461,14 @@ html::-webkit-scrollbar {
   background: transparent;
 }
 
+.sb-brand:focus-visible {
+  outline: 2px solid rgba(35, 131, 226, 0.45);
+  outline-offset: 1px;
+}
+
 .sb-brand-logo {
-  width: 24px;
-  height: 24px;
+  width: var(--axo-icon-brand-sb);
+  height: var(--axo-icon-brand-sb);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -19471,8 +19476,8 @@ html::-webkit-scrollbar {
 }
 
 .sb-brand-logo svg {
-  width: 24px;
-  height: 24px;
+  width: var(--axo-icon-brand-sb);
+  height: var(--axo-icon-brand-sb);
   display: block;
 }
 
@@ -19480,6 +19485,7 @@ html::-webkit-scrollbar {
   font-size: 17px;
   font-weight: 650;
   letter-spacing: -0.02em;
+  line-height: 1.1;
   color: var(--ink);
   white-space: nowrap;
 }
@@ -19492,8 +19498,8 @@ html::-webkit-scrollbar {
 }
 
 .sb-icon-btn {
-  width: 32px;
-  height: 32px;
+  width: var(--axo-icon-header-hit);
+  height: var(--axo-icon-header-hit);
   border-radius: 8px;
   border: none;
   background: transparent;
@@ -19513,16 +19519,16 @@ html::-webkit-scrollbar {
   color: var(--ink);
 }
 
-.sb-icon-btn svg {
-  width: 16px;
-  height: 16px;
-  display: block;
+.sb-icon-btn:focus-visible {
+  outline: 2px solid rgba(35, 131, 226, 0.45);
+  outline-offset: 1px;
 }
 
+.sb-icon-btn svg,
 .sb-icon-btn.sb-sidebar-toggle-btn svg,
 .sb-icon-btn svg.sb-toggle-layout-icon {
-  width: 18px;
-  height: 18px;
+  width: var(--axo-icon-header-glyph);
+  height: var(--axo-icon-header-glyph);
   display: block;
 }
 
@@ -19532,7 +19538,7 @@ html::-webkit-scrollbar {
 
 /* 2. Primary Navigation (Phase 2 & 3: 14px, weight 500, row height ~40px, horizontal padding 12px) */
 .sb-primary-nav {
-  padding: 4px 10px 10px;
+  padding: 4px 8px 10px 10px;
   display: flex;
   flex-direction: column;
   gap: 2px;
@@ -19542,7 +19548,7 @@ html::-webkit-scrollbar {
 .sb-nav-item {
   width: 100%;
   min-height: 40px;
-  padding: 6px 12px;
+  padding: 6px 8px 6px 12px;
   border-radius: 8px;
   border: none;
   background: transparent;
@@ -19552,7 +19558,7 @@ html::-webkit-scrollbar {
   font-weight: 500;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: var(--axo-sb-icon-gap);
   cursor: pointer;
   text-align: left;
   transition: background-color 110ms ease, color 110ms ease;
@@ -19563,6 +19569,11 @@ html::-webkit-scrollbar {
 .sb-nav-item:hover {
   background: rgba(0, 0, 0, 0.045);
   color: var(--ink);
+}
+
+.sb-nav-item:focus-visible {
+  outline: 2px solid rgba(35, 131, 226, 0.45);
+  outline-offset: 1px;
 }
 
 .sb-nav-item.is-active {
@@ -19577,15 +19588,15 @@ html::-webkit-scrollbar {
 }
 
 .sb-nav-icon {
-  width: 18px;
-  height: 18px;
+  width: var(--axo-icon-nav-glyph);
+  height: var(--axo-icon-nav-glyph);
   color: var(--ink-secondary, #615d59);
   flex-shrink: 0;
 }
 
 .sb-nav-icon.is-new-problem-icon {
-  width: 18px;
-  height: 18px;
+  width: var(--axo-icon-nav-glyph);
+  height: var(--axo-icon-nav-glyph);
 }
 
 .sb-nav-item.is-active .sb-nav-icon,
@@ -19878,8 +19889,8 @@ html::-webkit-scrollbar {
 }
 
 .axo-search-item-icon svg {
-  width: 15px;
-  height: 15px;
+  width: var(--axo-icon-menu-glyph);
+  height: var(--axo-icon-menu-glyph);
   display: block;
 }
 
@@ -19971,7 +19982,7 @@ html::-webkit-scrollbar {
 
 .sb-group-hdr {
   min-height: 28px;
-  padding: 0 4px;
+  padding: 4px 8px 4px 12px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -19982,7 +19993,7 @@ html::-webkit-scrollbar {
   flex: 1 1 auto;
   min-width: 0;
   height: 28px;
-  padding: 0 6px;
+  padding: 0 4px 0 0;
   border-radius: 6px;
   border: none;
   background: transparent;
@@ -19990,7 +20001,7 @@ html::-webkit-scrollbar {
   font-family: inherit;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: var(--axo-sb-icon-gap);
   cursor: pointer;
   text-align: left;
   transition: background-color 110ms ease, color 110ms ease;
@@ -20001,9 +20012,14 @@ html::-webkit-scrollbar {
   color: var(--ink);
 }
 
+.sb-group-toggle:focus-visible {
+  outline: 2px solid rgba(35, 131, 226, 0.45);
+  outline-offset: 1px;
+}
+
 .sb-group-chevron {
-  width: 14px;
-  height: 14px;
+  width: var(--axo-icon-geo-slot);
+  height: var(--axo-icon-geo-slot);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -20012,8 +20028,8 @@ html::-webkit-scrollbar {
 }
 
 .sb-group-chevron svg {
-  width: 12px;
-  height: 12px;
+  width: var(--axo-icon-sm-glyph);
+  height: var(--axo-icon-sm-glyph);
   display: block;
 }
 
@@ -20112,8 +20128,8 @@ html::-webkit-scrollbar {
 }
 
 .sb-item-geo-icon {
-  width: 18px;
-  height: 18px;
+  width: var(--axo-icon-geo-slot);
+  height: var(--axo-icon-geo-slot);
   border-radius: 4px;
   display: inline-flex;
   align-items: center;
@@ -20135,8 +20151,8 @@ html::-webkit-scrollbar {
 }
 
 .sb-item-geo-icon svg {
-  width: 16px;
-  height: 16px;
+  width: var(--axo-icon-geo-glyph);
+  height: var(--axo-icon-geo-glyph);
   display: block;
 }
 
@@ -20226,7 +20242,7 @@ html::-webkit-scrollbar {
   line-height: 1;
   display: inline-flex;
   align-items: center;
-  gap: 4px;
+  gap: 5px;
   cursor: pointer;
   flex-shrink: 0;
   transition: background-color 110ms ease, color 110ms ease, border-color 110ms ease;
@@ -20238,14 +20254,19 @@ html::-webkit-scrollbar {
   color: var(--ink);
 }
 
+.sb-filter-trigger-btn:focus-visible {
+  outline: 2px solid rgba(35, 131, 226, 0.45);
+  outline-offset: 1px;
+}
+
 .sb-filter-trigger-btn.is-filtered {
   background: rgba(0, 117, 222, 0.09);
   color: var(--primary);
 }
 
 .sb-filter-trigger-btn svg {
-  width: 13px;
-  height: 13px;
+  width: var(--axo-icon-sm-glyph);
+  height: var(--axo-icon-sm-glyph);
   flex-shrink: 0;
 }
 
@@ -20655,7 +20676,7 @@ html::-webkit-scrollbar {
 /* 4. Footer: Account Row + Account Menu Popover (Phase 5) */
 .sb-footer {
   position: relative;
-  padding: 8px 10px;
+  padding: 8px 10px 8px 11px;
   border-top: 1px solid var(--hairline, rgba(0, 0, 0, 0.08));
   display: flex;
   flex-direction: column;
@@ -20746,8 +20767,8 @@ html::-webkit-scrollbar {
 }
 
 .sb-user-menu-icon svg {
-  width: 14px;
-  height: 14px;
+  width: var(--axo-icon-menu-glyph);
+  height: var(--axo-icon-menu-glyph);
   display: block;
 }
 
@@ -20828,8 +20849,8 @@ html::-webkit-scrollbar {
 }
 
 .sb-account-popover-item svg {
-  width: 15px;
-  height: 15px;
+  width: var(--axo-icon-menu-glyph);
+  height: var(--axo-icon-menu-glyph);
   color: var(--ink-secondary, #615d59);
   flex-shrink: 0;
 }
@@ -22911,35 +22932,8 @@ html::-webkit-scrollbar {
   }
 }
 
-.sb-top {
-  padding: 0 8px 0 10px;
-}
-
-.sb-brand {
-  padding: 5px 8px 5px 9px;
-  gap: 8px;
-}
-
-.sb-primary-nav {
-  padding: 4px 8px 10px 10px;
-}
-
-.sb-nav-item {
-  padding: 6px 8px 6px 12px;
-  gap: 9px;
-}
-
 .sb-scroll-region {
   padding: 4px 8px 14px 10px;
-}
-
-.sb-group-hdr {
-  padding: 4px 8px 4px 12px;
-}
-
-.sb-group-toggle {
-  padding: 0 4px 0 0;
-  gap: 6px;
 }
 
 /* AXO V9.4.1: Claude-Inspired Light Mode Two-Tier Composer (680px) & Collision-Aware Floating Upload Menu */
@@ -23339,9 +23333,10 @@ html::-webkit-scrollbar {
 
 #btn-header-guest-account,
 .header-guest-account-btn {
-  min-width: 34px;
-  height: 34px;
-  padding: 0 8px;
+  width: var(--axo-icon-mobile-hit);
+  min-width: var(--axo-icon-mobile-hit);
+  height: var(--axo-icon-mobile-hit);
+  padding: 0;
   border-radius: 999px;
   border: 1px solid rgba(15, 23, 42, 0.1);
   background: var(--surface, #ffffff);
@@ -23368,8 +23363,8 @@ html::-webkit-scrollbar {
 
 #btn-header-guest-account svg,
 .header-guest-account-btn svg {
-  width: 16px;
-  height: 16px;
+  width: var(--axo-icon-header-glyph);
+  height: var(--axo-icon-header-glyph);
   flex-shrink: 0;
 }
 
@@ -23583,7 +23578,7 @@ html::-webkit-scrollbar {
   z-index: 5;
   margin-top: auto;
   flex-shrink: 0;
-  padding: 8px 10px;
+  padding: 8px 10px 8px 11px;
   border-top: 1px solid var(--hairline, rgba(0, 0, 0, 0.08));
   background: var(--canvas-soft, #f6f5f4);
 }
@@ -23668,11 +23663,21 @@ html::-webkit-scrollbar {
 .sb-guest-login-label {
   font-size: 14px;
   font-weight: 500;
-  line-height: 1.3;
   color: #37352f;
+  line-height: 1.3;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+/* AXO V9.4.11: Align Guest footer label column (49px) and icon axis (31px) with Nav & Problem items */
+#left-sidebar #sb-guest-account-btn.sb-guest-login-btn {
+  gap: 8px;
+}
+
+#left-sidebar .sb-guest-login-icon svg {
+  width: var(--axo-icon-nav-glyph);
+  height: var(--axo-icon-nav-glyph);
 }
 
 .header-guest-account-wrap {
