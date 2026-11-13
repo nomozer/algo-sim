@@ -1,0 +1,15 @@
+{
+  "run_id": "semantic-to-scene3d-verified-simulation",
+  "generated_at_utc": "2026-11-13T06:30:52.433030+00:00",
+  "head": "6e3989ba5dda57f3b3369551592d832aff9251a1",
+  "contract": "angle-construction/1 on angle quantities (additive field; no existing field changed); envelope schema hybrid-route-d-simulation/4 unchanged; CACHE_VERSION 132 → 133",
+  "existing_contract_reused": "Scene3D objects already carry id, type, producer, depends, dependency_edges, source provenance, formation steps (depends_on, preconditions, created_ids, verification_refs) and exact coordinates; no parallel schema was created",
+  "source_vs_derived_vs_helper": {
+    "SOURCE": "free points / given objects (origin free, display_group given)",
+    "DERIVED": "construct_* producers with depends (e.g. G via midpoint + divide_segment, H via project_onto)",
+    "VISUAL_HELPER": "angle_construction arms/arc/right-angle marks: no new typed fact, not pickable, not in depends"
+  },
+  "proof_carrying": "every angle_construction lists the checks it passed (checks[]) and is emitted only if cos² of the drawn angle equals the measured value exactly; otherwise ANGLE_CONSTRUCTION_UNBOUND in diagnostics",
+  "frontend_engine": "none added: the renderer only re-checks (fail-closed) and interpolates a presentation arc; purity guard in scene3d.test.tsx",
+  "compatibility": "older envelopes without the field render as before (field optional); cached 132 rows MISS under 133 (test_cache_angle_construction_invalidation.py)"
+}

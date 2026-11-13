@@ -1,0 +1,8 @@
+{
+  "run_id": "semantic-to-scene3d-verified-simulation",
+  "generated_at_utc": "2026-11-13T06:30:52.433030+00:00",
+  "head": "6e3989ba5dda57f3b3369551592d832aff9251a1",
+  "status": "NOT_MEASURED",
+  "why": "no independent transcriber/scorer; the agent wrote the constructions and all checks (AGENT_VERIFIED_DIAGNOSTIC)",
+  "reserved_pool_rows": 94
+}

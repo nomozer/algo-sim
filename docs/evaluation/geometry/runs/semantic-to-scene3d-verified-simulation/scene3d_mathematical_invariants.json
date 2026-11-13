@@ -1,0 +1,636 @@
+{
+  "run_id": "semantic-to-scene3d-verified-simulation",
+  "head": "6e3989ba5dda57f3b3369551592d832aff9251a1",
+  "oracle": "AGENT_VERIFIED_DIAGNOSTIC: exact Fractions and the envelope's own chart_metric G, written independently of the construction code",
+  "inputs": "synthetic goal probes + controlled-vision agent transcriptions (development/exposed); only SERVED scenes are checked",
+  "witness_window": {
+    "good_scene_all_ok": true,
+    "tampered_scenes_caught": {
+      "foot_moved_off_plane": true,
+      "arm_moved": true,
+      "value_changed": true
+    }
+  },
+  "served_scenes": 26,
+  "served": [
+    "probe:angle_line_plane",
+    "probe:angle_line_plane_lateral",
+    "probe:angle_line_plane_tetra",
+    "probe:angle_line_line_cross",
+    "probe:angle_line_line_skew",
+    "probe:angle_right",
+    "probe:dihedral_pyramid",
+    "probe:dihedral_prism",
+    "probe:distance_point_plane",
+    "probe:distance_point_line",
+    "probe:distance_skew_lines",
+    "probe:distance_skew_cuboid",
+    "probe:projection_named",
+    "probe:midpoint_length",
+    "probe:volume_pyramid",
+    "probe:volume_regular_pyramid",
+    "probe:centroid_foot",
+    "probe:face_perp_base",
+    "probe:late_square_side",
+    "controlled_vision:vmmu_r247",
+    "controlled_vision:vmmu_r270",
+    "controlled_vision:vmmu_r273",
+    "controlled_vision:vmmu_r298",
+    "controlled_vision:vmmu_r375",
+    "controlled_vision:vmmu_r476",
+    "controlled_vision:vmmu_r492"
+  ],
+  "checks_total": 95,
+  "checks_failed": 0,
+  "checks_by_kind": {
+    "angle_cos_sq_equals_measure": 9,
+    "projection_foot_on_plane": 4,
+    "vertex_on_plane": 4,
+    "perpendicular_to_plane_in_G": 4,
+    "foot_is_second_arm": 4,
+    "first_arm_through_from": 4,
+    "altitude_perpendicular_to_base_in_G": 39,
+    "helper_is_second_arm": 1,
+    "helper_parallel_to_second_line": 1,
+    "rays_perpendicular_to_common_line_in_G": 3,
+    "distance_foot_on_plane": 3,
+    "distance_leg_perpendicular_in_G": 6,
+    "distance_length_equals_value": 6,
+    "projection_foot_on_line": 2,
+    "projection_leg_perpendicular_in_G": 2,
+    "distance_foot_on_line": 3
+  },
+  "failures": [],
+  "checks": [
+    {
+      "case": "probe:angle_line_plane",
+      "object": "kq_q1",
+      "check": "angle_cos_sq_equals_measure",
+      "ok": true
+    },
+    {
+      "case": "probe:angle_line_plane",
+      "object": "kq_q1",
+      "check": "projection_foot_on_plane",
+      "ok": true
+    },
+    {
+      "case": "probe:angle_line_plane",
+      "object": "kq_q1",
+      "check": "vertex_on_plane",
+      "ok": true
+    },
+    {
+      "case": "probe:angle_line_plane",
+      "object": "kq_q1",
+      "check": "perpendicular_to_plane_in_G",
+      "ok": true
+    },
+    {
+      "case": "probe:angle_line_plane",
+      "object": "kq_q1",
+      "check": "foot_is_second_arm",
+      "ok": true
+    },
+    {
+      "case": "probe:angle_line_plane",
+      "object": "kq_q1",
+      "check": "first_arm_through_from",
+      "ok": true
+    },
+    {
+      "case": "probe:angle_line_plane",
+      "object": "canh_ben_S_A",
+      "check": "altitude_perpendicular_to_base_in_G",
+      "ok": true
+    },
+    {
+      "case": "probe:angle_line_plane_lateral",
+      "object": "kq_q1",
+      "check": "angle_cos_sq_equals_measure",
+      "ok": true
+    },
+    {
+      "case": "probe:angle_line_plane_lateral",
+      "object": "kq_q1",
+      "check": "projection_foot_on_plane",
+      "ok": true
+    },
+    {
+      "case": "probe:angle_line_plane_lateral",
+      "object": "kq_q1",
+      "check": "vertex_on_plane",
+      "ok": true
+    },
+    {
+      "case": "probe:angle_line_plane_lateral",
+      "object": "kq_q1",
+      "check": "perpendicular_to_plane_in_G",
+      "ok": true
+    },
+    {
+      "case": "probe:angle_line_plane_lateral",
+      "object": "kq_q1",
+      "check": "foot_is_second_arm",
+      "ok": true
+    },
+    {
+      "case": "probe:angle_line_plane_lateral",
+      "object": "kq_q1",
+      "check": "first_arm_through_from",
+      "ok": true
+    },
+    {
+      "case": "probe:angle_line_plane_lateral",
+      "object": "canh_ben_S_A",
+      "check": "altitude_perpendicular_to_base_in_G",
+      "ok": true
+    },
+    {
+      "case": "probe:angle_line_plane_tetra",
+      "object": "kq_q1",
+      "check": "angle_cos_sq_equals_measure",
+      "ok": true
+    },
+    {
+      "case": "probe:angle_line_plane_tetra",
+      "object": "kq_q1",
+      "check": "projection_foot_on_plane",
+      "ok": true
+    },
+    {
+      "case": "probe:angle_line_plane_tetra",
+      "object": "kq_q1",
+      "check": "vertex_on_plane",
+      "ok": true
+    },
+    {
+      "case": "probe:angle_line_plane_tetra",
+      "object": "kq_q1",
+      "check": "perpendicular_to_plane_in_G",
+      "ok": true
+    },
+    {
+      "case": "probe:angle_line_plane_tetra",
+      "object": "kq_q1",
+      "check": "foot_is_second_arm",
+      "ok": true
+    },
+    {
+      "case": "probe:angle_line_plane_tetra",
+      "object": "kq_q1",
+      "check": "first_arm_through_from",
+      "ok": true
+    },
+    {
+      "case": "probe:angle_line_line_cross",
+      "object": "kq_q1",
+      "check": "angle_cos_sq_equals_measure",
+      "ok": true
+    },
+    {
+      "case": "probe:angle_line_line_cross",
+      "object": "canh_ben_S_A",
+      "check": "altitude_perpendicular_to_base_in_G",
+      "ok": true
+    },
+    {
+      "case": "probe:angle_line_line_skew",
+      "object": "kq_q1",
+      "check": "angle_cos_sq_equals_measure",
+      "ok": true
+    },
+    {
+      "case": "probe:angle_line_line_skew",
+      "object": "kq_q1",
+      "check": "helper_is_second_arm",
+      "ok": true
+    },
+    {
+      "case": "probe:angle_line_line_skew",
+      "object": "kq_q1",
+      "check": "helper_parallel_to_second_line",
+      "ok": true
+    },
+    {
+      "case": "probe:angle_line_line_skew",
+      "object": "canh_ben_A_A_prime",
+      "check": "altitude_perpendicular_to_base_in_G",
+      "ok": true
+    },
+    {
+      "case": "probe:angle_line_line_skew",
+      "object": "canh_ben_B_B_prime",
+      "check": "altitude_perpendicular_to_base_in_G",
+      "ok": true
+    },
+    {
+      "case": "probe:angle_line_line_skew",
+      "object": "canh_ben_C_C_prime",
+      "check": "altitude_perpendicular_to_base_in_G",
+      "ok": true
+    },
+    {
+      "case": "probe:angle_line_line_skew",
+      "object": "canh_ben_D_D_prime",
+      "check": "altitude_perpendicular_to_base_in_G",
+      "ok": true
+    },
+    {
+      "case": "probe:angle_right",
+      "object": "canh_ben_S_A",
+      "check": "altitude_perpendicular_to_base_in_G",
+      "ok": true
+    },
+    {
+      "case": "probe:dihedral_pyramid",
+      "object": "kq_q1",
+      "check": "angle_cos_sq_equals_measure",
+      "ok": true
+    },
+    {
+      "case": "probe:dihedral_pyramid",
+      "object": "kq_q1",
+      "check": "rays_perpendicular_to_common_line_in_G",
+      "ok": true
+    },
+    {
+      "case": "probe:dihedral_pyramid",
+      "object": "canh_ben_S_A",
+      "check": "altitude_perpendicular_to_base_in_G",
+      "ok": true
+    },
+    {
+      "case": "probe:dihedral_prism",
+      "object": "kq_q1",
+      "check": "angle_cos_sq_equals_measure",
+      "ok": true
+    },
+    {
+      "case": "probe:dihedral_prism",
+      "object": "kq_q1",
+      "check": "rays_perpendicular_to_common_line_in_G",
+      "ok": true
+    },
+    {
+      "case": "probe:dihedral_prism",
+      "object": "canh_ben_A_A_prime",
+      "check": "altitude_perpendicular_to_base_in_G",
+      "ok": true
+    },
+    {
+      "case": "probe:dihedral_prism",
+      "object": "canh_ben_B_B_prime",
+      "check": "altitude_perpendicular_to_base_in_G",
+      "ok": true
+    },
+    {
+      "case": "probe:dihedral_prism",
+      "object": "canh_ben_C_C_prime",
+      "check": "altitude_perpendicular_to_base_in_G",
+      "ok": true
+    },
+    {
+      "case": "probe:distance_point_plane",
+      "object": "kq_q1",
+      "check": "distance_foot_on_plane",
+      "ok": true
+    },
+    {
+      "case": "probe:distance_point_plane",
+      "object": "kq_q1",
+      "check": "distance_leg_perpendicular_in_G",
+      "ok": true
+    },
+    {
+      "case": "probe:distance_point_plane",
+      "object": "kq_q1",
+      "check": "distance_length_equals_value",
+      "ok": true
+    },
+    {
+      "case": "probe:distance_point_plane",
+      "object": "canh_ben_S_A",
+      "check": "altitude_perpendicular_to_base_in_G",
+      "ok": true
+    },
+    {
+      "case": "probe:distance_point_line",
+      "object": "H",
+      "check": "projection_foot_on_line",
+      "ok": true
+    },
+    {
+      "case": "probe:distance_point_line",
+      "object": "H",
+      "check": "projection_leg_perpendicular_in_G",
+      "ok": true
+    },
+    {
+      "case": "probe:distance_point_line",
+      "object": "canh_ben_S_A",
+      "check": "altitude_perpendicular_to_base_in_G",
+      "ok": true
+    },
+    {
+      "case": "probe:distance_skew_lines",
+      "object": "kq_q1",
+      "check": "distance_foot_on_line",
+      "ok": true
+    },
+    {
+      "case": "probe:distance_skew_lines",
+      "object": "kq_q1",
+      "check": "distance_leg_perpendicular_in_G",
+      "ok": true
+    },
+    {
+      "case": "probe:distance_skew_lines",
+      "object": "kq_q1",
+      "check": "distance_length_equals_value",
+      "ok": true
+    },
+    {
+      "case": "probe:distance_skew_lines",
+      "object": "canh_ben_S_A",
+      "check": "altitude_perpendicular_to_base_in_G",
+      "ok": true
+    },
+    {
+      "case": "probe:distance_skew_cuboid",
+      "object": "kq_q1",
+      "check": "distance_foot_on_line",
+      "ok": true
+    },
+    {
+      "case": "probe:distance_skew_cuboid",
+      "object": "kq_q1",
+      "check": "distance_leg_perpendicular_in_G",
+      "ok": true
+    },
+    {
+      "case": "probe:distance_skew_cuboid",
+      "object": "kq_q1",
+      "check": "distance_length_equals_value",
+      "ok": true
+    },
+    {
+      "case": "probe:distance_skew_cuboid",
+      "object": "canh_ben_A_A_prime",
+      "check": "altitude_perpendicular_to_base_in_G",
+      "ok": true
+    },
+    {
+      "case": "probe:distance_skew_cuboid",
+      "object": "canh_ben_B_B_prime",
+      "check": "altitude_perpendicular_to_base_in_G",
+      "ok": true
+    },
+    {
+      "case": "probe:distance_skew_cuboid",
+      "object": "canh_ben_C_C_prime",
+      "check": "altitude_perpendicular_to_base_in_G",
+      "ok": true
+    },
+    {
+      "case": "probe:distance_skew_cuboid",
+      "object": "canh_ben_D_D_prime",
+      "check": "altitude_perpendicular_to_base_in_G",
+      "ok": true
+    },
+    {
+      "case": "probe:projection_named",
+      "object": "H",
+      "check": "projection_foot_on_line",
+      "ok": true
+    },
+    {
+      "case": "probe:projection_named",
+      "object": "H",
+      "check": "projection_leg_perpendicular_in_G",
+      "ok": true
+    },
+    {
+      "case": "probe:projection_named",
+      "object": "canh_ben_S_A",
+      "check": "altitude_perpendicular_to_base_in_G",
+      "ok": true
+    },
+    {
+      "case": "probe:midpoint_length",
+      "object": "canh_ben_S_A",
+      "check": "altitude_perpendicular_to_base_in_G",
+      "ok": true
+    },
+    {
+      "case": "probe:volume_pyramid",
+      "object": "canh_ben_S_A",
+      "check": "altitude_perpendicular_to_base_in_G",
+      "ok": true
+    },
+    {
+      "case": "probe:centroid_foot",
+      "object": "doan_gt_p4",
+      "check": "altitude_perpendicular_to_base_in_G",
+      "ok": true
+    },
+    {
+      "case": "probe:late_square_side",
+      "object": "kq_q1",
+      "check": "distance_foot_on_plane",
+      "ok": true
+    },
+    {
+      "case": "probe:late_square_side",
+      "object": "kq_q1",
+      "check": "distance_leg_perpendicular_in_G",
+      "ok": true
+    },
+    {
+      "case": "probe:late_square_side",
+      "object": "kq_q1",
+      "check": "distance_length_equals_value",
+      "ok": true
+    },
+    {
+      "case": "probe:late_square_side",
+      "object": "canh_ben_S_A",
+      "check": "altitude_perpendicular_to_base_in_G",
+      "ok": true
+    },
+    {
+      "case": "controlled_vision:vmmu_r247",
+      "object": "kq_q1",
+      "check": "distance_foot_on_line",
+      "ok": true
+    },
+    {
+      "case": "controlled_vision:vmmu_r247",
+      "object": "kq_q1",
+      "check": "distance_leg_perpendicular_in_G",
+      "ok": true
+    },
+    {
+      "case": "controlled_vision:vmmu_r247",
+      "object": "kq_q1",
+      "check": "distance_length_equals_value",
+      "ok": true
+    },
+    {
+      "case": "controlled_vision:vmmu_r247",
+      "object": "canh_ben_A_A_prime",
+      "check": "altitude_perpendicular_to_base_in_G",
+      "ok": true
+    },
+    {
+      "case": "controlled_vision:vmmu_r247",
+      "object": "canh_ben_B_B_prime",
+      "check": "altitude_perpendicular_to_base_in_G",
+      "ok": true
+    },
+    {
+      "case": "controlled_vision:vmmu_r247",
+      "object": "canh_ben_C_C_prime",
+      "check": "altitude_perpendicular_to_base_in_G",
+      "ok": true
+    },
+    {
+      "case": "controlled_vision:vmmu_r247",
+      "object": "canh_ben_D_D_prime",
+      "check": "altitude_perpendicular_to_base_in_G",
+      "ok": true
+    },
+    {
+      "case": "controlled_vision:vmmu_r270",
+      "object": "canh_ben_A_A_prime",
+      "check": "altitude_perpendicular_to_base_in_G",
+      "ok": true
+    },
+    {
+      "case": "controlled_vision:vmmu_r270",
+      "object": "canh_ben_B_B_prime",
+      "check": "altitude_perpendicular_to_base_in_G",
+      "ok": true
+    },
+    {
+      "case": "controlled_vision:vmmu_r270",
+      "object": "canh_ben_C_C_prime",
+      "check": "altitude_perpendicular_to_base_in_G",
+      "ok": true
+    },
+    {
+      "case": "controlled_vision:vmmu_r273",
+      "object": "canh_ben_S_A",
+      "check": "altitude_perpendicular_to_base_in_G",
+      "ok": true
+    },
+    {
+      "case": "controlled_vision:vmmu_r298",
+      "object": "canh_ben_A_A_prime",
+      "check": "altitude_perpendicular_to_base_in_G",
+      "ok": true
+    },
+    {
+      "case": "controlled_vision:vmmu_r298",
+      "object": "canh_ben_B_B_prime",
+      "check": "altitude_perpendicular_to_base_in_G",
+      "ok": true
+    },
+    {
+      "case": "controlled_vision:vmmu_r298",
+      "object": "canh_ben_C_C_prime",
+      "check": "altitude_perpendicular_to_base_in_G",
+      "ok": true
+    },
+    {
+      "case": "controlled_vision:vmmu_r375",
+      "object": "kq_q1",
+      "check": "distance_foot_on_plane",
+      "ok": true
+    },
+    {
+      "case": "controlled_vision:vmmu_r375",
+      "object": "kq_q1",
+      "check": "distance_leg_perpendicular_in_G",
+      "ok": true
+    },
+    {
+      "case": "controlled_vision:vmmu_r375",
+      "object": "kq_q1",
+      "check": "distance_length_equals_value",
+      "ok": true
+    },
+    {
+      "case": "controlled_vision:vmmu_r476",
+      "object": "kq_q1",
+      "check": "angle_cos_sq_equals_measure",
+      "ok": true
+    },
+    {
+      "case": "controlled_vision:vmmu_r476",
+      "object": "kq_q1",
+      "check": "rays_perpendicular_to_common_line_in_G",
+      "ok": true
+    },
+    {
+      "case": "controlled_vision:vmmu_r476",
+      "object": "canh_ben_S_A",
+      "check": "altitude_perpendicular_to_base_in_G",
+      "ok": true
+    },
+    {
+      "case": "controlled_vision:vmmu_r492",
+      "object": "kq_q1",
+      "check": "angle_cos_sq_equals_measure",
+      "ok": true
+    },
+    {
+      "case": "controlled_vision:vmmu_r492",
+      "object": "kq_q1",
+      "check": "projection_foot_on_plane",
+      "ok": true
+    },
+    {
+      "case": "controlled_vision:vmmu_r492",
+      "object": "kq_q1",
+      "check": "vertex_on_plane",
+      "ok": true
+    },
+    {
+      "case": "controlled_vision:vmmu_r492",
+      "object": "kq_q1",
+      "check": "perpendicular_to_plane_in_G",
+      "ok": true
+    },
+    {
+      "case": "controlled_vision:vmmu_r492",
+      "object": "kq_q1",
+      "check": "foot_is_second_arm",
+      "ok": true
+    },
+    {
+      "case": "controlled_vision:vmmu_r492",
+      "object": "kq_q1",
+      "check": "first_arm_through_from",
+      "ok": true
+    },
+    {
+      "case": "controlled_vision:vmmu_r492",
+      "object": "canh_ben_A_A_prime",
+      "check": "altitude_perpendicular_to_base_in_G",
+      "ok": true
+    },
+    {
+      "case": "controlled_vision:vmmu_r492",
+      "object": "canh_ben_B_B_prime",
+      "check": "altitude_perpendicular_to_base_in_G",
+      "ok": true
+    },
+    {
+      "case": "controlled_vision:vmmu_r492",
+      "object": "canh_ben_C_C_prime",
+      "check": "altitude_perpendicular_to_base_in_G",
+      "ok": true
+    }
+  ]
+}

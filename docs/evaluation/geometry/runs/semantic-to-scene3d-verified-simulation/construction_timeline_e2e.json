@@ -1,0 +1,686 @@
+{
+  "browser": "157.0.8103.78",
+  "headless": true,
+  "backend": "measured_app loopback, HYBRID_ROUTE_MODE=local-first, ALLOW_LIVE_AI=0",
+  "rule": "angle construction absent before the conclusion step, present (one) at it; steps walked with the real ←/→ buttons",
+  "rows": [
+    {
+      "case": "angle_line_plane",
+      "viewport": "1920x1080",
+      "construction_only_at_conclusion": true,
+      "steps": [
+        {
+          "step": 1,
+          "of": 6,
+          "angle_construction_ids": [],
+          "witness_ids": [],
+          "rendered": 5,
+          "next_ms": 90.5
+        },
+        {
+          "step": 2,
+          "of": 6,
+          "angle_construction_ids": [],
+          "witness_ids": [],
+          "rendered": 7,
+          "next_ms": 130.6000000005588
+        },
+        {
+          "step": 3,
+          "of": 6,
+          "angle_construction_ids": [],
+          "witness_ids": [],
+          "rendered": 10,
+          "next_ms": 164.3999999994412
+        },
+        {
+          "step": 4,
+          "of": 6,
+          "angle_construction_ids": [],
+          "witness_ids": [],
+          "rendered": 11,
+          "next_ms": 117.70000000018626
+        },
+        {
+          "step": 5,
+          "of": 6,
+          "angle_construction_ids": [],
+          "witness_ids": [],
+          "rendered": 12,
+          "next_ms": 104.59999999962747
+        },
+        {
+          "step": 6,
+          "of": 6,
+          "angle_construction_ids": [
+            "kq_q1"
+          ],
+          "witness_ids": [],
+          "rendered": 13
+        }
+      ]
+    },
+    {
+      "case": "angle_line_plane",
+      "viewport": "1366x768",
+      "construction_only_at_conclusion": true,
+      "steps": [
+        {
+          "step": 1,
+          "of": 6,
+          "angle_construction_ids": [],
+          "witness_ids": [],
+          "rendered": 5,
+          "next_ms": 65.6000000005588
+        },
+        {
+          "step": 2,
+          "of": 6,
+          "angle_construction_ids": [],
+          "witness_ids": [],
+          "rendered": 7,
+          "next_ms": 69.8999999994412
+        },
+        {
+          "step": 3,
+          "of": 6,
+          "angle_construction_ids": [],
+          "witness_ids": [],
+          "rendered": 10,
+          "next_ms": 82.20000000018626
+        },
+        {
+          "step": 4,
+          "of": 6,
+          "angle_construction_ids": [],
+          "witness_ids": [],
+          "rendered": 11,
+          "next_ms": 82.8999999994412
+        },
+        {
+          "step": 5,
+          "of": 6,
+          "angle_construction_ids": [],
+          "witness_ids": [],
+          "rendered": 12,
+          "next_ms": 89.69999999925494
+        },
+        {
+          "step": 6,
+          "of": 6,
+          "angle_construction_ids": [
+            "kq_q1"
+          ],
+          "witness_ids": [],
+          "rendered": 13
+        }
+      ]
+    },
+    {
+      "case": "angle_line_plane",
+      "viewport": "768x1024",
+      "construction_only_at_conclusion": true,
+      "steps": [
+        {
+          "step": 1,
+          "of": 6,
+          "angle_construction_ids": [],
+          "witness_ids": [],
+          "rendered": 5,
+          "next_ms": 68
+        },
+        {
+          "step": 2,
+          "of": 6,
+          "angle_construction_ids": [],
+          "witness_ids": [],
+          "rendered": 7,
+          "next_ms": 85.90000000037253
+        },
+        {
+          "step": 3,
+          "of": 6,
+          "angle_construction_ids": [],
+          "witness_ids": [],
+          "rendered": 10,
+          "next_ms": 81.79999999981374
+        },
+        {
+          "step": 4,
+          "of": 6,
+          "angle_construction_ids": [],
+          "witness_ids": [],
+          "rendered": 11,
+          "next_ms": 76.20000000018626
+        },
+        {
+          "step": 5,
+          "of": 6,
+          "angle_construction_ids": [],
+          "witness_ids": [],
+          "rendered": 12,
+          "next_ms": 91.59999999962747
+        },
+        {
+          "step": 6,
+          "of": 6,
+          "angle_construction_ids": [
+            "kq_q1"
+          ],
+          "witness_ids": [],
+          "rendered": 13
+        }
+      ]
+    },
+    {
+      "case": "angle_line_plane",
+      "viewport": "390x844",
+      "construction_only_at_conclusion": true,
+      "steps": [
+        {
+          "step": 1,
+          "of": 6,
+          "angle_construction_ids": [],
+          "witness_ids": [],
+          "rendered": 5,
+          "next_ms": 62.5
+        },
+        {
+          "step": 2,
+          "of": 6,
+          "angle_construction_ids": [],
+          "witness_ids": [],
+          "rendered": 7,
+          "next_ms": 65.5
+        },
+        {
+          "step": 3,
+          "of": 6,
+          "angle_construction_ids": [],
+          "witness_ids": [],
+          "rendered": 10,
+          "next_ms": 80.19999999925494
+        },
+        {
+          "step": 4,
+          "of": 6,
+          "angle_construction_ids": [],
+          "witness_ids": [],
+          "rendered": 11,
+          "next_ms": 77.20000000018626
+        },
+        {
+          "step": 5,
+          "of": 6,
+          "angle_construction_ids": [],
+          "witness_ids": [],
+          "rendered": 12,
+          "next_ms": 89.90000000037253
+        },
+        {
+          "step": 6,
+          "of": 6,
+          "angle_construction_ids": [
+            "kq_q1"
+          ],
+          "witness_ids": [],
+          "rendered": 13
+        }
+      ]
+    },
+    {
+      "case": "dihedral",
+      "viewport": "1920x1080",
+      "construction_only_at_conclusion": true,
+      "steps": [
+        {
+          "step": 1,
+          "of": 6,
+          "angle_construction_ids": [],
+          "witness_ids": [],
+          "rendered": 5,
+          "next_ms": 94.40000000037253
+        },
+        {
+          "step": 2,
+          "of": 6,
+          "angle_construction_ids": [],
+          "witness_ids": [],
+          "rendered": 7,
+          "next_ms": 100.29999999981374
+        },
+        {
+          "step": 3,
+          "of": 6,
+          "angle_construction_ids": [],
+          "witness_ids": [],
+          "rendered": 10,
+          "next_ms": 89.70000000018626
+        },
+        {
+          "step": 4,
+          "of": 6,
+          "angle_construction_ids": [],
+          "witness_ids": [],
+          "rendered": 11,
+          "next_ms": 110.70000000018626
+        },
+        {
+          "step": 5,
+          "of": 6,
+          "angle_construction_ids": [],
+          "witness_ids": [],
+          "rendered": 12,
+          "next_ms": 106.8999999994412
+        },
+        {
+          "step": 6,
+          "of": 6,
+          "angle_construction_ids": [
+            "kq_q1"
+          ],
+          "witness_ids": [],
+          "rendered": 13
+        }
+      ]
+    },
+    {
+      "case": "dihedral",
+      "viewport": "1366x768",
+      "construction_only_at_conclusion": true,
+      "steps": [
+        {
+          "step": 1,
+          "of": 6,
+          "angle_construction_ids": [],
+          "witness_ids": [],
+          "rendered": 5,
+          "next_ms": 60.60000000055879
+        },
+        {
+          "step": 2,
+          "of": 6,
+          "angle_construction_ids": [],
+          "witness_ids": [],
+          "rendered": 7,
+          "next_ms": 70
+        },
+        {
+          "step": 3,
+          "of": 6,
+          "angle_construction_ids": [],
+          "witness_ids": [],
+          "rendered": 10,
+          "next_ms": 83.40000000037253
+        },
+        {
+          "step": 4,
+          "of": 6,
+          "angle_construction_ids": [],
+          "witness_ids": [],
+          "rendered": 11,
+          "next_ms": 83
+        },
+        {
+          "step": 5,
+          "of": 6,
+          "angle_construction_ids": [],
+          "witness_ids": [],
+          "rendered": 12,
+          "next_ms": 95.5
+        },
+        {
+          "step": 6,
+          "of": 6,
+          "angle_construction_ids": [
+            "kq_q1"
+          ],
+          "witness_ids": [],
+          "rendered": 13
+        }
+      ]
+    },
+    {
+      "case": "dihedral",
+      "viewport": "768x1024",
+      "construction_only_at_conclusion": true,
+      "steps": [
+        {
+          "step": 1,
+          "of": 6,
+          "angle_construction_ids": [],
+          "witness_ids": [],
+          "rendered": 5,
+          "next_ms": 62.299999999813735
+        },
+        {
+          "step": 2,
+          "of": 6,
+          "angle_construction_ids": [],
+          "witness_ids": [],
+          "rendered": 7,
+          "next_ms": 77.09999999962747
+        },
+        {
+          "step": 3,
+          "of": 6,
+          "angle_construction_ids": [],
+          "witness_ids": [],
+          "rendered": 10,
+          "next_ms": 80.6000000005588
+        },
+        {
+          "step": 4,
+          "of": 6,
+          "angle_construction_ids": [],
+          "witness_ids": [],
+          "rendered": 11,
+          "next_ms": 81.1000000005588
+        },
+        {
+          "step": 5,
+          "of": 6,
+          "angle_construction_ids": [],
+          "witness_ids": [],
+          "rendered": 12,
+          "next_ms": 94.79999999981374
+        },
+        {
+          "step": 6,
+          "of": 6,
+          "angle_construction_ids": [
+            "kq_q1"
+          ],
+          "witness_ids": [],
+          "rendered": 13
+        }
+      ]
+    },
+    {
+      "case": "dihedral",
+      "viewport": "390x844",
+      "construction_only_at_conclusion": true,
+      "steps": [
+        {
+          "step": 1,
+          "of": 6,
+          "angle_construction_ids": [],
+          "witness_ids": [],
+          "rendered": 5,
+          "next_ms": 62.5
+        },
+        {
+          "step": 2,
+          "of": 6,
+          "angle_construction_ids": [],
+          "witness_ids": [],
+          "rendered": 7,
+          "next_ms": 72.1000000005588
+        },
+        {
+          "step": 3,
+          "of": 6,
+          "angle_construction_ids": [],
+          "witness_ids": [],
+          "rendered": 10,
+          "next_ms": 79.90000000037253
+        },
+        {
+          "step": 4,
+          "of": 6,
+          "angle_construction_ids": [],
+          "witness_ids": [],
+          "rendered": 11,
+          "next_ms": 83
+        },
+        {
+          "step": 5,
+          "of": 6,
+          "angle_construction_ids": [],
+          "witness_ids": [],
+          "rendered": 12,
+          "next_ms": 93.59999999962747
+        },
+        {
+          "step": 6,
+          "of": 6,
+          "angle_construction_ids": [
+            "kq_q1"
+          ],
+          "witness_ids": [],
+          "rendered": 13
+        }
+      ]
+    },
+    {
+      "case": "skew_lines_angle",
+      "viewport": "1366x768",
+      "construction_only_at_conclusion": true,
+      "steps": [
+        {
+          "step": 1,
+          "of": 6,
+          "angle_construction_ids": [],
+          "witness_ids": [],
+          "rendered": 5,
+          "next_ms": 69.5
+        },
+        {
+          "step": 2,
+          "of": 6,
+          "angle_construction_ids": [],
+          "witness_ids": [],
+          "rendered": 10,
+          "next_ms": 80.79999999981374
+        },
+        {
+          "step": 3,
+          "of": 6,
+          "angle_construction_ids": [],
+          "witness_ids": [],
+          "rendered": 14,
+          "next_ms": 93.20000000018626
+        },
+        {
+          "step": 4,
+          "of": 6,
+          "angle_construction_ids": [],
+          "witness_ids": [],
+          "rendered": 15,
+          "next_ms": 97.70000000018626
+        },
+        {
+          "step": 5,
+          "of": 6,
+          "angle_construction_ids": [],
+          "witness_ids": [],
+          "rendered": 16,
+          "next_ms": 117.70000000018626
+        },
+        {
+          "step": 6,
+          "of": 6,
+          "angle_construction_ids": [
+            "kq_q1"
+          ],
+          "witness_ids": [],
+          "rendered": 17
+        }
+      ]
+    },
+    {
+      "case": "tetra_line_plane",
+      "viewport": "1366x768",
+      "construction_only_at_conclusion": true,
+      "steps": [
+        {
+          "step": 1,
+          "of": 6,
+          "angle_construction_ids": [],
+          "witness_ids": [],
+          "rendered": 4,
+          "next_ms": 59.700000000186265
+        },
+        {
+          "step": 2,
+          "of": 6,
+          "angle_construction_ids": [],
+          "witness_ids": [],
+          "rendered": 7,
+          "next_ms": 67.70000000018626
+        },
+        {
+          "step": 3,
+          "of": 6,
+          "angle_construction_ids": [],
+          "witness_ids": [],
+          "rendered": 10,
+          "next_ms": 75.40000000037253
+        },
+        {
+          "step": 4,
+          "of": 6,
+          "angle_construction_ids": [],
+          "witness_ids": [],
+          "rendered": 11,
+          "next_ms": 76
+        },
+        {
+          "step": 5,
+          "of": 6,
+          "angle_construction_ids": [],
+          "witness_ids": [],
+          "rendered": 12,
+          "next_ms": 88.3999999994412
+        },
+        {
+          "step": 6,
+          "of": 6,
+          "angle_construction_ids": [
+            "kq_q1"
+          ],
+          "witness_ids": [],
+          "rendered": 13
+        }
+      ]
+    },
+    {
+      "case": "distance_point_plane",
+      "viewport": "1366x768",
+      "construction_only_at_conclusion": null,
+      "steps": [
+        {
+          "step": 1,
+          "of": 6,
+          "angle_construction_ids": [],
+          "witness_ids": [],
+          "rendered": 5,
+          "next_ms": 75
+        },
+        {
+          "step": 2,
+          "of": 6,
+          "angle_construction_ids": [],
+          "witness_ids": [],
+          "rendered": 7,
+          "next_ms": 106.6000000005588
+        },
+        {
+          "step": 3,
+          "of": 6,
+          "angle_construction_ids": [],
+          "witness_ids": [],
+          "rendered": 10,
+          "next_ms": 91.6000000005588
+        },
+        {
+          "step": 4,
+          "of": 6,
+          "angle_construction_ids": [],
+          "witness_ids": [],
+          "rendered": 11,
+          "next_ms": 102.90000000037253
+        },
+        {
+          "step": 5,
+          "of": 6,
+          "angle_construction_ids": [],
+          "witness_ids": [],
+          "rendered": 12,
+          "next_ms": 95.8999999994412
+        },
+        {
+          "step": 6,
+          "of": 6,
+          "angle_construction_ids": [],
+          "witness_ids": [
+            "perpendicular:kq_q1__foot1"
+          ],
+          "rendered": 14
+        }
+      ]
+    },
+    {
+      "case": "centroid_foot_volume",
+      "viewport": "1366x768",
+      "construction_only_at_conclusion": null,
+      "steps": [
+        {
+          "step": 1,
+          "of": 7,
+          "angle_construction_ids": [],
+          "witness_ids": [],
+          "rendered": 4,
+          "next_ms": 59
+        },
+        {
+          "step": 2,
+          "of": 7,
+          "angle_construction_ids": [],
+          "witness_ids": [],
+          "rendered": 5,
+          "next_ms": 71
+        },
+        {
+          "step": 3,
+          "of": 7,
+          "angle_construction_ids": [],
+          "witness_ids": [],
+          "rendered": 8,
+          "next_ms": 66.3999999994412
+        },
+        {
+          "step": 4,
+          "of": 7,
+          "angle_construction_ids": [],
+          "witness_ids": [],
+          "rendered": 10,
+          "next_ms": 73.09999999962747
+        },
+        {
+          "step": 5,
+          "of": 7,
+          "angle_construction_ids": [],
+          "witness_ids": [],
+          "rendered": 11,
+          "next_ms": 75.20000000018626
+        },
+        {
+          "step": 6,
+          "of": 7,
+          "angle_construction_ids": [],
+          "witness_ids": [],
+          "rendered": 12,
+          "next_ms": 97.29999999981374
+        },
+        {
+          "step": 7,
+          "of": 7,
+          "angle_construction_ids": [],
+          "witness_ids": [],
+          "rendered": 12
+        }
+      ]
+    }
+  ]
+}

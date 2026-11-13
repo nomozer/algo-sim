@@ -1,0 +1,176 @@
+{
+  "run_id": "semantic-to-scene3d-verified-simulation",
+  "generated_at_utc": "2026-11-13T06:30:52.433030+00:00",
+  "head": "6e3989ba5dda57f3b3369551592d832aff9251a1",
+  "witness_window": {
+    "good_scene_violations": 0,
+    "tampered_scene_violations": 2
+  },
+  "rule": "objects: every dependency exists and is born no later; angle constructions: named points are scene points born before the conclusion; formation steps: every depends_on object was created (or reused) by an earlier step",
+  "served_scenes": 26,
+  "violations_total": 0,
+  "unit_and_e2e_tests": [
+    "backend/tests/geometry/test_angle_construction.py",
+    "frontend/src/simulations/domains/geometry/scene3d-angle-construction.test.ts (shown only from the conclusion step, hidden when its named points are absent)",
+    "construction_timeline_e2e.json (real browser, ←/→ buttons)"
+  ],
+  "recompute_on_change": "Scenes are rebuilt from the source text on every analysis (no reuse of coordinates); a changed text is a new cache key and CACHE_VERSION 133 retires 132 envelopes. Interactive parameter editing does not exist (dragging is out of scope, ARCHITECTURE_MAP invariant #31).",
+  "rows": [
+    {
+      "case": "probe:angle_line_plane",
+      "objects": 14,
+      "steps": 7,
+      "violations": []
+    },
+    {
+      "case": "probe:angle_line_plane_lateral",
+      "objects": 14,
+      "steps": 7,
+      "violations": []
+    },
+    {
+      "case": "probe:angle_line_plane_tetra",
+      "objects": 9,
+      "steps": 5,
+      "violations": []
+    },
+    {
+      "case": "probe:angle_line_line_cross",
+      "objects": 14,
+      "steps": 7,
+      "violations": []
+    },
+    {
+      "case": "probe:angle_line_line_skew",
+      "objects": 18,
+      "steps": 8,
+      "violations": []
+    },
+    {
+      "case": "probe:angle_right",
+      "objects": 14,
+      "steps": 7,
+      "violations": []
+    },
+    {
+      "case": "probe:dihedral_pyramid",
+      "objects": 14,
+      "steps": 7,
+      "violations": []
+    },
+    {
+      "case": "probe:dihedral_prism",
+      "objects": 15,
+      "steps": 8,
+      "violations": []
+    },
+    {
+      "case": "probe:distance_point_plane",
+      "objects": 13,
+      "steps": 6,
+      "violations": []
+    },
+    {
+      "case": "probe:distance_point_line",
+      "objects": 14,
+      "steps": 7,
+      "violations": []
+    },
+    {
+      "case": "probe:distance_skew_lines",
+      "objects": 14,
+      "steps": 7,
+      "violations": []
+    },
+    {
+      "case": "probe:distance_skew_cuboid",
+      "objects": 18,
+      "steps": 8,
+      "violations": []
+    },
+    {
+      "case": "probe:projection_named",
+      "objects": 14,
+      "steps": 7,
+      "violations": []
+    },
+    {
+      "case": "probe:midpoint_length",
+      "objects": 13,
+      "steps": 6,
+      "violations": []
+    },
+    {
+      "case": "probe:volume_pyramid",
+      "objects": 12,
+      "steps": 5,
+      "violations": []
+    },
+    {
+      "case": "probe:volume_regular_pyramid",
+      "objects": 13,
+      "steps": 5,
+      "violations": []
+    },
+    {
+      "case": "probe:centroid_foot",
+      "objects": 13,
+      "steps": 8,
+      "violations": []
+    },
+    {
+      "case": "probe:face_perp_base",
+      "objects": 12,
+      "steps": 5,
+      "violations": []
+    },
+    {
+      "case": "probe:late_square_side",
+      "objects": 13,
+      "steps": 6,
+      "violations": []
+    },
+    {
+      "case": "controlled_vision:vmmu_r247",
+      "objects": 18,
+      "steps": 8,
+      "violations": []
+    },
+    {
+      "case": "controlled_vision:vmmu_r270",
+      "objects": 13,
+      "steps": 6,
+      "violations": []
+    },
+    {
+      "case": "controlled_vision:vmmu_r273",
+      "objects": 10,
+      "steps": 5,
+      "violations": []
+    },
+    {
+      "case": "controlled_vision:vmmu_r298",
+      "objects": 13,
+      "steps": 6,
+      "violations": []
+    },
+    {
+      "case": "controlled_vision:vmmu_r375",
+      "objects": 14,
+      "steps": 6,
+      "violations": []
+    },
+    {
+      "case": "controlled_vision:vmmu_r476",
+      "objects": 14,
+      "steps": 7,
+      "violations": []
+    },
+    {
+      "case": "controlled_vision:vmmu_r492",
+      "objects": 15,
+      "steps": 8,
+      "violations": []
+    }
+  ]
+}

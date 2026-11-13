@@ -1,0 +1,184 @@
+{
+  "run_id": "semantic-to-scene3d-verified-simulation",
+  "generated_at_utc": "2026-11-13T06:30:52.433030+00:00",
+  "head": "6e3989ba5dda57f3b3369551592d832aff9251a1",
+  "classification": {
+    "FULLY_DETERMINED": "served with exact coordinates in a canonical chart; coordinates are LAYOUT_DERIVED (a representation choice), never fed back as source facts",
+    "DETERMINED_UP_TO_SCALE": "served when every length is a multiple of one symbol (choose_unit: built at a = 1, the unit is not a fact, answers scale back as coefficient·a^degree); a figure with NO length at all is refused MISSING_DIMENSION even when the question is scale-free (safe, capability gap)",
+    "PARAMETRIC_FAMILY": "refused (UNDERDETERMINED_POINT / AMBIGUOUS_FACT / unparsed free point); no family is drawn as if it were unique",
+    "INSUFFICIENT_FOR_REQUESTED_CONSTRUCTION": "refused or asks for confirmation; an angle construction is emitted only when it reproduces the measured value exactly"
+  },
+  "underdetermined_probes": [
+    {
+      "case": "free_height",
+      "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a. Tính thể tích khối chóp S.ABCD.",
+      "status": "REFUSED",
+      "reason": "UNDERDETERMINED_POINT"
+    },
+    {
+      "case": "free_apex_position",
+      "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA = a. Tính khoảng cách từ A đến mặt phẳng (SBC).",
+      "status": "REFUSED",
+      "reason": "UNDERDETERMINED_POINT"
+    },
+    {
+      "case": "midpoint_without_height",
+      "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2a, SA = a. Gọi H là trung điểm của cạnh AB. Tính thể tích khối chóp S.ABCD.",
+      "status": "REFUSED",
+      "reason": "UNDERDETERMINED_POINT"
+    },
+    {
+      "case": "scale_free_regular_tetra",
+      "text": "Cho tứ diện đều ABCD. Gọi M là trung điểm của CD. Tính góc giữa hai đường thẳng AC và BM.",
+      "status": "REFUSED",
+      "reason": "MISSING_DIMENSION"
+    },
+    {
+      "case": "free_point_on_edge",
+      "text": "Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh a, SA vuông góc với mặt phẳng đáy và SA = a. Gọi I là một điểm thuộc cạnh BC. Tính khoảng cách từ I đến mặt phẳng (SAB).",
+      "status": "REFUSED",
+      "reason": "LIVE_AI_DISABLED"
+    },
+    {
+      "case": "square_without_side",
+      "text": "Cho hình chóp S.ABCD có SA ⊥ (ABCD), đáy ABCD là hình vuông, biết SA = 2. Tính khoảng cách từ điểm C đến mặt phẳng (SBD).",
+      "status": "REFUSED",
+      "reason": "AMBIGUOUS_FACT"
+    }
+  ],
+  "served_unique_count": 0,
+  "served_scenes_representation": {
+    "probe:angle_line_plane": {
+      "unit_chosen_by_system": true,
+      "points_marked_layout_derived": 5,
+      "points": 5
+    },
+    "probe:angle_line_plane_lateral": {
+      "unit_chosen_by_system": true,
+      "points_marked_layout_derived": 5,
+      "points": 5
+    },
+    "probe:angle_line_plane_tetra": {
+      "unit_chosen_by_system": true,
+      "points_marked_layout_derived": 5,
+      "points": 5
+    },
+    "probe:angle_line_line_cross": {
+      "unit_chosen_by_system": true,
+      "points_marked_layout_derived": 5,
+      "points": 5
+    },
+    "probe:angle_line_line_skew": {
+      "unit_chosen_by_system": true,
+      "points_marked_layout_derived": 8,
+      "points": 8
+    },
+    "probe:angle_right": {
+      "unit_chosen_by_system": true,
+      "points_marked_layout_derived": 5,
+      "points": 5
+    },
+    "probe:dihedral_pyramid": {
+      "unit_chosen_by_system": true,
+      "points_marked_layout_derived": 5,
+      "points": 5
+    },
+    "probe:dihedral_prism": {
+      "unit_chosen_by_system": true,
+      "points_marked_layout_derived": 6,
+      "points": 6
+    },
+    "probe:distance_point_plane": {
+      "unit_chosen_by_system": true,
+      "points_marked_layout_derived": 5,
+      "points": 5
+    },
+    "probe:distance_point_line": {
+      "unit_chosen_by_system": true,
+      "points_marked_layout_derived": 5,
+      "points": 6
+    },
+    "probe:distance_skew_lines": {
+      "unit_chosen_by_system": true,
+      "points_marked_layout_derived": 5,
+      "points": 5
+    },
+    "probe:distance_skew_cuboid": {
+      "unit_chosen_by_system": true,
+      "points_marked_layout_derived": 8,
+      "points": 8
+    },
+    "probe:projection_named": {
+      "unit_chosen_by_system": true,
+      "points_marked_layout_derived": 5,
+      "points": 6
+    },
+    "probe:midpoint_length": {
+      "unit_chosen_by_system": true,
+      "points_marked_layout_derived": 5,
+      "points": 6
+    },
+    "probe:volume_pyramid": {
+      "unit_chosen_by_system": true,
+      "points_marked_layout_derived": 5,
+      "points": 5
+    },
+    "probe:volume_regular_pyramid": {
+      "unit_chosen_by_system": true,
+      "points_marked_layout_derived": 6,
+      "points": 6
+    },
+    "probe:centroid_foot": {
+      "unit_chosen_by_system": true,
+      "points_marked_layout_derived": 4,
+      "points": 6
+    },
+    "probe:face_perp_base": {
+      "unit_chosen_by_system": true,
+      "points_marked_layout_derived": 5,
+      "points": 5
+    },
+    "probe:late_square_side": {
+      "unit_chosen_by_system": false,
+      "points_marked_layout_derived": 5,
+      "points": 5
+    },
+    "controlled_vision:vmmu_r247": {
+      "unit_chosen_by_system": true,
+      "points_marked_layout_derived": 8,
+      "points": 8
+    },
+    "controlled_vision:vmmu_r270": {
+      "unit_chosen_by_system": true,
+      "points_marked_layout_derived": 6,
+      "points": 6
+    },
+    "controlled_vision:vmmu_r273": {
+      "unit_chosen_by_system": true,
+      "points_marked_layout_derived": 4,
+      "points": 4
+    },
+    "controlled_vision:vmmu_r298": {
+      "unit_chosen_by_system": true,
+      "points_marked_layout_derived": 6,
+      "points": 6
+    },
+    "controlled_vision:vmmu_r375": {
+      "unit_chosen_by_system": false,
+      "points_marked_layout_derived": 6,
+      "points": 6
+    },
+    "controlled_vision:vmmu_r476": {
+      "unit_chosen_by_system": true,
+      "points_marked_layout_derived": 5,
+      "points": 5
+    },
+    "controlled_vision:vmmu_r492": {
+      "unit_chosen_by_system": true,
+      "points_marked_layout_derived": 6,
+      "points": 6
+    }
+  },
+  "parameter_interaction": "NOT_SUPPORTED_BY_DESIGN: camera only (orbit/zoom/pan/reset); vertex dragging is out of scope (ARCHITECTURE_MAP invariant #31: frame k ⇔ trace[k])",
+  "classification_label": "VERIFIED_FACT for the probe outcomes; INFERENCE for the class descriptions"
+}

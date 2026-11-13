@@ -1,0 +1,53 @@
+{
+  "run_id": "semantic-to-scene3d-verified-simulation",
+  "generated_at_utc": "2026-11-13T06:30:52.433030+00:00",
+  "head": "6e3989ba5dda57f3b3369551592d832aff9251a1",
+  "method": "code reading (scene3d.py _TRUONG, quantity_annotations, scene3d-view renderer, geometry samples) + goal probes (semantic_to_scene_gap_matrix.json) + independent invariant checks (scene3d_mathematical_invariants.json)",
+  "object_types": {
+    "point": "SUPPORTED",
+    "line": "SUPPORTED (line3, drawn clipped)",
+    "segment": "SUPPORTED",
+    "ray": "NOT_SUPPORTED as a scene type (angle arms are drawn as segments)",
+    "plane": "SUPPORTED (plane3, measurement-only planes hidden by default)",
+    "polygon": "SUPPORTED",
+    "polyhedron (pyramid, prism, cuboid, cube, tetrahedron)": "SUPPORTED",
+    "height / altitude": "SUPPORTED with an exact perpendicular_witness when the source gives it (SA ⟂ base, projection foot); PARTIALLY_SUPPORTED for a face ⟂ base (volume correct, altitude not drawn)",
+    "median / centroid": "PARTIALLY_SUPPORTED: centroid is composed (midpoint + divide_segment) when named; medians are not scene objects of their own; unnamed centroid refused",
+    "diagonal": "SUPPORTED (segments, intersection O for regular pyramids)",
+    "projection": "SUPPORTED: point onto line (named, project_onto), point onto plane (distance witness, named foot, NEW line-plane angle foot)",
+    "intersection line of two planes": "PARTIALLY_SUPPORTED: kernel + section steps exist; the local parser does not read 'Xác định giao tuyến …' (probe intersection_planes)",
+    "section": "PARTIALLY_SUPPORTED: kernel and scene ('section' objects, geometry samples) exist; the local parser refused both section probes",
+    "auxiliary objects": "SUPPORTED (CONSTRUCT_AUXILIARY_GEOMETRY role, auto-hidden after use)"
+  },
+  "goal_geometry_before_this_run": "angles ≠ 90° drew only the two operands (8/16 served probes stayed LEVEL1_BASE_ONLY) — the gap this run closes",
+  "computed_but_not_constructed_before": [
+    "foot of the projection for a line-plane angle",
+    "vertex / arms for line-line angles",
+    "the translated parallel for skew-line angles",
+    "the plane angle of a dihedral",
+    "right-angle witness relabelled as a segment length (bug)"
+  ],
+  "heuristic_constructions_found": "none in the angle path: the renderer drew no angle at all before; layout coordinates are canonical charts marked LAYOUT_DERIVED",
+  "levels_before_after": {
+    "before": {
+      "LEVEL1_BASE_ONLY": 8,
+      "LEVEL2_GOAL_CONSTRUCTED": 8,
+      "NOT_SERVED:LIVE_AI_DISABLED": 5,
+      "NOT_SERVED:AMBIGUOUS_FACT": 1,
+      "NOT_SERVED:OUT_OF_SCOPE": 1,
+      "NOT_SERVED:MISSING_DIMENSION": 1
+    },
+    "after": {
+      "LEVEL2_GOAL_CONSTRUCTED": 18,
+      "NOT_SERVED:LIVE_AI_DISABLED": 3,
+      "LEVEL1_BASE_ONLY": 1,
+      "NOT_SERVED:OUT_OF_SCOPE": 1,
+      "NOT_SERVED:MISSING_DIMENSION": 1
+    }
+  },
+  "invariants": {
+    "served_scenes": 26,
+    "checks": 95,
+    "failed": 0
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "run_id": "semantic-to-scene3d-verified-simulation",
+  "generated_at_utc": "2026-11-13T06:30:52.433030+00:00",
+  "head": "6e3989ba5dda57f3b3369551592d832aff9251a1",
+  "projections": {
+    "point→plane": "angle foot + distance foot: on plane (covector) and leg ⟂ plane in G — scene3d_mathematical_invariants.json",
+    "point→line": "named projection H and distance foot: on line and leg ⟂ line in G",
+    "segment→plane": "the line–plane construction draws the projection segment (vertex → foot)"
+  },
+  "intersections": {
+    "line∩plane": "vertex of the line–plane angle (on line and plane)",
+    "line∩line": "vertex of intersecting-line angles; skew → no point (translated parallel instead)",
+    "plane∩plane": "common line of the dihedral (rays ⟂ it)",
+    "edge∩plane / section": "kernel exists, not reached by the local parser in this run"
+  },
+  "degenerate_handling": "unique / parallel / contained / coincident cases raise distinct kernel errors; no fake intersection is drawn (tests in test_angle_construction.py)",
+  "checks": {
+    "projection_foot_on_plane": 4,
+    "vertex_on_plane": 4,
+    "perpendicular_to_plane_in_G": 4,
+    "foot_is_second_arm": 4,
+    "altitude_perpendicular_to_base_in_G": 39,
+    "rays_perpendicular_to_common_line_in_G": 3,
+    "distance_foot_on_plane": 3,
+    "distance_leg_perpendicular_in_G": 6,
+    "projection_foot_on_line": 2,
+    "projection_leg_perpendicular_in_G": 2,
+    "distance_foot_on_line": 3
+  }
+}

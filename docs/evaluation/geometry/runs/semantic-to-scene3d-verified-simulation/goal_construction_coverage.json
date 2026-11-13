@@ -1,0 +1,34 @@
+{
+  "run_id": "semantic-to-scene3d-verified-simulation",
+  "generated_at_utc": "2026-11-13T06:30:52.433030+00:00",
+  "head": "6e3989ba5dda57f3b3369551592d832aff9251a1",
+  "source": "semantic_to_scene_gap_matrix.json (synthetic probes) + text/image acceptance",
+  "goal_types": {
+    "angle line–plane": "CONSTRUCTED (projection foot, angle arc)",
+    "angle line–line (intersecting)": "CONSTRUCTED",
+    "angle skew lines": "CONSTRUCTED (named parallel segment)",
+    "dihedral": "CONSTRUCTED (plane angle ⟂ common line)",
+    "right angle": "CONSTRUCTED (right-angle witness; hidden in mode A because it is the answer)",
+    "distance point–plane / point–line": "CONSTRUCTED (foot + right angle, pre-existing)",
+    "distance skew lines": "CONSTRUCTED (common perpendicular, pre-existing)",
+    "volume": "BASE SOLID (+ certified altitude when given; not drawn for face ⟂ base)",
+    "area": "REGION anchor (pre-existing)",
+    "section / intersection line": "NOT REACHED by the local parser (kernel exists)",
+    "sub-solid volume": "NOT_SUPPORTED"
+  },
+  "levels_after": {
+    "LEVEL2_GOAL_CONSTRUCTED": 18,
+    "NOT_SERVED:LIVE_AI_DISABLED": 3,
+    "LEVEL1_BASE_ONLY": 1,
+    "NOT_SERVED:OUT_OF_SCOPE": 1,
+    "NOT_SERVED:MISSING_DIMENSION": 1
+  },
+  "levels_before": {
+    "LEVEL1_BASE_ONLY": 8,
+    "LEVEL2_GOAL_CONSTRUCTED": 8,
+    "NOT_SERVED:LIVE_AI_DISABLED": 5,
+    "NOT_SERVED:AMBIGUOUS_FACT": 1,
+    "NOT_SERVED:OUT_OF_SCOPE": 1,
+    "NOT_SERVED:MISSING_DIMENSION": 1
+  }
+}
