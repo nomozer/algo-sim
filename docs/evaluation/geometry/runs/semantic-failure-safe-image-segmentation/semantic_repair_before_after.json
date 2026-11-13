@@ -1,0 +1,351 @@
+{
+  "run_id": "semantic-failure-safe-image-segmentation",
+  "generated_at_utc": "2026-11-13T16:58:54.855761+00:00",
+  "head": "dcbedcb0d67971beb6ba5260a7553abe55de5ee1",
+  "measured_candidate_note": "development measurement on the working product; the frozen candidate identity is in candidate_freeze.json",
+  "candidate_at_measurement": {
+    "commit": "da06829fe1b8890a878056af57830f7c066719f0",
+    "measured_system": "040de2fd63fb687203610918160b1170ad025117b2d221acf12ef25215bd831c"
+  },
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "route": "route_text_input (local-first)"
+  },
+  "command": "python docs/evaluation/geometry/runs/semantic-failure-safe-image-segmentation/tools/semantic_eval.py <before_backend>",
+  "dataset_partition": "DEVELOPMENT ONLY (DEV agent-written, REAL27 exposed, PROBES exposed); no locked W2/W3 row, no H-1",
+  "oracle_status": "AGENT_DIAGNOSTIC (expected outcomes written by the agent from geometry and the product's documented scope)",
+  "summary": {
+    "after": {
+      "DEV": {
+        "items": 37,
+        "served": 23,
+        "by_layer": {
+          "SERVED": 23,
+          "GOAL_UNDERSTOOD_UNSUPPORTED": 3,
+          "GOAL_EXTRACTION": 4,
+          "ENTITY_RESOLUTION": 1,
+          "ENTITY_REFERENCE": 1,
+          "SOURCE_GATE": 1,
+          "CLAUSE_PARTIALLY_READ": 1,
+          "SOURCE_FACTS": 3
+        },
+        "by_root_cause": {
+          "None": 23,
+          "UNSUPPORTED_GOAL_FUNCTION": 2,
+          "UNSUPPORTED_GOAL_KIND": 1,
+          "UNRECOGNIZED_GOAL": 4,
+          "UNRECOGNIZED_GEOMETRIC_ENTITY": 1,
+          "UNRESOLVED_REFERENCE": 1,
+          "SOURCE_PROVENANCE_MISSING": 1,
+          "INCOMPLETE_FACT_EXTRACTION": 1,
+          "DIAGRAM_DEPENDENT_FACT": 1,
+          "INSUFFICIENT_CONSTRAINTS": 1,
+          "SOURCE_CONFLICT": 1
+        },
+        "fully_recognized": 30,
+        "partially_recognized": 6,
+        "missing_clauses": 6,
+        "meets_expectation": 31
+      },
+      "REAL27": {
+        "items": 27,
+        "served": 8,
+        "by_layer": {
+          "SERVED": 8,
+          "RELATION_EXTRACTION": 2,
+          "GOAL_EXTRACTION": 3,
+          "GOAL_UNDERSTOOD_UNSUPPORTED": 3,
+          "PLANNER_KERNEL": 1,
+          "ENTITY_RESOLUTION": 4,
+          "SOURCE_GATE": 3,
+          "CLAUSE_PARTIALLY_READ": 2,
+          "SOURCE_FACTS": 1
+        },
+        "by_root_cause": {
+          "None": 8,
+          "UNRECOGNIZED_RELATION": 2,
+          "UNRECOGNIZED_GOAL": 3,
+          "UNSUPPORTED_GOAL_FUNCTION": 3,
+          "PLANNER_COMPOSITION_UNSUPPORTED": 1,
+          "UNRECOGNIZED_GEOMETRIC_ENTITY": 4,
+          "SOURCE_PROVENANCE_MISSING": 3,
+          "INCOMPLETE_FACT_EXTRACTION": 2,
+          "INSUFFICIENT_CONSTRAINTS": 1
+        },
+        "fully_recognized": 16,
+        "partially_recognized": 7,
+        "missing_clauses": 17
+      },
+      "PROBES": {
+        "items": 39,
+        "served": 22,
+        "by_layer": {
+          "SERVED": 22,
+          "PLANNER_KERNEL": 3,
+          "ENTITY_RESOLUTION": 8,
+          "CLAUSE_PARTIALLY_READ": 1,
+          "ENTITY_REFERENCE": 1,
+          "SOURCE_FACTS": 1,
+          "GOAL_EXTRACTION": 2,
+          "GOAL_UNDERSTOOD_UNSUPPORTED": 1
+        },
+        "by_root_cause": {
+          "None": 22,
+          "GEOMETRIC_DEGENERACY": 3,
+          "UNRECOGNIZED_GEOMETRIC_ENTITY": 8,
+          "INCOMPLETE_FACT_EXTRACTION": 1,
+          "UNRESOLVED_REFERENCE": 1,
+          "INSUFFICIENT_CONSTRAINTS": 1,
+          "UNRECOGNIZED_GOAL": 2,
+          "UNSUPPORTED_GOAL_KIND": 1
+        },
+        "fully_recognized": 27,
+        "partially_recognized": 11,
+        "missing_clauses": 12,
+        "meets_expectation": 35
+      }
+    },
+    "before": {
+      "DEV": {
+        "items": 37,
+        "served": 19,
+        "by_layer": {
+          "SERVED": 19,
+          "GOAL_EXTRACTION": 6,
+          "GOAL_UNDERSTOOD_UNSUPPORTED": 3,
+          "ENTITY_RESOLUTION": 2,
+          "ENTITY_REFERENCE": 1,
+          "SOURCE_GATE": 1,
+          "RELATION_EXTRACTION": 1,
+          "CLAUSE_PARTIALLY_READ": 1,
+          "SOURCE_FACTS": 3
+        },
+        "by_root_cause": {
+          "None": 19,
+          "UNRECOGNIZED_GOAL": 6,
+          "UNSUPPORTED_GOAL_FUNCTION": 2,
+          "UNSUPPORTED_GOAL_KIND": 1,
+          "UNRECOGNIZED_GEOMETRIC_ENTITY": 2,
+          "UNRESOLVED_REFERENCE": 1,
+          "SOURCE_PROVENANCE_MISSING": 1,
+          "UNRECOGNIZED_RELATION": 1,
+          "INCOMPLETE_FACT_EXTRACTION": 1,
+          "DIAGRAM_DEPENDENT_FACT": 1,
+          "INSUFFICIENT_CONSTRAINTS": 1,
+          "SOURCE_CONFLICT": 1
+        },
+        "fully_recognized": 26,
+        "partially_recognized": 10,
+        "missing_clauses": 10,
+        "meets_expectation": 27
+      },
+      "REAL27": {
+        "items": 27,
+        "served": 8,
+        "by_layer": {
+          "SERVED": 8,
+          "RELATION_EXTRACTION": 2,
+          "GOAL_EXTRACTION": 3,
+          "GOAL_UNDERSTOOD_UNSUPPORTED": 3,
+          "PLANNER_KERNEL": 1,
+          "ENTITY_RESOLUTION": 4,
+          "SOURCE_GATE": 3,
+          "CLAUSE_PARTIALLY_READ": 2,
+          "SOURCE_FACTS": 1
+        },
+        "by_root_cause": {
+          "None": 8,
+          "UNRECOGNIZED_RELATION": 2,
+          "UNRECOGNIZED_GOAL": 3,
+          "UNSUPPORTED_GOAL_FUNCTION": 3,
+          "PLANNER_COMPOSITION_UNSUPPORTED": 1,
+          "UNRECOGNIZED_GEOMETRIC_ENTITY": 4,
+          "SOURCE_PROVENANCE_MISSING": 3,
+          "INCOMPLETE_FACT_EXTRACTION": 2,
+          "INSUFFICIENT_CONSTRAINTS": 1
+        },
+        "fully_recognized": 16,
+        "partially_recognized": 7,
+        "missing_clauses": 17
+      },
+      "PROBES": {
+        "items": 39,
+        "served": 22,
+        "by_layer": {
+          "SERVED": 22,
+          "PLANNER_KERNEL": 3,
+          "ENTITY_RESOLUTION": 8,
+          "CLAUSE_PARTIALLY_READ": 1,
+          "ENTITY_REFERENCE": 1,
+          "SOURCE_FACTS": 1,
+          "GOAL_EXTRACTION": 2,
+          "GOAL_UNDERSTOOD_UNSUPPORTED": 1
+        },
+        "by_root_cause": {
+          "None": 22,
+          "GEOMETRIC_DEGENERACY": 3,
+          "UNRECOGNIZED_GEOMETRIC_ENTITY": 8,
+          "INCOMPLETE_FACT_EXTRACTION": 1,
+          "UNRESOLVED_REFERENCE": 1,
+          "INSUFFICIENT_CONSTRAINTS": 1,
+          "UNRECOGNIZED_GOAL": 2,
+          "UNSUPPORTED_GOAL_KIND": 1
+        },
+        "fully_recognized": 27,
+        "partially_recognized": 11,
+        "missing_clauses": 12,
+        "meets_expectation": 35
+      }
+    }
+  },
+  "dev_expectation_rows": {
+    "goal_volume_tinh": {
+      "after": true,
+      "before": true
+    },
+    "goal_volume_stem": {
+      "after": true,
+      "before": true
+    },
+    "goal_volume_da_cho": {
+      "after": true,
+      "before": true
+    },
+    "goal_volume_theo_a": {
+      "after": true,
+      "before": true
+    },
+    "goal_distance_tinh": {
+      "after": true,
+      "before": true
+    },
+    "goal_distance_stem": {
+      "after": true,
+      "before": true
+    },
+    "goal_angle_tinh": {
+      "after": true,
+      "before": true
+    },
+    "goal_angle_stem": {
+      "after": true,
+      "before": true
+    },
+    "goal_angle_stem_day": {
+      "after": true,
+      "before": false
+    },
+    "goal_cos_unsupported": {
+      "after": true,
+      "before": true
+    },
+    "goal_tan_unsupported": {
+      "after": true,
+      "before": true
+    },
+    "goal_proof_only": {
+      "after": false,
+      "before": false
+    },
+    "pair_point_definition": {
+      "after": true,
+      "before": true
+    },
+    "pair_point_as_goal": {
+      "after": true,
+      "before": true
+    },
+    "pair_plane_determined": {
+      "after": true,
+      "before": true
+    },
+    "pair_plane_underdetermined": {
+      "after": true,
+      "before": true
+    },
+    "ref_undefined_plane": {
+      "after": true,
+      "before": true
+    },
+    "ref_mp_abbrev": {
+      "after": true,
+      "before": true
+    },
+    "ref_relative_clause_point": {
+      "after": true,
+      "before": false
+    },
+    "ref_unnamed_point_in_plane": {
+      "after": true,
+      "before": true
+    },
+    "ref_goi_plane": {
+      "after": true,
+      "before": true
+    },
+    "order_one_sentence": {
+      "after": false,
+      "before": false
+    },
+    "order_semicolon": {
+      "after": true,
+      "before": true
+    },
+    "order_goal_first": {
+      "after": false,
+      "before": false
+    },
+    "order_renamed": {
+      "after": true,
+      "before": true
+    },
+    "sec_hinh_gi_question": {
+      "after": true,
+      "before": false
+    },
+    "sec_do_P_cat": {
+      "after": false,
+      "before": false
+    },
+    "sec_area_stem": {
+      "after": true,
+      "before": false
+    },
+    "int_goal": {
+      "after": true,
+      "before": true
+    },
+    "int_goal_mp": {
+      "after": true,
+      "before": true
+    },
+    "multi_goals": {
+      "after": true,
+      "before": true
+    },
+    "diagram_benign": {
+      "after": false,
+      "before": false
+    },
+    "diagram_dependent": {
+      "after": false,
+      "before": false
+    },
+    "missing_dimension": {
+      "after": true,
+      "before": true
+    },
+    "inconsistent": {
+      "after": true,
+      "before": true
+    },
+    "elliptical_role": {
+      "after": true,
+      "before": true
+    },
+    "cube_stem_distance": {
+      "after": true,
+      "before": true
+    }
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "run_id": "semantic-failure-safe-image-segmentation",
+  "generated_at_utc": "2026-11-13T17:27:25.127687+00:00",
+  "head": "7315cf3b033f78fce1409085c6eeab720f83c967",
+  "environment": {
+    "ALLOW_LIVE_AI": "0"
+  },
+  "one_problem_images": 25,
+  "before": {
+    "pages": 25,
+    "status": {
+      "needs_confirmation": 25
+    },
+    "unnecessary_selection_prompts": 0,
+    "whole_problem_text_kept": 25
+  },
+  "after": {
+    "pages": 25,
+    "status": {
+      "needs_confirmation": 25
+    },
+    "unnecessary_selection_prompts": 0,
+    "whole_problem_text_kept": 25
+  },
+  "unnecessary_selection_prompts": {
+    "before": 0,
+    "after": 0
+  },
+  "option_group_estimate_on_singles": "24/25 crops read as exactly one option group; 1 (vmmu_r254) as none (no evidence → behaviour unchanged) — development prototype receipt in this run's log",
+  "multi_figure_rule": "the number of figures never counts problems; only option groups (one option A per problem) and 'Câu N' headers do",
+  "browser": {
+    "single_problem_asked_to_choose": [
+      false,
+      false,
+      false,
+      false
+    ]
+  },
+  "not_measured": [
+    "one problem with two figures and no options (no exposed image)",
+    "camera photos",
+    "handwriting"
+  ]
+}

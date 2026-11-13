@@ -1,0 +1,897 @@
+{
+  "run_id": "semantic-failure-safe-image-segmentation",
+  "generated_at_utc": "2026-11-13T16:58:54.855761+00:00",
+  "head": "dcbedcb0d67971beb6ba5260a7553abe55de5ee1",
+  "measured_candidate_note": "development measurement on the working product; the frozen candidate identity is in candidate_freeze.json",
+  "candidate_at_measurement": {
+    "commit": "da06829fe1b8890a878056af57830f7c066719f0",
+    "measured_system": "040de2fd63fb687203610918160b1170ad025117b2d221acf12ef25215bd831c"
+  },
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "route": "route_text_input (local-first)"
+  },
+  "command": "python docs/evaluation/geometry/runs/semantic-failure-safe-image-segmentation/tools/semantic_eval.py <before_backend>",
+  "dataset_partition": "DEVELOPMENT ONLY (DEV agent-written, REAL27 exposed, PROBES exposed); no locked W2/W3 row, no H-1",
+  "oracle_status": "AGENT_DIAGNOSTIC (expected outcomes written by the agent from geometry and the product's documented scope)",
+  "partition": {
+    "DEV": "NEW_DIAGNOSTIC_DEVELOPMENT (agent-written in this run; never blind)",
+    "REAL27": "DEVELOPMENT_EXPOSED",
+    "PROBES": "DEVELOPMENT_EXPOSED"
+  },
+  "items": {
+    "DEV": {
+      "goal_volume_tinh": {
+        "group": "goal_extraction",
+        "expect": [
+          "SERVED",
+          "volume"
+        ],
+        "same_as": null,
+        "text_sha256": "a68ab15a2f9549ed3de6fec5d0c80dac9253337d42f77c156803b5933db8790c"
+      },
+      "goal_volume_stem": {
+        "group": "goal_extraction",
+        "expect": [
+          "SERVED",
+          "volume"
+        ],
+        "same_as": "goal_volume_tinh",
+        "text_sha256": "7001a8d6e2ee25671ae8000b9433005feb23ace97926dc9928577b6e4e24f573"
+      },
+      "goal_volume_da_cho": {
+        "group": "goal_extraction",
+        "expect": [
+          "SERVED",
+          "volume"
+        ],
+        "same_as": "goal_volume_tinh",
+        "text_sha256": "c8733dd02f557a8acf3ffc2a2d668a8ce345942693265cf32fde045f9a1c2f12"
+      },
+      "goal_volume_theo_a": {
+        "group": "goal_extraction",
+        "expect": [
+          "SERVED",
+          "volume"
+        ],
+        "same_as": "goal_volume_tinh",
+        "text_sha256": "7a72f15ab21e0688dbeaf91472c0a7f76f97706299d2eb8d13a69b330ac5d722"
+      },
+      "goal_distance_tinh": {
+        "group": "goal_extraction",
+        "expect": [
+          "SERVED",
+          "distance"
+        ],
+        "same_as": null,
+        "text_sha256": "70a3c93c7f458b67c85e90f5c2150cc41c2a78cba0c701634ddc9fb1776ed65c"
+      },
+      "goal_distance_stem": {
+        "group": "goal_extraction",
+        "expect": [
+          "SERVED",
+          "distance"
+        ],
+        "same_as": "goal_distance_tinh",
+        "text_sha256": "2f599b79a69939204583b7497d23355f35608a57812f7c80641d15c388e108ec"
+      },
+      "goal_angle_tinh": {
+        "group": "goal_extraction",
+        "expect": [
+          "SERVED",
+          "angle"
+        ],
+        "same_as": null,
+        "text_sha256": "7f6934893cc86f24b60bdb924405071c8793b890269c5833c34beb6c00cff359"
+      },
+      "goal_angle_stem": {
+        "group": "goal_extraction",
+        "expect": [
+          "SERVED",
+          "angle"
+        ],
+        "same_as": "goal_angle_tinh",
+        "text_sha256": "137a64958bd9f9a2e1c14ea0053abe775288aadde763c017688d286588bff114"
+      },
+      "goal_angle_stem_day": {
+        "group": "goal_extraction",
+        "expect": [
+          "SERVED",
+          "angle"
+        ],
+        "same_as": "goal_angle_tinh",
+        "text_sha256": "a2c085bcbd20944319405f7b06f657d8d909f182afa01d4735e13ad3bc03afd8"
+      },
+      "goal_cos_unsupported": {
+        "group": "goal_extraction",
+        "expect": [
+          "REFUSED",
+          "UNSUPPORTED_GOAL_FUNCTION"
+        ],
+        "same_as": null,
+        "text_sha256": "f7d3286a24f73d56afb61ecb1e4e8102bf2e7ae7e6f8a931314a8e1de2db0898"
+      },
+      "goal_tan_unsupported": {
+        "group": "goal_extraction",
+        "expect": [
+          "REFUSED",
+          "UNSUPPORTED_GOAL_FUNCTION"
+        ],
+        "same_as": null,
+        "text_sha256": "efdb9ef4a72f7b58273037ea6fbfca0c2ea91ded7f8111be05742d24f85667a1"
+      },
+      "goal_proof_only": {
+        "group": "goal_extraction",
+        "expect": [
+          "REFUSED",
+          "UNRECOGNIZED_GOAL"
+        ],
+        "same_as": null,
+        "text_sha256": "b2fb0119dfacaac2a6856466c1dab98d771c5215b60e87d0ca45f0e8e9a935ef"
+      },
+      "pair_point_definition": {
+        "group": "minimal_pair",
+        "expect": [
+          "SERVED",
+          "distance"
+        ],
+        "same_as": null,
+        "text_sha256": "e031f108f53a657a1645dba4712c4cfb801f1a6e53b4f79e350a7fc81ec5ee95"
+      },
+      "pair_point_as_goal": {
+        "group": "minimal_pair",
+        "expect": [
+          "REFUSED",
+          "UNRECOGNIZED_GOAL"
+        ],
+        "same_as": null,
+        "text_sha256": "6dc910625cd20f4b3d1ab3cb0370d8376578d761f4ce8ea46e239ac347aabd6e"
+      },
+      "pair_plane_determined": {
+        "group": "minimal_pair",
+        "expect": [
+          "SERVED",
+          "section"
+        ],
+        "same_as": null,
+        "text_sha256": "539058d6814d6909b9432013d8d72f8a016588083a8b08b717b293667894266c"
+      },
+      "pair_plane_underdetermined": {
+        "group": "minimal_pair",
+        "expect": [
+          "REFUSED",
+          "UNRECOGNIZED_GEOMETRIC_ENTITY"
+        ],
+        "same_as": null,
+        "text_sha256": "e45d3532562e454496461e7da8a725533b74f7ee979f8ad64107cd270f0ab428"
+      },
+      "ref_undefined_plane": {
+        "group": "entity_reference",
+        "expect": [
+          "REFUSED",
+          "UNRESOLVED_REFERENCE"
+        ],
+        "same_as": null,
+        "text_sha256": "198d7d42024f61780a1a1a9cdc5eec0927f13ac05c06c8a46b8e72d768f29112"
+      },
+      "ref_mp_abbrev": {
+        "group": "entity_naming",
+        "expect": [
+          "SERVED",
+          "section"
+        ],
+        "same_as": "pair_plane_determined",
+        "text_sha256": "c4ad1eff205d5e7bbbcef5f5f803136751857795f86b08ca2ca4e709df7fddef"
+      },
+      "ref_relative_clause_point": {
+        "group": "relative_clause",
+        "expect": [
+          "SERVED",
+          "section"
+        ],
+        "same_as": "pair_plane_determined",
+        "text_sha256": "96ee1f6d88fc5efd0cc1a7d7ef7426a8bb21d6ec5803bf46579292ab7aa045e3"
+      },
+      "ref_unnamed_point_in_plane": {
+        "group": "named_unnamed_points",
+        "expect": [
+          "SERVED",
+          "section"
+        ],
+        "same_as": "pair_plane_determined",
+        "text_sha256": "9536042597b00e0eaeeb554bea27901bbdc1c7997def3fb2578b9f8a075c4065"
+      },
+      "ref_goi_plane": {
+        "group": "named_unnamed_planes",
+        "expect": [
+          "SERVED",
+          "section"
+        ],
+        "same_as": "pair_plane_determined",
+        "text_sha256": "e53d1d416a2bd69d8cc36728892981643e3826fad0436dd43b4eab520d74be6e"
+      },
+      "order_one_sentence": {
+        "group": "clause_ordering",
+        "expect": [
+          "SERVED",
+          "section"
+        ],
+        "same_as": "pair_plane_determined",
+        "text_sha256": "c0ebc384eb91283010ab4810579948fffdca94c21f92ac4bfdad14e439e7015d"
+      },
+      "order_semicolon": {
+        "group": "clause_ordering",
+        "expect": [
+          "SERVED",
+          "section"
+        ],
+        "same_as": "pair_plane_determined",
+        "text_sha256": "7c5e94e074605e07e8df652e489ad7a0f9bf2a1324d178987cb92696e84e0655"
+      },
+      "order_goal_first": {
+        "group": "clause_ordering",
+        "expect": [
+          "REFUSED",
+          "UNRESOLVED_REFERENCE"
+        ],
+        "same_as": null,
+        "text_sha256": "9e70ad628e4dc4677ff6049909a5aeb297e58bc7adfac83cc926c0b100bce93f"
+      },
+      "order_renamed": {
+        "group": "metamorphic_rename",
+        "expect": [
+          "SERVED",
+          "section"
+        ],
+        "same_as": "pair_plane_determined",
+        "text_sha256": "8532acd42ec6893d0858c4ee72ee4da530aefe66e3bfabd6bba28b8aef25b18d"
+      },
+      "sec_hinh_gi_question": {
+        "group": "section_goal",
+        "expect": [
+          "SERVED",
+          "section"
+        ],
+        "same_as": "pair_plane_determined",
+        "text_sha256": "dcb28f13961685d4df0959a652d3a09e797a448bec9d1166e6390d8909218ceb"
+      },
+      "sec_do_P_cat": {
+        "group": "section_goal",
+        "expect": [
+          "SERVED",
+          "section"
+        ],
+        "same_as": "pair_plane_determined",
+        "text_sha256": "b0aedb70612b013c017b30498e6b9b4ac57abd74f716cc4766cc5c04184c2d7d"
+      },
+      "sec_area_stem": {
+        "group": "section_goal",
+        "expect": [
+          "SERVED",
+          "area"
+        ],
+        "same_as": null,
+        "text_sha256": "2bfe971940ea35647df1bebe94bfac71208593497a379880343d04936fd00240"
+      },
+      "int_goal": {
+        "group": "intersection_goal",
+        "expect": [
+          "SERVED",
+          "intersection"
+        ],
+        "same_as": null,
+        "text_sha256": "23e5e3ab1612a814eab905e96772b166b73d00cc6260585d424a3252d3ff5a7b"
+      },
+      "int_goal_mp": {
+        "group": "intersection_goal",
+        "expect": [
+          "SERVED",
+          "intersection"
+        ],
+        "same_as": "int_goal",
+        "text_sha256": "2e77a5f1c7f1d18f7f08faad33dca648c9d581f892e24289aed72d1953a67d73"
+      },
+      "multi_goals": {
+        "group": "multiple_goals",
+        "expect": [
+          "SERVED",
+          "volume"
+        ],
+        "same_as": null,
+        "text_sha256": "9384e9c4ef3d5eca179b7fb76b2b20294fa10ab62c6323d8780a1c205d36e719"
+      },
+      "diagram_benign": {
+        "group": "diagram_reference",
+        "expect": [
+          "SERVED",
+          "volume"
+        ],
+        "same_as": "goal_volume_tinh",
+        "text_sha256": "ae7999e09c8a122b7a9a1073a9ea0d8c75999fc5c9c7b151dbf617eaacb429d0"
+      },
+      "diagram_dependent": {
+        "group": "diagram_reference",
+        "expect": [
+          "REFUSED",
+          "INSUFFICIENT_CONSTRAINTS"
+        ],
+        "same_as": null,
+        "text_sha256": "7a87ab477ff8f23af6baff8beca1d4cac9c44aa045b5c9140c1fb9f5a0e975b5"
+      },
+      "missing_dimension": {
+        "group": "missing_dimensions",
+        "expect": [
+          "REFUSED",
+          "INSUFFICIENT_CONSTRAINTS"
+        ],
+        "same_as": null,
+        "text_sha256": "831e18389ad2215d7e750413b105cf63e23efe789e3af8e4b3e9f4328b9b1085"
+      },
+      "inconsistent": {
+        "group": "inconsistent_premises",
+        "expect": [
+          "REFUSED",
+          "SOURCE_CONFLICT"
+        ],
+        "same_as": null,
+        "text_sha256": "75504f56de5ef8b7acfe3e3bf5f2b8a65f7ca7514aad58a3a7fbbfee303997f9"
+      },
+      "elliptical_role": {
+        "group": "elliptical_statement",
+        "expect": [
+          "REFUSED",
+          "UNRECOGNIZED_GOAL"
+        ],
+        "same_as": null,
+        "text_sha256": "69b60e53d8a87afb3dc9bcb6b7dd9da31ad42afd6821a7d6ae17235c8fa9b6d8"
+      },
+      "cube_stem_distance": {
+        "group": "goal_extraction",
+        "expect": [
+          "SERVED",
+          "distance"
+        ],
+        "same_as": null,
+        "text_sha256": "1868a56c5166e325f593270c0b1504b6ab916a5daf6303628079c3112c4f5aa9"
+      }
+    },
+    "REAL27": {
+      "vmmu_r247": {
+        "group": "real_exposed",
+        "expect": null,
+        "same_as": null,
+        "text_sha256": "5f3e8da93e0ce388243259a966f6e1c30efeb8ee798d27c4af33c20f5398ecfe"
+      },
+      "vmmu_r254": {
+        "group": "real_exposed",
+        "expect": null,
+        "same_as": null,
+        "text_sha256": "1b71b6ac60aedac7043c9a7c928ed4fa2b3d7229c6bef98432bea0446d00105d"
+      },
+      "vmmu_r256": {
+        "group": "real_exposed",
+        "expect": null,
+        "same_as": null,
+        "text_sha256": "b3c99ebccab872eab209179785d9c8940a1c36ce6c58a6ac2b94262810394950"
+      },
+      "vmmu_r258": {
+        "group": "real_exposed",
+        "expect": null,
+        "same_as": null,
+        "text_sha256": "86a06df87628a29335dec2168da6037cf5396731bd9a29ce24bdc2d5a0b0cd92"
+      },
+      "vmmu_r266": {
+        "group": "real_exposed",
+        "expect": null,
+        "same_as": null,
+        "text_sha256": "1e83a2eec97786ccdd033a1d744cdbb083f690e7bfd096b5a5cbbc2615879dc2"
+      },
+      "vmmu_r270": {
+        "group": "real_exposed",
+        "expect": null,
+        "same_as": null,
+        "text_sha256": "dada34f102c96ca7b1cf61c7fb1ef7bc66330e41ede6bbfd030952f3d0c7828e"
+      },
+      "vmmu_r273": {
+        "group": "real_exposed",
+        "expect": null,
+        "same_as": null,
+        "text_sha256": "2c2c430855ded12bafe9c96def610b16b3e84da540b0aed451632080ec19c990"
+      },
+      "vmmu_r277": {
+        "group": "real_exposed",
+        "expect": null,
+        "same_as": null,
+        "text_sha256": "9cc7353c9dd163e7190cb38347dd7a1aca2dabad29d3eb7c7cdba4ba8d81888e"
+      },
+      "vmmu_r284": {
+        "group": "real_exposed",
+        "expect": null,
+        "same_as": null,
+        "text_sha256": "e3ab9e610dfc7fed5669a20c237bcc178b04a2f15702c1fa19af6778b5c91d51"
+      },
+      "vmmu_r295": {
+        "group": "real_exposed",
+        "expect": null,
+        "same_as": null,
+        "text_sha256": "294378d7c5c5f73cbbd137b3da1bba388cf9ab5acedd68d1d666bb8debf98be0"
+      },
+      "vmmu_r298": {
+        "group": "real_exposed",
+        "expect": null,
+        "same_as": null,
+        "text_sha256": "a6e9d6b90f89854a2012a5a6d9631fa517fbbc6b2353940b998533c5d6e26895"
+      },
+      "vmmu_r375": {
+        "group": "real_exposed",
+        "expect": null,
+        "same_as": null,
+        "text_sha256": "43d3e7b4b26df10058e24fac2b230b42fcaf99d7a48c227b587b751280e8ac22"
+      },
+      "vmmu_r460": {
+        "group": "real_exposed",
+        "expect": null,
+        "same_as": null,
+        "text_sha256": "eeef7ddcad1956475fdfdf31fc2078ac40c7aeb676dcfae948e95dc2000cd85a"
+      },
+      "vmmu_r461": {
+        "group": "real_exposed",
+        "expect": null,
+        "same_as": null,
+        "text_sha256": "809ff614e1cd0c7592adc9eea4ba87dab2a4947566019da16a6d8ec9cc1fde74"
+      },
+      "vmmu_r463": {
+        "group": "real_exposed",
+        "expect": null,
+        "same_as": null,
+        "text_sha256": "d5b7213d8d1ec5e8e2a775f79368034cb363cc61ccc0bd25383a68cc276b8bd3"
+      },
+      "vmmu_r475": {
+        "group": "real_exposed",
+        "expect": null,
+        "same_as": null,
+        "text_sha256": "33abd4b25c729c465d2ee1740f6f063514d834d02e35c6d1323a875b9f69b601"
+      },
+      "vmmu_r476": {
+        "group": "real_exposed",
+        "expect": null,
+        "same_as": null,
+        "text_sha256": "ce8609f40262757ab9cde8c4aa6069672d9efbf45c2a55c5880f283fe0b8b1f3"
+      },
+      "vmmu_r488": {
+        "group": "real_exposed",
+        "expect": null,
+        "same_as": null,
+        "text_sha256": "7a9d2a6349ee313907d1dfa7bf3b2c9b8822c4543212968a5400e9e44cb35d66"
+      },
+      "vmmu_r491": {
+        "group": "real_exposed",
+        "expect": null,
+        "same_as": null,
+        "text_sha256": "ccf866f6e06a328aa73adaca5eb5c95cbd247aca3f2c821dc11d3e84cab8ac3d"
+      },
+      "vmmu_r492": {
+        "group": "real_exposed",
+        "expect": null,
+        "same_as": null,
+        "text_sha256": "0f07c493cb02fd120d04df23beaea5488e7ecfc91b6e24d567aea0655d0460ec"
+      },
+      "vmmu_r498": {
+        "group": "real_exposed",
+        "expect": null,
+        "same_as": null,
+        "text_sha256": "c437503de7d0db0da8be5b1f9412fe7d6db4397ea1ac53b650c859b2fe81ab52"
+      },
+      "vmmu_r513": {
+        "group": "real_exposed",
+        "expect": null,
+        "same_as": null,
+        "text_sha256": "49464028330e78ad4de5b4bffbf81beee0779b43eedb8ff554a50b6713e03685"
+      },
+      "vmmu_r520": {
+        "group": "real_exposed",
+        "expect": null,
+        "same_as": null,
+        "text_sha256": "5c9054338f29fa3f03ccc522cd5be706b0e0e41a439a19426189c26c132378d2"
+      },
+      "vmmu_r537": {
+        "group": "real_exposed",
+        "expect": null,
+        "same_as": null,
+        "text_sha256": "8b6a844c5ab49083138e6faedf8f6792fb0d3cb49a76e110ccde5f2b0ebdc80c"
+      },
+      "vmmu_r538": {
+        "group": "real_exposed",
+        "expect": null,
+        "same_as": null,
+        "text_sha256": "a4a500ab33ac1ab0dba657f00c75066bf0d47f79243d0eb6d553b46fb5940122"
+      },
+      "vmmu_r559": {
+        "group": "real_exposed",
+        "expect": null,
+        "same_as": null,
+        "text_sha256": "37e359e64b1e81fbdb0a0eb7507fccba73e3e3206781923b653b85040a9c160b"
+      },
+      "vmmu_r695": {
+        "group": "real_exposed",
+        "expect": null,
+        "same_as": null,
+        "text_sha256": "be92444253700faa6ccedfb0581868a07e75a3580bb9317db83ded26f4113fa1"
+      }
+    },
+    "PROBES": {
+      "par_plane_named": {
+        "group": "parallel_plane",
+        "expect": [
+          "SERVED",
+          null
+        ],
+        "same_as": null,
+        "text_sha256": "8346da9eded4b059b16902c7c5da201699067258e4d4a477e1b06cb5efda9244"
+      },
+      "par_plane_base_word": {
+        "group": "parallel_plane",
+        "expect": [
+          "SERVED",
+          null
+        ],
+        "same_as": null,
+        "text_sha256": "0d456069055ed839e3ea8e0258983ed242ffb761b9c607debc6837485f2ec08b"
+      },
+      "par_plane_base_word2": {
+        "group": "parallel_plane",
+        "expect": [
+          "SERVED",
+          null
+        ],
+        "same_as": null,
+        "text_sha256": "b9aa94c48add20f7d7ff7a8625a57bf5dff493be62cfb00127e3139525cd82f6"
+      },
+      "par_plane_qua_dung": {
+        "group": "parallel_plane",
+        "expect": [
+          "SERVED",
+          null
+        ],
+        "same_as": null,
+        "text_sha256": "c058b8dd838132711cfc91c7f7f5458ec46aa48b97b5cd2089b7f2d9308e63da"
+      },
+      "par_plane_goi": {
+        "group": "parallel_plane",
+        "expect": [
+          "SERVED",
+          null
+        ],
+        "same_as": null,
+        "text_sha256": "c3d408a6767ee36ca06e9f94266db4dc673d1966d519e36f95702d25a02d0a40"
+      },
+      "par_plane_lateral": {
+        "group": "parallel_plane",
+        "expect": [
+          "SERVED",
+          null
+        ],
+        "same_as": null,
+        "text_sha256": "73e6e376721697bb1f2d7a014e37175f1f088941a6574790aca1be6da5310c88"
+      },
+      "par_plane_renamed": {
+        "group": "parallel_plane",
+        "expect": [
+          "SERVED",
+          null
+        ],
+        "same_as": null,
+        "text_sha256": "8532acd42ec6893d0858c4ee72ee4da530aefe66e3bfabd6bba28b8aef25b18d"
+      },
+      "par_plane_cube": {
+        "group": "parallel_plane",
+        "expect": [
+          "SERVED",
+          null
+        ],
+        "same_as": null,
+        "text_sha256": "92370ab5959810ded347ae3ced66f42d27d889eebf48797c154ad7ad68e97252"
+      },
+      "par_plane_area": {
+        "group": "parallel_plane",
+        "expect": [
+          "SERVED",
+          null
+        ],
+        "same_as": null,
+        "text_sha256": "eaf35bee65f9f7b1d1cbb3e75739c811fc1d8df9853b5327ae0910aaa73a413d"
+      },
+      "par_plane_point_on_plane": {
+        "group": "parallel_plane_degenerate",
+        "expect": [
+          "REFUSED",
+          null
+        ],
+        "same_as": null,
+        "text_sha256": "1c056a1e83a86b57e775805d34094114da6c92dbb593643f253d6fd2293fcdfa"
+      },
+      "par_plane_triangle": {
+        "group": "parallel_plane",
+        "expect": [
+          "SERVED",
+          null
+        ],
+        "same_as": null,
+        "text_sha256": "94d430ef33344a6a8bad3bd9b786a75f92b1293cfeca0299bc35ad37718a349c"
+      },
+      "perp_line_SA": {
+        "group": "perpendicular_line",
+        "expect": [
+          "SERVED",
+          null
+        ],
+        "same_as": null,
+        "text_sha256": "41370fbbc043bfa5c35141d1d8fef42a69012c5ae2b78de3d1c3a8591f878bad"
+      },
+      "perp_line_word": {
+        "group": "perpendicular_line",
+        "expect": [
+          "SERVED",
+          null
+        ],
+        "same_as": null,
+        "text_sha256": "da43fa3967f194dbab3a3b182f8c9371c6996576ac9eced0cb4b0f98f13077a0"
+      },
+      "perp_line_cube_edge": {
+        "group": "perpendicular_line",
+        "expect": [
+          "SERVED",
+          null
+        ],
+        "same_as": null,
+        "text_sha256": "fb35d9bf57098b4569ff23b753f9530d825eca747a914e4185d4b933270dd960"
+      },
+      "perp_line_cube_diagonal": {
+        "group": "perpendicular_line",
+        "expect": [
+          "SERVED",
+          null
+        ],
+        "same_as": null,
+        "text_sha256": "2cc86efc053e3b6bae7451a68004c277cfc9a8c03e29eaadbb270c159c74a2f3"
+      },
+      "perp_bisector_plane": {
+        "group": "perpendicular_line",
+        "expect": [
+          "SERVED",
+          null
+        ],
+        "same_as": null,
+        "text_sha256": "c51234cc9ee8892977eaf813598ddff81c92e414ca9c7092744bf0a93a71e4d4"
+      },
+      "perp_line_degenerate": {
+        "group": "perpendicular_line_degenerate",
+        "expect": [
+          "REFUSED",
+          null
+        ],
+        "same_as": null,
+        "text_sha256": "c71963d43c5209279a173da15a72a077cdeed659b261f44c307c7cf4b1faf12f"
+      },
+      "line_point_contains_first": {
+        "group": "line_and_point",
+        "expect": [
+          "SERVED",
+          null
+        ],
+        "same_as": null,
+        "text_sha256": "4757c61440a5b67831aa05e21e2217fa77fc982b3849b402b977f7dec32f563d"
+      },
+      "line_point_through_first": {
+        "group": "line_and_point",
+        "expect": [
+          "SERVED",
+          null
+        ],
+        "same_as": null,
+        "text_sha256": "22244d778db8df37072d39904118875e3909111bf18a9184b6d565470ba967b0"
+      },
+      "line_point_on_line": {
+        "group": "line_and_point_degenerate",
+        "expect": [
+          "REFUSED",
+          null
+        ],
+        "same_as": null,
+        "text_sha256": "4ce9b92b1ba4aa0af482d664d63f9149955ba9e0f8f30dda9b6d7ef80cda7023"
+      },
+      "two_intersecting_lines": {
+        "group": "two_lines",
+        "expect": [
+          "SERVED",
+          null
+        ],
+        "same_as": null,
+        "text_sha256": "24d596e0db96e989d190d3079401951a696ddeb76289dd9e747796ebf25caafa"
+      },
+      "two_parallel_lines": {
+        "group": "two_lines",
+        "expect": [
+          "SERVED",
+          null
+        ],
+        "same_as": null,
+        "text_sha256": "80764c0657d08e5a3c32d678cb1a19bf1ec58ebe9a8cec5a7a6ccfb84f801f5f"
+      },
+      "two_lines_skew": {
+        "group": "two_lines_degenerate",
+        "expect": [
+          "REFUSED",
+          null
+        ],
+        "same_as": null,
+        "text_sha256": "c1b5605c6474d7f1c6edd74d08b9d2b035ceae0760cb1ff84c6dbc490359b16a"
+      },
+      "two_lines_same": {
+        "group": "two_lines_degenerate",
+        "expect": [
+          "REFUSED",
+          null
+        ],
+        "same_as": null,
+        "text_sha256": "d4e50c8317ac60447f3fa37f091c35ea6d344cceb110b5a9e293956e7f546d6b"
+      },
+      "through_point_parallel_two_lines": {
+        "group": "parallel_two_lines",
+        "expect": [
+          "SERVED",
+          null
+        ],
+        "same_as": null,
+        "text_sha256": "fd4b558929bbc91b43ec9cedeeebacf1667e4aa44d5bf3a8ddc972152fa4fd57"
+      },
+      "under_parallel_one_line": {
+        "group": "underconstrained",
+        "expect": [
+          "REFUSED",
+          null
+        ],
+        "same_as": null,
+        "text_sha256": "575cb0fa4d039aa3d367cbec8eb5b8c7f470905cf8cbca275d4b6c4061813299"
+      },
+      "under_perpendicular_plane": {
+        "group": "underconstrained",
+        "expect": [
+          "REFUSED",
+          null
+        ],
+        "same_as": null,
+        "text_sha256": "27639de968f02c4289cc0774567b5714cbe773a618b05f27157987cef441331d"
+      },
+      "under_contains_one_line": {
+        "group": "underconstrained",
+        "expect": [
+          "REFUSED",
+          null
+        ],
+        "same_as": null,
+        "text_sha256": "d72dc59f1c5c3752c49bfe6c81aa39da4f3ebfd466d6957f3c0fb47f983f032f"
+      },
+      "under_any_plane": {
+        "group": "underconstrained",
+        "expect": [
+          "REFUSED",
+          null
+        ],
+        "same_as": null,
+        "text_sha256": "5d9816e944a00186d4154fc2598405a9df9c2a523100a2f31b41a832aae1638c"
+      },
+      "compound_contains_parallel": {
+        "group": "compound",
+        "expect": [
+          "SERVED",
+          null
+        ],
+        "same_as": null,
+        "text_sha256": "4f5effd0942f44cd56d4fb9be623bc6d326cca17d0d5a08fae79e8658e324ed5"
+      },
+      "compound_contains_parallel_not_unique": {
+        "group": "compound_degenerate",
+        "expect": [
+          "REFUSED",
+          null
+        ],
+        "same_as": null,
+        "text_sha256": "dac7a622e83dcdb7fc8399a8d19c06dab18d7e882c7d6aa301dc0f925e9a7b78"
+      },
+      "compound_contains_perpendicular_face": {
+        "group": "compound_degenerate",
+        "expect": [
+          "REFUSED",
+          null
+        ],
+        "same_as": null,
+        "text_sha256": "3e37dcba16d69ffc59e4768290f12a76cf9f55baaec6411e924facc2ba4a5ae0"
+      },
+      "compound_contains_perpendicular": {
+        "group": "compound",
+        "expect": [
+          "SERVED",
+          null
+        ],
+        "same_as": null,
+        "text_sha256": "947f973c096b34111a530b5fa9ed99b7d0b6598511cb446897f2311d92fe1e0c"
+      },
+      "reordered_question_first": {
+        "group": "reordered",
+        "expect": [
+          "SERVED",
+          null
+        ],
+        "same_as": null,
+        "text_sha256": "6072fb4bbef8838bd5382bea80188e2c648e2e6d07ab60dff51768f5be9707be"
+      },
+      "unicode_prime": {
+        "group": "unicode",
+        "expect": [
+          "SERVED",
+          null
+        ],
+        "same_as": null,
+        "text_sha256": "2855f08f7e1939a577b55b1196ea97185a861e3f32c6af0aa637e9ea10dd4370"
+      },
+      "diagram_dependent": {
+        "group": "diagram",
+        "expect": [
+          "REFUSED",
+          null
+        ],
+        "same_as": null,
+        "text_sha256": "3eb055e2b6d72d9d7d69e49f54c50317160641990ab3607de875b020ec1eb1cd"
+      },
+      "goal_as_premise": {
+        "group": "goal_vs_premise",
+        "expect": [
+          "REFUSED",
+          null
+        ],
+        "same_as": null,
+        "text_sha256": "57896956f8b24061b4906fac5354d3dc7d2f610fdbf9795fdbd42fcabb5e5a0c"
+      },
+      "multiple_goals": {
+        "group": "multiple_goals",
+        "expect": [
+          "SERVED",
+          null
+        ],
+        "same_as": null,
+        "text_sha256": "1d356016c88040f6edcdf6b57dceb75824d71a01e0dcb5a9e90f42855ed0e440"
+      },
+      "intersection_with_derived_plane": {
+        "group": "intersection_derived",
+        "expect": [
+          "SERVED",
+          null
+        ],
+        "same_as": null,
+        "text_sha256": "0e7eaee399efb0a1578ba0b80c3ddc9a63204deeb454cfc479c19180938a1462"
+      }
+    }
+  },
+  "groups": {
+    "goal_extraction": 13,
+    "minimal_pair": 4,
+    "entity_reference": 1,
+    "entity_naming": 1,
+    "relative_clause": 1,
+    "named_unnamed_points": 1,
+    "named_unnamed_planes": 1,
+    "clause_ordering": 3,
+    "metamorphic_rename": 1,
+    "section_goal": 3,
+    "intersection_goal": 2,
+    "multiple_goals": 1,
+    "diagram_reference": 2,
+    "missing_dimensions": 1,
+    "inconsistent_premises": 1,
+    "elliptical_statement": 1
+  },
+  "source_file": "tools/semantic_dev_corpus.py",
+  "locked_rows_used": 0,
+  "h1_rows_used": 0
+}

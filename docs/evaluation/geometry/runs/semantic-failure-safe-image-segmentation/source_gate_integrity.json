@@ -1,0 +1,14 @@
+{
+  "run_id": "semantic-failure-safe-image-segmentation",
+  "generated_at_utc": "2026-11-13T17:27:25.127687+00:00",
+  "head": "7315cf3b033f78fce1409085c6eeab720f83c967",
+  "environment": {
+    "ALLOW_LIVE_AI": "0"
+  },
+  "source_gate_changed_in_this_run": false,
+  "registry_diff_since_start": "none",
+  "repairs_pass_the_unchanged_gate": "every repaired wording is served only after the existing gate reads it; 'thiết diện do (P) cắt' was dropped from the parser because the gate has no reading of it (backlog)",
+  "track_b_payload_corruptions_refused": "8/8",
+  "track_a_text_negatives_refused": "8/8",
+  "silent_premise_loss_checks": "a served problem never carries an unread clause: the parser refuses unless every fact/goal clause is mapped, and the gate reads every premise sentence (SOURCE_PREMISE_UNREAD)"
+}

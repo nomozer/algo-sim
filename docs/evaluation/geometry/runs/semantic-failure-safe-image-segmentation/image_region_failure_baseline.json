@@ -1,0 +1,74 @@
+{
+  "run_id": "semantic-failure-safe-image-segmentation",
+  "generated_at_utc": "2026-11-13T17:27:25.127687+00:00",
+  "head": "7315cf3b033f78fce1409085c6eeab720f83c967",
+  "environment": {
+    "ALLOW_LIVE_AI": "0"
+  },
+  "baseline": "product before this run (archive of 697b097ac) on the prepare path",
+  "summary_before": {
+    "COMPOSITE_2": {
+      "pages": 12,
+      "status": {
+        "needs_confirmation": 3,
+        "needs_selection": 9
+      },
+      "merged_without_prompt": 3,
+      "selection_offered": 9,
+      "selection_without_candidates": 0,
+      "picks": 18,
+      "picks_distinct_problems_cover_all": 7,
+      "picks_with_neighbour_containment_ge_0_2": 6,
+      "picks_clean": 15,
+      "pages_every_problem_cleanly_selectable": 7,
+      "merged_pages_neighbour_text_present": 0
+    },
+    "COMPOSITE_3": {
+      "pages": 8,
+      "status": {
+        "needs_selection": 8
+      },
+      "merged_without_prompt": 0,
+      "selection_offered": 8,
+      "selection_without_candidates": 0,
+      "picks": 19,
+      "picks_distinct_problems_cover_all": 1,
+      "picks_with_neighbour_containment_ge_0_2": 8,
+      "picks_clean": 10,
+      "pages_every_problem_cleanly_selectable": 0,
+      "merged_pages_neighbour_text_present": 0
+    },
+    "REAL_SINGLE": {
+      "pages": 25,
+      "status": {
+        "needs_confirmation": 25
+      },
+      "unnecessary_selection_prompts": 0,
+      "whole_problem_text_kept": 25
+    },
+    "SIDE_BY_SIDE": {
+      "pages": 6,
+      "status": {
+        "needs_confirmation": 2,
+        "needs_selection": 4
+      },
+      "merged_without_prompt": 2,
+      "selection_offered": 4,
+      "selection_without_candidates": 0,
+      "picks": 8,
+      "picks_distinct_problems_cover_all": 3,
+      "picks_with_neighbour_containment_ge_0_2": 2,
+      "picks_clean": 2,
+      "pages_every_problem_cleanly_selectable": 0,
+      "merged_pages_neighbour_text_present": 1
+    }
+  },
+  "earlier_detector_only_measurement": "independent-geometry-plane-constraints/image_region_detection_evaluation.json: detector merged 5/20 synthetic multi-problem pages, split 11/25 one-problem crops (rescued by the ≤ 1 header guard)",
+  "failure_modes": {
+    "merged_without_prompt": "detector keeps one region over several problems and no header guard fires",
+    "detector_blocks_as_choices": "a choice exists but a choice holds no full problem (text parted from its figure)",
+    "header_guard_overrule": "≤ 1 readable 'Câu N' keeps the page whole even when it holds several problems"
+  },
+  "dataset_partition": "DEVELOPMENT_EXPOSED crops and synthetic layouts of them",
+  "oracle_status": "BY_CONSTRUCTION layout"
+}

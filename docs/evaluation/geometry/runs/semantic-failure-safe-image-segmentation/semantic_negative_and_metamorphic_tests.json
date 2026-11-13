@@ -1,0 +1,411 @@
+{
+  "run_id": "semantic-failure-safe-image-segmentation",
+  "generated_at_utc": "2026-11-13T16:58:54.855761+00:00",
+  "head": "dcbedcb0d67971beb6ba5260a7553abe55de5ee1",
+  "measured_candidate_note": "development measurement on the working product; the frozen candidate identity is in candidate_freeze.json",
+  "candidate_at_measurement": {
+    "commit": "da06829fe1b8890a878056af57830f7c066719f0",
+    "measured_system": "040de2fd63fb687203610918160b1170ad025117b2d221acf12ef25215bd831c"
+  },
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "route": "route_text_input (local-first)"
+  },
+  "command": "python docs/evaluation/geometry/runs/semantic-failure-safe-image-segmentation/tools/semantic_eval.py <before_backend>",
+  "dataset_partition": "DEVELOPMENT ONLY (DEV agent-written, REAL27 exposed, PROBES exposed); no locked W2/W3 row, no H-1",
+  "oracle_status": "AGENT_DIAGNOSTIC (expected outcomes written by the agent from geometry and the product's documented scope)",
+  "metamorphic": [
+    {
+      "id": "goal_volume_stem",
+      "base": "goal_volume_tinh",
+      "side": "after",
+      "agree": true,
+      "status": "SERVED",
+      "base_status": "SERVED"
+    },
+    {
+      "id": "goal_volume_stem",
+      "base": "goal_volume_tinh",
+      "side": "before",
+      "agree": true,
+      "status": "SERVED",
+      "base_status": "SERVED"
+    },
+    {
+      "id": "goal_volume_da_cho",
+      "base": "goal_volume_tinh",
+      "side": "after",
+      "agree": true,
+      "status": "SERVED",
+      "base_status": "SERVED"
+    },
+    {
+      "id": "goal_volume_da_cho",
+      "base": "goal_volume_tinh",
+      "side": "before",
+      "agree": true,
+      "status": "SERVED",
+      "base_status": "SERVED"
+    },
+    {
+      "id": "goal_volume_theo_a",
+      "base": "goal_volume_tinh",
+      "side": "after",
+      "agree": true,
+      "status": "SERVED",
+      "base_status": "SERVED"
+    },
+    {
+      "id": "goal_volume_theo_a",
+      "base": "goal_volume_tinh",
+      "side": "before",
+      "agree": true,
+      "status": "SERVED",
+      "base_status": "SERVED"
+    },
+    {
+      "id": "goal_distance_stem",
+      "base": "goal_distance_tinh",
+      "side": "after",
+      "agree": true,
+      "status": "SERVED",
+      "base_status": "SERVED"
+    },
+    {
+      "id": "goal_distance_stem",
+      "base": "goal_distance_tinh",
+      "side": "before",
+      "agree": true,
+      "status": "SERVED",
+      "base_status": "SERVED"
+    },
+    {
+      "id": "goal_angle_stem",
+      "base": "goal_angle_tinh",
+      "side": "after",
+      "agree": true,
+      "status": "SERVED",
+      "base_status": "SERVED"
+    },
+    {
+      "id": "goal_angle_stem",
+      "base": "goal_angle_tinh",
+      "side": "before",
+      "agree": true,
+      "status": "SERVED",
+      "base_status": "SERVED"
+    },
+    {
+      "id": "goal_angle_stem_day",
+      "base": "goal_angle_tinh",
+      "side": "after",
+      "agree": true,
+      "status": "SERVED",
+      "base_status": "SERVED"
+    },
+    {
+      "id": "goal_angle_stem_day",
+      "base": "goal_angle_tinh",
+      "side": "before",
+      "agree": false,
+      "status": "REFUSED",
+      "base_status": "SERVED"
+    },
+    {
+      "id": "ref_mp_abbrev",
+      "base": "pair_plane_determined",
+      "side": "after",
+      "agree": true,
+      "status": "SERVED",
+      "base_status": "SERVED"
+    },
+    {
+      "id": "ref_mp_abbrev",
+      "base": "pair_plane_determined",
+      "side": "before",
+      "agree": true,
+      "status": "SERVED",
+      "base_status": "SERVED"
+    },
+    {
+      "id": "ref_relative_clause_point",
+      "base": "pair_plane_determined",
+      "side": "after",
+      "agree": true,
+      "status": "SERVED",
+      "base_status": "SERVED"
+    },
+    {
+      "id": "ref_relative_clause_point",
+      "base": "pair_plane_determined",
+      "side": "before",
+      "agree": false,
+      "status": "REFUSED",
+      "base_status": "SERVED"
+    },
+    {
+      "id": "ref_unnamed_point_in_plane",
+      "base": "pair_plane_determined",
+      "side": "after",
+      "agree": true,
+      "status": "SERVED",
+      "base_status": "SERVED"
+    },
+    {
+      "id": "ref_unnamed_point_in_plane",
+      "base": "pair_plane_determined",
+      "side": "before",
+      "agree": true,
+      "status": "SERVED",
+      "base_status": "SERVED"
+    },
+    {
+      "id": "ref_goi_plane",
+      "base": "pair_plane_determined",
+      "side": "after",
+      "agree": true,
+      "status": "SERVED",
+      "base_status": "SERVED"
+    },
+    {
+      "id": "ref_goi_plane",
+      "base": "pair_plane_determined",
+      "side": "before",
+      "agree": true,
+      "status": "SERVED",
+      "base_status": "SERVED"
+    },
+    {
+      "id": "order_one_sentence",
+      "base": "pair_plane_determined",
+      "side": "after",
+      "agree": false,
+      "status": "REFUSED",
+      "base_status": "SERVED"
+    },
+    {
+      "id": "order_one_sentence",
+      "base": "pair_plane_determined",
+      "side": "before",
+      "agree": false,
+      "status": "REFUSED",
+      "base_status": "SERVED"
+    },
+    {
+      "id": "order_semicolon",
+      "base": "pair_plane_determined",
+      "side": "after",
+      "agree": true,
+      "status": "SERVED",
+      "base_status": "SERVED"
+    },
+    {
+      "id": "order_semicolon",
+      "base": "pair_plane_determined",
+      "side": "before",
+      "agree": true,
+      "status": "SERVED",
+      "base_status": "SERVED"
+    },
+    {
+      "id": "order_renamed",
+      "base": "pair_plane_determined",
+      "side": "after",
+      "agree": true,
+      "status": "SERVED",
+      "base_status": "SERVED"
+    },
+    {
+      "id": "order_renamed",
+      "base": "pair_plane_determined",
+      "side": "before",
+      "agree": true,
+      "status": "SERVED",
+      "base_status": "SERVED"
+    },
+    {
+      "id": "sec_hinh_gi_question",
+      "base": "pair_plane_determined",
+      "side": "after",
+      "agree": true,
+      "status": "SERVED",
+      "base_status": "SERVED"
+    },
+    {
+      "id": "sec_hinh_gi_question",
+      "base": "pair_plane_determined",
+      "side": "before",
+      "agree": false,
+      "status": "REFUSED",
+      "base_status": "SERVED"
+    },
+    {
+      "id": "sec_do_P_cat",
+      "base": "pair_plane_determined",
+      "side": "after",
+      "agree": false,
+      "status": "REFUSED",
+      "base_status": "SERVED"
+    },
+    {
+      "id": "sec_do_P_cat",
+      "base": "pair_plane_determined",
+      "side": "before",
+      "agree": false,
+      "status": "REFUSED",
+      "base_status": "SERVED"
+    },
+    {
+      "id": "int_goal_mp",
+      "base": "int_goal",
+      "side": "after",
+      "agree": true,
+      "status": "SERVED",
+      "base_status": "SERVED"
+    },
+    {
+      "id": "int_goal_mp",
+      "base": "int_goal",
+      "side": "before",
+      "agree": true,
+      "status": "SERVED",
+      "base_status": "SERVED"
+    },
+    {
+      "id": "diagram_benign",
+      "base": "goal_volume_tinh",
+      "side": "after",
+      "agree": false,
+      "status": "REFUSED",
+      "base_status": "SERVED"
+    },
+    {
+      "id": "diagram_benign",
+      "base": "goal_volume_tinh",
+      "side": "before",
+      "agree": false,
+      "status": "REFUSED",
+      "base_status": "SERVED"
+    }
+  ],
+  "metamorphic_agreement": {
+    "after": "14/17",
+    "before": "11/17"
+  },
+  "negatives": {
+    "goal_cos_unsupported": {
+      "after": {
+        "status": "REFUSED",
+        "root_cause": "UNSUPPORTED_GOAL_FUNCTION"
+      },
+      "before": {
+        "status": "REFUSED",
+        "root_cause": "UNSUPPORTED_GOAL_FUNCTION"
+      }
+    },
+    "goal_tan_unsupported": {
+      "after": {
+        "status": "REFUSED",
+        "root_cause": "UNSUPPORTED_GOAL_FUNCTION"
+      },
+      "before": {
+        "status": "REFUSED",
+        "root_cause": "UNSUPPORTED_GOAL_FUNCTION"
+      }
+    },
+    "goal_proof_only": {
+      "after": {
+        "status": "REFUSED",
+        "root_cause": "UNSUPPORTED_GOAL_KIND"
+      },
+      "before": {
+        "status": "REFUSED",
+        "root_cause": "UNSUPPORTED_GOAL_KIND"
+      }
+    },
+    "pair_point_as_goal": {
+      "after": {
+        "status": "REFUSED",
+        "root_cause": "UNRECOGNIZED_GOAL"
+      },
+      "before": {
+        "status": "REFUSED",
+        "root_cause": "UNRECOGNIZED_GOAL"
+      }
+    },
+    "pair_plane_underdetermined": {
+      "after": {
+        "status": "REFUSED",
+        "root_cause": "UNRECOGNIZED_GEOMETRIC_ENTITY"
+      },
+      "before": {
+        "status": "REFUSED",
+        "root_cause": "UNRECOGNIZED_GEOMETRIC_ENTITY"
+      }
+    },
+    "ref_undefined_plane": {
+      "after": {
+        "status": "REFUSED",
+        "root_cause": "UNRESOLVED_REFERENCE"
+      },
+      "before": {
+        "status": "REFUSED",
+        "root_cause": "UNRESOLVED_REFERENCE"
+      }
+    },
+    "order_goal_first": {
+      "after": {
+        "status": "REFUSED",
+        "root_cause": "UNRECOGNIZED_GOAL"
+      },
+      "before": {
+        "status": "REFUSED",
+        "root_cause": "UNRECOGNIZED_GOAL"
+      }
+    },
+    "diagram_dependent": {
+      "after": {
+        "status": "REFUSED",
+        "root_cause": "DIAGRAM_DEPENDENT_FACT"
+      },
+      "before": {
+        "status": "REFUSED",
+        "root_cause": "DIAGRAM_DEPENDENT_FACT"
+      }
+    },
+    "missing_dimension": {
+      "after": {
+        "status": "REFUSED",
+        "root_cause": "INSUFFICIENT_CONSTRAINTS"
+      },
+      "before": {
+        "status": "REFUSED",
+        "root_cause": "INSUFFICIENT_CONSTRAINTS"
+      }
+    },
+    "inconsistent": {
+      "after": {
+        "status": "REFUSED",
+        "root_cause": "SOURCE_CONFLICT"
+      },
+      "before": {
+        "status": "REFUSED",
+        "root_cause": "SOURCE_CONFLICT"
+      }
+    },
+    "elliptical_role": {
+      "after": {
+        "status": "REFUSED",
+        "root_cause": "UNRECOGNIZED_GOAL"
+      },
+      "before": {
+        "status": "REFUSED",
+        "root_cause": "UNRECOGNIZED_GOAL"
+      }
+    }
+  },
+  "wrong_served_dev_negatives": {
+    "after": [],
+    "before": []
+  }
+}

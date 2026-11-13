@@ -1,0 +1,2221 @@
+{
+  "run_id": "semantic-failure-safe-image-segmentation",
+  "generated_at_utc": "2026-11-13T16:58:54.855761+00:00",
+  "head": "dcbedcb0d67971beb6ba5260a7553abe55de5ee1",
+  "measured_candidate_note": "development measurement on the working product; the frozen candidate identity is in candidate_freeze.json",
+  "candidate_at_measurement": {
+    "commit": "da06829fe1b8890a878056af57830f7c066719f0",
+    "measured_system": "040de2fd63fb687203610918160b1170ad025117b2d221acf12ef25215bd831c"
+  },
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "route": "route_text_input (local-first)"
+  },
+  "command": "python docs/evaluation/geometry/runs/semantic-failure-safe-image-segmentation/tools/semantic_eval.py <before_backend>",
+  "dataset_partition": "DEVELOPMENT ONLY (DEV agent-written, REAL27 exposed, PROBES exposed); no locked W2/W3 row, no H-1",
+  "oracle_status": "AGENT_DIAGNOSTIC (expected outcomes written by the agent from geometry and the product's documented scope)",
+  "instrument": "backend/app/ai/local_failure_diagnostics.py (local-failure-diagnostics/1)",
+  "clause_fields": [
+    "clause_id",
+    "start_offset",
+    "end_offset",
+    "parser_classification",
+    "semantic_status",
+    "clause_type",
+    "clause_type_cues",
+    "role",
+    "labels",
+    "plane_names",
+    "unresolved_plane_names",
+    "downstream_dependency",
+    "failure_reason"
+  ],
+  "segmentation": "the parser's own clause splitter (sentence ends, ';', and clause-level commas it already uses); offsets are into the normalized text the parser read",
+  "refused_items_after": {
+    "DEV:goal_cos_unsupported": [
+      {
+        "clause_id": "c0",
+        "start_offset": 0,
+        "end_offset": 95,
+        "parser_classification": "MAPPED_FACT",
+        "semantic_status": "RECOGNIZED",
+        "clause_type": "GEOMETRIC_OBJECT_DECLARATION",
+        "clause_type_cues": [
+          "GEOMETRIC_OBJECT_DECLARATION",
+          "PERPENDICULAR_RELATION",
+          "LENGTH_ANGLE_CONSTRAINT",
+          "GEOMETRIC_PROPERTY"
+        ],
+        "role": "PREMISE",
+        "labels": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "S"
+        ],
+        "plane_names": [],
+        "unresolved_plane_names": [],
+        "downstream_dependency": [],
+        "failure_reason": null
+      },
+      {
+        "clause_id": "c1",
+        "start_offset": 97,
+        "end_offset": 155,
+        "parser_classification": "MAPPED_GOAL",
+        "semantic_status": "RECOGNIZED",
+        "clause_type": "MEASUREMENT_GOAL",
+        "clause_type_cues": [
+          "MEASUREMENT_GOAL",
+          "LENGTH_ANGLE_CONSTRAINT"
+        ],
+        "role": "GOAL",
+        "labels": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "S"
+        ],
+        "plane_names": [],
+        "unresolved_plane_names": [],
+        "downstream_dependency": [],
+        "failure_reason": null
+      }
+    ],
+    "DEV:goal_tan_unsupported": [
+      {
+        "clause_id": "c0",
+        "start_offset": 0,
+        "end_offset": 95,
+        "parser_classification": "MAPPED_FACT",
+        "semantic_status": "RECOGNIZED",
+        "clause_type": "GEOMETRIC_OBJECT_DECLARATION",
+        "clause_type_cues": [
+          "GEOMETRIC_OBJECT_DECLARATION",
+          "PERPENDICULAR_RELATION",
+          "LENGTH_ANGLE_CONSTRAINT",
+          "GEOMETRIC_PROPERTY"
+        ],
+        "role": "PREMISE",
+        "labels": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "S"
+        ],
+        "plane_names": [],
+        "unresolved_plane_names": [],
+        "downstream_dependency": [],
+        "failure_reason": null
+      },
+      {
+        "clause_id": "c1",
+        "start_offset": 97,
+        "end_offset": 154,
+        "parser_classification": "MAPPED_GOAL",
+        "semantic_status": "RECOGNIZED",
+        "clause_type": "MEASUREMENT_GOAL",
+        "clause_type_cues": [
+          "MEASUREMENT_GOAL",
+          "LENGTH_ANGLE_CONSTRAINT"
+        ],
+        "role": "GOAL",
+        "labels": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "S"
+        ],
+        "plane_names": [],
+        "unresolved_plane_names": [],
+        "downstream_dependency": [],
+        "failure_reason": null
+      }
+    ],
+    "DEV:goal_proof_only": [
+      {
+        "clause_id": "c0",
+        "start_offset": 0,
+        "end_offset": 95,
+        "parser_classification": "MAPPED_FACT",
+        "semantic_status": "RECOGNIZED",
+        "clause_type": "GEOMETRIC_OBJECT_DECLARATION",
+        "clause_type_cues": [
+          "GEOMETRIC_OBJECT_DECLARATION",
+          "PERPENDICULAR_RELATION",
+          "LENGTH_ANGLE_CONSTRAINT",
+          "GEOMETRIC_PROPERTY"
+        ],
+        "role": "PREMISE",
+        "labels": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "S"
+        ],
+        "plane_names": [],
+        "unresolved_plane_names": [],
+        "downstream_dependency": [],
+        "failure_reason": null
+      },
+      {
+        "clause_id": "c1",
+        "start_offset": 97,
+        "end_offset": 145,
+        "parser_classification": "MAPPED_GOAL",
+        "semantic_status": "RECOGNIZED",
+        "clause_type": "PROOF_REQUEST",
+        "clause_type_cues": [
+          "PROOF_REQUEST",
+          "PERPENDICULAR_RELATION",
+          "LENGTH_ANGLE_CONSTRAINT"
+        ],
+        "role": "GOAL",
+        "labels": [
+          "A",
+          "B",
+          "C",
+          "S"
+        ],
+        "plane_names": [],
+        "unresolved_plane_names": [],
+        "downstream_dependency": [],
+        "failure_reason": null
+      }
+    ],
+    "DEV:pair_point_as_goal": [
+      {
+        "clause_id": "c0",
+        "start_offset": 0,
+        "end_offset": 95,
+        "parser_classification": "MAPPED_FACT",
+        "semantic_status": "RECOGNIZED",
+        "clause_type": "GEOMETRIC_OBJECT_DECLARATION",
+        "clause_type_cues": [
+          "GEOMETRIC_OBJECT_DECLARATION",
+          "PERPENDICULAR_RELATION",
+          "LENGTH_ANGLE_CONSTRAINT",
+          "GEOMETRIC_PROPERTY"
+        ],
+        "role": "PREMISE",
+        "labels": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "S"
+        ],
+        "plane_names": [],
+        "unresolved_plane_names": [],
+        "downstream_dependency": [],
+        "failure_reason": null
+      },
+      {
+        "clause_id": "c1",
+        "start_offset": 97,
+        "end_offset": 123,
+        "parser_classification": "UNPARSED_GOAL_CANDIDATE",
+        "semantic_status": "UNRECOGNIZED",
+        "clause_type": "CONSTRUCTION_GOAL",
+        "clause_type_cues": [
+          "CONSTRUCTION_GOAL"
+        ],
+        "role": "GOAL",
+        "labels": [
+          "A",
+          "S"
+        ],
+        "plane_names": [],
+        "unresolved_plane_names": [],
+        "downstream_dependency": [],
+        "failure_reason": "UNRECOGNIZED_GOAL"
+      }
+    ],
+    "DEV:pair_plane_underdetermined": [
+      {
+        "clause_id": "c0",
+        "start_offset": 0,
+        "end_offset": 95,
+        "parser_classification": "MAPPED_FACT",
+        "semantic_status": "RECOGNIZED",
+        "clause_type": "GEOMETRIC_OBJECT_DECLARATION",
+        "clause_type_cues": [
+          "GEOMETRIC_OBJECT_DECLARATION",
+          "PERPENDICULAR_RELATION",
+          "LENGTH_ANGLE_CONSTRAINT",
+          "GEOMETRIC_PROPERTY"
+        ],
+        "role": "PREMISE",
+        "labels": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "S"
+        ],
+        "plane_names": [],
+        "unresolved_plane_names": [],
+        "downstream_dependency": [],
+        "failure_reason": null
+      },
+      {
+        "clause_id": "c1",
+        "start_offset": 97,
+        "end_offset": 123,
+        "parser_classification": "MAPPED_FACT",
+        "semantic_status": "RECOGNIZED",
+        "clause_type": "POINT_DEFINITION",
+        "clause_type_cues": [
+          "POINT_DEFINITION"
+        ],
+        "role": "PREMISE",
+        "labels": [
+          "A",
+          "M",
+          "S"
+        ],
+        "plane_names": [],
+        "unresolved_plane_names": [],
+        "downstream_dependency": [],
+        "failure_reason": null
+      },
+      {
+        "clause_id": "c2",
+        "start_offset": 125,
+        "end_offset": 179,
+        "parser_classification": "UNPARSED_FACT_CANDIDATE",
+        "semantic_status": "UNRECOGNIZED",
+        "clause_type": "PLANE_DEFINITION",
+        "clause_type_cues": [
+          "PLANE_DEFINITION",
+          "PARALLEL_RELATION",
+          "INCIDENCE_RELATION"
+        ],
+        "role": "PREMISE",
+        "labels": [
+          "A",
+          "B",
+          "M",
+          "P"
+        ],
+        "plane_names": [
+          "P"
+        ],
+        "unresolved_plane_names": [],
+        "downstream_dependency": [],
+        "failure_reason": "UNRECOGNIZED_GEOMETRIC_ENTITY"
+      },
+      {
+        "clause_id": "c3",
+        "start_offset": 181,
+        "end_offset": 236,
+        "parser_classification": "UNPARSED_GOAL_CANDIDATE",
+        "semantic_status": "UNRECOGNIZED",
+        "clause_type": "CONSTRUCTION_GOAL",
+        "clause_type_cues": [
+          "CONSTRUCTION_GOAL",
+          "INCIDENCE_RELATION"
+        ],
+        "role": "GOAL",
+        "labels": [
+          "P"
+        ],
+        "plane_names": [
+          "P"
+        ],
+        "unresolved_plane_names": [],
+        "downstream_dependency": [
+          "c2"
+        ],
+        "failure_reason": "DEPENDS_ON_UNREAD_CLAUSE"
+      }
+    ],
+    "DEV:ref_undefined_plane": [
+      {
+        "clause_id": "c0",
+        "start_offset": 0,
+        "end_offset": 95,
+        "parser_classification": "MAPPED_FACT",
+        "semantic_status": "RECOGNIZED",
+        "clause_type": "GEOMETRIC_OBJECT_DECLARATION",
+        "clause_type_cues": [
+          "GEOMETRIC_OBJECT_DECLARATION",
+          "PERPENDICULAR_RELATION",
+          "LENGTH_ANGLE_CONSTRAINT",
+          "GEOMETRIC_PROPERTY"
+        ],
+        "role": "PREMISE",
+        "labels": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "S"
+        ],
+        "plane_names": [],
+        "unresolved_plane_names": [],
+        "downstream_dependency": [],
+        "failure_reason": null
+      },
+      {
+        "clause_id": "c1",
+        "start_offset": 97,
+        "end_offset": 152,
+        "parser_classification": "UNPARSED_GOAL_CANDIDATE",
+        "semantic_status": "UNRECOGNIZED",
+        "clause_type": "CONSTRUCTION_GOAL",
+        "clause_type_cues": [
+          "CONSTRUCTION_GOAL",
+          "INCIDENCE_RELATION"
+        ],
+        "role": "GOAL",
+        "labels": [
+          "Q"
+        ],
+        "plane_names": [
+          "Q"
+        ],
+        "unresolved_plane_names": [
+          "Q"
+        ],
+        "downstream_dependency": [],
+        "failure_reason": "UNRESOLVED_REFERENCE"
+      }
+    ],
+    "DEV:order_one_sentence": [
+      {
+        "clause_id": "c0",
+        "start_offset": 0,
+        "end_offset": 181,
+        "parser_classification": "MAPPED_FACT",
+        "semantic_status": "RECOGNIZED",
+        "clause_type": "PLANE_DEFINITION",
+        "clause_type_cues": [
+          "PLANE_DEFINITION",
+          "POINT_DEFINITION",
+          "GEOMETRIC_OBJECT_DECLARATION",
+          "PERPENDICULAR_RELATION",
+          "PARALLEL_RELATION",
+          "LENGTH_ANGLE_CONSTRAINT",
+          "GEOMETRIC_PROPERTY",
+          "INCIDENCE_RELATION"
+        ],
+        "role": "PREMISE",
+        "labels": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "M",
+          "P",
+          "S"
+        ],
+        "plane_names": [
+          "P"
+        ],
+        "unresolved_plane_names": [],
+        "downstream_dependency": [],
+        "failure_reason": null
+      },
+      {
+        "clause_id": "c1",
+        "start_offset": 183,
+        "end_offset": 238,
+        "parser_classification": "MAPPED_GOAL",
+        "semantic_status": "RECOGNIZED",
+        "clause_type": "CONSTRUCTION_GOAL",
+        "clause_type_cues": [
+          "CONSTRUCTION_GOAL",
+          "INCIDENCE_RELATION"
+        ],
+        "role": "GOAL",
+        "labels": [
+          "P"
+        ],
+        "plane_names": [
+          "P"
+        ],
+        "unresolved_plane_names": [],
+        "downstream_dependency": [],
+        "failure_reason": null
+      }
+    ],
+    "DEV:order_goal_first": [
+      {
+        "clause_id": "c0",
+        "start_offset": 0,
+        "end_offset": 95,
+        "parser_classification": "MAPPED_FACT",
+        "semantic_status": "RECOGNIZED",
+        "clause_type": "GEOMETRIC_OBJECT_DECLARATION",
+        "clause_type_cues": [
+          "GEOMETRIC_OBJECT_DECLARATION",
+          "PERPENDICULAR_RELATION",
+          "LENGTH_ANGLE_CONSTRAINT",
+          "GEOMETRIC_PROPERTY"
+        ],
+        "role": "PREMISE",
+        "labels": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "S"
+        ],
+        "plane_names": [],
+        "unresolved_plane_names": [],
+        "downstream_dependency": [],
+        "failure_reason": null
+      },
+      {
+        "clause_id": "c1",
+        "start_offset": 97,
+        "end_offset": 223,
+        "parser_classification": "UNPARSED_GOAL_CANDIDATE",
+        "semantic_status": "UNRECOGNIZED",
+        "clause_type": "CONSTRUCTION_GOAL",
+        "clause_type_cues": [
+          "CONSTRUCTION_GOAL",
+          "PARALLEL_RELATION",
+          "INCIDENCE_RELATION"
+        ],
+        "role": "GOAL",
+        "labels": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "M",
+          "P",
+          "S"
+        ],
+        "plane_names": [
+          "P"
+        ],
+        "unresolved_plane_names": [],
+        "downstream_dependency": [],
+        "failure_reason": "UNRECOGNIZED_GOAL"
+      }
+    ],
+    "DEV:sec_do_P_cat": [
+      {
+        "clause_id": "c0",
+        "start_offset": 0,
+        "end_offset": 95,
+        "parser_classification": "MAPPED_FACT",
+        "semantic_status": "RECOGNIZED",
+        "clause_type": "GEOMETRIC_OBJECT_DECLARATION",
+        "clause_type_cues": [
+          "GEOMETRIC_OBJECT_DECLARATION",
+          "PERPENDICULAR_RELATION",
+          "LENGTH_ANGLE_CONSTRAINT",
+          "GEOMETRIC_PROPERTY"
+        ],
+        "role": "PREMISE",
+        "labels": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "S"
+        ],
+        "plane_names": [],
+        "unresolved_plane_names": [],
+        "downstream_dependency": [],
+        "failure_reason": null
+      },
+      {
+        "clause_id": "c1",
+        "start_offset": 97,
+        "end_offset": 123,
+        "parser_classification": "MAPPED_FACT",
+        "semantic_status": "RECOGNIZED",
+        "clause_type": "POINT_DEFINITION",
+        "clause_type_cues": [
+          "POINT_DEFINITION"
+        ],
+        "role": "PREMISE",
+        "labels": [
+          "A",
+          "M",
+          "S"
+        ],
+        "plane_names": [],
+        "unresolved_plane_names": [],
+        "downstream_dependency": [],
+        "failure_reason": null
+      },
+      {
+        "clause_id": "c2",
+        "start_offset": 125,
+        "end_offset": 181,
+        "parser_classification": "MAPPED_FACT",
+        "semantic_status": "RECOGNIZED",
+        "clause_type": "PLANE_DEFINITION",
+        "clause_type_cues": [
+          "PLANE_DEFINITION",
+          "PARALLEL_RELATION",
+          "INCIDENCE_RELATION"
+        ],
+        "role": "PREMISE",
+        "labels": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "M",
+          "P"
+        ],
+        "plane_names": [
+          "P"
+        ],
+        "unresolved_plane_names": [],
+        "downstream_dependency": [],
+        "failure_reason": null
+      },
+      {
+        "clause_id": "c3",
+        "start_offset": 183,
+        "end_offset": 233,
+        "parser_classification": "UNPARSED_GOAL_CANDIDATE",
+        "semantic_status": "UNRECOGNIZED",
+        "clause_type": "CONSTRUCTION_GOAL",
+        "clause_type_cues": [
+          "CONSTRUCTION_GOAL",
+          "INCIDENCE_RELATION"
+        ],
+        "role": "GOAL",
+        "labels": [
+          "P"
+        ],
+        "plane_names": [
+          "P"
+        ],
+        "unresolved_plane_names": [],
+        "downstream_dependency": [],
+        "failure_reason": "UNRECOGNIZED_GOAL"
+      }
+    ],
+    "DEV:diagram_benign": [
+      {
+        "clause_id": "c0",
+        "start_offset": 0,
+        "end_offset": 95,
+        "parser_classification": "MAPPED_FACT",
+        "semantic_status": "RECOGNIZED",
+        "clause_type": "GEOMETRIC_OBJECT_DECLARATION",
+        "clause_type_cues": [
+          "GEOMETRIC_OBJECT_DECLARATION",
+          "PERPENDICULAR_RELATION",
+          "LENGTH_ANGLE_CONSTRAINT",
+          "GEOMETRIC_PROPERTY"
+        ],
+        "role": "PREMISE",
+        "labels": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "S"
+        ],
+        "plane_names": [],
+        "unresolved_plane_names": [],
+        "downstream_dependency": [],
+        "failure_reason": null
+      },
+      {
+        "clause_id": "c1",
+        "start_offset": 97,
+        "end_offset": 147,
+        "parser_classification": "MAPPED_GOAL",
+        "semantic_status": "RECOGNIZED",
+        "clause_type": "MEASUREMENT_GOAL",
+        "clause_type_cues": [
+          "MEASUREMENT_GOAL",
+          "FIGURE_REFERENCE"
+        ],
+        "role": "GOAL",
+        "labels": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "S"
+        ],
+        "plane_names": [],
+        "unresolved_plane_names": [],
+        "downstream_dependency": [],
+        "failure_reason": null
+      }
+    ],
+    "DEV:diagram_dependent": [
+      {
+        "clause_id": "c0",
+        "start_offset": 0,
+        "end_offset": 32,
+        "parser_classification": "MAPPED_FACT",
+        "semantic_status": "RECOGNIZED",
+        "clause_type": "GEOMETRIC_OBJECT_DECLARATION",
+        "clause_type_cues": [
+          "GEOMETRIC_OBJECT_DECLARATION",
+          "FIGURE_REFERENCE"
+        ],
+        "role": "PREMISE",
+        "labels": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "S"
+        ],
+        "plane_names": [],
+        "unresolved_plane_names": [],
+        "downstream_dependency": [],
+        "failure_reason": null
+      },
+      {
+        "clause_id": "c1",
+        "start_offset": 34,
+        "end_offset": 64,
+        "parser_classification": "MAPPED_GOAL",
+        "semantic_status": "RECOGNIZED",
+        "clause_type": "MEASUREMENT_GOAL",
+        "clause_type_cues": [
+          "MEASUREMENT_GOAL"
+        ],
+        "role": "GOAL",
+        "labels": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "S"
+        ],
+        "plane_names": [],
+        "unresolved_plane_names": [],
+        "downstream_dependency": [],
+        "failure_reason": null
+      }
+    ],
+    "DEV:missing_dimension": [
+      {
+        "clause_id": "c0",
+        "start_offset": 0,
+        "end_offset": 78,
+        "parser_classification": "MAPPED_FACT",
+        "semantic_status": "RECOGNIZED",
+        "clause_type": "GEOMETRIC_OBJECT_DECLARATION",
+        "clause_type_cues": [
+          "GEOMETRIC_OBJECT_DECLARATION",
+          "PERPENDICULAR_RELATION",
+          "LENGTH_ANGLE_CONSTRAINT",
+          "GEOMETRIC_PROPERTY"
+        ],
+        "role": "PREMISE",
+        "labels": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "S"
+        ],
+        "plane_names": [],
+        "unresolved_plane_names": [],
+        "downstream_dependency": [],
+        "failure_reason": null
+      },
+      {
+        "clause_id": "c1",
+        "start_offset": 80,
+        "end_offset": 110,
+        "parser_classification": "MAPPED_GOAL",
+        "semantic_status": "RECOGNIZED",
+        "clause_type": "MEASUREMENT_GOAL",
+        "clause_type_cues": [
+          "MEASUREMENT_GOAL"
+        ],
+        "role": "GOAL",
+        "labels": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "S"
+        ],
+        "plane_names": [],
+        "unresolved_plane_names": [],
+        "downstream_dependency": [],
+        "failure_reason": null
+      }
+    ],
+    "DEV:inconsistent": [
+      {
+        "clause_id": "c0",
+        "start_offset": 0,
+        "end_offset": 104,
+        "parser_classification": "MAPPED_FACT",
+        "semantic_status": "RECOGNIZED",
+        "clause_type": "GEOMETRIC_OBJECT_DECLARATION",
+        "clause_type_cues": [
+          "GEOMETRIC_OBJECT_DECLARATION",
+          "PERPENDICULAR_RELATION",
+          "LENGTH_ANGLE_CONSTRAINT",
+          "GEOMETRIC_PROPERTY"
+        ],
+        "role": "PREMISE",
+        "labels": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "S"
+        ],
+        "plane_names": [],
+        "unresolved_plane_names": [],
+        "downstream_dependency": [],
+        "failure_reason": null
+      },
+      {
+        "clause_id": "c1",
+        "start_offset": 106,
+        "end_offset": 136,
+        "parser_classification": "MAPPED_GOAL",
+        "semantic_status": "RECOGNIZED",
+        "clause_type": "MEASUREMENT_GOAL",
+        "clause_type_cues": [
+          "MEASUREMENT_GOAL"
+        ],
+        "role": "GOAL",
+        "labels": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "S"
+        ],
+        "plane_names": [],
+        "unresolved_plane_names": [],
+        "downstream_dependency": [],
+        "failure_reason": null
+      }
+    ],
+    "DEV:elliptical_role": [
+      {
+        "clause_id": "c0",
+        "start_offset": 0,
+        "end_offset": 71,
+        "parser_classification": "MAPPED_FACT",
+        "semantic_status": "RECOGNIZED",
+        "clause_type": "GEOMETRIC_OBJECT_DECLARATION",
+        "clause_type_cues": [
+          "GEOMETRIC_OBJECT_DECLARATION",
+          "LENGTH_ANGLE_CONSTRAINT",
+          "GEOMETRIC_PROPERTY"
+        ],
+        "role": "PREMISE",
+        "labels": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "S"
+        ],
+        "plane_names": [],
+        "unresolved_plane_names": [],
+        "downstream_dependency": [],
+        "failure_reason": null
+      },
+      {
+        "clause_id": "c1",
+        "start_offset": 73,
+        "end_offset": 106,
+        "parser_classification": "UNPARSED_GOAL_CANDIDATE",
+        "semantic_status": "UNRECOGNIZED",
+        "clause_type": "MEASUREMENT_GOAL",
+        "clause_type_cues": [
+          "MEASUREMENT_GOAL",
+          "LENGTH_ANGLE_CONSTRAINT"
+        ],
+        "role": "GOAL",
+        "labels": [],
+        "plane_names": [],
+        "unresolved_plane_names": [],
+        "downstream_dependency": [],
+        "failure_reason": "UNRECOGNIZED_GOAL"
+      }
+    ],
+    "REAL27:vmmu_r254": [
+      {
+        "clause_id": "c0",
+        "start_offset": 0,
+        "end_offset": 140,
+        "parser_classification": "MAPPED_FACT",
+        "semantic_status": "RECOGNIZED",
+        "clause_type": "GEOMETRIC_OBJECT_DECLARATION",
+        "clause_type_cues": [
+          "GEOMETRIC_OBJECT_DECLARATION",
+          "LENGTH_ANGLE_CONSTRAINT",
+          "GEOMETRIC_PROPERTY"
+        ],
+        "role": "PREMISE",
+        "labels": [
+          "A",
+          "A'",
+          "B",
+          "B'",
+          "C",
+          "C'"
+        ],
+        "plane_names": [],
+        "unresolved_plane_names": [],
+        "downstream_dependency": [],
+        "failure_reason": null
+      },
+      {
+        "clause_id": "c1",
+        "start_offset": 142,
+        "end_offset": 226,
+        "parser_classification": "UNPARSED_FACT_CANDIDATE",
+        "semantic_status": "UNRECOGNIZED",
+        "clause_type": "PERPENDICULAR_RELATION",
+        "clause_type_cues": [
+          "PERPENDICULAR_RELATION",
+          "LENGTH_ANGLE_CONSTRAINT"
+        ],
+        "role": "PREMISE",
+        "labels": [
+          "A",
+          "B",
+          "B'",
+          "C"
+        ],
+        "plane_names": [],
+        "unresolved_plane_names": [],
+        "downstream_dependency": [],
+        "failure_reason": "UNRECOGNIZED_RELATION"
+      },
+      {
+        "clause_id": "c2",
+        "start_offset": 228,
+        "end_offset": 271,
+        "parser_classification": "UNPARSED_GOAL_CANDIDATE",
+        "semantic_status": "UNRECOGNIZED",
+        "clause_type": "MEASUREMENT_GOAL",
+        "clause_type_cues": [
+          "MEASUREMENT_GOAL"
+        ],
+        "role": "GOAL",
+        "labels": [
+          "A",
+          "A'",
+          "B",
+          "C"
+        ],
+        "plane_names": [],
+        "unresolved_plane_names": [],
+        "downstream_dependency": [],
+        "failure_reason": "UNRECOGNIZED_GOAL"
+      }
+    ],
+    "REAL27:vmmu_r256": [
+      {
+        "clause_id": "c0",
+        "start_offset": 0,
+        "end_offset": 78,
+        "parser_classification": "MAPPED_FACT",
+        "semantic_status": "RECOGNIZED",
+        "clause_type": "GEOMETRIC_OBJECT_DECLARATION",
+        "clause_type_cues": [
+          "GEOMETRIC_OBJECT_DECLARATION",
+          "LENGTH_ANGLE_CONSTRAINT",
+          "GEOMETRIC_PROPERTY"
+        ],
+        "role": "PREMISE",
+        "labels": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "S"
+        ],
+        "plane_names": [],
+        "unresolved_plane_names": [],
+        "downstream_dependency": [],
+        "failure_reason": null
+      },
+      {
+        "clause_id": "c1",
+        "start_offset": 80,
+        "end_offset": 145,
+        "parser_classification": "MAPPED_FACT",
+        "semantic_status": "RECOGNIZED",
+        "clause_type": "PERPENDICULAR_RELATION",
+        "clause_type_cues": [
+          "PERPENDICULAR_RELATION",
+          "GEOMETRIC_PROPERTY",
+          "FIGURE_REFERENCE"
+        ],
+        "role": "PREMISE",
+        "labels": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "S"
+        ],
+        "plane_names": [],
+        "unresolved_plane_names": [],
+        "downstream_dependency": [],
+        "failure_reason": null
+      },
+      {
+        "clause_id": "c2",
+        "start_offset": 147,
+        "end_offset": 178,
+        "parser_classification": "UNPARSED_GOAL_CANDIDATE",
+        "semantic_status": "UNRECOGNIZED",
+        "clause_type": "MEASUREMENT_GOAL",
+        "clause_type_cues": [
+          "MEASUREMENT_GOAL"
+        ],
+        "role": "GOAL",
+        "labels": [
+          "A",
+          "B",
+          "C",
+          "S"
+        ],
+        "plane_names": [],
+        "unresolved_plane_names": [],
+        "downstream_dependency": [],
+        "failure_reason": "UNRECOGNIZED_GOAL"
+      }
+    ],
+    "REAL27:vmmu_r258": [
+      {
+        "clause_id": "c0",
+        "start_offset": 0,
+        "end_offset": 6,
+        "parser_classification": "BENIGN_DISCOURSE",
+        "semantic_status": "NON_PROBLEM_OR_DISCOURSE",
+        "clause_type": "UNKNOWN",
+        "clause_type_cues": [
+          "UNKNOWN"
+        ],
+        "role": "PREMISE",
+        "labels": [],
+        "plane_names": [],
+        "unresolved_plane_names": [],
+        "downstream_dependency": [],
+        "failure_reason": null
+      },
+      {
+        "clause_id": "c1",
+        "start_offset": 8,
+        "end_offset": 115,
+        "parser_classification": "MAPPED_FACT",
+        "semantic_status": "RECOGNIZED",
+        "clause_type": "GEOMETRIC_OBJECT_DECLARATION",
+        "clause_type_cues": [
+          "GEOMETRIC_OBJECT_DECLARATION",
+          "PERPENDICULAR_RELATION",
+          "LENGTH_ANGLE_CONSTRAINT",
+          "GEOMETRIC_PROPERTY",
+          "FIGURE_REFERENCE"
+        ],
+        "role": "PREMISE",
+        "labels": [
+          "A",
+          "B",
+          "C",
+          "S"
+        ],
+        "plane_names": [],
+        "unresolved_plane_names": [],
+        "downstream_dependency": [],
+        "failure_reason": null
+      },
+      {
+        "clause_id": "c2",
+        "start_offset": 117,
+        "end_offset": 168,
+        "parser_classification": "MAPPED_GOAL",
+        "semantic_status": "RECOGNIZED",
+        "clause_type": "MEASUREMENT_GOAL",
+        "clause_type_cues": [
+          "MEASUREMENT_GOAL",
+          "LENGTH_ANGLE_CONSTRAINT"
+        ],
+        "role": "GOAL",
+        "labels": [
+          "A",
+          "B",
+          "C",
+          "S"
+        ],
+        "plane_names": [],
+        "unresolved_plane_names": [],
+        "downstream_dependency": [],
+        "failure_reason": null
+      }
+    ],
+    "REAL27:vmmu_r266": [
+      {
+        "clause_id": "c0",
+        "start_offset": 0,
+        "end_offset": 6,
+        "parser_classification": "BENIGN_DISCOURSE",
+        "semantic_status": "NON_PROBLEM_OR_DISCOURSE",
+        "clause_type": "UNKNOWN",
+        "clause_type_cues": [
+          "UNKNOWN"
+        ],
+        "role": "PREMISE",
+        "labels": [],
+        "plane_names": [],
+        "unresolved_plane_names": [],
+        "downstream_dependency": [],
+        "failure_reason": null
+      },
+      {
+        "clause_id": "c1",
+        "start_offset": 8,
+        "end_offset": 89,
+        "parser_classification": "MAPPED_FACT",
+        "semantic_status": "RECOGNIZED",
+        "clause_type": "GEOMETRIC_OBJECT_DECLARATION",
+        "clause_type_cues": [
+          "GEOMETRIC_OBJECT_DECLARATION",
+          "PERPENDICULAR_RELATION",
+          "LENGTH_ANGLE_CONSTRAINT"
+        ],
+        "role": "PREMISE",
+        "labels": [
+          "A",
+          "B",
+          "C",
+          "S"
+        ],
+        "plane_names": [],
+        "unresolved_plane_names": [],
+        "downstream_dependency": [],
+        "failure_reason": null
+      },
+      {
+        "clause_id": "c2",
+        "start_offset": 91,
+        "end_offset": 121,
+        "parser_classification": "MAPPED_GOAL",
+        "semantic_status": "RECOGNIZED",
+        "clause_type": "MEASUREMENT_GOAL",
+        "clause_type_cues": [
+          "MEASUREMENT_GOAL"
+        ],
+        "role": "GOAL",
+        "labels": [],
+        "plane_names": [],
+        "unresolved_plane_names": [],
+        "downstream_dependency": [],
+        "failure_reason": null
+      }
+    ],
+    "REAL27:vmmu_r277": [
+      {
+        "clause_id": "c0",
+        "start_offset": 0,
+        "end_offset": 6,
+        "parser_classification": "BENIGN_DISCOURSE",
+        "semantic_status": "NON_PROBLEM_OR_DISCOURSE",
+        "clause_type": "UNKNOWN",
+        "clause_type_cues": [
+          "UNKNOWN"
+        ],
+        "role": "PREMISE",
+        "labels": [],
+        "plane_names": [],
+        "unresolved_plane_names": [],
+        "downstream_dependency": [],
+        "failure_reason": null
+      },
+      {
+        "clause_id": "c1",
+        "start_offset": 8,
+        "end_offset": 65,
+        "parser_classification": "MAPPED_FACT",
+        "semantic_status": "RECOGNIZED",
+        "clause_type": "LENGTH_ANGLE_CONSTRAINT",
+        "clause_type_cues": [
+          "LENGTH_ANGLE_CONSTRAINT",
+          "GEOMETRIC_PROPERTY"
+        ],
+        "role": "PREMISE",
+        "labels": [
+          "A",
+          "B",
+          "C",
+          "O"
+        ],
+        "plane_names": [],
+        "unresolved_plane_names": [],
+        "downstream_dependency": [],
+        "failure_reason": null
+      },
+      {
+        "clause_id": "c2",
+        "start_offset": 67,
+        "end_offset": 166,
+        "parser_classification": "UNPARSED_FACT_CANDIDATE",
+        "semantic_status": "UNRECOGNIZED",
+        "clause_type": "POINT_DEFINITION",
+        "clause_type_cues": [
+          "POINT_DEFINITION"
+        ],
+        "role": "PREMISE",
+        "labels": [
+          "A",
+          "B",
+          "C",
+          "M",
+          "N",
+          "O",
+          "P"
+        ],
+        "plane_names": [],
+        "unresolved_plane_names": [],
+        "downstream_dependency": [],
+        "failure_reason": "UNRECOGNIZED_GEOMETRIC_ENTITY"
+      },
+      {
+        "clause_id": "c3",
+        "start_offset": 168,
+        "end_offset": 198,
+        "parser_classification": "UNPARSED_GOAL_CANDIDATE",
+        "semantic_status": "UNRECOGNIZED",
+        "clause_type": "MEASUREMENT_GOAL",
+        "clause_type_cues": [
+          "MEASUREMENT_GOAL"
+        ],
+        "role": "GOAL",
+        "labels": [
+          "M",
+          "N",
+          "O",
+          "P"
+        ],
+        "plane_names": [],
+        "unresolved_plane_names": [],
+        "downstream_dependency": [],
+        "failure_reason": "UNRECOGNIZED_GOAL"
+      }
+    ],
+    "REAL27:vmmu_r284": [
+      {
+        "clause_id": "c0",
+        "start_offset": 0,
+        "end_offset": 6,
+        "parser_classification": "BENIGN_DISCOURSE",
+        "semantic_status": "NON_PROBLEM_OR_DISCOURSE",
+        "clause_type": "UNKNOWN",
+        "clause_type_cues": [
+          "UNKNOWN"
+        ],
+        "role": "PREMISE",
+        "labels": [],
+        "plane_names": [],
+        "unresolved_plane_names": [],
+        "downstream_dependency": [],
+        "failure_reason": null
+      },
+      {
+        "clause_id": "c1",
+        "start_offset": 8,
+        "end_offset": 163,
+        "parser_classification": "MAPPED_FACT",
+        "semantic_status": "RECOGNIZED",
+        "clause_type": "GEOMETRIC_OBJECT_DECLARATION",
+        "clause_type_cues": [
+          "GEOMETRIC_OBJECT_DECLARATION",
+          "PERPENDICULAR_RELATION",
+          "LENGTH_ANGLE_CONSTRAINT",
+          "GEOMETRIC_PROPERTY",
+          "INCIDENCE_RELATION",
+          "FIGURE_REFERENCE"
+        ],
+        "role": "PREMISE",
+        "labels": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "S"
+        ],
+        "plane_names": [],
+        "unresolved_plane_names": [],
+        "downstream_dependency": [],
+        "failure_reason": null
+      },
+      {
+        "clause_id": "c2",
+        "start_offset": 165,
+        "end_offset": 206,
+        "parser_classification": "MAPPED_GOAL",
+        "semantic_status": "RECOGNIZED",
+        "clause_type": "MEASUREMENT_GOAL",
+        "clause_type_cues": [
+          "MEASUREMENT_GOAL"
+        ],
+        "role": "GOAL",
+        "labels": [
+          "A",
+          "B",
+          "D",
+          "S"
+        ],
+        "plane_names": [],
+        "unresolved_plane_names": [],
+        "downstream_dependency": [],
+        "failure_reason": null
+      }
+    ],
+    "REAL27:vmmu_r295": [
+      {
+        "clause_id": "c0",
+        "start_offset": 0,
+        "end_offset": 6,
+        "parser_classification": "BENIGN_DISCOURSE",
+        "semantic_status": "NON_PROBLEM_OR_DISCOURSE",
+        "clause_type": "UNKNOWN",
+        "clause_type_cues": [
+          "UNKNOWN"
+        ],
+        "role": "PREMISE",
+        "labels": [],
+        "plane_names": [],
+        "unresolved_plane_names": [],
+        "downstream_dependency": [],
+        "failure_reason": null
+      },
+      {
+        "clause_id": "c1",
+        "start_offset": 8,
+        "end_offset": 102,
+        "parser_classification": "MAPPED_FACT",
+        "semantic_status": "RECOGNIZED",
+        "clause_type": "GEOMETRIC_OBJECT_DECLARATION",
+        "clause_type_cues": [
+          "GEOMETRIC_OBJECT_DECLARATION",
+          "LENGTH_ANGLE_CONSTRAINT",
+          "GEOMETRIC_PROPERTY",
+          "FIGURE_REFERENCE"
+        ],
+        "role": "PREMISE",
+        "labels": [
+          "A",
+          "A'",
+          "B",
+          "B'",
+          "C",
+          "C'",
+          "D",
+          "D'"
+        ],
+        "plane_names": [],
+        "unresolved_plane_names": [],
+        "downstream_dependency": [],
+        "failure_reason": null
+      },
+      {
+        "clause_id": "c2",
+        "start_offset": 104,
+        "end_offset": 153,
+        "parser_classification": "MAPPED_GOAL",
+        "semantic_status": "RECOGNIZED",
+        "clause_type": "MEASUREMENT_GOAL",
+        "clause_type_cues": [
+          "MEASUREMENT_GOAL",
+          "LENGTH_ANGLE_CONSTRAINT"
+        ],
+        "role": "GOAL",
+        "labels": [
+          "A",
+          "A'",
+          "B",
+          "C",
+          "D"
+        ],
+        "plane_names": [],
+        "unresolved_plane_names": [],
+        "downstream_dependency": [],
+        "failure_reason": null
+      }
+    ],
+    "REAL27:vmmu_r460": [
+      {
+        "clause_id": "c0",
+        "start_offset": 0,
+        "end_offset": 78,
+        "parser_classification": "MAPPED_FACT",
+        "semantic_status": "RECOGNIZED",
+        "clause_type": "GEOMETRIC_OBJECT_DECLARATION",
+        "clause_type_cues": [
+          "GEOMETRIC_OBJECT_DECLARATION",
+          "LENGTH_ANGLE_CONSTRAINT",
+          "GEOMETRIC_PROPERTY"
+        ],
+        "role": "PREMISE",
+        "labels": [
+          "A",
+          "B",
+          "C",
+          "S"
+        ],
+        "plane_names": [],
+        "unresolved_plane_names": [],
+        "downstream_dependency": [],
+        "failure_reason": null
+      },
+      {
+        "clause_id": "c1",
+        "start_offset": 80,
+        "end_offset": 133,
+        "parser_classification": "MAPPED_FACT",
+        "semantic_status": "RECOGNIZED",
+        "clause_type": "PERPENDICULAR_RELATION",
+        "clause_type_cues": [
+          "PERPENDICULAR_RELATION",
+          "LENGTH_ANGLE_CONSTRAINT"
+        ],
+        "role": "PREMISE",
+        "labels": [
+          "A",
+          "B",
+          "C",
+          "S"
+        ],
+        "plane_names": [],
+        "unresolved_plane_names": [],
+        "downstream_dependency": [],
+        "failure_reason": null
+      },
+      {
+        "clause_id": "c2",
+        "start_offset": 135,
+        "end_offset": 171,
+        "parser_classification": "MAPPED_GOAL",
+        "semantic_status": "RECOGNIZED",
+        "clause_type": "MEASUREMENT_GOAL",
+        "clause_type_cues": [
+          "MEASUREMENT_GOAL"
+        ],
+        "role": "GOAL",
+        "labels": [
+          "A",
+          "B",
+          "C",
+          "S"
+        ],
+        "plane_names": [],
+        "unresolved_plane_names": [],
+        "downstream_dependency": [],
+        "failure_reason": null
+      }
+    ],
+    "REAL27:vmmu_r461": [
+      {
+        "clause_id": "c0",
+        "start_offset": 0,
+        "end_offset": 6,
+        "parser_classification": "BENIGN_DISCOURSE",
+        "semantic_status": "NON_PROBLEM_OR_DISCOURSE",
+        "clause_type": "UNKNOWN",
+        "clause_type_cues": [
+          "UNKNOWN"
+        ],
+        "role": "PREMISE",
+        "labels": [],
+        "plane_names": [],
+        "unresolved_plane_names": [],
+        "downstream_dependency": [],
+        "failure_reason": null
+      },
+      {
+        "clause_id": "c1",
+        "start_offset": 8,
+        "end_offset": 109,
+        "parser_classification": "UNPARSED_FACT_CANDIDATE",
+        "semantic_status": "UNRECOGNIZED",
+        "clause_type": "GEOMETRIC_PROPERTY",
+        "clause_type_cues": [
+          "GEOMETRIC_PROPERTY",
+          "FIGURE_REFERENCE"
+        ],
+        "role": "PREMISE",
+        "labels": [
+          "A",
+          "B",
+          "C"
+        ],
+        "plane_names": [],
+        "unresolved_plane_names": [],
+        "downstream_dependency": [],
+        "failure_reason": "UNRECOGNIZED_RELATION"
+      },
+      {
+        "clause_id": "c2",
+        "start_offset": 111,
+        "end_offset": 137,
+        "parser_classification": "MAPPED_FACT",
+        "semantic_status": "RECOGNIZED",
+        "clause_type": "POINT_DEFINITION",
+        "clause_type_cues": [
+          "POINT_DEFINITION"
+        ],
+        "role": "PREMISE",
+        "labels": [
+          "B",
+          "C",
+          "K"
+        ],
+        "plane_names": [],
+        "unresolved_plane_names": [],
+        "downstream_dependency": [],
+        "failure_reason": null
+      },
+      {
+        "clause_id": "c3",
+        "start_offset": 139,
+        "end_offset": 274,
+        "parser_classification": "UNPARSED_FACT_CANDIDATE",
+        "semantic_status": "UNRECOGNIZED",
+        "clause_type": "INCIDENCE_RELATION",
+        "clause_type_cues": [
+          "INCIDENCE_RELATION"
+        ],
+        "role": "PREMISE",
+        "labels": [
+          "A",
+          "B",
+          "C",
+          "K",
+          "M",
+          "N"
+        ],
+        "plane_names": [],
+        "unresolved_plane_names": [],
+        "downstream_dependency": [],
+        "failure_reason": "UNRECOGNIZED_RELATION"
+      },
+      {
+        "clause_id": "c4",
+        "start_offset": 276,
+        "end_offset": 388,
+        "parser_classification": "UNPARSED_FACT_CANDIDATE",
+        "semantic_status": "UNRECOGNIZED",
+        "clause_type": "POINT_DEFINITION",
+        "clause_type_cues": [
+          "POINT_DEFINITION"
+        ],
+        "role": "PREMISE",
+        "labels": [
+          "A",
+          "M",
+          "N"
+        ],
+        "plane_names": [],
+        "unresolved_plane_names": [],
+        "downstream_dependency": [],
+        "failure_reason": "UNRECOGNIZED_GEOMETRIC_ENTITY"
+      },
+      {
+        "clause_id": "c5",
+        "start_offset": 390,
+        "end_offset": 434,
+        "parser_classification": "BENIGN_DISCOURSE",
+        "semantic_status": "NON_PROBLEM_OR_DISCOURSE",
+        "clause_type": "UNKNOWN",
+        "clause_type_cues": [
+          "UNKNOWN"
+        ],
+        "role": "PREMISE",
+        "labels": [],
+        "plane_names": [],
+        "unresolved_plane_names": [],
+        "downstream_dependency": [],
+        "failure_reason": null
+      }
+    ],
+    "REAL27:vmmu_r463": [
+      {
+        "clause_id": "c0",
+        "start_offset": 0,
+        "end_offset": 6,
+        "parser_classification": "BENIGN_DISCOURSE",
+        "semantic_status": "NON_PROBLEM_OR_DISCOURSE",
+        "clause_type": "UNKNOWN",
+        "clause_type_cues": [
+          "UNKNOWN"
+        ],
+        "role": "PREMISE",
+        "labels": [],
+        "plane_names": [],
+        "unresolved_plane_names": [],
+        "downstream_dependency": [],
+        "failure_reason": null
+      },
+      {
+        "clause_id": "c1",
+        "start_offset": 8,
+        "end_offset": 126,
+        "parser_classification": "UNPARSED_FACT_CANDIDATE",
+        "semantic_status": "UNRECOGNIZED",
+        "clause_type": "GEOMETRIC_OBJECT_DECLARATION",
+        "clause_type_cues": [
+          "GEOMETRIC_OBJECT_DECLARATION",
+          "LENGTH_ANGLE_CONSTRAINT",
+          "GEOMETRIC_PROPERTY"
+        ],
+        "role": "PREMISE",
+        "labels": [
+          "A",
+          "A'",
+          "B",
+          "B'",
+          "C",
+          "C'",
+          "D",
+          "D'"
+        ],
+        "plane_names": [],
+        "unresolved_plane_names": [],
+        "downstream_dependency": [],
+        "failure_reason": "UNRECOGNIZED_GEOMETRIC_ENTITY"
+      },
+      {
+        "clause_id": "c2",
+        "start_offset": 128,
+        "end_offset": 162,
+        "parser_classification": "UNPARSED_GOAL_CANDIDATE",
+        "semantic_status": "UNRECOGNIZED",
+        "clause_type": "MEASUREMENT_GOAL",
+        "clause_type_cues": [
+          "MEASUREMENT_GOAL"
+        ],
+        "role": "GOAL",
+        "labels": [],
+        "plane_names": [],
+        "unresolved_plane_names": [],
+        "downstream_dependency": [],
+        "failure_reason": "UNRECOGNIZED_GOAL"
+      }
+    ],
+    "REAL27:vmmu_r475": [
+      {
+        "clause_id": "c0",
+        "start_offset": 0,
+        "end_offset": 6,
+        "parser_classification": "BENIGN_DISCOURSE",
+        "semantic_status": "NON_PROBLEM_OR_DISCOURSE",
+        "clause_type": "UNKNOWN",
+        "clause_type_cues": [
+          "UNKNOWN"
+        ],
+        "role": "PREMISE",
+        "labels": [],
+        "plane_names": [],
+        "unresolved_plane_names": [],
+        "downstream_dependency": [],
+        "failure_reason": null
+      },
+      {
+        "clause_id": "c1",
+        "start_offset": 8,
+        "end_offset": 99,
+        "parser_classification": "UNPARSED_FACT_CANDIDATE",
+        "semantic_status": "UNRECOGNIZED",
+        "clause_type": "LENGTH_ANGLE_CONSTRAINT",
+        "clause_type_cues": [
+          "LENGTH_ANGLE_CONSTRAINT"
+        ],
+        "role": "PREMISE",
+        "labels": [],
+        "plane_names": [],
+        "unresolved_plane_names": [],
+        "downstream_dependency": [],
+        "failure_reason": "UNRECOGNIZED_RELATION"
+      },
+      {
+        "clause_id": "c2",
+        "start_offset": 101,
+        "end_offset": 147,
+        "parser_classification": "BENIGN_DISCOURSE",
+        "semantic_status": "NON_PROBLEM_OR_DISCOURSE",
+        "clause_type": "GEOMETRIC_PROPERTY",
+        "clause_type_cues": [
+          "GEOMETRIC_PROPERTY"
+        ],
+        "role": "PREMISE",
+        "labels": [],
+        "plane_names": [],
+        "unresolved_plane_names": [],
+        "downstream_dependency": [],
+        "failure_reason": null
+      },
+      {
+        "clause_id": "c3",
+        "start_offset": 149,
+        "end_offset": 235,
+        "parser_classification": "UNPARSED_FACT_CANDIDATE",
+        "semantic_status": "UNRECOGNIZED",
+        "clause_type": "UNKNOWN",
+        "clause_type_cues": [
+          "UNKNOWN"
+        ],
+        "role": "PREMISE",
+        "labels": [],
+        "plane_names": [],
+        "unresolved_plane_names": [],
+        "downstream_dependency": [],
+        "failure_reason": "INCOMPLETE_FACT_EXTRACTION"
+      },
+      {
+        "clause_id": "c4",
+        "start_offset": 237,
+        "end_offset": 379,
+        "parser_classification": "UNPARSED_GOAL_CANDIDATE",
+        "semantic_status": "UNRECOGNIZED",
+        "clause_type": "POINT_DEFINITION",
+        "clause_type_cues": [
+          "POINT_DEFINITION",
+          "INCIDENCE_RELATION",
+          "FIGURE_REFERENCE"
+        ],
+        "role": "PREMISE",
+        "labels": [],
+        "plane_names": [],
+        "unresolved_plane_names": [],
+        "downstream_dependency": [],
+        "failure_reason": "UNRECOGNIZED_GEOMETRIC_ENTITY"
+      },
+      {
+        "clause_id": "c5",
+        "start_offset": 381,
+        "end_offset": 455,
+        "parser_classification": "UNPARSED_GOAL_CANDIDATE",
+        "semantic_status": "UNRECOGNIZED",
+        "clause_type": "MEASUREMENT_GOAL",
+        "clause_type_cues": [
+          "MEASUREMENT_GOAL"
+        ],
+        "role": "GOAL",
+        "labels": [],
+        "plane_names": [],
+        "unresolved_plane_names": [],
+        "downstream_dependency": [],
+        "failure_reason": "UNRECOGNIZED_GOAL"
+      }
+    ],
+    "REAL27:vmmu_r488": [
+      {
+        "clause_id": "c0",
+        "start_offset": 0,
+        "end_offset": 83,
+        "parser_classification": "MAPPED_FACT",
+        "semantic_status": "RECOGNIZED",
+        "clause_type": "GEOMETRIC_OBJECT_DECLARATION",
+        "clause_type_cues": [
+          "GEOMETRIC_OBJECT_DECLARATION",
+          "LENGTH_ANGLE_CONSTRAINT",
+          "GEOMETRIC_PROPERTY"
+        ],
+        "role": "PREMISE",
+        "labels": [
+          "A",
+          "A'",
+          "B",
+          "B'",
+          "C",
+          "C'"
+        ],
+        "plane_names": [],
+        "unresolved_plane_names": [],
+        "downstream_dependency": [],
+        "failure_reason": null
+      },
+      {
+        "clause_id": "c1",
+        "start_offset": 85,
+        "end_offset": 163,
+        "parser_classification": "MAPPED_FACT",
+        "semantic_status": "RECOGNIZED",
+        "clause_type": "LENGTH_ANGLE_CONSTRAINT",
+        "clause_type_cues": [
+          "LENGTH_ANGLE_CONSTRAINT",
+          "FIGURE_REFERENCE"
+        ],
+        "role": "PREMISE",
+        "labels": [
+          "A",
+          "B'",
+          "C",
+          "C'"
+        ],
+        "plane_names": [],
+        "unresolved_plane_names": [],
+        "downstream_dependency": [],
+        "failure_reason": null
+      },
+      {
+        "clause_id": "c2",
+        "start_offset": 165,
+        "end_offset": 202,
+        "parser_classification": "UNPARSED_GOAL_CANDIDATE",
+        "semantic_status": "UNRECOGNIZED",
+        "clause_type": "MEASUREMENT_GOAL",
+        "clause_type_cues": [
+          "MEASUREMENT_GOAL"
+        ],
+        "role": "GOAL",
+        "labels": [
+          "A",
+          "A'",
+          "B'",
+          "C",
+          "C'"
+        ],
+        "plane_names": [],
+        "unresolved_plane_names": [],
+        "downstream_dependency": [],
+        "failure_reason": "UNRECOGNIZED_GOAL"
+      }
+    ],
+    "REAL27:vmmu_r491": [
+      {
+        "clause_id": "c0",
+        "start_offset": 0,
+        "end_offset": 109,
+        "parser_classification": "MAPPED_FACT",
+        "semantic_status": "RECOGNIZED",
+        "clause_type": "GEOMETRIC_OBJECT_DECLARATION",
+        "clause_type_cues": [
+          "GEOMETRIC_OBJECT_DECLARATION",
+          "LENGTH_ANGLE_CONSTRAINT",
+          "GEOMETRIC_PROPERTY",
+          "FIGURE_REFERENCE"
+        ],
+        "role": "PREMISE",
+        "labels": [
+          "A",
+          "A'",
+          "B",
+          "B'",
+          "C",
+          "C'"
+        ],
+        "plane_names": [],
+        "unresolved_plane_names": [],
+        "downstream_dependency": [],
+        "failure_reason": null
+      },
+      {
+        "clause_id": "c1",
+        "start_offset": 111,
+        "end_offset": 182,
+        "parser_classification": "UNPARSED_FACT_CANDIDATE",
+        "semantic_status": "UNRECOGNIZED",
+        "clause_type": "PERPENDICULAR_RELATION",
+        "clause_type_cues": [
+          "PERPENDICULAR_RELATION",
+          "LENGTH_ANGLE_CONSTRAINT",
+          "INCIDENCE_RELATION"
+        ],
+        "role": "PREMISE",
+        "labels": [
+          "A",
+          "A'",
+          "B",
+          "C",
+          "I"
+        ],
+        "plane_names": [],
+        "unresolved_plane_names": [],
+        "downstream_dependency": [],
+        "failure_reason": "UNRECOGNIZED_RELATION"
+      },
+      {
+        "clause_id": "c2",
+        "start_offset": 184,
+        "end_offset": 226,
+        "parser_classification": "MAPPED_GOAL",
+        "semantic_status": "RECOGNIZED",
+        "clause_type": "MEASUREMENT_GOAL",
+        "clause_type_cues": [
+          "MEASUREMENT_GOAL"
+        ],
+        "role": "GOAL",
+        "labels": [
+          "A",
+          "A'",
+          "B",
+          "C"
+        ],
+        "plane_names": [],
+        "unresolved_plane_names": [],
+        "downstream_dependency": [],
+        "failure_reason": null
+      }
+    ],
+    "REAL27:vmmu_r498": [
+      {
+        "clause_id": "c0",
+        "start_offset": 0,
+        "end_offset": 89,
+        "parser_classification": "MAPPED_FACT",
+        "semantic_status": "RECOGNIZED",
+        "clause_type": "GEOMETRIC_OBJECT_DECLARATION",
+        "clause_type_cues": [
+          "GEOMETRIC_OBJECT_DECLARATION",
+          "LENGTH_ANGLE_CONSTRAINT",
+          "GEOMETRIC_PROPERTY"
+        ],
+        "role": "PREMISE",
+        "labels": [
+          "A",
+          "A'",
+          "B",
+          "B'",
+          "C",
+          "C'",
+          "D",
+          "D'"
+        ],
+        "plane_names": [],
+        "unresolved_plane_names": [],
+        "downstream_dependency": [],
+        "failure_reason": null
+      },
+      {
+        "clause_id": "c1",
+        "start_offset": 91,
+        "end_offset": 145,
+        "parser_classification": "MAPPED_GOAL",
+        "semantic_status": "RECOGNIZED",
+        "clause_type": "MEASUREMENT_GOAL",
+        "clause_type_cues": [
+          "MEASUREMENT_GOAL",
+          "LENGTH_ANGLE_CONSTRAINT"
+        ],
+        "role": "GOAL",
+        "labels": [
+          "A",
+          "B",
+          "C",
+          "C'",
+          "D"
+        ],
+        "plane_names": [],
+        "unresolved_plane_names": [],
+        "downstream_dependency": [],
+        "failure_reason": null
+      }
+    ],
+    "REAL27:vmmu_r513": [
+      {
+        "clause_id": "c0",
+        "start_offset": 0,
+        "end_offset": 116,
+        "parser_classification": "MAPPED_FACT",
+        "semantic_status": "RECOGNIZED",
+        "clause_type": "MEASUREMENT_GOAL",
+        "clause_type_cues": [
+          "MEASUREMENT_GOAL",
+          "GEOMETRIC_OBJECT_DECLARATION",
+          "LENGTH_ANGLE_CONSTRAINT"
+        ],
+        "role": "GOAL",
+        "labels": [
+          "A",
+          "A'",
+          "B",
+          "B'",
+          "C",
+          "C'",
+          "D",
+          "D'"
+        ],
+        "plane_names": [],
+        "unresolved_plane_names": [],
+        "downstream_dependency": [],
+        "failure_reason": null
+      }
+    ],
+    "REAL27:vmmu_r520": [
+      {
+        "clause_id": "c0",
+        "start_offset": 0,
+        "end_offset": 6,
+        "parser_classification": "BENIGN_DISCOURSE",
+        "semantic_status": "NON_PROBLEM_OR_DISCOURSE",
+        "clause_type": "UNKNOWN",
+        "clause_type_cues": [
+          "UNKNOWN"
+        ],
+        "role": "PREMISE",
+        "labels": [],
+        "plane_names": [],
+        "unresolved_plane_names": [],
+        "downstream_dependency": [],
+        "failure_reason": null
+      },
+      {
+        "clause_id": "c1",
+        "start_offset": 8,
+        "end_offset": 112,
+        "parser_classification": "MAPPED_FACT",
+        "semantic_status": "RECOGNIZED",
+        "clause_type": "GEOMETRIC_OBJECT_DECLARATION",
+        "clause_type_cues": [
+          "GEOMETRIC_OBJECT_DECLARATION",
+          "PERPENDICULAR_RELATION",
+          "LENGTH_ANGLE_CONSTRAINT",
+          "GEOMETRIC_PROPERTY",
+          "FIGURE_REFERENCE"
+        ],
+        "role": "PREMISE",
+        "labels": [
+          "A",
+          "B",
+          "C",
+          "S"
+        ],
+        "plane_names": [],
+        "unresolved_plane_names": [],
+        "downstream_dependency": [],
+        "failure_reason": null
+      },
+      {
+        "clause_id": "c2",
+        "start_offset": 114,
+        "end_offset": 156,
+        "parser_classification": "MAPPED_GOAL",
+        "semantic_status": "RECOGNIZED",
+        "clause_type": "MEASUREMENT_GOAL",
+        "clause_type_cues": [
+          "MEASUREMENT_GOAL",
+          "LENGTH_ANGLE_CONSTRAINT"
+        ],
+        "role": "GOAL",
+        "labels": [
+          "A",
+          "B",
+          "C",
+          "S"
+        ],
+        "plane_names": [],
+        "unresolved_plane_names": [],
+        "downstream_dependency": [],
+        "failure_reason": null
+      }
+    ],
+    "REAL27:vmmu_r537": [
+      {
+        "clause_id": "c0",
+        "start_offset": 0,
+        "end_offset": 117,
+        "parser_classification": "MAPPED_FACT",
+        "semantic_status": "RECOGNIZED",
+        "clause_type": "GEOMETRIC_OBJECT_DECLARATION",
+        "clause_type_cues": [
+          "GEOMETRIC_OBJECT_DECLARATION",
+          "GEOMETRIC_PROPERTY",
+          "FIGURE_REFERENCE"
+        ],
+        "role": "PREMISE",
+        "labels": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "S"
+        ],
+        "plane_names": [],
+        "unresolved_plane_names": [],
+        "downstream_dependency": [],
+        "failure_reason": null
+      },
+      {
+        "clause_id": "c1",
+        "start_offset": 119,
+        "end_offset": 160,
+        "parser_classification": "MAPPED_GOAL",
+        "semantic_status": "RECOGNIZED",
+        "clause_type": "MEASUREMENT_GOAL",
+        "clause_type_cues": [
+          "MEASUREMENT_GOAL"
+        ],
+        "role": "GOAL",
+        "labels": [
+          "A",
+          "B",
+          "C",
+          "S"
+        ],
+        "plane_names": [],
+        "unresolved_plane_names": [],
+        "downstream_dependency": [],
+        "failure_reason": null
+      }
+    ],
+    "REAL27:vmmu_r538": [
+      {
+        "clause_id": "c0",
+        "start_offset": 0,
+        "end_offset": 6,
+        "parser_classification": "BENIGN_DISCOURSE",
+        "semantic_status": "NON_PROBLEM_OR_DISCOURSE",
+        "clause_type": "UNKNOWN",
+        "clause_type_cues": [
+          "UNKNOWN"
+        ],
+        "role": "PREMISE",
+        "labels": [],
+        "plane_names": [],
+        "unresolved_plane_names": [],
+        "downstream_dependency": [],
+        "failure_reason": null
+      },
+      {
+        "clause_id": "c1",
+        "start_offset": 8,
+        "end_offset": 106,
+        "parser_classification": "MAPPED_FACT",
+        "semantic_status": "RECOGNIZED",
+        "clause_type": "GEOMETRIC_OBJECT_DECLARATION",
+        "clause_type_cues": [
+          "GEOMETRIC_OBJECT_DECLARATION",
+          "LENGTH_ANGLE_CONSTRAINT",
+          "GEOMETRIC_PROPERTY",
+          "FIGURE_REFERENCE"
+        ],
+        "role": "PREMISE",
+        "labels": [
+          "A",
+          "B",
+          "C",
+          "S"
+        ],
+        "plane_names": [],
+        "unresolved_plane_names": [],
+        "downstream_dependency": [],
+        "failure_reason": null
+      },
+      {
+        "clause_id": "c2",
+        "start_offset": 108,
+        "end_offset": 141,
+        "parser_classification": "UNPARSED_GOAL_CANDIDATE",
+        "semantic_status": "UNRECOGNIZED",
+        "clause_type": "MEASUREMENT_GOAL",
+        "clause_type_cues": [
+          "MEASUREMENT_GOAL",
+          "LENGTH_ANGLE_CONSTRAINT"
+        ],
+        "role": "GOAL",
+        "labels": [],
+        "plane_names": [],
+        "unresolved_plane_names": [],
+        "downstream_dependency": [],
+        "failure_reason": "UNRECOGNIZED_GOAL"
+      }
+    ],
+    "REAL27:vmmu_r559": [
+      {
+        "clause_id": "c0",
+        "start_offset": 0,
+        "end_offset": 6,
+        "parser_classification": "BENIGN_DISCOURSE",
+        "semantic_status": "NON_PROBLEM_OR_DISCOURSE",
+        "clause_type": "UNKNOWN",
+        "clause_type_cues": [
+          "UNKNOWN"
+        ],
+        "role": "PREMISE",
+        "labels": [],
+        "plane_names": [],
+        "unresolved_plane_names": [],
+        "downstream_dependency": [],
+        "failure_reason": null
+      },
+      {
+        "clause_id": "c1",
+        "start_offset": 8,
+        "end_offset": 28,
+        "parser_classification": "MAPPED_FACT",
+        "semantic_status": "RECOGNIZED",
+        "clause_type": "GEOMETRIC_PROPERTY",
+        "clause_type_cues": [
+          "GEOMETRIC_PROPERTY"
+        ],
+        "role": "PREMISE",
+        "labels": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "plane_names": [],
+        "unresolved_plane_names": [],
+        "downstream_dependency": [],
+        "failure_reason": null
+      },
+      {
+        "clause_id": "c2",
+        "start_offset": 30,
+        "end_offset": 56,
+        "parser_classification": "MAPPED_FACT",
+        "semantic_status": "RECOGNIZED",
+        "clause_type": "POINT_DEFINITION",
+        "clause_type_cues": [
+          "POINT_DEFINITION"
+        ],
+        "role": "PREMISE",
+        "labels": [
+          "C",
+          "D",
+          "M"
+        ],
+        "plane_names": [],
+        "unresolved_plane_names": [],
+        "downstream_dependency": [],
+        "failure_reason": null
+      },
+      {
+        "clause_id": "c3",
+        "start_offset": 58,
+        "end_offset": 106,
+        "parser_classification": "MAPPED_GOAL",
+        "semantic_status": "RECOGNIZED",
+        "clause_type": "MEASUREMENT_GOAL",
+        "clause_type_cues": [
+          "MEASUREMENT_GOAL",
+          "LENGTH_ANGLE_CONSTRAINT"
+        ],
+        "role": "GOAL",
+        "labels": [
+          "A",
+          "B",
+          "C",
+          "M"
+        ],
+        "plane_names": [],
+        "unresolved_plane_names": [],
+        "downstream_dependency": [],
+        "failure_reason": null
+      }
+    ]
+  }
+}

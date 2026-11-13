@@ -1,0 +1,34 @@
+{
+  "run_id": "semantic-failure-safe-image-segmentation",
+  "generated_at_utc": "2026-11-13T16:58:18.691725+00:00",
+  "sealed_h1": {
+    "rows": 94,
+    "opened": 0,
+    "row_numbers_only": "local-semantic-source-gate-reliability/fresh_external_preregistration.json",
+    "vmmu_page_renders": "not opened (a page may hold a sealed question)"
+  },
+  "w2_w3_locked": {
+    "inputs_sha256": {
+      "W2": "1104be2ad8d4c5c96363f3648bc3c57dfcef5af4334c714e9cc94fc466f38e2d",
+      "W3": "cf2d3fd759b6a94c4eae2545a4a409e50859ff28e861f797609b6a259fe4dee0"
+    },
+    "exposed_rows": [
+      "W2-N03",
+      "W3-N63"
+    ],
+    "rows_read_in_this_run": 0,
+    "used_for": "nothing: only this phase0.py reads the two input files' BYTES to record their SHA-256 (never parsed); no other tool of this run names either file (grep of tools/)",
+    "aggregate_results_quoted": "only the published aggregates of independent-geometry-plane-constraints (2/48, 0/72, 2 WRONG_SERVED under the registered rule)"
+  },
+  "development_sources": {
+    "DEV": "tools/semantic_dev_corpus.py (agent-written in this run)",
+    "REAL27": "25 controlled-vision transcriptions + 2 earlier fresh items (exposed)",
+    "PROBES": "the 39 plane-constraint probes of the previous run (exposed)",
+    "IMAGES": "the 25 controlled-vision crops (exposed) and layouts composed from them"
+  },
+  "boundary_checks": [
+    "semantic_eval.py and segmentation_eval.py read only the manifests above",
+    "no network access during measurement",
+    "ALLOW_LIVE_AI=0 everywhere"
+  ]
+}

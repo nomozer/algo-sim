@@ -1,0 +1,11 @@
+{
+  "run_id": "semantic-failure-safe-image-segmentation",
+  "generated_at_utc": "2026-11-13T17:27:25.127687+00:00",
+  "head": "7315cf3b033f78fce1409085c6eeab720f83c967",
+  "environment": {
+    "ALLOW_LIVE_AI": "0"
+  },
+  "NEW_INDEPENDENT_EVALUATION": "BLOCKED_DATA",
+  "why": "no rights-cleared, unexposed, in-scope dataset exists beyond the 94 sealed H-1 rows (see independent-geometry-plane-constraints/dataset_partition_audit.json); W2/W3 remain locked except W2-N03 and W3-N63 and were not re-run",
+  "locked_rows_rerun_in_this_run": 0
+}

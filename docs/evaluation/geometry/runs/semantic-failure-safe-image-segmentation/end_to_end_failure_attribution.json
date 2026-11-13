@@ -1,0 +1,2133 @@
+{
+  "run_id": "semantic-failure-safe-image-segmentation",
+  "generated_at_utc": "2026-11-13T16:58:54.855761+00:00",
+  "head": "dcbedcb0d67971beb6ba5260a7553abe55de5ee1",
+  "measured_candidate_note": "development measurement on the working product; the frozen candidate identity is in candidate_freeze.json",
+  "candidate_at_measurement": {
+    "commit": "da06829fe1b8890a878056af57830f7c066719f0",
+    "measured_system": "040de2fd63fb687203610918160b1170ad025117b2d221acf12ef25215bd831c"
+  },
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "route": "route_text_input (local-first)"
+  },
+  "command": "python docs/evaluation/geometry/runs/semantic-failure-safe-image-segmentation/tools/semantic_eval.py <before_backend>",
+  "dataset_partition": "DEVELOPMENT ONLY (DEV agent-written, REAL27 exposed, PROBES exposed); no locked W2/W3 row, no H-1",
+  "oracle_status": "AGENT_DIAGNOSTIC (expected outcomes written by the agent from geometry and the product's documented scope)",
+  "rule": "root cause = the first layer that lost information (parser coverage, a fact the gate could not ground, schema), else the layer that refused a fully read problem (source facts, planner, kernel); terminal reason kept separately",
+  "rows": [
+    {
+      "corpus": "DEV",
+      "id": "goal_volume_tinh",
+      "group": "goal_extraction",
+      "text_sha256": "a68ab15a2f9549ed",
+      "after": {
+        "status": "SERVED",
+        "terminal": null,
+        "goals": [
+          "volume"
+        ],
+        "root_cause": null,
+        "layer": "SERVED",
+        "first_loss_layer": null,
+        "detected_by": null,
+        "clauses_total": null,
+        "clauses_recognized": null,
+        "clauses_unrecognized": null,
+        "meets_expectation": true
+      },
+      "before": {
+        "status": "SERVED",
+        "terminal": null,
+        "goals": [
+          "volume"
+        ],
+        "root_cause": null,
+        "layer": "SERVED",
+        "first_loss_layer": null,
+        "detected_by": null,
+        "clauses_total": null,
+        "clauses_recognized": null,
+        "clauses_unrecognized": null,
+        "meets_expectation": true
+      }
+    },
+    {
+      "corpus": "DEV",
+      "id": "goal_volume_stem",
+      "group": "goal_extraction",
+      "text_sha256": "7001a8d6e2ee2567",
+      "after": {
+        "status": "SERVED",
+        "terminal": null,
+        "goals": [
+          "volume"
+        ],
+        "root_cause": null,
+        "layer": "SERVED",
+        "first_loss_layer": null,
+        "detected_by": null,
+        "clauses_total": null,
+        "clauses_recognized": null,
+        "clauses_unrecognized": null,
+        "meets_expectation": true
+      },
+      "before": {
+        "status": "SERVED",
+        "terminal": null,
+        "goals": [
+          "volume"
+        ],
+        "root_cause": null,
+        "layer": "SERVED",
+        "first_loss_layer": null,
+        "detected_by": null,
+        "clauses_total": null,
+        "clauses_recognized": null,
+        "clauses_unrecognized": null,
+        "meets_expectation": true
+      }
+    },
+    {
+      "corpus": "DEV",
+      "id": "goal_volume_da_cho",
+      "group": "goal_extraction",
+      "text_sha256": "c8733dd02f557a8a",
+      "after": {
+        "status": "SERVED",
+        "terminal": null,
+        "goals": [
+          "volume"
+        ],
+        "root_cause": null,
+        "layer": "SERVED",
+        "first_loss_layer": null,
+        "detected_by": null,
+        "clauses_total": null,
+        "clauses_recognized": null,
+        "clauses_unrecognized": null,
+        "meets_expectation": true
+      },
+      "before": {
+        "status": "SERVED",
+        "terminal": null,
+        "goals": [
+          "volume"
+        ],
+        "root_cause": null,
+        "layer": "SERVED",
+        "first_loss_layer": null,
+        "detected_by": null,
+        "clauses_total": null,
+        "clauses_recognized": null,
+        "clauses_unrecognized": null,
+        "meets_expectation": true
+      }
+    },
+    {
+      "corpus": "DEV",
+      "id": "goal_volume_theo_a",
+      "group": "goal_extraction",
+      "text_sha256": "7a72f15ab21e0688",
+      "after": {
+        "status": "SERVED",
+        "terminal": null,
+        "goals": [
+          "volume"
+        ],
+        "root_cause": null,
+        "layer": "SERVED",
+        "first_loss_layer": null,
+        "detected_by": null,
+        "clauses_total": null,
+        "clauses_recognized": null,
+        "clauses_unrecognized": null,
+        "meets_expectation": true
+      },
+      "before": {
+        "status": "SERVED",
+        "terminal": null,
+        "goals": [
+          "volume"
+        ],
+        "root_cause": null,
+        "layer": "SERVED",
+        "first_loss_layer": null,
+        "detected_by": null,
+        "clauses_total": null,
+        "clauses_recognized": null,
+        "clauses_unrecognized": null,
+        "meets_expectation": true
+      }
+    },
+    {
+      "corpus": "DEV",
+      "id": "goal_distance_tinh",
+      "group": "goal_extraction",
+      "text_sha256": "70a3c93c7f458b67",
+      "after": {
+        "status": "SERVED",
+        "terminal": null,
+        "goals": [
+          "distance"
+        ],
+        "root_cause": null,
+        "layer": "SERVED",
+        "first_loss_layer": null,
+        "detected_by": null,
+        "clauses_total": null,
+        "clauses_recognized": null,
+        "clauses_unrecognized": null,
+        "meets_expectation": true
+      },
+      "before": {
+        "status": "SERVED",
+        "terminal": null,
+        "goals": [
+          "distance"
+        ],
+        "root_cause": null,
+        "layer": "SERVED",
+        "first_loss_layer": null,
+        "detected_by": null,
+        "clauses_total": null,
+        "clauses_recognized": null,
+        "clauses_unrecognized": null,
+        "meets_expectation": true
+      }
+    },
+    {
+      "corpus": "DEV",
+      "id": "goal_distance_stem",
+      "group": "goal_extraction",
+      "text_sha256": "2f599b79a6993920",
+      "after": {
+        "status": "SERVED",
+        "terminal": null,
+        "goals": [
+          "distance"
+        ],
+        "root_cause": null,
+        "layer": "SERVED",
+        "first_loss_layer": null,
+        "detected_by": null,
+        "clauses_total": null,
+        "clauses_recognized": null,
+        "clauses_unrecognized": null,
+        "meets_expectation": true
+      },
+      "before": {
+        "status": "SERVED",
+        "terminal": null,
+        "goals": [
+          "distance"
+        ],
+        "root_cause": null,
+        "layer": "SERVED",
+        "first_loss_layer": null,
+        "detected_by": null,
+        "clauses_total": null,
+        "clauses_recognized": null,
+        "clauses_unrecognized": null,
+        "meets_expectation": true
+      }
+    },
+    {
+      "corpus": "DEV",
+      "id": "goal_angle_tinh",
+      "group": "goal_extraction",
+      "text_sha256": "7f6934893cc86f24",
+      "after": {
+        "status": "SERVED",
+        "terminal": null,
+        "goals": [
+          "angle"
+        ],
+        "root_cause": null,
+        "layer": "SERVED",
+        "first_loss_layer": null,
+        "detected_by": null,
+        "clauses_total": null,
+        "clauses_recognized": null,
+        "clauses_unrecognized": null,
+        "meets_expectation": true
+      },
+      "before": {
+        "status": "SERVED",
+        "terminal": null,
+        "goals": [
+          "angle"
+        ],
+        "root_cause": null,
+        "layer": "SERVED",
+        "first_loss_layer": null,
+        "detected_by": null,
+        "clauses_total": null,
+        "clauses_recognized": null,
+        "clauses_unrecognized": null,
+        "meets_expectation": true
+      }
+    },
+    {
+      "corpus": "DEV",
+      "id": "goal_angle_stem",
+      "group": "goal_extraction",
+      "text_sha256": "137a64958bd9f9a2",
+      "after": {
+        "status": "SERVED",
+        "terminal": null,
+        "goals": [
+          "angle"
+        ],
+        "root_cause": null,
+        "layer": "SERVED",
+        "first_loss_layer": null,
+        "detected_by": null,
+        "clauses_total": null,
+        "clauses_recognized": null,
+        "clauses_unrecognized": null,
+        "meets_expectation": true
+      },
+      "before": {
+        "status": "SERVED",
+        "terminal": null,
+        "goals": [
+          "angle"
+        ],
+        "root_cause": null,
+        "layer": "SERVED",
+        "first_loss_layer": null,
+        "detected_by": null,
+        "clauses_total": null,
+        "clauses_recognized": null,
+        "clauses_unrecognized": null,
+        "meets_expectation": true
+      }
+    },
+    {
+      "corpus": "DEV",
+      "id": "goal_angle_stem_day",
+      "group": "goal_extraction",
+      "text_sha256": "a2c085bcbd209443",
+      "after": {
+        "status": "SERVED",
+        "terminal": null,
+        "goals": [
+          "angle"
+        ],
+        "root_cause": null,
+        "layer": "SERVED",
+        "first_loss_layer": null,
+        "detected_by": null,
+        "clauses_total": null,
+        "clauses_recognized": null,
+        "clauses_unrecognized": null,
+        "meets_expectation": true
+      },
+      "before": {
+        "status": "REFUSED",
+        "terminal": "LIVE_AI_DISABLED",
+        "goals": [],
+        "root_cause": "UNRECOGNIZED_GOAL",
+        "layer": "GOAL_EXTRACTION",
+        "first_loss_layer": "PARSER",
+        "detected_by": "PARSER_COVERAGE",
+        "clauses_total": 2,
+        "clauses_recognized": 1,
+        "clauses_unrecognized": 1,
+        "meets_expectation": false
+      }
+    },
+    {
+      "corpus": "DEV",
+      "id": "goal_cos_unsupported",
+      "group": "goal_extraction",
+      "text_sha256": "f7d3286a24f73d56",
+      "after": {
+        "status": "REFUSED",
+        "terminal": "LIVE_AI_DISABLED",
+        "goals": [],
+        "root_cause": "UNSUPPORTED_GOAL_FUNCTION",
+        "layer": "GOAL_UNDERSTOOD_UNSUPPORTED",
+        "first_loss_layer": "PARSER",
+        "detected_by": "SOURCE_GATE",
+        "clauses_total": 2,
+        "clauses_recognized": 2,
+        "clauses_unrecognized": 0,
+        "meets_expectation": true
+      },
+      "before": {
+        "status": "REFUSED",
+        "terminal": "LIVE_AI_DISABLED",
+        "goals": [],
+        "root_cause": "UNSUPPORTED_GOAL_FUNCTION",
+        "layer": "GOAL_UNDERSTOOD_UNSUPPORTED",
+        "first_loss_layer": "PARSER",
+        "detected_by": "SOURCE_GATE",
+        "clauses_total": 2,
+        "clauses_recognized": 2,
+        "clauses_unrecognized": 0,
+        "meets_expectation": true
+      }
+    },
+    {
+      "corpus": "DEV",
+      "id": "goal_tan_unsupported",
+      "group": "goal_extraction",
+      "text_sha256": "efdb9ef4a72f7b58",
+      "after": {
+        "status": "REFUSED",
+        "terminal": "LIVE_AI_DISABLED",
+        "goals": [],
+        "root_cause": "UNSUPPORTED_GOAL_FUNCTION",
+        "layer": "GOAL_UNDERSTOOD_UNSUPPORTED",
+        "first_loss_layer": "PARSER",
+        "detected_by": "SOURCE_GATE",
+        "clauses_total": 2,
+        "clauses_recognized": 2,
+        "clauses_unrecognized": 0,
+        "meets_expectation": true
+      },
+      "before": {
+        "status": "REFUSED",
+        "terminal": "LIVE_AI_DISABLED",
+        "goals": [],
+        "root_cause": "UNSUPPORTED_GOAL_FUNCTION",
+        "layer": "GOAL_UNDERSTOOD_UNSUPPORTED",
+        "first_loss_layer": "PARSER",
+        "detected_by": "SOURCE_GATE",
+        "clauses_total": 2,
+        "clauses_recognized": 2,
+        "clauses_unrecognized": 0,
+        "meets_expectation": true
+      }
+    },
+    {
+      "corpus": "DEV",
+      "id": "goal_proof_only",
+      "group": "goal_extraction",
+      "text_sha256": "b2fb0119dfacaac2",
+      "after": {
+        "status": "REFUSED",
+        "terminal": "OUT_OF_SCOPE",
+        "goals": [],
+        "root_cause": "UNSUPPORTED_GOAL_KIND",
+        "layer": "GOAL_UNDERSTOOD_UNSUPPORTED",
+        "first_loss_layer": "NONE",
+        "detected_by": "PARSER",
+        "clauses_total": 2,
+        "clauses_recognized": 2,
+        "clauses_unrecognized": 0,
+        "meets_expectation": false
+      },
+      "before": {
+        "status": "REFUSED",
+        "terminal": "OUT_OF_SCOPE",
+        "goals": [],
+        "root_cause": "UNSUPPORTED_GOAL_KIND",
+        "layer": "GOAL_UNDERSTOOD_UNSUPPORTED",
+        "first_loss_layer": "NONE",
+        "detected_by": "PARSER",
+        "clauses_total": 2,
+        "clauses_recognized": 2,
+        "clauses_unrecognized": 0,
+        "meets_expectation": false
+      }
+    },
+    {
+      "corpus": "DEV",
+      "id": "pair_point_definition",
+      "group": "minimal_pair",
+      "text_sha256": "e031f108f53a657a",
+      "after": {
+        "status": "SERVED",
+        "terminal": null,
+        "goals": [
+          "distance"
+        ],
+        "root_cause": null,
+        "layer": "SERVED",
+        "first_loss_layer": null,
+        "detected_by": null,
+        "clauses_total": null,
+        "clauses_recognized": null,
+        "clauses_unrecognized": null,
+        "meets_expectation": true
+      },
+      "before": {
+        "status": "SERVED",
+        "terminal": null,
+        "goals": [
+          "distance"
+        ],
+        "root_cause": null,
+        "layer": "SERVED",
+        "first_loss_layer": null,
+        "detected_by": null,
+        "clauses_total": null,
+        "clauses_recognized": null,
+        "clauses_unrecognized": null,
+        "meets_expectation": true
+      }
+    },
+    {
+      "corpus": "DEV",
+      "id": "pair_point_as_goal",
+      "group": "minimal_pair",
+      "text_sha256": "6dc910625cd20f4b",
+      "after": {
+        "status": "REFUSED",
+        "terminal": "LIVE_AI_DISABLED",
+        "goals": [],
+        "root_cause": "UNRECOGNIZED_GOAL",
+        "layer": "GOAL_EXTRACTION",
+        "first_loss_layer": "PARSER",
+        "detected_by": "PARSER_COVERAGE",
+        "clauses_total": 2,
+        "clauses_recognized": 1,
+        "clauses_unrecognized": 1,
+        "meets_expectation": true
+      },
+      "before": {
+        "status": "REFUSED",
+        "terminal": "LIVE_AI_DISABLED",
+        "goals": [],
+        "root_cause": "UNRECOGNIZED_GOAL",
+        "layer": "GOAL_EXTRACTION",
+        "first_loss_layer": "PARSER",
+        "detected_by": "PARSER_COVERAGE",
+        "clauses_total": 2,
+        "clauses_recognized": 1,
+        "clauses_unrecognized": 1,
+        "meets_expectation": true
+      }
+    },
+    {
+      "corpus": "DEV",
+      "id": "pair_plane_determined",
+      "group": "minimal_pair",
+      "text_sha256": "539058d6814d6909",
+      "after": {
+        "status": "SERVED",
+        "terminal": null,
+        "goals": [
+          "section"
+        ],
+        "root_cause": null,
+        "layer": "SERVED",
+        "first_loss_layer": null,
+        "detected_by": null,
+        "clauses_total": null,
+        "clauses_recognized": null,
+        "clauses_unrecognized": null,
+        "meets_expectation": true
+      },
+      "before": {
+        "status": "SERVED",
+        "terminal": null,
+        "goals": [
+          "section"
+        ],
+        "root_cause": null,
+        "layer": "SERVED",
+        "first_loss_layer": null,
+        "detected_by": null,
+        "clauses_total": null,
+        "clauses_recognized": null,
+        "clauses_unrecognized": null,
+        "meets_expectation": true
+      }
+    },
+    {
+      "corpus": "DEV",
+      "id": "pair_plane_underdetermined",
+      "group": "minimal_pair",
+      "text_sha256": "e45d3532562e4544",
+      "after": {
+        "status": "REFUSED",
+        "terminal": "LIVE_AI_DISABLED",
+        "goals": [],
+        "root_cause": "UNRECOGNIZED_GEOMETRIC_ENTITY",
+        "layer": "ENTITY_RESOLUTION",
+        "first_loss_layer": "PARSER",
+        "detected_by": "PARSER_COVERAGE",
+        "clauses_total": 4,
+        "clauses_recognized": 2,
+        "clauses_unrecognized": 1,
+        "meets_expectation": true
+      },
+      "before": {
+        "status": "REFUSED",
+        "terminal": "LIVE_AI_DISABLED",
+        "goals": [],
+        "root_cause": "UNRECOGNIZED_GEOMETRIC_ENTITY",
+        "layer": "ENTITY_RESOLUTION",
+        "first_loss_layer": "PARSER",
+        "detected_by": "PARSER_COVERAGE",
+        "clauses_total": 4,
+        "clauses_recognized": 2,
+        "clauses_unrecognized": 1,
+        "meets_expectation": true
+      }
+    },
+    {
+      "corpus": "DEV",
+      "id": "ref_undefined_plane",
+      "group": "entity_reference",
+      "text_sha256": "198d7d42024f6178",
+      "after": {
+        "status": "REFUSED",
+        "terminal": "LIVE_AI_DISABLED",
+        "goals": [],
+        "root_cause": "UNRESOLVED_REFERENCE",
+        "layer": "ENTITY_REFERENCE",
+        "first_loss_layer": "PARSER",
+        "detected_by": "PARSER_COVERAGE",
+        "clauses_total": 2,
+        "clauses_recognized": 1,
+        "clauses_unrecognized": 1,
+        "meets_expectation": true
+      },
+      "before": {
+        "status": "REFUSED",
+        "terminal": "LIVE_AI_DISABLED",
+        "goals": [],
+        "root_cause": "UNRESOLVED_REFERENCE",
+        "layer": "ENTITY_REFERENCE",
+        "first_loss_layer": "PARSER",
+        "detected_by": "PARSER_COVERAGE",
+        "clauses_total": 2,
+        "clauses_recognized": 1,
+        "clauses_unrecognized": 1,
+        "meets_expectation": true
+      }
+    },
+    {
+      "corpus": "DEV",
+      "id": "ref_mp_abbrev",
+      "group": "entity_naming",
+      "text_sha256": "c4ad1eff205d5e7b",
+      "after": {
+        "status": "SERVED",
+        "terminal": null,
+        "goals": [
+          "section"
+        ],
+        "root_cause": null,
+        "layer": "SERVED",
+        "first_loss_layer": null,
+        "detected_by": null,
+        "clauses_total": null,
+        "clauses_recognized": null,
+        "clauses_unrecognized": null,
+        "meets_expectation": true
+      },
+      "before": {
+        "status": "SERVED",
+        "terminal": null,
+        "goals": [
+          "section"
+        ],
+        "root_cause": null,
+        "layer": "SERVED",
+        "first_loss_layer": null,
+        "detected_by": null,
+        "clauses_total": null,
+        "clauses_recognized": null,
+        "clauses_unrecognized": null,
+        "meets_expectation": true
+      }
+    },
+    {
+      "corpus": "DEV",
+      "id": "ref_relative_clause_point",
+      "group": "relative_clause",
+      "text_sha256": "96ee1f6d88fc5efd",
+      "after": {
+        "status": "SERVED",
+        "terminal": null,
+        "goals": [
+          "section"
+        ],
+        "root_cause": null,
+        "layer": "SERVED",
+        "first_loss_layer": null,
+        "detected_by": null,
+        "clauses_total": null,
+        "clauses_recognized": null,
+        "clauses_unrecognized": null,
+        "meets_expectation": true
+      },
+      "before": {
+        "status": "REFUSED",
+        "terminal": "LIVE_AI_DISABLED",
+        "goals": [],
+        "root_cause": "UNRECOGNIZED_GEOMETRIC_ENTITY",
+        "layer": "ENTITY_RESOLUTION",
+        "first_loss_layer": "PARSER",
+        "detected_by": "PARSER_COVERAGE",
+        "clauses_total": 3,
+        "clauses_recognized": 1,
+        "clauses_unrecognized": 1,
+        "meets_expectation": false
+      }
+    },
+    {
+      "corpus": "DEV",
+      "id": "ref_unnamed_point_in_plane",
+      "group": "named_unnamed_points",
+      "text_sha256": "9536042597b00e0e",
+      "after": {
+        "status": "SERVED",
+        "terminal": null,
+        "goals": [
+          "section"
+        ],
+        "root_cause": null,
+        "layer": "SERVED",
+        "first_loss_layer": null,
+        "detected_by": null,
+        "clauses_total": null,
+        "clauses_recognized": null,
+        "clauses_unrecognized": null,
+        "meets_expectation": true
+      },
+      "before": {
+        "status": "SERVED",
+        "terminal": null,
+        "goals": [
+          "section"
+        ],
+        "root_cause": null,
+        "layer": "SERVED",
+        "first_loss_layer": null,
+        "detected_by": null,
+        "clauses_total": null,
+        "clauses_recognized": null,
+        "clauses_unrecognized": null,
+        "meets_expectation": true
+      }
+    },
+    {
+      "corpus": "DEV",
+      "id": "ref_goi_plane",
+      "group": "named_unnamed_planes",
+      "text_sha256": "e53d1d416a2bd69d",
+      "after": {
+        "status": "SERVED",
+        "terminal": null,
+        "goals": [
+          "section"
+        ],
+        "root_cause": null,
+        "layer": "SERVED",
+        "first_loss_layer": null,
+        "detected_by": null,
+        "clauses_total": null,
+        "clauses_recognized": null,
+        "clauses_unrecognized": null,
+        "meets_expectation": true
+      },
+      "before": {
+        "status": "SERVED",
+        "terminal": null,
+        "goals": [
+          "section"
+        ],
+        "root_cause": null,
+        "layer": "SERVED",
+        "first_loss_layer": null,
+        "detected_by": null,
+        "clauses_total": null,
+        "clauses_recognized": null,
+        "clauses_unrecognized": null,
+        "meets_expectation": true
+      }
+    },
+    {
+      "corpus": "DEV",
+      "id": "order_one_sentence",
+      "group": "clause_ordering",
+      "text_sha256": "c0ebc384eb912830",
+      "after": {
+        "status": "REFUSED",
+        "terminal": "LIVE_AI_DISABLED",
+        "goals": [],
+        "root_cause": "SOURCE_PROVENANCE_MISSING",
+        "layer": "SOURCE_GATE",
+        "first_loss_layer": "PARSER",
+        "detected_by": "SOURCE_GATE",
+        "clauses_total": 2,
+        "clauses_recognized": 2,
+        "clauses_unrecognized": 0,
+        "meets_expectation": false
+      },
+      "before": {
+        "status": "REFUSED",
+        "terminal": "LIVE_AI_DISABLED",
+        "goals": [],
+        "root_cause": "SOURCE_PROVENANCE_MISSING",
+        "layer": "SOURCE_GATE",
+        "first_loss_layer": "PARSER",
+        "detected_by": "SOURCE_GATE",
+        "clauses_total": 2,
+        "clauses_recognized": 2,
+        "clauses_unrecognized": 0,
+        "meets_expectation": false
+      }
+    },
+    {
+      "corpus": "DEV",
+      "id": "order_semicolon",
+      "group": "clause_ordering",
+      "text_sha256": "7c5e94e074605e07",
+      "after": {
+        "status": "SERVED",
+        "terminal": null,
+        "goals": [
+          "section"
+        ],
+        "root_cause": null,
+        "layer": "SERVED",
+        "first_loss_layer": null,
+        "detected_by": null,
+        "clauses_total": null,
+        "clauses_recognized": null,
+        "clauses_unrecognized": null,
+        "meets_expectation": true
+      },
+      "before": {
+        "status": "SERVED",
+        "terminal": null,
+        "goals": [
+          "section"
+        ],
+        "root_cause": null,
+        "layer": "SERVED",
+        "first_loss_layer": null,
+        "detected_by": null,
+        "clauses_total": null,
+        "clauses_recognized": null,
+        "clauses_unrecognized": null,
+        "meets_expectation": true
+      }
+    },
+    {
+      "corpus": "DEV",
+      "id": "order_goal_first",
+      "group": "clause_ordering",
+      "text_sha256": "9e70ad628e4dc467",
+      "after": {
+        "status": "REFUSED",
+        "terminal": "LIVE_AI_DISABLED",
+        "goals": [],
+        "root_cause": "UNRECOGNIZED_GOAL",
+        "layer": "GOAL_EXTRACTION",
+        "first_loss_layer": "PARSER",
+        "detected_by": "PARSER_COVERAGE",
+        "clauses_total": 2,
+        "clauses_recognized": 1,
+        "clauses_unrecognized": 1,
+        "meets_expectation": false
+      },
+      "before": {
+        "status": "REFUSED",
+        "terminal": "LIVE_AI_DISABLED",
+        "goals": [],
+        "root_cause": "UNRECOGNIZED_GOAL",
+        "layer": "GOAL_EXTRACTION",
+        "first_loss_layer": "PARSER",
+        "detected_by": "PARSER_COVERAGE",
+        "clauses_total": 2,
+        "clauses_recognized": 1,
+        "clauses_unrecognized": 1,
+        "meets_expectation": false
+      }
+    },
+    {
+      "corpus": "DEV",
+      "id": "order_renamed",
+      "group": "metamorphic_rename",
+      "text_sha256": "8532acd42ec6893d",
+      "after": {
+        "status": "SERVED",
+        "terminal": null,
+        "goals": [
+          "section"
+        ],
+        "root_cause": null,
+        "layer": "SERVED",
+        "first_loss_layer": null,
+        "detected_by": null,
+        "clauses_total": null,
+        "clauses_recognized": null,
+        "clauses_unrecognized": null,
+        "meets_expectation": true
+      },
+      "before": {
+        "status": "SERVED",
+        "terminal": null,
+        "goals": [
+          "section"
+        ],
+        "root_cause": null,
+        "layer": "SERVED",
+        "first_loss_layer": null,
+        "detected_by": null,
+        "clauses_total": null,
+        "clauses_recognized": null,
+        "clauses_unrecognized": null,
+        "meets_expectation": true
+      }
+    },
+    {
+      "corpus": "DEV",
+      "id": "sec_hinh_gi_question",
+      "group": "section_goal",
+      "text_sha256": "dcb28f13961685d4",
+      "after": {
+        "status": "SERVED",
+        "terminal": null,
+        "goals": [
+          "section"
+        ],
+        "root_cause": null,
+        "layer": "SERVED",
+        "first_loss_layer": null,
+        "detected_by": null,
+        "clauses_total": null,
+        "clauses_recognized": null,
+        "clauses_unrecognized": null,
+        "meets_expectation": true
+      },
+      "before": {
+        "status": "REFUSED",
+        "terminal": "LIVE_AI_DISABLED",
+        "goals": [],
+        "root_cause": "UNRECOGNIZED_RELATION",
+        "layer": "RELATION_EXTRACTION",
+        "first_loss_layer": "PARSER",
+        "detected_by": "PARSER_COVERAGE",
+        "clauses_total": 4,
+        "clauses_recognized": 3,
+        "clauses_unrecognized": 1,
+        "meets_expectation": false
+      }
+    },
+    {
+      "corpus": "DEV",
+      "id": "sec_do_P_cat",
+      "group": "section_goal",
+      "text_sha256": "b0aedb70612b013c",
+      "after": {
+        "status": "REFUSED",
+        "terminal": "LIVE_AI_DISABLED",
+        "goals": [],
+        "root_cause": "UNRECOGNIZED_GOAL",
+        "layer": "GOAL_EXTRACTION",
+        "first_loss_layer": "PARSER",
+        "detected_by": "PARSER_COVERAGE",
+        "clauses_total": 4,
+        "clauses_recognized": 3,
+        "clauses_unrecognized": 1,
+        "meets_expectation": false
+      },
+      "before": {
+        "status": "REFUSED",
+        "terminal": "LIVE_AI_DISABLED",
+        "goals": [],
+        "root_cause": "UNRECOGNIZED_GOAL",
+        "layer": "GOAL_EXTRACTION",
+        "first_loss_layer": "PARSER",
+        "detected_by": "PARSER_COVERAGE",
+        "clauses_total": 4,
+        "clauses_recognized": 3,
+        "clauses_unrecognized": 1,
+        "meets_expectation": false
+      }
+    },
+    {
+      "corpus": "DEV",
+      "id": "sec_area_stem",
+      "group": "section_goal",
+      "text_sha256": "2bfe971940ea3564",
+      "after": {
+        "status": "SERVED",
+        "terminal": null,
+        "goals": [
+          "area",
+          "section"
+        ],
+        "root_cause": null,
+        "layer": "SERVED",
+        "first_loss_layer": null,
+        "detected_by": null,
+        "clauses_total": null,
+        "clauses_recognized": null,
+        "clauses_unrecognized": null,
+        "meets_expectation": true
+      },
+      "before": {
+        "status": "REFUSED",
+        "terminal": "LIVE_AI_DISABLED",
+        "goals": [],
+        "root_cause": "UNRECOGNIZED_GOAL",
+        "layer": "GOAL_EXTRACTION",
+        "first_loss_layer": "PARSER",
+        "detected_by": "PARSER_COVERAGE",
+        "clauses_total": 4,
+        "clauses_recognized": 3,
+        "clauses_unrecognized": 1,
+        "meets_expectation": false
+      }
+    },
+    {
+      "corpus": "DEV",
+      "id": "int_goal",
+      "group": "intersection_goal",
+      "text_sha256": "23e5e3ab1612a814",
+      "after": {
+        "status": "SERVED",
+        "terminal": null,
+        "goals": [
+          "intersection"
+        ],
+        "root_cause": null,
+        "layer": "SERVED",
+        "first_loss_layer": null,
+        "detected_by": null,
+        "clauses_total": null,
+        "clauses_recognized": null,
+        "clauses_unrecognized": null,
+        "meets_expectation": true
+      },
+      "before": {
+        "status": "SERVED",
+        "terminal": null,
+        "goals": [
+          "intersection"
+        ],
+        "root_cause": null,
+        "layer": "SERVED",
+        "first_loss_layer": null,
+        "detected_by": null,
+        "clauses_total": null,
+        "clauses_recognized": null,
+        "clauses_unrecognized": null,
+        "meets_expectation": true
+      }
+    },
+    {
+      "corpus": "DEV",
+      "id": "int_goal_mp",
+      "group": "intersection_goal",
+      "text_sha256": "2e77a5f1c7f1d18f",
+      "after": {
+        "status": "SERVED",
+        "terminal": null,
+        "goals": [
+          "intersection"
+        ],
+        "root_cause": null,
+        "layer": "SERVED",
+        "first_loss_layer": null,
+        "detected_by": null,
+        "clauses_total": null,
+        "clauses_recognized": null,
+        "clauses_unrecognized": null,
+        "meets_expectation": true
+      },
+      "before": {
+        "status": "SERVED",
+        "terminal": null,
+        "goals": [
+          "intersection"
+        ],
+        "root_cause": null,
+        "layer": "SERVED",
+        "first_loss_layer": null,
+        "detected_by": null,
+        "clauses_total": null,
+        "clauses_recognized": null,
+        "clauses_unrecognized": null,
+        "meets_expectation": true
+      }
+    },
+    {
+      "corpus": "DEV",
+      "id": "multi_goals",
+      "group": "multiple_goals",
+      "text_sha256": "9384e9c4ef3d5eca",
+      "after": {
+        "status": "SERVED",
+        "terminal": null,
+        "goals": [
+          "distance",
+          "volume"
+        ],
+        "root_cause": null,
+        "layer": "SERVED",
+        "first_loss_layer": null,
+        "detected_by": null,
+        "clauses_total": null,
+        "clauses_recognized": null,
+        "clauses_unrecognized": null,
+        "meets_expectation": true
+      },
+      "before": {
+        "status": "SERVED",
+        "terminal": null,
+        "goals": [
+          "distance",
+          "volume"
+        ],
+        "root_cause": null,
+        "layer": "SERVED",
+        "first_loss_layer": null,
+        "detected_by": null,
+        "clauses_total": null,
+        "clauses_recognized": null,
+        "clauses_unrecognized": null,
+        "meets_expectation": true
+      }
+    },
+    {
+      "corpus": "DEV",
+      "id": "diagram_benign",
+      "group": "diagram_reference",
+      "text_sha256": "ae7999e09c8a122b",
+      "after": {
+        "status": "REFUSED",
+        "terminal": "LIVE_AI_DISABLED",
+        "goals": [],
+        "root_cause": "INCOMPLETE_FACT_EXTRACTION",
+        "layer": "CLAUSE_PARTIALLY_READ",
+        "first_loss_layer": "PARSER",
+        "detected_by": "SOURCE_GATE",
+        "clauses_total": 2,
+        "clauses_recognized": 2,
+        "clauses_unrecognized": 0,
+        "meets_expectation": false
+      },
+      "before": {
+        "status": "REFUSED",
+        "terminal": "LIVE_AI_DISABLED",
+        "goals": [],
+        "root_cause": "INCOMPLETE_FACT_EXTRACTION",
+        "layer": "CLAUSE_PARTIALLY_READ",
+        "first_loss_layer": "PARSER",
+        "detected_by": "SOURCE_GATE",
+        "clauses_total": 2,
+        "clauses_recognized": 2,
+        "clauses_unrecognized": 0,
+        "meets_expectation": false
+      }
+    },
+    {
+      "corpus": "DEV",
+      "id": "diagram_dependent",
+      "group": "diagram_reference",
+      "text_sha256": "7a87ab477ff8f23a",
+      "after": {
+        "status": "REFUSED",
+        "terminal": "LIVE_AI_DISABLED",
+        "goals": [],
+        "root_cause": "DIAGRAM_DEPENDENT_FACT",
+        "layer": "SOURCE_FACTS",
+        "first_loss_layer": "PARSER",
+        "detected_by": "SOURCE_GATE",
+        "clauses_total": 2,
+        "clauses_recognized": 2,
+        "clauses_unrecognized": 0,
+        "meets_expectation": false
+      },
+      "before": {
+        "status": "REFUSED",
+        "terminal": "LIVE_AI_DISABLED",
+        "goals": [],
+        "root_cause": "DIAGRAM_DEPENDENT_FACT",
+        "layer": "SOURCE_FACTS",
+        "first_loss_layer": "PARSER",
+        "detected_by": "SOURCE_GATE",
+        "clauses_total": 2,
+        "clauses_recognized": 2,
+        "clauses_unrecognized": 0,
+        "meets_expectation": false
+      }
+    },
+    {
+      "corpus": "DEV",
+      "id": "missing_dimension",
+      "group": "missing_dimensions",
+      "text_sha256": "831e18389ad2215d",
+      "after": {
+        "status": "REFUSED",
+        "terminal": "AMBIGUOUS_FACT",
+        "goals": [],
+        "root_cause": "INSUFFICIENT_CONSTRAINTS",
+        "layer": "SOURCE_FACTS",
+        "first_loss_layer": "NONE",
+        "detected_by": "PARSER",
+        "clauses_total": 2,
+        "clauses_recognized": 2,
+        "clauses_unrecognized": 0,
+        "meets_expectation": true
+      },
+      "before": {
+        "status": "REFUSED",
+        "terminal": "AMBIGUOUS_FACT",
+        "goals": [],
+        "root_cause": "INSUFFICIENT_CONSTRAINTS",
+        "layer": "SOURCE_FACTS",
+        "first_loss_layer": "NONE",
+        "detected_by": "PARSER",
+        "clauses_total": 2,
+        "clauses_recognized": 2,
+        "clauses_unrecognized": 0,
+        "meets_expectation": true
+      }
+    },
+    {
+      "corpus": "DEV",
+      "id": "inconsistent",
+      "group": "inconsistent_premises",
+      "text_sha256": "75504f56de5ef8b7",
+      "after": {
+        "status": "REFUSED",
+        "terminal": "INCONSISTENT_FACTS",
+        "goals": [],
+        "root_cause": "SOURCE_CONFLICT",
+        "layer": "SOURCE_FACTS",
+        "first_loss_layer": "NONE",
+        "detected_by": "KERNEL",
+        "clauses_total": 2,
+        "clauses_recognized": 2,
+        "clauses_unrecognized": 0,
+        "meets_expectation": true
+      },
+      "before": {
+        "status": "REFUSED",
+        "terminal": "INCONSISTENT_FACTS",
+        "goals": [],
+        "root_cause": "SOURCE_CONFLICT",
+        "layer": "SOURCE_FACTS",
+        "first_loss_layer": "NONE",
+        "detected_by": "KERNEL",
+        "clauses_total": 2,
+        "clauses_recognized": 2,
+        "clauses_unrecognized": 0,
+        "meets_expectation": true
+      }
+    },
+    {
+      "corpus": "DEV",
+      "id": "elliptical_role",
+      "group": "elliptical_statement",
+      "text_sha256": "69b60e53d8a87afb",
+      "after": {
+        "status": "REFUSED",
+        "terminal": "LIVE_AI_DISABLED",
+        "goals": [],
+        "root_cause": "UNRECOGNIZED_GOAL",
+        "layer": "GOAL_EXTRACTION",
+        "first_loss_layer": "PARSER",
+        "detected_by": "PARSER_COVERAGE",
+        "clauses_total": 2,
+        "clauses_recognized": 1,
+        "clauses_unrecognized": 1,
+        "meets_expectation": true
+      },
+      "before": {
+        "status": "REFUSED",
+        "terminal": "LIVE_AI_DISABLED",
+        "goals": [],
+        "root_cause": "UNRECOGNIZED_GOAL",
+        "layer": "GOAL_EXTRACTION",
+        "first_loss_layer": "PARSER",
+        "detected_by": "PARSER_COVERAGE",
+        "clauses_total": 2,
+        "clauses_recognized": 1,
+        "clauses_unrecognized": 1,
+        "meets_expectation": true
+      }
+    },
+    {
+      "corpus": "DEV",
+      "id": "cube_stem_distance",
+      "group": "goal_extraction",
+      "text_sha256": "1868a56c5166e325",
+      "after": {
+        "status": "SERVED",
+        "terminal": null,
+        "goals": [
+          "distance"
+        ],
+        "root_cause": null,
+        "layer": "SERVED",
+        "first_loss_layer": null,
+        "detected_by": null,
+        "clauses_total": null,
+        "clauses_recognized": null,
+        "clauses_unrecognized": null,
+        "meets_expectation": true
+      },
+      "before": {
+        "status": "SERVED",
+        "terminal": null,
+        "goals": [
+          "distance"
+        ],
+        "root_cause": null,
+        "layer": "SERVED",
+        "first_loss_layer": null,
+        "detected_by": null,
+        "clauses_total": null,
+        "clauses_recognized": null,
+        "clauses_unrecognized": null,
+        "meets_expectation": true
+      }
+    },
+    {
+      "corpus": "REAL27",
+      "id": "vmmu_r247",
+      "group": "real_exposed",
+      "text_sha256": "5f3e8da93e0ce388",
+      "after": {
+        "status": "SERVED",
+        "terminal": null,
+        "goals": [
+          "distance"
+        ],
+        "root_cause": null,
+        "layer": "SERVED",
+        "first_loss_layer": null,
+        "detected_by": null,
+        "clauses_total": null,
+        "clauses_recognized": null,
+        "clauses_unrecognized": null
+      },
+      "before": {
+        "status": "SERVED",
+        "terminal": null,
+        "goals": [
+          "distance"
+        ],
+        "root_cause": null,
+        "layer": "SERVED",
+        "first_loss_layer": null,
+        "detected_by": null,
+        "clauses_total": null,
+        "clauses_recognized": null,
+        "clauses_unrecognized": null
+      }
+    },
+    {
+      "corpus": "REAL27",
+      "id": "vmmu_r254",
+      "group": "real_exposed",
+      "text_sha256": "1b71b6ac60aedac7",
+      "after": {
+        "status": "REFUSED",
+        "terminal": "LIVE_AI_DISABLED",
+        "goals": [],
+        "root_cause": "UNRECOGNIZED_RELATION",
+        "layer": "RELATION_EXTRACTION",
+        "first_loss_layer": "PARSER",
+        "detected_by": "PARSER_COVERAGE",
+        "clauses_total": 3,
+        "clauses_recognized": 1,
+        "clauses_unrecognized": 2
+      },
+      "before": {
+        "status": "REFUSED",
+        "terminal": "LIVE_AI_DISABLED",
+        "goals": [],
+        "root_cause": "UNRECOGNIZED_RELATION",
+        "layer": "RELATION_EXTRACTION",
+        "first_loss_layer": "PARSER",
+        "detected_by": "PARSER_COVERAGE",
+        "clauses_total": 3,
+        "clauses_recognized": 1,
+        "clauses_unrecognized": 2
+      }
+    },
+    {
+      "corpus": "REAL27",
+      "id": "vmmu_r256",
+      "group": "real_exposed",
+      "text_sha256": "b3c99ebccab872ea",
+      "after": {
+        "status": "REFUSED",
+        "terminal": "LIVE_AI_DISABLED",
+        "goals": [],
+        "root_cause": "UNRECOGNIZED_GOAL",
+        "layer": "GOAL_EXTRACTION",
+        "first_loss_layer": "PARSER",
+        "detected_by": "PARSER_COVERAGE",
+        "clauses_total": 3,
+        "clauses_recognized": 2,
+        "clauses_unrecognized": 1
+      },
+      "before": {
+        "status": "REFUSED",
+        "terminal": "LIVE_AI_DISABLED",
+        "goals": [],
+        "root_cause": "UNRECOGNIZED_GOAL",
+        "layer": "GOAL_EXTRACTION",
+        "first_loss_layer": "PARSER",
+        "detected_by": "PARSER_COVERAGE",
+        "clauses_total": 3,
+        "clauses_recognized": 2,
+        "clauses_unrecognized": 1
+      }
+    },
+    {
+      "corpus": "REAL27",
+      "id": "vmmu_r258",
+      "group": "real_exposed",
+      "text_sha256": "86a06df87628a293",
+      "after": {
+        "status": "REFUSED",
+        "terminal": "LIVE_AI_DISABLED",
+        "goals": [],
+        "root_cause": "UNSUPPORTED_GOAL_FUNCTION",
+        "layer": "GOAL_UNDERSTOOD_UNSUPPORTED",
+        "first_loss_layer": "PARSER",
+        "detected_by": "SOURCE_GATE",
+        "clauses_total": 3,
+        "clauses_recognized": 2,
+        "clauses_unrecognized": 0
+      },
+      "before": {
+        "status": "REFUSED",
+        "terminal": "LIVE_AI_DISABLED",
+        "goals": [],
+        "root_cause": "UNSUPPORTED_GOAL_FUNCTION",
+        "layer": "GOAL_UNDERSTOOD_UNSUPPORTED",
+        "first_loss_layer": "PARSER",
+        "detected_by": "SOURCE_GATE",
+        "clauses_total": 3,
+        "clauses_recognized": 2,
+        "clauses_unrecognized": 0
+      }
+    },
+    {
+      "corpus": "REAL27",
+      "id": "vmmu_r266",
+      "group": "real_exposed",
+      "text_sha256": "1e83a2eec97786cc",
+      "after": {
+        "status": "REFUSED",
+        "terminal": "EXACT_DOMAIN_EXCEEDED",
+        "goals": [],
+        "root_cause": "PLANNER_COMPOSITION_UNSUPPORTED",
+        "layer": "PLANNER_KERNEL",
+        "first_loss_layer": "NONE",
+        "detected_by": "PLANNER",
+        "clauses_total": 3,
+        "clauses_recognized": 2,
+        "clauses_unrecognized": 0
+      },
+      "before": {
+        "status": "REFUSED",
+        "terminal": "EXACT_DOMAIN_EXCEEDED",
+        "goals": [],
+        "root_cause": "PLANNER_COMPOSITION_UNSUPPORTED",
+        "layer": "PLANNER_KERNEL",
+        "first_loss_layer": "NONE",
+        "detected_by": "PLANNER",
+        "clauses_total": 3,
+        "clauses_recognized": 2,
+        "clauses_unrecognized": 0
+      }
+    },
+    {
+      "corpus": "REAL27",
+      "id": "vmmu_r270",
+      "group": "real_exposed",
+      "text_sha256": "dada34f102c96ca7",
+      "after": {
+        "status": "SERVED",
+        "terminal": null,
+        "goals": [
+          "volume"
+        ],
+        "root_cause": null,
+        "layer": "SERVED",
+        "first_loss_layer": null,
+        "detected_by": null,
+        "clauses_total": null,
+        "clauses_recognized": null,
+        "clauses_unrecognized": null
+      },
+      "before": {
+        "status": "SERVED",
+        "terminal": null,
+        "goals": [
+          "volume"
+        ],
+        "root_cause": null,
+        "layer": "SERVED",
+        "first_loss_layer": null,
+        "detected_by": null,
+        "clauses_total": null,
+        "clauses_recognized": null,
+        "clauses_unrecognized": null
+      }
+    },
+    {
+      "corpus": "REAL27",
+      "id": "vmmu_r273",
+      "group": "real_exposed",
+      "text_sha256": "2c2c430855ded12b",
+      "after": {
+        "status": "SERVED",
+        "terminal": null,
+        "goals": [
+          "volume"
+        ],
+        "root_cause": null,
+        "layer": "SERVED",
+        "first_loss_layer": null,
+        "detected_by": null,
+        "clauses_total": null,
+        "clauses_recognized": null,
+        "clauses_unrecognized": null
+      },
+      "before": {
+        "status": "SERVED",
+        "terminal": null,
+        "goals": [
+          "volume"
+        ],
+        "root_cause": null,
+        "layer": "SERVED",
+        "first_loss_layer": null,
+        "detected_by": null,
+        "clauses_total": null,
+        "clauses_recognized": null,
+        "clauses_unrecognized": null
+      }
+    },
+    {
+      "corpus": "REAL27",
+      "id": "vmmu_r277",
+      "group": "real_exposed",
+      "text_sha256": "9cc7353c9dd163e7",
+      "after": {
+        "status": "REFUSED",
+        "terminal": "LIVE_AI_DISABLED",
+        "goals": [],
+        "root_cause": "UNRECOGNIZED_GEOMETRIC_ENTITY",
+        "layer": "ENTITY_RESOLUTION",
+        "first_loss_layer": "PARSER",
+        "detected_by": "PARSER_COVERAGE",
+        "clauses_total": 4,
+        "clauses_recognized": 1,
+        "clauses_unrecognized": 2
+      },
+      "before": {
+        "status": "REFUSED",
+        "terminal": "LIVE_AI_DISABLED",
+        "goals": [],
+        "root_cause": "UNRECOGNIZED_GEOMETRIC_ENTITY",
+        "layer": "ENTITY_RESOLUTION",
+        "first_loss_layer": "PARSER",
+        "detected_by": "PARSER_COVERAGE",
+        "clauses_total": 4,
+        "clauses_recognized": 1,
+        "clauses_unrecognized": 2
+      }
+    },
+    {
+      "corpus": "REAL27",
+      "id": "vmmu_r284",
+      "group": "real_exposed",
+      "text_sha256": "e3ab9e610dfc7fed",
+      "after": {
+        "status": "REFUSED",
+        "terminal": "LIVE_AI_DISABLED",
+        "goals": [],
+        "root_cause": "SOURCE_PROVENANCE_MISSING",
+        "layer": "SOURCE_GATE",
+        "first_loss_layer": "PARSER",
+        "detected_by": "SOURCE_GATE",
+        "clauses_total": 3,
+        "clauses_recognized": 2,
+        "clauses_unrecognized": 0
+      },
+      "before": {
+        "status": "REFUSED",
+        "terminal": "LIVE_AI_DISABLED",
+        "goals": [],
+        "root_cause": "SOURCE_PROVENANCE_MISSING",
+        "layer": "SOURCE_GATE",
+        "first_loss_layer": "PARSER",
+        "detected_by": "SOURCE_GATE",
+        "clauses_total": 3,
+        "clauses_recognized": 2,
+        "clauses_unrecognized": 0
+      }
+    },
+    {
+      "corpus": "REAL27",
+      "id": "vmmu_r295",
+      "group": "real_exposed",
+      "text_sha256": "294378d7c5c5f73c",
+      "after": {
+        "status": "REFUSED",
+        "terminal": "LIVE_AI_DISABLED",
+        "goals": [],
+        "root_cause": "SOURCE_PROVENANCE_MISSING",
+        "layer": "SOURCE_GATE",
+        "first_loss_layer": "PARSER",
+        "detected_by": "SOURCE_GATE",
+        "clauses_total": 3,
+        "clauses_recognized": 2,
+        "clauses_unrecognized": 0
+      },
+      "before": {
+        "status": "REFUSED",
+        "terminal": "LIVE_AI_DISABLED",
+        "goals": [],
+        "root_cause": "SOURCE_PROVENANCE_MISSING",
+        "layer": "SOURCE_GATE",
+        "first_loss_layer": "PARSER",
+        "detected_by": "SOURCE_GATE",
+        "clauses_total": 3,
+        "clauses_recognized": 2,
+        "clauses_unrecognized": 0
+      }
+    },
+    {
+      "corpus": "REAL27",
+      "id": "vmmu_r298",
+      "group": "real_exposed",
+      "text_sha256": "a6e9d6b90f89854a",
+      "after": {
+        "status": "SERVED",
+        "terminal": null,
+        "goals": [
+          "volume"
+        ],
+        "root_cause": null,
+        "layer": "SERVED",
+        "first_loss_layer": null,
+        "detected_by": null,
+        "clauses_total": null,
+        "clauses_recognized": null,
+        "clauses_unrecognized": null
+      },
+      "before": {
+        "status": "SERVED",
+        "terminal": null,
+        "goals": [
+          "volume"
+        ],
+        "root_cause": null,
+        "layer": "SERVED",
+        "first_loss_layer": null,
+        "detected_by": null,
+        "clauses_total": null,
+        "clauses_recognized": null,
+        "clauses_unrecognized": null
+      }
+    },
+    {
+      "corpus": "REAL27",
+      "id": "vmmu_r375",
+      "group": "real_exposed",
+      "text_sha256": "43d3e7b4b26df100",
+      "after": {
+        "status": "SERVED",
+        "terminal": null,
+        "goals": [
+          "distance"
+        ],
+        "root_cause": null,
+        "layer": "SERVED",
+        "first_loss_layer": null,
+        "detected_by": null,
+        "clauses_total": null,
+        "clauses_recognized": null,
+        "clauses_unrecognized": null
+      },
+      "before": {
+        "status": "SERVED",
+        "terminal": null,
+        "goals": [
+          "distance"
+        ],
+        "root_cause": null,
+        "layer": "SERVED",
+        "first_loss_layer": null,
+        "detected_by": null,
+        "clauses_total": null,
+        "clauses_recognized": null,
+        "clauses_unrecognized": null
+      }
+    },
+    {
+      "corpus": "REAL27",
+      "id": "vmmu_r460",
+      "group": "real_exposed",
+      "text_sha256": "eeef7ddcad195647",
+      "after": {
+        "status": "REFUSED",
+        "terminal": "LIVE_AI_DISABLED",
+        "goals": [],
+        "root_cause": "INCOMPLETE_FACT_EXTRACTION",
+        "layer": "CLAUSE_PARTIALLY_READ",
+        "first_loss_layer": "PARSER",
+        "detected_by": "SOURCE_GATE",
+        "clauses_total": 3,
+        "clauses_recognized": 3,
+        "clauses_unrecognized": 0
+      },
+      "before": {
+        "status": "REFUSED",
+        "terminal": "LIVE_AI_DISABLED",
+        "goals": [],
+        "root_cause": "INCOMPLETE_FACT_EXTRACTION",
+        "layer": "CLAUSE_PARTIALLY_READ",
+        "first_loss_layer": "PARSER",
+        "detected_by": "SOURCE_GATE",
+        "clauses_total": 3,
+        "clauses_recognized": 3,
+        "clauses_unrecognized": 0
+      }
+    },
+    {
+      "corpus": "REAL27",
+      "id": "vmmu_r461",
+      "group": "real_exposed",
+      "text_sha256": "809ff614e1cd0c75",
+      "after": {
+        "status": "REFUSED",
+        "terminal": "LIVE_AI_DISABLED",
+        "goals": [],
+        "root_cause": "UNRECOGNIZED_GEOMETRIC_ENTITY",
+        "layer": "ENTITY_RESOLUTION",
+        "first_loss_layer": "PARSER",
+        "detected_by": "PARSER_COVERAGE",
+        "clauses_total": 6,
+        "clauses_recognized": 1,
+        "clauses_unrecognized": 3
+      },
+      "before": {
+        "status": "REFUSED",
+        "terminal": "LIVE_AI_DISABLED",
+        "goals": [],
+        "root_cause": "UNRECOGNIZED_GEOMETRIC_ENTITY",
+        "layer": "ENTITY_RESOLUTION",
+        "first_loss_layer": "PARSER",
+        "detected_by": "PARSER_COVERAGE",
+        "clauses_total": 6,
+        "clauses_recognized": 1,
+        "clauses_unrecognized": 3
+      }
+    },
+    {
+      "corpus": "REAL27",
+      "id": "vmmu_r463",
+      "group": "real_exposed",
+      "text_sha256": "d5b7213d8d1ec5e8",
+      "after": {
+        "status": "REFUSED",
+        "terminal": "LIVE_AI_DISABLED",
+        "goals": [],
+        "root_cause": "UNRECOGNIZED_GEOMETRIC_ENTITY",
+        "layer": "ENTITY_RESOLUTION",
+        "first_loss_layer": "PARSER",
+        "detected_by": "PARSER_COVERAGE",
+        "clauses_total": 3,
+        "clauses_recognized": 0,
+        "clauses_unrecognized": 2
+      },
+      "before": {
+        "status": "REFUSED",
+        "terminal": "LIVE_AI_DISABLED",
+        "goals": [],
+        "root_cause": "UNRECOGNIZED_GEOMETRIC_ENTITY",
+        "layer": "ENTITY_RESOLUTION",
+        "first_loss_layer": "PARSER",
+        "detected_by": "PARSER_COVERAGE",
+        "clauses_total": 3,
+        "clauses_recognized": 0,
+        "clauses_unrecognized": 2
+      }
+    },
+    {
+      "corpus": "REAL27",
+      "id": "vmmu_r475",
+      "group": "real_exposed",
+      "text_sha256": "33abd4b25c729c46",
+      "after": {
+        "status": "REFUSED",
+        "terminal": "LIVE_AI_DISABLED",
+        "goals": [],
+        "root_cause": "UNRECOGNIZED_GEOMETRIC_ENTITY",
+        "layer": "ENTITY_RESOLUTION",
+        "first_loss_layer": "PARSER",
+        "detected_by": "PARSER_COVERAGE",
+        "clauses_total": 6,
+        "clauses_recognized": 0,
+        "clauses_unrecognized": 4
+      },
+      "before": {
+        "status": "REFUSED",
+        "terminal": "LIVE_AI_DISABLED",
+        "goals": [],
+        "root_cause": "UNRECOGNIZED_GEOMETRIC_ENTITY",
+        "layer": "ENTITY_RESOLUTION",
+        "first_loss_layer": "PARSER",
+        "detected_by": "PARSER_COVERAGE",
+        "clauses_total": 6,
+        "clauses_recognized": 0,
+        "clauses_unrecognized": 4
+      }
+    },
+    {
+      "corpus": "REAL27",
+      "id": "vmmu_r476",
+      "group": "real_exposed",
+      "text_sha256": "ce8609f40262757a",
+      "after": {
+        "status": "SERVED",
+        "terminal": null,
+        "goals": [
+          "angle"
+        ],
+        "root_cause": null,
+        "layer": "SERVED",
+        "first_loss_layer": null,
+        "detected_by": null,
+        "clauses_total": null,
+        "clauses_recognized": null,
+        "clauses_unrecognized": null
+      },
+      "before": {
+        "status": "SERVED",
+        "terminal": null,
+        "goals": [
+          "angle"
+        ],
+        "root_cause": null,
+        "layer": "SERVED",
+        "first_loss_layer": null,
+        "detected_by": null,
+        "clauses_total": null,
+        "clauses_recognized": null,
+        "clauses_unrecognized": null
+      }
+    },
+    {
+      "corpus": "REAL27",
+      "id": "vmmu_r488",
+      "group": "real_exposed",
+      "text_sha256": "7a9d2a6349ee3139",
+      "after": {
+        "status": "REFUSED",
+        "terminal": "LIVE_AI_DISABLED",
+        "goals": [],
+        "root_cause": "UNRECOGNIZED_GOAL",
+        "layer": "GOAL_EXTRACTION",
+        "first_loss_layer": "PARSER",
+        "detected_by": "PARSER_COVERAGE",
+        "clauses_total": 3,
+        "clauses_recognized": 2,
+        "clauses_unrecognized": 1
+      },
+      "before": {
+        "status": "REFUSED",
+        "terminal": "LIVE_AI_DISABLED",
+        "goals": [],
+        "root_cause": "UNRECOGNIZED_GOAL",
+        "layer": "GOAL_EXTRACTION",
+        "first_loss_layer": "PARSER",
+        "detected_by": "PARSER_COVERAGE",
+        "clauses_total": 3,
+        "clauses_recognized": 2,
+        "clauses_unrecognized": 1
+      }
+    },
+    {
+      "corpus": "REAL27",
+      "id": "vmmu_r491",
+      "group": "real_exposed",
+      "text_sha256": "ccf866f6e06a328a",
+      "after": {
+        "status": "REFUSED",
+        "terminal": "LIVE_AI_DISABLED",
+        "goals": [],
+        "root_cause": "UNRECOGNIZED_RELATION",
+        "layer": "RELATION_EXTRACTION",
+        "first_loss_layer": "PARSER",
+        "detected_by": "PARSER_COVERAGE",
+        "clauses_total": 3,
+        "clauses_recognized": 2,
+        "clauses_unrecognized": 1
+      },
+      "before": {
+        "status": "REFUSED",
+        "terminal": "LIVE_AI_DISABLED",
+        "goals": [],
+        "root_cause": "UNRECOGNIZED_RELATION",
+        "layer": "RELATION_EXTRACTION",
+        "first_loss_layer": "PARSER",
+        "detected_by": "PARSER_COVERAGE",
+        "clauses_total": 3,
+        "clauses_recognized": 2,
+        "clauses_unrecognized": 1
+      }
+    },
+    {
+      "corpus": "REAL27",
+      "id": "vmmu_r492",
+      "group": "real_exposed",
+      "text_sha256": "0f07c493cb02fd12",
+      "after": {
+        "status": "SERVED",
+        "terminal": null,
+        "goals": [
+          "angle"
+        ],
+        "root_cause": null,
+        "layer": "SERVED",
+        "first_loss_layer": null,
+        "detected_by": null,
+        "clauses_total": null,
+        "clauses_recognized": null,
+        "clauses_unrecognized": null
+      },
+      "before": {
+        "status": "SERVED",
+        "terminal": null,
+        "goals": [
+          "angle"
+        ],
+        "root_cause": null,
+        "layer": "SERVED",
+        "first_loss_layer": null,
+        "detected_by": null,
+        "clauses_total": null,
+        "clauses_recognized": null,
+        "clauses_unrecognized": null
+      }
+    },
+    {
+      "corpus": "REAL27",
+      "id": "vmmu_r498",
+      "group": "real_exposed",
+      "text_sha256": "c437503de7d0db0d",
+      "after": {
+        "status": "REFUSED",
+        "terminal": "LIVE_AI_DISABLED",
+        "goals": [],
+        "root_cause": "UNSUPPORTED_GOAL_FUNCTION",
+        "layer": "GOAL_UNDERSTOOD_UNSUPPORTED",
+        "first_loss_layer": "PARSER",
+        "detected_by": "SOURCE_GATE",
+        "clauses_total": 2,
+        "clauses_recognized": 2,
+        "clauses_unrecognized": 0
+      },
+      "before": {
+        "status": "REFUSED",
+        "terminal": "LIVE_AI_DISABLED",
+        "goals": [],
+        "root_cause": "UNSUPPORTED_GOAL_FUNCTION",
+        "layer": "GOAL_UNDERSTOOD_UNSUPPORTED",
+        "first_loss_layer": "PARSER",
+        "detected_by": "SOURCE_GATE",
+        "clauses_total": 2,
+        "clauses_recognized": 2,
+        "clauses_unrecognized": 0
+      }
+    },
+    {
+      "corpus": "REAL27",
+      "id": "vmmu_r513",
+      "group": "real_exposed",
+      "text_sha256": "49464028330e78ad",
+      "after": {
+        "status": "REFUSED",
+        "terminal": "LIVE_AI_DISABLED",
+        "goals": [],
+        "root_cause": "INCOMPLETE_FACT_EXTRACTION",
+        "layer": "CLAUSE_PARTIALLY_READ",
+        "first_loss_layer": "PARSER",
+        "detected_by": "SOURCE_GATE",
+        "clauses_total": 1,
+        "clauses_recognized": 1,
+        "clauses_unrecognized": 0
+      },
+      "before": {
+        "status": "REFUSED",
+        "terminal": "LIVE_AI_DISABLED",
+        "goals": [],
+        "root_cause": "INCOMPLETE_FACT_EXTRACTION",
+        "layer": "CLAUSE_PARTIALLY_READ",
+        "first_loss_layer": "PARSER",
+        "detected_by": "SOURCE_GATE",
+        "clauses_total": 1,
+        "clauses_recognized": 1,
+        "clauses_unrecognized": 0
+      }
+    },
+    {
+      "corpus": "REAL27",
+      "id": "vmmu_r520",
+      "group": "real_exposed",
+      "text_sha256": "5c9054338f29fa3f",
+      "after": {
+        "status": "REFUSED",
+        "terminal": "MISSING_DIMENSION",
+        "goals": [],
+        "root_cause": "INSUFFICIENT_CONSTRAINTS",
+        "layer": "SOURCE_FACTS",
+        "first_loss_layer": "NONE",
+        "detected_by": "SOURCE_FACTS",
+        "clauses_total": 3,
+        "clauses_recognized": 2,
+        "clauses_unrecognized": 0
+      },
+      "before": {
+        "status": "REFUSED",
+        "terminal": "MISSING_DIMENSION",
+        "goals": [],
+        "root_cause": "INSUFFICIENT_CONSTRAINTS",
+        "layer": "SOURCE_FACTS",
+        "first_loss_layer": "NONE",
+        "detected_by": "SOURCE_FACTS",
+        "clauses_total": 3,
+        "clauses_recognized": 2,
+        "clauses_unrecognized": 0
+      }
+    },
+    {
+      "corpus": "REAL27",
+      "id": "vmmu_r537",
+      "group": "real_exposed",
+      "text_sha256": "8b6a844c5ab49083",
+      "after": {
+        "status": "REFUSED",
+        "terminal": "LIVE_AI_DISABLED",
+        "goals": [],
+        "root_cause": "SOURCE_PROVENANCE_MISSING",
+        "layer": "SOURCE_GATE",
+        "first_loss_layer": "PARSER",
+        "detected_by": "SOURCE_GATE",
+        "clauses_total": 2,
+        "clauses_recognized": 2,
+        "clauses_unrecognized": 0
+      },
+      "before": {
+        "status": "REFUSED",
+        "terminal": "LIVE_AI_DISABLED",
+        "goals": [],
+        "root_cause": "SOURCE_PROVENANCE_MISSING",
+        "layer": "SOURCE_GATE",
+        "first_loss_layer": "PARSER",
+        "detected_by": "SOURCE_GATE",
+        "clauses_total": 2,
+        "clauses_recognized": 2,
+        "clauses_unrecognized": 0
+      }
+    },
+    {
+      "corpus": "REAL27",
+      "id": "vmmu_r538",
+      "group": "real_exposed",
+      "text_sha256": "a4a500ab33ac1ab0",
+      "after": {
+        "status": "REFUSED",
+        "terminal": "LIVE_AI_DISABLED",
+        "goals": [],
+        "root_cause": "UNRECOGNIZED_GOAL",
+        "layer": "GOAL_EXTRACTION",
+        "first_loss_layer": "PARSER",
+        "detected_by": "PARSER_COVERAGE",
+        "clauses_total": 3,
+        "clauses_recognized": 1,
+        "clauses_unrecognized": 1
+      },
+      "before": {
+        "status": "REFUSED",
+        "terminal": "LIVE_AI_DISABLED",
+        "goals": [],
+        "root_cause": "UNRECOGNIZED_GOAL",
+        "layer": "GOAL_EXTRACTION",
+        "first_loss_layer": "PARSER",
+        "detected_by": "PARSER_COVERAGE",
+        "clauses_total": 3,
+        "clauses_recognized": 1,
+        "clauses_unrecognized": 1
+      }
+    },
+    {
+      "corpus": "REAL27",
+      "id": "vmmu_r559",
+      "group": "real_exposed",
+      "text_sha256": "37e359e64b1e81fb",
+      "after": {
+        "status": "REFUSED",
+        "terminal": "LIVE_AI_DISABLED",
+        "goals": [],
+        "root_cause": "UNSUPPORTED_GOAL_FUNCTION",
+        "layer": "GOAL_UNDERSTOOD_UNSUPPORTED",
+        "first_loss_layer": "PARSER",
+        "detected_by": "SOURCE_GATE",
+        "clauses_total": 4,
+        "clauses_recognized": 3,
+        "clauses_unrecognized": 0
+      },
+      "before": {
+        "status": "REFUSED",
+        "terminal": "LIVE_AI_DISABLED",
+        "goals": [],
+        "root_cause": "UNSUPPORTED_GOAL_FUNCTION",
+        "layer": "GOAL_UNDERSTOOD_UNSUPPORTED",
+        "first_loss_layer": "PARSER",
+        "detected_by": "SOURCE_GATE",
+        "clauses_total": 4,
+        "clauses_recognized": 3,
+        "clauses_unrecognized": 0
+      }
+    },
+    {
+      "corpus": "REAL27",
+      "id": "vmmu_r695",
+      "group": "real_exposed",
+      "text_sha256": "be92444253700faa",
+      "after": {
+        "status": "SERVED",
+        "terminal": null,
+        "goals": [
+          "distance"
+        ],
+        "root_cause": null,
+        "layer": "SERVED",
+        "first_loss_layer": null,
+        "detected_by": null,
+        "clauses_total": null,
+        "clauses_recognized": null,
+        "clauses_unrecognized": null
+      },
+      "before": {
+        "status": "SERVED",
+        "terminal": null,
+        "goals": [
+          "distance"
+        ],
+        "root_cause": null,
+        "layer": "SERVED",
+        "first_loss_layer": null,
+        "detected_by": null,
+        "clauses_total": null,
+        "clauses_recognized": null,
+        "clauses_unrecognized": null
+      }
+    }
+  ]
+}
