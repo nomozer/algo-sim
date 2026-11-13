@@ -5,6 +5,7 @@ import {
   MAX_ATTACHMENTS,
   MAX_ATTACHMENT_BYTES,
   acceptAttr,
+  canPreviewAttachment,
   canSubmitComposer,
   composerAttachmentMimeOf,
   extOf,
@@ -231,5 +232,13 @@ describe("Axo Unified Problem Input — validateComposerFile & canSubmitComposer
       stem: "de-toan-hinh-chop-sabcd",
       extWithDot: ".docx",
     });
+  });
+
+  it("canPreviewAttachment chỉ cho phép image và pdf, loại trừ docx/doc", () => {
+    expect(canPreviewAttachment({ kind: "image", ext: ".png" })).toBe(true);
+    expect(canPreviewAttachment({ kind: "pdf", ext: ".pdf" })).toBe(true);
+    expect(canPreviewAttachment({ kind: "document", ext: ".docx" })).toBe(false);
+    expect(canPreviewAttachment({ kind: "document", ext: ".doc" })).toBe(false);
+    expect(canPreviewAttachment({ kind: "code", ext: ".py" })).toBe(false);
   });
 });

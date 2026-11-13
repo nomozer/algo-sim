@@ -296,6 +296,8 @@ describe("Axo V2.7 Slice 2 — 18 Component & Integration Cases (P11.2 & P11.3)"
     expect(modalHtml).toContain("#1 · de-so-1.docx");
     expect(modalHtml).toContain("DOCX · 18 KB · Đã đính kèm");
     expect(modalHtml).toContain("Xem trước");
+    expect(modalHtml).toContain('data-modal-preview-file-id="att-2"');
+    expect(modalHtml).not.toContain('data-modal-preview-file-id="att-1"');
     expect(modalHtml).toContain("file-card-remove");
   });
 
@@ -306,7 +308,7 @@ describe("Axo V2.7 Slice 2 — 18 Component & Integration Cases (P11.2 & P11.3)"
     );
     expect(modalWithOneHtml).toContain("Tất cả tệp đề toán đính kèm (1)");
     expect(modalWithOneHtml).toContain('aria-label="Gỡ tệp de-so-1.docx"');
-    expect(modalWithOneHtml).toContain("Xem trước");
+    expect(modalWithOneHtml).not.toContain("Xem trước");
 
     // Khi danh sách tệp về 0, modal không còn hiển thị
     const modalEmptyHtml = renderToString(
@@ -401,6 +403,8 @@ describe("Axo V2.7 Slice 2 — 18 Component & Integration Cases (P11.2 & P11.3)"
     expect(html).toContain('class="file-card-thumb badge-error"');
     expect(html).toContain("Đang kiểm tra · 125 KB");
     expect(html).toContain("Không thể đọc tệp PDF");
+    expect(html).toContain('data-previewable="false"');
+    expect(html).toContain('data-previewable="true"');
     expect(html).toContain('tabindex="0"');
     expect(html).toContain('rows="1"');
   });

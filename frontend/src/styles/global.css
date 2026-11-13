@@ -8224,7 +8224,7 @@ html {
   overflow-y: hidden;
   max-width: 100%;
   width: 100%;
-  padding: 2px 2px 4px;
+  padding: 5px;
   margin-top: 0;
   scrollbar-width: none;
   -webkit-overflow-scrolling: touch;
@@ -8299,9 +8299,9 @@ html {
 .composer-files-scroll-control:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; border-radius: 9999px; }
 
 .composer-files-row:focus-visible {
-  outline: 1.5px solid var(--primary);
-  outline-offset: 2px;
-  border-radius: 10px;
+  outline: 2px solid var(--primary);
+  outline-offset: -2px;
+  border-radius: 12px;
 }
 
 .file-preview-card {
@@ -8321,9 +8321,15 @@ html {
   height: 108px;
   flex: 0 0 108px;
   box-sizing: border-box;
+  scroll-margin-inline: 28px;
+  scroll-margin-block: 5px;
   cursor: pointer;
   user-select: none;
   transition: border-color 0.14s ease, background-color 0.14s ease, box-shadow 0.14s ease;
+}
+
+.file-preview-card:not([data-previewable="true"]) {
+  cursor: default;
 }
 
 .file-preview-card:not([data-kind="image"]):not(.has-thumb):not(.is-loading):not(.is-error) .file-card-thumb {
@@ -8520,9 +8526,10 @@ html {
   border-color: rgba(185, 28, 28, 0.35);
 }
 
-.file-preview-card .file-card-remove:focus-visible {
+.file-preview-card .file-card-remove:focus-visible,
+.file-preview-card .file-card-remove:focus-visible:not(:disabled) {
   outline: 2px solid var(--primary);
-  outline-offset: 1px;
+  outline-offset: 0px;
 }
 
 .file-preview-card:hover .file-card-remove,
@@ -8543,7 +8550,11 @@ html {
   border-color: #cbd5e1;
   box-shadow: var(--shadow-soft);
 }
-.file-preview-card:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+.file-preview-card:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+  z-index: 2;
+}
 
 .file-preview-card.is-loading {
   border-style: dashed;
@@ -8675,7 +8686,11 @@ html {
   background: #FEF2F2;
   border-color: #FECACA;
   color: #B91C1C;
-  outline: none;
+}
+
+.file-card-remove:focus-visible:not(:disabled) {
+  outline: 2px solid var(--primary);
+  outline-offset: 1px;
 }
 
 .file-full-tooltip {
@@ -8865,12 +8880,6 @@ html {
   text-align: left;
 }
 
-.attachment-document-dialog {
-  width: min(390px, calc(100vw - 32px));
-  height: auto;
-  max-height: min(280px, calc(100vh - 32px));
-  border-radius: 14px;
-}
 .attachment-pdf-dialog {
   width: min(368px, calc(100vw - 32px));
   max-height: calc(100vh - 32px);
@@ -8879,12 +8888,10 @@ html {
 .attachment-pdf-dialog:has(.attachment-pdf-preview[data-orientation="landscape"]) {
   width: min(496px, calc(100vw - 32px));
 }
-.attachment-document-dialog .axo-att-modal-head,
 .attachment-pdf-dialog .axo-att-modal-head {
   padding: 13px 16px 6px;
   border-bottom: none;
 }
-.attachment-document-dialog .axo-att-modal-title,
 .attachment-pdf-dialog .axo-att-modal-title {
   min-width: 0;
   font-size: 14px;
@@ -8892,12 +8899,6 @@ html {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-}
-.attachment-document-dialog .axo-att-modal-body {
-  padding: 8px 20px 22px;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
 }
 .attachment-doc-fallback {
   display: flex;

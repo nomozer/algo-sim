@@ -20,6 +20,7 @@ import {
 import {
   COMPOSER_ACCEPT,
   IMAGE_ACCEPT,
+  canPreviewAttachment,
   canSubmitComposer,
   composerAttachmentMimeOf,
   formatAttachmentSize,
@@ -874,6 +875,7 @@ export function ProblemInput({
   });
   const suppressCardClickRef = useRef(false);
   const modalOriginFocusRef = useRef<HTMLElement | null>(null);
+  const pendingFocusAfterRemoveRef = useRef<{ targetId: string | null; fromModal: boolean } | null>(null);
   const allFilesListRef = useRef<HTMLDivElement>(null);
   const [filesOverflow, setFilesOverflow] = useState<{ left: boolean; right: boolean }>({
     left: false,
@@ -900,7 +902,7 @@ export function ProblemInput({
 
   useEffect(() => {
     const item = attachments.find((attachment) => attachment.id === previewModalFileId);
-    if (!item || item.kind === "image" || typeof URL.createObjectURL !== "function") {
+    if (!item || !canPreviewAttachment(item) || item.kind === "image" || typeof URL.createObjectURL !== "function") {
       setPreviewDownloadUrl(null);
       return;
     }
@@ -1026,15 +1028,49 @@ export function ProblemInput({
     };
   }, [analyzing]);
 
-  // Tự đóng modal Tất cả tệp hoặc modal xem trước nếu người dùng xóa tệp.
+  // Tự đóng modal Tất cả tệp hoặc modal xem trước nếu người dùng xóa tệp hoặc tệp không hỗ trợ xem trước.
   useEffect(() => {
     if (attachments.length === 0 && allFilesModalOpen) {
       setAllFilesModalOpen(false);
     }
-    if (previewModalFileId && !attachments.some((a) => a.id === previewModalFileId)) {
+    const previewTarget = previewModalFileId
+      ? attachments.find((a) => a.id === previewModalFileId) ?? null
+      : null;
+    if (previewModalFileId && (!previewTarget || !canPreviewAttachment(previewTarget))) {
       setPreviewModalFileId(null);
     }
   }, [attachments, allFilesModalOpen, previewModalFileId]);
+
+  useEffect(() => {
+    const pending = pendingFocusAfterRemoveRef.current;
+    if (!pending) return;
+    pendingFocusAfterRemoveRef.current = null;
+    if (typeof document === "undefined") return;
+    if (pending.targetId) {
+      if (pending.fromModal && allFilesModalOpen) {
+        const modalBtn =
+          document.querySelector<HTMLElement>(
+            `[data-modal-remove-file-id="${pending.targetId}"]`,
+          ) ??
+          document.querySelector<HTMLElement>(
+            `[data-modal-preview-file-id="${pending.targetId}"]`,
+          );
+        modalBtn?.focus({ preventScroll: true });
+        return;
+      }
+      const stripCard = document.querySelector<HTMLElement>(
+        `.file-preview-card[data-file-id="${pending.targetId}"]`,
+      );
+      const nextRemoveBtn = stripCard?.querySelector<HTMLElement>(".file-card-remove") ?? null;
+      if (nextRemoveBtn && stripCard) {
+        stripCard.scrollIntoView?.({ block: "nearest", inline: "nearest" });
+        if (filesRowRef.current) syncFilesOverflow(filesRowRef.current);
+        nextRemoveBtn.focus({ preventScroll: true });
+        return;
+      }
+    }
+    textRef.current?.focus({ preventScroll: true });
+  }, [attachments, allFilesModalOpen]);
 
   function readCurrentPlusPopoverPos(): {
     pos: PlusPopoverPosition;
@@ -1532,6 +1568,33 @@ export function ProblemInput({
   function removeAttachment(id: string) {
     activePrepareRequestIdRef.current = null;
     dispatchAssist({ type: "reset" });
+    const currentList = attachmentsRef.current;
+    const removedIdx = currentList.findIndex((item) => item.id === id);
+    if (typeof document !== "undefined" && removedIdx >= 0) {
+      const activeEl = document.activeElement as HTMLElement | null;
+      const inStripCard = Boolean(
+        activeEl && activeEl.closest(`.file-preview-card[data-file-id="${id}"]`),
+      );
+      const inAllFilesRow = Boolean(
+        activeEl &&
+          (activeEl.getAttribute("data-modal-remove-file-id") === id ||
+            activeEl.closest(`.all-files-modal-item[data-modal-file-id="${id}"]`)),
+      );
+      let isKeyboardOrigin = true;
+      try {
+        isKeyboardOrigin = activeEl ? activeEl.matches(":focus-visible") : false;
+      } catch {
+        isKeyboardOrigin = true;
+      }
+      if ((inStripCard || inAllFilesRow) && isKeyboardOrigin) {
+        const remaining = currentList.filter((item) => item.id !== id);
+        const nextTarget =
+          remaining.length > 0
+            ? remaining[Math.min(removedIdx, remaining.length - 1)]?.id ?? null
+            : null;
+        pendingFocusAfterRemoveRef.current = { targetId: nextTarget, fromModal: inAllFilesRow };
+      }
+    }
     setAttachments((prev) => {
       const target = prev.find((item) => item.id === id);
       revokePreviewUrl(target?.previewUrl);
@@ -1833,12 +1896,29 @@ export function ProblemInput({
                     syncFilesOverflow(el);
                   }
                 }}
+                onFocus={(e) => {
+                  const target = e.target as HTMLElement | null;
+                  if (!target || target === e.currentTarget) return;
+                  let isKeyboardFocus = false;
+                  try {
+                    isKeyboardFocus = target.matches(":focus-visible");
+                  } catch {
+                    isKeyboardFocus = false;
+                  }
+                  if (!isKeyboardFocus) return;
+                  const card = target.closest(".file-preview-card") as HTMLElement | null;
+                  if (card && typeof card.scrollIntoView === "function") {
+                    card.scrollIntoView({ block: "nearest", inline: "nearest" });
+                    syncFilesOverflow(e.currentTarget);
+                  }
+                }}
               >
                 {attachments.map((att) => {
                   const { stem, extWithDot } = splitAttachmentName(att.name);
                   const extBadge = (att.ext.replace(".", "") || att.kind).toUpperCase();
                   const isAttLoading = att.status === "loading";
                   const isAttError = att.status === "error";
+                  const isPreviewable = canPreviewAttachment(att);
                   const hasCardThumb = Boolean(att.previewUrl) && !isAttLoading && !isAttError;
                   const badgeClass = isAttLoading
                     ? " badge-loading"
@@ -1862,20 +1942,29 @@ export function ProblemInput({
                       className={`file-preview-card${hasCardThumb ? " has-thumb" : ""}${isAttLoading ? " is-loading" : ""}${isAttError ? " is-error" : ""}`}
                       data-file-id={att.id}
                       data-kind={att.kind}
-                      role="button"
-                      tabIndex={0}
+                      data-previewable={isPreviewable ? "true" : "false"}
+                      role={isPreviewable ? "button" : undefined}
+                      tabIndex={isPreviewable ? 0 : undefined}
                       title={att.name}
-                      aria-label={`Xem chi tiết tệp ${att.name}`}
-                      onClick={() => {
-                        if (suppressCardClickRef.current) return;
-                        setPreviewModalFileId(att.id);
-                      }}
-                      onKeyDown={(e) => {
-                        if (e.key === "Enter" || e.key === " ") {
-                          e.preventDefault();
-                          setPreviewModalFileId(att.id);
-                        }
-                      }}
+                      aria-label={isPreviewable ? `Xem chi tiết tệp ${att.name}` : undefined}
+                      onClick={
+                        isPreviewable
+                          ? () => {
+                              if (suppressCardClickRef.current) return;
+                              setPreviewModalFileId(att.id);
+                            }
+                          : undefined
+                      }
+                      onKeyDown={
+                        isPreviewable
+                          ? (e) => {
+                              if (e.key === "Enter" || e.key === " ") {
+                                e.preventDefault();
+                                setPreviewModalFileId(att.id);
+                              }
+                            }
+                          : undefined
+                      }
                     >
                       <div className={`file-card-thumb${badgeClass}`}>
                         {isAttLoading ? (
@@ -2333,8 +2422,7 @@ export function ProblemInput({
         const previewAtt = previewModalFileId
           ? attachments.find((a) => a.id === previewModalFileId) ?? null
           : null;
-        if (!previewAtt) return null;
-        const extBadge = (previewAtt.ext.replace(".", "") || previewAtt.kind).toUpperCase();
+        if (!previewAtt || !canPreviewAttachment(previewAtt)) return null;
         if (previewAtt.kind === "image") {
           return (
             <div
@@ -2383,7 +2471,7 @@ export function ProblemInput({
               if (e.target === e.currentTarget) setPreviewModalFileId(null);
             }}
           >
-            <div className={`axo-modal-dialog axo-att-modal ${previewAtt.kind === "document" ? "attachment-document-dialog" : "attachment-pdf-dialog"}`}>
+            <div className="axo-modal-dialog axo-att-modal attachment-pdf-dialog">
               <div className="axo-modal-head axo-att-modal-head">
                 <span className="axo-modal-title axo-att-modal-title" id="file-modal-title" title={previewAtt.name}>
                   {previewAtt.name}
@@ -2402,16 +2490,14 @@ export function ProblemInput({
                 </button>
               </div>
               <div className="axo-modal-body axo-att-modal-body" id="file-modal-body">
-                {previewAtt.kind === "pdf" && pdfPreviewCheck === "unknown" ? (
+                {pdfPreviewCheck === "unknown" ? (
                   <PdfPreview key={previewAtt.id} file={previewAtt.file} downloadUrl={previewDownloadUrl} />
                 ) : (
                   <div className="attachment-doc-fallback">
                     <p className="attachment-doc-fallback-text">
-                      {previewAtt.kind === "pdf" && pdfPreviewCheck === "checking"
+                      {pdfPreviewCheck === "checking"
                         ? "Đang kiểm tra tệp PDF…"
-                        : previewAtt.kind === "pdf" && pdfPreviewCheck === "invalid"
-                          ? "Không thể đọc tệp PDF: tệp bị cắt ngắn hoặc không có chữ ký PDF."
-                          : `Chưa hỗ trợ xem trước tệp ${extBadge} tại đây. Em có thể tải tệp về để xem.`}
+                        : "Không thể đọc tệp PDF: tệp bị cắt ngắn hoặc không có chữ ký PDF."}
                     </p>
                     {previewDownloadUrl && (
                       <a
@@ -2531,14 +2617,16 @@ export function ProblemInput({
                         </div>
                       </div>
                       <div className="all-files-modal-item-actions">
-                        <button
-                          type="button"
-                          className="btn-admin-sm"
-                          data-modal-preview-file-id={att.id}
-                          onClick={() => setPreviewModalFileId(att.id)}
-                        >
-                          Xem trước
-                        </button>
+                        {canPreviewAttachment(att) && (
+                          <button
+                            type="button"
+                            className="btn-admin-sm"
+                            data-modal-preview-file-id={att.id}
+                            onClick={() => setPreviewModalFileId(att.id)}
+                          >
+                            Xem trước
+                          </button>
+                        )}
                         <button
                           type="button"
                           className="file-card-remove"

@@ -162,4 +162,47 @@ describe("AXO V9.4.8 — Unified Attachment System & Send/Stop Button", () => {
     expect(css).not.toContain(".axo-att-modal-nav");
     expect(css).not.toContain(".attachment-lightbox-nav");
   });
+
+  it("removes DOCX/DOC fallback preview modal & interactive preview semantics while fixing focus ring clipping", () => {
+    const src = readFileSync(new URL("../ProblemInput.tsx", import.meta.url), "utf-8");
+    const css = readFileSync(new URL("../../styles/global.css", import.meta.url), "utf-8");
+
+    expect(src).not.toContain("attachment-document-dialog");
+    expect(src).not.toContain("Chưa hỗ trợ xem trước tệp");
+    expect(css).not.toContain(".attachment-document-dialog");
+
+    const rowBlock = /\.composer-files-row\s*\{([^}]+)\}/.exec(css)?.[1] ?? "";
+    expect(rowBlock).toContain("padding: 5px;");
+    expect(css).toMatch(/\.composer-files-row:focus-visible\s*\{[^}]*outline-offset:\s*-2px;/);
+    expect(css).toMatch(/\.file-preview-card\s*\{[^}]*scroll-margin-inline:\s*28px;/);
+    expect(css).toMatch(/\.file-preview-card:not\(\[data-previewable="true"\]\)\s*\{[^}]*cursor:\s*default;/);
+    expect(css).toMatch(/\.file-preview-card:focus-visible\s*\{[^}]*outline:\s*2px\s+solid\s+var\(--primary\);\s*outline-offset:\s*2px;/);
+    expect(css).not.toMatch(/\.file-card-remove:focus-visible:not\(:disabled\)\s*\{[^}]*outline:\s*none;/);
+
+    const fileDocx = new File(["doc"], "de-bai.docx", {
+      type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+    });
+    const fileDocLegacy = new File(["doc"], "de-cu.doc", { type: "application/msword" });
+    const filePdf = new File(["%PDF-1.7\n" + "x".repeat(64)], "de-hinh-chop.pdf", { type: "application/pdf" });
+    const fileImg = new File(["img"], "hinh-ve.png", { type: "image/png" });
+
+    const html = renderToString(
+      <ProblemInput
+        initialAttachments={[
+          { id: "d1", file: fileDocx, name: fileDocx.name, size: fileDocx.size, sizeFormatted: "3 B", ext: ".docx", kind: "document", status: "ready" },
+          { id: "d2", file: fileDocLegacy, name: fileDocLegacy.name, size: fileDocLegacy.size, sizeFormatted: "3 B", ext: ".doc", kind: "document", status: "ready" },
+          { id: "p1", file: filePdf, name: filePdf.name, size: filePdf.size, sizeFormatted: "80 B", ext: ".pdf", kind: "pdf", previewUrl: "data:image/png;base64,iVBORw0KGgo=", status: "ready" },
+          { id: "i1", file: fileImg, name: fileImg.name, size: fileImg.size, sizeFormatted: "3 B", ext: ".png", kind: "image", previewUrl: "blob:http://localhost/img1", status: "ready" },
+        ]}
+      />,
+    );
+    expect(html).toContain('data-file-id="d1" data-kind="document" data-previewable="false" title="de-bai.docx"');
+    expect(html).toContain('data-file-id="d2" data-kind="document" data-previewable="false" title="de-cu.doc"');
+    expect(html).not.toContain('aria-label="Xem chi tiết tệp de-bai.docx"');
+    expect(html).not.toContain('aria-label="Xem chi tiết tệp de-cu.doc"');
+    expect(html).toContain('aria-label="Bỏ tệp de-bai.docx"');
+    expect(html).toContain('aria-label="Bỏ tệp de-cu.doc"');
+    expect(html).toContain('aria-label="Xem chi tiết tệp de-hinh-chop.pdf"');
+    expect(html).toContain('aria-label="Xem chi tiết tệp hinh-ve.png"');
+  });
 });
