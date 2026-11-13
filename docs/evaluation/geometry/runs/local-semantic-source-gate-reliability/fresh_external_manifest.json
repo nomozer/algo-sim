@@ -1,0 +1,211 @@
+{
+  "schema": "algosim-fresh-external-corpus/1",
+  "run_id": "local-semantic-source-gate-reliability",
+  "frozen_at_utc": "2026-11-13T04:32:53.747593+00:00",
+  "head": "9ba56f9d86d58a3a218339aa1e57afdad06e1900",
+  "status": "FROZEN_BEFORE_ANY_AXO_RUN_ON_THESE_IMAGES",
+  "ground_truth_authority": "AGENT_TRANSCRIBED_UNVERIFIED",
+  "independent_h1": "NOT_MEASURED",
+  "sampled_rows": 48,
+  "in_scope_items": 2,
+  "not_in_scope": {
+    "r541": "function / calculus problem (graph, variation table, extremum, equation roots), not solid geometry",
+    "r542": "integral and area under a derivative graph",
+    "r543": "function / calculus problem (graph, variation table, extremum, equation roots), not solid geometry",
+    "r544": "function / calculus problem (graph, variation table, extremum, equation roots), not solid geometry",
+    "r546": "function / calculus problem (graph, variation table, extremum, equation roots), not solid geometry",
+    "r549": "function / calculus problem (graph, variation table, extremum, equation roots), not solid geometry",
+    "r553": "function / calculus problem (graph, variation table, extremum, equation roots), not solid geometry",
+    "r554": "function / calculus problem (graph, variation table, extremum, equation roots), not solid geometry",
+    "r560": "function / calculus problem (graph, variation table, extremum, equation roots), not solid geometry",
+    "r565": "plane area between a line and a parabola",
+    "r568": "function / calculus problem (graph, variation table, extremum, equation roots), not solid geometry",
+    "r572": "function / calculus problem (graph, variation table, extremum, equation roots), not solid geometry",
+    "r577": "function / calculus problem (graph, variation table, extremum, equation roots), not solid geometry",
+    "r578": "function / calculus problem (graph, variation table, extremum, equation roots), not solid geometry",
+    "r580": "function / calculus problem (graph, variation table, extremum, equation roots), not solid geometry",
+    "r582": "function / calculus problem (graph, variation table, extremum, equation roots), not solid geometry",
+    "r586": "function / calculus problem (graph, variation table, extremum, equation roots), not solid geometry",
+    "r589": "function / calculus problem (graph, variation table, extremum, equation roots), not solid geometry",
+    "r594": "function / calculus problem (graph, variation table, extremum, equation roots), not solid geometry",
+    "r599": "function / calculus problem (graph, variation table, extremum, equation roots), not solid geometry",
+    "r606": "function / calculus problem (graph, variation table, extremum, equation roots), not solid geometry",
+    "r607": "function / calculus problem (graph, variation table, extremum, equation roots), not solid geometry",
+    "r609": "function / calculus problem (graph, variation table, extremum, equation roots), not solid geometry",
+    "r610": "function / calculus problem (graph, variation table, extremum, equation roots), not solid geometry",
+    "r626": "function / calculus problem (graph, variation table, extremum, equation roots), not solid geometry",
+    "r632": "function / calculus problem (graph, variation table, extremum, equation roots), not solid geometry",
+    "r635": "function / calculus problem (graph, variation table, extremum, equation roots), not solid geometry",
+    "r636": "function / calculus problem (graph, variation table, extremum, equation roots), not solid geometry",
+    "r638": "function / calculus problem (graph, variation table, extremum, equation roots), not solid geometry",
+    "r642": "function / calculus problem (graph, variation table, extremum, equation roots), not solid geometry",
+    "r644": "function / calculus problem (graph, variation table, extremum, equation roots), not solid geometry",
+    "r647": "function / calculus problem (graph, variation table, extremum, equation roots), not solid geometry",
+    "r649": "function / calculus problem (graph, variation table, extremum, equation roots), not solid geometry",
+    "r652": "function / calculus problem (graph, variation table, extremum, equation roots), not solid geometry",
+    "r654": "function / calculus problem (graph, variation table, extremum, equation roots), not solid geometry",
+    "r658": "plane area between a line and y = √x",
+    "r660": "function / calculus problem (graph, variation table, extremum, equation roots), not solid geometry",
+    "r662": "plane optimisation word problem (boat and walk)",
+    "r665": "function / calculus problem (graph, variation table, extremum, equation roots), not solid geometry",
+    "r669": "function / calculus problem (graph, variation table, extremum, equation roots), not solid geometry",
+    "r677": "recognise which drawing is not a polyhedron: no metric question",
+    "r684": "function / calculus problem (graph, variation table, extremum, equation roots), not solid geometry",
+    "r686": "cylinder inscribed in a sphere, maximise volume: curved solids with optimisation",
+    "r689": "function / calculus problem (graph, variation table, extremum, equation roots), not solid geometry",
+    "r691": "exponential function graphs",
+    "r693": "function / calculus problem (graph, variation table, extremum, equation roots), not solid geometry"
+  },
+  "items": [
+    {
+      "case_id": "vmmu_r559",
+      "row_idx": 559,
+      "dataset": "anvo25/vmmu",
+      "dataset_id": "Math_0213_test_040_question_45_page_6_key_B_vqa.png",
+      "cache_path": ".superpowers/external_image_cache/lsg-fresh-vmmu/r559_Math_0213_test_040_question_45_page_6_key_B_vqa.png",
+      "sha256": "f2ed5188752e675241a963614415e6c4ff70b30f7d161f2623b11fabf9d48188",
+      "partition": "fresh_external_evaluation",
+      "image_committed_to_git": false,
+      "ground_truth_text": "Câu 45. Cho tứ diện đều ABCD. Gọi M là trung điểm của CD. Côsin của góc giữa hai đường thẳng AC và BM bằng\nA. √3. B. √3/6. C. √3/2. D. √3/3.",
+      "statement": "Câu 45. Cho tứ diện đều ABCD. Gọi M là trung điểm của CD. Côsin của góc giữa hai đường thẳng AC và BM bằng",
+      "choices": {
+        "A": "√3",
+        "B": "√3/6",
+        "C": "√3/2",
+        "D": "√3/3"
+      },
+      "ground_truth_status": "AGENT_TRANSCRIBED_UNVERIFIED",
+      "critical_facts": [
+        {
+          "kind": "solid",
+          "accepted_forms": [
+            "tứ diện đều"
+          ]
+        },
+        {
+          "kind": "solid",
+          "accepted_forms": [
+            "ABCD"
+          ]
+        },
+        {
+          "kind": "relation",
+          "accepted_forms": [
+            "M là trung điểm của CD"
+          ]
+        },
+        {
+          "kind": "goal",
+          "accepted_forms": [
+            "Côsin"
+          ]
+        },
+        {
+          "kind": "goal",
+          "accepted_forms": [
+            "góc giữa hai đường thẳng AC và BM"
+          ]
+        }
+      ],
+      "diagram_description": "Labelled tetrahedron with M on CD, no measurements.",
+      "diagram_embedded_facts": [],
+      "diagram_dependency_by_agent_reading": "REFERENCE_FIGURE_ONLY_ALL_PREMISES_IN_TEXT",
+      "source_notes": [
+        "no edge length given (answer is scale-free)"
+      ],
+      "tags": [
+        "regular_tetrahedron",
+        "angle_line_line",
+        "cosine_output",
+        "scale_free"
+      ],
+      "dataset_answer_key": "B",
+      "expected_answer": "√3/6",
+      "oracle": {
+        "provenance": "DATASET_ANSWER_KEY",
+        "agent_hand_derivation_letter": "B",
+        "agent_derivation_agrees_with_key": true
+      }
+    },
+    {
+      "case_id": "vmmu_r695",
+      "row_idx": 695,
+      "dataset": "anvo25/vmmu",
+      "dataset_id": "Math_0160_test_027_question_36_page_4_key_B_vqa.png",
+      "cache_path": ".superpowers/external_image_cache/lsg-fresh-vmmu/r695_Math_0160_test_027_question_36_page_4_key_B_vqa.png",
+      "sha256": "bf634a34d9c5c76104679ba04fb4f4ea3122b743dd7b3094d86227f42e28d9ce",
+      "partition": "fresh_external_evaluation",
+      "image_committed_to_git": false,
+      "ground_truth_text": "Câu 36. Cho hình chóp S.ABCD có SA ⊥ (ABCD), đáy ABCD là hình vuông, biết AB = 1, SA = 2 (tham khảo hình vẽ bên dưới). Khoảng cách từ điểm C đến mặt phẳng (SBD) bằng\nA. √2/2. B. 2/3. C. 3/2. D. √2.",
+      "statement": "Câu 36. Cho hình chóp S.ABCD có SA ⊥ (ABCD), đáy ABCD là hình vuông, biết AB = 1, SA = 2 (tham khảo hình vẽ bên dưới). Khoảng cách từ điểm C đến mặt phẳng (SBD) bằng",
+      "choices": {
+        "A": "√2/2",
+        "B": "2/3",
+        "C": "3/2",
+        "D": "√2"
+      },
+      "ground_truth_status": "AGENT_TRANSCRIBED_UNVERIFIED",
+      "critical_facts": [
+        {
+          "kind": "solid",
+          "accepted_forms": [
+            "S.ABCD"
+          ]
+        },
+        {
+          "kind": "relation",
+          "accepted_forms": [
+            "SA⊥(ABCD)"
+          ]
+        },
+        {
+          "kind": "relation",
+          "accepted_forms": [
+            "hình vuông"
+          ]
+        },
+        {
+          "kind": "length",
+          "accepted_forms": [
+            "AB=1"
+          ]
+        },
+        {
+          "kind": "length",
+          "accepted_forms": [
+            "SA=2"
+          ]
+        },
+        {
+          "kind": "goal",
+          "accepted_forms": [
+            "Khoảng cách từ điểm C"
+          ]
+        },
+        {
+          "kind": "goal",
+          "accepted_forms": [
+            "(SBD)"
+          ]
+        }
+      ],
+      "diagram_description": "Labelled pyramid, no measurements.",
+      "diagram_embedded_facts": [],
+      "diagram_dependency_by_agent_reading": "REFERENCE_FIGURE_ONLY_ALL_PREMISES_IN_TEXT",
+      "source_notes": [
+        "watermark over the first line"
+      ],
+      "tags": [
+        "pyramid",
+        "distance_point_plane"
+      ],
+      "dataset_answer_key": "B",
+      "expected_answer": "2/3",
+      "oracle": {
+        "provenance": "DATASET_ANSWER_KEY",
+        "agent_hand_derivation_letter": "B",
+        "agent_derivation_agrees_with_key": true
+      }
+    }
+  ]
+}
