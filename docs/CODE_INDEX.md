@@ -1,5 +1,15 @@
 # CODE_INDEX.md — Chỉ mục module + BỘ NHỚ KIẾN TRÚC
 
+## Constraint-defined planes on the local route (2026-11-13)
+
+| Path | Owns | Locked by |
+|---|---|---|
+| `backend/app/ai/local_geometry_parser.py` (rule 7c-0b) | The section asked on a plane the source DEFINED earlier under a name ("Xác định / Dựng / Tìm / Vẽ thiết diện … (cắt\|tạo) bởi \| với (mặt phẳng) (P)"); only a name already bound to a defined plane is read | `backend/tests/geometry/test_plane_constraint_sections.py` |
+| `backend/app/ai/local_geometry_parser.py` (rule 6c, `pday`) | "song song với (mặt phẳng / mặt) đáy" = the declared base of the primary solid | same |
+| `backend/app/ai/local_geometry_parser.py` (rule 6d-0) · `backend/app/simulation/geometry_functions/registry.py` (`_MAT_TEN_DIEM_RE`, `_mat_ten_diem`, `_CAT_BOI_TEN`, `_CUM_DUNG_THIET_DIEN_TEN`) | A named plane through a line and a point, or through two lines with exactly one common label, is the three-point plane of those labels; the Source Gate reads that definition in the call's own quotes and the section request on its name (closed grammar; four labels or "song song" lines never read) | same (hand-computed vertices, gate grammar, refusals) |
+| `backend/app/simulation/geometry_functions/engine.py` (`kiem_mat_cat`) | Coincident planes in an intersection-line question refuse with `CONTAINED_INFINITE_INTERSECTION`; distinct parallel planes keep `PARALLEL_PLANES` | same (`test_coincident_planes_are_not_called_parallel`) |
+| `docs/evaluation/geometry/runs/independent-geometry-plane-constraints/tools/` | Preregistration, development probes, independent plane checks and mutations, region / diagram evaluation, browser E2E, acceptance, locked holdout evaluation | run report and receipts |
+
 ## Verified section, intersection and dihedral on the local route (2026-11-13)
 
 | Path | Owns | Locked by |
