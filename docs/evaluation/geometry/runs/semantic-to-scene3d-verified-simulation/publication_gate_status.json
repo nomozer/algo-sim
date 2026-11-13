@@ -1,0 +1,24 @@
+{
+  "run_id": "semantic-to-scene3d-verified-simulation",
+  "generated_at_utc": "2026-11-13T10:55:15.733735+00:00",
+  "publication_head": "BLOCKED_PENDING_OWNER_REVIEW",
+  "publication_head_scan": [
+    "SUMMARY scanned=31013 messages=0 violations=97 pending_exception=97 verdict=BLOCKED"
+  ],
+  "publication_range_scan": [
+    "SUMMARY scanned=109 messages=8 violations=1 pending_exception=0 verdict=BLOCKED"
+  ],
+  "full_release_gate": "BLOCKED_GATES_REMAIN",
+  "new_finding_in_this_run": {
+    "rule": "HARDCODED_PASSWORD",
+    "path": "docs/evaluation/geometry/runs/semantic-to-scene3d-verified-simulation/tools/browser_simulation_e2e.mjs",
+    "blob_sha1": "2bfce9c8e306ca707141c41806e1fac31623c2e9",
+    "blob_sha256": "75a685edde68459fa308794bb6e5d7d6abc543fef61874669e0277dc0acab6c0",
+    "introduced_in": "fe835d424",
+    "removed_at": "8da3ea754 (random per-run password)",
+    "nature": "synthetic password for a throwaway account in the measured app's own local SQLite file; never a real credential",
+    "status": "PENDING_OWNER_DECISION: the blob stays in history (no rewrite); only the Owner may add an exact-blob exception"
+  },
+  "agent_actions": "none: no approval written, no exception or wildcard added, no history rewritten, no frozen evidence removed",
+  "pending_templates": "K-1/R-1/S-2 re-bound to the refrozen measured_system as metadata only (pending_template_refresh.json); owner_decision stays PENDING_OWNER_DECISION"
+}

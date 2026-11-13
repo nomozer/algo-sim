@@ -66,11 +66,11 @@ Nhãn: **VF** VERIFIED FACT · **INF** INFERENCE · **HYP** HYPOTHESIS · **NM**
 28. **Có lộ đáp án cuối không?** *(VF)* Không: trên trang không có giá trị đáp số hay "cos²" ở bất kỳ ca nào. Phép dựng góc không mang con số.
 29. **Bao nhiêu đề mới chưa dùng phát triển được mô phỏng đúng?** *(NM)* Không có dữ liệu chưa thấy nào dùng được mà không mở 94 dòng niêm phong. r559 vẫn bị từ chối; r695 nay đã bị lộ vì là mục tiêu của luật cạnh muộn ([new_external_simulation_evaluation.json](new_external_simulation_evaluation.json)).
 30. **H-1 độc lập đã đo chưa?** *(NM)* Chưa.
-31. **Có regression ở Parser, Gate, Planner hoặc Kernel không?** Xem §5.
+31. **Có regression ở Parser, Gate, Planner hoặc Kernel không?** *(VF)* Không. Toàn bộ backend pytest đạt (14 317), gồm parser, Source Gate, planner, registry, kernel, chứng chỉ, Dev72/C26 và XFAIL nghiêm (15). Fixture hybrid-preview được xuất thành bộ mới trong run này, không ghi đè bộ cũ; khác biệt duy nhất là trường `angle_construction` trên 2 fixture góc.
 32. **Hiệu năng render và thao tác?** *(VF, máy host headless)* Từ bấm gửi đến canvas có timeline: 351–489 ms. Chuyển bước: trung vị 82 ms, tối đa 164 ms (gồm 2 khung hình). Tuyến backend: trung vị 33 ms, parse 11 ms, envelope trung vị 34,5 KB. Ảnh: upload → mô hình 2,0–2,8 s phía server ([frontend_performance_profile.json](frontend_performance_profile.json)). Máy cấu hình thấp vật lý: NM.
 33. **Có rò bộ nhớ không?** *(INF)* Chưa chứng minh có, cũng chưa loại trừ. Sau GC, heap tăng 2,5 MB qua 12 lần phân tích trong một phiên đăng nhập (lịch sử giữ từng envelope). 15 lần đi timeline của cùng một đề không tăng đơn điệu (24,2 → 27,2 → 25,6 MB). Số canvas giữ nguyên ([resource_cleanup_audit.json](resource_cleanup_audit.json)).
-34. **Full regression ra sao?** Xem §5.
-35. **Publication còn bị chặn không?** *(BL)* Còn: 97 finding / 18 blob chờ Owner.
+34. **Full regression ra sao?** *(VF)* Mọi cổng sản phẩm đều đạt. Hai cổng publication bị chặn nên verdict của bộ chạy là `INCOMPLETE_OR_FAIL` và verdict tổng là **BLOCKED** (§5).
+35. **Publication còn bị chặn không?** *(BL)* Còn. HEAD vẫn 97 finding / 18 blob như trước. Run này phát sinh **1 finding mới** trong lịch sử: mật khẩu tổng hợp viết cứng ở script E2E, dùng cho một tài khoản thử trong DB SQLite cục bộ (blob `2bfce9c8…`, commit `fe835d424`). HEAD đã sửa ở `8da3ea754` (mật khẩu ngẫu nhiên mỗi lần chạy). Blob cũ nằm lại trong lịch sử vì không được viết lại lịch sử; chỉ Owner được thêm ngoại lệ ([publication_gate_status.json](publication_gate_status.json)).
 36. **Candidate đủ điều kiện pilot ở mức nào?** *(INF)* Đủ cho demo có hướng dẫn trên các họ đa diện được hỗ trợ: dựng được đối tượng đề hỏi và chưa có cảnh sai nào. Chưa đủ cho học sinh tự học, vì phủ đề thật thấp (8/27 văn bản, 4/27 ảnh), ảnh luôn cần xác nhận, chưa có dữ liệu chưa thấy và publication đang bị chặn.
 37. **Tính năng mô phỏng quan trọng nào chưa hỗ trợ?** *(VF)* Thiết diện và giao tuyến trên tuyến local; khối con; đường cao của bài mặt bên ⟂ đáy; điểm mô tả không tên; hình chỉ xác định tới thang đo khi đề không có độ dài nào; điểm tự do; tương tác tham số.
 38. **Bước tiếp theo có giá trị cao nhất?** *(INF)* Đưa thiết diện và giao tuyến lên tuyến local, vì kernel và cảnh đã có và đây là dạng đề hình không gian phổ biến nhất. Sau đó dựng đường cao từ quan hệ mặt bên ⟂ đáy. Song song, Owner quyết định một đợt đánh giá trên dữ liệu chưa thấy và H-1 độc lập.
@@ -81,7 +81,19 @@ Nhãn: **VF** VERIFIED FACT · **INF** INFERENCE · **HYP** HYPOTHESIS · **NM**
 
 ## 5. Regression
 
-Chi tiết ở [full_regression_summary.json](full_regression_summary.json); bảng được điền sau khi chạy.
+Chi tiết ở [full_regression_summary.json](full_regression_summary.json). Cây sạch, `ALLOW_LIVE_AI=0`, mã nguồn không đổi trong lúc chạy.
+
+| Cổng | Kết quả |
+|---|---|
+| backend pytest | **PASS**: 14 317 passed, 7 skipped, 3 deselected, 15 xfailed. Lần đầu có 1 lỗi: fixture hybrid-preview cũ không còn tái sinh trùng; đã xuất bộ mới `fixtures-angle-construction`, giữ nguyên bộ cũ |
+| frontend `test:wave` | **PASS**: 140 file, 2 040 test; tsc + vite build đạt |
+| demo replay · crash audit | **PASS** · **PASS** 6/6 |
+| docs IA | **PASS** |
+| freeze verify | **PASS**: 115 file, `b222260d9a59bfc0…` |
+| publication HEAD | **BLOCKED**: 97, tất cả là `pending_exception` (không đổi) |
+| publication range `8a5a54e37..HEAD` | **BLOCKED**: 1 finding mới `HARDCODED_PASSWORD` trong blob lịch sử, HEAD đã sửa, chờ Owner |
+
+Ngoài bộ chạy: E2E trình duyệt 12/12; kiểm bất biến 95/95; đồ thị phụ thuộc 0 vi phạm.
 
 ## 6. Giới hạn
 

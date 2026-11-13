@@ -1,0 +1,30 @@
+{
+  "run_id": "semantic-to-scene3d-verified-simulation",
+  "generated_at_utc": "2026-11-13T10:55:15.733735+00:00",
+  "head": "8da3ea754a4925929a74b5ca6376b52c451cae1c",
+  "branch": "feat/local-first-geometry-understanding",
+  "freeze_commit_field": "fe835d424672203fc72fedeb786e9ad22457704b",
+  "freeze_stored_in": "15e98444b3b4bac07746b2d429126e6a3370eff3",
+  "product_commit": "70e393fd846fcd35b585b9ce28c1e3262e8fd3b0",
+  "measured_system": {
+    "paths": [
+      "backend/app",
+      "frontend/src/simulations/domains/semantic",
+      "frontend/src/simulations/domains/semantic/semantic_program.schema.json"
+    ],
+    "so_file": 115,
+    "tree_hash": "b222260d9a59bfc0b44aa5cf6021e0a9e1a7ad49b39c288844fa00b1b4117b64",
+    "khai": "Băm nội dung toàn bộ mã SẢN PHẨM của hệ được đo. Harness (scripts/tests/docs) KHÔNG nằm trong đây, nên bộ đo được phép cứng cáp thêm mà không phải đóng băng lại candidate."
+  },
+  "cache_version": "133",
+  "cache_version_bumped": "132 -> 133: served envelopes gained angle_construction (test_cache_angle_construction_invalidation.py proves a 132:route-d row MISSES)",
+  "contracts_unchanged": [
+    "geometry-fact-planner/26",
+    "geometry-functions/33",
+    "geometry-function-engine/24",
+    "height-invariance-certificate/2",
+    "output-policy/1",
+    "hybrid-route-d-simulation/4"
+  ],
+  "freeze_verify_in_regression": "PASS"
+}

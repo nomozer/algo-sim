@@ -1,0 +1,82 @@
+{
+  "name": "freeze_verify",
+  "command": "D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe backend/scripts/freeze_evaluation_candidate.py --verify",
+  "argv": [
+    "D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe",
+    "backend/scripts/freeze_evaluation_candidate.py",
+    "--verify"
+  ],
+  "cwd": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\local-first-geometry-understanding",
+  "started_at_utc": "2026-11-13T10:54:32.727477+00:00",
+  "start_snapshot": {
+    "head_commit": "8da3ea754a4925929a74b5ca6376b52c451cae1c",
+    "product_paths_sha256": "9817a4a620e79c8f43b8833a400a8d018e353a55fc521f070f95edc2224b8642",
+    "product_path_count": 335,
+    "hash_policy": "tracked backend/app + frontend/src, LF normalized; includes tests",
+    "working_product_source_sha256": "0924385759876717cc0bf50872791c84c464185d4dc3cbb37c52e68f5efadebd",
+    "working_product_source_count": 193,
+    "working_source_policy": "all working backend/app + frontend/src including untracked; skip pycache and freeze TEST_ONLY_GLOBS"
+  },
+  "ended_at_utc": "2026-11-13T10:54:35.527059+00:00",
+  "duration_seconds": 2.531,
+  "exit_code": 0,
+  "raw_output_sha256": "de36a90a50ba4fd1a16398528fcb899ffd7da8baf92bf0114f93a7a623052519",
+  "raw_output_bytes": 93,
+  "raw_output_retention": "ignored local .superpowers only; never staged",
+  "end_snapshot": {
+    "head_commit": "8da3ea754a4925929a74b5ca6376b52c451cae1c",
+    "product_paths_sha256": "9817a4a620e79c8f43b8833a400a8d018e353a55fc521f070f95edc2224b8642",
+    "product_path_count": 335,
+    "hash_policy": "tracked backend/app + frontend/src, LF normalized; includes tests",
+    "working_product_source_sha256": "0924385759876717cc0bf50872791c84c464185d4dc3cbb37c52e68f5efadebd",
+    "working_product_source_count": 193,
+    "working_source_policy": "all working backend/app + frontend/src including untracked; skip pycache and freeze TEST_ONLY_GLOBS"
+  },
+  "summary_lines": [
+    "Candidate khớp bản đã đóng băng (mã sản phẩm: 115 file, b222260d9a59bfc0…)."
+  ],
+  "source_unchanged_during_command": true,
+  "verdict": "PASS",
+  "previous_attempts": [
+    {
+      "name": "freeze_verify",
+      "command": "D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe backend/scripts/freeze_evaluation_candidate.py --verify",
+      "argv": [
+        "D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe",
+        "backend/scripts/freeze_evaluation_candidate.py",
+        "--verify"
+      ],
+      "cwd": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\local-first-geometry-understanding",
+      "started_at_utc": "2026-11-13T06:47:29.503254+00:00",
+      "start_snapshot": {
+        "head_commit": "e044873d466b3104832577fb62b33cb8f73f2f46",
+        "product_paths_sha256": "9817a4a620e79c8f43b8833a400a8d018e353a55fc521f070f95edc2224b8642",
+        "product_path_count": 335,
+        "hash_policy": "tracked backend/app + frontend/src, LF normalized; includes tests",
+        "working_product_source_sha256": "0924385759876717cc0bf50872791c84c464185d4dc3cbb37c52e68f5efadebd",
+        "working_product_source_count": 193,
+        "working_source_policy": "all working backend/app + frontend/src including untracked; skip pycache and freeze TEST_ONLY_GLOBS"
+      },
+      "ended_at_utc": "2026-11-13T06:47:31.885619+00:00",
+      "duration_seconds": 2.157,
+      "exit_code": 0,
+      "raw_output_sha256": "de36a90a50ba4fd1a16398528fcb899ffd7da8baf92bf0114f93a7a623052519",
+      "raw_output_bytes": 93,
+      "raw_output_retention": "ignored local .superpowers only; never staged",
+      "end_snapshot": {
+        "head_commit": "e044873d466b3104832577fb62b33cb8f73f2f46",
+        "product_paths_sha256": "9817a4a620e79c8f43b8833a400a8d018e353a55fc521f070f95edc2224b8642",
+        "product_path_count": 335,
+        "hash_policy": "tracked backend/app + frontend/src, LF normalized; includes tests",
+        "working_product_source_sha256": "0924385759876717cc0bf50872791c84c464185d4dc3cbb37c52e68f5efadebd",
+        "working_product_source_count": 193,
+        "working_source_policy": "all working backend/app + frontend/src including untracked; skip pycache and freeze TEST_ONLY_GLOBS"
+      },
+      "summary_lines": [
+        "Candidate khớp bản đã đóng băng (mã sản phẩm: 115 file, b222260d9a59bfc0…)."
+      ],
+      "source_unchanged_during_command": true,
+      "verdict": "PASS"
+    }
+  ]
+}
