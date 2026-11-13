@@ -1,0 +1,791 @@
+{
+  "run_id": "local-semantic-source-gate-reliability",
+  "generated_at_utc": "2026-11-12T18:27:29.153564+00:00",
+  "head": "81bcb5d0fa5d981cc9065a543315038ccaa44126",
+  "input": "agent transcriptions (statement only, choices excluded), AGENT_TRANSCRIBED_UNVERIFIED",
+  "before_source": "controlled-vision-real-image-validation/transcription_solver_diagnostic.json (c53be83db)",
+  "after_path": "route_text_input, local-first, ALLOW_LIVE_AI=0 (same code path as /api/analyze in local-first mode)",
+  "grading": "served answer compared with the dataset answer key (cos² of an angle compared through cos²(N°))",
+  "exposure": "ALL 23 polyhedron items were read while developing this run's rules: development/diagnostic evidence, NOT generalisation",
+  "polyhedron_items": 23,
+  "before_outcomes": {
+    "LOCAL_SOLVED": 4,
+    "LIVE_AI_DISABLED (local parse incomplete)": 17,
+    "EXACT_KERNEL_GAP": 1,
+    "NEEDS_CONFIRMATION": 1
+  },
+  "after_outcomes": {
+    "LOCAL_SOLVED": 7,
+    "LIVE_AI_DISABLED (local parse incomplete)": 13,
+    "EXACT_KERNEL_GAP": 2,
+    "NEEDS_CONFIRMATION": 1
+  },
+  "after_outcomes_by_partition": {
+    "development": {
+      "LOCAL_SOLVED": 2,
+      "LIVE_AI_DISABLED (local parse incomplete)": 3
+    },
+    "frozen_external_evaluation": {
+      "LOCAL_SOLVED": 5,
+      "LIVE_AI_DISABLED (local parse incomplete)": 10,
+      "EXACT_KERNEL_GAP": 2,
+      "NEEDS_CONFIRMATION": 1
+    }
+  },
+  "wrong_served_after": [],
+  "cases": [
+    {
+      "case_id": "vmmu_r247",
+      "partition": "frozen_external_evaluation",
+      "tags": [
+        "cuboid",
+        "distance_line_line"
+      ],
+      "expected": "3a",
+      "before": {
+        "kernel": {
+          "status": "SERVED",
+          "answers": {
+            "q1": "3a"
+          },
+          "reason_code": null
+        },
+        "verdict": "SERVED_MATCHES_DATASET_KEY",
+        "outcome": "LOCAL_SOLVED"
+      },
+      "after": {
+        "kernel": {
+          "status": "SERVED",
+          "answers": {
+            "q1": "3a"
+          },
+          "reason_code": null,
+          "scene3d_objects": 18
+        },
+        "verdict": "SERVED_MATCHES_DATASET_KEY",
+        "outcome": "LOCAL_SOLVED",
+        "ms": 283.38959999746294
+      }
+    },
+    {
+      "case_id": "vmmu_r254",
+      "partition": "frozen_external_evaluation",
+      "tags": [
+        "oblique_prism",
+        "volume"
+      ],
+      "expected": "9√13a³/2",
+      "before": {
+        "kernel": {
+          "status": null,
+          "answers": null,
+          "reason_code": "LIVE_AI_DISABLED"
+        },
+        "verdict": "NOT_SERVED",
+        "outcome": "LIVE_AI_DISABLED (local parse incomplete)"
+      },
+      "after": {
+        "kernel": {
+          "status": "REFUSED",
+          "answers": null,
+          "reason_code": "LIVE_AI_DISABLED",
+          "scene3d_objects": 0
+        },
+        "verdict": "NOT_SERVED",
+        "outcome": "LIVE_AI_DISABLED (local parse incomplete)",
+        "ms": 5.065500001364853
+      }
+    },
+    {
+      "case_id": "vmmu_r256",
+      "partition": "frozen_external_evaluation",
+      "tags": [
+        "pyramid",
+        "distance_point_plane"
+      ],
+      "expected": "a√15/5",
+      "before": {
+        "kernel": {
+          "status": null,
+          "answers": null,
+          "reason_code": "LIVE_AI_DISABLED"
+        },
+        "verdict": "NOT_SERVED",
+        "outcome": "LIVE_AI_DISABLED (local parse incomplete)"
+      },
+      "after": {
+        "kernel": {
+          "status": "REFUSED",
+          "answers": null,
+          "reason_code": "LIVE_AI_DISABLED",
+          "scene3d_objects": 0
+        },
+        "verdict": "NOT_SERVED",
+        "outcome": "LIVE_AI_DISABLED (local parse incomplete)",
+        "ms": 3.288700001576217
+      }
+    },
+    {
+      "case_id": "vmmu_r258",
+      "partition": "frozen_external_evaluation",
+      "tags": [
+        "pyramid",
+        "dihedral"
+      ],
+      "expected": "√2",
+      "before": {
+        "kernel": {
+          "status": null,
+          "answers": null,
+          "reason_code": "LIVE_AI_DISABLED"
+        },
+        "verdict": "NOT_SERVED",
+        "outcome": "LIVE_AI_DISABLED (local parse incomplete)"
+      },
+      "after": {
+        "kernel": {
+          "status": "REFUSED",
+          "answers": null,
+          "reason_code": "LIVE_AI_DISABLED",
+          "scene3d_objects": 0
+        },
+        "verdict": "NOT_SERVED",
+        "outcome": "LIVE_AI_DISABLED (local parse incomplete)",
+        "ms": 7.171600002038758
+      }
+    },
+    {
+      "case_id": "vmmu_r266",
+      "partition": "frozen_external_evaluation",
+      "tags": [
+        "pyramid",
+        "volume"
+      ],
+      "expected": "3",
+      "before": {
+        "kernel": {
+          "status": "REFUSED",
+          "answers": null,
+          "reason_code": "EXACT_DOMAIN_EXCEEDED"
+        },
+        "verdict": "NOT_SERVED",
+        "outcome": "EXACT_KERNEL_GAP"
+      },
+      "after": {
+        "kernel": {
+          "status": "REFUSED",
+          "answers": null,
+          "reason_code": "EXACT_DOMAIN_EXCEEDED",
+          "scene3d_objects": 0
+        },
+        "verdict": "NOT_SERVED",
+        "outcome": "EXACT_KERNEL_GAP",
+        "ms": 23.457600000256207
+      }
+    },
+    {
+      "case_id": "vmmu_r270",
+      "partition": "development",
+      "tags": [
+        "right_prism",
+        "volume",
+        "inverse_from_angle"
+      ],
+      "expected": "a³√3/2",
+      "before": {
+        "kernel": {
+          "status": null,
+          "answers": null,
+          "reason_code": "LIVE_AI_DISABLED"
+        },
+        "verdict": "NOT_SERVED",
+        "outcome": "LIVE_AI_DISABLED (local parse incomplete)"
+      },
+      "after": {
+        "kernel": {
+          "status": "SERVED",
+          "answers": {
+            "q1": "a³√3/2"
+          },
+          "reason_code": null,
+          "scene3d_objects": 13
+        },
+        "verdict": "SERVED_MATCHES_DATASET_KEY",
+        "outcome": "LOCAL_SOLVED",
+        "ms": 37.87709999960498
+      }
+    },
+    {
+      "case_id": "vmmu_r273",
+      "partition": "frozen_external_evaluation",
+      "tags": [
+        "pyramid",
+        "volume"
+      ],
+      "expected": "a³",
+      "before": {
+        "kernel": {
+          "status": "SERVED",
+          "answers": {
+            "q1": "a³"
+          },
+          "reason_code": null
+        },
+        "verdict": "SERVED_MATCHES_DATASET_KEY",
+        "outcome": "LOCAL_SOLVED"
+      },
+      "after": {
+        "kernel": {
+          "status": "SERVED",
+          "answers": {
+            "q1": "a³"
+          },
+          "reason_code": null,
+          "scene3d_objects": 10
+        },
+        "verdict": "SERVED_MATCHES_DATASET_KEY",
+        "outcome": "LOCAL_SOLVED",
+        "ms": 33.81960000115214
+      }
+    },
+    {
+      "case_id": "vmmu_r277",
+      "partition": "frozen_external_evaluation",
+      "tags": [
+        "tetrahedron",
+        "volume",
+        "point_reflection"
+      ],
+      "expected": "8a³",
+      "before": {
+        "kernel": {
+          "status": null,
+          "answers": null,
+          "reason_code": "LIVE_AI_DISABLED"
+        },
+        "verdict": "NOT_SERVED",
+        "outcome": "LIVE_AI_DISABLED (local parse incomplete)"
+      },
+      "after": {
+        "kernel": {
+          "status": "REFUSED",
+          "answers": null,
+          "reason_code": "LIVE_AI_DISABLED",
+          "scene3d_objects": 0
+        },
+        "verdict": "NOT_SERVED",
+        "outcome": "LIVE_AI_DISABLED (local parse incomplete)",
+        "ms": 4.246399999829009
+      }
+    },
+    {
+      "case_id": "vmmu_r284",
+      "partition": "development",
+      "tags": [
+        "pyramid",
+        "distance_point_plane"
+      ],
+      "expected": "√21a/7",
+      "before": {
+        "kernel": {
+          "status": null,
+          "answers": null,
+          "reason_code": "LIVE_AI_DISABLED"
+        },
+        "verdict": "NOT_SERVED",
+        "outcome": "LIVE_AI_DISABLED (local parse incomplete)"
+      },
+      "after": {
+        "kernel": {
+          "status": "REFUSED",
+          "answers": null,
+          "reason_code": "LIVE_AI_DISABLED",
+          "scene3d_objects": 0
+        },
+        "verdict": "NOT_SERVED",
+        "outcome": "LIVE_AI_DISABLED (local parse incomplete)",
+        "ms": 4.058099999383558
+      }
+    },
+    {
+      "case_id": "vmmu_r295",
+      "partition": "frozen_external_evaluation",
+      "tags": [
+        "cuboid",
+        "angle_line_plane"
+      ],
+      "expected": "60°",
+      "before": {
+        "kernel": {
+          "status": "REFUSED",
+          "answers": null,
+          "reason_code": "AMBIGUOUS_FACT"
+        },
+        "verdict": "NOT_SERVED",
+        "outcome": "NEEDS_CONFIRMATION"
+      },
+      "after": {
+        "kernel": {
+          "status": "REFUSED",
+          "answers": null,
+          "reason_code": "AMBIGUOUS_FACT",
+          "scene3d_objects": 0
+        },
+        "verdict": "NOT_SERVED",
+        "outcome": "NEEDS_CONFIRMATION",
+        "ms": 5.91809999968973
+      }
+    },
+    {
+      "case_id": "vmmu_r298",
+      "partition": "frozen_external_evaluation",
+      "tags": [
+        "regular_prism",
+        "volume",
+        "inverse_from_angle"
+      ],
+      "expected": "V = 2√6a³",
+      "before": {
+        "kernel": {
+          "status": null,
+          "answers": null,
+          "reason_code": "LIVE_AI_DISABLED"
+        },
+        "verdict": "NOT_SERVED",
+        "outcome": "LIVE_AI_DISABLED (local parse incomplete)"
+      },
+      "after": {
+        "kernel": {
+          "status": "SERVED",
+          "answers": {
+            "q1": "2a³√6"
+          },
+          "reason_code": null,
+          "scene3d_objects": 13
+        },
+        "verdict": "SERVED_MATCHES_DATASET_KEY",
+        "outcome": "LOCAL_SOLVED",
+        "ms": 44.422599999961676
+      }
+    },
+    {
+      "case_id": "vmmu_r375",
+      "partition": "frozen_external_evaluation",
+      "tags": [
+        "regular_pyramid",
+        "distance_point_plane"
+      ],
+      "expected": "√17",
+      "before": {
+        "kernel": {
+          "status": null,
+          "answers": null,
+          "reason_code": "LIVE_AI_DISABLED"
+        },
+        "verdict": "NOT_SERVED",
+        "outcome": "LIVE_AI_DISABLED (local parse incomplete)"
+      },
+      "after": {
+        "kernel": {
+          "status": "SERVED",
+          "answers": {
+            "q1": "√17"
+          },
+          "reason_code": null,
+          "scene3d_objects": 14
+        },
+        "verdict": "SERVED_MATCHES_DATASET_KEY",
+        "outcome": "LOCAL_SOLVED",
+        "ms": 34.00409999812837
+      }
+    },
+    {
+      "case_id": "vmmu_r460",
+      "partition": "frozen_external_evaluation",
+      "tags": [
+        "pyramid",
+        "volume",
+        "hypotenuse_given"
+      ],
+      "expected": "a³√2/3",
+      "before": {
+        "kernel": {
+          "status": null,
+          "answers": null,
+          "reason_code": "LIVE_AI_DISABLED"
+        },
+        "verdict": "NOT_SERVED",
+        "outcome": "LIVE_AI_DISABLED (local parse incomplete)"
+      },
+      "after": {
+        "kernel": {
+          "status": "REFUSED",
+          "answers": null,
+          "reason_code": "LIVE_AI_DISABLED",
+          "scene3d_objects": 0
+        },
+        "verdict": "NOT_SERVED",
+        "outcome": "LIVE_AI_DISABLED (local parse incomplete)",
+        "ms": 9.77959999727318
+      }
+    },
+    {
+      "case_id": "vmmu_r461",
+      "partition": "development",
+      "tags": [
+        "cone",
+        "applied"
+      ],
+      "expected": "0,5 dm³",
+      "before": {
+        "kernel": {
+          "status": null,
+          "answers": null,
+          "reason_code": "LIVE_AI_DISABLED"
+        },
+        "verdict": "NOT_SERVED",
+        "outcome": "OUT_OF_SCOPE"
+      },
+      "after": {
+        "kernel": {
+          "status": "REFUSED",
+          "answers": null,
+          "reason_code": "LIVE_AI_DISABLED",
+          "scene3d_objects": 0
+        },
+        "verdict": "NOT_SERVED",
+        "outcome": "OUT_OF_SCOPE",
+        "ms": 4.8879999994824175
+      }
+    },
+    {
+      "case_id": "vmmu_r463",
+      "partition": "frozen_external_evaluation",
+      "tags": [
+        "right_prism",
+        "volume",
+        "inverse_from_angle"
+      ],
+      "expected": "4√3a³",
+      "before": {
+        "kernel": {
+          "status": null,
+          "answers": null,
+          "reason_code": "LIVE_AI_DISABLED"
+        },
+        "verdict": "NOT_SERVED",
+        "outcome": "LIVE_AI_DISABLED (local parse incomplete)"
+      },
+      "after": {
+        "kernel": {
+          "status": "REFUSED",
+          "answers": null,
+          "reason_code": "LIVE_AI_DISABLED",
+          "scene3d_objects": 0
+        },
+        "verdict": "NOT_SERVED",
+        "outcome": "LIVE_AI_DISABLED (local parse incomplete)",
+        "ms": 3.2980999967548996
+      }
+    },
+    {
+      "case_id": "vmmu_r475",
+      "partition": "frozen_external_evaluation",
+      "tags": [
+        "cylinder_sphere_cone",
+        "applied"
+      ],
+      "expected": "5/9",
+      "before": {
+        "kernel": {
+          "status": null,
+          "answers": null,
+          "reason_code": "LIVE_AI_DISABLED"
+        },
+        "verdict": "NOT_SERVED",
+        "outcome": "OUT_OF_SCOPE"
+      },
+      "after": {
+        "kernel": {
+          "status": "REFUSED",
+          "answers": null,
+          "reason_code": "LIVE_AI_DISABLED",
+          "scene3d_objects": 0
+        },
+        "verdict": "NOT_SERVED",
+        "outcome": "OUT_OF_SCOPE",
+        "ms": 5.612599998130463
+      }
+    },
+    {
+      "case_id": "vmmu_r476",
+      "partition": "development",
+      "tags": [
+        "pyramid",
+        "dihedral"
+      ],
+      "expected": "30°",
+      "before": {
+        "kernel": {
+          "status": "SERVED",
+          "answers": {
+            "q1": "cos²=3/4"
+          },
+          "reason_code": null
+        },
+        "verdict": "SERVED_MATCHES_DATASET_KEY",
+        "outcome": "LOCAL_SOLVED"
+      },
+      "after": {
+        "kernel": {
+          "status": "SERVED",
+          "answers": {
+            "q1": "cos²=3/4"
+          },
+          "reason_code": null,
+          "scene3d_objects": 14
+        },
+        "verdict": "SERVED_MATCHES_DATASET_KEY",
+        "outcome": "LOCAL_SOLVED",
+        "ms": 33.43250000034459
+      }
+    },
+    {
+      "case_id": "vmmu_r488",
+      "partition": "development",
+      "tags": [
+        "right_prism",
+        "volume",
+        "inverse_from_angle"
+      ],
+      "expected": "a³/3",
+      "before": {
+        "kernel": {
+          "status": null,
+          "answers": null,
+          "reason_code": "LIVE_AI_DISABLED"
+        },
+        "verdict": "NOT_SERVED",
+        "outcome": "LIVE_AI_DISABLED (local parse incomplete)"
+      },
+      "after": {
+        "kernel": {
+          "status": "REFUSED",
+          "answers": null,
+          "reason_code": "LIVE_AI_DISABLED",
+          "scene3d_objects": 0
+        },
+        "verdict": "NOT_SERVED",
+        "outcome": "LIVE_AI_DISABLED (local parse incomplete)",
+        "ms": 3.7488999987544958
+      }
+    },
+    {
+      "case_id": "vmmu_r491",
+      "partition": "frozen_external_evaluation",
+      "tags": [
+        "oblique_prism",
+        "distance_point_plane"
+      ],
+      "expected": "2√5/5 a",
+      "before": {
+        "kernel": {
+          "status": null,
+          "answers": null,
+          "reason_code": "LIVE_AI_DISABLED"
+        },
+        "verdict": "NOT_SERVED",
+        "outcome": "LIVE_AI_DISABLED (local parse incomplete)"
+      },
+      "after": {
+        "kernel": {
+          "status": "REFUSED",
+          "answers": null,
+          "reason_code": "LIVE_AI_DISABLED",
+          "scene3d_objects": 0
+        },
+        "verdict": "NOT_SERVED",
+        "outcome": "LIVE_AI_DISABLED (local parse incomplete)",
+        "ms": 3.691499998240033
+      }
+    },
+    {
+      "case_id": "vmmu_r492",
+      "partition": "frozen_external_evaluation",
+      "tags": [
+        "right_prism",
+        "angle_line_plane"
+      ],
+      "expected": "60°",
+      "before": {
+        "kernel": {
+          "status": "SERVED",
+          "answers": {
+            "q1": "cos²=1/4"
+          },
+          "reason_code": null
+        },
+        "verdict": "SERVED_MATCHES_DATASET_KEY",
+        "outcome": "LOCAL_SOLVED"
+      },
+      "after": {
+        "kernel": {
+          "status": "SERVED",
+          "answers": {
+            "q1": "cos²=1/4"
+          },
+          "reason_code": null,
+          "scene3d_objects": 15
+        },
+        "verdict": "SERVED_MATCHES_DATASET_KEY",
+        "outcome": "LOCAL_SOLVED",
+        "ms": 58.55959999826155
+      }
+    },
+    {
+      "case_id": "vmmu_r498",
+      "partition": "frozen_external_evaluation",
+      "tags": [
+        "regular_prism",
+        "dihedral"
+      ],
+      "expected": "1/2",
+      "before": {
+        "kernel": {
+          "status": null,
+          "answers": null,
+          "reason_code": "LIVE_AI_DISABLED"
+        },
+        "verdict": "NOT_SERVED",
+        "outcome": "LIVE_AI_DISABLED (local parse incomplete)"
+      },
+      "after": {
+        "kernel": {
+          "status": "REFUSED",
+          "answers": null,
+          "reason_code": "LIVE_AI_DISABLED",
+          "scene3d_objects": 0
+        },
+        "verdict": "NOT_SERVED",
+        "outcome": "LIVE_AI_DISABLED (local parse incomplete)",
+        "ms": 6.628699997236254
+      }
+    },
+    {
+      "case_id": "vmmu_r513",
+      "partition": "development",
+      "tags": [
+        "cuboid",
+        "distance_point_plane"
+      ],
+      "expected": "2√5/5",
+      "before": {
+        "kernel": {
+          "status": null,
+          "answers": null,
+          "reason_code": "LIVE_AI_DISABLED"
+        },
+        "verdict": "NOT_SERVED",
+        "outcome": "LIVE_AI_DISABLED (local parse incomplete)"
+      },
+      "after": {
+        "kernel": {
+          "status": "REFUSED",
+          "answers": null,
+          "reason_code": "LIVE_AI_DISABLED",
+          "scene3d_objects": 0
+        },
+        "verdict": "NOT_SERVED",
+        "outcome": "LIVE_AI_DISABLED (local parse incomplete)",
+        "ms": 8.365499998035375
+      }
+    },
+    {
+      "case_id": "vmmu_r520",
+      "partition": "frozen_external_evaluation",
+      "tags": [
+        "pyramid",
+        "dihedral"
+      ],
+      "expected": "45°",
+      "before": {
+        "kernel": {
+          "status": null,
+          "answers": null,
+          "reason_code": "LIVE_AI_DISABLED"
+        },
+        "verdict": "NOT_SERVED",
+        "outcome": "LIVE_AI_DISABLED (local parse incomplete)"
+      },
+      "after": {
+        "kernel": {
+          "status": "REFUSED",
+          "answers": null,
+          "reason_code": "MISSING_DIMENSION",
+          "scene3d_objects": 0
+        },
+        "verdict": "NOT_SERVED",
+        "outcome": "EXACT_KERNEL_GAP",
+        "ms": 31.32990000085556
+      }
+    },
+    {
+      "case_id": "vmmu_r537",
+      "partition": "frozen_external_evaluation",
+      "tags": [
+        "regular_pyramid",
+        "distance_point_plane"
+      ],
+      "expected": "a√6/3",
+      "before": {
+        "kernel": {
+          "status": null,
+          "answers": null,
+          "reason_code": "LIVE_AI_DISABLED"
+        },
+        "verdict": "NOT_SERVED",
+        "outcome": "LIVE_AI_DISABLED (local parse incomplete)"
+      },
+      "after": {
+        "kernel": {
+          "status": "REFUSED",
+          "answers": null,
+          "reason_code": "LIVE_AI_DISABLED",
+          "scene3d_objects": 0
+        },
+        "verdict": "NOT_SERVED",
+        "outcome": "LIVE_AI_DISABLED (local parse incomplete)",
+        "ms": 4.699199998867698
+      }
+    },
+    {
+      "case_id": "vmmu_r538",
+      "partition": "frozen_external_evaluation",
+      "tags": [
+        "regular_pyramid",
+        "angle_line_plane"
+      ],
+      "expected": "30°",
+      "before": {
+        "kernel": {
+          "status": null,
+          "answers": null,
+          "reason_code": "LIVE_AI_DISABLED"
+        },
+        "verdict": "NOT_SERVED",
+        "outcome": "LIVE_AI_DISABLED (local parse incomplete)"
+      },
+      "after": {
+        "kernel": {
+          "status": "REFUSED",
+          "answers": null,
+          "reason_code": "LIVE_AI_DISABLED",
+          "scene3d_objects": 0
+        },
+        "verdict": "NOT_SERVED",
+        "outcome": "LIVE_AI_DISABLED (local parse incomplete)",
+        "ms": 4.10810000175843
+      }
+    }
+  ]
+}

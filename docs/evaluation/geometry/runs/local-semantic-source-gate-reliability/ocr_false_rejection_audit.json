@@ -1,0 +1,1469 @@
+{
+  "run_id": "local-semantic-source-gate-reliability",
+  "generated_at_utc": "2026-11-13T04:26:03.655214+00:00",
+  "source": "controlled-vision local_ocr_*.json (after reread fix) vs agent references (AGENT_TRANSCRIBED_UNVERIFIED)",
+  "question": "Among images with every critical fact recovered, was holding them for confirmation a false rejection?",
+  "images": 25,
+  "images_with_all_critical_facts": 16,
+  "verdicts_among_all_facts_images": {
+    "CORRECT_HOLD_UNFLAGGED_MATH_DIFFERENCES": 2,
+    "HOLD_WITH_FLAGGED_SPANS_ALL_FALSE_ALARMS": 13,
+    "HOLD_WITH_GENUINE_FLAGGED_ERRORS": 1
+  },
+  "blocking_flags_total": 70,
+  "blocking_flags_false_alarms": 59,
+  "every_image_references_a_diagram": false,
+  "policy_decision": "NO_GATE_CHANGE: no image is shown to be safely acceptable as a whole; see verdicts",
+  "limits": [
+    "agent references, not human-verified",
+    "word diff is a proxy: reading-order and spacing noise is included",
+    "'present in reference' cannot tell which occurrence a short token belongs to"
+  ],
+  "cases": [
+    {
+      "case_id": "vmmu_r270",
+      "partition": "development",
+      "all_critical_facts_recovered": true,
+      "blocking_reasons": [
+        "DIAGRAM_FACTS_UNVERIFIED",
+        "UNCERTAIN_SPANS"
+      ],
+      "diagram_classification": "DIAGRAM_REFERENCED_BY_TEXT",
+      "agent_diagram_reading": "REFERENCE_FIGURE_ONLY_ALL_PREMISES_IN_TEXT",
+      "flagged_spans": [
+        {
+          "text": "BC",
+          "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+          "blocking": true,
+          "present_in_reference": true
+        },
+        {
+          "text": "phng(A'BC)",
+          "reason": "PRIME_DISAGREEMENT",
+          "blocking": true,
+          "present_in_reference": false
+        },
+        {
+          "text": "(ABC)",
+          "reason": "MATH_TOKEN_DISAGREEMENT",
+          "blocking": true,
+          "present_in_reference": true
+        },
+        {
+          "text": "a³√3/2",
+          "reason": "FRACTION_STRUCTURE_LOSS",
+          "blocking": false,
+          "present_in_reference": true
+        },
+        {
+          "text": "a√2/3",
+          "reason": "FRACTION_STRUCTURE_LOSS",
+          "blocking": false,
+          "present_in_reference": false
+        },
+        {
+          "text": "C.a√3.",
+          "reason": "RADICAL_DISAGREEMENT",
+          "blocking": false,
+          "present_in_reference": false
+        }
+      ],
+      "blocking_flags": 3,
+      "blocking_flags_that_were_false_alarms": 2,
+      "unflagged_statement_differences": [
+        {
+          "op": "replace",
+          "reference": "phẳng(",
+          "ocr": "phng("
+        }
+      ],
+      "unflagged_math_differences": [
+        {
+          "op": "replace",
+          "reference": "phẳng(",
+          "ocr": "phng("
+        }
+      ],
+      "verdict": "CORRECT_HOLD_UNFLAGGED_MATH_DIFFERENCES"
+    },
+    {
+      "case_id": "vmmu_r284",
+      "partition": "development",
+      "all_critical_facts_recovered": false,
+      "blocking_reasons": [
+        "DIAGRAM_FACTS_UNVERIFIED",
+        "UNCERTAIN_SPANS"
+      ],
+      "diagram_classification": "DIAGRAM_REFERENCED_BY_TEXT",
+      "agent_diagram_reading": "REFERENCE_FIGURE_ONLY_ALL_PREMISES_IN_TEXT",
+      "flagged_spans": [
+        {
+          "text": ",Š.48ŒD",
+          "reason": "SINGLE_READER_TOKEN",
+          "blocking": true,
+          "present_in_reference": false
+        },
+        {
+          "text": "g",
+          "reason": "AMBIGUOUS_DIACRITIC_RESTORATION",
+          "blocking": true,
+          "present_in_reference": true
+        },
+        {
+          "text": "S",
+          "reason": "MATH_TOKEN_DISAGREEMENT",
+          "blocking": true,
+          "present_in_reference": true
+        },
+        {
+          "text": "tam",
+          "reason": "NOT_IN_LEXICON",
+          "blocking": true,
+          "present_in_reference": true
+        },
+        {
+          "text": "trong",
+          "reason": "NOT_IN_LEXICON",
+          "blocking": true,
+          "present_in_reference": true
+        },
+        {
+          "text": "√21a/14",
+          "reason": "FRACTION_STRUCTURE_LOSS",
+          "blocking": false,
+          "present_in_reference": true
+        },
+        {
+          "text": "√21a/28",
+          "reason": "FRACTION_STRUCTURE_LOSS",
+          "blocking": false,
+          "present_in_reference": true
+        },
+        {
+          "text": "√2a/2",
+          "reason": "FRACTION_STRUCTURE_LOSS",
+          "blocking": false,
+          "present_in_reference": true
+        },
+        {
+          "text": "√21a/7",
+          "reason": "FRACTION_STRUCTURE_LOSS",
+          "blocking": false,
+          "present_in_reference": true
+        },
+        {
+          "text": "1",
+          "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+          "blocking": false,
+          "present_in_reference": true
+        }
+      ],
+      "blocking_flags": 5,
+      "blocking_flags_that_were_false_alarms": 4,
+      "unflagged_statement_differences": [
+        {
+          "op": "replace",
+          "reference": "Cho",
+          "ocr": "C câu cho"
+        },
+        {
+          "op": "delete",
+          "reference": "là",
+          "ocr": ""
+        },
+        {
+          "op": "delete",
+          "reference": "a,",
+          "ocr": ""
+        },
+        {
+          "op": "delete",
+          "reference": "SAB là",
+          "ocr": ""
+        },
+        {
+          "op": "replace",
+          "reference": "và nằm",
+          "ocr": "năm"
+        }
+      ],
+      "unflagged_math_differences": [
+        {
+          "op": "replace",
+          "reference": "Cho",
+          "ocr": "C câu cho"
+        },
+        {
+          "op": "delete",
+          "reference": "SAB là",
+          "ocr": ""
+        }
+      ],
+      "verdict": "NOT_A_FALSE_REJECTION_FACT_MISSING"
+    },
+    {
+      "case_id": "vmmu_r461",
+      "partition": "development",
+      "all_critical_facts_recovered": true,
+      "blocking_reasons": [
+        "DIAGRAM_FACTS_UNVERIFIED",
+        "UNCERTAIN_SPANS"
+      ],
+      "diagram_classification": "DIAGRAM_REFERENCED_BY_TEXT",
+      "agent_diagram_reading": "REFERENCE_FIGURE_ONLY_ALL_PREMISES_IN_TEXT",
+      "flagged_spans": [
+        {
+          "text": "AN",
+          "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+          "blocking": true,
+          "present_in_reference": true
+        },
+        {
+          "text": "A.0,5dm³.",
+          "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+          "blocking": false,
+          "present_in_reference": true
+        },
+        {
+          "text": "B.",
+          "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+          "blocking": false,
+          "present_in_reference": true
+        },
+        {
+          "text": "0,6dm³.",
+          "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+          "blocking": false,
+          "present_in_reference": true
+        },
+        {
+          "text": "0,3dm³.",
+          "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+          "blocking": false,
+          "present_in_reference": true
+        },
+        {
+          "text": "D.0,4dm³.",
+          "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+          "blocking": false,
+          "present_in_reference": true
+        }
+      ],
+      "blocking_flags": 1,
+      "blocking_flags_that_were_false_alarms": 1,
+      "unflagged_statement_differences": [
+        {
+          "op": "replace",
+          "reference": "gián",
+          "ocr": "gian"
+        }
+      ],
+      "unflagged_math_differences": [],
+      "verdict": "HOLD_WITH_FLAGGED_SPANS_ALL_FALSE_ALARMS"
+    },
+    {
+      "case_id": "vmmu_r476",
+      "partition": "development",
+      "all_critical_facts_recovered": true,
+      "blocking_reasons": [
+        "DIAGRAM_FACTS_UNVERIFIED",
+        "UNCERTAIN_SPANS"
+      ],
+      "diagram_classification": "DIAGRAM_REFERENCED_BY_TEXT",
+      "agent_diagram_reading": "REFERENCE_FIGURE_ONLY_ALL_PREMISES_IN_TEXT",
+      "flagged_spans": [
+        {
+          "text": "a√3",
+          "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+          "blocking": true,
+          "present_in_reference": true
+        },
+        {
+          "text": "SA",
+          "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+          "blocking": true,
+          "present_in_reference": true
+        },
+        {
+          "text": "(SCD)",
+          "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+          "blocking": true,
+          "present_in_reference": true
+        },
+        {
+          "text": "(ABCD)",
+          "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+          "blocking": true,
+          "present_in_reference": true
+        },
+        {
+          "text": "A.45°.",
+          "reason": "DEGREE_SYMBOL_DISAGREEMENT",
+          "blocking": false,
+          "present_in_reference": true
+        },
+        {
+          "text": "90⁰.",
+          "reason": "DEGREE_SYMBOL_DISAGREEMENT",
+          "blocking": false,
+          "present_in_reference": true
+        },
+        {
+          "text": "D.30°.",
+          "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+          "blocking": false,
+          "present_in_reference": true
+        }
+      ],
+      "blocking_flags": 4,
+      "blocking_flags_that_were_false_alarms": 4,
+      "unflagged_statement_differences": [],
+      "unflagged_math_differences": [],
+      "verdict": "HOLD_WITH_FLAGGED_SPANS_ALL_FALSE_ALARMS"
+    },
+    {
+      "case_id": "vmmu_r488",
+      "partition": "development",
+      "all_critical_facts_recovered": false,
+      "blocking_reasons": [
+        "DIAGRAM_FACTS_UNVERIFIED",
+        "UNCERTAIN_SPANS"
+      ],
+      "diagram_classification": "DIAGRAM_REFERENCED_BY_TEXT",
+      "agent_diagram_reading": "REFERENCE_FIGURE_ONLY_ALL_PREMISES_IN_TEXT",
+      "flagged_spans": [
+        {
+          "text": "600",
+          "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+          "blocking": true,
+          "present_in_reference": false
+        },
+        {
+          "text": "√3a3",
+          "reason": "RADICAL_DISAGREEMENT",
+          "blocking": false,
+          "present_in_reference": false
+        }
+      ],
+      "blocking_flags": 1,
+      "blocking_flags_that_were_false_alarms": 0,
+      "unflagged_statement_differences": [
+        {
+          "op": "replace",
+          "reference": "Biết",
+          "ocr": "Biệt"
+        }
+      ],
+      "unflagged_math_differences": [
+        {
+          "op": "replace",
+          "reference": "Biết",
+          "ocr": "Biệt"
+        }
+      ],
+      "verdict": "NOT_A_FALSE_REJECTION_FACT_MISSING"
+    },
+    {
+      "case_id": "vmmu_r513",
+      "partition": "development",
+      "all_critical_facts_recovered": true,
+      "blocking_reasons": [
+        "DIAGRAM_FACTS_UNVERIFIED",
+        "UNCERTAIN_SPANS"
+      ],
+      "diagram_classification": "DIAGRAM_HAS_MEASUREMENTS",
+      "agent_diagram_reading": "REFERENCE_FIGURE_ONLY_ALL_PREMISES_IN_TEXT",
+      "flagged_spans": [
+        {
+          "text": "ABCD.A'B'C'D'",
+          "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+          "blocking": true,
+          "present_in_reference": true
+        },
+        {
+          "text": "A.√5.",
+          "reason": "RADICAL_DISAGREEMENT",
+          "blocking": false,
+          "present_in_reference": true
+        },
+        {
+          "text": "D.√2.",
+          "reason": "RADICAL_DISAGREEMENT",
+          "blocking": false,
+          "present_in_reference": true
+        },
+        {
+          "text": "√5/2",
+          "reason": "FRACTION_STRUCTURE_LOSS",
+          "blocking": false,
+          "present_in_reference": true
+        }
+      ],
+      "blocking_flags": 1,
+      "blocking_flags_that_were_false_alarms": 1,
+      "unflagged_statement_differences": [],
+      "unflagged_math_differences": [],
+      "verdict": "HOLD_WITH_FLAGGED_SPANS_ALL_FALSE_ALARMS"
+    },
+    {
+      "case_id": "vmmu_r247",
+      "partition": "frozen_external_evaluation",
+      "all_critical_facts_recovered": false,
+      "blocking_reasons": [
+        "DIAGRAM_FACTS_UNVERIFIED",
+        "UNCERTAIN_SPANS"
+      ],
+      "diagram_classification": "DIAGRAM_REFERENCED_BY_TEXT",
+      "agent_diagram_reading": "REFERENCE_FIGURE_ONLY_ALL_PREMISES_IN_TEXT",
+      "flagged_spans": [
+        {
+          "text": "4BCD-",
+          "reason": "NOT_IN_LEXICON",
+          "blocking": true,
+          "present_in_reference": false
+        },
+        {
+          "text": "A'B'C'D'",
+          "reason": "PRIME_DISAGREEMENT",
+          "blocking": true,
+          "present_in_reference": true
+        },
+        {
+          "text": "AB",
+          "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+          "blocking": true,
+          "present_in_reference": true
+        },
+        {
+          "text": "a,BC",
+          "reason": "NOT_IN_LEXICON",
+          "blocking": true,
+          "present_in_reference": true
+        },
+        {
+          "text": "2a",
+          "reason": "MATH_TOKEN_DISAGREEMENT",
+          "blocking": true,
+          "present_in_reference": true
+        },
+        {
+          "text": "3a",
+          "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+          "blocking": true,
+          "present_in_reference": true
+        },
+        {
+          "text": "a.",
+          "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+          "blocking": false,
+          "present_in_reference": true
+        },
+        {
+          "text": "B.",
+          "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+          "blocking": false,
+          "present_in_reference": true
+        },
+        {
+          "text": "√2a.",
+          "reason": "MATH_TOKEN_DISAGREEMENT",
+          "blocking": false,
+          "present_in_reference": true
+        },
+        {
+          "text": "C.2a.",
+          "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+          "blocking": false,
+          "present_in_reference": true
+        }
+      ],
+      "blocking_flags": 6,
+      "blocking_flags_that_were_false_alarms": 5,
+      "unflagged_statement_differences": [],
+      "unflagged_math_differences": [],
+      "verdict": "NOT_A_FALSE_REJECTION_FACT_MISSING"
+    },
+    {
+      "case_id": "vmmu_r254",
+      "partition": "frozen_external_evaluation",
+      "all_critical_facts_recovered": false,
+      "blocking_reasons": [
+        "DIAGRAM_FACTS_UNVERIFIED",
+        "LAYOUT_STRUCTURE_SUSPECTED",
+        "UNCERTAIN_SPANS"
+      ],
+      "diagram_classification": "DIAGRAM_HAS_MEASUREMENTS",
+      "agent_diagram_reading": "REFERENCE_FIGURE_ONLY_ALL_PREMISES_IN_TEXT",
+      "flagged_spans": [
+        {
+          "text": "ABC.A##€©#",
+          "reason": "NOT_IN_LEXICON",
+          "blocking": true,
+          "present_in_reference": false
+        },
+        {
+          "text": "AA=",
+          "reason": "MATH_TOKEN_DISAGREEMENT",
+          "blocking": true,
+          "present_in_reference": false
+        },
+        {
+          "text": "2√13a",
+          "reason": "RADICAL_DISAGREEMENT",
+          "blocking": true,
+          "present_in_reference": true
+        },
+        {
+          "text": "C",
+          "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+          "blocking": true,
+          "present_in_reference": true
+        },
+        {
+          "text": "27√13a3/2",
+          "reason": "FRACTION_STRUCTURE_LOSS",
+          "blocking": true,
+          "present_in_reference": false
+        }
+      ],
+      "blocking_flags": 5,
+      "blocking_flags_that_were_false_alarms": 2,
+      "unflagged_statement_differences": [
+        {
+          "op": "replace",
+          "reference": "A'B'C'",
+          "ocr": "A##€©#"
+        },
+        {
+          "op": "delete",
+          "reference": "A'ABC theo a bằng",
+          "ocr": ""
+        }
+      ],
+      "unflagged_math_differences": [
+        {
+          "op": "replace",
+          "reference": "A'B'C'",
+          "ocr": "A##€©#"
+        },
+        {
+          "op": "delete",
+          "reference": "A'ABC theo a bằng",
+          "ocr": ""
+        }
+      ],
+      "verdict": "NOT_A_FALSE_REJECTION_FACT_MISSING"
+    },
+    {
+      "case_id": "vmmu_r256",
+      "partition": "frozen_external_evaluation",
+      "all_critical_facts_recovered": false,
+      "blocking_reasons": [
+        "DIAGRAM_FACTS_UNVERIFIED",
+        "LAYOUT_STRUCTURE_SUSPECTED",
+        "UNCERTAIN_SPANS"
+      ],
+      "diagram_classification": "DIAGRAM_REFERENCED_BY_TEXT",
+      "agent_diagram_reading": "REFERENCE_FIGURE_ONLY_ALL_PREMISES_IN_TEXT",
+      "flagged_spans": [
+        {
+          "text": "S.ABCD",
+          "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+          "blocking": true,
+          "present_in_reference": true
+        },
+        {
+          "text": "a",
+          "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+          "blocking": true,
+          "present_in_reference": true
+        },
+        {
+          "text": "120°",
+          "reason": "SHARED_CORRUPTION_PATTERN",
+          "blocking": true,
+          "present_in_reference": true
+        },
+        {
+          "text": "√3a/4",
+          "reason": "FRACTION_STRUCTURE_LOSS",
+          "blocking": true,
+          "present_in_reference": true
+        },
+        {
+          "text": "7",
+          "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+          "blocking": true,
+          "present_in_reference": true
+        }
+      ],
+      "blocking_flags": 5,
+      "blocking_flags_that_were_false_alarms": 5,
+      "unflagged_statement_differences": [
+        {
+          "op": "replace",
+          "reference": "∠BAD=",
+          "ocr": "BAD="
+        },
+        {
+          "op": "replace",
+          "reference": "⊥(",
+          "ocr": "1("
+        }
+      ],
+      "unflagged_math_differences": [
+        {
+          "op": "replace",
+          "reference": "∠BAD=",
+          "ocr": "BAD="
+        },
+        {
+          "op": "replace",
+          "reference": "⊥(",
+          "ocr": "1("
+        }
+      ],
+      "verdict": "NOT_A_FALSE_REJECTION_FACT_MISSING"
+    },
+    {
+      "case_id": "vmmu_r258",
+      "partition": "frozen_external_evaluation",
+      "all_critical_facts_recovered": true,
+      "blocking_reasons": [
+        "DIAGRAM_FACTS_UNVERIFIED",
+        "UNCERTAIN_SPANS"
+      ],
+      "diagram_classification": "DIAGRAM_REFERENCED_BY_TEXT",
+      "agent_diagram_reading": "REFERENCE_FIGURE_ONLY_ALL_PREMISES_IN_TEXT",
+      "flagged_spans": [
+        {
+          "text": "=",
+          "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+          "blocking": true,
+          "present_in_reference": true
+        },
+        {
+          "text": "(SBA)",
+          "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+          "blocking": true,
+          "present_in_reference": true
+        },
+        {
+          "text": "D.V2.",
+          "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+          "blocking": true,
+          "present_in_reference": false
+        }
+      ],
+      "blocking_flags": 3,
+      "blocking_flags_that_were_false_alarms": 2,
+      "unflagged_statement_differences": [],
+      "unflagged_math_differences": [],
+      "verdict": "HOLD_WITH_GENUINE_FLAGGED_ERRORS"
+    },
+    {
+      "case_id": "vmmu_r266",
+      "partition": "frozen_external_evaluation",
+      "all_critical_facts_recovered": true,
+      "blocking_reasons": [
+        "UNCERTAIN_SPANS"
+      ],
+      "diagram_classification": "DIAGRAM_LABELS_ONLY_CONSISTENT",
+      "agent_diagram_reading": "REFERENCE_FIGURE_ONLY_ALL_PREMISES_IN_TEXT",
+      "flagged_spans": [
+        {
+          "text": "=",
+          "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+          "blocking": true,
+          "present_in_reference": true
+        },
+        {
+          "text": "3,",
+          "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+          "blocking": true,
+          "present_in_reference": true
+        },
+        {
+          "text": "=",
+          "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+          "blocking": true,
+          "present_in_reference": true
+        }
+      ],
+      "blocking_flags": 3,
+      "blocking_flags_that_were_false_alarms": 3,
+      "unflagged_statement_differences": [],
+      "unflagged_math_differences": [],
+      "verdict": "HOLD_WITH_FLAGGED_SPANS_ALL_FALSE_ALARMS"
+    },
+    {
+      "case_id": "vmmu_r273",
+      "partition": "frozen_external_evaluation",
+      "all_critical_facts_recovered": true,
+      "blocking_reasons": [
+        "DIAGRAM_FACTS_UNVERIFIED",
+        "UNCERTAIN_SPANS"
+      ],
+      "diagram_classification": "DIAGRAM_HAS_MEASUREMENTS",
+      "agent_diagram_reading": "REFERENCE_FIGURE_ONLY_ALL_PREMISES_IN_TEXT",
+      "flagged_spans": [
+        {
+          "text": "a√3,",
+          "reason": "RADICAL_DISAGREEMENT",
+          "blocking": true,
+          "present_in_reference": true
+        },
+        {
+          "text": "2a√3.",
+          "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+          "blocking": true,
+          "present_in_reference": true
+        },
+        {
+          "text": "A.a3√3.",
+          "reason": "RADICAL_DISAGREEMENT",
+          "blocking": false,
+          "present_in_reference": false
+        },
+        {
+          "text": "C.3a³.",
+          "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+          "blocking": false,
+          "present_in_reference": true
+        },
+        {
+          "text": "a3.",
+          "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+          "blocking": false,
+          "present_in_reference": false
+        }
+      ],
+      "blocking_flags": 2,
+      "blocking_flags_that_were_false_alarms": 2,
+      "unflagged_statement_differences": [],
+      "unflagged_math_differences": [],
+      "verdict": "HOLD_WITH_FLAGGED_SPANS_ALL_FALSE_ALARMS"
+    },
+    {
+      "case_id": "vmmu_r277",
+      "partition": "frozen_external_evaluation",
+      "all_critical_facts_recovered": true,
+      "blocking_reasons": [
+        "UNCERTAIN_SPANS"
+      ],
+      "diagram_classification": "DIAGRAM_LABELS_ONLY_CONSISTENT",
+      "agent_diagram_reading": "REFERENCE_FIGURE_ONLY_ALL_PREMISES_IN_TEXT",
+      "flagged_spans": [
+        {
+          "text": "=",
+          "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+          "blocking": true,
+          "present_in_reference": true
+        },
+        {
+          "text": "2a,",
+          "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+          "blocking": true,
+          "present_in_reference": true
+        },
+        {
+          "text": "lần",
+          "reason": "NOT_IN_LEXICON",
+          "blocking": true,
+          "present_in_reference": true
+        },
+        {
+          "text": "AB,",
+          "reason": "MATH_TOKEN_DISAGREEMENT",
+          "blocking": true,
+          "present_in_reference": true
+        },
+        {
+          "text": "BC,",
+          "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+          "blocking": true,
+          "present_in_reference": true
+        },
+        {
+          "text": "16a³.",
+          "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+          "blocking": false,
+          "present_in_reference": true
+        },
+        {
+          "text": "4a³.",
+          "reason": "PRIME_DISAGREEMENT",
+          "blocking": false,
+          "present_in_reference": true
+        },
+        {
+          "text": "8a3.",
+          "reason": "PRIME_DISAGREEMENT",
+          "blocking": false,
+          "present_in_reference": false
+        },
+        {
+          "text": "D.12a³/3",
+          "reason": "FRACTION_STRUCTURE_LOSS",
+          "blocking": false,
+          "present_in_reference": false
+        }
+      ],
+      "blocking_flags": 5,
+      "blocking_flags_that_were_false_alarms": 5,
+      "unflagged_statement_differences": [],
+      "unflagged_math_differences": [],
+      "verdict": "HOLD_WITH_FLAGGED_SPANS_ALL_FALSE_ALARMS"
+    },
+    {
+      "case_id": "vmmu_r295",
+      "partition": "frozen_external_evaluation",
+      "all_critical_facts_recovered": true,
+      "blocking_reasons": [
+        "DIAGRAM_FACTS_UNVERIFIED",
+        "UNCERTAIN_SPANS"
+      ],
+      "diagram_classification": "DIAGRAM_REFERENCED_BY_TEXT",
+      "agent_diagram_reading": "REFERENCE_FIGURE_ONLY_ALL_PREMISES_IN_TEXT",
+      "flagged_spans": [
+        {
+          "text": "ABCD.A'B'C'D'có",
+          "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+          "blocking": true,
+          "present_in_reference": true
+        },
+        {
+          "text": "√6(",
+          "reason": "RADICAL_DISAGREEMENT",
+          "blocking": true,
+          "present_in_reference": true
+        },
+        {
+          "text": "CA'và",
+          "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+          "blocking": true,
+          "present_in_reference": true
+        },
+        {
+          "text": "C.",
+          "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+          "blocking": false,
+          "present_in_reference": true
+        }
+      ],
+      "blocking_flags": 3,
+      "blocking_flags_that_were_false_alarms": 3,
+      "unflagged_statement_differences": [],
+      "unflagged_math_differences": [],
+      "verdict": "HOLD_WITH_FLAGGED_SPANS_ALL_FALSE_ALARMS"
+    },
+    {
+      "case_id": "vmmu_r298",
+      "partition": "frozen_external_evaluation",
+      "all_critical_facts_recovered": true,
+      "blocking_reasons": [
+        "DIAGRAM_FACTS_UNVERIFIED",
+        "UNCERTAIN_SPANS"
+      ],
+      "diagram_classification": "DIAGRAM_REFERENCED_BY_TEXT",
+      "agent_diagram_reading": "REFERENCE_FIGURE_ONLY_ALL_PREMISES_IN_TEXT",
+      "flagged_spans": [
+        {
+          "text": "BC'",
+          "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+          "blocking": true,
+          "present_in_reference": true
+        },
+        {
+          "text": "60°",
+          "reason": "DEGREE_SYMBOL_DISAGREEMENT",
+          "blocking": true,
+          "present_in_reference": true
+        },
+        {
+          "text": "=",
+          "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+          "blocking": false,
+          "present_in_reference": true
+        },
+        {
+          "text": "V=2√6a3.",
+          "reason": "DEGREE_SYMBOL_DISAGREEMENT",
+          "blocking": false,
+          "present_in_reference": false
+        },
+        {
+          "text": "V",
+          "reason": "MATH_TOKEN_DISAGREEMENT",
+          "blocking": false,
+          "present_in_reference": true
+        },
+        {
+          "text": "=",
+          "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+          "blocking": false,
+          "present_in_reference": true
+        },
+        {
+          "text": "2√3a³.",
+          "reason": "RADICAL_DISAGREEMENT",
+          "blocking": false,
+          "present_in_reference": true
+        }
+      ],
+      "blocking_flags": 2,
+      "blocking_flags_that_were_false_alarms": 2,
+      "unflagged_statement_differences": [],
+      "unflagged_math_differences": [],
+      "verdict": "HOLD_WITH_FLAGGED_SPANS_ALL_FALSE_ALARMS"
+    },
+    {
+      "case_id": "vmmu_r375",
+      "partition": "frozen_external_evaluation",
+      "all_critical_facts_recovered": false,
+      "blocking_reasons": [
+        "DIAGRAM_FACTS_UNVERIFIED"
+      ],
+      "diagram_classification": "DIAGRAM_REFERENCED_BY_TEXT",
+      "agent_diagram_reading": "REFERENCE_FIGURE_ONLY_ALL_PREMISES_IN_TEXT",
+      "flagged_spans": [
+        {
+          "text": "A.√21",
+          "reason": "RADICAL_DISAGREEMENT",
+          "blocking": false,
+          "present_in_reference": true
+        },
+        {
+          "text": "B.1",
+          "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+          "blocking": false,
+          "present_in_reference": true
+        },
+        {
+          "text": "C.√17",
+          "reason": "RADICAL_DISAGREEMENT",
+          "blocking": false,
+          "present_in_reference": true
+        }
+      ],
+      "blocking_flags": 0,
+      "blocking_flags_that_were_false_alarms": 0,
+      "unflagged_statement_differences": [
+        {
+          "op": "replace",
+          "reference": "S",
+          "ocr": "s"
+        }
+      ],
+      "unflagged_math_differences": [
+        {
+          "op": "replace",
+          "reference": "S",
+          "ocr": "s"
+        }
+      ],
+      "verdict": "NOT_A_FALSE_REJECTION_FACT_MISSING"
+    },
+    {
+      "case_id": "vmmu_r460",
+      "partition": "frozen_external_evaluation",
+      "all_critical_facts_recovered": false,
+      "blocking_reasons": [
+        "DIAGRAM_FACTS_UNVERIFIED"
+      ],
+      "diagram_classification": "DIAGRAM_HAS_MEASUREMENTS",
+      "agent_diagram_reading": "REFERENCE_FIGURE_ONLY_ALL_PREMISES_IN_TEXT",
+      "flagged_spans": [
+        {
+          "text": "A.2a3√2/a³√2",
+          "reason": "FRACTION_STRUCTURE_LOSS",
+          "blocking": false,
+          "present_in_reference": false
+        },
+        {
+          "text": "a³√2.",
+          "reason": "RADICAL_DISAGREEMENT",
+          "blocking": false,
+          "present_in_reference": true
+        }
+      ],
+      "blocking_flags": 0,
+      "blocking_flags_that_were_false_alarms": 0,
+      "unflagged_statement_differences": [
+        {
+          "op": "delete",
+          "reference": "ở",
+          "ocr": ""
+        },
+        {
+          "op": "replace",
+          "reference": "bằng",
+          "ocr": "bán"
+        }
+      ],
+      "unflagged_math_differences": [],
+      "verdict": "NOT_A_FALSE_REJECTION_FACT_MISSING"
+    },
+    {
+      "case_id": "vmmu_r463",
+      "partition": "frozen_external_evaluation",
+      "all_critical_facts_recovered": true,
+      "blocking_reasons": [
+        "UNCERTAIN_SPANS"
+      ],
+      "diagram_classification": "DIAGRAM_LABELS_ONLY_CONSISTENT",
+      "agent_diagram_reading": "REFERENCE_FIGURE_ONLY_ALL_PREMISES_IN_TEXT",
+      "flagged_spans": [
+        {
+          "text": "ABCDA'B'C'D'",
+          "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+          "blocking": true,
+          "present_in_reference": true
+        },
+        {
+          "text": "°,",
+          "reason": "AMBIGUOUS_DIACRITIC_RESTORATION",
+          "blocking": true,
+          "present_in_reference": true
+        },
+        {
+          "text": "2a",
+          "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+          "blocking": true,
+          "present_in_reference": true
+        },
+        {
+          "text": "AC'",
+          "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+          "blocking": true,
+          "present_in_reference": true
+        },
+        {
+          "text": "A.2√3a3/C.4a³",
+          "reason": "FRACTION_STRUCTURE_LOSS",
+          "blocking": false,
+          "present_in_reference": false
+        },
+        {
+          "text": "B.6a³/D.4√3a3",
+          "reason": "FRACTION_STRUCTURE_LOSS",
+          "blocking": false,
+          "present_in_reference": false
+        }
+      ],
+      "blocking_flags": 4,
+      "blocking_flags_that_were_false_alarms": 4,
+      "unflagged_statement_differences": [],
+      "unflagged_math_differences": [],
+      "verdict": "HOLD_WITH_FLAGGED_SPANS_ALL_FALSE_ALARMS"
+    },
+    {
+      "case_id": "vmmu_r475",
+      "partition": "frozen_external_evaluation",
+      "all_critical_facts_recovered": true,
+      "blocking_reasons": [
+        "DIAGRAM_FACTS_UNVERIFIED",
+        "UNCERTAIN_SPANS"
+      ],
+      "diagram_classification": "DIAGRAM_REFERENCED_BY_TEXT",
+      "agent_diagram_reading": "REFERENCE_FIGURE_ONLY_ALL_PREMISES_IN_TEXT",
+      "flagged_spans": [
+        {
+          "text": "thả",
+          "reason": "AMBIGUOUS_DIACRITIC_RESTORATION",
+          "blocking": true,
+          "present_in_reference": true
+        }
+      ],
+      "blocking_flags": 1,
+      "blocking_flags_that_were_false_alarms": 1,
+      "unflagged_statement_differences": [
+        {
+          "op": "replace",
+          "reference": "bàn",
+          "ocr": "bán"
+        },
+        {
+          "op": "replace",
+          "reference": "cốc",
+          "ocr": "các"
+        },
+        {
+          "op": "replace",
+          "reference": "viên",
+          "ocr": "viện"
+        },
+        {
+          "op": "replace",
+          "reference": "thủy",
+          "ocr": "thay"
+        },
+        {
+          "op": "replace",
+          "reference": "viên",
+          "ocr": "viện"
+        },
+        {
+          "op": "replace",
+          "reference": "đương",
+          "ocr": "đường"
+        },
+        {
+          "op": "replace",
+          "reference": "cốc",
+          "ocr": "các"
+        },
+        {
+          "op": "replace",
+          "reference": "cốc",
+          "ocr": "các"
+        },
+        {
+          "op": "replace",
+          "reference": "viên",
+          "ocr": "viện"
+        },
+        {
+          "op": "replace",
+          "reference": "thấy",
+          "ocr": "thay"
+        },
+        {
+          "op": "replace",
+          "reference": "cốc",
+          "ocr": "các"
+        },
+        {
+          "op": "replace",
+          "reference": "cốc",
+          "ocr": "các"
+        }
+      ],
+      "unflagged_math_differences": [],
+      "verdict": "HOLD_WITH_FLAGGED_SPANS_ALL_FALSE_ALARMS"
+    },
+    {
+      "case_id": "vmmu_r491",
+      "partition": "frozen_external_evaluation",
+      "all_critical_facts_recovered": true,
+      "blocking_reasons": [
+        "DIAGRAM_FACTS_UNVERIFIED",
+        "UNCERTAIN_SPANS"
+      ],
+      "diagram_classification": "DIAGRAM_REFERENCED_BY_TEXT",
+      "agent_diagram_reading": "REFERENCE_FIGURE_ONLY_ALL_PREMISES_IN_TEXT",
+      "flagged_spans": [
+        {
+          "text": "A,",
+          "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+          "blocking": true,
+          "present_in_reference": true
+        },
+        {
+          "text": "=",
+          "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+          "blocking": true,
+          "present_in_reference": true
+        },
+        {
+          "text": "I",
+          "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+          "blocking": true,
+          "present_in_reference": true
+        },
+        {
+          "text": "2/3",
+          "reason": "FRACTION_STRUCTURE_LOSS",
+          "blocking": false,
+          "present_in_reference": true
+        },
+        {
+          "text": "2√5",
+          "reason": "MATH_TOKEN_DISAGREEMENT",
+          "blocking": false,
+          "present_in_reference": true
+        }
+      ],
+      "blocking_flags": 3,
+      "blocking_flags_that_were_false_alarms": 3,
+      "unflagged_statement_differences": [],
+      "unflagged_math_differences": [],
+      "verdict": "HOLD_WITH_FLAGGED_SPANS_ALL_FALSE_ALARMS"
+    },
+    {
+      "case_id": "vmmu_r492",
+      "partition": "frozen_external_evaluation",
+      "all_critical_facts_recovered": true,
+      "blocking_reasons": [
+        "DIAGRAM_FACTS_UNVERIFIED",
+        "UNCERTAIN_SPANS"
+      ],
+      "diagram_classification": "DIAGRAM_REFERENCED_BY_TEXT",
+      "agent_diagram_reading": "REFERENCE_FIGURE_ONLY_ALL_PREMISES_IN_TEXT",
+      "flagged_spans": [
+        {
+          "text": "√15a",
+          "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+          "blocking": true,
+          "present_in_reference": true
+        }
+      ],
+      "blocking_flags": 1,
+      "blocking_flags_that_were_false_alarms": 1,
+      "unflagged_statement_differences": [],
+      "unflagged_math_differences": [],
+      "verdict": "HOLD_WITH_FLAGGED_SPANS_ALL_FALSE_ALARMS"
+    },
+    {
+      "case_id": "vmmu_r498",
+      "partition": "frozen_external_evaluation",
+      "all_critical_facts_recovered": false,
+      "blocking_reasons": [
+        "DIAGRAM_FACTS_UNVERIFIED",
+        "UNCERTAIN_SPANS"
+      ],
+      "diagram_classification": "DIAGRAM_HAS_MEASUREMENTS",
+      "agent_diagram_reading": "REFERENCE_FIGURE_ONLY_ALL_PREMISES_IN_TEXT",
+      "flagged_spans": [
+        {
+          "text": "ABCD.A##2#2#",
+          "reason": "NOT_IN_LEXICON",
+          "blocking": true,
+          "present_in_reference": false
+        },
+        {
+          "text": "a√3.",
+          "reason": "RADICAL_DISAGREEMENT",
+          "blocking": true,
+          "present_in_reference": true
+        },
+        {
+          "text": "(ABCð",
+          "reason": "NOT_IN_LEXICON",
+          "blocking": true,
+          "present_in_reference": false
+        },
+        {
+          "text": "30°.",
+          "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+          "blocking": false,
+          "present_in_reference": true
+        },
+        {
+          "text": "C.",
+          "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+          "blocking": false,
+          "present_in_reference": true
+        },
+        {
+          "text": "60°.",
+          "reason": "DEGREE_SYMBOL_DISAGREEMENT",
+          "blocking": false,
+          "present_in_reference": true
+        },
+        {
+          "text": "√3/2",
+          "reason": "FRACTION_STRUCTURE_LOSS",
+          "blocking": false,
+          "present_in_reference": true
+        }
+      ],
+      "blocking_flags": 3,
+      "blocking_flags_that_were_false_alarms": 1,
+      "unflagged_statement_differences": [
+        {
+          "op": "replace",
+          "reference": "A'B'C'D'",
+          "ocr": "A##2#2#"
+        }
+      ],
+      "unflagged_math_differences": [
+        {
+          "op": "replace",
+          "reference": "A'B'C'D'",
+          "ocr": "A##2#2#"
+        }
+      ],
+      "verdict": "NOT_A_FALSE_REJECTION_FACT_MISSING"
+    },
+    {
+      "case_id": "vmmu_r520",
+      "partition": "frozen_external_evaluation",
+      "all_critical_facts_recovered": true,
+      "blocking_reasons": [
+        "DIAGRAM_FACTS_UNVERIFIED",
+        "UNCERTAIN_SPANS"
+      ],
+      "diagram_classification": "DIAGRAM_REFERENCED_BY_TEXT",
+      "agent_diagram_reading": "REFERENCE_FIGURE_ONLY_ALL_PREMISES_IN_TEXT",
+      "flagged_spans": [
+        {
+          "text": "B,SA",
+          "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+          "blocking": true,
+          "present_in_reference": true
+        },
+        {
+          "text": "=",
+          "reason": "MATH_TOKEN_DISAGREEMENT",
+          "blocking": true,
+          "present_in_reference": true
+        },
+        {
+          "text": "(SBC)",
+          "reason": "MATH_TOKEN_DISAGREEMENT",
+          "blocking": true,
+          "present_in_reference": true
+        },
+        {
+          "text": "(ABC)",
+          "reason": "MATH_TOKEN_DISAGREEMENT",
+          "blocking": true,
+          "present_in_reference": true
+        },
+        {
+          "text": "60.",
+          "reason": "MATH_TOKEN_DISAGREEMENT",
+          "blocking": false,
+          "present_in_reference": true
+        },
+        {
+          "text": "308.",
+          "reason": "DEGREE_SYMBOL_DISAGREEMENT",
+          "blocking": false,
+          "present_in_reference": false
+        },
+        {
+          "text": "908.",
+          "reason": "DEGREE_SYMBOL_DISAGREEMENT",
+          "blocking": false,
+          "present_in_reference": false
+        },
+        {
+          "text": "458.",
+          "reason": "DEGREE_SYMBOL_DISAGREEMENT",
+          "blocking": false,
+          "present_in_reference": false
+        }
+      ],
+      "blocking_flags": 4,
+      "blocking_flags_that_were_false_alarms": 4,
+      "unflagged_statement_differences": [
+        {
+          "op": "insert",
+          "reference": "",
+          "ocr": "( SBC) và( ABC) bằng"
+        },
+        {
+          "op": "replace",
+          "reference": "phẳng( SBC) và( ABC) bằng",
+          "ocr": "phẳng"
+        }
+      ],
+      "unflagged_math_differences": [
+        {
+          "op": "insert",
+          "reference": "",
+          "ocr": "( SBC) và( ABC) bằng"
+        },
+        {
+          "op": "replace",
+          "reference": "phẳng( SBC) và( ABC) bằng",
+          "ocr": "phẳng"
+        }
+      ],
+      "verdict": "CORRECT_HOLD_UNFLAGGED_MATH_DIFFERENCES"
+    },
+    {
+      "case_id": "vmmu_r537",
+      "partition": "frozen_external_evaluation",
+      "all_critical_facts_recovered": false,
+      "blocking_reasons": [
+        "DIAGRAM_FACTS_UNVERIFIED",
+        "UNCERTAIN_SPANS"
+      ],
+      "diagram_classification": "DIAGRAM_REFERENCED_BY_TEXT",
+      "agent_diagram_reading": "REFERENCE_FIGURE_ONLY_ALL_PREMISES_IN_TEXT",
+      "flagged_spans": [
+        {
+          "text": "S.ABCD",
+          "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+          "blocking": true,
+          "present_in_reference": true
+        },
+        {
+          "text": "a",
+          "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+          "blocking": true,
+          "present_in_reference": true
+        },
+        {
+          "text": "a”",
+          "reason": "AMBIGUOUS_DIACRITIC_RESTORATION",
+          "blocking": true,
+          "present_in_reference": false
+        },
+        {
+          "text": "a√6/3",
+          "reason": "FRACTION_STRUCTURE_LOSS",
+          "blocking": false,
+          "present_in_reference": true
+        },
+        {
+          "text": "a√6.",
+          "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+          "blocking": false,
+          "present_in_reference": true
+        }
+      ],
+      "blocking_flags": 3,
+      "blocking_flags_that_were_false_alarms": 2,
+      "unflagged_statement_differences": [],
+      "unflagged_math_differences": [],
+      "verdict": "NOT_A_FALSE_REJECTION_FACT_MISSING"
+    },
+    {
+      "case_id": "vmmu_r538",
+      "partition": "frozen_external_evaluation",
+      "all_critical_facts_recovered": true,
+      "blocking_reasons": [
+        "DIAGRAM_FACTS_UNVERIFIED",
+        "LAYOUT_STRUCTURE_SUSPECTED",
+        "UNCERTAIN_SPANS"
+      ],
+      "diagram_classification": "DIAGRAM_REFERENCED_BY_TEXT",
+      "agent_diagram_reading": "REFERENCE_FIGURE_ONLY_ALL_PREMISES_IN_TEXT",
+      "flagged_spans": [
+        {
+          "text": "a",
+          "reason": "SAME_FAMILY_AGREEMENT_ONLY",
+          "blocking": true,
+          "present_in_reference": true
+        },
+        {
+          "text": "2a/3",
+          "reason": "FRACTION_STRUCTURE_LOSS",
+          "blocking": true,
+          "present_in_reference": true
+        },
+        {
+          "text": "A.90°/C.30°",
+          "reason": "FRACTION_STRUCTURE_LOSS",
+          "blocking": false,
+          "present_in_reference": false
+        },
+        {
+          "text": "B.45°/D.60°",
+          "reason": "FRACTION_STRUCTURE_LOSS",
+          "blocking": false,
+          "present_in_reference": false
+        }
+      ],
+      "blocking_flags": 2,
+      "blocking_flags_that_were_false_alarms": 2,
+      "unflagged_statement_differences": [],
+      "unflagged_math_differences": [],
+      "verdict": "HOLD_WITH_FLAGGED_SPANS_ALL_FALSE_ALARMS"
+    }
+  ]
+}
