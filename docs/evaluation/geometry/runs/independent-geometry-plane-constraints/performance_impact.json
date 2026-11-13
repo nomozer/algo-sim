@@ -50,6 +50,43 @@
     "median_after": 39.835599996877136,
     "note": "before refuses most of these texts at parse time (no planner/engine work), so after > before is the cost of now building the section"
   },
-  "browser": "scene3d_browser_e2e.json (measured separately)",
+  "browser": {
+    "first_model_ms": [
+      1052,
+      537,
+      414,
+      518,
+      675,
+      558,
+      571,
+      557,
+      554,
+      579,
+      543,
+      428,
+      483,
+      469
+    ],
+    "step_ms_median": 118.05000000074506,
+    "step_ms_max": 255,
+    "orbit_ms": [
+      307.5,
+      231.20000000298023,
+      166.29999999701977,
+      138.39999999850988,
+      300.19999999552965,
+      257.6000000014901,
+      284.5,
+      195.69999999552965,
+      290.3999999985099,
+      225.5,
+      160.70000000298023,
+      115.70000000298023,
+      180.10000000149012,
+      243.69999999552965
+    ],
+    "source": "browser_performance_profile.json (headless host)",
+    "previous_run_reference": "verified-section-intersection-dihedral-local: first model 380–593 ms, step median 98 ms, max 181 ms"
+  },
   "physical_low_end": "PHYSICAL_LOW_END_NOT_MEASURED"
 }
