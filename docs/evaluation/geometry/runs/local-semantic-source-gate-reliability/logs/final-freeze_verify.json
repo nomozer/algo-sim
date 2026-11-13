@@ -1,0 +1,40 @@
+{
+  "name": "freeze_verify",
+  "command": "D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe backend/scripts/freeze_evaluation_candidate.py --verify",
+  "argv": [
+    "D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe",
+    "backend/scripts/freeze_evaluation_candidate.py",
+    "--verify"
+  ],
+  "cwd": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\local-first-geometry-understanding",
+  "started_at_utc": "2026-11-13T05:13:52.613300+00:00",
+  "start_snapshot": {
+    "head_commit": "8e727333d8234f5a1ccc65f96d30d7ede32fdee9",
+    "product_paths_sha256": "53f6f53c11fc292701c73bb323e578f3920ab649acc9d0caee92be08862ad922",
+    "product_path_count": 332,
+    "hash_policy": "tracked backend/app + frontend/src, LF normalized; includes tests",
+    "working_product_source_sha256": "8bb7478441eb95924c0ae8682447138da2c9b3456b2a8144a2b44768b73a89da",
+    "working_product_source_count": 192,
+    "working_source_policy": "all working backend/app + frontend/src including untracked; skip pycache and freeze TEST_ONLY_GLOBS"
+  },
+  "ended_at_utc": "2026-11-13T05:13:55.040339+00:00",
+  "duration_seconds": 2.219,
+  "exit_code": 0,
+  "raw_output_sha256": "c9a1048419a9fbc75b5f4a4cdafbca8f761ed9ce1782f3fe7ce10b376ec57925",
+  "raw_output_bytes": 93,
+  "raw_output_retention": "ignored local .superpowers only; never staged",
+  "end_snapshot": {
+    "head_commit": "8e727333d8234f5a1ccc65f96d30d7ede32fdee9",
+    "product_paths_sha256": "53f6f53c11fc292701c73bb323e578f3920ab649acc9d0caee92be08862ad922",
+    "product_path_count": 332,
+    "hash_policy": "tracked backend/app + frontend/src, LF normalized; includes tests",
+    "working_product_source_sha256": "8bb7478441eb95924c0ae8682447138da2c9b3456b2a8144a2b44768b73a89da",
+    "working_product_source_count": 192,
+    "working_source_policy": "all working backend/app + frontend/src including untracked; skip pycache and freeze TEST_ONLY_GLOBS"
+  },
+  "summary_lines": [
+    "Candidate khớp bản đã đóng băng (mã sản phẩm: 115 file, 1cc979f559a632c3…)."
+  ],
+  "source_unchanged_during_command": true,
+  "verdict": "PASS"
+}

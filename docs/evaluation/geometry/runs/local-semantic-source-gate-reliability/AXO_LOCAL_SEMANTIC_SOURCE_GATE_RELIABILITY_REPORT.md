@@ -51,8 +51,8 @@ Nhãn kết luận: **VF** = VERIFIED FACT, **INF** = INFERENCE, **HYP** = HYPOT
 26. **Bao nhiêu ảnh được local OCR tự động chấp nhận?** *(VF)* 0/25, và 0/2 ở mẫu fresh.
 27. **Bao nhiêu ảnh Image-to-3D được giải đúng?** *(VF)* 4/25 sau khi xác nhận có mô phỏng (trước đó 3), 0/2 ở mẫu fresh, 0 trả sai.
 28. **Hiệu năng text và image thay đổi thế nào?** *(VF)* Parser: 18/25 câu không đổi (tỉ lệ 0,94–1,08). 7 câu nay đi xa hơn (tới Stage 8) tốn hơn 1,6–11 lần nhưng vẫn ≤ 15 ms; tổng 95 → 134 ms trên 25 câu ([parser_latency_before_after.json](parser_latency_before_after.json)). Prepare ảnh: trung vị hai phiên đo khác nhau là 3,1 s → 1,9–2,3 s; đây không phải so sánh có kiểm soát. Bộ nhớ: NM, vì không thêm tiến trình hay model.
-29. **Có regression ở Planner, Kernel hoặc Scene3D không?** Xem §6. *(VF khi các cổng ở §6 đạt)*
-30. **Full regression có hoàn tất không?** Xem §6.
+29. **Có regression ở Planner, Kernel hoặc Scene3D không?** *(VF)* Không. Toàn bộ backend pytest (gồm các test planner, kernel, oracle và cache identity) và vitest (gồm Scene3D) đều đạt; demo replay và crash audit (6/6) cũng đạt (§6).
+30. **Full regression có hoàn tất không?** *(VF)* Có. Cả 8 cổng đã chạy trên cây sạch, mã nguồn không đổi trong suốt lượt chạy. 7 cổng đạt; `publication_head` là BLOCKED với 97 finding chờ Owner, nên verdict của bộ chạy là `INCOMPLETE_OR_FAIL` và verdict tổng là **BLOCKED**.
 31. **97 finding publication đã được owner duyệt chưa?** *(BL)* Chưa. Agent không ghi phê duyệt, không thêm ngoại lệ, không viết lại lịch sử ([publication_owner_review_status.json](publication_owner_review_status.json)).
 32. **Live Vision đã được gọi chưa?** *(VF)* Chưa; 0 lượt gọi provider.
 33. **Candidate đủ điều kiện pilot ở mức nào?** *(INF)* Dùng được cho demo có người hướng dẫn trên văn bản, với các họ đa diện đã hỗ trợ, nhờ 0 trả sai trên mọi tập đã đo. Chưa dùng được cho học sinh tự học: ảnh luôn cần xác nhận, phủ đề thật còn thấp (2/2 bài fresh không được phục vụ), và publication đang bị chặn.
@@ -84,7 +84,20 @@ Nhãn kết luận: **VF** = VERIFIED FACT, **INF** = INFERENCE, **HYP** = HYPOT
 
 ## 6. Regression
 
-Kết quả nằm ở [full_regression_summary.json](full_regression_summary.json); bảng dưới được điền sau khi chạy.
+Chi tiết ở [full_regression_summary.json](full_regression_summary.json). Lượt chạy trên cây sạch tại `8e727333d`, `ALLOW_LIVE_AI=0`, mã nguồn không đổi trong lúc chạy.
+
+| Cổng | Kết quả |
+|---|---|
+| backend pytest | **PASS**: 14290 passed, 7 skipped, 3 deselected, 15 xfailed |
+| frontend `test:wave` | **PASS**: 139 file, 2024 test; build (tsc + vite) đạt |
+| demo replay | **PASS** |
+| crash audit | **PASS** 6/6, 0 uncaught |
+| docs IA | **PASS**: 0 link gãy, 0 lộ bí mật |
+| publication HEAD | **BLOCKED**: 97 vi phạm, đều là `pending_exception`, chờ Owner |
+| publication range `c5bb73f51..HEAD` | **PASS**: 75 file, 0 vi phạm |
+| freeze verify | **PASS**: 115 file, `1cc979f559a632c3…` |
+
+Các phép kiểm ngoài bộ chạy: trình duyệt nối/tách span đạt 2/2 viewport. Từ lần freeze trước, chỉ có 3 mẫu owner-approval PENDING được gắn lại measured_system, và vẫn giữ PENDING ([pending_template_refresh.json](pending_template_refresh.json)).
 
 ## 7. Giới hạn
 
