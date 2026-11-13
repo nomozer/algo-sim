@@ -1,0 +1,30 @@
+{
+  "run_id": "verified-section-intersection-dihedral-local",
+  "generated_at_utc": "2026-11-13T11:35:59.957987+00:00",
+  "head": "a74aa3325b61337e301e8df7b728a66f86fdc266",
+  "capabilities": {
+    "line–plane intersection (kernel intersect_line_plane: unique / parallel / contained)": "EXISTING_AND_REUSABLE",
+    "plane–plane intersection (kernel intersect_plane_plane; planner intersection_line; scene line3)": "EXISTING_BUT_NOT_CONNECTED → connected (local parser + /2 goal)",
+    "polyhedron section by a three-point plane (planner section, engine closure certificate, step-by-step face edges)": "EXISTING_BUT_NOT_CONNECTED → connected (local parser)",
+    "section by a named plane defined in a separate clause (6c/6d)": "EXISTING_AND_REUSABLE (already local)",
+    "section plane stated in a question sentence": "PARTIALLY_SUPPORTED (Source Gate refuses by design)",
+    "section of a curved solid": "EXISTING_AND_REUSABLE (not in scope here)",
+    "Scene3D section polygon and section plane rendering": "EXISTING_AND_REUSABLE",
+    "plane–plane intersection rendering (line3)": "EXISTING_AND_REUSABLE",
+    "altitude from a lateral face ⟂ base": "SCENE_RENDERING_GAP → constructed (altitude-construction/1)",
+    "coincident planes reason code": "PARTIALLY_SUPPORTED (refused as PARALLEL_PLANES)"
+  },
+  "new_kernel_primitives": 0,
+  "evidence": {
+    "before_after": {
+      "sections": 0,
+      "sections_after": 9,
+      "intersections_before": 0,
+      "intersections_after": 5
+    },
+    "invariants": {
+      "checks": 124,
+      "failed": 0
+    }
+  }
+}

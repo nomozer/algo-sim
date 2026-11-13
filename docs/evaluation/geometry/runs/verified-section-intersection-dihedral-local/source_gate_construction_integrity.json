@@ -1,0 +1,17 @@
+{
+  "run_id": "verified-section-intersection-dihedral-local",
+  "generated_at_utc": "2026-11-13T11:35:59.957987+00:00",
+  "head": "a74aa3325b61337e301e8df7b728a66f86fdc266",
+  "source_gate_changed": false,
+  "what_changed_upstream": "parser rules 7c-0/7c-1 emit facts the gate already grounds (`constrained` contains_points section, intersection_line question); the /2 bridge maps construct_intersection_line to the planner's existing intersection_line",
+  "goal_as_premise_guard": "a section plane stated inside a question sentence (\"… theo thiết diện là hình gì?\") is refused by the gate (QUESTION_CLAUSE_NOT_PREMISE); the parser leaves that form unparsed rather than loosening the guard",
+  "intersection_goal_never_a_premise": "the construct_intersection_line goal carries only the two planes; no premise mentions the line (test_intersection_goal_is_never_a_premise_and_needs_two_distinct_planes)",
+  "refusals_observed": {
+    "LIVE_AI_DISABLED": 6,
+    "UNDERDETERMINED_POINT": 1,
+    "COLLINEAR_POINTS": 1,
+    "PARALLEL_PLANES": 1,
+    "INCONSISTENT_FACTS": 1
+  },
+  "unexpected_serves": []
+}

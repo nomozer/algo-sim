@@ -1,0 +1,125 @@
+{
+  "browser": "157.0.8103.78",
+  "headless": true,
+  "backend": "measured_app loopback, HYBRID_ROUTE_MODE=local-first, ALLOW_LIVE_AI=0",
+  "synthetic_signup_status": 200,
+  "series": [
+    {
+      "cycle": 0,
+      "case": "section_pyramid",
+      "heap_mb": 19.450441360473633,
+      "canvases": 1,
+      "steps": 7,
+      "rendered": 14
+    },
+    {
+      "cycle": 0,
+      "case": "intersection_SAB_SCD",
+      "heap_mb": 20.31542205810547,
+      "canvases": 1,
+      "steps": 6,
+      "rendered": 14
+    },
+    {
+      "cycle": 1,
+      "case": "section_pyramid",
+      "heap_mb": 21.36680793762207,
+      "canvases": 1,
+      "steps": 7,
+      "rendered": 14
+    },
+    {
+      "cycle": 1,
+      "case": "intersection_SAB_SCD",
+      "heap_mb": 21.343896865844727,
+      "canvases": 1,
+      "steps": 6,
+      "rendered": 14
+    },
+    {
+      "cycle": 2,
+      "case": "section_pyramid",
+      "heap_mb": 21.114704132080078,
+      "canvases": 1,
+      "steps": 7,
+      "rendered": 14
+    },
+    {
+      "cycle": 2,
+      "case": "intersection_SAB_SCD",
+      "heap_mb": 22.540395736694336,
+      "canvases": 1,
+      "steps": 6,
+      "rendered": 14
+    },
+    {
+      "cycle": 3,
+      "case": "section_pyramid",
+      "heap_mb": 23.51130485534668,
+      "canvases": 1,
+      "steps": 7,
+      "rendered": 14
+    },
+    {
+      "cycle": 3,
+      "case": "intersection_SAB_SCD",
+      "heap_mb": 23.22930908203125,
+      "canvases": 1,
+      "steps": 6,
+      "rendered": 14
+    },
+    {
+      "cycle": 4,
+      "case": "section_pyramid",
+      "heap_mb": 24.738773345947266,
+      "canvases": 1,
+      "steps": 7,
+      "rendered": 14
+    },
+    {
+      "cycle": 4,
+      "case": "intersection_SAB_SCD",
+      "heap_mb": 24.336755752563477,
+      "canvases": 1,
+      "steps": 6,
+      "rendered": 14
+    },
+    {
+      "cycle": 5,
+      "case": "section_pyramid",
+      "heap_mb": 23.59564781188965,
+      "canvases": 1,
+      "steps": 7,
+      "rendered": 14
+    },
+    {
+      "cycle": 5,
+      "case": "intersection_SAB_SCD",
+      "heap_mb": 24.824914932250977,
+      "canvases": 1,
+      "steps": 6,
+      "rendered": 14
+    }
+  ],
+  "timeline_walk_heap_mb": [
+    23.553149223327637,
+    25.704028129577637,
+    25.97954273223877,
+    24.627760887145996
+  ],
+  "timeline_walk_growth_mb": 1.0746116638183594,
+  "method": "6 cycles × 2 problems in one signed-in page (each analysis is kept in the learner history), forced GC (--expose-gc) before each reading; plus 15 timeline walks of one problem with no new analysis",
+  "heap_mean_early_mb": 21.591451168060303,
+  "heap_mean_late_mb": 24.374022960662842,
+  "heap_growth_mb": 2.782571792602539,
+  "canvas_count_constant": true,
+  "classification": {
+    "MEMORY_LEAK": "INCONCLUSIVE",
+    "why": "heap after forced GC grew 2.78 MB over 12 signed-in analyses (history keeps every envelope by design) and the 15 timeline walks of one problem went 23.6 → 25.7 → 26.0 → 24.6 — not monotonic; canvas count constant; React/Three.js object counts are not exposed separately",
+    "not_measured_separately": [
+      "Three.js BufferGeometry/material/texture counts",
+      "event listeners",
+      "detached DOM nodes"
+    ]
+  }
+}

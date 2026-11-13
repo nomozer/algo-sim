@@ -1,0 +1,198 @@
+{
+  "run_id": "verified-section-intersection-dihedral-local",
+  "generated_at_utc": "2026-11-13T11:35:59.957987+00:00",
+  "head": "a74aa3325b61337e301e8df7b728a66f86fdc266",
+  "rule": "objects: dependencies exist and are born no later; angle constructions: named points born before the conclusion; formation steps: every depends_on object was created by an earlier step",
+  "checker": "semantic-to-scene3d-verified-simulation/tools/finalize.py::dependency_checks (witness window recorded in that run)",
+  "served_scenes": 31,
+  "violations_total": 0,
+  "rows": [
+    {
+      "probe": "angle_planes_SBC_SCD_60_not_120",
+      "objects": 14,
+      "steps": 7,
+      "violations": []
+    },
+    {
+      "probe": "angle_planes_SCD_SBC_swapped",
+      "objects": 14,
+      "steps": 7,
+      "violations": []
+    },
+    {
+      "probe": "angle_planes_renamed",
+      "objects": 14,
+      "steps": 7,
+      "violations": []
+    },
+    {
+      "probe": "angle_planes_SAB_SCD",
+      "objects": 14,
+      "steps": 7,
+      "violations": []
+    },
+    {
+      "probe": "angle_planes_SBD_SCD",
+      "objects": 14,
+      "steps": 7,
+      "violations": []
+    },
+    {
+      "probe": "angle_planes_SBC_ABCD",
+      "objects": 14,
+      "steps": 7,
+      "violations": []
+    },
+    {
+      "probe": "angle_planes_cube_A'BD_C'BD",
+      "objects": 18,
+      "steps": 8,
+      "violations": []
+    },
+    {
+      "probe": "angle_lines_SB_SD",
+      "objects": 14,
+      "steps": 7,
+      "violations": []
+    },
+    {
+      "probe": "angle_lines_skew_SB_CD",
+      "objects": 14,
+      "steps": 7,
+      "violations": []
+    },
+    {
+      "probe": "angle_lines_skew_cube",
+      "objects": 18,
+      "steps": 8,
+      "violations": []
+    },
+    {
+      "probe": "angle_line_plane_SC_ABCD",
+      "objects": 14,
+      "steps": 7,
+      "violations": []
+    },
+    {
+      "probe": "angle_tetra",
+      "objects": 9,
+      "steps": 5,
+      "violations": []
+    },
+    {
+      "probe": "section_cube_MNC'",
+      "objects": 19,
+      "steps": 14,
+      "violations": []
+    },
+    {
+      "probe": "section_pyramid_ABM",
+      "objects": 14,
+      "steps": 11,
+      "violations": []
+    },
+    {
+      "probe": "section_pyramid_area",
+      "objects": 15,
+      "steps": 12,
+      "violations": []
+    },
+    {
+      "probe": "section_cube_triangle",
+      "objects": 17,
+      "steps": 10,
+      "violations": []
+    },
+    {
+      "probe": "section_cube_hexagon",
+      "objects": 20,
+      "steps": 16,
+      "violations": []
+    },
+    {
+      "probe": "section_contains_edge",
+      "objects": 17,
+      "steps": 11,
+      "violations": []
+    },
+    {
+      "probe": "section_plane_is_face",
+      "objects": 13,
+      "steps": 10,
+      "violations": []
+    },
+    {
+      "probe": "section_through_vertex_and_edge_midpoints",
+      "objects": 15,
+      "steps": 12,
+      "violations": []
+    },
+    {
+      "probe": "section_renamed",
+      "objects": 14,
+      "steps": 11,
+      "violations": []
+    },
+    {
+      "probe": "iline_SAB_SCD",
+      "objects": 14,
+      "steps": 7,
+      "violations": []
+    },
+    {
+      "probe": "iline_SAC_SBD",
+      "objects": 14,
+      "steps": 7,
+      "violations": []
+    },
+    {
+      "probe": "iline_named_d",
+      "objects": 14,
+      "steps": 7,
+      "violations": []
+    },
+    {
+      "probe": "iline_SAD_SBC",
+      "objects": 14,
+      "steps": 7,
+      "violations": []
+    },
+    {
+      "probe": "iline_cube_A'BD_C'BD",
+      "objects": 18,
+      "steps": 8,
+      "violations": []
+    },
+    {
+      "probe": "altitude_face_perp_equilateral",
+      "objects": 12,
+      "steps": 5,
+      "violations": []
+    },
+    {
+      "probe": "altitude_face_perp_symbol",
+      "objects": 12,
+      "steps": 5,
+      "violations": []
+    },
+    {
+      "probe": "altitude_face_perp_triangle_base",
+      "objects": 10,
+      "steps": 5,
+      "violations": []
+    },
+    {
+      "probe": "altitude_regular_pyramid",
+      "objects": 13,
+      "steps": 5,
+      "violations": []
+    },
+    {
+      "probe": "altitude_already_drawn_SA",
+      "objects": 12,
+      "steps": 5,
+      "violations": []
+    }
+  ],
+  "browser": "browser_construction_timeline.json — the goal object is absent at the first step and present at the last (real ←/→ buttons)"
+}

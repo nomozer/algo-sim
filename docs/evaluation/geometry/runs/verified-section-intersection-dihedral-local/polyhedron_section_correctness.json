@@ -1,0 +1,579 @@
+{
+  "run_id": "verified-section-intersection-dihedral-local",
+  "generated_at_utc": "2026-11-13T11:28:15.273228+00:00",
+  "head": "a74aa3325b61337e301e8df7b728a66f86fdc266",
+  "oracle": "AGENT_DIAGNOSTIC: exact Fractions + envelope Gram G written here, independent of the construction code",
+  "probe_class": "SYNTHETIC_DEVELOPMENT_PROBES (agent-written)",
+  "before_ref": "ffc62f6fe (run start)",
+  "mutation_summary": {
+    "flip_angle_ray": {
+      "applied": 12,
+      "caught": 12
+    },
+    "section_vertex_off_plane": {
+      "applied": 9,
+      "caught": 9
+    },
+    "section_vertex_order_swapped": {
+      "applied": 9,
+      "caught": 8
+    },
+    "section_vertex_replaced_by_wrong_edge_point": {
+      "applied": 9,
+      "caught": 9
+    },
+    "intersection_direction_tilted": {
+      "applied": 5,
+      "caught": 5
+    },
+    "intersection_point_moved": {
+      "applied": 5,
+      "caught": 5
+    },
+    "altitude_wrong_foot": {
+      "applied": 4,
+      "caught": 4
+    }
+  },
+  "rows": [
+    {
+      "probe": "section_cube_MNC'",
+      "goal": "section",
+      "text": "Cho hình lập phương ABCD.A'B'C'D' có cạnh bằng a. Gọi M, N lần lượt là trung điểm của AB và AD. Xác định thiết diện của hình lập phương cắt bởi mặt phẳng (MNC').",
+      "before": {
+        "status": "REFUSED",
+        "answers": null,
+        "reason": "LIVE_AI_DISABLED",
+        "checks": [],
+        "failed_checks": []
+      },
+      "after": {
+        "status": "SERVED",
+        "answers": {},
+        "reason": null,
+        "checks": [
+          {
+            "check": "section_vertices_on_cutting_plane",
+            "ok": true
+          },
+          {
+            "check": "section_vertices_on_solid_edges",
+            "ok": true
+          },
+          {
+            "check": "section_vertices_distinct",
+            "ok": true
+          },
+          {
+            "check": "section_polygon_convex_cyclic_order",
+            "ok": true
+          },
+          {
+            "check": "section_edges_lie_in_solid_faces",
+            "ok": true
+          }
+        ],
+        "failed_checks": [],
+        "objects": {
+          "sections": [
+            5
+          ],
+          "intersection_lines": 0,
+          "altitude": false,
+          "angle_relation": null
+        },
+        "mutations_caught": {
+          "section_vertex_off_plane": true,
+          "section_vertex_order_swapped": true,
+          "section_vertex_replaced_by_wrong_edge_point": true
+        }
+      }
+    },
+    {
+      "probe": "section_pyramid_ABM",
+      "goal": "section",
+      "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với mặt phẳng đáy và SA = a. Gọi M là trung điểm của SC. Dựng thiết diện của hình chóp cắt bởi mặt phẳng (ABM).",
+      "before": {
+        "status": "REFUSED",
+        "answers": null,
+        "reason": "LIVE_AI_DISABLED",
+        "checks": [],
+        "failed_checks": []
+      },
+      "after": {
+        "status": "SERVED",
+        "answers": {},
+        "reason": null,
+        "checks": [
+          {
+            "check": "section_vertices_on_cutting_plane",
+            "ok": true
+          },
+          {
+            "check": "section_vertices_on_solid_edges",
+            "ok": true
+          },
+          {
+            "check": "section_vertices_distinct",
+            "ok": true
+          },
+          {
+            "check": "section_polygon_convex_cyclic_order",
+            "ok": true
+          },
+          {
+            "check": "section_edges_lie_in_solid_faces",
+            "ok": true
+          }
+        ],
+        "failed_checks": [],
+        "objects": {
+          "sections": [
+            4
+          ],
+          "intersection_lines": 0,
+          "altitude": false,
+          "angle_relation": null
+        },
+        "mutations_caught": {
+          "section_vertex_off_plane": true,
+          "section_vertex_order_swapped": true,
+          "section_vertex_replaced_by_wrong_edge_point": true
+        }
+      }
+    },
+    {
+      "probe": "section_pyramid_area",
+      "goal": "section",
+      "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với mặt phẳng đáy và SA = a. Gọi M là trung điểm của SC. Tính diện tích thiết diện của hình chóp cắt bởi mặt phẳng (ABM).",
+      "before": {
+        "status": "REFUSED",
+        "answers": null,
+        "reason": "LIVE_AI_DISABLED",
+        "checks": [],
+        "failed_checks": []
+      },
+      "after": {
+        "status": "SERVED",
+        "answers": {
+          "q1": "3a²√2/8"
+        },
+        "reason": null,
+        "checks": [
+          {
+            "check": "section_vertices_on_cutting_plane",
+            "ok": true
+          },
+          {
+            "check": "section_vertices_on_solid_edges",
+            "ok": true
+          },
+          {
+            "check": "section_vertices_distinct",
+            "ok": true
+          },
+          {
+            "check": "section_polygon_convex_cyclic_order",
+            "ok": true
+          },
+          {
+            "check": "section_edges_lie_in_solid_faces",
+            "ok": true
+          }
+        ],
+        "failed_checks": [],
+        "objects": {
+          "sections": [
+            4
+          ],
+          "intersection_lines": 0,
+          "altitude": false,
+          "angle_relation": null
+        },
+        "mutations_caught": {
+          "section_vertex_off_plane": true,
+          "section_vertex_order_swapped": true,
+          "section_vertex_replaced_by_wrong_edge_point": true
+        }
+      }
+    },
+    {
+      "probe": "section_cube_triangle",
+      "goal": "section",
+      "text": "Cho hình lập phương ABCD.A'B'C'D' có cạnh bằng a. Xác định thiết diện của hình lập phương cắt bởi mặt phẳng (A'BD).",
+      "before": {
+        "status": "REFUSED",
+        "answers": null,
+        "reason": "LIVE_AI_DISABLED",
+        "checks": [],
+        "failed_checks": []
+      },
+      "after": {
+        "status": "SERVED",
+        "answers": {},
+        "reason": null,
+        "checks": [
+          {
+            "check": "section_vertices_on_cutting_plane",
+            "ok": true
+          },
+          {
+            "check": "section_vertices_on_solid_edges",
+            "ok": true
+          },
+          {
+            "check": "section_vertices_distinct",
+            "ok": true
+          },
+          {
+            "check": "section_polygon_convex_cyclic_order",
+            "ok": true
+          },
+          {
+            "check": "section_edges_lie_in_solid_faces",
+            "ok": true
+          }
+        ],
+        "failed_checks": [],
+        "objects": {
+          "sections": [
+            3
+          ],
+          "intersection_lines": 0,
+          "altitude": false,
+          "angle_relation": null
+        },
+        "mutations_caught": {
+          "section_vertex_off_plane": true,
+          "section_vertex_order_swapped": false,
+          "section_vertex_replaced_by_wrong_edge_point": true
+        }
+      }
+    },
+    {
+      "probe": "section_cube_hexagon",
+      "goal": "section",
+      "text": "Cho hình lập phương ABCD.A'B'C'D' có cạnh bằng a. Gọi M, N, P lần lượt là trung điểm của AB, BC và CC'. Tìm thiết diện của hình lập phương cắt bởi mặt phẳng (MNP).",
+      "before": {
+        "status": "REFUSED",
+        "answers": null,
+        "reason": "LIVE_AI_DISABLED",
+        "checks": [],
+        "failed_checks": []
+      },
+      "after": {
+        "status": "SERVED",
+        "answers": {},
+        "reason": null,
+        "checks": [
+          {
+            "check": "section_vertices_on_cutting_plane",
+            "ok": true
+          },
+          {
+            "check": "section_vertices_on_solid_edges",
+            "ok": true
+          },
+          {
+            "check": "section_vertices_distinct",
+            "ok": true
+          },
+          {
+            "check": "section_polygon_convex_cyclic_order",
+            "ok": true
+          },
+          {
+            "check": "section_edges_lie_in_solid_faces",
+            "ok": true
+          }
+        ],
+        "failed_checks": [],
+        "objects": {
+          "sections": [
+            6
+          ],
+          "intersection_lines": 0,
+          "altitude": false,
+          "angle_relation": null
+        },
+        "mutations_caught": {
+          "section_vertex_off_plane": true,
+          "section_vertex_order_swapped": true,
+          "section_vertex_replaced_by_wrong_edge_point": true
+        }
+      }
+    },
+    {
+      "probe": "section_contains_edge",
+      "goal": "section",
+      "text": "Cho hình lập phương ABCD.A'B'C'D' có cạnh bằng a. Xác định thiết diện của hình lập phương cắt bởi mặt phẳng (ABC').",
+      "before": {
+        "status": "REFUSED",
+        "answers": null,
+        "reason": "LIVE_AI_DISABLED",
+        "checks": [],
+        "failed_checks": []
+      },
+      "after": {
+        "status": "SERVED",
+        "answers": {},
+        "reason": null,
+        "checks": [
+          {
+            "check": "section_vertices_on_cutting_plane",
+            "ok": true
+          },
+          {
+            "check": "section_vertices_on_solid_edges",
+            "ok": true
+          },
+          {
+            "check": "section_vertices_distinct",
+            "ok": true
+          },
+          {
+            "check": "section_polygon_convex_cyclic_order",
+            "ok": true
+          },
+          {
+            "check": "section_edges_lie_in_solid_faces",
+            "ok": true
+          }
+        ],
+        "failed_checks": [],
+        "objects": {
+          "sections": [
+            4
+          ],
+          "intersection_lines": 0,
+          "altitude": false,
+          "angle_relation": null
+        },
+        "mutations_caught": {
+          "section_vertex_off_plane": true,
+          "section_vertex_order_swapped": true,
+          "section_vertex_replaced_by_wrong_edge_point": true
+        }
+      }
+    },
+    {
+      "probe": "section_plane_is_face",
+      "goal": "section",
+      "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với mặt phẳng đáy và SA = a. Xác định thiết diện của hình chóp cắt bởi mặt phẳng (ABC).",
+      "before": {
+        "status": "REFUSED",
+        "answers": null,
+        "reason": "LIVE_AI_DISABLED",
+        "checks": [],
+        "failed_checks": []
+      },
+      "after": {
+        "status": "SERVED",
+        "answers": {},
+        "reason": null,
+        "checks": [
+          {
+            "check": "section_vertices_on_cutting_plane",
+            "ok": true
+          },
+          {
+            "check": "section_vertices_on_solid_edges",
+            "ok": true
+          },
+          {
+            "check": "section_vertices_distinct",
+            "ok": true
+          },
+          {
+            "check": "section_polygon_convex_cyclic_order",
+            "ok": true
+          },
+          {
+            "check": "section_edges_lie_in_solid_faces",
+            "ok": true
+          }
+        ],
+        "failed_checks": [],
+        "objects": {
+          "sections": [
+            4
+          ],
+          "intersection_lines": 0,
+          "altitude": false,
+          "angle_relation": null
+        },
+        "mutations_caught": {
+          "section_vertex_off_plane": true,
+          "section_vertex_order_swapped": true,
+          "section_vertex_replaced_by_wrong_edge_point": true
+        }
+      }
+    },
+    {
+      "probe": "section_through_vertex_and_edge_midpoints",
+      "goal": "section",
+      "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với mặt phẳng đáy và SA = a. Gọi M, N lần lượt là trung điểm của SB và SD. Xác định thiết diện của hình chóp cắt bởi mặt phẳng (AMN).",
+      "before": {
+        "status": "REFUSED",
+        "answers": null,
+        "reason": "LIVE_AI_DISABLED",
+        "checks": [],
+        "failed_checks": []
+      },
+      "after": {
+        "status": "SERVED",
+        "answers": {},
+        "reason": null,
+        "checks": [
+          {
+            "check": "section_vertices_on_cutting_plane",
+            "ok": true
+          },
+          {
+            "check": "section_vertices_on_solid_edges",
+            "ok": true
+          },
+          {
+            "check": "section_vertices_distinct",
+            "ok": true
+          },
+          {
+            "check": "section_polygon_convex_cyclic_order",
+            "ok": true
+          },
+          {
+            "check": "section_edges_lie_in_solid_faces",
+            "ok": true
+          }
+        ],
+        "failed_checks": [],
+        "objects": {
+          "sections": [
+            4
+          ],
+          "intersection_lines": 0,
+          "altitude": false,
+          "angle_relation": null
+        },
+        "mutations_caught": {
+          "section_vertex_off_plane": true,
+          "section_vertex_order_swapped": true,
+          "section_vertex_replaced_by_wrong_edge_point": true
+        }
+      }
+    },
+    {
+      "probe": "section_renamed",
+      "goal": "section",
+      "text": "Cho hình chóp T.MNPQ có đáy MNPQ là hình vuông cạnh a, TM vuông góc với mặt phẳng đáy và TM = a. Gọi K là trung điểm của TP. Dựng thiết diện của hình chóp cắt bởi mặt phẳng (MNK).",
+      "before": {
+        "status": "REFUSED",
+        "answers": null,
+        "reason": "LIVE_AI_DISABLED",
+        "checks": [],
+        "failed_checks": []
+      },
+      "after": {
+        "status": "SERVED",
+        "answers": {},
+        "reason": null,
+        "checks": [
+          {
+            "check": "section_vertices_on_cutting_plane",
+            "ok": true
+          },
+          {
+            "check": "section_vertices_on_solid_edges",
+            "ok": true
+          },
+          {
+            "check": "section_vertices_distinct",
+            "ok": true
+          },
+          {
+            "check": "section_polygon_convex_cyclic_order",
+            "ok": true
+          },
+          {
+            "check": "section_edges_lie_in_solid_faces",
+            "ok": true
+          }
+        ],
+        "failed_checks": [],
+        "objects": {
+          "sections": [
+            4
+          ],
+          "intersection_lines": 0,
+          "altitude": false,
+          "angle_relation": null
+        },
+        "mutations_caught": {
+          "section_vertex_off_plane": true,
+          "section_vertex_order_swapped": true,
+          "section_vertex_replaced_by_wrong_edge_point": true
+        }
+      }
+    },
+    {
+      "probe": "section_collinear_refused",
+      "goal": "section",
+      "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với mặt phẳng đáy và SA = a. Gọi M là trung điểm của AC. Xác định thiết diện của hình chóp cắt bởi mặt phẳng (AMC).",
+      "before": {
+        "status": "REFUSED",
+        "answers": null,
+        "reason": "LIVE_AI_DISABLED",
+        "checks": [],
+        "failed_checks": []
+      },
+      "after": {
+        "status": "REFUSED",
+        "answers": null,
+        "reason": "COLLINEAR_POINTS",
+        "checks": [],
+        "failed_checks": []
+      }
+    },
+    {
+      "probe": "section_unknown_point_refused",
+      "goal": "section",
+      "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với mặt phẳng đáy và SA = a. Xác định thiết diện của hình chóp cắt bởi mặt phẳng (XYZ).",
+      "before": {
+        "status": "REFUSED",
+        "answers": null,
+        "reason": "LIVE_AI_DISABLED",
+        "checks": [],
+        "failed_checks": []
+      },
+      "after": {
+        "status": "REFUSED",
+        "answers": null,
+        "reason": "UNDERDETERMINED_POINT",
+        "checks": [],
+        "failed_checks": []
+      }
+    },
+    {
+      "probe": "section_question_form_unparsed",
+      "goal": "section",
+      "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với mặt phẳng đáy và SA = a. Gọi M là trung điểm của SC. Mặt phẳng (ABM) cắt hình chóp theo thiết diện là hình gì?",
+      "before": {
+        "status": "REFUSED",
+        "answers": null,
+        "reason": "LIVE_AI_DISABLED",
+        "checks": [],
+        "failed_checks": []
+      },
+      "after": {
+        "status": "REFUSED",
+        "answers": null,
+        "reason": "LIVE_AI_DISABLED",
+        "checks": [],
+        "failed_checks": []
+      }
+    }
+  ],
+  "served_after": 9,
+  "served_before": 0,
+  "check_failures_after": 0
+}

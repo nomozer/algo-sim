@@ -1,0 +1,227 @@
+{
+  "run_id": "verified-section-intersection-dihedral-local",
+  "generated_at_utc": "2026-11-13T11:35:59.957987+00:00",
+  "head": "a74aa3325b61337e301e8df7b728a66f86fdc266",
+  "backend_route_ms": {
+    "method": "route_text_input median of 5 warm calls per probe, before (ffc62f6fe) and after in separate child processes on the same host",
+    "median_before": 22.092950001024292,
+    "median_after": 21.425400000225636,
+    "per_probe": [
+      {
+        "probe": "angle_planes_SBC_SCD_60_not_120",
+        "before": 22.803699997894,
+        "after": 22.57850000023609
+      },
+      {
+        "probe": "angle_planes_SCD_SBC_swapped",
+        "before": 23.49089999916032,
+        "after": 21.55969999876106
+      },
+      {
+        "probe": "angle_planes_renamed",
+        "before": 24.418200002401136,
+        "after": 21.17780000116909
+      },
+      {
+        "probe": "angle_planes_SAB_SCD",
+        "before": 22.03179999924032,
+        "after": 21.421400000690483
+      },
+      {
+        "probe": "angle_planes_SBD_SCD",
+        "before": 22.154100002808264,
+        "after": 21.42939999976079
+      },
+      {
+        "probe": "angle_planes_SBC_ABCD",
+        "before": 21.92589999685879,
+        "after": 21.178700000746176
+      },
+      {
+        "probe": "angle_planes_cube_A'BD_C'BD",
+        "before": 23.986299998796312,
+        "after": 23.598700001457473
+      },
+      {
+        "probe": "angle_lines_SB_SD",
+        "before": 26.77430000039749,
+        "after": 23.124800001824042
+      },
+      {
+        "probe": "angle_lines_skew_SB_CD",
+        "before": 22.22579999943264,
+        "after": 23.34049999990384
+      },
+      {
+        "probe": "angle_lines_skew_cube",
+        "before": 25.27629999894998,
+        "after": 25.528699999995297
+      },
+      {
+        "probe": "angle_line_plane_SC_ABCD",
+        "before": 23.716700001386926,
+        "after": 23.03599999868311
+      },
+      {
+        "probe": "angle_tetra",
+        "before": 18.97099999769125,
+        "after": 18.72890000231564
+      },
+      {
+        "probe": "section_cube_MNC'",
+        "before": 31.56959999978426,
+        "after": 31.916699997964315
+      },
+      {
+        "probe": "section_pyramid_ABM",
+        "before": 24.92800000254647,
+        "after": 25.06859999994049
+      },
+      {
+        "probe": "section_pyramid_area",
+        "before": 34.802900001523085,
+        "after": 35.480399998050416
+      },
+      {
+        "probe": "section_cube_triangle",
+        "before": 24.396300002990756,
+        "after": 24.954099997557933
+      },
+      {
+        "probe": "section_cube_hexagon",
+        "before": 36.6461999983585,
+        "after": 36.88980000151787
+      },
+      {
+        "probe": "section_contains_edge",
+        "before": 24.350399999093497,
+        "after": 22.880300002725562
+      },
+      {
+        "probe": "section_plane_is_face",
+        "before": 25.132299997494556,
+        "after": 21.556399999099085
+      },
+      {
+        "probe": "section_through_vertex_and_edge_midpoints",
+        "before": 28.80110000114655,
+        "after": 26.501100001041777
+      },
+      {
+        "probe": "section_renamed",
+        "before": 24.15879999898607,
+        "after": 24.471800003084354
+      },
+      {
+        "probe": "section_collinear_refused",
+        "before": 9.541900002659531,
+        "after": 9.739700002683094
+      },
+      {
+        "probe": "section_unknown_point_refused",
+        "before": 7.265000000188593,
+        "after": 7.578599997941637
+      },
+      {
+        "probe": "section_question_form_unparsed",
+        "before": 1.586200000019744,
+        "after": 1.6579000002820976
+      },
+      {
+        "probe": "iline_SAB_SCD",
+        "before": 16.344600000593346,
+        "after": 17.741699997714022
+      },
+      {
+        "probe": "iline_SAC_SBD",
+        "before": 16.149699997185962,
+        "after": 16.625699998257915
+      },
+      {
+        "probe": "iline_named_d",
+        "before": 16.013700002076803,
+        "after": 17.23399999900721
+      },
+      {
+        "probe": "iline_SAD_SBC",
+        "before": 16.126300000905758,
+        "after": 16.919900001084898
+      },
+      {
+        "probe": "iline_cube_A'BD_C'BD",
+        "before": 17.9110999997647,
+        "after": 18.582999997306615
+      },
+      {
+        "probe": "iline_parallel_refused",
+        "before": 7.376899997325381,
+        "after": 7.310099997994257
+      },
+      {
+        "probe": "iline_same_plane_refused",
+        "before": 7.456399998773122,
+        "after": 7.195700000011129
+      },
+      {
+        "probe": "altitude_face_perp_equilateral",
+        "before": 21.62250000037602,
+        "after": 21.552199999860022
+      },
+      {
+        "probe": "altitude_face_perp_symbol",
+        "before": 20.76680000027409,
+        "after": 20.723100002214778
+      },
+      {
+        "probe": "altitude_face_perp_triangle_base",
+        "before": 20.080700000107754,
+        "after": 20.259000000805827
+      },
+      {
+        "probe": "altitude_regular_pyramid",
+        "before": 20.38919999904465,
+        "after": 20.952099999703933
+      },
+      {
+        "probe": "altitude_already_drawn_SA",
+        "before": 20.156200000201352,
+        "after": 20.602900000085356
+      }
+    ],
+    "note": "probes refused before (sections, intersections) do more work after because they are now solved — not a regression of the same work"
+  },
+  "browser": {
+    "first_model_ms": [
+      548,
+      468,
+      531,
+      545,
+      435,
+      489,
+      453,
+      442,
+      380,
+      593,
+      462,
+      386
+    ],
+    "step_ms_median": 98.19999999925494,
+    "step_ms_max": 181.09999999776483,
+    "orbit_ms": [
+      271.1000000014901,
+      259.1000000014901,
+      226.40000000223517,
+      130.10000000149012,
+      282.3999999985099,
+      257,
+      225.70000000298023,
+      209.19999999925494,
+      137.30000000074506,
+      307.19999999925494,
+      144.80000000074506,
+      217.20000000298023
+    ],
+    "source": "browser_performance_profile.json (headless host)"
+  },
+  "physical_low_end": "PHYSICAL_LOW_END_NOT_MEASURED"
+}
