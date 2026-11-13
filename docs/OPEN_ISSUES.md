@@ -1,5 +1,12 @@
 # OPEN_ISSUES.md — Danh mục các vấn đề kỹ thuật đang mở
 
+**Local semantic update 2026-11-13:** [Report](evaluation/geometry/runs/local-semantic-source-gate-reliability/AXO_LOCAL_SEMANTIC_SOURCE_GATE_RELIABILITY_REPORT.md). Changes to the controlled-vision list below:
+- **Resolved:** SQLITE_BUSY / 401 cascade under concurrent uploads (OCR off the event loop); the split-span confirmation problem (`4BCD-` `A'B'C'D'`) has extend/restore; `… theo a bằng` and value-at-`biết` Source Gate gaps.
+- **Still open (capability, `semantic17_case_diagnostics.json`):** cos/tan output functions (need an output-policy version, not a gate change); sub-solid volume goals; centroid-foot oblique prisms; lateral face ⟂ base; point reflections; dot-less prism notation (must ask, not guess); planes without parentheses; area premise values; role-named angle operands; scale-free answers; free-parameter invariance; isosceles-vertex and hypotenuse-leg facts; a square whose side is given by a later `AB = …` (asks for confirmation today).
+- **Angle in degrees:** the frontend degree label is correct but invisible in the shipped workspace, which hides the final answer; decide where a learner should see a served angle.
+- **Throughput:** 8 simultaneous uploads now succeed but queue (~13 s p50); OCR is CPU-bound.
+- **Gate burden:** 13 of 16 all-facts images held only for false-alarm span flags (3 without a diagram hold); no change without human-verified references.
+
 **Controlled-vision update 2026-11-13:** [Report](evaluation/geometry/runs/controlled-vision-real-image-validation/AXO_CONTROLLED_VISION_REAL_IMAGE_VALIDATION_REPORT.md). Open issues:
 - **Parser / Source Gate coverage (highest value).** On verified text, 12 polyhedron statements stop at the local parser (unparsed goal/fact clauses, `EMPTY_SOLIDS` for `ABCDA'B'C'D'`) and 5 at the Source Gate (`NOT_ASKED_IN_SOURCE` on "… theo a bằng" / "Tính cosin …", `UNGROUNDED_VALUE`, `SOURCE_PREMISE_UNREAD`). Case specifications: `geometry_capability_gap_backlog.json`.
 - **Kernel gaps.** `EXACT_DOMAIN_EXCEEDED` on a pyramid volume with a 30° included angle; right-isosceles legs from the hypotenuse (carried over).

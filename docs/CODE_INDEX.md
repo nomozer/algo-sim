@@ -1,5 +1,16 @@
 # CODE_INDEX.md — Chỉ mục module + BỘ NHỚ KIẾN TRÚC
 
+## Local semantic coverage, Source Gate and reliability (2026-11-13)
+
+| Path | Owns | Locked by |
+|---|---|---|
+| `backend/app/ai/local_geometry_parser.py` (`_solid_dimension_items`, `_DIM_FIRST_RE`, `_DIM_NEXT_RE`, `_BARE_SEGMENT_EQUALITY_RE`, clause `notes`) | Regular pyramid / right or regular prism dimension lists (`cạnh đáy …, cạnh bên …` either order, optional `độ dài`), each later item quoted on its own; bare `SA = AB (= …)` equalities as `equal_length` (degenerate/repeated/scaled rejected); volume goals `thể tích (V) (của)` and bare `lăng trụ`; `vuông (cân) ở X`; every 7k guard records why a clause stayed unparsed in the coverage report | `backend/tests/geometry/test_local_semantic_coverage.py` |
+| `backend/app/simulation/geometry_functions/registry.py` (`_HOI_CUOI_DE`, `_DUOI_BANG`) | Source Gate: `… theo a bằng` ends a question; a value closes at `biết` or a capitalised new clause. Neither admits an unread premise or an unasked quantity | same test file (`test_theo_a_tail_*`, `test_value_boundary_*`) |
+| `backend/app/ingestion/unified_input.py` (`_process_normalized_visual_page`) | Region detection, header count and local OCR run through `run_in_threadpool`, so a slow OCR no longer blocks the event loop while a request session holds the SQLite write lock | `backend/tests/test_input_prepare_concurrency.py::test_prepare_keeps_the_event_loop_free_while_local_ocr_runs` |
+| `frontend/src/components/photo-problem-flow.ts` (`extendSpanTarget`, actions `extend-span` / `restore-span`) · `frontend/src/components/PhotoProblemPanel.tsx` · `frontend/src/components/ProblemInput.tsx` | Join a flagged OCR span with the next word (1–3 spaces, no prose, no sentence end; flagged spans inside are absorbed) and split it back; both clear every confirmation | `frontend/src/components/photo-span-review.test.tsx` |
+| `frontend/src/simulations/domains/geometry/scene3d-model.ts` (`COS2_DO_DAC_BIET`, `soDoGocDacBiet`) · `frontend/src/simulations/domains/geometry/scene3d-semantic-policy.ts` | A requested angle served as a special cos² (1, 3/4, 1/2, 1/4, 0) is labelled in degrees with the exact cos² kept; one table shared by both modules. Not visible in the shipped workspace, which hides final answers | `frontend/src/components/hybrid-preview-contract.test.tsx` |
+| `docs/evaluation/geometry/runs/local-semantic-source-gate-reliability/tools/` | Layered 17-case trace, text/image before-after, SQLite concurrency ladder, OCR hold audit, pre-registered fresh external sample, parser latency A/B, real-browser span check, regression wrapper, receipt writer. Reuses earlier harnesses; no second parser, OCR or solver | Run report, `run.json`, regression receipts |
+
 ## Controlled-vision real-image validation (2026-11-12)
 
 | Path | Owns | Locked by |

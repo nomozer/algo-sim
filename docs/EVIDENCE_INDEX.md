@@ -1,5 +1,20 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = LOCAL_SEMANTIC_SOURCE_GATE_RELIABILITY
+
+RUN_ID = local-semantic-source-gate-reliability
+REPORT = docs/evaluation/geometry/runs/local-semantic-source-gate-reliability/AXO_LOCAL_SEMANTIC_SOURCE_GATE_RELIABILITY_REPORT.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/local-semantic-source-gate-reliability/
+START_BASE = c5bb73f5144ebed1808ba5654588737ab5ecca0a
+CODE_COMMIT = 262ff46d5, d6b38b172, 81bcb5d0f, 1c9c26489 (product 1c9c26489); candidate freeze be3467457 (manifest commit dcad65e5e)
+CLASSIFICATION = DEVELOPMENT_EVIDENCE_ON_EXPOSED_ITEMS; FRESH_EXTERNAL_DIAGNOSTIC_N2; INDEPENDENT_H1_NOT_MEASURED; PUBLICATION_HEAD BLOCKED_PENDING_OWNER_REVIEW
+PRODUCT_CHANGE = YES (local parser rules, two Source Gate boundaries, OCR off the event loop, span extend/restore, degree label); contracts and CACHE_VERSION unchanged
+MODEL_REQUEST_COUNT = 0
+VERIFICATION = run.json; full_regression_summary.json; semantic17_case_diagnostics.json; text_to_geometry_before_after.json; image_to_scene3d_before_after.json; sqlite_concurrency_before_after.json; fresh_external_preregistration.json; fresh_external_evaluation.json; browser_span_angle_check.json
+CORRECTS = CONTROLLED_VISION_REAL_IMAGE_VALIDATION candidate label (`a78b1e087` stores the manifest whose `commit` is `835786746`; same product) — candidate_commit_reconciliation.json; previous Source Gate attribution of 5 cases — semantic17_case_diagnostics.json
+CORRECTED_BY = NONE
+LIMITATIONS = agent transcriptions; all 23 polyhedron items exposed; fresh sample has only 2 in-scope items; FIXTURE prepare in the browser span check; no Vision, students, H-1, PostgreSQL or low-end hardware.
+
 ## WAVE_ID = CONTROLLED_VISION_REAL_IMAGE_VALIDATION
 
 RUN_ID = controlled-vision-real-image-validation
@@ -12,7 +27,7 @@ PRODUCT_CHANGE = YES (ocr_reconcile reread trimming only; no geometry, parser, S
 MODEL_REQUEST_COUNT = 0
 VERIFICATION = run.json; full_regression_summary.json; publication_pending_classification.json; new_in_scope_image_manifest.json; transcription_solver_diagnostic.json; local_ocr_baseline.json; critical_mathematical_fact_evaluation.json; real_image_to_scene3d_results.json; concurrent_upload_reliability.json; browser_in_scope_audit.json
 CORRECTS = NONE (prior run receipts unchanged; pending owner-approval templates re-bound to the new measured system, PENDING kept)
-CORRECTED_BY = NONE
+CORRECTED_BY = LOCAL_SEMANTIC_SOURCE_GATE_RELIABILITY (candidate SHA label; Source Gate attribution of 5 cases)
 LIMITATIONS = 25 rendered crops from one dataset, agent references, Tesseract-keyword selection bias; scripted confirmation only; no Vision, students, H-1, low-end hardware or PostgreSQL.
 
 ## WAVE_ID = REAL_IMAGE_OCR_VISION_COMPARATIVE_ACCEPTANCE
