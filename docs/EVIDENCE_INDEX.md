@@ -1,5 +1,20 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = INDEPENDENT_GEOMETRY_PLANE_CONSTRAINTS
+
+RUN_ID = independent-geometry-plane-constraints
+REPORT = docs/evaluation/geometry/runs/independent-geometry-plane-constraints/AXO_INDEPENDENT_GEOMETRY_PLANE_CONSTRAINTS_REPORT.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/independent-geometry-plane-constraints/
+START_BASE = 4222f021b
+CODE_COMMIT = 697b097ac (constraint-defined plane rules, Source Gate grammar, coincident-plane code); preregistration 60ce483cc; candidate freeze 8852c4070
+CLASSIFICATION = DEVELOPMENT_EVIDENCE_ON_AGENT_PROBES; PREREGISTERED_LOCKED_INTERNAL_AI_CURATED_HOLDOUT_FRESH_TO_LOCAL_PARSER; AGENT_DIAGNOSTIC_ORACLE; AUTOMATED_BROWSER_E2E; NEW_EXTERNAL_EVALUATION BLOCKED_DATA; INDEPENDENT_H1_NOT_MEASURED; PUBLICATION BLOCKED_PENDING_OWNER_REVIEW
+PRODUCT_CHANGE = YES (local parser rules 7c-0b / 6c base / 6d-0, Source Gate closed grammar for named planes by points, CONTAINED_INFINITE_INTERSECTION for coincident planes); contracts and CACHE_VERSION 134 unchanged
+MODEL_REQUEST_COUNT = 0
+VERIFICATION = run.json; full_regression_summary.json; evaluation_preregistration.json; unseen_evaluation_results.json; plane_constraint_grammar_tests.json; geometry_mutation_verification.json; image_region_detection_evaluation.json; scene3d_browser_e2e.json
+CORRECTS = NONE (verified-section-intersection-dihedral-local receipts unchanged; its open issue "coincident planes refused as PARALLEL_PLANES" is resolved here)
+CORRECTED_BY = NONE
+LIMITATIONS = locked sets are AI-curated internal holdouts reused (not new, not human); 2 locked texts read after execution; agent probes; synthetic composites for multi-problem pages; headless host browser; no H-1, no students, no low-end hardware.
+
 ## WAVE_ID = VERIFIED_SECTION_INTERSECTION_DIHEDRAL_LOCAL
 
 RUN_ID = verified-section-intersection-dihedral-local

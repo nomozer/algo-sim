@@ -1,5 +1,10 @@
 # OPEN_ISSUES.md — Danh mục các vấn đề kỹ thuật đang mở
 
+**Constraint-defined planes update 2026-11-13:** [Report](evaluation/geometry/runs/independent-geometry-plane-constraints/AXO_INDEPENDENT_GEOMETRY_PLANE_CONSTRAINTS_REPORT.md).
+- **Resolved:** section questions on a plane defined by ∥ plane / ⊥ line / ∥ base / line + point / two intersecting lines were unread locally; coincident planes were refused as PARALLEL_PLANES.
+- **Still open:** the local grammar does not generalize to independently written problems (2/120 on the locked holdouts; 114 not read); intersection lines with a constraint-defined plane; "mặt phẳng trung trực"; two parallel lines (no typed line ∥ line premise); underdetermined definitions refuse as LIVE_AI_DISABLED instead of PLANE_NOT_UNIQUE; multi-problem pages without readable "Câu N" headers are merged into one region without a prompt (5/20 synthetic composites); the registered locked-evaluation rule did not separate payload-origin negatives.
+- **Unmeasured:** new external rights-cleared data (BLOCKED_DATA), independent H-1, human-verified regions, camera photos and handwriting, real students, physical low-end hardware; heap +3.2 MB over 12 analyses (INCONCLUSIVE).
+
 **Verified section / intersection update 2026-11-13:** [Report](evaluation/geometry/runs/verified-section-intersection-dihedral-local/AXO_VERIFIED_SECTION_INTERSECTION_DIHEDRAL_LOCAL_REPORT.md).
 - **Resolved:** angle constructions could draw the obtuse supplement (60° shown as 120°); sections by a three-point plane and plane–plane intersection lines were unreachable locally; the altitude of a lateral face ⟂ base was not drawn.
 - **Still open:** a section plane stated inside a question sentence is refused by the Source Gate (by design); section planes defined by parallelism/perpendicularity ("qua M và song song với …") are not read by the new rule; coincident planes are refused with the imprecise code `PARALLEL_PLANES`; a plane touching the solid only in a point or an edge is not reachable locally (NOT_MEASURED); the real-problem corpus has no section/intersection items.
