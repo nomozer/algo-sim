@@ -4720,7 +4720,7 @@
       }
     },
     "reading": "under the registered rule 2 WRONG_SERVED; on inspection neither is a wrong scene for its text — the registered rule did not separate payload-origin negatives from text-origin ones (a protocol limitation, reported, not re-scored)",
-    "positive_coverage": "the local route served 2 of 120 independently worded positive section problems (W2-B08, W2-B14, both ⊥ line); 114 are not read locally (LIVE_AI_DISABLED) and 4 ask for clarification (AMBIGUOUS_FACT). On the agent's own probes the same rules serve 21/24: the grammar fits the agent's phrasing, not the curators' — development probes are not evidence of generalization",
+    "positive_coverage": "the local route served 2 of 120 independently worded positive section problems (W2-B08, W2-B14, both ⊥ line); 114 are not read locally (LIVE_AI_DISABLED) and 4 ask for clarification (AMBIGUOUS_FACT). On the agent's own probes the same rules serve 22/25 (2/25 before): the grammar fits the agent's phrasing, not the curators' — development probes are not evidence of generalization",
     "no_rule_written_from_these_results": true
   }
 }
