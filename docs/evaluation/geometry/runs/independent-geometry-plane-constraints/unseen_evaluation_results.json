@@ -1,0 +1,4726 @@
+{
+  "run_id": "independent-geometry-plane-constraints",
+  "generated_at_utc": "2026-11-13T16:07:23.444972+00:00",
+  "head": "e30b72db6f9661d4f827394becdf3fe8cb0d9cf8",
+  "preregistration": "evaluation_preregistration.json (registered at commit 60ce483cc, before any product change)",
+  "claim_class": "FRESH_TO_LOCAL_PARSER_INTERNAL_AI_CURATED_HOLDOUT — not new external data, not human-adjudicated, not H-1",
+  "executions": "exactly one per product side; no product change after",
+  "deduplication": {
+    "LOCKED_W2": {
+      "max_jaccard": 0.627,
+      "cases_over_0_5": [
+        "W2-B12",
+        "W2-N03",
+        "W2-N06",
+        "W2-N24",
+        "W2-N32",
+        "W2-N33",
+        "W2-N46"
+      ],
+      "top5": [
+        [
+          "W2-N24",
+          0.627
+        ],
+        [
+          "W2-N06",
+          0.5898
+        ],
+        [
+          "W2-N03",
+          0.5882
+        ],
+        [
+          "W2-N33",
+          0.5451
+        ],
+        [
+          "W2-N32",
+          0.5282
+        ]
+      ]
+    },
+    "LOCKED_W3": {
+      "max_jaccard": 0.4543,
+      "cases_over_0_5": [],
+      "top5": [
+        [
+          "W3-N25",
+          0.4543
+        ],
+        [
+          "W3-N54",
+          0.3848
+        ],
+        [
+          "W3-N63",
+          0.3797
+        ],
+        [
+          "W3-B46",
+          0.3696
+        ],
+        [
+          "W3-B10",
+          0.3691
+        ]
+      ]
+    }
+  },
+  "sets": {
+    "LOCKED_W2": {
+      "before": {
+        "serve_cases": 48,
+        "served_correct": 0,
+        "wrong_served": 0,
+        "not_served": 48,
+        "route_errors": 0,
+        "oracle_unavailable": 0,
+        "refuse_cases": 48,
+        "correct_refusal": 48,
+        "serve_by_relation": {
+          "parallel_plane": {
+            "NOT_SERVED": 12
+          },
+          "parallel_two_lines": {
+            "NOT_SERVED": 12
+          },
+          "perpendicular_line": {
+            "NOT_SERVED": 12
+          },
+          "stated_intersections": {
+            "NOT_SERVED": 12
+          }
+        },
+        "serve_by_family": {
+          "cube": {
+            "NOT_SERVED": 7
+          },
+          "cuboid": {
+            "NOT_SERVED": 8
+          },
+          "oblique_triangular_prism": {
+            "NOT_SERVED": 7
+          },
+          "quadrilateral_pyramid": {
+            "NOT_SERVED": 9
+          },
+          "right_triangular_prism": {
+            "NOT_SERVED": 8
+          },
+          "triangular_pyramid": {
+            "NOT_SERVED": 9
+          }
+        },
+        "not_served_reasons": {
+          "LIVE_AI_DISABLED": 48
+        },
+        "wrong_served_ids": [],
+        "wrong_served_failed_checks": {}
+      },
+      "after": {
+        "serve_cases": 48,
+        "served_correct": 2,
+        "wrong_served": 1,
+        "not_served": 46,
+        "route_errors": 0,
+        "oracle_unavailable": 0,
+        "refuse_cases": 48,
+        "correct_refusal": 47,
+        "serve_by_relation": {
+          "parallel_plane": {
+            "NOT_SERVED": 12
+          },
+          "parallel_two_lines": {
+            "NOT_SERVED": 12
+          },
+          "perpendicular_line": {
+            "NOT_SERVED": 10,
+            "SERVED_CORRECT": 2
+          },
+          "stated_intersections": {
+            "NOT_SERVED": 12
+          }
+        },
+        "serve_by_family": {
+          "cube": {
+            "NOT_SERVED": 7
+          },
+          "cuboid": {
+            "NOT_SERVED": 8
+          },
+          "oblique_triangular_prism": {
+            "NOT_SERVED": 7
+          },
+          "quadrilateral_pyramid": {
+            "NOT_SERVED": 8,
+            "SERVED_CORRECT": 1
+          },
+          "right_triangular_prism": {
+            "NOT_SERVED": 7,
+            "SERVED_CORRECT": 1
+          },
+          "triangular_pyramid": {
+            "NOT_SERVED": 9
+          }
+        },
+        "not_served_reasons": {
+          "LIVE_AI_DISABLED": 46
+        },
+        "wrong_served_ids": [
+          "W2-N03"
+        ],
+        "wrong_served_failed_checks": {
+          "W2-N03": null
+        }
+      },
+      "rows_after": [
+        {
+          "id": "W2-B01",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-B",
+          "family": "triangular_pyramid",
+          "plane_relation": "perpendicular_line",
+          "question_type": "section_only"
+        },
+        {
+          "id": "W2-B02",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-B",
+          "family": "triangular_pyramid",
+          "plane_relation": "perpendicular_line",
+          "question_type": "area_only"
+        },
+        {
+          "id": "W2-B03",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-B",
+          "family": "triangular_pyramid",
+          "plane_relation": "parallel_plane",
+          "question_type": "section_and_area"
+        },
+        {
+          "id": "W2-B04",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-B",
+          "family": "triangular_pyramid",
+          "plane_relation": "parallel_plane",
+          "question_type": "section_only"
+        },
+        {
+          "id": "W2-B05",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-B",
+          "family": "triangular_pyramid",
+          "plane_relation": "parallel_two_lines",
+          "question_type": "area_only"
+        },
+        {
+          "id": "W2-B06",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-B",
+          "family": "triangular_pyramid",
+          "plane_relation": "parallel_two_lines",
+          "question_type": "section_and_area"
+        },
+        {
+          "id": "W2-B07",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-B",
+          "family": "quadrilateral_pyramid",
+          "plane_relation": "perpendicular_line",
+          "question_type": "area_only"
+        },
+        {
+          "id": "W2-B08",
+          "expected": "SERVE",
+          "status": "SERVED",
+          "reason": null,
+          "outcome": "SERVED_CORRECT",
+          "failed": [],
+          "vertices": 4,
+          "stratum": "P-B",
+          "family": "quadrilateral_pyramid",
+          "plane_relation": "perpendicular_line",
+          "question_type": "section_and_area"
+        },
+        {
+          "id": "W2-B09",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-B",
+          "family": "quadrilateral_pyramid",
+          "plane_relation": "parallel_plane",
+          "question_type": "section_only"
+        },
+        {
+          "id": "W2-B10",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-B",
+          "family": "quadrilateral_pyramid",
+          "plane_relation": "parallel_plane",
+          "question_type": "area_only"
+        },
+        {
+          "id": "W2-B11",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-B",
+          "family": "quadrilateral_pyramid",
+          "plane_relation": "parallel_two_lines",
+          "question_type": "section_and_area"
+        },
+        {
+          "id": "W2-B12",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-B",
+          "family": "quadrilateral_pyramid",
+          "plane_relation": "parallel_two_lines",
+          "question_type": "section_only"
+        },
+        {
+          "id": "W2-B13",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-B",
+          "family": "right_triangular_prism",
+          "plane_relation": "perpendicular_line",
+          "question_type": "section_and_area"
+        },
+        {
+          "id": "W2-B14",
+          "expected": "SERVE",
+          "status": "SERVED",
+          "reason": null,
+          "outcome": "SERVED_CORRECT",
+          "failed": [],
+          "vertices": 4,
+          "stratum": "P-B",
+          "family": "right_triangular_prism",
+          "plane_relation": "perpendicular_line",
+          "question_type": "section_only"
+        },
+        {
+          "id": "W2-B15",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-B",
+          "family": "right_triangular_prism",
+          "plane_relation": "parallel_plane",
+          "question_type": "area_only"
+        },
+        {
+          "id": "W2-B16",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-B",
+          "family": "right_triangular_prism",
+          "plane_relation": "parallel_plane",
+          "question_type": "section_and_area"
+        },
+        {
+          "id": "W2-B17",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-B",
+          "family": "right_triangular_prism",
+          "plane_relation": "parallel_two_lines",
+          "question_type": "section_only"
+        },
+        {
+          "id": "W2-B18",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-B",
+          "family": "right_triangular_prism",
+          "plane_relation": "parallel_two_lines",
+          "question_type": "area_only"
+        },
+        {
+          "id": "W2-B19",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-B",
+          "family": "oblique_triangular_prism",
+          "plane_relation": "perpendicular_line",
+          "question_type": "section_only"
+        },
+        {
+          "id": "W2-B20",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-B",
+          "family": "oblique_triangular_prism",
+          "plane_relation": "perpendicular_line",
+          "question_type": "area_only"
+        },
+        {
+          "id": "W2-B21",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-B",
+          "family": "oblique_triangular_prism",
+          "plane_relation": "parallel_plane",
+          "question_type": "section_and_area"
+        },
+        {
+          "id": "W2-B22",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-B",
+          "family": "oblique_triangular_prism",
+          "plane_relation": "parallel_plane",
+          "question_type": "section_only"
+        },
+        {
+          "id": "W2-B23",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-B",
+          "family": "oblique_triangular_prism",
+          "plane_relation": "parallel_two_lines",
+          "question_type": "area_only"
+        },
+        {
+          "id": "W2-B24",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-B",
+          "family": "oblique_triangular_prism",
+          "plane_relation": "parallel_two_lines",
+          "question_type": "section_and_area"
+        },
+        {
+          "id": "W2-B25",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-B",
+          "family": "cuboid",
+          "plane_relation": "perpendicular_line",
+          "question_type": "area_only"
+        },
+        {
+          "id": "W2-B26",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-B",
+          "family": "cuboid",
+          "plane_relation": "perpendicular_line",
+          "question_type": "section_and_area"
+        },
+        {
+          "id": "W2-B27",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-B",
+          "family": "cuboid",
+          "plane_relation": "parallel_plane",
+          "question_type": "section_only"
+        },
+        {
+          "id": "W2-B28",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-B",
+          "family": "cuboid",
+          "plane_relation": "parallel_plane",
+          "question_type": "area_only"
+        },
+        {
+          "id": "W2-B29",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-B",
+          "family": "cuboid",
+          "plane_relation": "parallel_two_lines",
+          "question_type": "section_and_area"
+        },
+        {
+          "id": "W2-B30",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-B",
+          "family": "cuboid",
+          "plane_relation": "parallel_two_lines",
+          "question_type": "section_only"
+        },
+        {
+          "id": "W2-B31",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-B",
+          "family": "cube",
+          "plane_relation": "perpendicular_line",
+          "question_type": "section_and_area"
+        },
+        {
+          "id": "W2-B32",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-B",
+          "family": "cube",
+          "plane_relation": "perpendicular_line",
+          "question_type": "section_only"
+        },
+        {
+          "id": "W2-B33",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-B",
+          "family": "cube",
+          "plane_relation": "parallel_plane",
+          "question_type": "area_only"
+        },
+        {
+          "id": "W2-B34",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-B",
+          "family": "cube",
+          "plane_relation": "parallel_plane",
+          "question_type": "section_and_area"
+        },
+        {
+          "id": "W2-B35",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-B",
+          "family": "cube",
+          "plane_relation": "parallel_two_lines",
+          "question_type": "section_only"
+        },
+        {
+          "id": "W2-B36",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-B",
+          "family": "cube",
+          "plane_relation": "parallel_two_lines",
+          "question_type": "area_only"
+        },
+        {
+          "id": "W2-A01",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-A",
+          "family": "triangular_pyramid",
+          "plane_relation": "stated_intersections",
+          "question_type": "section_only"
+        },
+        {
+          "id": "W2-A02",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-A",
+          "family": "triangular_pyramid",
+          "plane_relation": "stated_intersections",
+          "question_type": "area_only"
+        },
+        {
+          "id": "W2-A03",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-A",
+          "family": "triangular_pyramid",
+          "plane_relation": "stated_intersections",
+          "question_type": "section_and_area"
+        },
+        {
+          "id": "W2-A04",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-A",
+          "family": "quadrilateral_pyramid",
+          "plane_relation": "stated_intersections",
+          "question_type": "section_and_area"
+        },
+        {
+          "id": "W2-A05",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-A",
+          "family": "quadrilateral_pyramid",
+          "plane_relation": "stated_intersections",
+          "question_type": "section_only"
+        },
+        {
+          "id": "W2-A06",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-A",
+          "family": "quadrilateral_pyramid",
+          "plane_relation": "stated_intersections",
+          "question_type": "area_only"
+        },
+        {
+          "id": "W2-A07",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-A",
+          "family": "right_triangular_prism",
+          "plane_relation": "stated_intersections",
+          "question_type": "area_only"
+        },
+        {
+          "id": "W2-A08",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-A",
+          "family": "right_triangular_prism",
+          "plane_relation": "stated_intersections",
+          "question_type": "section_and_area"
+        },
+        {
+          "id": "W2-A09",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-A",
+          "family": "oblique_triangular_prism",
+          "plane_relation": "stated_intersections",
+          "question_type": "section_only"
+        },
+        {
+          "id": "W2-A10",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-A",
+          "family": "cuboid",
+          "plane_relation": "stated_intersections",
+          "question_type": "section_only"
+        },
+        {
+          "id": "W2-A11",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-A",
+          "family": "cuboid",
+          "plane_relation": "stated_intersections",
+          "question_type": "area_only"
+        },
+        {
+          "id": "W2-A12",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-A",
+          "family": "cube",
+          "plane_relation": "stated_intersections",
+          "question_type": "section_and_area"
+        },
+        {
+          "id": "W2-N01",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "triangular_pyramid",
+          "plane_relation": "parallel_plane",
+          "question_type": "section_only",
+          "negative_class": "wrong_solid_identity"
+        },
+        {
+          "id": "W2-N02",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "right_triangular_prism",
+          "plane_relation": "perpendicular_line",
+          "question_type": "section_only",
+          "negative_class": "wrong_solid_identity"
+        },
+        {
+          "id": "W2-N03",
+          "expected": "REFUSE",
+          "status": "SERVED",
+          "reason": null,
+          "outcome": "WRONG_SERVED",
+          "stratum": "N",
+          "family": "quadrilateral_pyramid",
+          "plane_relation": "parallel_plane",
+          "question_type": "section_only",
+          "negative_class": "wrong_solid_identity"
+        },
+        {
+          "id": "W2-N04",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "INCONSISTENT_FACTS",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "quadrilateral_pyramid",
+          "plane_relation": "parallel_plane",
+          "question_type": "section_only",
+          "negative_class": "contradictory_solid_kind"
+        },
+        {
+          "id": "W2-N05",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "NON_HOMOGENEOUS_LENGTHS",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "triangular_pyramid",
+          "plane_relation": "perpendicular_line",
+          "question_type": "area_only",
+          "negative_class": "contradictory_solid_kind"
+        },
+        {
+          "id": "W2-N06",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "INCONSISTENT_FACTS",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "triangular_pyramid",
+          "plane_relation": "parallel_plane",
+          "question_type": "section_only",
+          "negative_class": "contradictory_solid_kind"
+        },
+        {
+          "id": "W2-N07",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "triangular_pyramid",
+          "plane_relation": "perpendicular_line",
+          "question_type": "section_only",
+          "negative_class": "wrong_cutting_plane"
+        },
+        {
+          "id": "W2-N08",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "triangular_pyramid",
+          "plane_relation": "parallel_plane",
+          "question_type": "section_only",
+          "negative_class": "wrong_cutting_plane"
+        },
+        {
+          "id": "W2-N09",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "triangular_pyramid",
+          "plane_relation": "parallel_two_lines",
+          "question_type": "section_only",
+          "negative_class": "wrong_cutting_plane"
+        },
+        {
+          "id": "W2-N10",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "right_triangular_prism",
+          "plane_relation": "parallel_plane",
+          "question_type": "section_only",
+          "negative_class": "ambiguous_plane_name"
+        },
+        {
+          "id": "W2-N11",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "cuboid",
+          "plane_relation": "perpendicular_line",
+          "question_type": "section_only",
+          "negative_class": "ambiguous_plane_name"
+        },
+        {
+          "id": "W2-N12",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "cube",
+          "plane_relation": "parallel_plane",
+          "question_type": "section_only",
+          "negative_class": "ambiguous_plane_name"
+        },
+        {
+          "id": "W2-N13",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "triangular_pyramid",
+          "plane_relation": "other",
+          "question_type": "section_only",
+          "negative_class": "multiple_planes"
+        },
+        {
+          "id": "W2-N14",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "quadrilateral_pyramid",
+          "plane_relation": "other",
+          "question_type": "section_only",
+          "negative_class": "multiple_planes"
+        },
+        {
+          "id": "W2-N15",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "triangular_pyramid",
+          "plane_relation": "other",
+          "question_type": "section_only",
+          "negative_class": "multiple_planes"
+        },
+        {
+          "id": "W2-N16",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "other",
+          "plane_relation": "parallel_plane",
+          "question_type": "section_only",
+          "negative_class": "multiple_solids"
+        },
+        {
+          "id": "W2-N17",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "triangular_pyramid",
+          "plane_relation": "parallel_plane",
+          "question_type": "other",
+          "negative_class": "multiple_solids"
+        },
+        {
+          "id": "W2-N18",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "other",
+          "plane_relation": "parallel_plane",
+          "question_type": "section_only",
+          "negative_class": "multiple_solids"
+        },
+        {
+          "id": "W2-N19",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "triangular_pyramid",
+          "plane_relation": "parallel_plane",
+          "question_type": "section_only",
+          "negative_class": "incorrect_source_quotations"
+        },
+        {
+          "id": "W2-N20",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "triangular_pyramid",
+          "plane_relation": "perpendicular_line",
+          "question_type": "section_only",
+          "negative_class": "incorrect_source_quotations"
+        },
+        {
+          "id": "W2-N21",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "triangular_pyramid",
+          "plane_relation": "parallel_plane",
+          "question_type": "section_only",
+          "negative_class": "incorrect_source_quotations"
+        },
+        {
+          "id": "W2-N22",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "other",
+          "plane_relation": "other",
+          "question_type": "section_and_area",
+          "negative_class": "unsupported_topology"
+        },
+        {
+          "id": "W2-N23",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "other",
+          "plane_relation": "parallel_plane",
+          "question_type": "section_only",
+          "negative_class": "unsupported_topology"
+        },
+        {
+          "id": "W2-N24",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "MISSING_DIMENSION",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "quadrilateral_pyramid",
+          "plane_relation": "parallel_plane",
+          "question_type": "section_only",
+          "negative_class": "unsupported_topology"
+        },
+        {
+          "id": "W2-N25",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "triangular_pyramid",
+          "plane_relation": "parallel_plane",
+          "question_type": "area_only",
+          "negative_class": "missing_dimensions"
+        },
+        {
+          "id": "W2-N26",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "MISSING_DIMENSION",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "right_triangular_prism",
+          "plane_relation": "parallel_plane",
+          "question_type": "area_only",
+          "negative_class": "missing_dimensions"
+        },
+        {
+          "id": "W2-N27",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "cuboid",
+          "plane_relation": "parallel_plane",
+          "question_type": "area_only",
+          "negative_class": "missing_dimensions"
+        },
+        {
+          "id": "W2-N28",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "UNDERDETERMINED_POINT",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "triangular_pyramid",
+          "plane_relation": "perpendicular_line",
+          "question_type": "section_only",
+          "negative_class": "underconstrained_geometry"
+        },
+        {
+          "id": "W2-N29",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "triangular_pyramid",
+          "plane_relation": "parallel_plane",
+          "question_type": "area_only",
+          "negative_class": "underconstrained_geometry"
+        },
+        {
+          "id": "W2-N30",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "triangular_pyramid",
+          "plane_relation": "parallel_plane",
+          "question_type": "section_only",
+          "negative_class": "underconstrained_geometry"
+        },
+        {
+          "id": "W2-N31",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "triangular_pyramid",
+          "plane_relation": "parallel_plane",
+          "question_type": "section_only",
+          "negative_class": "conditional_or_negated_premises"
+        },
+        {
+          "id": "W2-N32",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "triangular_pyramid",
+          "plane_relation": "parallel_plane",
+          "question_type": "section_only",
+          "negative_class": "conditional_or_negated_premises"
+        },
+        {
+          "id": "W2-N33",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "triangular_pyramid",
+          "plane_relation": "parallel_plane",
+          "question_type": "section_only",
+          "negative_class": "conditional_or_negated_premises"
+        },
+        {
+          "id": "W2-N34",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "triangular_pyramid",
+          "plane_relation": "parallel_plane",
+          "question_type": "section_only",
+          "negative_class": "wrong_question_target"
+        },
+        {
+          "id": "W2-N35",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "triangular_pyramid",
+          "plane_relation": "parallel_plane",
+          "question_type": "other",
+          "negative_class": "wrong_question_target"
+        },
+        {
+          "id": "W2-N36",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "triangular_pyramid",
+          "plane_relation": "parallel_plane",
+          "question_type": "other",
+          "negative_class": "wrong_question_target"
+        },
+        {
+          "id": "W2-N37",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "triangular_pyramid",
+          "plane_relation": "stated_intersections",
+          "question_type": "area_only",
+          "negative_class": "incorrect_named_section"
+        },
+        {
+          "id": "W2-N38",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "triangular_pyramid",
+          "plane_relation": "stated_intersections",
+          "question_type": "section_only",
+          "negative_class": "incorrect_named_section"
+        },
+        {
+          "id": "W2-N39",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "triangular_pyramid",
+          "plane_relation": "stated_intersections",
+          "question_type": "area_only",
+          "negative_class": "incorrect_named_section"
+        },
+        {
+          "id": "W2-N40",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "triangular_pyramid",
+          "plane_relation": "parallel_plane",
+          "question_type": "area_only",
+          "negative_class": "ambiguous_anaphoric_area_request"
+        },
+        {
+          "id": "W2-N41",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "triangular_pyramid",
+          "plane_relation": "perpendicular_line",
+          "question_type": "area_only",
+          "negative_class": "ambiguous_anaphoric_area_request"
+        },
+        {
+          "id": "W2-N42",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "triangular_pyramid",
+          "plane_relation": "parallel_plane",
+          "question_type": "area_only",
+          "negative_class": "ambiguous_anaphoric_area_request"
+        },
+        {
+          "id": "W2-N43",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "triangular_pyramid",
+          "plane_relation": "stated_intersections",
+          "question_type": "section_only",
+          "negative_class": "contradictory_cut_point_claims"
+        },
+        {
+          "id": "W2-N44",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "quadrilateral_pyramid",
+          "plane_relation": "stated_intersections",
+          "question_type": "section_only",
+          "negative_class": "contradictory_cut_point_claims"
+        },
+        {
+          "id": "W2-N45",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "triangular_pyramid",
+          "plane_relation": "stated_intersections",
+          "question_type": "section_only",
+          "negative_class": "contradictory_cut_point_claims"
+        },
+        {
+          "id": "W2-N46",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "DERIVED_PLANE_IS_REFERENCE",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "triangular_pyramid",
+          "plane_relation": "parallel_plane",
+          "question_type": "section_only",
+          "negative_class": "degenerate_or_tampered_section_plane"
+        },
+        {
+          "id": "W2-N47",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "cuboid",
+          "plane_relation": "parallel_two_lines",
+          "question_type": "section_only",
+          "negative_class": "degenerate_or_tampered_section_plane"
+        },
+        {
+          "id": "W2-N48",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "PLANE_TOUCHES_VERTEX",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "triangular_pyramid",
+          "plane_relation": "perpendicular_line",
+          "question_type": "section_only",
+          "negative_class": "degenerate_or_tampered_section_plane"
+        }
+      ],
+      "rows_before": [
+        {
+          "id": "W2-B01",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W2-B02",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W2-B03",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W2-B04",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W2-B05",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W2-B06",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W2-B07",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W2-B08",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W2-B09",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W2-B10",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W2-B11",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W2-B12",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W2-B13",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W2-B14",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W2-B15",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W2-B16",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W2-B17",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W2-B18",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W2-B19",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W2-B20",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W2-B21",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W2-B22",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W2-B23",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W2-B24",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W2-B25",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W2-B26",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W2-B27",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W2-B28",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W2-B29",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W2-B30",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W2-B31",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W2-B32",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W2-B33",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W2-B34",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W2-B35",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W2-B36",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W2-A01",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W2-A02",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W2-A03",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W2-A04",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W2-A05",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W2-A06",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W2-A07",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W2-A08",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W2-A09",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W2-A10",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W2-A11",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W2-A12",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W2-N01",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W2-N02",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W2-N03",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W2-N04",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W2-N05",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "NON_HOMOGENEOUS_LENGTHS"
+        },
+        {
+          "id": "W2-N06",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W2-N07",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W2-N08",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W2-N09",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W2-N10",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W2-N11",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W2-N12",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W2-N13",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W2-N14",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W2-N15",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W2-N16",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W2-N17",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W2-N18",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W2-N19",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W2-N20",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W2-N21",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W2-N22",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W2-N23",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W2-N24",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W2-N25",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W2-N26",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "MISSING_DIMENSION"
+        },
+        {
+          "id": "W2-N27",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W2-N28",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W2-N29",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W2-N30",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W2-N31",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W2-N32",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W2-N33",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W2-N34",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W2-N35",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W2-N36",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W2-N37",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W2-N38",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W2-N39",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W2-N40",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W2-N41",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W2-N42",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W2-N43",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W2-N44",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W2-N45",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W2-N46",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W2-N47",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W2-N48",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        }
+      ]
+    },
+    "LOCKED_W3": {
+      "before": {
+        "serve_cases": 72,
+        "served_correct": 0,
+        "wrong_served": 0,
+        "not_served": 72,
+        "route_errors": 0,
+        "oracle_unavailable": 0,
+        "refuse_cases": 72,
+        "correct_refusal": 72,
+        "serve_by_relation": {
+          "parallel_plane": {
+            "NOT_SERVED": 23
+          },
+          "parallel_two_lines": {
+            "NOT_SERVED": 20
+          },
+          "perpendicular_line": {
+            "NOT_SERVED": 29
+          }
+        },
+        "serve_by_family": {
+          "cube": {
+            "NOT_SERVED": 12
+          },
+          "cuboid": {
+            "NOT_SERVED": 12
+          },
+          "oblique_triangular_prism": {
+            "NOT_SERVED": 12
+          },
+          "quadrilateral_pyramid": {
+            "NOT_SERVED": 12
+          },
+          "right_triangular_prism": {
+            "NOT_SERVED": 12
+          },
+          "triangular_pyramid": {
+            "NOT_SERVED": 12
+          }
+        },
+        "not_served_reasons": {
+          "LIVE_AI_DISABLED": 68,
+          "AMBIGUOUS_FACT": 4
+        },
+        "wrong_served_ids": [],
+        "wrong_served_failed_checks": {}
+      },
+      "after": {
+        "serve_cases": 72,
+        "served_correct": 0,
+        "wrong_served": 1,
+        "not_served": 72,
+        "route_errors": 0,
+        "oracle_unavailable": 0,
+        "refuse_cases": 72,
+        "correct_refusal": 71,
+        "serve_by_relation": {
+          "parallel_plane": {
+            "NOT_SERVED": 23
+          },
+          "parallel_two_lines": {
+            "NOT_SERVED": 20
+          },
+          "perpendicular_line": {
+            "NOT_SERVED": 29
+          }
+        },
+        "serve_by_family": {
+          "cube": {
+            "NOT_SERVED": 12
+          },
+          "cuboid": {
+            "NOT_SERVED": 12
+          },
+          "oblique_triangular_prism": {
+            "NOT_SERVED": 12
+          },
+          "quadrilateral_pyramid": {
+            "NOT_SERVED": 12
+          },
+          "right_triangular_prism": {
+            "NOT_SERVED": 12
+          },
+          "triangular_pyramid": {
+            "NOT_SERVED": 12
+          }
+        },
+        "not_served_reasons": {
+          "LIVE_AI_DISABLED": 68,
+          "AMBIGUOUS_FACT": 4
+        },
+        "wrong_served_ids": [
+          "W3-N63"
+        ],
+        "wrong_served_failed_checks": {
+          "W3-N63": null
+        }
+      },
+      "rows_after": [
+        {
+          "id": "W3-B01",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-B",
+          "family": "triangular_pyramid",
+          "solid_family": "triangular_pyramid",
+          "plane_relation": "perpendicular_line",
+          "plane_kind": "through_point_perpendicular_line",
+          "question_type": "section_only",
+          "representability": "representable_without_loss"
+        },
+        {
+          "id": "W3-B02",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-B",
+          "family": "triangular_pyramid",
+          "solid_family": "triangular_pyramid",
+          "plane_relation": "perpendicular_line",
+          "plane_kind": "through_point_perpendicular_line",
+          "question_type": "area_only",
+          "representability": "representable_without_loss"
+        },
+        {
+          "id": "W3-B03",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-B",
+          "family": "triangular_pyramid",
+          "solid_family": "triangular_pyramid",
+          "plane_relation": "perpendicular_line",
+          "plane_kind": "through_point_perpendicular_line",
+          "question_type": "section_and_area",
+          "representability": "representable_without_loss"
+        },
+        {
+          "id": "W3-B04",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-B",
+          "family": "triangular_pyramid",
+          "solid_family": "triangular_pyramid",
+          "plane_relation": "parallel_plane",
+          "plane_kind": "through_point_parallel_plane",
+          "question_type": "section_only",
+          "representability": "representable_without_loss"
+        },
+        {
+          "id": "W3-B05",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-B",
+          "family": "triangular_pyramid",
+          "solid_family": "triangular_pyramid",
+          "plane_relation": "parallel_plane",
+          "plane_kind": "through_point_parallel_plane",
+          "question_type": "area_only",
+          "representability": "representable_without_loss"
+        },
+        {
+          "id": "W3-B06",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-B",
+          "family": "triangular_pyramid",
+          "solid_family": "triangular_pyramid",
+          "plane_relation": "parallel_plane",
+          "plane_kind": "through_point_parallel_plane",
+          "question_type": "section_and_area",
+          "representability": "representable_without_loss"
+        },
+        {
+          "id": "W3-B07",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-B",
+          "family": "triangular_pyramid",
+          "solid_family": "triangular_pyramid",
+          "plane_relation": "parallel_two_lines",
+          "plane_kind": "through_point_parallel_two_lines",
+          "question_type": "section_only",
+          "representability": "representable_without_loss"
+        },
+        {
+          "id": "W3-B08",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-B",
+          "family": "triangular_pyramid",
+          "solid_family": "triangular_pyramid",
+          "plane_relation": "parallel_two_lines",
+          "plane_kind": "through_point_parallel_two_lines",
+          "question_type": "area_only",
+          "representability": "representable_without_loss"
+        },
+        {
+          "id": "W3-B09",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-B",
+          "family": "triangular_pyramid",
+          "solid_family": "triangular_pyramid",
+          "plane_relation": "parallel_two_lines",
+          "plane_kind": "through_point_parallel_two_lines",
+          "question_type": "section_and_area",
+          "representability": "representable_without_loss"
+        },
+        {
+          "id": "W3-B10",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-B",
+          "family": "quadrilateral_pyramid",
+          "solid_family": "quadrilateral_pyramid",
+          "plane_relation": "perpendicular_line",
+          "plane_kind": "through_point_perpendicular_line",
+          "question_type": "section_only",
+          "representability": "representable_without_loss"
+        },
+        {
+          "id": "W3-B11",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-B",
+          "family": "quadrilateral_pyramid",
+          "solid_family": "quadrilateral_pyramid",
+          "plane_relation": "perpendicular_line",
+          "plane_kind": "through_point_perpendicular_line",
+          "question_type": "area_only",
+          "representability": "representable_without_loss"
+        },
+        {
+          "id": "W3-B12",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-B",
+          "family": "quadrilateral_pyramid",
+          "solid_family": "quadrilateral_pyramid",
+          "plane_relation": "perpendicular_line",
+          "plane_kind": "through_point_perpendicular_line",
+          "question_type": "section_and_area",
+          "representability": "representable_without_loss"
+        },
+        {
+          "id": "W3-B13",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-B",
+          "family": "quadrilateral_pyramid",
+          "solid_family": "quadrilateral_pyramid",
+          "plane_relation": "parallel_plane",
+          "plane_kind": "through_point_parallel_plane",
+          "question_type": "section_only",
+          "representability": "representable_without_loss"
+        },
+        {
+          "id": "W3-B14",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-B",
+          "family": "quadrilateral_pyramid",
+          "solid_family": "quadrilateral_pyramid",
+          "plane_relation": "parallel_plane",
+          "plane_kind": "through_point_parallel_plane",
+          "question_type": "area_only",
+          "representability": "representable_without_loss"
+        },
+        {
+          "id": "W3-B15",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-B",
+          "family": "quadrilateral_pyramid",
+          "solid_family": "quadrilateral_pyramid",
+          "plane_relation": "parallel_plane",
+          "plane_kind": "through_point_parallel_plane",
+          "question_type": "section_and_area",
+          "representability": "representable_without_loss"
+        },
+        {
+          "id": "W3-B16",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-B",
+          "family": "quadrilateral_pyramid",
+          "solid_family": "quadrilateral_pyramid",
+          "plane_relation": "parallel_two_lines",
+          "plane_kind": "through_point_parallel_two_lines",
+          "question_type": "section_only",
+          "representability": "representable_without_loss"
+        },
+        {
+          "id": "W3-B17",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-B",
+          "family": "quadrilateral_pyramid",
+          "solid_family": "quadrilateral_pyramid",
+          "plane_relation": "parallel_two_lines",
+          "plane_kind": "through_point_parallel_two_lines",
+          "question_type": "area_only",
+          "representability": "representable_without_loss"
+        },
+        {
+          "id": "W3-B18",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-B",
+          "family": "quadrilateral_pyramid",
+          "solid_family": "quadrilateral_pyramid",
+          "plane_relation": "parallel_two_lines",
+          "plane_kind": "through_point_parallel_two_lines",
+          "question_type": "section_and_area",
+          "representability": "representable_without_loss"
+        },
+        {
+          "id": "W3-B19",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-B",
+          "family": "right_triangular_prism",
+          "solid_family": "right_triangular_prism",
+          "plane_relation": "perpendicular_line",
+          "plane_kind": "through_point_perpendicular_line",
+          "question_type": "section_only",
+          "representability": "representable_without_loss"
+        },
+        {
+          "id": "W3-B20",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-B",
+          "family": "right_triangular_prism",
+          "solid_family": "right_triangular_prism",
+          "plane_relation": "perpendicular_line",
+          "plane_kind": "through_point_perpendicular_line",
+          "question_type": "area_only",
+          "representability": "representable_without_loss"
+        },
+        {
+          "id": "W3-B21",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-B",
+          "family": "right_triangular_prism",
+          "solid_family": "right_triangular_prism",
+          "plane_relation": "perpendicular_line",
+          "plane_kind": "through_point_perpendicular_line",
+          "question_type": "section_and_area",
+          "representability": "representable_without_loss"
+        },
+        {
+          "id": "W3-B22",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-B",
+          "family": "right_triangular_prism",
+          "solid_family": "right_triangular_prism",
+          "plane_relation": "parallel_plane",
+          "plane_kind": "through_point_parallel_plane",
+          "question_type": "section_only",
+          "representability": "representable_without_loss"
+        },
+        {
+          "id": "W3-B23",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-B",
+          "family": "right_triangular_prism",
+          "solid_family": "right_triangular_prism",
+          "plane_relation": "parallel_plane",
+          "plane_kind": "through_point_parallel_plane",
+          "question_type": "area_only",
+          "representability": "representable_without_loss"
+        },
+        {
+          "id": "W3-B24",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-B",
+          "family": "right_triangular_prism",
+          "solid_family": "right_triangular_prism",
+          "plane_relation": "parallel_plane",
+          "plane_kind": "through_point_parallel_plane",
+          "question_type": "section_and_area",
+          "representability": "representable_without_loss"
+        },
+        {
+          "id": "W3-B25",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-B",
+          "family": "right_triangular_prism",
+          "solid_family": "right_triangular_prism",
+          "plane_relation": "parallel_two_lines",
+          "plane_kind": "through_point_parallel_two_lines",
+          "question_type": "section_only",
+          "representability": "representable_without_loss"
+        },
+        {
+          "id": "W3-B26",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-B",
+          "family": "right_triangular_prism",
+          "solid_family": "right_triangular_prism",
+          "plane_relation": "parallel_two_lines",
+          "plane_kind": "through_point_parallel_two_lines",
+          "question_type": "area_only",
+          "representability": "representable_without_loss"
+        },
+        {
+          "id": "W3-B27",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-B",
+          "family": "right_triangular_prism",
+          "solid_family": "right_triangular_prism",
+          "plane_relation": "parallel_two_lines",
+          "plane_kind": "through_point_parallel_two_lines",
+          "question_type": "section_and_area",
+          "representability": "representable_without_loss"
+        },
+        {
+          "id": "W3-B28",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-B",
+          "family": "oblique_triangular_prism",
+          "solid_family": "oblique_triangular_prism",
+          "plane_relation": "perpendicular_line",
+          "plane_kind": "through_point_perpendicular_line",
+          "question_type": "section_only",
+          "representability": "representable_without_loss"
+        },
+        {
+          "id": "W3-B29",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-B",
+          "family": "oblique_triangular_prism",
+          "solid_family": "oblique_triangular_prism",
+          "plane_relation": "perpendicular_line",
+          "plane_kind": "through_point_perpendicular_line",
+          "question_type": "area_only",
+          "representability": "representable_without_loss"
+        },
+        {
+          "id": "W3-B30",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-B",
+          "family": "oblique_triangular_prism",
+          "solid_family": "oblique_triangular_prism",
+          "plane_relation": "perpendicular_line",
+          "plane_kind": "through_point_perpendicular_line",
+          "question_type": "section_and_area",
+          "representability": "representable_without_loss"
+        },
+        {
+          "id": "W3-B31",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-B",
+          "family": "oblique_triangular_prism",
+          "solid_family": "oblique_triangular_prism",
+          "plane_relation": "parallel_plane",
+          "plane_kind": "through_point_parallel_plane",
+          "question_type": "section_only",
+          "representability": "representable_without_loss"
+        },
+        {
+          "id": "W3-B32",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-B",
+          "family": "oblique_triangular_prism",
+          "solid_family": "oblique_triangular_prism",
+          "plane_relation": "parallel_plane",
+          "plane_kind": "through_point_parallel_plane",
+          "question_type": "area_only",
+          "representability": "representable_without_loss"
+        },
+        {
+          "id": "W3-B33",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-B",
+          "family": "oblique_triangular_prism",
+          "solid_family": "oblique_triangular_prism",
+          "plane_relation": "parallel_plane",
+          "plane_kind": "through_point_parallel_plane",
+          "question_type": "section_and_area",
+          "representability": "representable_without_loss"
+        },
+        {
+          "id": "W3-B34",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-B",
+          "family": "oblique_triangular_prism",
+          "solid_family": "oblique_triangular_prism",
+          "plane_relation": "parallel_two_lines",
+          "plane_kind": "through_point_parallel_two_lines",
+          "question_type": "section_only",
+          "representability": "representable_without_loss"
+        },
+        {
+          "id": "W3-B35",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-B",
+          "family": "oblique_triangular_prism",
+          "solid_family": "oblique_triangular_prism",
+          "plane_relation": "parallel_two_lines",
+          "plane_kind": "through_point_parallel_two_lines",
+          "question_type": "area_only",
+          "representability": "representable_without_loss"
+        },
+        {
+          "id": "W3-B36",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-B",
+          "family": "oblique_triangular_prism",
+          "solid_family": "oblique_triangular_prism",
+          "plane_relation": "parallel_two_lines",
+          "plane_kind": "through_point_parallel_two_lines",
+          "question_type": "section_and_area",
+          "representability": "representable_without_loss"
+        },
+        {
+          "id": "W3-B37",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-B",
+          "family": "cuboid",
+          "solid_family": "cuboid",
+          "plane_relation": "perpendicular_line",
+          "plane_kind": "through_point_perpendicular_line",
+          "question_type": "section_only",
+          "representability": "representable_without_loss"
+        },
+        {
+          "id": "W3-B38",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-B",
+          "family": "cuboid",
+          "solid_family": "cuboid",
+          "plane_relation": "perpendicular_line",
+          "plane_kind": "through_point_perpendicular_line",
+          "question_type": "area_only",
+          "representability": "representable_without_loss"
+        },
+        {
+          "id": "W3-B39",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-B",
+          "family": "cuboid",
+          "solid_family": "cuboid",
+          "plane_relation": "perpendicular_line",
+          "plane_kind": "through_point_perpendicular_line",
+          "question_type": "section_and_area",
+          "representability": "representable_without_loss"
+        },
+        {
+          "id": "W3-B40",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-B",
+          "family": "cuboid",
+          "solid_family": "cuboid",
+          "plane_relation": "parallel_plane",
+          "plane_kind": "through_point_parallel_plane",
+          "question_type": "section_only",
+          "representability": "representable_without_loss"
+        },
+        {
+          "id": "W3-B41",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-B",
+          "family": "cuboid",
+          "solid_family": "cuboid",
+          "plane_relation": "parallel_plane",
+          "plane_kind": "through_point_parallel_plane",
+          "question_type": "area_only",
+          "representability": "representable_without_loss"
+        },
+        {
+          "id": "W3-B42",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-B",
+          "family": "cuboid",
+          "solid_family": "cuboid",
+          "plane_relation": "parallel_plane",
+          "plane_kind": "through_point_parallel_plane",
+          "question_type": "section_and_area",
+          "representability": "representable_without_loss"
+        },
+        {
+          "id": "W3-B43",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-B",
+          "family": "cuboid",
+          "solid_family": "cuboid",
+          "plane_relation": "parallel_two_lines",
+          "plane_kind": "through_point_parallel_two_lines",
+          "question_type": "section_only",
+          "representability": "representable_without_loss"
+        },
+        {
+          "id": "W3-B44",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-B",
+          "family": "cuboid",
+          "solid_family": "cuboid",
+          "plane_relation": "parallel_two_lines",
+          "plane_kind": "through_point_parallel_two_lines",
+          "question_type": "area_only",
+          "representability": "representable_without_loss"
+        },
+        {
+          "id": "W3-B45",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-B",
+          "family": "cuboid",
+          "solid_family": "cuboid",
+          "plane_relation": "parallel_two_lines",
+          "plane_kind": "through_point_parallel_two_lines",
+          "question_type": "section_and_area",
+          "representability": "representable_without_loss"
+        },
+        {
+          "id": "W3-B46",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-B",
+          "family": "cube",
+          "solid_family": "cube",
+          "plane_relation": "perpendicular_line",
+          "plane_kind": "through_point_perpendicular_line",
+          "question_type": "section_only",
+          "representability": "representable_without_loss"
+        },
+        {
+          "id": "W3-B47",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "AMBIGUOUS_FACT",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-B",
+          "family": "cube",
+          "solid_family": "cube",
+          "plane_relation": "perpendicular_line",
+          "plane_kind": "through_point_perpendicular_line",
+          "question_type": "area_only",
+          "representability": "representable_without_loss"
+        },
+        {
+          "id": "W3-B48",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-B",
+          "family": "cube",
+          "solid_family": "cube",
+          "plane_relation": "perpendicular_line",
+          "plane_kind": "through_point_perpendicular_line",
+          "question_type": "section_and_area",
+          "representability": "representable_without_loss"
+        },
+        {
+          "id": "W3-B49",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-B",
+          "family": "cube",
+          "solid_family": "cube",
+          "plane_relation": "parallel_plane",
+          "plane_kind": "through_point_parallel_plane",
+          "question_type": "section_only",
+          "representability": "representable_without_loss"
+        },
+        {
+          "id": "W3-B50",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "AMBIGUOUS_FACT",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-B",
+          "family": "cube",
+          "solid_family": "cube",
+          "plane_relation": "parallel_plane",
+          "plane_kind": "through_point_parallel_plane",
+          "question_type": "area_only",
+          "representability": "representable_without_loss"
+        },
+        {
+          "id": "W3-B51",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-B",
+          "family": "cube",
+          "solid_family": "cube",
+          "plane_relation": "parallel_plane",
+          "plane_kind": "through_point_parallel_plane",
+          "question_type": "section_and_area",
+          "representability": "representable_without_loss"
+        },
+        {
+          "id": "W3-B52",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-B",
+          "family": "cube",
+          "solid_family": "cube",
+          "plane_relation": "parallel_two_lines",
+          "plane_kind": "through_point_parallel_two_lines",
+          "question_type": "section_only",
+          "representability": "representable_without_loss"
+        },
+        {
+          "id": "W3-B53",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "AMBIGUOUS_FACT",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-B",
+          "family": "cube",
+          "solid_family": "cube",
+          "plane_relation": "parallel_two_lines",
+          "plane_kind": "through_point_parallel_two_lines",
+          "question_type": "area_only",
+          "representability": "representable_without_loss"
+        },
+        {
+          "id": "W3-B54",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-B",
+          "family": "cube",
+          "solid_family": "cube",
+          "plane_relation": "parallel_two_lines",
+          "plane_kind": "through_point_parallel_two_lines",
+          "question_type": "section_and_area",
+          "representability": "representable_without_loss"
+        },
+        {
+          "id": "W3-A01",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-A",
+          "family": "triangular_pyramid",
+          "solid_family": "triangular_pyramid",
+          "plane_relation": "perpendicular_line",
+          "plane_kind": "through_point_perpendicular_line",
+          "question_type": "section_only",
+          "representability": "representable_without_loss"
+        },
+        {
+          "id": "W3-A02",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-A",
+          "family": "triangular_pyramid",
+          "solid_family": "triangular_pyramid",
+          "plane_relation": "parallel_plane",
+          "plane_kind": "through_point_parallel_plane",
+          "question_type": "area_only",
+          "representability": "representable_without_loss"
+        },
+        {
+          "id": "W3-A03",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-A",
+          "family": "triangular_pyramid",
+          "solid_family": "triangular_pyramid",
+          "plane_relation": "perpendicular_line",
+          "plane_kind": "through_point_perpendicular_line",
+          "question_type": "section_and_area",
+          "representability": "representable_without_loss"
+        },
+        {
+          "id": "W3-A04",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-A",
+          "family": "quadrilateral_pyramid",
+          "solid_family": "quadrilateral_pyramid",
+          "plane_relation": "perpendicular_line",
+          "plane_kind": "through_point_perpendicular_line",
+          "question_type": "section_only",
+          "representability": "representable_without_loss"
+        },
+        {
+          "id": "W3-A05",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-A",
+          "family": "quadrilateral_pyramid",
+          "solid_family": "quadrilateral_pyramid",
+          "plane_relation": "parallel_plane",
+          "plane_kind": "through_point_parallel_plane",
+          "question_type": "area_only",
+          "representability": "representable_without_loss"
+        },
+        {
+          "id": "W3-A06",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-A",
+          "family": "quadrilateral_pyramid",
+          "solid_family": "quadrilateral_pyramid",
+          "plane_relation": "perpendicular_line",
+          "plane_kind": "through_point_perpendicular_line",
+          "question_type": "section_and_area",
+          "representability": "representable_without_loss"
+        },
+        {
+          "id": "W3-A07",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-A",
+          "family": "right_triangular_prism",
+          "solid_family": "right_triangular_prism",
+          "plane_relation": "perpendicular_line",
+          "plane_kind": "through_point_perpendicular_line",
+          "question_type": "section_only",
+          "representability": "representable_without_loss"
+        },
+        {
+          "id": "W3-A08",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-A",
+          "family": "right_triangular_prism",
+          "solid_family": "right_triangular_prism",
+          "plane_relation": "perpendicular_line",
+          "plane_kind": "through_point_perpendicular_line",
+          "question_type": "area_only",
+          "representability": "representable_without_loss"
+        },
+        {
+          "id": "W3-A09",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-A",
+          "family": "right_triangular_prism",
+          "solid_family": "right_triangular_prism",
+          "plane_relation": "parallel_plane",
+          "plane_kind": "through_point_parallel_plane",
+          "question_type": "section_and_area",
+          "representability": "representable_without_loss"
+        },
+        {
+          "id": "W3-A10",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-A",
+          "family": "oblique_triangular_prism",
+          "solid_family": "oblique_triangular_prism",
+          "plane_relation": "perpendicular_line",
+          "plane_kind": "through_point_perpendicular_line",
+          "question_type": "section_only",
+          "representability": "representable_without_loss"
+        },
+        {
+          "id": "W3-A11",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-A",
+          "family": "oblique_triangular_prism",
+          "solid_family": "oblique_triangular_prism",
+          "plane_relation": "parallel_plane",
+          "plane_kind": "through_point_parallel_plane",
+          "question_type": "area_only",
+          "representability": "representable_without_loss"
+        },
+        {
+          "id": "W3-A12",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-A",
+          "family": "oblique_triangular_prism",
+          "solid_family": "oblique_triangular_prism",
+          "plane_relation": "perpendicular_line",
+          "plane_kind": "through_point_perpendicular_line",
+          "question_type": "section_and_area",
+          "representability": "representable_without_loss"
+        },
+        {
+          "id": "W3-A13",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-A",
+          "family": "cuboid",
+          "solid_family": "cuboid",
+          "plane_relation": "perpendicular_line",
+          "plane_kind": "through_point_perpendicular_line",
+          "question_type": "section_only",
+          "representability": "representable_without_loss"
+        },
+        {
+          "id": "W3-A14",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-A",
+          "family": "cuboid",
+          "solid_family": "cuboid",
+          "plane_relation": "perpendicular_line",
+          "plane_kind": "through_point_perpendicular_line",
+          "question_type": "area_only",
+          "representability": "representable_without_loss"
+        },
+        {
+          "id": "W3-A15",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-A",
+          "family": "cuboid",
+          "solid_family": "cuboid",
+          "plane_relation": "parallel_two_lines",
+          "plane_kind": "through_point_parallel_two_lines",
+          "question_type": "section_and_area",
+          "representability": "representable_without_loss"
+        },
+        {
+          "id": "W3-A16",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-A",
+          "family": "cube",
+          "solid_family": "cube",
+          "plane_relation": "parallel_plane",
+          "plane_kind": "through_point_parallel_plane",
+          "question_type": "section_only",
+          "representability": "representable_without_loss"
+        },
+        {
+          "id": "W3-A17",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "AMBIGUOUS_FACT",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-A",
+          "family": "cube",
+          "solid_family": "cube",
+          "plane_relation": "perpendicular_line",
+          "plane_kind": "through_point_perpendicular_line",
+          "question_type": "area_only",
+          "representability": "representable_without_loss"
+        },
+        {
+          "id": "W3-A18",
+          "expected": "SERVE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "NOT_SERVED",
+          "stratum": "P-A",
+          "family": "cube",
+          "solid_family": "cube",
+          "plane_relation": "parallel_two_lines",
+          "plane_kind": "through_point_parallel_two_lines",
+          "question_type": "section_and_area",
+          "representability": "representable_without_loss"
+        },
+        {
+          "id": "W3-N01",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "triangular_pyramid",
+          "solid_family": "triangular_pyramid",
+          "plane_relation": "parallel_plane",
+          "plane_kind": "through_point_parallel_plane",
+          "question_type": "section_only",
+          "representability": "representable_with_explicit_gap",
+          "negative_class": "contradictory_source_facts"
+        },
+        {
+          "id": "W3-N02",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "triangular_pyramid",
+          "solid_family": "triangular_pyramid",
+          "plane_relation": "parallel_plane",
+          "plane_kind": "through_point_parallel_plane",
+          "question_type": "section_only",
+          "representability": "representable_with_explicit_gap",
+          "negative_class": "contradictory_source_facts"
+        },
+        {
+          "id": "W3-N03",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "triangular_pyramid",
+          "solid_family": "triangular_pyramid",
+          "plane_relation": "parallel_plane",
+          "plane_kind": "through_point_parallel_plane",
+          "question_type": "section_only",
+          "representability": "representable_with_explicit_gap",
+          "negative_class": "contradictory_source_facts"
+        },
+        {
+          "id": "W3-N04",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "quadrilateral_pyramid",
+          "solid_family": "quadrilateral_pyramid",
+          "plane_relation": "parallel_plane",
+          "plane_kind": "through_point_parallel_plane",
+          "question_type": "area_only",
+          "representability": "representable_with_explicit_gap",
+          "negative_class": "contradictory_source_facts"
+        },
+        {
+          "id": "W3-N05",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "triangular_pyramid",
+          "solid_family": "triangular_pyramid",
+          "plane_relation": "parallel_plane",
+          "plane_kind": "through_point_parallel_plane",
+          "question_type": "section_only",
+          "representability": "representable_with_explicit_gap",
+          "negative_class": "wrong_solid_kind"
+        },
+        {
+          "id": "W3-N06",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "right_triangular_prism",
+          "solid_family": "right_triangular_prism",
+          "plane_relation": "parallel_plane",
+          "plane_kind": "through_point_parallel_plane",
+          "question_type": "section_only",
+          "representability": "representable_with_explicit_gap",
+          "negative_class": "wrong_solid_kind"
+        },
+        {
+          "id": "W3-N07",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "triangular_pyramid",
+          "solid_family": "triangular_pyramid",
+          "plane_relation": "parallel_plane",
+          "plane_kind": "through_point_parallel_plane",
+          "question_type": "section_only",
+          "representability": "representable_with_explicit_gap",
+          "negative_class": "wrong_solid_kind"
+        },
+        {
+          "id": "W3-N08",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "cuboid",
+          "solid_family": "cuboid",
+          "plane_relation": "parallel_plane",
+          "plane_kind": "through_point_parallel_plane",
+          "question_type": "section_only",
+          "representability": "representable_with_explicit_gap",
+          "negative_class": "wrong_solid_kind"
+        },
+        {
+          "id": "W3-N09",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "triangular_pyramid",
+          "solid_family": "triangular_pyramid",
+          "plane_relation": "parallel_plane",
+          "plane_kind": "through_point_parallel_plane",
+          "question_type": "section_only",
+          "representability": "representable_with_explicit_gap",
+          "negative_class": "wrong_solid_notation"
+        },
+        {
+          "id": "W3-N10",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "right_triangular_prism",
+          "solid_family": "right_triangular_prism",
+          "plane_relation": "parallel_plane",
+          "plane_kind": "through_point_parallel_plane",
+          "question_type": "section_only",
+          "representability": "representable_with_explicit_gap",
+          "negative_class": "wrong_solid_notation"
+        },
+        {
+          "id": "W3-N11",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "triangular_pyramid",
+          "solid_family": "triangular_pyramid",
+          "plane_relation": "parallel_plane",
+          "plane_kind": "through_point_parallel_plane",
+          "question_type": "section_only",
+          "representability": "representable_with_explicit_gap",
+          "negative_class": "wrong_solid_notation"
+        },
+        {
+          "id": "W3-N12",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "triangular_pyramid",
+          "solid_family": "triangular_pyramid",
+          "plane_relation": "parallel_plane",
+          "plane_kind": "through_point_parallel_plane",
+          "question_type": "section_only",
+          "representability": "representable_with_explicit_gap",
+          "negative_class": "wrong_solid_notation"
+        },
+        {
+          "id": "W3-N13",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "triangular_pyramid",
+          "solid_family": "triangular_pyramid",
+          "plane_relation": "parallel_plane",
+          "plane_kind": "through_point_parallel_plane",
+          "question_type": "section_only",
+          "representability": "intentionally_outside_supported_v2_capability",
+          "negative_class": "mixed_solid_operands"
+        },
+        {
+          "id": "W3-N14",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "triangular_pyramid",
+          "solid_family": "triangular_pyramid",
+          "plane_relation": "parallel_plane",
+          "plane_kind": "through_point_parallel_plane",
+          "question_type": "section_only",
+          "representability": "intentionally_outside_supported_v2_capability",
+          "negative_class": "mixed_solid_operands"
+        },
+        {
+          "id": "W3-N15",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "triangular_pyramid",
+          "solid_family": "triangular_pyramid",
+          "plane_relation": "parallel_plane",
+          "plane_kind": "through_point_parallel_plane",
+          "question_type": "section_only",
+          "representability": "representable_with_explicit_gap",
+          "negative_class": "mixed_solid_operands"
+        },
+        {
+          "id": "W3-N16",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "triangular_pyramid",
+          "solid_family": "triangular_pyramid",
+          "plane_relation": "parallel_plane",
+          "plane_kind": "through_point_parallel_plane",
+          "question_type": "section_only",
+          "representability": "representable_with_explicit_gap",
+          "negative_class": "mixed_solid_operands"
+        },
+        {
+          "id": "W3-N17",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "triangular_pyramid",
+          "solid_family": "triangular_pyramid",
+          "plane_relation": "perpendicular_line",
+          "plane_kind": "through_point_perpendicular_line",
+          "question_type": "area_only",
+          "representability": "representable_with_explicit_gap",
+          "negative_class": "missing_mandatory_premise"
+        },
+        {
+          "id": "W3-N18",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "triangular_pyramid",
+          "solid_family": "triangular_pyramid",
+          "plane_relation": "perpendicular_line",
+          "plane_kind": "through_point_perpendicular_line",
+          "question_type": "section_only",
+          "representability": "representable_with_explicit_gap",
+          "negative_class": "missing_mandatory_premise"
+        },
+        {
+          "id": "W3-N19",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "right_triangular_prism",
+          "solid_family": "right_triangular_prism",
+          "plane_relation": "parallel_plane",
+          "plane_kind": "through_point_parallel_plane",
+          "question_type": "area_only",
+          "representability": "representable_with_explicit_gap",
+          "negative_class": "missing_mandatory_premise"
+        },
+        {
+          "id": "W3-N20",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "cuboid",
+          "solid_family": "cuboid",
+          "plane_relation": "parallel_plane",
+          "plane_kind": "through_point_parallel_plane",
+          "question_type": "area_only",
+          "representability": "representable_with_explicit_gap",
+          "negative_class": "missing_mandatory_premise"
+        },
+        {
+          "id": "W3-N21",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "triangular_pyramid",
+          "solid_family": "triangular_pyramid",
+          "plane_relation": "parallel_plane",
+          "plane_kind": "through_point_parallel_plane",
+          "question_type": "section_only",
+          "representability": "representable_with_explicit_gap",
+          "negative_class": "unproven_parallel_or_perpendicular_relation"
+        },
+        {
+          "id": "W3-N22",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "triangular_pyramid",
+          "solid_family": "triangular_pyramid",
+          "plane_relation": "parallel_plane",
+          "plane_kind": "through_point_parallel_plane",
+          "question_type": "section_only",
+          "representability": "representable_with_explicit_gap",
+          "negative_class": "unproven_parallel_or_perpendicular_relation"
+        },
+        {
+          "id": "W3-N23",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "triangular_pyramid",
+          "solid_family": "triangular_pyramid",
+          "plane_relation": "perpendicular_line",
+          "plane_kind": "through_point_perpendicular_line",
+          "question_type": "section_only",
+          "representability": "representable_with_explicit_gap",
+          "negative_class": "unproven_parallel_or_perpendicular_relation"
+        },
+        {
+          "id": "W3-N24",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "triangular_pyramid",
+          "solid_family": "triangular_pyramid",
+          "plane_relation": "parallel_plane",
+          "plane_kind": "through_point_parallel_plane",
+          "question_type": "section_only",
+          "representability": "representable_with_explicit_gap",
+          "negative_class": "unproven_parallel_or_perpendicular_relation"
+        },
+        {
+          "id": "W3-N25",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "triangular_pyramid",
+          "solid_family": "triangular_pyramid",
+          "plane_relation": "parallel_plane",
+          "plane_kind": "through_point_parallel_plane",
+          "question_type": "section_only",
+          "representability": "representable_with_explicit_gap",
+          "negative_class": "ambiguous_source_labels"
+        },
+        {
+          "id": "W3-N26",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "triangular_pyramid",
+          "solid_family": "triangular_pyramid",
+          "plane_relation": "parallel_plane",
+          "plane_kind": "through_point_parallel_plane",
+          "question_type": "section_only",
+          "representability": "representable_with_explicit_gap",
+          "negative_class": "ambiguous_source_labels"
+        },
+        {
+          "id": "W3-N27",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "triangular_pyramid",
+          "solid_family": "triangular_pyramid",
+          "plane_relation": "parallel_plane",
+          "plane_kind": "through_point_parallel_plane",
+          "question_type": "section_only",
+          "representability": "representable_with_explicit_gap",
+          "negative_class": "ambiguous_source_labels"
+        },
+        {
+          "id": "W3-N28",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "triangular_pyramid",
+          "solid_family": "triangular_pyramid",
+          "plane_relation": "parallel_plane",
+          "plane_kind": "through_point_parallel_plane",
+          "question_type": "section_only",
+          "representability": "representable_with_explicit_gap",
+          "negative_class": "ambiguous_source_labels"
+        },
+        {
+          "id": "W3-N29",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "triangular_pyramid",
+          "solid_family": "triangular_pyramid",
+          "plane_relation": "parallel_plane",
+          "plane_kind": "through_point_parallel_plane",
+          "question_type": "section_only",
+          "representability": "representable_with_explicit_gap",
+          "negative_class": "wrong_ratio"
+        },
+        {
+          "id": "W3-N30",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "triangular_pyramid",
+          "solid_family": "triangular_pyramid",
+          "plane_relation": "parallel_plane",
+          "plane_kind": "through_point_parallel_plane",
+          "question_type": "section_only",
+          "representability": "representable_with_explicit_gap",
+          "negative_class": "wrong_ratio"
+        },
+        {
+          "id": "W3-N31",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "triangular_pyramid",
+          "solid_family": "triangular_pyramid",
+          "plane_relation": "parallel_plane",
+          "plane_kind": "through_point_parallel_plane",
+          "question_type": "section_only",
+          "representability": "representable_with_explicit_gap",
+          "negative_class": "wrong_ratio"
+        },
+        {
+          "id": "W3-N32",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "triangular_pyramid",
+          "solid_family": "triangular_pyramid",
+          "plane_relation": "parallel_plane",
+          "plane_kind": "through_point_parallel_plane",
+          "question_type": "section_only",
+          "representability": "representable_with_explicit_gap",
+          "negative_class": "wrong_ratio"
+        },
+        {
+          "id": "W3-N33",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "triangular_pyramid",
+          "solid_family": "triangular_pyramid",
+          "plane_relation": "parallel_plane",
+          "plane_kind": "through_point_parallel_plane",
+          "question_type": "section_only",
+          "representability": "representable_with_explicit_gap",
+          "negative_class": "wrong_edge"
+        },
+        {
+          "id": "W3-N34",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "triangular_pyramid",
+          "solid_family": "triangular_pyramid",
+          "plane_relation": "parallel_plane",
+          "plane_kind": "through_point_parallel_plane",
+          "question_type": "section_only",
+          "representability": "representable_with_explicit_gap",
+          "negative_class": "wrong_edge"
+        },
+        {
+          "id": "W3-N35",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "triangular_pyramid",
+          "solid_family": "triangular_pyramid",
+          "plane_relation": "parallel_plane",
+          "plane_kind": "through_point_parallel_plane",
+          "question_type": "section_only",
+          "representability": "intentionally_outside_supported_v2_capability",
+          "negative_class": "wrong_edge"
+        },
+        {
+          "id": "W3-N36",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "right_triangular_prism",
+          "solid_family": "right_triangular_prism",
+          "plane_relation": "parallel_plane",
+          "plane_kind": "through_point_parallel_plane",
+          "question_type": "section_only",
+          "representability": "intentionally_outside_supported_v2_capability",
+          "negative_class": "wrong_edge"
+        },
+        {
+          "id": "W3-N37",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "triangular_pyramid",
+          "solid_family": "triangular_pyramid",
+          "plane_relation": "parallel_plane",
+          "plane_kind": "through_point_parallel_plane",
+          "question_type": "section_only",
+          "representability": "representable_with_explicit_gap",
+          "negative_class": "impossible_vertex"
+        },
+        {
+          "id": "W3-N38",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "triangular_pyramid",
+          "solid_family": "triangular_pyramid",
+          "plane_relation": "perpendicular_line",
+          "plane_kind": "through_point_perpendicular_line",
+          "question_type": "section_only",
+          "representability": "representable_with_explicit_gap",
+          "negative_class": "impossible_vertex"
+        },
+        {
+          "id": "W3-N39",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "triangular_pyramid",
+          "solid_family": "triangular_pyramid",
+          "plane_relation": "parallel_plane",
+          "plane_kind": "through_point_parallel_plane",
+          "question_type": "section_only",
+          "representability": "representable_with_explicit_gap",
+          "negative_class": "impossible_vertex"
+        },
+        {
+          "id": "W3-N40",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "triangular_pyramid",
+          "solid_family": "triangular_pyramid",
+          "plane_relation": "parallel_plane",
+          "plane_kind": "through_point_parallel_plane",
+          "question_type": "section_only",
+          "representability": "representable_with_explicit_gap",
+          "negative_class": "impossible_vertex"
+        },
+        {
+          "id": "W3-N41",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "triangular_pyramid",
+          "solid_family": "triangular_pyramid",
+          "plane_relation": "perpendicular_line",
+          "plane_kind": "through_point_perpendicular_line",
+          "question_type": "section_only",
+          "representability": "representable_with_explicit_gap",
+          "negative_class": "invalid_section_declaration"
+        },
+        {
+          "id": "W3-N42",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "triangular_pyramid",
+          "solid_family": "triangular_pyramid",
+          "plane_relation": "parallel_plane",
+          "plane_kind": "through_point_parallel_plane",
+          "question_type": "section_only",
+          "representability": "representable_with_explicit_gap",
+          "negative_class": "invalid_section_declaration"
+        },
+        {
+          "id": "W3-N43",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "triangular_pyramid",
+          "solid_family": "triangular_pyramid",
+          "plane_relation": "parallel_plane",
+          "plane_kind": "through_point_parallel_plane",
+          "question_type": "section_only",
+          "representability": "representable_with_explicit_gap",
+          "negative_class": "invalid_section_declaration"
+        },
+        {
+          "id": "W3-N44",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "triangular_pyramid",
+          "solid_family": "triangular_pyramid",
+          "plane_relation": "parallel_plane",
+          "plane_kind": "through_point_parallel_plane",
+          "question_type": "section_only",
+          "representability": "representable_with_explicit_gap",
+          "negative_class": "invalid_section_declaration"
+        },
+        {
+          "id": "W3-N45",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "cylinder",
+          "solid_family": "cylinder",
+          "plane_relation": "axial_section",
+          "plane_kind": "axial_section",
+          "question_type": "area_only",
+          "representability": "intentionally_outside_supported_v2_capability",
+          "negative_class": "unsupported_geometry_capability"
+        },
+        {
+          "id": "W3-N46",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "cone",
+          "solid_family": "cone",
+          "plane_relation": "axial_section",
+          "plane_kind": "axial_section",
+          "question_type": "section_only",
+          "representability": "intentionally_outside_supported_v2_capability",
+          "negative_class": "unsupported_geometry_capability"
+        },
+        {
+          "id": "W3-N47",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "pentagonal_pyramid",
+          "solid_family": "pentagonal_pyramid",
+          "plane_relation": "parallel_plane",
+          "plane_kind": "through_point_parallel_plane",
+          "question_type": "area_only",
+          "representability": "intentionally_outside_supported_v2_capability",
+          "negative_class": "unsupported_geometry_capability"
+        },
+        {
+          "id": "W3-N48",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "triangular_pyramid",
+          "solid_family": "triangular_pyramid",
+          "plane_relation": "plane_equation",
+          "plane_kind": "plane_equation",
+          "question_type": "section_only",
+          "representability": "intentionally_outside_supported_v2_capability",
+          "negative_class": "unsupported_geometry_capability"
+        },
+        {
+          "id": "W3-N49",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "triangular_pyramid",
+          "solid_family": "triangular_pyramid",
+          "plane_relation": "parallel_plane",
+          "plane_kind": "through_point_parallel_plane",
+          "question_type": "section_only",
+          "representability": "representable_with_explicit_gap",
+          "negative_class": "conflicting_section_area_requests"
+        },
+        {
+          "id": "W3-N50",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "triangular_pyramid",
+          "solid_family": "triangular_pyramid",
+          "plane_relation": "parallel_plane",
+          "plane_kind": "through_point_parallel_plane",
+          "question_type": "section_only",
+          "representability": "representable_with_explicit_gap",
+          "negative_class": "conflicting_section_area_requests"
+        },
+        {
+          "id": "W3-N51",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "triangular_pyramid",
+          "solid_family": "triangular_pyramid",
+          "plane_relation": "parallel_plane",
+          "plane_kind": "through_point_parallel_plane",
+          "question_type": "area_only",
+          "representability": "representable_with_explicit_gap",
+          "negative_class": "conflicting_section_area_requests"
+        },
+        {
+          "id": "W3-N52",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "triangular_pyramid",
+          "solid_family": "triangular_pyramid",
+          "plane_relation": "parallel_plane",
+          "plane_kind": "through_point_parallel_plane",
+          "question_type": "section_and_area",
+          "representability": "representable_with_explicit_gap",
+          "negative_class": "conflicting_section_area_requests"
+        },
+        {
+          "id": "W3-N53",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "right_triangular_prism",
+          "solid_family": "right_triangular_prism",
+          "plane_relation": "parallel_plane",
+          "plane_kind": "through_point_parallel_plane",
+          "question_type": "section_only",
+          "representability": "representable_with_explicit_gap",
+          "negative_class": "incorrect_stated_intersections"
+        },
+        {
+          "id": "W3-N54",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "quadrilateral_pyramid",
+          "solid_family": "quadrilateral_pyramid",
+          "plane_relation": "parallel_plane",
+          "plane_kind": "through_point_parallel_plane",
+          "question_type": "section_only",
+          "representability": "representable_with_explicit_gap",
+          "negative_class": "incorrect_stated_intersections"
+        },
+        {
+          "id": "W3-N55",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "cuboid",
+          "solid_family": "cuboid",
+          "plane_relation": "parallel_plane",
+          "plane_kind": "through_point_parallel_plane",
+          "question_type": "section_only",
+          "representability": "representable_with_explicit_gap",
+          "negative_class": "incorrect_stated_intersections"
+        },
+        {
+          "id": "W3-N56",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "right_triangular_prism",
+          "solid_family": "right_triangular_prism",
+          "plane_relation": "perpendicular_line",
+          "plane_kind": "through_point_perpendicular_line",
+          "question_type": "section_only",
+          "representability": "representable_with_explicit_gap",
+          "negative_class": "incorrect_stated_intersections"
+        },
+        {
+          "id": "W3-N57",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "triangular_pyramid",
+          "solid_family": "triangular_pyramid",
+          "plane_relation": "parallel_plane",
+          "plane_kind": "through_point_parallel_plane",
+          "question_type": "section_only",
+          "representability": "representable_with_explicit_gap",
+          "negative_class": "category_a_b_semantic_contradictions"
+        },
+        {
+          "id": "W3-N58",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "triangular_pyramid",
+          "solid_family": "triangular_pyramid",
+          "plane_relation": "parallel_plane",
+          "plane_kind": "through_point_parallel_plane",
+          "question_type": "section_only",
+          "representability": "representable_with_explicit_gap",
+          "negative_class": "category_a_b_semantic_contradictions"
+        },
+        {
+          "id": "W3-N59",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "triangular_pyramid",
+          "solid_family": "triangular_pyramid",
+          "plane_relation": "parallel_plane",
+          "plane_kind": "through_point_parallel_plane",
+          "question_type": "section_only",
+          "representability": "representable_with_explicit_gap",
+          "negative_class": "category_a_b_semantic_contradictions"
+        },
+        {
+          "id": "W3-N60",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "right_triangular_prism",
+          "solid_family": "right_triangular_prism",
+          "plane_relation": "perpendicular_line",
+          "plane_kind": "through_point_perpendicular_line",
+          "question_type": "section_only",
+          "representability": "representable_with_explicit_gap",
+          "negative_class": "category_a_b_semantic_contradictions"
+        },
+        {
+          "id": "W3-N61",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "right_triangular_prism",
+          "solid_family": "right_triangular_prism",
+          "plane_relation": "perpendicular_line",
+          "plane_kind": "through_point_perpendicular_line",
+          "question_type": "section_only",
+          "representability": "representable_with_explicit_gap",
+          "negative_class": "primed_label_identity_ambiguity"
+        },
+        {
+          "id": "W3-N62",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "right_triangular_prism",
+          "solid_family": "right_triangular_prism",
+          "plane_relation": "perpendicular_line",
+          "plane_kind": "through_point_perpendicular_line",
+          "question_type": "area_only",
+          "representability": "representable_with_explicit_gap",
+          "negative_class": "primed_label_identity_ambiguity"
+        },
+        {
+          "id": "W3-N63",
+          "expected": "REFUSE",
+          "status": "SERVED",
+          "reason": null,
+          "outcome": "WRONG_SERVED",
+          "stratum": "N",
+          "family": "cuboid",
+          "solid_family": "cuboid",
+          "plane_relation": "parallel_plane",
+          "plane_kind": "through_point_parallel_plane",
+          "question_type": "section_only",
+          "representability": "representable_with_explicit_gap",
+          "negative_class": "primed_label_identity_ambiguity"
+        },
+        {
+          "id": "W3-N64",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "oblique_triangular_prism",
+          "solid_family": "oblique_triangular_prism",
+          "plane_relation": "parallel_plane",
+          "plane_kind": "through_point_parallel_plane",
+          "question_type": "section_only",
+          "representability": "representable_with_explicit_gap",
+          "negative_class": "primed_label_identity_ambiguity"
+        },
+        {
+          "id": "W3-N65",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "triangular_pyramid",
+          "solid_family": "triangular_pyramid",
+          "plane_relation": "parallel_plane",
+          "plane_kind": "through_point_parallel_plane",
+          "question_type": "section_only",
+          "representability": "representable_with_explicit_gap",
+          "negative_class": "source_provenance_mismatch"
+        },
+        {
+          "id": "W3-N66",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "triangular_pyramid",
+          "solid_family": "triangular_pyramid",
+          "plane_relation": "parallel_plane",
+          "plane_kind": "through_point_parallel_plane",
+          "question_type": "section_only",
+          "representability": "representable_with_explicit_gap",
+          "negative_class": "source_provenance_mismatch"
+        },
+        {
+          "id": "W3-N67",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "triangular_pyramid",
+          "solid_family": "triangular_pyramid",
+          "plane_relation": "parallel_plane",
+          "plane_kind": "through_point_parallel_plane",
+          "question_type": "section_only",
+          "representability": "representable_with_explicit_gap",
+          "negative_class": "source_provenance_mismatch"
+        },
+        {
+          "id": "W3-N68",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "triangular_pyramid",
+          "solid_family": "triangular_pyramid",
+          "plane_relation": "parallel_plane",
+          "plane_kind": "through_point_parallel_plane",
+          "question_type": "section_only",
+          "representability": "representable_with_explicit_gap",
+          "negative_class": "source_provenance_mismatch"
+        },
+        {
+          "id": "W3-N69",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "triangular_pyramid",
+          "solid_family": "triangular_pyramid",
+          "plane_relation": "parallel_plane",
+          "plane_kind": "through_point_parallel_plane",
+          "question_type": "section_only",
+          "representability": "representable_with_explicit_gap",
+          "negative_class": "geometry_degeneration"
+        },
+        {
+          "id": "W3-N70",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "triangular_pyramid",
+          "solid_family": "triangular_pyramid",
+          "plane_relation": "parallel_plane",
+          "plane_kind": "through_point_parallel_plane",
+          "question_type": "section_only",
+          "representability": "representable_with_explicit_gap",
+          "negative_class": "geometry_degeneration"
+        },
+        {
+          "id": "W3-N71",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "cuboid",
+          "solid_family": "cuboid",
+          "plane_relation": "parallel_two_lines",
+          "plane_kind": "through_point_parallel_two_lines",
+          "question_type": "section_only",
+          "representability": "representable_with_explicit_gap",
+          "negative_class": "geometry_degeneration"
+        },
+        {
+          "id": "W3-N72",
+          "expected": "REFUSE",
+          "status": "REFUSED",
+          "reason": "LIVE_AI_DISABLED",
+          "outcome": "CORRECT_REFUSAL",
+          "stratum": "N",
+          "family": "triangular_pyramid",
+          "solid_family": "triangular_pyramid",
+          "plane_relation": "perpendicular_line",
+          "plane_kind": "through_point_perpendicular_line",
+          "question_type": "section_only",
+          "representability": "representable_with_explicit_gap",
+          "negative_class": "geometry_degeneration"
+        }
+      ],
+      "rows_before": [
+        {
+          "id": "W3-B01",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-B02",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-B03",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-B04",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-B05",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-B06",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-B07",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-B08",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-B09",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-B10",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-B11",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-B12",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-B13",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-B14",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-B15",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-B16",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-B17",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-B18",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-B19",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-B20",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-B21",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-B22",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-B23",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-B24",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-B25",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-B26",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-B27",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-B28",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-B29",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-B30",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-B31",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-B32",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-B33",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-B34",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-B35",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-B36",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-B37",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-B38",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-B39",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-B40",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-B41",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-B42",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-B43",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-B44",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-B45",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-B46",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-B47",
+          "outcome": "NOT_SERVED",
+          "reason": "AMBIGUOUS_FACT"
+        },
+        {
+          "id": "W3-B48",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-B49",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-B50",
+          "outcome": "NOT_SERVED",
+          "reason": "AMBIGUOUS_FACT"
+        },
+        {
+          "id": "W3-B51",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-B52",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-B53",
+          "outcome": "NOT_SERVED",
+          "reason": "AMBIGUOUS_FACT"
+        },
+        {
+          "id": "W3-B54",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-A01",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-A02",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-A03",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-A04",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-A05",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-A06",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-A07",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-A08",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-A09",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-A10",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-A11",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-A12",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-A13",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-A14",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-A15",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-A16",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-A17",
+          "outcome": "NOT_SERVED",
+          "reason": "AMBIGUOUS_FACT"
+        },
+        {
+          "id": "W3-A18",
+          "outcome": "NOT_SERVED",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-N01",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-N02",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-N03",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-N04",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-N05",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-N06",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-N07",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-N08",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-N09",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-N10",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-N11",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-N12",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-N13",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-N14",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-N15",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-N16",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-N17",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-N18",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-N19",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-N20",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-N21",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-N22",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-N23",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-N24",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-N25",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-N26",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-N27",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-N28",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-N29",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-N30",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-N31",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-N32",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-N33",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-N34",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-N35",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-N36",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-N37",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-N38",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-N39",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-N40",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-N41",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-N42",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-N43",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-N44",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-N45",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-N46",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-N47",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-N48",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-N49",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-N50",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-N51",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-N52",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-N53",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-N54",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-N55",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-N56",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-N57",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-N58",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-N59",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-N60",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-N61",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-N62",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-N63",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-N64",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-N65",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-N66",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-N67",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-N68",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-N69",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-N70",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-N71",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        },
+        {
+          "id": "W3-N72",
+          "outcome": "CORRECT_REFUSAL",
+          "reason": "LIVE_AI_DISABLED"
+        }
+      ]
+    }
+  },
+  "preregistered_verdict": {
+    "LOCKED_W2": {
+      "served_correct": "2/48 (before 0/48)",
+      "wrong_served": 1,
+      "correct_refusal": "47/48"
+    },
+    "LOCKED_W3": {
+      "served_correct": "0/72 (before 0/72)",
+      "wrong_served": 1,
+      "correct_refusal": "71/72"
+    },
+    "rule": "as registered: anything served on a REFUSE case is WRONG_SERVED"
+  },
+  "post_hoc_inspection": {
+    "after_the_single_execution": true,
+    "product_changed_afterwards": false,
+    "texts_read": [
+      "W2-N03",
+      "W3-N63"
+    ],
+    "now_exposed": [
+      "W2-N03",
+      "W3-N63"
+    ],
+    "finding": "both REFUSE labels belong to a corrupted extraction PAYLOAD (W2-N03 rationale: 'Payload declares prism ABCD.A'B'C'D' when source text states pyramid S.ABCD'; W2 negative_origin counts: faulty_extraction 19 / flawed_or_unsupported_problem 29); the problem TEXT of each is a valid, determined section problem. The local route never sees the payload.",
+    "served_geometry_vs_hand_computation": {
+      "W2-N03": {
+        "served_boundary": "midpoints of SA, SB, SC, SD",
+        "served_area_sq": "225",
+        "hand": "plane ∥ base through the midpoint of SA (SA = 8a): rectangle 3a × 5a ⇒ area² = 225 (a = 1)",
+        "match": true
+      },
+      "W3-N63": {
+        "served_boundary": "midpoints of AB, CD, C'D', A'B'",
+        "served_area_sq": "19600",
+        "hand": "plane ∥ (ADD') through the midpoint of A'B' (AB = 6): rectangle AD × AA' = 10 × 14 ⇒ area² = 19600",
+        "match": true
+      }
+    },
+    "reading": "under the registered rule 2 WRONG_SERVED; on inspection neither is a wrong scene for its text — the registered rule did not separate payload-origin negatives from text-origin ones (a protocol limitation, reported, not re-scored)",
+    "positive_coverage": "the local route served 2 of 120 independently worded positive section problems (W2-B08, W2-B14, both ⊥ line); 114 are not read locally (LIVE_AI_DISABLED) and 4 ask for clarification (AMBIGUOUS_FACT). On the agent's own probes the same rules serve 21/24: the grammar fits the agent's phrasing, not the curators' — development probes are not evidence of generalization",
+    "no_rule_written_from_these_results": true
+  }
+}
