@@ -292,6 +292,9 @@ export interface SceneObject {
   /** Semantic-to-Scene3D — phép dựng CHÍNH XÁC của góc khác 90° mà đề hỏi (backend `gan_dung_goc`): đỉnh, hai cạnh,
    *  chân hình chiếu / đoạn song song / tia vuông góc giao tuyến. Không mang con số; phía này chỉ vẽ. */
   angle_construction?: AngleConstruction;
+  /** Run thiết diện–giao tuyến–nhị diện (2026-11-13) — đường cao của hình chóp mà thể tích dùng khi cảnh chưa vẽ nó: chân =
+   *  hình chiếu chính xác của đỉnh lên đáy (backend `gan_duong_cao`), kèm cạnh đáy / mặt bên khi mặt bên ⟂ đáy. Không con số. */
+  altitude_construction?: AltitudeConstruction;
   /**
    * HÌNH CONG — tham số ngữ nghĩa, **không phải lưới**.
    *
@@ -628,6 +631,22 @@ export interface AngleConstruction {
   parallel?: { through: ExactVec3; to: ExactVec3; of: string };
   /** `plane_plane`: phương giao tuyến tại đỉnh — hai tia vuông góc với nó. */
   edge?: { direction: ExactVec3; toward_id?: string };
+  checks: string[];
+}
+
+/** `altitude-construction/1` — đường cao từ đỉnh `apex_id` tới chân `foot` trên đáy `on`; `marker` là dấu vuông góc tại chân
+ *  (`u` dọc đáy tới điểm có tên `u_to`, `v` = đỉnh − chân). `base_edge`/`face`: chân nằm trên giao tuyến của mặt bên ⟂ đáy. */
+export interface AltitudeConstruction {
+  schema: "altitude-construction/1";
+  apex_id: string;
+  from: ExactVec3;
+  foot: ExactVec3;
+  foot_id?: string;
+  on: string;
+  marker: { u: ExactVec3; v: ExactVec3; u_to: string };
+  base_edge?: [string, string];
+  face?: [string, string, string];
+  foot_on_edge_segment?: boolean;
   checks: string[];
 }
 

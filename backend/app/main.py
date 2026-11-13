@@ -903,7 +903,10 @@ MISSING_KEY_MSG = (
 #       (phép dựng chính xác của góc đề hỏi — đỉnh, hai cạnh, chân hình chiếu / đoạn song song / tia vuông góc giao
 #       tuyến), và nhân chứng góc vuông không còn bị đổi nhầm thành nhãn độ dài. Envelope phục vụ đổi ⇒ row
 #       `132:route-d` phải MISS (`tests/test_cache_angle_construction_invalidation.py`).
-CACHE_VERSION = "133"
+# 134 — 2026-11-13 (verified-section-intersection-dihedral-local): phép dựng góc không bao giờ vẽ góc bù (cos có dấu
+#       ≥ 0, `angle_domain`), thể tích hình chóp mang `altitude_construction` khi cảnh chưa vẽ đường cao. Envelope phục vụ
+#       đổi ⇒ row `133:route-d` phải MISS (`tests/test_cache_dihedral_altitude_invalidation.py`).
+CACHE_VERSION = "134"
 
 #: Hai chế độ hợp lệ của kiến trúc chính thức Hybrid `/4` do máy chủ sở hữu:
 #: - `live` (mặc định): trích xuất có cấu trúc qua Gemini (`typed-fact-next/2`) khi cấu hình `GEMINI_API_KEY`.

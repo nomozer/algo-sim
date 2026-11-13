@@ -2630,6 +2630,57 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
         ]
         mapped_goal = True
 
+    # 7c-0 (verified-section-intersection-dihedral-local). A section by the plane NAMED BY THREE POINTS in the question
+    # itself — the existing three-point section of the planner (`constrained` + `contains_points`):
+    #   "Xác định / Dựng / Tìm / Vẽ thiết diện (của hình chóp S.ABCD) (cắt|tạo) bởi (mặt phẳng) (MAB)"
+    # NOT "Mặt phẳng (MAB) cắt hình chóp theo thiết diện là hình gì?": the plane is stated inside the question itself, and the
+    # Source Gate's goal-as-premise guard refuses it (QUESTION_CLAUSE_NOT_PREMISE) — left unparsed, the guard is not loosened.
+    #   "Tính diện tích thiết diện (của …) (cắt|tạo) bởi (mặt phẳng) (MAB)" (the area goal itself is rule 7e's)
+    # The engine proves the three points distinct and non-collinear and computes the bounded section; a solid named in
+    # the clause must be the declared one. Nothing is assumed about the plane beyond the three points the source names.
+    _SOLID_WORDS = r"(?:hình|khối)\s+(?:chóp(?:\s+cụt)?|lăng\s+trụ(?:\s+đứng)?|hộp(?:\s+chữ\s+nhật)?|lập\s+phương|tứ\s+diện)"
+    m_sec3 = re.search(
+        rf"(?P<full>(?:(?P<area>tính\s+diện\s+tích)|(?:Xác\s+định|Dựng|Tìm|Vẽ))\s+thiết\s+diện(?:\s+của\s+{_SOLID_WORDS}"
+        rf"(?:\s+(?P<sol>{_PT}\.{_PTS3_6}|{_PTS3_6}\.{_PTS3_6}|{_PTS3_6}))?)?\s+(?:cắt\s+|tạo\s+)?bởi\s+(?:mặt\s+phẳng\s+|mp\s*)?"
+        rf"\((?P<pl>{_PTS3})\))(?![\w'])",
+        ctext_norm,
+        re.IGNORECASE | re.UNICODE,
+    )
+    if m_sec3 and builder._primary_solid_id and not builder.derived_sections:
+        pl = _split_pts(m_sec3.group("pl"))
+        sol = m_sec3.group("sol")
+        primary = next((sd for sd in builder.solids if sd.get("solid_id") == builder._primary_solid_id), {})
+        if len(set(pl)) == 3 and (sol is None or sol == primary.get("notation")):
+            q_s3 = _clean_quote(raw, ca + m_sec3.start("full"), ca + m_sec3.end("full"))
+            builder.derived_sections.append({
+                "section_id": "sec", "target_solid_id": builder._primary_solid_id, "plane_kind": "constrained",
+                "constraints": [{"kind": "contains_points", "operands": pl}], "stated_intersections": [], "quote": q_s3})
+            builder._section_by_plane_name["".join(pl)] = "sec"
+            builder._last_section_id = "sec"
+            builder.simulation_goals.append(
+                {"goal_id": "g_sec", "kind": "construct_plane_section", "target_section_id": "sec", "quote": q_s3})
+            mapped_goal = True
+
+    # 7c-1 (verified-section-intersection-dihedral-local). The intersection line of two planes, each named by three
+    # labels: "Tìm / Xác định / Dựng giao tuyến (của) (hai mặt phẳng) (SAB) và (mặt phẳng) (SCD)", "Gọi d là giao tuyến
+    # của (SAB) và (SCD)". A construction goal (`/2` construct_intersection_line): the line is never assumed known —
+    # the engine decides whether the planes meet in one line, are parallel or coincide.
+    for m_il in re.finditer(
+        rf"(?P<full>(?:(?:Tìm|Xác\s+định|Dựng|Vẽ)|Gọi\s+(?P<lname>[a-zΔ]|{_PT})\s+là)\s+giao\s+tuyến\s+(?:của\s+)?"
+        rf"(?:hai\s+mặt\s+phẳng\s+|mặt\s+phẳng\s+|mp\s*)?\((?P<pa>{_PTS3})\)\s+(?:và|với)\s+(?:mặt\s+phẳng\s+|mp\s*)?"
+        rf"\((?P<pb>{_PTS3})\))(?![\w'])",
+        ctext_norm,
+        re.IGNORECASE | re.UNICODE,
+    ):
+        pa, pb = _split_pts(m_il.group("pa")), _split_pts(m_il.group("pb"))
+        if len(set(pa)) != 3 or len(set(pb)) != 3 or set(pa) == set(pb) or not builder._primary_solid_id:
+            continue
+        q_il = _clean_quote(raw, ca + m_il.start("full"), ca + m_il.end("full"))
+        builder.simulation_goals.append(
+            {"goal_id": f"g_il{len(builder.simulation_goals) + 1}", "kind": "construct_intersection_line",
+             "target_planes": [pa, pb], "target_solid_id": builder._primary_solid_id, "quote": q_il})
+        mapped_goal = True
+
     # 7c. Construct plane section + derived sub-pyramid ("Dựng thiết diện của hình chóp S.ABC bởi (α) và khối chóp đỉnh S cắt bởi (α)")
     m_con_sec_only = re.search(
         rf"Dựng\s+(?:từng\s+bước\s+hình\s+chóp\s*,\s*|lăng\s+trụ\s*,\s*)?thiết\s+diện(?:\s+của\s+hình\s+(?:chóp|lăng\s+trụ)(?:\s+{_PT}\.{_PTS3_6})?)?(?:\s+(?:cắt\s+)?bởi\s+\((?P<pname>{_PT}|[α-ω]'?)\))?(?:\s*(?:,|\bvà\b)\s*khối\s+chóp\s+(?:(?P<sub_ap>{_PT})\.{_PTS3_6}|đỉnh\s+(?P<ap>{_PT})\s+cắt\s+bởi\s+\((?P<pname2>{_PT}|[α-ω]'?)\)|cắt\s+bởi\s+\((?P<pname3>{_PT}|[α-ω]'?)\)\s+chứa\s+đỉnh\s+(?P<ap2>{_PT})))?",

@@ -947,6 +947,12 @@ def _bridge(p: TypedFactNextPayload, section_fact, version: str, v2: bool) -> di
     for g in p.simulation_goals:
         if g.kind == "construct_plane_section":
             asked.setdefault(g.target_section_id, []).append(g.quote)
+        elif g.kind == "construct_intersection_line":
+            # `/2` additive: the planner's existing `intersection_line` question (the facts route has served it since
+            # hybrid-v2); the Source Gate grounds both planes in the quote, the engine proves the line exists and is unique.
+            pa, pb = ([_ref(x) for x in pl] for pl in g.target_planes)
+            facts.append({"id": g.goal_id, "kind": "intersection_line", "role": "question", "quotes": [g.quote],
+                          "points_a": pa, "points_b": pb})
     for sec in p.derived_sections:
         facts.append(
             section_fact(sec, solids, asked.get(sec.section_id, []), p.problem_text, mo_ta)

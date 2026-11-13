@@ -216,7 +216,8 @@ def test_inv_20_candidate_and_cache_verify_only():
     # 129 -> 130 (scene3d-to-hybrid-v2-replacement): nhân chứng góc vuông + `u_to`, bước dựng của vật do assign sinh, tên mặt phẳng `(α)` / tên nhiều điểm kiểm đồng phẳng (envelope phục vụ đổi; row v129 thật vẫn HIT, runs/scene3d-to-hybrid-v2-replacement/cache/decision.json).
     # 130 -> 131 (geometry-generalization-and-pedagogical-construction): cạnh thiết diện mang lý do đã kiểm chính xác (`justification_text`, envelope phục vụ đổi; row v130 phải MISS).
     # 132 -> 133 (semantic-to-scene3d-verified-simulation): góc khác 90° mang `angle_construction` (envelope phục vụ đổi; row 132:route-d phải MISS).
-    assert str(CACHE_VERSION) == "133"
+    # 133 -> 134 (verified-section-intersection-dihedral-local): góc không vẽ góc bù + `altitude_construction` (row 133:route-d phải MISS).
+    assert str(CACHE_VERSION) == "134"
 
 
 def test_inv_21_favicon_not_in_staged_changes():

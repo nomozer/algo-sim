@@ -1,5 +1,16 @@
 # CODE_INDEX.md — Chỉ mục module + BỘ NHỚ KIẾN TRÚC
 
+## Verified section, intersection and dihedral on the local route (2026-11-13)
+
+| Path | Owns | Locked by |
+|---|---|---|
+| `backend/app/simulation/semantic_program/quantity_annotations.py` (`GOC_MIEN`, `_khong_tu`, `_goc_dung`) | Every angle construction draws the asked non-oriented angle in [0°, 90°]: when the rays open an obtuse angle the second ray is replaced by its opposite (same line / same plane), and the construction is certified by the SIGNED cosine (≥ 0) together with cos²; `angle_domain` declares the domain | `backend/tests/geometry/test_angle_construction_domain.py` (60°/120° pair, plane order, renaming, parallel/coincident planes) |
+| `backend/app/simulation/semantic_program/quantity_annotations.py` (`gan_duong_cao`, `_dung_duong_cao`, `ALTITUDE_CONSTRUCTION_SCHEMA`) | `altitude-construction/1` on a pyramid volume whose altitude the scene does not draw: foot = exact orthogonal projection of the apex on the base plane; when the foot lies on a base edge line and that lateral face is ⟂ the base (checked exactly), the face, edge and whether the foot is inside the edge segment are recorded | `backend/tests/geometry/test_section_intersection_local.py` (altitude cases) |
+| `backend/app/simulation/geometry_functions/typed_fact_next.py` (`SimulationGoalSpecV2`, `KIND_ALLOWED_FIELDS_V2["simulation_goal_v2"]`) · `backend/app/simulation/geometry_functions/typed_fact_next_bridge.py` | `/2`-only additive goal `construct_intersection_line` (two planes of three labels each, `target_planes`); the bridge maps it to the planner's existing `intersection_line` question. The `/1` snapshot and the provider framing are unchanged | same test file (intersection cases) |
+| `backend/app/ai/local_geometry_parser.py` (rules 7c-0, 7c-1) | "Xác định / Dựng / Tìm / Vẽ thiết diện … (cắt\|tạo) bởi (mặt phẳng) (MAB)" → `constrained` section with `contains_points`; "Tìm / Xác định / Dựng giao tuyến (của) (hai mặt phẳng) (SAB) và (SCD)", "Gọi d là giao tuyến của …" → `construct_intersection_line`. A section plane stated inside a question sentence is left unparsed (goal-as-premise guard) | same test file (independent section oracle, counterexamples) |
+| `frontend/src/simulations/domains/geometry/scene3d-angle-construction.ts` (`altitudeConstructionsAt`, non-obtuse check) · `frontend/src/simulations/domains/geometry/scene3d-view.tsx` · `frontend/src/simulations/domains/geometry/scene3d-chart.ts` · `frontend/src/simulations/domains/geometry/scene3d-model.ts` (`AltitudeConstruction`) | Renderer refuses angle rays that open an obtuse angle or a construction without `angle_domain`; draws a re-checked altitude (dashed leg, right-angle mark, base-edge extension) from the volume's conclusion step | `frontend/src/simulations/domains/geometry/scene3d-angle-construction.test.ts` |
+| `docs/evaluation/geometry/runs/verified-section-intersection-dihedral-local/tools/` | Fixture regeneration, dihedral audit, section/intersection/altitude verification and mutation checks, browser E2E, acceptance, regression wrapper | run report and receipts |
+
 ## Semantic-to-Scene3D verified simulation (2026-11-13)
 
 | Path | Owns | Locked by |

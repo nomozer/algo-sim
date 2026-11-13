@@ -102,6 +102,30 @@ export function angleConstructionsAt(scene: Scene3D, step: number, present: Read
   });
 }
 
+/** Đường cao (`altitude-construction/1`) hiện ở bước kết luận của thể tích, khi đỉnh và điểm `u_to` đã có mặt. Kiểm lại
+ *  fail-closed ở toạ độ thế giới: đoạn đỉnh → chân vuông góc với phương dấu `u`, `u` hướng tới đúng điểm có tên, đỉnh và
+ *  chân khác nhau. Trả về cùng dạng nét như đoạn vuông góc của nhân chứng (`from`, `foot`, `u`, `v`, `uTo`). */
+export interface AltitudeShown { id: string; from: Vec3; foot: Vec3; u: Vec3; v: Vec3; uTo: Vec3 }
+
+export function altitudeConstructionsAt(scene: Scene3D, step: number, present: ReadonlySet<string>): AltitudeShown[] {
+  const k = clampStep(scene, step);
+  const ketLuan = buocKetLuan(scene);
+  const theoId = new Map(scene.objects.map((o) => [o.id, o]));
+  return scene.objects.flatMap((o: SceneObject): AltitudeShown[] => {
+    const h = o.type === "quantity" ? o.altitude_construction : undefined;
+    const tai = ketLuan.get(o.id);
+    if (!h || h.schema !== "altitude-construction/1" || tai === undefined || tai > k) return [];
+    if (!present.has(h.apex_id) || !present.has(h.marker.u_to)) return [];
+    const toi = theoId.get(h.marker.u_to)?.xyz;
+    const dinh = theoId.get(h.apex_id)?.xyz;
+    if (!toi || !dinh) return [];
+    const from = toVec3(h.from), foot = toVec3(h.foot), u = toVec3(h.marker.u), v = toVec3(h.marker.v), uTo = toVec3(toi);
+    if (![from, foot, u, v, uTo].every(huuHan) || doDai(tru(from, toVec3(dinh))) > SAI_SO_DUNG_GOC * (1 + doDai(from))) return [];
+    if (!vuong(tru(from, foot), u) || !songSong(u, tru(uTo, foot)) || !songSong(v, tru(from, foot))) return [];
+    return [{ id: o.id, from, foot, u, v, uTo }];
+  });
+}
+
 /** Điểm của cung góc tại đỉnh, bán kính `r`, từ cạnh thứ nhất sang cạnh thứ hai (nội suy cầu — trình bày thuần). */
 export function angleArcPoints(s: Pick<AngleConstructionShown, "vertex" | "arms">, r: number, n = 24): Vec3[] {
   const o = s.vertex;

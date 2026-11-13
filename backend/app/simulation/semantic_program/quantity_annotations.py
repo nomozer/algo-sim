@@ -83,6 +83,7 @@ def gan_so_do(spec: Any, final_memory: dict[str, Any], contract: Any,
             da_co[k] = q
     _gan_chung_chi_vuong_goc_doan(objects, final_memory)
     chan_doan += gan_dung_goc(dinh_nghia, objects, final_memory)
+    chan_doan += gan_duong_cao(dinh_nghia, objects, final_memory)
     return gan, chan_doan
 
 
@@ -121,6 +122,88 @@ def gan_dung_goc(dinh_nghia: dict[Any, Any], objects: list[dict[str, Any]], mem:
         else:
             chan_doan.append(f"ANGLE_CONSTRUCTION_UNBOUND {o['id']}: {kq}")
     return chan_doan
+
+
+#: Hợp đồng `altitude_construction` trên vật `quantity` đo THỂ TÍCH của một hình chóp chưa có đường cao được chứng nhận.
+ALTITUDE_CONSTRUCTION_SCHEMA = "altitude-construction/1"
+
+
+def gan_duong_cao(dinh_nghia: dict[Any, Any], objects: list[dict[str, Any]], mem: dict[str, Any]) -> list[str]:
+    """verified-section-intersection-dihedral-local — ĐƯỜNG CAO của hình chóp mà thể tích dùng, khi cảnh chưa vẽ nó.
+
+    Chân H là hình chiếu vuông góc CHÍNH XÁC của đỉnh lên mặt phẳng đáy (kernel, metric khung) — không chọn A, B hay
+    trung điểm nào. Phát khi: H trên mặt đáy, SH ⟂ hai phương của đáy theo G, SH ≠ 0. Nếu H nằm trên đường thẳng chứa
+    một cạnh đáy XY và mặt bên SXY vuông góc với đáy (kiểm chính xác: pháp tuyến hai mặt trực giao theo G), phép dựng
+    ghi lý do sách giáo khoa: H thuộc giao tuyến XY của mặt bên với đáy (chân có thể nằm ngoài đoạn XY). Đường cao đã
+    là một đoạn ĐÃ VẼ từ đỉnh tới đúng điểm chân (SA ⟂ đáy, SO của chóp đều, SG…) ⇒ không phát lần hai. Không mang con số."""
+    chan_doan: list[str] = []
+    by_id = {o["id"]: o for o in objects}
+    co_ten = {o["id"]: mem[o["id"]] for o in objects
+              if o.get("type") == "point3" and isinstance(mem.get(o["id"]), Vec3) and ky_hieu_toan(o["id"]) is not None}
+    day = next((o for o in objects if o.get("type") == "polygon3" and "CONSTRUCT_BASE" in (o.get("formation_roles") or ())), None)
+    for o in objects:
+        expr = getattr(dinh_nghia.get(o["id"]), "expr", None)
+        if o.get("type") != "quantity" or getattr(expr, "kind", None) != "measure" or expr.quantity != "volume":
+            continue
+        khoi = by_id.get(expr.of) or {}
+        if khoi.get("type") != "solid" or khoi.get("shape_class") != "PYRAMID_LIKE" or day is None:
+            continue
+        dinh_day = list(day.get("vertex_ids") or ())
+        dinh = [v for v in khoi.get("vertex_ids") or () if v not in dinh_day]
+        if len(dinh) != 1 or len(dinh_day) < 3 or not all(isinstance(mem.get(v), Vec3) for v in [*dinh, *dinh_day]):
+            chan_doan.append(f"ALTITUDE_CONSTRUCTION_UNBOUND {o['id']}: not a single apex over the constructed base")
+            continue
+        s_ten = dinh[0]
+        kq = _dung_duong_cao(s_ten, dinh_day, day["id"], mem, co_ten)
+        chan = Vec3.of(*(Fraction(x) for x in kq["foot"])) if isinstance(kq, dict) else None
+        if chan is not None and any(o2.get("type") == "segment3" and s_ten in (o2.get("endpoint_ids") or ())
+                                    and any(mem.get(x) == chan for x in o2.get("endpoint_ids") or () if x != s_ten)
+                                    for o2 in objects):
+            continue                                        # the altitude is already a drawn segment (SA, SO, SG…)
+        if isinstance(kq, dict):
+            o["altitude_construction"] = kq
+        else:
+            chan_doan.append(f"ALTITUDE_CONSTRUCTION_UNBOUND {o['id']}: {kq}")
+    return chan_doan
+
+
+def _dung_duong_cao(s_ten: str, dinh_day: list[str], day_id: str, mem: dict[str, Any],
+                    co_ten: dict[str, Vec3]) -> dict[str, Any] | str:
+    s_p = mem[s_ten]
+    pts = [mem[v] for v in dinh_day]
+    mp = Plane3.through(pts[0], pts[1], pts[2])
+    if any(mp.signed_eval(q) != 0 for q in pts):
+        return "the base is not planar"
+    h = K.project_point_onto_plane(s_p, mp)
+    leg = s_p - h
+    if leg.is_zero():
+        return "the apex lies in the base plane"
+    if mp.signed_eval(h) != 0 or any(_m.dot(leg, w) != 0 for w in _phuong_trong_mat(mp)):
+        return "the foot is not an orthogonal foot in the frame metric"
+    out: dict[str, Any] = {"schema": ALTITUDE_CONSTRUCTION_SCHEMA, "apex_id": s_ten, "from": _xau(s_p), "foot": _xau(h),
+                           "on": day_id, "checks": ["foot_on_base_plane", "altitude_orthogonal_to_base"]}
+    if (ten_h := next((n for n, q in co_ten.items() if q == h), None)) is not None:
+        out["foot_id"] = ten_h
+    n = len(dinh_day)
+    for i in range(n):                                    # the base edge whose line carries the foot, if any
+        x, y = dinh_day[i], dinh_day[(i + 1) % n]
+        canh = Line3.through(mem[x], mem[y])
+        if not _tren_duong(h, canh):
+            continue
+        mat_ben = Plane3.through(s_p, mem[x], mem[y])
+        vuong = _m.dot(_m.normal_vector(mat_ben.normal), _m.normal_vector(mp.normal)) == 0
+        if not vuong:
+            continue
+        t = _m.dot(h - mem[x], mem[y] - mem[x]) / _m.norm_sq(mem[y] - mem[x])
+        toi = x if h != mem[x] else y
+        out.update({"base_edge": [x, y], "face": [s_ten, x, y], "foot_on_edge_segment": bool(0 <= t <= 1),
+                    "marker": {"u": _xau(mem[toi] - h), "v": _xau(leg), "u_to": toi}})
+        out["checks"] += ["foot_on_face_base_intersection_line", "face_perpendicular_to_base"]
+        break
+    else:
+        toi = next((v for v in dinh_day if mem[v] != h), dinh_day[0])
+        out["marker"] = {"u": _xau(mem[toi] - h), "v": _xau(leg), "u_to": toi}
+    return out
 
 
 def _cos2(u: Vec3, w: Vec3) -> Fraction:

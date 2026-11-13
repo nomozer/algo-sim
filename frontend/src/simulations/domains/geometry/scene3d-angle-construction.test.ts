@@ -7,7 +7,7 @@ import * as THREE from "three";
 import { describe, expect, it } from "vitest";
 
 import fixtures from "./scene3d-angle-construction-fixtures.json";
-import { angleArcPoints, angleConstructionShape, angleConstructionsAt } from "./scene3d-angle-construction";
+import { altitudeConstructionsAt, angleArcPoints, angleConstructionShape, angleConstructionsAt } from "./scene3d-angle-construction";
 import { veKhongGian } from "./scene3d-chart";
 import { type Scene3D, type Vec3, toVec3 } from "./scene3d-model";
 import { vatDungGoc } from "./scene3d-view";
@@ -156,5 +156,31 @@ describe("phép dựng góc — trình bày", () => {
     const g = s.objects.find((o) => o.angle_construction)!.angle_construction!;
     expect(Object.keys(g).sort()).toEqual(["angle_domain", "arms", "checks", "perpendicular", "relation", "schema", "vertex", "vertex_id"]);
     expect(JSON.stringify(g)).not.toContain(String(s.objects.find((o) => o.angle_construction)!.value));
+  });
+});
+
+describe("đường cao từ mặt bên vuông góc đáy", () => {
+  it("hiện ở bước kết luận của thể tích: chân trên giao tuyến AB, SH ⟂ đáy ở toạ độ thế giới", () => {
+    const s = canh("face_perp_altitude");
+    const t = buocKetLuan(s);
+    expect(altitudeConstructionsAt(s, t - 1, tatCa(s))).toEqual([]);
+    const [h] = altitudeConstructionsAt(s, t, tatCa(s));
+    const [A, B, D] = ["A", "B", "D"].map((id) => diem(s, id));
+    const sh = tru(h.from, h.foot);
+    for (const q of [B, D]) expect(Math.abs(vh(sh, tru(q, A)))).toBeLessThan(1e-9);
+    const ab = tru(B, A), ah = tru(h.foot, A);
+    expect(Math.abs(vh(ab, ah)) - dai(ab) * dai(ah)).toBeCloseTo(0, 9);          // H on line AB
+  });
+
+  it("chân bị dời khỏi chỗ vuông góc ⇒ không vẽ", () => {
+    const s = structuredClone(canh("face_perp_altitude"));
+    const q = s.objects.find((o) => o.altitude_construction)!;
+    q.altitude_construction!.foot = ["1/4", "1/4", "0"];
+    expect(altitudeConstructionsAt(s, buocKetLuan(s), tatCa(s))).toEqual([]);
+  });
+
+  it("phép dựng đường cao không mang con số", () => {
+    const q = canh("face_perp_altitude").objects.find((o) => o.altitude_construction)!;
+    expect(JSON.stringify(q.altitude_construction)).not.toContain(String(q.value));
   });
 });

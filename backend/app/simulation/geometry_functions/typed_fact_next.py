@@ -184,6 +184,12 @@ KIND_ALLOWED_FIELDS_V2 = {
         'inscribed_in': ['kind', 'quote', 'relation_id', 'solid_a', 'solid_b'],
         'tangent_to': ['contact_ref', 'entity_b', 'kind', 'quote', 'relation_id', 'solid_a', 'solid_b'],
     },
+    # run `verified-section-intersection-dihedral-local` (`/2` additive, `/1` snapshot untouched): the intersection line
+    # of two planes the source names is a CONSTRUCTION goal — the line is the engine's output, never an input.
+    'simulation_goal_v2': {
+        **KIND_ALLOWED_FIELDS['simulation_goal'],
+        'construct_intersection_line': ['goal_id', 'kind', 'quote', 'target_planes', 'target_solid_id'],
+    },
     'math_goal_v2': {
         **KIND_ALLOWED_FIELDS['math_goal'],
         'measurement': ['goal_id', 'goal_type', 'kind', 'quote', 'requested_unit', 'rounding', 'solid_id', 'target'],
@@ -218,6 +224,7 @@ GOAL_TARGET_ALTERNATIVES = {'distance': [['segment'],
 _KIND_GROUPS = {"MathGoalSpec": ("math_goal", "INVALID_MATH_GOAL"),
                 "MathGoalSpecV2": ("math_goal_v2", "INVALID_MATH_GOAL"),
                 "SimulationGoalSpec": ("simulation_goal", "INVALID_SIMULATION_GOAL"),
+                "SimulationGoalSpecV2": ("simulation_goal_v2", "INVALID_SIMULATION_GOAL"),
                 "GeometricRelationSpec": ("relation", "INVALID_RELATION_SPEC"),
                 "GeometricRelationSpecV2": ("relation_v2", "INVALID_RELATION_SPEC")}
 
@@ -1284,7 +1291,8 @@ def scope_records(p: "TypedFactNextPayload") -> list[tuple[str, str, str | None,
         section = sections.get(g.target_section_id)
         scope = parents.get(g.derived_solid_id) if g.kind == "construct_derived_solid" else \
             g.target_solid_id or (section.target_solid_id if section else None)
-        refs = [x for x in (g.apex_ref, *g.target_refs) if x and x not in ids]
+        refs = [x for x in (g.apex_ref, *g.target_refs, *(x for pl in (getattr(g, "target_planes", None) or ()) for x in pl))
+                if x and x not in ids]
         recs.append(("simulation_goal", g.goal_id, scope, refs, False))
     for mg in p.math_goals:
         if mg.kind in ("length_ratio", "area_ratio"):
@@ -1599,6 +1607,37 @@ class DescribedPointSpec(ClosedNextModel):
                      for x in ([getattr(self, k)] if shape == "pt" else getattr(self, k)))
 
 
+class SimulationGoalSpecV2(SimulationGoalSpec):
+    """`/2` simulation goal: `/1` kinds plus `construct_intersection_line` — the line where two planes, each named by three
+    labels in the source ("giao tuyến của (SAB) và (SCD)"), meet. Only the two planes are input; whether they meet in one
+    line, are parallel or coincide is decided and proven by the engine (planner `intersection_line`)."""
+
+    kind: Literal[
+        "construct_object",
+        "construct_plane_section",
+        "construct_derived_solid",
+        "highlight_geometry",
+        "construction_sequence",
+        "construct_intersection_line",
+    ]
+    target_planes: tuple[tuple[NonEmptyText, NonEmptyText, NonEmptyText],
+                         tuple[NonEmptyText, NonEmptyText, NonEmptyText]] | None = None
+
+    @model_validator(mode="after")
+    def _validate_intersection_goal(self) -> "SimulationGoalSpecV2":
+        if (self.kind == "construct_intersection_line") != (self.target_planes is not None):
+            raise TypedFactNextValidationError(
+                "INVALID_SIMULATION_GOAL",
+                f"Simulation goal {self.goal_id!r}: exactly 'construct_intersection_line' carries 'target_planes'.")
+        if self.target_planes is not None:
+            planes = [tuple(parse_qualified_ref(x) for x in pl) for pl in self.target_planes]
+            if any(len(set(pl)) != 3 for pl in planes) or set(planes[0]) == set(planes[1]):
+                raise TypedFactNextValidationError(
+                    "INVALID_SIMULATION_GOAL",
+                    f"Simulation goal {self.goal_id!r}: two distinct planes of three distinct labels each are required.")
+        return self
+
+
 class TypedFactNextPayloadV2(TypedFactNextPayload):
     """`typed-fact-next/2` (run `hybrid-contract-v2`, owner D1): `/1` with the section split into stated intersections
     and an optional declared boundary, plus `/2` composite geometric relations (`GeometricRelationSpecV2`) and the
@@ -1607,6 +1646,7 @@ class TypedFactNextPayloadV2(TypedFactNextPayload):
     _VERSION: ClassVar[str] = TYPED_FACT_NEXT_V2_SCHEMA_VERSION
     derived_sections: tuple[DerivedPlaneSectionSpecV2, ...] = ()
     relations: tuple[GeometricRelationSpecV2, ...] = ()
+    simulation_goals: tuple[SimulationGoalSpecV2, ...] = ()
     math_goals: tuple[MathGoalSpecV2, ...] = ()
     unresolved: tuple[UnresolvedSpec, ...] = ()
     described_points: tuple[DescribedPointSpec, ...] = ()

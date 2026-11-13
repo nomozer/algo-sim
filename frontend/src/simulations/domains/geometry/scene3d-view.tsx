@@ -94,7 +94,7 @@ import {
   witnessesShown,
 } from "./scene3d-annotations";
 import { namTrenDoanDaVe, nhanChungDoanHopLe } from "./scene3d-witness-gate";
-import { angleArcPoints, angleConstructionsAt, type AngleConstructionShown } from "./scene3d-angle-construction";
+import { altitudeConstructionsAt, angleArcPoints, angleConstructionsAt, type AngleConstructionShown } from "./scene3d-angle-construction";
 import { auxiliaryHiddenAt, auxiliaryObjects } from "./scene3d-auxiliary";
 import { maTranKhung4 } from "./scene3d-chart";
 import {
@@ -6324,6 +6324,7 @@ export function Scene3DWorkspace({
           "__geo3d_fat_line_summary",
           "__geo3d_witness_ids",
           "__geo3d_angle_construction_ids",
+          "__geo3d_altitude_construction_ids",
           "__geo3d_grid_visible",
           "__geo3d_grid_subordinated",
           "__geo3d_axes_visible",
@@ -6437,6 +6438,14 @@ export function Scene3DWorkspace({
     const dungGoc = angleConstructionsAt(scene, buoc, coMat);
     for (const g of dungGoc) nhom.add(vatDungGoc(g, diemToanCanh, doanCo));
     if (typeof window !== "undefined") (window as any).__geo3d_angle_construction_ids = dungGoc.map((g) => g.id);
+    // Đường cao của hình chóp mà thể tích dùng (chân = hình chiếu chính xác; giao tuyến của mặt bên ⟂ đáy): cùng cách vẽ
+    // với đoạn vuông góc của nhân chứng — nét đứt đỉnh → chân, dấu vuông góc, phần kéo dài cạnh đáy khi chân ở ngoài.
+    const duongCao = altitudeConstructionsAt(scene, buoc, coMat);
+    for (const h of duongCao) {
+      nhom.add(vatNhanChung({ id: `altitude:${h.id}`, vai: "hinh_chieu", from: h.from, foot: h.foot, u: h.u, v: h.v, uTo: h.uTo },
+        diemToanCanh, undefined, false, doanCo, diemCoTen));
+    }
+    if (typeof window !== "undefined") (window as any).__geo3d_altitude_construction_ids = duongCao.map((h) => h.id);
     scheduleCommitRender();
   }, [scene, buoc, nhanSoDo, coMatNhan, tuongTac, tang, tapNoiBat, annotationView.hiddenIds, webglEpoch]);
 

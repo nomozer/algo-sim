@@ -20,6 +20,8 @@ CASES = {
     "planes_60_not_120": P + "Tính góc giữa mặt phẳng (SBC) và mặt phẳng (SCD).",
     "skew": "Cho hình lập phương ABCD.A'B'C'D' có cạnh bằng a. Tính góc giữa hai đường thẳng AC và A'D.",
     "tetra": "Cho tứ diện đều ABCD có cạnh bằng a. Tính góc giữa đường thẳng AB và mặt phẳng (BCD).",
+    "face_perp_altitude": ("Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, tam giác SAB đều và nằm trong mặt phẳng "
+                           "vuông góc với mặt phẳng đáy. Tính thể tích khối chóp S.ABCD."),
 }
 out = {"_generated_by": f"docs/evaluation/geometry/runs/verified-section-intersection-dihedral-local/tools/make_angle_fixture.py at CACHE_VERSION {CACHE_VERSION}",
        "cases": {k: {"text": t, "scene3d": route_text_input(t, allow_live_ai=False).response["envelope"]["scene3d"]} for k, t in CASES.items()}}

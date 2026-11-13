@@ -129,6 +129,11 @@ export function veKhongGian(scene: Scene3D): Scene3D {
     if (o.perpendicular_witness) {
       r.perpendicular_witness = nhanChung(o.perpendicular_witness);
     }
+    if (o.altitude_construction) {
+      const h = o.altitude_construction;
+      r.altitude_construction = { ...h, from: d(h.from), foot: d(h.foot),
+        marker: { ...h.marker, u: d(h.marker.u), v: d(h.marker.v) } };
+    }
     if (o.angle_construction) {
       const g = o.angle_construction;
       r.angle_construction = {
