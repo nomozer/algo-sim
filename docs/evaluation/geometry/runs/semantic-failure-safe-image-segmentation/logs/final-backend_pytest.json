@@ -1,0 +1,49 @@
+{
+  "name": "backend_pytest",
+  "command": "D:\\Documents\\projects\\algo-sim\\backend\\.venv\\Scripts\\python.exe -m pytest -c backend/pytest.ini backend/tests -q",
+  "argv": [
+    "D:\\Documents\\projects\\algo-sim\\backend\\.venv\\Scripts\\python.exe",
+    "-m",
+    "pytest",
+    "-c",
+    "backend/pytest.ini",
+    "backend/tests",
+    "-q"
+  ],
+  "cwd": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\local-first-geometry-understanding",
+  "started_at_utc": "2026-11-13T17:29:40.986267+00:00",
+  "start_snapshot": {
+    "head_commit": "d7a0c955a325d26a52f2fbf1f451ad0251a1ffdc",
+    "product_paths_sha256": "38a0813fb68b6098e0374098620dc93ce35535b42166f90ff3ee8aa4dda7565c",
+    "product_path_count": 336,
+    "hash_policy": "tracked backend/app + frontend/src, LF normalized; includes tests",
+    "working_product_source_sha256": "630d5d5627d706e6a59025feec013e8f1bfe9e6479bafbb3a9de91fb6973e23a",
+    "working_product_source_count": 194,
+    "working_source_policy": "all working backend/app + frontend/src including untracked; skip pycache and freeze TEST_ONLY_GLOBS"
+  },
+  "ended_at_utc": "2026-11-13T17:39:59.005583+00:00",
+  "duration_seconds": 617.735,
+  "exit_code": 0,
+  "raw_output_sha256": "5b87d5a20ce9b40505367b4e29570991c63c23a4c0426ec461ca8b569aeaf039",
+  "raw_output_bytes": 16860,
+  "raw_output_retention": "ignored local .superpowers only; never staged",
+  "end_snapshot": {
+    "head_commit": "d7a0c955a325d26a52f2fbf1f451ad0251a1ffdc",
+    "product_paths_sha256": "38a0813fb68b6098e0374098620dc93ce35535b42166f90ff3ee8aa4dda7565c",
+    "product_path_count": 336,
+    "hash_policy": "tracked backend/app + frontend/src, LF normalized; includes tests",
+    "working_product_source_sha256": "630d5d5627d706e6a59025feec013e8f1bfe9e6479bafbb3a9de91fb6973e23a",
+    "working_product_source_count": 194,
+    "working_source_policy": "all working backend/app + frontend/src including untracked; skip pycache and freeze TEST_ONLY_GLOBS"
+  },
+  "counts": {
+    "passed": 14422,
+    "skipped": 7,
+    "deselected": 3,
+    "xfailed": 15
+  },
+  "summary": "14422 passed, 7 skipped, 3 deselected, 15 xfailed, 1 warning in 613.62s (0:10:13)",
+  "failure_node_ids": [],
+  "source_unchanged_during_command": true,
+  "verdict": "PASS"
+}

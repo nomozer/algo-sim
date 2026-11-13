@@ -1,0 +1,41 @@
+{
+  "name": "demo_replay",
+  "command": "D:\\Documents\\projects\\algo-sim\\backend\\.venv\\Scripts\\python.exe backend/scripts/replay_demo_cases.py --json",
+  "argv": [
+    "D:\\Documents\\projects\\algo-sim\\backend\\.venv\\Scripts\\python.exe",
+    "backend/scripts/replay_demo_cases.py",
+    "--json"
+  ],
+  "cwd": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\local-first-geometry-understanding",
+  "started_at_utc": "2026-11-13T17:41:01.367883+00:00",
+  "start_snapshot": {
+    "head_commit": "d7a0c955a325d26a52f2fbf1f451ad0251a1ffdc",
+    "product_paths_sha256": "38a0813fb68b6098e0374098620dc93ce35535b42166f90ff3ee8aa4dda7565c",
+    "product_path_count": 336,
+    "hash_policy": "tracked backend/app + frontend/src, LF normalized; includes tests",
+    "working_product_source_sha256": "630d5d5627d706e6a59025feec013e8f1bfe9e6479bafbb3a9de91fb6973e23a",
+    "working_product_source_count": 194,
+    "working_source_policy": "all working backend/app + frontend/src including untracked; skip pycache and freeze TEST_ONLY_GLOBS"
+  },
+  "ended_at_utc": "2026-11-13T17:41:02.223114+00:00",
+  "duration_seconds": 0.61,
+  "exit_code": 0,
+  "raw_output_sha256": "8ae893cfece9d123b600b3fac0b37b4835c9ebafef75d5d7e2abfabf3149d66b",
+  "raw_output_bytes": 5091,
+  "raw_output_retention": "ignored local .superpowers only; never staged",
+  "end_snapshot": {
+    "head_commit": "d7a0c955a325d26a52f2fbf1f451ad0251a1ffdc",
+    "product_paths_sha256": "38a0813fb68b6098e0374098620dc93ce35535b42166f90ff3ee8aa4dda7565c",
+    "product_path_count": 336,
+    "hash_policy": "tracked backend/app + frontend/src, LF normalized; includes tests",
+    "working_product_source_sha256": "630d5d5627d706e6a59025feec013e8f1bfe9e6479bafbb3a9de91fb6973e23a",
+    "working_product_source_count": 194,
+    "working_source_policy": "all working backend/app + frontend/src including untracked; skip pycache and freeze TEST_ONLY_GLOBS"
+  },
+  "DEMO_CASES": 5,
+  "DEMO_REPLAY_PASS": "5/5",
+  "REDUCED_CHAIN_CASES": "1/1",
+  "semantic_pass": true,
+  "source_unchanged_during_command": true,
+  "verdict": "PASS"
+}
