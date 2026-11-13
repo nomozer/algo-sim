@@ -1265,11 +1265,26 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
         mapped_fact = True
 
     for m_reg_tri in re.finditer(
-        rf"(?P<full>tam\s+giác\s+(?P<verts>{_PTS3})\s+(?:là\s+tam\s+giác\s+)?đều(?:\s+cạnh\s+(?:bằng\s+)?(?P<side>{_VAL}))?)",
+        rf"(?P<full>(?:tam\s+giác|mặt\s+bên)\s+(?P<verts>{_PTS3})\s+(?:là\s+(?:một\s+)?tam\s+giác\s+)?đều(?:\s+cạnh\s+(?:bằng\s+)?(?P<side>{_VAL}))?)",
         ctext_norm,
         re.IGNORECASE | re.UNICODE,
     ):
         verts_tri = _split_pts(m_reg_tri.group("verts"))
+        # semantic-to-scene3d: an equilateral LATERAL face of the declared solid ("tam giác SAB đều", "mặt bên SAB là
+        # tam giác đều") — three labels of the solid that are not its base; the side comes from the base edge it shares.
+        dinh_tri = {x for sd in builder.solids for x in _split_pts(str(sd.get("notation") or "").replace(".", ""))}
+        if (builder._base_vertices and set(verts_tri) != set(builder._base_vertices) and set(verts_tri) <= dinh_tri
+                and len(set(verts_tri) & set(builder._base_vertices)) == 2):
+            q_lt = _clean_quote(raw, ca + m_reg_tri.start("full"), ca + m_reg_tri.end("full"))
+            if not any(p.get("kind") == "regular_polygon" and set(p["args"].get("vertices") or ()) == set(verts_tri)
+                       for p in builder.premises):
+                args_lt: dict[str, Any] = {"vertices": verts_tri}
+                if m_reg_tri.group("side") is not None:
+                    args_lt["side"] = _canon_val(m_reg_tri.group("side"))
+                builder.premises.append(
+                    {"kind": "regular_polygon", "args": args_lt, "quote": q_lt, "solid_id": builder._primary_solid_id})
+                mapped_fact = True
+            continue
         if builder._base_vertices and set(verts_tri) == set(builder._base_vertices):
             q_rt = _clean_quote(raw, ca + m_reg_tri.start("full"), ca + m_reg_tri.end("full"))
             if not any(p.get("kind") == "regular_polygon" and set(p["args"].get("vertices") or ()) == set(verts_tri) for p in builder.premises):
@@ -2183,6 +2198,61 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
                 "solid_id": builder._primary_solid_id,
             }
         )
+        mapped_fact = True
+
+    # 5f-bis (semantic-to-scene3d). The projection's IMAGE is a named point defined in place by a descriptor:
+    # "hình chiếu vuông góc của S lên (mặt phẳng) (ABC)/đáy trùng với trọng tâm G của tam giác ABC" (or "trung điểm H
+    # của (cạnh) AB"). Two facts, each with its own quote: the descriptor (centroid / midpoint) and the projection.
+    # The image must be NAMED in the source — an unnamed "trọng tâm của tam giác ABC" stays unparsed (no invented label).
+    for m_pr_d in re.finditer(
+        rf"(?P<full>hình\s+chiếu\s+(?:vuông\s+góc\s+)?của\s+(?:điểm\s+)?(?P<src>{_PT})\s+(?:lên|trên|xuống)\s+"
+        rf"(?:(?:mặt\s+phẳng\s+|mp\s*)?\((?P<plane>{_PTS3_6})\)|(?:mặt\s+phẳng\s+)?(?P<day>đáy))\s+(?:là|trùng\s+với)\s+"
+        rf"(?P<desc>(?:điểm\s+)?(?P<dk>trọng\s+tâm|trung\s+điểm)\s+(?P<img>{_PT})\s+(?:của\s+)?"
+        rf"(?:tam\s+giác\s+(?P<tri>{_PTS3})|(?:(?:cạnh|đoạn(?:\s+thẳng)?)\s+)?(?P<seg>{_PTS2}))))(?![\w'])",
+        ctext_norm,
+        re.IGNORECASE | re.UNICODE,
+    ):
+        src_d, img_d = m_pr_d.group("src"), m_pr_d.group("img")
+        plane_d = _split_pts(m_pr_d.group("plane")) if m_pr_d.group("plane") else list(builder._base_vertices)
+        centroid = m_pr_d.group("dk").lower().startswith("trọng")
+        operand = m_pr_d.group("tri") if centroid else m_pr_d.group("seg")
+        if (not src_d[0].isupper() or not img_d[0].isupper() or len(plane_d) < 3 or operand is None
+                or img_d in _split_pts(operand) or src_d in plane_d):
+            continue
+        q_desc = _clean_quote(raw, ca + m_pr_d.start("desc"), ca + m_pr_d.end("desc"))
+        q_full_d = _clean_quote(raw, ca + m_pr_d.start("full"), ca + m_pr_d.end("full"))
+        builder.premises.append(
+            {"kind": "centroid", "args": {"point": img_d, "polygon": _split_pts(operand)}, "quote": q_desc,
+             "solid_id": builder._primary_solid_id} if centroid else
+            {"kind": "midpoint", "args": {"point": img_d, "segment": _split_pts(operand)}, "quote": q_desc,
+             "solid_id": builder._primary_solid_id})
+        builder.premises.append(
+            {"kind": "orthogonal_projection", "args": {"point": src_d, "image": img_d, "plane": plane_d},
+             "quote": q_full_d, "solid_id": builder._primary_solid_id})
+        mapped_fact = True
+
+    # 5f-ter (semantic-to-scene3d). A lateral face perpendicular to the base: "(mặt bên / tam giác) SAB … nằm trong mặt
+    # phẳng vuông góc với (mặt phẳng) đáy" or "(SAB) ⊥ (ABCD)" / "mặt phẳng (SAB) vuông góc với mặt phẳng đáy". The face
+    # is three labels of the primary solid, not the base itself; the base is the solid's base (by name or "đáy").
+    dinh_khoi = {x for sd in builder.solids for x in _split_pts(str(sd.get("notation") or "").replace(".", ""))}
+    for m_fp in re.finditer(
+        rf"(?P<full>(?:mặt\s+bên\s+|tam\s+giác\s+)\(?(?P<face>{_PTS3})\)?(?:\s+(?!vuông\b)[^.;]{{0,40}}?)?\s+nằm\s+trong\s+"
+        rf"mặt\s+phẳng\s+vuông\s+góc\s+với\s+(?:(?:mặt\s+phẳng\s+)?(?P<day>đáy)|(?:mặt\s+phẳng\s+)?\((?P<base>{_PTS3_6})\))"
+        rf"|(?:mặt\s+phẳng\s+|mp\s*)?\((?P<face2>{_PTS3})\)\s*(?:⊥|vuông\s+góc\s+với)\s*"
+        rf"(?:(?:mặt\s+phẳng\s+)?(?P<day2>đáy)|(?:mặt\s+phẳng\s+|mp\s*)?\((?P<base2>{_PTS3_6})\)))(?![\w'])",
+        ctext_norm,
+        re.IGNORECASE | re.UNICODE,
+    ):
+        face_f = _split_pts(m_fp.group("face") or m_fp.group("face2"))
+        base_g = m_fp.group("base") or m_fp.group("base2")
+        base_f = _split_pts(base_g) if base_g else list(builder._base_vertices)
+        if (len(base_f) < 3 or set(base_f) != set(builder._base_vertices) or set(face_f) <= set(base_f)
+                or not set(face_f) <= dinh_khoi):
+            continue
+        q_fp = _clean_quote(raw, ca + m_fp.start("full"), ca + m_fp.end("full"))
+        builder.premises.append(
+            {"kind": "face_perpendicular_base", "args": {"face": face_f, "base": base_f}, "quote": q_fp,
+             "solid_id": builder._primary_solid_id})
         mapped_fact = True
 
     # 5g. Line-plane intersection point: "(Gọi )?I là giao điểm của AC' và mặt phẳng (A'BD)" or "Mặt phẳng (SAD) và đường thẳng ME cắt nhau tại I"
@@ -3378,7 +3448,8 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
             r"|\bnghiêng\s+đều\b"
             r"|\bkhông\s+(?:vuông\s+góc|song\s+song|cắt|đồng\s+phẳng|thẳng\s+hàng|trùng)\b"
             r"|\bnếu\b.+\bthì\b"
-            r"|\bmặt\s+bên\b.*\bnằm\s+trong\s+mặt\s+phẳng\s+vuông\s+góc\b",
+            + (r"|\bmặt\s+bên\b.*\bnằm\s+trong\s+mặt\s+phẳng\s+vuông\s+góc\b"
+               if "face_perpendicular_base" not in prem_kinds else ""),
             ctext_norm,
             re.IGNORECASE | re.UNICODE,
         ):
@@ -3517,6 +3588,7 @@ def _parse_geometry_problem_locally_uncached(problem_text: str, t0: float) -> Lo
 
     for cl in clauses:
         _parse_clause_into_ast(builder, cl)
+    _resolve_late_regular_polygon_dimension(builder)
 
     unparsed_facts = tuple(c.text for c in clauses if c.classification == CLAUSE_UNPARSED_FACT_CANDIDATE)
     unparsed_goals = tuple(c.text for c in clauses if c.classification == CLAUSE_UNPARSED_GOAL_CANDIDATE)
@@ -3694,6 +3766,27 @@ def _parse_geometry_problem_locally_uncached(problem_text: str, t0: float) -> Lo
         fallback_reason=None,
         parse_latency_ms=(time.perf_counter() - t0) * 1000.0,
     )
+
+
+def _resolve_late_regular_polygon_dimension(builder: "_AstBuilder") -> None:
+    """semantic-to-scene3d: "đáy ABCD là hình vuông, biết AB = 1" — the side is given by a LATER clause.
+
+    The regular-polygon rule records a `missing_operand` (dimension) when its own clause has no side. If the source
+    elsewhere gives the length of a segment joining two of that polygon's vertices (a side or a diagonal), the polygon is
+    no longer under-specified: the request is dropped and the planner/engine decide determinacy from the two facts (an
+    undetermined figure still refuses MISSING_DIMENSION). Nothing is added — both facts carry their own quotes."""
+    if not builder.unresolved:
+        return
+    keep = []
+    for u in builder.unresolved:
+        poly = next((p for p in builder.premises if p.get("kind") == "regular_polygon" and p.get("quote") == u.get("quote")
+                     and "side" not in (p.get("args") or {})), None)
+        if (u.get("kind") == "missing_operand" and u.get("missing_roles") == ["dimension"] and poly is not None
+                and any(q.get("kind") == "segment_length" and len(set(q["args"].get("segment") or ())) == 2
+                        and set(q["args"]["segment"]) <= set(poly["args"]["vertices"]) for q in builder.premises)):
+            continue
+        keep.append(u)
+    builder.unresolved[:] = keep
 
 
 def parse_geometry_problem_locally(problem_text: str, *, use_cache: bool = True) -> LocalParseResult:
