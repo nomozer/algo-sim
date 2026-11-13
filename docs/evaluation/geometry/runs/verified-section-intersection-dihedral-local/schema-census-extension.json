@@ -1,0 +1,127 @@
+{
+  "schema": "SCHEMA_CENSUS_EXTENSION/1",
+  "run": "verified-section-intersection-dihedral-local",
+  "extends": "docs/evaluation/geometry/runs/formal-correctness-real-world-acceptance/schema-census-extension.json",
+  "rule": "Additive only: classifies SimulationGoalSpecV2 (typed-fact-next/2 simulation goals gained construct_intersection_line) without modifying frozen historical census snapshots. Inherited fields keep the SimulationGoalSpec classification.",
+  "fields": {
+    "SimulationGoalSpecV2.goal_id": {
+      "category": "DEFINITION_ID",
+      "note": "goal id"
+    },
+    "SimulationGoalSpecV2.kind": {
+      "category": "METADATA",
+      "note": "no scope semantics (/1 kinds plus construct_intersection_line)"
+    },
+    "SimulationGoalSpecV2.quote": {
+      "category": "METADATA",
+      "note": "no scope semantics"
+    },
+    "SimulationGoalSpecV2.target_solid_id": {
+      "category": "SOLID_SCOPE",
+      "owner": "simulation goal (every kind)",
+      "rules": [
+        "S1",
+        "S3",
+        "S9"
+      ],
+      "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+      "positive_test": "test_simulation_goal_controls_serve",
+      "negative_test": "test_simulation_goal_scope_violations_refuse_every_kind",
+      "refusal_codes": [
+        "UNKNOWN_SOLID_ID",
+        "SOURCE_OBJECT_MISMATCH"
+      ]
+    },
+    "SimulationGoalSpecV2.target_section_id": {
+      "category": "SECTION_REF",
+      "owner": "simulation goal",
+      "rules": [
+        "S9"
+      ],
+      "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+      "positive_test": "test_simulation_goal_controls_serve",
+      "negative_test": "test_simulation_goal_scope_violations_refuse_every_kind",
+      "refusal_codes": [
+        "UNKNOWN_SECTION_ID",
+        "SOURCE_OBJECT_MISMATCH"
+      ]
+    },
+    "SimulationGoalSpecV2.derived_solid_id": {
+      "category": "SOLID_DEFINITION",
+      "note": "defines a derived solid; DUPLICATE_SOLID_ID"
+    },
+    "SimulationGoalSpecV2.parent_solid_id": {
+      "category": "SOLID_SCOPE",
+      "owner": "construct_derived_solid only (Owner D-A)",
+      "rules": [
+        "S1",
+        "S3",
+        "S4"
+      ],
+      "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+      "positive_test": "test_simulation_goal_controls_serve",
+      "negative_test": "test_parent_solid_id_outside_derived_solid_refused",
+      "refusal_codes": [
+        "UNKNOWN_SOLID_ID",
+        "SOURCE_OBJECT_MISMATCH",
+        "INVALID_SIMULATION_GOAL"
+      ]
+    },
+    "SimulationGoalSpecV2.apex_ref": {
+      "category": "VERTEX_REF",
+      "owner": "derived solid parent",
+      "rules": [
+        "S5",
+        "S7",
+        "S8"
+      ],
+      "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+      "positive_test": "test_simulation_goal_controls_serve",
+      "negative_test": "test_f4_curved_ownership_refuses",
+      "refusal_codes": [
+        "INVALID_QUALIFIED_REF",
+        "UNKNOWN_SOLID_ID",
+        "SOURCE_OBJECT_MISMATCH"
+      ]
+    },
+    "SimulationGoalSpecV2.target_refs": {
+      "category": "VERTEX_REF",
+      "owner": "simulation goal scope",
+      "rules": [
+        "S5",
+        "S7",
+        "S8",
+        "S10"
+      ],
+      "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+      "positive_test": "test_simulation_goal_controls_serve",
+      "negative_test": "test_simulation_goal_scope_violations_refuse_every_kind",
+      "refusal_codes": [
+        "UNKNOWN_VERTEX_REF",
+        "UNKNOWN_SOLID_ID",
+        "SOURCE_OBJECT_MISMATCH"
+      ]
+    },
+    "SimulationGoalSpecV2.style_role": {
+      "category": "METADATA",
+      "note": "no scope semantics"
+    },
+    "SimulationGoalSpecV2.target_planes": {
+      "category": "VERTEX_REF",
+      "owner": "simulation goal scope (construct_intersection_line only)",
+      "rules": [
+        "S5",
+        "S7",
+        "S8"
+      ],
+      "entry_points": "adapter4, planner route v2, bridge v2",
+      "positive_test": "test_intersection_goal_plane_scope_controls_serve",
+      "negative_test": "test_intersection_goal_plane_scope_violations_refuse",
+      "refusal_codes": [
+        "UNKNOWN_LABEL",
+        "SOURCE_OBJECT_MISMATCH",
+        "INVALID_SIMULATION_GOAL"
+      ]
+    }
+  }
+}

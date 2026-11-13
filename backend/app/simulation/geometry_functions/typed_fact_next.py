@@ -1291,8 +1291,9 @@ def scope_records(p: "TypedFactNextPayload") -> list[tuple[str, str, str | None,
         section = sections.get(g.target_section_id)
         scope = parents.get(g.derived_solid_id) if g.kind == "construct_derived_solid" else \
             g.target_solid_id or (section.target_solid_id if section else None)
-        refs = [x for x in (g.apex_ref, *g.target_refs, *(x for pl in (getattr(g, "target_planes", None) or ()) for x in pl))
-                if x and x not in ids]
+        refs = [x for x in (g.apex_ref, *g.target_refs) if x and x not in ids]
+        # S5 S7 S8: the labels of a `/2` intersection goal's two planes are scoped like target_refs.
+        refs += [x for pl in (getattr(g, "target_planes", None) or ()) for x in pl if x not in ids]
         recs.append(("simulation_goal", g.goal_id, scope, refs, False))
     for mg in p.math_goals:
         if mg.kind in ("length_ratio", "area_ratio"):
