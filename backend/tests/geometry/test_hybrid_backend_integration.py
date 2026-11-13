@@ -483,7 +483,7 @@ def test_version_constants_surface_fingerprints_and_historical_receipt_preservat
     # 126 -> 127 (hybrid-architecture-wave1-exact-certificates-planner): segment3 đường cao mang perpendicular_witness.
     # 127 -> 128 (visual-hybrid-final-corrections): tên hiển thị backend (mặt phẳng tên đề viết, chu trình thiết diện).
     # 128 -> 129 (sphere-sample-source-authority): mặt phẳng cắt khối cong (đường tròn/elip giao) mang vai CONSTRUCT_CUTTING_OBJECT thay CONSTRUCT_AUXILIARY_GEOMETRY trong envelope phục vụ; row v128 thật vẫn HIT (runs/sphere-sample-source-authority/cache/decision.json).
-    assert main_module.CACHE_VERSION == "132"
+    assert main_module.CACHE_VERSION == "133"
     assert main_module.hybrid_route_mode() == "live"
     assert RESPONSE_CONTRACT == "flat"
     assert not (ROOT / "backend/app/ai/pipeline.py").exists()

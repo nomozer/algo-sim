@@ -899,7 +899,11 @@ MISSING_KEY_MSG = (
 #       Exact Geometry Kernel -> Adapter `/4`), gỡ bỏ orchestrator `LLM_ONLY`, Compiler C và toàn bộ prompt sinh mã cũ.
 #       Bump `CACHE_VERSION` lên `132` (`ROUTE_D_CACHE_POLICY = "132:route-d"`) bảo đảm cách ly hai chiều: mọi hàng
 #       cache `131` (cả `LLM_ONLY` lẫn `131:route-d`) đều MISS và không bao giờ nhiễm sang kết quả Hybrid chính thức.
-CACHE_VERSION = "132"
+# 133 — 2026-11-13 (semantic-to-scene3d-verified-simulation): vật `quantity` đo góc khác 90° mang `angle_construction`
+#       (phép dựng chính xác của góc đề hỏi — đỉnh, hai cạnh, chân hình chiếu / đoạn song song / tia vuông góc giao
+#       tuyến), và nhân chứng góc vuông không còn bị đổi nhầm thành nhãn độ dài. Envelope phục vụ đổi ⇒ row
+#       `132:route-d` phải MISS (`tests/test_cache_angle_construction_invalidation.py`).
+CACHE_VERSION = "133"
 
 #: Hai chế độ hợp lệ của kiến trúc chính thức Hybrid `/4` do máy chủ sở hữu:
 #: - `live` (mặc định): trích xuất có cấu trúc qua Gemini (`typed-fact-next/2`) khi cấu hình `GEMINI_API_KEY`.

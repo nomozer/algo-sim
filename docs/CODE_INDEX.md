@@ -1,5 +1,14 @@
 # CODE_INDEX.md — Chỉ mục module + BỘ NHỚ KIẾN TRÚC
 
+## Semantic-to-Scene3D verified simulation (2026-11-13)
+
+| Path | Owns | Locked by |
+|---|---|---|
+| `backend/app/simulation/semantic_program/quantity_annotations.py` (`gan_dung_goc`, `_dung_goc`, `_goc_duong_mat`, `_goc_hai_duong`, `_goc_hai_mat`, `ANGLE_CONSTRUCTION_SCHEMA`) | `angle-construction/1` on every served angle measure ≠ 90°: line–plane (line ∩ plane, orthogonal projection foot of a point of the line, angle between line and projection), intersecting lines (vertex at the intersection), skew lines (a named segment through a point of the first line parallel to the second, else that point + direction), plane–plane (two rays ⟂ the common line at one point). Composed only from existing kernel constructions; emitted only when the drawn angle's cos² equals the measured value exactly in the frame metric. Right-angle witnesses are no longer relabelled as segment lengths (`_bam_doan_da_dung` is distance-only) | `backend/tests/geometry/test_angle_construction.py` (independent Gram recomputation, renaming/scaling metamorphic, fail-closed), `backend/tests/test_cache_angle_construction_invalidation.py` |
+| `backend/app/simulation/semantic_program/scene3d.py` (`_TRUONG["quantity"]`) | Carries `angle_construction` into the envelope | same |
+| `frontend/src/simulations/domains/geometry/scene3d-angle-construction.ts` (`angleConstructionShape`, `angleConstructionsAt`, `angleArcPoints`, `SAI_SO_DUNG_GOC`) | Pure, no three: re-checks the backend construction fail-closed in world coordinates (perpendicular foot, parallel helper, rays ⟂ common line), shows it from the quantity's conclusion step once its named points are present, and interpolates the presentation arc between the two arms. No value, no new point | `frontend/src/simulations/domains/geometry/scene3d-angle-construction.test.ts` (real envelopes in `scene3d-angle-construction-fixtures.json`), purity guard in `scene3d.test.tsx` |
+| `frontend/src/simulations/domains/geometry/scene3d-view.tsx` (`vatDungGoc`, `__geo3d_angle_construction_ids`) · `frontend/src/simulations/domains/geometry/scene3d-chart.ts` · `frontend/src/simulations/domains/geometry/scene3d-model.ts` (`AngleConstruction`) | Draws the construction (dashed arms unless already drawn, arc, perpendicular leg, right-angle marks) in the witness layer, non-pickable, no label; T·p maps every construction coordinate | same |
+
 ## Local semantic coverage, Source Gate and reliability (2026-11-13)
 
 | Path | Owns | Locked by |

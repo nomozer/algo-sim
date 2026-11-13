@@ -289,6 +289,9 @@ export interface SceneObject {
   /** Review I1 — điểm dựng bằng hình chiếu vuông góc: đoạn vuông góc PHỤ từ `from` tới chân (= chính điểm này) +
    *  hai phương ký hiệu vuông góc, do backend tính (cùng dạng `QuantityAnnotation.witness`). Không phải cạnh khối. */
   perpendicular_witness?: QuantityAnnotation["witness"];
+  /** Semantic-to-Scene3D — phép dựng CHÍNH XÁC của góc khác 90° mà đề hỏi (backend `gan_dung_goc`): đỉnh, hai cạnh,
+   *  chân hình chiếu / đoạn song song / tia vuông góc giao tuyến. Không mang con số; phía này chỉ vẽ. */
+  angle_construction?: AngleConstruction;
   /**
    * HÌNH CONG — tham số ngữ nghĩa, **không phải lưới**.
    *
@@ -606,6 +609,23 @@ export interface FormationStep {
 
 export interface SceneFormation {
   steps: FormationStep[];
+}
+
+/** `angle-construction/1` — phép dựng của một góc đo được (khác 90°). Toạ độ chính xác, đã tự kiểm ở backend:
+ *  đỉnh trên cả hai vật, cos² của góc dựng bằng đúng giá trị kernel đo. `to_id` vắng ⇒ điểm phụ không tên. */
+export interface AngleConstruction {
+  schema: "angle-construction/1";
+  relation: "line_plane" | "line_line" | "line_line_skew" | "plane_plane";
+  vertex: ExactVec3;
+  vertex_id?: string;
+  arms: [{ to: ExactVec3; to_id?: string }, { to: ExactVec3; to_id?: string }];
+  /** `line_plane`: đoạn từ một điểm của đường tới CHÂN hình chiếu trên mặt; `u` trong mặt (chân → đỉnh), `v` = điểm − chân. */
+  perpendicular?: { from: ExactVec3; foot: ExactVec3; on: string; u: ExactVec3; v: ExactVec3 };
+  /** `line_line_skew`: đoạn qua đỉnh song song với đường thứ hai (`of`). */
+  parallel?: { through: ExactVec3; to: ExactVec3; of: string };
+  /** `plane_plane`: phương giao tuyến tại đỉnh — hai tia vuông góc với nó. */
+  edge?: { direction: ExactVec3; toward_id?: string };
+  checks: string[];
 }
 
 /** W17 §15.4 — gắn kết đại lượng ↔ chủ thể hình học (backend sở hữu nghĩa). */

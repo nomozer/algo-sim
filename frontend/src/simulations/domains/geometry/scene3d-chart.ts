@@ -129,6 +129,16 @@ export function veKhongGian(scene: Scene3D): Scene3D {
     if (o.perpendicular_witness) {
       r.perpendicular_witness = nhanChung(o.perpendicular_witness);
     }
+    if (o.angle_construction) {
+      const g = o.angle_construction;
+      r.angle_construction = {
+        ...g, vertex: d(g.vertex), arms: [{ ...g.arms[0], to: d(g.arms[0].to) }, { ...g.arms[1], to: d(g.arms[1].to) }],
+        ...(g.perpendicular ? { perpendicular: { ...g.perpendicular, from: d(g.perpendicular.from),
+          foot: d(g.perpendicular.foot), u: d(g.perpendicular.u), v: d(g.perpendicular.v) } } : {}),
+        ...(g.parallel ? { parallel: { ...g.parallel, through: d(g.parallel.through), to: d(g.parallel.to) } } : {}),
+        ...(g.edge ? { edge: { ...g.edge, direction: d(g.edge.direction) } } : {}),
+      };
+    }
     return r;
   };
   const ra: Scene3D = { ...scene, objects: scene.objects.map(vat) };

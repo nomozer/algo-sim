@@ -117,7 +117,9 @@ _TRUONG: dict[str, tuple[str, ...]] = {
     # `exact` là cấu trúc cho máy. Bỏ `exact` khỏi bảng này thì nó dừng lại ở
     # `SimulationState` và **không bao giờ tới renderer** — frontend buộc phải
     # đọc ngược chuỗi `"3√2/5"`, đúng thứ cấu trúc sinh ra để khỏi phải làm.
-    "quantity": ("value", "exact"),
+    # `angle_construction`: phép dựng CHÍNH XÁC của góc khác 90° mà đề hỏi (`quantity_annotations.gan_dung_goc`) —
+    # đỉnh, hai cạnh, chân hình chiếu / đường song song / tia vuông góc giao tuyến. Không mang con số.
+    "quantity": ("value", "exact", "angle_construction"),
 }
 
 

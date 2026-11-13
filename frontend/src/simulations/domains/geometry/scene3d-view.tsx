@@ -94,6 +94,7 @@ import {
   witnessesShown,
 } from "./scene3d-annotations";
 import { namTrenDoanDaVe, nhanChungDoanHopLe } from "./scene3d-witness-gate";
+import { angleArcPoints, angleConstructionsAt, type AngleConstructionShown } from "./scene3d-angle-construction";
 import { auxiliaryHiddenAt, auxiliaryObjects } from "./scene3d-auxiliary";
 import { maTranKhung4 } from "./scene3d-chart";
 import {
@@ -3975,6 +3976,55 @@ export function vatNhanChung(
   return g;
 }
 
+/** Semantic-to-Scene3D — vẽ PHÉP DỰNG của góc đề hỏi (`scene3d-angle-construction`): hai cạnh nét đứt (trừ phần đã là
+ *  nét của hình), cung góc tại đỉnh, đoạn tới chân hình chiếu và dấu vuông góc. Không nhãn, không con số; không bắt cú
+ *  bấm chọn. Mọi toạ độ là của backend (đã kiểm lại fail-closed); ở đây chỉ chọn cỡ hiển thị. */
+export function vatDungGoc(s: AngleConstructionShown, diemNen: Vec3[] = [], doanCo: readonly [Vec3, Vec3][] = []): THREE.Group {
+  const g = new THREE.Group();
+  g.name = `angle_construction:${s.id}`;
+  const dk = duongKinhCanh(diemNen);
+  const chuKy = dk > 0 ? Math.max(0.045, Math.min(0.16, dk * 0.034)) : 0.12;
+  const mau = MAU_VAI_TRO.dich;
+  const netDut = (a: Vec3, b: Vec3, phu = false) => {
+    const l = new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(...a), new THREE.Vector3(...b)]),
+      new THREE.LineDashedMaterial({ color: phu ? MAU.line : mau, dashSize: chuKy,
+        gapSize: chuKy * PHONG_CACH_SCENE3D.dash.witnessGapRatio, depthTest: false, transparent: true, opacity: DO_DUC.witness }));
+    l.computeLineDistances();
+    l.userData.angle_construction_leg = true;
+    return l;
+  };
+  const ve: THREE.Object3D[] = [];
+  s.arms.forEach((dau, i) => {
+    if (!namTrenDoanDaVe(s.vertex, dau, doanCo)) ve.push(netDut(s.vertex, dau, i === 1 && Boolean(s.parallelHelper)));
+  });
+  if (s.perpendicular && !namTrenDoanDaVe(s.perpendicular[0], s.perpendicular[1], doanCo)) {
+    ve.push(netDut(s.perpendicular[0], s.perpendicular[1], true));
+  }
+  const ngan = Math.min(...s.arms.map((a) => Math.hypot(a[0] - s.vertex[0], a[1] - s.vertex[1], a[2] - s.vertex[2])));
+  const r = Math.min(ngan * 0.3, dk > 0 ? dk * 0.09 : 0.3);
+  const cung = angleArcPoints(s, r);
+  if (cung.length > 1) {
+    const l = new THREE.Line(new THREE.BufferGeometry().setFromPoints(cung.map((p) => new THREE.Vector3(...p))),
+      new THREE.LineBasicMaterial({ color: mau, depthTest: false, transparent: true, opacity: 0.95 }));
+    l.name = `angle_arc:${s.id}`;
+    l.userData.angle_arc = true;
+    ve.push(l);
+  }
+  for (const m of s.rightAngles) {
+    const lu = Math.hypot(...m.u), lv = Math.hypot(...m.v);
+    if (!(lu > 0 && lv > 0)) continue;
+    const c = Math.min(lv * 0.18, dk > 0 ? dk * 0.04 : 0.15);
+    ve.push(dauGocVuong(m.at, m.u.map((x) => x / lu) as Vec3, m.v.map((x) => x / lv) as Vec3, c,
+      PHONG_CACH_SCENE3D.rightAngle.maxLegRatio * lv, mau, g));
+  }
+  for (const x of ve) {
+    x.renderOrder = 10;
+    x.raycast = () => {};
+    g.add(x);
+  }
+  return g;
+}
+
 /** Vùng một lớp phủ khác đang che khung (`data-che-khung`: nút nổi, ô soi, ngăn kéo) — nhãn
  *  số đo không được nằm dưới nó. Toạ độ px trong khung `goc`. */
 function vungCheKhung(goc: DOMRect): LabelRect[] {
@@ -6273,6 +6323,7 @@ export function Scene3DWorkspace({
           "__geo3d_reset_occlusion_performance",
           "__geo3d_fat_line_summary",
           "__geo3d_witness_ids",
+          "__geo3d_angle_construction_ids",
           "__geo3d_grid_visible",
           "__geo3d_grid_subordinated",
           "__geo3d_axes_visible",
@@ -6381,6 +6432,11 @@ export function Scene3DWorkspace({
       nhom.add(vatNhanChung(w, diemToanCanh, mau, diu, doanCo, diemCoTen));
     }
     if (typeof window !== "undefined") (window as any).__geo3d_witness_ids = ds.map((w) => w.id);
+    // Semantic-to-Scene3D: phép dựng của góc đề hỏi, từ bước kết luận của đại lượng (không lộ con số).
+    const coMat = new Set(objectsAt(scene, buoc).map((o) => o.id));
+    const dungGoc = angleConstructionsAt(scene, buoc, coMat);
+    for (const g of dungGoc) nhom.add(vatDungGoc(g, diemToanCanh, doanCo));
+    if (typeof window !== "undefined") (window as any).__geo3d_angle_construction_ids = dungGoc.map((g) => g.id);
     scheduleCommitRender();
   }, [scene, buoc, nhanSoDo, coMatNhan, tuongTac, tang, tapNoiBat, annotationView.hiddenIds, webglEpoch]);
 
