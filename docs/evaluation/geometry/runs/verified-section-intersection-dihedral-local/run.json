@@ -1,0 +1,477 @@
+{
+  "schema": "algosim-verified-section-intersection-run/1",
+  "run_id": "verified-section-intersection-dihedral-local",
+  "updated_at_utc": "2026-11-13T12:27:04.333088+00:00",
+  "start_head": "ffc62f6fe6403e6a53ce2d19833c249e24566ee7",
+  "head_at_manifest_write": "c29cff312b02908e349674892edaaa232a0ba19e",
+  "branch": "feat/local-first-geometry-understanding",
+  "product_commit": "ea4b2a1970c538b7b4e863ee49ca434499d8a97e",
+  "candidate_manifest_commit": "cf058f0eeda111a9cea02e61dde3e872d74f20f2",
+  "measured_system": "dc834af0001169e6962b655b8953c9694eb4a8c5718e59995f152d5c3fc93d29",
+  "measured_files": 115,
+  "cache_version": "134",
+  "contracts_unchanged": [
+    "geometry-fact-planner/26",
+    "geometry-functions/33",
+    "geometry-function-engine/24",
+    "height-invariance-certificate/2",
+    "output-policy/1",
+    "hybrid-route-d-simulation/4"
+  ],
+  "additive_fields": [
+    "angle-construction/1 + angle_domain",
+    "altitude-construction/1 (new optional quantity field)",
+    "typed-fact-next/2 + simulation goal construct_intersection_line (/1 snapshot and provider framing unchanged)"
+  ],
+  "regression_verdict": "INCOMPLETE_OR_FAIL",
+  "regression_gates": {
+    "backend_pytest": "PASS",
+    "demo_replay": "PASS",
+    "crash_audit": "PASS",
+    "docs_ia": "PASS",
+    "publication_head": "FAIL",
+    "publication_range": "PASS",
+    "freeze_verify": "PASS",
+    "frontend_test_wave": "PASS"
+  },
+  "overall_verdict": "BLOCKED",
+  "overall_reason": "publication HEAD and range BLOCKED_PENDING_OWNER_REVIEW; FULL_RELEASE_GATE BLOCKED_GATES_REMAIN",
+  "obtuse_angle_constructions": {
+    "before": 3,
+    "after": 0
+  },
+  "sections_served": {
+    "before": 0,
+    "after": 9,
+    "probes": 12
+  },
+  "intersection_lines_served": {
+    "before": 0,
+    "after": 5,
+    "probes": 7
+  },
+  "invariants": {
+    "served_scenes": 31,
+    "checks": 124,
+    "failed": 0,
+    "mutations": {
+      "applied": 53,
+      "caught": 52
+    }
+  },
+  "browser_e2e": {
+    "passed": 12,
+    "total": 12
+  },
+  "unseen_evaluation": "NOT_MEASURED",
+  "independent_h1": "NOT_MEASURED",
+  "sealed_h1_rows_opened": 0,
+  "live_ai_calls": 0,
+  "physical_low_end": "NOT_MEASURED",
+  "merge_push_deploy": "NOT_PERFORMED",
+  "images_in_git": false,
+  "report": "AXO_VERIFIED_SECTION_INTERSECTION_DIHEDRAL_LOCAL_REPORT.md",
+  "hash_policy": "SHA-256 of bytes with CRLF normalised to LF; excludes run.json itself",
+  "artifacts": {
+    "altitude_face_perpendicular_verification.json": {
+      "sha256_lf": "2b41ed1598d930e7554e63456c1b47a778d59735b7e6c319c6ba169d29af65df",
+      "bytes_lf": 7518
+    },
+    "angle_construction_before_after.json": {
+      "sha256_lf": "e98bc975c6a338a2598bf46f5a65a3dd6bd57fe5e221367bbe3b7522021685ad",
+      "bytes_lf": 18534
+    },
+    "AXO_VERIFIED_SECTION_INTERSECTION_DIHEDRAL_LOCAL_REPORT.md": {
+      "sha256_lf": "60220d22d2cddb607981237f013127fbc6919e7d135a49597b85093dfb714ac8",
+      "bytes_lf": 21029
+    },
+    "baseline_candidate_integrity.json": {
+      "sha256_lf": "284514576fc38b70f0b5d93ad07e2a2354d0d52fc350ae52ec2b18ece042ee7b",
+      "bytes_lf": 1361
+    },
+    "browser_construction_timeline.json": {
+      "sha256_lf": "ecedbbbc226145f0f77e42e1a0ef7fbb184c12a2325f8feb87f860c5b63486a8",
+      "bytes_lf": 19907
+    },
+    "browser_performance_profile.json": {
+      "sha256_lf": "7a445df1347152c288dc51e58f45ed13c3f6a3b00650fd6a2468617a34e64596",
+      "bytes_lf": 4499
+    },
+    "candidate_freeze.json": {
+      "sha256_lf": "2c77c430c354ce34ba7a73ba5673e38474da02a99f61f28dc5a6995910a0aca0",
+      "bytes_lf": 1877
+    },
+    "construction_dependency_graph_tests.json": {
+      "sha256_lf": "4592051f9e6d7e0038f8dd7613fda966b5e1ab11eb33a3bd54fb224ebc6bea25",
+      "bytes_lf": 4301
+    },
+    "dihedral_angle_semantic_audit.json": {
+      "sha256_lf": "5fadb2781325e3e4c33c99a3b06bbe276690c5dc0947b5f470007e795ea72ded",
+      "bytes_lf": 1659
+    },
+    "dihedral_complementary_angle_counterexamples.json": {
+      "sha256_lf": "a7487d61418c104a5caa53032357d62d0f857ded1d625a0089df155bb7ca063d",
+      "bytes_lf": 1037
+    },
+    "existing_intersection_section_capability_audit.json": {
+      "sha256_lf": "73b64087df6dbe167dacd15e3511207ad0e0f48ad1109868c0b50efa2f88ab9b",
+      "bytes_lf": 1582
+    },
+    "fixtures-dihedral-altitude/gate-body-invalid.json": {
+      "sha256_lf": "1391173aaf74af926b4110eb9f9032589b20aa7fafd6de0c3510467420db79d8",
+      "bytes_lf": 1320
+    },
+    "fixtures-dihedral-altitude/gate-disabled.json": {
+      "sha256_lf": "0c3514e7a70e5f0f35226cd1a42b986a3356fd0fc1e209c9f147250e88166fae",
+      "bytes_lf": 1303
+    },
+    "fixtures-dihedral-altitude/gate-fixture-missing.json": {
+      "sha256_lf": "74e85d82249e67802e0619bd1c11be2cf5418091b11fecf4e283638eb9d91061",
+      "bytes_lf": 1394
+    },
+    "fixtures-dihedral-altitude/gate-forbidden.json": {
+      "sha256_lf": "7a03690ca64aa5a3abeec81bfd3c5b3d570871cd7a7c5c7154e97f69b7484b05",
+      "bytes_lf": 1321
+    },
+    "fixtures-dihedral-altitude/manifest.json": {
+      "sha256_lf": "b5b865e50e47814966e45ad994b2ff47e1b9e29b96cf1e8fc631f61c9b007f17",
+      "bytes_lf": 21123
+    },
+    "fixtures-dihedral-altitude/refusal-capability-conditional.json": {
+      "sha256_lf": "6be7a15bcbee4e6418909b0e6396fab16a8bdfe79ba09fd9c21fc4fd8e63d99b",
+      "bytes_lf": 3807
+    },
+    "fixtures-dihedral-altitude/refusal-capability-escape-unsupported.json": {
+      "sha256_lf": "b82450508e6de84fb3353ab50f0a3683b1b6d903fdc629325d554250e812b64f",
+      "bytes_lf": 3778
+    },
+    "fixtures-dihedral-altitude/refusal-capability-negated-question.json": {
+      "sha256_lf": "fd42d81fbcaacf90d8856ea2a7030bd9fcaa3797b7128bddc2de242515b29205",
+      "bytes_lf": 3827
+    },
+    "fixtures-dihedral-altitude/refusal-capability-unsupported.json": {
+      "sha256_lf": "f365ae7d2a1d6fac5426fa749983c2f42654dd4b7bb0d89f3c0960913764e16a",
+      "bytes_lf": 3932
+    },
+    "fixtures-dihedral-altitude/refusal-extraction-fact-incomplete.json": {
+      "sha256_lf": "74a3329984caf732cf9f5f738d3c51fedd0712dbeef0471f18fe856a5a1da459",
+      "bytes_lf": 3793
+    },
+    "fixtures-dihedral-altitude/refusal-extraction-not-json.json": {
+      "sha256_lf": "aa3a89d06c165f40ca5df1d4ee3479af0f50db9fd5751052a406a8ff14ad4c4e",
+      "bytes_lf": 2736
+    },
+    "fixtures-dihedral-altitude/refusal-inconclusive-figure.json": {
+      "sha256_lf": "ee4aed309fe877616e9d9fa5e02baed2564e1b69b93a2c4dc69867a78a60fe22",
+      "bytes_lf": 3786
+    },
+    "fixtures-dihedral-altitude/refusal-inconclusive-negated.json": {
+      "sha256_lf": "877dbb0aa28598f1177cb795a469b2babd90d60a10031ac89855d8ab620baae0",
+      "bytes_lf": 4830
+    },
+    "fixtures-dihedral-altitude/refusal-inconclusive-proof-only.json": {
+      "sha256_lf": "a374ad64a47b37b722888187982538571b322107e9c4b81b8eb52394e40f9a06",
+      "bytes_lf": 4585
+    },
+    "fixtures-dihedral-altitude/refusal-integrity-identity.json": {
+      "sha256_lf": "d572af9b97bde1268c6713a27b89dbffedda1e0e972f9270572b94f9aae112c1",
+      "bytes_lf": 4615
+    },
+    "fixtures-dihedral-altitude/refusal-integrity-proof-status.json": {
+      "sha256_lf": "57bb083b14be3e167cb4ea81b4e07b5e57393c7d7af173040a8ca2f4eb123a39",
+      "bytes_lf": 4615
+    },
+    "fixtures-dihedral-altitude/refusal-integrity-surface.json": {
+      "sha256_lf": "bd57899f273e5750e919284f26270ecf97df4893931e3e0fc682c07b05cc5f67",
+      "bytes_lf": 4595
+    },
+    "fixtures-dihedral-altitude/refusal-invalid-collinear.json": {
+      "sha256_lf": "e5bb8ccd919a028324fdb5f8db8a02369ca4498d98ccf7a6ecf428c6980405ac",
+      "bytes_lf": 3957
+    },
+    "fixtures-dihedral-altitude/refusal-invalid-contradiction.json": {
+      "sha256_lf": "fc03cebd951305e1b71323014bfa8766f77c80194c193e4089eaba3a03cbf023",
+      "bytes_lf": 3779
+    },
+    "fixtures-dihedral-altitude/refusal-invalid-zero-length.json": {
+      "sha256_lf": "14952905bb264a674bfc30f35f36a919342e6d910a0b673e1a07783613b9edbf",
+      "bytes_lf": 3648
+    },
+    "fixtures-dihedral-altitude/refusal-invalid-zero-not-in-text.json": {
+      "sha256_lf": "67db9284e617e134cc7febdb9da714a986b20b71df43f3c576d8488a7f2026c5",
+      "bytes_lf": 3624
+    },
+    "fixtures-dihedral-altitude/refusal-missing-ambiguous.json": {
+      "sha256_lf": "dd55bd4c321ca9aeb2b81464b4629846df5f1623357ca2cdfedf094c480f5bf0",
+      "bytes_lf": 3967
+    },
+    "fixtures-dihedral-altitude/refusal-missing-dimension.json": {
+      "sha256_lf": "b35081dd56f7f4d4d1b0c81944d707430e5193a532999e77cf9d11acad6d729d",
+      "bytes_lf": 3808
+    },
+    "fixtures-dihedral-altitude/refusal-missing-underdetermined.json": {
+      "sha256_lf": "f792d21077cb6677ae42ae23cf2e4101e4dacefdf76ae3a826fba2f7079f1597",
+      "bytes_lf": 3817
+    },
+    "fixtures-dihedral-altitude/refusal-result-engine-self-check.json": {
+      "sha256_lf": "c0873beb9f5358b0470c4be7408032d2872defa5d3e82f7440c2c695c94c4a82",
+      "bytes_lf": 3977
+    },
+    "fixtures-dihedral-altitude/refusal-result-kernel-check.json": {
+      "sha256_lf": "581469c544b577d956b12eed1b66fe49fcf677b5260c441a1dae96301f2e3b09",
+      "bytes_lf": 4568
+    },
+    "fixtures-dihedral-altitude/refusal-result-scene-metric.json": {
+      "sha256_lf": "7fab295b181f5a85c52d4eb2bc46e2b34ac385b9ae99c770242066876b608fec",
+      "bytes_lf": 4564
+    },
+    "fixtures-dihedral-altitude/refusal-source-goal-as-premise.json": {
+      "sha256_lf": "b63aca8aa42a8ed0bb811ade2082944eb269e5fd7adda9f3e0e54e50ff01fdf3",
+      "bytes_lf": 3747
+    },
+    "fixtures-dihedral-altitude/refusal-source-object-mismatch.json": {
+      "sha256_lf": "53dabe91ed827c4f986b9ebbebcab926dd31d623c5363b371487717159d8688b",
+      "bytes_lf": 3797
+    },
+    "fixtures-dihedral-altitude/refusal-source-request-unanswered.json": {
+      "sha256_lf": "b99b19fc199294174936a56e517422d30c15dff4f28f5d32d49fb3f92fd37c25",
+      "bytes_lf": 3971
+    },
+    "fixtures-dihedral-altitude/served-H01_CUBE.json": {
+      "sha256_lf": "007ac391b4c71d94ad9aef19898601c5a6289a1102e30a8e2aacc24bada35d61",
+      "bytes_lf": 73490
+    },
+    "fixtures-dihedral-altitude/served-H02_CUBOID_DISTANCE.json": {
+      "sha256_lf": "6571c6a50eddab7a15816a10aa446d0d7c4eaab25851b077033f47716d32eda0",
+      "bytes_lf": 80004
+    },
+    "fixtures-dihedral-altitude/served-H03_REGULAR_SQUARE_PYRAMID_ROLE_LENGTHS.json": {
+      "sha256_lf": "88f2ca02c4227c078863bb331c30a5071b9401c85a94639eff4b5e7b701c83a1",
+      "bytes_lf": 63625
+    },
+    "fixtures-dihedral-altitude/served-H07_PROOF_GOAL_NOT_PREMISE_BUT_CHECKED.json": {
+      "sha256_lf": "acbd8d0c96a2b45507f221b56e259aef95f4403600c097d6e27446b852eeb7f5",
+      "bytes_lf": 44865
+    },
+    "fixtures-dihedral-altitude/served-H11_SKEW_DISTANCE_COMPOSITION.json": {
+      "sha256_lf": "d5a798c3aea8180c9f3372a1013b9fb12fa51c07d12dd566ecba6f4eb0f8c37a",
+      "bytes_lf": 73384
+    },
+    "fixtures-dihedral-altitude/served-H12_PROJECTION_MIDPOINT_ANGLE.json": {
+      "sha256_lf": "b57bc9130e5492ad584087a832a27986b880652becd6ae265e43f16a0853438e",
+      "bytes_lf": 66469
+    },
+    "fixtures-dihedral-altitude/served-H14_REGULAR_TETRAHEDRON.json": {
+      "sha256_lf": "91adb3077b7f91dcf722e270649e45b077f7b5e189f412d3d75418b6cbf1a53a",
+      "bytes_lf": 29743
+    },
+    "fixtures-dihedral-altitude/served-intersection-SAB-SCD.json": {
+      "sha256_lf": "4abb7878094750f1f645d152f710ad33df44560fccdb9f41d415ad0840411871",
+      "bytes_lf": 55367
+    },
+    "fixtures-dihedral-altitude/served-pyramid-midpoint-area-AB.json": {
+      "sha256_lf": "52f184a1edeea0d4ee4ab957aecb6687ff645b1334190070191aa19a4a8c1ba4",
+      "bytes_lf": 57907
+    },
+    "fixtures-dihedral-altitude/served-pyramid-projection-and-unnamed-midpoint-area.json": {
+      "sha256_lf": "dd6503122720cf4f2c3c9d35e073677ab118aeea2f8f81f83ad99a0cf1ec78ed",
+      "bytes_lf": 67804
+    },
+    "fixtures-dihedral-altitude/served-pyramid-shared-midpoint-area-and-distance.json": {
+      "sha256_lf": "355ef81ac0209748567f2c1ff588b67ba53ea7652d5dd2d1753ae01ef0f7c48e",
+      "bytes_lf": 69697
+    },
+    "fixtures-dihedral-altitude/served-section-MAB-trapezoid.json": {
+      "sha256_lf": "bd1ccd4ce378b51b9a59b10efe92a0ba63816b1b2eab8d768ceeddf7674528c5",
+      "bytes_lf": 77041
+    },
+    "fresh_external_simulation_evaluation.json": {
+      "sha256_lf": "d7af130de0d04c1d164d2d4e4cfc6ae1b4aca52d300b9329893f87a18303b223",
+      "bytes_lf": 535
+    },
+    "full_regression_summary.json": {
+      "sha256_lf": "1a96fc30b4fa5efb8d7b73f1f756c28668b686885a232f734a8b563e8f63e690",
+      "bytes_lf": 24279
+    },
+    "image_to_simulation_acceptance.json": {
+      "sha256_lf": "1fd390e96f1b25663e97d2088e6158142972e6e4433963eedd0563124bc8a4e2",
+      "bytes_lf": 19350
+    },
+    "independent_h1_status.json": {
+      "sha256_lf": "7c406f5c0e202a579b0e213affc08cf14a46308f6ca8e3a33b9540b8c52c10aa",
+      "bytes_lf": 331
+    },
+    "local_section_intersection_parser_tests.json": {
+      "sha256_lf": "b1f17532b7f130ded3cc391558508463ffe8a3359acf16144903098f41677d52",
+      "bytes_lf": 10847
+    },
+    "logs/attempt1/final-backend_pytest.json": {
+      "sha256_lf": "4ee9c3b1c74c4b2e87ed21be543f5463473ea59e4d021a074657beb8a8d12735",
+      "bytes_lf": 2501
+    },
+    "logs/attempt1/final-crash_audit.json": {
+      "sha256_lf": "c96002872b8380bc88c8ab7ef3dffca1c82f44c418b26b7a93e1631c118cbac3",
+      "bytes_lf": 2055
+    },
+    "logs/attempt1/final-demo_replay.json": {
+      "sha256_lf": "e6aa6dcebb48cc2feda1ea1aee0fd5490b451630c8cf9f1948f85a6123676461",
+      "bytes_lf": 2100
+    },
+    "logs/attempt1/final-docs_ia.json": {
+      "sha256_lf": "9c892561cbef2e839ded7d2d0d4c278349bb20a29e7dc8f229e8ece6f5d1bd23",
+      "bytes_lf": 2121
+    },
+    "logs/attempt1/final-freeze_verify.json": {
+      "sha256_lf": "9e2ae9c9d1951513bc7bf99c33cc6b367deac8c1ab74f5a12dcae1abe04dca2c",
+      "bytes_lf": 2143
+    },
+    "logs/attempt1/final-frontend_test_wave.json": {
+      "sha256_lf": "1981f79c3a9abdf80cff2f975b923149a7dad2a1d38c8a9bed5b6029aed76d28",
+      "bytes_lf": 2102
+    },
+    "logs/attempt1/final-publication_head.json": {
+      "sha256_lf": "c174bd39154cd4ca97c5d2d9f08763f53593b3bc0f25f08c78d11931d00443a0",
+      "bytes_lf": 2133
+    },
+    "logs/attempt1/final-publication_range.json": {
+      "sha256_lf": "443f1436e67a767ef15686c354bbe17b507c8b4e921da3fab21bb5863379fdf9",
+      "bytes_lf": 2225
+    },
+    "logs/attempt1/full_regression_summary.json": {
+      "sha256_lf": "1f783d8fa3baea511a89dd64949322fe1c4e27c428864fa2bc702e6500e4cf9c",
+      "bytes_lf": 21572
+    },
+    "logs/attempt2/final-frontend_test_wave.json": {
+      "sha256_lf": "39560ec9dd8d7fdddfaaac27a2d0c95c9e918490beb7bba8d76ac5c960f816ef",
+      "bytes_lf": 2559
+    },
+    "logs/final-backend_pytest.json": {
+      "sha256_lf": "8fb00ba298518226ed7b1bad5d71a91bed349ecf6260d5b680c10368c33defe7",
+      "bytes_lf": 2259
+    },
+    "logs/final-crash_audit.json": {
+      "sha256_lf": "14938ec69e7fb9f37439bbe4f672e5fdfb6a75b25d19755e3de2052608905ffa",
+      "bytes_lf": 2055
+    },
+    "logs/final-demo_replay.json": {
+      "sha256_lf": "041ae53f17aa4dc64950688d825bb1176a61b491addaddfc336f3de4e8babb20",
+      "bytes_lf": 2100
+    },
+    "logs/final-docs_ia.json": {
+      "sha256_lf": "47081cd34a96506b0d3cfe36fe9c3668ff826ea37db98154a5485cd298d5bcea",
+      "bytes_lf": 2121
+    },
+    "logs/final-freeze_verify.json": {
+      "sha256_lf": "0ba8bdb22f5d11504f45b1e051100377adc8d7cd2c3e503c97d2441c38e19bd1",
+      "bytes_lf": 2143
+    },
+    "logs/final-frontend_test_wave.json": {
+      "sha256_lf": "70fa9d06636609f279954af9d2c6779d7becdc9c12b59a2547cb32f7eed337b5",
+      "bytes_lf": 4875
+    },
+    "logs/final-publication_head.json": {
+      "sha256_lf": "d595805aff6dae06da50696912c768a450712c5390fb7546380017b0f0c7af01",
+      "bytes_lf": 2133
+    },
+    "logs/final-publication_range.json": {
+      "sha256_lf": "b5b5763e515671f4a55e604b1cbed0a1ffd3350ee070405668ae4fd90505c32d",
+      "bytes_lf": 2226
+    },
+    "logs/prior-k1-owner-approval.template.json": {
+      "sha256_lf": "d38a5add9a27316719be0c4e0d19cb79a811f18b1253f0932eaa0547933694d3",
+      "bytes_lf": 782
+    },
+    "logs/prior-r1-owner-approval.template.json": {
+      "sha256_lf": "854bfce1967742fd02f31d7f9fbf8d9f5783ee3eca5dbd9ba93d28ef6db6c421",
+      "bytes_lf": 782
+    },
+    "logs/prior-s2-owner-approval.template.json": {
+      "sha256_lf": "a1abb900ff859f7fc303215d854c70e8032be5d3114b404373ba298520bc3e06",
+      "bytes_lf": 782
+    },
+    "pending_template_refresh.json": {
+      "sha256_lf": "4ef1a2d61f9bd4e980b03b68fb2f19d68ad3ed3aae712b69db72a40737090ae0",
+      "bytes_lf": 3254
+    },
+    "pending_template_refresh_after_census_fix.json": {
+      "sha256_lf": "8683cd5c5ea54b65730119baebc824b5ef599f33889a6e3537c9196ed6db5321",
+      "bytes_lf": 3193
+    },
+    "performance_impact.json": {
+      "sha256_lf": "b3a024adb3be08515bf32ccf5757f03785a8c88624201ccd753206ff5ef3fe84",
+      "bytes_lf": 6086
+    },
+    "plane_intersection_correctness.json": {
+      "sha256_lf": "66a24b8c775fd1fffea05ee59eda05204b838022bcf5519c5b816a57ef118594",
+      "bytes_lf": 9709
+    },
+    "polyhedron_section_correctness.json": {
+      "sha256_lf": "7c6872a0673dc93fdd9f621027d159032e73a6dd65f681b46d54db916ee84de3",
+      "bytes_lf": 16828
+    },
+    "publication_gate_status.json": {
+      "sha256_lf": "7471805ea175eab50cb1f7730898d085cfc7b418f06163022b47410cc33b5a83",
+      "bytes_lf": 1943
+    },
+    "resource_cleanup_audit.json": {
+      "sha256_lf": "efd1a1d3a8da3df0358c5a87f9c2ef499f4a8121108ea6dc16e1732f3b986dcf",
+      "bytes_lf": 3198
+    },
+    "scene3d_mathematical_invariants.json": {
+      "sha256_lf": "f68c88c4bb3dfe8a892cf30e377084d43420304bfb925ef78cebffec07324771",
+      "bytes_lf": 2119
+    },
+    "scene3d_section_intersection_browser_e2e.json": {
+      "sha256_lf": "f20a36f0daeaf05d21a252261875a3a6e9d736ee84842a6636e2f78c858d20d5",
+      "bytes_lf": 10414
+    },
+    "schema-census-extension.json": {
+      "sha256_lf": "8fc111ecc35db7facc35fd73e6772cc19c593c3f79e5250c72c79cbd7cbfa0b9",
+      "bytes_lf": 4376
+    },
+    "section_degenerate_cases.json": {
+      "sha256_lf": "473a12a5457776ec6916b9c82c15690e4745c4590b8593d72da147093f6cc16a",
+      "bytes_lf": 3083
+    },
+    "source_gate_construction_integrity.json": {
+      "sha256_lf": "4ae5b9fbb03cb2d52750780d91096892db8a886acb0166cce7cfc0597f248d5d",
+      "bytes_lf": 1112
+    },
+    "text_to_simulation_acceptance.json": {
+      "sha256_lf": "b9f4e5970f8ad698c74da6d283ee30414d255a8e14c0a084e5a36d8a56390754",
+      "bytes_lf": 11750
+    },
+    "tools/acceptance_run.py": {
+      "sha256_lf": "a89add6eebf71f0c0e202e56c5df431dda05c706295761470ce868c3799ad516",
+      "bytes_lf": 979
+    },
+    "tools/browser_section_e2e.mjs": {
+      "sha256_lf": "e2e4408b37d4117e9775770df1bf4f3fb8ae1e20ebdff5e5fb7076fc72ab4240",
+      "bytes_lf": 16433
+    },
+    "tools/finalize.py": {
+      "sha256_lf": "c1c133917cd55851e25995ff83c9ca9b8e5577a22880dec14cdbbe5c79033a9d",
+      "bytes_lf": 19954
+    },
+    "tools/make_angle_fixture.py": {
+      "sha256_lf": "82f12c53473d7cd9016da2e26a8202b85b2961c3969aa7a16d5c6a41dfbc078b",
+      "bytes_lf": 2068
+    },
+    "tools/refresh_pending_templates.py": {
+      "sha256_lf": "ef0bb8fe2f79eeae420795d7dddad66402e7dc2bed84b28938461603ef54212c",
+      "bytes_lf": 3398
+    },
+    "tools/run_full_regression.py": {
+      "sha256_lf": "c077b732cb3393c16dc0f5ea8b0933f9d1fef80dc2d5ef4c81c9323559f222f0",
+      "bytes_lf": 823
+    },
+    "tools/verify_constructions.py": {
+      "sha256_lf": "273b3fb32303109fe828423a9b153a501955c0fae14aed8089286ecba3a0cce8",
+      "bytes_lf": 19737
+    },
+    "tools/write_run_json.py": {
+      "sha256_lf": "2262d9242434524f89e505344b296509459398d0727b456bb6a9875192b88f35",
+      "bytes_lf": 7521
+    }
+  }
+}

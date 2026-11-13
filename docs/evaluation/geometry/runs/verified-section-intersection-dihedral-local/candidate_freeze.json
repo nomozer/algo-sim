@@ -1,0 +1,38 @@
+{
+  "run_id": "verified-section-intersection-dihedral-local",
+  "generated_at_utc": "2026-11-13T12:27:04.333088+00:00",
+  "head": "c29cff312b02908e349674892edaaa232a0ba19e",
+  "branch": "feat/local-first-geometry-understanding",
+  "freeze_commit_field": "cf058f0eeda111a9cea02e61dde3e872d74f20f2",
+  "freeze_stored_in": "f0fa7e359113c378f6cddc69a0dc1e557b51495c",
+  "product_commit": "ea4b2a1970c538b7b4e863ee49ca434499d8a97e",
+  "measured_system": {
+    "paths": [
+      "backend/app",
+      "frontend/src/simulations/domains/semantic",
+      "frontend/src/simulations/domains/semantic/semantic_program.schema.json"
+    ],
+    "so_file": 115,
+    "tree_hash": "dc834af0001169e6962b655b8953c9694eb4a8c5718e59995f152d5c3fc93d29",
+    "khai": "Băm nội dung toàn bộ mã SẢN PHẨM của hệ được đo. Harness (scripts/tests/docs) KHÔNG nằm trong đây, nên bộ đo được phép cứng cáp thêm mà không phải đóng băng lại candidate."
+  },
+  "cache_version": "134",
+  "cache_version_bumped": "133 -> 134: served envelopes changed (acute angle rays + angle_domain, altitude_construction); test_cache_dihedral_altitude_invalidation.py proves a 133:route-d row MISSES",
+  "contracts_unchanged": [
+    "geometry-fact-planner/26",
+    "geometry-functions/33",
+    "geometry-function-engine/24",
+    "height-invariance-certificate/2",
+    "output-policy/1",
+    "hybrid-route-d-simulation/4"
+  ],
+  "additive_fields": [
+    "angle-construction/1 + angle_domain",
+    "altitude-construction/1 (new optional quantity field)",
+    "typed-fact-next/2 + simulation goal construct_intersection_line (/1 snapshot and provider framing unchanged)"
+  ],
+  "freeze_verify_in_regression": "PASS",
+  "earlier_freezes_in_this_run": {
+    "89aed139e": "measured_system 8f49cd2d4d32…, superseded: regression attempt 1 failed 2 scope-census tests (logs/attempt1/)"
+  }
+}

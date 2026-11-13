@@ -1,0 +1,46 @@
+{
+  "name": "frontend_test_wave",
+  "command": "npm.cmd run test:wave",
+  "argv": [
+    "npm.cmd",
+    "run",
+    "test:wave"
+  ],
+  "cwd": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\local-first-geometry-understanding\\frontend",
+  "started_at_utc": "2026-11-13T12:17:35.944901+00:00",
+  "start_snapshot": {
+    "head_commit": "c29cff312b02908e349674892edaaa232a0ba19e",
+    "product_paths_sha256": "7d00837213ccc6f6c60d3c539cbd7f3a1ca07ea5c2933c6da2ad670b19286b32",
+    "product_path_count": 335,
+    "hash_policy": "tracked backend/app + frontend/src, LF normalized; includes tests",
+    "working_product_source_sha256": "c02156881bb0d87d75ab87c5cf37ff8db627628c8860cd612dd66b46d31ff1ee",
+    "working_product_source_count": 193,
+    "working_source_policy": "all working backend/app + frontend/src including untracked; skip pycache and freeze TEST_ONLY_GLOBS"
+  },
+  "ended_at_utc": "2026-11-13T12:18:43.724751+00:00",
+  "duration_seconds": 67.421,
+  "exit_code": 1,
+  "raw_output_sha256": "a58a21ba9a825a76eaf9787769fa337c2aefc1eacf15dec6abc5a6e168b6de33",
+  "raw_output_bytes": 11653,
+  "raw_output_retention": "ignored local .superpowers only; never staged",
+  "end_snapshot": {
+    "head_commit": "c29cff312b02908e349674892edaaa232a0ba19e",
+    "product_paths_sha256": "7d00837213ccc6f6c60d3c539cbd7f3a1ca07ea5c2933c6da2ad670b19286b32",
+    "product_path_count": 335,
+    "hash_policy": "tracked backend/app + frontend/src, LF normalized; includes tests",
+    "working_product_source_sha256": "c02156881bb0d87d75ab87c5cf37ff8db627628c8860cd612dd66b46d31ff1ee",
+    "working_product_source_count": 193,
+    "working_source_policy": "all working backend/app + frontend/src including untracked; skip pycache and freeze TEST_ONLY_GLOBS"
+  },
+  "summary_lines": [
+    "Test Files  1 failed | 139 passed (140)",
+    "Tests  1 failed | 2046 passed (2047)",
+    "Duration  65.36s (transform 6.37s, setup 1.78s, import 33.34s, tests 62.45s, environment 15ms)"
+  ],
+  "failure_node_ids": [
+    "src/simulations/domains/geometry/axo-cross-family-scene3d-acceptance.test.tsx > AXO — Cross-Family Scene3D Stabilization & Acceptance Suite (§4–§9) > 1. Cross-Family Pipeline Gate (§9.1–9.12): all 11 public catalog samples + right prism + oblique prism + cube hexagon + oblique cylinder + plane-plane intersection + exterior extension pass mathematical consistency, DAG construction continuity, visual continuity, and zero future-step leakage"
+  ],
+  "typescript_errors": 0,
+  "source_unchanged_during_command": true,
+  "verdict": "FAIL"
+}

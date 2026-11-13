@@ -4,8 +4,8 @@
 |---|---|
 | Nhánh / worktree | `feat/local-first-geometry-understanding` (worktree cố định; không tạo nhánh/worktree, không merge/push/deploy) |
 | Mốc bắt đầu | `ffc62f6fe` (candidate `15e98444b`, measured_system `b222260d…`, `CACHE_VERSION` 133) |
-| Commit sản phẩm | `420851be6` sửa góc bù · `6aad1f6b8` thiết diện, giao tuyến, đường cao trên tuyến local + cache 134 · `a74aa3325` bộ fixture hybrid-preview mới |
-| Candidate | đóng băng tại `89aed139e` (manifest commit `42818fb1d`), measured_system `8f49cd2d…` (115 file), `CACHE_VERSION` **134** |
+| Commit sản phẩm | `420851be6` sửa góc bù · `6aad1f6b8` thiết diện, giao tuyến, đường cao trên tuyến local + cache 134 · `a74aa3325` bộ fixture hybrid-preview mới · `ea4b2a197` sửa census phạm vi (hành vi không đổi) |
+| Candidate | đóng băng tại `f0fa7e359` (manifest commit `cf058f0ee`), measured_system `dc834af0…` (115 file), `CACHE_VERSION` **134**; bản đóng băng `89aed139e` trước đó bị thay vì regression lần 1 fail |
 | Hợp đồng | planner `/26`, registry `/33`, engine `/24`, envelope `hybrid-route-d-simulation/4`: **không đổi**. `angle-construction/1` thêm trường `angle_domain`; trường tuỳ chọn mới `altitude-construction/1`; TypedFactNext `/2` thêm goal `construct_intersection_line` (snapshot `/1` và fingerprint môi trường `3d5400a5` giữ nguyên) |
 | Lượt gọi model | 0 (`ALLOW_LIVE_AI=0`) |
 
@@ -27,6 +27,7 @@ Nhãn: **VF** VERIFIED FACT · **INF** INFERENCE · **HYP** HYPOTHESIS · **NM**
 | `420851be6` | `quantity_annotations`: nếu hai tia mở góc tù thì đảo tia thứ hai, ưu tiên điểm có tên trên tia đối. Chứng chỉ mới yêu cầu cos có dấu ≥ 0 **và** cos² = giá trị đo. Thêm `angle_domain = "[0°, 90°]"` cho mọi quan hệ (đường–mặt, hai đường cắt nhau/chéo nhau, hai mặt). Renderer từ chối tia tù hoặc thiếu domain (fail-closed) | `test_angle_construction_domain.py` (15/18 đỏ trước khi sửa), `scene3d-angle-construction.test.ts` |
 | `6aad1f6b8` | Parser local có luật 7c-0 (thiết diện cắt bởi mặt phẳng ba điểm có tên) và 7c-1 (giao tuyến của hai mặt phẳng). TypedFactNext `/2` thêm goal `construct_intersection_line`, bridge ánh xạ sang fact planner `intersection_line` đã có. `gan_duong_cao` ghi `altitude-construction/1` cho thể tích chóp; renderer kiểm lại rồi vẽ. `CACHE_VERSION` 133→134 | `test_section_intersection_local.py` (23 test, oracle thiết diện độc lập), `test_cache_dihedral_altitude_invalidation.py` |
 | `a74aa3325` | Bộ fixture hybrid-preview mới `fixtures-dihedral-altitude/`; bộ cũ giữ nguyên | `tests/test_hybrid_preview_fixtures.py` |
+| `ea4b2a197` | Nhãn hai mặt phẳng của goal giao tuyến được gộp vào tham chiếu trên một dòng riêng, nên dòng mà mutant `remove_apex_ownership` nhắm tới giữ nguyên. `SimulationGoalSpecV2` được phân loại trong phần mở rộng census (chỉ cộng thêm). Bản ghi phạm vi không đổi | `test_scope_census_closure.py` (+2 test phạm vi `target_planes`), [schema-census-extension.json](schema-census-extension.json) |
 
 ## 3. Trả lời 40 câu hỏi
 
@@ -62,10 +63,10 @@ Nhãn: **VF** VERIFIED FACT · **INF** INFERENCE · **HYP** HYPOTHESIS · **NM**
 30. **Có bao nhiêu bài mới chưa dùng phát triển được mô phỏng?** *(NM)* 0 được đo. Không có dữ liệu chưa thấy nào ngoài 94 dòng niêm phong ([fresh_external_simulation_evaluation.json](fresh_external_simulation_evaluation.json)).
 31. **Có mở 94 dòng H-1 không?** *(VF)* Không: không tải, không xem, không OCR, không đọc.
 32. **H-1 có được đánh giá độc lập không?** *(NM)* Chưa ([independent_h1_status.json](independent_h1_status.json)).
-33. **Full backend/frontend regression đạt không?** §5.
-34. **Publication HEAD còn bao nhiêu finding?** §5.
-35. **Publication range đã xử lý thế nào?** §5.
-36. **Candidate freeze ở commit nào?** *(VF)* `89aed139e` lưu manifest của HEAD `42818fb1d`, measured_system `8f49cd2d4d32…`, 115 file. Các template Owner K-1/S-2/R-1 đang chờ được gắn lại vào candidate này ở `3ccf72ad9` (chỉ metadata, giữ PENDING). Kết quả verify cuối ở §5.
+33. **Full backend/frontend regression đạt không?** *(VF)* Đạt, ở lần chạy thứ hai. Lần 1, backend có 2 test census phạm vi fail, đều do lỗi của run này; đã sửa ở `ea4b2a197` rồi đóng băng lại. Lần 2, backend đạt 14 363 test; frontend có 1 test quá thời hạn 5 s dưới tải, chạy riêng 3 lần đều đạt trong khoảng 1 s, và cả cổng chạy lại đạt 2 047/2 047 (§5).
+34. **Publication HEAD còn bao nhiêu finding?** *(BL)* 97, tất cả là `pending_exception`, như trước run. `PUBLICATION_HEAD = BLOCKED_PENDING_OWNER_REVIEW`.
+35. **Publication range đã xử lý thế nào?** *(VF/BL)* Quét `ffc62f6fe..HEAD`: **PASS**, 0 vi phạm (136 file). Run này không sinh finding mới vì mật khẩu thử là ngẫu nhiên mỗi lần chạy. Blob lịch sử `2bfce9c8` (`HARDCODED_PASSWORD`, mật khẩu tổng hợp cho tài khoản thử trong SQLite cục bộ) đã được git xác minh: có ở `fe835d424`, không còn ở `8da3ea754` và HEAD, và nằm trước mốc bắt đầu run nên không thuộc khoảng quét. Blob vẫn nằm trong lịch sử và chỉ Owner được thêm ngoại lệ đúng blob này, nên `PUBLICATION_RANGE = BLOCKED_PENDING_OWNER_REVIEW` và `FULL_RELEASE_GATE = BLOCKED_GATES_REMAIN`. Agent không duyệt, không thêm wildcard, không sửa chính sách quét, không viết lại lịch sử ([publication_gate_status.json](publication_gate_status.json)).
+36. **Candidate freeze ở commit nào?** *(VF)* `f0fa7e359` lưu manifest của HEAD `cf058f0ee`, sản phẩm `ea4b2a197`, measured_system `dc834af0001169e6…`, 115 file; `freeze --verify` đạt trong regression. Các template K-1/S-2/R-1 được gắn lại ở `c29cff312` (chỉ metadata, giữ PENDING). Bản trước, `89aed139e` / `8f49cd2d…`, bị thay thế ([candidate_freeze.json](candidate_freeze.json)).
 37. **Có merge, push, deploy hoặc live AI call không?** *(VF)* Không có.
 38. **Những khoảng trống mô phỏng nào còn tồn tại?** *(VF/INF)*
     - Thiết diện nêu trong câu hỏi bị chặn đúng theo thiết kế.
@@ -83,7 +84,18 @@ Nhãn: **VF** VERIFIED FACT · **INF** INFERENCE · **HYP** HYPOTHESIS · **NM**
 
 ## 5. Regression và publication
 
-*(điền sau khi bộ chạy đầy đủ kết thúc)*
+Chi tiết ở [full_regression_summary.json](full_regression_summary.json). `ALLOW_LIVE_AI=0`, mã nguồn không đổi trong lúc chạy. Verdict của bộ chạy là `INCOMPLETE_OR_FAIL` chỉ vì cổng publication HEAD; verdict tổng là **BLOCKED**.
+
+| Cổng | Lần 1 (candidate `8f49cd2d…`) | Lần 2 (candidate `dc834af0…`) |
+|---|---|---|
+| backend pytest | **FAIL**: 2 failed, 14 359 passed. `test_census_inventory_complete` báo `SimulationGoalSpecV2` chưa phân loại; mutant `remove_apex_ownership` không áp được | **PASS**: 14 363 passed, 7 skipped, 3 deselected, 15 xfailed |
+| frontend `test:wave` | PASS 2 047 | 1 timeout 5 s dưới tải (`axo-cross-family-scene3d-acceptance`); chạy riêng 3/3 đạt (~1 s); chạy lại cả cổng: **PASS**, 140 file, 2 047 test, tsc + vite build |
+| demo replay · crash audit · docs IA | PASS | **PASS** |
+| freeze verify | PASS (`8f49cd2d…`) | **PASS**: 115 file, `dc834af0…` |
+| publication HEAD | BLOCKED 97 | **BLOCKED**: 97, tất cả `pending_exception` |
+| publication range `ffc62f6fe..HEAD` | PASS 0 | **PASS**: 0 |
+
+Biên nhận lần 1 ở `logs/attempt1/`; biên nhận frontend lần 2 ở `logs/attempt2/` và trong `previous_attempts` của summary. Ngoài bộ chạy: E2E trình duyệt 12/12, kiểm bất biến 124/124, mutation 52/53, đồ thị phụ thuộc 0 vi phạm.
 
 ## 6. Giới hạn
 

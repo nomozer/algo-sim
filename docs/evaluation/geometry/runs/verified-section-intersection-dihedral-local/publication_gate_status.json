@@ -1,0 +1,31 @@
+{
+  "run_id": "verified-section-intersection-dihedral-local",
+  "generated_at_utc": "2026-11-13T12:27:04.333088+00:00",
+  "publication_head": "BLOCKED_PENDING_OWNER_REVIEW",
+  "publication_head_scan": [
+    "SUMMARY scanned=31116 messages=0 violations=97 pending_exception=97 verdict=BLOCKED"
+  ],
+  "publication_range": "BLOCKED_PENDING_OWNER_REVIEW",
+  "publication_range_scan_this_run": {
+    "range": "ffc62f6fe..HEAD",
+    "summary_lines": [
+      "SUMMARY scanned=136 messages=11 violations=0 pending_exception=0 verdict=PASS"
+    ],
+    "verdict": "PASS"
+  },
+  "full_release_gate": "BLOCKED_GATES_REMAIN",
+  "historical_range_finding": {
+    "rule": "HARDCODED_PASSWORD",
+    "path": "docs/evaluation/geometry/runs/semantic-to-scene3d-verified-simulation/tools/browser_simulation_e2e.mjs",
+    "blob_sha1": "2bfce9c8e306ca707141c41806e1fac31623c2e9",
+    "blob_sha256": "75a685edde68459fa308794bb6e5d7d6abc543fef61874669e0277dc0acab6c0",
+    "introduced_in": "fe835d424",
+    "removed_at": "8da3ea754 (random per-run password)",
+    "git_verified": "git cat-file -t 2bfce9c8 = blob; ls-tree fe835d424 holds it at that path, 8da3ea754 and HEAD hold 539d90f5; fe835d424 is an ancestor of the run start ffc62f6fe; rev-list --objects ffc62f6fe..HEAD lists it 0 times (VERIFIED FACT, session log)",
+    "in_this_run_range": false,
+    "nature": "synthetic password for a throwaway account in the measured app's own local SQLite file; never a real credential",
+    "status": "PENDING_OWNER_DECISION: the blob stays in history (no rewrite); only the Owner may add an exact-blob exception"
+  },
+  "agent_actions": "none: no approval written, no exception or wildcard added, scan policy unchanged, no history rewritten, no evidence removed, the old value not repeated",
+  "pending_templates": "K-1/R-1/S-2 re-bound to the refrozen measured_system as metadata only (pending_template_refresh.json); owner_decision stays PENDING_OWNER_DECISION"
+}
