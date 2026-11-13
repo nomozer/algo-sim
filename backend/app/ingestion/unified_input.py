@@ -162,6 +162,80 @@ def _text_candidates_to_items(
     return tuple(items)
 
 
+#: A band candidate id: "<region id or page>~band-<k>" (run `semantic-failure-safe-image-segmentation`).
+_BAND_SEP = "~band-"
+
+
+def _band_id(region_id: str | None, k: int) -> str:
+    return f"{region_id or 'page'}{_BAND_SEP}{k}"
+
+
+def _parse_band_id(cid: str) -> tuple[str | None, int] | None:
+    if _BAND_SEP not in cid:
+        return None
+    region, _, k = cid.partition(_BAND_SEP)
+    return (None if region == "page" else region), int(k) if k.isdigit() else 0
+
+
+def _band_geometry(region_res: RegionDetectionResult, band: tuple[int, int, int, int]) -> tuple[float, float, float, float]:
+    """A band rectangle of the PREPARED image (pixels) in working-image coordinates."""
+    ox, oy = region_res.prepared_origin
+    sw, sh = region_res.prepared_source_size or (region_res.prepared_image.width, region_res.prepared_image.height)
+    kx = sw / float(max(1, region_res.prepared_image.width))
+    ky = sh / float(max(1, region_res.prepared_image.height))
+    return ox + band[0] * kx, oy + band[1] * ky, ox + band[2] * kx, oy + band[3] * ky
+
+
+def _band_blocks(region_res: RegionDetectionResult, band: tuple[int, int, int, int]):
+    x0, y0, x1, y1 = _band_geometry(region_res, band)
+    return tuple(b for b in region_res.blocks if b.bbox.y1 > y0 and b.bbox.y0 < y1 and b.bbox.x1 > x0 and b.bbox.x0 < x1)
+
+
+def _crop_to_band(region_res: RegionDetectionResult, band: tuple[int, int, int, int]) -> RegionDetectionResult:
+    """The prepared image cut to one band: the problem the learner chose, its own figure blocks only."""
+    import io as _io
+
+    from PIL import Image as _Image
+
+    im = _Image.open(_io.BytesIO(region_res.prepared_image.data)).convert("RGB")
+    crop = im.crop(tuple(band))
+    buf = _io.BytesIO()
+    crop.save(buf, format="PNG")
+    x0, y0, x1, y1 = _band_geometry(region_res, band)
+    blocks = _band_blocks(region_res, band)
+    return replace(region_res, prepared_image=normalize_image(buf.getvalue()), prepared_origin=(int(x0), int(y0)),
+                   prepared_source_size=(int(x1 - x0), max(1, int(y1 - y0))), blocks=blocks,
+                   has_associated_figure=any(b.kind == "figure" for b in blocks), used_crop=True)
+
+
+def _band_candidates(region_res: RegionDetectionResult, bands, region_id: str | None, *, id_prefix: str,
+                     page_number: int | None) -> tuple[UnifiedCandidateItem, ...]:
+    import base64 as _b64
+    import io as _io
+
+    from PIL import Image as _Image
+
+    im = _Image.open(_io.BytesIO(region_res.prepared_image.data)).convert("RGB")
+    items = []
+    for k, band in enumerate(bands, start=1):
+        crop = im.crop(tuple(band))
+        crop.thumbnail((360, 360))
+        buf = _io.BytesIO()
+        crop.save(buf, format="JPEG", quality=70)
+        has_fig = any(b.kind == "figure" for b in _band_blocks(region_res, band))
+        pos = (("cột trái" if band[0] == 0 else "cột phải" if band[2] >= im.width else f"cột {k}")
+               if any(b[0] > 0 for b in bands) else
+               ("phía trên" if k == 1 else ("phía dưới" if k == len(bands) else f"vị trí {k}")))
+        items.append(UnifiedCandidateItem(
+            candidate_id=f"{id_prefix}{_band_id(region_id, k)}",
+            label=f"Bài {k} ({pos}{' · kèm hình vẽ' if has_fig else ''})" + (f" · Trang {page_number}" if page_number is not None else ""),
+            preview_snippet="Vùng đề kèm hình minh họa" if has_fig else "Vùng văn bản bài toán",
+            preview_data_url="data:image/jpeg;base64," + _b64.b64encode(buf.getvalue()).decode("ascii"),
+            page_number=page_number, has_figure=has_fig,
+            source_bbox=(band[0] / max(1, im.width), band[1] / max(1, im.height), band[2] / max(1, im.width), band[3] / max(1, im.height))))
+    return tuple(items)
+
+
 def _region_candidates_to_items(
     regions: tuple[CandidateProblemRegion, ...],
     *,
@@ -408,8 +482,11 @@ async def _process_normalized_visual_page(
     if selected_candidate_id:
         if id_prefix and selected_candidate_id.startswith(id_prefix):
             region_sel_id = selected_candidate_id[len(id_prefix) :]
-        elif selected_candidate_id.startswith("region-"):
+        elif selected_candidate_id.startswith("region-") or _BAND_SEP in selected_candidate_id:
             region_sel_id = selected_candidate_id
+    band_sel = _parse_band_id(region_sel_id) if region_sel_id else None
+    if band_sel is not None:
+        region_sel_id = band_sel[0]          # the band lives inside this region (None: the page as the detector kept it)
 
     # OCR and region detection are seconds of blocking work: off the event loop, so other requests (and their SQLite
     # transactions) keep being served while one image is read (run `local-semantic-source-gate-reliability`).
@@ -462,20 +539,36 @@ async def _process_normalized_visual_page(
     # 2. Có nhiều vùng bài toán tách biệt rõ và chưa có chỉ dẫn chọn bài -> chạm chọn 1 bước, 0 lượt gọi VLM!
     #    OCR local (nếu có) kiểm chứng bằng văn bản: cả trang chỉ có ≤ 1 tiêu đề "Câu/Bài N" ⇒ một bài bị bố cục
     #    (hình vẽ chen giữa lời đề và câu hỏi) tách nhầm thành hai vùng — giữ nguyên trang, không bắt chọn.
+    #    (semantic-failure-safe-image-segmentation) and at most ONE multiple-choice option group: a page with no readable
+    #    header but two option groups holds two problems — the split stands and the learner chooses.
     split_overruled = False
-    if region_res.ambiguous_multi_problem and len(region_res.candidates) >= 2 and not selected_candidate_id:
-        from app.ingestion.local_ocr_route import count_problem_headers_on_page
+    from app.ingestion.local_ocr_route import estimate_problem_signals
 
-        n_headers = await run_in_threadpool(count_problem_headers_on_page, region_res.full_image.data)
-        if n_headers is not None and n_headers <= 1:
+    if region_res.ambiguous_multi_problem and len(region_res.candidates) >= 2 and not selected_candidate_id:
+        page_sig = await run_in_threadpool(estimate_problem_signals, region_res.full_image.data)
+        n_headers = page_sig["headers"] if page_sig else None
+        if page_sig is not None and n_headers <= 1 and page_sig["option_groups"] <= 1:
             split_overruled = True
             prov_common["region_split_overruled_by_ocr_headers"] = n_headers
+            prov_common["region_option_groups_on_page"] = page_sig["option_groups"]
     if region_res.ambiguous_multi_problem and len(region_res.candidates) >= 2 and not selected_candidate_id and not split_overruled:
         msg = (
             f"Không tìm thấy vùng Bài {directive.target_problem_number} trong ảnh. Em chạm chọn vùng bài muốn dựng nhé."
             if directive.target_problem_number is not None
             else f"Ảnh có {len(region_res.candidates)} vùng bài toán độc lập. Em chạm chọn vùng bài muốn dựng nhé."
         )
+        # (semantic-failure-safe-image-segmentation) when the page shows ≥ 2 stacked option groups, one band per group IS
+        # one problem with its own options; the detector's blocks may part a problem's text from its figure — offer bands
+        prep_sig = await run_in_threadpool(estimate_problem_signals, region_res.prepared_image.data)
+        if prep_sig and prep_sig["option_groups"] >= 2 and prep_sig.get("bands") and directive.target_problem_number is None:
+            return UnifiedPrepareOutcome(
+                status="needs_selection", source_kind=source_kind, reason_code="MULTIPLE_PROBLEMS_DETECTED",
+                learner_message=f"Ảnh có {len(prep_sig['bands'])} bài toán. Em chạm chọn bài muốn dựng nhé.",
+                candidates=_band_candidates(region_res, prep_sig["bands"], None, id_prefix=id_prefix, page_number=page_number),
+                provenance={**prov_common, "region_state": "MULTIPLE_PROBLEM_CANDIDATES", "option_groups": prep_sig["option_groups"],
+                            "detector_candidates": len(region_res.candidates)},
+                metrics={"vlm_calls": 0, "used_vlm": False, "raw_input_bytes": raw_input_bytes, "vlm_payload_bytes": 0,
+                         "uncropped_baseline_bytes": uncropped_bytes, "processing_ms": round((time.perf_counter() - t0) * 1000.0, 2)})
         return UnifiedPrepareOutcome(
             status="needs_selection",
             source_kind=source_kind,
@@ -484,7 +577,7 @@ async def _process_normalized_visual_page(
             candidates=_region_candidates_to_items(
                 region_res.candidates, page_number=page_number, id_prefix=id_prefix
             ),
-            provenance=prov_common,
+            provenance={**prov_common, "region_state": "MULTIPLE_PROBLEM_CANDIDATES"},
             metrics={
                 "vlm_calls": 0,
                 "used_vlm": False,
@@ -494,6 +587,38 @@ async def _process_normalized_visual_page(
                 "processing_ms": round((time.perf_counter() - t0) * 1000.0, 2),
             },
         )
+
+    # 2b (semantic-failure-safe-image-segmentation). ONE region kept, but its OCR shows ≥ 2 multiple-choice option groups:
+    #    two problems were merged. Never send that region on: offer one band per problem (cut between a problem's last
+    #    option row and the next line), or — when the groups sit side by side — ask for a tighter photo. A chosen band
+    #    is recomputed deterministically from the same image and the same cached OCR.
+    sig = None
+    if band_sel is not None or not (region_res.ambiguous_multi_problem and not split_overruled and len(region_res.candidates) >= 2):
+        sig = await run_in_threadpool(estimate_problem_signals, region_res.prepared_image.data)
+    if band_sel is not None:
+        bands = (sig or {}).get("bands") or ()
+        if not 1 <= band_sel[1] <= len(bands):
+            return UnifiedPrepareOutcome(
+                status="needs_selection", source_kind=source_kind, reason_code="AMBIGUOUS_PROBLEM_BOUNDARIES",
+                learner_message="Vùng bài đã chọn không còn khớp với ảnh. Em chụp lại sát bài cần dựng nhé.",
+                candidates=(), provenance={**prov_common, "region_state": "AMBIGUOUS_PROBLEM_BOUNDARIES"},
+                metrics={"vlm_calls": 0, "used_vlm": False, "raw_input_bytes": raw_input_bytes, "vlm_payload_bytes": 0,
+                         "uncropped_baseline_bytes": uncropped_bytes, "processing_ms": round((time.perf_counter() - t0) * 1000.0, 2)})
+        region_res = _crop_to_band(region_res, bands[band_sel[1] - 1])
+        prov_common["region_state"] = "SINGLE_PROBLEM_CONFIRMED"
+        prov_common["selected_band"] = {"index": band_sel[1], "of": len(bands)}
+    elif sig is not None and sig["option_groups"] >= 2:
+        bands = sig.get("bands")
+        state = "MULTIPLE_PROBLEM_CANDIDATES" if bands else "AMBIGUOUS_PROBLEM_BOUNDARIES"
+        return UnifiedPrepareOutcome(
+            status="needs_selection", source_kind=source_kind,
+            reason_code="MULTIPLE_PROBLEMS_DETECTED" if bands else "AMBIGUOUS_PROBLEM_BOUNDARIES",
+            learner_message=(f"Ảnh có {len(bands)} bài toán. Em chạm chọn bài muốn dựng nhé." if bands else
+                             "Ảnh có nhiều bài toán nằm cạnh nhau. Em chụp lại sát bài cần dựng nhé."),
+            candidates=_band_candidates(region_res, bands, region_sel_id, id_prefix=id_prefix, page_number=page_number) if bands else (),
+            provenance={**prov_common, "region_state": state, "option_groups": sig["option_groups"]},
+            metrics={"vlm_calls": 0, "used_vlm": False, "raw_input_bytes": raw_input_bytes, "vlm_payload_bytes": 0,
+                     "uncropped_baseline_bytes": uncropped_bytes, "processing_ms": round((time.perf_counter() - t0) * 1000.0, 2)})
 
     # 3. OCR local (Route A / D) trước Vision khi đã cấu hình: token toán chỉ được dùng khi hai họ engine
     #    độc lập cùng đọc ra; còn lại học sinh xác nhận từng chỗ. Vision vẫn là đường đọc chính nếu được phép

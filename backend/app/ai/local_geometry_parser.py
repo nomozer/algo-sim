@@ -2401,7 +2401,25 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
         # Exclude if `thru_str` is comma-separated multiple points (which belongs to constrained plane 6d)
         if not re.fullmatch(rf"{_PT}\s*(?:,\s*{_PT})+", thru_str):
             thru_offset = m_sec_par_or_perp.start("thru") if m_sec_par_or_perp.group("thru") else m_sec_par_or_perp.start("thru2")
-            thru_ref = builder.parse_point_or_described(thru_str, ca + thru_offset)
+            # a NAMED point defined in place (semantic-failure-safe-image-segmentation): "trung điểm M của (cạnh) SA",
+            # "trọng tâm G của tam giác ABC" — the descriptor becomes its own premise with its own quote and the plane goes
+            # through the named label; a label already defined by a midpoint / centroid premise is not redefined here
+            m_rel = re.fullmatch(
+                rf"(?:điểm\s+)?(?P<dk>trung\s+điểm|trọng\s+tâm)\s+(?P<pt>{_PT})\s+của\s+(?:(?:(?:cạnh|đoạn(?:\s+thẳng)?)\s+)?(?P<seg>{_PTS2})|tam\s+giác\s+(?P<tri>{_PTS3}))",
+                thru_str, re.IGNORECASE | re.UNICODE)
+            defined_here = {str((pr.get("args") or {}).get("point")) for pr in builder.premises if pr.get("kind") in ("midpoint", "centroid")}
+            if m_rel and m_rel.group("pt") not in defined_here and (
+                    (m_rel.group("dk").lower().startswith("trung") and m_rel.group("seg"))
+                    or (m_rel.group("dk").lower().startswith("trọng") and m_rel.group("tri"))):
+                q_rel = _clean_quote(raw, ca + thru_offset, ca + thru_offset + len(thru_str))
+                builder.premises.append(
+                    {"kind": "midpoint", "args": {"point": m_rel.group("pt"), "segment": _split_pts(m_rel.group("seg"))},
+                     "quote": q_rel, "solid_id": builder._primary_solid_id} if m_rel.group("seg") else
+                    {"kind": "centroid", "args": {"point": m_rel.group("pt"), "polygon": _split_pts(m_rel.group("tri"))},
+                     "quote": q_rel, "solid_id": builder._primary_solid_id})
+                thru_ref = m_rel.group("pt")
+            else:
+                thru_ref = builder.parse_point_or_described(thru_str, ca + thru_offset)
             if thru_ref:
                 q_sec = _clean_quote(raw, ca + m_sec_par_or_perp.start(), ca + m_sec_par_or_perp.end())
                 sec_id = "sec"
@@ -2706,21 +2724,28 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
     #   "Xác định / Dựng / Tìm / Vẽ thiết diện (của hình chóp …) (cắt|tạo) bởi | với (mặt phẳng) (P)"
     # Only a name already bound to a defined plane is accepted — the plane is never guessed from the question; an
     # undefined name stays unparsed. The area goal of the same sentence remains rule 7e's.
+    #   (semantic-failure-safe-image-segmentation) also the question "Thiết diện (của hình chóp …) cắt bởi (P) là hình
+    #   gì?" — same request, other word order. "… thiết diện do (P) cắt hình chóp" is NOT read: the Source Gate has no
+    #   reading of that order for a derived plane, so the parser leaves it unread rather than produce a fact it refuses.
+    _SOL_SYM = rf"{_PT}\.{_PTS3_6}|{_PTS3_6}\.{_PTS3_6}|{_PTS3_6}"
     m_sec_named = re.search(
         rf"(?P<full>(?:Xác\s+định|Dựng|Tìm|Vẽ)\s+thiết\s+diện(?:\s+của\s+{_SOLID_WORDS}"
-        rf"(?:\s+(?P<sol>{_PT}\.{_PTS3_6}|{_PTS3_6}\.{_PTS3_6}|{_PTS3_6}))?)?\s+(?:(?:cắt\s+|tạo\s+)?bởi|với)\s+(?:mặt\s+phẳng\s+|mp\s*)?"
-        rf"\((?P<pl>{_PT}|[α-ω]'?)\))(?![\w'])",
+        rf"(?:\s+(?P<sol>{_SOL_SYM}))?)?\s+(?:(?:cắt\s+|tạo\s+)?bởi|với)\s+(?:mặt\s+phẳng\s+|mp\s*)?"
+        rf"\((?P<pl>{_PT}|[α-ω]'?)\)"
+        rf"|Thiết\s+diện(?:\s+của\s+{_SOLID_WORDS}(?:\s+(?P<sol_q>{_SOL_SYM}))?)?\s+(?:(?:cắt\s+|tạo\s+)?bởi|với)\s+"
+        rf"(?:mặt\s+phẳng\s+|mp\s*)?\((?P<pl_q>{_PT}|[α-ω]'?)\)\s+là\s+hình\s+gì)(?![\w'])",
         ctext_norm,
         re.IGNORECASE | re.UNICODE,
     )
-    if m_sec_named and m_sec_named.group("pl") in builder._section_by_plane_name and not any(
+    named_pl = m_sec_named and (m_sec_named.group("pl") or m_sec_named.group("pl_q"))
+    if m_sec_named and named_pl in builder._section_by_plane_name and not any(
             g.get("kind") == "construct_plane_section" for g in builder.simulation_goals):
-        sol = m_sec_named.group("sol")
+        sol = m_sec_named.group("sol") or m_sec_named.group("sol_q")
         primary = next((sd for sd in builder.solids if sd.get("solid_id") == builder._primary_solid_id), {})
         if sol is None or sol == primary.get("notation"):
             builder.simulation_goals.append(
                 {"goal_id": "g_sec", "kind": "construct_plane_section",
-                 "target_section_id": builder._section_by_plane_name[m_sec_named.group("pl")],
+                 "target_section_id": builder._section_by_plane_name[named_pl],
                  "quote": _clean_quote(raw, ca + m_sec_named.start("full"), ca + m_sec_named.end("full"))})
             mapped_goal = True
 
@@ -2863,10 +2888,13 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
     # 7e. Section area goal:
     # "(Xác định thiết diện của ... cắt bởi (P) và )?tính diện tích thiết diện( của ... cắt bởi (mặt phẳng )?(P)| đó)?"
     m_sec_area = re.search(
-        rf"(?P<full>(?:Xác\s+định\s+thiết\s+diện.*?và\s+)?tính\s+diện\s+tích\s+thiết\s+diện(?:\s+của\s+.*?cắt\s+bởi\s+(?:mặt\s+phẳng\s+|mp\s*)?\((?P<pname>{_PT}|[α-ω]'?)\)|\s+đó)?)",
+        rf"(?P<full>(?:Xác\s+định\s+thiết\s+diện.*?và\s+)?(?P<tinh>tính\s+)?diện\s+tích\s+thiết\s+diện(?:\s+của\s+.*?cắt\s+bởi\s+(?:mặt\s+phẳng\s+|mp\s*)?\((?P<pname>{_PT}|[α-ω]'?)\)|\s+đó)?)",
         ctext_norm,
         re.IGNORECASE | re.UNICODE,
     )
+    if m_sec_area and not m_sec_area.group("tinh") and not re.fullmatch(
+            r"\s*(?:bằng|là)\s*:?\s*[.?]?\s*", ctext_norm[m_sec_area.end("full"):], re.IGNORECASE):
+        m_sec_area = None              # without "tính", only the exam stem "Diện tích thiết diện … bằng" asks — never a given
     if m_sec_area:
         pname = m_sec_area.group("pname")
         sec_id = (
@@ -3337,9 +3365,9 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
     # - Angle between line (or line joining A with @desc) and plane or line, or between two planes:
     m_ang = re.search(
         rf"(?P<full>(?:Tính\s+)?(?:số\s+đo\s+(?:của\s+)?)?góc\s+(?:giữa|tạo\s+bởi|hợp\s+bởi)\s+(?:"
-        rf"(?:hai\s+mặt\s+phẳng\s+|mặt\s+phẳng\s+)?\((?P<pl1>{_PTS3_6})\)\s+và\s+(?:mặt\s+phẳng\s+|mp\s*)?\((?P<pl2>{_PTS3_6})\)"
+        rf"(?:hai\s+mặt\s+phẳng\s+|mặt\s+phẳng\s+)?\((?P<pl1>{_PTS3_6})\)\s+và\s+(?:(?:mặt\s+phẳng\s+|mp\s*)?\((?P<pl2>{_PTS3_6})\)|(?P<pl2d>(?:mặt\s+phẳng\s+|mặt\s+)?đáy)(?![\w]))"
         rf"|đường\s+thẳng\s+(?:nối|đi\s+qua)\s+(?P<la>{_PT})\s+(?:với|và)\s+(?P<lb>.+?)\s+(?:và|với)\s+(?:(?P<is_pl>mặt\s+phẳng\s+|mp\s*)?\((?P<pl3>{_PTS3_6})\)|(?:đường\s+thẳng\s+|cạnh\s+)?(?P<l2_desc>{_PTS2}))"
-        rf"|(?:hai\s+đường\s+thẳng\s+|đường\s+thẳng\s+|đt\s+|cạnh\s+)?(?P<l1>{_PTS2})\s+và\s+(?:(?:mặt\s+phẳng\s+|mp\s*)?\((?P<pl4>{_PTS3_6})\)|(?:đường\s+thẳng\s+|cạnh\s+)?(?P<l2>{_PTS2}))"
+        rf"|(?:hai\s+đường\s+thẳng\s+|đường\s+thẳng\s+|đt\s+|cạnh\s+)?(?P<l1>{_PTS2})\s+và\s+(?:(?:mặt\s+phẳng\s+|mp\s*)?\((?P<pl4>{_PTS3_6})\)|(?P<pl4d>(?:mặt\s+phẳng\s+|mặt\s+)?đáy)(?![\w])|(?:đường\s+thẳng\s+|cạnh\s+)?(?P<l2>{_PTS2}))"
         rf"))",
         ctext_norm,
         re.IGNORECASE | re.UNICODE,
@@ -3356,7 +3384,12 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
             or re.search(r"\b(?:theo|bằng)\s+độ\b|\(\s*(?:đơn\s+vị(?:\s+góc)?\s*:?\s*)?độ\s*\)", ctext_norm[m_ang.end("full") :], re.IGNORECASE)
         )
         ang_extra: dict[str, Any] = {"requested_unit": "deg"} if req_deg else {}
-        if m_ang.group("pl1") and m_ang.group("pl2"):
+        # "(mặt phẳng / mặt) đáy" as a plane operand (semantic-failure-safe-image-segmentation): the declared base of the
+        # primary solid, the plane the Source Gate reads for "đáy" — read only when that base is known
+        day_pts = list(builder._base_vertices) if len(builder._base_vertices) >= 3 else None
+        pl2_pts = _split_pts(m_ang.group("pl2")) if m_ang.group("pl2") else (day_pts if m_ang.group("pl2d") else None)
+        pl4_pts = _split_pts(m_ang.group("pl4")) if m_ang.group("pl4") else (day_pts if m_ang.group("pl4d") else None)
+        if m_ang.group("pl1") and pl2_pts:
             builder.math_goals.append(
                 {
                     "goal_id": f"q{len(builder.math_goals) + 1}",
@@ -3364,7 +3397,7 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
                     "goal_type": "angle",
                     "target": {
                         "plane1": _split_pts(m_ang.group("pl1")),
-                        "plane2": _split_pts(m_ang.group("pl2")),
+                        "plane2": pl2_pts,
                     },
                     "solid_id": builder._primary_solid_id,
                     "quote": q_ang,
@@ -3408,7 +3441,7 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
                     )
                     mapped_goal = True
         elif m_ang.group("l1"):
-            if m_ang.group("pl4"):
+            if pl4_pts:
                 builder.math_goals.append(
                     {
                         "goal_id": f"q{len(builder.math_goals) + 1}",
@@ -3416,7 +3449,7 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
                         "goal_type": "angle",
                         "target": {
                             "line": _split_pts(m_ang.group("l1")),
-                            "plane": _split_pts(m_ang.group("pl4")),
+                            "plane": pl4_pts,
                         },
                         "solid_id": builder._primary_solid_id,
                         "quote": q_ang,

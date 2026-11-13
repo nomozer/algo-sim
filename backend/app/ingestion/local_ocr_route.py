@@ -76,6 +76,123 @@ def _crop_data_url(image_bytes: bytes, bbox: list[int] | None, *, max_h: int = 7
 _HEADER_LINE_RE = re.compile(r"^\s*(?:Câu|Cau|Cu|Bài|Bai)\s*\d+\s*[.:)]", re.IGNORECASE)
 
 
+#: An answer-option marker at the start of an OCR word: "A.", "B)", "(C)", "D.a³√3" (run `semantic-failure-safe-image-segmentation`).
+_OPTION_MARK_RE = re.compile(r"^\(?([A-D])\s*[.)]")
+
+
+def option_groups(raw: dict[str, Any]) -> list[dict[str, Any]]:
+    """Multiple-choice option groups on a page, from OCR word positions only (no text is trusted as a fact).
+
+    Option markers are grouped into rows by vertical centre, rows into one group while they follow each other closely —
+    a group may be one row (A B C D), two rows (A B / C D) or four rows. A row carrying "A" starts a NEW group when the
+    current group already has an "A": every multiple-choice problem has exactly one option A. A group needs ≥ 3 distinct
+    letters. Returns [{top, bottom, left, right, letters}] in the image's pixel coordinates, top to bottom."""
+    lines = ((raw.get("engines") or {}).get("rapidocr") or {}).get("lines") or []
+    toks = []
+    for ln in lines:
+        for w in ln.get("words") or [ln]:
+            m = _OPTION_MARK_RE.match(str(w.get("text", "")).strip())
+            if m and w.get("bbox"):
+                x0, y0, x1, y1 = w["bbox"]
+                toks.append((m.group(1), (y0 + y1) / 2, max(1, y1 - y0), x0, y0, x1, y1))
+    toks.sort(key=lambda t: t[1])
+    rows: list[list[tuple]] = []
+    for t in toks:
+        if rows and abs(rows[-1][-1][1] - t[1]) < 0.6 * max(t[2], rows[-1][-1][2]):
+            rows[-1].append(t)
+        else:
+            rows.append([t])
+    groups: list[list[list[tuple]]] = []
+    for r in rows:
+        h = max(t[2] for t in r)
+        seen = {t[0] for rr in groups[-1] for t in rr} if groups else set()
+        if groups and r[0][1] - groups[-1][-1][0][1] < 3.2 * h and not ("A" in {t[0] for t in r} and "A" in seen):
+            groups[-1].append(r)
+        else:
+            groups.append([r])
+    out = []
+    for g in groups:
+        ts = [t for r in g for t in r]
+        letters = sorted({t[0] for t in ts})
+        if len(letters) >= 3:
+            out.append({"top": min(t[4] for t in ts), "bottom": max(t[6] for t in ts), "left": min(t[3] for t in ts),
+                        "right": max(t[5] for t in ts), "letters": letters})
+    return out
+
+
+def problem_bands(raw: dict[str, Any], height: int, width: int | None = None) -> list[tuple[int, int, int, int]] | None:
+    """One rectangle (x0, y0, x1, y1) per option group = per problem, in the image's pixels.
+
+    Columns first: option groups whose x-ranges are disjoint sit in different columns; the column cut is a vertical line
+    between them that NO OCR line crosses (else the layout is ambiguous → None). Inside a column, problems are stacked:
+    the cut is halfway between a group's last option row and the next OCR line of that column below it. Groups of one
+    column that overlap vertically → None. Never a band that crosses a column."""
+    groups = option_groups(raw)
+    if len(groups) < 2:
+        return None
+    lines = [ln["bbox"] for ln in ((raw.get("engines") or {}).get("rapidocr") or {}).get("lines") or [] if ln.get("bbox")]
+    width = int(width or raw.get("width") or max([b[2] for b in lines] + [g["right"] for g in groups]))
+
+    def overlap(a, b):
+        return min(a["right"], b["right"]) - max(a["left"], b["left"])
+
+    cols: list[list[dict]] = []
+    for g in sorted(groups, key=lambda g: g["left"]):
+        col = next((c for c in cols if any(overlap(g, h) > 0.3 * min(g["right"] - g["left"], h["right"] - h["left"]) for h in c)), None)
+        (col.append(g) if col is not None else cols.append([g]))
+    cols.sort(key=lambda c: min(g["left"] for g in c))
+    xcuts = []
+    for left, right in zip(cols, cols[1:]):
+        lo, hi = max(g["right"] for g in left), min(g["left"] for g in right)
+        if hi <= lo:
+            return None
+        free = [x for x in range(int(lo), int(hi) + 1, 4) if not any(b[0] < x < b[2] for b in lines)]
+        if not free:
+            return None                               # a text line crosses every candidate cut: columns not separable
+        runs, run = [], [free[0]]
+        for x in free[1:]:
+            if x - run[-1] <= 4:
+                run.append(x)
+            else:
+                runs.append(run)
+                run = [x]
+        runs.append(run)
+        best = max(runs, key=len)
+        xcuts.append((best[0] + best[-1]) // 2)
+    xedges = [0, *xcuts, width]
+    out: list[tuple[int, int, int, int]] = []
+    for ci, col in enumerate(cols):
+        x0, x1 = xedges[ci], xedges[ci + 1]
+        col = sorted(col, key=lambda g: g["top"])
+        if any(b["top"] < a["bottom"] for a, b in zip(col, col[1:])):
+            return None
+        tops = sorted(int(b[1]) for b in lines if b[0] < x1 and b[2] > x0)
+        cuts = []
+        for g in col[:-1]:
+            nxt = next((t for t in tops if t > g["bottom"]), None)
+            cuts.append(int((g["bottom"] + nxt) / 2) if nxt is not None else int(g["bottom"]))
+        edges = [0, *cuts, height]
+        out += [(x0, edges[i], x1, edges[i + 1]) for i in range(len(edges) - 1)]
+    return out
+
+
+def estimate_problem_signals(page_image_bytes: bytes) -> dict[str, Any] | None:
+    """Layout evidence of how many problems an image holds, from ONE local OCR pass (cached per image): "Câu/Bài N"
+    headers and multiple-choice option groups. `None` when local OCR is off or failed — the caller then keeps its
+    previous behaviour. Evidence only: nothing read here becomes a fact."""
+    if not local_ocr_available():
+        return None
+    raw = run_local_ocr(page_image_bytes)
+    if not raw.get("ok"):
+        return None
+    lines = ((raw.get("engines") or {}).get("rapidocr") or {}).get("lines") or []
+    groups = option_groups(raw)
+    return {"headers": sum(1 for ln in lines if _HEADER_LINE_RE.match(str(ln.get("text", "")))),
+            "option_groups": len(groups), "groups": groups,
+            "bands": problem_bands(raw, int(raw.get("height") or 0), int(raw.get("width") or 0) or None) if len(groups) >= 2 else None,
+            "height": int(raw.get("height") or 0)}
+
+
 def count_problem_headers_on_page(page_image_bytes: bytes) -> int | None:
     """Số tiêu đề "Câu N"/"Bài N" ở đầu dòng mà RapidOCR đọc được trên cả trang (`None` nếu OCR local tắt/hỏng).
     OCR được cache theo ảnh nên không tốn thêm lượt khi tuyến OCR local chạy tiếp trên cùng trang."""

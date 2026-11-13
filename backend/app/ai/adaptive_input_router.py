@@ -39,6 +39,7 @@ from typing import Any, Callable, Literal, Sequence
 
 from app.ai.adapter4_route import ADAPTER_V4_VERSION, ROUTE_D_SIMULATION_V4_SCHEMA_VERSION
 from app.ai.hybrid_offline import HybridOfflineResult, hybrid_offline_policy, run_hybrid_offline
+from app.ai.local_failure_diagnostics import diagnose
 from app.ai.local_geometry_parser import (
     LOCAL_GEOMETRY_PARSER_VERSION,
     LOCAL_PARSE_AMBIGUOUS,
@@ -407,6 +408,13 @@ def route_text_input(
             **hyb_out.receipt,
             "adaptive_telemetry": telemetry.to_dict(),
         }
+        if str(route_d.get("status") or "REFUSED") != "SERVED":
+            # root cause ≠ terminal reason (run `semantic-failure-safe-image-segmentation`); refusals are never cached
+            route_d["local_diagnostics"] = diagnose(
+                parse_status=local_res.status, parse_reason=local_res.reason_code, fallback_reason=local_res.fallback_reason,
+                source_coverage=local_res.source_coverage.to_dict(), terminal_code=ref_code or None,
+                fallback_allowed=is_fallback_allowed, planner=route_d.get("planner"),
+                unresolved_kinds=[u.get("kind") for u in (local_res.payload or {}).get("unresolved") or []])
         status_str = str(route_d.get("status") or "REFUSED")
         return AdaptiveRouteOutcome(
             status=status_str,
@@ -519,6 +527,11 @@ def route_text_input(
                 "reason_code": fail_code,
                 "fallback_reason": local_res.fallback_reason,
             },
+            # the terminal reason above says the fallback was blocked; this says what the local route did not read
+            "local_diagnostics": diagnose(
+                parse_status=local_res.status, parse_reason=local_res.reason_code, fallback_reason=local_res.fallback_reason,
+                source_coverage=local_res.source_coverage.to_dict(), terminal_code=fail_code,
+                fallback_allowed=is_fallback_allowed),
         },
         "envelope": {
             "status": "refused",
