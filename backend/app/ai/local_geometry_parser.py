@@ -2391,7 +2391,7 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
 
     # 6c. Section through point (named or described) parallel to plane or perpendicular to line:
     m_sec_par_or_perp = re.search(
-        rf"(?:(?:Gọi\s+\((?P<p1>{_PT}|[α-ω]'?)\)\s+là\s+mặt\s+phẳng|Mặt\s+phẳng\s+\((?P<p2>{_PT}|[α-ω]'?)\))\s+(?:đi\s+qua|qua|chứa)\s+(?P<thru>[^,;]+?)|Qua\s+(?P<thru2>{_PT})\s+(?:kẻ|dựng)\s+mặt\s+phẳng\s+\((?P<p3>{_PT}|[α-ω]'?)\))(?:\s*,\s*(?:và\s+)?|\s+và\s+|\s+)(?:(?P<par>song\s+song\s+với\s+(?:mặt\s+phẳng\s+|mp\s*|đáy\s*)?\((?P<pplane>{_PTS3_6})\))|(?P<perp>vuông\s+góc\s+với\s+(?:đường\s+thẳng\s+|cạnh\s+)?(?P<pline>{_PTS2})))(?P<cuts>(?:\s*,\s*(?:\([A-Za-z0-9'α-ω]+\)\s+)?|\s+(?:và\s+)?)cắt\s+.+)?",
+        rf"(?:(?:Gọi\s+\((?P<p1>{_PT}|[α-ω]'?)\)\s+là\s+mặt\s+phẳng|Mặt\s+phẳng\s+\((?P<p2>{_PT}|[α-ω]'?)\))\s+(?:đi\s+qua|qua|chứa)\s+(?P<thru>[^,;]+?)|Qua\s+(?P<thru2>{_PT})\s+(?:kẻ|dựng)\s+mặt\s+phẳng\s+\((?P<p3>{_PT}|[α-ω]'?)\))(?:\s*,\s*(?:và\s+)?|\s+và\s+|\s+)(?:(?P<par>song\s+song\s+với\s+(?:(?:mặt\s+phẳng\s+|mp\s*|đáy\s*)?\((?P<pplane>{_PTS3_6})\)|(?P<pday>(?:mặt\s+phẳng\s+|mặt\s+)?đáy)(?![\w])))|(?P<perp>vuông\s+góc\s+với\s+(?:đường\s+thẳng\s+|cạnh\s+)?(?P<pline>{_PTS2})))(?P<cuts>(?:\s*,\s*(?:\([A-Za-z0-9'α-ω]+\)\s+)?|\s+(?:và\s+)?)cắt\s+.+)?",
         ctext_norm,
         re.IGNORECASE | re.UNICODE,
     )
@@ -2447,7 +2447,10 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
                             )
 
                 if m_sec_par_or_perp.group("par"):
-                    pplane_pts = _split_pts(m_sec_par_or_perp.group("pplane"))
+                    # "song song với (mặt phẳng) đáy" (independent-geometry-plane-constraints): the declared base of the
+                    # primary solid, the same plane the Source Gate reads for "đáy" — never a guessed face.
+                    pplane_pts = (_split_pts(m_sec_par_or_perp.group("pplane")) if m_sec_par_or_perp.group("pplane")
+                                  else list(builder._base_vertices))
                     # Note: TypedFactNext /2 `parallel_plane` takes 3 points (e.g. ["A", "B", "C"])
                     builder.derived_sections.append(
                         {
@@ -2557,6 +2560,43 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
             )
             mapped_fact = True
 
+    # 6d-0 (independent-geometry-plane-constraints). A named plane through a line and a point, or through two lines that
+    # share a named point — in both cases exactly the plane of three named points (the planner's three-point plane):
+    #   "(P) chứa (đường thẳng) AB và (đi) qua M" · "(P) (đi) qua M và chứa (đường thẳng) AB"
+    #   "(P) chứa hai đường thẳng (cắt nhau) AB và AC"   (the common label is the intersection point)
+    # The whole clause must be this definition (nothing left unread). Two lines with four distinct labels, or stated
+    # "song song", are left unparsed: no typed premise states line ∥ line, so the claim could not be checked. The engine
+    # proves the three points distinct and not collinear (a point on the line ⇒ refused).
+    m_lp = re.fullmatch(
+        rf"\s*(?:Gọi\s+\((?P<p1>{_PT}|[α-ω]'?)\)\s+là\s+mặt\s+phẳng|Mặt\s+phẳng\s+\((?P<p2>{_PT}|[α-ω]'?)\))\s+(?:"
+        rf"chứa\s+(?:đường\s+thẳng\s+)?(?P<la>{_PTS2})\s+và\s+(?:đi\s+qua|qua)\s+(?:điểm\s+)?(?P<pa>{_PT})"
+        rf"|(?:đi\s+qua|qua)\s+(?:điểm\s+)?(?P<pb>{_PT})\s+và\s+chứa\s+(?:đường\s+thẳng\s+)?(?P<lb>{_PTS2})"
+        rf"|chứa\s+hai\s+đường\s+thẳng\s+(?:cắt\s+nhau\s+)?(?P<l1>{_PTS2})\s+và\s+(?P<l2>{_PTS2}))\s*[.;]?\s*",
+        ctext_norm,
+        re.IGNORECASE | re.UNICODE,
+    )
+    pts_lp: list[str] = []
+    if m_lp:
+        if m_lp.group("l1"):
+            a, b = _split_pts(m_lp.group("l1")), _split_pts(m_lp.group("l2"))
+            if len(set(a)) == 2 and len(set(b)) == 2 and len(set(a) & set(b)) == 1:
+                shared = (set(a) & set(b)).pop()
+                pts_lp = [shared, *(x for x in a if x != shared), *(x for x in b if x != shared)]
+        else:
+            line = _split_pts(m_lp.group("la") or m_lp.group("lb"))
+            pt = m_lp.group("pa") or m_lp.group("pb")
+            if len(set(line)) == 2:
+                pts_lp = [*line, pt]
+    if pts_lp and len(set(pts_lp)) == 3:
+        pname = m_lp.group("p1") or m_lp.group("p2")
+        builder.derived_sections.append({
+            "section_id": "sec", "plane_name": pname, "target_solid_id": builder._primary_solid_id, "plane_kind": "constrained",
+            "constraints": [{"kind": "contains_points", "operands": pts_lp}], "stated_intersections": [],
+            "quote": _clean_quote(raw, ca + m_lp.start(), ca + m_lp.end())})
+        builder._section_by_plane_name[pname] = "sec"
+        builder._last_section_id = "sec"
+        mapped_fact = True
+
     # 6d. Constrained plane (`plane_kind="constrained"`):
     # - "Mặt phẳng (Q) đi qua M, N, P"
     # - "Mặt phẳng (P) đi qua A, B(, C)? và vuông góc với (SCD)"
@@ -2659,6 +2699,29 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
             builder._last_section_id = "sec"
             builder.simulation_goals.append(
                 {"goal_id": "g_sec", "kind": "construct_plane_section", "target_section_id": "sec", "quote": q_s3})
+            mapped_goal = True
+
+    # 7c-0b (independent-geometry-plane-constraints). The section by a plane the source DEFINED earlier under a name
+    # (rules 6c / 6c-2 / 6d: "(P) qua M và song song với (ABCD)", "(P) chứa AB và đi qua M", …), asked in the question:
+    #   "Xác định / Dựng / Tìm / Vẽ thiết diện (của hình chóp …) (cắt|tạo) bởi | với (mặt phẳng) (P)"
+    # Only a name already bound to a defined plane is accepted — the plane is never guessed from the question; an
+    # undefined name stays unparsed. The area goal of the same sentence remains rule 7e's.
+    m_sec_named = re.search(
+        rf"(?P<full>(?:Xác\s+định|Dựng|Tìm|Vẽ)\s+thiết\s+diện(?:\s+của\s+{_SOLID_WORDS}"
+        rf"(?:\s+(?P<sol>{_PT}\.{_PTS3_6}|{_PTS3_6}\.{_PTS3_6}|{_PTS3_6}))?)?\s+(?:(?:cắt\s+|tạo\s+)?bởi|với)\s+(?:mặt\s+phẳng\s+|mp\s*)?"
+        rf"\((?P<pl>{_PT}|[α-ω]'?)\))(?![\w'])",
+        ctext_norm,
+        re.IGNORECASE | re.UNICODE,
+    )
+    if m_sec_named and m_sec_named.group("pl") in builder._section_by_plane_name and not any(
+            g.get("kind") == "construct_plane_section" for g in builder.simulation_goals):
+        sol = m_sec_named.group("sol")
+        primary = next((sd for sd in builder.solids if sd.get("solid_id") == builder._primary_solid_id), {})
+        if sol is None or sol == primary.get("notation"):
+            builder.simulation_goals.append(
+                {"goal_id": "g_sec", "kind": "construct_plane_section",
+                 "target_section_id": builder._section_by_plane_name[m_sec_named.group("pl")],
+                 "quote": _clean_quote(raw, ca + m_sec_named.start("full"), ca + m_sec_named.end("full"))})
             mapped_goal = True
 
     # 7c-1 (verified-section-intersection-dihedral-local). The intersection line of two planes, each named by three

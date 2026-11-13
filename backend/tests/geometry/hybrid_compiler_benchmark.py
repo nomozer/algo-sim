@@ -413,7 +413,7 @@ REFUSAL_CLASS = {
     "NOT_ASKED_IN_SOURCE": "grounding",                    # added by the slice 1 independent review (hybrid-slice1-review)
     "QUESTION_CLAUSE_NOT_PREMISE": "grounding",            # added by the S0/section review (hybrid-slice-review)
     # added with the section / intersection-line slice (hybrid-section-slice): geometric preconditions of the request
-    "PARALLEL_PLANES": "contradictory", "SECTION_EMPTY": "contradictory",
+    "PARALLEL_PLANES": "contradictory", "CONTAINED_INFINITE_INTERSECTION": "contradictory", "SECTION_EMPTY": "contradictory",
     # goal-directed section slice (goal-directed-section-planning): taxonomy only; case labels/oracle unchanged
     "PLANE_NOT_UNIQUE": "figure_not_unique", "DERIVED_PLANE_IS_REFERENCE": "contradictory",
     "SECTION_PLANE_IS_FACE": "contradictory", "AUXILIARY_ONLY_FUNCTION": "malformed",

@@ -1436,7 +1436,10 @@ def _co_mat(quotes: tuple[str, ...], mp: list[str], cho_day: bool = True) -> boo
     if any(set(p) == set(mp) for q in quotes for _a, _b, phan in _tu_nhan(q) for p in phan if len(p) >= 3):
         return True
     # "mặt phẳng (đi) qua (ba điểm) U, V, W" — the plane named by its three points written as a list
-    return any(set(_nhan_cum(m[1])) == set(mp) for q in quotes for m in _MAT_QUA_DS.finditer(q))
+    if any(set(_nhan_cum(m[1])) == set(mp) for q in quotes for m in _MAT_QUA_DS.finditer(q)):
+        return True
+    # "(P) chứa XY và qua Z" / "(P) chứa hai đường thẳng (cắt nhau) XY và XZ" — the plane (XYZ) by its definition
+    return frozenset(mp) in _mat_ten_diem(quotes).values()
 
 
 def _la_doan(phan: list[list[str]], seg: list[str]) -> bool:
@@ -3796,6 +3799,46 @@ _MAT_TOAN_HANG = (r"(?:(?:hai|2|các)\s+mặt phẳng\s+)?(?:(?:mặt phẳng|mp
                   + _DS_BA_DIEM + r")|(?:mặt\s+)?(đáy))(?![\w'])")
 _MAT_QUA_DS = re.compile(r"(?:mặt phẳng|mp)\s*(?:\([^()]*\)\s*)?,?\s*(?:đi\s+)?qua\s+(?:(?:ba|3)\s+điểm\s+)?("
                          + _DS_BA_DIEM + r")", re.IGNORECASE)
+#: A named plane DEFINED by points the source names (run `independent-geometry-plane-constraints`), closed grammar:
+#: "(P) (là mặt phẳng) chứa (đường thẳng) XY và (đi) qua (điểm) Z", "(P) (đi) qua (điểm) Z và chứa (đường thẳng) XY",
+#: "(P) chứa hai đường thẳng (cắt nhau) XY và XZ" (the two lines share exactly one label). Each names exactly the plane
+#: of three labels; "song song" between two lines, or four distinct labels, is not this grammar (it is never read here).
+_MAT_TEN_DIEM_RE = re.compile(
+    r"(?:(?:mặt phẳng|mp)\s*)?\((?P<ten>(?-i:[A-Z][0-9]*'?)|[α-ω]'?)\)\s*(?:là\s+mặt phẳng\s+)?(?:"
+    r"chứa\s+(?:đường thẳng\s+)?(?<![\w'.])(?P<l1>(?-i:[A-Z][0-9]*'?){2})(?![\w'])\s+và\s+(?:đi\s+)?qua\s+(?:điểm\s+)?(?P<z1>(?-i:[A-Z][0-9]*'?))(?![\w'])"
+    r"|(?:đi\s+)?qua\s+(?:điểm\s+)?(?P<z2>(?-i:[A-Z][0-9]*'?))(?![\w'])\s+và\s+chứa\s+(?:đường thẳng\s+)?(?<![\w'.])(?P<l2>(?-i:[A-Z][0-9]*'?){2})(?![\w'])"
+    r"|chứa\s+hai\s+đường thẳng\s+(?:cắt nhau\s+)?(?<![\w'.])(?P<a>(?-i:[A-Z][0-9]*'?){2})\s+và\s+(?P<b>(?-i:[A-Z][0-9]*'?){2})(?![\w']))",
+    re.IGNORECASE)
+
+
+def _mat_ten_diem(quotes) -> dict[str, frozenset]:
+    """Named planes the quotes define by three named points (`_MAT_TEN_DIEM_RE`): name → label set. A name defined twice
+    with different points is ambiguous and dropped."""
+    out: dict[str, frozenset] = {}
+    bad: set[str] = set()
+    for q in quotes:
+        for m in _MAT_TEN_DIEM_RE.finditer(chuan_hoa(q)):
+            if m["a"]:
+                x, y = _nhan_cum(m["a"]), _nhan_cum(m["b"])
+                if len(set(x)) != 2 or len(set(y)) != 2 or len(set(x) & set(y)) != 1:
+                    continue
+                tap = frozenset(x) | frozenset(y)
+            else:
+                tap = frozenset(_nhan_cum(m["l1"] or m["l2"])) | {m["z1"] or m["z2"]}
+            if len(tap) != 3:
+                continue
+            if out.get(m["ten"], tap) != tap:
+                bad.add(m["ten"])
+            out[m["ten"]] = tap
+    return {k: v for k, v in out.items() if k not in bad}
+
+
+#: "cắt bởi / tạo bởi / với (mặt phẳng) (P)" — a section phrase naming a plane by its single-letter name.
+_CAT_BOI_TEN = re.compile(r"thiết diện\s+(?:của\s+)?" + r"(?P<khoi>[^.;]*?)" +
+                          r"(?:(?:cắt|tạo)\s+)?(?:bởi|với)\s+(?:(?:mặt phẳng|mp)\s*)?\((?P<ten>(?-i:[A-Z][0-9]*'?)|[α-ω]'?)\)(?![\w'])",
+                          re.IGNORECASE)
+#: The request of that section: "(hãy) xác định / tìm / dựng / vẽ thiết diện … cắt bởi (P)".
+_CUM_DUNG_THIET_DIEN_TEN = re.compile(r"(?:hãy\s+)?(?:xác định|tìm|dựng|vẽ)\s+" + _CAT_BOI_TEN.pattern, re.IGNORECASE)
 #: Optional appositive after a named plane: "(UVW) đi qua ba điểm U, V, W" — read, and checked to name the SAME points.
 _MAT_DONG_VI = r"(?:\s*,?\s*(?:đi\s+)?qua\s+(?:(?:ba|3)\s+điểm\s+)?(?P<dongvi>" + _DS_BA_DIEM + r"))?"
 #: Cụm vai trò gọi tên MẶT CẮT của một thiết diện. "song song với …" / "vuông góc với …" là phép dựng khác — không gắn.
@@ -5098,6 +5141,12 @@ def _doc_phep_dung_cau_hoi(de: str, start: int, end: int, calls: tuple[LoiGoi, .
         for m in _CAT_BOI[3].finditer(de, start, end):
             if any(_cung_mat(frozenset(_nhan_cum(m[1] or m[2])), c.args.plane) and _cum_goi_khoi(m[0], c.args.solid, calls) for c in sec_calls):
                 spans.append((m.start(), m.end()))
+        # "Xác định / Tìm thiết diện … cắt bởi (P)", (P) defined in the call's quotes by exactly its three points
+        # (independent-geometry-plane-constraints): the request names that plane by its name, nothing else is read
+        for m in _CUM_DUNG_THIET_DIEN_TEN.finditer(de, start, end):
+            if any(_mat_ten_diem(c.quotes).get(m["ten"]) == frozenset(c.args.plane)
+                   and _cum_goi_khoi("thiết diện của " + m["khoi"], c.args.solid, calls) for c in sec_calls):
+                spans.append((m.start(), m.end()))
     if any(c.id in phu and c.fn in ("section", "ask_section_area") for c in calls):
         for pat in (_CUM_DUNG_MAT_PHU, _CUM_DUNG_THIET_DIEN_PHU):
             for m in pat.finditer(de, start, end):
@@ -6294,6 +6343,12 @@ def mat_cat_dung_nguon(c: LoiGoi, calls: tuple[LoiGoi, ...]) -> bool:
         and (bool(ky_hieu or _TU_LOAI.search(m[0])) or _chi_mot_khoi_3d(khoi, calls))
         and _cum_goi_khoi(m[0], c.args.solid, calls)
         for q in c.quotes for mau in _CAT_BOI for m in mau.finditer(q)
+    ) or (ten_mat := _mat_ten_diem(c.quotes)) and any(
+        # "thiết diện … cắt bởi (P)", (P) defined in the quotes by exactly these three points (independent-geometry-plane-constraints)
+        ten_mat.get(m["ten"]) == frozenset(c.args.plane)
+        and (bool(ky_hieu or _TU_LOAI.search(m[0])) or _chi_mot_khoi_3d(khoi, calls))
+        and _cum_goi_khoi("thiết diện của " + m["khoi"], c.args.solid, calls)
+        for q in c.quotes for m in _CAT_BOI_TEN.finditer(chuan_hoa(q))
     )
 
 

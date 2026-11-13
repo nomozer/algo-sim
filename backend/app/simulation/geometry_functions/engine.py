@@ -3667,7 +3667,7 @@ class _Dung:
     def kiem_mat_cat(self) -> None:
         """Tiền điều kiện của thiết diện / giao tuyến / tam giác / góc đường–mặt trên hình ĐÃ dựng — từ chối có mã thay vì để
         kernel ném lúc thực thi: mặt cắt/tam giác qua ba điểm thẳng hàng hay không cùng mặt ⇒ mã của kernel; hai mặt song song
-        (hay trùng) ⇒ PARALLEL_PLANES."""
+        phân biệt ⇒ PARALLEL_PLANES; hai mặt trùng nhau ⇒ CONTAINED_INFINITE_INTERSECTION (giao là cả mặt phẳng)."""
         cur_id: tuple[str, ...] = ()
         try:
             with _metric.using(self.metric()):
@@ -3700,7 +3700,10 @@ class _Dung:
                     cur_id = (c.id,)
                     p1, p2 = self._plane(c.args.plane1), self._plane(c.args.plane2)
                     if p1.normal.cross(p2.normal).is_zero():
-                        raise TuChoi("PARALLEL_PLANES", f"{c.id}: hai mặt phẳng song song hoặc trùng nhau — không có giao tuyến",
+                        if point_on_plane(p2.point, p1):     # the same plane under two names: the "intersection" is all of it
+                            raise TuChoi("CONTAINED_INFINITE_INTERSECTION",
+                                         f"{c.id}: hai mặt phẳng trùng nhau — giao là cả mặt phẳng, không có một giao tuyến", (c.id,))
+                        raise TuChoi("PARALLEL_PLANES", f"{c.id}: hai mặt phẳng song song phân biệt — không có giao tuyến",
                                      (c.id,))
         except GeometryError as e:
             raise TuChoi(e.code, str(e), cur_id or tuple(c.id for c in self.of("section", "ask_section_area", "intersection_line", "ask_area", "ask_angle_line_plane")))
