@@ -1,0 +1,12 @@
+{
+  "run_id": "independent-geometry-plane-constraints",
+  "generated_at_utc": "2026-11-13T15:42:11.531200+00:00",
+  "head": "697b097acc62e778a2668d1d74d304a778afc9ee",
+  "probe": "intersection_with_derived_plane",
+  "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với mặt phẳng đáy và SA = a. Gọi M là trung điểm của SA. Mặt phẳng (P) đi qua M và vuông góc với SA. Tìm giao tuyến của (P) và (SAB).",
+  "before": "NOT_SERVED",
+  "after": "NOT_SERVED",
+  "reason_after": "LIVE_AI_DISABLED",
+  "status": "NOT_SUPPORTED: an intersection line with a plane defined by relations is not read — the planner's intersection_line takes two three-label planes and the Source Gate grounds both in the quote; a constraint-defined plane has no three source labels. Three-label planes (verified-section-intersection-dihedral-local) are unchanged.",
+  "new_intersection_lines": 0
+}

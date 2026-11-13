@@ -1,0 +1,149 @@
+{
+  "run_id": "independent-geometry-plane-constraints",
+  "generated_at_utc": "2026-11-13T15:42:11.531200+00:00",
+  "head": "697b097acc62e778a2668d1d74d304a778afc9ee",
+  "types": {
+    "ANGLE_BETWEEN_LINES": "non-oriented, [0°, 90°]",
+    "ANGLE_BETWEEN_LINE_AND_PLANE": "[0°, 90°]",
+    "ANGLE_BETWEEN_PLANES": "non-oriented, [0°, 90°] — drawn rays with signed cos ≥ 0 (angle_domain)",
+    "DIHEDRAL_ANGLE": "a premise only (dihedral_angle with two half-planes, (0°, 180°)); never an asked quantity"
+  },
+  "dihedral_question_behaviour": "a question asking a dihedral angle by its half-planes ([B, SC, D], 'hai nửa mặt phẳng') is not read on the local route and, substituted into a plane–plane angle payload, is refused by the Source Gate's closed ask grammar ('góc giữa / tạo bởi / hợp bởi'): an acute substitute is never served. Canonical code: no new code is added; the refusal is QUESTION_CONTEXT_UNSUPPORTED (payload) / LIVE_AI_DISABLED (local, unread).",
+  "before": {
+    "planes_SBC_SCD_60": {
+      "status": "SERVED",
+      "reason": null,
+      "constructions": 1,
+      "angle_domain": [
+        "[0°, 90°]"
+      ],
+      "checks_failed": []
+    },
+    "planes_SCD_SBC_swapped": {
+      "status": "SERVED",
+      "reason": null,
+      "constructions": 1,
+      "angle_domain": [
+        "[0°, 90°]"
+      ],
+      "checks_failed": []
+    },
+    "planes_cube_A'BD_C'BD": {
+      "status": "SERVED",
+      "reason": null,
+      "constructions": 1,
+      "angle_domain": [
+        "[0°, 90°]"
+      ],
+      "checks_failed": []
+    },
+    "planes_SAB_SAD_90": {
+      "status": "SERVED",
+      "reason": null,
+      "constructions": 0,
+      "angle_domain": [],
+      "checks_failed": []
+    },
+    "planes_same_plane_0": {
+      "status": "SERVED",
+      "reason": null,
+      "constructions": 0,
+      "angle_domain": [],
+      "checks_failed": []
+    },
+    "dihedral_bracket_BSCD_120": {
+      "status": "REFUSED",
+      "reason": "LIVE_AI_DISABLED",
+      "constructions": 0,
+      "angle_domain": [],
+      "checks_failed": []
+    },
+    "dihedral_half_planes": {
+      "status": "REFUSED",
+      "reason": "LIVE_AI_DISABLED",
+      "constructions": 0,
+      "angle_domain": [],
+      "checks_failed": []
+    },
+    "dihedral_cube_A_BD_C'": {
+      "status": "REFUSED",
+      "reason": "LIVE_AI_DISABLED",
+      "constructions": 0,
+      "angle_domain": [],
+      "checks_failed": []
+    }
+  },
+  "after": {
+    "planes_SBC_SCD_60": {
+      "status": "SERVED",
+      "reason": null,
+      "constructions": 1,
+      "angle_domain": [
+        "[0°, 90°]"
+      ],
+      "checks_failed": []
+    },
+    "planes_SCD_SBC_swapped": {
+      "status": "SERVED",
+      "reason": null,
+      "constructions": 1,
+      "angle_domain": [
+        "[0°, 90°]"
+      ],
+      "checks_failed": []
+    },
+    "planes_cube_A'BD_C'BD": {
+      "status": "SERVED",
+      "reason": null,
+      "constructions": 1,
+      "angle_domain": [
+        "[0°, 90°]"
+      ],
+      "checks_failed": []
+    },
+    "planes_SAB_SAD_90": {
+      "status": "SERVED",
+      "reason": null,
+      "constructions": 0,
+      "angle_domain": [],
+      "checks_failed": []
+    },
+    "planes_same_plane_0": {
+      "status": "SERVED",
+      "reason": null,
+      "constructions": 0,
+      "angle_domain": [],
+      "checks_failed": []
+    },
+    "dihedral_bracket_BSCD_120": {
+      "status": "REFUSED",
+      "reason": "LIVE_AI_DISABLED",
+      "constructions": 0,
+      "angle_domain": [],
+      "checks_failed": []
+    },
+    "dihedral_half_planes": {
+      "status": "REFUSED",
+      "reason": "LIVE_AI_DISABLED",
+      "constructions": 0,
+      "angle_domain": [],
+      "checks_failed": []
+    },
+    "dihedral_cube_A_BD_C'": {
+      "status": "REFUSED",
+      "reason": "LIVE_AI_DISABLED",
+      "constructions": 0,
+      "angle_domain": [],
+      "checks_failed": []
+    }
+  },
+  "tests": [
+    "backend/tests/geometry/test_angle_construction_domain.py (60/120, 45/135, swapped, renamed, lines 135→45, parallel)",
+    "backend/tests/geometry/test_plane_constraint_sections.py::test_a_dihedral_question_is_never_served_as_the_angle_between_two_planes"
+  ],
+  "degenerate": {
+    "0°": "the same plane twice: served cos² = 1, no construction drawn",
+    "90°": "served cos² = 0, no construction (right angle is the answer)",
+    "180°": "not meaningful for an angle between planes; dihedral 180° not asked (unsupported)"
+  }
+}

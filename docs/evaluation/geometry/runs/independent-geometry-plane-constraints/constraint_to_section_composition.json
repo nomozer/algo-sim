@@ -1,0 +1,604 @@
+{
+  "run_id": "independent-geometry-plane-constraints",
+  "generated_at_utc": "2026-11-13T15:42:11.531200+00:00",
+  "head": "697b097acc62e778a2668d1d74d304a778afc9ee",
+  "chain": "verified point + verified plane/line + stated relation → engine plane (existence/uniqueness certificate) → polyhedron section (closure certificate) → Scene3D section polygon",
+  "before": {
+    "par_plane_named": "NOT_SERVED",
+    "par_plane_base_word": "NOT_SERVED",
+    "par_plane_base_word2": "NOT_SERVED",
+    "par_plane_qua_dung": "NOT_SERVED",
+    "par_plane_goi": "NOT_SERVED",
+    "par_plane_lateral": "NOT_SERVED",
+    "par_plane_renamed": "NOT_SERVED",
+    "par_plane_cube": "NOT_SERVED",
+    "par_plane_area": "AS_EXPECTED",
+    "par_plane_triangle": "NOT_SERVED",
+    "perp_line_SA": "NOT_SERVED",
+    "perp_line_word": "NOT_SERVED",
+    "perp_line_cube_edge": "NOT_SERVED",
+    "perp_line_cube_diagonal": "NOT_SERVED",
+    "perp_bisector_plane": "NOT_SERVED",
+    "line_point_contains_first": "NOT_SERVED",
+    "line_point_through_first": "NOT_SERVED",
+    "two_intersecting_lines": "NOT_SERVED",
+    "two_parallel_lines": "NOT_SERVED",
+    "through_point_parallel_two_lines": "NOT_SERVED",
+    "compound_contains_parallel": "NOT_SERVED",
+    "compound_contains_perpendicular": "NOT_SERVED",
+    "reordered_question_first": "NOT_SERVED",
+    "unicode_prime": "NOT_SERVED",
+    "multiple_goals": "AS_EXPECTED"
+  },
+  "after": {
+    "par_plane_named": "AS_EXPECTED",
+    "par_plane_base_word": "AS_EXPECTED",
+    "par_plane_base_word2": "AS_EXPECTED",
+    "par_plane_qua_dung": "AS_EXPECTED",
+    "par_plane_goi": "AS_EXPECTED",
+    "par_plane_lateral": "AS_EXPECTED",
+    "par_plane_renamed": "AS_EXPECTED",
+    "par_plane_cube": "AS_EXPECTED",
+    "par_plane_area": "AS_EXPECTED",
+    "par_plane_triangle": "AS_EXPECTED",
+    "perp_line_SA": "AS_EXPECTED",
+    "perp_line_word": "AS_EXPECTED",
+    "perp_line_cube_edge": "AS_EXPECTED",
+    "perp_line_cube_diagonal": "AS_EXPECTED",
+    "perp_bisector_plane": "NOT_SERVED",
+    "line_point_contains_first": "AS_EXPECTED",
+    "line_point_through_first": "AS_EXPECTED",
+    "two_intersecting_lines": "AS_EXPECTED",
+    "two_parallel_lines": "NOT_SERVED",
+    "through_point_parallel_two_lines": "AS_EXPECTED",
+    "compound_contains_parallel": "AS_EXPECTED",
+    "compound_contains_perpendicular": "AS_EXPECTED",
+    "reordered_question_first": "NOT_SERVED",
+    "unicode_prime": "AS_EXPECTED",
+    "multiple_goals": "AS_EXPECTED"
+  },
+  "served_before": 2,
+  "served_after": 22,
+  "section_probes": 25,
+  "served_after_checks_failed": 0,
+  "area_sq_after": {
+    "par_plane_named": "1/16",
+    "par_plane_base_word": "1/16",
+    "par_plane_base_word2": "1/16",
+    "par_plane_qua_dung": "1/16",
+    "par_plane_goi": "1/16",
+    "par_plane_lateral": "9/64",
+    "par_plane_renamed": "1/16",
+    "par_plane_cube": "3/64",
+    "par_plane_area": "1/16",
+    "par_plane_triangle": "3/256",
+    "perp_line_SA": "1/16",
+    "perp_line_word": "1/16",
+    "perp_line_cube_edge": "1",
+    "perp_line_cube_diagonal": "3/4",
+    "line_point_contains_first": "9/32",
+    "line_point_through_first": "9/32",
+    "two_intersecting_lines": "3/4",
+    "through_point_parallel_two_lines": "1/16",
+    "compound_contains_parallel": "3/8",
+    "compound_contains_perpendicular": "9/32",
+    "unicode_prime": "1",
+    "multiple_goals": "1/16"
+  },
+  "boundary_after": {
+    "par_plane_named": [
+      [
+        "EDGE",
+        "A",
+        "S",
+        "1/2"
+      ],
+      [
+        "EDGE",
+        "B",
+        "S",
+        "1/2"
+      ],
+      [
+        "EDGE",
+        "C",
+        "S",
+        "1/2"
+      ],
+      [
+        "EDGE",
+        "D",
+        "S",
+        "1/2"
+      ]
+    ],
+    "par_plane_base_word": [
+      [
+        "EDGE",
+        "A",
+        "S",
+        "1/2"
+      ],
+      [
+        "EDGE",
+        "B",
+        "S",
+        "1/2"
+      ],
+      [
+        "EDGE",
+        "C",
+        "S",
+        "1/2"
+      ],
+      [
+        "EDGE",
+        "D",
+        "S",
+        "1/2"
+      ]
+    ],
+    "par_plane_base_word2": [
+      [
+        "EDGE",
+        "A",
+        "S",
+        "1/2"
+      ],
+      [
+        "EDGE",
+        "B",
+        "S",
+        "1/2"
+      ],
+      [
+        "EDGE",
+        "C",
+        "S",
+        "1/2"
+      ],
+      [
+        "EDGE",
+        "D",
+        "S",
+        "1/2"
+      ]
+    ],
+    "par_plane_qua_dung": [
+      [
+        "EDGE",
+        "A",
+        "S",
+        "1/2"
+      ],
+      [
+        "EDGE",
+        "B",
+        "S",
+        "1/2"
+      ],
+      [
+        "EDGE",
+        "C",
+        "S",
+        "1/2"
+      ],
+      [
+        "EDGE",
+        "D",
+        "S",
+        "1/2"
+      ]
+    ],
+    "par_plane_goi": [
+      [
+        "EDGE",
+        "A",
+        "S",
+        "1/2"
+      ],
+      [
+        "EDGE",
+        "B",
+        "S",
+        "1/2"
+      ],
+      [
+        "EDGE",
+        "C",
+        "S",
+        "1/2"
+      ],
+      [
+        "EDGE",
+        "D",
+        "S",
+        "1/2"
+      ]
+    ],
+    "par_plane_lateral": [
+      [
+        "EDGE",
+        "B",
+        "C",
+        "1/2"
+      ],
+      [
+        "EDGE",
+        "A",
+        "D",
+        "1/2"
+      ],
+      [
+        "EDGE",
+        "D",
+        "S",
+        "1/2"
+      ],
+      [
+        "EDGE",
+        "C",
+        "S",
+        "1/2"
+      ]
+    ],
+    "par_plane_renamed": [
+      [
+        "EDGE",
+        "M",
+        "T",
+        "1/2"
+      ],
+      [
+        "EDGE",
+        "N",
+        "T",
+        "1/2"
+      ],
+      [
+        "EDGE",
+        "P",
+        "T",
+        "1/2"
+      ],
+      [
+        "EDGE",
+        "Q",
+        "T",
+        "1/2"
+      ]
+    ],
+    "par_plane_cube": [
+      [
+        "EDGE",
+        "A",
+        "B",
+        "1/2"
+      ],
+      [
+        "EDGE",
+        "A",
+        "D",
+        "1/2"
+      ],
+      [
+        "EDGE",
+        "A",
+        "A'",
+        "1/2"
+      ]
+    ],
+    "par_plane_area": [
+      [
+        "EDGE",
+        "A",
+        "S",
+        "1/2"
+      ],
+      [
+        "EDGE",
+        "B",
+        "S",
+        "1/2"
+      ],
+      [
+        "EDGE",
+        "C",
+        "S",
+        "1/2"
+      ],
+      [
+        "EDGE",
+        "D",
+        "S",
+        "1/2"
+      ]
+    ],
+    "par_plane_triangle": [
+      [
+        "EDGE",
+        "A",
+        "S",
+        "1/2"
+      ],
+      [
+        "EDGE",
+        "B",
+        "S",
+        "1/2"
+      ],
+      [
+        "EDGE",
+        "C",
+        "S",
+        "1/2"
+      ]
+    ],
+    "perp_line_SA": [
+      [
+        "EDGE",
+        "A",
+        "S",
+        "1/2"
+      ],
+      [
+        "EDGE",
+        "B",
+        "S",
+        "1/2"
+      ],
+      [
+        "EDGE",
+        "C",
+        "S",
+        "1/2"
+      ],
+      [
+        "EDGE",
+        "D",
+        "S",
+        "1/2"
+      ]
+    ],
+    "perp_line_word": [
+      [
+        "EDGE",
+        "A",
+        "S",
+        "1/2"
+      ],
+      [
+        "EDGE",
+        "B",
+        "S",
+        "1/2"
+      ],
+      [
+        "EDGE",
+        "C",
+        "S",
+        "1/2"
+      ],
+      [
+        "EDGE",
+        "D",
+        "S",
+        "1/2"
+      ]
+    ],
+    "perp_line_cube_edge": [
+      [
+        "EDGE",
+        "B",
+        "B'",
+        "1/2"
+      ],
+      [
+        "EDGE",
+        "A",
+        "A'",
+        "1/2"
+      ],
+      [
+        "EDGE",
+        "D",
+        "D'",
+        "1/2"
+      ],
+      [
+        "EDGE",
+        "C",
+        "C'",
+        "1/2"
+      ]
+    ],
+    "perp_line_cube_diagonal": [
+      [
+        "VERTEX",
+        "B"
+      ],
+      [
+        "VERTEX",
+        "D"
+      ],
+      [
+        "VERTEX",
+        "A'"
+      ]
+    ],
+    "line_point_contains_first": [
+      [
+        "VERTEX",
+        "A"
+      ],
+      [
+        "VERTEX",
+        "B"
+      ],
+      [
+        "EDGE",
+        "C",
+        "S",
+        "1/2"
+      ],
+      [
+        "EDGE",
+        "D",
+        "S",
+        "1/2"
+      ]
+    ],
+    "line_point_through_first": [
+      [
+        "VERTEX",
+        "A"
+      ],
+      [
+        "VERTEX",
+        "B"
+      ],
+      [
+        "EDGE",
+        "C",
+        "S",
+        "1/2"
+      ],
+      [
+        "EDGE",
+        "D",
+        "S",
+        "1/2"
+      ]
+    ],
+    "two_intersecting_lines": [
+      [
+        "VERTEX",
+        "B'"
+      ],
+      [
+        "VERTEX",
+        "D'"
+      ],
+      [
+        "VERTEX",
+        "A"
+      ]
+    ],
+    "through_point_parallel_two_lines": [
+      [
+        "EDGE",
+        "A",
+        "S",
+        "1/2"
+      ],
+      [
+        "EDGE",
+        "B",
+        "S",
+        "1/2"
+      ],
+      [
+        "EDGE",
+        "C",
+        "S",
+        "1/2"
+      ],
+      [
+        "EDGE",
+        "D",
+        "S",
+        "1/2"
+      ]
+    ],
+    "compound_contains_parallel": [
+      [
+        "VERTEX",
+        "B"
+      ],
+      [
+        "VERTEX",
+        "D"
+      ],
+      [
+        "EDGE",
+        "A",
+        "S",
+        "1/2"
+      ]
+    ],
+    "compound_contains_perpendicular": [
+      [
+        "VERTEX",
+        "A"
+      ],
+      [
+        "VERTEX",
+        "B"
+      ],
+      [
+        "EDGE",
+        "C",
+        "S",
+        "1/2"
+      ],
+      [
+        "EDGE",
+        "D",
+        "S",
+        "1/2"
+      ]
+    ],
+    "unicode_prime": [
+      [
+        "EDGE",
+        "B",
+        "B'",
+        "1/2"
+      ],
+      [
+        "EDGE",
+        "A",
+        "A'",
+        "1/2"
+      ],
+      [
+        "EDGE",
+        "D",
+        "D'",
+        "1/2"
+      ],
+      [
+        "EDGE",
+        "C",
+        "C'",
+        "1/2"
+      ]
+    ],
+    "multiple_goals": [
+      [
+        "EDGE",
+        "A",
+        "S",
+        "1/2"
+      ],
+      [
+        "EDGE",
+        "B",
+        "S",
+        "1/2"
+      ],
+      [
+        "EDGE",
+        "C",
+        "S",
+        "1/2"
+      ],
+      [
+        "EDGE",
+        "D",
+        "S",
+        "1/2"
+      ]
+    ]
+  }
+}

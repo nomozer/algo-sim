@@ -1,0 +1,28 @@
+{
+  "run_id": "independent-geometry-plane-constraints",
+  "generated_at_utc": "2026-11-13T15:42:11.531200+00:00",
+  "head": "697b097acc62e778a2668d1d74d304a778afc9ee",
+  "kernel_and_planner": {
+    "plane through three points": "EXISTING (planner section points / engine Plane3.through)",
+    "plane through a point parallel to a plane": "EXISTING (MAT_SONG_SONG; engine checks ∥, not the same plane, not a face)",
+    "plane through a point perpendicular to a line": "EXISTING (MAT_VUONG_DUONG; ⊥ certificate in G)",
+    "plane through a point parallel to two lines": "EXISTING (MAT_HAI_DUONG; dependent directions ⇒ PLANE_NOT_UNIQUE)",
+    "plane by relations (contains points, ∥ line, ⊥ plane)": "EXISTING (MAT_RANG_BUOC C17; affine-rank existence/uniqueness)",
+    "plane through a point perpendicular to a plane": "REFUSED by design (PLANE_NOT_UNIQUE)",
+    "plane–plane intersection": "EXISTING (intersect_plane_plane)",
+    "orthogonal projection": "EXISTING",
+    "polyhedron section": "EXISTING (closure certificate)"
+  },
+  "local_parser_before": {
+    "named plane definitions (6c/6c-2/6d)": "read",
+    "section question on a named plane": "only 'Dựng thiết diện … bởi (P)' (rule 7c) — 'Xác định / Tìm thiết diện … cắt bởi (P)' unread",
+    "'song song với (mặt phẳng) đáy'": "unread",
+    "line + point / two lines": "unread",
+    "mặt phẳng trung trực": "unread",
+    "intersection with a named plane": "unread"
+  },
+  "new_kernel_primitives": 0,
+  "new_planner_rules": 0,
+  "source_gate_grammar_added": "named plane by a line and a point / two intersecting lines (see source_grounding_verification.json)",
+  "evidence": "plane_constraint_grammar_tests.json (before/after per probe)"
+}

@@ -1,0 +1,30 @@
+{
+  "run_id": "independent-geometry-plane-constraints",
+  "generated_at_utc": "2026-11-13T15:42:11.531200+00:00",
+  "head": "697b097acc62e778a2668d1d74d304a778afc9ee",
+  "source_gate_changed": true,
+  "change": "closed grammar `_MAT_TEN_DIEM_RE` (registry): a named plane defined by a line and a point, or by two lines with exactly one common label, names the plane of those three labels; read only in the call's own quotes, a name defined twice with different points is dropped; the section request 'xác định / tìm / dựng / vẽ thiết diện … cắt bởi (P)' is read only when (P) is such a definition of exactly the call's plane",
+  "not_loosened": [
+    "no existing pattern removed or widened",
+    "four distinct labels or 'song song' lines are never read",
+    "an undefined plane name is never read (parser and gate)",
+    "goal-as-premise and conditional guards unchanged",
+    "a dihedral question substituted into a plane–plane angle payload is refused (test_a_dihedral_question_is_never_served_as_the_angle_between_two_planes)"
+  ],
+  "facts_without_source": 0,
+  "refusals_after": {
+    "par_plane_point_on_plane": "DERIVED_PLANE_IS_REFERENCE",
+    "perp_line_degenerate": "FACT_INCOMPLETE",
+    "line_point_on_line": "COLLINEAR_POINTS",
+    "two_lines_skew": "LIVE_AI_DISABLED",
+    "two_lines_same": "LIVE_AI_DISABLED",
+    "under_parallel_one_line": "LIVE_AI_DISABLED",
+    "under_perpendicular_plane": "LIVE_AI_DISABLED",
+    "under_contains_one_line": "LIVE_AI_DISABLED",
+    "under_any_plane": "LIVE_AI_DISABLED",
+    "compound_contains_parallel_not_unique": "PLANE_NOT_UNIQUE",
+    "compound_contains_perpendicular_face": "SECTION_PLANE_IS_FACE",
+    "diagram_dependent": "LIVE_AI_DISABLED",
+    "goal_as_premise": "OUT_OF_SCOPE"
+  }
+}

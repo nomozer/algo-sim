@@ -1,0 +1,55 @@
+{
+  "run_id": "independent-geometry-plane-constraints",
+  "generated_at_utc": "2026-11-13T15:42:11.531200+00:00",
+  "head": "697b097acc62e778a2668d1d74d304a778afc9ee",
+  "backend_route_ms": {
+    "method": "route_text_input median of 5 warm calls per probe, before (ea4b2a197 archive) and after, separate child processes, same host",
+    "probes": [
+      "par_plane_named",
+      "par_plane_base_word",
+      "par_plane_base_word2",
+      "par_plane_qua_dung",
+      "par_plane_goi",
+      "par_plane_lateral",
+      "par_plane_renamed",
+      "par_plane_cube",
+      "par_plane_area",
+      "par_plane_triangle",
+      "perp_line_SA",
+      "perp_line_word"
+    ],
+    "before": [
+      1.7876999991131015,
+      1.637299996218644,
+      1.6792000023997389,
+      1.7386999970767647,
+      1.695899998594541,
+      1.731399999698624,
+      1.6245000006165355,
+      1.6770000001997687,
+      44.938599996385165,
+      2.0325000004959293,
+      1.7719000024953857,
+      1.6677999956300482
+    ],
+    "after": [
+      45.339200005400926,
+      69.01540000399109,
+      39.133600002969615,
+      59.77130000246689,
+      63.27919999603182,
+      30.34990000014659,
+      35.62320000492036,
+      37.00679999747081,
+      44.023700000252575,
+      37.57770000083838,
+      40.19709999556653,
+      39.47409999818774
+    ],
+    "median_before": 1.7136499991465826,
+    "median_after": 39.835599996877136,
+    "note": "before refuses most of these texts at parse time (no planner/engine work), so after > before is the cost of now building the section"
+  },
+  "browser": "scene3d_browser_e2e.json (measured separately)",
+  "physical_low_end": "PHYSICAL_LOW_END_NOT_MEASURED"
+}

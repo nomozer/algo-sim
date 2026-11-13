@@ -1,0 +1,79 @@
+{
+  "run_id": "independent-geometry-plane-constraints",
+  "generated_at_utc": "2026-11-13T15:42:11.531200+00:00",
+  "head": "697b097acc62e778a2668d1d74d304a778afc9ee",
+  "cases": {
+    "par_plane_point_on_plane": {
+      "category": "parallel_plane_degenerate",
+      "status": "REFUSED",
+      "reason": "DERIVED_PLANE_IS_REFERENCE"
+    },
+    "perp_line_degenerate": {
+      "category": "perpendicular_line_degenerate",
+      "status": "REFUSED",
+      "reason": "FACT_INCOMPLETE"
+    },
+    "line_point_on_line": {
+      "category": "line_and_point_degenerate",
+      "status": "REFUSED",
+      "reason": "COLLINEAR_POINTS"
+    },
+    "two_lines_skew": {
+      "category": "two_lines_degenerate",
+      "status": "REFUSED",
+      "reason": "LIVE_AI_DISABLED"
+    },
+    "two_lines_same": {
+      "category": "two_lines_degenerate",
+      "status": "REFUSED",
+      "reason": "LIVE_AI_DISABLED"
+    },
+    "under_parallel_one_line": {
+      "category": "underconstrained",
+      "status": "REFUSED",
+      "reason": "LIVE_AI_DISABLED"
+    },
+    "under_perpendicular_plane": {
+      "category": "underconstrained",
+      "status": "REFUSED",
+      "reason": "LIVE_AI_DISABLED"
+    },
+    "under_contains_one_line": {
+      "category": "underconstrained",
+      "status": "REFUSED",
+      "reason": "LIVE_AI_DISABLED"
+    },
+    "under_any_plane": {
+      "category": "underconstrained",
+      "status": "REFUSED",
+      "reason": "LIVE_AI_DISABLED"
+    },
+    "compound_contains_parallel_not_unique": {
+      "category": "compound_degenerate",
+      "status": "REFUSED",
+      "reason": "PLANE_NOT_UNIQUE"
+    },
+    "compound_contains_perpendicular_face": {
+      "category": "compound_degenerate",
+      "status": "REFUSED",
+      "reason": "SECTION_PLANE_IS_FACE"
+    },
+    "diagram_dependent": {
+      "category": "diagram",
+      "status": "REFUSED",
+      "reason": "LIVE_AI_DISABLED"
+    },
+    "goal_as_premise": {
+      "category": "goal_vs_premise",
+      "status": "REFUSED",
+      "reason": "OUT_OF_SCOPE"
+    }
+  },
+  "coincident_vs_parallel": {
+    "before": "coincident planes refused with PARALLEL_PLANES",
+    "after": "CONTAINED_INFINITE_INTERSECTION (existing kernel code: the intersection is the whole plane); distinct parallel planes keep PARALLEL_PLANES",
+    "tests": "test_plane_constraint_sections.py::test_coincident_planes_are_not_called_parallel"
+  },
+  "point_or_edge_contact": "NOT_REACHED by any supported wording (no constraint-defined plane in the probes touches the solid only in a point or an edge); the kernel codes PLANE_TOUCHES_VERTEX / PLANE_TOUCHES_EDGE exist",
+  "wrong_served": 0
+}

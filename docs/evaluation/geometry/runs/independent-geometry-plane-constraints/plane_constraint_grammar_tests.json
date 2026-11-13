@@ -1,0 +1,973 @@
+{
+  "run_id": "independent-geometry-plane-constraints",
+  "generated_at_utc": "2026-11-13T15:42:11.531200+00:00",
+  "head": "697b097acc62e778a2668d1d74d304a778afc9ee",
+  "probe_class": "NEW_DIAGNOSTIC_DEVELOPMENT (agent-written, tools/plane_constraint_probes.py)",
+  "unit_tests": [
+    "backend/tests/geometry/test_plane_constraint_sections.py"
+  ],
+  "categories": [
+    "compound",
+    "compound_degenerate",
+    "diagram",
+    "goal_vs_premise",
+    "intersection_derived",
+    "line_and_point",
+    "line_and_point_degenerate",
+    "multiple_goals",
+    "parallel_plane",
+    "parallel_plane_degenerate",
+    "parallel_two_lines",
+    "perpendicular_line",
+    "perpendicular_line_degenerate",
+    "reordered",
+    "two_lines",
+    "two_lines_degenerate",
+    "underconstrained",
+    "unicode"
+  ],
+  "as_expected_before": 15,
+  "as_expected_after": 35,
+  "probes": 39,
+  "wrong_served_before": 0,
+  "wrong_served_after": 0,
+  "not_served_after": [
+    "perp_bisector_plane",
+    "two_parallel_lines",
+    "reordered_question_first",
+    "intersection_with_derived_plane"
+  ],
+  "rows": [
+    {
+      "probe": "par_plane_named",
+      "category": "parallel_plane",
+      "expected": "SERVED",
+      "parse_status": "LOCAL_PARSE_COMPLETE",
+      "unparsed_clauses": [],
+      "planes": [
+        {
+          "plane_kind": "through_point_parallel_plane",
+          "through_point": "M",
+          "parallel_plane": [
+            "A",
+            "B",
+            "C"
+          ],
+          "perpendicular_line": null,
+          "constraints": null
+        }
+      ],
+      "section_goals": [
+        "construct_plane_section"
+      ],
+      "before": "NOT_SERVED",
+      "after": "AS_EXPECTED",
+      "reason_after": null
+    },
+    {
+      "probe": "par_plane_base_word",
+      "category": "parallel_plane",
+      "expected": "SERVED",
+      "parse_status": "LOCAL_PARSE_COMPLETE",
+      "unparsed_clauses": [],
+      "planes": [
+        {
+          "plane_kind": "through_point_parallel_plane",
+          "through_point": "M",
+          "parallel_plane": [
+            "A",
+            "B",
+            "C"
+          ],
+          "perpendicular_line": null,
+          "constraints": null
+        }
+      ],
+      "section_goals": [
+        "construct_plane_section"
+      ],
+      "before": "NOT_SERVED",
+      "after": "AS_EXPECTED",
+      "reason_after": null
+    },
+    {
+      "probe": "par_plane_base_word2",
+      "category": "parallel_plane",
+      "expected": "SERVED",
+      "parse_status": "LOCAL_PARSE_COMPLETE",
+      "unparsed_clauses": [],
+      "planes": [
+        {
+          "plane_kind": "through_point_parallel_plane",
+          "through_point": "M",
+          "parallel_plane": [
+            "A",
+            "B",
+            "C"
+          ],
+          "perpendicular_line": null,
+          "constraints": null
+        }
+      ],
+      "section_goals": [
+        "construct_plane_section"
+      ],
+      "before": "NOT_SERVED",
+      "after": "AS_EXPECTED",
+      "reason_after": null
+    },
+    {
+      "probe": "par_plane_qua_dung",
+      "category": "parallel_plane",
+      "expected": "SERVED",
+      "parse_status": "LOCAL_PARSE_COMPLETE",
+      "unparsed_clauses": [],
+      "planes": [
+        {
+          "plane_kind": "through_point_parallel_plane",
+          "through_point": "M",
+          "parallel_plane": [
+            "A",
+            "B",
+            "C"
+          ],
+          "perpendicular_line": null,
+          "constraints": null
+        }
+      ],
+      "section_goals": [
+        "construct_plane_section"
+      ],
+      "before": "NOT_SERVED",
+      "after": "AS_EXPECTED",
+      "reason_after": null
+    },
+    {
+      "probe": "par_plane_goi",
+      "category": "parallel_plane",
+      "expected": "SERVED",
+      "parse_status": "LOCAL_PARSE_COMPLETE",
+      "unparsed_clauses": [],
+      "planes": [
+        {
+          "plane_kind": "through_point_parallel_plane",
+          "through_point": "M",
+          "parallel_plane": [
+            "A",
+            "B",
+            "C"
+          ],
+          "perpendicular_line": null,
+          "constraints": null
+        }
+      ],
+      "section_goals": [
+        "construct_plane_section"
+      ],
+      "before": "NOT_SERVED",
+      "after": "AS_EXPECTED",
+      "reason_after": null
+    },
+    {
+      "probe": "par_plane_lateral",
+      "category": "parallel_plane",
+      "expected": "SERVED",
+      "parse_status": "LOCAL_PARSE_COMPLETE",
+      "unparsed_clauses": [],
+      "planes": [
+        {
+          "plane_kind": "through_point_parallel_plane",
+          "through_point": "M",
+          "parallel_plane": [
+            "S",
+            "A",
+            "B"
+          ],
+          "perpendicular_line": null,
+          "constraints": null
+        }
+      ],
+      "section_goals": [
+        "construct_plane_section"
+      ],
+      "before": "NOT_SERVED",
+      "after": "AS_EXPECTED",
+      "reason_after": null
+    },
+    {
+      "probe": "par_plane_renamed",
+      "category": "parallel_plane",
+      "expected": "SERVED",
+      "parse_status": "LOCAL_PARSE_COMPLETE",
+      "unparsed_clauses": [],
+      "planes": [
+        {
+          "plane_kind": "through_point_parallel_plane",
+          "through_point": "K",
+          "parallel_plane": [
+            "M",
+            "N",
+            "P"
+          ],
+          "perpendicular_line": null,
+          "constraints": null
+        }
+      ],
+      "section_goals": [
+        "construct_plane_section"
+      ],
+      "before": "NOT_SERVED",
+      "after": "AS_EXPECTED",
+      "reason_after": null
+    },
+    {
+      "probe": "par_plane_cube",
+      "category": "parallel_plane",
+      "expected": "SERVED",
+      "parse_status": "LOCAL_PARSE_COMPLETE",
+      "unparsed_clauses": [],
+      "planes": [
+        {
+          "plane_kind": "through_point_parallel_plane",
+          "through_point": "M",
+          "parallel_plane": [
+            "A'",
+            "B",
+            "D"
+          ],
+          "perpendicular_line": null,
+          "constraints": null
+        }
+      ],
+      "section_goals": [
+        "construct_plane_section"
+      ],
+      "before": "NOT_SERVED",
+      "after": "AS_EXPECTED",
+      "reason_after": null
+    },
+    {
+      "probe": "par_plane_area",
+      "category": "parallel_plane",
+      "expected": "SERVED",
+      "parse_status": "LOCAL_PARSE_COMPLETE",
+      "unparsed_clauses": [],
+      "planes": [
+        {
+          "plane_kind": "through_point_parallel_plane",
+          "through_point": "M",
+          "parallel_plane": [
+            "A",
+            "B",
+            "C"
+          ],
+          "perpendicular_line": null,
+          "constraints": null
+        }
+      ],
+      "section_goals": [],
+      "before": "AS_EXPECTED",
+      "after": "AS_EXPECTED",
+      "reason_after": null
+    },
+    {
+      "probe": "par_plane_point_on_plane",
+      "category": "parallel_plane_degenerate",
+      "expected": "REFUSED",
+      "parse_status": "LOCAL_PARSE_COMPLETE",
+      "unparsed_clauses": [],
+      "planes": [
+        {
+          "plane_kind": "through_point_parallel_plane",
+          "through_point": "A",
+          "parallel_plane": [
+            "A",
+            "B",
+            "C"
+          ],
+          "perpendicular_line": null,
+          "constraints": null
+        }
+      ],
+      "section_goals": [
+        "construct_plane_section"
+      ],
+      "before": "AS_EXPECTED",
+      "after": "AS_EXPECTED",
+      "reason_after": "DERIVED_PLANE_IS_REFERENCE"
+    },
+    {
+      "probe": "par_plane_triangle",
+      "category": "parallel_plane",
+      "expected": "SERVED",
+      "parse_status": "LOCAL_PARSE_COMPLETE",
+      "unparsed_clauses": [],
+      "planes": [
+        {
+          "plane_kind": "through_point_parallel_plane",
+          "through_point": "M",
+          "parallel_plane": [
+            "A",
+            "B",
+            "C"
+          ],
+          "perpendicular_line": null,
+          "constraints": null
+        }
+      ],
+      "section_goals": [
+        "construct_plane_section"
+      ],
+      "before": "NOT_SERVED",
+      "after": "AS_EXPECTED",
+      "reason_after": null
+    },
+    {
+      "probe": "perp_line_SA",
+      "category": "perpendicular_line",
+      "expected": "SERVED",
+      "parse_status": "LOCAL_PARSE_COMPLETE",
+      "unparsed_clauses": [],
+      "planes": [
+        {
+          "plane_kind": "through_point_perpendicular_line",
+          "through_point": "M",
+          "parallel_plane": null,
+          "perpendicular_line": [
+            "S",
+            "A"
+          ],
+          "constraints": null
+        }
+      ],
+      "section_goals": [
+        "construct_plane_section"
+      ],
+      "before": "NOT_SERVED",
+      "after": "AS_EXPECTED",
+      "reason_after": null
+    },
+    {
+      "probe": "perp_line_word",
+      "category": "perpendicular_line",
+      "expected": "SERVED",
+      "parse_status": "LOCAL_PARSE_COMPLETE",
+      "unparsed_clauses": [],
+      "planes": [
+        {
+          "plane_kind": "through_point_perpendicular_line",
+          "through_point": "M",
+          "parallel_plane": null,
+          "perpendicular_line": [
+            "S",
+            "A"
+          ],
+          "constraints": null
+        }
+      ],
+      "section_goals": [
+        "construct_plane_section"
+      ],
+      "before": "NOT_SERVED",
+      "after": "AS_EXPECTED",
+      "reason_after": null
+    },
+    {
+      "probe": "perp_line_cube_edge",
+      "category": "perpendicular_line",
+      "expected": "SERVED",
+      "parse_status": "LOCAL_PARSE_COMPLETE",
+      "unparsed_clauses": [],
+      "planes": [
+        {
+          "plane_kind": "through_point_perpendicular_line",
+          "through_point": "M",
+          "parallel_plane": null,
+          "perpendicular_line": [
+            "A",
+            "A'"
+          ],
+          "constraints": null
+        }
+      ],
+      "section_goals": [
+        "construct_plane_section"
+      ],
+      "before": "NOT_SERVED",
+      "after": "AS_EXPECTED",
+      "reason_after": null
+    },
+    {
+      "probe": "perp_line_cube_diagonal",
+      "category": "perpendicular_line",
+      "expected": "SERVED",
+      "parse_status": "LOCAL_PARSE_COMPLETE",
+      "unparsed_clauses": [],
+      "planes": [
+        {
+          "plane_kind": "through_point_perpendicular_line",
+          "through_point": "B",
+          "parallel_plane": null,
+          "perpendicular_line": [
+            "A",
+            "C'"
+          ],
+          "constraints": null
+        }
+      ],
+      "section_goals": [
+        "construct_plane_section"
+      ],
+      "before": "NOT_SERVED",
+      "after": "AS_EXPECTED",
+      "reason_after": null
+    },
+    {
+      "probe": "perp_bisector_plane",
+      "category": "perpendicular_line",
+      "expected": "SERVED",
+      "parse_status": "LOCAL_PARSE_PARTIAL",
+      "unparsed_clauses": [
+        "Gọi (P) là mặt phẳng trung trực của đoạn thẳng SA",
+        "Xác định thiết diện của hình chóp cắt bởi mặt phẳng (P)"
+      ],
+      "planes": [],
+      "section_goals": [],
+      "before": "NOT_SERVED",
+      "after": "NOT_SERVED",
+      "reason_after": "LIVE_AI_DISABLED"
+    },
+    {
+      "probe": "perp_line_degenerate",
+      "category": "perpendicular_line_degenerate",
+      "expected": "REFUSED",
+      "parse_status": "LOCAL_PARSE_COMPLETE",
+      "unparsed_clauses": [],
+      "planes": [
+        {
+          "plane_kind": "through_point_perpendicular_line",
+          "through_point": "M",
+          "parallel_plane": null,
+          "perpendicular_line": [
+            "A",
+            "A"
+          ],
+          "constraints": null
+        }
+      ],
+      "section_goals": [
+        "construct_plane_section"
+      ],
+      "before": "AS_EXPECTED",
+      "after": "AS_EXPECTED",
+      "reason_after": "FACT_INCOMPLETE"
+    },
+    {
+      "probe": "line_point_contains_first",
+      "category": "line_and_point",
+      "expected": "SERVED",
+      "parse_status": "LOCAL_PARSE_COMPLETE",
+      "unparsed_clauses": [],
+      "planes": [
+        {
+          "plane_kind": "constrained",
+          "through_point": null,
+          "parallel_plane": null,
+          "perpendicular_line": null,
+          "constraints": [
+            {
+              "kind": "contains_points",
+              "operands": [
+                "A",
+                "B",
+                "M"
+              ]
+            }
+          ]
+        }
+      ],
+      "section_goals": [
+        "construct_plane_section"
+      ],
+      "before": "NOT_SERVED",
+      "after": "AS_EXPECTED",
+      "reason_after": null
+    },
+    {
+      "probe": "line_point_through_first",
+      "category": "line_and_point",
+      "expected": "SERVED",
+      "parse_status": "LOCAL_PARSE_COMPLETE",
+      "unparsed_clauses": [],
+      "planes": [
+        {
+          "plane_kind": "constrained",
+          "through_point": null,
+          "parallel_plane": null,
+          "perpendicular_line": null,
+          "constraints": [
+            {
+              "kind": "contains_points",
+              "operands": [
+                "A",
+                "B",
+                "M"
+              ]
+            }
+          ]
+        }
+      ],
+      "section_goals": [
+        "construct_plane_section"
+      ],
+      "before": "NOT_SERVED",
+      "after": "AS_EXPECTED",
+      "reason_after": null
+    },
+    {
+      "probe": "line_point_on_line",
+      "category": "line_and_point_degenerate",
+      "expected": "REFUSED",
+      "parse_status": "LOCAL_PARSE_COMPLETE",
+      "unparsed_clauses": [],
+      "planes": [
+        {
+          "plane_kind": "constrained",
+          "through_point": null,
+          "parallel_plane": null,
+          "perpendicular_line": null,
+          "constraints": [
+            {
+              "kind": "contains_points",
+              "operands": [
+                "A",
+                "B",
+                "M"
+              ]
+            }
+          ]
+        }
+      ],
+      "section_goals": [
+        "construct_plane_section"
+      ],
+      "before": "AS_EXPECTED",
+      "after": "AS_EXPECTED",
+      "reason_after": "COLLINEAR_POINTS"
+    },
+    {
+      "probe": "two_intersecting_lines",
+      "category": "two_lines",
+      "expected": "SERVED",
+      "parse_status": "LOCAL_PARSE_COMPLETE",
+      "unparsed_clauses": [],
+      "planes": [
+        {
+          "plane_kind": "constrained",
+          "through_point": null,
+          "parallel_plane": null,
+          "perpendicular_line": null,
+          "constraints": [
+            {
+              "kind": "contains_points",
+              "operands": [
+                "A",
+                "B'",
+                "D'"
+              ]
+            }
+          ]
+        }
+      ],
+      "section_goals": [
+        "construct_plane_section"
+      ],
+      "before": "NOT_SERVED",
+      "after": "AS_EXPECTED",
+      "reason_after": null
+    },
+    {
+      "probe": "two_parallel_lines",
+      "category": "two_lines",
+      "expected": "SERVED",
+      "parse_status": "LOCAL_PARSE_PARTIAL",
+      "unparsed_clauses": [
+        "Mặt phẳng (P) chứa hai đường thẳng song song AB và C'D'",
+        "Tìm thiết diện của hình lập phương cắt bởi (P)"
+      ],
+      "planes": [],
+      "section_goals": [],
+      "before": "NOT_SERVED",
+      "after": "NOT_SERVED",
+      "reason_after": "LIVE_AI_DISABLED"
+    },
+    {
+      "probe": "two_lines_skew",
+      "category": "two_lines_degenerate",
+      "expected": "REFUSED",
+      "parse_status": "LOCAL_PARSE_PARTIAL",
+      "unparsed_clauses": [
+        "Mặt phẳng (P) chứa hai đường thẳng AB và CC'",
+        "Tìm thiết diện của hình lập phương cắt bởi (P)"
+      ],
+      "planes": [],
+      "section_goals": [],
+      "before": "AS_EXPECTED",
+      "after": "AS_EXPECTED",
+      "reason_after": "LIVE_AI_DISABLED"
+    },
+    {
+      "probe": "two_lines_same",
+      "category": "two_lines_degenerate",
+      "expected": "REFUSED",
+      "parse_status": "LOCAL_PARSE_PARTIAL",
+      "unparsed_clauses": [
+        "Mặt phẳng (P) chứa hai đường thẳng AB và BA",
+        "Tìm thiết diện của hình lập phương cắt bởi (P)"
+      ],
+      "planes": [],
+      "section_goals": [],
+      "before": "AS_EXPECTED",
+      "after": "AS_EXPECTED",
+      "reason_after": "LIVE_AI_DISABLED"
+    },
+    {
+      "probe": "through_point_parallel_two_lines",
+      "category": "parallel_two_lines",
+      "expected": "SERVED",
+      "parse_status": "LOCAL_PARSE_COMPLETE",
+      "unparsed_clauses": [],
+      "planes": [
+        {
+          "plane_kind": "through_point_parallel_two_lines",
+          "through_point": "M",
+          "parallel_plane": null,
+          "perpendicular_line": null,
+          "constraints": null
+        }
+      ],
+      "section_goals": [
+        "construct_plane_section"
+      ],
+      "before": "NOT_SERVED",
+      "after": "AS_EXPECTED",
+      "reason_after": null
+    },
+    {
+      "probe": "under_parallel_one_line",
+      "category": "underconstrained",
+      "expected": "REFUSED",
+      "parse_status": "LOCAL_PARSE_PARTIAL",
+      "unparsed_clauses": [
+        "Mặt phẳng (P) đi qua M và song song với AB",
+        "Xác định thiết diện của hình chóp cắt bởi mặt phẳng (P)"
+      ],
+      "planes": [],
+      "section_goals": [],
+      "before": "AS_EXPECTED",
+      "after": "AS_EXPECTED",
+      "reason_after": "LIVE_AI_DISABLED"
+    },
+    {
+      "probe": "under_perpendicular_plane",
+      "category": "underconstrained",
+      "expected": "REFUSED",
+      "parse_status": "LOCAL_PARSE_PARTIAL",
+      "unparsed_clauses": [
+        "Mặt phẳng (P) đi qua M và vuông góc với mặt phẳng (ABCD)",
+        "Xác định thiết diện của hình chóp cắt bởi mặt phẳng (P)"
+      ],
+      "planes": [],
+      "section_goals": [],
+      "before": "AS_EXPECTED",
+      "after": "AS_EXPECTED",
+      "reason_after": "LIVE_AI_DISABLED"
+    },
+    {
+      "probe": "under_contains_one_line",
+      "category": "underconstrained",
+      "expected": "REFUSED",
+      "parse_status": "LOCAL_PARSE_PARTIAL",
+      "unparsed_clauses": [
+        "Mặt phẳng (P) chứa AB",
+        "Xác định thiết diện của hình chóp cắt bởi mặt phẳng (P)"
+      ],
+      "planes": [],
+      "section_goals": [],
+      "before": "AS_EXPECTED",
+      "after": "AS_EXPECTED",
+      "reason_after": "LIVE_AI_DISABLED"
+    },
+    {
+      "probe": "under_any_plane",
+      "category": "underconstrained",
+      "expected": "REFUSED",
+      "parse_status": "LOCAL_PARSE_PARTIAL",
+      "unparsed_clauses": [
+        "Một mặt phẳng (P) bất kỳ cắt hình chóp",
+        "Xác định thiết diện của hình chóp cắt bởi mặt phẳng (P)"
+      ],
+      "planes": [],
+      "section_goals": [],
+      "before": "AS_EXPECTED",
+      "after": "AS_EXPECTED",
+      "reason_after": "LIVE_AI_DISABLED"
+    },
+    {
+      "probe": "compound_contains_parallel",
+      "category": "compound",
+      "expected": "SERVED",
+      "parse_status": "LOCAL_PARSE_COMPLETE",
+      "unparsed_clauses": [],
+      "planes": [
+        {
+          "plane_kind": "constrained",
+          "through_point": null,
+          "parallel_plane": null,
+          "perpendicular_line": null,
+          "constraints": [
+            {
+              "kind": "contains_points",
+              "operands": [
+                "B",
+                "D"
+              ]
+            },
+            {
+              "kind": "parallel_to_line",
+              "operands": [
+                "S",
+                "C"
+              ]
+            }
+          ]
+        }
+      ],
+      "section_goals": [
+        "construct_plane_section"
+      ],
+      "before": "NOT_SERVED",
+      "after": "AS_EXPECTED",
+      "reason_after": null
+    },
+    {
+      "probe": "compound_contains_parallel_not_unique",
+      "category": "compound_degenerate",
+      "expected": "REFUSED",
+      "parse_status": "LOCAL_PARSE_COMPLETE",
+      "unparsed_clauses": [],
+      "planes": [
+        {
+          "plane_kind": "constrained",
+          "through_point": null,
+          "parallel_plane": null,
+          "perpendicular_line": null,
+          "constraints": [
+            {
+              "kind": "contains_points",
+              "operands": [
+                "A",
+                "B"
+              ]
+            },
+            {
+              "kind": "parallel_to_line",
+              "operands": [
+                "C",
+                "D"
+              ]
+            }
+          ]
+        }
+      ],
+      "section_goals": [
+        "construct_plane_section"
+      ],
+      "before": "AS_EXPECTED",
+      "after": "AS_EXPECTED",
+      "reason_after": "PLANE_NOT_UNIQUE"
+    },
+    {
+      "probe": "compound_contains_perpendicular_face",
+      "category": "compound_degenerate",
+      "expected": "REFUSED",
+      "parse_status": "LOCAL_PARSE_COMPLETE",
+      "unparsed_clauses": [],
+      "planes": [
+        {
+          "plane_kind": "constrained",
+          "through_point": null,
+          "parallel_plane": null,
+          "perpendicular_line": null,
+          "constraints": [
+            {
+              "kind": "contains_points",
+              "operands": [
+                "A",
+                "B"
+              ]
+            },
+            {
+              "kind": "perpendicular_to_plane",
+              "operands": [
+                "S",
+                "A",
+                "B"
+              ]
+            }
+          ]
+        }
+      ],
+      "section_goals": [
+        "construct_plane_section"
+      ],
+      "before": "AS_EXPECTED",
+      "after": "AS_EXPECTED",
+      "reason_after": "SECTION_PLANE_IS_FACE"
+    },
+    {
+      "probe": "compound_contains_perpendicular",
+      "category": "compound",
+      "expected": "SERVED",
+      "parse_status": "LOCAL_PARSE_COMPLETE",
+      "unparsed_clauses": [],
+      "planes": [
+        {
+          "plane_kind": "constrained",
+          "through_point": null,
+          "parallel_plane": null,
+          "perpendicular_line": null,
+          "constraints": [
+            {
+              "kind": "contains_points",
+              "operands": [
+                "A",
+                "B"
+              ]
+            },
+            {
+              "kind": "perpendicular_to_plane",
+              "operands": [
+                "S",
+                "C",
+                "D"
+              ]
+            }
+          ]
+        }
+      ],
+      "section_goals": [
+        "construct_plane_section"
+      ],
+      "before": "NOT_SERVED",
+      "after": "AS_EXPECTED",
+      "reason_after": null
+    },
+    {
+      "probe": "reordered_question_first",
+      "category": "reordered",
+      "expected": "SERVED",
+      "parse_status": "LOCAL_PARSE_PARTIAL",
+      "unparsed_clauses": [
+        "Xác định thiết diện của hình chóp cắt bởi mặt phẳng (P), biết (P) đi qua M và song song với mặt phẳng (ABCD)"
+      ],
+      "planes": [],
+      "section_goals": [],
+      "before": "NOT_SERVED",
+      "after": "NOT_SERVED",
+      "reason_after": "LIVE_AI_DISABLED"
+    },
+    {
+      "probe": "unicode_prime",
+      "category": "unicode",
+      "expected": "SERVED",
+      "parse_status": "LOCAL_PARSE_COMPLETE",
+      "unparsed_clauses": [],
+      "planes": [
+        {
+          "plane_kind": "through_point_perpendicular_line",
+          "through_point": "M",
+          "parallel_plane": null,
+          "perpendicular_line": [
+            "A",
+            "A'"
+          ],
+          "constraints": null
+        }
+      ],
+      "section_goals": [
+        "construct_plane_section"
+      ],
+      "before": "NOT_SERVED",
+      "after": "AS_EXPECTED",
+      "reason_after": null
+    },
+    {
+      "probe": "diagram_dependent",
+      "category": "diagram",
+      "expected": "REFUSED",
+      "parse_status": "LOCAL_PARSE_PARTIAL",
+      "unparsed_clauses": [
+        "Mặt phẳng (P) đi qua M như hình vẽ",
+        "Xác định thiết diện của hình chóp cắt bởi mặt phẳng (P)"
+      ],
+      "planes": [],
+      "section_goals": [],
+      "before": "AS_EXPECTED",
+      "after": "AS_EXPECTED",
+      "reason_after": "LIVE_AI_DISABLED"
+    },
+    {
+      "probe": "goal_as_premise",
+      "category": "goal_vs_premise",
+      "expected": "REFUSED",
+      "parse_status": "LOCAL_PARSE_COMPLETE",
+      "unparsed_clauses": [],
+      "planes": [],
+      "section_goals": [],
+      "before": "AS_EXPECTED",
+      "after": "AS_EXPECTED",
+      "reason_after": "OUT_OF_SCOPE"
+    },
+    {
+      "probe": "multiple_goals",
+      "category": "multiple_goals",
+      "expected": "SERVED",
+      "parse_status": "LOCAL_PARSE_COMPLETE",
+      "unparsed_clauses": [],
+      "planes": [
+        {
+          "plane_kind": "through_point_parallel_plane",
+          "through_point": "M",
+          "parallel_plane": [
+            "A",
+            "B",
+            "C"
+          ],
+          "perpendicular_line": null,
+          "constraints": null
+        }
+      ],
+      "section_goals": [
+        "construct_plane_section"
+      ],
+      "before": "AS_EXPECTED",
+      "after": "AS_EXPECTED",
+      "reason_after": null
+    },
+    {
+      "probe": "intersection_with_derived_plane",
+      "category": "intersection_derived",
+      "expected": "SERVED",
+      "parse_status": "LOCAL_PARSE_PARTIAL",
+      "unparsed_clauses": [
+        "Tìm giao tuyến của (P) và (SAB)"
+      ],
+      "planes": [],
+      "section_goals": [],
+      "before": "NOT_SERVED",
+      "after": "NOT_SERVED",
+      "reason_after": "LIVE_AI_DISABLED"
+    }
+  ]
+}
