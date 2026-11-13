@@ -1,5 +1,20 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = SEMANTIC_TO_SCENE3D_VERIFIED_SIMULATION
+
+RUN_ID = semantic-to-scene3d-verified-simulation
+REPORT = docs/evaluation/geometry/runs/semantic-to-scene3d-verified-simulation/AXO_SEMANTIC_TO_SCENE3D_VERIFIED_SIMULATION_REPORT.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/semantic-to-scene3d-verified-simulation/
+START_BASE = 8a5a54e37
+CODE_COMMIT = 5958df73d (angle constructions, CACHE_VERSION 133), 6e3989ba5 (parser rules), 70e393fd8 (step-button touch target); candidate freeze 15e98444b
+CLASSIFICATION = DEVELOPMENT_EVIDENCE_ON_EXPOSED_AND_SYNTHETIC_ITEMS; AGENT_VERIFIED_DIAGNOSTIC_INVARIANTS; AUTOMATED_BROWSER_E2E; UNSEEN_EVALUATION_NOT_MEASURED; INDEPENDENT_H1_NOT_MEASURED; PUBLICATION_HEAD BLOCKED_PENDING_OWNER_REVIEW
+PRODUCT_CHANGE = YES (angle-construction/1 on angle quantities, right-angle annotation fix, three local-parser rules, step-button touch target); planner/26, registry/33, engine/24 unchanged; CACHE_VERSION 132 → 133
+MODEL_REQUEST_COUNT = 0
+VERIFICATION = run.json; full_regression_summary.json; semantic_to_scene_gap_matrix.json; scene3d_mathematical_invariants.json; construction_dependency_graph_tests.json; scene3d_interaction_browser_e2e.json; text_to_simulation_acceptance.json; image_to_simulation_acceptance.json
+CORRECTS = NONE (local-semantic receipts unchanged)
+CORRECTED_BY = NONE
+LIMITATIONS = synthetic probes and exposed transcriptions; agent-written invariant oracle; scripted confirmation; headless host browser; no unseen data, no students, no H-1, no low-end hardware.
+
 ## WAVE_ID = LOCAL_SEMANTIC_SOURCE_GATE_RELIABILITY
 
 RUN_ID = local-semantic-source-gate-reliability
