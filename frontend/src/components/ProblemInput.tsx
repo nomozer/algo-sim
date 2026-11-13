@@ -5,10 +5,8 @@ import { useAuthStore } from "../state/auth";
 import { newAttemptId } from "../state/history";
 import { useToastStore } from "./TopNav";
 import {
-  IconCamera,
   IconClose,
-  IconPlus,
-  IconUpload,
+  IconSend,
 } from "./icons";
 import {
   AxoClientError,
@@ -25,6 +23,7 @@ import {
   canSubmitComposer,
   composerAttachmentMimeOf,
   formatAttachmentSize,
+  isClearlyInvalidPdf,
   readAsBase64,
   splitAttachmentName,
   validateComposerFile,
@@ -33,12 +32,16 @@ import {
 import type { AnalysisUnsupported } from "../core/types";
 import type { SimulationEnvelope } from "../simulations/types";
 import { PhotoProblemDialog } from "./PhotoProblemDialog";
+import { type CameraDeviceSignals } from "./PhotoCameraView";
 import {
-  readBrowserCameraDeviceSignals,
-  shouldShowCameraEntry,
-  type CameraDeviceSignals,
-} from "./PhotoCameraView";
+  captureScreenStillFrame,
+  classifyScreenCaptureError,
+  classifyScreenCaptureSupportError,
+  resolveUploadMenuCapabilities,
+  type UploadMenuCapabilitySignals,
+} from "./ScreenCaptureDialog";
 import { PhotoProblemPanel } from "./PhotoProblemPanel";
+import { PdfPreview, renderPdfFirstPageThumbnail } from "./PdfPreview";
 import { AxoScrollbar } from "./AxoScrollbar";
 import {
   canConfirmAssistText,
@@ -307,11 +310,19 @@ export interface RunComposerSubmitOptions {
 
 const useIsomorphicLayoutEffect = typeof window !== "undefined" ? useLayoutEffect : useEffect;
 
+export interface CollisionRect {
+  top: number;
+  bottom: number;
+  left: number;
+  right: number;
+}
+
 export interface PlusPopoverPosition {
   left: number;
   top: number;
   placement: "bottom" | "top";
   maxHeight?: number;
+  collisionFlipped?: boolean;
 }
 
 export function computePlusPopoverPosition(params: {
@@ -323,9 +334,13 @@ export function computePlusPopoverPosition(params: {
   cssZoom?: number;
   gapPx?: number;
   marginPx?: number;
+  preferredPlacement?: "top" | "bottom";
+  avoidRects?: CollisionRect[];
+  avoidClearancePx?: number;
 }): PlusPopoverPosition {
-  const gap = params.gapPx ?? 6;
+  const gap = params.gapPx ?? 8;
   const margin = params.marginPx ?? 12;
+  const preferred = params.preferredPlacement ?? "top";
   const zoom = params.cssZoom && Number.isFinite(params.cssZoom) && params.cssZoom > 0 ? params.cssZoom : 1;
   const vw = Math.max(margin * 2 + 40, params.viewportWidth);
   const vh = Math.max(margin * 2 + 40, params.viewportHeight);
@@ -333,21 +348,96 @@ export function computePlusPopoverPosition(params: {
   const maxAvailableHeight = Math.max(44, vh - margin * 2);
   const mh = Math.min(Math.max(1, params.menuHeight), maxAvailableHeight);
 
-  const spaceBelow = vh - params.triggerRect.bottom - margin;
-  const spaceAbove = params.triggerRect.top - margin;
-
-  let placement: "bottom" | "top" = "bottom";
-  let rawTop = params.triggerRect.bottom + gap;
-
-  if (spaceBelow < mh + gap && spaceAbove > spaceBelow) {
-    placement = "top";
-    rawTop = Math.max(margin, params.triggerRect.top - mh - gap);
-  } else if (rawTop + mh > vh - margin) {
-    rawTop = Math.max(margin, vh - mh - margin);
-  }
-
   const maxLeft = Math.max(margin, vw - mw - margin);
   const rawLeft = Math.max(margin, Math.min(maxLeft, params.triggerRect.left));
+  const menuRight = rawLeft + mw;
+
+  const spaceBelow = vh - params.triggerRect.bottom - margin;
+  const spaceAbove = params.triggerRect.top - margin;
+  const topFitsViewport = spaceAbove >= mh + gap;
+  const bottomFitsViewport = spaceBelow >= mh + gap;
+
+  const candidateTopY = Math.max(margin, Math.min(vh - mh - margin, params.triggerRect.top - mh - gap));
+  const candidateBottomY = Math.max(margin, Math.min(vh - mh - margin, params.triggerRect.bottom + gap));
+
+  const clearance = (params.avoidClearancePx ?? 8) * zoom;
+  const avoidList = params.avoidRects ?? [];
+  const calcCollisionArea = (candTop: number): number => {
+    const candBottom = candTop + mh;
+    let total = 0;
+    for (const r of avoidList) {
+      if (r.right <= r.left || r.bottom <= r.top) continue;
+      const ix = Math.max(0, Math.min(menuRight, r.right) - Math.max(rawLeft, r.left));
+      const iy = Math.max(
+        0,
+        Math.min(candBottom, r.bottom + clearance) - Math.max(candTop, r.top - clearance),
+      );
+      total += ix * iy;
+    }
+    return total;
+  };
+
+  const topCollision = calcCollisionArea(candidateTopY);
+  const bottomCollision = calcCollisionArea(candidateBottomY);
+
+  let placement: "bottom" | "top" = preferred;
+  let rawTop: number;
+  let collisionFlipped = false;
+
+  if (preferred === "top") {
+    if (topFitsViewport) {
+      placement = "top";
+      rawTop = candidateTopY;
+    } else if (bottomFitsViewport && bottomCollision === 0) {
+      placement = "bottom";
+      rawTop = candidateBottomY;
+      collisionFlipped = topFitsViewport && topCollision > 0;
+    } else if (topFitsViewport && !bottomFitsViewport) {
+      placement = "top";
+      rawTop = candidateTopY;
+    } else if (bottomFitsViewport && !topFitsViewport) {
+      placement = "bottom";
+      rawTop = candidateBottomY;
+    } else if (bottomCollision < topCollision && spaceBelow >= spaceAbove * 0.6) {
+      placement = "bottom";
+      rawTop = candidateBottomY;
+      collisionFlipped = topCollision > 0;
+    } else if (spaceAbove >= spaceBelow) {
+      placement = "top";
+      rawTop = candidateTopY;
+    } else {
+      placement = "bottom";
+      rawTop = candidateBottomY;
+    }
+  } else {
+    if (bottomFitsViewport && bottomCollision === 0) {
+      placement = "bottom";
+      rawTop = candidateBottomY;
+    } else if (topFitsViewport && topCollision === 0) {
+      placement = "top";
+      rawTop = candidateTopY;
+      collisionFlipped = bottomFitsViewport && bottomCollision > 0;
+    } else if (bottomFitsViewport && !topFitsViewport) {
+      placement = "bottom";
+      rawTop = candidateBottomY;
+    } else if (topFitsViewport && !bottomFitsViewport) {
+      placement = "top";
+      rawTop = candidateTopY;
+    } else if (topCollision < bottomCollision && spaceAbove >= spaceBelow * 0.6) {
+      placement = "top";
+      rawTop = candidateTopY;
+      collisionFlipped = bottomCollision > 0;
+    } else if (spaceBelow >= spaceAbove) {
+      placement = "bottom";
+      rawTop = candidateBottomY;
+    } else {
+      placement = "top";
+      rawTop = candidateTopY;
+    }
+  }
+
+  rawTop = Math.max(margin, Math.min(vh - mh - margin, rawTop));
+
   const maxHeight =
     params.menuHeight > maxAvailableHeight
       ? Math.round((maxAvailableHeight / zoom) * 10) / 10
@@ -358,6 +448,7 @@ export function computePlusPopoverPosition(params: {
     top: Math.round((rawTop / zoom) * 10) / 10,
     placement,
     ...(maxHeight !== undefined ? { maxHeight } : {}),
+    ...(collisionFlipped ? { collisionFlipped: true } : {}),
   };
 }
 
@@ -365,12 +456,24 @@ export function computePlusPopoverPosition(params: {
 export function cancelComposerSubmit(
   lockRef: { current: boolean },
   abortRef?: { current: AbortController | null },
+  requestIdRef?: { current: string | null },
 ): void {
   const ctl = abortRef?.current ?? null;
   if (abortRef) abortRef.current = null;
   lockRef.current = false;
   ctl?.abort();
-  useAppStore.getState().setAnalyzing(false);
+  const store = useAppStore.getState();
+  if (requestIdRef?.current) {
+    store.clearProblemProcessing(requestIdRef.current);
+  } else {
+    const inFlight = Object.values(store.problemProcessingRecords).find(
+      (r) => r.status === "in_progress",
+    );
+    if (inFlight) {
+      store.clearProblemProcessing(inFlight.canonicalId);
+    }
+  }
+  store.setAnalyzing(false);
 }
 
 export async function runComposerSubmit({
@@ -390,8 +493,15 @@ export async function runComposerSubmit({
 }: RunComposerSubmitOptions): Promise<void> {
   if (!canSubmit || lockRef.current) return;
   lockRef.current = true;
-  // Một lần bấm gửi = một lần học. Thử lại mạng nằm trong `analyzeFn` nên dùng chung ID này.
-  const attemptId = newAttemptId();
+  // Một lần bấm gửi = một lần học. Nếu người dùng đang gửi lại ngay lượt vừa thất bại trong cùng khung nhập,
+  // giữ nguyên ID ổn định của lượt đó để cập nhật trạng thái mà không nhân bản bản ghi.
+  const reusableFailedId =
+    requestIdRef?.current &&
+    useAppStore.getState().problemProcessingRecords[requestIdRef.current]?.status ===
+      "needs_attention"
+      ? requestIdRef.current
+      : null;
+  const attemptId = reusableFailedId ?? newAttemptId();
   if (requestIdRef) {
     requestIdRef.current = attemptId;
   }
@@ -399,18 +509,24 @@ export async function runComposerSubmit({
   const ctl = typeof AbortController !== "undefined" ? new AbortController() : null;
   if (abortRef) abortRef.current = ctl;
 
-  const store = useAppStore.getState();
-  store.setAnalysisError(null);
-  store.clearUnsupported();
-  useToastStore.getState().dismissToast("composer-refusal");
-  store.setAnalyzing(true);
-
   const targetAttachments =
     attachments && attachments.length > 0
       ? attachments
       : attachment
         ? [attachment]
         : [];
+
+  const initialStatement =
+    (typeof overridePreparedText === "string" ? overridePreparedText.trim() : problemText.trim()) ||
+    targetAttachments[0]?.name ||
+    "Bài toán đang xử lý";
+
+  const store = useAppStore.getState();
+  store.setAnalysisError(null);
+  store.clearUnsupported();
+  useToastStore.getState().dismissToast("composer-refusal");
+  store.startProblemProcessing(attemptId, initialStatement);
+  store.setAnalyzing(true);
 
   try {
     let finalProblemText = "";
@@ -423,15 +539,23 @@ export async function runComposerSubmit({
       const contents = await Promise.all(
         targetAttachments.map((item) => readAsBase64(item.file)),
       );
-      if (ctl?.signal.aborted) return;
-      if (requestIdRef?.current && requestIdRef.current !== attemptId) return;
+      if (ctl?.signal.aborted) {
+        useAppStore.getState().clearProblemProcessing(attemptId);
+        return;
+      }
+      if (requestIdRef?.current && requestIdRef.current !== attemptId) {
+        useAppStore.getState().clearProblemProcessing(attemptId);
+        return;
+      }
 
       const firstAtt = targetAttachments[0]!;
       const attachmentPayloads = targetAttachments.map((item, idx) => ({
         attachment_id: item.id,
         order_index: idx,
-        source_type: (item.kind === "image" ? "camera" : item.kind) as
+        source_type: (item.source ?? (item.kind === "image" ? "upload" : item.kind)) as
           | "camera"
+          | "upload"
+          | "paste"
           | "pdf"
           | "document",
         content: contents[idx]!,
@@ -451,11 +575,21 @@ export async function runComposerSubmit({
         },
         ctl?.signal,
       );
-      if (ctl?.signal.aborted) return;
-      if (requestIdRef?.current && requestIdRef.current !== attemptId) return;
-      if (prepared.request_id && prepared.request_id !== attemptId) return;
+      if (ctl?.signal.aborted) {
+        useAppStore.getState().clearProblemProcessing(attemptId);
+        return;
+      }
+      if (requestIdRef?.current && requestIdRef.current !== attemptId) {
+        useAppStore.getState().clearProblemProcessing(attemptId);
+        return;
+      }
+      if (prepared.request_id && prepared.request_id !== attemptId) {
+        useAppStore.getState().clearProblemProcessing(attemptId);
+        return;
+      }
 
       if (prepared.status === "needs_selection" || prepared.status === "needs_confirmation") {
+        useAppStore.getState().clearProblemProcessing(attemptId);
         onAssistRequired?.(prepared);
         return;
       }
@@ -469,6 +603,11 @@ export async function runComposerSubmit({
           prepared.learner_message ||
             "Tệp đính kèm chưa có nội dung đề toán hình học không gian rõ ràng. Em kiểm tra lại tệp hoặc nhập đề trực tiếp.",
         );
+        useAppStore.getState().failProblemProcessing(attemptId, {
+          problemStatement: initialStatement,
+          reasonCode: prepared.reason_code ?? "ATTACHMENT_REJECTED",
+          reasonMessage: rejectionDesc,
+        });
         useToastStore.getState().showToast({
           id: "composer-refusal",
           tone: "info",
@@ -480,6 +619,7 @@ export async function runComposerSubmit({
       }
 
       finalProblemText = prepared.problem_text.trim();
+      useAppStore.getState().updateProblemProcessingStatement(attemptId, finalProblemText);
     }
 
     const result = await analyzeFn(
@@ -488,7 +628,10 @@ export async function runComposerSubmit({
       undefined,
       attemptId,
     );
-    if (ctl?.signal.aborted) return;
+    if (ctl?.signal.aborted) {
+      useAppStore.getState().clearProblemProcessing(attemptId);
+      return;
+    }
 
     if (result.status === "ok") {
       store.loadEnvelope(
@@ -502,7 +645,7 @@ export async function runComposerSubmit({
       }
     } else {
       const unsupportedRes = result as AnalysisUnsupported;
-      store.loadUnsupported(unsupportedRes);
+      store.loadUnsupported(unsupportedRes, attemptId, finalProblemText);
       const refusalView = describeHomeRefusal(unsupportedRes);
       const description =
         refusalView.hint && !refusalView.body.includes(refusalView.hint)
@@ -518,6 +661,7 @@ export async function runComposerSubmit({
     }
   } catch (err) {
     if ((err as { name?: string } | null)?.name === "AbortError" || ctl?.signal.aborted) {
+      useAppStore.getState().clearProblemProcessing(attemptId);
       return;
     }
     const contract = err instanceof AxoClientError ? err.toContract() : null;
@@ -544,25 +688,96 @@ export async function runComposerSubmit({
   }
 }
 
-/** Kích thước chiều cao ô nhập theo V2.7 + yêu cầu co giãn 3 dòng mặc định của chủ dự án (Phase C.4 P2). */
-const COMPOSER_MIN_H_DESKTOP = 76;
-const COMPOSER_MIN_H_MOBILE = 72;
-const COMPOSER_MAX_H = 220;
-
-function getComposerMinHeight(): number {
-  if (typeof window !== "undefined" && window.innerWidth <= 640) {
-    return COMPOSER_MIN_H_MOBILE;
-  }
-  return COMPOSER_MIN_H_DESKTOP;
-}
-
 let attachmentSeq = 0;
+let savedDraftAttachments: ComposerAttachmentItem[] = [];
+const draftAttachmentsResetListeners = new Set<() => void>();
 
 function revokePreviewUrl(url: string | undefined) {
-  if (url && typeof URL !== "undefined" && typeof URL.revokeObjectURL === "function") {
+  if (url && url.startsWith("blob:") && typeof URL !== "undefined" && typeof URL.revokeObjectURL === "function") {
     URL.revokeObjectURL(url);
   }
 }
+
+export function clearSavedDraftAttachments() {
+  for (const item of savedDraftAttachments) {
+    revokePreviewUrl(item.previewUrl);
+  }
+  savedDraftAttachments = [];
+  for (const listener of draftAttachmentsResetListeners) {
+    listener();
+  }
+}
+
+export interface ExecuteScreenCaptureFlowParams {
+  busyRef: { current: boolean };
+  onCaptured: (file: File) => void;
+  checkSupport?: typeof classifyScreenCaptureSupportError;
+  captureFrame?: typeof captureScreenStillFrame;
+  classifyError?: typeof classifyScreenCaptureError;
+  revokeUrl?: (url: string | undefined) => void;
+}
+
+export async function executeScreenCaptureFlow({
+  busyRef,
+  onCaptured,
+  checkSupport = classifyScreenCaptureSupportError,
+  captureFrame = captureScreenStillFrame,
+  classifyError = classifyScreenCaptureError,
+  revokeUrl = revokePreviewUrl,
+}: ExecuteScreenCaptureFlowParams): Promise<
+  "busy" | "unsupported" | "cancelled" | "error" | "attached"
+> {
+  if (busyRef.current) return "busy";
+  const supportErr = checkSupport();
+  if (supportErr) {
+    useToastStore.getState().showToast({
+      id: "screen-capture-notice",
+      tone: "info",
+      title: supportErr.title,
+      description: supportErr.description,
+      durationMs: 5200,
+    });
+    return "unsupported";
+  }
+
+  busyRef.current = true;
+  try {
+    const captured = await captureFrame();
+    useToastStore.getState().dismissToast("screen-capture-notice");
+    try {
+      onCaptured(captured.file);
+    } finally {
+      revokeUrl(captured.previewUrl);
+    }
+    return "attached";
+  } catch (err) {
+    const classified = classifyError(err);
+    if (classified.code === "cancelled") {
+      return "cancelled";
+    }
+    useToastStore.getState().showToast({
+      id: "screen-capture-notice",
+      tone: "info",
+      title: classified.title,
+      description: classified.description,
+      durationMs: 5500,
+    });
+    return "error";
+  } finally {
+    busyRef.current = false;
+  }
+}
+
+useAppStore.subscribe((state, prevState) => {
+  if (
+    !state.hasInAppNavigation &&
+    state.workspaceTabs.length === 0 &&
+    state.problemText === "" &&
+    (prevState.hasInAppNavigation || prevState.workspaceTabs.length > 0)
+  ) {
+    clearSavedDraftAttachments();
+  }
+});
 
 /**
  * Axo Unified Problem Input Composer:
@@ -576,27 +791,45 @@ export interface ProblemInputProps {
   initialAllFilesModalOpen?: boolean;
   initialAssistState?: UnifiedAssistState;
   deviceSignals?: CameraDeviceSignals;
+  capabilitySignals?: Omit<UploadMenuCapabilitySignals, "deviceSignals">;
 }
 
 export function ProblemInput({
-  initialAttachments = [],
+  initialAttachments,
   initialPlusMenuOpen = false,
   initialAllFilesModalOpen = false,
   initialAssistState = initialUnifiedAssistState,
   deviceSignals,
+  capabilitySignals,
 }: ProblemInputProps = {}) {
-  const showCameraEntry = shouldShowCameraEntry(
-    deviceSignals ?? readBrowserCameraDeviceSignals(),
-  );
+  const hasExplicitInitialAttachments = initialAttachments !== undefined;
+  const menuCaps = resolveUploadMenuCapabilities({
+    deviceSignals,
+    ...capabilitySignals,
+  });
+  const showScreenCaptureEntry = menuCaps.showScreenCapture;
+  const showCameraEntry = menuCaps.showCamera;
+  const visibleMenuCount = menuCaps.visibleActionCount;
   const problemText = useAppStore((s) => s.problemText);
   const setProblemText = useAppStore((s) => s.setProblemText);
   const analyzing = useAppStore((s) => s.analyzing);
   const analysisError = useAppStore((s) => s.analysisError);
 
   const [health, setHealth] = useState<ServerHealth | null | "loading">("loading");
-  const [attachments, setAttachments] = useState<ComposerAttachmentItem[]>(
-    initialAttachments,
+  const [attachments, setAttachmentsState] = useState<ComposerAttachmentItem[]>(
+    () => (hasExplicitInitialAttachments ? initialAttachments : savedDraftAttachments),
   );
+  const setAttachments: React.Dispatch<React.SetStateAction<ComposerAttachmentItem[]>> = (
+    updater,
+  ) => {
+    setAttachmentsState((prev) => {
+      const next = typeof updater === "function" ? updater(prev) : updater;
+      if (!hasExplicitInitialAttachments) {
+        savedDraftAttachments = next;
+      }
+      return next;
+    });
+  };
   const [plusMenuOpen, setPlusMenuOpen] = useState(initialPlusMenuOpen);
   const [plusPopoverPos, setPlusPopoverPos] = useState<PlusPopoverPosition | null>(null);
   const plusPopoverPosRef = useRef<PlusPopoverPosition | null>(null);
@@ -608,7 +841,11 @@ export function ProblemInput({
   const [previewModalFileId, setPreviewModalFileId] = useState<string | null>(
     null,
   );
+  const [previewDownloadUrl, setPreviewDownloadUrl] = useState<string | null>(null);
+  const [previewImageError, setPreviewImageError] = useState(false);
+  const [pdfPreviewCheck, setPdfPreviewCheck] = useState<"checking" | "invalid" | "unknown">("unknown");
   const [photoDialogOpen, setPhotoDialogOpen] = useState(false);
+  const screenCaptureBusyRef = useRef(false);
   const [assist, dispatchAssist] = useReducer(
     unifiedAssistReducer,
     initialAssistState,
@@ -617,7 +854,6 @@ export function ProblemInput({
   const fileInputRef = useRef<HTMLInputElement>(null);
   const uploadImageRef = useRef<HTMLInputElement>(null);
   const cameraImageRef = useRef<HTMLInputElement>(null);
-  const replaceTargetIdRef = useRef<string | null>(null);
   const textRef = useRef<HTMLTextAreaElement>(null);
   const plusMenuAnchorRef = useRef<HTMLDivElement>(null);
   const plusTriggerRef = useRef<HTMLButtonElement>(null);
@@ -627,15 +863,112 @@ export function ProblemInput({
   const submittingRef = useRef(false);
   const analyzeAbortRef = useRef<AbortController | null>(null);
   const activePrepareRequestIdRef = useRef<string | null>(null);
+  const activeSubmitPromiseRef = useRef<Promise<void> | null>(null);
+  const cancellingRef = useRef(false);
+  const [cancelling, setCancelling] = useState(false);
+  const filesDragRef = useRef<{ active: boolean; startX: number; startScrollLeft: number; moved: boolean }>({
+    active: false,
+    startX: 0,
+    startScrollLeft: 0,
+    moved: false,
+  });
+  const suppressCardClickRef = useRef(false);
+  const modalOriginFocusRef = useRef<HTMLElement | null>(null);
   const allFilesListRef = useRef<HTMLDivElement>(null);
   const [filesOverflow, setFilesOverflow] = useState<{ left: boolean; right: boolean }>({
     left: false,
     right: false,
   });
+  const [filesScroll, setFilesScroll] = useState({ value: 0, max: 0, native: false, thumb: 0 });
+  const [isMultilineWrapped, setIsMultilineWrapped] = useState(false);
+  const [isShiftEnterMultiline, setIsShiftEnterMultiline] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  const hasNewline = problemText.includes("\n");
+  const composerExpanded = isExpanded;
+  const isMultiline =
+    attachments.length > 0 ||
+    isMultilineWrapped ||
+    hasNewline ||
+    isShiftEnterMultiline ||
+    composerExpanded;
+  const composerLineMode = "two-tier" as const;
 
   useEffect(() => {
     attachmentsRef.current = attachments;
   }, [attachments]);
+
+  useEffect(() => {
+    const item = attachments.find((attachment) => attachment.id === previewModalFileId);
+    if (!item || item.kind === "image" || typeof URL.createObjectURL !== "function") {
+      setPreviewDownloadUrl(null);
+      return;
+    }
+    const url = URL.createObjectURL(item.file);
+    setPreviewDownloadUrl(url);
+    return () => URL.revokeObjectURL(url);
+  }, [previewModalFileId, attachments]);
+
+  useEffect(() => {
+    const item = attachments.find((attachment) => attachment.id === previewModalFileId);
+    if (!item || item.kind !== "pdf") { setPdfPreviewCheck("unknown"); return; }
+    let cancelled = false;
+    setPdfPreviewCheck("checking");
+    void isClearlyInvalidPdf(item.file).then((invalid) => {
+      if (!cancelled) setPdfPreviewCheck(invalid ? "invalid" : "unknown");
+    }, () => { if (!cancelled) setPdfPreviewCheck("unknown"); });
+    return () => { cancelled = true; };
+  }, [previewModalFileId, attachments]);
+
+  const isPreviewModalOpen = Boolean(previewModalFileId);
+
+  useEffect(() => {
+    setPreviewImageError(false);
+  }, [previewModalFileId]);
+
+  useEffect(() => {
+    if (!isPreviewModalOpen) return;
+    modalOriginFocusRef.current = document.activeElement as HTMLElement | null;
+    document.getElementById("btn-close-file-modal")?.focus({ preventScroll: true });
+    const stepAttachment = (delta: number) => {
+      const list = attachmentsRef.current;
+      if (list.length <= 1) return;
+      setPreviewModalFileId((cur) => {
+        const idx = list.findIndex((a) => a.id === cur);
+        if (idx < 0) return cur;
+        const nextIdx = (idx + delta + list.length) % list.length;
+        return list[nextIdx]?.id ?? cur;
+      });
+    };
+    const onModalKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "ArrowLeft" && attachmentsRef.current.length > 1) {
+        event.preventDefault();
+        stepAttachment(-1);
+        return;
+      }
+      if (event.key === "ArrowRight" && attachmentsRef.current.length > 1) {
+        event.preventDefault();
+        stepAttachment(1);
+        return;
+      }
+      if (event.key !== "Tab") return;
+      const modal = document.getElementById("composer-single-file-modal");
+      const controls = Array.from(modal?.querySelectorAll<HTMLElement>('button:not([disabled]), a[href], [tabindex="0"]') ?? []);
+      if (!controls.length) return;
+      const index = controls.indexOf(document.activeElement as HTMLElement);
+      if (event.shiftKey && index <= 0) { event.preventDefault(); controls[controls.length - 1]?.focus({ preventScroll: true }); }
+      else if (!event.shiftKey && (index < 0 || index === controls.length - 1)) { event.preventDefault(); controls[0]?.focus({ preventScroll: true }); }
+    };
+    document.addEventListener("keydown", onModalKeyDown);
+    return () => {
+      document.removeEventListener("keydown", onModalKeyDown);
+      const origin = modalOriginFocusRef.current;
+      modalOriginFocusRef.current = null;
+      if (origin && origin.isConnected && typeof origin.focus === "function") {
+        origin.focus({ preventScroll: true });
+      }
+    };
+  }, [isPreviewModalOpen]);
 
   function syncFilesOverflow(el: HTMLDivElement | null) {
     if (!el) {
@@ -646,6 +979,10 @@ export function ProblemInput({
     }
     const nextLeft = el.scrollLeft > 2;
     const nextRight = el.scrollLeft + el.clientWidth < el.scrollWidth - 2;
+    const max = Math.max(0, el.scrollWidth - el.clientWidth);
+    const native = el.offsetHeight - el.clientHeight > 1;
+    const thumb = Math.max(20, Math.round(el.clientWidth * el.clientWidth / el.scrollWidth));
+    setFilesScroll((prev) => prev.value === el.scrollLeft && prev.max === max && prev.native === native && prev.thumb === thumb ? prev : { value: el.scrollLeft, max, native, thumb });
     setFilesOverflow((prev) =>
       prev.left === nextLeft && prev.right === nextRight
         ? prev
@@ -674,15 +1011,30 @@ export function ProblemInput({
     };
   }, [attachments.length]);
 
-  // Thu hồi toàn bộ objectURL và huỷ request đang chạy khi tháo component để tránh rò bộ nhớ.
+  // Huỷ request đang chạy khi tháo component; chỉ thu hồi objectURL nếu là danh sách đính kèm cục bộ của test (đính kèm nháp của học sinh được giữ nguyên khi chuyển tab).
+  useEffect(() => {
+    if (hasExplicitInitialAttachments) return;
+    const onClearDraft = () => {
+      setAttachmentsState([]);
+      dispatchAssist({ type: "reset" });
+      activePrepareRequestIdRef.current = null;
+    };
+    draftAttachmentsResetListeners.add(onClearDraft);
+    return () => {
+      draftAttachmentsResetListeners.delete(onClearDraft);
+    };
+  }, [hasExplicitInitialAttachments]);
+
   useEffect(() => {
     return () => {
       analyzeAbortRef.current?.abort();
-      for (const item of attachmentsRef.current) {
-        revokePreviewUrl(item.previewUrl);
+      if (hasExplicitInitialAttachments) {
+        for (const item of attachmentsRef.current) {
+          revokePreviewUrl(item.previewUrl);
+        }
       }
     };
-  }, []);
+  }, [hasExplicitInitialAttachments]);
 
   useEffect(() => {
     let cancelled = false;
@@ -732,9 +1084,67 @@ export function ProblemInput({
       plusPopoverSizeRef.current = { width: rawOffsetW, height: rawOffsetH };
     }
     const baseW =
-      plusPopoverSizeRef.current?.width ?? (showCameraEntry ? 194 : 188);
+      plusPopoverSizeRef.current?.width ?? 224;
     const baseH =
-      plusPopoverSizeRef.current?.height ?? (showCameraEntry ? 98 : 48);
+      plusPopoverSizeRef.current?.height ??
+      (visibleMenuCount >= 3 ? 124 : visibleMenuCount === 2 ? 86 : 48);
+
+    const avoidRects: CollisionRect[] = [];
+    const heroTitleEl = document.querySelector(".home-hero-title");
+    if (heroTitleEl) {
+      const hr = heroTitleEl.getBoundingClientRect();
+      if (hr.width > 0 && hr.height > 0) {
+        avoidRects.push({ top: hr.top, bottom: hr.bottom, left: hr.left, right: hr.right });
+      }
+    }
+    const filesWrapEl =
+      filesRowRef.current ?? document.getElementById("composer-files-wrap");
+    if (filesWrapEl) {
+      const fr = filesWrapEl.getBoundingClientRect();
+      if (fr.width > 0 && fr.height > 0) {
+        avoidRects.push({ top: fr.top, bottom: fr.bottom, left: fr.left, right: fr.right });
+      }
+    }
+    const taEl = textRef.current;
+    if (taEl) {
+      const taRect = taEl.getBoundingClientRect();
+      if (taRect.width > 0 && taRect.height > 0) {
+        const rawText = taEl.value || problemText || "";
+        const trimmed = rawText.trim();
+        if (trimmed.length === 0) {
+          const placeholderH = Math.min(taRect.height, 26 * cssZoom);
+          const placeholderW = Math.min(taRect.width, 280 * cssZoom);
+          avoidRects.push({
+            top: taRect.top,
+            bottom: taRect.top + placeholderH,
+            left: taRect.left,
+            right: taRect.left + placeholderW,
+          });
+        } else {
+          const charsPerLine = Math.max(
+            20,
+            Math.floor((taRect.width / cssZoom - 32) / 8.2),
+          );
+          const visualLines = rawText
+            .split("\n")
+            .reduce(
+              (acc, line) => acc + Math.max(1, Math.ceil(Math.max(1, line.length) / charsPerLine)),
+              0,
+            );
+          const lineHeightPx = 24 * cssZoom;
+          const occupiedH = Math.min(
+            taRect.height,
+            Math.max(28 * cssZoom, visualLines * lineHeightPx + 6 * cssZoom),
+          );
+          avoidRects.push({
+            top: taRect.top,
+            bottom: taRect.top + occupiedH,
+            left: taRect.left,
+            right: taRect.right,
+          });
+        }
+      }
+    }
 
     const pos = computePlusPopoverPosition({
       triggerRect,
@@ -743,6 +1153,8 @@ export function ProblemInput({
       viewportWidth,
       viewportHeight,
       cssZoom,
+      preferredPlacement: "top",
+      avoidRects,
     });
     return { pos, outOfView };
   }
@@ -753,6 +1165,7 @@ export function ProblemInput({
       prev &&
       prev.placement === next.placement &&
       prev.maxHeight === next.maxHeight &&
+      prev.collisionFlipped === next.collisionFlipped &&
       Math.abs(prev.left - next.left) < 0.5 &&
       Math.abs(prev.top - next.top) < 0.5
     ) {
@@ -762,15 +1175,15 @@ export function ProblemInput({
     setPlusPopoverPos(next);
   }
 
-  // Định vị sẵn vị trí nút `+` sau khi mount để lần mở đầu tiên đạt tốc độ tức thì (1 DOM mutation) giống hệt các lần mở tiếp theo.
+  // Định vị sẵn vị trí nút `+` sau khi mount hoặc khi chuyển trạng thái 1 dòng / nhiều dòng / mở rộng để lần mở đầu tiên đạt tốc độ tức thì (1 DOM mutation) giống hệt các lần mở tiếp theo.
   useEffect(() => {
     const measured = readCurrentPlusPopoverPos();
     if (measured && !measured.outOfView) {
       applyPlusPopoverPosIfChanged(measured.pos);
     }
-  }, [showCameraEntry]);
+  }, [visibleMenuCount, isMultiline, isExpanded, problemText, attachments.length]);
 
-  // Định vị menu `+` dựa trên không gian thực tế của viewport (mặc định mở xuống dưới, tự lật lên khi thiếu chỗ).
+  // Định vị menu `+` dựa trên không gian thực tế của viewport và chống va chạm nội dung (ưu tiên mở lên trên khi vùng dưới trống ở chế độ Expand, tự động lật xuống dưới nút `+` khi chạm tiêu đề hoặc chữ trong vùng nhập).
   useIsomorphicLayoutEffect(() => {
     if (!plusMenuOpen) return;
 
@@ -786,6 +1199,12 @@ export function ProblemInput({
 
     syncPopoverPosition();
 
+    let ro: ResizeObserver | null = null;
+    if (typeof ResizeObserver !== "undefined" && composerBoxRef.current) {
+      ro = new ResizeObserver(() => syncPopoverPosition());
+      ro.observe(composerBoxRef.current);
+    }
+
     window.addEventListener("resize", syncPopoverPosition);
     window.addEventListener("scroll", syncPopoverPosition, { passive: true, capture: true });
     const vv = window.visualViewport;
@@ -793,12 +1212,13 @@ export function ProblemInput({
     vv?.addEventListener("scroll", syncPopoverPosition);
 
     return () => {
+      ro?.disconnect();
       window.removeEventListener("resize", syncPopoverPosition);
       window.removeEventListener("scroll", syncPopoverPosition, true);
       vv?.removeEventListener("resize", syncPopoverPosition);
       vv?.removeEventListener("scroll", syncPopoverPosition);
     };
-  }, [plusMenuOpen, showCameraEntry]);
+  }, [plusMenuOpen, visibleMenuCount, isMultiline, isExpanded, problemText, attachments.length]);
 
   // Đóng menu `+`, modal Tất cả tệp hoặc modal xem trước tệp khi bấm ra ngoài hoặc nhấn Escape.
   useEffect(() => {
@@ -846,7 +1266,7 @@ export function ProblemInput({
   const readyAttachments = attachments.filter(
     (a) => a.status !== "loading" && a.status !== "error",
   );
-  const isUploadingAny = attachments.some((a) => a.status === "loading");
+  const isUploadingAny = attachments.some((a) => a.status === "loading" || a.status === "error");
   const canSubmit = canSubmitComposer(
     problemText,
     readyAttachments.length,
@@ -854,37 +1274,105 @@ export function ProblemInput({
     isUploadingAny,
   );
 
-  function syncTextareaHeight(el: HTMLTextAreaElement | null) {
+  function syncTextareaHeight(
+    el: HTMLTextAreaElement | null,
+    opts?: { expanded?: boolean; shiftMultiline?: boolean; hasAttachments?: boolean },
+  ) {
     if (!el) return;
-    const minH = getComposerMinHeight();
+    const expandedMode = opts?.expanded ?? composerExpanded;
+    const shiftMode = opts?.shiftMultiline ?? isShiftEnterMultiline;
     const val = el.value ?? "";
-    if (val.length === 0) {
-      el.style.height = `${minH}px`;
+    const hasNl = val.includes("\n");
+
+    const prevInlineH = parseFloat(el.style.height || "") || 0;
+
+    if (val.length === 0 && !expandedMode && !shiftMode) {
+      // V9.4 Two-tier default: 48px (2 × 24px lines) comfortable input space from empty state
+      setIsMultilineWrapped(false);
       el.style.overflowY = "hidden";
+      if (prevInlineH > 0 && Math.abs(prevInlineH - 48) >= 1) {
+        const prevTransition = el.style.transition;
+        el.style.transition = "none";
+        el.style.height = `${prevInlineH}px`;
+        void el.offsetHeight;
+        el.style.transition = prevTransition;
+        el.style.height = "48px";
+      } else {
+        el.style.height = "48px";
+      }
       return;
     }
+
+    const prevTransition = el.style.transition;
+    const prevMinH = el.style.minHeight;
+    el.style.transition = "none";
+    el.style.minHeight = "0px";
     el.style.height = "0px";
-    const measured = el.scrollHeight;
-    let targetH = minH;
-    if (measured > 0) {
-      targetH = Math.min(Math.max(measured, minH), COMPOSER_MAX_H);
-      el.style.overflowY = measured > COMPOSER_MAX_H ? "auto" : "hidden";
+    const rawScrollH = el.scrollHeight;
+    el.style.minHeight = prevMinH;
+
+    let wrapped = hasNl;
+    let measured = rawScrollH;
+    if (rawScrollH > 0) {
+      wrapped = hasNl || rawScrollH > 30;
     } else {
       const explicitLines = val.split("\n").length;
-      const approxWrappedLines = Math.ceil(val.length / 72);
+      const approxWrappedLines = Math.ceil(val.length / 68);
       const totalLines = Math.max(explicitLines, approxWrappedLines);
-      const lineH = minH === COMPOSER_MIN_H_MOBILE ? 22 : 24;
-      const padV = minH === COMPOSER_MIN_H_MOBILE ? 6 : 4;
-      const calcH = totalLines <= 3 ? minH : totalLines * lineH + padV;
-      targetH = Math.min(Math.max(calcH, minH), COMPOSER_MAX_H);
-      el.style.overflowY = calcH > COMPOSER_MAX_H ? "auto" : "hidden";
+      wrapped = totalLines > 1;
+      const effectiveLines = Math.max(totalLines, shiftMode ? 2 : 1);
+      measured = Math.max(48, effectiveLines * 24);
     }
-    el.style.height = `${targetH}px`;
+
+    setIsMultilineWrapped(wrapped);
+
+    if (!expandedMode) {
+      const nextH = Math.min(Math.max(measured, 48), 192);
+      el.style.overflowY = measured > 192 ? "auto" : "hidden";
+      if (prevInlineH > 0 && Math.abs(prevInlineH - nextH) >= 1) {
+        el.style.height = `${prevInlineH}px`;
+        void el.offsetHeight;
+        el.style.transition = prevTransition;
+        el.style.height = `${nextH}px`;
+      } else {
+        el.style.height = `${nextH}px`;
+        void el.offsetHeight;
+        el.style.transition = prevTransition;
+      }
+      return;
+    }
+
+    const nextH = Math.min(Math.max(measured, 216), 312);
+    el.style.overflowY = measured > 312 ? "auto" : "hidden";
+    if (prevInlineH > 0 && Math.abs(prevInlineH - nextH) >= 1) {
+      el.style.height = `${prevInlineH}px`;
+      void el.offsetHeight;
+      el.style.transition = prevTransition;
+      el.style.height = `${nextH}px`;
+    } else {
+      el.style.height = `${nextH}px`;
+      void el.offsetHeight;
+      el.style.transition = prevTransition;
+    }
   }
 
-  useEffect(() => {
-    syncTextareaHeight(textRef.current);
-  }, [problemText]);
+  useIsomorphicLayoutEffect(() => {
+    const isCleanEmpty = problemText.length === 0 && attachments.length === 0;
+    if (isCleanEmpty && isShiftEnterMultiline) {
+      setIsShiftEnterMultiline(false);
+    }
+    syncTextareaHeight(textRef.current, {
+      expanded: composerExpanded,
+      shiftMultiline: isCleanEmpty ? false : isShiftEnterMultiline,
+      hasAttachments: attachments.length > 0,
+    });
+  }, [
+    problemText,
+    composerLineMode,
+    composerExpanded,
+    attachments.length,
+    isShiftEnterMultiline,
+  ]);
 
   useEffect(() => {
     const el = textRef.current;
@@ -894,9 +1382,17 @@ export function ProblemInput({
     if (typeof window !== "undefined") {
       window.addEventListener("resize", onResize);
     }
+    let lastWidth = el.clientWidth;
     let ro: ResizeObserver | null = null;
     if (typeof ResizeObserver !== "undefined") {
-      ro = new ResizeObserver(() => syncTextareaHeight(textRef.current));
+      ro = new ResizeObserver(() => {
+        const cur = textRef.current;
+        if (!cur) return;
+        if (cur.clientWidth !== lastWidth) {
+          lastWidth = cur.clientWidth;
+          syncTextareaHeight(cur);
+        }
+      });
       ro.observe(el);
     }
     if (typeof document !== "undefined" && document.fonts?.ready) {
@@ -911,13 +1407,26 @@ export function ProblemInput({
   }, []);
 
   function onChangeText(e: React.ChangeEvent<HTMLTextAreaElement>) {
-    setProblemText(e.target.value);
+    const nextVal = e.target.value;
+    setProblemText(nextVal);
+    if (!nextVal.includes("\n") && isShiftEnterMultiline) {
+      setIsShiftEnterMultiline(false);
+    }
+    if (nextVal.length === 0 && attachments.length === 0 && isExpanded) {
+      setIsExpanded(false);
+    }
     const st = useAppStore.getState();
     if (st.unsupported) st.clearUnsupported();
     if (st.analysisError && !/lượt mô phỏng thử/.test(st.analysisError)) {
       st.setAnalysisError(null);
     }
-    syncTextareaHeight(e.target);
+  }
+
+  function onPasteText(e: React.ClipboardEvent<HTMLTextAreaElement>) {
+    const pasted = e.clipboardData?.getData("text/plain") ?? "";
+    if (pasted.includes("\n") || pasted.length > 60) {
+      setIsMultilineWrapped(true);
+    }
   }
 
   function onKeyDown(e: React.KeyboardEvent<HTMLTextAreaElement>) {
@@ -935,6 +1444,10 @@ export function ProblemInput({
 
     if (isComposing) return;
 
+    if (e.shiftKey && !analyzing) {
+      setIsShiftEnterMultiline(true);
+    }
+
     if (e.shiftKey) {
       if (analyzing) e.preventDefault();
       return;
@@ -942,17 +1455,14 @@ export function ProblemInput({
 
     e.preventDefault();
     if (canSubmit) {
-      void onAnalyze();
+      if (!cancelling) void onAnalyze();
     }
   }
 
-  function addFilesToComposer(allPicked: File[], opts?: { replaceId?: string | null }) {
+  function addFilesToComposer(allPicked: File[], opts?: { source?: "camera" | "upload" | "paste" }) {
     if (allPicked.length === 0) return;
 
-    const replaceId = opts?.replaceId ?? null;
-    const baseExisting = replaceId
-      ? attachments.filter((a) => a.id !== replaceId)
-      : attachments;
+    const baseExisting = attachmentsRef.current;
     const workingExisting = baseExisting.map((a) => ({ name: a.name, size: a.size }));
     const nextItems: ComposerAttachmentItem[] = [];
 
@@ -993,42 +1503,48 @@ export function ProblemInput({
         ext: check.ext,
         kind: check.kind,
         previewUrl,
-        status: "ready",
+        status: check.kind === "pdf" ? "loading" : "ready",
+        source: opts?.source ?? "upload",
       });
       workingExisting.push({ name: picked.name, size: picked.size });
     }
 
     if (nextItems.length > 0) {
       dispatchAssist({ type: "reset" });
-      setAttachments((prev) => {
-        if (!replaceId) {
-          return [...prev, ...nextItems];
-        }
-        const replaced = prev.find((item) => item.id === replaceId);
-        revokePreviewUrl(replaced?.previewUrl);
-        const idx = prev.findIndex((item) => item.id === replaceId);
-        if (idx < 0) return [...prev, ...nextItems];
-        const copy = [...prev];
-        copy.splice(idx, 1, ...nextItems);
-        return copy;
-      });
+      setAttachments((prev) => [...prev, ...nextItems]);
+      for (const item of nextItems) {
+        if (item.kind !== "pdf") continue;
+        void isClearlyInvalidPdf(item.file).then(async (invalid) => {
+          setAttachments((prev) => prev.map((current) => current.id === item.id
+            ? { ...current, status: invalid ? "error" : "ready", errorMessage: invalid ? "Tệp không có chữ ký PDF hợp lệ." : undefined }
+            : current));
+          if (invalid) return;
+          const thumbUrl = await renderPdfFirstPageThumbnail(item.file);
+          if (!thumbUrl) return;
+          setAttachments((prev) =>
+            prev.some((c) => c.id === item.id)
+              ? prev.map((current) => current.id === item.id ? { ...current, previewUrl: thumbUrl } : current)
+              : prev,
+          );
+        }, () => {
+          setAttachments((prev) => prev.map((current) => current.id === item.id
+            ? { ...current, status: "error", errorMessage: "Không thể đọc tệp PDF." }
+            : current));
+        });
+      }
     }
   }
 
   function onPickFiles(e: React.ChangeEvent<HTMLInputElement>) {
     const list = e.target.files ? Array.from(e.target.files) : [];
-    const replaceId = replaceTargetIdRef.current;
-    replaceTargetIdRef.current = null;
-    addFilesToComposer(list, { replaceId });
+    addFilesToComposer(list);
     e.target.value = "";
   }
 
   function onPickImage(e: React.ChangeEvent<HTMLInputElement>) {
     const pickedList = e.target.files ? Array.from(e.target.files) : [];
-    const replaceId = replaceTargetIdRef.current;
-    replaceTargetIdRef.current = null;
     if (pickedList.length > 0) {
-      addFilesToComposer(pickedList, { replaceId });
+      addFilesToComposer(pickedList, { source: e.currentTarget === cameraImageRef.current ? "camera" : "upload" });
     }
     e.target.value = "";
   }
@@ -1043,22 +1559,24 @@ export function ProblemInput({
     });
   }
 
-  function triggerReplaceAttachment(id: string) {
-    replaceTargetIdRef.current = id;
-    setPreviewModalFileId(null);
-    fileInputRef.current?.click();
-  }
-
   function closePhotoDialog() {
     setPhotoDialogOpen(false);
+  }
+
+  async function startScreenCapture() {
+    await executeScreenCaptureFlow({
+      busyRef: screenCaptureBusyRef,
+      onCaptured: (file) => addFilesToComposer([file]),
+    });
   }
 
   async function onAnalyze(opts?: {
     selectedCandidateId?: string;
     overridePreparedText?: string;
   }) {
+    if (cancellingRef.current) return;
     dispatchAssist({ type: "reset" });
-    await runComposerSubmit({
+    const runPromise = runComposerSubmit({
       canSubmit: Boolean(opts?.overridePreparedText) || canSubmit,
       lockRef: submittingRef,
       abortRef: analyzeAbortRef,
@@ -1073,6 +1591,35 @@ export function ProblemInput({
         dispatchAssist({ type: "from-prepare", response });
       },
     });
+    activeSubmitPromiseRef.current = runPromise;
+    try {
+      await runPromise;
+    } finally {
+      if (activeSubmitPromiseRef.current === runPromise) {
+        activeSubmitPromiseRef.current = null;
+        cancellingRef.current = false;
+        setCancelling(false);
+      }
+    }
+  }
+
+  function handleStopAnalyze() {
+    if (!analyzing || cancellingRef.current) return;
+    cancellingRef.current = true;
+    setCancelling(true);
+    cancelComposerSubmit(submittingRef, analyzeAbortRef, activePrepareRequestIdRef);
+    const pending = activeSubmitPromiseRef.current;
+    if (pending) {
+      void pending.finally(() => {
+        cancellingRef.current = false;
+        setCancelling(false);
+      });
+    } else {
+      queueMicrotask(() => {
+        cancellingRef.current = false;
+        setCancelling(false);
+      });
+    }
   }
 
   function onSelectAssistCandidate(candidateId: string) {
@@ -1095,20 +1642,115 @@ export function ProblemInput({
       </span>
     ) : null;
 
-  const isPlusOpenBottom =
-    plusMenuOpen && (plusPopoverPos?.placement ?? "bottom") === "bottom";
-
   return (
     <div
-      className={`composer-hero${isPlusOpenBottom ? " has-open-plus-bottom" : ""}${
+      className={`composer-hero${
         showCameraEntry ? " has-camera-item" : ""
       }`}
     >
       <div
         ref={composerBoxRef}
-        className={`composer-card composer-box${analyzing ? " is-busy" : ""}`}
+        className={`composer-card composer-box home-composer-box is-two-tier${analyzing ? " is-busy" : ""}${
+          attachments.length > 0 ? " has-attachments" : ""
+        }${isMultiline ? " is-multiline" : ""}${
+          isExpanded ? " is-expanded" : ""
+        }`}
         id="home-composer-box"
+        data-composer-layout={composerLineMode}
+        data-composer-multiline={isMultiline ? "true" : "false"}
+        data-composer-expanded={composerExpanded ? "true" : "false"}
       >
+        {isMultiline && (
+          <button
+            type="button"
+            id="btn-composer-expand"
+            className={`btn-composer-expand${isExpanded ? " is-active" : ""}`}
+            onMouseDown={(e) => {
+              e.preventDefault();
+            }}
+            onClick={() => {
+              const el = textRef.current;
+              const selStart = el?.selectionStart ?? null;
+              const selEnd = el?.selectionEnd ?? null;
+              const next = !isExpanded;
+              setIsExpanded(next);
+              const keepShiftMode = next
+                ? isShiftEnterMultiline
+                : problemText.includes("\n") && isShiftEnterMultiline;
+              if (!next && !problemText.includes("\n")) {
+                setIsShiftEnterMultiline(false);
+              }
+              syncTextareaHeight(el, {
+                expanded: next,
+                shiftMultiline: keepShiftMode,
+              });
+              requestAnimationFrame(() => {
+                syncTextareaHeight(textRef.current, {
+                  expanded: next,
+                  shiftMultiline: keepShiftMode,
+                });
+                const measured = readCurrentPlusPopoverPos();
+                if (measured && !measured.outOfView) {
+                  applyPlusPopoverPosIfChanged(measured.pos);
+                }
+                if (textRef.current) {
+                  textRef.current.focus();
+                  if (selStart !== null && selEnd !== null) {
+                    try {
+                      textRef.current.setSelectionRange(selStart, selEnd);
+                    } catch {
+                      /* ignore if unsupported */
+                    }
+                  }
+                }
+              });
+            }}
+            disabled={analyzing}
+            aria-expanded={isExpanded}
+            aria-label={isExpanded ? "Thu gọn khung nhập" : "Mở rộng khung nhập"}
+            title={isExpanded ? "Thu gọn khung nhập" : "Mở rộng khung nhập"}
+          >
+            {isExpanded ? (
+              <svg
+                width="15"
+                height="15"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.85"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                style={{ overflow: "visible", display: "block" }}
+                data-expand-icon="collapse"
+                aria-hidden="true"
+              >
+                <polyline points="4 14 10 14 10 20" />
+                <polyline points="20 10 14 10 14 4" />
+                <line x1="14" y1="10" x2="21" y2="3" />
+                <line x1="3" y1="21" x2="10" y2="14" />
+              </svg>
+            ) : (
+              <svg
+                width="15"
+                height="15"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.85"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                style={{ overflow: "visible", display: "block" }}
+                data-expand-icon="expand"
+                aria-hidden="true"
+              >
+                <polyline points="15 3 21 3 21 9" />
+                <polyline points="9 21 3 21 3 15" />
+                <line x1="21" y1="3" x2="14" y2="10" />
+                <line x1="3" y1="21" x2="10" y2="14" />
+              </svg>
+            )}
+          </button>
+        )}
         <input
           ref={fileInputRef}
           id="home-file-input"
@@ -1153,6 +1795,45 @@ export function ProblemInput({
                 aria-label="Dải tệp đính kèm ngang"
                 tabIndex={filesOverflow.left || filesOverflow.right ? 0 : undefined}
                 onScroll={(e) => syncFilesOverflow(e.currentTarget)}
+                onPointerDown={(e) => {
+                  if (e.pointerType !== "mouse" || e.button !== 0) return;
+                  if ((e.target as HTMLElement | null)?.closest(".file-card-remove")) return;
+                  const el = e.currentTarget;
+                  if (el.scrollWidth <= el.clientWidth) return;
+                  filesDragRef.current = {
+                    active: true,
+                    startX: e.clientX,
+                    startScrollLeft: el.scrollLeft,
+                    moved: false,
+                  };
+                }}
+                onPointerMove={(e) => {
+                  const st = filesDragRef.current;
+                  if (!st.active) return;
+                  const dx = e.clientX - st.startX;
+                  if (Math.abs(dx) > 6) {
+                    st.moved = true;
+                  }
+                  if (st.moved) {
+                    const el = e.currentTarget;
+                    el.scrollLeft = st.startScrollLeft - dx;
+                    syncFilesOverflow(el);
+                  }
+                }}
+                onPointerUp={() => {
+                  if (filesDragRef.current.moved) {
+                    suppressCardClickRef.current = true;
+                    setTimeout(() => {
+                      suppressCardClickRef.current = false;
+                    }, 0);
+                  }
+                  filesDragRef.current.active = false;
+                  filesDragRef.current.moved = false;
+                }}
+                onPointerCancel={() => {
+                  filesDragRef.current.active = false;
+                  filesDragRef.current.moved = false;
+                }}
                 onKeyDown={(e) => {
                   const el = e.currentTarget;
                   if (e.key === "ArrowRight" && el.scrollWidth > el.clientWidth) {
@@ -1178,6 +1859,7 @@ export function ProblemInput({
                   const extBadge = (att.ext.replace(".", "") || att.kind).toUpperCase();
                   const isAttLoading = att.status === "loading";
                   const isAttError = att.status === "error";
+                  const hasCardThumb = Boolean(att.previewUrl) && !isAttLoading && !isAttError;
                   const badgeClass = isAttLoading
                     ? " badge-loading"
                     : isAttError
@@ -1190,20 +1872,24 @@ export function ProblemInput({
                             ? " badge-code"
                             : "";
                   const subText = isAttLoading
-                    ? `Đang tải lên · ${att.sizeFormatted}`
+                    ? `Đang kiểm tra · ${att.sizeFormatted}`
                     : isAttError
                       ? att.errorMessage || "Lỗi tải tệp"
                       : `${extBadge} · ${att.sizeFormatted}`;
                   return (
                     <div
                       key={att.id}
-                      className={`file-preview-card${isAttLoading ? " is-loading" : ""}${isAttError ? " is-error" : ""}`}
+                      className={`file-preview-card${hasCardThumb ? " has-thumb" : ""}${isAttLoading ? " is-loading" : ""}${isAttError ? " is-error" : ""}`}
                       data-file-id={att.id}
+                      data-kind={att.kind}
                       role="button"
                       tabIndex={0}
                       title={att.name}
                       aria-label={`Xem chi tiết tệp ${att.name}`}
-                      onClick={() => setPreviewModalFileId(att.id)}
+                      onClick={() => {
+                        if (suppressCardClickRef.current) return;
+                        setPreviewModalFileId(att.id);
+                      }}
                       onKeyDown={(e) => {
                         if (e.key === "Enter" || e.key === " ") {
                           e.preventDefault();
@@ -1231,7 +1917,7 @@ export function ProblemInput({
                           <span className="file-name-stem">{stem}</span>
                           <span className="file-name-ext">{extWithDot}</span>
                         </div>
-                        <div className="file-card-sub">{subText}</div>
+                        <div className="file-card-format">{isAttLoading || isAttError ? subText : extBadge}</div>
                       </div>
                       <button
                         type="button"
@@ -1249,233 +1935,407 @@ export function ProblemInput({
                         title="Bỏ tệp"
                         aria-label={`Bỏ tệp ${att.name}`}
                       >
-                        <IconClose size={12} />
+                        <IconClose size={10} />
                       </button>
                     </div>
                   );
                 })}
               </div>
             </div>
+            {filesScroll.max > 0 && !filesScroll.native && (
+              <input
+                className="composer-files-scroll-control"
+                type="range"
+                aria-label="Cuộn danh sách tệp đính kèm"
+                min={0}
+                max={filesScroll.max}
+                step={1}
+                value={filesScroll.value}
+                style={{ "--thumb-width": `${filesScroll.thumb}px` } as React.CSSProperties}
+                onInput={(event) => {
+                  const row = filesRowRef.current;
+                  if (row) {
+                    row.scrollLeft = Number(event.currentTarget.value);
+                    syncFilesOverflow(row);
+                  }
+                }}
+                onChange={(event) => {
+                  const row = filesRowRef.current;
+                  if (row) {
+                    row.scrollLeft = Number(event.currentTarget.value);
+                    syncFilesOverflow(row);
+                  }
+                }}
+                onKeyDown={(event) => {
+                  const row = filesRowRef.current;
+                  if (!row) return;
+                  if (event.key === "ArrowRight") {
+                    event.preventDefault();
+                    row.scrollLeft = Math.min(filesScroll.max, row.scrollLeft + 72);
+                    syncFilesOverflow(row);
+                  } else if (event.key === "ArrowLeft") {
+                    event.preventDefault();
+                    row.scrollLeft = Math.max(0, row.scrollLeft - 72);
+                    syncFilesOverflow(row);
+                  }
+                }}
+              />
+            )}
           </div>
         )}
 
-        <textarea
-          ref={textRef}
-          id="home-problem-input"
-          className="composer-textarea composer-text"
-          rows={3}
-          placeholder="Nhập đề toán hình học không gian..."
-          aria-label="Đề bài hình học không gian"
-          aria-describedby="composer-submit-req-hint"
-          value={problemText}
-          onChange={onChangeText}
-          onKeyDown={onKeyDown}
-          readOnly={analyzing}
-        />
+        <div className="composer-main-row" id="composer-main-row">
+          <div className="composer-input-tier" id="composer-input-tier">
+            <textarea
+              ref={textRef}
+              id="home-problem-input"
+              className="composer-textarea composer-text"
+              rows={1}
+              placeholder="Nhập đề toán hình học không gian..."
+              aria-label="Đề bài hình học không gian"
+              aria-describedby="composer-submit-req-hint"
+              value={problemText}
+              onChange={onChangeText}
+              onPaste={onPasteText}
+              onKeyDown={onKeyDown}
+              readOnly={analyzing || cancelling}
+            />
+          </div>
 
-        <div className="composer-footer composer-foot">
-          <div className="composer-left-tools composer-tools">
-            <div className="plus-menu-anchor" ref={plusMenuAnchorRef}>
-              <button
-                ref={plusTriggerRef}
-                type="button"
-                id="btn-composer-plus"
-                className={`btn-plus-trigger${plusMenuOpen ? " is-open" : ""}`}
-                onClick={(e) => {
-                  const next = !plusMenuOpen;
-                  if (next) {
-                    const measured = readCurrentPlusPopoverPos();
-                    if (measured && !measured.outOfView) {
-                      applyPlusPopoverPosIfChanged(measured.pos);
-                    }
-                  }
-                  setPlusMenuOpen(next);
-                  if (next && e.detail === 0) {
-                    requestAnimationFrame(() => {
-                      plusPopoverRef.current
-                        ?.querySelector<HTMLButtonElement>(".plus-menu-item:not(:disabled)")
-                        ?.focus();
-                    });
-                  }
-                }}
-                onKeyDown={(e) => {
-                  if (e.key === "ArrowDown" || e.key === "ArrowUp") {
-                    e.preventDefault();
-                    const focusLast = e.key === "ArrowUp";
-                    if (!plusMenuOpen) {
+          <div className="composer-toolbar" id="composer-toolbar">
+            <div className="composer-left-tools composer-tools">
+              <div className="plus-menu-anchor" ref={plusMenuAnchorRef}>
+                <button
+                  ref={plusTriggerRef}
+                  type="button"
+                  id="btn-composer-plus"
+                  className={`btn-plus-trigger${plusMenuOpen ? " is-open" : ""}`}
+                  onClick={(e) => {
+                    const next = !plusMenuOpen;
+                    if (next) {
                       const measured = readCurrentPlusPopoverPos();
                       if (measured && !measured.outOfView) {
                         applyPlusPopoverPosIfChanged(measured.pos);
                       }
-                      setPlusMenuOpen(true);
                     }
-                    requestAnimationFrame(() => {
-                      const items = plusPopoverRef.current?.querySelectorAll<HTMLButtonElement>(
-                        ".plus-menu-item:not(:disabled)",
-                      );
-                      if (!items || items.length === 0) return;
-                      items[focusLast ? items.length - 1 : 0].focus();
-                    });
-                  }
-                }}
-                disabled={analyzing}
-                title={
-                  showCameraEntry
-                    ? "Đính kèm tệp hoặc chụp ảnh đề bài"
-                    : "Đính kèm tệp hoặc ảnh đề bài"
-                }
-                aria-label="Tải tệp đề"
-                aria-haspopup="menu"
-                aria-expanded={plusMenuOpen}
-              >
-                <IconPlus size={16} />
-              </button>
-
-              <div
-                ref={plusPopoverRef}
-                id="plus-popover-menu"
-                className={`plus-popover-menu${plusMenuOpen ? " open" : ""}`}
-                data-placement={plusPopoverPos?.placement ?? "bottom"}
-                style={
-                  plusPopoverPos
-                    ? {
-                        position: "fixed",
-                        left: `${plusPopoverPos.left}px`,
-                        top: `${plusPopoverPos.top}px`,
-                        bottom: "auto",
-                        right: "auto",
-                        ...(plusPopoverPos.maxHeight
-                          ? { maxHeight: `${plusPopoverPos.maxHeight}px` }
-                          : {}),
+                    setPlusMenuOpen(next);
+                    if (next && e.detail === 0) {
+                      requestAnimationFrame(() => {
+                        plusPopoverRef.current
+                          ?.querySelector<HTMLButtonElement>(".plus-menu-item:not(:disabled)")
+                          ?.focus();
+                      });
+                    }
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+                      e.preventDefault();
+                      const focusLast = e.key === "ArrowUp";
+                      if (!plusMenuOpen) {
+                        const measured = readCurrentPlusPopoverPos();
+                        if (measured && !measured.outOfView) {
+                          applyPlusPopoverPosIfChanged(measured.pos);
+                        }
+                        setPlusMenuOpen(true);
                       }
-                    : undefined
-                }
-                role="menu"
-                aria-label="Tùy chọn đính kèm đề bài"
-                onKeyDown={(e) => {
-                  if (
-                    e.key !== "ArrowDown" &&
-                    e.key !== "ArrowUp" &&
-                    e.key !== "Home" &&
-                    e.key !== "End"
-                  ) {
-                    return;
+                      requestAnimationFrame(() => {
+                        const items = plusPopoverRef.current?.querySelectorAll<HTMLButtonElement>(
+                          ".plus-menu-item:not(:disabled)",
+                        );
+                        if (!items || items.length === 0) return;
+                        items[focusLast ? items.length - 1 : 0].focus();
+                      });
+                    }
+                  }}
+                  disabled={analyzing}
+                  title={
+                    showCameraEntry
+                      ? "Đính kèm tệp hoặc chụp ảnh đề bài"
+                      : showScreenCaptureEntry
+                        ? "Đính kèm tệp hoặc chụp màn hình"
+                        : "Đính kèm tệp hoặc ảnh đề bài"
                   }
-                  const items = Array.from(
-                    plusPopoverRef.current?.querySelectorAll<HTMLButtonElement>(
-                      ".plus-menu-item:not(:disabled)",
-                    ) ?? [],
-                  );
-                  if (items.length === 0) return;
-                  e.preventDefault();
-                  if (e.key === "Home") {
-                    items[0].focus();
-                    return;
+                  aria-label="Tải tệp đề"
+                  aria-haspopup="menu"
+                  aria-expanded={plusMenuOpen}
+                >
+                  {plusMenuOpen ? (
+                    <svg
+                      width="18"
+                      height="18"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      data-icon-state="close"
+                      aria-hidden="true"
+                    >
+                      <path d="M6 6l12 12" />
+                      <path d="M18 6L6 18" />
+                    </svg>
+                  ) : (
+                    <svg
+                      width="18"
+                      height="18"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      data-icon-state="plus"
+                      aria-hidden="true"
+                    >
+                      <path d="M12 5v14" />
+                      <path d="M5 12h14" />
+                    </svg>
+                  )}
+                </button>
+
+                <div
+                  ref={plusPopoverRef}
+                  id="plus-popover-menu"
+                  className={`plus-popover-menu${
+                    showCameraEntry ? " has-camera-item" : ""
+                  }${showScreenCaptureEntry ? " has-screen-capture-item" : ""}${
+                    plusMenuOpen ? " open" : ""
+                  }`}
+                  data-placement={plusPopoverPos?.placement ?? "top"}
+                  data-collision-flipped={plusPopoverPos?.collisionFlipped ? "true" : "false"}
+                  style={
+                    plusPopoverPos
+                      ? {
+                          position: "fixed",
+                          left: `${plusPopoverPos.left}px`,
+                          top: `${plusPopoverPos.top}px`,
+                          bottom: "auto",
+                          right: "auto",
+                          ...(plusPopoverPos.maxHeight
+                            ? { maxHeight: `${plusPopoverPos.maxHeight}px` }
+                            : {}),
+                        }
+                      : undefined
                   }
-                  if (e.key === "End") {
-                    items[items.length - 1].focus();
-                    return;
-                  }
-                  const cur = items.indexOf(document.activeElement as HTMLButtonElement);
-                  const next =
-                    e.key === "ArrowDown"
-                      ? (cur + 1) % items.length
-                      : cur <= 0
-                        ? items.length - 1
-                        : cur - 1;
-                  items[next].focus();
-                }}
-              >
-                <button
-                  type="button"
-                  id="menu-item-upload-file"
-                  className="plus-menu-item"
-                  role="menuitem"
-                  onClick={() => {
-                    setPlusMenuOpen(false);
-                    replaceTargetIdRef.current = null;
-                    fileInputRef.current?.click();
+                  role="menu"
+                  aria-label="Tùy chọn đính kèm đề bài"
+                  onKeyDown={(e) => {
+                    if (
+                      e.key !== "ArrowDown" &&
+                      e.key !== "ArrowUp" &&
+                      e.key !== "Home" &&
+                      e.key !== "End"
+                    ) {
+                      return;
+                    }
+                    const items = Array.from(
+                      plusPopoverRef.current?.querySelectorAll<HTMLButtonElement>(
+                        ".plus-menu-item:not(:disabled)",
+                      ) ?? [],
+                    );
+                    if (items.length === 0) return;
+                    e.preventDefault();
+                    if (e.key === "Home") {
+                      items[0].focus();
+                      return;
+                    }
+                    if (e.key === "End") {
+                      items[items.length - 1].focus();
+                      return;
+                    }
+                    const cur = items.indexOf(document.activeElement as HTMLButtonElement);
+                    const next =
+                      e.key === "ArrowDown"
+                        ? (cur + 1) % items.length
+                        : cur <= 0
+                          ? items.length - 1
+                          : cur - 1;
+                    items[next].focus();
                   }}
                 >
-                  <IconUpload size={17} />
-                  <span>Tải tệp từ thiết bị</span>
-                </button>
-                {showCameraEntry && (
                   <button
                     type="button"
-                    id="menu-item-camera"
+                    id="menu-item-upload-file"
+                    data-testid="btn-plus-upload-file"
                     className="plus-menu-item"
                     role="menuitem"
-                    aria-haspopup="dialog"
                     onClick={() => {
                       setPlusMenuOpen(false);
-                      setPhotoDialogOpen(true);
+                      fileInputRef.current?.click();
                     }}
                   >
-                    <IconCamera size={17} />
-                    <span>Chụp ảnh đề bài</span>
+                    <span className="plus-menu-item-icon" aria-hidden="true">
+                      <svg
+                        width="18"
+                        height="18"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="1.75"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        data-icon="paperclip"
+                        aria-hidden="true"
+                      >
+                        <path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48" />
+                      </svg>
+                    </span>
+                    <span id="btn-plus-upload-file">Tải tệp từ thiết bị</span>
                   </button>
-                )}
+                  {showCameraEntry && (
+                    <button
+                      type="button"
+                      id="menu-item-camera"
+                      data-testid="btn-plus-camera"
+                      className="plus-menu-item"
+                      role="menuitem"
+                      aria-haspopup="dialog"
+                      onClick={() => {
+                        setPlusMenuOpen(false);
+                        setPhotoDialogOpen(true);
+                      }}
+                    >
+                      <span className="plus-menu-item-icon" aria-hidden="true">
+                        <svg
+                          width="18"
+                          height="18"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="1.75"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          data-icon="camera"
+                          aria-hidden="true"
+                        >
+                          <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
+                          <circle cx="12" cy="13" r="3.75" />
+                        </svg>
+                      </span>
+                      <span>Chụp ảnh đề bài</span>
+                    </button>
+                  )}
+                  {showScreenCaptureEntry && (
+                    <button
+                      type="button"
+                      id="menu-item-screen-capture"
+                      data-testid="btn-plus-screen-capture"
+                      className="plus-menu-item"
+                      role="menuitem"
+                      aria-haspopup="dialog"
+                      onClick={() => {
+                        setPlusMenuOpen(false);
+                        void startScreenCapture();
+                      }}
+                    >
+                      <span className="plus-menu-item-icon" aria-hidden="true">
+                        <svg
+                          width="18"
+                          height="18"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="1.75"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          data-icon="screen-capture"
+                          aria-hidden="true"
+                        >
+                          <rect x="3" y="4" width="18" height="13" rx="2" />
+                          <path d="M8 21h8" />
+                          <path d="M12 17v4" />
+                          <path d="M7 8h2.5M7 8v2.5" />
+                          <path d="M17 13h-2.5M17 13v-2.5" />
+                        </svg>
+                      </span>
+                      <span>Chụp màn hình</span>
+                    </button>
+                  )}
+                </div>
               </div>
+
+              <button
+                type="button"
+                className="composer-sr-only"
+                aria-label="Tải ảnh đề bài từ máy"
+                tabIndex={-1}
+                onClick={() => {
+                  uploadImageRef.current?.click();
+                }}
+              >
+                Tải ảnh
+              </button>
+
+              <span className="composer-hint-lbl composer-sr-only">
+                Nhập đề toán, tải tệp hoặc chụp ảnh đề bài
+              </span>
             </div>
 
-            <button
-              type="button"
-              className="composer-sr-only"
-              aria-label="Tải ảnh đề bài từ máy"
-              tabIndex={-1}
-              onClick={() => {
-                replaceTargetIdRef.current = null;
-                uploadImageRef.current?.click();
-              }}
-            >
-              Tải ảnh
-            </button>
+            <div className="composer-footer composer-foot">
+              {(() => {
+                const buttonMode = cancelling
+                  ? "cancelling"
+                  : analyzing
+                    ? "processing"
+                    : canSubmit
+                      ? "ready"
+                      : "idle";
+                const isStopMode = buttonMode === "processing" || buttonMode === "cancelling";
+                const actionLabel =
+                  buttonMode === "cancelling"
+                    ? "Đang dừng..."
+                    : buttonMode === "processing"
+                      ? "Dừng dựng hình"
+                      : "Dựng hình";
+                return (
+                  <button
+                    type="button"
+                    id="btn-composer-send"
+                    className={`btn-composer-submit${buttonMode === "processing" ? " is-processing" : ""}${buttonMode === "cancelling" ? " is-cancelling" : ""}`}
+                    data-composer-state={buttonMode}
+                    onClick={() => {
+                      if (buttonMode === "processing") {
+                        handleStopAnalyze();
+                      } else if (buttonMode === "ready") {
+                        void onAnalyze();
+                      }
+                    }}
+                    disabled={buttonMode === "idle" || buttonMode === "cancelling"}
+                    aria-busy={isStopMode}
+                    aria-describedby="composer-submit-req-hint"
+                    title={actionLabel}
+                    aria-label={actionLabel}
+                  >
+                    {isStopMode ? (
+                      <span className="composer-submit-layer composer-submit-layer-stop">
+                        <svg
+                          width="14"
+                          height="14"
+                          viewBox="0 0 16 16"
+                          className="composer-stop-icon"
+                          aria-hidden="true"
+                          focusable="false"
+                        >
+                          <rect x="3" y="3" width="10" height="10" rx="2" fill="currentColor" />
+                        </svg>
+                        <span className="composer-sr-only">{actionLabel}</span>
+                      </span>
+                    ) : (
+                      <span className="composer-submit-layer composer-submit-layer-idle">
+                        <IconSend size={18} className="composer-submit-arrow" />
+                        <span className="composer-sr-only">Dựng hình</span>
+                      </span>
+                    )}
+                  </button>
+                );
+              })()}
 
-            <span className="composer-hint-lbl">
-              Nhập đề bài hoặc chọn mẫu bên dưới
-            </span>
+              <span id="composer-submit-req-hint" className="composer-sr-only">
+                Phân tích đề bằng AI: Cần nhập đề toán hoặc đính kèm ít nhất một tệp đề bài hợp lệ để bật nút Dựng hình.
+              </span>
+            </div>
           </div>
-
-          {analyzing && (
-            <button
-              type="button"
-              id="btn-composer-cancel"
-              className="btn-composer-cancel"
-              onClick={() => cancelComposerSubmit(submittingRef, analyzeAbortRef)}
-              aria-label="Huỷ quá trình dựng hình đang chạy"
-            >
-              Huỷ
-            </button>
-          )}
-
-          <button
-            type="button"
-            id="btn-composer-send"
-            className={`btn-composer-submit${analyzing ? " is-loading" : ""}`}
-            onClick={() => void onAnalyze()}
-            disabled={!canSubmit}
-            aria-busy={analyzing}
-            aria-describedby="composer-submit-req-hint"
-            title="Dựng hình"
-            aria-label="Phân tích đề bằng AI"
-          >
-            {analyzing ? (
-              <span className="composer-submit-layer composer-submit-layer-loading">
-                <span className="composer-spin composer-submit-spinner" aria-hidden="true" />
-                <span className="composer-submit-label">Đang dựng hình...</span>
-              </span>
-            ) : (
-              <span className="composer-submit-layer composer-submit-layer-idle">
-                <span className="composer-submit-label">Dựng hình</span>
-                <span className="composer-submit-arrow" aria-hidden="true">→</span>
-              </span>
-            )}
-          </button>
-
-          <span id="composer-submit-req-hint" className="composer-sr-only">
-            Cần nhập đề toán hoặc đính kèm ít nhất một tệp đề bài hợp lệ để bật nút Dựng hình.
-          </span>
         </div>
       </div>
 
@@ -1490,11 +2350,90 @@ export function ProblemInput({
       />
 
       {(() => {
-        const previewAtt = previewModalFileId
-          ? attachments.find((a) => a.id === previewModalFileId) ?? null
-          : null;
+        const previewIdx = previewModalFileId
+          ? attachments.findIndex((a) => a.id === previewModalFileId)
+          : -1;
+        const previewAtt = previewIdx >= 0 ? attachments[previewIdx] ?? null : null;
         if (!previewAtt) return null;
         const extBadge = (previewAtt.ext.replace(".", "") || previewAtt.kind).toUpperCase();
+        const hasMultiple = attachments.length > 1;
+        const stepPreview = (delta: number) => {
+          if (!hasMultiple) return;
+          const nextIdx = (previewIdx + delta + attachments.length) % attachments.length;
+          const target = attachments[nextIdx];
+          if (target) setPreviewModalFileId(target.id);
+        };
+        if (previewAtt.kind === "image") {
+          return (
+            <div
+              className="attachment-lightbox"
+              id="composer-single-file-modal"
+              role="dialog"
+              aria-modal="true"
+              aria-label={`Xem ảnh ${previewAtt.name}`}
+              onClick={(e) => {
+                if (e.target === e.currentTarget) setPreviewModalFileId(null);
+              }}
+            >
+              <div className="attachment-lightbox-frame">
+                {hasMultiple && (
+                  <button
+                    type="button"
+                    id="btn-preview-prev-att"
+                    className="attachment-lightbox-nav attachment-lightbox-nav-prev"
+                    aria-label="Tệp trước"
+                    onClick={() => stepPreview(-1)}
+                  >
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.1" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <polyline points="15 18 9 12 15 6" />
+                    </svg>
+                  </button>
+                )}
+                <div className="attachment-lightbox-image">
+                  <button
+                    type="button"
+                    id="btn-close-file-modal"
+                    className="attachment-lightbox-close"
+                    aria-label="Đóng xem trước tệp"
+                    onClick={() => setPreviewModalFileId(null)}
+                  >
+                    <IconClose size={14} />
+                  </button>
+                  {previewAtt.previewUrl && !previewImageError ? (
+                    <img
+                      src={previewAtt.previewUrl}
+                      alt={`Xem trước ${previewAtt.name}`}
+                      onError={() => setPreviewImageError(true)}
+                    />
+                  ) : (
+                    <p className="attachment-lightbox-fallback">Không thể xem trước ảnh này.</p>
+                  )}
+                </div>
+                {hasMultiple && (
+                  <button
+                    type="button"
+                    id="btn-preview-next-att"
+                    className="attachment-lightbox-nav attachment-lightbox-nav-next"
+                    aria-label="Tệp tiếp theo"
+                    onClick={() => stepPreview(1)}
+                  >
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.1" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <polyline points="9 18 15 12 9 6" />
+                    </svg>
+                  </button>
+                )}
+              </div>
+              <div className="attachment-lightbox-caption">
+                <span>{previewAtt.name}</span>
+                {hasMultiple && (
+                  <span className="attachment-lightbox-counter">
+                    {previewIdx + 1} / {attachments.length}
+                  </span>
+                )}
+              </div>
+            </div>
+          );
+        }
         return (
           <div
             className="axo-modal-backdrop axo-att-modal-backdrop open"
@@ -1507,117 +2446,84 @@ export function ProblemInput({
               if (e.target === e.currentTarget) setPreviewModalFileId(null);
             }}
           >
-            <div className="axo-modal-dialog axo-att-modal" style={{ maxWidth: 500 }}>
+            <div className={`axo-modal-dialog axo-att-modal ${previewAtt.kind === "document" ? "attachment-document-dialog" : "attachment-pdf-dialog"}`}>
               <div className="axo-modal-head axo-att-modal-head">
-                <span className="axo-modal-title axo-att-modal-title" id="file-modal-title">
+                <span className="axo-modal-title axo-att-modal-title" id="file-modal-title" title={previewAtt.name}>
                   {previewAtt.name}
                 </span>
-                <button
-                  type="button"
-                  className="context-close-icon-btn axo-att-modal-close"
-                  id="btn-close-file-modal"
-                  onClick={() => setPreviewModalFileId(null)}
-                  aria-label="Đóng xem trước tệp"
-                >
-                  <svg viewBox="0 0 24 24" aria-hidden="true">
-                    <line x1="18" y1="6" x2="6" y2="18" />
-                    <line x1="6" y1="6" x2="18" y2="18" />
-                  </svg>
-                </button>
+                <div className="axo-att-modal-head-actions">
+                  {hasMultiple && (
+                    <div className="axo-att-modal-nav" aria-label="Chuyển tệp đính kèm">
+                      <button
+                        type="button"
+                        id="btn-preview-prev-att"
+                        className="axo-att-nav-btn"
+                        aria-label="Tệp trước"
+                        onClick={() => stepPreview(-1)}
+                      >
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                          <polyline points="15 18 9 12 15 6" />
+                        </svg>
+                      </button>
+                      <span className="axo-att-nav-counter">
+                        {previewIdx + 1}/{attachments.length}
+                      </span>
+                      <button
+                        type="button"
+                        id="btn-preview-next-att"
+                        className="axo-att-nav-btn"
+                        aria-label="Tệp tiếp theo"
+                        onClick={() => stepPreview(1)}
+                      >
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                          <polyline points="9 18 15 12 9 6" />
+                        </svg>
+                      </button>
+                    </div>
+                  )}
+                  <button
+                    type="button"
+                    className="context-close-icon-btn axo-att-modal-close"
+                    id="btn-close-file-modal"
+                    onClick={() => setPreviewModalFileId(null)}
+                    aria-label="Đóng xem trước tệp"
+                  >
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <line x1="18" y1="6" x2="6" y2="18" />
+                      <line x1="6" y1="6" x2="18" y2="18" />
+                    </svg>
+                  </button>
+                </div>
               </div>
               <div className="axo-modal-body axo-att-modal-body" id="file-modal-body">
-                {previewAtt.previewUrl ? (
-                  <div className="file-modal-preview-stage single-file-preview-box">
-                    <img
-                      className="single-file-preview-img"
-                      src={previewAtt.previewUrl}
-                      alt={`Xem trước ${previewAtt.name}`}
-                    />
-                  </div>
+                {previewAtt.kind === "pdf" && pdfPreviewCheck === "unknown" ? (
+                  <PdfPreview key={previewAtt.id} file={previewAtt.file} downloadUrl={previewDownloadUrl} />
                 ) : (
-                  <div
-                    className="file-modal-preview-stage single-file-preview-box"
-                    style={{ flexDirection: "column", gap: 8, textAlign: "center", minHeight: 160 }}
-                  >
-                    <span
-                      className={`role-chip ${extBadge === "PDF" ? "locked" : "student"}`}
-                      style={{ fontSize: 12.5, padding: "4px 12px" }}
-                    >
-                      {`Tệp ${extBadge} · ${previewAtt.sizeFormatted}`}
-                    </span>
-                    <div style={{ maxWidth: 420, color: "var(--ink-secondary)", fontSize: 12.6 }}>
-                      {`Nội dung tệp ${extBadge} sẽ được trích xuất tự động khi bấm Dựng hình.`}
-                    </div>
+                  <div className="attachment-doc-fallback">
+                    <p className="attachment-doc-fallback-text">
+                      {previewAtt.kind === "pdf" && pdfPreviewCheck === "checking"
+                        ? "Đang kiểm tra tệp PDF…"
+                        : previewAtt.kind === "pdf" && pdfPreviewCheck === "invalid"
+                          ? "Không thể đọc tệp PDF: tệp bị cắt ngắn hoặc không có chữ ký PDF."
+                          : `Chưa hỗ trợ xem trước tệp ${extBadge} tại đây. Em có thể tải tệp về để xem.`}
+                    </p>
+                    {previewDownloadUrl && (
+                      <a
+                        className="attachment-doc-download-btn"
+                        href={previewDownloadUrl}
+                        download={previewAtt.name}
+                        aria-label={`Tải tệp ${previewAtt.name} xuống`}
+                      >
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                          <polyline points="7 10 12 15 17 10" />
+                          <line x1="12" y1="15" x2="12" y2="3" />
+                        </svg>
+                        <span>Tải tệp xuống</span>
+                      </a>
+                    )}
                   </div>
                 )}
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                    gap: 8,
-                    flexWrap: "wrap",
-                    fontSize: 12,
-                    color: "var(--ink-muted)",
-                    textAlign: "left",
-                  }}
-                >
-                  <span>
-                    Định dạng: <strong>{extBadge}</strong> · Dung lượng:{" "}
-                    <strong>{previewAtt.sizeFormatted}</strong>
-                  </span>
-                  <span>
-                    Tên đầy đủ: <strong>{previewAtt.name}</strong>
-                  </span>
-                </div>
-                <div
-                  style={{
-                    background: "var(--canvas-soft)",
-                    border: "1px solid var(--hairline)",
-                    borderRadius: 8,
-                    padding: "10px 12px",
-                    fontSize: 12.3,
-                    color: "var(--ink-secondary)",
-                    textAlign: "left",
-                  }}
-                >
-                  <strong>Trạng thái tệp:</strong>{" "}
-                  {previewAtt.status === "loading"
-                    ? "Đang tải lên..."
-                    : previewAtt.status === "error"
-                      ? previewAtt.errorMessage || "Lỗi tải tệp"
-                      : "Đã đính kèm · Sẵn sàng phân tích khi bấm Dựng hình."}
-                </div>
-                <div className="all-files-modal-foot">
-                  <button
-                    type="button"
-                    id="btn-replace-file-modal"
-                    className="btn-admin-sm"
-                    onClick={() => triggerReplaceAttachment(previewAtt.id)}
-                    disabled={analyzing}
-                  >
-                    Đổi tệp
-                  </button>
-                  <button
-                    type="button"
-                    className="btn-admin-sm warn"
-                    onClick={() => {
-                      removeAttachment(previewAtt.id);
-                      setPreviewModalFileId(null);
-                    }}
-                    disabled={analyzing}
-                  >
-                    Gỡ tệp
-                  </button>
-                  <button
-                    type="button"
-                    className="btn-auth-primary"
-                    style={{ height: 34, padding: "0 16px" }}
-                    onClick={() => setPreviewModalFileId(null)}
-                  >
-                    Đóng
-                  </button>
-                </div>
               </div>
             </div>
           </div>
@@ -1766,20 +2672,18 @@ export function ProblemInput({
         onClose={closePhotoDialog}
         onPickFile={() => {
           setPhotoDialogOpen(false);
-          replaceTargetIdRef.current = null;
           uploadImageRef.current?.click();
         }}
         onNativeCamera={() => {
           setPhotoDialogOpen(false);
-          replaceTargetIdRef.current = null;
           cameraImageRef.current?.click();
         }}
         onCaptured={(file) => {
-          addFilesToComposer([file]);
+          addFilesToComposer([file], { source: "camera" });
           setPhotoDialogOpen(false);
         }}
         onCapturedBatch={(files) => {
-          addFilesToComposer(files);
+          addFilesToComposer(files, { source: "camera" });
           setPhotoDialogOpen(false);
         }}
       />
