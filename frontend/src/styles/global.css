@@ -8229,11 +8229,7 @@ html {
   scrollbar-width: none;
   -webkit-overflow-scrolling: touch;
   touch-action: pan-x;
-  cursor: grab;
-}
-
-.composer-files-row:active {
-  cursor: grabbing;
+  cursor: default;
 }
 
 .composer-files-row::-webkit-scrollbar {
@@ -8257,13 +8253,13 @@ html {
   padding: 0;
   border: 0;
   background: transparent;
-  cursor: grab;
+  cursor: default;
 }
-.composer-files-scroll-control:active { cursor: grabbing; }
 .composer-files-scroll-control::-webkit-slider-runnable-track {
   height: 5px;
   border: 0;
   background: transparent;
+  cursor: default;
 }
 .composer-files-scroll-control::-webkit-slider-thumb {
   appearance: none;
@@ -8274,6 +8270,7 @@ html {
   border: 0;
   border-radius: 9999px;
   background: rgba(15, 23, 42, 0.24);
+  cursor: default;
   transition: background-color 0.14s ease, transform 0.14s ease;
 }
 .composer-files-scroll-control:hover::-webkit-slider-thumb,
@@ -8285,6 +8282,7 @@ html {
   height: 5px;
   border: 0;
   background: transparent;
+  cursor: default;
 }
 .composer-files-scroll-control::-moz-range-thumb {
   width: var(--thumb-width);
@@ -8292,6 +8290,7 @@ html {
   border: 0;
   border-radius: 9999px;
   background: rgba(15, 23, 42, 0.24);
+  cursor: default;
 }
 .composer-files-scroll-control:hover::-moz-range-thumb,
 .composer-files-scroll-control:active::-moz-range-thumb {
@@ -8742,15 +8741,6 @@ html {
   backdrop-filter: blur(4px);
   color: #ffffff;
 }
-.attachment-lightbox-frame {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  max-width: min(86vw, 860px);
-  max-height: calc(100vh - 110px);
-}
 .attachment-lightbox-image {
   position: relative;
   display: flex;
@@ -8780,23 +8770,11 @@ html {
   font-size: 13.5px;
 }
 .attachment-lightbox-caption {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  flex-wrap: wrap;
   max-width: min(82vw, 560px);
   font-size: 13px;
   color: rgba(255, 255, 255, 0.9);
   overflow-wrap: anywhere;
   text-align: center;
-}
-.attachment-lightbox-counter {
-  font-size: 11.5px;
-  padding: 2px 7px;
-  border-radius: 9999px;
-  background: rgba(255, 255, 255, 0.14);
-  color: rgba(255, 255, 255, 0.88);
 }
 .attachment-lightbox-close {
   position: absolute;
@@ -8818,37 +8796,13 @@ html {
   background: rgba(15, 23, 42, 0.88);
 }
 .attachment-lightbox-close:focus-visible { outline: 2px solid #ffffff; outline-offset: 2px; }
-.attachment-lightbox-nav {
-  width: 34px;
-  height: 34px;
-  border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  background: rgba(15, 23, 42, 0.56);
-  color: #ffffff;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  flex: 0 0 auto;
-  transition: background-color 0.14s ease;
-}
-.attachment-lightbox-nav:hover {
-  background: rgba(15, 23, 42, 0.84);
-}
-.attachment-lightbox-nav:focus-visible { outline: 2px solid #ffffff; outline-offset: 2px; }
-.attachment-lightbox-nav-prev,
-.attachment-lightbox-nav-next {
-  flex-shrink: 0;
-}
 @media (max-width: 640px) {
   .attachment-lightbox { padding: 20px 12px 18px; }
-  .attachment-lightbox-frame { max-width: calc(100vw - 24px); gap: 6px; }
   .attachment-lightbox-image,
   .attachment-lightbox img {
     max-width: calc(100vw - 92px);
     max-height: calc(100vh - 130px);
   }
-  .attachment-lightbox-nav { width: 30px; height: 30px; }
 }
 
 .composer-files-meta-row {
@@ -8938,42 +8892,6 @@ html {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-}
-.axo-att-modal-head-actions {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  flex-shrink: 0;
-}
-.axo-att-modal-nav {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-}
-.axo-att-nav-btn {
-  width: 24px;
-  height: 24px;
-  border: 1px solid var(--hairline);
-  border-radius: 6px;
-  background: var(--surface);
-  color: var(--ink-secondary);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  padding: 0;
-}
-.axo-att-nav-btn:hover {
-  background: var(--canvas-soft);
-  color: var(--ink);
-}
-.axo-att-nav-btn:focus-visible { outline: 2px solid var(--primary); outline-offset: 1px; }
-.axo-att-nav-counter {
-  font-size: 11px;
-  font-weight: 600;
-  color: var(--ink-muted);
-  min-width: 28px;
-  text-align: center;
 }
 .attachment-document-dialog .axo-att-modal-body {
   padding: 8px 20px 22px;

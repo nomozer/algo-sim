@@ -930,27 +930,7 @@ export function ProblemInput({
     if (!isPreviewModalOpen) return;
     modalOriginFocusRef.current = document.activeElement as HTMLElement | null;
     document.getElementById("btn-close-file-modal")?.focus({ preventScroll: true });
-    const stepAttachment = (delta: number) => {
-      const list = attachmentsRef.current;
-      if (list.length <= 1) return;
-      setPreviewModalFileId((cur) => {
-        const idx = list.findIndex((a) => a.id === cur);
-        if (idx < 0) return cur;
-        const nextIdx = (idx + delta + list.length) % list.length;
-        return list[nextIdx]?.id ?? cur;
-      });
-    };
     const onModalKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "ArrowLeft" && attachmentsRef.current.length > 1) {
-        event.preventDefault();
-        stepAttachment(-1);
-        return;
-      }
-      if (event.key === "ArrowRight" && attachmentsRef.current.length > 1) {
-        event.preventDefault();
-        stepAttachment(1);
-        return;
-      }
       if (event.key !== "Tab") return;
       const modal = document.getElementById("composer-single-file-modal");
       const controls = Array.from(modal?.querySelectorAll<HTMLElement>('button:not([disabled]), a[href], [tabindex="0"]') ?? []);
@@ -2350,19 +2330,11 @@ export function ProblemInput({
       />
 
       {(() => {
-        const previewIdx = previewModalFileId
-          ? attachments.findIndex((a) => a.id === previewModalFileId)
-          : -1;
-        const previewAtt = previewIdx >= 0 ? attachments[previewIdx] ?? null : null;
+        const previewAtt = previewModalFileId
+          ? attachments.find((a) => a.id === previewModalFileId) ?? null
+          : null;
         if (!previewAtt) return null;
         const extBadge = (previewAtt.ext.replace(".", "") || previewAtt.kind).toUpperCase();
-        const hasMultiple = attachments.length > 1;
-        const stepPreview = (delta: number) => {
-          if (!hasMultiple) return;
-          const nextIdx = (previewIdx + delta + attachments.length) % attachments.length;
-          const target = attachments[nextIdx];
-          if (target) setPreviewModalFileId(target.id);
-        };
         if (previewAtt.kind === "image") {
           return (
             <div
@@ -2375,62 +2347,27 @@ export function ProblemInput({
                 if (e.target === e.currentTarget) setPreviewModalFileId(null);
               }}
             >
-              <div className="attachment-lightbox-frame">
-                {hasMultiple && (
-                  <button
-                    type="button"
-                    id="btn-preview-prev-att"
-                    className="attachment-lightbox-nav attachment-lightbox-nav-prev"
-                    aria-label="Tệp trước"
-                    onClick={() => stepPreview(-1)}
-                  >
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.1" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                      <polyline points="15 18 9 12 15 6" />
-                    </svg>
-                  </button>
-                )}
-                <div className="attachment-lightbox-image">
-                  <button
-                    type="button"
-                    id="btn-close-file-modal"
-                    className="attachment-lightbox-close"
-                    aria-label="Đóng xem trước tệp"
-                    onClick={() => setPreviewModalFileId(null)}
-                  >
-                    <IconClose size={14} />
-                  </button>
-                  {previewAtt.previewUrl && !previewImageError ? (
-                    <img
-                      src={previewAtt.previewUrl}
-                      alt={`Xem trước ${previewAtt.name}`}
-                      onError={() => setPreviewImageError(true)}
-                    />
-                  ) : (
-                    <p className="attachment-lightbox-fallback">Không thể xem trước ảnh này.</p>
-                  )}
-                </div>
-                {hasMultiple && (
-                  <button
-                    type="button"
-                    id="btn-preview-next-att"
-                    className="attachment-lightbox-nav attachment-lightbox-nav-next"
-                    aria-label="Tệp tiếp theo"
-                    onClick={() => stepPreview(1)}
-                  >
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.1" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                      <polyline points="9 18 15 12 9 6" />
-                    </svg>
-                  </button>
+              <div className="attachment-lightbox-image">
+                <button
+                  type="button"
+                  id="btn-close-file-modal"
+                  className="attachment-lightbox-close"
+                  aria-label="Đóng xem trước tệp"
+                  onClick={() => setPreviewModalFileId(null)}
+                >
+                  <IconClose size={14} />
+                </button>
+                {previewAtt.previewUrl && !previewImageError ? (
+                  <img
+                    src={previewAtt.previewUrl}
+                    alt={`Xem trước ${previewAtt.name}`}
+                    onError={() => setPreviewImageError(true)}
+                  />
+                ) : (
+                  <p className="attachment-lightbox-fallback">Không thể xem trước ảnh này.</p>
                 )}
               </div>
-              <div className="attachment-lightbox-caption">
-                <span>{previewAtt.name}</span>
-                {hasMultiple && (
-                  <span className="attachment-lightbox-counter">
-                    {previewIdx + 1} / {attachments.length}
-                  </span>
-                )}
-              </div>
+              <div className="attachment-lightbox-caption">{previewAtt.name}</div>
             </div>
           );
         }
@@ -2451,49 +2388,18 @@ export function ProblemInput({
                 <span className="axo-modal-title axo-att-modal-title" id="file-modal-title" title={previewAtt.name}>
                   {previewAtt.name}
                 </span>
-                <div className="axo-att-modal-head-actions">
-                  {hasMultiple && (
-                    <div className="axo-att-modal-nav" aria-label="Chuyển tệp đính kèm">
-                      <button
-                        type="button"
-                        id="btn-preview-prev-att"
-                        className="axo-att-nav-btn"
-                        aria-label="Tệp trước"
-                        onClick={() => stepPreview(-1)}
-                      >
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                          <polyline points="15 18 9 12 15 6" />
-                        </svg>
-                      </button>
-                      <span className="axo-att-nav-counter">
-                        {previewIdx + 1}/{attachments.length}
-                      </span>
-                      <button
-                        type="button"
-                        id="btn-preview-next-att"
-                        className="axo-att-nav-btn"
-                        aria-label="Tệp tiếp theo"
-                        onClick={() => stepPreview(1)}
-                      >
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                          <polyline points="9 18 15 12 9 6" />
-                        </svg>
-                      </button>
-                    </div>
-                  )}
-                  <button
-                    type="button"
-                    className="context-close-icon-btn axo-att-modal-close"
-                    id="btn-close-file-modal"
-                    onClick={() => setPreviewModalFileId(null)}
-                    aria-label="Đóng xem trước tệp"
-                  >
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
-                      <line x1="18" y1="6" x2="6" y2="18" />
-                      <line x1="6" y1="6" x2="18" y2="18" />
-                    </svg>
-                  </button>
-                </div>
+                <button
+                  type="button"
+                  className="context-close-icon-btn axo-att-modal-close"
+                  id="btn-close-file-modal"
+                  onClick={() => setPreviewModalFileId(null)}
+                  aria-label="Đóng xem trước tệp"
+                >
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <line x1="18" y1="6" x2="6" y2="18" />
+                    <line x1="6" y1="6" x2="18" y2="18" />
+                  </svg>
+                </button>
               </div>
               <div className="axo-modal-body axo-att-modal-body" id="file-modal-body">
                 {previewAtt.kind === "pdf" && pdfPreviewCheck === "unknown" ? (

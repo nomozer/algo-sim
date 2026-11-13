@@ -135,10 +135,31 @@ describe("AXO V9.4.8 — Unified Attachment System & Send/Stop Button", () => {
     await expect(renderPdfFirstPageThumbnail(pdfFile)).resolves.toBeNull();
   });
 
-  it("hides native attachment scrollbar arrows/track and styles minimal rounded thumb", () => {
+  it("hides native attachment scrollbar arrows/track, uses minimal rounded thumb, and keeps default cursor", () => {
     const css = readFileSync(new URL("../../styles/global.css", import.meta.url), "utf-8");
+    const rowBlock = /\.composer-files-row\s*\{([^}]+)\}/.exec(css)?.[1] ?? "";
+    const scrollCtrlBlock = /\.composer-files-scroll-control\s*\{([^}]+)\}/.exec(css)?.[1] ?? "";
+    const thumbBlock = /\.composer-files-scroll-control::-webkit-slider-thumb\s*\{([^}]+)\}/.exec(css)?.[1] ?? "";
     expect(css).toMatch(/\.composer-files-row::-webkit-scrollbar-button\s*\{\s*display:\s*none/);
     expect(css).toMatch(/\.composer-files-scroll-control::-webkit-slider-runnable-track\s*\{[^}]*background:\s*transparent/);
-    expect(css).toMatch(/\.composer-files-scroll-control::-webkit-slider-thumb\s*\{[^}]*border-radius:\s*9999px/);
+    expect(thumbBlock).toContain("border-radius: 9999px");
+    expect(thumbBlock).toContain("cursor: default");
+    expect(scrollCtrlBlock).toContain("cursor: default");
+    expect(scrollCtrlBlock).not.toMatch(/cursor:\s*(grab|grabbing|pointer)/);
+    expect(css).not.toMatch(/\.composer-files-scroll-control[^}]*cursor:\s*(grab|grabbing|pointer)/);
+    expect(rowBlock).not.toMatch(/cursor:\s*(grab|grabbing)/);
+    expect(css).not.toMatch(/\.composer-files-row:active\s*\{[^}]*cursor:\s*grabbing/);
+  });
+
+  it("removes unintended file preview Previous/Next navigation and file index counters", () => {
+    const src = readFileSync(new URL("../ProblemInput.tsx", import.meta.url), "utf-8");
+    const css = readFileSync(new URL("../../styles/global.css", import.meta.url), "utf-8");
+    expect(src).not.toContain("btn-preview-prev-att");
+    expect(src).not.toContain("btn-preview-next-att");
+    expect(src).not.toContain("axo-att-nav-counter");
+    expect(src).not.toContain("attachment-lightbox-counter");
+    expect(src).not.toContain("stepAttachment");
+    expect(css).not.toContain(".axo-att-modal-nav");
+    expect(css).not.toContain(".attachment-lightbox-nav");
   });
 });
