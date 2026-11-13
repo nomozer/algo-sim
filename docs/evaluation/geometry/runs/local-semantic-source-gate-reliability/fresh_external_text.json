@@ -1,0 +1,49 @@
+{
+  "run_id": "local-semantic-source-gate-reliability",
+  "generated_at_utc": "2026-11-13T04:33:01.535429+00:00",
+  "head": "9f2314e1126322bb6066d57bdcade209a0904062",
+  "path": "route_text_input, local-first, ALLOW_LIVE_AI=0",
+  "input": "agent transcription (statement only)",
+  "outcomes": {
+    "LIVE_AI_DISABLED (local parse incomplete)": 1,
+    "NEEDS_CONFIRMATION": 1
+  },
+  "cases": [
+    {
+      "case_id": "vmmu_r559",
+      "tags": [
+        "regular_tetrahedron",
+        "angle_line_line",
+        "cosine_output",
+        "scale_free"
+      ],
+      "expected": "√3/6",
+      "kernel": {
+        "status": "REFUSED",
+        "answers": null,
+        "reason_code": "LIVE_AI_DISABLED",
+        "scene3d_objects": 0
+      },
+      "verdict": "NOT_SERVED",
+      "outcome": "LIVE_AI_DISABLED (local parse incomplete)",
+      "ms": 255.1908000000367
+    },
+    {
+      "case_id": "vmmu_r695",
+      "tags": [
+        "pyramid",
+        "distance_point_plane"
+      ],
+      "expected": "2/3",
+      "kernel": {
+        "status": "REFUSED",
+        "answers": null,
+        "reason_code": "AMBIGUOUS_FACT",
+        "scene3d_objects": 0
+      },
+      "verdict": "NOT_SERVED",
+      "outcome": "NEEDS_CONFIRMATION",
+      "ms": 7.025299999895651
+    }
+  ]
+}

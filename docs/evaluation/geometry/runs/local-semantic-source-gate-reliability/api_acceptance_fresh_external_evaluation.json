@@ -1,0 +1,234 @@
+{
+  "run_id": "local-semantic-source-gate-reliability",
+  "head": "9f2314e1126322bb6066d57bdcade209a0904062",
+  "measured_system": [
+    "1cc979f559a632c30b97636e4b47532139b6205199ddbe97fc6fb6c6e9e16c28",
+    115
+  ],
+  "allow_live_ai": 0,
+  "ground_truth_authority": "AGENT_TRANSCRIBED_UNVERIFIED",
+  "independent_h1": "NOT_MEASURED",
+  "server": {
+    "hybrid_route_mode": "local-first",
+    "server_allow_live_ai": false,
+    "cache_version": "132"
+  },
+  "partition": "fresh_external_evaluation",
+  "user_correction": "SCRIPTED_NOT_REAL_STUDENT: only flagged spans are edited, using the agent transcription; unflagged OCR errors stay",
+  "grading": "served answer compared numerically with the dataset key choice; non-comparable answers stay ungraded",
+  "cases": [
+    {
+      "case_id": "vmmu_r559",
+      "partition": "fresh_external_evaluation",
+      "sha256": "f2ed5188752e675241a963614415e6c4ff70b30f7d161f2623b11fabf9d48188",
+      "prepare_http_status": 200,
+      "prepare_ms": 10273.014500000045,
+      "prepare_status": "needs_confirmation",
+      "prepare_reason_code": "LOCAL_OCR_REVIEW_REQUIRED",
+      "input_route": "LOCAL_OCR_NEEDS_CONFIRMATION",
+      "provider_calls": 0,
+      "ocr_text": "Câu 45. Cho tứ diện đều ABCD. Gọi M là trung điểm của CD. Côsin của góc giữa hai đường thẳng AC và BM bằng\nA. √3.",
+      "uncertain_tokens": 2,
+      "critical_facts_in_prepared_text": [
+        {
+          "kind": "solid",
+          "reference": "tứ diện đều",
+          "recovered": true
+        },
+        {
+          "kind": "solid",
+          "reference": "ABCD",
+          "recovered": true
+        },
+        {
+          "kind": "relation",
+          "reference": "M là trung điểm của CD",
+          "recovered": true
+        },
+        {
+          "kind": "goal",
+          "reference": "Côsin",
+          "recovered": true
+        },
+        {
+          "kind": "goal",
+          "reference": "góc giữa hai đường thẳng AC và BM",
+          "recovered": true
+        }
+      ],
+      "route": "C2_USER_CORRECTED_SIMULATED",
+      "kernel": {
+        "http_status": 503,
+        "status": null,
+        "answers": null,
+        "reason_code": "LIVE_AI_DISABLED",
+        "failure_category": null,
+        "scene3d_objects": 0,
+        "continuity_violations": null,
+        "oracle_status": "UNGRADED_UNLESS_SEPARATELY_ADJUDICATED"
+      },
+      "grade": {
+        "verdict": "NOT_SERVED"
+      },
+      "final_text": "Câu 45. Cho tứ diện đều ABCD. Gọi M là trung điểm của CD. Côsin của góc giữa hai đường thẳng AC và BM bằng\nA. √3.",
+      "scripted_edits": [],
+      "scripted_confirms": 1,
+      "scripted_actions": 2,
+      "critical_facts_after_scripted_correction": [
+        {
+          "kind": "solid",
+          "reference": "tứ diện đều",
+          "recovered": true
+        },
+        {
+          "kind": "solid",
+          "reference": "ABCD",
+          "recovered": true
+        },
+        {
+          "kind": "relation",
+          "reference": "M là trung điểm của CD",
+          "recovered": true
+        },
+        {
+          "kind": "goal",
+          "reference": "Côsin",
+          "recovered": true
+        },
+        {
+          "kind": "goal",
+          "reference": "góc giữa hai đường thẳng AC và BM",
+          "recovered": true
+        }
+      ],
+      "image_to_result_ms": 11700.079799999912,
+      "scene3d": {
+        "objects": 0,
+        "continuity_violations": null
+      }
+    },
+    {
+      "case_id": "vmmu_r695",
+      "partition": "fresh_external_evaluation",
+      "sha256": "bf634a34d9c5c76104679ba04fb4f4ea3122b743dd7b3094d86227f42e28d9ce",
+      "prepare_http_status": 200,
+      "prepare_ms": 2976.5394000000924,
+      "prepare_status": "needs_confirmation",
+      "prepare_reason_code": "LOCAL_OCR_REVIEW_REQUIRED",
+      "input_route": "LOCAL_OCR_NEEDS_CONFIRMATION",
+      "provider_calls": 0,
+      "ocr_text": "Câu 36. Cho hình chóp S.ABCD có SA L (ABCD), đáy ABCD là hình vuông, biết AB = 1, SA = 2 (tham khảo hình vẽ bên dưới) Khoảng cách từ điểm C đến mặt phẳng (SBD) bằng\nA. √2/2 B. 23 C. 3 D.√2.",
+      "uncertain_tokens": 3,
+      "critical_facts_in_prepared_text": [
+        {
+          "kind": "solid",
+          "reference": "S.ABCD",
+          "recovered": true
+        },
+        {
+          "kind": "relation",
+          "reference": "SA⊥(ABCD)",
+          "recovered": false
+        },
+        {
+          "kind": "relation",
+          "reference": "hình vuông",
+          "recovered": true
+        },
+        {
+          "kind": "length",
+          "reference": "AB=1",
+          "recovered": true
+        },
+        {
+          "kind": "length",
+          "reference": "SA=2",
+          "recovered": true
+        },
+        {
+          "kind": "goal",
+          "reference": "Khoảng cách từ điểm C",
+          "recovered": true
+        },
+        {
+          "kind": "goal",
+          "reference": "(SBD)",
+          "recovered": true
+        }
+      ],
+      "route": "C2_USER_CORRECTED_SIMULATED",
+      "kernel": {
+        "http_status": 200,
+        "status": "REFUSED",
+        "answers": null,
+        "reason_code": "AMBIGUOUS_FACT",
+        "failure_category": null,
+        "scene3d_objects": 0,
+        "continuity_violations": null,
+        "oracle_status": "UNGRADED_UNLESS_SEPARATELY_ADJUDICATED"
+      },
+      "grade": {
+        "verdict": "NOT_SERVED"
+      },
+      "final_text": "Câu 36. Cho hình chóp S.ABCD có SA ⊥ (ABCD), đáy ABCD là hình vuông, biết AB = 1, SA = 2 (tham khảo hình vẽ bên dưới) Khoảng cách từ điểm C đến mặt phẳng (SBD) bằng\nA. √2/2. B. 2/3. C. 3/2. D. √2.",
+      "scripted_edits": [
+        {
+          "span_id": "sp41",
+          "from": "A. √2/2 B. 23 C. 3 D.√2.",
+          "to": "A. √2/2. B. 2/3. C. 3/2. D. √2.",
+          "chosen_from_alternatives": false
+        },
+        {
+          "span_id": "sp9",
+          "from": "L",
+          "to": "⊥",
+          "chosen_from_alternatives": true
+        }
+      ],
+      "scripted_confirms": 0,
+      "scripted_actions": 3,
+      "critical_facts_after_scripted_correction": [
+        {
+          "kind": "solid",
+          "reference": "S.ABCD",
+          "recovered": true
+        },
+        {
+          "kind": "relation",
+          "reference": "SA⊥(ABCD)",
+          "recovered": true
+        },
+        {
+          "kind": "relation",
+          "reference": "hình vuông",
+          "recovered": true
+        },
+        {
+          "kind": "length",
+          "reference": "AB=1",
+          "recovered": true
+        },
+        {
+          "kind": "length",
+          "reference": "SA=2",
+          "recovered": true
+        },
+        {
+          "kind": "goal",
+          "reference": "Khoảng cách từ điểm C",
+          "recovered": true
+        },
+        {
+          "kind": "goal",
+          "reference": "(SBD)",
+          "recovered": true
+        }
+      ],
+      "image_to_result_ms": 3810.0743999998485,
+      "scene3d": {
+        "objects": 0,
+        "continuity_violations": null
+      }
+    }
+  ]
+}
