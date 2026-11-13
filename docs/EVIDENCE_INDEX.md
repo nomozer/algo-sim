@@ -1,5 +1,20 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = SEMANTIC_FAILURE_SAFE_IMAGE_SEGMENTATION
+
+RUN_ID = semantic-failure-safe-image-segmentation
+REPORT = docs/evaluation/geometry/runs/semantic-failure-safe-image-segmentation/AXO_SEMANTIC_FAILURE_SAFE_IMAGE_SEGMENTATION_REPORT.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/semantic-failure-safe-image-segmentation/
+START_BASE = dcbedcb0d
+CODE_COMMIT = cc449ae4b (diagnostics, parser repairs, option-group image segmentation), 7315cf3b0 (one figure per band); candidate freeze 18a7ba008
+CLASSIFICATION = DEVELOPMENT_EVIDENCE_ON_AGENT_CORPUS_AND_EXPOSED_ITEMS; SYNTHETIC_COMPOSITES_OF_REAL_EXPOSED_CROPS; AGENT_DIAGNOSTIC_ORACLE; AUTOMATED_BROWSER_E2E; NEW_INDEPENDENT_EVALUATION BLOCKED_DATA; INDEPENDENT_H1_NOT_MEASURED; PUBLICATION BLOCKED_PENDING_OWNER_REVIEW
+PRODUCT_CHANGE = YES (route_d.local_diagnostics on refusals, four parser repairs, prepare-path multi-problem segmentation); Source Gate, contracts and CACHE_VERSION 134 unchanged; measured files 115 → 116
+MODEL_REQUEST_COUNT = 0
+VERIFICATION = run.json; full_regression_summary.json; semantic_root_cause_matrix.json; end_to_end_failure_attribution.json; multi_problem_segmentation_before_after.json; image_selection_browser_e2e.json; text_vs_payload_negative_evaluation.json; scene3d_correctness_regression.json
+CORRECTS = NONE (W2/W3 historical results unchanged; their payload-vs-text limitation is addressed by a new method for new measurements only)
+CORRECTED_BY = NONE
+LIMITATIONS = agent-written development corpus; exposed real items; synthetic page layouts; 5-gram containment against agent transcriptions; headless host browser; segmentation evaluation measured at cc449ae4b (7315cf3b0 rechecked by E2E and association); no H-1, no students, no camera photos.
+
 ## WAVE_ID = INDEPENDENT_GEOMETRY_PLANE_CONSTRAINTS
 
 RUN_ID = independent-geometry-plane-constraints
