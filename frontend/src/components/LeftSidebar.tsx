@@ -1339,7 +1339,7 @@ export function LeftSidebar() {
           )}
         </nav>
 
-        {/* 3. UNIFIED PROBLEM LIST: BÀI TOÁN (Scrollable region with conditional hover scrollbar) */}
+        {/* 3. UNIFIED PROBLEM LIST: Bài toán (Scrollable region with native visible scrollbar) */}
         <div
           className="sb-scroll-region"
           id="sb-scroll-region"
@@ -1368,6 +1368,10 @@ export function LeftSidebar() {
                     : "Thu gọn nhóm Bài toán"
                 }
               >
+                <span className="sb-group-title">Bài toán</span>
+                <span className="sb-group-count" id="sb-problem-count">
+                  {unifiedSidebarItems.length}
+                </span>
                 <span className="sb-group-chevron" aria-hidden="true">
                   {leftRailProblemGroupCollapsed ? (
                     <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.95" strokeLinecap="round" strokeLinejoin="round">
@@ -1378,10 +1382,6 @@ export function LeftSidebar() {
                       <path d="M4.8 7.5L10 12.7 15.2 7.5" />
                     </svg>
                   )}
-                </span>
-                <span className="sb-group-title">Bài toán</span>
-                <span className="sb-group-count" id="sb-problem-count">
-                  {unifiedSidebarItems.length}
                 </span>
               </button>
 

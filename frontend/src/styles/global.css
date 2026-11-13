@@ -19990,10 +19990,10 @@ html::-webkit-scrollbar {
 }
 
 .sb-group-toggle {
-  flex: 1 1 auto;
+  flex: 0 1 auto;
   min-width: 0;
   height: 28px;
-  padding: 0 4px 0 0;
+  padding: 0;
   border-radius: 6px;
   border: none;
   background: transparent;
@@ -20001,20 +20001,14 @@ html::-webkit-scrollbar {
   font-family: inherit;
   display: inline-flex;
   align-items: center;
-  gap: var(--axo-sb-icon-gap);
+  gap: 6px;
   cursor: pointer;
   text-align: left;
-  transition: background-color 110ms ease, color 110ms ease;
-}
-
-.sb-group-toggle:hover {
-  background: rgba(0, 0, 0, 0.045);
-  color: var(--ink);
 }
 
 .sb-group-toggle:focus-visible {
   outline: 2px solid rgba(35, 131, 226, 0.45);
-  outline-offset: 1px;
+  outline-offset: 2px;
 }
 
 .sb-group-chevron {
@@ -20025,6 +20019,21 @@ html::-webkit-scrollbar {
   justify-content: center;
   color: var(--ink-secondary, #615d59);
   flex-shrink: 0;
+  visibility: hidden;
+  opacity: 0;
+}
+
+.sb-group-toggle:hover .sb-group-chevron,
+.sb-group-toggle:focus-visible .sb-group-chevron {
+  visibility: visible;
+  opacity: 1;
+}
+
+@media (hover: none), (pointer: coarse) {
+  .sb-group-chevron {
+    visibility: visible;
+    opacity: 1;
+  }
 }
 
 .sb-group-chevron svg {
@@ -20036,8 +20045,7 @@ html::-webkit-scrollbar {
 .sb-group-title {
   font-size: 12px;
   font-weight: 600;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
+  line-height: 1.25;
   color: var(--ink-secondary, #615d59);
   display: inline-flex;
   align-items: center;
@@ -20049,6 +20057,11 @@ html::-webkit-scrollbar {
   font-family: "JetBrains Mono", monospace;
   font-size: 11.5px;
   font-weight: 500;
+  line-height: 18px;
+  min-height: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   color: var(--ink-secondary, #615d59);
   background: rgba(0, 0, 0, 0.055);
   padding: 0 6px;
@@ -20245,13 +20258,6 @@ html::-webkit-scrollbar {
   gap: 5px;
   cursor: pointer;
   flex-shrink: 0;
-  transition: background-color 110ms ease, color 110ms ease, border-color 110ms ease;
-}
-
-.sb-filter-trigger-btn:hover,
-.sb-filter-trigger-btn.is-open {
-  background: rgba(0, 0, 0, 0.055);
-  color: var(--ink);
 }
 
 .sb-filter-trigger-btn:focus-visible {
