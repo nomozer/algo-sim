@@ -1,5 +1,14 @@
 # CODE_INDEX.md — Chỉ mục module + BỘ NHỚ KIẾN TRÚC
 
+## Local failure diagnostics and safe multi-problem images (2026-11-14)
+
+| Path | Owns | Locked by |
+|---|---|---|
+| `backend/app/ai/local_failure_diagnostics.py` (`diagnose`, `diagnose_clauses`, `clause_types`) · `backend/app/ai/adaptive_input_router.py` (`route_d.local_diagnostics`) | On local-first REFUSALS only: root cause separate from the terminal reason, first-loss / detecting / deciding layer, per-clause type, status, offsets and downstream dependency; "understood but unsupported" (cos/tan of an angle, proofs) vs "not understood". Codes grouped by `hybrid_preview.classify_refusal`; never cached | `backend/tests/geometry/test_semantic_failure_diagnostics.py` |
+| `backend/app/ai/local_geometry_parser.py` (angle goal `pl2d`/`pl4d`, 6c `m_rel`, 7c-0b `pl_q`, 7e `tinh`) | "(mặt phẳng / mặt) đáy" as an angle operand; a named point defined inside a plane clause; "Thiết diện … cắt bởi (P) là hình gì?"; the exam stem "Diện tích thiết diện … bằng" (never a given) | same |
+| `backend/app/ingestion/local_ocr_route.py` (`option_groups`, `problem_bands`, `estimate_problem_signals`) · `backend/app/ingestion/unified_input.py` (`_band_*`, `_crop_to_band`, step 2 / 2b) | Multiple-choice option groups from OCR word boxes (one option A per problem); rectangle bands per problem, columns cut where no OCR line crosses; a single kept region with ≥ 2 groups → `needs_selection` with band candidates (`<region>~band-k`) or a tighter-photo request; the ≤ 1 header guard requires ≤ 1 option group too; a layout block belongs to the band holding most of it | `backend/tests/test_multi_problem_segmentation.py` |
+| `docs/evaluation/geometry/runs/semantic-failure-safe-image-segmentation/tools/` | Development corpus, semantic/segmentation/performance evaluations, text vs payload negatives, image-selection browser E2E | run report and receipts |
+
 ## Constraint-defined planes on the local route (2026-11-13)
 
 | Path | Owns | Locked by |
