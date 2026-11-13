@@ -17,6 +17,10 @@ sys.path[:0] = [str(ROOT / "backend"), str(ROOT / "backend/scripts")]
 import run_s2_student_language_pilot as R  # noqa: E402  (the runner whose test owns the binding rule)
 
 KEYS = ("measured_system", "measured_system_tree_hash")
+# A second refresh in the same run writes its own receipt (argv[1]) and never replaces the first one.
+OUT = sys.argv[1] if len(sys.argv) > 1 else "pending_template_refresh.json"
+REASON = sys.argv[2] if len(sys.argv) > 2 else ("test_s2_student_language_pilot_runner requires pending templates to bind the current runtime; "
+                                                 "the dihedral fix, local sections/intersections, altitudes and cache 134 changed the measured system.")
 
 
 def main() -> int:
@@ -43,9 +47,9 @@ def main() -> int:
                      "after": {k: data.get(k) for k in KEYS}, "original_saved_as": saved.relative_to(RUN).as_posix(),
                      "original_sha256": hashlib.sha256(original).hexdigest(), "new_sha256": hashlib.sha256(path.read_bytes()).hexdigest(),
                      "owner_decision": data["owner_decision"], "paid_project_confirmed": data["paid_project_confirmed"]})
-    (RUN / "pending_template_refresh.json").write_text(json.dumps({
+    (RUN / OUT).write_text(json.dumps({
         "classification": "CURRENT_PENDING_TEMPLATE_METADATA_REFRESH_NOT_HUMAN_APPROVAL",
-        "reason": "test_s2_student_language_pilot_runner requires pending templates to bind the current runtime; the dihedral fix, local sections/intersections, altitudes and cache 134 changed the measured system.",
+        "reason": REASON,
         "runtime_identity_measured_system": ident["measured_system"], "rows": rows}, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(json.dumps([(r["study"], r["before"]["measured_system"][:12], r["after"]["measured_system"][:12]) for r in rows]))
     return 0
