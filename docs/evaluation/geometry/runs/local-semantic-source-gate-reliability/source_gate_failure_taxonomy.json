@@ -1,0 +1,120 @@
+{
+  "run_id": "local-semantic-source-gate-reliability",
+  "generated_at_utc": "2026-11-13T04:54:20.249879+00:00",
+  "final_gate_verdicts_on_built_facts": {
+    "REFUSED:SOURCE_PREMISE_UNREAD": 7,
+    "REFUSED:NOT_ASKED_IN_SOURCE": 2,
+    "ACCEPTED": 4,
+    "REFUSED:UNGROUNDED_VALUE": 2,
+    "REFUSED:QUESTION_CONTEXT_UNSUPPORTED": 1
+  },
+  "gate_refusal_classes": {
+    "SOURCE_PREMISE_UNREAD": "a premise sentence the parser did not turn into a fact (parser gap, gate correct)",
+    "NOT_ASKED_IN_SOURCE": "the source asks a function the output policy does not serve (tan, cos) — correct",
+    "UNGROUNDED_VALUE": "a value the parser could not ground (area a²) — correct, fail closed",
+    "QUESTION_CONTEXT_UNSUPPORTED": "plane written without parentheses — correct"
+  },
+  "true_gate_gaps_found": [
+    "'… theo a bằng' question tail (r460)",
+    "value boundary at 'biết' / new clause without punctuation (r270, r513)"
+  ],
+  "loosened": false,
+  "cases": [
+    {
+      "case_id": "vmmu_r254",
+      "gate": "REFUSED:SOURCE_PREMISE_UNREAD",
+      "first_failure": "PARSER_COVERAGE",
+      "refusal_correct": true
+    },
+    {
+      "case_id": "vmmu_r256",
+      "gate": "REFUSED:SOURCE_PREMISE_UNREAD",
+      "first_failure": "PARSER_COVERAGE",
+      "refusal_correct": true
+    },
+    {
+      "case_id": "vmmu_r258",
+      "gate": "REFUSED:NOT_ASKED_IN_SOURCE",
+      "first_failure": "SOURCE_GATE",
+      "refusal_correct": true
+    },
+    {
+      "case_id": "vmmu_r270",
+      "gate": "ACCEPTED",
+      "first_failure": "NONE_LOCAL_PARSE_COMPLETE",
+      "refusal_correct": false
+    },
+    {
+      "case_id": "vmmu_r277",
+      "gate": "REFUSED:SOURCE_PREMISE_UNREAD",
+      "first_failure": "PARSER_COVERAGE",
+      "refusal_correct": true
+    },
+    {
+      "case_id": "vmmu_r284",
+      "gate": "REFUSED:UNGROUNDED_VALUE",
+      "first_failure": "PARSER_COVERAGE",
+      "refusal_correct": true
+    },
+    {
+      "case_id": "vmmu_r298",
+      "gate": "ACCEPTED",
+      "first_failure": "NONE_LOCAL_PARSE_COMPLETE",
+      "refusal_correct": false
+    },
+    {
+      "case_id": "vmmu_r375",
+      "gate": "ACCEPTED",
+      "first_failure": "NONE_LOCAL_PARSE_COMPLETE",
+      "refusal_correct": false
+    },
+    {
+      "case_id": "vmmu_r460",
+      "gate": "REFUSED:SOURCE_PREMISE_UNREAD",
+      "first_failure": "SOURCE_GATE",
+      "refusal_correct": true
+    },
+    {
+      "case_id": "vmmu_r488",
+      "gate": "REFUSED:SOURCE_PREMISE_UNREAD",
+      "first_failure": "PARSER_COVERAGE",
+      "refusal_correct": true
+    },
+    {
+      "case_id": "vmmu_r491",
+      "gate": "REFUSED:SOURCE_PREMISE_UNREAD",
+      "first_failure": "PARSER_COVERAGE",
+      "refusal_correct": true
+    },
+    {
+      "case_id": "vmmu_r498",
+      "gate": "REFUSED:NOT_ASKED_IN_SOURCE",
+      "first_failure": "SOURCE_GATE",
+      "refusal_correct": true
+    },
+    {
+      "case_id": "vmmu_r513",
+      "gate": "REFUSED:QUESTION_CONTEXT_UNSUPPORTED",
+      "first_failure": "SOURCE_GATE",
+      "refusal_correct": true
+    },
+    {
+      "case_id": "vmmu_r520",
+      "gate": "ACCEPTED",
+      "first_failure": "NONE_LOCAL_PARSE_COMPLETE",
+      "refusal_correct": true
+    },
+    {
+      "case_id": "vmmu_r537",
+      "gate": "REFUSED:UNGROUNDED_VALUE",
+      "first_failure": "SOURCE_GATE",
+      "refusal_correct": true
+    },
+    {
+      "case_id": "vmmu_r538",
+      "gate": "REFUSED:SOURCE_PREMISE_UNREAD",
+      "first_failure": "PARSER_COVERAGE",
+      "refusal_correct": true
+    }
+  ]
+}

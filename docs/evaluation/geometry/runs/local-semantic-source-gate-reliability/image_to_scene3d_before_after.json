@@ -1,0 +1,39 @@
+{
+  "run_id": "local-semantic-source-gate-reliability",
+  "generated_at_utc": "2026-11-13T04:54:20.249879+00:00",
+  "before_source": "controlled-vision-real-image-validation/api_acceptance_*.json (c53be83db)",
+  "after_source": "api_acceptance_*.json in this run (working tree = frozen product)",
+  "route": "image -> /api/input/prepare (local OCR) -> scripted correction of flagged spans only -> /api/analyze; ALLOW_LIVE_AI=0",
+  "by_partition": {
+    "development": {
+      "before": {
+        "NOT_SERVED": 5,
+        "SERVED_MATCHES_DATASET_KEY": 1
+      },
+      "after": {
+        "NOT_SERVED": 5,
+        "SERVED_MATCHES_DATASET_KEY": 1
+      },
+      "prepare_ms_median_before": 3077.616250000574,
+      "prepare_ms_median_after": 2321.077200000218
+    },
+    "frozen_external_evaluation": {
+      "before": {
+        "NOT_SERVED": 17,
+        "SERVED_MATCHES_DATASET_KEY": 2
+      },
+      "after": {
+        "NOT_SERVED": 16,
+        "SERVED_MATCHES_DATASET_KEY": 3
+      },
+      "prepare_ms_median_before": 3117.882300000929,
+      "prepare_ms_median_after": 1941.9144000021333
+    }
+  },
+  "newly_served": [
+    "vmmu_r298"
+  ],
+  "wrong_served_after": [],
+  "why_r270_r375_not_from_image": "solved from the transcription but OCR does not recover every critical fact of those images (local_ocr_* receipts of the previous run)",
+  "exposure": "all items exposed during development; not a generalisation figure"
+}

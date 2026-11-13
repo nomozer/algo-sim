@@ -1,0 +1,13 @@
+{
+  "run_id": "local-semantic-source-gate-reliability",
+  "generated_at_utc": "2026-11-13T04:54:20.249879+00:00",
+  "population": "facts the parser built for the 17 cases (also partial parses), replayed through TypedFactNext schema and bridge_v2",
+  "schema_results": {
+    "VALID": 16,
+    "NO_SOLID": 1
+  },
+  "bridge_ambiguities": 0,
+  "invented_facts": "none: every new fact carries its own verbatim quote (Source Gate ACCEPTED only where the whole text is read)",
+  "contradiction_handling": "backend/tests/geometry/test_local_semantic_coverage.py::test_contradicting_lateral_edge_is_refused_not_served (INCONSISTENT_FACTS)",
+  "schema_version_changed": false
+}

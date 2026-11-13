@@ -1,0 +1,21 @@
+{
+  "run_id": "local-semantic-source-gate-reliability",
+  "generated_at_utc": "2026-11-13T04:54:20.249879+00:00",
+  "problem": "OCR splits one expression into adjacent flagged spans ('4BCD-' + 'A'B'C'D''); the space between belongs to no span, so per-span edits cannot rebuild 'ABCD.A'B'C'D''.",
+  "change": "photo-problem-flow.ts extendSpanTarget + actions extend-span / restore-span; PhotoProblemPanel buttons 'Nối với chữ kế tiếp' / 'Tách lại như máy đọc'",
+  "rules": [
+    "gap of 1-3 spaces/tabs only",
+    "next word ≤ 24 chars and not prose (two lower-case letters)",
+    "never across a sentence end",
+    "a flagged span inside the extension is absorbed whole",
+    "extending or restoring clears every confirmation"
+  ],
+  "unit_tests": "frontend/src/components/photo-span-review.test.tsx (4 new)",
+  "browser": {
+    "file": "browser_span_angle_check.json",
+    "passed": 2,
+    "total": 2,
+    "evidence_kind": "FIXTURE prepare response + real UI, real /api/analyze (local-first, no provider call)"
+  },
+  "classification": "VERIFIED_FACT (FIXTURE prepare response; real UI and real /api/analyze)"
+}

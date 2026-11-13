@@ -1,0 +1,24 @@
+{
+  "run_id": "local-semantic-source-gate-reliability",
+  "generated_at_utc": "2026-11-13T04:54:20.249879+00:00",
+  "observed_before_fix_at_8_uploads": {
+    "prepare_200": 24,
+    "auth_me_5xx": 10,
+    "prepare_5xx": 6,
+    "prepare_401": 8,
+    "prepare_401_after_auth_me_5xx": 8,
+    "transport_errors": 2,
+    "prepare_ms_p50": 3532.0391500008554,
+    "health_max_ms": 8518.60079999824,
+    "server_exception_types": [
+      "SQLITE_BUSY"
+    ]
+  },
+  "classification": {
+    "500 on /api/auth/me and /api/input/prepare": "INFRASTRUCTURE (SQLITE_BUSY: database is locked) — a server fault, never a math refusal",
+    "401 on /api/input/prepare": "CONSEQUENCE: every 401 followed a failed /api/auth/me session creation in the same client; the client then had no session cookie. Mapping 401 is correct for a request without a session.",
+    "dropped connections": "transport errors while the event loop was blocked"
+  },
+  "after_fix": "no 5xx, no 401, no dropped connection in 120 uploads (after + after_repeat)",
+  "auth_contract_changed": false
+}
