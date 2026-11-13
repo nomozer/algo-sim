@@ -187,8 +187,17 @@ def _band_geometry(region_res: RegionDetectionResult, band: tuple[int, int, int,
 
 
 def _band_blocks(region_res: RegionDetectionResult, band: tuple[int, int, int, int]):
+    """Layout blocks of one band: a block belongs to the band holding at least half of its area, so a figure whose box
+    spills over a cut is associated with ONE problem only."""
     x0, y0, x1, y1 = _band_geometry(region_res, band)
-    return tuple(b for b in region_res.blocks if b.bbox.y1 > y0 and b.bbox.y0 < y1 and b.bbox.x1 > x0 and b.bbox.x0 < x1)
+
+    def share(b) -> float:
+        w = max(0.0, min(b.bbox.x1, x1) - max(b.bbox.x0, x0))
+        h = max(0.0, min(b.bbox.y1, y1) - max(b.bbox.y0, y0))
+        area = max(1.0, float((b.bbox.x1 - b.bbox.x0) * (b.bbox.y1 - b.bbox.y0)))
+        return w * h / area
+
+    return tuple(b for b in region_res.blocks if share(b) >= 0.5)
 
 
 def _crop_to_band(region_res: RegionDetectionResult, band: tuple[int, int, int, int]) -> RegionDetectionResult:
