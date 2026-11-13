@@ -1,5 +1,20 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = VERIFIED_SECTION_INTERSECTION_DIHEDRAL_LOCAL
+
+RUN_ID = verified-section-intersection-dihedral-local
+REPORT = docs/evaluation/geometry/runs/verified-section-intersection-dihedral-local/AXO_VERIFIED_SECTION_INTERSECTION_DIHEDRAL_LOCAL_REPORT.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/verified-section-intersection-dihedral-local/
+START_BASE = ffc62f6fe
+CODE_COMMIT = 420851be6 (acute angle constructions), 6aad1f6b8 (local sections, intersection lines, altitudes, CACHE_VERSION 134), a74aa3325 (new hybrid-preview fixture bundle); candidate freeze 89aed139e
+CLASSIFICATION = DEVELOPMENT_EVIDENCE_ON_EXPOSED_AND_SYNTHETIC_ITEMS; AGENT_VERIFIED_DIAGNOSTIC_INVARIANTS; AUTOMATED_BROWSER_E2E; UNSEEN_EVALUATION_NOT_MEASURED; INDEPENDENT_H1_NOT_MEASURED; PUBLICATION BLOCKED_PENDING_OWNER_REVIEW
+PRODUCT_CHANGE = YES (signed-cos angle certificate + angle_domain, local parser rules for sections and intersection lines, TypedFactNext /2 goal construct_intersection_line, altitude-construction/1); planner/26, registry/33, engine/24 unchanged; CACHE_VERSION 133 → 134
+MODEL_REQUEST_COUNT = 0
+VERIFICATION = run.json; full_regression_summary.json; dihedral_angle_semantic_audit.json; polyhedron_section_correctness.json; plane_intersection_correctness.json; altitude_face_perpendicular_verification.json; scene3d_mathematical_invariants.json; scene3d_section_intersection_browser_e2e.json
+CORRECTS = semantic-to-scene3d-verified-simulation (angle constructions between planes could draw the obtuse supplement; its invariant checks compared cos² only)
+CORRECTED_BY = NONE
+LIMITATIONS = synthetic probes and exposed transcriptions; agent-written invariant oracle; no section/intersection item in the real corpus; headless host browser; no unseen data, no students, no H-1, no low-end hardware.
+
 ## WAVE_ID = SEMANTIC_TO_SCENE3D_VERIFIED_SIMULATION
 
 RUN_ID = semantic-to-scene3d-verified-simulation

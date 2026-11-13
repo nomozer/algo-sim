@@ -1,5 +1,10 @@
 # OPEN_ISSUES.md — Danh mục các vấn đề kỹ thuật đang mở
 
+**Verified section / intersection update 2026-11-13:** [Report](evaluation/geometry/runs/verified-section-intersection-dihedral-local/AXO_VERIFIED_SECTION_INTERSECTION_DIHEDRAL_LOCAL_REPORT.md).
+- **Resolved:** angle constructions could draw the obtuse supplement (60° shown as 120°); sections by a three-point plane and plane–plane intersection lines were unreachable locally; the altitude of a lateral face ⟂ base was not drawn.
+- **Still open:** a section plane stated inside a question sentence is refused by the Source Gate (by design); section planes defined by parallelism/perpendicularity ("qua M và song song với …") are not read by the new rule; coincident planes are refused with the imprecise code `PARALLEL_PLANES`; a plane touching the solid only in a point or an edge is not reachable locally (NOT_MEASURED); the real-problem corpus has no section/intersection items.
+- **Unmeasured:** unseen-data evaluation, independent H-1, real students, physical low-end hardware; heap +2.78 MB over 12 signed-in analyses — no leak proven or excluded.
+
 **Semantic-to-Scene3D update 2026-11-13:** [Report](evaluation/geometry/runs/semantic-to-scene3d-verified-simulation/AXO_SEMANTIC_TO_SCENE3D_VERIFIED_SIMULATION_REPORT.md).
 - **Resolved:** angles ≠ 90° had no goal construction in the scene; right-angle witnesses were relabelled as segment lengths; step buttons were 26 px on phones; centroid-foot / face ⟂ base / late square side were unreadable locally.
 - **Still open:** the altitude of a face ⟂ base is not drawn (volume correct); sections and plane–plane intersection lines are not reached by the local parser; sub-solid volumes; unnamed descriptor points ("trọng tâm của tam giác ABC"); a role-slot value in a sentence that also carries a projection descriptor is refused by the Source Gate's closed grammar (separate sentences work); scale-free figures (MISSING_DIMENSION); free points; no parameter interaction (camera only, by design); the conclusion step's learner text still reads "cos² … = value" in the backend event (not shown in the workspace).
