@@ -18494,3 +18494,15 @@ html::-webkit-scrollbar {
     height: 32px;
   }
 }
+
+/* semantic-to-scene3d-verified-simulation: the step buttons drive the construction timeline on a phone; the browser
+   E2E measured 26 px there (the 860 px rule above). Touch targets are at least 40 px on a coarse pointer or a narrow
+   screen; the icon size and the capsule design are unchanged. */
+@media (pointer: coarse), (max-width: 48rem) {
+  .playback-pa-capsule .pa-btn,
+  .playback-pa-capsule .pa-btn.play-btn,
+  .playback-pa-capsule .pa-btn-play {
+    width: 40px;
+    height: 40px;
+  }
+}
