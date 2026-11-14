@@ -48,7 +48,9 @@ ROOT = Path(__file__).resolve().parents[2]
 #: Superseded by run `scene3d-causal-pedagogical-integrity` (CACHE_VERSION 138): `served-intersection-SAB-SCD` no longer
 #: flags its ASKED intersection line as an unused auxiliary; every other fixture differs only by producer identity.
 #: The lineage bundle stays unchanged as the evidence it was.
-FIXTURES = ROOT / 'docs/evaluation/geometry/runs/scene3d-causal-pedagogical-integrity/fixtures-causal-pedagogical'
+#: Superseded within the same run: `served-section-MAB-trapezoid` carries trace-method reasons on its section edges
+#: (`trace_derivation`, `COPLANAR_TRACE_INTERSECTION`); geometry unchanged. The causal-pedagogical bundle stays unchanged.
+FIXTURES = ROOT / 'docs/evaluation/geometry/runs/scene3d-causal-pedagogical-integrity/fixtures-trace-method'
 #: The superseded bundle — the one that predates the route D version bump the identity-restore test is about.
 OLD_FIXTURES = ROOT / 'docs/evaluation/geometry/runs/hybrid-preview-contract-hardening/fixtures-adapter-2'
 SCRIPT = ROOT / 'backend/scripts/export_hybrid_preview_fixtures.py'
