@@ -52,6 +52,39 @@ def child(kind: str) -> None:
             out["_diagnose_ms"] = (time.perf_counter() - t0) * 1000 / 200
         except ImportError:
             out["_diagnose_ms"] = None
+        try:                                    # run `proof-soundness-generalized-angle-invariance`: proof search cost
+            from app.simulation.geometry_functions import planner
+            from app.simulation.geometry_functions.registry import doc_ke_hoach
+            from app.simulation.geometry_functions.target_invariance import MAX_DERIVED, prove_angle_goal, verify_target_invariance_certificate
+            from app.simulation.geometry_functions.typed_fact_next_bridge import bridge_v2
+            from app.ai.local_geometry_parser import parse_geometry_problem_locally as P
+            proof = {}
+            for k, v in CORPUS.items():
+                lp = P(v["text"], use_cache=False)
+                if lp.parsed_contract is None:
+                    continue
+                try:
+                    calls = doc_ke_hoach({"calls": planner.lap_ke_hoach({"facts": bridge_v2(lp.parsed_contract)["facts"]}, v["text"]).calls})
+                except Exception:  # noqa: BLE001 — a text the planner refuses has no proof to time
+                    continue
+                ask = next((c for c in calls if c.fn.startswith("ask_angle_")), None)
+                if ask is None:
+                    continue
+                t0 = time.perf_counter()
+                for _ in range(20):
+                    cert = prove_angle_goal(calls, ask)
+                prove_ms = (time.perf_counter() - t0) * 1000 / 20
+                ver_ms = None
+                if cert and cert.get("status") == "PROVEN":
+                    t0 = time.perf_counter()
+                    for _ in range(20):
+                        verify_target_invariance_certificate(cert, calls, ask)
+                    ver_ms = (time.perf_counter() - t0) * 1000 / 20
+                proof[k] = {"prove_ms": prove_ms, "verify_ms": ver_ms, "status": (cert or {}).get("status"),
+                            "steps": len((cert or {}).get("steps") or ())}
+            out["_proof"] = {"max_derived": MAX_DERIVED, "rows": proof}
+        except ImportError:
+            out["_proof"] = None
     else:
         from PIL import Image
         from app.ingestion.unified_input import prepare_unified_input
@@ -85,11 +118,19 @@ def main(before: Path) -> int:
                       "text_served_median_ms": med(r["text"], lambda v: v["status"] == "SERVED"),
                       "diagnose_call_ms": r["text"].get("_diagnose_ms"),
                       "prepare_single_median_ms": med(r["prepare"], lambda v: v["set"] == "REAL_SINGLE"),
-                      "prepare_composite_median_ms": med(r["prepare"], lambda v: v["set"] != "REAL_SINGLE")} for side, r in res.items()}
+                      "prepare_composite_median_ms": med(r["prepare"], lambda v: v["set"] != "REAL_SINGLE"),
+                      "proof": None if not r["text"].get("_proof") else {
+                          "max_derived": r["text"]["_proof"]["max_derived"],
+                          "goals_timed": len(r["text"]["_proof"]["rows"]),
+                          "prove_ms_max": round(max(x["prove_ms"] for x in r["text"]["_proof"]["rows"].values()), 3),
+                          "verify_ms_max": round(max((x["verify_ms"] or 0) for x in r["text"]["_proof"]["rows"].values()), 3),
+                          "steps_max": max(x["steps"] for x in r["text"]["_proof"]["rows"].values()),
+                          "budget_exceeded": sum(x["status"] == "PROOF_SEARCH_BUDGET_EXCEEDED" for x in r["text"]["_proof"]["rows"].values())}}
+               for side, r in res.items()}
     data = {"run_id": RUN.name, "generated_at_utc": datetime.now(timezone.utc).isoformat(),
             "head": subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT).decode().strip(),
             "environment": {"ALLOW_LIVE_AI": "0", "host": "developer desktop, shared, not isolated"},
-            "command": "python docs/evaluation/geometry/runs/compositional-semantics-simulation-goals/tools/perf.py <before_backend>",
+            "command": f"python docs/evaluation/geometry/runs/{RUN.name}/tools/perf.py <archive of 9d5e9b408>/backend",
             "summary": summary, "rows": res, "physical_low_end": "PHYSICAL_LOW_END_NOT_MEASURED"}
     (RUN / "performance_impact.json").write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(json.dumps(summary, indent=1))

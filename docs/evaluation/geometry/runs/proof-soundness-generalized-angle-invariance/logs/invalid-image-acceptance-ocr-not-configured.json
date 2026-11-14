@@ -1,0 +1,298 @@
+{
+  "run_id": "proof-soundness-generalized-angle-invariance",
+  "generated_at_utc": "2026-11-14T11:47:58.989708+00:00",
+  "head": "244d4b0223017c8eb217dcaf0872d188d663a96f",
+  "reference_status": "AGENT_TRANSCRIBED_UNVERIFIED; answer oracle = dataset key",
+  "input": "image → /api/input/prepare (local OCR) → scripted confirmation of flagged spans only (SCRIPTED_NOT_REAL_STUDENT) → /api/analyze",
+  "upload_to_first_model_note": "server-side path only (prepare + analyze); browser render adds ~0.4 s (frontend_performance_profile.json)",
+  "grading_note": "source_goal_completion ⇒ GOAL_VISUALIZATION_READY_NUMERIC_NOT_ANSWERED (never a numeric answer)",
+  "numeric_source_goal_not_answered": [
+    "vmmu_r258",
+    "vmmu_r498",
+    "vmmu_r559"
+  ],
+  "outcomes": {
+    "SAFE_REFUSAL": 27
+  },
+  "levels": {
+    "None": 27
+  },
+  "grades": {
+    "NOT_SERVED": 27
+  },
+  "wrong_scene_served": [],
+  "broken_invariants": 0,
+  "interactive_simulation_verified": "per-image browser interaction NOT_MEASURED; the browser E2E (scene3d_interaction_browser_e2e.json) covers the same scene types from text input",
+  "rows": [
+    {
+      "case_id": "vmmu_r247",
+      "partition_now": "DEVELOPMENT_EXPOSED",
+      "outcome": "SAFE_REFUSAL",
+      "reason": "LIVE_AI_DISABLED",
+      "simulation": {
+        "level": null
+      },
+      "grade": "NOT_SERVED"
+    },
+    {
+      "case_id": "vmmu_r254",
+      "partition_now": "DEVELOPMENT_EXPOSED",
+      "outcome": "SAFE_REFUSAL",
+      "reason": "MULTIPLE_PROBLEMS_DETECTED",
+      "simulation": {
+        "level": null
+      },
+      "grade": "NOT_SERVED"
+    },
+    {
+      "case_id": "vmmu_r256",
+      "partition_now": "DEVELOPMENT_EXPOSED",
+      "outcome": "SAFE_REFUSAL",
+      "reason": "MULTIPLE_PROBLEMS_DETECTED",
+      "simulation": {
+        "level": null
+      },
+      "grade": "NOT_SERVED"
+    },
+    {
+      "case_id": "vmmu_r258",
+      "partition_now": "DEVELOPMENT_EXPOSED",
+      "outcome": "SAFE_REFUSAL",
+      "reason": "MULTIPLE_PROBLEMS_DETECTED",
+      "simulation": {
+        "level": null
+      },
+      "grade": "NOT_SERVED"
+    },
+    {
+      "case_id": "vmmu_r266",
+      "partition_now": "DEVELOPMENT_EXPOSED",
+      "outcome": "SAFE_REFUSAL",
+      "reason": "LIVE_AI_DISABLED",
+      "simulation": {
+        "level": null
+      },
+      "grade": "NOT_SERVED"
+    },
+    {
+      "case_id": "vmmu_r270",
+      "partition_now": "DEVELOPMENT_EXPOSED",
+      "outcome": "SAFE_REFUSAL",
+      "reason": "LIVE_AI_DISABLED",
+      "simulation": {
+        "level": null
+      },
+      "grade": "NOT_SERVED"
+    },
+    {
+      "case_id": "vmmu_r273",
+      "partition_now": "DEVELOPMENT_EXPOSED",
+      "outcome": "SAFE_REFUSAL",
+      "reason": "MULTIPLE_PROBLEMS_DETECTED",
+      "simulation": {
+        "level": null
+      },
+      "grade": "NOT_SERVED"
+    },
+    {
+      "case_id": "vmmu_r277",
+      "partition_now": "DEVELOPMENT_EXPOSED",
+      "outcome": "SAFE_REFUSAL",
+      "reason": "LIVE_AI_DISABLED",
+      "simulation": {
+        "level": null
+      },
+      "grade": "NOT_SERVED"
+    },
+    {
+      "case_id": "vmmu_r284",
+      "partition_now": "DEVELOPMENT_EXPOSED",
+      "outcome": "SAFE_REFUSAL",
+      "reason": "LIVE_AI_DISABLED",
+      "simulation": {
+        "level": null
+      },
+      "grade": "NOT_SERVED"
+    },
+    {
+      "case_id": "vmmu_r295",
+      "partition_now": "DEVELOPMENT_EXPOSED",
+      "outcome": "SAFE_REFUSAL",
+      "reason": "LIVE_AI_DISABLED",
+      "simulation": {
+        "level": null
+      },
+      "grade": "NOT_SERVED"
+    },
+    {
+      "case_id": "vmmu_r298",
+      "partition_now": "DEVELOPMENT_EXPOSED",
+      "outcome": "SAFE_REFUSAL",
+      "reason": "LIVE_AI_DISABLED",
+      "simulation": {
+        "level": null
+      },
+      "grade": "NOT_SERVED"
+    },
+    {
+      "case_id": "vmmu_r375",
+      "partition_now": "DEVELOPMENT_EXPOSED",
+      "outcome": "SAFE_REFUSAL",
+      "reason": "MULTIPLE_PROBLEMS_DETECTED",
+      "simulation": {
+        "level": null
+      },
+      "grade": "NOT_SERVED"
+    },
+    {
+      "case_id": "vmmu_r460",
+      "partition_now": "DEVELOPMENT_EXPOSED",
+      "outcome": "SAFE_REFUSAL",
+      "reason": "MULTIPLE_PROBLEMS_DETECTED",
+      "simulation": {
+        "level": null
+      },
+      "grade": "NOT_SERVED"
+    },
+    {
+      "case_id": "vmmu_r461",
+      "partition_now": "DEVELOPMENT_EXPOSED",
+      "outcome": "SAFE_REFUSAL",
+      "reason": "MULTIPLE_PROBLEMS_DETECTED",
+      "simulation": {
+        "level": null
+      },
+      "grade": "NOT_SERVED"
+    },
+    {
+      "case_id": "vmmu_r463",
+      "partition_now": "DEVELOPMENT_EXPOSED",
+      "outcome": "SAFE_REFUSAL",
+      "reason": "LIVE_AI_DISABLED",
+      "simulation": {
+        "level": null
+      },
+      "grade": "NOT_SERVED"
+    },
+    {
+      "case_id": "vmmu_r475",
+      "partition_now": "DEVELOPMENT_EXPOSED",
+      "outcome": "SAFE_REFUSAL",
+      "reason": "LIVE_AI_DISABLED",
+      "simulation": {
+        "level": null
+      },
+      "grade": "NOT_SERVED"
+    },
+    {
+      "case_id": "vmmu_r476",
+      "partition_now": "DEVELOPMENT_EXPOSED",
+      "outcome": "SAFE_REFUSAL",
+      "reason": "MULTIPLE_PROBLEMS_DETECTED",
+      "simulation": {
+        "level": null
+      },
+      "grade": "NOT_SERVED"
+    },
+    {
+      "case_id": "vmmu_r488",
+      "partition_now": "DEVELOPMENT_EXPOSED",
+      "outcome": "SAFE_REFUSAL",
+      "reason": "LIVE_AI_DISABLED",
+      "simulation": {
+        "level": null
+      },
+      "grade": "NOT_SERVED"
+    },
+    {
+      "case_id": "vmmu_r491",
+      "partition_now": "DEVELOPMENT_EXPOSED",
+      "outcome": "SAFE_REFUSAL",
+      "reason": "LIVE_AI_DISABLED",
+      "simulation": {
+        "level": null
+      },
+      "grade": "NOT_SERVED"
+    },
+    {
+      "case_id": "vmmu_r492",
+      "partition_now": "DEVELOPMENT_EXPOSED",
+      "outcome": "SAFE_REFUSAL",
+      "reason": "MULTIPLE_PROBLEMS_DETECTED",
+      "simulation": {
+        "level": null
+      },
+      "grade": "NOT_SERVED"
+    },
+    {
+      "case_id": "vmmu_r498",
+      "partition_now": "DEVELOPMENT_EXPOSED",
+      "outcome": "SAFE_REFUSAL",
+      "reason": "MULTIPLE_PROBLEMS_DETECTED",
+      "simulation": {
+        "level": null
+      },
+      "grade": "NOT_SERVED"
+    },
+    {
+      "case_id": "vmmu_r513",
+      "partition_now": "DEVELOPMENT_EXPOSED",
+      "outcome": "SAFE_REFUSAL",
+      "reason": "MULTIPLE_PROBLEMS_DETECTED",
+      "simulation": {
+        "level": null
+      },
+      "grade": "NOT_SERVED"
+    },
+    {
+      "case_id": "vmmu_r520",
+      "partition_now": "DEVELOPMENT_EXPOSED",
+      "outcome": "SAFE_REFUSAL",
+      "reason": "LIVE_AI_DISABLED",
+      "simulation": {
+        "level": null
+      },
+      "grade": "NOT_SERVED"
+    },
+    {
+      "case_id": "vmmu_r537",
+      "partition_now": "DEVELOPMENT_EXPOSED",
+      "outcome": "SAFE_REFUSAL",
+      "reason": "LIVE_AI_DISABLED",
+      "simulation": {
+        "level": null
+      },
+      "grade": "NOT_SERVED"
+    },
+    {
+      "case_id": "vmmu_r538",
+      "partition_now": "DEVELOPMENT_EXPOSED",
+      "outcome": "SAFE_REFUSAL",
+      "reason": "LIVE_AI_DISABLED",
+      "simulation": {
+        "level": null
+      },
+      "grade": "NOT_SERVED"
+    },
+    {
+      "case_id": "vmmu_r559",
+      "partition_now": "PREVIOUS_RUN_FRESH_VIEWED",
+      "outcome": "SAFE_REFUSAL",
+      "reason": "LIVE_AI_DISABLED",
+      "simulation": {
+        "level": null
+      },
+      "grade": "NOT_SERVED"
+    },
+    {
+      "case_id": "vmmu_r695",
+      "partition_now": "PREVIOUS_RUN_FRESH_VIEWED_AND_RULE_TARGETED",
+      "outcome": "SAFE_REFUSAL",
+      "reason": "LIVE_AI_DISABLED",
+      "simulation": {
+        "level": null
+      },
+      "grade": "NOT_SERVED"
+    }
+  ]
+}

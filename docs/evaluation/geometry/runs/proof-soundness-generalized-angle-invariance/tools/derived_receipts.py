@@ -302,9 +302,12 @@ def main() -> int:
             s.settimeout(0.3)
             if s.connect_ex(("127.0.0.1", port)) == 0:
                 listening.append(port)
-    put("resource_cleanup_audit.json", {"ports_checked": [8767, 8000, 3000, 4173, 5173], "listening": listening,
+    browser = load("resource_cleanup_audit.json")          # measured by scene3d_goal_e2e.mjs; kept, extended here
+    browser = browser.get("browser_switch_loop", browser)
+    put("resource_cleanup_audit.json", {"browser_switch_loop": browser,
+        "ports_checked_after_run": [8767, 8000, 3000, 4173, 5173], "listening": listening,
         "worktrees": git("worktree", "list").count("\n") + 1, "new_worktrees_or_branches": 0,
-        "scratch": "temporary archives and probes under the session scratch directory only",
+        "scratch": "temporary archives, dist and probes under the session scratch directory only",
         "verdict": "PASS" if not listening else "FAIL"})
     put("publication_gate_status.json", {
         "product_regression": reg.get("verdict"),

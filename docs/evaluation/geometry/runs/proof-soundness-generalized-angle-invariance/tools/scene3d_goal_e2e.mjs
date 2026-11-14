@@ -1,4 +1,5 @@
 // Real Chromium on the production build + loopback measured_app (local-first, ALLOW_LIVE_AI=0, no provider call).
+// Run `proof-soundness-generalized-angle-invariance` (copied from target-invariant-regular-solid-semantics; six proof-angle cases).
 // Run `certified-scale-cache-safety` (copied from compositional-semantics-simulation-goals; distance-goal criterion added).
 // Earlier run: multi-clause sentences, a plane defined after its question, unnamed
 // described points, and trigonometric goals served as the constructed angle with the number NOT answered. The learner
@@ -14,6 +15,8 @@ const [dist, outDir] = process.argv.slice(2, 4).map((p) => resolve(p));
 const backendPort = Number(process.argv[4] ?? 8767);
 const P = 'Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với mặt phẳng đáy và SA = a';
 const T = 'Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh a, SA vuông góc với mặt phẳng (ABC) và SA = a. ';
+const R1 = 'Cho hình chóp S.ABC có đáy là tam giác vuông tại B, SA vuông góc với đáy và SA = AB. ';
+const R2 = 'Cho hình chóp S.ABC có đáy là tam giác vuông tại B, SA vuông góc với đáy và SA = 2AB. ';
 const CASES = {
   section_one_sentence: { goal: 'section', text: P + ', M là trung điểm của SA, mặt phẳng (P) đi qua M và song song với mặt đáy. Xác định thiết diện của hình chóp bởi (P).' },
   section_plane_after_goal: { goal: 'section', text: P + '. Gọi M là trung điểm của SA. Xác định thiết diện của hình chóp bởi mặt phẳng (P), biết (P) đi qua M và song song với mặt đáy.' },
@@ -26,10 +29,17 @@ const CASES = {
   shape_free_planes: { goal: 'angle', scale: true, shape: true, text: 'Cho hình chóp S.ABC có đáy là tam giác vuông tại B, SA vuông góc với đáy và SA = AB. Tính góc giữa hai mặt phẳng (SBC) và (ABC).' },
   shape_free_tan: { goal: 'angle', scale: true, shape: true, numeric: 'tan', text: 'Cho hình chóp S.ABC có đáy là tam giác vuông tại B, SA vuông góc với đáy và SA = AB. Tang của góc giữa hai mặt phẳng (SBC) và (ABC) bằng' },
   regular_tetra_cos: { goal: 'angle', scale: true, numeric: 'cos', text: 'Cho tứ diện đều ABCD. Gọi M là trung điểm của CD. Côsin của góc giữa hai đường thẳng AC và BM bằng' },
+  // run `proof-soundness-generalized-angle-invariance`: non-isosceles ratio, perpendicular planes, line–plane, line–line
+  ratio2_planes: { goal: 'angle', scale: true, shape: true, text: R2 + 'Tính góc giữa hai mặt phẳng (SBC) và (ABC).' },
+  ratio2_tan: { goal: 'angle', scale: true, shape: true, numeric: 'tan', text: R2 + 'Tang của góc giữa hai mặt phẳng (SBC) và (ABC) bằng' },
+  ratio2_line_plane: { goal: 'angle', scale: true, shape: true, text: R2 + 'Tính góc giữa đường thẳng SB và mặt phẳng (ABC).' },
+  lines_meeting: { goal: 'angle', scale: true, shape: true, text: R1 + 'Tính góc giữa hai đường thẳng SB và SA.' },
+  perp_planes: { goal: 'right_angle', scale: true, shape: true, text: R1 + 'Tính góc giữa hai mặt phẳng (SAC) và (ABC).' },
+  skew_perpendicular: { goal: 'right_angle', scale: true, shape: true, text: R1 + 'Tính góc giữa hai đường thẳng SA và BC.' },
   unnamed_midpoint_distance: { goal: 'distance', text: P + '. Tính khoảng cách từ trung điểm của SC đến mặt phẳng (ABCD).' },
 };
 const VIEWPORTS = [[1920, 1080], [1366, 768], [768, 1024], [390, 844]];
-const FULL_VIEWPORT_CASES = new Set(['section_one_sentence', 'cos_line_plane', 'scale_iso_tan', 'shape_free_tan']);
+const FULL_VIEWPORT_CASES = new Set(['section_one_sentence', 'cos_line_plane', 'scale_iso_tan', 'shape_free_tan', 'ratio2_tan']);
 
 const server = createServer((req, res) => {
   const path = new URL(req.url, 'http://localhost').pathname;
@@ -213,7 +223,8 @@ try {
         case: name, goal: c.goal, viewport: `${w}x${h}`, status, first_model_ms: firstModelMs,
         timeline_steps: steps.length, timeline: steps,
         goal_object_id: goalId ?? null,
-        construction_only_at_conclusion: c.goal === 'angle'
+        // a 90° goal (perpendicular planes / lines) draws no angle construction: not applicable, recorded as null
+        construction_only_at_conclusion: c.goal === 'right_angle' ? null : c.goal === 'angle'
           ? (last?.angle_construction_ids?.length === 1 && before.every((s) => s.angle_construction_ids.length === 0))
           : c.goal === 'altitude'
             ? (last?.altitude_construction_ids?.length === 1 && before.every((s) => s.altitude_construction_ids.length === 0))
