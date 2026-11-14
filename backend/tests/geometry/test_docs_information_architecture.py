@@ -217,7 +217,8 @@ def test_inv_20_candidate_and_cache_verify_only():
     # 130 -> 131 (geometry-generalization-and-pedagogical-construction): cạnh thiết diện mang lý do đã kiểm chính xác (`justification_text`, envelope phục vụ đổi; row v130 phải MISS).
     # 132 -> 133 (semantic-to-scene3d-verified-simulation): góc khác 90° mang `angle_construction` (envelope phục vụ đổi; row 132:route-d phải MISS).
     # 133 -> 134 (verified-section-intersection-dihedral-local): góc không vẽ góc bù + `altitude_construction` (row 133:route-d phải MISS).
-    assert str(CACHE_VERSION) == "134"
+    # 134 -> 135 (certified-scale-cache-safety): guard siết mà khoá cache không đổi ⇒ row 134:route-d phải MISS.
+    assert str(CACHE_VERSION) == "135"
 
 
 def test_inv_21_favicon_not_in_staged_changes():
