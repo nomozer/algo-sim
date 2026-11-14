@@ -338,6 +338,14 @@ export interface SceneObject {
   endpoint_entities?: SectionEndpointEntity[];
   identity_diagnostics?: string[];
   section_edge_coordinate_hashes?: Record<string, string>;
+  computational_depends?: string[];
+  visible_prerequisites?: string[];
+  construction_lineage?: ConstructionLineage;
+  measured_quantity?: MeasuredQuantity;
+  ordered_vertex_ids?: string[];
+  ordered_vertex_symbols?: string[];
+  ordered_boundary_edges?: string[];
+  is_unused_auxiliary?: boolean;
   /**
    * ĐẠI LƯỢNG ĐO — chuỗi ĐÃ ĐỊNH DẠNG cho người đọc (`"√2"`, `"3√2/5"`).
    *
@@ -428,32 +436,106 @@ const GIA_TRI_DAI_LUONG_CHUA_BIET = new Set([
   "-Infinity",
 ]);
 
-/** Kiểm tra đại lượng mang giá trị rỗng hoặc ký hiệu giữ chỗ chưa biết (`"?"`, `"unknown"`, `"NaN"`...). */
+export function isVectorLeakString(raw: unknown): boolean {
+  return typeof raw === "string" && /^\s*Vec3\s*\(/i.test(raw);
+}
+
+/** Kiểm tra đại lượng mang giá trị rỗng, rò rỉ Vec3(...) hoặc ký hiệu giữ chỗ chưa biết. */
 export function laGiaTriDaiLuongChuaBiet(raw: string | null | undefined): boolean {
   if (typeof raw !== "string") return true;
   const t = raw.trim();
-  return t.length === 0 || GIA_TRI_DAI_LUONG_CHUA_BIET.has(t);
+  return t.length === 0 || GIA_TRI_DAI_LUONG_CHUA_BIET.has(t) || isVectorLeakString(t);
 }
 
 /**
  * Định dạng biểu thức có thẩm quyền của một đối tượng `quantity` mà không tính toán lại:
  * ưu tiên `symbolic` (biểu thức chứa tham số đề cho), kế đến cấu trúc chính xác `exact` (`hienSo`),
- * cuối cùng là `value`. Trả về `null` nếu thiếu giá trị hoặc là placeholder chưa biết.
+ * cuối cùng là `value` hoặc `measured_quantity`. Trả về `null` nếu thiếu giá trị, chưa biết hoặc rò rỉ `Vec3(...)`.
  */
 export function hienBieuThucDaiLuong(
-  o: Pick<SceneObject, "symbolic" | "exact" | "value">,
+  o: Pick<SceneObject, "symbolic" | "exact" | "value" | "measured_quantity">,
 ): string | null {
   if (typeof o.symbolic === "string" && !laGiaTriDaiLuongChuaBiet(o.symbolic)) {
     return o.symbolic.trim();
   }
-  if (o.exact) {
-    const ex = hienSo(o.exact, typeof o.value === "string" ? o.value : "");
+  const mqVal =
+    o.measured_quantity?.value !== undefined && o.measured_quantity?.value !== null
+      ? String(o.measured_quantity.value)
+      : undefined;
+  const rawFallback = typeof o.value === "string" && !isVectorLeakString(o.value)
+    ? o.value
+    : (mqVal && !isVectorLeakString(mqVal) ? mqVal : "");
+  const exactStruct = o.exact ?? o.measured_quantity?.exact ?? undefined;
+  if (exactStruct) {
+    const ex = hienSo(exactStruct, rawFallback);
     return laGiaTriDaiLuongChuaBiet(ex) ? null : ex.trim();
   }
-  if (typeof o.value === "string" && !laGiaTriDaiLuongChuaBiet(o.value)) {
-    return o.value.trim();
+  if (!laGiaTriDaiLuongChuaBiet(rawFallback)) {
+    return rawFallback.trim();
   }
   return null;
+}
+
+/**
+ * Chỉ trả về quan hệ toán học đã được Backend chứng nhận tường minh trong `measured_quantity.certified_relation`.
+ * Tuyệt đối không suy diễn vuông góc chỉ vì giá trị số bằng `"0"` hay tên biến.
+ */
+export function resolveCertifiedMeasuredRelation(
+  o: Pick<SceneObject, "measured_quantity"> | null | undefined,
+): MeasuredCertifiedRelation {
+  const rel = o?.measured_quantity?.certified_relation;
+  if (
+    rel === "perpendicular_lines"
+    || rel === "point_on_plane"
+    || rel === "coplanar_intersecting_or_coincident_lines"
+  ) {
+    return rel;
+  }
+  return null;
+}
+
+/**
+ * Tiền đề hiển thị cho đối tượng trực quan, tách khỏi `computational_depends` khi có `vector3`/`non_visual`
+ * trung gian nhưng vẫn giữ phụ thuộc tính toán nguyên vẹn cho `computational_depends` / `depends`.
+ */
+export function resolveVisualPrerequisitesOf(
+  _scene: Pick<Scene3D, "objects">,
+  obj: SceneObject,
+): string[] {
+  if (
+    obj.type === "quantity"
+    || obj.render === "non_visual"
+    || obj.render === "readout"
+    || obj.display_role === "non_visual"
+    || obj.display_role === "measurement"
+  ) {
+    return [...(obj.computational_depends ?? obj.depends ?? [])];
+  }
+  if (Array.isArray(obj.visible_prerequisites)) {
+    return [...obj.visible_prerequisites];
+  }
+  if (
+    obj.construction_lineage?.mode === "vector_translation"
+    && Array.isArray(obj.construction_lineage.visible_prerequisites)
+  ) {
+    return [...obj.construction_lineage.visible_prerequisites];
+  }
+  const edgeBySource = new Map<string, DependencyEdge>();
+  for (const edge of obj.dependency_edges ?? []) {
+    edgeBySource.set(edge.source_id, edge);
+  }
+  const out: string[] = [];
+  for (const depId of obj.depends ?? []) {
+    const edge = edgeBySource.get(depId);
+    if (edge?.is_non_visual_carrier && Array.isArray(edge.resolved_visible_sources)) {
+      for (const sid of edge.resolved_visible_sources) {
+        if (sid && sid !== obj.id && !out.includes(sid)) out.push(sid);
+      }
+      continue;
+    }
+    if (depId && depId !== obj.id && !out.includes(depId)) out.push(depId);
+  }
+  return out;
 }
 
 /**
@@ -514,9 +596,57 @@ export type FormationSemanticKind =
 
 export type DependencyRelation = "numerical" | "structural" | "topological" | "layout";
 
+export type ConstructionLineage =
+  | { mode: "direct_euclidean_primitive"; producer: string }
+  | {
+      mode: "algebraic_line_plane_intersection";
+      line_id: string;
+      plane_id: string;
+      pedagogical_limitation?: string;
+    }
+  | {
+      mode: "euclidean_coplanar_intersection";
+      coplanar_lines: [string, string];
+    }
+  | {
+      mode: "vector_translation";
+      base_point_id: string;
+      vector_id: string;
+      visible_prerequisites: string[];
+    };
+
+export type MeasuredQuantityKind =
+  | "distance"
+  | "angle_cos_sq"
+  | "angle_cos"
+  | "volume"
+  | "area"
+  | "radius"
+  | "lateral_area"
+  | (string & {});
+
+export type MeasuredCertifiedRelation =
+  | "perpendicular_lines"
+  | "point_on_plane"
+  | "coplanar_intersecting_or_coincident_lines"
+  | null;
+
+export interface MeasuredQuantity {
+  quantity_kind: MeasuredQuantityKind;
+  producer?: string;
+  subject_ids: string[];
+  subject_labels?: string[];
+  subject_types?: string[];
+  value?: string | number | null;
+  exact?: ExactNumberJson | null;
+  certified_relation?: MeasuredCertifiedRelation;
+}
+
 export interface DependencyEdge {
   source_id: string;
   relation: DependencyRelation;
+  is_non_visual_carrier?: boolean;
+  resolved_visible_sources?: string[];
 }
 
 export interface SectionVertexSource {
@@ -581,6 +711,10 @@ export interface SceneEvent {
   display_label?: string;
   details?: Record<string, unknown>;
   semantic_kind?: FormationSemanticKind;
+  visible_prerequisites?: string[];
+  construction_lineage?: ConstructionLineage;
+  measured_quantity?: MeasuredQuantity;
+  formation_roles?: string[];
   diagnostics?: string[];
 }
 
@@ -602,6 +736,9 @@ export interface FormationStep {
   details?: Record<string, unknown>;
   semantic_kind?: FormationSemanticKind;
   geometry_progress?: GeometryProgress[];
+  visible_prerequisites?: string[];
+  construction_lineage?: ConstructionLineage;
+  measured_quantity?: MeasuredQuantity;
 }
 
 export interface SceneFormation {
@@ -657,6 +794,7 @@ export interface Scene3D {
   events: SceneEvent[];
   free_objects: string[];
   formation?: SceneFormation;
+  unused_auxiliary_ids?: string[];
   /** W17: chẩn đoán cho người phát triển (`ANNOTATION_UNBOUND …`) — không hiện cho học sinh. */
   diagnostics?: string[];
   /** exact-dimensions: metric KHUNG G (3×3 phân số) khi bố cục là khung affine — vắng ⇒ Euclid. `scene3d-chart`. */

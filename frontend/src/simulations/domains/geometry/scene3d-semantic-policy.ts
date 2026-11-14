@@ -40,18 +40,24 @@ import {
   hienBieuThucDaiLuong,
   hybridViewOfScene,
   isSceneWorldTransformed,
+  isVectorLeakString,
   learnerTextIsSafe,
   measurementOnlyPlanes,
   objectsAt,
   propagateSceneLineage,
   registerExactSceneOrigin,
+  resolveCertifiedMeasuredRelation,
+  resolveVisualPrerequisitesOf,
   toNumber,
   toVec3,
   type CanonicalMathProvenance,
+  type ConstructionLineage,
   type Exact,
   type ExactVec3,
   type FormationStep,
   type GeometryProgress,
+  type MeasuredCertifiedRelation,
+  type MeasuredQuantity,
   type Scene3D,
   type SceneEvent,
   type SceneObject,
@@ -6627,6 +6633,319 @@ export function formatCycleNotation(
   return `(${compact})`;
 }
 
+export interface CanonicalSectionDesignation {
+  vertexNames: string[];
+  vertexIds: string[];
+  boundaryEdges: string[];
+  notation: string | null;
+  compactLabel: string | null;
+  source: "ordered_vertex_symbols" | "boundary_edges" | "fallback_cycle";
+}
+
+function parseBoundaryEdgeVertices(edges: readonly string[]): string[] | null {
+  if (edges.length < 3) return null;
+  const pairs: [string, string][] = [];
+  for (const raw of edges) {
+    const tokens = raw.match(/[A-Z][0-9′']*/gu);
+    if (!tokens || tokens.length !== 2) return null;
+    pairs.push([tokens[0]!, tokens[1]!]);
+  }
+  for (let i = 0; i < pairs.length; i += 1) {
+    const next = pairs[(i + 1) % pairs.length]!;
+    if (pairs[i]![1] !== next[0]) return null;
+  }
+  const verts = pairs.map((p) => p[0]);
+  return new Set(verts).size === verts.length ? verts : null;
+}
+
+/**
+ * Chuẩn hóa tên gọi & chu trình đỉnh thiết diện từ `ordered_vertex_symbols` / `ordered_boundary_edges`
+ * do Backend chứng nhận; giữ nguyên chiều & thứ tự chu trình (không xoay hay đảo thành NPFME).
+ */
+export function resolveCanonicalSectionDesignation(
+  scene: Scene3D,
+  sec: SceneObject | null | undefined,
+): CanonicalSectionDesignation | null {
+  if (!sec || (sec.type !== "section" && sec.type !== "polygon3")) return null;
+  const sd = sec.type === "section" ? sectionDetails(scene, sec.id) : null;
+  const rawOrdSyms = (sec.ordered_vertex_symbols ?? []).filter(
+    (sym): sym is string => Boolean(sym && !/^Đỉnh\s+\d+$/u.test(sym) && sym.length <= 4),
+  );
+  const rawOrdEdges = (sec.ordered_boundary_edges ?? []).filter((e) => typeof e === "string" && e.trim().length > 0);
+  const ordIds = (sec.ordered_vertex_ids ?? sd?.orderedVertexIds ?? []).filter(Boolean);
+
+  if (
+    rawOrdSyms.length >= 3
+    && rawOrdSyms.length === (sec.ordered_vertex_symbols?.length ?? 0)
+    && new Set(rawOrdSyms).size === rawOrdSyms.length
+  ) {
+    const boundaryEdges = rawOrdEdges.length === rawOrdSyms.length
+      ? rawOrdEdges
+      : rawOrdSyms.map((a, idx) => `${a}${rawOrdSyms[(idx + 1) % rawOrdSyms.length]!}`);
+    const compactLabel = rawOrdSyms.join("");
+    return {
+      vertexNames: rawOrdSyms,
+      vertexIds: ordIds,
+      boundaryEdges,
+      notation: `(${compactLabel})`,
+      compactLabel,
+      source: "ordered_vertex_symbols",
+    };
+  }
+
+  const parsedFromEdges = parseBoundaryEdgeVertices(rawOrdEdges);
+  if (parsedFromEdges && parsedFromEdges.length >= 3) {
+    const compactLabel = parsedFromEdges.join("");
+    return {
+      vertexNames: parsedFromEdges,
+      vertexIds: ordIds,
+      boundaryEdges: rawOrdEdges,
+      notation: `(${compactLabel})`,
+      compactLabel,
+      source: "boundary_edges",
+    };
+  }
+
+  const byId = new Map(scene.objects.map((o) => [o.id, o]));
+  const rawNames = sd
+    ? [...sd.vertexNames]
+    : (sec.vertex_ids?.length ? sec.vertex_ids : sec.depends ?? [])
+        .map((id, idx) => {
+          const obj = byId.get(id);
+          return (obj ? shortSym(obj) : "") || `Đỉnh ${idx + 1}`;
+        });
+  const prefOrder = preferredPointOrderForPolygon(scene, sec);
+  const canon = canonicalizeCycleNames(rawNames, prefOrder);
+  const validCompact = canon.length >= 3 && canon.every((c) => Boolean(c) && c.length <= 3 && !/^Đỉnh\s+\d+$/u.test(c));
+  const boundaryEdges = validCompact
+    ? canon.map((a, idx) => `${a}${canon[(idx + 1) % canon.length]!}`)
+    : rawOrdEdges;
+  const compactLabel = validCompact ? canon.join("") : null;
+  return {
+    vertexNames: canon,
+    vertexIds: ordIds,
+    boundaryEdges,
+    notation: compactLabel ? `(${compactLabel})` : null,
+    compactLabel,
+    source: "fallback_cycle",
+  };
+}
+
+export interface LearnerConstructionLineageSummary {
+  mode: ConstructionLineage["mode"] | "unspecified";
+  isAlgebraic: boolean;
+  isEuclidean: boolean;
+  isVectorTranslation: boolean;
+  hasPedagogicalLimitation: boolean;
+  learnerNote: string | null;
+  rawLimitation: string | null;
+}
+
+/**
+ * Diễn giải nguồn gốc phép dựng cho học sinh mà không tự bịa bước dựng Euclid từ nghiệm đại số.
+ */
+export function describeConstructionLineageForLearner(
+  scene: Scene3D,
+  obj: SceneObject | null | undefined,
+): LearnerConstructionLineageSummary {
+  const lineage =
+    obj?.construction_lineage
+    ?? (obj ? scene.events.find((ev) => ev.object === obj.id && ev.construction_lineage)?.construction_lineage : undefined);
+  if (!lineage) {
+    return {
+      mode: "unspecified",
+      isAlgebraic: false,
+      isEuclidean: false,
+      isVectorTranslation: false,
+      hasPedagogicalLimitation: false,
+      learnerNote: null,
+      rawLimitation: null,
+    };
+  }
+  const byId = new Map(scene.objects.map((o) => [o.id, o]));
+  const labelOf = (id: string): string => {
+    const target = byId.get(id);
+    if (!target) return id;
+    const sym = shortSym(target);
+    if (target.type === "plane3") return formatPlaneDisplayNotation(target, scene);
+    return sym || cleanLearnerText(target.label) || id;
+  };
+  if (lineage.mode === "direct_euclidean_primitive") {
+    return {
+      mode: lineage.mode,
+      isAlgebraic: false,
+      isEuclidean: true,
+      isVectorTranslation: false,
+      hasPedagogicalLimitation: false,
+      learnerNote: "Dựng trực tiếp bằng phép dựng hình học cơ bản.",
+      rawLimitation: null,
+    };
+  }
+  if (lineage.mode === "euclidean_coplanar_intersection") {
+    const l0 = labelOf(lineage.coplanar_lines[0]);
+    const l1 = labelOf(lineage.coplanar_lines[1]);
+    return {
+      mode: lineage.mode,
+      isAlgebraic: false,
+      isEuclidean: true,
+      isVectorTranslation: false,
+      hasPedagogicalLimitation: false,
+      learnerNote: l0 && l1
+        ? `Xác định giao điểm đồng phẳng của hai đường ${l0} và ${l1}.`
+        : "Xác định giao điểm của hai đường thẳng đồng phẳng.",
+      rawLimitation: null,
+    };
+  }
+  if (lineage.mode === "algebraic_line_plane_intersection") {
+    const rawLimitation = lineage.pedagogical_limitation?.trim() || null;
+    const lineLabel = labelOf(lineage.line_id);
+    const planeLabel = labelOf(lineage.plane_id);
+    const concise =
+      rawLimitation && rawLimitation.length <= 160 && !/\b[A-Za-z]+_[A-Za-z0-9_]+\b/u.test(rawLimitation)
+        ? rawLimitation
+        : `Giao điểm giữa ${lineLabel} và ${planeLabel} được xác định bằng phương trình giải tích (chưa tách đường phụ đồng phẳng).`;
+    return {
+      mode: lineage.mode,
+      isAlgebraic: true,
+      isEuclidean: false,
+      isVectorTranslation: false,
+      hasPedagogicalLimitation: Boolean(rawLimitation),
+      learnerNote: concise,
+      rawLimitation,
+    };
+  }
+  const baseLabel = labelOf(lineage.base_point_id);
+  const visLabels = lineage.visible_prerequisites.map(labelOf).filter(Boolean);
+  return {
+    mode: lineage.mode,
+    isAlgebraic: false,
+    isEuclidean: true,
+    isVectorTranslation: true,
+    hasPedagogicalLimitation: false,
+    learnerNote: visLabels.length > 0
+      ? `Xác định bằng phép tịnh tiến từ ${baseLabel} dựa trên ${visLabels.join(", ")}.`
+      : `Xác định bằng phép tịnh tiến từ ${baseLabel}.`,
+    rawLimitation: null,
+  };
+}
+
+export interface InspectedMeasuredQuantity {
+  quantityKind: MeasuredQuantity["quantity_kind"] | null;
+  categoryLabel: string | null;
+  displayValue: string | null;
+  exact: MeasuredQuantity["exact"] | null;
+  certifiedRelation: MeasuredCertifiedRelation;
+  isCertifiedPerpendicular: boolean;
+  isZeroMeasure: boolean;
+  hasVectorLeak: boolean;
+  subjectIds: string[];
+  subjectLabels: string[];
+  subjectTypes: string[];
+}
+
+const MEASURED_QUANTITY_CATEGORY_LABELS: Record<string, string> = {
+  distance: "Khoảng cách",
+  angle_cos_sq: "Côsin bình phương góc",
+  angle_cos: "Côsin góc",
+  volume: "Thể tích",
+  area: "Diện tích",
+  radius: "Bán kính",
+  lateral_area: "Diện tích xung quanh",
+};
+
+/**
+ * Kiểm tra & định dạng `measured_quantity` từ Backend:
+ * - Không suy diễn vuông góc chỉ vì giá trị bằng `"0"`.
+ * - Không suy đoán từ tên biến và chặn rò rỉ `Vec3(...)` lên UI học sinh.
+ */
+export function inspectMeasuredQuantityContract(
+  scene: Scene3D,
+  obj: SceneObject | null | undefined,
+): InspectedMeasuredQuantity | null {
+  if (!obj) return null;
+  const mq = obj.measured_quantity;
+  const rawValue = mq?.value !== undefined && mq?.value !== null ? String(mq.value) : (obj.value ?? null);
+  const hasVectorLeak = isVectorLeakString(rawValue) || isVectorLeakString(obj.value);
+  const certifiedRelation = resolveCertifiedMeasuredRelation(obj);
+  const displayValue = hasVectorLeak ? null : hienBieuThucDaiLuong(obj);
+  const trimmedVal = rawValue?.trim() ?? "";
+  const isZeroMeasure = !hasVectorLeak && (trimmedVal === "0" || trimmedVal === "0.0");
+  const kind = mq?.quantity_kind ?? null;
+  const byId = new Map(scene.objects.map((o) => [o.id, o]));
+  const subjectIds = [...(mq?.subject_ids ?? obj.annotation?.subject_ids ?? [])];
+  const subjectLabels = mq?.subject_labels?.length
+    ? [...mq.subject_labels]
+    : subjectIds.map((id) => shortSym(byId.get(id)) || cleanLearnerText(byId.get(id)?.label) || id);
+  const subjectTypes = [...(mq?.subject_types ?? [])];
+  return {
+    quantityKind: kind,
+    categoryLabel: kind ? (MEASURED_QUANTITY_CATEGORY_LABELS[kind] ?? null) : null,
+    displayValue,
+    exact: mq?.exact ?? obj.exact ?? null,
+    certifiedRelation,
+    isCertifiedPerpendicular: certifiedRelation === "perpendicular_lines",
+    isZeroMeasure,
+    hasVectorLeak,
+    subjectIds,
+    subjectLabels,
+    subjectTypes,
+  };
+}
+
+export interface SceneAuxiliaryUsageClassification {
+  unusedAuxiliaryAuditIds: string[];
+  usedInCalculationIds: string[];
+  usedInExplanationIds: string[];
+  retainedSceneGivenIds: string[];
+  allUnusedRetainedInScene: boolean;
+}
+
+/**
+ * Phân loại metadata kiểm toán `unused_auxiliary_ids`:
+ * giữ nguyên đối tượng dữ kiện có ích (như tâm `O`) trong Scene Graph, tuyệt đối không tự ẩn/xóa.
+ */
+export function classifySceneAuxiliaryUsage(scene: Scene3D): SceneAuxiliaryUsageClassification {
+  const unusedIds = [...(scene.unused_auxiliary_ids ?? [])];
+  const byId = new Map(scene.objects.map((o) => [o.id, o]));
+  const unusedSet = new Set(unusedIds);
+  const usedInCalc = new Set<string>();
+  const usedInExplain = new Set<string>();
+
+  for (const o of scene.objects) {
+    if (unusedSet.has(o.id)) continue;
+    for (const d of o.computational_depends ?? o.depends ?? []) usedInCalc.add(d);
+    for (const s of o.measured_quantity?.subject_ids ?? o.annotation?.subject_ids ?? []) usedInCalc.add(s);
+    for (const vp of resolveVisualPrerequisitesOf(scene, o)) usedInExplain.add(vp);
+  }
+  for (const fs of scene.formation?.steps ?? []) {
+    for (const vid of fs.visible_ids ?? []) {
+      if (byId.has(vid)) usedInExplain.add(vid);
+    }
+    for (const vp of fs.visible_prerequisites ?? []) {
+      if (byId.has(vp)) usedInExplain.add(vp);
+    }
+  }
+  for (const ev of scene.events ?? []) {
+    if (ev.object && byId.has(ev.object)) usedInExplain.add(ev.object);
+    for (const vp of ev.visible_prerequisites ?? []) {
+      if (byId.has(vp)) usedInExplain.add(vp);
+    }
+  }
+
+  const retainedSceneGivenIds = unusedIds.filter((id) => {
+    const o = byId.get(id);
+    return Boolean(o && o.render !== "non_visual");
+  });
+
+  return {
+    unusedAuxiliaryAuditIds: unusedIds,
+    usedInCalculationIds: [...usedInCalc].filter((id) => byId.has(id)),
+    usedInExplanationIds: [...usedInExplain].filter((id) => byId.has(id)),
+    retainedSceneGivenIds,
+    allUnusedRetainedInScene: unusedIds.every((id) => byId.has(id)),
+  };
+}
+
 export function preferredPointOrderForPolygon(
   scene: Pick<Scene3D, "objects">,
   polyObj?: SceneObject | null,
@@ -9233,6 +9552,7 @@ export function deriveExactPolygonMathBasis(
   }
 
   let rawNames: string[] = [];
+  const secCanon = polyObj.type === "section" ? resolveCanonicalSectionDesignation(scene, polyObj) : null;
   if (polyObj.type === "section") {
     const sd = sectionDetails(scene, polyObj.id);
     rawNames = sd ? [...sd.vertexNames] : rawPts.map((pt, idx) => shortSym(coordMap.get(pt.join("|")) ?? undefined) || `Đỉnh ${idx + 1}`);
@@ -9255,7 +9575,10 @@ export function deriveExactPolygonMathBasis(
   let cycleNotation: string | null = null;
 
   if (allNamed) {
-    const targetCanon = canonicalizeCycleNames(rawNames, prefOrder);
+    const targetCanon =
+      secCanon && secCanon.source !== "fallback_cycle" && secCanon.vertexNames.length === n
+        ? secCanon.vertexNames
+        : canonicalizeCycleNames(rawNames, prefOrder);
     const revNames = [...rawNames].reverse();
     const revPts = [...rawPts].reverse();
     for (let shift = 0; shift < n; shift += 1) {
@@ -11844,8 +12167,9 @@ function buildPedagogicalNarrationForRange(
     // 7. Thiết diện đa diện (từng đoạn giao tuyến vs bước khép kín hoàn chỉnh)
     if (primaryObj.type === "section") {
       const sd = sectionDetails(scene, primaryObj.id);
+      const secCanon = resolveCanonicalSectionDesignation(scene, primaryObj);
       const prefOrder = preferredPointOrderForPolygon(scene, primaryObj);
-      const cycNotation = sd ? formatCycleNotation(sd.vertexNames, prefOrder) : null;
+      const cycNotation = secCanon?.notation ?? (sd ? formatCycleNotation(sd.vertexNames, prefOrder) : null);
       const planeObj = sd?.planeId ? byId.get(sd.planeId) : undefined;
       const solidObj = sd?.solidId ? byId.get(sd.solidId) : undefined;
       const pRaw = planeObj ? shortSym(planeObj) : "mặt phẳng cắt";
@@ -11856,10 +12180,12 @@ function buildPedagogicalNarrationForRange(
         (ev) => ev.action === "EXTEND" && ev.object === primaryObj.id,
       );
       if (lastEv?.action === "EXTEND" || hasCombinedExtendTraces) {
-        const canonNames = sd ? canonicalizeCycleNames(sd.vertexNames, prefOrder) : [];
-        const canonEdges = canonNames.length >= 3 && canonNames.every((x) => x.length <= 3 && !/^Đỉnh\s+\d+$/u.test(x))
-          ? canonNames.map((a, idx) => `${a}${canonNames[(idx + 1) % canonNames.length]}`)
-          : [];
+        const canonNames = secCanon?.vertexNames ?? (sd ? canonicalizeCycleNames(sd.vertexNames, prefOrder) : []);
+        const canonEdges = secCanon && secCanon.boundaryEdges.length >= 3
+          ? secCanon.boundaryEdges
+          : canonNames.length >= 3 && canonNames.every((x) => x.length <= 3 && !/^Đỉnh\s+\d+$/u.test(x))
+            ? canonNames.map((a, idx) => `${a}${canonNames[(idx + 1) % canonNames.length]}`)
+            : [];
         const coordSym = new Map<string, string | null>();
         for (const o of scene.objects) {
           if (isSubEntity(o.id) || o.type !== "point3" || !o.xyz || laDiemPhuDungMatPhang(scene, o, byId)) continue;
@@ -12516,13 +12842,14 @@ function buildGoalCompletionSummary(scene: Scene3D, steps: PedagogicalStepItem[]
       const rawLabel = q.label ?? q.notation ?? q.id;
       const hadGuillemets = rawLabel.includes("«");
       const cleanLabel = rawLabel.replace(/«([^»]+)»/gu, "$1").trim();
+      const mqKind = q.measured_quantity?.quantity_kind;
       const annKind = q.annotation?.kind;
       let kind: GoalCompletionKind = "length";
-      if (annKind === "distance") kind = "distance";
-      else if (annKind === "angle" || /\bgóc\s+giữa\b/iu.test(cleanLabel)) kind = "angle";
-      else if (annKind === "area" || /^Diện\s+tích\b/iu.test(cleanLabel)) kind = "area";
-      else if (annKind === "volume" || /^Thể\s+tích\b/iu.test(cleanLabel)) kind = "volume";
-      else if (/^Bán\s+kính\b/iu.test(cleanLabel)) kind = "radius";
+      if (mqKind === "distance" || annKind === "distance") kind = "distance";
+      else if (mqKind === "angle_cos_sq" || mqKind === "angle_cos" || annKind === "angle" || /\bgóc\s+giữa\b/iu.test(cleanLabel)) kind = "angle";
+      else if (mqKind === "area" || mqKind === "lateral_area" || annKind === "area" || /^Diện\s+tích\b/iu.test(cleanLabel)) kind = "area";
+      else if (mqKind === "volume" || annKind === "volume" || /^Thể\s+tích\b/iu.test(cleanLabel)) kind = "volume";
+      else if (mqKind === "radius" || /^Bán\s+kính\b/iu.test(cleanLabel)) kind = "radius";
       else if (
         /^Khoảng\s+cách\b/iu.test(cleanLabel)
         && (
@@ -12552,8 +12879,9 @@ function buildGoalCompletionSummary(scene: Scene3D, steps: PedagogicalStepItem[]
       const rawProv = classifySceneEntityProvenance(scene, q);
       const provenance: CanonicalMathProvenance = rawProv === "GIVEN" ? "DERIVED_VERIFIED" : rawProv;
       const isVerifiedResult = provenance === "DERIVED_VERIFIED";
+      const safeFallbackVal = q.value && !isVectorLeakString(q.value) ? q.value.trim() : null;
       let valueText: string | null = isVerifiedResult
-        ? (hienBieuThucDaiLuong(q)?.trim() || q.value?.trim() || null)
+        ? (hienBieuThucDaiLuong(q)?.trim() || safeFallbackVal)
         : null;
       if (valueText && q.annotation?.unit && !valueText.includes(q.annotation.unit)) {
         valueText = `${valueText} ${q.annotation.unit}`;
@@ -18000,7 +18328,7 @@ export function buildPedagogicalConstructionPlan(
       const tObj = outById.get(tId);
       if (!tObj) continue;
       const baseHostForPrereq = tObj.type === "circle3" ? hostCurvedSolidForBaseCircle(orderedSemanticScene, tObj) : null;
-      for (const depId of tObj.depends ?? []) {
+      for (const depId of resolveVisualPrerequisitesOf(orderedSemanticScene, tObj)) {
         if (baseHostForPrereq && depId === baseHostForPrereq.id) continue;
         if (unit.absorbedAuxIds.includes(depId) || dupPlaneIds.has(depId) || measOnlyIds.has(depId)) {
           const auxObj = outById.get(depId);
@@ -18054,7 +18382,7 @@ export function buildPedagogicalConstructionPlan(
         || baseHostForPrereq
       ) {
         // Mặt đáy ở bước đầu lấy các đỉnh/tâm đáy và bán kính/trục đã dựng trong `accumulatedPriorIds`
-        for (const depId of tObj.depends ?? []) {
+        for (const depId of resolveVisualPrerequisitesOf(orderedSemanticScene, tObj)) {
           if (baseHostForPrereq && (depId === baseHostForPrereq.id || dupPlaneIds.has(depId))) continue;
           if (accumulatedPriorIds.has(depId)) rawPrereqs.add(depId);
         }
@@ -19323,8 +19651,9 @@ function resolveStudentObjectPresentationCore(
 
   if (obj.type === "section") {
     const sd = sectionDetails(rawScene, obj.id);
+    const secCanon = resolveCanonicalSectionDesignation(rawScene, obj);
     const prefOrder = preferredPointOrderForPolygon(rawScene, obj);
-    const cyc = sd ? formatCycleNotation(sd.vertexNames, prefOrder) : null;
+    const cyc = secCanon?.notation ?? (sd ? formatCycleNotation(sd.vertexNames, prefOrder) : null);
     const basis = deriveExactPolygonMathBasis(rawScene, obj);
     const shape = basis ? basis.shape : (obj.polygon ? classifyScenePolygonShape(rawScene, obj) : null);
     const planeObj = sd?.planeId ? byId.get(sd.planeId) : undefined;
@@ -19770,12 +20099,17 @@ function resolveStudentObjectPresentationCore(
 
   if (obj.type === "quantity") {
     const isGiven = classifyQuantityProvenance(obj, rawScene) === "GIVEN";
+    const mqInfo = inspectMeasuredQuantityContract(rawScene, obj);
+    const mqValDesc = mqInfo?.displayValue ? ` (giá trị: ${mqInfo.displayValue})` : "";
+    const mqCertDesc = mqInfo?.isCertifiedPerpendicular && mqInfo.subjectLabels.length === 2
+      ? ` · Chứng nhận ${mqInfo.subjectLabels[0]} ⊥ ${mqInfo.subjectLabels[1]}.`
+      : "";
     return finalizeStudentObjectPresentation({
       title: cleanLearnerText(obj.label || obj.notation || "Đại lượng"),
-      role: isGiven ? "Dữ kiện đề cho" : "Đại lượng hình học",
+      role: isGiven ? "Dữ kiện đề cho" : (mqInfo?.categoryLabel ?? "Đại lượng hình học"),
       description: isGiven
         ? "Đại lượng số đo được cho trực tiếp trong giả thiết bài toán."
-        : "Đại lượng hình học gắn với các yếu tố trên mô hình.",
+        : `Đại lượng hình học gắn với các yếu tố trên mô hình${mqValDesc}.${mqCertDesc}`,
       evidence: null,
       accentHex,
       hasCanvasHoverTooltip: false,
@@ -19993,6 +20327,8 @@ export function formatCompactEntityChipLabel(
     obj.type === "section"
     || (obj.type === "polygon3" && vaiTroMien(obj) === "section" && !isPolyhedronLateralOrAuxFacePolygon(scene, obj))
   ) {
+    const secCanon = obj.type === "section" ? resolveCanonicalSectionDesignation(scene, obj) : null;
+    if (secCanon?.notation) return `Thiết diện ${secCanon.notation}`;
     const det = obj.type === "section" ? sectionDetails(scene, obj.id) : null;
     if (det && det.vertexNames.length >= 3 && det.vertexNames.every(isCompactPointSym)) {
       const cyc = formatCycleNotation(det.vertexNames, preferredPointOrderForPolygon(scene, obj));
@@ -20726,7 +21062,13 @@ export function getSemanticConstructionContract(scene: Scene3D): SemanticConstru
       : (isSceneWorldTransformed(scene) ? undefined : scene.chart_metric);
     const geometricType = mapSemanticGeometricType(obj);
     const provenance = classifySceneEntityProvenance(exactOrigin, exObj);
-    const prerequisiteIds = [...new Set((exObj.depends ?? obj.depends ?? []).filter((d) => d !== obj.id && byId.has(d)))];
+    const prereqSource =
+      exObj.visible_prerequisites !== undefined
+      || exObj.construction_lineage !== undefined
+      || exObj.dependency_edges !== undefined
+        ? exObj
+        : obj;
+    const prerequisiteIds = [...new Set(resolveVisualPrerequisitesOf(exactOrigin, prereqSource).filter((d) => d !== obj.id && byId.has(d)))];
 
     let semanticRole: UnifiedSemanticObjectRole = "AUXILIARY_OBJECT";
     let visibilityLifecycle: SemanticVisibilityLifecycle = "PERSISTENT_CONTEXT";
@@ -21973,9 +22315,17 @@ export function canonicalizeSceneFaceTokensInText(scene: Scene3D, rawText: strin
     } else if (o.type === "polygon3" || o.type === "section") {
       const pref = preferredPointOrderForPolygon(exactOrigin, o);
       if (o.type === "section") {
-        const sd = sectionDetails(exactOrigin, o.id);
-        if (sd && sd.vertexNames.length >= 3) {
-          registerFaceSyms([...sd.vertexNames], pref);
+        const secCanon = resolveCanonicalSectionDesignation(exactOrigin, o);
+        if (secCanon && secCanon.source !== "fallback_cycle" && secCanon.notation) {
+          const sortedKey = [...secCanon.vertexNames].sort().join("|");
+          if (!canonFaceBySortedKey.has(sortedKey)) {
+            canonFaceBySortedKey.set(sortedKey, secCanon.notation);
+          }
+        } else {
+          const sd = sectionDetails(exactOrigin, o.id);
+          if (sd && sd.vertexNames.length >= 3) {
+            registerFaceSyms([...sd.vertexNames], pref);
+          }
         }
       } else {
         const rawIds = (o.vertex_ids?.length ? o.vertex_ids : o.depends) ?? [];
@@ -22417,9 +22767,13 @@ export function buildPedagogicalStepNarration(
         };
         const rawSyms = secPts.map((pt) => ptSymAt(pt));
         const secPrefOrder = preferredPointOrderForPolygon(exactOrigin, polySectionTarget);
+        const secCanon = resolveCanonicalSectionDesignation(exactOrigin, polySectionTarget);
         let orderedSecPts = secPts;
         if (rawSyms.length >= 3 && rawSyms.every((sym) => Boolean(sym))) {
-          const targetCanon = canonicalizeCycleNames(rawSyms, secPrefOrder);
+          const targetCanon =
+            secCanon && secCanon.source !== "fallback_cycle" && secCanon.vertexNames.length === rawSyms.length
+              ? secCanon.vertexNames
+              : canonicalizeCycleNames(rawSyms, secPrefOrder);
           const nPts = secPts.length;
           const revSyms = [...rawSyms].reverse();
           const revPts = [...secPts].reverse();

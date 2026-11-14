@@ -258,32 +258,11 @@ describe("AXO V9.4.15 — System-Wide Step Integrity, Coplanar Guides & Mathemat
     for (const entry of inventory) {
       const frozenInput = deepFreeze(structuredClone(entry.scene));
       const continuity = verifyVisualContinuity(frozenInput);
-      if (entry.id === "fixture:circumsphere") {
-        // Legacy static backend fixture has A_prime -> vec_OB & D -> vec_OC (handed off as GEO-BE-V9415-003).
-        expect(continuity.dimensions.semantic, `${entry.id} semantic`).toBe(true);
-        expect(continuity.dimensions.visual, `${entry.id} visual`).toBe(true);
-        expect(continuity.dimensions.pedagogical, `${entry.id} pedagogical`).toBe(true);
-        expect(continuity.violations).toHaveLength(2);
-        expect(
-          continuity.violations.every((v) => v.detail.includes("CAUSAL_BIRTH_ORDER")),
-          `${entry.id} unexpected violations: ${JSON.stringify(continuity.violations)}`,
-        ).toBe(true);
-      } else if (entry.id === "fixture:coincident_elements_pyramid") {
-        // Static archetype fixture introduces SB_line in formation.steps without a preceding CREATE event before K (GEO-BE-V9415-004).
-        expect(continuity.dimensions.semantic, `${entry.id} semantic`).toBe(true);
-        expect(continuity.dimensions.visual, `${entry.id} visual`).toBe(true);
-        expect(continuity.dimensions.pedagogical, `${entry.id} pedagogical`).toBe(true);
-        expect(continuity.violations).toHaveLength(1);
-        expect(continuity.violations[0].objectId).toBe("K");
-        expect(continuity.violations[0].detail).toContain("CAUSAL_BIRTH_ORDER");
-        expect(continuity.violations[0].detail).toContain("SB_line");
-      } else {
-        expect(continuity.valid, `${entry.id} continuity violations: ${JSON.stringify(continuity.violations)}`).toBe(true);
-        expect(continuity.dimensions.geometric, `${entry.id} geometric`).toBe(true);
-        expect(continuity.dimensions.semantic, `${entry.id} semantic`).toBe(true);
-        expect(continuity.dimensions.visual, `${entry.id} visual`).toBe(true);
-        expect(continuity.dimensions.pedagogical, `${entry.id} pedagogical`).toBe(true);
-      }
+      expect(continuity.valid, `${entry.id} continuity violations: ${JSON.stringify(continuity.violations)}`).toBe(true);
+      expect(continuity.dimensions.geometric, `${entry.id} geometric`).toBe(true);
+      expect(continuity.dimensions.semantic, `${entry.id} semantic`).toBe(true);
+      expect(continuity.dimensions.visual, `${entry.id} visual`).toBe(true);
+      expect(continuity.dimensions.pedagogical, `${entry.id} pedagogical`).toBe(true);
 
       const totalSteps = Math.max(1, stepCount(frozenInput));
       const worldScene = veKhongGian(frozenInput);
