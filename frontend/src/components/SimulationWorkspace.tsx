@@ -78,6 +78,7 @@ import {
   normalizeCylinderEnvelopeTitle,
   preferredPointOrderForPolygon,
   registerExactSceneOrigin,
+  resolveCanonicalSectionDesignation,
   resolveStudentObjectPresentation,
   resolveVerifiedObjectRelations,
   verifySceneMathematicalConsistency,
@@ -473,6 +474,7 @@ export function AxoWorkspaceV62({
   const [fitToken, setFitToken] = useState(0);
   const [replayNonce, setReplayNonce] = useState(0);
   const [relationActiveForId, setRelationActiveForId] = useState<string | null>(null);
+  const [relationsExpanded, setRelationsExpanded] = useState(false);
   const [locateRequest, setLocateRequest] = useState<{ objectId: string; nonce: number } | null>(null);
   const [restoreCameraNonce, setRestoreCameraNonce] = useState(0);
   const [canRestoreLocatedCamera, setCanRestoreLocatedCamera] = useState(false);
@@ -848,6 +850,10 @@ export function AxoWorkspaceV62({
     }
   }, [dangChon?.id]);
 
+  useEffect(() => {
+    setRelationsExpanded(false);
+  }, [dangChon?.id, buocHien]);
+
   const phanTichToan = useMemo(
     () => phanTichToanHocCuaCanh(day, hybrid, routeDSimulation),
     [day, hybrid, routeDSimulation],
@@ -927,6 +933,10 @@ export function AxoWorkspaceV62({
   );
 
   const tenThietDien = (secObj: Scene3D["objects"][number]): string => {
+    const canon = resolveCanonicalSectionDesignation(day, secObj);
+    if (canon?.compactLabel) {
+      return `Thiết diện ${canon.compactLabel}`;
+    }
     const c = sectionDetails(day, secObj.id);
     const cyc =
       c && c.vertexNames.length > 0
@@ -952,6 +962,8 @@ export function AxoWorkspaceV62({
   const kyHieu = (id: string) => {
     const o = theoId.get(id);
     if (o?.type === "section") {
+      const canon = resolveCanonicalSectionDesignation(day, o);
+      if (canon?.compactLabel) return canon.compactLabel;
       const c = sectionDetails(day, o.id);
       const cyc =
         c && c.vertexNames.length > 0
@@ -2905,31 +2917,51 @@ export function AxoWorkspaceV62({
                         {locateStatusMessage}
                       </div>
                     )}
-                    {isRelationViewActive && verifiedObjectRelations && (
-                      <div className="context-card-relations-box" data-relations-for={dangChon.id}>
-                        {verifiedObjectRelations.hasVerifiedRelations &&
-                        verifiedObjectRelations.relations.length > 0 ? (
-                          <ul className="context-card-relation-list">
-                            {verifiedObjectRelations.relations.map((rel, idx) => (
-                              <li
-                                key={`${rel.kind}-${idx}`}
-                                className="context-card-relation-item"
-                                data-relation-kind={rel.kind}
-                              >
-                                <span className="context-card-relation-badge">{rel.kindLabel}</span>
-                                <span className="context-card-relation-text">
-                                  <MathDisplay text={rel.statement} />
-                                </span>
-                              </li>
-                            ))}
-                          </ul>
-                        ) : (
-                          <div className="context-card-relation-empty">
-                            {verifiedObjectRelations.summaryMessage}
-                          </div>
-                        )}
-                      </div>
-                    )}
+                    {isRelationViewActive && verifiedObjectRelations && (() => {
+                      const INITIAL_VISIBLE_RELATIONS = 4;
+                      const allRels = verifiedObjectRelations.relations;
+                      const visibleRels = relationsExpanded
+                        ? allRels
+                        : allRels.slice(0, INITIAL_VISIBLE_RELATIONS);
+                      const hiddenCount = Math.max(0, allRels.length - visibleRels.length);
+                      return (
+                        <div className="context-card-relations-box" data-relations-for={dangChon.id}>
+                          {verifiedObjectRelations.hasVerifiedRelations && allRels.length > 0 ? (
+                            <>
+                              <ul className="context-card-relation-list">
+                                {visibleRels.map((rel, idx) => (
+                                  <li
+                                    key={`${rel.kind}-${idx}`}
+                                    className="context-card-relation-item"
+                                    data-relation-kind={rel.kind}
+                                  >
+                                    <span className="context-card-relation-badge">{rel.kindLabel}</span>
+                                    <span className="context-card-relation-text">
+                                      <MathDisplay text={rel.statement} />
+                                    </span>
+                                  </li>
+                                ))}
+                              </ul>
+                              {allRels.length > INITIAL_VISIBLE_RELATIONS && (
+                                <button
+                                  id="btn-context-toggle-more-relations"
+                                  type="button"
+                                  className="context-relations-more-btn"
+                                  aria-expanded={relationsExpanded}
+                                  onClick={() => setRelationsExpanded((v) => !v)}
+                                >
+                                  {relationsExpanded ? "Thu gọn" : `Xem thêm ${hiddenCount} quan hệ`}
+                                </button>
+                              )}
+                            </>
+                          ) : (
+                            <div className="context-card-relation-empty">
+                              {verifiedObjectRelations.summaryMessage}
+                            </div>
+                          )}
+                        </div>
+                      );
+                    })()}
                   </div>
                 </div>
                 );

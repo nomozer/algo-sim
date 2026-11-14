@@ -23656,6 +23656,8 @@ export type VerifiedStudentRelationKind =
   | "point_on_plane"
   | "parallel"
   | "perpendicular"
+  | "intersection_point"
+  | "intersection_line"
   | "intersection"
   | "tangency"
   | "section_membership"
@@ -23683,12 +23685,14 @@ const RELATION_KIND_ORDER: Record<VerifiedStudentRelationKind, number> = {
   tangency: 0,
   perpendicular: 1,
   parallel: 2,
-  intersection: 3,
-  section_membership: 4,
-  point_on_line: 5,
-  point_on_plane: 6,
-  containment: 7,
-  dependency: 8,
+  intersection_point: 3,
+  intersection_line: 4,
+  intersection: 5,
+  section_membership: 6,
+  point_on_line: 7,
+  point_on_plane: 8,
+  containment: 9,
+  dependency: 10,
 };
 
 const RELATION_KIND_LABEL: Record<VerifiedStudentRelationKind, string> = {
@@ -23696,11 +23700,13 @@ const RELATION_KIND_LABEL: Record<VerifiedStudentRelationKind, string> = {
   point_on_plane: "Thuộc mặt phẳng",
   parallel: "Song song",
   perpendicular: "Vuông góc",
+  intersection_point: "Giao điểm",
+  intersection_line: "Giao tuyến",
   intersection: "Giao",
   tangency: "Tiếp xúc",
   section_membership: "Thiết diện",
   containment: "Nằm trong / Chứa",
-  dependency: "Dựng từ / Dẫn xuất",
+  dependency: "Quan hệ phụ thuộc dựng hình",
 };
 
 function safeVec3FromObject(v?: ExactVec3 | null): Vec3 | null {
@@ -23759,6 +23765,10 @@ export function resolveVerifiedObjectRelations(
     if (!o) return fallbackId ?? "";
     if (o.type === "plane3") return formatPlaneDisplayNotation(o, rawScene);
     if (o.type === "circle3") return formatCanonicalCircleDesignation(rawScene, o, visibleObjects);
+    if (o.type === "section") {
+      const secCanon = resolveCanonicalSectionDesignation(rawScene, o);
+      if (secCanon?.compactLabel) return secCanon.compactLabel;
+    }
     const sym = shortSym(o);
     if (sym) return replaceRawSceneIdTokens(sym, rawScene);
     if (isSubEntity(o.id)) {
@@ -23806,6 +23816,35 @@ export function resolveVerifiedObjectRelations(
     }
     return id;
   };
+
+  const stepFocusIds = new Set<string>();
+  const stepSnap = rawScene.formation?.steps[k];
+  if (stepSnap) {
+    for (const fid of stepSnap.focus_ids ?? []) stepFocusIds.add(canonicalizeTargetId(fid));
+  }
+  const prevPresentIds = k > 0 ? entitiesPresentAt(rawScene, k - 1, objectsAt) : null;
+  if (prevPresentIds) {
+    for (const id of presentIds) {
+      if (!prevPresentIds.has(id)) stepFocusIds.add(canonicalizeTargetId(id));
+    }
+  }
+  const stepEvent = rawScene.events.find((x) => x.step_index === k);
+  const stepEventDepends = new Set<string>();
+  if (stepEvent) {
+    if (stepEvent.object) stepFocusIds.add(canonicalizeTargetId(stepEvent.object));
+    for (const oid of stepEvent.objects ?? []) stepFocusIds.add(canonicalizeTargetId(oid));
+    for (const did of stepEvent.depends ?? []) stepEventDepends.add(canonicalizeTargetId(did));
+  }
+
+  const basicSolidElementIds = new Set<string>();
+  for (const o of visibleObjects) {
+    if (o.type === "solid" || o.type === "curved_solid") {
+      basicSolidElementIds.add(o.id);
+      for (const vid of o.vertex_ids ?? []) basicSolidElementIds.add(canonicalizeTargetId(vid));
+    } else if (isSubEntity(o.id) || Boolean(o.parent ?? parentSolidOf(o.id))) {
+      basicSolidElementIds.add(o.id);
+    }
+  }
 
   const collected: VerifiedStudentRelationItem[] = [];
   const seenKeys = new Set<string>();
@@ -23898,7 +23937,7 @@ export function resolveVerifiedObjectRelations(
     }
   }
 
-  // 2. Nhân chứng vuông góc trực tiếp (perpendicular_witness / annotation.witness) hai chiều
+  // 2. Nhân chứng vuông góc trực tiếp & chứng nhận measured_quantity (không tự suy diễn từ giá trị "0")
   for (const cand of visibleObjects) {
     for (const w of [cand.perpendicular_witness, cand.annotation?.witness, cand.annotation?.witness?.second]) {
       if (!w) continue;
@@ -23910,7 +23949,7 @@ export function resolveVerifiedObjectRelations(
           addRel("perpendicular", [onObj.id], `${subjName} ⊥ ${displayNameOf(onObj)}`, "⊥");
         }
         if (footObj && isEligibleTarget(footObj) && onObj && isEligibleTarget(onObj)) {
-          addRel("point_on_plane", [footObj.id, onObj.id], `${displayNameOf(footObj)} là chân đường vuông góc trên ${displayNameOf(onObj)}`);
+          addRel("point_on_plane", [footObj.id, onObj.id], `${displayNameOf(footObj)} là hình chiếu vuông góc trên ${displayNameOf(onObj)}`, "∈");
         }
       } else if (onObj?.id === subject.id) {
         addRel("perpendicular", [cand.id], `${displayNameOf(cand)} ⊥ ${subjName}`, "⊥");
@@ -23928,7 +23967,7 @@ export function resolveVerifiedObjectRelations(
             addRel(
               onObj.type === "plane3" || onObj.type === "polygon3" ? "point_on_plane" : "point_on_line",
               [onObj.id],
-              `${subjName} là hình chiếu trên ${displayNameOf(onObj)}`,
+              `${subjName} là hình chiếu vuông góc trên ${displayNameOf(onObj)}`,
               "∈",
             );
           }
@@ -23938,7 +23977,26 @@ export function resolveVerifiedObjectRelations(
     }
   }
 
-  // 3. Điểm thuộc đường / hai đầu mút đoạn thẳng & đường thuộc mặt
+  for (const qObj of rawScene.objects) {
+    if (!presentIds.has(qObj.id)) continue;
+    if (resolveCertifiedMeasuredRelation(qObj) !== "perpendicular_lines") continue;
+    const mqInfo = inspectMeasuredQuantityContract(rawScene, qObj);
+    if (!mqInfo || !mqInfo.isCertifiedPerpendicular) continue;
+    const mqTargets = mqInfo.subjectIds
+      .map(canonicalizeTargetId)
+      .map((id) => byId.get(id))
+      .filter((o): o is SceneObject => isEligibleTarget(o));
+    if (mqTargets.length >= 2) {
+      const aObj = mqTargets[0]!;
+      const bObj = mqTargets[1]!;
+      if (aObj.id !== bObj.id && (aObj.id === subject.id || bObj.id === subject.id)) {
+        const peer = aObj.id === subject.id ? bObj : aObj;
+        addRel("perpendicular", [peer.id], `${subjName} ⊥ ${displayNameOf(peer)}`, "⊥");
+      }
+    }
+  }
+
+  // 3. Điểm thuộc đường / hai đầu mút đoạn thẳng, đường thuộc mặt & giao tuyến hai mặt phẳng
   const lineEndpointsOf = (lo: SceneObject): string[] => {
     const out: string[] = [];
     for (const eid of lo.endpoint_ids ?? []) {
@@ -23950,6 +24008,20 @@ export function resolveVerifiedObjectRelations(
       }
     }
     return out;
+  };
+  const arePlanesIntersectingNonParallel = (paObj: SceneObject, pbObj: SceneObject): boolean => {
+    const exA = exactById.get(paObj.id) ?? paObj;
+    const exB = exactById.get(pbObj.id) ?? pbObj;
+    const na = safeVec3FromObject(exA.normal);
+    const nb = safeVec3FromObject(exB.normal);
+    if (!na || !nb) return true;
+    const la = Math.hypot(na[0], na[1], na[2]);
+    const lb = Math.hypot(nb[0], nb[1], nb[2]);
+    if (la <= 1e-12 || lb <= 1e-12) return false;
+    const cx = na[1] * nb[2] - na[2] * nb[1];
+    const cy = na[2] * nb[0] - na[0] * nb[2];
+    const cz = na[0] * nb[1] - na[1] * nb[0];
+    return Math.hypot(cx, cy, cz) / (la * lb) > 1e-4;
   };
   if (subject.type === "line3" || subject.type === "segment3" || (isSubEntity(subject.id) && subject.type === "edge")) {
     for (const ptId of lineEndpointsOf(subject)) {
@@ -24000,8 +24072,8 @@ export function resolveVerifiedObjectRelations(
     }
     // Giao tuyến 2 mặt phẳng
     const planeDeps = (subject.depends ?? []).map((id) => byId.get(id)).filter((d): d is SceneObject => Boolean(d && d.type === "plane3" && isEligibleTarget(d)));
-    if (planeDeps.length >= 2) {
-      addRel("intersection", [planeDeps[0].id, planeDeps[1].id], `${subjName} = ${displayNameOf(planeDeps[0])} ∩ ${displayNameOf(planeDeps[1])}`, "∩");
+    if (planeDeps.length >= 2 && arePlanesIntersectingNonParallel(planeDeps[0]!, planeDeps[1]!)) {
+      addRel("intersection_line", [planeDeps[0].id, planeDeps[1].id], `${subjName} = ${displayNameOf(planeDeps[0])} ∩ ${displayNameOf(planeDeps[1])}`, "∩");
     }
   } else if (subject.type === "point3") {
     const pVec = safeVec3FromObject(sExact.xyz);
@@ -24058,8 +24130,8 @@ export function resolveVerifiedObjectRelations(
       const planeDeps = (lo.depends ?? []).map((id) => byId.get(id)).filter((d): d is SceneObject => Boolean(d && d.type === "plane3" && isEligibleTarget(d)));
       if (planeDeps.length >= 2 && planeDeps.some((p) => p.id === subject.id)) {
         const other = planeDeps.find((p) => p.id !== subject.id);
-        if (other) {
-          addRel("intersection", [lo.id, other.id], `${displayNameOf(lo)} = ${subjName} ∩ ${displayNameOf(other)}`, "∩");
+        if (other && arePlanesIntersectingNonParallel(subject, other)) {
+          addRel("intersection_line", [lo.id, other.id], `${displayNameOf(lo)} = ${subjName} ∩ ${displayNameOf(other)}`, "∩");
         }
       } else if ((lo.depends ?? []).includes(subject.id) && !(lo.perpendicular_witness?.on === subject.id || lo.annotation?.witness?.on === subject.id)) {
         const eps = lineEndpointsOf(lo);
@@ -24078,7 +24150,7 @@ export function resolveVerifiedObjectRelations(
     }
   }
 
-  // 4. Giao điểm đường thẳng và mặt phẳng (bidirectional: point <-> line & plane)
+  // 4. Giao điểm đường thẳng và mặt phẳng (bidirectional + không đồng phẳng)
   for (const pt of visibleObjects) {
     if (pt.type !== "point3") continue;
     const deps = (pt.depends ?? []).map((id) => byId.get(id)).filter((d): d is SceneObject => Boolean(d && isEligibleTarget(d)));
@@ -24087,6 +24159,7 @@ export function resolveVerifiedObjectRelations(
     if (!lDep || !pDep) continue;
     const pv = safeVec3FromObject((exactById.get(pt.id) ?? pt).xyz);
     const pEx = exactById.get(pDep.id) ?? pDep;
+    const lEx = exactById.get(lDep.id) ?? lDep;
     const p0 = safeVec3FromObject(pEx.point);
     const nr = safeVec3FromObject(pEx.normal);
     const nLen = nr ? Math.hypot(nr[0], nr[1], nr[2]) : 0;
@@ -24094,16 +24167,68 @@ export function resolveVerifiedObjectRelations(
       ? Math.abs((pv[0] - p0[0]) * nr[0] + (pv[1] - p0[1]) * nr[1] + (pv[2] - p0[2]) * nr[2]) / nLen
       : 0;
     if (plDist > distTol) continue;
+    const lPa = safeVec3FromObject(lEx.endpoints?.[0] ?? lEx.point_a ?? lEx.point);
+    const lPb = safeVec3FromObject(lEx.endpoints?.[1] ?? lEx.point_b);
+    const lDirRaw = safeVec3FromObject(lEx.direction) ?? (lPa && lPb ? [lPb[0] - lPa[0], lPb[1] - lPa[1], lPb[2] - lPa[2]] : null);
+    if (lDirRaw && nr && nLen > 1e-12) {
+      const lLen = Math.hypot(lDirRaw[0], lDirRaw[1], lDirRaw[2]);
+      if (lLen > 1e-12) {
+        const sinAngle = Math.abs(lDirRaw[0] * nr[0] + lDirRaw[1] * nr[1] + lDirRaw[2] * nr[2]) / (lLen * nLen);
+        if (sinAngle <= 1e-4) continue;
+      }
+    }
     if (pt.id === subject.id) {
-      addRel("intersection", [lDep.id, pDep.id], `${subjName} = ${displayNameOf(lDep)} ∩ ${displayNameOf(pDep)}`, "∩");
+      addRel("intersection_point", [lDep.id, pDep.id], `${subjName} = ${displayNameOf(lDep)} ∩ ${displayNameOf(pDep)}`, "∩");
     } else if (lDep.id === subject.id) {
-      addRel("intersection", [pt.id, pDep.id], `${displayNameOf(pt)} = ${subjName} ∩ ${displayNameOf(pDep)}`, "∩");
+      addRel("intersection_point", [pt.id, pDep.id], `${displayNameOf(pt)} = ${subjName} ∩ ${displayNameOf(pDep)}`, "∩");
     } else if (pDep.id === subject.id) {
-      addRel("intersection", [pt.id, lDep.id], `${displayNameOf(pt)} = ${displayNameOf(lDep)} ∩ ${subjName}`, "∩");
+      addRel("intersection_point", [pt.id, lDep.id], `${displayNameOf(pt)} = ${displayNameOf(lDep)} ∩ ${subjName}`, "∩");
     }
   }
 
-  // 5. Thiết diện, điểm/cạnh thuộc thiết diện và mặt cắt tròn/elip trên khối tròn xoay
+  // 5. Thiết diện, điểm giao cạnh–mặt cắt xác thực & mặt cắt tròn/elip trên khối tròn xoay
+  const findVisiblePointAt = (sv: Vec3): SceneObject | undefined => {
+    let subMatch: SceneObject | undefined;
+    for (const p of visibleObjects) {
+      if (p.type !== "point3") continue;
+      const pv = safeVec3FromObject((exactById.get(p.id) ?? p).xyz);
+      if (!pv) continue;
+      if (Math.hypot(pv[0] - sv[0], pv[1] - sv[1], pv[2] - sv[2]) <= distTol) {
+        if (!isSubEntity(p.id)) return p;
+        if (!subMatch) subMatch = p;
+      }
+    }
+    return subMatch;
+  };
+  const verifyPointSegmentPlaneIntersection = (
+    cutPv: Vec3,
+    pa: Vec3,
+    pb: Vec3,
+    p0: Vec3,
+    nr: Vec3,
+  ): boolean => {
+    const nLen = Math.hypot(nr[0], nr[1], nr[2]);
+    const abX = pb[0] - pa[0];
+    const abY = pb[1] - pa[1];
+    const abZ = pb[2] - pa[2];
+    const abLenSq = abX * abX + abY * abY + abZ * abZ;
+    if (nLen <= 1e-12 || abLenSq <= 1e-16) return false;
+    const nhX = nr[0] / nLen;
+    const nhY = nr[1] / nLen;
+    const nhZ = nr[2] / nLen;
+    const dCut = Math.abs((cutPv[0] - p0[0]) * nhX + (cutPv[1] - p0[1]) * nhY + (cutPv[2] - p0[2]) * nhZ);
+    if (dCut > distTol) return false;
+    const daPlane = Math.abs((pa[0] - p0[0]) * nhX + (pa[1] - p0[1]) * nhY + (pa[2] - p0[2]) * nhZ);
+    const dbPlane = Math.abs((pb[0] - p0[0]) * nhX + (pb[1] - p0[1]) * nhY + (pb[2] - p0[2]) * nhZ);
+    if (Math.max(daPlane, dbPlane) <= distTol * 2) return false;
+    const t = ((cutPv[0] - pa[0]) * abX + (cutPv[1] - pa[1]) * abY + (cutPv[2] - pa[2]) * abZ) / abLenSq;
+    if (t < -1e-3 || t > 1 + 1e-3) return false;
+    const px = pa[0] + t * abX;
+    const py = pa[1] + t * abY;
+    const pz = pa[2] + t * abZ;
+    return Math.hypot(cutPv[0] - px, cutPv[1] - py, cutPv[2] - pz) <= distTol;
+  };
+
   for (const sec of visibleObjects) {
     const isSecPoly = sec.type === "section" || (sec.type === "polygon3" && vaiTroMien(sec) === "section" && !isCoordinatePlaneInterceptPolygon(rawScene, sec));
     const isCurvedCut = sec.type === "circle3" || sec.type === "ellipse3";
@@ -24115,17 +24240,22 @@ export function resolveVerifiedObjectRelations(
       ?? visibleObjects.find((d) => d.type === "solid" || d.type === "curved_solid");
     const cutPlane = (sec.depends ?? []).map((id) => byId.get(id)).find((d) => d?.type === "plane3" && isEligibleTarget(d));
     const secVertPts = (secEx.polygon ?? secEx.vertices ?? []).map((v) => safeVec3FromObject(v)).filter((v): v is Vec3 => v !== null);
-    const secVertexIds = new Set<string>((sec.vertex_ids ?? []).map(canonicalizeTargetId));
-    if (secVertexIds.size === 0 && secVertPts.length > 0) {
-      for (const p of visibleObjects) {
-        if (p.type !== "point3") continue;
-        const pv = safeVec3FromObject((exactById.get(p.id) ?? p).xyz);
-        if (!pv) continue;
-        if (secVertPts.some((sv) => Math.hypot(sv[0] - pv[0], sv[1] - pv[1], sv[2] - pv[2]) <= distTol)) {
-          secVertexIds.add(canonicalizeTargetId(p.id));
-        }
+    const orderedSecVertIds: string[] = [];
+    const pushSecVert = (rawId: string) => {
+      const cid = canonicalizeTargetId(rawId);
+      if (cid && !orderedSecVertIds.includes(cid)) orderedSecVertIds.push(cid);
+    };
+    for (const oid of sec.ordered_vertex_ids ?? []) pushSecVert(oid);
+    if (orderedSecVertIds.length === 0) {
+      for (const vid of sec.vertex_ids ?? []) pushSecVert(vid);
+    }
+    if (orderedSecVertIds.length === 0 && secVertPts.length > 0) {
+      for (const sv of secVertPts) {
+        const matchPt = findVisiblePointAt(sv);
+        if (matchPt) pushSecVert(matchPt.id);
       }
     }
+    const secVertexIds = new Set<string>(orderedSecVertIds);
 
     if (sec.id === subject.id) {
       if (hostSolid && cutPlane) {
@@ -24135,25 +24265,10 @@ export function resolveVerifiedObjectRelations(
       } else if (hostSolid) {
         addRel(isCurvedCut ? "intersection" : "section_membership", [hostSolid.id], `${subjName} nằm trên ${displayNameOf(hostSolid)}`);
       }
-      for (const vid of secVertexIds) {
+      for (const vid of orderedSecVertIds) {
         const vp = byId.get(vid);
         if (isEligibleTarget(vp)) {
           addRel("section_membership", [vp.id], `Đỉnh ${displayNameOf(vp)} thuộc ${subjName}`);
-        }
-      }
-      for (const vs of sec.vertex_sources ?? []) {
-        if (vs.kind === "SOLID_EDGE_INTERSECTION" && Array.isArray(vs.solid_edge_vertex_indices) && hostSolid?.vertex_ids) {
-          const va = hostSolid.vertex_ids[vs.solid_edge_vertex_indices[0]];
-          const vb = hostSolid.vertex_ids[vs.solid_edge_vertex_indices[1]];
-          const edgeObj = visibleObjects.find(
-            (e) =>
-              (e.type === "segment3" || (isSubEntity(e.id) && e.type === "edge"))
-              && (e.endpoint_ids ?? e.depends ?? []).includes(va ?? "")
-              && (e.endpoint_ids ?? e.depends ?? []).includes(vb ?? ""),
-          );
-          if (edgeObj && isEligibleTarget(edgeObj)) {
-            addRel("intersection", [edgeObj.id], `${subjName} cắt cạnh ${displayNameOf(edgeObj)}`, "∩");
-          }
         }
       }
     } else if (cutPlane?.id === subject.id) {
@@ -24162,20 +24277,74 @@ export function resolveVerifiedObjectRelations(
       addRel(isCurvedCut ? "intersection" : "section_membership", [sec.id], `${displayNameOf(sec)} nằm trên ${subjName}`, isCurvedCut ? "∩" : undefined);
     } else if (secVertexIds.has(subject.id) || secVertexIds.has(canonicalizeTargetId(subject.id))) {
       addRel("section_membership", [sec.id], `${subjName} là đỉnh của thiết diện ${displayNameOf(sec)}`);
-    } else if (
-      (subject.type === "segment3" || (isSubEntity(subject.id) && subject.type === "edge"))
-      && hostSolid?.vertex_ids
-      && Array.isArray(sec.vertex_sources)
-    ) {
-      const sPts = lineEndpointsOf(subject);
-      const cutsThisEdge = sPts.length === 2 && sec.vertex_sources.some((vs) => {
-        if (vs.kind !== "SOLID_EDGE_INTERSECTION" || !vs.solid_edge_vertex_indices) return false;
-        const va = hostSolid.vertex_ids![vs.solid_edge_vertex_indices[0]];
-        const vb = hostSolid.vertex_ids![vs.solid_edge_vertex_indices[1]];
-        return (va === sPts[0] && vb === sPts[1]) || (va === sPts[1] && vb === sPts[0]);
-      });
-      if (cutsThisEdge) {
-        addRel("intersection", [sec.id], `${subjName} cắt thiết diện ${displayNameOf(sec)}`, "∩");
+    }
+
+    if (hostSolid?.vertex_ids && Array.isArray(sec.vertex_sources)) {
+      const cutPlEx = cutPlane ? (exactById.get(cutPlane.id) ?? cutPlane) : null;
+      const p0 = cutPlEx ? safeVec3FromObject(cutPlEx.point) : null;
+      const nr = cutPlEx ? safeVec3FromObject(cutPlEx.normal) : null;
+
+      for (let vi = 0; vi < sec.vertex_sources.length; vi += 1) {
+        const vs = sec.vertex_sources[vi];
+        if (!vs || vs.kind !== "SOLID_EDGE_INTERSECTION" || !Array.isArray(vs.solid_edge_vertex_indices) || vs.solid_edge_vertex_indices.length < 2) {
+          continue;
+        }
+        const va = hostSolid.vertex_ids[vs.solid_edge_vertex_indices[0]];
+        const vb = hostSolid.vertex_ids[vs.solid_edge_vertex_indices[1]];
+        if (!va || !vb) continue;
+
+        const edgeObj = visibleObjects.find(
+          (e) =>
+            (e.type === "segment3" || (isSubEntity(e.id) && e.type === "edge"))
+            && (e.endpoint_ids ?? e.depends ?? []).includes(va)
+            && (e.endpoint_ids ?? e.depends ?? []).includes(vb),
+        );
+        if (!edgeObj || !isEligibleTarget(edgeObj)) continue;
+
+        // `sec.vertex_sources[vi]` tương ứng 1-1 theo chỉ số `vi` với `sec.polygon[vi]`
+        const sv = vi < secVertPts.length ? secVertPts[vi] : undefined;
+        const cutPt = sv ? findVisiblePointAt(sv) : undefined;
+        const vaObj = byId.get(va);
+        const vbObj = byId.get(vb);
+        const pa = vaObj ? safeVec3FromObject((exactById.get(vaObj.id) ?? vaObj).xyz) : null;
+        const pb = vbObj ? safeVec3FromObject((exactById.get(vbObj.id) ?? vbObj).xyz) : null;
+        const cutPv = cutPt ? safeVec3FromObject((exactById.get(cutPt.id) ?? cutPt).xyz) : null;
+
+        const certifiedCut = Boolean(
+          cutPt
+          && isEligibleTarget(cutPt)
+          && cutPlane
+          && isEligibleTarget(cutPlane)
+          && cutPv
+          && pa
+          && pb
+          && p0
+          && nr
+          && verifyPointSegmentPlaneIntersection(cutPv, pa, pb, p0, nr),
+        );
+
+        if (certifiedCut && cutPt && cutPlane) {
+          const cutName = displayNameOf(cutPt);
+          const edgeName = displayNameOf(edgeObj);
+          const planeName = displayNameOf(cutPlane);
+          if (sec.id === subject.id) {
+            addRel("intersection_point", [cutPt.id, edgeObj.id, cutPlane.id], `${cutName} = ${edgeName} ∩ ${planeName}`, "∩");
+          } else if (cutPt.id === subject.id) {
+            addRel("intersection_point", [edgeObj.id, cutPlane.id], `${subjName} = ${edgeName} ∩ ${planeName}`, "∩");
+            addRel("point_on_line", [edgeObj.id], `${subjName} ∈ ${edgeName}`, "∈");
+            addRel("point_on_plane", [cutPlane.id], `${subjName} ∈ ${planeName}`, "∈");
+          } else if (edgeObj.id === subject.id) {
+            addRel("intersection_point", [cutPt.id, cutPlane.id], `${cutName} = ${subjName} ∩ ${planeName}`, "∩");
+            addRel("point_on_line", [cutPt.id], `${cutName} ∈ ${subjName}`, "∈");
+          } else if (cutPlane.id === subject.id) {
+            addRel("intersection_point", [cutPt.id, edgeObj.id], `${cutName} = ${edgeName} ∩ ${subjName}`, "∩");
+            addRel("point_on_plane", [cutPt.id], `${cutName} ∈ ${subjName}`, "∈");
+          }
+        } else if (sec.id === subject.id) {
+          addRel("intersection_point", [edgeObj.id], `${subjName} cắt cạnh ${displayNameOf(edgeObj)}`, "∩");
+        } else if (edgeObj.id === subject.id) {
+          addRel("intersection", [sec.id], `${subjName} cắt thiết diện ${displayNameOf(sec)}`, "∩");
+        }
       }
     }
   }
@@ -24273,9 +24442,9 @@ export function resolveVerifiedObjectRelations(
     }
   }
 
-  // 8. Phụ thuộc dựng hình trực tiếp (dependency) — bỏ qua đối tượng tính toán nội bộ
+  // 8. Phụ thuộc dựng hình trực quan (dependency) — lọc qua resolveVisualPrerequisitesOf để tách khỏi carrier tính toán
   if (subject.type !== "solid") {
-    for (const depId of subject.depends ?? []) {
+    for (const depId of resolveVisualPrerequisitesOf(rawScene, subject)) {
       const depObj = byId.get(depId);
       if (!isEligibleTarget(depObj)) continue;
       if (collected.some((r) => r.targetIds.includes(depObj.id))) continue;
@@ -24284,12 +24453,57 @@ export function resolveVerifiedObjectRelations(
   }
   for (const cand of visibleObjects) {
     if (cand.id === subject.id || cand.type === "solid" || isSubEntity(cand.id)) continue;
-    if (!(cand.depends ?? []).includes(subject.id)) continue;
+    if (!resolveVisualPrerequisitesOf(rawScene, cand).includes(subject.id)) continue;
     if (collected.some((r) => r.targetIds.includes(cand.id))) continue;
     addRel("dependency", [cand.id], `${displayNameOf(cand)} phụ thuộc vào ${subjName}`);
   }
 
-  collected.sort((a, b) => RELATION_KIND_ORDER[a.kind] - RELATION_KIND_ORDER[b.kind]);
+  // Xếp hạng 4 tầng sư phạm + thứ tự từ điển tiếng Việt xác định (không phụ thuộc thứ tự khóa JSON)
+  const rankItem = (r: VerifiedStudentRelationItem): { tier: number; subRank: number } => {
+    const isCoreKind =
+      r.kind === "tangency"
+      || r.kind === "perpendicular"
+      || r.kind === "parallel"
+      || r.kind === "intersection_point"
+      || r.kind === "intersection_line"
+      || r.kind === "intersection";
+    const isSecSummary =
+      r.kind === "section_membership"
+      && !r.statement.startsWith("Đỉnh ")
+      && (subject.type === "section" || subject.type === "polygon3" || subject.type === "point3");
+    const isCurrentStepDirect =
+      r.kind !== "dependency"
+      && (
+        r.targetIds.some((id) => stepFocusIds.has(id))
+        || (
+          stepFocusIds.has(subject.id)
+          && (isCoreKind || isSecSummary || r.targetIds.some((id) => stepEventDepends.has(id)))
+        )
+      );
+    const subRank =
+      isSecSummary && subject.type === "section"
+        ? 0
+        : isCoreKind || isSecSummary
+          ? 1
+          : r.targetIds.some((id) => basicSolidElementIds.has(id))
+            ? 2
+            : 3;
+
+    if (isCurrentStepDirect) return { tier: 1, subRank };
+    if (isCoreKind || isSecSummary) return { tier: 2, subRank };
+    if (r.kind !== "dependency") return { tier: 3, subRank };
+    return { tier: 4, subRank };
+  };
+
+  collected.sort((a, b) => {
+    const ra = rankItem(a);
+    const rb = rankItem(b);
+    if (ra.tier !== rb.tier) return ra.tier - rb.tier;
+    if (ra.subRank !== rb.subRank) return ra.subRank - rb.subRank;
+    const ko = RELATION_KIND_ORDER[a.kind] - RELATION_KIND_ORDER[b.kind];
+    if (ko !== 0) return ko;
+    return a.statement.localeCompare(b.statement, "vi");
+  });
   const relatedIds = [...new Set(collected.flatMap((r) => r.targetIds))];
 
   return {

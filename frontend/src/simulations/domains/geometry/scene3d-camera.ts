@@ -1395,14 +1395,16 @@ export function computeSmartLocateCamera(input: SmartLocateInput): SmartLocateRe
     if (Math.hypot(...d) > 1e-9) segDir = chuan(d);
   }
 
+  const objDistFromHost = distPt(objCenter, hostCenter);
+  const hasHostSpan = validCtxPts.length >= 4 && objDistFromHost > 0.15 * sceneScale;
   const contextBlend =
     objectKind === "solid" || objectKind === "curved_surface"
       ? 1.0
       : objectKind === "point"
-        ? 0.34
+        ? (hasHostSpan ? 0.45 : 0.34)
         : objectKind === "segment"
-          ? 0.28
-          : 0.26;
+          ? (hasHostSpan ? 0.48 : 0.28)
+          : (hasHostSpan ? 0.32 : 0.26);
   const desiredTarget = lerp3(objCenter, hostCenter, validCtxPts.length > 0 ? contextBlend : 0);
 
   const curOffset = tru(currentPosition, currentTarget);
@@ -1416,6 +1418,22 @@ export function computeSmartLocateCamera(input: SmartLocateInput): SmartLocateRe
   const samplePtsForOcclusion: Diem3[] = validObjPts.length <= 6
     ? [...validObjPts, ...(validObjPts.length > 1 ? [objCenter] : [])]
     : [objCenter, validObjPts[0], validObjPts[Math.floor(validObjPts.length / 3)], validObjPts[Math.floor((2 * validObjPts.length) / 3)]];
+
+  const hostFaceNormals: Diem3[] = [];
+  for (const m of occluderMeshes) {
+    if (!m.isSolidFace) continue;
+    for (const [ia, ib, ic] of m.triangles) {
+      const va = m.vertices[ia], vb = m.vertices[ib], vc = m.vertices[ic];
+      if (!va || !vb || !vc) continue;
+      const n = cheo(tru(vb, va), tru(vc, va));
+      const nLen = Math.hypot(n[0], n[1], n[2]);
+      if (!(nLen > 1e-9)) continue;
+      const nu: Diem3 = [n[0] / nLen, n[1] / nLen, n[2] / nLen];
+      if (!hostFaceNormals.some((e) => Math.abs(tich(e, nu)) > 0.995)) {
+        hostFaceNormals.push(nu);
+      }
+    }
+  }
 
   const framingPts = validCtxPts.length > 0 ? allScenePts : validObjPts;
   const safeNdc =
@@ -1433,10 +1451,11 @@ export function computeSmartLocateCamera(input: SmartLocateInput): SmartLocateRe
     const knCtx = khungNhinQuanhTam(framingPts, camTarget, fovDeg, aspect, dirUnit, safeNdc);
     const baseDist = knCtx ? Math.max(0.2 * sceneScale, distPt(knCtx.viTri, camTarget)) : Math.max(1.5 * sceneScale, curDist);
     const objOnlyDist = knObj ? distPt(knObj.viTri, objCenter) * 1.15 : 0;
+    const ctxFloorMult = validCtxPts.length > 0 ? (objectKind === "point" ? 1.02 : 1.06) : 0.94;
     let dist =
       objectKind === "point"
-        ? Math.max(baseDist * 0.86, 0.75 * sceneScale)
-        : Math.max(baseDist * 0.94, objOnlyDist, 0.5 * sceneScale);
+        ? Math.max(baseDist * ctxFloorMult, 0.75 * sceneScale)
+        : Math.max(baseDist * ctxFloorMult, objOnlyDist, 0.5 * sceneScale);
 
     const floorSupport = stableCenter ? Math.max(0.2 * sceneScale, khoangTuaTheoHuong(stableCenter, dirUnit) * 1.35) : 0.2 * sceneScale;
     dist = Math.max(dist, floorSupport);
@@ -1560,26 +1579,81 @@ export function computeSmartLocateCamera(input: SmartLocateInput): SmartLocateRe
     let penalty = 0;
     // 1. Che khuất ưu tiên tuyệt đối (đặc biệt với điểm nằm trong khối / tiếp xúc)
     penalty += occRatio * (isInteriorOrTangent ? 220 : 140);
-    // 2. Mặt phẳng & thiết diện: cấm nhìn liếc cạnh (|u · n̂| < 0.42)
+    // 2. Mặt phẳng & thiết diện: cấm nhìn liếc cạnh (|u · n̂| < 0.42) + ưu tiên diện tích hình chiếu đa giác 2D
     if (normAlign !== null) {
       if (normAlign < 0.42) penalty += 160 + (0.42 - normAlign) * 200;
       else if (normAlign < 0.52) penalty += (0.52 - normAlign) * 18;
       // Thích góc nhìn nghiêng sư phạm (0.55..0.88) hơn nhìn thẳng đứng quá dẹt
       if (normAlign > 0.94) penalty += (normAlign - 0.94) * 12;
     }
+    if ((objectKind === "section" || objectKind === "plane") && validObjPts.length >= 3) {
+      const poly2d: [number, number][] = [];
+      let clippedPolyPts = 0;
+      for (const p of validObjPts) {
+        const ndc = projectToNdc(p, framed.pos, desiredTarget, fovDeg, aspect);
+        if (!ndc) {
+          clippedPolyPts += 1;
+        } else {
+          if (Math.abs(ndc[0]) > 0.92 || Math.abs(ndc[1]) > 0.92) clippedPolyPts += 1;
+          poly2d.push(ndc);
+        }
+      }
+      penalty += clippedPolyPts * 22;
+      if (poly2d.length >= 3) {
+        let twiceArea = 0;
+        for (let i = 0; i < poly2d.length; i += 1) {
+          const a = poly2d[i]!;
+          const b = poly2d[(i + 1) % poly2d.length]!;
+          twiceArea += a[0] * b[1] - b[0] * a[1];
+        }
+        const polyAreaNdc = 0.5 * Math.abs(twiceArea);
+        if (polyAreaNdc < 0.015) penalty += 35;
+        else penalty -= Math.min(polyAreaNdc * 18, 8);
+      }
+    }
     // 3. Đoạn thẳng: tránh nhìn dọc theo cạnh (|u · d̂| > 0.82)
     if (segCos !== null) {
       if (segCos > 0.82) penalty += 150 + (segCos - 0.82) * 200;
       else penalty += segCos * segCos * 12;
     }
-    // 4. Tránh lật ngược chiều đứng (nhìn từ dưới lên sâu quá -0.15)
+    // 4. Bảo toàn bối cảnh khối chủ & tránh cắt viền khung nhìn / nhìn lướt sát mặt bên của khối
+    if (validCtxPts.length > 0) {
+      let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+      let ctxClipped = 0;
+      for (const p of validCtxPts) {
+        const ndc = projectToNdc(p, framed.pos, desiredTarget, fovDeg, aspect);
+        if (!ndc || Math.abs(ndc[0]) > 0.90 || Math.abs(ndc[1]) > 0.90) {
+          ctxClipped += 1;
+        }
+        if (ndc) {
+          if (ndc[0] < minX) minX = ndc[0];
+          if (ndc[0] > maxX) maxX = ndc[0];
+          if (ndc[1] < minY) minY = ndc[1];
+          if (ndc[1] > maxY) maxY = ndc[1];
+        }
+      }
+      penalty += ctxClipped * 18;
+      if (validCtxPts.length >= 4 && Number.isFinite(minX)) {
+        const spanX = Math.min(2, Math.max(0, maxX - minX));
+        const spanY = Math.min(2, Math.max(0, maxY - minY));
+        penalty -= Math.min(spanX * spanY * 8, 6);
+      }
+    }
+    for (const fn of hostFaceNormals) {
+      const fCos = Math.abs(tich(u, fn));
+      if (fCos < 0.14) penalty += (0.14 - fCos) * 25;
+    }
+    // 5. Tránh lật ngược chiều đứng (nhìn từ dưới lên sâu quá -0.15)
     if (u[2] < 0.08) penalty += 35 + (0.08 - u[2]) * 60;
     else if (u[2] > 0.90) penalty += (u[2] - 0.90) * 25;
-    // 5. Giữ tâm đối tượng tương đối trung tâm trong khung nhìn & chuyển động mượt từ góc nhìn hiện tại
+    // 6. Giữ tâm đối tượng tương đối trung tâm trong khung nhìn & chuyển động mượt từ góc nhìn hiện tại
     penalty += (Math.abs(targetNdc[0]) + Math.abs(targetNdc[1])) * 6;
+    if (Math.abs(targetNdc[0]) > 0.56 || Math.abs(targetNdc[1]) > 0.56) {
+      penalty += 14;
+    }
     const rotCos = Math.max(-1, Math.min(1, tich(u, uCur)));
     penalty += (1 - rotCos) * 4.5;
-    // 6. Rất nhẹ ưu tiên hướng 3/4 chuẩn SGK nếu nhiều hướng ngang điểm
+    // 7. Rất nhẹ ưu tiên hướng 3/4 chuẩn SGK nếu nhiều hướng ngang điểm
     const sgkCos = tich(u, chuan([...HUONG_SGK]));
     penalty += (1 - sgkCos) * 0.4;
 
