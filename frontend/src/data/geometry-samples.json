@@ -3839,7 +3839,28 @@
           "2",
           "2",
           "0"
-         ]
+         ],
+         "trace_derivation": {
+          "face": 0,
+          "through": [
+           {
+            "vertex": 0
+           },
+           {
+            "vertex": 2
+           }
+          ],
+          "endpoints": [
+           {
+            "vertex": 0
+           },
+           {
+            "vertex": 2
+           }
+          ],
+          "derivations": [],
+          "verified_exact": true
+         }
         },
         {
          "face_index": 2,
@@ -3852,7 +3873,28 @@
           "0",
           "0",
           "4"
-         ]
+         ],
+         "trace_derivation": {
+          "face": 2,
+          "through": [
+           {
+            "vertex": 2
+           },
+           {
+            "vertex": 4
+           }
+          ],
+          "endpoints": [
+           {
+            "vertex": 2
+           },
+           {
+            "vertex": 4
+           }
+          ],
+          "derivations": [],
+          "verified_exact": true
+         }
         },
         {
          "face_index": 1,
@@ -3865,7 +3907,28 @@
           "0",
           "0",
           "0"
-         ]
+         ],
+         "trace_derivation": {
+          "face": 1,
+          "through": [
+           {
+            "vertex": 0
+           },
+           {
+            "vertex": 4
+           }
+          ],
+          "endpoints": [
+           {
+            "vertex": 4
+           },
+           {
+            "vertex": 0
+           }
+          ],
+          "derivations": [],
+          "verified_exact": true
+         }
         }
        ],
        "vertex_sources": [
@@ -4666,13 +4729,21 @@
         ],
         "khoi": "chop",
         "mat_phang": "sac",
-        "thiet_dien": "thiet_dien"
+        "thiet_dien": "thiet_dien",
+        "justification": {
+         "theorem": "COPLANAR_TRACE_INTERSECTION",
+         "plane": "(SAC)",
+         "face": "ABCD",
+         "auxiliary_points": [],
+         "verified_exact": true
+        }
        },
        "learner_text": "Trên mặt ABCD, nối đỉnh A với đỉnh C.",
        "visible_prerequisites": [
         "chop",
         "sac"
-       ]
+       ],
+       "justification_text": "(SAC) và mặt (ABCD) có chung A và C nên giao tuyến của chúng là đường thẳng nối hai điểm đó."
       },
       {
        "step_index": 7,
@@ -4700,13 +4771,21 @@
         ],
         "khoi": "chop",
         "mat_phang": "sac",
-        "thiet_dien": "thiet_dien"
+        "thiet_dien": "thiet_dien",
+        "justification": {
+         "theorem": "COPLANAR_TRACE_INTERSECTION",
+         "plane": "(SAC)",
+         "face": "BCS",
+         "auxiliary_points": [],
+         "verified_exact": true
+        }
        },
        "learner_text": "Trên mặt BCS, nối đỉnh C với đỉnh S.",
        "visible_prerequisites": [
         "chop",
         "sac"
-       ]
+       ],
+       "justification_text": "(SAC) và mặt (BCS) có chung C và S nên giao tuyến của chúng là đường thẳng nối hai điểm đó."
       },
       {
        "step_index": 8,
@@ -4734,13 +4813,21 @@
         ],
         "khoi": "chop",
         "mat_phang": "sac",
-        "thiet_dien": "thiet_dien"
+        "thiet_dien": "thiet_dien",
+        "justification": {
+         "theorem": "COPLANAR_TRACE_INTERSECTION",
+         "plane": "(SAC)",
+         "face": "ABS",
+         "auxiliary_points": [],
+         "verified_exact": true
+        }
        },
        "learner_text": "Trên mặt ABS, nối đỉnh S với đỉnh A.",
        "visible_prerequisites": [
         "chop",
         "sac"
-       ]
+       ],
+       "justification_text": "(SAC) và mặt (ABS) có chung S và A nên giao tuyến của chúng là đường thẳng nối hai điểm đó."
       },
       {
        "step_index": 9,
