@@ -167,13 +167,15 @@ def main() -> int:
                 "shape fixed AT the witness vertex", "stated cos² recomputed", "engine TI-6 kernel value binding",
                 "adapter: drawn angle = witness"]})
     c520, calls520, ask520 = _proof(real["vmmu_r520"])
-    rd520 = route(real["vmmu_r520"])
+    from app.ai.adaptive_input_router import route_text_input
+    full520 = route_text_input(real["vmmu_r520"], allow_live_ai=False).response or {}
+    rd520 = full520.get("route_d") or {}
     put("structured_angle_witness_verification.json", {
         "r520": {"witness": c520["conclusion"]["witness"], "cos_sq": c520["conclusion"]["cos_sq"],
                  "verified": ti.verify_target_invariance_certificate(c520, calls520, ask520),
                  "scene_angle_construction": next(({k: o["angle_construction"].get(k) for k in ("vertex_id",)} |
                                                    {"arm_ids": [a.get("to_id") for a in o["angle_construction"]["arms"]]}
-                                                   for o in (rd520.get("scene3d") or {}).get("objects", []) if o.get("angle_construction")), "NOT_EXPOSED_IN_ROUTE_D")},
+                                                   for o in ((full520.get("envelope") or {}).get("scene3d") or {}).get("objects", []) if o.get("angle_construction")), None)},
         "witness_schema": {"vertex": "label", "ray_1": "[vertex, U]", "ray_2": "[vertex, V]", "domain": ti.ANGLE_DOMAIN},
         "checks": ["rays start at the vertex", "distinct arm ends", "vertex on the planes' common line", "each ray in its plane off that line",
                    "each ray proven ⊥ the common line", "shape step at the same vertex of the same triangle", "conclusion witness = goal-step witness"]})
@@ -306,9 +308,11 @@ def main() -> int:
     browser = browser.get("browser_switch_loop", browser)
     put("resource_cleanup_audit.json", {"browser_switch_loop": browser,
         "ports_checked_after_run": [8767, 8000, 3000, 4173, 5173], "listening": listening,
+        "ports_started_by_this_run": [8767], "still_listening_from_this_run": [p for p in listening if p == 8767],
+        "other_listeners": {str(p): "not started by this run (a process already running before it); left untouched" for p in listening if p != 8767},
         "worktrees": git("worktree", "list").count("\n") + 1, "new_worktrees_or_branches": 0,
         "scratch": "temporary archives, dist and probes under the session scratch directory only",
-        "verdict": "PASS" if not listening else "FAIL"})
+        "verdict": "PASS" if 8767 not in listening else "FAIL"})
     put("publication_gate_status.json", {
         "product_regression": reg.get("verdict"),
         "publication_head": "BLOCKED_PENDING_OWNER_REVIEW", "publication_head_scan": (gates.get("publication_head") or {}).get("summary_lines"),

@@ -1,5 +1,10 @@
 # OPEN_ISSUES.md — Danh mục các vấn đề kỹ thuật đang mở
 
+**Proof soundness / generalized angle update 2026-11-14:** [Report](evaluation/geometry/runs/proof-soundness-generalized-angle-invariance/AXO_PROOF_SOUNDNESS_GENERALIZED_ANGLE_REPORT.md).
+- **Resolved:** /1 plane-angle witness defect (vertex-first triple; goal, vertex, value and scene unbound); perpendicular-planes rule; line–plane and line–line angles (meeting, and skew when proven ⊥) under shape freedom; leg ratios beyond equal legs; hybrid-preview fixture bundle stale after 9d5e9b408.
+- **Still open:** skew lines not proven ⊥ (no parallel transport); derived points (midpoints, feet) outside the proof domain; prisms / several solids; ratios not stated (Pythagoras, similarity); isosceles / equilateral triangles without `regular_polygon`; oriented / dihedral angles; base convexity assumed, not checked; `_Domain` / `_ratio_sq` shared by search and verifier.
+- **Unmeasured:** independent unseen data, H-1, students, the phrase "góc nhị diện".
+
 **Target invariance / regular tetrahedron update 2026-11-14:** [Report](evaluation/geometry/runs/target-invariant-regular-solid-semantics/AXO_TARGET_INVARIANT_REGULAR_SOLID_REPORT.md).
 - **Resolved:** GEO-BE-001 latent in this worktree; normalisation certifying an unexplored sign branch (≥ 2 anchors); r520 (shape freedom, plane angle proven); "tứ diện đều" without side (r559).
 - **Still open:** proof rules only for plane angles (no line–plane / line–line / ratio under shape freedom, no perpendicular-planes rule); triangle shape fixed only by right angle + equal legs or regularity; similarity normalisation is ENGINE_DOMAIN only; oriented (signed dihedral) goals under shape freedom; other phrasings of "tứ diện đều".

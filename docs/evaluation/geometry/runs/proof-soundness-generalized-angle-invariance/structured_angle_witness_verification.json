@@ -1,0 +1,56 @@
+{
+  "run_id": "proof-soundness-generalized-angle-invariance",
+  "generated_at_utc": "2026-11-14T12:35:21.414052+00:00",
+  "product_commit": "c54db0da0c792c2ba0399acc8e9df992d2d270c3",
+  "measured_system": "610b4ee1e3227bc44f0659aea5d0dfc7f7a827aff622605db2b9571fb980fb80",
+  "cache_version": "137",
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "HYBRID_ROUTE_MODE": "local-first",
+    "live_ai_calls": 0
+  },
+  "head": "94281be581617a67921f295474dbd8e698dade4b",
+  "r520": {
+    "witness": {
+      "vertex": "B",
+      "ray_1": [
+        "B",
+        "S"
+      ],
+      "ray_2": [
+        "B",
+        "A"
+      ],
+      "domain": "UNORIENTED_LINE_ANGLE_0_90"
+    },
+    "cos_sq": "1/2",
+    "verified": {
+      "verified": true,
+      "failed_step": null,
+      "reason": "every step re-derived from the calls; goal and value bound",
+      "cos_sq": "1/2"
+    },
+    "scene_angle_construction": {
+      "vertex_id": "B",
+      "arm_ids": [
+        "S",
+        "A"
+      ]
+    }
+  },
+  "witness_schema": {
+    "vertex": "label",
+    "ray_1": "[vertex, U]",
+    "ray_2": "[vertex, V]",
+    "domain": "UNORIENTED_LINE_ANGLE_0_90"
+  },
+  "checks": [
+    "rays start at the vertex",
+    "distinct arm ends",
+    "vertex on the planes' common line",
+    "each ray in its plane off that line",
+    "each ray proven ⊥ the common line",
+    "shape step at the same vertex of the same triangle",
+    "conclusion witness = goal-step witness"
+  ]
+}

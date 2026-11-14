@@ -1,0 +1,81 @@
+{
+  "run_id": "proof-soundness-generalized-angle-invariance",
+  "generated_at_utc": "2026-11-14T12:35:21.414052+00:00",
+  "product_commit": "c54db0da0c792c2ba0399acc8e9df992d2d270c3",
+  "measured_system": "610b4ee1e3227bc44f0659aea5d0dfc7f7a827aff622605db2b9571fb980fb80",
+  "cache_version": "137",
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "HYBRID_ROUTE_MODE": "local-first",
+    "live_ai_calls": 0
+  },
+  "head": "94281be581617a67921f295474dbd8e698dade4b",
+  "code_under_test": "archive of 914dd41db/backend (target_invariance.py identical at 9d5e9b408)",
+  "command": "PYTHONPATH=<archive>/backend python tools/old_verifier_probe.py logs/old_verifier_probe.json",
+  "generated_plane_angle_step": {
+    "id": "t8",
+    "rule": "PLANE_ANGLE",
+    "premises": [
+      "t7",
+      "t1"
+    ],
+    "conclusion": {
+      "angle_of_planes": [
+        [
+          "B",
+          "C",
+          "S"
+        ],
+        [
+          "A",
+          "B",
+          "C"
+        ]
+      ],
+      "equals_angle": [
+        "B",
+        "S",
+        "A"
+      ],
+      "intersection": [
+        "B",
+        "C"
+      ]
+    }
+  },
+  "claim_text": "for every configuration satisfying the cited facts, ∠(BCS, ABC) = ∠(SBA) of a triangle whose shape the facts fix",
+  "probes": {
+    "triple_in_standard_notation_vertex_in_the_middle": {
+      "accepted_by_old_verifier": false,
+      "note": "the correct angle SBA written in standard notation (vertex in the middle)"
+    },
+    "triple_as_generated_vertex_first": {
+      "accepted_by_old_verifier": true,
+      "note": "the generated triple ['B','S','A'] — reads as angle BSA (vertex S) in standard notation"
+    },
+    "forged_four_label_non_coplanar_plane": {
+      "accepted_by_old_verifier": false,
+      "note": "PERP_TWO_LINES concluding BC ⊥ 'plane' {A,B,C,S} (four non-coplanar labels)"
+    },
+    "certificate_attached_to_another_goal": {
+      "accepted_by_old_verifier": true,
+      "note": "goal_id changed: the verifier never sees the asked planes"
+    },
+    "triangle_listed_with_another_first_label": {
+      "accepted_by_old_verifier": true,
+      "note": "the fixed triangle named with S first: the angle's vertex is not tied to the triangle step"
+    }
+  },
+  "defect": [
+    "the triple ['B','S','A'] puts the vertex FIRST: read in standard notation it is ∠BSA (vertex S), the claim text says ∠(SBA)",
+    "a certificate re-pointed to another goal_id was accepted (no goal binding)",
+    "the shape step was not tied to the witness vertex (any listing of the triangle accepted)",
+    "the proven value was never bound to the kernel's answer"
+  ],
+  "served_value_was_right_because": "SAB is right isosceles at A: ∠SBA = ∠BSA = 45° — the defect was masked by the special shape",
+  "red_tests_now": [
+    "test_the_r520_vertex_first_triple_certificate_is_not_accepted",
+    "test_a_shape_fixed_at_another_vertex_is_rejected_even_when_the_figure_makes_it_equal",
+    "test_a_certificate_is_bound_to_the_goal_it_was_proven_for"
+  ]
+}

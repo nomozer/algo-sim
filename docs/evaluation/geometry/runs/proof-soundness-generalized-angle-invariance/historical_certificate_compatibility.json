@@ -1,0 +1,34 @@
+{
+  "run_id": "proof-soundness-generalized-angle-invariance",
+  "generated_at_utc": "2026-11-14T12:35:21.414052+00:00",
+  "product_commit": "c54db0da0c792c2ba0399acc8e9df992d2d270c3",
+  "measured_system": "610b4ee1e3227bc44f0659aea5d0dfc7f7a827aff622605db2b9571fb980fb80",
+  "cache_version": "137",
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "HYBRID_ROUTE_MODE": "local-first",
+    "live_ai_calls": 0
+  },
+  "head": "94281be581617a67921f295474dbd8e698dade4b",
+  "v1_certificates": "not accepted by the /2 verifier (schema, bare triple, no goal) — test_the_r520_vertex_first_triple_certificate_is_not_accepted",
+  "v1_in_cache": "rows 136:route-d MISS (cache 137)",
+  "previous_run_receipts_checked": 53,
+  "previous_run_receipts_changed": [],
+  "superseded_by_this_run": {
+    "run": "target-invariant-regular-solid-semantics",
+    "receipts": [
+      "universal_goal_invariance_proofs.json (/1 certificate, bare triple)",
+      "goal_invariance_mutation_tests.json (/1 mutations)",
+      "target_invariance_capability_audit.json (not_supported list)"
+    ],
+    "how": "this run's receipts supersede; the old files are unchanged"
+  },
+  "restated_tests": {
+    "tests/geometry/test_target_invariance_regular_solids.py": [
+      "test_the_proof_is_the_synthetic_one: equals_angle ⊇ {S,A,B} → witness vertex B + rays {S, A}",
+      "test_unproven_or_varying_goals_are_refused: '(SAC) và (ABC)' (was refused as 'invariant but unproven') → test_perpendicular_planes_are_now_proven (90°)",
+      "mutation keys equals_angle/intersection/RIGHT_ISOSCELES_AT_B → witness/intersection_line/RIGHT_ANGLE_AT_B; + value mutation"
+    ]
+  },
+  "verdict": "PASS"
+}

@@ -1,0 +1,30 @@
+{
+  "run_id": "proof-soundness-generalized-angle-invariance",
+  "generated_at_utc": "2026-11-14T12:35:21.414052+00:00",
+  "product_commit": "c54db0da0c792c2ba0399acc8e9df992d2d270c3",
+  "measured_system": "610b4ee1e3227bc44f0659aea5d0dfc7f7a827aff622605db2b9571fb980fb80",
+  "cache_version": "137",
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "HYBRID_ROUTE_MODE": "local-first",
+    "live_ai_calls": 0
+  },
+  "head": "94281be581617a67921f295474dbd8e698dade4b",
+  "sealed_h1_rows_opened": 0,
+  "locked_w2_w3_rows_read": 0,
+  "tools_scanned": [
+    "acceptance.py",
+    "compositional_dev_corpus.py",
+    "gram_angle_check.py",
+    "old_verifier_probe.py",
+    "perf.py",
+    "refresh_pending_templates.py",
+    "run_full_regression.py",
+    "scene3d_goal_e2e.mjs",
+    "scene_invariants_run.py",
+    "semantic_compare.py"
+  ],
+  "h1_corpus_paths_referenced": [],
+  "w2_w3_locked_manifests_referenced": [],
+  "verdict": "PASS"
+}

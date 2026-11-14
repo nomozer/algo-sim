@@ -1,141 +1,175 @@
 {
-  "browser": "158.0.8127.36",
-  "headless": true,
-  "backend": "measured_app loopback, HYBRID_ROUTE_MODE=local-first, ALLOW_LIVE_AI=0",
-  "synthetic_signup_status": 200,
-  "series": [
-    {
-      "cycle": 0,
-      "case": "cos_line_plane",
-      "numeric_note_present": true,
-      "numeric_note_expected": true,
-      "heap_mb": 17.50957202911377,
-      "canvases": 1,
-      "steps": 6,
-      "rendered": 11
-    },
-    {
-      "cycle": 0,
-      "case": "section_one_sentence",
-      "numeric_note_present": false,
-      "numeric_note_expected": false,
-      "heap_mb": 21.240736961364746,
-      "canvases": 1,
-      "steps": 7,
-      "rendered": 14
-    },
-    {
-      "cycle": 1,
-      "case": "cos_line_plane",
-      "numeric_note_present": true,
-      "numeric_note_expected": true,
-      "heap_mb": 21.847200393676758,
-      "canvases": 1,
-      "steps": 6,
-      "rendered": 11
-    },
-    {
-      "cycle": 1,
-      "case": "section_one_sentence",
-      "numeric_note_present": false,
-      "numeric_note_expected": false,
-      "heap_mb": 21.568713188171387,
-      "canvases": 1,
-      "steps": 7,
-      "rendered": 14
-    },
-    {
-      "cycle": 2,
-      "case": "cos_line_plane",
-      "numeric_note_present": true,
-      "numeric_note_expected": true,
-      "heap_mb": 22.22180938720703,
-      "canvases": 1,
-      "steps": 6,
-      "rendered": 11
-    },
-    {
-      "cycle": 2,
-      "case": "section_one_sentence",
-      "numeric_note_present": false,
-      "numeric_note_expected": false,
-      "heap_mb": 23.571157455444336,
-      "canvases": 1,
-      "steps": 7,
-      "rendered": 14
-    },
-    {
-      "cycle": 3,
-      "case": "cos_line_plane",
-      "numeric_note_present": true,
-      "numeric_note_expected": true,
-      "heap_mb": 22.97587776184082,
-      "canvases": 1,
-      "steps": 6,
-      "rendered": 11
-    },
-    {
-      "cycle": 3,
-      "case": "section_one_sentence",
-      "numeric_note_present": false,
-      "numeric_note_expected": false,
-      "heap_mb": 24.225261688232422,
-      "canvases": 1,
-      "steps": 7,
-      "rendered": 14
-    },
-    {
-      "cycle": 4,
-      "case": "cos_line_plane",
-      "numeric_note_present": true,
-      "numeric_note_expected": true,
-      "heap_mb": 24.211649894714355,
-      "canvases": 1,
-      "steps": 6,
-      "rendered": 11
-    },
-    {
-      "cycle": 4,
-      "case": "section_one_sentence",
-      "numeric_note_present": false,
-      "numeric_note_expected": false,
-      "heap_mb": 25.35614585876465,
-      "canvases": 1,
-      "steps": 7,
-      "rendered": 14
-    },
-    {
-      "cycle": 5,
-      "case": "cos_line_plane",
-      "numeric_note_present": true,
-      "numeric_note_expected": true,
-      "heap_mb": 24.706085205078125,
-      "canvases": 1,
-      "steps": 6,
-      "rendered": 11
-    },
-    {
-      "cycle": 5,
-      "case": "section_one_sentence",
-      "numeric_note_present": false,
-      "numeric_note_expected": false,
-      "heap_mb": 23.8825044631958,
-      "canvases": 1,
-      "steps": 7,
-      "rendered": 14
-    }
+  "run_id": "proof-soundness-generalized-angle-invariance",
+  "generated_at_utc": "2026-11-14T12:35:21.414052+00:00",
+  "product_commit": "c54db0da0c792c2ba0399acc8e9df992d2d270c3",
+  "measured_system": "610b4ee1e3227bc44f0659aea5d0dfc7f7a827aff622605db2b9571fb980fb80",
+  "cache_version": "137",
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "HYBRID_ROUTE_MODE": "local-first",
+    "live_ai_calls": 0
+  },
+  "head": "94281be581617a67921f295474dbd8e698dade4b",
+  "browser_switch_loop": {
+    "browser": "158.0.8127.36",
+    "headless": true,
+    "backend": "measured_app loopback, HYBRID_ROUTE_MODE=local-first, ALLOW_LIVE_AI=0",
+    "synthetic_signup_status": 200,
+    "series": [
+      {
+        "cycle": 0,
+        "case": "cos_line_plane",
+        "numeric_note_present": true,
+        "numeric_note_expected": true,
+        "heap_mb": 17.50957202911377,
+        "canvases": 1,
+        "steps": 6,
+        "rendered": 11
+      },
+      {
+        "cycle": 0,
+        "case": "section_one_sentence",
+        "numeric_note_present": false,
+        "numeric_note_expected": false,
+        "heap_mb": 21.240736961364746,
+        "canvases": 1,
+        "steps": 7,
+        "rendered": 14
+      },
+      {
+        "cycle": 1,
+        "case": "cos_line_plane",
+        "numeric_note_present": true,
+        "numeric_note_expected": true,
+        "heap_mb": 21.847200393676758,
+        "canvases": 1,
+        "steps": 6,
+        "rendered": 11
+      },
+      {
+        "cycle": 1,
+        "case": "section_one_sentence",
+        "numeric_note_present": false,
+        "numeric_note_expected": false,
+        "heap_mb": 21.568713188171387,
+        "canvases": 1,
+        "steps": 7,
+        "rendered": 14
+      },
+      {
+        "cycle": 2,
+        "case": "cos_line_plane",
+        "numeric_note_present": true,
+        "numeric_note_expected": true,
+        "heap_mb": 22.22180938720703,
+        "canvases": 1,
+        "steps": 6,
+        "rendered": 11
+      },
+      {
+        "cycle": 2,
+        "case": "section_one_sentence",
+        "numeric_note_present": false,
+        "numeric_note_expected": false,
+        "heap_mb": 23.571157455444336,
+        "canvases": 1,
+        "steps": 7,
+        "rendered": 14
+      },
+      {
+        "cycle": 3,
+        "case": "cos_line_plane",
+        "numeric_note_present": true,
+        "numeric_note_expected": true,
+        "heap_mb": 22.97587776184082,
+        "canvases": 1,
+        "steps": 6,
+        "rendered": 11
+      },
+      {
+        "cycle": 3,
+        "case": "section_one_sentence",
+        "numeric_note_present": false,
+        "numeric_note_expected": false,
+        "heap_mb": 24.225261688232422,
+        "canvases": 1,
+        "steps": 7,
+        "rendered": 14
+      },
+      {
+        "cycle": 4,
+        "case": "cos_line_plane",
+        "numeric_note_present": true,
+        "numeric_note_expected": true,
+        "heap_mb": 24.211649894714355,
+        "canvases": 1,
+        "steps": 6,
+        "rendered": 11
+      },
+      {
+        "cycle": 4,
+        "case": "section_one_sentence",
+        "numeric_note_present": false,
+        "numeric_note_expected": false,
+        "heap_mb": 25.35614585876465,
+        "canvases": 1,
+        "steps": 7,
+        "rendered": 14
+      },
+      {
+        "cycle": 5,
+        "case": "cos_line_plane",
+        "numeric_note_present": true,
+        "numeric_note_expected": true,
+        "heap_mb": 24.706085205078125,
+        "canvases": 1,
+        "steps": 6,
+        "rendered": 11
+      },
+      {
+        "cycle": 5,
+        "case": "section_one_sentence",
+        "numeric_note_present": false,
+        "numeric_note_expected": false,
+        "heap_mb": 23.8825044631958,
+        "canvases": 1,
+        "steps": 7,
+        "rendered": 14
+      }
+    ],
+    "timeline_walk_heap_mb": [
+      24.35521411895752,
+      25.340580940246582,
+      27.173056602478027,
+      25.794882774353027
+    ],
+    "timeline_walk_growth_mb": 1.4396686553955078,
+    "method": "6 cycles × 2 problems in one signed-in page (each analysis is kept in the learner history), forced GC (--expose-gc) before each reading; plus 15 timeline walks of one problem with no new analysis",
+    "heap_mean_early_mb": 22.302220106124878,
+    "heap_mean_late_mb": 24.539096355438232,
+    "heap_growth_mb": 2.2368762493133545,
+    "canvas_count_constant": true,
+    "numeric_note_never_carried_over": true
+  },
+  "ports_checked_after_run": [
+    8767,
+    8000,
+    3000,
+    4173,
+    5173
   ],
-  "timeline_walk_heap_mb": [
-    24.35521411895752,
-    25.340580940246582,
-    27.173056602478027,
-    25.794882774353027
+  "listening": [
+    8000
   ],
-  "timeline_walk_growth_mb": 1.4396686553955078,
-  "method": "6 cycles × 2 problems in one signed-in page (each analysis is kept in the learner history), forced GC (--expose-gc) before each reading; plus 15 timeline walks of one problem with no new analysis",
-  "heap_mean_early_mb": 22.302220106124878,
-  "heap_mean_late_mb": 24.539096355438232,
-  "heap_growth_mb": 2.2368762493133545,
-  "canvas_count_constant": true,
-  "numeric_note_never_carried_over": true
+  "ports_started_by_this_run": [
+    8767
+  ],
+  "still_listening_from_this_run": [],
+  "other_listeners": {
+    "8000": "not started by this run (a process already running before it); left untouched"
+  },
+  "worktrees": 16,
+  "new_worktrees_or_branches": 0,
+  "scratch": "temporary archives, dist and probes under the session scratch directory only",
+  "verdict": "PASS"
 }

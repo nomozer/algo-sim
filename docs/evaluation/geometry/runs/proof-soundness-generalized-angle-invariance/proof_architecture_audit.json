@@ -1,0 +1,56 @@
+{
+  "run_id": "proof-soundness-generalized-angle-invariance",
+  "generated_at_utc": "2026-11-14T12:35:21.414052+00:00",
+  "product_commit": "c54db0da0c792c2ba0399acc8e9df992d2d270c3",
+  "measured_system": "610b4ee1e3227bc44f0659aea5d0dfc7f7a827aff622605db2b9571fb980fb80",
+  "cache_version": "137",
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "HYBRID_ROUTE_MODE": "local-first",
+    "live_ai_calls": 0
+  },
+  "head": "94281be581617a67921f295474dbd8e698dade4b",
+  "module": "backend/app/simulation/geometry_functions/target_invariance.py",
+  "schema": "target-invariance-certificate/2",
+  "search": "_Search.saturate (bounded forward chaining over DERIVATION_RULES) + _prove (one goal rule) + _finish (TRIANGLE_SHAPE_FIXED)",
+  "verifier": "verify_target_invariance_certificate(cert, calls, goal): re-derives every step from the calls and EARLIER steps; shares only _ln/_args/_Domain/_ratio_sq; never calls the search (AST test)",
+  "derivation_rules": [
+    "RIGHT_ANGLE",
+    "PERPENDICULAR_LINES",
+    "SOURCE_LINE_PERP_PLANE",
+    "PERP_PLANE_TO_LINE",
+    "PERP_TWO_LINES"
+  ],
+  "goal_rules": [
+    "PLANE_ANGLE",
+    "PERP_PLANES",
+    "LINE_PLANE_ANGLE",
+    "LINE_PERP_PLANE_ANGLE",
+    "LINE_ANGLE",
+    "LINES_PERPENDICULAR"
+  ],
+  "shape_rule": "TRIANGLE_SHAPE_FIXED",
+  "goal_functions": [
+    "ask_angle_plane_plane",
+    "ask_angle_line_plane",
+    "ask_angle_lines"
+  ],
+  "angle_domain": "UNORIENTED_LINE_ANGLE_0_90",
+  "max_derived": 256,
+  "proof_domain": "one pyramid / regular_pyramid call and its vertices (convex base: no three collinear, apex off the base); prisms and derived points out of domain",
+  "engine_obligations": [
+    "TI-1 goal kind",
+    "TI-2 proof",
+    "TI-3 independent verification bound to the goal",
+    "TI-4 representative",
+    "TI-5 shape/scale witnesses (regression, not proof)",
+    "TI-6 proven cos² = kernel exact answer"
+  ],
+  "adapter_binding": "_invariance_proof_bound (adapter4_route.py)",
+  "not_built": [
+    "parallel geometry kernel",
+    "numeric sampling as proof",
+    "oriented / dihedral angles",
+    "parallel transport for skew lines (only ⊥ skew lines)"
+  ]
+}

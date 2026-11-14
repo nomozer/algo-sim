@@ -1,5 +1,20 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = PROOF_SOUNDNESS_GENERALIZED_ANGLE_INVARIANCE
+
+RUN_ID = proof-soundness-generalized-angle-invariance
+REPORT = docs/evaluation/geometry/runs/proof-soundness-generalized-angle-invariance/AXO_PROOF_SOUNDNESS_GENERALIZED_ANGLE_REPORT.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/proof-soundness-generalized-angle-invariance/
+START_BASE = 914dd41db (owner commit 9d5e9b408 landed during the run; before side of comparisons)
+CODE_COMMIT = c54db0da0 (certificate /2, bindings, generalized angles, cache 137); tests 79fae066b, 421d7a7f8, 94281be58; candidate freeze f30363597
+CLASSIFICATION = DEVELOPMENT_EVIDENCE_ON_AGENT_CORPUS_AND_EXPOSED_ITEMS; AGENT_DIAGNOSTIC_ORACLE; AUTOMATED_BROWSER_E2E; INDEPENDENT_GENERALIZATION NOT_MEASURED; PUBLICATION BLOCKED_PENDING_OWNER_REVIEW
+PRODUCT_CHANGE = YES; contract versions unchanged; certificate schema target-invariance-certificate/1 → /2; CACHE_VERSION 136 → 137; measured files 117
+MODEL_REQUEST_COUNT = 0
+VERIFICATION = run.json; full_regression_summary.json; r520_angle_witness_defect_reproduction.json; existing_rule_soundness_audit.json; proof_scene_binding_verification.json; generalized_angle_scene_checks.json
+CORRECTS = target-invariant-regular-solid-semantics: its /1 certificate (vertex-first triple, no goal / vertex / value / scene binding) — universal_goal_invariance_proofs.json, goal_invariance_mutation_tests.json, target_invariance_capability_audit.json are superseded; historical receipts unchanged. Also verified-section-intersection-dihedral-local fixtures-dihedral-altitude superseded (envelope lineage from 9d5e9b408)
+CORRECTED_BY = NONE
+LIMITATIONS = agent-written corpus; exposed items; proof domain one pyramid and its vertices; no derived points, no parallel transport for skew lines; headless browser; no H-1, no students.
+
 ## WAVE_ID = TARGET_INVARIANT_REGULAR_SOLID_SEMANTICS
 
 RUN_ID = target-invariant-regular-solid-semantics
