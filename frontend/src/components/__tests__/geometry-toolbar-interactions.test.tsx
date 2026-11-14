@@ -81,9 +81,15 @@ describe("Geometry Toolbar Interactions & X-Ray Rendering (AXO V9.4.20)", () => 
 
     expect(html).not.toContain('fill="#FFF"');
     expect(html).toContain('fill="var(--surface, #ffffff)"');
-    expect(html).toContain('title="Độ đậm vỏ khối &amp; mặt phẳng"');
-    expect(html).toContain('data-tooltip="Độ đậm khối &amp; mặt"');
-    expect(html).toContain("<span>Độ đậm khối &amp; mặt</span>");
+    expect(html).toContain('id="p-dot-geo-custom"');
+    expect(html).toContain('title="Tùy chỉnh hình đang áp dụng"');
+    expect(html).toContain('title="Tùy chỉnh hình"');
+    expect(html).toContain('data-tooltip="Tùy chỉnh hình"');
+    expect(html).toContain('aria-label="Tùy chỉnh hình"');
+    expect(html).toContain('title="Kéo để di chuyển bảng Tùy chỉnh hình"');
+    expect(html).toContain("<span>Tùy chỉnh hình</span>");
+    expect(html).not.toContain("Độ đậm khối &amp; mặt");
+    expect(html).not.toContain("Độ đậm vỏ khối");
     expect(html).toContain('<polygon points="12 3 21 8 12 13 3 8 12 3"');
     expect(html).toContain('id="slider-shell-opacity"');
     expect(html).toContain('id="slider-plane-opacity"');
@@ -240,15 +246,75 @@ describe("Geometry Toolbar Interactions & X-Ray Rendering (AXO V9.4.20)", () => 
         expect(await page.evaluate(() => (window as unknown as { __geo3d_shell_visible?: boolean }).__geo3d_shell_visible)).toBe(true);
         expect(await page.evaluate(() => (window as unknown as { __geo3d_axes_visible?: boolean }).__geo3d_axes_visible)).toBe(axesBefore);
 
-        // Toggle #btn-geo-custom-pop -> change sliders -> reset -> verify zero disabled sliders
+        // Toggle #btn-geo-custom-pop -> check Tùy chỉnh hình naming & stage bounds -> verify Eye X-Ray + sliders with zero accumulation -> reset defaults without disturbing step/selection/relations/xray
         await page.locator("#btn-geo-custom-pop").click();
         expect(await page.locator("#tb-geo-custom-pop.open").count()).toBe(1);
+        expect(await page.locator("#tb-geo-custom-pop .geo-custom-pop-title span").first().innerText()).toBe("Tùy chỉnh hình");
         expect(await page.locator("#tb-geo-custom-pop input[disabled]").count()).toBe(0);
-        await page.locator("#slider-shell-opacity").fill("24");
-        await page.waitForTimeout(80);
-        expect(await page.locator("#val-shell-opacity").innerText()).toBe("24%");
+
+        const boundsCheck = await page.evaluate(() => {
+          const stage = document.getElementById("stage-3d-box")?.getBoundingClientRect();
+          const pop = document.getElementById("tb-geo-custom-pop")?.getBoundingClientRect();
+          return Boolean(
+            stage &&
+            pop &&
+            pop.left >= stage.left - 1 &&
+            pop.right <= stage.right + 1 &&
+            pop.top >= stage.top - 1 &&
+            pop.bottom <= stage.bottom + 1,
+          );
+        });
+        expect(boundsCheck).toBe(true);
+
+        // Currently xray is true (from line 185); turn it OFF first, set sliders to 28% / 20%
+        await page.locator("#btn-xray").click();
+        await page.waitForFunction(() => (window as unknown as { __geo3d_xray_active?: boolean }).__geo3d_xray_active === false);
+        await page.locator("#slider-shell-opacity").fill("28");
+        await page.locator("#slider-plane-opacity").fill("20");
+        await page.waitForFunction(() => (window as unknown as { __geo3d_shell_opacity_pct?: number }).__geo3d_shell_opacity_pct === 28 && (window as unknown as { __geo3d_plane_opacity_pct?: number }).__geo3d_plane_opacity_pct === 20);
+        await page.waitForTimeout(150);
+        const xrayOffCustomPng = await canvasBox.screenshot();
+
+        // Turn Eye X-Ray ON, adjust sliders to 22% / 16%
+        await page.locator("#btn-xray").click();
+        await page.waitForFunction(() => (window as unknown as { __geo3d_xray_active?: boolean }).__geo3d_xray_active === true);
+        await page.locator("#slider-shell-opacity").fill("22");
+        await page.locator("#slider-plane-opacity").fill("16");
+        await page.waitForFunction(() => (window as unknown as { __geo3d_shell_opacity_pct?: number }).__geo3d_shell_opacity_pct === 22 && (window as unknown as { __geo3d_plane_opacity_pct?: number }).__geo3d_plane_opacity_pct === 16);
+        await page.waitForTimeout(150);
+        const xrayOnCustomPng = await canvasBox.screenshot();
+        expect(Buffer.compare(xrayOffCustomPng, xrayOnCustomPng)).not.toBe(0);
+
+        // Turn OFF, capture reference PNG, then cycle X-Ray ON/OFF 5 times and verify zero pixel/opacity accumulation
+        await page.locator("#btn-xray").click();
+        await page.waitForFunction(() => (window as unknown as { __geo3d_xray_active?: boolean }).__geo3d_xray_active === false);
+        await page.waitForTimeout(180);
+        const firstOff22Png = await canvasBox.screenshot();
+
+        for (let i = 0; i < 5; i += 1) {
+          await page.locator("#btn-xray").click();
+          await page.waitForFunction(() => (window as unknown as { __geo3d_xray_active?: boolean }).__geo3d_xray_active === true);
+          await page.locator("#btn-xray").click();
+          await page.waitForFunction(() => (window as unknown as { __geo3d_xray_active?: boolean }).__geo3d_xray_active === false);
+        }
+        await page.waitForTimeout(180);
+        const fifthOff22Png = await canvasBox.screenshot();
+        expect(Buffer.compare(firstOff22Png, fifthOff22Png)).toBe(0);
+        expect(await page.locator("#val-shell-opacity").innerText()).toBe("22%");
+        expect(await page.locator("#val-plane-opacity").innerText()).toBe("16%");
+
+        // Turn X-Ray back ON, then click Đặt lại (#btn-reset-geo-custom): resets ONLY sliders to 12%/8%, keeps xray=true & selected_id & relation intact
+        await page.locator("#btn-xray").click();
+        await page.waitForFunction(() => (window as unknown as { __geo3d_xray_active?: boolean }).__geo3d_xray_active === true);
         await page.locator("#btn-reset-geo-custom").click();
+        await page.waitForTimeout(120);
         expect(await page.locator("#val-shell-opacity").innerText()).toBe("12%");
+        expect(await page.locator("#val-plane-opacity").innerText()).toBe("8%");
+        expect(await page.locator("#btn-xray").getAttribute("aria-pressed")).toBe("true");
+        expect(await page.evaluate(() => (window as unknown as { __geo3d_selected_id?: string | null }).__geo3d_selected_id ?? null)).toBe(selectedBeforeReset);
+        if ((await relBtn.count()) > 0) {
+          expect(await relBtn.getAttribute("aria-pressed")).toBe("true");
+        }
 
         // Collapse & expand floating toolbar
         await page.locator("#btn-tb-collapse").click();

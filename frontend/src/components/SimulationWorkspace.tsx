@@ -2115,7 +2115,7 @@ export function AxoWorkspaceV62({
                   <span
                     className={`p-dot dot-blue${isGeoParamsDirty ? " is-on" : ""}`}
                     id="p-dot-geo-custom"
-                    title="Độ đậm khối & mặt đang tùy chỉnh"
+                    title="Tùy chỉnh hình đang áp dụng"
                   />
                 </span>
               </button>
@@ -2212,9 +2212,9 @@ export function AxoWorkspaceV62({
                   isGeoParamsDirty ? " is-dirty" : ""
                 }`}
                 id="btn-geo-custom-pop"
-                title="Độ đậm vỏ khối & mặt phẳng"
-                data-tooltip="Độ đậm khối & mặt"
-                aria-label="Độ đậm vỏ khối và mặt phẳng"
+                title="Tùy chỉnh hình"
+                data-tooltip="Tùy chỉnh hình"
+                aria-label="Tùy chỉnh hình"
                 aria-expanded={geoCustomOpen}
                 onClick={() => {
                   setDisplayPopOpen(false);
@@ -2268,7 +2268,7 @@ export function AxoWorkspaceV62({
             }${geoCustomPos ? " is-custom-dragged" : ""}`}
             id="tb-geo-custom-pop"
             role="dialog"
-            aria-label="Độ đậm vỏ khối và mặt phẳng"
+            aria-label="Tùy chỉnh hình"
             aria-hidden={!geoCustomOpen}
             style={
               geoCustomPos
@@ -2287,7 +2287,7 @@ export function AxoWorkspaceV62({
             <div
               className="geo-custom-pop-header"
               id="geo-custom-pop-header"
-              title="Kéo để di chuyển bảng Độ đậm khối & mặt"
+              title="Kéo để di chuyển bảng Tùy chỉnh hình"
               onPointerDown={handleGeoCustomDragStart}
             >
               <div className="geo-custom-pop-title">
@@ -2303,7 +2303,7 @@ export function AxoWorkspaceV62({
                   <circle cx="3.5" cy="12.5" r="1.2" />
                   <circle cx="8.5" cy="12.5" r="1.2" />
                 </svg>
-                <span>Độ đậm khối &amp; mặt</span>
+                <span>Tùy chỉnh hình</span>
                 <span className="geo-custom-scene-chip" id="geo-custom-scene-chip">
                   {loaiCanh.label}
                 </span>
