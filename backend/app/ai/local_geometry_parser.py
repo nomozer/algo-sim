@@ -133,7 +133,10 @@ _PTS2 = rf"(?:{_PT}){{2}}"
 _PTS3 = rf"(?:{_PT}){{3}}"
 _PTS4 = rf"(?:{_PT}){{4}}"
 _PTS3_6 = rf"(?:{_PT}){{3,6}}"
-_VAL = r"(?:\d+(?:√\d+)?(?:/\d+)?|\d*√\d+a(?:/\d+)?|√\d+(?:/\d+)?|\d*a(?:√\d+)?(?:/\d+)?|a√\d+(?:/\d+)?)(?![.,]\d|[A-Za-z0-9_'′²³₁₂₃°~√/])"
+#: run `certified-scale-cache-safety`: a decimal coefficient ("3,5", "2.5", "1,5a") is ONE number — the same grammar as the
+#: contract's `NUMBER_PATTERN` and the Source Gate's `_SO`; a comma followed by a space ("3, AC = 4") is no decimal
+_VAL = (r"(?:\d+(?:[.,]\d+)?(?:√\d+)?(?:/\d+)?|\d*√\d+a(?:/\d+)?|√\d+(?:/\d+)?|(?:\d+(?:[.,]\d+)?)?a(?:√\d+)?(?:/\d+)?"
+        r"|a√\d+(?:/\d+)?)(?![.,]\d|[A-Za-z0-9_'′²³₁₂₃°~√/])")
 
 
 def _canon_val(v: str) -> str:
