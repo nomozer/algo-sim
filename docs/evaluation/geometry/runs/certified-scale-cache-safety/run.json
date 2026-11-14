@@ -1,6 +1,6 @@
 {
   "run_id": "certified-scale-cache-safety",
-  "generated_at_utc": "2026-11-14T05:39:14.616567+00:00",
+  "generated_at_utc": "2026-11-14T05:40:52.234783+00:00",
   "product_commit": "902a3171c1a625c2741f0c6886d0328584dfb89e",
   "measured_system": "243d932765f7d4065394f91c6b4f25972f8232ba9228aec89d4c63a244c1976b",
   "cache_version": "135",
@@ -9,10 +9,10 @@
     "HYBRID_ROUTE_MODE": "local-first",
     "live_ai_calls": 0
   },
-  "head": "0ef9a5ee53c7ac4f7d52b4405b83f108738f9878",
+  "head": "4bb423b48393605355be39e4d8dc4386ad9b3946",
   "schema": "algosim-certified-scale-cache-run/1",
   "start_head": "30884a2e850a660da57f39516d691394d4c7e192",
-  "head_at_manifest_write": "0ef9a5ee53c7ac4f7d52b4405b83f108738f9878",
+  "head_at_manifest_write": "4bb423b48393605355be39e4d8dc4386ad9b3946",
   "branch": "feat/local-first-geometry-understanding",
   "candidate_manifest_commit": "6bb8b0713cf8f70115b7dc7a92faf4f4652fea99",
   "contracts_unchanged": [
@@ -51,8 +51,12 @@
   "report": "AXO_CERTIFIED_SCALE_CACHE_SAFETY_REPORT.md",
   "hash_policy": "SHA-256 LF-normalised; excludes run.json",
   "artifacts": {
+    "AXO_CERTIFIED_SCALE_CACHE_SAFETY_REPORT.md": {
+      "sha256_lf": "f75755ea99ee4ee87cfb98fa8e685bdfcd3d4a097929d49cdd058c6364a8072c",
+      "bytes_lf": 11599
+    },
     "baseline_candidate_integrity.json": {
-      "sha256_lf": "5037e209726207e5986b7795c51e87b0434be2955abfc8f2b56d4596030bd9e0",
+      "sha256_lf": "7f21afcc3fd8b51ca793101a23540f3839f32c21bd0b004057a99b2379ede228",
       "bytes_lf": 808
     },
     "browser_construction_timeline.json": {
@@ -64,19 +68,19 @@
       "bytes_lf": 6391
     },
     "browser_timeline_failure_analysis.json": {
-      "sha256_lf": "e12f9bfed0645540bcaf7b88fc75310c71e7ec925f2c6b43a74905d1c8c77cea",
+      "sha256_lf": "75097433fc5f8a21e9378bccec4a6d141a482a0a02ff6a281b8215b069ccd06c",
       "bytes_lf": 2482
     },
     "cache_invalidation_verification.json": {
-      "sha256_lf": "75b3f9c3450905f8e8527ac094c8804fdb499bedc2f01d3d962483508cbf16ff",
+      "sha256_lf": "87c5708fdd9d00022072ad16a37c600acec09adf9c555fa4404a4ab9c4646597",
       "bytes_lf": 844
     },
     "candidate_freeze.json": {
-      "sha256_lf": "d4c212caf3d41d47a74eebce8eb5e79d10c859fe66815292936b31d947828835",
+      "sha256_lf": "5ca2cebf46e7a551073e0ec23256a682c30495b467ebf6c6b56940705f682d57",
       "bytes_lf": 1121
     },
     "decimal_comma_parser_verification.json": {
-      "sha256_lf": "5be9f896ce9eacf9990036b23e067c383c9a0d196ff038faa3d6fb45de3a70f7",
+      "sha256_lf": "a4d2c074fb60709266150b437763661c097ee30cdd9678ed133fab1e067e732e",
       "bytes_lf": 1615
     },
     "full_regression_summary.json": {
@@ -84,7 +88,7 @@
       "bytes_lf": 21277
     },
     "holdout_protection_audit.json": {
-      "sha256_lf": "baf0b8cbf5a1cdc130c6cbd62cdeb56e0889e1df49f10b4bc80b518b6e2d6c0c",
+      "sha256_lf": "3707808bb13e31107b265bc0e5e45128e2f8b94130105bd2b96b6b6f548dd7d9",
       "bytes_lf": 1011
     },
     "local_image_to_simulation_acceptance.json": {
@@ -140,7 +144,7 @@
       "bytes_lf": 782
     },
     "normalized_scene_geometry_invariants.json": {
-      "sha256_lf": "bf530e8ae6ab2a602003813ae5cae6956be72d0c16d31ac425256855bdd99961",
+      "sha256_lf": "4fa0f4070a02e0adb0537d9e601ab6004fcf1ee8a6996ef6feb9221c04925bf4",
       "bytes_lf": 1665
     },
     "pending_template_refresh.json": {
@@ -152,11 +156,11 @@
       "bytes_lf": 15450
     },
     "publication_gate_status.json": {
-      "sha256_lf": "778d59cc912f33a3e04f4a0665c9604e14e03fbc7bd39c0b21a3920a86b08064",
+      "sha256_lf": "0a0dca653c1ab084afa81024a59998707c08b709ac3097da24332676a9faf10d",
       "bytes_lf": 1235
     },
     "real27_normalization_acceptance.json": {
-      "sha256_lf": "e875f91c5e5b8635a60dc2603b4e6d9b31ff6cd8f54d45426fa343fc819dc777",
+      "sha256_lf": "ef971bc7854564ae6a9e7675559c2bc400553accac6b371e170b116ec3f6c96b",
       "bytes_lf": 3141
     },
     "resource_cleanup_audit.json": {
@@ -164,7 +168,7 @@
       "bytes_lf": 3621
     },
     "scale_normalization_certificate.json": {
-      "sha256_lf": "2d34894d195e9ed8c5df113743e019de45d71cf5397225f12af818aa7565199e",
+      "sha256_lf": "207aa807841da29c10f228b94d322f4c5cca4e601110bb423eb128643b8460ec",
       "bytes_lf": 1565
     },
     "scene3d_browser_e2e.json": {
@@ -176,7 +180,7 @@
       "bytes_lf": 11185
     },
     "semantic_cache_audit.json": {
-      "sha256_lf": "902a5e10d6ffbb045f997ebe4a50b3dccf61e29b2852f158179f0ce91655ae22",
+      "sha256_lf": "883d2c40c4acf7d15fa4771f0b4bf524b89a15744bff07dd5828278b898b9975",
       "bytes_lf": 2191
     },
     "semantic_compare_rows.json": {
@@ -184,19 +188,19 @@
       "bytes_lf": 306104
     },
     "semantic_development_before_after.json": {
-      "sha256_lf": "83213eceb4e79bcbdbccfe907087a46b934d1c0c9d83039520ae60c0a417c5a4",
+      "sha256_lf": "4c14d8b65539be3bad7cf8f397eeccd945ae2ad76a4fd34bf5abdba0d788bf6f",
       "bytes_lf": 1386
     },
     "shape_freedom_counterexamples.json": {
-      "sha256_lf": "c6492fd5ceacc82cbcf96193a17ec0f97e56e8cbfc42c232e7216871e1728f60",
+      "sha256_lf": "89272de4a1db4ee2c0934fe7cf4bdf10b713e4cca0470af6bbed435e4fffbf5f",
       "bytes_lf": 3317
     },
     "similarity_invariance_capability_audit.json": {
-      "sha256_lf": "b13cdbdcc80844c777b7fcdbf710f2db7b0bb55df5e29c97413cb7951d8ed46e",
+      "sha256_lf": "adfd7dabafbdc09187a157ed6f8fef46b7ade372f20b84049962d36da988c48c",
       "bytes_lf": 1267
     },
     "stale_cache_adversarial_tests.json": {
-      "sha256_lf": "a36c5b8a2fc7ba8d0602e6f0ad4a0650ece4d4bec793e5d4de3f65d02e5987d6",
+      "sha256_lf": "8d3f39880dd4c06fdb7eb740a163cfe0c822f45ed9314a89808e82abbf46c382",
       "bytes_lf": 1142
     },
     "tools/acceptance.py": {
