@@ -8,9 +8,11 @@ import {
   type LibraryCategory,
 } from "../data/offline-catalog";
 import type { Domain } from "../simulations/types";
-import { useAppStore } from "../state/store";
+import { resolveEffectiveWorkspaceTabs, useAppStore } from "../state/store";
+import { findMatchingOpenSimulationTab } from "../state/workspace-tab-identity";
 import { SamplePreview } from "./SamplePreview";
 import { stepCountOfEnvelope } from "./SessionCard";
+import { WorkspaceTabBar } from "./WorkspaceTabBar";
 import { GeometryFamilyIcon, normalizeGeometryFamily } from "./geometry2d";
 
 /**
@@ -53,8 +55,8 @@ const PROBLEM_CATALOG_ORDER: readonly string[] = [
 ];
 
 export function LibraryView({
-  initialSearch = "",
-  initialCategory = "all",
+  initialSearch,
+  initialCategory,
   initialCategoryMenuOpen = false,
 }: {
   initialSearch?: string;
@@ -62,10 +64,86 @@ export function LibraryView({
   initialCategoryMenuOpen?: boolean;
 } = {}) {
   const loadEnvelope = useAppStore((s) => s.loadEnvelope);
-  const [query, setQuery] = useState(initialSearch);
-  const [activeCat, setActiveCat] = useState<LibraryCategory>(initialCategory);
+  const activateWorkspaceTab = useAppStore((s) => s.activateWorkspaceTab);
+  const libraryTabOpen = useAppStore((s) => s.libraryTabOpen);
+  const libraryUiState = useAppStore((s) => s.libraryUiState);
+  const setLibraryUiState = useAppStore((s) => s.setLibraryUiState);
+  const [query, setQueryState] = useState<string>(
+    initialSearch !== undefined ? initialSearch : libraryUiState.search,
+  );
+  const [activeCat, setActiveCatState] = useState<LibraryCategory>(
+    initialCategory !== undefined
+      ? initialCategory
+      : ((libraryUiState.category || "all") as LibraryCategory),
+  );
   const [menuOpen, setMenuOpen] = useState(initialCategoryMenuOpen);
   const dropdownWrapRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (initialSearch === undefined && query !== libraryUiState.search) {
+      setQueryState(libraryUiState.search);
+    }
+  }, [initialSearch, libraryUiState.search]);
+
+  useEffect(() => {
+    if (initialCategory === undefined) {
+      const nextCat = (libraryUiState.category || "all") as LibraryCategory;
+      if (activeCat !== nextCat) {
+        setActiveCatState(nextCat);
+      }
+    }
+  }, [initialCategory, libraryUiState.category]);
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el || typeof window === "undefined") return;
+    const savedTop = useAppStore.getState().libraryUiState.scrollTop;
+    const scrollParent = el.closest(".app-single") as HTMLElement | null;
+    if (savedTop > 0) {
+      el.scrollTop = savedTop;
+      if (scrollParent) {
+        scrollParent.scrollTop = savedTop;
+      }
+      if (
+        el.scrollHeight <= el.clientHeight &&
+        document.documentElement.scrollHeight > window.innerHeight
+      ) {
+        try {
+          window.scrollTo(0, savedTop);
+        } catch {
+          /* bỏ qua trong jsdom nếu scrollTo chưa được cài */
+        }
+      }
+    }
+
+    const onParentScroll = () => {
+      if (scrollParent && scrollParent.scrollTop !== useAppStore.getState().libraryUiState.scrollTop) {
+        setLibraryUiState({ scrollTop: scrollParent.scrollTop });
+      }
+    };
+    const onWindowScroll = () => {
+      if (el.scrollHeight <= el.clientHeight) {
+        setLibraryUiState({ scrollTop: window.scrollY || document.documentElement.scrollTop || 0 });
+      }
+    };
+    scrollParent?.addEventListener("scroll", onParentScroll, { passive: true });
+    window.addEventListener("scroll", onWindowScroll, { passive: true });
+    return () => {
+      scrollParent?.removeEventListener("scroll", onParentScroll);
+      window.removeEventListener("scroll", onWindowScroll);
+    };
+  }, [setLibraryUiState]);
+
+  const setQuery = (next: string) => {
+    setQueryState(next);
+    setLibraryUiState({ search: next });
+  };
+
+  const setActiveCat = (next: LibraryCategory) => {
+    setActiveCatState(next);
+    setLibraryUiState({ category: next });
+  };
 
   const entries = useMemo(() => {
     const raw = publicCatalog();
@@ -124,11 +202,37 @@ export function LibraryView({
   const activeCatName = activeCat === "all" ? "Tất cả" : activeCat;
 
   const openSample = (entry: CatalogEntry) => {
+    const state = useAppStore.getState();
+    const { tabs: effectiveTabs } = resolveEffectiveWorkspaceTabs({
+      workspaceTabs: state.workspaceTabs,
+      activeTabId: state.activeTabId,
+      active: state.active,
+      activeSampleId: state.activeSampleId,
+      activeHistoryId: state.activeHistoryId,
+    });
+    const existingTab = findMatchingOpenSimulationTab(effectiveTabs, {
+      tabId: `tab-sample-${entry.id}`,
+      sampleId: entry.id,
+      title: entry.title,
+      problemStatement: problemTextForSample(entry.id) || entry.envelope.problem_statement || null,
+      envelope: entry.envelope,
+    });
+    if (existingTab) {
+      activateWorkspaceTab(existingTab.id);
+      return;
+    }
     loadEnvelope(entry.envelope, entry.id);
   };
 
   return (
-    <div className="page-container" id="view-library">
+    <>
+      {libraryTabOpen ? <WorkspaceTabBar /> : null}
+      <div
+        ref={containerRef}
+        className="page-container"
+        id="view-library"
+        onScroll={(e) => setLibraryUiState({ scrollTop: e.currentTarget.scrollTop })}
+      >
       <div className="page-head-block">
         <div className="page-head-row">
           <h1 className="page-main-title">Thư viện mô phỏng</h1>
@@ -334,5 +438,6 @@ export function LibraryView({
         )}
       </div>
     </div>
+    </>
   );
 }

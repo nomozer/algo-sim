@@ -52,6 +52,8 @@ export interface LearnerRecoverySnapshotInput {
   mobileViewMode: MobileViewMode;
   display: LearnerDisplaySnapshot;
   camera: LearnerCameraSnapshot | null;
+  relationActiveForId?: string | null;
+  relationsExpanded?: boolean;
 }
 
 export interface LearnerRecoverySnapshot extends LearnerRecoverySnapshotInput {
@@ -186,6 +188,14 @@ function parseSingleSnapshotEntry(
     mobileViewMode: rec.mobileViewMode === "stage_expanded" ? "stage_expanded" : "dock_open",
     display,
     camera: sanitizeCameraSnapshot(rec.camera),
+    ...(rec.relationActiveForId === null
+      ? { relationActiveForId: null }
+      : typeof rec.relationActiveForId === "string" && rec.relationActiveForId.trim()
+        ? { relationActiveForId: rec.relationActiveForId.trim().slice(0, 120) }
+        : {}),
+    ...(typeof rec.relationsExpanded === "boolean"
+      ? { relationsExpanded: rec.relationsExpanded }
+      : {}),
   };
 }
 
@@ -254,6 +264,14 @@ export function saveLearnerRecoverySnapshot(
     mobileViewMode: input.mobileViewMode === "stage_expanded" ? "stage_expanded" : "dock_open",
     display,
     camera: sanitizeCameraSnapshot(input.camera),
+    ...(input.relationActiveForId === null
+      ? { relationActiveForId: null }
+      : typeof input.relationActiveForId === "string" && input.relationActiveForId.trim()
+        ? { relationActiveForId: input.relationActiveForId.trim().slice(0, 120) }
+        : {}),
+    ...(typeof input.relationsExpanded === "boolean"
+      ? { relationsExpanded: input.relationsExpanded }
+      : {}),
   };
 
   const map = readValidStoredEntries(store, nowMs, ttlMs);

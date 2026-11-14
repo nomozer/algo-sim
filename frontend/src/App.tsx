@@ -32,6 +32,7 @@ import { recoverCatalogScene3D } from "./data/offline-catalog";
 import { hopLeScene3D } from "./simulations/domains/geometry/scene3d-model";
 import { useAppStore } from "./state/store";
 import { useAuthStore } from "./state/auth";
+import { LIBRARY_TAB_ID } from "./state/workspace-tab-identity";
 
 export function reconcileCrashedResetKey(
   crashedResetKey: string | null,
@@ -80,6 +81,7 @@ export default function App() {
   const routeFailure = useAppStore((s) => s.routeFailure);
   const hasInAppNavigation = useAppStore((s) => s.hasInAppNavigation);
   const syncLocationRoute = useAppStore((s) => s.syncLocationRoute);
+  const hydrateWorkspaceSession = useAppStore((s) => s.hydrateWorkspaceSession);
   const escapeFromError = useAppStore((s) => s.escapeFromError);
   const openLibrary = useAppStore((s) => s.openLibrary);
   const rightOpen = useAppStore((s) => s.rightOpen);
@@ -141,41 +143,111 @@ export default function App() {
   useEffect(() => {
     void refresh();
     if (typeof window === "undefined") return;
-    const applyBrowserLocation = () => {
+    let popStateResetTimer: number | null = null;
+    const applyBrowserLocation = (ev?: Event) => {
       isPopStateSyncRef.current = true;
+      if (popStateResetTimer !== null) {
+        window.clearTimeout(popStateResetTimer);
+      }
       try {
         syncLocationRoute(window.location.pathname, window.location.hash, window.location.search);
+        const popState = (
+          (ev as PopStateEvent | undefined)?.state ?? window.history?.state
+        ) as
+          | { axoView?: string; axoTabId?: string | null; tabId?: string | null }
+          | null
+          | undefined;
+        const requestedTabId = popState?.axoTabId ?? popState?.tabId ?? null;
+        if (popState?.axoView === "workspace" && requestedTabId) {
+          const cur = useAppStore.getState();
+          const matchingTab = cur.workspaceTabs.find((t) => t.id === requestedTabId);
+          if (matchingTab && (cur.view !== "workspace" || cur.activeTabId !== matchingTab.id)) {
+            if (matchingTab.kind === "draft") {
+              useAppStore.setState({
+                view: "workspace",
+                activeTabId: matchingTab.id,
+                problemText: matchingTab.draftText ?? cur.problemText,
+                routeFailure: null,
+                navHistoryMode: "replace",
+              });
+            } else {
+              useAppStore.setState({
+                view: "workspace",
+                activeTabId: matchingTab.id,
+                active: matchingTab.active ?? cur.active,
+                activeSampleId: matchingTab.sampleId,
+                activeHistoryId: matchingTab.historyId,
+                routeFailure: null,
+                navHistoryMode: "replace",
+              });
+            }
+          }
+        }
         const st = useAppStore.getState();
-        if (st.view === "workspace" && st.routeFailure === null && typeof window.history?.replaceState === "function") {
-          const canonicalTarget = canonicalPathForView(st.view, st.activeSampleId ?? st.activeHistoryId);
+        if (st.routeFailure === null && typeof window.history?.replaceState === "function") {
           const curPath =
             window.location.pathname.length > 1 && window.location.pathname.endsWith("/")
               ? window.location.pathname.replace(/\/+$/, "")
               : window.location.pathname || "/";
-          if (curPath !== canonicalTarget) {
+          if (st.view === "workspace") {
+            const isDraftActive =
+              st.activeTabId === "tab-draft-new" &&
+              st.workspaceTabs.some((t) => t.id === "tab-draft-new");
+            const canonicalTarget = isDraftActive
+              ? "/workspace"
+              : canonicalPathForView(st.view, st.activeSampleId ?? st.activeHistoryId);
+            if (
+              curPath !== canonicalTarget ||
+              (window.history.state as { axoTabId?: string | null } | null)?.axoTabId !== st.activeTabId
+            ) {
+              try {
+                window.history.replaceState(
+                  {
+                    axoView: st.view,
+                    axoTabId: st.activeTabId,
+                    tabId: st.activeTabId,
+                    sampleId: isDraftActive ? null : st.activeSampleId,
+                    historyId: isDraftActive ? null : st.activeHistoryId,
+                  },
+                  "",
+                  canonicalTarget,
+                );
+              } catch {
+                /* bỏ qua nếu môi trường kiểm thử chặn replaceState */
+              }
+            }
+          } else if (
+            st.view === "library" &&
+            curPath === "/library" &&
+            (window.history.state as { axoTabId?: string | null } | null)?.axoTabId !== LIBRARY_TAB_ID
+          ) {
             try {
               window.history.replaceState(
-                { axoView: st.view, sampleId: st.activeSampleId, historyId: st.activeHistoryId },
+                {
+                  axoView: "library",
+                  axoTabId: LIBRARY_TAB_ID,
+                  tabId: LIBRARY_TAB_ID,
+                  sampleId: null,
+                  historyId: null,
+                },
                 "",
-                canonicalTarget,
+                "/library",
               );
             } catch {
               /* bỏ qua nếu môi trường kiểm thử chặn replaceState */
             }
           }
         }
-
-
-
-
       } finally {
-        window.setTimeout(() => {
+        popStateResetTimer = window.setTimeout(() => {
           isPopStateSyncRef.current = false;
+          popStateResetTimer = null;
         }, 0);
       }
     };
     if (!hasHydratedLocationRef.current) {
       hasHydratedLocationRef.current = true;
+      hydrateWorkspaceSession();
       if (
         window.location.pathname !== "/" ||
         window.location.hash === "#admin" ||
@@ -188,10 +260,14 @@ export default function App() {
     window.addEventListener("hashchange", applyBrowserLocation);
     window.addEventListener("popstate", applyBrowserLocation);
     return () => {
+      if (popStateResetTimer !== null) {
+        window.clearTimeout(popStateResetTimer);
+      }
+      isPopStateSyncRef.current = false;
       window.removeEventListener("hashchange", applyBrowserLocation);
       window.removeEventListener("popstate", applyBrowserLocation);
     };
-  }, [refresh, syncLocationRoute]);
+  }, [refresh, syncLocationRoute, hydrateWorkspaceSession]);
 
   // Browser tab: "Axo" on the home page, "<page> | Axo" elsewhere (the 3D workspace is named by its role).
   useEffect(() => {
@@ -219,9 +295,26 @@ export default function App() {
       : view === "home" && (guestEnteredApp || currentPath === "/app")
         ? "/app"
         : canonicalPathForView(view, activeSampleId ?? activeHistoryId);
-    if (currentPath === targetPath) return;
+    const resolvedAxoTabId =
+      view === "library"
+        ? LIBRARY_TAB_ID
+        : view === "workspace"
+          ? activeTabId
+          : null;
+    const prevHistoryState = window.history.state as
+      | { axoView?: string; axoTabId?: string | null }
+      | null
+      | undefined;
+    const sameWorkspaceTabRoute =
+      view === "workspace" &&
+      targetPath === "/workspace" &&
+      prevHistoryState?.axoView === "workspace" &&
+      Boolean(prevHistoryState?.axoTabId) &&
+      prevHistoryState?.axoTabId !== resolvedAxoTabId;
+    if (currentPath === targetPath && !sameWorkspaceTabRoute) return;
     const historyState = {
       axoView: view,
+      axoTabId: resolvedAxoTabId,
       tabId: activeTabId,
       sampleId: isDraftActive ? null : activeSampleId,
       historyId: isDraftActive ? null : activeHistoryId,

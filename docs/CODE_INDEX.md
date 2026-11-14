@@ -1,5 +1,11 @@
 # CODE_INDEX.md — Chỉ mục module + BỘ NHỚ KIẾN TRÚC
 
+## Single-Instance Workspace Navigation & Projected Tab Bar (2026-11-14)
+
+| Path | Owns | Locked by |
+|---|---|---|
+| `frontend/src/state/workspace-tab-identity.ts` · `frontend/src/components/WorkspaceTabBar.tsx` | Canonical single-instance resource identities (`LIBRARY_RESOURCE_KEY = "library"`, `problem:<canonicalId>`, `draft:new`), deduplicated tab matching (`findMatchingOpenSimulationTab`, `buildProjectedWorkspaceTabs`), and the shared `.ws-tab-bar` header (`WorkspaceTabBar`) used across `SimulationWorkspace` and `LibraryView` | `frontend/src/state/workspace-single-instance-navigation.test.tsx`, `frontend/src/components/phase-b-views.test.tsx`, `frontend/src/code-index-sync.test.ts` |
+
 ## Axo Reusable 2D Geometry Illustration System & Library Visual Refinement (2026-11-09)
 
 | Path | Owns | Locked by |
