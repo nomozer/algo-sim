@@ -678,8 +678,10 @@ describe("AXO — Cross-Family Scene3D Stabilization & Acceptance Suite (§4–�
         />,
       );
       expect(html, `${item.kind} card should mount`).toContain('class="context-object-card"');
-      expect(html, `${item.kind} card must expose #btn-card-hide`).toContain('id="btn-card-hide"');
-      expect(html, `${item.kind} card must expose #btn-card-isolate`).toContain('id="btn-card-isolate"');
+      expect(html, `${item.kind} card must omit removed #btn-card-hide`).not.toContain('id="btn-card-hide"');
+      expect(html, `${item.kind} card must omit removed #btn-card-isolate`).not.toContain('id="btn-card-isolate"');
+      expect(html, `${item.kind} workspace must omit removed #dock-visibility-restore-bar`).not.toContain('id="dock-visibility-restore-bar"');
+      expect(html, `${item.kind} workspace must omit removed #btn-restore-hidden-objects`).not.toContain('id="btn-restore-hidden-objects"');
       expect(html, `${item.kind} workspace must omit redundant #btn-undo-interaction`).not.toContain('id="btn-undo-interaction"');
       expect(html, `${item.kind} workspace must keep #btn-reset-pos`).toContain('id="btn-reset-pos"');
       expect(html, `${item.kind} workspace must keep #btn-xray`).toContain('id="btn-xray"');

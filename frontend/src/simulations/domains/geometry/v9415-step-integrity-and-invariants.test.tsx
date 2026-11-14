@@ -45,6 +45,7 @@ const VALID_STEP_GOALS = new Set<StepGoalKind>([
   "Construct",
   "Intersect",
   "Verify",
+  "Measure",
   "Complete",
 ]);
 
@@ -231,7 +232,7 @@ function transformScene(
 describe("AXO V9.4.15 — System-Wide Step Integrity, Coplanar Guides & Mathematical Invariants", () => {
   const inventory = collectFullInventory();
 
-  it("Step-Aware Presentation Policy exports complete 5-stage metadata with Construct fallback for minimal scenes", () => {
+  it("Step-Aware Presentation Policy exports complete 6-stage metadata with Construct fallback for minimal scenes", () => {
     for (const kind of VALID_STEP_GOALS) {
       expect(STEP_GOAL_LABELS[kind].length).toBeGreaterThan(0);
       expect(STEP_GOAL_PRESENTATION_POLICY[kind].goal).toBe(kind);

@@ -4556,6 +4556,110 @@ export function computeClampedCanvasTooltipPosition(
   return { x: Math.round(x), y: Math.round(y) };
 }
 
+export interface PointerSampleLike {
+  pointerId: number;
+  pointerType: string;
+  button?: number;
+  buttons?: number;
+  clientX: number;
+  clientY: number;
+}
+
+export interface CanvasPointerTapTracker {
+  handleDown(e: PointerSampleLike): { startedMultiTouch: boolean; activeCount: number };
+  handleMove(e: PointerSampleLike): { exceededDrag: boolean; isHoverEligible: boolean };
+  handleUp(e: PointerSampleLike): {
+    shouldSelect: boolean;
+    dragged: boolean;
+    multiTouch: boolean;
+    activeCount: number;
+  };
+  handleCancel(e: PointerSampleLike): { activeCount: number };
+  handleLeave(): void;
+}
+
+/**
+ * Tracks canvas pointer gestures so orbit drags, multi-touch pinch gestures,
+ * canceled touches, and non-primary clicks never misfire into entity selection.
+ */
+export function createCanvasPointerTapTracker(dragThresholdPx = 4): CanvasPointerTapTracker {
+  let start: [number, number] | null = null;
+  let draggedBeyondThreshold = false;
+  let wasMultiTouch = false;
+  const activePointerIds = new Set<number>();
+
+  return {
+    handleDown(e) {
+      if (e.pointerType === "mouse" && (e.button ?? 0) !== 0) {
+        return { startedMultiTouch: false, activeCount: activePointerIds.size };
+      }
+      activePointerIds.add(e.pointerId);
+      let startedMultiTouch = false;
+      if (activePointerIds.size > 1) {
+        wasMultiTouch = true;
+        draggedBeyondThreshold = true;
+        start = null;
+        startedMultiTouch = true;
+      } else if (!wasMultiTouch) {
+        start = [e.clientX, e.clientY];
+        draggedBeyondThreshold = false;
+      }
+      return { startedMultiTouch, activeCount: activePointerIds.size };
+    },
+    handleMove(e) {
+      let exceededDrag = false;
+      if (start && Math.hypot(e.clientX - start[0], e.clientY - start[1]) > dragThresholdPx) {
+        draggedBeyondThreshold = true;
+        exceededDrag = true;
+      }
+      const isHoverEligible =
+        e.pointerType !== "touch"
+        && !(e.buttons ?? 0)
+        && !start
+        && activePointerIds.size === 0;
+      return { exceededDrag, isHoverEligible };
+    },
+    handleUp(e) {
+      if (e.pointerType === "mouse" && (e.button ?? 0) !== 0) {
+        return {
+          shouldSelect: false,
+          dragged: false,
+          multiTouch: false,
+          activeCount: activePointerIds.size,
+        };
+      }
+      activePointerIds.delete(e.pointerId);
+      const multiTouch = wasMultiTouch;
+      const d0 = start;
+      const dragged = draggedBeyondThreshold
+        || Boolean(d0 && Math.hypot(e.clientX - d0[0], e.clientY - d0[1]) > dragThresholdPx);
+      const remaining = activePointerIds.size;
+      if (remaining === 0) {
+        start = null;
+        draggedBeyondThreshold = false;
+        wasMultiTouch = false;
+      }
+      const shouldSelect = !multiTouch && Boolean(d0) && remaining === 0 && !dragged;
+      return { shouldSelect, dragged, multiTouch, activeCount: remaining };
+    },
+    handleCancel(e) {
+      activePointerIds.delete(e.pointerId);
+      if (activePointerIds.size === 0) {
+        start = null;
+        draggedBeyondThreshold = false;
+        wasMultiTouch = false;
+      }
+      return { activeCount: activePointerIds.size };
+    },
+    handleLeave() {
+      activePointerIds.clear();
+      start = null;
+      draggedBeyondThreshold = false;
+      wasMultiTouch = false;
+    },
+  };
+}
+
 export function Scene3DWorkspace({
   scene, step, interaction, onSelect, fitToken = 0, replayNonce = 0, isPlaying = false, annotationView = DEFAULT_ANNOTATION_VIEW,
   auxiliaryShown = false, gridShown = false, xray = false,
@@ -5265,8 +5369,7 @@ export function Scene3DWorkspace({
     // `pointerup`, không `pointerdown`: OrbitControls dùng kéo-thả để xoay
     // cảnh, và bắt ở `down` thì mỗi lần xoay cũng là một lần chọn. Chỉ tính
     // là bấm khi con trỏ gần như không di chuyển giữa hai mốc.
-    let batDau: [number, number] | null = null;
-    const NGUONG_KEO = 4;
+    const pointerTracker = createCanvasPointerTapTracker(4);
     const datViTriTooltip = (clientX: number, clientY: number) => {
       const tip = tooltipRef.current;
       if (!tip) return;
@@ -5281,7 +5384,9 @@ export function Scene3DWorkspace({
       tip.style.transform = `translate3d(${clamped.x}px,${clamped.y}px,0)`;
     };
     const xuongTay = (e: PointerEvent) => {
-      batDau = [e.clientX, e.clientY];
+      if (e.pointerType === "mouse" && e.button !== 0) return;
+      const res = pointerTracker.handleDown(e);
+      if (res.startedMultiTouch) setTouchTooltipId(null);
       setDangKeoCanvas(true);
       if (e.pointerType !== "touch") setTouchTooltipId(null);
       renderer.domElement.style.cursor = "";
@@ -5308,13 +5413,12 @@ export function Scene3DWorkspace({
       }) ?? null : chonCuThe(ids, (id) => loaiRef.current.get(id));
     };
     const nhacTay = (e: PointerEvent) => {
-      const d0 = batDau;
-      batDau = null;
-      setDangKeoCanvas(false);
-      if (!d0 || !chonRef.current) return;
-      if (Math.hypot(e.clientX - d0[0], e.clientY - d0[1]) > NGUONG_KEO) {
-        userAdjustedCamera = true;
-        setTouchTooltipId(null);
+      if (e.pointerType === "mouse" && e.button !== 0) return;
+      const res = pointerTracker.handleUp(e);
+      if (res.activeCount === 0) setDangKeoCanvas(false);
+      if (res.dragged) userAdjustedCamera = true;
+      if (!res.shouldSelect || !chonRef.current) {
+        if (res.multiTouch || res.dragged) setTouchTooltipId(null);
         return;
       }
       const picked = vatTaiConTro(e);
@@ -5326,17 +5430,24 @@ export function Scene3DWorkspace({
       }
       chonRef.current(picked);
     };
+    const huyTay = (e: PointerEvent) => {
+      const res = pointerTracker.handleCancel(e);
+      if (res.activeCount === 0) setDangKeoCanvas(false);
+      setHoveredObject(null);
+      setTouchTooltipId(null);
+      renderer.domElement.style.cursor = "";
+    };
     const roiConTro = () => {
+      pointerTracker.handleLeave();
       setHoveredObject(null);
       setDangKeoCanvas(false);
       setTouchTooltipId(null);
       renderer.domElement.style.cursor = "";
     };
     const diConTro = (e: PointerEvent) => {
-      if (batDau && Math.hypot(e.clientX - batDau[0], e.clientY - batDau[1]) > NGUONG_KEO) {
-        userAdjustedCamera = true;
-      }
-      if (e.pointerType === "touch" || e.buttons || batDau) return;
+      const res = pointerTracker.handleMove(e);
+      if (res.exceededDrag) userAdjustedCamera = true;
+      if (!res.isHoverEligible) return;
       const id = vatTaiConTro(e, false);
       if (id) datViTriTooltip(e.clientX, e.clientY);
       setHoveredObject((prev) => (prev === id ? prev : id));
@@ -5345,6 +5456,7 @@ export function Scene3DWorkspace({
     renderer.domElement.addEventListener("pointerdown", xuongTay);
     renderer.domElement.addEventListener("pointerup", nhacTay);
     renderer.domElement.addEventListener("pointermove", diConTro);
+    renderer.domElement.addEventListener("pointercancel", huyTay);
     renderer.domElement.addEventListener("pointerleave", roiConTro);
 
     // ── NHÃN ĐIỂM, CHIẾU RA MÀN HÌNH MỖI KHUNG ──────────────────────────
@@ -6394,6 +6506,7 @@ export function Scene3DWorkspace({
       renderer.domElement.removeEventListener("pointerdown", xuongTay);
       renderer.domElement.removeEventListener("pointerup", nhacTay);
       renderer.domElement.removeEventListener("pointermove", diConTro);
+      renderer.domElement.removeEventListener("pointercancel", huyTay);
       renderer.domElement.removeEventListener("pointerleave", roiConTro);
       window.removeEventListener("resize", xuLyDoiCoKhung);
       roKhung?.disconnect();

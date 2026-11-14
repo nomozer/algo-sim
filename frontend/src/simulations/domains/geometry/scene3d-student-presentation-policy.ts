@@ -47,13 +47,14 @@ export {
   type VisualContinuityViolationCode,
 };
 
-export type StepGoalKind = "Define" | "Construct" | "Intersect" | "Verify" | "Complete";
+export type StepGoalKind = "Define" | "Construct" | "Intersect" | "Verify" | "Measure" | "Complete";
 
 export const STEP_GOAL_LABELS: Record<StepGoalKind, string> = {
   Define: "Khởi tạo dữ kiện",
   Construct: "Dựng yếu tố trung gian",
   Intersect: "Xác định giao điểm / giao tuyến",
   Verify: "Kiểm chứng quan hệ hình học",
+  Measure: "Đo đạc và tính đại lượng",
   Complete: "Hoàn thiện hình biểu diễn",
 };
 
@@ -98,6 +99,15 @@ export const STEP_GOAL_PRESENTATION_POLICY: Record<StepGoalKind, StepGoalPresent
   Verify: {
     goal: "Verify",
     label: STEP_GOAL_LABELS.Verify,
+    emphasizePrimaryTargets: true,
+    keepPrerequisiteContext: true,
+    showCoplanarIntersectionGuides: true,
+    showRelationWitnesses: true,
+    fadeCompletedScaffolds: true,
+  },
+  Measure: {
+    goal: "Measure",
+    label: STEP_GOAL_LABELS.Measure,
     emphasizePrimaryTargets: true,
     keepPrerequisiteContext: true,
     showCoplanarIntersectionGuides: true,

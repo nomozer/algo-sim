@@ -98,10 +98,7 @@ import {
 import {
   clearIsolate,
   directDependencies,
-  hide,
-  isolate,
   select,
-  show,
   showAll,
   taoTrangThai,
   type InteractionState,
@@ -2614,23 +2611,6 @@ export function AxoWorkspaceV62({
               )}
             </div>
 
-            {(tt.hidden_ids.length > 0 || tt.isolated_ids.length > 0) && (
-              <div className="dock-visibility-restore-bar" id="dock-visibility-restore-bar">
-                <span className="dock-visibility-restore-text">
-                  {tt.isolated_ids.length > 0
-                    ? "Đang chỉ xem phần liên quan"
-                    : `Đang ẩn ${tt.hidden_ids.length} đối tượng`}
-                </span>
-                <button
-                  type="button"
-                  className="context-action-pill"
-                  id="btn-restore-hidden-objects"
-                  onClick={() => setTt((s) => showAll(clearIsolate(s)))}
-                >
-                  Hiện lại tất cả
-                </button>
-              </div>
-            )}
             {/* CONTEXTUAL SELECTED OBJECT CARD MOUNT */}
             <div
               className="dock-context-mount"
@@ -2770,41 +2750,6 @@ export function AxoWorkspaceV62({
                         Giả thiết dựng: <strong>{dangChon.source.assumption}</strong>
                       </div>
                     )}
-                    <div className="context-card-actions">
-                      <button
-                        type="button"
-                        id="btn-card-isolate"
-                        className={`context-action-pill${tt.isolated_ids.includes(dangChon.id) ? " is-active" : ""}`}
-                        onClick={() => {
-                          setTt((s) =>
-                            s.isolated_ids.includes(dangChon.id)
-                              ? clearIsolate(s)
-                              : isolate(s, [
-                                  dangChon.id,
-                                  ...directDependencies(day, dangChon.id),
-                                ]),
-                          );
-                        }}
-                      >
-                        {tt.isolated_ids.includes(dangChon.id)
-                          ? "Hiện lại toàn hình"
-                          : "Chỉ xem phần này"}
-                      </button>
-                      <button
-                        type="button"
-                        id="btn-card-hide"
-                        className={`context-action-pill${tt.hidden_ids.includes(dangChon.id) ? " is-active" : ""}`}
-                        onClick={() => {
-                          setTt((s) =>
-                            s.hidden_ids.includes(dangChon.id)
-                              ? show(s, dangChon.id)
-                              : hide(s, dangChon.id),
-                          );
-                        }}
-                      >
-                        {tt.hidden_ids.includes(dangChon.id) ? "Hiện lại đối tượng" : "Ẩn đối tượng"}
-                      </button>
-                    </div>
                   </div>
                 </div>
                 );

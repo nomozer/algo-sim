@@ -73,6 +73,7 @@ const STEP_GOAL_LABELS_INTERNAL: Record<StepGoalKind, string> = {
   Construct: "Dựng yếu tố trung gian",
   Intersect: "Xác định giao điểm / giao tuyến",
   Verify: "Kiểm chứng quan hệ hình học",
+  Measure: "Đo đạc và tính đại lượng",
   Complete: "Hoàn thiện hình biểu diễn",
 };
 
@@ -1044,7 +1045,7 @@ export function resolveStepGoalKind(
     return "Complete";
   }
 
-  // 2. Intersect — tìm giao điểm, giao tuyến, mặt phẳng cắt hoặc dựng khung thiết diện.
+  // 2. Intersect — tìm giao điểm, giao tuyến hoặc dựng khung thiết diện.
   if (
     pedStep?.stepRole === "construct_intersection_or_section"
     || focusObjs.some(
@@ -1052,7 +1053,6 @@ export function resolveStepGoalKind(
         o.type === "section"
         || o.type === "curved_section"
         || isIntersectionLineOrSegment(o, scene)
-        || o.surface_role === "CUTTING_PLANE"
         || o.surface_role === "SECTION_REGION"
         || (o.type === "point3"
           && o.origin === "derived"
@@ -1076,29 +1076,46 @@ export function resolveStepGoalKind(
     return "Intersect";
   }
 
-  // 3. Verify — kiểm chứng quan hệ vuông góc, đo đạc, tính giá trị trung gian hoặc giải thích.
+  // 3. Bước khởi tạo dữ kiện ban đầu được ưu tiên trước kiểm chứng và đo đạc.
   if (
-    semKind === "MEASUREMENT"
+    ev?.action === "INIT"
+    || pedStep?.stepRole === "identify_given"
+    || pedStep?.epistemicCategory === "given"
+  ) {
+    return "Define";
+  }
+
+  // 4. Verify — kiểm chứng quan hệ hình học và chứng nhận liên kết.
+  if (
+    pedStep?.stepRole === "deduce_relation"
     || semKind === "EXPLANATION"
-    || ev?.action === "MEASURE"
-    || pedStep?.stepRole === "deduce_relation"
     || focusObjs.some(
       (o) =>
         o.type === "perpendicular_witness"
-        || o.type === "quantity"
         || o.semantic_role === "CERTIFIED_RELATION_MARKER"
-        || o.display_role === "measurement",
+        || (o.type === "quantity"
+          && String((o as unknown as Record<string, unknown>).value ?? "").trim() === "0"),
     )
   ) {
     return "Verify";
   }
 
-  // 4. Define — xác định khối/dữ kiện ban đầu (chỉ khi có ngữ nghĩa dữ kiện tường minh).
+  // 5. Measure — đo đạc và tính các đại lượng số hoặc hình học trung gian.
   if (
-    ev?.action === "INIT"
-    || pedStep?.stepRole === "identify_given"
-    || pedStep?.epistemicCategory === "given"
+    semKind === "MEASUREMENT"
+    || ev?.action === "MEASURE"
     || focusObjs.some(
+      (o) =>
+        o.type === "quantity"
+        || o.display_role === "measurement",
+    )
+  ) {
+    return "Measure";
+  }
+
+  // 6. Define — xác định khối/dữ kiện ban đầu từ siêu dữ liệu đối tượng.
+  if (
+    focusObjs.some(
       (o) =>
         (o.display_group ?? []).includes("given")
         || o.annotation?.role === "given"
@@ -1109,7 +1126,7 @@ export function resolveStepGoalKind(
     return "Define";
   }
 
-  // 5. Fallback mặc định cho bước dựng thông thường hoặc cảnh có metadata tối giản.
+  // 7. Fallback mặc định cho bước dựng thông thường hoặc cảnh có metadata tối giản.
   return "Construct";
 }
 
@@ -5623,7 +5640,7 @@ function buildReferenceSegmentNode(
 export function buildContractReferenceGroup(
   scene: Pick<Scene3D, "objects"> & Partial<Pick<Scene3D, "events">>,
   visibleObjects: readonly SceneObject[],
-  _step: number,
+  step: number,
 ): THREE.Group | null {
   const finitePts = diemHuuHan([...visibleObjects]);
   const dk = Math.max(duongKinhCanh(finitePts), 2);
@@ -5787,7 +5804,7 @@ export function buildContractReferenceGroup(
   const measuredQtyIds = scene.events?.length
     ? new Set(
         scene.events
-          .filter((ev) => ev && ev.step_index <= _step && ev.action === "MEASURE" && Boolean(ev.object))
+          .filter((ev) => ev && ev.step_index <= step && ev.action === "MEASURE" && Boolean(ev.object))
           .map((ev) => ev.object!),
       )
     : null;
@@ -6138,6 +6155,18 @@ export function buildContractReferenceGroup(
     }
   }
   const extendEvents = (scene.events ?? []).filter((e) => e.action === "EXTEND");
+  const activeStepNewIds = Array.isArray(scene.events) && scene.events.length > 0
+    ? new Set(
+        computeStepHighlightTargets(
+          { events: [], free_objects: [], ...scene } as Scene3D,
+          step,
+        ).newIds,
+      )
+    : null;
+  const guideOpacityForPoint = (pointId: string, activeOpacity: number, priorOpacity: number): number => {
+    if (!activeStepNewIds || activeStepNewIds.size === 0) return activeOpacity;
+    return activeStepNewIds.has(pointId) ? activeOpacity : priorOpacity;
+  };
 
   for (const pObj of visiblePoints) {
     if (pObj.origin !== "derived") continue;
@@ -6207,7 +6236,7 @@ export function buildContractReferenceGroup(
           dashSize,
           true,
           S.colors.line,
-          0.62,
+          guideOpacityForPoint(pObj.id, 0.62, 0.36),
         ),
       );
       existingSpans.push([nearEnd, pVec]);
@@ -6323,7 +6352,7 @@ export function buildContractReferenceGroup(
               dashSize,
               true,
               S.colors.secondaryPlaneOutline,
-              0.72,
+              guideOpacityForPoint(pObj.id, 0.72, 0.38),
             ),
           );
           existingSpans.push([pick.vec, pVec]);
@@ -6387,7 +6416,7 @@ export function buildContractReferenceGroup(
                 dashSize,
                 true,
                 S.colors.secondaryPlaneOutline,
-                0.72,
+                guideOpacityForPoint(pObj.id, 0.72, 0.38),
               ),
             );
             existingSpans.push([targetAnchor.vec, pVec]);
@@ -22351,7 +22380,7 @@ export function buildPedagogicalStepNarration(
     } else if (parallelPairs.length > 0 && parallelPairs.length <= 2) {
       conciseRationale = `Nối các đoạn giao tuyến trên các mặt khối (${parallelPairs.join(", ")}) để khép kín thiết diện ${secNotation}.`;
     } else if (parallelPairs.length > 2) {
-      conciseRationale = `Nối các đoạn giao tuyến song song (${parallelPairs.slice(0, 4).join(", ")}) trên các mặt khối để khép kín thiết diện ${secNotation}.`;
+      conciseRationale = `Nối các đoạn giao tuyến song song (${parallelPairs.join(", ")}) trên các mặt khối để khép kín thiết diện ${secNotation}.`;
     } else {
       const coincidentSolidEdges: string[] = [];
       const faceTraceEdges: string[] = [];
@@ -22386,9 +22415,30 @@ export function buildPedagogicalStepNarration(
           );
           return shortSym(match);
         };
-        for (let i = 0; i < secPts.length; i += 1) {
-          const pa = secPts[i]!;
-          const pb = secPts[(i + 1) % secPts.length]!;
+        const rawSyms = secPts.map((pt) => ptSymAt(pt));
+        const secPrefOrder = preferredPointOrderForPolygon(exactOrigin, polySectionTarget);
+        let orderedSecPts = secPts;
+        if (rawSyms.length >= 3 && rawSyms.every((sym) => Boolean(sym))) {
+          const targetCanon = canonicalizeCycleNames(rawSyms, secPrefOrder);
+          const nPts = secPts.length;
+          const revSyms = [...rawSyms].reverse();
+          const revPts = [...secPts].reverse();
+          for (let shift = 0; shift < nPts; shift += 1) {
+            const candFwd = Array.from({ length: nPts }, (_, k) => rawSyms[(shift + k) % nPts]);
+            if (candFwd.every((v, idx) => v === targetCanon[idx])) {
+              orderedSecPts = Array.from({ length: nPts }, (_, k) => secPts[(shift + k) % nPts]!);
+              break;
+            }
+            const candRev = Array.from({ length: nPts }, (_, k) => revSyms[(shift + k) % nPts]);
+            if (candRev.every((v, idx) => v === targetCanon[idx])) {
+              orderedSecPts = Array.from({ length: nPts }, (_, k) => revPts[(shift + k) % nPts]!);
+              break;
+            }
+          }
+        }
+        for (let i = 0; i < orderedSecPts.length; i += 1) {
+          const pa = orderedSecPts[i]!;
+          const pb = orderedSecPts[(i + 1) % orderedSecPts.length]!;
           const fpa = parseFracVec3(pa);
           const fpb = parseFracVec3(pb);
           const sa = ptSymAt(pa);
@@ -22429,7 +22479,7 @@ export function buildPedagogicalStepNarration(
       if (coincidentSolidEdges.length > 0 && faceTraceEdges.length > 0) {
         conciseRationale = `Mặt phẳng cắt đi qua ${coincidentSolidEdges.length === 1 ? "cạnh" : "các cạnh"} ${coincidentSolidEdges.join(", ")} và cắt theo ${faceTraceEdges.join(", ")}, khép kín thiết diện ${secNotation}.`;
       } else if (faceTraceEdges.length >= 2) {
-        conciseRationale = `Nối các đoạn giao tuyến (${faceTraceEdges.slice(0, 4).join(", ")}) để khép kín thiết diện ${secNotation}.`;
+        conciseRationale = `Nối các đoạn giao tuyến (${faceTraceEdges.join(", ")}) để khép kín thiết diện ${secNotation}.`;
       } else {
         conciseRationale = `Nối các đoạn giao tuyến trên từng mặt của khối để khép kín miền thiết diện ${secNotation}.`;
       }

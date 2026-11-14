@@ -333,8 +333,8 @@ describe("Axo V2.7 Phase B — Header Logo, Homepage, Library & History (P3–P8
     );
     expect(selectedHtml).toContain('class="context-object-card"');
     expect(selectedHtml).toContain('id="btn-clear-pick"');
-    expect(selectedHtml).toContain("Chỉ xem phần này");
-    expect(selectedHtml).toContain("Ẩn đối tượng");
+    expect(selectedHtml).not.toContain("Chỉ xem phần này");
+    expect(selectedHtml).not.toContain("Ẩn đối tượng");
     expect(selectedHtml).toContain('class="tb-display-popover tb-popover is-open"');
     expect(selectedHtml).toContain('tb-pop-header tb-pop-head');
     expect(selectedHtml).toContain('tb-pop-label tb-pop-row-text');
