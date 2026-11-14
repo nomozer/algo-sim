@@ -221,7 +221,8 @@ def test_inv_20_candidate_and_cache_verify_only():
     # 135 -> 136 (target-invariant-regular-solid-semantics): guard nhánh dấu + ngữ nghĩa tứ diện đều + tên hiển thị ⇒ row 135:route-d phải MISS.
     # 136 -> 137 (proof-soundness-generalized-angle-invariance): chứng chỉ bất biến /2 gắn mục tiêu, giá trị và cảnh ⇒ row 136:route-d phải MISS.
     # 137 -> 138 (scene3d-causal-pedagogical-integrity): cờ phụ trợ thừa theo mục tiêu đề, dữ kiện nguồn ngoài tiên quyết trực quan, góc vuông hai mặt / chéo nhau được dựng, ràng buộc loại góc vuông ⇒ row 137:route-d phải MISS.
-    assert str(CACHE_VERSION) == "138"
+    # 138 -> 139 (grounded-vietnamese-geometry-understanding): bộ đọc đề đổi quyết định phục vụ/từ chối (đáy không tên, cạnh bên chóp đều, lăng trụ viết liền, tam giác cân suy ra, diện tích đáy, giá trị chưa đọc) ⇒ row 138:route-d phải MISS.
+    assert str(CACHE_VERSION) == "139"
 
 
 def test_inv_21_favicon_not_in_staged_changes():

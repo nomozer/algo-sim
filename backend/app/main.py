@@ -921,7 +921,12 @@ MISSING_KEY_MSG = (
 #       mục tiêu của đề (vật đề nêu, giao tuyến đề hỏi không còn bị gắn cờ), đại lượng/vectơ tự do (R đề cho) ra khỏi
 #       `visible_prerequisites`, góc 90° giữa hai mặt / hai đường chéo nhau có `angle_construction`; adapter siết ràng
 #       buộc loại góc vuông. Mọi row `137:route-d` phải MISS (`tests/test_cache_causal_pedagogical_invalidation.py`).
-CACHE_VERSION = "138"
+# 139 — 2026-11-15 (grounded-vietnamese-geometry-understanding): bộ đọc cục bộ + Source Gate đổi quyết định trên cùng đề —
+#       đáy không tên gắn theo thứ tự mệnh đề, "góc giữa cạnh bên và mặt đáy" của chóp đều, lăng trụ viết liền không dấu
+#       chấm, "tam giác XYZ cân" có góc vuông đã chứng minh, diện tích đáy không tên; một giá trị tiền đề không trích dẫn
+#       nào đọc ⇒ không còn COMPLETE. Khoá Route D không đổi ⇒ mọi row `138:route-d` phải MISS
+#       (`tests/test_cache_grounded_understanding_invalidation.py`).
+CACHE_VERSION = "139"
 
 #: Hai chế độ hợp lệ của kiến trúc chính thức Hybrid `/4` do máy chủ sở hữu:
 #: - `live` (mặc định): trích xuất có cấu trúc qua Gemini (`typed-fact-next/2`) khi cấu hình `GEMINI_API_KEY`.

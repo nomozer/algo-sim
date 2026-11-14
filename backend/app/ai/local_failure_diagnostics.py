@@ -131,7 +131,12 @@ def diagnose_clauses(source_coverage: dict[str, Any]) -> list[dict[str, Any]]:
         subs = [(int(m.group(1)), m.group(2)) for n in c.get("notes") or ()
                 if (m := re.match(r"UNREAD_SUBCLAUSE@(\d+):(.*)", str(n)))]
         cause_text = " ".join(t for _o, t in subs) or c["text"]
-        if status in ("UNRECOGNIZED", "UNRESOLVED_REFERENCE"):
+        # run `grounded-vietnamese-geometry-understanding`: a value no item read (`UNREAD_VALUE@<offset>`) is a premise the
+        # parser recognised the sentence around but did not extract — an incomplete extraction, read from its own context
+        vals = [str(n).split(":", 1)[1] for n in c.get("notes") or () if str(n).startswith("UNREAD_VALUE@")]
+        if status in ("UNRECOGNIZED", "UNRESOLVED_REFERENCE") and vals and not subs:
+            root = _clause_root(" ".join(vals)) or "INCOMPLETE_FACT_EXTRACTION"
+        elif status in ("UNRECOGNIZED", "UNRESOLVED_REFERENCE"):
             sub_types = clause_types(cause_text) if subs else types
             root = ("UNSUPPORTED_GOAL_FUNCTION" if types[0] in _GOAL_TYPES and _GOAL_FUNCTION.search(c["text"]) else
                     _clause_root(cause_text) or

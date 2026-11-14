@@ -630,6 +630,66 @@ def _unread_subclauses(builder: "_AstBuilder", a: int, b: int, pre4: tuple[int, 
     return lost
 
 
+#: A value written in a premise: a number, a radical, or the length letter "a" right after "bằng" / "=" / "cạnh" / "là".
+_PREMISE_VALUE_RE = re.compile(
+    r"(?<![\w'.,])(?:\d+(?:[.,]\d+)?|√\s*\(?\s*\d+)(?![\w'])"
+    r"|(?:(?<=bằng\s)|(?<==\s)|(?<==)|(?<=cạnh\s)|(?<=là\s))a(?:²|³|\^\s*[23])?(?![\w'²³])",
+    re.UNICODE)
+
+
+def _unread_values(builder: "_AstBuilder", a: int, b: int, pre4: tuple[int, int, int, int],
+                   pre3: tuple[int, int, int]) -> list[int]:
+    """Positions of values in the PREMISE part of sentence `raw[a:b]` (before its question) that no quote of an item
+    created by this sentence covers. Exam headers ("Câu 39:") and figure references carry no premise value."""
+    raw = builder.raw_text
+    stop = b
+    if (q := _QUESTION_STARTER_RE.search(raw, a, b)) is not None:
+        stop = q.start()
+    start = a
+    if (h := _EXAM_HEADER_PREFIX_RE.match(raw[a:b])) is not None:
+        start = a + h.end()
+    items = (builder.solids[pre4[0]:], builder.premises[pre4[1]:], builder.derived_sections,
+             builder.math_goals[pre4[3]:], builder.described_points[pre3[0]:], builder.relations[pre3[1]:],
+             builder.simulation_goals[pre3[2]:], builder.unresolved)
+
+    def quotes(x):
+        if isinstance(x, dict):
+            for k, v in x.items():
+                if k == "quote" and isinstance(v, str) and v.strip():
+                    yield v
+                else:
+                    yield from quotes(v)
+        elif isinstance(x, list):
+            for v in x:
+                yield from quotes(v)
+
+    spans = []
+    for qt in {qt for group in items for qt in quotes(list(group))}:
+        p = raw.find(qt, a, b + len(qt))
+        while p >= 0:
+            spans.append((p, p + len(qt)))
+            p = raw.find(qt, p + 1, b + len(qt))
+    figs = [(m.start(), m.end()) for m in _FIG_REF_ANY_RE.finditer(raw, a, b)]
+    return [m.start() for m in _PREMISE_VALUE_RE.finditer(raw, start, stop)
+            if not any(s <= m.start() < e for s, e in spans) and not any(s <= m.start() < e for s, e in figs)]
+
+
+def _right_angle_vertex(premises: list[dict[str, Any]], tri: list[str]) -> str | None:
+    """The vertex of triangle `tri` at which a premise read so far makes it right-angled, when exactly one does:
+    `perpendicular_line_plane(VX, plane ∋ V, Y)` or `right_angle(V; X, Y)` with {V, X, Y} = the triangle."""
+    found = set()
+    for p in premises:
+        a = p.get("args") or {}
+        if p.get("kind") == "perpendicular_line_plane" and len(set(a.get("line") or ())) == 2 and set(a["line"]) < set(tri):
+            third = (set(tri) - set(a["line"])).pop()
+            for v in a["line"]:
+                if v in (a.get("plane") or ()) and third in (a.get("plane") or ()):
+                    found.add(v)
+        elif p.get("kind") == "right_angle" and {a.get("vertex"), *(a.get("rays") or ())} == set(tri):
+            found.add(a["vertex"])
+    return found.pop() if len(found) == 1 else None
+
+
 def _detect_length_unit(raw_text: str) -> str:
     # Check if symbolic unit `a` is used in length assignments (e.g. `cạnh a`, `= a`, `= 2a`, `= a√3`, `= √3a`, `chiều cao bằng a`)
     if re.search(
@@ -642,6 +702,10 @@ def _detect_length_unit(raw_text: str) -> str:
 
 _EXAM_HEADER_PREFIX_RE = re.compile(
     r"^(?:\s*(?:(?:Câu|Bài(?:\s+tập)?|Ví\s+dụ)\s*(?:\d+|[a-d])\s*[:.)]?|(?:\d+|[a-d])\s*\)|\(\s*\d+(?:[.,]\d+)?\s*điểm\s*\))\s*)+",
+    re.IGNORECASE | re.UNICODE,
+)
+_FIG_REF_ANY_RE = re.compile(
+    r"\(\s*(?:(?:hình\s+)?minh\s+h[ọo]a(?:\s+như)?|tham\s+khảo|như|xem)\s+hình(?:\s+vẽ)?(?:\s+bên(?:\s+dưới|\s+trên)?)?\s*\)",
     re.IGNORECASE | re.UNICODE,
 )
 _FIG_REF_SUFFIX_RE = re.compile(
@@ -1077,6 +1141,9 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
         re.IGNORECASE | re.UNICODE,
     )
     if m_cuboid and not builder.solids:
+        # Run `grounded-vietnamese-geometry-understanding`: like the prism branch, the notation span lets an unnamed
+        # "có đáy là hình vuông" right after it quote the solid it belongs to ("ABCD.A'B'C'D' có đáy là hình vuông").
+        clause_solid_not_span = (m_cuboid.start("not"), m_cuboid.end("not"))
         not_str = m_cuboid.group("not")
         b_str, t_str = not_str.split(".", 1)
         base_pts, top_pts = _split_pts(b_str), _split_pts(t_str)
@@ -1100,13 +1167,25 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
 
     # 1f. Prism (right, regular, or oblique): "Cho (hình |khối )?lăng trụ (đứng|đều|xiên)? ABC.A'B'C'"
     m_prism = re.search(
-        rf"(?P<lead>(?:Cho|Vẽ|Mô\s+phỏng)\s+)?(?:(?:hình|khối)\s+)?lăng\s+trụ(?:\s+(?P<mod>đứng|đều|tam\s+giác\s+đều|tứ\s+giác\s+đều|lục\s+giác\s+đều|xiên))?\s+(?P<not>{_PTS3_6}\.{_PTS3_6})",
+        rf"(?P<lead>(?:Cho|Vẽ|Mô\s+phỏng)\s+)?(?:(?:hình|khối)\s+)?lăng\s+trụ(?:\s+(?P<mod>đứng|đều|tam\s+giác\s+đều|tứ\s+giác\s+đều|lục\s+giác\s+đều|xiên))?\s+(?P<not>{_PTS3_6}\.{_PTS3_6}|(?P<nd>(?:[A-Z](?!['′]))+(?:[A-Z]['′])+)(?![\w'′]))",
         ctext_norm,
         re.IGNORECASE | re.UNICODE,
     )
+    if m_prism and m_prism.group("nd"):
+        # Run `grounded-vietnamese-geometry-understanding`: the notation written without its dot ("ABCDA'B'C'D'") splits
+        # ONLY when the top is the base's letters primed in the same order; anything else is not read as a prism.
+        nd_pts = _split_pts(m_prism.group("nd").replace("′", "'"))
+        nd_base = [x for x in nd_pts if not x.endswith("'")]
+        nd_top = [x for x in nd_pts if x.endswith("'")]
+        if not (3 <= len(nd_base) <= 6 and nd_pts == nd_base + nd_top and nd_top == [x + "'" for x in nd_base]):
+            m_prism = None
     if m_prism and not builder.solids:
         clause_solid_not_span = (m_prism.start("not"), m_prism.end("not"))
-        not_str = m_prism.group("not")
+        if m_prism.group("nd"):
+            nd_pts = _split_pts(m_prism.group("nd").replace("′", "'"))
+            not_str = "".join(nd_pts[: len(nd_pts) // 2]) + "." + "".join(nd_pts[len(nd_pts) // 2:])
+        else:
+            not_str = m_prism.group("not")
         b_str, t_str = not_str.split(".", 1)
         base_pts, top_pts = _split_pts(b_str), _split_pts(t_str)
         builder._base_vertices = base_pts
@@ -1683,6 +1762,20 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
                     "solid_id": builder._primary_solid_id,
                 }
             )
+            mapped_fact = True
+
+    # Run `grounded-vietnamese-geometry-understanding`: the area of the UNNAMED base of the declared solid ("diện tích đáy
+    # bằng a²"); quoted as written — the Source Gate resolves "đáy" to the unique solid's base itself.
+    for m_dt_day in re.finditer(
+        rf"(?P<full>diện\s+tích(?:\s+của)?\s+(?:mặt\s+)?đáy\s*(?:bằng|là|=)\s*(?P<val>{_VAL}))",
+        ctext_norm, re.IGNORECASE | re.UNICODE,
+    ):
+        if len(builder._base_vertices) >= 3 and len(builder.solids) == 1:
+            builder.premises.append({"kind": "face_area",
+                                     "args": {"polygon": list(builder._base_vertices), "value": _canon_val(m_dt_day.group("val")),
+                                              "shape": "polygon"},
+                                     "quote": _clean_quote(raw, ca + m_dt_day.start("full"), ca + m_dt_day.end("full")),
+                                     "solid_id": builder._primary_solid_id})
             mapped_fact = True
 
     # ── 3. Perpendicularity & Altitude Premises ──────────────────────────────────────────────────────────────────
@@ -3480,6 +3573,7 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
     # - Angle between line (or line joining A with @desc) and plane or line, or between two planes:
     m_ang = re.search(
         rf"(?P<full>(?:Tính\s+)?(?:số\s+đo\s+(?:của\s+)?)?góc\s+(?:giữa|tạo\s+bởi|hợp\s+bởi)\s+(?:"
+        rf"(?P<cb>(?:một\s+)?cạnh\s+bên)\s+(?:và|với)\s+(?:mặt\s+phẳng\s+|mặt\s+)?đáy(?![\w])|"
         rf"(?:hai\s+mặt\s+phẳng\s+|mặt\s+phẳng\s+)?\((?P<pl1>{_PTS3_6})\)\s+và\s+(?:(?:mặt\s+phẳng\s+|mp\s*)?\((?P<pl2>{_PTS3_6})\)|(?P<pl2d>(?:mặt\s+phẳng\s+|mặt\s+)?đáy)(?![\w]))"
         rf"|đường\s+thẳng\s+(?:nối|đi\s+qua)\s+(?P<la>{_PT})\s+(?:với|và)\s+(?P<lb>.+?)\s+(?:và|với)\s+(?:(?P<is_pl>mặt\s+phẳng\s+|mp\s*)?\((?P<pl3>{_PTS3_6})\)|(?:đường\s+thẳng\s+|cạnh\s+)?(?P<l2_desc>{_PTS2}))"
         rf"|(?:hai\s+đường\s+thẳng\s+|đường\s+thẳng\s+|đt\s+|cạnh\s+)?(?P<l1>{_PTS2})\s+và\s+(?:(?:mặt\s+phẳng\s+|mp\s*)?\((?P<pl4>{_PTS3_6})\)|(?P<pl4d>(?:mặt\s+phẳng\s+|mặt\s+)?đáy)(?![\w])|(?:đường\s+thẳng\s+|cạnh\s+)?(?P<l2>{_PTS2}))"
@@ -3504,7 +3598,24 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
         day_pts = list(builder._base_vertices) if len(builder._base_vertices) >= 3 else None
         pl2_pts = _split_pts(m_ang.group("pl2")) if m_ang.group("pl2") else (day_pts if m_ang.group("pl2d") else None)
         pl4_pts = _split_pts(m_ang.group("pl4")) if m_ang.group("pl4") else (day_pts if m_ang.group("pl4d") else None)
-        if m_ang.group("pl1") and pl2_pts:
+        if m_ang.group("cb"):
+            # Run `grounded-vietnamese-geometry-understanding`: "góc giữa cạnh bên và mặt đáy" names no edge. In a REGULAR
+            # pyramid every lateral edge makes the same angle with the base (the apex projects to the centre of a regular
+            # base), so one lateral edge stands for all; in any other pyramid the phrase does not name one angle.
+            notation = str(builder._primary_notation or "")
+            regular = any(p.get("kind") == "regular_pyramid" for p in builder.premises)
+            if builder._primary_solid_type == "pyramid" and "." in notation and regular and day_pts:
+                apex = _split_pts(notation.split(".", 1)[0])
+                if len(apex) == 1:
+                    builder.math_goals.append({"goal_id": f"q{len(builder.math_goals) + 1}", "kind": "measurement",
+                                               "goal_type": "angle", "target": {"line": [apex[0], day_pts[0]], "plane": day_pts},
+                                               "solid_id": builder._primary_solid_id, "quote": q_ang, **ang_extra})
+                    mapped_goal = True
+            else:
+                builder.unresolved.append({"unresolved_id": f"u{len(builder.unresolved) + 1}", "kind": "ambiguous",
+                                           "quote": q_ang, "missing_roles": ["goal_object"], "candidate_relations": ["angle"]})
+                mapped_goal = True
+        elif m_ang.group("pl1") and pl2_pts:
             builder.math_goals.append(
                 {
                     "goal_id": f"q{len(builder.math_goals) + 1}",
@@ -3599,6 +3710,26 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
             for g_item in builder.math_goals[pre_goals_len:]:
                 g_item["rounding"] = rd_spec
                 g_item["quote"] = q_full_cl
+
+    # Run `grounded-vietnamese-geometry-understanding`: "tam giác XYZ cân" WITHOUT its apex. When a premise read so far
+    # makes the triangle right-angled at one vertex V (a line ⊥ plane through V, or a stated right angle at V), the two
+    # equal sides can only be the legs at V (the hypotenuse is strictly longest): the definition reads as one equality,
+    # quoted by the phrase itself. Without such a right angle the apex is unknown and the phrase stays unread.
+    for m_can in re.finditer(rf"(?P<full>tam\s+giác\s+(?P<v>{_PTS3})\s+cân)(?![\w'])(?!\s+(?:tại|ở))", ctext_norm,
+                             re.IGNORECASE | re.UNICODE):
+        tri = _split_pts(m_can.group("v"))
+        dinh_vuong = _right_angle_vertex(builder.premises, tri)
+        if len(set(tri)) != 3 or dinh_vuong is None:
+            continue
+        legs = [x for x in tri if x != dinh_vuong]
+        if any(p.get("kind") == "equal_length" and {frozenset(p["args"]["segment_a"]), frozenset(p["args"]["segment_b"])}
+               == {frozenset((dinh_vuong, legs[0])), frozenset((dinh_vuong, legs[1]))} for p in builder.premises):
+            continue
+        builder.premises.append({"kind": "equal_length",
+                                 "args": {"segment_a": [dinh_vuong, legs[0]], "segment_b": [dinh_vuong, legs[1]]},
+                                 "quote": _clean_quote(raw, ca + m_can.start("full"), ca + m_can.end("full")),
+                                 "solid_id": builder._primary_solid_id})
+        mapped_fact = True
 
     # ── 7k. Intra-Sentence Integrity & Sub-Clause Coverage Guard ─────────────────────────────────────────────────
     if (mapped_fact or mapped_goal) and not builder.unresolved:
@@ -3774,6 +3905,17 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
             clause.notes.extend(f"UNREAD_SUBCLAUSE@{a - clause.start}:{raw[a:b].strip()[:120]}" for a, b in lost)
             clause.classification = (CLAUSE_UNPARSED_GOAL_CANDIDATE if any(_QUESTION_STARTER_RE.search(raw[a:b]) for a, b in lost)
                                      else CLAUSE_UNPARSED_FACT_CANDIDATE)
+            return
+        # 7b) Run `grounded-vietnamese-geometry-understanding`: a recognised part may still carry a value no item read
+        # ("… cạnh bên bằng a và diện tích đáy bằng a²": the side was read, the area was not). A value of the premise part
+        # of the sentence outside every quote of this sentence's items is a silently lost premise: never complete.
+        lost_v = _unread_values(builder, ca, cb, (pre_solids_len, pre_premises_len, pre_sections_len, pre_goals_len),
+                                pre_other_lens)
+        if lost_v:
+            mapped_fact = False
+            mapped_goal = False
+            clause.notes.extend(f"UNREAD_VALUE@{p - clause.start}:{raw[max(ca, p - 40):p + 12].strip()}" for p in lost_v)
+            clause.classification = CLAUSE_UNPARSED_FACT_CANDIDATE
             return
 
     # ── 8. Classify Clause Coverage ──────────────────────────────────────────────────────────────────────────────

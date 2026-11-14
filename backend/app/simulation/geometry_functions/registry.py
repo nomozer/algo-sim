@@ -1183,8 +1183,20 @@ def _tu_nhan(s: str) -> list[tuple[int, int, list[list[str]]]]:
     for m in _TU.finditer(s):
         w = m.group(0).strip(".")
         if w and any(ch.isalpha() for ch in w) and all(not ch.isalpha() or "A" <= ch <= "Z" for ch in w):
-            ra.append((m.start(), m.end(), [re.findall(r"[A-Z][0-9]*'?", p) for p in w.split(".") if p]))
+            ra.append((m.start(), m.end(), _tach_lang_tru_lien([re.findall(r"[A-Z][0-9]*'?", p) for p in w.split(".") if p])))
     return ra
+
+
+def _tach_lang_tru_lien(phan: list[list[str]]) -> list[list[str]]:
+    """Run `grounded-vietnamese-geometry-understanding`: a prism notation written without its dot ("ABCDA'B'C'D'") is the
+    two faces it names ONLY when the second half is exactly the first half primed, in order; anything else stays one group."""
+    if len(phan) != 1:
+        return phan
+    g = phan[0]
+    n = len(g) // 2
+    if len(g) % 2 or not 3 <= n <= 6 or any(x.endswith("'") for x in g[:n]) or g[n:] != [x + "'" for x in g[:n]]:
+        return phan
+    return [g[:n], g[n:]]
 
 
 _HAT_VERTEX_RE = re.compile(
@@ -1601,7 +1613,9 @@ _C_TISO_DOAN = re.compile(
 )
 _C_DIENTICH = re.compile(
     rf"(?:(?:có|với|biết)\s+)?(?:diện\s+tích(?:\s+của)?(?:\s+(?:mặt\s+bên|mặt\s+đáy|đáy|mặt|{_HINH}))?\s+\(?(?P<dp>{_L1}{_L1}{_NHAN})\)?\s*(?:=|bằng|là)\s*{_so_nhom('dv')}"
-    rf"|(?:mặt\s+bên|mặt\s+đáy|đáy|mặt|{_HINH})\s+\(?(?P<dp2>{_L1}{_L1}{_NHAN})\)?\s+có\s+diện\s+tích(?:\s+(?:=|bằng|là))?\s*{_so_nhom('dv2')})"
+    rf"|(?:mặt\s+bên|mặt\s+đáy|đáy|mặt|{_HINH})\s+\(?(?P<dp2>{_L1}{_L1}{_NHAN})\)?\s+có\s+diện\s+tích(?:\s+(?:=|bằng|là))?\s*{_so_nhom('dv2')}"
+    # the base of the sentence's solid, unnamed ("diện tích đáy bằng a²"): number-bearing, binds no role
+    rf"|diện\s+tích(?:\s+của)?\s+(?:mặt\s+)?đáy\s*(?:=|bằng|là)\s*{_so_nhom('dv3')})"
     rf"(?:\s*(?:\(\s*)?(?:cm|dm|mm|m)?(?:²|\^2|2)?(?:\s*\))?)?",
     re.IGNORECASE,
 )
@@ -1617,7 +1631,8 @@ _C_MAT = re.compile(rf"(?:{_MAT_NHAN}\s+(?:và\s+)?(?:nằm\s+trong\s+mặt\s+ph
                     rf"(?:đều|vuông(?:\s+cân)?(?:\s+tại\s+{_L1})?|cân(?:\s+tại\s+{_L1})?)(?![\w'])"
                     rf"(?:\s+(?:và\s+)?(?:nằm\s+)?trong\s+mặt\s+phẳng\s+vuông\s+góc\s+với\s+{_MAT_DICH})?"
                     rf"|{_L1}{_L1}(?:\s*=\s*{_L1}{_L1})+(?![\w'])(?!\s*=))"
-                    rf"(?=\s*(?:[,;.]|và\s|$))", re.IGNORECASE)
+                    # a figure reference ("(minh họa như hình vẽ bên)") may close the clause, as it may close a sentence (`_C_HET`)
+                    rf"(?=\s*(?:{_THAM_KHAO_HINH}\s*)?(?:[,;.]|và\s|$))", re.IGNORECASE)
 #: Run `compositional-semantics-simulation-goals`: a NAMED plane defined by number-free incidence / ∥ / ⊥ relations
 #: ("mặt phẳng (P) đi qua M và song song với mặt đáy", "(α) chứa AB và vuông góc với (SCD)"). It names no height, side or
 #: segment value; the section call that uses the plane is verified by its own quote. Read here only so the OTHER clauses of
@@ -1788,7 +1803,14 @@ def _lien_ket_cau(de: str, a: int, b: int, calls: tuple[LoiGoi, ...]) -> dict[in
             # after a point definition may predicate that definition's object: the sentence's roles are not bound.
             mo = mo or any(k0 == "diem" and k1 == "vai" and re.match(r"(?:có|với)\s", m1.group(), re.IGNORECASE)
                            for (k0, _m0), (k1, m1) in zip(cau, cau[1:]))
-            for kind, m in cau:
+            # Run `grounded-vietnamese-geometry-understanding`: a subject change can only re-attribute what FOLLOWS it. An
+            # unlabelled "đáy là hình vuông cạnh a" written BEFORE any face / triangle / altitude clause names the base of
+            # the solid that sentence declared, exactly like "đáy ABCD là hình vuông cạnh a" (which binds whatever follows).
+            doi_truoc = False
+            for i_c, (kind, m) in enumerate(cau):
+                if i_c and (cau[i_c - 1][0] in ("chieu", "mat", "dcao", "dagiac", "mpdn")
+                            or cau[i_c - 1][0] == "diem" and kind == "vai" and re.match(r"(?:có|với)\s", m.group(), re.IGNORECASE)):
+                    doi_truoc = True
                 if kind == "khoi":
                     khop = [k for k in khoi_goi if _khop_ky_hieu_khoi(k, m["k"])]
                     khoi = khop[0] if len(khop) == 1 else None
@@ -1798,7 +1820,7 @@ def _lien_ket_cau(de: str, a: int, b: int, calls: tuple[LoiGoi, ...]) -> dict[in
                     nhan = re.findall(r"[A-Z][0-9]*'?", m["p"])
                     if _so_dinh_khop(m.group(), len(nhan)):              # "Hình vuông ABC cạnh 2" binds nothing
                         out[x + m.start("ps")] = ("side", frozenset(nhan))
-                elif kind == "day" and m["ds"] and (m["d"] or m["d2"] or not mo):
+                elif kind == "day" and m["ds"] and (m["d"] or m["d2"] or not mo or (khoi is not None and not doi_truoc)):
                     day = m["d"] or m["d2"]
                     nhan = re.findall(r"[A-Z][0-9]*'?", day) if day else (list(khoi.args.base) if khoi else [])
                     if not nhan or _so_dinh_khop(m.group(), len(nhan)):  # "Đáy ABCD là tam giác đều cạnh 2" binds nothing
@@ -3027,6 +3049,8 @@ def _kiem_nguon(calls: tuple[LoiGoi, ...], text: str, auxiliary: tuple[dict, ...
             continue
         if c.spec.kind == "ask":
             _kiem_cau_hoi(c, de, vts, calls)
+            if c.fn == "ask_angle_line_plane":
+                _kiem_canh_ben_dai_dien(c, de, calls)
         if c.spec.kind != "ask":
             for (dau, _c), q in zip(vts, c.quotes):
                 # A quote may carry its own "Nếu" / "Chứng minh": read the role where the predicate and the call's labels
@@ -3059,7 +3083,8 @@ def _kiem_nguon(calls: tuple[LoiGoi, ...], text: str, auxiliary: tuple[dict, ...
                 raise TuChoi("OBJECT_NOT_IN_QUOTE", f"{c.id}: cụm chữ nhật không gọi đúng đa giác {c.args.vertices}", (c.id,))
         if c.fn in ("parallelogram", "rhombus", "trapezoid", "isosceles_trapezoid") and not _co_doi_tuong_hinh(c, de):
             raise TuChoi("OBJECT_NOT_IN_QUOTE", f"{c.id}: cụm {c.fn} không gọi đúng đa giác {c.args.vertices}", (c.id,))
-        vuong_can_eq = c.fn == "equal_length" and (_vuong_can_hai_canh(c, de) or _canh_tu_dien_deu(c))
+        vuong_can_eq = c.fn == "equal_length" and (_vuong_can_hai_canh(c, de) or _canh_tu_dien_deu(c)
+                                                   or _can_co_goc_vuong(c, calls))
         tri_alt_proj = c.fn == "orthogonal_projection_line" and any(_duong_cao_tam_giac_khop(c, q) for q in c.quotes)
         if not vuong_can_eq and not tri_alt_proj:
             for nhom in c.spec.keywords:
@@ -4639,7 +4664,11 @@ _CUM_HOI = {
         (_cum(rf"{_KC}\s+(?:giữa|từ)\s+(?:hai\s+mặt phẳng\s+)?{_mat_cum('a')}\s+(?:và|với|đến|tới)\s+{_mat_cum('b')}"), _hai_mat)],
     "ask_angle_line_plane": [
         (_cum(rf"(?:số đo\s+(?:của\s+)?)?góc\s+(?:giữa|tạo bởi|hợp bởi)\s+{_doan_cum('l')}\s+(?:và|với)\s+{_mat_cum('m')}"),
-         lambda m, a, k: set(_nhan_cum(m["l"])) == set(a.line) and _cung_mat(_mat_cua(m, "m", k), a.plane))],
+         lambda m, a, k: set(_nhan_cum(m["l"])) == set(a.line) and _cung_mat(_mat_cua(m, "m", k), a.plane)),
+        # "góc giữa cạnh bên và mặt đáy": a lateral edge of the ONLY declared pyramid with its base; that the pyramid is
+        # regular (so the edge is a representative) is checked by `_kiem_canh_ben_dai_dien`
+        (_cum(r"(?:số đo\s+(?:của\s+)?)?góc\s+(?:giữa|tạo bởi|hợp bởi)\s+(?:một\s+)?cạnh\s+bên\s+(?:và|với)\s+(?:mặt phẳng\s+|mặt\s+)?đáy(?![\w'])"),
+         lambda m, a, k: _canh_ben_cua_khoi(a, k))],
     "ask_angle_plane_plane": [
         (_cum(rf"(?:số đo\s+(?:của\s+)?)?góc\s+(?:giữa|tạo bởi|hợp bởi)\s+(?:hai\s+mặt phẳng\s+)?{_mat_cum('a')}\s+(?:và|với)\s+{_mat_cum('b')}"), _hai_mat)],
     # two named lines: each operand exactly two labels (`_doan_cum`), never a plane group — disjoint from the two above
@@ -5232,6 +5261,50 @@ def _doc_phep_dung_cau_hoi(de: str, start: int, end: int, calls: tuple[LoiGoi, .
             spans.append((m.start(), m.end()))
     return spans
 
+
+
+def _can_co_goc_vuong(c: LoiGoi, calls: tuple[LoiGoi, ...]) -> bool:
+    """Run `grounded-vietnamese-geometry-understanding`: `equal_length` quoted by a bare "tam giác XYZ cân" (no apex) is
+    read only as the two legs at the vertex V where ANOTHER validated call makes XYZ right-angled — a line ⊥ a plane
+    holding V and the third vertex, or a right angle at V. The hypotenuse is strictly longest, so no other pair can be
+    equal; without that right angle the apex is unknown and the call is not grounded."""
+    if len(c.quotes) != 1:
+        return False
+    m = re.fullmatch(rf"tam\s+giác\s+(?P<v>{_NHAN})\s+cân", chuan_hoa(c.quotes[0]).strip(), re.IGNORECASE)
+    if m is None:
+        return False
+    tri = re.findall(r"[A-Z][0-9]*'?", m["v"])
+    a, b = set(c.args.segment_a), set(c.args.segment_b)
+    if len(set(tri)) != 3 or len(a) != 2 or len(b) != 2 or len(a & b) != 1 or a | b != set(tri):
+        return False
+    v = (a & b).pop()
+    others = set(tri) - {v}
+    for k in calls:
+        if k.fn == "perpendicular_line_plane" and v in k.args.line and set(k.args.line) - {v} <= others                 and v in k.args.plane and (others - set(k.args.line)) <= set(k.args.plane):
+            return True
+        if k.fn == "right_angle" and k.args.vertex == v and set(k.args.rays) == others:
+            return True
+    return False
+
+
+def _canh_ben_cua_khoi(a: Any, khoi: dict[str, frozenset]) -> bool:
+    """The line of `a` is a lateral edge (apex, base vertex) of the single declared pyramid and the plane is its base."""
+    if len(khoi) != 1:
+        return False
+    ten, day = next(iter(khoi.items()))
+    dinh = ten.split(".", 1)[0]
+    return ("." in ten and len(re.findall(r"[A-Z][0-9]*'?", dinh)) == 1 and set(a.plane) == set(day)
+            and dinh in a.line and set(a.line) - {dinh} <= set(day) and len(set(a.line)) == 2)
+
+
+def _kiem_canh_ben_dai_dien(c: LoiGoi, de: str, calls: tuple[LoiGoi, ...]) -> None:
+    """Run `grounded-vietnamese-geometry-understanding`: an angle asked of "cạnh bên" (no edge named) is ONE angle only in a
+    REGULAR pyramid, where every lateral edge makes the same angle with the base; otherwise the phrase names no angle."""
+    if not any(re.search(r"góc\s+(?:giữa|tạo\s+bởi|hợp\s+bởi)\s+(?:một\s+)?cạnh\s+bên\s+(?:và|với)", chuan_hoa(q), re.IGNORECASE)
+               for q in c.quotes):
+        return
+    if not any(k.fn == "regular_pyramid" and k.args.apex in c.args.line for k in calls):
+        raise TuChoi("SOURCE_OBJECT_MISMATCH", f"{c.id}: 'cạnh bên' không chỉ một cạnh xác định khi hình chóp không đều", (c.id,))
 
 
 def _khoi_cua_loi_goi(calls: tuple[LoiGoi, ...]) -> dict[str, frozenset]:
@@ -7343,6 +7416,17 @@ def _kiem_dien_tich_da_giac_dung_nguon(c: LoiGoi, de: str, calls: tuple[LoiGoi, 
     """Source Gate grounding for `polygon_area`: verifies polygon labels, optional shape/face role, and exact area value."""
     a = c.args
     poly = list(a.polygon)
+    # Run `grounded-vietnamese-geometry-understanding`: "diện tích (mặt) đáy bằng V" names the base of the ONLY declared
+    # solid ("đáy": the base of the unique solid, as `_mat_cua` reads it) — the polygon must be exactly that base.
+    day = _khoi_cua_loi_goi(calls)
+    if len(day) == 1 and set(next(iter(day.values()))) == set(poly):
+        for q in c.quotes:
+            for m in re.finditer(rf"diện\s+tích(?:\s+của)?\s+(?:mặt\s+)?đáy\s*(?:=|bằng|là)\s*{_so_nhom('v')}", chuan_hoa(q),
+                                 re.IGNORECASE):
+                if _doc_nhom(m["v"]) == doc_so(a.value):
+                    return
+        if any(re.search(r"diện\s+tích(?:\s+của)?\s+(?:mặt\s+)?đáy\s*(?:=|bằng|là)", chuan_hoa(q), re.IGNORECASE) for q in c.quotes):
+            raise TuChoi("UNGROUNDED_VALUE", f"{c.id}: diện tích {a.value} không khớp số đo nguồn của đáy trong {c.quote!r}", (c.id,))
     if not any(_cung_da_giac(p, poly) for q in c.quotes for _x, _y, phan in _tu_nhan(q) for p in phan):
         raise TuChoi("OBJECT_NOT_IN_QUOTE", f"{c.id}: đa giác {''.join(poly)} không được gọi tên trong {c.quote!r}", (c.id,))
     if a.shape == "square" and not any(re.search(r"hình\s+vuông", q, re.IGNORECASE) for q in c.quotes):

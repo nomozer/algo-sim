@@ -1,5 +1,15 @@
 # CODE_INDEX.md — Chỉ mục module + BỘ NHỚ KIẾN TRÚC
 
+## Grounded Vietnamese geometry understanding (2026-11-15)
+
+| Path | Owns | Locked by |
+|---|---|---|
+| `backend/app/ai/local_geometry_parser.py` (`_unread_values`, `_PREMISE_VALUE_RE`, `_FIG_REF_ANY_RE`) | completeness: a value in the premise part of a sentence that no quote of an item of that sentence covers marks the clause `UNREAD_VALUE@…` (never COMPLETE); exam headers / figure references excluded | `backend/tests/geometry/test_grounded_vietnamese_understanding.py` |
+| `local_geometry_parser.py` (cuboid `clause_solid_not_span`, undotted prism `nd`, lateral-edge angle `cb`, apex-less isosceles rule, `_right_angle_vertex`, unnamed base area) | entity / goal grounding: "hình hộp chữ nhật X có đáy là hình vuông" quotes the notation; "ABCDA'B'C'D'" splits only as base + base-primed; "góc giữa cạnh bên và mặt đáy" → a lateral edge only in a regular pyramid (else `ambiguous`); "tam giác XYZ cân" → the legs at a right angle a premise proves; "diện tích (mặt) đáy bằng V" → `face_area` on the base | same |
+| `backend/app/simulation/geometry_functions/registry.py` (`_lien_ket_cau` clause order, `_C_MAT` figure ref, `_C_DIENTICH` unnamed base, `_tach_lang_tru_lien`, `_canh_ben_cua_khoi`, `_kiem_canh_ben_dai_dien`, `_can_co_goc_vuong`, `_kiem_dien_tich_da_giac_dung_nguon` unnamed base) | Source Gate: an unlabelled "đáy … cạnh a" binds when no subject change PRECEDES it; the same object rules for the new readings (regular pyramid for "cạnh bên", proven right angle for apex-less "cân", unique solid for "diện tích đáy") | same |
+| `backend/app/ai/local_failure_diagnostics.py` | `UNREAD_VALUE` notes → `INCOMPLETE_FACT_EXTRACTION` | same |
+| `backend/app/main.py` (`CACHE_VERSION` 139) | rows `138:route-d` MISS | `backend/tests/test_cache_grounded_understanding_invalidation.py` |
+
 ## Scene3D causal / pedagogical integrity (2026-11-14)
 
 | Path | Owns | Locked by |
@@ -9,7 +19,7 @@
 | `backend/app/simulation/semantic_program/quantity_annotations.py` (`_vuong_khong_neo`, `gan_dung_goc`) | a 90° angle `_goc_vuong` cannot mark (two planes; skew lines) gets an `angle-construction/1` (plane_plane rays ⊥ the common line / skew parallel helper), kernel-checked like any other angle | same |
 | `backend/app/simulation/semantic_program/simulation_state.py` (`_vet_giao_tuyen_thiet_dien`) · `scene3d.py` (`_ly_do_vet`) | the textbook TRACE METHOD for a section edge with no parallel reason: breadth-first coplanar intersections over ℚ (affine, no metric) from the named points of the cutting plane; `steps[k].trace_derivation` only when both endpoints are derived on the trace of their face; the «Vì sao» (`COPLANAR_TRACE_INTERSECTION`) names auxiliary points on extended edges once per section ("gọi I là giao điểm của NP và AB") and carries them in `auxiliary_points` (no scene object added) | same + `backend/tests/geometry/test_section_edge_justification.py` (independent re-check) |
 | `backend/app/ai/adapter4_route.py` (`_RIGHT_ANGLE_DRAWING`) | a proven 90° goal (no witness) may be drawn only by its kind of right angle | same (fault injection) |
-| `backend/app/main.py` (`CACHE_VERSION` 138) | rows `137:route-d` MISS | `backend/tests/test_cache_causal_pedagogical_invalidation.py` |
+| `backend/app/main.py` (`CACHE_VERSION` 138, superseded by 139) | rows `137:route-d` MISS | `backend/tests/test_cache_causal_pedagogical_invalidation.py` |
 
 ## Proof soundness, generalized angle invariance (2026-11-14)
 
