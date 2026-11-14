@@ -1,5 +1,20 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = COMPOSITIONAL_SEMANTICS_SIMULATION_GOALS
+
+RUN_ID = compositional-semantics-simulation-goals
+REPORT = docs/evaluation/geometry/runs/compositional-semantics-simulation-goals/AXO_COMPOSITIONAL_SEMANTICS_SIMULATION_GOALS_REPORT.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/compositional-semantics-simulation-goals/
+START_BASE = 1a9ee8b0c
+CODE_COMMIT = 13f1b482c (compositional clauses, clause order, trigonometric goals, diagnostics), 379d33969 (angle construction bound to verified points); candidate freeze 54268761e
+CLASSIFICATION = DEVELOPMENT_EVIDENCE_ON_AGENT_CORPUS_AND_EXPOSED_ITEMS; SYNTHETIC_COMPOSITES_OF_REAL_EXPOSED_CROPS; AGENT_DIAGNOSTIC_ORACLE; AUTOMATED_BROWSER_E2E; NEW_INDEPENDENT_EVALUATION BLOCKED_DATA; INDEPENDENT_H1_NOT_MEASURED; PUBLICATION BLOCKED_PENDING_OWNER_REVIEW
+PRODUCT_CHANGE = YES (parser sub-clause coverage and clause order; Source Gate closed grammar for named-plane definitions and trigonometric values of an angle; optional route_d.source_goal_completion; angle-construction binding); contract versions and CACHE_VERSION 134 unchanged; measured files 116
+MODEL_REQUEST_COUNT = 0
+VERIFICATION = run.json; full_regression_summary.json; semantic_development_before_after.json; cos_tan_visualization_verification.json; scene3d_mathematical_invariants.json; scene3d_browser_e2e.json; final_candidate_image_segmentation_revalidation.json
+CORRECTS = semantic-failure-safe-image-segmentation: its segmentation receipt was measured before 7315cf3b0 (re-measured here on the final candidate, same figures); its DEV37 expectations for cos/tan and goal-first are superseded by this task's product decision (historical receipts unchanged)
+CORRECTED_BY = NONE
+LIMITATIONS = agent-written development corpus; exposed real items; synthetic page layouts; headless host browser; one E2E row fails on an undefined distance-goal timing criterion of the instrument; no H-1, no students, no camera photos.
+
 ## WAVE_ID = SEMANTIC_FAILURE_SAFE_IMAGE_SEGMENTATION
 
 RUN_ID = semantic-failure-safe-image-segmentation

@@ -1,0 +1,40 @@
+{
+  "run_id": "compositional-semantics-simulation-goals",
+  "generated_at_utc": "2026-11-14T03:09:44.904460+00:00",
+  "product_commit": "379d33969ef0cb0e418d979ab211a00799f44834",
+  "measured_system": "b652e635d5497dc36bf6d55ff4a34c20a16302d01c154b59b039efd65170921e",
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "HYBRID_ROUTE_MODE": "local-first",
+    "live_ai_calls": 0
+  },
+  "head": "54268761eacadaca07d0d8cd2dea0d07c39a5d62",
+  "sealed_h1_rows_opened": 0,
+  "locked_w2_w3_rows_read": 0,
+  "locked_rows_rerun": 0,
+  "tools_scanned": [
+    "acceptance.py",
+    "compositional_dev_corpus.py",
+    "image_selection_e2e.mjs",
+    "perf.py",
+    "refresh_pending_templates.py",
+    "run_full_regression.py",
+    "scene3d_goal_e2e.mjs",
+    "scene_invariants_run.py",
+    "segmentation_revalidation.py",
+    "semantic_compare.py"
+  ],
+  "tool_references": {
+    "h1_corpus_paths": [],
+    "w2_w3_locked_manifests": []
+  },
+  "how_checked": "regex search of every tool of this run for H-1 corpus paths and locked W2/W3 manifests (empty lists = none referenced)",
+  "data_used": [
+    "this run's agent-written corpus",
+    "previous run's agent-written DEV37",
+    "REAL27 (exposed)",
+    "plane-constraint PROBES (exposed)",
+    "C26 K-1/R-1/S-2 rows read by an existing pytest only"
+  ],
+  "verdict": "PASS"
+}

@@ -1,0 +1,21 @@
+{
+  "run_id": "compositional-semantics-simulation-goals",
+  "generated_at_utc": "2026-11-14T03:09:44.904460+00:00",
+  "product_commit": "379d33969ef0cb0e418d979ab211a00799f44834",
+  "measured_system": "b652e635d5497dc36bf6d55ff4a34c20a16302d01c154b59b039efd65170921e",
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "HYBRID_ROUTE_MODE": "local-first",
+    "live_ai_calls": 0
+  },
+  "head": "54268761eacadaca07d0d8cd2dea0d07c39a5d62",
+  "NEW_INDEPENDENT_EVALUATION": "BLOCKED_DATA",
+  "INDEPENDENT_GENERALIZATION": "NOT_MEASURED",
+  "H1": {
+    "status": "NOT_MEASURED",
+    "sealed_rows": 94,
+    "opened": 0
+  },
+  "W2_W3": "locked rows neither read nor re-run",
+  "why": "no rights-cleared, unexposed, in-scope dataset and no independent selector / transcriber / scorer"
+}

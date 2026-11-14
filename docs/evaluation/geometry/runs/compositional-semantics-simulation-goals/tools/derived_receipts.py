@@ -79,7 +79,7 @@ def main() -> int:
                    "freeze_verify_at_start": "PASS (Candidate khớp bản đã đóng băng: 116 file, 1f62a4a47bb72071…)",
                    "product_unchanged_since_7315cf3b0_at_start": "git diff 7315cf3b0 1a9ee8b0c -- backend/app frontend/src empty"},
         "verdict": "VERIFIED_INTACT"})
-    tools = sorted(p.name for p in (RUN / "tools").glob("*.*"))
+    tools = sorted(p.name for p in (RUN / "tools").glob("*.*") if p.name != Path(__file__).name)   # not this auditor's own patterns
     text = "\n".join((RUN / "tools" / n).read_text(encoding="utf-8", errors="ignore") for n in tools)
     put("holdout_protection_audit.json", {
         "sealed_h1_rows_opened": 0, "locked_w2_w3_rows_read": 0, "locked_rows_rerun": 0,

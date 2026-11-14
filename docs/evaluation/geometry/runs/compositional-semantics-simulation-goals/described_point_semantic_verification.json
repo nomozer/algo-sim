@@ -1,0 +1,191 @@
+{
+  "run_id": "compositional-semantics-simulation-goals",
+  "generated_at_utc": "2026-11-14T03:09:44.904460+00:00",
+  "product_commit": "379d33969ef0cb0e418d979ab211a00799f44834",
+  "measured_system": "b652e635d5497dc36bf6d55ff4a34c20a16302d01c154b59b039efd65170921e",
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "HYBRID_ROUTE_MODE": "local-first",
+    "live_ai_calls": 0
+  },
+  "head": "54268761eacadaca07d0d8cd2dea0d07c39a5d62",
+  "command": "python docs/evaluation/geometry/runs/compositional-semantics-simulation-goals/tools/semantic_compare.py <archive of 1a9ee8b0c>/backend <out>",
+  "dataset_partition": "DEVELOPMENT (agent-written corpus of this run, tools/compositional_dev_corpus.py)",
+  "oracle_status": "AGENT_DIAGNOSTIC: expectations written from geometry and the documented scope before measurement",
+  "items": 8,
+  "pass": 7,
+  "rows": [
+    {
+      "case_id": "COMP:dp_named_midpoint_goal",
+      "group": "described_point",
+      "text_sha256": "722eddb56e90a0ceaa6f239d19c418ec167486eb46f0ac47aa0d858f0d619559",
+      "expected": "SERVE",
+      "goal": "distance",
+      "numeric": null,
+      "before": {
+        "status": "SERVED",
+        "code": null,
+        "root_cause": null
+      },
+      "after": {
+        "status": "SERVED",
+        "code": null,
+        "root_cause": null,
+        "source_goal_completion": null
+      },
+      "verdict": "PASS"
+    },
+    {
+      "case_id": "COMP:dp_unnamed_midpoint_goal",
+      "group": "described_point",
+      "text_sha256": "60078cd3fcad45dd4d78d6912d167d2451130ab4d3d8c888cd16abccce7ccfc6",
+      "expected": "SERVE",
+      "goal": "distance",
+      "numeric": null,
+      "before": {
+        "status": "SERVED",
+        "code": null,
+        "root_cause": null
+      },
+      "after": {
+        "status": "SERVED",
+        "code": null,
+        "root_cause": null,
+        "source_goal_completion": null
+      },
+      "verdict": "PASS"
+    },
+    {
+      "case_id": "COMP:dp_unnamed_centroid_goal",
+      "group": "described_point",
+      "text_sha256": "38681c5d797c262d703f5870d3be7d6ce03db23a55ddd4dd0eba8de6cb5807dc",
+      "expected": "SERVE",
+      "goal": "distance",
+      "numeric": null,
+      "before": {
+        "status": "SERVED",
+        "code": null,
+        "root_cause": null
+      },
+      "after": {
+        "status": "SERVED",
+        "code": null,
+        "root_cause": null,
+        "source_goal_completion": null
+      },
+      "verdict": "PASS"
+    },
+    {
+      "case_id": "COMP:dp_unnamed_through_point",
+      "group": "described_point",
+      "text_sha256": "b4930cde02b9c8e703347525ba3c34e8f6bb330af99e54f221d920cad8a1f9d8",
+      "expected": "SERVE",
+      "goal": "section",
+      "numeric": null,
+      "before": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "root_cause": "UNRECOGNIZED_GOAL"
+      },
+      "after": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "root_cause": "UNRECOGNIZED_GOAL",
+        "source_goal_completion": null
+      },
+      "verdict": "FAIL"
+    },
+    {
+      "case_id": "COMP:dp_free_point",
+      "group": "described_point_negative",
+      "text_sha256": "cf179cd1ea78d5668590d0699320830828f67ef3ed6b15be92e7c7cfeb8432c1",
+      "expected": "REFUSE",
+      "goal": null,
+      "numeric": null,
+      "before": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "root_cause": "UNRECOGNIZED_RELATION"
+      },
+      "after": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "root_cause": "FREE_POINT_UNDERDETERMINED",
+        "source_goal_completion": null
+      },
+      "verdict": "PASS"
+    },
+    {
+      "case_id": "COMP:dp_free_point_goi",
+      "group": "described_point_negative",
+      "text_sha256": "e9c09493c1ae40a477194aec0253151062a636d20e7a2cfc9859ac94b120a474",
+      "expected": "REFUSE",
+      "goal": null,
+      "numeric": null,
+      "before": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "root_cause": "UNRECOGNIZED_GEOMETRIC_ENTITY"
+      },
+      "after": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "root_cause": "FREE_POINT_UNDERDETERMINED",
+        "source_goal_completion": null
+      },
+      "verdict": "PASS"
+    },
+    {
+      "case_id": "COMP:dp_reflection",
+      "group": "described_point_unsupported",
+      "text_sha256": "128ddc3d3c337bcbc207ba4043ca9dfb4470ee83bd3ee7adf080bb4d96132ec4",
+      "expected": "REFUSE",
+      "goal": null,
+      "numeric": null,
+      "before": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "root_cause": "UNRECOGNIZED_GEOMETRIC_ENTITY"
+      },
+      "after": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "root_cause": "UNSUPPORTED_POINT_CONSTRUCTION",
+        "source_goal_completion": null
+      },
+      "verdict": "PASS"
+    },
+    {
+      "case_id": "COMP:dp_projection_unnamed_image",
+      "group": "described_point_unsupported",
+      "text_sha256": "1f28323288274c9843764fa297297020cab6cdf877fd3f7c714d57b93121c002",
+      "expected": "REFUSE",
+      "goal": null,
+      "numeric": null,
+      "before": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "root_cause": "SOURCE_PROVENANCE_MISSING"
+      },
+      "after": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "root_cause": "DESCRIBED_POINT_IN_PREMISE_UNSUPPORTED",
+        "source_goal_completion": null
+      },
+      "verdict": "PASS"
+    }
+  ],
+  "supported_kinds": [
+    "midpoint",
+    "centroid",
+    "orthocenter",
+    "circumcenter",
+    "intersect_line_line",
+    "intersect_line_plane",
+    "orthogonal_projection",
+    "orthogonal_projection_line"
+  ],
+  "free_point": "a point only said to lie on a segment is refused; root FREE_POINT_UNDERDETERMINED (never placed at a midpoint)",
+  "no_invented_label": "unnamed described points keep internal @id (m1, g1 …); no source label is created"
+}

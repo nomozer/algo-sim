@@ -1,0 +1,45 @@
+{
+  "run_id": "compositional-semantics-simulation-goals",
+  "generated_at_utc": "2026-11-14T03:09:44.904460+00:00",
+  "product_commit": "379d33969ef0cb0e418d979ab211a00799f44834",
+  "measured_system": "b652e635d5497dc36bf6d55ff4a34c20a16302d01c154b59b039efd65170921e",
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "HYBRID_ROUTE_MODE": "local-first",
+    "live_ai_calls": 0
+  },
+  "head": "54268761eacadaca07d0d8cd2dea0d07c39a5d62",
+  "method": "read local_geometry_parser.py, local_failure_diagnostics.py, typed_fact_next.py (DescribedPointSpec, R-1), registry.py (_phan_tich_cau, _vung_hoi), adapter4_route.py, hybrid-preview-adapter.ts before any change; probes in this run's log",
+  "found": {
+    "clauses": "split_into_clauses returned SENTENCES; many rules re.search one sentence; guard 7k only checked sentinel tokens (=, ∥, ⊥, góc, 'Gọi P là') ⇒ a comma- or 'và'-joined part without a sentinel was lost silently at the parser (caught later by the gate)",
+    "clause_order": "a question naming a plane defined in a LATER clause was unparsed (NO_GOAL_RULE_MATCHED)",
+    "described_points": "DescribedPointSpec /2 exists (midpoint, centroid, orthocenter, circumcenter, line-line / line-plane intersection, projections onto a line / plane, nesting depth 2); @id allowed only in measurement goals, a section's through_point and operands of other described points (R-1) — reused, not rebuilt",
+    "gate_sentence_grammar": "_phan_tich_cau closed grammar: an opaque clause makes its sentence bind no unlabelled role ⇒ a named-plane definition inside a comma-joined premise sentence made 'cạnh a' UNGROUNDED_VALUE",
+    "gate_section_context": "a plane defined in the solid's own sentence was re-added to construction contexts after the solid-sentence exemption",
+    "goal_semantics": "angle goals exist (line-plane, plane-plane, line-line, dihedral; signed cosine; angle-construction/1); cos/tan of an angle refused NOT_ASKED_IN_SOURCE by _vung_hoi (qualifier before the phrase)",
+    "output": "output-policy/1; the Workspace has NO answer surface since 2026-11-05 (scene3d-no-answer-surface.test.tsx)",
+    "angle_binding": "adapter /4 verified points and quantities but not the angle-construction annotation (found by mutation in this run)"
+  },
+  "layer_of_each_gap": {
+    "PARSER": [
+      "silent sub-clause loss",
+      "clause order",
+      "bare '(P) đi qua'"
+    ],
+    "SOURCE_GATE": [
+      "plane-definition clause opaque",
+      "section context asymmetry",
+      "trig qualifier"
+    ],
+    "ADAPTER": [
+      "angle annotation binding",
+      "numeric goal completion record"
+    ],
+    "PLANNER": [
+      "scale normalisation of similarity-invariant goals (not changed)"
+    ],
+    "CONTRACT": [
+      "unnamed described point as a premise operand (R-1, not changed)"
+    ]
+  }
+}

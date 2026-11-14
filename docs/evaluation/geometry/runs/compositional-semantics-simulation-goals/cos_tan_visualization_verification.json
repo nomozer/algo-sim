@@ -1,0 +1,402 @@
+{
+  "run_id": "compositional-semantics-simulation-goals",
+  "generated_at_utc": "2026-11-14T03:09:44.904460+00:00",
+  "product_commit": "379d33969ef0cb0e418d979ab211a00799f44834",
+  "measured_system": "b652e635d5497dc36bf6d55ff4a34c20a16302d01c154b59b039efd65170921e",
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "HYBRID_ROUTE_MODE": "local-first",
+    "live_ai_calls": 0
+  },
+  "head": "54268761eacadaca07d0d8cd2dea0d07c39a5d62",
+  "command": "python docs/evaluation/geometry/runs/compositional-semantics-simulation-goals/tools/semantic_compare.py <archive of 1a9ee8b0c>/backend <out>",
+  "dataset_partition": "DEVELOPMENT (agent-written corpus of this run, tools/compositional_dev_corpus.py)",
+  "oracle_status": "AGENT_DIAGNOSTIC: expectations written from geometry and the documented scope before measurement",
+  "items": 12,
+  "pass": 12,
+  "rows": [
+    {
+      "case_id": "COMP:goal_angle_line_plane",
+      "group": "goal_angle",
+      "text_sha256": "05b379d58b24d3fae94687c5f48cdc6efaadfbe141ed9a30c1361c4a3f59b414",
+      "expected": "SERVE",
+      "goal": "angle",
+      "numeric": null,
+      "before": {
+        "status": "SERVED",
+        "code": null,
+        "root_cause": null
+      },
+      "after": {
+        "status": "SERVED",
+        "code": null,
+        "root_cause": null,
+        "source_goal_completion": null
+      },
+      "verdict": "PASS"
+    },
+    {
+      "case_id": "COMP:goal_cos_line_plane",
+      "group": "goal_trig",
+      "text_sha256": "a121c7e6de918ef13f5456a8dd72b6947432619329419862ee99357b67de6372",
+      "expected": "SERVE",
+      "goal": "angle",
+      "numeric": "NOT_ANSWERED",
+      "before": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "root_cause": "UNSUPPORTED_GOAL_FUNCTION"
+      },
+      "after": {
+        "status": "SERVED",
+        "code": null,
+        "root_cause": null,
+        "source_goal_completion": [
+          {
+            "goal_id": "q1",
+            "source_request": "TRIGONOMETRIC_VALUE_OF_ANGLE",
+            "function": "cos",
+            "simulation_objective": "ANGLE_CONSTRUCTED_AND_VERIFIED",
+            "state": "GOAL_VISUALIZATION_READY",
+            "numeric_source_goal": "NOT_ANSWERED",
+            "value_defined": true
+          }
+        ]
+      },
+      "verdict": "PASS"
+    },
+    {
+      "case_id": "COMP:goal_cos_spelled",
+      "group": "goal_trig",
+      "text_sha256": "661be59bf530581040cf1063530f9b53c0a857c2120cc6499b0899ba95f96544",
+      "expected": "SERVE",
+      "goal": "angle",
+      "numeric": "NOT_ANSWERED",
+      "before": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "root_cause": "UNSUPPORTED_GOAL_FUNCTION"
+      },
+      "after": {
+        "status": "SERVED",
+        "code": null,
+        "root_cause": null,
+        "source_goal_completion": [
+          {
+            "goal_id": "q1",
+            "source_request": "TRIGONOMETRIC_VALUE_OF_ANGLE",
+            "function": "cos",
+            "simulation_objective": "ANGLE_CONSTRUCTED_AND_VERIFIED",
+            "state": "GOAL_VISUALIZATION_READY",
+            "numeric_source_goal": "NOT_ANSWERED",
+            "value_defined": true
+          }
+        ]
+      },
+      "verdict": "PASS"
+    },
+    {
+      "case_id": "COMP:goal_tan_line_plane",
+      "group": "goal_trig",
+      "text_sha256": "da7320847e7e2813aadcaf3074e65d2f69492d749e029bb1a406f23dfb3277c3",
+      "expected": "SERVE",
+      "goal": "angle",
+      "numeric": "NOT_ANSWERED",
+      "before": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "root_cause": "UNSUPPORTED_GOAL_FUNCTION"
+      },
+      "after": {
+        "status": "SERVED",
+        "code": null,
+        "root_cause": null,
+        "source_goal_completion": [
+          {
+            "goal_id": "q1",
+            "source_request": "TRIGONOMETRIC_VALUE_OF_ANGLE",
+            "function": "tan",
+            "simulation_objective": "ANGLE_CONSTRUCTED_AND_VERIFIED",
+            "state": "GOAL_VISUALIZATION_READY",
+            "numeric_source_goal": "NOT_ANSWERED",
+            "value_defined": true
+          }
+        ]
+      },
+      "verdict": "PASS"
+    },
+    {
+      "case_id": "COMP:goal_sin_mc_stem",
+      "group": "goal_trig",
+      "text_sha256": "79429c5392757b8a2130ebeb810f6275aa5abc90e6222f748f7c433686842f97",
+      "expected": "SERVE",
+      "goal": "angle",
+      "numeric": "NOT_ANSWERED",
+      "before": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "root_cause": "UNSUPPORTED_GOAL_FUNCTION"
+      },
+      "after": {
+        "status": "SERVED",
+        "code": null,
+        "root_cause": null,
+        "source_goal_completion": [
+          {
+            "goal_id": "q1",
+            "source_request": "TRIGONOMETRIC_VALUE_OF_ANGLE",
+            "function": "sin",
+            "simulation_objective": "ANGLE_CONSTRUCTED_AND_VERIFIED",
+            "state": "GOAL_VISUALIZATION_READY",
+            "numeric_source_goal": "NOT_ANSWERED",
+            "value_defined": true
+          }
+        ]
+      },
+      "verdict": "PASS"
+    },
+    {
+      "case_id": "COMP:goal_cos_planes",
+      "group": "goal_trig",
+      "text_sha256": "0622a851b0d6daf6cd25d2c8dd2458c6e24069f3f4421a01aebd868ff6c51e94",
+      "expected": "SERVE",
+      "goal": "angle",
+      "numeric": "NOT_ANSWERED",
+      "before": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "root_cause": "UNSUPPORTED_GOAL_FUNCTION"
+      },
+      "after": {
+        "status": "SERVED",
+        "code": null,
+        "root_cause": null,
+        "source_goal_completion": [
+          {
+            "goal_id": "q1",
+            "source_request": "TRIGONOMETRIC_VALUE_OF_ANGLE",
+            "function": "cos",
+            "simulation_objective": "ANGLE_CONSTRUCTED_AND_VERIFIED",
+            "state": "GOAL_VISUALIZATION_READY",
+            "numeric_source_goal": "NOT_ANSWERED",
+            "value_defined": true
+          }
+        ]
+      },
+      "verdict": "PASS"
+    },
+    {
+      "case_id": "COMP:goal_cos_lines",
+      "group": "goal_trig",
+      "text_sha256": "8e72faf2ccc0cd3fb0716c6fdc9efc06ea6ae350c81e850b34d1d257dd64604c",
+      "expected": "SERVE",
+      "goal": "angle",
+      "numeric": "NOT_ANSWERED",
+      "before": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "root_cause": "UNSUPPORTED_GOAL_FUNCTION"
+      },
+      "after": {
+        "status": "SERVED",
+        "code": null,
+        "root_cause": null,
+        "source_goal_completion": [
+          {
+            "goal_id": "q1",
+            "source_request": "TRIGONOMETRIC_VALUE_OF_ANGLE",
+            "function": "cos",
+            "simulation_objective": "ANGLE_CONSTRUCTED_AND_VERIFIED",
+            "state": "GOAL_VISUALIZATION_READY",
+            "numeric_source_goal": "NOT_ANSWERED",
+            "value_defined": true
+          }
+        ]
+      },
+      "verdict": "PASS"
+    },
+    {
+      "case_id": "COMP:goal_tan_right_angle",
+      "group": "goal_trig",
+      "text_sha256": "b46dff30d133bb3f81b0d6c328e0e746af2a6a3853b9e2310751188d89d6fb40",
+      "expected": "SERVE",
+      "goal": "angle",
+      "numeric": "NOT_ANSWERED",
+      "before": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "root_cause": "UNSUPPORTED_GOAL_FUNCTION"
+      },
+      "after": {
+        "status": "SERVED",
+        "code": null,
+        "root_cause": null,
+        "source_goal_completion": [
+          {
+            "goal_id": "q1",
+            "source_request": "TRIGONOMETRIC_VALUE_OF_ANGLE",
+            "function": "tan",
+            "simulation_objective": "ANGLE_CONSTRUCTED_AND_VERIFIED",
+            "state": "GOAL_VISUALIZATION_READY",
+            "numeric_source_goal": "NOT_ANSWERED",
+            "value_defined": false
+          }
+        ]
+      },
+      "verdict": "PASS"
+    },
+    {
+      "case_id": "COMP:goal_cos_scale_free",
+      "group": "goal_trig_underdetermined",
+      "text_sha256": "3b3faabb5f5f15cd816d63b2f768d4b9f4af3058013077437d646d8bca609145",
+      "expected": "REFUSE",
+      "goal": null,
+      "numeric": null,
+      "before": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "root_cause": "UNSUPPORTED_GOAL_FUNCTION"
+      },
+      "after": {
+        "status": "REFUSED",
+        "code": "MISSING_DIMENSION",
+        "root_cause": "SCALE_NORMALIZATION_UNSUPPORTED",
+        "source_goal_completion": null
+      },
+      "verdict": "PASS"
+    },
+    {
+      "case_id": "COMP:goal_cos_of_length_neg",
+      "group": "goal_trig_negative",
+      "text_sha256": "9f6c227d0561b2511a61c3988c33a60ab956d141f8d2b1745aece0a365a4278c",
+      "expected": "REFUSE",
+      "goal": null,
+      "numeric": null,
+      "before": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "root_cause": "UNRECOGNIZED_GOAL"
+      },
+      "after": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "root_cause": "UNRECOGNIZED_GOAL",
+        "source_goal_completion": null
+      },
+      "verdict": "PASS"
+    },
+    {
+      "case_id": "COMP:goal_cos_squared_neg",
+      "group": "goal_trig_negative",
+      "text_sha256": "3321e9b34e3e938c9289ec057ed24746d2430784f696d33ba5d4899a7fe57c0e",
+      "expected": "REFUSE",
+      "goal": null,
+      "numeric": null,
+      "before": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "root_cause": "UNSUPPORTED_GOAL_FUNCTION"
+      },
+      "after": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "root_cause": "UNSUPPORTED_GOAL_FUNCTION",
+        "source_goal_completion": null
+      },
+      "verdict": "PASS"
+    },
+    {
+      "case_id": "COMP:goal_cos_wrong_object_neg",
+      "group": "goal_trig_negative",
+      "text_sha256": "7cbd35a910d1e757dd4a11c7993db3f3b2e0376e81ea200947b5ad1e0f3c179e",
+      "expected": "REFUSE",
+      "goal": null,
+      "numeric": null,
+      "before": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "root_cause": "UNSUPPORTED_GOAL_FUNCTION"
+      },
+      "after": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "root_cause": "UNSUPPORTED_GOAL_FUNCTION",
+        "source_goal_completion": null
+      },
+      "verdict": "PASS"
+    }
+  ],
+  "same_angle_as_plain_question": [
+    {
+      "item": "goal_cos_line_plane",
+      "reference": "goal_angle_line_plane",
+      "same_certified_geometry": true,
+      "compared": "answer_exact + section vertex coordinates"
+    },
+    {
+      "item": "goal_cos_spelled",
+      "reference": "goal_cos_line_plane",
+      "same_certified_geometry": true,
+      "compared": "answer_exact + section vertex coordinates"
+    }
+  ],
+  "tan_of_right_angle": "value_defined false, value never computed (test_tangent_of_a_right_angle_is_reported_undefined_not_computed)",
+  "browser": [
+    {
+      "case": "cos_line_plane",
+      "viewport": "1920x1080",
+      "pass": true,
+      "note_has_digit": false,
+      "trig_value_on_page": false
+    },
+    {
+      "case": "cos_line_plane",
+      "viewport": "1366x768",
+      "pass": true,
+      "note_has_digit": false,
+      "trig_value_on_page": false
+    },
+    {
+      "case": "cos_line_plane",
+      "viewport": "768x1024",
+      "pass": true,
+      "note_has_digit": false,
+      "trig_value_on_page": false
+    },
+    {
+      "case": "cos_line_plane",
+      "viewport": "390x844",
+      "pass": true,
+      "note_has_digit": false,
+      "trig_value_on_page": false
+    },
+    {
+      "case": "tan_line_plane",
+      "viewport": "1366x768",
+      "pass": true,
+      "note_has_digit": false,
+      "trig_value_on_page": false
+    },
+    {
+      "case": "cos_two_planes",
+      "viewport": "1366x768",
+      "pass": true,
+      "note_has_digit": false,
+      "trig_value_on_page": false
+    },
+    {
+      "case": "angle_plain",
+      "viewport": "1366x768",
+      "pass": true,
+      "note_has_digit": null,
+      "trig_value_on_page": false
+    },
+    {
+      "case": "unnamed_midpoint_distance",
+      "viewport": "1366x768",
+      "pass": false,
+      "note_has_digit": null,
+      "trig_value_on_page": false
+    }
+  ]
+}

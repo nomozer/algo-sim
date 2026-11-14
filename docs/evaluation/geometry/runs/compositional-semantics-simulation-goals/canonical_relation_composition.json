@@ -1,0 +1,229 @@
+{
+  "run_id": "compositional-semantics-simulation-goals",
+  "generated_at_utc": "2026-11-14T03:09:44.904460+00:00",
+  "product_commit": "379d33969ef0cb0e418d979ab211a00799f44834",
+  "measured_system": "b652e635d5497dc36bf6d55ff4a34c20a16302d01c154b59b039efd65170921e",
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "HYBRID_ROUTE_MODE": "local-first",
+    "live_ai_calls": 0
+  },
+  "head": "54268761eacadaca07d0d8cd2dea0d07c39a5d62",
+  "command": "python docs/evaluation/geometry/runs/compositional-semantics-simulation-goals/tools/semantic_compare.py <archive of 1a9ee8b0c>/backend <out>",
+  "dataset_partition": "DEVELOPMENT (agent-written corpus of this run, tools/compositional_dev_corpus.py)",
+  "oracle_status": "AGENT_DIAGNOSTIC: expectations written from geometry and the documented scope before measurement",
+  "items": 8,
+  "pass": 8,
+  "rows": [
+    {
+      "case_id": "COMP:mc_section_renamed",
+      "group": "metamorphic",
+      "text_sha256": "6c09d18fe799e7b711072911c8a04535f4f328ac7fd6fac889ebbc097e5dd59f",
+      "expected": "SERVE",
+      "goal": "section",
+      "numeric": null,
+      "before": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "root_cause": "SOURCE_PROVENANCE_MISSING"
+      },
+      "after": {
+        "status": "SERVED",
+        "code": null,
+        "root_cause": null,
+        "source_goal_completion": null
+      },
+      "verdict": "PASS"
+    },
+    {
+      "case_id": "COMP:mc_section_greek",
+      "group": "metamorphic",
+      "text_sha256": "4f5c4e7c7f041398cf78a9a25d34dd59d5977db049b39bdb176279e256e1bf1d",
+      "expected": "SERVE",
+      "goal": "section",
+      "numeric": null,
+      "before": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "root_cause": "SOURCE_PROVENANCE_MISSING"
+      },
+      "after": {
+        "status": "SERVED",
+        "code": null,
+        "root_cause": null,
+        "source_goal_completion": null
+      },
+      "verdict": "PASS"
+    },
+    {
+      "case_id": "COMP:order_premises_swapped",
+      "group": "metamorphic",
+      "text_sha256": "a5720adf9b9f7eb53005eac78378545f8a5a86e6724aea7247a0536690fd386d",
+      "expected": "SERVE",
+      "goal": "distance",
+      "numeric": null,
+      "before": {
+        "status": "SERVED",
+        "code": null,
+        "root_cause": null
+      },
+      "after": {
+        "status": "SERVED",
+        "code": null,
+        "root_cause": null,
+        "source_goal_completion": null
+      },
+      "verdict": "PASS"
+    },
+    {
+      "case_id": "COMP:dp_redefined_conflict",
+      "group": "contradiction",
+      "text_sha256": "372a4c67f6247d05d2fc025f6f2e5ac4b763e476a583533728f2a6e464d38347",
+      "expected": "REFUSE",
+      "goal": null,
+      "numeric": null,
+      "before": {
+        "status": "REFUSED",
+        "code": "INCONSISTENT_FACTS",
+        "root_cause": "SOURCE_CONFLICT"
+      },
+      "after": {
+        "status": "REFUSED",
+        "code": "INCONSISTENT_FACTS",
+        "root_cause": "SOURCE_CONFLICT",
+        "source_goal_completion": null
+      },
+      "verdict": "PASS"
+    },
+    {
+      "case_id": "COMP:amb_plane_not_unique",
+      "group": "ambiguity",
+      "text_sha256": "ca807b15609f65c41f90a28fb41e399110ce1d67bdb18c589435d7d4cb69af07",
+      "expected": "REFUSE",
+      "goal": null,
+      "numeric": null,
+      "before": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "root_cause": "UNRECOGNIZED_GEOMETRIC_ENTITY"
+      },
+      "after": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "root_cause": "UNRECOGNIZED_GEOMETRIC_ENTITY",
+        "source_goal_completion": null
+      },
+      "verdict": "PASS"
+    },
+    {
+      "case_id": "COMP:contra_two_lengths",
+      "group": "contradiction",
+      "text_sha256": "c2a484a315554ebfe4dfc5e1a48699cce8bf0b0b13ebcf1d4dd59a46e44332f4",
+      "expected": "REFUSE",
+      "goal": null,
+      "numeric": null,
+      "before": {
+        "status": "REFUSED",
+        "code": "INCONSISTENT_FACTS",
+        "root_cause": "SOURCE_CONFLICT"
+      },
+      "after": {
+        "status": "REFUSED",
+        "code": "INCONSISTENT_FACTS",
+        "root_cause": "SOURCE_CONFLICT",
+        "source_goal_completion": null
+      },
+      "verdict": "PASS"
+    },
+    {
+      "case_id": "COMP:contra_skew_intersection",
+      "group": "contradiction",
+      "text_sha256": "c40ffcdbd00cd12cbee83ebe689541dcaac694254991e1fd9d097685e9dee002",
+      "expected": "REFUSE",
+      "goal": null,
+      "numeric": null,
+      "before": {
+        "status": "REFUSED",
+        "code": "SKEW_NO_INTERSECTION",
+        "root_cause": "GEOMETRIC_DEGENERACY"
+      },
+      "after": {
+        "status": "REFUSED",
+        "code": "SKEW_NO_INTERSECTION",
+        "root_cause": "GEOMETRIC_DEGENERACY",
+        "source_goal_completion": null
+      },
+      "verdict": "PASS"
+    },
+    {
+      "case_id": "COMP:diagram_fact",
+      "group": "diagram_dependent",
+      "text_sha256": "b5c224239c48b7d493c281cbb5f929fb336bd3ddaa2b163e992fe9ec64beaf80",
+      "expected": "REFUSE",
+      "goal": null,
+      "numeric": null,
+      "before": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "root_cause": "SOURCE_PROVENANCE_MISSING"
+      },
+      "after": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "root_cause": "SOURCE_PROVENANCE_MISSING",
+        "source_goal_completion": null
+      },
+      "verdict": "PASS"
+    }
+  ],
+  "equivalence_pairs": [
+    {
+      "item": "mc_section_split",
+      "reference": "mc_section_one_sentence",
+      "same_certified_geometry": true,
+      "compared": "answer_exact + section vertex coordinates"
+    },
+    {
+      "item": "mc_section_renamed",
+      "reference": "mc_section_one_sentence",
+      "same_certified_geometry": true,
+      "compared": "answer_exact"
+    },
+    {
+      "item": "mc_section_greek",
+      "reference": "mc_section_one_sentence",
+      "same_certified_geometry": true,
+      "compared": "answer_exact"
+    },
+    {
+      "item": "order_plane_after_goal",
+      "reference": "mc_section_split",
+      "same_certified_geometry": true,
+      "compared": "answer_exact + section vertex coordinates"
+    },
+    {
+      "item": "order_plane_after_goal_sep",
+      "reference": "mc_section_split",
+      "same_certified_geometry": true,
+      "compared": "answer_exact + section vertex coordinates"
+    },
+    {
+      "item": "order_premises_swapped",
+      "reference": "mc_distance",
+      "same_certified_geometry": true,
+      "compared": "answer_exact"
+    },
+    {
+      "item": "goal_cos_line_plane",
+      "reference": "goal_angle_line_plane",
+      "same_certified_geometry": true,
+      "compared": "answer_exact + section vertex coordinates"
+    },
+    {
+      "item": "goal_cos_spelled",
+      "reference": "goal_cos_line_plane",
+      "same_certified_geometry": true,
+      "compared": "answer_exact + section vertex coordinates"
+    }
+  ]
+}
