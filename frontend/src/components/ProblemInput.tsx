@@ -2,7 +2,7 @@ import { useEffect, useLayoutEffect, useReducer, useRef, useState } from "react"
 import { useAppStore } from "../state/store";
 import { displayBrand } from "../branding";
 import { useAuthStore } from "../state/auth";
-import { newAttemptId } from "../state/history";
+import { historyStore, newAttemptId } from "../state/history";
 import { useToastStore } from "./TopNav";
 import {
   IconClose,
@@ -522,7 +522,22 @@ export async function runComposerSubmit({
     targetAttachments[0]?.name ||
     "Bài toán đang xử lý";
 
+  type DraftTabSlice = {
+    view: string;
+    activeTabId?: string | null;
+    workspaceTabs?: Array<{ id: string }>;
+  };
   const store = useAppStore.getState();
+  const draftState = store as unknown as DraftTabSlice;
+  const startedFromDraftTab =
+    draftState.view === "workspace" &&
+    draftState.activeTabId === "tab-draft-new" &&
+    Boolean(draftState.workspaceTabs?.some((t) => t.id === "tab-draft-new"));
+  const wasOriginDraftTabClosed = () =>
+    startedFromDraftTab &&
+    !(useAppStore.getState() as unknown as DraftTabSlice).workspaceTabs?.some(
+      (t) => t.id === "tab-draft-new",
+    );
   store.setAnalysisError(null);
   store.clearUnsupported();
   useToastStore.getState().dismissToast("composer-refusal");
@@ -540,7 +555,7 @@ export async function runComposerSubmit({
       const contents = await Promise.all(
         targetAttachments.map((item) => readAsBase64(item.file)),
       );
-      if (ctl?.signal.aborted) {
+      if (ctl?.signal.aborted || wasOriginDraftTabClosed()) {
         useAppStore.getState().clearProblemProcessing(attemptId);
         return;
       }
@@ -576,7 +591,7 @@ export async function runComposerSubmit({
         },
         ctl?.signal,
       );
-      if (ctl?.signal.aborted) {
+      if (ctl?.signal.aborted || wasOriginDraftTabClosed()) {
         useAppStore.getState().clearProblemProcessing(attemptId);
         return;
       }
@@ -629,12 +644,14 @@ export async function runComposerSubmit({
       undefined,
       attemptId,
     );
-    if (ctl?.signal.aborted) {
+    if (ctl?.signal.aborted || wasOriginDraftTabClosed()) {
       useAppStore.getState().clearProblemProcessing(attemptId);
       return;
     }
 
     if (result.status === "ok") {
+      historyStore.clearDraftText();
+      clearSavedDraftAttachments();
       store.loadEnvelope(
         result as SimulationEnvelope,
         undefined,

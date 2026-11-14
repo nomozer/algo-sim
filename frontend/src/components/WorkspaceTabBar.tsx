@@ -29,7 +29,6 @@ export function WorkspaceTabBar({ fallbackTitle }: WorkspaceTabBarProps) {
   const active = useAppStore((s) => s.active);
   const activeSampleId = useAppStore((s) => s.activeSampleId);
   const activeHistoryId = useAppStore((s) => s.activeHistoryId);
-  const problemText = useAppStore((s) => s.problemText);
   const leftRailMobileOpen = useAppStore((s) => s.leftRailMobileOpen);
   const libraryTabOpen = useAppStore((s) => s.libraryTabOpen);
   const workspaceNavStack = useAppStore((s) => s.workspaceNavStack);
@@ -79,25 +78,7 @@ export function WorkspaceTabBar({ fallbackTitle }: WorkspaceTabBarProps) {
     }
   };
 
-  const handleCloseTab = (
-    id: string,
-    kind: "library" | "simulation" | "draft",
-    draftText?: string,
-  ) => {
-    if (kind === "draft") {
-      const isDraftActive = id === resolvedActiveTabId;
-      const unsavedText = (isDraftActive ? problemText : (draftText ?? "")).trim();
-      if (
-        unsavedText.length > 0 &&
-        typeof window !== "undefined" &&
-        typeof window.confirm === "function"
-      ) {
-        const ok = window.confirm(
-          "Em đang nhập dở đề bài trong tab «Bài toán mới». Em có chắc muốn đóng tab này?",
-        );
-        if (!ok) return;
-      }
-    }
+  const handleCloseTab = (id: string) => {
     closeWorkspaceTab(id);
   };
 
@@ -230,7 +211,7 @@ export function WorkspaceTabBar({ fallbackTitle }: WorkspaceTabBarProps) {
                 aria-label={`Đóng tab ${ptab.title}`}
                 onClick={(e) => {
                   e.stopPropagation();
-                  handleCloseTab(ptab.id, ptab.kind, ptab.tab?.draftText);
+                  handleCloseTab(ptab.id);
                 }}
               >
                 <IconClose size={11} />
