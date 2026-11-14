@@ -1,14 +1,23 @@
 # CODE_INDEX.md — Chỉ mục module + BỘ NHỚ KIẾN TRÚC
 
+## Proof soundness, generalized angle invariance (2026-11-14)
+
+| Path | Owns | Locked by |
+|---|---|---|
+| `backend/app/simulation/geometry_functions/target_invariance.py` (`prove_angle_goal`, `verify_target_invariance_certificate(cert, calls, goal)`, `RULES`, `DERIVATION_RULES`, `GOAL_RULES`, `GOAL_FUNCTIONS`, `ANGLE_DOMAIN`, `MAX_DERIVED`) | `target-invariance-certificate/2` over one pyramid's vertices: structured angle witness `{vertex, ray_1, ray_2, domain}` (the /1 vertex-first triple read as ∠BSA); goals PLANE_ANGLE, PERP_PLANES, LINE_PLANE_ANGLE, LINE_PERP_PLANE_ANGLE, LINE_ANGLE, LINES_PERPENDICULAR (skew lines only when proven ⊥); TRIANGLE_SHAPE_FIXED at the witness vertex (regular, right at the vertex, or right elsewhere with a stated leg ratio); budget ⇒ `PROOF_SEARCH_BUDGET_EXCEEDED`. The verifier is independent (never calls the search), requires the asked goal and checks witness + cos² | `backend/tests/geometry/test_proof_soundness_angles.py` |
+| `backend/app/simulation/geometry_functions/engine.py` (`_thu_bat_bien_muc_tieu` TI-1…TI-6) | all three `ask_angle_*` goals; TI-6 binds the proven cos² to the kernel's exact answer on the representative | same |
+| `backend/app/ai/adapter4_route.py` (`_invariance_proof_bound`) | a `TARGET_INVARIANT_ILLUSTRATIVE` envelope must carry a verified `/2` certificate per goal whose cos² is the served answer and whose witness is the drawn angle (vertex id + arm ids); the envelope's `scene_configuration` must equal the engine's | same (consistent forgeries + fault injection) |
+| `backend/app/main.py` (`CACHE_VERSION` 137) | rows `136:route-d` MISS (served /1 certificates) | `backend/tests/test_cache_proof_soundness_invalidation.py` |
+
 ## Target invariance, regular tetrahedron, GEO-BE-001 (2026-11-14)
 
 | Path | Owns | Locked by |
 |---|---|---|
-| `backend/app/simulation/geometry_functions/target_invariance.py` (`prove_plane_angle`, `verify_target_invariance_certificate`, `RULES`, `MAX_DERIVED`) | `target-invariance-certificate/1`: bounded synthetic proof over the verified calls (right angle, line ⊥ plane ⇒ ⊥ its lines, ⊥ two meeting lines ⇒ ⊥ their plane, angle of planes = angle of the perpendiculars to the common line, triangle shape fixed by right angle + equal legs or regularity); an independent step-by-step verifier | `backend/tests/geometry/test_target_invariance_regular_solids.py` |
+| `backend/app/simulation/geometry_functions/target_invariance.py` | superseded by `/2` (section above); `prove_plane_angle` / bare-triple `equals_angle` removed | `backend/tests/geometry/test_target_invariance_regular_solids.py` (ported to `/2`) |
 | `backend/app/simulation/geometry_functions/engine.py` (`_thu_bat_bien_muc_tieu`, `_Dung._shape_units`; `_thu_chuan_hoa_ty_le` single-anchor guard, `certification_level`) | A figure with a SHAPE freedom is served only when every goal is a plane angle with a proven + independently verified certificate; representative from illustrative lengths (`do_dai` only), witnesses at other shapes/scales; `scene_configuration.kind = TARGET_INVARIANT_ILLUSTRATIVE`. The similarity normalisation refuses ≥ 2 height anchors (sign branches unexplored) and declares `ENGINE_DOMAIN_CERTIFIED` | same + `test_certified_scale_normalization.py` |
 | `backend/app/ai/local_geometry_parser.py` (rule 1d) · `backend/app/simulation/geometry_functions/registry.py` (`_TU_DIEN_DEU`, `_canh_tu_dien_deu`) | "tứ diện đều XYZW" without side: one definitional `equal_length` (lateral = base edge) quoting the defining phrase; the gate reads it only from that phrase (like `_vuong_can_hai_canh`) | `test_target_invariance_regular_solids.py` |
 | `backend/app/simulation/semantic_program/display_names.py` | GEO-BE-001 integrated (hunk of `5a229507b`) | `backend/tests/semantic_program/test_display_names_incidence_cycle.py` |
-| `backend/app/main.py` (`CACHE_VERSION` 136) | rows `135:route-d` MISS | `backend/tests/test_cache_target_invariance_invalidation.py` |
+| `backend/app/main.py` (`CACHE_VERSION` 136, superseded by 137) | rows `135:route-d` MISS | `backend/tests/test_cache_target_invariance_invalidation.py` |
 | `frontend/src/simulations/domains/geometry/hybrid-preview-adapter.ts` | accepts `TARGET_INVARIANT_ILLUSTRATIVE`; learner note "hình minh họa, không duy nhất" | `frontend/src/components/illustrative-scene-label.test.tsx` |
 
 ## Certified similarity scale, cache safety, decimals (2026-11-14)

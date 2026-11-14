@@ -445,7 +445,7 @@ class _Dung:
         self._scale_segment = (frozenset(list(goc.args.base)[:2]) if goc is not None and _scale_unit is not None
                                else None)
         #: Target-invariance probe (`_thu_bat_bien_muc_tieu`): ILLUSTRATIVE lengths for further base edges, used only once
-        #: a `target-invariance-certificate/1` proved the goal independent of every free parameter — same channel
+        #: a `target-invariance-certificate/2` proved the goal independent of every free parameter — same channel
         #: (`do_dai`, pseudo id `SCALE_UNIT_ID`), never a call.
         self._shape_units = dict(_shape_units)
         self.free_height_for: set[str] = set()
@@ -5653,25 +5653,27 @@ def _thu_chuan_hoa_ty_le(problem_text: str, plan: Any, auxiliary: tuple[dict, ..
 def _thu_bat_bien_muc_tieu(problem_text: str, plan: Any, auxiliary: tuple[dict, ...], read_quotes: tuple[str, ...],
                            calls: tuple[LoiGoi, ...], asks: list[LoiGoi], audit) -> KetQuaTuyen | None:
     """Run `target-invariant-regular-solid-semantics`. The figure keeps a SHAPE freedom after the similarity unit; serve it
-    only if (TI-1) every goal is an angle between planes, (TI-2) `target-invariance-certificate/1` PROVES each goal
-    equal to an angle of a triangle whose shape the facts fix (synthetic proof over the calls) and (TI-3) the INDEPENDENT
-    verifier re-derives every step; then (TI-4) a representative is built with illustrative lengths on further base
+    only if (TI-1) every goal is an angle (two planes, line–plane, two lines), (TI-2) `target-invariance-certificate/2`
+    PROVES each goal equal to the angle AT A STATED VERTEX of a triangle whose shape the facts fix, or to 90° (synthetic
+    proof over the calls), and (TI-3) the INDEPENDENT verifier re-derives every step and binds the certificate to that
+    goal; then (TI-4) a representative is built with illustrative lengths on further base
     edges (internal, `do_dai` only), one height anchor, and (TI-5) other illustrative shapes/scales give the same exact
-    answers (witness, not proof). The scene says the figure is NOT unique (`TARGET_INVARIANT_ILLUSTRATIVE`)."""
-    from app.simulation.geometry_functions.target_invariance import prove_plane_angle, verify_target_invariance_certificate
+    answers (witness, not proof), and (TI-6) the kernel's exact cos² on the representative IS the proven one. The scene says the figure is NOT unique (`TARGET_INVARIANT_ILLUSTRATIVE`)."""
+    from app.simulation.geometry_functions.target_invariance import (
+        GOAL_FUNCTIONS, prove_angle_goal, verify_target_invariance_certificate)
 
-    if not asks or any(c.fn != "ask_angle_plane_plane" for c in asks):
+    if not asks or any(c.fn not in GOAL_FUNCTIONS for c in asks):
         audit(certified=False, failed_obligation="TI-1_GOAL_KIND",
-              detail="còn tự do hình dạng; chứng minh bất biến mục tiêu hiện chỉ có cho góc giữa hai mặt phẳng")
+              detail="còn tự do hình dạng; chứng minh bất biến mục tiêu chỉ có cho góc (hai mặt phẳng, đường–mặt, hai đường)")
         return None
     certs = []
     for c in asks:
-        cert = prove_plane_angle(calls, c.id, c.args.plane1, c.args.plane2)
+        cert = prove_angle_goal(calls, c)
         if not cert or cert.get("status") != "PROVEN":
             audit(certified=False, failed_obligation="TI-2_TARGET_PROOF",
                   detail=(cert or {}).get("status") or "không tìm được chứng minh mục tiêu bất biến theo phần hình bỏ ngỏ")
             return None
-        ver = verify_target_invariance_certificate(cert, calls)
+        ver = verify_target_invariance_certificate(cert, calls, c)
         if not ver.get("verified"):
             audit(certified=False, failed_obligation="TI-3_INDEPENDENT_VERIFICATION", detail=ver.get("reason"))
             return None
@@ -5704,6 +5706,15 @@ def _thu_bat_bien_muc_tieu(problem_text: str, plan: Any, auxiliary: tuple[dict, 
             or sum(w["same_exact_answers"] for w in witnesses) < 2:
         audit(certified=False, failed_obligation="TI-5_SHAPE_WITNESS", detail="đáp số chính xác đổi theo hình minh họa")
         return None
+    # TI-6 VALUE BINDING: the proof fixes cos² of the asked angle; the exact kernel's answer on the representative must be
+    # that very number — a certificate about another angle (another vertex of the same triangle) fails here even when a
+    # special figure makes both angles equal elsewhere.
+    for cert in certs:
+        got = (res.answer_exact.get(cert["goal_id"]) or {}).get("coef")
+        if got is None or Fraction(got) != Fraction(cert["conclusion"]["cos_sq"]):
+            audit(certified=False, failed_obligation="TI-6_VALUE_BINDING",
+                  detail=f"{cert['goal_id']}: kernel cos² {got} ≠ cos² đã chứng minh {cert['conclusion']['cos_sq']}")
+            return None
     seg0 = sorted(frozenset(base[:2]))
     lam = [sorted(e) for e, _v in units]
     res.details = {**(res.details or {}), "scene_configuration": {
@@ -5711,11 +5722,11 @@ def _thu_bat_bien_muc_tieu(problem_text: str, plan: Any, auxiliary: tuple[dict, 
         "free_for": ["".join(seg0), *("".join(x) for x in lam)],
         "normalization_kind": "REPRESENTATIVE_OF_A_NON_UNIQUE_FIGURE", "scale_origin": "INTERNAL_CONSTRUCTION_CONVENTION",
         "source_length_supplied": False, "illustrative_unit_segment": seg0, "illustrative_shape_segments": lam,
-        "invariance_certificate": {"schema_version": "target-invariance-certificate/1",
+        "invariance_certificate": {"schema_version": "target-invariance-certificate/2",
                                    "certification_level": "MATHEMATICALLY_PROVEN",
                                    "representative_level": "ENGINE_DOMAIN_CERTIFIED",
                                    "goals": certs, "witnesses": witnesses}}}
-    res.trace = [*res.trace, {"step": "certify_target_invariance", "rule": "synthetic_proof_plane_angle_by_fixed_triangle",
+    res.trace = [*res.trace, {"step": "certify_target_invariance", "rule": "synthetic_angle_proof_bound_to_kernel_value",
                               "object": [c["goal_id"] for c in certs], "provenance": "INTERNAL_CONSTRUCTION_CONVENTION",
                               "note": ("đề không xác định duy nhất hình; góc đề hỏi đã được chứng minh bằng một tam giác có "
                                        "hình dạng cố định — hình vẽ chỉ là một hình minh họa")}]

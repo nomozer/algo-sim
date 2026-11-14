@@ -91,6 +91,30 @@ def _angle_construction_bound(ac: Any, pts: dict[str, list[str]]) -> bool:
         and norm(perp.get("foot")) != norm(perp.get("from"))
 
 
+def _invariance_proof_bound(cfg: Any, answer_exact: dict, objects: dict) -> bool:
+    """A `TARGET_INVARIANT_ILLUSTRATIVE` scene is bound to its `target-invariance-certificate/2`: every proven goal is a
+    served answer whose exact cos² IS the proven one, and the angle the scene draws for it is the proof's witness — the
+    same named vertex and the same two arm ends (run `proof-soundness-generalized-angle-invariance`)."""
+    from fractions import Fraction
+
+    cert = (cfg or {}).get("invariance_certificate") if isinstance(cfg, dict) else None
+    goals = cert.get("goals") if isinstance(cert, dict) else None
+    if not isinstance(cert, dict) or cert.get("schema_version") != "target-invariance-certificate/2" or not goals:
+        return False
+    for g in goals:
+        gid, concl = g.get("goal_id"), g.get("conclusion") or {}
+        if (g.get("independent_verification") or {}).get("verified") is not True or gid not in answer_exact:
+            return False
+        if Fraction(str(answer_exact[gid].get("coef"))) != Fraction(str(concl.get("cos_sq"))):
+            return False
+        w, ac = concl.get("witness"), (objects.get(f"kq_{gid}") or {}).get("angle_construction")
+        if w is not None and ac is not None and (
+                ac.get("vertex_id") != w.get("vertex")
+                or sorted(str(a.get("to_id")) for a in ac.get("arms") or ()) != sorted((w["ray_1"][1], w["ray_2"][1]))):
+            return False
+    return True
+
+
 def _source_goal_completion(r: KetQuaTuyen, source: str) -> dict[str, Any] | None:
     """`source-goal-completion/1` when an `ask_angle_*` call answers an angle the source asks a trigonometric value OF
     (read by the gate's own `ham_luong_giac_hoi`), else None — every other served result keeps its exact shape."""
@@ -310,6 +334,11 @@ def build_adapter4_response(result: KetQuaTuyen, problem_text: str) -> dict[str,
             if obj["type"] == "quantity" and obj.get("angle_construction") is not None \
                     and not _angle_construction_bound(obj["angle_construction"], pts):
                 raise PreviewInvalid("RESULT_BINDING_UNVERIFIED")
+        if route.get("scene_configuration") != _phong_bi(result).get("scene_configuration"):
+            raise PreviewInvalid("RESULT_BINDING_UNVERIFIED")
+        if (route.get("scene_configuration") or {}).get("kind") == "TARGET_INVARIANT_ILLUSTRATIVE" \
+                and not _invariance_proof_bound(route["scene_configuration"], result.answer_exact, objects):
+            raise PreviewInvalid("RESULT_BINDING_UNVERIFIED")
         if route.get("sections") != _phong_bi(result)["sections"]:
             raise PreviewInvalid("PREVIEW_RESULT_INVALID")
         _validate_sections(route["sections"], objects, result)

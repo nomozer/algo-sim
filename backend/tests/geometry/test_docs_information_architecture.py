@@ -219,7 +219,8 @@ def test_inv_20_candidate_and_cache_verify_only():
     # 133 -> 134 (verified-section-intersection-dihedral-local): góc không vẽ góc bù + `altitude_construction` (row 133:route-d phải MISS).
     # 134 -> 135 (certified-scale-cache-safety): guard siết mà khoá cache không đổi ⇒ row 134:route-d phải MISS.
     # 135 -> 136 (target-invariant-regular-solid-semantics): guard nhánh dấu + ngữ nghĩa tứ diện đều + tên hiển thị ⇒ row 135:route-d phải MISS.
-    assert str(CACHE_VERSION) == "136"
+    # 136 -> 137 (proof-soundness-generalized-angle-invariance): chứng chỉ bất biến /2 gắn mục tiêu, giá trị và cảnh ⇒ row 136:route-d phải MISS.
+    assert str(CACHE_VERSION) == "137"
 
 
 def test_inv_21_favicon_not_in_staged_changes():
