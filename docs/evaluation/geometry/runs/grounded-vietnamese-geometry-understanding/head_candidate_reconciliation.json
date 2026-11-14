@@ -1,0 +1,224 @@
+{
+  "run_id": "grounded-vietnamese-geometry-understanding",
+  "generated_at_utc": "2026-11-14T19:37:45.073082+00:00",
+  "product_commit": "d222e6d9b582d54fc42397a9593f52eb6fd77f18",
+  "product_commits": [
+    "ac276a5c945f9ac1764f9af1f723b857c19b342d",
+    "ad090ceada3edc31b5788fa16c47e1639386bdc9",
+    "d222e6d9b582d54fc42397a9593f52eb6fd77f18"
+  ],
+  "candidate_freeze_commit": "63def519ad317911145b2d84929a687208996619",
+  "measured_system": "c25f9695828888987db2ab7990c4ff135da4d01c6b9d968f898c36728a0ae436",
+  "cache_version": "139",
+  "dataset_partition": "DEVELOPMENT (agent-written corpus, exposed REAL27, exposed probes); never H-1 or locked W2/W3",
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "HYBRID_ROUTE_MODE": "local-first",
+    "live_ai_calls": 0
+  },
+  "head": "542e32b0f8b21df5fff8e6b2a57fb27b9a6ea452",
+  "range": "6da2795a4..83fdc3071",
+  "ancestry": "6da2795a4 is the parent of 83fdc3071 (linear)",
+  "files": [
+    {
+      "status": "M",
+      "path": "docs/AI_CONTEXT_BUNDLE.md",
+      "class": "DOCS_OR_EVIDENCE"
+    },
+    {
+      "status": "M",
+      "path": "docs/CURRENT_STATE.md",
+      "class": "DOCS_OR_EVIDENCE"
+    },
+    {
+      "status": "M",
+      "path": "docs/EVIDENCE_INDEX.md",
+      "class": "DOCS_OR_EVIDENCE"
+    },
+    {
+      "status": "M",
+      "path": "docs/OPEN_ISSUES.md",
+      "class": "DOCS_OR_EVIDENCE"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-causal-pedagogical-integrity/AXO_SCENE3D_CAUSAL_PEDAGOGICAL_INTEGRITY_REPORT.md",
+      "class": "DOCS_OR_EVIDENCE"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-causal-pedagogical-integrity/auxiliary_construction_verification.json",
+      "class": "DOCS_OR_EVIDENCE"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-causal-pedagogical-integrity/baseline_candidate_integrity.json",
+      "class": "DOCS_OR_EVIDENCE"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-causal-pedagogical-integrity/cache_identity_verification.json",
+      "class": "DOCS_OR_EVIDENCE"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-causal-pedagogical-integrity/candidate_freeze.json",
+      "class": "DOCS_OR_EVIDENCE"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-causal-pedagogical-integrity/causal_birth_order_before_after.json",
+      "class": "DOCS_OR_EVIDENCE"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-causal-pedagogical-integrity/circumsphere_hidden_dependency_audit.json",
+      "class": "DOCS_OR_EVIDENCE"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-causal-pedagogical-integrity/coincident_elements_timeline_verification.json",
+      "class": "DOCS_OR_EVIDENCE"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-causal-pedagogical-integrity/dependency_semantics_audit.json",
+      "class": "DOCS_OR_EVIDENCE"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-causal-pedagogical-integrity/frontend_handoff_status.json",
+      "class": "DOCS_OR_EVIDENCE"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-causal-pedagogical-integrity/global_scene_causality_audit.json",
+      "class": "DOCS_OR_EVIDENCE"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-causal-pedagogical-integrity/historical_envelope_compatibility.json",
+      "class": "DOCS_OR_EVIDENCE"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-causal-pedagogical-integrity/holdout_protection_audit.json",
+      "class": "DOCS_OR_EVIDENCE"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-causal-pedagogical-integrity/line_plane_euclidean_trace_audit.json",
+      "class": "DOCS_OR_EVIDENCE"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-causal-pedagogical-integrity/measure_explanation_before_after.json",
+      "class": "DOCS_OR_EVIDENCE"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-causal-pedagogical-integrity/measure_source_provenance.json",
+      "class": "DOCS_OR_EVIDENCE"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-causal-pedagogical-integrity/orphan_object_classification.json",
+      "class": "DOCS_OR_EVIDENCE"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-causal-pedagogical-integrity/proof_to_scene_binding_regression.json",
+      "class": "DOCS_OR_EVIDENCE"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-causal-pedagogical-integrity/publication_gate_status.json",
+      "class": "DOCS_OR_EVIDENCE"
+    },
+    {
+      "status": "M",
+      "path": "docs/evaluation/geometry/runs/scene3d-causal-pedagogical-integrity/resource_cleanup_audit.json",
+      "class": "DOCS_OR_EVIDENCE"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-causal-pedagogical-integrity/right_angle_visualization_verification.json",
+      "class": "DOCS_OR_EVIDENCE"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-causal-pedagogical-integrity/run.json",
+      "class": "DOCS_OR_EVIDENCE"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-causal-pedagogical-integrity/scene_event_producer_inventory.json",
+      "class": "DOCS_OR_EVIDENCE"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-causal-pedagogical-integrity/section_geometry_regression.json",
+      "class": "DOCS_OR_EVIDENCE"
+    },
+    {
+      "status": "M",
+      "path": "docs/evaluation/geometry/runs/scene3d-causal-pedagogical-integrity/tools/derived_receipts.py",
+      "class": "DOCS_OR_EVIDENCE"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-causal-pedagogical-integrity/v9415_issue_reproduction_matrix.json",
+      "class": "DOCS_OR_EVIDENCE"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-causal-pedagogical-integrity/worktree_ownership_audit.json",
+      "class": "DOCS_OR_EVIDENCE"
+    }
+  ],
+  "counts": {
+    "DOCS_OR_EVIDENCE": 31
+  },
+  "product_changes_in_range": [],
+  "baseline_regression_needed": false,
+  "reason": "83fdc3071 only adds the previous run's report, receipts, manifest and living docs; the frozen candidate 225f4bba… still matched it",
+  "this_run": {
+    "candidate_commit": "cbcd8af2d4ce667d93378699971acdae7d7905ae",
+    "freeze_commit": "63def519ad317911145b2d84929a687208996619",
+    "files_changed_after_candidate": [
+      "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/browser_construction_timeline.json",
+      "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/browser_performance_profile.json",
+      "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/local_image_to_simulation_acceptance.json",
+      "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/local_text_to_simulation_acceptance.json",
+      "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/logs/e2e-first-attempt/WHY_INCOMPLETE.txt",
+      "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/logs/e2e-first-attempt/browser_construction_timeline.json",
+      "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/logs/e2e-first-attempt/browser_performance_profile.json",
+      "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/logs/e2e-first-attempt/resource_cleanup_audit.json",
+      "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/logs/e2e-first-attempt/scene3d_browser_e2e.json",
+      "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/logs/e2e-first-attempt/stdout.log",
+      "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/logs/e2e-second-attempt.stdout.log",
+      "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/logs/ocr_text_semantic_consistency.first-instrument.json",
+      "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/logs/ocr_text_semantic_consistency.first-instrument.log",
+      "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/logs/performance_impact.first-instrument.json",
+      "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/logs/prior-k1-owner-approval.template.json",
+      "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/logs/prior-r1-owner-approval.template.json",
+      "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/logs/prior-s2-owner-approval.template.json",
+      "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/logs/scene_sweep_after.json",
+      "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/logs/scene_sweep_before.json",
+      "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/ocr_text_semantic_consistency.json",
+      "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/pending_template_refresh.json",
+      "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/performance_impact.json",
+      "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/resource_cleanup_audit.json",
+      "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/scene3d_browser_e2e.json",
+      "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/semantic_compare_rows.json",
+      "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/tools/derive_receipts.py",
+      "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/tools/ocr_semantic_consistency.py",
+      "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/tools/perf.py",
+      "docs/evaluation/geometry/runs/hybrid-master-backend-replacement/k1-owner-approval.template.json",
+      "docs/evaluation/geometry/runs/hybrid-master-backend-replacement/r1-owner-approval.template.json",
+      "docs/evaluation/geometry/runs/hybrid-master-backend-replacement/s2-owner-approval.template.json",
+      "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json"
+    ],
+    "product_files_changed_after_candidate": []
+  }
+}

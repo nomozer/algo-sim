@@ -1,0 +1,40 @@
+{
+  "name": "freeze_verify",
+  "command": "D:\\Documents\\projects\\algo-sim\\backend\\.venv\\Scripts\\python.exe backend/scripts/freeze_evaluation_candidate.py --verify",
+  "argv": [
+    "D:\\Documents\\projects\\algo-sim\\backend\\.venv\\Scripts\\python.exe",
+    "backend/scripts/freeze_evaluation_candidate.py",
+    "--verify"
+  ],
+  "cwd": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\local-first-geometry-understanding",
+  "started_at_utc": "2026-11-14T19:35:11.976287+00:00",
+  "start_snapshot": {
+    "head_commit": "542e32b0f8b21df5fff8e6b2a57fb27b9a6ea452",
+    "product_paths_sha256": "ebb9663999694f51a198e042d1ec664bf506a661d69fbc11ca527ef6e503c9c5",
+    "product_path_count": 338,
+    "hash_policy": "tracked backend/app + frontend/src, LF normalized; includes tests",
+    "working_product_source_sha256": "a7def105fda6b1a05a2a8747f581ac3ee8a015e3bf592423296ee62ccf245233",
+    "working_product_source_count": 195,
+    "working_source_policy": "all working backend/app + frontend/src including untracked; skip pycache and freeze TEST_ONLY_GLOBS"
+  },
+  "ended_at_utc": "2026-11-14T19:35:15.133889+00:00",
+  "duration_seconds": 2.906,
+  "exit_code": 0,
+  "raw_output_sha256": "0a7a5eb07f53f0891c8d532351d14ea4f0fdbbd064ab1bd00db67f4051f116a4",
+  "raw_output_bytes": 93,
+  "raw_output_retention": "ignored local .superpowers only; never staged",
+  "end_snapshot": {
+    "head_commit": "542e32b0f8b21df5fff8e6b2a57fb27b9a6ea452",
+    "product_paths_sha256": "ebb9663999694f51a198e042d1ec664bf506a661d69fbc11ca527ef6e503c9c5",
+    "product_path_count": 338,
+    "hash_policy": "tracked backend/app + frontend/src, LF normalized; includes tests",
+    "working_product_source_sha256": "a7def105fda6b1a05a2a8747f581ac3ee8a015e3bf592423296ee62ccf245233",
+    "working_product_source_count": 195,
+    "working_source_policy": "all working backend/app + frontend/src including untracked; skip pycache and freeze TEST_ONLY_GLOBS"
+  },
+  "summary_lines": [
+    "Candidate khớp bản đã đóng băng (mã sản phẩm: 117 file, c25f969582888898…)."
+  ],
+  "source_unchanged_during_command": true,
+  "verdict": "PASS"
+}

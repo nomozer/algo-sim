@@ -1,5 +1,10 @@
 # OPEN_ISSUES.md — Danh mục các vấn đề kỹ thuật đang mở
 
+**Grounded Vietnamese geometry understanding update 2026-11-15:** [Report](evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/AXO_GROUNDED_VIETNAMESE_GEOMETRY_UNDERSTANDING_REPORT.md).
+- **Resolved:** unnamed base / lateral edge / undotted prism / apex-less isosceles / unnamed base area not read; a premise value no quote reads silently dropped; a local partial parse reported only as "AI disabled".
+- **Still open:** values in a² (doc_so lengths only); height from a given angle and legs from the hypotenuse (capability); typo tolerance (Owner S-1); unparenthesised plane after a missing period; diagnostics label INSUFFICIENT_CONSTRAINTS covers understood-but-unsupported; contradiction refusal title generic in the UI; FE-2/3/4/6 (ownership); right-angle marker hidden when it is the answer — pedagogical decision pending.
+- **Unmeasured:** independent unseen data, H-1, students.
+
 **Scene3D causal / pedagogical integrity update 2026-11-14:** [Report](evaluation/geometry/runs/scene3d-causal-pedagogical-integrity/AXO_SCENE3D_CAUSAL_PEDAGOGICAL_INTEGRITY_REPORT.md).
 - **Resolved:** GEO-BE-V9415-001 on Route D (trace method); Route D unused-auxiliary misflags (asked line, source-stated point); given radius as a visual prerequisite; 90° plane–plane / skew angles not drawn; right-angle kind not bound to the proof.
 - **Still open:** sections needing a diagonal auxiliary plane (e.g. "chứa BD và song song với SC"); trace-method auxiliary points not rendered (FE-4); library archetype multi_layer_aux_pyramid without readout_ids (FE-2); advanced catalog regeneration after merge (FE-3); right-angle marker hidden when it is the answer — pedagogical decision pending.

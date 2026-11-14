@@ -1,0 +1,766 @@
+{
+  "run_id": "grounded-vietnamese-geometry-understanding",
+  "generated_at_utc": "2026-11-14T19:37:45.073082+00:00",
+  "product_commit": "d222e6d9b582d54fc42397a9593f52eb6fd77f18",
+  "product_commits": [
+    "ac276a5c945f9ac1764f9af1f723b857c19b342d",
+    "ad090ceada3edc31b5788fa16c47e1639386bdc9",
+    "d222e6d9b582d54fc42397a9593f52eb6fd77f18"
+  ],
+  "candidate_freeze_commit": "63def519ad317911145b2d84929a687208996619",
+  "measured_system": "c25f9695828888987db2ab7990c4ff135da4d01c6b9d968f898c36728a0ae436",
+  "cache_version": "139",
+  "dataset_partition": "DEVELOPMENT (agent-written corpus, exposed REAL27, exposed probes); never H-1 or locked W2/W3",
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "HYBRID_ROUTE_MODE": "local-first",
+    "live_ai_calls": 0
+  },
+  "head": "542e32b0f8b21df5fff8e6b2a57fb27b9a6ea452",
+  "text": {
+    "grades_before": {
+      "SERVED_MATCHES_DATASET_KEY": 9,
+      "NOT_SERVED": 15,
+      "GOAL_VISUALIZATION_READY_NUMERIC_NOT_ANSWERED": 3
+    },
+    "grades_after": {
+      "SERVED_MATCHES_DATASET_KEY": 12,
+      "NOT_SERVED": 12,
+      "GOAL_VISUALIZATION_READY_NUMERIC_NOT_ANSWERED": 3
+    },
+    "visualized_before": 12,
+    "visualized_after": 15,
+    "changed": [
+      {
+        "case_id": "vmmu_r284",
+        "before": {
+          "outcome": "UNSUPPORTED",
+          "grade": "NOT_SERVED"
+        },
+        "after": {
+          "outcome": "TEXT_INPUT_SIMULATION",
+          "grade": "SERVED_MATCHES_DATASET_KEY",
+          "level": "GOAL_CONSTRUCTION_VERIFIED"
+        }
+      },
+      {
+        "case_id": "vmmu_r295",
+        "before": {
+          "outcome": "UNSUPPORTED",
+          "grade": "NOT_SERVED"
+        },
+        "after": {
+          "outcome": "TEXT_INPUT_SIMULATION",
+          "grade": "SERVED_MATCHES_DATASET_KEY",
+          "level": "GOAL_CONSTRUCTION_VERIFIED"
+        }
+      },
+      {
+        "case_id": "vmmu_r538",
+        "before": {
+          "outcome": "UNSUPPORTED",
+          "grade": "NOT_SERVED"
+        },
+        "after": {
+          "outcome": "TEXT_INPUT_SIMULATION",
+          "grade": "SERVED_MATCHES_DATASET_KEY",
+          "level": "GOAL_CONSTRUCTION_VERIFIED"
+        }
+      }
+    ],
+    "rows": [
+      {
+        "case_id": "vmmu_r247",
+        "before": {
+          "outcome": "TEXT_INPUT_SIMULATION",
+          "grade": "SERVED_MATCHES_DATASET_KEY"
+        },
+        "after": {
+          "outcome": "TEXT_INPUT_SIMULATION",
+          "grade": "SERVED_MATCHES_DATASET_KEY",
+          "level": "GOAL_CONSTRUCTION_VERIFIED"
+        }
+      },
+      {
+        "case_id": "vmmu_r254",
+        "before": {
+          "outcome": "UNSUPPORTED",
+          "grade": "NOT_SERVED"
+        },
+        "after": {
+          "outcome": "UNSUPPORTED",
+          "grade": "NOT_SERVED",
+          "level": null
+        }
+      },
+      {
+        "case_id": "vmmu_r256",
+        "before": {
+          "outcome": "UNSUPPORTED",
+          "grade": "NOT_SERVED"
+        },
+        "after": {
+          "outcome": "UNSUPPORTED",
+          "grade": "NOT_SERVED",
+          "level": null
+        }
+      },
+      {
+        "case_id": "vmmu_r258",
+        "before": {
+          "outcome": "TEXT_INPUT_SIMULATION",
+          "grade": "GOAL_VISUALIZATION_READY_NUMERIC_NOT_ANSWERED"
+        },
+        "after": {
+          "outcome": "TEXT_INPUT_SIMULATION",
+          "grade": "GOAL_VISUALIZATION_READY_NUMERIC_NOT_ANSWERED",
+          "level": "GOAL_CONSTRUCTION_VERIFIED"
+        }
+      },
+      {
+        "case_id": "vmmu_r266",
+        "before": {
+          "outcome": "SAFE_REFUSAL",
+          "grade": "NOT_SERVED"
+        },
+        "after": {
+          "outcome": "SAFE_REFUSAL",
+          "grade": "NOT_SERVED",
+          "level": null
+        }
+      },
+      {
+        "case_id": "vmmu_r270",
+        "before": {
+          "outcome": "TEXT_INPUT_SIMULATION",
+          "grade": "SERVED_MATCHES_DATASET_KEY"
+        },
+        "after": {
+          "outcome": "TEXT_INPUT_SIMULATION",
+          "grade": "SERVED_MATCHES_DATASET_KEY",
+          "level": "GOAL_CONSTRUCTION_VERIFIED"
+        }
+      },
+      {
+        "case_id": "vmmu_r273",
+        "before": {
+          "outcome": "TEXT_INPUT_SIMULATION",
+          "grade": "SERVED_MATCHES_DATASET_KEY"
+        },
+        "after": {
+          "outcome": "TEXT_INPUT_SIMULATION",
+          "grade": "SERVED_MATCHES_DATASET_KEY",
+          "level": "GOAL_CONSTRUCTION_VERIFIED"
+        }
+      },
+      {
+        "case_id": "vmmu_r277",
+        "before": {
+          "outcome": "UNSUPPORTED",
+          "grade": "NOT_SERVED"
+        },
+        "after": {
+          "outcome": "UNSUPPORTED",
+          "grade": "NOT_SERVED",
+          "level": null
+        }
+      },
+      {
+        "case_id": "vmmu_r284",
+        "before": {
+          "outcome": "UNSUPPORTED",
+          "grade": "NOT_SERVED"
+        },
+        "after": {
+          "outcome": "TEXT_INPUT_SIMULATION",
+          "grade": "SERVED_MATCHES_DATASET_KEY",
+          "level": "GOAL_CONSTRUCTION_VERIFIED"
+        }
+      },
+      {
+        "case_id": "vmmu_r295",
+        "before": {
+          "outcome": "UNSUPPORTED",
+          "grade": "NOT_SERVED"
+        },
+        "after": {
+          "outcome": "TEXT_INPUT_SIMULATION",
+          "grade": "SERVED_MATCHES_DATASET_KEY",
+          "level": "GOAL_CONSTRUCTION_VERIFIED"
+        }
+      },
+      {
+        "case_id": "vmmu_r298",
+        "before": {
+          "outcome": "TEXT_INPUT_SIMULATION",
+          "grade": "SERVED_MATCHES_DATASET_KEY"
+        },
+        "after": {
+          "outcome": "TEXT_INPUT_SIMULATION",
+          "grade": "SERVED_MATCHES_DATASET_KEY",
+          "level": "GOAL_CONSTRUCTION_VERIFIED"
+        }
+      },
+      {
+        "case_id": "vmmu_r375",
+        "before": {
+          "outcome": "TEXT_INPUT_SIMULATION",
+          "grade": "SERVED_MATCHES_DATASET_KEY"
+        },
+        "after": {
+          "outcome": "TEXT_INPUT_SIMULATION",
+          "grade": "SERVED_MATCHES_DATASET_KEY",
+          "level": "GOAL_CONSTRUCTION_VERIFIED"
+        }
+      },
+      {
+        "case_id": "vmmu_r460",
+        "before": {
+          "outcome": "UNSUPPORTED",
+          "grade": "NOT_SERVED"
+        },
+        "after": {
+          "outcome": "SAFE_REFUSAL",
+          "grade": "NOT_SERVED",
+          "level": null
+        }
+      },
+      {
+        "case_id": "vmmu_r461",
+        "before": {
+          "outcome": "UNSUPPORTED",
+          "grade": "NOT_SERVED"
+        },
+        "after": {
+          "outcome": "UNSUPPORTED",
+          "grade": "NOT_SERVED",
+          "level": null
+        }
+      },
+      {
+        "case_id": "vmmu_r463",
+        "before": {
+          "outcome": "UNSUPPORTED",
+          "grade": "NOT_SERVED"
+        },
+        "after": {
+          "outcome": "SAFE_REFUSAL",
+          "grade": "NOT_SERVED",
+          "level": null
+        }
+      },
+      {
+        "case_id": "vmmu_r475",
+        "before": {
+          "outcome": "UNSUPPORTED",
+          "grade": "NOT_SERVED"
+        },
+        "after": {
+          "outcome": "UNSUPPORTED",
+          "grade": "NOT_SERVED",
+          "level": null
+        }
+      },
+      {
+        "case_id": "vmmu_r476",
+        "before": {
+          "outcome": "TEXT_INPUT_SIMULATION",
+          "grade": "SERVED_MATCHES_DATASET_KEY"
+        },
+        "after": {
+          "outcome": "TEXT_INPUT_SIMULATION",
+          "grade": "SERVED_MATCHES_DATASET_KEY",
+          "level": "GOAL_CONSTRUCTION_VERIFIED"
+        }
+      },
+      {
+        "case_id": "vmmu_r488",
+        "before": {
+          "outcome": "UNSUPPORTED",
+          "grade": "NOT_SERVED"
+        },
+        "after": {
+          "outcome": "UNSUPPORTED",
+          "grade": "NOT_SERVED",
+          "level": null
+        }
+      },
+      {
+        "case_id": "vmmu_r491",
+        "before": {
+          "outcome": "UNSUPPORTED",
+          "grade": "NOT_SERVED"
+        },
+        "after": {
+          "outcome": "UNSUPPORTED",
+          "grade": "NOT_SERVED",
+          "level": null
+        }
+      },
+      {
+        "case_id": "vmmu_r492",
+        "before": {
+          "outcome": "TEXT_INPUT_SIMULATION",
+          "grade": "SERVED_MATCHES_DATASET_KEY"
+        },
+        "after": {
+          "outcome": "TEXT_INPUT_SIMULATION",
+          "grade": "SERVED_MATCHES_DATASET_KEY",
+          "level": "GOAL_CONSTRUCTION_VERIFIED"
+        }
+      },
+      {
+        "case_id": "vmmu_r498",
+        "before": {
+          "outcome": "TEXT_INPUT_SIMULATION",
+          "grade": "GOAL_VISUALIZATION_READY_NUMERIC_NOT_ANSWERED"
+        },
+        "after": {
+          "outcome": "TEXT_INPUT_SIMULATION",
+          "grade": "GOAL_VISUALIZATION_READY_NUMERIC_NOT_ANSWERED",
+          "level": "GOAL_CONSTRUCTION_VERIFIED"
+        }
+      },
+      {
+        "case_id": "vmmu_r513",
+        "before": {
+          "outcome": "UNSUPPORTED",
+          "grade": "NOT_SERVED"
+        },
+        "after": {
+          "outcome": "UNSUPPORTED",
+          "grade": "NOT_SERVED",
+          "level": null
+        }
+      },
+      {
+        "case_id": "vmmu_r520",
+        "before": {
+          "outcome": "TEXT_INPUT_SIMULATION",
+          "grade": "SERVED_MATCHES_DATASET_KEY"
+        },
+        "after": {
+          "outcome": "TEXT_INPUT_SIMULATION",
+          "grade": "SERVED_MATCHES_DATASET_KEY",
+          "level": "GOAL_CONSTRUCTION_VERIFIED"
+        }
+      },
+      {
+        "case_id": "vmmu_r537",
+        "before": {
+          "outcome": "UNSUPPORTED",
+          "grade": "NOT_SERVED"
+        },
+        "after": {
+          "outcome": "UNSUPPORTED",
+          "grade": "NOT_SERVED",
+          "level": null
+        }
+      },
+      {
+        "case_id": "vmmu_r538",
+        "before": {
+          "outcome": "UNSUPPORTED",
+          "grade": "NOT_SERVED"
+        },
+        "after": {
+          "outcome": "TEXT_INPUT_SIMULATION",
+          "grade": "SERVED_MATCHES_DATASET_KEY",
+          "level": "GOAL_CONSTRUCTION_VERIFIED"
+        }
+      },
+      {
+        "case_id": "vmmu_r559",
+        "before": {
+          "outcome": "TEXT_INPUT_SIMULATION",
+          "grade": "GOAL_VISUALIZATION_READY_NUMERIC_NOT_ANSWERED"
+        },
+        "after": {
+          "outcome": "TEXT_INPUT_SIMULATION",
+          "grade": "GOAL_VISUALIZATION_READY_NUMERIC_NOT_ANSWERED",
+          "level": "GOAL_CONSTRUCTION_VERIFIED"
+        }
+      },
+      {
+        "case_id": "vmmu_r695",
+        "before": {
+          "outcome": "TEXT_INPUT_SIMULATION",
+          "grade": "SERVED_MATCHES_DATASET_KEY"
+        },
+        "after": {
+          "outcome": "TEXT_INPUT_SIMULATION",
+          "grade": "SERVED_MATCHES_DATASET_KEY",
+          "level": "GOAL_CONSTRUCTION_VERIFIED"
+        }
+      }
+    ]
+  },
+  "image": {
+    "grades_before": {
+      "NOT_SERVED": 20,
+      "GOAL_VISUALIZATION_READY_NUMERIC_NOT_ANSWERED": 3,
+      "SERVED_MATCHES_DATASET_KEY": 4
+    },
+    "grades_after": {
+      "NOT_SERVED": 18,
+      "GOAL_VISUALIZATION_READY_NUMERIC_NOT_ANSWERED": 3,
+      "SERVED_MATCHES_DATASET_KEY": 6
+    },
+    "visualized_before": 7,
+    "visualized_after": 9,
+    "changed": [
+      {
+        "case_id": "vmmu_r295",
+        "before": {
+          "outcome": "UNSUPPORTED",
+          "grade": "NOT_SERVED"
+        },
+        "after": {
+          "outcome": "USER_CONFIRMED_SIMULATION",
+          "grade": "SERVED_MATCHES_DATASET_KEY",
+          "level": "GOAL_CONSTRUCTION_VERIFIED"
+        }
+      },
+      {
+        "case_id": "vmmu_r538",
+        "before": {
+          "outcome": "UNSUPPORTED",
+          "grade": "NOT_SERVED"
+        },
+        "after": {
+          "outcome": "USER_CONFIRMED_SIMULATION",
+          "grade": "SERVED_MATCHES_DATASET_KEY",
+          "level": "GOAL_CONSTRUCTION_VERIFIED"
+        }
+      }
+    ],
+    "rows": [
+      {
+        "case_id": "vmmu_r247",
+        "before": {
+          "outcome": "UNSUPPORTED",
+          "grade": "NOT_SERVED"
+        },
+        "after": {
+          "outcome": "UNSUPPORTED",
+          "grade": "NOT_SERVED",
+          "level": null
+        }
+      },
+      {
+        "case_id": "vmmu_r254",
+        "before": {
+          "outcome": "UNSUPPORTED",
+          "grade": "NOT_SERVED"
+        },
+        "after": {
+          "outcome": "UNSUPPORTED",
+          "grade": "NOT_SERVED",
+          "level": null
+        }
+      },
+      {
+        "case_id": "vmmu_r256",
+        "before": {
+          "outcome": "UNSUPPORTED",
+          "grade": "NOT_SERVED"
+        },
+        "after": {
+          "outcome": "UNSUPPORTED",
+          "grade": "NOT_SERVED",
+          "level": null
+        }
+      },
+      {
+        "case_id": "vmmu_r258",
+        "before": {
+          "outcome": "USER_CONFIRMED_SIMULATION",
+          "grade": "GOAL_VISUALIZATION_READY_NUMERIC_NOT_ANSWERED"
+        },
+        "after": {
+          "outcome": "USER_CONFIRMED_SIMULATION",
+          "grade": "GOAL_VISUALIZATION_READY_NUMERIC_NOT_ANSWERED",
+          "level": "GOAL_CONSTRUCTION_VERIFIED"
+        }
+      },
+      {
+        "case_id": "vmmu_r266",
+        "before": {
+          "outcome": "UNSUPPORTED",
+          "grade": "NOT_SERVED"
+        },
+        "after": {
+          "outcome": "UNSUPPORTED",
+          "grade": "NOT_SERVED",
+          "level": null
+        }
+      },
+      {
+        "case_id": "vmmu_r270",
+        "before": {
+          "outcome": "UNSUPPORTED",
+          "grade": "NOT_SERVED"
+        },
+        "after": {
+          "outcome": "UNSUPPORTED",
+          "grade": "NOT_SERVED",
+          "level": null
+        }
+      },
+      {
+        "case_id": "vmmu_r273",
+        "before": {
+          "outcome": "USER_CONFIRMED_SIMULATION",
+          "grade": "SERVED_MATCHES_DATASET_KEY"
+        },
+        "after": {
+          "outcome": "USER_CONFIRMED_SIMULATION",
+          "grade": "SERVED_MATCHES_DATASET_KEY",
+          "level": "GOAL_CONSTRUCTION_VERIFIED"
+        }
+      },
+      {
+        "case_id": "vmmu_r277",
+        "before": {
+          "outcome": "UNSUPPORTED",
+          "grade": "NOT_SERVED"
+        },
+        "after": {
+          "outcome": "UNSUPPORTED",
+          "grade": "NOT_SERVED",
+          "level": null
+        }
+      },
+      {
+        "case_id": "vmmu_r284",
+        "before": {
+          "outcome": "UNSUPPORTED",
+          "grade": "NOT_SERVED"
+        },
+        "after": {
+          "outcome": "UNSUPPORTED",
+          "grade": "NOT_SERVED",
+          "level": null
+        }
+      },
+      {
+        "case_id": "vmmu_r295",
+        "before": {
+          "outcome": "UNSUPPORTED",
+          "grade": "NOT_SERVED"
+        },
+        "after": {
+          "outcome": "USER_CONFIRMED_SIMULATION",
+          "grade": "SERVED_MATCHES_DATASET_KEY",
+          "level": "GOAL_CONSTRUCTION_VERIFIED"
+        }
+      },
+      {
+        "case_id": "vmmu_r298",
+        "before": {
+          "outcome": "USER_CONFIRMED_SIMULATION",
+          "grade": "SERVED_MATCHES_DATASET_KEY"
+        },
+        "after": {
+          "outcome": "USER_CONFIRMED_SIMULATION",
+          "grade": "SERVED_MATCHES_DATASET_KEY",
+          "level": "GOAL_CONSTRUCTION_VERIFIED"
+        }
+      },
+      {
+        "case_id": "vmmu_r375",
+        "before": {
+          "outcome": "UNSUPPORTED",
+          "grade": "NOT_SERVED"
+        },
+        "after": {
+          "outcome": "UNSUPPORTED",
+          "grade": "NOT_SERVED",
+          "level": null
+        }
+      },
+      {
+        "case_id": "vmmu_r460",
+        "before": {
+          "outcome": "UNSUPPORTED",
+          "grade": "NOT_SERVED"
+        },
+        "after": {
+          "outcome": "UNSUPPORTED",
+          "grade": "NOT_SERVED",
+          "level": null
+        }
+      },
+      {
+        "case_id": "vmmu_r461",
+        "before": {
+          "outcome": "UNSUPPORTED",
+          "grade": "NOT_SERVED"
+        },
+        "after": {
+          "outcome": "UNSUPPORTED",
+          "grade": "NOT_SERVED",
+          "level": null
+        }
+      },
+      {
+        "case_id": "vmmu_r463",
+        "before": {
+          "outcome": "UNSUPPORTED",
+          "grade": "NOT_SERVED"
+        },
+        "after": {
+          "outcome": "UNSUPPORTED",
+          "grade": "NOT_SERVED",
+          "level": null
+        }
+      },
+      {
+        "case_id": "vmmu_r475",
+        "before": {
+          "outcome": "UNSUPPORTED",
+          "grade": "NOT_SERVED"
+        },
+        "after": {
+          "outcome": "UNSUPPORTED",
+          "grade": "NOT_SERVED",
+          "level": null
+        }
+      },
+      {
+        "case_id": "vmmu_r476",
+        "before": {
+          "outcome": "USER_CONFIRMED_SIMULATION",
+          "grade": "SERVED_MATCHES_DATASET_KEY"
+        },
+        "after": {
+          "outcome": "USER_CONFIRMED_SIMULATION",
+          "grade": "SERVED_MATCHES_DATASET_KEY",
+          "level": "GOAL_CONSTRUCTION_VERIFIED"
+        }
+      },
+      {
+        "case_id": "vmmu_r488",
+        "before": {
+          "outcome": "UNSUPPORTED",
+          "grade": "NOT_SERVED"
+        },
+        "after": {
+          "outcome": "UNSUPPORTED",
+          "grade": "NOT_SERVED",
+          "level": null
+        }
+      },
+      {
+        "case_id": "vmmu_r491",
+        "before": {
+          "outcome": "UNSUPPORTED",
+          "grade": "NOT_SERVED"
+        },
+        "after": {
+          "outcome": "UNSUPPORTED",
+          "grade": "NOT_SERVED",
+          "level": null
+        }
+      },
+      {
+        "case_id": "vmmu_r492",
+        "before": {
+          "outcome": "USER_CONFIRMED_SIMULATION",
+          "grade": "SERVED_MATCHES_DATASET_KEY"
+        },
+        "after": {
+          "outcome": "USER_CONFIRMED_SIMULATION",
+          "grade": "SERVED_MATCHES_DATASET_KEY",
+          "level": "GOAL_CONSTRUCTION_VERIFIED"
+        }
+      },
+      {
+        "case_id": "vmmu_r498",
+        "before": {
+          "outcome": "USER_CONFIRMED_SIMULATION",
+          "grade": "GOAL_VISUALIZATION_READY_NUMERIC_NOT_ANSWERED"
+        },
+        "after": {
+          "outcome": "USER_CONFIRMED_SIMULATION",
+          "grade": "GOAL_VISUALIZATION_READY_NUMERIC_NOT_ANSWERED",
+          "level": "GOAL_CONSTRUCTION_VERIFIED"
+        }
+      },
+      {
+        "case_id": "vmmu_r513",
+        "before": {
+          "outcome": "UNSUPPORTED",
+          "grade": "NOT_SERVED"
+        },
+        "after": {
+          "outcome": "UNSUPPORTED",
+          "grade": "NOT_SERVED",
+          "level": null
+        }
+      },
+      {
+        "case_id": "vmmu_r520",
+        "before": {
+          "outcome": "UNSUPPORTED",
+          "grade": "NOT_SERVED"
+        },
+        "after": {
+          "outcome": "UNSUPPORTED",
+          "grade": "NOT_SERVED",
+          "level": null
+        }
+      },
+      {
+        "case_id": "vmmu_r537",
+        "before": {
+          "outcome": "UNSUPPORTED",
+          "grade": "NOT_SERVED"
+        },
+        "after": {
+          "outcome": "UNSUPPORTED",
+          "grade": "NOT_SERVED",
+          "level": null
+        }
+      },
+      {
+        "case_id": "vmmu_r538",
+        "before": {
+          "outcome": "UNSUPPORTED",
+          "grade": "NOT_SERVED"
+        },
+        "after": {
+          "outcome": "USER_CONFIRMED_SIMULATION",
+          "grade": "SERVED_MATCHES_DATASET_KEY",
+          "level": "GOAL_CONSTRUCTION_VERIFIED"
+        }
+      },
+      {
+        "case_id": "vmmu_r559",
+        "before": {
+          "outcome": "USER_CONFIRMED_SIMULATION",
+          "grade": "GOAL_VISUALIZATION_READY_NUMERIC_NOT_ANSWERED"
+        },
+        "after": {
+          "outcome": "USER_CONFIRMED_SIMULATION",
+          "grade": "GOAL_VISUALIZATION_READY_NUMERIC_NOT_ANSWERED",
+          "level": "GOAL_CONSTRUCTION_VERIFIED"
+        }
+      },
+      {
+        "case_id": "vmmu_r695",
+        "before": {
+          "outcome": "UNSUPPORTED",
+          "grade": "NOT_SERVED"
+        },
+        "after": {
+          "outcome": "UNSUPPORTED",
+          "grade": "NOT_SERVED",
+          "level": null
+        }
+      }
+    ]
+  },
+  "baseline_source": "scene3d-causal-pedagogical-integrity/local_*_to_simulation_acceptance.json",
+  "numeric_not_answered_rule": "GOAL_VISUALIZATION_READY_NUMERIC_NOT_ANSWERED is never counted as an answer"
+}

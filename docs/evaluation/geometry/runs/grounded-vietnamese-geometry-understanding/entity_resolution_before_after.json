@@ -1,0 +1,602 @@
+{
+  "run_id": "grounded-vietnamese-geometry-understanding",
+  "generated_at_utc": "2026-11-14T19:37:45.073082+00:00",
+  "product_commit": "d222e6d9b582d54fc42397a9593f52eb6fd77f18",
+  "product_commits": [
+    "ac276a5c945f9ac1764f9af1f723b857c19b342d",
+    "ad090ceada3edc31b5788fa16c47e1639386bdc9",
+    "d222e6d9b582d54fc42397a9593f52eb6fd77f18"
+  ],
+  "candidate_freeze_commit": "63def519ad317911145b2d84929a687208996619",
+  "measured_system": "c25f9695828888987db2ab7990c4ff135da4d01c6b9d968f898c36728a0ae436",
+  "cache_version": "139",
+  "dataset_partition": "DEVELOPMENT (agent-written corpus, exposed REAL27, exposed probes); never H-1 or locked W2/W3",
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "HYBRID_ROUTE_MODE": "local-first",
+    "live_ai_calls": 0
+  },
+  "head": "542e32b0f8b21df5fff8e6b2a57fb27b9a6ea452",
+  "rows": [
+    {
+      "case_id": "dp_named_midpoint_goal",
+      "group": "described_point",
+      "expect": "SERVE",
+      "source_sha256": "722eddb56e90a0ceaa6f239d19c418ec167486eb46f0ac47aa0d858f0d619559",
+      "before": {
+        "status": "SERVED",
+        "code": null,
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "root_cause": null
+      },
+      "after": {
+        "status": "SERVED",
+        "code": null,
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "answers": {
+          "q1": "a/2"
+        },
+        "root_cause": null
+      },
+      "oracle": null,
+      "oracle_match": null,
+      "verdict": "PASS"
+    },
+    {
+      "case_id": "dp_unnamed_midpoint_goal",
+      "group": "described_point",
+      "expect": "SERVE",
+      "source_sha256": "60078cd3fcad45dd4d78d6912d167d2451130ab4d3d8c888cd16abccce7ccfc6",
+      "before": {
+        "status": "SERVED",
+        "code": null,
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "root_cause": null
+      },
+      "after": {
+        "status": "SERVED",
+        "code": null,
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "answers": {
+          "q1": "a/2"
+        },
+        "root_cause": null
+      },
+      "oracle": null,
+      "oracle_match": null,
+      "verdict": "PASS"
+    },
+    {
+      "case_id": "dp_unnamed_centroid_goal",
+      "group": "described_point",
+      "expect": "SERVE",
+      "source_sha256": "38681c5d797c262d703f5870d3be7d6ce03db23a55ddd4dd0eba8de6cb5807dc",
+      "before": {
+        "status": "SERVED",
+        "code": null,
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "root_cause": null
+      },
+      "after": {
+        "status": "SERVED",
+        "code": null,
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "answers": {
+          "q1": "a/3"
+        },
+        "root_cause": null
+      },
+      "oracle": null,
+      "oracle_match": null,
+      "verdict": "PASS"
+    },
+    {
+      "case_id": "dp_unnamed_through_point",
+      "group": "described_point",
+      "expect": "SERVE",
+      "source_sha256": "b4930cde02b9c8e703347525ba3c34e8f6bb330af99e54f221d920cad8a1f9d8",
+      "before": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "parse_status": "LOCAL_PARSE_PARTIAL",
+        "root_cause": "UNRECOGNIZED_GOAL"
+      },
+      "after": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "parse_status": "LOCAL_PARSE_PARTIAL",
+        "answers": null,
+        "root_cause": "UNRECOGNIZED_GOAL"
+      },
+      "oracle": null,
+      "oracle_match": null,
+      "verdict": "FAIL"
+    },
+    {
+      "case_id": "dp_free_point",
+      "group": "described_point_negative",
+      "expect": "REFUSE",
+      "source_sha256": "cf179cd1ea78d5668590d0699320830828f67ef3ed6b15be92e7c7cfeb8432c1",
+      "before": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "parse_status": "LOCAL_PARSE_PARTIAL",
+        "root_cause": "FREE_POINT_UNDERDETERMINED"
+      },
+      "after": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "parse_status": "LOCAL_PARSE_PARTIAL",
+        "answers": null,
+        "root_cause": "FREE_POINT_UNDERDETERMINED"
+      },
+      "oracle": null,
+      "oracle_match": null,
+      "verdict": "PASS"
+    },
+    {
+      "case_id": "dp_free_point_goi",
+      "group": "described_point_negative",
+      "expect": "REFUSE",
+      "source_sha256": "e9c09493c1ae40a477194aec0253151062a636d20e7a2cfc9859ac94b120a474",
+      "before": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "parse_status": "LOCAL_PARSE_PARTIAL",
+        "root_cause": "FREE_POINT_UNDERDETERMINED"
+      },
+      "after": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "parse_status": "LOCAL_PARSE_PARTIAL",
+        "answers": null,
+        "root_cause": "FREE_POINT_UNDERDETERMINED"
+      },
+      "oracle": null,
+      "oracle_match": null,
+      "verdict": "PASS"
+    },
+    {
+      "case_id": "dp_midpoint_as_goal",
+      "group": "premise_vs_goal",
+      "expect": "REFUSE",
+      "source_sha256": "16f8bc9a3d4a1b6877978fb4b9f0e85dc7aeeedd897a0e7eba5dad3d346b7ba1",
+      "before": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "parse_status": "LOCAL_PARSE_PARTIAL",
+        "root_cause": "UNRECOGNIZED_GOAL"
+      },
+      "after": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "parse_status": "LOCAL_PARSE_PARTIAL",
+        "answers": null,
+        "root_cause": "UNRECOGNIZED_GOAL"
+      },
+      "oracle": null,
+      "oracle_match": null,
+      "verdict": "PASS"
+    },
+    {
+      "case_id": "dp_reflection",
+      "group": "described_point_unsupported",
+      "expect": "REFUSE",
+      "source_sha256": "128ddc3d3c337bcbc207ba4043ca9dfb4470ee83bd3ee7adf080bb4d96132ec4",
+      "before": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "parse_status": "LOCAL_PARSE_PARTIAL",
+        "root_cause": "UNSUPPORTED_POINT_CONSTRUCTION"
+      },
+      "after": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "parse_status": "LOCAL_PARSE_PARTIAL",
+        "answers": null,
+        "root_cause": "UNSUPPORTED_POINT_CONSTRUCTION"
+      },
+      "oracle": null,
+      "oracle_match": null,
+      "verdict": "PASS"
+    },
+    {
+      "case_id": "dp_projection_unnamed_image",
+      "group": "described_point_unsupported",
+      "expect": "REFUSE",
+      "source_sha256": "1f28323288274c9843764fa297297020cab6cdf877fd3f7c714d57b93121c002",
+      "before": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "parse_status": "LOCAL_PARSE_PARTIAL",
+        "root_cause": "DESCRIBED_POINT_IN_PREMISE_UNSUPPORTED"
+      },
+      "after": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "parse_status": "LOCAL_PARSE_PARTIAL",
+        "answers": null,
+        "root_cause": "DESCRIBED_POINT_IN_PREMISE_UNSUPPORTED"
+      },
+      "oracle": null,
+      "oracle_match": null,
+      "verdict": "PASS"
+    },
+    {
+      "case_id": "dp_redefined_conflict",
+      "group": "contradiction",
+      "expect": "REFUSE",
+      "source_sha256": "372a4c67f6247d05d2fc025f6f2e5ac4b763e476a583533728f2a6e464d38347",
+      "before": {
+        "status": "REFUSED",
+        "code": "INCONSISTENT_FACTS",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "root_cause": "SOURCE_CONFLICT"
+      },
+      "after": {
+        "status": "REFUSED",
+        "code": "INCONSISTENT_FACTS",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "answers": null,
+        "root_cause": "SOURCE_CONFLICT"
+      },
+      "oracle": null,
+      "oracle_match": null,
+      "verdict": "PASS"
+    },
+    {
+      "case_id": "gv_base_unnamed_face_after",
+      "group": "gv_base_unnamed",
+      "expect": "SERVE",
+      "source_sha256": "22255d16471dcc6a460e46e5e370608ba489c1b0e5b2f2b929cabcd1cb60b25e",
+      "before": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "parse_status": "LOCAL_PARSE_PARTIAL",
+        "root_cause": "SOURCE_PROVENANCE_MISSING"
+      },
+      "after": {
+        "status": "SERVED",
+        "code": null,
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "answers": {
+          "q1": "a√21/7"
+        },
+        "root_cause": null
+      },
+      "oracle": 0.6546536707079772,
+      "oracle_match": true,
+      "verdict": "PASS"
+    },
+    {
+      "case_id": "gv_base_unnamed_renamed",
+      "group": "metamorphic",
+      "expect": "SERVE",
+      "source_sha256": "8b9fa2cb37a5af6da72d4135e6d054a3b1433e6b29690e08dd42338ec8d9d06b",
+      "before": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "parse_status": "LOCAL_PARSE_PARTIAL",
+        "root_cause": "SOURCE_PROVENANCE_MISSING"
+      },
+      "after": {
+        "status": "SERVED",
+        "code": null,
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "answers": {
+          "q1": "a√21/7"
+        },
+        "root_cause": null
+      },
+      "oracle": 0.6546536707079772,
+      "oracle_match": true,
+      "verdict": "PASS"
+    },
+    {
+      "case_id": "gv_base_unnamed_figref",
+      "group": "metamorphic",
+      "expect": "SERVE",
+      "source_sha256": "81f536fe93eca8f03d28051f7d0391079c6dfd1ff7dd5df5bcc638d9434d4b7a",
+      "before": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "parse_status": "LOCAL_PARSE_PARTIAL",
+        "root_cause": "SOURCE_PROVENANCE_MISSING"
+      },
+      "after": {
+        "status": "SERVED",
+        "code": null,
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "answers": {
+          "q1": "a√21/7"
+        },
+        "root_cause": null
+      },
+      "oracle": 0.6546536707079772,
+      "oracle_match": true,
+      "verdict": "PASS"
+    },
+    {
+      "case_id": "gv_base_unnamed_subject_first",
+      "group": "gv_base_unnamed_negative",
+      "expect": "REFUSE",
+      "source_sha256": "8702fd282e8ef7baef2dd93666ed6591965e42c8397c4ee95d51544904cd18ef",
+      "before": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "parse_status": "LOCAL_PARSE_PARTIAL",
+        "root_cause": "SOURCE_PROVENANCE_MISSING"
+      },
+      "after": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "parse_status": "LOCAL_PARSE_PARTIAL",
+        "answers": null,
+        "root_cause": "SOURCE_PROVENANCE_MISSING"
+      },
+      "oracle": null,
+      "oracle_match": null,
+      "verdict": "PASS"
+    },
+    {
+      "case_id": "gv_cuboid_square_base",
+      "group": "gv_base_unnamed",
+      "expect": "SERVE",
+      "source_sha256": "422fdcc7e319bc0f5a4949743eaa6ea5d25276359f1748617fc2ea7ee4b652bf",
+      "before": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "parse_status": "LOCAL_PARSE_PARTIAL",
+        "root_cause": "SOURCE_PROVENANCE_MISSING"
+      },
+      "after": {
+        "status": "SERVED",
+        "code": null,
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "answers": {
+          "q1": "cos²=1/4"
+        },
+        "root_cause": null
+      },
+      "oracle": 0.25,
+      "oracle_match": true,
+      "verdict": "PASS"
+    },
+    {
+      "case_id": "gv_cuboid_no_square",
+      "group": "gv_base_unnamed_negative",
+      "expect": "REFUSE",
+      "source_sha256": "e155fa72ca9c66bd7cd23ce18d67210601c0569c5034b599a50897745a8f1d5f",
+      "before": {
+        "status": "REFUSED",
+        "code": "MISSING_DIMENSION",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "root_cause": "INSUFFICIENT_CONSTRAINTS"
+      },
+      "after": {
+        "status": "REFUSED",
+        "code": "MISSING_DIMENSION",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "answers": null,
+        "root_cause": "INSUFFICIENT_CONSTRAINTS"
+      },
+      "oracle": null,
+      "oracle_match": null,
+      "verdict": "PASS"
+    },
+    {
+      "case_id": "gv_prism_undotted",
+      "group": "gv_entity_notation",
+      "expect": "SERVE",
+      "source_sha256": "c57ab82291cdf3c29e9e11017c9720e1cb6d3ec6b3743fcddd156dcd08e2b63e",
+      "before": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "parse_status": "LOCAL_PARSE_PARTIAL",
+        "root_cause": "UNRECOGNIZED_GOAL"
+      },
+      "after": {
+        "status": "SERVED",
+        "code": null,
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "answers": {
+          "q1": "3√3"
+        },
+        "root_cause": null
+      },
+      "oracle": 5.196152422706632,
+      "oracle_match": true,
+      "verdict": "PASS"
+    },
+    {
+      "case_id": "gv_prism_dotted_same",
+      "group": "metamorphic",
+      "expect": "SERVE",
+      "source_sha256": "2716a7b373dcef2329ba8f7a193b43fc90cf410cfed37dffa71f7e0e4d365f73",
+      "before": {
+        "status": "SERVED",
+        "code": null,
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "root_cause": null
+      },
+      "after": {
+        "status": "SERVED",
+        "code": null,
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "answers": {
+          "q1": "3√3"
+        },
+        "root_cause": null
+      },
+      "oracle": 5.196152422706632,
+      "oracle_match": true,
+      "verdict": "PASS"
+    },
+    {
+      "case_id": "gv_prism_undotted_scrambled",
+      "group": "gv_entity_notation_negative",
+      "expect": "REFUSE",
+      "source_sha256": "974b93ee976ec06ab20f7c8ae7af5a484e00d84614c690fef63198c534cd3027",
+      "before": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "parse_status": "LOCAL_PARSE_PARTIAL",
+        "root_cause": "UNRECOGNIZED_GOAL"
+      },
+      "after": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "parse_status": "LOCAL_PARSE_PARTIAL",
+        "answers": null,
+        "root_cause": "UNRECOGNIZED_GOAL"
+      },
+      "oracle": null,
+      "oracle_match": null,
+      "verdict": "PASS"
+    },
+    {
+      "case_id": "gv_isosceles_right_derived",
+      "group": "gv_isosceles_derived",
+      "expect": "SERVE",
+      "source_sha256": "7eddc491750c9825c715814724eaf090d42b9f71859ff14ccfd6cc3cd543a6a3",
+      "before": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "parse_status": "LOCAL_PARSE_PARTIAL",
+        "root_cause": "INCOMPLETE_FACT_EXTRACTION"
+      },
+      "after": {
+        "status": "SERVED",
+        "code": null,
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "answers": {
+          "q1": "a³/6"
+        },
+        "root_cause": null
+      },
+      "oracle": 0.16666666666666666,
+      "oracle_match": true,
+      "verdict": "PASS"
+    },
+    {
+      "case_id": "gv_isosceles_explicit",
+      "group": "metamorphic",
+      "expect": "SERVE",
+      "source_sha256": "7f84fbc059b3bb831bf048183efc57053b73b27c4357f8b5db17af26ec553508",
+      "before": {
+        "status": "SERVED",
+        "code": null,
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "root_cause": null
+      },
+      "after": {
+        "status": "SERVED",
+        "code": null,
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "answers": {
+          "q1": "a³/6"
+        },
+        "root_cause": null
+      },
+      "oracle": 0.16666666666666666,
+      "oracle_match": true,
+      "verdict": "PASS"
+    },
+    {
+      "case_id": "gv_isosceles_no_right_angle",
+      "group": "gv_isosceles_negative",
+      "expect": "REFUSE",
+      "source_sha256": "1edc6966488602b7fb6fa6b3d82890f78db2697f09b9a4d03c0e863075846c1d",
+      "before": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "parse_status": "LOCAL_PARSE_PARTIAL",
+        "root_cause": "INCOMPLETE_FACT_EXTRACTION"
+      },
+      "after": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "parse_status": "LOCAL_PARSE_PARTIAL",
+        "answers": null,
+        "root_cause": "INCOMPLETE_FACT_EXTRACTION"
+      },
+      "oracle": null,
+      "oracle_match": null,
+      "verdict": "PASS"
+    },
+    {
+      "case_id": "gv_isosceles_base_only",
+      "group": "gv_isosceles_negative",
+      "expect": "REFUSE",
+      "source_sha256": "880d3d6a648b93db45bca4853c09bf08a0e52a7f12f3b3df7cc44ce938460f09",
+      "before": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "parse_status": "LOCAL_PARSE_PARTIAL",
+        "root_cause": "UNRECOGNIZED_GEOMETRIC_ENTITY"
+      },
+      "after": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "parse_status": "LOCAL_PARSE_PARTIAL",
+        "answers": null,
+        "root_cause": "UNRECOGNIZED_GEOMETRIC_ENTITY"
+      },
+      "oracle": null,
+      "oracle_match": null,
+      "verdict": "PASS"
+    },
+    {
+      "case_id": "gv_base_area_regular",
+      "group": "gv_base_area",
+      "expect": "SERVE",
+      "source_sha256": "52faf4593b73774a7e0ac0fb191d2bec5ee90e4f5dea6f7f1f4a92b12b745d35",
+      "before": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "parse_status": "LOCAL_PARSE_PARTIAL",
+        "root_cause": "SOURCE_PROVENANCE_MISSING"
+      },
+      "after": {
+        "status": "SERVED",
+        "code": null,
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "answers": {
+          "q1": "4√7/3"
+        },
+        "root_cause": null
+      },
+      "oracle": 3.5276684147527875,
+      "oracle_match": true,
+      "verdict": "PASS"
+    },
+    {
+      "case_id": "gv_base_area_impossible",
+      "group": "gv_base_area_negative",
+      "expect": "REFUSE",
+      "source_sha256": "5e88f1728d6ce5d37b325d8002fc0cc389b5b97fd6d63e5aa9b88b1d46198f3d",
+      "before": {
+        "status": "REFUSED",
+        "code": "LIVE_AI_DISABLED",
+        "parse_status": "LOCAL_PARSE_PARTIAL",
+        "root_cause": "SOURCE_PROVENANCE_MISSING"
+      },
+      "after": {
+        "status": "REFUSED",
+        "code": "INCONSISTENT_FACTS",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "answers": null,
+        "root_cause": "SOURCE_CONFLICT"
+      },
+      "oracle": null,
+      "oracle_match": null,
+      "verdict": "PASS"
+    }
+  ],
+  "fails": [
+    "dp_unnamed_through_point"
+  ],
+  "oracle_mismatches": [],
+  "auto_named_or_placed_entities": 0,
+  "note": "an unnamed base is the declared solid's base (no new point); an undescribed point is refused (FREE_POINT_UNDERDETERMINED)"
+}

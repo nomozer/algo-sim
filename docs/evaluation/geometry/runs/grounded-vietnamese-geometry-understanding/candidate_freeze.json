@@ -1,0 +1,27 @@
+{
+  "run_id": "grounded-vietnamese-geometry-understanding",
+  "generated_at_utc": "2026-11-14T19:37:45.073082+00:00",
+  "product_commit": "d222e6d9b582d54fc42397a9593f52eb6fd77f18",
+  "product_commits": [
+    "ac276a5c9",
+    "ad090cead",
+    "d222e6d9b"
+  ],
+  "candidate_freeze_commit": "63def519ad317911145b2d84929a687208996619",
+  "measured_system": "c25f9695828888987db2ab7990c4ff135da4d01c6b9d968f898c36728a0ae436",
+  "cache_version": "139",
+  "dataset_partition": "DEVELOPMENT (agent-written corpus, exposed REAL27, exposed probes); never H-1 or locked W2/W3",
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "HYBRID_ROUTE_MODE": "local-first",
+    "live_ai_calls": 0
+  },
+  "head": "542e32b0f8b21df5fff8e6b2a57fb27b9a6ea452",
+  "freeze_stored_in": "63def519ad317911145b2d84929a687208996619",
+  "commit_field": "cbcd8af2d4ce667d93378699971acdae7d7905ae",
+  "clean_tree": true,
+  "measured_files": 117,
+  "cache_version_bumped": "138 → 139",
+  "freeze_verify_in_regression": "PASS",
+  "templates_rebound": "pending_template_refresh.json (metadata only, still PENDING_OWNER_DECISION)"
+}

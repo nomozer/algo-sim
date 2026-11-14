@@ -1,0 +1,655 @@
+{
+  "run_id": "grounded-vietnamese-geometry-understanding",
+  "generated_at_utc": "2026-11-14T19:37:45.073082+00:00",
+  "product_commit": "d222e6d9b582d54fc42397a9593f52eb6fd77f18",
+  "product_commits": [
+    "ac276a5c945f9ac1764f9af1f723b857c19b342d",
+    "ad090ceada3edc31b5788fa16c47e1639386bdc9",
+    "d222e6d9b582d54fc42397a9593f52eb6fd77f18"
+  ],
+  "candidate_freeze_commit": "63def519ad317911145b2d84929a687208996619",
+  "measured_system": "c25f9695828888987db2ab7990c4ff135da4d01c6b9d968f898c36728a0ae436",
+  "cache_version": "139",
+  "dataset_partition": "DEVELOPMENT (agent-written corpus, exposed REAL27, exposed probes); never H-1 or locked W2/W3",
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "HYBRID_ROUTE_MODE": "local-first",
+    "live_ai_calls": 0
+  },
+  "head": "542e32b0f8b21df5fff8e6b2a57fb27b9a6ea452",
+  "command": "python tools/semantic_compare.py <archive of 83fdc3071>/backend semantic_compare_rows.json",
+  "fields": "root_cause = local_failure_diagnostics (where information was first lost); terminal_reason = what the response reports",
+  "refused_by_root_cause_before": {
+    "DESCRIBED_POINT_IN_PREMISE_UNSUPPORTED": 1,
+    "UNRECOGNIZED_GOAL": 3,
+    "PLANNER_COMPOSITION_UNSUPPORTED": 1,
+    "UNSUPPORTED_POINT_CONSTRUCTION": 1,
+    "SOURCE_PROVENANCE_MISSING": 3,
+    "INCOMPLETE_FACT_EXTRACTION": 2,
+    "UNRECOGNIZED_GEOMETRIC_ENTITY": 3,
+    "FREE_POINT_UNDERDETERMINED": 1
+  },
+  "refused_by_root_cause_after": {
+    "DESCRIBED_POINT_IN_PREMISE_UNSUPPORTED": 1,
+    "UNRECOGNIZED_GOAL": 2,
+    "PLANNER_COMPOSITION_UNSUPPORTED": 1,
+    "UNSUPPORTED_POINT_CONSTRUCTION": 1,
+    "INSUFFICIENT_CONSTRAINTS": 2,
+    "UNRECOGNIZED_GEOMETRIC_ENTITY": 2,
+    "FREE_POINT_UNDERDETERMINED": 1,
+    "INCOMPLETE_FACT_EXTRACTION": 2
+  },
+  "served_before": 12,
+  "served_after": 15,
+  "misattributions_found": [
+    {
+      "case_id": "vmmu_r284",
+      "before": "SOURCE_PROVENANCE_MISSING",
+      "truth": "the gate's role binding did not read an unlabelled base (a binding rule gap, not a missing quote)"
+    },
+    {
+      "case_id": "vmmu_r463/vmmu_r460",
+      "before": "UNRECOGNIZED_*",
+      "truth": "after the fix the text is understood; the refusal is MISSING_DIMENSION (capability), reported as INSUFFICIENT_CONSTRAINTS by the diagnostics grouping"
+    }
+  ],
+  "rows": [
+    {
+      "case_id": "vmmu_r247",
+      "source_sha256": "5f3e8da93e0ce388243259a966f6e1c30efeb8ee798d27c4af33c20f5398ecfe",
+      "before": {
+        "status": "SERVED",
+        "terminal_reason": null,
+        "root_cause": null,
+        "task_category": null,
+        "parse_reason": null,
+        "fallback_reason": null
+      },
+      "after": {
+        "status": "SERVED",
+        "terminal_reason": null,
+        "root_cause": null,
+        "task_category": null,
+        "parse_reason": null,
+        "answers": {
+          "q1": "3a"
+        }
+      },
+      "note": null
+    },
+    {
+      "case_id": "vmmu_r254",
+      "source_sha256": "1b71b6ac60aedac7043c9a7c928ed4fa2b3d7229c6bef98432bea0446d00105d",
+      "before": {
+        "status": "REFUSED",
+        "terminal_reason": "LIVE_AI_DISABLED",
+        "root_cause": "DESCRIBED_POINT_IN_PREMISE_UNSUPPORTED",
+        "task_category": null,
+        "parse_reason": "UNPARSED_GOAL_CANDIDATE",
+        "fallback_reason": "UNPARSED_GOAL_CANDIDATE"
+      },
+      "after": {
+        "status": "REFUSED",
+        "terminal_reason": "LIVE_AI_DISABLED",
+        "root_cause": "DESCRIBED_POINT_IN_PREMISE_UNSUPPORTED",
+        "task_category": null,
+        "parse_reason": "UNPARSED_GOAL_CANDIDATE",
+        "answers": null
+      },
+      "note": "an unnamed described point used as a premise operand (outside R-1)"
+    },
+    {
+      "case_id": "vmmu_r256",
+      "source_sha256": "b3c99ebccab872eab209179785d9c8940a1c36ce6c58a6ac2b94262810394950",
+      "before": {
+        "status": "REFUSED",
+        "terminal_reason": "LIVE_AI_DISABLED",
+        "root_cause": "UNRECOGNIZED_GOAL",
+        "task_category": "GOAL_NOT_RECOGNIZED",
+        "parse_reason": "UNPARSED_GOAL_CANDIDATE",
+        "fallback_reason": "UNPARSED_GOAL_CANDIDATE"
+      },
+      "after": {
+        "status": "REFUSED",
+        "terminal_reason": "LIVE_AI_DISABLED",
+        "root_cause": "UNRECOGNIZED_GOAL",
+        "task_category": "GOAL_NOT_RECOGNIZED",
+        "parse_reason": "UNPARSED_GOAL_CANDIDATE",
+        "answers": null
+      },
+      "note": "a typo ('đên') in the goal; diacritic-tolerant reading is Owner decision S-1"
+    },
+    {
+      "case_id": "vmmu_r258",
+      "source_sha256": "86a06df87628a29335dec2168da6037cf5396731bd9a29ce24bdc2d5a0b0cd92",
+      "before": {
+        "status": "SERVED",
+        "terminal_reason": null,
+        "root_cause": null,
+        "task_category": null,
+        "parse_reason": null,
+        "fallback_reason": null
+      },
+      "after": {
+        "status": "SERVED",
+        "terminal_reason": null,
+        "root_cause": null,
+        "task_category": null,
+        "parse_reason": null,
+        "answers": {
+          "q1": "cos²=1/3"
+        }
+      },
+      "note": null
+    },
+    {
+      "case_id": "vmmu_r266",
+      "source_sha256": "1e83a2eec97786ccdd033a1d744cdbb083f690e7bfd096b5a5cbbc2615879dc2",
+      "before": {
+        "status": "REFUSED",
+        "terminal_reason": "EXACT_DOMAIN_EXCEEDED",
+        "root_cause": "PLANNER_COMPOSITION_UNSUPPORTED",
+        "task_category": "CAPABILITY_UNSUPPORTED",
+        "parse_reason": null,
+        "fallback_reason": null
+      },
+      "after": {
+        "status": "REFUSED",
+        "terminal_reason": "EXACT_DOMAIN_EXCEEDED",
+        "root_cause": "PLANNER_COMPOSITION_UNSUPPORTED",
+        "task_category": "CAPABILITY_UNSUPPORTED",
+        "parse_reason": null,
+        "answers": null
+      },
+      "note": "EXACT_DOMAIN_EXCEEDED: capability"
+    },
+    {
+      "case_id": "vmmu_r270",
+      "source_sha256": "dada34f102c96ca7b1cf61c7fb1ef7bc66330e41ede6bbfd030952f3d0c7828e",
+      "before": {
+        "status": "SERVED",
+        "terminal_reason": null,
+        "root_cause": null,
+        "task_category": null,
+        "parse_reason": null,
+        "fallback_reason": null
+      },
+      "after": {
+        "status": "SERVED",
+        "terminal_reason": null,
+        "root_cause": null,
+        "task_category": null,
+        "parse_reason": null,
+        "answers": {
+          "q1": "a³√3/2"
+        }
+      },
+      "note": null
+    },
+    {
+      "case_id": "vmmu_r273",
+      "source_sha256": "2c2c430855ded12bafe9c96def610b16b3e84da540b0aed451632080ec19c990",
+      "before": {
+        "status": "SERVED",
+        "terminal_reason": null,
+        "root_cause": null,
+        "task_category": null,
+        "parse_reason": null,
+        "fallback_reason": null
+      },
+      "after": {
+        "status": "SERVED",
+        "terminal_reason": null,
+        "root_cause": null,
+        "task_category": null,
+        "parse_reason": null,
+        "answers": {
+          "q1": "a³"
+        }
+      },
+      "note": null
+    },
+    {
+      "case_id": "vmmu_r277",
+      "source_sha256": "9cc7353c9dd163e7190cb38347dd7a1aca2dabad29d3eb7c7cdba4ba8d81888e",
+      "before": {
+        "status": "REFUSED",
+        "terminal_reason": "LIVE_AI_DISABLED",
+        "root_cause": "UNSUPPORTED_POINT_CONSTRUCTION",
+        "task_category": "CAPABILITY_UNSUPPORTED",
+        "parse_reason": "UNPARSED_GOAL_CANDIDATE",
+        "fallback_reason": "UNPARSED_GOAL_CANDIDATE"
+      },
+      "after": {
+        "status": "REFUSED",
+        "terminal_reason": "LIVE_AI_DISABLED",
+        "root_cause": "UNSUPPORTED_POINT_CONSTRUCTION",
+        "task_category": "CAPABILITY_UNSUPPORTED",
+        "parse_reason": "UNPARSED_GOAL_CANDIDATE",
+        "answers": null
+      },
+      "note": "a reflected point: no registered construction"
+    },
+    {
+      "case_id": "vmmu_r284",
+      "source_sha256": "e3ab9e610dfc7fed5669a20c237bcc178b04a2f15702c1fa19af6778b5c91d51",
+      "before": {
+        "status": "REFUSED",
+        "terminal_reason": "LIVE_AI_DISABLED",
+        "root_cause": "SOURCE_PROVENANCE_MISSING",
+        "task_category": "SOURCE_PROVENANCE_UNAVAILABLE",
+        "parse_reason": "UNGROUNDED_VALUE",
+        "fallback_reason": "SOURCE_GATE_MISMATCH:UNGROUNDED_VALUE:p1: 'S.ABCD có đáy là hình vuông cạnh a' không gắn a với vai trò của ô này trong một câu đọc trọn"
+      },
+      "after": {
+        "status": "SERVED",
+        "terminal_reason": null,
+        "root_cause": null,
+        "task_category": null,
+        "parse_reason": null,
+        "answers": {
+          "q1": "a√21/7"
+        }
+      },
+      "note": null
+    },
+    {
+      "case_id": "vmmu_r295",
+      "source_sha256": "294378d7c5c5f73cbbd137b3da1bba388cf9ab5acedd68d1d666bb8debf98be0",
+      "before": {
+        "status": "REFUSED",
+        "terminal_reason": "LIVE_AI_DISABLED",
+        "root_cause": "SOURCE_PROVENANCE_MISSING",
+        "task_category": "SOURCE_PROVENANCE_UNAVAILABLE",
+        "parse_reason": "OBJECT_NOT_IN_QUOTE",
+        "fallback_reason": "SOURCE_GATE_MISMATCH:OBJECT_NOT_IN_QUOTE:p3: cụm lập phương không gọi đúng mặt ['A', 'B', 'C', 'D']"
+      },
+      "after": {
+        "status": "SERVED",
+        "terminal_reason": null,
+        "root_cause": null,
+        "task_category": null,
+        "parse_reason": null,
+        "answers": {
+          "q1": "cos²=1/4"
+        }
+      },
+      "note": null
+    },
+    {
+      "case_id": "vmmu_r298",
+      "source_sha256": "a6e9d6b90f89854a2012a5a6d9631fa517fbbc6b2353940b998533c5d6e26895",
+      "before": {
+        "status": "SERVED",
+        "terminal_reason": null,
+        "root_cause": null,
+        "task_category": null,
+        "parse_reason": null,
+        "fallback_reason": null
+      },
+      "after": {
+        "status": "SERVED",
+        "terminal_reason": null,
+        "root_cause": null,
+        "task_category": null,
+        "parse_reason": null,
+        "answers": {
+          "q1": "2a³√6"
+        }
+      },
+      "note": null
+    },
+    {
+      "case_id": "vmmu_r375",
+      "source_sha256": "43d3e7b4b26df10058e24fac2b230b42fcaf99d7a48c227b587b751280e8ac22",
+      "before": {
+        "status": "SERVED",
+        "terminal_reason": null,
+        "root_cause": null,
+        "task_category": null,
+        "parse_reason": null,
+        "fallback_reason": null
+      },
+      "after": {
+        "status": "SERVED",
+        "terminal_reason": null,
+        "root_cause": null,
+        "task_category": null,
+        "parse_reason": null,
+        "answers": {
+          "q1": "√17"
+        }
+      },
+      "note": null
+    },
+    {
+      "case_id": "vmmu_r460",
+      "source_sha256": "eeef7ddcad1956475fdfdf31fc2078ac40c7aeb676dcfae948e95dc2000cd85a",
+      "before": {
+        "status": "REFUSED",
+        "terminal_reason": "LIVE_AI_DISABLED",
+        "root_cause": "INCOMPLETE_FACT_EXTRACTION",
+        "task_category": "LANGUAGE_NOT_UNDERSTOOD",
+        "parse_reason": "UNPARSED_FACT_CANDIDATE",
+        "fallback_reason": "UNPARSED_FACT_CANDIDATE"
+      },
+      "after": {
+        "status": "REFUSED",
+        "terminal_reason": "MISSING_DIMENSION",
+        "root_cause": "INSUFFICIENT_CONSTRAINTS",
+        "task_category": "MATHEMATICALLY_UNDERDETERMINED",
+        "parse_reason": null,
+        "answers": null
+      },
+      "note": "understood now; legs from the hypotenuse of a right isosceles triangle are not derived (capability)"
+    },
+    {
+      "case_id": "vmmu_r461",
+      "source_sha256": "809ff614e1cd0c7592adc9eea4ba87dab2a4947566019da16a6d8ec9cc1fde74",
+      "before": {
+        "status": "REFUSED",
+        "terminal_reason": "LIVE_AI_DISABLED",
+        "root_cause": "UNRECOGNIZED_GEOMETRIC_ENTITY",
+        "task_category": "ENTITY_NOT_RESOLVED",
+        "parse_reason": "EMPTY_SOLIDS",
+        "fallback_reason": "SCHEMA_VALIDATION_FAILED:EMPTY_SOLIDS:EMPTY_SOLIDS: TypedFactNextPayload requires at least one declared solid."
+      },
+      "after": {
+        "status": "REFUSED",
+        "terminal_reason": "LIVE_AI_DISABLED",
+        "root_cause": "UNRECOGNIZED_GEOMETRIC_ENTITY",
+        "task_category": "ENTITY_NOT_RESOLVED",
+        "parse_reason": "EMPTY_SOLIDS",
+        "answers": null
+      },
+      "note": "modelling problem, out of scope"
+    },
+    {
+      "case_id": "vmmu_r463",
+      "source_sha256": "d5b7213d8d1ec5e8e2a775f79368034cb363cc61ccc0bd25383a68cc276b8bd3",
+      "before": {
+        "status": "REFUSED",
+        "terminal_reason": "LIVE_AI_DISABLED",
+        "root_cause": "UNRECOGNIZED_GEOMETRIC_ENTITY",
+        "task_category": "ENTITY_NOT_RESOLVED",
+        "parse_reason": "EMPTY_SOLIDS",
+        "fallback_reason": "SCHEMA_VALIDATION_FAILED:EMPTY_SOLIDS:EMPTY_SOLIDS: TypedFactNextPayload requires at least one declared solid."
+      },
+      "after": {
+        "status": "REFUSED",
+        "terminal_reason": "MISSING_DIMENSION",
+        "root_cause": "INSUFFICIENT_CONSTRAINTS",
+        "task_category": "MATHEMATICALLY_UNDERDETERMINED",
+        "parse_reason": null,
+        "answers": null
+      },
+      "note": "understood now; height from a given angle is not a registered construction (MISSING_DIMENSION → capability)"
+    },
+    {
+      "case_id": "vmmu_r475",
+      "source_sha256": "33abd4b25c729c465d2ee1740f6f063514d834d02e35c6d1323a875b9f69b601",
+      "before": {
+        "status": "REFUSED",
+        "terminal_reason": "LIVE_AI_DISABLED",
+        "root_cause": "UNRECOGNIZED_GEOMETRIC_ENTITY",
+        "task_category": "ENTITY_NOT_RESOLVED",
+        "parse_reason": "EMPTY_SOLIDS",
+        "fallback_reason": "SCHEMA_VALIDATION_FAILED:EMPTY_SOLIDS:EMPTY_SOLIDS: TypedFactNextPayload requires at least one declared solid."
+      },
+      "after": {
+        "status": "REFUSED",
+        "terminal_reason": "LIVE_AI_DISABLED",
+        "root_cause": "UNRECOGNIZED_GEOMETRIC_ENTITY",
+        "task_category": "ENTITY_NOT_RESOLVED",
+        "parse_reason": "EMPTY_SOLIDS",
+        "answers": null
+      },
+      "note": "modelling problem, out of scope"
+    },
+    {
+      "case_id": "vmmu_r476",
+      "source_sha256": "ce8609f40262757ab9cde8c4aa6069672d9efbf45c2a55c5880f283fe0b8b1f3",
+      "before": {
+        "status": "SERVED",
+        "terminal_reason": null,
+        "root_cause": null,
+        "task_category": null,
+        "parse_reason": null,
+        "fallback_reason": null
+      },
+      "after": {
+        "status": "SERVED",
+        "terminal_reason": null,
+        "root_cause": null,
+        "task_category": null,
+        "parse_reason": null,
+        "answers": {
+          "q1": "cos²=3/4"
+        }
+      },
+      "note": null
+    },
+    {
+      "case_id": "vmmu_r488",
+      "source_sha256": "7a9d2a6349ee313907d1dfa7bf3b2c9b8822c4543212968a5400e9e44cb35d66",
+      "before": {
+        "status": "REFUSED",
+        "terminal_reason": "LIVE_AI_DISABLED",
+        "root_cause": "UNRECOGNIZED_GOAL",
+        "task_category": "GOAL_NOT_RECOGNIZED",
+        "parse_reason": "UNPARSED_GOAL_CANDIDATE",
+        "fallback_reason": "UNPARSED_GOAL_CANDIDATE"
+      },
+      "after": {
+        "status": "REFUSED",
+        "terminal_reason": "LIVE_AI_DISABLED",
+        "root_cause": "UNRECOGNIZED_GOAL",
+        "task_category": "GOAL_NOT_RECOGNIZED",
+        "parse_reason": "UNPARSED_GOAL_CANDIDATE",
+        "answers": null
+      },
+      "note": "goal phrasing not read (multi-part question)"
+    },
+    {
+      "case_id": "vmmu_r491",
+      "source_sha256": "ccf866f6e06a328aa73adaca5eb5c95cbd247aca3f2c821dc11d3e84cab8ac3d",
+      "before": {
+        "status": "REFUSED",
+        "terminal_reason": "LIVE_AI_DISABLED",
+        "root_cause": "FREE_POINT_UNDERDETERMINED",
+        "task_category": null,
+        "parse_reason": "UNPARSED_FACT_CANDIDATE",
+        "fallback_reason": "UNPARSED_FACT_CANDIDATE"
+      },
+      "after": {
+        "status": "REFUSED",
+        "terminal_reason": "LIVE_AI_DISABLED",
+        "root_cause": "FREE_POINT_UNDERDETERMINED",
+        "task_category": null,
+        "parse_reason": "UNPARSED_FACT_CANDIDATE",
+        "answers": null
+      },
+      "note": "a point only said to lie on an object (FREE_POINT_UNDERDETERMINED): the value would need an invariance proof not covered"
+    },
+    {
+      "case_id": "vmmu_r492",
+      "source_sha256": "0f07c493cb02fd120d04df23beaea5488e7ecfc91b6e24d567aea0655d0460ec",
+      "before": {
+        "status": "SERVED",
+        "terminal_reason": null,
+        "root_cause": null,
+        "task_category": null,
+        "parse_reason": null,
+        "fallback_reason": null
+      },
+      "after": {
+        "status": "SERVED",
+        "terminal_reason": null,
+        "root_cause": null,
+        "task_category": null,
+        "parse_reason": null,
+        "answers": {
+          "q1": "cos²=1/4"
+        }
+      },
+      "note": null
+    },
+    {
+      "case_id": "vmmu_r498",
+      "source_sha256": "c437503de7d0db0da8be5b1f9412fe7d6db4397ea1ac53b650c859b2fe81ab52",
+      "before": {
+        "status": "SERVED",
+        "terminal_reason": null,
+        "root_cause": null,
+        "task_category": null,
+        "parse_reason": null,
+        "fallback_reason": null
+      },
+      "after": {
+        "status": "SERVED",
+        "terminal_reason": null,
+        "root_cause": null,
+        "task_category": null,
+        "parse_reason": null,
+        "answers": {
+          "q1": "cos²=1/4"
+        }
+      },
+      "note": null
+    },
+    {
+      "case_id": "vmmu_r513",
+      "source_sha256": "49464028330e78ad4de5b4bffbf81beee0779b43eedb8ff554a50b6713e03685",
+      "before": {
+        "status": "REFUSED",
+        "terminal_reason": "LIVE_AI_DISABLED",
+        "root_cause": "INCOMPLETE_FACT_EXTRACTION",
+        "task_category": "LANGUAGE_NOT_UNDERSTOOD",
+        "parse_reason": "QUESTION_CONTEXT_UNSUPPORTED",
+        "fallback_reason": "SOURCE_GATE_MISMATCH:QUESTION_CONTEXT_UNSUPPORTED:phần dữ kiện/đổi giả thiết trong câu hỏi chưa được đọc trọn; không dùng mô hình cũ"
+      },
+      "after": {
+        "status": "REFUSED",
+        "terminal_reason": "LIVE_AI_DISABLED",
+        "root_cause": "INCOMPLETE_FACT_EXTRACTION",
+        "task_category": "LANGUAGE_NOT_UNDERSTOOD",
+        "parse_reason": "QUESTION_CONTEXT_UNSUPPORTED",
+        "answers": null
+      },
+      "note": "a missing period plus an unparenthesised plane name: segmentation"
+    },
+    {
+      "case_id": "vmmu_r520",
+      "source_sha256": "5c9054338f29fa3f03ccc522cd5be706b0e0e41a439a19426189c26c132378d2",
+      "before": {
+        "status": "SERVED",
+        "terminal_reason": null,
+        "root_cause": null,
+        "task_category": null,
+        "parse_reason": null,
+        "fallback_reason": null
+      },
+      "after": {
+        "status": "SERVED",
+        "terminal_reason": null,
+        "root_cause": null,
+        "task_category": null,
+        "parse_reason": null,
+        "answers": {
+          "q1": "cos²=1/2"
+        }
+      },
+      "note": null
+    },
+    {
+      "case_id": "vmmu_r537",
+      "source_sha256": "8b6a844c5ab49083138e6faedf8f6792fb0d3cb49a76e110ccde5f2b0ebdc80c",
+      "before": {
+        "status": "REFUSED",
+        "terminal_reason": "LIVE_AI_DISABLED",
+        "root_cause": "SOURCE_PROVENANCE_MISSING",
+        "task_category": "SOURCE_PROVENANCE_UNAVAILABLE",
+        "parse_reason": "UNGROUNDED_VALUE",
+        "fallback_reason": "SOURCE_GATE_MISMATCH:UNGROUNDED_VALUE:p2: 'Cho hình chóp tứ giác đều S.ABCD có độ dài cạnh bên bằng a' không gắn a với vai trò của ô này trong một câu đọc trọn"
+      },
+      "after": {
+        "status": "REFUSED",
+        "terminal_reason": "LIVE_AI_DISABLED",
+        "root_cause": "INCOMPLETE_FACT_EXTRACTION",
+        "task_category": "LANGUAGE_NOT_UNDERSTOOD",
+        "parse_reason": "UNPARSED_FACT_CANDIDATE",
+        "answers": null
+      },
+      "note": "a base area in a² is not representable by the value reader (doc_so holds lengths only): capability"
+    },
+    {
+      "case_id": "vmmu_r538",
+      "source_sha256": "a4a500ab33ac1ab0dba657f00c75066bf0d47f79243d0eb6d553b46fb5940122",
+      "before": {
+        "status": "REFUSED",
+        "terminal_reason": "LIVE_AI_DISABLED",
+        "root_cause": "UNRECOGNIZED_GOAL",
+        "task_category": "GOAL_NOT_RECOGNIZED",
+        "parse_reason": "UNPARSED_GOAL_CANDIDATE",
+        "fallback_reason": "UNPARSED_GOAL_CANDIDATE"
+      },
+      "after": {
+        "status": "SERVED",
+        "terminal_reason": null,
+        "root_cause": null,
+        "task_category": null,
+        "parse_reason": null,
+        "answers": {
+          "q1": "cos²=3/4"
+        }
+      },
+      "note": null
+    },
+    {
+      "case_id": "vmmu_r559",
+      "source_sha256": "37e359e64b1e81fbdb0a0eb7507fccba73e3e3206781923b653b85040a9c160b",
+      "before": {
+        "status": "SERVED",
+        "terminal_reason": null,
+        "root_cause": null,
+        "task_category": null,
+        "parse_reason": null,
+        "fallback_reason": null
+      },
+      "after": {
+        "status": "SERVED",
+        "terminal_reason": null,
+        "root_cause": null,
+        "task_category": null,
+        "parse_reason": null,
+        "answers": {
+          "q1": "cos²=1/12"
+        }
+      },
+      "note": null
+    },
+    {
+      "case_id": "vmmu_r695",
+      "source_sha256": "be92444253700faa6ccedfb0581868a07e75a3580bb9317db83ded26f4113fa1",
+      "before": {
+        "status": "SERVED",
+        "terminal_reason": null,
+        "root_cause": null,
+        "task_category": null,
+        "parse_reason": null,
+        "fallback_reason": null
+      },
+      "after": {
+        "status": "SERVED",
+        "terminal_reason": null,
+        "root_cause": null,
+        "task_category": null,
+        "parse_reason": null,
+        "answers": {
+          "q1": "2/3"
+        }
+      },
+      "note": null
+    }
+  ]
+}

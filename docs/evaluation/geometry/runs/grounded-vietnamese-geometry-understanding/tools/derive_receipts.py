@@ -226,8 +226,11 @@ REAL27_NOTES = {   # this run's manual attribution of the still-refused REAL27 t
     "vmmu_r537": "a base area in a² is not representable by the value reader (doc_so holds lengths only): capability",
     "vmmu_r256": "a typo ('đên') in the goal; diacritic-tolerant reading is Owner decision S-1",
     "vmmu_r513": "a missing period plus an unparenthesised plane name: segmentation",
-    "vmmu_r266": "EXACT_DOMAIN_EXCEEDED: capability", "vmmu_r491": "invariance capability",
+    "vmmu_r266": "EXACT_DOMAIN_EXCEEDED: capability",
+    "vmmu_r491": "a point only said to lie on an object (FREE_POINT_UNDERDETERMINED): the value would need an invariance proof not covered",
     "vmmu_r461": "modelling problem, out of scope", "vmmu_r475": "modelling problem, out of scope",
+    "vmmu_r254": "an unnamed described point used as a premise operand (outside R-1)",
+    "vmmu_r277": "a reflected point: no registered construction", "vmmu_r488": "goal phrasing not read (multi-part question)",
 }
 
 
@@ -366,8 +369,10 @@ def r_completeness_crossclause_corpus_negatives():
              "reference_answers": ROWS[f"COMP:{r['same_as']}"]["after"]["answers"],
              "verdict": "PASS" if r["after"]["answers"] == ROWS[f"COMP:{r['same_as']}"]["after"]["answers"] else "FAIL"}
             for r in ROWS.values() if r["corpus"] == "COMP" and r.get("same_as")]
-    pairs = [{"case_id": r["id"], "pair": r["pair"], "status": r["after"]["status"], "pair_status": ROWS[f"COMP:{r['pair']}"]["after"]["status"],
-              "verdict": "PASS" if r["after"]["status"] != ROWS[f"COMP:{r['pair']}"]["after"]["status"] else "FAIL"}
+    met = lambda r: (r["expect"] == "SERVE") == (r["after"]["status"] == "SERVED")  # noqa: E731 — each side meets its own expectation
+    pairs = [{"case_id": r["id"], "pair": r["pair"], "expect": r["expect"], "status": r["after"]["status"],
+              "pair_expect": ROWS[f"COMP:{r['pair']}"]["expect"], "pair_status": ROWS[f"COMP:{r['pair']}"]["after"]["status"],
+              "verdict": "PASS" if met(r) and met(ROWS[f"COMP:{r['pair']}"]) else "FAIL"}
              for r in ROWS.values() if r["corpus"] == "COMP" and r.get("pair")]
     write("semantic_negative_metamorphic_tests.json", {
         "negatives": neg, "negatives_served": [r["case_id"] for r in neg if r["after"]["status"] == "SERVED"],
@@ -486,11 +491,11 @@ def r_cache():
 
 def r_holdout():
     tools = sorted(p.name for p in (RUN / "tools").iterdir() if p.suffix in (".py", ".mjs"))
-    pat = re.compile(r"H-1|h1_|sealed|W2|W3|locked", re.IGNORECASE)
-    refs = {n: [l.strip()[:120] for l in (RUN / "tools" / n).read_text(encoding="utf-8").splitlines() if pat.search(l) and "never" not in l.lower()]
-            for n in tools}
+    # a data FILE of a sealed / locked partition referenced by a tool (words in receipt text are not reads)
+    pat = re.compile(r"[\w/.-]*(?:h1|H-1|sealed|w2|w3|W2|W3|locked|held[-_]?out)[\w/.-]*\.(?:json|jsonl|csv|txt)\b")
+    refs = {n: sorted(set(pat.findall((RUN / "tools" / n).read_text(encoding="utf-8")))) for n in tools}
     write("holdout_protection_audit.json", {"sealed_h1_rows_opened": 0, "locked_w2_w3_rows_read": 0, "tools_scanned": tools,
-                                            "lines_mentioning_holdout_words": {k: v for k, v in refs.items() if v},
+                                            "holdout_data_files_referenced": {k: v for k, v in refs.items() if v},
                                             "verdict": "PASS" if not any(refs.values()) else "REVIEW"})
     write("independent_evaluation_status.json", {"INDEPENDENT_GENERALIZATION": "NOT_MEASURED", "NEW_INDEPENDENT_EVALUATION": "BLOCKED_DATA",
                                                  "H1": "NOT_OPENED", "why": "no unexposed independent set exists; REAL27 and the agent corpus are development data"})
@@ -505,7 +510,7 @@ def r_regression_publication_freeze():
     suites = {s["name"]: s for s in g.get("suites", [])}
     head_scan = load(RUN / "logs/final-publication_head.json") if (RUN / "logs/final-publication_head.json").exists() else {}
     range_scan = load(RUN / "logs/final-publication_range.json") if (RUN / "logs/final-publication_range.json").exists() else {}
-    summ = lambda d: [l for l in (d.get("stdout_tail") or d.get("stdout") or "").splitlines() if l.startswith("SUMMARY")]  # noqa: E731
+    summ = lambda d: [l for l in d.get("summary_lines") or () if l.startswith("SUMMARY")]  # noqa: E731
     product = all(suites.get(n, {}).get("verdict") == "PASS" for n in ("backend_pytest", "frontend_test_wave", "demo_replay", "crash_audit", "docs_ia", "freeze_verify"))
     write("publication_gate_status.json", {
         "PRODUCT_REGRESSION_VERDICT": "PASS" if product else "FAIL",

@@ -1,5 +1,20 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = GROUNDED_VIETNAMESE_GEOMETRY_UNDERSTANDING
+
+RUN_ID = grounded-vietnamese-geometry-understanding
+REPORT = docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/AXO_GROUNDED_VIETNAMESE_GEOMETRY_UNDERSTANDING_REPORT.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/
+START_BASE = 83fdc3071
+CODE_COMMIT = ac276a5c9 (parser + Source Gate grounding, cache 139), ad090cead (two restated completeness expectations), d222e6d9b (learner-facing local diagnostics); candidate freeze 63def519a (commit field cbcd8af2d)
+CLASSIFICATION = DEVELOPMENT_EVIDENCE_ON_AGENT_CORPUS_AND_EXPOSED_ITEMS; AUTOMATED_BROWSER_E2E; INDEPENDENT_GENERALIZATION NOT_MEASURED; PUBLICATION BLOCKED_PENDING_OWNER_REVIEW
+PRODUCT_CHANGE = YES; contract versions unchanged; CACHE_VERSION 138 → 139; measured files 117
+MODEL_REQUEST_COUNT = 0
+VERIFICATION = run.json; full_regression_summary.json; real27_root_cause_matrix.json; source_gate_integrity.json; semantic_planner_integration.json; wrong_scene_served_audit.json; scene3d_browser_e2e.json
+CORRECTS = scene3d-causal-pedagogical-integrity and earlier: REAL27 r284 attributed SOURCE_PROVENANCE_MISSING (a gate role-binding gap); DEV37 elliptical_role expectation (REFUSED) superseded for a regular pyramid. Historical receipts unchanged
+CORRECTED_BY = NONE
+LIMITATIONS = agent-written corpus; exposed items; a² values not representable; height from an angle not constructed; typo tolerance pending S-1; INSUFFICIENT_CONSTRAINTS label also covers understood-but-unsupported; headless browser; shared host timing; no H-1, no students.
+
 ## WAVE_ID = SCENE3D_CAUSAL_PEDAGOGICAL_INTEGRITY
 
 RUN_ID = scene3d-causal-pedagogical-integrity
