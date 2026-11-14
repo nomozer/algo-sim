@@ -284,3 +284,33 @@ def test_the_proof_search_is_budgeted(monkeypatch):
     cert, _c, _a = _proof(H + "SA = AB. " + PLANES)
     assert cert["status"] == "PROOF_SEARCH_BUDGET_EXCEEDED"
     assert _rd(H + "SA = AB. " + PLANES)["status"] != "SERVED"
+
+
+# ── degenerate goals and points outside the proof domain ───────────────────────────────────────────────────────────
+@pytest.mark.parametrize("fn, args", [
+    ("ask_angle_plane_plane", {"plane1": ["S", "B", "C"], "plane2": ["C", "B", "S"]}),        # the same plane twice
+    ("ask_angle_plane_plane", {"plane1": ["S", "B"], "plane2": ["A", "B", "C"]}),             # two labels are no plane
+    ("ask_angle_plane_plane", {"plane1": ["S", "A", "B", "C"], "plane2": ["A", "B", "C"]}),   # four non-coplanar labels
+    ("ask_angle_lines", {"line1": ["S", "S"], "line2": ["B", "C"]}),                           # a repeated label
+    ("ask_angle_lines", {"line1": ["S", "B"], "line2": ["B", "S"]}),                           # the same line twice
+    ("ask_angle_line_plane", {"line": ["A", "B"], "plane": ["A", "B", "C"]}),                  # the line lies in the plane
+    ("ask_angle_line_plane", {"line": ["S", "X"], "plane": ["A", "B", "C"]}),                  # a label of no solid
+])
+def test_degenerate_goals_get_no_proof(fn, args):
+    calls = _calls(H + "SA = AB. " + PLANES)
+    assert prove_angle_goal(calls, SimpleNamespace(id="q1", fn=fn, args=args)) is None
+
+
+def test_a_witness_with_one_ray_twice_is_rejected():
+    cert, calls, ask = _proof(H + "SA = AB. " + PLANES)
+    bad = copy.deepcopy(cert)
+    _step(bad, "PLANE_ANGLE")["conclusion"]["witness"]["ray_2"] = ["B", "S"]
+    assert _ok(bad, calls, ask) is False
+
+
+def test_a_derived_point_is_outside_the_proof_domain():
+    text = H + "SA = AB. Gọi M là trung điểm của BC. Tính góc giữa đường thẳng SM và mặt phẳng (ABC)."
+    calls = _calls(text)
+    ask = next((c for c in calls if c.fn in ti.GOAL_FUNCTIONS), None)
+    assert ask is None or prove_angle_goal(calls, ask) is None
+    assert _rd(text)["status"] != "SERVED"
