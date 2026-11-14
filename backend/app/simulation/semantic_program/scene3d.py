@@ -102,7 +102,8 @@ _TRUONG: dict[str, tuple[str, ...]] = {
     "solid": ("vertices", "vertex_ids", "faces", "shape_class", "formation_requirements"),
     "polygon3": ("vertices", "vertex_ids"),
     "section": ("polygon", "closed", "steps", "vertex_sources", "shape_class",
-                "formation_requirements"),
+                "formation_requirements", "ordered_vertex_ids",
+                "ordered_vertex_symbols", "ordered_boundary_edges"),
     # ⚠️ **KHÔNG `vertices`, KHÔNG `faces`** — và sự vắng mặt ấy LÀ cơ chế giữ
     # lưới ra khỏi ngữ nghĩa, không phải một lời dặn. Renderer chia lưới để vẽ,
     # nhưng không có ô nào để một đỉnh nội suy đi ngược lên checker hay phép đo.
@@ -120,7 +121,7 @@ _TRUONG: dict[str, tuple[str, ...]] = {
     # `angle_construction`: phép dựng CHÍNH XÁC của góc khác 90° mà đề hỏi (`quantity_annotations.gan_dung_goc`) —
     # đỉnh, hai cạnh, chân hình chiếu / đường song song / tia vuông góc giao tuyến. Không mang con số.
     # `altitude_construction`: đường cao của hình chóp mà thể tích dùng khi cảnh chưa vẽ nó (chân = hình chiếu chính xác).
-    "quantity": ("value", "exact", "angle_construction", "altitude_construction"),
+    "quantity": ("value", "exact", "angle_construction", "altitude_construction", "measured_quantity"),
 }
 
 
@@ -467,6 +468,14 @@ def build_scene3d(state: dict[str, Any]) -> dict[str, Any]:
         for f in _TRUONG[loai]:
             if f in o:
                 v[f] = o[f]
+        if "computational_depends" in o:
+            v["computational_depends"] = list(o["computational_depends"])
+        if "visible_prerequisites" in o:
+            v["visible_prerequisites"] = list(o["visible_prerequisites"])
+        if "construction_lineage" in o and o["construction_lineage"] is not None:
+            v["construction_lineage"] = dict(o["construction_lineage"])
+        if o.get("is_unused_auxiliary"):
+            v["is_unused_auxiliary"] = True
         if o.get("notation_assigned"):
             v["notation_assigned"] = True
         ra.append(v)
@@ -484,6 +493,7 @@ def build_scene3d(state: dict[str, Any]) -> dict[str, Any]:
         "events": events,
         "formation": formation,
         "free_objects": list(state.get("free_objects", [])),
+        "unused_auxiliary_ids": list(state.get("unused_auxiliary_ids") or []),
         # W17 §15.4: đại lượng không gắn được chủ thể (`ANNOTATION_UNBOUND …`) — cho người phát
         # triển; học sinh vẫn đọc giá trị ở bảng chi tiết.
         "diagnostics": list(state.get("annotation_diagnostics") or []),
@@ -854,6 +864,58 @@ def _cau_do(o: dict[str, Any], by_id: dict[str, dict[str, Any]]) -> str:
     return f"{o['label']} bằng {gia_tri}."
 
 
+def _giai_thich_do(o: dict[str, Any], by_id: dict[str, dict[str, Any]]) -> str:
+    """Giải thích chuẩn toán học và ý nghĩa hình học đã chứng nhận cho sự kiện `MEASURE`."""
+    mq = o.get("measured_quantity")
+    if not isinstance(mq, dict):
+        return _cau_do(o, by_id)
+    qk = mq.get("quantity_kind")
+    val = o.get("value")
+    rel = mq.get("certified_relation")
+    subs = [str(s) for s in (mq.get("subject_labels") or [])]
+    sa = subs[0] if len(subs) > 0 else "đối tượng"
+    sb = subs[1] if len(subs) > 1 else ""
+    if qk == "angle_cos_sq":
+        rel_note = {
+            "perpendicular_lines": f" Do cos² = 0 nên hai đường thẳng {sa} và {sb} vuông góc với nhau.",
+            "perpendicular_planes": f" Do cos² = 0 nên hai mặt phẳng {sa} và {sb} vuông góc với nhau.",
+            "perpendicular_line_plane": f" Do cos² = 0 nên {sa} vuông góc với {sb}.",
+            "parallel_lines": f" Do cos² = 1 nên hai đường thẳng {sa} và {sb} song song hoặc trùng nhau.",
+            "parallel_planes": f" Do cos² = 1 nên hai mặt phẳng {sa} và {sb} song song hoặc trùng nhau.",
+            "parallel_line_plane": f" Do cos² = 1 nên {sa} song song hoặc nằm trong {sb}.",
+        }.get(rel or "", "")
+        return f"Tính cos² góc giữa {sa} và {sb}: cos²({sa}, {sb}) = {val}.{rel_note}"
+    if qk == "angle_cos":
+        rel_note = {
+            "orthogonal_vectors": "; do cos = 0 nên hai vectơ vuông góc",
+            "same_direction_vectors": "; do cos = 1 nên hai vectơ cùng hướng",
+            "opposite_direction_vectors": "; do cos = -1 nên hai vectơ ngược hướng",
+        }.get(rel or "", "")
+        return f"Tính cosin góc giữa {sa} và {sb}: cos({sa}, {sb}) = {val}{rel_note}."
+    if qk == "distance":
+        rel_note = {
+            "coincident_points": " (hai điểm trùng nhau)",
+            "point_on_line": " (điểm nằm trên đường thẳng)",
+            "point_on_plane": " (điểm nằm trên mặt phẳng)",
+            "coplanar_intersecting_or_coincident_lines": " (hai đường thẳng đồng phẳng cắt nhau hoặc trùng nhau)",
+            "line_intersects_or_in_plane": " (đường thẳng cắt hoặc nằm trong mặt phẳng)",
+            "intersecting_or_coincident_planes": " (hai mặt phẳng cắt nhau hoặc trùng nhau)",
+        }.get(rel or "", "")
+        return f"Xác định khoảng cách giữa {sa} và {sb} bằng {val}{rel_note}."
+    if qk == "area":
+        return f"Tính diện tích {sa}: {val}."
+    if qk == "volume":
+        cong_thuc = (o.get("formula") or {}).get("text")
+        if cong_thuc:
+            return f"Tính {_giua_cau(o['label'])}: {cong_thuc}."
+        return f"Tính thể tích {sa}: {val}."
+    if qk == "radius":
+        return f"Tính bán kính của {sa}: {val}."
+    if qk == "lateral_area":
+        return f"Tính diện tích xung quanh của {sa}: {val}."
+    return _cau_do(o, by_id)
+
+
 def _ke_lai(events: list[dict[str, Any]], objects: list[dict[str, Any]]) -> None:
     """Kiểu ngữ nghĩa + lời kể của từng bước, dựng từ cảnh CÓ CẤU TRÚC.
 
@@ -874,6 +936,8 @@ def _ke_lai(events: list[dict[str, Any]], objects: list[dict[str, Any]]) -> None
     for e in events:
         oid = e.get("object")
         o = by_id.get(oid or "")
+        if o is not None and "visible_prerequisites" in o:
+            e["visible_prerequisites"] = list(o["visible_prerequisites"])
         if oid in bi_danh_dap_so:
             goc = by_id[bi_danh_dap_so[oid]]
             # Tiêu điểm là dòng đáp số HỌC SINH THẤY; bí danh của trace vẫn ghi lại.
@@ -881,13 +945,23 @@ def _ke_lai(events: list[dict[str, Any]], objects: list[dict[str, Any]]) -> None
             # tự phụ thuộc chính nó và mâu thuẫn với sự kiện đo của nó.
             do_goc = next((x for x in events if x is not e and x.get("object") == goc["id"]), None)
             e["depends"] = list(do_goc["depends"] if do_goc else goc.get("depends", []))
+            if "visible_prerequisites" in goc:
+                e["visible_prerequisites"] = list(goc["visible_prerequisites"])
+            if goc.get("measured_quantity"):
+                e["measured_quantity"] = dict(goc["measured_quantity"])
             e.update(object=goc["id"], alias_object=oid, display_label=goc["label"],
                      semantic_kind="FINAL_RESULT",
                      learner_text=f"Kết luận: {_giua_cau(goc['label'])} bằng {goc.get('value')}.")
+            if "Ghi nhận" in (e.get("explanation") or "") or goc.get("measured_quantity"):
+                e["explanation"] = f"Kết luận: {_giua_cau(goc['label'])} bằng {goc.get('value')}."
         elif o is not None and o["type"] == "quantity":
             la_ket_luan = not co_bi_danh and (oid in muc_tieu or (not muc_tieu and e is buoc_do[-1]))
+            if o.get("measured_quantity"):
+                e["measured_quantity"] = dict(o["measured_quantity"])
+            expl = _giai_thich_do(o, by_id)
             e.update(semantic_kind="FINAL_RESULT" if la_ket_luan else "MEASUREMENT",
-                     learner_text=_cau_do(o, by_id))
+                     learner_text=_cau_do(o, by_id),
+                     **({"explanation": expl} if expl else {}))
         elif e.get("action") == "INIT":
             e["learner_text"] = ("Dữ kiện đề cho: " + ", ".join(
                 f"{c.get('notation') or c['label']} = {c['value']}" for c in cho) + "."
@@ -900,6 +974,18 @@ def _ke_lai(events: list[dict[str, Any]], objects: list[dict[str, Any]]) -> None
             if e.get("action") == "EXTEND" and (ly_do := _ly_do_canh_thiet_dien(e, o, by_id)):
                 e["justification_text"] = ly_do.pop("text")
                 e.setdefault("details", {})["justification"] = ly_do
+            if e.get("action") != "EXTEND" and o.get("notation") and o.get("ordered_boundary_edges"):
+                edges = list(o["ordered_boundary_edges"])
+                e.setdefault("details", {})["ordered_boundary_edges"] = edges
+                edge_str = ", ".join(edges)
+                base_expl = (e.get("explanation") or "").strip()
+                if edge_str not in base_expl:
+                    e["explanation"] = f"{base_expl} Chu trình các cạnh khép kín: {edge_str}.".strip()
+        elif o is not None and o.get("type") == "vector3":
+            cau_v = f"Lấy {_giua_cau(o['label'])}." if o.get("label") else _sua_cau(e.get("learner_text") or "")
+            e["learner_text"] = cau_v
+            if "Vec3(" in (e.get("explanation") or "") or "Ghi nhận" in (e.get("explanation") or ""):
+                e["explanation"] = cau_v
         elif o is not None and o.get("notation_assigned") and e.get("action") in ("CREATE", "MEASURE"):
             # Tên trình bày `(α)` (display_names) — câu đặt tên một lần, ở chính bước dựng ra vật.
             cau = f"Gọi {o['notation']} là {_giua_cau(o['label'])}."
@@ -986,7 +1072,7 @@ def _build_formation(
             vai.add("CONSTRUCT_INTERSECTION" if event.get("action") == "EXTEND" else "CLOSE_SECTION")
         if event["semantic_kind"] in ("MEASUREMENT", "FINAL_RESULT"):
             vai = set()
-        steps.append({
+        step_entry: dict[str, Any] = {
             "step_index": event["step_index"],
             "visible_ids": sorted(visible),
             "focus_ids": sorted(set(focus)),
@@ -998,7 +1084,10 @@ def _build_formation(
             "semantic_kind": event["semantic_kind"],
             "geometry_progress": progress,
             "formation_roles": sorted(vai),
-        })
+        }
+        if "visible_prerequisites" in event:
+            step_entry["visible_prerequisites"] = list(event["visible_prerequisites"])
+        steps.append(step_entry)
     if steps:
         # Vật topology không có event riêng vẫn phải hiện ở ảnh kết thúc; chỉ
         # snapshot cuối được phép bổ sung chúng, nên không thể rò ra tương lai.

@@ -80,8 +80,15 @@ def _step_validity(
             )
         if prod == "construct_point.intersect_line_plane":
             refs.append(f"intersect_line_plane:{oid}")
-            return ("Đường thẳng cắt mặt phẳng tại một giao điểm duy nhất thỏa phương trình mặt phẳng.", refs)
-        if prod in ("construct_point.intersect_lines", "construct_point.line_line_intersection"):
+            return (
+                "Đường thẳng cắt mặt phẳng tại một giao điểm duy nhất xác định từ phương trình đường thẳng và mặt phẳng.",
+                refs,
+            )
+        if prod in (
+            "construct_point.intersect_line_line",
+            "construct_point.intersect_lines",
+            "construct_point.line_line_intersection",
+        ):
             refs.append(f"intersect_lines:{oid}")
             return ("Hai đường thẳng đồng phẳng và không song song nên cắt nhau tại đúng một điểm.", refs)
         if prod == "construct_point.translate" or otype == "vector3":
@@ -215,9 +222,22 @@ def enrich_construction_continuity(
         else:
             result_text = what_text
 
+        vis_prereqs: list[str] = []
+        lineages: list[dict[str, Any]] = []
+        for co in created_objs:
+            for vp in co.get("visible_prerequisites") or ():
+                if isinstance(vp, str) and vp not in vis_prereqs:
+                    vis_prereqs.append(vp)
+            lin = co.get("construction_lineage")
+            if isinstance(lin, dict):
+                lineages.append({"object": co.get("id"), **lin})
+
         st["step_id"] = f"step_{idx}"
         st["coordinate_frame_id"] = CANONICAL_COORDINATE_FRAME_ID
         st["depends_on"] = depends_on
+        st["visible_prerequisites"] = vis_prereqs
+        if lineages:
+            st["construction_lineage"] = lineages
         st["preconditions"] = preconditions
         st["created_ids"] = created_ids
         st["reused_ids"] = reused_ids

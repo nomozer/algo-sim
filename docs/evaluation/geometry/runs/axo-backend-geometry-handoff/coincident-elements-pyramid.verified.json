@@ -1,0 +1,711 @@
+{
+  "coincident_elements_pyramid": {
+    "title": "Hình chóp có điểm trùng, đoạn trùng cạnh và nhãn gần nhau",
+    "description": "Hình chóp S.ABCD có SA ⊥ (ABCD), chân đường cao H trùng A, đoạn AB trùng cạnh đáy, trung điểm M và hình chiếu K gần nhau trên SB.",
+    "scene3d": {
+      "free_objects": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "S"
+      ],
+      "objects": [
+        {
+          "id": "A",
+          "label": "Đỉnh A",
+          "notation": "A",
+          "type": "point3",
+          "render": "point_marker",
+          "origin": "free",
+          "producer": null,
+          "depends": [],
+          "xyz": [
+            "0",
+            "0",
+            "0"
+          ],
+          "display_group": [
+            "given"
+          ]
+        },
+        {
+          "id": "B",
+          "label": "Đỉnh B",
+          "notation": "B",
+          "type": "point3",
+          "render": "point_marker",
+          "origin": "free",
+          "producer": null,
+          "depends": [],
+          "xyz": [
+            "3",
+            "0",
+            "0"
+          ],
+          "display_group": [
+            "given"
+          ]
+        },
+        {
+          "id": "C",
+          "label": "Đỉnh C",
+          "notation": "C",
+          "type": "point3",
+          "render": "point_marker",
+          "origin": "free",
+          "producer": null,
+          "depends": [],
+          "xyz": [
+            "3",
+            "3",
+            "0"
+          ],
+          "display_group": [
+            "given"
+          ]
+        },
+        {
+          "id": "D",
+          "label": "Đỉnh D",
+          "notation": "D",
+          "type": "point3",
+          "render": "point_marker",
+          "origin": "free",
+          "producer": null,
+          "depends": [],
+          "xyz": [
+            "0",
+            "3",
+            "0"
+          ],
+          "display_group": [
+            "given"
+          ]
+        },
+        {
+          "id": "S",
+          "label": "Đỉnh S",
+          "notation": "S",
+          "type": "point3",
+          "render": "point_marker",
+          "origin": "free",
+          "producer": null,
+          "depends": [],
+          "xyz": [
+            "0",
+            "0",
+            "4"
+          ],
+          "display_group": [
+            "given"
+          ]
+        },
+        {
+          "id": "chop",
+          "label": "Hình chóp S.ABCD",
+          "notation": "S.ABCD",
+          "type": "solid",
+          "render": "mesh",
+          "origin": "derived",
+          "producer": "construct_solid",
+          "shape_class": "PYRAMID_LIKE",
+          "depends": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "S"
+          ],
+          "vertex_ids": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "S"
+          ],
+          "vertices": [
+            [
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "3",
+              "0",
+              "0"
+            ],
+            [
+              "3",
+              "3",
+              "0"
+            ],
+            [
+              "0",
+              "3",
+              "0"
+            ],
+            [
+              "0",
+              "0",
+              "4"
+            ]
+          ],
+          "faces": [
+            [
+              0,
+              1,
+              2,
+              3
+            ],
+            [
+              0,
+              1,
+              4
+            ],
+            [
+              1,
+              2,
+              4
+            ],
+            [
+              2,
+              3,
+              4
+            ],
+            [
+              3,
+              0,
+              4
+            ]
+          ],
+          "display_group": [
+            "given"
+          ]
+        },
+        {
+          "id": "H",
+          "label": "Chân đường cao H (trùng A)",
+          "notation": "H",
+          "type": "point3",
+          "render": "point_marker",
+          "origin": "derived",
+          "producer": "construct_point.project_onto",
+          "depends": [
+            "S",
+            "chop"
+          ],
+          "xyz": [
+            "0",
+            "0",
+            "0"
+          ],
+          "display_group": [
+            "construction"
+          ]
+        },
+        {
+          "id": "seg_AB",
+          "label": "Đoạn thẳng AB trùng cạnh đáy",
+          "notation": "AB",
+          "type": "segment3",
+          "render": "segment",
+          "origin": "derived",
+          "producer": "construct_segment",
+          "depends": [
+            "A",
+            "B"
+          ],
+          "endpoints": [
+            [
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "3",
+              "0",
+              "0"
+            ]
+          ],
+          "display_group": [
+            "construction"
+          ]
+        },
+        {
+          "id": "SB_line",
+          "label": "Đường thẳng SB",
+          "notation": "SB",
+          "type": "line3",
+          "render": "line",
+          "origin": "derived",
+          "producer": "construct_line",
+          "formation_roles": [
+            "CONSTRUCT_AUXILIARY_GEOMETRY"
+          ],
+          "depends": [
+            "S",
+            "B"
+          ],
+          "point": [
+            "0",
+            "0",
+            "4"
+          ],
+          "direction": [
+            "3",
+            "0",
+            "-4"
+          ],
+          "display_group": [
+            "construction"
+          ]
+        },
+        {
+          "id": "M",
+          "label": "Trung điểm M của SB",
+          "notation": "M",
+          "type": "point3",
+          "render": "point_marker",
+          "origin": "derived",
+          "producer": "construct_point.midpoint",
+          "depends": [
+            "S",
+            "B"
+          ],
+          "xyz": [
+            "3/2",
+            "0",
+            "2"
+          ],
+          "display_group": [
+            "construction"
+          ]
+        },
+        {
+          "id": "K",
+          "label": "Hình chiếu K của A lên SB",
+          "notation": "K",
+          "type": "point3",
+          "render": "point_marker",
+          "origin": "derived",
+          "producer": "construct_point.project_onto",
+          "depends": [
+            "SB_line",
+            "A"
+          ],
+          "xyz": [
+            "48/25",
+            "0",
+            "36/25"
+          ],
+          "display_group": [
+            "construction",
+            "target"
+          ]
+        },
+        {
+          "id": "AK",
+          "label": "Đoạn vuông góc AK",
+          "notation": "AK",
+          "type": "segment3",
+          "render": "segment",
+          "origin": "derived",
+          "producer": "construct_segment",
+          "depends": [
+            "A",
+            "K"
+          ],
+          "endpoints": [
+            [
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "48/25",
+              "0",
+              "36/25"
+            ]
+          ],
+          "display_group": [
+            "construction",
+            "target"
+          ],
+          "perpendicular_witness": {
+            "foot": [
+              "48/25",
+              "0",
+              "36/25"
+            ],
+            "on": "SB_line",
+            "marker": {
+              "u": [
+                "3",
+                "0",
+                "-4"
+              ],
+              "v": [
+                "-48",
+                "0",
+                "-36"
+              ]
+            },
+            "can_present_as_proven": true,
+            "certificate": "projection_onto_line"
+          }
+        }
+      ],
+      "events": [
+        {
+          "step_index": 0,
+          "semantic_kind": "EXPLANATION",
+          "action": "INIT",
+          "object": null,
+          "depends": [],
+          "explanation": "Khởi tạo các đỉnh A, B, C, D, S.",
+          "visible_prerequisites": []
+        },
+        {
+          "step_index": 1,
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "action": "CREATE",
+          "object": "chop",
+          "depends": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "S"
+          ],
+          "explanation": "Dựng hình chóp vuông góc S.ABCD (SA ⊥ đáy).",
+          "visible_prerequisites": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "S"
+          ]
+        },
+        {
+          "step_index": 2,
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "action": "CREATE",
+          "object": "H",
+          "depends": [
+            "S",
+            "chop"
+          ],
+          "explanation": "Chân đường cao H từ S xuống (ABCD) trùng với A.",
+          "visible_prerequisites": [
+            "S",
+            "chop"
+          ]
+        },
+        {
+          "step_index": 3,
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "action": "CREATE",
+          "object": "seg_AB",
+          "depends": [
+            "A",
+            "B"
+          ],
+          "explanation": "Xét đoạn thẳng AB trùng cạnh đáy.",
+          "visible_prerequisites": [
+            "A",
+            "B"
+          ]
+        },
+        {
+          "step_index": 4,
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "action": "CREATE",
+          "object": "SB_line",
+          "depends": [
+            "S",
+            "B"
+          ],
+          "visible_prerequisites": [
+            "S",
+            "B"
+          ],
+          "explanation": "Dựng đường thẳng SB đi qua hai điểm S và B."
+        },
+        {
+          "step_index": 5,
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "action": "CREATE",
+          "object": "M",
+          "depends": [
+            "S",
+            "B"
+          ],
+          "explanation": "Gọi M là trung điểm cạnh bên SB.",
+          "visible_prerequisites": [
+            "S",
+            "B"
+          ]
+        },
+        {
+          "step_index": 6,
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "action": "CREATE",
+          "object": "K",
+          "depends": [
+            "SB_line",
+            "A"
+          ],
+          "explanation": "Kẻ AK vuông góc với SB tại K (gần M).",
+          "visible_prerequisites": [
+            "SB_line",
+            "A"
+          ]
+        },
+        {
+          "step_index": 7,
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "action": "CREATE",
+          "object": "AK",
+          "depends": [
+            "A",
+            "K"
+          ],
+          "explanation": "Hoàn tất đoạn vuông góc AK ⊥ SB.",
+          "visible_prerequisites": [
+            "A",
+            "K"
+          ]
+        }
+      ],
+      "formation": {
+        "steps": [
+          {
+            "step_index": 0,
+            "semantic_kind": "EXPLANATION",
+            "visible_ids": [
+              "A",
+              "B",
+              "C",
+              "D",
+              "S"
+            ],
+            "focus_ids": [
+              "A",
+              "B",
+              "C",
+              "D",
+              "S"
+            ],
+            "readout_ids": [],
+            "learner_text": "Khởi tạo các đỉnh A, B, C, D, S.",
+            "geometry_progress": [],
+            "formation_roles": [
+              "DECLARE_ENTITIES"
+            ],
+            "visible_prerequisites": []
+          },
+          {
+            "step_index": 1,
+            "semantic_kind": "GEOMETRY_CONSTRUCTION",
+            "visible_ids": [
+              "A",
+              "B",
+              "C",
+              "D",
+              "S",
+              "chop"
+            ],
+            "focus_ids": [
+              "chop"
+            ],
+            "readout_ids": [],
+            "learner_text": "Dựng hình chóp vuông góc S.ABCD (SA ⊥ đáy).",
+            "geometry_progress": [],
+            "formation_roles": [
+              "CLOSE_SOLID"
+            ],
+            "visible_prerequisites": [
+              "A",
+              "B",
+              "C",
+              "D",
+              "S"
+            ]
+          },
+          {
+            "step_index": 2,
+            "semantic_kind": "GEOMETRY_CONSTRUCTION",
+            "visible_ids": [
+              "A",
+              "B",
+              "C",
+              "D",
+              "S",
+              "chop",
+              "H"
+            ],
+            "focus_ids": [
+              "H"
+            ],
+            "readout_ids": [],
+            "learner_text": "Chân đường cao H từ S xuống (ABCD) trùng với A.",
+            "geometry_progress": [],
+            "formation_roles": [
+              "CONSTRUCT_AUXILIARY_GEOMETRY"
+            ],
+            "visible_prerequisites": [
+              "S",
+              "chop"
+            ]
+          },
+          {
+            "step_index": 3,
+            "semantic_kind": "GEOMETRY_CONSTRUCTION",
+            "visible_ids": [
+              "A",
+              "B",
+              "C",
+              "D",
+              "S",
+              "chop",
+              "H",
+              "seg_AB"
+            ],
+            "focus_ids": [
+              "seg_AB"
+            ],
+            "readout_ids": [],
+            "learner_text": "Xét đoạn thẳng AB trùng cạnh đáy.",
+            "geometry_progress": [],
+            "formation_roles": [
+              "CONSTRUCT_AUXILIARY_GEOMETRY"
+            ],
+            "visible_prerequisites": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "step_index": 4,
+            "semantic_kind": "GEOMETRY_CONSTRUCTION",
+            "visible_ids": [
+              "A",
+              "B",
+              "C",
+              "D",
+              "S",
+              "chop",
+              "H",
+              "seg_AB",
+              "SB_line"
+            ],
+            "focus_ids": [
+              "SB_line"
+            ],
+            "readout_ids": [],
+            "learner_text": "Dựng đường thẳng SB đi qua hai điểm S và B.",
+            "geometry_progress": [],
+            "formation_roles": [
+              "CONSTRUCT_AUXILIARY_GEOMETRY"
+            ],
+            "visible_prerequisites": [
+              "S",
+              "B"
+            ]
+          },
+          {
+            "step_index": 5,
+            "semantic_kind": "GEOMETRY_CONSTRUCTION",
+            "visible_ids": [
+              "A",
+              "B",
+              "C",
+              "D",
+              "S",
+              "chop",
+              "H",
+              "seg_AB",
+              "SB_line",
+              "M"
+            ],
+            "focus_ids": [
+              "M"
+            ],
+            "readout_ids": [],
+            "learner_text": "Gọi M là trung điểm cạnh bên SB.",
+            "geometry_progress": [],
+            "formation_roles": [
+              "CONSTRUCT_AUXILIARY_GEOMETRY"
+            ],
+            "visible_prerequisites": [
+              "S",
+              "B"
+            ]
+          },
+          {
+            "step_index": 6,
+            "semantic_kind": "GEOMETRY_CONSTRUCTION",
+            "visible_ids": [
+              "A",
+              "B",
+              "C",
+              "D",
+              "S",
+              "chop",
+              "H",
+              "seg_AB",
+              "SB_line",
+              "M",
+              "K"
+            ],
+            "focus_ids": [
+              "K"
+            ],
+            "readout_ids": [],
+            "learner_text": "Kẻ AK vuông góc với SB tại K (gần M).",
+            "geometry_progress": [],
+            "formation_roles": [
+              "CONSTRUCT_AUXILIARY_GEOMETRY"
+            ],
+            "visible_prerequisites": [
+              "SB_line",
+              "A"
+            ]
+          },
+          {
+            "step_index": 7,
+            "semantic_kind": "GEOMETRY_CONSTRUCTION",
+            "visible_ids": [
+              "A",
+              "B",
+              "C",
+              "D",
+              "S",
+              "chop",
+              "H",
+              "seg_AB",
+              "SB_line",
+              "M",
+              "K",
+              "AK"
+            ],
+            "focus_ids": [
+              "AK"
+            ],
+            "readout_ids": [],
+            "learner_text": "Hoàn tất đoạn vuông góc AK ⊥ SB.",
+            "geometry_progress": [],
+            "formation_roles": [
+              "CONSTRUCT_AUXILIARY_GEOMETRY"
+            ],
+            "visible_prerequisites": [
+              "A",
+              "K"
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

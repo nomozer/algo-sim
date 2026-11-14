@@ -1,0 +1,81 @@
+{
+  "schema_version": "backend-handoff-resolution-run/1",
+  "run_id": "axo-backend-geometry-handoff",
+  "date": "2026-11-14",
+  "branch": "feat/local-first-geometry-understanding",
+  "base_commit": "914dd41dbb14b40647743c43dda09cbe1b306dd8",
+  "reference_library_repo": {
+    "path": "D:/Documents/projects/axo-geometry-library",
+    "branch": "feat/axo-geometry-library-verification",
+    "head_commit": "dfc063840",
+    "modified_by_this_run": false
+  },
+  "owner_approval": "PENDING_OWNER_REVIEW",
+  "issues_addressed": [
+    "GEO-BE-V9415-001",
+    "GEO-BE-V9415-002",
+    "GEO-BE-V9415-003",
+    "GEO-BE-V9415-004",
+    "SECTION_6_MENPF_EN_EDGE_CROSS_CHECK"
+  ],
+  "invariants": {
+    "ALLOW_LIVE_AI": "0",
+    "GEMINI_REQUESTS_EXECUTED": 0,
+    "EVALUATION_CANDIDATE_MODIFIED": false,
+    "VALIDATOR_MEMORY_LIMIT_UNCHANGED": 32,
+    "AXO_GEOMETRY_LIBRARY_MODIFIED": false,
+    "FRONTEND_WORKTREE_FILES_MODIFIED": false,
+    "PREEXISTING_DIRTY_FILES_UNTOUCHED": [
+      "backend/app/simulation/geometry_functions/engine.py",
+      "backend/app/simulation/geometry_functions/target_invariance.py",
+      "docs/evaluation/geometry/runs/proof-soundness-generalized-angle-invariance/"
+    ]
+  },
+  "owned_backend_changes": [
+    "backend/app/simulation/semantic_program/geometry_exec.py",
+    "backend/app/simulation/semantic_program/interpreter.py",
+    "backend/app/simulation/semantic_program/simulation_state.py",
+    "backend/app/simulation/semantic_program/scene3d.py",
+    "backend/app/simulation/geometry_functions/construction_continuity.py",
+    "backend/tests/geometry/test_backend_geometry_handoff_resolution.py"
+  ],
+  "artifacts": {
+    "scene3d-circumsphere-fixture.verified.json": {
+      "sha256": "872368586fe8dd258e25f55fb7051da310ffad9f663e5d28dde54eb962536320",
+      "bytes": 35583
+    },
+    "coincident-elements-pyramid.verified.json": {
+      "sha256": "1a5fb2edcf6d82bd766b1475b9ad5912c08abf4feef70066fac47f3a346ba1ea",
+      "bytes": 16751
+    },
+    "coincident-elements-pyramid.patch": {
+      "sha256": "a8e1b3b6fead1aa297345834672592cffa7ea35599ae7684e1b524432db2f25b",
+      "bytes": 8878
+    },
+    "advanced-geometry-samples.backend-fixed.json": {
+      "sha256": "f4051d03313a2f02a982c3393bab7e7a2996df46b029e7d77c2b6560b671b0fa",
+      "bytes": 895795
+    },
+    "advanced-geometry-samples.coplanar-sections.verified.json": {
+      "sha256": "87ed58a391b4bdff1ea6feaf45c39688704ea443391d48990538fa61430e8f67",
+      "bytes": 477081
+    },
+    "build_advanced_geometry_samples.coplanar-sections.patch": {
+      "sha256": "6d0c787ad3f24ea9776b57d7e8e84ede215de24231d04b5b4292e334cf9144c0",
+      "bytes": 16256
+    }
+  },
+  "verification": {
+    "pytest_targeted_regression_17_files": {
+      "passed": 428,
+      "failed": 0,
+      "skipped": 0,
+      "warnings": 1,
+      "duration_seconds": 30.35
+    },
+    "zero_measure_events_audited": 11,
+    "unused_auxiliary_detected_chop_thiet_dien": ["O"],
+    "unused_auxiliary_other_10_unmodified_samples": 0,
+    "unused_auxiliary_3_coplanar_samples": 0
+  }
+}

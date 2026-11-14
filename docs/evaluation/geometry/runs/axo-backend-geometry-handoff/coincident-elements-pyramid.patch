@@ -1,0 +1,313 @@
+--- a/frontend/src/simulations/domains/geometry/scene3d-regression-archetypes-fixtures.json
++++ b/frontend/src/simulations/domains/geometry/scene3d-regression-archetypes-fixtures.json
+@@ -1137,7 +1137,8 @@
+           "action": "INIT",
+           "object": null,
+           "depends": [],
+-          "explanation": "Khởi tạo các đỉnh A, B, C, D, S."
++          "explanation": "Khởi tạo các đỉnh A, B, C, D, S.",
++          "visible_prerequisites": []
+         },
+         {
+           "step_index": 1,
+@@ -1151,7 +1152,14 @@
+             "D",
+             "S"
+           ],
+-          "explanation": "Dựng hình chóp vuông góc S.ABCD (SA ⊥ đáy)."
++          "explanation": "Dựng hình chóp vuông góc S.ABCD (SA ⊥ đáy).",
++          "visible_prerequisites": [
++            "A",
++            "B",
++            "C",
++            "D",
++            "S"
++          ]
+         },
+         {
+           "step_index": 2,
+@@ -1162,7 +1170,11 @@
+             "S",
+             "chop"
+           ],
+-          "explanation": "Chân đường cao H từ S xuống (ABCD) trùng với A."
++          "explanation": "Chân đường cao H từ S xuống (ABCD) trùng với A.",
++          "visible_prerequisites": [
++            "S",
++            "chop"
++          ]
+         },
+         {
+           "step_index": 3,
+@@ -1173,40 +1185,71 @@
+             "A",
+             "B"
+           ],
+-          "explanation": "Xét đoạn thẳng AB trùng cạnh đáy."
++          "explanation": "Xét đoạn thẳng AB trùng cạnh đáy.",
++          "visible_prerequisites": [
++            "A",
++            "B"
++          ]
+         },
+         {
+           "step_index": 4,
+           "semantic_kind": "GEOMETRY_CONSTRUCTION",
+           "action": "CREATE",
+-          "object": "M",
++          "object": "SB_line",
+           "depends": [
+             "S",
+             "B"
+           ],
+-          "explanation": "Gọi M là trung điểm cạnh bên SB."
++          "visible_prerequisites": [
++            "S",
++            "B"
++          ],
++          "explanation": "Dựng đường thẳng SB đi qua hai điểm S và B."
+         },
+         {
+           "step_index": 5,
+           "semantic_kind": "GEOMETRY_CONSTRUCTION",
+           "action": "CREATE",
+-          "object": "K",
+-          "depends": [
+-            "SB_line",
+-            "A"
+-          ],
+-          "explanation": "Kẻ AK vuông góc với SB tại K (gần M)."
++          "object": "M",
++          "depends": [
++            "S",
++            "B"
++          ],
++          "explanation": "Gọi M là trung điểm cạnh bên SB.",
++          "visible_prerequisites": [
++            "S",
++            "B"
++          ]
+         },
+         {
+           "step_index": 6,
+           "semantic_kind": "GEOMETRY_CONSTRUCTION",
+           "action": "CREATE",
++          "object": "K",
++          "depends": [
++            "SB_line",
++            "A"
++          ],
++          "explanation": "Kẻ AK vuông góc với SB tại K (gần M).",
++          "visible_prerequisites": [
++            "SB_line",
++            "A"
++          ]
++        },
++        {
++          "step_index": 7,
++          "semantic_kind": "GEOMETRY_CONSTRUCTION",
++          "action": "CREATE",
+           "object": "AK",
+           "depends": [
+             "A",
+             "K"
+           ],
+-          "explanation": "Hoàn tất đoạn vuông góc AK ⊥ SB."
++          "explanation": "Hoàn tất đoạn vuông góc AK ⊥ SB.",
++          "visible_prerequisites": [
++            "A",
++            "K"
++          ]
+         }
+       ],
+       "formation": {
+@@ -1221,7 +1264,20 @@
+               "D",
+               "S"
+             ],
+-            "geometry_progress": []
++            "focus_ids": [
++              "A",
++              "B",
++              "C",
++              "D",
++              "S"
++            ],
++            "readout_ids": [],
++            "learner_text": "Khởi tạo các đỉnh A, B, C, D, S.",
++            "geometry_progress": [],
++            "formation_roles": [
++              "DECLARE_ENTITIES"
++            ],
++            "visible_prerequisites": []
+           },
+           {
+             "step_index": 1,
+@@ -1234,7 +1290,22 @@
+               "S",
+               "chop"
+             ],
+-            "geometry_progress": []
++            "focus_ids": [
++              "chop"
++            ],
++            "readout_ids": [],
++            "learner_text": "Dựng hình chóp vuông góc S.ABCD (SA ⊥ đáy).",
++            "geometry_progress": [],
++            "formation_roles": [
++              "CLOSE_SOLID"
++            ],
++            "visible_prerequisites": [
++              "A",
++              "B",
++              "C",
++              "D",
++              "S"
++            ]
+           },
+           {
+             "step_index": 2,
+@@ -1248,7 +1319,19 @@
+               "chop",
+               "H"
+             ],
+-            "geometry_progress": []
++            "focus_ids": [
++              "H"
++            ],
++            "readout_ids": [],
++            "learner_text": "Chân đường cao H từ S xuống (ABCD) trùng với A.",
++            "geometry_progress": [],
++            "formation_roles": [
++              "CONSTRUCT_AUXILIARY_GEOMETRY"
++            ],
++            "visible_prerequisites": [
++              "S",
++              "chop"
++            ]
+           },
+           {
+             "step_index": 3,
+@@ -1263,10 +1346,50 @@
+               "H",
+               "seg_AB"
+             ],
+-            "geometry_progress": []
++            "focus_ids": [
++              "seg_AB"
++            ],
++            "readout_ids": [],
++            "learner_text": "Xét đoạn thẳng AB trùng cạnh đáy.",
++            "geometry_progress": [],
++            "formation_roles": [
++              "CONSTRUCT_AUXILIARY_GEOMETRY"
++            ],
++            "visible_prerequisites": [
++              "A",
++              "B"
++            ]
+           },
+           {
+             "step_index": 4,
++            "semantic_kind": "GEOMETRY_CONSTRUCTION",
++            "visible_ids": [
++              "A",
++              "B",
++              "C",
++              "D",
++              "S",
++              "chop",
++              "H",
++              "seg_AB",
++              "SB_line"
++            ],
++            "focus_ids": [
++              "SB_line"
++            ],
++            "readout_ids": [],
++            "learner_text": "Dựng đường thẳng SB đi qua hai điểm S và B.",
++            "geometry_progress": [],
++            "formation_roles": [
++              "CONSTRUCT_AUXILIARY_GEOMETRY"
++            ],
++            "visible_prerequisites": [
++              "S",
++              "B"
++            ]
++          },
++          {
++            "step_index": 5,
+             "semantic_kind": "GEOMETRY_CONSTRUCTION",
+             "visible_ids": [
+               "A",
+@@ -1280,10 +1403,22 @@
+               "SB_line",
+               "M"
+             ],
+-            "geometry_progress": []
++            "focus_ids": [
++              "M"
++            ],
++            "readout_ids": [],
++            "learner_text": "Gọi M là trung điểm cạnh bên SB.",
++            "geometry_progress": [],
++            "formation_roles": [
++              "CONSTRUCT_AUXILIARY_GEOMETRY"
++            ],
++            "visible_prerequisites": [
++              "S",
++              "B"
++            ]
+           },
+           {
+-            "step_index": 5,
++            "step_index": 6,
+             "semantic_kind": "GEOMETRY_CONSTRUCTION",
+             "visible_ids": [
+               "A",
+@@ -1298,10 +1433,22 @@
+               "M",
+               "K"
+             ],
+-            "geometry_progress": []
++            "focus_ids": [
++              "K"
++            ],
++            "readout_ids": [],
++            "learner_text": "Kẻ AK vuông góc với SB tại K (gần M).",
++            "geometry_progress": [],
++            "formation_roles": [
++              "CONSTRUCT_AUXILIARY_GEOMETRY"
++            ],
++            "visible_prerequisites": [
++              "SB_line",
++              "A"
++            ]
+           },
+           {
+-            "step_index": 6,
++            "step_index": 7,
+             "semantic_kind": "GEOMETRY_CONSTRUCTION",
+             "visible_ids": [
+               "A",
+@@ -1317,7 +1464,19 @@
+               "K",
+               "AK"
+             ],
+-            "geometry_progress": []
++            "focus_ids": [
++              "AK"
++            ],
++            "readout_ids": [],
++            "learner_text": "Hoàn tất đoạn vuông góc AK ⊥ SB.",
++            "geometry_progress": [],
++            "formation_roles": [
++              "CONSTRUCT_AUXILIARY_GEOMETRY"
++            ],
++            "visible_prerequisites": [
++              "A",
++              "K"
++            ]
+           }
+         ]
+       }

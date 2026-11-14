@@ -219,57 +219,7 @@ class SemanticProgramInterpreter:
         if isinstance(stmt, AssignStmt):
             val = self._eval_value(stmt.expr)
             self._set_var(stmt.target_var, val)
-            narration = None
-            if self._compiler_geometry and getattr(stmt.expr, "kind", None) == "measure":
-                qty = getattr(stmt.expr, "quantity", None)
-                if qty == "area":
-                    narration = f"Tính diện tích của hình đã dựng: {val}."
-                elif qty == "distance":
-                    narration = f"Xác định khoảng cách cần dùng: {val}."
-                elif qty == "volume":
-                    dimension_values = {
-                        value for name, value in self.memory.items()
-                        if name.endswith("_length") and value is not None
-                    }
-                    if self._last_solid_vertex_count == 8 and len(dimension_values) == 1:
-                        narration = f"Tính thể tích V = a³ = {val}."
-                    else:
-                        narration = f"Tính thể tích khối: {val}."
-            elif self._compiler_geometry and getattr(stmt.expr, "kind", None) == "var":
-                from .display_names import ky_hieu_dai_luong
-                target_symbol = ky_hieu_dai_luong(stmt.target_var)
-                source_symbol = ky_hieu_dai_luong(getattr(stmt.expr, "name", ""))
-                if target_symbol and source_symbol:
-                    if stmt.target_var.endswith("_length"):
-                        narration = f"Suy ra {target_symbol} = {source_symbol} = {val}."
-                    elif stmt.target_var == "V":
-                        narration = f"Kết luận {target_symbol} = {val}."
-
-            if not narration and self._compiler_geometry and getattr(stmt.expr, "kind", None) == "vector_from_points":
-                # Một vectơ không phải "giá trị vừa tính": kể bằng hai điểm, không in repr của Vec3. Chỉ chương trình
-                # compiler — envelope LLM_ONLY giữ nguyên byte (lỗi lời kể ấy của tuyến LLM: OPEN_ISSUES, cần bump cache).
-                from .source_entities import dinh_danh_thuc_the
-                narration = "Lấy vectơ {}{}.".format(*(dinh_danh_thuc_the(p)[1] for p in (
-                    stmt.expr.from_point, stmt.expr.to_point)))
-            if not narration and self._compiler_geometry and getattr(stmt, "label", None):
-                lbl = str(stmt.label).strip()
-                if lbl:
-                    narration = f"Tính {lbl[:1].lower() + lbl[1:]}: {val}."
-            if not narration and self._kieu_khai.get(stmt.target_var) in GEOMETRY_TYPES:
-                # A geometric object is NAMED, never printed: `str()` of a kernel value is its Python repr
-                # ("Circle3(center=Vec3(x=Fraction(0, 1), …"), not learner text (run `hybrid-backend-reliability`).
-                from .display_names import MO_TA_KIEU, ky_hieu_dai_luong
-                target_symbol = ky_hieu_dai_luong(stmt.target_var)
-                noun = MO_TA_KIEU[self._kieu_khai[stmt.target_var]].lower()
-                narration = f"Dựng {noun} {target_symbol}." if target_symbol else f"Dựng {noun} cần dùng."
-            if not narration:
-                from .display_names import ky_hieu_dai_luong
-                target_symbol = ky_hieu_dai_luong(stmt.target_var)
-                narration = (
-                    f"Ghi nhận {target_symbol} = {val}."
-                    if target_symbol
-                    else f"Ghi nhận giá trị vừa tính được: {val}."
-                )
+            narration = self._mo_ta_phep_gan(stmt, val)
 
             self._record_step(
                 action="assign",
@@ -872,6 +822,133 @@ class SemanticProgramInterpreter:
             self.memory[name] = val
         else:
             self.scope_stack[-1][name] = val
+
+    def _ten_hien_thi_nhanh(self, oid: Optional[str]) -> str:
+        """Resolve a clean learner-facing reference for an IR identifier without snake_case leaks."""
+        if not oid:
+            return "đối tượng"
+        for step in reversed(self.trace):
+            if step.target == oid:
+                lbl = (step.details or {}).get("label")
+                if isinstance(lbl, str) and lbl.strip() and "_" not in lbl:
+                    return lbl.strip().replace("'", "′")
+        from .display_names import MO_TA_KIEU, ky_hieu_dai_luong
+        from .source_entities import dinh_danh_thuc_the
+
+        kieu = self._kieu_khai.get(oid)
+        if kieu in ("point3", "line3", "segment3", "solid", "polygon3") or oid.endswith("_prime"):
+            _, sym = dinh_danh_thuc_the(oid)
+            if sym and "_" not in sym:
+                return sym
+        if "_" not in oid:
+            return ky_hieu_dai_luong(oid) or oid
+        return MO_TA_KIEU.get(kieu or "", "đối tượng").lower()
+
+    def _mo_ta_phep_gan(self, stmt: AssignStmt, val: Any) -> str:
+        """Format learner- and engine-safe narration for any AssignStmt regardless of compiler mode."""
+        from ..geometry import Line3, Plane3
+        from ..geometry.curved import Circle3, CurvedSolid, Ellipse3
+        from ..geometry.section import Polyhedron, Section
+        from .display_names import MO_TA_KIEU, ky_hieu_dai_luong
+        from .geometry_exec import phan_loai_quan_he_do
+        from .source_entities import dinh_danh_thuc_the
+
+        expr_kind = getattr(stmt.expr, "kind", None)
+        if expr_kind == "measure":
+            qty = getattr(stmt.expr, "quantity", "")
+            of_id = getattr(stmt.expr, "of", "")
+            wrt_id = getattr(stmt.expr, "wrt", None)
+            sym_a = self._ten_hien_thi_nhanh(of_id)
+            sym_b = self._ten_hien_thi_nhanh(wrt_id) if wrt_id else ""
+            obj_a = self.memory.get(of_id)
+            obj_b = self.memory.get(wrt_id) if wrt_id else None
+            rel = phan_loai_quan_he_do(qty, val, obj_a, obj_b)
+
+            if qty == "angle_cos_sq":
+                rel_text = {
+                    "perpendicular_lines": f" Do cos² = 0 nên hai đường thẳng {sym_a} và {sym_b} vuông góc với nhau.",
+                    "perpendicular_planes": f" Do cos² = 0 nên hai mặt phẳng {sym_a} và {sym_b} vuông góc với nhau.",
+                    "perpendicular_line_plane": f" Do cos² = 0 nên {sym_a} vuông góc với {sym_b}.",
+                    "parallel_lines": f" Do cos² = 1 nên hai đường thẳng {sym_a} và {sym_b} song song hoặc trùng nhau.",
+                    "parallel_planes": f" Do cos² = 1 nên hai mặt phẳng {sym_a} và {sym_b} song song hoặc trùng nhau.",
+                    "parallel_line_plane": f" Do cos² = 1 nên {sym_a} song song hoặc nằm trong {sym_b}.",
+                }.get(rel or "", "")
+                return f"Tính cos² góc giữa {sym_a} và {sym_b}: cos²({sym_a}, {sym_b}) = {val}.{rel_text}"
+            if qty == "angle_cos":
+                rel_text = {
+                    "orthogonal_vectors": "; do cos = 0 nên hai vectơ vuông góc",
+                    "same_direction_vectors": "; do cos = 1 nên hai vectơ cùng hướng",
+                    "opposite_direction_vectors": "; do cos = -1 nên hai vectơ ngược hướng",
+                }.get(rel or "", "")
+                return f"Tính cosin góc giữa hai vectơ {sym_a} và {sym_b}: cos({sym_a}, {sym_b}) = {val}{rel_text}."
+            if qty == "distance":
+                meaning = {
+                    "coincident_points": " (hai điểm trùng nhau)",
+                    "point_on_line": " (điểm nằm trên đường thẳng)",
+                    "point_on_plane": " (điểm nằm trên mặt phẳng)",
+                    "coplanar_intersecting_or_coincident_lines": " (hai đường thẳng đồng phẳng cắt nhau hoặc trùng nhau)",
+                    "line_intersects_or_in_plane": " (đường thẳng cắt hoặc nằm trong mặt phẳng)",
+                    "intersecting_or_coincident_planes": " (hai mặt phẳng cắt nhau hoặc trùng nhau)",
+                }.get(rel or "", "")
+                return f"Xác định khoảng cách giữa {sym_a} và {sym_b} bằng {val}{meaning}."
+            if qty == "area":
+                return f"Tính diện tích {sym_a}: {val}."
+            if qty == "volume":
+                dimension_values = {
+                    value for name, value in self.memory.items()
+                    if name.endswith("_length") and value is not None
+                }
+                if self._last_solid_vertex_count == 8 and len(dimension_values) == 1:
+                    return f"Tính thể tích V = a³ = {val}."
+                return f"Tính thể tích {sym_a}: {val}."
+            if qty == "radius":
+                return f"Tính bán kính của {sym_a}: {val}."
+            if qty == "lateral_area":
+                return f"Tính diện tích xung quanh của {sym_a}: {val}."
+
+        if expr_kind == "vector_from_points":
+            return "Lấy vectơ {}{}.".format(*(dinh_danh_thuc_the(p)[1] for p in (
+                stmt.expr.from_point, stmt.expr.to_point)))
+
+        if expr_kind == "var":
+            target_symbol = ky_hieu_dai_luong(stmt.target_var)
+            source_symbol = ky_hieu_dai_luong(getattr(stmt.expr, "name", ""))
+            if target_symbol and source_symbol:
+                if stmt.target_var.endswith("_length"):
+                    return f"Suy ra {target_symbol} = {source_symbol} = {val}."
+                if stmt.target_var == "V":
+                    return f"Kết luận {target_symbol} = {val}."
+
+        runtime_type_map = (
+            (Circle3, "circle3"),
+            (Ellipse3, "ellipse3"),
+            (Line3, "line3"),
+            (Plane3, "plane3"),
+            (Polyhedron, "solid"),
+            (Section, "section"),
+            (CurvedSolid, "curved_solid"),
+        )
+        declared_type = self._kieu_khai.get(stmt.target_var)
+        detected_type = declared_type if declared_type in GEOMETRY_TYPES else next(
+            (name for cls, name in runtime_type_map if isinstance(val, cls)),
+            None,
+        )
+        if detected_type is not None:
+            # A geometric object is NAMED, never printed: `str()` of a kernel value is Python repr.
+            target_symbol = self._ten_hien_thi_nhanh(stmt.target_var)
+            noun = MO_TA_KIEU[detected_type].lower()
+            clean_lbl = str(getattr(stmt, "label", "") or "").strip()
+            if clean_lbl and "_" not in clean_lbl:
+                return f"Dựng {clean_lbl}." if not clean_lbl.lower().startswith(noun) else f"Dựng {clean_lbl[:1].lower() + clean_lbl[1:]}."
+            return f"Dựng {noun} {target_symbol}." if target_symbol and target_symbol != noun else f"Dựng {noun} cần dùng."
+
+        lbl = str(getattr(stmt, "label", "") or "").strip()
+        if lbl and "_" not in lbl:
+            return f"Tính {lbl[:1].lower() + lbl[1:]}: {val}."
+        target_symbol = ky_hieu_dai_luong(stmt.target_var)
+        if target_symbol and "_" not in stmt.target_var:
+            return f"Tính giá trị {target_symbol} = {val}."
+        return f"Tính giá trị đại lượng: {val}."
 
     def _record_step(
         self,

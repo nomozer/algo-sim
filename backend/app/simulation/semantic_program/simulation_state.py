@@ -48,7 +48,11 @@ from .construction_binding import AUXILIARY, MATCHED, doi_chieu_phep_dung
 from .contract import SemanticProgramSpec
 from .display_names import ky_hieu_dai_luong, ten_hien_thi
 from .formation import gan_vai_tro_dung
-from .geometry_exec import la_dai_luong_do, la_doi_tuong_hinh_hoc
+from .geometry_exec import (
+    la_dai_luong_do,
+    la_doi_tuong_hinh_hoc,
+    phan_loai_quan_he_do,
+)
 from .hoisting import TIEN_TO_TAM
 from .quantity_annotations import chieu_cao_the_tich, doan_tren_canh, gan_so_do
 from .shape_constraint import doc_quan_he_cat
@@ -408,11 +412,46 @@ def _length_joins_vertices(name: str, vertices: list[str]) -> bool:
     )
 
 
+_NON_VISUAL_CARRIERS = frozenset({"vector3", "quantity"})
+
+
+def _unwrap_visible_sources(
+    sources: list[str],
+    object_types: dict[str, str],
+    dependencies: dict[str, list[str]],
+    *,
+    exclude_id: str | None = None,
+) -> list[str]:
+    """Khai triển các nguồn trung gian không hiển thị (`vector3`, `quantity`) về vật hiển thị."""
+    seen_expand: set[str] = set()
+    out: list[str] = []
+
+    def _visit(sid: str) -> None:
+        if sid == exclude_id:
+            return
+        stype = object_types.get(sid)
+        if stype in _NON_VISUAL_CARRIERS:
+            if sid in seen_expand:
+                return
+            seen_expand.add(sid)
+            sub_deps = dependencies.get(sid) or []
+            if sub_deps:
+                for sub in sub_deps:
+                    _visit(sub)
+                return
+        if sid not in out:
+            out.append(sid)
+
+    for src in sources:
+        _visit(src)
+    return out
+
+
 def typed_dependency_graph(
     spec: SemanticProgramSpec,
     scene: dict[str, Any],
     dependencies: dict[str, list[str]],
-) -> dict[str, list[dict[str, str]]]:
+) -> dict[str, list[dict[str, Any]]]:
     """Gắn loại provenance cho từng cạnh phụ thuộc của Scene3D.
 
     Đây là metadata trình bày additive. Đồ thị ``dependencies`` cũ vẫn giữ
@@ -434,10 +473,10 @@ def typed_dependency_graph(
         "vector3": "topological",
         "quantity": "numerical",
     }
-    result: dict[str, list[dict[str, str]]] = {}
+    result: dict[str, list[dict[str, Any]]] = {}
     for target, sources in dependencies.items():
         producer = str(provenance.get(target, {}).get("producer") or "")
-        edges: list[dict[str, str]] = []
+        edges: list[dict[str, Any]] = []
         for source in sources:
             source_type = object_types.get(source)
             relation = relation_by_type.get(source_type or "", "layout")
@@ -445,7 +484,17 @@ def typed_dependency_graph(
                 relation = "numerical"
             elif producer == "measure.volume" and source_type == "solid":
                 relation = "structural"
-            edges.append({"source_id": source, "relation": relation})
+            edge: dict[str, Any] = {"source_id": source, "relation": relation}
+            if source_type in _NON_VISUAL_CARRIERS:
+                edge["is_non_visual_carrier"] = True
+                if source_type == "vector3":
+                    edge["resolved_visible_sources"] = _unwrap_visible_sources(
+                        dependencies.get(source) or [source],
+                        object_types,
+                        dependencies,
+                        exclude_id=source,
+                    )
+            edges.append(edge)
         result[target] = edges
     return result
 
@@ -622,15 +671,21 @@ def build_scene(
             tho.append((ten, "quantity", _dai_luong(gt)))
             continue
         mac_dinh, noi_dung = than
-        tho.append((ten, _loai_ngu_nghia(mac_dinh, kieu.get(ten)), noi_dung))
+        kieu_khai = kieu.get(ten) or (
+            "vector3" if prov.get(ten, {}).get("producer") == "vector_from_points" else None
+        )
+        tho.append((ten, _loai_ngu_nghia(mac_dinh, kieu_khai), noi_dung))
 
     # ── LƯỢT 2: TÊN HIỂN THỊ, do tầng ngữ nghĩa quyết ────────────────────
     #
     # Khối mang bảng mặt + toạ độ để tầng tên gọi được LOẠI khối (chóp, lăng
     # trụ, hộp, lập phương) từ topology; thiết diện mang tên các điểm trùng
     # đỉnh của nó để được gọi bằng chu trình. Không suy gì từ tên bài.
-    diem_co_ten = {n: v for n, v in memory.items()
-                   if isinstance(v, Vec3) and kieu.get(n) == "point3"}
+    diem_co_ten = {
+        ten: memory[ten]
+        for ten, loai, _ in tho
+        if loai == "point3" and isinstance(memory.get(ten), Vec3)
+    }
 
     def _hinh(ten: str, loai: str) -> dict[str, Any]:
         gt = memory.get(ten)
@@ -641,7 +696,12 @@ def build_scene(
             ten_dinh = [next((n for n, v in diem_co_ten.items() if v == p), None)
                         for p in gt.polygon]
             if all(ten_dinh) and len(set(ten_dinh)) == len(ten_dinh):
-                return {"section_vertex_names": ten_dinh}
+                ten_dinh_clean = [n for n in ten_dinh if n is not None]
+                # Align cycle start/orientation if section label explicitly specifies one
+                lbl_hint = str(prov.get(ten, {}).get("label") or ten)
+                syms = [ky_hieu_dai_luong(n) or n.replace("'", "′") for n in ten_dinh_clean]
+                ten_dinh_clean, _ = _can_chinh_chu_trinh_dinh(ten_dinh_clean, syms, lbl_hint)
+                return {"section_vertex_names": ten_dinh_clean}
         if loai == "plane3" and isinstance(gt, Plane3):
             # Điểm có tên nằm TRÊN mặt phẳng (chính xác) — để tên khai `(ABCD)` được kiểm, không rút thầm thành `(ABC)`.
             return {"points_on_plane": [n for n, v in diem_co_ten.items() if gt.signed_eval(v) == 0]}
@@ -815,6 +875,14 @@ def build_simulation_state(
                                        duong_vuong_goc_chung=common_perpendicular_witness)
     chieu_cao = chieu_cao_the_tich(scene["objects"], exec_result.final_memory, so_do)
     dependencies = dependency_graph(spec)
+    prov = _provenance(spec)
+    _gan_measured_quantity(scene["objects"], exec_result.final_memory)
+    _gan_lineage_va_tien_quyet(scene["objects"], dependencies)
+    _gan_chu_trinh_canh_thiet_dien(scene["objects"], exec_result.final_memory, prov)
+    targets = sorted(_muc_tieu(contract))
+    unused_aux_ids = _tim_phu_tro_du_thua(
+        scene["objects"], dependencies, exec_result.final_memory, targets
+    )
     return {
         "scene": scene,
         "dependencies": dependencies,
@@ -832,7 +900,8 @@ def build_simulation_state(
         # `targets`: vật mà đề BẢO chứng minh/tính. Nhóm hiển thị `target` dẫn
         # xuất từ đây, nên học sinh phân biệt được *"cái phải chứng minh"* với
         # *"cái dựng ra để chứng minh"* — thứ nhìn hình vẽ phẳng không thấy.
-        "targets": sorted(_muc_tieu(contract)),
+        "targets": targets,
+        "unused_auxiliary_ids": unused_aux_ids,
         "provenance": _xuat_xu_hien_thi(spec, contract),
         "annotations": so_do,
         "annotation_diagnostics": chan_doan_so_do,
@@ -843,6 +912,219 @@ def build_simulation_state(
         "khai": "Trạng thái TRUNG GIAN cho renderer. Mọi số là chuỗi phân số "
                 "CHÍNH XÁC; hoá float là việc của renderer, ở bước cuối cùng.",
     }
+
+
+def _can_chinh_chu_trinh_dinh(
+    ids: list[str],
+    syms: list[str],
+    label_hint: str,
+) -> tuple[list[str], list[str]]:
+    """Xoay/đảo chu trình đỉnh thiết diện khi nhãn nguồn nêu đúng một hoán vị vòng."""
+    if len(ids) < 3 or len(ids) != len(syms):
+        return ids, syms
+    tokens = re.findall(r"[A-Za-z0-9'′]+", (label_hint or "").replace("'", "′"))
+    norm_syms = [s.replace("'", "′") for s in syms]
+    rev_ids = list(reversed(ids))
+    rev_syms = list(reversed(syms))
+    norm_rev = list(reversed(norm_syms))
+    for tok in tokens:
+        for base_ids, base_syms, base_norm in (
+            (ids, syms, norm_syms),
+            (rev_ids, rev_syms, norm_rev),
+        ):
+            for idx in range(len(base_norm)):
+                rot = base_norm[idx:] + base_norm[:idx]
+                if "".join(rot) == tok:
+                    return base_ids[idx:] + base_ids[:idx], base_syms[idx:] + base_syms[:idx]
+    return ids, syms
+
+
+def _gan_measured_quantity(
+    objects: list[dict[str, Any]],
+    memory: dict[str, Any],
+) -> None:
+    """Gắn metadata `measured_quantity` có cấu trúc cho mọi đại lượng `measure.*`."""
+    by_id = {o["id"]: o for o in objects}
+    for o in objects:
+        if o.get("type") != "quantity":
+            continue
+        producer = str(o.get("producer") or "")
+        if not producer.startswith("measure."):
+            continue
+        qty_kind = producer.split(".", 1)[1]
+        sources = list(o.get("sources") or [])
+        subject_labels: list[str] = []
+        subject_types: list[str] = []
+        for sid in sources:
+            subj = by_id.get(sid) or {}
+            subject_labels.append(str(subj.get("reference") or subj.get("label") or sid))
+            subject_types.append(str(subj.get("type") or ""))
+        obj_a = memory.get(sources[0]) if len(sources) >= 1 else None
+        obj_b = memory.get(sources[1]) if len(sources) >= 2 else None
+        certified_relation = phan_loai_quan_he_do(qty_kind, memory.get(o["id"]), obj_a, obj_b)
+        o["measured_quantity"] = {
+            "quantity_kind": qty_kind,
+            "producer": producer,
+            "subject_ids": sources,
+            "subject_labels": subject_labels,
+            "subject_types": subject_types,
+            "value": o.get("value"),
+            "exact": o.get("exact"),
+            "certified_relation": certified_relation,
+        }
+
+
+def _gan_lineage_va_tien_quyet(
+    objects: list[dict[str, Any]],
+    dependencies: dict[str, list[str]],
+) -> None:
+    """Tách `computational_depends`, `visible_prerequisites` và `construction_lineage` trên từng vật."""
+    object_types = {str(o["id"]): str(o.get("type") or "") for o in objects if o.get("id")}
+    for o in objects:
+        oid = str(o["id"])
+        comp_deps = list(dependencies.get(oid, []))
+        vis_deps = _unwrap_visible_sources(comp_deps, object_types, dependencies, exclude_id=oid)
+        o["computational_depends"] = comp_deps
+        o["visible_prerequisites"] = vis_deps
+        if o.get("origin") == "derived" and o.get("type") != "quantity":
+            prod = str(o.get("producer") or "")
+            sources = list(o.get("sources") or [])
+            if prod in (
+                "construct_point.intersect_line_line",
+                "construct_point.intersect_lines",
+                "construct_point.line_line_intersection",
+            ):
+                o["construction_lineage"] = {
+                    "mode": "euclidean_coplanar_intersection",
+                    "coplanar_lines": sources,
+                }
+            elif prod == "construct_point.intersect_line_plane":
+                o["construction_lineage"] = {
+                    "mode": "algebraic_line_plane_intersection",
+                    "line_id": sources[0] if len(sources) > 0 else None,
+                    "plane_id": sources[1] if len(sources) > 1 else None,
+                    "pedagogical_limitation": (
+                        "Giao điểm được tính trực tiếp từ phương trình đường thẳng và mặt phẳng "
+                        "(chưa tách bước dựng đường phụ đồng phẳng trung gian)."
+                    ),
+                }
+            elif prod == "construct_point.translate":
+                o["construction_lineage"] = {
+                    "mode": "vector_translation",
+                    "base_point_id": sources[0] if len(sources) > 0 else None,
+                    "vector_id": sources[1] if len(sources) > 1 else None,
+                    "visible_prerequisites": list(vis_deps),
+                }
+            else:
+                o["construction_lineage"] = {
+                    "mode": "direct_euclidean_primitive",
+                    "producer": prod or None,
+                }
+
+
+def _gan_chu_trinh_canh_thiet_dien(
+    objects: list[dict[str, Any]],
+    memory: dict[str, Any],
+    prov: dict[str, dict[str, Any]],
+) -> None:
+    """Phát chu trình đỉnh và cạnh biên chuẩn cho thiết diện mà mọi đỉnh đã được đặt tên rõ."""
+    named_pts = [
+        o for o in objects if o.get("type") == "point3" and o.get("notation")
+    ]
+    unnamed_pts = [
+        memory.get(o["id"])
+        for o in objects
+        if o.get("type") == "point3" and not o.get("notation") and isinstance(memory.get(o["id"]), Vec3)
+    ]
+    for sec in objects:
+        if sec.get("type") != "section" or not sec.get("notation"):
+            continue
+        gt = memory.get(sec["id"])
+        if not isinstance(gt, Section) or len(gt.polygon) < 3:
+            continue
+        if any(any(up == pt for up in unnamed_pts) for pt in gt.polygon):
+            continue
+        matched = [
+            next((p for p in named_pts if memory.get(p["id"]) == pt), None)
+            for pt in gt.polygon
+        ]
+        if any(m is None for m in matched):
+            continue
+        ids = [str(m["id"]) for m in matched if m is not None]
+        if len(set(ids)) != len(ids):
+            continue
+        syms = [str(m.get("notation") or m["id"]) for m in matched if m is not None]
+        hint = f"{sec.get('notation') or ''} {(prov.get(sec['id']) or {}).get('label') or ''} {sec['id']}"
+        ids, syms = _can_chinh_chu_trinh_dinh(ids, syms, hint)
+        n = len(syms)
+        sec["ordered_vertex_ids"] = ids
+        sec["ordered_vertex_symbols"] = syms
+        sec["ordered_boundary_edges"] = [f"{syms[i]}{syms[(i + 1) % n]}" for i in range(n)]
+
+
+def _tim_phu_tro_du_thua(
+    objects: list[dict[str, Any]],
+    dependencies: dict[str, list[str]],
+    memory: dict[str, Any],
+    targets: list[str],
+) -> list[str]:
+    """Đánh dấu các vật dựng phụ không đi tới mục tiêu, đại lượng, khối hay đỉnh thiết diện nào."""
+    sinks: set[str] = set(targets)
+    has_terminal = bool(targets)
+    section_vertices: list[Vec3] = []
+    for o in objects:
+        otype = o.get("type")
+        if otype in (
+            "quantity",
+            "section",
+            "solid",
+            "curved_solid",
+            "polygon3",
+            "segment3",
+            "circle3",
+            "ellipse3",
+            "sphere3",
+            "plane3",
+        ):
+            sinks.add(o["id"])
+            if otype in ("quantity", "section"):
+                has_terminal = True
+        if otype == "section":
+            gt = memory.get(o["id"])
+            if isinstance(gt, Section):
+                section_vertices.extend(gt.polygon)
+    if section_vertices:
+        for o in objects:
+            if o.get("type") == "point3":
+                pt = memory.get(o["id"])
+                if isinstance(pt, Vec3) and any(pt == sv for sv in section_vertices):
+                    sinks.add(o["id"])
+    if not has_terminal:
+        derived_ids = [o["id"] for o in objects if o.get("origin") == "derived"]
+        if derived_ids:
+            sinks.add(derived_ids[-1])
+
+    reachable: set[str] = set()
+    stack = list(sinks)
+    while stack:
+        cur = stack.pop()
+        if cur in reachable:
+            continue
+        reachable.add(cur)
+        for dep in dependencies.get(cur) or ():
+            if dep not in reachable:
+                stack.append(dep)
+
+    unused: list[str] = []
+    for o in objects:
+        if (
+            o.get("origin") == "derived"
+            and o.get("type") in ("point3", "line3", "vector3")
+            and o["id"] not in reachable
+        ):
+            o["is_unused_auxiliary"] = True
+            unused.append(o["id"])
+    return unused
 
 
 def _canh_song_song_thiet_dien(objects: list[dict[str, Any]]) -> None:
