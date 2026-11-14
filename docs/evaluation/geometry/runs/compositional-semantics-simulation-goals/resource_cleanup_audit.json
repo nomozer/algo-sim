@@ -1,0 +1,141 @@
+{
+  "browser": "157.0.8103.78",
+  "headless": true,
+  "backend": "measured_app loopback, HYBRID_ROUTE_MODE=local-first, ALLOW_LIVE_AI=0",
+  "synthetic_signup_status": 200,
+  "series": [
+    {
+      "cycle": 0,
+      "case": "cos_line_plane",
+      "numeric_note_present": true,
+      "numeric_note_expected": true,
+      "heap_mb": 17.452436447143555,
+      "canvases": 1,
+      "steps": 6,
+      "rendered": 11
+    },
+    {
+      "cycle": 0,
+      "case": "section_one_sentence",
+      "numeric_note_present": false,
+      "numeric_note_expected": false,
+      "heap_mb": 21.10121726989746,
+      "canvases": 1,
+      "steps": 7,
+      "rendered": 14
+    },
+    {
+      "cycle": 1,
+      "case": "cos_line_plane",
+      "numeric_note_present": true,
+      "numeric_note_expected": true,
+      "heap_mb": 20.723756790161133,
+      "canvases": 1,
+      "steps": 6,
+      "rendered": 11
+    },
+    {
+      "cycle": 1,
+      "case": "section_one_sentence",
+      "numeric_note_present": false,
+      "numeric_note_expected": false,
+      "heap_mb": 22.026155471801758,
+      "canvases": 1,
+      "steps": 7,
+      "rendered": 14
+    },
+    {
+      "cycle": 2,
+      "case": "cos_line_plane",
+      "numeric_note_present": true,
+      "numeric_note_expected": true,
+      "heap_mb": 22.12528133392334,
+      "canvases": 1,
+      "steps": 6,
+      "rendered": 11
+    },
+    {
+      "cycle": 2,
+      "case": "section_one_sentence",
+      "numeric_note_present": false,
+      "numeric_note_expected": false,
+      "heap_mb": 23.381476402282715,
+      "canvases": 1,
+      "steps": 7,
+      "rendered": 14
+    },
+    {
+      "cycle": 3,
+      "case": "cos_line_plane",
+      "numeric_note_present": true,
+      "numeric_note_expected": true,
+      "heap_mb": 22.813040733337402,
+      "canvases": 1,
+      "steps": 6,
+      "rendered": 11
+    },
+    {
+      "cycle": 3,
+      "case": "section_one_sentence",
+      "numeric_note_present": false,
+      "numeric_note_expected": false,
+      "heap_mb": 24.12492084503174,
+      "canvases": 1,
+      "steps": 7,
+      "rendered": 14
+    },
+    {
+      "cycle": 4,
+      "case": "cos_line_plane",
+      "numeric_note_present": true,
+      "numeric_note_expected": true,
+      "heap_mb": 24.008004188537598,
+      "canvases": 1,
+      "steps": 6,
+      "rendered": 11
+    },
+    {
+      "cycle": 4,
+      "case": "section_one_sentence",
+      "numeric_note_present": false,
+      "numeric_note_expected": false,
+      "heap_mb": 25.26891040802002,
+      "canvases": 1,
+      "steps": 7,
+      "rendered": 14
+    },
+    {
+      "cycle": 5,
+      "case": "cos_line_plane",
+      "numeric_note_present": true,
+      "numeric_note_expected": true,
+      "heap_mb": 24.6903715133667,
+      "canvases": 1,
+      "steps": 6,
+      "rendered": 11
+    },
+    {
+      "cycle": 5,
+      "case": "section_one_sentence",
+      "numeric_note_present": false,
+      "numeric_note_expected": false,
+      "heap_mb": 25.944499015808105,
+      "canvases": 1,
+      "steps": 7,
+      "rendered": 14
+    }
+  ],
+  "timeline_walk_heap_mb": [
+    24.06058692932129,
+    25.82784080505371,
+    26.306480407714844,
+    25.525014877319336
+  ],
+  "timeline_walk_growth_mb": 1.4644279479980469,
+  "method": "6 cycles × 2 problems in one signed-in page (each analysis is kept in the learner history), forced GC (--expose-gc) before each reading; plus 15 timeline walks of one problem with no new analysis",
+  "heap_mean_early_mb": 22.064167499542236,
+  "heap_mean_late_mb": 24.977946281433105,
+  "heap_growth_mb": 2.913778781890869,
+  "canvas_count_constant": true,
+  "numeric_note_never_carried_over": true
+}

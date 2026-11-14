@@ -1,0 +1,175 @@
+{
+  "browser": "157.0.8103.78",
+  "headless": true,
+  "backend": "measured_app loopback, HYBRID_ROUTE_MODE=local-first, ALLOW_LIVE_AI=0, local OCR on",
+  "category": "AUTOMATED_BROWSER_NOT_HUMAN_STUDY",
+  "pages": "composed in the browser from exposed VMMU crops (r273, r298, r270); no image stored",
+  "rows": [
+    {
+      "viewport": "1920x1080",
+      "two_problems": {
+        "status": "needs_selection",
+        "reason": "MULTIPLE_PROBLEMS_DETECTED",
+        "candidates": [
+          "page~band-1",
+          "page~band-2"
+        ],
+        "candidate_button_min_px": 64,
+        "pick_2": {
+          "status": "needs_confirmation",
+          "target_r298": 1,
+          "neighbour_r273": 0.10588235294117647
+        },
+        "review_shows_neighbour": false,
+        "repick_1": {
+          "status": "needs_confirmation",
+          "target_r273": 1,
+          "neighbour_r298": 0.07317073170731707
+        },
+        "analyze_sent": true,
+        "analyzed_text_target_r273": 1,
+        "analyzed_text_neighbour_r298": 0.07317073170731707,
+        "analyze_status": "SERVED",
+        "analyze_refusal": null
+      },
+      "side_by_side": {
+        "status": "needs_selection",
+        "reason": "MULTIPLE_PROBLEMS_DETECTED",
+        "candidates": 2
+      },
+      "single_problem": {
+        "status": "needs_confirmation",
+        "reason": "LOCAL_OCR_REVIEW_REQUIRED",
+        "asked_to_choose": false
+      },
+      "horizontal_overflow_px": 0,
+      "page_errors": [],
+      "pass": true
+    },
+    {
+      "viewport": "1366x768",
+      "two_problems": {
+        "status": "needs_selection",
+        "reason": "MULTIPLE_PROBLEMS_DETECTED",
+        "candidates": [
+          "page~band-1",
+          "page~band-2"
+        ],
+        "candidate_button_min_px": 64,
+        "pick_2": {
+          "status": "needs_confirmation",
+          "target_r298": 1,
+          "neighbour_r273": 0.10588235294117647
+        },
+        "review_shows_neighbour": false,
+        "repick_1": {
+          "status": "needs_confirmation",
+          "target_r273": 1,
+          "neighbour_r298": 0.07317073170731707
+        },
+        "analyze_sent": true,
+        "analyzed_text_target_r273": 1,
+        "analyzed_text_neighbour_r298": 0.07317073170731707,
+        "analyze_status": "SERVED",
+        "analyze_refusal": null
+      },
+      "side_by_side": {
+        "status": "needs_selection",
+        "reason": "MULTIPLE_PROBLEMS_DETECTED",
+        "candidates": 2
+      },
+      "single_problem": {
+        "status": "needs_confirmation",
+        "reason": "LOCAL_OCR_REVIEW_REQUIRED",
+        "asked_to_choose": false
+      },
+      "horizontal_overflow_px": 0,
+      "page_errors": [],
+      "pass": true
+    },
+    {
+      "viewport": "768x1024",
+      "two_problems": {
+        "status": "needs_selection",
+        "reason": "MULTIPLE_PROBLEMS_DETECTED",
+        "candidates": [
+          "page~band-1",
+          "page~band-2"
+        ],
+        "candidate_button_min_px": 64,
+        "pick_2": {
+          "status": "needs_confirmation",
+          "target_r298": 1,
+          "neighbour_r273": 0.10588235294117647
+        },
+        "review_shows_neighbour": false,
+        "repick_1": {
+          "status": "needs_confirmation",
+          "target_r273": 1,
+          "neighbour_r298": 0.07317073170731707
+        },
+        "analyze_sent": true,
+        "analyzed_text_target_r273": 1,
+        "analyzed_text_neighbour_r298": 0.07317073170731707,
+        "analyze_status": "SERVED",
+        "analyze_refusal": null
+      },
+      "side_by_side": {
+        "status": "needs_selection",
+        "reason": "MULTIPLE_PROBLEMS_DETECTED",
+        "candidates": 2
+      },
+      "single_problem": {
+        "status": "needs_confirmation",
+        "reason": "LOCAL_OCR_REVIEW_REQUIRED",
+        "asked_to_choose": false
+      },
+      "horizontal_overflow_px": 0,
+      "page_errors": [],
+      "pass": true
+    },
+    {
+      "viewport": "390x844",
+      "two_problems": {
+        "status": "needs_selection",
+        "reason": "MULTIPLE_PROBLEMS_DETECTED",
+        "candidates": [
+          "page~band-1",
+          "page~band-2"
+        ],
+        "candidate_button_min_px": 64,
+        "pick_2": {
+          "status": "needs_confirmation",
+          "target_r298": 1,
+          "neighbour_r273": 0.10588235294117647
+        },
+        "review_shows_neighbour": false,
+        "repick_1": {
+          "status": "needs_confirmation",
+          "target_r273": 1,
+          "neighbour_r298": 0.07317073170731707
+        },
+        "analyze_sent": true,
+        "analyzed_text_target_r273": 1,
+        "analyzed_text_neighbour_r298": 0.07317073170731707,
+        "analyze_status": "SERVED",
+        "analyze_refusal": null
+      },
+      "side_by_side": {
+        "status": "needs_selection",
+        "reason": "MULTIPLE_PROBLEMS_DETECTED",
+        "candidates": 2
+      },
+      "single_problem": {
+        "status": "needs_confirmation",
+        "reason": "LOCAL_OCR_REVIEW_REQUIRED",
+        "asked_to_choose": false
+      },
+      "horizontal_overflow_px": 0,
+      "page_errors": [],
+      "pass": true
+    }
+  ],
+  "passed": 4,
+  "total": 4
+}

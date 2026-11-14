@@ -1,0 +1,197 @@
+{
+  "browser": "157.0.8103.78",
+  "headless": true,
+  "backend": "measured_app loopback, HYBRID_ROUTE_MODE=local-first, ALLOW_LIVE_AI=0",
+  "note": "host desktop, headless; first_model_ms = send click → canvas with a timeline (includes local parse + solve + scene build); step_ms = click → 2 animation frames",
+  "rows": [
+    {
+      "case": "section_one_sentence",
+      "viewport": "1920x1080",
+      "first_model_ms": 830,
+      "step_ms": [
+        280.60000000009313,
+        100.5,
+        200.10000000009313,
+        130.1999999997206,
+        127.79999999981374,
+        145.89999999990687
+      ],
+      "orbit_ms": 277.29999999981374,
+      "heap_mb": 17.22711181640625
+    },
+    {
+      "case": "section_one_sentence",
+      "viewport": "1366x768",
+      "first_model_ms": 476,
+      "step_ms": [
+        82.5,
+        76.60000000009313,
+        112.1999999997206,
+        96.5,
+        104.3000000002794,
+        117.20000000018626
+      ],
+      "orbit_ms": 221.6999999997206,
+      "heap_mb": 17.149658203125
+    },
+    {
+      "case": "section_one_sentence",
+      "viewport": "768x1024",
+      "first_model_ms": 449,
+      "step_ms": [
+        70.20000000018626,
+        73.09999999962747,
+        86.8999999994412,
+        87.70000000018626,
+        104.5,
+        118.29999999981374
+      ],
+      "orbit_ms": 181.5,
+      "heap_mb": 17.125953674316406
+    },
+    {
+      "case": "section_one_sentence",
+      "viewport": "390x844",
+      "first_model_ms": 428,
+      "step_ms": [
+        70.3999999994412,
+        74.20000000018626,
+        89.29999999981374,
+        80.70000000018626,
+        109.20000000018626,
+        116.09999999962747
+      ],
+      "orbit_ms": 146.09999999962747,
+      "heap_mb": 17.129180908203125
+    },
+    {
+      "case": "section_plane_after_goal",
+      "viewport": "1366x768",
+      "first_model_ms": 517,
+      "step_ms": [
+        77.59999999962747,
+        90.59999999962747,
+        123.3999999994412,
+        124.09999999962747,
+        102.90000000037253,
+        117.8999999994412
+      ],
+      "orbit_ms": 165.20000000018626,
+      "heap_mb": 17.137313842773438
+    },
+    {
+      "case": "cos_line_plane",
+      "viewport": "1920x1080",
+      "first_model_ms": 449,
+      "step_ms": [
+        98.70000000018626,
+        97.5,
+        109.80000000074506,
+        103.3999999994412,
+        132.09999999962747
+      ],
+      "orbit_ms": 241,
+      "heap_mb": 26.632841110229492
+    },
+    {
+      "case": "cos_line_plane",
+      "viewport": "1366x768",
+      "first_model_ms": 399,
+      "step_ms": [
+        68.3999999994412,
+        83.5,
+        89.8999999994412,
+        90,
+        111.5
+      ],
+      "orbit_ms": 145.8999999994412,
+      "heap_mb": 21.812631607055664
+    },
+    {
+      "case": "cos_line_plane",
+      "viewport": "768x1024",
+      "first_model_ms": 427,
+      "step_ms": [
+        77.79999999981374,
+        75.40000000037253,
+        88.70000000018626,
+        83.79999999981374,
+        111.09999999962747
+      ],
+      "orbit_ms": 138,
+      "heap_mb": 27.39075756072998
+    },
+    {
+      "case": "cos_line_plane",
+      "viewport": "390x844",
+      "first_model_ms": 453,
+      "step_ms": [
+        67,
+        73,
+        81.20000000018626,
+        95.1000000005588,
+        180.30000000074506
+      ],
+      "orbit_ms": 340.5,
+      "heap_mb": 27.60086727142334
+    },
+    {
+      "case": "tan_line_plane",
+      "viewport": "1366x768",
+      "first_model_ms": 463,
+      "step_ms": [
+        85.8999999994412,
+        92,
+        81.3999999994412,
+        95.59999999962747,
+        108.5
+      ],
+      "orbit_ms": 167.70000000018626,
+      "heap_mb": 30.30270004272461
+    },
+    {
+      "case": "cos_two_planes",
+      "viewport": "1366x768",
+      "first_model_ms": 490,
+      "step_ms": [
+        75.29999999981374,
+        132.5,
+        125,
+        118.29999999981374,
+        119.79999999981374
+      ],
+      "orbit_ms": 290,
+      "heap_mb": 26.80038356781006
+    },
+    {
+      "case": "angle_plain",
+      "viewport": "1366x768",
+      "first_model_ms": 442,
+      "step_ms": [
+        65.5,
+        79.5,
+        80.8999999994412,
+        88,
+        105
+      ],
+      "orbit_ms": 160.09999999962747,
+      "heap_mb": 16.161453247070312
+    },
+    {
+      "case": "unnamed_midpoint_distance",
+      "viewport": "1366x768",
+      "first_model_ms": 538,
+      "step_ms": [
+        84.20000000018626,
+        98.29999999981374,
+        95.09999999962747,
+        82.80000000074506,
+        104,
+        138.5
+      ],
+      "orbit_ms": 144.8999999994412,
+      "heap_mb": 16.677791595458984
+    }
+  ],
+  "physical_low_end": "PHYSICAL_LOW_END_NOT_MEASURED"
+}

@@ -1,0 +1,325 @@
+{
+  "run_id": "compositional-semantics-simulation-goals",
+  "generated_at_utc": "2026-11-14T02:20:34.314181+00:00",
+  "head": "30fe2ee126919584dfb024141d86d2079b642cfd",
+  "environment": {
+    "ALLOW_LIVE_AI": "0"
+  },
+  "command": "python docs/evaluation/geometry/runs/compositional-semantics-simulation-goals/tools/scene_invariants_run.py",
+  "dataset_partition": "DEVELOPMENT (agent corpus of this run; exposed probes of earlier runs)",
+  "oracle_status": "AGENT_DIAGNOSTIC exact checks (Fractions + envelope Gram G), independent of the construction code",
+  "plane_constraint_probes": {
+    "as_expected": 36,
+    "probes": 39,
+    "wrong_served": 0
+  },
+  "section_intersection_dihedral_probes": {
+    "served": 31,
+    "probes": 36,
+    "checks": 124,
+    "failed": 0
+  },
+  "new_served_items": {
+    "mc_section_one_sentence": {
+      "group": "multi_clause",
+      "checks": 5,
+      "failed": [],
+      "source_goal_completion": false
+    },
+    "mc_section_split": {
+      "group": "multi_clause",
+      "checks": 5,
+      "failed": [],
+      "source_goal_completion": false
+    },
+    "mc_section_renamed": {
+      "group": "metamorphic",
+      "checks": 5,
+      "failed": [],
+      "source_goal_completion": false
+    },
+    "mc_section_greek": {
+      "group": "metamorphic",
+      "checks": 5,
+      "failed": [],
+      "source_goal_completion": false
+    },
+    "mc_distance": {
+      "group": "multi_clause",
+      "checks": 0,
+      "failed": [],
+      "source_goal_completion": false
+    },
+    "mc_label_list": {
+      "group": "multi_clause",
+      "checks": 0,
+      "failed": [],
+      "source_goal_completion": false
+    },
+    "order_plane_after_goal": {
+      "group": "clause_order",
+      "checks": 5,
+      "failed": [],
+      "source_goal_completion": false
+    },
+    "order_plane_after_goal_sep": {
+      "group": "clause_order",
+      "checks": 5,
+      "failed": [],
+      "source_goal_completion": false
+    },
+    "order_premises_swapped": {
+      "group": "metamorphic",
+      "checks": 0,
+      "failed": [],
+      "source_goal_completion": false
+    },
+    "dp_named_midpoint_goal": {
+      "group": "described_point",
+      "checks": 0,
+      "failed": [],
+      "source_goal_completion": false
+    },
+    "dp_unnamed_midpoint_goal": {
+      "group": "described_point",
+      "checks": 0,
+      "failed": [],
+      "source_goal_completion": false
+    },
+    "dp_unnamed_centroid_goal": {
+      "group": "described_point",
+      "checks": 0,
+      "failed": [],
+      "source_goal_completion": false
+    },
+    "goal_angle_line_plane": {
+      "group": "goal_angle",
+      "checks": 2,
+      "failed": [],
+      "source_goal_completion": false
+    },
+    "goal_cos_line_plane": {
+      "group": "goal_trig",
+      "checks": 2,
+      "failed": [],
+      "source_goal_completion": true
+    },
+    "goal_cos_spelled": {
+      "group": "goal_trig",
+      "checks": 2,
+      "failed": [],
+      "source_goal_completion": true
+    },
+    "goal_tan_line_plane": {
+      "group": "goal_trig",
+      "checks": 2,
+      "failed": [],
+      "source_goal_completion": true
+    },
+    "goal_sin_mc_stem": {
+      "group": "goal_trig",
+      "checks": 2,
+      "failed": [],
+      "source_goal_completion": true
+    },
+    "goal_cos_planes": {
+      "group": "goal_trig",
+      "checks": 3,
+      "failed": [],
+      "source_goal_completion": true
+    },
+    "goal_cos_lines": {
+      "group": "goal_trig",
+      "checks": 2,
+      "failed": [],
+      "source_goal_completion": true
+    },
+    "goal_tan_right_angle": {
+      "group": "goal_trig",
+      "checks": 0,
+      "failed": [],
+      "source_goal_completion": true
+    }
+  },
+  "new_served_checks": 45,
+  "new_served_failed": 0,
+  "equivalence_pairs": [
+    {
+      "item": "mc_section_split",
+      "reference": "mc_section_one_sentence",
+      "same_certified_geometry": true,
+      "compared": "answer_exact + section vertex coordinates"
+    },
+    {
+      "item": "mc_section_renamed",
+      "reference": "mc_section_one_sentence",
+      "same_certified_geometry": true,
+      "compared": "answer_exact"
+    },
+    {
+      "item": "mc_section_greek",
+      "reference": "mc_section_one_sentence",
+      "same_certified_geometry": true,
+      "compared": "answer_exact"
+    },
+    {
+      "item": "order_plane_after_goal",
+      "reference": "mc_section_split",
+      "same_certified_geometry": true,
+      "compared": "answer_exact + section vertex coordinates"
+    },
+    {
+      "item": "order_plane_after_goal_sep",
+      "reference": "mc_section_split",
+      "same_certified_geometry": true,
+      "compared": "answer_exact + section vertex coordinates"
+    },
+    {
+      "item": "order_premises_swapped",
+      "reference": "mc_distance",
+      "same_certified_geometry": true,
+      "compared": "answer_exact"
+    },
+    {
+      "item": "goal_cos_line_plane",
+      "reference": "goal_angle_line_plane",
+      "same_certified_geometry": true,
+      "compared": "answer_exact + section vertex coordinates"
+    },
+    {
+      "item": "goal_cos_spelled",
+      "reference": "goal_cos_line_plane",
+      "same_certified_geometry": true,
+      "compared": "answer_exact + section vertex coordinates"
+    }
+  ],
+  "mutations": [
+    {
+      "item": "mc_section_one_sentence",
+      "mutation": "section_vertex_moved",
+      "caught_by_independent_checker": true,
+      "caught_by_product_boundary": true,
+      "caught": true
+    },
+    {
+      "item": "mc_section_split",
+      "mutation": "section_vertex_moved",
+      "caught_by_independent_checker": true,
+      "caught_by_product_boundary": true,
+      "caught": true
+    },
+    {
+      "item": "mc_section_renamed",
+      "mutation": "section_vertex_moved",
+      "caught_by_independent_checker": true,
+      "caught_by_product_boundary": true,
+      "caught": true
+    },
+    {
+      "item": "mc_section_greek",
+      "mutation": "section_vertex_moved",
+      "caught_by_independent_checker": true,
+      "caught_by_product_boundary": true,
+      "caught": true
+    },
+    {
+      "item": "order_plane_after_goal",
+      "mutation": "section_vertex_moved",
+      "caught_by_independent_checker": true,
+      "caught_by_product_boundary": true,
+      "caught": true
+    },
+    {
+      "item": "order_plane_after_goal_sep",
+      "mutation": "section_vertex_moved",
+      "caught_by_independent_checker": true,
+      "caught_by_product_boundary": true,
+      "caught": true
+    },
+    {
+      "item": "goal_angle_line_plane",
+      "mutation": "angle_foot_moved",
+      "caught_by_independent_checker": false,
+      "caught_by_product_boundary": true,
+      "caught": true
+    },
+    {
+      "item": "goal_angle_line_plane",
+      "mutation": "angle_ray_swapped",
+      "caught_by_independent_checker": true,
+      "caught_by_product_boundary": true,
+      "caught": true
+    },
+    {
+      "item": "goal_cos_line_plane",
+      "mutation": "angle_foot_moved",
+      "caught_by_independent_checker": false,
+      "caught_by_product_boundary": true,
+      "caught": true
+    },
+    {
+      "item": "goal_cos_line_plane",
+      "mutation": "angle_ray_swapped",
+      "caught_by_independent_checker": true,
+      "caught_by_product_boundary": true,
+      "caught": true
+    },
+    {
+      "item": "goal_cos_spelled",
+      "mutation": "angle_foot_moved",
+      "caught_by_independent_checker": false,
+      "caught_by_product_boundary": true,
+      "caught": true
+    },
+    {
+      "item": "goal_cos_spelled",
+      "mutation": "angle_ray_swapped",
+      "caught_by_independent_checker": true,
+      "caught_by_product_boundary": true,
+      "caught": true
+    },
+    {
+      "item": "goal_tan_line_plane",
+      "mutation": "angle_foot_moved",
+      "caught_by_independent_checker": false,
+      "caught_by_product_boundary": true,
+      "caught": true
+    },
+    {
+      "item": "goal_tan_line_plane",
+      "mutation": "angle_ray_swapped",
+      "caught_by_independent_checker": true,
+      "caught_by_product_boundary": true,
+      "caught": true
+    },
+    {
+      "item": "goal_sin_mc_stem",
+      "mutation": "angle_foot_moved",
+      "caught_by_independent_checker": false,
+      "caught_by_product_boundary": true,
+      "caught": true
+    },
+    {
+      "item": "goal_sin_mc_stem",
+      "mutation": "angle_ray_swapped",
+      "caught_by_independent_checker": true,
+      "caught_by_product_boundary": true,
+      "caught": true
+    },
+    {
+      "item": "goal_cos_planes",
+      "mutation": "angle_ray_swapped",
+      "caught_by_independent_checker": true,
+      "caught_by_product_boundary": true,
+      "caught": true
+    },
+    {
+      "item": "goal_cos_lines",
+      "mutation": "angle_ray_swapped",
+      "caught_by_independent_checker": true,
+      "caught_by_product_boundary": true,
+      "caught": true
+    }
+  ],
+  "mutations_caught": "18/18"
+}
