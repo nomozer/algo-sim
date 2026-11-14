@@ -3975,7 +3975,7 @@ export function planeSolidEdgeIntersections(
 export function compactPlaneAnchorPoints(
   scene: Pick<Scene3D, "objects">,
   planeObj: SceneObject,
-  visibleObjects: readonly SceneObject[],
+  _visibleObjects: readonly SceneObject[],
 ): Vec3[] {
   if (planeObj.type !== "plane3" || !planeObj.point || !planeObj.normal) return [];
   const p0 = toVec3(planeObj.point);
@@ -3983,14 +3983,14 @@ export function compactPlaneAnchorPoints(
   const dn = Math.hypot(...nRaw);
   if (!(dn > 1e-9)) return [];
   const u: Vec3 = [nRaw[0] / dn, nRaw[1] / dn, nRaw[2] / dn];
-  const allFinite = diemHuuHan([...visibleObjects]);
+  const allFinite = diemHuuHan([...scene.objects]);
   const zMin = allFinite.length > 0 ? Math.min(...allFinite.map((p) => p[2])) : -Infinity;
 
   // 1. Mặt phẳng cắt khối cong (mặt cầu, hình trụ, hình nón) ở cả bước trung gian lẫn bước hoàn tất
-  const conicCut = visibleObjects.find(
+  const conicCut = scene.objects.find(
     (x) => (x.type === "circle3" || x.type === "ellipse3") && (x.depends ?? []).includes(planeObj.id),
   );
-  const curvedSolids = visibleObjects.filter((x) => x.type === "curved_solid" && x.anchor);
+  const curvedSolids = scene.objects.filter((x) => x.type === "curved_solid" && x.anchor);
   if (conicCut) {
     for (const depId of conicCut.depends ?? []) {
       const s = scene.objects.find((obj) => obj.id === depId && obj.type === "curved_solid" && obj.anchor);
@@ -4026,7 +4026,7 @@ export function compactPlaneAnchorPoints(
     const [e1, e2] = orthonormalBasisOnPlane(u);
     if (rCut <= 1e-3) {
       const tolPlane = 1e-3 * Math.max(1, R);
-      const coplanar = diemNeoDuongThang([...visibleObjects], "").filter(
+      const coplanar = diemNeoDuongThang([...scene.objects], "").filter(
         (p) => Math.abs((p[0] - p0[0]) * u[0] + (p[1] - p0[1]) * u[1] + (p[2] - p0[2]) * u[2]) <= tolPlane,
       );
       let sLo = 0;
@@ -4271,7 +4271,7 @@ export function compactPlaneAnchorPoints(
 
   // 2. Kiểm tra số đỉnh hình học tường minh (không tính witness.foot) thực sự nằm trên mặt phẳng
   const explicitPts: Vec3[] = [];
-  for (const obj of visibleObjects) {
+  for (const obj of scene.objects) {
     if (obj.type === "point3" && obj.xyz) explicitPts.push(toVec3(obj.xyz));
     else if (obj.type === "solid" && obj.vertices) for (const v of obj.vertices) explicitPts.push(toVec3(v));
     else if ((obj.type === "section" || obj.type === "polygon3") && (obj.polygon ?? obj.vertices)) {
@@ -4305,7 +4305,7 @@ export function compactPlaneAnchorPoints(
   // Mặt phẳng đi qua < 3 đỉnh tường minh không thẳng hàng (vd qua B vuông góc SC): kết hợp điểm xuyên cạnh khối thực tế + chân vuông góc
   const anchors: Vec3[] = [p0];
   for (const item of coplanarScenePts) anchors.push(item.p);
-  for (const pierce of planeSolidEdgeIntersections(planeObj, visibleObjects)) {
+  for (const pierce of planeSolidEdgeIntersections(planeObj, scene.objects)) {
     anchors.push(pierce);
   }
   for (const obj of scene.objects) {
@@ -4459,7 +4459,9 @@ export function computeBoundedStudiedPlanePolygon(
   visibleObjects: readonly SceneObject[],
 ): Vec3[] {
   if (planeObj.type !== "plane3" || !planeObj.point || !planeObj.normal) return [];
-  if (visibleObjects.some((x) => x.type === "curved_solid")) return [];
+  if (visibleObjects.some((x) => x.type === "curved_solid") || scene.objects.some((x) => x.type === "curved_solid")) {
+    return [];
+  }
   const hasCutResult = scene.objects.some(
     (x) =>
       (x.type === "section"
@@ -4468,28 +4470,38 @@ export function computeBoundedStudiedPlanePolygon(
         || (x.type === "polygon3" && vaiTroMien(x) === "section" && !isCoordinatePlaneInterceptPolygon(scene, x)))
       && (x.depends ?? []).includes(planeObj.id),
   );
-  if (!visibleObjects.some((x) => x.type === "solid")) return [];
+  const hasSolidInScene = scene.objects.some((x) => x.type === "solid");
+  if (hasSolidInScene && !visibleObjects.some((x) => x.type === "solid")) return [];
 
   const p0 = toVec3(planeObj.point);
   const nRaw = toVec3(planeObj.normal);
   const dn = Math.hypot(...nRaw);
   if (!(dn > 1e-9)) return [];
   const u: Vec3 = [nRaw[0] / dn, nRaw[1] / dn, nRaw[2] / dn];
-  const allFinite = diemHuuHan([...visibleObjects]);
+  const allFinite = diemHuuHan([...scene.objects]);
   if (allFinite.length === 0) return [];
   const zMin = Math.min(...allFinite.map((p) => p[2]));
   const zMax = Math.max(...allFinite.map((p) => p[2]));
   const dk = Math.max(duongKinhCanh(allFinite), 1);
   const epsPlane = Math.max(dk * 1e-4, 1e-7);
 
+  if (!hasSolidInScene) {
+    const hasOffPlane3D = allFinite.some(
+      (p) => Math.abs((p[0] - p0[0]) * u[0] + (p[1] - p0[1]) * u[1] + (p[2] - p0[2]) * u[2]) > epsPlane * 5,
+    );
+    if (!hasOffPlane3D) return [];
+  }
+
   const candidates: Vec3[] = [];
-  for (const obj of visibleObjects) {
+  for (const obj of scene.objects) {
     if (obj.type === "point3" && obj.xyz) candidates.push(toVec3(obj.xyz));
     else if (obj.type === "solid" && obj.vertices) {
       for (const v of obj.vertices) candidates.push(toVec3(v));
+    } else if ((obj.type === "section" || obj.type === "polygon3") && (obj.depends ?? []).includes(planeObj.id)) {
+      for (const v of obj.polygon ?? obj.vertices ?? []) candidates.push(toVec3(v));
     }
   }
-  for (const pierce of planeSolidEdgeIntersections(planeObj, visibleObjects)) {
+  for (const pierce of planeSolidEdgeIntersections(planeObj, scene.objects)) {
     candidates.push(pierce);
   }
   for (const obj of scene.objects) {
@@ -4519,7 +4531,7 @@ export function computeBoundedStudiedPlanePolygon(
   );
   if (hullCheck.length < 3) return [];
 
-  const style = resolveStudiedPlaneVisualStyle(scene, planeObj, visibleObjects);
+  const style = resolveStudiedPlaneVisualStyle(scene, planeObj, scene.objects);
   const cutCollarScale = hasCutResult ? 0.68 : 1.0;
   const multiScale = (style.coexistingCount >= 2 ? 0.92 : 1.0) * cutCollarScale;
   const rankDelta = style.coexistingCount >= 2 ? (style.rank % 3) * 0.022 * dk : 0;
@@ -4543,14 +4555,16 @@ export function computeBoundedStudiedPlanePolygon(
     const tHeight = Math.max(tAllMax - tAllMin, dk * 0.24);
 
     const minPlaneZ = Math.min(...coplanarPts.map((p) => p[2]));
-    const restsOnBase = Math.abs(minPlaneZ - zMin) <= epsPlane * 5;
+    const restsOnBase = hasSolidInScene && Math.abs(minPlaneZ - zMin) <= epsPlane * 5;
     const tAtZMin = (zMin - p0[2]) / eSlope[2];
     const botPad = restsOnBase ? 0 : Math.min(dk * 0.075, tHeight * 0.11) * multiScale;
-    const tBot = restsOnBase ? tAtZMin : Math.max(tAtZMin, tAllMin - botPad);
+    const tBot = restsOnBase ? tAtZMin : hasSolidInScene ? Math.max(tAtZMin, tAllMin - botPad) : tAllMin - botPad;
 
     const zSpan = Math.max(zMax - zMin, 1e-3);
     const zTopPad = Math.min(dk * 0.082, Math.max(zSpan * 0.105, dk * 0.055)) * multiScale + rankDelta;
-    const zTopTarget = Math.min(zMax + zSpan * 0.18, Math.max(...coplanarPts.map((p) => p[2])) + zTopPad);
+    const zTopTarget = hasSolidInScene
+      ? Math.min(zMax + zSpan * 0.18, Math.max(...coplanarPts.map((p) => p[2])) + zTopPad)
+      : Math.max(...coplanarPts.map((p) => p[2])) + zTopPad;
     const tTop = Math.max(tAllMax + 0.04 * dk, (zTopTarget - p0[2]) / eSlope[2]);
 
     const lowerPts = stPts.filter((c) => c.t <= tAllMin + 0.36 * tHeight);
@@ -4586,8 +4600,18 @@ export function computeBoundedStudiedPlanePolygon(
         sTopHi = midTop + 0.19 * sWidth;
       }
     }
-    sTopLo = Math.max(sTopLo, sBotLo + 0.06 * latPad);
-    sTopHi = Math.min(sTopHi, sBotHi - 0.06 * latPad);
+    const tSpanPatch = Math.max(tTop - tBot, 1e-6);
+    const containMargin = Math.min(latPad * 0.72, shoulderPad * 0.85);
+    for (const pt of stPts) {
+      const alpha = Math.max(0, Math.min(1, (pt.t - tBot) / tSpanPatch));
+      if (alpha <= 1e-4) continue;
+      const reqTopLo = ((pt.s - containMargin) - (1 - alpha) * sBotLo) / alpha;
+      const reqTopHi = ((pt.s + containMargin) - (1 - alpha) * sBotHi) / alpha;
+      if (reqTopLo < sTopLo) sTopLo = reqTopLo;
+      if (reqTopHi > sTopHi) sTopHi = reqTopHi;
+    }
+    sTopLo = Math.max(sTopLo, sBotLo + 0.02 * latPad);
+    sTopHi = Math.min(sTopHi, sBotHi - 0.02 * latPad);
     if (sTopHi <= sTopLo + 1e-4) {
       sTopLo = sBotLo;
       sTopHi = sBotHi;
@@ -17377,6 +17401,34 @@ function finalizeStudentObjectPresentation(raw: StudentObjectPresentation): Stud
   };
 }
 
+/** Thay thế mã biến cảnh nội bộ (vd `mp_MNP`) rò rỉ trong chuỗi mô tả bằng ký hiệu hình học chuẩn. */
+export function replaceRawSceneIdTokens(
+  text: string | null | undefined,
+  rawScene: Pick<Scene3D, "objects"> | null | undefined,
+): string {
+  if (!text) return "";
+  if (!rawScene || !/[_]/u.test(text)) return text;
+  const candidates = rawScene.objects.filter(
+    (o) => !isSubEntity(o.id) && o.id.includes("_") && text.includes(o.id),
+  );
+  if (candidates.length === 0) return text;
+  let out = text;
+  const ordered = [...candidates].sort((a, b) => b.id.length - a.id.length);
+  for (const cand of ordered) {
+    const replacement =
+      cand.type === "plane3"
+        ? formatPlaneDisplayNotation(cand, rawScene as Scene3D)
+        : (shortSym(cand) || cand.id);
+    if (!replacement || replacement === cand.id) continue;
+    const escaped = cand.id.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    out = out.replace(
+      new RegExp(`(?<![A-Za-z0-9_])${escaped}(?![A-Za-z0-9_])`, "g"),
+      replacement,
+    );
+  }
+  return out;
+}
+
 /**
  * Hợp đồng trình bày chuẩn hóa cho mọi thẻ thông tin đối tượng (`.context-object-card`),
  * bảng soi (`BangNoi`), tooltip trên canvas (`.geo3d-math-tooltip`) và chip đối tượng (`§4`):
@@ -17385,7 +17437,7 @@ function finalizeStudentObjectPresentation(raw: StudentObjectPresentation): Stud
  * - `description`: một đoạn/câu giải thích rõ ràng, không lặp nguyên văn `title` hay `role`, không rò rỉ đối tượng tương lai.
  * - `evidence`: quan hệ / căn cứ hình học bổ sung khi có, đã khử trùng lặp với `description`.
  */
-export function resolveStudentObjectPresentation(
+function resolveStudentObjectPresentationCore(
   rawScene: Scene3D,
   targetId: string | null | undefined,
   step?: number,
@@ -18431,6 +18483,22 @@ export function resolveStudentObjectPresentation(
     accentHex,
     hasCanvasHoverTooltip: false,
   });
+}
+
+export function resolveStudentObjectPresentation(
+  rawScene: Scene3D,
+  targetId: string | null | undefined,
+  step?: number,
+): StudentObjectPresentation | null {
+  const res = resolveStudentObjectPresentationCore(rawScene, targetId, step);
+  if (!res) return null;
+  return {
+    ...res,
+    title: replaceRawSceneIdTokens(res.title, rawScene),
+    role: replaceRawSceneIdTokens(res.role, rawScene),
+    description: replaceRawSceneIdTokens(res.description, rawScene),
+    evidence: res.evidence ? replaceRawSceneIdTokens(res.evidence, rawScene) : null,
+  };
 }
 
 /**

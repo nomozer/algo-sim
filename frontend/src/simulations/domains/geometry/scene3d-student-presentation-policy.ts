@@ -20,6 +20,7 @@ import { veTrenKhung } from "./scene3d-presentation";
 import {
   buildPedagogicalStepNarration,
   canonicalizeSceneFaceTokensInText,
+  replaceRawSceneIdTokens,
   resolveSemanticObjectContract,
   resolveStudentObjectPresentation,
   verifyVisualContinuity,
@@ -141,7 +142,7 @@ export function evaluateStudentPresentationPolicy(
       if (classifySimulationEntityCategory(scene, obj) === "INTERNAL_MATH_RESULT") {
         return null;
       }
-      const cleaned = sanitizeStudentDescriptorText(obj.role);
+      const cleaned = sanitizeStudentDescriptorText(replaceRawSceneIdTokens(obj.role, scene));
       if (scene) {
         const sceneObj = scene.objects.find((x) => x.id === obj.id);
         if (cleaned && cleaned.length <= 26 && sceneObj && obj.role !== sceneObj.role) {
