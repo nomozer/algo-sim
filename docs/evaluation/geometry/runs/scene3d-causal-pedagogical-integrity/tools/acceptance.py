@@ -1,4 +1,4 @@
-"""Text- and image-to-simulation acceptance of run `proof-soundness-generalized-angle-invariance` (tool copied from target-invariant-regular-solid-semantics) (tool copied from compositional-semantics-simulation-goals) on the 27 development-exposed
+"""Text- and image-to-simulation acceptance of run `scene3d-causal-pedagogical-integrity` (tool copied from proof-soundness-generalized-angle-invariance) (tool copied from compositional-semantics-simulation-goals) on the 27 development-exposed
 items: the semantic-to-scene3d harness unchanged (sign-aware independent scene checks of verified-section-intersection-
 dihedral-local), receipts written to THIS run. One grading change, declared before measurement: a served item whose
 response carries `source_goal_completion` (the source asks a trigonometric VALUE of the angle) is never counted as a

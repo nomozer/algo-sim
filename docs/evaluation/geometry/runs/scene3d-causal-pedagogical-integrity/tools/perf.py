@@ -1,4 +1,4 @@
-"""Performance impact of run `proof-soundness-generalized-angle-invariance` (tool copied from target-invariant-regular-solid-semantics) (tool copied from compositional-semantics-simulation-goals) (tool copied from semantic-failure-safe-image-segmentation) (host desktop; not a low-end device).
+"""Performance impact of run `scene3d-causal-pedagogical-integrity` (tool copied from proof-soundness-generalized-angle-invariance) (tool copied from compositional-semantics-simulation-goals) (tool copied from semantic-failure-safe-image-segmentation) (host desktop; not a low-end device).
 
   python perf.py <before_backend_dir>            # from the worktree root
   python perf.py --child <kind>                  # internal: kind = text | prepare
@@ -130,7 +130,7 @@ def main(before: Path) -> int:
     data = {"run_id": RUN.name, "generated_at_utc": datetime.now(timezone.utc).isoformat(),
             "head": subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT).decode().strip(),
             "environment": {"ALLOW_LIVE_AI": "0", "host": "developer desktop, shared, not isolated"},
-            "command": f"python docs/evaluation/geometry/runs/{RUN.name}/tools/perf.py <archive of 9d5e9b408>/backend",
+            "command": f"python docs/evaluation/geometry/runs/{RUN.name}/tools/perf.py <archive of 9d0949b09>/backend",
             "summary": summary, "rows": res, "physical_low_end": "PHYSICAL_LOW_END_NOT_MEASURED"}
     (RUN / "performance_impact.json").write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(json.dumps(summary, indent=1))

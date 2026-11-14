@@ -1,4 +1,4 @@
-"""Before/after on the DEVELOPMENT corpora of run `proof-soundness-generalized-angle-invariance` (tool copied from target-invariant-regular-solid-semantics) (tool copied from compositional-semantics-simulation-goals) (never a locked W2/W3 row,
+"""Before/after on the DEVELOPMENT corpora of run `scene3d-causal-pedagogical-integrity` (tool copied from proof-soundness-generalized-angle-invariance) (tool copied from compositional-semantics-simulation-goals) (never a locked W2/W3 row,
 never H-1). Each side runs in its own child process with its own backend on PYTHONPATH (same instrument, both sides).
 
   python semantic_compare.py <before_backend_dir> <out.json>      # from the worktree root, backend interpreter
