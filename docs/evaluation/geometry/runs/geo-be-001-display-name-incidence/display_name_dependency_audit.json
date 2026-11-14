@@ -1,0 +1,16 @@
+{
+  "ticket": "GEO-BE-001",
+  "repository": "axo-geometry-library (a git worktree of the algo-sim repository, shared .git)",
+  "branch": "feat/axo-geometry-library-verification",
+  "baseline_head": "c7a6077fd",
+  "fix_commit": "5a229507b",
+  "live_ai_calls": 0,
+  "functions_changed": [
+    "_mot_luot (giai: points_on_plane branch, sentence construction, second phase)",
+    "ten_hien_thi (optional unresolved set)"
+  ],
+  "definition_vs_incidence": "a point whose definition (sources, transitively) uses the plane is an incidence: never resolved FROM the plane; its own name/label splits the declared plane name",
+  "symbol_first": "a sentence built while an operand is still in dang_giai is marked; after the first pass every marked name and every name whose definition uses one is re-resolved in table order with final symbols",
+  "raw_id_fallback": "removed from presentation sentences (_goi_tam: reference or the operand's kind noun); ids unchanged in id / sources / depends / producer",
+  "true_cycle": "still half-built after the second phase ⇒ reported in `unresolved` (never printed as an id)"
+}

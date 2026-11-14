@@ -1,0 +1,16 @@
+{
+  "ticket": "GEO-BE-001",
+  "repository": "axo-geometry-library (a git worktree of the algo-sim repository, shared .git)",
+  "branch": "feat/axo-geometry-library-verification",
+  "baseline_head": "c7a6077fd",
+  "fix_commit": "5a229507b",
+  "live_ai_calls": 0,
+  "full_pytest_on_dirty_worktree": "13880 passed, 16 failed",
+  "attribution": {
+    "candidate_identity_drift_class (14)": "measured system changed by the fix AND by the other session's uncommitted backend/app files; refreeze BLOCKED (dirty tree owned by another session)",
+    "test_inv_08_code_index_paths_exist": "passes on a clean archive of HEAD ⇒ caused by the other session's uncommitted CODE_INDEX / deleted files",
+    "test_curriculum_coverage::test_KHONG_co_mat_cong_va_KHONG_co_phep_chieu_song_song": "fails on clean archives of HEAD and HEAD^ ⇒ pre-existing on this branch, not caused by the fix"
+  },
+  "candidate_freeze": "BLOCKED_DIRTY_TREE_OWNED_BY_ANOTHER_SESSION",
+  "publication": "NOT_RUN in repository A (shared history with algo-sim; reported there)"
+}
