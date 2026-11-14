@@ -1,0 +1,41 @@
+{
+  "name": "docs_ia",
+  "command": "D:\\Documents\\projects\\algo-sim\\backend\\.venv\\Scripts\\python.exe backend/scripts/audit_docs_information_architecture.py --json",
+  "argv": [
+    "D:\\Documents\\projects\\algo-sim\\backend\\.venv\\Scripts\\python.exe",
+    "backend/scripts/audit_docs_information_architecture.py",
+    "--json"
+  ],
+  "cwd": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\local-first-geometry-understanding",
+  "started_at_utc": "2026-11-14T02:53:40.247770+00:00",
+  "start_snapshot": {
+    "head_commit": "186d92c9dee72ba4feedeaeaaa40f812fd24eaf8",
+    "product_paths_sha256": "8c48efac06306253f2eb7d953c833a1d32b562fd2d2d74a9001e989c1bb44cf3",
+    "product_path_count": 337,
+    "hash_policy": "tracked backend/app + frontend/src, LF normalized; includes tests",
+    "working_product_source_sha256": "0f5674e417de01ef43a122580b77af014bf0ac68890340e5aa527aef6efb027f",
+    "working_product_source_count": 194,
+    "working_source_policy": "all working backend/app + frontend/src including untracked; skip pycache and freeze TEST_ONLY_GLOBS"
+  },
+  "ended_at_utc": "2026-11-14T02:53:41.102580+00:00",
+  "duration_seconds": 0.609,
+  "exit_code": 0,
+  "raw_output_sha256": "6cf737ec0c662adf05d62345aab19056f406d57e34d98f9d3fb7d38d4d6263b6",
+  "raw_output_bytes": 10667,
+  "raw_output_retention": "ignored local .superpowers only; never staged",
+  "end_snapshot": {
+    "head_commit": "186d92c9dee72ba4feedeaeaaa40f812fd24eaf8",
+    "product_paths_sha256": "8c48efac06306253f2eb7d953c833a1d32b562fd2d2d74a9001e989c1bb44cf3",
+    "product_path_count": 337,
+    "hash_policy": "tracked backend/app + frontend/src, LF normalized; includes tests",
+    "working_product_source_sha256": "0f5674e417de01ef43a122580b77af014bf0ac68890340e5aa527aef6efb027f",
+    "working_product_source_count": 194,
+    "working_source_policy": "all working backend/app + frontend/src including untracked; skip pycache and freeze TEST_ONLY_GLOBS"
+  },
+  "status": "PASS",
+  "broken_links": 0,
+  "stale_code_index_paths": 0,
+  "secret_leaks": 0,
+  "source_unchanged_during_command": true,
+  "verdict": "PASS"
+}
