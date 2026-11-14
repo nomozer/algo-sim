@@ -253,6 +253,8 @@
         "0",
         "0"
        ],
+       "computational_depends": [],
+       "visible_prerequisites": [],
        "occludes_edges": false
       },
       {
@@ -290,6 +292,8 @@
         "0",
         "0"
        ],
+       "computational_depends": [],
+       "visible_prerequisites": [],
        "occludes_edges": false
       },
       {
@@ -327,6 +331,8 @@
         "2",
         "0"
        ],
+       "computational_depends": [],
+       "visible_prerequisites": [],
        "occludes_edges": false
       },
       {
@@ -364,6 +370,8 @@
         "2",
         "0"
        ],
+       "computational_depends": [],
+       "visible_prerequisites": [],
        "occludes_edges": false
       },
       {
@@ -401,6 +409,8 @@
         "0",
         "4"
        ],
+       "computational_depends": [],
+       "visible_prerequisites": [],
        "occludes_edges": false
       },
       {
@@ -453,6 +463,18 @@
         "0",
         "2"
        ],
+       "computational_depends": [
+        "A",
+        "S"
+       ],
+       "visible_prerequisites": [
+        "A",
+        "S"
+       ],
+       "construction_lineage": {
+        "mode": "direct_euclidean_primitive",
+        "producer": "construct_point.midpoint"
+       },
        "occludes_edges": false
       },
       {
@@ -505,6 +527,18 @@
         "0",
         "2"
        ],
+       "computational_depends": [
+        "B",
+        "S"
+       ],
+       "visible_prerequisites": [
+        "B",
+        "S"
+       ],
+       "construction_lineage": {
+        "mode": "direct_euclidean_primitive",
+        "producer": "construct_point.midpoint"
+       },
        "occludes_edges": false
       },
       {
@@ -557,6 +591,18 @@
         "1",
         "2"
        ],
+       "computational_depends": [
+        "C",
+        "S"
+       ],
+       "visible_prerequisites": [
+        "C",
+        "S"
+       ],
+       "construction_lineage": {
+        "mode": "direct_euclidean_primitive",
+        "producer": "construct_point.midpoint"
+       },
        "occludes_edges": false
       },
       {
@@ -613,6 +659,18 @@
         "2",
         "-4"
        ],
+       "computational_depends": [
+        "D",
+        "S"
+       ],
+       "visible_prerequisites": [
+        "D",
+        "S"
+       ],
+       "construction_lineage": {
+        "mode": "direct_euclidean_primitive",
+        "producer": "construct_line"
+       },
        "occludes_edges": false
       },
       {
@@ -665,6 +723,20 @@
         "1",
         "2"
        ],
+       "computational_depends": [
+        "mp",
+        "sd"
+       ],
+       "visible_prerequisites": [
+        "mp",
+        "sd"
+       ],
+       "construction_lineage": {
+        "mode": "algebraic_line_plane_intersection",
+        "line_id": "sd",
+        "plane_id": "mp",
+        "pedagogical_limitation": "Giao điểm được tính trực tiếp từ phương trình đường thẳng và mặt phẳng (chưa tách bước dựng đường phụ đồng phẳng trung gian)."
+       },
        "occludes_edges": false
       },
       {
@@ -796,6 +868,24 @@
         "CONSTRUCT_LATERAL_BOUNDARY",
         "CLOSE_SOLID"
        ],
+       "computational_depends": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "S"
+       ],
+       "visible_prerequisites": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "S"
+       ],
+       "construction_lineage": {
+        "mode": "direct_euclidean_primitive",
+        "producer": "construct_solid"
+       },
        "edge_ownership": [
         {
          "edge_id": "chop::edge:A-B",
@@ -1025,6 +1115,20 @@
         "0",
         "1"
        ],
+       "computational_depends": [
+        "M",
+        "N",
+        "P"
+       ],
+       "visible_prerequisites": [
+        "M",
+        "N",
+        "P"
+       ],
+       "construction_lineage": {
+        "mode": "direct_euclidean_primitive",
+        "producer": "construct_plane"
+       },
        "occludes_edges": false,
        "surface_role": "CUTTING_PLANE"
       },
@@ -1106,6 +1210,10 @@
           "0",
           "0",
           "2"
+         ],
+         "parallel_face_edge": [
+          0,
+          1
          ]
         },
         {
@@ -1119,6 +1227,10 @@
           "0",
           "1",
           "2"
+         ],
+         "parallel_face_edge": [
+          3,
+          0
          ]
         },
         {
@@ -1132,6 +1244,10 @@
           "1",
           "1",
           "2"
+         ],
+         "parallel_face_edge": [
+          2,
+          3
          ]
         },
         {
@@ -1145,6 +1261,10 @@
           "1",
           "0",
           "2"
+         ],
+         "parallel_face_edge": [
+          1,
+          2
          ]
         }
        ],
@@ -1188,6 +1308,36 @@
         "CONSTRUCT_INTERSECTION",
         "CLOSE_SECTION"
        ],
+       "ordered_vertex_ids": [
+        "N",
+        "M",
+        "Q",
+        "P"
+       ],
+       "ordered_vertex_symbols": [
+        "N",
+        "M",
+        "Q",
+        "P"
+       ],
+       "ordered_boundary_edges": [
+        "NM",
+        "MQ",
+        "QP",
+        "PN"
+       ],
+       "computational_depends": [
+        "chop",
+        "mp"
+       ],
+       "visible_prerequisites": [
+        "chop",
+        "mp"
+       ],
+       "construction_lineage": {
+        "mode": "direct_euclidean_primitive",
+        "producer": "construct_section"
+       },
        "occludes_edges": false,
        "surface_role": "SECTION_REGION",
        "endpoint_entities": [
@@ -1317,6 +1467,22 @@
         "C",
         "D"
        ],
+       "computational_depends": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ],
+       "visible_prerequisites": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ],
+       "construction_lineage": {
+        "mode": "direct_euclidean_primitive",
+        "producer": "construct_polygon"
+       },
        "occludes_edges": false,
        "surface_role": "BASE_REGION",
        "boundary_edge_ids": [
@@ -1450,6 +1616,18 @@
          ]
         }
        },
+       "computational_depends": [
+        "A",
+        "S"
+       ],
+       "visible_prerequisites": [
+        "A",
+        "S"
+       ],
+       "construction_lineage": {
+        "mode": "direct_euclidean_primitive",
+        "producer": "construct_segment"
+       },
        "occludes_edges": false,
        "boundary_edge_ids": [
         "chop::edge:A-S"
@@ -1525,6 +1703,18 @@
         "S",
         "B"
        ],
+       "computational_depends": [
+        "B",
+        "S"
+       ],
+       "visible_prerequisites": [
+        "B",
+        "S"
+       ],
+       "construction_lineage": {
+        "mode": "direct_euclidean_primitive",
+        "producer": "construct_segment"
+       },
        "occludes_edges": false,
        "boundary_edge_ids": [
         "chop::edge:B-S"
@@ -1600,6 +1790,18 @@
         "S",
         "C"
        ],
+       "computational_depends": [
+        "C",
+        "S"
+       ],
+       "visible_prerequisites": [
+        "C",
+        "S"
+       ],
+       "construction_lineage": {
+        "mode": "direct_euclidean_primitive",
+        "producer": "construct_segment"
+       },
        "occludes_edges": false,
        "boundary_edge_ids": [
         "chop::edge:C-S"
@@ -1675,6 +1877,18 @@
         "S",
         "D"
        ],
+       "computational_depends": [
+        "D",
+        "S"
+       ],
+       "visible_prerequisites": [
+        "D",
+        "S"
+       ],
+       "construction_lineage": {
+        "mode": "direct_euclidean_primitive",
+        "producer": "construct_segment"
+       },
        "occludes_edges": false,
        "boundary_edge_ids": [
         "chop::edge:D-S"
@@ -1715,7 +1929,13 @@
          "D"
         ]
        },
-       "learner_text": "Dựng đáy ABCD."
+       "learner_text": "Dựng đáy ABCD.",
+       "visible_prerequisites": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ]
       },
       {
        "step_index": 2,
@@ -1741,6 +1961,10 @@
        "learner_text": "Dựng chiều cao SA.",
        "objects": [
         "chieu_cao_SA"
+       ],
+       "visible_prerequisites": [
+        "A",
+        "S"
        ]
       },
       {
@@ -1809,7 +2033,14 @@
         ],
         "so_mat": 5
        },
-       "learner_text": "Dựng hình chóp S.ABCD (5 đỉnh, 5 mặt)."
+       "learner_text": "Dựng hình chóp S.ABCD (5 đỉnh, 5 mặt).",
+       "visible_prerequisites": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "S"
+       ]
       },
       {
        "step_index": 5,
@@ -1830,7 +2061,11 @@
          "2"
         ]
        },
-       "learner_text": "Dựng M."
+       "learner_text": "Dựng M.",
+       "visible_prerequisites": [
+        "A",
+        "S"
+       ]
       },
       {
        "step_index": 6,
@@ -1851,7 +2086,11 @@
          "2"
         ]
        },
-       "learner_text": "Dựng N."
+       "learner_text": "Dựng N.",
+       "visible_prerequisites": [
+        "B",
+        "S"
+       ]
       },
       {
        "step_index": 7,
@@ -1872,7 +2111,11 @@
          "2"
         ]
        },
-       "learner_text": "Dựng P."
+       "learner_text": "Dựng P.",
+       "visible_prerequisites": [
+        "C",
+        "S"
+       ]
       },
       {
        "step_index": 8,
@@ -1894,7 +2137,12 @@
          "P"
         ]
        },
-       "learner_text": "Dựng (MNP)."
+       "learner_text": "Dựng (MNP).",
+       "visible_prerequisites": [
+        "M",
+        "N",
+        "P"
+       ]
       },
       {
        "step_index": 9,
@@ -1914,7 +2162,11 @@
          "D"
         ]
        },
-       "learner_text": "Dựng SD."
+       "learner_text": "Dựng SD.",
+       "visible_prerequisites": [
+        "D",
+        "S"
+       ]
       },
       {
        "step_index": 10,
@@ -1935,7 +2187,11 @@
          "2"
         ]
        },
-       "learner_text": "Dựng Q."
+       "learner_text": "Dựng Q.",
+       "visible_prerequisites": [
+        "mp",
+        "sd"
+       ]
       },
       {
        "step_index": 11,
@@ -1973,6 +2229,10 @@
         }
        },
        "learner_text": "Trên mặt ABS, nối giao điểm thuộc cạnh BS với giao điểm thuộc cạnh AS.",
+       "visible_prerequisites": [
+        "chop",
+        "mp"
+       ],
        "justification_text": "Vì (MNP) song song với AB và AB nằm trong mặt (ABS), nên giao tuyến của (MNP) với mặt (ABS) song song với AB."
       },
       {
@@ -2011,6 +2271,10 @@
         }
        },
        "learner_text": "Trên mặt DAS, nối giao điểm thuộc cạnh AS với giao điểm thuộc cạnh DS.",
+       "visible_prerequisites": [
+        "chop",
+        "mp"
+       ],
        "justification_text": "Vì (MNP) song song với DA và DA nằm trong mặt (DAS), nên giao tuyến của (MNP) với mặt (DAS) song song với DA."
       },
       {
@@ -2049,6 +2313,10 @@
         }
        },
        "learner_text": "Trên mặt CDS, nối giao điểm thuộc cạnh DS với giao điểm thuộc cạnh CS.",
+       "visible_prerequisites": [
+        "chop",
+        "mp"
+       ],
        "justification_text": "Vì (MNP) song song với CD và CD nằm trong mặt (CDS), nên giao tuyến của (MNP) với mặt (CDS) song song với CD."
       },
       {
@@ -2087,6 +2355,10 @@
         }
        },
        "learner_text": "Trên mặt BCS, nối giao điểm thuộc cạnh CS với giao điểm thuộc cạnh BS.",
+       "visible_prerequisites": [
+        "chop",
+        "mp"
+       ],
        "justification_text": "Vì (MNP) song song với BC và BC nằm trong mặt (BCS), nên giao tuyến của (MNP) với mặt (BCS) song song với BC."
       },
       {
@@ -2097,7 +2369,7 @@
         "chop",
         "mp"
        ],
-       "explanation": "Thiết diện là đa giác 4 đỉnh, giao của mặt phẳng (MNP) với khối.",
+       "explanation": "Thiết diện là đa giác 4 đỉnh, giao của mặt phẳng (MNP) với khối. Chu trình các cạnh khép kín: NM, MQ, QP, PN.",
        "display_label": "Thiết diện NMQP",
        "semantic_kind": "GEOMETRY_CONSTRUCTION",
        "details": {
@@ -2131,9 +2403,19 @@
          4,
          3,
          2
+        ],
+        "ordered_boundary_edges": [
+         "NM",
+         "MQ",
+         "QP",
+         "PN"
         ]
        },
-       "learner_text": "Thiết diện khép lại thành tứ giác: (MNP) cắt hình chóp S.ABCD."
+       "learner_text": "Thiết diện khép lại thành tứ giác: (MNP) cắt hình chóp S.ABCD.",
+       "visible_prerequisites": [
+        "chop",
+        "mp"
+       ]
       }
      ],
      "formation": {
@@ -2175,6 +2457,12 @@
         "geometry_progress": [],
         "formation_roles": [
          "CONSTRUCT_BASE"
+        ],
+        "visible_prerequisites": [
+         "A",
+         "B",
+         "C",
+         "D"
         ]
        },
        {
@@ -2198,6 +2486,10 @@
         "formation_roles": [
          "CONSTRUCT_HEIGHT",
          "CONSTRUCT_LATERAL_BOUNDARY"
+        ],
+        "visible_prerequisites": [
+         "A",
+         "S"
         ]
        },
        {
@@ -2251,6 +2543,13 @@
         "geometry_progress": [],
         "formation_roles": [
          "CLOSE_SOLID"
+        ],
+        "visible_prerequisites": [
+         "A",
+         "B",
+         "C",
+         "D",
+         "S"
         ]
        },
        {
@@ -2278,6 +2577,10 @@
         "geometry_progress": [],
         "formation_roles": [
          "CONSTRUCT_AUXILIARY_GEOMETRY"
+        ],
+        "visible_prerequisites": [
+         "A",
+         "S"
         ]
        },
        {
@@ -2306,6 +2609,10 @@
         "geometry_progress": [],
         "formation_roles": [
          "CONSTRUCT_AUXILIARY_GEOMETRY"
+        ],
+        "visible_prerequisites": [
+         "B",
+         "S"
         ]
        },
        {
@@ -2335,6 +2642,10 @@
         "geometry_progress": [],
         "formation_roles": [
          "CONSTRUCT_AUXILIARY_GEOMETRY"
+        ],
+        "visible_prerequisites": [
+         "C",
+         "S"
         ]
        },
        {
@@ -2365,6 +2676,11 @@
         "geometry_progress": [],
         "formation_roles": [
          "CONSTRUCT_CUTTING_OBJECT"
+        ],
+        "visible_prerequisites": [
+         "M",
+         "N",
+         "P"
         ]
        },
        {
@@ -2396,6 +2712,10 @@
         "geometry_progress": [],
         "formation_roles": [
          "CONSTRUCT_AUXILIARY_GEOMETRY"
+        ],
+        "visible_prerequisites": [
+         "D",
+         "S"
         ]
        },
        {
@@ -2428,6 +2748,10 @@
         "geometry_progress": [],
         "formation_roles": [
          "CONSTRUCT_AUXILIARY_GEOMETRY"
+        ],
+        "visible_prerequisites": [
+         "mp",
+         "sd"
         ]
        },
        {
@@ -2473,6 +2797,10 @@
         ],
         "formation_roles": [
          "CONSTRUCT_INTERSECTION"
+        ],
+        "visible_prerequisites": [
+         "chop",
+         "mp"
         ]
        },
        {
@@ -2520,6 +2848,10 @@
         ],
         "formation_roles": [
          "CONSTRUCT_INTERSECTION"
+        ],
+        "visible_prerequisites": [
+         "chop",
+         "mp"
         ]
        },
        {
@@ -2569,6 +2901,10 @@
         ],
         "formation_roles": [
          "CONSTRUCT_INTERSECTION"
+        ],
+        "visible_prerequisites": [
+         "chop",
+         "mp"
         ]
        },
        {
@@ -2620,6 +2956,10 @@
         ],
         "formation_roles": [
          "CONSTRUCT_INTERSECTION"
+        ],
+        "visible_prerequisites": [
+         "chop",
+         "mp"
         ]
        },
        {
@@ -2671,6 +3011,10 @@
         ],
         "formation_roles": [
          "CLOSE_SECTION"
+        ],
+        "visible_prerequisites": [
+         "chop",
+         "mp"
         ]
        }
       ]
@@ -2682,6 +3026,7 @@
       "D",
       "S"
      ],
+     "unused_auxiliary_ids": [],
      "diagnostics": [],
      "khai": "Dữ liệu CẢNH cho renderer. Mọi số là chuỗi phân số CHÍNH XÁC; hoá float là việc của renderer, ở bước cuối trước GPU. Mặt phẳng và đường thẳng KHÔNG có biên — renderer tự quyết kích thước dựa trên `depends`."
     },
@@ -2868,6 +3213,8 @@
         "0",
         "0"
        ],
+       "computational_depends": [],
+       "visible_prerequisites": [],
        "occludes_edges": false
       },
       {
@@ -2905,6 +3252,8 @@
         "0",
         "0"
        ],
+       "computational_depends": [],
+       "visible_prerequisites": [],
        "occludes_edges": false
       },
       {
@@ -2942,6 +3291,8 @@
         "2",
         "0"
        ],
+       "computational_depends": [],
+       "visible_prerequisites": [],
        "occludes_edges": false
       },
       {
@@ -2979,6 +3330,8 @@
         "2",
         "0"
        ],
+       "computational_depends": [],
+       "visible_prerequisites": [],
        "occludes_edges": false
       },
       {
@@ -3016,6 +3369,8 @@
         "0",
         "4"
        ],
+       "computational_depends": [],
+       "visible_prerequisites": [],
        "occludes_edges": false
       },
       {
@@ -3147,6 +3502,24 @@
         "CONSTRUCT_LATERAL_BOUNDARY",
         "CLOSE_SOLID"
        ],
+       "computational_depends": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "S"
+       ],
+       "visible_prerequisites": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "S"
+       ],
+       "construction_lineage": {
+        "mode": "direct_euclidean_primitive",
+        "producer": "construct_solid"
+       },
        "edge_ownership": [
         {
          "edge_id": "chop::edge:A-B",
@@ -3376,16 +3749,30 @@
         "-8",
         "0"
        ],
+       "computational_depends": [
+        "A",
+        "C",
+        "S"
+       ],
+       "visible_prerequisites": [
+        "A",
+        "C",
+        "S"
+       ],
+       "construction_lineage": {
+        "mode": "direct_euclidean_primitive",
+        "producer": "construct_plane"
+       },
        "occludes_edges": false,
        "surface_role": "CUTTING_PLANE"
       },
       {
        "id": "thiet_dien",
-       "label": "Thiết diện ACS",
-       "notation": "ACS",
-       "reference": "ACS",
+       "label": "Thiết diện SAC",
+       "notation": "SAC",
+       "reference": "SAC",
        "role": "Thiết diện của S.ABCD cắt bởi (SAC)",
-       "display_label": "Thiết diện ACS",
+       "display_label": "Thiết diện SAC",
        "type": "section",
        "render": "polygon",
        "display_role": "visual_owner",
@@ -3504,6 +3891,33 @@
         "CONSTRUCT_INTERSECTION",
         "CLOSE_SECTION"
        ],
+       "ordered_vertex_ids": [
+        "S",
+        "A",
+        "C"
+       ],
+       "ordered_vertex_symbols": [
+        "S",
+        "A",
+        "C"
+       ],
+       "ordered_boundary_edges": [
+        "SA",
+        "AC",
+        "CS"
+       ],
+       "computational_depends": [
+        "chop",
+        "sac"
+       ],
+       "visible_prerequisites": [
+        "chop",
+        "sac"
+       ],
+       "construction_lineage": {
+        "mode": "direct_euclidean_primitive",
+        "producer": "construct_section"
+       },
        "occludes_edges": false,
        "surface_role": "SECTION_REGION",
        "endpoint_entities": [
@@ -3624,6 +4038,22 @@
         "C",
         "D"
        ],
+       "computational_depends": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ],
+       "visible_prerequisites": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ],
+       "construction_lineage": {
+        "mode": "direct_euclidean_primitive",
+        "producer": "construct_polygon"
+       },
        "occludes_edges": false,
        "surface_role": "BASE_REGION",
        "boundary_edge_ids": [
@@ -3757,6 +4187,18 @@
          ]
         }
        },
+       "computational_depends": [
+        "A",
+        "S"
+       ],
+       "visible_prerequisites": [
+        "A",
+        "S"
+       ],
+       "construction_lineage": {
+        "mode": "direct_euclidean_primitive",
+        "producer": "construct_segment"
+       },
        "occludes_edges": false,
        "boundary_edge_ids": [
         "chop::edge:A-S"
@@ -3832,6 +4274,18 @@
         "S",
         "B"
        ],
+       "computational_depends": [
+        "B",
+        "S"
+       ],
+       "visible_prerequisites": [
+        "B",
+        "S"
+       ],
+       "construction_lineage": {
+        "mode": "direct_euclidean_primitive",
+        "producer": "construct_segment"
+       },
        "occludes_edges": false,
        "boundary_edge_ids": [
         "chop::edge:B-S"
@@ -3907,6 +4361,18 @@
         "S",
         "C"
        ],
+       "computational_depends": [
+        "C",
+        "S"
+       ],
+       "visible_prerequisites": [
+        "C",
+        "S"
+       ],
+       "construction_lineage": {
+        "mode": "direct_euclidean_primitive",
+        "producer": "construct_segment"
+       },
        "occludes_edges": false,
        "boundary_edge_ids": [
         "chop::edge:C-S"
@@ -3982,6 +4448,18 @@
         "S",
         "D"
        ],
+       "computational_depends": [
+        "D",
+        "S"
+       ],
+       "visible_prerequisites": [
+        "D",
+        "S"
+       ],
+       "construction_lineage": {
+        "mode": "direct_euclidean_primitive",
+        "producer": "construct_segment"
+       },
        "occludes_edges": false,
        "boundary_edge_ids": [
         "chop::edge:D-S"
@@ -4022,7 +4500,13 @@
          "D"
         ]
        },
-       "learner_text": "Dựng đáy ABCD."
+       "learner_text": "Dựng đáy ABCD.",
+       "visible_prerequisites": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ]
       },
       {
        "step_index": 2,
@@ -4048,6 +4532,10 @@
        "learner_text": "Dựng chiều cao SA.",
        "objects": [
         "chieu_cao_SA"
+       ],
+       "visible_prerequisites": [
+        "A",
+        "S"
        ]
       },
       {
@@ -4116,7 +4604,14 @@
         ],
         "so_mat": 5
        },
-       "learner_text": "Dựng hình chóp S.ABCD (5 đỉnh, 5 mặt)."
+       "learner_text": "Dựng hình chóp S.ABCD (5 đỉnh, 5 mặt).",
+       "visible_prerequisites": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "S"
+       ]
       },
       {
        "step_index": 5,
@@ -4138,7 +4633,12 @@
          "C"
         ]
        },
-       "learner_text": "Dựng (SAC)."
+       "learner_text": "Dựng (SAC).",
+       "visible_prerequisites": [
+        "A",
+        "C",
+        "S"
+       ]
       },
       {
        "step_index": 6,
@@ -4168,7 +4668,11 @@
         "mat_phang": "sac",
         "thiet_dien": "thiet_dien"
        },
-       "learner_text": "Trên mặt ABCD, nối đỉnh A với đỉnh C."
+       "learner_text": "Trên mặt ABCD, nối đỉnh A với đỉnh C.",
+       "visible_prerequisites": [
+        "chop",
+        "sac"
+       ]
       },
       {
        "step_index": 7,
@@ -4198,7 +4702,11 @@
         "mat_phang": "sac",
         "thiet_dien": "thiet_dien"
        },
-       "learner_text": "Trên mặt BCS, nối đỉnh C với đỉnh S."
+       "learner_text": "Trên mặt BCS, nối đỉnh C với đỉnh S.",
+       "visible_prerequisites": [
+        "chop",
+        "sac"
+       ]
       },
       {
        "step_index": 8,
@@ -4228,7 +4736,11 @@
         "mat_phang": "sac",
         "thiet_dien": "thiet_dien"
        },
-       "learner_text": "Trên mặt ABS, nối đỉnh S với đỉnh A."
+       "learner_text": "Trên mặt ABS, nối đỉnh S với đỉnh A.",
+       "visible_prerequisites": [
+        "chop",
+        "sac"
+       ]
       },
       {
        "step_index": 9,
@@ -4238,8 +4750,8 @@
         "chop",
         "sac"
        ],
-       "explanation": "Thiết diện là đa giác 3 đỉnh, giao của mặt phẳng (SAC) với khối.",
-       "display_label": "Thiết diện ACS",
+       "explanation": "Thiết diện là đa giác 3 đỉnh, giao của mặt phẳng (SAC) với khối. Chu trình các cạnh khép kín: SA, AC, CS.",
+       "display_label": "Thiết diện SAC",
        "semantic_kind": "GEOMETRY_CONSTRUCTION",
        "details": {
         "khoi": "chop",
@@ -4266,9 +4778,18 @@
          0,
          2,
          1
+        ],
+        "ordered_boundary_edges": [
+         "SA",
+         "AC",
+         "CS"
         ]
        },
-       "learner_text": "Thiết diện khép lại thành tam giác: (SAC) cắt hình chóp S.ABCD."
+       "learner_text": "Thiết diện khép lại thành tam giác: (SAC) cắt hình chóp S.ABCD.",
+       "visible_prerequisites": [
+        "chop",
+        "sac"
+       ]
       }
      ],
      "formation": {
@@ -4310,6 +4831,12 @@
         "geometry_progress": [],
         "formation_roles": [
          "CONSTRUCT_BASE"
+        ],
+        "visible_prerequisites": [
+         "A",
+         "B",
+         "C",
+         "D"
         ]
        },
        {
@@ -4333,6 +4860,10 @@
         "formation_roles": [
          "CONSTRUCT_HEIGHT",
          "CONSTRUCT_LATERAL_BOUNDARY"
+        ],
+        "visible_prerequisites": [
+         "A",
+         "S"
         ]
        },
        {
@@ -4386,6 +4917,13 @@
         "geometry_progress": [],
         "formation_roles": [
          "CLOSE_SOLID"
+        ],
+        "visible_prerequisites": [
+         "A",
+         "B",
+         "C",
+         "D",
+         "S"
         ]
        },
        {
@@ -4413,6 +4951,11 @@
         "geometry_progress": [],
         "formation_roles": [
          "CONSTRUCT_CUTTING_OBJECT"
+        ],
+        "visible_prerequisites": [
+         "A",
+         "C",
+         "S"
         ]
        },
        {
@@ -4453,6 +4996,10 @@
         ],
         "formation_roles": [
          "CONSTRUCT_INTERSECTION"
+        ],
+        "visible_prerequisites": [
+         "chop",
+         "sac"
         ]
        },
        {
@@ -4495,6 +5042,10 @@
         ],
         "formation_roles": [
          "CONSTRUCT_INTERSECTION"
+        ],
+        "visible_prerequisites": [
+         "chop",
+         "sac"
         ]
        },
        {
@@ -4539,6 +5090,10 @@
         ],
         "formation_roles": [
          "CONSTRUCT_INTERSECTION"
+        ],
+        "visible_prerequisites": [
+         "chop",
+         "sac"
         ]
        },
        {
@@ -4583,6 +5138,10 @@
         ],
         "formation_roles": [
          "CLOSE_SECTION"
+        ],
+        "visible_prerequisites": [
+         "chop",
+         "sac"
         ]
        }
       ]
@@ -4594,6 +5153,7 @@
       "D",
       "S"
      ],
+     "unused_auxiliary_ids": [],
      "diagnostics": [],
      "khai": "Dữ liệu CẢNH cho renderer. Mọi số là chuỗi phân số CHÍNH XÁC; hoá float là việc của renderer, ở bước cuối trước GPU. Mặt phẳng và đường thẳng KHÔNG có biên — renderer tự quyết kích thước dựa trên `depends`."
     },
@@ -4659,7 +5219,7 @@
       },
       {
        "step_index": 7,
-       "narration": "Ghi nhận goc = 0.",
+       "narration": "Tính cos² góc giữa BC và (SAB): cos²(BC, (SAB)) = 0. Do cos² = 0 nên BC vuông góc với (SAB).",
        "objects": [],
        "highlighted_object_ids": []
       }
@@ -4711,7 +5271,7 @@
        "view_index": 7,
        "frame_lo": 7,
        "frame_hi": 7,
-       "narration": "Ghi nhận goc = 0."
+       "narration": "Tính cos² góc giữa BC và (SAB): cos²(BC, (SAB)) = 0. Do cos² = 0 nên BC vuông góc với (SAB)."
       }
      ],
      "grouping_level": "step",
@@ -4756,6 +5316,8 @@
         "0",
         "0"
        ],
+       "computational_depends": [],
+       "visible_prerequisites": [],
        "occludes_edges": false
       },
       {
@@ -4793,6 +5355,8 @@
         "0",
         "0"
        ],
+       "computational_depends": [],
+       "visible_prerequisites": [],
        "occludes_edges": false
       },
       {
@@ -4830,6 +5394,8 @@
         "2",
         "0"
        ],
+       "computational_depends": [],
+       "visible_prerequisites": [],
        "occludes_edges": false
       },
       {
@@ -4867,6 +5433,8 @@
         "2",
         "0"
        ],
+       "computational_depends": [],
+       "visible_prerequisites": [],
        "occludes_edges": false
       },
       {
@@ -4904,6 +5472,8 @@
         "0",
         "4"
        ],
+       "computational_depends": [],
+       "visible_prerequisites": [],
        "occludes_edges": false
       },
       {
@@ -5035,6 +5605,24 @@
         "CONSTRUCT_LATERAL_BOUNDARY",
         "CLOSE_SOLID"
        ],
+       "computational_depends": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "S"
+       ],
+       "visible_prerequisites": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "S"
+       ],
+       "construction_lineage": {
+        "mode": "direct_euclidean_primitive",
+        "producer": "construct_solid"
+       },
        "edge_ownership": [
         {
          "edge_id": "chop::edge:A-B",
@@ -5264,6 +5852,20 @@
         "-8",
         "0"
        ],
+       "computational_depends": [
+        "A",
+        "B",
+        "S"
+       ],
+       "visible_prerequisites": [
+        "A",
+        "B",
+        "S"
+       ],
+       "construction_lineage": {
+        "mode": "direct_euclidean_primitive",
+        "producer": "construct_plane"
+       },
        "occludes_edges": false,
        "surface_role": "CUTTING_PLANE"
       },
@@ -5322,6 +5924,18 @@
         "2",
         "0"
        ],
+       "computational_depends": [
+        "B",
+        "C"
+       ],
+       "visible_prerequisites": [
+        "B",
+        "C"
+       ],
+       "construction_lineage": {
+        "mode": "direct_euclidean_primitive",
+        "producer": "construct_line"
+       },
        "occludes_edges": false
       },
       {
@@ -5373,6 +5987,36 @@
         "kind": "rational",
         "value": "0"
        },
+       "measured_quantity": {
+        "quantity_kind": "angle_cos_sq",
+        "producer": "measure.angle_cos_sq",
+        "subject_ids": [
+         "bc",
+         "sab"
+        ],
+        "subject_labels": [
+         "BC",
+         "(SAB)"
+        ],
+        "subject_types": [
+         "line3",
+         "plane3"
+        ],
+        "value": "0",
+        "exact": {
+         "kind": "rational",
+         "value": "0"
+        },
+        "certified_relation": "perpendicular_line_plane"
+       },
+       "computational_depends": [
+        "bc",
+        "sab"
+       ],
+       "visible_prerequisites": [
+        "bc",
+        "sab"
+       ],
        "occludes_edges": false,
        "formula": {
         "text": "cos²(BC, (SAB)) = 0",
@@ -5496,6 +6140,22 @@
         "C",
         "D"
        ],
+       "computational_depends": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ],
+       "visible_prerequisites": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ],
+       "construction_lineage": {
+        "mode": "direct_euclidean_primitive",
+        "producer": "construct_polygon"
+       },
        "occludes_edges": false,
        "surface_role": "BASE_REGION",
        "boundary_edge_ids": [
@@ -5629,6 +6289,18 @@
          ]
         }
        },
+       "computational_depends": [
+        "A",
+        "S"
+       ],
+       "visible_prerequisites": [
+        "A",
+        "S"
+       ],
+       "construction_lineage": {
+        "mode": "direct_euclidean_primitive",
+        "producer": "construct_segment"
+       },
        "occludes_edges": false,
        "boundary_edge_ids": [
         "chop::edge:A-S"
@@ -5704,6 +6376,18 @@
         "S",
         "B"
        ],
+       "computational_depends": [
+        "B",
+        "S"
+       ],
+       "visible_prerequisites": [
+        "B",
+        "S"
+       ],
+       "construction_lineage": {
+        "mode": "direct_euclidean_primitive",
+        "producer": "construct_segment"
+       },
        "occludes_edges": false,
        "boundary_edge_ids": [
         "chop::edge:B-S"
@@ -5779,6 +6463,18 @@
         "S",
         "C"
        ],
+       "computational_depends": [
+        "C",
+        "S"
+       ],
+       "visible_prerequisites": [
+        "C",
+        "S"
+       ],
+       "construction_lineage": {
+        "mode": "direct_euclidean_primitive",
+        "producer": "construct_segment"
+       },
        "occludes_edges": false,
        "boundary_edge_ids": [
         "chop::edge:C-S"
@@ -5854,6 +6550,18 @@
         "S",
         "D"
        ],
+       "computational_depends": [
+        "D",
+        "S"
+       ],
+       "visible_prerequisites": [
+        "D",
+        "S"
+       ],
+       "construction_lineage": {
+        "mode": "direct_euclidean_primitive",
+        "producer": "construct_segment"
+       },
        "occludes_edges": false,
        "boundary_edge_ids": [
         "chop::edge:D-S"
@@ -5894,7 +6602,13 @@
          "D"
         ]
        },
-       "learner_text": "Dựng đáy ABCD."
+       "learner_text": "Dựng đáy ABCD.",
+       "visible_prerequisites": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ]
       },
       {
        "step_index": 2,
@@ -5920,6 +6634,10 @@
        "learner_text": "Dựng chiều cao SA.",
        "objects": [
         "chieu_cao_SA"
+       ],
+       "visible_prerequisites": [
+        "A",
+        "S"
        ]
       },
       {
@@ -5988,7 +6706,14 @@
         ],
         "so_mat": 5
        },
-       "learner_text": "Dựng hình chóp S.ABCD (5 đỉnh, 5 mặt)."
+       "learner_text": "Dựng hình chóp S.ABCD (5 đỉnh, 5 mặt).",
+       "visible_prerequisites": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "S"
+       ]
       },
       {
        "step_index": 5,
@@ -6010,7 +6735,12 @@
          "B"
         ]
        },
-       "learner_text": "Dựng (SAB)."
+       "learner_text": "Dựng (SAB).",
+       "visible_prerequisites": [
+        "A",
+        "B",
+        "S"
+       ]
       },
       {
        "step_index": 6,
@@ -6030,7 +6760,11 @@
          "C"
         ]
        },
-       "learner_text": "Dựng BC."
+       "learner_text": "Dựng BC.",
+       "visible_prerequisites": [
+        "B",
+        "C"
+       ]
       },
       {
        "step_index": 7,
@@ -6040,13 +6774,39 @@
         "bc",
         "sab"
        ],
-       "explanation": "Ghi nhận goc = 0.",
+       "explanation": "Tính cos² góc giữa BC và (SAB): cos²(BC, (SAB)) = 0. Do cos² = 0 nên BC vuông góc với (SAB).",
        "display_label": "Côsin bình phương của góc giữa BC và (SAB)",
        "semantic_kind": "FINAL_RESULT",
        "details": {
         "value": "0"
        },
-       "learner_text": "Tính côsin bình phương của góc giữa BC và (SAB): cos²(BC, (SAB)) = 0."
+       "learner_text": "Tính côsin bình phương của góc giữa BC và (SAB): cos²(BC, (SAB)) = 0.",
+       "visible_prerequisites": [
+        "bc",
+        "sab"
+       ],
+       "measured_quantity": {
+        "quantity_kind": "angle_cos_sq",
+        "producer": "measure.angle_cos_sq",
+        "subject_ids": [
+         "bc",
+         "sab"
+        ],
+        "subject_labels": [
+         "BC",
+         "(SAB)"
+        ],
+        "subject_types": [
+         "line3",
+         "plane3"
+        ],
+        "value": "0",
+        "exact": {
+         "kind": "rational",
+         "value": "0"
+        },
+        "certified_relation": "perpendicular_line_plane"
+       }
       }
      ],
      "formation": {
@@ -6088,6 +6848,12 @@
         "geometry_progress": [],
         "formation_roles": [
          "CONSTRUCT_BASE"
+        ],
+        "visible_prerequisites": [
+         "A",
+         "B",
+         "C",
+         "D"
         ]
        },
        {
@@ -6111,6 +6877,10 @@
         "formation_roles": [
          "CONSTRUCT_HEIGHT",
          "CONSTRUCT_LATERAL_BOUNDARY"
+        ],
+        "visible_prerequisites": [
+         "A",
+         "S"
         ]
        },
        {
@@ -6164,6 +6934,13 @@
         "geometry_progress": [],
         "formation_roles": [
          "CLOSE_SOLID"
+        ],
+        "visible_prerequisites": [
+         "A",
+         "B",
+         "C",
+         "D",
+         "S"
         ]
        },
        {
@@ -6191,6 +6968,11 @@
         "geometry_progress": [],
         "formation_roles": [
          "CONSTRUCT_AUXILIARY_GEOMETRY"
+        ],
+        "visible_prerequisites": [
+         "A",
+         "B",
+         "S"
         ]
        },
        {
@@ -6219,6 +7001,10 @@
         "geometry_progress": [],
         "formation_roles": [
          "CONSTRUCT_AUXILIARY_GEOMETRY"
+        ],
+        "visible_prerequisites": [
+         "B",
+         "C"
         ]
        },
        {
@@ -6248,7 +7034,11 @@
         "learner_text": "Tính côsin bình phương của góc giữa BC và (SAB): cos²(BC, (SAB)) = 0.",
         "semantic_kind": "FINAL_RESULT",
         "geometry_progress": [],
-        "formation_roles": []
+        "formation_roles": [],
+        "visible_prerequisites": [
+         "bc",
+         "sab"
+        ]
        }
       ]
      },
@@ -6259,6 +7049,7 @@
       "D",
       "S"
      ],
+     "unused_auxiliary_ids": [],
      "diagnostics": [],
      "khai": "Dữ liệu CẢNH cho renderer. Mọi số là chuỗi phân số CHÍNH XÁC; hoá float là việc của renderer, ở bước cuối trước GPU. Mặt phẳng và đường thẳng KHÔNG có biên — renderer tự quyết kích thước dựa trên `depends`."
     },
@@ -6318,7 +7109,7 @@
       },
       {
        "step_index": 6,
-       "narration": "Ghi nhận mpb = Plane3(point=Vec3(x=Fraction(2, 1), y=Fraction(0, 1), z=Fraction(0, 1)), normal=Vec3(x=Fraction(2, 1), y=Fraction(2, 1), z=Fraction(-4, 1))).",
+       "narration": "Dựng mặt phẳng mpb.",
        "objects": [],
        "highlighted_object_ids": []
       },
@@ -6330,7 +7121,7 @@
       },
       {
        "step_index": 8,
-       "narration": "Ghi nhận kc = 5√6/3.",
+       "narration": "Xác định khoảng cách giữa S và mpb bằng 5√6/3.",
        "objects": [],
        "highlighted_object_ids": []
       }
@@ -6376,7 +7167,7 @@
        "view_index": 6,
        "frame_lo": 6,
        "frame_hi": 6,
-       "narration": "Ghi nhận mpb = Plane3(point=Vec3(x=Fraction(2, 1), y=Fraction(0, 1), z=Fraction(0, 1)), normal=Vec3(x=Fraction(2, 1), y=Fraction(2, 1), z=Fraction(-4, 1)))."
+       "narration": "Dựng mặt phẳng mpb."
       },
       {
        "view_index": 7,
@@ -6388,7 +7179,7 @@
        "view_index": 8,
        "frame_lo": 8,
        "frame_hi": 8,
-       "narration": "Ghi nhận kc = 5√6/3."
+       "narration": "Xác định khoảng cách giữa S và mpb bằng 5√6/3."
       }
      ],
      "grouping_level": "step",
@@ -6433,6 +7224,8 @@
         "0",
         "0"
        ],
+       "computational_depends": [],
+       "visible_prerequisites": [],
        "occludes_edges": false
       },
       {
@@ -6470,6 +7263,8 @@
         "0",
         "0"
        ],
+       "computational_depends": [],
+       "visible_prerequisites": [],
        "occludes_edges": false
       },
       {
@@ -6507,6 +7302,8 @@
         "2",
         "0"
        ],
+       "computational_depends": [],
+       "visible_prerequisites": [],
        "occludes_edges": false
       },
       {
@@ -6544,6 +7341,8 @@
         "2",
         "0"
        ],
+       "computational_depends": [],
+       "visible_prerequisites": [],
        "occludes_edges": false
       },
       {
@@ -6582,6 +7381,8 @@
         "0",
         "4"
        ],
+       "computational_depends": [],
+       "visible_prerequisites": [],
        "occludes_edges": false
       },
       {
@@ -6713,6 +7514,24 @@
         "CONSTRUCT_LATERAL_BOUNDARY",
         "CLOSE_SOLID"
        ],
+       "computational_depends": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "S"
+       ],
+       "visible_prerequisites": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "S"
+       ],
+       "construction_lineage": {
+        "mode": "direct_euclidean_primitive",
+        "producer": "construct_solid"
+       },
        "edge_ownership": [
         {
          "edge_id": "chop::edge:A-B",
@@ -6937,6 +7756,18 @@
         "2",
         "-4"
        ],
+       "computational_depends": [
+        "C",
+        "S"
+       ],
+       "visible_prerequisites": [
+        "C",
+        "S"
+       ],
+       "construction_lineage": {
+        "mode": "direct_euclidean_primitive",
+        "producer": "construct_line"
+       },
        "occludes_edges": false
       },
       {
@@ -6998,6 +7829,20 @@
         "0",
         "4"
        ],
+       "computational_depends": [
+        "A",
+        "B",
+        "C"
+       ],
+       "visible_prerequisites": [
+        "A",
+        "B",
+        "C"
+       ],
+       "construction_lineage": {
+        "mode": "direct_euclidean_primitive",
+        "producer": "construct_plane"
+       },
        "occludes_edges": false,
        "surface_role": "CUTTING_PLANE"
       },
@@ -7055,6 +7900,18 @@
         "2",
         "-4"
        ],
+       "computational_depends": [
+        "B",
+        "sc"
+       ],
+       "visible_prerequisites": [
+        "B",
+        "sc"
+       ],
+       "construction_lineage": {
+        "mode": "direct_euclidean_primitive",
+        "producer": "plane_perpendicular_to_line"
+       },
        "notation_assigned": true,
        "occludes_edges": false,
        "surface_role": "CUTTING_PLANE"
@@ -7109,6 +7966,37 @@
         "coefficient": "5/3",
         "radicand": 6
        },
+       "measured_quantity": {
+        "quantity_kind": "distance",
+        "producer": "measure.distance",
+        "subject_ids": [
+         "S",
+         "mpb"
+        ],
+        "subject_labels": [
+         "S",
+         "(α)"
+        ],
+        "subject_types": [
+         "point3",
+         "plane3"
+        ],
+        "value": "5√6/3",
+        "exact": {
+         "kind": "radical",
+         "coefficient": "5/3",
+         "radicand": 6
+        },
+        "certified_relation": null
+       },
+       "computational_depends": [
+        "S",
+        "mpb"
+       ],
+       "visible_prerequisites": [
+        "S",
+        "mpb"
+       ],
        "occludes_edges": false,
        "formula": {
         "text": "d(S, (α)) = 5√6/3",
@@ -7231,6 +8119,22 @@
         "C",
         "D"
        ],
+       "computational_depends": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ],
+       "visible_prerequisites": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ],
+       "construction_lineage": {
+        "mode": "direct_euclidean_primitive",
+        "producer": "construct_polygon"
+       },
        "occludes_edges": false,
        "surface_role": "BASE_REGION",
        "boundary_edge_ids": [
@@ -7364,6 +8268,18 @@
          ]
         }
        },
+       "computational_depends": [
+        "A",
+        "S"
+       ],
+       "visible_prerequisites": [
+        "A",
+        "S"
+       ],
+       "construction_lineage": {
+        "mode": "direct_euclidean_primitive",
+        "producer": "construct_segment"
+       },
        "occludes_edges": false,
        "boundary_edge_ids": [
         "chop::edge:A-S"
@@ -7439,6 +8355,18 @@
         "S",
         "B"
        ],
+       "computational_depends": [
+        "B",
+        "S"
+       ],
+       "visible_prerequisites": [
+        "B",
+        "S"
+       ],
+       "construction_lineage": {
+        "mode": "direct_euclidean_primitive",
+        "producer": "construct_segment"
+       },
        "occludes_edges": false,
        "boundary_edge_ids": [
         "chop::edge:B-S"
@@ -7514,6 +8442,18 @@
         "S",
         "C"
        ],
+       "computational_depends": [
+        "C",
+        "S"
+       ],
+       "visible_prerequisites": [
+        "C",
+        "S"
+       ],
+       "construction_lineage": {
+        "mode": "direct_euclidean_primitive",
+        "producer": "construct_segment"
+       },
        "occludes_edges": false,
        "boundary_edge_ids": [
         "chop::edge:C-S"
@@ -7589,6 +8529,18 @@
         "S",
         "D"
        ],
+       "computational_depends": [
+        "D",
+        "S"
+       ],
+       "visible_prerequisites": [
+        "D",
+        "S"
+       ],
+       "construction_lineage": {
+        "mode": "direct_euclidean_primitive",
+        "producer": "construct_segment"
+       },
        "occludes_edges": false,
        "boundary_edge_ids": [
         "chop::edge:D-S"
@@ -7629,7 +8581,13 @@
          "D"
         ]
        },
-       "learner_text": "Dựng đáy ABCD."
+       "learner_text": "Dựng đáy ABCD.",
+       "visible_prerequisites": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ]
       },
       {
        "step_index": 2,
@@ -7655,6 +8613,10 @@
        "learner_text": "Dựng chiều cao SA.",
        "objects": [
         "chieu_cao_SA"
+       ],
+       "visible_prerequisites": [
+        "A",
+        "S"
        ]
       },
       {
@@ -7723,7 +8685,14 @@
         ],
         "so_mat": 5
        },
-       "learner_text": "Dựng hình chóp S.ABCD (5 đỉnh, 5 mặt)."
+       "learner_text": "Dựng hình chóp S.ABCD (5 đỉnh, 5 mặt).",
+       "visible_prerequisites": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "S"
+       ]
       },
       {
        "step_index": 5,
@@ -7743,7 +8712,11 @@
          "C"
         ]
        },
-       "learner_text": "Dựng SC."
+       "learner_text": "Dựng SC.",
+       "visible_prerequisites": [
+        "C",
+        "S"
+       ]
       },
       {
        "step_index": 6,
@@ -7771,7 +8744,11 @@
          ]
         }
        },
-       "learner_text": "Gọi (α) là mặt phẳng qua B và vuông góc với SC."
+       "learner_text": "Gọi (α) là mặt phẳng qua B và vuông góc với SC.",
+       "visible_prerequisites": [
+        "B",
+        "sc"
+       ]
       },
       {
        "step_index": 7,
@@ -7793,7 +8770,12 @@
          "C"
         ]
        },
-       "learner_text": "Dựng (ABCD)."
+       "learner_text": "Dựng (ABCD).",
+       "visible_prerequisites": [
+        "A",
+        "B",
+        "C"
+       ]
       },
       {
        "step_index": 8,
@@ -7803,7 +8785,7 @@
         "S",
         "mpb"
        ],
-       "explanation": "Ghi nhận kc = 5√6/3.",
+       "explanation": "Xác định khoảng cách giữa S và (α) bằng 5√6/3.",
        "display_label": "Khoảng cách giữa S và (α)",
        "semantic_kind": "FINAL_RESULT",
        "details": {
@@ -7813,7 +8795,34 @@
          "radicand": 6
         }
        },
-       "learner_text": "Tính khoảng cách giữa S và (α): d(S, (α)) = 5√6/3."
+       "learner_text": "Tính khoảng cách giữa S và (α): d(S, (α)) = 5√6/3.",
+       "visible_prerequisites": [
+        "S",
+        "mpb"
+       ],
+       "measured_quantity": {
+        "quantity_kind": "distance",
+        "producer": "measure.distance",
+        "subject_ids": [
+         "S",
+         "mpb"
+        ],
+        "subject_labels": [
+         "S",
+         "(α)"
+        ],
+        "subject_types": [
+         "point3",
+         "plane3"
+        ],
+        "value": "5√6/3",
+        "exact": {
+         "kind": "radical",
+         "coefficient": "5/3",
+         "radicand": 6
+        },
+        "certified_relation": null
+       }
       }
      ],
      "formation": {
@@ -7855,6 +8864,12 @@
         "geometry_progress": [],
         "formation_roles": [
          "CONSTRUCT_BASE"
+        ],
+        "visible_prerequisites": [
+         "A",
+         "B",
+         "C",
+         "D"
         ]
        },
        {
@@ -7878,6 +8893,10 @@
         "formation_roles": [
          "CONSTRUCT_HEIGHT",
          "CONSTRUCT_LATERAL_BOUNDARY"
+        ],
+        "visible_prerequisites": [
+         "A",
+         "S"
         ]
        },
        {
@@ -7931,6 +8950,13 @@
         "geometry_progress": [],
         "formation_roles": [
          "CLOSE_SOLID"
+        ],
+        "visible_prerequisites": [
+         "A",
+         "B",
+         "C",
+         "D",
+         "S"
         ]
        },
        {
@@ -7958,6 +8984,10 @@
         "geometry_progress": [],
         "formation_roles": [
          "CONSTRUCT_AUXILIARY_GEOMETRY"
+        ],
+        "visible_prerequisites": [
+         "C",
+         "S"
         ]
        },
        {
@@ -7986,6 +9016,10 @@
         "geometry_progress": [],
         "formation_roles": [
          "CONSTRUCT_AUXILIARY_GEOMETRY"
+        ],
+        "visible_prerequisites": [
+         "B",
+         "sc"
         ]
        },
        {
@@ -8015,6 +9049,11 @@
         "geometry_progress": [],
         "formation_roles": [
          "CONSTRUCT_AUXILIARY_GEOMETRY"
+        ],
+        "visible_prerequisites": [
+         "A",
+         "B",
+         "C"
         ]
        },
        {
@@ -8045,7 +9084,11 @@
         "learner_text": "Tính khoảng cách giữa S và (α): d(S, (α)) = 5√6/3.",
         "semantic_kind": "FINAL_RESULT",
         "geometry_progress": [],
-        "formation_roles": []
+        "formation_roles": [],
+        "visible_prerequisites": [
+         "S",
+         "mpb"
+        ]
        }
       ]
      },
@@ -8056,6 +9099,7 @@
       "D",
       "S"
      ],
+     "unused_auxiliary_ids": [],
      "diagnostics": [],
      "khai": "Dữ liệu CẢNH cho renderer. Mọi số là chuỗi phân số CHÍNH XÁC; hoá float là việc của renderer, ở bước cuối trước GPU. Mặt phẳng và đường thẳng KHÔNG có biên — renderer tự quyết kích thước dựa trên `depends`."
     },
@@ -8115,13 +9159,13 @@
       },
       {
        "step_index": 6,
-       "narration": "Ghi nhận V = 16/3.",
+       "narration": "Tính thể tích S.ABCD: 16/3.",
        "objects": [],
        "highlighted_object_ids": []
       },
       {
        "step_index": 7,
-       "narration": "Ghi nhận d = 4.",
+       "narration": "Xác định khoảng cách giữa S và (ABCD) bằng 4.",
        "objects": [],
        "highlighted_object_ids": []
       }
@@ -8167,13 +9211,13 @@
        "view_index": 6,
        "frame_lo": 6,
        "frame_hi": 6,
-       "narration": "Ghi nhận V = 16/3."
+       "narration": "Tính thể tích S.ABCD: 16/3."
       },
       {
        "view_index": 7,
        "frame_lo": 7,
        "frame_hi": 7,
-       "narration": "Ghi nhận d = 4."
+       "narration": "Xác định khoảng cách giữa S và (ABCD) bằng 4."
       }
      ],
      "grouping_level": "step",
@@ -8218,6 +9262,8 @@
         "0",
         "0"
        ],
+       "computational_depends": [],
+       "visible_prerequisites": [],
        "occludes_edges": false
       },
       {
@@ -8255,6 +9301,8 @@
         "0",
         "0"
        ],
+       "computational_depends": [],
+       "visible_prerequisites": [],
        "occludes_edges": false
       },
       {
@@ -8292,6 +9340,8 @@
         "2",
         "0"
        ],
+       "computational_depends": [],
+       "visible_prerequisites": [],
        "occludes_edges": false
       },
       {
@@ -8329,6 +9379,8 @@
         "2",
         "0"
        ],
+       "computational_depends": [],
+       "visible_prerequisites": [],
        "occludes_edges": false
       },
       {
@@ -8367,6 +9419,8 @@
         "0",
         "4"
        ],
+       "computational_depends": [],
+       "visible_prerequisites": [],
        "occludes_edges": false
       },
       {
@@ -8499,6 +9553,24 @@
         "CONSTRUCT_LATERAL_BOUNDARY",
         "CLOSE_SOLID"
        ],
+       "computational_depends": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "S"
+       ],
+       "visible_prerequisites": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "S"
+       ],
+       "construction_lineage": {
+        "mode": "direct_euclidean_primitive",
+        "producer": "construct_solid"
+       },
        "edge_ownership": [
         {
          "edge_id": "chop::edge:A-B",
@@ -8728,6 +9800,20 @@
         "0",
         "4"
        ],
+       "computational_depends": [
+        "A",
+        "B",
+        "C"
+       ],
+       "visible_prerequisites": [
+        "A",
+        "B",
+        "C"
+       ],
+       "construction_lineage": {
+        "mode": "direct_euclidean_primitive",
+        "producer": "construct_plane"
+       },
        "occludes_edges": false,
        "surface_role": "CUTTING_PLANE"
       },
@@ -8775,6 +9861,31 @@
         "kind": "rational",
         "value": "16/3"
        },
+       "measured_quantity": {
+        "quantity_kind": "volume",
+        "producer": "measure.volume",
+        "subject_ids": [
+         "chop"
+        ],
+        "subject_labels": [
+         "S.ABCD"
+        ],
+        "subject_types": [
+         "solid"
+        ],
+        "value": "16/3",
+        "exact": {
+         "kind": "rational",
+         "value": "16/3"
+        },
+        "certified_relation": null
+       },
+       "computational_depends": [
+        "chop"
+       ],
+       "visible_prerequisites": [
+        "chop"
+       ],
        "occludes_edges": false,
        "annotation": {
         "kind": "volume",
@@ -8836,6 +9947,36 @@
         "kind": "rational",
         "value": "4"
        },
+       "measured_quantity": {
+        "quantity_kind": "distance",
+        "producer": "measure.distance",
+        "subject_ids": [
+         "S",
+         "day"
+        ],
+        "subject_labels": [
+         "S",
+         "(ABCD)"
+        ],
+        "subject_types": [
+         "point3",
+         "plane3"
+        ],
+        "value": "4",
+        "exact": {
+         "kind": "rational",
+         "value": "4"
+        },
+        "certified_relation": null
+       },
+       "computational_depends": [
+        "S",
+        "day"
+       ],
+       "visible_prerequisites": [
+        "S",
+        "day"
+       ],
        "occludes_edges": false,
        "formula": {
         "text": "d(S, (ABCD)) = 4",
@@ -8936,6 +10077,22 @@
         "C",
         "D"
        ],
+       "computational_depends": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ],
+       "visible_prerequisites": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ],
+       "construction_lineage": {
+        "mode": "direct_euclidean_primitive",
+        "producer": "construct_polygon"
+       },
        "occludes_edges": false,
        "surface_role": "BASE_REGION",
        "boundary_edge_ids": [
@@ -9069,6 +10226,18 @@
          ]
         }
        },
+       "computational_depends": [
+        "A",
+        "S"
+       ],
+       "visible_prerequisites": [
+        "A",
+        "S"
+       ],
+       "construction_lineage": {
+        "mode": "direct_euclidean_primitive",
+        "producer": "construct_segment"
+       },
        "occludes_edges": false,
        "boundary_edge_ids": [
         "chop::edge:A-S"
@@ -9144,6 +10313,18 @@
         "S",
         "B"
        ],
+       "computational_depends": [
+        "B",
+        "S"
+       ],
+       "visible_prerequisites": [
+        "B",
+        "S"
+       ],
+       "construction_lineage": {
+        "mode": "direct_euclidean_primitive",
+        "producer": "construct_segment"
+       },
        "occludes_edges": false,
        "boundary_edge_ids": [
         "chop::edge:B-S"
@@ -9219,6 +10400,18 @@
         "S",
         "C"
        ],
+       "computational_depends": [
+        "C",
+        "S"
+       ],
+       "visible_prerequisites": [
+        "C",
+        "S"
+       ],
+       "construction_lineage": {
+        "mode": "direct_euclidean_primitive",
+        "producer": "construct_segment"
+       },
        "occludes_edges": false,
        "boundary_edge_ids": [
         "chop::edge:C-S"
@@ -9294,6 +10487,18 @@
         "S",
         "D"
        ],
+       "computational_depends": [
+        "D",
+        "S"
+       ],
+       "visible_prerequisites": [
+        "D",
+        "S"
+       ],
+       "construction_lineage": {
+        "mode": "direct_euclidean_primitive",
+        "producer": "construct_segment"
+       },
        "occludes_edges": false,
        "boundary_edge_ids": [
         "chop::edge:D-S"
@@ -9334,7 +10539,13 @@
          "D"
         ]
        },
-       "learner_text": "Dựng đáy ABCD."
+       "learner_text": "Dựng đáy ABCD.",
+       "visible_prerequisites": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ]
       },
       {
        "step_index": 2,
@@ -9360,6 +10571,10 @@
        "learner_text": "Dựng chiều cao SA.",
        "objects": [
         "chieu_cao_SA"
+       ],
+       "visible_prerequisites": [
+        "A",
+        "S"
        ]
       },
       {
@@ -9428,7 +10643,14 @@
         ],
         "so_mat": 5
        },
-       "learner_text": "Dựng hình chóp S.ABCD (5 đỉnh, 5 mặt)."
+       "learner_text": "Dựng hình chóp S.ABCD (5 đỉnh, 5 mặt).",
+       "visible_prerequisites": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "S"
+       ]
       },
       {
        "step_index": 5,
@@ -9450,7 +10672,12 @@
          "C"
         ]
        },
-       "learner_text": "Dựng (ABCD)."
+       "learner_text": "Dựng (ABCD).",
+       "visible_prerequisites": [
+        "A",
+        "B",
+        "C"
+       ]
       },
       {
        "step_index": 6,
@@ -9459,13 +10686,35 @@
        "depends": [
         "chop"
        ],
-       "explanation": "Ghi nhận V = 16/3.",
+       "explanation": "Tính thể tích S.ABCD: 16/3.",
        "display_label": "Thể tích S.ABCD",
        "semantic_kind": "FINAL_RESULT",
        "details": {
         "value": "16/3"
        },
-       "learner_text": "Thể tích S.ABCD bằng 16/3."
+       "learner_text": "Thể tích S.ABCD bằng 16/3.",
+       "visible_prerequisites": [
+        "chop"
+       ],
+       "measured_quantity": {
+        "quantity_kind": "volume",
+        "producer": "measure.volume",
+        "subject_ids": [
+         "chop"
+        ],
+        "subject_labels": [
+         "S.ABCD"
+        ],
+        "subject_types": [
+         "solid"
+        ],
+        "value": "16/3",
+        "exact": {
+         "kind": "rational",
+         "value": "16/3"
+        },
+        "certified_relation": null
+       }
       },
       {
        "step_index": 7,
@@ -9475,13 +10724,39 @@
         "S",
         "day"
        ],
-       "explanation": "Ghi nhận d = 4.",
+       "explanation": "Xác định khoảng cách giữa S và (ABCD) bằng 4.",
        "display_label": "Khoảng cách giữa S và (ABCD)",
        "semantic_kind": "FINAL_RESULT",
        "details": {
         "value": "4"
        },
-       "learner_text": "Tính khoảng cách giữa S và (ABCD): d(S, (ABCD)) = 4."
+       "learner_text": "Tính khoảng cách giữa S và (ABCD): d(S, (ABCD)) = 4.",
+       "visible_prerequisites": [
+        "S",
+        "day"
+       ],
+       "measured_quantity": {
+        "quantity_kind": "distance",
+        "producer": "measure.distance",
+        "subject_ids": [
+         "S",
+         "day"
+        ],
+        "subject_labels": [
+         "S",
+         "(ABCD)"
+        ],
+        "subject_types": [
+         "point3",
+         "plane3"
+        ],
+        "value": "4",
+        "exact": {
+         "kind": "rational",
+         "value": "4"
+        },
+        "certified_relation": null
+       }
       }
      ],
      "formation": {
@@ -9523,6 +10798,12 @@
         "geometry_progress": [],
         "formation_roles": [
          "CONSTRUCT_BASE"
+        ],
+        "visible_prerequisites": [
+         "A",
+         "B",
+         "C",
+         "D"
         ]
        },
        {
@@ -9546,6 +10827,10 @@
         "formation_roles": [
          "CONSTRUCT_HEIGHT",
          "CONSTRUCT_LATERAL_BOUNDARY"
+        ],
+        "visible_prerequisites": [
+         "A",
+         "S"
         ]
        },
        {
@@ -9599,6 +10884,13 @@
         "geometry_progress": [],
         "formation_roles": [
          "CLOSE_SOLID"
+        ],
+        "visible_prerequisites": [
+         "A",
+         "B",
+         "C",
+         "D",
+         "S"
         ]
        },
        {
@@ -9626,6 +10918,11 @@
         "geometry_progress": [],
         "formation_roles": [
          "CONSTRUCT_AUXILIARY_GEOMETRY"
+        ],
+        "visible_prerequisites": [
+         "A",
+         "B",
+         "C"
         ]
        },
        {
@@ -9654,7 +10951,10 @@
         "learner_text": "Thể tích S.ABCD bằng 16/3.",
         "semantic_kind": "FINAL_RESULT",
         "geometry_progress": [],
-        "formation_roles": []
+        "formation_roles": [],
+        "visible_prerequisites": [
+         "chop"
+        ]
        },
        {
         "step_index": 7,
@@ -9684,7 +10984,11 @@
         "learner_text": "Tính khoảng cách giữa S và (ABCD): d(S, (ABCD)) = 4.",
         "semantic_kind": "FINAL_RESULT",
         "geometry_progress": [],
-        "formation_roles": []
+        "formation_roles": [],
+        "visible_prerequisites": [
+         "S",
+         "day"
+        ]
        }
       ]
      },
@@ -9695,6 +10999,7 @@
       "D",
       "S"
      ],
+     "unused_auxiliary_ids": [],
      "diagnostics": [],
      "khai": "Dữ liệu CẢNH cho renderer. Mọi số là chuỗi phân số CHÍNH XÁC; hoá float là việc của renderer, ở bước cuối trước GPU. Mặt phẳng và đường thẳng KHÔNG có biên — renderer tự quyết kích thước dựa trên `depends`."
     },
@@ -9730,13 +11035,13 @@
       },
       {
        "step_index": 2,
-       "narration": "Ghi nhận R = 3.",
+       "narration": "Tính bán kính của (S): 3.",
        "objects": [],
        "highlighted_object_ids": []
       },
       {
        "step_index": 3,
-       "narration": "Ghi nhận V = 36π.",
+       "narration": "Tính thể tích (S): 36π.",
        "objects": [],
        "highlighted_object_ids": []
       }
@@ -9758,13 +11063,13 @@
        "view_index": 2,
        "frame_lo": 2,
        "frame_hi": 2,
-       "narration": "Ghi nhận R = 3."
+       "narration": "Tính bán kính của (S): 3."
       },
       {
        "view_index": 3,
        "frame_lo": 3,
        "frame_hi": 3,
-       "narration": "Ghi nhận V = 36π."
+       "narration": "Tính thể tích (S): 36π."
       }
      ],
      "grouping_level": "step",
@@ -9809,6 +11114,8 @@
         "0",
         "0"
        ],
+       "computational_depends": [],
+       "visible_prerequisites": [],
        "occludes_edges": false
       },
       {
@@ -9846,6 +11153,8 @@
         "0",
         "0"
        ],
+       "computational_depends": [],
+       "visible_prerequisites": [],
        "occludes_edges": false
       },
       {
@@ -9907,6 +11216,18 @@
        ],
        "radius_sq": "9",
        "height_sq": "0",
+       "computational_depends": [
+        "A",
+        "I"
+       ],
+       "visible_prerequisites": [
+        "A",
+        "I"
+       ],
+       "construction_lineage": {
+        "mode": "direct_euclidean_primitive",
+        "producer": "construct_curved_solid.ball"
+       },
        "occludes_edges": false
       },
       {
@@ -9953,6 +11274,31 @@
         "kind": "rational",
         "value": "3"
        },
+       "measured_quantity": {
+        "quantity_kind": "radius",
+        "producer": "measure.radius",
+        "subject_ids": [
+         "cau"
+        ],
+        "subject_labels": [
+         "(S)"
+        ],
+        "subject_types": [
+         "curved_solid"
+        ],
+        "value": "3",
+        "exact": {
+         "kind": "rational",
+         "value": "3"
+        },
+        "certified_relation": null
+       },
+       "computational_depends": [
+        "cau"
+       ],
+       "visible_prerequisites": [
+        "cau"
+       ],
        "occludes_edges": false,
        "formula": {
         "text": "Bán kính khối cong = 3",
@@ -10005,6 +11351,33 @@
         "radicand": 1,
         "pi": 1
        },
+       "measured_quantity": {
+        "quantity_kind": "volume",
+        "producer": "measure.volume",
+        "subject_ids": [
+         "cau"
+        ],
+        "subject_labels": [
+         "(S)"
+        ],
+        "subject_types": [
+         "curved_solid"
+        ],
+        "value": "36π",
+        "exact": {
+         "kind": "radical",
+         "coefficient": "36",
+         "radicand": 1,
+         "pi": 1
+        },
+        "certified_relation": null
+       },
+       "computational_depends": [
+        "cau"
+       ],
+       "visible_prerequisites": [
+        "cau"
+       ],
        "occludes_edges": false
       }
      ],
@@ -10039,7 +11412,11 @@
          "A"
         ]
        },
-       "learner_text": "Dựng (S)."
+       "learner_text": "Dựng (S).",
+       "visible_prerequisites": [
+        "A",
+        "I"
+       ]
       },
       {
        "step_index": 2,
@@ -10048,13 +11425,35 @@
        "depends": [
         "cau"
        ],
-       "explanation": "Ghi nhận R = 3.",
+       "explanation": "Tính bán kính của (S): 3.",
        "display_label": "Bán kính (S)",
        "semantic_kind": "FINAL_RESULT",
        "details": {
         "value": "3"
        },
-       "learner_text": "Bán kính (S) bằng 3."
+       "learner_text": "Bán kính (S) bằng 3.",
+       "visible_prerequisites": [
+        "cau"
+       ],
+       "measured_quantity": {
+        "quantity_kind": "radius",
+        "producer": "measure.radius",
+        "subject_ids": [
+         "cau"
+        ],
+        "subject_labels": [
+         "(S)"
+        ],
+        "subject_types": [
+         "curved_solid"
+        ],
+        "value": "3",
+        "exact": {
+         "kind": "rational",
+         "value": "3"
+        },
+        "certified_relation": null
+       }
       },
       {
        "step_index": 3,
@@ -10063,7 +11462,7 @@
        "depends": [
         "cau"
        ],
-       "explanation": "Ghi nhận V = 36π.",
+       "explanation": "Tính thể tích (S): 36π.",
        "display_label": "Thể tích (S)",
        "semantic_kind": "FINAL_RESULT",
        "details": {
@@ -10074,7 +11473,31 @@
          "pi": 1
         }
        },
-       "learner_text": "Thể tích (S) bằng 36π."
+       "learner_text": "Thể tích (S) bằng 36π.",
+       "visible_prerequisites": [
+        "cau"
+       ],
+       "measured_quantity": {
+        "quantity_kind": "volume",
+        "producer": "measure.volume",
+        "subject_ids": [
+         "cau"
+        ],
+        "subject_labels": [
+         "(S)"
+        ],
+        "subject_types": [
+         "curved_solid"
+        ],
+        "value": "36π",
+        "exact": {
+         "kind": "radical",
+         "coefficient": "36",
+         "radicand": 1,
+         "pi": 1
+        },
+        "certified_relation": null
+       }
       }
      ],
      "formation": {
@@ -10110,6 +11533,10 @@
         "geometry_progress": [],
         "formation_roles": [
          "CLOSE_SOLID"
+        ],
+        "visible_prerequisites": [
+         "A",
+         "I"
         ]
        },
        {
@@ -10129,7 +11556,10 @@
         "learner_text": "Bán kính (S) bằng 3.",
         "semantic_kind": "FINAL_RESULT",
         "geometry_progress": [],
-        "formation_roles": []
+        "formation_roles": [],
+        "visible_prerequisites": [
+         "cau"
+        ]
        },
        {
         "step_index": 3,
@@ -10150,7 +11580,10 @@
         "learner_text": "Thể tích (S) bằng 36π.",
         "semantic_kind": "FINAL_RESULT",
         "geometry_progress": [],
-        "formation_roles": []
+        "formation_roles": [],
+        "visible_prerequisites": [
+         "cau"
+        ]
        }
       ]
      },
@@ -10158,6 +11591,7 @@
       "A",
       "I"
      ],
+     "unused_auxiliary_ids": [],
      "diagnostics": [
       "ANNOTATION_UNBOUND R: measure radius has no registered anchor",
       "ANNOTATION_UNBOUND V: volume of a curved_solid has no registered anchor"
@@ -10202,19 +11636,19 @@
       },
       {
        "step_index": 3,
-       "narration": "Ghi nhận C = Circle3(center=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(3, 1)), normal=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(1, 1)), radius_sq=Fraction(16, 1)).",
+       "narration": "Dựng đường tròn C.",
        "objects": [],
        "highlighted_object_ids": []
       },
       {
        "step_index": 4,
-       "narration": "Ghi nhận r = 4.",
+       "narration": "Tính bán kính của C: 4.",
        "objects": [],
        "highlighted_object_ids": []
       },
       {
        "step_index": 5,
-       "narration": "Ghi nhận S = 16π.",
+       "narration": "Tính diện tích C: 16π.",
        "objects": [],
        "highlighted_object_ids": []
       }
@@ -10242,19 +11676,19 @@
        "view_index": 3,
        "frame_lo": 3,
        "frame_hi": 3,
-       "narration": "Ghi nhận C = Circle3(center=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(3, 1)), normal=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(1, 1)), radius_sq=Fraction(16, 1))."
+       "narration": "Dựng đường tròn C."
       },
       {
        "view_index": 4,
        "frame_lo": 4,
        "frame_hi": 4,
-       "narration": "Ghi nhận r = 4."
+       "narration": "Tính bán kính của C: 4."
       },
       {
        "view_index": 5,
        "frame_lo": 5,
        "frame_hi": 5,
-       "narration": "Ghi nhận S = 16π."
+       "narration": "Tính diện tích C: 16π."
       }
      ],
      "grouping_level": "step",
@@ -10300,6 +11734,8 @@
         "0",
         "0"
        ],
+       "computational_depends": [],
+       "visible_prerequisites": [],
        "occludes_edges": false
       },
       {
@@ -10339,6 +11775,8 @@
         "kind": "rational",
         "value": "5"
        },
+       "computational_depends": [],
+       "visible_prerequisites": [],
        "occludes_edges": false,
        "formula": {
         "text": "Bán kính mặt cầu = 5",
@@ -10368,7 +11806,8 @@
         },
         {
          "source_id": "R",
-         "relation": "numerical"
+         "relation": "numerical",
+         "is_non_visual_carrier": true
         }
        ],
        "parent": null,
@@ -10399,6 +11838,17 @@
        "rim_point": null,
        "radius_sq": "25",
        "height_sq": "0",
+       "computational_depends": [
+        "I",
+        "R"
+       ],
+       "visible_prerequisites": [
+        "I"
+       ],
+       "construction_lineage": {
+        "mode": "direct_euclidean_primitive",
+        "producer": "construct_curved_solid.ball"
+       },
        "occludes_edges": false
       },
       {
@@ -10443,6 +11893,12 @@
         "0",
         "1"
        ],
+       "computational_depends": [],
+       "visible_prerequisites": [],
+       "construction_lineage": {
+        "mode": "direct_euclidean_primitive",
+        "producer": "construct_plane_from_equation"
+       },
        "occludes_edges": false,
        "surface_role": "CUTTING_PLANE"
       },
@@ -10502,6 +11958,18 @@
         "1"
        ],
        "radius_sq": "16",
+       "computational_depends": [
+        "P",
+        "cau"
+       ],
+       "visible_prerequisites": [
+        "P",
+        "cau"
+       ],
+       "construction_lineage": {
+        "mode": "direct_euclidean_primitive",
+        "producer": "intersect_plane_curved"
+       },
        "occludes_edges": false
       },
       {
@@ -10548,6 +12016,31 @@
         "kind": "rational",
         "value": "4"
        },
+       "measured_quantity": {
+        "quantity_kind": "radius",
+        "producer": "measure.radius",
+        "subject_ids": [
+         "C"
+        ],
+        "subject_labels": [
+         "Đường tròn giao của khối cong và (P)"
+        ],
+        "subject_types": [
+         "circle3"
+        ],
+        "value": "4",
+        "exact": {
+         "kind": "rational",
+         "value": "4"
+        },
+        "certified_relation": null
+       },
+       "computational_depends": [
+        "C"
+       ],
+       "visible_prerequisites": [
+        "C"
+       ],
        "occludes_edges": false,
        "formula": {
         "text": "Bán kính đường tròn = 4",
@@ -10600,6 +12093,33 @@
         "radicand": 1,
         "pi": 1
        },
+       "measured_quantity": {
+        "quantity_kind": "area",
+        "producer": "measure.area",
+        "subject_ids": [
+         "C"
+        ],
+        "subject_labels": [
+         "Đường tròn giao của khối cong và (P)"
+        ],
+        "subject_types": [
+         "circle3"
+        ],
+        "value": "16π",
+        "exact": {
+         "kind": "radical",
+         "coefficient": "16",
+         "radicand": 1,
+         "pi": 1
+        },
+        "certified_relation": null
+       },
+       "computational_depends": [
+        "C"
+       ],
+       "visible_prerequisites": [
+        "C"
+       ],
        "occludes_edges": false,
        "formula": {
         "text": "Diện tích đường tròn = 16π",
@@ -10638,7 +12158,10 @@
          "R"
         ]
        },
-       "learner_text": "Dựng (S)."
+       "learner_text": "Dựng (S).",
+       "visible_prerequisites": [
+        "I"
+       ]
       },
       {
        "step_index": 2,
@@ -10657,7 +12180,8 @@
          "d": "-3"
         }
        },
-       "learner_text": "Dựng (P)."
+       "learner_text": "Dựng (P).",
+       "visible_prerequisites": []
       },
       {
        "step_index": 3,
@@ -10686,7 +12210,11 @@
          "radius_sq": "16"
         }
        },
-       "learner_text": "Dựng đường tròn giao của (S) và (P)."
+       "learner_text": "Dựng đường tròn giao của (S) và (P).",
+       "visible_prerequisites": [
+        "P",
+        "cau"
+       ]
       },
       {
        "step_index": 4,
@@ -10695,13 +12223,35 @@
        "depends": [
         "C"
        ],
-       "explanation": "Ghi nhận r = 4.",
+       "explanation": "Tính bán kính của Đường tròn giao của khối cong và (P): 4.",
        "display_label": "Bán kính «Đường tròn giao của khối cong và (P)»",
        "semantic_kind": "FINAL_RESULT",
        "details": {
         "value": "4"
        },
-       "learner_text": "Bán kính «Đường tròn giao của khối cong và (P)» bằng 4."
+       "learner_text": "Bán kính «Đường tròn giao của khối cong và (P)» bằng 4.",
+       "visible_prerequisites": [
+        "C"
+       ],
+       "measured_quantity": {
+        "quantity_kind": "radius",
+        "producer": "measure.radius",
+        "subject_ids": [
+         "C"
+        ],
+        "subject_labels": [
+         "Đường tròn giao của khối cong và (P)"
+        ],
+        "subject_types": [
+         "circle3"
+        ],
+        "value": "4",
+        "exact": {
+         "kind": "rational",
+         "value": "4"
+        },
+        "certified_relation": null
+       }
       },
       {
        "step_index": 5,
@@ -10710,7 +12260,7 @@
        "depends": [
         "C"
        ],
-       "explanation": "Ghi nhận S = 16π.",
+       "explanation": "Tính diện tích Đường tròn giao của khối cong và (P): 16π.",
        "display_label": "Diện tích «Đường tròn giao của khối cong và (P)»",
        "semantic_kind": "FINAL_RESULT",
        "details": {
@@ -10721,7 +12271,31 @@
          "pi": 1
         }
        },
-       "learner_text": "Diện tích «Đường tròn giao của khối cong và (P)» bằng 16π."
+       "learner_text": "Diện tích «Đường tròn giao của khối cong và (P)» bằng 16π.",
+       "visible_prerequisites": [
+        "C"
+       ],
+       "measured_quantity": {
+        "quantity_kind": "area",
+        "producer": "measure.area",
+        "subject_ids": [
+         "C"
+        ],
+        "subject_labels": [
+         "Đường tròn giao của khối cong và (P)"
+        ],
+        "subject_types": [
+         "circle3"
+        ],
+        "value": "16π",
+        "exact": {
+         "kind": "radical",
+         "coefficient": "16",
+         "radicand": 1,
+         "pi": 1
+        },
+        "certified_relation": null
+       }
       }
      ],
      "formation": {
@@ -10761,6 +12335,9 @@
         "geometry_progress": [],
         "formation_roles": [
          "CLOSE_SOLID"
+        ],
+        "visible_prerequisites": [
+         "I"
         ]
        },
        {
@@ -10782,7 +12359,8 @@
         "geometry_progress": [],
         "formation_roles": [
          "CONSTRUCT_CUTTING_OBJECT"
-        ]
+        ],
+        "visible_prerequisites": []
        },
        {
         "step_index": 3,
@@ -10804,6 +12382,10 @@
         "geometry_progress": [],
         "formation_roles": [
          "CONSTRUCT_AUXILIARY_GEOMETRY"
+        ],
+        "visible_prerequisites": [
+         "P",
+         "cau"
         ]
        },
        {
@@ -10826,7 +12408,10 @@
         "learner_text": "Bán kính «Đường tròn giao của khối cong và (P)» bằng 4.",
         "semantic_kind": "FINAL_RESULT",
         "geometry_progress": [],
-        "formation_roles": []
+        "formation_roles": [],
+        "visible_prerequisites": [
+         "C"
+        ]
        },
        {
         "step_index": 5,
@@ -10850,7 +12435,10 @@
         "learner_text": "Diện tích «Đường tròn giao của khối cong và (P)» bằng 16π.",
         "semantic_kind": "FINAL_RESULT",
         "geometry_progress": [],
-        "formation_roles": []
+        "formation_roles": [],
+        "visible_prerequisites": [
+         "C"
+        ]
        }
       ]
      },
@@ -10858,6 +12446,7 @@
       "I",
       "R"
      ],
+     "unused_auxiliary_ids": [],
      "diagnostics": [
       "ANNOTATION_UNBOUND R: the text gives the number without naming a segment",
       "ANNOTATION_UNBOUND r: measure radius has no registered anchor",
@@ -10897,19 +12486,19 @@
       },
       {
        "step_index": 2,
-       "narration": "Ghi nhận V = 15π.",
+       "narration": "Tính thể tích hình trụ: 15π.",
        "objects": [],
        "highlighted_object_ids": []
       },
       {
        "step_index": 3,
-       "narration": "Ghi nhận Sxq = 6π√5.",
+       "narration": "Tính diện tích xung quanh của hình trụ: 6π√5.",
        "objects": [],
        "highlighted_object_ids": []
       },
       {
        "step_index": 4,
-       "narration": "Ghi nhận h = 3.",
+       "narration": "Xác định khoảng cách giữa O và O′ bằng 3.",
        "objects": [],
        "highlighted_object_ids": []
       }
@@ -10931,19 +12520,19 @@
        "view_index": 2,
        "frame_lo": 2,
        "frame_hi": 2,
-       "narration": "Ghi nhận V = 15π."
+       "narration": "Tính thể tích hình trụ: 15π."
       },
       {
        "view_index": 3,
        "frame_lo": 3,
        "frame_hi": 3,
-       "narration": "Ghi nhận Sxq = 6π√5."
+       "narration": "Tính diện tích xung quanh của hình trụ: 6π√5."
       },
       {
        "view_index": 4,
        "frame_lo": 4,
        "frame_hi": 4,
-       "narration": "Ghi nhận h = 3."
+       "narration": "Xác định khoảng cách giữa O và O′ bằng 3."
       }
      ],
      "grouping_level": "step",
@@ -10988,6 +12577,8 @@
         "0",
         "0"
        ],
+       "computational_depends": [],
+       "visible_prerequisites": [],
        "occludes_edges": false
       },
       {
@@ -11025,6 +12616,8 @@
         "2",
         "2"
        ],
+       "computational_depends": [],
+       "visible_prerequisites": [],
        "occludes_edges": false
       },
       {
@@ -11062,6 +12655,8 @@
         "-1",
         "0"
        ],
+       "computational_depends": [],
+       "visible_prerequisites": [],
        "occludes_edges": false
       },
       {
@@ -11132,6 +12727,20 @@
        ],
        "radius_sq": "5",
        "height_sq": "9",
+       "computational_depends": [
+        "A",
+        "O",
+        "O_prime"
+       ],
+       "visible_prerequisites": [
+        "A",
+        "O",
+        "O_prime"
+       ],
+       "construction_lineage": {
+        "mode": "direct_euclidean_primitive",
+        "producer": "construct_curved_solid.cylinder"
+       },
        "occludes_edges": false
       },
       {
@@ -11180,6 +12789,33 @@
         "radicand": 1,
         "pi": 1
        },
+       "measured_quantity": {
+        "quantity_kind": "volume",
+        "producer": "measure.volume",
+        "subject_ids": [
+         "tru"
+        ],
+        "subject_labels": [
+         "Hình trụ đáy tâm O, tâm đáy trên O′, qua A"
+        ],
+        "subject_types": [
+         "curved_solid"
+        ],
+        "value": "15π",
+        "exact": {
+         "kind": "radical",
+         "coefficient": "15",
+         "radicand": 1,
+         "pi": 1
+        },
+        "certified_relation": null
+       },
+       "computational_depends": [
+        "tru"
+       ],
+       "visible_prerequisites": [
+        "tru"
+       ],
        "occludes_edges": false
       },
       {
@@ -11228,6 +12864,33 @@
         "radicand": 5,
         "pi": 1
        },
+       "measured_quantity": {
+        "quantity_kind": "lateral_area",
+        "producer": "measure.lateral_area",
+        "subject_ids": [
+         "tru"
+        ],
+        "subject_labels": [
+         "Hình trụ đáy tâm O, tâm đáy trên O′, qua A"
+        ],
+        "subject_types": [
+         "curved_solid"
+        ],
+        "value": "6π√5",
+        "exact": {
+         "kind": "radical",
+         "coefficient": "6",
+         "radicand": 5,
+         "pi": 1
+        },
+        "certified_relation": null
+       },
+       "computational_depends": [
+        "tru"
+       ],
+       "visible_prerequisites": [
+        "tru"
+       ],
        "occludes_edges": false,
        "formula": {
         "text": "Diện tích mặt cong của khối cong = 6π√5",
@@ -11282,6 +12945,36 @@
         "kind": "rational",
         "value": "3"
        },
+       "measured_quantity": {
+        "quantity_kind": "distance",
+        "producer": "measure.distance",
+        "subject_ids": [
+         "O",
+         "O_prime"
+        ],
+        "subject_labels": [
+         "O",
+         "O′"
+        ],
+        "subject_types": [
+         "point3",
+         "point3"
+        ],
+        "value": "3",
+        "exact": {
+         "kind": "rational",
+         "value": "3"
+        },
+        "certified_relation": null
+       },
+       "computational_depends": [
+        "O",
+        "O_prime"
+       ],
+       "visible_prerequisites": [
+        "O",
+        "O_prime"
+       ],
        "occludes_edges": false,
        "formula": {
         "text": "d(O, O′) = 3",
@@ -11333,7 +13026,12 @@
          "A"
         ]
        },
-       "learner_text": "Dựng hình trụ."
+       "learner_text": "Dựng hình trụ.",
+       "visible_prerequisites": [
+        "A",
+        "O",
+        "O_prime"
+       ]
       },
       {
        "step_index": 2,
@@ -11342,7 +13040,7 @@
        "depends": [
         "tru"
        ],
-       "explanation": "Ghi nhận V = 15π.",
+       "explanation": "Tính thể tích Hình trụ đáy tâm O, tâm đáy trên O′, qua A: 15π.",
        "display_label": "Thể tích «Hình trụ đáy tâm O, tâm đáy trên O′, qua A»",
        "semantic_kind": "FINAL_RESULT",
        "details": {
@@ -11353,7 +13051,31 @@
          "pi": 1
         }
        },
-       "learner_text": "Thể tích «Hình trụ đáy tâm O, tâm đáy trên O′, qua A» bằng 15π."
+       "learner_text": "Thể tích «Hình trụ đáy tâm O, tâm đáy trên O′, qua A» bằng 15π.",
+       "visible_prerequisites": [
+        "tru"
+       ],
+       "measured_quantity": {
+        "quantity_kind": "volume",
+        "producer": "measure.volume",
+        "subject_ids": [
+         "tru"
+        ],
+        "subject_labels": [
+         "Hình trụ đáy tâm O, tâm đáy trên O′, qua A"
+        ],
+        "subject_types": [
+         "curved_solid"
+        ],
+        "value": "15π",
+        "exact": {
+         "kind": "radical",
+         "coefficient": "15",
+         "radicand": 1,
+         "pi": 1
+        },
+        "certified_relation": null
+       }
       },
       {
        "step_index": 3,
@@ -11362,7 +13084,7 @@
        "depends": [
         "tru"
        ],
-       "explanation": "Ghi nhận Sxq = 6π√5.",
+       "explanation": "Tính diện tích xung quanh của Hình trụ đáy tâm O, tâm đáy trên O′, qua A: 6π√5.",
        "display_label": "Diện tích mặt cong của «Hình trụ đáy tâm O, tâm đáy trên O′, qua A»",
        "semantic_kind": "FINAL_RESULT",
        "details": {
@@ -11373,7 +13095,31 @@
          "pi": 1
         }
        },
-       "learner_text": "Diện tích mặt cong của «Hình trụ đáy tâm O, tâm đáy trên O′, qua A» bằng 6π√5."
+       "learner_text": "Diện tích mặt cong của «Hình trụ đáy tâm O, tâm đáy trên O′, qua A» bằng 6π√5.",
+       "visible_prerequisites": [
+        "tru"
+       ],
+       "measured_quantity": {
+        "quantity_kind": "lateral_area",
+        "producer": "measure.lateral_area",
+        "subject_ids": [
+         "tru"
+        ],
+        "subject_labels": [
+         "Hình trụ đáy tâm O, tâm đáy trên O′, qua A"
+        ],
+        "subject_types": [
+         "curved_solid"
+        ],
+        "value": "6π√5",
+        "exact": {
+         "kind": "radical",
+         "coefficient": "6",
+         "radicand": 5,
+         "pi": 1
+        },
+        "certified_relation": null
+       }
       },
       {
        "step_index": 4,
@@ -11383,13 +13129,39 @@
         "O",
         "O_prime"
        ],
-       "explanation": "Ghi nhận h = 3.",
+       "explanation": "Xác định khoảng cách giữa O và O′ bằng 3.",
        "display_label": "Khoảng cách giữa O và O′",
        "semantic_kind": "MEASUREMENT",
        "details": {
         "value": "3"
        },
-       "learner_text": "Tính khoảng cách giữa O và O′: d(O, O′) = 3."
+       "learner_text": "Tính khoảng cách giữa O và O′: d(O, O′) = 3.",
+       "visible_prerequisites": [
+        "O",
+        "O_prime"
+       ],
+       "measured_quantity": {
+        "quantity_kind": "distance",
+        "producer": "measure.distance",
+        "subject_ids": [
+         "O",
+         "O_prime"
+        ],
+        "subject_labels": [
+         "O",
+         "O′"
+        ],
+        "subject_types": [
+         "point3",
+         "point3"
+        ],
+        "value": "3",
+        "exact": {
+         "kind": "rational",
+         "value": "3"
+        },
+        "certified_relation": null
+       }
       }
      ],
      "formation": {
@@ -11427,6 +13199,11 @@
         "geometry_progress": [],
         "formation_roles": [
          "CLOSE_SOLID"
+        ],
+        "visible_prerequisites": [
+         "A",
+         "O",
+         "O_prime"
         ]
        },
        {
@@ -11447,7 +13224,10 @@
         "learner_text": "Thể tích «Hình trụ đáy tâm O, tâm đáy trên O′, qua A» bằng 15π.",
         "semantic_kind": "FINAL_RESULT",
         "geometry_progress": [],
-        "formation_roles": []
+        "formation_roles": [],
+        "visible_prerequisites": [
+         "tru"
+        ]
        },
        {
         "step_index": 3,
@@ -11469,7 +13249,10 @@
         "learner_text": "Diện tích mặt cong của «Hình trụ đáy tâm O, tâm đáy trên O′, qua A» bằng 6π√5.",
         "semantic_kind": "FINAL_RESULT",
         "geometry_progress": [],
-        "formation_roles": []
+        "formation_roles": [],
+        "visible_prerequisites": [
+         "tru"
+        ]
        },
        {
         "step_index": 4,
@@ -11493,7 +13276,11 @@
         "learner_text": "Tính khoảng cách giữa O và O′: d(O, O′) = 3.",
         "semantic_kind": "MEASUREMENT",
         "geometry_progress": [],
-        "formation_roles": []
+        "formation_roles": [],
+        "visible_prerequisites": [
+         "O",
+         "O_prime"
+        ]
        }
       ]
      },
@@ -11502,6 +13289,7 @@
       "O",
       "O_prime"
      ],
+     "unused_auxiliary_ids": [],
      "diagnostics": [
       "ANNOTATION_UNBOUND V: volume of a curved_solid has no registered anchor",
       "ANNOTATION_UNBOUND Sxq: measure lateral_area has no registered anchor"
@@ -11552,19 +13340,19 @@
       },
       {
        "step_index": 4,
-       "narration": "Ghi nhận P = Plane3(point=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(2, 1)), normal=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(4, 1))).",
+       "narration": "Dựng mặt phẳng P.",
        "objects": [],
        "highlighted_object_ids": []
       },
       {
        "step_index": 5,
-       "narration": "Ghi nhận C = Circle3(center=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(2, 1)), normal=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(4, 1)), radius_sq=Fraction(4, 1)).",
+       "narration": "Dựng đường tròn C.",
        "objects": [],
        "highlighted_object_ids": []
       },
       {
        "step_index": 6,
-       "narration": "Ghi nhận r = 2.",
+       "narration": "Tính bán kính của C: 2.",
        "objects": [],
        "highlighted_object_ids": []
       }
@@ -11598,19 +13386,19 @@
        "view_index": 4,
        "frame_lo": 4,
        "frame_hi": 4,
-       "narration": "Ghi nhận P = Plane3(point=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(2, 1)), normal=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(4, 1)))."
+       "narration": "Dựng mặt phẳng P."
       },
       {
        "view_index": 5,
        "frame_lo": 5,
        "frame_hi": 5,
-       "narration": "Ghi nhận C = Circle3(center=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(2, 1)), normal=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(4, 1)), radius_sq=Fraction(4, 1))."
+       "narration": "Dựng đường tròn C."
       },
       {
        "view_index": 6,
        "frame_lo": 6,
        "frame_hi": 6,
-       "narration": "Ghi nhận r = 2."
+       "narration": "Tính bán kính của C: 2."
       }
      ],
      "grouping_level": "step",
@@ -11655,6 +13443,8 @@
         "0",
         "0"
        ],
+       "computational_depends": [],
+       "visible_prerequisites": [],
        "occludes_edges": false
       },
       {
@@ -11692,6 +13482,8 @@
         "0",
         "4"
        ],
+       "computational_depends": [],
+       "visible_prerequisites": [],
        "occludes_edges": false
       },
       {
@@ -11731,6 +13523,8 @@
         "kind": "rational",
         "value": "2"
        },
+       "computational_depends": [],
+       "visible_prerequisites": [],
        "occludes_edges": false,
        "formula": {
         "text": "Bán kính đáy = 2",
@@ -11765,7 +13559,8 @@
         },
         {
          "source_id": "R",
-         "relation": "numerical"
+         "relation": "numerical",
+         "is_non_visual_carrier": true
         }
        ],
        "parent": null,
@@ -11800,6 +13595,19 @@
        "rim_point": null,
        "radius_sq": "4",
        "height_sq": "16",
+       "computational_depends": [
+        "O",
+        "O_prime",
+        "R"
+       ],
+       "visible_prerequisites": [
+        "O",
+        "O_prime"
+       ],
+       "construction_lineage": {
+        "mode": "direct_euclidean_primitive",
+        "producer": "construct_curved_solid.cylinder"
+       },
        "occludes_edges": false
       },
       {
@@ -11852,6 +13660,18 @@
         "0",
         "2"
        ],
+       "computational_depends": [
+        "O",
+        "O_prime"
+       ],
+       "visible_prerequisites": [
+        "O",
+        "O_prime"
+       ],
+       "construction_lineage": {
+        "mode": "direct_euclidean_primitive",
+        "producer": "construct_point.midpoint"
+       },
        "occludes_edges": false
       },
       {
@@ -11908,6 +13728,18 @@
         "0",
         "4"
        ],
+       "computational_depends": [
+        "O",
+        "O_prime"
+       ],
+       "visible_prerequisites": [
+        "O",
+        "O_prime"
+       ],
+       "construction_lineage": {
+        "mode": "direct_euclidean_primitive",
+        "producer": "construct_line"
+       },
        "occludes_edges": false
       },
       {
@@ -11964,6 +13796,18 @@
         "0",
         "4"
        ],
+       "computational_depends": [
+        "M",
+        "truc"
+       ],
+       "visible_prerequisites": [
+        "M",
+        "truc"
+       ],
+       "construction_lineage": {
+        "mode": "direct_euclidean_primitive",
+        "producer": "plane_perpendicular_to_line"
+       },
        "notation_assigned": true,
        "occludes_edges": false,
        "surface_role": "CUTTING_PLANE"
@@ -12024,6 +13868,18 @@
         "4"
        ],
        "radius_sq": "4",
+       "computational_depends": [
+        "P",
+        "tru"
+       ],
+       "visible_prerequisites": [
+        "P",
+        "tru"
+       ],
+       "construction_lineage": {
+        "mode": "direct_euclidean_primitive",
+        "producer": "intersect_plane_curved"
+       },
        "occludes_edges": false
       },
       {
@@ -12070,6 +13926,31 @@
         "kind": "rational",
         "value": "2"
        },
+       "measured_quantity": {
+        "quantity_kind": "radius",
+        "producer": "measure.radius",
+        "subject_ids": [
+         "C"
+        ],
+        "subject_labels": [
+         "Đường tròn giao của khối cong và (α)"
+        ],
+        "subject_types": [
+         "circle3"
+        ],
+        "value": "2",
+        "exact": {
+         "kind": "rational",
+         "value": "2"
+        },
+        "certified_relation": null
+       },
+       "computational_depends": [
+        "C"
+       ],
+       "visible_prerequisites": [
+        "C"
+       ],
        "occludes_edges": false,
        "formula": {
         "text": "Bán kính đường tròn = 2",
@@ -12110,7 +13991,11 @@
          "R"
         ]
        },
-       "learner_text": "Dựng hình trụ."
+       "learner_text": "Dựng hình trụ.",
+       "visible_prerequisites": [
+        "O",
+        "O_prime"
+       ]
       },
       {
        "step_index": 2,
@@ -12131,7 +14016,11 @@
          "2"
         ]
        },
-       "learner_text": "Dựng trung điểm của O và O′."
+       "learner_text": "Dựng trung điểm của O và O′.",
+       "visible_prerequisites": [
+        "O",
+        "O_prime"
+       ]
       },
       {
        "step_index": 3,
@@ -12151,7 +14040,11 @@
          "O_prime"
         ]
        },
-       "learner_text": "Dựng OO′."
+       "learner_text": "Dựng OO′.",
+       "visible_prerequisites": [
+        "O",
+        "O_prime"
+       ]
       },
       {
        "step_index": 4,
@@ -12179,7 +14072,11 @@
          ]
         }
        },
-       "learner_text": "Gọi (α) là mặt phẳng qua M và vuông góc với OO′."
+       "learner_text": "Gọi (α) là mặt phẳng qua M và vuông góc với OO′.",
+       "visible_prerequisites": [
+        "M",
+        "truc"
+       ]
       },
       {
        "step_index": 5,
@@ -12208,7 +14105,11 @@
          "radius_sq": "4"
         }
        },
-       "learner_text": "Dựng đường tròn giao của «Hình trụ đáy tâm O, tâm đáy trên O′» và (α)."
+       "learner_text": "Dựng đường tròn giao của «Hình trụ đáy tâm O, tâm đáy trên O′» và (α).",
+       "visible_prerequisites": [
+        "P",
+        "tru"
+       ]
       },
       {
        "step_index": 6,
@@ -12217,13 +14118,35 @@
        "depends": [
         "C"
        ],
-       "explanation": "Ghi nhận r = 2.",
+       "explanation": "Tính bán kính của Đường tròn giao của khối cong và (α): 2.",
        "display_label": "Bán kính «Đường tròn giao của khối cong và (α)»",
        "semantic_kind": "FINAL_RESULT",
        "details": {
         "value": "2"
        },
-       "learner_text": "Bán kính «Đường tròn giao của khối cong và (α)» bằng 2."
+       "learner_text": "Bán kính «Đường tròn giao của khối cong và (α)» bằng 2.",
+       "visible_prerequisites": [
+        "C"
+       ],
+       "measured_quantity": {
+        "quantity_kind": "radius",
+        "producer": "measure.radius",
+        "subject_ids": [
+         "C"
+        ],
+        "subject_labels": [
+         "Đường tròn giao của khối cong và (α)"
+        ],
+        "subject_types": [
+         "circle3"
+        ],
+        "value": "2",
+        "exact": {
+         "kind": "rational",
+         "value": "2"
+        },
+        "certified_relation": null
+       }
       }
      ],
      "formation": {
@@ -12265,6 +14188,10 @@
         "geometry_progress": [],
         "formation_roles": [
          "CLOSE_SOLID"
+        ],
+        "visible_prerequisites": [
+         "O",
+         "O_prime"
         ]
        },
        {
@@ -12287,6 +14214,10 @@
         "geometry_progress": [],
         "formation_roles": [
          "CONSTRUCT_AUXILIARY_GEOMETRY"
+        ],
+        "visible_prerequisites": [
+         "O",
+         "O_prime"
         ]
        },
        {
@@ -12310,6 +14241,10 @@
         "geometry_progress": [],
         "formation_roles": [
          "CONSTRUCT_AUXILIARY_GEOMETRY"
+        ],
+        "visible_prerequisites": [
+         "O",
+         "O_prime"
         ]
        },
        {
@@ -12334,6 +14269,10 @@
         "geometry_progress": [],
         "formation_roles": [
          "CONSTRUCT_CUTTING_OBJECT"
+        ],
+        "visible_prerequisites": [
+         "M",
+         "truc"
         ]
        },
        {
@@ -12359,6 +14298,10 @@
         "geometry_progress": [],
         "formation_roles": [
          "CONSTRUCT_AUXILIARY_GEOMETRY"
+        ],
+        "visible_prerequisites": [
+         "P",
+         "tru"
         ]
        },
        {
@@ -12384,7 +14327,10 @@
         "learner_text": "Bán kính «Đường tròn giao của khối cong và (α)» bằng 2.",
         "semantic_kind": "FINAL_RESULT",
         "geometry_progress": [],
-        "formation_roles": []
+        "formation_roles": [],
+        "visible_prerequisites": [
+         "C"
+        ]
        }
       ]
      },
@@ -12393,6 +14339,7 @@
       "O_prime",
       "R"
      ],
+     "unused_auxiliary_ids": [],
      "diagnostics": [
       "ANNOTATION_UNBOUND R: the text gives the number without naming a segment",
       "ANNOTATION_UNBOUND r: measure radius has no registered anchor"
@@ -12437,19 +14384,19 @@
       },
       {
        "step_index": 3,
-       "narration": "Ghi nhận l = 5.",
+       "narration": "Xác định khoảng cách giữa S và A bằng 5.",
        "objects": [],
        "highlighted_object_ids": []
       },
       {
        "step_index": 4,
-       "narration": "Ghi nhận V = 12π.",
+       "narration": "Tính thể tích hình nón: 12π.",
        "objects": [],
        "highlighted_object_ids": []
       },
       {
        "step_index": 5,
-       "narration": "Ghi nhận Sxq = 15π.",
+       "narration": "Tính diện tích xung quanh của hình nón: 15π.",
        "objects": [],
        "highlighted_object_ids": []
       }
@@ -12477,19 +14424,19 @@
        "view_index": 3,
        "frame_lo": 3,
        "frame_hi": 3,
-       "narration": "Ghi nhận l = 5."
+       "narration": "Xác định khoảng cách giữa S và A bằng 5."
       },
       {
        "view_index": 4,
        "frame_lo": 4,
        "frame_hi": 4,
-       "narration": "Ghi nhận V = 12π."
+       "narration": "Tính thể tích hình nón: 12π."
       },
       {
        "view_index": 5,
        "frame_lo": 5,
        "frame_hi": 5,
-       "narration": "Ghi nhận Sxq = 15π."
+       "narration": "Tính diện tích xung quanh của hình nón: 15π."
       }
      ],
      "grouping_level": "step",
@@ -12534,6 +14481,8 @@
         "0",
         "0"
        ],
+       "computational_depends": [],
+       "visible_prerequisites": [],
        "occludes_edges": false
       },
       {
@@ -12572,6 +14521,8 @@
         "0",
         "4"
        ],
+       "computational_depends": [],
+       "visible_prerequisites": [],
        "occludes_edges": false
       },
       {
@@ -12609,6 +14560,8 @@
         "0",
         "0"
        ],
+       "computational_depends": [],
+       "visible_prerequisites": [],
        "occludes_edges": false
       },
       {
@@ -12679,6 +14632,20 @@
        ],
        "radius_sq": "9",
        "height_sq": "16",
+       "computational_depends": [
+        "A",
+        "O",
+        "S"
+       ],
+       "visible_prerequisites": [
+        "A",
+        "O",
+        "S"
+       ],
+       "construction_lineage": {
+        "mode": "direct_euclidean_primitive",
+        "producer": "construct_curved_solid.cone"
+       },
        "occludes_edges": false
       },
       {
@@ -12730,6 +14697,36 @@
         "kind": "rational",
         "value": "5"
        },
+       "measured_quantity": {
+        "quantity_kind": "distance",
+        "producer": "measure.distance",
+        "subject_ids": [
+         "S",
+         "A"
+        ],
+        "subject_labels": [
+         "S",
+         "A"
+        ],
+        "subject_types": [
+         "point3",
+         "point3"
+        ],
+        "value": "5",
+        "exact": {
+         "kind": "rational",
+         "value": "5"
+        },
+        "certified_relation": null
+       },
+       "computational_depends": [
+        "A",
+        "S"
+       ],
+       "visible_prerequisites": [
+        "A",
+        "S"
+       ],
        "occludes_edges": false,
        "formula": {
         "text": "d(S, A) = 5",
@@ -12793,6 +14790,33 @@
         "radicand": 1,
         "pi": 1
        },
+       "measured_quantity": {
+        "quantity_kind": "volume",
+        "producer": "measure.volume",
+        "subject_ids": [
+         "non"
+        ],
+        "subject_labels": [
+         "Hình nón đáy tâm O, đỉnh S, qua A"
+        ],
+        "subject_types": [
+         "curved_solid"
+        ],
+        "value": "12π",
+        "exact": {
+         "kind": "radical",
+         "coefficient": "12",
+         "radicand": 1,
+         "pi": 1
+        },
+        "certified_relation": null
+       },
+       "computational_depends": [
+        "non"
+       ],
+       "visible_prerequisites": [
+        "non"
+       ],
        "occludes_edges": false
       },
       {
@@ -12841,6 +14865,33 @@
         "radicand": 1,
         "pi": 1
        },
+       "measured_quantity": {
+        "quantity_kind": "lateral_area",
+        "producer": "measure.lateral_area",
+        "subject_ids": [
+         "non"
+        ],
+        "subject_labels": [
+         "Hình nón đáy tâm O, đỉnh S, qua A"
+        ],
+        "subject_types": [
+         "curved_solid"
+        ],
+        "value": "15π",
+        "exact": {
+         "kind": "radical",
+         "coefficient": "15",
+         "radicand": 1,
+         "pi": 1
+        },
+        "certified_relation": null
+       },
+       "computational_depends": [
+        "non"
+       ],
+       "visible_prerequisites": [
+        "non"
+       ],
        "occludes_edges": false,
        "formula": {
         "text": "Diện tích mặt cong của khối cong = 15π",
@@ -12917,6 +14968,18 @@
         "S",
         "A"
        ],
+       "computational_depends": [
+        "A",
+        "S"
+       ],
+       "visible_prerequisites": [
+        "A",
+        "S"
+       ],
+       "construction_lineage": {
+        "mode": "direct_euclidean_primitive",
+        "producer": "construct_segment"
+       },
        "occludes_edges": false
       }
      ],
@@ -12953,7 +15016,12 @@
          "A"
         ]
        },
-       "learner_text": "Dựng hình nón."
+       "learner_text": "Dựng hình nón.",
+       "visible_prerequisites": [
+        "A",
+        "O",
+        "S"
+       ]
       },
       {
        "step_index": 2,
@@ -12979,6 +15047,10 @@
        "learner_text": "Dựng đoạn SA.",
        "objects": [
         "doan_SA"
+       ],
+       "visible_prerequisites": [
+        "A",
+        "S"
        ]
       },
       {
@@ -12989,13 +15061,39 @@
         "S",
         "A"
        ],
-       "explanation": "Ghi nhận l = 5.",
+       "explanation": "Xác định khoảng cách giữa S và A bằng 5.",
        "display_label": "Khoảng cách giữa S và A",
        "semantic_kind": "FINAL_RESULT",
        "details": {
         "value": "5"
        },
-       "learner_text": "Tính khoảng cách giữa S và A: d(S, A) = 5."
+       "learner_text": "Tính khoảng cách giữa S và A: d(S, A) = 5.",
+       "visible_prerequisites": [
+        "A",
+        "S"
+       ],
+       "measured_quantity": {
+        "quantity_kind": "distance",
+        "producer": "measure.distance",
+        "subject_ids": [
+         "S",
+         "A"
+        ],
+        "subject_labels": [
+         "S",
+         "A"
+        ],
+        "subject_types": [
+         "point3",
+         "point3"
+        ],
+        "value": "5",
+        "exact": {
+         "kind": "rational",
+         "value": "5"
+        },
+        "certified_relation": null
+       }
       },
       {
        "step_index": 4,
@@ -13004,7 +15102,7 @@
        "depends": [
         "non"
        ],
-       "explanation": "Ghi nhận V = 12π.",
+       "explanation": "Tính thể tích Hình nón đáy tâm O, đỉnh S, qua A: 12π.",
        "display_label": "Thể tích «Hình nón đáy tâm O, đỉnh S, qua A»",
        "semantic_kind": "FINAL_RESULT",
        "details": {
@@ -13015,7 +15113,31 @@
          "pi": 1
         }
        },
-       "learner_text": "Thể tích «Hình nón đáy tâm O, đỉnh S, qua A» bằng 12π."
+       "learner_text": "Thể tích «Hình nón đáy tâm O, đỉnh S, qua A» bằng 12π.",
+       "visible_prerequisites": [
+        "non"
+       ],
+       "measured_quantity": {
+        "quantity_kind": "volume",
+        "producer": "measure.volume",
+        "subject_ids": [
+         "non"
+        ],
+        "subject_labels": [
+         "Hình nón đáy tâm O, đỉnh S, qua A"
+        ],
+        "subject_types": [
+         "curved_solid"
+        ],
+        "value": "12π",
+        "exact": {
+         "kind": "radical",
+         "coefficient": "12",
+         "radicand": 1,
+         "pi": 1
+        },
+        "certified_relation": null
+       }
       },
       {
        "step_index": 5,
@@ -13024,7 +15146,7 @@
        "depends": [
         "non"
        ],
-       "explanation": "Ghi nhận Sxq = 15π.",
+       "explanation": "Tính diện tích xung quanh của Hình nón đáy tâm O, đỉnh S, qua A: 15π.",
        "display_label": "Diện tích mặt cong của «Hình nón đáy tâm O, đỉnh S, qua A»",
        "semantic_kind": "FINAL_RESULT",
        "details": {
@@ -13035,7 +15157,31 @@
          "pi": 1
         }
        },
-       "learner_text": "Diện tích mặt cong của «Hình nón đáy tâm O, đỉnh S, qua A» bằng 15π."
+       "learner_text": "Diện tích mặt cong của «Hình nón đáy tâm O, đỉnh S, qua A» bằng 15π.",
+       "visible_prerequisites": [
+        "non"
+       ],
+       "measured_quantity": {
+        "quantity_kind": "lateral_area",
+        "producer": "measure.lateral_area",
+        "subject_ids": [
+         "non"
+        ],
+        "subject_labels": [
+         "Hình nón đáy tâm O, đỉnh S, qua A"
+        ],
+        "subject_types": [
+         "curved_solid"
+        ],
+        "value": "15π",
+        "exact": {
+         "kind": "radical",
+         "coefficient": "15",
+         "radicand": 1,
+         "pi": 1
+        },
+        "certified_relation": null
+       }
       }
      ],
      "formation": {
@@ -13073,6 +15219,11 @@
         "geometry_progress": [],
         "formation_roles": [
          "CLOSE_SOLID"
+        ],
+        "visible_prerequisites": [
+         "A",
+         "O",
+         "S"
         ]
        },
        {
@@ -13093,6 +15244,10 @@
         "geometry_progress": [],
         "formation_roles": [
          "CONSTRUCT_AUXILIARY_GEOMETRY"
+        ],
+        "visible_prerequisites": [
+         "A",
+         "S"
         ]
        },
        {
@@ -13114,7 +15269,11 @@
         "learner_text": "Tính khoảng cách giữa S và A: d(S, A) = 5.",
         "semantic_kind": "FINAL_RESULT",
         "geometry_progress": [],
-        "formation_roles": []
+        "formation_roles": [],
+        "visible_prerequisites": [
+         "A",
+         "S"
+        ]
        },
        {
         "step_index": 4,
@@ -13137,7 +15296,10 @@
         "learner_text": "Thể tích «Hình nón đáy tâm O, đỉnh S, qua A» bằng 12π.",
         "semantic_kind": "FINAL_RESULT",
         "geometry_progress": [],
-        "formation_roles": []
+        "formation_roles": [],
+        "visible_prerequisites": [
+         "non"
+        ]
        },
        {
         "step_index": 5,
@@ -13162,7 +15324,10 @@
         "learner_text": "Diện tích mặt cong của «Hình nón đáy tâm O, đỉnh S, qua A» bằng 15π.",
         "semantic_kind": "FINAL_RESULT",
         "geometry_progress": [],
-        "formation_roles": []
+        "formation_roles": [],
+        "visible_prerequisites": [
+         "non"
+        ]
        }
       ]
      },
@@ -13171,6 +15336,7 @@
       "O",
       "S"
      ],
+     "unused_auxiliary_ids": [],
      "diagnostics": [
       "ANNOTATION_UNBOUND V: volume of a curved_solid has no registered anchor",
       "ANNOTATION_UNBOUND Sxq: measure lateral_area has no registered anchor"
@@ -13221,7 +15387,7 @@
       },
       {
        "step_index": 4,
-       "narration": "Ghi nhận Std = 12.",
+       "narration": "Tính diện tích SAB: 12.",
        "objects": [],
        "highlighted_object_ids": []
       }
@@ -13255,7 +15421,7 @@
        "view_index": 4,
        "frame_lo": 4,
        "frame_hi": 4,
-       "narration": "Ghi nhận Std = 12."
+       "narration": "Tính diện tích SAB: 12."
       }
      ],
      "grouping_level": "step",
@@ -13300,6 +15466,8 @@
         "0",
         "0"
        ],
+       "computational_depends": [],
+       "visible_prerequisites": [],
        "occludes_edges": false
       },
       {
@@ -13337,6 +15505,8 @@
         "0",
         "4"
        ],
+       "computational_depends": [],
+       "visible_prerequisites": [],
        "occludes_edges": false
       },
       {
@@ -13374,6 +15544,8 @@
         "0",
         "0"
        ],
+       "computational_depends": [],
+       "visible_prerequisites": [],
        "occludes_edges": false
       },
       {
@@ -13443,6 +15615,20 @@
        ],
        "radius_sq": "9",
        "height_sq": "16",
+       "computational_depends": [
+        "A",
+        "O",
+        "S"
+       ],
+       "visible_prerequisites": [
+        "A",
+        "O",
+        "S"
+       ],
+       "construction_lineage": {
+        "mode": "direct_euclidean_primitive",
+        "producer": "construct_curved_solid.cone"
+       },
        "occludes_edges": false
       },
       {
@@ -13495,6 +15681,18 @@
         "0",
         "0"
        ],
+       "computational_depends": [
+        "A",
+        "O"
+       ],
+       "visible_prerequisites": [
+        "A",
+        "O"
+       ],
+       "construction_lineage": {
+        "mode": "direct_euclidean_primitive",
+        "producer": "construct_point.divide_segment"
+       },
        "occludes_edges": false
       },
       {
@@ -13570,6 +15768,20 @@
         "A",
         "B"
        ],
+       "computational_depends": [
+        "A",
+        "B",
+        "S"
+       ],
+       "visible_prerequisites": [
+        "A",
+        "B",
+        "S"
+       ],
+       "construction_lineage": {
+        "mode": "direct_euclidean_primitive",
+        "producer": "construct_polygon"
+       },
        "occludes_edges": false,
        "surface_role": "AUXILIARY_SURFACE"
       },
@@ -13617,6 +15829,31 @@
         "kind": "rational",
         "value": "12"
        },
+       "measured_quantity": {
+        "quantity_kind": "area",
+        "producer": "measure.area",
+        "subject_ids": [
+         "td"
+        ],
+        "subject_labels": [
+         "SAB"
+        ],
+        "subject_types": [
+         "polygon3"
+        ],
+        "value": "12",
+        "exact": {
+         "kind": "rational",
+         "value": "12"
+        },
+        "certified_relation": null
+       },
+       "computational_depends": [
+        "td"
+       ],
+       "visible_prerequisites": [
+        "td"
+       ],
        "occludes_edges": false,
        "formula": {
         "text": "S(SAB) = 12",
@@ -13667,7 +15904,12 @@
          "A"
         ]
        },
-       "learner_text": "Dựng hình nón."
+       "learner_text": "Dựng hình nón.",
+       "visible_prerequisites": [
+        "A",
+        "O",
+        "S"
+       ]
       },
       {
        "step_index": 2,
@@ -13688,7 +15930,11 @@
          "0"
         ]
        },
-       "learner_text": "Dựng điểm chia đoạn nối A và O."
+       "learner_text": "Dựng điểm chia đoạn nối A và O.",
+       "visible_prerequisites": [
+        "A",
+        "O"
+       ]
       },
       {
        "step_index": 3,
@@ -13710,7 +15956,12 @@
          "B"
         ]
        },
-       "learner_text": "Dựng SAB."
+       "learner_text": "Dựng SAB.",
+       "visible_prerequisites": [
+        "A",
+        "B",
+        "S"
+       ]
       },
       {
        "step_index": 4,
@@ -13719,13 +15970,35 @@
        "depends": [
         "td"
        ],
-       "explanation": "Ghi nhận Std = 12.",
+       "explanation": "Tính diện tích SAB: 12.",
        "display_label": "Diện tích SAB",
        "semantic_kind": "FINAL_RESULT",
        "details": {
         "value": "12"
        },
-       "learner_text": "Tính diện tích SAB: S(SAB) = 12."
+       "learner_text": "Tính diện tích SAB: S(SAB) = 12.",
+       "visible_prerequisites": [
+        "td"
+       ],
+       "measured_quantity": {
+        "quantity_kind": "area",
+        "producer": "measure.area",
+        "subject_ids": [
+         "td"
+        ],
+        "subject_labels": [
+         "SAB"
+        ],
+        "subject_types": [
+         "polygon3"
+        ],
+        "value": "12",
+        "exact": {
+         "kind": "rational",
+         "value": "12"
+        },
+        "certified_relation": null
+       }
       }
      ],
      "formation": {
@@ -13763,6 +16036,11 @@
         "geometry_progress": [],
         "formation_roles": [
          "CLOSE_SOLID"
+        ],
+        "visible_prerequisites": [
+         "A",
+         "O",
+         "S"
         ]
        },
        {
@@ -13783,6 +16061,10 @@
         "geometry_progress": [],
         "formation_roles": [
          "CONSTRUCT_AUXILIARY_GEOMETRY"
+        ],
+        "visible_prerequisites": [
+         "A",
+         "O"
         ]
        },
        {
@@ -13804,6 +16086,11 @@
         "geometry_progress": [],
         "formation_roles": [
          "CONSTRUCT_AUXILIARY_GEOMETRY"
+        ],
+        "visible_prerequisites": [
+         "A",
+         "B",
+         "S"
         ]
        },
        {
@@ -13826,7 +16113,10 @@
         "learner_text": "Tính diện tích SAB: S(SAB) = 12.",
         "semantic_kind": "FINAL_RESULT",
         "geometry_progress": [],
-        "formation_roles": []
+        "formation_roles": [],
+        "visible_prerequisites": [
+         "td"
+        ]
        }
       ]
      },
@@ -13835,6 +16125,7 @@
       "O",
       "S"
      ],
+     "unused_auxiliary_ids": [],
      "diagnostics": [],
      "khai": "Dữ liệu CẢNH cho renderer. Mọi số là chuỗi phân số CHÍNH XÁC; hoá float là việc của renderer, ở bước cuối trước GPU. Mặt phẳng và đường thẳng KHÔNG có biên — renderer tự quyết kích thước dựa trên `depends`."
     },
