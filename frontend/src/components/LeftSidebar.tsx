@@ -737,6 +737,22 @@ export function LeftSidebar() {
     ],
   );
 
+  const hasAnyTrackedProblems = useMemo(
+    () =>
+      allUnifiedItems.length > 0 ||
+      analyzing ||
+      Object.keys(problemProcessingRecords).length > 0 ||
+      effectiveTabs.some((t) => t.kind !== "draft") ||
+      history.length > 0,
+    [
+      allUnifiedItems.length,
+      analyzing,
+      effectiveTabs,
+      history.length,
+      problemProcessingRecords,
+    ],
+  );
+
   const computeFilterPopoverPosition = useCallback((): FilterPopoverCoords => {
     if (typeof window === "undefined" || !filterBtnRef.current) {
       return { top: 224, left: 182, placement: "bottom-start" };
@@ -1460,24 +1476,35 @@ export function LeftSidebar() {
               hidden={leftRailProblemGroupCollapsed}
             >
               {unifiedSidebarItems.length === 0 ? (
-                <div className="sb-empty-state" id="sb-problem-empty">
-                  {leftRailProblemFilter === "ready"
-                    ? "Chưa có bài toán nào ở trạng thái Sẵn sàng."
-                    : leftRailProblemFilter === "needs_attention"
-                      ? "Không có bài toán nào Cần chú ý."
-                      : leftRailProblemFilter === "in_progress"
-                        ? "Không có bài toán nào Đang tiến hành."
-                        : "Chưa có bài toán nào."}
-                  <div>
-                    <button
-                      type="button"
-                      className="sb-empty-cta"
-                      onClick={handleNewProblem}
-                    >
-                      + Mở bài toán mới
-                    </button>
+                !authResolved ? (
+                  <div
+                    className="sb-empty-state"
+                    id="sb-problem-loading"
+                    data-empty-kind="loading"
+                  >
+                    Đang tải danh sách…
                   </div>
-                </div>
+                ) : hasAnyTrackedProblems && leftRailProblemFilter !== "all" ? (
+                  <div
+                    className="sb-empty-state"
+                    id="sb-problem-empty"
+                    data-empty-kind="filtered"
+                  >
+                    {leftRailProblemFilter === "ready"
+                      ? "Chưa có bài toán nào ở trạng thái Sẵn sàng."
+                      : leftRailProblemFilter === "needs_attention"
+                        ? "Không có bài toán nào Cần chú ý."
+                        : "Không có bài toán nào Đang tiến hành."}
+                  </div>
+                ) : (
+                  <div
+                    className="sb-empty-state"
+                    id="sb-problem-empty"
+                    data-empty-kind="empty"
+                  >
+                    Chưa có bài toán nào.
+                  </div>
+                )
               ) : (
                 unifiedSidebarItems.map((item) => {
                   const isMenuOpen = actionMenuState?.canonicalId === item.canonicalId;

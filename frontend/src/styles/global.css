@@ -20398,24 +20398,6 @@ html::-webkit-scrollbar {
   color: var(--ink-muted, #a39e98);
 }
 
-.sb-empty-cta {
-  margin-top: 6px;
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  font-size: 12.5px;
-  font-weight: 600;
-  color: var(--primary);
-  background: none;
-  border: none;
-  padding: 0;
-  cursor: pointer;
-  font-family: inherit;
-}
-
-.sb-empty-cta:hover {
-  text-decoration: underline;
-}
 
 /* V6 Phase 1 & 2: Gemini-Style Processing Status Filter Trigger & Right-Opening Popover (Light Mode) */
 .sb-filter-anchor {
