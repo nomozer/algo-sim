@@ -87,7 +87,8 @@ def gan_so_do(spec: Any, final_memory: dict[str, Any], contract: Any,
     return gan, chan_doan
 
 
-#: Hợp đồng `angle_construction` trên vật `quantity` đo góc KHÁC 90° (góc vuông thuộc `_goc_vuong`).
+#: Hợp đồng `angle_construction` trên vật `quantity` đo góc KHÁC 90°, và góc 90° mà `_goc_vuong` không neo được dấu
+#: (hai mặt phẳng vuông góc, hai đường chéo nhau vuông góc — run `scene3d-causal-pedagogical-integrity`).
 ANGLE_CONSTRUCTION_SCHEMA = "angle-construction/1"
 
 
@@ -110,8 +111,8 @@ def gan_dung_goc(dinh_nghia: dict[Any, Any], objects: list[dict[str, Any]], mem:
                 or expr.quantity not in ("angle_cos", "angle_cos_sq")):
             continue
         v = mem.get(o["id"])
-        if v is None or v == 0:
-            continue
+        if v is None or (v == 0 and not _vuong_khong_neo(mem.get(expr.of), mem.get(expr.wrt))):
+            continue                  # a right angle at a meeting point is the `_goc_vuong` marker
         try:
             c2 = v if expr.quantity == "angle_cos_sq" else square(v)
             kq = _dung_goc(expr.of, expr.wrt, Fraction(str(c2)), mem, by_id, co_ten)
@@ -204,6 +205,21 @@ def _dung_duong_cao(s_ten: str, dinh_day: list[str], day_id: str, mem: dict[str,
         toi = next((v for v in dinh_day if mem[v] != h), dinh_day[0])
         out["marker"] = {"u": _xau(mem[toi] - h), "v": _xau(leg), "u_to": toi}
     return out
+
+
+def _vuong_khong_neo(a: Any, b: Any) -> bool:
+    """A 90° angle `_goc_vuong` has no point to mark: two planes (the angle lives on their common line) or two lines that
+    do not meet and are not parallel (skew — drawn with a parallel through a point of the first line)."""
+    if isinstance(a, Plane3) and isinstance(b, Plane3):
+        return True
+    da, db = _duong(a), _duong(b)
+    if da is None or db is None or da.direction.cross(db.direction).is_zero():
+        return False
+    try:
+        K.intersect_line_line(da, db)
+    except GeometryError:
+        return True
+    return False
 
 
 def _cos2(u: Vec3, w: Vec3) -> Fraction:

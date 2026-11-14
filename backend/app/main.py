@@ -917,7 +917,11 @@ MISSING_KEY_MSG = (
 #       cấu trúc (đỉnh + hai tia), chứng chỉ gắn mục tiêu, cos² gắn vào nhân, góc vẽ gắn vào nhân chứng; thêm mặt phẳng
 #       vuông góc, góc đường–mặt, góc hai đường (kể cả chéo nhau). Guard siết, envelope đổi; mọi row `136:route-d` phải
 #       MISS (`tests/test_cache_proof_soundness_invalidation.py`).
-CACHE_VERSION = "137"
+# 138 — 2026-11-14 (scene3d-causal-pedagogical-integrity): envelope phục vụ đổi — cờ `is_unused_auxiliary` tính lại với
+#       mục tiêu của đề (vật đề nêu, giao tuyến đề hỏi không còn bị gắn cờ), đại lượng/vectơ tự do (R đề cho) ra khỏi
+#       `visible_prerequisites`, góc 90° giữa hai mặt / hai đường chéo nhau có `angle_construction`; adapter siết ràng
+#       buộc loại góc vuông. Mọi row `137:route-d` phải MISS (`tests/test_cache_causal_pedagogical_invalidation.py`).
+CACHE_VERSION = "138"
 
 #: Hai chế độ hợp lệ của kiến trúc chính thức Hybrid `/4` do máy chủ sở hữu:
 #: - `live` (mặc định): trích xuất có cấu trúc qua Gemini (`typed-fact-next/2`) khi cấu hình `GEMINI_API_KEY`.

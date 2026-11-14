@@ -1,5 +1,15 @@
 # CODE_INDEX.md — Chỉ mục module + BỘ NHỚ KIẾN TRÚC
 
+## Scene3D causal / pedagogical integrity (2026-11-14)
+
+| Path | Owns | Locked by |
+|---|---|---|
+| `backend/app/ai/function_route.py` (`_tinh_lai_phu_tro_du_thua`) | Route D decides `is_unused_auxiliary` / `unused_auxiliary_ids` only after the engine's targets are known; every object a source-gated call constructs (trace entry citing a call of `r.calls`) is a sink — a source-stated point or an asked intersection line is never "unused" | `backend/tests/geometry/test_scene3d_causal_pedagogical_integrity.py` |
+| `backend/app/simulation/semantic_program/simulation_state.py` (`_unwrap_visible_sources`) | a non-visual carrier with no dependency (a given radius R, a given vector) is source data: kept in `computational_depends`, never in `visible_prerequisites` | same |
+| `backend/app/simulation/semantic_program/quantity_annotations.py` (`_vuong_khong_neo`, `gan_dung_goc`) | a 90° angle `_goc_vuong` cannot mark (two planes; skew lines) gets an `angle-construction/1` (plane_plane rays ⊥ the common line / skew parallel helper), kernel-checked like any other angle | same |
+| `backend/app/ai/adapter4_route.py` (`_RIGHT_ANGLE_DRAWING`) | a proven 90° goal (no witness) may be drawn only by its kind of right angle | same (fault injection) |
+| `backend/app/main.py` (`CACHE_VERSION` 138) | rows `137:route-d` MISS | `backend/tests/test_cache_causal_pedagogical_invalidation.py` |
+
 ## Proof soundness, generalized angle invariance (2026-11-14)
 
 | Path | Owns | Locked by |
@@ -7,7 +17,7 @@
 | `backend/app/simulation/geometry_functions/target_invariance.py` (`prove_angle_goal`, `verify_target_invariance_certificate(cert, calls, goal)`, `RULES`, `DERIVATION_RULES`, `GOAL_RULES`, `GOAL_FUNCTIONS`, `ANGLE_DOMAIN`, `MAX_DERIVED`) | `target-invariance-certificate/2` over one pyramid's vertices: structured angle witness `{vertex, ray_1, ray_2, domain}` (the /1 vertex-first triple read as ∠BSA); goals PLANE_ANGLE, PERP_PLANES, LINE_PLANE_ANGLE, LINE_PERP_PLANE_ANGLE, LINE_ANGLE, LINES_PERPENDICULAR (skew lines only when proven ⊥); TRIANGLE_SHAPE_FIXED at the witness vertex (regular, right at the vertex, or right elsewhere with a stated leg ratio); budget ⇒ `PROOF_SEARCH_BUDGET_EXCEEDED`. The verifier is independent (never calls the search), requires the asked goal and checks witness + cos² | `backend/tests/geometry/test_proof_soundness_angles.py` |
 | `backend/app/simulation/geometry_functions/engine.py` (`_thu_bat_bien_muc_tieu` TI-1…TI-6) | all three `ask_angle_*` goals; TI-6 binds the proven cos² to the kernel's exact answer on the representative | same |
 | `backend/app/ai/adapter4_route.py` (`_invariance_proof_bound`) | a `TARGET_INVARIANT_ILLUSTRATIVE` envelope must carry a verified `/2` certificate per goal whose cos² is the served answer and whose witness is the drawn angle (vertex id + arm ids); the envelope's `scene_configuration` must equal the engine's | same (consistent forgeries + fault injection) |
-| `backend/app/main.py` (`CACHE_VERSION` 137) | rows `136:route-d` MISS (served /1 certificates) | `backend/tests/test_cache_proof_soundness_invalidation.py` |
+| `backend/app/main.py` (`CACHE_VERSION` 137, superseded by 138) | rows `136:route-d` MISS (served /1 certificates) | `backend/tests/test_cache_proof_soundness_invalidation.py` |
 
 ## Target invariance, regular tetrahedron, GEO-BE-001 (2026-11-14)
 

@@ -91,6 +91,14 @@ def _angle_construction_bound(ac: Any, pts: dict[str, list[str]]) -> bool:
         and norm(perp.get("foot")) != norm(perp.get("from"))
 
 
+#: Which drawn right angle may stand for a proven 90° goal (angle-construction relation or `_goc_vuong` marker relation).
+_RIGHT_ANGLE_DRAWING = {
+    "ask_angle_plane_plane": frozenset({"plane_plane"}),
+    "ask_angle_line_plane": frozenset({"line_perpendicular_plane"}),
+    "ask_angle_lines": frozenset({"line_perpendicular_line", "line_line_skew"}),
+}
+
+
 def _invariance_proof_bound(cfg: Any, answer_exact: dict, objects: dict) -> bool:
     """A `TARGET_INVARIANT_ILLUSTRATIVE` scene is bound to its `target-invariance-certificate/2`: every proven goal is a
     served answer whose exact cos² IS the proven one, and the angle the scene draws for it is the proof's witness — the
@@ -107,7 +115,16 @@ def _invariance_proof_bound(cfg: Any, answer_exact: dict, objects: dict) -> bool
             return False
         if Fraction(str(answer_exact[gid].get("coef"))) != Fraction(str(concl.get("cos_sq"))):
             return False
-        w, ac = concl.get("witness"), (objects.get(f"kq_{gid}") or {}).get("angle_construction")
+        q = objects.get(f"kq_{gid}") or {}
+        w, ac = concl.get("witness"), q.get("angle_construction")
+        # A 90° conclusion has no witness triangle; what the scene draws for it must be that KIND of right angle
+        # (run `scene3d-causal-pedagogical-integrity`): two planes ⇒ plane_plane, line–plane ⇒ the ⊥-plane marker, lines ⇒
+        # a meeting-point marker or the skew parallel construction.
+        kind = (g.get("goal") or {}).get("function")
+        drawn = {ac.get("relation")} if ac else set()
+        drawn |= {((q.get("annotation") or {}).get("witness") or {}).get("relation")} - {None}
+        if w is None and drawn and not drawn <= _RIGHT_ANGLE_DRAWING.get(kind, frozenset()):
+            return False
         if w is not None and ac is not None and (
                 ac.get("vertex_id") != w.get("vertex")
                 or sorted(str(a.get("to_id")) for a in ac.get("arms") or ()) != sorted((w["ray_1"][1], w["ray_2"][1]))):

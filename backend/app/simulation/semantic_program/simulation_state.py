@@ -435,10 +435,11 @@ def _unwrap_visible_sources(
                 return
             seen_expand.add(sid)
             sub_deps = dependencies.get(sid) or []
-            if sub_deps:
-                for sub in sub_deps:
-                    _visit(sub)
-                return
+            for sub in sub_deps:
+                _visit(sub)
+            # Run `scene3d-causal-pedagogical-integrity`: a carrier with no dependency is SOURCE DATA (the radius R the
+            # problem gives, a given vector) — a number, never a drawn prerequisite. It stays in `computational_depends`.
+            return
         if sid not in out:
             out.append(sid)
 

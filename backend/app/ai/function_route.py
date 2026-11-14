@@ -88,6 +88,26 @@ def _dich_khoang_cach_diem_duong(canh: dict[str, Any], auxiliary: tuple[dict, ..
                 canh["formation"]["steps"][e["step_index"]]["learner_text"] = e["learner_text"]
 
 
+def _tinh_lai_phu_tro_du_thua(state: dict[str, Any], r: KetQuaTuyen) -> None:
+    """Run `scene3d-causal-pedagogical-integrity`: "unused auxiliary" is decided only once the source's goals are known.
+
+    `build_simulation_state` computes it with no targets (its third argument here is topology), so an object the SOURCE
+    states but no goal consumes ("Gọi M, N …" with only M used) and an asked intersection line ("Tìm giao tuyến …") were
+    flagged unused. The sinks are the engine's targets plus every object a source-gated call constructs (trace entries
+    citing a call of `r.calls`); only what the system added and nothing reaches is an unused auxiliary."""
+    from app.simulation.geometry_functions.engine import ir_name
+    from app.simulation.semantic_program.simulation_state import _tim_phu_tro_du_thua
+
+    objs = state["scene"]["objects"]
+    call_ids = {c["id"] for c in r.calls if isinstance(c, dict) and c.get("id")}
+    stated = {ir_name(t["object"]) for t in r.trace
+              if isinstance(t.get("object"), str) and set(t.get("calls") or ()) & call_ids}
+    for o in objs:
+        o.pop("is_unused_auxiliary", None)
+    state["unused_auxiliary_ids"] = _tim_phu_tro_du_thua(objs, state["dependencies"], r.exec_result.final_memory,
+                                                         sorted({*r.targets, *stated}))
+
+
 def _ke_diem_dung(canh: dict[str, Any], vai: dict[str, str]) -> None:
     """Lời kể bước dựng một điểm: nói PHÉP DỰNG từ producer + ký hiệu toán hạng, thay "Dựng M." (run
     `pedagogical-construction-sequencing`). Producer khác dùng vai do `display_names` đã phát; thiếu ký hiệu ⇒ giữ lời cũ.
@@ -546,6 +566,7 @@ def run_function_route(problem_text: str, plan: Any, auxiliary: tuple[dict, ...]
             # CONTRACT-BE-1: the third argument carries topology, not obligations, so `targets` came out empty and the
             # asked quantity read as `intermediate` while its event was FINAL_RESULT; the engine names what the source asks.
             state["targets"] = list(r.targets)
+            _tinh_lai_phu_tro_du_thua(state, r)
             # Presentation of the certified auxiliary binding; no new geometry or semantic authority.
             aux_ids = ({ir_name(p) for d in two_line for p in d['labels']}
                        | {ir_name(d['label']) for d in auxiliary if d.get('effect_binding') and d.get('fresh')}
