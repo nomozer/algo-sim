@@ -1,0 +1,20 @@
+{
+  "run_id": "semantic-failure-safe-image-segmentation",
+  "generated_at_utc": "2026-11-14T01:22:58.632176+00:00",
+  "publication_head": "BLOCKED_PENDING_OWNER_REVIEW",
+  "publication_head_scan": [
+    "SUMMARY scanned=31228 messages=0 violations=97 pending_exception=97 verdict=BLOCKED"
+  ],
+  "publication_range_scan_this_run": {
+    "range": "dcbedcb0d..HEAD at regression time",
+    "summary_lines": [
+      "SUMMARY scanned=48 messages=7 violations=0 pending_exception=0 verdict=PASS"
+    ],
+    "scan_verdict": "PASS"
+  },
+  "scan_vs_governance": "the range scan of this run PASSES (0 violations); governance stays blocked because history still holds pending Owner decisions (97 HEAD findings in 18 blobs, and historical blob 2bfce9c8)",
+  "publication_range_governance": "BLOCKED_PENDING_OWNER_REVIEW",
+  "full_release_gate": "BLOCKED_GATES_REMAIN",
+  "agent_actions": "none: no approval written, no exception or wildcard added, scan policy unchanged, no history rewritten, no receipt removed",
+  "pending_templates": "K-1/R-1/S-2 re-bound to the refrozen measured_system as metadata only (pending_template_refresh.json); owner_decision stays PENDING_OWNER_DECISION"
+}
