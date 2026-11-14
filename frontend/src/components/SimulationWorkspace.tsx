@@ -1,5 +1,6 @@
 import {
   Suspense,
+  useCallback,
   useEffect,
   useMemo,
   useRef,
@@ -124,6 +125,11 @@ import {
   saveLearnerRecoverySnapshot,
 } from "../state/learner-recovery-snapshot";
 import {
+  classifySimulationError,
+  ensureMutableSceneForAttachment,
+  shouldOmitDockConstructionSteps,
+} from "../simulations/domains/geometry/simulation-error-classifier";
+import {
   cauQuanSat,
   hybridTaiBuoc,
   hybridViewCua,
@@ -160,10 +166,8 @@ const EMPTY_SAFE_SCENE: Scene3D = Object.freeze({
 
 export function AxoViewerRecoverySurface({
   state,
-  onSecondaryRetry,
 }: {
   state: ViewerRecoveryState;
-  onSecondaryRetry?: () => void;
 }) {
   const isRecovering = state.phase === "recovering";
   const title = isRecovering ? "Đang khôi phục mô phỏng" : "Khung 3D tạm gián đoạn";
@@ -174,9 +178,7 @@ export function AxoViewerRecoverySurface({
       : "Không thể tự khôi phục khung vẽ 3D sau các lần thử an toàn; em vẫn đọc được đề bài và các bước dựng bên cạnh.";
   const statusText = isRecovering
     ? `Đang khôi phục ngữ cảnh dựng hình (lần ${Math.max(1, state.attempt)}/${Math.max(1, state.maxAttempts)})…`
-    : onSecondaryRetry
-      ? "Tự động khôi phục đã tạm dừng; em có thể thử khôi phục thủ công khi sẵn sàng."
-      : "Đã dừng tự động thử lại để tránh lặp lỗi.";
+    : "Đã dừng tự động thử lại để tránh lặp lỗi.";
 
   return (
     <div
@@ -216,17 +218,6 @@ export function AxoViewerRecoverySurface({
       <h3 className="axo-viewer-recovery-title">{title}</h3>
       <p className="axo-viewer-recovery-desc">{detail}</p>
       <p className="axo-viewer-recovery-status">{statusText}</p>
-      {!isRecovering && onSecondaryRetry ? (
-        <div className="axo-viewer-recovery-actions">
-          <button
-            type="button"
-            className="btn-utility axo-viewer-recovery-retry"
-            onClick={onSecondaryRetry}
-          >
-            Khôi phục khung 3D
-          </button>
-        </div>
-      ) : null}
     </div>
   );
 }
@@ -311,11 +302,15 @@ export function AxoWorkspaceV62({
       };
     }
     try {
-      attachHybridViewToScene(sceneKhung, hybrid);
-      attachProblemContextToScene(sceneKhung, { title: tieuDe, statement: de });
+      const workingScene = ensureMutableSceneForAttachment(sceneKhung);
+      if (workingScene !== sceneKhung) {
+        registerExactSceneOrigin(workingScene, sceneKhung);
+      }
+      attachHybridViewToScene(workingScene, hybrid);
+      attachProblemContextToScene(workingScene, { title: tieuDe, statement: de });
 
-      const mv = verifySceneMathematicalConsistency(sceneKhung);
-      const plan = buildPedagogicalConstructionPlan(withSubEntities(sceneKhung));
+      const mv = verifySceneMathematicalConsistency(workingScene);
+      const plan = buildPedagogicalConstructionPlan(withSubEntities(workingScene));
       const disp = registerExactSceneOrigin(veKhongGian(plan.scene), plan.scene);
       const semContract = getSemanticConstructionContract(disp);
       return {
@@ -538,7 +533,30 @@ export function AxoWorkspaceV62({
   webglLifecycleRef.current = webglLifecycle;
   const [webglStageAttempt, setWebglStageAttempt] = useState(0);
   const [viewerMountGen, setViewerMountGen] = useState(0);
-  const hasInAppNavigation = useAppStore((s) => s.hasInAppNavigation);
+  const simulationError = useMemo(
+    () =>
+      classifySimulationError({
+        invalidSceneReason,
+        unavailableOverride: Boolean(unavailableOverride),
+        mathValid: mathVerification.valid,
+        contradictionId:
+          (mathVerification.contradictions[0] as { id?: string; code?: string } | undefined)?.id ??
+          (mathVerification.contradictions[0] as { code?: string } | undefined)?.code ??
+          null,
+        viewerBoundaryCrashed,
+        stageWebglFailed,
+        webglPhase: webglLifecycle.phase,
+        webglAttempt: webglLifecycle.attempt,
+      }),
+    [
+      invalidSceneReason,
+      unavailableOverride,
+      mathVerification,
+      viewerBoundaryCrashed,
+      stageWebglFailed,
+      webglLifecycle,
+    ],
+  );
   const isInitialSceneMountRef = useRef(true);
   const isInitialResetSyncRef = useRef(true);
 
@@ -1056,6 +1074,22 @@ export function AxoWorkspaceV62({
     setDangPhat(false);
     setStep((s) => nextPedagogicalAnchor(s));
   };
+
+  const handleWebglLifecycleChange = useCallback(
+    (lc: { phase: WebglLifecyclePhase; attempt: number; maxAttempts: number }) => {
+      if (lc.phase === "recovering") {
+        setSavedCameraPose((prev) => latestCameraPoseRef.current ?? prev);
+      }
+      setWebglLifecycle((prev) =>
+        prev.phase === lc.phase &&
+        prev.attempt === lc.attempt &&
+        prev.maxAttempts === lc.maxAttempts
+          ? prev
+          : lc,
+      );
+    },
+    [],
+  );
 
   const handleResetView = () => {
     setTt((s) => showAll(clearIsolate(select(s, null))));
@@ -2969,42 +3003,16 @@ export function AxoWorkspaceV62({
             </div>
 
             {/* SECTION B: CÁC BƯỚC DỰNG HÌNH */}
+            {!shouldOmitDockConstructionSteps(simulationError) && (
             <div className="dock-section">
               <div className="dock-sec-head">
                 <span className="dock-sec-title" id="dock-steps-heading">
-                  {invalidSceneReason !== null
-                    ? "CÁC BƯỚC DỰNG HÌNH"
-                    : mathVerification.valid
-                      ? "CÁC BƯỚC DỰNG HÌNH"
-                      : "KIỂM CHỨNG TOÁN HỌC"}
+                  CÁC BƯỚC DỰNG HÌNH
                 </span>
                 <span className="dock-steps-progress-tag" id="dock-steps-counter">
-                  {invalidSceneReason !== null
-                    ? "Tạm gián đoạn"
-                    : mathVerification.valid
-                      ? `Bước ${buocHinh + 1}/${tong}`
-                      : "Mâu thuẫn dữ kiện"}
+                  {`Bước ${buocHinh + 1}/${tong}`}
                 </span>
               </div>
-              {invalidSceneReason !== null ? (
-                <ul
-                  ref={stepsListRef}
-                  className="steps-list"
-                  id="dock-steps-ul"
-                  aria-label="Các bước dựng hình"
-                  data-stage-fault="invalid_scene_data"
-                >
-                  <li className="step-row">
-                    <span className="step-num">—</span>
-                    <div className="step-content">
-                      <div className="step-title">Chưa thể hiển thị trình tự dựng hình</div>
-                      <div className="step-detail-sub">
-                        Dữ liệu mô hình 3D của bản ghi này không hợp lệ; em vẫn có thể đối chiếu đề bài phía trên hoặc dựng lại trên Trang chủ.
-                      </div>
-                    </div>
-                  </li>
-                </ul>
-              ) : mathVerification.valid ? (
                 <>
                   <ul
                     ref={stepsListRef}
@@ -3121,24 +3129,8 @@ export function AxoWorkspaceV62({
                     </div>
                   )}
                 </>
-              ) : (
-                <ul className="steps-list" id="dock-steps-ul">
-                  <li className="step-row ws-math-contradiction-note">
-                    <span className="step-num">—</span>
-                    <div className="step-content">
-                      <div className="step-title">
-                        <span>Tạm dừng dựng hình</span>
-                        <span className="step-kind-badge is-auxiliary">Mâu thuẫn dữ kiện</span>
-                      </div>
-                      <div className="step-detail-sub">
-                        {mathVerification.contradictions[0]?.explanation ??
-                          "Không thể tạo trình tự dựng hình do dữ kiện đầu vào mâu thuẫn toán học."}
-                      </div>
-                    </div>
-                  </li>
-                </ul>
-              )}
             </div>
+            )}
 
             {/* SECTION C: ĐỐI TƯỢNG TRONG HÌNH (chọn nhanh đồng bộ 2 chiều với Scene3D) */}
             {invalidSceneReason === null && mathVerification.valid && entityGroups.all.length > 0 && (
@@ -3783,10 +3775,6 @@ export function SimulationWorkspace() {
       <AxoErrorExperience
         kind="unsupported_simulation"
         variant="refusal"
-        hasBackHistory={hasInAppNavigation}
-        onBack={() => useAppStore.getState().escapeFromError()}
-        onGoHome={() => useAppStore.getState().goHome()}
-        onOpenLibrary={() => useAppStore.getState().openLibrary()}
       >
         <UnsupportedNotice unsupported={unsupported} />
       </AxoErrorExperience>

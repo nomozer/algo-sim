@@ -254,6 +254,7 @@ describe("AXO Master Continuation §4–§6: Root-Cause Runtime Recovery, Fault 
       });
       try {
         const page = await browser.newPage({ viewport: { width: 1280, height: 800 } });
+        await page.clock.install();
         await page.setContent("<!doctype html><html><body></body></html>");
         await page.addScriptTag({ content: bundled.outputFiles[0]!.text });
 
@@ -268,6 +269,7 @@ describe("AXO Master Continuation §4–§6: Root-Cause Runtime Recovery, Fault 
 
         const afterCrash = await page.evaluate(() => ({
           hasViewerFault: Boolean(document.querySelector('[data-viewer-fault="render_crash"]')),
+          phase: document.querySelector("[data-viewer-recovery-phase]")?.getAttribute("data-viewer-recovery-phase"),
           hasNotFound: Boolean(document.querySelector('[data-error-kind="not_found"]')),
           leaksStack: (document.body.innerText || "").includes("Controlled crash"),
           hasStudyDock: Boolean(document.getElementById("ws-dock")),
@@ -279,6 +281,7 @@ describe("AXO Master Continuation §4–§6: Root-Cause Runtime Recovery, Fault 
         }));
         expect(afterCrash).toEqual({
           hasViewerFault: true,
+          phase: "recovering",
           hasNotFound: false,
           leaksStack: false,
           hasStudyDock: true,
@@ -286,23 +289,23 @@ describe("AXO Master Continuation §4–§6: Root-Cause Runtime Recovery, Fault 
           hasStepsList: true,
           hasPlaybackBar: false,
           hasFloatingToolbar: false,
-          hasRetryBtn: true,
+          hasRetryBtn: false,
         });
 
-        // 2) Disarm fault and click real `.axo-viewer-recovery-retry` button -> runs ErrorBoundary.setState + onRecover, restoring viewer & stage controls
+        // 2) Disarm fault and advance bounded auto-recovery timer -> ErrorBoundary recovers automatically without manual button
         await page.evaluate(() => {
           (window as unknown as { __armViewerCrash: boolean }).__armViewerCrash = false;
         });
-        await page.click(".axo-viewer-recovery-retry");
+        await page.clock.fastForward(250);
         await page.waitForSelector("#playback-pa-box", { timeout: 3000 });
-        const afterManualRetry = await page.evaluate(() => ({
+        const afterAutoRetry = await page.evaluate(() => ({
           hasViewerFault: Boolean(document.querySelector('[data-viewer-fault="render_crash"]')),
           hasPlaybackBar: Boolean(document.getElementById("playback-pa-box")),
           hasFloatingToolbar: Boolean(document.getElementById("floating-toolbar-3d")),
           hasStudyDock: Boolean(document.getElementById("ws-dock")),
           canvasCount: document.querySelectorAll(".geo3d-canvas canvas").length,
         }));
-        expect(afterManualRetry).toEqual({
+        expect(afterAutoRetry).toEqual({
           hasViewerFault: false,
           hasPlaybackBar: true,
           hasFloatingToolbar: true,
@@ -310,7 +313,7 @@ describe("AXO Master Continuation §4–§6: Root-Cause Runtime Recovery, Fault 
           canvasCount: 1,
         });
 
-        // 3) Crash again on problem key B, then switch to problem key C WITH THE EXACT SAME `SHARED_SCENE` REFERENCE (`MINOR-R2-2`)
+        // 3) Crash persistently on problem key B (exceeding 2 retries -> terminal "failed"), then switch to key C WITH IDENTICAL `SHARED_SCENE` REF (`MINOR-R2-2`)
         await page.evaluate(() => {
           const w = window as unknown as {
             __resetHarnessRoot: () => void;
@@ -319,8 +322,10 @@ describe("AXO Master Continuation §4–§6: Root-Cause Runtime Recovery, Fault 
           w.__resetHarnessRoot();
           w.__mountWorkspace("sample:thiet-dien-chop:b", true);
         });
-        await page.waitForSelector('[data-viewer-fault="render_crash"]', { timeout: 3000 });
+        await page.clock.fastForward(600);
+        await page.waitForSelector('[data-viewer-recovery-phase="failed"]', { timeout: 3000 });
         expect(await page.locator("#playback-pa-box").count()).toBe(0);
+        expect(await page.locator(".axo-viewer-recovery-retry").count()).toBe(0);
 
         await page.evaluate(() => {
           (window as unknown as { __mountWorkspace: (k: string, t: boolean) => void }).__mountWorkspace(
@@ -480,20 +485,23 @@ describe("AXO Master Continuation §4–§6: Root-Cause Runtime Recovery, Fault 
     expect(innerHtml).toContain('id="stage-3d-box"');
     expect(innerHtml).toContain('id="ws-scene3d-unavailable-card"');
     expect(innerHtml).toContain('data-stage-fault="invalid_scene_data"');
+    expect(innerHtml).toContain('data-simulation-error-code="SCENE_INVALID_SCHEMA"');
     expect(innerHtml).toContain('id="ws-dock"');
     expect(innerHtml).toContain('id="dock-prob-statement"');
     expect(innerHtml).toContain("SA = 4a");
-    expect(innerHtml).toContain('id="dock-steps-ul"');
-    expect(innerHtml).toContain("Tạm gián đoạn");
+    expect(innerHtml).not.toContain('id="dock-steps-ul"');
+    expect(innerHtml).not.toContain("Tạm gián đoạn");
+    expect(innerHtml).not.toContain("Chưa thể hiển thị trình tự dựng hình");
     expect(innerHtml).not.toContain("Bước 1/1");
     expect(innerHtml).not.toContain('id="playback-pa-box"');
     expect(innerHtml).not.toContain('id="floating-toolbar-3d"');
     expect(innerHtml).not.toContain("Chưa đủ kết quả mục tiêu");
     expect(innerHtml).not.toContain('data-error-action="secondary-retry"');
+    expect(innerHtml).not.toContain('class="axo-error-actions"');
     expect(innerHtml).not.toContain("<canvas");
 
     // Outer-malformed geometry envelope WITH empty problem text AND rendered inside full `<App />` shell:
-    // - Keeps `#ws-dock`, `#dock-prob-statement`, and `#dock-steps-ul`
+    // - Keeps `#ws-dock` and `#dock-prob-statement`, omits fake `#dock-steps-ul`
     // - Does NOT leak the 2D `<footer class="panel-controls">` shell controls!
     useAppStore.setState({
       view: "workspace",
@@ -518,7 +526,7 @@ describe("AXO Master Continuation §4–§6: Root-Cause Runtime Recovery, Fault 
     expect(outerWsHtml).toContain('id="ws-scene3d-unavailable-card"');
     expect(outerWsHtml).toContain('id="ws-dock"');
     expect(outerWsHtml).toContain('id="dock-prob-statement"');
-    expect(outerWsHtml).toContain('id="dock-steps-ul"');
+    expect(outerWsHtml).not.toContain('id="dock-steps-ul"');
     expect(outerWsHtml).not.toContain('id="playback-pa-box"');
     expect(outerWsHtml).not.toContain('id="floating-toolbar-3d"');
 
@@ -527,7 +535,7 @@ describe("AXO Master Continuation §4–§6: Root-Cause Runtime Recovery, Fault 
     expect(fullAppHtml).not.toContain('class="panel-controls"');
 
     // Mathematically contradictory Scene3D (`!mathVerification.valid`, `MINOR-R2-3`):
-    // - Keeps `#ws-dock`, `#dock-prob-statement`, `<ul id="dock-steps-ul">`, and `#dock-trigger-badge` `"—"`
+    // - Keeps `#ws-dock`, `#dock-prob-statement`, and `#dock-trigger-badge` `"—"`, omits fake `#dock-steps-ul` / `"Mâu thuẫn dữ kiện"` placeholder
     // - Suppresses `#playback-pa-box` and `#floating-toolbar-3d`
     const chopSample = publicCatalog().find((s) => s.id === "thiet-dien-chop") ?? publicCatalog()[0]!;
     const contradictoryScene = structuredClone(
@@ -548,7 +556,8 @@ describe("AXO Master Continuation §4–§6: Root-Cause Runtime Recovery, Fault 
     expect(contradictionHtml).toContain("data-math-contradiction");
     expect(contradictionHtml).toContain('id="ws-dock"');
     expect(contradictionHtml).toContain('id="dock-prob-statement"');
-    expect(contradictionHtml).toContain('id="dock-steps-ul"');
+    expect(contradictionHtml).not.toContain('id="dock-steps-ul"');
+    expect(contradictionHtml).not.toContain("Mâu thuẫn dữ kiện");
     expect(contradictionHtml).toContain('<span class="dock-trigger-badge" id="dock-trigger-badge">—</span>');
     expect(contradictionHtml).not.toContain('id="playback-pa-box"');
     expect(contradictionHtml).not.toContain('id="floating-toolbar-3d"');

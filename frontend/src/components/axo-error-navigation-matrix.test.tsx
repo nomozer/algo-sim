@@ -87,8 +87,9 @@ describe("AXO Master §9: Error State Design Quality, Strict Classification & 10
         secondaryRetryLabel="Khôi phục khung 3D"
       />,
     );
-    expect(htmlWebglWithRetry).toContain('data-error-action="secondary-retry"');
-    expect(htmlWebglWithRetry).toContain("Khôi phục khung 3D");
+    expect(htmlWebglWithRetry).not.toContain('data-error-action="secondary-retry"');
+    expect(htmlWebglWithRetry).not.toContain("Khôi phục khung 3D");
+    expect(htmlWebglWithRetry).not.toContain('class="axo-error-actions"');
     expect(htmlWebglWithRetry).not.toMatch(/\b404\b/u);
   });
 

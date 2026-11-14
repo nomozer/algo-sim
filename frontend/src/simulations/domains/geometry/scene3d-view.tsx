@@ -4699,6 +4699,15 @@ export function Scene3DWorkspace({
   xrayRef.current = xray;
   const onCameraPoseChangeRef = useRef(onCameraPoseChange);
   onCameraPoseChangeRef.current = onCameraPoseChange;
+  const onWebglFailureRef = useRef(onWebglFailure);
+  onWebglFailureRef.current = onWebglFailure;
+  const onWebglLifecycleChangeRef = useRef(onWebglLifecycleChange);
+  onWebglLifecycleChangeRef.current = onWebglLifecycleChange;
+  const lastEmittedLifecycleRef = useRef<{
+    phase: WebglLifecyclePhase;
+    attempt: number;
+    maxAttempts: number;
+  } | null>(null);
   const onLocateFeedbackRef = useRef(onLocateFeedback);
   onLocateFeedbackRef.current = onLocateFeedback;
   const locateCameraRef = useRef<((req: { objectId: string; nonce: number }) => void) | null>(null);
@@ -4733,29 +4742,57 @@ export function Scene3DWorkspace({
   const [webglPhase, setWebglPhase] = useState<WebglLifecyclePhase>("healthy");
   const [webglEpoch, setWebglEpoch] = useState(0);
   const webglRestoreCountRef = useRef(0);
+  const webglInitRetryCountRef = useRef(0);
   const webglTerminalLatchedRef = useRef(false);
+  const recoveringSceneRef = useRef<Scene3D | null>(null);
   const prevSceneForRecoveryRef = useRef(scene);
   const webglFailed = webglPhase === "failed";
   useEffect(() => {
-    if (prevSceneForRecoveryRef.current === scene) return;
+    const sceneChanged = prevSceneForRecoveryRef.current !== scene;
+    const staleRecoveringScene =
+      webglPhase === "recovering" &&
+      recoveringSceneRef.current !== null &&
+      recoveringSceneRef.current !== scene;
+    if (!sceneChanged && !staleRecoveringScene) return;
     prevSceneForRecoveryRef.current = scene;
     webglRestoreCountRef.current = 0;
-    if (webglPhase !== "healthy" || webglTerminalLatchedRef.current) {
+    webglInitRetryCountRef.current = 0;
+    if (
+      webglPhase !== "healthy" ||
+      webglTerminalLatchedRef.current ||
+      (recoveringSceneRef.current !== null && recoveringSceneRef.current !== scene)
+    ) {
+      recoveringSceneRef.current = null;
       webglTerminalLatchedRef.current = false;
       setWebglPhase("healthy");
       setWebglEpoch((n) => n + 1);
     }
   }, [scene, webglPhase]);
   useEffect(() => {
-    onWebglFailure?.(webglFailed);
-  }, [webglFailed, onWebglFailure]);
+    onWebglFailureRef.current?.(webglFailed);
+  }, [webglFailed]);
   useEffect(() => {
-    onWebglLifecycleChange?.({
+    const attempt =
+      webglPhase === "recovering"
+        ? Math.max(webglRestoreCountRef.current, webglInitRetryCountRef.current)
+        : webglRestoreCountRef.current;
+    const prev = lastEmittedLifecycleRef.current;
+    if (
+      prev &&
+      prev.phase === webglPhase &&
+      prev.attempt === attempt &&
+      prev.maxAttempts === MAX_WEBGL_AUTO_RESTORES
+    ) {
+      return;
+    }
+    const next = {
       phase: webglPhase,
-      attempt: webglRestoreCountRef.current,
+      attempt,
       maxAttempts: MAX_WEBGL_AUTO_RESTORES,
-    });
-  }, [webglPhase, onWebglLifecycleChange]);
+    };
+    lastEmittedLifecycleRef.current = next;
+    onWebglLifecycleChangeRef.current?.(next);
+  }, [webglPhase, webglEpoch]);
   const [hoveredObject, setHoveredObject] = useState<string | null>(null);
   const hoverFeedbackRef = useRef<{ id: string | null; edges: ReadonlySet<string> }>({ id: null, edges: new Set() });
   const [touchTooltipId, setTouchTooltipId] = useState<string | null>(null);
@@ -5145,9 +5182,31 @@ export function Scene3DWorkspace({
     if (!container) return;
     const acquired = acquireSceneWebGLRenderer();
     if (!acquired) {
+      const hidden = typeof document !== "undefined" && document.visibilityState === "hidden";
+      if (webglInitRetryCountRef.current < MAX_WEBGL_AUTO_RESTORES && !hidden) {
+        webglInitRetryCountRef.current += 1;
+        const retryScene = sceneRef.current;
+        recoveringSceneRef.current = retryScene;
+        setWebglPhase("recovering");
+        const retryTimer = setTimeout(() => {
+          const hiddenNow = typeof document !== "undefined" && document.visibilityState === "hidden";
+          if (!webglTerminalLatchedRef.current && !hiddenNow && sceneRef.current === retryScene) {
+            setWebglEpoch((n) => n + 1);
+          }
+        }, 220);
+        return () => {
+          clearTimeout(retryTimer);
+        };
+      }
+      recoveringSceneRef.current = null;
       webglTerminalLatchedRef.current = true;
       setWebglPhase("failed");
       return;
+    }
+    recoveringSceneRef.current = null;
+    if (webglInitRetryCountRef.current > 0) {
+      webglInitRetryCountRef.current = 0;
+      setWebglPhase("healthy");
     }
     const { renderer, pooled: isPooledRenderer } = acquired;
     let contextLostObserved = false;
@@ -5358,16 +5417,19 @@ export function Scene3DWorkspace({
         || (isHidden && webglRestoreCountRef.current > 0)
       ) {
         awaitingContextRestore = false;
+        recoveringSceneRef.current = null;
         webglTerminalLatchedRef.current = true;
         setWebglPhase("failed");
         return;
       }
       awaitingContextRestore = true;
+      recoveringSceneRef.current = sceneRef.current;
       setWebglPhase("recovering");
       armRestoreTimeout();
     };
     const xuLyKhoiPhucNguCanhWebgl = () => {
       awaitingContextRestore = false;
+      recoveringSceneRef.current = null;
       if (restoreTimeoutId !== null) {
         clearTimeout(restoreTimeoutId);
         restoreTimeoutId = null;
