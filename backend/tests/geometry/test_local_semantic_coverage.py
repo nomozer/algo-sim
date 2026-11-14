@@ -104,11 +104,21 @@ def test_degenerate_repeated_or_scaled_equalities_are_not_congruences(bad):
 
 
 def test_scale_free_equality_problem_refuses_safely_instead_of_inventing_a_length():
-    # tan of the angle is SA/AB = 1, but no absolute length or BC is given: the kernel must refuse, not guess
+    # Never guess a length. Run `target-invariant-regular-solid-semantics`: this figure (no length, BC/AB open) is now
+    # served ONLY under a proven, independently verified target-invariance certificate (∠ = ∠SBA of the right isosceles
+    # SAB), on an illustrative figure whose lengths are never source data; without the deciding fact SA = AB there is
+    # no proof and the kernel still refuses.
     status, _answers, reason = _solve(
-        "Cho hình chóp S.ABC có đáy là tam giác vuông tại B, SA vuông góc với đáy và SA = AB. "
+        "Cho hình chóp S.ABC có đáy là tam giác vuông tại B và SA vuông góc với đáy. "
         "Tính góc giữa hai mặt phẳng (SBC) và (ABC).")
     assert status == "REFUSED" and reason == "MISSING_DIMENSION"
+    from app.ai.adaptive_input_router import route_text_input
+    rd = route_text_input("Cho hình chóp S.ABC có đáy là tam giác vuông tại B, SA vuông góc với đáy và SA = AB. "
+                          "Tính góc giữa hai mặt phẳng (SBC) và (ABC).", allow_live_ai=False).response["route_d"]
+    cfg = rd["scene_configuration"]
+    assert rd["status"] == "SERVED" and cfg["kind"] == "TARGET_INVARIANT_ILLUSTRATIVE" and cfg["unique"] is False
+    assert cfg["source_length_supplied"] is False
+    assert cfg["invariance_certificate"]["certification_level"] == "MATHEMATICALLY_PROVEN"
 
 
 # ── Volume goal wording ─────────────────────────────────────────────────────────────────────────────────────────────
