@@ -72,6 +72,25 @@ def run_typed_fact_next_v2_route(raw: Any) -> KetQuaTuyen:
 SOURCE_GOAL_COMPLETION_VERSION = "source-goal-completion/1"
 
 
+def _angle_construction_bound(ac: Any, pts: dict[str, list[str]]) -> bool:
+    """`angle-construction/1` names only verified points: a named vertex / arm end has that point's coordinates, and the
+    perpendicular marker runs between two DISTINCT drawn points of the angle (vertex or arm ends)."""
+    if not isinstance(ac, dict) or not isinstance(ac.get("arms"), list) or not isinstance(ac.get("vertex"), list):
+        return False
+    norm = lambda v: [str(x) for x in v] if isinstance(v, list) else None  # noqa: E731
+    vertex, ends = norm(ac["vertex"]), [norm(a.get("to")) if isinstance(a, dict) else None for a in ac["arms"]]
+    if None in ends or (ac.get("vertex_id") in pts and pts[ac["vertex_id"]] != vertex):
+        return False
+    if any(isinstance(a, dict) and a.get("to_id") in pts and pts[a["to_id"]] != norm(a.get("to")) for a in ac["arms"]):
+        return False
+    perp = ac.get("perpendicular")
+    if perp is None:
+        return True
+    drawn = [vertex, *ends]
+    return isinstance(perp, dict) and norm(perp.get("foot")) in drawn and norm(perp.get("from")) in drawn \
+        and norm(perp.get("foot")) != norm(perp.get("from"))
+
+
 def _source_goal_completion(r: KetQuaTuyen, source: str) -> dict[str, Any] | None:
     """`source-goal-completion/1` when an `ask_angle_*` call answers an angle the source asks a trigonometric value OF
     (read by the gate's own `ham_luong_giac_hoi`), else None — every other served result keeps its exact shape."""
@@ -283,6 +302,14 @@ def build_adapter4_response(result: KetQuaTuyen, problem_text: str) -> dict[str,
                 point = result.exec_result.final_memory[obj["id"]]
                 if obj["xyz"] != [str(point.x), str(point.y), str(point.z)]:
                     raise PreviewInvalid("PREVIEW_RESULT_INVALID")
+        # Run `compositional-semantics-simulation-goals` (mutation "wrong projection foot" survived): the drawn angle is
+        # bound to the verified points — its vertex and arm ends ARE the kernel points they name, and its right-angle
+        # marker (perpendicular from → foot) joins two of those drawn points, never a free coordinate.
+        pts = {o["id"]: [str(x) for x in o["xyz"]] for o in objects.values() if o["type"] == "point3"}
+        for obj in objects.values():
+            if obj["type"] == "quantity" and obj.get("angle_construction") is not None \
+                    and not _angle_construction_bound(obj["angle_construction"], pts):
+                raise PreviewInvalid("RESULT_BINDING_UNVERIFIED")
         if route.get("sections") != _phong_bi(result)["sections"]:
             raise PreviewInvalid("PREVIEW_RESULT_INVALID")
         _validate_sections(route["sections"], objects, result)

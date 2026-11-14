@@ -137,6 +137,23 @@ def test_the_completion_record_is_bound_to_the_verified_result():
     assert build_adapter4_response(dropped, text)["route_d"]["status"] == "REFUSED"
 
 
+@pytest.mark.parametrize("mutate", [
+    lambda ac: ac["perpendicular"].__setitem__("foot", ["1/7", "0", "0"]),               # wrong projection foot
+    lambda ac: ac["perpendicular"].__setitem__("foot", list(ac["perpendicular"]["from"])),  # degenerate marker
+    lambda ac: ac["arms"][0].__setitem__("to", ["9", "9", "9"]),                          # arm end is not its point
+    lambda ac: ac.__setitem__("vertex", ["0", "1", "0"]),                                 # vertex is not its point
+])
+def test_a_drawn_angle_is_bound_to_the_verified_points(mutate):
+    from app.ai.adapter4_route import build_adapter4_response, run_typed_fact_next_v2_route
+
+    text = f"{B3}. Tính cosin của góc giữa SB và mặt phẳng (ABC)."
+    r = run_typed_fact_next_v2_route(parse_geometry_problem_locally(text, use_cache=False).payload)
+    assert build_adapter4_response(r, text)["route_d"]["status"] == "SERVED"
+    m = copy.deepcopy(r)
+    mutate(next(o for o in m.scene3d["objects"] if o.get("angle_construction"))["angle_construction"])
+    assert build_adapter4_response(m, text)["route_d"]["status"] == "REFUSED"
+
+
 def test_gate_reads_the_function_only_before_an_angle_phrase():
     from app.simulation.geometry_functions.registry import ham_luong_giac_hoi
     de = f"{B3}. Tính cosin của góc giữa SB và mặt phẳng (ABC)."
