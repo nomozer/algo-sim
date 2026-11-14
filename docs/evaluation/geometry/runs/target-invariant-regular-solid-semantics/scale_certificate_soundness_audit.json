@@ -1,0 +1,22 @@
+{
+  "run_id": "target-invariant-regular-solid-semantics",
+  "generated_at_utc": "2026-11-14T07:24:28.722429+00:00",
+  "product_commit": "bdc34a89e32c77fd73bff7b38b72d3a3496657e1",
+  "measured_system": "2a18f935e4c29462b0495ff6b0fec46df88e215e0bedcaba84668ec202af62d1",
+  "cache_version": "136",
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "HYBRID_ROUTE_MODE": "local-first",
+    "live_ai_calls": 0
+  },
+  "head": "a56d9aa7d3f5b8bc1bb0368d7b4fc7abd1084d7f",
+  "what_PO3_proves": "ENGINE_DOMAIN uniqueness: the engine placed every object by a forced rule from the calls and raised MISSING_DIMENSION / a sign-branch refusal wherever something was open; it is not a free-standing Euclidean uniqueness proof",
+  "gap_found": "the normalisation returned BEFORE the mirror search (dung_tu_loi_goi), so with ≥ 2 independent height anchors an unexplored sign branch could be certified",
+  "fix": "refuse when the unit build has ≥ 2 anchors; certificate states certification_level ENGINE_DOMAIN_CERTIFIED and its scope",
+  "PO4": "witnesses at units 2 and 5 are regression witnesses, never the proof",
+  "previously_served_cases_affected": "none on the measured corpora (all normalised scenes have one anchor)",
+  "classification_used": [
+    "MATHEMATICALLY_PROVEN (target-invariance synthetic proofs)",
+    "ENGINE_DOMAIN_CERTIFIED (similarity normalisation, representatives)"
+  ]
+}

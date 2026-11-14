@@ -1,5 +1,10 @@
 # OPEN_ISSUES.md — Danh mục các vấn đề kỹ thuật đang mở
 
+**Target invariance / regular tetrahedron update 2026-11-14:** [Report](evaluation/geometry/runs/target-invariant-regular-solid-semantics/AXO_TARGET_INVARIANT_REGULAR_SOLID_REPORT.md).
+- **Resolved:** GEO-BE-001 latent in this worktree; normalisation certifying an unexplored sign branch (≥ 2 anchors); r520 (shape freedom, plane angle proven); "tứ diện đều" without side (r559).
+- **Still open:** proof rules only for plane angles (no line–plane / line–line / ratio under shape freedom, no perpendicular-planes rule); triangle shape fixed only by right angle + equal legs or regularity; similarity normalisation is ENGINE_DOMAIN only; oriented (signed dihedral) goals under shape freedom; other phrasings of "tứ diện đều".
+- **Unmeasured:** independent unseen data, H-1, students.
+
 **Cache safety / similarity scale update 2026-11-14:** [Report](evaluation/geometry/runs/certified-scale-cache-safety/AXO_CERTIFIED_SCALE_CACHE_SAFETY_REPORT.md).
 - **Resolved:** stale SERVED rows replayed past tightened guards (cache 135); decimal comma values; the E2E distance oracle; figures fixed up to similarity with angle/ratio goals (certified); GEO-BE-001 in the axo-geometry-library worktree.
 - **Still open:** cache has no revalidation on read — every future guard tightening needs a policy bump; shape-invariance proofs (r520); "tứ diện đều" without side carries no every-edge-equal fact (r559); base shape stated last refused by the gate (strict xfail); GEO-BE-001 not ported to this worktree's identical `display_names.py`; axo-geometry-library candidate freeze blocked by another session's dirty tree.

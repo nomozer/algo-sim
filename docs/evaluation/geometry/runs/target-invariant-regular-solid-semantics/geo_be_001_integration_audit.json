@@ -1,0 +1,28 @@
+{
+  "run_id": "target-invariant-regular-solid-semantics",
+  "generated_at_utc": "2026-11-14T07:24:28.722429+00:00",
+  "product_commit": "bdc34a89e32c77fd73bff7b38b72d3a3496657e1",
+  "measured_system": "2a18f935e4c29462b0495ff6b0fec46df88e215e0bedcaba84668ec202af62d1",
+  "cache_version": "136",
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "HYBRID_ROUTE_MODE": "local-first",
+    "live_ai_calls": 0
+  },
+  "head": "a56d9aa7d3f5b8bc1bb0368d7b4fc7abd1084d7f",
+  "source_commit": "5a229507b (axo-geometry-library worktree)",
+  "integrated_in": "8f7f00a2c",
+  "method": "only the display_names.py hunk (git show 5a229507b -- display_names.py | git apply); no cherry-pick of the commit",
+  "base_blob_check": {
+    "B_before": "1c25e32c7b043870e52dbdfb70ae0ae71265f992",
+    "A_before": "1c25e32c7b043870e52dbdfb70ae0ae71265f992",
+    "B_after": "8d71e28c25733f935199ff78a10d51c38f9309fd",
+    "A_after": "8d71e28c25733f935199ff78a10d51c38f9309fd"
+  },
+  "not_integrated": [
+    "advanced-geometry-samples.json (does not exist in this worktree — not created)",
+    "A's generator test (needs A's scripts)"
+  ],
+  "sanitizer": "replaceRawSceneIdTokens untouched",
+  "verdict": "PASS"
+}

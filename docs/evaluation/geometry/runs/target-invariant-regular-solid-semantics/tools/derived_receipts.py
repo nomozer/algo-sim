@@ -62,7 +62,9 @@ def route(text):
 def main() -> int:
     reg = load("full_regression_summary.json")
     gates = {s["name"]: s for s in reg.get("suites", [])}
-    real = {i["case_id"]: i["statement"] for i in json.loads((RUN.parent / "controlled-vision-real-image-validation/new_in_scope_image_manifest.json").read_text(encoding="utf-8"))["items"]}
+    real = {i["case_id"]: i["statement"] for m in ("controlled-vision-real-image-validation/new_in_scope_image_manifest.json",
+                                                    "local-semantic-source-gate-reliability/fresh_external_manifest.json")
+            for i in json.loads((RUN.parent / m).read_text(encoding="utf-8"))["items"]}
     put("baseline_candidate_integrity.json", {
         "start_head": git("rev-parse", START), "start_product_commit": "902a3171c", "start_freeze": "901c02702",
         "start_measured_system": "243d932765f7d4065394f91c6b4f25972f8232ba9228aec89d4c63a244c1976b", "start_files": 116,

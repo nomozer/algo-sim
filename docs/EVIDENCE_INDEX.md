@@ -1,5 +1,20 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = TARGET_INVARIANT_REGULAR_SOLID_SEMANTICS
+
+RUN_ID = target-invariant-regular-solid-semantics
+REPORT = docs/evaluation/geometry/runs/target-invariant-regular-solid-semantics/AXO_TARGET_INVARIANT_REGULAR_SOLID_REPORT.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/target-invariant-regular-solid-semantics/
+START_BASE = 07c17fef0
+CODE_COMMIT = 8f7f00a2c (GEO-BE-001 hunk), bdc34a89e (target invariance, regular tetrahedron, soundness, cache 136); candidate freeze ade820bd3
+CLASSIFICATION = DEVELOPMENT_EVIDENCE_ON_AGENT_CORPUS_AND_EXPOSED_ITEMS; AGENT_DIAGNOSTIC_ORACLE; AUTOMATED_BROWSER_E2E; INDEPENDENT_GENERALIZATION NOT_MEASURED; PUBLICATION BLOCKED_PENDING_OWNER_REVIEW
+PRODUCT_CHANGE = YES; contract versions unchanged; CACHE_VERSION 135 → 136; measured files 116 → 117
+MODEL_REQUEST_COUNT = 0
+VERIFICATION = run.json; full_regression_summary.json; universal_goal_invariance_proofs.json; r520_mathematical_verification.json; r559_mathematical_verification.json; goal_invariance_mutation_tests.json; scale_certificate_soundness_audit.json
+CORRECTS = certified-scale-cache-safety: its similarity certificate could certify an unexplored sign branch (≥ 2 anchors) and claimed more than engine-domain uniqueness; historical receipts unchanged
+CORRECTED_BY = NONE
+LIMITATIONS = agent-written corpus; exposed items; proof rules limited to plane angles; headless browser; no H-1, no students.
+
 ## WAVE_ID = CERTIFIED_SCALE_CACHE_SAFETY
 
 RUN_ID = certified-scale-cache-safety
