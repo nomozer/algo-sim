@@ -1618,6 +1618,16 @@ _C_MAT = re.compile(rf"(?:{_MAT_NHAN}\s+(?:và\s+)?(?:nằm\s+trong\s+mặt\s+ph
                     rf"(?:\s+(?:và\s+)?(?:nằm\s+)?trong\s+mặt\s+phẳng\s+vuông\s+góc\s+với\s+{_MAT_DICH})?"
                     rf"|{_L1}{_L1}(?:\s*=\s*{_L1}{_L1})+(?![\w'])(?!\s*=))"
                     rf"(?=\s*(?:[,;.]|và\s|$))", re.IGNORECASE)
+#: Run `compositional-semantics-simulation-goals`: a NAMED plane defined by number-free incidence / ∥ / ⊥ relations
+#: ("mặt phẳng (P) đi qua M và song song với mặt đáy", "(α) chứa AB và vuông góc với (SCD)"). It names no height, side or
+#: segment value; the section call that uses the plane is verified by its own quote. Read here only so the OTHER clauses of
+#: its sentence stay readable — and as a subject change (`_lien_ket_cau`): unlabelled roles of the sentence still bind nothing.
+_MPDN_REF = rf"(?:(?:điểm|đường\s+thẳng|cạnh|đoạn(?:\s+thẳng)?)\s+)?{_L1}{{1,2}}(?![\w'])|trung\s+điểm\s+(?:của\s+)?(?:cạnh\s+|đoạn\s+)?{_L1}{_L1}(?![\w'])"
+_MPDN_DICH = rf"(?:{_MAT_DICH}|(?:đường\s+thẳng\s+|cạnh\s+)?{_L1}{_L1}(?![\w']))"
+_MPDN_PHAN = (rf"(?:(?:đi\s+qua|qua|chứa)\s+(?:{_MPDN_REF})(?:\s*(?:,|và)\s*(?:{_MPDN_REF}))*"
+              rf"|(?:song\s+song|vuông\s+góc)\s+với\s+{_MPDN_DICH}(?:\s+và\s+{_MPDN_DICH})?)")
+_C_MPDN = re.compile(rf"(?:mặt\s+phẳng\s+|mp\s*)?\((?:[A-Z][0-9']?|[α-ωΑ-Ω][0-9']?)\)\s+{_MPDN_PHAN}(?:\s+(?:và\s+)?{_MPDN_PHAN}){{0,2}}"
+                     rf"(?=\s*(?:[,;.]|và\s|$))", re.IGNORECASE)
 _C_DAU = re.compile(r"\s*(?:trong\s+không\s+gian\s*,\s*)?(?:(?:biết(?:\s+rằng)?|th[ỏo]a\s+mãn)\s+)?", re.IGNORECASE)
 _C_HET = re.compile(rf"\s*(?:{_THAM_KHAO_HINH}\s*)?[.;]?\s*", re.IGNORECASE)
 _C_HOI = re.compile(r"(?:hãy\s+)?(?:tính|tìm|xác\s+định|hỏi)(?!\w)", re.IGNORECASE)
@@ -1716,7 +1726,7 @@ def _phan_tich_cau(s: str) -> list[tuple[str, re.Match | None]] | None:
         # carrying a number (a local given or a changed value) leaves the sentence unread
         if q := _C_HOI.match(s, p):
             return out if not any(_doc(x) is not None for x in _SO.finditer(s, q.end())) else None
-        for kind, rx in (("khoi", _C_KHOI), ("day", _C_DAY), ("dagiac", _C_DAGIAC), ("dcao", _C_DCAO), ("diem", _C_DIEM),
+        for kind, rx in (("khoi", _C_KHOI), ("day", _C_DAY), ("dagiac", _C_DAGIAC), ("dcao", _C_DCAO), ("mpdn", _C_MPDN), ("diem", _C_DIEM),
                          ("chieu", _C_CHIEU), ("mat", _C_MAT), ("vuong", _C_VUONG), ("song", _C_SONG),
                          ("tiso_doan", _C_TISO_DOAN), ("dientich", _C_DIENTICH), ("goc", _C_GOC), ("doan", _C_DOAN), ("vai", _C_VAI)):
             if m := rx.match(s, p):
@@ -1773,7 +1783,7 @@ def _lien_ket_cau(de: str, a: int, b: int, calls: tuple[LoiGoi, ...]) -> dict[in
             # sentence ("mặt bên SAB là tam giác cân và có chiều cao bằng 5") may be ITS role, and its shape premise is
             # encoded by no call: no unlabelled role of such a sentence is bound. A plain point definition (midpoint,
             # centre, centroid, intersection, point on an object) names no height or side and changes nothing.
-            mo = any(kind in ("chieu", "mat", "dcao", "dagiac") for kind, _m in cau)
+            mo = any(kind in ("chieu", "mat", "dcao", "dagiac", "mpdn") for kind, _m in cau)
             # review round 6 (N1/N2): "G là trọng tâm của tam giác SAB và có đường cao bằng 5" — a "có/với <role>" right
             # after a point definition may predicate that definition's object: the sentence's roles are not bound.
             mo = mo or any(k0 == "diem" and k1 == "vai" and re.match(r"(?:có|với)\s", m1.group(), re.IGNORECASE)
@@ -2836,7 +2846,52 @@ def _vung_hoi(de: str, a: int, b: int) -> tuple[int, int] | None:
     tu = c0 + dong_tu[-1].start() if dong_tu else _bien_menh_de(de, a)[0]
     giua = truoc[dong_tu[-1].end():] if dong_tu else de[tu:a]
     sau = _SAU_HOP_LE.match(_bo_cum(de[b:c1]))
+    if sau and _ham_truoc_goc(_bo_cum(giua), de[a:b]) is not None:
+        return (tu, b + sau.end())                     # a trigonometric value OF the asked angle (`_ham_truoc_goc`)
     return (tu, b + sau.end()) if _GIUA_HOP_LE.fullmatch(_bo_cum(giua)) and sau else None
+
+
+#: Run `compositional-semantics-simulation-goals`: a TRIGONOMETRIC VALUE of an angle is asked ("Tính côsin của góc giữa
+#: …", "Tang của góc giữa … bằng"). The object the source asks about is the angle — the scene constructs and the kernel
+#: certifies it — while the number asked is a function of it that output-policy/1 never serves. The qualifier is read
+#: ONLY right before an angle phrase (never before a length, an area …), and `ham_luong_giac_hoi` reports the function so
+#: the response states the numeric source goal as NOT answered; it is never presented as the angle's value.
+_HAM_LUONG_GIAC = re.compile(
+    r"(?:giá\s+trị\s+(?:của\s+)?)?(?P<f>c[oô]\s?sin|cos|sin|tang|tan|c[oô]\s?tang|cot)\s+(?:của\s+)?$", re.IGNORECASE)
+_HAM_CHUAN = {"cos": "cos", "sin": "sin", "tan": "tan", "tang": "tan", "cot": "cot"}
+
+
+def _ham_truoc_goc(giua: str, cum: str) -> str | None:
+    """'cos' / 'sin' / 'tan' / 'cot' when `giua` (verb → phrase, other ask phrases blanked) is the closed connector text
+    then exactly one trigonometric qualifier, and the phrase `cum` is an angle; else None."""
+    if not re.match(r"(?:số\s+đo\s+(?:của\s+)?)?góc(?!\w)", cum, re.IGNORECASE):
+        return None
+    m = _HAM_LUONG_GIAC.search(giua)
+    if m is None or not _GIUA_HOP_LE.fullmatch(giua[:m.start()]):
+        return None
+    f = re.sub(r"[\sô]", lambda x: "o" if x.group() == "ô" else "", m["f"].lower())
+    return _HAM_CHUAN.get(f.replace("cosin", "cos").replace("cotang", "cot"))
+
+
+def ham_luong_giac_hoi(problem_text: str, quote: str) -> str | None:
+    """The trigonometric function the source asks OF the angle an `ask_angle_*` call answers (its verified `quote`), or
+    None when the angle itself is asked. Same closed reading as the gate (`_vung_hoi`); nothing else decides it."""
+    de, q = chuan_hoa(problem_text), chuan_hoa(quote)
+    g = re.search(r"(?:số\s+đo\s+(?:của\s+)?)?góc(?!\w)", q, re.IGNORECASE)
+    if g is None:
+        return None
+    q = q[g.start():]
+    found = set()
+    for m in re.finditer(re.escape(q), de):
+        if _vung_hoi(de, m.start(), m.end()) is None:
+            continue
+        c0, _c1 = _bien_cau(de, m.start())
+        truoc = de[c0:m.start()]
+        moc = [x.end() for x in _DUNG_GAN.finditer(_bo_cum(truoc))]
+        dong_tu = list(_DONG_TU_HOI.finditer(truoc, moc[-1] if moc else 0))
+        giua = truoc[dong_tu[-1].end():] if dong_tu else de[_bien_menh_de(de, m.start())[0]:m.start()]
+        found.add(_ham_truoc_goc(_bo_cum(giua), de[m.start():m.end()]))
+    return found.pop() if len(found) == 1 else None
 
 
 def _kiem_cau_hoi(c: LoiGoi, de: str, vts: list[tuple[int, int]], calls: tuple[LoiGoi, ...],
@@ -3228,7 +3283,10 @@ def _kiem_du_kien_cau_hoi(calls: tuple[LoiGoi, ...], de: str, read_quotes: tuple
                     if (re.search(r"thiết\s+diện|giao\s+tuyến", s_cau, re.IGNORECASE)
                             or _req_verbs(*cau) or _HOI_SAU.search(s_cau)):
                         request_contexts.add(cau)
-                    else:
+                    elif cau not in solid_contexts:
+                        # run `compositional-semantics-simulation-goals`: like every other construction, a plane defined in
+                        # the solid's own sentence ("Cho hình chóp …, M là trung điểm SA, mặt phẳng (P) đi qua M …") is
+                        # read by the premise-region reader, which reads every word of that sentence before the request
                         construction_contexts.add(cau)
     # Derived construction clauses already have their own binding gate. Context applies regardless of request wording.
     questions |= construction_contexts | request_contexts

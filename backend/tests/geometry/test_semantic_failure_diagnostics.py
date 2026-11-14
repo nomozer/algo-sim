@@ -52,7 +52,7 @@ def test_root_cause_is_separate_from_the_terminal_reason_and_points_at_the_unrea
 
 @pytest.mark.parametrize("text,root,detected", [
     (P + "Xác định thiết diện của hình chóp cắt bởi mặt phẳng (Q).", "UNRESOLVED_REFERENCE", "PARSER_COVERAGE"),
-    (P + "Tính côsin của góc giữa đường thẳng SC và mặt phẳng (ABCD).", "UNSUPPORTED_GOAL_FUNCTION", None),
+    (P + "Tính bình phương côsin của góc giữa đường thẳng SC và mặt phẳng (ABCD).", "UNSUPPORTED_GOAL_FUNCTION", None),
     (P + "Chứng minh rằng BC vuông góc với mặt phẳng (SAB).", "UNSUPPORTED_GOAL_KIND", "PARSER"),
     ("Cho hình chóp S.ABCD có đáy ABCD là hình vuông, SA vuông góc với mặt phẳng đáy. Tính thể tích khối chóp S.ABCD.",
      "INSUFFICIENT_CONSTRAINTS", "PARSER"),

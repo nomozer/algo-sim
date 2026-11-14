@@ -60,8 +60,41 @@ def run_typed_fact_next_v2_route(raw: Any) -> KetQuaTuyen:
             from app.simulation.geometry_functions.typed_fact_next import quote_spans
 
             clar["spans"] = quote_spans(source, clar["quote"])   # offsets in the RAW source (a model input is stripped)
+        if r.status == "SERVED" and (sgc := _source_goal_completion(r, source)):
+            r.details = {**(r.details or {}), "source_goal_completion": sgc}
     r.route_d = deepcopy(_phong_bi(r))
     return r
+
+
+#: Run `compositional-semantics-simulation-goals`. A served answer may construct the OBJECT of a source goal without
+#: answering the NUMBER the source asks of it: "Tính côsin của góc …" is served as the constructed, kernel-certified angle;
+#: the cosine itself is never shown (output-policy/1, no-answer surface) and never counted as answered.
+SOURCE_GOAL_COMPLETION_VERSION = "source-goal-completion/1"
+
+
+def _source_goal_completion(r: KetQuaTuyen, source: str) -> dict[str, Any] | None:
+    """`source-goal-completion/1` when an `ask_angle_*` call answers an angle the source asks a trigonometric value OF
+    (read by the gate's own `ham_luong_giac_hoi`), else None — every other served result keeps its exact shape."""
+    from fractions import Fraction
+
+    from app.simulation.geometry_functions.registry import ham_luong_giac_hoi
+
+    goals = []
+    for c in r.calls:
+        if not str(c.get("fn", "")).startswith("ask_angle_"):
+            continue
+        fs = {ham_luong_giac_hoi(source, q) for q in c.get("quotes") or ()}
+        if len(fs) != 1 or (f := fs.pop()) is None:
+            continue
+        cos2 = Fraction((r.answer_exact.get(c["id"]) or {}).get("coef", "nan")) if c["id"] in r.answer_exact else None
+        defined = None if cos2 is None else {"tan": cos2 != 0, "cot": cos2 != 1}.get(f, True)
+        goals.append({"goal_id": c["id"], "source_request": "TRIGONOMETRIC_VALUE_OF_ANGLE", "function": f,
+                      "simulation_objective": "ANGLE_CONSTRUCTED_AND_VERIFIED", "state": "GOAL_VISUALIZATION_READY",
+                      "numeric_source_goal": "NOT_ANSWERED", "value_defined": defined})
+    if not goals:
+        return None
+    return {"schema_version": SOURCE_GOAL_COMPLETION_VERSION, "source_goal_fully_satisfied": False,
+            "numeric_answer_shown": False, "goals": goals}
 
 
 def _phong_bi(r: KetQuaTuyen) -> dict[str, Any]:
@@ -107,6 +140,9 @@ def _phong_bi(r: KetQuaTuyen) -> dict[str, Any]:
         # Present only when the figure is NOT fixed by the source (a height-invariant answer): the scene is illustrative.
         **({"scene_configuration": deepcopy(cfg)}
            if served and (cfg := (r.details or {}).get("scene_configuration")) else {}),
+        # Present only when a source goal's NUMBER is not answered although its object is constructed (cos/tan of an angle).
+        **({"source_goal_completion": deepcopy(sgc)}
+           if served and (sgc := (r.details or {}).get("source_goal_completion")) else {}),
     }
 
 
@@ -252,6 +288,8 @@ def build_adapter4_response(result: KetQuaTuyen, problem_text: str) -> dict[str,
         _validate_sections(route["sections"], objects, result)
         if route.get("relation_certificates") != _phong_bi(result)["relation_certificates"]:
             raise PreviewInvalid("PREVIEW_RESULT_INVALID")
+        if route.get("source_goal_completion") != _phong_bi(result).get("source_goal_completion"):
+            raise PreviewInvalid("RESULT_BINDING_UNVERIFIED")
         for rcert in route.get("relation_certificates") or ():
             if not isinstance(rcert, dict):
                 raise PreviewInvalid("PREVIEW_RESULT_INVALID")

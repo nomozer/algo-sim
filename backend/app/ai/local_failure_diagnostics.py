@@ -44,8 +44,29 @@ _ROOT_OF_TYPE = {
     "MULTIPLE_CHOICE_OPTIONS": "INCOMPLETE_FACT_EXTRACTION", "NON_PROBLEM_TEXT": "INCOMPLETE_FACT_EXTRACTION",
 }
 #: precedence when several clauses are unread: the earliest definitional loss explains later goals
-_PRIORITY = ("UNSUPPORTED_GOAL_FUNCTION", "UNRESOLVED_REFERENCE", "UNRECOGNIZED_GEOMETRIC_ENTITY", "UNRECOGNIZED_RELATION", "INCOMPLETE_FACT_EXTRACTION",
-             "UNRECOGNIZED_GOAL")
+_PRIORITY = ("UNSUPPORTED_GOAL_FUNCTION", "FREE_POINT_UNDERDETERMINED", "UNSUPPORTED_POINT_CONSTRUCTION",
+             "DESCRIBED_POINT_IN_PREMISE_UNSUPPORTED", "UNRESOLVED_REFERENCE", "UNRECOGNIZED_GEOMETRIC_ENTITY",
+             "UNRECOGNIZED_RELATION", "INCOMPLETE_FACT_EXTRACTION", "UNRECOGNIZED_GOAL")
+#: (compositional-semantics-simulation-goals) clause shapes the parser deliberately leaves unread, each with its own cause:
+#: a point only said to lie ON an object (no ratio, no distance) is not unique; a reflection is no registered construction;
+#: an UNNAMED described point standing as a premise operand ("… trùng với trọng tâm của tam giác ABC") is outside R-1.
+_FREE_POINT = re.compile(r"(?<![\w'])[A-Z][0-9]*'?\s+(?:là\s+(?:một\s+)?điểm\s+(?:di\s+động\s+)?)?(?:thuộc|nằm\s+trên)\s+"
+                         r"(?:cạnh|đoạn(?:\s+thẳng)?|đường\s+thẳng|tia)\s+[A-Z][0-9]*'?[A-Z]", re.IGNORECASE)
+_FIXES_POSITION = re.compile(r"sao\s+cho|th[ỏo]a\s+mãn|cách\s|=|\btỉ\s+số|trung\s+điểm", re.IGNORECASE)
+_REFLECTION = re.compile(r"đối\s+xứng", re.IGNORECASE)
+_DESCRIBED_IN_PREMISE = re.compile(r"trùng\s+với\s+(?:trung\s+điểm|trọng\s+tâm|trực\s+tâm|tâm|giao\s+điểm)(?:\s+của)?\s", re.IGNORECASE)
+_SCALE_LENGTH = re.compile(r"(?:=|bằng|cạnh|dài|cao)\s*(?:\d|√|a\b|\d*a\b)", re.IGNORECASE)
+
+
+def _clause_root(text: str) -> str | None:
+    """A specific cause for an unread clause shape, or None (then the lexical type decides)."""
+    if _REFLECTION.search(text):
+        return "UNSUPPORTED_POINT_CONSTRUCTION"
+    if _DESCRIBED_IN_PREMISE.search(text):
+        return "DESCRIBED_POINT_IN_PREMISE_UNSUPPORTED"
+    if (m := _FREE_POINT.search(text)) and not _FIXES_POSITION.search(text, m.end()):
+        return "FREE_POINT_UNDERDETERMINED"
+    return None
 _GOAL_TYPES = {"PROOF_REQUEST", "CONSTRUCTION_GOAL", "MEASUREMENT_GOAL"}
 #: a trigonometric value OF an angle is asked: understood, but output-policy/1 serves the angle (cos²) only
 _GOAL_FUNCTION = re.compile(r"(?<!\w)(?:côsin|cosin|cos|sin|sin|tang|tan|tg|côtang|cotang|cot|cotg)\s+(?:của\s+)?góc", re.IGNORECASE)
@@ -106,16 +127,23 @@ def diagnose_clauses(source_coverage: dict[str, Any]) -> list[dict[str, Any]]:
         depends = sorted({defined_planes[n] for n in names if n in defined_planes and defined_planes[n] in unread_ids}
                          - {f"c{c['index']}"})
         root = None
+        # a comma-joined part the parser could not read (`UNREAD_SUBCLAUSE@<offset>`): the cause is read from that part
+        subs = [(int(m.group(1)), m.group(2)) for n in c.get("notes") or ()
+                if (m := re.match(r"UNREAD_SUBCLAUSE@(\d+):(.*)", str(n)))]
+        cause_text = " ".join(t for _o, t in subs) or c["text"]
         if status in ("UNRECOGNIZED", "UNRESOLVED_REFERENCE"):
+            sub_types = clause_types(cause_text) if subs else types
             root = ("UNSUPPORTED_GOAL_FUNCTION" if types[0] in _GOAL_TYPES and _GOAL_FUNCTION.search(c["text"]) else
-                    "UNRESOLVED_REFERENCE" if (unresolved or status == "UNRESOLVED_REFERENCE") else
-                    "DEPENDS_ON_UNREAD_CLAUSE" if depends and types[0] in _GOAL_TYPES else
-                    _ROOT_OF_TYPE.get(types[0], "INCOMPLETE_FACT_EXTRACTION"))
+                    _clause_root(cause_text) or
+                    ("UNRESOLVED_REFERENCE" if (unresolved or status == "UNRESOLVED_REFERENCE") else
+                     "DEPENDS_ON_UNREAD_CLAUSE" if depends and types[0] in _GOAL_TYPES else
+                     _ROOT_OF_TYPE.get(sub_types[0], "INCOMPLETE_FACT_EXTRACTION")))
         out.append({"clause_id": f"c{c['index']}", "start_offset": c["start"], "end_offset": c["end"],
                     "parser_classification": c.get("classification"), "semantic_status": status,
                     "clause_type": types[0], "clause_type_cues": types, "role": "GOAL" if types[0] in _GOAL_TYPES else "PREMISE",
                     "labels": sorted(_labels(c["text"])), "plane_names": sorted(_plane_names(c["text"])),
                     "unresolved_plane_names": unresolved, "downstream_dependency": depends, "failure_reason": root,
+                    **({"unread_subclause_offsets": [o for o, _t in subs]} if subs else {}),
                     "_text": c["text"]})
     return out
 
@@ -171,6 +199,14 @@ def diagnose(*, parse_status: str, parse_reason: str | None, fallback_reason: st
                 root = "SOURCE_CONFLICT"
             if terminal_code.startswith("BRIDGE_UNSUPPORTED"):
                 layer = "TYPED_FACTS_BRIDGE"
+            # an angle asked of a figure the source fixes only up to similarity (no length at all): the data are complete
+            # for the angle, the planner has no scale normalisation — a capability gap, not missing data
+            if (terminal_code == "MISSING_DIMENSION"
+                    and any(c["role"] == "GOAL" and re.search(r"\bgóc\b", c.get("_text", ""), re.IGNORECASE) for c in clauses)
+                    and not any(_SCALE_LENGTH.search(c.get("_text", "")) for c in clauses)):
+                root, layer = "SCALE_NORMALIZATION_UNSUPPORTED", "PLANNER"
+            if terminal_code == "MISSING_DIMENSION" and root == "SCALE_NORMALIZATION_UNSUPPORTED":
+                group = "CAPABILITY"
             rec.update(root_cause=root, first_loss_layer="NONE", detected_by=layer, refusal_group=group)
     else:
         rec.update(root_cause="INCOMPLETE_FACT_EXTRACTION", first_loss_layer="PARSER", detected_by="PARSER")

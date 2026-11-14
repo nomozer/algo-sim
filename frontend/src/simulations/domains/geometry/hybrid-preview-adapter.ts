@@ -111,6 +111,39 @@ export interface HybridPreviewView {
   relation_certificates?: HybridRelationCertificateEntry[];
   /** Có khi đề KHÔNG xác định duy nhất hình (đáp số đã kiểm bất biến): cảnh chỉ là minh họa, phải nói rõ với học sinh. */
   scene_configuration?: HybridSceneConfiguration;
+  /** Có khi đề hỏi một GIÁ TRỊ (côsin, tang …) của góc: cảnh dựng và kiểm chứng góc, giá trị ấy không được trả lời. */
+  source_goal_completion?: HybridSourceGoalCompletion;
+}
+
+/** `route_d.source_goal_completion` (`source-goal-completion/1`) — mục tiêu số của đề CHƯA được trả lời. */
+export interface HybridSourceGoalCompletion {
+  schema_version: "source-goal-completion/1";
+  source_goal_fully_satisfied: false;
+  numeric_answer_shown: false;
+  goals: { goal_id: string; function: "cos" | "sin" | "tan" | "cot"; state: "GOAL_VISUALIZATION_READY";
+    numeric_source_goal: "NOT_ANSWERED"; value_defined?: boolean | null }[];
+}
+
+const HAM_LUONG_GIAC: Record<string, string> = { cos: "côsin", sin: "sin", tan: "tang", cot: "côtang" };
+
+/** `null` = hợp lệ (hoặc vắng). Bản ghi tự xưng đã trả lời / đã hiện số, hay sai dạng ⇒ từ chối view. */
+function kiemSourceGoalCompletion(raw: unknown): string | null {
+  if (raw === undefined) return null;
+  if (!laDoiTuong(raw) || raw.schema_version !== "source-goal-completion/1" || raw.source_goal_fully_satisfied !== false
+    || raw.numeric_answer_shown !== false || !Array.isArray(raw.goals) || raw.goals.length === 0
+    || raw.goals.some((g) => !laDoiTuong(g) || typeof g.goal_id !== "string" || typeof g.function !== "string"
+      || !(g.function in HAM_LUONG_GIAC) || g.state !== "GOAL_VISUALIZATION_READY" || g.numeric_source_goal !== "NOT_ANSWERED"))
+    return "source_goal_completion sai dạng";
+  return null;
+}
+
+/** Câu cho học sinh khi đề hỏi giá trị lượng giác của góc: hình dựng góc ấy, không tính hộ giá trị. `null` khi không có. */
+export function cauMucTieuSoChuaTraLoi(view: HybridPreviewView | null | undefined): string | null {
+  const c = view?.source_goal_completion;
+  if (!c || c.source_goal_fully_satisfied !== false || !c.goals.length) return null;
+  const ten = [...new Set(c.goals.map((g) => HAM_LUONG_GIAC[g.function]).filter(Boolean))].join(", ");
+  return `Đề hỏi giá trị ${ten} của góc. Hình dưới đây dựng và kiểm chứng đúng góc đó để em quan sát; `
+    + `Axo không tính hộ giá trị ${ten}.`;
 }
 
 /** `route_d.scene_configuration` — hình không duy nhất; chỉ một loại đã có chứng chỉ bất biến ở backend. */
@@ -740,6 +773,8 @@ export function dungHybridView(routeD: unknown, scene: Scene3D): { view: HybridP
     if (provError) return { reason: provError };
     const cfgError = kiemSceneConfiguration(routeD.scene_configuration);
     if (cfgError) return { reason: cfgError };
+    const sgcError = kiemSourceGoalCompletion(routeD.source_goal_completion);
+    if (sgcError) return { reason: sgcError };
   } else if (!laDoiTuong(id) || id.adapter_version !== HYBRID_PREVIEW_ADAPTER) return { reason: "adapter_version không được hỗ trợ" };
 
   // §4 — length_unit của route_d phải đúng là length_unit của cảnh (một nguồn).
@@ -824,7 +859,9 @@ export function dungHybridView(routeD: unknown, scene: Scene3D): { view: HybridP
     ...(v4 && routeD.relation_certificates !== undefined
       ? { relation_certificates: structuredClone(routeD.relation_certificates) as HybridRelationCertificateEntry[] } : {}),
     ...(v4 && routeD.scene_configuration !== undefined
-      ? { scene_configuration: structuredClone(routeD.scene_configuration) as HybridSceneConfiguration } : {}) } };
+      ? { scene_configuration: structuredClone(routeD.scene_configuration) as HybridSceneConfiguration } : {}),
+    ...(v4 && routeD.source_goal_completion !== undefined
+      ? { source_goal_completion: structuredClone(routeD.source_goal_completion) as HybridSourceGoalCompletion } : {}) } };
 }
 
 /**
@@ -882,6 +919,8 @@ export function kiemHybridView(view: unknown, scene: Scene3D | undefined): strin
     if (provError) return provError;
     const cfgError = kiemSceneConfiguration(view.scene_configuration);
     if (cfgError) return cfgError;
+    const sgcError = kiemSourceGoalCompletion(view.source_goal_completion);
+    if (sgcError) return sgcError;
   }
   if (!Array.isArray(view.answers) || !Array.isArray(view.observations)) return "hybrid_preview sai dạng";
   const daCo = new Set<string>();

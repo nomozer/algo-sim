@@ -94,7 +94,6 @@ FALSE_SERVES = [
     ("Tính khoảng cách từ S đến (ABCD) khi M thay đổi.", DPP, True),
     ("Tính khoảng cách từ S đến (ABCD) sau khi tăng SA lên gấp đôi.", DPP, False),
     ("Tính SC. Biết khoảng cách từ S đến (ABCD)?", DPP, False),
-    ("Tính sin góc giữa SC và (ABCD).", ANG, False),
     # D — sections: the asked section is another one, or another quantity of it
     ("Tính diện tích thiết diện của hình chóp S.ABCD cắt bởi (MAB), biết diện tích thiết diện cắt bởi (SAC) bằng 3√2.",
      lambda s: SAREA(s, "SAC"), True),
@@ -106,6 +105,21 @@ FALSE_SERVES = [
     ("Tính diện tích thiết diện của hình chóp S.ABCD với mặt phẳng (MAB) song song với CD.", SAREA, True),
     ("Tính diện tích thiết diện của khối lập phương cắt bởi (MAB).", SAREA, True),
 ]
+
+
+def test_a_trigonometric_value_of_the_angle_is_served_as_the_angle_never_as_its_value():
+    """Run `compositional-semantics-simulation-goals` (product decision of that run's task): "Tính sin góc giữa SC và
+    (ABCD)." — formerly refused here as "another quantity" — is served as the constructed ANGLE, and the gate's own reading
+    reports the function, so the response states the sine NOT answered (`source-goal-completion/1`). A quantity of the
+    angle that is not a trigonometric value of it ("bình phương", "nửa") stays refused (FALSE_SERVES)."""
+    from app.simulation.geometry_functions.registry import ham_luong_giac_hoi
+    sentence = "Tính sin góc giữa SC và (ABCD)."
+    r = _run(sentence, ANG, False)
+    assert r.status == "SERVED"
+    q, _fs = HB._square()
+    assert ham_luong_giac_hoi(" ".join(q) + " " + sentence, ANG(sentence)["quotes"][0]) == "sin"
+    for other in ("Tính bình phương sin góc giữa SC và (ABCD).", "Tính nửa góc giữa SC và (ABCD)."):
+        assert _run(other, ANG, False).status == "REFUSED", other
 
 
 @pytest.mark.parametrize("sentence,qf,mid", FALSE_SERVES, ids=[s for s, _q, _m in FALSE_SERVES])

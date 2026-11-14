@@ -1,5 +1,17 @@
 # CODE_INDEX.md — Chỉ mục module + BỘ NHỚ KIẾN TRÚC
 
+## Compositional clauses and simulation-oriented goals (2026-11-14)
+
+| Path | Owns | Locked by |
+|---|---|---|
+| `backend/app/ai/local_geometry_parser.py` (`_subclause_spans`, `_unread_subclauses`, 7k guard 7) | A sentence is MAPPED only when every comma- or clause-opening-"và"-joined part with geometric content overlaps a quote of an item that sentence produced; otherwise `UNREAD_SUBCLAUSE@<offset>` and the sentence is partial (label lists, decimals and brackets are never cut) | `backend/tests/geometry/test_compositional_semantics_goals.py` |
+| `backend/app/ai/local_geometry_parser.py` (`_clause_order`, 6c `p2b`) | A question using a plane name only a LATER clause defines is parsed after that definition; the bare "(P) đi qua …" opening a "biết" clause or a sentence defines the plane | same |
+| `backend/app/simulation/geometry_functions/registry.py` (`_C_MPDN`, `_ham_truoc_goc`, `ham_luong_giac_hoi`, section `solid_contexts`) | Gate closed grammar: a number-free named-plane definition clause (a subject change, binds no role); "cos / sin / tan / cot (của) góc …" read as a request about the ANGLE object, the function reported by `ham_luong_giac_hoi`; a plane defined in the solid's own sentence is read by the premise-region reader | same |
+| `backend/app/ai/adapter4_route.py` (`_source_goal_completion`, `SOURCE_GOAL_COMPLETION_VERSION`) | `route_d.source_goal_completion` (`source-goal-completion/1`), present only when an angle is served for a trigonometric-value question: `GOAL_VISUALIZATION_READY`, `NUMERIC_SOURCE_GOAL` `NOT_ANSWERED`, `source_goal_fully_satisfied: false`, tan/cot `value_defined`; bound to the verified result in `build_adapter4_response` | same |
+| `backend/app/ai/local_failure_diagnostics.py` (`_clause_root`) | Roots `FREE_POINT_UNDERDETERMINED`, `UNSUPPORTED_POINT_CONSTRUCTION` (reflection), `DESCRIBED_POINT_IN_PREMISE_UNSUPPORTED` (R-1), `SCALE_NORMALIZATION_UNSUPPORTED` (an angle of a figure fixed only up to similarity) | same |
+| `frontend/src/simulations/domains/geometry/hybrid-preview-adapter.ts` (`HybridSourceGoalCompletion`, `kiemSourceGoalCompletion`, `cauMucTieuSoChuaTraLoi`) · `frontend/src/components/SimulationWorkspace.tsx` (`#stage-numeric-goal-note`) | The record kept on the view (a record claiming the goal answered or a number shown rejects the view); the learner note "Axo không tính hộ giá trị …" with no number | `frontend/src/components/numeric-goal-not-answered.test.tsx` |
+| `docs/evaluation/geometry/runs/compositional-semantics-simulation-goals/tools/` | Agent-written compositional corpus, before/after comparison, browser E2E of the goal flows | run report and receipts |
+
 ## Local failure diagnostics and safe multi-problem images (2026-11-14)
 
 | Path | Owns | Locked by |

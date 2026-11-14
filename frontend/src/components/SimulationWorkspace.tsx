@@ -125,6 +125,7 @@ import {
 } from "../state/learner-recovery-snapshot";
 import {
   cauCauHinhMinhHoa,
+  cauMucTieuSoChuaTraLoi,
   cauQuanSat,
   hybridTaiBuoc,
   hybridViewCua,
@@ -1449,6 +1450,11 @@ export function AxoWorkspaceV62({
           {cauCauHinhMinhHoa(hybrid) && (
             <p className="stage-illustrative-note" id="stage-illustrative-note" role="note" data-scene-unique="false">
               {cauCauHinhMinhHoa(hybrid)}
+            </p>
+          )}
+          {cauMucTieuSoChuaTraLoi(hybrid) && (
+            <p className="stage-illustrative-note" id="stage-numeric-goal-note" role="note" data-numeric-goal="not-answered">
+              {cauMucTieuSoChuaTraLoi(hybrid)}
             </p>
           )}
 

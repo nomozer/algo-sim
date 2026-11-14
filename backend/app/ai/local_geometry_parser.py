@@ -529,6 +529,104 @@ class _AstBuilder:
         return None
 
 
+#: A comma joins two sub-clauses unless it separates two bare labels of one list ("M, N lần lượt", "SA, SB") or sits
+#: inside a number ("3,5a") or brackets ("[S, BC, A]", "(ABC)"). Parts with no geometric content are discourse.
+_SUBCLAUSE_LABEL_RE = re.compile(r"(?:[A-Z][0-9]*'?)+")
+_SUBCLAUSE_CONTENT_RE = re.compile(
+    r"[A-Z]|\b(?:vuông|song\s+song|bằng|trung\s+điểm|trọng\s+tâm|thuộc|nằm|cắt|đều|cân|đáy|cạnh|góc|chiều\s+cao|"
+    r"mặt\s+phẳng|đi\s+qua|chứa|tâm|bán\s+kính|tính|tìm|xác\s+định|dựng)\b|[=⊥∥√°]",
+    re.IGNORECASE | re.UNICODE,
+)
+
+
+#: a request to SHOW the built figure (rule 7b; the gate reads it whole and it asks nothing): "Hãy mô phỏng hình và điểm H"
+_SUBCLAUSE_SHOW_RE = re.compile(
+    r"(?:(?:hãy|em\s+hãy)\s+)?(?:mô\s+phỏng|vẽ|dựng)\s+(?:lại\s+)?hình(?:\s+(?:chóp|lăng\s+trụ|vẽ))?"
+    r"(?:\s+và\s+(?:các\s+)?điểm\s+(?:[A-Z][0-9]*'?)(?:\s*(?:,|và)\s*[A-Z][0-9]*'?)*)?",
+    re.IGNORECASE | re.UNICODE)
+#: the part before the comma is itself only a list of labels ("M, N thuộc (P)", "Gọi M, N lần lượt …"): a list of subjects
+_SUBCLAUSE_SUBJECTS_RE = re.compile(r"(?:(?:Gọi|Cho|các|hai|ba)\s+(?:điểm\s+)?)?(?:(?:[A-Z][0-9]*'?)+\s*,\s*)*(?:[A-Z][0-9]*'?)+",
+                                    re.IGNORECASE)
+_SUBCLAUSE_VA_RE = re.compile(
+    # an object noun ("và điểm M", "và tam giác SBC", "và mặt phẳng (ABC)") is usually the next item of a LIST; it opens a
+    # clause only with a predicate of its own
+    r"\s(?=và\s+(?:hình\s+chiếu|mặt\s+bên|đáy|cạnh\s+bên|đường\s+cao|chiều\s+cao|"
+    r"(?:mặt\s+phẳng\s+|mp\s*)?\([^)]{1,8}\)\s+(?:đi\s+qua|qua|chứa|song|vuông|cắt)|"
+    r"(?:tam\s+giác|điểm)\s+(?:[A-Z][0-9]*'?)+\s+(?:là|đều|vuông|cân|thuộc|nằm)|"
+    r"(?:[A-Z][0-9]*'?)+\s+(?:là|vuông|song|thuộc|nằm|cắt|đi\s+qua|bằng|=|⊥|∥)))",
+    re.UNICODE)
+
+
+def _subclause_spans(raw: str, a: int, b: int) -> list[tuple[int, int]]:
+    """Comma/semicolon-separated parts of `raw[a:b]` (absolute spans), outside brackets and label lists."""
+    cuts, depth = [], 0
+    for i in range(a, b):
+        ch = raw[i]
+        depth += ch in "([{"
+        depth -= ch in ")]}" and depth > 0
+        if ch not in ",;" or depth or i + 1 >= b or not raw[i + 1].isspace():
+            continue
+        left = re.search(r"(\S+)\s*$", raw[a:i])
+        right = re.match(r"\s*(\S+?)(?=[,;.)]|\s|$)", raw[i + 1:b])
+        # a list item is followed by list punctuation or a list word ("M, N lần lượt là", "SA, SB và SC"), never by a
+        # predicate of its own ("…, SA, N thuộc cạnh SB" is two clauses)
+        part = raw[(cuts[-1] + 1) if cuts else a:i].strip()
+        if (left and right and _SUBCLAUSE_LABEL_RE.fullmatch(left.group(1).strip("′"))
+                and _SUBCLAUSE_LABEL_RE.fullmatch(right.group(1).strip("′"))
+                and (re.match(r"(?:\s*(?:[,;.)]|$)|\s+(?:và|lần\s+lượt|là|đôi|cùng|tương\s+ứng)(?!\w))",
+                              raw[i + 1 + right.end():b], re.IGNORECASE)
+                     or _SUBCLAUSE_SUBJECTS_RE.fullmatch(part))):
+            continue
+        cuts.append(i)
+    # "… SA = a và hình chiếu vuông góc của S …": "và" opening a NEW clause (a clause-opening noun phrase, or a label with
+    # its own predicate) joins two sub-clauses too; a "và" inside one relation ("góc giữa SB và (ABC)") is covered by that
+    # relation's quote anyway, so an extra cut there never reports a loss
+    for m in _SUBCLAUSE_VA_RE.finditer(raw, a, b):
+        cuts.append(m.start())
+    cuts.sort()
+    bounds = [a, *[c + 1 for c in cuts], b]
+    return [(x, y - (1 if y != b else 0)) for x, y in zip(bounds, bounds[1:]) if y > x]
+
+
+def _unread_subclauses(builder: "_AstBuilder", a: int, b: int, pre4: tuple[int, int, int, int],
+                       pre3: tuple[int, int, int]) -> list[tuple[int, int]]:
+    """Parts of the sentence `raw[a:b]` with geometric content that no quote of an item created by this sentence overlaps."""
+    raw = builder.raw_text
+    parts = _subclause_spans(raw, a, b)
+    if len(parts) < 2:          # one part: the whole-sentence classification above already decided it
+        return []
+    # items of this sentence, and earlier sections a later sentence may extend (stated intersections carry own quotes)
+    items = (builder.solids[pre4[0]:], builder.premises[pre4[1]:], builder.derived_sections,
+             builder.math_goals[pre4[3]:], builder.described_points[pre3[0]:], builder.relations[pre3[1]:],
+             builder.simulation_goals[pre3[2]:], builder.unresolved)
+
+    def quotes(x):
+        if isinstance(x, dict):
+            for k, v in x.items():
+                if k == "quote" and isinstance(v, str) and v.strip():
+                    yield v
+                else:
+                    yield from quotes(v)
+        elif isinstance(x, list):
+            for v in x:
+                yield from quotes(v)
+
+    spans = []
+    for q in {q for group in items for q in quotes(list(group))}:
+        p = raw.find(q, a, b + len(q))
+        while p >= 0:
+            spans.append((p, p + len(q)))
+            p = raw.find(q, p + 1, b + len(q))
+    lost = []
+    for x, y in parts:
+        part = _FIG_REF_SUFFIX_RE.sub("", raw[x:y])
+        if not _SUBCLAUSE_CONTENT_RE.search(part) or _SUBCLAUSE_SHOW_RE.fullmatch(part.strip()):
+            continue
+        if not any(s < y and x < e for s, e in spans):
+            lost.append((x, y))
+    return lost
+
+
 def _detect_length_unit(raw_text: str) -> str:
     # Check if symbolic unit `a` is used in length assignments (e.g. `cạnh a`, `= a`, `= 2a`, `= a√3`, `= √3a`, `chiều cao bằng a`)
     if re.search(
@@ -573,6 +671,7 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
     pre_sections_len = len(builder.derived_sections)
     pre_goals_len = len(builder.math_goals)
     pre_solids_len = len(builder.solids)
+    pre_other_lens = (len(builder.described_points), len(builder.relations), len(builder.simulation_goals))
 
     # ── 0. Explicit unsupported / out-of-scope or clarification triggers ─────────────────────────────────────────
     # Conditional premise ("Nếu mặt phẳng ... thì ...") -> leave as unparsed or let Source Gate refuse?
@@ -2391,12 +2490,16 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
 
     # 6c. Section through point (named or described) parallel to plane or perpendicular to line:
     m_sec_par_or_perp = re.search(
-        rf"(?:(?:Gọi\s+\((?P<p1>{_PT}|[α-ω]'?)\)\s+là\s+mặt\s+phẳng|Mặt\s+phẳng\s+\((?P<p2>{_PT}|[α-ω]'?)\))\s+(?:đi\s+qua|qua|chứa)\s+(?P<thru>[^,;]+?)|Qua\s+(?P<thru2>{_PT})\s+(?:kẻ|dựng)\s+mặt\s+phẳng\s+\((?P<p3>{_PT}|[α-ω]'?)\))(?:\s*,\s*(?:và\s+)?|\s+và\s+|\s+)(?:(?P<par>song\s+song\s+với\s+(?:(?:mặt\s+phẳng\s+|mp\s*|đáy\s*)?\((?P<pplane>{_PTS3_6})\)|(?P<pday>(?:mặt\s+phẳng\s+|mặt\s+)?đáy)(?![\w])))|(?P<perp>vuông\s+góc\s+với\s+(?:đường\s+thẳng\s+|cạnh\s+)?(?P<pline>{_PTS2})))(?P<cuts>(?:\s*,\s*(?:\([A-Za-z0-9'α-ω]+\)\s+)?|\s+(?:và\s+)?)cắt\s+.+)?",
+        rf"(?:(?:Gọi\s+\((?P<p1>{_PT}|[α-ω]'?)\)\s+là\s+mặt\s+phẳng|Mặt\s+phẳng\s+\((?P<p2>{_PT}|[α-ω]'?)\)"
+        # (compositional-semantics-simulation-goals) the bare name opening a "biết …" clause, the definition given after
+        # the question that uses it: "…bởi mặt phẳng (P), biết (P) đi qua M và song song với mặt đáy"
+        rf"|(?:(?<=biết\s)|(?<=biết\srằng\s)|(?<=^))\((?P<p2b>{_PT}|[α-ω]'?)\))\s+(?:đi\s+qua|qua|chứa)\s+(?P<thru>[^,;]+?)|Qua\s+(?P<thru2>{_PT})\s+(?:kẻ|dựng)\s+mặt\s+phẳng\s+\((?P<p3>{_PT}|[α-ω]'?)\))(?:\s*,\s*(?:và\s+)?|\s+và\s+|\s+)(?:(?P<par>song\s+song\s+với\s+(?:(?:mặt\s+phẳng\s+|mp\s*|đáy\s*)?\((?P<pplane>{_PTS3_6})\)|(?P<pday>(?:mặt\s+phẳng\s+|mặt\s+)?đáy)(?![\w])))|(?P<perp>vuông\s+góc\s+với\s+(?:đường\s+thẳng\s+|cạnh\s+)?(?P<pline>{_PTS2})))(?P<cuts>(?:\s*,\s*(?:\([A-Za-z0-9'α-ω]+\)\s+)?|\s+(?:và\s+)?)cắt\s+.+)?",
         ctext_norm,
         re.IGNORECASE | re.UNICODE,
     )
     if m_sec_par_or_perp:
-        pname = m_sec_par_or_perp.group("p1") or m_sec_par_or_perp.group("p2") or m_sec_par_or_perp.group("p3")
+        pname = (m_sec_par_or_perp.group("p1") or m_sec_par_or_perp.group("p2") or m_sec_par_or_perp.group("p2b")
+                 or m_sec_par_or_perp.group("p3"))
         thru_str = (m_sec_par_or_perp.group("thru") or m_sec_par_or_perp.group("thru2")).strip()
         # Exclude if `thru_str` is comma-separated multiple points (which belongs to constrained plane 6d)
         if not re.fullmatch(rf"{_PT}\s*(?:,\s*{_PT})+", thru_str):
@@ -3647,6 +3750,20 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
                 clause.classification = CLAUSE_UNPARSED_GOAL_CANDIDATE
                 return
 
+        # 7) Comma-joined sub-clauses (run `compositional-semantics-simulation-goals`): a sentence is read by many rules at
+        # once, so one recognised relation must not make the whole sentence MAPPED while another comma-joined part of it was
+        # read by nothing ("…, SA = a, N thuộc cạnh SB."). Every part with geometric content must overlap a quote that an
+        # item of THIS sentence carries; otherwise the sentence is partially read and never complete.
+        lost = _unread_subclauses(builder, ca, cb, (pre_solids_len, pre_premises_len, pre_sections_len, pre_goals_len),
+                                  pre_other_lens)
+        if lost:
+            mapped_fact = False
+            mapped_goal = False
+            clause.notes.extend(f"UNREAD_SUBCLAUSE@{a - clause.start}:{raw[a:b].strip()[:120]}" for a, b in lost)
+            clause.classification = (CLAUSE_UNPARSED_GOAL_CANDIDATE if any(_QUESTION_STARTER_RE.search(raw[a:b]) for a, b in lost)
+                                     else CLAUSE_UNPARSED_FACT_CANDIDATE)
+            return
+
     # ── 8. Classify Clause Coverage ──────────────────────────────────────────────────────────────────────────────
     if mapped_goal:
         clause.classification = CLAUSE_MAPPED_GOAL
@@ -3733,8 +3850,8 @@ def _parse_geometry_problem_locally_uncached(problem_text: str, t0: float) -> Lo
     clauses = split_into_clauses(raw)
     builder = _AstBuilder(raw)
 
-    for cl in clauses:
-        _parse_clause_into_ast(builder, cl)
+    for i in _clause_order(clauses):
+        _parse_clause_into_ast(builder, clauses[i])
     _resolve_late_regular_polygon_dimension(builder)
 
     unparsed_facts = tuple(c.text for c in clauses if c.classification == CLAUSE_UNPARSED_FACT_CANDIDATE)
@@ -3913,6 +4030,32 @@ def _parse_geometry_problem_locally_uncached(problem_text: str, t0: float) -> Lo
         fallback_reason=None,
         parse_latency_ms=(time.perf_counter() - t0) * 1000.0,
     )
+
+
+_PLANE_NAME_DEF_RE = re.compile(
+    r"\((?P<n>[A-Z]|[α-ω])'?\)\s+(?:đi\s+qua|qua|chứa)(?!\w)|Gọi\s+\((?P<g>[A-Z]|[α-ω])'?\)\s+là\s+mặt\s+phẳng",
+    re.IGNORECASE | re.UNICODE)
+_PLANE_NAME_USE_RE = re.compile(r"\((?P<n>[A-Z]|[α-ω])'?\)", re.UNICODE)
+
+
+def _clause_order(clauses: list[ClauseSpan]) -> list[int]:
+    """Order of clause parsing (run `compositional-semantics-simulation-goals`): source order, except that a QUESTION
+    clause using a plane name that only a LATER clause defines ("Xác định thiết diện … bởi (P). Biết (P) đi qua M …") is
+    parsed right after that definition. Nothing is assumed: the question still binds only a plane the source defines, and
+    an undefined name stays unparsed. Clause indices, spans and classifications are unchanged."""
+    defs = [{m.group("n") or m.group("g") for m in _PLANE_NAME_DEF_RE.finditer(c.text)} for c in clauses]
+    order: list[int] = []
+    deferred: dict[int, list[int]] = {}
+    for i, c in enumerate(clauses):
+        used = {m.group("n") for m in _PLANE_NAME_USE_RE.finditer(c.text)} - defs[i]
+        earlier = set().union(*defs[:i]) if i else set()
+        later = [j for j in range(i + 1, len(clauses)) if used & defs[j]]
+        if used and not (used & earlier) and later and _QUESTION_STARTER_RE.match(c.text.strip()):
+            deferred.setdefault(max(later), []).append(i)
+            continue
+        order.append(i)
+        order += deferred.pop(i, [])
+    return order
 
 
 def _resolve_late_regular_polygon_dimension(builder: "_AstBuilder") -> None:
