@@ -1,0 +1,41 @@
+{
+  "name": "publication_range",
+  "command": "D:\\Documents\\projects\\algo-sim\\backend\\.venv\\Scripts\\python.exe backend/scripts/check_publication_safety.py --range 9d0949b0935888ba097d661c79ca2f792ee5490b..HEAD",
+  "argv": [
+    "D:\\Documents\\projects\\algo-sim\\backend\\.venv\\Scripts\\python.exe",
+    "backend/scripts/check_publication_safety.py",
+    "--range",
+    "9d0949b0935888ba097d661c79ca2f792ee5490b..HEAD"
+  ],
+  "cwd": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\local-first-geometry-understanding",
+  "started_at_utc": "2026-11-14T15:37:21.440089+00:00",
+  "start_snapshot": {
+    "head_commit": "2c7175c9d8982f64be9ed153a593f12f7b7eafa6",
+    "product_paths_sha256": "4b2cf6d92e803798ba34d94b1f6f27594f8556e50b774bd6992994f35a36cf4c",
+    "product_path_count": 338,
+    "hash_policy": "tracked backend/app + frontend/src, LF normalized; includes tests",
+    "working_product_source_sha256": "bf55d0158182a72966a7a1509722e607578140d0fa2422a06b82e580b28670fc",
+    "working_product_source_count": 195,
+    "working_source_policy": "all working backend/app + frontend/src including untracked; skip pycache and freeze TEST_ONLY_GLOBS"
+  },
+  "ended_at_utc": "2026-11-14T15:37:23.005263+00:00",
+  "duration_seconds": 1.359,
+  "exit_code": 0,
+  "raw_output_sha256": "2aa726f250a3572803840f26e1eceb2e385cc00025a75d5c051282ef306c60c7",
+  "raw_output_bytes": 79,
+  "raw_output_retention": "ignored local .superpowers only; never staged",
+  "end_snapshot": {
+    "head_commit": "2c7175c9d8982f64be9ed153a593f12f7b7eafa6",
+    "product_paths_sha256": "4b2cf6d92e803798ba34d94b1f6f27594f8556e50b774bd6992994f35a36cf4c",
+    "product_path_count": 338,
+    "hash_policy": "tracked backend/app + frontend/src, LF normalized; includes tests",
+    "working_product_source_sha256": "bf55d0158182a72966a7a1509722e607578140d0fa2422a06b82e580b28670fc",
+    "working_product_source_count": 195,
+    "working_source_policy": "all working backend/app + frontend/src including untracked; skip pycache and freeze TEST_ONLY_GLOBS"
+  },
+  "summary_lines": [
+    "SUMMARY scanned=159 messages=11 violations=0 pending_exception=0 verdict=PASS"
+  ],
+  "source_unchanged_during_command": true,
+  "verdict": "PASS"
+}
