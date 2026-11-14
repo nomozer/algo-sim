@@ -153,3 +153,60 @@ def test_every_visual_prerequisite_is_born_first_and_is_drawn(text):
             assert birth.get(x, 10**9) <= e["step_index"], (e["object"], x)
     for s in sc["formation"]["steps"]:
         assert isinstance(s.get("readout_ids"), list) and set(s["readout_ids"]) <= set(by)
+
+
+# ── GEO-BE-V9415-001 on Route D: section vertices explained by the trace method ───────────────────────────────────
+PENTA = SQ + "Gọi M, N, P lần lượt là trung điểm của SA, BC, CD. Xác định thiết diện của hình chóp cắt bởi mặt phẳng (MNP)."
+QUAD = SQ + "Gọi M là trung điểm của SA, N là trung điểm của BC. Xác định thiết diện của hình chóp cắt bởi mặt phẳng (MND)."
+PARALLEL = SQ + "Gọi M, N, P lần lượt là trung điểm của SA, SB, SC. Xác định thiết diện của hình chóp cắt bởi mặt phẳng (MNP)."
+
+
+def _edges(sc):
+    return [e for e in sc["events"] if e["action"] == "EXTEND"]
+
+
+@pytest.mark.parametrize("text, theorems", [
+    (PENTA, {"COPLANAR_TRACE_INTERSECTION"}),
+    (QUAD, {"COPLANAR_TRACE_INTERSECTION"}),
+    (PARALLEL, {"PARALLEL_LINE_PLANE_INTERSECTION"}),          # the parallel reason is kept where it applies
+])
+def test_every_section_edge_has_a_verified_reason(text, theorems):
+    es = _edges(_scene(text))
+    assert es and all(e.get("justification_text") for e in es)
+    assert {e["details"]["justification"]["theorem"] for e in es} == theorems
+    assert all(e["details"]["justification"]["verified_exact"] is True for e in es)
+
+
+def test_the_auxiliary_points_are_the_textbook_intersections_and_keep_one_name():
+    sc = _scene(PENTA)
+    aux = {}
+    for e in _edges(sc):
+        for a in e["details"]["justification"]["auxiliary_points"]:
+            assert aux.setdefault(a["name"], a["xyz"]) == a["xyz"]          # one letter, one point, on every step
+    assert sorted(aux.values()) == [["0", "3/2", "0"], ["3/2", "0", "0"]]   # NP ∩ AD and NP ∩ AB (square of side 1)
+    names = {o.get("notation") or o.get("label") for o in sc["objects"]}
+    assert not set(aux) & names                                             # never a letter the scene already uses
+    sd = next(e for e in _edges(sc) if "SD" in e["learner_text"] and "CD" in e["learner_text"])
+    assert "giao điểm của NP và đường thẳng AD" in sd["justification_text"] and "cắt cạnh SD" in sd["justification_text"]
+
+
+def test_the_trace_derivation_reproduces_the_kernel_section():
+    """Every endpoint the derivation reaches is a vertex the kernel computed; a derivation never moves geometry."""
+    sc = _scene(PENTA)
+    sec = next(o for o in sc["objects"] if o["type"] == "section")
+    poly = [list(p) for p in sec["polygon"]]
+    for st in sec["steps"]:
+        for d in st["trace_derivation"]["derivations"]:
+            assert (d["xyz"] in poly) == d["on_edge_segment"]
+
+
+def test_no_reason_is_claimed_without_known_points(monkeypatch):
+    """Fault injection: with no named point of the cutting plane known, the trace method derives nothing."""
+    from app.simulation.semantic_program import simulation_state as SS
+    real = SS._vet_giao_tuyen_thiet_dien
+
+    def blind(objects):
+        real([o for o in objects if o.get("type") != "point3"])
+    monkeypatch.setattr(SS, "_vet_giao_tuyen_thiet_dien", blind)
+    es = _edges(_scene(PENTA))
+    assert not any(e.get("justification_text") for e in es)

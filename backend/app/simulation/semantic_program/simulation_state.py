@@ -870,6 +870,7 @@ def build_simulation_state(
     gan_vai_tro_dung(scene["objects"], spec, contract)
     _ky_hieu_dien_tich_thiet_dien(scene["objects"], contract)
     _canh_song_song_thiet_dien(scene["objects"])
+    _vet_giao_tuyen_thiet_dien(scene["objects"])
     # W17 §15.4: chủ thể của từng đại lượng — tầng ngữ nghĩa quyết (toán hạng phép đo, hoặc đoạn
     # đề gọi tên kiểm bằng khoảng cách chính xác); lớp chiếu này chỉ chở.
     so_do, chan_doan_so_do = gan_so_do(spec, exec_result.final_memory, contract, scene["objects"],
@@ -1168,6 +1169,133 @@ def _canh_song_song_thiet_dien(objects: list[dict[str, Any]]) -> None:
                     continue
                 st["parallel_face_edge"] = [face[i], face[(i + 1) % len(face)]]
                 break
+
+
+def _vet_giao_tuyen_thiet_dien(objects: list[dict[str, Any]]) -> None:
+    """Run `scene3d-causal-pedagogical-integrity` (GEO-BE-V9415-001) — the TRACE METHOD of the textbook, exactly.
+
+    A section edge with no parallel reason (`parallel_face_edge`) is explained by how its endpoints are FOUND: points of
+    the cutting plane Π known so far start as the named points of Π on the solid's face planes; a face plane holding two
+    known points carries the trace through them, and that trace meets each edge LINE of the face (two coplanar lines) in
+    a new point of Π, which lies on both faces of that edge — a section vertex on the segment, or an auxiliary point on
+    the extended edge. A face with one known point whose plane is parallel to a known trace carries the parallel through
+    it. Everything is affine incidence over ℚ (no metric). A step gets `trace_derivation` only when both endpoints are
+    derived and lie on the trace of its own face; otherwise nothing is claimed."""
+    by_id = {o["id"]: o for o in objects}
+    q = lambda v: tuple(Fraction(str(x)) for x in v)                                       # noqa: E731
+    hieu = lambda u, v: tuple(x - y for x, y in zip(u, v))                                 # noqa: E731
+    cheo = lambda u, v: (u[1] * v[2] - u[2] * v[1], u[2] * v[0] - u[0] * v[2], u[0] * v[1] - u[1] * v[0])  # noqa: E731
+    vo = lambda u, v: sum(x * y for x, y in zip(u, v))                                     # noqa: E731
+
+    def giao(p, d, r, e):                                   # p + s·d = r + t·e, coplanar, not parallel ⇒ (point, t)
+        w = cheo(d, e)
+        k = max(range(3), key=lambda i: abs(w[i]))
+        if w[k] == 0:
+            return None
+        rp = hieu(r, p)
+        s = cheo(rp, e)[k] / w[k]
+        t = cheo(rp, d)[k] / w[k]
+        x = tuple(pi + s * di for pi, di in zip(p, d))
+        return x if tuple(ri + t * ei for ri, ei in zip(r, e)) == x else None, t
+
+    for sec in objects:
+        if sec.get("type") != "section" or not sec.get("steps"):
+            continue
+        nguon = [by_id.get(x) for x in sec.get("sources") or []]
+        solid = next((o for o in nguon if o and o.get("type") == "solid"), None)
+        plane = next((o for o in nguon if o and o.get("type") == "plane3"), None)
+        if solid is None or plane is None:
+            continue
+        try:
+            verts = [q(v) for v in solid["vertices"]]
+            p0, n = q(plane["point"]), q(plane["normal"])
+            faces = [list(f) for f in solid["faces"]]
+            named = [(o["id"], q(o["xyz"])) for o in objects if o.get("type") == "point3" and o.get("xyz")]
+        except (KeyError, TypeError, ValueError, ZeroDivisionError):
+            continue
+        nm = [cheo(hieu(verts[f[1]], verts[f[0]]), hieu(verts[f[2]], verts[f[0]])) if len(f) >= 3 else (0, 0, 0) for f in faces]
+        tren_mat = lambda x, i: any(nm[i]) and vo(nm[i], hieu(x, verts[faces[i][0]])) == 0   # noqa: E731
+        trong_pi = lambda x: vo(n, hieu(x, p0)) == 0                                         # noqa: E731
+        known: list[dict[str, Any]] = []                     # {xyz, ref, faces, depth}
+        for vid, x in named:
+            mats = {i for i in range(len(faces)) if tren_mat(x, i)}
+            if trong_pi(x) and mats and all(k["xyz"] != x for k in known):
+                vi = next((j for j, v in enumerate(verts) if v == x), None)
+                known.append({"xyz": x, "ref": {"vertex": vi} if vi is not None else {"id": vid}, "faces": mats, "depth": 0})
+        for j, v in enumerate(verts):
+            if trong_pi(v) and all(k["xyz"] != v for k in known):
+                known.append({"xyz": v, "ref": {"vertex": j}, "faces": {i for i, f in enumerate(faces) if j in f}, "depth": 0})
+        derivations: list[dict[str, Any]] = []
+        traces: dict[int, dict[str, Any]] = {}
+        # Rounds (breadth first): a round only uses points and traces known when it starts, so every point is reached by
+        # the SHORTEST chain of coplanar intersections — the textbook construction, not whichever face came first.
+        for _ in range(2 * len(faces) + 2):
+            snap, tr_snap, moi = list(known), dict(traces), False
+            for i, f in enumerate(faces):
+                if i in traces or not any(nm[i]) or not any(cheo(nm[i], n)):
+                    continue
+                pts = [k for k in snap if i in k["faces"]]
+                cap = sorted(((max(u["depth"], w["depth"]), u["depth"] + w["depth"], iu, iw, u, w)
+                              for iu, u in enumerate(pts) for iw, w in enumerate(pts) if iu < iw and u["xyz"] != w["xyz"]),
+                             key=lambda c: c[:4])
+                if cap:
+                    _d, _s, _i, _j, u, w = cap[0]
+                    tr = {"through": [u["ref"], w["ref"]], "point": u["xyz"], "dir": hieu(w["xyz"], u["xyz"]), "depth": _d}
+                elif len(pts) == 1:
+                    ss = next((g for g, t in sorted(tr_snap.items(), key=lambda gt: gt[1]["depth"]) if vo(nm[i], t["dir"]) == 0), None)
+                    if ss is None:
+                        continue
+                    tr = {"through": [pts[0]["ref"]], "parallel_to_trace_of": ss, "point": pts[0]["xyz"],
+                          "dir": tr_snap[ss]["dir"], "depth": max(pts[0]["depth"], tr_snap[ss]["depth"])}
+                else:
+                    continue
+                traces[i] = tr
+                moi = True
+                for e in range(len(f)):
+                    x0, x1 = f[e], f[(e + 1) % len(f)]
+                    kq = giao(tr["point"], tr["dir"], verts[x0], hieu(verts[x1], verts[x0]))
+                    if kq is None or kq[0] is None:
+                        continue
+                    x, t = kq
+                    if not (trong_pi(x) and tren_mat(x, i)) or any(k["xyz"] == x for k in known):
+                        continue
+                    derivations.append({"xyz": [str(c) for c in x], "face": i, "trace": tr["through"],
+                                        **({"parallel_to_trace_of": tr["parallel_to_trace_of"]} if "parallel_to_trace_of" in tr else {}),
+                                        "edge": sorted((x0, x1)), "on_edge_segment": bool(0 <= t <= 1)})
+                    known.append({"xyz": x, "ref": {"derived": len(derivations) - 1}, "depth": tr["depth"] + 1,
+                                  "faces": {g for g, ff in enumerate(faces) if x0 in ff and x1 in ff}})
+            if not moi:
+                break
+        at = {k["xyz"]: k["ref"] for k in known}
+        for st in sec["steps"]:
+            mat = st.get("face_index")
+            if st.get("parallel_face_edge") or mat not in traces:
+                continue
+            try:
+                a, b = q(st["a"]), q(st["b"])
+            except (KeyError, TypeError, ValueError):
+                continue
+            tr = traces[mat]
+            if a not in at or b not in at or any(cheo(hieu(x, tr["point"]), tr["dir"]) != (0, 0, 0) for x in (a, b)):
+                continue
+            need: list[int] = []
+
+            def can(ref):
+                if "derived" in ref and ref["derived"] not in need:
+                    d = derivations[ref["derived"]]
+                    for r in d["trace"]:
+                        can(r)
+                    if "parallel_to_trace_of" in d:
+                        for r in traces[d["parallel_to_trace_of"]]["through"]:
+                            can(r)
+                    need.append(ref["derived"])
+            for r in (*tr["through"], at[a], at[b]):
+                can(r)
+            st["trace_derivation"] = {"face": mat, "through": tr["through"],
+                                      **({"parallel_to_trace_of": tr["parallel_to_trace_of"]} if "parallel_to_trace_of" in tr else {}),
+                                      "endpoints": [at[a], at[b]],
+                                      "derivations": [{**derivations[k], "index": k} for k in sorted(need)],
+                                      "verified_exact": True}
 
 
 def _ky_hieu_dien_tich_thiet_dien(objects: list[dict[str, Any]], contract: Any) -> None:

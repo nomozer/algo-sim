@@ -826,6 +826,8 @@ def _ly_do_canh_thiet_dien(e: dict[str, Any], sec: dict[str, Any],
         return None
     canh_ss, mat = buoc[k].get("parallel_face_edge"), buoc[k].get("face_index")
     faces = solid.get("faces") or []
+    if not (isinstance(canh_ss, list) and len(canh_ss) == 2) and isinstance(buoc[k].get("trace_derivation"), dict):
+        return _ly_do_vet(buoc[k]["trace_derivation"], sec, solid, plane, by_id)
     if not (isinstance(canh_ss, list) and len(canh_ss) == 2 and isinstance(mat, int) and mat < len(faces)):
         return None
     ten = _ten_diem_khoi(solid, by_id)
@@ -838,6 +840,70 @@ def _ly_do_canh_thiet_dien(e: dict[str, Any], sec: dict[str, Any],
             "verified_exact": True,
             "text": (f"Vì {mp} song song với {canh} và {canh} nằm trong mặt ({mat_ten}), "
                      f"nên giao tuyến của {mp} với mặt ({mat_ten}) song song với {canh}.")}
+
+
+def _ly_do_vet(td: dict[str, Any], sec: dict[str, Any], solid: dict[str, Any], plane: dict[str, Any],
+               by_id: dict[str, dict[str, Any]]) -> dict[str, Any] | None:
+    """Run `scene3d-causal-pedagogical-integrity` — the «Vì sao» of a section edge found by the TRACE METHOD
+    (`simulation_state._vet_giao_tuyen_thiet_dien`): the chain of coplanar intersections that produces its endpoints,
+    told with the solid's vertex / edge names. An auxiliary point on an extended edge is introduced the textbook way
+    ("gọi I là giao điểm của NP và AB") with a letter no object of the scene uses; it is carried in `auxiliary_points`
+    (exact coordinates and the two lines) for a renderer — no scene object is added."""
+    ten = _ten_diem_khoi(solid, by_id)
+    faces = solid.get("faces") or []
+    poly = [list(p) for p in sec.get("polygon") or []]
+    ds = {d["index"]: d for d in td.get("derivations") or []}
+    if any(not isinstance(i, int) or i >= len(faces) for i in [td.get("face"), *(d.get("face") for d in ds.values())]):
+        return None
+    mat = lambda i: "".join(ten[j] for j in faces[i])                                    # noqa: E731
+    canh = lambda e: "".join(ten[j] for j in sorted(e))                                  # noqa: E731
+    dung = {str(o.get(k)) for o in by_id.values() for k in ("notation", "label", "reference") if o.get(k)} | set(ten)
+    chu = iter([c for c in ("I", "J", "K", "L", "E", "F", "G", "H", "T", "U", "V", "X", "Y", "Z") if c not in dung])
+    # one name per auxiliary point for the WHOLE section: the same point keeps its letter on every step
+    moi_ds = {d["index"]: d for st in sec.get("steps") or () for d in ((st.get("trace_derivation") or {}).get("derivations") or ())}
+    ten_phu = {i: next(chu, None) for i in sorted(moi_ds) if not (moi_ds[i]["on_edge_segment"] and moi_ds[i]["xyz"] in poly)}
+    phu = {i: ten_phu[i] for i in ds if i in ten_phu}
+    if None in phu.values():
+        return None
+
+    def ten_diem(ref: dict[str, Any]) -> str | None:
+        if "vertex" in ref:
+            return ten[ref["vertex"]] if isinstance(ref["vertex"], int) and ref["vertex"] < len(ten) else None
+        if "id" in ref:
+            o = by_id.get(ref["id"]) or {}
+            return o.get("notation") or o.get("label")
+        i = ref.get("derived")
+        if i not in ds:
+            return None
+        return phu.get(i) or f"giao điểm thuộc cạnh {canh(ds[i]['edge'])}"
+
+    def duong(through: list[dict[str, Any]], song_song: int | None) -> str | None:
+        ns = [ten_diem(r) for r in through]
+        if None in ns:
+            return None
+        if song_song is not None:
+            return f"đường thẳng qua {ns[0]} song song với giao tuyến trên mặt ({mat(song_song)})"
+        return f"{ns[0]}{ns[1]}" if all(len(x) <= 3 for x in ns) else f"đường thẳng qua {ns[0]} và {ns[1]}"
+
+    buoc, aux = [], []
+    for i in sorted(ds):
+        d = ds[i]
+        l = duong(d["trace"], d.get("parallel_to_trace_of"))
+        if l is None:
+            return None
+        if i in phu:
+            buoc.append(f"trong mặt ({mat(d['face'])}), gọi {phu[i]} là giao điểm của {l} và đường thẳng {canh(d['edge'])}")
+            aux.append({"name": phu[i], "xyz": d["xyz"], "edge_line": canh(d["edge"]), "face": mat(d["face"])})
+        else:
+            buoc.append(f"trong mặt ({mat(d['face'])}), {l} cắt cạnh {canh(d['edge'])} tại {ten_diem({'derived': i})}")
+    a, b = (ten_diem(r) for r in td.get("endpoints") or [{}, {}])
+    mp = plane.get("notation") or "mặt phẳng cắt"
+    if a is None or b is None:
+        return None
+    ket = f"{mp} và mặt ({mat(td['face'])}) có chung {a} và {b} nên giao tuyến của chúng là đường thẳng nối hai điểm đó"
+    text = (("; ".join(buoc) + ". ") if buoc else "") + ket + "."
+    return {"theorem": "COPLANAR_TRACE_INTERSECTION", "plane": mp, "face": mat(td["face"]), "auxiliary_points": aux,
+            "verified_exact": True, "text": text[:1].upper() + text[1:]}
 
 
 def _cau_thiet_dien(sec: dict[str, Any], by_id: dict[str, dict[str, Any]]) -> str:
