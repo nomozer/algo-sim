@@ -149,12 +149,14 @@ export function cauMucTieuSoChuaTraLoi(view: HybridPreviewView | null | undefine
 /** `route_d.scene_configuration` — hình không duy nhất; chỉ một loại đã có chứng chỉ bất biến ở backend. */
 export interface HybridSceneConfiguration {
   unique: false;
-  kind: "HEIGHT_INVARIANT_ILLUSTRATIVE";
+  kind: "HEIGHT_INVARIANT_ILLUSTRATIVE" | "SIMILARITY_SCALE_ILLUSTRATIVE";
   free_parameter: string;
   free_for: string[];
 }
 
-const LOAI_CAU_HINH_MINH_HOA = new Set(["HEIGHT_INVARIANT_ILLUSTRATIVE"]);
+// `SIMILARITY_SCALE_ILLUSTRATIVE` (run `certified-scale-cache-safety`): the source states no length; the figure is fixed
+// up to similarity and the scale drawn is an internal construction convention, never a source length.
+const LOAI_CAU_HINH_MINH_HOA = new Set(["HEIGHT_INVARIANT_ILLUSTRATIVE", "SIMILARITY_SCALE_ILLUSTRATIVE"]);
 
 /** `null` = hợp lệ (hoặc vắng). Hình không duy nhất mà thiếu nhãn rõ ràng ⇒ từ chối view, không hiển thị như hình duy nhất. */
 function kiemSceneConfiguration(raw: unknown): string | null {
@@ -169,6 +171,10 @@ function kiemSceneConfiguration(raw: unknown): string | null {
 export function cauCauHinhMinhHoa(view: HybridPreviewView | null | undefined): string | null {
   const c = view?.scene_configuration;
   if (!c || c.unique !== false) return null;
+  if (c.kind === "SIMILARITY_SCALE_ILLUSTRATIVE") {
+    return "Đề không cho độ dài nào nên kích thước của hình dưới đây chỉ là một tỉ lệ minh họa: góc và tỉ số đề hỏi đã "
+      + "được kiểm là không phụ thuộc tỉ lệ, nhưng độ dài vẽ trên hình không phải dữ kiện của đề.";
+  }
   return "Đề không cho chiều cao nên hình dưới đây chỉ là một hình minh họa: đáp số đã được kiểm là không phụ thuộc "
     + "chiều cao, nhưng độ cao vẽ trên hình không phải dữ kiện của đề.";
 }

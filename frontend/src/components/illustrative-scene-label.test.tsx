@@ -42,6 +42,18 @@ describe("Adapter /4 illustrative (non-unique) scene label", () => {
     expect(note).toMatch(/không phụ thuộc/);
   });
 
+  it("keeps a similarity-scale label and says the drawn lengths are not source data", () => {
+    const raw = base();
+    raw.route_d.scene_configuration = { unique: false, kind: "SIMILARITY_SCALE_ILLUSTRATIVE", free_parameter: "scale",
+      free_for: ["AB"], source_length_supplied: false, scale_origin: "INTERNAL_CONSTRUCTION_CONVENTION" };
+    const r = docPhanHoiHybrid(raw);
+    if (!r.ok) throw new Error(r.reason);
+    const note = cauCauHinhMinhHoa(hybridViewCua(r.envelope))!;
+    expect(note).toMatch(/không cho độ dài nào/);
+    expect(note).toMatch(/không phải dữ kiện/);
+    expect(note).not.toMatch(/\d/);
+  });
+
   it.each([
     ["claims unique", (c: any) => { c.unique = true; }],
     ["unknown kind", (c: any) => { c.kind = "GUESSED_HEIGHT"; }],

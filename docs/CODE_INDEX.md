@@ -1,5 +1,14 @@
 # CODE_INDEX.md — Chỉ mục module + BỘ NHỚ KIẾN TRÚC
 
+## Certified similarity scale, cache safety, decimals (2026-11-14)
+
+| Path | Owns | Locked by |
+|---|---|---|
+| `backend/app/simulation/geometry_functions/engine.py` (`_thu_chuan_hoa_ty_le`, `SCALE_FREE_ASKS`, `SCALE_UNIT_ID`, `_Dung._scale_unit` / `_scale_segment`) | `similarity-scale-certificate/1`: after `MISSING_DIMENSION`, served only if PO-1 no stated length/area/volume, PO-2 only angle/ratio goals, PO-3 one internal unit (first base edge of the first solid, through `do_dai` only) leaves one configuration, PO-4 units 2 and 5 give the same exact answers; reported as `scene_configuration.kind = SIMILARITY_SCALE_ILLUSTRATIVE` (`source_length_supplied: false`), never a call or premise | `backend/tests/geometry/test_certified_scale_normalization.py` |
+| `backend/app/main.py` (`CACHE_VERSION` 135) | Route D rows written before the tightened semantic guards MISS (the key is computed before the parser) | `backend/tests/test_cache_semantic_guard_invalidation.py` |
+| `backend/app/ai/local_geometry_parser.py` (`_VAL`) | A decimal coefficient ("3,5", "2.5", "1,5a") is one number, as in `NUMBER_PATTERN` and the gate's `_SO` | `backend/tests/geometry/test_decimal_comma_values.py` |
+| `frontend/src/simulations/domains/geometry/hybrid-preview-adapter.ts` (`LOAI_CAU_HINH_MINH_HOA`, `cauCauHinhMinhHoa`) | Accepts `SIMILARITY_SCALE_ILLUSTRATIVE`; learner note: the drawn lengths are a scale convention, not source data | `frontend/src/components/illustrative-scene-label.test.tsx` |
+
 ## Compositional clauses and simulation-oriented goals (2026-11-14)
 
 | Path | Owns | Locked by |

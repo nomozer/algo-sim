@@ -420,16 +420,29 @@ def _key(c: LoiGoi) -> tuple:
     return (c.fn, json.dumps(c.args.model_dump(), ensure_ascii=False, sort_keys=True), c.id)
 
 
+#: Pseudo call id of the internal similarity-scale unit (`_Dung._scale_unit`): names no source call.
+SCALE_UNIT_ID = "__scale_unit__"
+
+
 class _Dung:
     def __init__(self, calls: tuple[LoiGoi, ...], text: str, ky_hieu: str | None = None,
                  _flip_apices: frozenset[str] = frozenset(),
-                 _free_h2_sample: Fraction | None = None) -> None:
+                 _free_h2_sample: Fraction | None = None, _scale_unit: Fraction | None = None) -> None:
         self.calls = tuple(sorted(calls, key=_key))
         self.text = text
         self.ky_hieu = ky_hieu
         self._flip_apices = _flip_apices
         #: Height-invariance probe (`dung_tu_loi_goi`): a placeholder h² used ONLY where the source fixes no height.
         self._free_h2_sample = _free_h2_sample
+        #: Similarity-scale probe (`_thu_chuan_hoa_ty_le`, run `certified-scale-cache-safety`): an INTERNAL construction
+        #: unit given to ONE segment — the first edge of the first solid's base in its declared order — used only when
+        #: the source states no length at all. It is never a call: the Source Gate grounds every call value, and this
+        #: one has no source; it lives in `do_dai` under the pseudo id `SCALE_UNIT_ID` and in the scene's
+        #: `scene_configuration`, never in the premises.
+        self._scale_unit = _scale_unit
+        goc = next((c for c in self.calls if c.fn in ("pyramid", "regular_pyramid", "prism")), None)
+        self._scale_segment = (frozenset(list(goc.args.base)[:2]) if goc is not None and _scale_unit is not None
+                               else None)
         self.free_height_for: set[str] = set()
         self.free_affine_for: set[str] = set()
         self.length_ratio_certificates: dict[str, tuple[Fraction, Fraction, Fraction]] = {}
@@ -567,6 +580,8 @@ class _Dung:
         for s, chuoi in self._lop_bang(frozenset((x, y))):
             ra += [(binh_phuong(c.args.value), (c.id, *chuoi)) for c in self.of("segment_length")
                    if frozenset(c.args.segment) == s]
+            if self._scale_segment is not None and s == self._scale_segment:
+                ra.append((self._scale_unit * self._scale_unit, (SCALE_UNIT_ID, *chuoi)))
             for c in self.of("polygon_area"):
                 vp = tuple(c.args.polygon)
                 np = len(vp)
@@ -5531,6 +5546,86 @@ def _thu_chieu_cao_bat_bien(
     return res
 
 
+#: Run `certified-scale-cache-safety`. Goals invariant under every similarity (angles and ratios of like quantities).
+SCALE_FREE_ASKS = frozenset({"ask_angle_line_plane", "ask_angle_lines", "ask_angle_plane_plane",
+                             "ask_length_ratio", "ask_area_ratio", "ask_volume_ratio", "ask_curved_volume_ratio"})
+#: Premise functions whose numeric fields are dimensionless (an angle, a ratio): they hold for k·X iff for X.
+_SCALE_FREE_VALUED = frozenset({"line_plane_angle", "plane_plane_angle", "dihedral_angle", "line_line_angle",
+                                "vertex_angle", "segment_ratio"})
+#: Exact metamorphic witnesses of the similarity argument (NOT the proof: PO-1..PO-3 are).
+_SCALE_WITNESS_UNITS = (Fraction(2), Fraction(5))
+
+
+def _gia_tri_so(v: Any) -> bool:
+    return isinstance(v, str) and bool(re.search(r"\d|(?<![A-Za-z])a(?![A-Za-z])", v))
+
+
+def _thu_chuan_hoa_ty_le(problem_text: str, plan: Any, auxiliary: tuple[dict, ...], read_quotes: tuple[str, ...],
+                         *, _audit_sink: dict[str, Any] | None = None) -> KetQuaTuyen | None:
+    """Certified similarity-scale normalisation (`similarity-scale-certificate/1`).
+
+    Claim: if (PO-1) every premise is invariant under every homothety X ↦ kX, k > 0 (the source states NO length, area
+    or volume — only incidences, perpendicularity, parallelism, equalities, regularity, midpoints, angles, ratios), (PO-2)
+    every asked quantity is invariant under similarity (an angle, a ratio of like quantities), and (PO-3) fixing ONE
+    segment to the internal unit leaves exactly one configuration (the engine builds it with no other free parameter —
+    it refuses an underdetermined figure), then the solution set is one similarity class {kX₀ : k > 0}, so every asked
+    quantity has one value and X₀ is a faithful representative. A configuration with a SHAPE freedom (a ratio the source
+    leaves open) fails PO-3 and stays refused, whatever its goal. (PO-4) rebuilding at units 2 and 5 must give the same
+    exact answers — a consistency witness only. (PO-5) the unit is never a call / premise / provenance: it is reported in
+    `scene_configuration` as an internal construction convention."""
+    def audit(**kw):
+        if _audit_sink is not None:
+            _audit_sink.update(**kw)
+
+    try:
+        calls = doc_ke_hoach(plan)
+    except TuChoi:
+        return None
+    asks = [c for c in calls if c.fn.startswith("ask_")]
+    if not asks or any(c.fn not in SCALE_FREE_ASKS for c in asks):
+        audit(certified=False, failed_obligation="PO-2_SCALE_FREE_GOALS",
+              detail="mục tiêu không bất biến qua phép đồng dạng (độ dài, diện tích hay thể tích tuyệt đối)")
+        return None
+    co_do_dai = [c.id for c in calls if not c.fn.startswith("ask_") and c.fn not in _SCALE_FREE_VALUED
+                 and any(_gia_tri_so(v) for v in c.args.model_dump().values())]
+    if co_do_dai:
+        audit(certified=False, failed_obligation="PO-1_SCALE_FREE_PREMISES",
+              detail=f"đề cho số đo có thứ nguyên ({', '.join(co_do_dai)}): không có tự do tỉ lệ để chuẩn hoá")
+        return None
+    holder: list[_Dung] = []
+    res, _anchors, _ = _dung_mot_nhanh(problem_text, plan, auxiliary, read_quotes, _scale_unit=Fraction(1), _out_dung=holder)
+    if res.status != "SERVED" or not holder or holder[0]._scale_segment is None \
+            or (res.details or {}).get("free_height_for"):
+        audit(certified=False, failed_obligation="PO-3_UNIQUE_UP_TO_SCALE",
+              detail=(f"cố định một đoạn đơn vị vẫn chưa xác định hình ({res.code}): còn tự do HÌNH DẠNG, không chỉ tỉ lệ"
+                      if res.status != "SERVED" else "hình còn tham số tự do ngoài tỉ lệ"))
+        return None
+    witnesses = []
+    for k in _SCALE_WITNESS_UNITS:
+        rk, _a, _t = _dung_mot_nhanh(problem_text, plan, auxiliary, read_quotes, _scale_unit=k)
+        witnesses.append({"unit": str(k), "status": rk.status, "same_exact_answers": rk.answer_exact == res.answer_exact})
+    if not all(w["status"] == "SERVED" and w["same_exact_answers"] for w in witnesses):
+        audit(certified=False, failed_obligation="PO-4_SCALE_WITNESS", detail="đáp số chính xác đổi theo đơn vị nội bộ")
+        return None
+    seg = sorted(holder[0]._scale_segment)
+    cert = {"schema_version": "similarity-scale-certificate/1",
+            "obligations": {"PO-1_SCALE_FREE_PREMISES": True, "PO-2_SCALE_FREE_GOALS": True,
+                            "PO-3_UNIQUE_UP_TO_SCALE": True, "PO-4_SCALE_WITNESS": witnesses,
+                            "PO-5_NO_SOURCE_FABRICATION": True},
+            "argument": "premises homothety-invariant + one unit fixes a unique configuration ⇒ one similarity class ⇒ "
+                        "every similarity-invariant goal has one value",
+            "goals": sorted(c.fn for c in asks)}
+    res.details = {**(res.details or {}), "scene_configuration": {
+        "unique": False, "kind": "SIMILARITY_SCALE_ILLUSTRATIVE", "free_parameter": "scale", "free_for": ["".join(seg)],
+        "normalization_kind": "REPRESENTATIVE_SIMILARITY_SCALE", "scale_origin": "INTERNAL_CONSTRUCTION_CONVENTION",
+        "source_length_supplied": False, "illustrative_unit_segment": seg, "invariance_certificate": cert}}
+    res.trace = [*res.trace, {"step": "certify_similarity_scale", "rule": "homothety_invariant_premises_unique_up_to_scale",
+                              "object": "".join(seg), "provenance": "INTERNAL_CONSTRUCTION_CONVENTION",
+                              "note": ("đề không cho độ dài nào; mọi giả thiết và mục tiêu bất biến qua phép đồng dạng, "
+                                       "cố định một đoạn làm đơn vị cho đúng một hình — độ dài trên hình chỉ minh họa")}]
+    return res
+
+
 def _dung_mot_nhanh(
     problem_text: str,
     plan: Any,
@@ -5540,6 +5635,7 @@ def _dung_mot_nhanh(
     _flip_apices: frozenset[str] = frozenset(),
     _free_h2_sample: Fraction | None = None,
     _out_dung: list[_Dung] | None = None,
+    _scale_unit: Fraction | None = None,
 ) -> tuple[KetQuaTuyen, tuple[str, ...], list[dict]]:
     from app.simulation.semantic_program.formation import hoan_thien_dung_hinh
     from app.simulation.semantic_program.interpreter import SemanticProgramInterpreter
@@ -5562,7 +5658,8 @@ def _dung_mot_nhanh(
         if any(c.args.circumscribes is None and c.args.inscribed_in is None for c in cong_calls):
             raise TuChoi("CURVED_RELATION_UNSUPPORTED", "chưa hỗ trợ trộn khối tròn xoay độc lập với khối đa diện", tuple(c.id for c in cong_calls))
         ky_hieu = _don_vi(calls)
-        dung = _Dung(calls, problem_text, ky_hieu, _flip_apices=_flip_apices, _free_h2_sample=_free_h2_sample)
+        dung = _Dung(calls, problem_text, ky_hieu, _flip_apices=_flip_apices, _free_h2_sample=_free_h2_sample,
+                     _scale_unit=_scale_unit)
         if ky_hieu:
             dung.trace.append({"step": "choose_unit", "object": ky_hieu, "rule": "symbolic_length_unit",
                                "calls": sorted(c.id for c in calls for f in c.spec.value_fields if getattr(c.args, f)),
@@ -5926,6 +6023,13 @@ def dung_tu_loi_goi(problem_text: str, plan: Any, auxiliary: tuple[dict, ...] = 
             return inv
         if audit_sink:
             res0.details = {**(res0.details or {}), "height_invariance_audit": audit_sink}
+        if res0.code == "MISSING_DIMENSION":
+            scale_sink: dict[str, Any] = {}
+            sc = _thu_chuan_hoa_ty_le(problem_text, plan, auxiliary, read_quotes, _audit_sink=scale_sink)
+            if sc is not None:
+                return sc
+            if scale_sink:
+                res0.details = {**(res0.details or {}), "similarity_scale_audit": scale_sink}
     if _exploring_mirrors or len(anchors0) < 2:
         return res0
     if res0.status != "SERVED" and res0.code not in _MIRROR_RETRY_CODES:
