@@ -36,7 +36,9 @@ def serve(text):
 
 def sections(scene):
     pts = {o["id"]: tuple(o["xyz"]) for o in scene["objects"] if o["type"] == "point3"}
-    return sorted(sorted(pts.get(v) or (v,) for v in (o.get("polygon") or [])) for o in scene["objects"] if o["type"] == "section")
+    def xyz(v):                          # a polygon vertex is a point id or its coordinates
+        return tuple(str(Fraction(c)) for c in v) if isinstance(v, list) else (pts.get(v) or (v,))
+    return sorted(sorted(xyz(v) for v in (o.get("polygon") or [])) for o in scene["objects"] if o["type"] == "section")
 
 
 def mutate(scene, kind):
@@ -46,7 +48,11 @@ def mutate(scene, kind):
         sec = next((o for o in objs if o["type"] == "section"), None)
         if not sec:
             return None
-        p = next(o for o in objs if o["type"] == "point3" and o["id"] == sec["polygon"][0])
+        v0 = sec["polygon"][0]
+        if isinstance(v0, list):         # coordinates carried by the section itself
+            sec["polygon"][0] = [str(Fraction(v0[0]) + Fraction(1, 7)), *v0[1:]]
+            return s
+        p = next(o for o in objs if o["type"] == "point3" and o["id"] == v0)
         p["xyz"] = [str(Fraction(p["xyz"][0]) + Fraction(1, 7)), *p["xyz"][1:]]
         return s
     q = next((o for o in objs if o.get("type") == "quantity" and o.get("angle_construction")), None)
@@ -90,14 +96,21 @@ def main() -> int:
                     and (renamed or sections(s1) == sections(s2)))
             pairs.append({"item": k, "reference": ref, "same_certified_geometry": same,
                           "compared": "answer_exact" + ("" if renamed else " + section vertex coordinates")})
+    from app.ai.adapter4_route import build_adapter4_response, run_typed_fact_next_v2_route
+    from app.ai.local_geometry_parser import parse_geometry_problem_locally
     muts = []
     for k, (rd, sc) in served.items():
+        r = run_typed_fact_next_v2_route(parse_geometry_problem_locally(CORPUS[k]["text"], use_cache=False).payload)
         for kind in ("section_vertex_moved", "angle_foot_moved", "angle_ray_swapped"):
             m = mutate(sc, kind)
             if m is None:
                 continue
-            caught = not all(c["ok"] for c in VC.check("x", m))
-            muts.append({"item": k, "mutation": kind, "caught": caught})
+            by_checker = not all(c["ok"] for c in VC.check("x", m))
+            rm = copy.deepcopy(r)
+            rm.scene3d = m
+            by_product = build_adapter4_response(rm, CORPUS[k]["text"])["route_d"]["status"] != "SERVED"
+            muts.append({"item": k, "mutation": kind, "caught_by_independent_checker": by_checker,
+                         "caught_by_product_boundary": by_product, "caught": by_checker or by_product})
     out = {"run_id": RUN.name, "generated_at_utc": datetime.now(timezone.utc).isoformat(),
            "head": subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT).decode().strip(),
            "environment": {"ALLOW_LIVE_AI": "0"},
