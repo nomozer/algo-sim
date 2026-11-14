@@ -13,7 +13,7 @@ from app.ai.adaptive_input_router import route_text_input
 from app.ai.local_geometry_parser import parse_geometry_problem_locally
 from app.simulation.geometry_functions import planner
 from app.simulation.geometry_functions.registry import doc_ke_hoach
-from app.simulation.geometry_functions.target_invariance import prove_plane_angle, verify_target_invariance_certificate
+from app.simulation.geometry_functions.target_invariance import prove_angle_goal, verify_target_invariance_certificate
 from app.simulation.geometry_functions.typed_fact_next_bridge import bridge_v2
 
 RIGHT_B = "Cho hình chóp S.ABC có đáy là tam giác vuông tại B, SA vuông góc với đáy và SA = AB. "
@@ -39,7 +39,7 @@ def _calls(text):
 def _cert(text):
     calls = _calls(text)
     ask = next(c for c in calls if c.fn == "ask_angle_plane_plane")
-    return prove_plane_angle(calls, ask.id, ask.args.plane1, ask.args.plane2), calls
+    return prove_angle_goal(calls, ask), calls, ask
 
 
 # ── target invariance with a free shape ────────────────────────────────────────────────────────────────────────────
@@ -55,12 +55,14 @@ def test_an_angle_fixed_by_a_fixed_triangle_is_served_on_an_illustrative_non_uni
 
 
 def test_the_proof_is_the_synthetic_one():
-    cert, _ = _cert(RIGHT_B + PLANES)
+    cert, _, _ = _cert(RIGHT_B + PLANES)
     rules = [s["rule"] for s in cert["steps"]]
     assert {"RIGHT_ANGLE", "SOURCE_LINE_PERP_PLANE", "PERP_PLANE_TO_LINE", "PERP_TWO_LINES", "PLANE_ANGLE",
             "TRIANGLE_SHAPE_FIXED"} <= set(rules)
     pa = next(s for s in cert["steps"] if s["rule"] == "PLANE_ANGLE")["conclusion"]
-    assert pa["intersection"] == ["B", "C"] and set(pa["equals_angle"]) == {"S", "A", "B"}
+    # /1 asserted `equals_angle ⊇ {S, A, B}` (a bare triple). /2 states the vertex: the angle is ∠SBA AT B.
+    assert pa["intersection_line"] == ["B", "C"] and pa["witness"]["vertex"] == "B"
+    assert {pa["witness"]["ray_1"][1], pa["witness"]["ray_2"][1]} == {"S", "A"}
 
 
 @pytest.mark.parametrize("text", [
@@ -75,39 +77,50 @@ def test_renamed_and_trigonometric_forms(text):
 @pytest.mark.parametrize("text", [
     "Cho hình chóp S.ABC có đáy là tam giác vuông tại B và SA vuông góc với đáy. " + PLANES,            # height free: angle varies
     RIGHT_B + "Tính góc giữa đường thẳng SC và mặt phẳng (ABC).",                                       # varies with BC
-    RIGHT_B + "Tính góc giữa hai mặt phẳng (SAC) và (ABC).",                                             # invariant but unproven here
+    # superseded: "(SAC) và (ABC)" was refused here as "invariant but unproven"; /2 proves it by PERP_PLANES
+    # (SA ⊂ (SAC), SA ⊥ (ABC)) — see test_perpendicular_planes_are_now_proven.
     "Cho hình chóp S.ABC có đáy là tam giác vuông tại B, SA vuông góc với đáy và SA = AB. Tính thể tích khối chóp S.ABC.",
 ])
 def test_unproven_or_varying_goals_are_refused(text):
     assert _rd(text)["status"] != "SERVED"
 
 
+def test_perpendicular_planes_are_now_proven():
+    rd = _rd(RIGHT_B + "Tính góc giữa hai mặt phẳng (SAC) và (ABC).")
+    assert rd["status"] == "SERVED" and rd["answer_exact"]["q1"]["coef"] == "0"
+    cert, _, _ = _cert(RIGHT_B + "Tính góc giữa hai mặt phẳng (SAC) và (ABC).")
+    assert [s["rule"] for s in cert["steps"]][-1] == "PERP_PLANES" and cert["conclusion"]["witness"] is None
+
+
 def test_no_proof_without_the_equal_legs():
-    cert, _ = _cert("Cho hình chóp S.ABC có đáy là tam giác vuông tại B và SA vuông góc với đáy. " + PLANES)
+    cert, _, _ = _cert("Cho hình chóp S.ABC có đáy là tam giác vuông tại B và SA vuông góc với đáy. " + PLANES)
     assert cert is None
 
 
 @pytest.mark.parametrize("mutate, where", [
     (lambda c: c["steps"].__setitem__(0, {**c["steps"][0], "rule": "PARALLEL"}), "unknown rule"),
-    (lambda c: next(s for s in c["steps"] if s["rule"] == "PLANE_ANGLE")["conclusion"].__setitem__("intersection", ["A", "C"]), "common line"),
-    (lambda c: next(s for s in c["steps"] if s["rule"] == "PLANE_ANGLE")["conclusion"].__setitem__("equals_angle", ["B", "C", "A"]), "arms"),
-    (lambda c: next(s for s in c["steps"] if s["rule"] == "TRIANGLE_SHAPE_FIXED")["conclusion"].__setitem__("by", "RIGHT_ISOSCELES_AT_B"), "right angle"),
+    (lambda c: next(s for s in c["steps"] if s["rule"] == "PLANE_ANGLE")["conclusion"].__setitem__("intersection_line", ["A", "C"]), "common line"),
+    (lambda c: next(s for s in c["steps"] if s["rule"] == "PLANE_ANGLE")["conclusion"].__setitem__(
+        "witness", {"vertex": "S", "ray_1": ["S", "B"], "ray_2": ["S", "A"], "domain": "UNORIENTED_LINE_ANGLE_0_90"}), "arms"),
+    (lambda c: next(s for s in c["steps"] if s["rule"] == "TRIANGLE_SHAPE_FIXED")["conclusion"].__setitem__("by", "RIGHT_ANGLE_AT_B"), "right angle"),
     (lambda c: c["steps"].pop(next(i for i, s in enumerate(c["steps"]) if s["rule"] == "PERP_TWO_LINES")), "earlier"),
     (lambda c: next(s for s in c["steps"] if s["rule"] == "PERP_PLANE_TO_LINE")["conclusion"].__setitem__("perpendicular", [["A", "S"], ["S", "C"]]), "plane"),
     (lambda c: next(s for s in c["steps"] if s["rule"] == "TRIANGLE_SHAPE_FIXED")["premises"].__setitem__(1, "nope"), "stated equal"),
+    (lambda c: c["conclusion"].__setitem__("cos_sq", "1/4"), "value"),
 ])
 def test_the_independent_verifier_catches_every_mutated_step(mutate, where):
-    cert, calls = _cert(RIGHT_B + PLANES)
-    assert verify_target_invariance_certificate(cert, calls)["verified"] is True
+    cert, calls, ask = _cert(RIGHT_B + PLANES)
+    assert verify_target_invariance_certificate(cert, calls, ask)["verified"] is True
     bad = copy.deepcopy(cert)
     mutate(bad)
-    assert verify_target_invariance_certificate(bad, calls)["verified"] is False
+    assert verify_target_invariance_certificate(bad, calls, ask)["verified"] is False
 
 
 def test_a_changed_source_fact_breaks_the_certificate():
-    cert, _ = _cert(RIGHT_B + PLANES)
+    cert, _, _ = _cert(RIGHT_B + PLANES)
     other = _calls("Cho hình chóp S.ABC có đáy là tam giác vuông tại C, SA vuông góc với đáy và SA = AB. " + PLANES)
-    assert verify_target_invariance_certificate(cert, other)["verified"] is False   # the right angle is now at C
+    ask = next(c for c in other if c.fn == "ask_angle_plane_plane")
+    assert verify_target_invariance_certificate(cert, other, ask)["verified"] is False   # the right angle is now at C
 
 
 # ── the regular tetrahedron ────────────────────────────────────────────────────────────────────────────────────────
