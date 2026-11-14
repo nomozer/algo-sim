@@ -217,6 +217,8 @@ _NOT_REFUSAL = {
     'HEIGHT_INVARIANT_ILLUSTRATIVE',  # served scene_configuration.kind, not a refusal
     # served similarity-scale scene_configuration values (run `certified-scale-cache-safety`), not refusals
     'SIMILARITY_SCALE_ILLUSTRATIVE', 'REPRESENTATIVE_SIMILARITY_SCALE', 'INTERNAL_CONSTRUCTION_CONVENTION',
+    # served target-invariance scene_configuration values and certificate levels (run `target-invariant-regular-solid-semantics`)
+    'TARGET_INVARIANT_ILLUSTRATIVE', 'REPRESENTATIVE_OF_A_NON_UNIQUE_FIGURE', 'MATHEMATICALLY_PROVEN', 'ENGINE_DOMAIN_CERTIFIED',
 }
 _ROUTE_D_SOURCES = ('app/simulation/geometry_functions/registry.py', 'app/simulation/geometry_functions/planner.py',
                     'app/simulation/geometry_functions/engine.py', 'app/simulation/geometry_functions/__init__.py',

@@ -427,7 +427,8 @@ SCALE_UNIT_ID = "__scale_unit__"
 class _Dung:
     def __init__(self, calls: tuple[LoiGoi, ...], text: str, ky_hieu: str | None = None,
                  _flip_apices: frozenset[str] = frozenset(),
-                 _free_h2_sample: Fraction | None = None, _scale_unit: Fraction | None = None) -> None:
+                 _free_h2_sample: Fraction | None = None, _scale_unit: Fraction | None = None,
+                 _shape_units: tuple[tuple[frozenset, Fraction], ...] = ()) -> None:
         self.calls = tuple(sorted(calls, key=_key))
         self.text = text
         self.ky_hieu = ky_hieu
@@ -443,6 +444,10 @@ class _Dung:
         goc = next((c for c in self.calls if c.fn in ("pyramid", "regular_pyramid", "prism")), None)
         self._scale_segment = (frozenset(list(goc.args.base)[:2]) if goc is not None and _scale_unit is not None
                                else None)
+        #: Target-invariance probe (`_thu_bat_bien_muc_tieu`): ILLUSTRATIVE lengths for further base edges, used only once
+        #: a `target-invariance-certificate/1` proved the goal independent of every free parameter — same channel
+        #: (`do_dai`, pseudo id `SCALE_UNIT_ID`), never a call.
+        self._shape_units = dict(_shape_units)
         self.free_height_for: set[str] = set()
         self.free_affine_for: set[str] = set()
         self.length_ratio_certificates: dict[str, tuple[Fraction, Fraction, Fraction]] = {}
@@ -582,6 +587,8 @@ class _Dung:
                    if frozenset(c.args.segment) == s]
             if self._scale_segment is not None and s == self._scale_segment:
                 ra.append((self._scale_unit * self._scale_unit, (SCALE_UNIT_ID, *chuoi)))
+            if s in self._shape_units:
+                ra.append((self._shape_units[s] * self._shape_units[s], (SCALE_UNIT_ID, *chuoi)))
             for c in self.of("polygon_area"):
                 vp = tuple(c.args.polygon)
                 np = len(vp)
@@ -5593,7 +5600,19 @@ def _thu_chuan_hoa_ty_le(problem_text: str, plan: Any, auxiliary: tuple[dict, ..
               detail=f"đề cho số đo có thứ nguyên ({', '.join(co_do_dai)}): không có tự do tỉ lệ để chuẩn hoá")
         return None
     holder: list[_Dung] = []
-    res, _anchors, _ = _dung_mot_nhanh(problem_text, plan, auxiliary, read_quotes, _scale_unit=Fraction(1), _out_dung=holder)
+    res, anchors, _ = _dung_mot_nhanh(problem_text, plan, auxiliary, read_quotes, _scale_unit=Fraction(1), _out_dung=holder)
+    # Soundness (run `target-invariant-regular-solid-semantics`): with ≥ 2 independent height anchors the engine's sign
+    # branches (`_flip_apices`) are explored only by the mirror search this probe bypasses — one served branch is then
+    # not "one configuration"; refuse rather than certify an unexplored branch.
+    if res.status == "SERVED" and len(anchors) >= 2:
+        audit(certified=False, failed_obligation="PO-3_UNIQUE_UP_TO_SCALE",
+              detail=f"{len(anchors)} neo độ cao độc lập: các nhánh dấu chưa được xét trong phép chuẩn hoá")
+        return None
+    if res.status != "SERVED" and res.code == "MISSING_DIMENSION":
+        # one unit leaves a SHAPE freedom: serve only if the GOAL is proven invariant over it
+        ti = _thu_bat_bien_muc_tieu(problem_text, plan, auxiliary, read_quotes, calls, asks, audit)
+        if ti is not None:
+            return ti
     if res.status != "SERVED" or not holder or holder[0]._scale_segment is None \
             or (res.details or {}).get("free_height_for"):
         audit(certified=False, failed_obligation="PO-3_UNIQUE_UP_TO_SCALE",
@@ -5609,6 +5628,11 @@ def _thu_chuan_hoa_ty_le(problem_text: str, plan: Any, auxiliary: tuple[dict, ..
         return None
     seg = sorted(holder[0]._scale_segment)
     cert = {"schema_version": "similarity-scale-certificate/1",
+            # What PO-3 establishes (soundness audit): uniqueness WITHIN THE ENGINE'S DOMAIN — the engine places each object
+            # by a forced rule from the calls and refuses wherever a dimension or sign branch is left open (one height
+            # anchor required). It is not a free-standing proof that every Euclidean model of the source is similar.
+            "certification_level": "ENGINE_DOMAIN_CERTIFIED",
+            "scope": "configurations the engine models from these calls; one height anchor; similarity-invariant goals",
             "obligations": {"PO-1_SCALE_FREE_PREMISES": True, "PO-2_SCALE_FREE_GOALS": True,
                             "PO-3_UNIQUE_UP_TO_SCALE": True, "PO-4_SCALE_WITNESS": witnesses,
                             "PO-5_NO_SOURCE_FABRICATION": True},
@@ -5626,6 +5650,78 @@ def _thu_chuan_hoa_ty_le(problem_text: str, plan: Any, auxiliary: tuple[dict, ..
     return res
 
 
+def _thu_bat_bien_muc_tieu(problem_text: str, plan: Any, auxiliary: tuple[dict, ...], read_quotes: tuple[str, ...],
+                           calls: tuple[LoiGoi, ...], asks: list[LoiGoi], audit) -> KetQuaTuyen | None:
+    """Run `target-invariant-regular-solid-semantics`. The figure keeps a SHAPE freedom after the similarity unit; serve it
+    only if (TI-1) every goal is an angle between planes, (TI-2) `target-invariance-certificate/1` PROVES each goal
+    equal to an angle of a triangle whose shape the facts fix (synthetic proof over the calls) and (TI-3) the INDEPENDENT
+    verifier re-derives every step; then (TI-4) a representative is built with illustrative lengths on further base
+    edges (internal, `do_dai` only), one height anchor, and (TI-5) other illustrative shapes/scales give the same exact
+    answers (witness, not proof). The scene says the figure is NOT unique (`TARGET_INVARIANT_ILLUSTRATIVE`)."""
+    from app.simulation.geometry_functions.target_invariance import prove_plane_angle, verify_target_invariance_certificate
+
+    if not asks or any(c.fn != "ask_angle_plane_plane" for c in asks):
+        audit(certified=False, failed_obligation="TI-1_GOAL_KIND",
+              detail="còn tự do hình dạng; chứng minh bất biến mục tiêu hiện chỉ có cho góc giữa hai mặt phẳng")
+        return None
+    certs = []
+    for c in asks:
+        cert = prove_plane_angle(calls, c.id, c.args.plane1, c.args.plane2)
+        if not cert or cert.get("status") != "PROVEN":
+            audit(certified=False, failed_obligation="TI-2_TARGET_PROOF",
+                  detail=(cert or {}).get("status") or "không tìm được chứng minh mục tiêu bất biến theo phần hình bỏ ngỏ")
+            return None
+        ver = verify_target_invariance_certificate(cert, calls)
+        if not ver.get("verified"):
+            audit(certified=False, failed_obligation="TI-3_INDEPENDENT_VERIFICATION", detail=ver.get("reason"))
+            return None
+        certs.append({**cert, "independent_verification": ver})
+    goc = next((k for k in calls if k.fn in ("pyramid", "regular_pyramid", "prism")), None)
+    if goc is None:
+        return None
+    base = list(goc.args.base)
+    edges = [frozenset((base[i], base[(i + 1) % len(base)])) for i in range(1, len(base))]
+    units: list[tuple[frozenset, Fraction]] = []
+    res, anchors = None, ()
+    for e in edges:
+        units.append((e, Fraction(1)))
+        res, anchors, _ = _dung_mot_nhanh(problem_text, plan, auxiliary, read_quotes, _scale_unit=Fraction(1),
+                                          _shape_units=tuple(units))
+        if res.status == "SERVED" or res.code != "MISSING_DIMENSION":
+            break
+    if res is None or res.status != "SERVED" or len(anchors) >= 2 or (res.details or {}).get("free_height_for"):
+        audit(certified=False, failed_obligation="TI-4_REPRESENTATIVE",
+              detail="không dựng được hình đại diện một nhánh từ các độ dài minh họa")
+        return None
+    witnesses = []
+    for scale, shape in ((Fraction(1), Fraction(2)), (Fraction(1), Fraction(5)), (Fraction(1), Fraction(1, 2)),
+                         (Fraction(3), Fraction(1))):
+        rk, _a, _t = _dung_mot_nhanh(problem_text, plan, auxiliary, read_quotes, _scale_unit=scale,
+                                     _shape_units=tuple((e, shape) for e, _v in units))
+        witnesses.append({"scale": str(scale), "shape_lengths": str(shape), "status": rk.status,
+                          "same_exact_answers": rk.status == "SERVED" and rk.answer_exact == res.answer_exact})
+    if any(w["status"] == "SERVED" and not w["same_exact_answers"] for w in witnesses) \
+            or sum(w["same_exact_answers"] for w in witnesses) < 2:
+        audit(certified=False, failed_obligation="TI-5_SHAPE_WITNESS", detail="đáp số chính xác đổi theo hình minh họa")
+        return None
+    seg0 = sorted(frozenset(base[:2]))
+    lam = [sorted(e) for e, _v in units]
+    res.details = {**(res.details or {}), "scene_configuration": {
+        "unique": False, "kind": "TARGET_INVARIANT_ILLUSTRATIVE", "free_parameter": "shape",
+        "free_for": ["".join(seg0), *("".join(x) for x in lam)],
+        "normalization_kind": "REPRESENTATIVE_OF_A_NON_UNIQUE_FIGURE", "scale_origin": "INTERNAL_CONSTRUCTION_CONVENTION",
+        "source_length_supplied": False, "illustrative_unit_segment": seg0, "illustrative_shape_segments": lam,
+        "invariance_certificate": {"schema_version": "target-invariance-certificate/1",
+                                   "certification_level": "MATHEMATICALLY_PROVEN",
+                                   "representative_level": "ENGINE_DOMAIN_CERTIFIED",
+                                   "goals": certs, "witnesses": witnesses}}}
+    res.trace = [*res.trace, {"step": "certify_target_invariance", "rule": "synthetic_proof_plane_angle_by_fixed_triangle",
+                              "object": [c["goal_id"] for c in certs], "provenance": "INTERNAL_CONSTRUCTION_CONVENTION",
+                              "note": ("đề không xác định duy nhất hình; góc đề hỏi đã được chứng minh bằng một tam giác có "
+                                       "hình dạng cố định — hình vẽ chỉ là một hình minh họa")}]
+    return res
+
+
 def _dung_mot_nhanh(
     problem_text: str,
     plan: Any,
@@ -5636,6 +5732,7 @@ def _dung_mot_nhanh(
     _free_h2_sample: Fraction | None = None,
     _out_dung: list[_Dung] | None = None,
     _scale_unit: Fraction | None = None,
+    _shape_units: tuple[tuple[frozenset, Fraction], ...] = (),
 ) -> tuple[KetQuaTuyen, tuple[str, ...], list[dict]]:
     from app.simulation.semantic_program.formation import hoan_thien_dung_hinh
     from app.simulation.semantic_program.interpreter import SemanticProgramInterpreter
@@ -5659,7 +5756,7 @@ def _dung_mot_nhanh(
             raise TuChoi("CURVED_RELATION_UNSUPPORTED", "chưa hỗ trợ trộn khối tròn xoay độc lập với khối đa diện", tuple(c.id for c in cong_calls))
         ky_hieu = _don_vi(calls)
         dung = _Dung(calls, problem_text, ky_hieu, _flip_apices=_flip_apices, _free_h2_sample=_free_h2_sample,
-                     _scale_unit=_scale_unit)
+                     _scale_unit=_scale_unit, _shape_units=_shape_units)
         if ky_hieu:
             dung.trace.append({"step": "choose_unit", "object": ky_hieu, "rule": "symbolic_length_unit",
                                "calls": sorted(c.id for c in calls for f in c.spec.value_fields if getattr(c.args, f)),

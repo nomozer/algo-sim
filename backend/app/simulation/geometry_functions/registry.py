@@ -3059,7 +3059,7 @@ def _kiem_nguon(calls: tuple[LoiGoi, ...], text: str, auxiliary: tuple[dict, ...
                 raise TuChoi("OBJECT_NOT_IN_QUOTE", f"{c.id}: cụm chữ nhật không gọi đúng đa giác {c.args.vertices}", (c.id,))
         if c.fn in ("parallelogram", "rhombus", "trapezoid", "isosceles_trapezoid") and not _co_doi_tuong_hinh(c, de):
             raise TuChoi("OBJECT_NOT_IN_QUOTE", f"{c.id}: cụm {c.fn} không gọi đúng đa giác {c.args.vertices}", (c.id,))
-        vuong_can_eq = c.fn == "equal_length" and _vuong_can_hai_canh(c, de)
+        vuong_can_eq = c.fn == "equal_length" and (_vuong_can_hai_canh(c, de) or _canh_tu_dien_deu(c))
         tri_alt_proj = c.fn == "orthogonal_projection_line" and any(_duong_cao_tam_giac_khop(c, q) for q in c.quotes)
         if not vuong_can_eq and not tri_alt_proj:
             for nhom in c.spec.keywords:
@@ -6478,6 +6478,28 @@ def _duong_cao_tam_giac_khop(c: LoiGoi, q: str) -> bool:
             and set(c.args.line) == set(tri) - {c.args.point}
         ):
             return True
+    return False
+
+
+#: Run `target-invariant-regular-solid-semantics`: "tứ diện đều XYZW" DEFINES a tetrahedron whose six edges are equal.
+#: Only the four vertices written right after the phrase are read; "tứ diện XYZW" (no "đều"), "chóp tam giác đều" or a
+#: tetrahedron with one regular face never match.
+_TU_DIEN_DEU = re.compile(r"(?<!\w)tứ\s+diện\s+đều\s+(?P<p>(?:[A-Z][0-9]*'?){4})(?![\w'.])", re.IGNORECASE)
+
+
+def _canh_tu_dien_deu(c: LoiGoi) -> bool:
+    """`equal_length` of two edges of a REGULAR TETRAHEDRON that the call's own quote defines ("Cho tứ diện đều ABCD"):
+    a consequence of the definition, read in closed grammar like `_vuong_can_hai_canh` — never a stated equality."""
+    if c.fn != "equal_length":
+        return False
+    a, b = set(c.args.segment_a), set(c.args.segment_b)
+    if len(a) != 2 or len(b) != 2 or a == b:
+        return False
+    for q in c.quotes:
+        for m in _TU_DIEN_DEU.finditer(chuan_hoa(q)):
+            v = re.findall(r"[A-Z][0-9]*'?", m["p"])
+            if len(set(v)) == 4 and a <= set(v) and b <= set(v):
+                return True                    # every pair of a tetrahedron's vertices is an edge
     return False
 
 

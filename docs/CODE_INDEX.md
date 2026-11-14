@@ -1,5 +1,16 @@
 # CODE_INDEX.md — Chỉ mục module + BỘ NHỚ KIẾN TRÚC
 
+## Target invariance, regular tetrahedron, GEO-BE-001 (2026-11-14)
+
+| Path | Owns | Locked by |
+|---|---|---|
+| `backend/app/simulation/geometry_functions/target_invariance.py` (`prove_plane_angle`, `verify_target_invariance_certificate`, `RULES`, `MAX_DERIVED`) | `target-invariance-certificate/1`: bounded synthetic proof over the verified calls (right angle, line ⊥ plane ⇒ ⊥ its lines, ⊥ two meeting lines ⇒ ⊥ their plane, angle of planes = angle of the perpendiculars to the common line, triangle shape fixed by right angle + equal legs or regularity); an independent step-by-step verifier | `backend/tests/geometry/test_target_invariance_regular_solids.py` |
+| `backend/app/simulation/geometry_functions/engine.py` (`_thu_bat_bien_muc_tieu`, `_Dung._shape_units`; `_thu_chuan_hoa_ty_le` single-anchor guard, `certification_level`) | A figure with a SHAPE freedom is served only when every goal is a plane angle with a proven + independently verified certificate; representative from illustrative lengths (`do_dai` only), witnesses at other shapes/scales; `scene_configuration.kind = TARGET_INVARIANT_ILLUSTRATIVE`. The similarity normalisation refuses ≥ 2 height anchors (sign branches unexplored) and declares `ENGINE_DOMAIN_CERTIFIED` | same + `test_certified_scale_normalization.py` |
+| `backend/app/ai/local_geometry_parser.py` (rule 1d) · `backend/app/simulation/geometry_functions/registry.py` (`_TU_DIEN_DEU`, `_canh_tu_dien_deu`) | "tứ diện đều XYZW" without side: one definitional `equal_length` (lateral = base edge) quoting the defining phrase; the gate reads it only from that phrase (like `_vuong_can_hai_canh`) | `test_target_invariance_regular_solids.py` |
+| `backend/app/simulation/semantic_program/display_names.py` | GEO-BE-001 integrated (hunk of `5a229507b`) | `backend/tests/semantic_program/test_display_names_incidence_cycle.py` |
+| `backend/app/main.py` (`CACHE_VERSION` 136) | rows `135:route-d` MISS | `backend/tests/test_cache_target_invariance_invalidation.py` |
+| `frontend/src/simulations/domains/geometry/hybrid-preview-adapter.ts` | accepts `TARGET_INVARIANT_ILLUSTRATIVE`; learner note "hình minh họa, không duy nhất" | `frontend/src/components/illustrative-scene-label.test.tsx` |
+
 ## Certified similarity scale, cache safety, decimals (2026-11-14)
 
 | Path | Owns | Locked by |

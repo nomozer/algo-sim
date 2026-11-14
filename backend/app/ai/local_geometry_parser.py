@@ -1020,6 +1020,15 @@ def _parse_clause_into_ast(builder: _AstBuilder, clause: ClauseSpan) -> None:
                 builder.premises.append(
                     {"kind": "segment_length", "args": {"segment": [pts[0], pts[1]], "value": val}, "quote": q_full, "solid_id": sid}
                 )
+            else:
+                # (target-invariant-regular-solid-semantics) no side: the DEFINITION still makes all six edges equal. With
+                # the regular base and the apex over its centre (regular_pyramid), one lateral edge = one base edge fixes
+                # them all; the quote is the defining phrase itself (gate `_canh_tu_dien_deu`), never an invented equality
+                q_def = _clean_quote(raw, ca + m_tet.start("core"), ca + m_tet.end("core"))
+                builder.premises.append(
+                    {"kind": "equal_length", "args": {"segment_a": [pts[0], pts[1]], "segment_b": [pts[1], pts[2]]},
+                     "quote": q_def, "solid_id": sid}
+                )
         mapped_fact = True
 
     # 1e. Cube: "Cho hình lập phương ABCD.A'B'C'D' (có cạnh bằng 2)?"

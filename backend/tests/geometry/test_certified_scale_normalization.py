@@ -64,15 +64,16 @@ def test_base_shape_stated_last(length):
 
 
 @pytest.mark.parametrize("text, obligation", [
-    # shape freedom: right at B, BC/AB open (the angle happens to be 45° here — uncertified ⇒ refused, never guessed)
+    # shape freedom with a goal that VARIES with it (BC/AB open; the plane angle case is now served by a
+    # target-invariance proof — test_target_invariance_regular_solids.py)
     ("Cho hình chóp S.ABC có đáy là tam giác vuông tại B, SA vuông góc với đáy và SA = AB. "
-     "Tính góc giữa hai mặt phẳng (SBC) và (ABC).", "PO-3_UNIQUE_UP_TO_SCALE"),
+     "Tính góc giữa đường thẳng SC và mặt phẳng (ABC).", "PO-3_UNIQUE_UP_TO_SCALE"),
     # free height: the angle changes with SA
     ("Cho hình chóp S.ABC có đáy là tam giác vuông cân tại A và SA vuông góc với đáy. " + GOAL, None),
     # an absolute quantity is asked
     (ISO + "Tính thể tích khối chóp S.ABC.", "PO-2_SCALE_FREE_GOALS"),
-    # a regular tetrahedron without its side: the calls carry no "every edge equal" fact, so the height is free
-    ("Cho tứ diện đều ABCD. Gọi M là trung điểm của CD. Tính góc giữa hai đường thẳng AC và BM.", "PO-3_UNIQUE_UP_TO_SCALE"),
+    # a tetrahedron that is NOT regular (a regular one is now served: its definition gives the equal edges)
+    ("Cho tứ diện ABCD. Gọi M là trung điểm của CD. Tính góc giữa hai đường thẳng AC và BM.", "PO-3_UNIQUE_UP_TO_SCALE"),
 ])
 def test_figures_not_fixed_up_to_scale_or_absolute_goals_are_refused(text, obligation):
     rd = _rd(text)

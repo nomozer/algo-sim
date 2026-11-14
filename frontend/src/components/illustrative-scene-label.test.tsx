@@ -54,6 +54,18 @@ describe("Adapter /4 illustrative (non-unique) scene label", () => {
     expect(note).not.toMatch(/\d/);
   });
 
+  it("keeps a target-invariant label and says the drawn figure is one of many", () => {
+    const raw = base();
+    raw.route_d.scene_configuration = { unique: false, kind: "TARGET_INVARIANT_ILLUSTRATIVE", free_parameter: "shape",
+      free_for: ["AB", "BC"], source_length_supplied: false };
+    const r = docPhanHoiHybrid(raw);
+    if (!r.ok) throw new Error(r.reason);
+    const note = cauCauHinhMinhHoa(hybridViewCua(r.envelope))!;
+    expect(note).toMatch(/không xác định duy nhất/);
+    expect(note).toMatch(/không phải dữ kiện/);
+    expect(note).not.toMatch(/[0-9]/);
+  });
+
   it.each([
     ["claims unique", (c: any) => { c.unique = true; }],
     ["unknown kind", (c: any) => { c.kind = "GUESSED_HEIGHT"; }],

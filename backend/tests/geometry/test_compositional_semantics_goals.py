@@ -178,8 +178,10 @@ def test_a_plane_definition_clause_is_closed_grammar_but_never_carries_a_number_
     (f"{B4}. Gọi E là điểm đối xứng của A qua C. Tính khoảng cách từ E đến mặt phẳng (SBC).", "UNSUPPORTED_POINT_CONSTRUCTION"),
     ("Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh a, SA = a và hình chiếu vuông góc của S lên mặt phẳng (ABC) trùng "
      "với trọng tâm của tam giác ABC. Tính khoảng cách từ S đến mặt phẳng (ABC).", "DESCRIBED_POINT_IN_PREMISE_UNSUPPORTED"),
-    ("Cho tứ diện đều ABCD. Gọi M là trung điểm của CD. Côsin của góc giữa hai đường thẳng AC và BM bằng",
-     "SCALE_NORMALIZATION_UNSUPPORTED"),
+    # a regular tetrahedron without side is now served (run `target-invariant-regular-solid-semantics`); a NON-regular
+    # one keeps a shape freedom that no target-invariance proof covers
+    ("Cho tứ diện ABCD. Gọi M là trung điểm của CD. Côsin của góc giữa hai đường thẳng AC và BM bằng",
+     "SHAPE_FREEDOM_UNCERTIFIED"),
 ])
 def test_specific_root_causes(text, root):
     out, rd = _route(text)

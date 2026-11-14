@@ -149,14 +149,17 @@ export function cauMucTieuSoChuaTraLoi(view: HybridPreviewView | null | undefine
 /** `route_d.scene_configuration` — hình không duy nhất; chỉ một loại đã có chứng chỉ bất biến ở backend. */
 export interface HybridSceneConfiguration {
   unique: false;
-  kind: "HEIGHT_INVARIANT_ILLUSTRATIVE" | "SIMILARITY_SCALE_ILLUSTRATIVE";
+  kind: "HEIGHT_INVARIANT_ILLUSTRATIVE" | "SIMILARITY_SCALE_ILLUSTRATIVE" | "TARGET_INVARIANT_ILLUSTRATIVE";
   free_parameter: string;
   free_for: string[];
 }
 
 // `SIMILARITY_SCALE_ILLUSTRATIVE` (run `certified-scale-cache-safety`): the source states no length; the figure is fixed
 // up to similarity and the scale drawn is an internal construction convention, never a source length.
-const LOAI_CAU_HINH_MINH_HOA = new Set(["HEIGHT_INVARIANT_ILLUSTRATIVE", "SIMILARITY_SCALE_ILLUSTRATIVE"]);
+// `TARGET_INVARIANT_ILLUSTRATIVE` (run `target-invariant-regular-solid-semantics`): the source does not fix the figure's
+// shape; the asked angle is PROVEN the same for every admissible figure and the drawn one is only an illustration.
+const LOAI_CAU_HINH_MINH_HOA = new Set(["HEIGHT_INVARIANT_ILLUSTRATIVE", "SIMILARITY_SCALE_ILLUSTRATIVE",
+  "TARGET_INVARIANT_ILLUSTRATIVE"]);
 
 /** `null` = hợp lệ (hoặc vắng). Hình không duy nhất mà thiếu nhãn rõ ràng ⇒ từ chối view, không hiển thị như hình duy nhất. */
 function kiemSceneConfiguration(raw: unknown): string | null {
@@ -171,6 +174,10 @@ function kiemSceneConfiguration(raw: unknown): string | null {
 export function cauCauHinhMinhHoa(view: HybridPreviewView | null | undefined): string | null {
   const c = view?.scene_configuration;
   if (!c || c.unique !== false) return null;
+  if (c.kind === "TARGET_INVARIANT_ILLUSTRATIVE") {
+    return "Đề không xác định duy nhất hình này nên hình dưới đây chỉ là một hình minh họa: góc đề hỏi đã được chứng "
+      + "minh là như nhau trên mọi hình thỏa đề, nhưng hình dạng và độ dài vẽ trên hình không phải dữ kiện của đề.";
+  }
   if (c.kind === "SIMILARITY_SCALE_ILLUSTRATIVE") {
     return "Đề không cho độ dài nào nên kích thước của hình dưới đây chỉ là một tỉ lệ minh họa: góc và tỉ số đề hỏi đã "
       + "được kiểm là không phụ thuộc tỉ lệ, nhưng độ dài vẽ trên hình không phải dữ kiện của đề.";

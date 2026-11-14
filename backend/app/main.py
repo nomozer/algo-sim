@@ -910,7 +910,10 @@ MISSING_KEY_MSG = (
 #       Run `compositional-semantics-simulation-goals` siết guard (mệnh đề phụ phải được đọc, góc vẽ ràng vào điểm đã
 #       kiểm) mà không đổi chuỗi nào và giữ 134 ⇒ một cảnh cũ cho đề nay bị từ chối vẫn được phát lại, bỏ qua guard.
 #       Mọi row `134:route-d` phải MISS (`tests/test_cache_semantic_guard_invalidation.py`, qua `/api/analyze` thật).
-CACHE_VERSION = "135"
+# 136 — 2026-11-14 (target-invariant-regular-solid-semantics): chuẩn hoá tỉ lệ nay TỪ CHỐI khi có ≥ 2 neo độ cao
+#       (nhánh dấu chưa xét) — guard siết; "tứ diện đều" không cạnh mang phép bằng nhau định nghĩa; tên hiển thị GEO-BE-001.
+#       Mọi row `135:route-d` phải MISS (`tests/test_cache_target_invariance_invalidation.py`).
+CACHE_VERSION = "136"
 
 #: Hai chế độ hợp lệ của kiến trúc chính thức Hybrid `/4` do máy chủ sở hữu:
 #: - `live` (mặc định): trích xuất có cấu trúc qua Gemini (`typed-fact-next/2`) khi cấu hình `GEMINI_API_KEY`.

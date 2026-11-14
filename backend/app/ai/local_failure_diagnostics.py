@@ -199,13 +199,14 @@ def diagnose(*, parse_status: str, parse_reason: str | None, fallback_reason: st
                 root = "SOURCE_CONFLICT"
             if terminal_code.startswith("BRIDGE_UNSUPPORTED"):
                 layer = "TYPED_FACTS_BRIDGE"
-            # an angle asked of a figure the source fixes only up to similarity (no length at all): the data are complete
-            # for the angle, the planner has no scale normalisation — a capability gap, not missing data
+            # an angle asked of a figure the source states no length for, still refused after the certified similarity
+            # normalisation: the figure keeps a SHAPE freedom and no target-invariance proof covers the goal — a
+            # capability gap (run `target-invariant-regular-solid-semantics`; formerly SCALE_NORMALIZATION_UNSUPPORTED)
             if (terminal_code == "MISSING_DIMENSION"
                     and any(c["role"] == "GOAL" and re.search(r"\bgóc\b", c.get("_text", ""), re.IGNORECASE) for c in clauses)
                     and not any(_SCALE_LENGTH.search(c.get("_text", "")) for c in clauses)):
-                root, layer = "SCALE_NORMALIZATION_UNSUPPORTED", "PLANNER"
-            if terminal_code == "MISSING_DIMENSION" and root == "SCALE_NORMALIZATION_UNSUPPORTED":
+                root, layer = "SHAPE_FREEDOM_UNCERTIFIED", "PLANNER"
+            if terminal_code == "MISSING_DIMENSION" and root == "SHAPE_FREEDOM_UNCERTIFIED":
                 group = "CAPABILITY"
             rec.update(root_cause=root, first_loss_layer="NONE", detected_by=layer, refusal_group=group)
     else:
