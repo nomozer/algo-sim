@@ -1,5 +1,20 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = SCENE3D_CAUSAL_PEDAGOGICAL_INTEGRITY
+
+RUN_ID = scene3d-causal-pedagogical-integrity
+REPORT = docs/evaluation/geometry/runs/scene3d-causal-pedagogical-integrity/AXO_SCENE3D_CAUSAL_PEDAGOGICAL_INTEGRITY_REPORT.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/scene3d-causal-pedagogical-integrity/
+START_BASE = 9d0949b09
+CODE_COMMIT = 70befe6f1 (unused auxiliaries, visual prerequisites, right angles, cache 138), fac7ead77 (trace method); samples af3e4dddd, a2874d273; fixtures d1789d71a, 1a1b6834a; candidate freeze 4ddec5666
+CLASSIFICATION = DEVELOPMENT_EVIDENCE_ON_AGENT_CORPUS_AND_EXPOSED_ITEMS; INDEPENDENT_SCENE_AUDIT (serialized scene only); AUTOMATED_BROWSER_E2E; INDEPENDENT_GENERALIZATION NOT_MEASURED; PUBLICATION BLOCKED_PENDING_OWNER_REVIEW
+PRODUCT_CHANGE = YES; contract versions unchanged (additive fields); CACHE_VERSION 137 → 138; measured files 117
+MODEL_REQUEST_COUNT = 0
+VERIFICATION = run.json; full_regression_summary.json; v9415_issue_reproduction_matrix.json; global_scene_causality_audit.json; causal_mutation_tests.json; section_geometry_regression.json
+CORRECTS = axo-backend-geometry-handoff (owner, 9d5e9b408): Route D unused-auxiliary flags computed without targets (flagged the asked line); dependency-free carriers kept as visual prerequisites. proof-soundness-generalized-angle-invariance: fixtures-lineage-proof-soundness superseded; its report's "90° goals draw no angle" gap closed. Historical receipts unchanged
+CORRECTED_BY = NONE
+LIMITATIONS = agent-written corpus; exposed items; sections needing a diagonal auxiliary plane unexplained (2 edges); auxiliary points not drawn; advanced catalog not regenerated (library generator); headless browser; no H-1, no students.
+
 ## WAVE_ID = PROOF_SOUNDNESS_GENERALIZED_ANGLE_INVARIANCE
 
 RUN_ID = proof-soundness-generalized-angle-invariance

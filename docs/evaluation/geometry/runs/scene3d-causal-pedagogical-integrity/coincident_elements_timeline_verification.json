@@ -1,0 +1,67 @@
+{
+  "run_id": "scene3d-causal-pedagogical-integrity",
+  "generated_at_utc": "2026-11-14T15:39:13.820636+00:00",
+  "product_commit": "a2874d273959970faa501879f4f9dbfe20c93975",
+  "measured_system": "225f4bba5a8765ccd1c12507ce6dbd0bab25d69d02263148cf94752f921e2b56",
+  "cache_version": "138",
+  "dataset_partition": "DEVELOPMENT (agent-written corpus, exposed REAL27, exposed probes); never H-1 or locked W2/W3",
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "HYBRID_ROUTE_MODE": "local-first",
+    "live_ai_calls": 0
+  },
+  "head": "6da2795a493d6097add56294832f0d5a7ea1ef13",
+  "this_branch": {
+    "violations": {
+      "READOUT_IDS_MISSING": 7,
+      "CAUSAL_BIRTH_ORDER": 1
+    },
+    "examples": {
+      "READOUT_IDS_MISSING": [
+        0,
+        1
+      ],
+      "CAUSAL_BIRTH_ORDER": [
+        [
+          "K",
+          5,
+          "SB_line",
+          "no CREATE event"
+        ]
+      ]
+    },
+    "orphans_not_flagged": [
+      "H",
+      "M"
+    ],
+    "unused_auxiliary_flagged": []
+  },
+  "library": {
+    "violations": {},
+    "examples": {},
+    "orphans_not_flagged": [
+      "H",
+      "M"
+    ],
+    "unused_auxiliary_flagged": []
+  },
+  "SB_line": "a source line: the library fixture creates it (CREATE depends [S, B]) before K; no fake CREATE added by this run",
+  "remaining_in_library": {
+    "violations": {
+      "READOUT_IDS_MISSING": 9
+    },
+    "examples": {
+      "READOUT_IDS_MISSING": [
+        0,
+        1
+      ]
+    },
+    "orphans_not_flagged": [
+      "M",
+      "N",
+      "P",
+      "Q"
+    ],
+    "unused_auxiliary_flagged": []
+  }
+}

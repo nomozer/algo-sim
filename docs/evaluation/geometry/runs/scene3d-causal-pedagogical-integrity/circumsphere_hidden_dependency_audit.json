@@ -1,0 +1,47 @@
+{
+  "run_id": "scene3d-causal-pedagogical-integrity",
+  "generated_at_utc": "2026-11-14T15:39:13.820636+00:00",
+  "product_commit": "a2874d273959970faa501879f4f9dbfe20c93975",
+  "measured_system": "225f4bba5a8765ccd1c12507ce6dbd0bab25d69d02263148cf94752f921e2b56",
+  "cache_version": "138",
+  "dataset_partition": "DEVELOPMENT (agent-written corpus, exposed REAL27, exposed probes); never H-1 or locked W2/W3",
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "HYBRID_ROUTE_MODE": "local-first",
+    "live_ai_calls": 0
+  },
+  "head": "6da2795a493d6097add56294832f0d5a7ea1ef13",
+  "this_branch_fixture": {
+    "": {
+      "violations": {
+        "HIDDEN_MATH_VISUAL_DEPENDENCY": 2
+      },
+      "examples": {
+        "HIDDEN_MATH_VISUAL_DEPENDENCY": [
+          [
+            "A_prime",
+            "vec_OB"
+          ],
+          [
+            "D",
+            "vec_OC"
+          ]
+        ]
+      },
+      "orphans_not_flagged": [],
+      "unused_auxiliary_flagged": []
+    }
+  },
+  "library_fixture": {
+    "": {
+      "violations": {},
+      "examples": {},
+      "orphans_not_flagged": [],
+      "unused_auxiliary_flagged": []
+    }
+  },
+  "owner_verified_artifact": 0,
+  "A_prime_D": "computational_depends [A, vec_OB] / [A_prime, vec_OC] kept; visible_prerequisites [A, B, O] / [A_prime, C, O] (owner test)",
+  "generalization_this_run": "a carrier with no dependency (given radius R of a sphere / cylinder) was kept in visible_prerequisites; dropped now (test_source_data_is_not_a_visual_prerequisite)",
+  "not_replaced_by_a_single_point": true
+}

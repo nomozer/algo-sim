@@ -263,7 +263,21 @@ def main() -> int:
                 listening.append(port)
     browser = load("resource_cleanup_audit.json")
     browser = browser.get("browser_switch_loop", browser)
-    put("resource_cleanup_audit.json", {"browser_switch_loop": browser, "ports_checked_after_run": [8767, 8000, 3000, 4173, 5173],
+    # the browser check split render ids on '::' only; a render id `td_sec#4cf` is a part of the CURRENT section td_sec
+    e2e_src = (RUN / "tools/scene3d_goal_e2e.mjs").read_text(encoding="utf-8")
+    switch_ids = {}
+    for case in {s["case"] for s in browser.get("series", [])}:
+        m = re.search(rf"\n  {case}: \{{.*?text: (.+?) \}},\n", e2e_src)
+        consts = dict(re.findall(r"const (\w+) = '([^']*)';", e2e_src))
+        text = "".join(consts.get(t.strip(), t.strip().strip("'")) for t in m.group(1).split(" + ")) if m else None
+        sc = (route_text_input(text, allow_live_ai=False).response or {}).get("envelope", {}).get("scene3d", {}) if text else {}
+        switch_ids[case] = {o["id"] for o in sc.get("objects") or ()}
+    foreign = [[s["cycle"], s["case"], x] for s in browser.get("series", []) for x in s.get("foreign_ids") or ()
+               if x.split("#")[0].split("::")[0] not in switch_ids.get(s["case"], set())]
+    put("resource_cleanup_audit.json", {"browser_switch_loop": browser,
+        "foreign_ids_after_normalising_render_suffix": foreign,
+        "foreign_ids_note": "raw foreign_ids hold render ids `<object>#<hash>` of the current scene's own section (split on '::' only in the harness)",
+        "ports_checked_after_run": [8767, 8000, 3000, 4173, 5173],
         "listening": listening, "ports_started_by_this_run": [8767],
         "other_listeners": {str(p): "not started by this run; left untouched" for p in listening if p != 8767},
         "new_worktrees_or_branches": 0, "verdict": "PASS" if 8767 not in listening else "FAIL"})

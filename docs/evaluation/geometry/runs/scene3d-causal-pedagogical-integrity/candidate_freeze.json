@@ -1,0 +1,34 @@
+{
+  "run_id": "scene3d-causal-pedagogical-integrity",
+  "generated_at_utc": "2026-11-14T15:39:13.820636+00:00",
+  "product_commit": "a2874d273959970faa501879f4f9dbfe20c93975",
+  "measured_system": "225f4bba5a8765ccd1c12507ce6dbd0bab25d69d02263148cf94752f921e2b56",
+  "cache_version": "138",
+  "dataset_partition": "DEVELOPMENT (agent-written corpus, exposed REAL27, exposed probes); never H-1 or locked W2/W3",
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "HYBRID_ROUTE_MODE": "local-first",
+    "live_ai_calls": 0
+  },
+  "head": "6da2795a493d6097add56294832f0d5a7ea1ef13",
+  "freeze_stored_in": "4ddec566608ac5bb4f82da6a6b09a58081eaa78e",
+  "commit_field": "63456520328eeb7a02c612908358438cbd5ee134",
+  "clean_tree": true,
+  "measured_files": 117,
+  "product_commits": [
+    "70befe6f1",
+    "fac7ead77"
+  ],
+  "cache_version_bumped": "137 → 138",
+  "contracts_unchanged": [
+    "geometry-fact-planner/26",
+    "geometry-functions/33",
+    "geometry-function-engine/24",
+    "angle-construction/1",
+    "target-invariance-certificate/2",
+    "output-policy/1",
+    "hybrid-route-d-simulation/4",
+    "typed-fact-next/2"
+  ],
+  "freeze_verify_in_regression": "PASS"
+}

@@ -1,5 +1,10 @@
 # OPEN_ISSUES.md — Danh mục các vấn đề kỹ thuật đang mở
 
+**Scene3D causal / pedagogical integrity update 2026-11-14:** [Report](evaluation/geometry/runs/scene3d-causal-pedagogical-integrity/AXO_SCENE3D_CAUSAL_PEDAGOGICAL_INTEGRITY_REPORT.md).
+- **Resolved:** GEO-BE-V9415-001 on Route D (trace method); Route D unused-auxiliary misflags (asked line, source-stated point); given radius as a visual prerequisite; 90° plane–plane / skew angles not drawn; right-angle kind not bound to the proof.
+- **Still open:** sections needing a diagonal auxiliary plane (e.g. "chứa BD và song song với SC"); trace-method auxiliary points not rendered (FE-4); library archetype multi_layer_aux_pyramid without readout_ids (FE-2); advanced catalog regeneration after merge (FE-3); right-angle marker hidden when it is the answer — pedagogical decision pending.
+- **Unmeasured:** independent unseen data, H-1, students.
+
 **Proof soundness / generalized angle update 2026-11-14:** [Report](evaluation/geometry/runs/proof-soundness-generalized-angle-invariance/AXO_PROOF_SOUNDNESS_GENERALIZED_ANGLE_REPORT.md).
 - **Resolved:** /1 plane-angle witness defect (vertex-first triple; goal, vertex, value and scene unbound); perpendicular-planes rule; line–plane and line–line angles (meeting, and skew when proven ⊥) under shape freedom; leg ratios beyond equal legs; hybrid-preview fixture bundle stale after 9d5e9b408.
 - **Still open:** skew lines not proven ⊥ (no parallel transport); derived points (midpoints, feet) outside the proof domain; prisms / several solids; ratios not stated (Pythagoras, similarity); isosceles / equilateral triangles without `regular_polygon`; oriented / dihedral angles; base convexity assumed, not checked; `_Domain` / `_ratio_sq` shared by search and verifier.

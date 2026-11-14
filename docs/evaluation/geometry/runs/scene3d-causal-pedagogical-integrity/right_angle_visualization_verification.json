@@ -1,0 +1,52 @@
+{
+  "run_id": "scene3d-causal-pedagogical-integrity",
+  "generated_at_utc": "2026-11-14T15:39:13.820636+00:00",
+  "product_commit": "a2874d273959970faa501879f4f9dbfe20c93975",
+  "measured_system": "225f4bba5a8765ccd1c12507ce6dbd0bab25d69d02263148cf94752f921e2b56",
+  "cache_version": "138",
+  "dataset_partition": "DEVELOPMENT (agent-written corpus, exposed REAL27, exposed probes); never H-1 or locked W2/W3",
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "HYBRID_ROUTE_MODE": "local-first",
+    "live_ai_calls": 0
+  },
+  "head": "6da2795a493d6097add56294832f0d5a7ea1ef13",
+  "before": {
+    "line_perpendicular_plane": 2,
+    "None": 3,
+    "line_perpendicular_line": 1
+  },
+  "after": {
+    "line_perpendicular_plane": 2,
+    "plane_plane": 2,
+    "line_perpendicular_line": 1,
+    "line_line_skew": 1
+  },
+  "cases": {
+    "COMP:goal_tan_right_angle": {
+      "kq_q1": "line_perpendicular_plane"
+    },
+    "COMP:pp_base": {
+      "kq_q1": "plane_plane"
+    },
+    "COMP:pp_lateral": {
+      "kq_q1": "plane_plane"
+    },
+    "COMP:lp_perpendicular": {
+      "kq_q1": "line_perpendicular_plane"
+    },
+    "COMP:ll_perpendicular": {
+      "kq_q1": "line_perpendicular_line"
+    },
+    "COMP:ll_skew_perpendicular": {
+      "kq_q1": "line_line_skew"
+    }
+  },
+  "checks": "rays orthogonal under the scene Gram (and ⊥ the common line for planes) — test_a_proven_right_angle_without_a_meeting_point_is_drawn",
+  "binding": "adapter _RIGHT_ANGLE_DRAWING: a proven 90° goal drawn by another kind of right angle is refused (fault injection)",
+  "pytest": {
+    "command": "python -m pytest -q tests/geometry/test_scene3d_causal_pedagogical_integrity.py -k right_angle",
+    "exit_code": 0,
+    "summary": "7 passed, 16 deselected in 2.17s"
+  }
+}
