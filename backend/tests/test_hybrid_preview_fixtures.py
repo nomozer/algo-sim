@@ -41,7 +41,11 @@ ROOT = Path(__file__).resolve().parents[2]
 #: Superseded by run `verified-section-intersection-dihedral-local` (CACHE_VERSION 134): angle constructions declare
 #: `angle_domain` and pyramid volumes whose altitude the scene does not draw carry `altitude_construction`; every other
 #: difference is producer identity. Earlier bundles stay unchanged.
-FIXTURES = ROOT / 'docs/evaluation/geometry/runs/verified-section-intersection-dihedral-local/fixtures-dihedral-altitude'
+#: Superseded by run `proof-soundness-generalized-angle-invariance` (CACHE_VERSION 137): served fixtures carry the
+#: construction lineage added by commit 9d5e9b408 (`visible_prerequisites`, `computational_depends`, `construction_lineage`,
+#: `unused_auxiliary_ids`, `measured_quantity`, named narrations); answers, coordinates and refusal/gate fixtures are
+#: unchanged. The dihedral-altitude bundle stays unchanged as the evidence it was.
+FIXTURES = ROOT / 'docs/evaluation/geometry/runs/proof-soundness-generalized-angle-invariance/fixtures-lineage-proof-soundness'
 #: The superseded bundle — the one that predates the route D version bump the identity-restore test is about.
 OLD_FIXTURES = ROOT / 'docs/evaluation/geometry/runs/hybrid-preview-contract-hardening/fixtures-adapter-2'
 SCRIPT = ROOT / 'backend/scripts/export_hybrid_preview_fixtures.py'
