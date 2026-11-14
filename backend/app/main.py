@@ -1210,9 +1210,12 @@ _HYBRID_PROVIDER_502_CODES = frozenset({
 })
 
 
-def _hybrid_infra_error(code: str) -> JSONResponse:
+def _hybrid_infra_error(code: str, local: dict | None = None) -> JSONResponse:
     """Ánh xạ sự cố hạ tầng / cấu hình / nhà cung cấp trên tuyến Hybrid sang lỗi HTTP có thể khôi phục.
-    Tuyệt đối không gán nhãn thành từ chối toán học và không rò rỉ khóa API hay stack trace."""
+    Tuyệt đối không gán nhãn thành từ chối toán học và không rò rỉ khóa API hay stack trace.
+
+    `local` (chẩn đoán của tuyến cục bộ khi nó đọc thiếu đề và lối dự phòng AI bị khoá): lời báo nói PHẦN NÀO của đề
+    chưa đọc được thay vì chỉ "live AI bị khoá"; phân loại vẫn là INFRASTRUCTURE_FAILURE, mã máy ở `local_understanding`."""
     headers = {"Cache-Control": "no-store"}
     if code == "HYBRID_DEADLINE_EXCEEDED":
         status, msg = 504, "Quá trình trích xuất và dựng hình vượt quá thời gian cho phép. Em hãy thử gửi lại đề bài."
@@ -1228,11 +1231,15 @@ def _hybrid_infra_error(code: str) -> JSONResponse:
         status, msg = 502, "Dịch vụ trích xuất đề bài đang gặp sự cố kết nối hoặc phản hồi chưa hợp lệ. Em hãy thử gửi lại sau ít phút."
     else:
         status, msg = 503, "Hệ thống gặp sự cố kỹ thuật tạm thời khi xử lý đề bài. Em hãy thử gửi lại sau."
-    return JSONResponse(
-        status_code=status,
-        headers=headers,
-        content={"error": msg, "reason_code": code, "failure_kind": "INFRASTRUCTURE_FAILURE"},
-    )
+    content: dict[str, Any] = {"error": msg, "reason_code": code, "failure_kind": "INFRASTRUCTURE_FAILURE"}
+    summary = (local or {}).get("learner_summary") if code == "LIVE_AI_DISABLED" else None
+    if summary:
+        seen = "".join(f" Phần chưa đọc được: «{t}»." for t in summary["unread_excerpts"])
+        tail = (" Máy chủ đang tắt chế độ đọc đề bằng AI nên chưa đọc thêm được; em có thể viết phần đó rõ hơn rồi gửi lại."
+                if summary.get("rewrite_may_help") else " Máy chủ đang tắt chế độ đọc đề bằng AI nên chưa xử lý thêm được bài này.")
+        content["error"] = f"{summary['message']}{seen}{tail}"
+        content["local_understanding"] = {"root_cause": local.get("root_cause"), **summary}
+    return JSONResponse(status_code=status, headers=headers, content=content)
 
 
 async def _analyze_hybrid_route(text: str, mode: str, api_key: str | None, algosim_session: str | None) -> Any:
@@ -1326,7 +1333,8 @@ async def _analyze_hybrid_route(text: str, mode: str, api_key: str | None, algos
                 or (mode == "live" and code in ("SCHEMA_VERSION_MISMATCH", "REPLAY_SOURCE_IDENTITY_MISMATCH"))):
             if obs is not None:
                 obs.ket_thuc(None)
-            return _hybrid_infra_error(code or "ROUTE_INTERNAL_ERROR")
+            return _hybrid_infra_error(code or "ROUTE_INTERNAL_ERROR",
+                                       ((result.response or {}).get("route_d") or {}).get("local_diagnostics"))
         response = result.response
         if obs is not None:
             obs.ket_thuc(response.get("envelope") if isinstance(response, dict) else None)

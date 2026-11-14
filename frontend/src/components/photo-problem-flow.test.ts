@@ -1,7 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { AxoClientError, type UnifiedInputPrepareResponse } from "../llm/client";
+import { AxoClientError, analyzeViaServer, type UnifiedInputPrepareResponse } from "../llm/client";
+import { describeComposerError } from "./ProblemInput";
 import {
   PHOTO_MAX_BYTES,
+  analyzeErrorMessage,
   assistBlocker,
   canConfirmAssistText,
   clientFileProblem,
@@ -135,6 +137,27 @@ describe("lỗi chuẩn bị đầu vào → lời cho người học (không l�
       expect(m).toMatch(/gõ đề vào ô nhập|PDF\/DOCX/);
       expect(m).not.toMatch(/ALLOW_LIVE_AI|GEMINI|API|_KEY/);
     }
+  });
+
+  it("đề đọc thiếu ở tuyến cục bộ ⇒ hiện PHẦN chưa hiểu thay vì chỉ 'AI bị tắt'; không có chẩn đoán ⇒ lời cũ", async () => {
+    const detail = "Hệ thống chưa xác định được đề hỏi gì. Phần chưa đọc được: «Tính tổng bình phương các cạnh».";
+    const realFetch = globalThis.fetch;
+    globalThis.fetch = (async () => new Response(JSON.stringify({
+      error: detail, reason_code: "LIVE_AI_DISABLED", failure_kind: "INFRASTRUCTURE_FAILURE",
+      local_understanding: { root_cause: "UNRECOGNIZED_GOAL", message: "x", unread_excerpts: ["y"] },
+    }), { status: 503 })) as typeof fetch;
+    let err: unknown;
+    try {
+      await analyzeViaServer({ type: "text", content: "Cho hình chóp S.ABC." }, undefined, { maxRetries: 0 });
+    } catch (e) { err = e; } finally { globalThis.fetch = realFetch; }
+    expect(analyzeErrorMessage(err)).toBe(detail);
+    const view = describeComposerError(detail, null, (err as AxoClientError).toContract());
+    expect(view).toMatchObject({ title: "Hệ thống chưa hiểu hết đề bài", description: detail });
+    expect(view!.description).not.toMatch(/UNRECOGNIZED|LIVE_AI|_/);
+
+    const plain = http(503, "… (ALLOW_LIVE_AI=0).", "LIVE_AI_DISABLED");          // kill switch, no local route ran
+    expect(analyzeErrorMessage(plain)).toMatch(/đang tạm tắt trên máy chủ/);
+    expect(describeComposerError("x", null, plain.toContract())?.title).toBe("Dịch vụ phân tích đề hiện chưa sẵn sàng");
   });
 
   it("trần kích thước tệp & mô tả ký hiệu chưa chắc", () => {

@@ -305,6 +305,7 @@ export function analyzeErrorMessage(err: unknown): string | null {
   if ((err as { name?: string } | null)?.name === "AbortError") return null;
   if (err instanceof AxoClientError) {
     if (err.reasonCode === "LIVE_AI_DISABLED") {
+      if (err.learnerDetail) return err.learnerDetail;
       return "Đề này cần bước phân tích bằng AI, nhưng bước đó đang tạm tắt trên máy chủ. Hệ chỉ tự giải được các dạng "
         + "đề quen thuộc khi không có AI — em thử diễn đạt lại theo cách trong sách giáo khoa, hoặc quay lại sau.";
     }

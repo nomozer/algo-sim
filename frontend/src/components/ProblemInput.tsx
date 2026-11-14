@@ -193,6 +193,13 @@ export function describeComposerError(
             "Máy chủ chưa bật kết nối AI cho đề tự nhập. Bạn vẫn có thể mở các mô hình mẫu bên dưới.",
         };
       case "SERVICE_UNAVAILABLE":
+        if (clientFailure.learnerDetail) {
+          return {
+            tone: "info",
+            title: "Hệ thống chưa hiểu hết đề bài",
+            description: normalizeDisplayBrand(clientFailure.learnerDetail),
+          };
+        }
         return {
           tone: "info",
           title: "Dịch vụ phân tích đề hiện chưa sẵn sàng",

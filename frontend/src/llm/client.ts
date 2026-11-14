@@ -33,6 +33,8 @@ export interface ClientFailureContract {
   readonly code: ClientFailureCode;
   readonly status?: number;
   readonly message: string;
+  /** Lời giải thích của máy chủ khi tuyến cục bộ chưa đọc hết đề (phần nào chưa hiểu) — đã là tiếng Việt sạch. */
+  readonly learnerDetail?: string;
 }
 
 export class AxoClientError extends Error implements ClientFailureContract {
@@ -42,6 +44,7 @@ export class AxoClientError extends Error implements ClientFailureContract {
   readonly transient?: boolean;
   /** `reason_code` máy đọc của máy chủ (vd `LIVE_AI_DISABLED`) — CHỈ để chọn lời báo, KHÔNG BAO GIỜ hiển thị. */
   readonly reasonCode?: string;
+  readonly learnerDetail?: string;
 
   constructor(opts: {
     kind: "network" | "http";
@@ -50,6 +53,7 @@ export class AxoClientError extends Error implements ClientFailureContract {
     status?: number;
     transient?: boolean;
     reasonCode?: string;
+    learnerDetail?: string;
   }) {
     super(opts.message);
     this.name = "AxoClientError";
@@ -58,6 +62,7 @@ export class AxoClientError extends Error implements ClientFailureContract {
     this.status = opts.status;
     this.transient = opts.transient;
     this.reasonCode = opts.reasonCode;
+    this.learnerDetail = opts.learnerDetail;
   }
 
   toContract(): ClientFailureContract {
@@ -66,6 +71,7 @@ export class AxoClientError extends Error implements ClientFailureContract {
       code: this.code,
       status: this.status,
       message: this.message,
+      learnerDetail: this.learnerDetail,
     };
   }
 }
@@ -150,6 +156,8 @@ async function postJson<T>(
       message: msg,
       transient: res.status === 502 || res.status === 504,
       reasonCode: typeof rec?.reason_code === "string" ? rec.reason_code : undefined,
+      // the server says which part of the problem the local route did not read (only when it ran on the problem)
+      learnerDetail: rec?.local_understanding && typeof rawMsg === "string" ? rawMsg : undefined,
     });
   }
   return body as T;

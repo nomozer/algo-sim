@@ -170,3 +170,46 @@ def test_a_premise_value_no_item_reads_is_never_silently_dropped(text):
 ])
 def test_exam_headers_and_figure_references_carry_no_premise_value(text):
     assert parse_geometry_problem_locally(text, use_cache=False).status == "LOCAL_PARSE_COMPLETE"
+
+
+# ── learner-facing diagnostics of a local partial parse (Phase 11) ─────────────────────────────────────────────────
+_TECH = __import__("re").compile(r"[a-z]+_[a-z_]+|[A-Z]{2,}_[A-Z_]+|\$\.|\{|\}|Traceback|Error\b|__|ALLOW_LIVE_AI|\bc\d+\b")
+_PYR = "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với đáy, SA = a. "
+
+
+@pytest.fixture
+def http(monkeypatch):
+    from fastapi.testclient import TestClient
+
+    from app import main as M
+    from tests.route_client import sign_in
+    monkeypatch.setenv("HYBRID_ROUTE_MODE", "local-first")
+    with TestClient(M.app) as c:
+        sign_in(c)
+        yield lambda t: c.post("/api/analyze", json={"input": {"type": "text", "content": t}})
+
+
+@pytest.mark.parametrize("text, root, excerpt, rewrite", [
+    (_PYR + "Gọi M là điểm đối xứng của A qua C. Tính khoảng cách từ M đến (SBD).",
+     "UNSUPPORTED_POINT_CONSTRUCTION", "Gọi M là điểm đối xứng của A qua C", False),          # unsupported construction
+    (_PYR + "Tính tổng bình phương các cạnh.", "UNRECOGNIZED_GOAL", "Tính tổng bình phương các cạnh", True),  # goal unknown
+    ("Cho hình chóp S.ABC có SA vuông góc với đáy, tam giác ABC đều cạnh a, chu vi tam giác SAB bằng 5. "
+     "Tính thể tích khối chóp S.ABC.", "UNRECOGNIZED_RELATION", "chu vi tam giác SAB bằng 5", True),       # premise unread
+])
+def test_a_local_partial_parse_tells_the_learner_which_part_was_not_read(http, text, root, excerpt, rewrite):
+    r = http(text)
+    body = r.json()
+    # still the same infrastructure outcome: the fallback is blocked, nothing is cached, no math refusal is invented
+    assert r.status_code == 503 and body["reason_code"] == "LIVE_AI_DISABLED"
+    assert body["failure_kind"] == "INFRASTRUCTURE_FAILURE"
+    lu = body["local_understanding"]
+    assert lu["root_cause"] == root and lu["unread_excerpts"] == [excerpt]
+    assert f"«{excerpt}»" in body["error"] and lu["message"] in body["error"]
+    assert _TECH.search(body["error"]) is None, body["error"]                  # no code, id, env name or trace
+    assert ("viết phần đó rõ hơn" in body["error"]) is rewrite                # a capability gap is not the learner's fault
+
+
+def test_the_kill_switch_without_a_local_parse_keeps_its_plain_message(http, monkeypatch):
+    monkeypatch.setenv("HYBRID_ROUTE_MODE", "live")                            # no local route ran: nothing to explain
+    body = http(_PYR + "Tính thể tích khối chóp S.ABCD.").json()
+    assert body["reason_code"] == "LIVE_AI_DISABLED" and "local_understanding" not in body

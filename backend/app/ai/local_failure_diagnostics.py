@@ -149,7 +149,7 @@ def diagnose_clauses(source_coverage: dict[str, Any]) -> list[dict[str, Any]]:
                     "labels": sorted(_labels(c["text"])), "plane_names": sorted(_plane_names(c["text"])),
                     "unresolved_plane_names": unresolved, "downstream_dependency": depends, "failure_reason": root,
                     **({"unread_subclause_offsets": [o for o, _t in subs]} if subs else {}),
-                    "_text": c["text"]})
+                    "_text": c["text"], "_cause": cause_text if subs else c["text"]})
     return out
 
 
@@ -216,10 +216,56 @@ def diagnose(*, parse_status: str, parse_reason: str | None, fallback_reason: st
             rec.update(root_cause=root, first_loss_layer="NONE", detected_by=layer, refusal_group=group)
     else:
         rec.update(root_cause="INCOMPLETE_FACT_EXTRACTION", first_loss_layer="PARSER", detected_by="PARSER")
+    rec["learner_summary"] = learner_summary(rec["root_cause"], [c for c in clauses if c["clause_id"] in
+                                                                (rec.get("root_clause_ids") or ())])
     for c in clauses:
         c.pop("_text", None)                            # offsets identify the clause; the text is not repeated
+        c.pop("_cause", None)
     rec["decided_by"] = "ROUTER_FAIL_CLOSED" if terminal_code == "LIVE_AI_DISABLED" else (
         "HYBRID_ROUTE" if parse_status in ("LOCAL_PARSE_COMPLETE", "LOCAL_PARSE_AMBIGUOUS") else "ROUTER")
     rec["fallback"] = ("LOCAL_PROVIDER_FALLBACK_DISABLED" if not fallback_allowed and terminal_code == "LIVE_AI_DISABLED"
                        else "NOT_REQUIRED" if rec["decided_by"] == "HYBRID_ROUTE" else "ALLOWED")
     return rec
+
+
+#: (grounded-vietnamese-geometry-understanding) what the learner is told about one root cause: which PART of the problem
+#: the system did not understand — an object, the question, a missing datum, an unsupported construction, the figure.
+#: Plain Vietnamese only; the code itself stays machine-side (`root_cause`), never displayed.
+_LEARNER_OF_ROOT = {
+    "UNRECOGNIZED_GEOMETRIC_ENTITY": "Hệ thống chưa đọc được một điểm hoặc một đối tượng hình học trong đề.",
+    "UNRESOLVED_REFERENCE": "Đề nhắc tới một điểm hoặc mặt phẳng mà hệ thống chưa tìm thấy chỗ định nghĩa.",
+    "DESCRIBED_POINT_IN_PREMISE_UNSUPPORTED": "Đề mô tả một điểm chưa được đặt tên; hệ thống chưa đọc được điểm đó.",
+    "FREE_POINT_UNDERDETERMINED": "Một điểm trong đề chỉ được nói là nằm trên một đối tượng, chưa đủ để xác định vị trí.",
+    "UNSUPPORTED_POINT_CONSTRUCTION": "Đề dùng một phép dựng điểm mà hệ thống chưa hỗ trợ.",
+    "UNRECOGNIZED_RELATION": "Hệ thống chưa đọc được một quan hệ hoặc số đo trong giả thiết của đề.",
+    "INCOMPLETE_FACT_EXTRACTION": "Hệ thống chưa đọc hết các dữ kiện trong đề.",
+    "SOURCE_PROVENANCE_MISSING": "Hệ thống chưa đối chiếu được một dữ kiện với câu chữ của đề.",
+    "DIAGRAM_DEPENDENT_FACT": "Đề lấy dữ kiện từ hình vẽ; hệ thống chỉ đọc được phần chữ của đề.",
+    "UNRECOGNIZED_GOAL": "Hệ thống chưa xác định được đề hỏi gì.",
+    "UNSUPPORTED_GOAL_FUNCTION": "Đề hỏi một đại lượng của góc mà hệ thống chưa tính được.",
+    "UNSUPPORTED_GOAL_KIND": "Đề yêu cầu chứng minh; hệ thống chỉ dựng hình và tính các đại lượng.",
+    "INSUFFICIENT_CONSTRAINTS": "Đề chưa cho đủ dữ kiện để dựng hình duy nhất.",
+    "SHAPE_FREEDOM_UNCERTIFIED": "Đề chưa cho đủ dữ kiện để cố định hình; hệ thống chưa chứng minh được kết quả không đổi.",
+    "QUESTION_PREMISE_AMBIGUITY": "Một phần của đề có thể hiểu theo nhiều cách; hệ thống chưa chọn thay em.",
+    "PLANNER_COMPOSITION_UNSUPPORTED": "Bài này cần một phép dựng mà hệ thống chưa hỗ trợ.",
+    "GEOMETRIC_DEGENERACY": "Các dữ kiện trong đề cho một hình suy biến.",
+    "SOURCE_CONFLICT": "Các dữ kiện trong đề mâu thuẫn nhau.",
+}
+_EXCERPT_MAX = 120
+_CAPABILITY_ROOTS = frozenset({"UNSUPPORTED_POINT_CONSTRUCTION", "PLANNER_COMPOSITION_UNSUPPORTED", "UNSUPPORTED_GOAL_FUNCTION",
+                               "UNSUPPORTED_GOAL_KIND", "DIAGRAM_DEPENDENT_FACT", "SHAPE_FREEDOM_UNCERTIFIED",
+                               "INSUFFICIENT_CONSTRAINTS", "GEOMETRIC_DEGENERACY", "SOURCE_CONFLICT",
+                               "FREE_POINT_UNDERDETERMINED"})
+
+
+def learner_summary(root: str, root_clauses: list[dict[str, Any]]) -> dict[str, Any]:
+    """Learner-safe summary of one refusal: a Vietnamese sentence for the root cause and the learner's own words the
+    system did not read (at most three excerpts, each cut to `_EXCERPT_MAX`). No code, id or offset is in the text."""
+    excerpts = []
+    for c in root_clauses[:3]:
+        t = re.sub(r"\s+", " ", c.get("_cause") or c.get("_text") or "").strip(" ,;.")
+        if t:
+            excerpts.append(t if len(t) <= _EXCERPT_MAX else t[:_EXCERPT_MAX - 1].rstrip() + "…")
+    return {"message": _LEARNER_OF_ROOT.get(root, "Hệ thống chưa hiểu hết đề bài này."), "unread_excerpts": excerpts,
+            # a valid problem refused for a capability gap is never the learner's to fix (W17 §15.3)
+            "rewrite_may_help": root not in _CAPABILITY_ROOTS}
