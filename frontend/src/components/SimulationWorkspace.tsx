@@ -79,6 +79,7 @@ import {
   preferredPointOrderForPolygon,
   registerExactSceneOrigin,
   resolveStudentObjectPresentation,
+  resolveVerifiedObjectRelations,
   verifySceneMathematicalConsistency,
 } from "../simulations/domains/geometry/scene3d-semantic-policy";
 import {
@@ -471,6 +472,12 @@ export function AxoWorkspaceV62({
   const [dangPhat, setDangPhat] = useState(false);
   const [fitToken, setFitToken] = useState(0);
   const [replayNonce, setReplayNonce] = useState(0);
+  const [relationActiveForId, setRelationActiveForId] = useState<string | null>(null);
+  const [locateRequest, setLocateRequest] = useState<{ objectId: string; nonce: number } | null>(null);
+  const [restoreCameraNonce, setRestoreCameraNonce] = useState(0);
+  const [canRestoreLocatedCamera, setCanRestoreLocatedCamera] = useState(false);
+  const [locateStatusMessage, setLocateStatusMessage] = useState<string | null>(null);
+  const locateNonceCounterRef = useRef(0);
   const [xray, setXray] = useState(() => initialRecoveredSnapshot?.display.xray ?? false);
   const [hinhPhu, setHinhPhu] = useState(() => initialRecoveredSnapshot?.display.auxiliaryShown ?? false);
   const [luoi, setLuoi] = useState(() => initialRecoveredSnapshot?.display.gridShown ?? true);
@@ -578,6 +585,10 @@ export function AxoWorkspaceV62({
     setGeoCustomPos(null);
     setMoreEntitiesOpen(false);
     setExpandedEvidenceStep(null);
+    setRelationActiveForId(null);
+    setLocateRequest(null);
+    setCanRestoreLocatedCamera(false);
+    setLocateStatusMessage(null);
     if (webglLifecycleRef.current.phase !== "healthy" || stageWebglFailed || viewerBoundaryCrashed) {
       setViewerMountGen((n) => n + 1);
     }
@@ -809,6 +820,8 @@ export function AxoWorkspaceV62({
   const chon = (id: string | null) => {
     const safeId = id && isSelectableAtAnchor(id, buocHien) ? id : null;
     setTt((s) => select(s, safeId));
+    setLocateStatusMessage(null);
+    setRelationActiveForId((prev) => (prev && prev === safeId ? prev : null));
     onFocus?.(safeId, safeId === null ? "clear" : "select");
   };
 
@@ -816,6 +829,24 @@ export function AxoWorkspaceV62({
     tt.selected_id && isSelectableAtAnchor(tt.selected_id, buocHien)
       ? theoId.get(tt.selected_id) ?? null
       : null;
+
+  const isRelationViewActive = Boolean(dangChon && relationActiveForId === dangChon.id);
+  const verifiedObjectRelations = useMemo(
+    () => (dangChon ? resolveVerifiedObjectRelations(day, dangChon.id, buocHien) : null),
+    [day, dangChon, buocHien],
+  );
+  const activeRelationHighlightIds = useMemo(
+    () => (isRelationViewActive && verifiedObjectRelations ? verifiedObjectRelations.relatedIds : null),
+    [isRelationViewActive, verifiedObjectRelations],
+  );
+  useEffect(() => {
+    setLocateStatusMessage(null);
+    if (!dangChon) {
+      setRelationActiveForId(null);
+    } else if (relationActiveForId !== null && relationActiveForId !== dangChon.id) {
+      setRelationActiveForId(null);
+    }
+  }, [dangChon?.id]);
 
   const phanTichToan = useMemo(
     () => phanTichToanHocCuaCanh(day, hybrid, routeDSimulation),
@@ -1020,6 +1051,9 @@ export function AxoWorkspaceV62({
     setGeoCustomPos(null);
     latestCameraPoseRef.current = null;
     setSavedCameraPose(null);
+    setRelationActiveForId(null);
+    setCanRestoreLocatedCamera(false);
+    setLocateStatusMessage(null);
     setFitToken((n) => n + 1);
   };
 
@@ -1542,6 +1576,23 @@ export function AxoWorkspaceV62({
                   planeOpacityPct={planeOpacityPct}
                   rightAnglesShown={showRightAngles}
                   dashedHiddenShown={showDashedHidden}
+                  relationHighlightIds={activeRelationHighlightIds}
+                  locateRequest={locateRequest}
+                  restoreCameraNonce={restoreCameraNonce}
+                  onLocateFeedback={(fb) => {
+                    setCanRestoreLocatedCamera(fb.canRestore);
+                    if (
+                      fb.status === "unchanged" &&
+                      (fb.reason === "current_view_already_optimal" || fb.reason === "already_optimal") &&
+                      fb.objectId
+                    ) {
+                      setLocateStatusMessage("Góc nhìn hiện tại đã hiển thị rõ đối tượng này.");
+                    } else if (fb.status === "fallback_unchanged" && fb.message) {
+                      setLocateStatusMessage(fb.message);
+                    } else {
+                      setLocateStatusMessage(null);
+                    }
+                  }}
                   initialCameraPose={savedCameraPose}
                   onCameraPoseChange={(pose) => {
                       latestCameraPoseRef.current = pose;
@@ -2748,6 +2799,135 @@ export function AxoWorkspaceV62({
                         !/hệ\s+trục|gốc\s+toạ\s+độ|gốc\s+tọa\s+độ/iu.test(dangChon.source.assumption)) && (
                       <div className="context-card-meta-line">
                         Giả thiết dựng: <strong>{dangChon.source.assumption}</strong>
+                      </div>
+                    )}
+                    <div className="context-card-actions" role="group" aria-label="Tương tác đối tượng">
+                      <button
+                        type="button"
+                        className={`context-action-pill${isRelationViewActive ? " is-active" : ""}`}
+                        aria-pressed={isRelationViewActive}
+                        data-context-action="relations"
+                        onClick={() =>
+                          setRelationActiveForId((prev) => (prev === dangChon.id ? null : dangChon.id))
+                        }
+                      >
+                        <svg
+                          width="12"
+                          height="12"
+                          viewBox="0 0 16 16"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="1.5"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          aria-hidden="true"
+                        >
+                          <circle cx="4" cy="4.5" r="2" />
+                          <circle cx="12" cy="4.5" r="2" />
+                          <circle cx="8" cy="12" r="2" />
+                          <path d="M5.7 5.7 6.9 10.2M10.3 5.7 9.1 10.2M6 4.5h4" />
+                        </svg>
+                        <span>Xem quan hệ</span>
+                      </button>
+                      <button
+                        type="button"
+                        className="context-action-pill"
+                        data-context-action="locate"
+                        onClick={() => {
+                          if (dangChon.type === "quantity") {
+                            const subjId = (dangChon.depends ?? []).find((depId) => {
+                              const dep = theoId.get(depId);
+                              return Boolean(dep && dep.type !== "quantity");
+                            });
+                            if (!subjId) {
+                              setLocateStatusMessage("Đại lượng số đo không có vị trí riêng trên mô hình 3D.");
+                              return;
+                            }
+                            locateNonceCounterRef.current += 1;
+                            setLocateStatusMessage(null);
+                            setLocateRequest({ objectId: subjId, nonce: locateNonceCounterRef.current });
+                            return;
+                          }
+                          locateNonceCounterRef.current += 1;
+                          setLocateStatusMessage(null);
+                          setLocateRequest({ objectId: dangChon.id, nonce: locateNonceCounterRef.current });
+                        }}
+                      >
+                        <svg
+                          width="12"
+                          height="12"
+                          viewBox="0 0 16 16"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="1.5"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          aria-hidden="true"
+                        >
+                          <circle cx="8" cy="8" r="4.5" />
+                          <circle cx="8" cy="8" r="1.2" />
+                          <path d="M8 1.5v2M8 12.5v2M1.5 8h2M12.5 8h2" />
+                        </svg>
+                        <span>Định vị</span>
+                      </button>
+                      {canRestoreLocatedCamera && (
+                        <button
+                          type="button"
+                          className="context-action-pill context-action-pill--ghost"
+                          data-context-action="restore-camera"
+                          onClick={() => {
+                            locateNonceCounterRef.current += 1;
+                            setLocateStatusMessage(null);
+                            setCanRestoreLocatedCamera(false);
+                            setRestoreCameraNonce(locateNonceCounterRef.current);
+                          }}
+                        >
+                          <svg
+                            width="12"
+                            height="12"
+                            viewBox="0 0 16 16"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="1.5"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            aria-hidden="true"
+                          >
+                            <path d="M3.5 6.5H10a3.5 3.5 0 1 1 0 7H6.5" />
+                            <path d="M6 4 3.5 6.5 6 9" />
+                          </svg>
+                          <span>Góc nhìn trước</span>
+                        </button>
+                      )}
+                    </div>
+                    {locateStatusMessage && (
+                      <div className="context-card-locate-status" role="status">
+                        {locateStatusMessage}
+                      </div>
+                    )}
+                    {isRelationViewActive && verifiedObjectRelations && (
+                      <div className="context-card-relations-box" data-relations-for={dangChon.id}>
+                        {verifiedObjectRelations.hasVerifiedRelations &&
+                        verifiedObjectRelations.relations.length > 0 ? (
+                          <ul className="context-card-relation-list">
+                            {verifiedObjectRelations.relations.map((rel, idx) => (
+                              <li
+                                key={`${rel.kind}-${idx}`}
+                                className="context-card-relation-item"
+                                data-relation-kind={rel.kind}
+                              >
+                                <span className="context-card-relation-badge">{rel.kindLabel}</span>
+                                <span className="context-card-relation-text">
+                                  <MathDisplay text={rel.statement} />
+                                </span>
+                              </li>
+                            ))}
+                          </ul>
+                        ) : (
+                          <div className="context-card-relation-empty">
+                            {verifiedObjectRelations.summaryMessage}
+                          </div>
+                        )}
                       </div>
                     )}
                   </div>

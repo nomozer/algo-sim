@@ -1268,3 +1268,559 @@ export function auditSceneRepresentationConsistency(
   }
   return report;
 }
+
+export type MathematicalInvariantCategory =
+  | "point_on_line"
+  | "point_on_plane"
+  | "line_plane_intersection"
+  | "plane_plane_intersection"
+  | "section_polygon"
+  | "tangency"
+  | "curved_intersections";
+
+export interface MathematicalInvariantCheckResult {
+  category: MathematicalInvariantCategory;
+  status: ConsistencyStatus;
+  checkedCount: number;
+  validCount: number;
+  invalidCount: number;
+  undeterminedCount: number;
+  maxNormalizedError: number;
+  findings: ConsistencyFinding[];
+}
+
+export interface SceneMathematicalInvariantsReport {
+  overallStatus: ConsistencyStatus;
+  isValid: boolean;
+  stepIndex: number | null;
+  sceneScale: number;
+  tolerances: {
+    distance: number;
+    direction: number;
+    area: number;
+  };
+  categories: Record<MathematicalInvariantCategory, MathematicalInvariantCheckResult>;
+  findings: ConsistencyFinding[];
+  baseReport: SceneConsistencyReport;
+}
+
+function emptyInvariantCategories(): Record<MathematicalInvariantCategory, MathematicalInvariantCheckResult> {
+  const mk = (category: MathematicalInvariantCategory): MathematicalInvariantCheckResult => ({
+    category,
+    status: "VALID",
+    checkedCount: 0,
+    validCount: 0,
+    invalidCount: 0,
+    undeterminedCount: 0,
+    maxNormalizedError: 0,
+    findings: [],
+  });
+  return {
+    point_on_line: mk("point_on_line"),
+    point_on_plane: mk("point_on_plane"),
+    line_plane_intersection: mk("line_plane_intersection"),
+    plane_plane_intersection: mk("plane_plane_intersection"),
+    section_polygon: mk("section_polygon"),
+    tangency: mk("tangency"),
+    curved_intersections: mk("curved_intersections"),
+  };
+}
+
+/**
+ * Verifies all V9.4.17 scale-adaptive mathematical invariants across points, lines,
+ * infinite planes, plane-plane / line-plane intersections, section polygons, tangency
+ * witnesses, and curved-surface plane intersections without mutating `rawScene`.
+ */
+export function verifySceneMathematicalInvariants(
+  rawScene: Scene3D,
+  options: AuditRepresentationOptions = {},
+): SceneMathematicalInvariantsReport {
+  const baseReport = auditSceneRepresentationConsistency(rawScene, options);
+  const categories = emptyInvariantCategories();
+  const extraFindings: ConsistencyFinding[] = [];
+
+  const pushCategoryRecord = (
+    category: MathematicalInvariantCategory,
+    check: ConsistencyCheckKind,
+    status: ConsistencyStatus,
+    objectIds: string[],
+    message: string,
+    measuredError?: number,
+    tolerance?: number,
+  ) => {
+    const slot = categories[category];
+    slot.checkedCount += 1;
+    if (status === "VALID") slot.validCount += 1;
+    else if (status === "INVALID") slot.invalidCount += 1;
+    else slot.undeterminedCount += 1;
+    if (
+      measuredError !== undefined
+      && tolerance !== undefined
+      && Number.isFinite(measuredError)
+      && tolerance > 0
+    ) {
+      slot.maxNormalizedError = Math.max(slot.maxNormalizedError, measuredError / tolerance);
+    }
+    if (status !== "VALID") {
+      const f: ConsistencyFinding = { check, status, objectIds, message, measuredError, tolerance };
+      slot.findings.push(f);
+      extraFindings.push(f);
+    }
+  };
+
+  // Seed direct checks already audited in baseReport
+  const mirrorSummary = (src: ConsistencyCheckKind, dst: MathematicalInvariantCategory) => {
+    const s = baseReport.checks[src];
+    const d = categories[dst];
+    d.checkedCount += s.checkedCount;
+    d.validCount += s.validCount;
+    d.invalidCount += s.invalidCount;
+    d.undeterminedCount += s.undeterminedCount;
+    d.maxNormalizedError = Math.max(d.maxNormalizedError, s.maxNormalizedError);
+    d.findings.push(...s.findings);
+  };
+  mirrorSummary("point_on_line", "point_on_line");
+  mirrorSummary("point_on_plane", "point_on_plane");
+  mirrorSummary("section_connectivity", "section_polygon");
+
+  let scene: Scene3D;
+  try {
+    scene = veKhongGian(rawScene);
+  } catch {
+    categories.point_on_plane.status = baseReport.overallStatus === "INVALID" ? "INVALID" : "UNDETERMINED";
+    return {
+      overallStatus: baseReport.overallStatus,
+      isValid: baseReport.isConsistent,
+      stepIndex: baseReport.stepIndex,
+      sceneScale: baseReport.sceneScale,
+      tolerances: baseReport.tolerances,
+      categories,
+      findings: [...baseReport.findings],
+      baseReport,
+    };
+  }
+
+  const resolvedStep = options.step !== undefined ? clampStep(scene, options.step) : null;
+  const visibleObjects = resolvedStep !== null ? objectsAt(scene, resolvedStep) : [...scene.objects];
+  const byId = new Map<string, SceneObject>(visibleObjects.map((o) => [o.id, o]));
+  const allById = new Map<string, SceneObject>(scene.objects.map((o) => [o.id, o]));
+  const distTol = baseReport.tolerances.distance > 0 ? baseReport.tolerances.distance : 1e-6;
+  const dirTol = baseReport.tolerances.direction > 0 ? baseReport.tolerances.direction : 1e-4;
+  const areaTol = baseReport.tolerances.area > 0 ? baseReport.tolerances.area : 1e-12;
+  const scale = Math.max(baseReport.sceneScale, 1e-9);
+
+  const getPlane = (o?: SceneObject): { point: Vec3; normal: Vec3 } | null => {
+    if (!o) return null;
+    const pt = safeToVec3(o.point);
+    const nRaw = safeToVec3(o.normal);
+    const n = nRaw ? unit3(nRaw, 1e-15) : null;
+    return pt && n ? { point: pt, normal: n } : null;
+  };
+  const getLine = (o?: SceneObject): { origin: Vec3; dir: Vec3; end?: Vec3 } | null => {
+    if (!o) return null;
+    if (o.render === "line") {
+      const p = safeToVec3(o.point);
+      const dRaw = safeToVec3(o.direction);
+      const d = dRaw ? unit3(dRaw, 1e-15) : null;
+      return p && d ? { origin: p, dir: d } : null;
+    }
+    const pa = safeToVec3(o.endpoints?.[0] ?? o.point_a);
+    const pb = safeToVec3(o.endpoints?.[1] ?? o.point_b);
+    if (!pa || !pb) return null;
+    const d = unit3(sub3(pb, pa), 1e-15);
+    return d ? { origin: pa, dir: d, end: pb } : null;
+  };
+
+  // A. Line-Plane Intersection (P ∈ line AND P ∈ plane; flag parallel line-plane vs in-plane)
+  for (const o of visibleObjects) {
+    if (o.type !== "point3" || !o.xyz) continue;
+    const pv = safeToVec3(o.xyz);
+    if (!pv) continue;
+    const deps = (o.depends ?? []).map((id) => byId.get(id) ?? allById.get(id)).filter((x): x is SceneObject => Boolean(x));
+    const lineDep = deps.find((d) => d.render === "line" || d.render === "segment");
+    const planeDep = deps.find((d) => d.render === "surface" || d.type === "plane3");
+    if (!lineDep || !planeDep) continue;
+    const ln = getLine(lineDep);
+    const pl = getPlane(planeDep);
+    if (!ln || !pl) {
+      pushCategoryRecord("line_plane_intersection", "intersection_consistency", "UNDETERMINED", [o.id, lineDep.id, planeDep.id], `Line-plane intersection "${o.id}" lacks finite carrier data.`);
+      continue;
+    }
+    const cosAng = Math.abs(dot3(ln.dir, pl.normal));
+    const lineErr = pointLineProjection(pv, ln.origin, ln.dir).dist;
+    const planeErr = distPointPlane(pv, pl.point, pl.normal);
+    if (cosAng <= dirTol) {
+      const lineDistToPlane = distPointPlane(ln.origin, pl.point, pl.normal);
+      const ok = lineDistToPlane <= distTol && lineErr <= distTol && planeErr <= distTol;
+      pushCategoryRecord(
+        "line_plane_intersection",
+        "intersection_consistency",
+        ok ? "VALID" : "INVALID",
+        [o.id, lineDep.id, planeDep.id],
+        ok
+          ? `Line "${lineDep.id}" lies in "${planeDep.id}" at "${o.id}".`
+          : `Parallel line "${lineDep.id}" and plane "${planeDep.id}" cannot yield isolated intersection "${o.id}" (line-plane dist=${lineDistToPlane.toExponential(2)}).`,
+        Math.max(lineDistToPlane, lineErr, planeErr),
+        distTol,
+      );
+    } else {
+      const err = Math.max(lineErr, planeErr);
+      pushCategoryRecord(
+        "line_plane_intersection",
+        "intersection_consistency",
+        err <= distTol ? "VALID" : "INVALID",
+        [o.id, lineDep.id, planeDep.id],
+        err <= distTol
+          ? `Intersection point "${o.id}" lies on both "${lineDep.id}" and "${planeDep.id}".`
+          : `Intersection point "${o.id}" misses line/plane (err=${err.toExponential(3)}).`,
+        err,
+        distTol,
+      );
+    }
+  }
+
+  // B. Plane-Plane Intersection (unique line vs parallel vs coincident)
+  for (const o of visibleObjects) {
+    if (o.render !== "line" && o.render !== "segment") continue;
+    const planeDeps = (o.depends ?? [])
+      .map((id) => byId.get(id) ?? allById.get(id))
+      .filter((d): d is SceneObject => Boolean(d && (d.render === "surface" || d.type === "plane3")));
+    if (planeDeps.length < 2) continue;
+    const ln = getLine(o);
+    const plA = getPlane(planeDeps[0]);
+    const plB = getPlane(planeDeps[1]);
+    if (!ln || !plA || !plB) {
+      pushCategoryRecord("plane_plane_intersection", "intersection_consistency", "UNDETERMINED", [o.id, planeDeps[0].id, planeDeps[1].id], `Plane-plane intersection "${o.id}" lacks plane or line carrier.`);
+      continue;
+    }
+    const sinTheta = len3(cross3(plA.normal, plB.normal));
+    if (sinTheta <= dirTol) {
+      const offset = distPointPlane(plB.point, plA.point, plA.normal);
+      pushCategoryRecord(
+        "plane_plane_intersection",
+        "intersection_consistency",
+        "INVALID",
+        [o.id, planeDeps[0].id, planeDeps[1].id],
+        offset <= distTol
+          ? `Planes "${planeDeps[0].id}" and "${planeDeps[1].id}" are coincident, not an isolated line "${o.id}".`
+          : `Planes "${planeDeps[0].id}" and "${planeDeps[1].id}" are strictly parallel (gap=${offset.toExponential(2)}), no intersection line "${o.id}".`,
+        offset,
+        distTol,
+      );
+    } else {
+      const distErr = Math.max(
+        distPointPlane(ln.origin, plA.point, plA.normal),
+        distPointPlane(ln.origin, plB.point, plB.normal),
+        ln.end ? distPointPlane(ln.end, plA.point, plA.normal) : 0,
+        ln.end ? distPointPlane(ln.end, plB.point, plB.normal) : 0,
+      );
+      const orthoErr = Math.max(Math.abs(dot3(ln.dir, plA.normal)), Math.abs(dot3(ln.dir, plB.normal)));
+      const ok = distErr <= distTol && orthoErr <= dirTol;
+      pushCategoryRecord(
+        "plane_plane_intersection",
+        "intersection_consistency",
+        ok ? "VALID" : "INVALID",
+        [o.id, planeDeps[0].id, planeDeps[1].id],
+        ok
+          ? `Line "${o.id}" is the exact intersection of "${planeDeps[0].id}" and "${planeDeps[1].id}".`
+          : `Line "${o.id}" deviates from intersection of "${planeDeps[0].id}" and "${planeDeps[1].id}" (dist=${distErr.toExponential(2)}, ortho=${orthoErr.toExponential(2)}).`,
+        Math.max(distErr, orthoErr * scale),
+        distTol,
+      );
+    }
+  }
+
+  // C. Section Polygon face-coplanar edges & triangulation area sanity
+  const solids = visibleObjects.filter((s) => s.type === "solid" && Array.isArray(s.vertices) && Array.isArray(s.faces));
+  for (const o of visibleObjects) {
+    if (o.type !== "section" && !(o.type === "polygon3" && o.semantic_role === "RESULT_SECTION")) continue;
+    const rawPoly = (o.polygon ?? o.vertices ?? []).map(safeToVec3);
+    if (rawPoly.length < 3 || rawPoly.some((v) => v === null)) {
+      pushCategoryRecord("section_polygon", "section_connectivity", "INVALID", [o.id], `Section "${o.id}" has missing or fewer than 3 vertices.`);
+      continue;
+    }
+    const poly = rawPoly as Vec3[];
+    const tris = chiaTamGiac(poly);
+    const trisOk = tris.length >= poly.length - 2 && tris.every(([i, j, k]) => {
+      const a = poly[i], b = poly[j], c = poly[k];
+      const cr = cross3(sub3(b, a), sub3(c, a));
+      return 0.5 * len3(cr) > areaTol * 0.1;
+    });
+    pushCategoryRecord(
+      "section_polygon",
+      "mesh_consistency",
+      trisOk ? "VALID" : "INVALID",
+      [o.id],
+      trisOk
+        ? `Section "${o.id}" triangulation produces ${tris.length} non-degenerate triangles.`
+        : `Section "${o.id}" triangulation has missing or degenerate triangles.`,
+    );
+
+    const hostSolid =
+      (o.depends ?? []).map((id) => allById.get(id)).find((d) => d?.type === "solid" && d.vertices && d.faces)
+      ?? solids[0];
+    if (hostSolid?.vertices && hostSolid.faces) {
+      const sVerts = hostSolid.vertices.map(safeToVec3);
+      if (sVerts.every((v): v is Vec3 => v !== null)) {
+        const facePlanes = hostSolid.faces
+          .map((f) => bestFitPlaneFromPoints(f.map((vi) => sVerts[vi]).filter(Boolean)))
+          .filter((fp): fp is NonNullable<typeof fp> => fp !== null);
+        if (facePlanes.length > 0 && o.closed !== false) {
+          let maxEdgeFaceErr = 0;
+          for (let i = 0; i < poly.length; i += 1) {
+            const pA = poly[i];
+            const pB = poly[(i + 1) % poly.length];
+            let bestFaceErr = Infinity;
+            for (const fp of facePlanes) {
+              const e = Math.max(distPointPlane(pA, fp.origin, fp.unitNormal), distPointPlane(pB, fp.origin, fp.unitNormal));
+              if (e < bestFaceErr) bestFaceErr = e;
+            }
+            maxEdgeFaceErr = Math.max(maxEdgeFaceErr, bestFaceErr);
+          }
+          pushCategoryRecord(
+            "section_polygon",
+            "section_connectivity",
+            maxEdgeFaceErr <= distTol * 2 ? "VALID" : "INVALID",
+            [o.id, hostSolid.id],
+            maxEdgeFaceErr <= distTol * 2
+              ? `Every edge of section "${o.id}" lies on a face of solid "${hostSolid.id}".`
+              : `Section "${o.id}" edge does not lie on any face of "${hostSolid.id}" (err=${maxEdgeFaceErr.toExponential(2)}).`,
+            maxEdgeFaceErr,
+            distTol * 2,
+          );
+        }
+      }
+    }
+  }
+
+  // D. Tangency: d(I, P) = R, A ∈ sphere, A ∈ P, IA ⊥ P
+  const balls = visibleObjects.filter((b) => b.type === "curved_solid" && b.curved_kind === "ball" && b.anchor);
+  const planes = visibleObjects.filter((p) => p.render === "surface" || p.type === "plane3");
+  for (const ball of balls) {
+    const sphC = safeToVec3(ball.anchor);
+    let bigR = NaN;
+    if (ball.radius_sq !== undefined) {
+      try {
+        const r2 = toNumber(ball.radius_sq);
+        if (Number.isFinite(r2) && r2 > 0) bigR = Math.sqrt(r2);
+      } catch { bigR = NaN; }
+    } else if (sphC && ball.rim_point) {
+      const rim = safeToVec3(ball.rim_point);
+      if (rim) bigR = dist3(sphC, rim);
+    }
+    if (!sphC || !Number.isFinite(bigR) || bigR <= 0) continue;
+    const tangentTol = Math.max(distTol, 5e-4 * bigR);
+
+    for (const plane of planes) {
+      const pl = getPlane(plane);
+      if (!pl) continue;
+      const hasSecant = visibleObjects.some((c) => c.render === "circle" && (c.depends ?? []).includes(ball.id) && (c.depends ?? []).includes(plane.id));
+      if (hasSecant) continue;
+      const linked = (plane.depends ?? []).includes(ball.id) || visibleObjects.some((pt) =>
+        pt.type === "point3" && pt.xyz && (pt.depends ?? []).includes(ball.id) && (pt.depends ?? []).includes(plane.id),
+      ) || visibleObjects.some((wObj) =>
+        [wObj.perpendicular_witness, wObj.annotation?.witness].some((w) => w?.on === plane.id),
+      );
+      const dIP = distPointPlane(sphC, pl.point, pl.normal);
+      if (!linked && Math.abs(dIP - bigR) > tangentTol) continue;
+
+      if (linked) {
+        const err = Math.abs(dIP - bigR);
+        pushCategoryRecord(
+          "tangency",
+          "intersection_consistency",
+          err <= tangentTol ? "VALID" : "INVALID",
+          [ball.id, plane.id],
+          err <= tangentTol
+            ? `Sphere "${ball.id}" tangent to "${plane.id}" (d(I,P)=R).`
+            : `Tangent plane "${plane.id}" deviates from sphere "${ball.id}" radius by ${err.toExponential(3)}.`,
+          err,
+          tangentTol,
+        );
+      }
+
+      // Check tangent point candidates A and radius IA ⊥ P
+      for (const pt of visibleObjects) {
+        if (pt.type !== "point3" || !pt.xyz) continue;
+        const pv = safeToVec3(pt.xyz);
+        if (!pv) continue;
+        const isLinkedPt = (pt.depends ?? []).includes(ball.id) || (pt.depends ?? []).includes(plane.id) || (plane.depends ?? []).includes(pt.id);
+        if (!isLinkedPt) continue;
+        const onSphereErr = Math.abs(dist3(pv, sphC) - bigR);
+        const onPlaneErr = distPointPlane(pv, pl.point, pl.normal);
+        const radiusVec = sub3(pv, sphC);
+        const radiusUnit = unit3(radiusVec, 1e-12);
+        const perpSinErr = radiusUnit ? len3(cross3(radiusUnit, pl.normal)) : 1;
+        if (onSphereErr <= tangentTol * 10 || onPlaneErr <= tangentTol * 10 || linked) {
+          const ok = onSphereErr <= tangentTol && onPlaneErr <= tangentTol && perpSinErr <= Math.max(dirTol, 1e-3);
+          pushCategoryRecord(
+            "tangency",
+            "intersection_consistency",
+            ok ? "VALID" : "INVALID",
+            [pt.id, ball.id, plane.id],
+            ok
+              ? `Tangent point "${pt.id}" satisfies A ∈ S, A ∈ P, and IA ⊥ P.`
+              : `Tangency witness "${pt.id}" fails incidence/normal orthogonality (dS=${onSphereErr.toExponential(2)}, dP=${onPlaneErr.toExponential(2)}, sin=${perpSinErr.toExponential(2)}).`,
+            Math.max(onSphereErr, onPlaneErr, perpSinErr * bigR),
+            tangentTol,
+          );
+        }
+      }
+    }
+  }
+
+  // E. Curved Intersections (circle & ellipse sampled points on plane AND cone/cylinder/sphere)
+  for (const f of baseReport.checks.intersection_consistency.findings) {
+    if (f.status !== "VALID") {
+      categories.curved_intersections.invalidCount += f.status === "INVALID" ? 1 : 0;
+      categories.curved_intersections.undeterminedCount += f.status === "UNDETERMINED" ? 1 : 0;
+      categories.curved_intersections.checkedCount += 1;
+      categories.curved_intersections.findings.push(f);
+    }
+  }
+  for (const o of visibleObjects) {
+    if (o.render === "circle" && o.semantic_role !== "INSCRIBED_CIRCLE") {
+      const center = safeToVec3(o.center);
+      const nRaw = safeToVec3(o.normal);
+      const normal = nRaw ? unit3(nRaw, 1e-12) : null;
+      let rSq = NaN;
+      try { if (o.radius_sq !== undefined) rSq = toNumber(o.radius_sq); } catch { rSq = NaN; }
+      const planeDep = (o.depends ?? []).map((id) => allById.get(id)).find((d) => d && (d.render === "surface" || d.type === "plane3"));
+      const pl = getPlane(planeDep);
+      if (center && normal && Number.isFinite(rSq) && rSq > 0 && pl) {
+        const rC = Math.sqrt(rSq);
+        const [uAx, vAx] = planeBasisFromNormal(normal);
+        let maxPlErr = 0;
+        for (let i = 0; i < 24; i += 1) {
+          const theta = (2 * Math.PI * i) / 24;
+          const pt: Vec3 = [
+            center[0] + rC * (Math.cos(theta) * uAx[0] + Math.sin(theta) * vAx[0]),
+            center[1] + rC * (Math.cos(theta) * uAx[1] + Math.sin(theta) * vAx[1]),
+            center[2] + rC * (Math.cos(theta) * uAx[2] + Math.sin(theta) * vAx[2]),
+          ];
+          maxPlErr = Math.max(maxPlErr, distPointPlane(pt, pl.point, pl.normal));
+        }
+        const tol = Math.max(distTol, 5e-4 * rC);
+        pushCategoryRecord(
+          "curved_intersections",
+          "intersection_consistency",
+          maxPlErr <= tol ? "VALID" : "INVALID",
+          [o.id, planeDep!.id],
+          maxPlErr <= tol
+            ? `24-point circle sample of "${o.id}" lies on plane "${planeDep!.id}".`
+            : `Circle "${o.id}" samples leave plane "${planeDep!.id}" by ${maxPlErr.toExponential(2)}.`,
+          maxPlErr,
+          tol,
+        );
+      }
+    } else if (o.render === "ellipse") {
+      const center = safeToVec3(o.center);
+      const uMajRaw = safeToVec3(o.major_dir);
+      const uMinRaw = safeToVec3(o.minor_dir);
+      const uMaj = uMajRaw ? unit3(uMajRaw, 1e-12) : null;
+      const uMin = uMinRaw ? unit3(uMinRaw, 1e-12) : null;
+      let aSq = NaN;
+      let bSq = NaN;
+      try { if (o.semi_major_sq !== undefined) aSq = toNumber(o.semi_major_sq); } catch { aSq = NaN; }
+      try { if (o.semi_minor_sq !== undefined) bSq = toNumber(o.semi_minor_sq); } catch { bSq = NaN; }
+      const planeDep = (o.depends ?? []).map((id) => allById.get(id)).find((d) => d && (d.render === "surface" || d.type === "plane3"));
+      const pl = getPlane(planeDep);
+      if (center && uMaj && uMin && Number.isFinite(aSq) && aSq > 0 && Number.isFinite(bSq) && bSq > 0) {
+        const aLen = Math.sqrt(aSq);
+        const bLen = Math.sqrt(bSq);
+        const tol = Math.max(distTol, 5e-4 * Math.max(aLen, bLen, 1e-6));
+        const samplePts: Vec3[] = [];
+        for (let i = 0; i < 24; i += 1) {
+          const t = (2 * Math.PI * i) / 24;
+          const cs = Math.cos(t);
+          const sn = Math.sin(t);
+          samplePts.push([
+            center[0] + cs * aLen * uMaj[0] + sn * bLen * uMin[0],
+            center[1] + cs * aLen * uMaj[1] + sn * bLen * uMin[1],
+            center[2] + cs * aLen * uMaj[2] + sn * bLen * uMin[2],
+          ]);
+        }
+        if (pl) {
+          let maxPlErr = 0;
+          for (const pt of samplePts) {
+            maxPlErr = Math.max(maxPlErr, distPointPlane(pt, pl.point, pl.normal));
+          }
+          pushCategoryRecord(
+            "curved_intersections",
+            "intersection_consistency",
+            maxPlErr <= tol ? "VALID" : "INVALID",
+            [o.id, planeDep!.id],
+            maxPlErr <= tol
+              ? `24-point ellipse sample of "${o.id}" lies on plane "${planeDep!.id}".`
+              : `Ellipse "${o.id}" samples leave plane "${planeDep!.id}" by ${maxPlErr.toExponential(2)}.`,
+            maxPlErr,
+            tol,
+          );
+        }
+        for (const depId of o.depends ?? []) {
+          const csObj = allById.get(depId);
+          if (!csObj || csObj.type !== "curved_solid" || (csObj.curved_kind !== "cylinder" && csObj.curved_kind !== "cone")) continue;
+          const anchorVec = safeToVec3(csObj.anchor);
+          const topVec = safeToVec3(csObj.apex_or_top);
+          if (!anchorVec || !topVec) continue;
+          const axisVec = sub3(topVec, anchorVec);
+          const axisLen = len3(axisVec);
+          const axisUnit = unit3(axisVec, 1e-12);
+          let csR = NaN;
+          try { if (csObj.radius_sq !== undefined) csR = Math.sqrt(toNumber(csObj.radius_sq)); } catch { csR = NaN; }
+          if (!Number.isFinite(csR) && csObj.rim_point) {
+            const rim = safeToVec3(csObj.rim_point);
+            if (rim) csR = dist3(anchorVec, rim);
+          }
+          if (!axisUnit || axisLen <= 1e-12 || !Number.isFinite(csR) || csR <= 0) continue;
+          const csTol = Math.max(tol, 5e-4 * csR);
+          let maxSurfErr = 0;
+          for (const pt of samplePts) {
+            const { dist: radialDist, along } = pointLineProjection(pt, anchorVec, axisUnit);
+            const axialOverhang = Math.max(0, -along, along - axisLen);
+            const expectedR = csObj.curved_kind === "cone"
+              ? csR * Math.max(0, Math.min(1, 1 - along / axisLen))
+              : csR;
+            maxSurfErr = Math.max(maxSurfErr, Math.abs(radialDist - expectedR), axialOverhang);
+          }
+          pushCategoryRecord(
+            "curved_intersections",
+            "intersection_consistency",
+            maxSurfErr <= csTol ? "VALID" : "INVALID",
+            [o.id, csObj.id],
+            maxSurfErr <= csTol
+              ? `24-point ellipse sample of "${o.id}" lies on ${csObj.curved_kind} "${csObj.id}".`
+              : `Ellipse "${o.id}" deviates from ${csObj.curved_kind} "${csObj.id}" by ${maxSurfErr.toExponential(2)}.`,
+            maxSurfErr,
+            csTol,
+          );
+        }
+      }
+    }
+  }
+
+  let anyInvalid = baseReport.overallStatus === "INVALID";
+  let anyUndetermined = baseReport.overallStatus === "UNDETERMINED";
+  for (const cat of Object.values(categories)) {
+    if (cat.invalidCount > 0) {
+      cat.status = "INVALID";
+      anyInvalid = true;
+    } else if (cat.undeterminedCount > 0) {
+      cat.status = "UNDETERMINED";
+      anyUndetermined = true;
+    } else {
+      cat.status = "VALID";
+    }
+  }
+  const overallStatus: ConsistencyStatus = anyInvalid ? "INVALID" : anyUndetermined ? "UNDETERMINED" : "VALID";
+  return {
+    overallStatus,
+    isValid: overallStatus === "VALID",
+    stepIndex: baseReport.stepIndex,
+    sceneScale: baseReport.sceneScale,
+    tolerances: baseReport.tolerances,
+    categories,
+    findings: [...baseReport.findings, ...extraFindings],
+    baseReport,
+  };
+}

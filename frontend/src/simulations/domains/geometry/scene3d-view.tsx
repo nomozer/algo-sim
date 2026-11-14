@@ -76,8 +76,8 @@ import {
   veTrenKhung,
 } from "./scene3d-presentation";
 import {
-  type KhungNhin, type LoaiKhoiTamXoay, type TamXoayOnDinh,
-  chonHuongNhin, hopBaoCuaDiem, huongLenHienThi, khungAnToanCanDoiTam, khungNhinQuanhTam,
+  type KhungNhin, type LoaiKhoiTamXoay, type LocateObjectKind, type OccluderSphereMesh, type OccluderTriangleMesh, type SmartLocateStatus, type TamXoayOnDinh,
+  chonHuongNhin, computeSmartLocateCamera, hopBaoCuaDiem, huongLenHienThi, khungAnToanCanDoiTam, khungNhinQuanhTam,
   khungNhinSuPham, khungNhinVua, tiLeHinhChieu, tinhTamXoayTuKhoi, khoangGanToiThieu, khoangTuaTheoHuong,
 } from "./scene3d-camera";
 import { MAU_VAI_TRO, PHONG_CACH_SCENE3D, vaiTroKhoi, vaiTroMien, type VaiTroKhoi } from "./scene3d-roles";
@@ -3528,6 +3528,17 @@ interface Props {
   }) => void;
   initialCameraPose?: SceneCameraPose | null;
   onCameraPoseChange?: (pose: SceneCameraPose) => void;
+  relationHighlightIds?: readonly string[] | null;
+  locateRequest?: { objectId: string; nonce: number } | null;
+  restoreCameraNonce?: number;
+  onLocateFeedback?: (feedback: {
+    nonce: number;
+    objectId: string;
+    status: SmartLocateStatus | "restored";
+    canRestore: boolean;
+    reason: string;
+    message?: string;
+  }) => void;
 }
 
 /** §16.7 — cạnh góc vuông của ký hiệu tại chân, theo độ dài đoạn tới chân, có trần (đơn vị cảnh). */
@@ -4668,6 +4679,10 @@ export function Scene3DWorkspace({
   rightAnglesShown = true, dashedHiddenShown = true,
   webglFallbackNode, webglRecoveringNode, onWebglFailure, onWebglLifecycleChange,
   initialCameraPose, onCameraPoseChange,
+  relationHighlightIds = null,
+  locateRequest = null,
+  restoreCameraNonce = 0,
+  onLocateFeedback,
 }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const rootRef = useRef<THREE.Group | null>(null);
@@ -4684,6 +4699,14 @@ export function Scene3DWorkspace({
   xrayRef.current = xray;
   const onCameraPoseChangeRef = useRef(onCameraPoseChange);
   onCameraPoseChangeRef.current = onCameraPoseChange;
+  const onLocateFeedbackRef = useRef(onLocateFeedback);
+  onLocateFeedbackRef.current = onLocateFeedback;
+  const locateCameraRef = useRef<((req: { objectId: string; nonce: number }) => void) | null>(null);
+  const restoreCameraRef = useRef<((nonce: number) => void) | null>(null);
+  const preLocatePoseRef = useRef<(SceneCameraPose & { offset?: [number, number] }) | null>(null);
+  const cancelLocateTweenRef = useRef<(() => void) | null>(null);
+  const prevLocateNonceRef = useRef<number>(locateRequest?.nonce ?? 0);
+  const prevRestoreCameraNonceRef = useRef<number>(restoreCameraNonce);
   const pendingRestoredCameraRef = useRef<SceneCameraPose | null>(
     hopLeCameraPose(initialCameraPose) ? initialCameraPose : null,
   );
@@ -4693,6 +4716,7 @@ export function Scene3DWorkspace({
     pendingRestoredCameraRef.current = hopLeCameraPose(initialCameraPose)
       ? initialCameraPose
       : null;
+    preLocatePoseRef.current = null;
   }
   const prevFitTokenRef = useRef(fitToken);
   //: Đặt lại khung nhìn cho vừa hình. Giữ trong ref vì nó do vòng dựng cảnh
@@ -4753,6 +4777,8 @@ export function Scene3DWorkspace({
   const tRef = useRef<number[] | null>(null);
   tRef.current = maTranKhung4(scene);
   const buoc = clampStep(scene, step);
+  const buocRef = useRef(buoc);
+  buocRef.current = buoc;
   const tuongTac = interaction ?? TRANG_THAI_DAU;
   const tuongTacRef = useRef(tuongTac);
   tuongTacRef.current = tuongTac;
@@ -4766,10 +4792,13 @@ export function Scene3DWorkspace({
     () => computeStepHighlightTargets(scene, buoc, activePedStep?.startAnchor),
     [scene, buoc, activePedStep?.startAnchor],
   );
-  const tapChon = useMemo(
-    () => new Set(hasSelection ? highlightSet(scene, tuongTac.selected_id!, true) : []),
-    [scene, hasSelection, tuongTac?.selected_id],
-  );
+  const tapChon = useMemo(() => {
+    if (!hasSelection) return new Set<string>();
+    if (Array.isArray(relationHighlightIds)) {
+      return new Set<string>([tuongTac.selected_id!, ...relationHighlightIds]);
+    }
+    return new Set(highlightSet(scene, tuongTac.selected_id!, true));
+  }, [scene, hasSelection, tuongTac?.selected_id, relationHighlightIds]);
   const tapNoiBat = useMemo(
     () =>
       hasSelection
@@ -4937,10 +4966,18 @@ export function Scene3DWorkspace({
     }
   }, [scene, buoc, replayNonce, isPlaying, stepHighlightTargets, sphereFormationSpecs]);
   // Chỉ khi NGƯỜI DÙNG chọn: phân tầng chuỗi nhân quả; null = trung tính.
-  const tang = useMemo(
-    () => (tuongTac.selected_id ? tangNhanManh(scene, tuongTac.selected_id) : null),
-    [scene, tuongTac.selected_id],
-  );
+  const tang = useMemo(() => {
+    if (!tuongTac.selected_id) return null;
+    if (Array.isArray(relationHighlightIds)) {
+      const relMap = new Map<string, TangNhanManh>();
+      for (const rid of relationHighlightIds) {
+        if (rid && rid !== tuongTac.selected_id) relMap.set(rid, "du_kien_so");
+      }
+      relMap.set(tuongTac.selected_id, "dich");
+      return relMap;
+    }
+    return tangNhanManh(scene, tuongTac.selected_id);
+  }, [scene, tuongTac.selected_id, relationHighlightIds]);
   const rawHiddenAux = useMemo(
     () => auxiliaryHiddenAt(scene, buoc, auxiliaryShown, tuongTac.selected_id ?? null),
     [scene, buoc, auxiliaryShown, tuongTac.selected_id],
@@ -5187,6 +5224,50 @@ export function Scene3DWorkspace({
     let lechOngKinhNgang = 0;
     let lechOngKinhDoc = 0;
     let kcKhungChuan = 0;
+    interface CameraTweenState {
+      active: boolean;
+      startMs: number;
+      durationMs: number;
+      fromPos: THREE.Vector3;
+      toPos: THREE.Vector3;
+      fromTarget: THREE.Vector3;
+      toTarget: THREE.Vector3;
+      fromOffset: [number, number];
+      toOffset: [number, number];
+      kind: "locate" | "restore";
+    }
+    let cameraTween: CameraTweenState | null = null;
+    let poseSavedBeforeLocate = false;
+    const huyTweenCam = () => {
+      if (cameraTween) cameraTween.active = false;
+      cameraTween = null;
+    };
+    const onManualCamStart = () => {
+      const hadTween = Boolean(cameraTween?.active);
+      const hadSaved = poseSavedBeforeLocate;
+      huyTweenCam();
+      poseSavedBeforeLocate = false;
+      preLocatePoseRef.current = null;
+      if (hadTween || hadSaved) {
+        if (typeof window !== "undefined") {
+          const prevLoc = ((window as any).__geo3d_locate_state ?? {}) as Record<string, unknown>;
+          (window as any).__geo3d_locate_state = {
+            ...prevLoc,
+            status: hadTween ? "cancelled_by_user" : (prevLoc.status ?? "manual_override"),
+            animating: false,
+            canRestore: false,
+          };
+        }
+        onLocateFeedbackRef.current?.({
+          nonce: prevLocateNonceRef.current,
+          objectId: "",
+          status: "unchanged",
+          canRestore: false,
+          reason: hadTween ? "cancelled_by_user" : "manual_camera_moved",
+        });
+      }
+    };
+    cancelLocateTweenRef.current = huyTweenCam;
     const armRestoreTimeout = () => {
       if (restoreTimeoutId !== null) {
         clearTimeout(restoreTimeoutId);
@@ -5301,6 +5382,7 @@ export function Scene3DWorkspace({
       setWebglEpoch((n) => n + 1);
     };
     renderer.domElement.addEventListener("wheel", xuLyDoiDieuKhien, { passive: true });
+    renderer.domElement.addEventListener("wheel", onManualCamStart, { passive: true });
     // A label or annotation over the figure keeps its pointer events (selection, focus) but must not swallow the
     // wheel: forward it to the canvas so zooming works wherever the pointer rests on the figure.
     const chuyenWheelVeCanvas = (e: WheelEvent) => {
@@ -5317,6 +5399,7 @@ export function Scene3DWorkspace({
     // Near zoom limit follows the real surface along the new view direction (clamped on the next controls update).
     const capNhatGioiHanTheoHuong = () => { khoangTuaHienTai = capNhatGioiHanGan(cam, dieuKhien); };
     dieuKhien.addEventListener("start", danhDauNguoiDungChinhCam);
+    dieuKhien.addEventListener("start", onManualCamStart);
     dieuKhien.addEventListener("change", capNhatGioiHanTheoHuong);
     dieuKhien.addEventListener("change", xuLyDoiDieuKhien);
     dieuKhien.addEventListener("end", xuLyKetThucDieuKhien);
@@ -6084,6 +6167,7 @@ export function Scene3DWorkspace({
     let rafId = 0;
     const isAnimationActive = (controlsChanged: boolean): boolean => {
       if (controlsChanged || controlsInteracting) return true;
+      if (cameraTween?.active) return true;
       const nowMs = typeof performance !== "undefined" ? performance.now() : Date.now();
       if (nowMs - lastInteractionWakeMs < 260) return true;
       if (currentStepPulse() > 0) return true;
@@ -6095,7 +6179,49 @@ export function Scene3DWorkspace({
     };
     const renderSingleFrame = (updateControls: boolean): boolean => {
       let controlsMoved = false;
-      if (updateControls) {
+      if (cameraTween?.active) {
+        const nowMs = typeof performance !== "undefined" ? performance.now() : Date.now();
+        const rawT = cameraTween.durationMs > 0
+          ? Math.min(1, Math.max(0, (nowMs - cameraTween.startMs) / cameraTween.durationMs))
+          : 1;
+        const eased = 1 - Math.pow(1 - rawT, 3);
+        dangDatKhungTuDong = true;
+        try {
+          cam.position.lerpVectors(cameraTween.fromPos, cameraTween.toPos, eased);
+          dieuKhien.target.lerpVectors(cameraTween.fromTarget, cameraTween.toTarget, eased);
+          lechOngKinhNgang =
+            cameraTween.fromOffset[0] + (cameraTween.toOffset[0] - cameraTween.fromOffset[0]) * eased;
+          lechOngKinhDoc =
+            cameraTween.fromOffset[1] + (cameraTween.toOffset[1] - cameraTween.fromOffset[1]) * eased;
+          chinhCo();
+          cam.lookAt(dieuKhien.target);
+          cam.updateMatrixWorld();
+          khoangTuaHienTai = capNhatGioiHanGan(cam, dieuKhien);
+          controlsMoved = true;
+          if (rawT >= 1) {
+            cameraTween.active = false;
+            const kind = cameraTween.kind;
+            cameraTween = null;
+            dieuKhien.saveState();
+            dieuKhien.reset();
+            if (typeof window !== "undefined") {
+              const prevLoc = ((window as any).__geo3d_locate_state ?? {}) as Record<string, unknown>;
+              (window as any).__geo3d_locate_state = {
+                ...prevLoc,
+                status: kind === "restore" ? "restored" : "completed",
+                animating: false,
+                position: cam.position.toArray(),
+                target: dieuKhien.target.toArray(),
+              };
+            }
+          }
+        } finally {
+          dangDatKhungTuDong = false;
+        }
+        if (!cameraTween) {
+          baoCaoCameraPose();
+        }
+      } else if (updateControls) {
         const truocPos = cam.position.clone();
         const truocQuat = cam.quaternion.clone();
         controlsMoved = dieuKhien.update();
@@ -6431,6 +6557,16 @@ export function Scene3DWorkspace({
 
     // ── ĐẶT KHUNG NHÌN CHO VỪA HÌNH ────────────────────────────────────
     vuaKhungRef.current = () => {
+      huyTweenCam();
+      poseSavedBeforeLocate = false;
+      preLocatePoseRef.current = null;
+      if (typeof window !== "undefined" && (window as any).__geo3d_locate_state) {
+        (window as any).__geo3d_locate_state = {
+          ...((window as any).__geo3d_locate_state as Record<string, unknown>),
+          animating: false,
+          canRestore: false,
+        };
+      }
       const savedPose = pendingRestoredCameraRef.current;
       userAdjustedCamera = false;
       const { dsNguon, infoTam, diem } = tinhTamVaDiemCanh();
@@ -6476,6 +6612,462 @@ export function Scene3DWorkspace({
       scheduleCommitRender();
     };
 
+    const isReducedMotionActive = (): boolean =>
+      Boolean(
+        stepEntranceRef.current.reducedMotion
+        || (typeof window !== "undefined"
+          && typeof window.matchMedia === "function"
+          && window.matchMedia("(prefers-reduced-motion: reduce)").matches),
+      );
+
+    locateCameraRef.current = ({ objectId, nonce }) => {
+      huyTweenCam();
+      const curScene = sceneRef.current;
+      const curBuoc = buocRef.current;
+      const tt = tuongTacRef.current;
+      const visObjs = objectsAt(curScene, curBuoc).filter((x) => !tt.hidden_ids.includes(x.id));
+      const obj = visObjs.find((x) => x.id === objectId) ?? curScene.objects.find((x) => x.id === objectId);
+      if (!obj) {
+        onLocateFeedbackRef.current?.({
+          nonce,
+          objectId,
+          status: "fallback_unchanged",
+          canRestore: poseSavedBeforeLocate,
+          reason: "object_not_found",
+          message: "Không tìm thấy đối tượng để định vị.",
+        });
+        return;
+      }
+      const mapPt = (p: Vec3, id: string): Vec3 => {
+        const dich = visualTransformOf(tt, curScene, id).translate;
+        return xoay([p[0] + dich[0], p[1] + dich[1], p[2] + dich[2]], qRef.current);
+      };
+      const mapDir = (d: Vec3): Vec3 => xoay(d, qRef.current);
+      const basePts = diemHuuHan([obj]).map((p) => mapPt(p, obj.id));
+      let objectPoints: Vec3[] = basePts;
+      if (obj.type === "point3" && obj.xyz) {
+        objectPoints = [mapPt(toVec3(obj.xyz), obj.id)];
+      } else if (obj.endpoints && obj.endpoints.length >= 2) {
+        objectPoints = obj.endpoints.map((p) => mapPt(toVec3(p), obj.id));
+      } else if (obj.point_a && obj.point_b) {
+        objectPoints = [mapPt(toVec3(obj.point_a), obj.id), mapPt(toVec3(obj.point_b), obj.id)];
+      } else if ((obj.type === "segment3" || obj.type === "edge") && basePts.length < 2) {
+        const refIds = obj.endpoint_ids?.length ? obj.endpoint_ids : (obj.depends ?? []);
+        const resolvedPts: Vec3[] = [];
+        for (const eid of refIds) {
+          const ep = visObjs.find((x) => x.id === eid) ?? curScene.objects.find((x) => x.id === eid);
+          if (ep?.type === "point3" && ep.xyz) {
+            resolvedPts.push(mapPt(toVec3(ep.xyz), ep.id));
+          }
+        }
+        if (resolvedPts.length >= 2) {
+          objectPoints = resolvedPts;
+        }
+      } else if (obj.type === "line3" && basePts.length < 2 && obj.point && obj.direction) {
+        const p0 = toVec3(obj.point);
+        const d0 = toVec3(obj.direction);
+        objectPoints = [
+          mapPt([p0[0] - d0[0], p0[1] - d0[1], p0[2] - d0[2]], obj.id),
+          mapPt([p0[0] + d0[0], p0[1] + d0[1], p0[2] + d0[2]], obj.id),
+        ];
+      } else if (obj.type === "plane3") {
+        const studiedPoly = computeBoundedStudiedPlanePolygon(curScene, obj, visObjs);
+        const anchorPts = studiedPoly.length >= 3
+          ? studiedPoly
+          : compactPlaneAnchorPoints(curScene, obj, visObjs);
+        if (anchorPts.length > 0) {
+          objectPoints = anchorPts.map((p) => mapPt(p, obj.id));
+        } else if (basePts.length === 0 && obj.point) {
+          objectPoints = [mapPt(toVec3(obj.point), obj.id)];
+        }
+      } else if ((obj.type === "section" || obj.type === "polygon3" || obj.type === "face") && (obj.polygon || obj.vertices)) {
+        const raw = (obj.polygon ?? obj.vertices ?? []).map(toVec3);
+        if (raw.length > 0) {
+          objectPoints = raw.map((p) => mapPt(p, obj.id));
+        }
+      } else if (obj.type === "circle3" && obj.center && obj.normal && obj.radius_sq !== undefined) {
+        try {
+          const c = toVec3(obj.center);
+          const nRaw = toVec3(obj.normal);
+          const nLen = Math.hypot(nRaw[0], nRaw[1], nRaw[2]);
+          const r2 = toNumber(obj.radius_sq);
+          if (nLen > 1e-9 && Number.isFinite(r2) && r2 > 0) {
+            const n = new THREE.Vector3(nRaw[0] / nLen, nRaw[1] / nLen, nRaw[2] / nLen);
+            const helper = Math.abs(n.z) < 0.9 ? new THREE.Vector3(0, 0, 1) : new THREE.Vector3(1, 0, 0);
+            const u = new THREE.Vector3().crossVectors(helper, n).normalize();
+            const v = new THREE.Vector3().crossVectors(n, u).normalize();
+            const r = Math.sqrt(r2);
+            const ring: Vec3[] = [];
+            for (let k = 0; k < 16; k++) {
+              const theta = (2 * Math.PI * k) / 16;
+              const ct = Math.cos(theta) * r;
+              const st = Math.sin(theta) * r;
+              ring.push(
+                mapPt([c[0] + u.x * ct + v.x * st, c[1] + u.y * ct + v.y * st, c[2] + u.z * ct + v.z * st], obj.id),
+              );
+            }
+            objectPoints = ring;
+          }
+        } catch {
+          // giữ nguyên basePts nếu tham số đường tròn không phải số hữu hạn
+        }
+      } else if (
+        obj.type === "ellipse3"
+        && obj.center
+        && obj.major_dir
+        && obj.minor_dir
+        && obj.semi_major_sq !== undefined
+        && obj.semi_minor_sq !== undefined
+      ) {
+        try {
+          const c = toVec3(obj.center);
+          const rawU = toVec3(obj.major_dir);
+          const rawV = toVec3(obj.minor_dir);
+          const uLen = Math.hypot(rawU[0], rawU[1], rawU[2]);
+          const vLen = Math.hypot(rawV[0], rawV[1], rawV[2]);
+          const a2 = toNumber(obj.semi_major_sq);
+          const b2 = toNumber(obj.semi_minor_sq);
+          if (uLen > 1e-9 && vLen > 1e-9 && Number.isFinite(a2) && a2 > 0 && Number.isFinite(b2) && b2 > 0) {
+            const u: Vec3 = [rawU[0] / uLen, rawU[1] / uLen, rawU[2] / uLen];
+            const v: Vec3 = [rawV[0] / vLen, rawV[1] / vLen, rawV[2] / vLen];
+            const a = Math.sqrt(a2);
+            const b = Math.sqrt(b2);
+            const ring: Vec3[] = [];
+            for (let k = 0; k < 16; k++) {
+              const theta = (2 * Math.PI * k) / 16;
+              const ca = Math.cos(theta) * a;
+              const sb = Math.sin(theta) * b;
+              ring.push(
+                mapPt([c[0] + u[0] * ca + v[0] * sb, c[1] + u[1] * ca + v[1] * sb, c[2] + u[2] * ca + v[2] * sb], obj.id),
+              );
+            }
+            objectPoints = ring;
+          }
+        } catch {
+          // giữ nguyên basePts nếu tham số elip không phải số hữu hạn
+        }
+      }
+
+      let objectNormal: Vec3 | null = null;
+      if ("normal" in obj && obj.normal) {
+        const nd = mapDir(toVec3(obj.normal));
+        const nl = Math.hypot(nd[0], nd[1], nd[2]);
+        if (nl > 1e-8) objectNormal = [nd[0] / nl, nd[1] / nl, nd[2] / nl];
+      } else if (obj.type === "ellipse3" && obj.major_dir && obj.minor_dir) {
+        const u = toVec3(obj.major_dir);
+        const v = toVec3(obj.minor_dir);
+        const nx = u[1] * v[2] - u[2] * v[1];
+        const ny = u[2] * v[0] - u[0] * v[2];
+        const nz = u[0] * v[1] - u[1] * v[0];
+        const nd = mapDir([nx, ny, nz]);
+        const nl = Math.hypot(nd[0], nd[1], nd[2]);
+        if (nl > 1e-8) objectNormal = [nd[0] / nl, nd[1] / nl, nd[2] / nl];
+      } else if (
+        (obj.type === "section" || obj.type === "polygon3" || obj.type === "face" || obj.type === "circle3")
+        && objectPoints.length >= 3
+      ) {
+        const tri = chiaTamGiac(objectPoints)[0];
+        if (tri) {
+          const p0 = objectPoints[tri[0]];
+          const p1 = objectPoints[tri[1]];
+          const p2 = objectPoints[tri[2]];
+          const ux = p1[0] - p0[0], uy = p1[1] - p0[1], uz = p1[2] - p0[2];
+          const vx = p2[0] - p0[0], vy = p2[1] - p0[1], vz = p2[2] - p0[2];
+          const nx = uy * vz - uz * vy;
+          const ny = uz * vx - ux * vz;
+          const nz = ux * vy - uy * vx;
+          const nl = Math.hypot(nx, ny, nz);
+          if (nl > 1e-6) objectNormal = [nx / nl, ny / nl, nz / nl];
+        }
+      }
+
+      const objectKind: LocateObjectKind =
+        obj.type === "point3"
+          ? "point"
+          : obj.type === "segment3" || obj.type === "line3" || obj.type === "edge"
+            ? "segment"
+            : obj.type === "plane3"
+              ? "plane"
+              : obj.type === "section" || (obj.type === "polygon3" && vaiTroMien(obj) === "section")
+                ? "section"
+                : obj.type === "solid"
+                  ? "solid"
+                  : obj.type === "curved_solid"
+                    ? "curved_surface"
+                    : (obj.type === "polygon3" || obj.type === "face") && obj.closed === false
+                      ? "segment"
+                      : obj.type === "polygon3" || obj.type === "face" || obj.type === "circle3" || obj.type === "ellipse3"
+                        ? "section"
+                        : objectPoints.length <= 1
+                          ? "point"
+                          : "solid";
+
+      const objectCenter =
+        obj.type === "curved_solid" && obj.curved_kind === "ball" && obj.anchor
+          ? mapPt(toVec3(obj.anchor), obj.id)
+          : undefined;
+
+      const byIdVis = new Map(visObjs.map((x) => [x.id, x]));
+      const stepContextPts: Vec3[] = [];
+      for (const x of visObjs) {
+        if (laDiemPhuDungMatPhang(curScene, x, byIdVis)) continue;
+        for (const p of diemHuuHan([x])) stepContextPts.push(mapPt(p, x.id));
+      }
+      const { infoTam, diem: fullScenePts } = tinhTamVaDiemCanh();
+      const contextPoints = stepContextPts.length > 0
+        ? stepContextPts
+        : fullScenePts.length > 0
+          ? fullScenePts
+          : objectPoints;
+
+      const occluderMeshes: OccluderTriangleMesh[] = [];
+      const occluderSpheres: OccluderSphereMesh[] = [];
+      for (const x of visObjs) {
+        if (x.type === "solid" && x.vertices && x.faces) {
+          const verts = x.vertices.map((v) => mapPt(toVec3(v), x.id));
+          const tris: [number, number, number][] = [];
+          for (const f of x.faces) {
+            const facePts = f.map((idx) => verts[idx]).filter(Boolean);
+            if (facePts.length < 3) continue;
+            for (const [a, b, c] of chiaTamGiac(facePts)) {
+              if (a < f.length && b < f.length && c < f.length) {
+                tris.push([f[a], f[b], f[c]]);
+              }
+            }
+          }
+          if (tris.length > 0) {
+            occluderMeshes.push({ objectId: x.id, vertices: verts, triangles: tris, isSolidFace: true });
+          }
+        } else if (x.type === "curved_solid" && x.curved_kind === "ball" && x.anchor && x.radius_sq) {
+          const r = Math.sqrt(Math.max(0, toNumber(x.radius_sq)));
+          if (r > 1e-6) {
+            occluderSpheres.push({
+              objectId: x.id,
+              center: mapPt(toVec3(x.anchor), x.id),
+              radius: r,
+            });
+          }
+        }
+      }
+
+      const w = renderer.domElement.clientWidth || container.clientWidth || 640;
+      const h = renderer.domElement.clientHeight || container.clientHeight || 420;
+      const isInteriorOrTangent = Boolean(
+        obj.origin === "derived"
+        || obj.parent
+        || (occluderMeshes.length > 0 && objectKind === "point")
+        || (occluderSpheres.length > 0 && (objectKind === "point" || objectKind === "solid")),
+      );
+
+      const res = computeSmartLocateCamera({
+        objectId,
+        objectKind,
+        objectPoints,
+        objectNormal,
+        objectCenter,
+        contextPoints,
+        stableCenter: infoTam,
+        currentPosition: [cam.position.x, cam.position.y, cam.position.z],
+        currentTarget: [dieuKhien.target.x, dieuKhien.target.y, dieuKhien.target.z],
+        fovDeg: cam.fov,
+        aspect: w / Math.max(1, h),
+        occluderMeshes,
+        occluderSpheres,
+        isInteriorOrTangent,
+      });
+
+      if (res.status === "located") {
+        if (!poseSavedBeforeLocate || !preLocatePoseRef.current) {
+          preLocatePoseRef.current = {
+            position: [cam.position.x, cam.position.y, cam.position.z],
+            target: [dieuKhien.target.x, dieuKhien.target.y, dieuKhien.target.z],
+            offset: [lechOngKinhNgang, lechOngKinhDoc],
+          };
+          poseSavedBeforeLocate = true;
+        }
+        userAdjustedCamera = true;
+        const durationMs = isReducedMotionActive() ? 0 : 300;
+        const baseDiag = {
+          nonce,
+          objectId,
+          objectKind,
+          canRestore: true,
+          target: res.target,
+          position: res.position,
+          targetNdc: res.targetNdc,
+          normalAlignment: res.normalAlignment,
+          segmentForeshorteningCos: res.segmentForeshorteningCos,
+          occludedRatio: res.occludedRatio,
+          minMarginToHostMesh: res.minMarginToHostMesh,
+          reason: res.reason,
+        };
+        if (durationMs === 0) {
+          dangDatKhungTuDong = true;
+          try {
+            cam.position.set(...res.position);
+            dieuKhien.target.set(...res.target);
+            lechOngKinhNgang = 0;
+            lechOngKinhDoc = 0;
+            chinhCo();
+            cam.lookAt(dieuKhien.target);
+            cam.updateMatrixWorld();
+            dieuKhien.saveState();
+            dieuKhien.reset();
+            khoangTuaHienTai = capNhatGioiHanGan(cam, dieuKhien);
+          } finally {
+            dangDatKhungTuDong = false;
+          }
+          baoCaoCameraPose();
+          if (typeof window !== "undefined") {
+            (window as any).__geo3d_locate_state = {
+              ...baseDiag,
+              status: "completed",
+              animating: false,
+            };
+          }
+          renderSingleFrame(false);
+        } else {
+          const nowMs = typeof performance !== "undefined" ? performance.now() : Date.now();
+          cameraTween = {
+            active: true,
+            startMs: nowMs,
+            durationMs,
+            fromPos: cam.position.clone(),
+            toPos: new THREE.Vector3(...res.position),
+            fromTarget: dieuKhien.target.clone(),
+            toTarget: new THREE.Vector3(...res.target),
+            fromOffset: [lechOngKinhNgang, lechOngKinhDoc],
+            toOffset: [0, 0],
+            kind: "locate",
+          };
+          if (typeof window !== "undefined") {
+            (window as any).__geo3d_locate_state = {
+              ...baseDiag,
+              status: "animating",
+              animating: true,
+            };
+          }
+          wakeRenderLoop();
+        }
+        onLocateFeedbackRef.current?.({
+          nonce,
+          objectId,
+          status: "located",
+          canRestore: true,
+          reason: res.reason,
+          message: res.message,
+        });
+      } else {
+        if (typeof window !== "undefined") {
+          (window as any).__geo3d_locate_state = {
+            nonce,
+            objectId,
+            objectKind,
+            status: res.status,
+            animating: false,
+            canRestore: poseSavedBeforeLocate,
+            target: res.target,
+            position: res.position,
+            targetNdc: res.targetNdc,
+            normalAlignment: res.normalAlignment,
+            segmentForeshorteningCos: res.segmentForeshorteningCos,
+            occludedRatio: res.occludedRatio,
+            minMarginToHostMesh: res.minMarginToHostMesh,
+            reason: res.reason,
+            message: res.message,
+          };
+        }
+        onLocateFeedbackRef.current?.({
+          nonce,
+          objectId,
+          status: res.status,
+          canRestore: poseSavedBeforeLocate,
+          reason: res.reason,
+          message: res.message,
+        });
+      }
+    };
+
+    restoreCameraRef.current = (nonce) => {
+      huyTweenCam();
+      const saved = preLocatePoseRef.current;
+      preLocatePoseRef.current = null;
+      poseSavedBeforeLocate = false;
+      if (!saved || !hopLeCameraPose(saved)) {
+        onLocateFeedbackRef.current?.({
+          nonce,
+          objectId: "",
+          status: "unchanged",
+          canRestore: false,
+          reason: "no_saved_camera",
+        });
+        return;
+      }
+      const toOffset: [number, number] = saved.offset ?? [0, 0];
+      const durationMs = isReducedMotionActive() ? 0 : 300;
+      if (durationMs === 0) {
+        dangDatKhungTuDong = true;
+        try {
+          cam.position.set(...saved.position);
+          dieuKhien.target.set(...saved.target);
+          lechOngKinhNgang = toOffset[0];
+          lechOngKinhDoc = toOffset[1];
+          chinhCo();
+          cam.lookAt(dieuKhien.target);
+          cam.updateMatrixWorld();
+          dieuKhien.saveState();
+          dieuKhien.reset();
+          khoangTuaHienTai = capNhatGioiHanGan(cam, dieuKhien);
+        } finally {
+          dangDatKhungTuDong = false;
+        }
+        baoCaoCameraPose();
+        if (typeof window !== "undefined") {
+          (window as any).__geo3d_locate_state = {
+            nonce,
+            status: "restored",
+            animating: false,
+            canRestore: false,
+            position: cam.position.toArray(),
+            target: dieuKhien.target.toArray(),
+          };
+        }
+        renderSingleFrame(false);
+      } else {
+        const nowMs = typeof performance !== "undefined" ? performance.now() : Date.now();
+        cameraTween = {
+          active: true,
+          startMs: nowMs,
+          durationMs,
+          fromPos: cam.position.clone(),
+          toPos: new THREE.Vector3(...saved.position),
+          fromTarget: dieuKhien.target.clone(),
+          toTarget: new THREE.Vector3(...saved.target),
+          fromOffset: [lechOngKinhNgang, lechOngKinhDoc],
+          toOffset,
+          kind: "restore",
+        };
+        if (typeof window !== "undefined") {
+          (window as any).__geo3d_locate_state = {
+            nonce,
+            status: "restoring",
+            animating: true,
+            canRestore: false,
+            position: saved.position,
+            target: saved.target,
+          };
+        }
+        wakeRenderLoop();
+      }
+      onLocateFeedbackRef.current?.({
+        nonce,
+        objectId: "",
+        status: "restored",
+        canRestore: false,
+        reason: "restored_previous_view",
+      });
+    };
+
     scheduleCommitRender();
 
     return () => {
@@ -6496,10 +7088,12 @@ export function Scene3DWorkspace({
         document.removeEventListener("visibilitychange", xuLyDoiTrangThaiTab);
       }
       renderer.domElement.removeEventListener("wheel", xuLyDoiDieuKhien);
+      renderer.domElement.removeEventListener("wheel", onManualCamStart);
       container.removeEventListener("wheel", chuyenWheelVeCanvas);
       renderer.domElement.removeEventListener("webglcontextlost", xuLyMatNguCanhWebgl);
       renderer.domElement.removeEventListener("webglcontextrestored", xuLyKhoiPhucNguCanhWebgl);
       dieuKhien.removeEventListener("start", danhDauNguoiDungChinhCam);
+      dieuKhien.removeEventListener("start", onManualCamStart);
       dieuKhien.removeEventListener("change", xuLyDoiDieuKhien);
       dieuKhien.removeEventListener("change", capNhatGioiHanTheoHuong);
       dieuKhien.removeEventListener("end", xuLyKetThucDieuKhien);
@@ -6525,6 +7119,9 @@ export function Scene3DWorkspace({
       luoiRef.current = null;
       veRef.current = null;
       vuaKhungRef.current = null;
+      locateCameraRef.current = null;
+      restoreCameraRef.current = null;
+      cancelLocateTweenRef.current = null;
       if (typeof window !== "undefined") {
         for (const k of [
           "__geo3d_set_section_fill_visible",
@@ -6572,6 +7169,8 @@ export function Scene3DWorkspace({
           "__geo3d_selected_id",
           "__geo3d_highlighted_ids",
           "__geo3d_selection_highlight_ids",
+          "__geo3d_relation_highlight_ids",
+          "__geo3d_locate_state",
           "__geo3d_runtime_metrics",
         ]) {
           delete (window as any)[k];
@@ -7811,6 +8410,20 @@ export function Scene3DWorkspace({
     vuaKhungRef.current?.();
   }, [scene, fitToken, daBung, webglEpoch]);
 
+  useEffect(() => {
+    if (!locateRequest || !locateCameraRef.current) return;
+    if (locateRequest.nonce <= prevLocateNonceRef.current) return;
+    prevLocateNonceRef.current = locateRequest.nonce;
+    locateCameraRef.current(locateRequest);
+  }, [locateRequest, webglEpoch]);
+
+  useEffect(() => {
+    if (!restoreCameraRef.current) return;
+    if (restoreCameraNonce <= prevRestoreCameraNonceRef.current) return;
+    prevRestoreCameraNonceRef.current = restoreCameraNonce;
+    restoreCameraRef.current(restoreCameraNonce);
+  }, [restoreCameraNonce, webglEpoch]);
+
   // Gộp mọi cập nhật đồ thị cảnh & khung nhìn trong cùng một commit React thành ĐÚNG MỘT lượt render WebGL đồng bộ.
   useEffect(() => {
     if (commitRenderDirtyRef.current) {
@@ -7879,8 +8492,11 @@ export function Scene3DWorkspace({
       (window as any).__geo3d_selected_id = tuongTac?.selected_id || null;
       (window as any).__geo3d_highlighted_ids = [...tapNoiBat].sort();
       (window as any).__geo3d_selection_highlight_ids = [...tapChon].sort();
+      (window as any).__geo3d_relation_highlight_ids = Array.isArray(relationHighlightIds)
+        ? [...relationHighlightIds].sort()
+        : null;
     }
-  }, [webglFailed, tuongTac?.selected_id, tapNoiBat, tapChon]);
+  }, [webglFailed, tuongTac?.selected_id, tapNoiBat, tapChon, relationHighlightIds]);
 
   return (
     <div className="geo3d" data-webgl-phase={webglPhase}>

@@ -11427,20 +11427,36 @@ body:has(.app-root.la-tap-trung) {
   align-items: center;
   flex-wrap: wrap;
   gap: 6px;
-  padding-top: 2px;
+  padding-top: 4px;
 }
 
 .context-action-pill {
-  border: 1px solid var(--ink-faint);
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  border: 1px solid var(--hairline, #d5d2cc);
   background: var(--surface);
   color: var(--ink-secondary);
   font-family: inherit;
-  font-size: 11.2px;
+  font-size: 11.4px;
   font-weight: 600;
-  padding: 3px 9px;
+  line-height: 1.3;
+  padding: 4px 10px;
   border-radius: var(--rounded-full);
   cursor: pointer;
   transition: background-color 0.12s ease, color 0.12s ease, border-color 0.12s ease;
+}
+
+.context-action-pill svg {
+  width: 12px;
+  height: 12px;
+  flex-shrink: 0;
+}
+
+.context-action-pill--ghost {
+  background: var(--canvas-soft);
+  border-color: var(--hairline, #d5d2cc);
+  color: var(--ink-secondary);
 }
 
 .context-action-pill:hover,
@@ -11453,6 +11469,71 @@ body:has(.app-root.la-tap-trung) {
 .context-action-pill:focus-visible {
   outline: 2px solid var(--primary);
   outline-offset: 1px;
+}
+
+.context-card-locate-status {
+  margin-top: 4px;
+  font-size: 11.6px;
+  line-height: 1.4;
+  color: var(--ink-muted);
+  background: var(--canvas-soft);
+  border: 1px solid var(--hairline, #d5d2cc);
+  border-radius: 7px;
+  padding: 5px 8px;
+}
+
+.context-card-relations-box {
+  margin-top: 4px;
+  padding: 7px 9px;
+  background: var(--surface);
+  border: 1px solid var(--hairline, #d5d2cc);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.context-card-relation-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.context-card-relation-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--ink);
+}
+
+.context-card-relation-badge {
+  flex-shrink: 0;
+  font-size: 10.6px;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--ink-secondary);
+  background: var(--accent-sky-tint, #eff4fb);
+  border: 1px solid var(--hairline, #d5d2cc);
+  border-radius: var(--rounded-sm);
+  padding: 1px 6px;
+  margin-top: 1px;
+}
+
+.context-card-relation-text {
+  min-width: 0;
+  overflow-wrap: break-word;
+  color: var(--ink);
+}
+
+.context-card-relation-empty {
+  font-size: 11.8px;
+  line-height: 1.45;
+  color: var(--ink-muted);
 }
 
 /* Section B — Construction Steps List (#dock-steps-ul) */

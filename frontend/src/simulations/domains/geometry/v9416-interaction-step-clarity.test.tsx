@@ -65,7 +65,7 @@ function collectCoplanarGuideOpacities(group: THREE.Group | null): Map<string, n
 }
 
 describe("AXO V9.4.16 — Interaction Simplicity, Step Goal Clarity & Hierarchy", () => {
-  it("omits Isolate/Hide controls, restore banner, and unapproved replacement labels across selected objects", () => {
+  it("omits Isolate/Hide controls and restore banner while rendering V9.4.17 Xem quan hệ and Định vị actions", () => {
     const sample = extractCatalogSample("chop-thiet-dien-ba-diem");
     const raw = sampleRawScene(sample);
     const { disp } = prepareScene(raw);
@@ -97,8 +97,8 @@ describe("AXO V9.4.16 — Interaction Simplicity, Step Goal Clarity & Hierarchy"
       expect(html).not.toContain("Hiện lại toàn hình");
       expect(html).not.toContain("Hiện lại tất cả");
       expect(html).not.toContain("Tập trung");
-      expect(html).not.toContain("Xem quan hệ");
-      expect(html).not.toContain("Định vị");
+      expect(html).toContain("Xem quan hệ");
+      expect(html).toContain("Định vị");
     }
   });
 
