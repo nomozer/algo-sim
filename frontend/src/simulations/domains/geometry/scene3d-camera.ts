@@ -1562,8 +1562,10 @@ export function computeSmartLocateCamera(input: SmartLocateInput): SmartLocateRe
 
   let bestScore = Infinity;
   let bestResult: SmartLocateResult | null = null;
+  let uCurCandidateScore: number | null = null;
 
-  for (const rawDir of candidates) {
+  for (let candIdx = 0; candIdx < candidates.length; candIdx += 1) {
+    const rawDir = candidates[candIdx]!;
     if (!rawDir.every(Number.isFinite) || Math.hypot(...rawDir) <= 1e-9) continue;
     const u = chuan(rawDir);
     const framed = computeDistanceAndClearance(u, desiredTarget);
@@ -1656,6 +1658,7 @@ export function computeSmartLocateCamera(input: SmartLocateInput): SmartLocateRe
     // 7. Rất nhẹ ưu tiên hướng 3/4 chuẩn SGK nếu nhiều hướng ngang điểm
     const sgkCos = tich(u, chuan([...HUONG_SGK]));
     penalty += (1 - sgkCos) * 0.4;
+    if (candIdx === 0) uCurCandidateScore = penalty;
 
     if (penalty < bestScore) {
       bestScore = penalty;
@@ -1673,6 +1676,40 @@ export function computeSmartLocateCamera(input: SmartLocateInput): SmartLocateRe
         reason: `smart_locate_${objectKind}`,
       };
     }
+  }
+
+  const allObjUnclipped =
+    curTargetNdc !== null
+    && Math.abs(curTargetNdc[0]) <= 0.88
+    && Math.abs(curTargetNdc[1]) <= 0.88
+    && curObjNdcs.every((ndc) => ndc !== null && Math.abs(ndc[0]) <= 0.92 && Math.abs(ndc[1]) <= 0.92);
+  if (
+    bestResult
+    && allObjUnclipped
+    && distPt(currentTarget, desiredTarget) <= 0.22 * sceneScale
+    && (curNormalAlign === null || curNormalAlign >= 0.42)
+    && (curSegCos === null || curSegCos <= 0.82)
+    && curOcc <= bestResult.occludedRatio + 1e-6
+    && (!Number.isFinite(curMargin) || curMargin >= 0.08 * sceneScale)
+    && refFramed !== null
+    && curDist >= refFramed.dist * 0.80
+    && curDist <= refFramed.dist * 1.24
+    && uCurCandidateScore !== null
+    && uCurCandidateScore <= bestScore + 5.0
+  ) {
+    return {
+      status: "unchanged",
+      position: [...currentPosition],
+      target: [...currentTarget],
+      viewDirection: uCur,
+      distance: curDist,
+      targetNdc: curTargetNdc!,
+      normalAlignment: curNormalAlign,
+      segmentForeshorteningCos: curSegCos,
+      occludedRatio: curOcc,
+      minMarginToHostMesh: curMargin,
+      reason: "current_view_already_optimal",
+    };
   }
 
   return bestResult ?? fallback("no_valid_locate_candidate", "Không tìm thấy hướng nhìn hợp lệ cho đối tượng.");

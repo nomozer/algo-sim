@@ -320,19 +320,20 @@ function classifyCurvedObject(
   if (ck === "cylinder") return "cylinder";
   if (ck === "cone") return "cone";
 
-  const producer = typeof obj.producer === "string" ? obj.producer.toLowerCase() : "";
-  if (producer.includes("curved_solid.ball") || producer.endsWith(".ball")) return "sphere";
-  if (producer.includes("curved_solid.cylinder") || producer.endsWith(".cylinder")) {
-    return "cylinder";
-  }
-  if (producer.includes("curved_solid.cone") || producer.endsWith(".cone")) return "cone";
-
   const semRole = typeof obj.semantic_role === "string" ? obj.semantic_role : "";
   if (
     semRole === "STANDALONE_SPHERE" ||
     semRole === "CIRCUMSCRIBED_SPHERE" ||
     semRole === "INSCRIBED_SPHERE"
   ) {
+    return "sphere";
+  }
+
+  if ("apex" in obj && obj.apex != null) return "cone";
+  if (("axis" in obj && obj.axis != null) || ("bottom_center" in obj && obj.bottom_center != null)) {
+    return "cylinder";
+  }
+  if ("anchor" in obj && obj.anchor != null && "radius_sq" in obj && obj.radius_sq != null) {
     return "sphere";
   }
   return null;
@@ -374,8 +375,7 @@ function classifyFromScene3D(sceneRaw: unknown): GeometrySolidFamily | null {
     return (
       rec.type === "curved_solid" ||
       rec.render === "curved_solid" ||
-      typeof rec.curved_kind === "string" ||
-      (typeof rec.producer === "string" && rec.producer.includes("curved_solid"))
+      typeof rec.curved_kind === "string"
     );
   });
 
