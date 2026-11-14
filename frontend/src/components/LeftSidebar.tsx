@@ -1374,11 +1374,11 @@ export function LeftSidebar() {
                 </span>
                 <span className="sb-group-chevron" aria-hidden="true">
                   {leftRailProblemGroupCollapsed ? (
-                    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.95" strokeLinecap="round" strokeLinejoin="round">
+                    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M7.5 4.8L12.7 10 7.5 15.2" />
                     </svg>
                   ) : (
-                    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.95" strokeLinecap="round" strokeLinejoin="round">
+                    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M4.8 7.5L10 12.7 15.2 7.5" />
                     </svg>
                   )}

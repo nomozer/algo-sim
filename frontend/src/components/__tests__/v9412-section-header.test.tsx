@@ -60,6 +60,7 @@ describe("AXO V9.4.12 — Sidebar Section Header & Filter Alignment", () => {
     expect(titleIdx).toBeGreaterThan(-1);
     expect(countIdx).toBeGreaterThan(titleIdx);
     expect(chevronIdx).toBeGreaterThan(countIdx);
+    expect(hdrHtmlZero).toContain('stroke-width="1.75"');
 
     // Filter trigger: SVG comes BEFORE #sb-problem-filter-label ("Tất cả"), no chevron on filter
     const filterStart = hdrHtmlZero.indexOf('id="btn-sidebar-problem-filter"');
@@ -116,12 +117,16 @@ describe("AXO V9.4.12 — Sidebar Section Header & Filter Alignment", () => {
     expect(globalCss).not.toMatch(/\.sb-group-toggle:hover\s*\{/);
 
     const chevronBlock = extractCssBlock(/\.sb-group-chevron\s*\{[^}]*\}/);
-    expect(chevronBlock).toContain("width: var(--axo-icon-geo-slot);");
-    expect(chevronBlock).toContain("height: var(--axo-icon-geo-slot);");
+    expect(chevronBlock).toContain("width: 14px;");
+    expect(chevronBlock).toContain("height: 14px;");
     expect(chevronBlock).toContain("visibility: hidden;");
     expect(chevronBlock).toContain("opacity: 0;");
     expect(chevronBlock).not.toContain("display: none");
     expect(chevronBlock).not.toContain("transition:");
+
+    const chevronSvgBlock = extractCssBlock(/\.sb-group-chevron\s+svg\s*\{[^}]*\}/);
+    expect(chevronSvgBlock).toContain("width: 11px;");
+    expect(chevronSvgBlock).toContain("height: 11px;");
 
     expect(globalCss).toMatch(
       /\.sb-group-toggle:hover\s+\.sb-group-chevron,\s*\.sb-group-toggle:focus-visible\s+\.sb-group-chevron\s*\{\s*visibility:\s*visible;\s*opacity:\s*1;\s*\}/s,

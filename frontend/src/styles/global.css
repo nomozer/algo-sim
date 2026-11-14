@@ -20001,7 +20001,7 @@ html::-webkit-scrollbar {
   font-family: inherit;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 5px;
   cursor: pointer;
   text-align: left;
 }
@@ -20012,8 +20012,8 @@ html::-webkit-scrollbar {
 }
 
 .sb-group-chevron {
-  width: var(--axo-icon-geo-slot);
-  height: var(--axo-icon-geo-slot);
+  width: 14px;
+  height: 14px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -20037,8 +20037,8 @@ html::-webkit-scrollbar {
 }
 
 .sb-group-chevron svg {
-  width: var(--axo-icon-sm-glyph);
-  height: var(--axo-icon-sm-glyph);
+  width: 11px;
+  height: 11px;
   display: block;
 }
 
