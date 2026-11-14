@@ -23763,7 +23763,10 @@ export function resolveVerifiedObjectRelations(
 
   const displayNameOf = (o: SceneObject | undefined, fallbackId?: string): string => {
     if (!o) return fallbackId ?? "";
-    if (o.type === "plane3") return formatPlaneDisplayNotation(o, rawScene);
+    if (o.type === "plane3") {
+      const plNot = formatPlaneDisplayNotation(o, rawScene);
+      return /^qua\s+/iu.test(plNot) ? `mặt phẳng ${plNot}` : plNot;
+    }
     if (o.type === "circle3") return formatCanonicalCircleDesignation(rawScene, o, visibleObjects);
     if (o.type === "section") {
       const secCanon = resolveCanonicalSectionDesignation(rawScene, o);
@@ -23858,7 +23861,12 @@ export function resolveVerifiedObjectRelations(
       ),
     ];
     if (targetIds.length === 0) return;
-    const cleanStmt = replaceRawSceneIdTokens(cleanLearnerText(statement), rawScene);
+    const rawCleanStmt = replaceRawSceneIdTokens(cleanLearnerText(statement), rawScene);
+    const cleanStmt = /^mặt phẳng\b/u.test(rawCleanStmt) ? `M${rawCleanStmt.slice(1)}` : rawCleanStmt;
+    const binSelfMatch = cleanStmt.match(/^(.+?)\s+(?:⊥|∥|tiếp xúc|∈|⊂|=)\s+(.+)$/u);
+    if (binSelfMatch && binSelfMatch[1]!.trim().toLowerCase() === binSelfMatch[2]!.trim().toLowerCase()) {
+      return;
+    }
     const normStmt = cleanStmt.replace(/[()]/g, "").replace(/\s+/g, " ").trim().toLowerCase();
     const stmtKey = `${kind}::${normStmt}`;
     const existing = byStmtKey.get(stmtKey);
@@ -23884,54 +23892,151 @@ export function resolveVerifiedObjectRelations(
   const subjName = subjectLabel;
 
   // 1. Quan hệ từ hợp đồng SemanticConstructionContract (cả hai chiều: subject -> other và other -> subject)
+  const isLineLikeType = (t: SceneObject["type"] | undefined): boolean =>
+    t === "line3" || t === "segment3" || t === "edge";
+  const isPlaneLikeType = (t: SceneObject["type"] | undefined): boolean =>
+    t === "plane3" || t === "polygon3" || t === "section" || t === "face";
+
   for (const [ownerId, ownerSpec] of contract.objectsById.entries()) {
     const ownerObj = byId.get(ownerId);
     if (!isEligibleTarget(ownerObj)) continue;
+    const ownerName = displayNameOf(ownerObj);
+
     for (const rel of ownerSpec.verifiedRelations) {
       if (!rel.exactVerified) continue;
-      const validTargets = rel.targetIds.filter((tid) => isEligibleTarget(byId.get(tid)));
-      if (validTargets.length === 0 && ownerId !== subject.id) continue;
+      const validTargets = rel.targetIds
+        .map(canonicalizeTargetId)
+        .filter((tid, idx, arr) => tid !== ownerId && arr.indexOf(tid) === idx && isEligibleTarget(byId.get(tid)));
+      if (validTargets.length === 0) continue;
       const involvesSubject = ownerId === subject.id || validTargets.includes(subject.id);
       if (!involvesSubject) continue;
 
-      const peerIds = ownerId === subject.id ? validTargets : [ownerId, ...validTargets.filter((id) => id !== subject.id)];
-      const filteredPeers = peerIds.filter((id) => id !== subject.id && isEligibleTarget(byId.get(id)));
-      if (filteredPeers.length === 0) continue;
-
-      const ownerName = displayNameOf(ownerObj);
-      const primaryPeer = byId.get(filteredPeers[0]);
-      const primaryPeerName = displayNameOf(primaryPeer);
-
-      if (rel.kind === "line_perp_plane" || rel.kind === "line_perp_line" || rel.kind === "common_perpendicular") {
-        const lineObj = ownerObj.type === "line3" || ownerObj.type === "segment3" ? ownerObj : primaryPeer;
-        const targetObj = ownerObj.id === lineObj?.id ? primaryPeer : ownerObj;
-        const aName = lineObj ? displayNameOf(lineObj) : ownerName;
-        const bName = targetObj ? displayNameOf(targetObj) : primaryPeerName;
-        addRel("perpendicular", filteredPeers, `${aName} ⊥ ${bName}`, "⊥");
-        if (rel.kind === "line_perp_plane" && filteredPeers.length >= 2) {
-          const footObj = byId.get(filteredPeers[1]);
-          if (footObj?.type === "point3" && targetObj?.type === "plane3") {
-            addRel("point_on_plane", [targetObj.id, footObj.id], `${displayNameOf(footObj)} là hình chiếu vuông góc trên ${displayNameOf(targetObj)}`, "∈");
+      if (rel.kind === "common_perpendicular") {
+        if (ownerId === subject.id) {
+          for (const tid of validTargets) {
+            const tObj = byId.get(tid);
+            if (tObj && tObj.type !== "point3" && tObj.id !== subject.id) {
+              addRel("perpendicular", [tObj.id], `${subjName} ⊥ ${displayNameOf(tObj)}`, "⊥");
+            }
+          }
+        } else if (validTargets.includes(subject.id) && subject.type !== "point3") {
+          addRel("perpendicular", [ownerObj.id], `${ownerName} ⊥ ${subjName}`, "⊥");
+        }
+      } else if (rel.kind === "line_perp_plane") {
+        if (isLineLikeType(ownerObj.type)) {
+          const targetObjs = validTargets.map((id) => byId.get(id)).filter((o): o is SceneObject => Boolean(o));
+          const planeObj = targetObjs.find((o) => isPlaneLikeType(o.type));
+          const footObj = targetObjs.find((o) => o.type === "point3");
+          if (ownerId === subject.id) {
+            if (planeObj && planeObj.id !== subject.id) {
+              addRel("perpendicular", [planeObj.id], `${subjName} ⊥ ${displayNameOf(planeObj)}`, "⊥");
+            }
+            if (footObj && planeObj) {
+              addRel("point_on_plane", [planeObj.id, footObj.id], `${displayNameOf(footObj)} là hình chiếu vuông góc trên ${displayNameOf(planeObj)}`, "∈");
+            }
+          } else if (planeObj?.id === subject.id) {
+            addRel("perpendicular", [ownerObj.id], `${ownerName} ⊥ ${subjName}`, "⊥");
+            if (footObj && footObj.id !== subject.id) {
+              addRel("point_on_plane", [footObj.id], `${displayNameOf(footObj)} ∈ ${subjName}`, "∈");
+            }
+          } else if (footObj?.id === subject.id && planeObj) {
+            addRel("point_on_plane", [planeObj.id], `${subjName} là hình chiếu vuông góc trên ${displayNameOf(planeObj)}`, "∈");
+            addRel("perpendicular", [ownerObj.id, planeObj.id], `${ownerName} ⊥ ${displayNameOf(planeObj)}`, "⊥");
+          }
+        } else if (ownerObj.type === "plane3") {
+          if (ownerId === subject.id) {
+            for (const tid of validTargets) {
+              const lObj = byId.get(tid);
+              if (lObj && isLineLikeType(lObj.type) && lObj.id !== subject.id) {
+                addRel("perpendicular", [lObj.id], `${displayNameOf(lObj)} ⊥ ${subjName}`, "⊥");
+              }
+            }
+          } else if (validTargets.includes(subject.id) && isLineLikeType(subject.type)) {
+            addRel("perpendicular", [ownerObj.id], `${subjName} ⊥ ${ownerName}`, "⊥");
+          }
+        }
+      } else if (rel.kind === "line_perp_line") {
+        if (isLineLikeType(ownerObj.type)) {
+          const linePeers = validTargets
+            .map((id) => byId.get(id))
+            .filter((o): o is SceneObject => Boolean(o && isLineLikeType(o.type) && o.id !== ownerObj.id));
+          if (ownerId === subject.id) {
+            for (const lp of linePeers) {
+              addRel("perpendicular", [lp.id], `${subjName} ⊥ ${displayNameOf(lp)}`, "⊥");
+            }
+          } else if (linePeers.some((lp) => lp.id === subject.id)) {
+            addRel("perpendicular", [ownerObj.id], `${ownerName} ⊥ ${subjName}`, "⊥");
           }
         }
       } else if (rel.kind === "parallel") {
-        addRel("parallel", filteredPeers, `${ownerName} ∥ ${primaryPeerName}`, "∥");
+        if (ownerId === subject.id) {
+          for (const tid of validTargets) {
+            const tObj = byId.get(tid);
+            if (tObj && tObj.id !== subject.id) {
+              addRel("parallel", [tObj.id], `${subjName} ∥ ${displayNameOf(tObj)}`, "∥");
+            }
+          }
+        } else if (validTargets.includes(subject.id)) {
+          addRel("parallel", [ownerObj.id], `${subjName} ∥ ${ownerName}`, "∥");
+        }
       } else if (rel.kind === "tangent_sphere_plane") {
-        addRel("tangency", filteredPeers, `${ownerName} tiếp xúc ${primaryPeerName}`);
+        const candidates = [ownerObj, ...validTargets.map((id) => byId.get(id))].filter((o): o is SceneObject => Boolean(o));
+        const ballObj = candidates.find((o) => o.type === "curved_solid");
+        const planeObj = candidates.find((o) => o.type === "plane3");
+        if (ballObj && planeObj && ballObj.id !== planeObj.id) {
+          if (subject.id === planeObj.id) {
+            addRel("tangency", [ballObj.id], `${subjName} tiếp xúc ${displayNameOf(ballObj)}`);
+          } else if (subject.id === ballObj.id) {
+            addRel("tangency", [planeObj.id], `${subjName} tiếp xúc ${displayNameOf(planeObj)}`);
+          } else if (ownerId === subject.id) {
+            addRel("tangency", [planeObj.id, ballObj.id], `${displayNameOf(planeObj)} tiếp xúc ${displayNameOf(ballObj)}`);
+          }
+        }
       } else if (rel.kind === "secant_sphere_plane") {
-        addRel("intersection", filteredPeers, `${ownerName} là giao của ${filteredPeers.map((id) => displayNameOf(byId.get(id))).join(" và ")}`, "∩");
+        if (ownerObj.type === "circle3") {
+          const carriers = validTargets.map((id) => byId.get(id)).filter((o): o is SceneObject => isEligibleTarget(o));
+          if (carriers.length >= 2) {
+            const carrierText = carriers.map((c) => displayNameOf(c)).join(" và ");
+            if (ownerId === subject.id) {
+              addRel("intersection", carriers.map((c) => c.id), `${subjName} là giao của ${carrierText}`, "∩");
+            } else if (carriers.some((c) => c.id === subject.id)) {
+              const otherCarrierIds = carriers.filter((c) => c.id !== subject.id).map((c) => c.id);
+              addRel("intersection", [ownerObj.id, ...otherCarrierIds], `${ownerName} là giao của ${carrierText}`, "∩");
+            }
+          }
+        } else if (ownerObj.type === "plane3") {
+          if (ownerId === subject.id) {
+            for (const tid of validTargets) {
+              const bObj = byId.get(tid);
+              if (bObj && bObj.id !== subject.id) {
+                addRel("intersection", [bObj.id], `${subjName} cắt ${displayNameOf(bObj)}`, "∩");
+              }
+            }
+          } else if (validTargets.includes(subject.id)) {
+            addRel("intersection", [ownerObj.id], `${ownerName} cắt ${subjName}`, "∩");
+          }
+        }
       } else if (rel.kind === "incidence") {
-        const otherObj = ownerObj.id === subject.id ? primaryPeer : ownerObj;
-        if (subject.type === "point3" && (otherObj?.type === "line3" || otherObj?.type === "segment3")) {
-          addRel("point_on_line", [otherObj.id], `${subjName} ∈ ${displayNameOf(otherObj)}`, "∈");
-        } else if ((subject.type === "line3" || subject.type === "segment3") && otherObj?.type === "point3") {
-          addRel("point_on_line", [otherObj.id], `${displayNameOf(otherObj)} ∈ ${subjName}`, "∈");
-        } else if (subject.type === "point3" && (otherObj?.type === "plane3" || otherObj?.type === "polygon3")) {
-          addRel("point_on_plane", [otherObj.id], `${subjName} ∈ ${displayNameOf(otherObj)}`, "∈");
-        } else if ((subject.type === "plane3" || subject.type === "polygon3") && otherObj?.type === "point3") {
-          addRel("point_on_plane", [otherObj.id], `${displayNameOf(otherObj)} ∈ ${subjName}`, "∈");
-        } else if (otherObj) {
-          addRel("containment", [otherObj.id], `${ownerName} liên thuộc với ${primaryPeerName}`);
+        const peers =
+          ownerId === subject.id
+            ? validTargets.map((id) => byId.get(id)).filter((o): o is SceneObject => isEligibleTarget(o) && o.id !== subject.id)
+            : (validTargets.includes(subject.id) && ownerObj.id !== subject.id ? [ownerObj] : []);
+        for (const otherObj of peers) {
+          if (subject.type === "point3" && isLineLikeType(otherObj.type)) {
+            addRel("point_on_line", [otherObj.id], `${subjName} ∈ ${displayNameOf(otherObj)}`, "∈");
+          } else if (isLineLikeType(subject.type) && otherObj.type === "point3") {
+            addRel("point_on_line", [otherObj.id], `${displayNameOf(otherObj)} ∈ ${subjName}`, "∈");
+          } else if (subject.type === "point3" && isPlaneLikeType(otherObj.type)) {
+            addRel("point_on_plane", [otherObj.id], `${subjName} ∈ ${displayNameOf(otherObj)}`, "∈");
+          } else if (isPlaneLikeType(subject.type) && otherObj.type === "point3") {
+            addRel("point_on_plane", [otherObj.id], `${displayNameOf(otherObj)} ∈ ${subjName}`, "∈");
+          } else if (subject.type === "point3" && otherObj.type === "curved_solid") {
+            addRel("containment", [otherObj.id], `${subjName} ∈ ${displayNameOf(otherObj)}`, "∈");
+          } else if (subject.type === "curved_solid" && otherObj.type === "point3") {
+            addRel("containment", [otherObj.id], `${displayNameOf(otherObj)} ∈ ${subjName}`, "∈");
+          } else {
+            addRel("containment", [otherObj.id], `${subjName} liên thuộc với ${displayNameOf(otherObj)}`);
+          }
         }
       }
     }
@@ -24392,22 +24497,59 @@ export function resolveVerifiedObjectRelations(
         || (contract.objectsById.get(pl.id)?.verifiedRelations.some((r) => r.kind === "tangent_sphere_plane" && r.exactVerified) ?? false);
       if (!hasTanLink) continue;
 
+      const upgradeBareTangency = (peerIdsToMatch: string[], richStatement: string, extraTargets: string[]) => {
+        for (let i = collected.length - 1; i >= 0; i -= 1) {
+          const item = collected[i]!;
+          if (item.kind !== "tangency" || item.statement.includes(" tại ")) continue;
+          const allMatch = peerIdsToMatch.every((pid) => pid === subject.id || item.targetIds.includes(canonicalizeTargetId(pid)));
+          if (!allMatch) continue;
+          const oldKey = `tangency:${[...item.targetIds].sort().join(",")}`;
+          const oldNorm = item.statement.replace(/[()]/g, "").replace(/\s+/g, " ").trim().toLowerCase();
+          seenKeys.delete(oldKey);
+          byStmtKey.delete(`tangency::${oldNorm}`);
+          collected.splice(i, 1);
+        }
+        addRel("tangency", [...peerIdsToMatch, ...extraTargets], richStatement);
+      };
+
+      const tpNames = tPts.map((p) => displayNameOf(p)).join(", ");
       if (pl.id === subject.id) {
-        const tpNames = tPts.map((p) => displayNameOf(p)).join(", ");
-        addRel(
-          "tangency",
-          [ball.id, ...tPts.map((p) => p.id)],
-          tpNames ? `${subjName} tiếp xúc ${displayNameOf(ball)} tại ${tpNames}` : `${subjName} tiếp xúc ${displayNameOf(ball)}`,
-        );
+        if (tpNames) {
+          upgradeBareTangency(
+            [ball.id],
+            `${subjName} tiếp xúc ${displayNameOf(ball)} tại ${tpNames}`,
+            tPts.map((p) => p.id),
+          );
+        } else {
+          addRel("tangency", [ball.id], `${subjName} tiếp xúc ${displayNameOf(ball)}`);
+        }
       } else if (ball.id === subject.id) {
-        const tpNames = tPts.map((p) => displayNameOf(p)).join(", ");
-        addRel(
-          "tangency",
-          [pl.id, ...tPts.map((p) => p.id)],
-          tpNames ? `${subjName} tiếp xúc ${displayNameOf(pl)} tại ${tpNames}` : `${subjName} tiếp xúc ${displayNameOf(pl)}`,
-        );
+        if (tpNames) {
+          upgradeBareTangency(
+            [pl.id],
+            `${subjName} tiếp xúc ${displayNameOf(pl)} tại ${tpNames}`,
+            tPts.map((p) => p.id),
+          );
+        } else {
+          addRel("tangency", [pl.id], `${subjName} tiếp xúc ${displayNameOf(pl)}`);
+        }
       } else if (tPts.some((p) => p.id === subject.id)) {
         addRel("tangency", [ball.id, pl.id], `${subjName} là tiếp điểm của ${displayNameOf(ball)} và ${displayNameOf(pl)}`);
+      } else if (
+        tpNames
+        && collected.some(
+          (item) =>
+            item.kind === "tangency"
+            && !item.statement.includes(" tại ")
+            && item.targetIds.includes(canonicalizeTargetId(ball.id))
+            && item.targetIds.includes(canonicalizeTargetId(pl.id)),
+        )
+      ) {
+        upgradeBareTangency(
+          [pl.id, ball.id],
+          `${displayNameOf(pl)} tiếp xúc ${displayNameOf(ball)} tại ${tpNames}`,
+          tPts.map((p) => p.id),
+        );
       }
     }
   }

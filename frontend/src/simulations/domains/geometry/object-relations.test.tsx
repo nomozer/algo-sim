@@ -418,4 +418,45 @@ describe("Verified Object Relations & Context Card UI", () => {
     expect(wsSrc).toContain("aria-expanded={relationsExpanded}");
     expect(wsSrc).toContain("`Xem thêm ${hiddenCount} quan hệ`");
   });
+
+  it("21. V9.4.18 sphere tangent & secant scenes never emit self-referential or duplicate bare/point tangency relations", () => {
+    const selfRelRe = /^(.+?)\s+(?:⊥|∥|tiếp xúc|∈|⊂|=)\s+\1$/iu;
+    const selfInterRe = /^(.+?)\s+là giao của\s+\1\b/iu;
+
+    for (const sampleId of ["mat-phang-tiep-xuc-mat-cau", "mat-cau-cat-mat-phang"] as const) {
+      const disp = prepareDisplayScene(sampleRaw(sampleId).scene);
+      const steps = pedagogicalStepList(disp);
+      const lastStep = steps[steps.length - 1]!.anchor;
+      for (const obj of disp.objects) {
+        const res = resolveVerifiedObjectRelations(disp, obj.id, lastStep);
+        for (const rel of res.relations) {
+          expect(rel.statement, `${sampleId}:${obj.id}`).not.toMatch(selfRelRe);
+          expect(rel.statement, `${sampleId}:${obj.id}`).not.toMatch(selfInterRe);
+        }
+      }
+    }
+
+    const tanDisp = prepareDisplayScene(sampleRaw("mat-phang-tiep-xuc-mat-cau").scene);
+    const tanSteps = pedagogicalStepList(tanDisp);
+    const tanLast = tanSteps[tanSteps.length - 1]!.anchor;
+
+    const tanPlaneRel = resolveVerifiedObjectRelations(tanDisp, "mp_tiep_dien", tanLast);
+    expect(tanPlaneRel.relations.some((r) => r.statement === "Mặt phẳng qua A và vuông góc với IA tiếp xúc (S) tại A")).toBe(true);
+    expect(tanPlaneRel.relations.some((r) => r.statement === "IA ⊥ mặt phẳng qua A và vuông góc với IA")).toBe(true);
+    expect(tanPlaneRel.relations.some((r) => r.statement === "A ∈ mặt phẳng qua A và vuông góc với IA")).toBe(true);
+    expect(tanPlaneRel.relations.filter((r) => r.kind === "tangency").length).toBeLessThanOrEqual(1);
+    expect(tanPlaneRel.relations.some((r) => r.statement.includes("IA tiếp xúc IA") || r.statement.includes("IA ⊥ IA"))).toBe(false);
+
+    const iaObj = tanDisp.objects.find((o) => o.id === "doan_IA" || (o.type === "segment3" && shortSym(o) === "IA"))!;
+    expect(iaObj).toBeDefined();
+    const iaRel = resolveVerifiedObjectRelations(tanDisp, iaObj.id, tanLast);
+    expect(iaRel.relations.some((r) => r.kind === "perpendicular" && r.targetIds.includes("mp_tiep_dien"))).toBe(true);
+    expect(iaRel.relations.some((r) => r.statement.startsWith("IA tiếp xúc"))).toBe(false);
+
+    const secDisp = prepareDisplayScene(sampleRaw("mat-cau-cat-mat-phang").scene);
+    const secSteps = pedagogicalStepList(secDisp);
+    const secLast = secSteps[secSteps.length - 1]!.anchor;
+    const cauRel = resolveVerifiedObjectRelations(secDisp, "cau", secLast);
+    expect(cauRel.relations.some((r) => r.statement === "Đường tròn (H; HM) là giao của (S) và (P)")).toBe(true);
+  });
 });
