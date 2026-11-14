@@ -45,7 +45,10 @@ ROOT = Path(__file__).resolve().parents[2]
 #: construction lineage added by commit 9d5e9b408 (`visible_prerequisites`, `computational_depends`, `construction_lineage`,
 #: `unused_auxiliary_ids`, `measured_quantity`, named narrations); answers, coordinates and refusal/gate fixtures are
 #: unchanged. The dihedral-altitude bundle stays unchanged as the evidence it was.
-FIXTURES = ROOT / 'docs/evaluation/geometry/runs/proof-soundness-generalized-angle-invariance/fixtures-lineage-proof-soundness'
+#: Superseded by run `scene3d-causal-pedagogical-integrity` (CACHE_VERSION 138): `served-intersection-SAB-SCD` no longer
+#: flags its ASKED intersection line as an unused auxiliary; every other fixture differs only by producer identity.
+#: The lineage bundle stays unchanged as the evidence it was.
+FIXTURES = ROOT / 'docs/evaluation/geometry/runs/scene3d-causal-pedagogical-integrity/fixtures-causal-pedagogical'
 #: The superseded bundle — the one that predates the route D version bump the identity-restore test is about.
 OLD_FIXTURES = ROOT / 'docs/evaluation/geometry/runs/hybrid-preview-contract-hardening/fixtures-adapter-2'
 SCRIPT = ROOT / 'backend/scripts/export_hybrid_preview_fixtures.py'

@@ -1,0 +1,14 @@
+{
+ "old_bundle": "docs/evaluation/geometry/runs/proof-soundness-generalized-angle-invariance/fixtures-lineage-proof-soundness",
+ "new_bundle": "docs/evaluation/geometry/runs/scene3d-causal-pedagogical-integrity/fixtures-causal-pedagogical",
+ "fixtures": 41,
+ "fixtures_changed": [
+  "served-intersection-SAB-SCD"
+ ],
+ "changed_paths": {
+  ".envelope.scene3d.objects[].is_unused_auxiliary": 1,
+  ".envelope.scene3d.unused_auxiliary_ids[len]": 1
+ },
+ "answer_coordinate_status_paths_changed": [],
+ "cause": "Route D unused-auxiliary flags recomputed with the source's goals (the asked intersection line was flagged unused)"
+}
