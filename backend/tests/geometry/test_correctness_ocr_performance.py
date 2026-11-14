@@ -164,12 +164,16 @@ def test_05a_formerly_unsupported_rhombus_and_isosceles_bases_now_solve_exact(
     ("mutated_text", "expected_reason"),
     [
         (
+            # restated (run `grounded-vietnamese-geometry-understanding`): was "SOURCE_PREMISE_UNREAD", raised by the Source
+            # Gate; the parser now detects the unread "ngũ giác đều cạnh 4" itself (a premise value no item quotes) — same
+            # root cause INCOMPLETE_FACT_EXTRACTION, an earlier detection stage, still refused with no payload
             "Cho hình chóp S.ABCDE có đáy ABCDE là ngũ giác đều cạnh 4, SA vuông góc với mặt phẳng (ABCDE) và SA = 3. Tính thể tích khối chóp S.ABCDE.",
-            "SOURCE_PREMISE_UNREAD",
+            "UNPARSED_FACT_CANDIDATE",
         ),
         (
+            # restated like the pentagon case above: the unread "bán kính 5" is detected by the parser (UNREAD_VALUE)
             "Cho hình chóp S.ABCD có đáy ABCD là tứ giác nội tiếp đường tròn bán kính 5, SA vuông góc với mặt phẳng (ABCD), SA = 4. Tính thể tích khối chóp S.ABCD.",
-            "SOURCE_PREMISE_UNREAD",
+            "UNPARSED_FACT_CANDIDATE",
         ),
         (
             # run `certified-scale-cache-safety` (task B5): "3,5" is a Vietnamese DECIMAL, read as 7/2 (served, see
