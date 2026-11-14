@@ -21,10 +21,12 @@ const CASES = {
   tan_line_plane: { goal: 'angle', numeric: 'tan', text: T + 'Tính tang của góc giữa SB và mặt phẳng (ABC).' },
   cos_two_planes: { goal: 'angle', numeric: 'cos', text: "Cho hình lăng trụ tứ giác đều ABCD.A'B'C'D' có cạnh đáy bằng a, cạnh bên bằng a√3. Tính cosin của góc giữa hai mặt phẳng (ABCD) và (ABC')." },
   angle_plain: { goal: 'angle', text: T + 'Tính góc giữa SB và mặt phẳng (ABC).' },
+  scale_iso_planes: { goal: 'angle', scale: true, text: 'Cho hình chóp S.ABC có đáy là tam giác vuông cân tại A, SA vuông góc với đáy và SA = AB. Tính góc giữa hai mặt phẳng (SBC) và (SBA).' },
+  scale_iso_tan: { goal: 'angle', scale: true, numeric: 'tan', text: 'Cho hình chóp S.ABC có đáy là tam giác vuông cân tại A, SA vuông góc với đáy và SA = AB. Tang của góc giữa hai mặt phẳng (SBC) và (SBA) bằng' },
   unnamed_midpoint_distance: { goal: 'distance', text: P + '. Tính khoảng cách từ trung điểm của SC đến mặt phẳng (ABCD).' },
 };
 const VIEWPORTS = [[1920, 1080], [1366, 768], [768, 1024], [390, 844]];
-const FULL_VIEWPORT_CASES = new Set(['section_one_sentence', 'cos_line_plane']);
+const FULL_VIEWPORT_CASES = new Set(['section_one_sentence', 'cos_line_plane', 'scale_iso_tan']);
 
 const server = createServer((req, res) => {
   const path = new URL(req.url, 'http://localhost').pathname;
@@ -195,6 +197,7 @@ try {
       const sel = status === 'SERVED' ? await selectionCheck(page, goalId) : null;
       const text = await page.evaluate(() => document.body.innerText);
       const note = await page.locator('#stage-numeric-goal-note').innerText().catch(() => null);
+      const illus = await page.locator('#stage-illustrative-note').innerText().catch(() => null);
       const sgc = body.route_d?.source_goal_completion ?? null;
       const leaked = answers.filter((a) => {
         const v = String(a).replace(/^cos²=/, '').replace(/\s/g, '');
@@ -216,6 +219,7 @@ try {
               : (Boolean(goalId) && has(last?.rendered_ids, goalId) && !has(steps[0]?.rendered_ids, goalId)),
         camera: cam, pan_and_auxiliary: panAux, selection: sel,
         answer_text_on_page: leaked, cos2_text_on_page: /cos²/.test(text),
+        illustrative_note: illus, scale_configuration: body.route_d?.scene_configuration?.kind ?? null,
         numeric_goal_note: note, numeric_goal_note_has_digit: note ? /\d/.test(note) : null,
         source_goal_completion: sgc ? { fully_satisfied: sgc.source_goal_fully_satisfied, goals: sgc.goals.map((g) => [g.function, g.numeric_source_goal]) } : null,
         trig_value_on_page: /(?:c[oô]sin|cos|tang|tan|sin)\s*(?:của\s+góc[^.]*?)?\s*(?:=|bằng)\s*[-\d√]/i.test(text.replace(c.text, '')),
@@ -225,6 +229,7 @@ try {
         && cam?.orbit_changes_camera && cam?.zoom_changes_camera && panAux?.pan_changes_camera && leaked.length === 0 && !row.cos2_text_on_page
         && (c.numeric ? (sgc?.source_goal_fully_satisfied === false && Boolean(note) && !row.numeric_goal_note_has_digit)
                       : !note && !sgc) && !row.trig_value_on_page
+        && (!c.scale || (row.scale_configuration === 'SIMILARITY_SCALE_ILLUSTRATIVE' && /không cho độ dài/.test(illus ?? '') && !/\d/.test(illus ?? '')))
         && overflow <= 0 && errors.length === 0 && (w > 500 || minTarget >= 40) && (!goalId || sel?.selects === true);
       rows.push(row);
       perf.push({ case: name, viewport: row.viewport, first_model_ms: firstModelMs,
