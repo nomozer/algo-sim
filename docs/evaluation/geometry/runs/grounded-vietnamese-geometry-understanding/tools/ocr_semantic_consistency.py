@@ -56,7 +56,10 @@ def main(out: Path) -> int:
         a, g = rep(txt), rep(item["statement"])
         same = {k: a[k] == g[k] for k in ("solids", "premises", "goals")}
         headers = re.findall(r"(?:Câu|Bài)\s*\d+", txt)
-        options = re.findall(r"(?:^|\s)[A-D]\s*[.)]\s", txt)
+        # instrument correction (first output kept in logs/…first-instrument.json): the REAL27 items are multiple-choice,
+        # so ONE option group (A–D, each letter once) belongs to the problem itself; a second group is another problem's
+        options = [m.strip()[0] for m in re.findall(r"(?:^|\s)[A-D]\s*[.)]\s", txt)]
+        options = [o for o in set(options) if options.count(o) > 1]
         rows[item["case_id"]] = {
             "prepare_status": prep.get("status"), "confirmed_text_sha256": hashlib.sha256(txt.encode()).hexdigest(),
             "statement_sha256": hashlib.sha256(item["statement"].encode()).hexdigest(),

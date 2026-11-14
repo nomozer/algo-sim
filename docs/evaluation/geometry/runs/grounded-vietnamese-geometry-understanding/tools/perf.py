@@ -85,6 +85,63 @@ def child(kind: str) -> None:
             out["_proof"] = {"max_derived": MAX_DERIVED, "rows": proof}
         except ImportError:
             out["_proof"] = None
+    elif kind == "stages":
+        # run `grounded-vietnamese-geometry-understanding`: per-stage inclusive time (cProfile cumtime, one warm call per
+        # text; profiler overhead inflates absolute values, shares are comparable before/after). Entity resolution, goal
+        # extraction and relation reading are the same clause rules (`_parse_clause_into_ast`): one stage, not three.
+        import cProfile
+        import pstats
+        from compositional_dev_corpus import CORPUS
+        from app.ai.adaptive_input_router import route_text_input
+        stages = {"text_normalization": ("local_geometry_parser.py", "normalize_problem_text"),
+                  "clause_segmentation": ("local_geometry_parser.py", "split_into_clauses"),
+                  "clause_rules_entity_goal_relation": ("local_geometry_parser.py", "_parse_clause_into_ast"),
+                  "local_parse_total": ("local_geometry_parser.py", "parse_geometry_problem_locally"),
+                  "typed_fact_bridge": ("typed_fact_next_bridge.py", "bridge_v2"),
+                  "planner": ("planner.py", "lap_ke_hoach"),
+                  "source_gate": ("registry.py", "kiem_nguon"),
+                  "engine_incl_source_gate": ("engine.py", "dung_tu_loi_goi"),
+                  "scene3d_adapter": ("adapter4_route.py", "build_adapter4_response"),
+                  "end_to_end": ("adaptive_input_router.py", "route_text_input")}
+        capability = {"UNSUPPORTED_POINT_CONSTRUCTION", "PLANNER_COMPOSITION_UNSUPPORTED", "UNSUPPORTED_GOAL_FUNCTION",
+                      "UNSUPPORTED_GOAL_KIND", "SHAPE_FREEDOM_UNCERTIFIED", "DIAGRAM_DEPENDENT_FACT"}
+        for k, v in CORPUS.items():
+            r = route_text_input(v["text"], allow_live_ai=False)
+            pr = cProfile.Profile()
+            pr.enable()
+            r = route_text_input(v["text"], allow_live_ai=False)
+            pr.disable()
+            st = pstats.Stats(pr).stats
+            cum = {}
+            for (path, _line, name), val in st.items():
+                for stage, (mod, fn) in stages.items():
+                    if name == fn and path.replace("\\", "/").endswith("/" + mod):
+                        cum[stage] = cum.get(stage, 0.0) + val[3] * 1000
+            rd = (r.response or {}).get("route_d") or {}
+            root = (rd.get("local_diagnostics") or {}).get("root_cause")
+            cls = ("SERVED" if r.status == "SERVED" else
+                   # understood = the local parse read every clause (COMPLETE) and a later layer refused, or a capability root
+                   "UNDERSTOOD_CAPABILITY_UNSUPPORTED" if root in capability or (
+                       ((rd.get("local_diagnostics") or {}).get("parse_status") or "").endswith("COMPLETE") and root) else
+                   "REFUSED")
+            # the route reuses the in-process parse cache, so its parser stages read ~0: profile one COLD parse as well
+            from app.ai.local_geometry_parser import parse_geometry_problem_locally as P
+            pr = cProfile.Profile()
+            pr.enable()
+            P(v["text"], use_cache=False)
+            pr.disable()
+            for (path, _line, name), val in pstats.Stats(pr).stats.items():
+                for stage, (mod, fn) in stages.items():
+                    if mod == "local_geometry_parser.py" and name == fn and path.replace("\\", "/").endswith("/" + mod):
+                        cum["cold_" + stage] = cum.get("cold_" + stage, 0.0) + val[3] * 1000
+            xs = []
+            for _ in range(5):
+                t0 = time.perf_counter()
+                P(v["text"], use_cache=False)
+                xs.append((time.perf_counter() - t0) * 1000)
+            cum["cold_local_parse_wall"] = statistics.median(xs)
+            keys = list(stages) + [f"cold_{s_}" for s_ in stages if stages[s_][0] == "local_geometry_parser.py"] + ["cold_local_parse_wall"]
+            out[k] = {"class": cls, "status": r.status, "root_cause": root, "stages_ms": {s_: round(cum.get(s_, 0.0), 3) for s_ in keys}}
     else:
         from PIL import Image
         from app.ingestion.unified_input import prepare_unified_input
@@ -108,7 +165,7 @@ def run(backend: Path, kind: str) -> dict:
 
 
 def main(before: Path) -> int:
-    res = {side: {kind: run(b, kind) for kind in ("text", "prepare")} for side, b in (("before", before), ("after", ROOT / "backend"))}
+    res = {side: {kind: run(b, kind) for kind in ("text", "prepare", "stages")} for side, b in (("before", before), ("after", ROOT / "backend"))}
 
     def med(rows, pred):
         xs = [v["ms"] for k, v in rows.items() if not k.startswith("_") and pred(v)]
@@ -127,6 +184,15 @@ def main(before: Path) -> int:
                           "steps_max": max(x["steps"] for x in r["text"]["_proof"]["rows"].values()),
                           "budget_exceeded": sum(x["status"] == "PROOF_SEARCH_BUDGET_EXCEEDED" for x in r["text"]["_proof"]["rows"].values())}}
                for side, r in res.items()}
+    for side, r in res.items():           # per-stage medians by outcome class; OCR confirmation = prepare rows by status
+        by = {}
+        for v in r["stages"].values():
+            for st_, ms in v["stages_ms"].items():
+                by.setdefault(v["class"], {}).setdefault(st_, []).append(ms)
+        summary[side]["stages_median_ms_cprofile"] = {c: {"n": len(next(iter(d.values()))), **{st_: round(statistics.median(xs), 3) for st_, xs in d.items()}}
+                                                      for c, d in sorted(by.items())}
+        summary[side]["prepare_median_ms_by_status"] = {s_: med(r["prepare"], lambda v, s_=s_: v["status"] == s_)
+                                                        for s_ in sorted({v["status"] for v in r["prepare"].values()})}
     data = {"run_id": RUN.name, "generated_at_utc": datetime.now(timezone.utc).isoformat(),
             "head": subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT).decode().strip(),
             "environment": {"ALLOW_LIVE_AI": "0", "host": "developer desktop, shared, not isolated"},

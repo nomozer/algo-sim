@@ -1,0 +1,5567 @@
+{
+  "run_id": "grounded-vietnamese-geometry-understanding",
+  "generated_at_utc": "2026-11-14T19:12:05.501349+00:00",
+  "head": "94d4e9ca72866c6b06a6a423c76f1dbac7cf341d",
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "host": "developer desktop, shared, not isolated"
+  },
+  "command": "python docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/tools/perf.py <archive of 83fdc3071>/backend",
+  "summary": {
+    "before": {
+      "text_refused_median_ms": 2.23,
+      "text_served_median_ms": 50.52,
+      "diagnose_call_ms": 0.12648399999307003,
+      "prepare_single_median_ms": 2651.72,
+      "prepare_composite_median_ms": 3459.94,
+      "proof": {
+        "max_derived": 256,
+        "goals_timed": 48,
+        "prove_ms_max": 0.163,
+        "verify_ms_max": 0.102,
+        "steps_max": 8,
+        "budget_exceeded": 0
+      },
+      "stages_median_ms_cprofile": {
+        "REFUSED": {
+          "n": 33,
+          "text_normalization": 0.084,
+          "clause_segmentation": 0.0,
+          "clause_rules_entity_goal_relation": 0.0,
+          "local_parse_total": 0.013,
+          "typed_fact_bridge": 0.0,
+          "planner": 0.0,
+          "source_gate": 0.0,
+          "engine_incl_source_gate": 0.0,
+          "scene3d_adapter": 0.0,
+          "end_to_end": 5.477
+        },
+        "SERVED": {
+          "n": 54,
+          "text_normalization": 0.098,
+          "clause_segmentation": 0.0,
+          "clause_rules_entity_goal_relation": 0.0,
+          "local_parse_total": 0.222,
+          "typed_fact_bridge": 1.461,
+          "planner": 0.893,
+          "source_gate": 49.712,
+          "engine_incl_source_gate": 75.15,
+          "scene3d_adapter": 12.639,
+          "end_to_end": 135.196
+        },
+        "UNDERSTOOD_CAPABILITY_UNSUPPORTED": {
+          "n": 25,
+          "text_normalization": 0.081,
+          "clause_segmentation": 0.0,
+          "clause_rules_entity_goal_relation": 0.0,
+          "local_parse_total": 0.21,
+          "typed_fact_bridge": 1.221,
+          "planner": 0.792,
+          "source_gate": 31.268,
+          "engine_incl_source_gate": 34.243,
+          "scene3d_adapter": 0.028,
+          "end_to_end": 46.174
+        }
+      },
+      "prepare_median_ms_by_status": {
+        "needs_confirmation": 2651.72,
+        "needs_selection": 3459.94
+      }
+    },
+    "after": {
+      "text_refused_median_ms": 3.11,
+      "text_served_median_ms": 31.3,
+      "diagnose_call_ms": 0.1414909999948577,
+      "prepare_single_median_ms": 2602.12,
+      "prepare_composite_median_ms": 3738.67,
+      "proof": {
+        "max_derived": 256,
+        "goals_timed": 52,
+        "prove_ms_max": 0.133,
+        "verify_ms_max": 0.073,
+        "steps_max": 8,
+        "budget_exceeded": 0
+      },
+      "stages_median_ms_cprofile": {
+        "REFUSED": {
+          "n": 22,
+          "text_normalization": 0.105,
+          "clause_segmentation": 0.0,
+          "clause_rules_entity_goal_relation": 0.0,
+          "local_parse_total": 0.015,
+          "typed_fact_bridge": 0.0,
+          "planner": 0.0,
+          "source_gate": 0.0,
+          "engine_incl_source_gate": 0.0,
+          "scene3d_adapter": 0.0,
+          "end_to_end": 6.297
+        },
+        "SERVED": {
+          "n": 63,
+          "text_normalization": 0.103,
+          "clause_segmentation": 0.0,
+          "clause_rules_entity_goal_relation": 0.0,
+          "local_parse_total": 0.25,
+          "typed_fact_bridge": 1.575,
+          "planner": 0.994,
+          "source_gate": 22.654,
+          "engine_incl_source_gate": 44.067,
+          "scene3d_adapter": 14.148,
+          "end_to_end": 111.842
+        },
+        "UNDERSTOOD_CAPABILITY_UNSUPPORTED": {
+          "n": 27,
+          "text_normalization": 0.095,
+          "clause_segmentation": 0.0,
+          "clause_rules_entity_goal_relation": 0.0,
+          "local_parse_total": 0.235,
+          "typed_fact_bridge": 1.381,
+          "planner": 0.807,
+          "source_gate": 32.642,
+          "engine_incl_source_gate": 40.413,
+          "scene3d_adapter": 0.033,
+          "end_to_end": 55.534
+        }
+      },
+      "prepare_median_ms_by_status": {
+        "needs_confirmation": 2602.12,
+        "needs_selection": 3738.67
+      }
+    }
+  },
+  "rows": {
+    "before": {
+      "text": {
+        "mc_section_one_sentence": {
+          "ms": 35.47519999847282,
+          "status": "SERVED"
+        },
+        "mc_section_split": {
+          "ms": 35.979100000986364,
+          "status": "SERVED"
+        },
+        "mc_section_renamed": {
+          "ms": 35.778599994955584,
+          "status": "SERVED"
+        },
+        "mc_section_greek": {
+          "ms": 34.36479999800213,
+          "status": "SERVED"
+        },
+        "mc_extra_unread": {
+          "ms": 2.014099998632446,
+          "status": "REFUSED"
+        },
+        "mc_extra_unread2": {
+          "ms": 1.9332999945618212,
+          "status": "REFUSED"
+        },
+        "mc_distance_extra_unread": {
+          "ms": 1.9201999966753647,
+          "status": "REFUSED"
+        },
+        "mc_distance": {
+          "ms": 23.29469999676803,
+          "status": "SERVED"
+        },
+        "mc_decimal_value": {
+          "ms": 23.361600004136562,
+          "status": "SERVED"
+        },
+        "mc_label_list": {
+          "ms": 30.841899999359157,
+          "status": "SERVED"
+        },
+        "order_plane_after_goal": {
+          "ms": 35.448800001177005,
+          "status": "SERVED"
+        },
+        "order_plane_after_goal_sep": {
+          "ms": 33.95200000522891,
+          "status": "SERVED"
+        },
+        "order_plane_never_defined": {
+          "ms": 2.0879000003333203,
+          "status": "REFUSED"
+        },
+        "order_premises_swapped": {
+          "ms": 23.616900005436037,
+          "status": "SERVED"
+        },
+        "dp_named_midpoint_goal": {
+          "ms": 27.408100002503488,
+          "status": "SERVED"
+        },
+        "dp_unnamed_midpoint_goal": {
+          "ms": 26.063500001328066,
+          "status": "SERVED"
+        },
+        "dp_unnamed_centroid_goal": {
+          "ms": 24.731699995754752,
+          "status": "SERVED"
+        },
+        "dp_unnamed_through_point": {
+          "ms": 4.772599997522775,
+          "status": "REFUSED"
+        },
+        "dp_free_point": {
+          "ms": 4.679899997427128,
+          "status": "REFUSED"
+        },
+        "dp_free_point_goi": {
+          "ms": 2.8697000016109087,
+          "status": "REFUSED"
+        },
+        "dp_midpoint_as_goal": {
+          "ms": 2.14830000186339,
+          "status": "REFUSED"
+        },
+        "dp_reflection": {
+          "ms": 2.387499996984843,
+          "status": "REFUSED"
+        },
+        "dp_projection_unnamed_image": {
+          "ms": 2.307399998244364,
+          "status": "REFUSED"
+        },
+        "dp_redefined_conflict": {
+          "ms": 16.886799996427726,
+          "status": "REFUSED"
+        },
+        "goal_angle_line_plane": {
+          "ms": 25.916699996741954,
+          "status": "SERVED"
+        },
+        "goal_cos_line_plane": {
+          "ms": 25.68279999832157,
+          "status": "SERVED"
+        },
+        "goal_cos_spelled": {
+          "ms": 29.08000000024913,
+          "status": "SERVED"
+        },
+        "goal_tan_line_plane": {
+          "ms": 24.443100002827123,
+          "status": "SERVED"
+        },
+        "goal_sin_mc_stem": {
+          "ms": 24.12719999847468,
+          "status": "SERVED"
+        },
+        "goal_cos_planes": {
+          "ms": 28.133100000559352,
+          "status": "SERVED"
+        },
+        "goal_cos_lines": {
+          "ms": 28.543600004923064,
+          "status": "SERVED"
+        },
+        "goal_tan_right_angle": {
+          "ms": 26.593200003844686,
+          "status": "SERVED"
+        },
+        "goal_cos_scale_free": {
+          "ms": 70.8362000004854,
+          "status": "SERVED"
+        },
+        "goal_cos_of_length_neg": {
+          "ms": 1.912899999297224,
+          "status": "REFUSED"
+        },
+        "goal_cos_squared_neg": {
+          "ms": 1.9281999993836507,
+          "status": "REFUSED"
+        },
+        "goal_cos_given_premise_neg": {
+          "ms": 1.9189999948139302,
+          "status": "REFUSED"
+        },
+        "goal_cos_wrong_object_neg": {
+          "ms": 1.7822999943746254,
+          "status": "REFUSED"
+        },
+        "proof_only": {
+          "ms": 3.5483000028762035,
+          "status": "REFUSED"
+        },
+        "proof_premise_not_given": {
+          "ms": 4.310600001190323,
+          "status": "REFUSED"
+        },
+        "amb_plane_not_unique": {
+          "ms": 2.8165000039734878,
+          "status": "REFUSED"
+        },
+        "contra_two_lengths": {
+          "ms": 13.709499995457008,
+          "status": "REFUSED"
+        },
+        "contra_skew_intersection": {
+          "ms": 15.3230999931111,
+          "status": "REFUSED"
+        },
+        "diagram_fact": {
+          "ms": 1.759200000378769,
+          "status": "REFUSED"
+        },
+        "scale_iso_planes": {
+          "ms": 67.67650000256253,
+          "status": "SERVED"
+        },
+        "scale_iso_tan": {
+          "ms": 65.60259999969276,
+          "status": "SERVED"
+        },
+        "scale_iso_line_plane": {
+          "ms": 71.24669999757316,
+          "status": "SERVED"
+        },
+        "scale_iso_renamed": {
+          "ms": 67.81499999488005,
+          "status": "SERVED"
+        },
+        "scale_iso_with_length": {
+          "ms": 25.579900000593625,
+          "status": "SERVED"
+        },
+        "scale_shape_free": {
+          "ms": 102.16950000176439,
+          "status": "SERVED"
+        },
+        "scale_height_free": {
+          "ms": 32.01789999729954,
+          "status": "REFUSED"
+        },
+        "scale_absolute_volume": {
+          "ms": 22.604099998716265,
+          "status": "REFUSED"
+        },
+        "scale_regular_tetra_no_side": {
+          "ms": 73.36959999520332,
+          "status": "SERVED"
+        },
+        "ti_right_b_planes": {
+          "ms": 97.35599999839906,
+          "status": "SERVED"
+        },
+        "ti_right_b_tan": {
+          "ms": 99.46379999746569,
+          "status": "SERVED"
+        },
+        "ti_renamed": {
+          "ms": 104.871199997433,
+          "status": "SERVED"
+        },
+        "ti_varying_line_plane": {
+          "ms": 34.38610000011977,
+          "status": "REFUSED"
+        },
+        "ti_height_free": {
+          "ms": 27.479600001242943,
+          "status": "REFUSED"
+        },
+        "ti_absolute_volume": {
+          "ms": 24.341299998923205,
+          "status": "REFUSED"
+        },
+        "tet_lines": {
+          "ms": 69.97120000596624,
+          "status": "SERVED"
+        },
+        "tet_cos_mc": {
+          "ms": 68.80079999973532,
+          "status": "SERVED"
+        },
+        "tet_renamed": {
+          "ms": 74.46039999922505,
+          "status": "SERVED"
+        },
+        "tet_with_side": {
+          "ms": 26.329800006351434,
+          "status": "SERVED"
+        },
+        "tet_edge_face": {
+          "ms": 65.06079999962822,
+          "status": "SERVED"
+        },
+        "tet_not_regular": {
+          "ms": 43.72569999395637,
+          "status": "REFUSED"
+        },
+        "tet_regular_pyramid_only": {
+          "ms": 49.128999999084044,
+          "status": "REFUSED"
+        },
+        "tet_conflict": {
+          "ms": 2.7547000063350424,
+          "status": "REFUSED"
+        },
+        "pa_ratio2_planes": {
+          "ms": 118.08149999706075,
+          "status": "SERVED"
+        },
+        "pa_ratio2_tan": {
+          "ms": 98.78899999603163,
+          "status": "SERVED"
+        },
+        "pa_source_perp_lines": {
+          "ms": 99.22189999633702,
+          "status": "SERVED"
+        },
+        "pp_base": {
+          "ms": 105.43480000342242,
+          "status": "SERVED"
+        },
+        "pp_lateral": {
+          "ms": 107.25399999500951,
+          "status": "SERVED"
+        },
+        "lp_isosceles": {
+          "ms": 105.1590999995824,
+          "status": "SERVED"
+        },
+        "lp_ratio2": {
+          "ms": 103.68150000431342,
+          "status": "SERVED"
+        },
+        "lp_perpendicular": {
+          "ms": 117.66239999997197,
+          "status": "SERVED"
+        },
+        "lp_renamed": {
+          "ms": 110.26200000196695,
+          "status": "SERVED"
+        },
+        "ll_meeting": {
+          "ms": 116.30349999904865,
+          "status": "SERVED"
+        },
+        "ll_perpendicular": {
+          "ms": 114.7075999979279,
+          "status": "SERVED"
+        },
+        "ll_skew_perpendicular": {
+          "ms": 113.77910000010161,
+          "status": "SERVED"
+        },
+        "ll_skew_varying": {
+          "ms": 35.16589999344433,
+          "status": "REFUSED"
+        },
+        "lp_varying_lateral": {
+          "ms": 31.287300000258256,
+          "status": "REFUSED"
+        },
+        "lp_no_ratio": {
+          "ms": 29.76219999982277,
+          "status": "REFUSED"
+        },
+        "pa_prism_out_of_domain": {
+          "ms": 29.952799995953683,
+          "status": "REFUSED"
+        },
+        "gv_base_unnamed_face_after": {
+          "ms": 1.8511000016587786,
+          "status": "REFUSED"
+        },
+        "gv_base_unnamed_renamed": {
+          "ms": 1.7525000002933666,
+          "status": "REFUSED"
+        },
+        "gv_base_unnamed_figref": {
+          "ms": 2.1487999983946793,
+          "status": "REFUSED"
+        },
+        "gv_base_unnamed_subject_first": {
+          "ms": 1.9042999992961995,
+          "status": "REFUSED"
+        },
+        "gv_cuboid_square_base": {
+          "ms": 1.9182000032742508,
+          "status": "REFUSED"
+        },
+        "gv_cuboid_no_square": {
+          "ms": 22.873399997479282,
+          "status": "REFUSED"
+        },
+        "gv_lateral_regular_tri": {
+          "ms": 1.752900003339164,
+          "status": "REFUSED"
+        },
+        "gv_lateral_regular_quad": {
+          "ms": 1.7238000000361353,
+          "status": "REFUSED"
+        },
+        "gv_lateral_not_regular": {
+          "ms": 1.7235999985132366,
+          "status": "REFUSED"
+        },
+        "gv_lateral_no_height": {
+          "ms": 1.686299998254981,
+          "status": "REFUSED"
+        },
+        "gv_prism_undotted": {
+          "ms": 1.7120999982580543,
+          "status": "REFUSED"
+        },
+        "gv_prism_dotted_same": {
+          "ms": 22.35349999682512,
+          "status": "SERVED"
+        },
+        "gv_prism_undotted_scrambled": {
+          "ms": 1.8990000025951304,
+          "status": "REFUSED"
+        },
+        "gv_isosceles_right_derived": {
+          "ms": 1.9608000002335757,
+          "status": "REFUSED"
+        },
+        "gv_isosceles_explicit": {
+          "ms": 22.27090000087628,
+          "status": "SERVED"
+        },
+        "gv_isosceles_no_right_angle": {
+          "ms": 1.7716000002110377,
+          "status": "REFUSED"
+        },
+        "gv_isosceles_base_only": {
+          "ms": 1.7747000019880943,
+          "status": "REFUSED"
+        },
+        "gv_unread_perimeter": {
+          "ms": 1.8535999988671392,
+          "status": "REFUSED"
+        },
+        "gv_unread_area_in_a": {
+          "ms": 1.7066000000340864,
+          "status": "REFUSED"
+        },
+        "gv_base_area_regular": {
+          "ms": 1.6748000052757561,
+          "status": "REFUSED"
+        },
+        "gv_base_area_impossible": {
+          "ms": 1.6666000010445714,
+          "status": "REFUSED"
+        },
+        "gv_pair_midpoint_premise": {
+          "ms": 24.06920000066748,
+          "status": "SERVED"
+        },
+        "gv_pair_point_on": {
+          "ms": 1.8225000021629967,
+          "status": "REFUSED"
+        },
+        "gv_pair_perp_premise": {
+          "ms": 23.245999997016042,
+          "status": "SERVED"
+        },
+        "gv_pair_perp_proof": {
+          "ms": 5.0832999986596406,
+          "status": "REFUSED"
+        },
+        "gv_pair_regular_pyramid": {
+          "ms": 35.361800000828225,
+          "status": "REFUSED"
+        },
+        "gv_pair_regular_tetra": {
+          "ms": 70.70889999886276,
+          "status": "SERVED"
+        },
+        "gv_pair_section_shape_proof": {
+          "ms": 4.444300000614021,
+          "status": "REFUSED"
+        },
+        "gv_contradiction": {
+          "ms": 13.338299999304581,
+          "status": "REFUSED"
+        },
+        "gv_missing_height": {
+          "ms": 24.05670000007376,
+          "status": "REFUSED"
+        },
+        "_diagnose_ms": 0.12648399999307003,
+        "_proof": {
+          "max_derived": 256,
+          "rows": {
+            "goal_angle_line_plane": {
+              "prove_ms": 0.059780000083264895,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "goal_cos_line_plane": {
+              "prove_ms": 0.06393500007106923,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "goal_cos_spelled": {
+              "prove_ms": 0.13888499997847248,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "goal_tan_line_plane": {
+              "prove_ms": 0.0587500002438901,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "goal_sin_mc_stem": {
+              "prove_ms": 0.05608499996014871,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "goal_cos_planes": {
+              "prove_ms": 0.0009749997843755409,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "goal_cos_lines": {
+              "prove_ms": 0.0009650000720284879,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "goal_tan_right_angle": {
+              "prove_ms": 0.09074999979929999,
+              "verify_ms": 0.022499999977299012,
+              "status": "PROVEN",
+              "steps": 2
+            },
+            "goal_cos_scale_free": {
+              "prove_ms": 0.02813499995681923,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "scale_iso_planes": {
+              "prove_ms": 0.10615499995765276,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "scale_iso_tan": {
+              "prove_ms": 0.10559000002103858,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "scale_iso_line_plane": {
+              "prove_ms": 0.1633449999644654,
+              "verify_ms": 0.048519999836571515,
+              "status": "PROVEN",
+              "steps": 4
+            },
+            "scale_iso_renamed": {
+              "prove_ms": 0.1497099998232443,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "scale_iso_with_length": {
+              "prove_ms": 0.11074499998358078,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "scale_shape_free": {
+              "prove_ms": 0.10177999974985141,
+              "verify_ms": 0.07121000016923063,
+              "status": "PROVEN",
+              "steps": 8
+            },
+            "scale_height_free": {
+              "prove_ms": 0.13389000014285557,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "scale_regular_tetra_no_side": {
+              "prove_ms": 0.032160000046133064,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "ti_right_b_planes": {
+              "prove_ms": 0.1263549998839153,
+              "verify_ms": 0.06340500003716443,
+              "status": "PROVEN",
+              "steps": 8
+            },
+            "ti_right_b_tan": {
+              "prove_ms": 0.10705999993660953,
+              "verify_ms": 0.061404999723890796,
+              "status": "PROVEN",
+              "steps": 8
+            },
+            "ti_renamed": {
+              "prove_ms": 0.12677500017161947,
+              "verify_ms": 0.09580000005371403,
+              "status": "PROVEN",
+              "steps": 8
+            },
+            "ti_varying_line_plane": {
+              "prove_ms": 0.09166499985440169,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "ti_height_free": {
+              "prove_ms": 0.10130999980901834,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "tet_lines": {
+              "prove_ms": 0.042034999933093786,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "tet_cos_mc": {
+              "prove_ms": 0.04790999992110301,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "tet_renamed": {
+              "prove_ms": 0.029424999956972897,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "tet_with_side": {
+              "prove_ms": 0.02714000002015382,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "tet_edge_face": {
+              "prove_ms": 0.043199999709031545,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "tet_not_regular": {
+              "prove_ms": 0.014530000044032931,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "tet_regular_pyramid_only": {
+              "prove_ms": 0.020754999786731787,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "pa_ratio2_planes": {
+              "prove_ms": 0.12227500010340009,
+              "verify_ms": 0.0849150001158705,
+              "status": "PROVEN",
+              "steps": 8
+            },
+            "pa_ratio2_tan": {
+              "prove_ms": 0.12233499983267393,
+              "verify_ms": 0.1015899997582892,
+              "status": "PROVEN",
+              "steps": 8
+            },
+            "pa_source_perp_lines": {
+              "prove_ms": 0.1206850000016857,
+              "verify_ms": 0.06256000015127938,
+              "status": "PROVEN",
+              "steps": 8
+            },
+            "pp_base": {
+              "prove_ms": 0.09337500014225952,
+              "verify_ms": 0.02964000013889745,
+              "status": "PROVEN",
+              "steps": 2
+            },
+            "pp_lateral": {
+              "prove_ms": 0.12133499985793605,
+              "verify_ms": 0.04384499989100732,
+              "status": "PROVEN",
+              "steps": 5
+            },
+            "lp_isosceles": {
+              "prove_ms": 0.10634499994921498,
+              "verify_ms": 0.04406000007293187,
+              "status": "PROVEN",
+              "steps": 4
+            },
+            "lp_ratio2": {
+              "prove_ms": 0.11567500005185138,
+              "verify_ms": 0.08170500004780479,
+              "status": "PROVEN",
+              "steps": 4
+            },
+            "lp_perpendicular": {
+              "prove_ms": 0.12956999999005347,
+              "verify_ms": 0.028374999965308234,
+              "status": "PROVEN",
+              "steps": 2
+            },
+            "lp_renamed": {
+              "prove_ms": 0.11971499989158474,
+              "verify_ms": 0.05270500005281065,
+              "status": "PROVEN",
+              "steps": 4
+            },
+            "ll_meeting": {
+              "prove_ms": 0.12705500012089033,
+              "verify_ms": 0.043899999946006574,
+              "status": "PROVEN",
+              "steps": 4
+            },
+            "ll_perpendicular": {
+              "prove_ms": 0.0896399997145636,
+              "verify_ms": 0.04618500024662353,
+              "status": "PROVEN",
+              "steps": 6
+            },
+            "ll_skew_perpendicular": {
+              "prove_ms": 0.09736499996506609,
+              "verify_ms": 0.029974999779369682,
+              "status": "PROVEN",
+              "steps": 3
+            },
+            "ll_skew_varying": {
+              "prove_ms": 0.07991000020410866,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "lp_varying_lateral": {
+              "prove_ms": 0.08830500009935349,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "lp_no_ratio": {
+              "prove_ms": 0.07878500000515487,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "pa_prism_out_of_domain": {
+              "prove_ms": 0.0008900002285372466,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "gv_cuboid_no_square": {
+              "prove_ms": 0.0010799998563015833,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "gv_pair_regular_pyramid": {
+              "prove_ms": 0.021879999985685572,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "gv_pair_regular_tetra": {
+              "prove_ms": 0.028185000337543897,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            }
+          }
+        }
+      },
+      "prepare": {
+        "vmmu_r247": {
+          "ms": 5132.120499998564,
+          "status": "needs_confirmation",
+          "set": "REAL_SINGLE"
+        },
+        "vmmu_r254": {
+          "ms": 2431.1698000019533,
+          "status": "needs_confirmation",
+          "set": "REAL_SINGLE"
+        },
+        "vmmu_r256": {
+          "ms": 2872.2764999984065,
+          "status": "needs_confirmation",
+          "set": "REAL_SINGLE"
+        },
+        "vmmu_r258": {
+          "ms": 1821.262299999944,
+          "status": "needs_confirmation",
+          "set": "REAL_SINGLE"
+        },
+        "vmmu_r266": {
+          "ms": 1775.0038000012864,
+          "status": "needs_confirmation",
+          "set": "REAL_SINGLE"
+        },
+        "vmmu_r270": {
+          "ms": 3455.40500000061,
+          "status": "needs_confirmation",
+          "set": "REAL_SINGLE"
+        },
+        "vmmu_r247+vmmu_r254": {
+          "ms": 3417.429799999809,
+          "status": "needs_selection",
+          "set": "COMPOSITE_2"
+        },
+        "vmmu_r256+vmmu_r258": {
+          "ms": 3550.8614999998827,
+          "status": "needs_selection",
+          "set": "COMPOSITE_2"
+        },
+        "vmmu_r266+vmmu_r270": {
+          "ms": 3502.451899999869,
+          "status": "needs_selection",
+          "set": "COMPOSITE_2"
+        },
+        "vmmu_r273+vmmu_r277": {
+          "ms": 2667.184099998849,
+          "status": "needs_selection",
+          "set": "COMPOSITE_2"
+        }
+      },
+      "stages": {
+        "mc_section_one_sentence": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.132,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.258,
+            "typed_fact_bridge": 1.661,
+            "planner": 1.909,
+            "source_gate": 9.639,
+            "engine_incl_source_gate": 37.547,
+            "scene3d_adapter": 32.117,
+            "end_to_end": 105.338
+          }
+        },
+        "mc_section_split": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.113,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.246,
+            "typed_fact_bridge": 1.59,
+            "planner": 1.86,
+            "source_gate": 12.339,
+            "engine_incl_source_gate": 39.916,
+            "scene3d_adapter": 31.7,
+            "end_to_end": 104.715
+          }
+        },
+        "mc_section_renamed": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.124,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.319,
+            "typed_fact_bridge": 1.547,
+            "planner": 1.781,
+            "source_gate": 9.97,
+            "engine_incl_source_gate": 36.992,
+            "scene3d_adapter": 47.705,
+            "end_to_end": 118.921
+          }
+        },
+        "mc_section_greek": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.118,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.235,
+            "typed_fact_bridge": 1.67,
+            "planner": 1.781,
+            "source_gate": 10.055,
+            "engine_incl_source_gate": 38.328,
+            "scene3d_adapter": 61.866,
+            "end_to_end": 137.737
+          }
+        },
+        "mc_extra_unread": {
+          "class": "REFUSED",
+          "status": "REFUSED",
+          "root_cause": "FREE_POINT_UNDERDETERMINED",
+          "stages_ms": {
+            "text_normalization": 0.113,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.015,
+            "typed_fact_bridge": 0.0,
+            "planner": 0.0,
+            "source_gate": 0.0,
+            "engine_incl_source_gate": 0.0,
+            "scene3d_adapter": 0.0,
+            "end_to_end": 5.792
+          }
+        },
+        "mc_extra_unread2": {
+          "class": "REFUSED",
+          "status": "REFUSED",
+          "root_cause": "INCOMPLETE_FACT_EXTRACTION",
+          "stages_ms": {
+            "text_normalization": 0.181,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.024,
+            "typed_fact_bridge": 0.0,
+            "planner": 0.0,
+            "source_gate": 0.0,
+            "engine_incl_source_gate": 0.0,
+            "scene3d_adapter": 0.0,
+            "end_to_end": 5.824
+          }
+        },
+        "mc_distance_extra_unread": {
+          "class": "REFUSED",
+          "status": "REFUSED",
+          "root_cause": "INCOMPLETE_FACT_EXTRACTION",
+          "stages_ms": {
+            "text_normalization": 0.09,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.012,
+            "typed_fact_bridge": 0.0,
+            "planner": 0.0,
+            "source_gate": 0.0,
+            "engine_incl_source_gate": 0.0,
+            "scene3d_adapter": 0.0,
+            "end_to_end": 5.544
+          }
+        },
+        "mc_distance": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.087,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.207,
+            "typed_fact_bridge": 1.265,
+            "planner": 0.802,
+            "source_gate": 15.564,
+            "engine_incl_source_gate": 27.212,
+            "scene3d_adapter": 10.462,
+            "end_to_end": 58.659
+          }
+        },
+        "mc_decimal_value": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.088,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.208,
+            "typed_fact_bridge": 1.498,
+            "planner": 0.818,
+            "source_gate": 16.229,
+            "engine_incl_source_gate": 28.694,
+            "scene3d_adapter": 10.898,
+            "end_to_end": 63.211
+          }
+        },
+        "mc_label_list": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.105,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.281,
+            "typed_fact_bridge": 1.749,
+            "planner": 1.028,
+            "source_gate": 20.925,
+            "engine_incl_source_gate": 35.482,
+            "scene3d_adapter": 13.677,
+            "end_to_end": 75.239
+          }
+        },
+        "order_plane_after_goal": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.121,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.245,
+            "typed_fact_bridge": 1.545,
+            "planner": 2.006,
+            "source_gate": 12.051,
+            "engine_incl_source_gate": 40.187,
+            "scene3d_adapter": 35.361,
+            "end_to_end": 109.611
+          }
+        },
+        "order_plane_after_goal_sep": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.115,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.246,
+            "typed_fact_bridge": 1.852,
+            "planner": 2.003,
+            "source_gate": 13.75,
+            "engine_incl_source_gate": 44.088,
+            "scene3d_adapter": 32.352,
+            "end_to_end": 112.085
+          }
+        },
+        "order_plane_never_defined": {
+          "class": "REFUSED",
+          "status": "REFUSED",
+          "root_cause": "UNRESOLVED_REFERENCE",
+          "stages_ms": {
+            "text_normalization": 0.097,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.014,
+            "typed_fact_bridge": 0.0,
+            "planner": 0.0,
+            "source_gate": 0.0,
+            "engine_incl_source_gate": 0.0,
+            "scene3d_adapter": 0.0,
+            "end_to_end": 5.613
+          }
+        },
+        "order_premises_swapped": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.113,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.231,
+            "typed_fact_bridge": 1.452,
+            "planner": 0.899,
+            "source_gate": 16.048,
+            "engine_incl_source_gate": 28.171,
+            "scene3d_adapter": 11.097,
+            "end_to_end": 61.282
+          }
+        },
+        "dp_named_midpoint_goal": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.101,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.226,
+            "typed_fact_bridge": 1.639,
+            "planner": 0.99,
+            "source_gate": 18.979,
+            "engine_incl_source_gate": 33.266,
+            "scene3d_adapter": 12.394,
+            "end_to_end": 68.81
+          }
+        },
+        "dp_unnamed_midpoint_goal": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.094,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.281,
+            "typed_fact_bridge": 1.513,
+            "planner": 2.132,
+            "source_gate": 16.972,
+            "engine_incl_source_gate": 30.345,
+            "scene3d_adapter": 12.133,
+            "end_to_end": 66.448
+          }
+        },
+        "dp_unnamed_centroid_goal": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.099,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.223,
+            "typed_fact_bridge": 1.643,
+            "planner": 2.187,
+            "source_gate": 16.352,
+            "engine_incl_source_gate": 31.033,
+            "scene3d_adapter": 13.688,
+            "end_to_end": 69.932
+          }
+        },
+        "dp_unnamed_through_point": {
+          "class": "REFUSED",
+          "status": "REFUSED",
+          "root_cause": "UNRECOGNIZED_GOAL",
+          "stages_ms": {
+            "text_normalization": 0.105,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.014,
+            "typed_fact_bridge": 0.0,
+            "planner": 0.0,
+            "source_gate": 0.0,
+            "engine_incl_source_gate": 0.0,
+            "scene3d_adapter": 0.0,
+            "end_to_end": 5.783
+          }
+        },
+        "dp_free_point": {
+          "class": "REFUSED",
+          "status": "REFUSED",
+          "root_cause": "FREE_POINT_UNDERDETERMINED",
+          "stages_ms": {
+            "text_normalization": 0.084,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.013,
+            "typed_fact_bridge": 0.0,
+            "planner": 0.0,
+            "source_gate": 0.0,
+            "engine_incl_source_gate": 0.0,
+            "scene3d_adapter": 0.0,
+            "end_to_end": 5.373
+          }
+        },
+        "dp_free_point_goi": {
+          "class": "REFUSED",
+          "status": "REFUSED",
+          "root_cause": "FREE_POINT_UNDERDETERMINED",
+          "stages_ms": {
+            "text_normalization": 0.084,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.011,
+            "typed_fact_bridge": 0.0,
+            "planner": 0.0,
+            "source_gate": 0.0,
+            "engine_incl_source_gate": 0.0,
+            "scene3d_adapter": 0.0,
+            "end_to_end": 5.372
+          }
+        },
+        "dp_midpoint_as_goal": {
+          "class": "REFUSED",
+          "status": "REFUSED",
+          "root_cause": "UNRECOGNIZED_GOAL",
+          "stages_ms": {
+            "text_normalization": 0.095,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.012,
+            "typed_fact_bridge": 0.0,
+            "planner": 0.0,
+            "source_gate": 0.0,
+            "engine_incl_source_gate": 0.0,
+            "scene3d_adapter": 0.0,
+            "end_to_end": 5.376
+          }
+        },
+        "dp_reflection": {
+          "class": "UNDERSTOOD_CAPABILITY_UNSUPPORTED",
+          "status": "REFUSED",
+          "root_cause": "UNSUPPORTED_POINT_CONSTRUCTION",
+          "stages_ms": {
+            "text_normalization": 0.091,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.01,
+            "typed_fact_bridge": 0.0,
+            "planner": 0.0,
+            "source_gate": 0.0,
+            "engine_incl_source_gate": 0.0,
+            "scene3d_adapter": 0.0,
+            "end_to_end": 5.585
+          }
+        },
+        "dp_projection_unnamed_image": {
+          "class": "REFUSED",
+          "status": "REFUSED",
+          "root_cause": "DESCRIBED_POINT_IN_PREMISE_UNSUPPORTED",
+          "stages_ms": {
+            "text_normalization": 0.094,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.013,
+            "typed_fact_bridge": 0.0,
+            "planner": 0.0,
+            "source_gate": 0.0,
+            "engine_incl_source_gate": 0.0,
+            "scene3d_adapter": 0.0,
+            "end_to_end": 5.374
+          }
+        },
+        "dp_redefined_conflict": {
+          "class": "UNDERSTOOD_CAPABILITY_UNSUPPORTED",
+          "status": "REFUSED",
+          "root_cause": "SOURCE_CONFLICT",
+          "stages_ms": {
+            "text_normalization": 0.1,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.247,
+            "typed_fact_bridge": 1.886,
+            "planner": 1.02,
+            "source_gate": 21.205,
+            "engine_incl_source_gate": 24.855,
+            "scene3d_adapter": 0.031,
+            "end_to_end": 38.946
+          }
+        },
+        "goal_angle_line_plane": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.088,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.204,
+            "typed_fact_bridge": 1.244,
+            "planner": 0.821,
+            "source_gate": 18.312,
+            "engine_incl_source_gate": 30.336,
+            "scene3d_adapter": 10.731,
+            "end_to_end": 63.189
+          }
+        },
+        "goal_cos_line_plane": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.106,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.208,
+            "typed_fact_bridge": 1.229,
+            "planner": 0.911,
+            "source_gate": 16.858,
+            "engine_incl_source_gate": 28.575,
+            "scene3d_adapter": 10.938,
+            "end_to_end": 61.675
+          }
+        },
+        "goal_cos_spelled": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.099,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.211,
+            "typed_fact_bridge": 1.388,
+            "planner": 0.888,
+            "source_gate": 16.983,
+            "engine_incl_source_gate": 29.174,
+            "scene3d_adapter": 10.794,
+            "end_to_end": 63.905
+          }
+        },
+        "goal_tan_line_plane": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.092,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.207,
+            "typed_fact_bridge": 1.41,
+            "planner": 0.845,
+            "source_gate": 16.884,
+            "engine_incl_source_gate": 29.311,
+            "scene3d_adapter": 10.899,
+            "end_to_end": 63.554
+          }
+        },
+        "goal_sin_mc_stem": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.088,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.204,
+            "typed_fact_bridge": 1.312,
+            "planner": 0.845,
+            "source_gate": 15.002,
+            "engine_incl_source_gate": 27.02,
+            "scene3d_adapter": 11.273,
+            "end_to_end": 60.622
+          }
+        },
+        "goal_cos_planes": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.126,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.221,
+            "typed_fact_bridge": 1.476,
+            "planner": 0.774,
+            "source_gate": 14.972,
+            "engine_incl_source_gate": 30.765,
+            "scene3d_adapter": 15.582,
+            "end_to_end": 74.914
+          }
+        },
+        "goal_cos_lines": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.098,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.222,
+            "typed_fact_bridge": 1.518,
+            "planner": 0.714,
+            "source_gate": 19.256,
+            "engine_incl_source_gate": 33.513,
+            "scene3d_adapter": 15.798,
+            "end_to_end": 78.279
+          }
+        },
+        "goal_tan_right_angle": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.099,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.209,
+            "typed_fact_bridge": 1.349,
+            "planner": 1.036,
+            "source_gate": 16.671,
+            "engine_incl_source_gate": 30.608,
+            "scene3d_adapter": 12.139,
+            "end_to_end": 66.788
+          }
+        },
+        "goal_cos_scale_free": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.078,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.205,
+            "typed_fact_bridge": 1.271,
+            "planner": 0.857,
+            "source_gate": 88.277,
+            "engine_incl_source_gate": 116.884,
+            "scene3d_adapter": 10.377,
+            "end_to_end": 147.201
+          }
+        },
+        "goal_cos_of_length_neg": {
+          "class": "REFUSED",
+          "status": "REFUSED",
+          "root_cause": "UNRECOGNIZED_GOAL",
+          "stages_ms": {
+            "text_normalization": 0.082,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.015,
+            "typed_fact_bridge": 0.0,
+            "planner": 0.0,
+            "source_gate": 0.0,
+            "engine_incl_source_gate": 0.0,
+            "scene3d_adapter": 0.0,
+            "end_to_end": 5.443
+          }
+        },
+        "goal_cos_squared_neg": {
+          "class": "UNDERSTOOD_CAPABILITY_UNSUPPORTED",
+          "status": "REFUSED",
+          "root_cause": "UNSUPPORTED_GOAL_FUNCTION",
+          "stages_ms": {
+            "text_normalization": 0.083,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.012,
+            "typed_fact_bridge": 0.0,
+            "planner": 0.0,
+            "source_gate": 0.0,
+            "engine_incl_source_gate": 0.0,
+            "scene3d_adapter": 0.0,
+            "end_to_end": 5.382
+          }
+        },
+        "goal_cos_given_premise_neg": {
+          "class": "REFUSED",
+          "status": "REFUSED",
+          "root_cause": "SOURCE_PROVENANCE_MISSING",
+          "stages_ms": {
+            "text_normalization": 0.087,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.011,
+            "typed_fact_bridge": 0.0,
+            "planner": 0.0,
+            "source_gate": 0.0,
+            "engine_incl_source_gate": 0.0,
+            "scene3d_adapter": 0.0,
+            "end_to_end": 5.402
+          }
+        },
+        "goal_cos_wrong_object_neg": {
+          "class": "UNDERSTOOD_CAPABILITY_UNSUPPORTED",
+          "status": "REFUSED",
+          "root_cause": "UNSUPPORTED_GOAL_FUNCTION",
+          "stages_ms": {
+            "text_normalization": 0.082,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.012,
+            "typed_fact_bridge": 0.0,
+            "planner": 0.0,
+            "source_gate": 0.0,
+            "engine_incl_source_gate": 0.0,
+            "scene3d_adapter": 0.0,
+            "end_to_end": 5.421
+          }
+        },
+        "proof_only": {
+          "class": "UNDERSTOOD_CAPABILITY_UNSUPPORTED",
+          "status": "REFUSED",
+          "root_cause": "UNSUPPORTED_GOAL_KIND",
+          "stages_ms": {
+            "text_normalization": 0.084,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.189,
+            "typed_fact_bridge": 0.47,
+            "planner": 0.0,
+            "source_gate": 0.0,
+            "engine_incl_source_gate": 0.0,
+            "scene3d_adapter": 0.066,
+            "end_to_end": 9.616
+          }
+        },
+        "proof_premise_not_given": {
+          "class": "UNDERSTOOD_CAPABILITY_UNSUPPORTED",
+          "status": "REFUSED",
+          "root_cause": "UNSUPPORTED_GOAL_KIND",
+          "stages_ms": {
+            "text_normalization": 0.08,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.197,
+            "typed_fact_bridge": 0.539,
+            "planner": 0.0,
+            "source_gate": 0.0,
+            "engine_incl_source_gate": 0.0,
+            "scene3d_adapter": 0.063,
+            "end_to_end": 9.03
+          }
+        },
+        "amb_plane_not_unique": {
+          "class": "REFUSED",
+          "status": "REFUSED",
+          "root_cause": "UNRECOGNIZED_GEOMETRIC_ENTITY",
+          "stages_ms": {
+            "text_normalization": 0.086,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.011,
+            "typed_fact_bridge": 0.0,
+            "planner": 0.0,
+            "source_gate": 0.0,
+            "engine_incl_source_gate": 0.0,
+            "scene3d_adapter": 0.0,
+            "end_to_end": 5.407
+          }
+        },
+        "contra_two_lengths": {
+          "class": "UNDERSTOOD_CAPABILITY_UNSUPPORTED",
+          "status": "REFUSED",
+          "root_cause": "SOURCE_CONFLICT",
+          "stages_ms": {
+            "text_normalization": 0.081,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.225,
+            "typed_fact_bridge": 1.501,
+            "planner": 0.884,
+            "source_gate": 16.632,
+            "engine_incl_source_gate": 17.918,
+            "scene3d_adapter": 0.029,
+            "end_to_end": 30.376
+          }
+        },
+        "contra_skew_intersection": {
+          "class": "UNDERSTOOD_CAPABILITY_UNSUPPORTED",
+          "status": "REFUSED",
+          "root_cause": "GEOMETRIC_DEGENERACY",
+          "stages_ms": {
+            "text_normalization": 0.093,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.234,
+            "typed_fact_bridge": 1.559,
+            "planner": 1.062,
+            "source_gate": 19.09,
+            "engine_incl_source_gate": 20.741,
+            "scene3d_adapter": 0.028,
+            "end_to_end": 33.553
+          }
+        },
+        "diagram_fact": {
+          "class": "REFUSED",
+          "status": "REFUSED",
+          "root_cause": "SOURCE_PROVENANCE_MISSING",
+          "stages_ms": {
+            "text_normalization": 0.099,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.013,
+            "typed_fact_bridge": 0.0,
+            "planner": 0.0,
+            "source_gate": 0.0,
+            "engine_incl_source_gate": 0.0,
+            "scene3d_adapter": 0.0,
+            "end_to_end": 5.723
+          }
+        },
+        "scale_iso_planes": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.098,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.237,
+            "typed_fact_bridge": 1.949,
+            "planner": 1.213,
+            "source_gate": 89.909,
+            "engine_incl_source_gate": 149.567,
+            "scene3d_adapter": 12.012,
+            "end_to_end": 189.122
+          }
+        },
+        "scale_iso_tan": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.091,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.235,
+            "typed_fact_bridge": 1.884,
+            "planner": 1.042,
+            "source_gate": 110.873,
+            "engine_incl_source_gate": 154.089,
+            "scene3d_adapter": 12.191,
+            "end_to_end": 192.408
+          }
+        },
+        "scale_iso_line_plane": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.088,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.238,
+            "typed_fact_bridge": 1.729,
+            "planner": 0.897,
+            "source_gate": 93.306,
+            "engine_incl_source_gate": 131.929,
+            "scene3d_adapter": 11.583,
+            "end_to_end": 168.15
+          }
+        },
+        "scale_iso_renamed": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.117,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.262,
+            "typed_fact_bridge": 1.606,
+            "planner": 0.927,
+            "source_gate": 83.745,
+            "engine_incl_source_gate": 123.138,
+            "scene3d_adapter": 11.518,
+            "end_to_end": 159.792
+          }
+        },
+        "scale_iso_with_length": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.1,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.315,
+            "typed_fact_bridge": 1.693,
+            "planner": 0.966,
+            "source_gate": 17.021,
+            "engine_incl_source_gate": 29.548,
+            "scene3d_adapter": 12.117,
+            "end_to_end": 66.787
+          }
+        },
+        "scale_shape_free": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.108,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.222,
+            "typed_fact_bridge": 1.318,
+            "planner": 0.797,
+            "source_gate": 125.621,
+            "engine_incl_source_gate": 189.991,
+            "scene3d_adapter": 13.371,
+            "end_to_end": 227.338
+          }
+        },
+        "scale_height_free": {
+          "class": "UNDERSTOOD_CAPABILITY_UNSUPPORTED",
+          "status": "REFUSED",
+          "root_cause": "SHAPE_FREEDOM_UNCERTIFIED",
+          "stages_ms": {
+            "text_normalization": 0.084,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.21,
+            "typed_fact_bridge": 1.473,
+            "planner": 0.82,
+            "source_gate": 46.055,
+            "engine_incl_source_gate": 50.073,
+            "scene3d_adapter": 0.027,
+            "end_to_end": 62.227
+          }
+        },
+        "scale_absolute_volume": {
+          "class": "UNDERSTOOD_CAPABILITY_UNSUPPORTED",
+          "status": "REFUSED",
+          "root_cause": "INSUFFICIENT_CONSTRAINTS",
+          "stages_ms": {
+            "text_normalization": 0.075,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.254,
+            "typed_fact_bridge": 1.361,
+            "planner": 0.799,
+            "source_gate": 31.268,
+            "engine_incl_source_gate": 33.786,
+            "scene3d_adapter": 0.03,
+            "end_to_end": 46.174
+          }
+        },
+        "scale_regular_tetra_no_side": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.076,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.196,
+            "typed_fact_bridge": 1.288,
+            "planner": 0.72,
+            "source_gate": 102.508,
+            "engine_incl_source_gate": 131.428,
+            "scene3d_adapter": 10.285,
+            "end_to_end": 160.865
+          }
+        },
+        "ti_right_b_planes": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.091,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.211,
+            "typed_fact_bridge": 1.482,
+            "planner": 0.87,
+            "source_gate": 124.161,
+            "engine_incl_source_gate": 185.78,
+            "scene3d_adapter": 14.615,
+            "end_to_end": 224.813
+          }
+        },
+        "ti_right_b_tan": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.099,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.213,
+            "typed_fact_bridge": 1.65,
+            "planner": 0.87,
+            "source_gate": 119.425,
+            "engine_incl_source_gate": 181.943,
+            "scene3d_adapter": 14.58,
+            "end_to_end": 221.19
+          }
+        },
+        "ti_renamed": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.093,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.211,
+            "typed_fact_bridge": 1.397,
+            "planner": 0.843,
+            "source_gate": 126.505,
+            "engine_incl_source_gate": 189.224,
+            "scene3d_adapter": 14.108,
+            "end_to_end": 227.731
+          }
+        },
+        "ti_varying_line_plane": {
+          "class": "UNDERSTOOD_CAPABILITY_UNSUPPORTED",
+          "status": "REFUSED",
+          "root_cause": "SHAPE_FREEDOM_UNCERTIFIED",
+          "stages_ms": {
+            "text_normalization": 0.083,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.213,
+            "typed_fact_bridge": 1.782,
+            "planner": 0.824,
+            "source_gate": 52.471,
+            "engine_incl_source_gate": 56.029,
+            "scene3d_adapter": 0.026,
+            "end_to_end": 68.838
+          }
+        },
+        "ti_height_free": {
+          "class": "UNDERSTOOD_CAPABILITY_UNSUPPORTED",
+          "status": "REFUSED",
+          "root_cause": "SHAPE_FREEDOM_UNCERTIFIED",
+          "stages_ms": {
+            "text_normalization": 0.077,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.183,
+            "typed_fact_bridge": 1.333,
+            "planner": 0.765,
+            "source_gate": 44.628,
+            "engine_incl_source_gate": 47.575,
+            "scene3d_adapter": 0.033,
+            "end_to_end": 59.018
+          }
+        },
+        "ti_absolute_volume": {
+          "class": "UNDERSTOOD_CAPABILITY_UNSUPPORTED",
+          "status": "REFUSED",
+          "root_cause": "INSUFFICIENT_CONSTRAINTS",
+          "stages_ms": {
+            "text_normalization": 0.076,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.216,
+            "typed_fact_bridge": 1.153,
+            "planner": 0.732,
+            "source_gate": 32.177,
+            "engine_incl_source_gate": 34.243,
+            "scene3d_adapter": 0.028,
+            "end_to_end": 45.282
+          }
+        },
+        "tet_lines": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.124,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.278,
+            "typed_fact_bridge": 1.399,
+            "planner": 0.738,
+            "source_gate": 107.311,
+            "engine_incl_source_gate": 138.207,
+            "scene3d_adapter": 22.687,
+            "end_to_end": 183.581
+          }
+        },
+        "tet_cos_mc": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.093,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.215,
+            "typed_fact_bridge": 1.434,
+            "planner": 0.745,
+            "source_gate": 88.456,
+            "engine_incl_source_gate": 117.997,
+            "scene3d_adapter": 12.851,
+            "end_to_end": 151.277
+          }
+        },
+        "tet_renamed": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.098,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.214,
+            "typed_fact_bridge": 1.371,
+            "planner": 0.864,
+            "source_gate": 117.611,
+            "engine_incl_source_gate": 151.401,
+            "scene3d_adapter": 10.841,
+            "end_to_end": 183.682
+          }
+        },
+        "tet_with_side": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.085,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.238,
+            "typed_fact_bridge": 1.442,
+            "planner": 0.811,
+            "source_gate": 21.958,
+            "engine_incl_source_gate": 31.208,
+            "scene3d_adapter": 9.779,
+            "end_to_end": 61.097
+          }
+        },
+        "tet_edge_face": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.067,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.181,
+            "typed_fact_bridge": 1.153,
+            "planner": 0.768,
+            "source_gate": 77.465,
+            "engine_incl_source_gate": 106.212,
+            "scene3d_adapter": 9.101,
+            "end_to_end": 132.655
+          }
+        },
+        "tet_not_regular": {
+          "class": "UNDERSTOOD_CAPABILITY_UNSUPPORTED",
+          "status": "REFUSED",
+          "root_cause": "SHAPE_FREEDOM_UNCERTIFIED",
+          "stages_ms": {
+            "text_normalization": 0.074,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.178,
+            "typed_fact_bridge": 0.965,
+            "planner": 0.86,
+            "source_gate": 66.257,
+            "engine_incl_source_gate": 69.228,
+            "scene3d_adapter": 0.029,
+            "end_to_end": 79.642
+          }
+        },
+        "tet_regular_pyramid_only": {
+          "class": "UNDERSTOOD_CAPABILITY_UNSUPPORTED",
+          "status": "REFUSED",
+          "root_cause": "SHAPE_FREEDOM_UNCERTIFIED",
+          "stages_ms": {
+            "text_normalization": 0.072,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.187,
+            "typed_fact_bridge": 1.1,
+            "planner": 1.253,
+            "source_gate": 64.282,
+            "engine_incl_source_gate": 67.572,
+            "scene3d_adapter": 0.028,
+            "end_to_end": 78.55
+          }
+        },
+        "tet_conflict": {
+          "class": "REFUSED",
+          "status": "REFUSED",
+          "root_cause": "SOURCE_PROVENANCE_MISSING",
+          "stages_ms": {
+            "text_normalization": 0.069,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.014,
+            "typed_fact_bridge": 0.0,
+            "planner": 0.0,
+            "source_gate": 0.0,
+            "engine_incl_source_gate": 0.0,
+            "scene3d_adapter": 0.0,
+            "end_to_end": 5.79
+          }
+        },
+        "pa_ratio2_planes": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.111,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.334,
+            "typed_fact_bridge": 1.336,
+            "planner": 0.832,
+            "source_gate": 127.364,
+            "engine_incl_source_gate": 189.396,
+            "scene3d_adapter": 13.76,
+            "end_to_end": 227.118
+          }
+        },
+        "pa_ratio2_tan": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.094,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.217,
+            "typed_fact_bridge": 1.495,
+            "planner": 0.975,
+            "source_gate": 137.6,
+            "engine_incl_source_gate": 202.192,
+            "scene3d_adapter": 16.079,
+            "end_to_end": 244.204
+          }
+        },
+        "pa_source_perp_lines": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.105,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.274,
+            "typed_fact_bridge": 2.779,
+            "planner": 1.619,
+            "source_gate": 155.897,
+            "engine_incl_source_gate": 221.206,
+            "scene3d_adapter": 13.974,
+            "end_to_end": 272.499
+          }
+        },
+        "pp_base": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.087,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.243,
+            "typed_fact_bridge": 1.328,
+            "planner": 0.944,
+            "source_gate": 124.072,
+            "engine_incl_source_gate": 209.167,
+            "scene3d_adapter": 12.835,
+            "end_to_end": 245.962
+          }
+        },
+        "pp_lateral": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.1,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.305,
+            "typed_fact_bridge": 1.371,
+            "planner": 0.817,
+            "source_gate": 125.386,
+            "engine_incl_source_gate": 188.265,
+            "scene3d_adapter": 13.745,
+            "end_to_end": 226.703
+          }
+        },
+        "lp_isosceles": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.09,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.21,
+            "typed_fact_bridge": 1.313,
+            "planner": 0.972,
+            "source_gate": 174.523,
+            "engine_incl_source_gate": 245.397,
+            "scene3d_adapter": 12.819,
+            "end_to_end": 281.897
+          }
+        },
+        "lp_ratio2": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.111,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.218,
+            "typed_fact_bridge": 1.341,
+            "planner": 0.816,
+            "source_gate": 140.468,
+            "engine_incl_source_gate": 204.701,
+            "scene3d_adapter": 12.796,
+            "end_to_end": 240.974
+          }
+        },
+        "lp_perpendicular": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.09,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.209,
+            "typed_fact_bridge": 1.381,
+            "planner": 0.867,
+            "source_gate": 139.306,
+            "engine_incl_source_gate": 199.82,
+            "scene3d_adapter": 12.309,
+            "end_to_end": 234.694
+          }
+        },
+        "lp_renamed": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.086,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.21,
+            "typed_fact_bridge": 1.415,
+            "planner": 0.827,
+            "source_gate": 146.377,
+            "engine_incl_source_gate": 211.293,
+            "scene3d_adapter": 13.378,
+            "end_to_end": 249.348
+          }
+        },
+        "ll_meeting": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.093,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.207,
+            "typed_fact_bridge": 1.52,
+            "planner": 0.834,
+            "source_gate": 157.761,
+            "engine_incl_source_gate": 212.832,
+            "scene3d_adapter": 12.783,
+            "end_to_end": 249.22
+          }
+        },
+        "ll_perpendicular": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.089,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.215,
+            "typed_fact_bridge": 1.359,
+            "planner": 0.94,
+            "source_gate": 160.581,
+            "engine_incl_source_gate": 217.273,
+            "scene3d_adapter": 12.496,
+            "end_to_end": 252.575
+          }
+        },
+        "ll_skew_perpendicular": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.117,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.207,
+            "typed_fact_bridge": 1.432,
+            "planner": 0.931,
+            "source_gate": 166.62,
+            "engine_incl_source_gate": 221.868,
+            "scene3d_adapter": 12.195,
+            "end_to_end": 258.13
+          }
+        },
+        "ll_skew_varying": {
+          "class": "UNDERSTOOD_CAPABILITY_UNSUPPORTED",
+          "status": "REFUSED",
+          "root_cause": "SHAPE_FREEDOM_UNCERTIFIED",
+          "stages_ms": {
+            "text_normalization": 0.081,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.217,
+            "typed_fact_bridge": 1.386,
+            "planner": 0.862,
+            "source_gate": 60.127,
+            "engine_incl_source_gate": 63.292,
+            "scene3d_adapter": 0.029,
+            "end_to_end": 75.351
+          }
+        },
+        "lp_varying_lateral": {
+          "class": "UNDERSTOOD_CAPABILITY_UNSUPPORTED",
+          "status": "REFUSED",
+          "root_cause": "SHAPE_FREEDOM_UNCERTIFIED",
+          "stages_ms": {
+            "text_normalization": 0.081,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.212,
+            "typed_fact_bridge": 1.436,
+            "planner": 0.995,
+            "source_gate": 51.48,
+            "engine_incl_source_gate": 54.825,
+            "scene3d_adapter": 0.027,
+            "end_to_end": 66.973
+          }
+        },
+        "lp_no_ratio": {
+          "class": "UNDERSTOOD_CAPABILITY_UNSUPPORTED",
+          "status": "REFUSED",
+          "root_cause": "SHAPE_FREEDOM_UNCERTIFIED",
+          "stages_ms": {
+            "text_normalization": 0.089,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.178,
+            "typed_fact_bridge": 1.13,
+            "planner": 1.833,
+            "source_gate": 50.818,
+            "engine_incl_source_gate": 53.658,
+            "scene3d_adapter": 0.028,
+            "end_to_end": 65.815
+          }
+        },
+        "pa_prism_out_of_domain": {
+          "class": "UNDERSTOOD_CAPABILITY_UNSUPPORTED",
+          "status": "REFUSED",
+          "root_cause": "SHAPE_FREEDOM_UNCERTIFIED",
+          "stages_ms": {
+            "text_normalization": 0.081,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.226,
+            "typed_fact_bridge": 1.432,
+            "planner": 0.741,
+            "source_gate": 44.915,
+            "engine_incl_source_gate": 47.944,
+            "scene3d_adapter": 0.026,
+            "end_to_end": 59.673
+          }
+        },
+        "gv_base_unnamed_face_after": {
+          "class": "REFUSED",
+          "status": "REFUSED",
+          "root_cause": "SOURCE_PROVENANCE_MISSING",
+          "stages_ms": {
+            "text_normalization": 0.089,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.014,
+            "typed_fact_bridge": 0.0,
+            "planner": 0.0,
+            "source_gate": 0.0,
+            "engine_incl_source_gate": 0.0,
+            "scene3d_adapter": 0.0,
+            "end_to_end": 5.419
+          }
+        },
+        "gv_base_unnamed_renamed": {
+          "class": "REFUSED",
+          "status": "REFUSED",
+          "root_cause": "SOURCE_PROVENANCE_MISSING",
+          "stages_ms": {
+            "text_normalization": 0.089,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.011,
+            "typed_fact_bridge": 0.0,
+            "planner": 0.0,
+            "source_gate": 0.0,
+            "engine_incl_source_gate": 0.0,
+            "scene3d_adapter": 0.0,
+            "end_to_end": 5.591
+          }
+        },
+        "gv_base_unnamed_figref": {
+          "class": "REFUSED",
+          "status": "REFUSED",
+          "root_cause": "SOURCE_PROVENANCE_MISSING",
+          "stages_ms": {
+            "text_normalization": 0.093,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.012,
+            "typed_fact_bridge": 0.0,
+            "planner": 0.0,
+            "source_gate": 0.0,
+            "engine_incl_source_gate": 0.0,
+            "scene3d_adapter": 0.0,
+            "end_to_end": 5.404
+          }
+        },
+        "gv_base_unnamed_subject_first": {
+          "class": "REFUSED",
+          "status": "REFUSED",
+          "root_cause": "SOURCE_PROVENANCE_MISSING",
+          "stages_ms": {
+            "text_normalization": 0.073,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.011,
+            "typed_fact_bridge": 0.0,
+            "planner": 0.0,
+            "source_gate": 0.0,
+            "engine_incl_source_gate": 0.0,
+            "scene3d_adapter": 0.0,
+            "end_to_end": 5.302
+          }
+        },
+        "gv_cuboid_square_base": {
+          "class": "REFUSED",
+          "status": "REFUSED",
+          "root_cause": "SOURCE_PROVENANCE_MISSING",
+          "stages_ms": {
+            "text_normalization": 0.079,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.013,
+            "typed_fact_bridge": 0.0,
+            "planner": 0.0,
+            "source_gate": 0.0,
+            "engine_incl_source_gate": 0.0,
+            "scene3d_adapter": 0.0,
+            "end_to_end": 5.477
+          }
+        },
+        "gv_cuboid_no_square": {
+          "class": "UNDERSTOOD_CAPABILITY_UNSUPPORTED",
+          "status": "REFUSED",
+          "root_cause": "INSUFFICIENT_CONSTRAINTS",
+          "stages_ms": {
+            "text_normalization": 0.074,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.226,
+            "typed_fact_bridge": 1.699,
+            "planner": 0.792,
+            "source_gate": 33.86,
+            "engine_incl_source_gate": 36.845,
+            "scene3d_adapter": 0.028,
+            "end_to_end": 48.905
+          }
+        },
+        "gv_lateral_regular_tri": {
+          "class": "REFUSED",
+          "status": "REFUSED",
+          "root_cause": "UNRECOGNIZED_GOAL",
+          "stages_ms": {
+            "text_normalization": 0.076,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.013,
+            "typed_fact_bridge": 0.0,
+            "planner": 0.0,
+            "source_gate": 0.0,
+            "engine_incl_source_gate": 0.0,
+            "scene3d_adapter": 0.0,
+            "end_to_end": 5.579
+          }
+        },
+        "gv_lateral_regular_quad": {
+          "class": "REFUSED",
+          "status": "REFUSED",
+          "root_cause": "UNRECOGNIZED_GOAL",
+          "stages_ms": {
+            "text_normalization": 0.068,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.014,
+            "typed_fact_bridge": 0.0,
+            "planner": 0.0,
+            "source_gate": 0.0,
+            "engine_incl_source_gate": 0.0,
+            "scene3d_adapter": 0.0,
+            "end_to_end": 5.189
+          }
+        },
+        "gv_lateral_not_regular": {
+          "class": "REFUSED",
+          "status": "REFUSED",
+          "root_cause": "UNRECOGNIZED_GOAL",
+          "stages_ms": {
+            "text_normalization": 0.076,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.012,
+            "typed_fact_bridge": 0.0,
+            "planner": 0.0,
+            "source_gate": 0.0,
+            "engine_incl_source_gate": 0.0,
+            "scene3d_adapter": 0.0,
+            "end_to_end": 5.402
+          }
+        },
+        "gv_lateral_no_height": {
+          "class": "REFUSED",
+          "status": "REFUSED",
+          "root_cause": "UNRECOGNIZED_GOAL",
+          "stages_ms": {
+            "text_normalization": 0.065,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.013,
+            "typed_fact_bridge": 0.0,
+            "planner": 0.0,
+            "source_gate": 0.0,
+            "engine_incl_source_gate": 0.0,
+            "scene3d_adapter": 0.0,
+            "end_to_end": 5.311
+          }
+        },
+        "gv_prism_undotted": {
+          "class": "REFUSED",
+          "status": "REFUSED",
+          "root_cause": "UNRECOGNIZED_GOAL",
+          "stages_ms": {
+            "text_normalization": 0.083,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.013,
+            "typed_fact_bridge": 0.0,
+            "planner": 0.0,
+            "source_gate": 0.0,
+            "engine_incl_source_gate": 0.0,
+            "scene3d_adapter": 0.0,
+            "end_to_end": 6.058
+          }
+        },
+        "gv_prism_dotted_same": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.132,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.333,
+            "typed_fact_bridge": 2.045,
+            "planner": 2.011,
+            "source_gate": 16.301,
+            "engine_incl_source_gate": 30.152,
+            "scene3d_adapter": 13.028,
+            "end_to_end": 73.246
+          }
+        },
+        "gv_prism_undotted_scrambled": {
+          "class": "REFUSED",
+          "status": "REFUSED",
+          "root_cause": "UNRECOGNIZED_GOAL",
+          "stages_ms": {
+            "text_normalization": 0.076,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.014,
+            "typed_fact_bridge": 0.0,
+            "planner": 0.0,
+            "source_gate": 0.0,
+            "engine_incl_source_gate": 0.0,
+            "scene3d_adapter": 0.0,
+            "end_to_end": 5.382
+          }
+        },
+        "gv_isosceles_right_derived": {
+          "class": "REFUSED",
+          "status": "REFUSED",
+          "root_cause": "INCOMPLETE_FACT_EXTRACTION",
+          "stages_ms": {
+            "text_normalization": 0.084,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.011,
+            "typed_fact_bridge": 0.0,
+            "planner": 0.0,
+            "source_gate": 0.0,
+            "engine_incl_source_gate": 0.0,
+            "scene3d_adapter": 0.0,
+            "end_to_end": 5.579
+          }
+        },
+        "gv_isosceles_explicit": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.088,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.252,
+            "typed_fact_bridge": 1.47,
+            "planner": 0.931,
+            "source_gate": 17.428,
+            "engine_incl_source_gate": 27.804,
+            "scene3d_adapter": 8.882,
+            "end_to_end": 59.449
+          }
+        },
+        "gv_isosceles_no_right_angle": {
+          "class": "REFUSED",
+          "status": "REFUSED",
+          "root_cause": "INCOMPLETE_FACT_EXTRACTION",
+          "stages_ms": {
+            "text_normalization": 0.108,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.015,
+            "typed_fact_bridge": 0.0,
+            "planner": 0.0,
+            "source_gate": 0.0,
+            "engine_incl_source_gate": 0.0,
+            "scene3d_adapter": 0.0,
+            "end_to_end": 5.398
+          }
+        },
+        "gv_isosceles_base_only": {
+          "class": "REFUSED",
+          "status": "REFUSED",
+          "root_cause": "UNRECOGNIZED_GEOMETRIC_ENTITY",
+          "stages_ms": {
+            "text_normalization": 0.076,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.011,
+            "typed_fact_bridge": 0.0,
+            "planner": 0.0,
+            "source_gate": 0.0,
+            "engine_incl_source_gate": 0.0,
+            "scene3d_adapter": 0.0,
+            "end_to_end": 6.075
+          }
+        },
+        "gv_unread_perimeter": {
+          "class": "REFUSED",
+          "status": "REFUSED",
+          "root_cause": "SOURCE_PROVENANCE_MISSING",
+          "stages_ms": {
+            "text_normalization": 0.078,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.012,
+            "typed_fact_bridge": 0.0,
+            "planner": 0.0,
+            "source_gate": 0.0,
+            "engine_incl_source_gate": 0.0,
+            "scene3d_adapter": 0.0,
+            "end_to_end": 5.242
+          }
+        },
+        "gv_unread_area_in_a": {
+          "class": "REFUSED",
+          "status": "REFUSED",
+          "root_cause": "SOURCE_PROVENANCE_MISSING",
+          "stages_ms": {
+            "text_normalization": 0.105,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.011,
+            "typed_fact_bridge": 0.0,
+            "planner": 0.0,
+            "source_gate": 0.0,
+            "engine_incl_source_gate": 0.0,
+            "scene3d_adapter": 0.0,
+            "end_to_end": 7.271
+          }
+        },
+        "gv_base_area_regular": {
+          "class": "REFUSED",
+          "status": "REFUSED",
+          "root_cause": "SOURCE_PROVENANCE_MISSING",
+          "stages_ms": {
+            "text_normalization": 0.074,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.011,
+            "typed_fact_bridge": 0.0,
+            "planner": 0.0,
+            "source_gate": 0.0,
+            "engine_incl_source_gate": 0.0,
+            "scene3d_adapter": 0.0,
+            "end_to_end": 7.131
+          }
+        },
+        "gv_base_area_impossible": {
+          "class": "REFUSED",
+          "status": "REFUSED",
+          "root_cause": "SOURCE_PROVENANCE_MISSING",
+          "stages_ms": {
+            "text_normalization": 0.078,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.012,
+            "typed_fact_bridge": 0.0,
+            "planner": 0.0,
+            "source_gate": 0.0,
+            "engine_incl_source_gate": 0.0,
+            "scene3d_adapter": 0.0,
+            "end_to_end": 5.735
+          }
+        },
+        "gv_pair_midpoint_premise": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.097,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.237,
+            "typed_fact_bridge": 1.721,
+            "planner": 0.981,
+            "source_gate": 21.096,
+            "engine_incl_source_gate": 35.572,
+            "scene3d_adapter": 13.424,
+            "end_to_end": 74.971
+          }
+        },
+        "gv_pair_point_on": {
+          "class": "REFUSED",
+          "status": "REFUSED",
+          "root_cause": "FREE_POINT_UNDERDETERMINED",
+          "stages_ms": {
+            "text_normalization": 0.101,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.015,
+            "typed_fact_bridge": 0.0,
+            "planner": 0.0,
+            "source_gate": 0.0,
+            "engine_incl_source_gate": 0.0,
+            "scene3d_adapter": 0.0,
+            "end_to_end": 6.187
+          }
+        },
+        "gv_pair_perp_premise": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.131,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.193,
+            "typed_fact_bridge": 1.645,
+            "planner": 0.874,
+            "source_gate": 16.649,
+            "engine_incl_source_gate": 29.091,
+            "scene3d_adapter": 10.496,
+            "end_to_end": 63.844
+          }
+        },
+        "gv_pair_perp_proof": {
+          "class": "UNDERSTOOD_CAPABILITY_UNSUPPORTED",
+          "status": "REFUSED",
+          "root_cause": "UNSUPPORTED_GOAL_KIND",
+          "stages_ms": {
+            "text_normalization": 0.076,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.168,
+            "typed_fact_bridge": 0.384,
+            "planner": 0.0,
+            "source_gate": 0.0,
+            "engine_incl_source_gate": 0.0,
+            "scene3d_adapter": 0.065,
+            "end_to_end": 9.042
+          }
+        },
+        "gv_pair_regular_pyramid": {
+          "class": "UNDERSTOOD_CAPABILITY_UNSUPPORTED",
+          "status": "REFUSED",
+          "root_cause": "SHAPE_FREEDOM_UNCERTIFIED",
+          "stages_ms": {
+            "text_normalization": 0.076,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.172,
+            "typed_fact_bridge": 1.221,
+            "planner": 0.763,
+            "source_gate": 61.281,
+            "engine_incl_source_gate": 64.25,
+            "scene3d_adapter": 0.028,
+            "end_to_end": 74.815
+          }
+        },
+        "gv_pair_regular_tetra": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.08,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.218,
+            "typed_fact_bridge": 1.304,
+            "planner": 0.724,
+            "source_gate": 103.956,
+            "engine_incl_source_gate": 133.019,
+            "scene3d_adapter": 10.571,
+            "end_to_end": 162.444
+          }
+        },
+        "gv_pair_section_shape_proof": {
+          "class": "UNDERSTOOD_CAPABILITY_UNSUPPORTED",
+          "status": "REFUSED",
+          "root_cause": "UNSUPPORTED_GOAL_KIND",
+          "stages_ms": {
+            "text_normalization": 0.111,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.253,
+            "typed_fact_bridge": 0.615,
+            "planner": 0.0,
+            "source_gate": 0.0,
+            "engine_incl_source_gate": 0.0,
+            "scene3d_adapter": 0.073,
+            "end_to_end": 11.158
+          }
+        },
+        "gv_contradiction": {
+          "class": "UNDERSTOOD_CAPABILITY_UNSUPPORTED",
+          "status": "REFUSED",
+          "root_cause": "SOURCE_CONFLICT",
+          "stages_ms": {
+            "text_normalization": 0.107,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.237,
+            "typed_fact_bridge": 1.247,
+            "planner": 1.148,
+            "source_gate": 16.961,
+            "engine_incl_source_gate": 20.342,
+            "scene3d_adapter": 0.029,
+            "end_to_end": 32.623
+          }
+        },
+        "gv_missing_height": {
+          "class": "UNDERSTOOD_CAPABILITY_UNSUPPORTED",
+          "status": "REFUSED",
+          "root_cause": "INSUFFICIENT_CONSTRAINTS",
+          "stages_ms": {
+            "text_normalization": 0.083,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.178,
+            "typed_fact_bridge": 1.018,
+            "planner": 0.688,
+            "source_gate": 30.872,
+            "engine_incl_source_gate": 44.113,
+            "scene3d_adapter": 0.027,
+            "end_to_end": 54.62
+          }
+        }
+      }
+    },
+    "after": {
+      "text": {
+        "mc_section_one_sentence": {
+          "ms": 31.396099999255966,
+          "status": "SERVED"
+        },
+        "mc_section_split": {
+          "ms": 32.010800001444295,
+          "status": "SERVED"
+        },
+        "mc_section_renamed": {
+          "ms": 30.9281000008923,
+          "status": "SERVED"
+        },
+        "mc_section_greek": {
+          "ms": 31.299599999329075,
+          "status": "SERVED"
+        },
+        "mc_extra_unread": {
+          "ms": 3.5256999981356785,
+          "status": "REFUSED"
+        },
+        "mc_extra_unread2": {
+          "ms": 2.5066000016522594,
+          "status": "REFUSED"
+        },
+        "mc_distance_extra_unread": {
+          "ms": 2.075100004731212,
+          "status": "REFUSED"
+        },
+        "mc_distance": {
+          "ms": 21.800599999551196,
+          "status": "SERVED"
+        },
+        "mc_decimal_value": {
+          "ms": 23.202199998195283,
+          "status": "SERVED"
+        },
+        "mc_label_list": {
+          "ms": 27.88169999985257,
+          "status": "SERVED"
+        },
+        "order_plane_after_goal": {
+          "ms": 32.18879999622004,
+          "status": "SERVED"
+        },
+        "order_plane_after_goal_sep": {
+          "ms": 32.792300000437535,
+          "status": "SERVED"
+        },
+        "order_plane_never_defined": {
+          "ms": 1.8061000009765849,
+          "status": "REFUSED"
+        },
+        "order_premises_swapped": {
+          "ms": 21.694100003514905,
+          "status": "SERVED"
+        },
+        "dp_named_midpoint_goal": {
+          "ms": 24.031000000832137,
+          "status": "SERVED"
+        },
+        "dp_unnamed_midpoint_goal": {
+          "ms": 24.647899997944478,
+          "status": "SERVED"
+        },
+        "dp_unnamed_centroid_goal": {
+          "ms": 25.93899999919813,
+          "status": "SERVED"
+        },
+        "dp_unnamed_through_point": {
+          "ms": 1.963300004717894,
+          "status": "REFUSED"
+        },
+        "dp_free_point": {
+          "ms": 1.9476000015856698,
+          "status": "REFUSED"
+        },
+        "dp_free_point_goi": {
+          "ms": 1.9834999984595925,
+          "status": "REFUSED"
+        },
+        "dp_midpoint_as_goal": {
+          "ms": 1.8374999999650754,
+          "status": "REFUSED"
+        },
+        "dp_reflection": {
+          "ms": 1.879499999631662,
+          "status": "REFUSED"
+        },
+        "dp_projection_unnamed_image": {
+          "ms": 2.3058000006130897,
+          "status": "REFUSED"
+        },
+        "dp_redefined_conflict": {
+          "ms": 16.524599996046163,
+          "status": "REFUSED"
+        },
+        "goal_angle_line_plane": {
+          "ms": 23.438300006091595,
+          "status": "SERVED"
+        },
+        "goal_cos_line_plane": {
+          "ms": 23.243499999807682,
+          "status": "SERVED"
+        },
+        "goal_cos_spelled": {
+          "ms": 24.259599995275494,
+          "status": "SERVED"
+        },
+        "goal_tan_line_plane": {
+          "ms": 23.75400000164518,
+          "status": "SERVED"
+        },
+        "goal_sin_mc_stem": {
+          "ms": 23.618599996552803,
+          "status": "SERVED"
+        },
+        "goal_cos_planes": {
+          "ms": 25.81300000019837,
+          "status": "SERVED"
+        },
+        "goal_cos_lines": {
+          "ms": 28.638499999942724,
+          "status": "SERVED"
+        },
+        "goal_tan_right_angle": {
+          "ms": 27.02589999535121,
+          "status": "SERVED"
+        },
+        "goal_cos_scale_free": {
+          "ms": 66.3085999985924,
+          "status": "SERVED"
+        },
+        "goal_cos_of_length_neg": {
+          "ms": 1.781399994797539,
+          "status": "REFUSED"
+        },
+        "goal_cos_squared_neg": {
+          "ms": 1.8825000006472692,
+          "status": "REFUSED"
+        },
+        "goal_cos_given_premise_neg": {
+          "ms": 1.7348999972455204,
+          "status": "REFUSED"
+        },
+        "goal_cos_wrong_object_neg": {
+          "ms": 1.893499997095205,
+          "status": "REFUSED"
+        },
+        "proof_only": {
+          "ms": 3.474500001175329,
+          "status": "REFUSED"
+        },
+        "proof_premise_not_given": {
+          "ms": 3.110799996647984,
+          "status": "REFUSED"
+        },
+        "amb_plane_not_unique": {
+          "ms": 1.8312999964109622,
+          "status": "REFUSED"
+        },
+        "contra_two_lengths": {
+          "ms": 13.094900001306087,
+          "status": "REFUSED"
+        },
+        "contra_skew_intersection": {
+          "ms": 14.317200002551544,
+          "status": "REFUSED"
+        },
+        "diagram_fact": {
+          "ms": 1.8163999993703328,
+          "status": "REFUSED"
+        },
+        "scale_iso_planes": {
+          "ms": 64.13269999757176,
+          "status": "SERVED"
+        },
+        "scale_iso_tan": {
+          "ms": 63.340799999423325,
+          "status": "SERVED"
+        },
+        "scale_iso_line_plane": {
+          "ms": 69.87739999749465,
+          "status": "SERVED"
+        },
+        "scale_iso_renamed": {
+          "ms": 67.452700001013,
+          "status": "SERVED"
+        },
+        "scale_iso_with_length": {
+          "ms": 24.88889999949606,
+          "status": "SERVED"
+        },
+        "scale_shape_free": {
+          "ms": 94.1097999966587,
+          "status": "SERVED"
+        },
+        "scale_height_free": {
+          "ms": 28.903899998113047,
+          "status": "REFUSED"
+        },
+        "scale_absolute_volume": {
+          "ms": 21.137700001418125,
+          "status": "REFUSED"
+        },
+        "scale_regular_tetra_no_side": {
+          "ms": 69.80850000400096,
+          "status": "SERVED"
+        },
+        "ti_right_b_planes": {
+          "ms": 112.69419999734964,
+          "status": "SERVED"
+        },
+        "ti_right_b_tan": {
+          "ms": 91.44599999854108,
+          "status": "SERVED"
+        },
+        "ti_renamed": {
+          "ms": 93.5784999965108,
+          "status": "SERVED"
+        },
+        "ti_varying_line_plane": {
+          "ms": 31.46059999562567,
+          "status": "REFUSED"
+        },
+        "ti_height_free": {
+          "ms": 26.352200002293102,
+          "status": "REFUSED"
+        },
+        "ti_absolute_volume": {
+          "ms": 22.642500000074506,
+          "status": "REFUSED"
+        },
+        "tet_lines": {
+          "ms": 71.33070000418229,
+          "status": "SERVED"
+        },
+        "tet_cos_mc": {
+          "ms": 62.825100001646206,
+          "status": "SERVED"
+        },
+        "tet_renamed": {
+          "ms": 69.42089999938617,
+          "status": "SERVED"
+        },
+        "tet_with_side": {
+          "ms": 23.772699998517055,
+          "status": "SERVED"
+        },
+        "tet_edge_face": {
+          "ms": 61.19179999950575,
+          "status": "SERVED"
+        },
+        "tet_not_regular": {
+          "ms": 32.62350000295555,
+          "status": "REFUSED"
+        },
+        "tet_regular_pyramid_only": {
+          "ms": 34.79399999923771,
+          "status": "REFUSED"
+        },
+        "tet_conflict": {
+          "ms": 1.7048000008799136,
+          "status": "REFUSED"
+        },
+        "pa_ratio2_planes": {
+          "ms": 94.42649999982677,
+          "status": "SERVED"
+        },
+        "pa_ratio2_tan": {
+          "ms": 93.58659999998054,
+          "status": "SERVED"
+        },
+        "pa_source_perp_lines": {
+          "ms": 94.02390000468586,
+          "status": "SERVED"
+        },
+        "pp_base": {
+          "ms": 95.45159999834141,
+          "status": "SERVED"
+        },
+        "pp_lateral": {
+          "ms": 93.84370000043418,
+          "status": "SERVED"
+        },
+        "lp_isosceles": {
+          "ms": 101.55079999822192,
+          "status": "SERVED"
+        },
+        "lp_ratio2": {
+          "ms": 109.24099999829195,
+          "status": "SERVED"
+        },
+        "lp_perpendicular": {
+          "ms": 104.33049999846844,
+          "status": "SERVED"
+        },
+        "lp_renamed": {
+          "ms": 102.17709999415092,
+          "status": "SERVED"
+        },
+        "ll_meeting": {
+          "ms": 114.31399999855785,
+          "status": "SERVED"
+        },
+        "ll_perpendicular": {
+          "ms": 111.50830000406131,
+          "status": "SERVED"
+        },
+        "ll_skew_perpendicular": {
+          "ms": 113.12760000146227,
+          "status": "SERVED"
+        },
+        "ll_skew_varying": {
+          "ms": 35.48589999991236,
+          "status": "REFUSED"
+        },
+        "lp_varying_lateral": {
+          "ms": 32.499900000402704,
+          "status": "REFUSED"
+        },
+        "lp_no_ratio": {
+          "ms": 30.678499999339692,
+          "status": "REFUSED"
+        },
+        "pa_prism_out_of_domain": {
+          "ms": 28.754600003594533,
+          "status": "REFUSED"
+        },
+        "gv_base_unnamed_face_after": {
+          "ms": 24.353599997994024,
+          "status": "SERVED"
+        },
+        "gv_base_unnamed_renamed": {
+          "ms": 24.638900002173614,
+          "status": "SERVED"
+        },
+        "gv_base_unnamed_figref": {
+          "ms": 24.5673999961582,
+          "status": "SERVED"
+        },
+        "gv_base_unnamed_subject_first": {
+          "ms": 1.7787000033422373,
+          "status": "REFUSED"
+        },
+        "gv_cuboid_square_base": {
+          "ms": 28.018199998768978,
+          "status": "SERVED"
+        },
+        "gv_cuboid_no_square": {
+          "ms": 22.192999997059815,
+          "status": "REFUSED"
+        },
+        "gv_lateral_regular_tri": {
+          "ms": 22.30750000308035,
+          "status": "SERVED"
+        },
+        "gv_lateral_regular_quad": {
+          "ms": 24.359700000786688,
+          "status": "SERVED"
+        },
+        "gv_lateral_not_regular": {
+          "ms": 3.383999996003695,
+          "status": "REFUSED"
+        },
+        "gv_lateral_no_height": {
+          "ms": 23.427399995853193,
+          "status": "REFUSED"
+        },
+        "gv_prism_undotted": {
+          "ms": 18.575699999928474,
+          "status": "SERVED"
+        },
+        "gv_prism_dotted_same": {
+          "ms": 22.44789999531349,
+          "status": "SERVED"
+        },
+        "gv_prism_undotted_scrambled": {
+          "ms": 1.7459000009694137,
+          "status": "REFUSED"
+        },
+        "gv_isosceles_right_derived": {
+          "ms": 24.7250999964308,
+          "status": "SERVED"
+        },
+        "gv_isosceles_explicit": {
+          "ms": 22.045699995942414,
+          "status": "SERVED"
+        },
+        "gv_isosceles_no_right_angle": {
+          "ms": 1.9697000025189482,
+          "status": "REFUSED"
+        },
+        "gv_isosceles_base_only": {
+          "ms": 1.9068000037805177,
+          "status": "REFUSED"
+        },
+        "gv_unread_perimeter": {
+          "ms": 1.8128000010619871,
+          "status": "REFUSED"
+        },
+        "gv_unread_area_in_a": {
+          "ms": 1.7728000020724721,
+          "status": "REFUSED"
+        },
+        "gv_base_area_regular": {
+          "ms": 24.16399999492569,
+          "status": "SERVED"
+        },
+        "gv_base_area_impossible": {
+          "ms": 13.589299996965565,
+          "status": "REFUSED"
+        },
+        "gv_pair_midpoint_premise": {
+          "ms": 25.204600002325606,
+          "status": "SERVED"
+        },
+        "gv_pair_point_on": {
+          "ms": 1.781200000550598,
+          "status": "REFUSED"
+        },
+        "gv_pair_perp_premise": {
+          "ms": 22.23089999461081,
+          "status": "SERVED"
+        },
+        "gv_pair_perp_proof": {
+          "ms": 3.0346999992616475,
+          "status": "REFUSED"
+        },
+        "gv_pair_regular_pyramid": {
+          "ms": 35.48440000304254,
+          "status": "REFUSED"
+        },
+        "gv_pair_regular_tetra": {
+          "ms": 69.0281999995932,
+          "status": "SERVED"
+        },
+        "gv_pair_section_shape_proof": {
+          "ms": 4.393399998662062,
+          "status": "REFUSED"
+        },
+        "gv_contradiction": {
+          "ms": 13.909100001910701,
+          "status": "REFUSED"
+        },
+        "gv_missing_height": {
+          "ms": 24.004200000490528,
+          "status": "REFUSED"
+        },
+        "_diagnose_ms": 0.1414909999948577,
+        "_proof": {
+          "max_derived": 256,
+          "rows": {
+            "goal_angle_line_plane": {
+              "prove_ms": 0.05386499979067594,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "goal_cos_line_plane": {
+              "prove_ms": 0.054459999955724925,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "goal_cos_spelled": {
+              "prove_ms": 0.05724000002373941,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "goal_tan_line_plane": {
+              "prove_ms": 0.0707349998265272,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "goal_sin_mc_stem": {
+              "prove_ms": 0.05526000022655353,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "goal_cos_planes": {
+              "prove_ms": 0.0008999999408842996,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "goal_cos_lines": {
+              "prove_ms": 0.0009049999789567664,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "goal_tan_right_angle": {
+              "prove_ms": 0.09589000001142267,
+              "verify_ms": 0.021624999862979166,
+              "status": "PROVEN",
+              "steps": 2
+            },
+            "goal_cos_scale_free": {
+              "prove_ms": 0.030824999703327194,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "scale_iso_planes": {
+              "prove_ms": 0.11028499975509476,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "scale_iso_tan": {
+              "prove_ms": 0.10584999981801957,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "scale_iso_line_plane": {
+              "prove_ms": 0.13192000005801674,
+              "verify_ms": 0.04835500003537163,
+              "status": "PROVEN",
+              "steps": 4
+            },
+            "scale_iso_renamed": {
+              "prove_ms": 0.1180650000605965,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "scale_iso_with_length": {
+              "prove_ms": 0.11740500012820121,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "scale_shape_free": {
+              "prove_ms": 0.11369499989086762,
+              "verify_ms": 0.06495999987237155,
+              "status": "PROVEN",
+              "steps": 8
+            },
+            "scale_height_free": {
+              "prove_ms": 0.11500999971758574,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "scale_regular_tetra_no_side": {
+              "prove_ms": 0.02915500008384697,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "ti_right_b_planes": {
+              "prove_ms": 0.10412499977974221,
+              "verify_ms": 0.059514999884413555,
+              "status": "PROVEN",
+              "steps": 8
+            },
+            "ti_right_b_tan": {
+              "prove_ms": 0.10309499994036742,
+              "verify_ms": 0.05926000012550503,
+              "status": "PROVEN",
+              "steps": 8
+            },
+            "ti_renamed": {
+              "prove_ms": 0.10318000022380147,
+              "verify_ms": 0.060075000146753155,
+              "status": "PROVEN",
+              "steps": 8
+            },
+            "ti_varying_line_plane": {
+              "prove_ms": 0.08703500025148969,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "ti_height_free": {
+              "prove_ms": 0.08030499993765261,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "tet_lines": {
+              "prove_ms": 0.030920000062906183,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "tet_cos_mc": {
+              "prove_ms": 0.027245000092079863,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "tet_renamed": {
+              "prove_ms": 0.026665000041248277,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "tet_with_side": {
+              "prove_ms": 0.035864999881596304,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "tet_edge_face": {
+              "prove_ms": 0.027834999855258502,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "tet_not_regular": {
+              "prove_ms": 0.013265000234241597,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "tet_regular_pyramid_only": {
+              "prove_ms": 0.01931000006152317,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "pa_ratio2_planes": {
+              "prove_ms": 0.11522500026330817,
+              "verify_ms": 0.07199499996204395,
+              "status": "PROVEN",
+              "steps": 8
+            },
+            "pa_ratio2_tan": {
+              "prove_ms": 0.11551999996299855,
+              "verify_ms": 0.07335499976761639,
+              "status": "PROVEN",
+              "steps": 8
+            },
+            "pa_source_perp_lines": {
+              "prove_ms": 0.10416500008432195,
+              "verify_ms": 0.0683250000292901,
+              "status": "PROVEN",
+              "steps": 8
+            },
+            "pp_base": {
+              "prove_ms": 0.09066999991773628,
+              "verify_ms": 0.032205000024987385,
+              "status": "PROVEN",
+              "steps": 2
+            },
+            "pp_lateral": {
+              "prove_ms": 0.08977999968919903,
+              "verify_ms": 0.046460000157821923,
+              "status": "PROVEN",
+              "steps": 5
+            },
+            "lp_isosceles": {
+              "prove_ms": 0.11864499974763021,
+              "verify_ms": 0.04441999990376644,
+              "status": "PROVEN",
+              "steps": 4
+            },
+            "lp_ratio2": {
+              "prove_ms": 0.1325699999142671,
+              "verify_ms": 0.05325499987520743,
+              "status": "PROVEN",
+              "steps": 4
+            },
+            "lp_perpendicular": {
+              "prove_ms": 0.09359499999845866,
+              "verify_ms": 0.02652000002854038,
+              "status": "PROVEN",
+              "steps": 2
+            },
+            "lp_renamed": {
+              "prove_ms": 0.11327499996696133,
+              "verify_ms": 0.05520999984582886,
+              "status": "PROVEN",
+              "steps": 4
+            },
+            "ll_meeting": {
+              "prove_ms": 0.11197500025446061,
+              "verify_ms": 0.04372000003058929,
+              "status": "PROVEN",
+              "steps": 4
+            },
+            "ll_perpendicular": {
+              "prove_ms": 0.09500999985903036,
+              "verify_ms": 0.043029999869759195,
+              "status": "PROVEN",
+              "steps": 6
+            },
+            "ll_skew_perpendicular": {
+              "prove_ms": 0.08917999984987546,
+              "verify_ms": 0.02943500003311783,
+              "status": "PROVEN",
+              "steps": 3
+            },
+            "ll_skew_varying": {
+              "prove_ms": 0.08572000006097369,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "lp_varying_lateral": {
+              "prove_ms": 0.09281000020564534,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "lp_no_ratio": {
+              "prove_ms": 0.08332999968843069,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "pa_prism_out_of_domain": {
+              "prove_ms": 0.0008899998647393659,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "gv_cuboid_square_base": {
+              "prove_ms": 0.0009600000339560211,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "gv_cuboid_no_square": {
+              "prove_ms": 0.0009549999958835542,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "gv_lateral_regular_tri": {
+              "prove_ms": 0.025820000155363232,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "gv_lateral_regular_quad": {
+              "prove_ms": 0.019615000201156363,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "gv_lateral_no_height": {
+              "prove_ms": 0.01785000022209715,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "gv_pair_regular_pyramid": {
+              "prove_ms": 0.01942999988386873,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            },
+            "gv_pair_regular_tetra": {
+              "prove_ms": 0.027555000269785523,
+              "verify_ms": null,
+              "status": null,
+              "steps": 0
+            }
+          }
+        }
+      },
+      "prepare": {
+        "vmmu_r247": {
+          "ms": 4441.585699998541,
+          "status": "needs_confirmation",
+          "set": "REAL_SINGLE"
+        },
+        "vmmu_r254": {
+          "ms": 2378.3273000008194,
+          "status": "needs_confirmation",
+          "set": "REAL_SINGLE"
+        },
+        "vmmu_r256": {
+          "ms": 2825.907200000074,
+          "status": "needs_confirmation",
+          "set": "REAL_SINGLE"
+        },
+        "vmmu_r258": {
+          "ms": 1908.2060000000638,
+          "status": "needs_confirmation",
+          "set": "REAL_SINGLE"
+        },
+        "vmmu_r266": {
+          "ms": 2029.3610000007902,
+          "status": "needs_confirmation",
+          "set": "REAL_SINGLE"
+        },
+        "vmmu_r270": {
+          "ms": 3704.021500001545,
+          "status": "needs_confirmation",
+          "set": "REAL_SINGLE"
+        },
+        "vmmu_r247+vmmu_r254": {
+          "ms": 3529.3183000030695,
+          "status": "needs_selection",
+          "set": "COMPOSITE_2"
+        },
+        "vmmu_r256+vmmu_r258": {
+          "ms": 3948.0248000036227,
+          "status": "needs_selection",
+          "set": "COMPOSITE_2"
+        },
+        "vmmu_r266+vmmu_r270": {
+          "ms": 4205.518199996732,
+          "status": "needs_selection",
+          "set": "COMPOSITE_2"
+        },
+        "vmmu_r273+vmmu_r277": {
+          "ms": 3425.4860000000917,
+          "status": "needs_selection",
+          "set": "COMPOSITE_2"
+        }
+      },
+      "stages": {
+        "mc_section_one_sentence": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.119,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.252,
+            "typed_fact_bridge": 1.65,
+            "planner": 3.154,
+            "source_gate": 15.35,
+            "engine_incl_source_gate": 56.193,
+            "scene3d_adapter": 34.403,
+            "end_to_end": 130.097
+          }
+        },
+        "mc_section_split": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.122,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.253,
+            "typed_fact_bridge": 1.723,
+            "planner": 1.906,
+            "source_gate": 12.882,
+            "engine_incl_source_gate": 41.9,
+            "scene3d_adapter": 33.449,
+            "end_to_end": 112.273
+          }
+        },
+        "mc_section_renamed": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.128,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.315,
+            "typed_fact_bridge": 1.697,
+            "planner": 2.068,
+            "source_gate": 9.973,
+            "engine_incl_source_gate": 39.179,
+            "scene3d_adapter": 35.985,
+            "end_to_end": 111.049
+          }
+        },
+        "mc_section_greek": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.147,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.293,
+            "typed_fact_bridge": 1.657,
+            "planner": 2.074,
+            "source_gate": 10.251,
+            "engine_incl_source_gate": 40.064,
+            "scene3d_adapter": 36.266,
+            "end_to_end": 111.842
+          }
+        },
+        "mc_extra_unread": {
+          "class": "REFUSED",
+          "status": "REFUSED",
+          "root_cause": "FREE_POINT_UNDERDETERMINED",
+          "stages_ms": {
+            "text_normalization": 0.124,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.017,
+            "typed_fact_bridge": 0.0,
+            "planner": 0.0,
+            "source_gate": 0.0,
+            "engine_incl_source_gate": 0.0,
+            "scene3d_adapter": 0.0,
+            "end_to_end": 6.005
+          }
+        },
+        "mc_extra_unread2": {
+          "class": "REFUSED",
+          "status": "REFUSED",
+          "root_cause": "INCOMPLETE_FACT_EXTRACTION",
+          "stages_ms": {
+            "text_normalization": 0.115,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.034,
+            "typed_fact_bridge": 0.0,
+            "planner": 0.0,
+            "source_gate": 0.0,
+            "engine_incl_source_gate": 0.0,
+            "scene3d_adapter": 0.0,
+            "end_to_end": 6.391
+          }
+        },
+        "mc_distance_extra_unread": {
+          "class": "REFUSED",
+          "status": "REFUSED",
+          "root_cause": "INCOMPLETE_FACT_EXTRACTION",
+          "stages_ms": {
+            "text_normalization": 0.105,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.021,
+            "typed_fact_bridge": 0.0,
+            "planner": 0.0,
+            "source_gate": 0.0,
+            "engine_incl_source_gate": 0.0,
+            "scene3d_adapter": 0.0,
+            "end_to_end": 8.106
+          }
+        },
+        "mc_distance": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.089,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.204,
+            "typed_fact_bridge": 1.396,
+            "planner": 0.885,
+            "source_gate": 18.02,
+            "engine_incl_source_gate": 33.573,
+            "scene3d_adapter": 16.125,
+            "end_to_end": 74.569
+          }
+        },
+        "mc_decimal_value": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.111,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.215,
+            "typed_fact_bridge": 1.432,
+            "planner": 1.126,
+            "source_gate": 18.105,
+            "engine_incl_source_gate": 31.1,
+            "scene3d_adapter": 12.352,
+            "end_to_end": 67.358
+          }
+        },
+        "mc_label_list": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.107,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.26,
+            "typed_fact_bridge": 2.051,
+            "planner": 2.15,
+            "source_gate": 22.746,
+            "engine_incl_source_gate": 38.323,
+            "scene3d_adapter": 14.345,
+            "end_to_end": 87.285
+          }
+        },
+        "order_plane_after_goal": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.179,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.434,
+            "typed_fact_bridge": 3.919,
+            "planner": 2.729,
+            "source_gate": 20.511,
+            "engine_incl_source_gate": 51.648,
+            "scene3d_adapter": 37.908,
+            "end_to_end": 140.125
+          }
+        },
+        "order_plane_after_goal_sep": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.195,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.248,
+            "typed_fact_bridge": 1.622,
+            "planner": 1.826,
+            "source_gate": 13.048,
+            "engine_incl_source_gate": 41.592,
+            "scene3d_adapter": 34.286,
+            "end_to_end": 110.508
+          }
+        },
+        "order_plane_never_defined": {
+          "class": "REFUSED",
+          "status": "REFUSED",
+          "root_cause": "UNRESOLVED_REFERENCE",
+          "stages_ms": {
+            "text_normalization": 0.199,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.029,
+            "typed_fact_bridge": 0.0,
+            "planner": 0.0,
+            "source_gate": 0.0,
+            "engine_incl_source_gate": 0.0,
+            "scene3d_adapter": 0.0,
+            "end_to_end": 6.586
+          }
+        },
+        "order_premises_swapped": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.106,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.235,
+            "typed_fact_bridge": 1.546,
+            "planner": 1.729,
+            "source_gate": 21.63,
+            "engine_incl_source_gate": 34.803,
+            "scene3d_adapter": 11.952,
+            "end_to_end": 71.074
+          }
+        },
+        "dp_named_midpoint_goal": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.101,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.238,
+            "typed_fact_bridge": 1.669,
+            "planner": 0.979,
+            "source_gate": 20.543,
+            "engine_incl_source_gate": 38.196,
+            "scene3d_adapter": 12.917,
+            "end_to_end": 76.125
+          }
+        },
+        "dp_unnamed_midpoint_goal": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.106,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.242,
+            "typed_fact_bridge": 1.575,
+            "planner": 2.18,
+            "source_gate": 18.098,
+            "engine_incl_source_gate": 32.29,
+            "scene3d_adapter": 14.32,
+            "end_to_end": 73.706
+          }
+        },
+        "dp_unnamed_centroid_goal": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.103,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.24,
+            "typed_fact_bridge": 1.821,
+            "planner": 2.261,
+            "source_gate": 18.791,
+            "engine_incl_source_gate": 33.779,
+            "scene3d_adapter": 14.478,
+            "end_to_end": 75.57
+          }
+        },
+        "dp_unnamed_through_point": {
+          "class": "REFUSED",
+          "status": "REFUSED",
+          "root_cause": "UNRECOGNIZED_GOAL",
+          "stages_ms": {
+            "text_normalization": 0.116,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.019,
+            "typed_fact_bridge": 0.0,
+            "planner": 0.0,
+            "source_gate": 0.0,
+            "engine_incl_source_gate": 0.0,
+            "scene3d_adapter": 0.0,
+            "end_to_end": 5.954
+          }
+        },
+        "dp_free_point": {
+          "class": "REFUSED",
+          "status": "REFUSED",
+          "root_cause": "FREE_POINT_UNDERDETERMINED",
+          "stages_ms": {
+            "text_normalization": 0.094,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.012,
+            "typed_fact_bridge": 0.0,
+            "planner": 0.0,
+            "source_gate": 0.0,
+            "engine_incl_source_gate": 0.0,
+            "scene3d_adapter": 0.0,
+            "end_to_end": 6.174
+          }
+        },
+        "dp_free_point_goi": {
+          "class": "REFUSED",
+          "status": "REFUSED",
+          "root_cause": "FREE_POINT_UNDERDETERMINED",
+          "stages_ms": {
+            "text_normalization": 0.093,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.012,
+            "typed_fact_bridge": 0.0,
+            "planner": 0.0,
+            "source_gate": 0.0,
+            "engine_incl_source_gate": 0.0,
+            "scene3d_adapter": 0.0,
+            "end_to_end": 5.838
+          }
+        },
+        "dp_midpoint_as_goal": {
+          "class": "REFUSED",
+          "status": "REFUSED",
+          "root_cause": "UNRECOGNIZED_GOAL",
+          "stages_ms": {
+            "text_normalization": 0.085,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.014,
+            "typed_fact_bridge": 0.0,
+            "planner": 0.0,
+            "source_gate": 0.0,
+            "engine_incl_source_gate": 0.0,
+            "scene3d_adapter": 0.0,
+            "end_to_end": 5.512
+          }
+        },
+        "dp_reflection": {
+          "class": "UNDERSTOOD_CAPABILITY_UNSUPPORTED",
+          "status": "REFUSED",
+          "root_cause": "UNSUPPORTED_POINT_CONSTRUCTION",
+          "stages_ms": {
+            "text_normalization": 0.095,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.012,
+            "typed_fact_bridge": 0.0,
+            "planner": 0.0,
+            "source_gate": 0.0,
+            "engine_incl_source_gate": 0.0,
+            "scene3d_adapter": 0.0,
+            "end_to_end": 6.022
+          }
+        },
+        "dp_projection_unnamed_image": {
+          "class": "REFUSED",
+          "status": "REFUSED",
+          "root_cause": "DESCRIBED_POINT_IN_PREMISE_UNSUPPORTED",
+          "stages_ms": {
+            "text_normalization": 0.1,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.023,
+            "typed_fact_bridge": 0.0,
+            "planner": 0.0,
+            "source_gate": 0.0,
+            "engine_incl_source_gate": 0.0,
+            "scene3d_adapter": 0.0,
+            "end_to_end": 5.9
+          }
+        },
+        "dp_redefined_conflict": {
+          "class": "UNDERSTOOD_CAPABILITY_UNSUPPORTED",
+          "status": "REFUSED",
+          "root_cause": "SOURCE_CONFLICT",
+          "stages_ms": {
+            "text_normalization": 0.143,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.256,
+            "typed_fact_bridge": 2.558,
+            "planner": 1.129,
+            "source_gate": 22.103,
+            "engine_incl_source_gate": 26.404,
+            "scene3d_adapter": 0.033,
+            "end_to_end": 41.947
+          }
+        },
+        "goal_angle_line_plane": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.088,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.202,
+            "typed_fact_bridge": 1.528,
+            "planner": 1.576,
+            "source_gate": 21.549,
+            "engine_incl_source_gate": 33.412,
+            "scene3d_adapter": 11.428,
+            "end_to_end": 73.004
+          }
+        },
+        "goal_cos_line_plane": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.194,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.514,
+            "typed_fact_bridge": 1.231,
+            "planner": 0.925,
+            "source_gate": 17.855,
+            "engine_incl_source_gate": 31.091,
+            "scene3d_adapter": 14.549,
+            "end_to_end": 71.486
+          }
+        },
+        "goal_cos_spelled": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.156,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.356,
+            "typed_fact_bridge": 1.992,
+            "planner": 1.087,
+            "source_gate": 20.139,
+            "engine_incl_source_gate": 34.915,
+            "scene3d_adapter": 13.179,
+            "end_to_end": 78.918
+          }
+        },
+        "goal_tan_line_plane": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.097,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.223,
+            "typed_fact_bridge": 1.507,
+            "planner": 0.994,
+            "source_gate": 24.254,
+            "engine_incl_source_gate": 39.732,
+            "scene3d_adapter": 11.937,
+            "end_to_end": 78.725
+          }
+        },
+        "goal_sin_mc_stem": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.117,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.224,
+            "typed_fact_bridge": 1.473,
+            "planner": 0.898,
+            "source_gate": 19.637,
+            "engine_incl_source_gate": 34.795,
+            "scene3d_adapter": 15.802,
+            "end_to_end": 83.714
+          }
+        },
+        "goal_cos_planes": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.142,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.25,
+            "typed_fact_bridge": 3.237,
+            "planner": 1.772,
+            "source_gate": 23.866,
+            "engine_incl_source_gate": 47.795,
+            "scene3d_adapter": 20.049,
+            "end_to_end": 114.369
+          }
+        },
+        "goal_cos_lines": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.1,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.239,
+            "typed_fact_bridge": 2.422,
+            "planner": 0.976,
+            "source_gate": 22.654,
+            "engine_incl_source_gate": 44.067,
+            "scene3d_adapter": 18.889,
+            "end_to_end": 97.378
+          }
+        },
+        "goal_tan_right_angle": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.122,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.238,
+            "typed_fact_bridge": 1.519,
+            "planner": 2.329,
+            "source_gate": 20.373,
+            "engine_incl_source_gate": 37.173,
+            "scene3d_adapter": 16.782,
+            "end_to_end": 89.919
+          }
+        },
+        "goal_cos_scale_free": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.1,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.259,
+            "typed_fact_bridge": 2.434,
+            "planner": 1.251,
+            "source_gate": 124.613,
+            "engine_incl_source_gate": 164.539,
+            "scene3d_adapter": 11.51,
+            "end_to_end": 203.798
+          }
+        },
+        "goal_cos_of_length_neg": {
+          "class": "REFUSED",
+          "status": "REFUSED",
+          "root_cause": "UNRECOGNIZED_GOAL",
+          "stages_ms": {
+            "text_normalization": 0.126,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.023,
+            "typed_fact_bridge": 0.0,
+            "planner": 0.0,
+            "source_gate": 0.0,
+            "engine_incl_source_gate": 0.0,
+            "scene3d_adapter": 0.0,
+            "end_to_end": 6.351
+          }
+        },
+        "goal_cos_squared_neg": {
+          "class": "UNDERSTOOD_CAPABILITY_UNSUPPORTED",
+          "status": "REFUSED",
+          "root_cause": "UNSUPPORTED_GOAL_FUNCTION",
+          "stages_ms": {
+            "text_normalization": 0.098,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.013,
+            "typed_fact_bridge": 0.0,
+            "planner": 0.0,
+            "source_gate": 0.0,
+            "engine_incl_source_gate": 0.0,
+            "scene3d_adapter": 0.0,
+            "end_to_end": 6.431
+          }
+        },
+        "goal_cos_given_premise_neg": {
+          "class": "REFUSED",
+          "status": "REFUSED",
+          "root_cause": "INCOMPLETE_FACT_EXTRACTION",
+          "stages_ms": {
+            "text_normalization": 0.1,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.015,
+            "typed_fact_bridge": 0.0,
+            "planner": 0.0,
+            "source_gate": 0.0,
+            "engine_incl_source_gate": 0.0,
+            "scene3d_adapter": 0.0,
+            "end_to_end": 6.702
+          }
+        },
+        "goal_cos_wrong_object_neg": {
+          "class": "UNDERSTOOD_CAPABILITY_UNSUPPORTED",
+          "status": "REFUSED",
+          "root_cause": "UNSUPPORTED_GOAL_FUNCTION",
+          "stages_ms": {
+            "text_normalization": 0.146,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.023,
+            "typed_fact_bridge": 0.0,
+            "planner": 0.0,
+            "source_gate": 0.0,
+            "engine_incl_source_gate": 0.0,
+            "scene3d_adapter": 0.0,
+            "end_to_end": 6.501
+          }
+        },
+        "proof_only": {
+          "class": "UNDERSTOOD_CAPABILITY_UNSUPPORTED",
+          "status": "REFUSED",
+          "root_cause": "UNSUPPORTED_GOAL_KIND",
+          "stages_ms": {
+            "text_normalization": 0.118,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.416,
+            "typed_fact_bridge": 0.502,
+            "planner": 0.0,
+            "source_gate": 0.0,
+            "engine_incl_source_gate": 0.0,
+            "scene3d_adapter": 0.071,
+            "end_to_end": 11.156
+          }
+        },
+        "proof_premise_not_given": {
+          "class": "UNDERSTOOD_CAPABILITY_UNSUPPORTED",
+          "status": "REFUSED",
+          "root_cause": "UNSUPPORTED_GOAL_KIND",
+          "stages_ms": {
+            "text_normalization": 0.097,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.224,
+            "typed_fact_bridge": 0.747,
+            "planner": 0.0,
+            "source_gate": 0.0,
+            "engine_incl_source_gate": 0.0,
+            "scene3d_adapter": 0.073,
+            "end_to_end": 11.115
+          }
+        },
+        "amb_plane_not_unique": {
+          "class": "REFUSED",
+          "status": "REFUSED",
+          "root_cause": "UNRECOGNIZED_GEOMETRIC_ENTITY",
+          "stages_ms": {
+            "text_normalization": 0.104,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.013,
+            "typed_fact_bridge": 0.0,
+            "planner": 0.0,
+            "source_gate": 0.0,
+            "engine_incl_source_gate": 0.0,
+            "scene3d_adapter": 0.0,
+            "end_to_end": 6.808
+          }
+        },
+        "contra_two_lengths": {
+          "class": "UNDERSTOOD_CAPABILITY_UNSUPPORTED",
+          "status": "REFUSED",
+          "root_cause": "SOURCE_CONFLICT",
+          "stages_ms": {
+            "text_normalization": 0.121,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.301,
+            "typed_fact_bridge": 2.659,
+            "planner": 1.029,
+            "source_gate": 20.086,
+            "engine_incl_source_gate": 21.441,
+            "scene3d_adapter": 0.029,
+            "end_to_end": 37.459
+          }
+        },
+        "contra_skew_intersection": {
+          "class": "UNDERSTOOD_CAPABILITY_UNSUPPORTED",
+          "status": "REFUSED",
+          "root_cause": "GEOMETRIC_DEGENERACY",
+          "stages_ms": {
+            "text_normalization": 0.122,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.264,
+            "typed_fact_bridge": 3.982,
+            "planner": 1.959,
+            "source_gate": 30.679,
+            "engine_incl_source_gate": 32.738,
+            "scene3d_adapter": 0.033,
+            "end_to_end": 54.993
+          }
+        },
+        "diagram_fact": {
+          "class": "REFUSED",
+          "status": "REFUSED",
+          "root_cause": "SOURCE_PROVENANCE_MISSING",
+          "stages_ms": {
+            "text_normalization": 0.167,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.015,
+            "typed_fact_bridge": 0.0,
+            "planner": 0.0,
+            "source_gate": 0.0,
+            "engine_incl_source_gate": 0.0,
+            "scene3d_adapter": 0.0,
+            "end_to_end": 7.155
+          }
+        },
+        "scale_iso_planes": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.108,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.317,
+            "typed_fact_bridge": 1.679,
+            "planner": 0.967,
+            "source_gate": 90.393,
+            "engine_incl_source_gate": 132.975,
+            "scene3d_adapter": 13.278,
+            "end_to_end": 192.861
+          }
+        },
+        "scale_iso_tan": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.094,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.245,
+            "typed_fact_bridge": 1.581,
+            "planner": 1.161,
+            "source_gate": 81.002,
+            "engine_incl_source_gate": 121.438,
+            "scene3d_adapter": 13.691,
+            "end_to_end": 160.784
+          }
+        },
+        "scale_iso_line_plane": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.175,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.271,
+            "typed_fact_bridge": 2.209,
+            "planner": 1.54,
+            "source_gate": 123.73,
+            "engine_incl_source_gate": 169.371,
+            "scene3d_adapter": 15.181,
+            "end_to_end": 221.194
+          }
+        },
+        "scale_iso_renamed": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.094,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.262,
+            "typed_fact_bridge": 1.552,
+            "planner": 0.931,
+            "source_gate": 86.496,
+            "engine_incl_source_gate": 126.851,
+            "scene3d_adapter": 11.884,
+            "end_to_end": 163.394
+          }
+        },
+        "scale_iso_with_length": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.093,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.273,
+            "typed_fact_bridge": 1.772,
+            "planner": 1.018,
+            "source_gate": 18.196,
+            "engine_incl_source_gate": 31.386,
+            "scene3d_adapter": 11.64,
+            "end_to_end": 70.161
+          }
+        },
+        "scale_shape_free": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.097,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.22,
+            "typed_fact_bridge": 1.703,
+            "planner": 1.014,
+            "source_gate": 131.555,
+            "engine_incl_source_gate": 197.646,
+            "scene3d_adapter": 15.357,
+            "end_to_end": 239.484
+          }
+        },
+        "scale_height_free": {
+          "class": "UNDERSTOOD_CAPABILITY_UNSUPPORTED",
+          "status": "REFUSED",
+          "root_cause": "SHAPE_FREEDOM_UNCERTIFIED",
+          "stages_ms": {
+            "text_normalization": 0.108,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.302,
+            "typed_fact_bridge": 1.403,
+            "planner": 0.849,
+            "source_gate": 49.156,
+            "engine_incl_source_gate": 53.279,
+            "scene3d_adapter": 0.029,
+            "end_to_end": 66.529
+          }
+        },
+        "scale_absolute_volume": {
+          "class": "UNDERSTOOD_CAPABILITY_UNSUPPORTED",
+          "status": "REFUSED",
+          "root_cause": "INSUFFICIENT_CONSTRAINTS",
+          "stages_ms": {
+            "text_normalization": 0.105,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.247,
+            "typed_fact_bridge": 1.903,
+            "planner": 1.185,
+            "source_gate": 36.985,
+            "engine_incl_source_gate": 40.413,
+            "scene3d_adapter": 0.077,
+            "end_to_end": 55.534
+          }
+        },
+        "scale_regular_tetra_no_side": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.097,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.258,
+            "typed_fact_bridge": 1.404,
+            "planner": 0.768,
+            "source_gate": 116.199,
+            "engine_incl_source_gate": 148.818,
+            "scene3d_adapter": 12.311,
+            "end_to_end": 185.207
+          }
+        },
+        "ti_right_b_planes": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.088,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.226,
+            "typed_fact_bridge": 1.551,
+            "planner": 0.879,
+            "source_gate": 141.497,
+            "engine_incl_source_gate": 212.648,
+            "scene3d_adapter": 15.814,
+            "end_to_end": 255.743
+          }
+        },
+        "ti_right_b_tan": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.094,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.22,
+            "typed_fact_bridge": 1.701,
+            "planner": 0.909,
+            "source_gate": 120.738,
+            "engine_incl_source_gate": 187.897,
+            "scene3d_adapter": 14.943,
+            "end_to_end": 228.897
+          }
+        },
+        "ti_renamed": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.093,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.218,
+            "typed_fact_bridge": 1.486,
+            "planner": 0.89,
+            "source_gate": 141.786,
+            "engine_incl_source_gate": 235.967,
+            "scene3d_adapter": 15.387,
+            "end_to_end": 277.493
+          }
+        },
+        "ti_varying_line_plane": {
+          "class": "UNDERSTOOD_CAPABILITY_UNSUPPORTED",
+          "status": "REFUSED",
+          "root_cause": "SHAPE_FREEDOM_UNCERTIFIED",
+          "stages_ms": {
+            "text_normalization": 0.17,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.38,
+            "typed_fact_bridge": 1.494,
+            "planner": 0.871,
+            "source_gate": 59.174,
+            "engine_incl_source_gate": 62.617,
+            "scene3d_adapter": 0.067,
+            "end_to_end": 76.77
+          }
+        },
+        "ti_height_free": {
+          "class": "UNDERSTOOD_CAPABILITY_UNSUPPORTED",
+          "status": "REFUSED",
+          "root_cause": "SHAPE_FREEDOM_UNCERTIFIED",
+          "stages_ms": {
+            "text_normalization": 0.092,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.201,
+            "typed_fact_bridge": 1.381,
+            "planner": 0.781,
+            "source_gate": 48.986,
+            "engine_incl_source_gate": 52.201,
+            "scene3d_adapter": 0.038,
+            "end_to_end": 63.886
+          }
+        },
+        "ti_absolute_volume": {
+          "class": "UNDERSTOOD_CAPABILITY_UNSUPPORTED",
+          "status": "REFUSED",
+          "root_cause": "INSUFFICIENT_CONSTRAINTS",
+          "stages_ms": {
+            "text_normalization": 0.082,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.196,
+            "typed_fact_bridge": 1.203,
+            "planner": 0.763,
+            "source_gate": 32.642,
+            "engine_incl_source_gate": 34.711,
+            "scene3d_adapter": 0.036,
+            "end_to_end": 46.747
+          }
+        },
+        "tet_lines": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.101,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.203,
+            "typed_fact_bridge": 1.28,
+            "planner": 0.902,
+            "source_gate": 115.685,
+            "engine_incl_source_gate": 154.286,
+            "scene3d_adapter": 13.822,
+            "end_to_end": 201.729
+          }
+        },
+        "tet_cos_mc": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.083,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.215,
+            "typed_fact_bridge": 1.345,
+            "planner": 0.768,
+            "source_gate": 103.493,
+            "engine_incl_source_gate": 137.864,
+            "scene3d_adapter": 11.094,
+            "end_to_end": 169.404
+          }
+        },
+        "tet_renamed": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.09,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.217,
+            "typed_fact_bridge": 1.397,
+            "planner": 0.782,
+            "source_gate": 116.423,
+            "engine_incl_source_gate": 147.875,
+            "scene3d_adapter": 12.763,
+            "end_to_end": 181.376
+          }
+        },
+        "tet_with_side": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.079,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.229,
+            "typed_fact_bridge": 1.634,
+            "planner": 0.942,
+            "source_gate": 23.299,
+            "engine_incl_source_gate": 33.111,
+            "scene3d_adapter": 10.377,
+            "end_to_end": 64.994
+          }
+        },
+        "tet_edge_face": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.105,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.256,
+            "typed_fact_bridge": 1.18,
+            "planner": 0.691,
+            "source_gate": 112.181,
+            "engine_incl_source_gate": 148.675,
+            "scene3d_adapter": 11.354,
+            "end_to_end": 182.281
+          }
+        },
+        "tet_not_regular": {
+          "class": "UNDERSTOOD_CAPABILITY_UNSUPPORTED",
+          "status": "REFUSED",
+          "root_cause": "SHAPE_FREEDOM_UNCERTIFIED",
+          "stages_ms": {
+            "text_normalization": 0.079,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.194,
+            "typed_fact_bridge": 1.566,
+            "planner": 1.042,
+            "source_gate": 72.56,
+            "engine_incl_source_gate": 75.189,
+            "scene3d_adapter": 0.03,
+            "end_to_end": 88.403
+          }
+        },
+        "tet_regular_pyramid_only": {
+          "class": "UNDERSTOOD_CAPABILITY_UNSUPPORTED",
+          "status": "REFUSED",
+          "root_cause": "SHAPE_FREEDOM_UNCERTIFIED",
+          "stages_ms": {
+            "text_normalization": 0.12,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.182,
+            "typed_fact_bridge": 1.905,
+            "planner": 1.316,
+            "source_gate": 71.265,
+            "engine_incl_source_gate": 75.097,
+            "scene3d_adapter": 0.091,
+            "end_to_end": 88.337
+          }
+        },
+        "tet_conflict": {
+          "class": "REFUSED",
+          "status": "REFUSED",
+          "root_cause": "SOURCE_PROVENANCE_MISSING",
+          "stages_ms": {
+            "text_normalization": 0.157,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.033,
+            "typed_fact_bridge": 0.0,
+            "planner": 0.0,
+            "source_gate": 0.0,
+            "engine_incl_source_gate": 0.0,
+            "scene3d_adapter": 0.0,
+            "end_to_end": 9.653
+          }
+        },
+        "pa_ratio2_planes": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.102,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.259,
+            "typed_fact_bridge": 3.014,
+            "planner": 2.662,
+            "source_gate": 198.1,
+            "engine_incl_source_gate": 294.429,
+            "scene3d_adapter": 18.835,
+            "end_to_end": 354.077
+          }
+        },
+        "pa_ratio2_tan": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.129,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.346,
+            "typed_fact_bridge": 1.481,
+            "planner": 1.524,
+            "source_gate": 164.93,
+            "engine_incl_source_gate": 268.812,
+            "scene3d_adapter": 17.051,
+            "end_to_end": 318.363
+          }
+        },
+        "pa_source_perp_lines": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.152,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.243,
+            "typed_fact_bridge": 1.618,
+            "planner": 0.899,
+            "source_gate": 156.056,
+            "engine_incl_source_gate": 244.117,
+            "scene3d_adapter": 18.669,
+            "end_to_end": 294.338
+          }
+        },
+        "pp_base": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.195,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.283,
+            "typed_fact_bridge": 2.389,
+            "planner": 0.928,
+            "source_gate": 142.872,
+            "engine_incl_source_gate": 213.846,
+            "scene3d_adapter": 17.368,
+            "end_to_end": 304.261
+          }
+        },
+        "pp_lateral": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.091,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.22,
+            "typed_fact_bridge": 1.546,
+            "planner": 1.092,
+            "source_gate": 138.878,
+            "engine_incl_source_gate": 206.418,
+            "scene3d_adapter": 13.597,
+            "end_to_end": 245.245
+          }
+        },
+        "lp_isosceles": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.096,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.261,
+            "typed_fact_bridge": 1.506,
+            "planner": 1.016,
+            "source_gate": 146.31,
+            "engine_incl_source_gate": 211.837,
+            "scene3d_adapter": 13.347,
+            "end_to_end": 251.118
+          }
+        },
+        "lp_ratio2": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.096,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.214,
+            "typed_fact_bridge": 2.248,
+            "planner": 1.075,
+            "source_gate": 154.474,
+            "engine_incl_source_gate": 225.335,
+            "scene3d_adapter": 14.641,
+            "end_to_end": 267.327
+          }
+        },
+        "lp_perpendicular": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.132,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.255,
+            "typed_fact_bridge": 2.101,
+            "planner": 0.989,
+            "source_gate": 191.08,
+            "engine_incl_source_gate": 280.386,
+            "scene3d_adapter": 14.591,
+            "end_to_end": 322.452
+          }
+        },
+        "lp_renamed": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.13,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.273,
+            "typed_fact_bridge": 1.398,
+            "planner": 0.884,
+            "source_gate": 156.749,
+            "engine_incl_source_gate": 228.275,
+            "scene3d_adapter": 14.311,
+            "end_to_end": 270.779
+          }
+        },
+        "ll_meeting": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.097,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.404,
+            "typed_fact_bridge": 1.432,
+            "planner": 0.881,
+            "source_gate": 184.587,
+            "engine_incl_source_gate": 252.909,
+            "scene3d_adapter": 16.145,
+            "end_to_end": 298.268
+          }
+        },
+        "ll_perpendicular": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.183,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.263,
+            "typed_fact_bridge": 1.536,
+            "planner": 1.042,
+            "source_gate": 186.841,
+            "engine_incl_source_gate": 254.099,
+            "scene3d_adapter": 15.495,
+            "end_to_end": 299.441
+          }
+        },
+        "ll_skew_perpendicular": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.131,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.259,
+            "typed_fact_bridge": 1.482,
+            "planner": 0.878,
+            "source_gate": 184.418,
+            "engine_incl_source_gate": 249.828,
+            "scene3d_adapter": 18.042,
+            "end_to_end": 295.965
+          }
+        },
+        "ll_skew_varying": {
+          "class": "UNDERSTOOD_CAPABILITY_UNSUPPORTED",
+          "status": "REFUSED",
+          "root_cause": "SHAPE_FREEDOM_UNCERTIFIED",
+          "stages_ms": {
+            "text_normalization": 0.088,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.235,
+            "typed_fact_bridge": 1.96,
+            "planner": 1.478,
+            "source_gate": 68.09,
+            "engine_incl_source_gate": 71.723,
+            "scene3d_adapter": 0.028,
+            "end_to_end": 86.554
+          }
+        },
+        "lp_varying_lateral": {
+          "class": "UNDERSTOOD_CAPABILITY_UNSUPPORTED",
+          "status": "REFUSED",
+          "root_cause": "SHAPE_FREEDOM_UNCERTIFIED",
+          "stages_ms": {
+            "text_normalization": 0.086,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.228,
+            "typed_fact_bridge": 1.395,
+            "planner": 0.851,
+            "source_gate": 52.378,
+            "engine_incl_source_gate": 55.943,
+            "scene3d_adapter": 0.029,
+            "end_to_end": 67.783
+          }
+        },
+        "lp_no_ratio": {
+          "class": "UNDERSTOOD_CAPABILITY_UNSUPPORTED",
+          "status": "REFUSED",
+          "root_cause": "SHAPE_FREEDOM_UNCERTIFIED",
+          "stages_ms": {
+            "text_normalization": 0.085,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.18,
+            "typed_fact_bridge": 1.141,
+            "planner": 1.707,
+            "source_gate": 54.638,
+            "engine_incl_source_gate": 58.749,
+            "scene3d_adapter": 0.034,
+            "end_to_end": 70.754
+          }
+        },
+        "pa_prism_out_of_domain": {
+          "class": "UNDERSTOOD_CAPABILITY_UNSUPPORTED",
+          "status": "REFUSED",
+          "root_cause": "SHAPE_FREEDOM_UNCERTIFIED",
+          "stages_ms": {
+            "text_normalization": 0.091,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.253,
+            "typed_fact_bridge": 1.501,
+            "planner": 0.773,
+            "source_gate": 47.911,
+            "engine_incl_source_gate": 51.871,
+            "scene3d_adapter": 0.031,
+            "end_to_end": 64.099
+          }
+        },
+        "gv_base_unnamed_face_after": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.112,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.216,
+            "typed_fact_bridge": 1.424,
+            "planner": 1.082,
+            "source_gate": 16.999,
+            "engine_incl_source_gate": 31.414,
+            "scene3d_adapter": 12.998,
+            "end_to_end": 69.738
+          }
+        },
+        "gv_base_unnamed_renamed": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.115,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.216,
+            "typed_fact_bridge": 1.492,
+            "planner": 0.899,
+            "source_gate": 18.504,
+            "engine_incl_source_gate": 32.957,
+            "scene3d_adapter": 12.282,
+            "end_to_end": 71.291
+          }
+        },
+        "gv_base_unnamed_figref": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.18,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.287,
+            "typed_fact_bridge": 1.413,
+            "planner": 0.896,
+            "source_gate": 18.391,
+            "engine_incl_source_gate": 32.157,
+            "scene3d_adapter": 13.306,
+            "end_to_end": 71.042
+          }
+        },
+        "gv_base_unnamed_subject_first": {
+          "class": "REFUSED",
+          "status": "REFUSED",
+          "root_cause": "SOURCE_PROVENANCE_MISSING",
+          "stages_ms": {
+            "text_normalization": 0.094,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.015,
+            "typed_fact_bridge": 0.0,
+            "planner": 0.0,
+            "source_gate": 0.0,
+            "engine_incl_source_gate": 0.0,
+            "scene3d_adapter": 0.0,
+            "end_to_end": 6.244
+          }
+        },
+        "gv_cuboid_square_base": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.091,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.319,
+            "typed_fact_bridge": 2.948,
+            "planner": 1.008,
+            "source_gate": 22.236,
+            "engine_incl_source_gate": 41.815,
+            "scene3d_adapter": 17.214,
+            "end_to_end": 92.778
+          }
+        },
+        "gv_cuboid_no_square": {
+          "class": "UNDERSTOOD_CAPABILITY_UNSUPPORTED",
+          "status": "REFUSED",
+          "root_cause": "INSUFFICIENT_CONSTRAINTS",
+          "stages_ms": {
+            "text_normalization": 0.094,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.28,
+            "typed_fact_bridge": 1.604,
+            "planner": 0.878,
+            "source_gate": 40.434,
+            "engine_incl_source_gate": 44.349,
+            "scene3d_adapter": 0.029,
+            "end_to_end": 57.494
+          }
+        },
+        "gv_lateral_regular_tri": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.085,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.292,
+            "typed_fact_bridge": 1.251,
+            "planner": 0.801,
+            "source_gate": 17.212,
+            "engine_incl_source_gate": 29.474,
+            "scene3d_adapter": 11.907,
+            "end_to_end": 65.047
+          }
+        },
+        "gv_lateral_regular_quad": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.094,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.204,
+            "typed_fact_bridge": 1.964,
+            "planner": 0.77,
+            "source_gate": 16.18,
+            "engine_incl_source_gate": 31.896,
+            "scene3d_adapter": 14.148,
+            "end_to_end": 74.183
+          }
+        },
+        "gv_lateral_not_regular": {
+          "class": "REFUSED",
+          "status": "REFUSED",
+          "root_cause": "QUESTION_PREMISE_AMBIGUITY",
+          "stages_ms": {
+            "text_normalization": 0.105,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.21,
+            "typed_fact_bridge": 0.691,
+            "planner": 0.0,
+            "source_gate": 0.0,
+            "engine_incl_source_gate": 0.0,
+            "scene3d_adapter": 0.09,
+            "end_to_end": 10.911
+          }
+        },
+        "gv_lateral_no_height": {
+          "class": "UNDERSTOOD_CAPABILITY_UNSUPPORTED",
+          "status": "REFUSED",
+          "root_cause": "INSUFFICIENT_CONSTRAINTS",
+          "stages_ms": {
+            "text_normalization": 0.072,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.179,
+            "typed_fact_bridge": 1.287,
+            "planner": 0.744,
+            "source_gate": 31.733,
+            "engine_incl_source_gate": 47.562,
+            "scene3d_adapter": 0.026,
+            "end_to_end": 60.052
+          }
+        },
+        "gv_prism_undotted": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.103,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.269,
+            "typed_fact_bridge": 1.206,
+            "planner": 0.693,
+            "source_gate": 16.425,
+            "engine_incl_source_gate": 24.851,
+            "scene3d_adapter": 9.537,
+            "end_to_end": 50.41
+          }
+        },
+        "gv_prism_dotted_same": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.087,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.199,
+            "typed_fact_bridge": 1.452,
+            "planner": 1.057,
+            "source_gate": 16.139,
+            "engine_incl_source_gate": 29.348,
+            "scene3d_adapter": 13.385,
+            "end_to_end": 63.803
+          }
+        },
+        "gv_prism_undotted_scrambled": {
+          "class": "REFUSED",
+          "status": "REFUSED",
+          "root_cause": "UNRECOGNIZED_GOAL",
+          "stages_ms": {
+            "text_normalization": 0.108,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.015,
+            "typed_fact_bridge": 0.0,
+            "planner": 0.0,
+            "source_gate": 0.0,
+            "engine_incl_source_gate": 0.0,
+            "scene3d_adapter": 0.0,
+            "end_to_end": 5.702
+          }
+        },
+        "gv_isosceles_right_derived": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.094,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.252,
+            "typed_fact_bridge": 1.596,
+            "planner": 1.065,
+            "source_gate": 19.07,
+            "engine_incl_source_gate": 31.14,
+            "scene3d_adapter": 9.549,
+            "end_to_end": 65.664
+          }
+        },
+        "gv_isosceles_explicit": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.104,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.278,
+            "typed_fact_bridge": 1.696,
+            "planner": 1.154,
+            "source_gate": 19.278,
+            "engine_incl_source_gate": 30.522,
+            "scene3d_adapter": 9.179,
+            "end_to_end": 64.217
+          }
+        },
+        "gv_isosceles_no_right_angle": {
+          "class": "REFUSED",
+          "status": "REFUSED",
+          "root_cause": "INCOMPLETE_FACT_EXTRACTION",
+          "stages_ms": {
+            "text_normalization": 0.091,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.014,
+            "typed_fact_bridge": 0.0,
+            "planner": 0.0,
+            "source_gate": 0.0,
+            "engine_incl_source_gate": 0.0,
+            "scene3d_adapter": 0.0,
+            "end_to_end": 5.767
+          }
+        },
+        "gv_isosceles_base_only": {
+          "class": "REFUSED",
+          "status": "REFUSED",
+          "root_cause": "UNRECOGNIZED_GEOMETRIC_ENTITY",
+          "stages_ms": {
+            "text_normalization": 0.137,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.014,
+            "typed_fact_bridge": 0.0,
+            "planner": 0.0,
+            "source_gate": 0.0,
+            "engine_incl_source_gate": 0.0,
+            "scene3d_adapter": 0.0,
+            "end_to_end": 6.511
+          }
+        },
+        "gv_unread_perimeter": {
+          "class": "REFUSED",
+          "status": "REFUSED",
+          "root_cause": "INCOMPLETE_FACT_EXTRACTION",
+          "stages_ms": {
+            "text_normalization": 0.087,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.015,
+            "typed_fact_bridge": 0.0,
+            "planner": 0.0,
+            "source_gate": 0.0,
+            "engine_incl_source_gate": 0.0,
+            "scene3d_adapter": 0.0,
+            "end_to_end": 5.988
+          }
+        },
+        "gv_unread_area_in_a": {
+          "class": "REFUSED",
+          "status": "REFUSED",
+          "root_cause": "INCOMPLETE_FACT_EXTRACTION",
+          "stages_ms": {
+            "text_normalization": 0.084,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.013,
+            "typed_fact_bridge": 0.0,
+            "planner": 0.0,
+            "source_gate": 0.0,
+            "engine_incl_source_gate": 0.0,
+            "scene3d_adapter": 0.0,
+            "end_to_end": 5.88
+          }
+        },
+        "gv_base_area_regular": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.087,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.203,
+            "typed_fact_bridge": 1.311,
+            "planner": 0.76,
+            "source_gate": 19.065,
+            "engine_incl_source_gate": 56.844,
+            "scene3d_adapter": 12.016,
+            "end_to_end": 94.359
+          }
+        },
+        "gv_base_area_impossible": {
+          "class": "UNDERSTOOD_CAPABILITY_UNSUPPORTED",
+          "status": "REFUSED",
+          "root_cause": "SOURCE_CONFLICT",
+          "stages_ms": {
+            "text_normalization": 0.077,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.244,
+            "typed_fact_bridge": 1.247,
+            "planner": 0.729,
+            "source_gate": 18.187,
+            "engine_incl_source_gate": 20.202,
+            "scene3d_adapter": 0.029,
+            "end_to_end": 32.773
+          }
+        },
+        "gv_pair_midpoint_premise": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.128,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.257,
+            "typed_fact_bridge": 1.616,
+            "planner": 0.968,
+            "source_gate": 20.092,
+            "engine_incl_source_gate": 35.016,
+            "scene3d_adapter": 12.941,
+            "end_to_end": 73.564
+          }
+        },
+        "gv_pair_point_on": {
+          "class": "REFUSED",
+          "status": "REFUSED",
+          "root_cause": "FREE_POINT_UNDERDETERMINED",
+          "stages_ms": {
+            "text_normalization": 0.119,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.014,
+            "typed_fact_bridge": 0.0,
+            "planner": 0.0,
+            "source_gate": 0.0,
+            "engine_incl_source_gate": 0.0,
+            "scene3d_adapter": 0.0,
+            "end_to_end": 6.557
+          }
+        },
+        "gv_pair_perp_premise": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.095,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.21,
+            "typed_fact_bridge": 1.591,
+            "planner": 0.879,
+            "source_gate": 17.94,
+            "engine_incl_source_gate": 32.545,
+            "scene3d_adapter": 11.389,
+            "end_to_end": 69.712
+          }
+        },
+        "gv_pair_perp_proof": {
+          "class": "UNDERSTOOD_CAPABILITY_UNSUPPORTED",
+          "status": "REFUSED",
+          "root_cause": "UNSUPPORTED_GOAL_KIND",
+          "stages_ms": {
+            "text_normalization": 0.078,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.174,
+            "typed_fact_bridge": 0.397,
+            "planner": 0.0,
+            "source_gate": 0.0,
+            "engine_incl_source_gate": 0.0,
+            "scene3d_adapter": 0.068,
+            "end_to_end": 9.336
+          }
+        },
+        "gv_pair_regular_pyramid": {
+          "class": "UNDERSTOOD_CAPABILITY_UNSUPPORTED",
+          "status": "REFUSED",
+          "root_cause": "SHAPE_FREEDOM_UNCERTIFIED",
+          "stages_ms": {
+            "text_normalization": 0.092,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.248,
+            "typed_fact_bridge": 1.281,
+            "planner": 0.807,
+            "source_gate": 69.031,
+            "engine_incl_source_gate": 73.421,
+            "scene3d_adapter": 0.034,
+            "end_to_end": 85.249
+          }
+        },
+        "gv_pair_regular_tetra": {
+          "class": "SERVED",
+          "status": "SERVED",
+          "root_cause": null,
+          "stages_ms": {
+            "text_normalization": 0.084,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.222,
+            "typed_fact_bridge": 1.462,
+            "planner": 0.875,
+            "source_gate": 153.729,
+            "engine_incl_source_gate": 187.836,
+            "scene3d_adapter": 11.317,
+            "end_to_end": 220.586
+          }
+        },
+        "gv_pair_section_shape_proof": {
+          "class": "UNDERSTOOD_CAPABILITY_UNSUPPORTED",
+          "status": "REFUSED",
+          "root_cause": "UNSUPPORTED_GOAL_KIND",
+          "stages_ms": {
+            "text_normalization": 0.17,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.297,
+            "typed_fact_bridge": 1.022,
+            "planner": 0.0,
+            "source_gate": 0.0,
+            "engine_incl_source_gate": 0.0,
+            "scene3d_adapter": 0.128,
+            "end_to_end": 13.485
+          }
+        },
+        "gv_contradiction": {
+          "class": "UNDERSTOOD_CAPABILITY_UNSUPPORTED",
+          "status": "REFUSED",
+          "root_cause": "SOURCE_CONFLICT",
+          "stages_ms": {
+            "text_normalization": 0.152,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.236,
+            "typed_fact_bridge": 1.542,
+            "planner": 1.344,
+            "source_gate": 18.987,
+            "engine_incl_source_gate": 22.539,
+            "scene3d_adapter": 0.046,
+            "end_to_end": 37.541
+          }
+        },
+        "gv_missing_height": {
+          "class": "UNDERSTOOD_CAPABILITY_UNSUPPORTED",
+          "status": "REFUSED",
+          "root_cause": "INSUFFICIENT_CONSTRAINTS",
+          "stages_ms": {
+            "text_normalization": 0.088,
+            "clause_segmentation": 0.0,
+            "clause_rules_entity_goal_relation": 0.0,
+            "local_parse_total": 0.192,
+            "typed_fact_bridge": 1.115,
+            "planner": 0.779,
+            "source_gate": 34.305,
+            "engine_incl_source_gate": 50.218,
+            "scene3d_adapter": 0.033,
+            "end_to_end": 61.552
+          }
+        }
+      }
+    }
+  },
+  "physical_low_end": "PHYSICAL_LOW_END_NOT_MEASURED"
+}
