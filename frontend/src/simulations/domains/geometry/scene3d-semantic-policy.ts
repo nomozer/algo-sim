@@ -2825,8 +2825,35 @@ export function resolvePlaneSectionVisibility(
         return false;
       });
 
+    const hasExtendedObliqueCut = (() => {
+      const depPts = (planeObj.depends ?? [])
+        .map((id) => scene.objects.find((obj) => obj.id === id && obj.type === "point3" && obj.xyz))
+        .filter((obj): obj is SceneObject => Boolean(obj));
+      if (depPts.length < 3 || !planeObj.normal) return false;
+      const nVec = toVec3(planeObj.normal);
+      const nLen = Math.hypot(...nVec);
+      if (!(nLen > 1e-9)) return false;
+      const nXY = Math.hypot(nVec[0], nVec[1]) / nLen;
+      if (nXY <= 0.14) return false;
+      const depIdSet = new Set(depPts.map((p) => p.id));
+      const depCoords = depPts.map((p) => toVec3(p.xyz!));
+      return presentCuts.some((c) => {
+        if (c.type !== "section" && c.type !== "polygon3") return false;
+        const prog = progressById.get(c.id);
+        const closedNow = prog ? prog.closed : c.closed !== false;
+        const filledNow = prog ? prog.fill_visible : c.fill_visible !== false;
+        if (!closedNow || !filledNow) return false;
+        const polyIds = c.vertex_ids ?? [];
+        if (polyIds.some((vid) => !depIdSet.has(vid))) return true;
+        const polyVerts = (c.polygon ?? c.vertices ?? []).map(toVec3);
+        return polyVerts.length >= 4 && polyVerts.some((pv) =>
+          depCoords.every((dc) => Math.hypot(pv[0] - dc[0], pv[1] - dc[1], pv[2] - dc[2]) > 1e-3),
+        );
+      });
+    })();
+
     if (hasCompletedPolySection && !isNewlyCreatedPlane) {
-      if (hasConsolidatedTraceInCurrentStep) {
+      if (hasConsolidatedTraceInCurrentStep && !hasExtendedObliqueCut) {
         return {
           visible: true,
           subRole: "CONSTRUCTION_TOOL_PLANE",
@@ -2838,7 +2865,7 @@ export function resolvePlaneSectionVisibility(
       return {
         visible: auxiliaryShown,
         subRole: "CONSTRUCTION_TOOL_PLANE",
-        opacityScale: auxiliaryShown ? 0.42 : 0,
+        opacityScale: auxiliaryShown ? 0.24 : 0,
         lifecycleStage: "retired_scaffold",
         showPlaneLabel: auxiliaryShown,
       };
@@ -4045,8 +4072,9 @@ export function compactPlaneAnchorPoints(
         if (tc > tHi) tHi = tc;
       }
       const hasOffCenter = Math.hypot(sHi - sLo, tHi - tLo) > 1e-3;
-      const minHalf = hasOffCenter ? R * 0.30 : R * 0.52;
-      const pad = hasOffCenter ? R * 0.12 : 0;
+      const backCollar = R * 0.10;
+      const minHalf = hasOffCenter ? backCollar : R * 0.36;
+      const pad = hasOffCenter ? R * 0.06 : 0;
       const aLo = Math.min(-minHalf, sLo - pad);
       const aHi = Math.max(minHalf, sHi + pad);
       const bLo = Math.min(-minHalf, tLo - pad);
@@ -4062,8 +4090,8 @@ export function compactPlaneAnchorPoints(
         center[2] + sc * e1[2] + tc * e2[2],
       ]);
     }
-    const hs = Math.max(rCut * 1.30, R * 1.18);
-    const ht = Math.max(rCut * 1.24, R * 1.12);
+    const hs = rCut < R * 0.72 ? Math.max(rCut * 1.18, R * 0.38) : Math.max(rCut * 1.15, R * 1.108);
+    const ht = rCut < R * 0.72 ? Math.max(rCut * 1.16, R * 0.36) : Math.max(rCut * 1.14, R * 1.105);
     return [
       [-hs, -ht],
       [hs, -ht],
@@ -4205,8 +4233,13 @@ export function compactPlaneAnchorPoints(
       const tMaxC = Math.max(...pCoords.map((c) => c.t));
       const midSC = (sMinC + sMaxC) * 0.5;
       const midTC = (tMinC + tMaxC) * 0.5;
-      const hs = Math.max((sMaxC - sMinC) * 0.5 * 1.28, maxParentR * 1.24);
-      const ht = Math.max((tMaxC - tMinC) * 0.5 * 1.24, maxParentR * 1.18);
+      const hasConeSolid = cylConeSolids.some((s) => s.curved_kind === "cone");
+      const hs = hasConeSolid
+        ? Math.max((sMaxC - sMinC) * 0.5 * 1.18, maxParentR * 0.28)
+        : Math.max((sMaxC - sMinC) * 0.5 * 1.13, maxParentR * 1.115);
+      const ht = hasConeSolid
+        ? Math.max((tMaxC - tMinC) * 0.5 * 1.16, maxParentR * 0.26)
+        : Math.max((tMaxC - tMinC) * 0.5 * 1.12, maxParentR * 1.11);
       const curvedBox: Vec3[] = [
         [midSC - hs, midTC - ht],
         [midSC + hs, midTC - ht],
@@ -4226,8 +4259,8 @@ export function compactPlaneAnchorPoints(
     if (conicCut.type === "circle3" && conicCut.radius_sq) {
       const r = Math.sqrt(Math.max(0, toNumber(conicCut.radius_sq)));
       const [e1, e2] = orthonormalBasisOnPlane(u);
-      const hs = r * 1.28;
-      const ht = r * 1.24;
+      const hs = r * 1.16;
+      const ht = r * 1.14;
       return [
         [-hs, -ht],
         [hs, -ht],
@@ -4254,8 +4287,8 @@ export function compactPlaneAnchorPoints(
       const dm = Math.hypot(...m) || 1;
       const e1: Vec3 = [M[0] / dM, M[1] / dM, M[2] / dM];
       const e2: Vec3 = [m[0] / dm, m[1] / dm, m[2] / dm];
-      const hs = a * 1.28;
-      const ht = b * 1.24;
+      const hs = a * 1.16;
+      const ht = b * 1.14;
       return [
         [-hs, -ht],
         [hs, -ht],
@@ -4453,16 +4486,277 @@ export function resolveStudiedPlaneVisualStyle(
  *   mặt phẳng mở rộng chứ không phải mặt tam giác `△SAC`/`△SBD`, đồng thời không phình thành tấm chữ nhật lớn che khuất hình chóp.
  * - Bất biến theo góc quay camera (không giật/nhấp nháy khi Orbit), có lệch nhẹ theo `rank` khi nhiều mặt phẳng cùng xuất hiện để hai biên không trùng khít.
  */
-export function computeBoundedStudiedPlanePolygon(
+export type PlaneVisualizationMode =
+  | "MINIMAL_GEOMETRY"
+  | "COMPACT_PLANE_PATCH"
+  | "CONTROLLED_EXTENDED_PATCH";
+
+export interface AdaptivePlaneVisualizationDecision {
+  mode: PlaneVisualizationMode;
+  reason: string;
+  suppressPlaneSurface: boolean;
+  patchVertices: Vec3[];
+}
+
+function orderCoplanarTriangleCCW(pts: readonly [Vec3, Vec3, Vec3], unitNormal: Vec3): Vec3[] {
+  const [a, b, c] = pts;
+  const ab: Vec3 = [b[0] - a[0], b[1] - a[1], b[2] - a[2]];
+  const ac: Vec3 = [c[0] - a[0], c[1] - a[1], c[2] - a[2]];
+  const cx = ab[1] * ac[2] - ab[2] * ac[1];
+  const cy = ab[2] * ac[0] - ab[0] * ac[2];
+  const cz = ab[0] * ac[1] - ab[1] * ac[0];
+  const areaSq = cx * cx + cy * cy + cz * cz;
+  const maxEdgeSq = Math.max(
+    ab[0] * ab[0] + ab[1] * ab[1] + ab[2] * ab[2],
+    ac[0] * ac[0] + ac[1] * ac[1] + ac[2] * ac[2],
+    1e-6,
+  );
+  if (Math.sqrt(areaSq) <= Math.max(1e-6, maxEdgeSq * 1e-4)) return [];
+  const orient = cx * unitNormal[0] + cy * unitNormal[1] + cz * unitNormal[2];
+  return orient >= 0 ? [a, b, c] : [a, c, b];
+}
+
+function extractExplicitDefiningTriangle(
+  scene: Pick<Scene3D, "objects"> & Partial<Pick<Scene3D, "events">>,
+  planeObj: SceneObject,
+  origin: Vec3,
+  unitNormal: Vec3,
+  epsPlane: number,
+  includeInterceptPolygon = false,
+): { tri: [Vec3, Vec3, Vec3]; idSet: Set<string> } | null {
+  const uniquePts: Vec3[] = [];
+  const idSet = new Set<string>();
+  const tryPush = (p: Vec3, id?: string) => {
+    const dist = (p[0] - origin[0]) * unitNormal[0] + (p[1] - origin[1]) * unitNormal[1] + (p[2] - origin[2]) * unitNormal[2];
+    if (Math.abs(dist) > epsPlane * 3) return;
+    const proj: Vec3 = [p[0] - dist * unitNormal[0], p[1] - dist * unitNormal[1], p[2] - dist * unitNormal[2]];
+    if (id) idSet.add(id);
+    if (!uniquePts.some((q) => Math.hypot(q[0] - proj[0], q[1] - proj[1], q[2] - proj[2]) <= 1e-5)) {
+      uniquePts.push(proj);
+    }
+  };
+
+  for (const depId of planeObj.depends ?? []) {
+    const depObj = scene.objects.find((o) => o.id === depId && o.type === "point3" && o.xyz);
+    if (depObj?.xyz) tryPush(toVec3(depObj.xyz), depObj.id);
+  }
+  if (uniquePts.length < 3 && includeInterceptPolygon) {
+    const wrap: Scene3D = { free_objects: [], objects: scene.objects, events: scene.events ?? [] };
+    for (const poly of scene.objects) {
+      if (poly.type === "polygon3" && isCoordinatePlaneInterceptPolygon(wrap, poly)) {
+        const verts = poly.polygon ?? poly.vertices ?? [];
+        const vIds = poly.vertex_ids ?? [];
+        for (let i = 0; i < verts.length; i += 1) {
+          tryPush(toVec3(verts[i]), vIds[i]);
+        }
+      }
+    }
+  }
+  if (uniquePts.length < 3) return null;
+
+  let bestTri: [Vec3, Vec3, Vec3] | null = null;
+  let bestAreaSq = 0;
+  for (let i = 0; i < uniquePts.length - 2; i += 1) {
+    for (let j = i + 1; j < uniquePts.length - 1; j += 1) {
+      for (let k = j + 1; k < uniquePts.length; k += 1) {
+        const a = uniquePts[i], b = uniquePts[j], c = uniquePts[k];
+        const ab: Vec3 = [b[0] - a[0], b[1] - a[1], b[2] - a[2]];
+        const ac: Vec3 = [c[0] - a[0], c[1] - a[1], c[2] - a[2]];
+        const cx = ab[1] * ac[2] - ab[2] * ac[1];
+        const cy = ab[2] * ac[0] - ab[0] * ac[2];
+        const cz = ab[0] * ac[1] - ab[1] * ac[0];
+        const aSq = cx * cx + cy * cy + cz * cz;
+        if (aSq > bestAreaSq) {
+          bestAreaSq = aSq;
+          bestTri = [a, b, c];
+        }
+      }
+    }
+  }
+  if (!bestTri) return null;
+  const ordered = orderCoplanarTriangleCCW(bestTri, unitNormal);
+  if (ordered.length !== 3) return null;
+  return { tri: [ordered[0], ordered[1], ordered[2]], idSet };
+}
+
+function pointInsideOrOnTriangle3D(
+  pt: Vec3,
+  tri: readonly [Vec3, Vec3, Vec3],
+  origin: Vec3,
+  unitNormal: Vec3,
+  tol: number,
+): boolean {
+  const distPlane = Math.abs(
+    (pt[0] - origin[0]) * unitNormal[0] + (pt[1] - origin[1]) * unitNormal[1] + (pt[2] - origin[2]) * unitNormal[2],
+  );
+  if (distPlane > tol) return false;
+  const [b1, b2] = orthonormalBasisOnPlane(unitNormal);
+  const to2D = (v: Vec3) => ({
+    s: (v[0] - origin[0]) * b1[0] + (v[1] - origin[1]) * b1[1] + (v[2] - origin[2]) * b1[2],
+    t: (v[0] - origin[0]) * b2[0] + (v[1] - origin[1]) * b2[1] + (v[2] - origin[2]) * b2[2],
+  });
+  const p2 = to2D(pt);
+  const verts = tri.map(to2D);
+  let signedTwice = 0;
+  for (let i = 0; i < 3; i += 1) {
+    const a = verts[i], b = verts[(i + 1) % 3];
+    signedTwice += a.s * b.t - a.t * b.s;
+  }
+  const orient = signedTwice >= 0 ? 1 : -1;
+  for (let i = 0; i < 3; i += 1) {
+    const a = verts[i], b = verts[(i + 1) % 3];
+    const es = b.s - a.s, et = b.t - a.t;
+    const len = Math.hypot(es, et);
+    if (len <= 1e-9) continue;
+    const signedDist = orient * ((es * (p2.t - a.t) - et * (p2.s - a.s)) / len);
+    if (signedDist < -tol) return false;
+  }
+  return true;
+}
+
+function buildControlledExtendedConvexPatch(
+  corePts: readonly Vec3[],
+  exteriorPts: readonly Vec3[],
+  origin: Vec3,
+  unitNormal: Vec3,
+  padRatio = 0.04,
+): Vec3[] {
+  const [b1, b2] = orthonormalBasisOnPlane(unitNormal);
+  const pts2D: { s: number; t: number }[] = [];
+  for (const p of [...corePts, ...exteriorPts]) {
+    const s = (p[0] - origin[0]) * b1[0] + (p[1] - origin[1]) * b1[1] + (p[2] - origin[2]) * b1[2];
+    const t = (p[0] - origin[0]) * b2[0] + (p[1] - origin[1]) * b2[1] + (p[2] - origin[2]) * b2[2];
+    if (!pts2D.some((q) => Math.hypot(q.s - s, q.t - t) <= 1e-5)) {
+      pts2D.push({ s, t });
+    }
+  }
+  const hull = convexHull2D(pts2D);
+  if (hull.length < 3) return [];
+  let hullDiag = 0;
+  for (let i = 0; i < hull.length; i += 1) {
+    for (let j = i + 1; j < hull.length; j += 1) {
+      hullDiag = Math.max(hullDiag, Math.hypot(hull[i].s - hull[j].s, hull[i].t - hull[j].t));
+    }
+  }
+  const pad = Math.max(1e-3, hullDiag * padRatio);
+  const m = hull.length;
+  const out: Vec3[] = [];
+  for (let i = 0; i < m; i += 1) {
+    const prev = hull[(i - 1 + m) % m];
+    const curr = hull[i];
+    const next = hull[(i + 1) % m];
+    const inS = curr.s - prev.s, inT = curr.t - prev.t;
+    const outS = next.s - curr.s, outT = next.t - curr.t;
+    const inLen = Math.hypot(inS, inT) || 1;
+    const outLen = Math.hypot(outS, outT) || 1;
+    const nInS = inT / inLen, nInT = -inS / inLen;
+    const nOutS = outT / outLen, nOutT = -outS / outLen;
+    const bisS = nInS + nOutS, bisT = nInT + nOutT;
+    const bisLen = Math.hypot(bisS, bisT);
+    const uS = bisLen > 1e-6 ? bisS / bisLen : nOutS;
+    const uT = bisLen > 1e-6 ? bisT / bisLen : nOutT;
+    const denom = Math.max(0.35, uS * nOutS + uT * nOutT);
+    const ps = curr.s + uS * (pad / denom);
+    const pt = curr.t + uT * (pad / denom);
+    out.push([
+      origin[0] + ps * b1[0] + pt * b2[0],
+      origin[1] + ps * b1[1] + pt * b2[1],
+      origin[2] + ps * b1[2] + pt * b2[2],
+    ]);
+  }
+  return out;
+}
+
+/**
+ * Resolves the internal adaptive visualization mode for a mathematical plane:
+ * - `MINIMAL_GEOMETRY`: minimal defining triangle / retired plane once completed section dominates.
+ * - `COMPACT_PLANE_PATCH`: local finite patch for multi-plane intersections, tangent/perp/conic relations.
+ * - `CONTROLLED_EXTENDED_PATCH`: minimal tight convex extension around relevant exterior witness points.
+ */
+export function resolveAdaptivePlaneVisualization(
   scene: Pick<Scene3D, "objects"> & Partial<Pick<Scene3D, "events">>,
   planeObj: SceneObject,
   visibleObjects: readonly SceneObject[],
-): Vec3[] {
-  if (planeObj.type !== "plane3" || !planeObj.point || !planeObj.normal) return [];
-  if (visibleObjects.some((x) => x.type === "curved_solid") || scene.objects.some((x) => x.type === "curved_solid")) {
-    return [];
+  opts?: { completedPolySectionActive?: boolean; auxiliaryShown?: boolean; directlySelected?: boolean },
+): AdaptivePlaneVisualizationDecision {
+  if (planeObj.type !== "plane3" || !planeObj.point || !planeObj.normal) {
+    return { mode: "COMPACT_PLANE_PATCH", reason: "not_a_plane3", suppressPlaneSurface: false, patchVertices: [] };
   }
-  const hasCutResult = scene.objects.some(
+  const hasCurved =
+    visibleObjects.some((x) => x.type === "curved_solid") || scene.objects.some((x) => x.type === "curved_solid");
+  if (hasCurved) {
+    return {
+      mode: "COMPACT_PLANE_PATCH",
+      reason: "curved_solid_relation_patch",
+      suppressPlaneSurface: false,
+      patchVertices: compactPlaneAnchorPoints(scene, planeObj, visibleObjects),
+    };
+  }
+
+  const hasSolidInScene = scene.objects.some((x) => x.type === "solid");
+  if (hasSolidInScene && !visibleObjects.some((x) => x.type === "solid")) {
+    return { mode: "MINIMAL_GEOMETRY", reason: "solid_not_yet_visible", suppressPlaneSurface: false, patchVertices: [] };
+  }
+
+  const p0 = toVec3(planeObj.point);
+  const nRaw = toVec3(planeObj.normal);
+  const dn = Math.hypot(...nRaw);
+  if (!(dn > 1e-9)) {
+    return { mode: "COMPACT_PLANE_PATCH", reason: "degenerate_normal", suppressPlaneSurface: false, patchVertices: [] };
+  }
+  const u: Vec3 = [nRaw[0] / dn, nRaw[1] / dn, nRaw[2] / dn];
+  const allFinite = diemHuuHan([...scene.objects]);
+  if (allFinite.length === 0) {
+    return { mode: "COMPACT_PLANE_PATCH", reason: "empty_bounds", suppressPlaneSurface: false, patchVertices: [] };
+  }
+  const dk = Math.max(duongKinhCanh(allFinite), 1);
+  const epsPlane = Math.max(dk * 1e-4, 1e-7);
+
+  if (!hasSolidInScene) {
+    const hasOffPlane3D = allFinite.some(
+      (p) => Math.abs((p[0] - p0[0]) * u[0] + (p[1] - p0[1]) * u[1] + (p[2] - p0[2]) * u[2]) > epsPlane * 5,
+    );
+    if (!hasOffPlane3D) {
+      return { mode: "COMPACT_PLANE_PATCH", reason: "planar_scene", suppressPlaneSurface: false, patchVertices: [] };
+    }
+    const defTriInfo = extractExplicitDefiningTriangle(scene, planeObj, p0, u, epsPlane, true);
+    if (defTriInfo) {
+      const triTol = Math.max(1e-3, dk * 0.015);
+      const exteriorWitnessFeet: Vec3[] = [];
+      for (const obj of scene.objects) {
+        for (const w of [obj.perpendicular_witness, obj.annotation?.witness]) {
+          if (w?.on === planeObj.id && w.foot) {
+            const ft = toVec3(w.foot);
+            if (!pointInsideOrOnTriangle3D(ft, defTriInfo.tri, p0, u, triTol)) {
+              exteriorWitnessFeet.push(ft);
+            }
+          }
+        }
+      }
+      if (exteriorWitnessFeet.length > 0) {
+        return {
+          mode: "CONTROLLED_EXTENDED_PATCH",
+          reason: "standalone_exterior_witness_extension",
+          suppressPlaneSurface: false,
+          patchVertices: buildControlledExtendedConvexPatch(defTriInfo.tri, exteriorWitnessFeet, p0, u, 0.04),
+        };
+      }
+      return {
+        mode: "MINIMAL_GEOMETRY",
+        reason: "standalone_defining_triangle",
+        suppressPlaneSurface: false,
+        patchVertices: [...defTriInfo.tri],
+      };
+    }
+    return {
+      mode: "COMPACT_PLANE_PATCH",
+      reason: "standalone_without_defining_triangle",
+      suppressPlaneSurface: false,
+      patchVertices: [],
+    };
+  }
+
+  const cutSections = scene.objects.filter(
     (x) =>
       (x.type === "section"
         || x.type === "circle3"
@@ -4470,6 +4764,107 @@ export function computeBoundedStudiedPlanePolygon(
         || (x.type === "polygon3" && vaiTroMien(x) === "section" && !isCoordinatePlaneInterceptPolygon(scene, x)))
       && (x.depends ?? []).includes(planeObj.id),
   );
+  const hasCutResult = cutSections.length > 0;
+  const nXY = Math.hypot(u[0], u[1]);
+  const defTriInfo = extractExplicitDefiningTriangle(scene, planeObj, p0, u, epsPlane, false);
+
+  if (hasCutResult && nXY > 0.14 && defTriInfo) {
+    const hasExtendedSectionVertices = cutSections.some((sec) => {
+      if (sec.type !== "section" && sec.type !== "polygon3") return false;
+      const vIds = sec.vertex_ids ?? [];
+      if (vIds.some((vid) => !defTriInfo.idSet.has(vid))) return true;
+      const verts = (sec.polygon ?? sec.vertices ?? []).map(toVec3);
+      return verts.length >= 4 && verts.some((pv) =>
+        defTriInfo.tri.every((tv) => Math.hypot(pv[0] - tv[0], pv[1] - tv[1], pv[2] - tv[2]) > 1e-3),
+      );
+    });
+    if (hasExtendedSectionVertices) {
+      return {
+        mode: "MINIMAL_GEOMETRY",
+        reason: "oblique_polyhedron_cut_minimal_triangle",
+        suppressPlaneSurface: Boolean(opts?.completedPolySectionActive && !opts?.auxiliaryShown && !opts?.directlySelected),
+        patchVertices: [...defTriInfo.tri],
+      };
+    }
+  }
+
+  const style = resolveStudiedPlaneVisualStyle(scene, planeObj, scene.objects);
+  if (!hasCutResult && style.coexistingCount === 1 && defTriInfo) {
+    const triTol = Math.max(1e-3, dk * 0.015);
+    const exteriorRelPts: Vec3[] = [];
+    for (const obj of scene.objects) {
+      for (const w of [obj.perpendicular_witness, obj.annotation?.witness]) {
+        if (w?.on === planeObj.id && w.foot) {
+          const ft = toVec3(w.foot);
+          if (!pointInsideOrOnTriangle3D(ft, defTriInfo.tri, p0, u, triTol)) {
+            exteriorRelPts.push(ft);
+          }
+        }
+      }
+      if (obj.type === "point3" && obj.xyz && (obj.depends ?? []).includes(planeObj.id)) {
+        const pt = toVec3(obj.xyz);
+        if (
+          Math.abs((pt[0] - p0[0]) * u[0] + (pt[1] - p0[1]) * u[1] + (pt[2] - p0[2]) * u[2]) <= epsPlane * 3
+          && !pointInsideOrOnTriangle3D(pt, defTriInfo.tri, p0, u, triTol)
+        ) {
+          exteriorRelPts.push(pt);
+        }
+      }
+    }
+    if (exteriorRelPts.length > 0) {
+      return {
+        mode: "CONTROLLED_EXTENDED_PATCH",
+        reason: "studied_plane_exterior_witness_extension",
+        suppressPlaneSurface: false,
+        patchVertices: buildControlledExtendedConvexPatch(defTriInfo.tri, exteriorRelPts, p0, u, 0.04),
+      };
+    }
+    return {
+      mode: "MINIMAL_GEOMETRY",
+      reason: "single_studied_plane_minimal_triangle",
+      suppressPlaneSurface: false,
+      patchVertices: [...defTriInfo.tri],
+    };
+  }
+
+  return {
+    mode: "COMPACT_PLANE_PATCH",
+    reason: hasCutResult ? "section_collar_patch" : "coexisting_or_point_normal_patch",
+    suppressPlaneSurface: false,
+    patchVertices: computeCompactTrapezoidPlanePolygon(scene, planeObj, visibleObjects, hasCutResult, style),
+  };
+}
+
+/**
+ * Adaptive Bounded Finite Plane Patch:
+ * Dispatches through `resolveAdaptivePlaneVisualization` (`MINIMAL_GEOMETRY`, `COMPACT_PLANE_PATCH`,
+ * or `CONTROLLED_EXTENDED_PATCH`) without inflating planes across exterior coplanar scene points.
+ */
+export function computeBoundedStudiedPlanePolygon(
+  scene: Pick<Scene3D, "objects"> & Partial<Pick<Scene3D, "events">>,
+  planeObj: SceneObject,
+  visibleObjects: readonly SceneObject[],
+): Vec3[] {
+  const decision = resolveAdaptivePlaneVisualization(scene, planeObj, visibleObjects);
+  if (decision.mode === "COMPACT_PLANE_PATCH") {
+    const hasCurved =
+      visibleObjects.some((x) => x.type === "curved_solid") || scene.objects.some((x) => x.type === "curved_solid");
+    if (hasCurved) return [];
+  }
+  return decision.patchVertices;
+}
+
+function computeCompactTrapezoidPlanePolygon(
+  scene: Pick<Scene3D, "objects"> & Partial<Pick<Scene3D, "events">>,
+  planeObj: SceneObject,
+  visibleObjects: readonly SceneObject[],
+  hasCutResult: boolean,
+  style: StudiedPlaneVisualStyle,
+): Vec3[] {
+  if (planeObj.type !== "plane3" || !planeObj.point || !planeObj.normal) return [];
+  if (visibleObjects.some((x) => x.type === "curved_solid") || scene.objects.some((x) => x.type === "curved_solid")) {
+    return [];
+  }
   const hasSolidInScene = scene.objects.some((x) => x.type === "solid");
   if (hasSolidInScene && !visibleObjects.some((x) => x.type === "solid")) return [];
 
@@ -4497,8 +4892,6 @@ export function computeBoundedStudiedPlanePolygon(
     if (obj.type === "point3" && obj.xyz) candidates.push(toVec3(obj.xyz));
     else if (obj.type === "solid" && obj.vertices) {
       for (const v of obj.vertices) candidates.push(toVec3(v));
-    } else if ((obj.type === "section" || obj.type === "polygon3") && (obj.depends ?? []).includes(planeObj.id)) {
-      for (const v of obj.polygon ?? obj.vertices ?? []) candidates.push(toVec3(v));
     }
   }
   for (const pierce of planeSolidEdgeIntersections(planeObj, scene.objects)) {
@@ -4531,13 +4924,11 @@ export function computeBoundedStudiedPlanePolygon(
   );
   if (hullCheck.length < 3) return [];
 
-  const style = resolveStudiedPlaneVisualStyle(scene, planeObj, scene.objects);
   const cutCollarScale = hasCutResult ? 0.68 : 1.0;
   const multiScale = (style.coexistingCount >= 2 ? 0.92 : 1.0) * cutCollarScale;
   const rankDelta = style.coexistingCount >= 2 ? (style.rank % 3) * 0.022 * dk : 0;
 
   const nXY = Math.hypot(u[0], u[1]);
-  // Trường hợp 1: Mặt phẳng nghiêng hoặc thẳng đứng (có giao tuyến ngang eHoriz xác định) → dựng tấm tứ giác hình thang phối cảnh SGK
   if (nXY > 0.14) {
     const eHoriz: Vec3 = [-u[1] / nXY, u[0] / nXY, 0];
     const eSlope: Vec3 = [(-u[2] * u[0]) / nXY, (-u[2] * u[1]) / nXY, nXY];
@@ -4600,16 +4991,6 @@ export function computeBoundedStudiedPlanePolygon(
         sTopHi = midTop + 0.19 * sWidth;
       }
     }
-    const tSpanPatch = Math.max(tTop - tBot, 1e-6);
-    const containMargin = Math.min(latPad * 0.72, shoulderPad * 0.85);
-    for (const pt of stPts) {
-      const alpha = Math.max(0, Math.min(1, (pt.t - tBot) / tSpanPatch));
-      if (alpha <= 1e-4) continue;
-      const reqTopLo = ((pt.s - containMargin) - (1 - alpha) * sBotLo) / alpha;
-      const reqTopHi = ((pt.s + containMargin) - (1 - alpha) * sBotHi) / alpha;
-      if (reqTopLo < sTopLo) sTopLo = reqTopLo;
-      if (reqTopHi > sTopHi) sTopHi = reqTopHi;
-    }
     sTopLo = Math.max(sTopLo, sBotLo + 0.02 * latPad);
     sTopHi = Math.min(sTopHi, sBotHi - 0.02 * latPad);
     if (sTopHi <= sTopLo + 1e-4) {
@@ -4631,7 +5012,6 @@ export function computeBoundedStudiedPlanePolygon(
     ];
   }
 
-  // Trường hợp 2: Mặt phẳng nằm ngang / gần ngang → dựng hình chữ nhật 4 đỉnh theo hệ trục trực chuẩn trên mặt phẳng
   const sVals = coplanarPts.map((p) => (p[0] - p0[0]) * b1[0] + (p[1] - p0[1]) * b1[1] + (p[2] - p0[2]) * b1[2]);
   const tVals = coplanarPts.map((p) => (p[0] - p0[0]) * b2[0] + (p[1] - p0[1]) * b2[1] + (p[2] - p0[2]) * b2[2]);
   const sMin = Math.min(...sVals), sMax = Math.max(...sVals);

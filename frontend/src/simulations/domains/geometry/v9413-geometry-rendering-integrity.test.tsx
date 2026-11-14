@@ -18,8 +18,9 @@ import { veKhongGian } from "./scene3d-chart";
 import {
   compactPlaneAnchorPoints,
   computeBoundedStudiedPlanePolygon,
-  planeSolidEdgeIntersections,
   replaceRawSceneIdTokens,
+  resolveAdaptivePlaneVisualization,
+  resolvePlaneSectionVisibility,
   resolveStudentObjectPresentation,
 } from "./scene3d-semantic-policy";
 import { evaluateStudentPresentationPolicy } from "./scene3d-student-presentation-policy";
@@ -38,47 +39,8 @@ function getSampleScene(id: string): Scene3D {
   return extractEnvelopeScene3d(sample.envelope);
 }
 
-function sub3(a: Vec3, b: Vec3): Vec3 {
-  return [a[0] - b[0], a[1] - b[1], a[2] - b[2]];
-}
-
 function dot3(a: Vec3, b: Vec3): number {
   return a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
-}
-
-function cross3(a: Vec3, b: Vec3): Vec3 {
-  return [
-    a[1] * b[2] - a[2] * b[1],
-    a[2] * b[0] - a[0] * b[2],
-    a[0] * b[1] - a[1] * b[0],
-  ];
-}
-
-function minEdgeDistanceInPlane(p: Vec3, poly: Vec3[], rawNormal: Vec3): number {
-  const nLen = Math.hypot(...rawNormal);
-  const n: Vec3 = [rawNormal[0] / nLen, rawNormal[1] / nLen, rawNormal[2] / nLen];
-  const planeDist = Math.abs(dot3(sub3(p, poly[0]), n));
-  if (planeDist > 1e-3) return -planeDist;
-
-  // Signed winding relative to n
-  let signedTwiceArea = 0;
-  for (let i = 0; i < poly.length; i += 1) {
-    const a = sub3(poly[i], poly[0]);
-    const b = sub3(poly[(i + 1) % poly.length], poly[0]);
-    signedTwiceArea += dot3(n, cross3(a, b));
-  }
-  const orient = signedTwiceArea >= 0 ? 1 : -1;
-  let minMargin = Infinity;
-  for (let i = 0; i < poly.length; i += 1) {
-    const a = poly[i];
-    const b = poly[(i + 1) % poly.length];
-    const edge = sub3(b, a);
-    const edgeLen = Math.hypot(...edge);
-    if (edgeLen <= 1e-9) continue;
-    const edgeDist = orient * (dot3(n, cross3(edge, sub3(p, a))) / edgeLen);
-    if (edgeDist < minMargin) minMargin = edgeDist;
-  }
-  return minMargin;
 }
 
 function scaleExactNumber(value: string, factor: number): string {
@@ -138,95 +100,103 @@ function cloneAndScaleScene(raw: Scene3D, factor: number): Scene3D {
 }
 
 describe("AXO V9.4.13 — Geometry Rendering Integrity & Consistency", () => {
-  it("BUG-FE-001: bounded plane patch contains all coplanar anchors and section vertices (no floating E/F/P)", () => {
-    const cases: { id: string; planeId: string; step?: number }[] = [
-      { id: "chop-thiet-dien-ba-diem", planeId: "mp_MNP", step: 10 },
-      { id: "chop-thiet-dien-ba-diem", planeId: "mp_MNP" },
-      { id: "lang-tru-tam-giac-thiet-dien", planeId: "mp_NPQ" },
-      { id: "lap-phuong-thiet-dien-bat-ky", planeId: "mp_MNP" },
+  it("BUG-FE-001: oblique 3-point cutting planes render minimal defining triangle, retire cleanly on section completion, and keep all catalog plane patches coplanar", () => {
+    const cases: {
+      id: string;
+      planeId: string;
+      intermediateStep: number;
+      expectedSectionVertices: number;
+    }[] = [
+      { id: "chop-thiet-dien-ba-diem", planeId: "mp_MNP", intermediateStep: 10, expectedSectionVertices: 5 },
+      { id: "lang-tru-tam-giac-thiet-dien", planeId: "mp_NPQ", intermediateStep: 10, expectedSectionVertices: 5 },
+      { id: "lap-phuong-thiet-dien-bat-ky", planeId: "mp_MNP", intermediateStep: 10, expectedSectionVertices: 6 },
     ];
-
-    const collectRealCoplanarPoints = (
-      planeObj: SceneObject,
-      vis: readonly SceneObject[],
-      scale: number,
-    ): Vec3[] => {
-      const p0 = toVec3(planeObj.point!);
-      const nRaw = toVec3(planeObj.normal!);
-      const nLen = Math.hypot(...nRaw);
-      const u: Vec3 = [nRaw[0] / nLen, nRaw[1] / nLen, nRaw[2] / nLen];
-      const tol = 1e-4 * scale;
-      const out: Vec3[] = [...planeSolidEdgeIntersections(planeObj, vis)];
-      for (const obj of vis) {
-        if (obj.type === "point3" && obj.xyz) out.push(toVec3(obj.xyz));
-        else if (obj.type === "solid" && Array.isArray(obj.vertices)) {
-          for (const sv of obj.vertices) out.push(toVec3(sv));
-        } else if (
-          (obj.type === "section" || obj.type === "polygon3")
-          && (obj.depends ?? []).includes(planeObj.id)
-        ) {
-          for (const pv of obj.polygon ?? obj.vertices ?? []) out.push(toVec3(pv));
-        }
-      }
-      return out.filter(
-        (p) => Math.abs((p[0] - p0[0]) * u[0] + (p[1] - p0[1]) * u[1] + (p[2] - p0[2]) * u[2]) <= tol,
-      );
-    };
 
     for (const tc of cases) {
       const scene = veKhongGian(getSampleScene(tc.id));
-      const vis = tc.step !== undefined ? objectsAt(scene, tc.step) : scene.objects;
-      const planeObj = (vis.find((o) => o.id === tc.planeId) ?? vis.find((o) => o.render === "surface"))!;
-      expect(planeObj).toBeDefined();
-      const bounded = computeBoundedStudiedPlanePolygon(scene, planeObj, vis);
-      expect(bounded.length).toBeGreaterThanOrEqual(3);
-
       const scale = Math.max(duongKinhCanh(diemHuuHan(scene.objects)), 1);
-      const planeNormal = toVec3(planeObj.normal!);
-      const mustContain = collectRealCoplanarPoints(planeObj, vis, scale);
-      expect(mustContain.length).toBeGreaterThanOrEqual(3);
+      const visMid = objectsAt(scene, tc.intermediateStep);
+      const planeMid = visMid.find((o) => o.id === tc.planeId)!;
+      expect(planeMid).toBeDefined();
 
-      for (const pt of mustContain) {
-        const margin = minEdgeDistanceInPlane(pt, bounded, planeNormal);
-        expect(
-          margin,
-          `${tc.id} (step=${tc.step ?? "final"}, plane=${planeObj.id}) pt=${JSON.stringify(pt)} outside bounded=${JSON.stringify(bounded)}`,
-        ).toBeGreaterThanOrEqual(-1e-4 * scale);
+      const decMid = resolveAdaptivePlaneVisualization(scene, planeMid, visMid);
+      expect(decMid.mode).toBe("MINIMAL_GEOMETRY");
+      const boundedMid = computeBoundedStudiedPlanePolygon(scene, planeMid, visMid);
+      expect(boundedMid.length).toBe(3);
+
+      const visDecMid = resolvePlaneSectionVisibility(scene, planeMid, tc.intermediateStep, false);
+      expect(visDecMid.visible).toBe(true);
+
+      const lastStep = Math.max(0, stepCount(scene) - 1);
+      const planeFinal = scene.objects.find((o) => o.id === tc.planeId)!;
+      const visDecFinal = resolvePlaneSectionVisibility(scene, planeFinal, lastStep, false);
+      expect(visDecFinal.visible).toBe(false);
+      expect(visDecFinal.lifecycleStage).toBe("retired_scaffold");
+
+      // Completed section polygon carries all exact edge intersection vertices
+      const sectionObj = scene.objects.find((o) => o.type === "section" && (o.depends ?? []).includes(tc.planeId))!;
+      expect(sectionObj).toBeDefined();
+      const secVerts = (sectionObj.polygon ?? sectionObj.vertices ?? []).map((v) => toVec3(v));
+      expect(secVerts.length).toBe(tc.expectedSectionVertices);
+
+      const p0 = toVec3(planeFinal.point!);
+      const nRaw = toVec3(planeFinal.normal!);
+      const nLen = Math.hypot(...nRaw);
+      const u: Vec3 = [nRaw[0] / nLen, nRaw[1] / nLen, nRaw[2] / nLen];
+      for (const v of [...boundedMid, ...secVerts]) {
+        const dist = Math.abs(dot3([v[0] - p0[0], v[1] - p0[1], v[2] - p0[2]], u));
+        expect(dist, `${tc.id} off-plane`).toBeLessThanOrEqual(1e-4 * scale);
       }
     }
 
-    // Universal catalog sweep across all samples with section + plane3
+    // Universal catalog sweep: every rendered bounded/compact patch across all 22 samples is strictly coplanar and non-degenerate
     for (const sample of GEOMETRY_SAMPLES) {
       const scene = veKhongGian(extractEnvelopeScene3d(sample.envelope));
       const scale = Math.max(duongKinhCanh(diemHuuHan(scene.objects)), 1);
       const planes = scene.objects.filter((o) => o.render === "surface");
       for (const planeObj of planes) {
         const bounded = computeBoundedStudiedPlanePolygon(scene, planeObj, scene.objects);
-        if (bounded.length < 3) continue;
-        const planeNormal = toVec3(planeObj.normal!);
-        for (const pt of collectRealCoplanarPoints(planeObj, scene.objects, scale)) {
-          const margin = minEdgeDistanceInPlane(pt, bounded, planeNormal);
-          expect(
-            margin,
-            `catalog ${sample.id} plane=${planeObj.id} pt=${JSON.stringify(pt)} outside bounded`,
-          ).toBeGreaterThanOrEqual(-1e-4 * scale);
+        const compact = bounded.length < 3 ? compactPlaneAnchorPoints(scene, planeObj, scene.objects) : [];
+        const patch = bounded.length >= 3 ? bounded : compact;
+        if (patch.length === 0) continue;
+        expect(patch.length, `${sample.id} (${planeObj.id})`).toBeGreaterThanOrEqual(3);
+
+        const p0 = toVec3(planeObj.point!);
+        const nRaw = toVec3(planeObj.normal!);
+        const nLen = Math.hypot(...nRaw);
+        const u: Vec3 = [nRaw[0] / nLen, nRaw[1] / nLen, nRaw[2] / nLen];
+        let maxDiag = 0;
+        for (let i = 0; i < patch.length; i += 1) {
+          const v = patch[i];
+          const err = Math.abs(dot3([v[0] - p0[0], v[1] - p0[1], v[2] - p0[2]], u));
+          expect(err, `catalog ${sample.id} plane=${planeObj.id} off-plane`).toBeLessThanOrEqual(1e-4 * scale);
+          for (let j = i + 1; j < patch.length; j += 1) {
+            maxDiag = Math.max(
+              maxDiag,
+              Math.hypot(v[0] - patch[j][0], v[1] - patch[j][1], v[2] - patch[j][2]),
+            );
+          }
         }
+        expect(maxDiag, `catalog ${sample.id} plane=${planeObj.id} degenerate`).toBeGreaterThan(1e-3);
       }
     }
   });
 
-  it("BUG-FE-002: Oxyz standalone plane (P) expands cleanly around triangle ABC without solid in scene", () => {
+  it("BUG-FE-002: Oxyz standalone plane (P) uses minimal defining triangle ABC without outer 4-gon expansion", () => {
     const scene = veKhongGian(getSampleScene("oxyz-giao-diem-duong-mat"));
     const planeP = scene.objects.find((o) => o.render === "surface")!;
     expect(planeP).toBeDefined();
+
+    const dec = resolveAdaptivePlaneVisualization(scene, planeP, scene.objects);
+    expect(dec.mode).toBe("MINIMAL_GEOMETRY");
+
     const bounded = computeBoundedStudiedPlanePolygon(scene, planeP, scene.objects);
-    expect(bounded.length).toBeGreaterThanOrEqual(4);
+    expect(bounded.length).toBe(3);
 
     const triPts = ["A", "B", "C"].map((id) => toVec3(scene.objects.find((o) => o.id === id)!.xyz!));
-    const n = toVec3(planeP.normal!);
     for (const p of triPts) {
-      const margin = minEdgeDistanceInPlane(p, bounded, n);
-      expect(margin).toBeGreaterThan(0.05);
+      const minD = Math.min(...bounded.map((v) => Math.hypot(v[0] - p[0], v[1] - p[1], v[2] - p[2])));
+      expect(minD).toBeLessThan(1e-6);
     }
   });
 

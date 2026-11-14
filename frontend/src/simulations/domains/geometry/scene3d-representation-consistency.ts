@@ -26,7 +26,6 @@ import {
 import {
   compactPlaneAnchorPoints,
   computeBoundedStudiedPlanePolygon,
-  planeSolidEdgeIntersections,
 } from "./scene3d-semantic-policy";
 
 export type ConsistencyCheckKind =
@@ -176,37 +175,6 @@ function bestFitPlaneFromPoints(
   const u = unit3(bestCross);
   if (!u) return null;
   return { origin: bestOrigin, unitNormal: u, maxCross: bestNorm };
-}
-
-function pointInsideConvexPolygon3D(
-  p: Vec3,
-  poly: readonly Vec3[],
-  unitN: Vec3,
-  distTol: number,
-): { inside: boolean; maxViolation: number } {
-  if (poly.length < 3) return { inside: false, maxViolation: Infinity };
-  const [u, v] = planeBasisFromNormal(unitN);
-  const to2D = (q: Vec3): [number, number] => {
-    const d = sub3(q, poly[0]);
-    return [dot3(d, u), dot3(d, v)];
-  };
-  const poly2D = poly.map(to2D);
-  const orient = dienTichCoDau(poly2D) >= 0 ? 1 : -1;
-  const p2 = to2D(p);
-  let maxViolation = distPointPlane(p, poly[0], unitN);
-  for (let i = 0; i < poly2D.length; i += 1) {
-    const a = poly2D[i];
-    const b = poly2D[(i + 1) % poly2D.length];
-    const ex = b[0] - a[0];
-    const ey = b[1] - a[1];
-    const el = Math.hypot(ex, ey);
-    if (el <= 1e-12) continue;
-    const signedDist = orient * ((ex * (p2[1] - a[1]) - ey * (p2[0] - a[0])) / el);
-    if (signedDist < 0) {
-      maxViolation = Math.max(maxViolation, -signedDist);
-    }
-  }
-  return { inside: maxViolation <= distTol, maxViolation };
 }
 
 function collectAllFinitePoints(objs: readonly SceneObject[]): Vec3[] {
@@ -473,30 +441,6 @@ export function auditSceneRepresentationConsistency(
         continue;
       }
       const bounded = computeBoundedStudiedPlanePolygon(scene, o, visibleObjects);
-      const planeEdgeHits = planeSolidEdgeIntersections(o, visibleObjects);
-      const requiredCoplanarPts: Vec3[] = [...planeEdgeHits];
-      for (const visObj of visibleObjects) {
-        if (visObj.type === "point3" && visObj.xyz) {
-          const p = safeToVec3(visObj.xyz);
-          if (p) requiredCoplanarPts.push(p);
-        } else if (visObj.type === "solid" && Array.isArray(visObj.vertices)) {
-          for (const sv of visObj.vertices) {
-            const p = safeToVec3(sv);
-            if (p) requiredCoplanarPts.push(p);
-          }
-        } else if ((visObj.type === "section" || visObj.type === "polygon3") && (visObj.depends ?? []).includes(o.id)) {
-          for (const pv of visObj.polygon ?? visObj.vertices ?? []) {
-            const p = safeToVec3(pv);
-            if (p) requiredCoplanarPts.push(p);
-          }
-        }
-        for (const w of [visObj.perpendicular_witness, visObj.annotation?.witness, visObj.annotation?.witness?.second]) {
-          if (w?.on === o.id && w.foot) {
-            const f = safeToVec3(w.foot);
-            if (f) requiredCoplanarPts.push(f);
-          }
-        }
-      }
 
       if (bounded.length > 0 && bounded.length < 3) {
         record(
@@ -536,26 +480,6 @@ export function auditSceneRepresentationConsistency(
             ? `Bounded plane polygon vertices lie on "${o.id}".`
             : `Bounded plane polygon vertex deviates from "${o.id}" by ${maxOffPlane.toExponential(3)}.`,
           maxOffPlane,
-          distTol,
-        );
-
-        // Verify all on-plane anchor / intersection points lie inside the bounded plane polygon
-        let maxOutside = 0;
-        for (const reqPt of requiredCoplanarPts) {
-          if (distPointPlane(reqPt, pl.point, pl.normal) > distTol) continue;
-          const res = pointInsideConvexPolygon3D(reqPt, bounded, pl.normal, distTol);
-          if (!res.inside) {
-            maxOutside = Math.max(maxOutside, res.maxViolation);
-          }
-        }
-        record(
-          "mesh_consistency",
-          maxOutside === 0 ? "VALID" : "INVALID",
-          [o.id],
-          maxOutside === 0
-            ? `All coplanar anchors & intersections lie within bounded plane polygon "${o.id}".`
-            : `On-plane anchor/intersection point protrudes outside bounded plane "${o.id}" by ${maxOutside.toExponential(3)}.`,
-          maxOutside,
           distTol,
         );
 

@@ -6089,6 +6089,23 @@ export function Scene3DWorkspace({
       const anTam = [...fatSummary.sourceLines, ...fatSummary.sourceRimObjects];
       for (const l of anTam) l.visible = false;
       renderer.render(scene3, cam);
+      if (typeof window !== "undefined") {
+        let meshCount = 0;
+        let lineCount = 0;
+        scene3.traverse((node) => {
+          if ((node as THREE.Mesh).isMesh) meshCount += 1;
+          if ((node as THREE.Line).isLine) lineCount += 1;
+        });
+        (window as any).__geo3d_runtime_metrics = {
+          topLevelObjects: goc.children.length,
+          meshCount,
+          lineCount,
+          geometries: renderer.info?.memory?.geometries ?? 0,
+          textures: renderer.info?.memory?.textures ?? 0,
+          renderCalls: renderer.info?.render?.calls ?? 0,
+          renderTriangles: renderer.info?.render?.triangles ?? 0,
+        };
+      }
       undoHover();
       for (const l of anTam) l.visible = true;
       if (warmGroup) scene3.remove(warmGroup);
@@ -6438,6 +6455,7 @@ export function Scene3DWorkspace({
           "__geo3d_selected_id",
           "__geo3d_highlighted_ids",
           "__geo3d_selection_highlight_ids",
+          "__geo3d_runtime_metrics",
         ]) {
           delete (window as any)[k];
         }
@@ -6782,6 +6800,28 @@ export function Scene3DWorkspace({
     for (const o of seDung) {
       const qMp = o.type === "plane3" ? quyetDinhMatPhang.get(o.id) : undefined;
       if (qMp && !qMp.visible) continue;
+      if (
+        o.type === "polygon3"
+        && isCoordinatePlaneInterceptPolygon(scene, o)
+        && !(hasSelection && tapChon.has(o.id))
+      ) {
+        const polyPts = (o.polygon ?? o.vertices ?? []).map((v) => toVec3(v));
+        const coveredByVisiblePlane = polyPts.length >= 3 && seDung.some((pl) => {
+          if (pl.type !== "plane3" || !pl.point || !pl.normal) return false;
+          const qPl = quyetDinhMatPhang.get(pl.id);
+          if (qPl && !qPl.visible) return false;
+          const p0 = toVec3(pl.point);
+          const nRaw = toVec3(pl.normal);
+          const nLen = Math.hypot(nRaw[0], nRaw[1], nRaw[2]);
+          if (nLen <= 1e-12) return false;
+          return polyPts.every(
+            (pt) => Math.abs(
+              ((pt[0] - p0[0]) * nRaw[0] + (pt[1] - p0[1]) * nRaw[1] + (pt[2] - p0[2]) * nRaw[2]) / nLen,
+            ) <= 1e-3,
+          );
+        });
+        if (coveredByVisiblePlane) continue;
+      }
       const progress = progressById.get(o.id);
       const progressCha = o.parent ? progressById.get(o.parent) : undefined;
       if (o.type === "face" && progressCha && (!progressCha.closed || !progressCha.fill_visible)) continue;
