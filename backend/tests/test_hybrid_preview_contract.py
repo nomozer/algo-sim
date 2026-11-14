@@ -215,6 +215,8 @@ _NOT_REFUSAL = {
     'SOURCE_EXPLICIT_SEQUENCE', 'REGISTERED_DECOMPOSITION', 'DISCOVERED_FUNCTION_COMPOSITION', 'SEARCH_EXHAUSTED', 'MISSING_PRIMITIVE',
     'SOURCE_GROUNDING_PROOF', 'GEOMETRIC_RELATION_PROOF', 'KERNEL_EXECUTION_PROOF', 'RESULT_CERTIFICATE',
     'HEIGHT_INVARIANT_ILLUSTRATIVE',  # served scene_configuration.kind, not a refusal
+    # served similarity-scale scene_configuration values (run `certified-scale-cache-safety`), not refusals
+    'SIMILARITY_SCALE_ILLUSTRATIVE', 'REPRESENTATIVE_SIMILARITY_SCALE', 'INTERNAL_CONSTRUCTION_CONVENTION',
 }
 _ROUTE_D_SOURCES = ('app/simulation/geometry_functions/registry.py', 'app/simulation/geometry_functions/planner.py',
                     'app/simulation/geometry_functions/engine.py', 'app/simulation/geometry_functions/__init__.py',

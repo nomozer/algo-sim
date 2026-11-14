@@ -55,3 +55,10 @@ def test_renaming_keeps_the_decimal_reading():
     renamed = P.format(a="2", h="3,5").replace("S.ABCD", "T.EFGH").replace("ABCD", "EFGH").replace("SA", "TE") \
         .replace("từ A", "từ E").replace("(SBC)", "(TFG)")
     assert _answers(renamed) == _answers(P.format(a="2", h="3,5"))
+
+
+def test_a_decimal_leg_of_a_right_prism_base_is_read_not_called_corrupt():
+    """Formerly a 'numeric corruption' case of test_correctness_ocr_performance; V = ½ · 3,5 · 4 · 5 = 35."""
+    status, exact = _answers("Cho hình lăng trụ đứng ABC.A'B'C' có đáy ABC là tam giác vuông tại A, AB = 3,5, AC = 4, "
+                             "AA' = 5. Tính thể tích khối lăng trụ ABC.A'B'C'.")
+    assert status == "SERVED" and exact["q1"]["coef"] == "35"

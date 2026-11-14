@@ -172,7 +172,9 @@ def test_05a_formerly_unsupported_rhombus_and_isosceles_bases_now_solve_exact(
             "SOURCE_PREMISE_UNREAD",
         ),
         (
-            "Cho hình lăng trụ đứng ABC.A'B'C' có đáy ABC là tam giác vuông tại A, AB = 3,5, AC = 4, AA' = 5. Tính thể tích khối lăng trụ ABC.A'B'C'.",
+            # run `certified-scale-cache-safety` (task B5): "3,5" is a Vietnamese DECIMAL, read as 7/2 (served, see
+            # test_decimal_comma_values.py); a genuinely corrupted number still never parses silently
+            "Cho hình lăng trụ đứng ABC.A'B'C' có đáy ABC là tam giác vuông tại A, AB = 3,5,6, AC = 4, AA' = 5. Tính thể tích khối lăng trụ ABC.A'B'C'.",
             "UNPARSED_FACT_CANDIDATE",
         ),
         (
