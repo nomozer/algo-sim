@@ -1,0 +1,3148 @@
+{
+  "browser": "158.0.8127.36",
+  "headless": true,
+  "backend": "measured_app loopback, HYBRID_ROUTE_MODE=local-first, ALLOW_LIVE_AI=0",
+  "rule": "the goal object (section polygon / intersection line / altitude / angle construction) is absent at the first step and present at the last; steps walked with the real ←/→ buttons",
+  "rows": [
+    {
+      "case": "section_one_sentence",
+      "viewport": "1920x1080",
+      "construction_only_at_conclusion": true,
+      "steps": [
+        {
+          "step": 1,
+          "of": 7,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 5,
+          "next_ms": 192.10000000149012
+        },
+        {
+          "step": 2,
+          "of": 7,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 7,
+          "next_ms": 109.89999999850988
+        },
+        {
+          "step": 3,
+          "of": 7,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 10,
+          "next_ms": 113.20000000298023
+        },
+        {
+          "step": 4,
+          "of": 7,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 11,
+          "next_ms": 124.20000000298023
+        },
+        {
+          "step": 5,
+          "of": 7,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 12,
+          "next_ms": 198.90000000596046
+        },
+        {
+          "step": 6,
+          "of": 7,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 15,
+          "next_ms": 184.90000000596046
+        },
+        {
+          "step": 7,
+          "of": 7,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "Giao tuyến trên từng mặt: (P) ∩ (SAB), (P) ∩ (SBC), (P) ∩ (SCD), (P) ∩ (SAD) ⇒ khép kín miền thiết diện tạo bởi (P) (giao tuyến trên (SAB) ∥ AB, giao tuyến trên (SBC) ∥ BC, giao tuyến trên (SCD) ∥ CD, giao tuyến trên (SAD) ∥ DA) Định lý giao tuyến song song: mặt phẳng (P) lần lượt song song với AB ⊂ (SAB), BC ⊂ (SBC), CD ⊂ (SCD), DA ⊂ (SAD), nên giao tuyến trên từng mặt tương ứng song song với cạnh đó. Trên mặt (SAB), nối M với giao điểm của SB với mặt phẳng cắt. Trên mặt (SBC), nối giao điểm của SB với mặt phẳng cắt với giao điểm của SC với mặt phẳng cắt. Trên mặt (SCD), nối giao điểm của SC với mặt phẳng cắt với giao điểm của SD với mặt phẳng cắt. Trên mặt (SAD), nối giao điểm của SD với mặt phẳng cắt với M.",
+          "rendered": 14
+        }
+      ]
+    },
+    {
+      "case": "section_one_sentence",
+      "viewport": "1366x768",
+      "construction_only_at_conclusion": true,
+      "steps": [
+        {
+          "step": 1,
+          "of": 7,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 5,
+          "next_ms": 117.20000000298023
+        },
+        {
+          "step": 2,
+          "of": 7,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 7,
+          "next_ms": 95.79999999701977
+        },
+        {
+          "step": 3,
+          "of": 7,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 10,
+          "next_ms": 117.5
+        },
+        {
+          "step": 4,
+          "of": 7,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 11,
+          "next_ms": 90.79999999701977
+        },
+        {
+          "step": 5,
+          "of": 7,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 12,
+          "next_ms": 110.30000000447035
+        },
+        {
+          "step": 6,
+          "of": 7,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 15,
+          "next_ms": 125.89999999850988
+        },
+        {
+          "step": 7,
+          "of": 7,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "Giao tuyến trên từng mặt: (P) ∩ (SAB), (P) ∩ (SBC), (P) ∩ (SCD), (P) ∩ (SAD) ⇒ khép kín miền thiết diện tạo bởi (P) (giao tuyến trên (SAB) ∥ AB, giao tuyến trên (SBC) ∥ BC, giao tuyến trên (SCD) ∥ CD, giao tuyến trên (SAD) ∥ DA) Định lý giao tuyến song song: mặt phẳng (P) lần lượt song song với AB ⊂ (SAB), BC ⊂ (SBC), CD ⊂ (SCD), DA ⊂ (SAD), nên giao tuyến trên từng mặt tương ứng song song với cạnh đó. Trên mặt (SAB), nối M với giao điểm của SB với mặt phẳng cắt. Trên mặt (SBC), nối giao điểm của SB với mặt phẳng cắt với giao điểm của SC với mặt phẳng cắt. Trên mặt (SCD), nối giao điểm của SC với mặt phẳng cắt với giao điểm của SD với mặt phẳng cắt. Trên mặt (SAD), nối giao điểm của SD với mặt phẳng cắt với M.",
+          "rendered": 14
+        }
+      ]
+    },
+    {
+      "case": "section_one_sentence",
+      "viewport": "768x1024",
+      "construction_only_at_conclusion": true,
+      "steps": [
+        {
+          "step": 1,
+          "of": 7,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 5,
+          "next_ms": 123.10000000149012
+        },
+        {
+          "step": 2,
+          "of": 7,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 7,
+          "next_ms": 110.29999999701977
+        },
+        {
+          "step": 3,
+          "of": 7,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 10,
+          "next_ms": 129
+        },
+        {
+          "step": 4,
+          "of": 7,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 11,
+          "next_ms": 117.5
+        },
+        {
+          "step": 5,
+          "of": 7,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 12,
+          "next_ms": 170.39999999850988
+        },
+        {
+          "step": 6,
+          "of": 7,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 15,
+          "next_ms": 108.60000000149012
+        },
+        {
+          "step": 7,
+          "of": 7,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "Giao tuyến trên từng mặt: (P) ∩ (SAB), (P) ∩ (SBC), (P) ∩ (SCD), (P) ∩ (SAD) ⇒ khép kín miền thiết diện tạo bởi (P) (giao tuyến trên (SAB) ∥ AB, giao tuyến trên (SBC) ∥ BC, giao tuyến trên (SCD) ∥ CD, giao tuyến trên (SAD) ∥ DA) Định lý giao tuyến song song: mặt phẳng (P) lần lượt song song với AB ⊂ (SAB), BC ⊂ (SBC), CD ⊂ (SCD), DA ⊂ (SAD), nên giao tuyến trên từng mặt tương ứng song song với cạnh đó. Trên mặt (SAB), nối M với giao điểm của SB với mặt phẳng cắt. Trên mặt (SBC), nối giao điểm của SB với mặt phẳng cắt với giao điểm của SC với mặt phẳng cắt. Trên mặt (SCD), nối giao điểm của SC với mặt phẳng cắt với giao điểm của SD với mặt phẳng cắt. Trên mặt (SAD), nối giao điểm của SD với mặt phẳng cắt với M.",
+          "rendered": 14
+        }
+      ]
+    },
+    {
+      "case": "section_one_sentence",
+      "viewport": "390x844",
+      "construction_only_at_conclusion": true,
+      "steps": [
+        {
+          "step": 1,
+          "of": 7,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 5,
+          "next_ms": 202.60000000149012
+        },
+        {
+          "step": 2,
+          "of": 7,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 7,
+          "next_ms": 127.10000000149012
+        },
+        {
+          "step": 3,
+          "of": 7,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 10,
+          "next_ms": 96.70000000298023
+        },
+        {
+          "step": 4,
+          "of": 7,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 11,
+          "next_ms": 138.39999999850988
+        },
+        {
+          "step": 5,
+          "of": 7,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 12,
+          "next_ms": 110.29999999701977
+        },
+        {
+          "step": 6,
+          "of": 7,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 15,
+          "next_ms": 118.19999999552965
+        },
+        {
+          "step": 7,
+          "of": 7,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "Giao tuyến trên từng mặt: (P) ∩ (SAB), (P) ∩ (SBC), (P) ∩ (SCD), (P) ∩ (SAD) ⇒ khép kín miền thiết diện tạo bởi (P) (giao tuyến trên (SAB) ∥ AB, giao tuyến trên (SBC) ∥ BC, giao tuyến trên (SCD) ∥ CD, giao tuyến trên (SAD) ∥ DA) Định lý giao tuyến song song: mặt phẳng (P) lần lượt song song với AB ⊂ (SAB), BC ⊂ (SBC), CD ⊂ (SCD), DA ⊂ (SAD), nên giao tuyến trên từng mặt tương ứng song song với cạnh đó. Trên mặt (SAB), nối M với giao điểm của SB với mặt phẳng cắt. Trên mặt (SBC), nối giao điểm của SB với mặt phẳng cắt với giao điểm của SC với mặt phẳng cắt. Trên mặt (SCD), nối giao điểm của SC với mặt phẳng cắt với giao điểm của SD với mặt phẳng cắt. Trên mặt (SAD), nối giao điểm của SD với mặt phẳng cắt với M.",
+          "rendered": 14
+        }
+      ]
+    },
+    {
+      "case": "section_plane_after_goal",
+      "viewport": "1366x768",
+      "construction_only_at_conclusion": true,
+      "steps": [
+        {
+          "step": 1,
+          "of": 7,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 5,
+          "next_ms": 73.90000000596046
+        },
+        {
+          "step": 2,
+          "of": 7,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 7,
+          "next_ms": 81.89999999850988
+        },
+        {
+          "step": 3,
+          "of": 7,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 10,
+          "next_ms": 103.39999999850988
+        },
+        {
+          "step": 4,
+          "of": 7,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 11,
+          "next_ms": 90.79999999701977
+        },
+        {
+          "step": 5,
+          "of": 7,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 12,
+          "next_ms": 106.79999999701977
+        },
+        {
+          "step": 6,
+          "of": 7,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 15,
+          "next_ms": 117.39999999850988
+        },
+        {
+          "step": 7,
+          "of": 7,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "Giao tuyến trên từng mặt: (P) ∩ (SAB), (P) ∩ (SBC), (P) ∩ (SCD), (P) ∩ (SAD) ⇒ khép kín miền thiết diện tạo bởi (P) (giao tuyến trên (SAB) ∥ AB, giao tuyến trên (SBC) ∥ BC, giao tuyến trên (SCD) ∥ CD, giao tuyến trên (SAD) ∥ DA) Định lý giao tuyến song song: mặt phẳng (P) lần lượt song song với AB ⊂ (SAB), BC ⊂ (SBC), CD ⊂ (SCD), DA ⊂ (SAD), nên giao tuyến trên từng mặt tương ứng song song với cạnh đó. Trên mặt (SAB), nối M với giao điểm của SB với mặt phẳng cắt. Trên mặt (SBC), nối giao điểm của SB với mặt phẳng cắt với giao điểm của SC với mặt phẳng cắt. Trên mặt (SCD), nối giao điểm của SC với mặt phẳng cắt với giao điểm của SD với mặt phẳng cắt. Trên mặt (SAD), nối giao điểm của SD với mặt phẳng cắt với M.",
+          "rendered": 14
+        }
+      ]
+    },
+    {
+      "case": "cos_line_plane",
+      "viewport": "1920x1080",
+      "construction_only_at_conclusion": true,
+      "steps": [
+        {
+          "step": 1,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 4,
+          "next_ms": 106
+        },
+        {
+          "step": 2,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 6,
+          "next_ms": 253.70000000298023
+        },
+        {
+          "step": 3,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 8,
+          "next_ms": 158.89999999850988
+        },
+        {
+          "step": 4,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 9,
+          "next_ms": 98.70000000298023
+        },
+        {
+          "step": 5,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 10,
+          "next_ms": 174.70000000298023
+        },
+        {
+          "step": 6,
+          "of": 6,
+          "angle_construction_ids": [
+            "kq_q1"
+          ],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 11
+        }
+      ]
+    },
+    {
+      "case": "cos_line_plane",
+      "viewport": "1366x768",
+      "construction_only_at_conclusion": true,
+      "steps": [
+        {
+          "step": 1,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 4,
+          "next_ms": 233.89999999850988
+        },
+        {
+          "step": 2,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 6,
+          "next_ms": 136.60000000149012
+        },
+        {
+          "step": 3,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 8,
+          "next_ms": 172.70000000298023
+        },
+        {
+          "step": 4,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 9,
+          "next_ms": 141.80000000447035
+        },
+        {
+          "step": 5,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 10,
+          "next_ms": 382.79999999701977
+        },
+        {
+          "step": 6,
+          "of": 6,
+          "angle_construction_ids": [
+            "kq_q1"
+          ],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 11
+        }
+      ]
+    },
+    {
+      "case": "cos_line_plane",
+      "viewport": "768x1024",
+      "construction_only_at_conclusion": true,
+      "steps": [
+        {
+          "step": 1,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 4,
+          "next_ms": 125.89999999850988
+        },
+        {
+          "step": 2,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 6,
+          "next_ms": 118.89999999850988
+        },
+        {
+          "step": 3,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 8,
+          "next_ms": 97.10000000149012
+        },
+        {
+          "step": 4,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 9,
+          "next_ms": 110.60000000149012
+        },
+        {
+          "step": 5,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 10,
+          "next_ms": 190.10000000149012
+        },
+        {
+          "step": 6,
+          "of": 6,
+          "angle_construction_ids": [
+            "kq_q1"
+          ],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 11
+        }
+      ]
+    },
+    {
+      "case": "cos_line_plane",
+      "viewport": "390x844",
+      "construction_only_at_conclusion": true,
+      "steps": [
+        {
+          "step": 1,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 4,
+          "next_ms": 82.79999999701977
+        },
+        {
+          "step": 2,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 6,
+          "next_ms": 73.39999999850988
+        },
+        {
+          "step": 3,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 8,
+          "next_ms": 89.70000000298023
+        },
+        {
+          "step": 4,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 9,
+          "next_ms": 87.60000000149012
+        },
+        {
+          "step": 5,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 10,
+          "next_ms": 135.70000000298023
+        },
+        {
+          "step": 6,
+          "of": 6,
+          "angle_construction_ids": [
+            "kq_q1"
+          ],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 11
+        }
+      ]
+    },
+    {
+      "case": "tan_line_plane",
+      "viewport": "1366x768",
+      "construction_only_at_conclusion": true,
+      "steps": [
+        {
+          "step": 1,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 4,
+          "next_ms": 63
+        },
+        {
+          "step": 2,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 6,
+          "next_ms": 82.79999999701977
+        },
+        {
+          "step": 3,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 8,
+          "next_ms": 89
+        },
+        {
+          "step": 4,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 9,
+          "next_ms": 96.39999999850988
+        },
+        {
+          "step": 5,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 10,
+          "next_ms": 96.89999999850988
+        },
+        {
+          "step": 6,
+          "of": 6,
+          "angle_construction_ids": [
+            "kq_q1"
+          ],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 11
+        }
+      ]
+    },
+    {
+      "case": "cos_two_planes",
+      "viewport": "1366x768",
+      "construction_only_at_conclusion": true,
+      "steps": [
+        {
+          "step": 1,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 5,
+          "next_ms": 73.5
+        },
+        {
+          "step": 2,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 10,
+          "next_ms": 84.09999999403954
+        },
+        {
+          "step": 3,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 14,
+          "next_ms": 149.10000000149012
+        },
+        {
+          "step": 4,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 15,
+          "next_ms": 109.5
+        },
+        {
+          "step": 5,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 16,
+          "next_ms": 112
+        },
+        {
+          "step": 6,
+          "of": 6,
+          "angle_construction_ids": [
+            "kq_q1"
+          ],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 17
+        }
+      ]
+    },
+    {
+      "case": "angle_plain",
+      "viewport": "1366x768",
+      "construction_only_at_conclusion": true,
+      "steps": [
+        {
+          "step": 1,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 4,
+          "next_ms": 341.20000000298023
+        },
+        {
+          "step": 2,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 6,
+          "next_ms": 196
+        },
+        {
+          "step": 3,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 8,
+          "next_ms": 188.69999999552965
+        },
+        {
+          "step": 4,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 9,
+          "next_ms": 273.5
+        },
+        {
+          "step": 5,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 10,
+          "next_ms": 257.8999999985099
+        },
+        {
+          "step": 6,
+          "of": 6,
+          "angle_construction_ids": [
+            "kq_q1"
+          ],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 11
+        }
+      ]
+    },
+    {
+      "case": "scale_iso_planes",
+      "viewport": "1366x768",
+      "construction_only_at_conclusion": true,
+      "steps": [
+        {
+          "step": 1,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 4,
+          "next_ms": 77.40000000596046
+        },
+        {
+          "step": 2,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 6,
+          "next_ms": 74
+        },
+        {
+          "step": 3,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 8,
+          "next_ms": 76.90000000596046
+        },
+        {
+          "step": 4,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 9,
+          "next_ms": 82.10000000149012
+        },
+        {
+          "step": 5,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 10,
+          "next_ms": 88.39999999850988
+        },
+        {
+          "step": 6,
+          "of": 6,
+          "angle_construction_ids": [
+            "kq_q1"
+          ],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 11
+        }
+      ]
+    },
+    {
+      "case": "scale_iso_tan",
+      "viewport": "1920x1080",
+      "construction_only_at_conclusion": true,
+      "steps": [
+        {
+          "step": 1,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 4,
+          "next_ms": 102.19999999552965
+        },
+        {
+          "step": 2,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 6,
+          "next_ms": 100.60000000149012
+        },
+        {
+          "step": 3,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 8,
+          "next_ms": 107.70000000298023
+        },
+        {
+          "step": 4,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 9,
+          "next_ms": 138.30000000447035
+        },
+        {
+          "step": 5,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 10,
+          "next_ms": 131.39999999850988
+        },
+        {
+          "step": 6,
+          "of": 6,
+          "angle_construction_ids": [
+            "kq_q1"
+          ],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 11
+        }
+      ]
+    },
+    {
+      "case": "scale_iso_tan",
+      "viewport": "1366x768",
+      "construction_only_at_conclusion": true,
+      "steps": [
+        {
+          "step": 1,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 4,
+          "next_ms": 66.29999999701977
+        },
+        {
+          "step": 2,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 6,
+          "next_ms": 72.69999999552965
+        },
+        {
+          "step": 3,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 8,
+          "next_ms": 87.79999999701977
+        },
+        {
+          "step": 4,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 9,
+          "next_ms": 84.70000000298023
+        },
+        {
+          "step": 5,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 10,
+          "next_ms": 87.70000000298023
+        },
+        {
+          "step": 6,
+          "of": 6,
+          "angle_construction_ids": [
+            "kq_q1"
+          ],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 11
+        }
+      ]
+    },
+    {
+      "case": "scale_iso_tan",
+      "viewport": "768x1024",
+      "construction_only_at_conclusion": true,
+      "steps": [
+        {
+          "step": 1,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 4,
+          "next_ms": 63.899999998509884
+        },
+        {
+          "step": 2,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 6,
+          "next_ms": 68.39999999850988
+        },
+        {
+          "step": 3,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 8,
+          "next_ms": 73.5
+        },
+        {
+          "step": 4,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 9,
+          "next_ms": 80.20000000298023
+        },
+        {
+          "step": 5,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 10,
+          "next_ms": 82.29999999701977
+        },
+        {
+          "step": 6,
+          "of": 6,
+          "angle_construction_ids": [
+            "kq_q1"
+          ],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 11
+        }
+      ]
+    },
+    {
+      "case": "scale_iso_tan",
+      "viewport": "390x844",
+      "construction_only_at_conclusion": true,
+      "steps": [
+        {
+          "step": 1,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 4,
+          "next_ms": 58.5
+        },
+        {
+          "step": 2,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 6,
+          "next_ms": 65.70000000298023
+        },
+        {
+          "step": 3,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 8,
+          "next_ms": 74.10000000149012
+        },
+        {
+          "step": 4,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 9,
+          "next_ms": 75.80000000447035
+        },
+        {
+          "step": 5,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 10,
+          "next_ms": 94.80000000447035
+        },
+        {
+          "step": 6,
+          "of": 6,
+          "angle_construction_ids": [
+            "kq_q1"
+          ],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 11
+        }
+      ]
+    },
+    {
+      "case": "shape_free_planes",
+      "viewport": "1366x768",
+      "construction_only_at_conclusion": true,
+      "steps": [
+        {
+          "step": 1,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 4,
+          "next_ms": 62
+        },
+        {
+          "step": 2,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 6,
+          "next_ms": 67.70000000298023
+        },
+        {
+          "step": 3,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 8,
+          "next_ms": 81.89999999850988
+        },
+        {
+          "step": 4,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 9,
+          "next_ms": 81.5
+        },
+        {
+          "step": 5,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 10,
+          "next_ms": 104.60000000149012
+        },
+        {
+          "step": 6,
+          "of": 6,
+          "angle_construction_ids": [
+            "kq_q1"
+          ],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 11
+        }
+      ]
+    },
+    {
+      "case": "shape_free_tan",
+      "viewport": "1920x1080",
+      "construction_only_at_conclusion": true,
+      "steps": [
+        {
+          "step": 1,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 4,
+          "next_ms": 107.39999999850988
+        },
+        {
+          "step": 2,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 6,
+          "next_ms": 106.89999999850988
+        },
+        {
+          "step": 3,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 8,
+          "next_ms": 114
+        },
+        {
+          "step": 4,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 9,
+          "next_ms": 146.5
+        },
+        {
+          "step": 5,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 10,
+          "next_ms": 270
+        },
+        {
+          "step": 6,
+          "of": 6,
+          "angle_construction_ids": [
+            "kq_q1"
+          ],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 11
+        }
+      ]
+    },
+    {
+      "case": "shape_free_tan",
+      "viewport": "1366x768",
+      "construction_only_at_conclusion": true,
+      "steps": [
+        {
+          "step": 1,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 4,
+          "next_ms": 64.80000000447035
+        },
+        {
+          "step": 2,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 6,
+          "next_ms": 73.20000000298023
+        },
+        {
+          "step": 3,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 8,
+          "next_ms": 73.19999999552965
+        },
+        {
+          "step": 4,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 9,
+          "next_ms": 90.69999999552965
+        },
+        {
+          "step": 5,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 10,
+          "next_ms": 96.60000000149012
+        },
+        {
+          "step": 6,
+          "of": 6,
+          "angle_construction_ids": [
+            "kq_q1"
+          ],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 11
+        }
+      ]
+    },
+    {
+      "case": "shape_free_tan",
+      "viewport": "768x1024",
+      "construction_only_at_conclusion": true,
+      "steps": [
+        {
+          "step": 1,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 4,
+          "next_ms": 67.29999999701977
+        },
+        {
+          "step": 2,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 6,
+          "next_ms": 62.899999998509884
+        },
+        {
+          "step": 3,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 8,
+          "next_ms": 70
+        },
+        {
+          "step": 4,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 9,
+          "next_ms": 82.89999999850988
+        },
+        {
+          "step": 5,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 10,
+          "next_ms": 97.5
+        },
+        {
+          "step": 6,
+          "of": 6,
+          "angle_construction_ids": [
+            "kq_q1"
+          ],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 11
+        }
+      ]
+    },
+    {
+      "case": "shape_free_tan",
+      "viewport": "390x844",
+      "construction_only_at_conclusion": true,
+      "steps": [
+        {
+          "step": 1,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 4,
+          "next_ms": 61.5
+        },
+        {
+          "step": 2,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 6,
+          "next_ms": 65
+        },
+        {
+          "step": 3,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 8,
+          "next_ms": 72.69999999552965
+        },
+        {
+          "step": 4,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 9,
+          "next_ms": 80.5
+        },
+        {
+          "step": 5,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 10,
+          "next_ms": 87.79999999701977
+        },
+        {
+          "step": 6,
+          "of": 6,
+          "angle_construction_ids": [
+            "kq_q1"
+          ],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 11
+        }
+      ]
+    },
+    {
+      "case": "regular_tetra_cos",
+      "viewport": "1366x768",
+      "construction_only_at_conclusion": true,
+      "steps": [
+        {
+          "step": 1,
+          "of": 7,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 4,
+          "next_ms": 67.29999999701977
+        },
+        {
+          "step": 2,
+          "of": 7,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 7,
+          "next_ms": 68.40000000596046
+        },
+        {
+          "step": 3,
+          "of": 7,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 10,
+          "next_ms": 89.79999999701977
+        },
+        {
+          "step": 4,
+          "of": 7,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 11,
+          "next_ms": 71.5
+        },
+        {
+          "step": 5,
+          "of": 7,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 12,
+          "next_ms": 88.29999999701977
+        },
+        {
+          "step": 6,
+          "of": 7,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 13,
+          "next_ms": 112
+        },
+        {
+          "step": 7,
+          "of": 7,
+          "angle_construction_ids": [
+            "kq_q1"
+          ],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 14
+        }
+      ]
+    },
+    {
+      "case": "ratio2_planes",
+      "viewport": "1366x768",
+      "construction_only_at_conclusion": true,
+      "steps": [
+        {
+          "step": 1,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 4,
+          "next_ms": 62.19999999552965
+        },
+        {
+          "step": 2,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 6,
+          "next_ms": 76.60000000149012
+        },
+        {
+          "step": 3,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 8,
+          "next_ms": 80.20000000298023
+        },
+        {
+          "step": 4,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 9,
+          "next_ms": 88.69999999552965
+        },
+        {
+          "step": 5,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 10,
+          "next_ms": 84.20000000298023
+        },
+        {
+          "step": 6,
+          "of": 6,
+          "angle_construction_ids": [
+            "kq_q1"
+          ],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 11
+        }
+      ]
+    },
+    {
+      "case": "ratio2_tan",
+      "viewport": "1920x1080",
+      "construction_only_at_conclusion": true,
+      "steps": [
+        {
+          "step": 1,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 4,
+          "next_ms": 70.89999999850988
+        },
+        {
+          "step": 2,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 6,
+          "next_ms": 94.60000000149012
+        },
+        {
+          "step": 3,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 8,
+          "next_ms": 96.40000000596046
+        },
+        {
+          "step": 4,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 9,
+          "next_ms": 105
+        },
+        {
+          "step": 5,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 10,
+          "next_ms": 162.79999999701977
+        },
+        {
+          "step": 6,
+          "of": 6,
+          "angle_construction_ids": [
+            "kq_q1"
+          ],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 11
+        }
+      ]
+    },
+    {
+      "case": "ratio2_tan",
+      "viewport": "1366x768",
+      "construction_only_at_conclusion": true,
+      "steps": [
+        {
+          "step": 1,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 4,
+          "next_ms": 67.79999999701977
+        },
+        {
+          "step": 2,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 6,
+          "next_ms": 75.89999999850988
+        },
+        {
+          "step": 3,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 8,
+          "next_ms": 74.10000000149012
+        },
+        {
+          "step": 4,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 9,
+          "next_ms": 89.39999999850988
+        },
+        {
+          "step": 5,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 10,
+          "next_ms": 98.59999999403954
+        },
+        {
+          "step": 6,
+          "of": 6,
+          "angle_construction_ids": [
+            "kq_q1"
+          ],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 11
+        }
+      ]
+    },
+    {
+      "case": "ratio2_tan",
+      "viewport": "768x1024",
+      "construction_only_at_conclusion": true,
+      "steps": [
+        {
+          "step": 1,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 4,
+          "next_ms": 61.899999998509884
+        },
+        {
+          "step": 2,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 6,
+          "next_ms": 62.5
+        },
+        {
+          "step": 3,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 8,
+          "next_ms": 81.19999999552965
+        },
+        {
+          "step": 4,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 9,
+          "next_ms": 79.5
+        },
+        {
+          "step": 5,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 10,
+          "next_ms": 95.30000000447035
+        },
+        {
+          "step": 6,
+          "of": 6,
+          "angle_construction_ids": [
+            "kq_q1"
+          ],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 11
+        }
+      ]
+    },
+    {
+      "case": "ratio2_tan",
+      "viewport": "390x844",
+      "construction_only_at_conclusion": true,
+      "steps": [
+        {
+          "step": 1,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 4,
+          "next_ms": 65.90000000596046
+        },
+        {
+          "step": 2,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 6,
+          "next_ms": 69.29999999701977
+        },
+        {
+          "step": 3,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 8,
+          "next_ms": 69.60000000149012
+        },
+        {
+          "step": 4,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 9,
+          "next_ms": 83.89999999850988
+        },
+        {
+          "step": 5,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 10,
+          "next_ms": 95.09999999403954
+        },
+        {
+          "step": 6,
+          "of": 6,
+          "angle_construction_ids": [
+            "kq_q1"
+          ],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 11
+        }
+      ]
+    },
+    {
+      "case": "ratio2_line_plane",
+      "viewport": "1366x768",
+      "construction_only_at_conclusion": true,
+      "steps": [
+        {
+          "step": 1,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 4,
+          "next_ms": 70.40000000596046
+        },
+        {
+          "step": 2,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 6,
+          "next_ms": 76.29999999701977
+        },
+        {
+          "step": 3,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 8,
+          "next_ms": 80.79999999701977
+        },
+        {
+          "step": 4,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 9,
+          "next_ms": 82.20000000298023
+        },
+        {
+          "step": 5,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 10,
+          "next_ms": 96.5
+        },
+        {
+          "step": 6,
+          "of": 6,
+          "angle_construction_ids": [
+            "kq_q1"
+          ],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 11
+        }
+      ]
+    },
+    {
+      "case": "lines_meeting",
+      "viewport": "1366x768",
+      "construction_only_at_conclusion": true,
+      "steps": [
+        {
+          "step": 1,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 4,
+          "next_ms": 68.10000000149012
+        },
+        {
+          "step": 2,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 6,
+          "next_ms": 73
+        },
+        {
+          "step": 3,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 8,
+          "next_ms": 82.20000000298023
+        },
+        {
+          "step": 4,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 9,
+          "next_ms": 80.70000000298023
+        },
+        {
+          "step": 5,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 10,
+          "next_ms": 104.29999999701977
+        },
+        {
+          "step": 6,
+          "of": 6,
+          "angle_construction_ids": [
+            "kq_q1"
+          ],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 11
+        }
+      ]
+    },
+    {
+      "case": "perp_planes",
+      "viewport": "1920x1080",
+      "construction_only_at_conclusion": true,
+      "steps": [
+        {
+          "step": 1,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 4,
+          "next_ms": 69.59999999403954
+        },
+        {
+          "step": 2,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 6,
+          "next_ms": 89.69999999552965
+        },
+        {
+          "step": 3,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 8,
+          "next_ms": 109.39999999850988
+        },
+        {
+          "step": 4,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 9,
+          "next_ms": 119.10000000149012
+        },
+        {
+          "step": 5,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 10,
+          "next_ms": 125.60000000149012
+        },
+        {
+          "step": 6,
+          "of": 6,
+          "angle_construction_ids": [
+            "kq_q1"
+          ],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 11
+        }
+      ]
+    },
+    {
+      "case": "perp_planes",
+      "viewport": "1366x768",
+      "construction_only_at_conclusion": true,
+      "steps": [
+        {
+          "step": 1,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 4,
+          "next_ms": 80.89999999850988
+        },
+        {
+          "step": 2,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 6,
+          "next_ms": 83.10000000149012
+        },
+        {
+          "step": 3,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 8,
+          "next_ms": 76.59999999403954
+        },
+        {
+          "step": 4,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 9,
+          "next_ms": 128.5
+        },
+        {
+          "step": 5,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 10,
+          "next_ms": 171.39999999850988
+        },
+        {
+          "step": 6,
+          "of": 6,
+          "angle_construction_ids": [
+            "kq_q1"
+          ],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 11
+        }
+      ]
+    },
+    {
+      "case": "perp_planes",
+      "viewport": "768x1024",
+      "construction_only_at_conclusion": true,
+      "steps": [
+        {
+          "step": 1,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 4,
+          "next_ms": 67.59999999403954
+        },
+        {
+          "step": 2,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 6,
+          "next_ms": 67.69999999552965
+        },
+        {
+          "step": 3,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 8,
+          "next_ms": 69.60000000149012
+        },
+        {
+          "step": 4,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 9,
+          "next_ms": 81
+        },
+        {
+          "step": 5,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 10,
+          "next_ms": 92.40000000596046
+        },
+        {
+          "step": 6,
+          "of": 6,
+          "angle_construction_ids": [
+            "kq_q1"
+          ],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 11
+        }
+      ]
+    },
+    {
+      "case": "perp_planes",
+      "viewport": "390x844",
+      "construction_only_at_conclusion": true,
+      "steps": [
+        {
+          "step": 1,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 4,
+          "next_ms": 75.59999999403954
+        },
+        {
+          "step": 2,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 6,
+          "next_ms": 76
+        },
+        {
+          "step": 3,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 8,
+          "next_ms": 87.29999999701977
+        },
+        {
+          "step": 4,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 9,
+          "next_ms": 87.70000000298023
+        },
+        {
+          "step": 5,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 10,
+          "next_ms": 84.89999999850988
+        },
+        {
+          "step": 6,
+          "of": 6,
+          "angle_construction_ids": [
+            "kq_q1"
+          ],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 11
+        }
+      ]
+    },
+    {
+      "case": "skew_perpendicular",
+      "viewport": "1366x768",
+      "construction_only_at_conclusion": true,
+      "steps": [
+        {
+          "step": 1,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 4,
+          "next_ms": 102.20000000298023
+        },
+        {
+          "step": 2,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 6,
+          "next_ms": 95.69999999552965
+        },
+        {
+          "step": 3,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 8,
+          "next_ms": 135.59999999403954
+        },
+        {
+          "step": 4,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 9,
+          "next_ms": 177.89999999850988
+        },
+        {
+          "step": 5,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 10,
+          "next_ms": 128.79999999701977
+        },
+        {
+          "step": 6,
+          "of": 6,
+          "angle_construction_ids": [
+            "kq_q1"
+          ],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 11
+        }
+      ]
+    },
+    {
+      "case": "line_perp_plane_marker",
+      "viewport": "1366x768",
+      "construction_only_at_conclusion": true,
+      "steps": [
+        {
+          "step": 1,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 4,
+          "next_ms": 124.40000000596046
+        },
+        {
+          "step": 2,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 6,
+          "next_ms": 107
+        },
+        {
+          "step": 3,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 8,
+          "next_ms": 96
+        },
+        {
+          "step": 4,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 9,
+          "next_ms": 97.20000000298023
+        },
+        {
+          "step": 5,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 10,
+          "next_ms": 106.59999999403954
+        },
+        {
+          "step": 6,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 11
+        }
+      ]
+    },
+    {
+      "case": "section_three_points_parallel",
+      "viewport": "1366x768",
+      "construction_only_at_conclusion": true,
+      "steps": [
+        {
+          "step": 1,
+          "of": 9,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 5,
+          "next_ms": 72.80000000447035
+        },
+        {
+          "step": 2,
+          "of": 9,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 7,
+          "next_ms": 74.39999999850988
+        },
+        {
+          "step": 3,
+          "of": 9,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 10,
+          "next_ms": 86.39999999850988
+        },
+        {
+          "step": 4,
+          "of": 9,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 11,
+          "next_ms": 116
+        },
+        {
+          "step": 5,
+          "of": 9,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 12,
+          "next_ms": 88.60000000149012
+        },
+        {
+          "step": 6,
+          "of": 9,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 13,
+          "next_ms": 99.5
+        },
+        {
+          "step": 7,
+          "of": 9,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 14,
+          "next_ms": 104
+        },
+        {
+          "step": 8,
+          "of": 9,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 15,
+          "next_ms": 108.10000000149012
+        },
+        {
+          "step": 9,
+          "of": 9,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "Giao tuyến trên từng mặt: (MNP) ∩ (SAB) = MN, (MNP) ∩ (SBC) = NP, (MNP) ∩ (SCD), (MNP) ∩ (SAD) ⇒ khép kín miền thiết diện tạo bởi (MNP) (MN ∥ AB, NP ∥ BC, giao tuyến trên (SCD) ∥ CD, giao tuyến trên (SAD) ∥ DA) Định lý giao tuyến song song: mặt phẳng (MNP) lần lượt song song với AB ⊂ (SAB), BC ⊂ (SBC), CD ⊂ (SCD), DA ⊂ (SAD), nên giao tuyến trên từng mặt tương ứng song song với cạnh đó. Trên mặt (SAB), nối M với N. Trên mặt (SBC), nối N với P. Trên mặt (SCD), nối P với giao điểm của SD với mặt phẳng cắt. Trên mặt (SAD), nối giao điểm của SD với mặt phẳng cắt với M.",
+          "rendered": 16
+        }
+      ]
+    },
+    {
+      "case": "section_trace_pentagon",
+      "viewport": "1920x1080",
+      "construction_only_at_conclusion": true,
+      "steps": [
+        {
+          "step": 1,
+          "of": 9,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 5,
+          "next_ms": 119
+        },
+        {
+          "step": 2,
+          "of": 9,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 7,
+          "next_ms": 186.29999999701977
+        },
+        {
+          "step": 3,
+          "of": 9,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 10,
+          "next_ms": 144.90000000596046
+        },
+        {
+          "step": 4,
+          "of": 9,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 11,
+          "next_ms": 129.39999999850988
+        },
+        {
+          "step": 5,
+          "of": 9,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 12,
+          "next_ms": 126.10000000149012
+        },
+        {
+          "step": 6,
+          "of": 9,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 13,
+          "next_ms": 131.60000000149012
+        },
+        {
+          "step": 7,
+          "of": 9,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 14,
+          "next_ms": 132.40000000596046
+        },
+        {
+          "step": 8,
+          "of": 9,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 15,
+          "next_ms": 136.89999999850988
+        },
+        {
+          "step": 9,
+          "of": 9,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "Giao tuyến trên từng mặt: (MNP) ∩ (ABCD) = NP, (MNP) ∩ (SCD), (MNP) ∩ (SAD), (MNP) ∩ (SAB), (MNP) ∩ (SBC) ⇒ khép kín miền thiết diện tạo bởi (MNP) (MNP) và mặt (ABCD) có chung N và P nên giao tuyến của chúng là đường thẳng nối hai điểm đó. Trong mặt (ABCD), gọi J là giao điểm của NP và đường thẳng AD; trong mặt (SAD), MJ cắt cạnh SD tại giao điểm thuộc cạnh SD. (MNP) và mặt (SCD) có chung P và giao điểm thuộc cạnh SD nên giao tuyến của chúng là đường thẳng nối hai điểm đó. Trong mặt (ABCD), gọi J là giao điểm của NP và đường thẳng AD; trong mặt (SAD), MJ cắt cạnh SD tại giao điểm thuộc cạnh SD. (MNP) và mặt (SAD) có chung giao điểm thuộc cạnh SD và M nên giao tuyến của chúng là đường thẳng nối hai điểm đó. Trong mặt (ABCD), gọi I là giao điểm của NP và đường thẳng AB; trong mặt (SAB), MI cắt cạnh SB tại giao điểm thuộc cạnh SB. (MNP) và mặt (SAB) có chung M và giao điểm thuộc cạnh SB nên giao tuyến của chúng là đường thẳng nối hai điểm đó. Trong mặt (ABCD), gọi I là giao điểm của NP và đường thẳng AB; trong mặt (SAB), MI cắt cạnh SB tại giao điểm thuộc cạnh SB. (MNP) và mặt (SBC) có chung giao điểm thuộc cạnh SB và N nên giao tuyến của chúng là đường thẳng nối hai điểm đó. Trên mặt (ABCD), nối N với P. Trên mặt (SCD), nối P với giao điểm của SD với mặt phẳng cắt. Trên mặt (SAD), nối giao điểm của SD với mặt phẳng cắt với M. Trên mặt (SAB), nối M với giao điểm của SB với mặt phẳng cắt. Trên mặt (SBC), nối giao điểm của SB với mặt phẳng cắt với N.",
+          "rendered": 16
+        }
+      ]
+    },
+    {
+      "case": "section_trace_pentagon",
+      "viewport": "1366x768",
+      "construction_only_at_conclusion": true,
+      "steps": [
+        {
+          "step": 1,
+          "of": 9,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 5,
+          "next_ms": 101.69999999552965
+        },
+        {
+          "step": 2,
+          "of": 9,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 7,
+          "next_ms": 111.5
+        },
+        {
+          "step": 3,
+          "of": 9,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 10,
+          "next_ms": 165.60000000149012
+        },
+        {
+          "step": 4,
+          "of": 9,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 11,
+          "next_ms": 127
+        },
+        {
+          "step": 5,
+          "of": 9,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 12,
+          "next_ms": 112.29999999701977
+        },
+        {
+          "step": 6,
+          "of": 9,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 13,
+          "next_ms": 156.20000000298023
+        },
+        {
+          "step": 7,
+          "of": 9,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 14,
+          "next_ms": 151.20000000298023
+        },
+        {
+          "step": 8,
+          "of": 9,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 15,
+          "next_ms": 126.10000000149012
+        },
+        {
+          "step": 9,
+          "of": 9,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "Giao tuyến trên từng mặt: (MNP) ∩ (ABCD) = NP, (MNP) ∩ (SCD), (MNP) ∩ (SAD), (MNP) ∩ (SAB), (MNP) ∩ (SBC) ⇒ khép kín miền thiết diện tạo bởi (MNP) (MNP) và mặt (ABCD) có chung N và P nên giao tuyến của chúng là đường thẳng nối hai điểm đó. Trong mặt (ABCD), gọi J là giao điểm của NP và đường thẳng AD; trong mặt (SAD), MJ cắt cạnh SD tại giao điểm thuộc cạnh SD. (MNP) và mặt (SCD) có chung P và giao điểm thuộc cạnh SD nên giao tuyến của chúng là đường thẳng nối hai điểm đó. Trong mặt (ABCD), gọi J là giao điểm của NP và đường thẳng AD; trong mặt (SAD), MJ cắt cạnh SD tại giao điểm thuộc cạnh SD. (MNP) và mặt (SAD) có chung giao điểm thuộc cạnh SD và M nên giao tuyến của chúng là đường thẳng nối hai điểm đó. Trong mặt (ABCD), gọi I là giao điểm của NP và đường thẳng AB; trong mặt (SAB), MI cắt cạnh SB tại giao điểm thuộc cạnh SB. (MNP) và mặt (SAB) có chung M và giao điểm thuộc cạnh SB nên giao tuyến của chúng là đường thẳng nối hai điểm đó. Trong mặt (ABCD), gọi I là giao điểm của NP và đường thẳng AB; trong mặt (SAB), MI cắt cạnh SB tại giao điểm thuộc cạnh SB. (MNP) và mặt (SBC) có chung giao điểm thuộc cạnh SB và N nên giao tuyến của chúng là đường thẳng nối hai điểm đó. Trên mặt (ABCD), nối N với P. Trên mặt (SCD), nối P với giao điểm của SD với mặt phẳng cắt. Trên mặt (SAD), nối giao điểm của SD với mặt phẳng cắt với M. Trên mặt (SAB), nối M với giao điểm của SB với mặt phẳng cắt. Trên mặt (SBC), nối giao điểm của SB với mặt phẳng cắt với N.",
+          "rendered": 16
+        }
+      ]
+    },
+    {
+      "case": "section_trace_pentagon",
+      "viewport": "768x1024",
+      "construction_only_at_conclusion": true,
+      "steps": [
+        {
+          "step": 1,
+          "of": 9,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 5,
+          "next_ms": 75.29999999701977
+        },
+        {
+          "step": 2,
+          "of": 9,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 7,
+          "next_ms": 73.60000000149012
+        },
+        {
+          "step": 3,
+          "of": 9,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 10,
+          "next_ms": 86.20000000298023
+        },
+        {
+          "step": 4,
+          "of": 9,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 11,
+          "next_ms": 76.39999999850988
+        },
+        {
+          "step": 5,
+          "of": 9,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 12,
+          "next_ms": 83.29999999701977
+        },
+        {
+          "step": 6,
+          "of": 9,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 13,
+          "next_ms": 88.89999999850988
+        },
+        {
+          "step": 7,
+          "of": 9,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 14,
+          "next_ms": 96.09999999403954
+        },
+        {
+          "step": 8,
+          "of": 9,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 15,
+          "next_ms": 102.20000000298023
+        },
+        {
+          "step": 9,
+          "of": 9,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "Giao tuyến trên từng mặt: (MNP) ∩ (ABCD) = NP, (MNP) ∩ (SCD), (MNP) ∩ (SAD), (MNP) ∩ (SAB), (MNP) ∩ (SBC) ⇒ khép kín miền thiết diện tạo bởi (MNP) (MNP) và mặt (ABCD) có chung N và P nên giao tuyến của chúng là đường thẳng nối hai điểm đó. Trong mặt (ABCD), gọi J là giao điểm của NP và đường thẳng AD; trong mặt (SAD), MJ cắt cạnh SD tại giao điểm thuộc cạnh SD. (MNP) và mặt (SCD) có chung P và giao điểm thuộc cạnh SD nên giao tuyến của chúng là đường thẳng nối hai điểm đó. Trong mặt (ABCD), gọi J là giao điểm của NP và đường thẳng AD; trong mặt (SAD), MJ cắt cạnh SD tại giao điểm thuộc cạnh SD. (MNP) và mặt (SAD) có chung giao điểm thuộc cạnh SD và M nên giao tuyến của chúng là đường thẳng nối hai điểm đó. Trong mặt (ABCD), gọi I là giao điểm của NP và đường thẳng AB; trong mặt (SAB), MI cắt cạnh SB tại giao điểm thuộc cạnh SB. (MNP) và mặt (SAB) có chung M và giao điểm thuộc cạnh SB nên giao tuyến của chúng là đường thẳng nối hai điểm đó. Trong mặt (ABCD), gọi I là giao điểm của NP và đường thẳng AB; trong mặt (SAB), MI cắt cạnh SB tại giao điểm thuộc cạnh SB. (MNP) và mặt (SBC) có chung giao điểm thuộc cạnh SB và N nên giao tuyến của chúng là đường thẳng nối hai điểm đó. Trên mặt (ABCD), nối N với P. Trên mặt (SCD), nối P với giao điểm của SD với mặt phẳng cắt. Trên mặt (SAD), nối giao điểm của SD với mặt phẳng cắt với M. Trên mặt (SAB), nối M với giao điểm của SB với mặt phẳng cắt. Trên mặt (SBC), nối giao điểm của SB với mặt phẳng cắt với N.",
+          "rendered": 16
+        }
+      ]
+    },
+    {
+      "case": "section_trace_pentagon",
+      "viewport": "390x844",
+      "construction_only_at_conclusion": true,
+      "steps": [
+        {
+          "step": 1,
+          "of": 9,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 5,
+          "next_ms": 69.89999999850988
+        },
+        {
+          "step": 2,
+          "of": 9,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 7,
+          "next_ms": 70.10000000149012
+        },
+        {
+          "step": 3,
+          "of": 9,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 10,
+          "next_ms": 81.60000000149012
+        },
+        {
+          "step": 4,
+          "of": 9,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 11,
+          "next_ms": 88.09999999403954
+        },
+        {
+          "step": 5,
+          "of": 9,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 12,
+          "next_ms": 100.89999999850988
+        },
+        {
+          "step": 6,
+          "of": 9,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 13,
+          "next_ms": 96.5
+        },
+        {
+          "step": 7,
+          "of": 9,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 14,
+          "next_ms": 91.79999999701977
+        },
+        {
+          "step": 8,
+          "of": 9,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 15,
+          "next_ms": 109.10000000149012
+        },
+        {
+          "step": 9,
+          "of": 9,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "Giao tuyến trên từng mặt: (MNP) ∩ (ABCD) = NP, (MNP) ∩ (SCD), (MNP) ∩ (SAD), (MNP) ∩ (SAB), (MNP) ∩ (SBC) ⇒ khép kín miền thiết diện tạo bởi (MNP) (MNP) và mặt (ABCD) có chung N và P nên giao tuyến của chúng là đường thẳng nối hai điểm đó. Trong mặt (ABCD), gọi J là giao điểm của NP và đường thẳng AD; trong mặt (SAD), MJ cắt cạnh SD tại giao điểm thuộc cạnh SD. (MNP) và mặt (SCD) có chung P và giao điểm thuộc cạnh SD nên giao tuyến của chúng là đường thẳng nối hai điểm đó. Trong mặt (ABCD), gọi J là giao điểm của NP và đường thẳng AD; trong mặt (SAD), MJ cắt cạnh SD tại giao điểm thuộc cạnh SD. (MNP) và mặt (SAD) có chung giao điểm thuộc cạnh SD và M nên giao tuyến của chúng là đường thẳng nối hai điểm đó. Trong mặt (ABCD), gọi I là giao điểm của NP và đường thẳng AB; trong mặt (SAB), MI cắt cạnh SB tại giao điểm thuộc cạnh SB. (MNP) và mặt (SAB) có chung M và giao điểm thuộc cạnh SB nên giao tuyến của chúng là đường thẳng nối hai điểm đó. Trong mặt (ABCD), gọi I là giao điểm của NP và đường thẳng AB; trong mặt (SAB), MI cắt cạnh SB tại giao điểm thuộc cạnh SB. (MNP) và mặt (SBC) có chung giao điểm thuộc cạnh SB và N nên giao tuyến của chúng là đường thẳng nối hai điểm đó. Trên mặt (ABCD), nối N với P. Trên mặt (SCD), nối P với giao điểm của SD với mặt phẳng cắt. Trên mặt (SAD), nối giao điểm của SD với mặt phẳng cắt với M. Trên mặt (SAB), nối M với giao điểm của SB với mặt phẳng cắt. Trên mặt (SBC), nối giao điểm của SB với mặt phẳng cắt với N.",
+          "rendered": 16
+        }
+      ]
+    },
+    {
+      "case": "section_trace_vertex",
+      "viewport": "1366x768",
+      "construction_only_at_conclusion": true,
+      "steps": [
+        {
+          "step": 1,
+          "of": 8,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 5,
+          "next_ms": 61.899999998509884
+        },
+        {
+          "step": 2,
+          "of": 8,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 7,
+          "next_ms": 73.10000000149012
+        },
+        {
+          "step": 3,
+          "of": 8,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 10,
+          "next_ms": 76.09999999403954
+        },
+        {
+          "step": 4,
+          "of": 8,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 11,
+          "next_ms": 89.5
+        },
+        {
+          "step": 5,
+          "of": 8,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 12,
+          "next_ms": 113.39999999850988
+        },
+        {
+          "step": 6,
+          "of": 8,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 13,
+          "next_ms": 103.80000000447035
+        },
+        {
+          "step": 7,
+          "of": 8,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 14,
+          "next_ms": 102.80000000447035
+        },
+        {
+          "step": 8,
+          "of": 8,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "Giao tuyến trên từng mặt: (MND) ∩ (ABCD) = ND, (MND) ∩ (SAD) = DM, (MND) ∩ (SAB), (MND) ∩ (SBC) ⇒ khép kín miền thiết diện tạo bởi (MND) (MND) và mặt (ABCD) có chung N và D nên giao tuyến của chúng là đường thẳng nối hai điểm đó. (MND) và mặt (SAD) có chung D và M nên giao tuyến của chúng là đường thẳng nối hai điểm đó. Trong mặt (ABCD), gọi I là giao điểm của DN và đường thẳng AB; trong mặt (SAB), MI cắt cạnh SB tại giao điểm thuộc cạnh SB. (MND) và mặt (SAB) có chung M và giao điểm thuộc cạnh SB nên giao tuyến của chúng là đường thẳng nối hai điểm đó. Trong mặt (ABCD), gọi I là giao điểm của DN và đường thẳng AB; trong mặt (SAB), MI cắt cạnh SB tại giao điểm thuộc cạnh SB. (MND) và mặt (SBC) có chung giao điểm thuộc cạnh SB và N nên giao tuyến của chúng là đường thẳng nối hai điểm đó. Trên mặt (ABCD), nối N với D. Trên mặt (SAD), nối D với M. Trên mặt (SAB), nối M với giao điểm của SB với mặt phẳng cắt. Trên mặt (SBC), nối giao điểm của SB với mặt phẳng cắt với N.",
+          "rendered": 15
+        }
+      ]
+    },
+    {
+      "case": "unnamed_midpoint_distance",
+      "viewport": "1366x768",
+      "construction_only_at_conclusion": true,
+      "steps": [
+        {
+          "step": 1,
+          "of": 7,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 5,
+          "next_ms": 93.39999999850988
+        },
+        {
+          "step": 2,
+          "of": 7,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 7,
+          "next_ms": 74.20000000298023
+        },
+        {
+          "step": 3,
+          "of": 7,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 10,
+          "next_ms": 75.10000000149012
+        },
+        {
+          "step": 4,
+          "of": 7,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 11,
+          "next_ms": 73.29999999701977
+        },
+        {
+          "step": 5,
+          "of": 7,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 12,
+          "next_ms": 97.80000000447035
+        },
+        {
+          "step": 6,
+          "of": 7,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 13,
+          "next_ms": 117.20000000298023
+        },
+        {
+          "step": 7,
+          "of": 7,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [
+            "perpendicular:kq_q1__foot1"
+          ],
+          "why": "",
+          "rendered": 15
+        }
+      ]
+    }
+  ]
+}

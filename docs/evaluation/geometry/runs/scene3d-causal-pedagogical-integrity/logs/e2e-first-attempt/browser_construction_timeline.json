@@ -1,0 +1,3148 @@
+{
+  "browser": "158.0.8127.36",
+  "headless": true,
+  "backend": "measured_app loopback, HYBRID_ROUTE_MODE=local-first, ALLOW_LIVE_AI=0",
+  "rule": "the goal object (section polygon / intersection line / altitude / angle construction) is absent at the first step and present at the last; steps walked with the real ←/→ buttons",
+  "rows": [
+    {
+      "case": "section_one_sentence",
+      "viewport": "1920x1080",
+      "construction_only_at_conclusion": true,
+      "steps": [
+        {
+          "step": 1,
+          "of": 7,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 5,
+          "next_ms": 151.29999999701977
+        },
+        {
+          "step": 2,
+          "of": 7,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 7,
+          "next_ms": 135.29999999701977
+        },
+        {
+          "step": 3,
+          "of": 7,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 10,
+          "next_ms": 155.90000000596046
+        },
+        {
+          "step": 4,
+          "of": 7,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 11,
+          "next_ms": 111.30000000447035
+        },
+        {
+          "step": 5,
+          "of": 7,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 12,
+          "next_ms": 138.30000000447035
+        },
+        {
+          "step": 6,
+          "of": 7,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 15,
+          "next_ms": 145
+        },
+        {
+          "step": 7,
+          "of": 7,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 14
+        }
+      ]
+    },
+    {
+      "case": "section_one_sentence",
+      "viewport": "1366x768",
+      "construction_only_at_conclusion": true,
+      "steps": [
+        {
+          "step": 1,
+          "of": 7,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 5,
+          "next_ms": 74.80000000447035
+        },
+        {
+          "step": 2,
+          "of": 7,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 7,
+          "next_ms": 75.39999999850988
+        },
+        {
+          "step": 3,
+          "of": 7,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 10,
+          "next_ms": 88.5
+        },
+        {
+          "step": 4,
+          "of": 7,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 11,
+          "next_ms": 118.5
+        },
+        {
+          "step": 5,
+          "of": 7,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 12,
+          "next_ms": 108.89999999850988
+        },
+        {
+          "step": 6,
+          "of": 7,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 15,
+          "next_ms": 110.39999999850988
+        },
+        {
+          "step": 7,
+          "of": 7,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 14
+        }
+      ]
+    },
+    {
+      "case": "section_one_sentence",
+      "viewport": "768x1024",
+      "construction_only_at_conclusion": true,
+      "steps": [
+        {
+          "step": 1,
+          "of": 7,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 5,
+          "next_ms": 65.70000000298023
+        },
+        {
+          "step": 2,
+          "of": 7,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 7,
+          "next_ms": 76.20000000298023
+        },
+        {
+          "step": 3,
+          "of": 7,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 10,
+          "next_ms": 82.69999999552965
+        },
+        {
+          "step": 4,
+          "of": 7,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 11,
+          "next_ms": 89.60000000149012
+        },
+        {
+          "step": 5,
+          "of": 7,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 12,
+          "next_ms": 97
+        },
+        {
+          "step": 6,
+          "of": 7,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 15,
+          "next_ms": 109
+        },
+        {
+          "step": 7,
+          "of": 7,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 14
+        }
+      ]
+    },
+    {
+      "case": "section_one_sentence",
+      "viewport": "390x844",
+      "construction_only_at_conclusion": true,
+      "steps": [
+        {
+          "step": 1,
+          "of": 7,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 5,
+          "next_ms": 62.100000001490116
+        },
+        {
+          "step": 2,
+          "of": 7,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 7,
+          "next_ms": 61.29999999701977
+        },
+        {
+          "step": 3,
+          "of": 7,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 10,
+          "next_ms": 80.89999999850988
+        },
+        {
+          "step": 4,
+          "of": 7,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 11,
+          "next_ms": 91.60000000149012
+        },
+        {
+          "step": 5,
+          "of": 7,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 12,
+          "next_ms": 101.79999999701977
+        },
+        {
+          "step": 6,
+          "of": 7,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 15,
+          "next_ms": 97.39999999850988
+        },
+        {
+          "step": 7,
+          "of": 7,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 14
+        }
+      ]
+    },
+    {
+      "case": "section_plane_after_goal",
+      "viewport": "1366x768",
+      "construction_only_at_conclusion": true,
+      "steps": [
+        {
+          "step": 1,
+          "of": 7,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 5,
+          "next_ms": 67.20000000298023
+        },
+        {
+          "step": 2,
+          "of": 7,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 7,
+          "next_ms": 74.80000000447035
+        },
+        {
+          "step": 3,
+          "of": 7,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 10,
+          "next_ms": 81.89999999850988
+        },
+        {
+          "step": 4,
+          "of": 7,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 11,
+          "next_ms": 78
+        },
+        {
+          "step": 5,
+          "of": 7,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 12,
+          "next_ms": 111.40000000596046
+        },
+        {
+          "step": 6,
+          "of": 7,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 15,
+          "next_ms": 116
+        },
+        {
+          "step": 7,
+          "of": 7,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 14
+        }
+      ]
+    },
+    {
+      "case": "cos_line_plane",
+      "viewport": "1920x1080",
+      "construction_only_at_conclusion": true,
+      "steps": [
+        {
+          "step": 1,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 4,
+          "next_ms": 131.79999999701977
+        },
+        {
+          "step": 2,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 6,
+          "next_ms": 117
+        },
+        {
+          "step": 3,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 8,
+          "next_ms": 125.29999999701977
+        },
+        {
+          "step": 4,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 9,
+          "next_ms": 131.89999999850988
+        },
+        {
+          "step": 5,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 10,
+          "next_ms": 135.39999999850988
+        },
+        {
+          "step": 6,
+          "of": 6,
+          "angle_construction_ids": [
+            "kq_q1"
+          ],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 11
+        }
+      ]
+    },
+    {
+      "case": "cos_line_plane",
+      "viewport": "1366x768",
+      "construction_only_at_conclusion": true,
+      "steps": [
+        {
+          "step": 1,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 4,
+          "next_ms": 67.29999999701977
+        },
+        {
+          "step": 2,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 6,
+          "next_ms": 75.29999999701977
+        },
+        {
+          "step": 3,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 8,
+          "next_ms": 84
+        },
+        {
+          "step": 4,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 9,
+          "next_ms": 82.10000000149012
+        },
+        {
+          "step": 5,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 10,
+          "next_ms": 91.19999999552965
+        },
+        {
+          "step": 6,
+          "of": 6,
+          "angle_construction_ids": [
+            "kq_q1"
+          ],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 11
+        }
+      ]
+    },
+    {
+      "case": "cos_line_plane",
+      "viewport": "768x1024",
+      "construction_only_at_conclusion": true,
+      "steps": [
+        {
+          "step": 1,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 4,
+          "next_ms": 61.899999998509884
+        },
+        {
+          "step": 2,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 6,
+          "next_ms": 66.30000000447035
+        },
+        {
+          "step": 3,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 8,
+          "next_ms": 82.40000000596046
+        },
+        {
+          "step": 4,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 9,
+          "next_ms": 79.40000000596046
+        },
+        {
+          "step": 5,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 10,
+          "next_ms": 88
+        },
+        {
+          "step": 6,
+          "of": 6,
+          "angle_construction_ids": [
+            "kq_q1"
+          ],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 11
+        }
+      ]
+    },
+    {
+      "case": "cos_line_plane",
+      "viewport": "390x844",
+      "construction_only_at_conclusion": true,
+      "steps": [
+        {
+          "step": 1,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 4,
+          "next_ms": 62.399999998509884
+        },
+        {
+          "step": 2,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 6,
+          "next_ms": 72.69999999552965
+        },
+        {
+          "step": 3,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 8,
+          "next_ms": 73.5
+        },
+        {
+          "step": 4,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 9,
+          "next_ms": 80.59999999403954
+        },
+        {
+          "step": 5,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 10,
+          "next_ms": 87.59999999403954
+        },
+        {
+          "step": 6,
+          "of": 6,
+          "angle_construction_ids": [
+            "kq_q1"
+          ],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 11
+        }
+      ]
+    },
+    {
+      "case": "tan_line_plane",
+      "viewport": "1366x768",
+      "construction_only_at_conclusion": true,
+      "steps": [
+        {
+          "step": 1,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 4,
+          "next_ms": 63.600000001490116
+        },
+        {
+          "step": 2,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 6,
+          "next_ms": 72.70000000298023
+        },
+        {
+          "step": 3,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 8,
+          "next_ms": 83.5
+        },
+        {
+          "step": 4,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 9,
+          "next_ms": 79.59999999403954
+        },
+        {
+          "step": 5,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 10,
+          "next_ms": 85.20000000298023
+        },
+        {
+          "step": 6,
+          "of": 6,
+          "angle_construction_ids": [
+            "kq_q1"
+          ],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 11
+        }
+      ]
+    },
+    {
+      "case": "cos_two_planes",
+      "viewport": "1366x768",
+      "construction_only_at_conclusion": true,
+      "steps": [
+        {
+          "step": 1,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 5,
+          "next_ms": 74.40000000596046
+        },
+        {
+          "step": 2,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 10,
+          "next_ms": 85.5
+        },
+        {
+          "step": 3,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 14,
+          "next_ms": 157.89999999850988
+        },
+        {
+          "step": 4,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 15,
+          "next_ms": 103.80000000447035
+        },
+        {
+          "step": 5,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 16,
+          "next_ms": 105.5
+        },
+        {
+          "step": 6,
+          "of": 6,
+          "angle_construction_ids": [
+            "kq_q1"
+          ],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 17
+        }
+      ]
+    },
+    {
+      "case": "angle_plain",
+      "viewport": "1366x768",
+      "construction_only_at_conclusion": true,
+      "steps": [
+        {
+          "step": 1,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 4,
+          "next_ms": 84.89999999850988
+        },
+        {
+          "step": 2,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 6,
+          "next_ms": 100.90000000596046
+        },
+        {
+          "step": 3,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 8,
+          "next_ms": 80.20000000298023
+        },
+        {
+          "step": 4,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 9,
+          "next_ms": 105.69999999552965
+        },
+        {
+          "step": 5,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 10,
+          "next_ms": 105.29999999701977
+        },
+        {
+          "step": 6,
+          "of": 6,
+          "angle_construction_ids": [
+            "kq_q1"
+          ],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 11
+        }
+      ]
+    },
+    {
+      "case": "scale_iso_planes",
+      "viewport": "1366x768",
+      "construction_only_at_conclusion": true,
+      "steps": [
+        {
+          "step": 1,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 4,
+          "next_ms": 88.5
+        },
+        {
+          "step": 2,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 6,
+          "next_ms": 116.5
+        },
+        {
+          "step": 3,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 8,
+          "next_ms": 112.89999999850988
+        },
+        {
+          "step": 4,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 9,
+          "next_ms": 116.60000000149012
+        },
+        {
+          "step": 5,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 10,
+          "next_ms": 113.20000000298023
+        },
+        {
+          "step": 6,
+          "of": 6,
+          "angle_construction_ids": [
+            "kq_q1"
+          ],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 11
+        }
+      ]
+    },
+    {
+      "case": "scale_iso_tan",
+      "viewport": "1920x1080",
+      "construction_only_at_conclusion": true,
+      "steps": [
+        {
+          "step": 1,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 4,
+          "next_ms": 92.70000000298023
+        },
+        {
+          "step": 2,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 6,
+          "next_ms": 103.60000000149012
+        },
+        {
+          "step": 3,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 8,
+          "next_ms": 101.5
+        },
+        {
+          "step": 4,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 9,
+          "next_ms": 119
+        },
+        {
+          "step": 5,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 10,
+          "next_ms": 97.90000000596046
+        },
+        {
+          "step": 6,
+          "of": 6,
+          "angle_construction_ids": [
+            "kq_q1"
+          ],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 11
+        }
+      ]
+    },
+    {
+      "case": "scale_iso_tan",
+      "viewport": "1366x768",
+      "construction_only_at_conclusion": true,
+      "steps": [
+        {
+          "step": 1,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 4,
+          "next_ms": 69.70000000298023
+        },
+        {
+          "step": 2,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 6,
+          "next_ms": 74.29999999701977
+        },
+        {
+          "step": 3,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 8,
+          "next_ms": 76.5
+        },
+        {
+          "step": 4,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 9,
+          "next_ms": 84.80000000447035
+        },
+        {
+          "step": 5,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 10,
+          "next_ms": 92.89999999850988
+        },
+        {
+          "step": 6,
+          "of": 6,
+          "angle_construction_ids": [
+            "kq_q1"
+          ],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 11
+        }
+      ]
+    },
+    {
+      "case": "scale_iso_tan",
+      "viewport": "768x1024",
+      "construction_only_at_conclusion": true,
+      "steps": [
+        {
+          "step": 1,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 4,
+          "next_ms": 63.30000000447035
+        },
+        {
+          "step": 2,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 6,
+          "next_ms": 63.399999998509884
+        },
+        {
+          "step": 3,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 8,
+          "next_ms": 76
+        },
+        {
+          "step": 4,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 9,
+          "next_ms": 76.5
+        },
+        {
+          "step": 5,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 10,
+          "next_ms": 91.5
+        },
+        {
+          "step": 6,
+          "of": 6,
+          "angle_construction_ids": [
+            "kq_q1"
+          ],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 11
+        }
+      ]
+    },
+    {
+      "case": "scale_iso_tan",
+      "viewport": "390x844",
+      "construction_only_at_conclusion": true,
+      "steps": [
+        {
+          "step": 1,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 4,
+          "next_ms": 59.30000000447035
+        },
+        {
+          "step": 2,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 6,
+          "next_ms": 65.60000000149012
+        },
+        {
+          "step": 3,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 8,
+          "next_ms": 73.39999999850988
+        },
+        {
+          "step": 4,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 9,
+          "next_ms": 80.29999999701977
+        },
+        {
+          "step": 5,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 10,
+          "next_ms": 88
+        },
+        {
+          "step": 6,
+          "of": 6,
+          "angle_construction_ids": [
+            "kq_q1"
+          ],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 11
+        }
+      ]
+    },
+    {
+      "case": "shape_free_planes",
+      "viewport": "1366x768",
+      "construction_only_at_conclusion": true,
+      "steps": [
+        {
+          "step": 1,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 4,
+          "next_ms": 63.399999998509884
+        },
+        {
+          "step": 2,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 6,
+          "next_ms": 76.89999999850988
+        },
+        {
+          "step": 3,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 8,
+          "next_ms": 75.5
+        },
+        {
+          "step": 4,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 9,
+          "next_ms": 80.79999999701977
+        },
+        {
+          "step": 5,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 10,
+          "next_ms": 92
+        },
+        {
+          "step": 6,
+          "of": 6,
+          "angle_construction_ids": [
+            "kq_q1"
+          ],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 11
+        }
+      ]
+    },
+    {
+      "case": "shape_free_tan",
+      "viewport": "1920x1080",
+      "construction_only_at_conclusion": true,
+      "steps": [
+        {
+          "step": 1,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 4,
+          "next_ms": 112.39999999850988
+        },
+        {
+          "step": 2,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 6,
+          "next_ms": 115.29999999701977
+        },
+        {
+          "step": 3,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 8,
+          "next_ms": 120
+        },
+        {
+          "step": 4,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 9,
+          "next_ms": 104.79999999701977
+        },
+        {
+          "step": 5,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 10,
+          "next_ms": 104.39999999850988
+        },
+        {
+          "step": 6,
+          "of": 6,
+          "angle_construction_ids": [
+            "kq_q1"
+          ],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 11
+        }
+      ]
+    },
+    {
+      "case": "shape_free_tan",
+      "viewport": "1366x768",
+      "construction_only_at_conclusion": true,
+      "steps": [
+        {
+          "step": 1,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 4,
+          "next_ms": 62.70000000298023
+        },
+        {
+          "step": 2,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 6,
+          "next_ms": 68.79999999701977
+        },
+        {
+          "step": 3,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 8,
+          "next_ms": 76.39999999850988
+        },
+        {
+          "step": 4,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 9,
+          "next_ms": 84.59999999403954
+        },
+        {
+          "step": 5,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 10,
+          "next_ms": 91.10000000149012
+        },
+        {
+          "step": 6,
+          "of": 6,
+          "angle_construction_ids": [
+            "kq_q1"
+          ],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 11
+        }
+      ]
+    },
+    {
+      "case": "shape_free_tan",
+      "viewport": "768x1024",
+      "construction_only_at_conclusion": true,
+      "steps": [
+        {
+          "step": 1,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 4,
+          "next_ms": 66.30000000447035
+        },
+        {
+          "step": 2,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 6,
+          "next_ms": 62.399999998509884
+        },
+        {
+          "step": 3,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 8,
+          "next_ms": 73.90000000596046
+        },
+        {
+          "step": 4,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 9,
+          "next_ms": 80.89999999850988
+        },
+        {
+          "step": 5,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 10,
+          "next_ms": 95.29999999701977
+        },
+        {
+          "step": 6,
+          "of": 6,
+          "angle_construction_ids": [
+            "kq_q1"
+          ],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 11
+        }
+      ]
+    },
+    {
+      "case": "shape_free_tan",
+      "viewport": "390x844",
+      "construction_only_at_conclusion": true,
+      "steps": [
+        {
+          "step": 1,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 4,
+          "next_ms": 62.399999998509884
+        },
+        {
+          "step": 2,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 6,
+          "next_ms": 67.80000000447035
+        },
+        {
+          "step": 3,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 8,
+          "next_ms": 73.70000000298023
+        },
+        {
+          "step": 4,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 9,
+          "next_ms": 80.70000000298023
+        },
+        {
+          "step": 5,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 10,
+          "next_ms": 88.70000000298023
+        },
+        {
+          "step": 6,
+          "of": 6,
+          "angle_construction_ids": [
+            "kq_q1"
+          ],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 11
+        }
+      ]
+    },
+    {
+      "case": "regular_tetra_cos",
+      "viewport": "1366x768",
+      "construction_only_at_conclusion": true,
+      "steps": [
+        {
+          "step": 1,
+          "of": 7,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 4,
+          "next_ms": 90.90000000596046
+        },
+        {
+          "step": 2,
+          "of": 7,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 7,
+          "next_ms": 88.69999999552965
+        },
+        {
+          "step": 3,
+          "of": 7,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 10,
+          "next_ms": 87.59999999403954
+        },
+        {
+          "step": 4,
+          "of": 7,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 11,
+          "next_ms": 75.19999999552965
+        },
+        {
+          "step": 5,
+          "of": 7,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 12,
+          "next_ms": 94.39999999850988
+        },
+        {
+          "step": 6,
+          "of": 7,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 13,
+          "next_ms": 133.29999999701977
+        },
+        {
+          "step": 7,
+          "of": 7,
+          "angle_construction_ids": [
+            "kq_q1"
+          ],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 14
+        }
+      ]
+    },
+    {
+      "case": "ratio2_planes",
+      "viewport": "1366x768",
+      "construction_only_at_conclusion": true,
+      "steps": [
+        {
+          "step": 1,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 4,
+          "next_ms": 83.29999999701977
+        },
+        {
+          "step": 2,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 6,
+          "next_ms": 104.60000000149012
+        },
+        {
+          "step": 3,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 8,
+          "next_ms": 102.10000000149012
+        },
+        {
+          "step": 4,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 9,
+          "next_ms": 87.70000000298023
+        },
+        {
+          "step": 5,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 10,
+          "next_ms": 96.60000000149012
+        },
+        {
+          "step": 6,
+          "of": 6,
+          "angle_construction_ids": [
+            "kq_q1"
+          ],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 11
+        }
+      ]
+    },
+    {
+      "case": "ratio2_tan",
+      "viewport": "1920x1080",
+      "construction_only_at_conclusion": true,
+      "steps": [
+        {
+          "step": 1,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 4,
+          "next_ms": 81.40000000596046
+        },
+        {
+          "step": 2,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 6,
+          "next_ms": 85.70000000298023
+        },
+        {
+          "step": 3,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 8,
+          "next_ms": 100.79999999701977
+        },
+        {
+          "step": 4,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 9,
+          "next_ms": 117.39999999850988
+        },
+        {
+          "step": 5,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 10,
+          "next_ms": 122.19999999552965
+        },
+        {
+          "step": 6,
+          "of": 6,
+          "angle_construction_ids": [
+            "kq_q1"
+          ],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 11
+        }
+      ]
+    },
+    {
+      "case": "ratio2_tan",
+      "viewport": "1366x768",
+      "construction_only_at_conclusion": true,
+      "steps": [
+        {
+          "step": 1,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 4,
+          "next_ms": 66.70000000298023
+        },
+        {
+          "step": 2,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 6,
+          "next_ms": 65.40000000596046
+        },
+        {
+          "step": 3,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 8,
+          "next_ms": 69.60000000149012
+        },
+        {
+          "step": 4,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 9,
+          "next_ms": 83.60000000149012
+        },
+        {
+          "step": 5,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 10,
+          "next_ms": 84
+        },
+        {
+          "step": 6,
+          "of": 6,
+          "angle_construction_ids": [
+            "kq_q1"
+          ],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 11
+        }
+      ]
+    },
+    {
+      "case": "ratio2_tan",
+      "viewport": "768x1024",
+      "construction_only_at_conclusion": true,
+      "steps": [
+        {
+          "step": 1,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 4,
+          "next_ms": 62.5
+        },
+        {
+          "step": 2,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 6,
+          "next_ms": 66.10000000149012
+        },
+        {
+          "step": 3,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 8,
+          "next_ms": 72.79999999701977
+        },
+        {
+          "step": 4,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 9,
+          "next_ms": 87.69999999552965
+        },
+        {
+          "step": 5,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 10,
+          "next_ms": 92.70000000298023
+        },
+        {
+          "step": 6,
+          "of": 6,
+          "angle_construction_ids": [
+            "kq_q1"
+          ],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 11
+        }
+      ]
+    },
+    {
+      "case": "ratio2_tan",
+      "viewport": "390x844",
+      "construction_only_at_conclusion": true,
+      "steps": [
+        {
+          "step": 1,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 4,
+          "next_ms": 65.60000000149012
+        },
+        {
+          "step": 2,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 6,
+          "next_ms": 60.5
+        },
+        {
+          "step": 3,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 8,
+          "next_ms": 73.39999999850988
+        },
+        {
+          "step": 4,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 9,
+          "next_ms": 81.39999999850988
+        },
+        {
+          "step": 5,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 10,
+          "next_ms": 87.70000000298023
+        },
+        {
+          "step": 6,
+          "of": 6,
+          "angle_construction_ids": [
+            "kq_q1"
+          ],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 11
+        }
+      ]
+    },
+    {
+      "case": "ratio2_line_plane",
+      "viewport": "1366x768",
+      "construction_only_at_conclusion": true,
+      "steps": [
+        {
+          "step": 1,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 4,
+          "next_ms": 72
+        },
+        {
+          "step": 2,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 6,
+          "next_ms": 77.39999999850988
+        },
+        {
+          "step": 3,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 8,
+          "next_ms": 80.89999999850988
+        },
+        {
+          "step": 4,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 9,
+          "next_ms": 75.29999999701977
+        },
+        {
+          "step": 5,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 10,
+          "next_ms": 87.80000000447035
+        },
+        {
+          "step": 6,
+          "of": 6,
+          "angle_construction_ids": [
+            "kq_q1"
+          ],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 11
+        }
+      ]
+    },
+    {
+      "case": "lines_meeting",
+      "viewport": "1366x768",
+      "construction_only_at_conclusion": true,
+      "steps": [
+        {
+          "step": 1,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 4,
+          "next_ms": 61.099999994039536
+        },
+        {
+          "step": 2,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 6,
+          "next_ms": 69.09999999403954
+        },
+        {
+          "step": 3,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 8,
+          "next_ms": 83.80000000447035
+        },
+        {
+          "step": 4,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 9,
+          "next_ms": 73.70000000298023
+        },
+        {
+          "step": 5,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 10,
+          "next_ms": 80.40000000596046
+        },
+        {
+          "step": 6,
+          "of": 6,
+          "angle_construction_ids": [
+            "kq_q1"
+          ],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 11
+        }
+      ]
+    },
+    {
+      "case": "perp_planes",
+      "viewport": "1920x1080",
+      "construction_only_at_conclusion": true,
+      "steps": [
+        {
+          "step": 1,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 4,
+          "next_ms": 79.10000000149012
+        },
+        {
+          "step": 2,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 6,
+          "next_ms": 138.70000000298023
+        },
+        {
+          "step": 3,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 8,
+          "next_ms": 89
+        },
+        {
+          "step": 4,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 9,
+          "next_ms": 103.70000000298023
+        },
+        {
+          "step": 5,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 10,
+          "next_ms": 108.20000000298023
+        },
+        {
+          "step": 6,
+          "of": 6,
+          "angle_construction_ids": [
+            "kq_q1"
+          ],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 11
+        }
+      ]
+    },
+    {
+      "case": "perp_planes",
+      "viewport": "1366x768",
+      "construction_only_at_conclusion": true,
+      "steps": [
+        {
+          "step": 1,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 4,
+          "next_ms": 62.80000000447035
+        },
+        {
+          "step": 2,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 6,
+          "next_ms": 61.899999998509884
+        },
+        {
+          "step": 3,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 8,
+          "next_ms": 81.29999999701977
+        },
+        {
+          "step": 4,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 9,
+          "next_ms": 83.80000000447035
+        },
+        {
+          "step": 5,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 10,
+          "next_ms": 97.89999999850988
+        },
+        {
+          "step": 6,
+          "of": 6,
+          "angle_construction_ids": [
+            "kq_q1"
+          ],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 11
+        }
+      ]
+    },
+    {
+      "case": "perp_planes",
+      "viewport": "768x1024",
+      "construction_only_at_conclusion": true,
+      "steps": [
+        {
+          "step": 1,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 4,
+          "next_ms": 66.80000000447035
+        },
+        {
+          "step": 2,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 6,
+          "next_ms": 63.19999999552965
+        },
+        {
+          "step": 3,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 8,
+          "next_ms": 82.60000000149012
+        },
+        {
+          "step": 4,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 9,
+          "next_ms": 84.10000000149012
+        },
+        {
+          "step": 5,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 10,
+          "next_ms": 96.79999999701977
+        },
+        {
+          "step": 6,
+          "of": 6,
+          "angle_construction_ids": [
+            "kq_q1"
+          ],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 11
+        }
+      ]
+    },
+    {
+      "case": "perp_planes",
+      "viewport": "390x844",
+      "construction_only_at_conclusion": true,
+      "steps": [
+        {
+          "step": 1,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 4,
+          "next_ms": 65.79999999701977
+        },
+        {
+          "step": 2,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 6,
+          "next_ms": 82.80000000447035
+        },
+        {
+          "step": 3,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 8,
+          "next_ms": 80.29999999701977
+        },
+        {
+          "step": 4,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 9,
+          "next_ms": 80.60000000149012
+        },
+        {
+          "step": 5,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 10,
+          "next_ms": 88.09999999403954
+        },
+        {
+          "step": 6,
+          "of": 6,
+          "angle_construction_ids": [
+            "kq_q1"
+          ],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 11
+        }
+      ]
+    },
+    {
+      "case": "skew_perpendicular",
+      "viewport": "1366x768",
+      "construction_only_at_conclusion": true,
+      "steps": [
+        {
+          "step": 1,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 4,
+          "next_ms": 96.80000000447035
+        },
+        {
+          "step": 2,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 6,
+          "next_ms": 75.5
+        },
+        {
+          "step": 3,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 8,
+          "next_ms": 83.89999999850988
+        },
+        {
+          "step": 4,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 9,
+          "next_ms": 97.60000000149012
+        },
+        {
+          "step": 5,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 10,
+          "next_ms": 123
+        },
+        {
+          "step": 6,
+          "of": 6,
+          "angle_construction_ids": [
+            "kq_q1"
+          ],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 11
+        }
+      ]
+    },
+    {
+      "case": "line_perp_plane_marker",
+      "viewport": "1366x768",
+      "construction_only_at_conclusion": false,
+      "steps": [
+        {
+          "step": 1,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 4,
+          "next_ms": 67
+        },
+        {
+          "step": 2,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 6,
+          "next_ms": 69.39999999850988
+        },
+        {
+          "step": 3,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 8,
+          "next_ms": 80.19999999552965
+        },
+        {
+          "step": 4,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 9,
+          "next_ms": 69.70000000298023
+        },
+        {
+          "step": 5,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 10,
+          "next_ms": 85
+        },
+        {
+          "step": 6,
+          "of": 6,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 11
+        }
+      ]
+    },
+    {
+      "case": "section_three_points_parallel",
+      "viewport": "1366x768",
+      "construction_only_at_conclusion": true,
+      "steps": [
+        {
+          "step": 1,
+          "of": 9,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 5,
+          "next_ms": 102.20000000298023
+        },
+        {
+          "step": 2,
+          "of": 9,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 7,
+          "next_ms": 111.89999999850988
+        },
+        {
+          "step": 3,
+          "of": 9,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 10,
+          "next_ms": 98.19999999552965
+        },
+        {
+          "step": 4,
+          "of": 9,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 11,
+          "next_ms": 106.5
+        },
+        {
+          "step": 5,
+          "of": 9,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 12,
+          "next_ms": 110.79999999701977
+        },
+        {
+          "step": 6,
+          "of": 9,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 13,
+          "next_ms": 105.20000000298023
+        },
+        {
+          "step": 7,
+          "of": 9,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 14,
+          "next_ms": 130.70000000298023
+        },
+        {
+          "step": 8,
+          "of": 9,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 15,
+          "next_ms": 120.80000000447035
+        },
+        {
+          "step": 9,
+          "of": 9,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 16
+        }
+      ]
+    },
+    {
+      "case": "section_trace_pentagon",
+      "viewport": "1920x1080",
+      "construction_only_at_conclusion": true,
+      "steps": [
+        {
+          "step": 1,
+          "of": 9,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 5,
+          "next_ms": 104.70000000298023
+        },
+        {
+          "step": 2,
+          "of": 9,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 7,
+          "next_ms": 113.79999999701977
+        },
+        {
+          "step": 3,
+          "of": 9,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 10,
+          "next_ms": 149
+        },
+        {
+          "step": 4,
+          "of": 9,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 11,
+          "next_ms": 116.70000000298023
+        },
+        {
+          "step": 5,
+          "of": 9,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 12,
+          "next_ms": 151
+        },
+        {
+          "step": 6,
+          "of": 9,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 13,
+          "next_ms": 144.39999999850988
+        },
+        {
+          "step": 7,
+          "of": 9,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 14,
+          "next_ms": 138
+        },
+        {
+          "step": 8,
+          "of": 9,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 15,
+          "next_ms": 146.10000000149012
+        },
+        {
+          "step": 9,
+          "of": 9,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 16
+        }
+      ]
+    },
+    {
+      "case": "section_trace_pentagon",
+      "viewport": "1366x768",
+      "construction_only_at_conclusion": true,
+      "steps": [
+        {
+          "step": 1,
+          "of": 9,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 5,
+          "next_ms": 140.09999999403954
+        },
+        {
+          "step": 2,
+          "of": 9,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 7,
+          "next_ms": 123
+        },
+        {
+          "step": 3,
+          "of": 9,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 10,
+          "next_ms": 139.30000000447035
+        },
+        {
+          "step": 4,
+          "of": 9,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 11,
+          "next_ms": 131.69999999552965
+        },
+        {
+          "step": 5,
+          "of": 9,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 12,
+          "next_ms": 158.89999999850988
+        },
+        {
+          "step": 6,
+          "of": 9,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 13,
+          "next_ms": 124.69999999552965
+        },
+        {
+          "step": 7,
+          "of": 9,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 14,
+          "next_ms": 126.59999999403954
+        },
+        {
+          "step": 8,
+          "of": 9,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 15,
+          "next_ms": 124.39999999850988
+        },
+        {
+          "step": 9,
+          "of": 9,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 16
+        }
+      ]
+    },
+    {
+      "case": "section_trace_pentagon",
+      "viewport": "768x1024",
+      "construction_only_at_conclusion": true,
+      "steps": [
+        {
+          "step": 1,
+          "of": 9,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 5,
+          "next_ms": 98.29999999701977
+        },
+        {
+          "step": 2,
+          "of": 9,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 7,
+          "next_ms": 228.5
+        },
+        {
+          "step": 3,
+          "of": 9,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 10,
+          "next_ms": 119.5
+        },
+        {
+          "step": 4,
+          "of": 9,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 11,
+          "next_ms": 118.80000000447035
+        },
+        {
+          "step": 5,
+          "of": 9,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 12,
+          "next_ms": 131.19999999552965
+        },
+        {
+          "step": 6,
+          "of": 9,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 13,
+          "next_ms": 211.70000000298023
+        },
+        {
+          "step": 7,
+          "of": 9,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 14,
+          "next_ms": 226.70000000298023
+        },
+        {
+          "step": 8,
+          "of": 9,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 15,
+          "next_ms": 146.89999999850988
+        },
+        {
+          "step": 9,
+          "of": 9,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 16
+        }
+      ]
+    },
+    {
+      "case": "section_trace_pentagon",
+      "viewport": "390x844",
+      "construction_only_at_conclusion": true,
+      "steps": [
+        {
+          "step": 1,
+          "of": 9,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 5,
+          "next_ms": 95.5
+        },
+        {
+          "step": 2,
+          "of": 9,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 7,
+          "next_ms": 87.5
+        },
+        {
+          "step": 3,
+          "of": 9,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 10,
+          "next_ms": 83.10000000149012
+        },
+        {
+          "step": 4,
+          "of": 9,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 11,
+          "next_ms": 89
+        },
+        {
+          "step": 5,
+          "of": 9,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 12,
+          "next_ms": 89
+        },
+        {
+          "step": 6,
+          "of": 9,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 13,
+          "next_ms": 82.39999999850988
+        },
+        {
+          "step": 7,
+          "of": 9,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 14,
+          "next_ms": 97.79999999701977
+        },
+        {
+          "step": 8,
+          "of": 9,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 15,
+          "next_ms": 105
+        },
+        {
+          "step": 9,
+          "of": 9,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 16
+        }
+      ]
+    },
+    {
+      "case": "section_trace_vertex",
+      "viewport": "1366x768",
+      "construction_only_at_conclusion": true,
+      "steps": [
+        {
+          "step": 1,
+          "of": 8,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 5,
+          "next_ms": 177.39999999850988
+        },
+        {
+          "step": 2,
+          "of": 8,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 7,
+          "next_ms": 415
+        },
+        {
+          "step": 3,
+          "of": 8,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 10,
+          "next_ms": 245.20000000298023
+        },
+        {
+          "step": 4,
+          "of": 8,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 11,
+          "next_ms": 207.20000000298023
+        },
+        {
+          "step": 5,
+          "of": 8,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 12,
+          "next_ms": 229.20000000298023
+        },
+        {
+          "step": 6,
+          "of": 8,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 13,
+          "next_ms": 246.10000000149012
+        },
+        {
+          "step": 7,
+          "of": 8,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 14,
+          "next_ms": 298.19999999552965
+        },
+        {
+          "step": 8,
+          "of": 8,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 15
+        }
+      ]
+    },
+    {
+      "case": "unnamed_midpoint_distance",
+      "viewport": "1366x768",
+      "construction_only_at_conclusion": true,
+      "steps": [
+        {
+          "step": 1,
+          "of": 7,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 5,
+          "next_ms": 62.900000005960464
+        },
+        {
+          "step": 2,
+          "of": 7,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 7,
+          "next_ms": 77.20000000298023
+        },
+        {
+          "step": 3,
+          "of": 7,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 10,
+          "next_ms": 89.60000000149012
+        },
+        {
+          "step": 4,
+          "of": 7,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 11,
+          "next_ms": 84.19999999552965
+        },
+        {
+          "step": 5,
+          "of": 7,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 12,
+          "next_ms": 165.79999999701977
+        },
+        {
+          "step": 6,
+          "of": 7,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [],
+          "why": "",
+          "rendered": 13,
+          "next_ms": 138.29999999701977
+        },
+        {
+          "step": 7,
+          "of": 7,
+          "angle_construction_ids": [],
+          "altitude_construction_ids": [],
+          "witness_ids": [
+            "perpendicular:kq_q1__foot1"
+          ],
+          "why": "",
+          "rendered": 15
+        }
+      ]
+    }
+  ]
+}

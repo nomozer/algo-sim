@@ -1,0 +1,103 @@
+{
+  "run_id": "scene3d-causal-pedagogical-integrity",
+  "generated_at_utc": "2026-11-14T13:49:46.989971+00:00",
+  "base_scene_clean": true,
+  "rows": [
+    {
+      "mutation": "swap_create_order",
+      "checker": "causal_audit",
+      "caught": true,
+      "violations": [
+        "CAUSAL_BIRTH_ORDER",
+        "EVENT_PREREQUISITE_LATE",
+        "SHOWN_BEFORE_CREATE"
+      ]
+    },
+    {
+      "mutation": "delete_create",
+      "checker": "causal_audit",
+      "caught": true,
+      "violations": [
+        "CAUSAL_BIRTH_ORDER"
+      ]
+    },
+    {
+      "mutation": "object_before_prerequisite",
+      "checker": "causal_audit",
+      "caught": true,
+      "violations": [
+        "CAUSAL_BIRTH_ORDER",
+        "EVENT_PREREQUISITE_LATE"
+      ]
+    },
+    {
+      "mutation": "visual_dependency_replaced_by_hidden_vector",
+      "checker": "causal_audit",
+      "caught": true,
+      "violations": [
+        "HIDDEN_MATH_VISUAL_DEPENDENCY"
+      ]
+    },
+    {
+      "mutation": "delete_source_object",
+      "checker": "causal_audit",
+      "caught": true,
+      "violations": [
+        "CREATE_UNKNOWN_OBJECT",
+        "UNRESOLVED_REFERENCE",
+        "VISIBLE_ID_UNKNOWN"
+      ]
+    },
+    {
+      "mutation": "insert_unsourced_object",
+      "checker": "causal_audit",
+      "caught": true,
+      "violations": [
+        "UNRESOLVED_REFERENCE"
+      ]
+    },
+    {
+      "mutation": "delete_required_helper",
+      "checker": "causal_audit",
+      "caught": true,
+      "violations": [
+        "CREATE_UNKNOWN_OBJECT",
+        "UNRESOLVED_REFERENCE",
+        "VISIBLE_ID_UNKNOWN"
+      ]
+    },
+    {
+      "mutation": "readout_for_uncertified_quantity",
+      "checker": "causal_audit",
+      "caught": true,
+      "violations": [
+        "READOUT_ID_UNKNOWN"
+      ]
+    },
+    {
+      "mutation": "duplicate_create",
+      "checker": "causal_audit",
+      "caught": true,
+      "violations": [
+        "DUPLICATE_CREATE"
+      ]
+    },
+    {
+      "mutation": "move_intersection_point",
+      "checker": "build_adapter4_response",
+      "caught": true
+    },
+    {
+      "mutation": "ray_in_wrong_plane",
+      "checker": "build_adapter4_response",
+      "caught": true
+    },
+    {
+      "mutation": "right_angle_changed_to_other_kind",
+      "checker": "build_adapter4_response",
+      "caught": true
+    }
+  ],
+  "caught": 12,
+  "total": 12
+}

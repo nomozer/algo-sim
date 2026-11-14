@@ -39,7 +39,8 @@ const CASES = {
   perp_planes: { goal: 'angle', scale: true, shape: true, text: R1 + 'Tính góc giữa hai mặt phẳng (SAC) và (ABC).' },
   skew_perpendicular: { goal: 'angle', scale: true, shape: true, text: R1 + 'Tính góc giữa hai đường thẳng SA và BC.' },
   // run `scene3d-causal-pedagogical-integrity`
-  line_perp_plane_marker: { goal: 'witness', scale: true, shape: true, text: R1 + 'Tính góc giữa đường thẳng SA và mặt phẳng (ABC).' },
+  // a right angle that IS the asked answer: its marker is hidden in the learner mode (scene3d-view `laDapSoAn`, no-answer policy)
+  line_perp_plane_marker: { goal: 'hidden_answer_marker', scale: true, shape: true, text: R1 + 'Tính góc giữa đường thẳng SA và mặt phẳng (ABC).' },
   section_three_points_parallel: { goal: 'section', why: 'song song', text: P + '. Gọi M, N, P lần lượt là trung điểm của SA, SB, SC. Xác định thiết diện của hình chóp cắt bởi mặt phẳng (MNP).' },
   section_trace_pentagon: { goal: 'section', why: 'gọi I là giao điểm', text: P + '. Gọi M, N, P lần lượt là trung điểm của SA, BC, CD. Xác định thiết diện của hình chóp cắt bởi mặt phẳng (MNP).' },
   section_trace_vertex: { goal: 'section', why: 'gọi I là giao điểm', text: P + '. Gọi M là trung điểm của SA, N là trung điểm của BC. Xác định thiết diện của hình chóp cắt bởi mặt phẳng (MND).' },
@@ -107,7 +108,12 @@ async function walkTimeline(page) {
       altitude_construction_ids: await page.evaluate(() => window.__geo3d_altitude_construction_ids ?? []),
       rendered_ids: await page.evaluate(() => window.__geo3d_rendered_object_ids ?? []),
       witness_ids: await page.evaluate(() => window.__geo3d_witness_ids ?? []),
-      why: (await page.locator('.geo3d-cac-buoc-vi-sao').allInnerTexts().catch(() => [])).join(' '),
+      // the «Vì sao» of the active step: 'Xem giải thích' in the step list (closed by default) — opened like a learner would
+      why: await (async () => {
+        const t = page.locator('.step-evidence-toggle[aria-expanded="false"]').first();
+        if (await t.count() && await t.isVisible().catch(() => false)) { await t.click().catch(() => {}); await frames(page); }
+        return (await page.locator('.geo3d-cac-buoc-vi-sao').allInnerTexts().catch(() => [])).join(' ');
+      })(),
       rendered: (await page.evaluate(() => window.__geo3d_rendered_object_ids ?? [])).length });
     if (!c || c[0] >= c[1] || await page.isDisabled('#pa-next')) break;
     const t0 = await page.evaluate(() => performance.now());
@@ -231,8 +237,8 @@ try {
         case: name, goal: c.goal, viewport: `${w}x${h}`, status, first_model_ms: firstModelMs,
         timeline_steps: steps.length, timeline: steps,
         goal_object_id: goalId ?? null,
-        construction_only_at_conclusion: c.goal === 'witness'
-          ? ((last?.witness_ids?.length ?? 0) >= 1)
+        construction_only_at_conclusion: c.goal === 'hidden_answer_marker'
+          ? steps.every((s) => (s.witness_ids?.length ?? 0) === 0)
           : c.goal === 'angle'
           ? (last?.angle_construction_ids?.length === 1 && before.every((s) => s.angle_construction_ids.length === 0))
           : c.goal === 'altitude'

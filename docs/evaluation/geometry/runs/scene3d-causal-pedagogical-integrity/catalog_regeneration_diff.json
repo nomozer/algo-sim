@@ -1,0 +1,140 @@
+{
+  "run_id": "scene3d-causal-pedagogical-integrity",
+  "generated_at_utc": "2026-11-14T15:21:51.054305+00:00",
+  "geometry_samples": {
+    "path": "frontend/src/data/geometry-samples.json",
+    "generator": "backend/scripts/build_geometry_samples.py",
+    "start_sha256": "fe5575f04e937a46fe6dd2950188ef651611331900643c8e3f70e9a300560ec5",
+    "now_sha256": "ae541683facd33368ae5bc778c2f7bf8b4fac178f0cac4770fea0d84ba73f3d5",
+    "samples": {
+      "thiet-dien-chop": {
+        "geometry_changed": [],
+        "audit_violations": {
+          "start": 0,
+          "now": 0
+        },
+        "section_edges_with_reason": {
+          "start": 4,
+          "now": 4
+        }
+      },
+      "mat-cheo-sac": {
+        "geometry_changed": [],
+        "audit_violations": {
+          "start": 0,
+          "now": 0
+        },
+        "section_edges_with_reason": {
+          "start": 0,
+          "now": 3
+        }
+      },
+      "vuong-goc-chop": {
+        "geometry_changed": [],
+        "audit_violations": {
+          "start": 0,
+          "now": 0
+        },
+        "section_edges_with_reason": {
+          "start": 0,
+          "now": 0
+        }
+      },
+      "mp-vuong-goc-duong": {
+        "geometry_changed": [],
+        "audit_violations": {
+          "start": 0,
+          "now": 0
+        },
+        "section_edges_with_reason": {
+          "start": 0,
+          "now": 0
+        }
+      },
+      "the-tich-chop": {
+        "geometry_changed": [],
+        "audit_violations": {
+          "start": 0,
+          "now": 0
+        },
+        "section_edges_with_reason": {
+          "start": 0,
+          "now": 0
+        }
+      },
+      "cau-the-tich": {
+        "geometry_changed": [],
+        "audit_violations": {
+          "start": 0,
+          "now": 0
+        },
+        "section_edges_with_reason": {
+          "start": 0,
+          "now": 0
+        }
+      },
+      "cau-cat-mat-phang": {
+        "geometry_changed": [],
+        "audit_violations": {
+          "start": 1,
+          "now": 0
+        },
+        "section_edges_with_reason": {
+          "start": 0,
+          "now": 0
+        }
+      },
+      "tru-truc-xien": {
+        "geometry_changed": [],
+        "audit_violations": {
+          "start": 0,
+          "now": 0
+        },
+        "section_edges_with_reason": {
+          "start": 0,
+          "now": 0
+        }
+      },
+      "tru-thiet-dien-tron": {
+        "geometry_changed": [],
+        "audit_violations": {
+          "start": 1,
+          "now": 0
+        },
+        "section_edges_with_reason": {
+          "start": 0,
+          "now": 0
+        }
+      },
+      "non-duong-sinh": {
+        "geometry_changed": [],
+        "audit_violations": {
+          "start": 0,
+          "now": 0
+        },
+        "section_edges_with_reason": {
+          "start": 0,
+          "now": 0
+        }
+      },
+      "non-thiet-dien-truc": {
+        "geometry_changed": [],
+        "audit_violations": {
+          "start": 0,
+          "now": 0
+        },
+        "section_edges_with_reason": {
+          "start": 0,
+          "now": 0
+        }
+      }
+    },
+    "regenerated_identically": true,
+    "generator_exit": 0
+  },
+  "advanced_geometry_samples": {
+    "status": "BLOCKED_OWNERSHIP",
+    "reason": "generator backend/scripts/build_advanced_geometry_samples.py exists only on the library branch and imports `circumscribed_sphere`, absent from this branch's kernel; regenerating it here would mix branches",
+    "library_committed_audit": "see catalog_fixture_provenance.json"
+  }
+}

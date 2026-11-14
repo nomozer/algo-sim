@@ -1,0 +1,165 @@
+{
+  "browser": "158.0.8127.36",
+  "headless": true,
+  "backend": "measured_app loopback, HYBRID_ROUTE_MODE=local-first, ALLOW_LIVE_AI=0",
+  "synthetic_signup_status": 200,
+  "series": [
+    {
+      "cycle": 0,
+      "case": "cos_line_plane",
+      "numeric_note_present": true,
+      "numeric_note_expected": true,
+      "heap_mb": 17.961198806762695,
+      "canvases": 1,
+      "steps": 6,
+      "rendered": 11,
+      "foreign_ids": []
+    },
+    {
+      "cycle": 0,
+      "case": "section_one_sentence",
+      "numeric_note_present": false,
+      "numeric_note_expected": false,
+      "heap_mb": 21.55727767944336,
+      "canvases": 1,
+      "steps": 7,
+      "rendered": 14,
+      "foreign_ids": [
+        "td_sec#4cf"
+      ]
+    },
+    {
+      "cycle": 1,
+      "case": "cos_line_plane",
+      "numeric_note_present": true,
+      "numeric_note_expected": true,
+      "heap_mb": 21.076772689819336,
+      "canvases": 1,
+      "steps": 6,
+      "rendered": 11,
+      "foreign_ids": []
+    },
+    {
+      "cycle": 1,
+      "case": "section_one_sentence",
+      "numeric_note_present": false,
+      "numeric_note_expected": false,
+      "heap_mb": 22.23076629638672,
+      "canvases": 1,
+      "steps": 7,
+      "rendered": 14,
+      "foreign_ids": [
+        "td_sec#4cf"
+      ]
+    },
+    {
+      "cycle": 2,
+      "case": "cos_line_plane",
+      "numeric_note_present": true,
+      "numeric_note_expected": true,
+      "heap_mb": 22.522530555725098,
+      "canvases": 1,
+      "steps": 6,
+      "rendered": 11,
+      "foreign_ids": []
+    },
+    {
+      "cycle": 2,
+      "case": "section_one_sentence",
+      "numeric_note_present": false,
+      "numeric_note_expected": false,
+      "heap_mb": 23.751164436340332,
+      "canvases": 1,
+      "steps": 7,
+      "rendered": 14,
+      "foreign_ids": [
+        "td_sec#4cf"
+      ]
+    },
+    {
+      "cycle": 3,
+      "case": "cos_line_plane",
+      "numeric_note_present": true,
+      "numeric_note_expected": true,
+      "heap_mb": 23.209803581237793,
+      "canvases": 1,
+      "steps": 6,
+      "rendered": 11,
+      "foreign_ids": []
+    },
+    {
+      "cycle": 3,
+      "case": "section_one_sentence",
+      "numeric_note_present": false,
+      "numeric_note_expected": false,
+      "heap_mb": 24.580830574035645,
+      "canvases": 1,
+      "steps": 7,
+      "rendered": 14,
+      "foreign_ids": [
+        "td_sec#4cf"
+      ]
+    },
+    {
+      "cycle": 4,
+      "case": "cos_line_plane",
+      "numeric_note_present": true,
+      "numeric_note_expected": true,
+      "heap_mb": 24.405115127563477,
+      "canvases": 1,
+      "steps": 6,
+      "rendered": 11,
+      "foreign_ids": []
+    },
+    {
+      "cycle": 4,
+      "case": "section_one_sentence",
+      "numeric_note_present": false,
+      "numeric_note_expected": false,
+      "heap_mb": 25.82767391204834,
+      "canvases": 1,
+      "steps": 7,
+      "rendered": 14,
+      "foreign_ids": [
+        "td_sec#4cf"
+      ]
+    },
+    {
+      "cycle": 5,
+      "case": "cos_line_plane",
+      "numeric_note_present": true,
+      "numeric_note_expected": true,
+      "heap_mb": 25.107561111450195,
+      "canvases": 1,
+      "steps": 6,
+      "rendered": 11,
+      "foreign_ids": []
+    },
+    {
+      "cycle": 5,
+      "case": "section_one_sentence",
+      "numeric_note_present": false,
+      "numeric_note_expected": false,
+      "heap_mb": 26.39540958404541,
+      "canvases": 1,
+      "steps": 7,
+      "rendered": 14,
+      "foreign_ids": [
+        "td_sec#4cf"
+      ]
+    }
+  ],
+  "timeline_walk_heap_mb": [
+    24.43140411376953,
+    26.200572967529297,
+    27.755701065063477,
+    28.030385971069336
+  ],
+  "timeline_walk_growth_mb": 3.5989818572998047,
+  "method": "6 cycles × 2 problems in one signed-in page (each analysis is kept in the learner history), forced GC (--expose-gc) before each reading; plus 15 timeline walks of one problem with no new analysis",
+  "heap_mean_early_mb": 22.39530849456787,
+  "heap_mean_late_mb": 25.433939933776855,
+  "heap_growth_mb": 3.0386314392089844,
+  "canvas_count_constant": true,
+  "numeric_note_never_carried_over": true
+}
