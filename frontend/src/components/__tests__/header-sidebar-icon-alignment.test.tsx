@@ -1,8 +1,11 @@
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
+import esbuild from "esbuild";
+import { chromium } from "playwright";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { renderToString } from "react-dom/server";
 import App from "../../App";
+import { publicCatalog } from "../../data/offline-catalog";
 import {
   GEOMETRY_SOLID_FAMILIES,
   GeometryFamilyIcon,
@@ -158,4 +161,153 @@ describe("AXO V9.4.11 — Icon System Consistency & Optical Alignment", () => {
       expect(html).toContain('height="17"');
     }
   });
+
+  it(
+    "renders IconSidebarPanel with outer rounded rect and short interior left vertical bar not touching top or bottom borders, and toggles sidebar via click/keyboard across desktop and mobile without disturbing open tabs",
+    async () => {
+      const panelHtml = renderToString(<IconSidebarPanel />);
+      const rectMatch = panelHtml.match(
+        /<rect[^>]*x="([\d.]+)"[^>]*y="([\d.]+)"[^>]*width="([\d.]+)"[^>]*height="([\d.]+)"[^>]*rx="([\d.]+)"/,
+      );
+      expect(rectMatch).not.toBeNull();
+      const [, rxStr, ryStr, rwStr, rhStr, radiusStr] = rectMatch!;
+      const rectX = Number(rxStr);
+      const rectY = Number(ryStr);
+      const rectH = Number(rhStr);
+      const radius = Number(radiusStr);
+      const strokeWidth = 1.75;
+      expect(Number(rwStr)).toBeCloseTo(15.5, 2);
+      expect(rectH).toBeCloseTo(13.5, 2);
+      expect(radius).toBeGreaterThanOrEqual(2.5);
+
+      const pathMatch = panelHtml.match(
+        /<path[^>]*d="M([\d.]+)\s+([\d.]+)v([\d.]+)"/,
+      );
+      expect(pathMatch).not.toBeNull();
+      const [, pxStr, py1Str, pLenStr] = pathMatch!;
+      const barX = Number(pxStr);
+      const barY1 = Number(py1Str);
+      const barY2 = barY1 + Number(pLenStr);
+
+      expect(barX).toBeGreaterThan(rectX + strokeWidth);
+      expect(barX).toBeLessThan(10);
+      expect(barY1 - strokeWidth / 2).toBeGreaterThan(rectY + strokeWidth / 2);
+      expect(barY2 + strokeWidth / 2).toBeLessThan(rectY + rectH - strokeWidth / 2);
+      expect(panelHtml).not.toContain('d="M7.5 3.5v13"');
+
+      const sample = publicCatalog()[0]!;
+      const bundled = await esbuild.build({
+        stdin: {
+          contents: `
+            import React from "react";
+            import { createRoot } from "react-dom/client";
+            import App from "../App";
+            import { registerAllSimulations } from "../simulations";
+            import { useAuthStore } from "../state/auth";
+            import { useAppStore } from "../state/store";
+
+            registerAllSimulations();
+            useAuthStore.setState({ user: null, resolved: true });
+            useAppStore.getState().setGuestEnteredApp(true);
+            (window as unknown as { __axoStore?: typeof useAppStore }).__axoStore = useAppStore;
+
+            const host = document.getElementById("root")!;
+            createRoot(host).render(React.createElement(App));
+          `,
+          resolveDir: resolve(__dirname, ".."),
+          sourcefile: "sidebar-icon-browser-harness.tsx",
+          loader: "tsx",
+        },
+        bundle: true,
+        write: false,
+        jsx: "automatic",
+        format: "iife",
+        platform: "browser",
+        target: "es2022",
+        define: {
+          "process.env.NODE_ENV": '"development"',
+          "import.meta.hot": "undefined",
+        },
+      });
+
+      const browser = await chromium.launch({
+        headless: true,
+        args: ["--use-gl=angle", "--use-angle=swiftshader", "--enable-unsafe-swiftshader"],
+      });
+      const bundleJs = bundled.outputFiles[0]!.text;
+      const htmlDoc = `<!DOCTYPE html><html lang="vi"><head><meta charset="utf-8" /><style>${tokensCss}\n${globalCss}\nhtml, body { margin: 0; }</style></head><body><div id="root"></div><script src="/bundle.js"></script></body></html>`;
+      try {
+        const page = await browser.newPage({ viewport: { width: 1280, height: 800 } });
+        const pageErrors: string[] = [];
+        page.on("pageerror", (e) => pageErrors.push(e.message));
+        await page.route("http://axo.test/**", async (route) => {
+          const url = route.request().url();
+          if (url === "http://axo.test/bundle.js") {
+            await route.fulfill({ status: 200, contentType: "application/javascript; charset=utf-8", body: bundleJs });
+          } else if (url.includes("/api/auth/")) {
+            await route.fulfill({ status: 200, contentType: "application/json", body: '{"user":null}' });
+          } else if (url.includes("/api/health")) {
+            await route.fulfill({ status: 200, contentType: "application/json", body: '{"ok":true,"hasKey":false}' });
+          } else {
+            await route.fulfill({ status: 200, contentType: "text/html; charset=utf-8", body: htmlDoc });
+          }
+        });
+        await page.goto("http://axo.test/app", { waitUntil: "domcontentloaded" });
+        await page.waitForSelector("#nav-item-library", { timeout: 10000 });
+        await page.locator("#nav-item-library").click();
+        await page.waitForSelector(`.lib-card[data-lib-prob="${sample.id}"]`, { timeout: 10000 });
+        await page.locator(`.lib-card[data-lib-prob="${sample.id}"]`).click();
+        await page.waitForSelector('[data-close-tab^="tab-sample-"]', { timeout: 10000 });
+
+        await page.waitForSelector("#btn-sidebar-collapse", { timeout: 10000 });
+        type AxoStoreWindow = {
+          __axoStore: { getState: () => { workspaceTabs?: Array<{ id: string }> } };
+        };
+        const readTabIds = () =>
+          page.evaluate(() =>
+            ((window as unknown as AxoStoreWindow).__axoStore.getState().workspaceTabs ?? []).map(
+              (t) => t.id,
+            ),
+          );
+        const initialTabs = await readTabIds();
+        expect(initialTabs).toEqual([`tab-sample-${sample.id}`]);
+
+        // Verify SVG path inside desktop header toggle & click to collapse
+        expect(
+          await page.locator("#btn-sidebar-collapse svg.sb-toggle-layout-icon path").getAttribute("d"),
+        ).toBe("M6.25 6.75v6.5");
+        await page.locator("#btn-sidebar-collapse").click();
+        await page.waitForSelector('#left-sidebar[data-sidebar-state="collapsed"]', {
+          state: "attached",
+          timeout: 5000,
+        });
+        await page.waitForSelector("#btn-sidebar-open-trigger", { state: "visible", timeout: 5000 });
+        expect(await readTabIds()).toEqual(initialTabs);
+
+        // Keyboard Enter on collapsed trigger re-expands sidebar
+        expect(
+          await page.locator("#btn-sidebar-open-trigger svg.sb-toggle-layout-icon path").getAttribute("d"),
+        ).toBe("M6.25 6.75v6.5");
+        await page.locator("#btn-sidebar-open-trigger").focus();
+        await page.keyboard.press("Enter");
+        await page.waitForSelector('#left-sidebar[data-sidebar-state="expanded"]', { timeout: 5000 });
+        expect(await readTabIds()).toEqual(initialTabs);
+
+        // Mobile viewport uses same short-bar IconSidebarPanel on #btn-mobile-open-ws without losing open tabs
+        await page.setViewportSize({ width: 390, height: 844 });
+        await page.waitForSelector("#btn-mobile-open-ws", { state: "visible", timeout: 5000 });
+        expect(
+          await page.locator("#btn-mobile-open-ws svg.sb-toggle-layout-icon path").getAttribute("d"),
+        ).toBe("M6.25 6.75v6.5");
+        await page.locator("#btn-mobile-open-ws").click();
+        await page.waitForSelector("#left-sidebar.is-mobile-open", { timeout: 5000 });
+        expect(await readTabIds()).toEqual(initialTabs);
+
+        expect(pageErrors).toEqual([]);
+      } finally {
+        await browser.close();
+      }
+    },
+    30_000,
+  );
 });
