@@ -278,6 +278,14 @@ export interface TuyChonHuongNhin {
   matCap?: [Diem3, Diem3][];
   /** Cảnh có khối tròn xoay (nón/trụ) kết hợp mặt/tam giác trọng tâm — tránh hướng nhìn trùng khít đường sinh biên làm cạnh thiết diện đè lên đường bao khối. */
   coKhoiCong?: boolean;
+  /** Mặt phẳng tiếp xúc mặt cầu: ưu tiên góc nhìn nghiêng tiếp tuyến để tiếp điểm nằm sát vành cầu và các điểm phụ trên mặt phẳng nằm ngoài đĩa cầu. */
+  matTiepDienCau?: {
+    tamCau: Diem3;
+    banKinh: number;
+    tiepDiem: Diem3;
+    phapTuyen: Diem3;
+    diemTrenMat: Diem3[];
+  }[];
 }
 
 export function datNguong(q: ChatLuongGocNhin, tran: TranGocNhin): boolean {
@@ -383,6 +391,72 @@ function diemTachDayTru(
   return { hopLe, thuong: tong / capDayTru.length };
 }
 
+function diemTiepDienCau(
+  huong: Diem3,
+  matTiepDienCau: NonNullable<TuyChonHuongNhin["matTiepDienCau"]>,
+): { hopLe: boolean; thuong: number } {
+  if (matTiepDienCau.length === 0) return { hopLe: true, thuong: 0 };
+  const d = chuan(huong);
+  const phai = chuan(Math.abs(d[2]) > 0.999 ? cheo([0, 1, 0], d) : cheo([0, 0, 1], d));
+  const len = cheo(d, phai);
+  let hopLe = Math.abs(d[0]) >= 0.30 && Math.abs(d[1]) >= 0.30;
+  let tong = 0;
+  for (const item of matTiepDienCau) {
+    const R = Math.max(1e-6, item.banKinh);
+    const u = chuan(item.phapTuyen);
+    const ud = tich(u, d);
+    const nd = Math.abs(ud);
+    if (ud < 0.42 || ud > 0.58) {
+      hopLe = false;
+    }
+    let diemItem =
+      ud >= 0.42 && ud <= 0.58
+        ? 1.4 - Math.abs(nd - 0.49) / 0.10
+        : ud > 0.68 || ud < 0.18
+          ? -2.2
+          : -0.9;
+    const dirs2d: [number, number][] = [];
+    for (const pk of item.diemTrenMat) {
+      const v = tru(pk, item.tamCau);
+      const vd = tich(v, d);
+      const r2 = Math.max(0, tich(v, v) - vd * vd);
+      const rProj = Math.sqrt(r2);
+      const tiLeR = rProj / R;
+      if (tiLeR < 0.96) {
+        hopLe = false;
+      }
+      const ap = tru(pk, item.tiepDiem);
+      const apLen = Math.hypot(...ap);
+      const dotCungPhia = apLen > 1e-6 ? (-ud * tich(ap, d)) / apLen : 0;
+      const sx = tich(ap, phai);
+      const sy = tich(ap, len);
+      const sLen = Math.hypot(sx, sy);
+      if (sLen > 1e-6) {
+        dirs2d.push([sx / sLen, sy / sLen]);
+      }
+      if (tiLeR < 0.85) {
+        diemItem -= 1.6;
+      } else if (tiLeR >= 0.96) {
+        diemItem += Math.min(1.1, (tiLeR - 0.94) * 2.2);
+      }
+      if (dotCungPhia >= 0) {
+        diemItem += 0.45 * dotCungPhia;
+      } else {
+        diemItem += 0.25 * dotCungPhia;
+      }
+    }
+    if (dirs2d.length >= 2) {
+      const sinGoc = Math.abs(dirs2d[0][0] * dirs2d[1][1] - dirs2d[0][1] * dirs2d[1][0]);
+      if (sinGoc < 0.65) {
+        hopLe = false;
+      }
+      diemItem += 0.9 * sinGoc;
+    }
+    tong += diemItem;
+  }
+  return { hopLe, thuong: tong / matTiepDienCau.length };
+}
+
 /** Hướng nhìn tốt nhất trên lưới. Đạt ngưỡng trước; trong số đạt, cân diện
  *  tích, khoảng hở và độ sâu, trừ một chút cho việc xa hướng quen thuộc cũ để
  *  hình giữ tư thế sách giáo khoa. Không hướng nào đạt ⇒ hướng điểm cao nhất. */
@@ -395,7 +469,8 @@ export function chonHuongNhin(
   const capDayTru = tuyChon?.capDayTru ?? [];
   const matCap = tuyChon?.matCap ?? [];
   const coKhoiCong = Boolean(tuyChon?.coKhoiCong);
-  const coTuyChon = matTrongTam.length > 0 || capDayTru.length > 0 || matCap.length > 0;
+  const matTiepDienCau = tuyChon?.matTiepDienCau ?? [];
+  const coTuyChon = matTrongTam.length > 0 || capDayTru.length > 0 || matCap.length > 0 || matTiepDienCau.length > 0;
 
   if (!coTuyChon) {
     let tot: { huong: Diem3; diem: number; dat: boolean } | null = null;
@@ -416,30 +491,32 @@ export function chonHuongNhin(
     const camEst = uocLuongCameraPhoiCanh(diem, d);
     const mo = doMoMatTrongTam(huong, matTrongTam, coKhoiCong);
     const truInfo = diemTachDayTru(huong, camEst, capDayTru);
+    const tiepDienInfo = diemTiepDienCau(huong, matTiepDienCau);
     const napMo = kiemMoPhoiCanhNapDaDien(camEst, matCap);
-    const datKhongDetNap = truInfo.hopLe && napMo;
+    const datKhongDetNap = truInfo.hopLe && napMo && tiepDienInfo.hopLe;
     const datCoBan = datNguong(q, tran) && datKhongDetNap;
-    const datMo = !mo.coMatDung || mo.minNghieng >= 0.55;
-    return { huong, q, mo, truInfo, datKhongDetNap, datCoBan, datDayDu: datCoBan && datMo };
+    const datMo = (!mo.coMatDung || mo.minNghieng >= 0.55) && tiepDienInfo.hopLe;
+    return { huong, q, mo, truInfo, tiepDienInfo, datKhongDetNap, datCoBan, datDayDu: datCoBan && datMo };
   });
   const coUngVienMo = danhSach.some((x) => x.datDayDu);
   const coUngVienCoBan = danhSach.some((x) => x.datCoBan);
 
   let tot: { huong: Diem3; diem: number; hang: number } | null = null;
   for (const item of danhSach) {
-    const { huong, q, mo, truInfo, datKhongDetNap, datCoBan, datDayDu } = item;
+    const { huong, q, mo, truInfo, tiepDienInfo, datKhongDetNap, datCoBan, datDayDu } = item;
     const hang = coUngVienMo
       ? (datDayDu ? 3 : datCoBan ? 2 : datKhongDetNap ? 1 : 0)
       : coUngVienCoBan
         ? (datCoBan ? 2 : datKhongDetNap ? 1 : 0)
         : (datKhongDetNap ? 1 : 0);
-    const lucKeo = mo.coMatDung ? 0.55 : LUC_KEO_SGK;
+    const lucKeo = mo.coMatDung || matTiepDienCau.length > 0 ? 0.55 : LUC_KEO_SGK;
     const diemSo = q.dienTichBao / (tran.dienTichBao || 1)
       + 2.2 * Math.min(q.khoangDinhCanhMin, 0.22)
       + Math.min(q.khoangDinhMin, 0.38)
       + 0.5 * q.doSau / (tran.doSau || 1)
       + (matTrongTam.length > 0 ? 2.6 * mo.tb : 0)
       + (capDayTru.length > 0 ? 0.45 * truInfo.thuong : 0)
+      + (matTiepDienCau.length > 0 ? 2.4 * tiepDienInfo.thuong : 0)
       - lucKeo * (1 - tich(huong, quen));
     if (!tot || hang > tot.hang || (hang === tot.hang && diemSo > tot.diem)) {
       tot = { huong, diem: diemSo, hang };

@@ -126,6 +126,7 @@ import {
   resolveLineDisplaySpan,
   resolvePlaneSectionVisibility,
   resolveSphereReferenceGreatCirclePolicy,
+  resolveStepGoalKind,
   resolveStepVisualRoles,
   resolveStudiedPlaneVisualStyle,
   shouldShowSphereReferenceEquator,
@@ -2357,7 +2358,10 @@ export function buildObject3D(
       boundedPlanePolygon && boundedPlanePolygon.length >= 3
         ? boundedPlanePolygon
         : sceneContext && o.type === "plane3"
-          ? computeBoundedStudiedPlanePolygon(sceneContext, o, sceneContext.objects)
+          ? (() => {
+              const p = computeBoundedStudiedPlanePolygon(sceneContext, o, sceneContext.objects);
+              return p.length >= 3 ? p : compactPlaneAnchorPoints(sceneContext, o, sceneContext.objects);
+            })()
           : [];
     const daGiac = daGiacNghienCuu.length >= 3 ? daGiacNghienCuu : daGiacMatPhang(diemMp, phapTuyen, diemNen);
     const daGiacMoRong = daGiacNghienCuu.length >= 3 ? null : moRongDaGiacMatPhang(diemMp, phapTuyen, diemNen, daGiac);
@@ -4579,6 +4583,13 @@ export function Scene3DWorkspace({
   const pendingRestoredCameraRef = useRef<SceneCameraPose | null>(
     hopLeCameraPose(initialCameraPose) ? initialCameraPose : null,
   );
+  const prevSceneForCameraRef = useRef(scene);
+  if (prevSceneForCameraRef.current !== scene) {
+    prevSceneForCameraRef.current = scene;
+    pendingRestoredCameraRef.current = hopLeCameraPose(initialCameraPose)
+      ? initialCameraPose
+      : null;
+  }
   const prevFitTokenRef = useRef(fitToken);
   //: Đặt lại khung nhìn cho vừa hình. Giữ trong ref vì nó do vòng dựng cảnh
   //: tạo ra (cần `cam`, `controls`) nhưng được gọi từ ngoài vòng ấy.
@@ -6266,32 +6277,22 @@ export function Scene3DWorkspace({
       if (!infoTam || diem.length === 0) return;
       cam.updateMatrixWorld(true);
       const tmp = new THREE.Vector3();
-      let tranKhung = false;
+      let maxAbsNdc = 0;
       for (const p of diem) {
         tmp.set(p[0], p[1], p[2]).project(cam);
-        if (tmp.z < 1 && (tmp.x < -0.86 || tmp.x > 0.86 || tmp.y < -0.86 || tmp.y > 0.86)) {
-          tranKhung = true;
-          break;
+        if (tmp.z < 1 && Number.isFinite(tmp.x) && Number.isFinite(tmp.y)) {
+          maxAbsNdc = Math.max(maxAbsNdc, Math.abs(tmp.x), Math.abs(tmp.y));
         }
       }
-      if (!tranKhung) return;
+      if (maxAbsNdc <= 0.96) return;
       const ray = cam.position.clone().sub(dieuKhien.target);
       if (ray.lengthSq() <= 1e-8) return;
-      const huongHienTai: [number, number, number] = [ray.x, ray.y, ray.z];
-      const w0 = container.clientWidth || 640;
-      const h0 = container.clientHeight || 420;
-      const tc = tinhTuyChonKhung(diem, huongHienTai, w0, h0);
-      const canDoi = khungAnToanCanDoiTam(diem, infoTam.tamXoay, cam.fov, w0 / Math.max(1, h0), huongHienTai, tc);
-      lechOngKinhNgang = canDoi.lechOngKinhNgang;
-      lechOngKinhDoc = canDoi.lechOngKinhDoc;
-      chinhCo();
-      const w = renderer.domElement.clientWidth || 1;
-      const h = renderer.domElement.clientHeight || 1;
-      const kn = khungNhinQuanhTam(diem, infoTam.tamXoay, cam.fov, w / h, huongHienTai, canDoi.vungAnToanNdc);
-      if (!kn) return;
+      const scale = Math.min(1.6, Math.max(1.02, maxAbsNdc / 0.92));
       dangDatKhungTuDong = true;
       try {
-        datKhungNhin(cam, dieuKhien, kn, { banKinhKhoi: infoTam.banKinhKhoi, tam: infoTam });
+        cam.position.copy(dieuKhien.target).addScaledVector(ray, scale);
+        chinhCo();
+        cam.updateMatrixWorld(true);
         kcKhungChuan = cam.position.clone().sub(dieuKhien.target).length();
       } finally {
         dangDatKhungTuDong = false;
@@ -6344,13 +6345,16 @@ export function Scene3DWorkspace({
       if (!kn) return;
       dangDatKhungTuDong = true;
       try {
+        dieuKhien.saveState();
+        dieuKhien.reset();
         datKhungNhin(cam, dieuKhien, kn, infoTam ? { banKinhKhoi: infoTam.banKinhKhoi, tam: infoTam } : undefined);
         // A recovered pose still needs the scene's fit-derived zoom and clipping bounds, not OrbitControls' 0..Infinity.
         if (savedPose && hopLeCameraPose(savedPose)) {
           pendingRestoredCameraRef.current = null;
           cam.position.set(...savedPose.position);
           dieuKhien.target.set(...savedPose.target);
-          dieuKhien.update();
+          dieuKhien.saveState();
+          dieuKhien.reset();
           userAdjustedCamera = true;
         }
         kcKhungChuan = cam.position.clone().sub(dieuKhien.target).length();
@@ -6849,8 +6853,9 @@ export function Scene3DWorkspace({
         && x.depends.includes(o.id)
         && x.closed !== false && (progressById.get(x.id)?.closed ?? true),
       );
-      const daGiacNghienCuu = o.type === "plane3" ? computeBoundedStudiedPlanePolygon(scene, o, seDung) : [];
-      const neoGonMp = o.type === "plane3" && daGiacNghienCuu.length < 3 ? compactPlaneAnchorPoints(scene, o, seDung) : [];
+      const daGiacNghienCuuRaw = o.type === "plane3" ? computeBoundedStudiedPlanePolygon(scene, o, seDung) : [];
+      const neoGonMp = o.type === "plane3" && daGiacNghienCuuRaw.length < 3 ? compactPlaneAnchorPoints(scene, o, seDung) : [];
+      const daGiacNghienCuu = daGiacNghienCuuRaw.length >= 3 ? daGiacNghienCuuRaw : neoGonMp;
       const diemMp = o.render === "surface"
         ? (daGiacNghienCuu.length >= 3
             ? daGiacNghienCuu
@@ -7127,7 +7132,8 @@ export function Scene3DWorkspace({
             if (line.isLine && (line.name.startsWith("plane_border:") || line.name.startsWith("plane_corner_arc:"))) {
               const lMat = line.material as THREE.LineBasicMaterial | undefined;
               if (lMat && typeof lMat.opacity === "number") {
-                lMat.opacity = Math.max(0.05, Math.min(0.95, lMat.opacity * borderScale));
+                const minBorderOpacity = borderScale >= 0.2 ? 0.34 : 0.05;
+                lMat.opacity = Math.max(minBorderOpacity, Math.min(0.95, lMat.opacity * borderScale));
               }
             }
           });
@@ -7641,6 +7647,7 @@ export function Scene3DWorkspace({
     }
     if (typeof window !== "undefined") {
       (window as any).__geo3d_rendered_object_ids = daDung;
+      (window as any).__geo3d_step_goal = resolveStepGoalKind(scene, buoc);
       (window as any).__geo3d_contract_reference_ids = nhomThamChieuHopDong
         ? nhomThamChieuHopDong.children.map((c) => c.name)
         : [];

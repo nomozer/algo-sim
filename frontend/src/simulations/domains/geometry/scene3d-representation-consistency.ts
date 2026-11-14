@@ -505,6 +505,69 @@ export function auditSceneRepresentationConsistency(
     }
   }
 
+  // Derived point3 (intersect / project / foot) incidence on dependent planes and lines
+  for (const o of visibleObjects) {
+    if (o.type !== "point3" || o.origin !== "derived" || !o.xyz) continue;
+    const pVec = safeToVec3(o.xyz);
+    if (!pVec) continue;
+    const prod = (o.producer ?? "").toLowerCase();
+    const isIntersect = prod.includes("intersect") || prod.includes("giao");
+    const isProjectOrFoot =
+      prod.includes("project")
+      || prod.includes("foot")
+      || prod.includes("hinh_chieu")
+      || prod.includes("chan_");
+    if (!isIntersect && !isProjectOrFoot) continue;
+
+    const depObjs = (o.depends ?? [])
+      .map((id) => byId.get(id) ?? allById.get(id))
+      .filter((d): d is SceneObject => Boolean(d));
+    const hasPlaneDep = depObjs.some((d) => d.type === "plane3");
+    const isParallelProd = prod.includes("parallel") || prod.includes("distance");
+
+    for (const dep of depObjs) {
+      if (dep.type === "plane3") {
+        const pl = getPlaneData(dep);
+        if (!pl) {
+          record("point_on_plane", "UNDETERMINED", [o.id, dep.id], `Dependent plane "${dep.id}" incomplete.`);
+        } else {
+          const err = distPointPlane(pVec, pl.point, pl.normal);
+          record(
+            "point_on_plane",
+            err <= distTol ? "VALID" : "INVALID",
+            [o.id, dep.id],
+            err <= distTol
+              ? `Derived point "${o.id}" lies on dependent plane "${dep.id}".`
+              : `Derived point "${o.id}" (${o.producer ?? ""}) deviates from plane "${dep.id}" by ${err.toExponential(3)} (tol ${distTol.toExponential(3)}).`,
+            err,
+            distTol,
+          );
+        }
+      } else if (
+        (dep.type === "line3" || dep.type === "segment3" || dep.type === "edge")
+        && !isParallelProd
+        && (isIntersect || !hasPlaneDep)
+      ) {
+        const ld = getLineData(dep);
+        if (!ld) {
+          record("point_on_line", "UNDETERMINED", [o.id, dep.id], `Dependent line "${dep.id}" incomplete.`);
+        } else {
+          const { dist: err } = pointLineProjection(pVec, ld.origin, ld.dir);
+          record(
+            "point_on_line",
+            err <= distTol ? "VALID" : "INVALID",
+            [o.id, dep.id],
+            err <= distTol
+              ? `Derived point "${o.id}" lies on dependent line "${dep.id}".`
+              : `Derived point "${o.id}" (${o.producer ?? ""}) misses line "${dep.id}" by ${err.toExponential(3)} (tol ${distTol.toExponential(3)}).`,
+            err,
+            distTol,
+          );
+        }
+      }
+    }
+  }
+
   // 2. POINT ON LINE / SEGMENT & EDGE SPAN
   for (const o of visibleObjects) {
     // Witness foot -> line or segment
@@ -696,6 +759,167 @@ export function auditSceneRepresentationConsistency(
               );
             }
           }
+        }
+
+        // 24-point 3D curved-surface perimeter sampling for circle sections / rims on ball, cylinder, cone
+        if (o.semantic_role !== "INSCRIBED_CIRCLE") {
+          const rCircle = Math.sqrt(rSq);
+          const [uAx, vAx] = planeBasisFromNormal(normal);
+          const samplePts: Vec3[] = [];
+          for (let i = 0; i < 24; i += 1) {
+            const theta = (2 * Math.PI * i) / 24;
+            const cs = Math.cos(theta);
+            const sn = Math.sin(theta);
+            samplePts.push([
+              center[0] + rCircle * (cs * uAx[0] + sn * vAx[0]),
+              center[1] + rCircle * (cs * uAx[1] + sn * vAx[1]),
+              center[2] + rCircle * (cs * uAx[2] + sn * vAx[2]),
+            ]);
+          }
+          const resolveCurvedRadius = (csObj: SceneObject, anchorVec: Vec3): number => {
+            if (csObj.radius_sq !== undefined) {
+              try {
+                const r2 = toNumber(csObj.radius_sq);
+                if (Number.isFinite(r2) && r2 > 0) return Math.sqrt(r2);
+              } catch {
+                // fallback below
+              }
+            }
+            const rim = safeToVec3(csObj.rim_point);
+            return rim ? dist3(anchorVec, rim) : NaN;
+          };
+
+          for (const depId of o.depends ?? []) {
+            const curvedDep = allById.get(depId);
+            if (!curvedDep || curvedDep.type !== "curved_solid" || !curvedDep.anchor) continue;
+            const anchorVec = safeToVec3(curvedDep.anchor);
+            if (!anchorVec) continue;
+            const curvedR = resolveCurvedRadius(curvedDep, anchorVec);
+            if (!Number.isFinite(curvedR) || curvedR <= 0) continue;
+            const curveTol = Math.max(distTol, 5e-4 * curvedR);
+
+            if (curvedDep.curved_kind === "ball") {
+              let maxErr = 0;
+              for (const pt of samplePts) {
+                maxErr = Math.max(maxErr, Math.abs(dist3(pt, anchorVec) - curvedR));
+              }
+              record(
+                "intersection_consistency",
+                maxErr <= curveTol ? "VALID" : "INVALID",
+                [o.id, curvedDep.id],
+                maxErr <= curveTol
+                  ? `Circle "${o.id}" 24-point perimeter lies on sphere "${curvedDep.id}".`
+                  : `Circle "${o.id}" 24-point perimeter deviates from sphere "${curvedDep.id}" by ${maxErr.toExponential(3)}.`,
+                maxErr,
+                curveTol,
+              );
+            } else if (curvedDep.curved_kind === "cylinder" || curvedDep.curved_kind === "cone") {
+              const topVec = safeToVec3(curvedDep.apex_or_top);
+              if (!topVec) continue;
+              const axisVec = sub3(topVec, anchorVec);
+              const axisLen = len3(axisVec);
+              const axisUnit = unit3(axisVec, 1e-12);
+              if (!axisUnit || axisLen <= minEdgeLen) continue;
+              let maxErr = 0;
+              for (const pt of samplePts) {
+                const { dist: radialDist, along } = pointLineProjection(pt, anchorVec, axisUnit);
+                const axialOverhang = Math.max(0, -along, along - axisLen);
+                const expectedR =
+                  curvedDep.curved_kind === "cone"
+                    ? curvedR * Math.max(0, Math.min(1, 1 - along / axisLen))
+                    : curvedR;
+                maxErr = Math.max(maxErr, Math.abs(radialDist - expectedR), axialOverhang);
+              }
+              record(
+                "intersection_consistency",
+                maxErr <= curveTol ? "VALID" : "INVALID",
+                [o.id, curvedDep.id],
+                maxErr <= curveTol
+                  ? `Circle "${o.id}" 24-point perimeter lies on ${curvedDep.curved_kind} "${curvedDep.id}".`
+                  : `Circle "${o.id}" 24-point perimeter deviates from ${curvedDep.curved_kind} "${curvedDep.id}" by ${maxErr.toExponential(3)}.`,
+                maxErr,
+                curveTol,
+              );
+            }
+          }
+        }
+      }
+    }
+
+    // Standalone sphere tangent-plane distance check
+    if (o.render === "surface") {
+      const pl = getPlaneData(o);
+      if (pl && !/cut|secant|intersect|cat/i.test(o.producer ?? "")) {
+        for (const ball of visibleObjects) {
+          if (ball.type !== "curved_solid" || ball.curved_kind !== "ball" || !ball.anchor) continue;
+          const hasSecantCircle = visibleObjects.some(
+            (c) =>
+              c.render === "circle"
+              && (c.depends ?? []).includes(ball.id)
+              && (c.depends ?? []).includes(o.id),
+          );
+          if (hasSecantCircle) continue;
+          const sphC = safeToVec3(ball.anchor);
+          let bigR = NaN;
+          if (ball.radius_sq !== undefined) {
+            try {
+              const r2 = toNumber(ball.radius_sq);
+              if (Number.isFinite(r2) && r2 > 0) bigR = Math.sqrt(r2);
+            } catch {
+              bigR = NaN;
+            }
+          } else if (sphC && ball.rim_point) {
+            const rim = safeToVec3(ball.rim_point);
+            if (rim) bigR = dist3(sphC, rim);
+          }
+          if (!sphC || !Number.isFinite(bigR) || bigR <= 0) continue;
+
+          const tangentTol = Math.max(distTol, 5e-4 * bigR);
+          const hasTangentLink =
+            ((o.depends ?? []).includes(ball.id))
+            || (/tangent|tiep_xuc|tiep_diem/i.test(o.producer ?? "")
+              && ((o.depends ?? []).includes(ball.id)
+                || visibleObjects.filter((b) => b.type === "curved_solid" && b.curved_kind === "ball").length === 1))
+            || visibleObjects.some((pt) => {
+              if (pt.type !== "point3" || !pt.xyz) return false;
+              const pProd = pt.producer ?? "";
+              if (!/tangent|tiep_xuc|tiep_diem/i.test(pProd)) return false;
+              const pv = safeToVec3(pt.xyz);
+              if (!pv) return false;
+              return (
+                ((pt.depends ?? []).includes(ball.id) || (pt.depends ?? []).includes(o.id))
+                && distPointPlane(pv, pl.point, pl.normal) <= tangentTol
+                && Math.abs(dist3(pv, sphC) - bigR) <= tangentTol
+              );
+            });
+          const hasWitnessTangent = visibleObjects.some((wObj) => {
+            for (const w of [wObj.perpendicular_witness, wObj.annotation?.witness, wObj.annotation?.witness?.second]) {
+              if (!w || w.on !== o.id || !w.foot) continue;
+              const ft = safeToVec3(w.foot);
+              if (!ft) continue;
+              const fromId = "from" in w && typeof w.from === "string" ? w.from : wObj.annotation?.witness?.from;
+              const fromObj = fromId ? allById.get(fromId) : undefined;
+              const fromPt = fromObj?.xyz ? safeToVec3(fromObj.xyz) : null;
+              if (fromPt && dist3(fromPt, sphC) <= tangentTol && Math.abs(dist3(ft, sphC) - bigR) <= tangentTol) {
+                return true;
+              }
+            }
+            return false;
+          });
+          if (!hasTangentLink && !hasWitnessTangent) continue;
+
+          const dPlane = distPointPlane(sphC, pl.point, pl.normal);
+          const err = Math.abs(dPlane - bigR);
+          record(
+            "intersection_consistency",
+            err <= tangentTol ? "VALID" : "INVALID",
+            [o.id, ball.id],
+            err <= tangentTol
+              ? `Tangent plane "${o.id}" sits at sphere radius from "${ball.id}".`
+              : `Tangent plane "${o.id}" violates d(I, P) = R for sphere "${ball.id}" (|d-R|=${err.toExponential(3)}).`,
+            err,
+            tangentTol,
+          );
         }
       }
     }
@@ -963,6 +1187,35 @@ export function auditSceneRepresentationConsistency(
           `Polygon "${o.id}" triangulation threw: ${err instanceof Error ? err.message : String(err)}`,
         );
       }
+    }
+
+    // Perpendicular witness marker orthogonality
+    for (const w of [o.perpendicular_witness, o.annotation?.witness, o.annotation?.witness?.second]) {
+      if (!w?.marker?.u || !w.marker.v) continue;
+      const uVec = safeToVec3(w.marker.u);
+      const vVec = safeToVec3(w.marker.v);
+      if (!uVec || !vVec) {
+        record("mesh_consistency", "UNDETERMINED", [o.id], `Witness marker vectors on "${o.id}" are invalid.`);
+        continue;
+      }
+      const uLen = len3(uVec);
+      const vLen = len3(vVec);
+      const orthoTol = Math.max(dirTol, 1e-3);
+      if (uLen <= 1e-9 || vLen <= 1e-9) {
+        record("mesh_consistency", "INVALID", [o.id], `Witness marker on "${o.id}" has zero-length axis vector.`);
+        continue;
+      }
+      const cosErr = Math.abs(dot3(uVec, vVec) / (uLen * vLen));
+      record(
+        "mesh_consistency",
+        cosErr <= orthoTol ? "VALID" : "INVALID",
+        [o.id],
+        cosErr <= orthoTol
+          ? `Perpendicular witness marker on "${o.id}" is orthogonal.`
+          : `Perpendicular witness marker on "${o.id}" is non-orthogonal (|cos|=${cosErr.toExponential(3)}).`,
+        cosErr,
+        orthoTol,
+      );
     }
   }
 

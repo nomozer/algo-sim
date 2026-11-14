@@ -7,6 +7,7 @@ import {
   khungNhinSuPham, khungNhinVua, type KhungNhin, tiLeHinhChieu,
 } from "./scene3d-camera";
 import { cauTrucGocNhin, type Scene3D } from "./scene3d-model";
+import { cauTrucSuPham } from "./scene3d-semantic-policy";
 
 /**
  * GÓC NHÌN SƯ PHẠM trên sáu family đo (w10).
@@ -218,6 +219,68 @@ describe("tỉ lệ hình chiếu cao/rộng (mobile-canvas-fit, D5)", () => {
     const pv = Math.atan2(huong[1], huong[0]) * 180 / Math.PI;
     expect(pv).toBeGreaterThanOrEqual(15);
     expect(pv).toBeLessThanOrEqual(45);
+  });
+
+  it("mat-phang-tiep-xuc-mat-cau: cauTrucSuPham ghi nhận matTiepDienCau (không đẩy mặt tiếp diện vào matTrongTam) và chonHuongNhin chọn góc nhìn nghiêng tiếp tuyến đưa A sát vành cầu, B và C nằm ngoài đĩa cầu", () => {
+    const objects: Scene3D["objects"] = [
+      { id: "I", type: "point3", label: "I", render: "point_marker", origin: "free", producer: null, depends: [], xyz: ["0", "0", "0"] },
+      { id: "A", type: "point3", label: "A", render: "point_marker", origin: "free", producer: null, depends: [], xyz: ["3", "0", "4"] },
+      { id: "B", type: "point3", label: "B", render: "point_marker", origin: "free", producer: null, depends: [], xyz: ["3", "4", "4"] },
+      { id: "C", type: "point3", label: "C", render: "point_marker", origin: "free", producer: null, depends: [], xyz: ["-1", "0", "7"] },
+      {
+        id: "cau_S",
+        type: "curved_solid",
+        label: "(S)",
+        render: "mesh",
+        origin: "derived",
+        producer: "sphere_from_center_point",
+        depends: ["I", "A"],
+        curved_kind: "ball",
+        anchor: ["0", "0", "0"],
+        radius_sq: "25",
+        rim_point: ["3", "0", "4"],
+      },
+      {
+        id: "doan_IA",
+        type: "segment3",
+        label: "IA",
+        render: "segment",
+        origin: "derived",
+        producer: "segment",
+        depends: ["I", "A"],
+        endpoints: [["0", "0", "0"], ["3", "0", "4"]],
+      },
+      {
+        id: "mp_tiep_dien",
+        type: "plane3",
+        label: "(P)",
+        render: "surface",
+        origin: "derived",
+        producer: "plane_from_points",
+        depends: ["A", "B", "C"],
+        point: ["3", "0", "4"],
+        normal: ["3", "0", "4"],
+      },
+    ];
+    const ct = cauTrucSuPham(objects);
+    expect(ct.canh.length).toBeGreaterThan(0);
+    expect(ct.tuyChon.matTrongTam ?? []).toHaveLength(0);
+    expect(ct.tuyChon.matTiepDienCau).toBeDefined();
+    expect(ct.tuyChon.matTiepDienCau).toHaveLength(1);
+
+    const huong = chonHuongNhin(ct.diem, ct.canh, ct.mat, ct.tuyChon);
+    const dLen = Math.hypot(...huong);
+    const d: [number, number, number] = [huong[0] / dLen, huong[1] / dLen, huong[2] / dLen];
+    const rProj = (p: [number, number, number]) => {
+      const pd = p[0] * d[0] + p[1] * d[1] + p[2] * d[2];
+      return Math.sqrt(Math.max(0, p[0] * p[0] + p[1] * p[1] + p[2] * p[2] - pd * pd));
+    };
+    const R = 5;
+    expect(Math.abs(d[0])).toBeGreaterThanOrEqual(0.30);
+    expect(Math.abs(d[1])).toBeGreaterThanOrEqual(0.30);
+    expect(rProj([3, 0, 4])).toBeGreaterThanOrEqual(0.82 * R);
+    expect(rProj([3, 4, 4])).toBeGreaterThanOrEqual(0.98 * R);
+    expect(rProj([-1, 0, 7])).toBeGreaterThanOrEqual(0.98 * R);
   });
 });
 
