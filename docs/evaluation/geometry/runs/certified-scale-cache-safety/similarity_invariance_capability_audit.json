@@ -1,0 +1,32 @@
+{
+  "run_id": "certified-scale-cache-safety",
+  "generated_at_utc": "2026-11-14T05:39:14.616567+00:00",
+  "product_commit": "902a3171c1a625c2741f0c6886d0328584dfb89e",
+  "measured_system": "243d932765f7d4065394f91c6b4f25972f8232ba9228aec89d4c63a244c1976b",
+  "cache_version": "135",
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "HYBRID_ROUTE_MODE": "local-first",
+    "live_ai_calls": 0
+  },
+  "head": "0ef9a5ee53c7ac4f7d52b4405b83f108738f9878",
+  "existing": "height-invariance-certificate/2 (one free orthogonal height, symbolic over ℚ[t]); no similarity-scale handling — every figure without a length refused MISSING_DIMENSION",
+  "gate_finding": "a length injected as a CALL is refused by the Source Gate inside dung_tu_loi_goi (UNGROUNDED_VALUE) — the unit cannot be a call; implemented as an engine construction parameter (`_Dung._scale_unit`, through `do_dai` only)",
+  "scale_free_asks": [
+    "ask_angle_line_plane",
+    "ask_angle_lines",
+    "ask_angle_plane_plane",
+    "ask_length_ratio",
+    "ask_area_ratio",
+    "ask_volume_ratio",
+    "ask_curved_volume_ratio"
+  ],
+  "scale_free_valued_premises": [
+    "line_plane_angle",
+    "plane_plane_angle",
+    "dihedral_angle",
+    "line_line_angle",
+    "vertex_angle",
+    "segment_ratio"
+  ]
+}

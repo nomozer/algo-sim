@@ -1,0 +1,29 @@
+{
+  "run_id": "certified-scale-cache-safety",
+  "generated_at_utc": "2026-11-14T05:39:14.616567+00:00",
+  "product_commit": "902a3171c1a625c2741f0c6886d0328584dfb89e",
+  "measured_system": "243d932765f7d4065394f91c6b4f25972f8232ba9228aec89d4c63a244c1976b",
+  "cache_version": "135",
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "HYBRID_ROUTE_MODE": "local-first",
+    "live_ai_calls": 0
+  },
+  "head": "0ef9a5ee53c7ac4f7d52b4405b83f108738f9878",
+  "freeze_stored_in": "901c02702e11f1f38570154eeaeafc3a879a23af",
+  "commit_field": "6bb8b0713cf8f70115b7dc7a92faf4f4652fea99",
+  "clean_tree": true,
+  "measured_files": 116,
+  "cache_version_bumped": "134 → 135 (stale-guard bypass, see semantic_cache_audit.json)",
+  "contracts_unchanged": [
+    "geometry-fact-planner/26",
+    "geometry-functions/33",
+    "geometry-function-engine/24",
+    "height-invariance-certificate/2",
+    "output-policy/1",
+    "hybrid-route-d-simulation/4",
+    "typed-fact-next/2"
+  ],
+  "optional_values_added": "scene_configuration.kind SIMILARITY_SCALE_ILLUSTRATIVE (+ normalization metadata)",
+  "freeze_verify_in_regression": "PASS"
+}

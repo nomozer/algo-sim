@@ -1,0 +1,35 @@
+{
+  "run_id": "certified-scale-cache-safety",
+  "generated_at_utc": "2026-11-14T05:39:14.616567+00:00",
+  "product_commit": "902a3171c1a625c2741f0c6886d0328584dfb89e",
+  "measured_system": "243d932765f7d4065394f91c6b4f25972f8232ba9228aec89d4c63a244c1976b",
+  "cache_version": "135",
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "HYBRID_ROUTE_MODE": "local-first",
+    "live_ai_calls": 0
+  },
+  "head": "0ef9a5ee53c7ac4f7d52b4405b83f108738f9878",
+  "root_cause_layer": "LOCAL PARSER value grammar `_VAL` (no decimal form; lookahead refused a digit after ',' or '.'); tokenizer, clause segmentation, contract NUMBER_PATTERN and gate `_SO`/`doc_so` already read decimals",
+  "fix": "decimal coefficient in `_VAL` (\\d+(?:[.,]\\d+)?), lookahead kept; a comma followed by a space is a separator",
+  "tests": "backend/tests/geometry/test_decimal_comma_values.py (3,5 = 3.5 = 7/2 exact; 1,5 side; 'AB = 3, AC = 4' list; '3,5,6', '≈ 3,5', '3,' refused; renamed)",
+  "superseded_expectation": "test_correctness_ocr_performance treated 'AB = 3,5' as numeric corruption; restated as '3,5,6' (still refused) and the decimal text now serves V = 35 (task B5: 3,5 is a decimal)",
+  "COMP:mc_decimal_value": {
+    "case_id": "COMP:mc_decimal_value",
+    "text_sha256": "35c23328f08b62ecd555be3202aca2edffda19eab2fb6e27a77997854bf4158c",
+    "expected": "SERVE",
+    "before": {
+      "status": "REFUSED",
+      "code": "LIVE_AI_DISABLED",
+      "answers": null
+    },
+    "after": {
+      "status": "SERVED",
+      "code": null,
+      "answers": {
+        "q1": "14√65/65"
+      }
+    },
+    "after_root_cause": null
+  }
+}

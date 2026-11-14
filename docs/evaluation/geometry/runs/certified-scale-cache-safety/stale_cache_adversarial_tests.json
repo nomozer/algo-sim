@@ -1,0 +1,19 @@
+{
+  "run_id": "certified-scale-cache-safety",
+  "generated_at_utc": "2026-11-14T05:39:14.616567+00:00",
+  "product_commit": "902a3171c1a625c2741f0c6886d0328584dfb89e",
+  "measured_system": "243d932765f7d4065394f91c6b4f25972f8232ba9228aec89d4c63a244c1976b",
+  "cache_version": "135",
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "HYBRID_ROUTE_MODE": "local-first",
+    "live_ai_calls": 0
+  },
+  "head": "0ef9a5ee53c7ac4f7d52b4405b83f108738f9878",
+  "test": "backend/tests/test_cache_semantic_guard_invalidation.py",
+  "fixture": "development: the one-sentence section text with an unread ', N thuộc cạnh SB' (current parser refuses); stored envelope = the served scene of the same text without that clause (what the earlier code served), policy 134:route-d",
+  "at_cache_134": "FAIL — the stale SERVED scene was returned through /api/analyze (assert 'SERVED' != 'SERVED')",
+  "at_cache_135": "PASS — the request is decided by the guard (HTTP 503 LIVE_AI_DISABLED, no scene)",
+  "control": "the same row under the current policy is served (no revalidation on read): any future guard tightening must bump",
+  "locked_rows_used": 0
+}

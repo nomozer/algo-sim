@@ -1,0 +1,29 @@
+{
+  "run_id": "certified-scale-cache-safety",
+  "generated_at_utc": "2026-11-14T05:39:14.616567+00:00",
+  "product_commit": "902a3171c1a625c2741f0c6886d0328584dfb89e",
+  "measured_system": "243d932765f7d4065394f91c6b4f25972f8232ba9228aec89d4c63a244c1976b",
+  "cache_version": "135",
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "HYBRID_ROUTE_MODE": "local-first",
+    "live_ai_calls": 0
+  },
+  "head": "0ef9a5ee53c7ac4f7d52b4405b83f108738f9878",
+  "publication_head": "BLOCKED_PENDING_OWNER_REVIEW",
+  "publication_head_scan": [
+    "SUMMARY scanned=31325 messages=0 violations=97 pending_exception=97 verdict=BLOCKED"
+  ],
+  "publication_range_scan_this_run": {
+    "range": "30884a2e8..HEAD",
+    "summary_lines": [
+      "SUMMARY scanned=49 messages=8 violations=0 pending_exception=0 verdict=PASS"
+    ],
+    "scan_verdict": "PASS"
+  },
+  "publication_range_governance": "BLOCKED_PENDING_OWNER_REVIEW",
+  "full_release_gate": "BLOCKED_GATES_REMAIN",
+  "historical_blob": "2bfce9c8… pending Owner decision",
+  "agent_actions": "none (no approval, no exception, scan policy unchanged)",
+  "repository_a": "axo-geometry-library shares this repository's history; its branch was not scanned separately (not merged, not pushed)"
+}

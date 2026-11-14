@@ -1,5 +1,10 @@
 # OPEN_ISSUES.md — Danh mục các vấn đề kỹ thuật đang mở
 
+**Cache safety / similarity scale update 2026-11-14:** [Report](evaluation/geometry/runs/certified-scale-cache-safety/AXO_CERTIFIED_SCALE_CACHE_SAFETY_REPORT.md).
+- **Resolved:** stale SERVED rows replayed past tightened guards (cache 135); decimal comma values; the E2E distance oracle; figures fixed up to similarity with angle/ratio goals (certified); GEO-BE-001 in the axo-geometry-library worktree.
+- **Still open:** cache has no revalidation on read — every future guard tightening needs a policy bump; shape-invariance proofs (r520); "tứ diện đều" without side carries no every-edge-equal fact (r559); base shape stated last refused by the gate (strict xfail); GEO-BE-001 not ported to this worktree's identical `display_names.py`; axo-geometry-library candidate freeze blocked by another session's dirty tree.
+- **Unmeasured:** independent unseen data, H-1, real students, camera photos.
+
 **Compositional clauses / simulation goals update 2026-11-14:** [Report](evaluation/geometry/runs/compositional-semantics-simulation-goals/AXO_COMPOSITIONAL_SEMANTICS_SIMULATION_GOALS_REPORT.md).
 - **Resolved:** silent loss of comma- or "và"-joined sub-clauses at the parser; a named-plane definition inside a comma-joined premise sentence (gate UNGROUNDED_VALUE); goal before definition ("…bởi (P), biết (P) …"); cos/sin/tan of an angle (served as the angle, number NOT answered); an unbound angle-construction annotation (moved projection foot served); "thiếu dữ kiện" mislabel for scale-only determined angles.
 - **Still open:** scale normalisation of similarity-invariant goals (r258, r520, r559); unnamed described point as a premise operand (R-1 contract); sub-solid volumes; reflections; an unnamed plane inside the question; decimal comma values ("3,5"); unnamed "cạnh bên"; anaphora "đó/này"; the independent scene checker does not check `perpendicular.foot`; the browser E2E has no construction-timing criterion for distance goals.

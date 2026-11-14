@@ -1,0 +1,64 @@
+{
+  "run_id": "certified-scale-cache-safety",
+  "generated_at_utc": "2026-11-14T05:39:14.616567+00:00",
+  "product_commit": "902a3171c1a625c2741f0c6886d0328584dfb89e",
+  "measured_system": "243d932765f7d4065394f91c6b4f25972f8232ba9228aec89d4c63a244c1976b",
+  "cache_version": "135",
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "HYBRID_ROUTE_MODE": "local-first",
+    "live_ai_calls": 0
+  },
+  "head": "0ef9a5ee53c7ac4f7d52b4405b83f108738f9878",
+  "normalized_items": {
+    "scale_iso_planes": {
+      "group": "scale_certified",
+      "checks": 3,
+      "failed": [],
+      "source_goal_completion": false
+    },
+    "scale_iso_tan": {
+      "group": "scale_certified",
+      "checks": 3,
+      "failed": [],
+      "source_goal_completion": true
+    },
+    "scale_iso_line_plane": {
+      "group": "scale_certified",
+      "checks": 2,
+      "failed": [],
+      "source_goal_completion": false
+    },
+    "scale_iso_renamed": {
+      "group": "metamorphic",
+      "checks": 3,
+      "failed": [],
+      "source_goal_completion": false
+    },
+    "scale_iso_with_length": {
+      "group": "scale_negative",
+      "checks": 3,
+      "failed": [],
+      "source_goal_completion": false
+    }
+  },
+  "all_new_served": {
+    "checks": 59,
+    "failed": 0
+  },
+  "mutations": "24/24",
+  "equivalence_pairs": [
+    {
+      "item": "scale_iso_renamed",
+      "reference": "scale_iso_planes",
+      "same_certified_geometry": true,
+      "compared": "answer_exact"
+    },
+    {
+      "item": "scale_iso_with_length",
+      "reference": "scale_iso_planes",
+      "same_certified_geometry": true,
+      "compared": "answer_exact + section vertex coordinates"
+    }
+  ]
+}

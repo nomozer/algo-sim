@@ -1,5 +1,20 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = CERTIFIED_SCALE_CACHE_SAFETY
+
+RUN_ID = certified-scale-cache-safety
+REPORT = docs/evaluation/geometry/runs/certified-scale-cache-safety/AXO_CERTIFIED_SCALE_CACHE_SAFETY_REPORT.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/certified-scale-cache-safety/
+START_BASE = 30884a2e8
+CODE_COMMIT = 78bdc4c43 (cache 135), fb0639a01 (decimal values), 902a3171c (certified similarity scale); candidate freeze 901c02702; GEO-BE-001 5a229507b (axo-geometry-library worktree)
+CLASSIFICATION = DEVELOPMENT_EVIDENCE_ON_AGENT_CORPUS_AND_EXPOSED_ITEMS; AGENT_DIAGNOSTIC_ORACLE; AUTOMATED_BROWSER_E2E; INDEPENDENT_GENERALIZATION NOT_MEASURED; PUBLICATION BLOCKED_PENDING_OWNER_REVIEW
+PRODUCT_CHANGE = YES; contract versions unchanged; CACHE_VERSION 134 → 135; measured files 116
+MODEL_REQUEST_COUNT = 0
+VERIFICATION = run.json; full_regression_summary.json; semantic_cache_audit.json; stale_cache_adversarial_tests.json; scale_normalization_certificate.json; shape_freedom_counterexamples.json; real27_normalization_acceptance.json; scene3d_browser_e2e.json
+CORRECTS = compositional-semantics-simulation-goals: its "no CACHE_VERSION bump" reasoning (insufficient for a stricter guard) and its E2E distance-row FAIL (instrument gap); historical receipts unchanged
+CORRECTED_BY = NONE
+LIMITATIONS = agent-written corpus; exposed real items; headless browser; scale certificate covers similarity only (no shape-invariance proof); no H-1, no students.
+
 ## WAVE_ID = COMPOSITIONAL_SEMANTICS_SIMULATION_GOALS
 
 RUN_ID = compositional-semantics-simulation-goals
