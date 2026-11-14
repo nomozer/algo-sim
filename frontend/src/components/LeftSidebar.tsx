@@ -329,6 +329,7 @@ export function LeftSidebar() {
   const [renameModalState, setRenameModalState] = useState<RenameModalState | null>(null);
   const [deleteModalState, setDeleteModalState] = useState<DeleteModalState | null>(null);
   const [selectedSearchIndex, setSelectedSearchIndex] = useState(0);
+  const [problemListScrolling, setProblemListScrolling] = useState(false);
 
   const searchInputRef = useRef<HTMLInputElement | null>(null);
   const searchModalRef = useRef<HTMLDivElement | null>(null);
@@ -346,6 +347,7 @@ export function LeftSidebar() {
 
   const hoverOpenTimerRef = useRef<number | null>(null);
   const hoverCloseTimerRef = useRef<number | null>(null);
+  const scrollIdleTimerRef = useRef<number | null>(null);
   const isPointerInsidePreviewRef = useRef(false);
   const shortcutLabel = useMemo(() => detectSearchShortcutLabel(), []);
 
@@ -371,6 +373,10 @@ export function LeftSidebar() {
       }
       if (hoverCloseTimerRef.current !== null && typeof window !== "undefined") {
         window.clearTimeout(hoverCloseTimerRef.current);
+      }
+      if (scrollIdleTimerRef.current !== null && typeof window !== "undefined") {
+        window.clearTimeout(scrollIdleTimerRef.current);
+        scrollIdleTimerRef.current = null;
       }
     };
   }, []);
@@ -1339,13 +1345,25 @@ export function LeftSidebar() {
           )}
         </nav>
 
-        {/* 3. UNIFIED PROBLEM LIST: Bài toán (Scrollable region with native visible scrollbar) */}
+        {/* 3. UNIFIED PROBLEM LIST: Bài toán (Scrollable region with scoped sleek scrollbar) */}
         <div
-          className="sb-scroll-region"
+          className={`sb-scroll-region${problemListScrolling ? " is-scrolling" : ""}`}
           id="sb-scroll-region"
+          tabIndex={0}
+          aria-label="Danh sách bài toán"
           onScroll={() => {
             if (actionMenuState) setActionMenuState(null);
             if (filterMenuOpen) setFilterMenuOpen(false);
+            setProblemListScrolling(true);
+            if (typeof window !== "undefined") {
+              if (scrollIdleTimerRef.current !== null) {
+                window.clearTimeout(scrollIdleTimerRef.current);
+              }
+              scrollIdleTimerRef.current = window.setTimeout(() => {
+                scrollIdleTimerRef.current = null;
+                setProblemListScrolling(false);
+              }, 650);
+            }
           }}
         >
           <div
