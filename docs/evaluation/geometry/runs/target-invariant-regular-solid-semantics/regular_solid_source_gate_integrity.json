@@ -1,6 +1,6 @@
 {
   "run_id": "target-invariant-regular-solid-semantics",
-  "generated_at_utc": "2026-11-14T07:24:28.722429+00:00",
+  "generated_at_utc": "2026-11-14T07:25:58.179662+00:00",
   "product_commit": "bdc34a89e32c77fd73bff7b38b72d3a3496657e1",
   "measured_system": "2a18f935e4c29462b0495ff6b0fec46df88e215e0bedcaba84668ec202af62d1",
   "cache_version": "136",
@@ -9,7 +9,7 @@
     "HYBRID_ROUTE_MODE": "local-first",
     "live_ai_calls": 0
   },
-  "head": "a56d9aa7d3f5b8bc1bb0368d7b4fc7abd1084d7f",
+  "head": "bcba912e82661ccc8b186e6d93cd2bf7928f06bc",
   "gate_rule": "_canh_tu_dien_deu: equal_length accepted without '='/'bằng' ONLY when its quote contains 'tứ diện đều XYZW' naming four distinct vertices that contain both segments (precedent: _vuong_can_hai_canh)",
   "probe_before_fix": "equal_length quoted 'Cho tứ diện đều ABCD' → PREDICATE_NOT_IN_QUOTE",
   "negatives": "quotes 'tứ diện ABCD', 'tam giác đều BCD' refused (test_the_gate_reads_the_equality_only_from_a_regular_tetrahedron_phrase)",
