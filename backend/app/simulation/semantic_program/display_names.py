@@ -404,9 +404,13 @@ def _tach_ten_diem(than: str, ky: set[str]) -> Optional[list[str]]:
 
 def ten_hien_thi(
     thong_tin: dict[str, dict[str, Any]], *, prefer_declared_plane_names: bool = False,
-    source_plane_names: frozenset[str] = frozenset(),
+    source_plane_names: frozenset[str] = frozenset(), unresolved: Optional[set[str]] = None,
 ) -> dict[str, dict[str, Optional[str]]]:
     """`{tên: {type, producer, sources, label}}` → bốn trường hiển thị mỗi vật.
+
+    `unresolved` (GEO-BE-001, optional): filled with the names whose sentence still depends on a half-resolved operand
+    after both phases — a true definition cycle. Their presentation fields never carry an id (the operand is called by
+    its kind), and the caller can refuse or report them.
 
     ─── BỐN VAI, KHÔNG PHẢI MỘT TRƯỜNG GÁNH TẤT ────────────────────────────
 
@@ -439,7 +443,7 @@ def ten_hien_thi(
     tên trong ngoặc mà không vật nào hiện tên ấy — mặt phẳng trống có thể chính là `(α)` của đề (mô hình gọi nó
     "mặt phẳng alpha"), và gán `(β)` khi ấy là nói trái đề.
     """
-    ra = _mot_luot(thong_tin, {}, prefer_declared_plane_names, source_plane_names)
+    ra = _mot_luot(thong_tin, {}, prefer_declared_plane_names, source_plane_names, unresolved)
     trong = [t for t, o in thong_tin.items() if o.get("type") == "plane3" and ra[t]["notation"] is None
              and _ten_mp_khai(o.get("label")) is None]
     da_hien = {(r["notation"] or "").strip("()").replace("′", "'") for r in ra.values()}
@@ -449,12 +453,14 @@ def ten_hien_thi(
         c for o in thong_tin.values() for c in str(o.get("label") or "") if c in _CHU_MP_GAN}
     tu_do = (c for c in _CHU_MP_GAN if c not in chu_da_dung)
     gan = {t: f"({c})" for t, c in zip(trong, tu_do)}
-    return _mot_luot(thong_tin, gan, prefer_declared_plane_names, source_plane_names) if gan else ra
+    if gan and unresolved is not None:
+        unresolved.clear()
+    return _mot_luot(thong_tin, gan, prefer_declared_plane_names, source_plane_names, unresolved) if gan else ra
 
 
 def _mot_luot(
     thong_tin: dict[str, dict[str, Any]], gan_ten: dict[str, str], prefer_declared_plane_names: bool,
-    source_plane_names: frozenset[str],
+    source_plane_names: frozenset[str], chua_giai: Optional[set[str]] = None,
 ) -> dict[str, dict[str, Optional[str]]]:
     """Một lượt đặt tên; `gan_ten` = tên trình bày đã quyết cho các mặt phẳng còn trống (`ten_hien_thi`)."""
     ky_hieu: dict[str, Optional[str]] = {}
@@ -469,6 +475,30 @@ def _mot_luot(
             so_mp_khai[t] = so_mp_khai.get(t, 0) + 1
     tu_dat: set[str] = set()
     nhan_sai: set[str] = set()
+    # GEO-BE-001: names whose sentence was built while an operand was still being resolved (its symbol not final yet).
+    dung_som: set[str] = set()
+
+    def _dua_vao(p: str, dich: str) -> bool:
+        """Does the DEFINITION of `p` (its `sources`, transitively) use `dich`?"""
+        thay, ngan = set(), [p]
+        while ngan:
+            x = ngan.pop()
+            for s in (thong_tin.get(x) or {}).get("sources") or ():
+                if s == dich:
+                    return True
+                if isinstance(s, str) and s in thong_tin and s not in thay:
+                    thay.add(s)
+                    ngan.append(s)
+        return False
+
+    def _ky_hieu_diem_rieng(p: str) -> Optional[str]:
+        o = thong_tin.get(p) or {}
+        lb = o.get("label")
+        return (ky_hieu_toan(lb.strip()) if isinstance(lb, str) else None) or ky_hieu_toan(p)
+
+    def _goi_tam(s: str) -> str:
+        """How operand `s` is called inside another sentence — never its id (the fallback names its kind)."""
+        return goi_ngan.get(s) or _DANH_TU_NGAN.get((thong_tin.get(s) or {}).get("type") or "", "đối tượng")
 
     def giai(ten: str) -> None:
         if ten in ky_hieu or ten in dang_giai:
@@ -508,10 +538,14 @@ def _mot_luot(
             m_nhieu = _TEN_MP_NHIEU_DIEM.fullmatch(nhan_khai.strip()) if kh is None and loai == "plane3" else None
             tren = o.get("points_on_plane")
             if m_nhieu and tren is not None:
+                # GEO-BE-001: a point ON the plane is an incidence, not a definition input. A point whose own definition
+                # goes through this plane (F = SD ∩ (MNP)) is never resolved from here — that call would come back into
+                # the plane half-built and name it by its id. Its symbol for splitting the declared name is its own name.
                 for p in tren:
-                    if p in thong_tin:
+                    if p in thong_tin and not _dua_vao(p, ten):
                         giai(p)
-                ky_tren = {k.replace("'", "′") for p in tren if (k := ky_hieu.get(p) or ky_hieu_toan(p))}
+                ky_tren = {k.replace("'", "′") for p in tren
+                           if (k := ky_hieu.get(p) or _ky_hieu_diem_rieng(p))}
                 phan = _tach_ten_diem(m_nhieu.group(1).replace("'", "′").replace("’", "′"), ky_tren)
                 if phan is not None and len(set(phan)) == len(phan):
                     kh = f"({''.join(phan)})"
@@ -589,10 +623,12 @@ def _mot_luot(
         #               không có câu nào dài vô hạn.
         cau: Optional[str] = None
         cau_ngan: Optional[str] = None
+        if any(s in dang_giai for s in nguon):
+            dung_som.add(ten)              # an operand is half-built: this sentence is redone once every symbol is final
         if du_nguon:
             try:
                 cau = cong_thuc[0](
-                    [_boc(ky_hieu.get(s) or goi_ngan.get(s, s)) for s in nguon])
+                    [_boc(ky_hieu.get(s) or _goi_tam(s)) for s in nguon])
                 cau_ngan = cong_thuc[0]([
                     ky_hieu.get(s)
                     or _DANH_TU_NGAN.get(thong_tin.get(s, {}).get("type") or "",
@@ -666,7 +702,7 @@ def _mot_luot(
                 nhan[ten] = nhan.get(nguon[0], nhan[ten])
                 goi_ngan[ten] = goi_ngan.get(nguon[0], goi_ngan[ten])
             vai[ten] = (_VAI_DAI_LUONG.get(prod or "")
-                        or (f"Bằng {goi_ngan.get(nguon[0], nguon[0])}" if la_bi_danh else None)
+                        or (f"Bằng {_goi_tam(nguon[0])}" if la_bi_danh else None)
                         or ("Giá trị tính được" if prod else None)
                         or ("Độ dài cho trong đề" if ten.endswith("_length")
                             else "Giá trị cho trong đề"))
@@ -674,6 +710,22 @@ def _mot_luot(
 
     for ten in thong_tin:
         giai(ten)
+
+    # GEO-BE-001, second phase: every symbol is now final. Redo each sentence built against a half-resolved operand, and
+    # every name whose definition uses one of them (their sentences quoted the provisional text), in dependency order.
+    if dung_som:
+        lai = {t for t in thong_tin if t in dung_som or any(_dua_vao(t, x) for x in dung_som)}
+        for t in lai:
+            for bang in (ky_hieu, nhan, goi_ngan, vai):
+                bang.pop(t, None)
+            nhan_sai.discard(t)
+            tu_dat.discard(t)
+        dung_som.clear()
+        for ten in thong_tin:
+            if ten in lai:
+                giai(ten)
+    if chua_giai is not None:
+        chua_giai |= dung_som              # still half-built after the second phase: a true definition cycle
 
     return {t: {"label": nhan[t], "notation": ky_hieu[t],
                 "reference": goi_ngan[t], "role": vai[t],
