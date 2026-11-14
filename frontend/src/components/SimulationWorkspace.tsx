@@ -1092,12 +1092,11 @@ export function AxoWorkspaceV62({
   );
 
   const handleResetView = () => {
-    setTt((s) => showAll(clearIsolate(select(s, null))));
+    setTt((s) => showAll(clearIsolate(s)));
     setTbPos(null);
     setGeoCustomPos(null);
     latestCameraPoseRef.current = null;
     setSavedCameraPose(null);
-    setRelationActiveForId(null);
     setCanRestoreLocatedCamera(false);
     setLocateStatusMessage(null);
     setFitToken((n) => n + 1);
@@ -1541,18 +1540,13 @@ export function AxoWorkspaceV62({
                 id="ws-scene3d-unavailable-card"
                 role="alert"
                 data-stage-fault="invalid_scene_data"
+                data-simulation-error-code={simulationError?.code ?? "SCENE_INVALID_SCHEMA"}
               >
                 <AxoErrorExperience
                   kind="unsupported_simulation"
                   variant="stage"
                   title={unavailableOverride?.title ?? "Dữ liệu mô hình 3D không hợp lệ"}
                   detail={invalidSceneReason}
-                  hasBackHistory={hasInAppNavigation}
-                  onBack={() => useAppStore.getState().escapeFromError()}
-                  onGoHome={unavailableOverride?.onGoHome ?? (() => useAppStore.getState().goHome())}
-                  homeLabel={unavailableOverride ? "Dựng lại trên Trang chủ" : undefined}
-                  onOpenLibrary={() => useAppStore.getState().openLibrary()}
-                  libraryLabel={unavailableOverride ? "Mở Thư viện 3D" : undefined}
                 />
               </div>
             ) : !mathVerification.valid ? (
@@ -1560,6 +1554,7 @@ export function AxoWorkspaceV62({
                 className="ws-math-contradiction-wrap"
                 role="alert"
                 data-math-contradiction=""
+                data-simulation-error-code={simulationError?.code ?? "GEOMETRY_CONTRADICTION"}
               >
                 <AxoErrorExperience
                   kind="unsupported_simulation"
@@ -1569,35 +1564,27 @@ export function AxoWorkspaceV62({
                     mathVerification.contradictions.map((c) => c.explanation).join(" ") ||
                     "Các tọa độ hoặc ràng buộc hình học hiện tại mâu thuẫn nên Axo dừng dựng hình."
                   }
-                  hasBackHistory={hasInAppNavigation}
-                  onBack={() => useAppStore.getState().escapeFromError()}
-                  onGoHome={() => useAppStore.getState().goHome()}
-                  onOpenLibrary={() => useAppStore.getState().openLibrary()}
                 />
               </div>
             ) : (
               <ErrorBoundary
                 mien="scene3d-viewer"
                 resetKey={`${problemSnapshotKey}|${webglStageAttempt}`}
-                onCatch={() => setViewerBoundaryCrashed(true)}
+                autoRetryMax={2}
+                autoRetryDelayMs={180}
+                onCatch={() => {
+                  setSavedCameraPose((prev) => latestCameraPoseRef.current ?? prev);
+                  setViewerBoundaryCrashed(true);
+                }}
                 onRecover={() => setViewerBoundaryCrashed(false)}
-                fallback={(thuLai, { canRetry, retryCount }) => (
+                fallback={(_thuLai, { retryCount, isAutoRetrying }) => (
                   <AxoViewerRecoverySurface
                     state={{
-                      phase: "failed",
+                      phase: isAutoRetrying ? "recovering" : "failed",
                       reason: "render_crash",
-                      attempt: retryCount,
-                      maxAttempts: 1,
+                      attempt: isAutoRetrying ? retryCount + 1 : retryCount,
+                      maxAttempts: 2,
                     }}
-                    onSecondaryRetry={
-                      canRetry
-                        ? () => {
-                            setViewerBoundaryCrashed(false);
-                            setSavedCameraPose(latestCameraPoseRef.current);
-                            thuLai();
-                          }
-                        : undefined
-                    }
                   />
                 )}
               >
@@ -1669,13 +1656,13 @@ export function AxoWorkspaceV62({
                       }
                     }}
                     onWebglFailure={setStageWebglFailed}
-                    onWebglLifecycleChange={setWebglLifecycle}
+                    onWebglLifecycleChange={handleWebglLifecycleChange}
                     webglRecoveringNode={
                       <AxoViewerRecoverySurface
                         state={{
                           phase: "recovering",
                           reason: "webgl_context_lost",
-                          attempt: Math.max(1, webglLifecycle.attempt + 1),
+                          attempt: Math.max(1, webglLifecycle.attempt),
                           maxAttempts: webglLifecycle.maxAttempts,
                         }}
                       />
@@ -1688,15 +1675,6 @@ export function AxoWorkspaceV62({
                           attempt: webglLifecycle.attempt,
                           maxAttempts: webglLifecycle.maxAttempts,
                         }}
-                        onSecondaryRetry={
-                          webglStageAttempt < 1
-                            ? () => {
-                                setStageWebglFailed(false);
-                                setSavedCameraPose(latestCameraPoseRef.current);
-                                setWebglStageAttempt((n) => n + 1);
-                              }
-                            : undefined
-                        }
                       />
                     }
                   />
@@ -2137,7 +2115,7 @@ export function AxoWorkspaceV62({
                   <span
                     className={`p-dot dot-blue${isGeoParamsDirty ? " is-on" : ""}`}
                     id="p-dot-geo-custom"
-                    title="Tùy chỉnh hình đang áp dụng"
+                    title="Độ đậm khối & mặt đang tùy chỉnh"
                   />
                 </span>
               </button>
@@ -2222,9 +2200,9 @@ export function AxoWorkspaceV62({
                   <line x1="4" y1="6" x2="20" y2="6" />
                   <line x1="4" y1="12" x2="20" y2="12" />
                   <line x1="4" y1="18" x2="20" y2="18" />
-                  <circle cx="9" cy="6" r="2" fill="#FFF" />
-                  <circle cx="15" cy="12" r="2" fill="#FFF" />
-                  <circle cx="10" cy="18" r="2" fill="#FFF" />
+                  <circle cx="9" cy="6" r="2" fill="var(--surface, #ffffff)" />
+                  <circle cx="15" cy="12" r="2" fill="var(--surface, #ffffff)" />
+                  <circle cx="10" cy="18" r="2" fill="var(--surface, #ffffff)" />
                 </svg>
               </button>
 
@@ -2234,21 +2212,27 @@ export function AxoWorkspaceV62({
                   isGeoParamsDirty ? " is-dirty" : ""
                 }`}
                 id="btn-geo-custom-pop"
-                title="Tùy chỉnh thông số hình học & mặt phẳng cắt"
-                data-tooltip="Tùy chỉnh hình"
-                aria-label="Tùy chỉnh thông số hình học & mặt phẳng cắt"
+                title="Độ đậm vỏ khối & mặt phẳng"
+                data-tooltip="Độ đậm khối & mặt"
+                aria-label="Độ đậm vỏ khối và mặt phẳng"
                 aria-expanded={geoCustomOpen}
                 onClick={() => {
                   setDisplayPopOpen(false);
                   setGeoCustomOpen((v) => !v);
                 }}
               >
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M12 3v18" />
-                  <path d="M5 8h14" />
-                  <path d="M5 16h14" />
-                  <circle cx="9" cy="8" r="2.2" fill="#FFF" />
-                  <circle cx="15" cy="16" r="2.2" fill="#FFF" />
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.8"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                >
+                  <polygon points="12 3 21 8 12 13 3 8 12 3" />
+                  <polyline points="3 12.5 12 17.5 21 12.5" />
+                  <polyline points="3 17 12 22 21 17" />
                 </svg>
               </button>
 
@@ -2284,7 +2268,7 @@ export function AxoWorkspaceV62({
             }${geoCustomPos ? " is-custom-dragged" : ""}`}
             id="tb-geo-custom-pop"
             role="dialog"
-            aria-label="Tùy chỉnh hình học 3D"
+            aria-label="Độ đậm vỏ khối và mặt phẳng"
             aria-hidden={!geoCustomOpen}
             style={
               geoCustomPos
@@ -2303,7 +2287,7 @@ export function AxoWorkspaceV62({
             <div
               className="geo-custom-pop-header"
               id="geo-custom-pop-header"
-              title="Kéo để di chuyển bảng Tùy chỉnh hình"
+              title="Kéo để di chuyển bảng Độ đậm khối & mặt"
               onPointerDown={handleGeoCustomDragStart}
             >
               <div className="geo-custom-pop-title">
@@ -2319,7 +2303,7 @@ export function AxoWorkspaceV62({
                   <circle cx="3.5" cy="12.5" r="1.2" />
                   <circle cx="8.5" cy="12.5" r="1.2" />
                 </svg>
-                <span>Tùy chỉnh hình</span>
+                <span>Độ đậm khối &amp; mặt</span>
                 <span className="geo-custom-scene-chip" id="geo-custom-scene-chip">
                   {loaiCanh.label}
                 </span>
@@ -2416,203 +2400,6 @@ export function AxoWorkspaceV62({
                     <span>Nhạt (4%)</span>
                     <span>Rõ (24%)</span>
                   </div>
-                </div>
-              </div>
-
-              <div className="geo-custom-divider" />
-
-              <div className="geo-custom-group" id="geo-custom-experiment-group">
-                <div className="geo-custom-group-title">
-                  <span>Thử nghiệm hình học</span>
-                  <span className="geo-custom-group-badge is-exploratory">
-                    Khóa theo Kernel
-                  </span>
-                </div>
-                {loaiCanh.key === "sphere" && (
-                  <>
-                    <div className="geo-custom-row">
-                      <div className="geo-custom-label-line">
-                        <span className="geo-custom-label">Vị trí mặt phẳng cắt (OH / R)</span>
-                        <span className="geo-custom-val">Theo đề</span>
-                      </div>
-                      <input
-                        type="range"
-                        id="slider-plane-height"
-                        className="geo-custom-slider"
-                        data-geo-slider="spherePlaneRatio"
-                        min={0}
-                        max={92}
-                        step={1}
-                        value={60}
-                        disabled
-                        aria-disabled="true"
-                        aria-label="Vị trí mặt phẳng cắt (OH / R)"
-                      />
-                    </div>
-                    <div className="geo-custom-row">
-                      <div className="geo-custom-label-line">
-                        <span className="geo-custom-label">Góc nghiêng mặt phẳng (α)</span>
-                        <span className="geo-custom-val">0°</span>
-                      </div>
-                      <input
-                        type="range"
-                        id="slider-plane-tilt"
-                        className="geo-custom-slider"
-                        data-geo-slider="spherePlaneTiltDeg"
-                        min={-35}
-                        max={35}
-                        step={1}
-                        value={0}
-                        disabled
-                        aria-disabled="true"
-                        aria-label="Góc nghiêng mặt phẳng (α)"
-                      />
-                    </div>
-                    <div className="geo-custom-row">
-                      <div className="geo-custom-label-line">
-                        <span className="geo-custom-label">Bán kính mặt cầu (R)</span>
-                        <span className="geo-custom-val">1.00×</span>
-                      </div>
-                      <input
-                        type="range"
-                        id="slider-sphere-radius"
-                        className="geo-custom-slider"
-                        data-geo-slider="sphereRadiusScale"
-                        min={75}
-                        max={125}
-                        step={1}
-                        value={100}
-                        disabled
-                        aria-disabled="true"
-                        aria-label="Bán kính mặt cầu (R)"
-                      />
-                    </div>
-                  </>
-                )}
-                {loaiCanh.key === "pyramid" && (
-                  <>
-                    <div className="geo-custom-row">
-                      <div className="geo-custom-label-line">
-                        <span className="geo-custom-label">Độ cao mặt phẳng cắt (t)</span>
-                        <span className="geo-custom-val">Theo đề</span>
-                      </div>
-                      <input
-                        type="range"
-                        className="geo-custom-slider"
-                        data-geo-slider="pyramidPlaneRatio"
-                        min={18}
-                        max={82}
-                        step={1}
-                        value={50}
-                        disabled
-                        aria-disabled="true"
-                        aria-label="Độ cao mặt phẳng cắt (t)"
-                      />
-                    </div>
-                    <div className="geo-custom-row">
-                      <div className="geo-custom-label-line">
-                        <span className="geo-custom-label">Tỷ lệ chiều cao chóp (SO)</span>
-                        <span className="geo-custom-val">1.00×</span>
-                      </div>
-                      <input
-                        type="range"
-                        className="geo-custom-slider"
-                        data-geo-slider="pyramidHeightScale"
-                        min={70}
-                        max={135}
-                        step={1}
-                        value={100}
-                        disabled
-                        aria-disabled="true"
-                        aria-label="Tỷ lệ chiều cao chóp (SO)"
-                      />
-                    </div>
-                  </>
-                )}
-                {loaiCanh.key === "cylinder" && (
-                  <>
-                    <div className="geo-custom-row">
-                      <div className="geo-custom-label-line">
-                        <span className="geo-custom-label">Vị trí mặt cắt dọc trục</span>
-                        <span className="geo-custom-val">Theo đề</span>
-                      </div>
-                      <input
-                        type="range"
-                        className="geo-custom-slider"
-                        data-geo-slider="cylinderPlaneOffset"
-                        min={-65}
-                        max={65}
-                        step={1}
-                        value={0}
-                        disabled
-                        aria-disabled="true"
-                        aria-label="Vị trí mặt cắt dọc trục"
-                      />
-                    </div>
-                    <div className="geo-custom-row">
-                      <div className="geo-custom-label-line">
-                        <span className="geo-custom-label">Tỷ lệ chiều cao trụ (OO&apos;)</span>
-                        <span className="geo-custom-val">1.00×</span>
-                      </div>
-                      <input
-                        type="range"
-                        className="geo-custom-slider"
-                        data-geo-slider="cylinderHeightScale"
-                        min={75}
-                        max={130}
-                        step={1}
-                        value={100}
-                        disabled
-                        aria-disabled="true"
-                        aria-label="Tỷ lệ chiều cao trụ"
-                      />
-                    </div>
-                  </>
-                )}
-                {(loaiCanh.key === "cone" || loaiCanh.key === "solid") && (
-                  <>
-                    <div className="geo-custom-row">
-                      <div className="geo-custom-label-line">
-                        <span className="geo-custom-label">Độ cao mặt phẳng cắt</span>
-                        <span className="geo-custom-val">Theo đề</span>
-                      </div>
-                      <input
-                        type="range"
-                        className="geo-custom-slider"
-                        data-geo-slider="conePlaneRatio"
-                        min={20}
-                        max={80}
-                        step={1}
-                        value={48}
-                        disabled
-                        aria-disabled="true"
-                        aria-label="Độ cao mặt phẳng cắt"
-                      />
-                    </div>
-                    <div className="geo-custom-row">
-                      <div className="geo-custom-label-line">
-                        <span className="geo-custom-label">Tỷ lệ chiều cao khối (SO)</span>
-                        <span className="geo-custom-val">1.00×</span>
-                      </div>
-                      <input
-                        type="range"
-                        className="geo-custom-slider"
-                        data-geo-slider="coneHeightScale"
-                        min={75}
-                        max={130}
-                        step={1}
-                        value={100}
-                        disabled
-                        aria-disabled="true"
-                        aria-label="Tỷ lệ chiều cao khối"
-                      />
-                    </div>
-                  </>
-                )}
-                <div className="geo-custom-Dirty-banner is-visible" id="geo-custom-kernel-note">
-                  <span>
-                    Tọa độ đỉnh và thiết diện được khóa bởi Kernel hữu tỉ theo đúng dữ kiện đề bài.
-                  </span>
                 </div>
               </div>
             </div>

@@ -6388,7 +6388,7 @@ export function Scene3DWorkspace({
       datCoGocVuong([goc, nhanChung], cam, hCss, dieuKhien.target, rightAnglesShownRef.current);
       capNhatDauSongSong(goc, cam);
       const undoHover = applyHoverFeedback(goc, hoverFeedbackRef.current.id, hoverFeedbackRef.current.edges);
-      const fatSummary = dongBoNetDayManHinh([goc, nhanChung, truc], netDay, wCss, hCss, dashedHiddenShownRef.current, stepPulse, tinhZoomDashScale());
+      const fatSummary = dongBoNetDayManHinh([goc, nhanChung, truc], netDay, wCss, hCss, dashedHiddenShownRef.current, stepPulse, tinhZoomDashScale(), xrayRef.current);
       if (typeof window !== "undefined") {
         (window as any).__geo3d_fat_line_summary = {
           totalLines: fatSummary.totalLines,
@@ -6461,7 +6461,7 @@ export function Scene3DWorkspace({
       const hCss = renderer.domElement.clientHeight || 1;
       datCoGocVuong([goc, nhanChung], cam, hCss, dieuKhien.target, rightAnglesShownRef.current);
       capNhatDauSongSong(goc, cam);
-      const fatSummary = dongBoNetDayManHinh([goc, nhanChung, truc], netDay, wCss, hCss, dashedHiddenShownRef.current, 0, tinhZoomDashScale());
+      const fatSummary = dongBoNetDayManHinh([goc, nhanChung, truc], netDay, wCss, hCss, dashedHiddenShownRef.current, 0, tinhZoomDashScale(), xrayRef.current);
       const anTam = [...fatSummary.sourceLines, ...fatSummary.sourceRimObjects];
       for (const l of anTam) l.visible = false;
       renderer.render(scene3, cam);
@@ -7228,6 +7228,7 @@ export function Scene3DWorkspace({
           "__geo3d_plane_opacity_pct",
           "__geo3d_right_angles_visible",
           "__geo3d_dashed_hidden_visible",
+          "__geo3d_xray_active",
           "__geo3d_selected_id",
           "__geo3d_highlighted_ids",
           "__geo3d_selection_highlight_ids",
@@ -7860,7 +7861,7 @@ export function Scene3DWorkspace({
           : 1;
       if (
         (o.type === "solid" || o.type === "curved_solid")
-        && (!shellShown || typeof shellOpacityPct === "number" || hostSolidScale !== 1)
+        && (!shellShown || typeof shellOpacityPct === "number" || hostSolidScale !== 1 || xray)
       ) {
         obj.traverse((child) => {
           const mesh = child as THREE.Mesh;
@@ -7873,7 +7874,10 @@ export function Scene3DWorkspace({
             mesh.visible = true;
             const baseOp = typeof mesh.userData?.baseShellOpacity === "number" ? mesh.userData.baseShellOpacity : DO_DUC.solid;
             const pctScale = typeof shellOpacityPct === "number" ? shellOpacityPct / 12 : 1;
-            mat.opacity = Math.max(0.01, Math.min(0.95, baseOp * pctScale * hostSolidScale));
+            mat.opacity = Math.max(0.01, Math.min(0.95, baseOp * pctScale * hostSolidScale * (xray ? 0.28 : 1)));
+            if (xray) {
+              mat.depthWrite = false;
+            }
           }
         });
       }
@@ -7934,6 +7938,18 @@ export function Scene3DWorkspace({
         && (o.type === "section" || laMienThietDienKetQua || thuocThietDienCha || isIntersectionLineOrSegment(o, scene))
       ) {
         obj.visible = false;
+      }
+      if (xray && (o.type === "point3" || o.type === "plane3" || o.type === "section")) {
+        obj.traverse((child) => {
+          const mesh = child as THREE.Mesh;
+          if (!mesh.isMesh) return;
+          const mats = Array.isArray(mesh.material) ? mesh.material : [mesh.material];
+          for (const rawMat of mats) {
+            const mat = rawMat as THREE.MeshBasicMaterial | undefined;
+            if (!mat || mat.colorWrite === false) continue;
+            mat.depthTest = false;
+          }
+        });
       }
       const bd = visualTransformOf(tuongTac, scene, o.id);
       datViTriTrinhBay(obj, bd);
@@ -8045,6 +8061,7 @@ export function Scene3DWorkspace({
             opacity: Math.max(0.03, Math.min(0.65, baseOpFc * pctScaleFc)),
             forceSinglePass: true,
             side: THREE.DoubleSide,
+            depthTest: !xray,
             depthWrite: false,
             ...LECH_THIET_DIEN,
           }),
@@ -8436,6 +8453,7 @@ export function Scene3DWorkspace({
       (window as any).__geo3d_plane_opacity_pct = planeOpacityPct ?? 8;
       (window as any).__geo3d_right_angles_visible = rightAnglesShown;
       (window as any).__geo3d_dashed_hidden_visible = dashedHiddenShown;
+      (window as any).__geo3d_xray_active = xray;
     }
     scheduleCommitRender();
   }, [scene, buoc, tuongTac, tapNoiBat, hasSelection, tapChon, stepHighlightTargets, tang, anPhu, ungroundedPts, quyetDinhMatPhang, stepVisualRoles, auxiliaryShown, xray, vaiKhoiTheoId, shellShown, planeShown, sectionShown, shellOpacityPct, planeOpacityPct, rightAnglesShown, dashedHiddenShown, webglEpoch]);

@@ -401,8 +401,11 @@ describe("Axo V2.7 Phase B — Header Logo, Homepage, Library & History (P3–P8
         />,
       );
       expect(sphereHtml).toContain(">Mặt cầu<");
-      expect(sphereHtml).toContain('id="slider-sphere-radius"');
-      expect(sphereHtml).toContain('id="slider-plane-height"');
+      expect(sphereHtml).toContain('id="slider-shell-opacity"');
+      expect(sphereHtml).toContain('id="slider-plane-opacity"');
+      expect(sphereHtml).not.toContain('id="geo-custom-experiment-group"');
+      expect(sphereHtml).not.toContain('id="slider-sphere-radius"');
+      expect(sphereHtml).not.toContain('id="slider-plane-height"');
     }
 
     // P4: Đủ 7 lớp chuẩn của HTML V2.7 + nút Khôi phục hiển thị
@@ -506,7 +509,7 @@ describe("Axo V2.7 Phase B — Header Logo, Homepage, Library & History (P3–P8
     expect(finalWsHtml).toContain('d="m15 18-6-6 6-6"');
     expect(finalWsHtml).toContain('d="m9 18 6-6-6-6"');
     expect(finalWsHtml).toContain('points="15 3 21 3 21 9"');
-    expect(finalWsHtml).toContain('d="M12 3v18"');
+    expect(finalWsHtml).toContain('points="12 3 21 8 12 13 3 8 12 3"');
     expect(finalWsHtml).not.toContain('id="btn-explode"');
   });
 
