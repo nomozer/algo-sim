@@ -7782,8 +7782,12 @@ export interface PedagogicalStepNarration {
   detailedEvidence: string[];
 }
 
-export function shortSym(o: SceneObject | undefined): string {
+export function shortSym(o: SceneObject | undefined, scene?: Pick<Scene3D, "objects">): string {
   if (!o) return "";
+  if (o.type === "plane3") {
+    const certified = resolveCertifiedPlaneSymbolFromContext(o, scene);
+    if (certified) return certified;
+  }
   const explicit = o.notation?.trim() || o.reference?.trim() || o.display_label?.trim();
   if (explicit) return explicit;
   const lbl = (o.label ?? "").trim();
@@ -8730,8 +8734,8 @@ export function verifySceneMathematicalConsistency(
         const n1 = parseFracVec3(planeDeps[0].normal!);
         const p2 = parseFracVec3(planeDeps[1].point!);
         const n2 = parseFracVec3(planeDeps[1].normal!);
-        const pl1 = formatPlaneDisplayNotation(planeDeps[0]);
-        const pl2 = formatPlaneDisplayNotation(planeDeps[1]);
+        const pl1 = formatPlaneDisplayNotation(planeDeps[0], scene);
+        const pl2 = formatPlaneDisplayNotation(planeDeps[1], scene);
         if (!vIsZero(n1) && !vIsZero(n2)) {
           if (vIsZero(vCross(n1, n2))) {
             const coincident = fIsZero(plainDotFrac(vSub(p2, p1), n1));
@@ -8978,7 +8982,7 @@ export function verifySceneMathematicalConsistency(
             const d2 = metricDot(diff, diff, scene.chart_metric);
             const R2 = parseExactFrac(targetBall.radius_sq);
             if (d2[0] * R2[1] > R2[0] * d2[1]) {
-              const pName = formatPlaneDisplayNotation(obj);
+              const pName = formatPlaneDisplayNotation(obj, scene);
               contradictions.push({
                 objectId: obj.id,
                 title: "Mặt phẳng không cắt mặt cầu",
@@ -9006,7 +9010,7 @@ export function verifySceneMathematicalConsistency(
         const H = parseFracVec3(obj.center);
         const p0 = parseFracVec3(planeDep.point);
         const nVec = parseFracVec3(planeDep.normal);
-        const pName = formatPlaneDisplayNotation(planeDep);
+        const pName = formatPlaneDisplayNotation(planeDep, scene);
         if (!vIsZero(nVec) && !fIsZero(plainDotFrac(vSub(H, p0), nVec))) {
           contradictions.push({
             objectId: obj.id,
@@ -9123,7 +9127,7 @@ export function verifySceneMathematicalConsistency(
         const H = parseFracVec3(obj.center);
         const p0 = parseFracVec3(planeDep.point);
         const nVec = parseFracVec3(planeDep.normal);
-        const pName = formatPlaneDisplayNotation(planeDep);
+        const pName = formatPlaneDisplayNotation(planeDep, scene);
         if (
           !vIsZero(nVec)
           && (
@@ -9973,8 +9977,603 @@ const GREEK_PLANE_ALIAS: Record<string, string> = {
   delta: "δ",
 };
 
+function normalizePlaneSymbolToken(rawToken: string): string | null {
+  const cleaned = rawToken.replace(/[«»]/gu, "").trim().replace(/^\((.+)\)$/u, "$1").trim();
+  if (!cleaned) return null;
+  const greek = GREEK_PLANE_ALIAS[cleaned.toLowerCase()];
+  if (greek) return `(${greek})`;
+  if (/^[αβγδ]$/u.test(cleaned)) return `(${cleaned})`;
+  if (/^(?:Oxy|Oyz|Ozx|Oxz)$/u.test(cleaned)) return `(${cleaned})`;
+  if (/^[A-Z][0-9′']*$/u.test(cleaned)) return `(${cleaned.replace(/'+/gu, "′")})`;
+  return null;
+}
+
+function extractDirectPlaneDesignation(
+  rawText: string | undefined | null,
+  options?: { allowBareShortToken?: boolean; allowMultiPointParens?: boolean },
+): string | null {
+  if (!rawText) return null;
+  const cleaned = rawText.replace(/«([^»]+)»/gu, "$1").replace(/\s+/gu, " ").trim();
+  if (!cleaned) return null;
+  const prefixed = /^(?:Mặt\s+phẳng(?:\s+(?:tiếp\s+diện|cắt|trung\s+trực|nghiêng|đáy|qua\s+tâm))?|Tiếp\s+diện)?\s*\(\s*([^()\s;]+)\s*\)$/iu.exec(
+    cleaned,
+  );
+  if (prefixed) {
+    const inner = prefixed[1]!.trim();
+    const norm = normalizePlaneSymbolToken(inner);
+    if (norm) return norm;
+    if (options?.allowMultiPointParens && /^[A-Z][0-9′']*(?:[A-Z][0-9′']*){2,5}$/u.test(inner)) {
+      return `(${inner.replace(/'+/gu, "′")})`;
+    }
+  }
+  if (options?.allowBareShortToken && cleaned.length <= 8 && !/\s/u.test(cleaned)) {
+    return normalizePlaneSymbolToken(cleaned);
+  }
+  const inlineIntro = /(?:^|(?:mặt\s+phẳng|mp\.?)(?:\s+(?:tiếp\s+diện|cắt|trung\s+trực|nghiêng|đáy|qua\s+tâm))?|tiếp\s+diện)\s*\(\s*([^()\s;]+)\s*\)/iu.exec(
+    cleaned,
+  );
+  if (inlineIntro) {
+    return normalizePlaneSymbolToken(inlineIntro[1]!);
+  }
+  const defLeft = /\(\s*([^()\s;]+)\s*\)\s+(?:là\s+)?(?:mặt\s+phẳng|tiếp\s+diện)\b/iu.exec(cleaned);
+  if (defLeft) {
+    return normalizePlaneSymbolToken(defLeft[1]!);
+  }
+  return null;
+}
+
+function escapeRegExpLiteral(value: string): string {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+function clauseContainsSymbolToken(clause: string, sym: string): boolean {
+  const cleanSym = sym.trim();
+  if (!cleanSym) return false;
+  return new RegExp(`(?<![A-Za-z0-9_αβγδ])${escapeRegExpLiteral(cleanSym)}(?![A-Za-z0-9_αβγδ])`, "u").test(
+    clause,
+  );
+}
+
+function parseLinearNumberCoeff(rawCoeff: string): number | null {
+  const s = rawCoeff.replace(/\s+/gu, "");
+  if (!s || s === "+") return 1;
+  if (s === "-") return -1;
+  if (s.includes("/")) {
+    const [nStr, dStr] = s.split("/");
+    const n = Number(nStr);
+    const d = Number(dStr);
+    return Number.isFinite(n) && Number.isFinite(d) && d !== 0 ? n / d : null;
+  }
+  const v = Number(s.replace(",", "."));
+  return Number.isFinite(v) ? v : null;
+}
+
+function evaluateCartesianPlaneEquationMatch(
+  clause: string,
+  point: ExactVec3,
+  normal: ExactVec3,
+): boolean {
+  const px = toNumber(point[0]);
+  const py = toNumber(point[1]);
+  const pz = toNumber(point[2]);
+  const nx = toNumber(normal[0]);
+  const ny = toNumber(normal[1]);
+  const nz = toNumber(normal[2]);
+  if (![px, py, pz, nx, ny, nz].every(Number.isFinite)) return false;
+  const nNorm = Math.hypot(nx, ny, nz);
+  if (nNorm <= 1e-9) return false;
+
+  const eqRe = /([+-]?\s*(?:\d+(?:[.,/]\d+)?\s*)?[xyz](?:\s*[+-]\s*(?:\d+(?:[.,/]\d+)?\s*)?[xyz]|\s*[+-]\s*\d+(?:[.,/]\d+)?)*)\s*=\s*([+-]?\s*\d+(?:[.,/]\d+)?)/giu;
+  let m: RegExpExecArray | null;
+  while ((m = eqRe.exec(clause)) !== null) {
+    const lhs = m[1]!;
+    const rhsVal = parseLinearNumberCoeff(m[2]!);
+    if (rhsVal === null) continue;
+    let a = 0;
+    let b = 0;
+    let c = 0;
+    let d = -rhsVal;
+    const termRe = /[+-]?\s*(?:(?:\d+(?:[.,/]\d+)?\s*)?[xyz]|\d+(?:[.,/]\d+)?)/giu;
+    const terms = lhs.match(termRe) ?? [];
+    if (terms.length === 0) continue;
+    let ok = true;
+    for (const rawTerm of terms) {
+      const t = rawTerm.replace(/\s+/gu, "");
+      const varMatch = /^([+-]?\d*(?:[.,/]\d+)?)([xyz])$/iu.exec(t);
+      if (varMatch) {
+        const coeff = parseLinearNumberCoeff(varMatch[1]!);
+        if (coeff === null) {
+          ok = false;
+          break;
+        }
+        const axis = varMatch[2]!.toLowerCase();
+        if (axis === "x") a += coeff;
+        else if (axis === "y") b += coeff;
+        else c += coeff;
+      } else {
+        const num = parseLinearNumberCoeff(t);
+        if (num === null) {
+          ok = false;
+          break;
+        }
+        d += num;
+      }
+    }
+    if (!ok) continue;
+    const eqNorm = Math.hypot(a, b, c);
+    if (eqNorm <= 1e-9) continue;
+    const cx = b * nz - c * ny;
+    const cy = c * nx - a * nz;
+    const cz = a * ny - b * nx;
+    if (Math.hypot(cx, cy, cz) > 1e-6 * eqNorm * nNorm) continue;
+    if (Math.abs(a * px + b * py + c * pz + d) <= 1e-6 * Math.max(1, eqNorm)) {
+      return true;
+    }
+  }
+  return false;
+}
+
+function collectPlaneCandidateClauses(text: string): { symbol: string; clause: string; sentence: string }[] {
+  const cleaned = text.replace(/«([^»]+)»/gu, "$1");
+  const sentences = cleaned.split(/(?<=[.!?])\s+|\n+/u).map((s) => s.trim()).filter(Boolean);
+  const out: { symbol: string; clause: string; sentence: string }[] = [];
+
+  for (const sentence of sentences) {
+    const hits = new Map<number, { start: number; end: number; symbol: string }>();
+    const recordHit = (start: number, end: number, rawSym: string) => {
+      if (!/^(?:[A-Z][0-9′']*|[αβγδ])$/u.test(rawSym.trim())) return;
+      const sym = normalizePlaneSymbolToken(rawSym);
+      if (!sym || hits.has(start)) return;
+      hits.set(start, { start, end, symbol: sym });
+    };
+
+    const reIntro =
+      /\b(?:mặt\s+phẳng|mp\.?)(?:\s+(?:tiếp\s+diện|cắt|trung\s+trực|nghiêng|đáy|chứa|qua\s+tâm))?\s*\(\s*([A-Za-z][0-9′']*|[αβγδ])\s*\)/giu;
+    for (const m of sentence.matchAll(reIntro)) {
+      recordHit(m.index!, m.index! + m[0].length, m[1]!);
+    }
+    const reTan = /\btiếp\s+diện\s*\(\s*([A-Za-z][0-9′']*|[αβγδ])\s*\)/giu;
+    for (const m of sentence.matchAll(reTan)) {
+      recordHit(m.index!, m.index! + m[0].length, m[1]!);
+    }
+    const reLeftDef =
+      /\(\s*([A-Za-z][0-9′']*|[αβγδ])\s*\)\s+(?:là\s+(?:mặt\s+phẳng|tiếp\s+diện)|tiếp\s+xúc\s+(?:với\s+)?(?:mặt\s+cầu|khối\s+cầu))\b/giu;
+    for (const m of sentence.matchAll(reLeftDef)) {
+      recordHit(m.index!, m.index! + m[0].length, m[1]!);
+    }
+    const reBareFollow =
+      /\(\s*([A-Za-z][0-9′']*|[αβγδ])\s*\)\s+(?:đi\s+qua|qua\s+[A-Z]|vuông\s+góc|⊥|song\s+song|∥|cắt\b)/giu;
+    for (const m of sentence.matchAll(reBareFollow)) {
+      const idx = m.index!;
+      const before = sentence.slice(Math.max(0, idx - 24), idx);
+      if (/(?:mặt\s+cầu|khối\s+cầu|đường\s+tròn|giao\s+tuyến\s+tròn|hình\s+nón|hình\s+trụ|hình\s+chóp|lăng\s+trụ|tâm|đỉnh)\s*$/iu.test(before)) {
+        continue;
+      }
+      recordHit(idx, idx + m[0].length, m[1]!);
+    }
+
+    const sortedHits = [...hits.values()].sort((a, b) => a.start - b.start);
+    for (let i = 0; i < sortedHits.length; i += 1) {
+      const cur = sortedHits[i]!;
+      const prevEnd = i > 0 ? sortedHits[i - 1]!.end : 0;
+      const clauseStart = Math.max(prevEnd, cur.start - 28);
+      const nextSameOrOther = sortedHits.slice(i + 1).find((n) => n.symbol !== cur.symbol);
+      const clauseEnd = nextSameOrOther ? nextSameOrOther.start : sentence.length;
+      out.push({
+        symbol: cur.symbol,
+        clause: sentence.slice(clauseStart, clauseEnd).trim(),
+        sentence,
+      });
+    }
+  }
+  return out;
+}
+
+/**
+ * Suy dẫn ký hiệu mặt phẳng được chứng nhận trực tiếp từ ngữ cảnh nguồn (`pl.notation`, `pl.label`,
+ * `source_provenance`, `events`, `formation`, `goal`/`audit`, hoặc `problemText`), đối chiếu chặt
+ * với điểm đi qua, pháp tuyến/đường vuông góc, tiếp xúc mặt cầu hoặc phương trình tọa độ của `pl`.
+ * Tuyệt đối fail-closed: trả về `null` nếu không có chứng cứ tường minh gắn với chính `pl`.
+ */
+export function resolveCertifiedPlaneSymbolFromContext(
+  pl: Pick<
+    SceneObject,
+    "id" | "type" | "label" | "notation" | "reference" | "display_label" | "role" | "depends" | "point" | "normal" | "formation_roles"
+  > | undefined,
+  scene?: Pick<Scene3D, "objects">,
+  problemText?: string | null,
+): string | null {
+  if (!pl || (pl.type && pl.type !== "plane3")) return null;
+
+  for (const [rawField, opts] of [
+    [pl.notation, { allowBareShortToken: true, allowMultiPointParens: true }],
+    [pl.display_label, { allowBareShortToken: true, allowMultiPointParens: true }],
+    [pl.reference, { allowBareShortToken: false, allowMultiPointParens: true }],
+    [pl.label, { allowBareShortToken: false, allowMultiPointParens: true }],
+  ] as const) {
+    const direct = extractDirectPlaneDesignation(rawField, opts);
+    if (direct) return direct;
+  }
+  if (pl.role) {
+    const roleMatch = /(?:^|(?:mặt\s+phẳng|tiếp\s+diện)(?:\s+(?:tiếp\s+diện|cắt|trung\s+trực|nghiêng))?\s*)\(\s*([^()\s;]+)\s*\)/iu.exec(
+      pl.role,
+    );
+    if (roleMatch) {
+      const norm = normalizePlaneSymbolToken(roleMatch[1]!);
+      if (norm) return norm;
+    }
+  }
+
+  if (!scene) {
+    if (!problemText) return null;
+    const candidates = collectPlaneCandidateClauses(problemText);
+    const matched = new Set(
+      candidates
+        .filter((c) => !pl.label || clauseMatchesUncontextualPlaneLabel(pl, c.clause))
+        .map((c) => c.symbol),
+    );
+    return matched.size === 1 ? [...matched][0]! : null;
+  }
+
+  const exactOrigin = exactSceneOriginOf(scene);
+  const byId = new Map(scene.objects.map((o) => [o.id, o]));
+  const exactById = new Map(exactOrigin.objects.map((o) => [o.id, o]));
+  const exactPl = exactById.get(pl.id) ?? pl;
+
+  const hybridMeta =
+    ("events" in scene ? hybridViewOfScene(scene as Scene3D) : undefined)
+    ?? ("events" in exactOrigin ? hybridViewOfScene(exactOrigin as Scene3D) : undefined);
+  const scopedTexts: string[] = [];
+  const generalProvenanceTexts: string[] = [];
+  if (hybridMeta?.source_provenance) {
+    for (const sp of hybridMeta.source_provenance) {
+      const rec = sp as unknown as Record<string, unknown>;
+      const quotes = Array.isArray(rec.quotes)
+        ? rec.quotes.filter((q): q is string => typeof q === "string" && q.trim().length > 0)
+        : [];
+      if (rec.id === pl.id || rec.object_id === pl.id) {
+        scopedTexts.push(...quotes);
+      } else {
+        generalProvenanceTexts.push(...quotes);
+      }
+    }
+  }
+
+  const allEvents = [
+    ...("events" in scene && Array.isArray((scene as Partial<Scene3D>).events) ? ((scene as Partial<Scene3D>).events ?? []) : []),
+    ...("events" in exactOrigin && Array.isArray((exactOrigin as Partial<Scene3D>).events) ? ((exactOrigin as Partial<Scene3D>).events ?? []) : []),
+  ];
+  for (const ev of allEvents) {
+    if (ev.object === pl.id || (ev.objects ?? []).includes(pl.id)) {
+      const evRec = ev as unknown as Record<string, unknown>;
+      for (const t of [ev.display_label, evRec.title, ev.learner_text, ev.explanation, ev.justification_text]) {
+        if (typeof t === "string" && t.trim()) scopedTexts.push(t);
+      }
+    }
+  }
+
+  const formationSteps = ("formation" in scene ? (scene as Scene3D).formation?.steps : undefined) ?? [];
+  for (const fst of formationSteps) {
+    const fRec = fst as unknown as Record<string, unknown>;
+    const fFocus = fst.focus_ids ?? [];
+    if ((fFocus.length === 1 && fFocus[0] === pl.id) || fRec.object_id === pl.id || fRec.object === pl.id) {
+      for (const t of [fst.learner_text, fRec.title, fRec.label, fRec.explanation]) {
+        if (typeof t === "string" && t.trim()) scopedTexts.push(t);
+      }
+    }
+  }
+
+  for (const st of scopedTexts) {
+    const direct = extractDirectPlaneDesignation(st, { allowBareShortToken: st.length <= 8 });
+    if (direct) return direct;
+  }
+
+  const claimedByOtherPlanes = new Set<string>();
+  for (const other of scene.objects) {
+    if (other.id === pl.id || other.type !== "plane3") continue;
+    const otherDirect =
+      extractDirectPlaneDesignation(other.notation, { allowBareShortToken: true })
+      ?? extractDirectPlaneDesignation(other.display_label, { allowBareShortToken: true })
+      ?? extractDirectPlaneDesignation(other.label);
+    if (otherDirect) claimedByOtherPlanes.add(otherDirect);
+  }
+
+  const depPointSymSet = new Set<string>();
+  const addPointSym = (pt: SceneObject | undefined) => {
+    if (!pt || pt.type !== "point3") return;
+    const rawSym = pt.notation?.trim() || pt.reference?.trim() || pt.display_label?.trim() || pt.label;
+    const m = /^(?:Điểm|Tiếp điểm|Tâm|Hình chiếu)?\s*([A-Z][0-9′']*)$/u.exec((rawSym ?? "").trim());
+    const sym = (m ? m[1]! : rawSym ?? "").replace(/'+/gu, "′").trim();
+    if (/^[A-Z][0-9′']*$/u.test(sym)) depPointSymSet.add(sym);
+  };
+  for (const depId of pl.depends ?? []) {
+    addPointSym(byId.get(depId) ?? exactById.get(depId));
+  }
+  for (const cand of [...scene.objects, ...exactOrigin.objects]) {
+    if (cand.perpendicular_witness?.on === pl.id && cand.perpendicular_witness.foot_id) {
+      addPointSym(byId.get(cand.perpendicular_witness.foot_id) ?? exactById.get(cand.perpendicular_witness.foot_id));
+    }
+  }
+  const depPointSyms = [...depPointSymSet];
+
+  const coplanarPointSyms: string[] = [];
+  if (exactPl.point && exactPl.normal) {
+    const p0 = parseFracVec3(exactPl.point);
+    const nVec = parseFracVec3(exactPl.normal);
+    if (!vIsZero(nVec)) {
+      for (const pt of scene.objects) {
+        if (isSubEntity(pt.id) || pt.type !== "point3") continue;
+        const ep = exactById.get(pt.id) ?? pt;
+        if (!ep.xyz) continue;
+        if (!fIsZero(plainDotFrac(vSub(parseFracVec3(ep.xyz), p0), nVec))) continue;
+        const m = /^(?:Điểm|Tiếp điểm|Tâm|Hình chiếu)?\s*([A-Z][0-9′']*)$/u.exec(
+          (pt.notation?.trim() || pt.reference?.trim() || pt.label || "").trim(),
+        );
+        const sym = (m ? m[1]! : "").replace(/'+/gu, "′");
+        if (sym && !depPointSymSet.has(sym) && !coplanarPointSyms.includes(sym)) {
+          coplanarPointSyms.push(sym);
+        }
+      }
+    }
+  }
+
+  const exactMetric = (exactOrigin as Partial<Scene3D>).chart_metric ?? (scene as Partial<Scene3D>).chart_metric;
+  const perpLineSymSet = new Set<string>();
+  const addPerpLineIfValid = (ln: SceneObject | undefined) => {
+    if (!ln || (ln.type !== "line3" && ln.type !== "segment3")) return;
+    const rawSym = ln.notation?.trim() || ln.reference?.trim() || ln.display_label?.trim() || ln.label;
+    const clean = (rawSym ?? "").replace(/^Đoạn\s+thẳng\s+|^Đường\s+thẳng\s+/iu, "").trim();
+    if (!clean || /\s/u.test(clean)) return;
+    if (exactPl.normal) {
+      const exLn = exactById.get(ln.id) ?? ln;
+      const lnDir = exLn.direction
+        ? parseFracVec3(exLn.direction)
+        : exLn.point_a && exLn.point_b
+          ? vSub(parseFracVec3(exLn.point_b), parseFracVec3(exLn.point_a))
+          : null;
+      if (lnDir && !vIsZero(lnDir)) {
+        const covN = parseFracVec3(exactPl.normal);
+        const gLn: FracVec3 = exactMetric
+          ? (([0, 1, 2] as const).map((r) => {
+              let acc: Frac = [0n, 1n];
+              for (let c = 0; c < 3; c += 1) {
+                acc = fAdd(acc, fMul(parseExactFrac(exactMetric[r][c]), lnDir[c]));
+              }
+              return acc;
+            }) as unknown as FracVec3)
+          : lnDir;
+        if (!vParallel(covN, gLn)) return;
+      }
+    }
+    perpLineSymSet.add(clean);
+  };
+  for (const depId of pl.depends ?? []) {
+    addPerpLineIfValid(byId.get(depId) ?? exactById.get(depId));
+  }
+  for (const cand of [...scene.objects, ...exactOrigin.objects]) {
+    if (cand.perpendicular_witness?.on === pl.id && (cand.type === "segment3" || cand.type === "line3")) {
+      addPerpLineIfValid(cand);
+    }
+  }
+  const perpLineSyms = [...perpLineSymSet];
+
+  let isTangentSpherePlane = false;
+  if (exactPl.point && exactPl.normal) {
+    const p0 = parseFracVec3(exactPl.point);
+    const nVec = parseFracVec3(exactPl.normal);
+    if (!vIsZero(nVec)) {
+      for (const b of exactOrigin.objects) {
+        if (b.type !== "curved_solid" || b.curved_kind !== "ball" || !b.anchor || !b.radius_sq) continue;
+        const proj = projectPointOntoPlaneExact(parseFracVec3(b.anchor), p0, nVec, exactMetric);
+        if (!proj) continue;
+        const vIH = vSub(proj.foot, parseFracVec3(b.anchor));
+        const d2 = metricDot(vIH, vIH, exactMetric);
+        if (d2[0] > 0n && fEq(d2, parseExactFrac(b.radius_sq))) {
+          isTangentSpherePlane = true;
+          break;
+        }
+      }
+    }
+  }
+
+  let isBisectorPlane = false;
+  if (depPointSyms.length === 1 && perpLineSyms.length > 0) {
+    const depPtObj = (pl.depends ?? [])
+      .map((id) => byId.get(id) ?? exactById.get(id))
+      .find((o) => o?.type === "point3");
+    if (depPtObj && /trung\s+trực|trung\s+điểm/iu.test(`${pl.label ?? ""} ${depPtObj.label ?? ""} ${depPtObj.role ?? ""}`)) {
+      isBisectorPlane = true;
+    }
+  }
+
+  const parallelBase = findParallelBaseForPlane(scene, pl as SceneObject);
+  const isOxyz = isExplicitOxyzCoordinateScene(scene, pl as SceneObject);
+  const ctx = problemContextOfScene(scene);
+  const sceneMeta = scene as unknown as Record<string, unknown>;
+  const extraMetaTexts: string[] = [];
+  for (const field of [sceneMeta.audit, sceneMeta.goal]) {
+    if (typeof field === "string" && field.trim()) extraMetaTexts.push(field);
+    else if (field && typeof field === "object") {
+      try {
+        const vals = Object.values(field as Record<string, unknown>);
+        for (const v of vals) {
+          if (typeof v === "string" && v.trim()) extraMetaTexts.push(v);
+        }
+      } catch {
+        /* ignore */
+      }
+    }
+  }
+
+  const prosePool = [
+    problemText,
+    ctx?.statement,
+    ctx?.title,
+    ...scopedTexts,
+    ...generalProvenanceTexts,
+    ...extraMetaTexts,
+  ].filter((t): t is string => typeof t === "string" && t.trim().length > 0);
+  if (prosePool.length === 0) return null;
+
+  const scores = new Map<string, { bestPrimary: number; supportingHits: number }>();
+  const seenSentenceSym = new Set<string>();
+
+  for (const block of prosePool) {
+    for (const cand of collectPlaneCandidateClauses(block)) {
+      if (claimedByOtherPlanes.has(cand.symbol)) continue;
+      let score = 0;
+      let concreteMatches = 0;
+
+      for (const ptSym of depPointSyms) {
+        if (clauseContainsSymbolToken(cand.clause, ptSym)) {
+          score += 3;
+          concreteMatches += 1;
+        }
+      }
+      let coplanarMatches = 0;
+      for (const cpSym of coplanarPointSyms) {
+        if (clauseContainsSymbolToken(cand.clause, cpSym)) {
+          score += 1.5;
+          coplanarMatches += 1;
+        }
+      }
+      if (coplanarMatches >= 2) concreteMatches += 1;
+
+      for (const lSym of perpLineSyms) {
+        if (clauseContainsSymbolToken(cand.clause, lSym)) {
+          const hasPerpCue = /vuông\s+góc|⊥|trục|bán\s+kính|đường\s+cao|trung\s+trực/iu.test(cand.clause);
+          score += hasPerpCue ? 4 : 2;
+          concreteMatches += 1;
+        }
+      }
+
+      if (isOxyz && exactPl.point && exactPl.normal && evaluateCartesianPlaneEquationMatch(cand.clause, exactPl.point, exactPl.normal)) {
+        score += 5;
+        concreteMatches += 1;
+      }
+
+      if (isTangentSpherePlane && /tiếp\s+diện|tiếp\s+xúc/iu.test(cand.clause)) {
+        score += 3;
+        concreteMatches += 1;
+      }
+
+      if (isBisectorPlane && /trung\s+trực/iu.test(cand.clause)) {
+        score += 3;
+        concreteMatches += 1;
+      }
+
+      if (parallelBase && /song\s+song/iu.test(cand.clause)) {
+        const baseBare = parallelBase.replace(/[()]/gu, "").trim();
+        if (
+          (baseBare && clauseContainsSymbolToken(cand.clause, baseBare))
+          || /\bmặt\s+(?:phẳng\s+)?đáy\b/iu.test(cand.clause)
+        ) {
+          score += 2;
+          if (concreteMatches > 0) concreteMatches += 1;
+        }
+      }
+
+      if (concreteMatches === 0 || score < 3) continue;
+
+      const cur = scores.get(cand.symbol) ?? { bestPrimary: 0, supportingHits: 0 };
+      const sentKey = `${cand.symbol}::${cand.sentence}`;
+      if (score > cur.bestPrimary) cur.bestPrimary = score;
+      if (!seenSentenceSym.has(sentKey)) {
+        seenSentenceSym.add(sentKey);
+        cur.supportingHits += 1;
+      }
+      scores.set(cand.symbol, cur);
+    }
+  }
+
+  if (scores.size === 0) return null;
+  const ranked = [...scores.entries()]
+    .map(([symbol, st]) => ({
+      symbol,
+      total: st.bestPrimary + Math.max(0, st.supportingHits - 1),
+      bestPrimary: st.bestPrimary,
+    }))
+    .sort((a, b) => b.total - a.total || b.bestPrimary - a.bestPrimary);
+
+  const top = ranked[0]!;
+  const runnerUp = ranked[1];
+  if (runnerUp && top.total === runnerUp.total) return null;
+  return top.symbol;
+}
+
+function clauseMatchesUncontextualPlaneLabel(
+  pl: Pick<SceneObject, "label">,
+  clause: string,
+): boolean {
+  const lbl = (pl.label ?? "").trim();
+  if (!lbl) return false;
+  const pts = lbl.match(/(?<![A-Za-z0-9_])[A-Z][0-9′']*(?![A-Za-z0-9_])/gu) ?? [];
+  return pts.some((pt) => clauseContainsSymbolToken(clause, pt));
+}
+
+function resolveConciseUncertifiedPlaneTag(
+  pl: SceneObject,
+  scene?: Pick<Scene3D, "objects">,
+): string {
+  const exactScene = scene ? exactSceneOriginOf(scene) : undefined;
+  const byId = scene ? new Map(scene.objects.map((o) => [o.id, o])) : undefined;
+  const exactById = exactScene ? new Map(exactScene.objects.map((o) => [o.id, o])) : undefined;
+  const exactPl = exactById?.get(pl.id) ?? pl;
+
+  const depPts = (pl.depends ?? [])
+    .map((id) => byId?.get(id) ?? exactById?.get(id))
+    .filter(
+      (p): p is SceneObject =>
+        Boolean(
+          p
+            && p.type === "point3"
+            && (!scene || !byId || !laDiemPhuDungMatPhang(scene, p, byId))
+            && /^[A-Z][0-9′']*$/u.test((p.notation?.trim() || p.reference?.trim() || p.display_label?.trim() || "").replace(/'+/gu, "′")),
+        ),
+    )
+    .map((p) => (p.notation?.trim() || p.reference?.trim() || p.display_label?.trim() || "").replace(/'+/gu, "′"));
+
+  if (scene && exactPl.point && exactPl.normal && exactScene) {
+    const p0 = parseFracVec3(exactPl.point);
+    const nVec = parseFracVec3(exactPl.normal);
+    const exactMetric = (exactScene as Partial<Scene3D>).chart_metric ?? (scene as Partial<Scene3D>).chart_metric;
+    if (!vIsZero(nVec)) {
+      const isTangentBall = exactScene.objects.some((b) => {
+        if (b.type !== "curved_solid" || b.curved_kind !== "ball" || !b.anchor || !b.radius_sq) return false;
+        const proj = projectPointOntoPlaneExact(parseFracVec3(b.anchor), p0, nVec, exactMetric);
+        if (!proj) return false;
+        const d2 = metricDot(vSub(proj.foot, parseFracVec3(b.anchor)), vSub(proj.foot, parseFracVec3(b.anchor)), exactMetric);
+        return d2[0] > 0n && fEq(d2, parseExactFrac(b.radius_sq));
+      });
+      if (isTangentBall) {
+        const footFromWitness = scene.objects.find(
+          (cand) => cand.perpendicular_witness?.on === pl.id && cand.perpendicular_witness.foot_id,
+        )?.perpendicular_witness?.foot_id;
+        const footObj = footFromWitness ? byId?.get(footFromWitness) : undefined;
+        const footSym = footObj ? shortSym(footObj, scene) : depPts[0];
+        return footSym && /^[A-Z][0-9′']*$/u.test(footSym) ? `tiếp diện tại ${footSym}` : "tiếp diện";
+      }
+    }
+  }
+
+  if (depPts.length === 1) return `qua ${depPts[0]}`;
+  if (depPts.length === 2) return `qua ${depPts[0]}, ${depPts[1]}`;
+
+  const perpDep = (pl.depends ?? [])
+    .map((id) => byId?.get(id) ?? exactById?.get(id))
+    .find((d) => Boolean(d && (d.type === "segment3" || d.type === "line3") && shortSym(d, scene)));
+  if (perpDep) return `vuông góc với ${shortSym(perpDep, scene)}`;
+
+  const stripped = (pl.label ?? "").replace(/^Mặt phẳng(?:\s+cắt)?\s+/iu, "").trim();
+  const quaSolo = /^(qua\s+[A-Z][0-9′']*)\s+và\s+vuông\s+góc\s+với\b/iu.exec(stripped);
+  if (quaSolo) return quaSolo[1]!;
+  return stripped || "cắt";
+}
+
 export function formatPlaneDisplayNotation(pl: SceneObject, scene?: Pick<Scene3D, "objects">): string {
-  const raw = (pl.notation?.trim() || shortSym(pl))
+  const certified = resolveCertifiedPlaneSymbolFromContext(pl, scene);
+  if (certified) return certified;
+  const raw = (pl.notation?.trim() || shortSym(pl, scene))
     .replace(/^Mặt phẳng(?:\s+cắt)?\s+/iu, "")
     .trim();
   const bare = raw.replace(/^\((.+)\)$/u, "$1").trim();
@@ -9991,7 +10590,7 @@ export function formatPlaneDisplayNotation(pl: SceneObject, scene?: Pick<Scene3D
   const greek = GREEK_PLANE_ALIAS[bare.toLowerCase()];
   if (greek) return `(${greek})`;
   if (raw.startsWith("(")) return raw;
-  return raw.length <= 6 ? `(${raw})` : pl.label.replace(/^Mặt phẳng(?:\s+cắt)?\s+/iu, "").trim() || raw;
+  return raw.length <= 6 ? `(${raw})` : resolveConciseUncertifiedPlaneTag(pl, scene);
 }
 
 export function findParallelBaseForPlane(
@@ -10106,7 +10705,7 @@ export function describeExactCurvedSectionMath(
     if (curvedDep.curved_kind === "cylinder" && curvedDep.radius_sq) {
       const ortho = inspectAxialCurvedOrthogonality(scene, curvedDep);
       if (ortho.isRightCertified && fEq(r2, parseExactFrac(curvedDep.radius_sq))) {
-        return `Mặt phẳng${planeDep ? ` ${formatPlaneDisplayNotation(planeDep)}` : ""} vuông góc với trục cắt hình trụ theo giao tuyến là đường tròn bằng đường tròn đáy`;
+        return `Mặt phẳng${planeDep ? ` ${formatPlaneDisplayNotation(planeDep, scene)}` : ""} vuông góc với trục cắt hình trụ theo giao tuyến là đường tròn bằng đường tròn đáy`;
       }
       return `Xác định đường tròn giao tuyến phẳng của mặt phẳng cắt với mặt trụ`;
     }
@@ -12839,7 +13438,9 @@ function buildGoalCompletionSummary(scene: Scene3D, steps: PedagogicalStepItem[]
 
   if (derivedQuantities.length > 0) {
     const items: GoalCompletionItem[] = derivedQuantities.map((q) => {
-      const rawLabel = q.label ?? q.notation ?? q.id;
+      const rawLabel = canonicalizeCertifiedPlaneTokensInText(q.label ?? q.notation ?? q.id, scene, {
+        replaceRawIds: false,
+      });
       const hadGuillemets = rawLabel.includes("«");
       const cleanLabel = rawLabel.replace(/«([^»]+)»/gu, "$1").trim();
       const mqKind = q.measured_quantity?.quantity_kind;
@@ -12938,12 +13539,12 @@ function buildGoalCompletionSummary(scene: Scene3D, steps: PedagogicalStepItem[]
           : `Đoạn vuông góc chung ${segSym}`;
       } else if (isVerifiedResult && w?.on && synthSeg) {
         const onObj = byId.get(w.on);
-        const onName = onObj ? (onObj.type === "plane3" ? formatPlaneDisplayNotation(onObj) : shortSym(onObj)) : "";
+        const onName = onObj ? (onObj.type === "plane3" ? formatPlaneDisplayNotation(onObj, scene) : shortSym(onObj)) : "";
         witnessSummary = onName ? `Đoạn vuông góc ${shortSym(synthSeg)} ⊥ ${onName}` : `Đoạn vuông góc ${shortSym(synthSeg)}`;
       } else if (isVerifiedResult && w?.on && w.from && w.foot) {
         const fromObj = byId.get(w.from);
         const onObj = byId.get(w.on);
-        const onName = onObj ? (onObj.type === "plane3" ? formatPlaneDisplayNotation(onObj) : shortSym(onObj)) : "";
+        const onName = onObj ? (onObj.type === "plane3" ? formatPlaneDisplayNotation(onObj, scene) : shortSym(onObj)) : "";
         const exactScene = exactSceneOriginOf(scene);
         const exactById = new Map(exactScene.objects.map((o) => [o.id, o]));
         const wExFoot = (exactById.get(q.id)?.annotation?.witness ?? w).foot;
@@ -15584,6 +16185,7 @@ function expandVerifiedExplanatoryRelations(rawScene: Scene3D): { scene: Scene3D
         continue;
       }
 
+      propagateSceneLineage(curScene, rawScene);
       const tanInserted: SceneObject[] = [];
       if (!existingFootPt) {
         tanInserted.push({
@@ -16275,9 +16877,10 @@ function expandVerifiedExplanatoryRelations(rawScene: Scene3D): { scene: Scene3D
     const onCur = curMap.get(wEx.on) ?? onExObj;
     const footSym = existingFoot ? shortSym(existingFoot) : pickUnusedSym(curScene, ["H", "K", "I", "E"]);
     const footId = existingFoot?.id ?? `${q.id}__foot1`;
+    propagateSceneLineage(curScene, rawScene);
     const dispFrom = fromCur.xyz ?? mapExactVecToSceneFrame(fromEx, chartT);
     const dispFoot = existingFoot?.xyz ?? wDisp.foot ?? mapExactVecToSceneFrame(footEx, chartT);
-    const onName = onCur.type === "plane3" ? formatPlaneDisplayNotation(onCur) : shortSym(onCur);
+    const onName = onCur.type === "plane3" ? formatPlaneDisplayNotation(onCur, curScene) : shortSym(onCur);
 
     const perpWitness: NonNullable<SceneObject["perpendicular_witness"]> = {
       ...wDisp,
@@ -19036,26 +19639,84 @@ function finalizeStudentObjectPresentation(raw: StudentObjectPresentation): Stud
   };
 }
 
+function canonicalizeCertifiedPlaneTokensInText(
+  text: string,
+  rawScene: Pick<Scene3D, "objects">,
+  options?: { replaceRawIds?: boolean },
+): string {
+  if (!text) return "";
+  let out = text;
+  const planes = rawScene.objects.filter((o) => !isSubEntity(o.id) && o.type === "plane3");
+  if (planes.length === 0) return out;
+
+  for (const pl of planes) {
+    const certSym = resolveCertifiedPlaneSymbolFromContext(pl, rawScene);
+    const plDisplay = certSym ?? formatPlaneDisplayNotation(pl, rawScene);
+    if (!plDisplay) continue;
+
+    if (certSym) {
+      const cleanedLbl = cleanLearnerText(pl.label);
+      if (cleanedLbl && !cleanedLbl.includes(certSym) && /^Mặt\s+phẳng\s+(?:qua|tiếp|vuông|song)/iu.test(cleanedLbl)) {
+        const escapedLbl = escapeRegExpLiteral(cleanedLbl);
+        out = out.replace(new RegExp(`«${escapedLbl}»`, "giu"), certSym);
+        out = out.replace(new RegExp(escapedLbl, "giu"), (match, offset: number, fullStr: string) => {
+          const prefix = fullStr.slice(Math.max(0, offset - 28), offset);
+          if (new RegExp(`${escapeRegExpLiteral(certSym)}\\s+là\\s*$`, "iu").test(prefix)) {
+            return match;
+          }
+          if (/(?:⊥|∥|∈|⊂|∩|giữa\s+[^.;,]+?\s+và|d\s*\([^)]*,\s*)\s*$/iu.test(prefix)) {
+            return certSym;
+          }
+          const isSentenceStart = offset === 0 || /(?:[.!?]\s*|:\s*)$/u.test(fullStr.slice(0, offset));
+          return isSentenceStart && match[0] === match[0]!.toUpperCase() ? `Mặt phẳng ${certSym}` : `mặt phẳng ${certSym}`;
+        });
+      }
+    }
+
+    if (options?.replaceRawIds !== false && pl.id.includes("_") && out.includes(pl.id)) {
+      const escapedId = escapeRegExpLiteral(pl.id);
+      const isSymParens = plDisplay.startsWith("(");
+      const bareForm = isSymParens ? plDisplay : `mặt phẳng ${plDisplay}`;
+      out = out.replace(
+        new RegExp(`(?<![A-Za-z0-9_])${escapedId}(?![A-Za-z0-9_])`, "g"),
+        (_m, offset: number, fullStr: string) => {
+          const prefix = fullStr.slice(Math.max(0, offset - 24), offset);
+          if (/(?:mặt\s+phẳng|tiếp\s+diện)\s*$/iu.test(prefix)) {
+            return isSymParens ? plDisplay : plDisplay.replace(/^mặt\s+phẳng\s+/iu, "");
+          }
+          if (/(?:⊥|∥|∈|⊂|∩|tới|đến|trên|của|với|là|giữa\s+[^.;,]+?\s+và|d\s*\([^)]*,\s*)\s*$/iu.test(prefix)) {
+            return bareForm;
+          }
+          const isSentenceStart = offset === 0 || /(?:[.!?]\s*|:\s*)$/u.test(fullStr.slice(0, offset));
+          const planeNoun = isSymParens ? `mặt phẳng ${plDisplay}` : bareForm;
+          return isSentenceStart ? `${planeNoun.charAt(0).toUpperCase()}${planeNoun.slice(1)}` : planeNoun;
+        },
+      );
+    }
+  }
+  return out;
+}
+
 /** Thay thế mã biến cảnh nội bộ (vd `mp_MNP`) rò rỉ trong chuỗi mô tả bằng ký hiệu hình học chuẩn. */
 export function replaceRawSceneIdTokens(
   text: string | null | undefined,
   rawScene: Pick<Scene3D, "objects"> | null | undefined,
 ): string {
   if (!text) return "";
-  if (!rawScene || !/[_]/u.test(text)) return text;
+  if (!rawScene) return text;
+  let out = /[Mm]ặt\s+phẳng\b|_/u.test(text)
+    ? canonicalizeCertifiedPlaneTokensInText(text, rawScene, { replaceRawIds: true })
+    : text;
+  if (!/[_]/u.test(out)) return out;
   const candidates = rawScene.objects.filter(
-    (o) => !isSubEntity(o.id) && o.id.includes("_") && text.includes(o.id),
+    (o) => !isSubEntity(o.id) && o.type !== "plane3" && o.id.includes("_") && out.includes(o.id),
   );
-  if (candidates.length === 0) return text;
-  let out = text;
+  if (candidates.length === 0) return out;
   const ordered = [...candidates].sort((a, b) => b.id.length - a.id.length);
   for (const cand of ordered) {
-    const replacement =
-      cand.type === "plane3"
-        ? formatPlaneDisplayNotation(cand, rawScene as Scene3D)
-        : (shortSym(cand) || cand.id);
+    const replacement = shortSym(cand, rawScene) || cand.id;
     if (!replacement || replacement === cand.id) continue;
-    const escaped = cand.id.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const escaped = escapeRegExpLiteral(cand.id);
     out = out.replace(
       new RegExp(`(?<![A-Za-z0-9_])${escaped}(?![A-Za-z0-9_])`, "g"),
       replacement,
@@ -19578,11 +20239,20 @@ function resolveStudentObjectPresentationCore(
   }
 
   if (obj.type === "plane3") {
-    const pName = formatPlaneDisplayNotation(obj, rawScene);
+    const certSym = resolveCertifiedPlaneSymbolFromContext(obj, rawScene);
+    const pName = certSym ?? formatPlaneDisplayNotation(obj, rawScene);
     const depPts = (obj.depends ?? [])
       .filter((id) => presentIds.has(id))
       .map((id) => byId.get(id))
       .filter((p): p is SceneObject => Boolean(p && p.type === "point3" && !laDiemPhuDungMatPhang(rawScene, p, byId) && isCompactPointSym(shortSym(p))));
+    const witnessFootPt = depPts.length === 0
+      ? presentObjs
+          .map((cand) => (cand.perpendicular_witness?.on === obj.id ? cand.perpendicular_witness.foot_id : undefined))
+          .filter((fid): fid is string => Boolean(fid && presentIds.has(fid)))
+          .map((fid) => byId.get(fid))
+          .find((p): p is SceneObject => Boolean(p && p.type === "point3" && isCompactPointSym(shortSym(p))))
+      : undefined;
+    const passPts = depPts.length > 0 ? depPts : witnessFootPt ? [witnessFootPt] : [];
     const parallelBase = findParallelBaseForPlane(rawScene, obj);
     let sanitizedPlaneRole = stripStudentSpoilerSuffix(obj.role);
     if (!isExplicitOxyzCoordinateScene(rawScene, obj) && /phương\s+trình/iu.test(sanitizedPlaneRole)) {
@@ -19600,10 +20270,14 @@ function resolveStudentObjectPresentationCore(
     }
     let perpLineClause = "";
     const exPlane = exactById.get(obj.id) ?? obj;
-    const perpLineDep = (obj.depends ?? [])
-      .filter((id) => presentIds.has(id))
-      .map((id) => byId.get(id))
-      .find((d): d is SceneObject => Boolean(d && (d.type === "segment3" || d.type === "line3") && shortSym(d)));
+    const perpLineDep =
+      (obj.depends ?? [])
+        .filter((id) => presentIds.has(id))
+        .map((id) => byId.get(id))
+        .find((d): d is SceneObject => Boolean(d && (d.type === "segment3" || d.type === "line3") && shortSym(d)))
+      ?? presentObjs.find(
+        (d) => (d.type === "segment3" || d.type === "line3") && d.perpendicular_witness?.on === obj.id && Boolean(shortSym(d)),
+      );
     if (perpLineDep && exPlane.normal) {
       const exLn = exactById.get(perpLineDep.id) ?? perpLineDep;
       const lnDir = exLn.direction
@@ -19628,19 +20302,26 @@ function resolveStudentObjectPresentationCore(
         }
       }
     }
+    const title = `Mặt phẳng ${pName}`;
+    const rawFallbackDesc = cleanLearnerText(obj.label).replace(/^Mặt\s+phẳng\s+qua\s+/iu, "Đi qua ");
+    const hasExactPointPerp = passPts.length === 1 && Boolean(perpLineClause);
     const body = depPts.length >= 3
       ? `Đi qua ba điểm ${depPts.map((p) => shortSym(p)).join(", ")}${parallelBase ? ` · song song với ${parallelBase}` : ""}`
-      : sanitizedPlaneRole
-        || (depPts.length === 1 && perpLineClause
-          ? `Đi qua ${shortSym(depPts[0])} · ${perpLineClause}${parallelBase ? ` · song song với ${parallelBase}` : ""}`
-          : depPts.length === 1 && parallelBase
-            ? `Đi qua ${shortSym(depPts[0])} · song song với ${parallelBase}`
+      : hasExactPointPerp
+        ? `Đi qua ${shortSym(passPts[0])} và ${perpLineClause}${parallelBase ? ` · song song với ${parallelBase}` : ""}`
+        : sanitizedPlaneRole
+          || (passPts.length === 1 && parallelBase
+            ? `Đi qua ${shortSym(passPts[0])} · song song với ${parallelBase}`
             : perpLineClause
-              ? `Mặt phẳng ${perpLineClause}`
-              : "");
+              ? (`Mặt phẳng ${perpLineClause}`.toLowerCase() === title.toLowerCase()
+                  ? `Mặt phẳng xác định theo quan hệ ${perpLineClause}`
+                  : `Mặt phẳng ${perpLineClause}`)
+              : rawFallbackDesc && rawFallbackDesc.toLowerCase() !== title.toLowerCase()
+                ? rawFallbackDesc
+                : "");
     const isCutting = (obj.formation_roles ?? []).includes("CONSTRUCT_CUTTING_OBJECT");
     return finalizeStudentObjectPresentation({
-      title: `Mặt phẳng ${pName}`,
+      title,
       role: isCutting ? "Mặt phẳng cắt" : "Mặt phẳng",
       description: body || `Mặt phẳng ${pName} xác định từ các yếu tố hình học trong đề bài.`,
       evidence: null,
@@ -19828,13 +20509,15 @@ function resolveStudentObjectPresentationCore(
     }
     if ((obj.formation_roles ?? []).includes("CONSTRUCT_HEIGHT") || curvedRole?.kind === "altitude") {
       const onObj = obj.perpendicular_witness?.on ? byId.get(obj.perpendicular_witness.on) : undefined;
-      const onSym = onObj?.notation
-        ? (onObj.notation.startsWith("(") ? onObj.notation : `(${onObj.notation})`)
-        : shortSym(onObj) || "mặt đáy";
+      const onSym = onObj?.type === "plane3"
+        ? formatPlaneDisplayNotation(onObj, rawScene)
+        : onObj?.notation
+          ? (onObj.notation.startsWith("(") ? onObj.notation : `(${onObj.notation})`)
+          : shortSym(onObj) || "mặt đáy";
       return finalizeStudentObjectPresentation({
         title: `Đường cao ${sym}`,
         role: "Đường cao",
-        description: `Vuông góc với mặt phẳng ${onSym} (${sym} ⊥ ${onSym})`,
+        description: `Vuông góc với ${/^mặt\s+/iu.test(onSym) ? onSym : `mặt phẳng ${onSym}`} (${sym} ⊥ ${onSym})`,
         evidence: null,
         accentHex: hexCss(S.colors.line),
         hasCanvasHoverTooltip: true,
@@ -20105,7 +20788,9 @@ function resolveStudentObjectPresentationCore(
       ? ` · Chứng nhận ${mqInfo.subjectLabels[0]} ⊥ ${mqInfo.subjectLabels[1]}.`
       : "";
     return finalizeStudentObjectPresentation({
-      title: cleanLearnerText(obj.label || obj.notation || "Đại lượng"),
+      title: canonicalizeCertifiedPlaneTokensInText(cleanLearnerText(obj.label || obj.notation || "Đại lượng"), rawScene, {
+        replaceRawIds: false,
+      }),
       role: isGiven ? "Dữ kiện đề cho" : (mqInfo?.categoryLabel ?? "Đại lượng hình học"),
       description: isGiven
         ? "Đại lượng số đo được cho trực tiếp trong giả thiết bài toán."
@@ -20284,7 +20969,7 @@ export function formatCanonicalCircleDesignation(
   }
   if (centerSym) return `Đường tròn (${centerSym}; ${radiusSpec})`;
   const planeDep = (obj.depends ?? []).map((id) => byId.get(id)).find((p) => p?.type === "plane3");
-  if (planeDep) return `Giao tuyến tròn trên ${formatPlaneDisplayNotation(planeDep)}`;
+  if (planeDep) return `Giao tuyến tròn trên ${formatPlaneDisplayNotation(planeDep, scene)}`;
   return "Đường tròn thiết diện";
 }
 
@@ -20444,7 +21129,7 @@ export function formatCompactEntityChipLabel(
         .map((id) => byId.get(id))
         .filter((p): p is SceneObject => Boolean(p && p.type === "plane3"));
       if (planeDeps.length >= 2) {
-        return `${formatPlaneDisplayNotation(planeDeps[0])} ∩ ${formatPlaneDisplayNotation(planeDeps[1])}`;
+        return `${formatPlaneDisplayNotation(planeDeps[0], scene)} ∩ ${formatPlaneDisplayNotation(planeDeps[1], scene)}`;
       }
       return "Giao tuyến";
     }
@@ -20470,7 +21155,7 @@ export function formatCompactEntityChipLabel(
 
   if (obj.type === "ellipse3") {
     const planeDep = (obj.depends ?? []).map((id) => byId.get(id)).find((p) => p?.type === "plane3");
-    return planeDep ? `Elip giao tuyến trên ${formatPlaneDisplayNotation(planeDep)}` : "Elip thiết diện";
+    return planeDep ? `Elip giao tuyến trên ${formatPlaneDisplayNotation(planeDep, scene)}` : "Elip thiết diện";
   }
 
   if (obj.type === "curved_solid") {
@@ -22288,6 +22973,7 @@ function soDemCanhTiengViet(n: number): string {
 export function canonicalizeSceneFaceTokensInText(scene: Scene3D, rawText: string): string {
   if (!rawText) return "";
   const exactOrigin = exactSceneOriginOf(scene);
+  const textAfterPlaneCanon = canonicalizeCertifiedPlaneTokensInText(rawText, scene, { replaceRawIds: true });
   const byId = new Map(exactOrigin.objects.map((o) => [o.id, o]));
   const apexSyms = structuralApexSymsOfScene(exactOrigin);
   const canonFaceBySortedKey = new Map<string, string>();
@@ -22339,8 +23025,8 @@ export function canonicalizeSceneFaceTokensInText(scene: Scene3D, rawText: strin
     }
   }
 
-  if (canonFaceBySortedKey.size === 0) return rawText;
-  return rawText.replace(/\(([A-Z][0-9′']*(?:[A-Z][0-9′']*){2,5})\)/gu, (full, inner: string) => {
+  if (canonFaceBySortedKey.size === 0) return textAfterPlaneCanon;
+  return textAfterPlaneCanon.replace(/\(([A-Z][0-9′']*(?:[A-Z][0-9′']*){2,5})\)/gu, (full, inner: string) => {
     const tokens = inner.match(/[A-Z][0-9′']*/gu) ?? [];
     if (tokens.length < 3 || tokens.join("") !== inner) return full;
     const key = [...tokens].sort().join("|");
@@ -23719,6 +24405,8 @@ function safeVec3FromObject(v?: ExactVec3 | null): Vec3 | null {
   }
 }
 
+export const DEFAULT_VISIBLE_RELATION_LIMIT = 4;
+
 /**
  * Bộ chọn quan hệ toán học đã được Backend / SemanticConstructionContract xác minh,
  * lọc nghiêm ngặt theo bước dựng hiện tại `step` và hai chiều theo `objectId`.
@@ -23765,14 +24453,14 @@ export function resolveVerifiedObjectRelations(
     if (!o) return fallbackId ?? "";
     if (o.type === "plane3") {
       const plNot = formatPlaneDisplayNotation(o, rawScene);
-      return /^qua\s+/iu.test(plNot) ? `mặt phẳng ${plNot}` : plNot;
+      return /^(?:qua|tiếp\s+diện|trung\s+trực|vuông\s+góc)\b/iu.test(plNot) ? `mặt phẳng ${plNot}` : plNot;
     }
     if (o.type === "circle3") return formatCanonicalCircleDesignation(rawScene, o, visibleObjects);
     if (o.type === "section") {
       const secCanon = resolveCanonicalSectionDesignation(rawScene, o);
       if (secCanon?.compactLabel) return secCanon.compactLabel;
     }
-    const sym = shortSym(o);
+    const sym = shortSym(o, rawScene);
     if (sym) return replaceRawSceneIdTokens(sym, rawScene);
     if (isSubEntity(o.id)) {
       const pts = (o.depends ?? [])
@@ -23868,10 +24556,14 @@ export function resolveVerifiedObjectRelations(
       return;
     }
     const normStmt = cleanStmt.replace(/[()]/g, "").replace(/\s+/g, " ").trim().toLowerCase();
-    const stmtKey = `${kind}::${normStmt}`;
-    const existing = byStmtKey.get(stmtKey);
+    const existing = byStmtKey.get(normStmt);
     if (existing) {
       existing.targetIds = [...new Set([...existing.targetIds, ...targetIds])];
+      if (RELATION_KIND_ORDER[kind] < RELATION_KIND_ORDER[existing.kind]) {
+        existing.kind = kind;
+        existing.kindLabel = RELATION_KIND_LABEL[kind];
+        if (symbol !== undefined) existing.symbol = symbol;
+      }
       return;
     }
     const key = `${kind}:${[...targetIds].sort().join(",")}`;
@@ -23884,7 +24576,7 @@ export function resolveVerifiedObjectRelations(
       statement: cleanStmt,
       symbol,
     };
-    byStmtKey.set(stmtKey, item);
+    byStmtKey.set(normStmt, item);
     collected.push(item);
   };
 
@@ -23984,12 +24676,15 @@ export function resolveVerifiedObjectRelations(
         const ballObj = candidates.find((o) => o.type === "curved_solid");
         const planeObj = candidates.find((o) => o.type === "plane3");
         if (ballObj && planeObj && ballObj.id !== planeObj.id) {
+          const plTitle = /^mặt\s+phẳng\b/iu.test(displayNameOf(planeObj))
+            ? displayNameOf(planeObj)
+            : `Mặt phẳng ${displayNameOf(planeObj)}`;
           if (subject.id === planeObj.id) {
-            addRel("tangency", [ballObj.id], `${subjName} tiếp xúc ${displayNameOf(ballObj)}`);
+            addRel("tangency", [ballObj.id], `${plTitle} tiếp xúc ${displayNameOf(ballObj)}`);
           } else if (subject.id === ballObj.id) {
             addRel("tangency", [planeObj.id], `${subjName} tiếp xúc ${displayNameOf(planeObj)}`);
           } else if (ownerId === subject.id) {
-            addRel("tangency", [planeObj.id, ballObj.id], `${displayNameOf(planeObj)} tiếp xúc ${displayNameOf(ballObj)}`);
+            addRel("tangency", [planeObj.id, ballObj.id], `${plTitle} tiếp xúc ${displayNameOf(ballObj)}`);
           }
         }
       } else if (rel.kind === "secant_sphere_plane") {
@@ -24366,7 +25061,9 @@ export function resolveVerifiedObjectRelations(
       if (hostSolid && cutPlane) {
         addRel("section_membership", [hostSolid.id, cutPlane.id], `${subjName} là thiết diện của ${displayNameOf(hostSolid)} cắt bởi ${displayNameOf(cutPlane)}`);
       } else if (cutPlane) {
-        addRel(isCurvedCut ? "intersection" : "section_membership", [cutPlane.id], `${subjName} thuộc mặt phẳng ${displayNameOf(cutPlane)}`);
+        const cutPlName = displayNameOf(cutPlane);
+        const cutPlPhrase = /^mặt\s+phẳng\b/iu.test(cutPlName) ? cutPlName : `mặt phẳng ${cutPlName}`;
+        addRel(isCurvedCut ? "intersection" : "section_membership", [cutPlane.id], `${subjName} thuộc ${cutPlPhrase}`);
       } else if (hostSolid) {
         addRel(isCurvedCut ? "intersection" : "section_membership", [hostSolid.id], `${subjName} nằm trên ${displayNameOf(hostSolid)}`);
       }
@@ -24377,7 +25074,8 @@ export function resolveVerifiedObjectRelations(
         }
       }
     } else if (cutPlane?.id === subject.id) {
-      addRel(isCurvedCut ? "intersection" : "section_membership", [sec.id], `${displayNameOf(sec)} được tạo bởi mặt phẳng ${subjName}`, isCurvedCut ? "∩" : undefined);
+      const subjPlPhrase = /^mặt\s+phẳng\b/iu.test(subjName) ? subjName : `mặt phẳng ${subjName}`;
+      addRel(isCurvedCut ? "intersection" : "section_membership", [sec.id], `${displayNameOf(sec)} được tạo bởi ${subjPlPhrase}`, isCurvedCut ? "∩" : undefined);
     } else if (hostSolid?.id === subject.id) {
       addRel(isCurvedCut ? "intersection" : "section_membership", [sec.id], `${displayNameOf(sec)} nằm trên ${subjName}`, isCurvedCut ? "∩" : undefined);
     } else if (secVertexIds.has(subject.id) || secVertexIds.has(canonicalizeTargetId(subject.id))) {
@@ -24506,35 +25204,37 @@ export function resolveVerifiedObjectRelations(
           const oldKey = `tangency:${[...item.targetIds].sort().join(",")}`;
           const oldNorm = item.statement.replace(/[()]/g, "").replace(/\s+/g, " ").trim().toLowerCase();
           seenKeys.delete(oldKey);
-          byStmtKey.delete(`tangency::${oldNorm}`);
+          byStmtKey.delete(oldNorm);
           collected.splice(i, 1);
         }
         addRel("tangency", [...peerIdsToMatch, ...extraTargets], richStatement);
       };
 
       const tpNames = tPts.map((p) => displayNameOf(p)).join(", ");
+      const plNameRaw = displayNameOf(pl);
+      const plSubjectTitle = /^mặt\s+phẳng\b/iu.test(plNameRaw) ? plNameRaw : `Mặt phẳng ${plNameRaw}`;
       if (pl.id === subject.id) {
         if (tpNames) {
           upgradeBareTangency(
             [ball.id],
-            `${subjName} tiếp xúc ${displayNameOf(ball)} tại ${tpNames}`,
+            `${plSubjectTitle} tiếp xúc ${displayNameOf(ball)} tại ${tpNames}`,
             tPts.map((p) => p.id),
           );
         } else {
-          addRel("tangency", [ball.id], `${subjName} tiếp xúc ${displayNameOf(ball)}`);
+          addRel("tangency", [ball.id], `${plSubjectTitle} tiếp xúc ${displayNameOf(ball)}`);
         }
       } else if (ball.id === subject.id) {
         if (tpNames) {
           upgradeBareTangency(
             [pl.id],
-            `${subjName} tiếp xúc ${displayNameOf(pl)} tại ${tpNames}`,
+            `${subjName} tiếp xúc ${plNameRaw} tại ${tpNames}`,
             tPts.map((p) => p.id),
           );
         } else {
-          addRel("tangency", [pl.id], `${subjName} tiếp xúc ${displayNameOf(pl)}`);
+          addRel("tangency", [pl.id], `${subjName} tiếp xúc ${plNameRaw}`);
         }
       } else if (tPts.some((p) => p.id === subject.id)) {
-        addRel("tangency", [ball.id, pl.id], `${subjName} là tiếp điểm của ${displayNameOf(ball)} và ${displayNameOf(pl)}`);
+        addRel("tangency", [ball.id, pl.id], `${subjName} là tiếp điểm của ${displayNameOf(ball)} và ${plNameRaw}`);
       } else if (
         tpNames
         && collected.some(
@@ -24547,7 +25247,7 @@ export function resolveVerifiedObjectRelations(
       ) {
         upgradeBareTangency(
           [pl.id, ball.id],
-          `${displayNameOf(pl)} tiếp xúc ${displayNameOf(ball)} tại ${tpNames}`,
+          `${plSubjectTitle} tiếp xúc ${displayNameOf(ball)} tại ${tpNames}`,
           tPts.map((p) => p.id),
         );
       }

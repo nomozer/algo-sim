@@ -441,9 +441,9 @@ describe("Verified Object Relations & Context Card UI", () => {
     const tanLast = tanSteps[tanSteps.length - 1]!.anchor;
 
     const tanPlaneRel = resolveVerifiedObjectRelations(tanDisp, "mp_tiep_dien", tanLast);
-    expect(tanPlaneRel.relations.some((r) => r.statement === "Mặt phẳng qua A và vuông góc với IA tiếp xúc (S) tại A")).toBe(true);
-    expect(tanPlaneRel.relations.some((r) => r.statement === "IA ⊥ mặt phẳng qua A và vuông góc với IA")).toBe(true);
-    expect(tanPlaneRel.relations.some((r) => r.statement === "A ∈ mặt phẳng qua A và vuông góc với IA")).toBe(true);
+    expect(tanPlaneRel.relations.some((r) => r.statement === "Mặt phẳng (P) tiếp xúc (S) tại A")).toBe(true);
+    expect(tanPlaneRel.relations.some((r) => r.statement === "IA ⊥ (P)")).toBe(true);
+    expect(tanPlaneRel.relations.some((r) => r.statement === "A ∈ (P)")).toBe(true);
     expect(tanPlaneRel.relations.filter((r) => r.kind === "tangency").length).toBeLessThanOrEqual(1);
     expect(tanPlaneRel.relations.some((r) => r.statement.includes("IA tiếp xúc IA") || r.statement.includes("IA ⊥ IA"))).toBe(false);
 
