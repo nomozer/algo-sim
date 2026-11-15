@@ -1,4 +1,6 @@
 import { GEOMETRY_SAMPLES, geometrySampleById, type GeometrySample } from "../../data/geometry-samples";
+import { useAuthStore, type AuthUser } from "../../state/auth";
+import { historyStore } from "../../state/history";
 import { useAppStore } from "../../state/store";
 
 export type Vec3Tuple = readonly [number, number, number];
@@ -732,20 +734,211 @@ export function landingSampleById(id: string): LandingSampleSpec {
   return LANDING_SHOWCASE_SAMPLES.find((s) => s.id === id) ?? LANDING_PYRAMID_SAMPLE;
 }
 
-export function enterAxoWorkspace(): void {
+export const AXO_INTENDED_DESTINATION_KEY = "axo_intended_destination_v1";
+const INTENDED_DESTINATION_TTL_MS = 30 * 60 * 1000;
+
+export type IntendedDestinationKind = "home" | "workspace" | "library" | "sample" | "admin";
+
+export interface IntendedDestination {
+  readonly kind: IntendedDestinationKind;
+  readonly sampleId?: string;
+  readonly preferActive?: boolean;
+  readonly createdAt: number;
+}
+
+let memoryIntendedDestination: IntendedDestination | null = null;
+
+function isValidIntendedDestination(raw: unknown): raw is IntendedDestination {
+  if (!raw || typeof raw !== "object") return false;
+  const candidate = raw as Partial<IntendedDestination>;
+  if (
+    candidate.kind !== "home" &&
+    candidate.kind !== "workspace" &&
+    candidate.kind !== "library" &&
+    candidate.kind !== "sample" &&
+    candidate.kind !== "admin"
+  ) {
+    return false;
+  }
+  if (typeof candidate.createdAt !== "number" || !Number.isFinite(candidate.createdAt)) {
+    return false;
+  }
+  if (Date.now() - candidate.createdAt > INTENDED_DESTINATION_TTL_MS) {
+    return false;
+  }
+  return true;
+}
+
+export function saveIntendedDestination(dest: Omit<IntendedDestination, "createdAt"> & { createdAt?: number }): IntendedDestination {
+  const normalized: IntendedDestination = {
+    kind: dest.kind,
+    ...(dest.sampleId ? { sampleId: dest.sampleId } : {}),
+    ...(dest.preferActive !== undefined ? { preferActive: dest.preferActive } : {}),
+    createdAt: typeof dest.createdAt === "number" ? dest.createdAt : Date.now(),
+  };
+  memoryIntendedDestination = normalized;
+  if (typeof window !== "undefined") {
+    try {
+      window.sessionStorage?.setItem(AXO_INTENDED_DESTINATION_KEY, JSON.stringify(normalized));
+    } catch {
+      /* ignore sessionStorage restriction */
+    }
+  }
+  return normalized;
+}
+
+export function peekIntendedDestination(): IntendedDestination | null {
+  if (typeof window !== "undefined") {
+    try {
+      const raw = window.sessionStorage?.getItem(AXO_INTENDED_DESTINATION_KEY);
+      if (raw) {
+        const parsed = JSON.parse(raw) as unknown;
+        if (isValidIntendedDestination(parsed)) {
+          memoryIntendedDestination = parsed;
+          return parsed;
+        }
+        window.sessionStorage?.removeItem(AXO_INTENDED_DESTINATION_KEY);
+      }
+    } catch {
+      /* fallback to memory copy */
+    }
+  }
+  if (isValidIntendedDestination(memoryIntendedDestination)) {
+    return memoryIntendedDestination;
+  }
+  memoryIntendedDestination = null;
+  return null;
+}
+
+export function clearIntendedDestination(): void {
+  memoryIntendedDestination = null;
+  if (typeof window !== "undefined") {
+    try {
+      window.sessionStorage?.removeItem(AXO_INTENDED_DESTINATION_KEY);
+    } catch {
+      /* ignore sessionStorage restriction */
+    }
+  }
+}
+
+export function consumeIntendedDestination(): IntendedDestination | null {
+  const dest = peekIntendedDestination();
+  clearIntendedDestination();
+  return dest;
+}
+
+export function resetIntendedDestinationForTests(): void {
+  clearIntendedDestination();
+}
+
+/**
+ * Restore the persisted composer draft into store.problemText after a cold page load
+ * whenever entering Workspace Home with an empty in-memory draft.
+ */
+export function restoreSavedDraftIfEmpty(): void {
+  const store = useAppStore.getState();
+  if (store.problemText.trim().length > 0) return;
+  const saved = historyStore.readDraftText();
+  if (saved.trim().length > 0) {
+    useAppStore.setState({ problemText: saved });
+  }
+}
+
+/**
+ * Restore the exact task destination after successful login/register without creating
+ * a redirect loop or losing draft problemText.
+ */
+export function applyIntendedDestination(dest: IntendedDestination, user: AuthUser | null): boolean {
+  if (!user) return false;
   const store = useAppStore.getState();
   store.setGuestEnteredApp(true);
+
+  if (user.role === "admin" || dest.kind === "admin") {
+    if (user.role === "admin") {
+      store.setView("admin");
+      return true;
+    }
+  }
+
+  if (dest.kind === "sample" && dest.sampleId) {
+    const sample = geometrySampleById(dest.sampleId);
+    if (sample) {
+      store.loadEnvelope(sample.envelope, sample.id, sample.problemText);
+      return true;
+    }
+    store.openLibrary();
+    return true;
+  }
+
+  if (dest.kind === "library") {
+    store.openLibrary();
+    return true;
+  }
+
+  if (dest.kind === "workspace" && dest.preferActive && store.active !== null) {
+    store.setView("workspace");
+    return true;
+  }
+
+  store.goHome();
+  restoreSavedDraftIfEmpty();
+  return true;
+}
+
+export interface EnterWorkspaceOptions {
+  readonly requireAuth?: boolean;
+}
+
+export function enterAxoWorkspaceWithOptions(options?: EnterWorkspaceOptions): void {
+  const auth = useAuthStore.getState();
+  const store = useAppStore.getState();
+  store.setGuestEnteredApp(true);
+
+  if (auth.user !== null) {
+    clearIntendedDestination();
+    if (auth.user.role === "admin") {
+      store.setView("admin");
+      return;
+    }
+    if (store.active !== null) {
+      store.setView("workspace");
+    } else {
+      store.goHome();
+      restoreSavedDraftIfEmpty();
+    }
+    return;
+  }
+
+  const target: IntendedDestination =
+    store.active !== null
+      ? {
+          kind: "workspace",
+          preferActive: true,
+          sampleId: store.activeSampleId ?? undefined,
+          createdAt: Date.now(),
+        }
+      : { kind: "home", createdAt: Date.now() };
+
+  const requiresAuth =
+    Boolean(options?.requireAuth) ||
+    (auth.resolved && auth.entitlement.canRunSimulation === false);
+
+  if (requiresAuth) {
+    saveIntendedDestination(target);
+    store.setView("login");
+    return;
+  }
+
   if (store.active !== null) {
     store.setView("workspace");
   } else {
     store.goHome();
+    restoreSavedDraftIfEmpty();
   }
 }
 
-export function openLandingLogin(): void {
-  const store = useAppStore.getState();
-  store.setGuestEnteredApp(true);
-  store.setView("login");
+export function enterAxoWorkspace(): void {
+  enterAxoWorkspaceWithOptions();
 }
 
 export function openLibraryFromLanding(): void {

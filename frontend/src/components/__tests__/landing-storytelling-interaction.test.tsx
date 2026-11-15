@@ -2,11 +2,12 @@ import fs from "node:fs";
 import path from "node:path";
 import { renderToString } from "react-dom/server";
 import { describe, expect, it } from "vitest";
+import { LandingExplainerAnimation } from "../landing/LandingExplainerAnimation";
 import { LandingStorytelling } from "../landing/LandingStorytelling";
 import { LANDING_PRISM_STORY_SPEC } from "../landing/landing-geometry-data";
 
-describe("AXO Landing Page V1.2 — Option A Vector Storytelling & Math Proof", () => {
-  it("renders zero WebGL canvas elements and mounts all 4 stages & 4 metric pills for zero CLS", () => {
+describe("AXO Landing Page V1.2.2 — Vector Storytelling & Stage-Strict Math Epistemics", () => {
+  it("renders zero WebGL canvas elements, keeps Stage 0 free of premature final results, and reveals all 4 verified metrics on Stage 3", () => {
     const html = renderToString(<LandingStorytelling />);
 
     expect(html).toContain('id="landing-storytelling-scene"');
@@ -21,15 +22,29 @@ describe("AXO Landing Page V1.2 — Option A Vector Storytelling & Math Proof", 
       expect(html).toContain(`id="btn-landing-story-pill-${i}"`);
     }
 
-    // All 4 separated verification metric pills stay mounted across every stage so card height never shifts
-    const pillCount = (html.match(/class="axo-sp-story-metric-pill/g) ?? []).length;
-    expect(pillCount).toBe(4);
-    expect(html).toContain("MN = 2");
-    expect(html).toContain("PQ = 4");
-    expect(html).toContain("MQ = NP = 2√2");
-    expect(html).toContain("S(MNPQ) = 3√7");
+    // Stage 0 bottom bar shows only problem givens and never leaks premature final results at low opacity
+    const bottomBarStart = html.indexOf('class="axo-sp-story-bottom-bar"');
+    const bottomBarHtml = bottomBarStart >= 0 ? html.slice(bottomBarStart) : "";
+    expect(bottomBarHtml).toContain("Giả thiết: Lăng trụ đều ABC.A′B′C′");
+    expect(bottomBarHtml).not.toContain("S(MNPQ) = 3√7");
+    expect(bottomBarHtml).not.toContain("MN = 2");
+    expect(html).not.toContain("axo-sp-explainer-result-badge is-shown");
     expect(html).toContain('id="btn-landing-story-autoplay"');
     expect(html).toContain("axo-sp-story-active-card");
+
+    const stage3Html = renderToString(
+      <LandingExplainerAnimation
+        selectedStage={3}
+        autoPlaying={false}
+        onToggleAutoPlay={() => undefined}
+      />,
+    );
+    const pillCount = (stage3Html.match(/class="axo-sp-story-metric-pill/g) ?? []).length;
+    expect(pillCount).toBe(4);
+    expect(stage3Html).toContain("MN = 2");
+    expect(stage3Html).toContain("PQ = 4");
+    expect(stage3Html).toContain("MQ = NP = 2√2");
+    expect(stage3Html).toContain("S(MNPQ) = 3√7");
   });
 
   it("V1.2.1: renders 4-scene animated explainer scenes without Workspace screen recording", () => {

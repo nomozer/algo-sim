@@ -8,8 +8,9 @@ import App, {
 import { useAuthStore, type AuthUser } from "../../state/auth";
 import { useAppStore } from "../../state/store";
 import {
+  clearIntendedDestination,
   enterAxoWorkspace,
-  openLandingLogin,
+  enterAxoWorkspaceWithOptions,
 } from "../landing/landing-geometry-data";
 
 const USERS_BY_ROLE: readonly AuthUser[] = [
@@ -89,6 +90,7 @@ describe("AXO Landing Page V1.2.1 — Auth & Navigation Sync", () => {
       (globalThis as { window?: unknown }).window = origWindow;
     }
     resetAuthReconcileForTests();
+    clearIntendedDestination();
     useAuthStore.setState({ user: null, resolved: false, error: null, authGate: null });
     useAppStore.getState().reset();
     syncStoresForSSR();
@@ -108,21 +110,26 @@ describe("AXO Landing Page V1.2.1 — Auth & Navigation Sync", () => {
 
       enterAxoWorkspace();
       syncStoresForSSR();
-      expect(useAppStore.getState().view).toBe("home");
+      const expectedView = user.role === "admin" ? "admin" : "home";
+      expect(useAppStore.getState().view).toBe(expectedView);
       expect(useAppStore.getState().guestEnteredApp).toBe(true);
 
       const workspaceHtml = renderToString(<App />);
-      expect(workspaceHtml).toContain('id="left-sidebar"');
-      expect(workspaceHtml).toContain('id="sb-user-account-btn"');
-      expect(workspaceHtml).toContain(user.displayName);
-      expect(workspaceHtml).not.toContain('id="sb-guest-account-btn"');
+      if (user.role !== "admin") {
+        expect(workspaceHtml).toContain('id="left-sidebar"');
+        expect(workspaceHtml).toContain('id="sb-user-account-btn"');
+        expect(workspaceHtml).toContain(user.displayName);
+        expect(workspaceHtml).not.toContain('id="sb-guest-account-btn"');
+      } else {
+        expect(workspaceHtml).not.toContain('id="view-landing"');
+      }
     }
   });
 
   it("supports clean Landing -> Login -> Auth Success -> Workspace and preserves draft problemText across Landing -> Workspace", () => {
     useAuthStore.setState({ user: null, resolved: true, error: null });
     useAppStore.getState().setView("landing");
-    openLandingLogin();
+    enterAxoWorkspaceWithOptions({ requireAuth: true });
     expect(useAppStore.getState().view).toBe("login");
     expect(useAppStore.getState().guestEnteredApp).toBe(true);
 

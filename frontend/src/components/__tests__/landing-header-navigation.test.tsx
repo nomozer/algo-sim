@@ -5,7 +5,7 @@ import { afterEach, describe, expect, it } from "vitest";
 import { useAuthStore, type AuthUser } from "../../state/auth";
 import { useAppStore } from "../../state/store";
 import { LandingHeader } from "../landing/LandingHeader";
-import { enterAxoWorkspace, openLandingLogin } from "../landing/landing-geometry-data";
+import { enterAxoWorkspace } from "../landing/landing-geometry-data";
 
 const SAMPLE_STUDENT: AuthUser = {
   id: 11,
@@ -46,15 +46,15 @@ describe("AXO Landing Page V1.2 — Header Auth Awareness, Guest Freedom & Acces
     syncAuthForSSR();
   });
 
-  it("shows Guest CTAs without login gate and enters workspace directly when clicked", () => {
+  it("shows Guest CTAs without standalone login button and enters workspace directly when trial allows", () => {
     useAuthStore.setState({ user: null, resolved: true, error: null });
     syncAuthForSSR();
     const html = renderToString(<LandingHeader />);
 
     expect(html).toContain('id="btn-landing-header-start"');
     expect(html).toContain("Bắt đầu");
-    expect(html).toContain('id="btn-landing-header-login"');
-    expect(html).toContain("Đăng nhập");
+    expect(html).not.toContain('id="btn-landing-header-login"');
+    expect(html).not.toContain("Đăng nhập");
     expect(html).toContain('id="btn-landing-header-library"');
     expect(html).toContain("Thư viện");
     expect(html).not.toContain('id="header-user-actions"');
@@ -62,11 +62,6 @@ describe("AXO Landing Page V1.2 — Header Auth Awareness, Guest Freedom & Acces
     useAppStore.getState().setView("landing");
     enterAxoWorkspace();
     expect(useAppStore.getState().view).toBe("home");
-    expect(useAppStore.getState().guestEnteredApp).toBe(true);
-
-    useAppStore.getState().setView("landing");
-    openLandingLogin();
-    expect(useAppStore.getState().view).toBe("login");
     expect(useAppStore.getState().guestEnteredApp).toBe(true);
   });
 

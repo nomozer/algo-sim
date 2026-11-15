@@ -14,6 +14,14 @@ import { HistoryView } from "./components/HistoryView";
 import { HomeView } from "./components/HomeView";
 import { IconPanel } from "./components/icons";
 import { LandingView } from "./components/LandingView";
+import {
+  applyIntendedDestination,
+  clearIntendedDestination,
+  consumeIntendedDestination,
+  peekIntendedDestination,
+  restoreSavedDraftIfEmpty,
+  saveIntendedDestination,
+} from "./components/landing/landing-geometry-data";
 import { LeftSidebar } from "./components/LeftSidebar";
 import { LibraryView } from "./components/LibraryView";
 import { SimulationControls } from "./components/SimulationControls";
@@ -170,7 +178,13 @@ export default function App() {
   const isPopStateSyncRef = useRef(false);
   const hasHydratedLocationRef = useRef(false);
   const prevBroadcastUserIdRef = useRef<number | null | undefined>(undefined);
+  const prevSessionUserIdRef = useRef<number | null | undefined>(undefined);
   const prevViewForAuthRef = useRef(view);
+  const lastNonAuthDestRef = useRef<{
+    kind: "home" | "workspace" | "library" | "sample";
+    sampleId?: string;
+    preferActive?: boolean;
+  } | null>(null);
   const [crashedResetKey, setCrashedResetKey] = useState<string | null>(null);
   const [guestHeaderMenuOpen, setGuestHeaderMenuOpen] = useState(false);
   const guestHeaderRef = useRef<HTMLDivElement | null>(null);
@@ -389,6 +403,7 @@ export default function App() {
       ) {
         applyBrowserLocation();
       }
+      restoreSavedDraftIfEmpty();
     }
     window.addEventListener("hashchange", applyBrowserLocation);
     window.addEventListener("popstate", applyBrowserLocation);
@@ -416,13 +431,56 @@ export default function App() {
   }, [syncLocationRoute, hydrateWorkspaceSession]);
 
   useEffect(() => {
+    if (view === "library") {
+      lastNonAuthDestRef.current = { kind: "library" };
+    } else if (view === "workspace") {
+      if (activeSampleId) {
+        lastNonAuthDestRef.current = { kind: "sample", sampleId: activeSampleId };
+      } else if (active !== null) {
+        lastNonAuthDestRef.current = { kind: "workspace", preferActive: true };
+      }
+    } else if (view === "home" && (guestEnteredApp || Boolean(user))) {
+      lastNonAuthDestRef.current = { kind: "home" };
+    }
+  }, [view, activeSampleId, active, guestEnteredApp, user]);
+
+  useEffect(() => {
     const prevView = prevViewForAuthRef.current;
     prevViewForAuthRef.current = view;
+    if ((view === "login" || view === "register") && prevView !== view) {
+      if (!peekIntendedDestination() && lastNonAuthDestRef.current) {
+        saveIntendedDestination(lastNonAuthDestRef.current);
+      }
+    }
     if (!authResolved || prevView === view) return;
     if (prevView === "landing" || view === "landing") {
       void reconcileAuthSession();
     }
   }, [view, authResolved]);
+
+  useEffect(() => {
+    const curUserId = user?.id ?? null;
+    if (prevSessionUserIdRef.current === undefined) {
+      prevSessionUserIdRef.current = curUserId;
+      return;
+    }
+    const prevUserId = prevSessionUserIdRef.current;
+    prevSessionUserIdRef.current = curUserId;
+
+    if (prevUserId === null && user !== null) {
+      const pending = consumeIntendedDestination();
+      if (pending) {
+        applyIntendedDestination(pending, user);
+      } else {
+        restoreSavedDraftIfEmpty();
+      }
+    } else if (prevUserId !== null && user === null) {
+      clearIntendedDestination();
+      if (view === "admin" || view === "account") {
+        setView("landing");
+      }
+    }
+  }, [user, view, setView]);
 
   // Browser tab: "Axo" on the home page, "<page> | Axo" elsewhere (the 3D workspace is named by its role).
   useEffect(() => {

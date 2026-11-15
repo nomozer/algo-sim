@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { IconAxoLogo } from "../icons";
 import { TopNavAccount } from "../TopNav";
 import { useAuthStore } from "../../state/auth";
-import { enterAxoWorkspace, openLandingLogin, openLibraryFromLanding } from "./landing-geometry-data";
+import { enterAxoWorkspace, openLibraryFromLanding } from "./landing-geometry-data";
 
 export interface LandingSectionNavItem {
   readonly id: string;
@@ -279,16 +279,6 @@ export function LandingHeader() {
               >
                 Thư viện
               </button>
-              {!user && (
-                <button
-                  id="btn-landing-header-login"
-                  type="button"
-                  className="axo-sp-btn-ghost"
-                  onClick={openLandingLogin}
-                >
-                  Đăng nhập
-                </button>
-              )}
               <button
                 id="btn-landing-header-start"
                 type="button"
@@ -359,8 +349,21 @@ export function LandingHeader() {
           >
             {user && (
               <div className="axo-sp-mobile-account" id="landing-mobile-account">
-                <div className="axo-sp-mobile-account-name">{user.displayName}</div>
-                <span className="axo-sp-mobile-account-role">{ROLE_LABELS[user.role]}</span>
+                <div className="axo-sp-mobile-account-info">
+                  <div className="axo-sp-mobile-account-name">{user.displayName}</div>
+                  <span className="axo-sp-mobile-account-role">{ROLE_LABELS[user.role]}</span>
+                </div>
+                <button
+                  id="btn-landing-drawer-logout"
+                  type="button"
+                  className="axo-sp-mobile-account-logout"
+                  onClick={() => {
+                    setMobileOpen(false);
+                    void useAuthStore.getState().logout();
+                  }}
+                >
+                  Đăng xuất
+                </button>
               </div>
             )}
             <nav className="axo-sp-mobile-links" aria-label="Mục trang giới thiệu">
@@ -405,19 +408,6 @@ export function LandingHeader() {
               >
                 {user ? "Vào ứng dụng" : "Bắt đầu dựng hình"}
               </button>
-              {!user && (
-                <button
-                  id="btn-landing-drawer-login"
-                  type="button"
-                  className="axo-sp-btn-ghost axo-sp-btn-full"
-                  onClick={() => {
-                    setMobileOpen(false);
-                    openLandingLogin();
-                  }}
-                >
-                  Đăng nhập tài khoản
-                </button>
-              )}
             </div>
           </div>
         </>

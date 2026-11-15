@@ -6,8 +6,12 @@ import { FinalCtaCornerAccent } from "./landing/LandingIllustrationAccents";
 import { LandingInteractiveDemo } from "./landing/LandingInteractiveDemo";
 import { LandingStorytelling } from "./landing/LandingStorytelling";
 import { enterAxoWorkspace, openLibraryFromLanding } from "./landing/landing-geometry-data";
+import { useAuthStore } from "../state/auth";
 
 export function LandingView() {
+  const user = useAuthStore((s) => s.user);
+  const primaryStartLabel = user ? "Vào ứng dụng" : "Bắt đầu dựng hình";
+
   const scrollToSection = (id: string) => {
     if (typeof document === "undefined") return;
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -38,7 +42,7 @@ export function LandingView() {
                   className="axo-sp-btn-primary axo-sp-btn-lg"
                   onClick={enterAxoWorkspace}
                 >
-                  Bắt đầu dựng hình
+                  {primaryStartLabel}
                 </button>
                 <button
                   id="btn-landing-hero-story"
@@ -71,11 +75,11 @@ export function LandingView() {
               <div className="axo-sp-final-cta-copy">
                 <p className="axo-sp-eyebrow">Sẵn sàng bắt đầu</p>
                 <h2 id="landing-final-title" className="axo-sp-final-title">
-                  Tự tay dựng hình không gian từ đề bài của bạn.
+                  Từ đề toán đến mô hình hình học không gian.
                 </h2>
                 <p className="axo-sp-final-desc">
-                  Nhập một đề bài mới trong Xưởng 3D hoặc mở bộ sưu tập bài mẫu chuẩn hóa để xoay
-                  và tách lớp ngay.
+                  Nhập đề bài tiếng Việt hoặc mở một bài toán mẫu để quan sát khối đa diện, mặt
+                  phẳng cắt và từng bước lập luận trong không gian 3D.
                 </p>
                 <div className="axo-sp-final-actions">
                   <button
@@ -84,7 +88,7 @@ export function LandingView() {
                     className="axo-sp-btn-primary axo-sp-btn-lg"
                     onClick={enterAxoWorkspace}
                   >
-                    Bắt đầu dựng hình
+                    {primaryStartLabel}
                   </button>
                   <button
                     id="btn-landing-hero-library"
@@ -125,11 +129,8 @@ export function LandingView() {
             <a href="#trai-nghiem" onClick={(e) => { e.preventDefault(); scrollToSection("trai-nghiem"); }}>
               Trải nghiệm
             </a>
-            <button type="button" onClick={openLibraryFromLanding}>
+            <button id="btn-landing-footer-library" type="button" onClick={openLibraryFromLanding}>
               Thư viện bài mẫu
-            </button>
-            <button type="button" onClick={enterAxoWorkspace}>
-              Vào ứng dụng
             </button>
           </nav>
         </div>

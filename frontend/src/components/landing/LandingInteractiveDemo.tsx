@@ -14,6 +14,7 @@ export function LandingInteractiveDemo() {
 
   const sample = landingSampleById(selectedId);
   const activeStage = sample.milestones[stepIndex] ?? sample.milestones[sample.milestones.length - 1];
+  const isFinalVerifiedStage = stepIndex === sample.milestones.length - 1;
 
   const handleSelectSample = (nextId: string) => {
     setSelectedId(nextId);
@@ -152,14 +153,24 @@ export function LandingInteractiveDemo() {
               <p className="axo-sp-demo-step-desc">{activeStage.summary}</p>
             </div>
 
-            {/* Separated Exact Verification Metrics (no concatenated string duplication) */}
-            <div className="axo-sp-demo-metrics" aria-label="Kết quả kiểm chứng chính xác">
-              {sample.verifiedMetrics.map((metric) => (
-                <div key={`${sample.id}-${metric.label}`} className="axo-sp-demo-metric-chip">
-                  <span className="axo-sp-demo-metric-label">{metric.label}</span>
-                  <span className="axo-sp-demo-metric-val">{metric.value}</span>
+            {/* Separated Verification / Stage Facts (final results appear strictly on the concluding stage) */}
+            <div
+              className="axo-sp-demo-metrics"
+              aria-label={isFinalVerifiedStage ? "Kết quả kiểm chứng chính xác" : `Dữ kiện bước ${activeStage.stepNumber}`}
+            >
+              {isFinalVerifiedStage ? (
+                sample.verifiedMetrics.map((metric) => (
+                  <div key={`${sample.id}-${metric.label}`} className="axo-sp-demo-metric-chip">
+                    <span className="axo-sp-demo-metric-label">{metric.label}</span>
+                    <span className="axo-sp-demo-metric-val">{metric.value}</span>
+                  </div>
+                ))
+              ) : (
+                <div className="axo-sp-demo-metric-chip is-stage-note">
+                  <span className="axo-sp-demo-metric-label">{activeStage.tag}</span>
+                  <span className="axo-sp-demo-metric-val">{activeStage.mathFact}</span>
                 </div>
-              ))}
+              )}
             </div>
 
             <details className="axo-sp-demo-problem-disclosure">

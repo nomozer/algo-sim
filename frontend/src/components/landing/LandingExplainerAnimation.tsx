@@ -79,7 +79,7 @@ export const EXPLAINER_SCENES: readonly LandingExplainerSceneMeta[] = [
     shortLabel: "Hình thành không gian",
     headline: "Khối lăng trụ và nét khuất dựng lên theo đúng tỷ lệ",
     summary:
-      "Mặt đáy mở rộng theo chiều cao không gian, cạnh khuất chuyển nét đứt tự nhiên, ba điểm gốc M, N, P đặt chính xác trên cạnh.",
+      "Từ hai đáy tam giác đều song song ABC, A′B′C′ và các cạnh bên vuông góc đáy, khối lăng trụ hiện rõ nét thấy, nét khuất cùng ba trung điểm M, N, P trên cạnh.",
   },
   {
     id: "scene-relations",
@@ -97,6 +97,33 @@ export const EXPLAINER_SCENES: readonly LandingExplainerSceneMeta[] = [
     summary:
       "Hình thang cân MNPQ hiện nổi bật với các số đo cạnh và diện tích S(MNPQ) = 3√7 khớp chặt mô hình không gian.",
   },
+];
+
+interface StoryStageFactPill {
+  readonly label: string;
+  readonly highlight?: boolean;
+}
+
+const STORY_STAGE_FACTS: readonly (readonly StoryStageFactPill[])[] = [
+  [
+    { label: "Giả thiết: Lăng trụ đều ABC.A′B′C′ (a = 4)" },
+    { label: "Trung điểm M ∈ AB · N ∈ AC · P ∈ CC′" },
+  ],
+  [
+    { label: "Dựng hình: Hai đáy (ABC) // (A′B′C′)" },
+    { label: "Cạnh bên ⊥ đáy" },
+    { label: "Nét thấy & nét khuất" },
+  ],
+  [
+    { label: "Quan hệ: MN // BC (đường trung bình)" },
+    { label: "Giao tuyến PQ // BC ⇒ Q = (MNP) ∩ BB′" },
+  ],
+  [
+    { label: "MN = 2" },
+    { label: "PQ = 4" },
+    { label: "MQ = NP = 2√2" },
+    { label: "S(MNPQ) = 3√7", highlight: true },
+  ],
 ];
 
 export interface LandingExplainerAnimationProps {
@@ -449,25 +476,17 @@ export function LandingExplainerAnimation({
         })}
       </svg>
 
-      {/* Single-line fixed-height bottom verification strip (0.000 CLS across mobile & desktop) */}
+      {/* Single-line fixed-height bottom epistemic strip (0.000 CLS; final results shown only when established) */}
       <div className="axo-sp-story-bottom-bar">
-        <div className="axo-sp-story-metric-group">
-          <span className={`axo-sp-story-metric-pill${selectedStage < 2 ? " is-muted" : ""}`}>
-            MN = 2
-          </span>
-          <span className={`axo-sp-story-metric-pill${selectedStage < 2 ? " is-muted" : ""}`}>
-            PQ = 4
-          </span>
-          <span className={`axo-sp-story-metric-pill${selectedStage < 2 ? " is-muted" : ""}`}>
-            MQ = NP = 2√2
-          </span>
-          <span
-            className={`axo-sp-story-metric-pill${
-              selectedStage >= 3 ? " is-highlight" : " is-muted"
-            }`}
-          >
-            S(MNPQ) = 3√7
-          </span>
+        <div className="axo-sp-story-metric-group" data-stage-facts={selectedStage}>
+          {(STORY_STAGE_FACTS[selectedStage] ?? STORY_STAGE_FACTS[0]).map((item) => (
+            <span
+              key={`${selectedStage}-${item.label}`}
+              className={`axo-sp-story-metric-pill${item.highlight ? " is-highlight" : ""}`}
+            >
+              {item.label}
+            </span>
+          ))}
         </div>
       </div>
     </div>
