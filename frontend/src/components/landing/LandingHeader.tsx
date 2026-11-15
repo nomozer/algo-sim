@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { IconAxoLogo } from "../icons";
+import { TopNavAccount } from "../TopNav";
+import { useAuthStore } from "../../state/auth";
 import { enterAxoWorkspace, openLibraryFromLanding } from "./landing-geometry-data";
 
 export interface LandingSectionNavItem {
@@ -13,7 +15,14 @@ const LANDING_NAV_ITEMS: readonly LandingSectionNavItem[] = [
   { id: "trai-nghiem", label: "Trải nghiệm" },
 ];
 
+const ROLE_LABELS: Record<"student" | "teacher" | "admin", string> = {
+  student: "Học sinh",
+  teacher: "Giáo viên",
+  admin: "Quản trị viên",
+};
+
 export function LandingHeader() {
+  const user = useAuthStore((s) => s.user);
   const [scrolled, setScrolled] = useState(false);
   const [activeId, setActiveId] = useState<string>("landing-hero");
   const [hoveredId, setHoveredId] = useState<string | null>(null);
@@ -27,6 +36,7 @@ export function LandingHeader() {
   const navRef = useRef<HTMLElement | null>(null);
   const linkRefs = useRef<Record<string, HTMLAnchorElement | null>>({});
   const mobileBtnRef = useRef<HTMLButtonElement | null>(null);
+  const drawerRef = useRef<HTMLDivElement | null>(null);
   const firstDrawerActionRef = useRef<HTMLAnchorElement | null>(null);
   const prevMobileOpenRef = useRef(false);
   const clickLockUntilRef = useRef<number>(0);
@@ -37,10 +47,18 @@ export function LandingHeader() {
     const navEl = navRef.current;
     const linkEl = linkRefs.current[targetId];
     if (!navEl || !linkEl) return;
+    if (linkEl.offsetWidth > 0) {
+      setPillRect({
+        left: linkEl.offsetLeft,
+        width: linkEl.offsetWidth,
+        opacity: 1,
+      });
+      return;
+    }
     const navBox = navEl.getBoundingClientRect();
     const linkBox = linkEl.getBoundingClientRect();
     setPillRect({
-      left: linkBox.left - navBox.left,
+      left: Math.max(0, linkBox.left - navBox.left - navEl.clientLeft),
       width: linkBox.width,
       opacity: linkBox.width > 0 ? 1 : 0,
     });
@@ -51,16 +69,30 @@ export function LandingHeader() {
   }, [displayId, updatePillGeometry]);
 
   useEffect(() => {
+    if (typeof document === "undefined" || !document.fonts?.ready) return;
+    let alive = true;
+    void document.fonts.ready.then(() => {
+      if (alive) updatePillGeometry(displayId);
+    });
+    return () => {
+      alive = false;
+    };
+  }, [displayId, updatePillGeometry]);
+
+  useEffect(() => {
     if (typeof window === "undefined") return;
 
-    const onScroll = () => {
+    let rafId = 0;
+    const syncScrollSpy = () => {
+      rafId = 0;
       const y = window.scrollY || window.pageYOffset || 0;
-      setScrolled(y > 16);
+      const nextScrolled = y > 16;
+      setScrolled((prev) => (prev === nextScrolled ? prev : nextScrolled));
 
       if (Date.now() < clickLockUntilRef.current) return;
 
       const probeY = y + 180;
-      let nextActive = LANDING_NAV_ITEMS[0].id;
+      let nextActive: string = LANDING_NAV_ITEMS[0].id;
       for (const item of LANDING_NAV_ITEMS) {
         const el = document.getElementById(item.id);
         if (el) {
@@ -70,7 +102,12 @@ export function LandingHeader() {
           }
         }
       }
-      setActiveId(nextActive);
+      setActiveId((prev) => (prev === nextActive ? prev : nextActive));
+    };
+
+    const onScroll = () => {
+      if (rafId !== 0) return;
+      rafId = window.requestAnimationFrame(syncScrollSpy);
     };
 
     const onResize = () => {
@@ -80,10 +117,11 @@ export function LandingHeader() {
       }
     };
 
-    onScroll();
+    syncScrollSpy();
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onResize, { passive: true });
     return () => {
+      if (rafId !== 0) window.cancelAnimationFrame(rafId);
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onResize);
     };
@@ -113,6 +151,26 @@ export function LandingHeader() {
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         setMobileOpen(false);
+        return;
+      }
+      if (e.key === "Tab" && drawerRef.current) {
+        const focusables = Array.from(
+          drawerRef.current.querySelectorAll<HTMLElement>(
+            'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])',
+          ),
+        );
+        if (focusables.length === 0) return;
+        const first = focusables[0];
+        const last = focusables[focusables.length - 1];
+        if (e.shiftKey) {
+          if (document.activeElement === first || !drawerRef.current.contains(document.activeElement)) {
+            e.preventDefault();
+            last.focus();
+          }
+        } else if (document.activeElement === last || !drawerRef.current.contains(document.activeElement)) {
+          e.preventDefault();
+          first.focus();
+        }
       }
     };
     window.addEventListener("keydown", onKeyDown);
@@ -211,8 +269,13 @@ export function LandingHeader() {
             className="axo-sp-btn-primary"
             onClick={enterAxoWorkspace}
           >
-            Bắt đầu
+            {user ? "Vào ứng dụng" : "Bắt đầu"}
           </button>
+          {user && (
+            <div className="axo-sp-header-account">
+              <TopNavAccount />
+            </div>
+          )}
 
           <button
             ref={mobileBtnRef}
@@ -250,12 +313,19 @@ export function LandingHeader() {
             onClick={() => setMobileOpen(false)}
           />
           <div
+            ref={drawerRef}
             id="landing-mobile-drawer"
             className="axo-sp-mobile-drawer"
             role="dialog"
             aria-modal="true"
             aria-label="Điều hướng di động Axo"
           >
+            {user && (
+              <div className="axo-sp-mobile-account" id="landing-mobile-account">
+                <div className="axo-sp-mobile-account-name">{user.displayName}</div>
+                <span className="axo-sp-mobile-account-role">{ROLE_LABELS[user.role]}</span>
+              </div>
+            )}
             <nav className="axo-sp-mobile-links" aria-label="Mục trang giới thiệu">
               {LANDING_NAV_ITEMS.map((item, idx) => (
                 <a
@@ -291,7 +361,7 @@ export function LandingHeader() {
                   enterAxoWorkspace();
                 }}
               >
-                Bắt đầu dựng hình
+                {user ? "Vào ứng dụng" : "Bắt đầu dựng hình"}
               </button>
             </div>
           </div>
