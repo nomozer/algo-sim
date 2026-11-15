@@ -40,6 +40,7 @@ export function LandingHeader() {
   const firstDrawerActionRef = useRef<HTMLAnchorElement | null>(null);
   const prevMobileOpenRef = useRef(false);
   const openedViaKeyboardRef = useRef(false);
+  const restoreFocusOnCloseRef = useRef(false);
   const clickLockUntilRef = useRef<number>(0);
 
   const displayId = hoveredId ?? activeId;
@@ -136,6 +137,7 @@ export function LandingHeader() {
     if (mobileOpen) {
       document.body.style.overflow = "hidden";
       const focusFromKeyboard = openedViaKeyboardRef.current;
+      restoreFocusOnCloseRef.current = focusFromKeyboard;
       openedViaKeyboardRef.current = false;
       window.requestAnimationFrame(() => {
         if (focusFromKeyboard) {
@@ -145,9 +147,10 @@ export function LandingHeader() {
         }
       });
     } else if (prevMobileOpenRef.current) {
-      if (openedViaKeyboardRef.current) {
+      if (restoreFocusOnCloseRef.current) {
         mobileBtnRef.current?.focus();
       }
+      restoreFocusOnCloseRef.current = false;
       openedViaKeyboardRef.current = false;
     }
     prevMobileOpenRef.current = mobileOpen;
@@ -160,6 +163,7 @@ export function LandingHeader() {
 
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
+        restoreFocusOnCloseRef.current = true;
         setMobileOpen(false);
         return;
       }
