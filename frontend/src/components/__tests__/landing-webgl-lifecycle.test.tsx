@@ -1,7 +1,9 @@
 import fs from "node:fs";
 import path from "node:path";
+import { renderToString } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 import { separateLabelPositions, type LabelCandidate } from "../landing/LandingHeroScene3D";
+import { LandingHeroSculpture3D } from "../landing/LandingHeroSculpture3D";
 import { LANDING_CUBE_SAMPLE, extractPointsFromSample } from "../landing/landing-geometry-data";
 
 describe("AXO Landing Page V1.2 — WebGL Persistent Lifecycle, Deduplication & Label Collision", () => {
@@ -91,5 +93,16 @@ describe("AXO Landing Page V1.2 — WebGL Persistent Lifecycle, Deduplication & 
     expect(workspaceSrc).toContain('variant="stage"');
     expect(errExpSrc).toContain('readonly variant?: "page" | "stage" | "refusal"');
     expect(errExpSrc).toContain('variant === "page"');
+  });
+
+  it("V1.2.1: renders Concept A transformation hero illustration by default with zero vertex tags", () => {
+    const html = renderToString(<LandingHeroSculpture3D />);
+    expect(html).toContain('id="landing-hero-sculpture"');
+    expect(html).toContain('data-hero-variant="transformation"');
+    expect(html).toContain("<svg");
+    expect(html).not.toContain("axo-sp-point-tag");
+
+    const altHtml = renderToString(<LandingHeroSculpture3D variant="sculpture" />);
+    expect(altHtml).toContain('data-hero-variant="sculpture"');
   });
 });
