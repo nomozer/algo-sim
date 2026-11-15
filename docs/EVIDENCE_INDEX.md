@@ -1,5 +1,20 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = DIMENSION_AWARE_VERIFIED_CONSTRUCTION
+
+RUN_ID = dimension-aware-verified-construction
+REPORT = docs/evaluation/geometry/runs/dimension-aware-verified-construction/AXO_DIMENSION_AWARE_VERIFIED_CONSTRUCTION_REPORT.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/dimension-aware-verified-construction/
+START_BASE = b04bed0f8
+CODE_COMMIT = 0c9d4a2f0 (dimension-aware expression algebra, determinacy taxonomy, verified trig constructions, frontend consumers, cache 140), 32bdaa1df (Stage 4A §4.4 soundness guard, oblique-prism/line_perp_line rational counterexample realizations, lazy preview import, scope/trig/registry alignment); fixtures 72d61087b; candidate freeze 3c65266ba (commit field 72d61087b)
+CLASSIFICATION = DEVELOPMENT_EVIDENCE_ON_AGENT_CORPUS_AND_EXPOSED_ITEMS; AUTOMATED_BROWSER_E2E; COUNTERBALANCED_HOST_PERFORMANCE_STUDY; INDEPENDENT_GENERALIZATION NOT_MEASURED; PUBLICATION BLOCKED_PENDING_OWNER_REVIEW
+PRODUCT_CHANGE = YES; local-geometry-parser/2, dimension-expression/1, mathematical-determinacy-audit/1, trig-construction-certificate/1; CACHE_VERSION 139 → 140; measured files 120
+MODEL_REQUEST_COUNT = 0
+VERIFICATION = run.json; full_regression_summary.json; failure_taxonomy_audit.json; mathematical_determinacy_audit.json; mathematical_expression_architecture.json; source_gate_dimension_integrity.json; proof_certificate_mutation_tests.json; real27_acceptance_before_after.json; scene3d_browser_e2e.json
+CORRECTS = grounded-vietnamese-geometry-understanding and earlier: vmmu_r460 and vmmu_r463 were labeled INSUFFICIENT_CONSTRAINTS / insufficient_specification despite being uniquely determined capability gaps (now verified SERVED); compositional_semantics_goals negative expectation for a given cos line-plane premise superseded by verified trig-construction-certificate/1. Historical receipts unchanged
+CORRECTED_BY = NONE
+LIMITATIONS = agent-written corpus; exposed REAL27 items; non-algebraic angles (70°/50° in r266) outside closed exact domain; 10/27 REAL27 images gated by OCR/region before span confirmation; FE-2/3/4/6 blocked on separate axo-geometry-library ownership; headless browser; shared host timing; no H-1, no students.
+
 ## WAVE_ID = GROUNDED_VIETNAMESE_GEOMETRY_UNDERSTANDING
 
 RUN_ID = grounded-vietnamese-geometry-understanding
