@@ -5,8 +5,8 @@
   "generated_at_utc": "2026-11-15T07:24:18Z",
   "branch": "feat/local-first-geometry-understanding",
   "base_head": "b04bed0f83e02ac27416814bea08fa830ee91461",
-  "product_commit": "0c9d4a2f0c892ac13fcd6e47b919e87bfb141479",
-  "measured_system_hash": "7a15dc2e59a869c8c898458359a97a772760ae8eb89e7a75460a7625d0d6b488",
+  "product_commit": "32bdaa1df3dd7606b59b8c3cd8411578c4206d54",
+  "measured_system_hash": "b1403b91fd81410f9586c5676f541911540b4bc4bb0d7bf40204d17538623e59",
   "measured_system_file_count": 120,
   "baseline_measured_system_hash": "c25f9695828888987db2ab7990c4ff135da4d01c6b9d968f898c36728a0ae436",
   "cache_version": "140",
@@ -777,6 +777,146 @@
           "scope_note": "Khối tròn xoay độc lập còn thiếu bán kính hoặc chiều cao/đường sinh mà không có ràng buộc phụ."
         }
       }
+    },
+    {
+      "probe_id": "RELIABILITY:oblique-prism",
+      "parse_status": "TYPED_FACT_NEXT_V2_ROUTE",
+      "terminal_reason": "UNDERDETERMINED_POINT",
+      "determinacy_audit": {
+        "schema_version": "mathematical-determinacy-audit/1",
+        "status": "PROVED_UNDERDETERMINED",
+        "witness_kind": "TWO_VALID_REALIZATIONS_DIVERGE",
+        "terminal_code": "UNDERDETERMINED_POINT",
+        "unconsumed_constraint_ids": [
+          "p4"
+        ],
+        "dimensional_premise_ids": [
+          "p2",
+          "p3",
+          "p4"
+        ],
+        "positive_degree_goal_ids": [
+          "q"
+        ],
+        "counterexample_models": [
+          {
+            "trial": "tilt=0",
+            "answers": {
+              "q": "30"
+            },
+            "answer_exact": {
+              "q": {
+                "coef": "30",
+                "dim": 0,
+                "unit": null
+              }
+            }
+          },
+          {
+            "trial": "tilt=3/5",
+            "answers": {
+              "q": "24"
+            },
+            "answer_exact": {
+              "q": {
+                "coef": "24",
+                "dim": 0,
+                "unit": null
+              }
+            }
+          }
+        ],
+        "valid_realizations_count": 2,
+        "trials_executed": 4,
+        "scope_note": "Đã kiểm chứng bằng hai mô hình Euclid chính xác thỏa 100% giả thiết nhưng cho kết quả khác nhau."
+      },
+      "taxonomy_class": "MATHEMATICALLY_UNDERDETERMINED",
+      "failure_dimension": "MATHEMATICAL_DETERMINACY",
+      "root_cause": "INSUFFICIENT_CONSTRAINTS",
+      "envelope_failure_category": "insufficient_specification",
+      "envelope_refusal_cause": "UNKNOWN",
+      "envelope_learner_reason": "Dữ kiện hiện có chưa xác định được duy nhất hình cần dựng hoặc còn hiểu theo nhiều cách. AlgoSim không tự chọn số liệu hay cách hiểu thay em, nên không dựng hình."
+    },
+    {
+      "probe_id": "RELIABILITY:line-perp-line-is-not-height",
+      "parse_status": "TYPED_FACT_NEXT_V2_ROUTE",
+      "terminal_reason": "UNDERDETERMINED_POINT",
+      "determinacy_audit": {
+        "schema_version": "mathematical-determinacy-audit/1",
+        "status": "PROVED_UNDERDETERMINED",
+        "witness_kind": "TWO_VALID_REALIZATIONS_DIVERGE",
+        "terminal_code": "UNDERDETERMINED_POINT",
+        "unconsumed_constraint_ids": [
+          "p2",
+          "p3"
+        ],
+        "dimensional_premise_ids": [
+          "p1",
+          "p3"
+        ],
+        "positive_degree_goal_ids": [
+          "q"
+        ],
+        "counterexample_models": [
+          {
+            "trial": "tilt=0",
+            "answers": {
+              "q": "16"
+            },
+            "answer_exact": {
+              "q": {
+                "coef": "16",
+                "dim": 0,
+                "unit": null
+              }
+            }
+          },
+          {
+            "trial": "tilt=3/5",
+            "answers": {
+              "q": "64/5"
+            },
+            "answer_exact": {
+              "q": {
+                "coef": "64/5",
+                "dim": 0,
+                "unit": null
+              }
+            }
+          }
+        ],
+        "valid_realizations_count": 2,
+        "trials_executed": 4,
+        "scope_note": "Đã kiểm chứng bằng hai mô hình Euclid chính xác thỏa 100% giả thiết nhưng cho kết quả khác nhau."
+      },
+      "taxonomy_class": "MATHEMATICALLY_UNDERDETERMINED",
+      "failure_dimension": "MATHEMATICAL_DETERMINACY",
+      "root_cause": "INSUFFICIENT_CONSTRAINTS",
+      "envelope_failure_category": "insufficient_specification",
+      "envelope_refusal_cause": "UNKNOWN",
+      "envelope_learner_reason": "Dữ kiện hiện có chưa xác định được duy nhất hình cần dựng hoặc còn hiểu theo nhiều cách. AlgoSim không tự chọn số liệu hay cách hiểu thay em, nên không dựng hình."
+    },
+    {
+      "probe_id": "SYNTH:soundness_guard_no_valid_variation_zero_unconsumed",
+      "parse_status": "LOCAL_PARSE_COMPLETE",
+      "terminal_reason": "MISSING_DIMENSION",
+      "determinacy_audit": {
+        "schema_version": "mathematical-determinacy-audit/1",
+        "status": "UNPROVED_DUE_TO_CAPABILITY_GAP",
+        "witness_kind": "NO_VALID_VARIATION_CONSTRUCTED",
+        "terminal_code": "MISSING_DIMENSION",
+        "unconsumed_constraint_ids": [],
+        "unconsumed_coupling_constraint_ids": [],
+        "valid_realizations_count": 0,
+        "counterexample_models": [],
+        "trials_executed": 6
+      },
+      "taxonomy_class": "MATHEMATICALLY_UNDERDETERMINED",
+      "failure_dimension": "MATHEMATICAL_DETERMINACY",
+      "determinacy_status": "UNPROVED_NO_VALID_VARIATION",
+      "root_cause": "INSUFFICIENT_CONSTRAINTS",
+      "envelope_failure_category": "insufficient_specification",
+      "envelope_refusal_cause": "UNKNOWN"
     }
   ],
   "dev37_refused_cases": [
@@ -937,5 +1077,12 @@
   "baseline_product_commit": "d222e6d9b582d54fc42397a9593f52eb6fd77f18",
   "stage_observed_measured_system_hash": "e1d06448e0ea9d15dfdc8098f46898240a891622d9e32368865f0ee3c966e9ef",
   "stage_observed_measured_system_file_count": 118,
-  "stage_observed_cache_version": "139"
+  "stage_observed_cache_version": "139",
+  "stage_4a_remediation": {
+    "remediated_at_utc": "2026-11-15T16:35:00Z",
+    "previous_measured_system_hash": "7a15dc2e59a869c8c898458359a97a772760ae8eb89e7a75460a7625d0d6b488",
+    "current_measured_system_hash": "b1403b91fd81410f9586c5676f541911540b4bc4bb0d7bf40204d17538623e59",
+    "measured_system_file_count": 120,
+    "summary": "Stage 4A remediation added exact rational _free_tilt_sample realization trials in engine.py (_Dung._dinh_nghieng_thu_nghiem) and determinacy_audit.py (MAX_COUNTEREXAMPLE_TRIALS=12) to constructively prove non-uniqueness on unanchored oblique prisms (volumes {30, 24}) and single line-perp-line pyramids such as SA perp BC without SA perp (ABCD) (volumes {16, 64/5}), plus enforced the section 4.4 soundness guard so NO_VALID_VARIATION_CONSTRUCTED (valid_count < 2 and unconsumed_constraint_ids == []) never reclassifies MISSING_DATA as capability_gap and reports determinacy_status='UNPROVED_NO_VALID_VARIATION' with refusal_cause='UNKNOWN'."
+  }
 }

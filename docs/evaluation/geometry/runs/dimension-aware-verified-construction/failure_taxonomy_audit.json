@@ -5,8 +5,8 @@
   "generated_at_utc": "2026-11-15T07:24:18Z",
   "branch": "feat/local-first-geometry-understanding",
   "head": "b04bed0f83e02ac27416814bea08fa830ee91461",
-  "product_commit": "0c9d4a2f0c892ac13fcd6e47b919e87bfb141479",
-  "measured_system_hash": "7a15dc2e59a869c8c898458359a97a772760ae8eb89e7a75460a7625d0d6b488",
+  "product_commit": "32bdaa1df3dd7606b59b8c3cd8411578c4206d54",
+  "measured_system_hash": "b1403b91fd81410f9586c5676f541911540b4bc4bb0d7bf40204d17538623e59",
   "measured_system_file_count": 120,
   "baseline_measured_system_hash": "c25f9695828888987db2ab7990c4ff135da4d01c6b9d968f898c36728a0ae436",
   "cache_version": "140",
@@ -961,5 +961,12 @@
   "baseline_product_commit": "d222e6d9b582d54fc42397a9593f52eb6fd77f18",
   "stage_observed_measured_system_hash": "e1d06448e0ea9d15dfdc8098f46898240a891622d9e32368865f0ee3c966e9ef",
   "stage_observed_measured_system_file_count": 118,
-  "stage_observed_cache_version": "139"
+  "stage_observed_cache_version": "139",
+  "stage_4a_remediation": {
+    "remediated_at_utc": "2026-11-15T16:35:00Z",
+    "previous_measured_system_hash": "7a15dc2e59a869c8c898458359a97a772760ae8eb89e7a75460a7625d0d6b488",
+    "current_measured_system_hash": "b1403b91fd81410f9586c5676f541911540b4bc4bb0d7bf40204d17538623e59",
+    "measured_system_file_count": 120,
+    "summary": "Stage 4A remediation added exact rational _free_tilt_sample realization trials in engine.py (_Dung._dinh_nghieng_thu_nghiem) and determinacy_audit.py (MAX_COUNTEREXAMPLE_TRIALS=12) to constructively prove non-uniqueness on unanchored oblique prisms (volumes {30, 24}) and single line-perp-line pyramids such as SA perp BC without SA perp (ABCD) (volumes {16, 64/5}), plus enforced the section 4.4 soundness guard so NO_VALID_VARIATION_CONSTRUCTED (valid_count < 2 and unconsumed_constraint_ids == []) never reclassifies MISSING_DATA as capability_gap and reports determinacy_status='UNPROVED_NO_VALID_VARIATION' with refusal_cause='UNKNOWN'."
+  }
 }

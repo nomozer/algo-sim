@@ -9,15 +9,15 @@
   "prior_regression_head": "542e32b0f8b21df5fff8e6b2a57fb27b9a6ea452",
   "candidate_commit_field": "cbcd8af2d4ce667d93378699971acdae7d7905ae",
   "candidate_freeze_commit": "63def519ad317911145b2d84929a687208996619",
-  "product_commit": "0c9d4a2f0c892ac13fcd6e47b919e87bfb141479",
+  "product_commit": "32bdaa1df3dd7606b59b8c3cd8411578c4206d54",
   "product_commit_rule": "product-paths-excluding-test-only/1",
   "product_commits_in_prior_wave": [
     "ac276a5c945f9ac1764f9af1f723b857c19b342d",
     "ad090ceada3edc31b5788fa16c47e1639386bdc9",
     "d222e6d9b582d54fc42397a9593f52eb6fd77f18"
   ],
-  "measured_system_hash": "7a15dc2e59a869c8c898458359a97a772760ae8eb89e7a75460a7625d0d6b488",
-  "measured_system": "7a15dc2e59a869c8c898458359a97a772760ae8eb89e7a75460a7625d0d6b488",
+  "measured_system_hash": "b1403b91fd81410f9586c5676f541911540b4bc4bb0d7bf40204d17538623e59",
+  "measured_system": "b1403b91fd81410f9586c5676f541911540b4bc4bb0d7bf40204d17538623e59",
   "measured_system_files": 120,
   "cache_version": "140",
   "route_d_cache_policy": "140:route-d",
