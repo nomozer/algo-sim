@@ -3,10 +3,11 @@
 **Ngày hoàn thành:** 2026-11-15  
 **Nhánh làm việc:** `feat/axo-geometry-library-verification`  
 **Mốc nền Pha A:** [`AXO-LANDING-V1.2.2-UX-REPORT.md`](./AXO-LANDING-V1.2.2-UX-REPORT.md) (`2cde6e6a4`)  
-**Owner Approval:** `PENDING_OWNER_REVIEW`
+**Prototype Disposition:** `NOT_APPROVED_FOR_INTEGRATION` (cả Prototype A `?prototype=a` và Prototype B `?prototype=b` được thay thế định hướng bởi bản Preview V1.4 thống nhất `?preview=v1.4`; giữ nguyên mã nguồn để đối chiếu QA, không gộp vào production)  
+**Owner Approval:** `NOT_APPROVED_FOR_INTEGRATION` (V1.3 đã bị vượt cấp sang V1.4)
 
 > [!IMPORTANT]
-> Cả hai prototype V1.3 (`?prototype=a` và `?prototype=b`) đang chạy ở chế độ **cô lập hoàn toàn qua query parameter** để chủ dự án trực tiếp nghiệm thu. Trang mặc định `/` và `/gioi-thieu` (không có `?prototype=`) giữ nguyên bản **V1.2.2** không thay đổi. Tài liệu này không tự động phê duyệt tích hợp và giữ nguyên trạng thái `PENDING_OWNER_REVIEW`.
+> Cả hai prototype V1.3 (`?prototype=a` và `?prototype=b`) đang được đánh dấu **`NOT_APPROVED_FOR_INTEGRATION`** và vẫn chạy ở chế độ **cô lập hoàn toàn qua query parameter** để đối chiếu trực tiếp với bản Preview V1.4. Trang mặc định `/` và `/gioi-thieu` (không có query parameter) giữ nguyên bản **V1.2.2** không thay đổi.
 
 ---
 
