@@ -513,3 +513,153 @@ def test_standalone_curved_solid_shortcut_respects_goal_dependence():
     )
     assert det_no_ask["status"] == "PROVED_UNDERDETERMINED"
     assert det_no_ask["witness_kind"] == "EXPLICIT_FREE_LOCUS_ZERO_UNCONSUMED_FACTS"
+
+
+def test_oblique_prism_and_single_line_perp_line_certify_two_diverging_exact_realizations():
+    """Unanchored oblique prism (known base + lateral edge length) and unanchored pyramid apex under a single
+    line-line perpendicularity (`SA ⊥ BC` without `SA ⊥ (ABCD)`) must construct >= 2 exact rational kernel-certified
+    realizations with distinct exact volumes -> `PROVED_UNDERDETERMINED` (`TWO_VALID_REALIZATIONS_DIVERGE`),
+    `failure_category == 'insufficient_specification'`."""
+    from app.ai.adapter4_route import build_adapter4_response, run_typed_fact_next_v2_route
+
+    oblique_payload = {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": (
+            "Cho lăng trụ ABC.DEF có đáy ABC vuông tại A, AB = 3, AC = 4, cạnh bên AD = 5. "
+            "Tính thể tích khối lăng trụ ABC.DEF."
+        ),
+        "length_unit": "1",
+        "solids": [
+            {
+                "solid_id": "pr",
+                "solid_type": "prism",
+                "notation": "ABC.DEF",
+                "quote": "Cho lăng trụ ABC.DEF",
+            }
+        ],
+        "premises": [
+            {
+                "kind": "base_is_right_triangle",
+                "args": {"vertices": ["A", "B", "C"], "right_at": "A"},
+                "quote": "đáy ABC vuông tại A",
+            },
+            {"kind": "segment_length", "args": {"segment": ["A", "B"], "value": "3"}, "quote": "AB = 3"},
+            {"kind": "segment_length", "args": {"segment": ["A", "C"], "value": "4"}, "quote": "AC = 4"},
+            {"kind": "segment_length", "args": {"segment": ["A", "D"], "value": "5"}, "quote": "cạnh bên AD = 5"},
+        ],
+        "simulation_goals": [
+            {"goal_id": "draw", "kind": "construct_object", "target_solid_id": "pr", "quote": "Cho lăng trụ ABC.DEF"}
+        ],
+        "math_goals": [
+            {
+                "goal_id": "q",
+                "kind": "measurement",
+                "goal_type": "volume",
+                "target": {"solid_id": "pr"},
+                "quote": "Tính thể tích khối lăng trụ ABC.DEF.",
+            }
+        ],
+    }
+    r_ob = run_typed_fact_next_v2_route(oblique_payload)
+    env_ob = build_adapter4_response(r_ob, oblique_payload["problem_text"])["envelope"]
+    det_ob = (r_ob.details or {}).get("determinacy_audit") or {}
+    assert r_ob.status == "REFUSED" and r_ob.code == "UNDERDETERMINED_POINT"
+    assert env_ob["failure_category"] == "insufficient_specification"
+    assert det_ob["status"] == "PROVED_UNDERDETERMINED"
+    assert det_ob["witness_kind"] == "TWO_VALID_REALIZATIONS_DIVERGE"
+    ob_coefs = [m["answer_exact"]["q"]["coef"] for m in det_ob["counterexample_models"]]
+    assert len(ob_coefs) == 2 and ob_coefs[0] != ob_coefs[1]
+    assert set(ob_coefs) == {"30", "24"}
+
+    perp_line_payload = {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": (
+            "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 4, SA vuông góc với BC và SA = 3. "
+            "Tính thể tích khối chóp S.ABCD."
+        ),
+        "length_unit": "1",
+        "solids": [
+            {
+                "solid_id": "pyr",
+                "solid_type": "pyramid",
+                "notation": "S.ABCD",
+                "quote": "Cho hình chóp S.ABCD",
+            }
+        ],
+        "premises": [
+            {
+                "kind": "base_is_square",
+                "args": {"vertices": ["A", "B", "C", "D"], "side": "4"},
+                "quote": "đáy ABCD là hình vuông cạnh 4",
+            },
+            {
+                "kind": "line_perp_line",
+                "args": {"line1": ["S", "A"], "line2": ["B", "C"]},
+                "quote": "SA vuông góc với BC",
+            },
+            {"kind": "segment_length", "args": {"segment": ["S", "A"], "value": "3"}, "quote": "SA = 3"},
+        ],
+        "simulation_goals": [
+            {"goal_id": "draw", "kind": "construct_object", "target_solid_id": "pyr", "quote": "Cho hình chóp S.ABCD"}
+        ],
+        "math_goals": [
+            {
+                "goal_id": "q",
+                "kind": "measurement",
+                "goal_type": "volume",
+                "target": {"solid_id": "pyr"},
+                "quote": "Tính thể tích khối chóp S.ABCD.",
+            }
+        ],
+    }
+    r_pl = run_typed_fact_next_v2_route(perp_line_payload)
+    env_pl = build_adapter4_response(r_pl, perp_line_payload["problem_text"])["envelope"]
+    det_pl = (r_pl.details or {}).get("determinacy_audit") or {}
+    assert r_pl.status == "REFUSED" and r_pl.code == "UNDERDETERMINED_POINT"
+    assert env_pl["failure_category"] == "insufficient_specification"
+    assert det_pl["status"] == "PROVED_UNDERDETERMINED"
+    assert det_pl["witness_kind"] == "TWO_VALID_REALIZATIONS_DIVERGE"
+    pl_coefs = [m["answer_exact"]["q"]["coef"] for m in det_pl["counterexample_models"]]
+    assert len(pl_coefs) == 2 and pl_coefs[0] != pl_coefs[1]
+    assert set(pl_coefs) == {"16", "64/5"}
+
+
+def test_soundness_guard_no_valid_variation_with_zero_unconsumed_never_claims_capability_gap():
+    """Soundness guard (§4.4): when `valid_count < 2` AND `unconsumed_constraint_ids == []`
+    (`witness_kind == 'NO_VALID_VARIATION_CONSTRUCTED'`), `classify_refusal` and `diagnose` MUST NOT rewrite
+    `MISSING_DATA` to `capability_gap` AND MUST NOT falsely claim `PROVED_UNDERDETERMINED`."""
+    from app.ai.local_failure_diagnostics import diagnose
+
+    det_no_var = {
+        "schema_version": DETERMINACY_AUDIT_VERSION,
+        "status": "UNPROVED_DUE_TO_CAPABILITY_GAP",
+        "witness_kind": "NO_VALID_VARIATION_CONSTRUCTED",
+        "terminal_code": "MISSING_DIMENSION",
+        "unconsumed_constraint_ids": [],
+        "unconsumed_coupling_constraint_ids": [],
+        "valid_realizations_count": 0,
+        "counterexample_models": [],
+        "trials_executed": 6,
+    }
+    cls = classify_refusal(
+        "MISSING_DIMENSION",
+        details={"determinacy_audit": det_no_var},
+        local_complete=True,
+    )
+    assert cls.group == "MISSING_DATA"
+    assert cls.failure_category == "insufficient_specification"
+    assert cls.refusal_cause == "UNKNOWN"
+
+    diag = diagnose(
+        parse_status="LOCAL_PARSE_COMPLETE",
+        parse_reason=None,
+        fallback_reason=None,
+        source_coverage={"clauses": [{"index": 0, "start": 0, "end": 20, "text": "Cho hình chóp S.ABC.", "classification": "MAPPED_FACT"}]},
+        terminal_code="MISSING_DIMENSION",
+        fallback_allowed=False,
+        determinacy_audit=det_no_var,
+    )
+    assert diag["determinacy_status"] == "UNPROVED_NO_VALID_VARIATION"
+    assert diag["determinacy_status"] != "PROVED_UNDERDETERMINED"
+    assert diag["taxonomy_class"] != "CAPABILITY_UNSUPPORTED"
+

@@ -113,11 +113,26 @@ def test_tangent_of_a_right_angle_is_reported_undefined_not_computed():
     f"{B3}. Tính cosin của độ dài SB.",                                                       # not an angle
     f"{B3}. Tính bình phương cosin của góc giữa SB và mặt phẳng (ABC).",                       # another quantity of it
     f"{B3}. Tính cosin của góc giữa SB và mặt phẳng (SAC) và độ dài SC.",                      # an unanswered request remains
-    "Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh a, SA vuông góc với mặt phẳng (ABC) và cosin của góc giữa SB và "
-    "mặt phẳng (ABC) bằng 1/2. Tính độ dài SA.",                                               # a premise, not a goal
 ])
 def test_trigonometric_wording_never_answers_another_object_or_becomes_a_fact(text):
     assert _route(text)[0].status != "SERVED"
+
+
+def test_trigonometric_angle_premise_serves_verified_length_goal_without_goal_confusion():
+    # Before run `dimension-aware-verified-construction` (Stage P1c), `cosin của góc giữa SB và mặt phẳng (ABC) bằng 1/2`
+    # was unparsed as a premise and refused; Stage P1c parses and Source-Gate-verifies trigonometric angle premises
+    # (`unit='cos'`, `cos=1/2` => `tan=√3` => `SA = a√3`) with `trig-construction-certificate/1`, answering ONLY the
+    # asked length goal `SA` (never treating the premise angle as an asked trigonometric goal).
+    text = (
+        "Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh a, SA vuông góc với mặt phẳng (ABC) và cosin của góc giữa SB và "
+        "mặt phẳng (ABC) bằng 1/2. Tính độ dài SA."
+    )
+    out, rd = _route(text)
+    assert out.status == "SERVED"
+    assert rd["answer_exact"] == {"q1": {"coef": "√3", "dim": 1, "unit": "a"}}
+    assert "source_goal_completion" not in rd
+    certs = rd.get("trig_construction_certificates") or []
+    assert len(certs) == 1 and certs[0]["verified"] is True and certs[0]["derived_quantity_id"] == ["A", "S"]
 
 
 def test_the_completion_record_is_bound_to_the_verified_result():

@@ -1,0 +1,22 @@
+{
+  "schema": "SCHEMA_CENSUS_EXTENSION/1",
+  "run": "dimension-aware-verified-construction",
+  "extends": "docs/evaluation/geometry/runs/verified-section-intersection-dihedral-local/schema-census-extension.json",
+  "rule": "Additive only: classifies PremiseSpec.args[solid_volume] added in dimension-aware-verified-construction without modifying frozen historical census snapshots.",
+  "fields": {
+    "PremiseSpec.args[solid_volume].solid": {
+      "category": "SOLID_OPERAND",
+      "owner": "premise (solid_volume solid)",
+      "rules": ["S2", "S3"],
+      "entry_points": "adapter4, planner route v2, bridge v2",
+      "positive_test": "test_solid_volume_premise_scope_controls_serve",
+      "negative_test": "test_solid_volume_premise_scope_violations_refuse",
+      "refusal_codes": ["UNKNOWN_SOLID_ID", "UNKNOWN_SOLID", "SOURCE_OBJECT_MISMATCH"],
+      "shape": "id?"
+    },
+    "PremiseSpec.args[solid_volume].value": {
+      "category": "METADATA",
+      "note": "exact solid volume value (dimension VOLUME)"
+    }
+  }
+}

@@ -59,7 +59,7 @@ _COUPLING_CONSTRAINT_FNS = frozenset({
     "sphere_tangent_plane",
     "curved_solid",
 })
-MAX_COUNTEREXAMPLE_TRIALS = 8
+MAX_COUNTEREXAMPLE_TRIALS = 12
 
 
 def _canonical_line_sig(line_obj: Any) -> tuple[str, ...]:
@@ -191,45 +191,74 @@ def _build_trial_specs(
     open_reps: list[frozenset[str]],
     *,
     scale_free_premises: bool,
-) -> list[tuple[str, Fraction | None, Fraction | None, tuple[tuple[frozenset[str], Fraction], ...]]]:
-    """Deterministic exact trial parameterizations `(label, _scale_unit, _free_h2_sample, _shape_units)`."""
-    trials: list[tuple[str, Fraction | None, Fraction | None, tuple[tuple[frozenset[str], Fraction], ...]]] = []
+    terminal_code: str = "",
+) -> list[
+    tuple[
+        str,
+        Fraction | None,
+        Fraction | None,
+        tuple[tuple[frozenset[str], Fraction], ...],
+        tuple[Fraction, int] | None,
+    ]
+]:
+    """Deterministic exact trial parameterizations `(label, _scale_unit, _free_h2_sample, _shape_units, _free_tilt_sample)`."""
+    trials: list[
+        tuple[
+            str,
+            Fraction | None,
+            Fraction | None,
+            tuple[tuple[frozenset[str], Fraction], ...],
+            tuple[Fraction, int] | None,
+        ]
+    ] = []
 
     if scale_free_premises:
         # 1) Pure homothety scale trials
-        trials.append(("scale=1", Fraction(1), None, ()))
-        trials.append(("scale=2", Fraction(2), None, ()))
+        trials.append(("scale=1", Fraction(1), None, (), None))
+        trials.append(("scale=2", Fraction(2), None, (), None))
         # 2) Scale + open height trials (including homothetic pairs (1, 1) vs (2, 4) for 45°, (1, 3) vs (2, 12) for 60°)
-        trials.append(("scale=1,h2=1", Fraction(1), Fraction(1), ()))
-        trials.append(("scale=2,h2=4", Fraction(2), Fraction(4), ()))
+        trials.append(("scale=1,h2=1", Fraction(1), Fraction(1), (), None))
+        trials.append(("scale=2,h2=4", Fraction(2), Fraction(4), (), None))
+        if terminal_code == "UNDERDETERMINED_POINT":
+            trials.append(("scale=1,tilt=0", Fraction(1), None, (), (Fraction(0), 0)))
+            trials.append(("scale=2,tilt=0", Fraction(2), None, (), (Fraction(0), 0)))
+            trials.append(("scale=1,tilt=3/5", Fraction(1), None, (), (Fraction(3, 5), 0)))
+            trials.append(("scale=1,tilt=1/2,dir=1", Fraction(1), None, (), (Fraction(1, 2), 1)))
         # 3) Scale + secondary open shape edge/diagonal trials (e.g. rectangle aspect ratio, rhombus diagonal)
         sec = open_reps[1:] if open_reps else []
         if sec:
             s0 = sec[0]
-            trials.append(("scale=1,shape0=1", Fraction(1), None, ((s0, Fraction(1)),)))
-            trials.append(("scale=1,shape0=2", Fraction(1), None, ((s0, Fraction(2)),)))
-            trials.append(("scale=1,shape0=6/5,h2=1", Fraction(1), Fraction(1), ((s0, Fraction(6, 5)),)))
-            trials.append(("scale=1,shape0=10/13,h2=1", Fraction(1), Fraction(1), ((s0, Fraction(10, 13)),)))
+            trials.append(("scale=1,shape0=1", Fraction(1), None, ((s0, Fraction(1)),), None))
+            trials.append(("scale=1,shape0=2", Fraction(1), None, ((s0, Fraction(2)),), None))
+            trials.append(("scale=1,shape0=6/5,h2=1", Fraction(1), Fraction(1), ((s0, Fraction(6, 5)),), None))
+            trials.append(("scale=1,shape0=10/13,h2=1", Fraction(1), Fraction(1), ((s0, Fraction(10, 13)),), None))
         else:
-            trials.append(("scale=1,h2=3", Fraction(1), Fraction(3), ()))
-            trials.append(("scale=2,h2=12", Fraction(2), Fraction(12), ()))
-            trials.append(("scale=1,h2=1/3", Fraction(1), Fraction(1, 3), ()))
-            trials.append(("scale=2,h2=4/3", Fraction(2), Fraction(4, 3), ()))
+            trials.append(("scale=1,h2=3", Fraction(1), Fraction(3), (), None))
+            trials.append(("scale=2,h2=12", Fraction(2), Fraction(12), (), None))
+            trials.append(("scale=1,h2=1/3", Fraction(1), Fraction(1, 3), (), None))
+            trials.append(("scale=2,h2=4/3", Fraction(2), Fraction(4, 3), (), None))
     else:
         # 1) Open height trials (base already fixed, apex height open)
-        trials.append(("h2=1", None, Fraction(1), ()))
-        trials.append(("h2=4", None, Fraction(4), ()))
+        trials.append(("h2=1", None, Fraction(1), (), None))
+        trials.append(("h2=4", None, Fraction(4), (), None))
+        if terminal_code == "UNDERDETERMINED_POINT":
+            trials.append(("tilt=0", None, None, (), (Fraction(0), 0)))
+            trials.append(("tilt=3/5", None, None, (), (Fraction(3, 5), 0)))
+            trials.append(("tilt=1/2,dir=1", None, None, (), (Fraction(1, 2), 1)))
         # 2) First open base segment/diagonal trials (e.g. uncoupled base vs apex, missing rectangle side, rhombus/isosceles)
         if open_reps:
             s0 = open_reps[0]
-            trials.append(("shape0=1", None, None, ((s0, Fraction(1)),)))
-            trials.append(("shape0=2", None, None, ((s0, Fraction(2)),)))
-            trials.append(("shape0=6/5", None, None, ((s0, Fraction(6, 5)),)))
-            trials.append(("shape0=10/13", None, None, ((s0, Fraction(10, 13)),)))
+            trials.append(("shape0=1", None, None, ((s0, Fraction(1)),), None))
+            trials.append(("shape0=2", None, None, ((s0, Fraction(2)),), None))
+            trials.append(("shape0=6/5", None, None, ((s0, Fraction(6, 5)),), None))
+            trials.append(("shape0=10/13", None, None, ((s0, Fraction(10, 13)),), None))
+            if terminal_code == "UNDERDETERMINED_POINT":
+                trials.append(("shape0=1,tilt=0", None, None, ((s0, Fraction(1)),), (Fraction(0), 0)))
+                trials.append(("shape0=1,tilt=3/5", None, None, ((s0, Fraction(1)),), (Fraction(3, 5), 0)))
         if len(open_reps) >= 2 and len(trials) < MAX_COUNTEREXAMPLE_TRIALS:
             s0, s1 = open_reps[0], open_reps[1]
-            trials.append(("shape0=1,shape1=6/5", None, None, ((s0, Fraction(1)), (s1, Fraction(6, 5)))))
-            trials.append(("shape0=1,shape1=10/13", None, None, ((s0, Fraction(1)), (s1, Fraction(10, 13)))))
+            trials.append(("shape0=1,shape1=6/5", None, None, ((s0, Fraction(1)), (s1, Fraction(6, 5))), None))
+            trials.append(("shape0=1,shape1=10/13", None, None, ((s0, Fraction(1)), (s1, Fraction(10, 13))), None))
 
     return trials[:MAX_COUNTEREXAMPLE_TRIALS]
 
@@ -354,13 +383,13 @@ def audit_determinacy(
     # 2. Constructive two-model counterexample search (capped at MAX_COUNTEREXAMPLE_TRIALS, pure Fraction arithmetic)
     open_reps = _collect_open_segment_representatives(calls, problem_text)
     scale_free = len(dimensional_ids) == 0
-    trial_specs = _build_trial_specs(open_reps, scale_free_premises=scale_free)
+    trial_specs = _build_trial_specs(open_reps, scale_free_premises=scale_free, terminal_code=code)
 
     valid_by_sig: dict[tuple, dict[str, Any]] = {}
     valid_count = 0
     trials_run = 0
 
-    for label, sc_unit, free_h2, sh_units in trial_specs:
+    for label, sc_unit, free_h2, sh_units, free_tilt in trial_specs:
         trials_run += 1
         rk, _anc, _tr = _dung_mot_nhanh(
             problem_text,
@@ -370,6 +399,7 @@ def audit_determinacy(
             _scale_unit=sc_unit,
             _free_h2_sample=free_h2,
             _shape_units=sh_units,
+            _free_tilt_sample=free_tilt,
         )
         if rk.status != "SERVED" or rk.kernel_check is not True:
             continue
@@ -409,6 +439,7 @@ def audit_determinacy(
                 "dimensional_premise_ids": dimensional_ids,
                 "positive_degree_goal_ids": positive_deg_goals,
                 "counterexample_models": [m1, m2],
+                "valid_realizations_count": valid_count,
                 "trials_executed": trials_run,
                 "scope_note": (
                     "Đã kiểm chứng bằng hai mô hình Euclid chính xác thỏa 100% giả thiết nhưng cho kết quả khác nhau."
@@ -426,10 +457,30 @@ def audit_determinacy(
             "dimensional_premise_ids": dimensional_ids,
             "positive_degree_goal_ids": positive_deg_goals,
             "counterexample_models": list(valid_by_sig.values()),
+            "valid_realizations_count": valid_count,
             "trials_executed": trials_run,
             "scope_note": (
                 "Các cấu hình hợp lệ thử nghiệm cho cùng một kết quả, nhưng hệ chưa có chứng chỉ bất biến tổng quát "
                 "cho mọi cấu hình thỏa đề."
+            ),
+        }
+
+    if not unconsumed_ids:
+        return {
+            "schema_version": DETERMINACY_AUDIT_VERSION,
+            "status": "UNPROVED_DUE_TO_CAPABILITY_GAP",
+            "witness_kind": "NO_VALID_VARIATION_CONSTRUCTED",
+            "terminal_code": code,
+            "unconsumed_constraint_ids": unconsumed_ids,
+            "unconsumed_coupling_constraint_ids": unconsumed_coupling_ids,
+            "dimensional_premise_ids": dimensional_ids,
+            "positive_degree_goal_ids": positive_deg_goals,
+            "counterexample_models": list(valid_by_sig.values()),
+            "valid_realizations_count": valid_count,
+            "trials_executed": trials_run,
+            "scope_note": (
+                "Không dựng được cặp mô hình biến thiên hợp lệ và không còn giả thiết chưa tiêu thụ; hệ giữ nhóm từ chối "
+                "thiếu thông số mà không tự khẳng định chỉ thiếu năng lực suy diễn."
             ),
         }
 
@@ -443,6 +494,7 @@ def audit_determinacy(
         "dimensional_premise_ids": dimensional_ids,
         "positive_degree_goal_ids": positive_deg_goals,
         "counterexample_models": list(valid_by_sig.values()),
+        "valid_realizations_count": valid_count,
         "trials_executed": trials_run,
         "scope_note": (
             "Không tìm được cặp mô hình hợp lệ cho kết quả khác nhau; còn giả thiết chưa được suy diễn hết hoặc hệ "

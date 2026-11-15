@@ -184,7 +184,10 @@ def classify_refusal(code: str, planner: dict | None = None, *, adapter: bool = 
         code = "PROOF_UNVERIFIABLE"
     det = (details or {}).get("determinacy_audit") if isinstance(details, dict) else None
     if not adapter and code in ("MISSING_DIMENSION", "UNDERDETERMINED_POINT", "FOOT_NOT_DETERMINED", "AMBIGUOUS_FACT") and isinstance(det, dict):
-        if det.get("status") == "UNPROVED_DUE_TO_CAPABILITY_GAP":
+        if (
+            det.get("status") == "UNPROVED_DUE_TO_CAPABILITY_GAP"
+            and det.get("witness_kind") != "NO_VALID_VARIATION_CONSTRUCTED"
+        ):
             msg = (
                 _MSG_SHAPE_INVARIANCE_UNCERTIFIED
                 if det.get("witness_kind") == "CONSTANT_ACROSS_SAMPLED_REALIZATIONS_UNPROVED_INVARIANCE"

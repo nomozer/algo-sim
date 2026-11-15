@@ -240,6 +240,15 @@ def _orthogonal_classification(
             "determinacy_scope_note": "Lỗi kỹ thuật hoặc cấu hình vận hành.",
         }
     if root_cause == "INSUFFICIENT_CONSTRAINTS" or terminal_code in ("PLANE_NOT_UNIQUE", "FIGURE_NOT_UNIQUE"):
+        if witness == "NO_VALID_VARIATION_CONSTRUCTED" and terminal_code not in ("PLANE_NOT_UNIQUE", "FIGURE_NOT_UNIQUE"):
+            return {
+                "failure_dimension": "MATHEMATICAL_DETERMINACY",
+                "taxonomy_class": "MATHEMATICALLY_UNDERDETERMINED",
+                "determinacy_status": "UNPROVED_NO_VALID_VARIATION",
+                "determinacy_scope_note": note or "Chưa dựng được cặp mô hình biến thiên hợp lệ để chứng minh tính bất định hay chỉ lỗi năng lực.",
+                "witness_kind": witness,
+                "unconsumed_constraint_ids": unconsumed,
+            }
         return {
             "failure_dimension": "MATHEMATICAL_DETERMINACY",
             "taxonomy_class": "MATHEMATICALLY_UNDERDETERMINED",
@@ -329,7 +338,7 @@ def diagnose(*, parse_status: str, parse_reason: str | None, fallback_reason: st
             elif det_status == "PROVED_UNDERDETERMINED":
                 rec.update(root_cause="INSUFFICIENT_CONSTRAINTS", first_loss_layer="NONE", detected_by="PARSER",
                            unresolved_kinds=sorted(kinds))
-            elif det_status == "UNPROVED_DUE_TO_CAPABILITY_GAP":
+            elif det_status == "UNPROVED_DUE_TO_CAPABILITY_GAP" and det_witness != "NO_VALID_VARIATION_CONSTRUCTED":
                 if kinds and kinds <= {"missing_operand"} and det_witness != "UNRESOLVED_SEMANTIC_OPERAND":
                     rec.update(root_cause="UNSUPPORTED_DEDUCTION", first_loss_layer="NONE", detected_by="ENGINE",
                                unresolved_kinds=sorted(kinds), refusal_group="CAPABILITY")
@@ -341,7 +350,11 @@ def diagnose(*, parse_status: str, parse_reason: str | None, fallback_reason: st
                            first_loss_layer="NONE", detected_by="PARSER", unresolved_kinds=sorted(kinds))
         elif terminal_code == "OUT_OF_SCOPE" and any(c["clause_type"] == "PROOF_REQUEST" for c in clauses):
             rec.update(root_cause="UNSUPPORTED_GOAL_KIND", first_loss_layer="NONE", detected_by="PARSER")
-        elif terminal_code in ("MISSING_DIMENSION", "UNDERDETERMINED_POINT", "FOOT_NOT_DETERMINED") and det_status == "UNPROVED_DUE_TO_CAPABILITY_GAP":
+        elif (
+            terminal_code in ("MISSING_DIMENSION", "UNDERDETERMINED_POINT", "FOOT_NOT_DETERMINED")
+            and det_status == "UNPROVED_DUE_TO_CAPABILITY_GAP"
+            and det_witness != "NO_VALID_VARIATION_CONSTRUCTED"
+        ):
             is_shape_uncert = (
                 det_witness == "CONSTANT_ACROSS_SAMPLED_REALIZATIONS_UNPROVED_INVARIANCE"
                 or (

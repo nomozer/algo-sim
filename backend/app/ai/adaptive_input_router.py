@@ -40,7 +40,6 @@ from typing import Any, Callable, Literal, Sequence
 
 from app.ai.adapter4_route import ADAPTER_V4_VERSION, ROUTE_D_SIMULATION_V4_SCHEMA_VERSION
 from app.ai.hybrid_offline import HybridOfflineResult, hybrid_offline_policy, run_hybrid_offline
-from app.ai.hybrid_preview import RefusalClass, classify_refusal
 from app.ai.local_failure_diagnostics import diagnose
 from app.ai.local_geometry_parser import (
     LOCAL_GEOMETRY_PARSER_VERSION,
@@ -388,6 +387,8 @@ def route_text_input(
                 determinacy_audit=det_audit,
             )
             if hyb_out.receipt.get("failure_stage") != "adapter4" and ref_code:
+                from app.ai.hybrid_preview import RefusalClass, classify_refusal
+
                 if diag.get("root_cause") == "UNSUPPORTED_GOAL_KIND":
                     kind = RefusalClass(
                         "CAPABILITY",

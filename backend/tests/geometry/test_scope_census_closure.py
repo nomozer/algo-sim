@@ -40,6 +40,9 @@ INVENTORY = {**INVENTORY, 'fields': {**INVENTORY['fields'], **_EXT_FCRWA}}
 _EXT_VSID = json.loads((RUNS / 'verified-section-intersection-dihedral-local/schema-census-extension.json').read_text(encoding='utf-8'))['fields']
 assert not set(_EXT_VSID) & set(INVENTORY['fields'])
 INVENTORY = {**INVENTORY, 'fields': {**INVENTORY['fields'], **_EXT_VSID}}
+_EXT_DAVC = json.loads((RUNS / 'dimension-aware-verified-construction/schema-census-extension.json').read_text(encoding='utf-8'))['fields']
+assert not set(_EXT_DAVC) & set(INVENTORY['fields'])
+INVENTORY = {**INVENTORY, 'fields': {**INVENTORY['fields'], **_EXT_DAVC}}
 SUP = json.loads((RUN / 'inputs/recovery-supplementary.json').read_text(encoding='utf-8'))['control']
 A3DEV = {c['case_id']: c for c in json.loads((RUNS / 'typedfact-next-adapter3-simulation/corpus-dev.json').read_text(encoding='utf-8'))['cases']}
 SIM = {c['case_id']: c for c in json.loads((RUNS / 'simulation-coverage-visual-validation/corpus-dev.json').read_text(encoding='utf-8'))['cases']}
@@ -804,3 +807,37 @@ def test_angle_and_base_premise_scope_violations_refuse():
         if prem['kind'] == 'line_plane_angle':
             prem['args']['line'] = ['zz::T', 'B']
     assert outcome(run_typed_fact_next_v2_route(p)) == ('REFUSED', 'SOURCE_OBJECT_MISMATCH')          # S5/S7
+
+
+def _solid_volume_scope_payload():
+    from app.ai.local_geometry_parser import parse_geometry_problem_locally
+    txt = (
+        'Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 3, SA ⊥ (ABCD) '
+        'và thể tích khối chóp S.ABCD bằng 15. Tính độ dài SA.'
+    )
+    return parse_geometry_problem_locally(txt).payload
+
+
+def test_solid_volume_premise_scope_controls_serve():
+    p = _solid_volume_scope_payload()
+    r = run_typed_fact_next_v2_route(p)
+    assert r.status == 'SERVED' and r.kernel_check is True
+    assert r.answer_exact['q1']['coef'] == '5'
+
+
+@pytest.mark.parametrize('mutation,code', [
+    (lambda p: next(x for x in p['premises'] if x['kind'] == 'solid_volume')['args'].__setitem__('solid', 'NO_SUCH'),
+     'UNKNOWN_SOLID_ID'),
+    (lambda p: next(x for x in p['premises'] if x['kind'] == 'solid_volume').__setitem__('solid_id', 'zz'),
+     'SOURCE_OBJECT_MISMATCH'),
+])
+def test_solid_volume_premise_scope_violations_refuse(mutation, code):
+    p = _solid_volume_scope_payload()
+    p['solids'].append({'solid_id': 'zz', 'solid_type': 'pyramid', 'notation': 'T.ABCD', 'quote': 'Cho hình chóp T.ABCD'})
+    p['problem_text'] += ' Cho hình chóp T.ABCD.'
+    for prem in p['premises']:
+        if prem['kind'] == 'solid_volume' and 'solid' not in prem['args']:
+            prem['args']['solid'] = 'S.ABCD'
+    mutation(p)
+    assert outcome(run_typed_fact_next_v2_route(p)) == ('REFUSED', code)                                # S2/S3
+

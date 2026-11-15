@@ -471,13 +471,16 @@ class _Dung:
     def __init__(self, calls: tuple[LoiGoi, ...], text: str, ky_hieu: str | None = None,
                  _flip_apices: frozenset[str] = frozenset(),
                  _free_h2_sample: Fraction | None = None, _scale_unit: Fraction | None = None,
-                 _shape_units: tuple[tuple[frozenset, Fraction], ...] = ()) -> None:
+                 _shape_units: tuple[tuple[frozenset, Fraction], ...] = (),
+                 _free_tilt_sample: tuple[Fraction, int] | None = None) -> None:
         self.calls = tuple(sorted(calls, key=_key))
         self.text = text
         self.ky_hieu = ky_hieu
         self._flip_apices = _flip_apices
         #: Height-invariance probe (`dung_tu_loi_goi`): a placeholder h² used ONLY where the source fixes no height.
         self._free_h2_sample = _free_h2_sample
+        #: Determinacy-audit trial tilt (`determinacy_audit.py` only, `None` in production): `(tau, dir_idx)` over ℚ.
+        self._free_tilt_sample = _free_tilt_sample
         #: Similarity-scale probe (`_thu_chuan_hoa_ty_le`, run `certified-scale-cache-safety`): an INTERNAL construction
         #: unit given to ONE segment — the first edge of the first solid's base in its declared order — used only when
         #: the source states no length at all. It is never a call: the Source Gate grounds every call value, and this
@@ -2738,7 +2741,206 @@ class _Dung:
                 self.trace[-1]["relation_verified"] = True
                 self.dung.add(c.id)
                 return True
-        return self._dinh_tu_ba_canh_ben() or self._dinh_tu_goc_canh_ben_bang_nhau() or self._dinh_affine_minh_hoa()
+        return (
+            self._dinh_tu_ba_canh_ben()
+            or self._dinh_tu_goc_canh_ben_bang_nhau()
+            or self._dinh_affine_minh_hoa()
+            or self._dinh_nghieng_thu_nghiem()
+        )
+
+    def _dinh_nghieng_thu_nghiem(self) -> bool:
+        """Determinacy-audit trial placement (`self._free_tilt_sample` non-None ONLY) for unanchored oblique prisms
+        and unanchored pyramid apices (e.g. single line-perp-line `SA ⊥ BC` without `SA ⊥ (ABC)`). Every resulting
+        model must still pass 100% of `dung.kiem()` and `SemanticProgramInterpreter` (`kernel_check == True`)."""
+        if self._free_tilt_sample is None:
+            return False
+        root = getattr(self, "root", None)
+        G2 = self.G2
+        if root is None or G2 is None:
+            return False
+        det_g2 = G2[0][0] * G2[1][1] - G2[0][1] * G2[1][0]
+        if det_g2 <= 0:
+            return False
+        tau, dir_idx = self._free_tilt_sample
+
+        def _ortho_base_dir(u: V3) -> V3 | None:
+            alpha = G2[0][0] * u[0] + G2[0][1] * u[1]
+            beta = G2[1][0] * u[0] + G2[1][1] * u[1]
+            wx, wy = -beta, alpha
+            if wx == 0 and wy == 0:
+                return None
+            scale = max(abs(wx), abs(wy))
+            return (wx / scale, wy / scale, Z)
+
+        def _place_tilted(
+            ten: str,
+            b0: str,
+            delta_0: tuple[Fraction, Fraction],
+            w: V3,
+            l2_rem: Fraction | None,
+            h2_known: Fraction | None,
+            solid_name: str,
+            call_ids: set[str],
+        ) -> bool:
+            q_w = self.g(w, w)
+            if q_w <= 0:
+                return False
+            if l2_rem is not None:
+                if l2_rem <= 0:
+                    return False
+                if h2_known is not None:
+                    rem = l2_rem - h2_known
+                    if rem < 0:
+                        return False
+                    s_abs = _sqrt_q(rem / q_w) if rem > 0 else Z
+                    if s_abs is None:
+                        return False
+                    s = s_abs if tau == 0 else -s_abs
+                    h2_val = h2_known
+                elif tau == 0:
+                    s = Z
+                    h2_val = l2_rem
+                else:
+                    r = l2_rem / q_w
+                    q_root = _sqrt_q(r)
+                    if q_root is not None:
+                        s = tau * q_root
+                    else:
+                        s = tau if r >= 1 else r * tau
+                    h2_val = l2_rem - s * s * q_w
+                    if h2_val <= 0:
+                        return False
+            else:
+                if h2_known is not None:
+                    h2_val = h2_known
+                    s = tau
+                else:
+                    unit2 = (self._scale_unit or Fraction(1)) ** 2
+                    h2_val = unit2 if tau == 0 else unit2 * (Fraction(1) + tau) ** 2
+                    s = tau
+            if h2_val <= 0:
+                return False
+            if self.h2 is not None and _sqrt_q(h2_val / self.h2) is None:
+                return False
+            self.free_height_for.add(solid_name)
+            fx = self.pts[b0][0] + delta_0[0] + s * w[0]
+            fy = self.pts[b0][1] + delta_0[1] + s * w[1]
+            self._dat_ngoai_day(ten, (fx, fy), h2_val, f"trial_tilt_{b0}", call_ids)
+            return True
+
+        def _base_perp_constraints(off_pts: set[str], pair_map: dict[str, str]) -> list[tuple[str, V3, str]]:
+            specs: list[tuple[str, V3, str]] = []
+            for cp in self.of("perpendicular_lines"):
+                l1, l2 = tuple(cp.args.line1), tuple(cp.args.line2)
+                for la, lb in ((l1, l2), (l2, l1)):
+                    if len(la) == 2 and len(lb) == 2 and all(self.trong_day(v) for v in lb):
+                        off_hits = [v for v in la if v in off_pts]
+                        base_hits = [v for v in la if self.trong_day(v)]
+                        if len(off_hits) == 1 and len(base_hits) == 1:
+                            t_v, b_v = off_hits[0], base_hits[0]
+                            if not pair_map or pair_map.get(t_v) == b_v:
+                                u_vec = self._vec(lb[0], lb[1])
+                                if self.g(u_vec, u_vec) > 0:
+                                    specs.append((b_v, u_vec, cp.id))
+            for cr in self.of("right_angle"):
+                v_at = cr.args.vertex
+                r1, r2 = cr.args.rays
+                if self.trong_day(v_at):
+                    for r_off, r_base in ((r1, r2), (r2, r1)):
+                        if r_off in off_pts and self.trong_day(r_base):
+                            if not pair_map or pair_map.get(r_off) == v_at:
+                                u_vec = self._vec(v_at, r_base)
+                                if self.g(u_vec, u_vec) > 0:
+                                    specs.append((v_at, u_vec, cr.id))
+            return specs
+
+        base_set = frozenset(root.base)
+        for k in sorted(self.khoi.values(), key=lambda kk: kk.name):
+            if (
+                k.kind == "prism"
+                and not k.right
+                and all(b in self.pts and self.trong_day(b) for b in k.base)
+                and all(t not in self.pts for t in k.top)
+            ):
+                b0, t0 = k.base[0], k.top[0]
+                l2_rem: Fraction | None = None
+                cids: set[str] = {k.call}
+                for b_i, t_i in zip(k.base, k.top):
+                    d_list = sorted(self.do_dai(b_i, t_i))
+                    if d_list:
+                        b0, t0 = b_i, t_i
+                        l2_rem = d_list[0][0]
+                        cids |= set(d_list[0][1])
+                        break
+                h_cands = [
+                    (binh_phuong(ch.args.value), (ch.id,)) for ch in self.of("height") if ch.args.solid == k.name
+                ] + self._chieu_cao_tu_the_tich([k.name])
+                h2_known = sorted(h_cands)[0][0] if h_cands else None
+                if h_cands:
+                    cids |= set(sorted(h_cands)[0][1])
+                t_to_b = dict(zip(k.top, k.base))
+                p_specs = _base_perp_constraints(set(k.top), t_to_b)
+                if p_specs:
+                    w = _ortho_base_dir(p_specs[0][1])
+                    cids.add(p_specs[0][2])
+                else:
+                    w = (Fraction(1), Z, Z) if dir_idx == 0 else (Z, Fraction(1), Z)
+                if w is not None and _place_tilted(t0, b0, (Z, Z), w, l2_rem, h2_known, k.name, cids):
+                    return True
+
+            if (
+                k.kind == "pyramid"
+                and not k.regular
+                and k.apex
+                and k.apex not in self.pts
+                and frozenset(k.base) == base_set
+                and all(b in self.pts and self.trong_day(b) for b in k.base)
+            ):
+                apex = k.apex
+                placed_base = sorted(p for p in self.pts if self.trong_day(p))
+                slant = [
+                    (b_v, d_list[0][0], d_list[0][1])
+                    for b_v in placed_base
+                    if (d_list := sorted(self.do_dai(apex, b_v)))
+                ]
+                h_cands = [
+                    (binh_phuong(ch.args.value), (ch.id,)) for ch in self.of("height") if ch.args.solid == k.name
+                ] + self._chieu_cao_tu_the_tich([k.name])
+                h2_known = sorted(h_cands)[0][0] if h_cands else None
+                h_ids = set(sorted(h_cands)[0][1]) if h_cands else set()
+                p_specs = _base_perp_constraints({apex}, {})
+                if len(slant) == 2 and not p_specs:
+                    (b0, l0_sq, ids0), (b1, l1_sq, ids1) = slant
+                    u = self._vec(b0, b1)
+                    guu = self.g(u, u)
+                    if guu > 0:
+                        t_foot = (l0_sq - l1_sq + guu) / (2 * guu)
+                        d0 = (t_foot * u[0], t_foot * u[1])
+                        l2_rem = l0_sq - self.g((d0[0], d0[1], Z), (d0[0], d0[1], Z))
+                        w = _ortho_base_dir(u)
+                        if w is not None and l2_rem > 0 and _place_tilted(
+                            apex, b0, d0, w, l2_rem, h2_known, k.name, {k.call, *ids0, *ids1, *h_ids}
+                        ):
+                            return True
+                elif len(slant) <= 1:
+                    if slant:
+                        b0, l2_rem, s_ids = slant[0][0], slant[0][1], set(slant[0][2])
+                    elif p_specs:
+                        b0, l2_rem, s_ids = p_specs[0][0], None, set()
+                    else:
+                        b0, l2_rem, s_ids = k.base[0], None, set()
+                    perp_on_b0 = [item for item in p_specs if item[0] == b0]
+                    if perp_on_b0:
+                        w = _ortho_base_dir(perp_on_b0[0][1])
+                        p_ids = {perp_on_b0[0][2]}
+                    else:
+                        w = (Fraction(1), Z, Z) if dir_idx == 0 else (Z, Fraction(1), Z)
+                        p_ids = set()
+                    if w is not None and _place_tilted(
+                        apex, b0, (Z, Z), w, l2_rem, h2_known, k.name, {k.call, *s_ids, *p_ids, *h_ids}
+                    ):
+                        return True
+        return False
 
     def _dinh_affine_minh_hoa(self) -> bool:
         """Illustrative pyramid apex placement when all goals are affine ratios (`ask_length_ratio`, `ask_area_ratio`, `ask_volume_ratio`)."""
@@ -7098,6 +7300,7 @@ def _dung_mot_nhanh(
     _out_dung: list[_Dung] | None = None,
     _scale_unit: Fraction | None = None,
     _shape_units: tuple[tuple[frozenset, Fraction], ...] = (),
+    _free_tilt_sample: tuple[Fraction, int] | None = None,
 ) -> tuple[KetQuaTuyen, tuple[str, ...], list[dict]]:
     from app.simulation.semantic_program.formation import hoan_thien_dung_hinh
     from app.simulation.semantic_program.interpreter import SemanticProgramInterpreter
@@ -7121,7 +7324,7 @@ def _dung_mot_nhanh(
             raise TuChoi("CURVED_RELATION_UNSUPPORTED", "chưa hỗ trợ trộn khối tròn xoay độc lập với khối đa diện", tuple(c.id for c in cong_calls))
         ky_hieu = _don_vi(calls)
         dung = _Dung(calls, problem_text, ky_hieu, _flip_apices=_flip_apices, _free_h2_sample=_free_h2_sample,
-                     _scale_unit=_scale_unit, _shape_units=_shape_units)
+                     _scale_unit=_scale_unit, _shape_units=_shape_units, _free_tilt_sample=_free_tilt_sample)
         if ky_hieu:
             dung.trace.append({"step": "choose_unit", "object": ky_hieu, "rule": "symbolic_length_unit",
                                "calls": sorted(
