@@ -634,6 +634,8 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
+  min-width: 0;
+  max-width: 100%;
 }
 
 .axo-sp-story-head {
@@ -695,6 +697,8 @@
   overflow-x: auto;
   scrollbar-width: none;
   padding-bottom: 4px;
+  min-width: 0;
+  max-width: 100%;
 }
 
 .axo-sp-story-pills::-webkit-scrollbar {
@@ -855,6 +859,8 @@
 
 .axo-sp-story-visual-col {
   width: 100%;
+  min-width: 0;
+  max-width: 100%;
 }
 
 .axo-sp-story-stage-frame {
@@ -863,6 +869,9 @@
   background: var(--axo-sp-surface);
   box-shadow: var(--axo-sp-shadow-soft);
   padding: 12px;
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .axo-sp-story-canvas {
@@ -875,6 +884,9 @@
     radial-gradient(circle at 1px 1px, rgba(49, 48, 46, 0.08) 1px, transparent 0) 0 0 / 24px 24px,
     var(--axo-sp-surface);
   border: 1px solid rgba(49, 48, 46, 0.07);
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .axo-sp-story-top-bar {
@@ -1074,6 +1086,7 @@
   justify-content: space-between;
   gap: 8px;
   min-height: 36px;
+  min-width: 0;
 }
 
 .axo-sp-story-metric-group {
@@ -1083,6 +1096,8 @@
   scrollbar-width: none;
   gap: 6px;
   width: 100%;
+  min-width: 0;
+  max-width: 100%;
 }
 
 .axo-sp-story-metric-group::-webkit-scrollbar {
@@ -1927,7 +1942,7 @@
   .axo-sp-story-sticky,
   .axo-sp-demo-workbench,
   .axo-sp-final-cta-band {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .axo-sp-hero-visual {

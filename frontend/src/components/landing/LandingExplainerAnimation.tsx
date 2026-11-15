@@ -393,11 +393,11 @@ export function LandingExplainerAnimation({
 
         {/* ACT 4 visual result badge rendered inside the theater when Stage 3 resolves */}
         <g className={`axo-sp-explainer-result-badge${selectedStage === 3 ? " is-shown" : ""}`}>
-          <rect x="26" y="294" width="206" height="58" rx="14" className="axo-sp-explainer-result-bg" />
-          <text x="42" y="318" className="axo-sp-explainer-result-kicker">
+          <rect x="382" y="16" width="202" height="58" rx="14" className="axo-sp-explainer-result-bg" />
+          <text x="398" y="40" className="axo-sp-explainer-result-kicker">
             Thiết diện hình thang cân MNPQ
           </text>
-          <text x="42" y="340" className="axo-sp-explainer-result-val">
+          <text x="398" y="62" className="axo-sp-explainer-result-val">
             S(MNPQ) = 3√7
           </text>
         </g>
