@@ -1,0 +1,215 @@
+{
+  "schema": "algosim-stage-p1b-r537-development-regression/1",
+  "run_id": "dimension-aware-verified-construction",
+  "phase": "phase_7_exposed_development_case_r537_verification",
+  "stage": "stage_p1b",
+  "generated_by": "expr-dim-audit",
+  "generated_at": "2026-11-15T10:40:55Z",
+  "generated_at_utc": "2026-11-15T10:40:55Z",
+  "branch": "feat/local-first-geometry-understanding",
+  "git_head_sha": "b04bed0f83e02ac27416814bea08fa830ee91461",
+  "head": "b04bed0f83e02ac27416814bea08fa830ee91461",
+  "product_commit": "0c9d4a2f0c892ac13fcd6e47b919e87bfb141479",
+  "product_commit_rule": "product-paths-excluding-test-only/1",
+  "measured_system_hash": "7a15dc2e59a869c8c898458359a97a772760ae8eb89e7a75460a7625d0d6b488",
+  "measured_system_file_count": 120,
+  "baseline_measured_system_hash": "c25f9695828888987db2ab7990c4ff135da4d01c6b9d968f898c36728a0ae436",
+  "corpus_id": "REAL27_EXPOSED_DEVELOPMENT_VMMU_R537",
+  "dataset_manifest_sha256": "15486cd57a491060f6cdbc39ebd46c3c0c820b83cae645060554e9d8edee8141",
+  "provider_call_count": 0,
+  "cache_version": "140",
+  "cache_policy": "140:route-d",
+  "route_d_cache_policy": "140:route-d",
+  "planned_stage_p1c_cache_version": "140",
+  "schema_versions": {
+    "expression_model": "dimension-expression/1",
+    "typed_fact_next": "typed-fact-next/2",
+    "typed_fact_next_bridge": "typed-fact-next-bridge/2",
+    "registry": "geometry-functions/33",
+    "planner": "geometry-fact-planner/26",
+    "engine": "geometry-function-engine/24",
+    "local_geometry_parser": "local-geometry-parser/2",
+    "ocr_reconcile": "layout-aware-ocr-reconcile/1",
+    "determinacy_audit": "mathematical-determinacy-audit/1",
+    "trig_construction_certificates": "trig-construction-certificate/1",
+    "output_policy": "output-policy/1",
+    "hybrid_adapter": "hybrid-simulation-adapter/4",
+    "route_d_envelope": "hybrid-route-d-simulation/4"
+  },
+  "dataset_partition": "DEVELOPMENT_EXPOSED_ONLY (exposed REAL27 vmmu_r537, COMP112, DEV37, and Stage P1b dimensional/parser/Source-Gate probes); zero access to sealed H-1 or locked W2/W3",
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "HYBRID_ROUTE_MODE": "local-first",
+    "PYTHONPATH": "backend",
+    "python_executable": "D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe -B",
+    "live_ai_calls": 0,
+    "sealed_h1_rows_opened": 0,
+    "locked_w2_w3_rows_read": 0
+  },
+  "test_command": "D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe -B -m pytest -q backend/tests/simulation/test_dimension_expression_safety.py -k r537",
+  "expected_behavior": "Exposed REAL27 development case vmmu_r537 parses LOCAL_PARSE_COMPLETE without rewriting 'diện tích đáy bằng a²' into a source side premise, derives base side AB = a via certified SQUARE_AREA_TO_SIDE with VERIFIED_DERIVED_QUANTITY provenance, passes Exact Kernel verification, formats 'a√6/3' via output-policy/1 (matching VMMU dataset answer key C), produces complete cumulative Scene3D construction, preserves local OCR superscript 'a²' and Rule 5 diagram-reference confirmation gate, and uses zero case-ID hardcoding.",
+  "actual_behavior": "vmmu_r537 upgraded from SEMANTIC_INPUT_INCOMPLETE / NOT_SERVED to LOCAL_PARSE_COMPLETE / SERVED with exact answer 'a√6/3' (dataset key C), kernel_check=True, 0 provider calls, verified Scene3D points {'S','A','B','C','D'} + construction events, verified OCR draft 'a²' + confirmed-OCR serving, and 0 occurrences of 'r537'/'r460'/'r463' across all backend/app/*.py files.",
+  "mathematical_oracle": "Regular square pyramid S.ABCD with lateral edge SA = SB = SC = SD = a and square base area S_ABCD = a²: certified square ABCD => AB = sqrt(a²) = a; center O of ABCD satisfies AO² = AB²/2 = a²/2; altitude SO perp (ABCD) satisfies SO² = SA² - AO² = a²/2; midpoint M of BC gives OM = a/2, SM² = SO² + OM² = 3a²/4; distance d(O, (SBC)) = SO*OM/SM = (a/√2)*(a/2)/(a√3/2) = a√6/6; since AD || BC subset (SBC) and O is midpoint of AC, d(A, (SBC)) = 2*d(O, (SBC)) = a√6/3 (dataset key C).",
+  "source_provenance": {
+    "prior_run_receipt": "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/real27_acceptance_before_after.json",
+    "prior_run_receipt_sha256": "9a35613d0079451413a7e3334f46363658848c339539867ebd6590ae406bae68",
+    "test_suite": "backend/tests/simulation/test_dimension_expression_safety.py"
+  },
+  "case_verification": {
+    "case_id": "vmmu_r537",
+    "dataset_answer_key": "C",
+    "dataset_expected_expression": "a√6/3",
+    "source_text": "Cho hình chóp tứ giác đều S.ABCD có độ dài cạnh bên bằng a và diện tích đáy bằng a² (tham khảo hình bên dưới). Khoảng cách từ A đến mặt phẳng (SBC) bằng",
+    "root_causes_resolved_generally": [
+      {
+        "blocker_id": "R537-B1",
+        "component": "expression.py + local_geometry_parser.py + registry.py + engine.py",
+        "fix": "General dimension-aware QuantityExpr AST & certified SQUARE_AREA_TO_SIDE derivation"
+      },
+      {
+        "blocker_id": "R537-B2",
+        "component": "backend/app/simulation/geometry_functions/registry.py (_C_DIENTICH, _DIEN_TICH_PREMISE_RE)",
+        "fix": "Require balanced closing ')' on optional polygon-label group so trailing '(tham khảo hình bên dưới)' is never swallowed as an unclosed polygon label"
+      }
+    ],
+    "before_stage_p1b": {
+      "parse_status": "LOCAL_PARSE_PARTIAL",
+      "unread_clause": "diện tích đáy bằng a²",
+      "taxonomy_class": "SEMANTIC_INPUT_INCOMPLETE",
+      "route_status": "REFUSED",
+      "served": false
+    },
+    "after_stage_p1b": {
+      "parse_status": "LOCAL_PARSE_COMPLETE",
+      "extracted_premises": [
+        {
+          "kind": "regular_pyramid",
+          "args": {
+            "apex": "S",
+            "base": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          },
+          "quote": "Cho hình chóp tứ giác đều S.ABCD"
+        },
+        {
+          "kind": "segment_length",
+          "args": {
+            "segment": [
+              "S",
+              "A"
+            ],
+            "value": "a"
+          },
+          "quote": "Cho hình chóp tứ giác đều S.ABCD có độ dài cạnh bên bằng a"
+        },
+        {
+          "kind": "face_area",
+          "args": {
+            "polygon": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "value": "a²",
+            "shape": "polygon"
+          },
+          "quote": "diện tích đáy bằng a²"
+        }
+      ],
+      "side_premise_rewritten_in_parser": false,
+      "kernel_status": "SERVED",
+      "kernel_check": true,
+      "answer_exact": {
+        "coef": "√6/3",
+        "dim": 1,
+        "unit": "a"
+      },
+      "derived_quantities": [
+        {
+          "role": "VERIFIED_DERIVED_QUANTITY",
+          "rule_id": "SQUARE_AREA_TO_SIDE",
+          "target_entity": "AB",
+          "target_dimension": "LENGTH",
+          "premise_call_ids": [
+            "p3"
+          ],
+          "value_sq_unit": "1",
+          "symbolic_unit": "a",
+          "positivity_certified": true,
+          "certificate": "certified_square_polygon_and_positive_length_domain"
+        },
+        {
+          "role": "VERIFIED_DERIVED_QUANTITY",
+          "rule_id": "SQUARE_AREA_TO_SIDE",
+          "target_entity": "BC",
+          "target_dimension": "LENGTH",
+          "premise_call_ids": [
+            "p3"
+          ],
+          "value_sq_unit": "1",
+          "symbolic_unit": "a",
+          "positivity_certified": true,
+          "certificate": "certified_square_polygon_and_positive_length_domain"
+        },
+        {
+          "role": "VERIFIED_DERIVED_QUANTITY",
+          "rule_id": "SQUARE_AREA_TO_SIDE",
+          "target_entity": "CD",
+          "target_dimension": "LENGTH",
+          "premise_call_ids": [
+            "p3"
+          ],
+          "value_sq_unit": "1",
+          "symbolic_unit": "a",
+          "positivity_certified": true,
+          "certificate": "certified_square_polygon_and_positive_length_domain"
+        },
+        {
+          "role": "VERIFIED_DERIVED_QUANTITY",
+          "rule_id": "SQUARE_AREA_TO_SIDE",
+          "target_entity": "AD",
+          "target_dimension": "LENGTH",
+          "premise_call_ids": [
+            "p3"
+          ],
+          "value_sq_unit": "1",
+          "symbolic_unit": "a",
+          "positivity_certified": true,
+          "certificate": "certified_square_polygon_and_positive_length_domain"
+        }
+      ],
+      "text_route_status": "SERVED",
+      "text_route_answer_display": "a√6/3",
+      "matches_hand_oracle_and_dataset_key_C": true,
+      "scene3d_point_ids": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "O",
+        "S"
+      ],
+      "scene3d_event_count": 6,
+      "ocr_reconciliation": {
+        "draft_matches_source": true,
+        "uncertain_spans": [],
+        "blocking_reasons": [
+          "DIAGRAM_FACTS_UNVERIFIED"
+        ],
+        "confirmed_ocr_route_status": "SERVED",
+        "confirmed_ocr_route_answer": "a√6/3"
+      },
+      "zero_case_id_hardcoding_in_backend_app": true
+    }
+  },
+  "verdict": "VMMU_R537_SERVED_EXACT_MATCHES_ORACLE_ZERO_HARDCODING",
+  "baseline_product_commit": "d222e6d9b582d54fc42397a9593f52eb6fd77f18",
+  "stage_observed_measured_system_hash": "da96b0cb9ab42619b950fb1aaa8670caab9a0839821347ef0bbcf65bcfb44caf",
+  "stage_observed_measured_system_file_count": 120,
+  "stage_observed_cache_version": "139"
+}

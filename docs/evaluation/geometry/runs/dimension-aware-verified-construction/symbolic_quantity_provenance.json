@@ -1,0 +1,178 @@
+{
+  "schema": "algosim-stage-p1b-symbolic-quantity-provenance/1",
+  "run_id": "dimension-aware-verified-construction",
+  "phase": "phase_5_fact_roles_and_verified_derivation_provenance",
+  "stage": "stage_p1b",
+  "generated_by": "expr-dim-audit",
+  "generated_at": "2026-11-15T10:40:55Z",
+  "generated_at_utc": "2026-11-15T10:40:55Z",
+  "branch": "feat/local-first-geometry-understanding",
+  "git_head_sha": "b04bed0f83e02ac27416814bea08fa830ee91461",
+  "head": "b04bed0f83e02ac27416814bea08fa830ee91461",
+  "product_commit": "0c9d4a2f0c892ac13fcd6e47b919e87bfb141479",
+  "product_commit_rule": "product-paths-excluding-test-only/1",
+  "measured_system_hash": "7a15dc2e59a869c8c898458359a97a772760ae8eb89e7a75460a7625d0d6b488",
+  "measured_system_file_count": 120,
+  "baseline_measured_system_hash": "c25f9695828888987db2ab7990c4ff135da4d01c6b9d968f898c36728a0ae436",
+  "corpus_id": "STAGE_P1B_FACT_ROLE_AND_DERIVATION_PROVENANCE_PROBES",
+  "dataset_manifest_sha256": "15486cd57a491060f6cdbc39ebd46c3c0c820b83cae645060554e9d8edee8141",
+  "provider_call_count": 0,
+  "cache_version": "140",
+  "cache_policy": "140:route-d",
+  "route_d_cache_policy": "140:route-d",
+  "planned_stage_p1c_cache_version": "140",
+  "schema_versions": {
+    "expression_model": "dimension-expression/1",
+    "typed_fact_next": "typed-fact-next/2",
+    "typed_fact_next_bridge": "typed-fact-next-bridge/2",
+    "registry": "geometry-functions/33",
+    "planner": "geometry-fact-planner/26",
+    "engine": "geometry-function-engine/24",
+    "local_geometry_parser": "local-geometry-parser/2",
+    "ocr_reconcile": "layout-aware-ocr-reconcile/1",
+    "determinacy_audit": "mathematical-determinacy-audit/1",
+    "trig_construction_certificates": "trig-construction-certificate/1",
+    "output_policy": "output-policy/1",
+    "hybrid_adapter": "hybrid-simulation-adapter/4",
+    "route_d_envelope": "hybrid-route-d-simulation/4"
+  },
+  "dataset_partition": "DEVELOPMENT_EXPOSED_ONLY (exposed REAL27 vmmu_r537, COMP112, DEV37, and Stage P1b dimensional/parser/Source-Gate probes); zero access to sealed H-1 or locked W2/W3",
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "HYBRID_ROUTE_MODE": "local-first",
+    "PYTHONPATH": "backend",
+    "python_executable": "D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe -B",
+    "live_ai_calls": 0,
+    "sealed_h1_rows_opened": 0,
+    "locked_w2_w3_rows_read": 0
+  },
+  "test_command": "D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe -B -m pytest -q backend/tests/simulation/test_dimension_expression_safety.py -k 'derivation or provenance or bridge_and_planner'",
+  "expected_behavior": "All quantity facts carry explicit FactRole separation: SOURCE_QUANTITY preserves verbatim source premises (AREA(base) = a² is never rewritten into SIDE(base) = a); VERIFIED_DERIVED_QUANTITY is emitted only by certified geometric rules when shape/altitude/positivity hypotheses hold; ILLUSTRATIVE_CONSTRUCTION_QUANTITY is strictly isolated to certified scale-invariant/illustrative choices; UNVERIFIED_CANDIDATE is hard-blocked from realization.",
+  "actual_behavior": "Verified across bridge_v2, planner.lap_ke_hoach, engine.dung_tu_loi_goi, and route_text_input: regular_polygon emitted by planner carries no rewritten 'side' argument; engine records explicit DerivedQuantityRecord entries for certified square/equilateral-triangle/pyramid/prism derivations; general quadrilateral ABCD with area a² refuses MISSING_DIMENSION with empty derived_quantities; illustrative angle construction records ILLUSTRATIVE_CONSTRUCTION_QUANTITY with source_length_supplied=False.",
+  "mathematical_oracle": "Deductive soundness of certified inverse mensuration rules: (1) Square(ABCD) & Area(ABCD)=A > 0 => AB^2 = A; (2) EquilateralTriangle(ABC) & Area(ABC)=A > 0 => AB^2 = 4*A/sqrt(3); (3) Pyramid(S, base) & V > 0 & Area(base)=B > 0 => h = 3*V/B; (4) Pyramid(S, Square(ABCD)) & V > 0 & h > 0 => AB^2 = 3*V/h; (5) RightPrism & V > 0 & Area(base)=B > 0 => h = V/B.",
+  "source_provenance": {
+    "bridge_module": "backend/app/simulation/geometry_functions/typed_fact_next_bridge.py",
+    "planner_module": "backend/app/simulation/geometry_functions/planner.py",
+    "engine_module": "backend/app/simulation/geometry_functions/engine.py",
+    "test_suite": "backend/tests/simulation/test_dimension_expression_safety.py"
+  },
+  "source_quantity_no_premise_rewriting": {
+    "premise_provenance_records": [
+      {
+        "premise_id": "p2",
+        "kind": "segment_length",
+        "field": "value",
+        "slot_dimension": "LENGTH",
+        "role": "SOURCE_QUANTITY",
+        "original_expr": "2",
+        "normalized_expr": "2",
+        "source_span": [
+          50,
+          51
+        ],
+        "operand_spans": [
+          [
+            "num:2",
+            50,
+            51
+          ]
+        ]
+      },
+      {
+        "premise_id": "p3",
+        "kind": "face_area",
+        "field": "value",
+        "slot_dimension": "AREA",
+        "role": "SOURCE_QUANTITY",
+        "original_expr": "4",
+        "normalized_expr": "4",
+        "source_span": [
+          72,
+          73
+        ],
+        "operand_spans": [
+          [
+            "num:4",
+            72,
+            73
+          ]
+        ]
+      },
+      {
+        "premise_id": "p4",
+        "kind": "solid_volume",
+        "field": "value",
+        "slot_dimension": "VOLUME",
+        "role": "SOURCE_QUANTITY",
+        "original_expr": "4/3",
+        "normalized_expr": "4/3",
+        "source_span": [
+          108,
+          111
+        ],
+        "operand_spans": [
+          [
+            "num:4",
+            108,
+            109
+          ],
+          [
+            "num:3",
+            110,
+            111
+          ]
+        ]
+      }
+    ],
+    "planned_call_fns": [
+      "regular_pyramid",
+      "regular_polygon",
+      "polygon_area",
+      "segment_length",
+      "solid_volume",
+      "ask_distance_point_plane"
+    ],
+    "regular_polygon_args": {
+      "vertices": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    },
+    "area_rewritten_as_side_premise": false
+  },
+  "certified_derivation_rules_verified": [
+    "SQUARE_AREA_TO_SIDE",
+    "EQUILATERAL_TRIANGLE_AREA_TO_SIDE",
+    "PYRAMID_VOLUME_AND_BASE_TO_HEIGHT",
+    "PYRAMID_VOLUME_AND_HEIGHT_TO_SQUARE_SIDE",
+    "PRISM_VOLUME_AND_BASE_TO_HEIGHT"
+  ],
+  "uncertified_derivation_blocked": {
+    "polygon": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "shape_certified": null,
+    "area_value": "a²",
+    "engine_status": "REFUSED",
+    "engine_code": "MISSING_DIMENSION",
+    "derived_quantities": []
+  },
+  "illustrative_construction_quantity_separation": {
+    "status": "SERVED",
+    "scene_configuration_kind": "TARGET_INVARIANT_ILLUSTRATIVE",
+    "source_length_supplied": false,
+    "illustrative_steps": [
+      "certify_target_invariance"
+    ]
+  },
+  "verdict": "SYMBOLIC_QUANTITY_PROVENANCE_AND_FACT_ROLES_VERIFIED",
+  "baseline_product_commit": "d222e6d9b582d54fc42397a9593f52eb6fd77f18",
+  "stage_observed_measured_system_hash": "da96b0cb9ab42619b950fb1aaa8670caab9a0839821347ef0bbcf65bcfb44caf",
+  "stage_observed_measured_system_file_count": 120,
+  "stage_observed_cache_version": "139"
+}

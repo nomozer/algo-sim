@@ -1,0 +1,118 @@
+{
+  "schema": "algosim-phase2-frontend-error-consumer-compatibility/1",
+  "run_id": "dimension-aware-verified-construction",
+  "phase": "phase_2_frontend_error_consumer_compatibility",
+  "generated_at_utc": "2026-11-15T07:24:18Z",
+  "branch": "feat/local-first-geometry-understanding",
+  "head": "b04bed0f83e02ac27416814bea08fa830ee91461",
+  "product_commit": "0c9d4a2f0c892ac13fcd6e47b919e87bfb141479",
+  "measured_system_hash": "7a15dc2e59a869c8c898458359a97a772760ae8eb89e7a75460a7625d0d6b488",
+  "measured_system_file_count": 120,
+  "baseline_measured_system_hash": "c25f9695828888987db2ab7990c4ff135da4d01c6b9d968f898c36728a0ae436",
+  "cache_version": "140",
+  "route_d_cache_policy": "140:route-d",
+  "dataset_partition": "DEVELOPMENT (static + contract audit of all frontend API clients, state stores, error adapters, learner notices, telemetry panels, and Vitest/Playwright suites; never sealed H-1 or locked W2/W3)",
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "PYTHONPATH": "backend",
+    "live_ai_calls": 0
+  },
+  "test_command": "npx --prefix frontend tsc --noEmit && npx --prefix frontend vitest run src/components/failure-taxonomy-ui-contract.test.tsx src/components/hybrid-preview-contract.test.tsx src/components/hybrid-product-integration.test.tsx src/components/refusal-contract.test.tsx src/components/learner-error.test.tsx src/components/photo-problem-flow.test.ts src/components/axo-error-experience.test.tsx src/components/axo-runtime-recovery.test.tsx src/components/v28-ux-functional.test.tsx src/components/analyze-error-message.test.ts",
+  "expected_behavior": "Every frontend consumer of /api/analyze, /api/image/extract, and /api/input/prepare handles HTTP 200 structured refusals (envelope.status='unsupported') and HTTP 503 operational errors (failure_kind='INFRASTRUCTURE_FAILURE' with optional local_understanding) without pointless client retries, without leaking technical identifiers, without advising students to add missing hypotheses on capability gaps or unproved determinacy (enforcing W17 section 15.3 / F6 across both Home composer and Workspace UnsupportedNotice), and without labeling capability/determinacy clauses as 'chưa hiểu hết đề bài' when rewrite_may_help === false.",
+  "actual_behavior": "Stage P0 Phase 2 frontend consumer fixes implemented and verified (npx tsc --noEmit 0 errors; 10/10 Vitest suites, 191/191 tests passed): (1) client.ts preserves 0 automatic retries on HTTP 503 (transient === false) and exposes structured localUnderstanding (rootCause, rewriteMayHelp, taxonomyClass, failureDimension) on AxoClientError and ClientFailureContract; (2) ProblemInput.tsx describeHomeRefusal reads const code = errCode || reasonCode, enforces HFOI-F6 (inviting learners to add missing data ONLY when refusal_cause === 'SOURCE' and !isCapabilityGap), renders 'Axo chưa hỗ trợ phép dựng này' on capability_gap (even when reason_code is MISSING_DIMENSION as in P0 vmmu_r460/r463), and separates NON_POSITIVE_LENGTH ('Số đo độ dài trong đề cần lớn hơn 0') from mutual premise contradictions; (3) ProblemInput.tsx describeComposerError renders 'Đề bài dùng dữ kiện hệ thống chưa hỗ trợ xử lý cục bộ' when HTTP 503 carries localUnderstanding.rewriteMayHelp === false, while keeping 'Hệ thống chưa hiểu hết đề bài' when rewrite_may_help is true or omitted; (4) SimulationWorkspace.tsx UnsupportedNotice adds SOURCE_VERIFIED_INVALID_DATA_REFUSAL_TEXT gated strictly on (!error_code && refusal_cause === 'SOURCE' && reason_code), preserving 100% of locked F5/F6 and 41-fixture preview contracts.",
+  "mathematical_oracle": "Exhaustive static call-graph and state-transition verification over all frontend consumers of AnalyzeOutcome, ClientFailure, HybridRouteEnvelope, and UnsupportedState, cross-checked against locked Vitest contracts (F5/F6 in hybrid-preview-contract.test.tsx, refusal-contract.test.tsx, analyze-error-message.test.ts, photo-problem-flow.test.ts, axo-error-experience.test.tsx).",
+  "source_provenance": {
+    "candidate_manifest": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+    "inspected_frontend_files": [
+      "frontend/src/llm/client.ts",
+      "frontend/src/simulations/domains/geometry/hybrid-preview-adapter.ts",
+      "frontend/src/components/ProblemInput.tsx",
+      "frontend/src/components/photo-problem-flow.ts",
+      "frontend/src/components/SimulationWorkspace.tsx",
+      "frontend/src/components/AxoErrorExperience.tsx",
+      "frontend/src/components/AuthGate.tsx",
+      "frontend/src/state/store.ts",
+      "frontend/src/core/types.ts"
+    ],
+    "inspected_frontend_tests": [
+      "frontend/src/llm/analyze-error-message.test.ts",
+      "frontend/src/components/photo-problem-flow.test.ts",
+      "frontend/src/components/axo-error-experience.test.tsx",
+      "frontend/src/components/hybrid-preview-contract.test.tsx",
+      "frontend/src/components/hybrid-product-integration.test.tsx",
+      "frontend/src/components/learner-error.test.tsx",
+      "frontend/src/components/refusal-contract.test.tsx",
+      "frontend/src/components/v28-ux-functional.test.tsx",
+      "frontend/scripts/verify-hybrid-product-e2e.mjs",
+      "frontend/scripts/photo-problem-browser-check.mjs"
+    ]
+  },
+  "verdict": "STAGE_P0_GATE_B_FRONTEND_CONSUMERS_VERIFIED_191_VITEST_PASSED",
+  "consumer_compatibility_matrix": [
+    {
+      "consumer": "frontend/src/llm/client.ts (postJson & analyzeProblem, lines 32-345)",
+      "http_200_unsupported_handling": "Parsed via docPhanHoiHybrid(raw) -> ketQuaTuHybrid -> returns { status: 'unsupported', envelope, routeD }. 0 retries.",
+      "http_503_handling": "Lines 154-169: maps 503 -> code='SERVICE_UNAVAILABLE', transient = (res.status === 502 || res.status === 504) === false -> 0 automatic retries! Extracts lu = rec.local_understanding (message, unread_excerpts, rewrite_may_help) into learnerDetail (safe Vietnamese string) and attaches structured localUnderstanding metadata.",
+      "retry_safety": "VERIFIED_ZERO_POINTLESS_RETRIES (only 502, 504, network TypeError, and one-shot 401 session_required retry; 503 never retries).",
+      "compatibility_verdict": "COMPATIBLE_ADD_OPTIONAL_LOCAL_UNDERSTANDING_METADATA_FIELD"
+    },
+    {
+      "consumer": "frontend/src/simulations/domains/geometry/hybrid-preview-adapter.ts (docPhanHoiHybrid, lines 819-925)",
+      "http_200_unsupported_handling": "Accepts schema_version === 'hybrid-route-d-simulation/4' with envelope.status === 'unsupported' and route_d.status === 'REFUSED'. Checks closed allowed fields on envelope (status, reason_code, error_code, reason, learner_reason, failure_category, refusal_cause) while ignoring extra keys inside route_d (such as local_diagnostics or refusal.determinacy).",
+      "compatibility_verdict": "STRICT_ENVELOPE_6_KEY_GUARD_MUST_KEEP_TAXONOMY_FIELDS_IN_ROUTE_D"
+    },
+    {
+      "consumer": "frontend/src/components/ProblemInput.tsx (describeHomeRefusal & mapClientFailureToNotice, lines 55-225)",
+      "http_200_unsupported_handling": "DEFECT FE-ERR-1 at lines 97-108 & 120-125: Route-D HTTP 200 envelopes set reason_code without error_code (so errCode is ''), causing MISSING_PREMISE_CODES.has(errCode), INCONSISTENT_PREMISE_CODES.has(errCode), and SOURCE_CONFLICT_CODES.has(errCode) to miss Route-D reason_codes; simultaneously line 104 checks cat === 'insufficient_specification' without gating on cause === 'SOURCE', displaying 'Đề bài chưa đủ dữ kiện để dựng hình' + hint 'Bạn có thể bổ sung dữ kiện còn thiếu...' even when refusal_cause === 'UNKNOWN' (violating F6).",
+      "http_503_handling": "DEFECT FE-ERR-2 at lines 196-202: when code === 'SERVICE_UNAVAILABLE' && learnerDetail, always sets title='Hệ thống chưa hiểu hết đề bài' even when local_understanding.rewrite_may_help === false (e.g. UNSUPPORTED_POINT_CONSTRUCTION).",
+      "compatibility_verdict": "REQUIRES_SURGICAL_P0_FIX_IN_PROBLEMINPUT_TSX"
+    },
+    {
+      "consumer": "frontend/src/components/photo-problem-flow.ts (mapImageExtractError & mapAnalyzeErrorForPhotoFlow, lines 250-334)",
+      "http_503_handling": "Reads err.learnerDetail when present and disables retry button when err.transient === false unless user edits text; photo-problem-flow.test.ts:143-160 locks HTTP 503 LIVE_AI_DISABLED + local_understanding behavior.",
+      "compatibility_verdict": "COMPATIBLE_PRESERVE_LEARNER_DETAIL_CONTRACT"
+    },
+    {
+      "consumer": "frontend/src/components/SimulationWorkspace.tsx (UnsupportedNotice, lines 3290-3545)",
+      "http_200_unsupported_handling": "Enforces F6 at line 3418 (const deThieu = insufficient && unsupported.refusal_cause === 'SOURCE') and preserves error_code='input_not_grounded' via NHAN_LOAI_VAN_DE.input_not_grounded (refusal-contract.test.tsx:220) and hint = null on refusal_cause === 'SOURCE' (line 3466). DEFECT FE-ERR-3 at lines 3322-3358: GEOMETRY_REFUSAL_TEXT only lists INCONSISTENT_FACTS and CURVED_PLANE_DOES_NOT_CUT among Route-D INVALID_DATA reason_codes, omitting structured reason_code entries for NON_POSITIVE_LENGTH (non-positive dimension, distinct from mutual premise contradiction), PLANE_DOES_NOT_CUT / PARALLEL_NO_INTERSECTION / SKEW_NO_INTERSECTION (no intersection/section), and DEGENERATE_SOLID / COLLINEAR_POINTS / NON_COPLANAR_POINTS / NO_CIRCUMSCRIBED_SPHERE / NO_INSCRIBED_SPHERE when gated on refusal_cause === 'SOURCE'.",
+      "compatibility_verdict": "REQUIRES_SURGICAL_P0_REASON_CODE_TABLE_EXPANSION"
+    },
+    {
+      "consumer": "frontend/src/components/AxoErrorExperience.tsx (lines 1-260) & frontend/src/state/store.ts (lines 330-445, 710-745)",
+      "handling": "store.ts loadUnsupported stores structured envelope fields (reason, learner_reason, error_code, reason_code, failure_category, refusal_cause, stage_reached) without mutation; AxoErrorExperience renders structured title/detail/hint/actions passed by ProblemInput/Workspace.",
+      "compatibility_verdict": "COMPATIBLE_NO_BREAKING_CHANGES"
+    },
+    {
+      "consumer": "frontend/src/components/AuthGate.tsx (admin telemetry dashboard)",
+      "handling": "Reads server-aggregated servedRequests, refusedRequests, failedRequests counts only.",
+      "compatibility_verdict": "COMPATIBLE"
+    }
+  ],
+  "surgical_frontend_p0_spec": [
+    {
+      "file": "frontend/src/llm/client.ts",
+      "lines": "15-35, 130-170",
+      "action": "Preserve HTTP 503 -> code='SERVICE_UNAVAILABLE', transient=false, and learnerDetail string formatting (keeping analyze-error-message.test.ts and photo-problem-flow.test.ts 100% green); attach optional localUnderstanding?: { rootCause?: string; rewriteMayHelp?: boolean; taxonomyClass?: string } on ClientFailure."
+    },
+    {
+      "file": "frontend/src/components/ProblemInput.tsx",
+      "lines": "55-130, 195-210",
+      "action": "1) In describeHomeRefusal (lines 96-128): compute const code = errCode || reasonCode (since Route-D HTTP 200 envelopes populate reason_code with no error_code), require cause === 'SOURCE' for BOTH isMissingPremise (cause === 'SOURCE' && (cat === 'insufficient_specification' || MISSING_PREMISE_CODES.has(code))) and isInconsistentPremise (cause === 'SOURCE' && ROUTE_D_INVALID_DATA_MUTUAL_CONFLICT_CODES.has(code)), keep NON_POSITIVE_LENGTH (cause === 'SOURCE' && code === 'NON_POSITIVE_LENGTH') distinct with non-positive-dimension copy ('Số đo độ dài trong đề cần lớn hơn 0'), and when cat === 'insufficient_specification' && cause !== 'SOURCE' render neutral title 'Hệ thống chưa xác định được duy nhất hình' with no 'bổ sung dữ kiện' hint (enforcing F6). 2) In mapClientFailureToNotice (lines 196-205): when clientFailure.localUnderstanding?.rewriteMayHelp === false, use neutral capability/scope title ('Đề bài dùng dữ kiện hệ thống chưa hỗ trợ xử lý cục bộ') instead of 'Hệ thống chưa hiểu hết đề bài'."
+    },
+    {
+      "file": "frontend/src/components/SimulationWorkspace.tsx",
+      "lines": "3321-3360",
+      "action": "Strictly use structured lookup by reason_code in GEOMETRY_REFUSAL_TEXT gated on (!unsupported.error_code && unsupported.refusal_cause === 'SOURCE') for newly added Route-D INVALID_DATA entries — keeping error_code='input_not_grounded' (NHAN_LOAI_VAN_DE.input_not_grounded, refusal-contract.test.tsx:220) 100% untouched, keeping NON_POSITIVE_LENGTH ('SỐ ĐO KHÔNG DƯƠNG') distinct from mutual premise contradiction (INCONSISTENT_FACTS / QUESTION_LOCAL_GIVEN_CONFLICT / SKEW_CLAIM_CONTRADICTED -> 'DỮ KIỆN MÂU THUẪN') and non-intersection/degeneracy codes (PLANE_DOES_NOT_CUT / PARALLEL_NO_INTERSECTION / SKEW_NO_INTERSECTION -> 'KHÔNG CÓ GIAO TUYẾN'; DEGENERATE_SOLID / COLLINEAR_POINTS / NON_COPLANAR_POINTS -> 'HÌNH SUY BIẾN'), preserving hint = null on refusal_cause === 'SOURCE' (line 3466), and performing zero string-matching on reason/learner_reason (refusal-contract.test.tsx:157-211) while keeping all 25 fixtures with refusal_cause === 'UNKNOWN' in hybrid-preview-contract.test.tsx byte-unchanged."
+    }
+  ],
+  "stage_p0_verification": {
+    "tsc_no_emit_errors": 0,
+    "vitest_files_passed": 10,
+    "vitest_tests_passed": 191,
+    "new_contract_suite": "frontend/src/components/failure-taxonomy-ui-contract.test.tsx"
+  },
+  "baseline_product_commit": "d222e6d9b582d54fc42397a9593f52eb6fd77f18",
+  "stage_observed_measured_system_hash": "e1d06448e0ea9d15dfdc8098f46898240a891622d9e32368865f0ee3c966e9ef",
+  "stage_observed_measured_system_file_count": 118,
+  "stage_observed_cache_version": "139"
+}

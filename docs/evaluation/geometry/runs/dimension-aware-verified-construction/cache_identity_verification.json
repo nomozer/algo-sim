@@ -1,0 +1,102 @@
+{
+  "schema": "algosim-stage-p1c-cache-identity-verification/1",
+  "phase": "phase_10_cache_identity_140_lock_and_adversarial_invalidation",
+  "run_id": "dimension-aware-verified-construction",
+  "stage": "stage_p1c",
+  "generated_by": "trig-kernel-audit",
+  "generated_at": "2026-11-15T11:52:00Z",
+  "generated_at_utc": "2026-11-15T11:52:00Z",
+  "branch": "feat/local-first-geometry-understanding",
+  "git_head_sha": "b04bed0f83e02ac27416814bea08fa830ee91461",
+  "head": "b04bed0f83e02ac27416814bea08fa830ee91461",
+  "product_commit": "0c9d4a2f0c892ac13fcd6e47b919e87bfb141479",
+  "product_commit_rule": "product-paths-excluding-test-only/1",
+  "measured_system_hash": "7a15dc2e59a869c8c898458359a97a772760ae8eb89e7a75460a7625d0d6b488",
+  "measured_system_file_count": 120,
+  "baseline_measured_system_hash": "c25f9695828888987db2ab7990c4ff135da4d01c6b9d968f898c36728a0ae436",
+  "cache_version": "140",
+  "route_d_cache_policy": "140:route-d",
+  "semantic_environment_hash": "6233c43c395c9b493d31d3dbb5d0ca952604730f6185cf541d2f179c077f955b",
+  "provider_call_count": 0,
+  "schema_versions": {
+    "expression_model": "dimension-expression/1",
+    "typed_fact_next": "typed-fact-next/2",
+    "typed_fact_next_bridge": "typed-fact-next-bridge/2",
+    "registry": "geometry-functions/33",
+    "planner": "geometry-fact-planner/26",
+    "engine": "geometry-function-engine/24",
+    "local_geometry_parser": "local-geometry-parser/2",
+    "adaptive_input_router": "adaptive-input-router/1",
+    "determinacy_audit": "mathematical-determinacy-audit/1",
+    "trig_construction_certificates": "trig-construction-certificate/1",
+    "output_policy": "output-policy/1",
+    "hybrid_adapter": "hybrid-simulation-adapter/4",
+    "route_d_envelope": "hybrid-route-d-simulation/4"
+  },
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "HYBRID_ROUTE_MODE": "local-first",
+    "PYTHONPATH": "backend",
+    "python_executable": "D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe -B",
+    "live_ai_calls": 0,
+    "sealed_h1_rows_opened": 0,
+    "locked_w2_w3_rows_read": 0
+  },
+  "zero_case_id_hardcode_verified": {
+    "scanned_path": "backend/app/**/*.py",
+    "forbidden_tokens": [
+      "vmmu_",
+      "r460",
+      "r463",
+      "r537",
+      "r266",
+      "r411"
+    ],
+    "hits": 0
+  },
+  "dataset_partition": "CACHE_IDENTITY_AND_ADVERSARIAL_STALE_POLICY_SUITE (zero access to sealed H-1 or locked W2/W3)",
+  "test_command": "D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe -B -m pytest -q backend/tests/test_cache_dimension_trig_invalidation.py backend/tests/test_cache_identity.py && D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe -B backend/scripts/lock_cache_identity.py --verify",
+  "source_provenance": {
+    "cache_modules": [
+      "backend/app/main.py",
+      "backend/app/runtime_identity.py",
+      "backend/cache_identity.lock.json",
+      "backend/scripts/lock_cache_identity.py",
+      "backend/app/ai/local_geometry_parser.py",
+      "backend/app/ai/hybrid_offline.py"
+    ],
+    "test_suites": [
+      "backend/tests/test_cache_dimension_trig_invalidation.py",
+      "backend/tests/test_cache_identity.py"
+    ]
+  },
+  "mathematical_oracle": "Cache soundness invariant: whenever verdict or served envelope semantics change across parser, dimensional algebra, derived-quantity rules, or trigonometric construction certificates, both persistent SQLite `SimulationCache` (`policy_version = f'{CACHE_VERSION}:route-d'`) and in-process/offline keys (`LOCAL_GEOMETRY_PARSER_VERSION` + `semantic_environment_fingerprint`) MUST change atomically so stale prior-version rows (`139:route-d`) miss 100% of the time, while refusals and HTTP `502/503/504` responses emit `Cache-Control: no-store` and never write to `SimulationCache`.",
+  "expected_behavior": "Bump `CACHE_VERSION` from `'139'` to `'140'` (`ROUTE_D_CACHE_POLICY = '140:route-d'`), extend `runtime_identity.py` `hybrid_surface` with `local_parser_version`, `adaptive_router_version`, and `trig_construction_certificate_version`, regenerate `backend/cache_identity.lock.json` (`--verify` PASS), update active `'139'` test pins without touching historical run receipts or dirty-tree `EVALUATION_CANDIDATE.json`, and prove stale `'139:route-d'` entries always miss.",
+  "actual_behavior": "Locked `CACHE_VERSION = '140'`, `ROUTE_D_CACHE_POLICY = '140:route-d'`, and `semantic_environment_hash = '6233c43c395c9b493d31d3dbb5d0ca952604730f6185cf541d2f179c077f955b'` (`lock_cache_identity.py --verify` PASS); updated 19 active test pin files; verified all 7 adversarial tests in `test_cache_dimension_trig_invalidation.py` + `test_cache_identity.py` PASS while preserving `EVALUATION_CANDIDATE.json` untouched on the dirty working tree.",
+  "verdict": "PASS",
+  "lockfile_verification": {
+    "lockfile_path": "backend/cache_identity.lock.json",
+    "lockfile_sha256": "b6b2b8b9d34f14088d86f81e37321f7d4069ee4063fe1b478e49653d33063b17",
+    "previous_cache_version": "139",
+    "current_cache_version": "140",
+    "current_route_d_cache_policy": "140:route-d",
+    "semantic_environment_hash": "6233c43c395c9b493d31d3dbb5d0ca952604730f6185cf541d2f179c077f955b",
+    "component_hashes": {
+      "prompts": "cb272862541ae2dcdeb4ede7535c4b36f14e6abc739321ff32ae60fea592a385",
+      "grammar_card": "9b8506e6883154a1f08bb90a1e7a51999ce0df6bf5a9ba4b4d61fc4757d2b750",
+      "synthesis_schema": "6b6d0d71b84965049c47b386f102cff7dea0918434e0314961f66c86bdbfc1b0",
+      "analyze_schema": "ab7b894a3f60ff5c5baafcfddc08861ae7a4327f77f5f00d4a73ec492975463f",
+      "capability": "a2e8131eeeab638f0567b8962317c3d92c9d5a7a0b4ee9e2e74bbcb78d62751a",
+      "typed_fact_next_surface": "33197a45e0620d94a669047b47907479d1e7f07b1dc76e7c6abd75ada7a6df14",
+      "hybrid_route_surface": "1c0bd6f6d8753d803eecc886878dd67848b7ad3b02847ed9c48d8195b6a7203e"
+    },
+    "hybrid_surface_extensions": [
+      "local_parser_version",
+      "adaptive_router_version",
+      "trig_construction_certificate_version"
+    ],
+    "updated_test_pin_files_count": 19,
+    "evaluation_candidate_untouched_while_dirty": true
+  },
+  "baseline_product_commit": "d222e6d9b582d54fc42397a9593f52eb6fd77f18"
+}

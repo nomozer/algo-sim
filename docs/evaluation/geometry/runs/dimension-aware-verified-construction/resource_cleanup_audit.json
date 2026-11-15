@@ -1,0 +1,408 @@
+{
+  "schema": "algosim-resource-cleanup-audit/1",
+  "run_id": "dimension-aware-verified-construction",
+  "phase": "phase_14_5_memory_and_resource_cleanup_audit",
+  "generated_at_utc": "2026-11-15T14:09:17Z",
+  "git_head_at_generation": "b04bed0f83e02ac27416814bea08fa830ee91461",
+  "product_commit": "0c9d4a2f0c892ac13fcd6e47b919e87bfb141479",
+  "measured_system_hash": "7a15dc2e59a869c8c898458359a97a772760ae8eb89e7a75460a7625d0d6b488",
+  "measured_system_file_count": 120,
+  "cache_version": "140",
+  "route_d_cache_policy": "140:route-d",
+  "semantic_environment_hash": "6233c43c395c9b493d31d3dbb5d0ca952604730f6185cf541d2f179c077f955b",
+  "allow_live_ai": "0",
+  "unbounded_retention_detected_in_tested_paths": false,
+  "universal_absence_of_memory_leak_proof": "INCONCLUSIVE_FINITE_SAMPLE",
+  "dataset_partition": "SYNTHETIC_AND_DEVELOPMENT_PROBES_ONLY (Stage P1 expression/trig/refusal probes + synthetic 600-item cache test + Vitest frontend lifecycle suites); zero access to sealed H-1 or locked W2/W3",
+  "test_command": "D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe -B docs/evaluation/geometry/runs/dimension-aware-verified-construction/tools/resource_cleanup_audit.py",
+  "source_provenance": {
+    "audit_script": "docs/evaluation/geometry/runs/dimension-aware-verified-construction/tools/resource_cleanup_audit.py",
+    "expression_module": "backend/app/simulation/geometry/expression.py",
+    "trig_certificates_module": "backend/app/simulation/geometry_functions/trig_construction_certificates.py",
+    "local_parser_module": "backend/app/ai/local_geometry_parser.py",
+    "frontend_history_module": "frontend/src/state/history.ts",
+    "frontend_recovery_module": "frontend/src/state/learner-recovery-snapshot.ts",
+    "frontend_workspace_module": "frontend/src/components/SimulationWorkspace.tsx",
+    "frontend_scene3d_module": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+    "temp_sqlite_cleaned_up": true
+  },
+  "mathematical_oracle": "Resource-boundedness & lifecycle cleanup contract (§14.5): (1) `QuantityExpr` / `SymbolBindingPlan` / `TrigCertificateError` instances are request-ephemeral with zero module-level unbounded caches; (2) `_PARSER_CACHE` is strictly bounded at `MAX_PARSER_CACHE_SIZE = 256` with FIFO eviction and `<= 4096`-char input guard; (3) browser storage & route stacks enforce explicit caps (`HISTORY_MAX_ITEMS = 30`, `MAX_STORED_PROBLEMS = 12`, `MAX_SNAPSHOT_CHARS = 12288`, `routeStack <= 24`); (4-5) scene switching and unmount dispose Three.js geometries, materials, textures, observers, timers, and render lists; (6-7) 200x repeated failed and 200x repeated successful requests plateau in traced Python heap after warm-up without writing failed/refused rows into `SimulationCache`. Finite-sample empirical runs bound retention on tested paths without claiming a universal proof of zero leaks across arbitrary browser/GPU drivers.",
+  "expected_behavior": "All 7 §14.5 audit areas pass: `retained_delta == 0` for `QuantityExpr` / AST objects after GC; `len(_PARSER_CACHE) == 256` after 600 unique parses and `> 4096`-char text excluded; all 4 frontend Vitest lifecycle & history suites pass; `SimulationCache` has `0` rows after 200 failed requests and exactly `5` rows (`5` misses, `195` hits under `140:route-d`) after 200 cached served requests; and traced heap growth between request 50 and request 200 stays near zero.",
+  "actual_behavior": "All 7 §14.5 areas PASSED: (1) `retained_delta == 0` across all 6 `QuantityExpr`/AST/certificate classes after 200 requests + GC; (2) `_PARSER_CACHE` held exactly 256/256 entries after 600 unique inputs with 5k-char input excluded and deep-copy isolation verified; (3-5) all 34/34 Vitest lifecycle/history tests passed across 4 suites with 0 Stage P1c carrier leaks; (6) 200x failed requests wrote 0 SQLite rows with `tracemalloc` delta (req 200 - req 50) = +5.26 KiB; (7) 200x uncached served requests had `tracemalloc` delta (req 200 - req 50) = +1.13 KiB and 200x SQLite-cached served requests recorded 5 misses + 195 hits (`140:route-d`) with delta = -0.38 KiB.",
+  "verdict": "PASS",
+  "areas": {
+    "1_quantity_expr_and_ast_retention": {
+      "status": "PASS",
+      "static_inspection": {
+        "expression_module": {
+          "file": "backend/app/simulation/geometry/expression.py",
+          "sha256": "ba1fe258bbcbcd2dd80e5ed18eb37551a6037f260699471181a8526480dd506d",
+          "lru_or_unbounded_cache_decorators": [],
+          "mutable_collection_globals": [],
+          "top_level_symbol_count": 15
+        },
+        "trig_certificates_module": {
+          "file": "backend/app/simulation/geometry_functions/trig_construction_certificates.py",
+          "sha256": "e41b426b6b73d9298e2d3247b8b10d0c34b507cffc90d2d759135e2dcc8dfb5c",
+          "lru_or_unbounded_cache_decorators": [],
+          "mutable_collection_globals": [],
+          "top_level_symbol_count": 20
+        }
+      },
+      "live_gc_object_tracking_200_requests": {
+        "requests_executed": 200,
+        "counts_before": {
+          "QuantityExpr": 0,
+          "ExprNode": 0,
+          "EvaluatedQuantity": 0,
+          "SymbolBindingPlan": 0,
+          "SlotQuantityEntry": 0,
+          "TrigCertificateError": 0
+        },
+        "counts_after_gc": {
+          "QuantityExpr": 0,
+          "ExprNode": 0,
+          "EvaluatedQuantity": 0,
+          "SymbolBindingPlan": 0,
+          "SlotQuantityEntry": 0,
+          "TrigCertificateError": 0
+        },
+        "retained_delta": {
+          "QuantityExpr": 0,
+          "ExprNode": 0,
+          "EvaluatedQuantity": 0,
+          "SymbolBindingPlan": 0,
+          "SlotQuantityEntry": 0,
+          "TrigCertificateError": 0
+        }
+      }
+    },
+    "2_parsed_expression_and_parser_cache_boundedness": {
+      "status": "PASS",
+      "file": "backend/app/ai/local_geometry_parser.py",
+      "max_parser_cache_size": 256,
+      "max_cached_problem_text_chars": 4096,
+      "cache_key_format": "(LOCAL_GEOMETRY_PARSER_VERSION, problem_text)",
+      "parser_version": "local-geometry-parser/2",
+      "synthetic_unique_inputs_fed": 600,
+      "observed_cache_size_after_600": 256,
+      "earliest_344_entries_evicted_deterministically": true,
+      "oversized_5k_char_input_excluded": true,
+      "deepcopy_read_write_isolation_verified": true,
+      "quantity_expr_ast_objects_stored_in_parser_cache": 0
+    },
+    "3_browser_history_and_client_state_bounds": {
+      "status": "PASS",
+      "files_inspected": [
+        "frontend/src/state/history.ts",
+        "frontend/src/state/learner-recovery-snapshot.ts",
+        "frontend/src/state/store.ts"
+      ],
+      "verified_bounds": {
+        "history_schema_version": 2,
+        "history_max_items": 30,
+        "history_eviction_policy": "oldest_lastViewedAt_evicted_and_in_memory_Map_pruned_to_active_storage_keys",
+        "history_envelope_sanitization": "sanitizeEnvelope whitelist strips transient/WebGL/secret fields before localStorage write",
+        "recovery_max_stored_problems": 12,
+        "recovery_max_snapshot_chars": 12288,
+        "recovery_ttl_ms": "30 * 60 * 1000",
+        "recovery_excludes_scene3d_payload": true,
+        "store_route_stack_cap": 24,
+        "store_active_simulation_cardinality": "single_nullable_slot_atomic_replacement"
+      },
+      "vitest_verification": [
+        {
+          "file": "frontend/src/state/history.test.ts",
+          "status": "passed",
+          "passed_tests": 12,
+          "failed_tests": 0
+        },
+        {
+          "file": "frontend/src/state/workspace-lifecycle.test.ts",
+          "status": "passed",
+          "passed_tests": 7,
+          "failed_tests": 0
+        }
+      ]
+    },
+    "4_scene_switching_cleanup": {
+      "status": "PASS",
+      "files_inspected": [
+        "frontend/src/components/SimulationWorkspace.tsx",
+        "frontend/src/simulations/domains/geometry/scene3d-view.tsx"
+      ],
+      "verified_reset_invariants": {
+        "workspace_resets_interaction_state_on_scene_or_snapshot_key": true,
+        "workspace_stops_playback_on_scene_switch": true,
+        "scene3d_disposes_previous_children_before_rebuild": true,
+        "scene3d_clears_label_direction_and_offset_maps": true,
+        "scene3d_clears_plane_position_and_angle_maps": true,
+        "prior_headless_chromium_gc_series_reference": {
+          "artifact": "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/resource_cleanup_audit.json",
+          "sha256": "d1d84080db86458546fcf6ebc3990503e20675efb3b463905a2205048e78b974",
+          "cycles": 6,
+          "problems_per_cycle": 2,
+          "canvas_count_constant_at_1": true,
+          "numeric_note_never_carried_over": true,
+          "heap_mean_early_mb": 22.407,
+          "heap_mean_late_mb": 25.459,
+          "timeline_15_walks_growth_mb": 1.706
+        }
+      },
+      "vitest_verification": [
+        {
+          "file": "frontend/src/components/axo-runtime-recovery.test.tsx",
+          "status": "passed",
+          "passed_tests": 6,
+          "failed_tests": 0
+        },
+        {
+          "file": "frontend/src/state/workspace-lifecycle.test.ts",
+          "status": "passed",
+          "passed_tests": 7,
+          "failed_tests": 0
+        },
+        {
+          "file": "frontend/src/simulations/domains/geometry/scene3d-zup-lifecycle.test.tsx",
+          "status": "passed",
+          "passed_tests": 9,
+          "failed_tests": 0
+        }
+      ],
+      "stage_p1c_trig_scene_carrier_leak_count": 0
+    },
+    "5_canvas_and_webgl_disposal": {
+      "status": "PASS",
+      "files_inspected": [
+        "frontend/src/simulations/domains/geometry/scene3d-view.tsx"
+      ],
+      "verified_disposal_invariants": {
+        "buffer_geometry_disposed_in_traversal": true,
+        "span_geo_pool_disposed": true,
+        "material_and_span_material_pool_disposed": true,
+        "sprite_and_material_textures_disposed": true,
+        "raf_and_timers_cancelled_on_unmount": true,
+        "resize_and_mutation_observers_disconnected": true,
+        "orbit_controls_disposed": true,
+        "renderer_render_lists_disposed": true,
+        "single_slot_renderer_pool_or_hard_dispose_on_context_loss": true,
+        "window_debug_handles_deleted_on_unmount": true
+      },
+      "vitest_verification": [
+        {
+          "file": "frontend/src/components/axo-runtime-recovery.test.tsx",
+          "status": "passed",
+          "passed_tests": 6,
+          "failed_tests": 0
+        },
+        {
+          "file": "frontend/src/simulations/domains/geometry/scene3d-zup-lifecycle.test.tsx",
+          "status": "passed",
+          "passed_tests": 9,
+          "failed_tests": 0
+        }
+      ]
+    },
+    "6_repeated_failed_requests_200x": {
+      "status": "PASS",
+      "requests_executed": 200,
+      "distinct_failure_classes_cycled": 5,
+      "observed_terminal_outcomes": {
+        "http_200:INCONSISTENT_FACTS": 40,
+        "http_200:EXACT_DOMAIN_EXCEEDED": 40,
+        "http_200:AMBIGUOUS_FACT": 40,
+        "http_200:gate_out_of_scope": 40,
+        "http_503:LIVE_AI_DISABLED": 40
+      },
+      "sqlite_simulation_cache_rows_written": 0,
+      "checkpoints": [
+        {
+          "request_count": 0,
+          "tracemalloc_current_kib": 9.44,
+          "tracemalloc_peak_kib": 10.17,
+          "process_rss_mib": 110.594,
+          "parser_cache_entries": 0
+        },
+        {
+          "request_count": 25,
+          "tracemalloc_current_kib": 1207.57,
+          "tracemalloc_peak_kib": 2240.29,
+          "process_rss_mib": 112.891,
+          "parser_cache_entries": 4
+        },
+        {
+          "request_count": 50,
+          "tracemalloc_current_kib": 1210.49,
+          "tracemalloc_peak_kib": 2240.29,
+          "process_rss_mib": 112.895,
+          "parser_cache_entries": 4
+        },
+        {
+          "request_count": 100,
+          "tracemalloc_current_kib": 1216.08,
+          "tracemalloc_peak_kib": 2454.81,
+          "process_rss_mib": 113.148,
+          "parser_cache_entries": 4
+        },
+        {
+          "request_count": 150,
+          "tracemalloc_current_kib": 1210.69,
+          "tracemalloc_peak_kib": 2454.81,
+          "process_rss_mib": 113.27,
+          "parser_cache_entries": 4
+        },
+        {
+          "request_count": 200,
+          "tracemalloc_current_kib": 1215.75,
+          "tracemalloc_peak_kib": 2454.97,
+          "process_rss_mib": 113.27,
+          "parser_cache_entries": 4
+        }
+      ],
+      "tracemalloc_delta_200_minus_50_kib": 5.26
+    },
+    "7_repeated_successful_requests_200x": {
+      "status": "PASS",
+      "uncached_full_pipeline_200x": {
+        "requests_executed": 200,
+        "checkpoints": [
+          {
+            "request_count": 0,
+            "tracemalloc_current_kib": 0.0,
+            "tracemalloc_peak_kib": 0.04,
+            "process_rss_mib": 110.406,
+            "parser_cache_entries": 0
+          },
+          {
+            "request_count": 25,
+            "tracemalloc_current_kib": 52.61,
+            "tracemalloc_peak_kib": 1572.75,
+            "process_rss_mib": 113.559,
+            "parser_cache_entries": 1
+          },
+          {
+            "request_count": 50,
+            "tracemalloc_current_kib": 54.26,
+            "tracemalloc_peak_kib": 1574.62,
+            "process_rss_mib": 113.551,
+            "parser_cache_entries": 1
+          },
+          {
+            "request_count": 100,
+            "tracemalloc_current_kib": 54.68,
+            "tracemalloc_peak_kib": 1719.95,
+            "process_rss_mib": 113.547,
+            "parser_cache_entries": 1
+          },
+          {
+            "request_count": 150,
+            "tracemalloc_current_kib": 55.52,
+            "tracemalloc_peak_kib": 1721.16,
+            "process_rss_mib": 113.801,
+            "parser_cache_entries": 1
+          },
+          {
+            "request_count": 200,
+            "tracemalloc_current_kib": 55.39,
+            "tracemalloc_peak_kib": 1721.16,
+            "process_rss_mib": 113.809,
+            "parser_cache_entries": 1
+          }
+        ],
+        "tracemalloc_delta_200_minus_50_kib": 1.13
+      },
+      "api_analyze_sqlite_cached_200x": {
+        "requests_executed": 200,
+        "cache_header_counts": {
+          "miss": 5,
+          "hit": 195
+        },
+        "sqlite_simulation_cache_rows": 5,
+        "sqlite_policy_versions": [
+          "140:route-d"
+        ],
+        "checkpoints": [
+          {
+            "request_count": 0,
+            "tracemalloc_current_kib": 7.34,
+            "tracemalloc_peak_kib": 8.12,
+            "process_rss_mib": 110.613,
+            "parser_cache_entries": 0
+          },
+          {
+            "request_count": 25,
+            "tracemalloc_current_kib": 249.99,
+            "tracemalloc_peak_kib": 1058.13,
+            "process_rss_mib": 112.738,
+            "parser_cache_entries": 5
+          },
+          {
+            "request_count": 50,
+            "tracemalloc_current_kib": 262.07,
+            "tracemalloc_peak_kib": 1058.13,
+            "process_rss_mib": 113.051,
+            "parser_cache_entries": 5
+          },
+          {
+            "request_count": 100,
+            "tracemalloc_current_kib": 267.49,
+            "tracemalloc_peak_kib": 1058.13,
+            "process_rss_mib": 113.051,
+            "parser_cache_entries": 5
+          },
+          {
+            "request_count": 150,
+            "tracemalloc_current_kib": 256.34,
+            "tracemalloc_peak_kib": 1058.13,
+            "process_rss_mib": 113.051,
+            "parser_cache_entries": 5
+          },
+          {
+            "request_count": 200,
+            "tracemalloc_current_kib": 261.69,
+            "tracemalloc_peak_kib": 1058.13,
+            "process_rss_mib": 113.051,
+            "parser_cache_entries": 5
+          }
+        ],
+        "tracemalloc_delta_200_minus_50_kib": -0.38
+      }
+    }
+  },
+  "frontend_vitest_summary": {
+    "exit_code": 0,
+    "success": true,
+    "num_total_suites": 17,
+    "num_passed_suites": 17,
+    "num_total_tests": 34,
+    "num_passed_tests": 34,
+    "num_failed_tests": 0,
+    "suites": [
+      {
+        "file": "frontend/src/components/axo-runtime-recovery.test.tsx",
+        "status": "passed",
+        "passed_tests": 6,
+        "failed_tests": 0
+      },
+      {
+        "file": "frontend/src/state/history.test.ts",
+        "status": "passed",
+        "passed_tests": 12,
+        "failed_tests": 0
+      },
+      {
+        "file": "frontend/src/state/workspace-lifecycle.test.ts",
+        "status": "passed",
+        "passed_tests": 7,
+        "failed_tests": 0
+      },
+      {
+        "file": "frontend/src/simulations/domains/geometry/scene3d-zup-lifecycle.test.tsx",
+        "status": "passed",
+        "passed_tests": 9,
+        "failed_tests": 0
+      }
+    ]
+  },
+  "baseline_product_commit": "d222e6d9b582d54fc42397a9593f52eb6fd77f18"
+}

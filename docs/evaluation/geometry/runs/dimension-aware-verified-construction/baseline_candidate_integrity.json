@@ -1,0 +1,246 @@
+{
+  "schema": "algosim-phase0-baseline-candidate-integrity/1",
+  "run_id": "dimension-aware-verified-construction",
+  "phase": "phase_0_baseline_integrity",
+  "generated_at_utc": "2026-11-15T05:31:00Z",
+  "worktree": "D:/Documents/projects/algo-sim/.superpowers/worktrees/local-first-geometry-understanding",
+  "branch": "feat/local-first-geometry-understanding",
+  "head": "b04bed0f83e02ac27416814bea08fa830ee91461",
+  "prior_regression_head": "542e32b0f8b21df5fff8e6b2a57fb27b9a6ea452",
+  "candidate_commit_field": "cbcd8af2d4ce667d93378699971acdae7d7905ae",
+  "candidate_freeze_commit": "63def519ad317911145b2d84929a687208996619",
+  "product_commit": "0c9d4a2f0c892ac13fcd6e47b919e87bfb141479",
+  "product_commit_rule": "product-paths-excluding-test-only/1",
+  "product_commits_in_prior_wave": [
+    "ac276a5c945f9ac1764f9af1f723b857c19b342d",
+    "ad090ceada3edc31b5788fa16c47e1639386bdc9",
+    "d222e6d9b582d54fc42397a9593f52eb6fd77f18"
+  ],
+  "measured_system_hash": "7a15dc2e59a869c8c898458359a97a772760ae8eb89e7a75460a7625d0d6b488",
+  "measured_system": "7a15dc2e59a869c8c898458359a97a772760ae8eb89e7a75460a7625d0d6b488",
+  "measured_system_files": 120,
+  "cache_version": "140",
+  "route_d_cache_policy": "140:route-d",
+  "semantic_environment_hash": "6233c43c395c9b493d31d3dbb5d0ca952604730f6185cf541d2f179c077f955b",
+  "dataset_partition": "GOVERNANCE_ONLY (git ancestry, EVALUATION_CANDIDATE.json, cache_identity.lock.json, docs IA, publication safety); DEVELOPMENT baseline inherited from grounded-vietnamese-geometry-understanding; never sealed H-1 or locked W2/W3",
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "PYTHONPATH": "backend",
+    "python_executable": "D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe -B",
+    "live_ai_calls": 0
+  },
+  "test_command": "D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe -B backend/scripts/freeze_evaluation_candidate.py --verify && D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe -B backend/scripts/lock_cache_identity.py --verify && D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe -B backend/scripts/audit_docs_information_architecture.py --json && D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe -B backend/scripts/check_publication_safety.py --head && D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe -B backend/scripts/check_publication_safety.py --range 542e32b0f8..HEAD",
+  "expected_behavior": "Worktree feat/local-first-geometry-understanding is clean at HEAD b04bed0f83e02ac27416814bea08fa830ee91461; commits ac276a5c9, ad090cead, d222e6d9b, cbcd8af2d, 63def519a, 542e32b0f8, and b04bed0f8 are linear ancestors of HEAD; freeze_evaluation_candidate.py --verify exits 0 with 117 product files and tree hash c25f9695828888987db2ab7990c4ff135da4d01c6b9d968f898c36728a0ae436; lock_cache_identity.py --verify exits 0 at CACHE_VERSION=139; audit_docs_information_architecture.py --json exits 0 with STATUS=PASS; check_publication_safety.py --range 542e32b0f8..HEAD exits 0 with 0 violations while --head reports the 97 historical pending-owner-review findings (including historical blob 2bfce9c8e306ca707141c41806e1fac31623c2e9).",
+  "actual_behavior": "Verified clean working tree on branch feat/local-first-geometry-understanding at HEAD b04bed0f83e02ac27416814bea08fa830ee91461 (root D:/Documents/projects/algo-sim untouched on axo-ui-consistency). All 7 commits confirmed ancestors of HEAD via git merge-base --is-ancestor. freeze_evaluation_candidate.py --verify exited 0 ('Candidate khớp bản đã đóng băng (mã sản phẩm: 117 file, c25f969582888898…).'); lock_cache_identity.py --verify exited 0 ('Khoá khớp · CACHE_VERSION 139 · môi trường 3d5400a510361e93…'); audit_docs_information_architecture.py --json exited 0 (STATUS=PASS, 11/11 canonical domains, 730 links checked / 0 broken, 1200 indexed paths / 0 stale, 0 secret leaks); check_publication_safety.py --range 542e32b0f8..HEAD exited 0 (scanned=43, messages=1, violations=0, pending_exception=0, verdict=PASS); check_publication_safety.py --head exited 1 as expected (scanned=31763, messages=0, violations=97, pending_exception=97, verdict=BLOCKED; 0 agent-approved exceptions; historical blob 2bfce9c8e306ca707141c41806e1fac31623c2e9 from commit fe835d424 removed at 8da3ea754 remains pending owner review).",
+  "mathematical_oracle": "Deterministic SHA-256 LF-normalized tree hash over the 117 non-test product files defined by backend/scripts/freeze_evaluation_candidate.py (product-paths-excluding-test-only/1), deterministic SHA-256 semantic_environment_hash in backend/scripts/lock_cache_identity.py, and Git DAG ancestry.",
+  "source_provenance": {
+    "candidate_manifest": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+    "cache_lock": "backend/cache_identity.lock.json",
+    "publication_exceptions": "docs/evaluation/geometry/runs/publication-safety-remediation/publication_exceptions.json",
+    "prior_run_report": "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/AXO_GROUNDED_VIETNAMESE_GEOMETRY_UNDERSTANDING_REPORT.md",
+    "prior_run_receipts_read": [
+      "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/candidate_freeze.json",
+      "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/run.json",
+      "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/real27_acceptance_before_after.json",
+      "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/fact_completeness_verification.json",
+      "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/source_gate_integrity.json",
+      "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/semantic_cache_invalidation.json",
+      "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/full_regression_summary.json",
+      "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/publication_gate_status.json",
+      "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/real27_root_cause_matrix.json",
+      "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/wrong_scene_served_audit.json"
+    ]
+  },
+  "ancestry_checks": [
+    {
+      "short_sha": "ac276a5c9",
+      "full_sha": "ac276a5c945f9ac1764f9af1f723b857c19b342d",
+      "is_ancestor_of_head": true
+    },
+    {
+      "short_sha": "ad090cead",
+      "full_sha": "ad090ceada3edc31b5788fa16c47e1639386bdc9",
+      "is_ancestor_of_head": true
+    },
+    {
+      "short_sha": "d222e6d9b",
+      "full_sha": "d222e6d9b582d54fc42397a9593f52eb6fd77f18",
+      "is_ancestor_of_head": true
+    },
+    {
+      "short_sha": "cbcd8af2d",
+      "full_sha": "cbcd8af2d4ce667d93378699971acdae7d7905ae",
+      "is_ancestor_of_head": true
+    },
+    {
+      "short_sha": "63def519a",
+      "full_sha": "63def519ad317911145b2d84929a687208996619",
+      "is_ancestor_of_head": true
+    },
+    {
+      "short_sha": "542e32b0f8",
+      "full_sha": "542e32b0f8b21df5fff8e6b2a57fb27b9a6ea452",
+      "is_ancestor_of_head": true
+    },
+    {
+      "short_sha": "b04bed0f8",
+      "full_sha": "b04bed0f83e02ac27416814bea08fa830ee91461",
+      "is_ancestor_of_head": true
+    }
+  ],
+  "verification_checks": {
+    "tree_clean_at_start": true,
+    "root_worktree_untouched": true,
+    "freeze_evaluation_candidate_verify": {
+      "exit_code": 0,
+      "output": "Candidate khớp bản đã đóng băng (mã sản phẩm: 117 file, c25f969582888898…).",
+      "status": "PASS"
+    },
+    "lock_cache_identity_verify": {
+      "exit_code": 0,
+      "output": "Khoá khớp · CACHE_VERSION 139 · môi trường 3d5400a510361e93…",
+      "status": "PASS"
+    },
+    "docs_information_architecture_audit": {
+      "exit_code": 0,
+      "status": "PASS",
+      "canonical_domains_valid": "11/11",
+      "links_checked": 730,
+      "broken_links": 0,
+      "code_index_paths": 1200,
+      "stale_code_index_paths": 0,
+      "secret_leaks": 0,
+      "handoff_line_count": 300
+    },
+    "publication_safety_gate": {
+      "head_scan": {
+        "exit_code": 1,
+        "summary": "SUMMARY scanned=31763 messages=0 violations=97 pending_exception=97 verdict=BLOCKED",
+        "status": "BLOCKED_PENDING_OWNER_REVIEW"
+      },
+      "range_542e32b0f8_to_head": {
+        "exit_code": 0,
+        "summary": "SUMMARY scanned=43 messages=1 violations=0 pending_exception=0 verdict=PASS",
+        "status": "PASS"
+      },
+      "range_83fdc3071_to_head": {
+        "exit_code": 0,
+        "summary": "SUMMARY scanned=118 messages=8 violations=0 pending_exception=0 verdict=PASS",
+        "status": "PASS"
+      },
+      "historical_commit_fe835d424_blob": {
+        "blob_sha1": "2bfce9c8e306ca707141c41806e1fac31623c2e9",
+        "rule": "HARDCODED_PASSWORD",
+        "path": "docs/evaluation/geometry/runs/semantic-to-scene3d-verified-simulation/tools/browser_simulation_e2e.mjs",
+        "removed_from_tree_in_commit": "8da3ea754",
+        "governance_status": "PENDING_OWNER_DECISION"
+      },
+      "exceptions_manifest_counts": {
+        "total_entries": 30,
+        "pending_owner_decision": 27,
+        "pre_existing_owner_approved": 3,
+        "agent_approved_exceptions": 0
+      }
+    }
+  },
+  "inherited_baseline_metrics": {
+    "source_run": "grounded-vietnamese-geometry-understanding",
+    "real27_total": 27,
+    "real27_text": {
+      "visualized_before": 12,
+      "visualized_after": 15,
+      "grades_before": {
+        "SERVED_MATCHES_DATASET_KEY": 9,
+        "GOAL_VISUALIZATION_READY_NUMERIC_NOT_ANSWERED": 3,
+        "NOT_SERVED": 15
+      },
+      "grades_after": {
+        "SERVED_MATCHES_DATASET_KEY": 12,
+        "GOAL_VISUALIZATION_READY_NUMERIC_NOT_ANSWERED": 3,
+        "NOT_SERVED": 12
+      },
+      "newly_served_cases": [
+        "vmmu_r284",
+        "vmmu_r295",
+        "vmmu_r538"
+      ],
+      "goal_visualization_ready_numeric_not_answered_cases": [
+        "vmmu_r258",
+        "vmmu_r498",
+        "vmmu_r559"
+      ],
+      "wrong_scene_served": 0,
+      "remaining_12_not_served_by_root_cause": {
+        "capability_missing_dimension_from_angle_or_hypotenuse": [
+          "vmmu_r460",
+          "vmmu_r463"
+        ],
+        "capability_base_area_value_representation": [
+          "vmmu_r537"
+        ],
+        "capability_exact_domain_or_point_construction_or_invariance": [
+          "vmmu_r266",
+          "vmmu_r277",
+          "vmmu_r491"
+        ],
+        "segmentation_or_diacritic_typo": [
+          "vmmu_r513",
+          "vmmu_r256"
+        ],
+        "described_point_in_premise": [
+          "vmmu_r254"
+        ],
+        "multi_part_goal_phrasing": [
+          "vmmu_r488"
+        ],
+        "modelling_out_of_scope": [
+          "vmmu_r461",
+          "vmmu_r475"
+        ]
+      },
+      "refused_by_root_cause_after": {
+        "DESCRIBED_POINT_IN_PREMISE_UNSUPPORTED": 1,
+        "UNRECOGNIZED_GOAL": 2,
+        "PLANNER_COMPOSITION_UNSUPPORTED": 1,
+        "UNSUPPORTED_POINT_CONSTRUCTION": 1,
+        "INSUFFICIENT_CONSTRAINTS": 2,
+        "UNRECOGNIZED_GEOMETRIC_ENTITY": 2,
+        "FREE_POINT_UNDERDETERMINED": 1,
+        "INCOMPLETE_FACT_EXTRACTION": 2
+      }
+    },
+    "real27_image": {
+      "visualized_before": 7,
+      "visualized_after": 9,
+      "grades_before": {
+        "SERVED_MATCHES_DATASET_KEY": 4,
+        "GOAL_VISUALIZATION_READY_NUMERIC_NOT_ANSWERED": 3,
+        "NOT_SERVED": 20
+      },
+      "grades_after": {
+        "SERVED_MATCHES_DATASET_KEY": 6,
+        "GOAL_VISUALIZATION_READY_NUMERIC_NOT_ANSWERED": 3,
+        "NOT_SERVED": 18
+      },
+      "newly_served_cases": [
+        "vmmu_r295",
+        "vmmu_r538"
+      ],
+      "wrong_scene_served": 0
+    },
+    "backend_pytest": "14638 passed, 7 skipped, 3 deselected, 17 xfailed",
+    "frontend_test_wave": "141 files passed, 2058 tests passed, 0 TypeScript errors",
+    "demo_replay": "5/5 PASS",
+    "crash_audit": "6/6 PASS (0 uncaught)"
+  },
+  "verdict": "VERIFIED_INTACT",
+  "start_head": "b04bed0f83e02ac27416814bea08fa830ee91461",
+  "start_product_commit": "d222e6d9b582d54fc42397a9593f52eb6fd77f18",
+  "start_freeze": "63def519ad317911145b2d84929a687208996619",
+  "start_candidate_commit_field": "cbcd8af2d4ce667d93378699971acdae7d7905ae",
+  "start_measured_system": "c25f9695828888987db2ab7990c4ff135da4d01c6b9d968f898c36728a0ae436",
+  "start_files": 117,
+  "start_cache_version": "139",
+  "start_route_d_cache_policy": "139:route-d",
+  "start_semantic_environment_hash": "3d5400a510361e9336421892bbb758ebde5d764c25c8bcc9409095f5ed68cc34"
+}

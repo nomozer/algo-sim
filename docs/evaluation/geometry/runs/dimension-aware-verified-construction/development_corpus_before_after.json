@@ -1,0 +1,2379 @@
+{
+  "schema": "algosim-wave-3b-development-corpus-before-after/1",
+  "run_id": "dimension-aware-verified-construction",
+  "phase": "phase_11_step_26_development_corpus_evaluation",
+  "stage": "wave_3b_step_26",
+  "generated_by": "expr-dim-audit",
+  "generated_at_utc": "2026-11-15T14:46:53Z",
+  "branch": "feat/local-first-geometry-understanding",
+  "git_head_at_generation": "b04bed0f83e02ac27416814bea08fa830ee91461",
+  "head": "b04bed0f83e02ac27416814bea08fa830ee91461",
+  "product_commit": "0c9d4a2f0c892ac13fcd6e47b919e87bfb141479",
+  "product_commit_rule": "product-paths-excluding-test-only/1",
+  "measured_system_hash": "7a15dc2e59a869c8c898458359a97a772760ae8eb89e7a75460a7625d0d6b488",
+  "measured_system_file_count": 120,
+  "baseline_measured_system_hash": "c25f9695828888987db2ab7990c4ff135da4d01c6b9d968f898c36728a0ae436",
+  "cache_version": "140",
+  "route_d_cache_policy": "140:route-d",
+  "semantic_environment_hash": "6233c43c395c9b493d31d3dbb5d0ca952604730f6185cf541d2f179c077f955b",
+  "corpus_id": "COMP112_DEV37_PROBES39_STAGE_P1_WAVE_PROBES_24",
+  "provider_call_count": 0,
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "GEMINI_API_KEY": "",
+    "HYBRID_ROUTE_MODE": "local-first",
+    "live_ai_calls": 0,
+    "sealed_h1_rows_opened": 0,
+    "locked_w2_w3_rows_read": 0
+  },
+  "dataset_partition": "DEVELOPMENT_EXPOSED_ONLY (COMP112, DEV37, PROBES39, STAGE_P1_WAVE_PROBES 24, and exposed REAL27 text + images); zero access to sealed H-1 or locked W2/W3",
+  "test_command": "D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe -B docs/evaluation/geometry/runs/dimension-aware-verified-construction/tools/evaluate_step26_wave3b.py",
+  "expected_behavior": "Evaluate COMP112 (baseline 111/112), DEV37 (baseline 28/37 served), PROBES39 (baseline 23/39 served), and STAGE_P1_WAVE_PROBES (24 Phase 3–8 expression/dimension/unit/trig probes) across all 11 separated §14.2 metrics without inflating numeric goal completion when output-policy/1 withholds trig-value answers; answer all 7 §14.3 attribution questions; preserve exact coordinates and exact answers on every previously served item; and maintain wrong_scene_served == 0.",
+  "actual_behavior": "Evaluated 212 development corpus items across Baseline (b04bed0f8, v139) and Candidate (v140) with 0 provider calls: COMP112 served 63 -> 65/112 (meets expectation 111/112 -> 111/112, with gv_unread_area_in_a -> 'a√6/3' and goal_cos_given_premise_neg -> 'a√3' newly served and only pre-existing dp_unnamed_through_point remaining capability-refused); DEV37 served 28 -> 28/37; PROBES39 served 23 -> 23/39; STAGE_P1_WAVE_PROBES met 24/24 (13/13 positive probes served with exact oracle match, 11/11 negative probes refused fail-closed). Across all 129 shared-SERVED items (including REAL27), 0 previously served items regressed, 0 changed coordinates or exact values, and wrong_scene_served == 0.",
+  "mathematical_oracle": "Independent exact/symbolic equivalence at two non-resonant scale evaluations (a=1.3, a=2.1) + independent Gram-matrix scene invariant check (verify_constructions.py + causal_audit.py) + exact trig-construction-certificate/1 and target-invariance-certificate/2 verification.",
+  "source_provenance": {
+    "baseline_commit": "b04bed0f8",
+    "baseline_cache_version": "139",
+    "candidate_cache_version": "140",
+    "measurement_script": "docs/evaluation/geometry/runs/dimension-aware-verified-construction/tools/evaluate_step26_wave3b.py",
+    "wave_corpus_module": "docs/evaluation/geometry/runs/dimension-aware-verified-construction/tools/compositional_dev_corpus.py",
+    "prior_comp112_module": "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/tools/compositional_dev_corpus.py",
+    "prior_dev37_module": "docs/evaluation/geometry/runs/semantic-failure-safe-image-segmentation/tools/semantic_dev_corpus.py",
+    "prior_probes39_module": "docs/evaluation/geometry/runs/independent-geometry-plane-constraints/tools/plane_constraint_probes.py",
+    "temp_baseline_archive_cleaned_up": true
+  },
+  "separated_11_metrics_before_v139": {
+    "COMP112": {
+      "total_items": 112,
+      "semantic_correctness": {
+        "local_parse_complete_count": 87,
+        "complete_parse_with_unread_leak_count": 0,
+        "meets_expected_outcome_count": 111,
+        "meets_expected_outcome_rate": "111/112"
+      },
+      "dimension_correctness": {
+        "served_with_verified_slot_dimensions": 63,
+        "negative_dimension_or_unit_probes_total": 0,
+        "negative_dimension_or_unit_falsely_served": []
+      },
+      "source_provenance": {
+        "extracted_items_quote_checked": 450,
+        "ungrounded_quotes_count": 0,
+        "clause_span_mismatch_count": 0,
+        "served_passed_source_gate_count": 63
+      },
+      "mathematical_determinacy": {
+        "NOT_SERVED": 49,
+        "SIMILARITY_SCALE_ILLUSTRATIVE": 11,
+        "TARGET_INVARIANT_ILLUSTRATIVE": 16,
+        "UNIQUELY_DETERMINED_SERVED": 36
+      },
+      "planner_capability": {
+        "planned_and_served_count": 63,
+        "capability_gap_refusal_count": 4,
+        "capability_gap_cases": [
+          "proof_only",
+          "proof_premise_not_given",
+          "gv_pair_perp_proof",
+          "gv_pair_section_shape_proof"
+        ]
+      },
+      "exact_construction": {
+        "served_count": 63,
+        "kernel_check_passed_count": 63,
+        "float_approximations_used": 0
+      },
+      "proof_verification": {
+        "trig_certificate_cases_count": 0,
+        "trig_certificate_verification_failures": [],
+        "invariance_certificate_cases_count": 27,
+        "invariance_certificate_verification_failures": [],
+        "verified_derived_quantity_cases_count": 0
+      },
+      "verified_scene3d": {
+        "visualized_served_count": 63,
+        "goal_construction_verified_count": 63,
+        "broken_scene_invariants_count": 0
+      },
+      "numeric_goal_completion": {
+        "learner_visible_numeric_answered_count": 45,
+        "learner_visible_numeric_oracle_or_key_match_count": 45,
+        "goal_visualization_ready_numeric_not_answered_count": 12,
+        "goal_visualization_ready_numeric_not_answered_cases": [
+          "goal_cos_line_plane",
+          "goal_cos_spelled",
+          "goal_tan_line_plane",
+          "goal_sin_mc_stem",
+          "goal_cos_planes",
+          "goal_cos_lines",
+          "goal_tan_right_angle",
+          "goal_cos_scale_free",
+          "scale_iso_tan",
+          "ti_right_b_tan",
+          "tet_cos_mc",
+          "pa_ratio2_tan"
+        ],
+        "structural_construction_only_no_numeric_goal_count": 6,
+        "internal_symbolic_oracle_comparable_match_count": 57,
+        "output_policy_note": "Strictly per §14.2: items with source_goal_completion (asking sin/cos/tan/cot value of an angle) are reported as GOAL_VISUALIZATION_READY_NUMERIC_NOT_ANSWERED and NEVER counted in learner_visible_numeric_oracle_or_key_match_count."
+      },
+      "safe_refusal": {
+        "total_not_served_count": 49,
+        "expected_negative_items_count": 48,
+        "expected_negative_safely_refused_count": 48,
+        "provider_503_infrastructure_fallbacks_in_offline_mode": 24
+      },
+      "wrong_scene_served": {
+        "count": 0,
+        "cases": []
+      }
+    },
+    "DEV37": {
+      "total_items": 37,
+      "semantic_correctness": {
+        "local_parse_complete_count": 30,
+        "complete_parse_with_unread_leak_count": 0,
+        "meets_expected_outcome_count": 35,
+        "meets_expected_outcome_rate": "35/37"
+      },
+      "dimension_correctness": {
+        "served_with_verified_slot_dimensions": 28,
+        "negative_dimension_or_unit_probes_total": 0,
+        "negative_dimension_or_unit_falsely_served": []
+      },
+      "source_provenance": {
+        "extracted_items_quote_checked": 154,
+        "ungrounded_quotes_count": 0,
+        "clause_span_mismatch_count": 0,
+        "served_passed_source_gate_count": 28
+      },
+      "mathematical_determinacy": {
+        "NOT_SERVED": 9,
+        "UNIQUELY_DETERMINED_SERVED": 28
+      },
+      "planner_capability": {
+        "planned_and_served_count": 28,
+        "capability_gap_refusal_count": 1,
+        "capability_gap_cases": [
+          "goal_proof_only"
+        ]
+      },
+      "exact_construction": {
+        "served_count": 28,
+        "kernel_check_passed_count": 28,
+        "float_approximations_used": 0
+      },
+      "proof_verification": {
+        "trig_certificate_cases_count": 0,
+        "trig_certificate_verification_failures": [],
+        "invariance_certificate_cases_count": 0,
+        "invariance_certificate_verification_failures": [],
+        "verified_derived_quantity_cases_count": 0
+      },
+      "verified_scene3d": {
+        "visualized_served_count": 28,
+        "goal_construction_verified_count": 27,
+        "broken_scene_invariants_count": 0
+      },
+      "numeric_goal_completion": {
+        "learner_visible_numeric_answered_count": 14,
+        "learner_visible_numeric_oracle_or_key_match_count": 14,
+        "goal_visualization_ready_numeric_not_answered_count": 2,
+        "goal_visualization_ready_numeric_not_answered_cases": [
+          "goal_cos_unsupported",
+          "goal_tan_unsupported"
+        ],
+        "structural_construction_only_no_numeric_goal_count": 12,
+        "internal_symbolic_oracle_comparable_match_count": 16,
+        "output_policy_note": "Strictly per §14.2: items with source_goal_completion (asking sin/cos/tan/cot value of an angle) are reported as GOAL_VISUALIZATION_READY_NUMERIC_NOT_ANSWERED and NEVER counted in learner_visible_numeric_oracle_or_key_match_count."
+      },
+      "safe_refusal": {
+        "total_not_served_count": 9,
+        "expected_negative_items_count": 7,
+        "expected_negative_safely_refused_count": 7,
+        "provider_503_infrastructure_fallbacks_in_offline_mode": 6
+      },
+      "wrong_scene_served": {
+        "count": 0,
+        "cases": []
+      }
+    },
+    "PROBES39": {
+      "total_items": 39,
+      "semantic_correctness": {
+        "local_parse_complete_count": 29,
+        "complete_parse_with_unread_leak_count": 0,
+        "meets_expected_outcome_count": 36,
+        "meets_expected_outcome_rate": "36/39"
+      },
+      "dimension_correctness": {
+        "served_with_verified_slot_dimensions": 23,
+        "negative_dimension_or_unit_probes_total": 0,
+        "negative_dimension_or_unit_falsely_served": []
+      },
+      "source_provenance": {
+        "extracted_items_quote_checked": 140,
+        "ungrounded_quotes_count": 0,
+        "clause_span_mismatch_count": 0,
+        "served_passed_source_gate_count": 23
+      },
+      "mathematical_determinacy": {
+        "NOT_SERVED": 16,
+        "UNIQUELY_DETERMINED_SERVED": 23
+      },
+      "planner_capability": {
+        "planned_and_served_count": 23,
+        "capability_gap_refusal_count": 1,
+        "capability_gap_cases": [
+          "goal_as_premise"
+        ]
+      },
+      "exact_construction": {
+        "served_count": 23,
+        "kernel_check_passed_count": 23,
+        "float_approximations_used": 0
+      },
+      "proof_verification": {
+        "trig_certificate_cases_count": 0,
+        "trig_certificate_verification_failures": [],
+        "invariance_certificate_cases_count": 0,
+        "invariance_certificate_verification_failures": [],
+        "verified_derived_quantity_cases_count": 0
+      },
+      "verified_scene3d": {
+        "visualized_served_count": 23,
+        "goal_construction_verified_count": 23,
+        "broken_scene_invariants_count": 0
+      },
+      "numeric_goal_completion": {
+        "learner_visible_numeric_answered_count": 2,
+        "learner_visible_numeric_oracle_or_key_match_count": 2,
+        "goal_visualization_ready_numeric_not_answered_count": 0,
+        "goal_visualization_ready_numeric_not_answered_cases": [],
+        "structural_construction_only_no_numeric_goal_count": 21,
+        "internal_symbolic_oracle_comparable_match_count": 2,
+        "output_policy_note": "Strictly per §14.2: items with source_goal_completion (asking sin/cos/tan/cot value of an angle) are reported as GOAL_VISUALIZATION_READY_NUMERIC_NOT_ANSWERED and NEVER counted in learner_visible_numeric_oracle_or_key_match_count."
+      },
+      "safe_refusal": {
+        "total_not_served_count": 16,
+        "expected_negative_items_count": 13,
+        "expected_negative_safely_refused_count": 13,
+        "provider_503_infrastructure_fallbacks_in_offline_mode": 10
+      },
+      "wrong_scene_served": {
+        "count": 0,
+        "cases": []
+      }
+    },
+    "WAVE_PROBES": {
+      "total_items": 24,
+      "semantic_correctness": {
+        "local_parse_complete_count": 4,
+        "complete_parse_with_unread_leak_count": 0,
+        "meets_expected_outcome_count": 11,
+        "meets_expected_outcome_rate": "11/24"
+      },
+      "dimension_correctness": {
+        "served_with_verified_slot_dimensions": 0,
+        "negative_dimension_or_unit_probes_total": 6,
+        "negative_dimension_or_unit_falsely_served": []
+      },
+      "source_provenance": {
+        "extracted_items_quote_checked": 49,
+        "ungrounded_quotes_count": 0,
+        "clause_span_mismatch_count": 0,
+        "served_passed_source_gate_count": 0
+      },
+      "mathematical_determinacy": {
+        "NOT_SERVED": 24
+      },
+      "planner_capability": {
+        "planned_and_served_count": 0,
+        "capability_gap_refusal_count": 1,
+        "capability_gap_cases": [
+          "wp_neg_non_special_angle_37deg"
+        ]
+      },
+      "exact_construction": {
+        "served_count": 0,
+        "kernel_check_passed_count": 0,
+        "float_approximations_used": 0
+      },
+      "proof_verification": {
+        "trig_certificate_cases_count": 0,
+        "trig_certificate_verification_failures": [],
+        "invariance_certificate_cases_count": 0,
+        "invariance_certificate_verification_failures": [],
+        "verified_derived_quantity_cases_count": 0
+      },
+      "verified_scene3d": {
+        "visualized_served_count": 0,
+        "goal_construction_verified_count": 0,
+        "broken_scene_invariants_count": 0
+      },
+      "numeric_goal_completion": {
+        "learner_visible_numeric_answered_count": 0,
+        "learner_visible_numeric_oracle_or_key_match_count": 0,
+        "goal_visualization_ready_numeric_not_answered_count": 0,
+        "goal_visualization_ready_numeric_not_answered_cases": [],
+        "structural_construction_only_no_numeric_goal_count": 0,
+        "internal_symbolic_oracle_comparable_match_count": 0,
+        "output_policy_note": "Strictly per §14.2: items with source_goal_completion (asking sin/cos/tan/cot value of an angle) are reported as GOAL_VISUALIZATION_READY_NUMERIC_NOT_ANSWERED and NEVER counted in learner_visible_numeric_oracle_or_key_match_count."
+      },
+      "safe_refusal": {
+        "total_not_served_count": 24,
+        "expected_negative_items_count": 11,
+        "expected_negative_safely_refused_count": 11,
+        "provider_503_infrastructure_fallbacks_in_offline_mode": 15
+      },
+      "wrong_scene_served": {
+        "count": 0,
+        "cases": []
+      }
+    }
+  },
+  "separated_11_metrics_after_v140": {
+    "COMP112": {
+      "total_items": 112,
+      "semantic_correctness": {
+        "local_parse_complete_count": 89,
+        "complete_parse_with_unread_leak_count": 0,
+        "meets_expected_outcome_count": 111,
+        "meets_expected_outcome_rate": "111/112"
+      },
+      "dimension_correctness": {
+        "served_with_verified_slot_dimensions": 65,
+        "negative_dimension_or_unit_probes_total": 0,
+        "negative_dimension_or_unit_falsely_served": []
+      },
+      "source_provenance": {
+        "extracted_items_quote_checked": 460,
+        "ungrounded_quotes_count": 0,
+        "clause_span_mismatch_count": 0,
+        "served_passed_source_gate_count": 65
+      },
+      "mathematical_determinacy": {
+        "NOT_SERVED": 47,
+        "SIMILARITY_SCALE_ILLUSTRATIVE": 11,
+        "TARGET_INVARIANT_ILLUSTRATIVE": 16,
+        "UNIQUELY_DETERMINED_SERVED": 38
+      },
+      "planner_capability": {
+        "planned_and_served_count": 65,
+        "capability_gap_refusal_count": 11,
+        "capability_gap_cases": [
+          "proof_only",
+          "proof_premise_not_given",
+          "scale_height_free",
+          "ti_height_free",
+          "tet_not_regular",
+          "tet_regular_pyramid_only",
+          "lp_no_ratio",
+          "pa_prism_out_of_domain",
+          "gv_pair_perp_proof",
+          "gv_pair_regular_pyramid",
+          "gv_pair_section_shape_proof"
+        ]
+      },
+      "exact_construction": {
+        "served_count": 65,
+        "kernel_check_passed_count": 65,
+        "float_approximations_used": 0
+      },
+      "proof_verification": {
+        "trig_certificate_cases_count": 9,
+        "trig_certificate_verification_failures": [
+          "goal_cos_given_premise_neg",
+          "scale_iso_with_length",
+          "tet_with_side",
+          "gv_lateral_regular_tri",
+          "gv_lateral_regular_quad",
+          "gv_isosceles_right_derived",
+          "gv_isosceles_explicit",
+          "gv_unread_area_in_a",
+          "gv_base_area_regular"
+        ],
+        "invariance_certificate_cases_count": 27,
+        "invariance_certificate_verification_failures": [],
+        "verified_derived_quantity_cases_count": 0
+      },
+      "verified_scene3d": {
+        "visualized_served_count": 65,
+        "goal_construction_verified_count": 65,
+        "broken_scene_invariants_count": 0
+      },
+      "numeric_goal_completion": {
+        "learner_visible_numeric_answered_count": 47,
+        "learner_visible_numeric_oracle_or_key_match_count": 47,
+        "goal_visualization_ready_numeric_not_answered_count": 12,
+        "goal_visualization_ready_numeric_not_answered_cases": [
+          "goal_cos_line_plane",
+          "goal_cos_spelled",
+          "goal_tan_line_plane",
+          "goal_sin_mc_stem",
+          "goal_cos_planes",
+          "goal_cos_lines",
+          "goal_tan_right_angle",
+          "goal_cos_scale_free",
+          "scale_iso_tan",
+          "ti_right_b_tan",
+          "tet_cos_mc",
+          "pa_ratio2_tan"
+        ],
+        "structural_construction_only_no_numeric_goal_count": 6,
+        "internal_symbolic_oracle_comparable_match_count": 59,
+        "output_policy_note": "Strictly per §14.2: items with source_goal_completion (asking sin/cos/tan/cot value of an angle) are reported as GOAL_VISUALIZATION_READY_NUMERIC_NOT_ANSWERED and NEVER counted in learner_visible_numeric_oracle_or_key_match_count."
+      },
+      "safe_refusal": {
+        "total_not_served_count": 47,
+        "expected_negative_items_count": 46,
+        "expected_negative_safely_refused_count": 46,
+        "provider_503_infrastructure_fallbacks_in_offline_mode": 22
+      },
+      "wrong_scene_served": {
+        "count": 0,
+        "cases": []
+      }
+    },
+    "DEV37": {
+      "total_items": 37,
+      "semantic_correctness": {
+        "local_parse_complete_count": 30,
+        "complete_parse_with_unread_leak_count": 0,
+        "meets_expected_outcome_count": 35,
+        "meets_expected_outcome_rate": "35/37"
+      },
+      "dimension_correctness": {
+        "served_with_verified_slot_dimensions": 28,
+        "negative_dimension_or_unit_probes_total": 0,
+        "negative_dimension_or_unit_falsely_served": []
+      },
+      "source_provenance": {
+        "extracted_items_quote_checked": 154,
+        "ungrounded_quotes_count": 0,
+        "clause_span_mismatch_count": 0,
+        "served_passed_source_gate_count": 28
+      },
+      "mathematical_determinacy": {
+        "NOT_SERVED": 9,
+        "UNIQUELY_DETERMINED_SERVED": 28
+      },
+      "planner_capability": {
+        "planned_and_served_count": 28,
+        "capability_gap_refusal_count": 1,
+        "capability_gap_cases": [
+          "goal_proof_only"
+        ]
+      },
+      "exact_construction": {
+        "served_count": 28,
+        "kernel_check_passed_count": 28,
+        "float_approximations_used": 0
+      },
+      "proof_verification": {
+        "trig_certificate_cases_count": 1,
+        "trig_certificate_verification_failures": [
+          "elliptical_role"
+        ],
+        "invariance_certificate_cases_count": 0,
+        "invariance_certificate_verification_failures": [],
+        "verified_derived_quantity_cases_count": 0
+      },
+      "verified_scene3d": {
+        "visualized_served_count": 28,
+        "goal_construction_verified_count": 27,
+        "broken_scene_invariants_count": 0
+      },
+      "numeric_goal_completion": {
+        "learner_visible_numeric_answered_count": 14,
+        "learner_visible_numeric_oracle_or_key_match_count": 14,
+        "goal_visualization_ready_numeric_not_answered_count": 2,
+        "goal_visualization_ready_numeric_not_answered_cases": [
+          "goal_cos_unsupported",
+          "goal_tan_unsupported"
+        ],
+        "structural_construction_only_no_numeric_goal_count": 12,
+        "internal_symbolic_oracle_comparable_match_count": 16,
+        "output_policy_note": "Strictly per §14.2: items with source_goal_completion (asking sin/cos/tan/cot value of an angle) are reported as GOAL_VISUALIZATION_READY_NUMERIC_NOT_ANSWERED and NEVER counted in learner_visible_numeric_oracle_or_key_match_count."
+      },
+      "safe_refusal": {
+        "total_not_served_count": 9,
+        "expected_negative_items_count": 7,
+        "expected_negative_safely_refused_count": 7,
+        "provider_503_infrastructure_fallbacks_in_offline_mode": 6
+      },
+      "wrong_scene_served": {
+        "count": 0,
+        "cases": []
+      }
+    },
+    "PROBES39": {
+      "total_items": 39,
+      "semantic_correctness": {
+        "local_parse_complete_count": 29,
+        "complete_parse_with_unread_leak_count": 0,
+        "meets_expected_outcome_count": 36,
+        "meets_expected_outcome_rate": "36/39"
+      },
+      "dimension_correctness": {
+        "served_with_verified_slot_dimensions": 23,
+        "negative_dimension_or_unit_probes_total": 0,
+        "negative_dimension_or_unit_falsely_served": []
+      },
+      "source_provenance": {
+        "extracted_items_quote_checked": 140,
+        "ungrounded_quotes_count": 0,
+        "clause_span_mismatch_count": 0,
+        "served_passed_source_gate_count": 23
+      },
+      "mathematical_determinacy": {
+        "NOT_SERVED": 16,
+        "UNIQUELY_DETERMINED_SERVED": 23
+      },
+      "planner_capability": {
+        "planned_and_served_count": 23,
+        "capability_gap_refusal_count": 1,
+        "capability_gap_cases": [
+          "goal_as_premise"
+        ]
+      },
+      "exact_construction": {
+        "served_count": 23,
+        "kernel_check_passed_count": 23,
+        "float_approximations_used": 0
+      },
+      "proof_verification": {
+        "trig_certificate_cases_count": 0,
+        "trig_certificate_verification_failures": [],
+        "invariance_certificate_cases_count": 0,
+        "invariance_certificate_verification_failures": [],
+        "verified_derived_quantity_cases_count": 0
+      },
+      "verified_scene3d": {
+        "visualized_served_count": 23,
+        "goal_construction_verified_count": 23,
+        "broken_scene_invariants_count": 0
+      },
+      "numeric_goal_completion": {
+        "learner_visible_numeric_answered_count": 2,
+        "learner_visible_numeric_oracle_or_key_match_count": 2,
+        "goal_visualization_ready_numeric_not_answered_count": 0,
+        "goal_visualization_ready_numeric_not_answered_cases": [],
+        "structural_construction_only_no_numeric_goal_count": 21,
+        "internal_symbolic_oracle_comparable_match_count": 2,
+        "output_policy_note": "Strictly per §14.2: items with source_goal_completion (asking sin/cos/tan/cot value of an angle) are reported as GOAL_VISUALIZATION_READY_NUMERIC_NOT_ANSWERED and NEVER counted in learner_visible_numeric_oracle_or_key_match_count."
+      },
+      "safe_refusal": {
+        "total_not_served_count": 16,
+        "expected_negative_items_count": 13,
+        "expected_negative_safely_refused_count": 13,
+        "provider_503_infrastructure_fallbacks_in_offline_mode": 10
+      },
+      "wrong_scene_served": {
+        "count": 0,
+        "cases": []
+      }
+    },
+    "WAVE_PROBES": {
+      "total_items": 24,
+      "semantic_correctness": {
+        "local_parse_complete_count": 22,
+        "complete_parse_with_unread_leak_count": 0,
+        "meets_expected_outcome_count": 24,
+        "meets_expected_outcome_rate": "24/24"
+      },
+      "dimension_correctness": {
+        "served_with_verified_slot_dimensions": 13,
+        "negative_dimension_or_unit_probes_total": 6,
+        "negative_dimension_or_unit_falsely_served": []
+      },
+      "source_provenance": {
+        "extracted_items_quote_checked": 127,
+        "ungrounded_quotes_count": 0,
+        "clause_span_mismatch_count": 0,
+        "served_passed_source_gate_count": 13
+      },
+      "mathematical_determinacy": {
+        "NOT_SERVED": 11,
+        "UNIQUELY_DETERMINED_SERVED": 13
+      },
+      "planner_capability": {
+        "planned_and_served_count": 13,
+        "capability_gap_refusal_count": 1,
+        "capability_gap_cases": [
+          "wp_neg_non_special_angle_37deg"
+        ]
+      },
+      "exact_construction": {
+        "served_count": 13,
+        "kernel_check_passed_count": 13,
+        "float_approximations_used": 0
+      },
+      "proof_verification": {
+        "trig_certificate_cases_count": 11,
+        "trig_certificate_verification_failures": [
+          "wp_area_square_base_dist",
+          "wp_area_alpha_renamed_x",
+          "wp_area_vertex_renamed_T_MNPQ",
+          "wp_area_parenthesized_2a_sq",
+          "wp_role_ordered_ratio",
+          "wp_consistent_metric_units_cm",
+          "wp_trig_tan_line_plane_height",
+          "wp_trig_angle_coupled_square_base",
+          "wp_right_isosceles_hypotenuse_to_legs",
+          "wp_rhombus_prism_angle_volume",
+          "wp_trig_goal_withheld_numeric_policy"
+        ],
+        "invariance_certificate_cases_count": 0,
+        "invariance_certificate_verification_failures": [],
+        "verified_derived_quantity_cases_count": 0
+      },
+      "verified_scene3d": {
+        "visualized_served_count": 13,
+        "goal_construction_verified_count": 13,
+        "broken_scene_invariants_count": 0
+      },
+      "numeric_goal_completion": {
+        "learner_visible_numeric_answered_count": 12,
+        "learner_visible_numeric_oracle_or_key_match_count": 12,
+        "goal_visualization_ready_numeric_not_answered_count": 1,
+        "goal_visualization_ready_numeric_not_answered_cases": [
+          "wp_trig_goal_withheld_numeric_policy"
+        ],
+        "structural_construction_only_no_numeric_goal_count": 0,
+        "internal_symbolic_oracle_comparable_match_count": 13,
+        "output_policy_note": "Strictly per §14.2: items with source_goal_completion (asking sin/cos/tan/cot value of an angle) are reported as GOAL_VISUALIZATION_READY_NUMERIC_NOT_ANSWERED and NEVER counted in learner_visible_numeric_oracle_or_key_match_count."
+      },
+      "safe_refusal": {
+        "total_not_served_count": 11,
+        "expected_negative_items_count": 11,
+        "expected_negative_safely_refused_count": 11,
+        "provider_503_infrastructure_fallbacks_in_offline_mode": 0
+      },
+      "wrong_scene_served": {
+        "count": 0,
+        "cases": []
+      }
+    }
+  },
+  "attribution_questions_14_3": {
+    "q1_improvements_at_parser": {
+      "unlocked_from_non_complete_parse": [
+        "COMP112:goal_cos_given_premise_neg",
+        "COMP112:gv_unread_area_in_a",
+        "REAL27:vmmu_r537",
+        "WAVE_PROBES:wp_area_alpha_renamed_x",
+        "WAVE_PROBES:wp_area_equilateral_tri_base",
+        "WAVE_PROBES:wp_area_parenthesized_2a_sq",
+        "WAVE_PROBES:wp_area_square_base_dist",
+        "WAVE_PROBES:wp_area_vertex_renamed_T_MNPQ",
+        "WAVE_PROBES:wp_consistent_metric_units_cm",
+        "WAVE_PROBES:wp_role_ordered_ratio",
+        "WAVE_PROBES:wp_trig_angle_coupled_square_base",
+        "WAVE_PROBES:wp_trig_goal_withheld_numeric_policy",
+        "WAVE_PROBES:wp_trig_tan_line_plane_height",
+        "WAVE_PROBES:wp_volume_pyramid_to_height"
+      ],
+      "explanation": "local-geometry-parser/2 unlocked squared/cubic/parenthesized/decimal/role-ratio quantity clauses (face_area, solid_volume, segment_ratio), Vietnamese trig-ratio angle clauses (sin/cos/tan/cot), Coupling-Guard late regular-polygon dimension resolution, and deterministic wrong-unit tail capture (converting prior 503 LIVE_AI_DISABLED fallbacks on wrong units into deterministic INCONSISTENT_FACTS refusals with 0 provider calls)."
+    },
+    "q2_improvements_at_typed_expressions_and_derivations": {
+      "unlocked_cases": [],
+      "explanation": "dimension-expression/1 (QuantityExpr AST + context-driven SymbolEnvironment) and certified inverse mensuration rules (SQUARE_AREA_TO_SIDE, EQUILATERAL_TRIANGLE_AREA_TO_SIDE, PYRAMID_VOLUME_AND_BASE_TO_HEIGHT, PYRAMID_VOLUME_AND_HEIGHT_TO_SQUARE_SIDE, PRISM_VOLUME_AND_BASE_TO_HEIGHT) unlocked area/volume premises while refusing conflicting symbol dimensions (e.g., area = 4a with length = a)."
+    },
+    "q3_improvements_at_planner_and_kernel_trig_composition": {
+      "unlocked_cases": [
+        {
+          "key": "COMP112:goal_cos_given_premise_neg",
+          "trig_identities": [
+            null
+          ],
+          "answers": {
+            "q1": "a√3"
+          }
+        },
+        {
+          "key": "COMP112:gv_unread_area_in_a",
+          "trig_identities": [
+            null
+          ],
+          "answers": {
+            "q1": "a√6/3"
+          }
+        },
+        {
+          "key": "REAL27:vmmu_r460",
+          "trig_identities": [
+            null,
+            null
+          ],
+          "answers": {
+            "q1": "a³√2/3"
+          }
+        },
+        {
+          "key": "REAL27:vmmu_r463",
+          "trig_identities": [
+            null,
+            null
+          ],
+          "answers": {
+            "q1": "4a³√3"
+          }
+        },
+        {
+          "key": "REAL27:vmmu_r537",
+          "trig_identities": [
+            null
+          ],
+          "answers": {
+            "q1": "a√6/3"
+          }
+        },
+        {
+          "key": "WAVE_PROBES:wp_area_alpha_renamed_x",
+          "trig_identities": [
+            null
+          ],
+          "answers": {
+            "q1": "x√6/3"
+          }
+        },
+        {
+          "key": "WAVE_PROBES:wp_area_parenthesized_2a_sq",
+          "trig_identities": [
+            null
+          ],
+          "answers": {
+            "q1": "4a³√7/3"
+          }
+        },
+        {
+          "key": "WAVE_PROBES:wp_area_square_base_dist",
+          "trig_identities": [
+            null
+          ],
+          "answers": {
+            "q1": "a√6/3"
+          }
+        },
+        {
+          "key": "WAVE_PROBES:wp_area_vertex_renamed_T_MNPQ",
+          "trig_identities": [
+            null
+          ],
+          "answers": {
+            "q1": "a√6/3"
+          }
+        },
+        {
+          "key": "WAVE_PROBES:wp_consistent_metric_units_cm",
+          "trig_identities": [
+            null
+          ],
+          "answers": {
+            "q1": "√6"
+          }
+        },
+        {
+          "key": "WAVE_PROBES:wp_rhombus_prism_angle_volume",
+          "trig_identities": [
+            null,
+            null
+          ],
+          "answers": {
+            "q1": "12a³"
+          }
+        },
+        {
+          "key": "WAVE_PROBES:wp_right_isosceles_hypotenuse_to_legs",
+          "trig_identities": [
+            null,
+            null
+          ],
+          "answers": {
+            "q1": "a³√2/3"
+          }
+        },
+        {
+          "key": "WAVE_PROBES:wp_role_ordered_ratio",
+          "trig_identities": [
+            null
+          ],
+          "answers": {
+            "q1": "a³√7/6"
+          }
+        },
+        {
+          "key": "WAVE_PROBES:wp_trig_angle_coupled_square_base",
+          "trig_identities": [
+            null
+          ],
+          "answers": {
+            "q1": "8a³/3"
+          }
+        },
+        {
+          "key": "WAVE_PROBES:wp_trig_goal_withheld_numeric_policy",
+          "trig_identities": [
+            null
+          ],
+          "answers": {
+            "q1": "cos²=1/5"
+          }
+        },
+        {
+          "key": "WAVE_PROBES:wp_trig_tan_line_plane_height",
+          "trig_identities": [
+            null
+          ],
+          "answers": {
+            "q1": "a³√3/6"
+          }
+        }
+      ],
+      "explanation": "Exact Kernel trig & right-triangle constructions over Fraction/Radical with self-verified trig-construction-certificate/1 unlocked altitude-from-angle (tan/sin/cos/cot), RIGHT_ISOSCELES_HYPOTENUSE_TO_LEGS (pythagoras_equal_legs), and RHOMBUS_DIAGONAL_AND_ANGLE_TO_SIDE (rhombus_half_diagonal_cos)."
+    },
+    "q4_remaining_refusals_and_exact_categories": {
+      "COMP112": {
+        "count": 47,
+        "by_failure_taxonomy": {
+          "None": 47
+        },
+        "by_reason_code": {
+          "LIVE_AI_DISABLED": 22,
+          "INCONSISTENT_FACTS": 4,
+          "OUT_OF_SCOPE": 4,
+          "SKEW_NO_INTERSECTION": 1,
+          "MISSING_DIMENSION": 15,
+          "AMBIGUOUS_FACT": 1
+        },
+        "by_root_cause": {
+          "FREE_POINT_UNDERDETERMINED": 4,
+          "INCOMPLETE_FACT_EXTRACTION": 4,
+          "UNRESOLVED_REFERENCE": 1,
+          "UNRECOGNIZED_GOAL": 4,
+          "UNSUPPORTED_POINT_CONSTRUCTION": 1,
+          "DESCRIBED_POINT_IN_PREMISE_UNSUPPORTED": 1,
+          "SOURCE_CONFLICT": 4,
+          "UNSUPPORTED_GOAL_FUNCTION": 2,
+          "UNSUPPORTED_GOAL_KIND": 4,
+          "UNRECOGNIZED_GEOMETRIC_ENTITY": 2,
+          "GEOMETRIC_DEGENERACY": 1,
+          "SOURCE_PROVENANCE_MISSING": 3,
+          "SHAPE_FREEDOM_UNCERTIFIED": 7,
+          "INSUFFICIENT_CONSTRAINTS": 8,
+          "QUESTION_PREMISE_AMBIGUITY": 1
+        },
+        "unexpected_refusals": [
+          "dp_unnamed_through_point"
+        ],
+        "rows": [
+          {
+            "id": "mc_extra_unread",
+            "group": "silent_loss_negative",
+            "expected": "REFUSE",
+            "reason_code": "LIVE_AI_DISABLED",
+            "failure_category": null,
+            "failure_taxonomy": null,
+            "root_cause": "FREE_POINT_UNDERDETERMINED"
+          },
+          {
+            "id": "mc_extra_unread2",
+            "group": "silent_loss_negative",
+            "expected": "REFUSE",
+            "reason_code": "LIVE_AI_DISABLED",
+            "failure_category": null,
+            "failure_taxonomy": null,
+            "root_cause": "INCOMPLETE_FACT_EXTRACTION"
+          },
+          {
+            "id": "mc_distance_extra_unread",
+            "group": "silent_loss_negative",
+            "expected": "REFUSE",
+            "reason_code": "LIVE_AI_DISABLED",
+            "failure_category": null,
+            "failure_taxonomy": null,
+            "root_cause": "INCOMPLETE_FACT_EXTRACTION"
+          },
+          {
+            "id": "order_plane_never_defined",
+            "group": "clause_order_negative",
+            "expected": "REFUSE",
+            "reason_code": "LIVE_AI_DISABLED",
+            "failure_category": null,
+            "failure_taxonomy": null,
+            "root_cause": "UNRESOLVED_REFERENCE"
+          },
+          {
+            "id": "dp_unnamed_through_point",
+            "group": "described_point",
+            "expected": "SERVE",
+            "reason_code": "LIVE_AI_DISABLED",
+            "failure_category": null,
+            "failure_taxonomy": null,
+            "root_cause": "UNRECOGNIZED_GOAL"
+          },
+          {
+            "id": "dp_free_point",
+            "group": "described_point_negative",
+            "expected": "REFUSE",
+            "reason_code": "LIVE_AI_DISABLED",
+            "failure_category": null,
+            "failure_taxonomy": null,
+            "root_cause": "FREE_POINT_UNDERDETERMINED"
+          },
+          {
+            "id": "dp_free_point_goi",
+            "group": "described_point_negative",
+            "expected": "REFUSE",
+            "reason_code": "LIVE_AI_DISABLED",
+            "failure_category": null,
+            "failure_taxonomy": null,
+            "root_cause": "FREE_POINT_UNDERDETERMINED"
+          },
+          {
+            "id": "dp_midpoint_as_goal",
+            "group": "premise_vs_goal",
+            "expected": "REFUSE",
+            "reason_code": "LIVE_AI_DISABLED",
+            "failure_category": null,
+            "failure_taxonomy": null,
+            "root_cause": "UNRECOGNIZED_GOAL"
+          },
+          {
+            "id": "dp_reflection",
+            "group": "described_point_unsupported",
+            "expected": "REFUSE",
+            "reason_code": "LIVE_AI_DISABLED",
+            "failure_category": null,
+            "failure_taxonomy": null,
+            "root_cause": "UNSUPPORTED_POINT_CONSTRUCTION"
+          },
+          {
+            "id": "dp_projection_unnamed_image",
+            "group": "described_point_unsupported",
+            "expected": "REFUSE",
+            "reason_code": "LIVE_AI_DISABLED",
+            "failure_category": null,
+            "failure_taxonomy": null,
+            "root_cause": "DESCRIBED_POINT_IN_PREMISE_UNSUPPORTED"
+          },
+          {
+            "id": "dp_redefined_conflict",
+            "group": "contradiction",
+            "expected": "REFUSE",
+            "reason_code": "INCONSISTENT_FACTS",
+            "failure_category": "geometry_generation_failed",
+            "failure_taxonomy": null,
+            "root_cause": "SOURCE_CONFLICT"
+          },
+          {
+            "id": "goal_cos_of_length_neg",
+            "group": "goal_trig_negative",
+            "expected": "REFUSE",
+            "reason_code": "LIVE_AI_DISABLED",
+            "failure_category": null,
+            "failure_taxonomy": null,
+            "root_cause": "UNRECOGNIZED_GOAL"
+          },
+          {
+            "id": "goal_cos_squared_neg",
+            "group": "goal_trig_negative",
+            "expected": "REFUSE",
+            "reason_code": "LIVE_AI_DISABLED",
+            "failure_category": null,
+            "failure_taxonomy": null,
+            "root_cause": "UNSUPPORTED_GOAL_FUNCTION"
+          },
+          {
+            "id": "goal_cos_wrong_object_neg",
+            "group": "goal_trig_negative",
+            "expected": "REFUSE",
+            "reason_code": "LIVE_AI_DISABLED",
+            "failure_category": null,
+            "failure_taxonomy": null,
+            "root_cause": "UNSUPPORTED_GOAL_FUNCTION"
+          },
+          {
+            "id": "proof_only",
+            "group": "proof",
+            "expected": "REFUSE",
+            "reason_code": "OUT_OF_SCOPE",
+            "failure_category": "capability_gap",
+            "failure_taxonomy": null,
+            "root_cause": "UNSUPPORTED_GOAL_KIND"
+          },
+          {
+            "id": "proof_premise_not_given",
+            "group": "premise_vs_goal",
+            "expected": "REFUSE",
+            "reason_code": "OUT_OF_SCOPE",
+            "failure_category": "capability_gap",
+            "failure_taxonomy": null,
+            "root_cause": "UNSUPPORTED_GOAL_KIND"
+          },
+          {
+            "id": "amb_plane_not_unique",
+            "group": "ambiguity",
+            "expected": "REFUSE",
+            "reason_code": "LIVE_AI_DISABLED",
+            "failure_category": null,
+            "failure_taxonomy": null,
+            "root_cause": "UNRECOGNIZED_GEOMETRIC_ENTITY"
+          },
+          {
+            "id": "contra_two_lengths",
+            "group": "contradiction",
+            "expected": "REFUSE",
+            "reason_code": "INCONSISTENT_FACTS",
+            "failure_category": "geometry_generation_failed",
+            "failure_taxonomy": null,
+            "root_cause": "SOURCE_CONFLICT"
+          },
+          {
+            "id": "contra_skew_intersection",
+            "group": "contradiction",
+            "expected": "REFUSE",
+            "reason_code": "SKEW_NO_INTERSECTION",
+            "failure_category": "geometry_generation_failed",
+            "failure_taxonomy": null,
+            "root_cause": "GEOMETRIC_DEGENERACY"
+          },
+          {
+            "id": "diagram_fact",
+            "group": "diagram_dependent",
+            "expected": "REFUSE",
+            "reason_code": "LIVE_AI_DISABLED",
+            "failure_category": null,
+            "failure_taxonomy": null,
+            "root_cause": "SOURCE_PROVENANCE_MISSING"
+          },
+          {
+            "id": "scale_height_free",
+            "group": "scale_negative",
+            "expected": "REFUSE",
+            "reason_code": "MISSING_DIMENSION",
+            "failure_category": "capability_gap",
+            "failure_taxonomy": null,
+            "root_cause": "SHAPE_FREEDOM_UNCERTIFIED"
+          },
+          {
+            "id": "scale_absolute_volume",
+            "group": "scale_negative",
+            "expected": "REFUSE",
+            "reason_code": "MISSING_DIMENSION",
+            "failure_category": "insufficient_specification",
+            "failure_taxonomy": null,
+            "root_cause": "INSUFFICIENT_CONSTRAINTS"
+          },
+          {
+            "id": "ti_varying_line_plane",
+            "group": "target_invariant_negative",
+            "expected": "REFUSE",
+            "reason_code": "MISSING_DIMENSION",
+            "failure_category": "insufficient_specification",
+            "failure_taxonomy": null,
+            "root_cause": "INSUFFICIENT_CONSTRAINTS"
+          },
+          {
+            "id": "ti_height_free",
+            "group": "target_invariant_negative",
+            "expected": "REFUSE",
+            "reason_code": "MISSING_DIMENSION",
+            "failure_category": "capability_gap",
+            "failure_taxonomy": null,
+            "root_cause": "SHAPE_FREEDOM_UNCERTIFIED"
+          },
+          {
+            "id": "ti_absolute_volume",
+            "group": "target_invariant_negative",
+            "expected": "REFUSE",
+            "reason_code": "MISSING_DIMENSION",
+            "failure_category": "insufficient_specification",
+            "failure_taxonomy": null,
+            "root_cause": "INSUFFICIENT_CONSTRAINTS"
+          },
+          {
+            "id": "tet_not_regular",
+            "group": "regular_tetrahedron_negative",
+            "expected": "REFUSE",
+            "reason_code": "MISSING_DIMENSION",
+            "failure_category": "capability_gap",
+            "failure_taxonomy": null,
+            "root_cause": "SHAPE_FREEDOM_UNCERTIFIED"
+          },
+          {
+            "id": "tet_regular_pyramid_only",
+            "group": "regular_tetrahedron_negative",
+            "expected": "REFUSE",
+            "reason_code": "MISSING_DIMENSION",
+            "failure_category": "capability_gap",
+            "failure_taxonomy": null,
+            "root_cause": "SHAPE_FREEDOM_UNCERTIFIED"
+          },
+          {
+            "id": "tet_conflict",
+            "group": "regular_tetrahedron_negative",
+            "expected": "REFUSE",
+            "reason_code": "LIVE_AI_DISABLED",
+            "failure_category": null,
+            "failure_taxonomy": null,
+            "root_cause": "SOURCE_PROVENANCE_MISSING"
+          },
+          {
+            "id": "ll_skew_varying",
+            "group": "proof_angle_negative",
+            "expected": "REFUSE",
+            "reason_code": "MISSING_DIMENSION",
+            "failure_category": "insufficient_specification",
+            "failure_taxonomy": null,
+            "root_cause": "INSUFFICIENT_CONSTRAINTS"
+          },
+          {
+            "id": "lp_varying_lateral",
+            "group": "proof_angle_negative",
+            "expected": "REFUSE",
+            "reason_code": "MISSING_DIMENSION",
+            "failure_category": "insufficient_specification",
+            "failure_taxonomy": null,
+            "root_cause": "INSUFFICIENT_CONSTRAINTS"
+          },
+          {
+            "id": "lp_no_ratio",
+            "group": "proof_angle_negative",
+            "expected": "REFUSE",
+            "reason_code": "MISSING_DIMENSION",
+            "failure_category": "capability_gap",
+            "failure_taxonomy": null,
+            "root_cause": "SHAPE_FREEDOM_UNCERTIFIED"
+          },
+          {
+            "id": "pa_prism_out_of_domain",
+            "group": "proof_angle_negative",
+            "expected": "REFUSE",
+            "reason_code": "MISSING_DIMENSION",
+            "failure_category": "capability_gap",
+            "failure_taxonomy": null,
+            "root_cause": "SHAPE_FREEDOM_UNCERTIFIED"
+          },
+          {
+            "id": "gv_base_unnamed_subject_first",
+            "group": "gv_base_unnamed_negative",
+            "expected": "REFUSE",
+            "reason_code": "LIVE_AI_DISABLED",
+            "failure_category": null,
+            "failure_taxonomy": null,
+            "root_cause": "SOURCE_PROVENANCE_MISSING"
+          },
+          {
+            "id": "gv_cuboid_no_square",
+            "group": "gv_base_unnamed_negative",
+            "expected": "REFUSE",
+            "reason_code": "MISSING_DIMENSION",
+            "failure_category": "insufficient_specification",
+            "failure_taxonomy": null,
+            "root_cause": "INSUFFICIENT_CONSTRAINTS"
+          },
+          {
+            "id": "gv_lateral_not_regular",
+            "group": "gv_lateral_edge_negative",
+            "expected": "REFUSE",
+            "reason_code": "AMBIGUOUS_FACT",
+            "failure_category": "insufficient_specification",
+            "failure_taxonomy": null,
+            "root_cause": "QUESTION_PREMISE_AMBIGUITY"
+          },
+          {
+            "id": "gv_lateral_no_height",
+            "group": "gv_lateral_edge_negative",
+            "expected": "REFUSE",
+            "reason_code": "MISSING_DIMENSION",
+            "failure_category": "insufficient_specification",
+            "failure_taxonomy": null,
+            "root_cause": "INSUFFICIENT_CONSTRAINTS"
+          },
+          {
+            "id": "gv_prism_undotted_scrambled",
+            "group": "gv_entity_notation_negative",
+            "expected": "REFUSE",
+            "reason_code": "LIVE_AI_DISABLED",
+            "failure_category": null,
+            "failure_taxonomy": null,
+            "root_cause": "UNRECOGNIZED_GOAL"
+          },
+          {
+            "id": "gv_isosceles_no_right_angle",
+            "group": "gv_isosceles_negative",
+            "expected": "REFUSE",
+            "reason_code": "LIVE_AI_DISABLED",
+            "failure_category": null,
+            "failure_taxonomy": null,
+            "root_cause": "INCOMPLETE_FACT_EXTRACTION"
+          },
+          {
+            "id": "gv_isosceles_base_only",
+            "group": "gv_isosceles_negative",
+            "expected": "REFUSE",
+            "reason_code": "LIVE_AI_DISABLED",
+            "failure_category": null,
+            "failure_taxonomy": null,
+            "root_cause": "UNRECOGNIZED_GEOMETRIC_ENTITY"
+          },
+          {
+            "id": "gv_unread_perimeter",
+            "group": "gv_completeness_negative",
+            "expected": "REFUSE",
+            "reason_code": "LIVE_AI_DISABLED",
+            "failure_category": null,
+            "failure_taxonomy": null,
+            "root_cause": "INCOMPLETE_FACT_EXTRACTION"
+          },
+          {
+            "id": "gv_base_area_impossible",
+            "group": "gv_base_area_negative",
+            "expected": "REFUSE",
+            "reason_code": "INCONSISTENT_FACTS",
+            "failure_category": "geometry_generation_failed",
+            "failure_taxonomy": null,
+            "root_cause": "SOURCE_CONFLICT"
+          },
+          {
+            "id": "gv_pair_point_on",
+            "group": "gv_minimal_pair",
+            "expected": "REFUSE",
+            "reason_code": "LIVE_AI_DISABLED",
+            "failure_category": null,
+            "failure_taxonomy": null,
+            "root_cause": "FREE_POINT_UNDERDETERMINED"
+          },
+          {
+            "id": "gv_pair_perp_proof",
+            "group": "gv_minimal_pair",
+            "expected": "REFUSE",
+            "reason_code": "OUT_OF_SCOPE",
+            "failure_category": "capability_gap",
+            "failure_taxonomy": null,
+            "root_cause": "UNSUPPORTED_GOAL_KIND"
+          },
+          {
+            "id": "gv_pair_regular_pyramid",
+            "group": "gv_minimal_pair",
+            "expected": "REFUSE",
+            "reason_code": "MISSING_DIMENSION",
+            "failure_category": "capability_gap",
+            "failure_taxonomy": null,
+            "root_cause": "SHAPE_FREEDOM_UNCERTIFIED"
+          },
+          {
+            "id": "gv_pair_section_shape_proof",
+            "group": "gv_minimal_pair",
+            "expected": "REFUSE",
+            "reason_code": "OUT_OF_SCOPE",
+            "failure_category": "capability_gap",
+            "failure_taxonomy": null,
+            "root_cause": "UNSUPPORTED_GOAL_KIND"
+          },
+          {
+            "id": "gv_contradiction",
+            "group": "gv_contradiction",
+            "expected": "REFUSE",
+            "reason_code": "INCONSISTENT_FACTS",
+            "failure_category": "geometry_generation_failed",
+            "failure_taxonomy": null,
+            "root_cause": "SOURCE_CONFLICT"
+          },
+          {
+            "id": "gv_missing_height",
+            "group": "gv_contradiction",
+            "expected": "REFUSE",
+            "reason_code": "MISSING_DIMENSION",
+            "failure_category": "insufficient_specification",
+            "failure_taxonomy": null,
+            "root_cause": "INSUFFICIENT_CONSTRAINTS"
+          }
+        ]
+      },
+      "DEV37": {
+        "count": 9,
+        "by_failure_taxonomy": {
+          "None": 9
+        },
+        "by_reason_code": {
+          "OUT_OF_SCOPE": 1,
+          "LIVE_AI_DISABLED": 6,
+          "AMBIGUOUS_FACT": 1,
+          "INCONSISTENT_FACTS": 1
+        },
+        "by_root_cause": {
+          "UNSUPPORTED_GOAL_KIND": 1,
+          "UNRECOGNIZED_GOAL": 2,
+          "UNRECOGNIZED_GEOMETRIC_ENTITY": 1,
+          "UNRESOLVED_REFERENCE": 1,
+          "INCOMPLETE_FACT_EXTRACTION": 1,
+          "DIAGRAM_DEPENDENT_FACT": 1,
+          "INSUFFICIENT_CONSTRAINTS": 1,
+          "SOURCE_CONFLICT": 1
+        },
+        "unexpected_refusals": [
+          "sec_do_P_cat",
+          "diagram_benign"
+        ],
+        "rows": [
+          {
+            "id": "goal_proof_only",
+            "group": "goal_extraction",
+            "expected": "REFUSE",
+            "reason_code": "OUT_OF_SCOPE",
+            "failure_category": "capability_gap",
+            "failure_taxonomy": null,
+            "root_cause": "UNSUPPORTED_GOAL_KIND"
+          },
+          {
+            "id": "pair_point_as_goal",
+            "group": "minimal_pair",
+            "expected": "REFUSE",
+            "reason_code": "LIVE_AI_DISABLED",
+            "failure_category": null,
+            "failure_taxonomy": null,
+            "root_cause": "UNRECOGNIZED_GOAL"
+          },
+          {
+            "id": "pair_plane_underdetermined",
+            "group": "minimal_pair",
+            "expected": "REFUSE",
+            "reason_code": "LIVE_AI_DISABLED",
+            "failure_category": null,
+            "failure_taxonomy": null,
+            "root_cause": "UNRECOGNIZED_GEOMETRIC_ENTITY"
+          },
+          {
+            "id": "ref_undefined_plane",
+            "group": "entity_reference",
+            "expected": "REFUSE",
+            "reason_code": "LIVE_AI_DISABLED",
+            "failure_category": null,
+            "failure_taxonomy": null,
+            "root_cause": "UNRESOLVED_REFERENCE"
+          },
+          {
+            "id": "sec_do_P_cat",
+            "group": "section_goal",
+            "expected": "SERVE",
+            "reason_code": "LIVE_AI_DISABLED",
+            "failure_category": null,
+            "failure_taxonomy": null,
+            "root_cause": "UNRECOGNIZED_GOAL"
+          },
+          {
+            "id": "diagram_benign",
+            "group": "diagram_reference",
+            "expected": "SERVE",
+            "reason_code": "LIVE_AI_DISABLED",
+            "failure_category": null,
+            "failure_taxonomy": null,
+            "root_cause": "INCOMPLETE_FACT_EXTRACTION"
+          },
+          {
+            "id": "diagram_dependent",
+            "group": "diagram_reference",
+            "expected": "REFUSE",
+            "reason_code": "LIVE_AI_DISABLED",
+            "failure_category": null,
+            "failure_taxonomy": null,
+            "root_cause": "DIAGRAM_DEPENDENT_FACT"
+          },
+          {
+            "id": "missing_dimension",
+            "group": "missing_dimensions",
+            "expected": "REFUSE",
+            "reason_code": "AMBIGUOUS_FACT",
+            "failure_category": "insufficient_specification",
+            "failure_taxonomy": null,
+            "root_cause": "INSUFFICIENT_CONSTRAINTS"
+          },
+          {
+            "id": "inconsistent",
+            "group": "inconsistent_premises",
+            "expected": "REFUSE",
+            "reason_code": "INCONSISTENT_FACTS",
+            "failure_category": "geometry_generation_failed",
+            "failure_taxonomy": null,
+            "root_cause": "SOURCE_CONFLICT"
+          }
+        ]
+      },
+      "PROBES39": {
+        "count": 16,
+        "by_failure_taxonomy": {
+          "None": 16
+        },
+        "by_reason_code": {
+          "DERIVED_PLANE_IS_REFERENCE": 1,
+          "LIVE_AI_DISABLED": 10,
+          "FACT_INCOMPLETE": 1,
+          "COLLINEAR_POINTS": 1,
+          "PLANE_NOT_UNIQUE": 1,
+          "SECTION_PLANE_IS_FACE": 1,
+          "OUT_OF_SCOPE": 1
+        },
+        "by_root_cause": {
+          "GEOMETRIC_DEGENERACY": 3,
+          "UNRECOGNIZED_GEOMETRIC_ENTITY": 8,
+          "INCOMPLETE_FACT_EXTRACTION": 1,
+          "UNRESOLVED_REFERENCE": 1,
+          "INSUFFICIENT_CONSTRAINTS": 1,
+          "UNSUPPORTED_GOAL_KIND": 1,
+          "UNRECOGNIZED_GOAL": 1
+        },
+        "unexpected_refusals": [
+          "perp_bisector_plane",
+          "two_parallel_lines",
+          "intersection_with_derived_plane"
+        ],
+        "rows": [
+          {
+            "id": "par_plane_point_on_plane",
+            "group": "parallel_plane_degenerate",
+            "expected": "REFUSE",
+            "reason_code": "DERIVED_PLANE_IS_REFERENCE",
+            "failure_category": "geometry_generation_failed",
+            "failure_taxonomy": null,
+            "root_cause": "GEOMETRIC_DEGENERACY"
+          },
+          {
+            "id": "perp_bisector_plane",
+            "group": "perpendicular_line",
+            "expected": "SERVE",
+            "reason_code": "LIVE_AI_DISABLED",
+            "failure_category": null,
+            "failure_taxonomy": null,
+            "root_cause": "UNRECOGNIZED_GEOMETRIC_ENTITY"
+          },
+          {
+            "id": "perp_line_degenerate",
+            "group": "perpendicular_line_degenerate",
+            "expected": "REFUSE",
+            "reason_code": "FACT_INCOMPLETE",
+            "failure_category": "geometry_generation_failed",
+            "failure_taxonomy": null,
+            "root_cause": "INCOMPLETE_FACT_EXTRACTION"
+          },
+          {
+            "id": "line_point_on_line",
+            "group": "line_and_point_degenerate",
+            "expected": "REFUSE",
+            "reason_code": "COLLINEAR_POINTS",
+            "failure_category": "geometry_generation_failed",
+            "failure_taxonomy": null,
+            "root_cause": "GEOMETRIC_DEGENERACY"
+          },
+          {
+            "id": "two_parallel_lines",
+            "group": "two_lines",
+            "expected": "SERVE",
+            "reason_code": "LIVE_AI_DISABLED",
+            "failure_category": null,
+            "failure_taxonomy": null,
+            "root_cause": "UNRECOGNIZED_GEOMETRIC_ENTITY"
+          },
+          {
+            "id": "two_lines_skew",
+            "group": "two_lines_degenerate",
+            "expected": "REFUSE",
+            "reason_code": "LIVE_AI_DISABLED",
+            "failure_category": null,
+            "failure_taxonomy": null,
+            "root_cause": "UNRECOGNIZED_GEOMETRIC_ENTITY"
+          },
+          {
+            "id": "two_lines_same",
+            "group": "two_lines_degenerate",
+            "expected": "REFUSE",
+            "reason_code": "LIVE_AI_DISABLED",
+            "failure_category": null,
+            "failure_taxonomy": null,
+            "root_cause": "UNRECOGNIZED_GEOMETRIC_ENTITY"
+          },
+          {
+            "id": "under_parallel_one_line",
+            "group": "underconstrained",
+            "expected": "REFUSE",
+            "reason_code": "LIVE_AI_DISABLED",
+            "failure_category": null,
+            "failure_taxonomy": null,
+            "root_cause": "UNRECOGNIZED_GEOMETRIC_ENTITY"
+          },
+          {
+            "id": "under_perpendicular_plane",
+            "group": "underconstrained",
+            "expected": "REFUSE",
+            "reason_code": "LIVE_AI_DISABLED",
+            "failure_category": null,
+            "failure_taxonomy": null,
+            "root_cause": "UNRECOGNIZED_GEOMETRIC_ENTITY"
+          },
+          {
+            "id": "under_contains_one_line",
+            "group": "underconstrained",
+            "expected": "REFUSE",
+            "reason_code": "LIVE_AI_DISABLED",
+            "failure_category": null,
+            "failure_taxonomy": null,
+            "root_cause": "UNRECOGNIZED_GEOMETRIC_ENTITY"
+          },
+          {
+            "id": "under_any_plane",
+            "group": "underconstrained",
+            "expected": "REFUSE",
+            "reason_code": "LIVE_AI_DISABLED",
+            "failure_category": null,
+            "failure_taxonomy": null,
+            "root_cause": "UNRESOLVED_REFERENCE"
+          },
+          {
+            "id": "compound_contains_parallel_not_unique",
+            "group": "compound_degenerate",
+            "expected": "REFUSE",
+            "reason_code": "PLANE_NOT_UNIQUE",
+            "failure_category": "insufficient_specification",
+            "failure_taxonomy": null,
+            "root_cause": "INSUFFICIENT_CONSTRAINTS"
+          },
+          {
+            "id": "compound_contains_perpendicular_face",
+            "group": "compound_degenerate",
+            "expected": "REFUSE",
+            "reason_code": "SECTION_PLANE_IS_FACE",
+            "failure_category": "geometry_generation_failed",
+            "failure_taxonomy": null,
+            "root_cause": "GEOMETRIC_DEGENERACY"
+          },
+          {
+            "id": "diagram_dependent",
+            "group": "diagram",
+            "expected": "REFUSE",
+            "reason_code": "LIVE_AI_DISABLED",
+            "failure_category": null,
+            "failure_taxonomy": null,
+            "root_cause": "UNRECOGNIZED_GEOMETRIC_ENTITY"
+          },
+          {
+            "id": "goal_as_premise",
+            "group": "goal_vs_premise",
+            "expected": "REFUSE",
+            "reason_code": "OUT_OF_SCOPE",
+            "failure_category": "capability_gap",
+            "failure_taxonomy": null,
+            "root_cause": "UNSUPPORTED_GOAL_KIND"
+          },
+          {
+            "id": "intersection_with_derived_plane",
+            "group": "intersection_derived",
+            "expected": "SERVE",
+            "reason_code": "LIVE_AI_DISABLED",
+            "failure_category": null,
+            "failure_taxonomy": null,
+            "root_cause": "UNRECOGNIZED_GOAL"
+          }
+        ]
+      },
+      "WAVE_PROBES": {
+        "count": 11,
+        "by_failure_taxonomy": {
+          "None": 11
+        },
+        "by_reason_code": {
+          "INCONSISTENT_FACTS": 7,
+          "MISSING_DIMENSION": 1,
+          "AMBIGUOUS_FACT": 2,
+          "EXACT_DOMAIN_EXCEEDED": 1
+        },
+        "by_root_cause": {
+          "SOURCE_CONFLICT": 7,
+          "INSUFFICIENT_CONSTRAINTS": 2,
+          "QUESTION_PREMISE_AMBIGUITY": 1,
+          "PLANNER_COMPOSITION_UNSUPPORTED": 1
+        },
+        "unexpected_refusals": [],
+        "rows": [
+          {
+            "id": "wp_neg_area_assigned_linear_4a",
+            "group": "p1b_dimension_negative",
+            "expected": "REFUSE",
+            "reason_code": "INCONSISTENT_FACTS",
+            "failure_category": "geometry_generation_failed",
+            "failure_taxonomy": null,
+            "root_cause": "SOURCE_CONFLICT"
+          },
+          {
+            "id": "wp_neg_length_assigned_a_squared",
+            "group": "p1b_dimension_negative",
+            "expected": "REFUSE",
+            "reason_code": "INCONSISTENT_FACTS",
+            "failure_category": "geometry_generation_failed",
+            "failure_taxonomy": null,
+            "root_cause": "SOURCE_CONFLICT"
+          },
+          {
+            "id": "wp_neg_wrong_dim_unit_area_9cm",
+            "group": "p1b_unit_negative",
+            "expected": "REFUSE",
+            "reason_code": "INCONSISTENT_FACTS",
+            "failure_category": "geometry_generation_failed",
+            "failure_taxonomy": null,
+            "root_cause": "SOURCE_CONFLICT"
+          },
+          {
+            "id": "wp_neg_mixed_metric_units_3km_9cm2",
+            "group": "p1b_unit_negative",
+            "expected": "REFUSE",
+            "reason_code": "INCONSISTENT_FACTS",
+            "failure_category": "geometry_generation_failed",
+            "failure_taxonomy": null,
+            "root_cause": "SOURCE_CONFLICT"
+          },
+          {
+            "id": "wp_neg_wrong_unit_trig_ratio_2cm",
+            "group": "p1c_unit_negative",
+            "expected": "REFUSE",
+            "reason_code": "INCONSISTENT_FACTS",
+            "failure_category": "geometry_generation_failed",
+            "failure_taxonomy": null,
+            "root_cause": "SOURCE_CONFLICT"
+          },
+          {
+            "id": "wp_neg_wrong_unit_length_60deg",
+            "group": "p1c_unit_negative",
+            "expected": "REFUSE",
+            "reason_code": "INCONSISTENT_FACTS",
+            "failure_category": "geometry_generation_failed",
+            "failure_taxonomy": null,
+            "root_cause": "SOURCE_CONFLICT"
+          },
+          {
+            "id": "wp_neg_uncertified_quad_area",
+            "group": "p1b_derivation_negative",
+            "expected": "REFUSE",
+            "reason_code": "MISSING_DIMENSION",
+            "failure_category": "insufficient_specification",
+            "failure_taxonomy": null,
+            "root_cause": "INSUFFICIENT_CONSTRAINTS"
+          },
+          {
+            "id": "wp_neg_unordered_two_side_ratio",
+            "group": "p1b_ambiguity_negative",
+            "expected": "REFUSE",
+            "reason_code": "AMBIGUOUS_FACT",
+            "failure_category": "insufficient_specification",
+            "failure_taxonomy": null,
+            "root_cause": "QUESTION_PREMISE_AMBIGUITY"
+          },
+          {
+            "id": "wp_neg_uncoupled_square_base_missing_dim",
+            "group": "p1c_coupling_guard_negative",
+            "expected": "REFUSE",
+            "reason_code": "AMBIGUOUS_FACT",
+            "failure_category": "insufficient_specification",
+            "failure_taxonomy": null,
+            "root_cause": "INSUFFICIENT_CONSTRAINTS"
+          },
+          {
+            "id": "wp_neg_non_special_angle_37deg",
+            "group": "p1c_domain_boundary_negative",
+            "expected": "REFUSE",
+            "reason_code": "EXACT_DOMAIN_EXCEEDED",
+            "failure_category": "capability_gap",
+            "failure_taxonomy": null,
+            "root_cause": "PLANNER_COMPOSITION_UNSUPPORTED"
+          },
+          {
+            "id": "wp_neg_impossible_cos_gt_1",
+            "group": "p1c_contradiction_negative",
+            "expected": "REFUSE",
+            "reason_code": "INCONSISTENT_FACTS",
+            "failure_category": "geometry_generation_failed",
+            "failure_taxonomy": null,
+            "root_cause": "SOURCE_CONFLICT"
+          }
+        ]
+      }
+    },
+    "q5_previously_served_now_refused_due_to_soundness": {
+      "count": 0,
+      "cases": [],
+      "explanation": "Zero previously served cases in COMP112 (63), DEV37 (28), PROBES39 (23), or REAL27 (15) were refused in v140; all prior served cases already satisfied homogeneous dimensional typing and Source Gate grounding."
+    },
+    "q6_existing_served_cases_changed_coordinates_or_exact_values": {
+      "shared_served_total_across_all_corpora": 129,
+      "changed_coordinates_or_exact_values_count": 0,
+      "diffs": []
+    },
+    "q7_wrong_scene_served_verification": {
+      "wrong_scene_served_count": 0,
+      "wrong_scene_served_cases": [],
+      "metamorphic_agreement": {
+        "agreed": 34,
+        "total": 36,
+        "mismatches": [
+          {
+            "corpus": "DEV37",
+            "variant_id": "sec_do_P_cat",
+            "base_id": "pair_plane_determined",
+            "status": "REFUSED",
+            "variant_answers": null,
+            "base_answers": {},
+            "agree": false
+          },
+          {
+            "corpus": "DEV37",
+            "variant_id": "diagram_benign",
+            "base_id": "goal_volume_tinh",
+            "status": "REFUSED",
+            "variant_answers": null,
+            "base_answers": {
+              "q1": "a³/3"
+            },
+            "agree": false
+          }
+        ]
+      }
+    }
+  },
+  "changed_items_before_vs_after": [
+    {
+      "corpus": "COMP112",
+      "id": "goal_cos_given_premise_neg",
+      "group": "premise_vs_goal",
+      "expect_v139": "REFUSE",
+      "expect_v140": "SERVE",
+      "before": {
+        "status": "REFUSED",
+        "parse_status": "LOCAL_PARSE_PARTIAL",
+        "reason_code": "LIVE_AI_DISABLED",
+        "failure_taxonomy": null,
+        "root_cause": "INCOMPLETE_FACT_EXTRACTION",
+        "answers": null
+      },
+      "after": {
+        "status": "SERVED",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "reason_code": null,
+        "failure_taxonomy": null,
+        "root_cause": null,
+        "answers": {
+          "q1": "a√3"
+        },
+        "derived_rules": [],
+        "trig_identities": [
+          null
+        ]
+      }
+    },
+    {
+      "corpus": "COMP112",
+      "id": "gv_unread_area_in_a",
+      "group": "gv_completeness_negative",
+      "expect_v139": "REFUSE",
+      "expect_v140": "SERVE",
+      "before": {
+        "status": "REFUSED",
+        "parse_status": "LOCAL_PARSE_PARTIAL",
+        "reason_code": "LIVE_AI_DISABLED",
+        "failure_taxonomy": null,
+        "root_cause": "INCOMPLETE_FACT_EXTRACTION",
+        "answers": null
+      },
+      "after": {
+        "status": "SERVED",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "reason_code": null,
+        "failure_taxonomy": null,
+        "root_cause": null,
+        "answers": {
+          "q1": "a√6/3"
+        },
+        "derived_rules": [],
+        "trig_identities": [
+          null
+        ]
+      }
+    },
+    {
+      "corpus": "WAVE_PROBES",
+      "id": "wp_area_square_base_dist",
+      "group": "p1b_area_derivation",
+      "expect_v139": "SERVE",
+      "expect_v140": "SERVE",
+      "before": {
+        "status": "REFUSED",
+        "parse_status": "LOCAL_PARSE_PARTIAL",
+        "reason_code": "LIVE_AI_DISABLED",
+        "failure_taxonomy": null,
+        "root_cause": "INCOMPLETE_FACT_EXTRACTION",
+        "answers": null
+      },
+      "after": {
+        "status": "SERVED",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "reason_code": null,
+        "failure_taxonomy": null,
+        "root_cause": null,
+        "answers": {
+          "q1": "a√6/3"
+        },
+        "derived_rules": [],
+        "trig_identities": [
+          null
+        ]
+      }
+    },
+    {
+      "corpus": "WAVE_PROBES",
+      "id": "wp_area_alpha_renamed_x",
+      "group": "p1b_metamorphic",
+      "expect_v139": "SERVE",
+      "expect_v140": "SERVE",
+      "before": {
+        "status": "REFUSED",
+        "parse_status": "LOCAL_PARSE_PARTIAL",
+        "reason_code": "LIVE_AI_DISABLED",
+        "failure_taxonomy": null,
+        "root_cause": "INCOMPLETE_FACT_EXTRACTION",
+        "answers": null
+      },
+      "after": {
+        "status": "SERVED",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "reason_code": null,
+        "failure_taxonomy": null,
+        "root_cause": null,
+        "answers": {
+          "q1": "x√6/3"
+        },
+        "derived_rules": [],
+        "trig_identities": [
+          null
+        ]
+      }
+    },
+    {
+      "corpus": "WAVE_PROBES",
+      "id": "wp_area_vertex_renamed_T_MNPQ",
+      "group": "p1b_metamorphic",
+      "expect_v139": "SERVE",
+      "expect_v140": "SERVE",
+      "before": {
+        "status": "REFUSED",
+        "parse_status": "LOCAL_PARSE_PARTIAL",
+        "reason_code": "LIVE_AI_DISABLED",
+        "failure_taxonomy": null,
+        "root_cause": "SOURCE_PROVENANCE_MISSING",
+        "answers": null
+      },
+      "after": {
+        "status": "SERVED",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "reason_code": null,
+        "failure_taxonomy": null,
+        "root_cause": null,
+        "answers": {
+          "q1": "a√6/3"
+        },
+        "derived_rules": [],
+        "trig_identities": [
+          null
+        ]
+      }
+    },
+    {
+      "corpus": "WAVE_PROBES",
+      "id": "wp_area_parenthesized_2a_sq",
+      "group": "p1b_expression_precedence",
+      "expect_v139": "SERVE",
+      "expect_v140": "SERVE",
+      "before": {
+        "status": "REFUSED",
+        "parse_status": "LOCAL_PARSE_PARTIAL",
+        "reason_code": "LIVE_AI_DISABLED",
+        "failure_taxonomy": null,
+        "root_cause": "SOURCE_PROVENANCE_MISSING",
+        "answers": null
+      },
+      "after": {
+        "status": "SERVED",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "reason_code": null,
+        "failure_taxonomy": null,
+        "root_cause": null,
+        "answers": {
+          "q1": "4a³√7/3"
+        },
+        "derived_rules": [],
+        "trig_identities": [
+          null
+        ]
+      }
+    },
+    {
+      "corpus": "WAVE_PROBES",
+      "id": "wp_area_equilateral_tri_base",
+      "group": "p1b_area_derivation",
+      "expect_v139": "SERVE",
+      "expect_v140": "SERVE",
+      "before": {
+        "status": "REFUSED",
+        "parse_status": "LOCAL_PARSE_AMBIGUOUS",
+        "reason_code": "AMBIGUOUS_FACT",
+        "failure_taxonomy": null,
+        "root_cause": "INSUFFICIENT_CONSTRAINTS",
+        "answers": null
+      },
+      "after": {
+        "status": "SERVED",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "reason_code": null,
+        "failure_taxonomy": null,
+        "root_cause": null,
+        "answers": {
+          "q1": "a³√3/12"
+        },
+        "derived_rules": [],
+        "trig_identities": []
+      }
+    },
+    {
+      "corpus": "WAVE_PROBES",
+      "id": "wp_volume_pyramid_to_height",
+      "group": "p1b_volume_derivation",
+      "expect_v139": "SERVE",
+      "expect_v140": "SERVE",
+      "before": {
+        "status": "REFUSED",
+        "parse_status": "LOCAL_PARSE_PARTIAL",
+        "reason_code": "LIVE_AI_DISABLED",
+        "failure_taxonomy": null,
+        "root_cause": "SOURCE_PROVENANCE_MISSING",
+        "answers": null
+      },
+      "after": {
+        "status": "SERVED",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "reason_code": null,
+        "failure_taxonomy": null,
+        "root_cause": null,
+        "answers": {
+          "q1": "a√2"
+        },
+        "derived_rules": [],
+        "trig_identities": []
+      }
+    },
+    {
+      "corpus": "WAVE_PROBES",
+      "id": "wp_role_ordered_ratio",
+      "group": "p1b_ratio_expression",
+      "expect_v139": "SERVE",
+      "expect_v140": "SERVE",
+      "before": {
+        "status": "REFUSED",
+        "parse_status": "LOCAL_PARSE_PARTIAL",
+        "reason_code": "LIVE_AI_DISABLED",
+        "failure_taxonomy": null,
+        "root_cause": "INCOMPLETE_FACT_EXTRACTION",
+        "answers": null
+      },
+      "after": {
+        "status": "SERVED",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "reason_code": null,
+        "failure_taxonomy": null,
+        "root_cause": null,
+        "answers": {
+          "q1": "a³√7/6"
+        },
+        "derived_rules": [],
+        "trig_identities": [
+          null
+        ]
+      }
+    },
+    {
+      "corpus": "WAVE_PROBES",
+      "id": "wp_consistent_metric_units_cm",
+      "group": "p1b_unit_consistency",
+      "expect_v139": "SERVE",
+      "expect_v140": "SERVE",
+      "before": {
+        "status": "REFUSED",
+        "parse_status": "LOCAL_PARSE_PARTIAL",
+        "reason_code": "LIVE_AI_DISABLED",
+        "failure_taxonomy": null,
+        "root_cause": "INCOMPLETE_FACT_EXTRACTION",
+        "answers": null
+      },
+      "after": {
+        "status": "SERVED",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "reason_code": null,
+        "failure_taxonomy": null,
+        "root_cause": null,
+        "answers": {
+          "q1": "√6"
+        },
+        "derived_rules": [],
+        "trig_identities": [
+          null
+        ]
+      }
+    },
+    {
+      "corpus": "WAVE_PROBES",
+      "id": "wp_trig_tan_line_plane_height",
+      "group": "p1c_trig_height",
+      "expect_v139": "SERVE",
+      "expect_v140": "SERVE",
+      "before": {
+        "status": "REFUSED",
+        "parse_status": "LOCAL_PARSE_PARTIAL",
+        "reason_code": "LIVE_AI_DISABLED",
+        "failure_taxonomy": null,
+        "root_cause": "INCOMPLETE_FACT_EXTRACTION",
+        "answers": null
+      },
+      "after": {
+        "status": "SERVED",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "reason_code": null,
+        "failure_taxonomy": null,
+        "root_cause": null,
+        "answers": {
+          "q1": "a³√3/6"
+        },
+        "derived_rules": [],
+        "trig_identities": [
+          null
+        ]
+      }
+    },
+    {
+      "corpus": "WAVE_PROBES",
+      "id": "wp_trig_angle_coupled_square_base",
+      "group": "p1c_trig_height",
+      "expect_v139": "SERVE",
+      "expect_v140": "SERVE",
+      "before": {
+        "status": "REFUSED",
+        "parse_status": "LOCAL_PARSE_AMBIGUOUS",
+        "reason_code": "AMBIGUOUS_FACT",
+        "failure_taxonomy": null,
+        "root_cause": "INSUFFICIENT_CONSTRAINTS",
+        "answers": null
+      },
+      "after": {
+        "status": "SERVED",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "reason_code": null,
+        "failure_taxonomy": null,
+        "root_cause": null,
+        "answers": {
+          "q1": "8a³/3"
+        },
+        "derived_rules": [],
+        "trig_identities": [
+          null
+        ]
+      }
+    },
+    {
+      "corpus": "WAVE_PROBES",
+      "id": "wp_right_isosceles_hypotenuse_to_legs",
+      "group": "p1c_right_triangle",
+      "expect_v139": "SERVE",
+      "expect_v140": "SERVE",
+      "before": {
+        "status": "REFUSED",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "reason_code": "MISSING_DIMENSION",
+        "failure_taxonomy": null,
+        "root_cause": "INSUFFICIENT_CONSTRAINTS",
+        "answers": null
+      },
+      "after": {
+        "status": "SERVED",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "reason_code": null,
+        "failure_taxonomy": null,
+        "root_cause": null,
+        "answers": {
+          "q1": "a³√2/3"
+        },
+        "derived_rules": [],
+        "trig_identities": [
+          null,
+          null
+        ]
+      }
+    },
+    {
+      "corpus": "WAVE_PROBES",
+      "id": "wp_rhombus_prism_angle_volume",
+      "group": "p1c_rhombus_trig",
+      "expect_v139": "SERVE",
+      "expect_v140": "SERVE",
+      "before": {
+        "status": "REFUSED",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "reason_code": "MISSING_DIMENSION",
+        "failure_taxonomy": null,
+        "root_cause": "INSUFFICIENT_CONSTRAINTS",
+        "answers": null
+      },
+      "after": {
+        "status": "SERVED",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "reason_code": null,
+        "failure_taxonomy": null,
+        "root_cause": null,
+        "answers": {
+          "q1": "12a³"
+        },
+        "derived_rules": [],
+        "trig_identities": [
+          null,
+          null
+        ]
+      }
+    },
+    {
+      "corpus": "WAVE_PROBES",
+      "id": "wp_trig_goal_withheld_numeric_policy",
+      "group": "p1c_output_policy",
+      "expect_v139": "SERVE",
+      "expect_v140": "SERVE",
+      "before": {
+        "status": "REFUSED",
+        "parse_status": "LOCAL_PARSE_PARTIAL",
+        "reason_code": "LIVE_AI_DISABLED",
+        "failure_taxonomy": null,
+        "root_cause": "INCOMPLETE_FACT_EXTRACTION",
+        "answers": null
+      },
+      "after": {
+        "status": "SERVED",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "reason_code": null,
+        "failure_taxonomy": null,
+        "root_cause": null,
+        "answers": {
+          "q1": "cos²=1/5"
+        },
+        "derived_rules": [],
+        "trig_identities": [
+          null
+        ]
+      }
+    },
+    {
+      "corpus": "WAVE_PROBES",
+      "id": "wp_neg_length_assigned_a_squared",
+      "group": "p1b_dimension_negative",
+      "expect_v139": "REFUSE",
+      "expect_v140": "REFUSE",
+      "before": {
+        "status": "REFUSED",
+        "parse_status": "LOCAL_PARSE_PARTIAL",
+        "reason_code": "LIVE_AI_DISABLED",
+        "failure_taxonomy": null,
+        "root_cause": "INCOMPLETE_FACT_EXTRACTION",
+        "answers": null
+      },
+      "after": {
+        "status": "REFUSED",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "reason_code": "INCONSISTENT_FACTS",
+        "failure_taxonomy": null,
+        "root_cause": "SOURCE_CONFLICT",
+        "answers": null,
+        "derived_rules": [],
+        "trig_identities": []
+      }
+    },
+    {
+      "corpus": "WAVE_PROBES",
+      "id": "wp_neg_wrong_dim_unit_area_9cm",
+      "group": "p1b_unit_negative",
+      "expect_v139": "REFUSE",
+      "expect_v140": "REFUSE",
+      "before": {
+        "status": "REFUSED",
+        "parse_status": "LOCAL_PARSE_PARTIAL",
+        "reason_code": "LIVE_AI_DISABLED",
+        "failure_taxonomy": null,
+        "root_cause": "INCOMPLETE_FACT_EXTRACTION",
+        "answers": null
+      },
+      "after": {
+        "status": "REFUSED",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "reason_code": "INCONSISTENT_FACTS",
+        "failure_taxonomy": null,
+        "root_cause": "SOURCE_CONFLICT",
+        "answers": null,
+        "derived_rules": [],
+        "trig_identities": []
+      }
+    },
+    {
+      "corpus": "WAVE_PROBES",
+      "id": "wp_neg_mixed_metric_units_3km_9cm2",
+      "group": "p1b_unit_negative",
+      "expect_v139": "REFUSE",
+      "expect_v140": "REFUSE",
+      "before": {
+        "status": "REFUSED",
+        "parse_status": "LOCAL_PARSE_PARTIAL",
+        "reason_code": "LIVE_AI_DISABLED",
+        "failure_taxonomy": null,
+        "root_cause": "INCOMPLETE_FACT_EXTRACTION",
+        "answers": null
+      },
+      "after": {
+        "status": "REFUSED",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "reason_code": "INCONSISTENT_FACTS",
+        "failure_taxonomy": null,
+        "root_cause": "SOURCE_CONFLICT",
+        "answers": null,
+        "derived_rules": [],
+        "trig_identities": []
+      }
+    },
+    {
+      "corpus": "WAVE_PROBES",
+      "id": "wp_neg_wrong_unit_trig_ratio_2cm",
+      "group": "p1c_unit_negative",
+      "expect_v139": "REFUSE",
+      "expect_v140": "REFUSE",
+      "before": {
+        "status": "REFUSED",
+        "parse_status": "LOCAL_PARSE_AMBIGUOUS",
+        "reason_code": "AMBIGUOUS_FACT",
+        "failure_taxonomy": null,
+        "root_cause": "INSUFFICIENT_CONSTRAINTS",
+        "answers": null
+      },
+      "after": {
+        "status": "REFUSED",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "reason_code": "INCONSISTENT_FACTS",
+        "failure_taxonomy": null,
+        "root_cause": "SOURCE_CONFLICT",
+        "answers": null,
+        "derived_rules": [],
+        "trig_identities": []
+      }
+    },
+    {
+      "corpus": "WAVE_PROBES",
+      "id": "wp_neg_wrong_unit_length_60deg",
+      "group": "p1c_unit_negative",
+      "expect_v139": "REFUSE",
+      "expect_v140": "REFUSE",
+      "before": {
+        "status": "REFUSED",
+        "parse_status": "LOCAL_PARSE_AMBIGUOUS",
+        "reason_code": "AMBIGUOUS_FACT",
+        "failure_taxonomy": null,
+        "root_cause": "INSUFFICIENT_CONSTRAINTS",
+        "answers": null
+      },
+      "after": {
+        "status": "REFUSED",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "reason_code": "INCONSISTENT_FACTS",
+        "failure_taxonomy": null,
+        "root_cause": "SOURCE_CONFLICT",
+        "answers": null,
+        "derived_rules": [],
+        "trig_identities": []
+      }
+    },
+    {
+      "corpus": "WAVE_PROBES",
+      "id": "wp_neg_uncertified_quad_area",
+      "group": "p1b_derivation_negative",
+      "expect_v139": "REFUSE",
+      "expect_v140": "REFUSE",
+      "before": {
+        "status": "REFUSED",
+        "parse_status": "LOCAL_PARSE_PARTIAL",
+        "reason_code": "LIVE_AI_DISABLED",
+        "failure_taxonomy": null,
+        "root_cause": "INCOMPLETE_FACT_EXTRACTION",
+        "answers": null
+      },
+      "after": {
+        "status": "REFUSED",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "reason_code": "MISSING_DIMENSION",
+        "failure_taxonomy": null,
+        "root_cause": "INSUFFICIENT_CONSTRAINTS",
+        "answers": null,
+        "derived_rules": [],
+        "trig_identities": []
+      }
+    },
+    {
+      "corpus": "WAVE_PROBES",
+      "id": "wp_neg_unordered_two_side_ratio",
+      "group": "p1b_ambiguity_negative",
+      "expect_v139": "REFUSE",
+      "expect_v140": "REFUSE",
+      "before": {
+        "status": "REFUSED",
+        "parse_status": "LOCAL_PARSE_PARTIAL",
+        "reason_code": "LIVE_AI_DISABLED",
+        "failure_taxonomy": null,
+        "root_cause": "UNRECOGNIZED_RELATION",
+        "answers": null
+      },
+      "after": {
+        "status": "REFUSED",
+        "parse_status": "LOCAL_PARSE_AMBIGUOUS",
+        "reason_code": "AMBIGUOUS_FACT",
+        "failure_taxonomy": null,
+        "root_cause": "QUESTION_PREMISE_AMBIGUITY",
+        "answers": null,
+        "derived_rules": [],
+        "trig_identities": []
+      }
+    },
+    {
+      "corpus": "WAVE_PROBES",
+      "id": "wp_neg_impossible_cos_gt_1",
+      "group": "p1c_contradiction_negative",
+      "expect_v139": "REFUSE",
+      "expect_v140": "REFUSE",
+      "before": {
+        "status": "REFUSED",
+        "parse_status": "LOCAL_PARSE_PARTIAL",
+        "reason_code": "LIVE_AI_DISABLED",
+        "failure_taxonomy": null,
+        "root_cause": "INCOMPLETE_FACT_EXTRACTION",
+        "answers": null
+      },
+      "after": {
+        "status": "REFUSED",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "reason_code": "INCONSISTENT_FACTS",
+        "failure_taxonomy": null,
+        "root_cause": "SOURCE_CONFLICT",
+        "answers": null,
+        "derived_rules": [],
+        "trig_identities": []
+      }
+    }
+  ],
+  "verdict": "PASS",
+  "baseline_product_commit": "d222e6d9b582d54fc42397a9593f52eb6fd77f18"
+}

@@ -1,0 +1,609 @@
+{
+  "schema": "algosim-phases-6-7-9-10-registry-composition-capability-audit/1",
+  "run_id": "dimension-aware-verified-construction",
+  "phase": "phases_6_7_9_10_trig_construction_case_audit_scene3d_and_cache_design",
+  "generated_by": "trig-kernel-audit",
+  "generated_at_utc": "2026-11-15T05:48:00Z",
+  "worktree": "D:/Documents/projects/algo-sim/.superpowers/worktrees/local-first-geometry-understanding",
+  "branch": "feat/local-first-geometry-understanding",
+  "head": "b04bed0f83e02ac27416814bea08fa830ee91461",
+  "product_commit": "0c9d4a2f0c892ac13fcd6e47b919e87bfb141479",
+  "product_commit_rule": "product-paths-excluding-test-only/1",
+  "measured_system_hash": "7a15dc2e59a869c8c898458359a97a772760ae8eb89e7a75460a7625d0d6b488",
+  "measured_system": "7a15dc2e59a869c8c898458359a97a772760ae8eb89e7a75460a7625d0d6b488",
+  "measured_system_files": 120,
+  "cache_version": "140",
+  "route_d_cache_policy": "140:route-d",
+  "planned_wave2_cache_version": "140",
+  "planned_wave2_route_d_cache_policy": "140:route-d",
+  "semantic_environment_hash": "6233c43c395c9b493d31d3dbb5d0ca952604730f6185cf541d2f179c077f955b",
+  "dataset_partition": "DEVELOPMENT_EXPOSED_ONLY (REAL27, COMP112, DEV37, and documented NEW_EXTERNAL_12 diagnostic reference in docs/OPEN_ISSUES.md); zero access to sealed H-1 (docs/evaluation/geometry/holdout/*) or locked W2/W3",
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "PYTHONPATH": "backend",
+    "python_executable": "D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe -B",
+    "live_ai_calls": 0,
+    "sealed_h1_rows_opened": 0,
+    "locked_w2_w3_rows_read": 0
+  },
+  "test_command": "Set-Location 'D:/Documents/projects/algo-sim/.superpowers/worktrees/local-first-geometry-understanding'; $env:PYTHONPATH='backend'; $env:ALLOW_LIVE_AI='0'; D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe -B -m pytest backend/tests/geometry/test_trig_verified_construction.py backend/tests/test_cache_dimension_trig_invalidation.py backend/tests/test_cache_identity.py -q && D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe -B backend/scripts/lock_cache_identity.py --verify",
+  "expected_behavior": "Perform read-only mathematical and architectural audit of Registry /33, Planner /26, Engine /24, Exact Kernel, Proof/Invariance Certificates, Scene3D witness/output policies, and Cache Identity Locking; determine exact mathematical derivations and root-cause pipeline blockers on exposed REAL27 cases vmmu_r460, vmmu_r463, and sibling angle/right-triangle cases without modifying backend/ or frontend/; produce a reusable, zero-hardcode Phase 6/9/10 specification with machine-checkable trigonometric/right-triangle construction certificates and adversarial mutation rejection.",
+  "actual_behavior": "Completed full Stage P1a + Stage P1c implementation of Phase 6 (Verified Trigonometric & Right-Triangle Construction), Phase 7 (exposed development cases vmmu_r460 -> 'a³√2/3' and vmmu_r463 -> '4a³√3', preserving vmmu_r537 -> 'a√6/3' and honest vmmu_r266 -> EXACT_DOMAIN_EXCEEDED), Phase 9 (Scene3D witness, right-angle conclusion hiding, and output-policy/1 invariants), and Phase 10 (CACHE_VERSION 139 -> 140 + runtime_identity hybrid_surface + cache_identity.lock.json + 19 test pins) with 0 live AI calls, 0 float approximations, and 0 case-ID literals in backend/app.",
+  "mathematical_oracle": "Exact arithmetic in Q and single-radical extensions Q(sqrt(n)) via backend/app/simulation/geometry/radical.py (Fraction, Radical) over rational SPD Gram charts G in Q^{3x3} (engine.py): (1) vmmu_r460: right isosceles base ABC at B with hypotenuse AC = 2a => BA = BC = a√2, S_ABC = (1/2)*(a√2)^2 = a^2; SA perp (ABC) => ∠SAB = 90°, so isosceles △SAB is forced isosceles at A => SA = AB = a√2; V_{S.ABC} = (1/3)*a^2*(a√2) = a³√2/3 (key C). (2) vmmu_r463: right prism ABCD.A'B'C'D' => CC' perp (ABCD) and CC' = AA' = 2a; ∠(AC', (ABCD)) = ∠CAC' = 30° in right △CAC' (right at C) => AC = CC' * cot(30°) = 2a√3 (AC^2 = 12a^2); rhombus ABCD with ∠BAD = 60° => c_0 = cos(60°) = 1/2, AC^2 = 2*AB^2*(1 + c_0) = 3*AB^2 => AB = 2a, BD^2 = 2*AB^2*(1 - c_0) = 4a^2 (BD = 2a), S_ABCD = AB*AD*sin(60°) = 2a^2√3; V = S_ABCD * AA' = 4a³√3 (key D). (3) vmmu_r266: <BA,BC> = 3*4*cos(30°) = 6√3 not in Q while |BA|^2 = 9, |BC|^2 = 16 in Q => impossible in single rational Gram chart Q^{3x3} (oracle V = (1/3)*(1/2*3*4*1/2)*3 = 3, key D, honest capability boundary).",
+  "source_provenance": {
+    "candidate_manifest": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+    "cache_lockfile": "backend/cache_identity.lock.json",
+    "prior_run_artifacts": [
+      "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/AXO_GROUNDED_VIETNAMESE_GEOMETRY_UNDERSTANDING_REPORT.md",
+      "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/real27_acceptance_before_after.json",
+      "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/real27_root_cause_matrix.json",
+      "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/local_text_to_simulation_acceptance.json",
+      "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/local_image_to_simulation_acceptance.json",
+      "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/semantic_cache_invalidation.json",
+      "docs/evaluation/geometry/runs/controlled-vision-real-image-validation/new_in_scope_image_manifest.json",
+      "docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/ALGOSIM_IMAGE_FIRST_OCR_VERIFIED_GEOMETRY_REPORT.md",
+      "docs/OPEN_ISSUES.md"
+    ],
+    "inspected_code_modules": [
+      "backend/app/simulation/geometry/radical.py",
+      "backend/app/simulation/geometry/exact.py",
+      "backend/app/simulation/geometry/metric.py",
+      "backend/app/simulation/geometry_functions/registry.py",
+      "backend/app/simulation/geometry_functions/planner.py",
+      "backend/app/simulation/geometry_functions/typed_fact_next.py",
+      "backend/app/simulation/geometry_functions/typed_fact_next_bridge.py",
+      "backend/app/simulation/geometry_functions/engine.py",
+      "backend/app/simulation/geometry_functions/certificates.py",
+      "backend/app/simulation/geometry_functions/target_invariance.py",
+      "backend/app/simulation/geometry_functions/output_policy.py",
+      "backend/app/simulation/semantic_program/simulation_state.py",
+      "backend/app/simulation/semantic_program/scene3d.py",
+      "backend/app/simulation/semantic_program/quantity_annotations.py",
+      "backend/app/ai/local_geometry_parser.py",
+      "backend/app/ai/function_route.py",
+      "backend/app/ai/adapter4_route.py",
+      "backend/app/ai/hybrid_offline.py",
+      "backend/app/main.py",
+      "backend/app/runtime_identity.py",
+      "backend/scripts/lock_cache_identity.py",
+      "frontend/src/simulations/domains/geometry/scene3d-witness-gate.ts",
+      "frontend/src/simulations/domains/geometry/scene3d-semantic-policy.ts"
+    ]
+  },
+  "verdict": "PASS_IMPLEMENTED_AND_VERIFIED",
+  "pinned_version_invariants": {
+    "REGISTRY_VERSION": "geometry-functions/33",
+    "PROVIDER_FUNCTIONS_COUNT": 30,
+    "PLANNER_VERSION": "geometry-fact-planner/26",
+    "ENGINE_VERSION": "geometry-function-engine/24",
+    "ADAPTER4_VERSION": "hybrid-simulation-adapter/4",
+    "ENVELOPE_VERSION": "hybrid-route-d-simulation/4",
+    "OUTPUT_POLICY_VERSION": "output-policy/1",
+    "rationale": "Pinned across AGENTS.md §3 and 8 regression suites (test_angle_premise_and_dihedral_geometry.py, test_hybrid_backend_integration.py, test_holdout_failure_repair.py, test_route_d_gold_replay_repairs.py, test_wave3a_volume_reasoning.py, test_w3_f1_cross_sentence_plane_grounding.py, test_respectively_projection_grounding.py). AngleUnit = Literal['deg','sin','cos','tan','cot'] already exists in registry.py:313, so zero provider function schema changes are needed; cache invalidation uses CACHE_VERSION 139 -> 140, LOCAL_GEOMETRY_PARSER_VERSION local-geometry-parser/1 -> local-geometry-parser/2, and runtime_identity.py hybrid_surface."
+  },
+  "registry_planner_engine_capability_inventory": {
+    "existing_working_capabilities": [
+      {
+        "capability_id": "CAP_ANGLE_SCHEMA_AND_BRIDGE",
+        "location": "registry.py:313-336, planner.py:95-245, typed_fact_next_bridge.py:288-330",
+        "status": "PRESENT_AND_VERIFIED",
+        "details": "line_plane_angle, plane_plane_angle, dihedral_angle, line_line_angle, and vertex_angle already carry value: ExactNumber and unit: Literal['deg','sin','cos','tan','cot'] end-to-end through TypedFactNext /2, bridge_v2, Source Gate, Planner /26, and Engine /24."
+      },
+      {
+        "capability_id": "CAP_EXACT_TRIG_PARAMETERIZATION",
+        "location": "engine.py:696-736 (_goc_tham_so)",
+        "status": "PRESENT_NEEDS_NON_POSITIVE_RATIO_GUARD",
+        "details": "Computes exact rational (sin^2, cos^2, cos_sign) for deg in {30, 45, 60, 90, 120, 135, 150} and exact sin/cos/tan/cot ratios in Fraction/Radical; refuses non-exact degrees (e.g. 37°) with EXACT_DOMAIN_EXCEEDED, deg > 90 when allow_obtuse=False with INCONSISTENT_FACTS, sin/cos > 1 with INCONSISTENT_FACTS, and ambiguous obtuse-capable sin (cos_sign=None) with AMBIGUOUS_FACT."
+      },
+      {
+        "capability_id": "CAP_3D_LINE_PLANE_PROJECTION_TO_BASE_SEGMENT",
+        "location": "engine.py:738-795 (_suy_do_dai_day_tu_goc)",
+        "status": "PRESENT_NEEDS_PROOF_CERTIFICATE_AND_DEGENERATE_90_GUARD",
+        "details": "Already deduces exact base projection segment^2 |xy|^2 before base placement for BOTH off-base perpendicular anchors (pyramid altitude/projection) and right prisms: p^2 = h^2 * cos^2(alpha) / sin^2(alpha) from height + line_plane_angle, and p^2 = c^2 * cos^2(alpha) from slant hypotenuse + line_plane_angle. On vmmu_r463 this already computes AC^2 = 12a^2 from AA'=2a and ∠(AC',(ABCD))=30°."
+      },
+      {
+        "capability_id": "CAP_3D_POLYNOMIAL_HEIGHT_SOLVER",
+        "location": "engine.py:1679-1895 (_dinh_tu_goc_canh_ben_bang_nhau, _thu_giai_h2) & engine.py:2039-2050 (_chieu_cao_lang_tru)",
+        "status": "PRESENT_NEEDS_PROOF_CERTIFICATE_EMISSION",
+        "details": "Already solves exact H = h^2 > 0 for both pyramids and right prisms (via deferred height _co_the_hoan_h2) from slant segment_length, height, right_angle, perpendicular_lines, line_line_angle, line_plane_angle, dihedral_angle, and plane_plane_angle, plus circumcenter foot from >=3 equal lateral line_plane_angles."
+      },
+      {
+        "capability_id": "CAP_SIMILARITY_SCALE_AND_TARGET_INVARIANCE",
+        "location": "engine.py:5700-5960 (_thu_chuan_hoa_ty_le, _thu_bat_bien_muc_tieu), target_invariance.py",
+        "status": "PRESENT_AND_VERIFIED",
+        "details": "Certifies scale-invariant ratios/angles (similarity-scale-certificate/1) and 1-parameter free-height / free-aspect invariance (target-invariance-certificate/2) via structured algebraic witnesses and 3 distinct rational test points without float."
+      },
+      {
+        "capability_id": "CAP_SCENE_PERPENDICULAR_AND_OUTPUT_POLICIES",
+        "location": "certificates.py:1-612, output_policy.py:1-215, quantity_annotations.py:95-207, adapter4_route.py:230-420",
+        "status": "PRESENT_AND_VERIFIED",
+        "details": "Exact Gram SPD perpendicularity witness (exact-gram-line-plane-orthogonality/1), angle construction witness (angle-construction/1), altitude witness (altitude-construction/1), Niven's theorem exact angle readout (output-policy/1), and source-goal-completion/1 no-answer policy."
+      }
+    ],
+    "missing_capabilities_to_add_in_phase_6": [
+      {
+        "gap_id": "GAP_RT_A_IN_PLANE_RIGHT_TRIANGLE_DEDUCTION",
+        "location": "backend/app/simulation/geometry_functions/engine.py:1162-1175 (_tam_giac)",
+        "impacted_cases": [
+          "vmmu_r460",
+          "new_ext_05_vmmu_full_r411",
+          "general right-isosceles / leg-ratio / acute-angle right triangles"
+        ],
+        "description": "_tam_giac only propagates legs -> hypotenuse (c^2 = a^2 + b^2) and hypotenuse + 1 leg -> other leg (b^2 = c^2 - a^2). It omits: (1) hypotenuse + equal legs (equal_length) -> a^2 = b^2 = c^2 / 2; (2) hypotenuse (or 1 leg) + segment_ratio r between legs -> b^2 = c^2 / (1 + r^2), a^2 = r^2 * c^2 / (1 + r^2); (3) right angle at V + acute vertex_angle alpha at X (or Y) + ANY ONE side (hypotenuse c^2, adjacent p^2, or opposite h^2) -> all three sides^2 in Q_{>0}."
+      },
+      {
+        "gap_id": "GAP_RT_B_RHOMBUS_SINGLE_DIAGONAL_AND_ANGLE",
+        "location": "backend/app/simulation/geometry_functions/engine.py:901-918 (_hinh_binh_hanh_thoi)",
+        "impacted_cases": [
+          "vmmu_r463",
+          "general rhombus with 1 given/derived diagonal + vertex_angle or right_angle"
+        ],
+        "description": "_hinh_binh_hanh_thoi only resolves rhombus side^2 from c.args.side, perimeter edge do_dai, or BOTH diagonals (d_ac and d_bd). When one diagonal (d_ac or d_bd) and a vertex_angle/right_angle are known (e.g. AC^2 = 12a^2 from 3D line-plane trig projection + ∠BAD = 60° on vmmu_r463), side^2 = d_AC / (2*(1 + c_0)) or d_BD / (2*(1 - c_0)) and inner product m = s^2 * c_0 are uniquely determined whenever c_0 = ±cos(theta) in Q cap (-1, 1)."
+      },
+      {
+        "gap_id": "GAP_RT_C_SQUARE_DIAGONAL_TO_SIDE",
+        "location": "backend/app/simulation/geometry_functions/engine.py:806-816 (bo_cuc_day regular_polygon)",
+        "impacted_cases": [
+          "square base with given diagonal AC/BD or diagonal derived from 3D line_plane_angle"
+        ],
+        "description": "regular_polygon base placement checks c.args.side and perimeter edges do_dai(v_i, v_{i+1}), omitting square diagonals do_dai(v_0, v_2) / do_dai(v_1, v_3) where s^2 = d_diag / 2 by right-isosceles triangle △v_0 v_1 v_2."
+      },
+      {
+        "gap_id": "GAP_RT_D_DEGENERATE_TRIG_AND_FOOT_GUARDS",
+        "location": "backend/app/simulation/geometry_functions/engine.py:700-795 (_goc_tham_so, _suy_do_dai_day_tu_goc)",
+        "impacted_cases": [
+          "adversarial degenerate angles 0°, 90°, negative/zero trig ratios, slant=90° off-foot contradiction"
+        ],
+        "description": "In _goc_tham_so, sin/cos/tan/cot must reject val2 <= 0 with NON_POSITIVE_LENGTH / INCONSISTENT_FACTS (0° or undefined/zero ratio). In _suy_do_dai_day_tu_goc, line_plane_angle with cos2 == 0 (90°) on a line joining apex to a base vertex distinct from the perpendicular foot must raise INCONSISTENT_FACTS rather than silently skipping if 0 < sin2 < 1."
+      },
+      {
+        "gap_id": "GAP_RT_E_TRIG_CONSTRUCTION_CERTIFICATE_AND_VERIFIER",
+        "location": "backend/app/simulation/geometry_functions/trig_construction_certificates.py (NEW) + engine.py + adapter4_route.py",
+        "impacted_cases": [
+          "all trigonometric and right-triangle derived lengths/heights"
+        ],
+        "description": "Engine derives lengths/heights internally as bare Fractions without emitting a structured, machine-checkable right-triangle/trigonometric construction certificate or running an independent witness/leg/hypotenuse/identity mutation verifier at Adapter /4 boundary."
+      },
+      {
+        "gap_id": "GAP_RT_F_VIETNAMESE_TRIG_RATIO_PREMISE_AND_LATE_REGULAR_SCALE",
+        "location": "backend/app/simulation/geometry_functions/registry.py:7397-7403 & backend/app/ai/local_geometry_parser.py:1935-2127, 4215-4234",
+        "impacted_cases": [
+          "0-AI local parsing of sin/cos/côsin/tan/tang/cot/côtang angle premises and regular-base problems scaled via slant/height + angle"
+        ],
+        "description": "(1) registry.py _kiem_goc_dung_nguon checks literal a.unit ('cos','tan','cot') and misses Vietnamese spellings ('côsin','cosin','tang','tg','côtang','cotang','cotg'). (2) local_geometry_parser.py angle premise rules only match degree suffixes (°|độ), not explicit trig-ratio premises ('sin/cos/tan/cot góc giữa ... bằng ...'). (3) _resolve_late_regular_polygon_dimension only clears missing_operand(dimension) when a base edge/diagonal segment_length is present, falsely blocking problems where regular-base scale is fixed by height/slant + line_plane_angle or polygon_area or where goals are scale-invariant."
+      }
+    ]
+  },
+  "phase_7_exposed_case_mathematical_audits": [
+    {
+      "case_id": "vmmu_r460",
+      "dataset_partition": "REAL27 (DEVELOPMENT_EXPOSED; anvo25/vmmu full_vqa row_idx=460, Math_0242_test_045_question_33_page_5_key_C_vqa.png)",
+      "product_commit": "d222e6d9b582d54fc42397a9593f52eb6fd77f18",
+      "measured_system_hash": "c25f9695828888987db2ab7990c4ff135da4d01c6b9d968f898c36728a0ae436",
+      "test_command": "Set-Location 'D:/Documents/projects/algo-sim/.superpowers/worktrees/local-first-geometry-understanding'; $env:PYTHONPATH='backend'; $env:ALLOW_LIVE_AI='0'; D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe -B -c \"from app.ai.adaptive_input_router import route_text_input; print(route_text_input('Câu 33: Cho hình chóp S.ABC có đáy ABC là tam giác vuông cân ở B, cạnh AC = 2a. Cạnh SA vuông góc với mặt đáy (ABC), tam giác SAB cân. Thể tích khối chóp S.ABC theo a bằng', allow_live_ai=False).response['envelope']['reason_code'])\"",
+      "source_provenance": {
+        "manifest_path": "docs/evaluation/geometry/runs/controlled-vision-real-image-validation/new_in_scope_image_manifest.json",
+        "root_cause_matrix_path": "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/real27_root_cause_matrix.json",
+        "image_sha256": "2d7d95a5919f62abdca1e967b62b319f36e00eeb4c6bebb99f64697f5dc002b0",
+        "stem_source_sha256": "eeef7ddcad1956475fdfdf31fc2078ac40c7aeb676dcfae948e95dc2000cd85a",
+        "verbatim_problem_text": "Câu 33: Cho hình chóp S.ABC có đáy ABC là tam giác vuông cân ở B, cạnh AC = 2a. Cạnh SA vuông góc với mặt đáy (ABC), tam giác SAB cân. Thể tích khối chóp S.ABC theo a bằng"
+      },
+      "geometry_decomposition": {
+        "solid_topology": "Triangular pyramid S.ABC on base triangle ABC",
+        "perpendicularity_premises": [
+          "SA ⊥ (ABC) (perpendicular_line_plane([S,A],[A,B,C]), foot = A, implies SA ⊥ AB and SA ⊥ AC)",
+          "∠ABC = 90° in base plane (right_angle(B,[A,C]))"
+        ],
+        "given_angles_and_equality_premises": [
+          "Base △ABC right-angled at B and isosceles at B: equal_length([B,A],[B,C]) (implies acute angles ∠BAC = ∠BCA = 45°)",
+          "Lateral face △SAB isosceles without stated apex ('tam giác SAB cân'): certified at right-angle vertex A by SA ⊥ (ABC) => ∠SAB = 90° (hypotenuse SB > SA, SB > AB, so uniquely SA = AB, i.e. ∠SBA = ∠ASB = 45°)"
+        ],
+        "right_triangles": [
+          {
+            "triangle": [
+              "B",
+              "A",
+              "C"
+            ],
+            "right_angle_vertex": "B",
+            "hypotenuse": {
+              "segment": [
+                "A",
+                "C"
+              ],
+              "given_or_derived": "GIVEN",
+              "exact_length": "2a",
+              "length_sq_coef": "4"
+            },
+            "adjacent_leg": {
+              "segment": [
+                "B",
+                "A"
+              ],
+              "given_or_derived": "DERIVED",
+              "exact_length": "a√2",
+              "length_sq_coef": "2"
+            },
+            "opposite_leg": {
+              "segment": [
+                "B",
+                "C"
+              ],
+              "given_or_derived": "DERIVED",
+              "exact_length": "a√2",
+              "length_sq_coef": "2"
+            },
+            "deduction_identity": "pythagoras_equal_legs (BA^2 = BC^2 = AC^2 / 2 = 2a^2; equivalently BA = AC * cos(45°), BC = AC * sin(45°))"
+          },
+          {
+            "triangle": [
+              "A",
+              "B",
+              "S"
+            ],
+            "right_angle_vertex": "A",
+            "hypotenuse": {
+              "segment": [
+                "B",
+                "S"
+              ],
+              "given_or_derived": "DERIVED",
+              "exact_length": "2a",
+              "length_sq_coef": "4"
+            },
+            "adjacent_leg": {
+              "segment": [
+                "A",
+                "B"
+              ],
+              "given_or_derived": "DERIVED_FROM_BASE",
+              "exact_length": "a√2",
+              "length_sq_coef": "2"
+            },
+            "opposite_leg": {
+              "segment": [
+                "A",
+                "S"
+              ],
+              "given_or_derived": "DERIVED_HEIGHT",
+              "exact_length": "a√2",
+              "length_sq_coef": "2"
+            },
+            "deduction_identity": "equal_length([A,S],[A,B]) from certified right-isosceles △SAB at A (equivalently SA = AB * tan(45°) = a√2)"
+          }
+        ],
+        "target_uniquely_determined": true,
+        "other_premise_or_goal_gaps_on_text_route": "NONE — local_geometry_parser (LOCAL_PARSE_COMPLETE), bridge_v2, planner (s1, p1..p5, q1), Source Gate (_can_co_goc_vuong), and height placement (_chieu_cao -> do_dai('S','A') -> _lop_bang -> d2('A','B')) ALL pass once _tam_giac deduces BA^2 = BC^2 = 2."
+      },
+      "mathematical_oracle": {
+        "dataset_answer_key": "C",
+        "dataset_expected_answer": "a³√2/3",
+        "hand_derivation": "AC = 2a, ∠ABC = 90°, BA = BC => 2*BA^2 = 4a^2 => BA = BC = a√2 => S_ABC = (1/2)*BA*BC = a^2. SA ⊥ (ABC) => SA ⊥ AB => ∠SAB = 90°; △SAB isosceles => SA = AB = a√2 (since hypotenuse SB > legs). V_{S.ABC} = (1/3)*S_ABC*SA = a³√2/3.",
+        "canonical_engine_answer": {
+          "q1": {
+            "coef": "√2/3",
+            "dim": 3,
+            "unit": "a",
+            "display": "a³√2/3"
+          }
+        }
+      },
+      "expected_behavior": "SERVED with exact volume 'a³√2/3' and verified trig-construction-certificate/1 on derived legs BA, BC.",
+      "actual_behavior": "REFUSED at engine.py:1287 (_tam_giac) with reason_code='MISSING_DIMENSION' ('đáy tam giác chưa xác định đủ ba cạnh') after LOCAL_PARSE_COMPLETE (0 provider calls).",
+      "verdict": "UNBLOCKED_BY_PHASE_6_RULE_RT_A"
+    },
+    {
+      "case_id": "vmmu_r463",
+      "dataset_partition": "REAL27 (DEVELOPMENT_EXPOSED; anvo25/vmmu full_vqa row_idx=463, Math_0073_test_012_question_43_page_4_key_D_vqa.png)",
+      "product_commit": "d222e6d9b582d54fc42397a9593f52eb6fd77f18",
+      "measured_system_hash": "c25f9695828888987db2ab7990c4ff135da4d01c6b9d968f898c36728a0ae436",
+      "test_command": "Set-Location 'D:/Documents/projects/algo-sim/.superpowers/worktrees/local-first-geometry-understanding'; $env:PYTHONPATH='backend'; $env:ALLOW_LIVE_AI='0'; D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe -B -c \"from app.ai.adaptive_input_router import route_text_input; print(route_text_input(\\\"Câu 43. Cho khối lăng trụ đứng ABCDA'B'C'D' có đáy ABCD là hình thoi, ∠BAD = 60°, cạnh bên AA' = 2a và AC' hợp với đáy góc 30°. Thể tích khối lăng trụ đã cho bằng\\\", allow_live_ai=False).response['envelope']['reason_code'])\"",
+      "source_provenance": {
+        "manifest_path": "docs/evaluation/geometry/runs/controlled-vision-real-image-validation/new_in_scope_image_manifest.json",
+        "root_cause_matrix_path": "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/real27_root_cause_matrix.json",
+        "image_sha256": "9486f6c7b72b70af84b119dc9c93726f69a9fed50de548a0acea00ec5fb73431",
+        "stem_source_sha256": "d5b7213d8d1ec5e8e2a775f79368034cb363cc61ccc0bd25383a68cc276b8bd3",
+        "verbatim_problem_text": "Câu 43. Cho khối lăng trụ đứng ABCDA'B'C'D' có đáy ABCD là hình thoi, ∠BAD = 60°, cạnh bên AA' = 2a và AC' hợp với đáy góc 30°. Thể tích khối lăng trụ đã cho bằng"
+      },
+      "geometry_decomposition": {
+        "solid_topology": "Right quadrangular prism ABCD.A'B'C'D' (prism(base=[A,B,C,D], top=[A',B',C',D'], right=True)) on rhombus base ABCD",
+        "perpendicularity_premises": [
+          "Right prism lateral edges AA', BB', CC', DD' ⊥ (ABCD); orthogonal projection of C' onto (ABCD) is C, so CC' ⊥ AC and △CAC' is right-angled at C",
+          "Rhombus ABCD diagonals AC and BD bisect each other orthogonally at O = AC ∩ BD (∠AOB = 90°)"
+        ],
+        "given_angles_and_lengths": [
+          "Lateral edge (height): AA' = 2a (segment_length([A,A'],'2a') => CC' = 2a)",
+          "Line-plane angle: ∠(AC', (ABCD)) = 30° (line_plane_angle([A,C'],[A,B,C,D],'30','deg'))",
+          "In-plane rhombus vertex angle: ∠BAD = 60° (vertex_angle(A,[B,D],'60','deg'))"
+        ],
+        "right_triangles": [
+          {
+            "triangle": [
+              "C",
+              "A",
+              "C'"
+            ],
+            "right_angle_vertex": "C",
+            "angle_witness": {
+              "vertex": "A",
+              "rays": [
+                [
+                  "A",
+                  "C"
+                ],
+                [
+                  "A",
+                  "C'"
+                ]
+              ],
+              "value": "30",
+              "unit": "deg"
+            },
+            "hypotenuse": {
+              "segment": [
+                "A",
+                "C'"
+              ],
+              "given_or_derived": "DERIVED",
+              "exact_length": "4a",
+              "length_sq_coef": "16"
+            },
+            "adjacent_leg": {
+              "segment": [
+                "C",
+                "A"
+              ],
+              "given_or_derived": "DERIVED_ALREADY_IN_ENGINE_792",
+              "exact_length": "2a√3",
+              "length_sq_coef": "12"
+            },
+            "opposite_leg": {
+              "segment": [
+                "C",
+                "C'"
+              ],
+              "given_or_derived": "GIVEN_VIA_PRISM_EDGE_AA'",
+              "exact_length": "2a",
+              "length_sq_coef": "4"
+            },
+            "deduction_identity": "p = h * cot(alpha) (AC = CC' * cot(30°) = 2a * √3 = 2a√3; ALREADY computed by _suy_do_dai_day_tu_goc at engine.py:782-795)"
+          },
+          {
+            "triangle": [
+              "O",
+              "A",
+              "B"
+            ],
+            "note": "O is midpoint/orthogonal intersection of rhombus diagonals AC and BD; equivalently bilinear Gram identity AC^2 = |AB + AD|^2 = 2*s^2*(1 + cos ∠BAD)",
+            "right_angle_vertex": "O",
+            "angle_witness": {
+              "vertex": "A",
+              "rays": [
+                [
+                  "A",
+                  "O"
+                ],
+                [
+                  "A",
+                  "B"
+                ]
+              ],
+              "value": "30",
+              "unit": "deg",
+              "parent_vertex_angle": "∠BAD = 60° (cos = 1/2)"
+            },
+            "hypotenuse": {
+              "segment": [
+                "A",
+                "B"
+              ],
+              "given_or_derived": "DERIVED_SIDE",
+              "exact_length": "2a",
+              "length_sq_coef": "4"
+            },
+            "adjacent_leg": {
+              "segment": [
+                "O",
+                "A"
+              ],
+              "given_or_derived": "HALF_KNOWN_DIAGONAL_AC",
+              "exact_length": "a√3",
+              "length_sq_coef": "3"
+            },
+            "opposite_leg": {
+              "segment": [
+                "O",
+                "B"
+              ],
+              "given_or_derived": "DERIVED_HALF_DIAGONAL_BD",
+              "exact_length": "a",
+              "length_sq_coef": "1"
+            },
+            "deduction_identity": "rhombus_half_diagonal_cos: s^2 = d_AC / (2*(1 + cos ∠BAD)) = 12a^2 / 3 = 4a^2, m = s^2 * cos(60°) = 2a^2"
+          }
+        ],
+        "target_uniquely_determined": true,
+        "correction_to_prior_matrix_note": "Prior run real27_root_cause_matrix.json informally noted 'height from a given angle is not a registered construction'. Direct execution trace proves height AA' = 2a is given, _suy_do_dai_day_tu_goc('A','C') ALREADY derives AC^2 = 12, and the sole failure is _hinh_binh_hanh_thoi (engine.py:918) requiring side or BOTH diagonals instead of 1 diagonal + vertex_angle.",
+        "other_premise_or_goal_gaps_on_text_route": "NONE — local_geometry_parser (LOCAL_PARSE_COMPLETE, splits ABCDA'B'C'D' cleanly), bridge_v2, planner (s1, p2..p5, q1), Source Gate, and prism volume execution ALL pass once _hinh_binh_hanh_thoi deduces a2=b2=4, m_val=2."
+      },
+      "mathematical_oracle": {
+        "dataset_answer_key": "D",
+        "dataset_expected_answer": "4√3a³",
+        "hand_derivation": "Right prism => CC' ⊥ (ABCD), CC' = AA' = 2a. ∠(AC',(ABCD)) = ∠CAC' = 30° => AC = CC' * cot(30°) = 2a√3. Rhombus ABCD with ∠BAD = 60° => △ABD equilateral of side s, diagonal AC = s√3 = 2a√3 => s = 2a => S_ABCD = 2 * (s^2√3/4) = 2a^2√3. V = S_ABCD * AA' = 2a^2√3 * 2a = 4a³√3.",
+        "canonical_engine_answer": {
+          "q1": {
+            "coef": "4√3",
+            "dim": 3,
+            "unit": "a",
+            "display": "4a³√3"
+          }
+        }
+      },
+      "expected_behavior": "SERVED with exact volume '4a³√3' (semantically equivalent to dataset key D '4√3a³') and verified trig-construction-certificate/1 on AC and AB.",
+      "actual_behavior": "REFUSED at engine.py:918 (_hinh_binh_hanh_thoi) with reason_code='MISSING_DIMENSION' ('hình thoi đáy chưa có độ dài cạnh hoặc hai đường chéo') after LOCAL_PARSE_COMPLETE (0 provider calls).",
+      "verdict": "UNBLOCKED_BY_PHASE_6_RULE_RT_B"
+    },
+    {
+      "case_id": "vmmu_r266",
+      "dataset_partition": "REAL27 (DEVELOPMENT_EXPOSED; anvo25/vmmu full_vqa row_idx=266, Math_0059_test_010_question_12_page_2_key_D_vqa.png)",
+      "product_commit": "d222e6d9b582d54fc42397a9593f52eb6fd77f18",
+      "measured_system_hash": "c25f9695828888987db2ab7990c4ff135da4d01c6b9d968f898c36728a0ae436",
+      "test_command": "Set-Location 'D:/Documents/projects/algo-sim/.superpowers/worktrees/local-first-geometry-understanding'; $env:PYTHONPATH='backend'; $env:ALLOW_LIVE_AI='0'; D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe -B -c \"from app.ai.adaptive_input_router import route_text_input; print(route_text_input('Cho hình chóp S.ABC có cạnh bên SA vuông góc với đáy, SA = 3, AB = 3, CB = 4 và ∠ABC = 30°. Thể tích khối chóp S.ABC bằng', allow_live_ai=False).response['envelope']['reason_code'])\"",
+      "source_provenance": {
+        "manifest_path": "docs/evaluation/geometry/runs/controlled-vision-real-image-validation/new_in_scope_image_manifest.json",
+        "root_cause_matrix_path": "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/real27_root_cause_matrix.json",
+        "image_sha256": "5f2587de4d78c078002379f4405721556d604dff87fde093745ee312486f433e",
+        "stem_source_sha256": "1e83a2eec97786ccdd033a1d744cdbb083f690e7bfd096b5a5cbbc2615879dc2"
+      },
+      "mathematical_oracle": {
+        "dataset_answer_key": "D",
+        "dataset_expected_answer": "3",
+        "hand_derivation": "S_ABC = (1/2)*AB*BC*sin(30°) = (1/2)*3*4*(1/2) = 3; V = (1/3)*S_ABC*SA = 3. However, <BA, BC> = 3*4*cos(30°) = 6√3 not in Q and AC^2 = 25 - 12√3 not in Q, so A, B, C cannot simultaneously inhabit Q^3 under any rational SPD Gram matrix G in Q^{3x3} (radical.py:41 architectural invariant: no float coordinates, no second kernel)."
+      },
+      "expected_behavior": "Fail closed honestly with reason_code='EXACT_DOMAIN_EXCEEDED' mapped to public category 'CAPABILITY_UNSUPPORTED' (never float-approximated, never mislabelled MATHEMATICALLY_UNDERDETERMINED).",
+      "actual_behavior": "REFUSED at engine.py:1215 (_tam_giac SAS Law of Cosines) with reason_code='EXACT_DOMAIN_EXCEEDED' and task_category='CAPABILITY_UNSUPPORTED'.",
+      "verdict": "HONEST_CAPABILITY_BOUNDARY_PRESERVED"
+    },
+    {
+      "case_id": "new_ext_05_vmmu_full_r411",
+      "dataset_partition": "NEW_EXTERNAL_12 (documented diagnostic reference in docs/OPEN_ISSUES.md:70 and ALGOSIM_IMAGE_FIRST_OCR_VERIFIED_GEOMETRY_REPORT.md:190; never sealed H-1 or locked W2/W3)",
+      "product_commit": "d222e6d9b582d54fc42397a9593f52eb6fd77f18",
+      "measured_system_hash": "c25f9695828888987db2ab7990c4ff135da4d01c6b9d968f898c36728a0ae436",
+      "test_command": "Set-Location 'D:/Documents/projects/algo-sim/.superpowers/worktrees/local-first-geometry-understanding'; $env:PYTHONPATH='backend'; $env:ALLOW_LIVE_AI='0'; D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe -B -c \"from app.ai.adaptive_input_router import route_text_input; print(route_text_input('Câu 35 (VD) Cho hình chóp S.ABC có SA vuông góc với mặt phẳng (ABC), SA = √2a, tam giác ABC vuông cân tại B và AC = 2a (minh họa như hình bên). Góc giữa đường thẳng SB và mặt phẳng (ABC) bằng', allow_live_ai=False).response['envelope']['reason_code'])\"",
+      "source_provenance": {
+        "report_path": "docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/ALGOSIM_IMAGE_FIRST_OCR_VERIFIED_GEOMETRY_REPORT.md",
+        "catalog_path": "docs/evaluation/geometry/runs/image-first-ocr-verified-geometry/tools/new_external_catalog.py",
+        "original_file_sha256": "6751cfe07bfaaf1236258df5b7d8c6700901efb0750961b1fc45817af4e48bb7"
+      },
+      "mathematical_oracle": {
+        "dataset_answer_key": "B",
+        "dataset_expected_answer": "45°",
+        "hand_derivation": "△ABC right isosceles at B with AC = 2a => AB = BC = a√2; SA ⊥ (ABC) and SA = a√2 => in right △SAB (right at A), tan ∠(SB,(ABC)) = SA / AB = 1 => ∠(SB,(ABC)) = 45°."
+      },
+      "expected_behavior": "SERVED with exact angle '45°' via general Rule RT-A (no case-specific logic).",
+      "actual_behavior": "REFUSED at engine.py:1287 (_tam_giac) with reason_code='MISSING_DIMENSION'.",
+      "verdict": "AUTOMATICALLY_UNBLOCKED_BY_GENERAL_RULE_RT_A"
+    }
+  ],
+  "phase_6_surgical_architecture_spec": {
+    "new_module": "backend/app/simulation/geometry_functions/trig_construction_certificates.py",
+    "certificate_schema_version": "trig-construction-certificate/1",
+    "supported_exact_angle_domain": {
+      "acute_right_triangle_degrees": [
+        30,
+        45,
+        60
+      ],
+      "polygon_interior_and_dihedral_degrees": [
+        30,
+        45,
+        60,
+        90,
+        120,
+        135,
+        150
+      ],
+      "exact_trig_ratio_units": [
+        "sin",
+        "cos",
+        "tan",
+        "cot"
+      ],
+      "exact_trig_ratio_value_domain": "ExactNumber (Fraction or single-radical Radical in radical.py) with squared ratio r^2 in Q_{>0}, 0 < sin^2(alpha) < 1, 0 < cos^2(alpha) < 1 for non-degenerate right-triangle scaling",
+      "unsupported_non_exact_degree_policy": "Refuse fail-closed with TuChoi('EXACT_DOMAIN_EXCEEDED', ...) -> public category CAPABILITY_UNSUPPORTED (e.g. 37°, 15°, 75°)",
+      "degenerate_angle_policy": "Refuse fail-closed with TuChoi('NON_POSITIVE_LENGTH' or 'INCONSISTENT_FACTS') on <= 0°, >= 180°, 90° at non-right vertex of a right triangle or off-foot line_plane_angle, tan 90° / zero trig ratio, or hypotenuse <= leg"
+    },
+    "closed_trig_identities": [
+      "h = c * sin(alpha)",
+      "p = c * cos(alpha)",
+      "h = p * tan(alpha)",
+      "p = h * cot(alpha)",
+      "c = p / cos(alpha)",
+      "c = h / sin(alpha)",
+      "pythagoras_hypotenuse_from_legs",
+      "pythagoras_leg_from_hypotenuse",
+      "pythagoras_equal_legs",
+      "pythagoras_leg_ratio",
+      "rhombus_half_diagonal_cos"
+    ],
+    "certificate_required_fields": {
+      "schema_version": "trig-construction-certificate/1",
+      "certificate_id": "Deterministic ID (e.g. 'trig_cert_1')",
+      "derived_quantity_id": "Canonical segment [U, V] or solid height identifier",
+      "source_premises": "List of {call_id, fn, quotes} tracing exclusively to verified source calls",
+      "derived_right_triangle": "[V_right, V_adj, V_opp] — 3 distinct non-collinear vertices (placed scene vertices or verified exact rational auxiliary foot/midpoint O)",
+      "right_angle_vertex": "V_right",
+      "perpendicularity_justification": "{rule, supporting_calls, gram_dot_zero_verified: true} — deductive rule from calls/topology AND exact Gram orthogonality <V_adj - V_right, V_opp - V_right>_G == 0",
+      "angle_witness": "{kind, vertex: V_adj, ray_1: [V_adj, V_right], ray_2: [V_adj, V_opp], domain: '(0°, 90°)', unit, raw_value, sin_sq, cos_sq} — for pure Pythagorean ratio/leg rules without an angle call, records exact induced rational sin_sq/cos_sq on [V_adj, V_right] and [V_adj, V_opp]",
+      "hypotenuse": "{segment: [V_adj, V_opp], length_sq: str}",
+      "adjacent_leg": "{segment: [V_right, V_adj], length_sq: str}",
+      "opposite_leg": "{segment: [V_right, V_opp], length_sq: str}",
+      "trig_identity": "One of closed_trig_identities",
+      "known_inputs": "List of {role, segment_or_angle, exact_value_or_sq, dimension} with dimension='LENGTH' or 'ANGLE'/'SCALAR'",
+      "exact_length_expr": "{coef_json, coef_str, squared_coef_str, unit_symbol, power: 1, display} backed by radical.py sqrt_rational",
+      "dimension": "LENGTH",
+      "positivity_domain": "{sin_sq_gt_0: true, cos_sq_gt_0: true, unit_circle_sum_eq_1: true, hypotenuse_sq_gt_legs_sq: true, derived_length_sq_gt_0: true, gram_spd_verified: true}",
+      "construction_dependencies": "Ordered tuple of prerequisite call IDs and point labels"
+    },
+    "independent_verifier_adversarial_checks": [
+      "1. SPD Metric Check: validate_gram_metric_spd(chart_metric) must pass.",
+      "2. Distinct Non-Collinear Triangle & Incidence Topology Check: derived_right_triangle = [V_right, V_adj, V_opp] must have 3 distinct points with non-zero Gram area; hypotenuse endpoints must equal {V_adj, V_opp} (must NOT contain V_right); adjacent_leg endpoints must equal {V_right, V_adj} (MUST contain BOTH V_right AND angle_witness.vertex); opposite_leg endpoints must equal {V_right, V_opp} (MUST contain V_right and EXCLUDE angle_witness.vertex). This catches leg swapping even at 45° where numeric leg lengths coincide.",
+      "3. Deductive + Metric Right-Angle Check: perpendicularity_justification.supporting_calls must exist in calls and deductively entail orthogonality at V_right (right_angle, perpendicular_lines, perpendicular_line_plane, orthogonal_projection, orthogonal_projection_line, right prism lateral edge, or rhombus diagonal intersection), AND exact <V_adj - V_right, V_opp - V_right>_G == 0.",
+      "4. Deductive + Metric Angle/Ratio Witness Check: angle_witness must match the cited source angle/equal_length/segment_ratio premise call (including exact foot projection ray for line_plane_angle and edge-orthogonal rays for dihedral_angle/plane_plane_angle), satisfy 0 < sin_sq < 1, 0 < cos_sq < 1, sin_sq + cos_sq == 1, <r1, r2>_G > 0 (strictly acute), and <r1, r2>_G^2 == cos_sq * <r1, r1>_G * <r2, r2>_G.",
+      "5. Exact Symbolic Formula Re-Evaluation Check: independently recomputes target length^2 and exact Radical from known_inputs according to trig_identity (verifying known_inputs were genuinely independent inputs and not circularly equal to the derived output), and requires exact match with exact_length_expr, scene segment Gram length^2, and dimension == 'LENGTH'. Rejects any mutated witness, swapped leg/hypotenuse, forged trig_identity, or tampered expression with TrigCertificateError -> RESULT_BINDING_UNVERIFIED."
+    ]
+  },
+  "phase_9_scene3d_integration_policy": {
+    "carrier_and_prerequisite_cleanliness": "Internal rational trig squares (sin^2, cos^2) and Gram entries stay inside engine/certificate metadata; bien_dich emits only geometric point3, line3, segment3, plane3, polygon3, solid, section, and goal quantity objects. simulation_state._unwrap_visible_sources strips quantity objects from visible_prerequisites.",
+    "foot_height_and_witness_construction": "Stated perpendicular edges (SA in r460, AA'/CC' in r463) and projections (doan_gt_<id>) receive exact-gram-line-plane-orthogonality/1 witnesses via certificates.attach_scene_perpendicular_certificates; unstated volume altitudes use altitude-construction/1 (gan_duong_cao) without fabricating GIVEN premises; asked angles use angle-construction/1 (gan_dung_goc) verified by adapter4_route._angle_construction_bound.",
+    "right_angle_conclusion_hiding": "Premise right-angle markers come strictly from premise placement provenance (GIVEN / ENGINE_VERIFIED in certificates._infer_segment_provenance). Prove goals never enter calls and carry can_present_as_proven=False; asked 90° angle goals attach measurement witness annotations on kq_<goal_id> rather than premise right-angle markers.",
+    "no_answer_surface_and_output_policy": "output-policy/1 (output_policy.py) and source-goal-completion/1 (adapter4_route.py) remain unchanged; trig-of-angle goals report numeric_source_goal='NOT_ANSWERED' and numeric_answer_shown=False, and frontend AxoWorkspaceV62 exposes zero numeric answer reveal surfaces.",
+    "exact_vs_representative_height": "When trig premises + length scale uniquely fix solid height (including r460 and r463), free_height_for is empty and route_d['scene_configuration'] is omitted (unique exact scene). Representative scene_configuration ('unique': False) is emitted ONLY when height/scale is genuinely free and certified invariant by similarity-scale-certificate/1 or target-invariance-certificate/2."
+  },
+  "phase_10_cache_identity_audit": {
+    "cache_surfaces_inspected": [
+      {
+        "surface": "SQLite SimulationCache (backend/app/cache.py + backend/app/main.py)",
+        "current_version": "CACHE_VERSION = '139', ROUTE_D_CACHE_POLICY = '139:route-d'",
+        "wave2_change": "Bump CACHE_VERSION = '140' (ROUTE_D_CACHE_POLICY = '140:route-d'), invalidating all cached text, staging-replay, local-first, and image OCR/vision analyze entries from 139 while keeping refusals and HTTP 502/503/504 uncached (Cache-Control: no-store)."
+      },
+      {
+        "surface": "In-process _PARSER_CACHE and local-first request_hash (backend/app/ai/local_geometry_parser.py + backend/app/ai/hybrid_offline.py)",
+        "current_version": "LOCAL_GEOMETRY_PARSER_VERSION = 'local-geometry-parser/1'",
+        "wave2_change": "Bump LOCAL_GEOMETRY_PARSER_VERSION = 'local-geometry-parser/2' (verified 0 hardcoded test assertions on 'local-geometry-parser/1'), invalidating in-process _PARSER_CACHE and changing prepare_local_first_hybrid cache_key."
+      },
+      {
+        "surface": "Semantic Environment Lockfile (backend/app/runtime_identity.py + backend/scripts/lock_cache_identity.py + backend/cache_identity.lock.json)",
+        "audit_finding": "runtime_identity.py:261-268 hybrid_surface currently hashes route_policy, extraction_schema, bridge_version, adapter_version, envelope_version, clarify_version, and output_policy_version, omitting LOCAL_GEOMETRY_PARSER_VERSION, ADAPTIVE_INPUT_ROUTER_VERSION, and TRIG_CONSTRUCTION_CERTIFICATE_VERSION.",
+        "wave2_change": "Extend hybrid_surface dict inside semantic_environment_fingerprint() with local_parser_version, adaptive_router_version, and trig_construction_certificate_version (preserving the 7 top-level component_hashes keys in cache_identity.lock.json), then run backend/scripts/lock_cache_identity.py once after all Wave 2 code lands."
+      }
+    ],
+    "adversarial_regression_test": "backend/tests/test_cache_dimension_trig_invalidation.py — seeds stale 139:route-d cache entries for inputs whose verdict/semantics change in 140 (dimensional mismatch refusal, newly served trig/right-triangle construction, and stale refusal), proving POST /api/analyze misses 139:route-d and recomputes fresh under 140:route-d."
+  },
+  "wave2_non_colliding_file_ownership": {
+    "exclusive_new_files_for_trig_kernel_audit": [
+      "backend/app/simulation/geometry_functions/trig_construction_certificates.py",
+      "backend/tests/geometry/test_trig_verified_construction.py",
+      "backend/tests/test_cache_dimension_trig_invalidation.py"
+    ],
+    "partitioned_shared_files": {
+      "backend/app/simulation/geometry_functions/engine.py": "trig-kernel-audit edits lines 696-816 (_goc_tham_so non-positive guard, _suy_do_dai_day_tu_goc 90° contradiction guard + cert recording, bo_cuc_day square diagonal), 896-920 (_hinh_binh_hanh_thoi rhombus 1-diagonal + vertex_angle/right_angle), 1162-1225 (_tam_giac right-triangle hypotenuse+leg-ratio & acute vertex_angle+side solver), 1679-1895 / 2160-2210 / 6170-6204 (trig_certificates emission & post-verification). Zero overlap with expr-dim-audit lines 585-665, 760-785 (coordinate sequential merge if both touch _suy_do_dai_day_tu_goc), 1230-1240, 1335-1345, 2038-2045, 3200-3210, 4520-4542.",
+      "backend/app/simulation/geometry_functions/registry.py": "trig-kernel-audit edits lines 7397-7403 (_kiem_goc_dung_nguon Vietnamese trig keyword aliases côsin/cosin/tang/tg/côtang/cotang/cotg). Zero overlap with expr-dim-audit lines 108-145, 364-395, 999-1006, 1513-1625, 3640-3670, 4920-4945, 7405-7770.",
+      "backend/app/ai/local_geometry_parser.py": "expr-dim-audit owns primary Wave 2a expression edits; trig-kernel-audit sequences in Wave 2b (or hands off exact patch) for lines 44 (LOCAL_GEOMETRY_PARSER_VERSION -> /2), 1935-2127 (sin/cos/tan/cot angle premise clauses), and 4215-4234 (_resolve_late_regular_polygon_dimension when metric scale or scale-invariant goal exists).",
+      "backend/app/ai/adapter4_route.py": "trig-kernel-audit exposes route_d['trig_construction_certificates'] in _phong_bi (lines 184-206) and bind-checks verify_trig_construction_certificate in build_adapter4_response (lines 362-378).",
+      "backend/app/runtime_identity.py_and_main.py_and_lockfile": "Final Wave 2 lock step: bump CACHE_VERSION = '140' in main.py, extend hybrid_surface in runtime_identity.py, and regenerate backend/cache_identity.lock.json via backend/scripts/lock_cache_identity.py."
+    }
+  },
+  "stage": "stage_p1c",
+  "updated_at_utc": "2026-11-15T11:52:00Z",
+  "stage_p1c_execution_summary": {
+    "closed_trig_identities_count": 11,
+    "r460_served_answer": "a³√2/3",
+    "r463_served_answer": "4a³√3",
+    "r537_served_answer": "a√6/3",
+    "r266_refusal_code": "EXACT_DOMAIN_EXCEEDED",
+    "cache_version_locked": "140",
+    "semantic_environment_hash_locked": "6233c43c395c9b493d31d3dbb5d0ca952604730f6185cf541d2f179c077f955b"
+  },
+  "baseline_product_commit": "d222e6d9b582d54fc42397a9593f52eb6fd77f18"
+}

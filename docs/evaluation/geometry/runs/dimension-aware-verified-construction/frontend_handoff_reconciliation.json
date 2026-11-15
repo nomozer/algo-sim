@@ -1,0 +1,93 @@
+{
+  "schema": "algosim-phase0-frontend-handoff-reconciliation/1",
+  "run_id": "dimension-aware-verified-construction",
+  "phase": "phase_0_baseline_integrity",
+  "generated_at_utc": "2026-11-15T05:31:00Z",
+  "branch": "feat/local-first-geometry-understanding",
+  "head": "b04bed0f83e02ac27416814bea08fa830ee91461",
+  "product_commit": "0c9d4a2f0c892ac13fcd6e47b919e87bfb141479",
+  "candidate_freeze_commit": "63def519ad317911145b2d84929a687208996619",
+  "measured_system_hash": "7a15dc2e59a869c8c898458359a97a772760ae8eb89e7a75460a7625d0d6b488",
+  "measured_system": "7a15dc2e59a869c8c898458359a97a772760ae8eb89e7a75460a7625d0d6b488",
+  "measured_system_files": 120,
+  "cache_version": "140",
+  "dataset_partition": "GOVERNANCE_ONLY (read-only cross-worktree Git status/log/ls-tree/grep/apply-check reconciliation of D:/Documents/projects/axo-geometry-library vs local-first-geometry-understanding); never sealed H-1 or locked W2/W3",
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "PYTHONPATH": "backend",
+    "live_ai_calls": 0
+  },
+  "test_command": "git -C D:/Documents/projects/axo-geometry-library status -sb && git -C D:/Documents/projects/axo-geometry-library log -3 --oneline && git -C D:/Documents/projects/axo-geometry-library ls-tree HEAD frontend/src/simulations/domains/geometry/scene3d-regression-archetypes-fixtures.json frontend/src/simulations/domains/geometry/scene3d-circumsphere-fixture.json && git -C D:/Documents/projects/axo-geometry-library apply --check D:/Documents/projects/algo-sim/.superpowers/worktrees/local-first-geometry-understanding/docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/handoff/fe2-multi-layer-aux-readout-ids.diff",
+  "expected_behavior": "Read-only inspection of D:/Documents/projects/axo-geometry-library records current branch, HEAD, uncommitted ownership state, and exact FE-2, FE-3, FE-4, and FE-6 status without modifying any file in D:/Documents/projects/axo-geometry-library or frontend/; items owned by the active dirty frontend worktree are marked BLOCKED_OWNERSHIP.",
+  "actual_behavior": "D:/Documents/projects/axo-geometry-library is on branch feat/axo-geometry-library-verification at HEAD 94292eac0889da224949c949c11d635aadbaa667 (advanced 3 UI commits beyond prior receipt's 8af24a5c8: 7cca5b4b1, c65eea956, 94292eac0) with 78 uncommitted/untracked working-tree entries owned by an active frontend session; 0 files were modified. FE-2 is BLOCKED_OWNERSHIP (library HEAD blob d6722d90df84b457adcf40cd80412a59acf4c7bd unchanged since handoff base aecd3daa5a9ca289e3521ac40c7be6ad8f1e60eb; handoff patch fe2-multi-layer-aux-readout-ids.diff passes git apply --check with exit code 0). FE-3 is BLOCKED_OWNERSHIP and BLOCKED_DEPENDENCY (generator resides in axo-geometry-library at blob bc6ebf83affc51f8997ea881ed6ad0785949e1e8 and requires circumscribed_sphere capability absent from Registry /33 on this branch). FE-4 is BLOCKED_OWNERSHIP (0 TypeScript/TSX renderer consumers of auxiliary_points in frontend/src across both worktrees; Scene3D renderer owned by the dirty frontend session). FE-6 is MERGE_NOTE / BLOCKED_OWNERSHIP until branch merge (local static fixtures 882c16415ed1477a56c7365fbe792418e7cfe2a2 and 00cf0367b4f22472a95aae49071d99135184debc are older than library HEAD blobs 88e00000f8d7e252aacb6732f5a11f7692afca43 and d6722d90df84b457adcf40cd80412a59acf4c7bd; take library copies on merge).",
+  "mathematical_oracle": "Exact Git tree blob SHA-1 comparison (git ls-tree HEAD across both worktrees), deterministic dry-run patch verification (git apply --check exit code 0), and static symbol search across tracked frontend/src TypeScript/TSX files.",
+  "source_provenance": {
+    "library_worktree": "D:/Documents/projects/axo-geometry-library",
+    "fe2_handoff_base": "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/handoff/fe2-base-library-head.txt",
+    "fe2_handoff_patch": "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/handoff/fe2-multi-layer-aux-readout-ids.diff",
+    "prior_frontend_reconciliation": "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/frontend_handoff_reconciliation.json",
+    "originating_handoff_receipt": "docs/evaluation/geometry/runs/scene3d-causal-pedagogical-integrity/frontend_handoff_status.json"
+  },
+  "library_worktree_branch": "feat/axo-geometry-library-verification",
+  "library_head": "94292eac0889da224949c949c11d635aadbaa667",
+  "library_recent_commits": [
+    "94292eac0 fix(axo): remove redundant tab close confirmation and preserve drafts",
+    "c65eea956 style(axo): match sidebar toggle icon to approved reference",
+    "7cca5b4b1 style(axo): restore geometry customization naming"
+  ],
+  "library_uncommitted_entries_observed": 78,
+  "library_uncommitted_note": "Observed 78 uncommitted/untracked entries via read-only git status -sb in D:/Documents/projects/axo-geometry-library; active frontend session owns that worktree; zero files read for editing and zero modified.",
+  "items": [
+    {
+      "id": "FE-2",
+      "what": "multi_layer_aux_pyramid lacks readout_ids on 9 steps in scene3d-regression-archetypes-fixtures.json",
+      "source_of_truth": "D:/Documents/projects/axo-geometry-library/frontend/src/simulations/domains/geometry/scene3d-regression-archetypes-fixtures.json",
+      "library_blob_at_head": "d6722d90df84b457adcf40cd80412a59acf4c7bd",
+      "handoff_base_commit": "aecd3daa5a9ca289e3521ac40c7be6ad8f1e60eb",
+      "library_blob_unchanged_since_handoff_base": true,
+      "handoff_patch": "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/handoff/fe2-multi-layer-aux-readout-ids.diff",
+      "patch_applies_cleanly": true,
+      "status": "BLOCKED_OWNERSHIP",
+      "why": "Fixture resides in the dirty axo-geometry-library worktree owned by another active session; 9-hunk patch remains clean and ready to apply when ownership permits."
+    },
+    {
+      "id": "FE-3",
+      "what": "Regenerate advanced-geometry-samples.json with the library catalog generator",
+      "library_generator_blob_at_head": "bc6ebf83affc51f8997ea881ed6ad0785949e1e8",
+      "status": "BLOCKED_OWNERSHIP",
+      "secondary_status": "BLOCKED_DEPENDENCY",
+      "why": "Catalog generator and target catalog reside in dirty axo-geometry-library worktree, and regeneration also requires circumscribed_sphere capability absent from Registry /33 on feat/local-first-geometry-understanding."
+    },
+    {
+      "id": "FE-4",
+      "what": "Visualize backend auxiliary_points (trace-method helpers) in Scene3D renderer",
+      "library_frontend_tsx_occurrences": 0,
+      "local_frontend_tsx_occurrences": 0,
+      "local_sample_data_occurrences": 3,
+      "status": "BLOCKED_OWNERSHIP",
+      "why": "Zero TypeScript/TSX renderer consumers of auxiliary_points exist in either worktree; Scene3D renderer components are owned by the active dirty frontend session in axo-geometry-library."
+    },
+    {
+      "id": "FE-6",
+      "what": "Two static Scene3D fixtures on feat/local-first-geometry-understanding predate axo-geometry-library HEAD",
+      "fixture_blobs": {
+        "frontend/src/simulations/domains/geometry/scene3d-circumsphere-fixture.json": {
+          "local_head_blob": "882c16415ed1477a56c7365fbe792418e7cfe2a2",
+          "library_head_blob": "88e00000f8d7e252aacb6732f5a11f7692afca43"
+        },
+        "frontend/src/simulations/domains/geometry/scene3d-regression-archetypes-fixtures.json": {
+          "local_head_blob": "00cf0367b4f22472a95aae49071d99135184debc",
+          "library_head_blob": "d6722d90df84b457adcf40cd80412a59acf4c7bd"
+        }
+      },
+      "status": "BLOCKED_OWNERSHIP",
+      "reconciliation_action": "MERGE_NOTE",
+      "why": "Cross-branch merge and frontend fixture edits are out of scope while axo-geometry-library is dirty; take the library copies (plus FE-2 patch) at branch merge time."
+    }
+  ],
+  "right_angle_answer_marker_policy": "UNCHANGED: hidden when right-angle is the asked answer; open Owner decision",
+  "verdict": "RECONCILED_BLOCKED_OWNERSHIP",
+  "start_product_commit": "d222e6d9b582d54fc42397a9593f52eb6fd77f18",
+  "start_measured_system_hash": "c25f9695828888987db2ab7990c4ff135da4d01c6b9d968f898c36728a0ae436",
+  "start_cache_version": "139"
+}

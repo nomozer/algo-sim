@@ -1,0 +1,424 @@
+{
+  "schema": "algosim-stage-p1c-r460-development-regression/1",
+  "phase": "phase_7_exposed_development_case_r460_verification",
+  "run_id": "dimension-aware-verified-construction",
+  "stage": "stage_p1c",
+  "generated_by": "trig-kernel-audit",
+  "generated_at": "2026-11-15T11:52:00Z",
+  "generated_at_utc": "2026-11-15T11:52:00Z",
+  "branch": "feat/local-first-geometry-understanding",
+  "git_head_sha": "b04bed0f83e02ac27416814bea08fa830ee91461",
+  "head": "b04bed0f83e02ac27416814bea08fa830ee91461",
+  "product_commit": "0c9d4a2f0c892ac13fcd6e47b919e87bfb141479",
+  "product_commit_rule": "product-paths-excluding-test-only/1",
+  "measured_system_hash": "7a15dc2e59a869c8c898458359a97a772760ae8eb89e7a75460a7625d0d6b488",
+  "measured_system_file_count": 120,
+  "baseline_measured_system_hash": "c25f9695828888987db2ab7990c4ff135da4d01c6b9d968f898c36728a0ae436",
+  "cache_version": "140",
+  "route_d_cache_policy": "140:route-d",
+  "semantic_environment_hash": "6233c43c395c9b493d31d3dbb5d0ca952604730f6185cf541d2f179c077f955b",
+  "provider_call_count": 0,
+  "schema_versions": {
+    "expression_model": "dimension-expression/1",
+    "typed_fact_next": "typed-fact-next/2",
+    "typed_fact_next_bridge": "typed-fact-next-bridge/2",
+    "registry": "geometry-functions/33",
+    "planner": "geometry-fact-planner/26",
+    "engine": "geometry-function-engine/24",
+    "local_geometry_parser": "local-geometry-parser/2",
+    "adaptive_input_router": "adaptive-input-router/1",
+    "determinacy_audit": "mathematical-determinacy-audit/1",
+    "trig_construction_certificates": "trig-construction-certificate/1",
+    "output_policy": "output-policy/1",
+    "hybrid_adapter": "hybrid-simulation-adapter/4",
+    "route_d_envelope": "hybrid-route-d-simulation/4"
+  },
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "HYBRID_ROUTE_MODE": "local-first",
+    "PYTHONPATH": "backend",
+    "python_executable": "D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe -B",
+    "live_ai_calls": 0,
+    "sealed_h1_rows_opened": 0,
+    "locked_w2_w3_rows_read": 0
+  },
+  "zero_case_id_hardcode_verified": {
+    "scanned_path": "backend/app/**/*.py",
+    "forbidden_tokens": [
+      "vmmu_",
+      "r460",
+      "r463",
+      "r537",
+      "r266",
+      "r411"
+    ],
+    "hits": 0
+  },
+  "corpus_id": "REAL27_EXPOSED_DEVELOPMENT_VMMU_R460",
+  "dataset_manifest_sha256": "4e65026c63753600111cdf82ddf1026423069d95581145f842f2baf9a48f5d45",
+  "dataset_partition": "DEVELOPMENT_EXPOSED_ONLY (exposed REAL27 vmmu_r460 and documented sibling stem new_ext_05_vmmu_full_r411); zero access to sealed H-1 or locked W2/W3",
+  "test_command": "D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe -B -m pytest -q backend/tests/geometry/test_trig_verified_construction.py -k 'stage_p1c_end_to_end_verified_constructions'",
+  "source_provenance": {
+    "prior_run_receipt": "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/real27_acceptance_before_after.json",
+    "prior_run_receipt_sha256": "9a35613d0079451413a7e3334f46363658848c339539867ebd6590ae406bae68",
+    "dataset_manifest": "docs/evaluation/geometry/runs/controlled-vision-real-image-validation/new_in_scope_image_manifest.json",
+    "test_suite": "backend/tests/geometry/test_trig_verified_construction.py"
+  },
+  "mathematical_oracle": "Pyramid S.ABC with right-isosceles base △ABC at B and hypotenuse AC = 2a: BA² = BC² = AC²/2 = 2a² (BA = BC = a√2), so base area S_ABC = (1/2)*BA*BC = a². Since SA ⊥ (ABC), SA ⊥ AB (∠SAB = 90°); since △SAB is isosceles and hypotenuse SB > SA, SB > AB, △SAB is uniquely forced isosceles at A, giving SA = AB = a√2. Volume V_{S.ABC} = (1/3)*S_ABC*SA = (1/3)*a²*(a√2) = a³√2/3 (dataset answer key C).",
+  "expected_behavior": "Exposed REAL27 case `vmmu_r460` parses `LOCAL_PARSE_COMPLETE` locally with 0 provider calls, derives `BA = BC = a√2` via general `RIGHT_ISOSCELES_HYPOTENUSE_TO_LEGS` (`pythagoras_equal_legs`) with `VERIFIED_DERIVED_QUANTITY` provenance and verified `trig-construction-certificate/1`, propagates `SA = AB = a√2`, constructs unique exact Scene3D (`scene_configuration=None`), and serves exact `'a³√2/3'` matching VMMU key C with zero case-ID hardcoding.",
+  "actual_behavior": "vmmu_r460 upgraded from ENGINE REFUSED (MISSING_DIMENSION) to LOCAL_PARSE_COMPLETE / SERVED with exact answer 'a³√2/3' (dataset key C), 2 verified `trig_construction_certificates`, scene_configuration=None, 0 provider calls, and 0 case-ID strings in backend/app.",
+  "verdict": "PASS",
+  "case_verification": {
+    "case_id": "vmmu_r460",
+    "dataset_answer_key": "C",
+    "dataset_expected_expression": "a³√2/3",
+    "source_text": "Câu 33: Cho hình chóp S.ABC có đáy ABC là tam giác vuông cân ở B, cạnh AC = 2a. Cạnh SA vuông góc với mặt đáy (ABC), tam giác SAB cân. Thể tích khối chóp S.ABC theo a bằng\nA. 2a³√2. B. a³√2. C. a³√2/3. D. 2a³√2/3.",
+    "before_stage_p1c": {
+      "parse_status": "LOCAL_PARSE_COMPLETE",
+      "route_status": "REFUSED",
+      "reason_code": "MISSING_DIMENSION",
+      "served": false
+    },
+    "after_stage_p1c": {
+      "parse_status": "LOCAL_PARSE_COMPLETE",
+      "envelope_status": "ok",
+      "route_d_status": "SERVED",
+      "reason_code": null,
+      "failure_category": null,
+      "answers": {
+        "q1": "a³√2/3"
+      },
+      "answer_exact": {
+        "q1": {
+          "coef": "√2/3",
+          "dim": 3,
+          "unit": "a"
+        }
+      },
+      "scene_configuration": null,
+      "provider_calls": 0,
+      "trig_certificates_count": 2,
+      "trig_identities": [
+        "pythagoras_equal_legs",
+        "pythagoras_equal_legs"
+      ],
+      "trig_certificates": [
+        {
+          "schema_version": "trig-construction-certificate/1",
+          "certificate_id": "trig_cert_1",
+          "derived_quantity_id": [
+            [
+              "B",
+              "A"
+            ],
+            [
+              "B",
+              "C"
+            ]
+          ],
+          "derived_role": "both_legs",
+          "source_premises": [
+            {
+              "call_id": "p1",
+              "fn": "right_angle",
+              "quotes": [
+                "S.ABC có đáy ABC là tam giác vuông cân ở B"
+              ]
+            },
+            {
+              "call_id": "p2",
+              "fn": "equal_length",
+              "quotes": [
+                "S.ABC có đáy ABC là tam giác vuông cân ở B"
+              ]
+            },
+            {
+              "call_id": "p3",
+              "fn": "segment_length",
+              "quotes": [
+                "AC = 2a"
+              ]
+            }
+          ],
+          "derived_right_triangle": [
+            "B",
+            "A",
+            "C"
+          ],
+          "right_angle_vertex": "B",
+          "perpendicularity_justification": {
+            "rule": "explicit_right_angle",
+            "supporting_calls": [
+              "p1"
+            ],
+            "gram_dot_zero_verified": true
+          },
+          "angle_witness": {
+            "kind": "equal_legs_witness",
+            "vertex": "A",
+            "ray_1": [
+              "A",
+              "B"
+            ],
+            "ray_2": [
+              "A",
+              "C"
+            ],
+            "domain": "(0°, 90°)",
+            "unit": "deg",
+            "raw_value": "45",
+            "sin_sq": "1/2",
+            "cos_sq": "1/2",
+            "supporting_calls": [
+              "p2"
+            ]
+          },
+          "hypotenuse": {
+            "segment": [
+              "A",
+              "C"
+            ],
+            "length_sq": "4"
+          },
+          "adjacent_leg": {
+            "segment": [
+              "B",
+              "A"
+            ],
+            "length_sq": "2"
+          },
+          "opposite_leg": {
+            "segment": [
+              "B",
+              "C"
+            ],
+            "length_sq": "2"
+          },
+          "trig_identity": "pythagoras_equal_legs",
+          "known_inputs": [
+            {
+              "role": "hypotenuse",
+              "segment": [
+                "A",
+                "C"
+              ],
+              "length_sq": "4",
+              "coef_json": {
+                "kind": "rational",
+                "value": "2"
+              },
+              "dimension": "LENGTH"
+            },
+            {
+              "role": "equal_legs",
+              "sin_sq": "1/2",
+              "cos_sq": "1/2",
+              "dimension": "SCALAR"
+            }
+          ],
+          "exact_length_expr": {
+            "coef_json": {
+              "kind": "radical",
+              "coefficient": "1",
+              "radicand": 2
+            },
+            "coef_str": "√2",
+            "squared_coef_str": "2",
+            "unit_symbol": "a",
+            "power": 1,
+            "display": "a√2"
+          },
+          "dimension": "LENGTH",
+          "positivity_domain": {
+            "sin_sq_gt_0": true,
+            "cos_sq_gt_0": true,
+            "unit_circle_sum_eq_1": true,
+            "hypotenuse_sq_gt_legs_sq": true,
+            "derived_length_sq_gt_0": true,
+            "gram_spd_verified": true
+          },
+          "single_branch_uniqueness": {
+            "unique_positive_root": true,
+            "acute_or_verified_branch": true
+          },
+          "construction_dependencies": {
+            "prerequisite_calls": [
+              "p1",
+              "p2",
+              "p3"
+            ],
+            "vertices": [
+              "B",
+              "A",
+              "C"
+            ]
+          },
+          "verified": true
+        },
+        {
+          "schema_version": "trig-construction-certificate/1",
+          "certificate_id": "trig_cert_2",
+          "derived_quantity_id": [
+            [
+              "B",
+              "C"
+            ],
+            [
+              "B",
+              "A"
+            ]
+          ],
+          "derived_role": "both_legs",
+          "source_premises": [
+            {
+              "call_id": "p1",
+              "fn": "right_angle",
+              "quotes": [
+                "S.ABC có đáy ABC là tam giác vuông cân ở B"
+              ]
+            },
+            {
+              "call_id": "p2",
+              "fn": "equal_length",
+              "quotes": [
+                "S.ABC có đáy ABC là tam giác vuông cân ở B"
+              ]
+            },
+            {
+              "call_id": "p3",
+              "fn": "segment_length",
+              "quotes": [
+                "AC = 2a"
+              ]
+            }
+          ],
+          "derived_right_triangle": [
+            "B",
+            "C",
+            "A"
+          ],
+          "right_angle_vertex": "B",
+          "perpendicularity_justification": {
+            "rule": "explicit_right_angle",
+            "supporting_calls": [
+              "p1"
+            ],
+            "gram_dot_zero_verified": true
+          },
+          "angle_witness": {
+            "kind": "equal_legs_witness",
+            "vertex": "C",
+            "ray_1": [
+              "C",
+              "B"
+            ],
+            "ray_2": [
+              "C",
+              "A"
+            ],
+            "domain": "(0°, 90°)",
+            "unit": "deg",
+            "raw_value": "45",
+            "sin_sq": "1/2",
+            "cos_sq": "1/2",
+            "supporting_calls": [
+              "p2"
+            ]
+          },
+          "hypotenuse": {
+            "segment": [
+              "C",
+              "A"
+            ],
+            "length_sq": "4"
+          },
+          "adjacent_leg": {
+            "segment": [
+              "B",
+              "C"
+            ],
+            "length_sq": "2"
+          },
+          "opposite_leg": {
+            "segment": [
+              "B",
+              "A"
+            ],
+            "length_sq": "2"
+          },
+          "trig_identity": "pythagoras_equal_legs",
+          "known_inputs": [
+            {
+              "role": "hypotenuse",
+              "segment": [
+                "C",
+                "A"
+              ],
+              "length_sq": "4",
+              "coef_json": {
+                "kind": "rational",
+                "value": "2"
+              },
+              "dimension": "LENGTH"
+            },
+            {
+              "role": "equal_legs",
+              "sin_sq": "1/2",
+              "cos_sq": "1/2",
+              "dimension": "SCALAR"
+            }
+          ],
+          "exact_length_expr": {
+            "coef_json": {
+              "kind": "radical",
+              "coefficient": "1",
+              "radicand": 2
+            },
+            "coef_str": "√2",
+            "squared_coef_str": "2",
+            "unit_symbol": "a",
+            "power": 1,
+            "display": "a√2"
+          },
+          "dimension": "LENGTH",
+          "positivity_domain": {
+            "sin_sq_gt_0": true,
+            "cos_sq_gt_0": true,
+            "unit_circle_sum_eq_1": true,
+            "hypotenuse_sq_gt_legs_sq": true,
+            "derived_length_sq_gt_0": true,
+            "gram_spd_verified": true
+          },
+          "single_branch_uniqueness": {
+            "unique_positive_root": true,
+            "acute_or_verified_branch": true
+          },
+          "construction_dependencies": {
+            "prerequisite_calls": [
+              "p1",
+              "p2",
+              "p3"
+            ],
+            "vertices": [
+              "B",
+              "C",
+              "A"
+            ]
+          },
+          "verified": true
+        }
+      ],
+      "scene_object_count": 10,
+      "scene_point_labels": [
+        "A",
+        "B",
+        "C",
+        "S"
+      ],
+      "scene_perpendicular_witness_ids": [
+        "canh_ben_S_A"
+      ]
+    }
+  },
+  "baseline_product_commit": "d222e6d9b582d54fc42397a9593f52eb6fd77f18"
+}

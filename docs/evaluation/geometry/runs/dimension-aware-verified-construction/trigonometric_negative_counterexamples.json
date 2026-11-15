@@ -1,0 +1,165 @@
+{
+  "schema": "algosim-stage-p1c-trigonometric-negative-counterexamples/1",
+  "phase": "phase_6_and_phase_8_9_7_negative_trigonometric_counterexamples",
+  "run_id": "dimension-aware-verified-construction",
+  "stage": "stage_p1c",
+  "generated_by": "trig-kernel-audit",
+  "generated_at": "2026-11-15T11:52:00Z",
+  "generated_at_utc": "2026-11-15T11:52:00Z",
+  "branch": "feat/local-first-geometry-understanding",
+  "git_head_sha": "b04bed0f83e02ac27416814bea08fa830ee91461",
+  "head": "b04bed0f83e02ac27416814bea08fa830ee91461",
+  "product_commit": "0c9d4a2f0c892ac13fcd6e47b919e87bfb141479",
+  "product_commit_rule": "product-paths-excluding-test-only/1",
+  "measured_system_hash": "7a15dc2e59a869c8c898458359a97a772760ae8eb89e7a75460a7625d0d6b488",
+  "measured_system_file_count": 120,
+  "baseline_measured_system_hash": "c25f9695828888987db2ab7990c4ff135da4d01c6b9d968f898c36728a0ae436",
+  "cache_version": "140",
+  "route_d_cache_policy": "140:route-d",
+  "semantic_environment_hash": "6233c43c395c9b493d31d3dbb5d0ca952604730f6185cf541d2f179c077f955b",
+  "provider_call_count": 0,
+  "schema_versions": {
+    "expression_model": "dimension-expression/1",
+    "typed_fact_next": "typed-fact-next/2",
+    "typed_fact_next_bridge": "typed-fact-next-bridge/2",
+    "registry": "geometry-functions/33",
+    "planner": "geometry-fact-planner/26",
+    "engine": "geometry-function-engine/24",
+    "local_geometry_parser": "local-geometry-parser/2",
+    "adaptive_input_router": "adaptive-input-router/1",
+    "determinacy_audit": "mathematical-determinacy-audit/1",
+    "trig_construction_certificates": "trig-construction-certificate/1",
+    "output_policy": "output-policy/1",
+    "hybrid_adapter": "hybrid-simulation-adapter/4",
+    "route_d_envelope": "hybrid-route-d-simulation/4"
+  },
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "HYBRID_ROUTE_MODE": "local-first",
+    "PYTHONPATH": "backend",
+    "python_executable": "D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe -B",
+    "live_ai_calls": 0,
+    "sealed_h1_rows_opened": 0,
+    "locked_w2_w3_rows_read": 0
+  },
+  "zero_case_id_hardcode_verified": {
+    "scanned_path": "backend/app/**/*.py",
+    "forbidden_tokens": [
+      "vmmu_",
+      "r460",
+      "r463",
+      "r537",
+      "r266",
+      "r411"
+    ],
+    "hits": 0
+  },
+  "dataset_partition": "DEVELOPMENT_EXPOSED_VMMU_R266_AND_NEGATIVE_COUNTEREXAMPLES (zero access to sealed H-1 or locked W2/W3)",
+  "test_command": "D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe -B -m pytest -q backend/tests/geometry/test_trig_verified_construction.py -k 'negative_trig or float_inputs or stage_p1c_end_to_end_negative or p1c1 or p1c3 or p1c4'",
+  "source_provenance": {
+    "modules": [
+      "backend/app/simulation/geometry_functions/trig_construction_certificates.py",
+      "backend/app/simulation/geometry_functions/registry.py",
+      "backend/app/simulation/geometry_functions/engine.py",
+      "backend/app/ai/local_geometry_parser.py"
+    ],
+    "test_suite": "backend/tests/geometry/test_trig_verified_construction.py"
+  },
+  "mathematical_oracle": "By Niven's Theorem, dimensional analysis (`SCALAR` vs `ANGLE` vs `LENGTH`/`AREA`/`VOLUME`), and single rational SPD Gram chart invariants (`Vec3 ∈ Q^3`, `G ∈ Q^{3×3}`): (1) Non-special degrees (`37°`, `15°`, `75°`) and irrational inner products (`<BA,BC> = 6√3 ∉ Q` when `|BA|²=9, |BC|²=16` in Q) cannot be represented without float approximation and MUST fail closed with `EXACT_DOMAIN_EXCEEDED` (`capability_gap`); (2) `sin, cos ≥ 1` on `(0°, 90°)`, non-positive trig ratios, acute right-triangle angles `≥ 90°`, off-foot `90°` line-plane angles, and wrong-dimension units (`tan = 2cm`, `tan = 30°`, `góc = 2cm`, `SA = 60°`, including cross-clause `... và SB = 60°` without false-positive crossing onto valid `... và SA = 3cm`) MUST fail closed with `INCONSISTENT_FACTS`; (3) Obtuse-capable `sin ∈ (0, 1)` (`sin(α) = sin(180°-α)`) and uncoupled regular polygons without base metric data MUST fail closed with `AMBIGUOUS_FACT`.",
+  "expected_behavior": "Fail closed with exact taxonomy classification across all 21 unit counterexamples + float-input guards + 10 E2E negative probes (including exposed REAL27 capability boundary `vmmu_r266`, structured LHS wrong-dimension units on trig/angle/length premises, cross-clause `P1c-3` guards, and the `_resolve_late_regular_polygon_dimension` Coupling Guard).",
+  "actual_behavior": "All 21 unit counterexamples, 2 `FLOAT_APPROXIMATION_FORBIDDEN` guards, 4 truncated-quote Source Gate unit-mismatch guards, 11 cross-clause structured-LHS `P1c-3` guards (5 false-positive guards + 6 false-negative bypass guards), and 10 E2E negative probes failed closed deterministically offline (`0` provider calls) with the exact expected `reason_code` and `failure_category`.",
+  "verdict": "PASS",
+  "e2e_counterexamples": [
+    {
+      "counterexample_id": "vmmu_r266_non_rational_sas_gram_boundary",
+      "expected_reason_code": "EXACT_DOMAIN_EXCEEDED",
+      "actual_reason_code": "EXACT_DOMAIN_EXCEEDED",
+      "expected_failure_category": "capability_gap",
+      "actual_failure_category": "capability_gap",
+      "envelope_status": "unsupported",
+      "parse_status": "LOCAL_PARSE_COMPLETE"
+    },
+    {
+      "counterexample_id": "non_exact_degree_37_deg",
+      "expected_reason_code": "EXACT_DOMAIN_EXCEEDED",
+      "actual_reason_code": "EXACT_DOMAIN_EXCEEDED",
+      "expected_failure_category": "capability_gap",
+      "actual_failure_category": "capability_gap",
+      "envelope_status": "unsupported",
+      "parse_status": "LOCAL_PARSE_COMPLETE"
+    },
+    {
+      "counterexample_id": "off_foot_90_deg_line_plane_contradiction",
+      "expected_reason_code": "INCONSISTENT_FACTS",
+      "actual_reason_code": "INCONSISTENT_FACTS",
+      "expected_failure_category": "geometry_generation_failed",
+      "actual_failure_category": "geometry_generation_failed",
+      "envelope_status": "unsupported",
+      "parse_status": "LOCAL_PARSE_COMPLETE"
+    },
+    {
+      "counterexample_id": "out_of_range_sin_ratio_gt_one",
+      "expected_reason_code": "INCONSISTENT_FACTS",
+      "actual_reason_code": "INCONSISTENT_FACTS",
+      "expected_failure_category": "geometry_generation_failed",
+      "actual_failure_category": "geometry_generation_failed",
+      "envelope_status": "unsupported",
+      "parse_status": "LOCAL_PARSE_COMPLETE"
+    },
+    {
+      "counterexample_id": "coupling_guard_uncoupled_square_base_missing_dimension",
+      "expected_reason_code": "AMBIGUOUS_FACT",
+      "actual_reason_code": "AMBIGUOUS_FACT",
+      "expected_failure_category": "insufficient_specification",
+      "actual_failure_category": "insufficient_specification",
+      "envelope_status": "unsupported",
+      "parse_status": "LOCAL_PARSE_AMBIGUOUS"
+    },
+    {
+      "counterexample_id": "wrong_unit_trig_ratio_with_length_unit_cm",
+      "expected_reason_code": "INCONSISTENT_FACTS",
+      "actual_reason_code": "INCONSISTENT_FACTS",
+      "expected_failure_category": "geometry_generation_failed",
+      "actual_failure_category": "geometry_generation_failed",
+      "envelope_status": "unsupported",
+      "parse_status": "LOCAL_PARSE_COMPLETE"
+    },
+    {
+      "counterexample_id": "wrong_unit_trig_ratio_with_angle_unit_deg",
+      "expected_reason_code": "INCONSISTENT_FACTS",
+      "actual_reason_code": "INCONSISTENT_FACTS",
+      "expected_failure_category": "geometry_generation_failed",
+      "actual_failure_category": "geometry_generation_failed",
+      "envelope_status": "unsupported",
+      "parse_status": "LOCAL_PARSE_COMPLETE"
+    },
+    {
+      "counterexample_id": "wrong_unit_angle_with_length_unit_cm",
+      "expected_reason_code": "INCONSISTENT_FACTS",
+      "actual_reason_code": "INCONSISTENT_FACTS",
+      "expected_failure_category": "geometry_generation_failed",
+      "actual_failure_category": "geometry_generation_failed",
+      "envelope_status": "unsupported",
+      "parse_status": "LOCAL_PARSE_COMPLETE"
+    },
+    {
+      "counterexample_id": "wrong_unit_segment_length_with_angle_unit_deg",
+      "expected_reason_code": "INCONSISTENT_FACTS",
+      "actual_reason_code": "INCONSISTENT_FACTS",
+      "expected_failure_category": "geometry_generation_failed",
+      "actual_failure_category": "geometry_generation_failed",
+      "envelope_status": "unsupported",
+      "parse_status": "LOCAL_PARSE_COMPLETE"
+    },
+    {
+      "counterexample_id": "cross_clause_angle_followed_by_wrong_unit_segment_deg",
+      "expected_reason_code": "INCONSISTENT_FACTS",
+      "actual_reason_code": "INCONSISTENT_FACTS",
+      "expected_failure_category": "geometry_generation_failed",
+      "actual_failure_category": "geometry_generation_failed",
+      "envelope_status": "unsupported",
+      "parse_status": "LOCAL_PARSE_COMPLETE"
+    }
+  ],
+  "baseline_product_commit": "d222e6d9b582d54fc42397a9593f52eb6fd77f18"
+}

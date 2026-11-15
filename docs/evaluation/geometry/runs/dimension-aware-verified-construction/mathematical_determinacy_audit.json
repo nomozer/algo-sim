@@ -1,0 +1,941 @@
+{
+  "schema": "algosim-stage-p0-mathematical-determinacy-audit/1",
+  "run_id": "dimension-aware-verified-construction",
+  "phase": "stage_p0_phase_1_mathematical_determinacy_audit",
+  "generated_at_utc": "2026-11-15T07:24:18Z",
+  "branch": "feat/local-first-geometry-understanding",
+  "base_head": "b04bed0f83e02ac27416814bea08fa830ee91461",
+  "product_commit": "0c9d4a2f0c892ac13fcd6e47b919e87bfb141479",
+  "measured_system_hash": "7a15dc2e59a869c8c898458359a97a772760ae8eb89e7a75460a7625d0d6b488",
+  "measured_system_file_count": 120,
+  "baseline_measured_system_hash": "c25f9695828888987db2ab7990c4ff135da4d01c6b9d968f898c36728a0ae436",
+  "cache_version": "140",
+  "determinacy_audit_version": "mathematical-determinacy-audit/1",
+  "dataset_partition": "DEVELOPMENT (exposed REAL27 vmmu_r460 & vmmu_r463, DEV37 refused cases, and 9 synthetic determinacy/invariance boundary probes; never sealed H-1 or locked W2/W3)",
+  "test_command": "python -B -m pytest backend/tests/geometry/test_failure_taxonomy_and_api_contract.py -q",
+  "expected_behavior": "MATHEMATICALLY_UNDERDETERMINED ('PROVED_UNDERDETERMINED') is emitted iff 100% of source clauses/values were parsed AND the Exact Kernel determinacy audit certifies non-uniqueness via (1) TWO_VALID_REALIZATIONS_DIVERGE (two Exact-Kernel-certified Fraction/Radical realizations satisfying 100% of premises via dung.kiem() and kernel_check == True with distinct exact answers), (2) HOMOTHETY_SCALE_DEGREE_POSITIVE (0 dimensional premises, >=1 certified unit-scale model, and positive goal homogeneity degree), (3) EXPLICIT_FREE_LOCUS_ZERO_UNCONSUMED_FACTS (PLANE_NOT_UNIQUE, FIGURE_NOT_UNIQUE, bare topological solid, or standalone curved solid with 0 unconsumed constraints), or (4) MULTI_ROOT_OR_MIRROR_BRANCH_DIVERGENCE. Whenever unconsumed constraints remain, coupling solves after stripping parser dimension guards, or sampled realizations agree without an algebraic invariance proof, status MUST be UNPROVED_DUE_TO_CAPABILITY_GAP.",
+  "actual_behavior": "Verified across 15 determinacy audit probes (including pure construction cross-section/intersection-line invariance, Metric.g solid-vertex distance divergence, and standalone curved_solid goal-dependence guards) + DEV37 refused cases in pure exact Fraction/Radical arithmetic (0 floats, <=8 trials per refusal): REAL27:vmmu_r460 (5 unconsumed calls) and REAL27:vmmu_r463 (3 unconsumed calls) return UNPROVED_DUE_TO_CAPABILITY_GAP (NO_DIVERGING_REALIZATION_PAIR_FOUND); angle-coupled square base (SA=a, angle(SB,(ABCD))=60 deg) returns UNPROVED_DUE_TO_CAPABILITY_GAP (CONSTRUCTIBLE_WHEN_DIMENSION_COUPLED_BY_OTHER_PREMISES); invariant distance d(B,(SAD))=a, midpoint cross-section (MNP), and affine intersection line (SAC) cap (SBD) with open height SA return UNPROVED_DUE_TO_CAPABILITY_GAP (CONSTANT_ACROSS_SAMPLED_REALIZATIONS_UNPROVED_INVARIANCE) rather than a false-positive underdetermined label; standalone curved_solid with supplied radius asking ask_radius or degree-0 ask_curved_volume_ratio returns UNPROVED_DUE_TO_CAPABILITY_GAP while ask_curved_volume returns PROVED_UNDERDETERMINED; all genuinely underdetermined problems + DEV37:missing_dimension return PROVED_UNDERDETERMINED with explicit diverging Fraction/Radical models or explicit locus certificates.",
+  "mathematical_oracle": "Constructive Two-Model Counterexample Soundness Theorem in Exact Euclidean Gram Arithmetic: Since every trial model M_i passes Exact-Kernel dung.kiem() on all extracted calls P and SemanticProgramInterpreter verification (kernel_check == True), M_1, M_2 in Models(P) with val_G(M_1) != val_G(M_2) is a deductive existence proof that P does not uniquely determine G (zero false positives possible).",
+  "source_provenance": {
+    "candidate_manifest": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+    "implementation_module": "backend/app/simulation/geometry_functions/determinacy_audit.py",
+    "engine_hook": "backend/app/simulation/geometry_functions/engine.py",
+    "router_hook": "backend/app/ai/adaptive_input_router.py",
+    "test_suite": "backend/tests/geometry/test_failure_taxonomy_and_api_contract.py"
+  },
+  "verdict": "SOUND_TWO_MODEL_EXACT_COUNTEREXAMPLE_GATE_VERIFIED_ZERO_FALSE_POSITIVES",
+  "probes": [
+    {
+      "probe_id": "REAL27:vmmu_r460",
+      "parse_status": "LOCAL_PARSE_COMPLETE",
+      "terminal_reason": "MISSING_DIMENSION",
+      "determinacy_audit": {
+        "schema_version": "mathematical-determinacy-audit/1",
+        "status": "UNPROVED_DUE_TO_CAPABILITY_GAP",
+        "witness_kind": "NO_DIVERGING_REALIZATION_PAIR_FOUND",
+        "terminal_code": "MISSING_DIMENSION",
+        "unconsumed_constraint_ids": [
+          "p1",
+          "p2",
+          "p3",
+          "p4",
+          "p5"
+        ],
+        "unconsumed_coupling_constraint_ids": [
+          "p1",
+          "p2",
+          "p3",
+          "p4",
+          "p5"
+        ],
+        "dimensional_premise_ids": [
+          "p3"
+        ],
+        "positive_degree_goal_ids": [
+          "q1"
+        ],
+        "counterexample_models": [],
+        "trials_executed": 6,
+        "scope_note": "Không tìm được cặp mô hình hợp lệ cho kết quả khác nhau; còn giả thiết chưa được suy diễn hết hoặc hệ chưa chứng minh được tính xác định duy nhất của bài toán."
+      },
+      "taxonomy_class": "CAPABILITY_UNSUPPORTED",
+      "failure_dimension": "IMPLEMENTATION_CAPABILITY",
+      "root_cause": "UNSUPPORTED_DEDUCTION",
+      "envelope_failure_category": "capability_gap",
+      "envelope_refusal_cause": "UNKNOWN",
+      "envelope_learner_reason": "Hệ đã đọc các giả thiết trong đề nhưng chưa có quy tắc suy diễn tất định cho tổ hợp quan hệ này, nên dừng lại thay vì dựng một hình gần đúng."
+    },
+    {
+      "probe_id": "REAL27:vmmu_r463",
+      "parse_status": "LOCAL_PARSE_COMPLETE",
+      "terminal_reason": "MISSING_DIMENSION",
+      "determinacy_audit": {
+        "schema_version": "mathematical-determinacy-audit/1",
+        "status": "UNPROVED_DUE_TO_CAPABILITY_GAP",
+        "witness_kind": "NO_DIVERGING_REALIZATION_PAIR_FOUND",
+        "terminal_code": "MISSING_DIMENSION",
+        "unconsumed_constraint_ids": [
+          "p2",
+          "p3",
+          "p4",
+          "p5"
+        ],
+        "unconsumed_coupling_constraint_ids": [
+          "p3",
+          "p4",
+          "p5"
+        ],
+        "dimensional_premise_ids": [
+          "p5"
+        ],
+        "positive_degree_goal_ids": [
+          "q1"
+        ],
+        "counterexample_models": [
+          {
+            "trial": "shape0=2",
+            "answers": {
+              "q1": "4a³√3"
+            },
+            "answer_exact": {
+              "q1": {
+                "coef": "4√3",
+                "dim": 3,
+                "unit": "a"
+              }
+            }
+          }
+        ],
+        "trials_executed": 8,
+        "scope_note": "Không tìm được cặp mô hình hợp lệ cho kết quả khác nhau; còn giả thiết chưa được suy diễn hết hoặc hệ chưa chứng minh được tính xác định duy nhất của bài toán."
+      },
+      "taxonomy_class": "CAPABILITY_UNSUPPORTED",
+      "failure_dimension": "IMPLEMENTATION_CAPABILITY",
+      "root_cause": "UNSUPPORTED_DEDUCTION",
+      "envelope_failure_category": "capability_gap",
+      "envelope_refusal_cause": "UNKNOWN",
+      "envelope_learner_reason": "Hệ đã đọc các giả thiết trong đề nhưng chưa có quy tắc suy diễn tất định cho tổ hợp quan hệ này, nên dừng lại thay vì dựng một hình gần đúng."
+    },
+    {
+      "probe_id": "SYNTH:angle_coupled_square_base_before_parser_relaxation",
+      "parse_status": "LOCAL_PARSE_AMBIGUOUS",
+      "terminal_reason": "AMBIGUOUS_FACT",
+      "determinacy_audit": {
+        "schema_version": "mathematical-determinacy-audit/1",
+        "status": "UNPROVED_DUE_TO_CAPABILITY_GAP",
+        "witness_kind": "CONSTRUCTIBLE_WHEN_DIMENSION_COUPLED_BY_OTHER_PREMISES",
+        "terminal_code": "AMBIGUOUS_FACT",
+        "unconsumed_constraint_ids": [],
+        "counterexample_models": [
+          {
+            "trial": "coupled_exact_kernel",
+            "answers": {
+              "q1": "a³/9"
+            },
+            "answer_exact": {
+              "q1": {
+                "coef": "1/9",
+                "dim": 3,
+                "unit": "a"
+              }
+            }
+          }
+        ],
+        "trials_executed": 1,
+        "scope_note": "Các giả thiết khác trong đề đã khóa kích thước trong nhân chính xác, nhưng bộ đọc cục bộ hiện tại yêu cầu nêu trực tiếp cạnh đáy."
+      },
+      "taxonomy_class": "CAPABILITY_UNSUPPORTED",
+      "failure_dimension": "IMPLEMENTATION_CAPABILITY",
+      "root_cause": "UNSUPPORTED_DEDUCTION",
+      "envelope_failure_category": "capability_gap",
+      "envelope_refusal_cause": "UNKNOWN",
+      "envelope_learner_reason": "Hệ đã đọc các giả thiết trong đề nhưng chưa có quy tắc suy diễn tất định cho tổ hợp quan hệ này, nên dừng lại thay vì dựng một hình gần đúng."
+    },
+    {
+      "probe_id": "SYNTH:invariant_distance_with_open_rectangle_side",
+      "parse_status": "LOCAL_PARSE_COMPLETE",
+      "terminal_reason": "MISSING_DIMENSION",
+      "determinacy_audit": {
+        "schema_version": "mathematical-determinacy-audit/1",
+        "status": "UNPROVED_DUE_TO_CAPABILITY_GAP",
+        "witness_kind": "CONSTANT_ACROSS_SAMPLED_REALIZATIONS_UNPROVED_INVARIANCE",
+        "terminal_code": "MISSING_DIMENSION",
+        "unconsumed_constraint_ids": [
+          "p1",
+          "p2",
+          "p3",
+          "p4"
+        ],
+        "unconsumed_coupling_constraint_ids": [
+          "p2",
+          "p3",
+          "p4"
+        ],
+        "dimensional_premise_ids": [
+          "p3",
+          "p4"
+        ],
+        "positive_degree_goal_ids": [
+          "q1"
+        ],
+        "counterexample_models": [
+          {
+            "trial": "shape0=1",
+            "answers": {
+              "q1": "a"
+            },
+            "answer_exact": {
+              "q1": {
+                "coef": "1",
+                "dim": 1,
+                "unit": "a"
+              }
+            }
+          }
+        ],
+        "trials_executed": 8,
+        "scope_note": "Các cấu hình hợp lệ thử nghiệm cho cùng một kết quả, nhưng hệ chưa có chứng chỉ bất biến tổng quát cho mọi cấu hình thỏa đề."
+      },
+      "taxonomy_class": "CAPABILITY_UNSUPPORTED",
+      "failure_dimension": "IMPLEMENTATION_CAPABILITY",
+      "root_cause": "SHAPE_FREEDOM_UNCERTIFIED",
+      "envelope_failure_category": "capability_gap",
+      "envelope_refusal_cause": "UNKNOWN",
+      "envelope_learner_reason": "Các giả thiết chưa cố định duy nhất hình dạng, và hệ chưa có chứng chỉ bất biến tổng quát cho đại lượng được hỏi nên tạm dừng thay vì kết luận từ hình mẫu."
+    },
+    {
+      "probe_id": "SYNTH:scale_free_rectangle_aspect_ratio_open_angle_goal",
+      "parse_status": "LOCAL_PARSE_COMPLETE",
+      "terminal_reason": "MISSING_DIMENSION",
+      "determinacy_audit": {
+        "schema_version": "mathematical-determinacy-audit/1",
+        "status": "PROVED_UNDERDETERMINED",
+        "witness_kind": "TWO_VALID_REALIZATIONS_DIVERGE",
+        "terminal_code": "MISSING_DIMENSION",
+        "unconsumed_constraint_ids": [
+          "p1",
+          "p2",
+          "p3"
+        ],
+        "dimensional_premise_ids": [],
+        "positive_degree_goal_ids": [],
+        "counterexample_models": [
+          {
+            "trial": "scale=1,shape0=1",
+            "answers": {
+              "q1": "cos²=2/3"
+            },
+            "answer_exact": {
+              "q1": {
+                "coef": "2/3",
+                "dim": 0,
+                "unit": null
+              }
+            }
+          },
+          {
+            "trial": "scale=1,shape0=2",
+            "answers": {
+              "q1": "cos²=5/6"
+            },
+            "answer_exact": {
+              "q1": {
+                "coef": "5/6",
+                "dim": 0,
+                "unit": null
+              }
+            }
+          }
+        ],
+        "trials_executed": 6,
+        "scope_note": "Đã kiểm chứng bằng hai mô hình Euclid chính xác thỏa 100% giả thiết nhưng cho kết quả khác nhau."
+      },
+      "taxonomy_class": "MATHEMATICALLY_UNDERDETERMINED",
+      "failure_dimension": "MATHEMATICAL_DETERMINACY",
+      "root_cause": "INSUFFICIENT_CONSTRAINTS",
+      "envelope_failure_category": "insufficient_specification",
+      "envelope_refusal_cause": "SOURCE",
+      "envelope_learner_reason": "Các dữ kiện đã nêu trong đề chưa xác định duy nhất đại lượng hoặc hình cần dựng (tồn tại nhiều hình hợp lệ thỏa mọi giả thiết nhưng cho kết quả khác nhau). Em hãy kiểm tra và bổ sung số đo còn thiếu trong đề rồi gửi lại."
+    },
+    {
+      "probe_id": "SYNTH:missing_all_dimensions_volume",
+      "parse_status": "LOCAL_PARSE_AMBIGUOUS",
+      "terminal_reason": "AMBIGUOUS_FACT",
+      "determinacy_audit": {
+        "schema_version": "mathematical-determinacy-audit/1",
+        "status": "PROVED_UNDERDETERMINED",
+        "witness_kind": "TWO_VALID_REALIZATIONS_DIVERGE",
+        "terminal_code": "MISSING_DIMENSION",
+        "unconsumed_constraint_ids": [
+          "p1",
+          "p2"
+        ],
+        "dimensional_premise_ids": [],
+        "positive_degree_goal_ids": [
+          "q1"
+        ],
+        "counterexample_models": [
+          {
+            "trial": "scale=1,h2=1",
+            "answers": {
+              "q1": "1/3"
+            },
+            "answer_exact": {
+              "q1": {
+                "coef": "1/3",
+                "dim": 0,
+                "unit": null
+              }
+            }
+          },
+          {
+            "trial": "scale=2,h2=4",
+            "answers": {
+              "q1": "8/3"
+            },
+            "answer_exact": {
+              "q1": {
+                "coef": "8/3",
+                "dim": 0,
+                "unit": null
+              }
+            }
+          }
+        ],
+        "trials_executed": 4,
+        "scope_note": "Đã kiểm chứng bằng hai mô hình Euclid chính xác thỏa 100% giả thiết nhưng cho kết quả khác nhau."
+      },
+      "taxonomy_class": "MATHEMATICALLY_UNDERDETERMINED",
+      "failure_dimension": "MATHEMATICAL_DETERMINACY",
+      "root_cause": "INSUFFICIENT_CONSTRAINTS",
+      "envelope_failure_category": "insufficient_specification",
+      "envelope_refusal_cause": "SOURCE",
+      "envelope_learner_reason": "Các dữ kiện đã nêu trong đề chưa xác định duy nhất đại lượng hoặc hình cần dựng (tồn tại nhiều hình hợp lệ thỏa mọi giả thiết nhưng cho kết quả khác nhau). Em hãy kiểm tra và bổ sung số đo còn thiếu trong đề rồi gửi lại."
+    },
+    {
+      "probe_id": "SYNTH:angle_only_without_scale_volume",
+      "parse_status": "LOCAL_PARSE_AMBIGUOUS",
+      "terminal_reason": "AMBIGUOUS_FACT",
+      "determinacy_audit": {
+        "schema_version": "mathematical-determinacy-audit/1",
+        "status": "PROVED_UNDERDETERMINED",
+        "witness_kind": "HOMOTHETY_SCALE_DEGREE_POSITIVE",
+        "terminal_code": "MISSING_DIMENSION",
+        "unconsumed_constraint_ids": [
+          "p1",
+          "p2",
+          "p3"
+        ],
+        "dimensional_premise_ids": [],
+        "positive_degree_goal_ids": [
+          "q1"
+        ],
+        "counterexample_models": [
+          {
+            "trial": "scale=1",
+            "answers": {
+              "q1": "1/3"
+            },
+            "answer_exact": {
+              "q1": {
+                "coef": "1/3",
+                "dim": 0,
+                "unit": null
+              }
+            }
+          },
+          {
+            "trial": "scale=2",
+            "answers": {
+              "q1": "8/3"
+            },
+            "answer_exact": {
+              "q1": {
+                "coef": "8/3",
+                "dim": 0,
+                "unit": null
+              }
+            }
+          }
+        ],
+        "trials_executed": 2,
+        "scope_note": "Đã kiểm chứng bằng hai mô hình Euclid chính xác thỏa 100% giả thiết nhưng cho kết quả khác nhau."
+      },
+      "taxonomy_class": "MATHEMATICALLY_UNDERDETERMINED",
+      "failure_dimension": "MATHEMATICAL_DETERMINACY",
+      "root_cause": "INSUFFICIENT_CONSTRAINTS",
+      "envelope_failure_category": "insufficient_specification",
+      "envelope_refusal_cause": "SOURCE",
+      "envelope_learner_reason": "Các dữ kiện đã nêu trong đề chưa xác định duy nhất đại lượng hoặc hình cần dựng (tồn tại nhiều hình hợp lệ thỏa mọi giả thiết nhưng cho kết quả khác nhau). Em hãy kiểm tra và bổ sung số đo còn thiếu trong đề rồi gửi lại."
+    },
+    {
+      "probe_id": "SYNTH:uncoupled_square_base_and_apex_height",
+      "parse_status": "LOCAL_PARSE_AMBIGUOUS",
+      "terminal_reason": "AMBIGUOUS_FACT",
+      "determinacy_audit": {
+        "schema_version": "mathematical-determinacy-audit/1",
+        "status": "PROVED_UNDERDETERMINED",
+        "witness_kind": "TWO_VALID_REALIZATIONS_DIVERGE",
+        "terminal_code": "MISSING_DIMENSION",
+        "unconsumed_constraint_ids": [
+          "p1",
+          "p2",
+          "p3"
+        ],
+        "dimensional_premise_ids": [
+          "p3"
+        ],
+        "positive_degree_goal_ids": [
+          "q1"
+        ],
+        "counterexample_models": [
+          {
+            "trial": "shape0=1",
+            "answers": {
+              "q1": "2a³/3"
+            },
+            "answer_exact": {
+              "q1": {
+                "coef": "2/3",
+                "dim": 3,
+                "unit": "a"
+              }
+            }
+          },
+          {
+            "trial": "shape0=2",
+            "answers": {
+              "q1": "8a³/3"
+            },
+            "answer_exact": {
+              "q1": {
+                "coef": "8/3",
+                "dim": 3,
+                "unit": "a"
+              }
+            }
+          }
+        ],
+        "trials_executed": 4,
+        "scope_note": "Đã kiểm chứng bằng hai mô hình Euclid chính xác thỏa 100% giả thiết nhưng cho kết quả khác nhau."
+      },
+      "taxonomy_class": "MATHEMATICALLY_UNDERDETERMINED",
+      "failure_dimension": "MATHEMATICAL_DETERMINACY",
+      "root_cause": "INSUFFICIENT_CONSTRAINTS",
+      "envelope_failure_category": "insufficient_specification",
+      "envelope_refusal_cause": "SOURCE",
+      "envelope_learner_reason": "Các dữ kiện đã nêu trong đề chưa xác định duy nhất đại lượng hoặc hình cần dựng (tồn tại nhiều hình hợp lệ thỏa mọi giả thiết nhưng cho kết quả khác nhau). Em hãy kiểm tra và bổ sung số đo còn thiếu trong đề rồi gửi lại."
+    },
+    {
+      "probe_id": "SYNTH:missing_rectangle_second_side",
+      "parse_status": "LOCAL_PARSE_COMPLETE",
+      "terminal_reason": "MISSING_DIMENSION",
+      "determinacy_audit": {
+        "schema_version": "mathematical-determinacy-audit/1",
+        "status": "PROVED_UNDERDETERMINED",
+        "witness_kind": "TWO_VALID_REALIZATIONS_DIVERGE",
+        "terminal_code": "MISSING_DIMENSION",
+        "unconsumed_constraint_ids": [
+          "p1",
+          "p2",
+          "p3",
+          "p4"
+        ],
+        "dimensional_premise_ids": [
+          "p3",
+          "p4"
+        ],
+        "positive_degree_goal_ids": [
+          "q1"
+        ],
+        "counterexample_models": [
+          {
+            "trial": "shape0=1",
+            "answers": {
+              "q1": "a³/3"
+            },
+            "answer_exact": {
+              "q1": {
+                "coef": "1/3",
+                "dim": 3,
+                "unit": "a"
+              }
+            }
+          },
+          {
+            "trial": "shape0=2",
+            "answers": {
+              "q1": "2a³/3"
+            },
+            "answer_exact": {
+              "q1": {
+                "coef": "2/3",
+                "dim": 3,
+                "unit": "a"
+              }
+            }
+          }
+        ],
+        "trials_executed": 4,
+        "scope_note": "Đã kiểm chứng bằng hai mô hình Euclid chính xác thỏa 100% giả thiết nhưng cho kết quả khác nhau."
+      },
+      "taxonomy_class": "MATHEMATICALLY_UNDERDETERMINED",
+      "failure_dimension": "MATHEMATICAL_DETERMINACY",
+      "root_cause": "INSUFFICIENT_CONSTRAINTS",
+      "envelope_failure_category": "insufficient_specification",
+      "envelope_refusal_cause": "SOURCE",
+      "envelope_learner_reason": "Các dữ kiện đã nêu trong đề chưa xác định duy nhất đại lượng hoặc hình cần dựng (tồn tại nhiều hình hợp lệ thỏa mọi giả thiết nhưng cho kết quả khác nhau). Em hãy kiểm tra và bổ sung số đo còn thiếu trong đề rồi gửi lại."
+    },
+    {
+      "probe_id": "SYNTH:missing_height_with_fixed_square_base",
+      "parse_status": "LOCAL_PARSE_COMPLETE",
+      "terminal_reason": "MISSING_DIMENSION",
+      "determinacy_audit": {
+        "schema_version": "mathematical-determinacy-audit/1",
+        "status": "PROVED_UNDERDETERMINED",
+        "witness_kind": "TWO_VALID_REALIZATIONS_DIVERGE",
+        "terminal_code": "MISSING_DIMENSION",
+        "unconsumed_constraint_ids": [
+          "p2"
+        ],
+        "dimensional_premise_ids": [
+          "p1"
+        ],
+        "positive_degree_goal_ids": [
+          "q1"
+        ],
+        "counterexample_models": [
+          {
+            "trial": "h2=1",
+            "answers": {
+              "q1": "a³/3"
+            },
+            "answer_exact": {
+              "q1": {
+                "coef": "1/3",
+                "dim": 3,
+                "unit": "a"
+              }
+            }
+          },
+          {
+            "trial": "h2=4",
+            "answers": {
+              "q1": "2a³/3"
+            },
+            "answer_exact": {
+              "q1": {
+                "coef": "2/3",
+                "dim": 3,
+                "unit": "a"
+              }
+            }
+          }
+        ],
+        "trials_executed": 2,
+        "scope_note": "Đã kiểm chứng bằng hai mô hình Euclid chính xác thỏa 100% giả thiết nhưng cho kết quả khác nhau."
+      },
+      "taxonomy_class": "MATHEMATICALLY_UNDERDETERMINED",
+      "failure_dimension": "MATHEMATICAL_DETERMINACY",
+      "root_cause": "INSUFFICIENT_CONSTRAINTS",
+      "envelope_failure_category": "insufficient_specification",
+      "envelope_refusal_cause": "SOURCE",
+      "envelope_learner_reason": "Các dữ kiện đã nêu trong đề chưa xác định duy nhất đại lượng hoặc hình cần dựng (tồn tại nhiều hình hợp lệ thỏa mọi giả thiết nhưng cho kết quả khác nhau). Em hãy kiểm tra và bổ sung số đo còn thiếu trong đề rồi gửi lại."
+    },
+    {
+      "probe_id": "SYNTH:plane_pencil_non_unique_section",
+      "parse_status": "LOCAL_PARSE_COMPLETE",
+      "terminal_reason": "PLANE_NOT_UNIQUE",
+      "determinacy_audit": {
+        "schema_version": "mathematical-determinacy-audit/1",
+        "status": "PROVED_UNDERDETERMINED",
+        "witness_kind": "EXPLICIT_FREE_LOCUS_ZERO_UNCONSUMED_FACTS",
+        "terminal_code": "PLANE_NOT_UNIQUE",
+        "unconsumed_constraint_ids": [
+          "sec"
+        ],
+        "dimensional_premise_ids": [
+          "p1",
+          "p3"
+        ],
+        "positive_degree_goal_ids": [],
+        "counterexample_models": [],
+        "trials_executed": 0,
+        "scope_note": "Các ràng buộc xác định một họ vô số mặt phẳng hoặc vị trí đỉnh tự do trên quỹ tích."
+      },
+      "taxonomy_class": "MATHEMATICALLY_UNDERDETERMINED",
+      "failure_dimension": "MATHEMATICAL_DETERMINACY",
+      "root_cause": "INSUFFICIENT_CONSTRAINTS",
+      "envelope_failure_category": "insufficient_specification",
+      "envelope_refusal_cause": "SOURCE",
+      "envelope_learner_reason": "Các dữ kiện đã nêu trong đề chưa xác định duy nhất đại lượng hoặc hình cần dựng (tồn tại nhiều hình hợp lệ thỏa mọi giả thiết nhưng cho kết quả khác nhau). Em hãy kiểm tra và bổ sung số đo còn thiếu trong đề rồi gửi lại."
+    },
+    {
+      "probe_id": "pure_construction:midpoint_cross_section_open_height",
+      "parse_status": "LOCAL_PARSE_COMPLETE",
+      "terminal_reason": "MISSING_DIMENSION",
+      "determinacy_audit": {
+        "schema_version": "mathematical-determinacy-audit/1",
+        "status": "UNPROVED_DUE_TO_CAPABILITY_GAP",
+        "witness_kind": "CONSTANT_ACROSS_SAMPLED_REALIZATIONS_UNPROVED_INVARIANCE",
+        "terminal_code": "MISSING_DIMENSION",
+        "unconsumed_constraint_ids": [
+          "p2",
+          "p3",
+          "p4",
+          "p5",
+          "sec"
+        ],
+        "unconsumed_coupling_constraint_ids": [
+          "p2",
+          "p3",
+          "p4",
+          "p5"
+        ],
+        "dimensional_premise_ids": [
+          "p1"
+        ],
+        "positive_degree_goal_ids": [],
+        "counterexample_models": [
+          {
+            "trial": "h2=1",
+            "answers": {},
+            "answer_exact": {},
+            "construction_signature": [
+              "('S.ABCD', ('section:td_sec:point:on:khoi_S_ABCD::edge:S-A', 'section:td_sec:point:on:khoi_S_ABCD::edge:S-B', 'section:td_sec:point:on:khoi_S_ABCD::edge:S-C', 'section:td_sec:point:on:khoi_S_ABCD::edge:S-D'), (('section:td_sec:point:on:khoi_S_ABCD::edge:S-A', 'engine_derived_edge_cut', ('S', 'A')), ('section:td_sec:point:on:khoi_S_ABCD::edge:S-B', 'engine_derived_edge_cut', ('S', 'B')), ('section:td_sec:point:on:khoi_S_ABCD::edge:S-C', 'engine_derived_edge_cut', ('S', 'C')), ('section:td_sec:point:on:khoi_S_ABCD::edge:S-D', 'engine_derived_edge_cut', ('S', 'D'))), 4)"
+            ]
+          }
+        ],
+        "trials_executed": 8,
+        "scope_note": "Các cấu hình hợp lệ thử nghiệm cho cùng một kết quả, nhưng hệ chưa có chứng chỉ bất biến tổng quát cho mọi cấu hình thỏa đề."
+      },
+      "taxonomy_class": "CAPABILITY_UNSUPPORTED",
+      "failure_dimension": "IMPLEMENTATION_CAPABILITY",
+      "root_cause": "SHAPE_FREEDOM_UNCERTIFIED",
+      "envelope_failure_category": "capability_gap",
+      "envelope_refusal_cause": "UNKNOWN",
+      "envelope_learner_reason": "Các giả thiết chưa cố định duy nhất hình dạng, và hệ chưa có chứng chỉ bất biến tổng quát cho đại lượng được hỏi nên tạm dừng thay vì kết luận từ hình mẫu."
+    },
+    {
+      "probe_id": "pure_construction:affine_intersection_line_open_height",
+      "parse_status": "LOCAL_PARSE_COMPLETE",
+      "terminal_reason": "MISSING_DIMENSION",
+      "determinacy_audit": {
+        "schema_version": "mathematical-determinacy-audit/1",
+        "status": "UNPROVED_DUE_TO_CAPABILITY_GAP",
+        "witness_kind": "CONSTANT_ACROSS_SAMPLED_REALIZATIONS_UNPROVED_INVARIANCE",
+        "terminal_code": "MISSING_DIMENSION",
+        "unconsumed_constraint_ids": [
+          "g_il2",
+          "p2"
+        ],
+        "unconsumed_coupling_constraint_ids": [
+          "p2"
+        ],
+        "dimensional_premise_ids": [
+          "p1"
+        ],
+        "positive_degree_goal_ids": [],
+        "counterexample_models": [
+          {
+            "trial": "h2=1",
+            "answers": {},
+            "answer_exact": {},
+            "construction_signature": [
+              "('g_il2', ('0', '0', '1', '1', '1', '-2'))"
+            ]
+          }
+        ],
+        "trials_executed": 8,
+        "scope_note": "Các cấu hình hợp lệ thử nghiệm cho cùng một kết quả, nhưng hệ chưa có chứng chỉ bất biến tổng quát cho mọi cấu hình thỏa đề."
+      },
+      "taxonomy_class": "CAPABILITY_UNSUPPORTED",
+      "failure_dimension": "IMPLEMENTATION_CAPABILITY",
+      "root_cause": "SHAPE_FREEDOM_UNCERTIFIED",
+      "envelope_failure_category": "capability_gap",
+      "envelope_refusal_cause": "UNKNOWN",
+      "envelope_learner_reason": "Các giả thiết chưa cố định duy nhất hình dạng, và hệ chưa có chứng chỉ bất biến tổng quát cho đại lượng được hỏi nên tạm dừng thay vì kết luận từ hình mẫu."
+    },
+    {
+      "probe_id": "pure_construction:solid_metric_g_diverge",
+      "parse_status": "LOCAL_PARSE_COMPLETE",
+      "terminal_reason": "MISSING_DIMENSION",
+      "determinacy_audit": {
+        "schema_version": "mathematical-determinacy-audit/1",
+        "status": "PROVED_UNDERDETERMINED",
+        "witness_kind": "TWO_VALID_REALIZATIONS_DIVERGE",
+        "terminal_code": "MISSING_DIMENSION",
+        "unconsumed_constraint_ids": [],
+        "dimensional_premise_ids": [
+          "p1"
+        ],
+        "positive_degree_goal_ids": [],
+        "counterexample_models": [
+          {
+            "trial": "h2=1",
+            "answers": {},
+            "answer_exact": {},
+            "construction_signature": [
+              "('A', 'B', '1')",
+              "('A', 'C', '2')",
+              "('A', 'D', '1')",
+              "('A', 'S', '1')",
+              "('B', 'C', '1')",
+              "('B', 'D', '2')",
+              "('B', 'S', '2')",
+              "('C', 'D', '1')",
+              "('C', 'S', '3')",
+              "('D', 'S', '2')"
+            ]
+          },
+          {
+            "trial": "h2=4",
+            "answers": {},
+            "answer_exact": {},
+            "construction_signature": [
+              "('A', 'B', '1')",
+              "('A', 'C', '2')",
+              "('A', 'D', '1')",
+              "('A', 'S', '4')",
+              "('B', 'C', '1')",
+              "('B', 'D', '2')",
+              "('B', 'S', '5')",
+              "('C', 'D', '1')",
+              "('C', 'S', '6')",
+              "('D', 'S', '5')"
+            ]
+          }
+        ],
+        "trials_executed": 2,
+        "scope_note": "Đã kiểm chứng bằng hai mô hình Euclid chính xác thỏa 100% giả thiết nhưng cho kết quả khác nhau."
+      },
+      "taxonomy_class": "MATHEMATICALLY_UNDERDETERMINED",
+      "failure_dimension": "MATHEMATICAL_DETERMINACY",
+      "root_cause": "INSUFFICIENT_CONSTRAINTS",
+      "envelope_failure_category": "insufficient_specification",
+      "envelope_refusal_cause": "SOURCE"
+    },
+    {
+      "probe_id": "curved_solid:goal_dependence_matrix",
+      "cases": {
+        "ask_radius_when_radius_given": {
+          "schema_version": "mathematical-determinacy-audit/1",
+          "status": "UNPROVED_DUE_TO_CAPABILITY_GAP",
+          "witness_kind": "NO_DIVERGING_REALIZATION_PAIR_FOUND",
+          "terminal_code": "MISSING_DIMENSION",
+          "unconsumed_constraint_ids": [
+            "c0"
+          ],
+          "unconsumed_coupling_constraint_ids": [
+            "c0"
+          ],
+          "dimensional_premise_ids": [
+            "c0"
+          ],
+          "positive_degree_goal_ids": [
+            "c1"
+          ],
+          "counterexample_models": [],
+          "trials_executed": 2,
+          "scope_note": "Không tìm được cặp mô hình hợp lệ cho kết quả khác nhau; còn giả thiết chưa được suy diễn hết hoặc hệ chưa chứng minh được tính xác định duy nhất của bài toán."
+        },
+        "ask_curved_volume_ratio_deg0": {
+          "schema_version": "mathematical-determinacy-audit/1",
+          "status": "UNPROVED_DUE_TO_CAPABILITY_GAP",
+          "witness_kind": "NO_DIVERGING_REALIZATION_PAIR_FOUND",
+          "terminal_code": "MISSING_DIMENSION",
+          "unconsumed_constraint_ids": [
+            "c0"
+          ],
+          "unconsumed_coupling_constraint_ids": [
+            "c0"
+          ],
+          "dimensional_premise_ids": [
+            "c0"
+          ],
+          "positive_degree_goal_ids": [],
+          "counterexample_models": [],
+          "trials_executed": 2,
+          "scope_note": "Không tìm được cặp mô hình hợp lệ cho kết quả khác nhau; còn giả thiết chưa được suy diễn hết hoặc hệ chưa chứng minh được tính xác định duy nhất của bài toán."
+        },
+        "ask_curved_volume_missing_height": {
+          "schema_version": "mathematical-determinacy-audit/1",
+          "status": "PROVED_UNDERDETERMINED",
+          "witness_kind": "EXPLICIT_FREE_LOCUS_ZERO_UNCONSUMED_FACTS",
+          "terminal_code": "MISSING_DIMENSION",
+          "unconsumed_constraint_ids": [
+            "c0"
+          ],
+          "dimensional_premise_ids": [
+            "c0"
+          ],
+          "positive_degree_goal_ids": [
+            "c1"
+          ],
+          "counterexample_models": [],
+          "trials_executed": 0,
+          "scope_note": "Khối tròn xoay độc lập còn thiếu bán kính hoặc chiều cao/đường sinh mà không có ràng buộc phụ."
+        }
+      }
+    }
+  ],
+  "dev37_refused_cases": [
+    {
+      "case_id": "goal_proof_only",
+      "parse_status": "LOCAL_PARSE_COMPLETE",
+      "terminal_reason": "OUT_OF_SCOPE",
+      "root_cause": "UNSUPPORTED_GOAL_KIND",
+      "failure_dimension": "IMPLEMENTATION_CAPABILITY",
+      "taxonomy_class": "CAPABILITY_UNSUPPORTED",
+      "determinacy_status": "NOT_EVALUATED_KNOWN_CAPABILITY_BOUNDARY",
+      "witness_kind": null,
+      "counterexample_models": [],
+      "envelope_failure_category": "capability_gap",
+      "envelope_refusal_cause": "UNKNOWN",
+      "envelope_learner_reason": "Hệ chưa hỗ trợ yêu cầu chứng minh hình học; hiện chỉ dựng hình và tính các đại lượng hình học không gian."
+    },
+    {
+      "case_id": "pair_point_as_goal",
+      "parse_status": "LOCAL_PARSE_PARTIAL",
+      "terminal_reason": "LIVE_AI_DISABLED",
+      "root_cause": "UNRECOGNIZED_GOAL",
+      "failure_dimension": "SEMANTIC_COMPLETENESS",
+      "taxonomy_class": "SEMANTIC_INPUT_INCOMPLETE",
+      "determinacy_status": "NOT_EVALUATED_SEMANTIC_INCOMPLETE",
+      "witness_kind": null,
+      "counterexample_models": [],
+      "envelope_failure_category": null,
+      "envelope_refusal_cause": null,
+      "envelope_learner_reason": null
+    },
+    {
+      "case_id": "pair_plane_underdetermined",
+      "parse_status": "LOCAL_PARSE_PARTIAL",
+      "terminal_reason": "LIVE_AI_DISABLED",
+      "root_cause": "UNRECOGNIZED_GEOMETRIC_ENTITY",
+      "failure_dimension": "SEMANTIC_COMPLETENESS",
+      "taxonomy_class": "SEMANTIC_ENTITY_UNRESOLVED",
+      "determinacy_status": "NOT_EVALUATED_SEMANTIC_INCOMPLETE",
+      "witness_kind": null,
+      "counterexample_models": [],
+      "envelope_failure_category": null,
+      "envelope_refusal_cause": null,
+      "envelope_learner_reason": null
+    },
+    {
+      "case_id": "ref_undefined_plane",
+      "parse_status": "LOCAL_PARSE_PARTIAL",
+      "terminal_reason": "LIVE_AI_DISABLED",
+      "root_cause": "UNRESOLVED_REFERENCE",
+      "failure_dimension": "SEMANTIC_COMPLETENESS",
+      "taxonomy_class": "SEMANTIC_ENTITY_UNRESOLVED",
+      "determinacy_status": "NOT_EVALUATED_SEMANTIC_INCOMPLETE",
+      "witness_kind": null,
+      "counterexample_models": [],
+      "envelope_failure_category": null,
+      "envelope_refusal_cause": null,
+      "envelope_learner_reason": null
+    },
+    {
+      "case_id": "sec_do_P_cat",
+      "parse_status": "LOCAL_PARSE_PARTIAL",
+      "terminal_reason": "LIVE_AI_DISABLED",
+      "root_cause": "UNRECOGNIZED_GOAL",
+      "failure_dimension": "SEMANTIC_COMPLETENESS",
+      "taxonomy_class": "SEMANTIC_INPUT_INCOMPLETE",
+      "determinacy_status": "NOT_EVALUATED_SEMANTIC_INCOMPLETE",
+      "witness_kind": null,
+      "counterexample_models": [],
+      "envelope_failure_category": null,
+      "envelope_refusal_cause": null,
+      "envelope_learner_reason": null
+    },
+    {
+      "case_id": "diagram_benign",
+      "parse_status": "LOCAL_PARSE_PARTIAL",
+      "terminal_reason": "LIVE_AI_DISABLED",
+      "root_cause": "INCOMPLETE_FACT_EXTRACTION",
+      "failure_dimension": "SEMANTIC_COMPLETENESS",
+      "taxonomy_class": "SEMANTIC_INPUT_INCOMPLETE",
+      "determinacy_status": "NOT_EVALUATED_SEMANTIC_INCOMPLETE",
+      "witness_kind": null,
+      "counterexample_models": [],
+      "envelope_failure_category": null,
+      "envelope_refusal_cause": null,
+      "envelope_learner_reason": null
+    },
+    {
+      "case_id": "diagram_dependent",
+      "parse_status": "LOCAL_PARSE_PARTIAL",
+      "terminal_reason": "LIVE_AI_DISABLED",
+      "root_cause": "DIAGRAM_DEPENDENT_FACT",
+      "failure_dimension": "SEMANTIC_COMPLETENESS",
+      "taxonomy_class": "SEMANTIC_INPUT_INCOMPLETE",
+      "determinacy_status": "NOT_EVALUATED_SEMANTIC_INCOMPLETE",
+      "witness_kind": null,
+      "counterexample_models": [],
+      "envelope_failure_category": null,
+      "envelope_refusal_cause": null,
+      "envelope_learner_reason": null
+    },
+    {
+      "case_id": "missing_dimension",
+      "parse_status": "LOCAL_PARSE_AMBIGUOUS",
+      "terminal_reason": "AMBIGUOUS_FACT",
+      "root_cause": "INSUFFICIENT_CONSTRAINTS",
+      "failure_dimension": "MATHEMATICAL_DETERMINACY",
+      "taxonomy_class": "MATHEMATICALLY_UNDERDETERMINED",
+      "determinacy_status": "PROVED_UNDERDETERMINED",
+      "witness_kind": "TWO_VALID_REALIZATIONS_DIVERGE",
+      "counterexample_models": [
+        {
+          "trial": "scale=1,h2=1",
+          "answers": {
+            "q1": "1/3"
+          },
+          "answer_exact": {
+            "q1": {
+              "coef": "1/3",
+              "dim": 0,
+              "unit": null
+            }
+          }
+        },
+        {
+          "trial": "scale=2,h2=4",
+          "answers": {
+            "q1": "8/3"
+          },
+          "answer_exact": {
+            "q1": {
+              "coef": "8/3",
+              "dim": 0,
+              "unit": null
+            }
+          }
+        }
+      ],
+      "envelope_failure_category": "insufficient_specification",
+      "envelope_refusal_cause": "SOURCE",
+      "envelope_learner_reason": "Các dữ kiện đã nêu trong đề chưa xác định duy nhất đại lượng hoặc hình cần dựng (tồn tại nhiều hình hợp lệ thỏa mọi giả thiết nhưng cho kết quả khác nhau). Em hãy kiểm tra và bổ sung số đo còn thiếu trong đề rồi gửi lại."
+    },
+    {
+      "case_id": "inconsistent",
+      "parse_status": "LOCAL_PARSE_COMPLETE",
+      "terminal_reason": "INCONSISTENT_FACTS",
+      "root_cause": "SOURCE_CONFLICT",
+      "failure_dimension": "CONTRADICTORY_CONSTRAINTS",
+      "taxonomy_class": "CONTRADICTORY_CONSTRAINTS",
+      "determinacy_status": "NO_VALID_REALIZATION",
+      "witness_kind": null,
+      "counterexample_models": [],
+      "envelope_failure_category": "geometry_generation_failed",
+      "envelope_refusal_cause": "SOURCE",
+      "envelope_learner_reason": "Các dữ kiện dùng để dựng hình mâu thuẫn nhau hoặc làm hình suy biến, nên không có hình nào thoả tất cả. AlgoSim dừng lại thay vì dựng một hình sai."
+    }
+  ],
+  "baseline_product_commit": "d222e6d9b582d54fc42397a9593f52eb6fd77f18",
+  "stage_observed_measured_system_hash": "e1d06448e0ea9d15dfdc8098f46898240a891622d9e32368865f0ee3c966e9ef",
+  "stage_observed_measured_system_file_count": 118,
+  "stage_observed_cache_version": "139"
+}

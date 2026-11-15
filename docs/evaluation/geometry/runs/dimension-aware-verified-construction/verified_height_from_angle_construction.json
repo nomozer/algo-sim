@@ -1,0 +1,1615 @@
+{
+  "schema": "algosim-stage-p1c-verified-height-from-angle-construction/1",
+  "phase": "phase_6_verified_height_and_projection_from_angle",
+  "run_id": "dimension-aware-verified-construction",
+  "stage": "stage_p1c",
+  "generated_by": "trig-kernel-audit",
+  "generated_at": "2026-11-15T11:52:00Z",
+  "generated_at_utc": "2026-11-15T11:52:00Z",
+  "branch": "feat/local-first-geometry-understanding",
+  "git_head_sha": "b04bed0f83e02ac27416814bea08fa830ee91461",
+  "head": "b04bed0f83e02ac27416814bea08fa830ee91461",
+  "product_commit": "0c9d4a2f0c892ac13fcd6e47b919e87bfb141479",
+  "product_commit_rule": "product-paths-excluding-test-only/1",
+  "measured_system_hash": "7a15dc2e59a869c8c898458359a97a772760ae8eb89e7a75460a7625d0d6b488",
+  "measured_system_file_count": 120,
+  "baseline_measured_system_hash": "c25f9695828888987db2ab7990c4ff135da4d01c6b9d968f898c36728a0ae436",
+  "cache_version": "140",
+  "route_d_cache_policy": "140:route-d",
+  "semantic_environment_hash": "6233c43c395c9b493d31d3dbb5d0ca952604730f6185cf541d2f179c077f955b",
+  "provider_call_count": 0,
+  "schema_versions": {
+    "expression_model": "dimension-expression/1",
+    "typed_fact_next": "typed-fact-next/2",
+    "typed_fact_next_bridge": "typed-fact-next-bridge/2",
+    "registry": "geometry-functions/33",
+    "planner": "geometry-fact-planner/26",
+    "engine": "geometry-function-engine/24",
+    "local_geometry_parser": "local-geometry-parser/2",
+    "adaptive_input_router": "adaptive-input-router/1",
+    "determinacy_audit": "mathematical-determinacy-audit/1",
+    "trig_construction_certificates": "trig-construction-certificate/1",
+    "output_policy": "output-policy/1",
+    "hybrid_adapter": "hybrid-simulation-adapter/4",
+    "route_d_envelope": "hybrid-route-d-simulation/4"
+  },
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "HYBRID_ROUTE_MODE": "local-first",
+    "PYTHONPATH": "backend",
+    "python_executable": "D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe -B",
+    "live_ai_calls": 0,
+    "sealed_h1_rows_opened": 0,
+    "locked_w2_w3_rows_read": 0
+  },
+  "zero_case_id_hardcode_verified": {
+    "scanned_path": "backend/app/**/*.py",
+    "forbidden_tokens": [
+      "vmmu_",
+      "r460",
+      "r463",
+      "r537",
+      "r266",
+      "r411"
+    ],
+    "hits": 0
+  },
+  "dataset_partition": "DEVELOPMENT_EXPOSED_AND_SYNTHETIC_UNIT_PROBES (zero access to sealed H-1 or locked W2/W3)",
+  "test_command": "D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe -B -m pytest -q backend/tests/geometry/test_trig_verified_construction.py -k 'stage_p1c_end_to_end_verified_constructions or six_core_trig'",
+  "source_provenance": {
+    "implementation_modules": [
+      "backend/app/simulation/geometry_functions/engine.py",
+      "backend/app/simulation/geometry_functions/trig_construction_certificates.py",
+      "backend/app/simulation/geometry_functions/registry.py",
+      "backend/app/ai/local_geometry_parser.py",
+      "backend/app/ai/adapter4_route.py"
+    ],
+    "test_suite": "backend/tests/geometry/test_trig_verified_construction.py"
+  },
+  "mathematical_oracle": "In right triangle △FVS with orthogonal projection F of apex S onto base plane (SF ⊥ FV): h = |SF| = |SV|*sin(α) = |FV|*tan(α) and p = |FV| = |SV|*cos(α) = |SF|*cot(α) in exact Q / Q(√n) arithmetic (`Fraction`, `Radical`); for dihedral/plane-plane angle α along base edge e, Three Perpendiculars projects F orthogonally onto H_e ∈ e and certifies h = |FH_e|*tan(α) over SPD Gram chart G ∈ Q^{3×3}.",
+  "expected_behavior": "Construct exact solid heights and base projections from `line_plane_angle`, `dihedral_angle`, `plane_plane_angle`, and regular-pyramid angle-to-base-side premises across exact special degrees (30°, 45°, 60°) and Vietnamese trig ratios (`sin`, `cos`/`côsin`/`cosin`, `tan`/`tang`/`tg`, `cot`/`côtang`/`cotang`/`cotg`), attaching self-verified and Adapter-`/4`-verified `trig-construction-certificate/1` records with zero float approximations.",
+  "actual_behavior": "All 4 E2E height/projection probes and all 6 core trigonometric scaling identities (`h = c*sin(α)`, `p = c*cos(α)`, `h = p*tan(α)`, `p = h*cot(α)`, `c = p/cos(α)`, `c = h/sin(α)`) served exact symbolic answers matching hand mathematical oracles with verified `trig-construction-certificate/1` records and 0 provider calls.",
+  "verdict": "PASS",
+  "probes": [
+    {
+      "probe_id": "line_plane_angle_tan_vietnamese_alias",
+      "problem_text": "Cho hình chóp S.ABC có đáy ABC là tam giác vuông tại B, AB = a, BC = a, SA vuông góc với mặt phẳng (ABC), góc giữa SB và mặt phẳng (ABC) có tang bằng √3. Tính thể tích khối chóp S.ABC.",
+      "expected_answer": "a³√3/6",
+      "parse_status": "LOCAL_PARSE_COMPLETE",
+      "envelope_status": "ok",
+      "route_d_status": "SERVED",
+      "reason_code": null,
+      "failure_category": null,
+      "answers": {
+        "q1": "a³√3/6"
+      },
+      "answer_exact": {
+        "q1": {
+          "coef": "√3/6",
+          "dim": 3,
+          "unit": "a"
+        }
+      },
+      "scene_configuration": null,
+      "provider_calls": 0,
+      "trig_certificates_count": 2,
+      "trig_identities": [
+        "pythagoras_hypotenuse_from_legs",
+        "h = p * tan(alpha)"
+      ],
+      "trig_certificates": [
+        {
+          "schema_version": "trig-construction-certificate/1",
+          "certificate_id": "trig_cert_1",
+          "derived_quantity_id": [
+            "A",
+            "C"
+          ],
+          "derived_role": "hypotenuse",
+          "source_premises": [
+            {
+              "call_id": "p1",
+              "fn": "right_angle",
+              "quotes": [
+                "S.ABC có đáy ABC là tam giác vuông tại B"
+              ]
+            },
+            {
+              "call_id": "p4",
+              "fn": "segment_length",
+              "quotes": [
+                "AB = a"
+              ]
+            },
+            {
+              "call_id": "p5",
+              "fn": "segment_length",
+              "quotes": [
+                "BC = a"
+              ]
+            }
+          ],
+          "derived_right_triangle": [
+            "B",
+            "A",
+            "C"
+          ],
+          "right_angle_vertex": "B",
+          "perpendicularity_justification": {
+            "rule": "explicit_right_angle",
+            "supporting_calls": [
+              "p1"
+            ],
+            "gram_dot_zero_verified": true
+          },
+          "angle_witness": {
+            "kind": "pythagorean_lengths",
+            "vertex": "A",
+            "ray_1": [
+              "A",
+              "B"
+            ],
+            "ray_2": [
+              "A",
+              "C"
+            ],
+            "domain": "(0°, 90°)",
+            "unit": "sin",
+            "raw_value": null,
+            "sin_sq": "1/2",
+            "cos_sq": "1/2",
+            "supporting_calls": []
+          },
+          "hypotenuse": {
+            "segment": [
+              "A",
+              "C"
+            ],
+            "length_sq": "2"
+          },
+          "adjacent_leg": {
+            "segment": [
+              "B",
+              "A"
+            ],
+            "length_sq": "1"
+          },
+          "opposite_leg": {
+            "segment": [
+              "B",
+              "C"
+            ],
+            "length_sq": "1"
+          },
+          "trig_identity": "pythagoras_hypotenuse_from_legs",
+          "known_inputs": [
+            {
+              "role": "adjacent_leg",
+              "segment": [
+                "B",
+                "A"
+              ],
+              "length_sq": "1",
+              "coef_json": {
+                "kind": "rational",
+                "value": "1"
+              },
+              "dimension": "LENGTH"
+            },
+            {
+              "role": "opposite_leg",
+              "segment": [
+                "B",
+                "C"
+              ],
+              "length_sq": "1",
+              "coef_json": {
+                "kind": "rational",
+                "value": "1"
+              },
+              "dimension": "LENGTH"
+            }
+          ],
+          "exact_length_expr": {
+            "coef_json": {
+              "kind": "radical",
+              "coefficient": "1",
+              "radicand": 2
+            },
+            "coef_str": "√2",
+            "squared_coef_str": "2",
+            "unit_symbol": "a",
+            "power": 1,
+            "display": "a√2"
+          },
+          "dimension": "LENGTH",
+          "positivity_domain": {
+            "sin_sq_gt_0": true,
+            "cos_sq_gt_0": true,
+            "unit_circle_sum_eq_1": true,
+            "hypotenuse_sq_gt_legs_sq": true,
+            "derived_length_sq_gt_0": true,
+            "gram_spd_verified": true
+          },
+          "single_branch_uniqueness": {
+            "unique_positive_root": true,
+            "acute_or_verified_branch": true
+          },
+          "construction_dependencies": {
+            "prerequisite_calls": [
+              "p1",
+              "p4",
+              "p5"
+            ],
+            "vertices": [
+              "B",
+              "A",
+              "C"
+            ]
+          },
+          "verified": true
+        },
+        {
+          "schema_version": "trig-construction-certificate/1",
+          "certificate_id": "trig_cert_2",
+          "derived_quantity_id": [
+            "A",
+            "S"
+          ],
+          "derived_role": "opposite_leg",
+          "source_premises": [
+            {
+              "call_id": "p2",
+              "fn": "perpendicular_line_plane",
+              "quotes": [
+                "SA vuông góc với mặt phẳng (ABC)"
+              ]
+            },
+            {
+              "call_id": "p3",
+              "fn": "line_plane_angle",
+              "quotes": [
+                "góc giữa SB và mặt phẳng (ABC) có tang bằng √3"
+              ]
+            },
+            {
+              "call_id": "p1",
+              "fn": "right_angle",
+              "quotes": [
+                "S.ABC có đáy ABC là tam giác vuông tại B"
+              ]
+            },
+            {
+              "call_id": "p4",
+              "fn": "segment_length",
+              "quotes": [
+                "AB = a"
+              ]
+            },
+            {
+              "call_id": "p5",
+              "fn": "segment_length",
+              "quotes": [
+                "BC = a"
+              ]
+            }
+          ],
+          "derived_right_triangle": [
+            "A",
+            "B",
+            "S"
+          ],
+          "right_angle_vertex": "A",
+          "perpendicularity_justification": {
+            "rule": "line_perpendicular_to_plane",
+            "supporting_calls": [
+              "p2"
+            ],
+            "gram_dot_zero_verified": true
+          },
+          "angle_witness": {
+            "kind": "line_plane_angle",
+            "vertex": "B",
+            "ray_1": [
+              "B",
+              "A"
+            ],
+            "ray_2": [
+              "B",
+              "S"
+            ],
+            "domain": "(0°, 90°)",
+            "unit": "tan",
+            "raw_value": "√3",
+            "sin_sq": "3/4",
+            "cos_sq": "1/4",
+            "supporting_calls": [
+              "p3"
+            ]
+          },
+          "hypotenuse": {
+            "segment": [
+              "B",
+              "S"
+            ],
+            "length_sq": "4"
+          },
+          "adjacent_leg": {
+            "segment": [
+              "A",
+              "B"
+            ],
+            "length_sq": "1"
+          },
+          "opposite_leg": {
+            "segment": [
+              "A",
+              "S"
+            ],
+            "length_sq": "3"
+          },
+          "trig_identity": "h = p * tan(alpha)",
+          "known_inputs": [
+            {
+              "role": "adjacent_leg",
+              "segment": [
+                "A",
+                "B"
+              ],
+              "length_sq": "1",
+              "coef_json": {
+                "kind": "rational",
+                "value": "1"
+              },
+              "dimension": "LENGTH"
+            },
+            {
+              "role": "angle",
+              "sin_sq": "3/4",
+              "cos_sq": "1/4",
+              "dimension": "ANGLE"
+            }
+          ],
+          "exact_length_expr": {
+            "coef_json": {
+              "kind": "radical",
+              "coefficient": "1",
+              "radicand": 3
+            },
+            "coef_str": "√3",
+            "squared_coef_str": "3",
+            "unit_symbol": "a",
+            "power": 1,
+            "display": "a√3"
+          },
+          "dimension": "LENGTH",
+          "positivity_domain": {
+            "sin_sq_gt_0": true,
+            "cos_sq_gt_0": true,
+            "unit_circle_sum_eq_1": true,
+            "hypotenuse_sq_gt_legs_sq": true,
+            "derived_length_sq_gt_0": true,
+            "gram_spd_verified": true
+          },
+          "single_branch_uniqueness": {
+            "unique_positive_root": true,
+            "acute_or_verified_branch": true
+          },
+          "construction_dependencies": {
+            "prerequisite_calls": [
+              "p2",
+              "p3",
+              "p1",
+              "p4",
+              "p5"
+            ],
+            "vertices": [
+              "A",
+              "B",
+              "S"
+            ]
+          },
+          "verified": true
+        }
+      ],
+      "scene_object_count": 10,
+      "scene_point_labels": [
+        "A",
+        "B",
+        "C",
+        "S"
+      ],
+      "scene_perpendicular_witness_ids": [
+        "canh_ben_S_A"
+      ]
+    },
+    {
+      "probe_id": "line_plane_angle_cos_vietnamese_alias_slant_to_height",
+      "problem_text": "Cho hình chóp S.ABC có đáy ABC là tam giác vuông tại B, BC = a, SB = 5a, SA vuông góc với mặt phẳng (ABC), góc giữa SB và mặt phẳng (ABC) có côsin bằng 3/5. Tính thể tích khối chóp S.ABC.",
+      "expected_answer": "2a³",
+      "parse_status": "LOCAL_PARSE_COMPLETE",
+      "envelope_status": "ok",
+      "route_d_status": "SERVED",
+      "reason_code": null,
+      "failure_category": null,
+      "answers": {
+        "q1": "2a³"
+      },
+      "answer_exact": {
+        "q1": {
+          "coef": "2",
+          "dim": 3,
+          "unit": "a"
+        }
+      },
+      "scene_configuration": null,
+      "provider_calls": 0,
+      "trig_certificates_count": 3,
+      "trig_identities": [
+        "p = c * cos(alpha)",
+        "pythagoras_hypotenuse_from_legs",
+        "h = c * sin(alpha)"
+      ],
+      "trig_certificates": [
+        {
+          "schema_version": "trig-construction-certificate/1",
+          "certificate_id": "trig_cert_1",
+          "derived_quantity_id": [
+            "A",
+            "B"
+          ],
+          "derived_role": "adjacent_leg",
+          "source_premises": [
+            {
+              "call_id": "p2",
+              "fn": "perpendicular_line_plane",
+              "quotes": [
+                "SA vuông góc với mặt phẳng (ABC)"
+              ]
+            },
+            {
+              "call_id": "p3",
+              "fn": "line_plane_angle",
+              "quotes": [
+                "góc giữa SB và mặt phẳng (ABC) có côsin bằng 3/5"
+              ]
+            },
+            {
+              "call_id": "p5",
+              "fn": "segment_length",
+              "quotes": [
+                "SB = 5a"
+              ]
+            }
+          ],
+          "derived_right_triangle": [
+            "A",
+            "B",
+            "S"
+          ],
+          "right_angle_vertex": "A",
+          "perpendicularity_justification": {
+            "rule": "line_perpendicular_to_plane",
+            "supporting_calls": [
+              "p2"
+            ],
+            "gram_dot_zero_verified": true
+          },
+          "angle_witness": {
+            "kind": "line_plane_angle",
+            "vertex": "B",
+            "ray_1": [
+              "B",
+              "A"
+            ],
+            "ray_2": [
+              "B",
+              "S"
+            ],
+            "domain": "(0°, 90°)",
+            "unit": "cos",
+            "raw_value": "3/5",
+            "sin_sq": "16/25",
+            "cos_sq": "9/25",
+            "supporting_calls": [
+              "p3"
+            ]
+          },
+          "hypotenuse": {
+            "segment": [
+              "B",
+              "S"
+            ],
+            "length_sq": "25"
+          },
+          "adjacent_leg": {
+            "segment": [
+              "A",
+              "B"
+            ],
+            "length_sq": "9"
+          },
+          "opposite_leg": {
+            "segment": [
+              "A",
+              "S"
+            ],
+            "length_sq": "16"
+          },
+          "trig_identity": "p = c * cos(alpha)",
+          "known_inputs": [
+            {
+              "role": "hypotenuse",
+              "segment": [
+                "B",
+                "S"
+              ],
+              "length_sq": "25",
+              "coef_json": {
+                "kind": "rational",
+                "value": "5"
+              },
+              "dimension": "LENGTH"
+            },
+            {
+              "role": "angle",
+              "sin_sq": "16/25",
+              "cos_sq": "9/25",
+              "dimension": "ANGLE"
+            }
+          ],
+          "exact_length_expr": {
+            "coef_json": {
+              "kind": "rational",
+              "value": "3"
+            },
+            "coef_str": "3",
+            "squared_coef_str": "9",
+            "unit_symbol": "a",
+            "power": 1,
+            "display": "3a"
+          },
+          "dimension": "LENGTH",
+          "positivity_domain": {
+            "sin_sq_gt_0": true,
+            "cos_sq_gt_0": true,
+            "unit_circle_sum_eq_1": true,
+            "hypotenuse_sq_gt_legs_sq": true,
+            "derived_length_sq_gt_0": true,
+            "gram_spd_verified": true
+          },
+          "single_branch_uniqueness": {
+            "unique_positive_root": true,
+            "acute_or_verified_branch": true
+          },
+          "construction_dependencies": {
+            "prerequisite_calls": [
+              "p2",
+              "p3",
+              "p5"
+            ],
+            "vertices": [
+              "A",
+              "B",
+              "S"
+            ]
+          },
+          "verified": true
+        },
+        {
+          "schema_version": "trig-construction-certificate/1",
+          "certificate_id": "trig_cert_2",
+          "derived_quantity_id": [
+            "A",
+            "C"
+          ],
+          "derived_role": "hypotenuse",
+          "source_premises": [
+            {
+              "call_id": "p1",
+              "fn": "right_angle",
+              "quotes": [
+                "S.ABC có đáy ABC là tam giác vuông tại B"
+              ]
+            },
+            {
+              "call_id": "p2",
+              "fn": "perpendicular_line_plane",
+              "quotes": [
+                "SA vuông góc với mặt phẳng (ABC)"
+              ]
+            },
+            {
+              "call_id": "p3",
+              "fn": "line_plane_angle",
+              "quotes": [
+                "góc giữa SB và mặt phẳng (ABC) có côsin bằng 3/5"
+              ]
+            },
+            {
+              "call_id": "p5",
+              "fn": "segment_length",
+              "quotes": [
+                "SB = 5a"
+              ]
+            },
+            {
+              "call_id": "p4",
+              "fn": "segment_length",
+              "quotes": [
+                "BC = a"
+              ]
+            }
+          ],
+          "derived_right_triangle": [
+            "B",
+            "A",
+            "C"
+          ],
+          "right_angle_vertex": "B",
+          "perpendicularity_justification": {
+            "rule": "explicit_right_angle",
+            "supporting_calls": [
+              "p1"
+            ],
+            "gram_dot_zero_verified": true
+          },
+          "angle_witness": {
+            "kind": "pythagorean_lengths",
+            "vertex": "A",
+            "ray_1": [
+              "A",
+              "B"
+            ],
+            "ray_2": [
+              "A",
+              "C"
+            ],
+            "domain": "(0°, 90°)",
+            "unit": "sin",
+            "raw_value": null,
+            "sin_sq": "1/10",
+            "cos_sq": "9/10",
+            "supporting_calls": []
+          },
+          "hypotenuse": {
+            "segment": [
+              "A",
+              "C"
+            ],
+            "length_sq": "10"
+          },
+          "adjacent_leg": {
+            "segment": [
+              "B",
+              "A"
+            ],
+            "length_sq": "9"
+          },
+          "opposite_leg": {
+            "segment": [
+              "B",
+              "C"
+            ],
+            "length_sq": "1"
+          },
+          "trig_identity": "pythagoras_hypotenuse_from_legs",
+          "known_inputs": [
+            {
+              "role": "adjacent_leg",
+              "segment": [
+                "B",
+                "A"
+              ],
+              "length_sq": "9",
+              "coef_json": {
+                "kind": "rational",
+                "value": "3"
+              },
+              "dimension": "LENGTH"
+            },
+            {
+              "role": "opposite_leg",
+              "segment": [
+                "B",
+                "C"
+              ],
+              "length_sq": "1",
+              "coef_json": {
+                "kind": "rational",
+                "value": "1"
+              },
+              "dimension": "LENGTH"
+            }
+          ],
+          "exact_length_expr": {
+            "coef_json": {
+              "kind": "radical",
+              "coefficient": "1",
+              "radicand": 10
+            },
+            "coef_str": "√10",
+            "squared_coef_str": "10",
+            "unit_symbol": "a",
+            "power": 1,
+            "display": "a√10"
+          },
+          "dimension": "LENGTH",
+          "positivity_domain": {
+            "sin_sq_gt_0": true,
+            "cos_sq_gt_0": true,
+            "unit_circle_sum_eq_1": true,
+            "hypotenuse_sq_gt_legs_sq": true,
+            "derived_length_sq_gt_0": true,
+            "gram_spd_verified": true
+          },
+          "single_branch_uniqueness": {
+            "unique_positive_root": true,
+            "acute_or_verified_branch": true
+          },
+          "construction_dependencies": {
+            "prerequisite_calls": [
+              "p1",
+              "p2",
+              "p3",
+              "p5",
+              "p4"
+            ],
+            "vertices": [
+              "B",
+              "A",
+              "C"
+            ]
+          },
+          "verified": true
+        },
+        {
+          "schema_version": "trig-construction-certificate/1",
+          "certificate_id": "trig_cert_3",
+          "derived_quantity_id": [
+            "A",
+            "S"
+          ],
+          "derived_role": "opposite_leg",
+          "source_premises": [
+            {
+              "call_id": "p2",
+              "fn": "perpendicular_line_plane",
+              "quotes": [
+                "SA vuông góc với mặt phẳng (ABC)"
+              ]
+            },
+            {
+              "call_id": "p3",
+              "fn": "line_plane_angle",
+              "quotes": [
+                "góc giữa SB và mặt phẳng (ABC) có côsin bằng 3/5"
+              ]
+            },
+            {
+              "call_id": "p5",
+              "fn": "segment_length",
+              "quotes": [
+                "SB = 5a"
+              ]
+            }
+          ],
+          "derived_right_triangle": [
+            "A",
+            "B",
+            "S"
+          ],
+          "right_angle_vertex": "A",
+          "perpendicularity_justification": {
+            "rule": "line_perpendicular_to_plane",
+            "supporting_calls": [
+              "p2"
+            ],
+            "gram_dot_zero_verified": true
+          },
+          "angle_witness": {
+            "kind": "line_plane_angle",
+            "vertex": "B",
+            "ray_1": [
+              "B",
+              "A"
+            ],
+            "ray_2": [
+              "B",
+              "S"
+            ],
+            "domain": "(0°, 90°)",
+            "unit": "cos",
+            "raw_value": "3/5",
+            "sin_sq": "16/25",
+            "cos_sq": "9/25",
+            "supporting_calls": [
+              "p3"
+            ]
+          },
+          "hypotenuse": {
+            "segment": [
+              "B",
+              "S"
+            ],
+            "length_sq": "25"
+          },
+          "adjacent_leg": {
+            "segment": [
+              "A",
+              "B"
+            ],
+            "length_sq": "9"
+          },
+          "opposite_leg": {
+            "segment": [
+              "A",
+              "S"
+            ],
+            "length_sq": "16"
+          },
+          "trig_identity": "h = c * sin(alpha)",
+          "known_inputs": [
+            {
+              "role": "hypotenuse",
+              "segment": [
+                "B",
+                "S"
+              ],
+              "length_sq": "25",
+              "coef_json": {
+                "kind": "rational",
+                "value": "5"
+              },
+              "dimension": "LENGTH"
+            },
+            {
+              "role": "angle",
+              "sin_sq": "16/25",
+              "cos_sq": "9/25",
+              "dimension": "ANGLE"
+            }
+          ],
+          "exact_length_expr": {
+            "coef_json": {
+              "kind": "rational",
+              "value": "4"
+            },
+            "coef_str": "4",
+            "squared_coef_str": "16",
+            "unit_symbol": "a",
+            "power": 1,
+            "display": "4a"
+          },
+          "dimension": "LENGTH",
+          "positivity_domain": {
+            "sin_sq_gt_0": true,
+            "cos_sq_gt_0": true,
+            "unit_circle_sum_eq_1": true,
+            "hypotenuse_sq_gt_legs_sq": true,
+            "derived_length_sq_gt_0": true,
+            "gram_spd_verified": true
+          },
+          "single_branch_uniqueness": {
+            "unique_positive_root": true,
+            "acute_or_verified_branch": true
+          },
+          "construction_dependencies": {
+            "prerequisite_calls": [
+              "p2",
+              "p3",
+              "p5"
+            ],
+            "vertices": [
+              "A",
+              "B",
+              "S"
+            ]
+          },
+          "verified": true
+        }
+      ],
+      "scene_object_count": 10,
+      "scene_point_labels": [
+        "A",
+        "B",
+        "C",
+        "S"
+      ],
+      "scene_perpendicular_witness_ids": [
+        "canh_ben_S_A"
+      ]
+    },
+    {
+      "probe_id": "regular_pyramid_slant_and_60_deg_line_plane_angle",
+      "problem_text": "Cho hình chóp tứ giác đều S.ABCD có cạnh bên SA = 2a, góc giữa SA và mặt phẳng đáy bằng 60°. Tính thể tích khối chóp S.ABCD.",
+      "expected_answer": "2a³√3/3",
+      "parse_status": "LOCAL_PARSE_COMPLETE",
+      "envelope_status": "ok",
+      "route_d_status": "SERVED",
+      "reason_code": null,
+      "failure_category": null,
+      "answers": {
+        "q1": "2a³√3/3"
+      },
+      "answer_exact": {
+        "q1": {
+          "coef": "2√3/3",
+          "dim": 3,
+          "unit": "a"
+        }
+      },
+      "scene_configuration": null,
+      "provider_calls": 0,
+      "trig_certificates_count": 2,
+      "trig_identities": [
+        "p = c * cos(alpha)",
+        "h = c * sin(alpha)"
+      ],
+      "trig_certificates": [
+        {
+          "schema_version": "trig-construction-certificate/1",
+          "certificate_id": "trig_cert_1",
+          "derived_quantity_id": [
+            "O",
+            "A"
+          ],
+          "derived_role": "adjacent_leg",
+          "source_premises": [
+            {
+              "call_id": "s1",
+              "fn": "regular_pyramid",
+              "quotes": [
+                "Cho hình chóp tứ giác đều S.ABCD"
+              ]
+            },
+            {
+              "call_id": "p2",
+              "fn": "line_plane_angle",
+              "quotes": [
+                "góc giữa SA và mặt phẳng đáy bằng 60°"
+              ]
+            },
+            {
+              "call_id": "s1_day",
+              "fn": "regular_polygon",
+              "quotes": [
+                "Cho hình chóp tứ giác đều S.ABCD"
+              ]
+            },
+            {
+              "call_id": "p3",
+              "fn": "segment_length",
+              "quotes": [
+                "SA = 2a"
+              ]
+            }
+          ],
+          "derived_right_triangle": [
+            "O",
+            "A",
+            "S"
+          ],
+          "right_angle_vertex": "O",
+          "perpendicularity_justification": {
+            "rule": "line_perpendicular_to_plane",
+            "supporting_calls": [
+              "s1"
+            ],
+            "gram_dot_zero_verified": true
+          },
+          "angle_witness": {
+            "kind": "line_plane_angle",
+            "vertex": "A",
+            "ray_1": [
+              "A",
+              "O"
+            ],
+            "ray_2": [
+              "A",
+              "S"
+            ],
+            "domain": "(0°, 90°)",
+            "unit": "deg",
+            "raw_value": "60",
+            "sin_sq": "3/4",
+            "cos_sq": "1/4",
+            "supporting_calls": [
+              "p2"
+            ]
+          },
+          "hypotenuse": {
+            "segment": [
+              "A",
+              "S"
+            ],
+            "length_sq": "4"
+          },
+          "adjacent_leg": {
+            "segment": [
+              "O",
+              "A"
+            ],
+            "length_sq": "1"
+          },
+          "opposite_leg": {
+            "segment": [
+              "O",
+              "S"
+            ],
+            "length_sq": "3"
+          },
+          "trig_identity": "p = c * cos(alpha)",
+          "known_inputs": [
+            {
+              "role": "hypotenuse",
+              "segment": [
+                "A",
+                "S"
+              ],
+              "length_sq": "4",
+              "coef_json": {
+                "kind": "rational",
+                "value": "2"
+              },
+              "dimension": "LENGTH"
+            },
+            {
+              "role": "angle",
+              "sin_sq": "3/4",
+              "cos_sq": "1/4",
+              "dimension": "ANGLE"
+            }
+          ],
+          "exact_length_expr": {
+            "coef_json": {
+              "kind": "rational",
+              "value": "1"
+            },
+            "coef_str": "1",
+            "squared_coef_str": "1",
+            "unit_symbol": "a",
+            "power": 1,
+            "display": "a"
+          },
+          "dimension": "LENGTH",
+          "positivity_domain": {
+            "sin_sq_gt_0": true,
+            "cos_sq_gt_0": true,
+            "unit_circle_sum_eq_1": true,
+            "hypotenuse_sq_gt_legs_sq": true,
+            "derived_length_sq_gt_0": true,
+            "gram_spd_verified": true
+          },
+          "single_branch_uniqueness": {
+            "unique_positive_root": true,
+            "acute_or_verified_branch": true
+          },
+          "construction_dependencies": {
+            "prerequisite_calls": [
+              "s1",
+              "p2",
+              "s1_day",
+              "p3"
+            ],
+            "vertices": [
+              "O",
+              "A",
+              "S"
+            ]
+          },
+          "verified": true
+        },
+        {
+          "schema_version": "trig-construction-certificate/1",
+          "certificate_id": "trig_cert_2",
+          "derived_quantity_id": [
+            "O",
+            "S"
+          ],
+          "derived_role": "opposite_leg",
+          "source_premises": [
+            {
+              "call_id": "s1",
+              "fn": "regular_pyramid",
+              "quotes": [
+                "Cho hình chóp tứ giác đều S.ABCD"
+              ]
+            },
+            {
+              "call_id": "p2",
+              "fn": "line_plane_angle",
+              "quotes": [
+                "góc giữa SA và mặt phẳng đáy bằng 60°"
+              ]
+            },
+            {
+              "call_id": "p3",
+              "fn": "segment_length",
+              "quotes": [
+                "SA = 2a"
+              ]
+            }
+          ],
+          "derived_right_triangle": [
+            "O",
+            "A",
+            "S"
+          ],
+          "right_angle_vertex": "O",
+          "perpendicularity_justification": {
+            "rule": "line_perpendicular_to_plane",
+            "supporting_calls": [
+              "s1"
+            ],
+            "gram_dot_zero_verified": true
+          },
+          "angle_witness": {
+            "kind": "line_plane_angle",
+            "vertex": "A",
+            "ray_1": [
+              "A",
+              "O"
+            ],
+            "ray_2": [
+              "A",
+              "S"
+            ],
+            "domain": "(0°, 90°)",
+            "unit": "deg",
+            "raw_value": "60",
+            "sin_sq": "3/4",
+            "cos_sq": "1/4",
+            "supporting_calls": [
+              "p2"
+            ]
+          },
+          "hypotenuse": {
+            "segment": [
+              "A",
+              "S"
+            ],
+            "length_sq": "4"
+          },
+          "adjacent_leg": {
+            "segment": [
+              "O",
+              "A"
+            ],
+            "length_sq": "1"
+          },
+          "opposite_leg": {
+            "segment": [
+              "O",
+              "S"
+            ],
+            "length_sq": "3"
+          },
+          "trig_identity": "h = c * sin(alpha)",
+          "known_inputs": [
+            {
+              "role": "hypotenuse",
+              "segment": [
+                "A",
+                "S"
+              ],
+              "length_sq": "4",
+              "coef_json": {
+                "kind": "rational",
+                "value": "2"
+              },
+              "dimension": "LENGTH"
+            },
+            {
+              "role": "angle",
+              "sin_sq": "3/4",
+              "cos_sq": "1/4",
+              "dimension": "ANGLE"
+            }
+          ],
+          "exact_length_expr": {
+            "coef_json": {
+              "kind": "radical",
+              "coefficient": "1",
+              "radicand": 3
+            },
+            "coef_str": "√3",
+            "squared_coef_str": "3",
+            "unit_symbol": "a",
+            "power": 1,
+            "display": "a√3"
+          },
+          "dimension": "LENGTH",
+          "positivity_domain": {
+            "sin_sq_gt_0": true,
+            "cos_sq_gt_0": true,
+            "unit_circle_sum_eq_1": true,
+            "hypotenuse_sq_gt_legs_sq": true,
+            "derived_length_sq_gt_0": true,
+            "gram_spd_verified": true
+          },
+          "single_branch_uniqueness": {
+            "unique_positive_root": true,
+            "acute_or_verified_branch": true
+          },
+          "construction_dependencies": {
+            "prerequisite_calls": [
+              "s1",
+              "p2",
+              "p3"
+            ],
+            "vertices": [
+              "O",
+              "A",
+              "S"
+            ]
+          },
+          "verified": true
+        }
+      ],
+      "scene_object_count": 13,
+      "scene_point_labels": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "O",
+        "S"
+      ],
+      "scene_perpendicular_witness_ids": []
+    },
+    {
+      "probe_id": "dihedral_angle_60_deg_three_perpendiculars_to_height",
+      "problem_text": "Cho hình chóp S.ABC có đáy ABC là tam giác vuông tại B, AB = a, BC = a√3, SA vuông góc với mặt phẳng (ABC), góc giữa hai mặt phẳng (SBC) và (ABC) bằng 60°. Tính thể tích khối chóp S.ABC.",
+      "expected_answer": "a³/2",
+      "parse_status": "LOCAL_PARSE_COMPLETE",
+      "envelope_status": "ok",
+      "route_d_status": "SERVED",
+      "reason_code": null,
+      "failure_category": null,
+      "answers": {
+        "q1": "a³/2"
+      },
+      "answer_exact": {
+        "q1": {
+          "coef": "1/2",
+          "dim": 3,
+          "unit": "a"
+        }
+      },
+      "scene_configuration": null,
+      "provider_calls": 0,
+      "trig_certificates_count": 2,
+      "trig_identities": [
+        "pythagoras_hypotenuse_from_legs",
+        "h = p * tan(alpha)"
+      ],
+      "trig_certificates": [
+        {
+          "schema_version": "trig-construction-certificate/1",
+          "certificate_id": "trig_cert_1",
+          "derived_quantity_id": [
+            "A",
+            "C"
+          ],
+          "derived_role": "hypotenuse",
+          "source_premises": [
+            {
+              "call_id": "p1",
+              "fn": "right_angle",
+              "quotes": [
+                "S.ABC có đáy ABC là tam giác vuông tại B"
+              ]
+            },
+            {
+              "call_id": "p4",
+              "fn": "segment_length",
+              "quotes": [
+                "AB = a"
+              ]
+            },
+            {
+              "call_id": "p5",
+              "fn": "segment_length",
+              "quotes": [
+                "BC = a√3"
+              ]
+            }
+          ],
+          "derived_right_triangle": [
+            "B",
+            "A",
+            "C"
+          ],
+          "right_angle_vertex": "B",
+          "perpendicularity_justification": {
+            "rule": "explicit_right_angle",
+            "supporting_calls": [
+              "p1"
+            ],
+            "gram_dot_zero_verified": true
+          },
+          "angle_witness": {
+            "kind": "pythagorean_lengths",
+            "vertex": "A",
+            "ray_1": [
+              "A",
+              "B"
+            ],
+            "ray_2": [
+              "A",
+              "C"
+            ],
+            "domain": "(0°, 90°)",
+            "unit": "sin",
+            "raw_value": null,
+            "sin_sq": "3/4",
+            "cos_sq": "1/4",
+            "supporting_calls": []
+          },
+          "hypotenuse": {
+            "segment": [
+              "A",
+              "C"
+            ],
+            "length_sq": "4"
+          },
+          "adjacent_leg": {
+            "segment": [
+              "B",
+              "A"
+            ],
+            "length_sq": "1"
+          },
+          "opposite_leg": {
+            "segment": [
+              "B",
+              "C"
+            ],
+            "length_sq": "3"
+          },
+          "trig_identity": "pythagoras_hypotenuse_from_legs",
+          "known_inputs": [
+            {
+              "role": "adjacent_leg",
+              "segment": [
+                "B",
+                "A"
+              ],
+              "length_sq": "1",
+              "coef_json": {
+                "kind": "rational",
+                "value": "1"
+              },
+              "dimension": "LENGTH"
+            },
+            {
+              "role": "opposite_leg",
+              "segment": [
+                "B",
+                "C"
+              ],
+              "length_sq": "3",
+              "coef_json": {
+                "kind": "radical",
+                "coefficient": "1",
+                "radicand": 3
+              },
+              "dimension": "LENGTH"
+            }
+          ],
+          "exact_length_expr": {
+            "coef_json": {
+              "kind": "rational",
+              "value": "2"
+            },
+            "coef_str": "2",
+            "squared_coef_str": "4",
+            "unit_symbol": "a",
+            "power": 1,
+            "display": "2a"
+          },
+          "dimension": "LENGTH",
+          "positivity_domain": {
+            "sin_sq_gt_0": true,
+            "cos_sq_gt_0": true,
+            "unit_circle_sum_eq_1": true,
+            "hypotenuse_sq_gt_legs_sq": true,
+            "derived_length_sq_gt_0": true,
+            "gram_spd_verified": true
+          },
+          "single_branch_uniqueness": {
+            "unique_positive_root": true,
+            "acute_or_verified_branch": true
+          },
+          "construction_dependencies": {
+            "prerequisite_calls": [
+              "p1",
+              "p4",
+              "p5"
+            ],
+            "vertices": [
+              "B",
+              "A",
+              "C"
+            ]
+          },
+          "verified": true
+        },
+        {
+          "schema_version": "trig-construction-certificate/1",
+          "certificate_id": "trig_cert_2",
+          "derived_quantity_id": [
+            "A",
+            "S"
+          ],
+          "derived_role": "opposite_leg",
+          "source_premises": [
+            {
+              "call_id": "p2",
+              "fn": "perpendicular_line_plane",
+              "quotes": [
+                "SA vuông góc với mặt phẳng (ABC)"
+              ]
+            },
+            {
+              "call_id": "p3",
+              "fn": "plane_plane_angle",
+              "quotes": [
+                "góc giữa hai mặt phẳng (SBC) và (ABC) bằng 60°"
+              ]
+            },
+            {
+              "call_id": "p1",
+              "fn": "right_angle",
+              "quotes": [
+                "S.ABC có đáy ABC là tam giác vuông tại B"
+              ]
+            },
+            {
+              "call_id": "p4",
+              "fn": "segment_length",
+              "quotes": [
+                "AB = a"
+              ]
+            },
+            {
+              "call_id": "p5",
+              "fn": "segment_length",
+              "quotes": [
+                "BC = a√3"
+              ]
+            }
+          ],
+          "derived_right_triangle": [
+            "A",
+            "B",
+            "S"
+          ],
+          "right_angle_vertex": "A",
+          "perpendicularity_justification": {
+            "rule": "line_perpendicular_to_plane",
+            "supporting_calls": [
+              "p2"
+            ],
+            "gram_dot_zero_verified": true
+          },
+          "angle_witness": {
+            "kind": "dihedral_angle",
+            "vertex": "B",
+            "ray_1": [
+              "B",
+              "A"
+            ],
+            "ray_2": [
+              "B",
+              "S"
+            ],
+            "domain": "(0°, 90°)",
+            "unit": "deg",
+            "raw_value": "60",
+            "sin_sq": "3/4",
+            "cos_sq": "1/4",
+            "supporting_calls": [
+              "p3"
+            ]
+          },
+          "hypotenuse": {
+            "segment": [
+              "B",
+              "S"
+            ],
+            "length_sq": "4"
+          },
+          "adjacent_leg": {
+            "segment": [
+              "A",
+              "B"
+            ],
+            "length_sq": "1"
+          },
+          "opposite_leg": {
+            "segment": [
+              "A",
+              "S"
+            ],
+            "length_sq": "3"
+          },
+          "trig_identity": "h = p * tan(alpha)",
+          "known_inputs": [
+            {
+              "role": "adjacent_leg",
+              "segment": [
+                "A",
+                "B"
+              ],
+              "length_sq": "1",
+              "coef_json": {
+                "kind": "rational",
+                "value": "1"
+              },
+              "dimension": "LENGTH"
+            },
+            {
+              "role": "angle",
+              "sin_sq": "3/4",
+              "cos_sq": "1/4",
+              "dimension": "ANGLE"
+            }
+          ],
+          "exact_length_expr": {
+            "coef_json": {
+              "kind": "radical",
+              "coefficient": "1",
+              "radicand": 3
+            },
+            "coef_str": "√3",
+            "squared_coef_str": "3",
+            "unit_symbol": "a",
+            "power": 1,
+            "display": "a√3"
+          },
+          "dimension": "LENGTH",
+          "positivity_domain": {
+            "sin_sq_gt_0": true,
+            "cos_sq_gt_0": true,
+            "unit_circle_sum_eq_1": true,
+            "hypotenuse_sq_gt_legs_sq": true,
+            "derived_length_sq_gt_0": true,
+            "gram_spd_verified": true
+          },
+          "single_branch_uniqueness": {
+            "unique_positive_root": true,
+            "acute_or_verified_branch": true
+          },
+          "construction_dependencies": {
+            "prerequisite_calls": [
+              "p2",
+              "p3",
+              "p1",
+              "p4",
+              "p5"
+            ],
+            "vertices": [
+              "A",
+              "B",
+              "S"
+            ]
+          },
+          "verified": true
+        }
+      ],
+      "scene_object_count": 10,
+      "scene_point_labels": [
+        "A",
+        "B",
+        "C",
+        "S"
+      ],
+      "scene_perpendicular_witness_ids": [
+        "canh_ben_S_A"
+      ]
+    }
+  ],
+  "baseline_product_commit": "d222e6d9b582d54fc42397a9593f52eb6fd77f18"
+}

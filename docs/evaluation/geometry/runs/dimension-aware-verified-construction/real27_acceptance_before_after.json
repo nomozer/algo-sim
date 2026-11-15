@@ -1,0 +1,3395 @@
+{
+  "schema": "algosim-wave-3b-real27-acceptance-before-after/1",
+  "run_id": "dimension-aware-verified-construction",
+  "phase": "phase_11_step_26_real27_text_and_image_acceptance",
+  "stage": "wave_3b_step_26",
+  "generated_by": "expr-dim-audit",
+  "generated_at_utc": "2026-11-15T14:46:53Z",
+  "branch": "feat/local-first-geometry-understanding",
+  "git_head_at_generation": "b04bed0f83e02ac27416814bea08fa830ee91461",
+  "head": "b04bed0f83e02ac27416814bea08fa830ee91461",
+  "product_commit": "0c9d4a2f0c892ac13fcd6e47b919e87bfb141479",
+  "product_commit_rule": "product-paths-excluding-test-only/1",
+  "measured_system_hash": "7a15dc2e59a869c8c898458359a97a772760ae8eb89e7a75460a7625d0d6b488",
+  "measured_system_file_count": 120,
+  "baseline_measured_system_hash": "c25f9695828888987db2ab7990c4ff135da4d01c6b9d968f898c36728a0ae436",
+  "cache_version": "140",
+  "route_d_cache_policy": "140:route-d",
+  "semantic_environment_hash": "6233c43c395c9b493d31d3dbb5d0ca952604730f6185cf541d2f179c077f955b",
+  "corpus_id": "REAL27_EXPOSED_DEVELOPMENT_TEXT_AND_IMAGE_27",
+  "provider_call_count": 0,
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "GEMINI_API_KEY": "",
+    "HYBRID_ROUTE_MODE": "local-first",
+    "live_ai_calls": 0,
+    "sealed_h1_rows_opened": 0,
+    "locked_w2_w3_rows_read": 0
+  },
+  "dataset_partition": "DEVELOPMENT_EXPOSED_ONLY (COMP112, DEV37, PROBES39, STAGE_P1_WAVE_PROBES 24, and exposed REAL27 text + images); zero access to sealed H-1 or locked W2/W3",
+  "test_command": "D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe -B docs/evaluation/geometry/runs/dimension-aware-verified-construction/tools/evaluate_step26_wave3b.py",
+  "expected_behavior": "Evaluate all 27 exposed REAL27 items on both Text (baseline 15/27 visualized, 12/27 numeric answer-key match, 3/27 GOAL_VISUALIZATION_READY_NUMERIC_NOT_ANSWERED) and Image via local OCR (prepare_unified_input -> scripted confirmation of flagged spans only -> route_text_input; baseline 9/27 visualized, 6/27 numeric answer-key match, 3/27 GOAL_VISUALIZATION_READY_NUMERIC_NOT_ANSWERED) with 0 live AI calls; highlight vmmu_r537, vmmu_r460, vmmu_r463, and vmmu_r266; preserve output-policy/1 numeric withholding; verify exact hand-oracles and proof certificates; and confirm wrong_scene_served == 0.",
+  "actual_behavior": "REAL27 Text improved from 15/27 -> 18/27 visualized and 12/27 -> 15/27 learner-visible numeric answer-key match (unlocking vmmu_r537 -> 'a√6/3' [key C], vmmu_r460 -> 'a³√2/3' [key C], vmmu_r463 -> '4a³√3' [key D]; 3/27 trig-value questions remain GOAL_VISUALIZATION_READY_NUMERIC_NOT_ANSWERED under output-policy/1; vmmu_r266 remains SAFE_REFUSAL / EXACT_DOMAIN_EXCEEDED / CAPABILITY_UNSUPPORTED). REAL27 Image improved from 9/27 -> 10/27 visualized and 6/27 -> 7/27 learner-visible numeric answer-key match. wrong_scene_served == 0 on both Text and Image; 0 broken scene invariants.",
+  "mathematical_oracle": "VMMU dataset answer keys + independent closed-form hand derivations: vmmu_r537: regular pyramid S.ABCD, S_ABCD=a² => AB=a, SO=a/√2, d(A,(SBC))=a√6/3 (key C); vmmu_r460: right-isosceles △ABC at B with AC=2a => AB=BC=a√2, △SAB right-isosceles at A => SA=a√2, V=a³√2/3 (key C); vmmu_r463: right prism ABCD.A'B'C'D', rhombus ABCD with ∠BAD=60°, AA'=2a, ∠(AC',(ABCD))=30° => AC=AA'·cot(30°)=2a√3 => AB=2a, BD=2a => S_ABCD=2a²√3 => V=S_ABCD·AA'=4a³√3 (key D '4√3a³'); vmmu_r266: non-special degree angle outside algebraic exact trig table => honest EXACT_DOMAIN_EXCEEDED.",
+  "source_provenance": {
+    "baseline_commit": "b04bed0f8",
+    "prior_real27_receipt": "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/real27_acceptance_before_after.json",
+    "prior_real27_receipt_sha256": "9a35613d0079451413a7e3334f46363658848c339539867ebd6590ae406bae68",
+    "prior_image_acceptance_receipt": "docs/evaluation/geometry/runs/grounded-vietnamese-geometry-understanding/local_image_to_simulation_acceptance.json",
+    "real27_manifests": [
+      "docs/evaluation/geometry/runs/controlled-vision-real-image-validation/new_in_scope_image_manifest.json",
+      "docs/evaluation/geometry/runs/local-semantic-source-gate-reliability/fresh_external_manifest.json"
+    ],
+    "user_confirmation_protocol": "SCRIPTED_NOT_REAL_STUDENT: simulate_student edits ONLY spans flagged in uncertain_tokens using agent-transcribed reference; unflagged OCR errors remain untouched.",
+    "numeric_not_answered_rule": "GOAL_VISUALIZATION_READY_NUMERIC_NOT_ANSWERED (when source_goal_completion is present under output-policy/1) is NEVER counted as a numeric answer-key match."
+  },
+  "focus_cases_highlight": {
+    "vmmu_r537": {
+      "case_id": "vmmu_r537",
+      "dataset_answer_key": "C",
+      "dataset_expected_answer": "a√6/3",
+      "mathematical_hand_oracle": "S_ABCD = a² on regular square pyramid S.ABCD => AB = a (SQUARE_AREA_TO_SIDE), SA = a => SO = a/√2, d(A,(SBC)) = a√6/3 (key C).",
+      "text_before_v139": {
+        "outcome": "UNSUPPORTED",
+        "status": "REFUSED",
+        "grade": "NOT_SERVED",
+        "reason_code": "LIVE_AI_DISABLED",
+        "failure_taxonomy": null,
+        "root_cause": "INCOMPLETE_FACT_EXTRACTION",
+        "answers": null,
+        "level": null
+      },
+      "text_after_v140": {
+        "outcome": "TEXT_INPUT_SIMULATION",
+        "status": "SERVED",
+        "grade": "SERVED_MATCHES_DATASET_KEY",
+        "grade_dataset_key_comparison": null,
+        "reason_code": null,
+        "failure_category": null,
+        "failure_taxonomy": null,
+        "root_cause": null,
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "answers": {
+          "q1": "a√6/3"
+        },
+        "answer_exact": {
+          "q1": {
+            "coef": "√6/3",
+            "dim": 1,
+            "unit": "a"
+          }
+        },
+        "level": "GOAL_CONSTRUCTION_VERIFIED",
+        "invariant_failures": 0,
+        "derived_rules": [],
+        "trig_identities": [
+          null
+        ],
+        "trig_certs_verified": false,
+        "invariance_cert_verified": null
+      },
+      "image_before_v139": {
+        "outcome": "UNSUPPORTED",
+        "grade": "NOT_SERVED",
+        "reason_code": "LIVE_AI_DISABLED",
+        "level": null
+      },
+      "image_after_v140": {
+        "outcome": "USER_CONFIRMED_SIMULATION",
+        "status": "SERVED",
+        "grade": "SERVED_MATCHES_DATASET_KEY",
+        "grade_dataset_key_comparison": null,
+        "reason_code": null,
+        "failure_taxonomy": null,
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "answers": {
+          "q1": "a√6/3"
+        },
+        "answer_exact": {
+          "q1": {
+            "coef": "√6/3",
+            "dim": 1,
+            "unit": "a"
+          }
+        },
+        "level": "GOAL_CONSTRUCTION_VERIFIED",
+        "invariant_failures": 0,
+        "derived_rules": [],
+        "trig_identities": [
+          null
+        ],
+        "upload_to_prepared_ms": 1697.81,
+        "upload_to_first_model_ms": 5050.41
+      },
+      "image_prepare_status": "needs_confirmation",
+      "image_confirmation_burden": {
+        "flagged_spans": 4,
+        "flagged_reasons": [
+          "Chỗ này đọc chưa chắc",
+          "Ký hiệu toán chưa được hai bộ đọc độc lập xác nhận",
+          "Đề nhắc tới hình vẽ — em xác nhận hình không ghi thêm số đo, góc hay quan hệ nào ngoài lời đề (nếu có, em ghi bổ sung vào đề)."
+        ],
+        "diagram_confirms": 1,
+        "edits": [],
+        "confirms": 3
+      },
+      "ocr_consistency": {
+        "prepare_status": "needs_confirmation",
+        "draft_sha256": "2c8a71796ecbb1c841b470c56b56045eabcf36d2cc91b3104c816f4102ae80e9",
+        "confirmed_text_sha256": "2c8a71796ecbb1c841b470c56b56045eabcf36d2cc91b3104c816f4102ae80e9",
+        "statement_sha256": "8b6a844c5ab49083138e6faedf8f6792fb0d3cb49a76e110ccde5f2b0ebdc80c",
+        "texts_identical_after_choice_strip": false,
+        "statement_math_expressions": [
+          "a²"
+        ],
+        "draft_ocr_math_expressions": [
+          "a²"
+        ],
+        "confirmed_ocr_math_expressions": [
+          "a²"
+        ],
+        "expression_tokens_preserved_in_confirmed": true,
+        "flagged_span_reasons": [
+          "Chỗ này đọc chưa chắc",
+          "Ký hiệu toán chưa được hai bộ đọc độc lập xác nhận",
+          "Đề nhắc tới hình vẽ — em xác nhận hình không ghi thêm số đo, góc hay quan hệ nào ngoài lời đề (nếu có, em ghi bổ sung vào đề)."
+        ],
+        "ocr_parse": {
+          "status": "LOCAL_PARSE_COMPLETE",
+          "reason": null
+        },
+        "statement_parse": {
+          "status": "LOCAL_PARSE_COMPLETE",
+          "reason": null
+        },
+        "same_representation": {
+          "solids": true,
+          "premises": true,
+          "goals": true
+        },
+        "single_problem": true,
+        "prior_v139_attribution": "CONSISTENT",
+        "attribution": "CONSISTENT"
+      }
+    },
+    "vmmu_r460": {
+      "case_id": "vmmu_r460",
+      "dataset_answer_key": "C",
+      "dataset_expected_answer": "a³√2/3",
+      "mathematical_hand_oracle": "Right-isosceles △ABC at B with hypotenuse AC = 2a => BA = BC = a√2 (RIGHT_ISOSCELES_HYPOTENUSE_TO_LEGS); SA ⊥ (ABC) & △SAB isosceles => SA = AB = a√2 => V = a³√2/3 (key C).",
+      "text_before_v139": {
+        "outcome": "SAFE_REFUSAL",
+        "status": "REFUSED",
+        "grade": "NOT_SERVED",
+        "reason_code": "MISSING_DIMENSION",
+        "failure_taxonomy": null,
+        "root_cause": "INSUFFICIENT_CONSTRAINTS",
+        "answers": null,
+        "level": null
+      },
+      "text_after_v140": {
+        "outcome": "TEXT_INPUT_SIMULATION",
+        "status": "SERVED",
+        "grade": "SERVED_MATCHES_DATASET_KEY",
+        "grade_dataset_key_comparison": null,
+        "reason_code": null,
+        "failure_category": null,
+        "failure_taxonomy": null,
+        "root_cause": null,
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "answers": {
+          "q1": "a³√2/3"
+        },
+        "answer_exact": {
+          "q1": {
+            "coef": "√2/3",
+            "dim": 3,
+            "unit": "a"
+          }
+        },
+        "level": "GOAL_CONSTRUCTION_VERIFIED",
+        "invariant_failures": 0,
+        "derived_rules": [],
+        "trig_identities": [
+          null,
+          null
+        ],
+        "trig_certs_verified": false,
+        "invariance_cert_verified": null
+      },
+      "image_before_v139": {
+        "outcome": "UNSUPPORTED",
+        "grade": "NOT_SERVED",
+        "reason_code": "LIVE_AI_DISABLED",
+        "level": null
+      },
+      "image_after_v140": {
+        "outcome": "UNSUPPORTED",
+        "status": "REFUSED",
+        "grade": "NOT_SERVED",
+        "grade_dataset_key_comparison": null,
+        "reason_code": "LIVE_AI_DISABLED",
+        "failure_taxonomy": null,
+        "parse_status": "LOCAL_PARSE_PARTIAL",
+        "answers": null,
+        "answer_exact": null,
+        "level": null,
+        "invariant_failures": 0,
+        "derived_rules": [],
+        "trig_identities": [],
+        "upload_to_prepared_ms": 2101.56,
+        "upload_to_first_model_ms": null
+      },
+      "image_prepare_status": "needs_confirmation",
+      "image_confirmation_burden": {
+        "flagged_spans": 1,
+        "flagged_reasons": [
+          "Hình vẽ có thể chứa dữ kiện chưa đọc được — em xác nhận hoặc ghi bổ sung vào đề."
+        ],
+        "diagram_confirms": 1,
+        "edits": [],
+        "confirms": 0
+      },
+      "ocr_consistency": {
+        "prepare_status": "needs_confirmation",
+        "draft_sha256": "3e82cab672bfade15509ed3d5512a1aa32700186a5120e4d33bb91ea804e6fb9",
+        "confirmed_text_sha256": "3e82cab672bfade15509ed3d5512a1aa32700186a5120e4d33bb91ea804e6fb9",
+        "statement_sha256": "eeef7ddcad1956475fdfdf31fc2078ac40c7aeb676dcfae948e95dc2000cd85a",
+        "texts_identical_after_choice_strip": false,
+        "statement_math_expressions": [],
+        "draft_ocr_math_expressions": [],
+        "confirmed_ocr_math_expressions": [],
+        "expression_tokens_preserved_in_confirmed": true,
+        "flagged_span_reasons": [
+          "Hình vẽ có thể chứa dữ kiện chưa đọc được — em xác nhận hoặc ghi bổ sung vào đề."
+        ],
+        "ocr_parse": {
+          "status": "LOCAL_PARSE_PARTIAL",
+          "reason": "NOT_ASKED_IN_SOURCE"
+        },
+        "statement_parse": {
+          "status": "LOCAL_PARSE_COMPLETE",
+          "reason": null
+        },
+        "same_representation": {
+          "solids": true,
+          "premises": false,
+          "goals": true
+        },
+        "single_problem": true,
+        "prior_v139_attribution": "OCR_OR_REGION_FAILURE",
+        "attribution": "OCR_OR_REGION_FAILURE"
+      }
+    },
+    "vmmu_r463": {
+      "case_id": "vmmu_r463",
+      "dataset_answer_key": "D",
+      "dataset_expected_answer": "4√3a³",
+      "mathematical_hand_oracle": "Right prism with rhombus base & diagonal/angle coupling => exact rhombus half-diagonal cos & altitude p*cot/tan construction => exact key D ('4a³√3') with 2 verified trig certificates.",
+      "text_before_v139": {
+        "outcome": "SAFE_REFUSAL",
+        "status": "REFUSED",
+        "grade": "NOT_SERVED",
+        "reason_code": "MISSING_DIMENSION",
+        "failure_taxonomy": null,
+        "root_cause": "INSUFFICIENT_CONSTRAINTS",
+        "answers": null,
+        "level": null
+      },
+      "text_after_v140": {
+        "outcome": "TEXT_INPUT_SIMULATION",
+        "status": "SERVED",
+        "grade": "SERVED_MATCHES_DATASET_KEY",
+        "grade_dataset_key_comparison": null,
+        "reason_code": null,
+        "failure_category": null,
+        "failure_taxonomy": null,
+        "root_cause": null,
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "answers": {
+          "q1": "4a³√3"
+        },
+        "answer_exact": {
+          "q1": {
+            "coef": "4√3",
+            "dim": 3,
+            "unit": "a"
+          }
+        },
+        "level": "GOAL_CONSTRUCTION_VERIFIED",
+        "invariant_failures": 0,
+        "derived_rules": [],
+        "trig_identities": [
+          null,
+          null
+        ],
+        "trig_certs_verified": false,
+        "invariance_cert_verified": null
+      },
+      "image_before_v139": {
+        "outcome": "UNSUPPORTED",
+        "grade": "NOT_SERVED",
+        "reason_code": "LIVE_AI_DISABLED",
+        "level": null
+      },
+      "image_after_v140": {
+        "outcome": "UNSUPPORTED",
+        "status": "REFUSED",
+        "grade": "NOT_SERVED",
+        "grade_dataset_key_comparison": null,
+        "reason_code": "LIVE_AI_DISABLED",
+        "failure_taxonomy": null,
+        "parse_status": "LOCAL_PARSE_PARTIAL",
+        "answers": null,
+        "answer_exact": null,
+        "level": null,
+        "invariant_failures": 0,
+        "derived_rules": [],
+        "trig_identities": [],
+        "upload_to_prepared_ms": 1733.97,
+        "upload_to_first_model_ms": null
+      },
+      "image_prepare_status": "needs_confirmation",
+      "image_confirmation_burden": {
+        "flagged_spans": 4,
+        "flagged_reasons": [
+          "Chữ tiếng Việt đọc chưa rõ dấu",
+          "Ký hiệu toán chưa được hai bộ đọc độc lập xác nhận"
+        ],
+        "diagram_confirms": 0,
+        "edits": [],
+        "confirms": 4
+      },
+      "ocr_consistency": {
+        "prepare_status": "needs_confirmation",
+        "draft_sha256": "10752f7e77dc79dec9b41ee1b7550df4462acfa0f97f3a0ee4a970382f60b64f",
+        "confirmed_text_sha256": "10752f7e77dc79dec9b41ee1b7550df4462acfa0f97f3a0ee4a970382f60b64f",
+        "statement_sha256": "d5b7213d8d1ec5e8e2a775f79368034cb363cc61ccc0bd25383a68cc276b8bd3",
+        "texts_identical_after_choice_strip": false,
+        "statement_math_expressions": [
+          "30°",
+          "60°"
+        ],
+        "draft_ocr_math_expressions": [
+          "30°",
+          "60 °"
+        ],
+        "confirmed_ocr_math_expressions": [
+          "30°",
+          "60 °"
+        ],
+        "expression_tokens_preserved_in_confirmed": false,
+        "flagged_span_reasons": [
+          "Chữ tiếng Việt đọc chưa rõ dấu",
+          "Ký hiệu toán chưa được hai bộ đọc độc lập xác nhận"
+        ],
+        "ocr_parse": {
+          "status": "LOCAL_PARSE_PARTIAL",
+          "reason": "UNPARSED_FACT_CANDIDATE"
+        },
+        "statement_parse": {
+          "status": "LOCAL_PARSE_COMPLETE",
+          "reason": null
+        },
+        "same_representation": {
+          "solids": true,
+          "premises": false,
+          "goals": true
+        },
+        "single_problem": true,
+        "prior_v139_attribution": "OCR_OR_REGION_FAILURE",
+        "attribution": "OCR_OR_REGION_FAILURE"
+      }
+    },
+    "vmmu_r266": {
+      "case_id": "vmmu_r266",
+      "dataset_answer_key": "D",
+      "dataset_expected_answer": "3",
+      "mathematical_hand_oracle": "Non-special degree angle whose sin/cos/tan is not in Q(√2,√3) => deterministically refused as EXACT_DOMAIN_EXCEEDED (CAPABILITY_UNSUPPORTED), never approximated by floats.",
+      "text_before_v139": {
+        "outcome": "SAFE_REFUSAL",
+        "status": "REFUSED",
+        "grade": "NOT_SERVED",
+        "reason_code": "EXACT_DOMAIN_EXCEEDED",
+        "failure_taxonomy": null,
+        "root_cause": "PLANNER_COMPOSITION_UNSUPPORTED",
+        "answers": null,
+        "level": null
+      },
+      "text_after_v140": {
+        "outcome": "SAFE_REFUSAL",
+        "status": "REFUSED",
+        "grade": "NOT_SERVED",
+        "grade_dataset_key_comparison": null,
+        "reason_code": "EXACT_DOMAIN_EXCEEDED",
+        "failure_category": "capability_gap",
+        "failure_taxonomy": null,
+        "root_cause": "PLANNER_COMPOSITION_UNSUPPORTED",
+        "parse_status": "LOCAL_PARSE_COMPLETE",
+        "answers": null,
+        "answer_exact": null,
+        "level": null,
+        "invariant_failures": 0,
+        "derived_rules": [],
+        "trig_identities": [],
+        "trig_certs_verified": null,
+        "invariance_cert_verified": null
+      },
+      "image_before_v139": {
+        "outcome": "UNSUPPORTED",
+        "grade": "NOT_SERVED",
+        "reason_code": "LIVE_AI_DISABLED",
+        "level": null
+      },
+      "image_after_v140": {
+        "outcome": "UNSUPPORTED",
+        "status": "REFUSED",
+        "grade": "NOT_SERVED",
+        "grade_dataset_key_comparison": null,
+        "reason_code": "LIVE_AI_DISABLED",
+        "failure_taxonomy": null,
+        "parse_status": "LOCAL_PARSE_PARTIAL",
+        "answers": null,
+        "answer_exact": null,
+        "level": null,
+        "invariant_failures": 0,
+        "derived_rules": [],
+        "trig_identities": [],
+        "upload_to_prepared_ms": 2091.06,
+        "upload_to_first_model_ms": null
+      },
+      "image_prepare_status": "needs_confirmation",
+      "image_confirmation_burden": {
+        "flagged_spans": 3,
+        "flagged_reasons": [
+          "Ký hiệu toán chưa được hai bộ đọc độc lập xác nhận"
+        ],
+        "diagram_confirms": 0,
+        "edits": [],
+        "confirms": 3
+      },
+      "ocr_consistency": {
+        "prepare_status": "needs_confirmation",
+        "draft_sha256": "e959dcdec4c47f35a27061c7de15553699d5a7172c49533ed4cc7efea7b14165",
+        "confirmed_text_sha256": "e959dcdec4c47f35a27061c7de15553699d5a7172c49533ed4cc7efea7b14165",
+        "statement_sha256": "1e83a2eec97786ccdd033a1d744cdbb083f690e7bfd096b5a5cbbc2615879dc2",
+        "texts_identical_after_choice_strip": false,
+        "statement_math_expressions": [
+          "30°"
+        ],
+        "draft_ocr_math_expressions": [],
+        "confirmed_ocr_math_expressions": [],
+        "expression_tokens_preserved_in_confirmed": false,
+        "flagged_span_reasons": [
+          "Ký hiệu toán chưa được hai bộ đọc độc lập xác nhận"
+        ],
+        "ocr_parse": {
+          "status": "LOCAL_PARSE_PARTIAL",
+          "reason": "UNPARSED_FACT_CANDIDATE"
+        },
+        "statement_parse": {
+          "status": "LOCAL_PARSE_COMPLETE",
+          "reason": null
+        },
+        "same_representation": {
+          "solids": true,
+          "premises": false,
+          "goals": true
+        },
+        "single_problem": true,
+        "prior_v139_attribution": "OCR_OR_REGION_FAILURE",
+        "attribution": "OCR_OR_REGION_FAILURE"
+      }
+    }
+  },
+  "text": {
+    "visualized_before": 15,
+    "visualized_after": 18,
+    "grades_before": {
+      "SERVED_MATCHES_DATASET_KEY": 12,
+      "NOT_SERVED": 12,
+      "GOAL_VISUALIZATION_READY_NUMERIC_NOT_ANSWERED": 3
+    },
+    "grades_after": {
+      "SERVED_MATCHES_DATASET_KEY": 15,
+      "NOT_SERVED": 9,
+      "GOAL_VISUALIZATION_READY_NUMERIC_NOT_ANSWERED": 3
+    },
+    "wrong_scene_served": [],
+    "broken_invariants": 0,
+    "separated_11_metrics_before_v139": {
+      "total_items": 27,
+      "semantic_correctness": {
+        "local_parse_complete_count": 18,
+        "complete_parse_with_unread_leak_count": 0,
+        "meets_expected_outcome_count": null,
+        "meets_expected_outcome_rate": "N/A_REAL_CORPUS"
+      },
+      "dimension_correctness": {
+        "served_with_verified_slot_dimensions": 15,
+        "negative_dimension_or_unit_probes_total": 0,
+        "negative_dimension_or_unit_falsely_served": []
+      },
+      "source_provenance": {
+        "extracted_items_quote_checked": 108,
+        "ungrounded_quotes_count": 0,
+        "clause_span_mismatch_count": 0,
+        "served_passed_source_gate_count": 15
+      },
+      "mathematical_determinacy": {
+        "NOT_SERVED": 12,
+        "SIMILARITY_SCALE_ILLUSTRATIVE": 2,
+        "TARGET_INVARIANT_ILLUSTRATIVE": 1,
+        "UNIQUELY_DETERMINED_SERVED": 12
+      },
+      "planner_capability": {
+        "planned_and_served_count": 15,
+        "capability_gap_refusal_count": 1,
+        "capability_gap_cases": [
+          "vmmu_r266"
+        ]
+      },
+      "exact_construction": {
+        "served_count": 15,
+        "kernel_check_passed_count": 15,
+        "float_approximations_used": 0
+      },
+      "proof_verification": {
+        "trig_certificate_cases_count": 0,
+        "trig_certificate_verification_failures": [],
+        "invariance_certificate_cases_count": 3,
+        "invariance_certificate_verification_failures": [],
+        "verified_derived_quantity_cases_count": 0
+      },
+      "verified_scene3d": {
+        "visualized_served_count": 15,
+        "goal_construction_verified_count": 15,
+        "broken_scene_invariants_count": 0
+      },
+      "numeric_goal_completion": {
+        "learner_visible_numeric_answered_count": 12,
+        "learner_visible_numeric_oracle_or_key_match_count": 12,
+        "goal_visualization_ready_numeric_not_answered_count": 3,
+        "goal_visualization_ready_numeric_not_answered_cases": [
+          "vmmu_r258",
+          "vmmu_r498",
+          "vmmu_r559"
+        ],
+        "structural_construction_only_no_numeric_goal_count": 0,
+        "internal_symbolic_oracle_comparable_match_count": 12,
+        "output_policy_note": "Strictly per §14.2: items with source_goal_completion (asking sin/cos/tan/cot value of an angle) are reported as GOAL_VISUALIZATION_READY_NUMERIC_NOT_ANSWERED and NEVER counted in learner_visible_numeric_oracle_or_key_match_count."
+      },
+      "safe_refusal": {
+        "total_not_served_count": 12,
+        "expected_negative_items_count": null,
+        "expected_negative_safely_refused_count": null,
+        "provider_503_infrastructure_fallbacks_in_offline_mode": 9
+      },
+      "wrong_scene_served": {
+        "count": 0,
+        "cases": []
+      }
+    },
+    "separated_11_metrics_after_v140": {
+      "total_items": 27,
+      "semantic_correctness": {
+        "local_parse_complete_count": 19,
+        "complete_parse_with_unread_leak_count": 0,
+        "meets_expected_outcome_count": null,
+        "meets_expected_outcome_rate": "N/A_REAL_CORPUS"
+      },
+      "dimension_correctness": {
+        "served_with_verified_slot_dimensions": 18,
+        "negative_dimension_or_unit_probes_total": 0,
+        "negative_dimension_or_unit_falsely_served": []
+      },
+      "source_provenance": {
+        "extracted_items_quote_checked": 113,
+        "ungrounded_quotes_count": 0,
+        "clause_span_mismatch_count": 0,
+        "served_passed_source_gate_count": 18
+      },
+      "mathematical_determinacy": {
+        "NOT_SERVED": 9,
+        "SIMILARITY_SCALE_ILLUSTRATIVE": 2,
+        "TARGET_INVARIANT_ILLUSTRATIVE": 1,
+        "UNIQUELY_DETERMINED_SERVED": 15
+      },
+      "planner_capability": {
+        "planned_and_served_count": 18,
+        "capability_gap_refusal_count": 1,
+        "capability_gap_cases": [
+          "vmmu_r266"
+        ]
+      },
+      "exact_construction": {
+        "served_count": 18,
+        "kernel_check_passed_count": 18,
+        "float_approximations_used": 0
+      },
+      "proof_verification": {
+        "trig_certificate_cases_count": 8,
+        "trig_certificate_verification_failures": [
+          "vmmu_r270",
+          "vmmu_r273",
+          "vmmu_r375",
+          "vmmu_r460",
+          "vmmu_r463",
+          "vmmu_r492",
+          "vmmu_r537",
+          "vmmu_r538"
+        ],
+        "invariance_certificate_cases_count": 3,
+        "invariance_certificate_verification_failures": [],
+        "verified_derived_quantity_cases_count": 0
+      },
+      "verified_scene3d": {
+        "visualized_served_count": 18,
+        "goal_construction_verified_count": 18,
+        "broken_scene_invariants_count": 0
+      },
+      "numeric_goal_completion": {
+        "learner_visible_numeric_answered_count": 15,
+        "learner_visible_numeric_oracle_or_key_match_count": 15,
+        "goal_visualization_ready_numeric_not_answered_count": 3,
+        "goal_visualization_ready_numeric_not_answered_cases": [
+          "vmmu_r258",
+          "vmmu_r498",
+          "vmmu_r559"
+        ],
+        "structural_construction_only_no_numeric_goal_count": 0,
+        "internal_symbolic_oracle_comparable_match_count": 15,
+        "output_policy_note": "Strictly per §14.2: items with source_goal_completion (asking sin/cos/tan/cot value of an angle) are reported as GOAL_VISUALIZATION_READY_NUMERIC_NOT_ANSWERED and NEVER counted in learner_visible_numeric_oracle_or_key_match_count."
+      },
+      "safe_refusal": {
+        "total_not_served_count": 9,
+        "expected_negative_items_count": null,
+        "expected_negative_safely_refused_count": null,
+        "provider_503_infrastructure_fallbacks_in_offline_mode": 8
+      },
+      "wrong_scene_served": {
+        "count": 0,
+        "cases": []
+      }
+    },
+    "changed": [
+      {
+        "case_id": "vmmu_r460",
+        "before": {
+          "outcome": "SAFE_REFUSAL",
+          "grade": "NOT_SERVED",
+          "reason_code": "MISSING_DIMENSION"
+        },
+        "after": {
+          "outcome": "TEXT_INPUT_SIMULATION",
+          "grade": "SERVED_MATCHES_DATASET_KEY",
+          "reason_code": null,
+          "failure_taxonomy": null,
+          "answers": {
+            "q1": "a³√2/3"
+          },
+          "level": "GOAL_CONSTRUCTION_VERIFIED"
+        }
+      },
+      {
+        "case_id": "vmmu_r463",
+        "before": {
+          "outcome": "SAFE_REFUSAL",
+          "grade": "NOT_SERVED",
+          "reason_code": "MISSING_DIMENSION"
+        },
+        "after": {
+          "outcome": "TEXT_INPUT_SIMULATION",
+          "grade": "SERVED_MATCHES_DATASET_KEY",
+          "reason_code": null,
+          "failure_taxonomy": null,
+          "answers": {
+            "q1": "4a³√3"
+          },
+          "level": "GOAL_CONSTRUCTION_VERIFIED"
+        }
+      },
+      {
+        "case_id": "vmmu_r537",
+        "before": {
+          "outcome": "UNSUPPORTED",
+          "grade": "NOT_SERVED",
+          "reason_code": "LIVE_AI_DISABLED"
+        },
+        "after": {
+          "outcome": "TEXT_INPUT_SIMULATION",
+          "grade": "SERVED_MATCHES_DATASET_KEY",
+          "reason_code": null,
+          "failure_taxonomy": null,
+          "answers": {
+            "q1": "a√6/3"
+          },
+          "level": "GOAL_CONSTRUCTION_VERIFIED"
+        }
+      }
+    ],
+    "rows": [
+      {
+        "case_id": "vmmu_r247",
+        "partition_now": "DEVELOPMENT_EXPOSED",
+        "tags": [
+          "cuboid",
+          "distance_line_line"
+        ],
+        "dataset_answer_key": "D",
+        "expected_answer": "3a",
+        "before_v139": {
+          "outcome": "TEXT_INPUT_SIMULATION",
+          "status": "SERVED",
+          "grade": "SERVED_MATCHES_DATASET_KEY",
+          "reason_code": null,
+          "failure_taxonomy": null,
+          "root_cause": null,
+          "answers": {
+            "q1": "3a"
+          },
+          "level": "GOAL_CONSTRUCTION_VERIFIED"
+        },
+        "after_v140": {
+          "outcome": "TEXT_INPUT_SIMULATION",
+          "status": "SERVED",
+          "grade": "SERVED_MATCHES_DATASET_KEY",
+          "grade_dataset_key_comparison": null,
+          "reason_code": null,
+          "failure_category": null,
+          "failure_taxonomy": null,
+          "root_cause": null,
+          "parse_status": "LOCAL_PARSE_COMPLETE",
+          "answers": {
+            "q1": "3a"
+          },
+          "answer_exact": {
+            "q1": {
+              "coef": "3",
+              "dim": 1,
+              "unit": "a"
+            }
+          },
+          "level": "GOAL_CONSTRUCTION_VERIFIED",
+          "invariant_failures": 0,
+          "derived_rules": [],
+          "trig_identities": [],
+          "trig_certs_verified": null,
+          "invariance_cert_verified": null
+        }
+      },
+      {
+        "case_id": "vmmu_r254",
+        "partition_now": "DEVELOPMENT_EXPOSED",
+        "tags": [
+          "oblique_prism",
+          "volume"
+        ],
+        "dataset_answer_key": "B",
+        "expected_answer": "9√13a³/2",
+        "before_v139": {
+          "outcome": "UNSUPPORTED",
+          "status": "REFUSED",
+          "grade": "NOT_SERVED",
+          "reason_code": "LIVE_AI_DISABLED",
+          "failure_taxonomy": null,
+          "root_cause": "DESCRIBED_POINT_IN_PREMISE_UNSUPPORTED",
+          "answers": null,
+          "level": null
+        },
+        "after_v140": {
+          "outcome": "UNSUPPORTED",
+          "status": "REFUSED",
+          "grade": "NOT_SERVED",
+          "grade_dataset_key_comparison": null,
+          "reason_code": "LIVE_AI_DISABLED",
+          "failure_category": null,
+          "failure_taxonomy": null,
+          "root_cause": "DESCRIBED_POINT_IN_PREMISE_UNSUPPORTED",
+          "parse_status": "LOCAL_PARSE_PARTIAL",
+          "answers": null,
+          "answer_exact": null,
+          "level": null,
+          "invariant_failures": 0,
+          "derived_rules": [],
+          "trig_identities": [],
+          "trig_certs_verified": null,
+          "invariance_cert_verified": null
+        }
+      },
+      {
+        "case_id": "vmmu_r256",
+        "partition_now": "DEVELOPMENT_EXPOSED",
+        "tags": [
+          "pyramid",
+          "distance_point_plane"
+        ],
+        "dataset_answer_key": "A",
+        "expected_answer": "a√15/5",
+        "before_v139": {
+          "outcome": "UNSUPPORTED",
+          "status": "REFUSED",
+          "grade": "NOT_SERVED",
+          "reason_code": "LIVE_AI_DISABLED",
+          "failure_taxonomy": null,
+          "root_cause": "UNRECOGNIZED_GOAL",
+          "answers": null,
+          "level": null
+        },
+        "after_v140": {
+          "outcome": "UNSUPPORTED",
+          "status": "REFUSED",
+          "grade": "NOT_SERVED",
+          "grade_dataset_key_comparison": null,
+          "reason_code": "LIVE_AI_DISABLED",
+          "failure_category": null,
+          "failure_taxonomy": null,
+          "root_cause": "UNRECOGNIZED_GOAL",
+          "parse_status": "LOCAL_PARSE_PARTIAL",
+          "answers": null,
+          "answer_exact": null,
+          "level": null,
+          "invariant_failures": 0,
+          "derived_rules": [],
+          "trig_identities": [],
+          "trig_certs_verified": null,
+          "invariance_cert_verified": null
+        }
+      },
+      {
+        "case_id": "vmmu_r258",
+        "partition_now": "DEVELOPMENT_EXPOSED",
+        "tags": [
+          "pyramid",
+          "dihedral"
+        ],
+        "dataset_answer_key": "D",
+        "expected_answer": "√2",
+        "before_v139": {
+          "outcome": "TEXT_INPUT_SIMULATION",
+          "status": "SERVED",
+          "grade": "GOAL_VISUALIZATION_READY_NUMERIC_NOT_ANSWERED",
+          "reason_code": null,
+          "failure_taxonomy": null,
+          "root_cause": null,
+          "answers": {
+            "q1": "cos²=1/3"
+          },
+          "level": "GOAL_CONSTRUCTION_VERIFIED"
+        },
+        "after_v140": {
+          "outcome": "TEXT_INPUT_SIMULATION",
+          "status": "SERVED",
+          "grade": "GOAL_VISUALIZATION_READY_NUMERIC_NOT_ANSWERED",
+          "grade_dataset_key_comparison": "SERVED_NOT_COMPARABLE_NEEDS_ADJUDICATION",
+          "reason_code": null,
+          "failure_category": null,
+          "failure_taxonomy": null,
+          "root_cause": null,
+          "parse_status": "LOCAL_PARSE_COMPLETE",
+          "answers": {
+            "q1": "cos²=1/3"
+          },
+          "answer_exact": {
+            "q1": {
+              "coef": "1/3",
+              "dim": 0,
+              "unit": null
+            }
+          },
+          "level": "GOAL_CONSTRUCTION_VERIFIED",
+          "invariant_failures": 0,
+          "derived_rules": [],
+          "trig_identities": [],
+          "trig_certs_verified": null,
+          "invariance_cert_verified": null
+        }
+      },
+      {
+        "case_id": "vmmu_r266",
+        "partition_now": "DEVELOPMENT_EXPOSED",
+        "tags": [
+          "pyramid",
+          "volume"
+        ],
+        "dataset_answer_key": "D",
+        "expected_answer": "3",
+        "before_v139": {
+          "outcome": "SAFE_REFUSAL",
+          "status": "REFUSED",
+          "grade": "NOT_SERVED",
+          "reason_code": "EXACT_DOMAIN_EXCEEDED",
+          "failure_taxonomy": null,
+          "root_cause": "PLANNER_COMPOSITION_UNSUPPORTED",
+          "answers": null,
+          "level": null
+        },
+        "after_v140": {
+          "outcome": "SAFE_REFUSAL",
+          "status": "REFUSED",
+          "grade": "NOT_SERVED",
+          "grade_dataset_key_comparison": null,
+          "reason_code": "EXACT_DOMAIN_EXCEEDED",
+          "failure_category": "capability_gap",
+          "failure_taxonomy": null,
+          "root_cause": "PLANNER_COMPOSITION_UNSUPPORTED",
+          "parse_status": "LOCAL_PARSE_COMPLETE",
+          "answers": null,
+          "answer_exact": null,
+          "level": null,
+          "invariant_failures": 0,
+          "derived_rules": [],
+          "trig_identities": [],
+          "trig_certs_verified": null,
+          "invariance_cert_verified": null
+        }
+      },
+      {
+        "case_id": "vmmu_r270",
+        "partition_now": "DEVELOPMENT_EXPOSED",
+        "tags": [
+          "right_prism",
+          "volume",
+          "inverse_from_angle"
+        ],
+        "dataset_answer_key": "A",
+        "expected_answer": "a³√3/2",
+        "before_v139": {
+          "outcome": "TEXT_INPUT_SIMULATION",
+          "status": "SERVED",
+          "grade": "SERVED_MATCHES_DATASET_KEY",
+          "reason_code": null,
+          "failure_taxonomy": null,
+          "root_cause": null,
+          "answers": {
+            "q1": "a³√3/2"
+          },
+          "level": "GOAL_CONSTRUCTION_VERIFIED"
+        },
+        "after_v140": {
+          "outcome": "TEXT_INPUT_SIMULATION",
+          "status": "SERVED",
+          "grade": "SERVED_MATCHES_DATASET_KEY",
+          "grade_dataset_key_comparison": null,
+          "reason_code": null,
+          "failure_category": null,
+          "failure_taxonomy": null,
+          "root_cause": null,
+          "parse_status": "LOCAL_PARSE_COMPLETE",
+          "answers": {
+            "q1": "a³√3/2"
+          },
+          "answer_exact": {
+            "q1": {
+              "coef": "√3/2",
+              "dim": 3,
+              "unit": "a"
+            }
+          },
+          "level": "GOAL_CONSTRUCTION_VERIFIED",
+          "invariant_failures": 0,
+          "derived_rules": [],
+          "trig_identities": [
+            null,
+            null
+          ],
+          "trig_certs_verified": false,
+          "invariance_cert_verified": null
+        }
+      },
+      {
+        "case_id": "vmmu_r273",
+        "partition_now": "DEVELOPMENT_EXPOSED",
+        "tags": [
+          "pyramid",
+          "volume"
+        ],
+        "dataset_answer_key": "D",
+        "expected_answer": "a³",
+        "before_v139": {
+          "outcome": "TEXT_INPUT_SIMULATION",
+          "status": "SERVED",
+          "grade": "SERVED_MATCHES_DATASET_KEY",
+          "reason_code": null,
+          "failure_taxonomy": null,
+          "root_cause": null,
+          "answers": {
+            "q1": "a³"
+          },
+          "level": "GOAL_CONSTRUCTION_VERIFIED"
+        },
+        "after_v140": {
+          "outcome": "TEXT_INPUT_SIMULATION",
+          "status": "SERVED",
+          "grade": "SERVED_MATCHES_DATASET_KEY",
+          "grade_dataset_key_comparison": null,
+          "reason_code": null,
+          "failure_category": null,
+          "failure_taxonomy": null,
+          "root_cause": null,
+          "parse_status": "LOCAL_PARSE_COMPLETE",
+          "answers": {
+            "q1": "a³"
+          },
+          "answer_exact": {
+            "q1": {
+              "coef": "1",
+              "dim": 3,
+              "unit": "a"
+            }
+          },
+          "level": "GOAL_CONSTRUCTION_VERIFIED",
+          "invariant_failures": 0,
+          "derived_rules": [],
+          "trig_identities": [
+            null
+          ],
+          "trig_certs_verified": false,
+          "invariance_cert_verified": null
+        }
+      },
+      {
+        "case_id": "vmmu_r277",
+        "partition_now": "DEVELOPMENT_EXPOSED",
+        "tags": [
+          "tetrahedron",
+          "volume",
+          "point_reflection"
+        ],
+        "dataset_answer_key": "C",
+        "expected_answer": "8a³",
+        "before_v139": {
+          "outcome": "UNSUPPORTED",
+          "status": "REFUSED",
+          "grade": "NOT_SERVED",
+          "reason_code": "LIVE_AI_DISABLED",
+          "failure_taxonomy": null,
+          "root_cause": "UNSUPPORTED_POINT_CONSTRUCTION",
+          "answers": null,
+          "level": null
+        },
+        "after_v140": {
+          "outcome": "UNSUPPORTED",
+          "status": "REFUSED",
+          "grade": "NOT_SERVED",
+          "grade_dataset_key_comparison": null,
+          "reason_code": "LIVE_AI_DISABLED",
+          "failure_category": null,
+          "failure_taxonomy": null,
+          "root_cause": "UNSUPPORTED_POINT_CONSTRUCTION",
+          "parse_status": "LOCAL_PARSE_PARTIAL",
+          "answers": null,
+          "answer_exact": null,
+          "level": null,
+          "invariant_failures": 0,
+          "derived_rules": [],
+          "trig_identities": [],
+          "trig_certs_verified": null,
+          "invariance_cert_verified": null
+        }
+      },
+      {
+        "case_id": "vmmu_r284",
+        "partition_now": "DEVELOPMENT_EXPOSED",
+        "tags": [
+          "pyramid",
+          "distance_point_plane"
+        ],
+        "dataset_answer_key": "D",
+        "expected_answer": "√21a/7",
+        "before_v139": {
+          "outcome": "TEXT_INPUT_SIMULATION",
+          "status": "SERVED",
+          "grade": "SERVED_MATCHES_DATASET_KEY",
+          "reason_code": null,
+          "failure_taxonomy": null,
+          "root_cause": null,
+          "answers": {
+            "q1": "a√21/7"
+          },
+          "level": "GOAL_CONSTRUCTION_VERIFIED"
+        },
+        "after_v140": {
+          "outcome": "TEXT_INPUT_SIMULATION",
+          "status": "SERVED",
+          "grade": "SERVED_MATCHES_DATASET_KEY",
+          "grade_dataset_key_comparison": null,
+          "reason_code": null,
+          "failure_category": null,
+          "failure_taxonomy": null,
+          "root_cause": null,
+          "parse_status": "LOCAL_PARSE_COMPLETE",
+          "answers": {
+            "q1": "a√21/7"
+          },
+          "answer_exact": {
+            "q1": {
+              "coef": "√21/7",
+              "dim": 1,
+              "unit": "a"
+            }
+          },
+          "level": "GOAL_CONSTRUCTION_VERIFIED",
+          "invariant_failures": 0,
+          "derived_rules": [],
+          "trig_identities": [],
+          "trig_certs_verified": null,
+          "invariance_cert_verified": null
+        }
+      },
+      {
+        "case_id": "vmmu_r295",
+        "partition_now": "DEVELOPMENT_EXPOSED",
+        "tags": [
+          "cuboid",
+          "angle_line_plane"
+        ],
+        "dataset_answer_key": "C",
+        "expected_answer": "60°",
+        "before_v139": {
+          "outcome": "TEXT_INPUT_SIMULATION",
+          "status": "SERVED",
+          "grade": "SERVED_MATCHES_DATASET_KEY",
+          "reason_code": null,
+          "failure_taxonomy": null,
+          "root_cause": null,
+          "answers": {
+            "q1": "cos²=1/4"
+          },
+          "level": "GOAL_CONSTRUCTION_VERIFIED"
+        },
+        "after_v140": {
+          "outcome": "TEXT_INPUT_SIMULATION",
+          "status": "SERVED",
+          "grade": "SERVED_MATCHES_DATASET_KEY",
+          "grade_dataset_key_comparison": null,
+          "reason_code": null,
+          "failure_category": null,
+          "failure_taxonomy": null,
+          "root_cause": null,
+          "parse_status": "LOCAL_PARSE_COMPLETE",
+          "answers": {
+            "q1": "cos²=1/4"
+          },
+          "answer_exact": {
+            "q1": {
+              "coef": "1/4",
+              "dim": 0,
+              "unit": null
+            }
+          },
+          "level": "GOAL_CONSTRUCTION_VERIFIED",
+          "invariant_failures": 0,
+          "derived_rules": [],
+          "trig_identities": [],
+          "trig_certs_verified": null,
+          "invariance_cert_verified": null
+        }
+      },
+      {
+        "case_id": "vmmu_r298",
+        "partition_now": "DEVELOPMENT_EXPOSED",
+        "tags": [
+          "regular_prism",
+          "volume",
+          "inverse_from_angle"
+        ],
+        "dataset_answer_key": "B",
+        "expected_answer": "V = 2√6a³",
+        "before_v139": {
+          "outcome": "TEXT_INPUT_SIMULATION",
+          "status": "SERVED",
+          "grade": "SERVED_MATCHES_DATASET_KEY",
+          "reason_code": null,
+          "failure_taxonomy": null,
+          "root_cause": null,
+          "answers": {
+            "q1": "2a³√6"
+          },
+          "level": "GOAL_CONSTRUCTION_VERIFIED"
+        },
+        "after_v140": {
+          "outcome": "TEXT_INPUT_SIMULATION",
+          "status": "SERVED",
+          "grade": "SERVED_MATCHES_DATASET_KEY",
+          "grade_dataset_key_comparison": null,
+          "reason_code": null,
+          "failure_category": null,
+          "failure_taxonomy": null,
+          "root_cause": null,
+          "parse_status": "LOCAL_PARSE_COMPLETE",
+          "answers": {
+            "q1": "2a³√6"
+          },
+          "answer_exact": {
+            "q1": {
+              "coef": "2√6",
+              "dim": 3,
+              "unit": "a"
+            }
+          },
+          "level": "GOAL_CONSTRUCTION_VERIFIED",
+          "invariant_failures": 0,
+          "derived_rules": [],
+          "trig_identities": [],
+          "trig_certs_verified": null,
+          "invariance_cert_verified": null
+        }
+      },
+      {
+        "case_id": "vmmu_r375",
+        "partition_now": "DEVELOPMENT_EXPOSED",
+        "tags": [
+          "regular_pyramid",
+          "distance_point_plane"
+        ],
+        "dataset_answer_key": "C",
+        "expected_answer": "√17",
+        "before_v139": {
+          "outcome": "TEXT_INPUT_SIMULATION",
+          "status": "SERVED",
+          "grade": "SERVED_MATCHES_DATASET_KEY",
+          "reason_code": null,
+          "failure_taxonomy": null,
+          "root_cause": null,
+          "answers": {
+            "q1": "√17"
+          },
+          "level": "GOAL_CONSTRUCTION_VERIFIED"
+        },
+        "after_v140": {
+          "outcome": "TEXT_INPUT_SIMULATION",
+          "status": "SERVED",
+          "grade": "SERVED_MATCHES_DATASET_KEY",
+          "grade_dataset_key_comparison": null,
+          "reason_code": null,
+          "failure_category": null,
+          "failure_taxonomy": null,
+          "root_cause": null,
+          "parse_status": "LOCAL_PARSE_COMPLETE",
+          "answers": {
+            "q1": "√17"
+          },
+          "answer_exact": {
+            "q1": {
+              "coef": "√17",
+              "dim": 0,
+              "unit": null
+            }
+          },
+          "level": "GOAL_CONSTRUCTION_VERIFIED",
+          "invariant_failures": 0,
+          "derived_rules": [],
+          "trig_identities": [
+            null
+          ],
+          "trig_certs_verified": false,
+          "invariance_cert_verified": null
+        }
+      },
+      {
+        "case_id": "vmmu_r460",
+        "partition_now": "DEVELOPMENT_EXPOSED",
+        "tags": [
+          "pyramid",
+          "volume",
+          "hypotenuse_given"
+        ],
+        "dataset_answer_key": "C",
+        "expected_answer": "a³√2/3",
+        "before_v139": {
+          "outcome": "SAFE_REFUSAL",
+          "status": "REFUSED",
+          "grade": "NOT_SERVED",
+          "reason_code": "MISSING_DIMENSION",
+          "failure_taxonomy": null,
+          "root_cause": "INSUFFICIENT_CONSTRAINTS",
+          "answers": null,
+          "level": null
+        },
+        "after_v140": {
+          "outcome": "TEXT_INPUT_SIMULATION",
+          "status": "SERVED",
+          "grade": "SERVED_MATCHES_DATASET_KEY",
+          "grade_dataset_key_comparison": null,
+          "reason_code": null,
+          "failure_category": null,
+          "failure_taxonomy": null,
+          "root_cause": null,
+          "parse_status": "LOCAL_PARSE_COMPLETE",
+          "answers": {
+            "q1": "a³√2/3"
+          },
+          "answer_exact": {
+            "q1": {
+              "coef": "√2/3",
+              "dim": 3,
+              "unit": "a"
+            }
+          },
+          "level": "GOAL_CONSTRUCTION_VERIFIED",
+          "invariant_failures": 0,
+          "derived_rules": [],
+          "trig_identities": [
+            null,
+            null
+          ],
+          "trig_certs_verified": false,
+          "invariance_cert_verified": null
+        }
+      },
+      {
+        "case_id": "vmmu_r461",
+        "partition_now": "DEVELOPMENT_EXPOSED",
+        "tags": [
+          "cone",
+          "applied"
+        ],
+        "dataset_answer_key": "A",
+        "expected_answer": "0,5 dm³",
+        "before_v139": {
+          "outcome": "UNSUPPORTED",
+          "status": "REFUSED",
+          "grade": "NOT_SERVED",
+          "reason_code": "LIVE_AI_DISABLED",
+          "failure_taxonomy": null,
+          "root_cause": "UNRECOGNIZED_GEOMETRIC_ENTITY",
+          "answers": null,
+          "level": null
+        },
+        "after_v140": {
+          "outcome": "UNSUPPORTED",
+          "status": "REFUSED",
+          "grade": "NOT_SERVED",
+          "grade_dataset_key_comparison": null,
+          "reason_code": "LIVE_AI_DISABLED",
+          "failure_category": null,
+          "failure_taxonomy": null,
+          "root_cause": "UNRECOGNIZED_GEOMETRIC_ENTITY",
+          "parse_status": "LOCAL_PARSE_PARTIAL",
+          "answers": null,
+          "answer_exact": null,
+          "level": null,
+          "invariant_failures": 0,
+          "derived_rules": [],
+          "trig_identities": [],
+          "trig_certs_verified": null,
+          "invariance_cert_verified": null
+        }
+      },
+      {
+        "case_id": "vmmu_r463",
+        "partition_now": "DEVELOPMENT_EXPOSED",
+        "tags": [
+          "right_prism",
+          "volume",
+          "inverse_from_angle"
+        ],
+        "dataset_answer_key": "D",
+        "expected_answer": "4√3a³",
+        "before_v139": {
+          "outcome": "SAFE_REFUSAL",
+          "status": "REFUSED",
+          "grade": "NOT_SERVED",
+          "reason_code": "MISSING_DIMENSION",
+          "failure_taxonomy": null,
+          "root_cause": "INSUFFICIENT_CONSTRAINTS",
+          "answers": null,
+          "level": null
+        },
+        "after_v140": {
+          "outcome": "TEXT_INPUT_SIMULATION",
+          "status": "SERVED",
+          "grade": "SERVED_MATCHES_DATASET_KEY",
+          "grade_dataset_key_comparison": null,
+          "reason_code": null,
+          "failure_category": null,
+          "failure_taxonomy": null,
+          "root_cause": null,
+          "parse_status": "LOCAL_PARSE_COMPLETE",
+          "answers": {
+            "q1": "4a³√3"
+          },
+          "answer_exact": {
+            "q1": {
+              "coef": "4√3",
+              "dim": 3,
+              "unit": "a"
+            }
+          },
+          "level": "GOAL_CONSTRUCTION_VERIFIED",
+          "invariant_failures": 0,
+          "derived_rules": [],
+          "trig_identities": [
+            null,
+            null
+          ],
+          "trig_certs_verified": false,
+          "invariance_cert_verified": null
+        }
+      },
+      {
+        "case_id": "vmmu_r475",
+        "partition_now": "DEVELOPMENT_EXPOSED",
+        "tags": [
+          "cylinder_sphere_cone",
+          "applied"
+        ],
+        "dataset_answer_key": "B",
+        "expected_answer": "5/9",
+        "before_v139": {
+          "outcome": "UNSUPPORTED",
+          "status": "REFUSED",
+          "grade": "NOT_SERVED",
+          "reason_code": "LIVE_AI_DISABLED",
+          "failure_taxonomy": null,
+          "root_cause": "UNRECOGNIZED_GEOMETRIC_ENTITY",
+          "answers": null,
+          "level": null
+        },
+        "after_v140": {
+          "outcome": "UNSUPPORTED",
+          "status": "REFUSED",
+          "grade": "NOT_SERVED",
+          "grade_dataset_key_comparison": null,
+          "reason_code": "LIVE_AI_DISABLED",
+          "failure_category": null,
+          "failure_taxonomy": null,
+          "root_cause": "UNRECOGNIZED_GEOMETRIC_ENTITY",
+          "parse_status": "LOCAL_PARSE_UNSUPPORTED",
+          "answers": null,
+          "answer_exact": null,
+          "level": null,
+          "invariant_failures": 0,
+          "derived_rules": [],
+          "trig_identities": [],
+          "trig_certs_verified": null,
+          "invariance_cert_verified": null
+        }
+      },
+      {
+        "case_id": "vmmu_r476",
+        "partition_now": "DEVELOPMENT_EXPOSED",
+        "tags": [
+          "pyramid",
+          "dihedral"
+        ],
+        "dataset_answer_key": "D",
+        "expected_answer": "30°",
+        "before_v139": {
+          "outcome": "TEXT_INPUT_SIMULATION",
+          "status": "SERVED",
+          "grade": "SERVED_MATCHES_DATASET_KEY",
+          "reason_code": null,
+          "failure_taxonomy": null,
+          "root_cause": null,
+          "answers": {
+            "q1": "cos²=3/4"
+          },
+          "level": "GOAL_CONSTRUCTION_VERIFIED"
+        },
+        "after_v140": {
+          "outcome": "TEXT_INPUT_SIMULATION",
+          "status": "SERVED",
+          "grade": "SERVED_MATCHES_DATASET_KEY",
+          "grade_dataset_key_comparison": null,
+          "reason_code": null,
+          "failure_category": null,
+          "failure_taxonomy": null,
+          "root_cause": null,
+          "parse_status": "LOCAL_PARSE_COMPLETE",
+          "answers": {
+            "q1": "cos²=3/4"
+          },
+          "answer_exact": {
+            "q1": {
+              "coef": "3/4",
+              "dim": 0,
+              "unit": null
+            }
+          },
+          "level": "GOAL_CONSTRUCTION_VERIFIED",
+          "invariant_failures": 0,
+          "derived_rules": [],
+          "trig_identities": [],
+          "trig_certs_verified": null,
+          "invariance_cert_verified": null
+        }
+      },
+      {
+        "case_id": "vmmu_r488",
+        "partition_now": "DEVELOPMENT_EXPOSED",
+        "tags": [
+          "right_prism",
+          "volume",
+          "inverse_from_angle"
+        ],
+        "dataset_answer_key": "A",
+        "expected_answer": "a³/3",
+        "before_v139": {
+          "outcome": "UNSUPPORTED",
+          "status": "REFUSED",
+          "grade": "NOT_SERVED",
+          "reason_code": "LIVE_AI_DISABLED",
+          "failure_taxonomy": null,
+          "root_cause": "UNRECOGNIZED_GOAL",
+          "answers": null,
+          "level": null
+        },
+        "after_v140": {
+          "outcome": "UNSUPPORTED",
+          "status": "REFUSED",
+          "grade": "NOT_SERVED",
+          "grade_dataset_key_comparison": null,
+          "reason_code": "LIVE_AI_DISABLED",
+          "failure_category": null,
+          "failure_taxonomy": null,
+          "root_cause": "UNRECOGNIZED_GOAL",
+          "parse_status": "LOCAL_PARSE_PARTIAL",
+          "answers": null,
+          "answer_exact": null,
+          "level": null,
+          "invariant_failures": 0,
+          "derived_rules": [],
+          "trig_identities": [],
+          "trig_certs_verified": null,
+          "invariance_cert_verified": null
+        }
+      },
+      {
+        "case_id": "vmmu_r491",
+        "partition_now": "DEVELOPMENT_EXPOSED",
+        "tags": [
+          "oblique_prism",
+          "distance_point_plane"
+        ],
+        "dataset_answer_key": "D",
+        "expected_answer": "2√5/5 a",
+        "before_v139": {
+          "outcome": "UNSUPPORTED",
+          "status": "REFUSED",
+          "grade": "NOT_SERVED",
+          "reason_code": "LIVE_AI_DISABLED",
+          "failure_taxonomy": null,
+          "root_cause": "FREE_POINT_UNDERDETERMINED",
+          "answers": null,
+          "level": null
+        },
+        "after_v140": {
+          "outcome": "UNSUPPORTED",
+          "status": "REFUSED",
+          "grade": "NOT_SERVED",
+          "grade_dataset_key_comparison": null,
+          "reason_code": "LIVE_AI_DISABLED",
+          "failure_category": null,
+          "failure_taxonomy": null,
+          "root_cause": "FREE_POINT_UNDERDETERMINED",
+          "parse_status": "LOCAL_PARSE_PARTIAL",
+          "answers": null,
+          "answer_exact": null,
+          "level": null,
+          "invariant_failures": 0,
+          "derived_rules": [],
+          "trig_identities": [],
+          "trig_certs_verified": null,
+          "invariance_cert_verified": null
+        }
+      },
+      {
+        "case_id": "vmmu_r492",
+        "partition_now": "DEVELOPMENT_EXPOSED",
+        "tags": [
+          "right_prism",
+          "angle_line_plane"
+        ],
+        "dataset_answer_key": "A",
+        "expected_answer": "60°",
+        "before_v139": {
+          "outcome": "TEXT_INPUT_SIMULATION",
+          "status": "SERVED",
+          "grade": "SERVED_MATCHES_DATASET_KEY",
+          "reason_code": null,
+          "failure_taxonomy": null,
+          "root_cause": null,
+          "answers": {
+            "q1": "cos²=1/4"
+          },
+          "level": "GOAL_CONSTRUCTION_VERIFIED"
+        },
+        "after_v140": {
+          "outcome": "TEXT_INPUT_SIMULATION",
+          "status": "SERVED",
+          "grade": "SERVED_MATCHES_DATASET_KEY",
+          "grade_dataset_key_comparison": null,
+          "reason_code": null,
+          "failure_category": null,
+          "failure_taxonomy": null,
+          "root_cause": null,
+          "parse_status": "LOCAL_PARSE_COMPLETE",
+          "answers": {
+            "q1": "cos²=1/4"
+          },
+          "answer_exact": {
+            "q1": {
+              "coef": "1/4",
+              "dim": 0,
+              "unit": null
+            }
+          },
+          "level": "GOAL_CONSTRUCTION_VERIFIED",
+          "invariant_failures": 0,
+          "derived_rules": [],
+          "trig_identities": [
+            null
+          ],
+          "trig_certs_verified": false,
+          "invariance_cert_verified": null
+        }
+      },
+      {
+        "case_id": "vmmu_r498",
+        "partition_now": "DEVELOPMENT_EXPOSED",
+        "tags": [
+          "regular_prism",
+          "dihedral"
+        ],
+        "dataset_answer_key": "B",
+        "expected_answer": "1/2",
+        "before_v139": {
+          "outcome": "TEXT_INPUT_SIMULATION",
+          "status": "SERVED",
+          "grade": "GOAL_VISUALIZATION_READY_NUMERIC_NOT_ANSWERED",
+          "reason_code": null,
+          "failure_taxonomy": null,
+          "root_cause": null,
+          "answers": {
+            "q1": "cos²=1/4"
+          },
+          "level": "GOAL_CONSTRUCTION_VERIFIED"
+        },
+        "after_v140": {
+          "outcome": "TEXT_INPUT_SIMULATION",
+          "status": "SERVED",
+          "grade": "GOAL_VISUALIZATION_READY_NUMERIC_NOT_ANSWERED",
+          "grade_dataset_key_comparison": "SERVED_NOT_COMPARABLE_NEEDS_ADJUDICATION",
+          "reason_code": null,
+          "failure_category": null,
+          "failure_taxonomy": null,
+          "root_cause": null,
+          "parse_status": "LOCAL_PARSE_COMPLETE",
+          "answers": {
+            "q1": "cos²=1/4"
+          },
+          "answer_exact": {
+            "q1": {
+              "coef": "1/4",
+              "dim": 0,
+              "unit": null
+            }
+          },
+          "level": "GOAL_CONSTRUCTION_VERIFIED",
+          "invariant_failures": 0,
+          "derived_rules": [],
+          "trig_identities": [],
+          "trig_certs_verified": null,
+          "invariance_cert_verified": null
+        }
+      },
+      {
+        "case_id": "vmmu_r513",
+        "partition_now": "DEVELOPMENT_EXPOSED",
+        "tags": [
+          "cuboid",
+          "distance_point_plane"
+        ],
+        "dataset_answer_key": "C",
+        "expected_answer": "2√5/5",
+        "before_v139": {
+          "outcome": "UNSUPPORTED",
+          "status": "REFUSED",
+          "grade": "NOT_SERVED",
+          "reason_code": "LIVE_AI_DISABLED",
+          "failure_taxonomy": null,
+          "root_cause": "INCOMPLETE_FACT_EXTRACTION",
+          "answers": null,
+          "level": null
+        },
+        "after_v140": {
+          "outcome": "UNSUPPORTED",
+          "status": "REFUSED",
+          "grade": "NOT_SERVED",
+          "grade_dataset_key_comparison": null,
+          "reason_code": "LIVE_AI_DISABLED",
+          "failure_category": null,
+          "failure_taxonomy": null,
+          "root_cause": "INCOMPLETE_FACT_EXTRACTION",
+          "parse_status": "LOCAL_PARSE_PARTIAL",
+          "answers": null,
+          "answer_exact": null,
+          "level": null,
+          "invariant_failures": 0,
+          "derived_rules": [],
+          "trig_identities": [],
+          "trig_certs_verified": null,
+          "invariance_cert_verified": null
+        }
+      },
+      {
+        "case_id": "vmmu_r520",
+        "partition_now": "DEVELOPMENT_EXPOSED",
+        "tags": [
+          "pyramid",
+          "dihedral"
+        ],
+        "dataset_answer_key": "D",
+        "expected_answer": "45°",
+        "before_v139": {
+          "outcome": "TEXT_INPUT_SIMULATION",
+          "status": "SERVED",
+          "grade": "SERVED_MATCHES_DATASET_KEY",
+          "reason_code": null,
+          "failure_taxonomy": null,
+          "root_cause": null,
+          "answers": {
+            "q1": "cos²=1/2"
+          },
+          "level": "GOAL_CONSTRUCTION_VERIFIED"
+        },
+        "after_v140": {
+          "outcome": "TEXT_INPUT_SIMULATION",
+          "status": "SERVED",
+          "grade": "SERVED_MATCHES_DATASET_KEY",
+          "grade_dataset_key_comparison": null,
+          "reason_code": null,
+          "failure_category": null,
+          "failure_taxonomy": null,
+          "root_cause": null,
+          "parse_status": "LOCAL_PARSE_COMPLETE",
+          "answers": {
+            "q1": "cos²=1/2"
+          },
+          "answer_exact": {
+            "q1": {
+              "coef": "1/2",
+              "dim": 0,
+              "unit": null
+            }
+          },
+          "level": "GOAL_CONSTRUCTION_VERIFIED",
+          "invariant_failures": 0,
+          "derived_rules": [],
+          "trig_identities": [],
+          "trig_certs_verified": null,
+          "invariance_cert_verified": true
+        }
+      },
+      {
+        "case_id": "vmmu_r537",
+        "partition_now": "DEVELOPMENT_EXPOSED",
+        "tags": [
+          "regular_pyramid",
+          "distance_point_plane"
+        ],
+        "dataset_answer_key": "C",
+        "expected_answer": "a√6/3",
+        "before_v139": {
+          "outcome": "UNSUPPORTED",
+          "status": "REFUSED",
+          "grade": "NOT_SERVED",
+          "reason_code": "LIVE_AI_DISABLED",
+          "failure_taxonomy": null,
+          "root_cause": "INCOMPLETE_FACT_EXTRACTION",
+          "answers": null,
+          "level": null
+        },
+        "after_v140": {
+          "outcome": "TEXT_INPUT_SIMULATION",
+          "status": "SERVED",
+          "grade": "SERVED_MATCHES_DATASET_KEY",
+          "grade_dataset_key_comparison": null,
+          "reason_code": null,
+          "failure_category": null,
+          "failure_taxonomy": null,
+          "root_cause": null,
+          "parse_status": "LOCAL_PARSE_COMPLETE",
+          "answers": {
+            "q1": "a√6/3"
+          },
+          "answer_exact": {
+            "q1": {
+              "coef": "√6/3",
+              "dim": 1,
+              "unit": "a"
+            }
+          },
+          "level": "GOAL_CONSTRUCTION_VERIFIED",
+          "invariant_failures": 0,
+          "derived_rules": [],
+          "trig_identities": [
+            null
+          ],
+          "trig_certs_verified": false,
+          "invariance_cert_verified": null
+        }
+      },
+      {
+        "case_id": "vmmu_r538",
+        "partition_now": "DEVELOPMENT_EXPOSED",
+        "tags": [
+          "regular_pyramid",
+          "angle_line_plane"
+        ],
+        "dataset_answer_key": "C",
+        "expected_answer": "30°",
+        "before_v139": {
+          "outcome": "TEXT_INPUT_SIMULATION",
+          "status": "SERVED",
+          "grade": "SERVED_MATCHES_DATASET_KEY",
+          "reason_code": null,
+          "failure_taxonomy": null,
+          "root_cause": null,
+          "answers": {
+            "q1": "cos²=3/4"
+          },
+          "level": "GOAL_CONSTRUCTION_VERIFIED"
+        },
+        "after_v140": {
+          "outcome": "TEXT_INPUT_SIMULATION",
+          "status": "SERVED",
+          "grade": "SERVED_MATCHES_DATASET_KEY",
+          "grade_dataset_key_comparison": null,
+          "reason_code": null,
+          "failure_category": null,
+          "failure_taxonomy": null,
+          "root_cause": null,
+          "parse_status": "LOCAL_PARSE_COMPLETE",
+          "answers": {
+            "q1": "cos²=3/4"
+          },
+          "answer_exact": {
+            "q1": {
+              "coef": "3/4",
+              "dim": 0,
+              "unit": null
+            }
+          },
+          "level": "GOAL_CONSTRUCTION_VERIFIED",
+          "invariant_failures": 0,
+          "derived_rules": [],
+          "trig_identities": [
+            null
+          ],
+          "trig_certs_verified": false,
+          "invariance_cert_verified": null
+        }
+      },
+      {
+        "case_id": "vmmu_r559",
+        "partition_now": "PREVIOUS_RUN_FRESH_VIEWED",
+        "tags": [
+          "regular_tetrahedron",
+          "angle_line_line",
+          "cosine_output",
+          "scale_free"
+        ],
+        "dataset_answer_key": "B",
+        "expected_answer": "√3/6",
+        "before_v139": {
+          "outcome": "TEXT_INPUT_SIMULATION",
+          "status": "SERVED",
+          "grade": "GOAL_VISUALIZATION_READY_NUMERIC_NOT_ANSWERED",
+          "reason_code": null,
+          "failure_taxonomy": null,
+          "root_cause": null,
+          "answers": {
+            "q1": "cos²=1/12"
+          },
+          "level": "GOAL_CONSTRUCTION_VERIFIED"
+        },
+        "after_v140": {
+          "outcome": "TEXT_INPUT_SIMULATION",
+          "status": "SERVED",
+          "grade": "GOAL_VISUALIZATION_READY_NUMERIC_NOT_ANSWERED",
+          "grade_dataset_key_comparison": "SERVED_NOT_COMPARABLE_NEEDS_ADJUDICATION",
+          "reason_code": null,
+          "failure_category": null,
+          "failure_taxonomy": null,
+          "root_cause": null,
+          "parse_status": "LOCAL_PARSE_COMPLETE",
+          "answers": {
+            "q1": "cos²=1/12"
+          },
+          "answer_exact": {
+            "q1": {
+              "coef": "1/12",
+              "dim": 0,
+              "unit": null
+            }
+          },
+          "level": "GOAL_CONSTRUCTION_VERIFIED",
+          "invariant_failures": 0,
+          "derived_rules": [],
+          "trig_identities": [],
+          "trig_certs_verified": null,
+          "invariance_cert_verified": null
+        }
+      },
+      {
+        "case_id": "vmmu_r695",
+        "partition_now": "PREVIOUS_RUN_FRESH_VIEWED_AND_RULE_TARGETED",
+        "tags": [
+          "pyramid",
+          "distance_point_plane"
+        ],
+        "dataset_answer_key": "B",
+        "expected_answer": "2/3",
+        "before_v139": {
+          "outcome": "TEXT_INPUT_SIMULATION",
+          "status": "SERVED",
+          "grade": "SERVED_MATCHES_DATASET_KEY",
+          "reason_code": null,
+          "failure_taxonomy": null,
+          "root_cause": null,
+          "answers": {
+            "q1": "2/3"
+          },
+          "level": "GOAL_CONSTRUCTION_VERIFIED"
+        },
+        "after_v140": {
+          "outcome": "TEXT_INPUT_SIMULATION",
+          "status": "SERVED",
+          "grade": "SERVED_MATCHES_DATASET_KEY",
+          "grade_dataset_key_comparison": null,
+          "reason_code": null,
+          "failure_category": null,
+          "failure_taxonomy": null,
+          "root_cause": null,
+          "parse_status": "LOCAL_PARSE_COMPLETE",
+          "answers": {
+            "q1": "2/3"
+          },
+          "answer_exact": {
+            "q1": {
+              "coef": "2/3",
+              "dim": 0,
+              "unit": null
+            }
+          },
+          "level": "GOAL_CONSTRUCTION_VERIFIED",
+          "invariant_failures": 0,
+          "derived_rules": [],
+          "trig_identities": [],
+          "trig_certs_verified": null,
+          "invariance_cert_verified": null
+        }
+      }
+    ]
+  },
+  "image": {
+    "visualized_before": 9,
+    "visualized_after": 10,
+    "grades_before": {
+      "NOT_SERVED": 18,
+      "GOAL_VISUALIZATION_READY_NUMERIC_NOT_ANSWERED": 3,
+      "SERVED_MATCHES_DATASET_KEY": 6
+    },
+    "grades_after": {
+      "NOT_SERVED": 17,
+      "GOAL_VISUALIZATION_READY_NUMERIC_NOT_ANSWERED": 3,
+      "SERVED_MATCHES_DATASET_KEY": 7
+    },
+    "wrong_scene_served": [],
+    "broken_invariants": 0,
+    "separated_11_metrics_after_v140": {
+      "total_items": 27,
+      "semantic_correctness": {
+        "local_parse_complete_count": 10,
+        "complete_parse_with_unread_leak_count": 0,
+        "meets_expected_outcome_count": null,
+        "meets_expected_outcome_rate": "N/A_REAL_CORPUS"
+      },
+      "dimension_correctness": {
+        "served_with_verified_slot_dimensions": 10,
+        "negative_dimension_or_unit_probes_total": 0,
+        "negative_dimension_or_unit_falsely_served": []
+      },
+      "source_provenance": {
+        "extracted_items_quote_checked": 57,
+        "ungrounded_quotes_count": 0,
+        "clause_span_mismatch_count": 0,
+        "served_passed_source_gate_count": 10
+      },
+      "mathematical_determinacy": {
+        "NOT_SERVED": 17,
+        "SIMILARITY_SCALE_ILLUSTRATIVE": 2,
+        "UNIQUELY_DETERMINED_SERVED": 8
+      },
+      "planner_capability": {
+        "planned_and_served_count": 10,
+        "capability_gap_refusal_count": 0,
+        "capability_gap_cases": []
+      },
+      "exact_construction": {
+        "served_count": 10,
+        "kernel_check_passed_count": 10,
+        "float_approximations_used": 0
+      },
+      "proof_verification": {
+        "trig_certificate_cases_count": 4,
+        "trig_certificate_verification_failures": [
+          "vmmu_r273",
+          "vmmu_r492",
+          "vmmu_r537",
+          "vmmu_r538"
+        ],
+        "invariance_certificate_cases_count": 2,
+        "invariance_certificate_verification_failures": [],
+        "verified_derived_quantity_cases_count": 0
+      },
+      "verified_scene3d": {
+        "visualized_served_count": 10,
+        "goal_construction_verified_count": 10,
+        "broken_scene_invariants_count": 0
+      },
+      "numeric_goal_completion": {
+        "learner_visible_numeric_answered_count": 7,
+        "learner_visible_numeric_oracle_or_key_match_count": 7,
+        "goal_visualization_ready_numeric_not_answered_count": 3,
+        "goal_visualization_ready_numeric_not_answered_cases": [
+          "vmmu_r258",
+          "vmmu_r498",
+          "vmmu_r559"
+        ],
+        "structural_construction_only_no_numeric_goal_count": 0,
+        "internal_symbolic_oracle_comparable_match_count": 7,
+        "output_policy_note": "Strictly per §14.2: items with source_goal_completion (asking sin/cos/tan/cot value of an angle) are reported as GOAL_VISUALIZATION_READY_NUMERIC_NOT_ANSWERED and NEVER counted in learner_visible_numeric_oracle_or_key_match_count."
+      },
+      "safe_refusal": {
+        "total_not_served_count": 17,
+        "expected_negative_items_count": null,
+        "expected_negative_safely_refused_count": null,
+        "provider_503_infrastructure_fallbacks_in_offline_mode": 17
+      },
+      "wrong_scene_served": {
+        "count": 0,
+        "cases": []
+      }
+    },
+    "changed": [
+      {
+        "case_id": "vmmu_r537",
+        "before": {
+          "outcome": "UNSUPPORTED",
+          "grade": "NOT_SERVED"
+        },
+        "after": {
+          "outcome": "USER_CONFIRMED_SIMULATION",
+          "grade": "SERVED_MATCHES_DATASET_KEY",
+          "answers": {
+            "q1": "a√6/3"
+          },
+          "level": "GOAL_CONSTRUCTION_VERIFIED"
+        }
+      }
+    ],
+    "rows": [
+      {
+        "case_id": "vmmu_r247",
+        "partition_now": "DEVELOPMENT_EXPOSED",
+        "prepare_status": "needs_confirmation",
+        "confirmation_burden": {
+          "flagged_spans": 7,
+          "flagged_reasons": [
+            "Chữ tiếng Việt đọc chưa chắc",
+            "Dấu phẩy trên (′) đọc chưa chắc",
+            "Ký hiệu toán chưa được hai bộ đọc độc lập xác nhận",
+            "Ký hiệu toán đọc chưa chắc",
+            "Đề nhắc tới hình vẽ — em xác nhận hình không ghi thêm số đo, góc hay quan hệ nào ngoài lời đề (nếu có, em ghi bổ sung vào đề)."
+          ],
+          "diagram_confirms": 1,
+          "edits": [
+            {
+              "span_id": "sp13",
+              "from": "a,BC",
+              "to": "a, BC",
+              "chosen_from_alternatives": false
+            },
+            {
+              "span_id": "sp8",
+              "from": "4BCD-",
+              "to": "ABCD.",
+              "chosen_from_alternatives": false
+            }
+          ],
+          "confirms": 4
+        },
+        "before_v139": {
+          "outcome": "UNSUPPORTED",
+          "grade": "NOT_SERVED",
+          "reason_code": "LIVE_AI_DISABLED",
+          "level": null
+        },
+        "after_v140": {
+          "outcome": "UNSUPPORTED",
+          "status": "REFUSED",
+          "grade": "NOT_SERVED",
+          "grade_dataset_key_comparison": null,
+          "reason_code": "LIVE_AI_DISABLED",
+          "failure_taxonomy": null,
+          "parse_status": "LOCAL_PARSE_PARTIAL",
+          "answers": null,
+          "answer_exact": null,
+          "level": null,
+          "invariant_failures": 0,
+          "derived_rules": [],
+          "trig_identities": [],
+          "upload_to_prepared_ms": 5628.47,
+          "upload_to_first_model_ms": null
+        }
+      },
+      {
+        "case_id": "vmmu_r254",
+        "partition_now": "DEVELOPMENT_EXPOSED",
+        "prepare_status": "needs_confirmation",
+        "confirmation_burden": {
+          "flagged_spans": 9,
+          "flagged_reasons": [
+            "Chữ tiếng Việt đọc chưa chắc",
+            "Dấu căn (√) đọc chưa chắc",
+            "Hình vẽ có thể chứa dữ kiện chưa đọc được — em xác nhận hoặc ghi bổ sung vào đề.",
+            "Ký hiệu toán chưa được hai bộ đọc độc lập xác nhận",
+            "Ký hiệu toán đọc chưa chắc",
+            "Phân số viết hai tầng — kiểm tra tử số và mẫu số"
+          ],
+          "diagram_confirms": 1,
+          "edits": [
+            {
+              "span_id": "sp64",
+              "from": "8",
+              "to": "",
+              "chosen_from_alternatives": false
+            },
+            {
+              "span_id": "sp58",
+              "from": "27√13a3/2",
+              "to": "27√13a³/2",
+              "chosen_from_alternatives": false
+            },
+            {
+              "span_id": "sp60",
+              "from": "C. D. 27√13a3/2",
+              "to": "C. 99√13a³/8. D. 27√13a³/2",
+              "chosen_from_alternatives": false
+            },
+            {
+              "span_id": "sp62",
+              "from": "C. D. 27√13a3/2",
+              "to": "C. 99√13a³/8. D. 27√13a³/2",
+              "chosen_from_alternatives": false
+            },
+            {
+              "span_id": "sp9",
+              "from": "AA=",
+              "to": "AA' =",
+              "chosen_from_alternatives": false
+            },
+            {
+              "span_id": "sp7",
+              "from": "ABC.A##€©#",
+              "to": "ABC.A'B'C'",
+              "chosen_from_alternatives": false
+            }
+          ],
+          "confirms": 2
+        },
+        "before_v139": {
+          "outcome": "UNSUPPORTED",
+          "grade": "NOT_SERVED",
+          "reason_code": "LIVE_AI_DISABLED",
+          "level": null
+        },
+        "after_v140": {
+          "outcome": "UNSUPPORTED",
+          "status": "REFUSED",
+          "grade": "NOT_SERVED",
+          "grade_dataset_key_comparison": null,
+          "reason_code": "LIVE_AI_DISABLED",
+          "failure_taxonomy": null,
+          "parse_status": "LOCAL_PARSE_PARTIAL",
+          "answers": null,
+          "answer_exact": null,
+          "level": null,
+          "invariant_failures": 0,
+          "derived_rules": [],
+          "trig_identities": [],
+          "upload_to_prepared_ms": 2702.62,
+          "upload_to_first_model_ms": null
+        }
+      },
+      {
+        "case_id": "vmmu_r256",
+        "partition_now": "DEVELOPMENT_EXPOSED",
+        "prepare_status": "needs_confirmation",
+        "confirmation_burden": {
+          "flagged_spans": 6,
+          "flagged_reasons": [
+            "Ký hiệu có dạng thường bị đọc sai",
+            "Ký hiệu toán chưa được hai bộ đọc độc lập xác nhận",
+            "Phân số viết hai tầng — kiểm tra tử số và mẫu số",
+            "Đề nhắc tới hình vẽ — em xác nhận hình không ghi thêm số đo, góc hay quan hệ nào ngoài lời đề (nếu có, em ghi bổ sung vào đề)."
+          ],
+          "diagram_confirms": 1,
+          "edits": [
+            {
+              "span_id": "sp45",
+              "from": "7",
+              "to": "",
+              "chosen_from_alternatives": false
+            }
+          ],
+          "confirms": 4
+        },
+        "before_v139": {
+          "outcome": "UNSUPPORTED",
+          "grade": "NOT_SERVED",
+          "reason_code": "LIVE_AI_DISABLED",
+          "level": null
+        },
+        "after_v140": {
+          "outcome": "UNSUPPORTED",
+          "status": "REFUSED",
+          "grade": "NOT_SERVED",
+          "grade_dataset_key_comparison": null,
+          "reason_code": "LIVE_AI_DISABLED",
+          "failure_taxonomy": null,
+          "parse_status": "LOCAL_PARSE_PARTIAL",
+          "answers": null,
+          "answer_exact": null,
+          "level": null,
+          "invariant_failures": 0,
+          "derived_rules": [],
+          "trig_identities": [],
+          "upload_to_prepared_ms": 3670.4,
+          "upload_to_first_model_ms": null
+        }
+      },
+      {
+        "case_id": "vmmu_r258",
+        "partition_now": "DEVELOPMENT_EXPOSED",
+        "prepare_status": "needs_confirmation",
+        "confirmation_burden": {
+          "flagged_spans": 4,
+          "flagged_reasons": [
+            "Ký hiệu toán chưa được hai bộ đọc độc lập xác nhận",
+            "Đề nhắc tới hình vẽ — em xác nhận hình không ghi thêm số đo, góc hay quan hệ nào ngoài lời đề (nếu có, em ghi bổ sung vào đề)."
+          ],
+          "diagram_confirms": 1,
+          "edits": [
+            {
+              "span_id": "sp42",
+              "from": "D.V2.",
+              "to": "D. √2.",
+              "chosen_from_alternatives": false
+            }
+          ],
+          "confirms": 2
+        },
+        "before_v139": {
+          "outcome": "USER_CONFIRMED_SIMULATION",
+          "grade": "GOAL_VISUALIZATION_READY_NUMERIC_NOT_ANSWERED",
+          "reason_code": null,
+          "level": "GOAL_CONSTRUCTION_VERIFIED"
+        },
+        "after_v140": {
+          "outcome": "USER_CONFIRMED_SIMULATION",
+          "status": "SERVED",
+          "grade": "GOAL_VISUALIZATION_READY_NUMERIC_NOT_ANSWERED",
+          "grade_dataset_key_comparison": "SERVED_NOT_COMPARABLE_NEEDS_ADJUDICATION",
+          "reason_code": null,
+          "failure_taxonomy": null,
+          "parse_status": "LOCAL_PARSE_COMPLETE",
+          "answers": {
+            "q1": "cos²=1/3"
+          },
+          "answer_exact": {
+            "q1": {
+              "coef": "1/3",
+              "dim": 0,
+              "unit": null
+            }
+          },
+          "level": "GOAL_CONSTRUCTION_VERIFIED",
+          "invariant_failures": 0,
+          "derived_rules": [],
+          "trig_identities": [],
+          "upload_to_prepared_ms": 1971.77,
+          "upload_to_first_model_ms": 5378.0
+        }
+      },
+      {
+        "case_id": "vmmu_r266",
+        "partition_now": "DEVELOPMENT_EXPOSED",
+        "prepare_status": "needs_confirmation",
+        "confirmation_burden": {
+          "flagged_spans": 3,
+          "flagged_reasons": [
+            "Ký hiệu toán chưa được hai bộ đọc độc lập xác nhận"
+          ],
+          "diagram_confirms": 0,
+          "edits": [],
+          "confirms": 3
+        },
+        "before_v139": {
+          "outcome": "UNSUPPORTED",
+          "grade": "NOT_SERVED",
+          "reason_code": "LIVE_AI_DISABLED",
+          "level": null
+        },
+        "after_v140": {
+          "outcome": "UNSUPPORTED",
+          "status": "REFUSED",
+          "grade": "NOT_SERVED",
+          "grade_dataset_key_comparison": null,
+          "reason_code": "LIVE_AI_DISABLED",
+          "failure_taxonomy": null,
+          "parse_status": "LOCAL_PARSE_PARTIAL",
+          "answers": null,
+          "answer_exact": null,
+          "level": null,
+          "invariant_failures": 0,
+          "derived_rules": [],
+          "trig_identities": [],
+          "upload_to_prepared_ms": 2091.06,
+          "upload_to_first_model_ms": null
+        }
+      },
+      {
+        "case_id": "vmmu_r270",
+        "partition_now": "DEVELOPMENT_EXPOSED",
+        "prepare_status": "needs_confirmation",
+        "confirmation_burden": {
+          "flagged_spans": 4,
+          "flagged_reasons": [
+            "Dấu phẩy trên (′) đọc chưa chắc",
+            "Ký hiệu toán chưa được hai bộ đọc độc lập xác nhận",
+            "Ký hiệu toán đọc chưa chắc",
+            "Đề nhắc tới hình vẽ — em xác nhận hình không ghi thêm số đo, góc hay quan hệ nào ngoài lời đề (nếu có, em ghi bổ sung vào đề)."
+          ],
+          "diagram_confirms": 1,
+          "edits": [
+            {
+              "span_id": "sp23",
+              "from": "phng(A'BC)",
+              "to": "phẳng (A'BC)",
+              "chosen_from_alternatives": false
+            }
+          ],
+          "confirms": 2
+        },
+        "before_v139": {
+          "outcome": "UNSUPPORTED",
+          "grade": "NOT_SERVED",
+          "reason_code": "LIVE_AI_DISABLED",
+          "level": null
+        },
+        "after_v140": {
+          "outcome": "UNSUPPORTED",
+          "status": "REFUSED",
+          "grade": "NOT_SERVED",
+          "grade_dataset_key_comparison": null,
+          "reason_code": "LIVE_AI_DISABLED",
+          "failure_taxonomy": null,
+          "parse_status": "LOCAL_PARSE_PARTIAL",
+          "answers": null,
+          "answer_exact": null,
+          "level": null,
+          "invariant_failures": 0,
+          "derived_rules": [],
+          "trig_identities": [],
+          "upload_to_prepared_ms": 3312.9,
+          "upload_to_first_model_ms": null
+        }
+      },
+      {
+        "case_id": "vmmu_r273",
+        "partition_now": "DEVELOPMENT_EXPOSED",
+        "prepare_status": "needs_confirmation",
+        "confirmation_burden": {
+          "flagged_spans": 3,
+          "flagged_reasons": [
+            "Dấu căn (√) đọc chưa chắc",
+            "Hình vẽ có thể chứa dữ kiện chưa đọc được — em xác nhận hoặc ghi bổ sung vào đề.",
+            "Ký hiệu toán chưa được hai bộ đọc độc lập xác nhận"
+          ],
+          "diagram_confirms": 1,
+          "edits": [],
+          "confirms": 2
+        },
+        "before_v139": {
+          "outcome": "USER_CONFIRMED_SIMULATION",
+          "grade": "SERVED_MATCHES_DATASET_KEY",
+          "reason_code": null,
+          "level": "GOAL_CONSTRUCTION_VERIFIED"
+        },
+        "after_v140": {
+          "outcome": "USER_CONFIRMED_SIMULATION",
+          "status": "SERVED",
+          "grade": "SERVED_MATCHES_DATASET_KEY",
+          "grade_dataset_key_comparison": null,
+          "reason_code": null,
+          "failure_taxonomy": null,
+          "parse_status": "LOCAL_PARSE_COMPLETE",
+          "answers": {
+            "q1": "a³"
+          },
+          "answer_exact": {
+            "q1": {
+              "coef": "1",
+              "dim": 3,
+              "unit": "a"
+            }
+          },
+          "level": "GOAL_CONSTRUCTION_VERIFIED",
+          "invariant_failures": 0,
+          "derived_rules": [],
+          "trig_identities": [
+            null
+          ],
+          "upload_to_prepared_ms": 1715.03,
+          "upload_to_first_model_ms": 4549.72
+        }
+      },
+      {
+        "case_id": "vmmu_r277",
+        "partition_now": "DEVELOPMENT_EXPOSED",
+        "prepare_status": "needs_confirmation",
+        "confirmation_burden": {
+          "flagged_spans": 5,
+          "flagged_reasons": [
+            "Chữ tiếng Việt đọc chưa chắc",
+            "Ký hiệu toán chưa được hai bộ đọc độc lập xác nhận",
+            "Ký hiệu toán đọc chưa chắc"
+          ],
+          "diagram_confirms": 0,
+          "edits": [],
+          "confirms": 5
+        },
+        "before_v139": {
+          "outcome": "UNSUPPORTED",
+          "grade": "NOT_SERVED",
+          "reason_code": "LIVE_AI_DISABLED",
+          "level": null
+        },
+        "after_v140": {
+          "outcome": "UNSUPPORTED",
+          "status": "REFUSED",
+          "grade": "NOT_SERVED",
+          "grade_dataset_key_comparison": null,
+          "reason_code": "LIVE_AI_DISABLED",
+          "failure_taxonomy": null,
+          "parse_status": "LOCAL_PARSE_PARTIAL",
+          "answers": null,
+          "answer_exact": null,
+          "level": null,
+          "invariant_failures": 0,
+          "derived_rules": [],
+          "trig_identities": [],
+          "upload_to_prepared_ms": 2083.08,
+          "upload_to_first_model_ms": null
+        }
+      },
+      {
+        "case_id": "vmmu_r284",
+        "partition_now": "DEVELOPMENT_EXPOSED",
+        "prepare_status": "needs_confirmation",
+        "confirmation_burden": {
+          "flagged_spans": 6,
+          "flagged_reasons": [
+            "Chỉ một bộ đọc nhận ra chỗ này",
+            "Chữ tiếng Việt đọc chưa chắc",
+            "Chữ tiếng Việt đọc chưa rõ dấu",
+            "Ký hiệu toán đọc chưa chắc",
+            "Đề nhắc tới hình vẽ — em xác nhận hình không ghi thêm số đo, góc hay quan hệ nào ngoài lời đề (nếu có, em ghi bổ sung vào đề)."
+          ],
+          "diagram_confirms": 1,
+          "edits": [
+            {
+              "span_id": "sp14",
+              "from": "S",
+              "to": "",
+              "chosen_from_alternatives": false
+            },
+            {
+              "span_id": "sp8",
+              "from": "g",
+              "to": "có",
+              "chosen_from_alternatives": false
+            },
+            {
+              "span_id": "sp7",
+              "from": ",Š.48ŒD",
+              "to": "S.ABCD",
+              "chosen_from_alternatives": false
+            }
+          ],
+          "confirms": 2
+        },
+        "before_v139": {
+          "outcome": "UNSUPPORTED",
+          "grade": "NOT_SERVED",
+          "reason_code": "LIVE_AI_DISABLED",
+          "level": null
+        },
+        "after_v140": {
+          "outcome": "UNSUPPORTED",
+          "status": "REFUSED",
+          "grade": "NOT_SERVED",
+          "grade_dataset_key_comparison": null,
+          "reason_code": "LIVE_AI_DISABLED",
+          "failure_taxonomy": null,
+          "parse_status": "LOCAL_PARSE_PARTIAL",
+          "answers": null,
+          "answer_exact": null,
+          "level": null,
+          "invariant_failures": 0,
+          "derived_rules": [],
+          "trig_identities": [],
+          "upload_to_prepared_ms": 2119.52,
+          "upload_to_first_model_ms": null
+        }
+      },
+      {
+        "case_id": "vmmu_r295",
+        "partition_now": "DEVELOPMENT_EXPOSED",
+        "prepare_status": "needs_confirmation",
+        "confirmation_burden": {
+          "flagged_spans": 4,
+          "flagged_reasons": [
+            "Dấu căn (√) đọc chưa chắc",
+            "Ký hiệu toán chưa được hai bộ đọc độc lập xác nhận",
+            "Đề nhắc tới hình vẽ — em xác nhận hình không ghi thêm số đo, góc hay quan hệ nào ngoài lời đề (nếu có, em ghi bổ sung vào đề)."
+          ],
+          "diagram_confirms": 1,
+          "edits": [
+            {
+              "span_id": "sp27",
+              "from": "CA'và",
+              "to": "CA' và",
+              "chosen_from_alternatives": false
+            },
+            {
+              "span_id": "sp18",
+              "from": "√6(",
+              "to": "√6 (",
+              "chosen_from_alternatives": false
+            },
+            {
+              "span_id": "sp8",
+              "from": "ABCD.A'B'C'D'có",
+              "to": "ABCD.A'B'C'D' có",
+              "chosen_from_alternatives": false
+            }
+          ],
+          "confirms": 0
+        },
+        "before_v139": {
+          "outcome": "USER_CONFIRMED_SIMULATION",
+          "grade": "SERVED_MATCHES_DATASET_KEY",
+          "reason_code": null,
+          "level": "GOAL_CONSTRUCTION_VERIFIED"
+        },
+        "after_v140": {
+          "outcome": "USER_CONFIRMED_SIMULATION",
+          "status": "SERVED",
+          "grade": "SERVED_MATCHES_DATASET_KEY",
+          "grade_dataset_key_comparison": null,
+          "reason_code": null,
+          "failure_taxonomy": null,
+          "parse_status": "LOCAL_PARSE_COMPLETE",
+          "answers": {
+            "q1": "cos²=1/4"
+          },
+          "answer_exact": {
+            "q1": {
+              "coef": "1/4",
+              "dim": 0,
+              "unit": null
+            }
+          },
+          "level": "GOAL_CONSTRUCTION_VERIFIED",
+          "invariant_failures": 0,
+          "derived_rules": [],
+          "trig_identities": [],
+          "upload_to_prepared_ms": 1346.82,
+          "upload_to_first_model_ms": 4169.43
+        }
+      },
+      {
+        "case_id": "vmmu_r298",
+        "partition_now": "DEVELOPMENT_EXPOSED",
+        "prepare_status": "needs_confirmation",
+        "confirmation_burden": {
+          "flagged_spans": 3,
+          "flagged_reasons": [
+            "Ký hiệu toán chưa được hai bộ đọc độc lập xác nhận",
+            "Ký hiệu độ (°) đọc chưa chắc",
+            "Đề nhắc tới hình vẽ — em xác nhận hình không ghi thêm số đo, góc hay quan hệ nào ngoài lời đề (nếu có, em ghi bổ sung vào đề)."
+          ],
+          "diagram_confirms": 1,
+          "edits": [],
+          "confirms": 2
+        },
+        "before_v139": {
+          "outcome": "USER_CONFIRMED_SIMULATION",
+          "grade": "SERVED_MATCHES_DATASET_KEY",
+          "reason_code": null,
+          "level": "GOAL_CONSTRUCTION_VERIFIED"
+        },
+        "after_v140": {
+          "outcome": "USER_CONFIRMED_SIMULATION",
+          "status": "SERVED",
+          "grade": "SERVED_MATCHES_DATASET_KEY",
+          "grade_dataset_key_comparison": null,
+          "reason_code": null,
+          "failure_taxonomy": null,
+          "parse_status": "LOCAL_PARSE_COMPLETE",
+          "answers": {
+            "q1": "2a³√6"
+          },
+          "answer_exact": {
+            "q1": {
+              "coef": "2√6",
+              "dim": 3,
+              "unit": "a"
+            }
+          },
+          "level": "GOAL_CONSTRUCTION_VERIFIED",
+          "invariant_failures": 0,
+          "derived_rules": [],
+          "trig_identities": [],
+          "upload_to_prepared_ms": 1690.46,
+          "upload_to_first_model_ms": 4480.29
+        }
+      },
+      {
+        "case_id": "vmmu_r375",
+        "partition_now": "DEVELOPMENT_EXPOSED",
+        "prepare_status": "needs_confirmation",
+        "confirmation_burden": {
+          "flagged_spans": 1,
+          "flagged_reasons": [
+            "Đề nhắc tới hình vẽ — em xác nhận hình không ghi thêm số đo, góc hay quan hệ nào ngoài lời đề (nếu có, em ghi bổ sung vào đề)."
+          ],
+          "diagram_confirms": 1,
+          "edits": [],
+          "confirms": 0
+        },
+        "before_v139": {
+          "outcome": "UNSUPPORTED",
+          "grade": "NOT_SERVED",
+          "reason_code": "LIVE_AI_DISABLED",
+          "level": null
+        },
+        "after_v140": {
+          "outcome": "UNSUPPORTED",
+          "status": "REFUSED",
+          "grade": "NOT_SERVED",
+          "grade_dataset_key_comparison": null,
+          "reason_code": "LIVE_AI_DISABLED",
+          "failure_taxonomy": null,
+          "parse_status": "LOCAL_PARSE_PARTIAL",
+          "answers": null,
+          "answer_exact": null,
+          "level": null,
+          "invariant_failures": 0,
+          "derived_rules": [],
+          "trig_identities": [],
+          "upload_to_prepared_ms": 2380.23,
+          "upload_to_first_model_ms": null
+        }
+      },
+      {
+        "case_id": "vmmu_r460",
+        "partition_now": "DEVELOPMENT_EXPOSED",
+        "prepare_status": "needs_confirmation",
+        "confirmation_burden": {
+          "flagged_spans": 1,
+          "flagged_reasons": [
+            "Hình vẽ có thể chứa dữ kiện chưa đọc được — em xác nhận hoặc ghi bổ sung vào đề."
+          ],
+          "diagram_confirms": 1,
+          "edits": [],
+          "confirms": 0
+        },
+        "before_v139": {
+          "outcome": "UNSUPPORTED",
+          "grade": "NOT_SERVED",
+          "reason_code": "LIVE_AI_DISABLED",
+          "level": null
+        },
+        "after_v140": {
+          "outcome": "UNSUPPORTED",
+          "status": "REFUSED",
+          "grade": "NOT_SERVED",
+          "grade_dataset_key_comparison": null,
+          "reason_code": "LIVE_AI_DISABLED",
+          "failure_taxonomy": null,
+          "parse_status": "LOCAL_PARSE_PARTIAL",
+          "answers": null,
+          "answer_exact": null,
+          "level": null,
+          "invariant_failures": 0,
+          "derived_rules": [],
+          "trig_identities": [],
+          "upload_to_prepared_ms": 2101.56,
+          "upload_to_first_model_ms": null
+        }
+      },
+      {
+        "case_id": "vmmu_r461",
+        "partition_now": "DEVELOPMENT_EXPOSED",
+        "prepare_status": "needs_confirmation",
+        "confirmation_burden": {
+          "flagged_spans": 2,
+          "flagged_reasons": [
+            "Ký hiệu toán chưa được hai bộ đọc độc lập xác nhận",
+            "Đề nhắc tới hình vẽ — em xác nhận hình không ghi thêm số đo, góc hay quan hệ nào ngoài lời đề (nếu có, em ghi bổ sung vào đề)."
+          ],
+          "diagram_confirms": 1,
+          "edits": [],
+          "confirms": 1
+        },
+        "before_v139": {
+          "outcome": "UNSUPPORTED",
+          "grade": "NOT_SERVED",
+          "reason_code": "LIVE_AI_DISABLED",
+          "level": null
+        },
+        "after_v140": {
+          "outcome": "UNSUPPORTED",
+          "status": "REFUSED",
+          "grade": "NOT_SERVED",
+          "grade_dataset_key_comparison": null,
+          "reason_code": "LIVE_AI_DISABLED",
+          "failure_taxonomy": null,
+          "parse_status": "LOCAL_PARSE_PARTIAL",
+          "answers": null,
+          "answer_exact": null,
+          "level": null,
+          "invariant_failures": 0,
+          "derived_rules": [],
+          "trig_identities": [],
+          "upload_to_prepared_ms": 2455.22,
+          "upload_to_first_model_ms": null
+        }
+      },
+      {
+        "case_id": "vmmu_r463",
+        "partition_now": "DEVELOPMENT_EXPOSED",
+        "prepare_status": "needs_confirmation",
+        "confirmation_burden": {
+          "flagged_spans": 4,
+          "flagged_reasons": [
+            "Chữ tiếng Việt đọc chưa rõ dấu",
+            "Ký hiệu toán chưa được hai bộ đọc độc lập xác nhận"
+          ],
+          "diagram_confirms": 0,
+          "edits": [],
+          "confirms": 4
+        },
+        "before_v139": {
+          "outcome": "UNSUPPORTED",
+          "grade": "NOT_SERVED",
+          "reason_code": "LIVE_AI_DISABLED",
+          "level": null
+        },
+        "after_v140": {
+          "outcome": "UNSUPPORTED",
+          "status": "REFUSED",
+          "grade": "NOT_SERVED",
+          "grade_dataset_key_comparison": null,
+          "reason_code": "LIVE_AI_DISABLED",
+          "failure_taxonomy": null,
+          "parse_status": "LOCAL_PARSE_PARTIAL",
+          "answers": null,
+          "answer_exact": null,
+          "level": null,
+          "invariant_failures": 0,
+          "derived_rules": [],
+          "trig_identities": [],
+          "upload_to_prepared_ms": 1733.97,
+          "upload_to_first_model_ms": null
+        }
+      },
+      {
+        "case_id": "vmmu_r475",
+        "partition_now": "DEVELOPMENT_EXPOSED",
+        "prepare_status": "needs_confirmation",
+        "confirmation_burden": {
+          "flagged_spans": 2,
+          "flagged_reasons": [
+            "Chữ tiếng Việt đọc chưa rõ dấu",
+            "Đề nhắc tới hình vẽ — em xác nhận hình không ghi thêm số đo, góc hay quan hệ nào ngoài lời đề (nếu có, em ghi bổ sung vào đề)."
+          ],
+          "diagram_confirms": 1,
+          "edits": [],
+          "confirms": 1
+        },
+        "before_v139": {
+          "outcome": "UNSUPPORTED",
+          "grade": "NOT_SERVED",
+          "reason_code": "LIVE_AI_DISABLED",
+          "level": null
+        },
+        "after_v140": {
+          "outcome": "UNSUPPORTED",
+          "status": "REFUSED",
+          "grade": "NOT_SERVED",
+          "grade_dataset_key_comparison": null,
+          "reason_code": "LIVE_AI_DISABLED",
+          "failure_taxonomy": null,
+          "parse_status": "LOCAL_PARSE_UNSUPPORTED",
+          "answers": null,
+          "answer_exact": null,
+          "level": null,
+          "invariant_failures": 0,
+          "derived_rules": [],
+          "trig_identities": [],
+          "upload_to_prepared_ms": 2216.23,
+          "upload_to_first_model_ms": null
+        }
+      },
+      {
+        "case_id": "vmmu_r476",
+        "partition_now": "DEVELOPMENT_EXPOSED",
+        "prepare_status": "needs_confirmation",
+        "confirmation_burden": {
+          "flagged_spans": 5,
+          "flagged_reasons": [
+            "Ký hiệu toán chưa được hai bộ đọc độc lập xác nhận",
+            "Đề nhắc tới hình vẽ — em xác nhận hình không ghi thêm số đo, góc hay quan hệ nào ngoài lời đề (nếu có, em ghi bổ sung vào đề)."
+          ],
+          "diagram_confirms": 1,
+          "edits": [],
+          "confirms": 4
+        },
+        "before_v139": {
+          "outcome": "USER_CONFIRMED_SIMULATION",
+          "grade": "SERVED_MATCHES_DATASET_KEY",
+          "reason_code": null,
+          "level": "GOAL_CONSTRUCTION_VERIFIED"
+        },
+        "after_v140": {
+          "outcome": "USER_CONFIRMED_SIMULATION",
+          "status": "SERVED",
+          "grade": "SERVED_MATCHES_DATASET_KEY",
+          "grade_dataset_key_comparison": null,
+          "reason_code": null,
+          "failure_taxonomy": null,
+          "parse_status": "LOCAL_PARSE_COMPLETE",
+          "answers": {
+            "q1": "cos²=3/4"
+          },
+          "answer_exact": {
+            "q1": {
+              "coef": "3/4",
+              "dim": 0,
+              "unit": null
+            }
+          },
+          "level": "GOAL_CONSTRUCTION_VERIFIED",
+          "invariant_failures": 0,
+          "derived_rules": [],
+          "trig_identities": [],
+          "upload_to_prepared_ms": 2085.97,
+          "upload_to_first_model_ms": 5585.83
+        }
+      },
+      {
+        "case_id": "vmmu_r488",
+        "partition_now": "DEVELOPMENT_EXPOSED",
+        "prepare_status": "needs_confirmation",
+        "confirmation_burden": {
+          "flagged_spans": 2,
+          "flagged_reasons": [
+            "Ký hiệu toán chưa được hai bộ đọc độc lập xác nhận",
+            "Đề nhắc tới hình vẽ — em xác nhận hình không ghi thêm số đo, góc hay quan hệ nào ngoài lời đề (nếu có, em ghi bổ sung vào đề)."
+          ],
+          "diagram_confirms": 1,
+          "edits": [
+            {
+              "span_id": "sp30",
+              "from": "600",
+              "to": "60°",
+              "chosen_from_alternatives": true
+            }
+          ],
+          "confirms": 0
+        },
+        "before_v139": {
+          "outcome": "UNSUPPORTED",
+          "grade": "NOT_SERVED",
+          "reason_code": "LIVE_AI_DISABLED",
+          "level": null
+        },
+        "after_v140": {
+          "outcome": "UNSUPPORTED",
+          "status": "REFUSED",
+          "grade": "NOT_SERVED",
+          "grade_dataset_key_comparison": null,
+          "reason_code": "LIVE_AI_DISABLED",
+          "failure_taxonomy": null,
+          "parse_status": "LOCAL_PARSE_PARTIAL",
+          "answers": null,
+          "answer_exact": null,
+          "level": null,
+          "invariant_failures": 0,
+          "derived_rules": [],
+          "trig_identities": [],
+          "upload_to_prepared_ms": 1854.52,
+          "upload_to_first_model_ms": null
+        }
+      },
+      {
+        "case_id": "vmmu_r491",
+        "partition_now": "DEVELOPMENT_EXPOSED",
+        "prepare_status": "needs_confirmation",
+        "confirmation_burden": {
+          "flagged_spans": 4,
+          "flagged_reasons": [
+            "Ký hiệu toán chưa được hai bộ đọc độc lập xác nhận",
+            "Đề nhắc tới hình vẽ — em xác nhận hình không ghi thêm số đo, góc hay quan hệ nào ngoài lời đề (nếu có, em ghi bổ sung vào đề)."
+          ],
+          "diagram_confirms": 1,
+          "edits": [],
+          "confirms": 3
+        },
+        "before_v139": {
+          "outcome": "UNSUPPORTED",
+          "grade": "NOT_SERVED",
+          "reason_code": "LIVE_AI_DISABLED",
+          "level": null
+        },
+        "after_v140": {
+          "outcome": "UNSUPPORTED",
+          "status": "REFUSED",
+          "grade": "NOT_SERVED",
+          "grade_dataset_key_comparison": null,
+          "reason_code": "LIVE_AI_DISABLED",
+          "failure_taxonomy": null,
+          "parse_status": "LOCAL_PARSE_PARTIAL",
+          "answers": null,
+          "answer_exact": null,
+          "level": null,
+          "invariant_failures": 0,
+          "derived_rules": [],
+          "trig_identities": [],
+          "upload_to_prepared_ms": 3426.8,
+          "upload_to_first_model_ms": null
+        }
+      },
+      {
+        "case_id": "vmmu_r492",
+        "partition_now": "DEVELOPMENT_EXPOSED",
+        "prepare_status": "needs_confirmation",
+        "confirmation_burden": {
+          "flagged_spans": 2,
+          "flagged_reasons": [
+            "Ký hiệu toán chưa được hai bộ đọc độc lập xác nhận",
+            "Đề nhắc tới hình vẽ — em xác nhận hình không ghi thêm số đo, góc hay quan hệ nào ngoài lời đề (nếu có, em ghi bổ sung vào đề)."
+          ],
+          "diagram_confirms": 1,
+          "edits": [],
+          "confirms": 1
+        },
+        "before_v139": {
+          "outcome": "USER_CONFIRMED_SIMULATION",
+          "grade": "SERVED_MATCHES_DATASET_KEY",
+          "reason_code": null,
+          "level": "GOAL_CONSTRUCTION_VERIFIED"
+        },
+        "after_v140": {
+          "outcome": "USER_CONFIRMED_SIMULATION",
+          "status": "SERVED",
+          "grade": "SERVED_MATCHES_DATASET_KEY",
+          "grade_dataset_key_comparison": null,
+          "reason_code": null,
+          "failure_taxonomy": null,
+          "parse_status": "LOCAL_PARSE_COMPLETE",
+          "answers": {
+            "q1": "cos²=1/4"
+          },
+          "answer_exact": {
+            "q1": {
+              "coef": "1/4",
+              "dim": 0,
+              "unit": null
+            }
+          },
+          "level": "GOAL_CONSTRUCTION_VERIFIED",
+          "invariant_failures": 0,
+          "derived_rules": [],
+          "trig_identities": [
+            null
+          ],
+          "upload_to_prepared_ms": 3158.87,
+          "upload_to_first_model_ms": 7865.51
+        }
+      },
+      {
+        "case_id": "vmmu_r498",
+        "partition_now": "DEVELOPMENT_EXPOSED",
+        "prepare_status": "needs_confirmation",
+        "confirmation_burden": {
+          "flagged_spans": 4,
+          "flagged_reasons": [
+            "Chữ tiếng Việt đọc chưa chắc",
+            "Dấu căn (√) đọc chưa chắc",
+            "Hình vẽ có thể chứa dữ kiện chưa đọc được — em xác nhận hoặc ghi bổ sung vào đề."
+          ],
+          "diagram_confirms": 1,
+          "edits": [
+            {
+              "span_id": "sp31",
+              "from": "(ABCð",
+              "to": "(ABC')",
+              "chosen_from_alternatives": false
+            },
+            {
+              "span_id": "sp10",
+              "from": "ABCD.A##2#2#",
+              "to": "ABCD.A'B'C'D'",
+              "chosen_from_alternatives": false
+            }
+          ],
+          "confirms": 1
+        },
+        "before_v139": {
+          "outcome": "USER_CONFIRMED_SIMULATION",
+          "grade": "GOAL_VISUALIZATION_READY_NUMERIC_NOT_ANSWERED",
+          "reason_code": null,
+          "level": "GOAL_CONSTRUCTION_VERIFIED"
+        },
+        "after_v140": {
+          "outcome": "USER_CONFIRMED_SIMULATION",
+          "status": "SERVED",
+          "grade": "GOAL_VISUALIZATION_READY_NUMERIC_NOT_ANSWERED",
+          "grade_dataset_key_comparison": "SERVED_NOT_COMPARABLE_NEEDS_ADJUDICATION",
+          "reason_code": null,
+          "failure_taxonomy": null,
+          "parse_status": "LOCAL_PARSE_COMPLETE",
+          "answers": {
+            "q1": "cos²=1/4"
+          },
+          "answer_exact": {
+            "q1": {
+              "coef": "1/4",
+              "dim": 0,
+              "unit": null
+            }
+          },
+          "level": "GOAL_CONSTRUCTION_VERIFIED",
+          "invariant_failures": 0,
+          "derived_rules": [],
+          "trig_identities": [],
+          "upload_to_prepared_ms": 1707.6,
+          "upload_to_first_model_ms": 6460.56
+        }
+      },
+      {
+        "case_id": "vmmu_r513",
+        "partition_now": "DEVELOPMENT_EXPOSED",
+        "prepare_status": "needs_confirmation",
+        "confirmation_burden": {
+          "flagged_spans": 2,
+          "flagged_reasons": [
+            "Hình vẽ có thể chứa dữ kiện chưa đọc được — em xác nhận hoặc ghi bổ sung vào đề.",
+            "Ký hiệu toán chưa được hai bộ đọc độc lập xác nhận"
+          ],
+          "diagram_confirms": 1,
+          "edits": [],
+          "confirms": 1
+        },
+        "before_v139": {
+          "outcome": "UNSUPPORTED",
+          "grade": "NOT_SERVED",
+          "reason_code": "LIVE_AI_DISABLED",
+          "level": null
+        },
+        "after_v140": {
+          "outcome": "UNSUPPORTED",
+          "status": "REFUSED",
+          "grade": "NOT_SERVED",
+          "grade_dataset_key_comparison": null,
+          "reason_code": "LIVE_AI_DISABLED",
+          "failure_taxonomy": null,
+          "parse_status": "LOCAL_PARSE_PARTIAL",
+          "answers": null,
+          "answer_exact": null,
+          "level": null,
+          "invariant_failures": 0,
+          "derived_rules": [],
+          "trig_identities": [],
+          "upload_to_prepared_ms": 3787.26,
+          "upload_to_first_model_ms": null
+        }
+      },
+      {
+        "case_id": "vmmu_r520",
+        "partition_now": "DEVELOPMENT_EXPOSED",
+        "prepare_status": "needs_confirmation",
+        "confirmation_burden": {
+          "flagged_spans": 5,
+          "flagged_reasons": [
+            "Ký hiệu toán chưa được hai bộ đọc độc lập xác nhận",
+            "Ký hiệu toán đọc chưa chắc",
+            "Đề nhắc tới hình vẽ — em xác nhận hình không ghi thêm số đo, góc hay quan hệ nào ngoài lời đề (nếu có, em ghi bổ sung vào đề)."
+          ],
+          "diagram_confirms": 1,
+          "edits": [
+            {
+              "span_id": "sp29",
+              "from": "(ABC)",
+              "to": "",
+              "chosen_from_alternatives": false
+            },
+            {
+              "span_id": "sp27",
+              "from": "(SBC)",
+              "to": "",
+              "chosen_from_alternatives": false
+            },
+            {
+              "span_id": "sp14",
+              "from": "B,SA",
+              "to": "B, SA",
+              "chosen_from_alternatives": false
+            }
+          ],
+          "confirms": 1
+        },
+        "before_v139": {
+          "outcome": "UNSUPPORTED",
+          "grade": "NOT_SERVED",
+          "reason_code": "LIVE_AI_DISABLED",
+          "level": null
+        },
+        "after_v140": {
+          "outcome": "UNSUPPORTED",
+          "status": "REFUSED",
+          "grade": "NOT_SERVED",
+          "grade_dataset_key_comparison": null,
+          "reason_code": "LIVE_AI_DISABLED",
+          "failure_taxonomy": null,
+          "parse_status": "LOCAL_PARSE_PARTIAL",
+          "answers": null,
+          "answer_exact": null,
+          "level": null,
+          "invariant_failures": 0,
+          "derived_rules": [],
+          "trig_identities": [],
+          "upload_to_prepared_ms": 2627.99,
+          "upload_to_first_model_ms": null
+        }
+      },
+      {
+        "case_id": "vmmu_r537",
+        "partition_now": "DEVELOPMENT_EXPOSED",
+        "prepare_status": "needs_confirmation",
+        "confirmation_burden": {
+          "flagged_spans": 4,
+          "flagged_reasons": [
+            "Chỗ này đọc chưa chắc",
+            "Ký hiệu toán chưa được hai bộ đọc độc lập xác nhận",
+            "Đề nhắc tới hình vẽ — em xác nhận hình không ghi thêm số đo, góc hay quan hệ nào ngoài lời đề (nếu có, em ghi bổ sung vào đề)."
+          ],
+          "diagram_confirms": 1,
+          "edits": [],
+          "confirms": 3
+        },
+        "before_v139": {
+          "outcome": "UNSUPPORTED",
+          "grade": "NOT_SERVED",
+          "reason_code": "LIVE_AI_DISABLED",
+          "level": null
+        },
+        "after_v140": {
+          "outcome": "USER_CONFIRMED_SIMULATION",
+          "status": "SERVED",
+          "grade": "SERVED_MATCHES_DATASET_KEY",
+          "grade_dataset_key_comparison": null,
+          "reason_code": null,
+          "failure_taxonomy": null,
+          "parse_status": "LOCAL_PARSE_COMPLETE",
+          "answers": {
+            "q1": "a√6/3"
+          },
+          "answer_exact": {
+            "q1": {
+              "coef": "√6/3",
+              "dim": 1,
+              "unit": "a"
+            }
+          },
+          "level": "GOAL_CONSTRUCTION_VERIFIED",
+          "invariant_failures": 0,
+          "derived_rules": [],
+          "trig_identities": [
+            null
+          ],
+          "upload_to_prepared_ms": 1697.81,
+          "upload_to_first_model_ms": 5050.41
+        }
+      },
+      {
+        "case_id": "vmmu_r538",
+        "partition_now": "DEVELOPMENT_EXPOSED",
+        "prepare_status": "needs_confirmation",
+        "confirmation_burden": {
+          "flagged_spans": 3,
+          "flagged_reasons": [
+            "Ký hiệu toán chưa được hai bộ đọc độc lập xác nhận",
+            "Phân số viết hai tầng — kiểm tra tử số và mẫu số",
+            "Đề nhắc tới hình vẽ — em xác nhận hình không ghi thêm số đo, góc hay quan hệ nào ngoài lời đề (nếu có, em ghi bổ sung vào đề)."
+          ],
+          "diagram_confirms": 1,
+          "edits": [],
+          "confirms": 2
+        },
+        "before_v139": {
+          "outcome": "USER_CONFIRMED_SIMULATION",
+          "grade": "SERVED_MATCHES_DATASET_KEY",
+          "reason_code": null,
+          "level": "GOAL_CONSTRUCTION_VERIFIED"
+        },
+        "after_v140": {
+          "outcome": "USER_CONFIRMED_SIMULATION",
+          "status": "SERVED",
+          "grade": "SERVED_MATCHES_DATASET_KEY",
+          "grade_dataset_key_comparison": null,
+          "reason_code": null,
+          "failure_taxonomy": null,
+          "parse_status": "LOCAL_PARSE_COMPLETE",
+          "answers": {
+            "q1": "cos²=3/4"
+          },
+          "answer_exact": {
+            "q1": {
+              "coef": "3/4",
+              "dim": 0,
+              "unit": null
+            }
+          },
+          "level": "GOAL_CONSTRUCTION_VERIFIED",
+          "invariant_failures": 0,
+          "derived_rules": [],
+          "trig_identities": [
+            null
+          ],
+          "upload_to_prepared_ms": 2807.38,
+          "upload_to_first_model_ms": 5725.2
+        }
+      },
+      {
+        "case_id": "vmmu_r559",
+        "partition_now": "PREVIOUS_RUN_FRESH_VIEWED",
+        "prepare_status": "needs_confirmation",
+        "confirmation_burden": {
+          "flagged_spans": 2,
+          "flagged_reasons": [
+            "Hình vẽ có thể chứa dữ kiện chưa đọc được — em xác nhận hoặc ghi bổ sung vào đề.",
+            "Ký hiệu toán chưa được hai bộ đọc độc lập xác nhận"
+          ],
+          "diagram_confirms": 1,
+          "edits": [],
+          "confirms": 1
+        },
+        "before_v139": {
+          "outcome": "USER_CONFIRMED_SIMULATION",
+          "grade": "GOAL_VISUALIZATION_READY_NUMERIC_NOT_ANSWERED",
+          "reason_code": null,
+          "level": "GOAL_CONSTRUCTION_VERIFIED"
+        },
+        "after_v140": {
+          "outcome": "USER_CONFIRMED_SIMULATION",
+          "status": "SERVED",
+          "grade": "GOAL_VISUALIZATION_READY_NUMERIC_NOT_ANSWERED",
+          "grade_dataset_key_comparison": "SERVED_NOT_COMPARABLE_NEEDS_ADJUDICATION",
+          "reason_code": null,
+          "failure_taxonomy": null,
+          "parse_status": "LOCAL_PARSE_COMPLETE",
+          "answers": {
+            "q1": "cos²=1/12"
+          },
+          "answer_exact": {
+            "q1": {
+              "coef": "1/12",
+              "dim": 0,
+              "unit": null
+            }
+          },
+          "level": "GOAL_CONSTRUCTION_VERIFIED",
+          "invariant_failures": 0,
+          "derived_rules": [],
+          "trig_identities": [],
+          "upload_to_prepared_ms": 1484.08,
+          "upload_to_first_model_ms": 4721.27
+        }
+      },
+      {
+        "case_id": "vmmu_r695",
+        "partition_now": "PREVIOUS_RUN_FRESH_VIEWED_AND_RULE_TARGETED",
+        "prepare_status": "needs_confirmation",
+        "confirmation_burden": {
+          "flagged_spans": 3,
+          "flagged_reasons": [
+            "Ký hiệu toán chưa được hai bộ đọc độc lập xác nhận",
+            "Phân số viết hai tầng — kiểm tra tử số và mẫu số",
+            "Đề nhắc tới hình vẽ — em xác nhận hình không ghi thêm số đo, góc hay quan hệ nào ngoài lời đề (nếu có, em ghi bổ sung vào đề)."
+          ],
+          "diagram_confirms": 1,
+          "edits": [
+            {
+              "span_id": "sp41",
+              "from": "A. √2/2 B. 23 C. 3 D.√2.",
+              "to": "A. √2/2. B. 2/3. C. 3/2. D. √2.",
+              "chosen_from_alternatives": false
+            },
+            {
+              "span_id": "sp9",
+              "from": "L",
+              "to": "⊥",
+              "chosen_from_alternatives": true
+            }
+          ],
+          "confirms": 0
+        },
+        "before_v139": {
+          "outcome": "UNSUPPORTED",
+          "grade": "NOT_SERVED",
+          "reason_code": "LIVE_AI_DISABLED",
+          "level": null
+        },
+        "after_v140": {
+          "outcome": "UNSUPPORTED",
+          "status": "REFUSED",
+          "grade": "NOT_SERVED",
+          "grade_dataset_key_comparison": null,
+          "reason_code": "LIVE_AI_DISABLED",
+          "failure_taxonomy": null,
+          "parse_status": "LOCAL_PARSE_PARTIAL",
+          "answers": null,
+          "answer_exact": null,
+          "level": null,
+          "invariant_failures": 0,
+          "derived_rules": [],
+          "trig_identities": [],
+          "upload_to_prepared_ms": 2096.0,
+          "upload_to_first_model_ms": null
+        }
+      }
+    ]
+  },
+  "verdict": "PASS",
+  "baseline_product_commit": "d222e6d9b582d54fc42397a9593f52eb6fd77f18"
+}
