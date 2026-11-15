@@ -160,6 +160,8 @@ export function SpatialSceneCanvas({
   const targetLookAt = lookAt ?? sample.defaultLookAt;
 
   const [webglReady, setWebglReady] = useState(false);
+  const [shouldMountWebgl, setShouldMountWebgl] = useState(false);
+  const wakeRenderRef = useRef<() => void>(() => {});
   const onUserOrbitRef = useRef(onUserOrbit);
   onUserOrbitRef.current = onUserOrbit;
 
@@ -196,7 +198,46 @@ export function SpatialSceneCanvas({
 
   useEffect(() => {
     sphericalOffsetRef.current = { theta: 0, phi: 0, radiusScale: 1 };
+    wakeRenderRef.current();
   }, [orbitResetNonce, sample.id]);
+
+  // Wake sleeping demand-based RAF whenever stage props or camera targets change
+  useEffect(() => {
+    wakeRenderRef.current();
+  }, [
+    visiblePoints,
+    activePoints,
+    showGuideEdges,
+    planeOpacity,
+    sectionProgress,
+    sectionFillOpacity,
+    targetCamera,
+    targetLookAt,
+    interactiveOrbit,
+    subtlePointerParallax,
+  ]);
+
+  // Lazy-mount WebGLRenderer only once the canvas approaches or enters the viewport
+  useEffect(() => {
+    const shell = shellRef.current;
+    if (!shell || typeof window === "undefined") return;
+    if (shouldMountWebgl) return;
+    if (typeof IntersectionObserver === "undefined") {
+      setShouldMountWebgl(true);
+      return;
+    }
+    const mountObserver = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((entry) => entry.isIntersecting)) {
+          setShouldMountWebgl(true);
+          mountObserver.disconnect();
+        }
+      },
+      { rootMargin: "280px 0px", threshold: 0.01 },
+    );
+    mountObserver.observe(shell);
+    return () => mountObserver.disconnect();
+  }, [shouldMountWebgl]);
 
   // Precompute fallback SVG geometry using the exact same 3D points & projection math
   const svgFallback = useMemo(() => {
@@ -250,6 +291,7 @@ export function SpatialSceneCanvas({
   }, [sample, targetCamera, targetLookAt, visiblePoints]);
 
   useEffect(() => {
+    if (!shouldMountWebgl) return;
     const shell = shellRef.current;
     const host = hostRef.current;
     if (!shell || !host || typeof window === "undefined") return;
@@ -281,7 +323,8 @@ export function SpatialSceneCanvas({
     }
 
     const activeRenderer = renderer;
-    activeRenderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    const maxDpr = window.innerWidth <= 820 ? 1.5 : 2;
+    activeRenderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, maxDpr));
     activeRenderer.setClearColor(0x000000, 0);
     activeRenderer.outputColorSpace = THREE.SRGBColorSpace;
     host.appendChild(activeRenderer.domElement);
@@ -565,6 +608,14 @@ export function SpatialSceneCanvas({
     let lastPtrX = 0;
     let lastPtrY = 0;
 
+    const wakeRender = () => {
+      if (isDisposed || !isInView || document.hidden) return;
+      if (rafId === 0) {
+        rafId = window.requestAnimationFrame(renderFrame);
+      }
+    };
+    wakeRenderRef.current = wakeRender;
+
     const onPointerDown = (e: PointerEvent) => {
       if (!propsRef.current.interactiveOrbit) return;
       isDragging = true;
@@ -572,6 +623,7 @@ export function SpatialSceneCanvas({
       lastPtrY = e.clientY;
       shell.setPointerCapture?.(e.pointerId);
       onUserOrbitRef.current?.();
+      wakeRender();
     };
 
     const onPointerMove = (e: PointerEvent) => {
@@ -585,11 +637,13 @@ export function SpatialSceneCanvas({
           -0.65,
           Math.min(0.65, sphericalOffsetRef.current.phi - dy * 0.007),
         );
+        wakeRender();
       } else if (propsRef.current.subtlePointerParallax && !reducedMotion) {
         const rect = shell.getBoundingClientRect();
         if (rect.width > 0 && rect.height > 0) {
           targetParallaxX = ((e.clientX - rect.left) / rect.width - 0.5) * 0.55;
           targetParallaxY = ((e.clientY - rect.top) / rect.height - 0.5) * 0.35;
+          wakeRender();
         }
       }
     };
@@ -598,12 +652,14 @@ export function SpatialSceneCanvas({
       if (isDragging) {
         isDragging = false;
         shell.releasePointerCapture?.(e.pointerId);
+        wakeRender();
       }
     };
 
     const onPointerLeave = () => {
       targetParallaxX = 0;
       targetParallaxY = 0;
+      wakeRender();
     };
 
     shell.addEventListener("pointerdown", onPointerDown);
@@ -627,6 +683,7 @@ export function SpatialSceneCanvas({
       typeof ResizeObserver !== "undefined"
         ? new ResizeObserver(() => {
             viewportSize = syncSize();
+            wakeRender();
           })
         : null;
     ro?.observe(shell);
@@ -635,50 +692,71 @@ export function SpatialSceneCanvas({
       typeof IntersectionObserver !== "undefined"
         ? new IntersectionObserver(
             (entries) => {
-              isInView = entries.some((entry) => entry.isIntersecting);
+              const visible = entries.some((entry) => entry.isIntersecting);
+              isInView = visible;
+              if (visible) {
+                wakeRender();
+              } else if (rafId !== 0) {
+                window.cancelAnimationFrame(rafId);
+                rafId = 0;
+              }
             },
-            { threshold: 0.05 },
+            { threshold: 0.02 },
           )
         : null;
     io?.observe(shell);
 
+    const onVisibilityChange = () => {
+      if (document.hidden) {
+        if (rafId !== 0) {
+          window.cancelAnimationFrame(rafId);
+          rafId = 0;
+        }
+      } else {
+        wakeRender();
+      }
+    };
+    document.addEventListener("visibilitychange", onVisibilityChange);
+
     const onContextLost = (ev: Event) => {
       ev.preventDefault();
+      if (rafId !== 0) {
+        window.cancelAnimationFrame(rafId);
+        rafId = 0;
+      }
       setWebglReady(false);
     };
     activeRenderer.domElement.addEventListener("webglcontextlost", onContextLost);
 
     const tempVec = new THREE.Vector3();
     const baseVec = new THREE.Vector3();
+    const desiredLookVec = new THREE.Vector3();
     const sph = new THREE.Spherical();
 
-    const renderFrame = (timeMs: number) => {
+    function renderFrame() {
       if (isDisposed) return;
-      rafId = window.requestAnimationFrame(renderFrame);
-      if (!isInView && !isDragging) return;
+      if (!isInView || document.hidden) {
+        rafId = 0;
+        return;
+      }
 
       const p = propsRef.current;
-      const damp = reducedMotion ? 1 : 0.1;
+      const damp = reducedMotion ? 1 : 0.14;
 
-      baseVec.set(...p.targetCamera).sub(new THREE.Vector3(...p.targetLookAt));
+      baseVec.set(...p.targetCamera).sub(desiredLookVec.set(...p.targetLookAt));
       sph.setFromVector3(baseVec);
       sph.theta += sphericalOffsetRef.current.theta;
       sph.phi = Math.max(0.28, Math.min(Math.PI * 0.48, sph.phi + sphericalOffsetRef.current.phi));
       sph.radius *= sphericalOffsetRef.current.radiusScale;
 
-      if (p.subtlePointerParallax && !reducedMotion) {
-        const idleBreath = Math.sin(timeMs * 0.00055) * 0.055;
-        sph.theta += idleBreath;
-      }
-
-      const desiredPos = new THREE.Vector3().setFromSpherical(sph).add(new THREE.Vector3(...p.targetLookAt));
+      const desiredPos = new THREE.Vector3().setFromSpherical(sph).add(desiredLookVec);
       curParallaxX += (targetParallaxX - curParallaxX) * damp;
       curParallaxY += (targetParallaxY - curParallaxY) * damp;
       desiredPos.x += curParallaxX;
       desiredPos.y -= curParallaxY;
 
       curCam.lerp(desiredPos, damp);
-      curLook.lerp(new THREE.Vector3(...p.targetLookAt), damp);
+      curLook.lerp(desiredLookVec, damp);
       camera.position.copy(curCam);
       camera.lookAt(curLook);
       camera.updateMatrixWorld();
@@ -780,13 +858,33 @@ export function SpatialSceneCanvas({
       }
 
       activeRenderer.render(scene, camera);
-    };
+
+      const settled =
+        !isDragging &&
+        curCam.distanceTo(desiredPos) < 0.0008 &&
+        curLook.distanceTo(desiredLookVec) < 0.0008 &&
+        Math.abs(p.planeOpacity - curPlaneOp) < 0.0008 &&
+        Math.abs(p.sectionProgress - curSecProg) < 0.0008 &&
+        Math.abs(p.sectionFillOpacity - curSecFill) < 0.0008 &&
+        Math.abs(targetParallaxX - curParallaxX) < 0.0008 &&
+        Math.abs(targetParallaxY - curParallaxY) < 0.0008;
+
+      if (!settled && !reducedMotion) {
+        rafId = window.requestAnimationFrame(renderFrame);
+      } else {
+        rafId = 0;
+      }
+    }
 
     setWebglReady(true);
-    rafId = window.requestAnimationFrame(renderFrame);
+    renderFrame();
+    if (!reducedMotion) {
+      wakeRender();
+    }
 
     return () => {
       isDisposed = true;
+      wakeRenderRef.current = () => {};
       if (rafId !== 0) window.cancelAnimationFrame(rafId);
       ro?.disconnect();
       io?.disconnect();
@@ -795,6 +893,7 @@ export function SpatialSceneCanvas({
       shell.removeEventListener("pointerup", onPointerUp);
       shell.removeEventListener("pointercancel", onPointerUp);
       shell.removeEventListener("pointerleave", onPointerLeave);
+      document.removeEventListener("visibilitychange", onVisibilityChange);
       activeRenderer.domElement.removeEventListener("webglcontextlost", onContextLost);
       for (const d of disposables) d.dispose();
       activeRenderer.dispose();
@@ -803,7 +902,7 @@ export function SpatialSceneCanvas({
       }
       setWebglReady(false);
     };
-  }, [sample]);
+  }, [sample, shouldMountWebgl]);
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (!interactiveOrbit) return;
@@ -811,18 +910,22 @@ export function SpatialSceneCanvas({
     if (e.key === "ArrowLeft") {
       e.preventDefault();
       sphericalOffsetRef.current.theta -= step;
+      wakeRenderRef.current();
       onUserOrbit?.();
     } else if (e.key === "ArrowRight") {
       e.preventDefault();
       sphericalOffsetRef.current.theta += step;
+      wakeRenderRef.current();
       onUserOrbit?.();
     } else if (e.key === "ArrowUp") {
       e.preventDefault();
       sphericalOffsetRef.current.phi = Math.max(-0.65, sphericalOffsetRef.current.phi - step * 0.7);
+      wakeRenderRef.current();
       onUserOrbit?.();
     } else if (e.key === "ArrowDown") {
       e.preventDefault();
       sphericalOffsetRef.current.phi = Math.min(0.65, sphericalOffsetRef.current.phi + step * 0.7);
+      wakeRenderRef.current();
       onUserOrbit?.();
     }
   };

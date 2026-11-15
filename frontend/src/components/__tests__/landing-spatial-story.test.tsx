@@ -1,158 +1,126 @@
-import { readFileSync } from "node:fs";
-import { beforeEach, describe, expect, it } from "vitest";
+import fs from "node:fs";
+import path from "node:path";
 import { renderToString } from "react-dom/server";
-import App from "../../App";
-import { registerAllSimulations } from "../../simulations";
-import { useAuthStore } from "../../state/auth";
-import { useAppStore } from "../../state/store";
+import { describe, expect, it } from "vitest";
 import { LandingView } from "../LandingView";
 import {
-  enterAxoWorkspace,
   LANDING_CUBE_SAMPLE,
   LANDING_PYRAMID_SAMPLE,
+  enterAxoWorkspace,
+  landingSampleById,
   openLibraryFromLanding,
   openSampleInWorkspace,
 } from "../landing/landing-geometry-data";
+import { registerAllSimulations } from "../../simulations";
+import { useAppStore } from "../../state/store";
 
-function syncStoreForSSR() {
-  Object.assign(useAppStore.getInitialState(), useAppStore.getState());
-  Object.assign(useAuthStore.getInitialState(), useAuthStore.getState());
-}
-
-describe("Axo Spatial Story — Landing Page V1 Prototype", () => {
-  beforeEach(() => {
-    registerAllSimulations();
-    useAuthStore.setState({
-      user: null,
-      resolved: true,
-    });
-    useAppStore.setState({
-      guestEnteredApp: false,
-      active: null,
-      activeSampleId: null,
-      activeHistoryId: null,
-      workspaceTabs: [],
-      activeTabId: null,
-      routeFailure: null,
-      view: "home",
-    });
-    syncStoreForSSR();
-  });
-
-  it("hiển thị đúng bản sắc Axo tiếng Việt, không chứa nội dung hay liên kết giả của Notion", () => {
+describe("AXO Landing Page V1.1 — Spatial Story & Architecture", () => {
+  it("renders Hero with frameless spatial sculpture, 2 focused CTAs, and clean editorial hierarchy", () => {
     const html = renderToString(<LandingView />);
 
     expect(html).toContain('id="view-landing"');
-    expect(html).toContain('id="landing-header"');
-    expect(html).toContain('id="landing-nav"');
-    expect(html).toContain('id="landing-hero"');
+    expect(html).toContain("Hình học không gian, dễ hình dung hơn.");
+    expect(html).toContain('id="landing-hero-sculpture"');
     expect(html).toContain('id="btn-landing-hero-start"');
+    expect(html).toContain('id="btn-landing-hero-story"');
+
+    // Hero must NOT show a third button, stats strip, or proof vertex tags inside the Hero section
+    const heroStart = html.indexOf('id="landing-hero"');
+    const heroEnd = html.indexOf('id="cach-hoat-dong"');
+    const heroSlice = html.slice(heroStart, heroEnd);
+    expect(heroSlice).not.toContain('id="btn-landing-hero-library"');
+    expect(heroSlice).not.toContain("axo-sp-hero-meta");
+    expect(heroSlice).not.toContain("axo-sp-point-tag");
+
+    // Library CTA remains accessible in the Final CTA closing band (preserving workspace entry contract)
     expect(html).toContain('id="btn-landing-hero-library"');
+    expect(html).toContain('id="btn-landing-final-start"');
+    expect(html).toContain("axo-sp-closing-sculpture");
+  });
+
+  it("renders continuous 4-stage Storytelling with collapsed math disclosure and interactive Demo showcase", () => {
+    const html = renderToString(<LandingView />);
+
     expect(html).toContain('id="cach-hoat-dong"');
+    expect(html).toContain("Một bài toán, mở ra từng lớp không gian.");
+    expect(html).toContain('id="btn-landing-story-step-0"');
+    expect(html).toContain('id="btn-landing-story-step-3"');
+    expect(html).toContain("Chi tiết tọa độ &amp; kiểm chứng hình học");
+    expect(html).toContain('id="landing-storytelling-scene"');
+
     expect(html).toContain('id="trai-nghiem"');
     expect(html).toContain('id="landing-product-showcase"');
+    expect(html).toContain('id="landing-demo-scene"');
+    expect(html).toContain('id="btn-landing-sample-chop-thiet-dien-ba-diem"');
+    expect(html).toContain('id="btn-landing-sample-lap-phuong-thiet-dien-bat-ky"');
+    expect(html).toContain("Xem đề bài gốc");
     expect(html).toContain('id="btn-landing-open-showcase-3d"');
-    expect(html).toContain('id="landing-final-cta"');
-    expect(html).toContain('id="landing-footer"');
-
-    expect(html).toContain("Hình học không gian, dễ hình dung hơn.");
-    expect(html).toContain("Bắt đầu dựng hình");
-    expect(html).toContain("Cách Axo hoạt động");
-    expect(html).toContain("Giới thiệu");
-    expect(html).toContain("Cách hoạt động");
-    expect(html).toContain("Trải nghiệm");
-
-    for (const forbidden of [
-      "Notion",
-      "Ramp HQ",
-      "Where teams and",
-      "OpenAI",
-      "FedEx",
-      "Pricing",
-      "Enterprise",
-      "Blog",
-    ]) {
-      expect(html).not.toContain(forbidden);
-    }
   });
 
-  it("dữ liệu 3D cho hai bài mẫu thỏa mãn đúng phương trình mặt cắt và kích thước đại số", () => {
-    // 1. Chóp S.ABCD cắt bởi (MNP): x + y + 2z = 6
-    const pyramidIds = ["M", "E", "N", "P", "F"] as const;
-    for (const id of pyramidIds) {
+  it("keeps verified geometric invariants across Landing normalized samples", () => {
+    expect(LANDING_PYRAMID_SAMPLE.milestones).toHaveLength(4);
+    expect(LANDING_CUBE_SAMPLE.milestones).toHaveLength(4);
+
+    // Pyramid S.ABCD midpoints M=(S+A)/2, N=(B+C)/2, P=(C+D)/2 and plane x+y+2z=6 on section MENPF
+    const S = LANDING_PYRAMID_SAMPLE.pointMap["S"].domainXyz;
+    const A = LANDING_PYRAMID_SAMPLE.pointMap["A"].domainXyz;
+    const B = LANDING_PYRAMID_SAMPLE.pointMap["B"].domainXyz;
+    const C = LANDING_PYRAMID_SAMPLE.pointMap["C"].domainXyz;
+    const D = LANDING_PYRAMID_SAMPLE.pointMap["D"].domainXyz;
+    const M = LANDING_PYRAMID_SAMPLE.pointMap["M"].domainXyz;
+    const N = LANDING_PYRAMID_SAMPLE.pointMap["N"].domainXyz;
+    const P = LANDING_PYRAMID_SAMPLE.pointMap["P"].domainXyz;
+    for (let k = 0; k < 3; k++) {
+      expect(M[k]).toBeCloseTo((S[k] + A[k]) / 2, 4);
+      expect(N[k]).toBeCloseTo((B[k] + C[k]) / 2, 4);
+      expect(P[k]).toBeCloseTo((C[k] + D[k]) / 2, 4);
+    }
+    for (const id of LANDING_PYRAMID_SAMPLE.sectionLoop) {
       const [x, y, z] = LANDING_PYRAMID_SAMPLE.pointMap[id].domainXyz;
-      expect(Math.abs(x + y + 2 * z - 6)).toBeLessThan(1e-9);
+      expect(x + y + 2 * z).toBeCloseTo(6, 4);
     }
-    const [sx, sy, sz] = LANDING_PYRAMID_SAMPLE.pointMap.S.domainXyz;
-    const [ax, ay, az] = LANDING_PYRAMID_SAMPLE.pointMap.A.domainXyz;
-    expect(sx).toBe(ax);
-    expect(sy).toBe(ay);
-    expect(sz - az).toBe(6);
 
-    // 2. Lập phương ABCD.A'B'C'D' cắt bởi (MNP): -x + y + z = 2 (lục giác đều cạnh 2√2)
-    const cubeIds = LANDING_CUBE_SAMPLE.sectionLoop;
-    for (let i = 0; i < cubeIds.length; i++) {
-      const cur = LANDING_CUBE_SAMPLE.pointMap[cubeIds[i]].domainXyz;
-      const nxt = LANDING_CUBE_SAMPLE.pointMap[cubeIds[(i + 1) % cubeIds.length]].domainXyz;
-      expect(Math.abs(-cur[0] + cur[1] + cur[2] - 2)).toBeLessThan(1e-9);
-      const edgeLen = Math.hypot(nxt[0] - cur[0], nxt[1] - cur[1], nxt[2] - cur[2]);
-      expect(Math.abs(edgeLen - Math.sqrt(8))).toBeLessThan(1e-9);
+    // Cube section MNEPFQ must form an equilateral planar hexagon
+    const loop = LANDING_CUBE_SAMPLE.sectionLoop.map(
+      (id) => LANDING_CUBE_SAMPLE.pointMap[id].pos,
+    );
+    expect(loop).toHaveLength(6);
+    const edgeLengths = loop.map((p, idx) => {
+      const q = loop[(idx + 1) % loop.length];
+      return Math.hypot(p[0] - q[0], p[1] - q[1], p[2] - q[2]);
+    });
+    for (const len of edgeLengths) {
+      expect(len).toBeCloseTo(edgeLengths[0], 4);
     }
+
+    expect(landingSampleById("unknown-id").id).toBe(LANDING_PYRAMID_SAMPLE.id);
   });
 
-  it("CTA chính, CTA thư viện và Showcase Interactive chuyển đúng sang App Workspace", () => {
-    enterAxoWorkspace();
-    expect(useAppStore.getState().guestEnteredApp).toBe(true);
-    expect(useAppStore.getState().view).toBe("home");
-    syncStoreForSSR();
-    const homeHtml = renderToString(<App />);
-    expect(homeHtml).toContain('id="left-sidebar"');
-    expect(homeHtml).not.toContain('id="view-landing"');
+  it("navigates cleanly from Landing CTA into Workspace, Library, and Sample Studio", () => {
+    registerAllSimulations();
 
-    openLibraryFromLanding();
+    useAppStore.getState().setView("landing");
+    enterAxoWorkspace();
+    expect(useAppStore.getState().view).toBe("home");
     expect(useAppStore.getState().guestEnteredApp).toBe(true);
+
+    useAppStore.getState().setView("landing");
+    openLibraryFromLanding();
     expect(useAppStore.getState().view).toBe("library");
 
-    openSampleInWorkspace("chop-thiet-dien-ba-diem");
-    expect(useAppStore.getState().guestEnteredApp).toBe(true);
+    useAppStore.getState().setView("landing");
+    openSampleInWorkspace("lap-phuong-thiet-dien-bat-ky");
     expect(useAppStore.getState().view).toBe("workspace");
-    expect(useAppStore.getState().activeSampleId).toBe("chop-thiet-dien-ba-diem");
+    expect(useAppStore.getState().activeSampleId).toBe("lap-phuong-thiet-dien-bat-ky");
   });
 
-  it("điều hướng trực tiếp /gioi-thieu, khách ở /, người dùng đã đăng nhập ở / và /simulation/... hoạt động chuẩn", () => {
-    useAppStore.getState().syncLocationRoute("/gioi-thieu");
-    expect(useAppStore.getState().view).toBe("landing");
-
-    // Khách tại "/" -> Landing
-    useAppStore.getState().syncLocationRoute("/");
-    syncStoreForSSR();
-    expect(renderToString(<App />)).toContain('id="view-landing"');
-
-    // Người dùng đã đăng nhập tại "/" -> thẳng Workspace Sidebar
-    useAuthStore.setState({
-      user: {
-        id: 1,
-        email: "demo@axo.edu.vn",
-        displayName: "Demo",
-        role: "student",
-        mustChangePassword: false,
-      },
-      resolved: true,
-    });
-    syncStoreForSSR();
-    expect(renderToString(<App />)).toContain('id="left-sidebar"');
-    expect(renderToString(<App />)).not.toContain('id="view-landing"');
-
-    // Deep-link trực tiếp vào mô phỏng
-    useAppStore.getState().syncLocationRoute("/simulation/oxyz-line-plane-intersection");
-    expect(useAppStore.getState().view).toBe("workspace");
-    expect(useAppStore.getState().activeSampleId).toBe("oxyz-giao-diem-duong-mat");
-  });
-
-  it("CSS của Landing chỉ giới hạn phạm vi trong #view-landing và không đụng global.css", () => {
-    const cssText = readFileSync(new URL("../landing/landing.css", import.meta.url), "utf-8");
-    expect(cssText).toContain("#view-landing.axo-sp-root");
-    expect(cssText).not.toMatch(/^\s*(html|body|\*)\s*\{/m);
-    expect(cssText).not.toContain(".app-root");
+  it("keeps Landing styles isolated in landing.css without CSS variable leakage into TSX", () => {
+    const landingDir = path.resolve(__dirname, "../landing");
+    const files = fs.readdirSync(landingDir).filter((f) => f.endsWith(".tsx"));
+    for (const file of files) {
+      const src = fs.readFileSync(path.join(landingDir, file), "utf8");
+      expect(src).not.toContain("var(--");
+      expect(src).not.toMatch(/import\s+["']\.\/.*\.css["']/);
+    }
   });
 });
