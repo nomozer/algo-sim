@@ -274,8 +274,8 @@ function buildPyramidSample(): LandingSampleSpec {
     equationText: "x + y + 2z = 6",
     answerBadge: "S(MENPF) = 6√6",
     verifiedMetrics: [
-      { label: "Thiết diện MENPF", value: "S = 6√6" },
-      { label: "Thể tích chóp", value: "V = 32" },
+      { label: "Thiết diện", value: "S(MENPF) = 6√6" },
+      { label: "Thể tích khối chóp", value: "V(S.ABCD) = 32" },
     ],
     points,
     pointMap,
@@ -447,8 +447,8 @@ function buildCubeSample(): LandingSampleSpec {
     equationText: "-x + y + z = 2",
     answerBadge: "S(MNEPFQ) = 12√3",
     verifiedMetrics: [
-      { label: "Thiết diện MNEPFQ", value: "S = 12√3" },
-      { label: "Cạnh lục giác", value: "MN = 2√2" },
+      { label: "Thiết diện lục giác", value: "S(MNEPFQ) = 12√3" },
+      { label: "Cạnh thiết diện", value: "MN = 2√2" },
     ],
     points,
     pointMap,
@@ -735,7 +735,17 @@ export function landingSampleById(id: string): LandingSampleSpec {
 export function enterAxoWorkspace(): void {
   const store = useAppStore.getState();
   store.setGuestEnteredApp(true);
-  store.goHome();
+  if (store.active !== null) {
+    store.setView("workspace");
+  } else {
+    store.goHome();
+  }
+}
+
+export function openLandingLogin(): void {
+  const store = useAppStore.getState();
+  store.setGuestEnteredApp(true);
+  store.setView("login");
 }
 
 export function openLibraryFromLanding(): void {

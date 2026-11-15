@@ -34,6 +34,81 @@ import { useAppStore } from "./state/store";
 import { useAuthStore } from "./state/auth";
 import { LIBRARY_TAB_ID } from "./state/workspace-tab-identity";
 
+export const AXO_AUTH_SYNC_STORAGE_KEY = "axo_auth_sync_v1";
+export const AXO_AUTH_SYNC_CHANNEL = "axo_auth_sync_v1";
+
+let activeAuthReconcile: Promise<void> | null = null;
+let lastAuthReconcileAt = 0;
+const AUTH_RECONCILE_THROTTLE_MS = 1200;
+
+export function resetAuthReconcileForTests(): void {
+  activeAuthReconcile = null;
+  lastAuthReconcileAt = 0;
+}
+
+export async function reconcileAuthSession(force = false): Promise<void> {
+  if (typeof fetch !== "function") {
+    await useAuthStore.getState().refresh();
+    return;
+  }
+  if (activeAuthReconcile) {
+    return activeAuthReconcile;
+  }
+  if (!force && lastAuthReconcileAt > 0 && Date.now() - lastAuthReconcileAt < AUTH_RECONCILE_THROTTLE_MS) {
+    return;
+  }
+
+  activeAuthReconcile = (async () => {
+    try {
+      const res = await fetch("/api/auth/me", {
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        method: "GET",
+      });
+      if (res.status === 401 || res.status === 403) {
+        useAuthStore.setState({
+          user: null,
+          resolved: true,
+          authGate: null,
+          error: null,
+        });
+        if (typeof window !== "undefined") {
+          try {
+            window.sessionStorage.removeItem("axo_auth_session_hint");
+          } catch {
+            /* bỏ qua nếu trình duyệt chặn sessionStorage */
+          }
+        }
+        return;
+      }
+      if (!res.ok) {
+        if (!useAuthStore.getState().resolved) {
+          useAuthStore.setState({ resolved: true });
+        }
+        return;
+      }
+      const body = (await res.json()) as {
+        user?: ReturnType<typeof useAuthStore.getState>["user"];
+        entitlement?: ReturnType<typeof useAuthStore.getState>["entitlement"];
+      };
+      useAuthStore.setState((prev) => ({
+        user: body?.user ?? null,
+        entitlement: body?.entitlement ?? prev.entitlement,
+        resolved: true,
+      }));
+    } catch {
+      if (!useAuthStore.getState().resolved) {
+        useAuthStore.setState({ resolved: true });
+      }
+    } finally {
+      lastAuthReconcileAt = Date.now();
+      activeAuthReconcile = null;
+    }
+  })();
+
+  return activeAuthReconcile;
+}
+
 export function reconcileCrashedResetKey(
   crashedResetKey: string | null,
   currentResetKey: string,
@@ -92,9 +167,10 @@ export default function App() {
 
   const user = useAuthStore((s) => s.user);
   const authResolved = useAuthStore((s) => s.resolved);
-  const refresh = useAuthStore((s) => s.refresh);
   const isPopStateSyncRef = useRef(false);
   const hasHydratedLocationRef = useRef(false);
+  const prevBroadcastUserIdRef = useRef<number | null | undefined>(undefined);
+  const prevViewForAuthRef = useRef(view);
   const [crashedResetKey, setCrashedResetKey] = useState<string | null>(null);
   const [guestHeaderMenuOpen, setGuestHeaderMenuOpen] = useState(false);
   const guestHeaderRef = useRef<HTMLDivElement | null>(null);
@@ -126,6 +202,7 @@ export default function App() {
 
   useEffect(() => {
     if (typeof window === "undefined" || !authResolved) return;
+    const nextUserId = user?.id ?? null;
     try {
       if (user) {
         window.sessionStorage.setItem("axo_auth_session_hint", "1");
@@ -135,14 +212,70 @@ export default function App() {
     } catch {
       /* bỏ qua nếu trình duyệt chặn sessionStorage */
     }
+
+    if (prevBroadcastUserIdRef.current === undefined) {
+      prevBroadcastUserIdRef.current = nextUserId;
+      return;
+    }
+    if (prevBroadcastUserIdRef.current === nextUserId) {
+      return;
+    }
+    prevBroadcastUserIdRef.current = nextUserId;
+    const payload = JSON.stringify({ userId: nextUserId, ts: Date.now() });
+    try {
+      window.localStorage.setItem(AXO_AUTH_SYNC_STORAGE_KEY, payload);
+    } catch {
+      /* bỏ qua nếu trình duyệt chặn localStorage */
+    }
+    try {
+      if (typeof BroadcastChannel !== "undefined") {
+        const ch = new BroadcastChannel(AXO_AUTH_SYNC_CHANNEL);
+        ch.postMessage({ userId: nextUserId, ts: Date.now() });
+        ch.close();
+      }
+    } catch {
+      /* bỏ qua nếu môi trường không hỗ trợ BroadcastChannel */
+    }
   }, [authResolved, user]);
 
-  /* Hỏi máy chủ MỘT LẦN lúc mở app: phiên nằm ở cookie httpOnly nên JS không
-     tự đọc được, và đây là cách duy nhất biết mình đang là ai. Đồng thời đồng bộ
-     pathname/hash ban đầu và lắng nghe Browser Back/Forward (popstate). */
+  /* Hỏi máy chủ và giữ phiên đồng bộ xuyên tab + xuyên view giữa Landing và Workspace:
+     cookie httpOnly nên JS không tự đọc trực tiếp được. */
   useEffect(() => {
-    void refresh();
+    void reconcileAuthSession(true);
     if (typeof window === "undefined") return;
+
+    const handleFocusOrVisibility = () => {
+      if (typeof document !== "undefined" && document.visibilityState === "hidden") return;
+      void reconcileAuthSession();
+    };
+    const handleStorageSync = (e: StorageEvent) => {
+      if (e.key !== AXO_AUTH_SYNC_STORAGE_KEY || !e.newValue) return;
+      try {
+        const parsed = JSON.parse(e.newValue) as { userId?: number | null };
+        const curUserId = useAuthStore.getState().user?.id ?? null;
+        if ((parsed.userId ?? null) !== curUserId) {
+          void reconcileAuthSession(true);
+        }
+      } catch {
+        void reconcileAuthSession(true);
+      }
+    };
+
+    let bc: BroadcastChannel | null = null;
+    try {
+      if (typeof BroadcastChannel !== "undefined") {
+        bc = new BroadcastChannel(AXO_AUTH_SYNC_CHANNEL);
+        bc.onmessage = (ev: MessageEvent<{ userId?: number | null }>) => {
+          const curUserId = useAuthStore.getState().user?.id ?? null;
+          if ((ev.data?.userId ?? null) !== curUserId) {
+            void reconcileAuthSession(true);
+          }
+        };
+      }
+    } catch {
+      bc = null;
+    }
+
     let popStateResetTimer: number | null = null;
     const applyBrowserLocation = (ev?: Event) => {
       isPopStateSyncRef.current = true;
@@ -259,6 +392,11 @@ export default function App() {
     }
     window.addEventListener("hashchange", applyBrowserLocation);
     window.addEventListener("popstate", applyBrowserLocation);
+    window.addEventListener("focus", handleFocusOrVisibility);
+    window.addEventListener("storage", handleStorageSync);
+    if (typeof document !== "undefined") {
+      document.addEventListener("visibilitychange", handleFocusOrVisibility);
+    }
     return () => {
       if (popStateResetTimer !== null) {
         window.clearTimeout(popStateResetTimer);
@@ -266,8 +404,25 @@ export default function App() {
       isPopStateSyncRef.current = false;
       window.removeEventListener("hashchange", applyBrowserLocation);
       window.removeEventListener("popstate", applyBrowserLocation);
+      window.removeEventListener("focus", handleFocusOrVisibility);
+      window.removeEventListener("storage", handleStorageSync);
+      if (typeof document !== "undefined") {
+        document.removeEventListener("visibilitychange", handleFocusOrVisibility);
+      }
+      if (bc) {
+        bc.close();
+      }
     };
-  }, [refresh, syncLocationRoute, hydrateWorkspaceSession]);
+  }, [syncLocationRoute, hydrateWorkspaceSession]);
+
+  useEffect(() => {
+    const prevView = prevViewForAuthRef.current;
+    prevViewForAuthRef.current = view;
+    if (!authResolved || prevView === view) return;
+    if (prevView === "landing" || view === "landing") {
+      void reconcileAuthSession();
+    }
+  }, [view, authResolved]);
 
   // Browser tab: "Axo" on the home page, "<page> | Axo" elsewhere (the 3D workspace is named by its role).
   useEffect(() => {
@@ -292,7 +447,7 @@ export default function App() {
         : window.location.pathname || "/";
     const targetPath = isDraftActive
       ? "/workspace"
-      : view === "home" && (guestEnteredApp || currentPath === "/app")
+      : view === "home" && (Boolean(user) || guestEnteredApp || currentPath === "/app")
         ? "/app"
         : canonicalPathForView(view, activeSampleId ?? activeHistoryId);
     const resolvedAxoTabId =
@@ -328,7 +483,7 @@ export default function App() {
     } catch {
       /* bỏ qua nếu môi trường kiểm thử chặn pushState */
     }
-  }, [view, activeTabId, workspaceTabs, activeSampleId, activeHistoryId, routeFailure, navHistoryMode]);
+  }, [view, activeTabId, workspaceTabs, activeSampleId, activeHistoryId, routeFailure, navHistoryMode, guestEnteredApp, user]);
 
   const inWorkspace =
     view === "workspace" &&
@@ -341,8 +496,22 @@ export default function App() {
   const isAdminPage = view === "admin";
   const browserPathname =
     typeof window !== "undefined" ? window.location.pathname || "/" : "";
+  const normalizedBrowserPath =
+    browserPathname.length > 1 && browserPathname.endsWith("/")
+      ? browserPathname.replace(/\/+$/, "")
+      : browserPathname;
   const isExplicitAppPath =
-    browserPathname === "/app" || browserPathname === "/home";
+    normalizedBrowserPath === "/app" || normalizedBrowserPath === "/home";
+  const isLandingPathname =
+    normalizedBrowserPath === "/gioi-thieu" ||
+    normalizedBrowserPath === "/welcome" ||
+    normalizedBrowserPath === "/intro" ||
+    normalizedBrowserPath === "/landing";
+  const isInitialLandingPathname =
+    !hasHydratedLocationRef.current &&
+    !hasInAppNavigation &&
+    view === "home" &&
+    isLandingPathname;
   const hasSessionHint =
     typeof window !== "undefined" &&
     (() => {
@@ -358,7 +527,7 @@ export default function App() {
     !guestEnteredApp &&
     !isExplicitAppPath &&
     (authResolved || (typeof window !== "undefined" && browserPathname === "/" && !hasSessionHint));
-  const isLandingPage = view === "landing" || isGuestLandingOnHome;
+  const isLandingPage = view === "landing" || isGuestLandingOnHome || isInitialLandingPathname;
   const isStandaloneShell = isAuthPage || isAdminPage || isLandingPage;
   const mainResetKey = `${view}|${activeTabId ?? ""}|${activeHistoryId ?? activeSampleId ?? ""}|${active?.envelope?.simulation_id ?? ""}|${active?.envelope?.title ?? ""}`;
   const activeCrashedResetKey = reconcileCrashedResetKey(crashedResetKey, mainResetKey);
