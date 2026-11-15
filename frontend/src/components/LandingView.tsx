@@ -1,16 +1,74 @@
+import { useEffect, useState } from "react";
 import { IconAxoLogo } from "./icons";
 import { LandingClosingSculpture } from "./landing/LandingClosingSculpture";
 import { LandingHeader } from "./landing/LandingHeader";
 import { LandingHeroSculpture3D } from "./landing/LandingHeroSculpture3D";
 import { FinalCtaCornerAccent } from "./landing/LandingIllustrationAccents";
 import { LandingInteractiveDemo } from "./landing/LandingInteractiveDemo";
+import { LandingPrototypeA } from "./landing/LandingPrototypeA";
+import { LandingPrototypeB } from "./landing/LandingPrototypeB";
 import { LandingStorytelling } from "./landing/LandingStorytelling";
 import { enterAxoWorkspace, openLibraryFromLanding } from "./landing/landing-geometry-data";
 import { useAuthStore } from "../state/auth";
 
+export type LandingPrototypeMode = "prod" | "a" | "b";
+
+const PROTO_CHANGE_EVENT = "axolanding:protochange";
+
+export function readLandingPrototypeMode(search?: string): LandingPrototypeMode {
+  const raw =
+    search !== undefined
+      ? search
+      : typeof window !== "undefined"
+        ? window.location.search
+        : "";
+  const param = new URLSearchParams(raw).get("prototype")?.trim().toLowerCase();
+  if (param === "a") return "a";
+  if (param === "b") return "b";
+  return "prod";
+}
+
+export function switchLandingPrototype(mode: LandingPrototypeMode): void {
+  if (typeof window === "undefined") return;
+  const url = new URL(window.location.href);
+  if (mode === "prod") {
+    url.searchParams.delete("prototype");
+  } else {
+    url.searchParams.set("prototype", mode);
+  }
+  const nextUrl = `${url.pathname}${url.search}${url.hash}`;
+  window.history.pushState(null, "", nextUrl);
+  window.dispatchEvent(new CustomEvent(PROTO_CHANGE_EVENT));
+  if (typeof window.scrollTo === "function") {
+    window.scrollTo({ top: 0, behavior: "auto" });
+  }
+}
+
 export function LandingView() {
   const user = useAuthStore((s) => s.user);
   const primaryStartLabel = user ? "Vào ứng dụng" : "Bắt đầu dựng hình";
+  const [protoMode, setProtoMode] = useState<LandingPrototypeMode>(() =>
+    readLandingPrototypeMode(),
+  );
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const sync = () => setProtoMode(readLandingPrototypeMode(window.location.search));
+    window.addEventListener("popstate", sync);
+    window.addEventListener(PROTO_CHANGE_EVENT, sync);
+    return () => {
+      window.removeEventListener("popstate", sync);
+      window.removeEventListener(PROTO_CHANGE_EVENT, sync);
+    };
+  }, []);
+
+  if (protoMode === "a") {
+    return <LandingPrototypeA onSwitchMode={switchLandingPrototype} />;
+  }
+
+  if (protoMode === "b") {
+    return <LandingPrototypeB onSwitchMode={switchLandingPrototype} />;
+  }
 
   const scrollToSection = (id: string) => {
     if (typeof document === "undefined") return;
