@@ -431,6 +431,13 @@
   outline-offset: 2px;
 }
 
+.axo-sp-mobile-link-btn {
+  font: inherit;
+  text-align: left;
+  width: 100%;
+  cursor: pointer;
+}
+
 .axo-sp-mobile-link-meta {
   font-size: 0.875rem;
   color: var(--axo-sp-ink-3);
@@ -1109,6 +1116,19 @@
 }
 
 /* 4-Scene Animated Product Explainer Theater (SVG + CSS motion graphics) */
+.axo-sp-explainer-stage {
+  background: radial-gradient(
+      65% 58% at 72% 28%,
+      rgba(0, 117, 222, 0.045),
+      transparent 70%
+    ),
+    var(--axo-sp-surface);
+}
+
+.axo-sp-explainer-svg {
+  overflow: visible;
+}
+
 .axo-sp-explainer-controls {
   display: inline-flex;
   align-items: center;
