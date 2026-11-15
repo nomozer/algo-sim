@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { AnnotatedPhrase } from "./AnnotatedHeading";
 import {
   LANDING_SHOWCASE_SAMPLES,
   landingSampleById,
@@ -6,7 +7,14 @@ import {
 } from "./landing-geometry-data";
 import { SpatialSceneCanvas } from "./LandingHeroScene3D";
 
-export function LandingInteractiveDemo() {
+export interface LandingInteractiveDemoProps {
+  readonly presentation?: "default" | "v14";
+}
+
+export function LandingInteractiveDemo({
+  presentation = "default",
+}: LandingInteractiveDemoProps = {}) {
+  const isV14 = presentation === "v14";
   const [selectedId, setSelectedId] = useState<string>(LANDING_SHOWCASE_SAMPLES[0].id);
   const [stepIndex, setStepIndex] = useState<number>(3);
   const [orbitResetNonce, setOrbitResetNonce] = useState<number>(0);
@@ -47,15 +55,25 @@ export function LandingInteractiveDemo() {
   return (
     <section
       id="trai-nghiem"
-      className="axo-sp-demo-section"
+      className={isV14 ? "axo-sp-demo-section is-v14" : "axo-sp-demo-section"}
       aria-labelledby="landing-demo-heading"
     >
       <div className="axo-sp-container">
         <div className="axo-sp-demo-header">
           <div className="axo-sp-section-head">
-            <p className="axo-sp-eyebrow">Trải nghiệm trực tiếp</p>
+            {!isV14 && <p className="axo-sp-eyebrow">Trải nghiệm trực tiếp</p>}
             <h2 id="landing-demo-heading" className="axo-sp-section-title">
-              Xoay, cắt và kiểm chứng ngay trên mô hình 3D.
+              {isV14 ? (
+                <>
+                  Xoay khối 3D và kiểm chứng{" "}
+                  <AnnotatedPhrase variant="highlight">
+                    thiết diện thật
+                  </AnnotatedPhrase>
+                  .
+                </>
+              ) : (
+                "Xoay, cắt và kiểm chứng ngay trên mô hình 3D."
+              )}
             </h2>
           </div>
 
@@ -84,7 +102,11 @@ export function LandingInteractiveDemo() {
           </div>
         </div>
 
-        <div id="landing-product-showcase" className="axo-sp-demo-workbench">
+        <div
+          id="landing-product-showcase"
+          data-ui={isV14 ? "product-workbench" : undefined}
+          className={isV14 ? "axo-sp-demo-workbench is-v14" : "axo-sp-demo-workbench"}
+        >
           {/* Dominant Interactive 3D Viewport */}
           <div className="axo-sp-demo-canvas-wrap">
             <div className="axo-sp-demo-toolbar">
@@ -116,6 +138,7 @@ export function LandingInteractiveDemo() {
               interactiveOrbit={true}
               orbitResetNonce={orbitResetNonce}
               onUserOrbit={() => setHasCameraMoved(true)}
+              presentation={presentation}
               bottomHint={
                 hasCameraMoved ? undefined : "Kéo để xoay 3D · Phím mũi tên để đổi góc"
               }
@@ -126,7 +149,11 @@ export function LandingInteractiveDemo() {
           {/* Focused Step Control Column */}
           <aside className="axo-sp-demo-panel" aria-label="Điều khiển bước dựng">
             <div className="axo-sp-demo-step-head">
-              <span className="axo-sp-demo-step-eyebrow">
+              <span
+                className={
+                  isV14 ? "axo-v14-demo-step-tag" : "axo-sp-demo-step-eyebrow"
+                }
+              >
                 Bước {activeStage.stepNumber} · {activeStage.tag}
               </span>
             </div>

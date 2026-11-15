@@ -21,12 +21,12 @@ const VARIANT_GEOMETRY: Record<
   circle: {
     viewBox: "0 0 320 136",
     pathD:
-      "M 284 44 C 242 12, 86 10, 26 42 C -6 60, 8 106, 76 122 C 154 138, 286 124, 306 78 C 318 52, 266 26, 212 24",
+      "M 278 40 C 232 14, 86 14, 28 46 C -2 64, 14 108, 82 120 C 166 134, 284 118, 302 74 C 312 50, 282 28, 224 22",
   },
   underline: {
     viewBox: "0 0 280 22",
-    pathD: "M 5 14 Q 140 5 275 13",
-    secondaryD: "M 5 9 L 5 18 M 275 8 L 275 17",
+    pathD: "M 5 12 Q 140 7 275 12",
+    secondaryD: "M 5 7 L 5 17 M 275 7 L 275 17",
   },
   highlight: {
     viewBox: "0 0 300 104",

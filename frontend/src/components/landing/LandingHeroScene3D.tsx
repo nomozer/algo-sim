@@ -27,6 +27,7 @@ export interface SpatialSceneCanvasProps {
   readonly bottomHint?: string;
   readonly sceneId?: string;
   readonly ariaLabel?: string;
+  readonly presentation?: "default" | "v14";
   readonly onUserOrbit?: () => void;
 }
 
@@ -197,46 +198,84 @@ interface ActiveSampleRig {
   pointMeshes: { pt: LandingPointSpec; mesh: THREE.Mesh }[];
 }
 
-function buildSampleRig(sample: LandingSampleSpec): ActiveSampleRig {
+function buildSampleRig(
+  sample: LandingSampleSpec,
+  presentation: "default" | "v14" = "default",
+): ActiveSampleRig {
   const group = new THREE.Group();
   const disposables: { dispose: () => void }[] = [];
   const track = <T extends { dispose: () => void }>(item: T): T => {
     disposables.push(item);
     return item;
   };
+  const isV14 = presentation === "v14";
 
-  // Datum reference ring under solid
+  // Datum reference ring or studio contact shadow under solid
   const minY = Math.min(...sample.points.map((p) => p.pos[1]));
-  const ringGeo = track(new THREE.RingGeometry(2.65, 2.68, 64));
-  ringGeo.rotateX(-Math.PI / 2);
-  const ringMat = track(
-    new THREE.MeshBasicMaterial({
-      color: 0x111110,
-      transparent: true,
-      opacity: 0.08,
-      side: THREE.DoubleSide,
-    }),
-  );
-  const ringMesh = new THREE.Mesh(ringGeo, ringMat);
-  ringMesh.position.y = minY - 0.04;
-  group.add(ringMesh);
+  if (isV14) {
+    const outerDiskGeo = track(new THREE.CircleGeometry(2.68, 48));
+    outerDiskGeo.rotateX(-Math.PI / 2);
+    const outerDiskMat = track(
+      new THREE.MeshBasicMaterial({
+        color: 0x191918,
+        transparent: true,
+        opacity: 0.028,
+        depthWrite: false,
+      }),
+    );
+    const outerDisk = new THREE.Mesh(outerDiskGeo, outerDiskMat);
+    outerDisk.position.y = minY - 0.04;
+    group.add(outerDisk);
 
-  // Lightweight translucent solid faces (no heavy PBR shader compile stalls)
+    const innerDiskGeo = track(new THREE.CircleGeometry(1.86, 40));
+    innerDiskGeo.rotateX(-Math.PI / 2);
+    const innerDiskMat = track(
+      new THREE.MeshBasicMaterial({
+        color: 0x191918,
+        transparent: true,
+        opacity: 0.052,
+        depthWrite: false,
+      }),
+    );
+    const innerDisk = new THREE.Mesh(innerDiskGeo, innerDiskMat);
+    innerDisk.position.y = minY - 0.036;
+    group.add(innerDisk);
+  } else {
+    const ringGeo = track(new THREE.RingGeometry(2.65, 2.68, 64));
+    ringGeo.rotateX(-Math.PI / 2);
+    const ringMat = track(
+      new THREE.MeshBasicMaterial({
+        color: 0x111110,
+        transparent: true,
+        opacity: 0.08,
+        side: THREE.DoubleSide,
+      }),
+    );
+    const ringMesh = new THREE.Mesh(ringGeo, ringMat);
+    ringMesh.position.y = minY - 0.04;
+    group.add(ringMesh);
+  }
+
+  // Lightweight translucent solid faces (studio face-normal shading in V1.4 presentation)
   const solidFacesMeta = computeOutwardFaceNormals(sample);
+  const keyDir = new THREE.Vector3(6.5, 10.5, 4.5).normalize();
+  const baseAlbedo = new THREE.Color(0xf5f4f1);
   const baseFaceMat = track(
     new THREE.MeshBasicMaterial({
-      color: 0xeef3f8,
+      color: isV14 ? 0xffffff : 0xeef3f8,
+      vertexColors: isV14,
       transparent: true,
-      opacity: 0.24,
+      opacity: isV14 ? 0.56 : 0.24,
       side: THREE.DoubleSide,
       depthWrite: false,
     }),
   );
   const sideFaceMat = track(
     new THREE.MeshBasicMaterial({
-      color: 0xf4f6f9,
+      color: isV14 ? 0xffffff : 0xf4f6f9,
+      vertexColors: isV14,
       transparent: true,
-      opacity: 0.14,
+      opacity: isV14 ? 0.42 : 0.14,
       side: THREE.DoubleSide,
       depthWrite: false,
     }),
@@ -246,14 +285,29 @@ function buildSampleRig(sample: LandingSampleSpec): ActiveSampleRig {
     const face = sample.solidFaces[fIdx];
     if (face.length < 3) continue;
     const verts: number[] = [];
+    const vertColors: number[] = [];
+    const faceMeta = solidFacesMeta[fIdx];
+    const shade =
+      isV14 && faceMeta
+        ? Math.min(1.02, 0.8 + Math.max(0, faceMeta.normal.dot(keyDir)) * 0.22)
+        : 1;
+    const r = Math.min(1, baseAlbedo.r * shade);
+    const g = Math.min(1, baseAlbedo.g * shade);
+    const b = Math.min(1, baseAlbedo.b * shade);
     const p0 = sample.pointMap[face[0]].pos;
     for (let i = 1; i < face.length - 1; i++) {
       const p1 = sample.pointMap[face[i]].pos;
       const p2 = sample.pointMap[face[i + 1]].pos;
       verts.push(...p0, ...p1, ...p2);
+      if (isV14) {
+        vertColors.push(r, g, b, r, g, b, r, g, b);
+      }
     }
     const faceGeo = track(new THREE.BufferGeometry());
     faceGeo.setAttribute("position", new THREE.Float32BufferAttribute(verts, 3));
+    if (isV14) {
+      faceGeo.setAttribute("color", new THREE.Float32BufferAttribute(vertColors, 3));
+    }
     const mesh = new THREE.Mesh(faceGeo, fIdx === 0 ? baseFaceMat : sideFaceMat);
     mesh.renderOrder = 1;
     group.add(mesh);
@@ -478,6 +532,7 @@ export function SpatialSceneCanvas({
   bottomHint,
   sceneId,
   ariaLabel = "Mô hình hình học không gian 3D Axo",
+  presentation = "default",
   onUserOrbit,
 }: SpatialSceneCanvasProps) {
   const shellRef = useRef<HTMLDivElement | null>(null);
@@ -497,6 +552,7 @@ export function SpatialSceneCanvas({
 
   const propsRef = useRef({
     sample,
+    presentation,
     visiblePoints,
     activePoints,
     showGuideEdges,
@@ -510,6 +566,7 @@ export function SpatialSceneCanvas({
   });
   propsRef.current = {
     sample,
+    presentation,
     visiblePoints,
     activePoints,
     showGuideEdges,
@@ -653,7 +710,7 @@ export function SpatialSceneCanvas({
       const swapSample = (nextSample: LandingSampleSpec) => {
         if (activeRig && activeRig.sampleId === nextSample.id) return;
         disposeActiveRig();
-        activeRig = buildSampleRig(nextSample);
+        activeRig = buildSampleRig(nextSample, propsRef.current.presentation);
         scene.add(activeRig.group);
         curCam.set(...(propsRef.current.targetCamera));
         curLook.set(...(propsRef.current.targetLookAt));
@@ -712,13 +769,14 @@ export function SpatialSceneCanvas({
         curSecProg += (p.sectionProgress - curSecProg) * damp;
         curSecFill += (p.sectionFillOpacity - curSecFill) * damp;
 
+        const isV14Presentation = p.presentation === "v14";
         rig.planeMesh.visible = curPlaneOp > 0.02;
         rig.planeBorderLine.visible = curPlaneOp > 0.02;
-        rig.planeFillMat.opacity = curPlaneOp * 0.16;
-        rig.planeBorderMat.opacity = curPlaneOp * 0.56;
+        rig.planeFillMat.opacity = curPlaneOp * (isV14Presentation ? 0.22 : 0.16);
+        rig.planeBorderMat.opacity = curPlaneOp * (isV14Presentation ? 0.72 : 0.56);
 
         rig.secFillMesh.visible = curSecFill > 0.02;
-        rig.secFillMat.opacity = curSecFill * 0.25;
+        rig.secFillMat.opacity = curSecFill * (isV14Presentation ? 0.34 : 0.25);
 
         const totalSegs = rig.sectionSegments.length;
         const scaled = Math.max(0, Math.min(1, curSecProg)) * totalSegs;
@@ -1141,7 +1199,7 @@ export function SpatialSceneCanvas({
     <div
       id={sceneId}
       ref={shellRef}
-      className={`axo-sp-scene-shell${interactiveOrbit ? " is-interactive" : ""}${compact ? " is-compact" : ""}`}
+      className={`axo-sp-scene-shell${interactiveOrbit ? " is-interactive" : ""}${compact ? " is-compact" : ""}${presentation === "v14" ? " is-v14" : ""}`}
       role={interactiveOrbit ? "application" : "img"}
       aria-label={ariaLabel}
       tabIndex={interactiveOrbit ? 0 : undefined}

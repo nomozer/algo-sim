@@ -5,13 +5,14 @@ import { LandingHeader } from "./landing/LandingHeader";
 import { LandingHeroSculpture3D } from "./landing/LandingHeroSculpture3D";
 import { FinalCtaCornerAccent } from "./landing/LandingIllustrationAccents";
 import { LandingInteractiveDemo } from "./landing/LandingInteractiveDemo";
+import { LandingPreviewV14 } from "./landing/LandingPreviewV14";
 import { LandingPrototypeA } from "./landing/LandingPrototypeA";
 import { LandingPrototypeB } from "./landing/LandingPrototypeB";
 import { LandingStorytelling } from "./landing/LandingStorytelling";
 import { enterAxoWorkspace, openLibraryFromLanding } from "./landing/landing-geometry-data";
 import { useAuthStore } from "../state/auth";
 
-export type LandingPrototypeMode = "prod" | "a" | "b";
+export type LandingPrototypeMode = "prod" | "a" | "b" | "v14";
 
 const PROTO_CHANGE_EVENT = "axolanding:protochange";
 
@@ -22,9 +23,19 @@ export function readLandingPrototypeMode(search?: string): LandingPrototypeMode 
       : typeof window !== "undefined"
         ? window.location.search
         : "";
-  const param = new URLSearchParams(raw).get("prototype")?.trim().toLowerCase();
-  if (param === "a") return "a";
-  if (param === "b") return "b";
+  const params = new URLSearchParams(raw);
+  const previewParam = params.get("preview")?.trim().toLowerCase();
+  const protoParam = params.get("prototype")?.trim().toLowerCase();
+  if (
+    previewParam === "v1.4" ||
+    previewParam === "v14" ||
+    protoParam === "v1.4" ||
+    protoParam === "v14"
+  ) {
+    return "v14";
+  }
+  if (protoParam === "a") return "a";
+  if (protoParam === "b") return "b";
   return "prod";
 }
 
@@ -33,7 +44,12 @@ export function switchLandingPrototype(mode: LandingPrototypeMode): void {
   const url = new URL(window.location.href);
   if (mode === "prod") {
     url.searchParams.delete("prototype");
+    url.searchParams.delete("preview");
+  } else if (mode === "v14") {
+    url.searchParams.delete("prototype");
+    url.searchParams.set("preview", "v1.4");
   } else {
+    url.searchParams.delete("preview");
     url.searchParams.set("prototype", mode);
   }
   const nextUrl = `${url.pathname}${url.search}${url.hash}`;
@@ -61,6 +77,10 @@ export function LandingView() {
       window.removeEventListener(PROTO_CHANGE_EVENT, sync);
     };
   }, []);
+
+  if (protoMode === "v14") {
+    return <LandingPreviewV14 />;
+  }
 
   if (protoMode === "a") {
     return <LandingPrototypeA onSwitchMode={switchLandingPrototype} />;

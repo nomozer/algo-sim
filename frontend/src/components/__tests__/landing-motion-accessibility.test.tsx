@@ -15,12 +15,17 @@ describe("AXO Landing Page V1.3 — Prototype Isolation, Motion Accessibility & 
     expect(readLandingPrototypeMode("?prototype=A")).toBe("a");
     expect(readLandingPrototypeMode("?prototype=b")).toBe("b");
     expect(readLandingPrototypeMode("?prototype=%20b%20")).toBe("b");
+    expect(readLandingPrototypeMode("?preview=v1.4")).toBe("v14");
+    expect(readLandingPrototypeMode("?preview=V14")).toBe("v14");
+    expect(readLandingPrototypeMode("?prototype=v1.4")).toBe("v14");
+    expect(readLandingPrototypeMode("?prototype=v14")).toBe("v14");
 
     const defaultHtml = renderToString(<LandingView />);
     expect(defaultHtml).toContain('id="landing-hero"');
     expect(defaultHtml).toContain('id="landing-storytelling-scene"');
     expect(defaultHtml).toContain('id="landing-final-cta"');
     expect(defaultHtml).not.toContain('id="landing-v13-review-banner"');
+    expect(defaultHtml).not.toContain("axo-v14-root");
     expect(defaultHtml).not.toContain("PENDING_OWNER_REVIEW");
   });
 
@@ -83,7 +88,16 @@ describe("AXO Landing Page V1.3 — Prototype Isolation, Motion Accessibility & 
     expect(landingCss).toContain(".axo-v13-switch-btn");
     expect(landingCss).toContain(".axo-v13-canvas-host");
 
-    for (const src of [protoASrc, protoBSrc]) {
+    const v14HeroSrc = fs.readFileSync(
+      path.resolve(__dirname, "../landing/LandingHeroV14.tsx"),
+      "utf8",
+    );
+    const v14StorySrc = fs.readFileSync(
+      path.resolve(__dirname, "../landing/LandingStorytellingV14.tsx"),
+      "utf8",
+    );
+
+    for (const src of [protoASrc, protoBSrc, v14HeroSrc, v14StorySrc]) {
       expect(src).not.toContain("var(--");
       expect(src).not.toMatch(/import\s+["'][^"']*\.css["']/);
       expect(src).not.toContain("APPROVED_BY_USER");
