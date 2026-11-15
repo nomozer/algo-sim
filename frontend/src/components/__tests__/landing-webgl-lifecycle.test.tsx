@@ -2,6 +2,10 @@ import fs from "node:fs";
 import path from "node:path";
 import { renderToString } from "react-dom/server";
 import { describe, expect, it } from "vitest";
+import {
+  LandingClosingScene3D,
+  projectClosingFallbackSvg,
+} from "../landing/LandingClosingScene3D";
 import { separateLabelPositions, type LabelCandidate } from "../landing/LandingHeroScene3D";
 import { LandingHeroSculpture3D } from "../landing/LandingHeroSculpture3D";
 import { LANDING_CUBE_SAMPLE, extractPointsFromSample } from "../landing/landing-geometry-data";
@@ -104,5 +108,29 @@ describe("AXO Landing Page V1.2 — WebGL Persistent Lifecycle, Deduplication & 
 
     const altHtml = renderToString(<LandingHeroSculpture3D variant="sculpture" />);
     expect(altHtml).toContain('data-hero-variant="sculpture"');
+  });
+
+  it("manages LandingClosingScene3D with lazy observer, single persistent WebGLRenderer, offscreen RAF pause, fallback, and disposal", () => {
+    const closingSceneSrc = fs.readFileSync(
+      path.resolve(__dirname, "../landing/LandingClosingScene3D.tsx"),
+      "utf8",
+    );
+
+    const rendererNews = closingSceneSrc.match(/new THREE\.WebGLRenderer\(/g) ?? [];
+    expect(rendererNews).toHaveLength(1);
+    expect(closingSceneSrc).toContain("IntersectionObserver");
+    expect(closingSceneSrc).toContain("ResizeObserver");
+    expect(closingSceneSrc).toContain('document.addEventListener("visibilitychange"');
+    expect(closingSceneSrc).toContain("webglcontextlost");
+    expect(closingSceneSrc).toContain("webglcontextrestored");
+    expect(closingSceneSrc).toContain("cancelAnimationFrame");
+    expect(closingSceneSrc).toContain("renderer.dispose()");
+    expect(closingSceneSrc).toContain("item.dispose()");
+    expect(closingSceneSrc).toContain("no_webgl=1");
+
+    const ssrHtml = renderToString(<LandingClosingScene3D />);
+    expect(ssrHtml).toContain('id="landing-closing-scene3d"');
+    const fallbackProj = projectClosingFallbackSvg();
+    expect(Object.keys(fallbackProj.points).length).toBeGreaterThanOrEqual(11);
   });
 });
